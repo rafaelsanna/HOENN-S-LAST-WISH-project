@@ -36,8 +36,10 @@ SINGLE_BATTLE_TEST("Roost fails when user is at full HP")
         TURN { MOVE(player, MOVE_ROOST); }
     } SCENE {
         MESSAGE("Wobbuffet's HP is full!");
-        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
-        NOT HP_BAR(player);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
+            HP_BAR(player);
+        }
     }
 }
 
@@ -52,14 +54,16 @@ SINGLE_BATTLE_TEST("Roost fails if the user is under the effects of Heal Block")
         ANIMATION(ANIM_TYPE_MOVE, MOVE_HEAL_BLOCK, opponent);
         MESSAGE("Wobbuffet was prevented from healing!"); // Message when Heal Block is applied
         MESSAGE("Wobbuffet was prevented from healing!"); // Message when trying to heal under Heal Block
-        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
-        NOT HP_BAR(player);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
+            HP_BAR(player);
+        }
     }
 }
 
 SINGLE_BATTLE_TEST("Roost recovers 50% of the user's Max HP")
-{    
-    s16 hp;
+{
+    u16 hp;
 
     KNOWN_FAILING; // All healing is currently rounded down
     GIVEN {
@@ -127,7 +131,6 @@ SINGLE_BATTLE_TEST("Roost, if used by a Flying/Flying type, treats the user as a
     PARAMETRIZE{ damagingMove = MOVE_DISARMING_VOICE; }
 
     GIVEN {
-        ASSUME(P_GEN_5_POKEMON == TRUE);
         ASSUME(gSpeciesInfo[SPECIES_TORNADUS].types[0] == TYPE_FLYING);
         ASSUME(gSpeciesInfo[SPECIES_TORNADUS].types[1] == TYPE_FLYING);
         PLAYER(SPECIES_TORNADUS) { HP(50); MaxHP(100); }
@@ -218,7 +221,7 @@ SINGLE_BATTLE_TEST("Roost, if used by a Mystery/Flying type, treats the user as 
             MESSAGE("It's not very effective…");
             MESSAGE("It doesn't affect Moltres…");
         }
-    } 
+    }
 }
 
 // Tested in ORAS
@@ -230,9 +233,9 @@ DOUBLE_BATTLE_TEST("Roost suppresses the user's not-yet-aquired Flying-type this
         PLAYER(SPECIES_KECLEON) { Speed(40); HP(150); Ability(ABILITY_COLOR_CHANGE); }
         PLAYER(SPECIES_WOBBUFFET) { Speed(10); }
         OPPONENT(SPECIES_PIDGEY) { Speed(30); }
-        OPPONENT(SPECIES_SANDSHREW) { Speed(20); }        
+        OPPONENT(SPECIES_SANDSHREW) { Speed(20); }
     } WHEN {
-        TURN { MOVE(playerLeft, MOVE_ROOST); 
+        TURN { MOVE(playerLeft, MOVE_ROOST);
                MOVE(opponentLeft, MOVE_GUST, target: playerLeft);
                MOVE(opponentRight, MOVE_EARTHQUAKE, target: playerLeft); }
     } SCENE {
@@ -340,8 +343,10 @@ SINGLE_BATTLE_TEST("Roost's suppression prevents Reflect Type from copying any F
         // Turn 3: EQ has no effect
         MESSAGE("Swellow used Earthquake!");
         MESSAGE("It doesn't affect Foe Wobbuffet…");
-        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, player);
-        NOT HP_BAR(opponent);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, player);
+            HP_BAR(opponent);
+        }
     }
 }
 
@@ -357,8 +362,10 @@ SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Levitate")
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
         MESSAGE("Flygon regained health!");
         MESSAGE("Foe Wobbuffet used Earthquake!");
-        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
-        NOT HP_BAR(player);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
+            HP_BAR(player);
+        }
     }
 }
 
@@ -374,8 +381,10 @@ SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Air Balloon
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
         MESSAGE("Wobbuffet regained health!");
         MESSAGE("Foe Wobbuffet used Earthquake!");
-        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
-        NOT HP_BAR(player);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
+            HP_BAR(player);
+        }
     }
 }
 
@@ -397,14 +406,15 @@ SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Magnet Rise
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
         MESSAGE("Wobbuffet regained health!");
         MESSAGE("Foe Wobbuffet used Earthquake!");
-        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
-        NOT HP_BAR(player);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
+            HP_BAR(player);
+        }
     }
 }
 
 SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Telekinesis")
 {
-    KNOWN_FAILING; // Telekinesis currently says the pokemon was identified
     GIVEN {
         PLAYER(SPECIES_WOBBUFFET) { HP(1); }
         OPPONENT(SPECIES_WOBBUFFET);
@@ -421,12 +431,14 @@ SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Telekinesis
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
         MESSAGE("Wobbuffet regained health!");
         MESSAGE("Foe Wobbuffet used Earthquake!");
-        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
-        NOT HP_BAR(player);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_EARTHQUAKE, opponent);
+            HP_BAR(player);
+        }
     }
 }
 
 // Tested in ORAS
-// Transform does not copy the Roost "status" either. 
+// Transform does not copy the Roost "status" either.
 // Probably better as a Transform test.
 TO_DO_BATTLE_TEST("Roost's suppression does not prevent others who are Transforming into the user from copying its Flying-type");
