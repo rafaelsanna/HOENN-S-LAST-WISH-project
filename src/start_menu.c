@@ -550,12 +550,10 @@ static void RemoveExtraStartMenuWindows(void)
         ClearStdWindowAndFrameToTransparent(sBattlePyramidFloorWindowId, FALSE);
         RemoveWindow(sBattlePyramidFloorWindowId);
     }
-    else
-    {
-        ClearStdWindowAndFrameToTransparent(sStartClockWindowId, FALSE);
-        // CopyWindowToVram(sStartClockWindowId, COPYWIN_GFX);
-        RemoveWindow(sStartClockWindowId);
-    }
+    
+    ClearStdWindowAndFrameToTransparent(sStartClockWindowId, FALSE);
+    // CopyWindowToVram(sStartClockWindowId, COPYWIN_GFX);
+    RemoveWindow(sStartClockWindowId);
 }
 
 static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
