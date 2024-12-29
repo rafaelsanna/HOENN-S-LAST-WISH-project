@@ -241,7 +241,38 @@ u32 LoadCompressedSpriteSheetByTemplate(const struct SpriteTemplate *template, s
         return ret;
     }
     return LoadSpriteSheetByTemplate(template, 0, offset);
+}
 
+u8 LoadCompressedSpritePalette(const struct CompressedSpritePalette *src)
+{
+    struct SpritePalette dest;
+    u16 buffer[16];
+
+    LZ77UnCompWram(src->data, buffer);
+    dest.data = buffer;
+    dest.tag = src->tag;
+    return LoadSpritePalette(&dest);
+}
+
+u8 LoadCompressedSpritePaletteWithTag(const u32 *pal, u16 tag)
+{
+    struct SpritePalette dest;
+    u16 buffer[16];
+
+    LZ77UnCompWram(pal, buffer);
+    dest.data = buffer;
+    dest.tag = tag;
+    return LoadSpritePalette(&dest);
+}
+
+void LoadCompressedSpritePaletteOverrideBuffer(const struct CompressedSpritePalette *src, void *buffer)
+{
+    struct SpritePalette dest;
+
+    LZ77UnCompWram(src->data, buffer);
+    dest.data = buffer;
+    dest.tag = src->tag;
+    LoadSpritePalette(&dest);
 }
 
 void DecompressPicFromTable(const struct CompressedSpriteSheet *src, void *buffer)
