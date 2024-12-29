@@ -1264,7 +1264,6 @@ void CB2_Pokemon_Sprite_Visualizer(void)
             AllocateMonSpritesGfx();
 
             LoadPalette(sBgColor, 0, 2);
-            LoadMonIconPalette(SPECIES_BULBASAUR);
 
             SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
             ShowBg(0);
@@ -1972,8 +1971,7 @@ static void ReloadPokemonSprites(struct PokemonSpriteVisualizer *data)
     FreeMonIconPalettes();
 
     AllocateMonSpritesGfx();
-    LoadMonIconPalettePersonality(species, (data->isFemale ? FEMALE_PERSONALITY : MALE_PERSONALITY));
-
+    
     //Update instructions
     PrintInstructionsOnWindow(data);
 
