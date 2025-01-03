@@ -156,7 +156,7 @@ const u32 gMonIconPalettesCompressed[][16] =
 const u32 * GetIconPalette(u32 species, bool32 isShiny)
 {
     if (gSpeciesInfo[species].iconPalette != NULL)
-        return (isShiny) ? gSpeciesInfo[species].iconShinyPalette : gSpeciesInfo[species].iconPalette;
+        return (isShiny) ? gSpeciesInfo[species].shinyIconPalette : gSpeciesInfo[species].iconPalette;
     else
         return gMonIconPalettesCompressed[GetMonIconPaletteIndexFromSpecies(species)];
 }
