@@ -5005,11 +5005,12 @@ static void CreatePartyMonsSprites(bool8 visible)
     u16 i, count;
     u16 species = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG);
     u32 personality = GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY);
+    bool32 isShiny = GetMonData(&gPlayerParty[0], MON_DATA_IS_SHINY);
     u8 paletteNum;
 
     sStorage->transferWholePlttFrames = -1; // keep transferring entire palette buffer until done with party menu
     sStorage->partySprites[0] = CreateMonIconSprite(species, personality, 104, 64, 1, 12);
-    LoadCompressedPaletteFast(GetMonFrontSpritePal(&gPlayerParty[0]), (0+1)* 16 + 0x100, 32);
+    LoadCompressedPaletteFast(GetIconPalette(species, isShiny), (0+1)* 16 + 0x100, 32);
     sStorage->partySprites[0]->oam.paletteNum = 0+1;
     count = 1;
     for (i = 1; i < PARTY_SIZE; i++)
@@ -5019,8 +5020,9 @@ static void CreatePartyMonsSprites(bool8 visible)
         if (species != SPECIES_NONE)
         {
             personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
+            isShiny = GetMonData(&gPlayerParty[i], MON_DATA_IS_SHINY);
             sStorage->partySprites[i] = CreateMonIconSprite(species, personality, 152,  8 * (3 * (i - 1)) + 16, 1, 12);
-            LoadCompressedPaletteFast(GetMonFrontSpritePal(&gPlayerParty[i]), paletteNum*16 + 0x100, 32);
+            LoadCompressedPaletteFast(GetIconPalette(species, isShiny), paletteNum*16 + 0x100, 32);
             sStorage->partySprites[i]->oam.paletteNum = paletteNum;
             count++;
         }
