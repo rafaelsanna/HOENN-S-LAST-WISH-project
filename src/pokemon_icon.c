@@ -35,11 +35,9 @@ const struct SpritePalette gMonIconPaletteTable[] =
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
     { gMonIconPalettes[1], POKE_ICON_BASE_PAL_TAG + 1 },
     { gMonIconPalettes[2], POKE_ICON_BASE_PAL_TAG + 2 },
-
-    // There are only 3 actual palettes, but we repurpose the last 3 as duplicates for the new icon system
-    { gMonIconPalettes[3 % 3], POKE_ICON_BASE_PAL_TAG + 3 },
-    { gMonIconPalettes[4 % 3], POKE_ICON_BASE_PAL_TAG + 4 },
-    { gMonIconPalettes[5 % 3], POKE_ICON_BASE_PAL_TAG + 5 },
+    { gMonIconPalettes[3], POKE_ICON_BASE_PAL_TAG + 3 },
+    { gMonIconPalettes[4], POKE_ICON_BASE_PAL_TAG + 4 },
+    { gMonIconPalettes[5], POKE_ICON_BASE_PAL_TAG + 5 },
 };
 
 static const struct OamData sMonIconOamData =
@@ -145,6 +143,33 @@ static const u16 sSpriteImageSizes[3][4] =
     },
 };
 
+const u32 gMonIconPalettesCompressed[][16] =
+{
+    INCBIN_U32("graphics/pokemon/icon_palettes/pal0.gbapal.lz"),
+    INCBIN_U32("graphics/pokemon/icon_palettes/pal1.gbapal.lz"),
+    INCBIN_U32("graphics/pokemon/icon_palettes/pal2.gbapal.lz"),
+    INCBIN_U32("graphics/pokemon/icon_palettes/pal3.gbapal.lz"),
+    INCBIN_U32("graphics/pokemon/icon_palettes/pal4.gbapal.lz"),
+    INCBIN_U32("graphics/pokemon/icon_palettes/pal5.gbapal.lz"),
+};
+
+const u32 * GetIconPalette(u32 species, bool32 isShiny)
+{
+    if (gSpeciesInfo[species].iconPalette != NULL)
+        return (isShiny) ? gSpeciesInfo[species].iconShinyPalette : gSpeciesInfo[species].iconPalette;
+    else
+        return gMonIconPalettesCompressed[GetMonIconPaletteIndexFromSpecies(species)];
+}
+
+const u32 GetIconPalTag(u32 species, bool32 isShiny)
+{
+    u32 tag = POKE_ICON_SPECIES_BASE_PAL_TAG;
+    if (isShiny)
+        tag += NUM_SPECIES;
+    tag += species;
+    return tag;
+}
+
 // Find or allocate a palette slot for a pokemon icon
 // Prefers unused slots with tags in the icon range (IS_MON_ICON_TAG),
 // but if not found, will allocate a new palette slot
@@ -190,8 +215,8 @@ u8 CreateMonIcon3(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, 
 u8 CreateMonIcon2(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority, bool32 isShiny, u32 personality)
 {
     u32 paletteNum;
-    const u32 *palette = GetMonSpritePalFromSpeciesAndPersonality(species, isShiny, personality);
-    u16 tag = POKE_ICON_SPECIES_BASE_PAL_TAG + (isShiny ? NUM_SPECIES : 0) + species;
+    const u32 *palette = GetIconPalette(species, isShiny);
+    u16 tag = GetIconPalTag(species, isShiny);
 
     if ((paletteNum = IndexOfSpritePaletteTag(tag)) >= 16) 
     {

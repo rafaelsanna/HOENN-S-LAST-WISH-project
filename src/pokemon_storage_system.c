@@ -247,6 +247,7 @@ enum {
     PALTAG_ITEM_ICON_1, // Used implicitly in CreateItemIconSprites
     PALTAG_ITEM_ICON_2, // Used implicitly in CreateItemIconSprites
     PALTAG_MARKING_MENU,
+    PALTAG_MOVING_MON,
 };
 
 #define PALTAG_SWAP_BASE PALTAG_MARKING_MENU + 2
@@ -465,6 +466,7 @@ struct PokemonStorageSystemData
     u16 iconSpeciesList[MAX_MON_ICONS];
     u16 boxSpecies[IN_BOX_COUNT];
     u32 boxPersonalities[IN_BOX_COUNT];
+    bool32 boxShininess[IN_BOX_COUNT];
     u8 incomingBoxId;
     u8 shiftTimer;
     u8 numPartyToCompact;
@@ -4665,9 +4667,8 @@ static void CreateMovingMonIcon(void)
 static const u32 *_GetMonFrontSpritePal(struct Pokemon *mon, u16 *species)
 {
     bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY, 0);
-    u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
     *species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0);
-    return GetMonSpritePalFromSpeciesAndPersonality(*species, isShiny, personality);
+    return GetIconPalette(*species, isShiny);
 }
 
 static void SetBoxMonDynamicPalette(u8 boxId, u8 position) {
@@ -4972,7 +4973,10 @@ static void GetIncomingBoxMonData(u8 boxId)
         {
             sStorage->boxSpecies[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_SPECIES_OR_EGG);
             if (sStorage->boxSpecies[boxPosition] != SPECIES_NONE)
+            {
                 sStorage->boxPersonalities[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
+                sStorage->boxShininess[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_IS_SHINY);
+            }
             boxPosition++;
         }
     }
@@ -6622,9 +6626,11 @@ static void MoveMon(void)
             SetMovingMonData(StorageGetCurrentBox(), sCursorPosition);
             SetMovingMonSprite(MODE_BOX, sCursorPosition);
 
+            LoadCompressedPaletteFast(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY)), 0x100 + 14*16, 32);
+
             // Set moving sprite palette to currently displayed pokemon
 
-            sStorage->movingMonSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_DISPLAY_MON);
+            sStorage->movingMonSprite->oam.paletteNum = 14;
             palette[0] = 0x8000;
             SwapInPalNextVBlank(&palette[0], &sPaletteSwapBuffer[(sCursorPosition)*16]);
         }
@@ -6739,6 +6745,9 @@ static void SetShiftedMonData(u8 boxId, u8 position)
         BoxMonAtToMon(boxId, position, &sStorage->tempMon);
     }
 
+    LoadCompressedPaletteFast(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY)), 0x100 + 15*16, 32);
+    LoadCompressedPaletteFast(GetIconPalette(GetMonData(&sStorage->tempMon, MON_DATA_SPECIES), GetMonData(&sStorage->tempMon, MON_DATA_IS_SHINY)), 0x100 + 14*16, 32);
+
     SetPlacedMonData(boxId, position);
     sStorage->movingMon = sStorage->tempMon;
 }
@@ -6757,14 +6766,14 @@ static void SetShiftedMonSprites(u8 boxId, u8 position) {
         // Copy display palette into swap buffer (at next vblank)
         // This is necessary because copying it while the screen is being drawn will cause flickering
         SwapInPalNextVBlank(&gPlttBufferFaded[displayIndex*16+0x100], &sPaletteSwapBuffer[(position)*16]);
-        sStorage->boxMonsSprites[position]->oam.paletteNum = (i & 1 ? 6 : 0) + j + 1;
+        sStorage->boxMonsSprites[position]->oam.paletteNum = 15;
     }
 
     SetDisplayMonData(&sStorage->movingMon, MODE_PARTY);
     // Set moving sprite palette to currently displayed pokemon's palette
     sStorage->displayMonSprite->invisible = TRUE;
     LoadCompressedPaletteFast(sStorage->displayMonPalette, sStorage->displayMonPalOffset, 0x20);
-    sStorage->movingMonSprite->oam.paletteNum = displayIndex;
+    sStorage->movingMonSprite->oam.paletteNum = 14;
     sMovingMonOrigBoxId = boxId;
     sMovingMonOrigBoxPos = position;
 }
