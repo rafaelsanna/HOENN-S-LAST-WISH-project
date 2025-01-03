@@ -4664,10 +4664,10 @@ static void CreateMovingMonIcon(void)
 // helper that also returns the species
 static const u32 *_GetMonFrontSpritePal(struct Pokemon *mon, u16 *species)
 {
-    u32 otId = GetMonData(mon, MON_DATA_OT_ID, 0);
+    bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY, 0);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
     *species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0);
-    return GetMonSpritePalFromSpeciesAndPersonality(*species, otId, personality);
+    return GetMonSpritePalFromSpeciesAndPersonality(*species, isShiny, personality);
 }
 
 static void SetBoxMonDynamicPalette(u8 boxId, u8 position) {
