@@ -2337,6 +2337,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .shinyPalette = gMonShinyPalette_RattataAlola,
         .iconSprite = gMonIcon_RattataAlola,
         .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_RattataAlola,
+        .shinyIconPalette = gMonShinyIconPalette_RattataAlola,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(-3, 2, SHADOW_SIZE_S)
         FOOTPRINT(Rattata)
@@ -2402,6 +2404,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .shinyPalette = gMonShinyPalette_RaticateAlola,
         .iconSprite = gMonIcon_RaticateAlola,
         .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_RaticateAlola,
+        .shinyIconPalette = gMonShinyIconPalette_RaticateAlola,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(-4, 3, SHADOW_SIZE_L)
         FOOTPRINT(Raticate)
@@ -4082,6 +4086,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .shinyPalette = gMonShinyPalette_RaichuAlola,
         .iconSprite = gMonIcon_RaichuAlola,
         .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_RaichuAlola,
+        .shinyIconPalette = gMonShinyIconPalette_RaichuAlola,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(3, 15, SHADOW_SIZE_M)
         FOOTPRINT(Raichu)

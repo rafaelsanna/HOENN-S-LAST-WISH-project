@@ -793,6 +793,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_RattataAlola[] = INCBIN_U32("graphics/pokemon/rattata/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_RattataAlola[] = INCBIN_U16("graphics/pokemon/rattata/alola/shiny.gbapal");
     const u8 gMonIcon_RattataAlola[] = INCBIN_U8("graphics/pokemon/rattata/alola/icon.4bpp");
+    const u32 gMonIconPalette_RattataAlola[] = INCBIN_U32("graphics/pokemon/rattata/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_RattataAlola[] = INCBIN_U32("graphics/pokemon/rattata/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_RattataAlola[] = INCBIN_COMP("graphics/pokemon/rattata/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -806,6 +808,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_RaticateAlola[] = INCBIN_U32("graphics/pokemon/raticate/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_RaticateAlola[] = INCBIN_U16("graphics/pokemon/raticate/alola/shiny.gbapal");
     const u8 gMonIcon_RaticateAlola[] = INCBIN_U8("graphics/pokemon/raticate/alola/icon.4bpp");
+    const u32 gMonIconPalette_RaticateAlola[] = INCBIN_U32("graphics/pokemon/raticate/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_RaticateAlola[] = INCBIN_U32("graphics/pokemon/raticate/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_RaticateAlola[] = INCBIN_COMP("graphics/pokemon/raticate/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -1189,6 +1193,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_RaichuAlola[] = INCBIN_U32("graphics/pokemon/raichu/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_RaichuAlola[] = INCBIN_U16("graphics/pokemon/raichu/alola/shiny.gbapal");
     const u8 gMonIcon_RaichuAlola[] = INCBIN_U8("graphics/pokemon/raichu/alola/icon.4bpp");
+    const u32 gMonIconPalette_RaichuAlola[] = INCBIN_U32("graphics/pokemon/raichu/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_RaichuAlola[] = INCBIN_U32("graphics/pokemon/raichu/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_RaichuAlola[] = INCBIN_COMP("graphics/pokemon/raichu/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
