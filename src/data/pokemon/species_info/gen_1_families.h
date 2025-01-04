@@ -17086,6 +17086,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .shinyPalette = gMonShinyPalette_TaurosPaldeaCombat,
         .iconSprite = gMonIcon_TaurosPaldeaCombat,
         .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_TaurosPaldeaCombat,
+        .shinyIconPalette = gMonShinyIconPalette_TaurosPaldeaCombat,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 7, SHADOW_SIZE_L)
         FOOTPRINT(Tauros)
@@ -17152,6 +17154,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .shinyPalette = gMonShinyPalette_TaurosPaldeaBlaze,
         .iconSprite = gMonIcon_TaurosPaldeaBlaze,
         .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_TaurosPaldeaBlaze,
+        .shinyIconPalette = gMonShinyIconPalette_TaurosPaldeaBlaze,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 7, SHADOW_SIZE_L)
         FOOTPRINT(Tauros)
@@ -17218,6 +17222,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .shinyPalette = gMonShinyPalette_TaurosPaldeaAqua,
         .iconSprite = gMonIcon_TaurosPaldeaAqua,
         .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_TaurosPaldeaAqua,
+        .shinyIconPalette = gMonShinyIconPalette_TaurosPaldeaAqua,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 7, SHADOW_SIZE_L)
         FOOTPRINT(Tauros)

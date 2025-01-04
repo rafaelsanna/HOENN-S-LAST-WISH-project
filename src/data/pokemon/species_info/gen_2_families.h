@@ -3519,6 +3519,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .shinyPalette = gMonShinyPalette_WooperPaldea,
         .iconSprite = gMonIcon_WooperPaldea,
         .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_WooperPaldea,
+        .shinyIconPalette = gMonShinyIconPalette_WooperPaldea,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(-1, -2, SHADOW_SIZE_S)
         FOOTPRINT(Wooper)

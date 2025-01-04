@@ -5485,18 +5485,24 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_TaurosPaldeaCombat[] = INCBIN_U32("graphics/pokemon/tauros/paldea_combat/back.4bpp.smol");
     const u16 gMonShinyPalette_TaurosPaldeaCombat[] = INCBIN_U16("graphics/pokemon/tauros/paldea_combat/shiny.gbapal");
     const u8 gMonIcon_TaurosPaldeaCombat[] = INCBIN_U8("graphics/pokemon/tauros/paldea_combat/icon.4bpp");
+    const u32 gMonIconPalette_TaurosPaldeaCombat[] = INCBIN_U32("graphics/pokemon/tauros/paldea_combat/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_TaurosPaldeaCombat[] = INCBIN_U32("graphics/pokemon/tauros/paldea_combat/icon_shiny.gbapal.lz");
 
     const u32 gMonFrontPic_TaurosPaldeaBlaze[] = INCBIN_U32("graphics/pokemon/tauros/paldea_blaze/front.4bpp.smol");
     const u16 gMonPalette_TaurosPaldeaBlaze[] = INCBIN_U16("graphics/pokemon/tauros/paldea_blaze/normal.gbapal");
     const u32 gMonBackPic_TaurosPaldeaBlaze[] = INCBIN_U32("graphics/pokemon/tauros/paldea_blaze/back.4bpp.smol");
     const u16 gMonShinyPalette_TaurosPaldeaBlaze[] = INCBIN_U16("graphics/pokemon/tauros/paldea_blaze/shiny.gbapal");
     const u8 gMonIcon_TaurosPaldeaBlaze[] = INCBIN_U8("graphics/pokemon/tauros/paldea_blaze/icon.4bpp");
+    const u32 gMonIconPalette_TaurosPaldeaBlaze[] = INCBIN_U32("graphics/pokemon/tauros/paldea_blaze/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_TaurosPaldeaBlaze[] = INCBIN_U32("graphics/pokemon/tauros/paldea_blaze/icon_shiny.gbapal.lz");
 
     const u32 gMonFrontPic_TaurosPaldeaAqua[] = INCBIN_U32("graphics/pokemon/tauros/paldea_aqua/front.4bpp.smol");
     const u16 gMonPalette_TaurosPaldeaAqua[] = INCBIN_U16("graphics/pokemon/tauros/paldea_aqua/normal.gbapal");
     const u32 gMonBackPic_TaurosPaldeaAqua[] = INCBIN_U32("graphics/pokemon/tauros/paldea_aqua/back.4bpp.smol");
     const u16 gMonShinyPalette_TaurosPaldeaAqua[] = INCBIN_U16("graphics/pokemon/tauros/paldea_aqua/shiny.gbapal");
     const u8 gMonIcon_TaurosPaldeaAqua[] = INCBIN_U8("graphics/pokemon/tauros/paldea_aqua/icon.4bpp");
+    const u32 gMonIconPalette_TaurosPaldeaAqua[] = INCBIN_U32("graphics/pokemon/tauros/paldea_aqua/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_TaurosPaldeaAqua[] = INCBIN_U32("graphics/pokemon/tauros/paldea_aqua/icon_shiny.gbapal.lz");
 
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_TaurosPaldeaCombat[] = INCBIN_COMP("graphics/pokemon/tauros/paldea_combat/overworld.4bpp");
@@ -7784,6 +7790,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_WooperPaldea[] = INCBIN_U32("graphics/pokemon/wooper/paldea/back.4bpp.smol");
     const u16 gMonShinyPalette_WooperPaldea[] = INCBIN_U16("graphics/pokemon/wooper/paldea/shiny.gbapal");
     const u8 gMonIcon_WooperPaldea[] = INCBIN_U8("graphics/pokemon/wooper/paldea/icon.4bpp");
+    const u32 gMonIconPalette_WooperPaldea[] = INCBIN_U32("graphics/pokemon/wooper/paldea/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_WooperPaldea[] = INCBIN_U32("graphics/pokemon/wooper/paldea/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_WooperPaldea[] = INCBIN_COMP("graphics/pokemon/wooper/paldea/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
