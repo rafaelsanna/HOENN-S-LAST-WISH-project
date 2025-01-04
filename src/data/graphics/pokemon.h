@@ -413,6 +413,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Caterpie[] = INCBIN_U8("graphics/pokemon/caterpie/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Caterpie[] = INCBIN_U32("graphics/pokemon/caterpie/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Caterpie[] = INCBIN_U32("graphics/pokemon/caterpie/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Caterpie[] = INCBIN_U8("graphics/pokemon/caterpie/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -436,6 +438,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gMonShinyPalette_Metapod[] = INCBIN_U16("graphics/pokemon/metapod/shiny_gba.gbapal");
 #endif //P_GBA_STYLE_SPECIES_GFX
     const u8 gMonIcon_Metapod[] = INCBIN_U8( "graphics/pokemon/metapod/icon.4bpp");
+    const u32 gMonIconPalette_Metapod[] = INCBIN_U32("graphics/pokemon/metapod/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Metapod[] = INCBIN_U32("graphics/pokemon/metapod/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Metapod[] = INCBIN_U8("graphics/pokemon/metapod/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -463,6 +467,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Butterfree[] = INCBIN_U8("graphics/pokemon/butterfree/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Butterfree[] = INCBIN_U32("graphics/pokemon/butterfree/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Butterfree[] = INCBIN_U32("graphics/pokemon/butterfree/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Butterfree[] = INCBIN_U8("graphics/pokemon/butterfree/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -515,6 +521,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Weedle[] = INCBIN_U8("graphics/pokemon/weedle/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Weedle[] = INCBIN_U32("graphics/pokemon/weedle/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Weedle[] = INCBIN_U32("graphics/pokemon/weedle/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Weedle[] = INCBIN_U8("graphics/pokemon/weedle/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -542,6 +550,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Kakuna[] = INCBIN_U8("graphics/pokemon/kakuna/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Kakuna[] = INCBIN_U32("graphics/pokemon/kakuna/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Kakuna[] = INCBIN_U32("graphics/pokemon/kakuna/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Kakuna[] = INCBIN_U8("graphics/pokemon/kakuna/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -569,6 +579,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Beedrill[] = INCBIN_U8("graphics/pokemon/beedrill/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Beedrill[] = INCBIN_U32("graphics/pokemon/beedrill/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Beedrill[] = INCBIN_U32("graphics/pokemon/beedrill/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Beedrill[] = INCBIN_U8("graphics/pokemon/beedrill/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -613,6 +625,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Pidgey[] = INCBIN_U8("graphics/pokemon/pidgey/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Pidgey[] = INCBIN_U32("graphics/pokemon/pidgey/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Pidgey[] = INCBIN_U32("graphics/pokemon/pidgey/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pidgey[] = INCBIN_U8("graphics/pokemon/pidgey/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -640,6 +654,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Pidgeotto[] = INCBIN_U8("graphics/pokemon/pidgeotto/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Pidgeotto[] = INCBIN_U32("graphics/pokemon/pidgeotto/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Pidgeotto[] = INCBIN_U32("graphics/pokemon/pidgeotto/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pidgeotto[] = INCBIN_U8("graphics/pokemon/pidgeotto/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -667,6 +683,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Pidgeot[] = INCBIN_U8("graphics/pokemon/pidgeot/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Pidgeot[] = INCBIN_U32("graphics/pokemon/pidgeot/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Pidgeot[] = INCBIN_U32("graphics/pokemon/pidgeot/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pidgeot[] = INCBIN_U8("graphics/pokemon/pidgeot/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -711,6 +729,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Rattata[] = INCBIN_U8("graphics/pokemon/rattata/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Rattata[] = INCBIN_U32("graphics/pokemon/rattata/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Rattata[] = INCBIN_U32("graphics/pokemon/rattata/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Rattata[] = INCBIN_U8("graphics/pokemon/rattata/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -746,6 +766,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Raticate[] = INCBIN_U8("graphics/pokemon/raticate/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Raticate[] = INCBIN_U32("graphics/pokemon/raticate/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Raticate[] = INCBIN_U32("graphics/pokemon/raticate/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Raticate[] = INCBIN_U8("graphics/pokemon/raticate/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -811,6 +833,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Spearow[] = INCBIN_U8("graphics/pokemon/spearow/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Spearow[] = INCBIN_U32("graphics/pokemon/spearow/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Spearow[] = INCBIN_U32("graphics/pokemon/spearow/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Spearow[] = INCBIN_U8("graphics/pokemon/spearow/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -838,6 +862,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Fearow[] = INCBIN_U8("graphics/pokemon/fearow/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Fearow[] = INCBIN_U32("graphics/pokemon/fearow/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Fearow[] = INCBIN_U32("graphics/pokemon/fearow/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Fearow[] = INCBIN_U8("graphics/pokemon/fearow/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -867,6 +893,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Ekans[] = INCBIN_U8("graphics/pokemon/ekans/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Ekans[] = INCBIN_U32("graphics/pokemon/ekans/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Ekans[] = INCBIN_U32("graphics/pokemon/ekans/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Ekans[] = INCBIN_U8("graphics/pokemon/ekans/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -894,6 +922,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Arbok[] = INCBIN_U8("graphics/pokemon/arbok/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Arbok[] = INCBIN_U32("graphics/pokemon/arbok/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Arbok[] = INCBIN_U32("graphics/pokemon/arbok/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Arbok[] = INCBIN_U8("graphics/pokemon/arbok/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -965,6 +995,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Pikachu[] = INCBIN_U8("graphics/pokemon/pikachu/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Pikachu[] = INCBIN_U32("graphics/pokemon/pikachu/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Pikachu[] = INCBIN_U32("graphics/pokemon/pikachu/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pikachu[] = INCBIN_U8("graphics/pokemon/pikachu/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -1131,6 +1163,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Raichu[] = INCBIN_U8("graphics/pokemon/raichu/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Raichu[] = INCBIN_U32("graphics/pokemon/raichu/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Raichu[] = INCBIN_U32("graphics/pokemon/raichu/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Raichu[] = INCBIN_U8("graphics/pokemon/raichu/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -1182,6 +1216,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Sandshrew[] = INCBIN_U8("graphics/pokemon/sandshrew/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Sandshrew[] = INCBIN_U32("graphics/pokemon/sandshrew/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Sandshrew[] = INCBIN_U32("graphics/pokemon/sandshrew/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Sandshrew[] = INCBIN_U8("graphics/pokemon/sandshrew/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -1209,6 +1245,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Sandslash[] = INCBIN_U8("graphics/pokemon/sandslash/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Sandslash[] = INCBIN_U32("graphics/pokemon/sandslash/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Sandslash[] = INCBIN_U32("graphics/pokemon/sandslash/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Sandslash[] = INCBIN_U8("graphics/pokemon/sandslash/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -1266,6 +1304,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_NidoranF[] = INCBIN_U8("graphics/pokemon/nidoran_f/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_NidoranF[] = INCBIN_U32("graphics/pokemon/nidoran_f/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_NidoranF[] = INCBIN_U32("graphics/pokemon/nidoran_f/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_NidoranF[] = INCBIN_U8("graphics/pokemon/nidoran_f/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -1293,6 +1333,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Nidorina[] = INCBIN_U8("graphics/pokemon/nidorina/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u32 gMonIconPalette_Nidorina[] = INCBIN_U32("graphics/pokemon/nidorina/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Nidorina[] = INCBIN_U32("graphics/pokemon/nidorina/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Nidorina[] = INCBIN_U8("graphics/pokemon/nidorina/footprint.1bpp");
 #endif //P_FOOTPRINTS
