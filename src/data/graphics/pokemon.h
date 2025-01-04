@@ -1270,6 +1270,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_SandshrewAlola[] = INCBIN_U32("graphics/pokemon/sandshrew/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_SandshrewAlola[] = INCBIN_U16("graphics/pokemon/sandshrew/alola/shiny.gbapal");
     const u8 gMonIcon_SandshrewAlola[] = INCBIN_U8("graphics/pokemon/sandshrew/alola/icon.4bpp");
+    const u32 gMonIconPalette_SandshrewAlola[] = INCBIN_U32("graphics/pokemon/sandshrew/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_SandshrewAlola[] = INCBIN_U32("graphics/pokemon/sandshrew/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_SandshrewAlola[] = INCBIN_COMP("graphics/pokemon/sandshrew/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -1283,6 +1285,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_SandslashAlola[] = INCBIN_U32("graphics/pokemon/sandslash/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_SandslashAlola[] = INCBIN_U16("graphics/pokemon/sandslash/alola/shiny.gbapal");
     const u8 gMonIcon_SandslashAlola[] = INCBIN_U8("graphics/pokemon/sandslash/alola/icon.4bpp");
+    const u32 gMonIconPalette_SandslashAlola[] = INCBIN_U32("graphics/pokemon/sandslash/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_SandslashAlola[] = INCBIN_U32("graphics/pokemon/sandslash/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_SandslashAlola[] = INCBIN_COMP("graphics/pokemon/sandslash/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -1607,6 +1611,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_VulpixAlola[] = INCBIN_U32("graphics/pokemon/vulpix/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_VulpixAlola[] = INCBIN_U16("graphics/pokemon/vulpix/alola/shiny.gbapal");
     const u8 gMonIcon_VulpixAlola[] = INCBIN_U8("graphics/pokemon/vulpix/alola/icon.4bpp");
+    const u32 gMonIconPalette_VulpixAlola[] = INCBIN_U32("graphics/pokemon/vulpix/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_VulpixAlola[] = INCBIN_U32("graphics/pokemon/vulpix/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_VulpixAlola[] = INCBIN_COMP("graphics/pokemon/vulpix/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -1620,6 +1626,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_NinetalesAlola[] = INCBIN_U32("graphics/pokemon/ninetales/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_NinetalesAlola[] = INCBIN_U16("graphics/pokemon/ninetales/alola/shiny.gbapal");
     const u8 gMonIcon_NinetalesAlola[] = INCBIN_U8("graphics/pokemon/ninetales/alola/icon.4bpp");
+    const u32 gMonIconPalette_NinetalesAlola[] = INCBIN_U32("graphics/pokemon/ninetales/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_NinetalesAlola[] = INCBIN_U32("graphics/pokemon/ninetales/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_NinetalesAlola[] = INCBIN_COMP("graphics/pokemon/ninetales/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -2117,6 +2125,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_DiglettAlola[] = INCBIN_U32("graphics/pokemon/diglett/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_DiglettAlola[] = INCBIN_U16("graphics/pokemon/diglett/alola/shiny.gbapal");
     const u8 gMonIcon_DiglettAlola[] = INCBIN_U8("graphics/pokemon/diglett/alola/icon.4bpp");
+    const u32 gMonIconPalette_DiglettAlola[] = INCBIN_U32("graphics/pokemon/diglett/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_DiglettAlola[] = INCBIN_U32("graphics/pokemon/diglett/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_DiglettAlola[] = INCBIN_COMP("graphics/pokemon/diglett/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -2130,6 +2140,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_DugtrioAlola[] = INCBIN_U32("graphics/pokemon/dugtrio/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_DugtrioAlola[] = INCBIN_U16("graphics/pokemon/dugtrio/alola/shiny.gbapal");
     const u8 gMonIcon_DugtrioAlola[] = INCBIN_U8("graphics/pokemon/dugtrio/alola/icon.4bpp");
+    const u32 gMonIconPalette_DugtrioAlola[] = INCBIN_U32("graphics/pokemon/dugtrio/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_DugtrioAlola[] = INCBIN_U32("graphics/pokemon/dugtrio/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_DugtrioAlola[] = INCBIN_COMP("graphics/pokemon/dugtrio/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -2201,6 +2213,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_MeowthAlola[] = INCBIN_U32("graphics/pokemon/meowth/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_MeowthAlola[] = INCBIN_U16("graphics/pokemon/meowth/alola/shiny.gbapal");
     const u8 gMonIcon_MeowthAlola[] = INCBIN_U8("graphics/pokemon/meowth/alola/icon.4bpp");
+    const u32 gMonIconPalette_MeowthAlola[] = INCBIN_U32("graphics/pokemon/meowth/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_MeowthAlola[] = INCBIN_U32("graphics/pokemon/meowth/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_MeowthAlola[] = INCBIN_COMP("graphics/pokemon/meowth/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -2214,6 +2228,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_PersianAlola[] = INCBIN_U32("graphics/pokemon/persian/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_PersianAlola[] = INCBIN_U16("graphics/pokemon/persian/alola/shiny.gbapal");
     const u8 gMonIcon_PersianAlola[] = INCBIN_U8("graphics/pokemon/persian/alola/icon.4bpp");
+    const u32 gMonIconPalette_PersianAlola[] = INCBIN_U32("graphics/pokemon/persian/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_PersianAlola[] = INCBIN_U32("graphics/pokemon/persian/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_PersianAlola[] = INCBIN_COMP("graphics/pokemon/persian/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -3047,6 +3063,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_GeodudeAlola[] = INCBIN_U32("graphics/pokemon/geodude/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_GeodudeAlola[] = INCBIN_U16("graphics/pokemon/geodude/alola/shiny.gbapal");
     const u8 gMonIcon_GeodudeAlola[] = INCBIN_U8("graphics/pokemon/geodude/alola/icon.4bpp");
+    const u32 gMonIconPalette_GeodudeAlola[] = INCBIN_U32("graphics/pokemon/geodude/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_GeodudeAlola[] = INCBIN_U32("graphics/pokemon/geodude/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_GeodudeAlola[] = INCBIN_COMP("graphics/pokemon/geodude/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -3060,6 +3078,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_GravelerAlola[] = INCBIN_U32("graphics/pokemon/graveler/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_GravelerAlola[] = INCBIN_U16("graphics/pokemon/graveler/alola/shiny.gbapal");
     const u8 gMonIcon_GravelerAlola[] = INCBIN_U8("graphics/pokemon/graveler/alola/icon.4bpp");
+    const u32 gMonIconPalette_GravelerAlola[] = INCBIN_U32("graphics/pokemon/graveler/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_GravelerAlola[] = INCBIN_U32("graphics/pokemon/graveler/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_GravelerAlola[] = INCBIN_COMP("graphics/pokemon/graveler/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -3073,6 +3093,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_GolemAlola[] = INCBIN_U32("graphics/pokemon/golem/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_GolemAlola[] = INCBIN_U16("graphics/pokemon/golem/alola/shiny.gbapal");
     const u8 gMonIcon_GolemAlola[] = INCBIN_U8("graphics/pokemon/golem/alola/icon.4bpp");
+    const u32 gMonIconPalette_GolemAlola[] = INCBIN_U32("graphics/pokemon/golem/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_GolemAlola[] = INCBIN_U32("graphics/pokemon/golem/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_GolemAlola[] = INCBIN_COMP("graphics/pokemon/golem/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -3633,6 +3655,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_GrimerAlola[] = INCBIN_U32("graphics/pokemon/grimer/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_GrimerAlola[] = INCBIN_U16("graphics/pokemon/grimer/alola/shiny.gbapal");
     const u8 gMonIcon_GrimerAlola[] = INCBIN_U8("graphics/pokemon/grimer/alola/icon.4bpp");
+    const u32 gMonIconPalette_GrimerAlola[] = INCBIN_U32("graphics/pokemon/grimer/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_GrimerAlola[] = INCBIN_U32("graphics/pokemon/grimer/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_GrimerAlola[] = INCBIN_COMP("graphics/pokemon/grimer/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -3646,6 +3670,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_MukAlola[] = INCBIN_U32("graphics/pokemon/muk/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_MukAlola[] = INCBIN_U16("graphics/pokemon/muk/alola/shiny.gbapal");
     const u8 gMonIcon_MukAlola[] = INCBIN_U8("graphics/pokemon/muk/alola/icon.4bpp");
+    const u32 gMonIconPalette_MukAlola[] = INCBIN_U32("graphics/pokemon/muk/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_MukAlola[] = INCBIN_U32("graphics/pokemon/muk/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_MukAlola[] = INCBIN_COMP("graphics/pokemon/muk/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -4186,6 +4212,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_ExeggutorAlola[] = INCBIN_U32("graphics/pokemon/exeggutor/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_ExeggutorAlola[] = INCBIN_U16("graphics/pokemon/exeggutor/alola/shiny.gbapal");
     const u8 gMonIcon_ExeggutorAlola[] = INCBIN_U8("graphics/pokemon/exeggutor/alola/icon.4bpp");
+    const u32 gMonIconPalette_ExeggutorAlola[] = INCBIN_U32("graphics/pokemon/exeggutor/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_ExeggutorAlola[] = INCBIN_U32("graphics/pokemon/exeggutor/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_ExeggutorAlola[] = INCBIN_COMP("graphics/pokemon/exeggutor/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -4257,6 +4285,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_MarowakAlola[] = INCBIN_U32("graphics/pokemon/marowak/alola/back.4bpp.smol");
     const u16 gMonShinyPalette_MarowakAlola[] = INCBIN_U16("graphics/pokemon/marowak/alola/shiny.gbapal");
     const u8 gMonIcon_MarowakAlola[] = INCBIN_U8("graphics/pokemon/marowak/alola/icon.4bpp");
+    const u32 gMonIconPalette_MarowakAlola[] = INCBIN_U32("graphics/pokemon/marowak/alola/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_MarowakAlola[] = INCBIN_U32("graphics/pokemon/marowak/alola/icon_shiny.gbapal.lz");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_MarowakAlola[] = INCBIN_COMP("graphics/pokemon/marowak/alola/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
