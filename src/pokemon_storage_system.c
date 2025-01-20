@@ -801,7 +801,6 @@ static void CreateIncomingBoxTitle(u8, s8);
 static void CycleBoxTitleSprites(void);
 static void SpriteCB_IncomingBoxTitle(struct Sprite *);
 static void SpriteCB_OutgoingBoxTitle(struct Sprite *);
-static void CycleBoxTitleColor(void);
 static s16 GetBoxTitleBaseX(const u8 *);
 
 // Wallpaper
@@ -5236,7 +5235,7 @@ u8 FindFreePartyPaletteSlot(void) {
 
 static void SetPlacedMonSprite(u8 boxId, u8 position)
 {
-    u32 i, paletteNum;
+    u32 paletteNum;
     if (boxId == TOTAL_BOXES_COUNT) // party mon
     {
         sStorage->partySprites[position] = sStorage->movingMonSprite;
@@ -5646,7 +5645,6 @@ static bool8 DoWallpaperGfxChange(void)
     case 2:
         if (WaitForWallpaperGfxLoad() == TRUE)
         {
-            CycleBoxTitleColor();
             BeginNormalPaletteFade(sStorage->wallpaperPalBits, 1, 16, 0, RGB_WHITEALPHA);
             sStorage->wallpaperChangeState++;
         }
@@ -5780,10 +5778,6 @@ static void InitBoxTitle(u8 boxId)
     u16 i;
 
     struct SpriteSheet spriteSheet = {sStorage->boxTitleTiles, 0x200, GFXTAG_BOX_TITLE};
-    struct SpritePalette palettes[] = {
-        {sStorage->boxTitlePal, PALTAG_BOX_TITLE},
-        {}
-    };
 
     u16 wallpaperId = GetBoxWallpaper(boxId);
 
@@ -5829,7 +5823,6 @@ static void InitBoxTitle(u8 boxId)
 
 static void CreateIncomingBoxTitle(u8 boxId, s8 direction)
 {
-    u16 palOffset;
     s16 x, adjustedX;
     u16 i;
     struct SpriteSheet spriteSheet = {sStorage->boxTitleTiles, 0x200, GFXTAG_BOX_TITLE};
@@ -5839,12 +5832,10 @@ static void CreateIncomingBoxTitle(u8 boxId, s8 direction)
     if (sStorage->boxTitleCycleId == 0)
     {
         spriteSheet.tag = GFXTAG_BOX_TITLE;
-        palOffset = sStorage->boxTitlePalOffset;
     }
     else
     {
         spriteSheet.tag = GFXTAG_BOX_TITLE_ALT;
-        palOffset = sStorage->boxTitlePalOffset;
         template.tileTag = GFXTAG_BOX_TITLE_ALT;
         // template.paletteTag = PALTAG_BOX_TITLE;
     }
@@ -5914,16 +5905,6 @@ static void SpriteCB_OutgoingBoxTitle(struct Sprite *sprite)
 #undef sIncomingDelay
 #undef sOutgoingDelay
 #undef sOutgoingX
-
-static void CycleBoxTitleColor(void)
-{
-    u8 boxId = StorageGetCurrentBox();
-    u8 wallpaperId = GetBoxWallpaper(boxId);
-    /*if (sStorage->boxTitleCycleId == 0)
-        CpuCopy16(sBoxTitleColors[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitlePalOffset], PLTT_SIZEOF(2));
-    else
-        CpuCopy16(sBoxTitleColors[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitleAltPalOffset], PLTT_SIZEOF(2));*/
-}
 
 static s16 GetBoxTitleBaseX(const u8 *string)
 {
