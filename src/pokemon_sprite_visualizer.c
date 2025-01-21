@@ -1277,7 +1277,7 @@ void CB2_Pokemon_Sprite_Visualizer(void)
             data = AllocZeroed(sizeof(struct PokemonSpriteVisualizer));
             SetStructPtr(taskId, data);
 
-            data->currentmonId = SPECIES_GLIGAR,
+            data->currentmonId = SPECIES_SMOOCHUM,
             species = data->currentmonId;
 
             //Print instructions
