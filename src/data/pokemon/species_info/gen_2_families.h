@@ -8342,6 +8342,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .shinyPalette = gMonShinyPalette_Pupitar,
         .iconSprite = gMonIcon_Pupitar,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 0 : 2,
+        .iconPalette = gMonIconPalette_Pupitar,
+        .shinyIconPalette = gMonShinyIconPalette_Pupitar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(3, 3, SHADOW_SIZE_S)
         FOOTPRINT(Pupitar)
@@ -8417,6 +8419,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .shinyPalette = gMonShinyPalette_Tyranitar,
         .iconSprite = gMonIcon_Tyranitar,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 4,
+        .iconPalette = gMonIconPalette_Tyranitar,
+        .shinyIconPalette = gMonShinyIconPalette_Tyranitar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 16, SHADOW_SIZE_L)
         FOOTPRINT(Tyranitar)
@@ -8575,6 +8579,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .shinyPalette = gMonShinyPalette_Lugia,
         .iconSprite = gMonIcon_Lugia,
         .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Lugia,
+        .shinyIconPalette = gMonShinyIconPalette_Lugia,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 17, SHADOW_SIZE_L)
         FOOTPRINT(Lugia)
@@ -8655,6 +8661,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .shinyPalette = gMonShinyPalette_HoOh,
         .iconSprite = gMonIcon_HoOh,
         .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_HoOh,
+        .shinyIconPalette = gMonShinyIconPalette_HoOh,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 17, SHADOW_SIZE_L)
         FOOTPRINT(HoOh)
@@ -8737,6 +8745,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .shinyPalette = gMonShinyPalette_Celebi,
         .iconSprite = gMonIcon_Celebi,
         .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Celebi,
+        .shinyIconPalette = gMonShinyIconPalette_Celebi,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 14, SHADOW_SIZE_S)
         FOOTPRINT(Celebi)
