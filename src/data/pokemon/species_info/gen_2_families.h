@@ -4053,6 +4053,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .shinyPalette = gMonShinyPalette_Unown,                                                         \
         .iconSprite = gMonIcon_Unown ##letter,                                                          \
         .iconPalIndex = 0,                                                                              \
+        .iconPalette = gMonIconPalette_Unown,                                                           \
+        .shinyIconPalette = gMonShinyIconPalette_Unown,                                                 \
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,                                                         \
         SHADOW(0, 3, SHADOW_SIZE_S)                                                                     \
         FOOTPRINT(Unown)                                                                                \

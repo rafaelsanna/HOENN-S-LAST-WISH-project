@@ -8399,6 +8399,9 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_UnownQuestion[] = INCBIN_U32("graphics/pokemon/unown/question/back.4bpp.smol");
     const u8 gMonIcon_UnownQuestion[] = INCBIN_U8("graphics/pokemon/unown/question/icon.4bpp");
 
+    const u32 gMonIconPalette_Unown[] = INCBIN_U32("graphics/pokemon/unown/icon_normal.gbapal.lz");
+    const u32 gMonShinyIconPalette_Unown[] = INCBIN_U32("graphics/pokemon/unown/icon_shiny.gbapal.lz");
+
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_UnownA[] = INCBIN_COMP("graphics/pokemon/unown/overworld.4bpp");
     const u32 gObjectEventPic_UnownB[] = INCBIN_COMP("graphics/pokemon/unown/b/overworld.4bpp");
