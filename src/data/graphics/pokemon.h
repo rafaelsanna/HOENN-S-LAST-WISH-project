@@ -11419,6 +11419,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Slaking[] = INCBIN_U8("graphics/pokemon/slaking/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
+    const u16 gMonIconPalette_Slaking[] = INCBIN_U16("graphics/pokemon/slaking/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Slaking[] = INCBIN_U16("graphics/pokemon/slaking/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Slaking[] = INCBIN_U8("graphics/pokemon/slaking/footprint.1bpp");
 #endif //P_FOOTPRINTS
