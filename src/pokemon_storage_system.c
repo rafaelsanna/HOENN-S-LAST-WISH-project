@@ -4299,9 +4299,14 @@ static void SetUpHidePartyMenu(void)
 {
     sStorage->partyMenuY = 22;
     sStorage->partyMenuMoveTimer = 0;
+
+    LoadSpritePaletteWithTag(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY)), PALTAG_MOVING_MON);
+    sStorage->movingMonPalOffset = OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_MOVING_MON));
+
     // Set moving sprite palette to currently displayed pokemon
-    if (sStorage->movingMonSprite)
-      sStorage->movingMonSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_DISPLAY_MON);
+
+    sStorage->movingMonSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
+
     if (sStorage->boxOption == OPTION_MOVE_ITEMS)
         MoveHeldItemWithPartyMenu();
 }
