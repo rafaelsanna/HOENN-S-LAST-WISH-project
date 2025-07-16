@@ -462,6 +462,8 @@ struct SpeciesInfo /*0xC4*/
     const u16 *paletteFemale;
     const u16 *shinyPaletteFemale;
     const u8 *iconSpriteFemale;
+    const u16 *iconPaletteFemale;
+    const u16 *shinyIconPaletteFemale;
 #endif //P_GENDER_DIFFERENCES
 #if P_FOOTPRINTS
     const u8 *footprint;

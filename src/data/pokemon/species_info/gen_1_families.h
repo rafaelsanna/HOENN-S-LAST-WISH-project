@@ -14737,7 +14737,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Happiny,
         .shinyPalette = gMonShinyPalette_Happiny,
         .iconSprite = gMonIcon_Happiny,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Happiny,
+        .shinyIconPalette = gMonShinyIconPalette_Happiny,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(-1, 1, SHADOW_SIZE_S)
         FOOTPRINT(Happiny)
@@ -15852,7 +15853,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_MimeJr,
         .shinyPalette = gMonShinyPalette_MimeJr,
         .iconSprite = gMonIcon_MimeJr,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_MimeJr,
+        .shinyIconPalette = gMonShinyIconPalette_MimeJr,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(-5, 4, SHADOW_SIZE_S)
         FOOTPRINT(MimeJr)
@@ -19476,7 +19478,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Munchlax,
         .shinyPalette = gMonShinyPalette_Munchlax,
         .iconSprite = gMonIcon_Munchlax,
-        .iconPalIndex = 3,
+        .iconPalette = gMonIconPalette_Munchlax,
+        .shinyIconPalette = gMonShinyIconPalette_Munchlax,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(-1, 2, SHADOW_SIZE_M)
         FOOTPRINT(Munchlax)

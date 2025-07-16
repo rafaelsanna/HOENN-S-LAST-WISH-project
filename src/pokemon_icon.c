@@ -153,8 +153,13 @@ const u32 gMonIconPalettesCompressed[][16] =
     INCBIN_U32("graphics/pokemon/icon_palettes/pal5.gbapal.lz"),
 };
 
-const u32 * GetIconPalette(u32 species, bool32 isShiny)
+const u32 * GetIconPalette(u32 species, bool32 isShiny, bool32 female)
 {
+#if P_GENDER_DIFFERENCES
+    if (gSpeciesInfo[species].iconSpriteFemale != NULL && gSpeciesInfo[species].iconPaletteFemale != NULL && female)
+        return (isShiny) ? gSpeciesInfo[species].shinyIconPaletteFemale : gSpeciesInfo[species].iconPaletteFemale;
+    else
+#endif
     if (gSpeciesInfo[species].iconPalette != NULL)
         return (isShiny) ? gSpeciesInfo[species].shinyIconPalette : gSpeciesInfo[species].iconPalette;
     else
@@ -215,7 +220,7 @@ u8 CreateMonIcon3(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, 
 u8 CreateMonIcon2(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority, bool32 isShiny, u32 personality)
 {
     u32 paletteNum;
-    const u32 *palette = GetIconPalette(species, isShiny);
+    const u32 *palette = GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality));
     u16 tag = GetIconPalTag(species, isShiny);
 
     if ((paletteNum = IndexOfSpritePaletteTag(tag)) >= 16) 

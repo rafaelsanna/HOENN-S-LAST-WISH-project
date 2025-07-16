@@ -4302,7 +4302,10 @@ static void SetUpHidePartyMenu(void)
 
     if (sStorage->movingMonSprite)
     {
-        LoadSpritePaletteWithTag(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY)), PALTAG_MOVING_MON);
+        u16 species = GetMonData(&sStorage->movingMon, MON_DATA_SPECIES);
+        bool8 isShiny = GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY);
+        u32 personality = GetMonData(&sStorage->movingMon, MON_DATA_PERSONALITY);
+        LoadSpritePaletteWithTag(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)), PALTAG_MOVING_MON);
         sStorage->movingMonPalOffset = OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_MOVING_MON));
         sStorage->movingMonSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
     }
@@ -4672,8 +4675,9 @@ static void CreateMovingMonIcon(void)
 static const u32 *_GetMonFrontSpritePal(struct Pokemon *mon, u16 *species)
 {
     bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY, 0);
+    u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
     *species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0);
-    return GetIconPalette(*species, isShiny);
+    return GetIconPalette(*species, isShiny, IsPersonalityFemale(*species, personality));
 }
 
 static void SetBoxMonDynamicPalette(u8 boxId, u8 position) {
@@ -5014,7 +5018,7 @@ static void CreatePartyMonsSprites(bool8 visible)
 
     sStorage->transferWholePlttFrames = -1; // keep transferring entire palette buffer until done with party menu
     sStorage->partySprites[0] = CreateMonIconSprite(species, personality, 104, 64, 1, 12);
-    LoadCompressedPaletteFast(GetIconPalette(species, isShiny), (0+1)* 16 + 0x100, 32);
+    LoadCompressedPaletteFast(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)), (0+1)* 16 + 0x100, 32);
     sStorage->partySprites[0]->oam.paletteNum = 0+1;
     count = 1;
     for (i = 1; i < PARTY_SIZE; i++)
@@ -5026,7 +5030,7 @@ static void CreatePartyMonsSprites(bool8 visible)
             personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
             isShiny = GetMonData(&gPlayerParty[i], MON_DATA_IS_SHINY);
             sStorage->partySprites[i] = CreateMonIconSprite(species, personality, 152,  8 * (3 * (i - 1)) + 16, 1, 12);
-            LoadCompressedPaletteFast(GetIconPalette(species, isShiny), paletteNum*16 + 0x100, 32);
+            LoadCompressedPaletteFast(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)), paletteNum*16 + 0x100, 32);
             sStorage->partySprites[i]->oam.paletteNum = paletteNum;
             count++;
         }
@@ -6612,10 +6616,17 @@ static void MoveMon(void)
         if (sStorage->inBoxMovingMode == MOVE_MODE_NORMAL)
         {
             u16 palette[16] = {0};
+            u16 species;
+            bool8 isShiny;
+            u32 personality;
             SetMovingMonData(StorageGetCurrentBox(), sCursorPosition);
             SetMovingMonSprite(MODE_BOX, sCursorPosition);
 
-            LoadCompressedSpritePaletteWithTag(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY)), PALTAG_MOVING_MON);
+            species = GetMonData(&sStorage->movingMon, MON_DATA_SPECIES);
+            isShiny = GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY);
+            personality = GetMonData(&sStorage->movingMon, MON_DATA_PERSONALITY);
+
+            LoadCompressedSpritePaletteWithTag(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)), PALTAG_MOVING_MON);
             sStorage->movingMonPalOffset = OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_MOVING_MON));
 
             sStorage->movingMonSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
@@ -6760,7 +6771,7 @@ static void SetShiftedMonSprites(u8 boxId, u8 position) {
     SetDisplayMonData(&sStorage->movingMon, MODE_PARTY);
     // Set moving sprite palette to currently displayed pokemon's palette
     sStorage->displayMonSprite->invisible = TRUE;
-    LoadCompressedPaletteFast(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY)), sStorage->movingMonPalOffset, 0x20);
+    LoadCompressedPaletteFast(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY), IsPersonalityFemale(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_PERSONALITY))), sStorage->movingMonPalOffset, 0x20);
     sStorage->movingMonSprite->oam.paletteNum = displayIndex;
     sMovingMonOrigBoxId = boxId;
     sMovingMonOrigBoxPos = position;
