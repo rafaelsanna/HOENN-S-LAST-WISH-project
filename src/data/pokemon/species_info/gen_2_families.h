@@ -1743,7 +1743,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Togekiss,
         .shinyPalette = gMonShinyPalette_Togekiss,
         .iconSprite = gMonIcon_Togekiss,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Togekiss,
+        .shinyIconPalette = gMonShinyIconPalette_Togekiss,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(4, 15, SHADOW_SIZE_M)
         FOOTPRINT(Togekiss)
@@ -3365,7 +3366,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Yanmega,
         .shinyPalette = gMonShinyPalette_Yanmega,
         .iconSprite = gMonIcon_Yanmega,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Yanmega,
+        .shinyIconPalette = gMonShinyIconPalette_Yanmega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 12, SHADOW_SIZE_M)
         FOOTPRINT(Yanmega)
@@ -4936,7 +4938,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Gliscor,
         .shinyPalette = gMonShinyPalette_Gliscor,
         .iconSprite = gMonIcon_Gliscor,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Gliscor,
+        .shinyIconPalette = gMonShinyIconPalette_Gliscor,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 13, SHADOW_SIZE_M)
         FOOTPRINT(Gliscor)
@@ -5716,7 +5719,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Weavile,
         .shinyPalette = gMonShinyPalette_Weavile,
         .iconSprite = gMonIcon_Weavile,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Weavile,
+        .shinyIconPalette = gMonShinyIconPalette_Weavile,
 #if P_GENDER_DIFFERENCES
         .frontPicFemale = gMonFrontPic_WeavileF,
         .frontPicSizeFemale = MON_COORDS_SIZE(56, 56),
@@ -6565,7 +6569,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Mamoswine,
         .shinyPalette = gMonShinyPalette_Mamoswine,
         .iconSprite = gMonIcon_Mamoswine,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Mamoswine,
+        .shinyIconPalette = gMonShinyIconPalette_Mamoswine,
 #if P_GENDER_DIFFERENCES
         .frontPicFemale = gMonFrontPic_MamoswineF,
         .frontPicSizeFemale = MON_COORDS_SIZE(64, 56),
