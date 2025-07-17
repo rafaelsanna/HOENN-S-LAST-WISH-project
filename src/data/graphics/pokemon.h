@@ -16998,6 +16998,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Victini[] = INCBIN_U32("graphics/pokemon/victini/back.4bpp.smol");
     const u16 gMonShinyPalette_Victini[] = INCBIN_U16("graphics/pokemon/victini/shiny.gbapal");
     const u8 gMonIcon_Victini[] = INCBIN_U8("graphics/pokemon/victini/icon.4bpp");
+    const u16 gMonIconPalette_Victini[] = INCBIN_U16("graphics/pokemon/victini/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Victini[] = INCBIN_U16("graphics/pokemon/victini/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Victini[] = INCBIN_U8("graphics/pokemon/victini/footprint.1bpp");
 #endif //P_FOOTPRINTS

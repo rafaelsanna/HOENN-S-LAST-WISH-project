@@ -54,7 +54,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Victini,
         .shinyPalette = gMonShinyPalette_Victini,
         .iconSprite = gMonIcon_Victini,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Victini,
+        .shinyIconPalette = gMonShinyIconPalette_Victini,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 4, SHADOW_SIZE_S)
         FOOTPRINT(Victini)
