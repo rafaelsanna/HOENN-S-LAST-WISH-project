@@ -16582,6 +16582,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_DialgaOrigin[] = INCBIN_U32("graphics/pokemon/dialga/origin/back.4bpp.smol");
     const u16 gMonShinyPalette_DialgaOrigin[] = INCBIN_U16("graphics/pokemon/dialga/origin/shiny.gbapal");
     const u8 gMonIcon_DialgaOrigin[] = INCBIN_U8("graphics/pokemon/dialga/origin/icon.4bpp");
+    const u16 gMonIconPalette_DialgaOrigin[] = INCBIN_U16("graphics/pokemon/dialga/origin/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_DialgaOrigin[] = INCBIN_U16("graphics/pokemon/dialga/origin/icon_shiny.gbapal");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_DialgaOrigin[] = INCBIN_COMP("graphics/pokemon/dialga/origin/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE

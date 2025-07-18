@@ -6546,7 +6546,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .palette = gMonPalette_DialgaOrigin,
         .shinyPalette = gMonShinyPalette_DialgaOrigin,
         .iconSprite = gMonIcon_DialgaOrigin,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_DialgaOrigin,
+        .shinyIconPalette = gMonShinyIconPalette_DialgaOrigin,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 11, SHADOW_SIZE_L)
         FOOTPRINT(Dialga)
