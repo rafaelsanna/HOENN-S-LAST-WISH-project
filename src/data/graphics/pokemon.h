@@ -16617,6 +16617,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_PalkiaOrigin[] = INCBIN_U32("graphics/pokemon/palkia/origin/back.4bpp.smol");
     const u16 gMonShinyPalette_PalkiaOrigin[] = INCBIN_U16("graphics/pokemon/palkia/origin/shiny.gbapal");
     const u8 gMonIcon_PalkiaOrigin[] = INCBIN_U8("graphics/pokemon/palkia/origin/icon.4bpp");
+    const u16 gMonIconPalette_PalkiaOrigin[] = INCBIN_U16("graphics/pokemon/palkia/origin/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_PalkiaOrigin[] = INCBIN_U16("graphics/pokemon/palkia/origin/icon_shiny.gbapal");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_PalkiaOrigin[] = INCBIN_COMP("graphics/pokemon/palkia/origin/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -17020,6 +17022,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Snivy[] = INCBIN_U32("graphics/pokemon/snivy/back.4bpp.smol");
     const u16 gMonShinyPalette_Snivy[] = INCBIN_U16("graphics/pokemon/snivy/shiny.gbapal");
     const u8 gMonIcon_Snivy[] = INCBIN_U8("graphics/pokemon/snivy/icon.4bpp");
+    const u16 gMonIconPalette_Snivy[] = INCBIN_U16("graphics/pokemon/snivy/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Snivy[] = INCBIN_U16("graphics/pokemon/snivy/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Snivy[] = INCBIN_U8("graphics/pokemon/snivy/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17036,6 +17040,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Servine[] = INCBIN_U32("graphics/pokemon/servine/back.4bpp.smol");
     const u16 gMonShinyPalette_Servine[] = INCBIN_U16("graphics/pokemon/servine/shiny.gbapal");
     const u8 gMonIcon_Servine[] = INCBIN_U8("graphics/pokemon/servine/icon.4bpp");
+    const u16 gMonIconPalette_Servine[] = INCBIN_U16("graphics/pokemon/servine/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Servine[] = INCBIN_U16("graphics/pokemon/servine/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Servine[] = INCBIN_U8("graphics/pokemon/servine/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17052,6 +17058,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Serperior[] = INCBIN_U32("graphics/pokemon/serperior/back.4bpp.smol");
     const u16 gMonShinyPalette_Serperior[] = INCBIN_U16("graphics/pokemon/serperior/shiny.gbapal");
     const u8 gMonIcon_Serperior[] = INCBIN_U8("graphics/pokemon/serperior/icon.4bpp");
+    const u16 gMonIconPalette_Serperior[] = INCBIN_U16("graphics/pokemon/serperior/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Serperior[] = INCBIN_U16("graphics/pokemon/serperior/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Serperior[] = INCBIN_U8("graphics/pokemon/serperior/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17070,6 +17078,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Tepig[] = INCBIN_U32("graphics/pokemon/tepig/back.4bpp.smol");
     const u16 gMonShinyPalette_Tepig[] = INCBIN_U16("graphics/pokemon/tepig/shiny.gbapal");
     const u8 gMonIcon_Tepig[] = INCBIN_U8("graphics/pokemon/tepig/icon.4bpp");
+    const u16 gMonIconPalette_Tepig[] = INCBIN_U16("graphics/pokemon/tepig/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Tepig[] = INCBIN_U16("graphics/pokemon/tepig/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Tepig[] = INCBIN_U8("graphics/pokemon/tepig/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17086,6 +17096,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Pignite[] = INCBIN_U32("graphics/pokemon/pignite/back.4bpp.smol");
     const u16 gMonShinyPalette_Pignite[] = INCBIN_U16("graphics/pokemon/pignite/shiny.gbapal");
     const u8 gMonIcon_Pignite[] = INCBIN_U8("graphics/pokemon/pignite/icon.4bpp");
+    const u16 gMonIconPalette_Pignite[] = INCBIN_U16("graphics/pokemon/pignite/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Pignite[] = INCBIN_U16("graphics/pokemon/pignite/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pignite[] = INCBIN_U8("graphics/pokemon/pignite/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17102,6 +17114,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Emboar[] = INCBIN_U32("graphics/pokemon/emboar/back.4bpp.smol");
     const u16 gMonShinyPalette_Emboar[] = INCBIN_U16("graphics/pokemon/emboar/shiny.gbapal");
     const u8 gMonIcon_Emboar[] = INCBIN_U8("graphics/pokemon/emboar/icon.4bpp");
+    const u16 gMonIconPalette_Emboar[] = INCBIN_U16("graphics/pokemon/emboar/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Emboar[] = INCBIN_U16("graphics/pokemon/emboar/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Emboar[] = INCBIN_U8("graphics/pokemon/emboar/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17120,6 +17134,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Oshawott[] = INCBIN_U32("graphics/pokemon/oshawott/back.4bpp.smol");
     const u16 gMonShinyPalette_Oshawott[] = INCBIN_U16("graphics/pokemon/oshawott/shiny.gbapal");
     const u8 gMonIcon_Oshawott[] = INCBIN_U8("graphics/pokemon/oshawott/icon.4bpp");
+    const u16 gMonIconPalette_Oshawott[] = INCBIN_U16("graphics/pokemon/oshawott/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Oshawott[] = INCBIN_U16("graphics/pokemon/oshawott/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Oshawott[] = INCBIN_U8("graphics/pokemon/oshawott/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17136,6 +17152,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Dewott[] = INCBIN_U32("graphics/pokemon/dewott/back.4bpp.smol");
     const u16 gMonShinyPalette_Dewott[] = INCBIN_U16("graphics/pokemon/dewott/shiny.gbapal");
     const u8 gMonIcon_Dewott[] = INCBIN_U8("graphics/pokemon/dewott/icon.4bpp");
+    const u16 gMonIconPalette_Dewott[] = INCBIN_U16("graphics/pokemon/dewott/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Dewott[] = INCBIN_U16("graphics/pokemon/dewott/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Dewott[] = INCBIN_U8("graphics/pokemon/dewott/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17152,6 +17170,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Samurott[] = INCBIN_U32("graphics/pokemon/samurott/back.4bpp.smol");
     const u16 gMonShinyPalette_Samurott[] = INCBIN_U16("graphics/pokemon/samurott/shiny.gbapal");
     const u8 gMonIcon_Samurott[] = INCBIN_U8("graphics/pokemon/samurott/icon.4bpp");
+    const u16 gMonIconPalette_Samurott[] = INCBIN_U16("graphics/pokemon/samurott/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Samurott[] = INCBIN_U16("graphics/pokemon/samurott/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Samurott[] = INCBIN_U8("graphics/pokemon/samurott/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17169,6 +17189,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_SamurottHisui[] = INCBIN_U32("graphics/pokemon/samurott/hisui/back.4bpp.smol");
     const u16 gMonShinyPalette_SamurottHisui[] = INCBIN_U16("graphics/pokemon/samurott/hisui/shiny.gbapal");
     const u8 gMonIcon_SamurottHisui[] = INCBIN_U8("graphics/pokemon/samurott/hisui/icon.4bpp");
+    const u16 gMonIconPalette_SamurottHisui[] = INCBIN_U16("graphics/pokemon/samurott/hisui/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_SamurottHisui[] = INCBIN_U16("graphics/pokemon/samurott/hisui/icon_shiny.gbapal");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_SamurottHisui[] = INCBIN_COMP("graphics/pokemon/samurott/hisui/overworld.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -17185,6 +17207,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Patrat[] = INCBIN_U32("graphics/pokemon/patrat/back.4bpp.smol");
     const u16 gMonShinyPalette_Patrat[] = INCBIN_U16("graphics/pokemon/patrat/shiny.gbapal");
     const u8 gMonIcon_Patrat[] = INCBIN_U8("graphics/pokemon/patrat/icon.4bpp");
+    const u16 gMonIconPalette_Patrat[] = INCBIN_U16("graphics/pokemon/patrat/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Patrat[] = INCBIN_U16("graphics/pokemon/patrat/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Patrat[] = INCBIN_U8("graphics/pokemon/patrat/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17201,6 +17225,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Watchog[] = INCBIN_U32("graphics/pokemon/watchog/back.4bpp.smol");
     const u16 gMonShinyPalette_Watchog[] = INCBIN_U16("graphics/pokemon/watchog/shiny.gbapal");
     const u8 gMonIcon_Watchog[] = INCBIN_U8("graphics/pokemon/watchog/icon.4bpp");
+    const u16 gMonIconPalette_Watchog[] = INCBIN_U16("graphics/pokemon/watchog/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Watchog[] = INCBIN_U16("graphics/pokemon/watchog/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Watchog[] = INCBIN_U8("graphics/pokemon/watchog/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17219,6 +17245,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Lillipup[] = INCBIN_U32("graphics/pokemon/lillipup/back.4bpp.smol");
     const u16 gMonShinyPalette_Lillipup[] = INCBIN_U16("graphics/pokemon/lillipup/shiny.gbapal");
     const u8 gMonIcon_Lillipup[] = INCBIN_U8("graphics/pokemon/lillipup/icon.4bpp");
+    const u16 gMonIconPalette_Lillipup[] = INCBIN_U16("graphics/pokemon/lillipup/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Lillipup[] = INCBIN_U16("graphics/pokemon/lillipup/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Lillipup[] = INCBIN_U8("graphics/pokemon/lillipup/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17235,6 +17263,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Herdier[] = INCBIN_U32("graphics/pokemon/herdier/back.4bpp.smol");
     const u16 gMonShinyPalette_Herdier[] = INCBIN_U16("graphics/pokemon/herdier/shiny.gbapal");
     const u8 gMonIcon_Herdier[] = INCBIN_U8("graphics/pokemon/herdier/icon.4bpp");
+    const u16 gMonIconPalette_Herdier[] = INCBIN_U16("graphics/pokemon/herdier/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Herdier[] = INCBIN_U16("graphics/pokemon/herdier/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Herdier[] = INCBIN_U8("graphics/pokemon/herdier/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17251,6 +17281,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Stoutland[] = INCBIN_U32("graphics/pokemon/stoutland/back.4bpp.smol");
     const u16 gMonShinyPalette_Stoutland[] = INCBIN_U16("graphics/pokemon/stoutland/shiny.gbapal");
     const u8 gMonIcon_Stoutland[] = INCBIN_U8("graphics/pokemon/stoutland/icon.4bpp");
+    const u16 gMonIconPalette_Stoutland[] = INCBIN_U16("graphics/pokemon/stoutland/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Stoutland[] = INCBIN_U16("graphics/pokemon/stoutland/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Stoutland[] = INCBIN_U8("graphics/pokemon/stoutland/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17269,6 +17301,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Purrloin[] = INCBIN_U32("graphics/pokemon/purrloin/back.4bpp.smol");
     const u16 gMonShinyPalette_Purrloin[] = INCBIN_U16("graphics/pokemon/purrloin/shiny.gbapal");
     const u8 gMonIcon_Purrloin[] = INCBIN_U8("graphics/pokemon/purrloin/icon.4bpp");
+    const u16 gMonIconPalette_Purrloin[] = INCBIN_U16("graphics/pokemon/purrloin/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Purrloin[] = INCBIN_U16("graphics/pokemon/purrloin/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Purrloin[] = INCBIN_U8("graphics/pokemon/purrloin/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17285,6 +17319,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Liepard[] = INCBIN_U32("graphics/pokemon/liepard/back.4bpp.smol");
     const u16 gMonShinyPalette_Liepard[] = INCBIN_U16("graphics/pokemon/liepard/shiny.gbapal");
     const u8 gMonIcon_Liepard[] = INCBIN_U8("graphics/pokemon/liepard/icon.4bpp");
+    const u16 gMonIconPalette_Liepard[] = INCBIN_U16("graphics/pokemon/liepard/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Liepard[] = INCBIN_U16("graphics/pokemon/liepard/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Liepard[] = INCBIN_U8("graphics/pokemon/liepard/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17303,6 +17339,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Pansage[] = INCBIN_U32("graphics/pokemon/pansage/back.4bpp.smol");
     const u16 gMonShinyPalette_Pansage[] = INCBIN_U16("graphics/pokemon/pansage/shiny.gbapal");
     const u8 gMonIcon_Pansage[] = INCBIN_U8("graphics/pokemon/pansage/icon.4bpp");
+    const u16 gMonIconPalette_Pansage[] = INCBIN_U16("graphics/pokemon/pansage/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Pansage[] = INCBIN_U16("graphics/pokemon/pansage/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pansage[] = INCBIN_U8("graphics/pokemon/pansage/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17319,6 +17357,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Simisage[] = INCBIN_U32("graphics/pokemon/simisage/back.4bpp.smol");
     const u16 gMonShinyPalette_Simisage[] = INCBIN_U16("graphics/pokemon/simisage/shiny.gbapal");
     const u8 gMonIcon_Simisage[] = INCBIN_U8("graphics/pokemon/simisage/icon.4bpp");
+    const u16 gMonIconPalette_Simisage[] = INCBIN_U16("graphics/pokemon/simisage/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Simisage[] = INCBIN_U16("graphics/pokemon/simisage/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Simisage[] = INCBIN_U8("graphics/pokemon/simisage/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17337,6 +17377,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Pansear[] = INCBIN_U32("graphics/pokemon/pansear/back.4bpp.smol");
     const u16 gMonShinyPalette_Pansear[] = INCBIN_U16("graphics/pokemon/pansear/shiny.gbapal");
     const u8 gMonIcon_Pansear[] = INCBIN_U8("graphics/pokemon/pansear/icon.4bpp");
+    const u16 gMonIconPalette_Pansear[] = INCBIN_U16("graphics/pokemon/pansear/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Pansear[] = INCBIN_U16("graphics/pokemon/pansear/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pansear[] = INCBIN_U8("graphics/pokemon/pansear/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17353,6 +17395,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Simisear[] = INCBIN_U32("graphics/pokemon/simisear/back.4bpp.smol");
     const u16 gMonShinyPalette_Simisear[] = INCBIN_U16("graphics/pokemon/simisear/shiny.gbapal");
     const u8 gMonIcon_Simisear[] = INCBIN_U8("graphics/pokemon/simisear/icon.4bpp");
+    const u16 gMonIconPalette_Simisear[] = INCBIN_U16("graphics/pokemon/simisear/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Simisear[] = INCBIN_U16("graphics/pokemon/simisear/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Simisear[] = INCBIN_U8("graphics/pokemon/simisear/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17371,6 +17415,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Panpour[] = INCBIN_U32("graphics/pokemon/panpour/back.4bpp.smol");
     const u16 gMonShinyPalette_Panpour[] = INCBIN_U16("graphics/pokemon/panpour/shiny.gbapal");
     const u8 gMonIcon_Panpour[] = INCBIN_U8("graphics/pokemon/panpour/icon.4bpp");
+    const u16 gMonIconPalette_Panpour[] = INCBIN_U16("graphics/pokemon/panpour/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Panpour[] = INCBIN_U16("graphics/pokemon/panpour/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Panpour[] = INCBIN_U8("graphics/pokemon/panpour/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17387,6 +17433,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Simipour[] = INCBIN_U32("graphics/pokemon/simipour/back.4bpp.smol");
     const u16 gMonShinyPalette_Simipour[] = INCBIN_U16("graphics/pokemon/simipour/shiny.gbapal");
     const u8 gMonIcon_Simipour[] = INCBIN_U8("graphics/pokemon/simipour/icon.4bpp");
+    const u16 gMonIconPalette_Simipour[] = INCBIN_U16("graphics/pokemon/simipour/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Simipour[] = INCBIN_U16("graphics/pokemon/simipour/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Simipour[] = INCBIN_U8("graphics/pokemon/simipour/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17405,6 +17453,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Munna[] = INCBIN_U32("graphics/pokemon/munna/back.4bpp.smol");
     const u16 gMonShinyPalette_Munna[] = INCBIN_U16("graphics/pokemon/munna/shiny.gbapal");
     const u8 gMonIcon_Munna[] = INCBIN_U8("graphics/pokemon/munna/icon.4bpp");
+    const u16 gMonIconPalette_Munna[] = INCBIN_U16("graphics/pokemon/munna/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Munna[] = INCBIN_U16("graphics/pokemon/munna/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Munna[] = INCBIN_U8("graphics/pokemon/munna/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17421,6 +17471,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Musharna[] = INCBIN_U32("graphics/pokemon/musharna/back.4bpp.smol");
     const u16 gMonShinyPalette_Musharna[] = INCBIN_U16("graphics/pokemon/musharna/shiny.gbapal");
     const u8 gMonIcon_Musharna[] = INCBIN_U8("graphics/pokemon/musharna/icon.4bpp");
+    const u16 gMonIconPalette_Musharna[] = INCBIN_U16("graphics/pokemon/musharna/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Musharna[] = INCBIN_U16("graphics/pokemon/musharna/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Musharna[] = INCBIN_U8("graphics/pokemon/musharna/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17439,6 +17491,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Pidove[] = INCBIN_U32("graphics/pokemon/pidove/back.4bpp.smol");
     const u16 gMonShinyPalette_Pidove[] = INCBIN_U16("graphics/pokemon/pidove/shiny.gbapal");
     const u8 gMonIcon_Pidove[] = INCBIN_U8("graphics/pokemon/pidove/icon.4bpp");
+    const u16 gMonIconPalette_Pidove[] = INCBIN_U16("graphics/pokemon/pidove/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Pidove[] = INCBIN_U16("graphics/pokemon/pidove/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Pidove[] = INCBIN_U8("graphics/pokemon/pidove/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17455,6 +17509,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Tranquill[] = INCBIN_U32("graphics/pokemon/tranquill/back.4bpp.smol");
     const u16 gMonShinyPalette_Tranquill[] = INCBIN_U16("graphics/pokemon/tranquill/shiny.gbapal");
     const u8 gMonIcon_Tranquill[] = INCBIN_U8("graphics/pokemon/tranquill/icon.4bpp");
+    const u16 gMonIconPalette_Tranquill[] = INCBIN_U16("graphics/pokemon/tranquill/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Tranquill[] = INCBIN_U16("graphics/pokemon/tranquill/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Tranquill[] = INCBIN_U8("graphics/pokemon/tranquill/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17471,6 +17527,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Unfezant[] = INCBIN_U32("graphics/pokemon/unfezant/back.4bpp.smol");
     const u16 gMonShinyPalette_Unfezant[] = INCBIN_U16("graphics/pokemon/unfezant/shiny.gbapal");
     const u8 gMonIcon_Unfezant[] = INCBIN_U8("graphics/pokemon/unfezant/icon.4bpp");
+    const u16 gMonIconPalette_Unfezant[] = INCBIN_U16("graphics/pokemon/unfezant/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Unfezant[] = INCBIN_U16("graphics/pokemon/unfezant/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Unfezant[] = INCBIN_U8("graphics/pokemon/unfezant/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17488,6 +17546,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_UnfezantF[] = INCBIN_U32("graphics/pokemon/unfezant/backf.4bpp.smol");
     const u16 gMonShinyPalette_UnfezantF[] = INCBIN_U16("graphics/pokemon/unfezant/shinyf.gbapal");
     const u8 gMonIcon_UnfezantF[] = INCBIN_U8("graphics/pokemon/unfezant/iconf.4bpp");
+    const u16 gMonIconPalette_UnfezantF[] = INCBIN_U16("graphics/pokemon/unfezant/iconf_normal.gbapal");
+    const u16 gMonShinyIconPalette_UnfezantF[] = INCBIN_U16("graphics/pokemon/unfezant/iconf_shiny.gbapal");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_UnfezantF[] = INCBIN_COMP("graphics/pokemon/unfezant/overworldf.4bpp");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -17504,6 +17564,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Blitzle[] = INCBIN_U32("graphics/pokemon/blitzle/back.4bpp.smol");
     const u16 gMonShinyPalette_Blitzle[] = INCBIN_U16("graphics/pokemon/blitzle/shiny.gbapal");
     const u8 gMonIcon_Blitzle[] = INCBIN_U8("graphics/pokemon/blitzle/icon.4bpp");
+    const u16 gMonIconPalette_Blitzle[] = INCBIN_U16("graphics/pokemon/blitzle/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Blitzle[] = INCBIN_U16("graphics/pokemon/blitzle/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Blitzle[] = INCBIN_U8("graphics/pokemon/blitzle/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17520,6 +17582,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Zebstrika[] = INCBIN_U32("graphics/pokemon/zebstrika/back.4bpp.smol");
     const u16 gMonShinyPalette_Zebstrika[] = INCBIN_U16("graphics/pokemon/zebstrika/shiny.gbapal");
     const u8 gMonIcon_Zebstrika[] = INCBIN_U8("graphics/pokemon/zebstrika/icon.4bpp");
+    const u16 gMonIconPalette_Zebstrika[] = INCBIN_U16("graphics/pokemon/zebstrika/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Zebstrika[] = INCBIN_U16("graphics/pokemon/zebstrika/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Zebstrika[] = INCBIN_U8("graphics/pokemon/zebstrika/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17538,6 +17602,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Roggenrola[] = INCBIN_U32("graphics/pokemon/roggenrola/back.4bpp.smol");
     const u16 gMonShinyPalette_Roggenrola[] = INCBIN_U16("graphics/pokemon/roggenrola/shiny.gbapal");
     const u8 gMonIcon_Roggenrola[] = INCBIN_U8("graphics/pokemon/roggenrola/icon.4bpp");
+    const u16 gMonIconPalette_Roggenrola[] = INCBIN_U16("graphics/pokemon/roggenrola/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Roggenrola[] = INCBIN_U16("graphics/pokemon/roggenrola/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Roggenrola[] = INCBIN_U8("graphics/pokemon/roggenrola/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17554,6 +17620,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Boldore[] = INCBIN_U32("graphics/pokemon/boldore/back.4bpp.smol");
     const u16 gMonShinyPalette_Boldore[] = INCBIN_U16("graphics/pokemon/boldore/shiny.gbapal");
     const u8 gMonIcon_Boldore[] = INCBIN_U8("graphics/pokemon/boldore/icon.4bpp");
+    const u16 gMonIconPalette_Boldore[] = INCBIN_U16("graphics/pokemon/boldore/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Boldore[] = INCBIN_U16("graphics/pokemon/boldore/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Boldore[] = INCBIN_U8("graphics/pokemon/boldore/footprint.1bpp");
 #endif //P_FOOTPRINTS
@@ -17570,6 +17638,8 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Gigalith[] = INCBIN_U32("graphics/pokemon/gigalith/back.4bpp.smol");
     const u16 gMonShinyPalette_Gigalith[] = INCBIN_U16("graphics/pokemon/gigalith/shiny.gbapal");
     const u8 gMonIcon_Gigalith[] = INCBIN_U8("graphics/pokemon/gigalith/icon.4bpp");
+    const u16 gMonIconPalette_Gigalith[] = INCBIN_U16("graphics/pokemon/gigalith/icon_normal.gbapal");
+    const u16 gMonShinyIconPalette_Gigalith[] = INCBIN_U16("graphics/pokemon/gigalith/icon_shiny.gbapal");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Gigalith[] = INCBIN_U8("graphics/pokemon/gigalith/footprint.1bpp");
 #endif //P_FOOTPRINTS

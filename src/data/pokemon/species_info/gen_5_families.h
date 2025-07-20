@@ -127,7 +127,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Snivy,
         .shinyPalette = gMonShinyPalette_Snivy,
         .iconSprite = gMonIcon_Snivy,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Snivy,
+        .shinyIconPalette = gMonShinyIconPalette_Snivy,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(-1, 1, SHADOW_SIZE_S)
         FOOTPRINT(Snivy)
@@ -200,7 +201,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Servine,
         .shinyPalette = gMonShinyPalette_Servine,
         .iconSprite = gMonIcon_Servine,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Servine,
+        .shinyIconPalette = gMonShinyIconPalette_Servine,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 7, SHADOW_SIZE_S)
         FOOTPRINT(Servine)
@@ -270,7 +272,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Serperior,
         .shinyPalette = gMonShinyPalette_Serperior,
         .iconSprite = gMonIcon_Serperior,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Serperior,
+        .shinyIconPalette = gMonShinyIconPalette_Serperior,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 8, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Serperior)
@@ -341,7 +344,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Tepig,
         .shinyPalette = gMonShinyPalette_Tepig,
         .iconSprite = gMonIcon_Tepig,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Tepig,
+        .shinyIconPalette = gMonShinyIconPalette_Tepig,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(0, -2, SHADOW_SIZE_S)
         FOOTPRINT(Tepig)
@@ -410,7 +414,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Pignite,
         .shinyPalette = gMonShinyPalette_Pignite,
         .iconSprite = gMonIcon_Pignite,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Pignite,
+        .shinyIconPalette = gMonShinyIconPalette_Pignite,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 6, SHADOW_SIZE_M)
         FOOTPRINT(Pignite)
@@ -498,7 +503,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Emboar,
         .shinyPalette = gMonShinyPalette_Emboar,
         .iconSprite = gMonIcon_Emboar,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Emboar,
+        .shinyIconPalette = gMonShinyIconPalette_Emboar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 12, SHADOW_SIZE_L)
         FOOTPRINT(Emboar)
@@ -571,7 +577,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Oshawott,
         .shinyPalette = gMonShinyPalette_Oshawott,
         .iconSprite = gMonIcon_Oshawott,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Oshawott,
+        .shinyIconPalette = gMonShinyIconPalette_Oshawott,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 0, SHADOW_SIZE_S)
         FOOTPRINT(Oshawott)
@@ -642,7 +649,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Dewott,
         .shinyPalette = gMonShinyPalette_Dewott,
         .iconSprite = gMonIcon_Dewott,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Dewott,
+        .shinyIconPalette = gMonShinyIconPalette_Dewott,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 6, SHADOW_SIZE_S)
         FOOTPRINT(Dewott)
@@ -710,7 +718,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Samurott,
         .shinyPalette = gMonShinyPalette_Samurott,
         .iconSprite = gMonIcon_Samurott,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Samurott,
+        .shinyIconPalette = gMonShinyIconPalette_Samurott,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 13, SHADOW_SIZE_L)
         FOOTPRINT(Samurott)
@@ -775,7 +784,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_SamurottHisui,
         .shinyPalette = gMonShinyPalette_SamurottHisui,
         .iconSprite = gMonIcon_SamurottHisui,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_SamurottHisui,
+        .shinyIconPalette = gMonShinyIconPalette_SamurottHisui,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 13, SHADOW_SIZE_L)
         FOOTPRINT(Samurott)
@@ -846,7 +856,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Patrat,
         .shinyPalette = gMonShinyPalette_Patrat,
         .iconSprite = gMonIcon_Patrat,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Patrat,
+        .shinyIconPalette = gMonShinyIconPalette_Patrat,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(1, 2, SHADOW_SIZE_S)
         FOOTPRINT(Patrat)
@@ -919,7 +930,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Watchog,
         .shinyPalette = gMonShinyPalette_Watchog,
         .iconSprite = gMonIcon_Watchog,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Watchog,
+        .shinyIconPalette = gMonShinyIconPalette_Watchog,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-4, 11, SHADOW_SIZE_S)
         FOOTPRINT(Watchog)
@@ -992,7 +1004,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Lillipup,
         .shinyPalette = gMonShinyPalette_Lillipup,
         .iconSprite = gMonIcon_Lillipup,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Lillipup,
+        .shinyIconPalette = gMonShinyIconPalette_Lillipup,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(2, 1, SHADOW_SIZE_S)
         FOOTPRINT(Lillipup)
@@ -1064,7 +1077,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Herdier,
         .shinyPalette = gMonShinyPalette_Herdier,
         .iconSprite = gMonIcon_Herdier,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Herdier,
+        .shinyIconPalette = gMonShinyIconPalette_Herdier,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Herdier)
@@ -1140,7 +1154,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Stoutland,
         .shinyPalette = gMonShinyPalette_Stoutland,
         .iconSprite = gMonIcon_Stoutland,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Stoutland,
+        .shinyIconPalette = gMonShinyIconPalette_Stoutland,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-4, 9, SHADOW_SIZE_L)
         FOOTPRINT(Stoutland)
@@ -1209,7 +1224,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Purrloin,
         .shinyPalette = gMonShinyPalette_Purrloin,
         .iconSprite = gMonIcon_Purrloin,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Purrloin,
+        .shinyIconPalette = gMonShinyIconPalette_Purrloin,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(0, 2, SHADOW_SIZE_S)
         FOOTPRINT(Purrloin)
@@ -1278,7 +1294,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Liepard,
         .shinyPalette = gMonShinyPalette_Liepard,
         .iconSprite = gMonIcon_Liepard,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Liepard,
+        .shinyIconPalette = gMonShinyIconPalette_Liepard,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 11, SHADOW_SIZE_M)
         FOOTPRINT(Liepard)
@@ -1349,7 +1366,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Pansage,
         .shinyPalette = gMonShinyPalette_Pansage,
         .iconSprite = gMonIcon_Pansage,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Pansage,
+        .shinyIconPalette = gMonShinyIconPalette_Pansage,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(0, 3, SHADOW_SIZE_S)
         FOOTPRINT(Pansage)
@@ -1418,7 +1436,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Simisage,
         .shinyPalette = gMonShinyPalette_Simisage,
         .iconSprite = gMonIcon_Simisage,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Simisage,
+        .shinyIconPalette = gMonShinyIconPalette_Simisage,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 12, SHADOW_SIZE_M)
         FOOTPRINT(Simisage)
@@ -1487,7 +1506,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Pansear,
         .shinyPalette = gMonShinyPalette_Pansear,
         .iconSprite = gMonIcon_Pansear,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Pansear,
+        .shinyIconPalette = gMonShinyIconPalette_Pansear,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(1, 3, SHADOW_SIZE_S)
         FOOTPRINT(Pansear)
@@ -1559,7 +1579,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Simisear,
         .shinyPalette = gMonShinyPalette_Simisear,
         .iconSprite = gMonIcon_Simisear,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Simisear,
+        .shinyIconPalette = gMonShinyIconPalette_Simisear,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 8, SHADOW_SIZE_M)
         FOOTPRINT(Simisear)
@@ -1628,7 +1649,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Panpour,
         .shinyPalette = gMonShinyPalette_Panpour,
         .iconSprite = gMonIcon_Panpour,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Panpour,
+        .shinyIconPalette = gMonShinyIconPalette_Panpour,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 4, SHADOW_SIZE_S)
         FOOTPRINT(Panpour)
@@ -1696,7 +1718,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Simipour,
         .shinyPalette = gMonShinyPalette_Simipour,
         .iconSprite = gMonIcon_Simipour,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Simipour,
+        .shinyIconPalette = gMonShinyIconPalette_Simipour,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 8, SHADOW_SIZE_M)
         FOOTPRINT(Simipour)
@@ -1771,7 +1794,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Munna,
         .shinyPalette = gMonShinyPalette_Munna,
         .iconSprite = gMonIcon_Munna,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Munna,
+        .shinyIconPalette = gMonShinyIconPalette_Munna,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 2, SHADOW_SIZE_S)
         FOOTPRINT(Munna)
@@ -1843,7 +1867,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Musharna,
         .shinyPalette = gMonShinyPalette_Musharna,
         .iconSprite = gMonIcon_Musharna,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Musharna,
+        .shinyIconPalette = gMonShinyIconPalette_Musharna,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(6, 10, SHADOW_SIZE_M)
         FOOTPRINT(Musharna)
@@ -1912,7 +1937,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Pidove,
         .shinyPalette = gMonShinyPalette_Pidove,
         .iconSprite = gMonIcon_Pidove,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Pidove,
+        .shinyIconPalette = gMonShinyIconPalette_Pidove,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 1, SHADOW_SIZE_S)
         FOOTPRINT(Pidove)
@@ -1981,7 +2007,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Tranquill,
         .shinyPalette = gMonShinyPalette_Tranquill,
         .iconSprite = gMonIcon_Tranquill,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Tranquill,
+        .shinyIconPalette = gMonShinyIconPalette_Tranquill,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 6, SHADOW_SIZE_S)
         FOOTPRINT(Tranquill)
@@ -2055,7 +2082,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Unfezant,
         .shinyPalette = gMonShinyPalette_Unfezant,
         .iconSprite = gMonIcon_Unfezant,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Unfezant,
+        .shinyIconPalette = gMonShinyIconPalette_Unfezant,
 #if P_GENDER_DIFFERENCES
         .frontPicFemale = gMonFrontPic_UnfezantF,
         .frontPicSizeFemale = MON_COORDS_SIZE(56, 64),
@@ -2064,7 +2092,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .paletteFemale = gMonPalette_UnfezantF,
         .shinyPaletteFemale = gMonShinyPalette_UnfezantF,
         .iconSpriteFemale = gMonIcon_UnfezantF,
-        .iconPalIndexFemale = 1,
+        .iconPaletteFemale = gMonIconPalette_UnfezantF,
+        .shinyIconPaletteFemale = gMonShinyIconPalette_UnfezantF,
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 12, SHADOW_SIZE_M)
@@ -2146,7 +2175,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Blitzle,
         .shinyPalette = gMonShinyPalette_Blitzle,
         .iconSprite = gMonIcon_Blitzle,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Blitzle,
+        .shinyIconPalette = gMonShinyIconPalette_Blitzle,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(3, 9, SHADOW_SIZE_M)
         FOOTPRINT(Blitzle)
@@ -2215,7 +2245,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Zebstrika,
         .shinyPalette = gMonShinyPalette_Zebstrika,
         .iconSprite = gMonIcon_Zebstrika,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Zebstrika,
+        .shinyIconPalette = gMonShinyIconPalette_Zebstrika,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 13, SHADOW_SIZE_M)
         FOOTPRINT(Zebstrika)
@@ -2290,7 +2321,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Roggenrola,
         .shinyPalette = gMonShinyPalette_Roggenrola,
         .iconSprite = gMonIcon_Roggenrola,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Roggenrola,
+        .shinyIconPalette = gMonShinyIconPalette_Roggenrola,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(-1, 0, SHADOW_SIZE_S)
         FOOTPRINT(Roggenrola)
@@ -2369,7 +2401,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Boldore,
         .shinyPalette = gMonShinyPalette_Boldore,
         .iconSprite = gMonIcon_Boldore,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Boldore,
+        .shinyIconPalette = gMonShinyIconPalette_Boldore,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 3, SHADOW_SIZE_L)
         FOOTPRINT(Boldore)
@@ -2450,7 +2483,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Gigalith,
         .shinyPalette = gMonShinyPalette_Gigalith,
         .iconSprite = gMonIcon_Gigalith,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Gigalith,
+        .shinyIconPalette = gMonShinyIconPalette_Gigalith,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 8, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Gigalith)

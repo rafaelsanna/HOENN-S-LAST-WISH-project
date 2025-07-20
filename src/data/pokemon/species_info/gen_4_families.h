@@ -6697,7 +6697,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .palette = gMonPalette_PalkiaOrigin,
         .shinyPalette = gMonShinyPalette_PalkiaOrigin,
         .iconSprite = gMonIcon_PalkiaOrigin,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_PalkiaOrigin,
+        .shinyIconPalette = gMonShinyIconPalette_PalkiaOrigin,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-3, 14, SHADOW_SIZE_L)
         FOOTPRINT(Palkia)
