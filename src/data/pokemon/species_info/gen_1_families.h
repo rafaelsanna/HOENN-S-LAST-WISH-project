@@ -8003,7 +8003,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_GrowlitheHisui,
         .shinyPalette = gMonShinyPalette_GrowlitheHisui,
         .iconSprite = gMonIcon_GrowlitheHisui,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_GrowlitheHisui,
+        .shinyIconPalette = gMonShinyIconPalette_GrowlitheHisui,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, -2, SHADOW_SIZE_M)
         FOOTPRINT(Growlithe)
@@ -8069,7 +8070,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_ArcanineHisui,
         .shinyPalette = gMonShinyPalette_ArcanineHisui,
         .iconSprite = gMonIcon_ArcanineHisui,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_ArcanineHisui,
+        .shinyIconPalette = gMonShinyIconPalette_ArcanineHisui,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 11, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Arcanine)
@@ -13123,7 +13125,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_VoltorbHisui,
         .shinyPalette = gMonShinyPalette_VoltorbHisui,
         .iconSprite = gMonIcon_VoltorbHisui,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_VoltorbHisui,
+        .shinyIconPalette = gMonShinyIconPalette_VoltorbHisui,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, -4, SHADOW_SIZE_S)
         FOOTPRINT(Voltorb)
@@ -13189,7 +13192,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_ElectrodeHisui,
         .shinyPalette = gMonShinyPalette_ElectrodeHisui,
         .iconSprite = gMonIcon_ElectrodeHisui,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_ElectrodeHisui,
+        .shinyIconPalette = gMonShinyIconPalette_ElectrodeHisui,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 4, SHADOW_SIZE_M)
         FOOTPRINT(Electrode)

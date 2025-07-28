@@ -503,7 +503,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_TyphlosionHisui,
         .shinyPalette = gMonShinyPalette_TyphlosionHisui,
         .iconSprite = gMonIcon_TyphlosionHisui,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_TyphlosionHisui,
+        .shinyIconPalette = gMonShinyIconPalette_TyphlosionHisui,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 14, SHADOW_SIZE_L)
         FOOTPRINT(Typhlosion)
@@ -5246,7 +5247,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_QwilfishHisui,
         .shinyPalette = gMonShinyPalette_QwilfishHisui,
         .iconSprite = gMonIcon_QwilfishHisui,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_QwilfishHisui,
+        .shinyIconPalette = gMonShinyIconPalette_QwilfishHisui,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-5, 4, SHADOW_SIZE_S)
         FOOTPRINT(Qwilfish)
@@ -5312,7 +5314,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Overqwil,
         .shinyPalette = gMonShinyPalette_Overqwil,
         .iconSprite = gMonIcon_Overqwil,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Overqwil,
+        .shinyIconPalette = gMonShinyIconPalette_Overqwil,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 11, SHADOW_SIZE_M)
         FOOTPRINT(Overqwil)
@@ -5800,7 +5803,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_SneaselHisui,
         .shinyPalette = gMonShinyPalette_SneaselHisui,
         .iconSprite = gMonIcon_SneaselHisui,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_SneaselHisui,
+        .shinyIconPalette = gMonShinyIconPalette_SneaselHisui,
 #if P_GENDER_DIFFERENCES
         .frontPicFemale = gMonFrontPic_SneaselHisuiF,
         .frontPicSizeFemale = MON_COORDS_SIZE(56, 56),
@@ -5880,7 +5884,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Sneasler,
         .shinyPalette = gMonShinyPalette_Sneasler,
         .iconSprite = gMonIcon_Sneasler,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Sneasler,
+        .shinyIconPalette = gMonShinyIconPalette_Sneasler,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 11, SHADOW_SIZE_M)
         FOOTPRINT(Sneasler)
