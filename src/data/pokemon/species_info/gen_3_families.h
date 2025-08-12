@@ -1308,7 +1308,8 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .palette = gMonPalette_ZigzagoonGalar,
         .shinyPalette = gMonShinyPalette_ZigzagoonGalar,
         .iconSprite = gMonIcon_ZigzagoonGalar,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_ZigzagoonGalar,
+        .shinyIconPalette = gMonShinyIconPalette_ZigzagoonGalar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-5, 0, SHADOW_SIZE_M)
         FOOTPRINT(Zigzagoon)
@@ -1375,7 +1376,8 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .palette = gMonPalette_LinooneGalar,
         .shinyPalette = gMonShinyPalette_LinooneGalar,
         .iconSprite = gMonIcon_LinooneGalar,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_LinooneGalar,
+        .shinyIconPalette = gMonShinyIconPalette_LinooneGalar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-4, 0, SHADOW_SIZE_L)
         FOOTPRINT(Linoone)

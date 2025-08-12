@@ -6744,7 +6744,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_CorsolaGalar,
         .shinyPalette = gMonShinyPalette_CorsolaGalar,
         .iconSprite = gMonIcon_CorsolaGalar,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_CorsolaGalar,
+        .shinyIconPalette = gMonShinyIconPalette_CorsolaGalar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 2, SHADOW_SIZE_M)
         FOOTPRINT(Corsola)
