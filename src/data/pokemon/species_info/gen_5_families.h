@@ -2931,7 +2931,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_AudinoMega,
         .shinyPalette = gMonShinyPalette_AudinoMega,
         .iconSprite = gMonIcon_AudinoMega,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_AudinoMega,
+        .shinyIconPalette = gMonShinyIconPalette_AudinoMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 7, SHADOW_SIZE_M)
         FOOTPRINT(Audino)

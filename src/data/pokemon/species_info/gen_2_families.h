@@ -2202,7 +2202,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_AmpharosMega,
         .shinyPalette = gMonShinyPalette_AmpharosMega,
         .iconSprite = gMonIcon_AmpharosMega,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_AmpharosMega,
+        .shinyIconPalette = gMonShinyIconPalette_AmpharosMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-7, 13, SHADOW_SIZE_M)
         FOOTPRINT(Ampharos)
@@ -5548,7 +5549,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_HeracrossMega,
         .shinyPalette = gMonShinyPalette_HeracrossMega,
         .iconSprite = gMonIcon_HeracrossMega,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_HeracrossMega,
+        .shinyIconPalette = gMonShinyIconPalette_HeracrossMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 13, SHADOW_SIZE_M)
         FOOTPRINT(Heracross)
@@ -7504,7 +7506,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_HoundoomMega,
         .shinyPalette = gMonShinyPalette_HoundoomMega,
         .iconSprite = gMonIcon_HoundoomMega,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_HoundoomMega,
+        .shinyIconPalette = gMonShinyIconPalette_HoundoomMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-5, 13, SHADOW_SIZE_L)
         FOOTPRINT(Houndoom)
@@ -8508,7 +8511,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_TyranitarMega,
         .shinyPalette = gMonShinyPalette_TyranitarMega,
         .iconSprite = gMonIcon_TyranitarMega,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_TyranitarMega,
+        .shinyIconPalette = gMonShinyIconPalette_TyranitarMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 13, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Tyranitar)

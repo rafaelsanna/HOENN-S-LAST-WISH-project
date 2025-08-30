@@ -3548,7 +3548,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .palette = gMonPalette_LopunnyMega,
         .shinyPalette = gMonShinyPalette_LopunnyMega,
         .iconSprite = gMonIcon_LopunnyMega,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_LopunnyMega,
+        .shinyIconPalette = gMonShinyIconPalette_LopunnyMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 13, SHADOW_SIZE_S)
         FOOTPRINT(Lopunny)
@@ -4469,7 +4470,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .palette = gMonPalette_GarchompMega,
         .shinyPalette = gMonShinyPalette_GarchompMega,
         .iconSprite = gMonIcon_GarchompMega,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_GarchompMega,
+        .shinyIconPalette = gMonShinyIconPalette_GarchompMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 12, SHADOW_SIZE_L)
         FOOTPRINT(Garchomp)
@@ -4683,7 +4685,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .palette = gMonPalette_LucarioMega,
         .shinyPalette = gMonShinyPalette_LucarioMega,
         .iconSprite = gMonIcon_LucarioMega,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_LucarioMega,
+        .shinyIconPalette = gMonShinyIconPalette_LucarioMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 11, SHADOW_SIZE_M)
         FOOTPRINT(Lucario)
@@ -5679,7 +5682,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .palette = gMonPalette_AbomasnowMega,
         .shinyPalette = gMonShinyPalette_AbomasnowMega,
         .iconSprite = gMonIcon_AbomasnowMega,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_AbomasnowMega,
+        .shinyIconPalette = gMonShinyIconPalette_AbomasnowMega,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 12, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Abomasnow)
