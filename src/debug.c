@@ -3150,8 +3150,9 @@ static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) //Credit: Sierraffini
     int boxId, boxPosition;
     u32 personality;
     struct BoxPokemon boxMon;
-    u16 species = SPECIES_VICTINI;
+    u16 species = SPECIES_ROWLET;
     u8 speciesName[POKEMON_NAME_LENGTH + 1];
+    bool32 isShiny = TRUE;
 
     personality = Random32();
 
@@ -3166,17 +3167,14 @@ static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) //Credit: Sierraffini
                 StringCopy(speciesName, GetSpeciesName(species));
                 SetBoxMonData(&boxMon, MON_DATA_NICKNAME, &speciesName);
                 SetBoxMonData(&boxMon, MON_DATA_SPECIES, &species);
+                SetBoxMonData(&boxMon, MON_DATA_IS_SHINY, &isShiny);
                 GiveBoxMonInitialMoveset(&boxMon);
                 gPokemonStoragePtr->boxes[boxId][boxPosition] = boxMon;
             }
 
-            if (species == SPECIES_GENESECT)
-                species = SPECIES_MEOWTH_GALAR;
-            if (species == SPECIES_STUNFISK_GALAR)
-                species = SPECIES_BASCULIN_BLUE_STRIPED;
-            if (species == SPECIES_LANDORUS_THERIAN)
-                species = SPECIES_KYUREM_WHITE;
-            if (species == SPECIES_MELOETTA_PIROUETTE)
+            if (species == SPECIES_MELMETAL)
+                species = SPECIES_ORICORIO_POM_POM - 1;
+            if (species == SPECIES_MAGEARNA_ORIGINAL)
                 return;
         }
     }
