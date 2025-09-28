@@ -4420,6 +4420,16 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/LITTLEROOT_TOWN_01/border.bin",
       "blockdata_filepath": "data/layouts/LITTLEROOT_TOWN_01/map.bin"
+    },
+    {
+      "id": "LAYOUT_MOSSDEEP01",
+      "name": "MOSSDEEP01_Layout",
+      "width": 83,
+      "height": 83,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mossdeep",
+      "border_filepath": "data/layouts/MOSSDEEP01/border.bin",
+      "blockdata_filepath": "data/layouts/MOSSDEEP01/map.bin"
     }
   ]
 }
