@@ -4416,8 +4416,8 @@
       "name": "LITTLEROOT_TOWN_01_Layout",
       "width": 80,
       "height": 80,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Petalburg",
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_MeteorFalls",
       "border_filepath": "data/layouts/LITTLEROOT_TOWN_01/border.bin",
       "blockdata_filepath": "data/layouts/LITTLEROOT_TOWN_01/map.bin"
     },
