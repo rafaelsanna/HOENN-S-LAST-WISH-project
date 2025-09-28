@@ -29,7 +29,6 @@
 #include "pokedex.h"
 #include "apprentice.h"
 #include "frontier_util.h"
-#include "pokedex.h"
 #include "save.h"
 #include "link_rfu.h"
 #include "main.h"
@@ -51,21 +50,27 @@
 
 extern const u8 EventScript_ResetAllMapFlags[];
 
+// Static function prototypes
 static void ClearFrontierRecord(void);
-static void WarpToTruck(void);
 static void ResetMiniGamesRecords(void);
 static void ResetItemFlags(void);
 static void ResetDexNav(void);
+static void InitPlayerTrainerId(void);
+static void SetDefaultOptions(void);
+static void ClearPokedexFlags(void);
 
+// Global variables
 EWRAM_DATA bool8 gDifferentSaveFile = FALSE;
 EWRAM_DATA bool8 gEnableContestDebugging = FALSE;
 
+// Contest winner dummy data
 static const struct ContestWinner sContestWinnerPicDummy =
 {
     .monName = _(""),
     .trainerName = _("")
 };
 
+// Trainer ID management functions
 void SetTrainerId(u32 trainerId, u8 *dst)
 {
     dst[0] = trainerId;
@@ -92,7 +97,7 @@ static void InitPlayerTrainerId(void)
     SetTrainerId(trainerId, gSaveBlock2Ptr->playerTrainerId);
 }
 
-// L=A isnt set here for some reason.
+// Game options initialization
 static void SetDefaultOptions(void)
 {
     gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
@@ -103,6 +108,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->regionMapZoom = FALSE;
 }
 
+// Pokédex initialization
 static void ClearPokedexFlags(void)
 {
     gUnusedPokedexU8 = 0;
@@ -110,31 +116,28 @@ static void ClearPokedexFlags(void)
     memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
 }
 
+// Contest system management
 void ClearAllContestWinnerPics(void)
 {
     s32 i;
-
+    
     ClearContestWinnerPicsInContestHall();
-
+    
     // Clear Museum paintings
     for (i = MUSEUM_CONTEST_WINNERS_START; i < NUM_CONTEST_WINNERS; i++)
         gSaveBlock1Ptr->contestWinners[i] = sContestWinnerPicDummy;
 }
 
+// Battle Frontier record management
 static void ClearFrontierRecord(void)
 {
     CpuFill32(0, &gSaveBlock2Ptr->frontier, sizeof(gSaveBlock2Ptr->frontier));
-
+    
     gSaveBlock2Ptr->frontier.opponentNames[0][0] = EOS;
     gSaveBlock2Ptr->frontier.opponentNames[1][0] = EOS;
 }
 
-static void WarpToTruck(void)
-{
-    SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
-    WarpIntoMap();
-}
-
+// Save system functions
 void Sav2_ClearSetDefault(void)
 {
     ClearSav2();
@@ -151,70 +154,112 @@ void ResetMenuAndMonGlobals(void)
     ResetPokeblockScrollPositions();
 }
 
+// Main new game initialization - REFINED VERSION
 void NewGameInitData(void)
 {
+    // RTC initialization for new/corrupt saves
     if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
         RtcReset();
 
+    // Core initialization flags
     gDifferentSaveFile = TRUE;
     gSaveBlock2Ptr->encryptionKey = 0;
+    
+    // Clear all party data
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
+    gPlayerPartyCount = 0;
+    
+    // Initialize core game systems
     ResetPokedex();
     ClearFrontierRecord();
     ClearSav1();
     ClearSav3();
     ClearAllMail();
+    
+    // Clear special flags
     gSaveBlock2Ptr->specialSaveWarpFlags = 0;
     gSaveBlock2Ptr->gcnLinkFlags = 0;
+    
+    // Player identification and timing
     InitPlayerTrainerId();
     PlayTimeCounter_Reset();
     ClearPokedexFlags();
+    
+    // Event and story systems
     InitEventData();
     ClearTVShowData();
     ResetGabbyAndTy();
+    
+    // World state systems
     ClearSecretBases();
     ClearBerryTrees();
+    DeactivateAllRoamers();
+    
+    // Player resources
     SetMoney(&gSaveBlock1Ptr->money, 3000);
     SetCoins(0);
+    gSaveBlock1Ptr->registeredItem = ITEM_NONE;
+    
+    // Inventory systems
+    ClearBag();
+    NewGameInitPCItems();
+    ClearPokeblocks();
+    ClearDecorationInventories();
+    
+    // Game features and records
     ResetLinkContestBoolean();
     ResetGameStats();
     ClearAllContestWinnerPics();
     ClearPlayerLinkBattleRecords();
     InitSeedotSizeRecord();
     InitLotadSizeRecord();
-    gPlayerPartyCount = 0;
-    ZeroPlayerPartyMons();
     ResetPokemonStorageSystem();
-    DeactivateAllRoamers();
-    gSaveBlock1Ptr->registeredItem = ITEM_NONE;
-    ClearBag();
-    NewGameInitPCItems();
-    ClearPokeblocks();
-    ClearDecorationInventories();
+    
+    // Communication and social systems
     InitEasyChatPhrases();
+    InitUnionRoomChatRegisteredTexts();
+    InitLilycoveLady();
+    InitMatchCallCounters();
+    
+    // NPCs and special characters
     SetMauvilleOldMan();
     InitDewfordTrend();
     ResetFanClub();
     ResetLotteryCorner();
-    WarpToTruck();
-    RunScriptImmediately(EventScript_ResetAllMapFlags);
-    ResetMiniGamesRecords();
-    InitUnionRoomChatRegisteredTexts();
-    InitLilycoveLady();
     ResetAllApprenticeData();
+    
+    // Competition and ranking systems
     ClearRankingHallRecords();
-    InitMatchCallCounters();
-    ClearMysteryGift();
-    WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    WipeTrainerNameRecords();
+    
+    // Mystery and special events
+    ClearMysteryGift();
+    
+    // Game difficulty and features
     SetCurrentDifficultyLevel(DIFFICULTY_NORMAL);
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
+    
+    // Mini-games
+    ResetMiniGamesRecords();
+    
+    // CRITICAL: Set initial warp destination to LITTLEROOT_TOWN_01
+    // This ensures the NPC interaction works from the start
+    SetWarpDestination(MAP_GROUP(MAP_LITTLEROOT_TOWN_01), 
+                       MAP_NUM(MAP_LITTLEROOT_TOWN_01), 
+                       WARP_ID_NONE, 
+                       10, 12);
+    WarpIntoMap();
+    
+    // Execute map reset script
+    RunScriptImmediately(EventScript_ResetAllMapFlags);
 }
 
+// Mini-games record management
 static void ResetMiniGamesRecords(void)
 {
     CpuFill16(0, &gSaveBlock2Ptr->berryCrush, sizeof(struct BerryCrush));
@@ -223,6 +268,7 @@ static void ResetMiniGamesRecords(void)
     CpuFill16(0, &gSaveBlock2Ptr->berryPick, sizeof(struct BerryPickingResults));
 }
 
+// Item system flags management
 static void ResetItemFlags(void)
 {
 #if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_FIRST_TIME
@@ -230,6 +276,7 @@ static void ResetItemFlags(void)
 #endif
 }
 
+// DexNav system management
 static void ResetDexNav(void)
 {
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
@@ -237,3 +284,4 @@ static void ResetDexNav(void)
 #endif
     gSaveBlock3Ptr->dexNavChain = 0;
 }
+
