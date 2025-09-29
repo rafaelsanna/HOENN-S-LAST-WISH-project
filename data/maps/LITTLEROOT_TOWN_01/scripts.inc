@@ -29,16 +29,18 @@ LittlerootTown_01_Warp::
 	fadescreen FADE_TO_BLACK
 	delay 40
 	checkplayergender
-	compare VAR_RESULT, MALE
+	compare VAR_RESULT, 0
 	goto_if_eq LittlerootTown_01_WarpMale
-	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 3, 8
-	goto LittlerootTown_01_WarpDone
+	@ Female
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 3, 1
+	waitstate
+	release
+	end
 
 LittlerootTown_01_WarpMale::
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 3, 8
-	goto LittlerootTown_01_WarpDone
-
-LittlerootTown_01_WarpDone::
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 3, 1
 	waitstate
 	release
 	end
@@ -54,7 +56,7 @@ LittlerootTown_01_Stay::
 	setvar VAR_LITTLEROOT_TOWN_STATE, 0
 	fadescreen FADE_TO_BLACK
 	delay 40
-	warp MAP_MOSSDEEP01, 10, 10
+	warp MAP_MOSSDEEP01, 15, 8
 	waitstate
 	release
 	end
@@ -64,10 +66,25 @@ LittlerootTown_CelebiScript::
 	faceplayer
 	random 3
 	switch VAR_RESULT
-	case 0, LittlerootTown_01_Text_CelebiLost
-	case 1, LittlerootTown_01_Text_CelebiHelp  
-	case 2, LittlerootTown_01_Text_CelebiForest
+	case 0, LittlerootTown_Celebi_Case0
+	case 1, LittlerootTown_Celebi_Case1  
+	case 2, LittlerootTown_Celebi_Case2
 	msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_Celebi_Case0::
+	msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_Celebi_Case1::
+	msgbox LittlerootTown_01_Text_CelebiHelp, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_Celebi_Case2::
+	msgbox LittlerootTown_01_Text_CelebiForest, MSGBOX_DEFAULT
 	release
 	end
 
@@ -76,10 +93,25 @@ LittlerootTown_JirachiScript::
 	faceplayer
 	random 3
 	switch VAR_RESULT
-	case 0, LittlerootTown_01_Text_JirachiWish
-	case 1, LittlerootTown_01_Text_JirachiSleep
-	case 2, LittlerootTown_01_Text_JirachiGrant
+	case 0, LittlerootTown_Jirachi_Case0
+	case 1, LittlerootTown_Jirachi_Case1
+	case 2, LittlerootTown_Jirachi_Case2
 	msgbox LittlerootTown_01_Text_JirachiWish, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_Jirachi_Case0::
+	msgbox LittlerootTown_01_Text_JirachiWish, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_Jirachi_Case1::
+	msgbox LittlerootTown_01_Text_JirachiSleep, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_Jirachi_Case2::
+	msgbox LittlerootTown_01_Text_JirachiGrant, MSGBOX_DEFAULT
 	release
 	end
 
@@ -109,5 +141,7 @@ LittlerootTown_01_Text_JirachiSleep:
 
 LittlerootTown_01_Text_JirachiGrant:
 	.string "Jirachi: They say I can grant any wish!\nWhat would you wish for?$"
+
+
 
 
