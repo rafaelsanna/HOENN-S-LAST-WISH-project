@@ -75,7 +75,7 @@ LittlerootTown_01_Stay::
 	setvar VAR_LITTLEROOT_TOWN_STATE, 0
 	fadescreen FADE_TO_BLACK
 	delay 40
-	warp MAP_MOSSDEEP01, 15, 8
+	warp MAP_MOSSDEEP01, 28, 38  // ← Coordenadas do Jirachi (terra firme)
 	waitstate
 	release
 	end

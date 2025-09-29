@@ -454,7 +454,10 @@
 #define LOCALID_MIRAGE_CLAW_FOSSIL 2
 
 // MAP_MOSSDEEP01
-#define LOCALID_MEW 1  
+#define OBJ_EVENT_GFX_JIRACHI_01 1
+#define item_quest_01 2
+#define item_quest_02 3
+#define item_quest_03 4
 
 // MAP_MOSSDEEP_CITY_HOUSE2
 #define LOCALID_MOSSDEEP_HOUSE_WINGULL 3

@@ -2,10 +2,10 @@
   "id": "MAP_MOSSDEEP01",
   "name": "MOSSDEEP01",
   "layout": "LAYOUT_MOSSDEEP01",
-  "music": "MUS_DUMMY",
+  "music": "MUS_C_VS_LEGEND_BEAST",
   "region_map_section": "MAPSEC_MOSSDEEP_CITY",
   "requires_flash": false,
-  "weather": "WEATHER_NONE",
+  "weather": "WEATHER_RAIN_THUNDERSTORM",
   "map_type": "MAP_TYPE_NONE",
   "allow_cycling": false,
   "allow_escaping": false,
@@ -15,8 +15,8 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "01",
-      "graphics_id": "OBJ_EVENT_GFX_MEW",
+      "local_id": "OBJ_EVENT_GFX_JIRACHI_01",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(JIRACHI)",
       "x": 26,
       "y": 36,
       "elevation": 0,
@@ -25,7 +25,49 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "MOSSDEEP01_EventScript_DirectWarp",
+      "flag": "0"
+    },
+    {
+      "local_id": "item_quest_01",
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 28,
+      "y": 31,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_Item1",
+      "flag": "0"
+    },
+    {
+      "local_id": "item_quest_02",
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 30,
+      "y": 28,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_Item2",
+      "flag": "0"
+    },
+    {
+      "local_id": "item_quest_03",
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 35,
+      "y": 23,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_Item3",
       "flag": "0"
     }
   ],
@@ -33,3 +75,4 @@
   "coord_events": [],
   "bg_events": []
 }
+
