@@ -17,31 +17,50 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	release
 	end
 
+@ ====================================================================
+@ SOLUÇÃO COMPLETA - Todas as correções aplicadas
+@ ====================================================================
+
 LittlerootTown_01_Warp::
 	msgbox LittlerootTown_01_Text_Yes, MSGBOX_DEFAULT
 	closemessage
+	
+	@ FLAGS ESSENCIAIS
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
 	setflag FLAG_SET_WALL_CLOCK
-	setvar VAR_LITTLEROOT_INTRO_STATE, 7
+	setflag FLAG_RESCUED_BIRCH
+	setflag FLAG_ADVENTURE_STARTED
+	
+	@ VARIÁVEIS CRÍTICAS
+	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 	setvar VAR_LITTLEROOT_TOWN_STATE, 0
+	
 	fadescreen FADE_TO_BLACK
-	delay 40
+	delay 180
+	
 	checkplayergender
 	compare VAR_RESULT, 0
 	goto_if_eq LittlerootTown_01_WarpMale
+	
 	@ Female
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
-	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 3, 1
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 6, 3
 	waitstate
+	delay 80
+	fadescreen FADE_FROM_BLACK
+	delay 50
 	release
 	end
 
 LittlerootTown_01_WarpMale::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 3, 1
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 3, 3
 	waitstate
+	delay 80
+	fadescreen FADE_FROM_BLACK
+	delay 50
 	release
 	end
 
