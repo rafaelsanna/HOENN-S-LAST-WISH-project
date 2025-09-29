@@ -1,7 +1,29 @@
+// ====================================================================
+// BRENDAN'S HOUSE 2F - SIMPLIFICADO SEM VARIÁVEIS EXTRAS
+// ====================================================================
+
 LittlerootTown_BrendansHouse_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_BrendansHouse_2F_OnTransition
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, LittlerootTown_BrendansHouse_2F_OnWarp
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, LittlerootTown_BrendansHouse_2F_OnFrame
 	.byte 0
+
+LittlerootTown_BrendansHouse_2F_OnFrame:
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_2F_EventScript_WeirdDreamDialogue
+	.2byte 0
+
+LittlerootTown_BrendansHouse_2F_EventScript_WeirdDreamDialogue::
+	lockall
+	msgbox LittlerootTown_BrendansHouse_2F_Text_WeirdDream, MSGBOX_DEFAULT
+	setvar VAR_LITTLEROOT_INTRO_STATE, 7
+	releaseall
+	end
+
+LittlerootTown_BrendansHouse_2F_Text_WeirdDream:
+	.string "{PLAYER}: What a weird dream...\p"
+	.string "Was that JIRACHI and CELEBI?\n"
+	.string "Maybe it wasn't a dream...\l"
+	.string "Maybe it really happened...$"
 
 LittlerootTown_BrendansHouse_2F_OnTransition:
 	call_if_lt VAR_LITTLEROOT_RIVAL_STATE, 2, LittlerootTown_BrendansHouse_2F_EventScript_CheckSetReadyToMeetBrendan
@@ -19,8 +41,7 @@ LittlerootTown_BrendansHouse_2F_EventScript_CheckShouldUpdateBrendanPos::
 LittlerootTown_BrendansHouse_2F_EventScript_TryUpdateBrendanPos::
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, LittlerootTown_BrendansHouse_2F_EventScript_Ret
-	@ Odd that the MaysHouse equivalent was used below instead
-	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_MaysHouse_2F_EventScript_Ret
+	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_BrendansHouse_2F_EventScript_Ret
 	setobjectxyperm LOCALID_RIVALS_HOUSE_2F_RIVAL, 0, 2
 	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, MOVEMENT_TYPE_FACE_UP
 	return
@@ -44,7 +65,7 @@ LittlerootTown_BrendansHouse_2F_OnWarp:
 LittlerootTown_BrendansHouse_2F_EventScript_CheckInitDecor::
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, SecretBase_EventScript_InitDecorations
-	end
+	return
 
 LittlerootTown_BrendansHouse_2F_EventScript_RivalsPokeBall::
 	lockall
@@ -226,7 +247,6 @@ LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCEast:
 	walk_in_place_faster_up
 	step_end
 
-@ Unused, the player is already facing this direction so its unneeded
 LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanEast:
 	delay_16
 	delay_16

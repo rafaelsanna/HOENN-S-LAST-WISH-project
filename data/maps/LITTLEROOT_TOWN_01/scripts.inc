@@ -25,6 +25,12 @@ LittlerootTown_01_Warp::
 	msgbox LittlerootTown_01_Text_Yes, MSGBOX_DEFAULT
 	closemessage
 	
+	@ FLAGS ESSENCIAIS PARA LIMPAR NPCS (SOMENTE OS PROBLEMÁTICOS)
+	@ === NÃO ESCONDER A MÃE CORRETA! ===
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+
 	@ FLAGS ESSENCIAIS
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
@@ -41,26 +47,20 @@ LittlerootTown_01_Warp::
 	delay 180
 	
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	goto_if_eq LittlerootTown_01_WarpMale
 	
 	@ Female
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
-	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 6, 3
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 1, 1  @ Cama feminina
 	waitstate
-	delay 80
-	fadescreen FADE_FROM_BLACK
-	delay 50
 	release
 	end
 
 LittlerootTown_01_WarpMale::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 3, 3
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 7, 1  @ Cama masculina
 	waitstate
-	delay 80
-	fadescreen FADE_FROM_BLACK
-	delay 50
 	release
 	end
 

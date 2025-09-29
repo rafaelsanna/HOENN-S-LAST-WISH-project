@@ -1,49 +1,7 @@
 LittlerootTown_MaysHouse_2F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_MaysHouse_2F_OnTransition
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, LittlerootTown_MaysHouse_2F_OnWarp
 	.byte 0
 
-LittlerootTown_MaysHouse_2F_OnTransition:
-	call_if_lt VAR_LITTLEROOT_RIVAL_STATE, 2, LittlerootTown_MaysHouse_2F_EventScript_CheckSetReadyToMeetMay
-	call_if_ge VAR_LITTLEROOT_RIVAL_STATE, 3, LittlerootTown_MaysHouse_2F_EventScript_CheckShouldUpdateMayPos
-	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 4, PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
-	call SecretBase_EventScript_SetDecorationFlags
-	setvar VAR_SECRET_BASE_INITIALIZED, 0
-	end
-
-LittlerootTown_MaysHouse_2F_EventScript_CheckShouldUpdateMayPos::
-	goto_if_set FLAG_MET_RIVAL_LILYCOVE, LittlerootTown_MaysHouse_2F_EventScript_TryUpdateMayPos
-	goto_if_ge VAR_BIRCH_LAB_STATE, 2, LittlerootTown_MaysHouse_2F_EventScript_Ret
-	goto LittlerootTown_MaysHouse_2F_EventScript_TryUpdateMayPos
-
-LittlerootTown_MaysHouse_2F_EventScript_TryUpdateMayPos::
-	checkplayergender
-	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_2F_EventScript_Ret
-	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_MaysHouse_2F_EventScript_Ret
-	setobjectxyperm LOCALID_RIVALS_HOUSE_2F_RIVAL, 8, 2
-	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, MOVEMENT_TYPE_FACE_UP
-	return
-
-LittlerootTown_MaysHouse_2F_EventScript_Ret::
-	return
-
-LittlerootTown_MaysHouse_2F_EventScript_CheckSetReadyToMeetMay::
-	checkplayergender
-	goto_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_2F_EventScript_SetReadyToMeetMay
-	return
-
-LittlerootTown_MaysHouse_2F_EventScript_SetReadyToMeetMay::
-	setvar VAR_LITTLEROOT_RIVAL_STATE, 2
-	return
-
-LittlerootTown_MaysHouse_2F_OnWarp:
-	map_script_2 VAR_SECRET_BASE_INITIALIZED, 0, LittlerootTown_MaysHouse_2F_EventScript_CheckInitDecor
-	.2byte 0
-
 LittlerootTown_MaysHouse_2F_EventScript_CheckInitDecor::
-	checkplayergender
-	goto_if_eq VAR_RESULT, FEMALE, SecretBase_EventScript_InitDecorations
-	end
 
 LittlerootTown_MaysHouse_2F_EventScript_RivalsPokeBall::
 	lockall
@@ -395,3 +353,5 @@ RivalsHouse_2F_Text_BrendanWhereShouldIGoNext:
 	.string "Hey, {PLAYER}, if I see you while I'm out\n"
 	.string "catching POKéMON, I can pitch you a\l"
 	.string "battle if you'd like.$"
+
+	
