@@ -1,68 +1,118 @@
-@ ====================================================================
-@ File: data/maps/LITTLEROOT_TOWN_01/scripts.inc
-@ Choice System: Skip Prologue (Warp 2F) or Play Normal Prologue
-@ ====================================================================
+// ====================================================================
+// DEFINIÇÕES
+// ====================================================================
+
+// Local IDs dos objetos no mapa
+.equiv LOCALID_JIRACHI, 1      // ← O JIRACHI SERÁ O OBJETO 1
+.equiv LOCALID_CELEBI,  2      // ← CELEBI SERÁ O OBJETO 2
 
 LITTLEROOT_TOWN_01_MapScripts::
 	.byte 0
 
+// Script do Jirachi (OBJETO 1 no mapa)
 LittlerootTown_01_EventScript_JirachiCelebi::
 	lock
 	faceplayer
+	msgbox LittlerootTown_01_Text_JirachiIntro, MSGBOX_DEFAULT
 	msgbox LittlerootTown_01_Text_Question, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq LittlerootTown_01_Warp
-	compare VAR_RESULT, NO
-	goto_if_eq LittlerootTown_01_Stay
-	release
-	end
+	goto_if_eq LittlerootTown_01_JirachiWarp
+	goto LittlerootTown_01_Stay
 
-@ ====================================================================
-@ SOLUÇÃO COMPLETA - Todas as correções aplicadas
-@ ====================================================================
-
-LittlerootTown_01_Warp::
-	msgbox LittlerootTown_01_Text_Yes, MSGBOX_DEFAULT
+LittlerootTown_01_JirachiWarp::
+	msgbox LittlerootTown_01_Text_JirachiTimeWarp, MSGBOX_DEFAULT
 	closemessage
 	
-	@ FLAGS ESSENCIAIS PARA LIMPAR NPCS (SOMENTE OS PROBLEMÁTICOS)
-	@ === NÃO ESCONDER A MÃE CORRETA! ===
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
-
-	@ FLAGS ESSENCIAIS
+	// === CUTSCENE ÉPICA DO JIRACHI ===
+	// Fase 1: Jirachi começa a voar ao redor
+	applymovement LOCALID_JIRACHI, LittlerootTown_Movement_JirachiCircleStart
+	waitmovement LOCALID_JIRACHI
+	
+	// Fase 2: Efeitos visuais começam
+	playse SE_M_PSYBEAM
+	fadescreenspeed FADE_FROM_WHITE, 12
+	delay 20
+	
+	// Fase 3: Jirachi completa a volta
+	applymovement LOCALID_JIRACHI, LittlerootTown_Movement_JirachiCircleComplete
+	waitmovement LOCALID_JIRACHI
+	
+	// Fase 5: Efeito final explosivo
+	playse SE_M_MOONLIGHT
+	delay 15
+	playse SE_M_MORNING_SUN
+	fadescreen FADE_TO_BLACK
+	delay 60
+	
+	// === WARP PARA CASA ===
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
 	setflag FLAG_SET_WALL_CLOCK
 	setflag FLAG_RESCUED_BIRCH
 	setflag FLAG_ADVENTURE_STARTED
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
+	setflag FLAG_SYS_B_DASH
+	setflag FLAG_RECEIVED_RUNNING_SHOES
 	
-	@ VARIÁVEIS CRÍTICAS
 	setvar VAR_LITTLEROOT_INTRO_STATE, 6
-	setvar VAR_LITTLEROOT_TOWN_STATE, 0
-	
-	fadescreen FADE_TO_BLACK
-	delay 180
+	setvar VAR_LITTLEROOT_TOWN_STATE, 4
 	
 	checkplayergender
 	compare VAR_RESULT, MALE
 	goto_if_eq LittlerootTown_01_WarpMale
 	
-	@ Female
+	// FEMALE - vai pra casa da May
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
-	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 1, 1  @ Cama feminina
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
 	waitstate
 	release
 	end
 
 LittlerootTown_01_WarpMale::
+	// MALE - vai pra casa do Brendan
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 7, 1  @ Cama masculina
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
 	waitstate
 	release
 	end
+
+	LittlerootTown_Movement_JirachiCircleStart:
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	step_end
+
+LittlerootTown_Movement_JirachiCircleComplete:
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	step_end
+
+LittlerootTown_Movement_JirachiSpin:
+	face_left
+	delay_2
+	face_up
+	delay_2
+	face_right
+	delay_2
+	face_down
+	delay_2
+	face_left
+	delay_2
+	face_up
+	delay_2
+	face_right
+	delay_2
+	face_down
+	delay_2
+	step_end
 
 LittlerootTown_01_Stay::
 	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
@@ -134,11 +184,18 @@ LittlerootTown_Jirachi_Case2::
 	release
 	end
 
+LittlerootTown_01_Text_JirachiIntro:
+	.string "Jirachi: I am the wish Pokémon!\n"
+	.string "I can warp time and space!\p"
+	.string "Would you like to skip the prologue\n"
+	.string "and go straight home?$"
+
 LittlerootTown_01_Text_Question:
 	.string "Skip prologue?$"
 
-LittlerootTown_01_Text_Yes:
-	.string "Going home.$"
+LittlerootTown_01_Text_JirachiTimeWarp:
+	.string "Jirachi: Your wish is my command!\n"
+	.string "TIME WARP - ACTIVATE!$"
 
 LittlerootTown_01_Text_No:
 	.string "Alright, start the journey.$"

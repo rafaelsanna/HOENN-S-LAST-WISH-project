@@ -354,4 +354,9 @@ RivalsHouse_2F_Text_BrendanWhereShouldIGoNext:
 	.string "catching POKéMON, I can pitch you a\l"
 	.string "battle if you'd like.$"
 
+
+
+
+
+
 	
