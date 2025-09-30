@@ -373,18 +373,18 @@ LittlerootTown_Movement_TwinReturnRight:
 	step_end
 
 LittlerootTown_EventScript_GoSaveBirchTrigger::
-	lockall
-	applymovement LOCALID_LITTLEROOT_TWIN, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0
+	//lockall//
+	//applymovement LOCALID_LITTLEROOT_TWIN, Common_Movement_WalkInPlaceFasterRight
+	//waitmovement 0
+	//applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	//waitmovement 0
 	special GetPlayerBigGuyGirlString
 	msgbox LittlerootTown_Text_CanYouGoSeeWhatsHappening, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_LITTLEROOT_TWIN, Common_Movement_FaceOriginalDirection
+	//applymovement LOCALID_LITTLEROOT_TWIN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
-	setvar VAR_LITTLEROOT_TOWN_STATE, 2
-	releaseall
+	//setvar VAR_LITTLEROOT_TOWN_STATE, 2
+	//releaseall
 	end
 
 LittlerootTown_EventScript_TownSign::
