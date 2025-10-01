@@ -3124,3 +3124,9 @@ void UpdateFriendshipFromXItem(u32 battler)
         SetBattlerMonData(battler, GetBattlerParty(battler), gBattlerPartyIndexes[battler]);
     }
 }
+
+// Custom Battle System
+void SetControllerToCustom(u32 battler);
+bool8 StartCustomBattleNoPokeball(void);
+bool8 CustomWildEncounter_NoPokeball(u16 metatileBehavior);
+

@@ -348,3 +348,126 @@ MOSSDEEP01_Text_Healing:
 MOSSDEEP01_Text_HealedComplete:
 	.string "Done! Your Pokémon are\n"
 	.string "fully recovered!$"
+
+// ====================================================================
+// NPCs INIMIGOS - ADICIONE NO FINAL DO SEU scripts.inc
+// ====================================================================
+
+// Defina os Local IDs dos inimigos (ajuste os números conforme seu mapa)
+.equiv LOCALID_MIGHTYENA, 6
+.equiv LOCALID_POOCHYENA, 7
+.equiv LOCALID_ZIGZAGOON, 8
+
+MOSSDEEP01_EventScript_Mightyena::
+	// Verificar se Celebi foi resgatado
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDisabled
+	
+	lockall
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 20
+	
+	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
+	closemessage
+	
+	playse SE_M_BITE
+	fadescreen FADE_TO_BLACK
+	delay 60
+	
+	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
+	closemessage
+	
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	warp MAP_MOSSDEEP01, 28, 38
+	waitstate
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_MightyenaDisabled::
+	// Mightyenas foram desativados após resgatar Celebi
+	end
+
+MOSSDEEP01_Text_MightyenaAttack:
+	.string "Wild MIGHTYENA used CRUNCH!\p"
+	.string "It's super effective!$"
+
+MOSSDEEP01_Text_MightyenaBlackedOut:
+	.string "You blacked out!\p"
+	.string "Returning to safety...$"
+
+// ====================================================================
+// CELEBI - DESATIVA MIGHTYENAS E SEGUE O PLAYER
+// ====================================================================
+
+// REMOVIDO: .equiv LOCALID_CELEBI, 8  (já está definido no início)
+
+// ====================================================================
+// CELEBI - DESATIVA MIGHTYENAS E SEGUE O PLAYER
+// ====================================================================
+
+MOSSDEEP01_EventScript_Celebi::
+	lock
+	faceplayer
+	
+	// Verificar se já resgatou o Celebi
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiFollowing
+	
+	// Primeira interação
+	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	closemessage
+	
+	// Celebi usa seus poderes!
+	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
+	closemessage
+	
+	// FLASH BRANCO DUPLO
+	playse SE_M_HYPER_BEAM
+	fadescreenspeed FADE_TO_WHITE, 4
+	delay 30
+	fadescreenspeed FADE_FROM_WHITE, 4
+	delay 15
+	
+	playse SE_M_PSYBEAM
+	fadescreenspeed FADE_TO_WHITE, 4
+	delay 20
+	fadescreenspeed FADE_FROM_WHITE, 4
+	
+	// Desativa os Mightyenas
+	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
+	
+	// Mensagem de sucesso
+	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
+	closemessage
+	
+	msgbox MOSSDEEP01_Text_CelebiFollows, MSGBOX_DEFAULT
+	closemessage
+	
+	release
+	end
+
+MOSSDEEP01_EventScript_CelebiFollowing::
+	msgbox MOSSDEEP01_Text_CelebiHappy, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_Text_CelebiHelp:
+	.string "CELEBI: Help! Those Mightyena\n"
+	.string "are hunting me!\p"
+	.string "Please, help me escape!$"
+
+MOSSDEEP01_Text_CelebiPower:
+	.string "CELEBI: Let me use my powers\n"
+	.string "to calm them down!$"
+
+MOSSDEEP01_Text_CelebiCalmed:
+	.string "The Mightyena have been calmed!\p"
+	.string "They won't attack anymore...$"
+
+MOSSDEEP01_Text_CelebiFollows:
+	.string "CELEBI: Thank you!\n"
+	.string "I'll follow you to safety!$"
+
+MOSSDEEP01_Text_CelebiHappy:
+	.string "CELEBI: Bi bi!\n"
+	.string "I feel safe with you!$"
