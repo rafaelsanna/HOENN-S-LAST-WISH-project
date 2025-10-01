@@ -117,6 +117,7 @@ LittlerootTown_Movement_JirachiSpin:
 LittlerootTown_01_Stay::
 	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
 	closemessage
+	setflag FLAG_HIDE_MOSSDEEP_COMET
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
