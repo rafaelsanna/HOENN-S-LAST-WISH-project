@@ -44,7 +44,7 @@ LittlerootTown_01_JirachiWarp::
 	fadescreen FADE_TO_BLACK
 	delay 60
 	
-	// === WARP PARA CASA ===
+	// === CONFIGURAÇÃO DO PROGRESSO DO JOGO ===
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
@@ -58,6 +58,7 @@ LittlerootTown_01_JirachiWarp::
 	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 	setvar VAR_LITTLEROOT_TOWN_STATE, 4
 	
+	// === CONFIGURAR PONTO DE RESPAWN (HEAL LOCATION) ===
 	checkplayergender
 	compare VAR_RESULT, MALE
 	goto_if_eq LittlerootTown_01_WarpMale
@@ -66,6 +67,10 @@ LittlerootTown_01_JirachiWarp::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	
+	// *** IMPORTANTE: Define o respawn para a casa da May ***
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
+	
 	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
 	waitstate
 	release
@@ -76,12 +81,16 @@ LittlerootTown_01_WarpMale::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	
+	// *** IMPORTANTE: Define o respawn para a casa do Brendan ***
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
+	
 	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
 	waitstate
 	release
 	end
 
-	LittlerootTown_Movement_JirachiCircleStart:
+LittlerootTown_Movement_JirachiCircleStart:
 	walk_left
 	walk_left
 	walk_down
@@ -117,16 +126,26 @@ LittlerootTown_Movement_JirachiSpin:
 LittlerootTown_01_Stay::
 	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
 	closemessage
-	setflag FLAG_HIDE_MOSSDEEP_COMET
+	
+	// === CONFIGURAÇÃO CRÍTICA ===
+	// 1. Setar o respawn ANTES de qualquer coisa
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	
+	// 2. Flags essenciais
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
 	setflag FLAG_SET_WALL_CLOCK
+	setflag FLAG_RESCUED_BIRCH
+	setflag FLAG_ADVENTURE_STARTED
+	
 	setvar VAR_LITTLEROOT_INTRO_STATE, 7
 	setvar VAR_LITTLEROOT_TOWN_STATE, 0
+	
+	// 3. Warp direto
 	fadescreen FADE_TO_BLACK
 	delay 40
-	warp MAP_MOSSDEEP01, 28, 38  // ← Coordenadas do Jirachi (terra firme)
+	warp MAP_MOSSDEEP01, 28, 38
 	waitstate
 	release
 	end

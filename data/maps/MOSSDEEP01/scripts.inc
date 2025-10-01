@@ -10,15 +10,21 @@
 
 MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MOSSDEEP01_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, MOSSDEEP01_OnResume
 	.byte 0
 
 MOSSDEEP01_OnTransition:
-	@ Sempre esconde o meteoro na transição (ele só aparece no script)
+	// FORÇAR RESPAWN - garantir que está setado
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	
+	// Resto do código normal
 	call MOSSDEEP01_EventScript_HideComet
-	@ Esconde itens já coletados
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
-	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2
+	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
+	end
+
+MOSSDEEP01_OnResume:
 	end
 
 MOSSDEEP01_EventScript_HideComet::
@@ -315,3 +321,30 @@ MOSSDEEP01_Text_AlreadyCollected:
 	.string "Nothing here anymore...$"
 
 
+// ====================================================================
+// HEALER NPC SCRIPT
+// ====================================================================
+
+MOSSDEEP01_EventScript_Healer::
+	lock
+	faceplayer
+	msgbox MOSSDEEP01_Text_HealerWelcome, MSGBOX_DEFAULT
+	playfanfare MUS_HEAL
+	msgbox MOSSDEEP01_Text_Healing, MSGBOX_DEFAULT
+	waitfanfare
+	special HealPlayerParty
+	msgbox MOSSDEEP01_Text_HealedComplete, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_Text_HealerWelcome:
+	.string "Survivor: You look tired!\n"
+	.string "Let me heal your Pokémon.$"
+
+MOSSDEEP01_Text_Healing:
+	.string "Using residual energies from\n"
+	.string "the meteor to heal...$"
+
+MOSSDEEP01_Text_HealedComplete:
+	.string "Done! Your Pokémon are\n"
+	.string "fully recovered!$"

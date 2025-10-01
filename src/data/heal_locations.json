@@ -180,6 +180,13 @@
       "respawn_y": 20
     },
     {
+      "id": "HEAL_LOCATION_MOSSDEEP_01",
+      "map": "MAP_MOSSDEEP01",
+      "x": 15,
+      "y": 10,
+      "respawn_map": "MAP_MOSSDEEP01"
+    },
+    {
       "id": "HEAL_LOCATION_BATTLE_FRONTIER_OUTSIDE_EAST",
       "map": "MAP_BATTLE_FRONTIER_OUTSIDE_EAST",
       "x": 3,
@@ -189,3 +196,6 @@
     }
   ]
 }
+
+
+

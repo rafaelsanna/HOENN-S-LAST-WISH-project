@@ -1162,3 +1162,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LITTLEROOT_TOWN_01/scripts.inc"
 
 	.include "data/maps/MOSSDEEP01/scripts.inc"
+
+	.include "data/maps/Littleroottown_House01/scripts.inc"
