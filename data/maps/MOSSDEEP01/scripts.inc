@@ -7,6 +7,8 @@
 .equiv LOCALID_TIME_GEAR_1, 2
 .equiv LOCALID_TIME_GEAR_2, 3
 .equiv LOCALID_TIME_GEAR_3, 4
+.equiv LOCALID_CELEBI_STATIC, 8      // Celebi estático
+.equiv LOCALID_CELEBI_FOLLOWER, 14   // Celebi que segue
 
 MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MOSSDEEP01_OnTransition
@@ -16,6 +18,10 @@ MOSSDEEP01_MapScripts::
 MOSSDEEP01_OnTransition:
 	// FORÇAR RESPAWN - garantir que está setado
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
+
+	// === CONFIGURAR VISIBILIDADE DOS CELEBIS ===
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
+	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	
 	// Resto do código normal
 	call MOSSDEEP01_EventScript_HideComet
@@ -23,6 +29,11 @@ MOSSDEEP01_OnTransition:
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
 	end
+
+// Adicione esta função nova:
+MOSSDEEP01_EventScript_HideFollowerCelebi::
+	setflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER
+	return
 
 MOSSDEEP01_OnResume:
 	end
@@ -410,44 +421,29 @@ MOSSDEEP01_EventScript_Celebi::
 	lock
 	faceplayer
 	
-	// Verificar se já resgatou o Celebi
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiFollowing
-	
-	// Primeira interação
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
 	closemessage
-	
-	// Celebi usa seus poderes!
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
 	closemessage
 	
-	// FLASH BRANCO DUPLO
+	// FLASH BRANCO
 	playse SE_M_HYPER_BEAM
 	fadescreenspeed FADE_TO_WHITE, 4
+	
+	// === TROCA: Some estático, aparece follower ===
+	removeobject LOCALID_CELEBI_STATIC
+	clearflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER  // MOSTRA O FOLLOWER!
+	
 	delay 30
 	fadescreenspeed FADE_FROM_WHITE, 4
-	delay 15
 	
-	playse SE_M_PSYBEAM
-	fadescreenspeed FADE_TO_WHITE, 4
-	delay 20
-	fadescreenspeed FADE_FROM_WHITE, 4
-	
-	// Desativa os Mightyenas
 	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
 	
-	// Mensagem de sucesso
 	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
 	closemessage
-	
 	msgbox MOSSDEEP01_Text_CelebiFollows, MSGBOX_DEFAULT
 	closemessage
 	
-	release
-	end
-
-MOSSDEEP01_EventScript_CelebiFollowing::
-	msgbox MOSSDEEP01_Text_CelebiHappy, MSGBOX_DEFAULT
 	release
 	end
 
@@ -471,3 +467,8 @@ MOSSDEEP01_Text_CelebiFollows:
 MOSSDEEP01_Text_CelebiHappy:
 	.string "CELEBI: Bi bi!\n"
 	.string "I feel safe with you!$"
+
+MOSSDEEP01_EventScript_HideStaticCelebi::
+	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
+	return
+

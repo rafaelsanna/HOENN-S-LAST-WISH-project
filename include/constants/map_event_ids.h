@@ -459,6 +459,8 @@
 #define item_quest_02 3
 #define item_quest_03 4
 #define MillenniumComet01 5
+#define CELEBI_STATIC 8
+#define CELEBI_FOLLOWER 14
 
 // MAP_MOSSDEEP_CITY_HOUSE2
 #define LOCALID_MOSSDEEP_HOUSE_WINGULL 3
