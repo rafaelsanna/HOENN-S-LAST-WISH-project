@@ -126,6 +126,10 @@ LittlerootTown_Movement_JirachiSpin:
 LittlerootTown_01_Stay::
 	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
 	closemessage
+
+	// === DAR RUNNING SHOES TAMBÉM ===
+	setflag FLAG_SYS_B_DASH
+	setflag FLAG_RECEIVED_RUNNING_SHOES
 	
 	// === CONFIGURAÇÃO CRÍTICA ===
 	// 1. Setar o respawn ANTES de qualquer coisa
@@ -145,7 +149,7 @@ LittlerootTown_01_Stay::
 	// 3. Warp direto
 	fadescreen FADE_TO_BLACK
 	delay 40
-	warp MAP_MOSSDEEP01, 28, 38
+	warp MAP_MOSSDEEP02, 13, 8
 	waitstate
 	release
 	end

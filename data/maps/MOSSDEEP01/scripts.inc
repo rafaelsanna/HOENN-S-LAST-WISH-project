@@ -431,7 +431,6 @@ MOSSDEEP01_EventScript_Celebi::
 	fadescreenspeed FADE_TO_WHITE, 4
 	
 	// === TROCA: Some estático, aparece follower ===
-	removeobject LOCALID_CELEBI_STATIC
 	clearflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER  // MOSTRA O FOLLOWER!
 	
 	delay 30
