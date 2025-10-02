@@ -1,9 +1,9 @@
 // ====================================================================
-// PRÓLOGO - CUTSCENE DA AVÓ E TERREMOTO
+// PROLOGUE - GRANDMA & GRANDPA CUTSCENE & EARTHQUAKE
 // ====================================================================
 
-.equiv LOCALID_AVO, 1
-.equiv LOCALID_AVO2, 2
+.equiv LOCALID_GRANDMA, 1
+.equiv LOCALID_GRANDPA, 2
 
 MOSSDEEP02_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MOSSDEEP02_OnFrame
@@ -17,119 +17,182 @@ MOSSDEEP02_EventScript_StartPrologue::
 	setvar VAR_TEMP_0, 1
 	lockall
 	
-	// Player aparece da tela preta
-	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP02_Movement_PlayerAppear
-	waitmovement 0
+	// Small delay for scene setup
+	delay 30
 	
-	// Avó se aproxima preocupada
-	applymovement LOCALID_AVO, MOSSDEEP02_Movement_AvoApproach
-	waitmovement 0
-	
+	// Grandma greets the player
 	msgbox MOSSDEEP02_Text_GrandmaWelcome, MSGBOX_DEFAULT
 	closemessage
 	
-	// === TERREMOTO COMEÇA === (COMENTADO POR ENQUANTO)
+	delay 20
+	
+	// === EARTHQUAKE BEGINS ===
 	msgbox MOSSDEEP02_Text_EarthquakeWarning, MSGBOX_DEFAULT
-	closemessage
 	
-	/*
-	// Efeito de tremor na tela - COMENTADO
-	playse SE_M_ROCK_THROW
-	special ShakeScreen
+	// Screen shake effect (usando ShakeCamera ao invés de ShakeScreen)
+	setvar VAR_0x8004, 2
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 5
+	setvar VAR_0x8007, 10
+	special ShakeCamera
 	waitstate
-	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP02_Movement_Earthquake
-	applymovement LOCALID_AVO, MOSSDEEP02_Movement_Earthquake
-	waitmovement 0
-	*/
-
-	// Avó fala sobre a destruição
+	playse SE_M_ROCK_THROW
+	
+	closemessage
+	
+	// Another tremor
+	setvar VAR_0x8004, 3
+	setvar VAR_0x8005, 3
+	setvar VAR_0x8006, 6
+	setvar VAR_0x8007, 8
+	special ShakeCamera
+	waitstate
+	playse SE_M_ROCK_THROW
+	
+	delay 20
+	
+	// Grandma explains the situation
 	msgbox MOSSDEEP02_Text_HoennDestroyed, MSGBOX_DEFAULT
+	
+	// Subtle tremor during dialogue
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 2
+	setvar VAR_0x8007, 5
+	special ShakeCamera
+	waitstate
+	
+	closemessage
+	delay 20
+	
+	// Grandpa speaks
+	msgbox MOSSDEEP02_Text_GrandpaLegend, MSGBOX_DEFAULT
 	closemessage
 	
-	// Avó conta a lenda
-	msgbox MOSSDEEP02_Text_LegendOfCelebi, MSGBOX_DEFAULT
-	closemessage
+	delay 20
 	
-	// Player decide investigar
+	// Player's determination
 	msgbox MOSSDEEP02_Text_PlayerDecision, MSGBOX_DEFAULT
 	closemessage
 	
-	// Avó dá item importante (opcional)
-	// giveitem ITEM_OLD_AMULET, 1
+	delay 15
 	
+	// Grandma wishes good luck
 	msgbox MOSSDEEP02_Text_GoodLuck, MSGBOX_DEFAULT
 	closemessage
 	
-	// Avó volta para posição original
-	applymovement LOCALID_AVO, MOSSDEEP02_Movement_AvoReturn
-	waitmovement 0
-	
+	setflag FLAG_TEMP_1
 	releaseall
 	end
 
 // ====================================================================
-// MOVIMENTOS
+// GRANDMA - AFTER PROLOGUE (OPTIONAL DIALOGUE)
 // ====================================================================
 
-MOSSDEEP02_Movement_PlayerAppear:
-	walk_up
-	walk_up
-	walk_up
-	step_end
+MOSSDEEP02_EventScript_Grandma::
+	lock
+	faceplayer
+	goto_if_set FLAG_TEMP_1, MOSSDEEP02_EventScript_GrandmaAfterPrologue
+	msgbox MOSSDEEP02_Text_GrandmaWelcome, MSGBOX_DEFAULT
+	release
+	end
 
-MOSSDEEP02_Movement_AvoApproach:
-	walk_down
-	walk_down
-	walk_left
-	walk_left
-	step_end
-
-MOSSDEEP02_Movement_Earthquake:
-	walk_in_place_fast_down
-	delay_4
-	walk_in_place_fast_up
-	delay_4
-	step_end
-
-MOSSDEEP02_Movement_AvoReturn:
-	walk_right
-	walk_right
-	walk_up
-	walk_up
-	step_end
+MOSSDEEP02_EventScript_GrandmaAfterPrologue::
+	msgbox MOSSDEEP02_Text_GrandmaReminder, MSGBOX_DEFAULT
+	release
+	end
 
 // ====================================================================
-// TEXTS (ENGLISH)
+// GRANDPA - AFTER PROLOGUE (OPTIONAL DIALOGUE)
+// ====================================================================
+
+MOSSDEEP02_EventScript_Grandpa::
+	lock
+	faceplayer
+	goto_if_set FLAG_TEMP_1, MOSSDEEP02_EventScript_GrandpaAfterPrologue
+	msgbox MOSSDEEP02_Text_GrandpaLegend, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP02_EventScript_GrandpaAfterPrologue::
+	msgbox MOSSDEEP02_Text_GrandpaEncouragement, MSGBOX_DEFAULT
+	release
+	end
+
+// ====================================================================
+// MOM - OPTIONAL DIALOGUE (se você tiver uma mãe no mapa)
+// ====================================================================
+
+MOSSDEEP02_EventScript_Mom::
+	lock
+	faceplayer
+	goto_if_set FLAG_TEMP_1, MOSSDEEP02_EventScript_MomAfterPrologue
+	msgbox MOSSDEEP02_Text_MomWorried, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP02_EventScript_MomAfterPrologue::
+	msgbox MOSSDEEP02_Text_MomEncouragement, MSGBOX_DEFAULT
+	release
+	end
+
+// ====================================================================
+// DIALOGUE TEXT
 // ====================================================================
 
 MOSSDEEP02_Text_GrandmaWelcome:
-	.string "Grandma: You're finally awake, child!\n"
-	.string "We were so worried about you...$"
+	.string "Grandma: Oh, you're awake!\p"
+	.string "Thank goodness...\n"
+	.string "You've been having nightmares.$"
 
 MOSSDEEP02_Text_EarthquakeWarning:
-	.string "Grandma: What was that?\n"
-	.string "The ground is shaking again!$"
+	.string "Grandma: Wait... do you feel that?\p"
+	.string "Not again!$"
 
 MOSSDEEP02_Text_HoennDestroyed:
-	.string "Grandma: Since the Great Tragedy,\n"
-	.string "Hoenn has never been the same.\p"
-	.string "Earthquakes, storms...\n"
-	.string "The region is dying.$"
+	.string "Grandma: Ever since the Great Disaster,\n"
+	.string "these quakes won't stop...\p"
+	.string "The land is tearing itself apart.\n"
+	.string "Storms rage without end.\p"
+	.string "Hoenn is dying, child.\n"
+	.string "And no one knows why.$"
 
-MOSSDEEP02_Text_LegendOfCelebi:
-	.string "Grandma: My great-grandfather came\n"
-	.string "from Johto before the tragedy.\p"
-	.string "He built an altar atop Mossdeep\n"
-	.string "for Celebi.\p"
-	.string "He said this mythical creature\n"
-	.string "can travel through time...$"
+MOSSDEEP02_Text_GrandpaLegend:
+	.string "Grandpa: My grandfather fled\n"
+	.string "from Johto long ago.\p"
+	.string "He built an altar on the northern cliffs\n"
+	.string "and spoke of Celebi...\p"
+	.string "A guardian that can travel through time.\p"
+	.string "Perhaps the answers lie there.$"
 
 MOSSDEEP02_Text_PlayerDecision:
-	.string "{PLAYER} feels a chill...\n"
-	.string "Those dreams...\p"
-	.string "Need to investigate the altar!$"
+	.string "{PLAYER} feels a strange pull...\p"
+	.string "Those recurring dreams...\n"
+	.string "The ruined altar...\p"
+	.string "There has to be a connection.$"
 
 MOSSDEEP02_Text_GoodLuck:
-	.string "Grandma: Be careful, child!\n"
-	.string "The ruins are dangerous.$"
+	.string "Grandma: Please, be careful out there.\p"
+	.string "The path to the ruins is treacherous.$"
+
+MOSSDEEP02_Text_GrandmaReminder:
+	.string "Grandma: Take care of yourself,\n"
+	.string "and remember what we told you.$"
+
+MOSSDEEP02_Text_GrandpaEncouragement:
+	.string "Grandpa: You have our blessing.\n"
+	.string "Go find the truth, {PLAYER}.$"
+
+// MOM texts (caso você tenha uma mãe no mapa)
+MOSSDEEP02_Text_MomWorried:
+	.string "Mom: You look pale, sweetheart.\p"
+	.string "Those nightmares again?\n"
+	.string "Maybe you should rest a bit more...$"
+
+MOSSDEEP02_Text_MomEncouragement:
+	.string "Mom: I know you feel you must do this.\p"
+	.string "Just promise me you'll come back safe.$"
+
+
+
 

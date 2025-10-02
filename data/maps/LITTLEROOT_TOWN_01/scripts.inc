@@ -146,26 +146,22 @@ LittlerootTown_01_Stay::
 	setvar VAR_LITTLEROOT_INTRO_STATE, 7
 	setvar VAR_LITTLEROOT_TOWN_STATE, 0
 	
-	// 3. Warp direto
+	// 3. Fade to black with longer duration (wake up effect)
 	fadescreen FADE_TO_BLACK
-	delay 40
+	delay 60               // Aumentado de 40 para 60
+	
+	// 4. Warp to bedroom
 	warp MAP_MOSSDEEP02, 13, 8
 	waitstate
+	
+	// 5. Stay black for longer (sleeping effect)
+	delay 80               // Tela preta adicional após o warp
+	
+	// 6. Slow fade in (waking up)
+	fadescreenspeed FADE_FROM_BLACK, 4    // Fade lento (4 = bem devagar)
+	
 	release
 	end
-
-LittlerootTown_CelebiScript::
-	lock
-	faceplayer
-	random 3
-	switch VAR_RESULT
-	case 0, LittlerootTown_Celebi_Case0
-	case 1, LittlerootTown_Celebi_Case1  
-	case 2, LittlerootTown_Celebi_Case2
-	msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
-	release
-	end
-
 LittlerootTown_Celebi_Case0::
 	msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
 	release

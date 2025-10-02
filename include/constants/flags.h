@@ -51,8 +51,8 @@
 #define FLAG_MOSSDEEP_CELEBI_RESCUED      0x267
 #define FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER    0x268
 #define FLAG_HIDE_MOSSDEEP_CELEBI_STATIC    0x269
-#define FLAG_UNUSED_0x028    0x28 // Unused Flag
-#define FLAG_UNUSED_0x029    0x29 // Unused Flag
+#define FLAG_PROLOGUE_COMPLETED    0x270
+#define FLAG_MOSSDEEP_GRANDMA_DIALOGUE    0x271
 #define FLAG_UNUSED_0x02A    0x2A // Unused Flag
 #define FLAG_UNUSED_0x02B    0x2B // Unused Flag
 #define FLAG_UNUSED_0x02C    0x2C // Unused Flag

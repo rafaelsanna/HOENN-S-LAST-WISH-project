@@ -30,10 +30,10 @@ enum {
 };
 
 #define VERSION_BANNER_RIGHT_TILEOFFSET 64
-#define VERSION_BANNER_LEFT_X 88
-#define VERSION_BANNER_RIGHT_X 152
+#define VERSION_BANNER_LEFT_X 98
+#define VERSION_BANNER_RIGHT_X 162
 #define VERSION_BANNER_Y 2
-#define VERSION_BANNER_Y_GOAL 58
+#define VERSION_BANNER_Y_GOAL 64
 #define START_BANNER_X 128
 
 #define CLEAR_SAVE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_UP)
@@ -384,7 +384,7 @@ static void SpriteCB_VersionBannerLeft(struct Sprite *sprite)
             sprite->y++;
         if (sprite->sAlphaBlendIdx != 0)
             sprite->sAlphaBlendIdx--;
-        SetGpuReg(REG_OFFSET_BLDALPHA, gTitleScreenAlphaBlend[sprite->sAlphaBlendIdx]);
+        //SetGpuReg(REG_OFFSET_BLDALPHA, gTitleScreenAlphaBlend[sprite->sAlphaBlendIdx]);
     }
 }
 
@@ -596,6 +596,7 @@ void CB2_InitTitleScreen(void)
         break;
     case 1:
         // bg2
+        /*COMENTAR AS PROX DUAS P TIRAR O TITULO; usar um blend pra botar transparência*/
         DecompressDataWithHeaderVram(gTitleScreenPokemonLogoGfx, (void *)(BG_CHAR_ADDR(0)));
         DecompressDataWithHeaderVram(gTitleScreenPokemonLogoTilemap, (void *)(BG_SCREEN_ADDR(9)));
         LoadPalette(gTitleScreenBgPalettes, BG_PLTT_ID(0), 15 * PLTT_SIZE_4BPP);
@@ -766,7 +767,7 @@ static void Task_TitleScreenPhase2(u8 taskId)
         gTasks[taskId].tPointless++;
     if (!(gTasks[taskId].tCounter & 1) && gTasks[taskId].tBg2Y != 0)
         gTasks[taskId].tBg2Y++;
-            
+
     // Slide Pokémon logo up
     yPos = gTasks[taskId].tBg2Y * 256;
     SetGpuReg(REG_OFFSET_BG2Y_L, yPos);
