@@ -7,8 +7,11 @@
 .equiv LOCALID_TIME_GEAR_1, 2
 .equiv LOCALID_TIME_GEAR_2, 3
 .equiv LOCALID_TIME_GEAR_3, 4
-.equiv LOCALID_CELEBI_STATIC, 8      // Celebi estático
-.equiv LOCALID_CELEBI_FOLLOWER, 14   // Celebi que segue
+.equiv LOCALID_CELEBI_STATIC, 8
+.equiv LOCALID_CELEBI_FOLLOWER, 14
+.equiv LOCALID_MIGHTYENA, 6
+.equiv LOCALID_POOCHYENA, 7
+.equiv LOCALID_ZIGZAGOON, 9
 
 MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MOSSDEEP01_OnTransition
@@ -16,21 +19,35 @@ MOSSDEEP01_MapScripts::
 	.byte 0
 
 MOSSDEEP01_OnTransition:
-	// FORÇAR RESPAWN - garantir que está setado
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 
-	// === CONFIGURAR VISIBILIDADE DOS CELEBIS ===
+	// === CELEBI STATIC/FOLLOWER CONTROL ===
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	
-	// Resto do código normal
+	// === DESATIVAR MIGHTYENAS SE CELEBI FOI RESGATADO ===
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DisableMightyenas
+	
+	// === METEORO - Sempre escondido no início, só aparece na cutscene ===
 	call MOSSDEEP01_EventScript_HideComet
+	
+	// === ITENS CONTROL ===
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
 	end
 
-// Adicione esta função nova:
+MOSSDEEP01_EventScript_DisableMightyenas::
+	// Remove o comportamento de trainer das Mightyenas
+	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
+	setobjectmovementtype LOCALID_POOCHYENA, MOVEMENT_TYPE_WANDER_AROUND
+	setobjectmovementtype LOCALID_ZIGZAGOON, MOVEMENT_TYPE_WANDER_AROUND
+	return
+
+MOSSDEEP01_EventScript_HideStaticCelebi::
+	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
+	return
+
 MOSSDEEP01_EventScript_HideFollowerCelebi::
 	setflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER
 	return
@@ -62,9 +79,6 @@ MOSSDEEP01_EventScript_DirectWarp::
 	lock
 	faceplayer
 	
-	// PARA TESTE: Pular coleta de itens - REMOVER DEPOIS
-	goto MOSSDEEP01_EventScript_QuestComplete
-
 	// Verificar se já completou a quest
 	goto_if_set FLAG_MOSSDEEP_QUEST_COMPLETED, MOSSDEEP01_EventScript_AlreadyCompleted
 	
@@ -93,7 +107,7 @@ MOSSDEEP01_EventScript_QuestComplete::
 	// Marcar quest como completa
 	setflag FLAG_MOSSDEEP_QUEST_COMPLETED
 	
-	// === CUTSCENE DO METEORO COM CAMERA ===
+	// === CUTSCENE DO METEORO ===
 	msgbox MOSSDEEP01_Text_CometAppears, MSGBOX_DEFAULT
 	closemessage
 	
@@ -101,31 +115,25 @@ MOSSDEEP01_EventScript_QuestComplete::
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
 	
-	// Aparecer o meteoro (bem longe à direita, fora da tela)
+	// REMOVER A FLAG QUE ESCONDE O METEORO
 	clearflag FLAG_HIDE_MOSSDEEP_COMET
+	
+	// Aparecer o meteoro
 	addobject LOCALID_MILLENNIUM_COMET
 	
-	// Delay dramático
 	delay 60
 	
-	// Som do meteoro chegando
+	// Som do meteoro
 	playse SE_M_SACRED_FIRE
 	
-	// ========== SISTEMA DE CAMERA ==========
-	// Ativar objeto de camera
+	// Camera acompanha meteoro
 	special SpawnCameraObject
-	
-	// Camera acompanha o meteoro - MOVIMENTO LONGO PARA EFEITO DRAMÁTICO
 	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
 	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometCrossingSky
 	waitmovement 0
-	
-	// Remover objeto de camera (volta pro player)
 	special RemoveCameraObject
 	
-	// ========================================
-	
-	// Efeito final explosivo
+	// Efeito final
 	playse SE_M_EXPLOSION
 	fadescreenspeed FADE_TO_WHITE, 8
 	delay 40
@@ -150,20 +158,10 @@ MOSSDEEP01_EventScript_QuestComplete::
 	end
 
 // ====================================================================
-// MOVIMENTO DO METEORO E CÂMERA (VERSÃO LONGA - DRAMÁTICA)
+// MOVIMENTO DO METEORO E CÂMERA
 // ====================================================================
 
 MOSSDEEP01_Movement_CameraFollowComet:
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
@@ -207,20 +205,10 @@ MOSSDEEP01_Movement_CometCrossingSky:
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
-	walk_fast_left
 	step_end
 
 // ====================================================================
-// ITENS COLECIONÁVEIS - TIME GEARS (FRAGMENTOS DO TEMPO)
+// ITENS COLECIONÁVEIS - TIME GEARS
 // ====================================================================
 
 MOSSDEEP01_EventScript_Item1::
@@ -270,6 +258,149 @@ MOSSDEEP01_EventScript_Item3::
 
 MOSSDEEP01_EventScript_Item_AlreadyCollected::
 	msgbox MOSSDEEP01_Text_AlreadyCollected, MSGBOX_DEFAULT
+	release
+	end
+
+// ====================================================================
+// CELEBI - DESATIVA MIGHTYENAS E SEGUE O PLAYER
+// ====================================================================
+
+MOSSDEEP01_EventScript_Celebi::
+	lock
+	faceplayer
+	
+	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	closemessage
+	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
+	closemessage
+	
+	// FLASH BRANCO
+	playse SE_M_HYPER_BEAM
+	fadescreenspeed FADE_TO_WHITE, 4
+	
+	// === TROCA CELEBIS ===
+	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
+	clearflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER
+	
+	// Remover o Celebi estático e adicionar o follower
+	removeobject LOCALID_CELEBI_STATIC
+	addobject LOCALID_CELEBI_FOLLOWER
+	
+	delay 30
+	fadescreenspeed FADE_FROM_WHITE, 4
+	
+	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
+	
+	// DESATIVAR COMPORTAMENTO DE TRAINER DAS MIGHTYENAS
+	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
+	setobjectmovementtype LOCALID_POOCHYENA, MOVEMENT_TYPE_WANDER_AROUND
+	setobjectmovementtype LOCALID_ZIGZAGOON, MOVEMENT_TYPE_WANDER_AROUND
+	
+	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
+	closemessage
+	msgbox MOSSDEEP01_Text_CelebiFollows, MSGBOX_DEFAULT
+	closemessage
+	
+	release
+	end
+
+// ====================================================================
+// MIGHTYENAS - ATACAM OU FICAM CALMAS
+// ====================================================================
+
+MOSSDEEP01_EventScript_Mightyena::
+	// Se Celebi foi resgatado, não faz nada
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDoNothing
+	
+	// Sistema de detecção com exclamação
+	lockall
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	delay 20
+	
+	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
+	closemessage
+	
+	playse SE_M_BITE
+	fadescreen FADE_TO_BLACK
+	delay 60
+	
+	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
+	closemessage
+	
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	warp MAP_MOSSDEEP01, 28, 38
+	waitstate
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_MightyenaDoNothing::
+	end
+
+// ====================================================================
+// SURVIVOR NPC - TRAPPED BY MIGHTYENAS
+// ====================================================================
+
+.equiv LOCALID_SURVIVOR, 15
+
+MOSSDEEP01_EventScript_Survivor::
+	lock
+	faceplayer
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_SurvivorAfterCelebi
+	msgbox MOSSDEEP01_Text_SurvivorTrapped, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_EventScript_SurvivorAfterCelebi::
+	goto_if_set FLAG_TEMP_14, MOSSDEEP01_EventScript_SurvivorMoved
+	msgbox MOSSDEEP01_Text_SurvivorAmazed, MSGBOX_DEFAULT
+	closemessage
+	
+	// Survivor caminha até perto dos Mightyenas
+	msgbox MOSSDEEP01_Text_SurvivorGoing, MSGBOX_DEFAULT
+	closemessage
+	
+	applymovement LOCALID_SURVIVOR, MOSSDEEP01_Movement_SurvivorGoUp
+	waitmovement 0
+	
+	setflag FLAG_TEMP_14
+	release
+	end
+
+MOSSDEEP01_EventScript_SurvivorMoved::
+	msgbox MOSSDEEP01_Text_SurvivorHappy, MSGBOX_DEFAULT
+	release
+	end
+
+// ====================================================================
+// SURVIVOR MOVEMENT - 9 tiles para cima
+// ====================================================================
+
+MOSSDEEP01_Movement_SurvivorGoUp:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+MOSSDEEP01_EventScript_Healer::
+	lock
+	faceplayer
+	msgbox MOSSDEEP01_Text_HealerWelcome, MSGBOX_DEFAULT
+	playfanfare MUS_HEAL
+	msgbox MOSSDEEP01_Text_Healing, MSGBOX_DEFAULT
+	waitfanfare
+	special HealPlayerParty
+	msgbox MOSSDEEP01_Text_HealedComplete, MSGBOX_DEFAULT
 	release
 	end
 
@@ -331,121 +462,6 @@ MOSSDEEP01_Text_ObtainedTimeGear3:
 MOSSDEEP01_Text_AlreadyCollected:
 	.string "Nothing here anymore...$"
 
-
-// ====================================================================
-// HEALER NPC SCRIPT
-// ====================================================================
-
-MOSSDEEP01_EventScript_Healer::
-	lock
-	faceplayer
-	msgbox MOSSDEEP01_Text_HealerWelcome, MSGBOX_DEFAULT
-	playfanfare MUS_HEAL
-	msgbox MOSSDEEP01_Text_Healing, MSGBOX_DEFAULT
-	waitfanfare
-	special HealPlayerParty
-	msgbox MOSSDEEP01_Text_HealedComplete, MSGBOX_DEFAULT
-	release
-	end
-
-MOSSDEEP01_Text_HealerWelcome:
-	.string "Survivor: You look tired!\n"
-	.string "Let me heal your Pokémon.$"
-
-MOSSDEEP01_Text_Healing:
-	.string "Using residual energies from\n"
-	.string "the meteor to heal...$"
-
-MOSSDEEP01_Text_HealedComplete:
-	.string "Done! Your Pokémon are\n"
-	.string "fully recovered!$"
-
-// ====================================================================
-// NPCs INIMIGOS - ADICIONE NO FINAL DO SEU scripts.inc
-// ====================================================================
-
-// Defina os Local IDs dos inimigos (ajuste os números conforme seu mapa)
-.equiv LOCALID_MIGHTYENA, 6
-.equiv LOCALID_POOCHYENA, 7
-.equiv LOCALID_ZIGZAGOON, 8
-
-MOSSDEEP01_EventScript_Mightyena::
-	// Verificar se Celebi foi resgatado
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDisabled
-	
-	lockall
-	playse SE_PIN
-	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 20
-	
-	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
-	closemessage
-	
-	playse SE_M_BITE
-	fadescreen FADE_TO_BLACK
-	delay 60
-	
-	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
-	closemessage
-	
-	setrespawn HEAL_LOCATION_MOSSDEEP_01
-	warp MAP_MOSSDEEP01, 28, 38
-	waitstate
-	releaseall
-	end
-
-MOSSDEEP01_EventScript_MightyenaDisabled::
-	// Mightyenas foram desativados após resgatar Celebi
-	end
-
-MOSSDEEP01_Text_MightyenaAttack:
-	.string "Wild MIGHTYENA used CRUNCH!\p"
-	.string "It's super effective!$"
-
-MOSSDEEP01_Text_MightyenaBlackedOut:
-	.string "You blacked out!\p"
-	.string "Returning to safety...$"
-
-// ====================================================================
-// CELEBI - DESATIVA MIGHTYENAS E SEGUE O PLAYER
-// ====================================================================
-
-// REMOVIDO: .equiv LOCALID_CELEBI, 8  (já está definido no início)
-
-// ====================================================================
-// CELEBI - DESATIVA MIGHTYENAS E SEGUE O PLAYER
-// ====================================================================
-
-MOSSDEEP01_EventScript_Celebi::
-	lock
-	faceplayer
-	
-	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
-	closemessage
-	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
-	closemessage
-	
-	// FLASH BRANCO
-	playse SE_M_HYPER_BEAM
-	fadescreenspeed FADE_TO_WHITE, 4
-	
-	// === TROCA: Some estático, aparece follower ===
-	clearflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER  // MOSTRA O FOLLOWER!
-	
-	delay 30
-	fadescreenspeed FADE_FROM_WHITE, 4
-	
-	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
-	
-	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
-	closemessage
-	msgbox MOSSDEEP01_Text_CelebiFollows, MSGBOX_DEFAULT
-	closemessage
-	
-	release
-	end
-
 MOSSDEEP01_Text_CelebiHelp:
 	.string "CELEBI: Help! Those Mightyena\n"
 	.string "are hunting me!\p"
@@ -463,11 +479,57 @@ MOSSDEEP01_Text_CelebiFollows:
 	.string "CELEBI: Thank you!\n"
 	.string "I'll follow you to safety!$"
 
-MOSSDEEP01_Text_CelebiHappy:
-	.string "CELEBI: Bi bi!\n"
-	.string "I feel safe with you!$"
+MOSSDEEP01_Text_MightyenaAttack:
+	.string "Wild MIGHTYENA used CRUNCH!\p"
+	.string "It's super effective!$"
 
-MOSSDEEP01_EventScript_HideStaticCelebi::
-	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
-	return
+MOSSDEEP01_Text_MightyenaBlackedOut:
+	.string "You blacked out!\p"
+	.string "Returning to safety...$"
+
+MOSSDEEP01_Text_MightyenaCalm:
+	.string "Woof woof...\p"
+	.string "I can even pet them now...$"
+
+MOSSDEEP01_Text_HealerWelcome:
+	.string "Survivor: You look tired!\n"
+	.string "Let me heal your Pokémon.$"
+
+MOSSDEEP01_Text_Healing:
+	.string "Using residual energies from\n"
+	.string "the meteor to heal...$"
+
+MOSSDEEP01_Text_HealedComplete:
+	.string "Done! Your Pokémon are\n"
+	.string "fully recovered!$"
+
+// ====================================================================
+// SURVIVOR NPC TEXTS
+// ====================================================================
+
+MOSSDEEP01_Text_SurvivorTrapped:
+	.string "Survivor: Watch out!\n"
+	.string "Those Mightyena are attacking\l"
+	.string "everyone who passes by!\p"
+	.string "I've been trapped down here\n"
+	.string "for days...\p"
+	.string "I can't get back home!$"
+
+MOSSDEEP01_Text_SurvivorAmazed:
+	.string "Survivor: What... what was that\n"
+	.string "incredible light?!\p"
+	.string "The Mightyena... they're friendly now!$"
+
+MOSSDEEP01_Text_SurvivorGoing:
+	.string "Survivor: I can finally go check on them!\n"
+	.string "Let me see...$"
+
+MOSSDEEP01_Text_SurvivorHappy:
+	.string "Survivor: Amazing! I can even pet them!\p"
+	.string "Was it that strange Pokémon\n"
+	.string "following you?\p"
+	.string "I didn't know people could still\n"
+	.string "be Pokémon trainers...\p"
+	.string "Thank you so much!$"
+
 

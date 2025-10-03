@@ -2,7 +2,7 @@
   "map_sections": [
     {
       "id": "MAPSEC_LITTLEROOT_TOWN",
-      "name": "LITTLEROOT TOWN",
+      "name": "DREAM HELM",
       "x": 4,
       "y": 11,
       "width": 1,
@@ -106,7 +106,7 @@
     },
     {
       "id": "MAPSEC_MOSSDEEP_CITY",
-      "name": "house",
+      "name": "MOSSDEEP RUINS",
       "x": 24,
       "y": 5,
       "width": 2,
