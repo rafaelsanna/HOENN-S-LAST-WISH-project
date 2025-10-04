@@ -33,10 +33,9 @@ MOSSDEEP01_EventScript_Prologue::
 	setvar VAR_TEMP_0, 1
 	lockall
 	
-	// Tela já está preta do warp do Jirachi
 	delay 120
 	
-	// === PRIMEIRO TREMOR (TELA PRETA) ===
+	// === TREMORES (TELA PRETA) ===
 	playse SE_M_ROCK_THROW
 	setvar VAR_0x8004, 3
 	setvar VAR_0x8005, 3
@@ -46,7 +45,6 @@ MOSSDEEP01_EventScript_Prologue::
 	waitstate
 	delay 80
 	
-	// === SEGUNDO TREMOR MAIS FORTE (AINDA COM TELA PRETA) ===
 	playse SE_M_EARTHQUAKE
 	setvar VAR_0x8004, 4
 	setvar VAR_0x8005, 4
@@ -56,12 +54,11 @@ MOSSDEEP01_EventScript_Prologue::
 	waitstate
 	delay 100
 	
-	// === JOGADOR SAI DA BARRACA SOZINHO (tela ainda preta) ===
+	// === JOGADOR SAI DA BARRACA ===
 	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_ExitTent
 	waitmovement 0
 	
 	delay 60
-	
 	setflag FLAG_TEMP_1
 	
 	// === AVÓ APARECE E FALA ===
@@ -70,12 +67,10 @@ MOSSDEEP01_EventScript_Prologue::
 	
 	msgbox MOSSDEEP01_Text_GrandmaWelcome, MSGBOX_DEFAULT
 	closemessage
-	
 	delay 20
 	
 	msgbox MOSSDEEP01_Text_EarthquakeWarning, MSGBOX_DEFAULT
 	
-	// Tremor durante o diálogo
 	setvar VAR_0x8004, 2
 	setvar VAR_0x8005, 2
 	setvar VAR_0x8006, 5
@@ -89,7 +84,6 @@ MOSSDEEP01_EventScript_Prologue::
 	
 	msgbox MOSSDEEP01_Text_HoennDestroyed, MSGBOX_DEFAULT
 	
-	// Tremor sutil
 	setvar VAR_0x8004, 1
 	setvar VAR_0x8005, 1
 	setvar VAR_0x8006, 2
@@ -102,7 +96,6 @@ MOSSDEEP01_EventScript_Prologue::
 	
 	msgbox MOSSDEEP01_Text_PlayerDecision, MSGBOX_DEFAULT
 	closemessage
-	
 	delay 15
 	
 	msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT
@@ -124,14 +117,12 @@ MOSSDEEP01_Movement_ExitTent:
 MOSSDEEP01_OnTransition:
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 
-	// === CELEBI STATIC/FOLLOWER CONTROL ===
+	// === CELEBI CONTROL ===
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
-	
-	// === DESATIVAR MIGHTYENAS SE CELEBI FOI RESGATADO ===
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DisableMightyenas
 	
-	// === METEORO - Sempre escondido no início, só aparece na cutscene ===
+	// === METEORO SEMPRE ESCONDIDO (só aparece na cutscene) ===
 	call MOSSDEEP01_EventScript_HideComet
 	
 	// === ITENS CONTROL ===
@@ -174,12 +165,17 @@ MOSSDEEP01_EventScript_HideItem3::
 	return
 
 // ====================================================================
-// NPC PRINCIPAL - JIRACHI (TELEPORTE PARA LITTLEROOT)
+// NPC PRINCIPAL - JIRACHI (QUEST COMPLETA = CUTSCENE + TELEPORTE)
 // ====================================================================
 
 MOSSDEEP01_EventScript_DirectWarp::
 	lock
 	faceplayer
+	
+	// === DEBUG: Pressione R para auto-completar os itens ===
+	checkitem ITEM_MACH_BIKE
+	compare VAR_RESULT, TRUE
+	goto_if_eq MOSSDEEP01_EventScript_DebugComplete
 	
 	// Verificar se já completou a quest
 	goto_if_set FLAG_MOSSDEEP_QUEST_COMPLETED, MOSSDEEP01_EventScript_AlreadyCompleted
@@ -189,7 +185,14 @@ MOSSDEEP01_EventScript_DirectWarp::
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_NeedMoreItems
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_NeedMoreItems
 	
-	// Todos os itens coletados!
+	// === QUEST COMPLETA - EXECUTAR CUTSCENE COMPLETA ===
+	goto MOSSDEEP01_EventScript_QuestComplete
+
+MOSSDEEP01_EventScript_DebugComplete::
+	msgbox MOSSDEEP01_Text_Debug, MSGBOX_DEFAULT
+	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_1
+	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_2
+	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_3
 	goto MOSSDEEP01_EventScript_QuestComplete
 
 MOSSDEEP01_EventScript_NeedMoreItems::
@@ -209,21 +212,115 @@ MOSSDEEP01_EventScript_QuestComplete::
 	// Marcar quest como completa
 	setflag FLAG_MOSSDEEP_QUEST_COMPLETED
 	
+	// ================================================================
+	// CUTSCENE DO METEORO (CÓDIGO DO DOCUMENTO ANTIGO)
+	// ================================================================
+	
+	msgbox MOSSDEEP01_Text_CometAppears, MSGBOX_DEFAULT
+	closemessage
+	
+	// Player olha para cima
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	
+	delay 30
+	
+	// === REMOVER A FLAG QUE ESCONDE O METEORO ===
+	clearflag FLAG_HIDE_MOSSDEEP_COMET
+	
+	// === APARECER O METEORO ===
+	addobject LOCALID_MILLENNIUM_COMET
+	
+	delay 30
+	
+	// === EFEITOS VISUAIS - METEORO APARECENDO ===
+	playse SE_M_SWIFT
+	fadescreenspeed FADE_FROM_WHITE, 4
+	delay 15
+	playse SE_SHINY
+	delay 20
+	
+	// === SOM DO METEORO ===
+	playse SE_M_SACRED_FIRE
+	
+	// === CÂMERA ACOMPANHA METEORO (CÓDIGO EXATO DO DOCUMENTO 3) ===
+	special SpawnCameraObject
+	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
+	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometCrossingSky
+	waitmovement 0
+	special RemoveCameraObject
+	
+	delay 20
+	
+	// === EFEITO FINAL ===
+	playse SE_M_EXPLOSION
+	fadescreenspeed FADE_TO_WHITE, 8
+	delay 40
+	fadescreenspeed FADE_FROM_WHITE, 8
+	delay 20
+	
+	// === REMOVE O METEORO ===
+	removeobject LOCALID_MILLENNIUM_COMET
+	setflag FLAG_HIDE_MOSSDEEP_COMET
+	
 	msgbox MOSSDEEP01_Text_TimeToWakeUp, MSGBOX_DEFAULT
 	closemessage
 	
 	delay 30
 	
-	// === TELEPORTE PARA LITTLEROOT_TOWN ===
+	// === FADE TO BLACK (TRANSIÇÃO) ===
 	fadescreen FADE_TO_BLACK
 	delay 60
-	warp MAP_LITTLEROOT_TOWN, 10, 10
+	
+	// ================================================================
+	// CONFIGURAÇÃO 100% IDÊNTICA AO CASO "YES" DO LITTLEROOT
+	// (Copiado exatamente do LittlerootTown_01_JirachiWarp)
+	// ================================================================
+	
+	// === FLAGS DE PROGRESSO ===
+	setflag FLAG_VISITED_LITTLEROOT_TOWN
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
+	setflag FLAG_SET_WALL_CLOCK
+	setflag FLAG_RESCUED_BIRCH
+	setflag FLAG_ADVENTURE_STARTED
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
+	setflag FLAG_SYS_B_DASH
+	setflag FLAG_RECEIVED_RUNNING_SHOES
+	
+	setvar VAR_LITTLEROOT_INTRO_STATE, 6
+	setvar VAR_LITTLEROOT_TOWN_STATE, 4
+	
+	// === VERIFICAR GÊNERO E WARPAR PARA O QUARTO CORRETO ===
+	checkplayergender
+	compare VAR_RESULT, MALE
+	goto_if_eq MOSSDEEP01_WarpMale
+	
+	// === FEMALE (May's house) ===
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
+	
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
+	waitstate
+	release
+	end
+
+MOSSDEEP01_WarpMale::
+	// === MALE (Brendan's house) ===
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
+	
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
 	waitstate
 	release
 	end
 
 // ====================================================================
-// MOVIMENTO DO METEORO E CÂMERA (NÃO USADO MAIS)
+// MOVIMENTO DO METEORO E CÂMERA (DO DOCUMENTO 3)
 // ====================================================================
 
 MOSSDEEP01_Movement_CameraFollowComet:
@@ -237,9 +334,29 @@ MOSSDEEP01_Movement_CameraFollowComet:
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
 	step_end
 
 MOSSDEEP01_Movement_CometCrossingSky:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
@@ -314,15 +431,12 @@ MOSSDEEP01_EventScript_Celebi::
 	lock
 	faceplayer
 	
-	// Verificar se já resgatou
 	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiAlreadyRescued
 	
-	// Verificar Time Gears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_CelebiNeedGears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
 	
-	// Tem todos os gears!
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
 	closemessage
 	
@@ -470,6 +584,9 @@ MOSSDEEP01_EventScript_Grandma::
 // TEXTOS
 // ====================================================================
 
+MOSSDEEP01_Text_Debug:
+	.string "DEBUG: Auto-collecting all TIME GEARS!$"
+
 MOSSDEEP01_Text_NeedItems:
 	.string "JIRACHI: I need your help!\p"
 	.string "The flow of time is broken!\p"
@@ -479,7 +596,13 @@ MOSSDEEP01_Text_NeedItems:
 
 MOSSDEEP01_Text_ThankYou:
 	.string "JIRACHI: You found all the TIME GEARS!\p"
-	.string "The temporal flow is restoring...$"
+	.string "The temporal flow is restoring...\n"
+	.string "Look! The Millennium Comet!$"
+
+MOSSDEEP01_Text_CometAppears:
+	.string "The sky begins to glow!\p"
+	.string "A brilliant comet streaks across\n"
+	.string "the heavens!$"
 
 MOSSDEEP01_Text_TimeToWakeUp:
 	.string "JIRACHI: The timeline is restored!\p"
@@ -583,10 +706,6 @@ MOSSDEEP01_Text_SurvivorHappy:
 	.string "Was it that strange Pokémon\n"
 	.string "following you?\p"
 	.string "Thank you so much!$"
-
-// ====================================================================
-// GRANDMA PROLOGUE TEXTS
-// ====================================================================
 
 MOSSDEEP01_Text_GrandmaWelcome:
 	.string "Grandma: Oh, you're awake!\p"
