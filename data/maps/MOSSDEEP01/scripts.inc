@@ -101,6 +101,9 @@ MOSSDEEP01_EventScript_Prologue::
 	msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT
 	closemessage
 	
+	// === SETAR FLAG PERMANENTE PARA EVITAR REPETIÇÃO ===
+	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
+	
 	releaseall
 	end
 
@@ -109,7 +112,7 @@ MOSSDEEP01_Movement_ExitTent:
 	walk_down
 	walk_down
 	step_end
-
+	
 // ====================================================================
 // ON TRANSITION
 // ====================================================================
@@ -117,6 +120,15 @@ MOSSDEEP01_Movement_ExitTent:
 MOSSDEEP01_OnTransition:
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 
+	// === CONTROLE DO PRÓLOGO ===
+	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_SkipPrologue
+	setvar VAR_TEMP_0, 0  // Permitir prólogo na primeira vez
+	goto MOSSDEEP01_ContinueTransition
+
+MOSSDEEP01_SkipPrologue:
+	setvar VAR_TEMP_0, 1  // Bloquear prólogo
+
+MOSSDEEP01_ContinueTransition:
 	// === CELEBI CONTROL ===
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
@@ -129,6 +141,17 @@ MOSSDEEP01_OnTransition:
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
+	end
+
+// ====================================================================
+// GRANDMA NPC - DEPOIS DO PRÓLOGO
+// ====================================================================
+
+MOSSDEEP01_EventScript_Grandma::
+	lock
+	faceplayer
+	msgbox MOSSDEEP01_Text_GrandmaReminder, MSGBOX_DEFAULT
+	release
 	end
 
 MOSSDEEP01_EventScript_DisableMightyenas::
@@ -219,32 +242,43 @@ MOSSDEEP01_EventScript_QuestComplete::
 	msgbox MOSSDEEP01_Text_CometAppears, MSGBOX_DEFAULT
 	closemessage
 	
+	// === ESCURECER DRAMÁTICO ===
+	fadescreenspeed FADE_TO_BLACK, 8
+	delay 40
+	
 	// Player olha para cima
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
 	
-	delay 30
+	// === CLAREAR SÚBITO ===
+	fadescreenspeed FADE_FROM_BLACK, 4
+	delay 10
 	
-	// === REMOVER A FLAG QUE ESCONDE O METEORO ===
+	// Aparecer o meteoro
 	clearflag FLAG_HIDE_MOSSDEEP_COMET
-	
-	// === APARECER O METEORO ===
 	addobject LOCALID_MILLENNIUM_COMET
 	
+	// === FLASH INTENSO DE LUZ ===
+	playse SE_SHINY
+	fadescreenspeed FADE_TO_WHITE, 2
+	delay 8
+	fadescreenspeed FADE_FROM_WHITE, 2
+	
 	delay 30
 	
-	// === EFEITOS VISUAIS - METEORO APARECENDO ===
-	playse SE_M_SWIFT
-	fadescreenspeed FADE_FROM_WHITE, 4
+	// === SONS ÉPICOS ===
+	playse SE_THUNDERSTORM
 	delay 15
-	playse SE_SHINY
-	delay 20
-	
-	// === SOM DO METEORO ===
 	playse SE_M_SACRED_FIRE
 	
-	// === CÂMERA ACOMPANHA METEORO (CÓDIGO EXATO DO DOCUMENTO 3) ===
+	delay 20
+	
+	// Camera acompanha meteoro
 	special SpawnCameraObject
+	
+	// Som contínuo durante movimento
+	playse SE_M_SWIFT
+	
 	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
 	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometCrossingSky
 	waitmovement 0
@@ -252,13 +286,20 @@ MOSSDEEP01_EventScript_QuestComplete::
 	
 	delay 20
 	
-	// === EFEITO FINAL ===
+	// === EFEITO FINAL MASSIVO ===
 	playse SE_M_EXPLOSION
-	fadescreenspeed FADE_TO_WHITE, 8
+	delay 15
+	
+	// === PULSO DE ENERGIA GIGANTE ===
+	fadescreenspeed FADE_TO_WHITE, 4
+	delay 30
+	playse SE_M_SOLAR_BEAM
 	delay 40
 	fadescreenspeed FADE_FROM_WHITE, 8
 	delay 20
-	
+	// Som contínuo durante movimento
+	playse SE_M_SWIFT
+
 	// === REMOVE O METEORO ===
 	removeobject LOCALID_MILLENNIUM_COMET
 	setflag FLAG_HIDE_MOSSDEEP_COMET
@@ -268,8 +309,12 @@ MOSSDEEP01_EventScript_QuestComplete::
 	
 	delay 30
 	
-	// === FADE TO BLACK (TRANSIÇÃO) ===
-	fadescreen FADE_TO_BLACK
+	// === FADE TO BLACK LONGO (TRANSIÇÃO PARA DESPERTAR) ===
+	playse SE_M_TELEPORT
+	fadescreenspeed FADE_TO_BLACK, 12
+	delay 80
+	
+	// Silêncio dramático
 	delay 60
 	
 	// ================================================================
@@ -320,7 +365,7 @@ MOSSDEEP01_WarpMale::
 	end
 
 // ====================================================================
-// MOVIMENTO DO METEORO E CÂMERA (DO DOCUMENTO 3)
+// MOVIMENTO DO METEORO E CÂMERA (VERSÃO SIMPLIFICADA QUE FUNCIONAVA)
 // ====================================================================
 
 MOSSDEEP01_Movement_CameraFollowComet:
@@ -570,13 +615,19 @@ MOSSDEEP01_EventScript_Healer::
 	end
 
 // ====================================================================
-// GRANDMA NPC - DEPOIS DO PRÓLOGO
+// AVÔ - MUDANÇA DE DIÁLOGO
 // ====================================================================
 
-MOSSDEEP01_EventScript_Grandma::
+MOSSDEEP01_EventScript_Grandpa::
 	lock
 	faceplayer
-	msgbox MOSSDEEP01_Text_GrandmaReminder, MSGBOX_DEFAULT
+	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaResting
+	msgbox MOSSDEEP01_Text_HoennChanged, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_EventScript_GrandmaResting::
+	msgbox MOSSDEEP01_Text_GrandmaRestingTent, MSGBOX_DEFAULT
 	release
 	end
 
@@ -737,4 +788,20 @@ MOSSDEEP01_Text_GoodLuck:
 MOSSDEEP01_Text_GrandmaReminder:
 	.string "Grandma: Take care of yourself,\n"
 	.string "and remember what I told you.$"
+
+MOSSDEEP01_Text_HoennChanged:
+	.string "Grandpa: Hoenn isn't the same anymore,\n"
+	.string "but I still believe in the legend of\l"
+	.string "Celebi, the time traveler.\p"
+	.string "My wife says you're the one who can\n"
+	.string "find the Time Gears and save us all.$"
+
+MOSSDEEP01_Text_GrandmaRestingTent:
+	.string "Grandpa: My wife went to rest in\n"
+	.string "the tent after guiding you.\p"
+	.string "She needs to recover her strength\n"
+	.string "after all that has happened.$"
+
+
+
 
