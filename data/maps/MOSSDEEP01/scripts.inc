@@ -78,7 +78,7 @@ MOSSDEEP01_EventScript_Prologue::
 	delay 15
 	msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT
 	closemessage
-	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
+	// setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE  // REMOVIDO DAQUI
 	releaseall
 	end
 
@@ -98,6 +98,8 @@ MOSSDEEP01_SkipPrologue:
 	setvar VAR_TEMP_0, 1
 
 MOSSDEEP01_ContinueTransition:
+	// Se a flag estiver definida, esconde a Grandma permanentemente
+	call_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_HideGrandma
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DisableMightyenas
@@ -106,6 +108,10 @@ MOSSDEEP01_ContinueTransition:
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
 	end
+
+MOSSDEEP01_EventScript_HideGrandma::
+	setflag FLAG_TEMP_16  // Flag temporária para esconder a Grandma
+	return
 
 MOSSDEEP01_EventScript_DisableMightyenas::
 	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
@@ -397,7 +403,7 @@ MOSSDEEP01_EventScript_Mightyena::
 	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
 	closemessage
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
-	warp MAP_MOSSDEEP01, 28, 38
+	warp MAP_MOSSDEEP01, 11, 71
 	waitstate
 	releaseall
 	end
@@ -457,7 +463,24 @@ MOSSDEEP01_EventScript_Healer::
 MOSSDEEP01_EventScript_Grandma::
 	lock
 	faceplayer
+	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaAlreadyGone
+	
 	msgbox MOSSDEEP01_Text_GrandmaReminder, MSGBOX_DEFAULT
+	closemessage
+	msgbox MOSSDEEP01_Text_GrandmaGoingToRest, MSGBOX_DEFAULT
+	closemessage
+	
+	// Define a flag que faz o Grandpa mudar seu diálogo
+	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
+	
+	// Faz a Grandma "sair" (ser removida do mapa)
+	removeobject LOCALID_GRANDMA_MOSSDEEP01
+	
+	release
+	end
+
+MOSSDEEP01_EventScript_GrandmaAlreadyGone::
+	// Se o jogador tentar interagir onde a Grandma estava
 	release
 	end
 
@@ -628,6 +651,11 @@ MOSSDEEP01_Text_GrandmaReminder:
 	.string "Grandma: Take care of yourself,\n"
 	.string "and remember what I told you.$"
 
+MOSSDEEP01_Text_GrandmaGoingToRest:
+	.string "Grandma: I've said all I can, dear.\p"
+	.string "I need to rest inside the tent now.\n"
+	.string "Good luck.$"
+
 MOSSDEEP01_Text_HoennChanged:
 	.string "Grandpa: Hoenn isn't the same anymore,\n"
 	.string "but I still believe in the legend of\l"
@@ -640,5 +668,8 @@ MOSSDEEP01_Text_GrandpaRestingTent:
 	.string "the tent after guiding you.\p"
 	.string "She needs to recover her strength\n"
 	.string "after all that has happened.$"
+
+
+
 
 	

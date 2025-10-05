@@ -104,7 +104,7 @@ LittlerootTown_01_Stay::
 	delay 60
 	
 	// === WARP PARA MOSSDEEP01 (DENTRO DA BARRACA) ===
-	warp MAP_MOSSDEEP01, 38, 70
+	warp MAP_MOSSDEEP01, 11, 71
 	waitstate
 	
 	// Continua black (ainda dormindo)

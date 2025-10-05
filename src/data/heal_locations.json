@@ -182,8 +182,8 @@
     {
       "id": "HEAL_LOCATION_MOSSDEEP_01",
       "map": "MAP_MOSSDEEP01",
-      "x": 24,
-      "y": 41,
+      "x": 11,
+      "y": 55,
       "respawn_map": "MAP_MOSSDEEP01"
     },
     {
