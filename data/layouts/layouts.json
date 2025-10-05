@@ -4417,7 +4417,7 @@
       "width": 39,
       "height": 35,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_MeteorFalls",
+      "secondary_tileset": "gTileset_Slateport",
       "border_filepath": "data/layouts/LITTLEROOT_TOWN_01/border.bin",
       "blockdata_filepath": "data/layouts/LITTLEROOT_TOWN_01/map.bin"
     },

@@ -21,10 +21,6 @@ MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, MOSSDEEP01_OnResume
 	.byte 0
 
-// ====================================================================
-// PRÓLOGO - DESPERTAR DENTRO DA BARRACA
-// ====================================================================
-
 MOSSDEEP01_OnFrame:
 	map_script_2 VAR_TEMP_0, 0, MOSSDEEP01_EventScript_Prologue
 	.2byte 0
@@ -32,10 +28,7 @@ MOSSDEEP01_OnFrame:
 MOSSDEEP01_EventScript_Prologue::
 	setvar VAR_TEMP_0, 1
 	lockall
-	
 	delay 120
-	
-	// === TREMORES (TELA PRETA) ===
 	playse SE_M_ROCK_THROW
 	setvar VAR_0x8004, 3
 	setvar VAR_0x8005, 3
@@ -44,7 +37,6 @@ MOSSDEEP01_EventScript_Prologue::
 	special ShakeCamera
 	waitstate
 	delay 80
-	
 	playse SE_M_EARTHQUAKE
 	setvar VAR_0x8004, 4
 	setvar VAR_0x8005, 4
@@ -53,24 +45,16 @@ MOSSDEEP01_EventScript_Prologue::
 	special ShakeCamera
 	waitstate
 	delay 100
-	
-	// === JOGADOR SAI DA BARRACA ===
 	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_ExitTent
 	waitmovement 0
-	
 	delay 60
 	setflag FLAG_TEMP_1
-	
-	// === AVÓ APARECE E FALA ===
 	applymovement LOCALID_GRANDMA_MOSSDEEP01, Common_Movement_FacePlayer
 	waitmovement 0
-	
 	msgbox MOSSDEEP01_Text_GrandmaWelcome, MSGBOX_DEFAULT
 	closemessage
 	delay 20
-	
 	msgbox MOSSDEEP01_Text_EarthquakeWarning, MSGBOX_DEFAULT
-	
 	setvar VAR_0x8004, 2
 	setvar VAR_0x8005, 2
 	setvar VAR_0x8006, 5
@@ -78,32 +62,23 @@ MOSSDEEP01_EventScript_Prologue::
 	special ShakeCamera
 	waitstate
 	playse SE_M_ROCK_THROW
-	
 	closemessage
 	delay 20
-	
 	msgbox MOSSDEEP01_Text_HoennDestroyed, MSGBOX_DEFAULT
-	
 	setvar VAR_0x8004, 1
 	setvar VAR_0x8005, 1
 	setvar VAR_0x8006, 2
 	setvar VAR_0x8007, 5
 	special ShakeCamera
 	waitstate
-	
 	closemessage
 	delay 20
-	
 	msgbox MOSSDEEP01_Text_PlayerDecision, MSGBOX_DEFAULT
 	closemessage
 	delay 15
-	
 	msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT
 	closemessage
-	
-	// === SETAR FLAG PERMANENTE PARA EVITAR REPETIÇÃO ===
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
-	
 	releaseall
 	end
 
@@ -112,46 +87,24 @@ MOSSDEEP01_Movement_ExitTent:
 	walk_down
 	walk_down
 	step_end
-	
-// ====================================================================
-// ON TRANSITION
-// ====================================================================
 
 MOSSDEEP01_OnTransition:
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
-
-	// === CONTROLE DO PRÓLOGO ===
 	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_SkipPrologue
-	setvar VAR_TEMP_0, 0  // Permitir prólogo na primeira vez
+	setvar VAR_TEMP_0, 0
 	goto MOSSDEEP01_ContinueTransition
 
 MOSSDEEP01_SkipPrologue:
-	setvar VAR_TEMP_0, 1  // Bloquear prólogo
+	setvar VAR_TEMP_0, 1
 
 MOSSDEEP01_ContinueTransition:
-	// === CELEBI CONTROL ===
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DisableMightyenas
-	
-	// === METEORO SEMPRE ESCONDIDO (só aparece na cutscene) ===
 	call MOSSDEEP01_EventScript_HideComet
-	
-	// === ITENS CONTROL ===
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
-	end
-
-// ====================================================================
-// GRANDMA NPC - DEPOIS DO PRÓLOGO
-// ====================================================================
-
-MOSSDEEP01_EventScript_Grandma::
-	lock
-	faceplayer
-	msgbox MOSSDEEP01_Text_GrandmaReminder, MSGBOX_DEFAULT
-	release
 	end
 
 MOSSDEEP01_EventScript_DisableMightyenas::
@@ -187,28 +140,16 @@ MOSSDEEP01_EventScript_HideItem3::
 	setflag FLAG_TEMP_13
 	return
 
-// ====================================================================
-// NPC PRINCIPAL - JIRACHI (QUEST COMPLETA = CUTSCENE + TELEPORTE)
-// ====================================================================
-
 MOSSDEEP01_EventScript_DirectWarp::
 	lock
 	faceplayer
-	
-	// === DEBUG: Pressione R para auto-completar os itens ===
 	checkitem ITEM_MACH_BIKE
 	compare VAR_RESULT, TRUE
 	goto_if_eq MOSSDEEP01_EventScript_DebugComplete
-	
-	// Verificar se já completou a quest
 	goto_if_set FLAG_MOSSDEEP_QUEST_COMPLETED, MOSSDEEP01_EventScript_AlreadyCompleted
-	
-	// Verificar se coletou todos os itens
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_NeedMoreItems
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_NeedMoreItems
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_NeedMoreItems
-	
-	// === QUEST COMPLETA - EXECUTAR CUTSCENE COMPLETA ===
 	goto MOSSDEEP01_EventScript_QuestComplete
 
 MOSSDEEP01_EventScript_DebugComplete::
@@ -231,98 +172,50 @@ MOSSDEEP01_EventScript_AlreadyCompleted::
 MOSSDEEP01_EventScript_QuestComplete::
 	msgbox MOSSDEEP01_Text_ThankYou, MSGBOX_DEFAULT
 	closemessage
-	
-	// Marcar quest como completa
 	setflag FLAG_MOSSDEEP_QUEST_COMPLETED
-	
-	// ================================================================
-	// CUTSCENE DO METEORO (CÓDIGO DO DOCUMENTO ANTIGO)
-	// ================================================================
-	
 	msgbox MOSSDEEP01_Text_CometAppears, MSGBOX_DEFAULT
 	closemessage
-	
-	// === ESCURECER DRAMÁTICO ===
 	fadescreenspeed FADE_TO_BLACK, 8
 	delay 40
-	
-	// Player olha para cima
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
-	
-	// === CLAREAR SÚBITO ===
 	fadescreenspeed FADE_FROM_BLACK, 4
 	delay 10
-	
-	// Aparecer o meteoro
 	clearflag FLAG_HIDE_MOSSDEEP_COMET
 	addobject LOCALID_MILLENNIUM_COMET
-	
-	// === FLASH INTENSO DE LUZ ===
 	playse SE_SHINY
 	fadescreenspeed FADE_TO_WHITE, 2
 	delay 8
 	fadescreenspeed FADE_FROM_WHITE, 2
-	
 	delay 30
-	
-	// === SONS ÉPICOS ===
 	playse SE_THUNDERSTORM
 	delay 15
 	playse SE_M_SACRED_FIRE
-	
 	delay 20
-	
-	// Camera acompanha meteoro
 	special SpawnCameraObject
-	
-	// Som contínuo durante movimento
 	playse SE_M_SWIFT
-	
 	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
 	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometCrossingSky
 	waitmovement 0
 	special RemoveCameraObject
-	
 	delay 20
-	
-	// === EFEITO FINAL MASSIVO ===
 	playse SE_M_EXPLOSION
 	delay 15
-	
-	// === PULSO DE ENERGIA GIGANTE ===
 	fadescreenspeed FADE_TO_WHITE, 4
 	delay 30
 	playse SE_M_SOLAR_BEAM
 	delay 40
 	fadescreenspeed FADE_FROM_WHITE, 8
 	delay 20
-	// Som contínuo durante movimento
-	playse SE_M_SWIFT
-
-	// === REMOVE O METEORO ===
 	removeobject LOCALID_MILLENNIUM_COMET
 	setflag FLAG_HIDE_MOSSDEEP_COMET
-	
 	msgbox MOSSDEEP01_Text_TimeToWakeUp, MSGBOX_DEFAULT
 	closemessage
-	
 	delay 30
-	
-	// === FADE TO BLACK LONGO (TRANSIÇÃO PARA DESPERTAR) ===
 	playse SE_M_TELEPORT
 	fadescreenspeed FADE_TO_BLACK, 12
 	delay 80
-	
-	// Silêncio dramático
 	delay 60
-	
-	// ================================================================
-	// CONFIGURAÇÃO 100% IDÊNTICA AO CASO "YES" DO LITTLEROOT
-	// (Copiado exatamente do LittlerootTown_01_JirachiWarp)
-	// ================================================================
-	
-	// === FLAGS DE PROGRESSO ===
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
@@ -332,41 +225,29 @@ MOSSDEEP01_EventScript_QuestComplete::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
 	setflag FLAG_SYS_B_DASH
 	setflag FLAG_RECEIVED_RUNNING_SHOES
-	
 	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 	setvar VAR_LITTLEROOT_TOWN_STATE, 4
-	
-	// === VERIFICAR GÊNERO E WARPAR PARA O QUARTO CORRETO ===
 	checkplayergender
 	compare VAR_RESULT, MALE
 	goto_if_eq MOSSDEEP01_WarpMale
-	
-	// === FEMALE (May's house) ===
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
-	
 	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
 	waitstate
 	release
 	end
 
 MOSSDEEP01_WarpMale::
-	// === MALE (Brendan's house) ===
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
-	
 	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
 	waitstate
 	release
 	end
-
-// ====================================================================
-// MOVIMENTO DO METEORO E CÂMERA (VERSÃO SIMPLIFICADA QUE FUNCIONAVA)
-// ====================================================================
 
 MOSSDEEP01_Movement_CameraFollowComet:
 	walk_fast_left
@@ -414,15 +295,10 @@ MOSSDEEP01_Movement_CometCrossingSky:
 	walk_fast_left
 	step_end
 
-// ====================================================================
-// ITENS COLECIONÁVEIS - TIME GEARS
-// ====================================================================
-
 MOSSDEEP01_EventScript_Item1::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_Item_AlreadyCollected
-	
 	msgbox MOSSDEEP01_Text_FoundItem1, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
 	message MOSSDEEP01_Text_ObtainedTimeGear1
@@ -437,7 +313,6 @@ MOSSDEEP01_EventScript_Item2::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_Item_AlreadyCollected
-	
 	msgbox MOSSDEEP01_Text_FoundItem2, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
 	message MOSSDEEP01_Text_ObtainedTimeGear2
@@ -452,7 +327,6 @@ MOSSDEEP01_EventScript_Item3::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_Item_AlreadyCollected
-	
 	msgbox MOSSDEEP01_Text_FoundItem3, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
 	message MOSSDEEP01_Text_ObtainedTimeGear3
@@ -468,48 +342,31 @@ MOSSDEEP01_EventScript_Item_AlreadyCollected::
 	release
 	end
 
-// ====================================================================
-// CELEBI - DESATIVA MIGHTYENAS E SEGUE O PLAYER
-// ====================================================================
-
 MOSSDEEP01_EventScript_Celebi::
 	lock
 	faceplayer
-	
 	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiAlreadyRescued
-	
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_CelebiNeedGears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
-	
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
 	closemessage
-	
-	// FLASH BRANCO
 	playse SE_M_HYPER_BEAM
 	fadescreenspeed FADE_TO_WHITE, 4
-	
-	// Troca Celebis
 	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
 	clearflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER
 	removeobject LOCALID_CELEBI_STATIC
 	addobject LOCALID_CELEBI_FOLLOWER
-	
 	delay 30
 	fadescreenspeed FADE_FROM_WHITE, 4
-	
 	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
-	
-	// Desativar Mightyenas
 	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
 	setobjectmovementtype LOCALID_POOCHYENA, MOVEMENT_TYPE_WANDER_AROUND
 	setobjectmovementtype LOCALID_ZIGZAGOON, MOVEMENT_TYPE_WANDER_AROUND
-	
 	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
 	closemessage
 	msgbox MOSSDEEP01_Text_CelebiFollows, MSGBOX_DEFAULT
 	closemessage
-	
 	release
 	end
 
@@ -523,32 +380,22 @@ MOSSDEEP01_EventScript_CelebiAlreadyRescued::
 	release
 	end
 
-// ====================================================================
-// MIGHTYENAS - ATACAM OU FICAM CALMAS
-// ====================================================================
-
 MOSSDEEP01_EventScript_Mightyena::
 	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDoNothing
-	
 	lockall
 	playse SE_PIN
 	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
 	waitmovement 0
-	
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
 	delay 20
-	
 	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
 	closemessage
-	
 	playse SE_M_BITE
 	fadescreen FADE_TO_BLACK
 	delay 60
-	
 	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
 	closemessage
-	
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 	warp MAP_MOSSDEEP01, 28, 38
 	waitstate
@@ -557,10 +404,6 @@ MOSSDEEP01_EventScript_Mightyena::
 
 MOSSDEEP01_EventScript_MightyenaDoNothing::
 	end
-
-// ====================================================================
-// SURVIVOR NPC
-// ====================================================================
 
 MOSSDEEP01_EventScript_Survivor::
 	lock
@@ -574,13 +417,10 @@ MOSSDEEP01_EventScript_SurvivorAfterCelebi::
 	goto_if_set FLAG_TEMP_14, MOSSDEEP01_EventScript_SurvivorMoved
 	msgbox MOSSDEEP01_Text_SurvivorAmazed, MSGBOX_DEFAULT
 	closemessage
-	
 	msgbox MOSSDEEP01_Text_SurvivorGoing, MSGBOX_DEFAULT
 	closemessage
-	
 	applymovement LOCALID_SURVIVOR, MOSSDEEP01_Movement_SurvivorGoUp
 	waitmovement 0
-	
 	setflag FLAG_TEMP_14
 	release
 	end
@@ -614,26 +454,25 @@ MOSSDEEP01_EventScript_Healer::
 	release
 	end
 
-// ====================================================================
-// AVÔ - MUDANÇA DE DIÁLOGO
-// ====================================================================
+MOSSDEEP01_EventScript_Grandma::
+	lock
+	faceplayer
+	msgbox MOSSDEEP01_Text_GrandmaReminder, MSGBOX_DEFAULT
+	release
+	end
 
 MOSSDEEP01_EventScript_Grandpa::
 	lock
 	faceplayer
-	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaResting
+	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandpaAfter
 	msgbox MOSSDEEP01_Text_HoennChanged, MSGBOX_DEFAULT
 	release
 	end
 
-MOSSDEEP01_EventScript_GrandmaResting::
-	msgbox MOSSDEEP01_Text_GrandmaRestingTent, MSGBOX_DEFAULT
+MOSSDEEP01_EventScript_GrandpaAfter::
+	msgbox MOSSDEEP01_Text_GrandpaRestingTent, MSGBOX_DEFAULT
 	release
 	end
-
-// ====================================================================
-// TEXTOS
-// ====================================================================
 
 MOSSDEEP01_Text_Debug:
 	.string "DEBUG: Auto-collecting all TIME GEARS!$"
@@ -726,14 +565,14 @@ MOSSDEEP01_Text_MightyenaBlackedOut:
 
 MOSSDEEP01_Text_HealerWelcome:
 	.string "Survivor: You look tired!\n"
-	.string "Let me heal your Pokémon.$"
+	.string "Let me heal your Pokemon.$"
 
 MOSSDEEP01_Text_Healing:
 	.string "Using residual energies from\n"
 	.string "the meteor to heal...$"
 
 MOSSDEEP01_Text_HealedComplete:
-	.string "Done! Your Pokémon are\n"
+	.string "Done! Your Pokemon are\n"
 	.string "fully recovered!$"
 
 MOSSDEEP01_Text_SurvivorTrapped:
@@ -754,7 +593,7 @@ MOSSDEEP01_Text_SurvivorGoing:
 
 MOSSDEEP01_Text_SurvivorHappy:
 	.string "Survivor: Amazing! I can even pet them!\p"
-	.string "Was it that strange Pokémon\n"
+	.string "Was it that strange Pokemon\n"
 	.string "following you?\p"
 	.string "Thank you so much!$"
 
@@ -796,12 +635,10 @@ MOSSDEEP01_Text_HoennChanged:
 	.string "My wife says you're the one who can\n"
 	.string "find the Time Gears and save us all.$"
 
-MOSSDEEP01_Text_GrandmaRestingTent:
+MOSSDEEP01_Text_GrandpaRestingTent:
 	.string "Grandpa: My wife went to rest in\n"
 	.string "the tent after guiding you.\p"
 	.string "She needs to recover her strength\n"
 	.string "after all that has happened.$"
 
-
-
-
+	
