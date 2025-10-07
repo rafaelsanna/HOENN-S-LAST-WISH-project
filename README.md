@@ -52,3 +52,4 @@ If you are looking to [report a bug](CONTRIBUTING.md#Bug-Report), [open a pull r
 
 Our community uses the [ROM Hacking Hideout (RHH) Discord server](https://discord.gg/6CzjAG6GZk) to communicate and organize. Most of our discussions take place there, and we welcome anybody to join us!
 # HOENN-S-LAST-WISH
+# HOENN-S-LAST-WISH-project
