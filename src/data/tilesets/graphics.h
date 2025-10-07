@@ -1634,23 +1634,3 @@ const u16 gTilesetPalettes_UnionRoom[][16] =
 };
 
 const u32 gTilesetTiles_UnionRoom[] = INCBIN_U32("data/tilesets/secondary/union_room/tiles.4bpp.fastSmol");
-
-const u32 gTilesetTiles_SpaceMeteor[] = INCBIN_U32("data/tilesets/secondary/space_meteor/tiles.4bpp.lz");
-
-const u16 gTilesetPalettes_SpaceMeteor[][16] =
-{
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/03.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/04.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/05.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/06.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/07.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/08.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/09.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/10.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/11.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/space_meteor/palettes/12.gbapal"),
-};
-

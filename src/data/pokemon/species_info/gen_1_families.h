@@ -21,7 +21,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_GRASS),
-        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_CHLOROPHYLL },
+        .abilities = { ABILITY_TORRENT, ABILITY_NONE, ABILITY_CHLOROPHYLL },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Bulbasaur"),
         .cryId = CRY_BULBASAUR,
@@ -30,10 +30,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 7,
         .weight = 69,
         .description = COMPOUND_STRING(
-            "Bulbasaur can be seen napping in bright\n"
-            "sunlight. There is a seed on its back.\n"
-            "By soaking up the sun's rays, the seed\n"
-            "grows progressively larger."),
+            "Bulbasaur can be seen napping in murky.\n"
+            "swamps. It has a porous skin on its body.\n"
+            "By soaking toxins from the water, he can\n"
+            "become venomous and secrete toxins"),
         .pokemonScale = 356,
         .pokemonOffset = 17,
         .trainerScale = 256,
