@@ -2562,7 +2562,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .baseSpeed     = 50,
         .baseSpAttack  = 35,
         .baseSpDefense = 55,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_FLYING),
+        .types = MON_TYPES(TYPE_FAIRY),
         .catchRate = 255,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 50 : 74,
         .evYield_SpDefense = 1,
@@ -2572,9 +2572,9 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY, EGG_GROUP_GRASS),
     #if P_UPDATED_ABILITIES >= GEN_4
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_LEAF_GUARD, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_HUGE_POWER, ABILITY_NONE, ABILITY_INFILTRATOR },
     #else
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_NONE, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_HUGE_POWER, ABILITY_NONE, ABILITY_INFILTRATOR },
     #endif
         .bodyColor = BODY_COLOR_PINK,
         .speciesName = _("Hoppip"),
@@ -2584,10 +2584,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 4,
         .weight = 5,
         .description = COMPOUND_STRING(
-            "This Pokémon drifts and floats with the\n"
-            "wind. If it senses the approach of strong\n"
-            "winds, a Hoppip links leaves with others\n"
-            "to prepare against being blown away."),
+            "This Fairy Pokémon drifts and floats while\n"
+            "collecting round objects. It becomes happy\n"
+            "when adding to its collection of spheres,\n"
+            "carefully carrying them with its small hands."),
         .pokemonScale = 562,
         .pokemonOffset = -7,
         .trainerScale = 256,
@@ -2632,12 +2632,12 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
     [SPECIES_SKIPLOOM] =
     {
         .baseHP        = 55,
-        .baseAttack    = 45,
+        .baseAttack    = 40,
         .baseDefense   = 50,
-        .baseSpeed     = 80,
+        .baseSpeed     = 85,
         .baseSpAttack  = 45,
         .baseSpDefense = 65,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_FLYING),
+        .types = MON_TYPES(TYPE_FAIRY, TYPE_ICE),
         .catchRate = 120,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 119 : 136,
         .evYield_Speed = 2,
@@ -2647,9 +2647,9 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY, EGG_GROUP_GRASS),
     #if P_UPDATED_ABILITIES >= GEN_4
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_LEAF_GUARD, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_HUGE_POWER, ABILITY_NONE, ABILITY_INFILTRATOR },
     #else
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_NONE, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_HUGE_POWER, ABILITY_NONE, ABILITY_INFILTRATOR },
     #endif
         .bodyColor = BODY_COLOR_GREEN,
         .speciesName = _("Skiploom"),
@@ -2659,10 +2659,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 6,
         .weight = 10,
         .description = COMPOUND_STRING(
-            "It blossoms when the temperature rises\n"
-            "above 64 degrees F. Because its flower's\n"
-            "blooming changes with the temperature,\n"
-            "it is sometimes used as a thermometer."),
+            "This Fairy-Ice Pokémon rolls and throws\n"
+            "a snowball at other Pokémon. The snowball\n"
+            "grows larger as it rolls through snowy\n"
+            "fields, becoming a powerful icy weapon."),
         .pokemonScale = 387,
         .pokemonOffset = 0,
         .trainerScale = 256,
@@ -2715,7 +2715,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .baseSpeed     = 110,
         .baseSpAttack  = 55,
         .baseSpDefense = P_UPDATED_STATS >= GEN_6 ? 95 : 85,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_FLYING),
+        .types = MON_TYPES(TYPE_FAIRY, TYPE_ICE),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
         .expYield = 230,
@@ -2733,9 +2733,9 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY, EGG_GROUP_GRASS),
     #if P_UPDATED_ABILITIES >= GEN_4
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_LEAF_GUARD, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_HUGE_POWER, ABILITY_NONE, ABILITY_INFILTRATOR },
     #else
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_NONE, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_HUGE_POWER, ABILITY_NONE, ABILITY_INFILTRATOR },
     #endif
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Jumpluff"),
@@ -2745,10 +2745,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 8,
         .weight = 30,
         .description = COMPOUND_STRING(
-            "Jumpluff ride warm southern winds to\n"
-            "cross the sea and fly to foreign lands.\n"
-            "This Pokémon lands when it encounters\n"
-            "cold air while it is floating."),
+            "Jumpluff builds a massive snowball that\n"
+            "it hurls with incredible force. This Pokémon\n"
+            "can roll snowballs so large they become\n"
+            "as big as boulders when fully grown."),
         .pokemonScale = 418,
         .pokemonOffset = -4,
         .trainerScale = 256,
@@ -7044,12 +7044,12 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
     [SPECIES_SKARMORY] =
     {
         .baseHP        = 65,
-        .baseAttack    = 80,
-        .baseDefense   = 140,
-        .baseSpeed     = 70,
+        .baseAttack    = 110,
+        .baseDefense   = 70,
+        .baseSpeed     = 115,
         .baseSpAttack  = 40,
         .baseSpDefense = 70,
-        .types = MON_TYPES(TYPE_STEEL, TYPE_FLYING),
+        .types = MON_TYPES(TYPE_STEEL, TYPE_FIGHTING),
         .catchRate = 25,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 163 : 168,
         .evYield_Defense = 2,
@@ -7068,10 +7068,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 17,
         .weight = 505,
         .description = COMPOUND_STRING(
-            "A Pokémon that has a body and wings of\n"
-            "steel. People in the past used feathers\n"
-            "fallen from Skarmory to make swords and\n"
-            "knives."),
+            "A Pokémon that has lost its wings but retains\n"
+            "its steel body. Now a flightless fighter, it uses\n"
+            "its powerful legs to kick and charge. People still\n"
+            "use its fallen feathers to make sharp weapons."),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 271,
