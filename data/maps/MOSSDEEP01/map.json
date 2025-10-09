@@ -291,8 +291,34 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MOSSDEEP01_EventScript_Grandma",
+      "script": "MOSSDEEP01_EventScript_Child01",
       "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BRENDAN_NORMAL",
+      "x": 8,
+      "y": 69,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_RIGHT_AND_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_RivalMale",
+      "flag": "FLAG_HIDE_MOSSDEEP_RIVAL_MALE"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_RIVAL_MAY_NORMAL",
+      "x": 12,
+      "y": 69,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_RIGHT_AND_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_RivalFemale",
+      "flag": "FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE"
     }
   ],
   "warp_events": [

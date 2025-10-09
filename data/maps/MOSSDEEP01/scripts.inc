@@ -14,10 +14,12 @@
 .equiv LOCALID_ZIGZAGOON, 9
 .equiv LOCALID_SURVIVOR, 15
 .equiv LOCALID_GRANDMA_MOSSDEEP01, 16
+.equiv LOCALID_RIVAL_MALE, 17
+.equiv LOCALID_RIVAL_FEMALE, 18
 
 MOSSDEEP01_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, MOSSDEEP01_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MOSSDEEP01_OnFrame
+	map_script MAP_SCRIPT_ON_TRANSITION, MOSSDEEP01_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, MOSSDEEP01_OnResume
 	.byte 0
 
@@ -64,6 +66,12 @@ MOSSDEEP01_EventScript_Prologue::
 	playse SE_M_ROCK_THROW
 	closemessage
 	delay 20
+	
+	// NOVO: Dar o Shiny Charm durante o terremoto
+	msgbox MOSSDEEP01_Text_GrandmaGivesCharm, MSGBOX_DEFAULT
+	giveitem ITEM_SHINY_CHARM
+	msgbox MOSSDEEP01_Text_GrandmaCharmExplanation, MSGBOX_DEFAULT
+	
 	msgbox MOSSDEEP01_Text_HoennDestroyed, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 1
 	setvar VAR_0x8005, 1
@@ -98,7 +106,6 @@ MOSSDEEP01_SkipPrologue:
 	setvar VAR_TEMP_0, 1
 
 MOSSDEEP01_ContinueTransition:
-	call_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_HideGrandma
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DisableMightyenas
@@ -106,11 +113,8 @@ MOSSDEEP01_ContinueTransition:
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
+	call MOSSDEEP01_EventScript_SetupRivalNPC  // ADICIONE ESTA LINHA
 	end
-
-MOSSDEEP01_EventScript_HideGrandma::
-	setflag FLAG_TEMP_16
-	return
 
 MOSSDEEP01_EventScript_DisableMightyenas::
 	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
@@ -466,20 +470,15 @@ MOSSDEEP01_EventScript_Healer::
 MOSSDEEP01_EventScript_Grandma::
 	lock
 	faceplayer
-	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaAlreadyGone
+	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaAfterFirstTalk
 	
 	msgbox MOSSDEEP01_Text_GrandmaReminder, MSGBOX_DEFAULT
-	closemessage
-	msgbox MOSSDEEP01_Text_GrandmaGoingToRest, MSGBOX_DEFAULT
-	closemessage
-	
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
-	removeobject LOCALID_GRANDMA_MOSSDEEP01
-	
 	release
 	end
 
-MOSSDEEP01_EventScript_GrandmaAlreadyGone::
+MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
+	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	release
 	end
 
@@ -487,14 +486,105 @@ MOSSDEEP01_EventScript_Grandpa::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandpaAfter
-	msgbox MOSSDEEP01_Text_HoennChanged, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_GrandpaFirstTalk, MSGBOX_DEFAULT
 	release
 	end
 
 MOSSDEEP01_EventScript_GrandpaAfter::
-	msgbox MOSSDEEP01_Text_GrandpaRestingTent, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_GrandpaAfterTalk, MSGBOX_DEFAULT
 	release
 	end
+
+// ====================================================================
+// NPC RIVAL DE GÊNERO OPOSTO - MOSSDEEP01
+// ====================================================================
+
+// Script para mostrar/esconder o NPC correto baseado no gênero
+MOSSDEEP01_EventScript_SetupRivalNPC::
+	checkplayergender
+	compare VAR_RESULT, MALE
+	goto_if_eq MOSSDEEP01_EventScript_ShowFemaleRival
+	setflag FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE
+	clearflag FLAG_HIDE_MOSSDEEP_RIVAL_MALE
+	return
+
+MOSSDEEP01_EventScript_ShowFemaleRival::
+	setflag FLAG_HIDE_MOSSDEEP_RIVAL_MALE
+	clearflag FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE
+	return
+
+// Script do NPC Masculino (aparece quando jogador é feminino)
+MOSSDEEP01_EventScript_RivalMale::
+	lock
+	faceplayer
+	random 4
+	switch VAR_RESULT
+	case 0, MOSSDEEP01_RivalMale_Case0
+	case 1, MOSSDEEP01_RivalMale_Case1
+	case 2, MOSSDEEP01_RivalMale_Case2
+	case 3, MOSSDEEP01_RivalMale_Case3
+	release
+	end
+
+MOSSDEEP01_RivalMale_Case0::
+	msgbox MOSSDEEP01_Text_RivalMale01, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_RivalMale_Case1::
+	msgbox MOSSDEEP01_Text_RivalMale02, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_RivalMale_Case2::
+	msgbox MOSSDEEP01_Text_RivalMale03, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_RivalMale_Case3::
+	msgbox MOSSDEEP01_Text_RivalMale04, MSGBOX_DEFAULT
+	release
+	end
+
+// Script do NPC Feminino (aparece quando jogador é masculino)
+MOSSDEEP01_EventScript_RivalFemale::
+	lock
+	faceplayer
+	random 4
+	switch VAR_RESULT
+	case 0, MOSSDEEP01_RivalFemale_Case0
+	case 1, MOSSDEEP01_RivalFemale_Case1
+	case 2, MOSSDEEP01_RivalFemale_Case2
+	case 3, MOSSDEEP01_RivalFemale_Case3
+	release
+	end
+
+MOSSDEEP01_RivalFemale_Case0::
+	msgbox MOSSDEEP01_Text_RivalFemale01, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_RivalFemale_Case1::
+	msgbox MOSSDEEP01_Text_RivalFemale02, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_RivalFemale_Case2::
+	msgbox MOSSDEEP01_Text_RivalFemale03, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_RivalFemale_Case3::
+	msgbox MOSSDEEP01_Text_RivalFemale04, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_EventScript_Child01::
+	lock
+	faceplayer
+	msgbox MOSSDEEP01_Text_Child01, MSGBOX_DEFAULT
+	release
+	end	
 
 MOSSDEEP01_Text_Debug:
 	.string "DEBUG: Auto-collecting all TIME GEARS\n"
@@ -644,6 +734,19 @@ MOSSDEEP01_Text_HoennDestroyed:
 	.string "Hoenn is dying, child.\n"
 	.string "And no one knows why.$"
 
+MOSSDEEP01_Text_GrandmaGivesCharm:
+	.string "Grandma: Wait! Before you go...\p"
+	.string "Take this old charm. It's been\n"
+	.string "passed down in our family.\p"
+	.string "They say it protects travelers and\n"
+	.string "brings luck with rare Pokémon.$"
+
+MOSSDEEP01_Text_GrandmaCharmExplanation:
+	.string "Grandma: It's called the Shiny Charm.\n"
+	.string "May it keep you safe out there and\l"
+	.string "help you find special Pokémon\l"
+	.string "on your journey.$"	
+
 MOSSDEEP01_Text_PlayerDecision:
 	.string "{PLAYER} feels a strange pull...\p"
 	.string "Those recurring dreams...\n"
@@ -655,27 +758,100 @@ MOSSDEEP01_Text_GoodLuck:
 	.string "The path to the ruins is treacherous.$"
 
 MOSSDEEP01_Text_GrandmaReminder:
-	.string "Grandma: Take care of yourself,\n"
-	.string "and remember what I told you.$"
+	.string "Grandma: Be very careful out there.\p"
+	.string "The land is unstable, and those\n"
+	.string "creatures... they're not themselves.\p"
+	.string "Stay safe, child.$"
 
-MOSSDEEP01_Text_GrandmaGoingToRest:
-	.string "Grandma: I've said all I can, dear.\p"
-	.string "I need to rest inside the tent now.\n"
-	.string "Good luck.$"
+MOSSDEEP01_Text_GrandmaEncouragement:
+	.string "Grandma: You're doing well, dear.\p"
+	.string "I can sense it... there's something\n"
+	.string "special about you.\p"
+	.string "Keep going. Hoenn needs you.$"
 
-MOSSDEEP01_Text_HoennChanged:
-	.string "Grandpa: Hoenn isn't the same anymore,\n"
-	.string "but I still believe in the legend of\l"
-	.string "Celebi, the time traveler.\p"
-	.string "My wife says you're the one who can\n"
-	.string "find the Time Gears and save us all.$"
+MOSSDEEP01_Text_GrandpaFirstTalk:
+	.string "Grandpa: Hoenn isn't the same anymore.\p"
+	.string "But I still believe in the old legends...\n"
+	.string "The Guardian of Time, CELEBI.\p"
+	.string "And the Wish-Maker, JIRACHI.\p"
+	.string "Perhaps they can help us yet.$"
 
-MOSSDEEP01_Text_GrandpaRestingTent:
-	.string "Grandpa: My wife went to rest in\n"
-	.string "the tent after guiding you.\p"
-	.string "She needs to recover her strength\n"
-	.string "after all that has happened.$"
+MOSSDEEP01_Text_GrandpaAfterTalk:
+	.string "Grandpa: My wife believes in you.\p"
+	.string "And if she believes, then so do I.\n"
+	.string "Good luck out there.$"
 
+MOSSDEEP01_Text_Child01:
+	.string "Eu detesto esses terremotos...\p"
+	.string "Você sabia que antigamente as pessoas.\n"
+	.string "Tinham seus proprios pkm! Imigaina isso.$"
+
+// ====================================================================
+// TEXTOS - RIVAL MASCULINO
+// ====================================================================
+
+MOSSDEEP01_Text_RivalMale01:
+	.string "I tried venturing into the ruins\n"
+	.string "yesterday, but...\p"
+	.string "Those Mightyena attacked me!\n"
+	.string "I barely made it back alive.\p"
+	.string "They weren't always this aggressive.\n"
+	.string "Something changed after the disaster.$"
+
+MOSSDEEP01_Text_RivalMale02:
+	.string "I used to have more courage to explore\n"
+	.string "the mountains...\p"
+	.string "Now? I just stay here with the elders.\n"
+	.string "At least it's safe.$"
+
+MOSSDEEP01_Text_RivalMale03:
+	.string "They say it was possible to train\n"
+	.string "Pokémon in the past...\p"
+	.string "I'm sure I would've been an excellent\n"
+	.string "trainer!\p"
+	.string "Too bad we can't catch Pokémon\n"
+	.string "anymore...$"
+
+MOSSDEEP01_Text_RivalMale04:
+	.string "Sometimes I wonder what life was like\n"
+	.string "before the Great Disaster...\p"
+	.string "Must have been amazing to have\n"
+	.string "Pokémon partners by your side.$"
+
+// ====================================================================
+// TEXTOS - RIVAL FEMININO
+// ====================================================================
+
+MOSSDEEP01_Text_RivalFemale01:
+	.string "I tried venturing into the ruins\n"
+	.string "yesterday, but...\p"
+	.string "Those Mightyena attacked me!\n"
+	.string "I barely made it back alive.\p"
+	.string "They weren't always this aggressive.\n"
+	.string "Something changed after the disaster.$"
+
+MOSSDEEP01_Text_RivalFemale02:
+	.string "I used to have more courage to explore\n"
+	.string "the mountains...\p"
+	.string "Now? I just stay here with the elders.\n"
+	.string "At least it's safe.$"
+
+MOSSDEEP01_Text_RivalFemale03:
+	.string "They say it was possible to train\n"
+	.string "Pokémon in the past...\p"
+	.string "I'm sure I would've been an excellent\n"
+	.string "trainer!\p"
+	.string "Too bad we can't catch Pokémon\n"
+	.string "anymore...$"
+
+MOSSDEEP01_Text_RivalFemale04:
+	.string "Sometimes I wonder what life was like\n"
+	.string "before the Great Disaster...\p"
+	.string "Must have been amazing to have\n"
+	.string "Pokémon partners by your side.$"
+
+	
+	
 
 
 
