@@ -78,7 +78,7 @@ MOSSDEEP01_EventScript_Prologue::
 	delay 15
 	msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT
 	closemessage
-	// setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE  // REMOVIDO DAQUI
+	setflag FLAG_MOSSDEEP_PROLOGUE_COMPLETED
 	releaseall
 	end
 
@@ -90,7 +90,7 @@ MOSSDEEP01_Movement_ExitTent:
 
 MOSSDEEP01_OnTransition:
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
-	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_SkipPrologue
+	goto_if_set FLAG_MOSSDEEP_PROLOGUE_COMPLETED, MOSSDEEP01_SkipPrologue
 	setvar VAR_TEMP_0, 0
 	goto MOSSDEEP01_ContinueTransition
 
@@ -98,7 +98,6 @@ MOSSDEEP01_SkipPrologue:
 	setvar VAR_TEMP_0, 1
 
 MOSSDEEP01_ContinueTransition:
-	// Se a flag estiver definida, esconde a Grandma permanentemente
 	call_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_HideGrandma
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
@@ -110,7 +109,7 @@ MOSSDEEP01_ContinueTransition:
 	end
 
 MOSSDEEP01_EventScript_HideGrandma::
-	setflag FLAG_TEMP_16  // Flag temporária para esconder a Grandma
+	setflag FLAG_TEMP_16
 	return
 
 MOSSDEEP01_EventScript_DisableMightyenas::
@@ -135,15 +134,15 @@ MOSSDEEP01_EventScript_HideComet::
 	return
 
 MOSSDEEP01_EventScript_HideItem1::
-	setflag FLAG_TEMP_11
+	removeobject LOCALID_TIME_GEAR_1
 	return
 
 MOSSDEEP01_EventScript_HideItem2::
-	setflag FLAG_TEMP_12
+	removeobject LOCALID_TIME_GEAR_2
 	return
 
 MOSSDEEP01_EventScript_HideItem3::
-	setflag FLAG_TEMP_13
+	removeobject LOCALID_TIME_GEAR_3
 	return
 
 MOSSDEEP01_EventScript_DirectWarp::
@@ -153,6 +152,7 @@ MOSSDEEP01_EventScript_DirectWarp::
 	compare VAR_RESULT, TRUE
 	goto_if_eq MOSSDEEP01_EventScript_DebugComplete
 	goto_if_set FLAG_MOSSDEEP_QUEST_COMPLETED, MOSSDEEP01_EventScript_AlreadyCompleted
+	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_NeedCelebi
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_NeedMoreItems
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_NeedMoreItems
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_NeedMoreItems
@@ -163,7 +163,13 @@ MOSSDEEP01_EventScript_DebugComplete::
 	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_1
 	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_2
 	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_3
+	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
 	goto MOSSDEEP01_EventScript_QuestComplete
+
+MOSSDEEP01_EventScript_NeedCelebi::
+	msgbox MOSSDEEP01_Text_NeedCelebiFirst, MSGBOX_DEFAULT
+	release
+	end
 
 MOSSDEEP01_EventScript_NeedMoreItems::
 	msgbox MOSSDEEP01_Text_NeedItems, MSGBOX_DEFAULT
@@ -310,7 +316,6 @@ MOSSDEEP01_EventScript_Item1::
 	message MOSSDEEP01_Text_ObtainedTimeGear1
 	waitfanfare
 	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_1
-	setflag FLAG_TEMP_11
 	removeobject LOCALID_TIME_GEAR_1
 	release
 	end
@@ -324,7 +329,6 @@ MOSSDEEP01_EventScript_Item2::
 	message MOSSDEEP01_Text_ObtainedTimeGear2
 	waitfanfare
 	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_2
-	setflag FLAG_TEMP_12
 	removeobject LOCALID_TIME_GEAR_2
 	release
 	end
@@ -338,7 +342,6 @@ MOSSDEEP01_EventScript_Item3::
 	message MOSSDEEP01_Text_ObtainedTimeGear3
 	waitfanfare
 	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_3
-	setflag FLAG_TEMP_13
 	removeobject LOCALID_TIME_GEAR_3
 	release
 	end
@@ -470,17 +473,13 @@ MOSSDEEP01_EventScript_Grandma::
 	msgbox MOSSDEEP01_Text_GrandmaGoingToRest, MSGBOX_DEFAULT
 	closemessage
 	
-	// Define a flag que faz o Grandpa mudar seu diálogo
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
-	
-	// Faz a Grandma "sair" (ser removida do mapa)
 	removeobject LOCALID_GRANDMA_MOSSDEEP01
 	
 	release
 	end
 
 MOSSDEEP01_EventScript_GrandmaAlreadyGone::
-	// Se o jogador tentar interagir onde a Grandma estava
 	release
 	end
 
@@ -498,11 +497,19 @@ MOSSDEEP01_EventScript_GrandpaAfter::
 	end
 
 MOSSDEEP01_Text_Debug:
-	.string "DEBUG: Auto-collecting all TIME GEARS!$"
+	.string "DEBUG: Auto-collecting all TIME GEARS\n"
+	.string "and rescuing CELEBI!$"
+
+MOSSDEEP01_Text_NeedCelebiFirst:
+	.string "JIRACHI: I sense something...\p"
+	.string "The Guardian of the Forest,\n"
+	.string "CELEBI, is in danger!\p"
+	.string "Please, help CELEBI first!\n"
+	.string "Only then can I assist you.$"
 
 MOSSDEEP01_Text_NeedItems:
-	.string "JIRACHI: I need your help!\p"
-	.string "The flow of time is broken!\p"
+	.string "JIRACHI: Thank you for saving CELEBI!\p"
+	.string "Now, the flow of time is broken!\p"
 	.string "Please find the 3 TIME GEARS\n"
 	.string "scattered around this place.\p"
 	.string "Only then can I send you home!$"

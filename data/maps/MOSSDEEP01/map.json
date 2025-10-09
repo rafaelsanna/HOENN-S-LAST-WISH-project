@@ -40,7 +40,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Item1",
-      "flag": "0"
+      "flag": "FLAG_MOSSDEEP_COLLECTED_ITEM_1"
     },
     {
       "local_id": "item_quest_02",
@@ -54,7 +54,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Item2",
-      "flag": "0"
+      "flag": "FLAG_MOSSDEEP_COLLECTED_ITEM_2"
     },
     {
       "local_id": "item_quest_03",
@@ -68,7 +68,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Item3",
-      "flag": "0"
+      "flag": "FLAG_MOSSDEEP_COLLECTED_ITEM_3"
     },
     {
       "local_id": "MillenniumComet01",

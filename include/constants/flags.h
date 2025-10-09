@@ -54,7 +54,7 @@
 #define FLAG_PROLOGUE_COMPLETED    0x270
 #define FLAG_MOSSDEEP_GRANDMA_DIALOGUE    0x271
 #define FLAG_MOSSDEEP_GRANDPA_DIALOGUE    0x272
-#define FLAG_UNUSED_0x02B    0x2B // Unused Flag
+#define FLAG_MOSSDEEP_PROLOGUE_COMPLETED    0x2B
 #define FLAG_UNUSED_0x02C    0x2C // Unused Flag
 #define FLAG_UNUSED_0x02D    0x2D // Unused Flag
 #define FLAG_UNUSED_0x02E    0x2E // Unused Flag
