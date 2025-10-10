@@ -586,6 +586,15 @@ MOSSDEEP01_EventScript_Child01::
 	release
 	end	
 
+MOSSDEEP01_EventScript_Child02::
+	lock
+	faceplayer
+	msgbox MOSSDEEP01_Text_Child02, MSGBOX_DEFAULT
+	release
+	end	
+
+
+
 MOSSDEEP01_Text_Debug:
 	.string "DEBUG: Auto-collecting all TIME GEARS\n"
 	.string "and rescuing CELEBI!$"
@@ -782,6 +791,11 @@ MOSSDEEP01_Text_GrandpaAfterTalk:
 	.string "Good luck out there.$"
 
 MOSSDEEP01_Text_Child01:
+	.string "Eu detesto esses terremotos...\p"
+	.string "Você sabia que antigamente as pessoas.\n"
+	.string "Tinham seus proprios pkm! Imigaina isso.$"
+
+MOSSDEEP01_Text_Child02:
 	.string "Eu detesto esses terremotos...\p"
 	.string "Você sabia que antigamente as pessoas.\n"
 	.string "Tinham seus proprios pkm! Imigaina isso.$"
