@@ -33,9 +33,14 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/trainer_types.h"
+#include "constants/flags.h"  // ← ADICIONE ESTA LINHA
 
 #define NUM_FORCED_MOVEMENTS 18
 #define NUM_ACRO_BIKE_COLLISIONS 5
+
+// Strings para Auto-Run
+static const u8 sText_AutoRunOn[] = _("Auto-Run: ON");
+static const u8 sText_AutoRunOff[] = _("Auto-Run: OFF");
 
 enum SpinDirection
 {
@@ -445,6 +450,25 @@ static void MovePlayerAvatarUsingKeypadInput(u8 direction, u16 newKeys, u16 held
         MovePlayerNotOnBike(direction, heldKeys);
 }
 
+static void HandleAutoRunToggle(u16 heldKeys, u16 newKeys)
+{
+    // Verifica se L + B foram pressionados JUNTOS
+    if ((heldKeys & L_BUTTON) && (newKeys & B_BUTTON))
+    {
+        // Toggle do Auto-Run
+        if (FlagGet(FLAG_SYS_AUTO_RUN))
+        {
+            FlagClear(FLAG_SYS_AUTO_RUN);
+            PlaySE(SE_SELECT);
+        }
+        else
+        {
+            FlagSet(FLAG_SYS_AUTO_RUN);
+            PlaySE(SE_SELECT);
+        }
+    }
+}
+
 static void PlayerAllowForcedMovementIfMovingSameDirection(void)
 {
     if (gPlayerAvatar.runningState == MOVING)
@@ -651,6 +675,9 @@ static bool8 ForcedMovement_MuddySlope(void)
 
 static void MovePlayerNotOnBike(u8 direction, u16 heldKeys)
 {
+    // ADICIONE ESTA LINHA - Processa toggle do Auto-Run
+    HandleAutoRunToggle(heldKeys, gMain.newKeys);
+    
     sPlayerNotOnBikeFuncs[CheckMovementInputNotOnBike(direction)](direction, heldKeys);
 }
 
@@ -858,7 +885,7 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         return;
     }
 
-    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON) && FlagGet(FLAG_SYS_B_DASH)
+    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && ((heldKeys & B_BUTTON) || FlagGet(FLAG_SYS_AUTO_RUN)) && FlagGet(FLAG_SYS_B_DASH)
      && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0 && !FollowerNPCComingThroughDoor())
     {
         if (ObjectMovingOnRockStairs(&gObjectEvents[gPlayerAvatar.objectEventId], direction))
