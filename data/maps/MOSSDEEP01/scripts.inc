@@ -16,6 +16,7 @@
 .equiv LOCALID_GRANDMA_MOSSDEEP01, 16
 .equiv LOCALID_RIVAL_MALE, 17
 .equiv LOCALID_RIVAL_FEMALE, 18
+.equiv LOCALID_SECRET_PATH_OBJECT, 20
 
 MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MOSSDEEP01_OnFrame
@@ -110,10 +111,11 @@ MOSSDEEP01_ContinueTransition:
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DisableMightyenas
 	call MOSSDEEP01_EventScript_HideComet
+	call MOSSDEEP01_EventScript_HideSecretPath  // Planta começa INVISÍVEL
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
-	call MOSSDEEP01_EventScript_SetupRivalNPC  // ADICIONE ESTA LINHA
+	call MOSSDEEP01_EventScript_SetupRivalNPC
 	end
 
 MOSSDEEP01_EventScript_DisableMightyenas::
@@ -135,6 +137,10 @@ MOSSDEEP01_OnResume:
 
 MOSSDEEP01_EventScript_HideComet::
 	setflag FLAG_HIDE_MOSSDEEP_COMET
+	return
+
+MOSSDEEP01_EventScript_HideSecretPath::
+	setflag FLAG_HIDE_SECRET_PATH  // Planta INVISÍVEL no início
 	return
 
 MOSSDEEP01_EventScript_HideItem1::
@@ -518,11 +524,14 @@ MOSSDEEP01_EventScript_RivalMale::
 	lock
 	faceplayer
 	random 4
-	switch VAR_RESULT
-	case 0, MOSSDEEP01_RivalMale_Case0
-	case 1, MOSSDEEP01_RivalMale_Case1
-	case 2, MOSSDEEP01_RivalMale_Case2
-	case 3, MOSSDEEP01_RivalMale_Case3
+	compare VAR_RESULT, 0
+	goto_if_eq MOSSDEEP01_RivalMale_Case0
+	compare VAR_RESULT, 1
+	goto_if_eq MOSSDEEP01_RivalMale_Case1
+	compare VAR_RESULT, 2
+	goto_if_eq MOSSDEEP01_RivalMale_Case2
+	compare VAR_RESULT, 3
+	goto_if_eq MOSSDEEP01_RivalMale_Case3
 	release
 	end
 
@@ -551,11 +560,14 @@ MOSSDEEP01_EventScript_RivalFemale::
 	lock
 	faceplayer
 	random 4
-	switch VAR_RESULT
-	case 0, MOSSDEEP01_RivalFemale_Case0
-	case 1, MOSSDEEP01_RivalFemale_Case1
-	case 2, MOSSDEEP01_RivalFemale_Case2
-	case 3, MOSSDEEP01_RivalFemale_Case3
+	compare VAR_RESULT, 0
+	goto_if_eq MOSSDEEP01_RivalFemale_Case0
+	compare VAR_RESULT, 1
+	goto_if_eq MOSSDEEP01_RivalFemale_Case1
+	compare VAR_RESULT, 2
+	goto_if_eq MOSSDEEP01_RivalFemale_Case2
+	compare VAR_RESULT, 3
+	goto_if_eq MOSSDEEP01_RivalFemale_Case3
 	release
 	end
 
@@ -593,7 +605,57 @@ MOSSDEEP01_EventScript_Child02::
 	release
 	end	
 
+// ====================================================================
+// SISTEMA DE CAMINHO SECRETO - AGORA FUNCIONANDO IGUAL AO COMETA
+// ====================================================================
 
+MOSSDEEP01_EventScript_SecretPathTrigger::
+	lockall
+	// Se Celebi NÃO FOI resgatado, bloqueia o caminho
+	checkflag FLAG_MOSSDEEP_CELEBI_RESCUED
+	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_PathBlocked
+	
+	// Se planta JÁ ESTÁ visível, não faz nada
+	checkflag FLAG_HIDE_SECRET_PATH
+	goto_if_unset FLAG_HIDE_SECRET_PATH, MOSSDEEP01_PathAlreadyOpen
+	
+	// Se chegou aqui, Celebi foi resgatado E planta está invisível - REVELA!
+	goto MOSSDEEP01_RevealSecretPath
+
+MOSSDEEP01_PathBlocked::
+	msgbox MOSSDEEP01_Text_PathBlocked, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
+	waitmovement 0
+	releaseall
+	end
+
+MOSSDEEP01_RevealSecretPath::
+	msgbox MOSSDEEP01_Text_CelebiSensesPath, MSGBOX_DEFAULT
+	closemessage
+	delay 20
+	playse SE_M_HEAL_BELL
+	delay 30
+	msgbox MOSSDEEP01_Text_CelebiUsesPower, MSGBOX_DEFAULT
+	closemessage
+	playse SE_M_PSYBEAM
+	fadescreenspeed FADE_TO_WHITE, 8
+	delay 30
+	
+	// REVELA a planta magicamente (igual ao cometa)
+	clearflag FLAG_HIDE_SECRET_PATH
+	addobject LOCALID_SECRET_PATH_OBJECT
+	
+	playse SE_M_PSYBEAM
+	delay 20
+	fadescreenspeed FADE_FROM_WHITE, 8
+	msgbox MOSSDEEP01_Text_PathRevealed, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_PathAlreadyOpen::
+	releaseall
+	end
 
 MOSSDEEP01_Text_Debug:
 	.string "DEBUG: Auto-collecting all TIME GEARS\n"
@@ -864,7 +926,27 @@ MOSSDEEP01_Text_RivalFemale04:
 	.string "Must have been amazing to have\n"
 	.string "Pokémon partners by your side.$"
 
-	
+// ====================================================================
+// TEXTOS - CAMINHO SECRETO
+// ====================================================================
+
+MOSSDEEP01_Text_PathBlocked:
+	.string "There's only water and plants here...\p"
+	.string "I can't pass through this way.$"
+
+MOSSDEEP01_Text_CelebiSensesPath:
+	.string "CELEBI reacts to something!\p"
+	.string "It seems to sense a hidden path\n"
+	.string "through the vegetation...$"
+
+MOSSDEEP01_Text_CelebiUsesPower:
+	.string "CELEBI channels its mystical power!\p"
+	.string "The plants begin to shimmer and\n"
+	.string "shift, revealing a secret passage!$"
+
+MOSSDEEP01_Text_PathRevealed:
+	.string "A hidden path has been revealed!\p"
+	.string "The way forward is now clear!$"		
 	
 
 
