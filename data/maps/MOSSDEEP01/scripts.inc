@@ -115,6 +115,7 @@ MOSSDEEP01_ContinueTransition:
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
 	call MOSSDEEP01_EventScript_SetupSecretPath
+	call_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_EventScript_KeepJirachiAwake
 	call MOSSDEEP01_EventScript_SetupRivalNPC
 	end
 
@@ -678,6 +679,48 @@ MOSSDEEP01_PathAlreadyOpen::
 	end
 
 // ====================================================================
+// JIRACHI WAKE EVENT
+// ====================================================================
+
+MOSSDEEP01_EventScript_Jirachi::
+	lock
+	faceplayer
+	
+	// If already awake, stay awake (front frame)
+	goto_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiAwake
+	
+	// First time - wake up Jirachi
+	msgbox MOSSDEEP01_Text_JirachiWaking, MSGBOX_DEFAULT
+	closemessage
+	delay 15
+	
+	// White flash effect
+	fadescreenspeed FADE_TO_WHITE, 4
+	playse SE_M_PSYBEAM
+	delay 10
+	fadescreenspeed FADE_FROM_WHITE, 4
+	delay 15
+		
+	// Jirachi front frame (fully awake)
+	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
+	playse SE_M_SWIFT
+	delay 20
+	
+	setflag FLAG_JIRACHI_AWAKE
+	msgbox MOSSDEEP01_Text_JirachiAwoken, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_JirachiAwake::
+	msgbox MOSSDEEP01_Text_JirachiDialog, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_EventScript_KeepJirachiAwake::
+	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
+	return
+
+// ====================================================================
 // TEXTOS
 // ====================================================================
 
@@ -981,6 +1024,24 @@ MOSSDEEP01_Text_DebugFrame2:
 
 MOSSDEEP01_Text_DebugFrame3:
 	.string "DEBUG: Frame 3 (face_up)$"
+
+// ====================================================================
+// TEXT STRINGS
+// ====================================================================
+
+MOSSDEEP01_Text_JirachiWaking:
+	.string "JIRACHI stirs and opens its eyes...\p"
+	.string "It's finally awake!$"
+
+MOSSDEEP01_Text_JirachiAwoken:
+	.string "JIRACHI: Thank you for awakening me...\p"
+	.string "The time has come to restore\n"
+	.string "the flow of time itself!$"
+
+MOSSDEEP01_Text_JirachiDialog:
+	.string "JIRACHI: The temporal energy flows\n"
+	.string "through this place...\p"
+	.string "Are you ready to save Hoenn?$"
 
 
 
