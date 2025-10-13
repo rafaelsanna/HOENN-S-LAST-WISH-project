@@ -18,7 +18,7 @@
       "local_id": "JIRACHI",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(BASCULIN)",
       "x": 21,
-      "y": 9,
+      "y": 8,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -74,7 +74,7 @@
       "local_id": "MillenniumComet01",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(KORAIDON)",
       "x": 21,
-      "y": 8,
+      "y": 7,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -376,6 +376,15 @@
       "var": "FLAG_PLANT_SECRET_PATH",
       "var_value": "0",
       "script": "MOSSDEEP01_EventScript_SecretPathTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 10,
+      "elevation": 0,
+      "var": "FLAG_JIRACHI_AWAKE",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_JirachiTrigger"
     }
   ],
   "bg_events": []

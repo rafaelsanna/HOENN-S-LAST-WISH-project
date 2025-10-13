@@ -679,15 +679,21 @@ MOSSDEEP01_PathAlreadyOpen::
 	end
 
 // ====================================================================
-// JIRACHI WAKE EVENT
+// JIRACHI WAKE EVENT - TRIGGER BASED (NOT NPC TALK)
 // ====================================================================
 
-MOSSDEEP01_EventScript_Jirachi::
-	lock
-	faceplayer
+MOSSDEEP01_EventScript_JirachiObject::
+	end
+
+// ====================================================================
+// JIRACHI WAKE TRIGGER - STEP ON IT TO WAKE JIRACHI
+// ====================================================================
+
+MOSSDEEP01_EventScript_JirachiTrigger::
+	lockall
 	
-	// If already awake, stay awake (front frame)
-	goto_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiAwake
+	// If already awake, do nothing
+	goto_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiAlreadyAwake
 	
 	// First time - wake up Jirachi
 	msgbox MOSSDEEP01_Text_JirachiWaking, MSGBOX_DEFAULT
@@ -700,7 +706,12 @@ MOSSDEEP01_EventScript_Jirachi::
 	delay 10
 	fadescreenspeed FADE_FROM_WHITE, 4
 	delay 15
-		
+	
+	// Jirachi middle frame (waking up)
+	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_SOUTH
+	playse SE_M_PSYBEAM
+	delay 20
+	
 	// Jirachi front frame (fully awake)
 	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
 	playse SE_M_SWIFT
@@ -708,17 +719,61 @@ MOSSDEEP01_EventScript_Jirachi::
 	
 	setflag FLAG_JIRACHI_AWAKE
 	msgbox MOSSDEEP01_Text_JirachiAwoken, MSGBOX_DEFAULT
-	release
+	closemessage
+	releaseall
 	end
 
-MOSSDEEP01_JirachiAwake::
-	msgbox MOSSDEEP01_Text_JirachiDialog, MSGBOX_DEFAULT
-	release
+MOSSDEEP01_JirachiAlreadyAwake::
+	releaseall
 	end
+
+// ====================================================================
+// ON TRANSITION - KEEP JIRACHI AWAKE STATE
+// ====================================================================
+
+// Add this to your MOSSDEEP01_ContinueTransition:
+// call_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_EventScript_KeepJirachiAwake
 
 MOSSDEEP01_EventScript_KeepJirachiAwake::
 	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
 	return
+
+MOSSDEEP01_EventScript_Jirachi::
+	lock
+	faceplayer
+	
+	// If not awake yet, tell player to approach trigger first
+	goto_if_unset FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiSleeping
+	
+	// Check if all conditions are met for meteor event
+	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_JirachiNeedCelebi
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_JirachiNeedItems
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_JirachiNeedItems
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_JirachiNeedItems
+	goto_if_set FLAG_MOSSDEEP_QUEST_COMPLETED, MOSSDEEP01_JirachiAlreadyCompleted
+	
+	// All conditions met - trigger meteor event
+	goto MOSSDEEP01_EventScript_DirectWarp
+
+MOSSDEEP01_JirachiNeedCelebi::
+	msgbox MOSSDEEP01_Text_JirachiNeedCelebi, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_JirachiNeedItems::
+	msgbox MOSSDEEP01_Text_JirachiNeedItems, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_JirachiAlreadyCompleted::
+	msgbox MOSSDEEP01_Text_JirachiCompleted, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_JirachiSleeping::
+	msgbox MOSSDEEP01_Text_JirachiStillSleeping, MSGBOX_DEFAULT
+	release
+	end	
 
 // ====================================================================
 // TEXTOS
@@ -1026,7 +1081,7 @@ MOSSDEEP01_Text_DebugFrame3:
 	.string "DEBUG: Frame 3 (face_up)$"
 
 // ====================================================================
-// TEXT STRINGS
+// TEXT JIRACHI
 // ====================================================================
 
 MOSSDEEP01_Text_JirachiWaking:
@@ -1038,11 +1093,28 @@ MOSSDEEP01_Text_JirachiAwoken:
 	.string "The time has come to restore\n"
 	.string "the flow of time itself!$"
 
+MOSSDEEP01_Text_JirachiStillSleeping:
+	.string "JIRACHI is still sleeping...\p"
+	.string "It needs to be awakened.$"
+
 MOSSDEEP01_Text_JirachiDialog:
 	.string "JIRACHI: The temporal energy flows\n"
 	.string "through this place...\p"
 	.string "Are you ready to save Hoenn?$"
 
+MOSSDEEP01_Text_JirachiNeedCelebi:
+	.string "JIRACHI: I sense CELEBI is still\n"
+	.string "in danger!\p"
+	.string "Please rescue CELEBI first!$"
 
+MOSSDEEP01_Text_JirachiNeedItems:
+	.string "JIRACHI: The TIME GEARS are\n"
+	.string "still scattered!\p"
+	.string "Collect all 3 TIME GEARS and\n"
+	.string "return to me!$"
 
+MOSSDEEP01_Text_JirachiCompleted:
+	.string "JIRACHI: You've already restored\n"
+	.string "the flow of time!\p"
+	.string "Thank you, hero!$"
 	
