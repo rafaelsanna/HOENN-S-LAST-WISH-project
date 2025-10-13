@@ -649,12 +649,12 @@ MOSSDEEP01_EventScript_SecretPathTrigger::
 	delay 20
 	
 	// Plant turns to face right (first rotation)
-	turnobject LOCALID_SECRET_PATH_PLANT, DIR_WEST
+	turnobject LOCALID_SECRET_PATH_PLANT, DIR_NORTH
 	playse SE_M_PSYBEAM
 	delay 20
 	
 		// Plant turns to face up (second rotation)
-	turnobject LOCALID_SECRET_PATH_PLANT, DIR_NORTH
+	turnobject LOCALID_SECRET_PATH_PLANT, DIR_WEST
 	playse SE_M_SWIFT
 	delay 25
 	
