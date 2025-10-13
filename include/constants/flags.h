@@ -57,10 +57,10 @@
 #define FLAG_HIDE_MOSSDEEP_RIVAL_MALE        0x26D
 #define FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE      0x26E
 #define FLAG_SYS_AUTO_RUN                    0x2E
-#define FLAG_HIDE_SECRET_PATH   0x2F // Unused Flag
-#define FLAG_UNUSED_0x030    0x30 // Unused Flag
-#define FLAG_UNUSED_0x031    0x31 // Unused Flag
-#define FLAG_UNUSED_0x032    0x32 // Unused Flag
+#define FLAG_HIDE_SECRET_PATH   0x2F
+#define FLAG_PLANT_SECRET_PATH    0x30 
+#define FLAG_HIDE_SECRET_RIGHT    0x31 // Unused Flag
+#define FLAG_HIDE_SECRET_UP    0x32 // Unused Flag
 #define FLAG_UNUSED_0x033    0x33 // Unused Flag
 #define FLAG_UNUSED_0x034    0x34 // Unused Flag
 #define FLAG_UNUSED_0x035    0x35 // Unused Flag

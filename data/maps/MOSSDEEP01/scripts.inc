@@ -1,5 +1,5 @@
 // ====================================================================
-// SISTEMA DE QUEST - TIME GEARS (FRAGMENTOS DO TEMPO)
+// QUEST SYSTEM - TIME GEARS (TIME FRAGMENTS)
 // ====================================================================
 
 .equiv LOCALID_MOSSDEEP_JIRACHI, 1
@@ -14,9 +14,10 @@
 .equiv LOCALID_ZIGZAGOON, 9
 .equiv LOCALID_SURVIVOR, 15
 .equiv LOCALID_GRANDMA_MOSSDEEP01, 16
-.equiv LOCALID_RIVAL_MALE, 17
+.equiv LOCALID_RIVAL_MALE, 1
 .equiv LOCALID_RIVAL_FEMALE, 18
-.equiv LOCALID_SECRET_PATH_OBJECT, 20
+.equiv LOCALID_SECRET_PATH_PLANT_1, 24
+.equiv LOCALID_SECRET_PATH_PLANT_2, 25
 
 MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MOSSDEEP01_OnFrame
@@ -68,7 +69,6 @@ MOSSDEEP01_EventScript_Prologue::
 	closemessage
 	delay 20
 	
-	// NOVO: Dar o Shiny Charm durante o terremoto
 	msgbox MOSSDEEP01_Text_GrandmaGivesCharm, MSGBOX_DEFAULT
 	giveitem ITEM_SHINY_CHARM
 	msgbox MOSSDEEP01_Text_GrandmaCharmExplanation, MSGBOX_DEFAULT
@@ -111,13 +111,23 @@ MOSSDEEP01_ContinueTransition:
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DisableMightyenas
 	call MOSSDEEP01_EventScript_HideComet
-	call MOSSDEEP01_EventScript_HideSecretPath  // Planta começa INVISÍVEL
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
+	call MOSSDEEP01_EventScript_SetupSecretPath
 	call MOSSDEEP01_EventScript_SetupRivalNPC
 	end
 
+MOSSDEEP01_EventScript_HideSecretPathRight::
+	setflag FLAG_HIDE_SECRET_RIGHT
+	return
+
+MOSSDEEP01_EventScript_HideSecretPathUp::
+	setflag FLAG_HIDE_SECRET_UP
+	return
+	call MOSSDEEP01_EventScript_SetupRivalNPC
+	end
+	
 MOSSDEEP01_EventScript_DisableMightyenas::
 	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
 	setobjectmovementtype LOCALID_POOCHYENA, MOVEMENT_TYPE_WANDER_AROUND
@@ -137,10 +147,6 @@ MOSSDEEP01_OnResume:
 
 MOSSDEEP01_EventScript_HideComet::
 	setflag FLAG_HIDE_MOSSDEEP_COMET
-	return
-
-MOSSDEEP01_EventScript_HideSecretPath::
-	setflag FLAG_HIDE_SECRET_PATH  // Planta INVISÍVEL no início
 	return
 
 MOSSDEEP01_EventScript_HideItem1::
@@ -502,10 +508,9 @@ MOSSDEEP01_EventScript_GrandpaAfter::
 	end
 
 // ====================================================================
-// NPC RIVAL DE GÊNERO OPOSTO - MOSSDEEP01
+// OPPOSITE GENDER RIVAL NPC
 // ====================================================================
 
-// Script para mostrar/esconder o NPC correto baseado no gênero
 MOSSDEEP01_EventScript_SetupRivalNPC::
 	checkplayergender
 	compare VAR_RESULT, MALE
@@ -519,7 +524,6 @@ MOSSDEEP01_EventScript_ShowFemaleRival::
 	clearflag FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE
 	return
 
-// Script do NPC Masculino (aparece quando jogador é feminino)
 MOSSDEEP01_EventScript_RivalMale::
 	lock
 	faceplayer
@@ -555,7 +559,6 @@ MOSSDEEP01_RivalMale_Case3::
 	release
 	end
 
-// Script do NPC Feminino (aparece quando jogador é masculino)
 MOSSDEEP01_EventScript_RivalFemale::
 	lock
 	faceplayer
@@ -606,21 +609,61 @@ MOSSDEEP01_EventScript_Child02::
 	end	
 
 // ====================================================================
-// SISTEMA DE CAMINHO SECRETO - AGORA FUNCIONANDO IGUAL AO COMETA
+// ====================================================================
+// SECRET PATH PLANT - SIMPLE TURNOBJECT SOLUTION
+// ====================================================================
+
+.equiv LOCALID_SECRET_PATH_PLANT, 24
+
+// Plant object - always visible, just rotates
+MOSSDEEP01_EventScript_SecretPathPlant::
+	end
+
+// ====================================================================
+// SETUP - NOTHING NEEDED, PLANT IS ALWAYS VISIBLE
+// ====================================================================
+
+MOSSDEEP01_EventScript_SetupSecretPath::
+	return
+
+// ====================================================================
+// TRIGGER - ROTATE PLANT DIRECTION
 // ====================================================================
 
 MOSSDEEP01_EventScript_SecretPathTrigger::
 	lockall
-	// Se Celebi NÃO FOI resgatado, bloqueia o caminho
-	checkflag FLAG_MOSSDEEP_CELEBI_RESCUED
+	
+	// Must rescue Celebi first
 	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_PathBlocked
 	
-	// Se planta JÁ ESTÁ visível, não faz nada
-	checkflag FLAG_HIDE_SECRET_PATH
-	goto_if_unset FLAG_HIDE_SECRET_PATH, MOSSDEEP01_PathAlreadyOpen
+	// Already triggered, do nothing
+	goto_if_set FLAG_PLANT_SECRET_PATH, MOSSDEEP01_PathAlreadyOpen
 	
-	// Se chegou aqui, Celebi foi resgatado E planta está invisível - REVELA!
-	goto MOSSDEEP01_RevealSecretPath
+	// First time - plant rotates with magical effects
+	msgbox MOSSDEEP01_Text_CelebiSensesPath, MSGBOX_DEFAULT
+	closemessage
+	delay 15
+		
+	// Mystic power sound
+	playse SE_M_HYPER_BEAM
+	delay 20
+	
+	// Plant turns to face right (first rotation)
+	turnobject LOCALID_SECRET_PATH_PLANT, DIR_WEST
+	playse SE_M_PSYBEAM
+	delay 20
+	
+		// Plant turns to face up (second rotation)
+	turnobject LOCALID_SECRET_PATH_PLANT, DIR_NORTH
+	playse SE_M_SWIFT
+	delay 25
+	
+	msgbox MOSSDEEP01_Text_PathRevealed, MSGBOX_DEFAULT
+	closemessage
+	
+	setflag FLAG_PLANT_SECRET_PATH
+	releaseall
+	end
 
 MOSSDEEP01_PathBlocked::
 	msgbox MOSSDEEP01_Text_PathBlocked, MSGBOX_DEFAULT
@@ -630,32 +673,13 @@ MOSSDEEP01_PathBlocked::
 	releaseall
 	end
 
-MOSSDEEP01_RevealSecretPath::
-	msgbox MOSSDEEP01_Text_CelebiSensesPath, MSGBOX_DEFAULT
-	closemessage
-	delay 20
-	playse SE_M_HEAL_BELL
-	delay 30
-	msgbox MOSSDEEP01_Text_CelebiUsesPower, MSGBOX_DEFAULT
-	closemessage
-	playse SE_M_PSYBEAM
-	fadescreenspeed FADE_TO_WHITE, 8
-	delay 30
-	
-	// REVELA a planta magicamente (igual ao cometa)
-	clearflag FLAG_HIDE_SECRET_PATH
-	addobject LOCALID_SECRET_PATH_OBJECT
-	
-	playse SE_M_PSYBEAM
-	delay 20
-	fadescreenspeed FADE_FROM_WHITE, 8
-	msgbox MOSSDEEP01_Text_PathRevealed, MSGBOX_DEFAULT
-	releaseall
-	end
-
 MOSSDEEP01_PathAlreadyOpen::
 	releaseall
 	end
+
+// ====================================================================
+// TEXTOS
+// ====================================================================
 
 MOSSDEEP01_Text_Debug:
 	.string "DEBUG: Auto-collecting all TIME GEARS\n"
@@ -862,10 +886,6 @@ MOSSDEEP01_Text_Child02:
 	.string "Você sabia que antigamente as pessoas.\n"
 	.string "Tinham seus proprios pkm! Imigaina isso.$"
 
-// ====================================================================
-// TEXTOS - RIVAL MASCULINO
-// ====================================================================
-
 MOSSDEEP01_Text_RivalMale01:
 	.string "I tried venturing into the ruins\n"
 	.string "yesterday, but...\p"
@@ -893,10 +913,6 @@ MOSSDEEP01_Text_RivalMale04:
 	.string "before the Great Disaster...\p"
 	.string "Must have been amazing to have\n"
 	.string "Pokémon partners by your side.$"
-
-// ====================================================================
-// TEXTOS - RIVAL FEMININO
-// ====================================================================
 
 MOSSDEEP01_Text_RivalFemale01:
 	.string "I tried venturing into the ruins\n"
@@ -926,10 +942,6 @@ MOSSDEEP01_Text_RivalFemale04:
 	.string "Must have been amazing to have\n"
 	.string "Pokémon partners by your side.$"
 
-// ====================================================================
-// TEXTOS - CAMINHO SECRETO
-// ====================================================================
-
 MOSSDEEP01_Text_PathBlocked:
 	.string "There's only water and plants here...\p"
 	.string "I can't pass through this way.$"
@@ -946,8 +958,29 @@ MOSSDEEP01_Text_CelebiUsesPower:
 
 MOSSDEEP01_Text_PathRevealed:
 	.string "A hidden path has been revealed!\p"
-	.string "The way forward is now clear!$"		
-	
+	.string "The way forward is now clear!$"
+
+MOSSDEEP01_Text_DebugStepped:
+	.string "DEBUG: Trigger ativado!$"
+
+MOSSDEEP01_Text_DebugAlreadyOpen:
+	.string "DEBUG: Caminho já aberto!$"
+
+MOSSDEEP01_Text_DebugRevealStart:
+	.string "DEBUG: Iniciando reveal!$"
+
+MOSSDEEP01_Text_DebugAfterAdd:
+	.string "DEBUG: Após addobject!\n"
+	.string "A planta deveria estar visível agora!$"
+
+MOSSDEEP01_Text_DebugFrame1:
+	.string "DEBUG: Frame 1 (face_down)$"
+
+MOSSDEEP01_Text_DebugFrame2:
+	.string "DEBUG: Frame 2 (face_right)$"
+
+MOSSDEEP01_Text_DebugFrame3:
+	.string "DEBUG: Frame 3 (face_up)$"
 
 
 
