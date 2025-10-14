@@ -4424,8 +4424,8 @@
     {
       "id": "LAYOUT_MOSSDEEP01",
       "name": "MOSSDEEP01_Layout",
-      "width": 83,
-      "height": 83,
+      "width": 81,
+      "height": 81,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mossdeep",
       "border_filepath": "data/layouts/MOSSDEEP01/border.bin",
@@ -4450,6 +4450,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/MOSSDEEP02/border.bin",
       "blockdata_filepath": "data/layouts/MOSSDEEP02/map.bin"
+    },
+    {
+      "id": "LAYOUT_LITTLEROOT_TOWN_2",
+      "name": "LittlerootTown_2_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/LittlerootTown_2/border.bin",
+      "blockdata_filepath": "data/layouts/LittlerootTown_2/map.bin"
     }
   ]
 }

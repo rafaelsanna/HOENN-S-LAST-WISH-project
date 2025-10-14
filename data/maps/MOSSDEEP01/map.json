@@ -347,6 +347,34 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_SecretPathPlant",
       "flag": "NULL"
+    },
+    {
+      "local_id": "SECRET_PATH_PLANT_1_FINAL",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZEKROM)",
+      "x": 32,
+      "y": 18,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "FLAG_HIDE_SECRET_PATH_FINAL"
+    },
+    {
+      "local_id": "SECRET_PATH_PLANT_2_FINAL",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZEKROM)",
+      "x": 33,
+      "y": 18,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "FLAG_HIDE_SECRET_PATH_FINAL"
     }
   ],
   "warp_events": [
@@ -364,16 +392,7 @@
       "x": 33,
       "y": 19,
       "elevation": 3,
-      "var": "FLAG_PLANT_SECRET_PATH",
-      "var_value": "0",
-      "script": "MOSSDEEP01_EventScript_SecretPathTrigger"
-    },
-    {
-      "type": "trigger",
-      "x": 32,
-      "y": 19,
-      "elevation": 3,
-      "var": "FLAG_PLANT_SECRET_PATH",
+      "var": "FLAG_SECRET_PATH_TRIGGERED",
       "var_value": "0",
       "script": "MOSSDEEP01_EventScript_SecretPathTrigger"
     },
@@ -385,6 +404,15 @@
       "var": "FLAG_JIRACHI_AWAKE",
       "var_value": "0",
       "script": "MOSSDEEP01_EventScript_JirachiTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 19,
+      "elevation": 3,
+      "var": "FLAG_SECRET_PATH_TRIGGERED",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_SecretPathTrigger"
     }
   ],
   "bg_events": []

@@ -18,6 +18,8 @@
 .equiv LOCALID_RIVAL_FEMALE, 18
 .equiv LOCALID_SECRET_PATH_PLANT_1, 24
 .equiv LOCALID_SECRET_PATH_PLANT_2, 25
+.equiv LOCALID_SECRET_PATH_PLANT_1_FINAL, 26
+.equiv LOCALID_SECRET_PATH_PLANT_2_FINAL, 27
 
 MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MOSSDEEP01_OnFrame
@@ -611,58 +613,78 @@ MOSSDEEP01_EventScript_Child02::
 
 // ====================================================================
 // ====================================================================
-// SECRET PATH PLANT - SIMPLE TURNOBJECT SOLUTION
+// SECRET PATH PLANTS - SOLUÇÃO SIMPLES SEM BURACOS
 // ====================================================================
 
-.equiv LOCALID_SECRET_PATH_PLANT, 24
-
-// Plant object - always visible, just rotates
 MOSSDEEP01_EventScript_SecretPathPlant::
 	end
 
 // ====================================================================
-// SETUP - NOTHING NEEDED, PLANT IS ALWAYS VISIBLE
+// SETUP - PLANTAS PEQUENAS SEMPRE VISÍVEIS
 // ====================================================================
 
 MOSSDEEP01_EventScript_SetupSecretPath::
+	// Plantas pequenas sempre visíveis
+	addobject LOCALID_SECRET_PATH_PLANT_1
+	addobject LOCALID_SECRET_PATH_PLANT_2
+	
+	// Se já triggerou, mostrar plantas grandes também
+	goto_if_set FLAG_SECRET_PATH_TRIGGERED, MOSSDEEP01_PlantsFinalState
+	
+	// Se NÃO triggerou, esconder plantas grandes
+	setflag FLAG_HIDE_SECRET_PATH_FINAL
+	return
+
+MOSSDEEP01_PlantsFinalState::
+	// Mostrar plantas grandes (sobrepõem as pequenas)
+	clearflag FLAG_HIDE_SECRET_PATH_FINAL
+	addobject LOCALID_SECRET_PATH_PLANT_1_FINAL
+	addobject LOCALID_SECRET_PATH_PLANT_2_FINAL
 	return
 
 // ====================================================================
-// TRIGGER - ROTATE PLANT DIRECTION
+// TRIGGER - ATIVA AS PLANTAS GRANDES SEM BURACO
 // ====================================================================
 
 MOSSDEEP01_EventScript_SecretPathTrigger::
 	lockall
-	
-	// Must rescue Celebi first
+	goto_if_set FLAG_SECRET_PATH_TRIGGERED, MOSSDEEP01_PathAlreadyOpen
 	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_PathBlocked
 	
-	// Already triggered, do nothing
-	goto_if_set FLAG_PLANT_SECRET_PATH, MOSSDEEP01_PathAlreadyOpen
-	
-	// First time - plant rotates with magical effects
+	// Mensagem inicial
 	msgbox MOSSDEEP01_Text_CelebiSensesPath, MSGBOX_DEFAULT
 	closemessage
 	delay 15
-		
-	// Mystic power sound
+	
 	playse SE_M_HYPER_BEAM
 	delay 20
 	
-	// Plant turns to face right (first rotation)
-	turnobject LOCALID_SECRET_PATH_PLANT, DIR_NORTH
+	// Animação nas plantas PEQUENAS (elas continuam existindo)
+	turnobject LOCALID_SECRET_PATH_PLANT_1, DIR_NORTH
 	playse SE_M_PSYBEAM
+	turnobject LOCALID_SECRET_PATH_PLANT_2, DIR_NORTH
 	delay 20
 	
-		// Plant turns to face up (second rotation)
-	turnobject LOCALID_SECRET_PATH_PLANT, DIR_WEST
+	turnobject LOCALID_SECRET_PATH_PLANT_1, DIR_WEST
 	playse SE_M_SWIFT
+	turnobject LOCALID_SECRET_PATH_PLANT_2, DIR_WEST
 	delay 25
 	
+	// CHAVE: Adicionar plantas grandes ANTES de limpar flag
+	// Isso faz elas aparecerem instantaneamente sobre as pequenas
+	addobject LOCALID_SECRET_PATH_PLANT_1_FINAL
+	addobject LOCALID_SECRET_PATH_PLANT_2_FINAL
+	clearflag FLAG_HIDE_SECRET_PATH_FINAL
+	
+	// Mensagem de sucesso
 	msgbox MOSSDEEP01_Text_PathRevealed, MSGBOX_DEFAULT
 	closemessage
 	
-	setflag FLAG_PLANT_SECRET_PATH
+	setflag FLAG_SECRET_PATH_TRIGGERED
+	releaseall
+	end
+
+MOSSDEEP01_PathAlreadyOpen::
 	releaseall
 	end
 
@@ -671,10 +693,6 @@ MOSSDEEP01_PathBlocked::
 	closemessage
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
 	waitmovement 0
-	releaseall
-	end
-
-MOSSDEEP01_PathAlreadyOpen::
 	releaseall
 	end
 
@@ -1117,4 +1135,8 @@ MOSSDEEP01_Text_JirachiCompleted:
 	.string "JIRACHI: You've already restored\n"
 	.string "the flow of time!\p"
 	.string "Thank you, hero!$"
-	
+
+
+
+
+
