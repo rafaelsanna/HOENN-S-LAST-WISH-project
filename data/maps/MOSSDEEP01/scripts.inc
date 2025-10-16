@@ -613,37 +613,37 @@ MOSSDEEP01_EventScript_Child02::
 
 // ====================================================================
 // ====================================================================
-// SECRET PATH PLANTS - SOLUÇÃO SIMPLES SEM BURACOS
+// SECRET PATH PLANTS - SIMPLE SOLUTION WITHOUT HOLES
 // ====================================================================
 
 MOSSDEEP01_EventScript_SecretPathPlant::
 	end
 
 // ====================================================================
-// SETUP - PLANTAS PEQUENAS SEMPRE VISÍVEIS
+// SETUP - SMALL PLANTS ALWAYS VISIBLE
 // ====================================================================
 
 MOSSDEEP01_EventScript_SetupSecretPath::
-	// Plantas pequenas sempre visíveis
+	// Small plants always visible
 	addobject LOCALID_SECRET_PATH_PLANT_1
 	addobject LOCALID_SECRET_PATH_PLANT_2
 	
-	// Se já triggerou, mostrar plantas grandes também
+	// If already triggered, show big plants too
 	goto_if_set FLAG_SECRET_PATH_TRIGGERED, MOSSDEEP01_PlantsFinalState
 	
-	// Se NÃO triggerou, esconder plantas grandes
+	// If NOT triggered, hide big plants
 	setflag FLAG_HIDE_SECRET_PATH_FINAL
 	return
 
 MOSSDEEP01_PlantsFinalState::
-	// Mostrar plantas grandes (sobrepõem as pequenas)
+	// Show big plants (overlay the small ones)
 	clearflag FLAG_HIDE_SECRET_PATH_FINAL
 	addobject LOCALID_SECRET_PATH_PLANT_1_FINAL
 	addobject LOCALID_SECRET_PATH_PLANT_2_FINAL
 	return
 
 // ====================================================================
-// TRIGGER - ATIVA AS PLANTAS GRANDES SEM BURACO
+// TRIGGER - ACTIVATE BIG PLANTS WITHOUT HOLE
 // ====================================================================
 
 MOSSDEEP01_EventScript_SecretPathTrigger::
@@ -651,7 +651,7 @@ MOSSDEEP01_EventScript_SecretPathTrigger::
 	goto_if_set FLAG_SECRET_PATH_TRIGGERED, MOSSDEEP01_PathAlreadyOpen
 	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_PathBlocked
 	
-	// Mensagem inicial
+	// Initial message
 	msgbox MOSSDEEP01_Text_CelebiSensesPath, MSGBOX_DEFAULT
 	closemessage
 	delay 15
@@ -659,7 +659,7 @@ MOSSDEEP01_EventScript_SecretPathTrigger::
 	playse SE_M_HYPER_BEAM
 	delay 20
 	
-	// Animação nas plantas PEQUENAS (elas continuam existindo)
+	// Animation on SMALL plants (they continue to exist)
 	turnobject LOCALID_SECRET_PATH_PLANT_1, DIR_NORTH
 	playse SE_M_PSYBEAM
 	turnobject LOCALID_SECRET_PATH_PLANT_2, DIR_NORTH
@@ -670,13 +670,13 @@ MOSSDEEP01_EventScript_SecretPathTrigger::
 	turnobject LOCALID_SECRET_PATH_PLANT_2, DIR_WEST
 	delay 25
 	
-	// CHAVE: Adicionar plantas grandes ANTES de limpar flag
-	// Isso faz elas aparecerem instantaneamente sobre as pequenas
+	// KEY: Add big plants BEFORE clearing flag
+	// This makes them appear instantly over the small ones
 	addobject LOCALID_SECRET_PATH_PLANT_1_FINAL
 	addobject LOCALID_SECRET_PATH_PLANT_2_FINAL
 	clearflag FLAG_HIDE_SECRET_PATH_FINAL
 	
-	// Mensagem de sucesso
+	// Success message
 	msgbox MOSSDEEP01_Text_PathRevealed, MSGBOX_DEFAULT
 	closemessage
 	
@@ -794,7 +794,7 @@ MOSSDEEP01_JirachiSleeping::
 	end	
 
 // ====================================================================
-// TEXTOS
+// TEXTS
 // ====================================================================
 
 MOSSDEEP01_Text_Debug:
@@ -851,290 +851,204 @@ MOSSDEEP01_Text_ObtainedTimeGear2:
 	.string "of the PRESENT!$"
 
 MOSSDEEP01_Text_FoundItem3:
-	.string "{PLAYER} noticed a strange light\n"
-	.string "in the distance...$"
+	.string "{PLAYER} noticed something sparkling\n"
+	.string "in the water...$"
 
 MOSSDEEP01_Text_ObtainedTimeGear3:
 	.string "{PLAYER} obtained the TIME GEAR\n"
 	.string "of the FUTURE!$"
 
 MOSSDEEP01_Text_AlreadyCollected:
-	.string "Nothing here anymore...$"
+	.string "This place seems peaceful now.$"
 
 MOSSDEEP01_Text_CelebiHelp:
-	.string "CELEBI: Help! Those Mightyena\n"
-	.string "are hunting me!\p"
-	.string "I'm trapped and can't escape!\n"
-	.string "Please find the 3 TIME GEARS!\p"
-	.string "Only with their power can I\n"
-	.string "calm these wild creatures!$"
+	.string "CELEBI: ... ... ...\p"
+	.string "The flow of time is broken...\p"
+	.string "Please... find the 3 TIME GEARS...\n"
+	.string "Only then can I be freed...$"
 
 MOSSDEEP01_Text_CelebiPower:
-	.string "CELEBI: You found them all!\p"
-	.string "Now I can use my temporal powers\n"
-	.string "to calm the Mightyena!$"
+	.string "CELEBI: You found all the TIME GEARS!\p"
+	.string "Now I can use my power to restore\n"
+	.string "the temporal flow!$"
 
 MOSSDEEP01_Text_CelebiCalmed:
-	.string "The Mightyena have been calmed!\p"
-	.string "They won't attack anymore...$"
+	.string "The wild POKéMON have calmed down!$"
 
 MOSSDEEP01_Text_CelebiFollows:
-	.string "CELEBI: Thank you!\n"
-	.string "I'll follow you to safety!$"
+	.string "CELEBI: Thank you for saving me!\n"
+	.string "I will accompany you on your journey.$"
 
 MOSSDEEP01_Text_CelebiThanks:
-	.string "CELEBI: Thank you for saving me!\p"
-	.string "I'll stay with you for safety!$"
+	.string "CELEBI: Thank you, {PLAYER}!\n"
+	.string "Together we restored time!$"
 
 MOSSDEEP01_Text_MightyenaAttack:
-	.string "Wild MIGHTYENA used CRUNCH!\p"
-	.string "It's super effective!$"
+	.string "The wild MIGHTYENA attacks!$"
 
 MOSSDEEP01_Text_MightyenaBlackedOut:
-	.string "You blacked out!\p"
-	.string "Returning to safety...$"
-
-MOSSDEEP01_Text_HealerWelcome:
-	.string "Survivor: You look tired!\n"
-	.string "Let me heal your Pokemon.$"
-
-MOSSDEEP01_Text_Healing:
-	.string "Using residual energies from\n"
-	.string "the meteor to heal...$"
-
-MOSSDEEP01_Text_HealedComplete:
-	.string "Done! Your Pokemon are\n"
-	.string "fully recovered!$"
+	.string "The wild POKéMON are too aggressive!\n"
+	.string "You blacked out!$"
 
 MOSSDEEP01_Text_SurvivorTrapped:
-	.string "Survivor: Watch out!\n"
-	.string "Those Mightyena are attacking\l"
-	.string "everyone who passes by!\p"
-	.string "I've been trapped down here\n"
-	.string "for days...$"
+	.string "SURVIVOR: Help! These wild POKéMON\n"
+	.string "are too aggressive!\p"
+	.string "I can't escape!$"
 
 MOSSDEEP01_Text_SurvivorAmazed:
-	.string "Survivor: What... what was that\n"
-	.string "incredible light?!\p"
-	.string "The Mightyena... they're friendly now!$"
+	.string "SURVIVOR: Incredible! The POKéMON\n"
+	.string "suddenly calmed down!\p"
+	.string "What happened?$"
 
 MOSSDEEP01_Text_SurvivorGoing:
-	.string "Survivor: I can finally go check on them!\n"
-	.string "Let me see...$"
+	.string "SURVIVOR: I'm going to find a safer\n"
+	.string "place. Thank you!$"
 
 MOSSDEEP01_Text_SurvivorHappy:
-	.string "Survivor: Amazing! I can even pet them!\p"
-	.string "Was it that strange Pokemon\n"
-	.string "following you?\p"
-	.string "Thank you so much!$"
+	.string "SURVIVOR: I feel much safer now.\n"
+	.string "Thank you for your help!$"
+
+MOSSDEEP01_Text_HealerWelcome:
+	.string "HEALER: Let me heal your POKéMON.$"
+
+MOSSDEEP01_Text_Healing:
+	.string "Healing POKéMON...$"
+
+MOSSDEEP01_Text_HealedComplete:
+	.string "HEALER: Your POKéMON are fully\n"
+	.string "healed! Good luck!$"
 
 MOSSDEEP01_Text_GrandmaWelcome:
-	.string "Grandma: Oh, you're awake!\p"
-	.string "Thank goodness...\n"
-	.string "You've been having nightmares.$"
+	.string "GRANDMA: {PLAYER}! You're awake!\p"
+	.string "The earthquake was terrible...\n"
+	.string "Many people are trapped...$"
 
 MOSSDEEP01_Text_EarthquakeWarning:
-	.string "Grandma: Wait... do you feel that?\p"
-	.string "Not again!$"
-
-MOSSDEEP01_Text_HoennDestroyed:
-	.string "Grandma: Ever since the Great Disaster,\n"
-	.string "these quakes won't stop...\p"
-	.string "The land is tearing itself apart.\n"
-	.string "Storms rage without end.\p"
-	.string "Hoenn is dying, child.\n"
-	.string "And no one knows why.$"
+	.string "GRANDMA: Another tremor!\n"
+	.string "Be careful out there!$"
 
 MOSSDEEP01_Text_GrandmaGivesCharm:
-	.string "Grandma: Wait! Before you go...\p"
-	.string "Take this old charm. It's been\n"
-	.string "passed down in our family.\p"
-	.string "They say it protects travelers and\n"
-	.string "brings luck with rare Pokémon.$"
+	.string "GRANDMA: Take this SHINY CHARM.\n"
+	.string "It might bring you luck!$"
 
 MOSSDEEP01_Text_GrandmaCharmExplanation:
-	.string "Grandma: It's called the Shiny Charm.\n"
-	.string "May it keep you safe out there and\l"
-	.string "help you find special Pokémon\l"
-	.string "on your journey.$"	
+	.string "GRANDMA: This charm increases your\n"
+	.string "chances of finding rare POKéMON.\p"
+	.string "Use it well!$"
+
+MOSSDEEP01_Text_HoennDestroyed:
+	.string "GRANDMA: The HOENN region...\n"
+	.string "It's been completely destroyed...\p"
+	.string "But there are survivors who need\n"
+	.string "help. Please, {PLAYER}, help them!$"
 
 MOSSDEEP01_Text_PlayerDecision:
-	.string "{PLAYER} feels a strange pull...\p"
-	.string "Those recurring dreams...\n"
-	.string "The ruined altar...\p"
-	.string "There has to be a connection.$"
+	.string "{PLAYER} decides to help the survivors\n"
+	.string "and explore the devastated area.$"
 
 MOSSDEEP01_Text_GoodLuck:
-	.string "Grandma: Please, be careful out there.\p"
-	.string "The path to the ruins is treacherous.$"
+	.string "GRANDMA: Good luck, {PLAYER}!\n"
+	.string "Be very careful!$"
 
 MOSSDEEP01_Text_GrandmaReminder:
-	.string "Grandma: Be very careful out there.\p"
-	.string "The land is unstable, and those\n"
-	.string "creatures... they're not themselves.\p"
-	.string "Stay safe, child.$"
+	.string "GRANDMA: Please help the survivors!\n"
+	.string "And be careful with the wild POKéMON.$"
 
 MOSSDEEP01_Text_GrandmaEncouragement:
-	.string "Grandma: You're doing well, dear.\p"
-	.string "I can sense it... there's something\n"
-	.string "special about you.\p"
-	.string "Keep going. Hoenn needs you.$"
+	.string "GRANDMA: You're doing great, {PLAYER}!\n"
+	.string "Keep helping people!$"
 
 MOSSDEEP01_Text_GrandpaFirstTalk:
-	.string "Grandpa: Hoenn isn't the same anymore.\p"
-	.string "But I still believe in the old legends...\n"
-	.string "The Guardian of Time, CELEBI.\p"
-	.string "And the Wish-Maker, JIRACHI.\p"
-	.string "Perhaps they can help us yet.$"
+	.string "GRANDPA: The world has changed...\n"
+	.string "Everything is so different now...$"
 
 MOSSDEEP01_Text_GrandpaAfterTalk:
-	.string "Grandpa: My wife believes in you.\p"
-	.string "And if she believes, then so do I.\n"
-	.string "Good luck out there.$"
-
-MOSSDEEP01_Text_Child01:
-	.string "Eu detesto esses terremotos...\p"
-	.string "Você sabia que antigamente as pessoas.\n"
-	.string "Tinham seus proprios pkm! Imigaina isso.$"
-
-MOSSDEEP01_Text_Child02:
-	.string "Eu detesto esses terremotos...\p"
-	.string "Você sabia que antigamente as pessoas.\n"
-	.string "Tinham seus proprios pkm! Imigaina isso.$"
+	.string "GRANDPA: Thank you for helping\n"
+	.string "everyone, {PLAYER}. You're a hero!$"
 
 MOSSDEEP01_Text_RivalMale01:
-	.string "I tried venturing into the ruins\n"
-	.string "yesterday, but...\p"
-	.string "Those Mightyena attacked me!\n"
-	.string "I barely made it back alive.\p"
-	.string "They weren't always this aggressive.\n"
-	.string "Something changed after the disaster.$"
+	.string "RIVAL: Hey {PLAYER}! I'm helping\n"
+	.string "the survivors too!\p"
+	.string "Let's work together!$"
 
 MOSSDEEP01_Text_RivalMale02:
-	.string "I used to have more courage to explore\n"
-	.string "the mountains...\p"
-	.string "Now? I just stay here with the elders.\n"
-	.string "At least it's safe.$"
+	.string "RIVAL: These wild POKéMON are\n"
+	.string "really aggressive!\p"
+	.string "Be careful out there!$"
 
 MOSSDEEP01_Text_RivalMale03:
-	.string "They say it was possible to train\n"
-	.string "Pokémon in the past...\p"
-	.string "I'm sure I would've been an excellent\n"
-	.string "trainer!\p"
-	.string "Too bad we can't catch Pokémon\n"
-	.string "anymore...$"
+	.string "RIVAL: I heard there's a special\n"
+	.string "POKéMON that can help us.\p"
+	.string "Let's find it!$"
 
 MOSSDEEP01_Text_RivalMale04:
-	.string "Sometimes I wonder what life was like\n"
-	.string "before the Great Disaster...\p"
-	.string "Must have been amazing to have\n"
-	.string "Pokémon partners by your side.$"
+	.string "RIVAL: We can do this, {PLAYER}!\n"
+	.string "Together we'll save everyone!$"
 
 MOSSDEEP01_Text_RivalFemale01:
-	.string "I tried venturing into the ruins\n"
-	.string "yesterday, but...\p"
-	.string "Those Mightyena attacked me!\n"
-	.string "I barely made it back alive.\p"
-	.string "They weren't always this aggressive.\n"
-	.string "Something changed after the disaster.$"
+	.string "RIVAL: {PLAYER}! I'm so glad\n"
+	.string "you're safe!\p"
+	.string "Let's help the survivors together!$"
 
 MOSSDEEP01_Text_RivalFemale02:
-	.string "I used to have more courage to explore\n"
-	.string "the mountains...\p"
-	.string "Now? I just stay here with the elders.\n"
-	.string "At least it's safe.$"
+	.string "RIVAL: The wild POKéMON are\n"
+	.string "acting so strange...\p"
+	.string "Something must be wrong!$"
 
 MOSSDEEP01_Text_RivalFemale03:
-	.string "They say it was possible to train\n"
-	.string "Pokémon in the past...\p"
-	.string "I'm sure I would've been an excellent\n"
-	.string "trainer!\p"
-	.string "Too bad we can't catch Pokémon\n"
-	.string "anymore...$"
+	.string "RIVAL: I heard about a legendary\n"
+	.string "POKéMON that controls time.\p"
+	.string "Maybe it can help us!$"
 
 MOSSDEEP01_Text_RivalFemale04:
-	.string "Sometimes I wonder what life was like\n"
-	.string "before the Great Disaster...\p"
-	.string "Must have been amazing to have\n"
-	.string "Pokémon partners by your side.$"
+	.string "RIVAL: We make a great team,\n"
+	.string "{PLAYER}! Let's keep going!$"
 
-MOSSDEEP01_Text_PathBlocked:
-	.string "There's only water and plants here...\p"
-	.string "I can't pass through this way.$"
+MOSSDEEP01_Text_Child01:
+	.string "CHILD: I'm scared...\n"
+	.string "Where are my parents?$"
+
+MOSSDEEP01_Text_Child02:
+	.string "CHILD: The ground shook really hard...\n"
+	.string "Then everything changed...$"
 
 MOSSDEEP01_Text_CelebiSensesPath:
-	.string "CELEBI reacts to something!\p"
-	.string "It seems to sense a hidden path\n"
-	.string "through the vegetation...$"
-
-MOSSDEEP01_Text_CelebiUsesPower:
-	.string "CELEBI channels its mystical power!\p"
-	.string "The plants begin to shimmer and\n"
-	.string "shift, revealing a secret passage!$"
+	.string "CELEBI senses something hidden\n"
+	.string "in this area...$"
 
 MOSSDEEP01_Text_PathRevealed:
-	.string "A hidden path has been revealed!\p"
-	.string "The way forward is now clear!$"
+	.string "CELEBI's power reveals a hidden path!$"
 
-MOSSDEEP01_Text_DebugStepped:
-	.string "DEBUG: Trigger ativado!$"
-
-MOSSDEEP01_Text_DebugAlreadyOpen:
-	.string "DEBUG: Caminho já aberto!$"
-
-MOSSDEEP01_Text_DebugRevealStart:
-	.string "DEBUG: Iniciando reveal!$"
-
-MOSSDEEP01_Text_DebugAfterAdd:
-	.string "DEBUG: Após addobject!\n"
-	.string "A planta deveria estar visível agora!$"
-
-MOSSDEEP01_Text_DebugFrame1:
-	.string "DEBUG: Frame 1 (face_down)$"
-
-MOSSDEEP01_Text_DebugFrame2:
-	.string "DEBUG: Frame 2 (face_right)$"
-
-MOSSDEEP01_Text_DebugFrame3:
-	.string "DEBUG: Frame 3 (face_up)$"
-
-// ====================================================================
-// TEXT JIRACHI
-// ====================================================================
+MOSSDEEP01_Text_PathBlocked:
+	.string "The path is blocked by strange plants.\n"
+	.string "You cannot pass.$"
 
 MOSSDEEP01_Text_JirachiWaking:
-	.string "JIRACHI stirs and opens its eyes...\p"
-	.string "It's finally awake!$"
+	.string "A mysterious POKéMON is sleeping\n"
+	.string "near the rocks...\p"
+	.string "It seems to be waking up!$"
 
 MOSSDEEP01_Text_JirachiAwoken:
-	.string "JIRACHI: Thank you for awakening me...\p"
-	.string "The time has come to restore\n"
-	.string "the flow of time itself!$"
-
-MOSSDEEP01_Text_JirachiStillSleeping:
-	.string "JIRACHI is still sleeping...\p"
-	.string "It needs to be awakened.$"
-
-MOSSDEEP01_Text_JirachiDialog:
-	.string "JIRACHI: The temporal energy flows\n"
-	.string "through this place...\p"
-	.string "Are you ready to save Hoenn?$"
+	.string "JIRACHI has awoken!$"
 
 MOSSDEEP01_Text_JirachiNeedCelebi:
-	.string "JIRACHI: I sense CELEBI is still\n"
-	.string "in danger!\p"
+	.string "JIRACHI: I sense temporal disturbance...\n"
+	.string "The forest guardian needs help!\p"
 	.string "Please rescue CELEBI first!$"
 
 MOSSDEEP01_Text_JirachiNeedItems:
-	.string "JIRACHI: The TIME GEARS are\n"
-	.string "still scattered!\p"
-	.string "Collect all 3 TIME GEARS and\n"
-	.string "return to me!$"
+	.string "JIRACHI: Thank you for saving CELEBI!\n"
+	.string "But time is still broken...\p"
+	.string "Please find the 3 TIME GEARS\n"
+	.string "to restore temporal flow!$"
 
 MOSSDEEP01_Text_JirachiCompleted:
-	.string "JIRACHI: You've already restored\n"
-	.string "the flow of time!\p"
-	.string "Thank you, hero!$"
+	.string "JIRACHI: You restored the timeline!\n"
+	.string "Thank you, time traveler!$"
+
+MOSSDEEP01_Text_JirachiStillSleeping:
+	.string "JIRACHI is sleeping peacefully...\n"
+	.string "Maybe you should approach it?$"
 
 
 

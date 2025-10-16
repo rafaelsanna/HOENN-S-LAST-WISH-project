@@ -22,13 +22,18 @@
       "map": "MAP_LITTLEROOT_TOWN",
       "offset": 0,
       "direction": "down"
+    },
+    {
+      "map": "MAP_ROUTENEW101",
+      "offset": 2,
+      "direction": "right"
     }
   ],
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
-      "x": 16,
-      "y": 8,
+      "x": 4,
+      "y": 3,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,

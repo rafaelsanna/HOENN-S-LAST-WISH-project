@@ -4460,6 +4460,16 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/LittlerootTown_2/border.bin",
       "blockdata_filepath": "data/layouts/LittlerootTown_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTENEW101",
+      "name": "Routenew101_Layout",
+      "width": 15,
+      "height": 15,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/Routenew101/border.bin",
+      "blockdata_filepath": "data/layouts/Routenew101/map.bin"
     }
   ]
 }
