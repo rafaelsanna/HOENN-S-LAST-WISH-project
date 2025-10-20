@@ -352,7 +352,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .backPicSizeFemale = MON_COORDS_SIZE(40, 48),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
-        SHADOW(-1, 1, SHADOW_SIZE_S)
+        SHADOW(-1, 4, SHADOW_SIZE_S)
         FOOTPRINT(Torchic)
         OVERWORLD(
             sPicTable_Torchic,
@@ -976,7 +976,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Poochyena,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
-        SHADOW(0, 2, SHADOW_SIZE_M)
+        SHADOW(3, 7, SHADOW_SIZE_M)
         FOOTPRINT(Poochyena)
         OVERWORLD(
             sPicTable_Poochyena,
@@ -1051,7 +1051,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Mightyena,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-2, 6, SHADOW_SIZE_L)
+        SHADOW(3, 12, SHADOW_SIZE_L)
         FOOTPRINT(Mightyena)
         OVERWORLD(
             sPicTable_Mightyena,
@@ -1136,7 +1136,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Zigzagoon,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
-        SHADOW(-4, 0, SHADOW_SIZE_M)
+        SHADOW(3, 3, SHADOW_SIZE_M)
         FOOTPRINT(Zigzagoon)
         OVERWORLD(
             sPicTable_Zigzagoon,
@@ -1909,7 +1909,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Lotad,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 4,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
-        SHADOW(2, -3, SHADOW_SIZE_S)
+        SHADOW(2, 1, SHADOW_SIZE_S)
         FOOTPRINT(Lotad)
         OVERWORLD(
             sPicTable_Lotad,
@@ -1981,7 +1981,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Lombre,
         .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(4, 2, SHADOW_SIZE_S)
+        SHADOW(3, 5, SHADOW_SIZE_S)
         FOOTPRINT(Lombre)
         OVERWORLD(
             sPicTable_Lombre,
@@ -2778,7 +2778,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 39),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .frontAnimId = ANIM_BOUNCE_ROTATE_TO_SIDES,
         .backPic = gMonBackPic_Kirlia,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(40, 56) : MON_COORDS_SIZE(48, 56),
         .backPicYOffset = 6,
@@ -2856,7 +2856,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 30),
             ANIMCMD_FRAME(0, 20),
         ),
-        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_V_SQUISH_AND_BOUNCE : ANIM_V_SQUISH_AND_BOUNCE_SLOW,
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_BOUNCE_ROTATE_TO_SIDES : ANIM_BOUNCE_ROTATE_TO_SIDES,
         .backPic = gMonBackPic_Gardevoir,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 56) : MON_COORDS_SIZE(48, 56),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 6,
@@ -3404,7 +3404,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Breloom,
         .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-4, 9, SHADOW_SIZE_M)
+        SHADOW(0, 15, SHADOW_SIZE_L)
         FOOTPRINT(Breloom)
         OVERWORLD(
             sPicTable_Breloom,
@@ -3611,9 +3611,9 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 22),
             ANIMCMD_FRAME(1, 22),
-            ANIMCMD_FRAME(0, 22),
             ANIMCMD_FRAME(1, 22),
-            ANIMCMD_FRAME(0, 22),
+            ANIMCMD_FRAME(1, 22),
+            ANIMCMD_FRAME(1, 22),
             ANIMCMD_FRAME(1, 22),
             ANIMCMD_FRAME(0, 22),
         ),
@@ -3627,7 +3627,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Slaking,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(0, 6, SHADOW_SIZE_XL_BATTLE_ONLY)
+        SHADOW(0, 10, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Slaking)
         OVERWORLD(
             sPicTable_Slaking,
@@ -4158,7 +4158,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Makuhita,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 2 : 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(1, 5, SHADOW_SIZE_M)
+        SHADOW(1, 8, SHADOW_SIZE_M)
         FOOTPRINT(Makuhita)
         OVERWORLD(
             sPicTable_Makuhita,
@@ -4229,7 +4229,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Hariyama,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-3, 9, SHADOW_SIZE_L)
+        SHADOW(-3, 12, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Hariyama)
         OVERWORLD(
             sPicTable_Hariyama,
@@ -6840,7 +6840,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .trainerScale = 345,
         .trainerOffset = 6,
         .frontPic = gMonFrontPic_Camerupt,
-        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicSize = MON_COORDS_SIZE(64, 36),
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 9 : 6,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
@@ -6851,7 +6851,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 15),
         ),
-        .frontAnimId = ANIM_V_SHAKE,
+        .frontAnimId = ANIM_GLOW_RED,
         .backPic = gMonBackPic_Camerupt,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 32) : MON_COORDS_SIZE(64, 40),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 19 : 13,
@@ -6867,7 +6867,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .backPicSizeFemale = MON_COORDS_SIZE(64, 40),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 4, SHADOW_SIZE_L)
+        SHADOW(2, 7, SHADOW_SIZE_L)
         FOOTPRINT(Camerupt)
         OVERWORLD(
             sPicTable_Camerupt,
@@ -7713,7 +7713,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 10),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_V_SLIDE : ANIM_GROW_VIBRATE,
+        .frontAnimId = ANIM_H_PIVOT,
         .enemyMonElevation = P_GBA_STYLE_SPECIES_GFX ? 12 : 0,
         .backPic = gMonBackPic_Swablu,
         .backPicSize = MON_COORDS_SIZE(64, 48),
@@ -9883,7 +9883,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 15),
         ),
-        .frontAnimId = ANIM_H_VIBRATE,
+        .frontAnimId = ANIM_GLOW_BLACK,
         .frontAnimDelay = 30,
         .backPic = gMonBackPic_Dusclops,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 48) : MON_COORDS_SIZE(64, 64),
@@ -9894,7 +9894,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Dusclops,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-2, 8, SHADOW_SIZE_M)
+        SHADOW(-2, 10, SHADOW_SIZE_L)
         FOOTPRINT(Dusclops)
         OVERWORLD(
             sPicTable_Dusclops,
@@ -10896,11 +10896,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 2),
             ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(0, 30),
+            ANIMCMD_FRAME(1, 30),
             ANIMCMD_FRAME(1, 6),
             ANIMCMD_FRAME(0, 15),
         ),
-        .frontAnimId = ANIM_H_SHAKE,
+        .frontAnimId = ANIM_V_STRETCH,
         .backPic = gMonBackPic_Walrein,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(64, 64),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 0,
@@ -10910,7 +10910,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Walrein,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(0, 8, SHADOW_SIZE_L)
+        SHADOW(1, 12, SHADOW_SIZE_L)
         FOOTPRINT(Walrein)
         OVERWORLD(
             sPicTable_Walrein,
@@ -11361,7 +11361,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Bagon,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 2 : 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
-        SHADOW(4, 3, SHADOW_SIZE_S)
+        SHADOW(-2, 7, SHADOW_SIZE_M)
         FOOTPRINT(Bagon)
         OVERWORLD(
             sPicTable_Bagon,
@@ -11423,7 +11423,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 15),
         ),
-        .frontAnimId = ANIM_V_SLIDE,
+        .frontAnimId = ANIM_BOUNCE_ROTATE_TO_SIDES,
         .backPic = gMonBackPic_Shelgon,
         .backPicSize = MON_COORDS_SIZE(64, 40),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 13 : 12,
@@ -11433,7 +11433,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Shelgon,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(1, 2, SHADOW_SIZE_M)
+        SHADOW(1, 5, SHADOW_SIZE_M)
         FOOTPRINT(Shelgon)
         OVERWORLD(
             sPicTable_Shelgon,
@@ -11495,9 +11495,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 3,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 10),
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(0, 30),
-            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(1, 30),
             ANIMCMD_FRAME(0, 15),
         ),
         .frontAnimId = ANIM_H_SHAKE,
@@ -11511,7 +11509,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Salamence,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(3, 8, SHADOW_SIZE_L)
+        SHADOW(3, 10, SHADOW_SIZE_L)
         FOOTPRINT(Salamence)
         OVERWORLD(
             sPicTable_Salamence,

@@ -679,7 +679,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_WATER_1),
         .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_SHEER_FORCE },
-        .bodyColor = BODY_COLOR_BLUE,
+        .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Feraligatr"),
         .cryId = CRY_FERALIGATR,
         .natDexNum = NATIONAL_DEX_FERALIGATR,
@@ -709,7 +709,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .backPic = gMonBackPic_Feraligatr,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(56, 64),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 1 : 2,
-        .backAnimId = BACK_ANIM_V_SHAKE,
+        .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
         .palette = gMonPalette_Feraligatr,
         .shinyPalette = gMonShinyPalette_Feraligatr,
         .iconSprite = gMonIcon_Feraligatr,
@@ -1456,7 +1456,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
             ANIMCMD_FRAME(1, 20),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_V_SLIDE_WOBBLE_SMALL,
+        .frontAnimId = ANIM_SHAKE_FLASH_YELLOW,
         .backPic = gMonBackPic_Lanturn,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 48) : MON_COORDS_SIZE(64, 56),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 8 : 6,
@@ -1466,7 +1466,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconSprite = gMonIcon_Lanturn,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(5, 4, SHADOW_SIZE_M)
+        SHADOW(6, 5, SHADOW_SIZE_L)
         FOOTPRINT(Lanturn)
         OVERWORLD(
             sPicTable_Lanturn,
@@ -5319,11 +5319,11 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 20),
-            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 30),
             ANIMCMD_FRAME(1, 20),
-            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(0, 5),
         ),
-        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_LUNGE_GROW : ANIM_V_STRETCH,
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_RISING_WOBBLE : ANIM_RISING_WOBBLE,
         .backPic = gMonBackPic_Heracross,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 56) : MON_COORDS_SIZE(48, 64),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 2,
@@ -5579,7 +5579,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .backPic = gMonBackPic_Weavile,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 6,
-        .backAnimId = BACK_ANIM_JOLT_RIGHT,
+        .backAnimId = BACK_ANIM_H_VIBRATE,
         .palette = gMonPalette_Weavile,
         .shinyPalette = gMonShinyPalette_Weavile,
         .iconSprite = gMonIcon_Weavile,
@@ -8211,7 +8211,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
             ANIMCMD_FRAME(1, 30),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_H_SHAKE : ANIM_V_SHAKE,
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_BACK_AND_LUNGE : ANIM_BACK_AND_LUNGE,
         .frontAnimDelay = 10,
         .backPic = gMonBackPic_Tyranitar,
         .backPicSize = MON_COORDS_SIZE(64, 64),
@@ -8222,7 +8222,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconSprite = gMonIcon_Tyranitar,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 4,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-1, 11, SHADOW_SIZE_L)
+        SHADOW(1, 16, SHADOW_SIZE_L)
         FOOTPRINT(Tyranitar)
         OVERWORLD(
             sPicTable_Tyranitar,
