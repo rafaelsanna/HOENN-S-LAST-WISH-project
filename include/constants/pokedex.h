@@ -1063,6 +1063,7 @@ enum NationalDexOrder
 
 #define POKEMON_SLOTS_NUMBER (NATIONAL_DEX_COUNT + 1)
 
+
 // Hoenn Pokédex order
 enum HoennDexOrder
 {
@@ -1132,6 +1133,11 @@ enum HoennDexOrder
     HOENN_DEX_EXPLOUD,
     HOENN_DEX_MAKUHITA,
     HOENN_DEX_HARIYAMA,
+    // Poliwag line - após Hariyama
+    HOENN_DEX_POLIWAG,
+    HOENN_DEX_POLIWHIRL,
+    HOENN_DEX_POLIWRATH,
+    HOENN_DEX_POLITOED,
     HOENN_DEX_GOLDEEN,
     HOENN_DEX_SEAKING,
     HOENN_DEX_MAGIKARP,
@@ -1139,6 +1145,10 @@ enum HoennDexOrder
     HOENN_DEX_AZURILL,
     HOENN_DEX_MARILL,
     HOENN_DEX_AZUMARILL,
+    // Hoppip line - após Azumarill
+    HOENN_DEX_HOPPIP,
+    HOENN_DEX_SKIPLOOM,
+    HOENN_DEX_JUMPLUFF,
     HOENN_DEX_GEODUDE,
     HOENN_DEX_GRAVELER,
     HOENN_DEX_GOLEM,
@@ -1203,6 +1213,9 @@ enum HoennDexOrder
     HOENN_DEX_SLUGMA,
     HOENN_DEX_MAGCARGO,
     HOENN_DEX_TORKOAL,
+    // Houndour line - após Torkoal
+    HOENN_DEX_HOUNDOUR,
+    HOENN_DEX_HOUNDOOM,
     HOENN_DEX_GRIMER,
     HOENN_DEX_MUK,
     HOENN_DEX_KOFFING,
@@ -1213,6 +1226,10 @@ enum HoennDexOrder
     HOENN_DEX_SANDSLASH,
     HOENN_DEX_SPINDA,
     HOENN_DEX_SKARMORY,
+    // Scyther line - após Skarmory
+    HOENN_DEX_SCYTHER,
+    HOENN_DEX_SCIZOR,
+    HOENN_DEX_KLEAVOR,
     HOENN_DEX_SNEASEL,
     HOENN_DEX_WEAVILE,
     HOENN_DEX_TRAPINCH,
@@ -1220,9 +1237,16 @@ enum HoennDexOrder
     HOENN_DEX_FLYGON,
     HOENN_DEX_CACNEA,
     HOENN_DEX_CACTURNE,
+    // Gligar line - após Cacturne
+    HOENN_DEX_GLIGAR,
+    HOENN_DEX_GLISCOR,
     HOENN_DEX_SWABLU,
     HOENN_DEX_ALTARIA,
     HOENN_DEX_ZANGOOSE,
+    // Teddiursa line - após Zangoose
+    HOENN_DEX_TEDDIURSA,
+    HOENN_DEX_URSARING,
+    HOENN_DEX_URSALUNA,
     HOENN_DEX_SEVIPER,
     HOENN_DEX_LUNATONE,
     HOENN_DEX_SOLROCK,
@@ -1252,7 +1276,7 @@ enum HoennDexOrder
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
     HOENN_DEX_DUSKNOIR,
 #endif
-    // Gastly line - adicionado após Dusknoir
+    // Gastly line - após Dusknoir
     HOENN_DEX_GASTLY,
     HOENN_DEX_HAUNTER,
     HOENN_DEX_GENGAR,
@@ -1262,36 +1286,44 @@ enum HoennDexOrder
 #else
     HOENN_DEX_TROPIUS,
 #endif
+    // Yanma line - após Tropius
+    HOENN_DEX_YANMA,
+    HOENN_DEX_YANMEGA,
     HOENN_DEX_CHIMECHO,
     HOENN_DEX_ABSOL,
+    // Misdreavus line - antes de Vulpix
+    HOENN_DEX_MISDREAVUS,
+    HOENN_DEX_MISMAGIUS,
     HOENN_DEX_VULPIX,
     HOENN_DEX_NINETALES,
-    // Growlithe line - adicionado após Ninetales
+    // Growlithe line - após Ninetales
     HOENN_DEX_GROWLITHE,
     HOENN_DEX_ARCANINE,
     HOENN_DEX_PICHU,
     HOENN_DEX_PIKACHU,
     HOENN_DEX_RAICHU,
-    // Eevee e evoluções - adicionado após Raichu
+    // Eevee e evoluções - após Raichu
     HOENN_DEX_EEVEE,
     HOENN_DEX_VAPOREON,
     HOENN_DEX_JOLTEON,
     HOENN_DEX_FLAREON,
     HOENN_DEX_ESPEON,
     HOENN_DEX_UMBREON,
-#if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
     HOENN_DEX_LEAFEON,
     HOENN_DEX_GLACEON,
-#endif
-#if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_6_CROSS_EVOS
     HOENN_DEX_SYLVEON,
-#endif
     HOENN_DEX_PSYDUCK,
     HOENN_DEX_GOLDUCK,
+    // Wooper line - após Golduck
+    HOENN_DEX_WOOPER,
+    HOENN_DEX_QUAGSIRE,
     HOENN_DEX_WYNAUT,
     HOENN_DEX_WOBBUFFET,
     HOENN_DEX_NATU,
     HOENN_DEX_XATU,
+    // Murkrow line - após Xatu
+    HOENN_DEX_MURKROW,
+    HOENN_DEX_HONCHKROW,
     HOENN_DEX_GIRAFARIG,
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_9_CROSS_EVOS
     HOENN_DEX_FARIGIRAF,
@@ -1307,19 +1339,16 @@ enum HoennDexOrder
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
     HOENN_DEX_RHYPERIOR,
 #endif
-    // Electabuzz/Magmar lines - adicionado após Rhyperior
-#if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
+    // Electabuzz/Magmar lines - após Rhyperior
     HOENN_DEX_ELEKID,
-#endif
     HOENN_DEX_ELECTABUZZ,
-#if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
     HOENN_DEX_ELECTIVIRE,
     HOENN_DEX_MAGBY,
-#endif
     HOENN_DEX_MAGMAR,
-#if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
     HOENN_DEX_MAGMORTAR,
-#endif
+    // Smoochum line - após Magmortar
+    HOENN_DEX_SMOOCHUM,
+    HOENN_DEX_JYNX,
     HOENN_DEX_SNORUNT,
     HOENN_DEX_GLALIE,
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
@@ -1338,7 +1367,12 @@ enum HoennDexOrder
 #endif
     HOENN_DEX_CHINCHOU,
     HOENN_DEX_LANTURN,
+    // Mantyke line - após Lanturn
+    HOENN_DEX_MANTYKE,
+    HOENN_DEX_MANTINE,
     HOENN_DEX_LUVDISC,
+    // Lapras - após Luvdisc
+    HOENN_DEX_LAPRAS,
     HOENN_DEX_HORSEA,
     HOENN_DEX_SEADRA,
     HOENN_DEX_KINGDRA,
@@ -1363,8 +1397,10 @@ enum HoennDexOrder
     HOENN_DEX_JIRACHI,
     HOENN_DEX_DEOXYS,
     
-    HOENN_DEX_COUNT  // SEMPRE por último!
+    HOENN_DEX_COUNT
 };
+
+/////////////////////////////////////////////////////////////
 
 #define HOENN_DEX_COUNT (HOENN_DEX_DEOXYS + 1)
 
