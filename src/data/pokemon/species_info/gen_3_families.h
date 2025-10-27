@@ -508,11 +508,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 7),
             ANIMCMD_FRAME(0, 7),
         ),
-        .frontAnimId = ANIM_H_SHAKE,
+        .frontAnimId = ANIM_BACK_FLIP_BIG,
         .backPic = gMonBackPic_Blaziken,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 0,
-        .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
+        .backAnimId = BACK_ANIM_CIRCLE_COUNTERCLOCKWISE,
         .palette = gMonPalette_Blaziken,
         .shinyPalette = gMonShinyPalette_Blaziken,
         .iconSprite = gMonIcon_Blaziken,
@@ -524,7 +524,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .backPicSizeFemale = MON_COORDS_SIZE(64, 64),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(4, 8, SHADOW_SIZE_M)
+        SHADOW(4, 16, SHADOW_SIZE_L)
         FOOTPRINT(Blaziken)
         OVERWORLD(
             sPicTable_Blaziken,
