@@ -57,3 +57,7 @@ gText_Birch_AreYouReady::
 	.string "Meet me at the ancient POKéMON LAB\n"
 	.string "to begin our sacred mission.\p"
 	.string "$"
+
+
+
+

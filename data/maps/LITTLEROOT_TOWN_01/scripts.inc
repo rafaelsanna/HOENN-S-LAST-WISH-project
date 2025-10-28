@@ -1,5 +1,5 @@
 // ====================================================================
-// DREAM HELM - JIRACHI WARP TO MOSSDEEP01 - FIXED FINAL V2
+// DREAM HELM - JIRACHI WARP TO MOSSDEEP01 - FIXED FINAL V8
 // ====================================================================
 
 .equiv LOCALID_JIRACHI, 1
@@ -69,6 +69,9 @@ LittlerootTown_01_WarpMale::
 	// Hide the Pokéball in player's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 	
+	// Set rival house state to trigger mom dialogue
+	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1
+	
 	// Set respawn in player's house
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
 	
@@ -90,6 +93,9 @@ LittlerootTown_01_WarpFemale::
 	// Hide the Pokéball in player's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
 	
+	// Set rival house state to trigger mom dialogue
+	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 1
+	
 	// Set respawn in player's house
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
 	
@@ -98,6 +104,8 @@ LittlerootTown_01_WarpFemale::
 	waitstate
 	release
 	end
+
+// ... o resto do script continua igual ...
 
 LittlerootTown_01_Stay::
 	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
