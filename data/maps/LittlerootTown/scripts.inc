@@ -46,6 +46,7 @@ LittlerootTown_OnTransition:
 	call_if_eq VAR_LITTLEROOT_RIVAL_STATE, 3, LittlerootTown_EventScript_SetRivalLeftForRoute103
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_EventScript_HideMapNamePopup
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_EventScript_LeftLabAfterDexUpgrade
+	call_if_set FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT, LittlerootTown_EventScript_HideResearchAssistant
 	end
 
 LittlerootTown_EventScript_LeftLabAfterDexUpgrade::
@@ -904,6 +905,16 @@ LittlerootTown_EventScript_GiveRunningShoes::
 	delay 30
 	return
 
+LittlerootTown_EventScript_HideResearchAssistant::
+    setflag FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT
+    return
+
+LittlerootTown_EventScript_ResearchAssistant::
+	msgbox LittlerootTown_Text_ResearchAssistant, MSGBOX_NPC
+	end
+
+////////////////////////////// 
+
 LittlerootTown_Text_OurNewHomeLetsGoInside:
 	.string "MOM: {PLAYER}, we're here, honey!\p"
 	.string "It must be tiring riding with our things\n"
@@ -1013,4 +1024,14 @@ LittlerootTown_Text_BirchSomethingToShowYouAtLab:
 	.string "I gave you?\p"
 	.string "I have something to show you.\n"
 	.string "Let's go to my LAB.$"
+
+LittlerootTown_Text_ResearchAssistant:
+	.string "I'm one of PROF. BIRCH's research\n"
+	.string "assistants.\p"
+	.string "The PROFESSOR is always out in the\n"
+	.string "field studying POKéMON habitats.$"
+
+
+
+
 

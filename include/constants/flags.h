@@ -64,7 +64,7 @@
 #define FLAG_JIRACHI_AWAKE 0x33 
 #define FLAG_SECRET_PATH_TRIGGERED    0x34 
 #define FLAG_HIDE_SECRET_PATH_FINAL    0x35 
-#define FLAG_UNUSED_0x036    0x36 // Unused Flag
+#define FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT    0x36 // Unused Flag
 #define FLAG_UNUSED_0x037    0x37 // Unused Flag
 #define FLAG_UNUSED_0x038    0x38 // Unused Flag
 #define FLAG_UNUSED_0x039    0x39 // Unused Flag
