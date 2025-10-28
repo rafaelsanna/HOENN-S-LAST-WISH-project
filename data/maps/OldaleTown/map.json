@@ -27,6 +27,11 @@
       "map": "MAP_ROUTE102",
       "offset": 0,
       "direction": "left"
+    },
+    {
+      "map": "MAP_OLDALE_FIELD",
+      "offset": 0,
+      "direction": "right"
     }
   ],
   "object_events": [

@@ -1170,3 +1170,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LittlerootTown_2/scripts.inc"
 
 	.include "data/maps/Routenew101/scripts.inc"
+
+	.include "data/maps/OldaleField/scripts.inc"

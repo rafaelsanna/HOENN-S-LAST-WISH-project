@@ -4470,6 +4470,16 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/Routenew101/border.bin",
       "blockdata_filepath": "data/layouts/Routenew101/map.bin"
+    },
+    {
+      "id": "LAYOUT_OLDALE_FIELD",
+      "name": "OldaleField_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/OldaleField/border.bin",
+      "blockdata_filepath": "data/layouts/OldaleField/map.bin"
     }
   ]
 }
