@@ -1,5 +1,5 @@
 // ====================================================================
-// DREAM HELM - JIRACHI WARP PARA MOSSDEEP01
+// DREAM HELM - JIRACHI WARP TO MOSSDEEP01 - FIXED FINAL V2
 // ====================================================================
 
 .equiv LOCALID_JIRACHI, 1
@@ -21,7 +21,7 @@ LittlerootTown_01_JirachiWarp::
 	msgbox LittlerootTown_01_Text_JirachiTimeWarp, MSGBOX_DEFAULT
 	closemessage
 	
-	// === CUTSCENE ÉPICA DO JIRACHI ===
+	// === JIRACHI EPIC CUTSCENE ===
 	applymovement LOCALID_JIRACHI, LittlerootTown_Movement_JirachiCircleStart
 	waitmovement LOCALID_JIRACHI
 	
@@ -38,7 +38,7 @@ LittlerootTown_01_JirachiWarp::
 	fadescreen FADE_TO_BLACK
 	delay 60
 	
-	// === CONFIGURAÇÃO DO PROGRESSO DO JOGO ===
+	// === GAME PROGRESS SETUP ===
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
@@ -55,25 +55,46 @@ LittlerootTown_01_JirachiWarp::
 	checkplayergender
 	compare VAR_RESULT, MALE
 	goto_if_eq LittlerootTown_01_WarpMale
-	
-	// FEMALE
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+	goto LittlerootTown_01_WarpFemale
+
+LittlerootTown_01_WarpMale::
+	// MALE Player (Brendan)
+	// Show ONLY player's mom in player's house
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
+	// Hide rival mom in player's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
-	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
+	// Hide rival's mom in rival's house
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
 	
-	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
+	// Hide the Pokéball in player's house
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
+	
+	// Set respawn in player's house
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
+	
+	// Warp to player's house 2F
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
 	waitstate
 	release
 	end
 
-LittlerootTown_01_WarpMale::
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+LittlerootTown_01_WarpFemale::
+	// FEMALE Player (May)
+	// Show ONLY player's mom in player's house
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
+	// Hide rival mom in player's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
-	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
+	// Hide rival's mom in rival's house
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
 	
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
+	// Hide the Pokéball in player's house
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+	
+	// Set respawn in player's house
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
+	
+	// Warp to player's house 2F
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
 	waitstate
 	release
 	end
@@ -86,8 +107,11 @@ LittlerootTown_01_Stay::
 	setflag FLAG_SYS_B_DASH
 	setflag FLAG_RECEIVED_RUNNING_SHOES
 	
-	// === CONFIGURAÇÃO CRÍTICA ===
+	// === CRITICAL SETUP ===
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	
+	// Let the InsideOfTruck script handle the mom flags
+	// Don't set any mom flags here to avoid conflicts
 	
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
@@ -99,23 +123,21 @@ LittlerootTown_01_Stay::
 	setvar VAR_LITTLEROOT_INTRO_STATE, 7
 	setvar VAR_LITTLEROOT_TOWN_STATE, 0
 	
-	// === FADE TO BLACK (DORMINDO) ===
+	// === FADE TO BLACK (SLEEPING) ===
 	fadescreen FADE_TO_BLACK
 	delay 60
 	
-	// === WARP PARA MOSSDEEP01 (DENTRO DA BARRACA) ===
+	// === WARP TO MOSSDEEP01 (INSIDE TENT) ===
 	warp MAP_MOSSDEEP01, 11, 64
 	waitstate
 	
-	// Continua black (ainda dormindo)
+	// Continue black (still sleeping)
 	delay 80
-	
-	// NÃO fazer fade in aqui - deixar o OnFrame fazer isso
 	
 	release
 	end
 
-// Movimentos
+// Movements
 LittlerootTown_Movement_JirachiCircleStart:
 	walk_left
 	walk_left
@@ -130,7 +152,7 @@ LittlerootTown_Movement_JirachiCircleComplete:
 	walk_up
 	step_end
 
-// Scripts do Celebi
+// Celebi Scripts
 LittlerootTown_CelebiScript::
 	lock
 	faceplayer
@@ -158,7 +180,7 @@ LittlerootTown_Celebi_Case2::
 	release
 	end
 
-// Scripts do Jirachi
+// Jirachi Scripts
 LittlerootTown_JirachiScript::
 	lock
 	faceplayer
@@ -186,7 +208,7 @@ LittlerootTown_Jirachi_Case2::
 	end
 
 // ====================================================================
-// TEXTOS
+// TEXTS
 // ====================================================================
 
 LittlerootTown_01_Text_JirachiIntro:
@@ -240,6 +262,7 @@ LittlerootTown_01_Text_JirachiSleep:
 
 LittlerootTown_01_Text_JirachiGrant:
 	.string "Jirachi: They say I can grant any wish!\nWhat would you wish for?$"
+
 
 
 
