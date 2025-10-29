@@ -4249,12 +4249,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_NOSEPASS] =
     {
         .baseHP        = 30,
-        .baseAttack    = 45,
-        .baseDefense   = 135,
+        .baseAttack    = 25,
+        .baseDefense   = 90,
         .baseSpeed     = 30,
-        .baseSpAttack  = 45,
-        .baseSpDefense = 90,
-        .types = MON_TYPES(TYPE_ROCK),
+        .baseSpAttack  = 65,
+        .baseSpDefense = 135,
+        .types = MON_TYPES(TYPE_ROCK, TYPE_PSYCHIC),
         .catchRate = 255,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 75 : 108,
         .evYield_Defense = 1,
