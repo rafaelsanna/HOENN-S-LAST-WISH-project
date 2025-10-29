@@ -269,6 +269,7 @@ LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForJohtoStarter:
 LittlerootTown_ProfessorBirchsLab_EventScript_Aide::
 	lock
 	faceplayer
+	goto_if_set FLAG_RECEIVED_POKEDEX_FROM_BIRCH, LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterPokedex
 	goto_if_ge VAR_BIRCH_LAB_STATE, 3, LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter
 	goto_if_set FLAG_BIRCH_AIDE_MET, LittlerootTown_ProfessorBirchsLab_EventScript_AideAlreadyMet
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchAwayOnFieldwork, MSGBOX_DEFAULT
@@ -285,6 +286,47 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchEnjoysRivalsHelpToo, MSGBOX_DEFAULT
 	release
 	end
+
+///////NOVO EVENTO: Aide depois que o jogador recebe a Pokédex
+LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterPokedex::
+	goto_if_set FLAG_RECEIVED_TOGEPI_EGG, LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterTogepi
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_Register10PokemonForTogepiEgg, MSGBOX_DEFAULT
+	/// Usa o comando bufferpartymonnick que conta Pokémon vistos
+	call LittlerootTown_ProfessorBirchsLab_EventScript_CountSeenPokemon
+	goto_if_ge VAR_TEMP_0, 10, LittlerootTown_ProfessorBirchsLab_EventScript_GiveTogepiEgg
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_CountSeenPokemon::
+	copyvar VAR_TEMP_0, VAR_0x8004
+	special ScriptGetPokedexInfo
+	copyvar VAR_TEMP_0, VAR_0x8005
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GiveTogepiEgg::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_YouHave10PokemonHeresTogepiEgg, MSGBOX_DEFAULT
+	@ Seta a flag ANTES de dar o ovo para evitar loop
+	setflag FLAG_RECEIVED_TOGEPI_EGG
+	giveegg SPECIES_TOGEPI
+	goto_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_NoRoomForTogepiEgg
+	playfanfare MUS_OBTAIN_ITEM
+	message LittlerootTown_ProfessorBirchsLab_Text_ReceivedTogepiEgg
+	waitmessage
+	waitfanfare
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_TakeGoodCareOfTogepi, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_NoRoomForTogepiEgg::
+	@ Não mostra mensagem de erro, apenas não dá o ovo
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterTogepi::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_HowIsTogepiDoing, MSGBOX_DEFAULT
+	release
+	end
+////////////////////////////////
 
 LittlerootTown_ProfessorBirchsLab_EventScript_Cyndaquil::
 	release
@@ -993,3 +1035,31 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 	.string "we meet. I'll be waiting!\p"
 	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_Register10PokemonForTogepiEgg:
+	.string "We're studying this different Pokémon\n"
+	.string "called Togepi.\p"
+	.string "If you register 10 Pokémon in your\n"
+	.string "Pokédex, we'll give you a Togepi Egg!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_YouHave10PokemonHeresTogepiEgg:
+	.string "Wow! You've already registered\n"
+	.string "10 Pokémon in your Pokédex!\p"
+	.string "As promised, here's the Togepi Egg!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_ReceivedTogepiEgg:
+	.string "{PLAYER} received the Togepi Egg!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_TakeGoodCareOfTogepi:
+	.string "Take good care of that Togepi!\n"
+	.string "It's a very special Pokémon.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg:
+	.string "Oh, you don't have room for this Egg\n"
+	.string "in your party. Come back later!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_HowIsTogepiDoing:
+	.string "How is the Togepi doing?\n"
+	.string "I hope it's growing well!$"
+
+
