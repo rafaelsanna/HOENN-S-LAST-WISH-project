@@ -548,6 +548,17 @@ EventScript_RegisterProfBirch::
 LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_HeardYouBeatRivalTakePokedex, MSGBOX_DEFAULT
 	call LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex
+	
+	// Novo evento: Oferecer o Infinite Candy
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_WouldYouLikeInfiniteCandy, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_GiveInfiniteCandy
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_AfterCandyChoice
+	
+LittlerootTown_ProfessorBirchsLab_EventScript_GiveInfiniteCandy::
+	giveitem ITEM_INFINITE_CANDY
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_UseInfiniteCandyWisely, MSGBOX_DEFAULT
+	
+LittlerootTown_ProfessorBirchsLab_EventScript_AfterCandyChoice::
 	setflag FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex, MSGBOX_DEFAULT
 	closemessage
@@ -1062,4 +1073,17 @@ LittlerootTown_ProfessorBirchsLab_Text_HowIsTogepiDoing:
 	.string "How is the Togepi doing?\n"
 	.string "I hope it's growing well!$"
 
+LittlerootTown_ProfessorBirchsLab_Text_WouldYouLikeInfiniteCandy:
+	.string "PROF. BIRCH: Ah, before I forget!\p"
+	.string "I'm developing a new tool for\n"
+	.string "trainers called INFINITE CANDY.\p"
+	.string "It allows your POKéMON to level up\n"
+	.string "safely until the level cap.\p"
+	.string "Would you like to try it?$"
+
+LittlerootTown_ProfessorBirchsLab_Text_UseInfiniteCandyWisely:
+	.string "PROF. BIRCH: Use the INFINITE CANDY\n"
+	.string "wisely! Remember that natural growth\l"
+	.string "is also important for your POKéMON\l"
+	.string "to develop strong bonds.$"
 

@@ -6428,32 +6428,41 @@ static void Task_TryItemUseFusionChange(u8 taskId)
         {
             if (gTasks[taskId].fusionType == FUSE_MON)
             {
-#if P_FAMILY_KYUREM
-#if P_FAMILY_RESHIRAM
-                if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_WHITE)
-                    SwapFusionMonMoves(mon, gKyurenWhiteSwapMoveTable, FUSE_MON);
-#endif //P_FAMILY_RESHIRAM
-#if P_FAMILY_ZEKROM
-                if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_BLACK)
-                    SwapFusionMonMoves(mon, gKyurenBlackSwapMoveTable, FUSE_MON);
-#endif //P_FAMILY_ZEKROM
-#endif //P_FAMILY_KYUREM
+// #if P_FAMILY_KYUREM
+// #if P_FAMILY_RESHIRAM
+//                 if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_WHITE)
+//                     SwapFusionMonMoves(mon, gKyurenWhiteSwapMoveTable, FUSE_MON);
+// #endif // P_FAMILY_RESHIRAM
+// #if P_FAMILY_ZEKROM
+//                 if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_BLACK)
+//                     SwapFusionMonMoves(mon, gKyurenBlackSwapMoveTable, FUSE_MON);
+// #endif // P_FAMILY_ZEKROM
+// #endif // P_FAMILY_KYUREM
+
                 if (gTasks[taskId].moveToLearn != 0)
                     FormChangeTeachMove(taskId, gTasks[taskId].moveToLearn, gTasks[taskId].firstFusionSlot);
             }
             else //(gTasks[taskId].fusionType == UNFUSE_MON)
             {
-#if P_FAMILY_KYUREM
-#if P_FAMILY_RESHIRAM
-                if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_WHITE)
-                    SwapFusionMonMoves(mon, gKyurenWhiteSwapMoveTable, UNFUSE_MON);
-#endif //P_FAMILY_RESHIRAM
-#if P_FAMILY_ZEKROM
-                if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_BLACK)
-                    SwapFusionMonMoves(mon, gKyurenBlackSwapMoveTable, UNFUSE_MON);
-#endif //P_FAMILY_ZEKROM
-#endif //P_FAMILY_KYUREM
-                if ( gTasks[taskId].tExtraMoveHandling == FORGET_EXTRA_MOVES)
+// ================================================================
+// Kyurem Unfusion Handling (Desativado)
+// ---------------------------------------------------------------
+// Mesmo motivo do bloco acima — desativado para evitar dependências
+// em tabelas removidas nas versões novas do expansion.
+// ================================================================
+
+// #if P_FAMILY_KYUREM
+// #if P_FAMILY_RESHIRAM
+//                 if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_WHITE)
+//                     SwapFusionMonMoves(mon, gKyurenWhiteSwapMoveTable, UNFUSE_MON);
+// #endif // P_FAMILY_RESHIRAM
+// #if P_FAMILY_ZEKROM
+//                 if (gTasks[taskId].tExtraMoveHandling == SWAP_EXTRA_MOVES_KYUREM_BLACK)
+//                     SwapFusionMonMoves(mon, gKyurenBlackSwapMoveTable, UNFUSE_MON);
+// #endif // P_FAMILY_ZEKROM
+// #endif // P_FAMILY_KYUREM
+
+                if (gTasks[taskId].tExtraMoveHandling == FORGET_EXTRA_MOVES)
                 {
                     DeleteInvalidFusionMoves(mon, gTasks[taskId].fusionResult);
                     if (!DoesMonHaveAnyMoves(mon))

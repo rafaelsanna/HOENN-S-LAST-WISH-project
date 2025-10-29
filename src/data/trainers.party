@@ -4798,29 +4798,32 @@ Items: Potion / Potion
 Double Battle: No
 AI: Basic Trainer
 
-Geodude
-Level: 12
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
-- Defense Curl
-- Rock Throw
+Lileep @ Focus Band  
+Ability: Storm Drain 
+Level: 14
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe  
+- Mega Drain  
+- Stealth Rock  
+- Ancient Power  
+- Recover 
+
+Gligar @ Salac Berry  
+Ability: Hyper Cutter  
+Level: 14  
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe 
+- Wing Attack  
+- Spikes  
+- Bulldoze  
 - Rock Tomb
 
-Geodude
-Level: 12
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
-- Defense Curl
-- Rock Throw
-- Rock Tomb
-
-Nosepass @ Oran Berry
-Level: 15
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Block
-- Harden
-- Tackle
-- Rock Tomb
+Nosepass @ Sitrus Berry  
+Ability: Sturdy  
+Level: 15  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
+- Psybeam  
+- Ancient Power  
+- Calm Mind  
+- Shock Wave
 
 === TRAINER_BRAWLY_1 ===
 Name: BRAWLY
@@ -9510,7 +9513,7 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer
 
-Treecko
+Totodile
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -9620,7 +9623,7 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer
 
-Mudkip
+Bulbasaur
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -9675,7 +9678,7 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Treecko
+Totodile
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -9785,7 +9788,7 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Mudkip
+BULBASAUR
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
