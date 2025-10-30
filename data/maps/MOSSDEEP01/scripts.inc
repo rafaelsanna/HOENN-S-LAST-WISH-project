@@ -416,20 +416,56 @@ MOSSDEEP01_EventScript_CelebiAlreadyRescued::
 	release
 	end
 
-MOSSDEEP01_EventScript_MightyenaDetect::
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDoNothing
+// ====================================================================
+// MIGHTYENA ZONE TRIGGER - APENAS OLHAR PARA O JOGADOR
+// ====================================================================
+
+MOSSDEEP01_EventScript_MightyenaZone::
 	lockall
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_MightyenaZone_Safe
 	playse SE_PIN
-	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	delay 20
+	
+	// Encontrar Mightyena mais próxima e fazer ela olhar para o jogador
+	call MOSSDEEP01_EventScript_FindNearestMightyena
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
 	waitmovement 0
-	call MOSSDEEP01_EventScript_Mightyena
+	applymovement VAR_0x8008, Common_Movement_FacePlayer
+	waitmovement 0
+	
+	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
+	closemessage
+	playse SE_M_BITE
+	fadescreen FADE_TO_BLACK
+	delay 60
+	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
+	closemessage
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	warp MAP_MOSSDEEP01, 11, 71
+	waitstate
 	releaseall
 	end
 
+MOSSDEEP01_EventScript_FindNearestMightyena::
+	// Usa a primeira Mightyena (LOCALID_MIGHTYENA)
+	setvar VAR_0x8008, LOCALID_MIGHTYENA
+	return
+
+MOSSDEEP01_MightyenaZone_Safe::
+	end
+
+// ====================================================================
+// MIGHTYENA NPC - COM FACEPLAYER EM AMBOS OS ESTADOS
+// ====================================================================
+
 MOSSDEEP01_EventScript_Mightyena::
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDoNothing
+	// SEMPRE olhar para o jogador primeiro
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaFriendly
 	delay 20
 	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
 	closemessage
@@ -441,6 +477,12 @@ MOSSDEEP01_EventScript_Mightyena::
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 	warp MAP_MOSSDEEP01, 11, 71
 	waitstate
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_MightyenaFriendly::
+	// Estado calm - já está olhando para o jogador
+	msgbox MOSSDEEP01_Text_MightyenaFriendly, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -807,7 +849,7 @@ MOSSDEEP01_JirachiSleeping::
 	msgbox MOSSDEEP01_Text_JirachiStillSleeping, MSGBOX_DEFAULT
 	release
 	end	
-
+	
 // ====================================================================
 // TEXTS
 // ====================================================================
@@ -1065,7 +1107,10 @@ MOSSDEEP01_Text_JirachiStillSleeping:
 	.string "JIRACHI is sleeping peacefully...\n"
 	.string "Maybe you should approach it?$"
 
-
+MOSSDEEP01_Text_MightyenaFriendly:
+	.string "The MIGHTYENA looks calm and friendly.\n"
+	.string "Amazing, they're so peaceful now!\p"
+	.string "You can even pet them!$"
 
 
 
