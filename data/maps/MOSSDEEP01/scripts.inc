@@ -416,7 +416,7 @@ MOSSDEEP01_EventScript_CelebiAlreadyRescued::
 	release
 	end
 
-MOSSDEEP01_EventScript_Mightyena::
+MOSSDEEP01_EventScript_MightyenaDetect::
 	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDoNothing
 	lockall
 	playse SE_PIN
@@ -424,6 +424,12 @@ MOSSDEEP01_EventScript_Mightyena::
 	waitmovement 0
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
+	call MOSSDEEP01_EventScript_Mightyena
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_Mightyena::
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaDoNothing
 	delay 20
 	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
 	closemessage
@@ -440,6 +446,7 @@ MOSSDEEP01_EventScript_Mightyena::
 
 MOSSDEEP01_EventScript_MightyenaDoNothing::
 	end
+
 
 MOSSDEEP01_EventScript_Survivor::
 	lock
