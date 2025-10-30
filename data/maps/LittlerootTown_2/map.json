@@ -22,8 +22,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_M)",
-      "x": 6,
-      "y": 5,
+      "x": 5,
+      "y": 16,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -35,8 +35,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_F)",
-      "x": 13,
-      "y": 5,
+      "x": 14,
+      "y": 16,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
