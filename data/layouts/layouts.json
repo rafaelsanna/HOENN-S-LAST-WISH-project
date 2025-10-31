@@ -934,7 +934,7 @@
     {
       "id": "LAYOUT_RUSTBORO_CITY_GYM",
       "name": "RustboroCity_Gym_Layout",
-      "width": 11,
+      "width": 12,
       "height": 24,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_RustboroGym",
