@@ -550,57 +550,104 @@ MOSSDEEP01_EventScript_Grandma::
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaAfterFirstTalk
 	
-	// PRIMEIRA FOTO - AEGISLASH
-	showmonpic SPECIES_AEGISLASH, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
-	hidemonpic
-	
-	// SEGUNDA FOTO - ALOMOMOLA  
-	showmonpic SPECIES_ALOMOMOLA, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory2, MSGBOX_DEFAULT
-	hidemonpic
-	
-	// TERCEIRA FOTO - AMAURA
-	showmonpic SPECIES_AMAURA, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory3, MSGBOX_DEFAULT
-	hidemonpic
-	
-	// QUARTA FOTO - AMOONGUSS (corrigido)
-	showmonpic SPECIES_AMOONGUSS, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
-	hidemonpic
-	
-	// QUINTA FOTO - APPLIN (corrigido)
-	showmonpic SPECIES_APPLIN, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
-	hidemonpic
-	
-	// SEXTA FOTO - APPLETUN (corrigido)
-	showmonpic SPECIES_APPLETUN, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
-	hidemonpic
-	
-	// SÉTIMA FOTO - ARBOLIVA
-	showmonpic SPECIES_ARBOLIVA, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
-	hidemonpic
-	
-	// OITAVA FOTO - ARCHEN
-	showmonpic SPECIES_ARCHEN, 10, 3
-	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
-	hidemonpic
-	
+	msgbox MOSSDEEP01_Text_GrandmaAskStory, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq MOSSDEEP01_EventScript_TellStory
+	// Se escolheu NÃO
+	msgbox MOSSDEEP01_Text_GrandmaBeCareful, MSGBOX_DEFAULT
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
 	release
 	end
 
-MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
-	// Depois da primeira conversa, mostra só a última foto
+	MOSSDEEP01_EventScript_TellStory::
+	// 1. AEGISLASH
+	showmonpic SPECIES_AEGISLASH, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 2. ALOMOMOLA  
+	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	msgbox MOSSDEEP01_Text_GrandmaStory2, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 3. AVALUGG - GROUDON X KYOGRE
+	showmonpic SPECIES_AVALUGG, 10, 3
+	playse SE_M_SURF
+	playse SE_M_THUNDERBOLT
+	msgbox MOSSDEEP01_Text_GrandmaStory3, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 4. AMAURA
+	showmonpic SPECIES_AMAURA, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 5. AROMATISSE - TSUNAMI
+	showmonpic SPECIES_AROMATISSE, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 6. ARROKUDA - VULCANO
+	showmonpic SPECIES_ARROKUDA, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 7. AUDINO - WASTELAND
+	showmonpic SPECIES_AUDINO, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 8. AURORUS - OCEAN
+	showmonpic SPECIES_AURORUS, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 9. AMOONGUSS
+	showmonpic SPECIES_AMOONGUSS, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory9, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 10. APPLIN
+	showmonpic SPECIES_APPLIN, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory10, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 11. APPLETUN
+	showmonpic SPECIES_APPLETUN, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory11, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 12. AXEW - CAMPING
+	showmonpic SPECIES_AXEW, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory12, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 13. ARBOLIVA
+	showmonpic SPECIES_ARBOLIVA, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory13, MSGBOX_DEFAULT
+	hidemonpic
+
+// 14. ARBOLIVA - COMETT
 	showmonpic SPECIES_ARCHEN, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
+	
+MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
+	// Depois da primeira conversa, pergunta se quer ouvir de novo
+	msgbox MOSSDEEP01_Text_GrandmaAskAgain, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq MOSSDEEP01_EventScript_TellStory
+	// Se escolheu NÃO, mostra só a mensagem de encorajamento (SEM FOTO)
+	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	release
 	end
+
+	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
+	release
+	end
+
 
 MOSSDEEP01_EventScript_Grandpa::
 	lock
@@ -1160,36 +1207,61 @@ MOSSDEEP01_Text_MightyenaFriendly:
 	.string "Amazing, they're so peaceful now!\p"
 	.string "You can even pet them!$"
 
+// ADICIONE ESTES TEXTOS NO FINAL DO ARQUIVO (se ainda não existirem):
+
 MOSSDEEP01_Text_GrandmaStory1:
-	.string "GRANDMA: This is the first part\n"
-	.string "of our story...$"
+	.string "GRANDMA: This was the beginning...$"
 
 MOSSDEEP01_Text_GrandmaStory2:
-	.string "GRANDMA: Then came the second\n"
-	.string "chapter...$"
+	.string "GRANDMA: Then the conflict started...$"
 
 MOSSDEEP01_Text_GrandmaStory3:
-	.string "GRANDMA: The third event changed\n"
-	.string "everything...$"
+	.string "GRANDMA: The great battle between\nland and sea...$"
 
 MOSSDEEP01_Text_GrandmaStory4:
-	.string "GRANDMA: Fourth, we discovered\n"
-	.string "the truth...$"
+	.string "GRANDMA: The tsunami devastated\neverything...$"
 
 MOSSDEEP01_Text_GrandmaStory5:
-	.string "GRANDMA: Fifth, the heroes arose\n"
-	.string "to face the challenge...$"
+	.string "GRANDMA: Volcanoes erupted across\nthe land...$"
 
 MOSSDEEP01_Text_GrandmaStory6:
-	.string "GRANDMA: Sixth, the great battle\n"
-	.string "began...$"
+	.string "GRANDMA: The land became a barren\nwasteland...$"
 
 MOSSDEEP01_Text_GrandmaStory7:
-	.string "GRANDMA: Seventh, the sacrifice\n"
-	.string "was made...$"
+	.string "GRANDMA: The oceans raged with\nunending storms...$"
 
 MOSSDEEP01_Text_GrandmaStory8:
-	.string "GRANDMA: Finally, the world was\n"
-	.string "forever changed...$"
+	.string "GRANDMA: Survivors gathered in\ncamps...$"
+
+MOSSDEEP01_Text_GrandmaStory9:
+	.string "GRANDMA: Hope began to fade...$"
+
+MOSSDEEP01_Text_GrandmaStory10:
+	.string "GRANDMA: But then a legend\nappeared...$"
+
+MOSSDEEP01_Text_GrandmaStory11:
+	.string "GRANDMA: The sky guardian descended\nfrom above...$"
+
+MOSSDEEP01_Text_GrandmaStory12:
+	.string "GRANDMA: Peace was restored,\nbut at a cost...$"
+
+MOSSDEEP01_Text_GrandmaStory13:
+	.string "GRANDMA: And this is how our world\nbecame what it is today...$"
+
+MOSSDEEP01_Text_GrandmaAskStory:
+	.string "GRANDMA: Hello, {PLAYER}!\p"
+	.string "Would you like to hear the legends\n"
+	.string "and stories of how HOENN arrived\l"
+	.string "in the state it is now?$"
+
+MOSSDEEP01_Text_GrandmaBeCareful:
+	.string "GRANDMA: I understand.\p"
+	.string "Please be very careful when exploring\n"
+	.string "the MOSSDEEP ruins.\p"
+	.string "There are many dangers out there...$"
+
+MOSSDEEP01_Text_GrandmaAskAgain:
+	.string "GRANDMA: Would you like to hear\n"
+	.string "the stories of HOENN again?$"
 
 
