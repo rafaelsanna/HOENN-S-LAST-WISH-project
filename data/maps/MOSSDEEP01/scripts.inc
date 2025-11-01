@@ -407,7 +407,9 @@ MOSSDEEP01_EventScript_Celebi::
 	end
 
 MOSSDEEP01_EventScript_CelebiNeedGears::
+	showmonpic SPECIES_ARAQUANID, 10, 3
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	hidemonpic
 	release
 	end
 
@@ -539,18 +541,64 @@ MOSSDEEP01_EventScript_Healer::
 	release
 	end
 
+// ====================================================================
+// GRANDMA EVENT WITH RAYQUAZA MUGSHOT
+// ====================================================================
+
 MOSSDEEP01_EventScript_Grandma::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaAfterFirstTalk
 	
-	msgbox MOSSDEEP01_Text_GrandmaReminder, MSGBOX_DEFAULT
+	// PRIMEIRA FOTO - AEGISLASH
+	showmonpic SPECIES_AEGISLASH, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// SEGUNDA FOTO - ALOMOMOLA  
+	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory2, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// TERCEIRA FOTO - AMAURA
+	showmonpic SPECIES_AMAURA, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory3, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// QUARTA FOTO - AMOONGUSS (corrigido)
+	showmonpic SPECIES_AMOONGUSS, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// QUINTA FOTO - APPLIN (corrigido)
+	showmonpic SPECIES_APPLIN, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// SEXTA FOTO - APPLETUN (corrigido)
+	showmonpic SPECIES_APPLETUN, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// SÉTIMA FOTO - ARBOLIVA
+	showmonpic SPECIES_ARBOLIVA, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// OITAVA FOTO - ARCHEN
+	showmonpic SPECIES_ARCHEN, 10, 3
+	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
+	hidemonpic
+	
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
 	release
 	end
 
 MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
+	// Depois da primeira conversa, mostra só a última foto
+	showmonpic SPECIES_ARCHEN, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
+	hidemonpic
 	release
 	end
 
@@ -1112,5 +1160,36 @@ MOSSDEEP01_Text_MightyenaFriendly:
 	.string "Amazing, they're so peaceful now!\p"
 	.string "You can even pet them!$"
 
+MOSSDEEP01_Text_GrandmaStory1:
+	.string "GRANDMA: This is the first part\n"
+	.string "of our story...$"
+
+MOSSDEEP01_Text_GrandmaStory2:
+	.string "GRANDMA: Then came the second\n"
+	.string "chapter...$"
+
+MOSSDEEP01_Text_GrandmaStory3:
+	.string "GRANDMA: The third event changed\n"
+	.string "everything...$"
+
+MOSSDEEP01_Text_GrandmaStory4:
+	.string "GRANDMA: Fourth, we discovered\n"
+	.string "the truth...$"
+
+MOSSDEEP01_Text_GrandmaStory5:
+	.string "GRANDMA: Fifth, the heroes arose\n"
+	.string "to face the challenge...$"
+
+MOSSDEEP01_Text_GrandmaStory6:
+	.string "GRANDMA: Sixth, the great battle\n"
+	.string "began...$"
+
+MOSSDEEP01_Text_GrandmaStory7:
+	.string "GRANDMA: Seventh, the sacrifice\n"
+	.string "was made...$"
+
+MOSSDEEP01_Text_GrandmaStory8:
+	.string "GRANDMA: Finally, the world was\n"
+	.string "forever changed...$"
 
 
