@@ -48,6 +48,54 @@ LittlerootTown_2_CheckResults::
 	// Se chegou aqui, tem ambos!
 	goto LittlerootTown_2_EventScript_GiveMoonStone
 
+// NOVO: Quando não tem NENHUM dos dois
+LittlerootTown_2_EventScript_NoNidoran::
+	// Mostra Nidoran♂
+	showmonpic SPECIES_NIDORAN_M, 10, 3
+	playmoncry SPECIES_NIDORAN_M, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox LittlerootTown_2_Text_ThisIsMaleNidoran, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// Mostra Nidoran♀
+	showmonpic SPECIES_NIDORAN_F, 10, 3
+	playmoncry SPECIES_NIDORAN_F, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox LittlerootTown_2_Text_ThisIsFemaleNidoran, MSGBOX_DEFAULT
+	hidemonpic
+	
+	msgbox LittlerootTown_2_Text_NeedBothNidoran, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_2_EventScript_NoMaleNidoran::
+	// Verifica se também não tem a fêmea
+	compare VAR_TEMP_1, 0
+	goto_if_eq LittlerootTown_2_EventScript_NoNidoran
+	
+	// Só falta o macho
+	showmonpic SPECIES_NIDORAN_M, 10, 3
+	playmoncry SPECIES_NIDORAN_M, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox LittlerootTown_2_Text_NoMaleNidoran, MSGBOX_DEFAULT
+	hidemonpic
+	release
+	end
+
+LittlerootTown_2_EventScript_NoFemaleNidoran::
+	// Verifica se também não tem o macho
+	compare VAR_TEMP_0, 0
+	goto_if_eq LittlerootTown_2_EventScript_NoNidoran
+	
+	// Só falta a fêmea
+	showmonpic SPECIES_NIDORAN_F, 10, 3
+	playmoncry SPECIES_NIDORAN_F, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox LittlerootTown_2_Text_NoFemaleNidoran, MSGBOX_DEFAULT
+	hidemonpic
+	release
+	end
+
 LittlerootTown_2_EventScript_GiveMoonStone::
 	msgbox LittlerootTown_2_Text_YouHaveBothNidoran, MSGBOX_DEFAULT
 	giveitem ITEM_MOON_STONE
@@ -56,22 +104,12 @@ LittlerootTown_2_EventScript_GiveMoonStone::
 	release
 	end
 
-LittlerootTown_2_EventScript_NoMaleNidoran::
-	msgbox LittlerootTown_2_Text_NoMaleNidoran, MSGBOX_DEFAULT
-	release
-	end
-
-LittlerootTown_2_EventScript_NoFemaleNidoran::
-	msgbox LittlerootTown_2_Text_NoFemaleNidoran, MSGBOX_DEFAULT
-	release
-	end
-
 LittlerootTown_2_EventScript_DefaultDialogue::
 	msgbox LittlerootTown_2_Text_DefaultDialogue, MSGBOX_DEFAULT
 	release
 	end
-
-// Textos
+	
+// Textos 
 LittlerootTown_2_Text_CheckForNidoran:
 	.string "I'm researching Moon Stones!\p"
 	.string "If you have both a male and female\n"
@@ -87,20 +125,30 @@ LittlerootTown_2_Text_UseMoonStoneToEvolve:
 	.string "Moon Stones can evolve certain\n"
 	.string "Pokémon like Nidorina and Nidorino!$"
 
+LittlerootTown_2_Text_ThisIsMaleNidoran:
+	.string "This is a male Nidoran!$"
+
+LittlerootTown_2_Text_ThisIsFemaleNidoran:
+	.string "This is a female Nidoran!$"
+
+LittlerootTown_2_Text_NeedBothNidoran:
+	.string "You need both a male and female\n"
+	.string "Nidoran in your party!\p"
+	.string "Come back when you have them both!$"
+
 LittlerootTown_2_Text_NoMaleNidoran:
-	.string "Hmm... I don't see a male Nidoran\n"
-	.string "in your party.\p"
-	.string "Come back when you have both!$"
+	.string "This is a male Nidoran!\p"
+	.string "Hmm... I don't see one in your party.\n"
+	.string "You still need this one!$"
 
 LittlerootTown_2_Text_NoFemaleNidoran:
-	.string "Hmm... I don't see a female Nidoran\n"
-	.string "in your party.\p"
-	.string "Come back when you have both!$"
+	.string "This is a female Nidoran!\p"
+	.string "Hmm... I don't see one in your party.\n"
+	.string "You still need this one!$"
 
 LittlerootTown_2_Text_DefaultDialogue:
 	.string "Moon Stones are fascinating!\n"
 	.string "They trigger evolution in some Pokémon.$"
-
 
 
 
