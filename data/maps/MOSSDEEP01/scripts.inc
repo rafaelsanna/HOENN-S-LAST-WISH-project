@@ -560,6 +560,9 @@ MOSSDEEP01_EventScript_Grandma::
 	end
 
 	MOSSDEEP01_EventScript_TellStory::
+	// Fade para preto e silencia música
+	fadeoutbgm 0
+	fadescreen FADE_TO_BLACK
 	// 1. AEGISLASH
 	showmonpic SPECIES_AEGISLASH, 10, 3
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
@@ -633,7 +636,10 @@ MOSSDEEP01_EventScript_Grandma::
 	showmonpic SPECIES_ARCHEN, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
-	
+
+	// No final, volta tela normal
+	fadescreen FADE_FROM_BLACK
+
 MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
 	// Depois da primeira conversa, pergunta se quer ouvir de novo
 	msgbox MOSSDEEP01_Text_GrandmaAskAgain, MSGBOX_YESNO

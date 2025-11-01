@@ -283,7 +283,86 @@ LittlerootTown_BrendansHouse_2F_EventScript_CheckRivalsPC::
 	end
 
 PlayersHouse_2F_EventScript_Notebook::
-	msgbox PlayersHouse_2F_Text_Notebook, MSGBOX_SIGN
+	lock
+	faceplayer
+	msgbox PlayersHouse_2F_Text_NotebookAskRead, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq PlayersHouse_2F_EventScript_ReadNotebook
+	msgbox PlayersHouse_2F_Text_NotebookMaybeLater, MSGBOX_DEFAULT
+	release
+	end
+
+PlayersHouse_2F_EventScript_ReadNotebook::
+	// 1. AEGISLASH - The Beginning
+	showmonpic SPECIES_AEGISLASH, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory1, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 2. ALOMOMOLA - The Conflict
+	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory2, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 3. AVALUGG - Great Battle
+	showmonpic SPECIES_AVALUGG, 10, 3
+	playse SE_M_SURF
+	playse SE_M_THUNDERBOLT
+	msgbox PlayersHouse_2F_Text_NotebookStory3, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 4. AMAURA - Tsunami
+	showmonpic SPECIES_AMAURA, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory4, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 5. AROMATISSE - Volcano
+	showmonpic SPECIES_AROMATISSE, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory5, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 6. ARROKUDA - Wasteland
+	showmonpic SPECIES_ARROKUDA, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory6, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 7. AUDINO - Ocean Storms
+	showmonpic SPECIES_AUDINO, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory7, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 8. AURORUS - Survivor Camps
+	showmonpic SPECIES_AURORUS, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory8, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 9. AMOONGUSS - Hope Fades
+	showmonpic SPECIES_AMOONGUSS, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory9, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 10. APPLIN - Legend Appears
+	showmonpic SPECIES_APPLIN, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory10, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 11. APPLETUN - Sky Guardian
+	showmonpic SPECIES_APPLETUN, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory11, MSGBOX_DEFAULT
+	hidemonpic
+
+	// 12. AXEW - Peace Restored
+	showmonpic SPECIES_AXEW, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory12, MSGBOX_DEFAULT
+	hidemonpic
+	
+	// 13. ARBOLIVA - World Today
+	showmonpic SPECIES_ARBOLIVA, 10, 3
+	msgbox PlayersHouse_2F_Text_NotebookStory13, MSGBOX_DEFAULT
+	hidemonpic
+
+	// Final message
+	msgbox PlayersHouse_2F_Text_NotebookFinished, MSGBOX_DEFAULT
+	release
 	end
 
 PlayersHouse_2F_EventScript_GameCube::
@@ -304,13 +383,54 @@ PlayersHouse_2F_Text_HowDoYouLikeYourRoom:
 	.string "Oh, you should make sure that\n"
 	.string "everything's all there on your desk.$"
 
-PlayersHouse_2F_Text_Notebook:
-	.string "{PLAYER} flipped open the notebook.\p"
-	.string "ADVENTURE RULE NO. 1\n"
-	.string "Open the MENU with START.\p"
-	.string "ADVENTURE RULE NO. 2\n"
-	.string "Record your progress with SAVE.\p"
-	.string "The remaining pages are blank…$"
+PlayersHouse_2F_Text_NotebookAskRead:
+	.string "A notebook with ancient drawings\nand writings.\p"
+	.string "Would you like to read it?$"
+
+PlayersHouse_2F_Text_NotebookMaybeLater:
+	.string "You leave the notebook for later.$"
+
+PlayersHouse_2F_Text_NotebookStory1:
+	.string "Page 1: This was the beginning\nof it all...$"
+
+PlayersHouse_2F_Text_NotebookStory2:
+	.string "Page 2: Then the great conflict\nstarted...$"
+
+PlayersHouse_2F_Text_NotebookStory3:
+	.string "Page 3: The epic battle between land\nand sea shook Hoenn...$"
+
+PlayersHouse_2F_Text_NotebookStory4:
+	.string "Page 4: Massive tsunamis devastated\nthe coastal regions...$"
+
+PlayersHouse_2F_Text_NotebookStory5:
+	.string "Page 5: Volcanoes erupted across\nthe land...$"
+
+PlayersHouse_2F_Text_NotebookStory6:
+	.string "Page 6: The land became a barren\nwasteland...$"
+
+PlayersHouse_2F_Text_NotebookStory7:
+	.string "Page 7: The oceans raged with\nunending storms...$"
+
+PlayersHouse_2F_Text_NotebookStory8:
+	.string "Page 8: Survivors gathered in\ncamps...$"
+
+PlayersHouse_2F_Text_NotebookStory9:
+	.string "Page 9: Hope began to fade...$"
+
+PlayersHouse_2F_Text_NotebookStory10:
+	.string "Page 10: But then a legend\nappeared...$"
+
+PlayersHouse_2F_Text_NotebookStory11:
+	.string "Page 11: The sky guardian descended\nfrom above...$"
+
+PlayersHouse_2F_Text_NotebookStory12:
+	.string "Page 12: Peace was restored,\nbut at a cost...$"
+
+PlayersHouse_2F_Text_NotebookStory13:
+	.string "Page 13: This is how our world\nbecame what it is today...$"
+
+PlayersHouse_2F_Text_NotebookFinished:
+	.string "You close the notebook, filled with\nwonder about Hoenn's ancient past.$"
 
 Common_Text_LookCloserAtMap:
 	.string "{PLAYER} took a closer look at the\n"
