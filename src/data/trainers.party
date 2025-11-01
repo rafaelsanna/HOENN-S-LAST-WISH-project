@@ -5991,9 +5991,16 @@ Double Battle: No
 AI: Check Bad Move
 
 Geodude
-Level: 10
+Level: 13
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
+
+Sentret
+Level: 13
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Aron
+Level: 13
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_TOMMY ===
 Name: TOMMY
@@ -6005,11 +6012,11 @@ Double Battle: No
 AI: Check Bad Move
 
 Geodude
-Level: 8
+Level: 12
 IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 13 Spe
 
-Geodude
-Level: 8
+Sentret
+Level: 13
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 
 === TRAINER_JOEY ===
@@ -10580,12 +10587,12 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 8
+Rhyhorn
+Level: 13
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 
-Geodude
-Level: 8
+Aron
+Level: 13
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 === TRAINER_BRENDEN ===
