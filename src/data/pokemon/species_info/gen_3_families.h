@@ -4401,13 +4401,13 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
 #if P_FAMILY_SKITTY
     [SPECIES_SKITTY] =
     {
-        .baseHP        = 50,
-        .baseAttack    = 45,
-        .baseDefense   = 45,
-        .baseSpeed     = 50,
-        .baseSpAttack  = 35,
+        .baseHP        = 40,
+        .baseAttack    = 55,
+        .baseDefense   = 35,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 25,
         .baseSpDefense = 35,
-        .types = MON_TYPES(TYPE_NORMAL),
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_STEEL),
         .catchRate = 255,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 52 : 65,
         .evYield_Speed = 1,
@@ -4417,7 +4417,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .growthRate = GROWTH_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_FAIRY),
     #if P_UPDATED_ABILITIES >= GEN_4
-        .abilities = { ABILITY_CUTE_CHARM, ABILITY_NORMALIZE, ABILITY_WONDER_SKIN },
+        .abilities = { ABILITY_SHARPNESS, ABILITY_NORMALIZE, ABILITY_WONDER_SKIN },
     #else
         .abilities = { ABILITY_CUTE_CHARM, ABILITY_NONE, ABILITY_WONDER_SKIN },
     #endif
@@ -4442,7 +4442,9 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 12,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
-            ANIMCMD_FRAME(1, 35),
+            ANIMCMD_FRAME(1, 5),
+            ANIMCMD_FRAME(4, 56),
+            ANIMCMD_FRAME(1, 5),
             ANIMCMD_FRAME(0, 9),
         ),
         .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
@@ -4475,12 +4477,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_DELCATTY] =
     {
         .baseHP        = 70,
-        .baseAttack    = 65,
+        .baseAttack    = 95,
         .baseDefense   = 65,
-        .baseSpeed     = P_UPDATED_STATS >= GEN_7 ? 90 : 70,
-        .baseSpAttack  = 55,
+        .baseSpeed     = P_UPDATED_STATS >= GEN_7 ? 110 : 70,
+        .baseSpAttack  = 25,
         .baseSpDefense = 55,
-        .types = MON_TYPES(TYPE_NORMAL),
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_STEEL),
         .catchRate = 60,
     #if P_UPDATED_EXP_YIELDS >= GEN_7
         .expYield = 140,
@@ -4497,7 +4499,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .growthRate = GROWTH_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_FAIRY),
     #if P_UPDATED_ABILITIES >= GEN_4
-        .abilities = { ABILITY_CUTE_CHARM, ABILITY_NORMALIZE, ABILITY_WONDER_SKIN },
+        .abilities = { ABILITY_SHARPNESS, ABILITY_NORMALIZE, ABILITY_WONDER_SKIN },
     #else
         .abilities = { ABILITY_CUTE_CHARM, ABILITY_NONE, ABILITY_WONDER_SKIN },
     #endif
@@ -4522,10 +4524,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 8 : 4,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 10),
-            ANIMCMD_FRAME(1, 46),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(4, 46),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_V_STRETCH,
+        .frontAnimId = ANIM_H_VIBRATE_FASTEST,
         .backPic = gMonBackPic_Delcatty,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 48) : MON_COORDS_SIZE(64, 64),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 8 : 0,
@@ -7275,7 +7278,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .baseSpeed     = 10,
         .baseSpAttack  = 45,
         .baseSpDefense = 45,
-        .types = MON_TYPES(TYPE_GROUND),
+        .types = MON_TYPES(TYPE_GROUND, TYPE_BUG),
         .catchRate = 255,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 58 : 73,
         .evYield_Attack = 1,
@@ -7351,7 +7354,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .baseSpeed     = 70,
         .baseSpAttack  = 50,
         .baseSpDefense = 50,
-        .types = MON_TYPES(TYPE_GROUND, TYPE_DRAGON),
+        .types = MON_TYPES(TYPE_BUG, TYPE_DRAGON),
         .catchRate = 120,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 119 : 126,
         .evYield_Attack = 1,
@@ -7424,11 +7427,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     {
         .baseHP        = 80,
         .baseAttack    = 100,
-        .baseDefense   = 80,
-        .baseSpeed     = 100,
+        .baseDefense   = 75,
+        .baseSpeed     = 110,
         .baseSpAttack  = 80,
-        .baseSpDefense = 80,
-        .types = MON_TYPES(TYPE_GROUND, TYPE_DRAGON),
+        .baseSpDefense = 75,
+        .types = MON_TYPES(TYPE_BUG, TYPE_DRAGON),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
         .expYield = 260,

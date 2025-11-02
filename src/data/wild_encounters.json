@@ -1370,7 +1370,7 @@
               {
                 "min_level": 6,
                 "max_level": 6,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_PIDGEY"
               },
               {
                 "min_level": 6,
@@ -1405,12 +1405,12 @@
               {
                 "min_level": 7,
                 "max_level": 7,
-                "species": "SPECIES_POOCHYENA"
+                "species": "SPECIES_MAKUHITA"
               },
               {
                 "min_level": 8,
                 "max_level": 8,
-                "species": "SPECIES_POOCHYENA"
+                "species": "SPECIES_MAKUHITA"
               },
               {
                 "min_level": 7,
@@ -1910,27 +1910,27 @@
               {
                 "min_level": 6,
                 "max_level": 6,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_ZUBAT"
               },
               {
                 "min_level": 6,
                 "max_level": 6,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_MAKUHITA"
               },
               {
                 "min_level": 7,
                 "max_level": 7,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_MAKUHITA"
               },
               {
                 "min_level": 7,
                 "max_level": 7,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_ZUBAT"
               },
               {
                 "min_level": 5,
                 "max_level": 5,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_ZUBAT"
               },
               {
                 "min_level": 8,
@@ -1950,12 +1950,12 @@
               {
                 "min_level": 5,
                 "max_level": 5,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_ABRA"
               },
               {
                 "min_level": 8,
                 "max_level": 8,
-                "species": "SPECIES_WHISMUR"
+                "species": "SPECIES_ABRA"
               }
             ]
           }

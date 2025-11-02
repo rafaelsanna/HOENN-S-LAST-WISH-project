@@ -1,17 +1,245 @@
 // ====================================================================
-// DREAM HELM - JIRACHI WARP TO MOSSDEEP01 - FIXED FINAL V8
+// DREAM HELM - pre game QOL - skip prologue 
 // ====================================================================
 
 .equiv LOCALID_JIRACHI, 1
 .equiv LOCALID_CELEBI,  2
 
 LITTLEROOT_TOWN_01_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_01_OnTransition
 	.byte 0
+
+LittlerootTown_01_OnTransition:
+	setflag FLAG_VISITED_LITTLEROOT_TOWN
+	call Common_EventScript_SetupRivalGfxId
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 2, LittlerootTown_EventScript_MoveMomToMaysDoor
+	call_if_unset FLAG_RESCUED_BIRCH, LittlerootTown_EventScript_SetTwinPos
+	call_if_eq VAR_LITTLEROOT_TOWN_STATE, 3, LittlerootTown_EventScript_SetMomStandingInFrontOfDoorPos
+	call_if_eq VAR_LITTLEROOT_HOUSES_STATE_MAY, 4, LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent
+	call_if_eq VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4, LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent
+	call_if_eq VAR_OLDALE_RIVAL_STATE, 1, LittlerootTown_EventScript_MoveRivalFromOldale
+	call_if_eq VAR_LITTLEROOT_RIVAL_STATE, 3, LittlerootTown_EventScript_SetRivalLeftForRoute103
+	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_EventScript_HideMapNamePopup
+	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_EventScript_LeftLabAfterDexUpgrade
+	call_if_set FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT, LittlerootTown_EventScript_HideResearchAssistant
+	
+	end
+
+LittlerootTown_EventScript_ShowGrandmaStory::
+	lockall
+	delay 20
+	
+	// Fade to black and silence music
+	fadeoutbgm 0
+	fadescreen FADE_TO_BLACK
+	delay 40
+	
+	// 1. AEGISLASH - The beginning
+	showmonpic SPECIES_AEGISLASH, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 2. ALOMOMOLA - The conflict began  
+	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory2, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 3. AVALUGG - The great battle
+	showmonpic SPECIES_AVALUGG, 10, 3
+	playse SE_M_SURF
+	playse SE_M_THUNDERBOLT
+	msgbox LittlerootTown_Text_GrandmaStory3, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 4. AMAURA - The tsunami
+	showmonpic SPECIES_AMAURA, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory4, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 5. AROMATISSE - Volcanoes
+	showmonpic SPECIES_AROMATISSE, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory5, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 6. ARROKUDA - Devastated land
+	showmonpic SPECIES_ARROKUDA, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory6, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 7. AUDINO - Stormy oceans
+	showmonpic SPECIES_AUDINO, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory7, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 8. AURORUS - Survivors
+	showmonpic SPECIES_AURORUS, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory8, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 9. AMOONGUSS - Hope fading
+	showmonpic SPECIES_AMOONGUSS, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory9, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 10. APPLIN - A legend appears
+	showmonpic SPECIES_APPLIN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory10, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 11. APPLETUN - The sky guardian
+	showmonpic SPECIES_APPLETUN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory11, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 12. AXEW - Peace restored
+	showmonpic SPECIES_AXEW, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory12, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 13. ARBOLIVA - The world today
+	showmonpic SPECIES_ARBOLIVA, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory13, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// Final - encouragement message
+	showmonpic SPECIES_ARCHEN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
+	hidemonpic
+
+	// Return to normal screen
+	fadescreen FADE_FROM_BLACK
+	delay 20
+	
+	// Restore ambient music
+	fadeinbgm 0
+	
+	msgbox LittlerootTown_Text_WelcomeToNewWorld, MSGBOX_DEFAULT
+	closemessage
+	
+	releaseall
+	return	
 
 LittlerootTown_01_EventScript_JirachiCelebi::
 	lock
 	faceplayer
 	msgbox LittlerootTown_01_Text_JirachiIntro, MSGBOX_DEFAULT
+	
+	// JIRACHI CONTA A HISTÓRIA ANTES DE PERGUNTAR
+	msgbox LittlerootTown_01_Text_JirachiCloseEyes, MSGBOX_DEFAULT
+	
+	// Fade to black
+	fadeoutbgm 0
+	fadescreen FADE_TO_BLACK
+	delay 40
+	
+	// 1. AEGISLASH - The beginning
+	showmonpic SPECIES_AEGISLASH, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 2. ALOMOMOLA - The conflict began  
+	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory2, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 3. AVALUGG - The great battle
+	showmonpic SPECIES_AVALUGG, 10, 3
+	playse SE_M_SURF
+	playse SE_M_THUNDERBOLT
+	msgbox LittlerootTown_Text_GrandmaStory3, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 4. AMAURA - The tsunami
+	showmonpic SPECIES_AMAURA, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory4, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 5. AROMATISSE - Volcanoes
+	showmonpic SPECIES_AROMATISSE, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory5, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 6. ARROKUDA - Devastated land
+	showmonpic SPECIES_ARROKUDA, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory6, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 7. AUDINO - Stormy oceans
+	showmonpic SPECIES_AUDINO, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory7, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 8. AURORUS - Survivors
+	showmonpic SPECIES_AURORUS, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory8, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 9. AMOONGUSS - Hope fading
+	showmonpic SPECIES_AMOONGUSS, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory9, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 10. APPLIN - A legend appears
+	showmonpic SPECIES_APPLIN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory10, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 11. APPLETUN - The sky guardian
+	showmonpic SPECIES_APPLETUN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory11, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 12. AXEW - Peace restored
+	showmonpic SPECIES_AXEW, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory12, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 13. ARBOLIVA - The world today
+	showmonpic SPECIES_ARBOLIVA, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory13, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// Final - encouragement message
+	showmonpic SPECIES_ARCHEN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
+	hidemonpic
+
+	// Return to normal screen
+	fadescreen FADE_FROM_BLACK
+	delay 20
+	fadeinbgm 0
+	
+	// AGORA PERGUNTA SE QUER PULAR
 	msgbox LittlerootTown_01_Text_Question, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq LittlerootTown_01_JirachiWarp
@@ -65,7 +293,7 @@ LittlerootTown_01_WarpMale::
 	// Hide rival's mom in rival's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
 	
-	// Hide the Pokéball in player's house
+	// Hide the Pokeball in player's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 	
 	// Set rival house state to trigger mom dialogue
@@ -89,7 +317,7 @@ LittlerootTown_01_WarpFemale::
 	// Hide rival's mom in rival's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
 	
-	// Hide the Pokéball in player's house
+	// Hide the Pokeball in player's house
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
 	
 	// Set rival house state to trigger mom dialogue
@@ -103,8 +331,6 @@ LittlerootTown_01_WarpFemale::
 	waitstate
 	release
 	end
-
-// ... o resto do script continua igual ...
 
 LittlerootTown_01_Stay::
 	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
@@ -218,10 +444,13 @@ LittlerootTown_Jirachi_Case2::
 // ====================================================================
 
 LittlerootTown_01_Text_JirachiIntro:
-	.string "Jirachi: I am the wish Pokémon!\n"
+	.string "Jirachi: I am the wish Pokemon!\n"
 	.string "I can warp time and space!\p"
-	.string "Would you like to skip the prologue\n"
-	.string "and go straight home?$"
+	.string "Before we begin...$"
+
+LittlerootTown_01_Text_JirachiCloseEyes:
+	.string "Close your eyes and remember...\n"
+	.string "Remember how it all happened...$"
 
 LittlerootTown_01_Text_Question:
 	.string "Skip prologue?$"
@@ -269,6 +498,72 @@ LittlerootTown_01_Text_JirachiSleep:
 LittlerootTown_01_Text_JirachiGrant:
 	.string "Jirachi: They say I can grant any wish!\nWhat would you wish for?$"
 
+// ====================================================================
+// STORY TEXTS (English)
+// ====================================================================
+
+LittlerootTown_Text_GrandmaStory1:
+	.string "Once upon a time, there was a\n"
+	.string "prosperous land called HOENN...$"
+
+LittlerootTown_Text_GrandmaStory2:
+	.string "Then the conflict began between\n"
+	.string "the forces of nature...$"
+
+LittlerootTown_Text_GrandmaStory3:
+	.string "The great battle between land\n"
+	.string "and sea devastated the region...$"
+
+LittlerootTown_Text_GrandmaStory4:
+	.string "A tsunami swept away everything\n"
+	.string "in its path...$"
+
+LittlerootTown_Text_GrandmaStory5:
+	.string "Volcanoes erupted across\n"
+	.string "the entire land...$"
+
+LittlerootTown_Text_GrandmaStory6:
+	.string "The land became a barren\n"
+	.string "and arid desert...$"
+
+LittlerootTown_Text_GrandmaStory7:
+	.string "The oceans roared with storms\n"
+	.string "that never ended...$"
+
+LittlerootTown_Text_GrandmaStory8:
+	.string "The survivors gathered in\n"
+	.string "makeshift camps...$"
+
+LittlerootTown_Text_GrandmaStory9:
+	.string "Hope began to fade from\n"
+	.string "the hearts of the people...$"
+
+LittlerootTown_Text_GrandmaStory10:
+	.string "But then an ancient legend\n"
+	.string "resurfaced from memories...$"
+
+LittlerootTown_Text_GrandmaStory11:
+	.string "The celestial guardian descended\n"
+	.string "from the heavens to bring balance...$"
+
+LittlerootTown_Text_GrandmaStory12:
+	.string "Peace was restored, but at\n"
+	.string "a very high cost...$"
+
+LittlerootTown_Text_GrandmaStory13:
+	.string "And that is how our world\n"
+	.string "became what it is today...$"
+
+LittlerootTown_Text_GrandmaEncouragement:
+	.string "Now it is your turn to write\n"
+	.string "a new chapter in this story!\p"
+	.string "May your journey be filled\n"
+	.string "with hope and courage!$"
+
+LittlerootTown_Text_WelcomeToNewWorld:
+	.string "Welcome to your new world,\n"
+	.string "{PLAYER}!\p"
+	.string "A new adventure awaits you!$"
 
 
 
