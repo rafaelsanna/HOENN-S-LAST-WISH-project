@@ -1,5 +1,5 @@
 // ====================================================================
-// DREAM HELM - pre game QOL - skip prologue 
+// DREAM HELM - pre game QOL skip
 // ====================================================================
 
 .equiv LOCALID_JIRACHI, 1
