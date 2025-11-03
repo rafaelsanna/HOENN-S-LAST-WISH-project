@@ -185,13 +185,13 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .trainerOffset = 6,
         .frontPic = gMonFrontPic_Venusaur,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 3,
+        .frontPicYOffset = 4,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 10),
             ANIMCMD_FRAME(1, 25),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_H_VIBRATE,
+        .frontAnimId = ANIM_GROW_VIBRATE,
         .backPic = gMonBackPic_Venusaur,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(64, 48),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 7 : 10,
@@ -207,7 +207,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .backPicSizeFemale = MON_COORDS_SIZE(64, 48),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 8, SHADOW_SIZE_XL_BATTLE_ONLY)
+        SHADOW(-5, 15, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Venusaur)
         OVERWORLD(
             sPicTable_Venusaur,
@@ -7998,7 +7998,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Poliwag,
         .shinyPalette = gMonShinyPalette_Poliwag,
         .iconSprite = gMonIcon_Poliwag,
-        .iconPalIndex = 0,
+        .iconPalIndex = 4,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(-3, 0, SHADOW_SIZE_S)
         FOOTPRINT(Poliwag)

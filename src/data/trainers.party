@@ -4851,29 +4851,43 @@ Items: Super Potion / Super Potion
 Double Battle: No
 AI: Basic Trainer
 
-Machop
-Level: 16
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Karate Chop
-- Low Kick
-- Seismic Toss
-- Bulk Up
+Poliwhirl @ Eviolite  
+Level: 25  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
+- Thunder Punch  
+- Brick Break    
+- Fire Punch  
+- Ice Punch  
 
-Meditite
-Level: 16
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Focus Punch
-- Light Screen
-- Reflect
-- Bulk Up
+Breloom @ Expert Belt   
+Ability: Technician  
+Shiny: Yes   
+Level: 25 
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
+- Mach Punch  
+- Spore 
+- Rock Tomb  
+- Bullet Seed  
 
-Makuhita @ Sitrus Berry
-Level: 19
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Arm Thrust
-- Vital Throw
-- Reversal
-- Bulk Up
+Furret @ Expert Belt  
+Ability: Adaptability  
+Level: 25  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
+Jolly Nature  
+- Brick Break  
+- Fire Punch  
+- Ice Punch  
+- Thunder Punch  
+
+Heracross @ Expert Belt  
+Ability: Moxie  
+Adamant Nature  
+Level: 25  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
+- Brick Break  
+- Bug Bite  
+- Bullet Seed  
+- Rock Blast  
 
 === TRAINER_WATTSON_1 ===
 Name: WATTSON
@@ -12085,12 +12099,44 @@ Class: Rival
 Pic: Wally
 Gender: Male
 Music: Male
-Double Battle: No
+Double Battle: Yes
 AI: Basic Trainer
 
-Ralts
-Level: 16
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Kirlia @ Sitrus Berry
+Level: 24
+IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 0 Spe
+- Draining Kiss
+- Psybeam
+- Calm Mind
+- Trick Room
+
+Makuhita @ Eviolite
+Level: 24
+IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 0 Spe
+- Fake Out
+- Protect
+- Bulk Up
+- Drain Punch
+
+Delcatty @ Chople Berry 
+Ability: Sharpness
+Shiny: Yes  
+Level: 24
+IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 13 Spe
+- Fake Out
+- Slash
+- Substitute
+- Protect
+
+Pinsir @ Lum Berry
+Level: 24
+IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 0 Spe
+- Swagger
+- Horn Leech
+- Bug Bite
+- Bite
+
+
 
 === TRAINER_WALLY_VR_2 ===
 Name: WALLY
