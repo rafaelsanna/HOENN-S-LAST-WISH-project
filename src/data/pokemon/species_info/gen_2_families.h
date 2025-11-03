@@ -758,10 +758,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 8,
         .weight = 60,
         .description = COMPOUND_STRING(
-            "They take turns standing guard when it\n"
-            "is time to sleep. The sentry awakens the\n"
-            "others if it senses danger. If one becomes\n"
-            "separated, it turns sleepless with fear."),
+            "It digs cozy burrows in dry soil, living\n"
+            "in small groups. Hot-headed and bold, it\n"
+            "often challenges stronger foes just to\n"
+            "prove its fighting spirit."),
         .pokemonScale = 439,
         .pokemonOffset = 12,
         .trainerScale = 256,
@@ -828,10 +828,11 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 18,
         .weight = 325,
         .description = COMPOUND_STRING(
-            "A Furret has a very slim build. When under\n"
-            "attack, it can squirm through narrow\n"
-            "spaces and get away. In spite of its short\n"
-            "limbs, it is very nimble and fleet."),
+            "Its body is lean and scarred from many\n"
+            "battles. It wears each mark with pride.\n"
+            "Its larger claws let it carve new dens\n"
+            "and stand firm against strong foes."),
+
         .pokemonScale = 346,
         .pokemonOffset = 11,
         .trainerScale = 256,

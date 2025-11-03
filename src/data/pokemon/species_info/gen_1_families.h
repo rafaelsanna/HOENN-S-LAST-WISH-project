@@ -30,10 +30,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 7,
         .weight = 69,
         .description = COMPOUND_STRING(
-            "Bulbasaur can be seen napping in murky.\n"
-            "swamps. It has a porous skin on its body.\n"
-            "By soaking toxins from the water, he can\n"
-            "become venomous and secrete toxins"),
+            "It lounges in muddy banks where water\n"
+            "and earth meet. Its moist skin draws nutrient\n"
+            "rich mud into its body, and when threat\n"
+            "approaches it burrows deep and surges out."),
         .pokemonScale = 356,
         .pokemonOffset = 17,
         .trainerScale = 256,
@@ -81,7 +81,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .baseSpeed     = 60,
         .baseSpAttack  = 80,
         .baseSpDefense = 80,
-        .types = MON_TYPES(TYPE_WATER, TYPE_POISON),
+        .types = MON_TYPES(TYPE_WATER, TYPE_GROUND),
         .catchRate = 45,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 142 : 141,
         .evYield_SpAttack = 1,
@@ -100,10 +100,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 10,
         .weight = 130,
         .description = COMPOUND_STRING(
-            "To support its bulb, Ivysaur's legs\n"
-            "grow sturdy. If it spends more time lying in\n"
-            "the sunlight, the bud will soon bloom into\n"
-            "a large flower."),
+            "Its long tail helps it glide through muddy\n"
+            "waters and balance on soft ground. It grows\n"
+            "stronger by channeling the flow of earth\n"
+            "and water through its sturdy body."),
         .pokemonScale = 335,
         .pokemonOffset = 13,
         .trainerScale = 256,
@@ -150,7 +150,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .baseSpeed     = 80,
         .baseSpAttack  = 100,
         .baseSpDefense = 100,
-        .types = MON_TYPES(TYPE_WATER, TYPE_POISON),
+        .types = MON_TYPES(TYPE_WATER, TYPE_GROUND),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
         .expYield = 263,
@@ -175,10 +175,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 20,
         .weight = 1000,
         .description = COMPOUND_STRING(
-            "Venusaur's flower is said to take on vivid\n"
-            "colors if it gets plenty of nutrition and\n"
-            "sunlight. The flower's aroma soothes the\n"
-            "emotions of people."),
+            "A massive fin rises from its back like an\n"
+            "ancient spine, letting it swim through\n"
+            "swamps and mangroves. Its mighty roar can\n"
+            "shake the earth and split the ground."),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 388,
@@ -5022,7 +5022,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .baseSpeed     = 65,
         .baseSpAttack  = P_UPDATED_STATS >= GEN_2 ? 50 : 65,
         .baseSpDefense = 65,
-        .types = MON_TYPES(TYPE_FIRE),
+        .types = MON_TYPES(TYPE_FIRE, TYPE_FAIRY),
         .catchRate = 190,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 60 : 63,
         .evYield_Speed = 1,
@@ -5040,11 +5040,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Fox"),
         .height = 6,
         .weight = 99,
-        .description = COMPOUND_STRING(
-            "It can freely control fire, making fiery\n"
-            "orbs fly like will-o'-the-wisps. Just\n"
-            "before evolution, its six tails grow hot \n"
-            "as if on fire."),
+       .description = COMPOUND_STRING(
+       "It weaves flames with charm, creating\n"
+       "shimmering lights that dance in air. As\n"
+       "it nears evolution, its six tails glow \n"
+       "with a gentle, mystic fire."),
         .pokemonScale = 542,
         .pokemonOffset = 19,
         .trainerScale = 256,
@@ -5059,7 +5059,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             ANIMCMD_FRAME(1, 20),
             ANIMCMD_FRAME(0, 15),
         ),
-        .frontAnimId = ANIM_V_STRETCH,
+        .frontAnimId = ANIM_V_JUMPS_H_JUMPS,
         .backPic = gMonBackPic_Vulpix,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 48) : MON_COORDS_SIZE(64, 48),
         .backPicYOffset = 9,
@@ -5069,7 +5069,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconSprite = gMonIcon_Vulpix,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 2 : 5,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
-        SHADOW(0, 2, SHADOW_SIZE_M)
+        SHADOW(-6, 4, SHADOW_SIZE_M)
         FOOTPRINT(Vulpix)
         OVERWORLD(
             sPicTable_Vulpix,
@@ -5114,11 +5114,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Fox"),
         .height = 11,
         .weight = 199,
-        .description = COMPOUND_STRING(
-            "It has long been said that each of the\n"
-            "nine tails embody an enchanted power.\n"
-            "A long-lived Ninetales will have fur that\n"
-            "shines like gold."),
+       .description = COMPOUND_STRING(
+           "Legends say each of its nine tails holds\n"
+           "a spark of mystical flame. When it moves,\n"
+           "light twirls like fairy dust, and its fur\n"
+           "gleams with radiant gold."),
         .pokemonScale = 339,
         .pokemonOffset = 10,
         .trainerScale = 256,
@@ -16747,10 +16747,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 15,
         .weight = 550,
         .description = COMPOUND_STRING(
-            "Their pincers are strong enough to\n"
-            "shatter thick logs. Because they dislike\n"
-            "cold, Pinsir burrow and sleep under\n"
-            "the ground on chilly nights."),
+            "Its black shell and masked face give it\n"
+            "a fearsome look. The horn between its\n"
+            "twin pincers impales foes swiftly, and it\n"
+            "lurks in shadows waiting to strike."),
         .pokemonScale = 256,
         .pokemonOffset = 2,
         .trainerScale = 257,
