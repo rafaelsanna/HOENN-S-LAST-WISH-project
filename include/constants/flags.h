@@ -57,26 +57,26 @@
 #define FLAG_HIDE_MOSSDEEP_RIVAL_MALE        0x26D
 #define FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE      0x26E
 #define FLAG_SYS_AUTO_RUN                    0x2E
-#define FLAG_HIDE_SECRET_PATH   0x2F
-#define FLAG_PLANT_SECRET_PATH    0x30 
-#define FLAG_HIDE_SECRET_RIGHT    0x31 
-#define FLAG_HIDE_SECRET_UP    0x32 
-#define FLAG_JIRACHI_AWAKE 0x33 
-#define FLAG_SECRET_PATH_TRIGGERED    0x34 
-#define FLAG_HIDE_SECRET_PATH_FINAL    0x35 
-#define FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT    0x36
-#define FLAG_RECEIVED_TOGEPI_EGG    0x37 
-#define FLAG_RECEIVED_MOON_STONE_LITTLEROOT    0x38
-#define FLAG_UNUSED_0x039    0x39 // Unused Flag
-#define FLAG_UNUSED_0x03A    0x3A // Unused Flag
-#define FLAG_UNUSED_0x03B    0x3B // Unused Flag
-#define FLAG_UNUSED_0x03C    0x3C // Unused Flag
-#define FLAG_UNUSED_0x03D    0x3D // Unused Flag
-#define FLAG_UNUSED_0x03E    0x3E // Unused Flag
-#define FLAG_UNUSED_0x03F    0x3F // Unused Flag
-#define FLAG_UNUSED_0x040    0x40 // Unused Flag
-#define FLAG_UNUSED_0x041    0x41 // Unused Flag
-#define FLAG_UNUSED_0x042    0x42 // Unused Flag
+#define FLAG_HIDE_SECRET_PATH                0x2F
+#define FLAG_PLANT_SECRET_PATH               0x30 
+#define FLAG_HIDE_SECRET_RIGHT               0x31 
+#define FLAG_HIDE_SECRET_UP                  0x32 
+#define FLAG_JIRACHI_AWAKE                   0x33 
+#define FLAG_SECRET_PATH_TRIGGERED           0x34 
+#define FLAG_HIDE_SECRET_PATH_FINAL          0x35 
+#define FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT  0x36
+#define FLAG_RECEIVED_TOGEPI_EGG             0x37 
+#define FLAG_RECEIVED_MOON_STONE_LITTLEROOT  0x38
+#define FLAG_WALLY_INTRO_DONE                0x39
+#define FLAG_WALLY_ATTACKED_BY_MIGHTYENA     0x3A 
+#define FLAG_WALLY_HELPING                   0x3B
+#define FLAG_WALLY_AT_MIGHTYENA_ZONE         0x3C
+#define FLAG_PIDGEOT_DISTRACTING             0x3D
+#define FLAG_HIDE_WALLY_INITIAL    0x3E 
+#define FLAG_HIDE_WALLY_BATTLE    0x3F 
+#define FLAG_HIDE_PIDGEOT_INITIAL     0x40 
+#define FLAG_HIDE_WALLY_CLONE    0x41 
+#define FLAG_HIDE_PIDGEOT_CLONE     0x42 
 #define FLAG_UNUSED_0x043    0x43 // Unused Flag
 #define FLAG_UNUSED_0x044    0x44 // Unused Flag
 #define FLAG_UNUSED_0x045    0x45 // Unused Flag

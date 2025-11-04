@@ -1,5 +1,5 @@
 // ====================================================================
-// QUEST SYSTEM - TIME GEARS (TIME FRAGMENTS)
+// QUEST SYSTEM - TIME GEARS (CELEBI + WALLY SIMPLIFICADO)
 // ====================================================================
 
 .equiv LOCALID_MOSSDEEP_JIRACHI, 1
@@ -7,19 +7,20 @@
 .equiv LOCALID_TIME_GEAR_1, 2
 .equiv LOCALID_TIME_GEAR_2, 3
 .equiv LOCALID_TIME_GEAR_3, 4
-.equiv LOCALID_CELEBI_STATIC, 8
-.equiv LOCALID_CELEBI_FOLLOWER, 14
 .equiv LOCALID_MIGHTYENA, 6
 .equiv LOCALID_POOCHYENA, 7
+.equiv LOCALID_CELEBI_STATIC, 8
 .equiv LOCALID_ZIGZAGOON, 9
+.equiv LOCALID_CELEBI_FOLLOWER, 14
 .equiv LOCALID_SURVIVOR, 15
 .equiv LOCALID_GRANDMA_MOSSDEEP01, 16
-.equiv LOCALID_RIVAL_MALE, 1
+.equiv LOCALID_RIVAL_MALE, 17
 .equiv LOCALID_RIVAL_FEMALE, 18
 .equiv LOCALID_SECRET_PATH_PLANT_1, 24
 .equiv LOCALID_SECRET_PATH_PLANT_2, 25
 .equiv LOCALID_SECRET_PATH_PLANT_1_FINAL, 26
 .equiv LOCALID_SECRET_PATH_PLANT_2_FINAL, 27
+.equiv LOCALID_WALLY, 29
 
 MOSSDEEP01_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MOSSDEEP01_OnFrame
@@ -119,7 +120,34 @@ MOSSDEEP01_ContinueTransition:
 	call MOSSDEEP01_EventScript_SetupSecretPath
 	call_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_EventScript_KeepJirachiAwake
 	call MOSSDEEP01_EventScript_SetupRivalNPC
+	
+	// Gerenciar Wally e Pidgeot
+	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideInitialWally
+	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowInitialWally
+	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowCloneWally
+	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideCloneWally
+	
 	end
+
+MOSSDEEP01_EventScript_HideInitialWally::
+	setflag FLAG_HIDE_WALLY_INITIAL
+	setflag FLAG_HIDE_PIDGEOT_INITIAL
+	return
+
+MOSSDEEP01_EventScript_ShowInitialWally::
+	clearflag FLAG_HIDE_WALLY_INITIAL
+	clearflag FLAG_HIDE_PIDGEOT_INITIAL
+	return
+
+MOSSDEEP01_EventScript_ShowCloneWally::
+	clearflag FLAG_HIDE_WALLY_CLONE
+	clearflag FLAG_HIDE_PIDGEOT_CLONE
+	return
+
+MOSSDEEP01_EventScript_HideCloneWally::
+	setflag FLAG_HIDE_WALLY_CLONE
+	setflag FLAG_HIDE_PIDGEOT_CLONE
+	return
 
 MOSSDEEP01_EventScript_HideSecretPathRight::
 	setflag FLAG_HIDE_SECRET_RIGHT
@@ -128,13 +156,8 @@ MOSSDEEP01_EventScript_HideSecretPathRight::
 MOSSDEEP01_EventScript_HideSecretPathUp::
 	setflag FLAG_HIDE_SECRET_UP
 	return
-	call MOSSDEEP01_EventScript_SetupRivalNPC
-	end
 	
 MOSSDEEP01_EventScript_DisableMightyenas::
-	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
-	setobjectmovementtype LOCALID_POOCHYENA, MOVEMENT_TYPE_WANDER_AROUND
-	setobjectmovementtype LOCALID_ZIGZAGOON, MOVEMENT_TYPE_WANDER_AROUND
 	return
 
 MOSSDEEP01_EventScript_HideStaticCelebi::
@@ -200,7 +223,6 @@ MOSSDEEP01_EventScript_AlreadyCompleted::
 	release
 	end
 
-// NO FINAL DO MOSSDEEP01_EventScript_QuestComplete:
 MOSSDEEP01_EventScript_QuestComplete::
 	msgbox MOSSDEEP01_Text_ThankYou, MSGBOX_DEFAULT
 	closemessage
@@ -249,7 +271,6 @@ MOSSDEEP01_EventScript_QuestComplete::
 	delay 80
 	delay 60
 	
-	// ========== ESTADO IDÊNTICO AO LITTLEROOT_TOWN_01 ==========
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
@@ -258,21 +279,20 @@ MOSSDEEP01_EventScript_QuestComplete::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
 	setflag FLAG_SYS_B_DASH
 	setflag FLAG_RECEIVED_RUNNING_SHOES
-	setflag FLAG_SYS_POKEMON_GET        // ← IMPORTANTE!
-	setflag FLAG_SYS_POKEDEX_GET        // ← IMPORTANTE!
+	setflag FLAG_SYS_POKEMON_GET
+	setflag FLAG_SYS_POKEDEX_GET
 	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 	setvar VAR_LITTLEROOT_TOWN_STATE, 4
 	
-	// Lógica de gênero igual ao LITTLEROOT_TOWN_01
 	checkplayergender
 	compare VAR_RESULT, MALE
 	goto_if_eq MOSSDEEP01_WarpMale
 	
-	// FEMALE
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
+	destroyfollowernpc
 	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
 	waitstate
 	release
@@ -283,6 +303,7 @@ MOSSDEEP01_WarpMale::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
+	destroyfollowernpc
 	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
 	waitstate
 	release
@@ -309,9 +330,89 @@ MOSSDEEP01_Movement_CameraFollowComet:
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
 	step_end
 
 MOSSDEEP01_Movement_CometCrossingSky:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
@@ -378,33 +479,43 @@ MOSSDEEP01_EventScript_Item_AlreadyCollected::
 	release
 	end
 
+// ====================================================================
+// CELEBI EVENT - FINAL VERSION FOLLOWER FIRST, NO GAP
+// ====================================================================
+
+MOSSDEEP01_EventScript_ForceVisualRefresh::
+    fadescreenspeed FADE_TO_BLACK, 1
+    fadescreenspeed FADE_FROM_BLACK, 1
+    return
+
 MOSSDEEP01_EventScript_Celebi::
-	lock
-	faceplayer
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiAlreadyRescued
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_CelebiNeedGears
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
-	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
-	closemessage
-	playse SE_M_HYPER_BEAM
-	fadescreenspeed FADE_TO_WHITE, 4
-	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
-	clearflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER
-	removeobject LOCALID_CELEBI_STATIC
-	addobject LOCALID_CELEBI_FOLLOWER
-	delay 30
-	fadescreenspeed FADE_FROM_WHITE, 4
-	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
-	setobjectmovementtype LOCALID_MIGHTYENA, MOVEMENT_TYPE_WANDER_AROUND
-	setobjectmovementtype LOCALID_POOCHYENA, MOVEMENT_TYPE_WANDER_AROUND
-	setobjectmovementtype LOCALID_ZIGZAGOON, MOVEMENT_TYPE_WANDER_AROUND
-	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
-	closemessage
-	msgbox MOSSDEEP01_Text_CelebiFollows, MSGBOX_DEFAULT
-	closemessage
-	release
-	end
+    lock
+    faceplayer
+    goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiAlreadyRescued
+    goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_CelebiNeedGears
+    goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
+    goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
+
+    msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
+    closemessage
+    playse SE_M_HYPER_BEAM
+    
+    // Padrão lendário - mas adaptado para não fazer fly away
+    fadescreenswapbuffers FADE_TO_BLACK
+    setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
+    fadescreenswapbuffers FADE_FROM_BLACK
+    
+    setflag FLAG_MOSSDEEP_CELEBI_RESCUED
+    
+    // Transforma em seguidor
+    destroyfollowernpc
+    setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
+
+    msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
+    closemessage
+    release
+    end
+
 
 MOSSDEEP01_EventScript_CelebiNeedGears::
 	showmonpic SPECIES_ARAQUANID, 10, 3
@@ -418,8 +529,9 @@ MOSSDEEP01_EventScript_CelebiAlreadyRescued::
 	release
 	end
 
+
 // ====================================================================
-// MIGHTYENA ZONE TRIGGER - APENAS OLHAR PARA O JOGADOR
+// MIGHTYENA ZONE TRIGGER
 // ====================================================================
 
 MOSSDEEP01_EventScript_MightyenaZone::
@@ -430,7 +542,6 @@ MOSSDEEP01_EventScript_MightyenaZone::
 	waitmovement 0
 	delay 20
 	
-	// Encontrar Mightyena mais próxima e fazer ela olhar para o jogador
 	call MOSSDEEP01_EventScript_FindNearestMightyena
 	applymovement VAR_0x8008, Common_Movement_ExclamationMark
 	waitmovement 0
@@ -444,6 +555,9 @@ MOSSDEEP01_EventScript_MightyenaZone::
 	delay 60
 	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
 	closemessage
+	
+	setflag FLAG_WALLY_ATTACKED_BY_MIGHTYENA
+	
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 	warp MAP_MOSSDEEP01, 11, 71
 	waitstate
@@ -451,31 +565,32 @@ MOSSDEEP01_EventScript_MightyenaZone::
 	end
 
 MOSSDEEP01_EventScript_FindNearestMightyena::
-	// Usa a primeira Mightyena (LOCALID_MIGHTYENA)
 	setvar VAR_0x8008, LOCALID_MIGHTYENA
 	return
 
 MOSSDEEP01_MightyenaZone_Safe::
+	releaseall
 	end
 
 // ====================================================================
-// MIGHTYENA NPC - COM FACEPLAYER EM AMBOS OS ESTADOS
+// MIGHTYENA NPC
 // ====================================================================
 
 MOSSDEEP01_EventScript_Mightyena::
-	// SEMPRE olhar para o jogador primeiro
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
-	
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
 	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaFriendly
 	delay 20
 	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
 	closemessage
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
 	playse SE_M_BITE
 	fadescreen FADE_TO_BLACK
 	delay 60
 	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
 	closemessage
+	setflag FLAG_WALLY_ATTACKED_BY_MIGHTYENA
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 	warp MAP_MOSSDEEP01, 11, 71
 	waitstate
@@ -483,7 +598,7 @@ MOSSDEEP01_EventScript_Mightyena::
 	end
 
 MOSSDEEP01_EventScript_MightyenaFriendly::
-	// Estado calm - já está olhando para o jogador
+    playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
 	msgbox MOSSDEEP01_Text_MightyenaFriendly, MSGBOX_DEFAULT
 	releaseall
 	end
@@ -491,6 +606,98 @@ MOSSDEEP01_EventScript_MightyenaFriendly::
 MOSSDEEP01_EventScript_MightyenaDoNothing::
 	end
 
+
+// ====================================================================
+// PIDGEOT NPC e outros pokemons 
+// ====================================================================
+
+MOSSDEEP01_EventScript_PidgeotInitial::
+	lock
+	faceplayer
+	playmoncry SPECIES_PIDGEOT, CRY_MODE_NORMAL
+	msgbox MOSSDEEP01_Text_PidgeotGreeting, MSGBOX_DEFAULT
+	waitmoncry
+	release
+	end
+
+MOSSDEEP01_EventScript_PidgeotClone::
+	lock
+	faceplayer
+	playmoncry SPECIES_PIDGEOT, CRY_MODE_NORMAL
+	msgbox MOSSDEEP01_Text_PidgeotAfterWarp, MSGBOX_DEFAULT
+	waitmoncry
+	release
+	end
+
+MOSSDEEP01_EventScript_Bulbasaur::
+	lock
+	faceplayer
+	playmoncry SPECIES_BULBASAUR, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+MOSSDEEP01_EventScript_Totodile::
+	lock
+	faceplayer
+	playmoncry SPECIES_TOTODILE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+MOSSDEEP01_EventScript_Torchic::
+	lock
+	faceplayer
+	playmoncry SPECIES_TORCHIC, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+
+// ====================================================================
+// WALLY NPC - VERSÃO CORRIGIDA (SÓ TELEPORTA APÓS ATAQUE)
+// ====================================================================
+
+MOSSDEEP01_EventScript_Wally::
+	lock
+	faceplayer
+	goto_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_WallyAfterIntro
+	
+	// VERIFICAR SE FOI ATACADO PELAS MIGHTYENAS
+	goto_if_unset FLAG_WALLY_ATTACKED_BY_MIGHTYENA, MOSSDEEP01_EventScript_WallyNotReady
+	
+	// Primeira conversa (após ataque)
+	msgbox MOSSDEEP01_Text_WallyIntro, MSGBOX_DEFAULT
+	closemessage
+	setflag FLAG_WALLY_INTRO_DONE
+	
+	// Esconde Wally e Pidgeot iniciais
+	setflag FLAG_HIDE_WALLY_INITIAL
+	setflag FLAG_HIDE_PIDGEOT_INITIAL
+	
+	// Mostra Wally e Pidgeot clones na nova posição
+	clearflag FLAG_HIDE_WALLY_CLONE
+	clearflag FLAG_HIDE_PIDGEOT_CLONE
+	
+	// Teleporta o jogador
+	warp MAP_MOSSDEEP01, 47, 45
+	waitstate
+
+	msgbox MOSSDEEP01_Text_WallyWarped, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_EventScript_WallyNotReady::
+	msgbox MOSSDEEP01_Text_WallyNotReady, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_EventScript_WallyAfterIntro::
+	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
+	release
+	end
+
+////////////////////////////////////////////////////////// 
 
 MOSSDEEP01_EventScript_Survivor::
 	lock
@@ -553,107 +760,86 @@ MOSSDEEP01_EventScript_Grandma::
 	msgbox MOSSDEEP01_Text_GrandmaAskStory, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq MOSSDEEP01_EventScript_TellStory
-	// Se escolheu NÃO
 	msgbox MOSSDEEP01_Text_GrandmaBeCareful, MSGBOX_DEFAULT
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
 	release
 	end
 
-	MOSSDEEP01_EventScript_TellStory::
-	// Fade para preto e silencia música
+MOSSDEEP01_EventScript_TellStory::
 	fadeoutbgm 0
 	fadescreen FADE_TO_BLACK
-	// 1. AEGISLASH
 	showmonpic SPECIES_AEGISLASH, 10, 3
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
 	hidemonpic
 	
-	// 2. ALOMOMOLA  
 	showmonpic SPECIES_ALOMOMOLA, 10, 3
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 	msgbox MOSSDEEP01_Text_GrandmaStory2, MSGBOX_DEFAULT
 	hidemonpic
 
-	// 3. AVALUGG - GROUDON X KYOGRE
 	showmonpic SPECIES_AVALUGG, 10, 3
 	playse SE_M_SURF
 	playse SE_M_THUNDERBOLT
 	msgbox MOSSDEEP01_Text_GrandmaStory3, MSGBOX_DEFAULT
 	hidemonpic
 	
-	// 4. AMAURA
 	showmonpic SPECIES_AMAURA, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
 	hidemonpic
 
-	// 5. AROMATISSE - TSUNAMI
 	showmonpic SPECIES_AROMATISSE, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
 	hidemonpic
 
-	// 6. ARROKUDA - VULCANO
 	showmonpic SPECIES_ARROKUDA, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
 	hidemonpic
 
-	// 7. AUDINO - WASTELAND
 	showmonpic SPECIES_AUDINO, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
 	hidemonpic
 
-	// 8. AURORUS - OCEAN
 	showmonpic SPECIES_AURORUS, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
 	hidemonpic
 
-	// 9. AMOONGUSS
 	showmonpic SPECIES_AMOONGUSS, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory9, MSGBOX_DEFAULT
 	hidemonpic
 	
-	// 10. APPLIN
 	showmonpic SPECIES_APPLIN, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory10, MSGBOX_DEFAULT
 	hidemonpic
 	
-	// 11. APPLETUN
 	showmonpic SPECIES_APPLETUN, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory11, MSGBOX_DEFAULT
 	hidemonpic
 
-	// 12. AXEW - CAMPING
 	showmonpic SPECIES_AXEW, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory12, MSGBOX_DEFAULT
 	hidemonpic
 	
-	// 13. ARBOLIVA
 	showmonpic SPECIES_ARBOLIVA, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory13, MSGBOX_DEFAULT
 	hidemonpic
 
-// 14. ARBOLIVA - COMETT
 	showmonpic SPECIES_ARCHEN, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
 
-	// No final, volta tela normal
 	fadescreen FADE_FROM_BLACK
-
-MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
-	// Depois da primeira conversa, pergunta se quer ouvir de novo
-	msgbox MOSSDEEP01_Text_GrandmaAskAgain, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq MOSSDEEP01_EventScript_TellStory
-	// Se escolheu NÃO, mostra só a mensagem de encorajamento (SEM FOTO)
-	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
-	release
-	end
-
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
 	release
 	end
 
+MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
+	msgbox MOSSDEEP01_Text_GrandmaAskAgain, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq MOSSDEEP01_EventScript_TellStory
+	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
+	release
+	end
 
 MOSSDEEP01_EventScript_Grandpa::
 	lock
@@ -770,46 +956,32 @@ MOSSDEEP01_EventScript_Child02::
 	end	
 
 // ====================================================================
-// ====================================================================
 // SECRET PATH PLANTS - SIMPLE SOLUTION WITHOUT HOLES
 // ====================================================================
 
 MOSSDEEP01_EventScript_SecretPathPlant::
 	end
 
-// ====================================================================
-// SETUP - SMALL PLANTS ALWAYS VISIBLE
-// ====================================================================
-
 MOSSDEEP01_EventScript_SetupSecretPath::
-	// Small plants always visible
 	addobject LOCALID_SECRET_PATH_PLANT_1
 	addobject LOCALID_SECRET_PATH_PLANT_2
 	
-	// If already triggered, show big plants too
 	goto_if_set FLAG_SECRET_PATH_TRIGGERED, MOSSDEEP01_PlantsFinalState
 	
-	// If NOT triggered, hide big plants
 	setflag FLAG_HIDE_SECRET_PATH_FINAL
 	return
 
 MOSSDEEP01_PlantsFinalState::
-	// Show big plants (overlay the small ones)
 	clearflag FLAG_HIDE_SECRET_PATH_FINAL
 	addobject LOCALID_SECRET_PATH_PLANT_1_FINAL
 	addobject LOCALID_SECRET_PATH_PLANT_2_FINAL
 	return
-
-// ====================================================================
-// TRIGGER - ACTIVATE BIG PLANTS WITHOUT HOLE
-// ====================================================================
 
 MOSSDEEP01_EventScript_SecretPathTrigger::
 	lockall
 	goto_if_set FLAG_SECRET_PATH_TRIGGERED, MOSSDEEP01_PathAlreadyOpen
 	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_PathBlocked
 	
-	// Initial message
 	msgbox MOSSDEEP01_Text_CelebiSensesPath, MSGBOX_DEFAULT
 	closemessage
 	delay 15
@@ -817,7 +989,6 @@ MOSSDEEP01_EventScript_SecretPathTrigger::
 	playse SE_M_HYPER_BEAM
 	delay 20
 	
-	// Animation on SMALL plants (they continue to exist)
 	turnobject LOCALID_SECRET_PATH_PLANT_1, DIR_NORTH
 	playse SE_M_PSYBEAM
 	turnobject LOCALID_SECRET_PATH_PLANT_2, DIR_NORTH
@@ -828,13 +999,10 @@ MOSSDEEP01_EventScript_SecretPathTrigger::
 	turnobject LOCALID_SECRET_PATH_PLANT_2, DIR_WEST
 	delay 25
 	
-	// KEY: Add big plants BEFORE clearing flag
-	// This makes them appear instantly over the small ones
 	addobject LOCALID_SECRET_PATH_PLANT_1_FINAL
 	addobject LOCALID_SECRET_PATH_PLANT_2_FINAL
 	clearflag FLAG_HIDE_SECRET_PATH_FINAL
 	
-	// Success message
 	msgbox MOSSDEEP01_Text_PathRevealed, MSGBOX_DEFAULT
 	closemessage
 	
@@ -861,34 +1029,25 @@ MOSSDEEP01_PathBlocked::
 MOSSDEEP01_EventScript_JirachiObject::
 	end
 
-// ====================================================================
-// JIRACHI WAKE TRIGGER - STEP ON IT TO WAKE JIRACHI
-// ====================================================================
-
 MOSSDEEP01_EventScript_JirachiTrigger::
 	lockall
 	
-	// If already awake, do nothing
 	goto_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiAlreadyAwake
 	
-	// First time - wake up Jirachi
 	msgbox MOSSDEEP01_Text_JirachiWaking, MSGBOX_DEFAULT
 	closemessage
 	delay 15
 	
-	// White flash effect
 	fadescreenspeed FADE_TO_WHITE, 4
 	playse SE_M_PSYBEAM
 	delay 10
 	fadescreenspeed FADE_FROM_WHITE, 4
 	delay 15
 	
-	// Jirachi middle frame (waking up)
 	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_SOUTH
 	playse SE_M_PSYBEAM
 	delay 20
 	
-	// Jirachi front frame (fully awake)
 	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
 	playse SE_M_SWIFT
 	delay 20
@@ -903,13 +1062,6 @@ MOSSDEEP01_JirachiAlreadyAwake::
 	releaseall
 	end
 
-// ====================================================================
-// ON TRANSITION - KEEP JIRACHI AWAKE STATE
-// ====================================================================
-
-// Add this to your MOSSDEEP01_ContinueTransition:
-// call_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_EventScript_KeepJirachiAwake
-
 MOSSDEEP01_EventScript_KeepJirachiAwake::
 	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
 	return
@@ -918,17 +1070,14 @@ MOSSDEEP01_EventScript_Jirachi::
 	lock
 	faceplayer
 	
-	// If not awake yet, tell player to approach trigger first
 	goto_if_unset FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiSleeping
 	
-	// Check if all conditions are met for meteor event
 	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_JirachiNeedCelebi
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_JirachiNeedItems
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_JirachiNeedItems
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_JirachiNeedItems
 	goto_if_set FLAG_MOSSDEEP_QUEST_COMPLETED, MOSSDEEP01_JirachiAlreadyCompleted
 	
-	// All conditions met - trigger meteor event
 	goto MOSSDEEP01_EventScript_DirectWarp
 
 MOSSDEEP01_JirachiNeedCelebi::
@@ -950,7 +1099,7 @@ MOSSDEEP01_JirachiSleeping::
 	msgbox MOSSDEEP01_Text_JirachiStillSleeping, MSGBOX_DEFAULT
 	release
 	end	
-	
+
 // ====================================================================
 // TEXTS
 // ====================================================================
@@ -1048,6 +1197,11 @@ MOSSDEEP01_Text_MightyenaBlackedOut:
 	.string "The wild POKéMON are too aggressive!\n"
 	.string "You blacked out!$"
 
+MOSSDEEP01_Text_MightyenaFriendly:
+	.string "The MIGHTYENA looks calm and friendly.\n"
+	.string "Amazing, they're so peaceful now!\p"
+	.string "You can even pet them!$"
+
 MOSSDEEP01_Text_SurvivorTrapped:
 	.string "SURVIVOR: Help! These wild POKéMON\n"
 	.string "are too aggressive!\p"
@@ -1108,10 +1262,6 @@ MOSSDEEP01_Text_GoodLuck:
 	.string "GRANDMA: Good luck, {PLAYER}!\n"
 	.string "Be very careful!$"
 
-MOSSDEEP01_Text_GrandmaReminder:
-	.string "GRANDMA: Please help the survivors!\n"
-	.string "And be careful with the wild POKéMON.$"
-
 MOSSDEEP01_Text_GrandmaEncouragement:
 	.string "GRANDMA: You're doing great, {PLAYER}!\n"
 	.string "Keep helping people!$"
@@ -1123,6 +1273,71 @@ MOSSDEEP01_Text_GrandpaFirstTalk:
 MOSSDEEP01_Text_GrandpaAfterTalk:
 	.string "GRANDPA: Thank you for helping\n"
 	.string "everyone, {PLAYER}. You're a hero!$"
+
+MOSSDEEP01_Text_GrandmaStory1:
+	.string "GRANDMA: This was the beginning...$"
+
+MOSSDEEP01_Text_GrandmaStory2:
+	.string "GRANDMA: Then the conflict started...$"
+
+MOSSDEEP01_Text_GrandmaStory3:
+	.string "GRANDMA: The great battle between\n"
+	.string "land and sea...$"
+
+MOSSDEEP01_Text_GrandmaStory4:
+	.string "GRANDMA: The tsunami devastated\n"
+	.string "everything...$"
+
+MOSSDEEP01_Text_GrandmaStory5:
+	.string "GRANDMA: Volcanoes erupted across\n"
+	.string "the land...$"
+
+MOSSDEEP01_Text_GrandmaStory6:
+	.string "GRANDMA: The land became a barren\n"
+	.string "wasteland...$"
+
+MOSSDEEP01_Text_GrandmaStory7:
+	.string "GRANDMA: The oceans raged with\n"
+	.string "unending storms...$"
+
+MOSSDEEP01_Text_GrandmaStory8:
+	.string "GRANDMA: Survivors gathered in\n"
+	.string "camps...$"
+
+MOSSDEEP01_Text_GrandmaStory9:
+	.string "GRANDMA: Hope began to fade...$"
+
+MOSSDEEP01_Text_GrandmaStory10:
+	.string "GRANDMA: But then a legend\n"
+	.string "appeared...$"
+
+MOSSDEEP01_Text_GrandmaStory11:
+	.string "GRANDMA: The sky guardian descended\n"
+	.string "from above...$"
+
+MOSSDEEP01_Text_GrandmaStory12:
+	.string "GRANDMA: Peace was restored,\n"
+	.string "but at a cost...$"
+
+MOSSDEEP01_Text_GrandmaStory13:
+	.string "GRANDMA: And this is how our world\n"
+	.string "became what it is today...$"
+
+MOSSDEEP01_Text_GrandmaAskStory:
+	.string "GRANDMA: Hello, {PLAYER}!\p"
+	.string "Would you like to hear the legends\n"
+	.string "and stories of how HOENN arrived\l"
+	.string "in the state it is now?$"
+
+MOSSDEEP01_Text_GrandmaBeCareful:
+	.string "GRANDMA: I understand.\p"
+	.string "Please be very careful when exploring\n"
+	.string "the MOSSDEEP ruins.\p"
+	.string "There are many dangers out there...$"
+
+MOSSDEEP01_Text_GrandmaAskAgain:
+	.string "GRANDMA: Would you like to hear\n"
+	.string "the stories of HOENN again?$"
 
 MOSSDEEP01_Text_RivalMale01:
 	.string "RIVAL: Hey {PLAYER}! I'm helping\n"
@@ -1208,66 +1423,48 @@ MOSSDEEP01_Text_JirachiStillSleeping:
 	.string "JIRACHI is sleeping peacefully...\n"
 	.string "Maybe you should approach it?$"
 
-MOSSDEEP01_Text_MightyenaFriendly:
-	.string "The MIGHTYENA looks calm and friendly.\n"
-	.string "Amazing, they're so peaceful now!\p"
-	.string "You can even pet them!$"
+MOSSDEEP01_Text_WallyIntro:
+	.string "WALLY: Hello, {PLAYER}!\p"
+	.string "Did you know that in the past people\n"
+	.string "could train POKéMON normally?\p"
+	.string "There were POKé BALLS, devices that\n"
+	.string "captured and stored POKéMON.\p"
+	.string "But now... they don't make them anymore.\n"
+	.string "The technology was lost.\p"
+	.string "That's why the connection with POKéMON\n"
+	.string "has to be made in another way...\p"
+	.string "A more natural, purer connection.$"
 
-// ADICIONE ESTES TEXTOS NO FINAL DO ARQUIVO (se ainda não existirem):
+MOSSDEEP01_Text_WallyAfterAttack:
+	.string "WALLY: {PLAYER}! I heard you were\n"
+	.string "attacked by the wild MIGHTYENA!\p"
+	.string "These creatures are very aggressive\n"
+	.string "when the flow of time is broken.\p"
+	.string "Please be careful out there!\n"
+	.string "Try to help CELEBI!$"
 
-MOSSDEEP01_Text_GrandmaStory1:
-	.string "GRANDMA: This was the beginning...$"
+MOSSDEEP01_Text_WallyAfterCelebi:
+	.string "WALLY: {PLAYER}, you did it!\p"
+	.string "CELEBI calmed all the wild POKéMON.\n"
+	.string "Amazing!\p"
+	.string "The connection between POKéMON and\n"
+	.string "humans is being restored!$"
 
-MOSSDEEP01_Text_GrandmaStory2:
-	.string "GRANDMA: Then the conflict started...$"
+MOSSDEEP01_Text_WallyWarped:
+	.string "WALLY: I'll head there first!\p"
+	.string "Meet me ahead, {PLAYER}!$"
 
-MOSSDEEP01_Text_GrandmaStory3:
-	.string "GRANDMA: The great battle between\nland and sea...$"
+MOSSDEEP01_Text_WallyNotReady:
+	.string "WALLY: Hello, {PLAYER}!\p"
+	.string "Be careful out there! The wild\n"
+	.string "POKéMON are very aggressive.\p"
+	.string "If you get into trouble, come\n"
+	.string "talk to me!$"
 
-MOSSDEEP01_Text_GrandmaStory4:
-	.string "GRANDMA: The tsunami devastated\neverything...$"
+MOSSDEEP01_Text_PidgeotGreeting:
+	.string "Pidgeot: Piiidgeoo!$"
 
-MOSSDEEP01_Text_GrandmaStory5:
-	.string "GRANDMA: Volcanoes erupted across\nthe land...$"
-
-MOSSDEEP01_Text_GrandmaStory6:
-	.string "GRANDMA: The land became a barren\nwasteland...$"
-
-MOSSDEEP01_Text_GrandmaStory7:
-	.string "GRANDMA: The oceans raged with\nunending storms...$"
-
-MOSSDEEP01_Text_GrandmaStory8:
-	.string "GRANDMA: Survivors gathered in\ncamps...$"
-
-MOSSDEEP01_Text_GrandmaStory9:
-	.string "GRANDMA: Hope began to fade...$"
-
-MOSSDEEP01_Text_GrandmaStory10:
-	.string "GRANDMA: But then a legend\nappeared...$"
-
-MOSSDEEP01_Text_GrandmaStory11:
-	.string "GRANDMA: The sky guardian descended\nfrom above...$"
-
-MOSSDEEP01_Text_GrandmaStory12:
-	.string "GRANDMA: Peace was restored,\nbut at a cost...$"
-
-MOSSDEEP01_Text_GrandmaStory13:
-	.string "GRANDMA: And this is how our world\nbecame what it is today...$"
-
-MOSSDEEP01_Text_GrandmaAskStory:
-	.string "GRANDMA: Hello, {PLAYER}!\p"
-	.string "Would you like to hear the legends\n"
-	.string "and stories of how HOENN arrived\l"
-	.string "in the state it is now?$"
-
-MOSSDEEP01_Text_GrandmaBeCareful:
-	.string "GRANDMA: I understand.\p"
-	.string "Please be very careful when exploring\n"
-	.string "the MOSSDEEP ruins.\p"
-	.string "There are many dangers out there...$"
-
-MOSSDEEP01_Text_GrandmaAskAgain:
-	.string "GRANDMA: Would you like to hear\n"
-	.string "the stories of HOENN again?$"
+MOSSDEEP01_Text_PidgeotAfterWarp:
+	.string "Pidgeot: Pii-pii!$"
 
 
