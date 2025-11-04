@@ -7714,7 +7714,8 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .palette = gMonPalette_MelmetalGmax,
         .shinyPalette = gMonShinyPalette_MelmetalGmax,
         .iconSprite = gMonIcon_MelmetalGmax,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_MelmetalGmax,
+        .shinyIconPalette = gMonShinyIconPalette_MelmetalGmax,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 13, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Melmetal)

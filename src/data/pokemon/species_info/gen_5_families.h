@@ -4618,7 +4618,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_BasculegionM,
         .shinyPalette = gMonShinyPalette_BasculegionM,
         .iconSprite = gMonIcon_BasculegionM,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_BasculegionM,
+        .shinyIconPalette = gMonShinyIconPalette_BasculegionM,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 16, SHADOW_SIZE_M)
         FOOTPRINT(Basculegion)
@@ -4682,7 +4683,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_BasculegionF,
         .shinyPalette = gMonShinyPalette_BasculegionF,
         .iconSprite = gMonIcon_BasculegionF,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_BasculegionF,
+        .shinyIconPalette = gMonShinyIconPalette_BasculegionF,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 16, SHADOW_SIZE_M)
         FOOTPRINT(Basculegion)
@@ -6027,7 +6029,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Runerigus,
         .shinyPalette = gMonShinyPalette_Runerigus,
         .iconSprite = gMonIcon_Runerigus,
-        .iconPalIndex = 2,
+        .iconPalette = gMonIconPalette_Runerigus,
+        .shinyIconPalette = gMonShinyIconPalette_Runerigus,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(14, 14, SHADOW_SIZE_M)
         FOOTPRINT(Runerigus)
@@ -6535,7 +6538,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_GarbodorGmax,
         .shinyPalette = gMonShinyPalette_GarbodorGmax,
         .iconSprite = gMonIcon_GarbodorGmax,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_GarbodorGmax,
+        .shinyIconPalette = gMonShinyIconPalette_GarbodorGmax,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         NO_SHADOW
         FOOTPRINT(Garbodor)
