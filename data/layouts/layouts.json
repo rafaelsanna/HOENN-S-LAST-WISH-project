@@ -4480,6 +4480,26 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/OldaleField/border.bin",
       "blockdata_filepath": "data/layouts/OldaleField/map.bin"
+    },
+    {
+      "id": "LAYOUT_LITTLEROOT_TOWN_NEW_HOUSE",
+      "name": "LittlerootTown_NewHouse_Layout",
+      "width": 10,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/LittlerootTown_NewHouse/border.bin",
+      "blockdata_filepath": "data/layouts/LittlerootTown_NewHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_OLDALE_TOWN_OLD_TUNEL",
+      "name": "OldaleTown_OldTunel_Layout",
+      "width": 18,
+      "height": 12,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/OldaleTown_OldTunel/border.bin",
+      "blockdata_filepath": "data/layouts/OldaleTown_OldTunel/map.bin"
     }
   ]
 }

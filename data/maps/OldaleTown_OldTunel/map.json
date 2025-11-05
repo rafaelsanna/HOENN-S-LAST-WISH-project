@@ -1,55 +1,36 @@
 {
-  "id": "MAP_OLDALE_FIELD",
-  "name": "OldaleField",
-  "layout": "LAYOUT_OLDALE_FIELD",
-  "music": "MUS_DUMMY",
+  "id": "MAP_OLDALE_TOWN_OLD_TUNEL",
+  "name": "OldaleTown_OldTunel",
+  "layout": "LAYOUT_OLDALE_TOWN_OLD_TUNEL",
+  "music": "MUS_RG_SEVII_CAVE",
   "region_map_section": "MAPSEC_OLDALE_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
-  "map_type": "MAP_TYPE_NONE",
+  "map_type": "MAP_TYPE_UNDERGROUND",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
-  "show_map_name": true,
+  "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_OLDALE_TOWN",
-      "offset": 0,
-      "direction": "left"
-    }
-  ],
+  "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_GIRL_3",
-      "x": 15,
-      "y": 13,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 10,
-      "y": 3,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(SENTRET)",
-      "x": 9,
-      "y": 16,
+      "x": 13,
+      "y": 4,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
+      "movement_range_x": 2,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZUBAT)",
+      "x": 16,
+      "y": 10,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -60,9 +41,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ABRA)",
-      "x": 9,
-      "y": 3,
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZUBAT)",
+      "x": 0,
+      "y": 1,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -75,10 +56,10 @@
   ],
   "warp_events": [
     {
-      "x": 9,
-      "y": 6,
+      "x": 4,
+      "y": 10,
       "elevation": 0,
-      "dest_map": "MAP_OLDALE_TOWN_OLD_TUNEL",
+      "dest_map": "MAP_OLDALE_FIELD",
       "dest_warp_id": "0"
     }
   ],

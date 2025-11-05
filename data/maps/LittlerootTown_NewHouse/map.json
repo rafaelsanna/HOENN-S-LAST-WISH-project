@@ -1,31 +1,25 @@
 {
-  "id": "MAP_OLDALE_FIELD",
-  "name": "OldaleField",
-  "layout": "LAYOUT_OLDALE_FIELD",
-  "music": "MUS_DUMMY",
-  "region_map_section": "MAPSEC_OLDALE_TOWN",
+  "id": "MAP_LITTLEROOT_TOWN_NEW_HOUSE",
+  "name": "LittlerootTown_NewHouse",
+  "layout": "LAYOUT_LITTLEROOT_TOWN_NEW_HOUSE",
+  "music": "MUS_LITTLEROOT",
+  "region_map_section": "MAPSEC_LITTLEROOT_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
-  "map_type": "MAP_TYPE_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
-  "show_map_name": true,
+  "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_OLDALE_TOWN",
-      "offset": 0,
-      "direction": "left"
-    }
-  ],
+  "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_GIRL_3",
-      "x": 15,
-      "y": 13,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
+      "x": 2,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -34,11 +28,11 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 10,
-      "y": 3,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "x": 5,
+      "y": 4,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -47,26 +41,26 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SENTRET)",
-      "x": 9,
-      "y": 16,
-      "elevation": 0,
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EEVEE)",
+      "x": 7,
+      "y": 5,
+      "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
+      "movement_range_x": 0,
+      "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ABRA)",
-      "x": 9,
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EEVEE)",
+      "x": 1,
       "y": 3,
-      "elevation": 0,
+      "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
+      "movement_range_x": 0,
+      "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
@@ -75,11 +69,18 @@
   ],
   "warp_events": [
     {
-      "x": 9,
-      "y": 6,
+      "x": 4,
+      "y": 8,
       "elevation": 0,
-      "dest_map": "MAP_OLDALE_TOWN_OLD_TUNEL",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_LITTLEROOT_TOWN",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_LITTLEROOT_TOWN",
+      "dest_warp_id": "3"
     }
   ],
   "coord_events": [],
