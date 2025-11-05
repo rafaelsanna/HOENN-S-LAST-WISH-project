@@ -1744,6 +1744,16 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
 
     SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
     UpdateObjectEventVisibility(objectEvent, sprite);
+    
+    // === ADICIONE ESTE CÓDIGO ===
+    // Forçar Zekrom a ficar SEMPRE por baixo do jogador
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(ZEKROM))
+    {
+        objectEvent->fixedPriority = TRUE;
+        sprite->subpriority = 0xFF;  // Valor ALTO = renderiza POR BAIXO
+    }
+    // ============================
+    
     return objectEventId;
 }
 
@@ -2901,6 +2911,15 @@ static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
 
         ResetObjectEventFldEffData(objectEvent);
         SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
+        
+        // === ADICIONE ESTE CÓDIGO ===
+        // Forçar Zekrom a ficar SEMPRE por baixo do jogador
+        if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(ZEKROM))
+        {
+            objectEvent->fixedPriority = TRUE;
+            sprite->subpriority = 0xFF;  // Valor ALTO = renderiza POR BAIXO
+        }
+        // ============================
     }
 }
 

@@ -47,11 +47,9 @@ MOSSDEEP01_ContinueTransition:
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 	
-    // Wailord management: show only AFTER Celebi is rescued
+    // Wailord management: hide UNTIL Celebi is rescued
     call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideWailord
     call_if_set   FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_ShowWailord
-
-
 	
 	// Hide comet initially
 	call MOSSDEEP01_EventScript_HideComet
@@ -174,11 +172,12 @@ MOSSDEEP01_EventScript_HideFollowerCelebi::
 	return
 
 MOSSDEEP01_EventScript_HideWailord::
-	clearflag FLAG_HIDE_WAILORD_PATH
+	setflag FLAG_HIDE_WAILORD_PATH
 	return
 
 MOSSDEEP01_EventScript_ShowWailord::
 	clearflag FLAG_HIDE_WAILORD_PATH
+	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
 	return
 
 MOSSDEEP01_EventScript_HideComet::
@@ -273,6 +272,7 @@ MOSSDEEP01_EventScript_Item_AlreadyCollected::
 // CELEBI RESCUE EVENT
 // ====================================================================
 
+// No evento de interação com Celebi, após mostrar o Wailord:
 MOSSDEEP01_EventScript_Celebi::
 	lock
 	faceplayer
@@ -292,9 +292,13 @@ MOSSDEEP01_EventScript_Celebi::
 	
 	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
 	
-	// Hide Wailord blocker when Celebi is rescued
-	setflag FLAG_HIDE_WAILORD_PATH
-	
+	// Show Wailord path and set subpriority to walk over it
+	clearflag FLAG_HIDE_WAILORD_PATH
+	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
+	msgbox MOSSDEEP01_Text_CelebiCallsWailord, MSGBOX_DEFAULT
+	closemessage
+	delay 20
+
 	// Set Celebi as follower
 	destroyfollowernpc
 	setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
@@ -762,20 +766,48 @@ MOSSDEEP01_EventScript_WailordBlocksPath::
     end
 
 MOSSDEEP01_EventScript_WailordPathClear::
-    // Quando Celebi é resgatado, o caminho é liberado
-    setflag FLAG_HIDE_WAILORD_PATH
+    // Path is clear, do nothing
     end
 
 MOSSDEEP01_EventScript_Wailord::
+    lock
+    faceplayer
     msgbox MOSSDEEP01_Text_WailordIdle, MSGBOX_DEFAULT
     release
     end
 
 MOSSDEEP01_EventScript_Wailmer::
+    lock
+    faceplayer
     msgbox MOSSDEEP01_Text_WailmerIdle, MSGBOX_DEFAULT
     release
     end
 
+MOSSDEEP01_EventScript_WailordJumpOver::
+	lockall
+	// Pula no lugar virado para cima
+	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_JumpOverWailordUp
+	waitmovement 0
+	playse SE_BIKE_HOP
+	
+	// Move o jogador para o outro lado (atravessa o Wailord)
+	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_CrossWailordUp
+	waitmovement 0
+	playse SE_BIKE_HOP
+	releaseall
+	end
+
+MOSSDEEP01_Movement_JumpOverWailordUp:
+	jump_in_place_up     // EXISTE - pulo no lugar virado para cima
+	delay_4
+	jump_in_place_up     // Segundo pulo para efeito
+	step_end
+
+MOSSDEEP01_Movement_CrossWailordUp:
+	walk_up              // Atravessa o Wailord
+	walk_up
+	walk_up  
+	step_end	
 
 // ====================================================================
 // JIRACHI WAKE EVENT - TRIGGER BASED
@@ -1417,12 +1449,17 @@ MOSSDEEP01_Text_PidgeotGreeting:
 	.string "Pidgeot: Piiidgeoo!$"
 
 MOSSDEEP01_Text_WailordBlocks:
-    .string "The huge WAILORD blocks your way!\n"
-    .string "It doesn’t seem to want to move yet.$"
+    .string "There's only water ahead!\p"
+    .string "You can't cross without help...$"
 
 MOSSDEEP01_Text_WailordIdle:
     .string "WAILORD is calmly floating on the water.$"
 
 MOSSDEEP01_Text_WailmerIdle:
     .string "The WAILMER are splashing playfully!$"
+
+MOSSDEEP01_Text_CelebiCallsWailord:
+    .string "CELEBI calls out to the ocean!\p"
+    .string "A massive WAILORD appears and\n"
+    .string "creates a path across the water!$"
 

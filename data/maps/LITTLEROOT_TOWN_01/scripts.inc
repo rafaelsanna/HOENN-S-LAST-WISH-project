@@ -30,18 +30,47 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 	delay 20
 	
 	// Fade to black and silence music
+	playse SE_M_PSYBEAM
 	fadeoutbgm 0
 	fadescreen FADE_TO_BLACK
 	delay 40
 	
-	// 1. AEGISLASH - The beginning
+	// 0. ARCTIBAX - forgotten age
+	showmonpic SPECIES_ARCTIBAX, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// 0.1. ARCTOVISH - Hoenn was a paradise
+	showmonpic SPECIES_ARCTOVISH, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20	
+
+	// 0.2. ARCTOZOLT - People and Pokémon lived as one
+	showmonpic SPECIES_ARCTOZOLT, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20	
+
+	// 0.3. ARMAROUGE - the balance
+	showmonpic SPECIES_ARMAROUGE, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20	
+
+	// 1. AEGISLASH - KYOGRE
 	showmonpic SPECIES_AEGISLASH, 10, 3
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 	
-	// 2. ALOMOMOLA - The conflict began  
+	// 2. ALOMOMOLA - GROUNDON
 	showmonpic SPECIES_ALOMOMOLA, 10, 3
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory2, MSGBOX_DEFAULT
@@ -56,67 +85,67 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 	hidemonpic
 	delay 20
 	
-	// 4. AMAURA - The tsunami
+	// 4. AMAURA - The FLOOD
 	showmonpic SPECIES_AMAURA, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory4, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 5. AROMATISSE - Volcanoes
+	// 5. AROMATISSE - TSUNAMI
 	showmonpic SPECIES_AROMATISSE, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory5, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 6. ARROKUDA - Devastated land
+	// 6. ARROKUDA - VOLCANO
 	showmonpic SPECIES_ARROKUDA, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory6, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 7. AUDINO - Stormy oceans
+	// 7. AUDINO - DESTROYED CITIES
 	showmonpic SPECIES_AUDINO, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory7, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 8. AURORUS - Survivors
+	// 8. AURORUS - FLOODED CITIES
 	showmonpic SPECIES_AURORUS, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory8, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 9. AMOONGUSS - Hope fading
+	// 9. AMOONGUSS - LAVA ON THE LANDS
 	showmonpic SPECIES_AMOONGUSS, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory9, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 	
-	// 10. APPLIN - A legend appears
+	// 10. APPLIN - A legend appears jirachi and celebi
 	showmonpic SPECIES_APPLIN, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory10, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 	
-	// 11. APPLETUN - The sky guardian
+	// 11. APPLETUN - The MAGIC SHRINE
 	showmonpic SPECIES_APPLETUN, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory11, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 12. AXEW - Peace restored
+	// 12. AXEW - JIRACHI USING ITS POWERS TO GRANT A WISH
 	showmonpic SPECIES_AXEW, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory12, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 	
-	// 13. ARBOLIVA - The world today
+	// 13. ARBOLIVA - JIRACHI USING ITS POWERS TO GRANT A WISH
 	showmonpic SPECIES_ARBOLIVA, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory13, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// Final - encouragement message
+	// Final - MILLENION COMMET
 	showmonpic SPECIES_ARCHEN, 10, 3
 	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
@@ -135,29 +164,54 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 	return	
 
 LittlerootTown_01_EventScript_JirachiCelebi::
-	lock
-	faceplayer
-	msgbox LittlerootTown_01_Text_JirachiIntro, MSGBOX_DEFAULT
-	
-	// JIRACHI CONTA A HISTÓRIA ANTES DE PERGUNTAR
+	lockall
+	msgbox LittlerootTown_Text_GentleIntroduction, MSGBOX_DEFAULT
 	msgbox LittlerootTown_01_Text_JirachiCloseEyes, MSGBOX_DEFAULT
 	
-	// Fade to black
+	// Fade to black and silence music
 	fadeoutbgm 0
 	fadescreen FADE_TO_BLACK
 	delay 40
 	
-	// 1. AEGISLASH - The beginning
-	showmonpic SPECIES_AEGISLASH, 10, 3
+	// 0. ARCTIBAX - forgotten age
+	showmonpic SPECIES_ARCTIBAX, 10, 3
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
+
+	// 0.1. ARCTOVISH - Hoenn was a paradise
+	showmonpic SPECIES_ARCTOVISH, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory2, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20	
+
+	// 0.2. ARCTOZOLT - People and Pokémon lived as one
+	showmonpic SPECIES_ARCTOZOLT, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory3, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20	
+
+	// 0.3. ARMAROUGE - the balance
+	showmonpic SPECIES_ARMAROUGE, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory4, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20	
+
+	// 1. AEGISLASH - KYOGRE
+	showmonpic SPECIES_AEGISLASH, 10, 3
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	msgbox LittlerootTown_Text_GrandmaStory5, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
 	
-	// 2. ALOMOMOLA - The conflict began  
+	// 2. ALOMOMOLA - GROUNDON
 	showmonpic SPECIES_ALOMOMOLA, 10, 3
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
-	msgbox LittlerootTown_Text_GrandmaStory2, MSGBOX_DEFAULT
+	msgbox LittlerootTown_Text_GrandmaStory6, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
@@ -165,79 +219,84 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	showmonpic SPECIES_AVALUGG, 10, 3
 	playse SE_M_SURF
 	playse SE_M_THUNDERBOLT
-	msgbox LittlerootTown_Text_GrandmaStory3, MSGBOX_DEFAULT
-	hidemonpic
-	delay 20
-	
-	// 4. AMAURA - The tsunami
-	showmonpic SPECIES_AMAURA, 10, 3
-	msgbox LittlerootTown_Text_GrandmaStory4, MSGBOX_DEFAULT
-	hidemonpic
-	delay 20
-
-	// 5. AROMATISSE - Volcanoes
-	showmonpic SPECIES_AROMATISSE, 10, 3
-	msgbox LittlerootTown_Text_GrandmaStory5, MSGBOX_DEFAULT
-	hidemonpic
-	delay 20
-
-	// 6. ARROKUDA - Devastated land
-	showmonpic SPECIES_ARROKUDA, 10, 3
-	msgbox LittlerootTown_Text_GrandmaStory6, MSGBOX_DEFAULT
-	hidemonpic
-	delay 20
-
-	// 7. AUDINO - Stormy oceans
-	showmonpic SPECIES_AUDINO, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory7, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
-
-	// 8. AURORUS - Survivors
-	showmonpic SPECIES_AURORUS, 10, 3
+	
+	// 4. AMAURA - The FLOOD
+	showmonpic SPECIES_AMAURA, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory8, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 9. AMOONGUSS - Hope fading
-	showmonpic SPECIES_AMOONGUSS, 10, 3
+	// 5. AROMATISSE - TSUNAMI
+	showmonpic SPECIES_AROMATISSE, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory9, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
-	
-	// 10. APPLIN - A legend appears
-	showmonpic SPECIES_APPLIN, 10, 3
+
+	// 6. ARROKUDA - VOLCANO
+	showmonpic SPECIES_ARROKUDA, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory10, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
-	
-	// 11. APPLETUN - The sky guardian
-	showmonpic SPECIES_APPLETUN, 10, 3
+
+	// 7. AUDINO - DESTROYED CITIES
+	showmonpic SPECIES_AUDINO, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory11, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
-	// 12. AXEW - Peace restored
-	showmonpic SPECIES_AXEW, 10, 3
+	// 8. AURORUS - FLOODED CITIES
+	showmonpic SPECIES_AURORUS, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory12, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
-	
-	// 13. ARBOLIVA - The world today
-	showmonpic SPECIES_ARBOLIVA, 10, 3
+
+	// 9. AMOONGUSS - LAVA ON THE LANDS
+	showmonpic SPECIES_AMOONGUSS, 10, 3
 	msgbox LittlerootTown_Text_GrandmaStory13, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
+	
+	// 10. APPLIN - A legend appears jirachi and celebi
+	showmonpic SPECIES_APPLIN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory14, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 11. APPLETUN - The MAGIC SHRINE
+	showmonpic SPECIES_APPLETUN, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory15, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
 
-	// Final - encouragement message
+	// 12. AXEW - JIRACHI USING ITS POWERS TO GRANT A WISH
+	showmonpic SPECIES_AXEW, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory16, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+	
+	// 13. ARBOLIVA - JIRACHI USING ITS POWERS TO GRANT A WISH
+	showmonpic SPECIES_ARBOLIVA, 10, 3
+	msgbox LittlerootTown_Text_GrandmaStory17, MSGBOX_DEFAULT
+	hidemonpic
+	delay 20
+
+	// Final - MILLENION COMMET
 	showmonpic SPECIES_ARCHEN, 10, 3
 	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
 
-	// Return to normal screen
+// Return to normal screen
 	fadescreen FADE_FROM_BLACK
 	delay 20
-	fadeinbgm 0
+	fadeinbgm 1
+	
+	// TRANSIÇÃO SUAVE ANTES DA PERGUNTA
+	msgbox LittlerootTown_Text_StoryConclusion, MSGBOX_DEFAULT
+	closemessage
+	delay 20
 	
 	// AGORA PERGUNTA SE QUER PULAR
 	msgbox LittlerootTown_01_Text_Question, MSGBOX_YESNO
@@ -443,6 +502,12 @@ LittlerootTown_Jirachi_Case2::
 // TEXTS
 // ====================================================================
 
+LittlerootTown_Text_GentleIntroduction:
+	.string "Do not be alarmed...\n"
+	.string "You are in the dream realm.\p"
+	.string "I will tell you the story of HOENN...\n"
+	.string "The story that shaped our world...$"
+
 LittlerootTown_01_Text_JirachiIntro:
 	.string "Jirachi: I am the wish Pokemon!\n"
 	.string "I can warp time and space!\p"
@@ -498,72 +563,101 @@ LittlerootTown_01_Text_JirachiSleep:
 LittlerootTown_01_Text_JirachiGrant:
 	.string "Jirachi: They say I can grant any wish!\nWhat would you wish for?$"
 
+
 // ====================================================================
-// STORY TEXTS (English)
+// OPTIMIZED STORY TEXTS (English - Coherent with All Images)
 // ====================================================================
 
 LittlerootTown_Text_GrandmaStory1:
-	.string "Once upon a time, there was a\n"
-	.string "prosperous land called HOENN...$"
+	.string "In a forgotten age,\n"
+	.string "before the great calamity...$"
 
 LittlerootTown_Text_GrandmaStory2:
-	.string "Then the conflict began between\n"
-	.string "the forces of nature...$"
+	.string "HOENN was a paradise divided\n"
+	.string "between sea and land...$"
 
 LittlerootTown_Text_GrandmaStory3:
-	.string "The great battle between land\n"
-	.string "and sea devastated the region...$"
+	.string "People and Pokémon lived as one,\n"
+	.string "their hearts beating in harmony...$"
 
 LittlerootTown_Text_GrandmaStory4:
-	.string "A tsunami swept away everything\n"
-	.string "in its path...$"
+	.string "A delicate balance maintained\n"
+	.string "by ancient forces...$"
 
 LittlerootTown_Text_GrandmaStory5:
-	.string "Volcanoes erupted across\n"
-	.string "the entire land...$"
+	.string "KYOGRE, deity of the ocean depths,\n"
+	.string "keeper of the seas...$"
 
 LittlerootTown_Text_GrandmaStory6:
-	.string "The land became a barren\n"
-	.string "and arid desert...$"
+	.string "GROUDON, titan of the land,\n"
+	.string "master of the continents...$"
 
 LittlerootTown_Text_GrandmaStory7:
-	.string "The oceans roared with storms\n"
-	.string "that never ended...$"
+	.string "Their eternal conflict erupted\n"
+	.string "into a world-shattering battle...$"
 
 LittlerootTown_Text_GrandmaStory8:
-	.string "The survivors gathered in\n"
-	.string "makeshift camps...$"
+	.string "The seas rose with terrifying floods,\n"
+	.string "swallowing coastal cities...$"
 
 LittlerootTown_Text_GrandmaStory9:
-	.string "Hope began to fade from\n"
-	.string "the hearts of the people...$"
+	.string "Colossal tsunamis swept across\n"
+	.string "what remained of the land...$"
 
 LittlerootTown_Text_GrandmaStory10:
-	.string "But then an ancient legend\n"
-	.string "resurfaced from memories...$"
+	.string "Volcanoes erupted in response,\n"
+	.string "scorching the earth with fire...$"
 
 LittlerootTown_Text_GrandmaStory11:
-	.string "The celestial guardian descended\n"
-	.string "from the heavens to bring balance...$"
+	.string "Cities crumbled to dust and ruins\n"
+	.string "under nature's wrath...$"
 
 LittlerootTown_Text_GrandmaStory12:
-	.string "Peace was restored, but at\n"
-	.string "a very high cost...$"
+	.string "The land became submerged,\n"
+	.string "an archipelago of memories...$"
 
 LittlerootTown_Text_GrandmaStory13:
-	.string "And that is how our world\n"
-	.string "became what it is today...$"
+	.string "Rivers of lava flowed where\n"
+	.string "forests once stood...$"
+
+LittlerootTown_Text_GrandmaStory14:
+	.string "In despair, they turned to legends\n"
+	.string "of time-travel and wish-granting...$"
+
+LittlerootTown_Text_GrandmaStory15:
+	.string "Ancient shrines were built\n"
+	.string "to mythical guardians...$"
+
+LittlerootTown_Text_GrandmaStory16:
+	.string "JIRACHI awakened to grant\n"
+	.string "a desperate wish for salvation...$"
+
+LittlerootTown_Text_GrandmaStory17:
+	.string "The millennium comet appeared,\n"
+	.string "a celestial beacon of hope...$"
 
 LittlerootTown_Text_GrandmaEncouragement:
-	.string "Now it is your turn to write\n"
-	.string "a new chapter in this story!\p"
-	.string "May your journey be filled\n"
-	.string "with hope and courage!$"
+	.string "This is the world we inherited.\n"
+	.string "Your journey begins where hope remains...$"
+
+
+//////////////////////////////// TALE END ////////////////////////
+
+LittlerootTown_Text_StoryConclusion:
+	.string "This is the story of all that happened\n"
+	.string "in HOENN...\p"
+	.string "And now, only the chosen one can help\n"
+	.string "change destiny and alter the past,\l"
+	.string "so the future may be prosperous again...$"
 
 LittlerootTown_Text_WelcomeToNewWorld:
 	.string "Welcome to your new world,\n"
 	.string "{PLAYER}!\p"
 	.string "A new adventure awaits you!$"
+
+LittlerootTown_Text_JirachiContinue:
+	.string "Jirachi: Then let us continue...\n"
+	.string "Your adventure awaits!$"
 
 
 

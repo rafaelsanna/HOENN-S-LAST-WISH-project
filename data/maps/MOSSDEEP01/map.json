@@ -570,12 +570,25 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
-      "x": 72,
-      "y": 17,
+      "x": 64,
+      "y": 18,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(AZELF)",
+      "x": 42,
+      "y": 17,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
+      "movement_range_x": 4,
+      "movement_range_y": 4,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
@@ -691,6 +704,78 @@
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "1",
       "script": "MOSSDEEP01_EventScript_WailordPathClear"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 17,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 17,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 16,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 16,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 15,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 15,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 14,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 14,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
     }
   ],
   "bg_events": [],
