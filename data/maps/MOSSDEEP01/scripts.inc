@@ -532,7 +532,7 @@ MOSSDEEP01_EventScript_Healer::
 	end
 
 // ====================================================================
-// GRANDMA EVENT WITH STORY
+// GRANDMA EVENT WITH STORY //
 // ====================================================================
 
 MOSSDEEP01_EventScript_Grandma::
