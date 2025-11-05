@@ -59,7 +59,7 @@
 #define FLAG_SYS_AUTO_RUN                    0x2E
 #define FLAG_HIDE_SECRET_PATH                0x2F
 #define FLAG_PLANT_SECRET_PATH               0x30 
-#define FLAG_HIDE_SECRET_RIGHT               0x31 
+#define FLAG_HIDE_WAILORD_PATH               0x31 
 #define FLAG_HIDE_SECRET_UP                  0x32 
 #define FLAG_JIRACHI_AWAKE                   0x33 
 #define FLAG_SECRET_PATH_TRIGGERED           0x34 
