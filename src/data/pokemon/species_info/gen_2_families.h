@@ -705,10 +705,12 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 10),
             ANIMCMD_FRAME(0, 10),
-            ANIMCMD_FRAME(1, 25),
-            ANIMCMD_FRAME(0, 40),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_GLOW_RED,
+        .frontAnimId = ANIM_SHAKE_GLOW_RED,
         .frontAnimDelay = 5,
         .backPic = gMonBackPic_Feraligatr,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(56, 64),
@@ -719,7 +721,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconSprite = gMonIcon_Feraligatr,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 2 : 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(3, 11, SHADOW_SIZE_XL_BATTLE_ONLY)
+        SHADOW(-4, 14, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Feraligatr)
         OVERWORLD(
             sPicTable_Feraligatr,

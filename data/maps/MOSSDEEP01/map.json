@@ -31,8 +31,8 @@
     {
       "local_id": "item_quest_01",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
-      "x": 58,
-      "y": 40,
+      "x": 73,
+      "y": 37,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -45,8 +45,8 @@
     {
       "local_id": "item_quest_02",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
-      "x": 60,
-      "y": 40,
+      "x": 44,
+      "y": 20,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -59,8 +59,8 @@
     {
       "local_id": "item_quest_03",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
-      "x": 59,
-      "y": 40,
+      "x": 11,
+      "y": 22,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
