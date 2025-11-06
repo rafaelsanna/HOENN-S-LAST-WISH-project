@@ -625,20 +625,24 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .frontPicSize = MON_COORDS_SIZE(48, 56),
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 5,
         .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 40),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_H_SHAKE,
+        .frontAnimId = ANIM_SHAKE_GLOW_RED,
         .backPic = gMonBackPic_Croconaw,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 56) : MON_COORDS_SIZE(56, 64),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 7 : 2,
-        .backAnimId = BACK_ANIM_JOLT_RIGHT,
+        .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
         .palette = gMonPalette_Croconaw,
         .shinyPalette = gMonShinyPalette_Croconaw,
         .iconSprite = gMonIcon_Croconaw,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 2 : 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 8, SHADOW_SIZE_M)
+        SHADOW(-7, 13, SHADOW_SIZE_L)
         FOOTPRINT(Croconaw)
         OVERWORLD(
             sPicTable_Croconaw,
