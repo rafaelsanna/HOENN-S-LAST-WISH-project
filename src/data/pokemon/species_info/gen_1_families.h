@@ -6002,12 +6002,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     [SPECIES_VILEPLUME] =
     {
         .baseHP        = 75,
-        .baseAttack    = 80,
+        .baseAttack    = 50,
         .baseDefense   = 85,
-        .baseSpeed     = 50,
+        .baseSpeed     = 80,
         .baseSpAttack  = P_UPDATED_STATS >= GEN_6 ? 110 : 100,
-        .baseSpDefense = P_UPDATED_STATS >= GEN_2 ? 90 : 100,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_POISON),
+        .baseSpDefense = P_UPDATED_STATS >= GEN_2 ? 100 : 100,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_FAIRY),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
         .expYield = 245,
