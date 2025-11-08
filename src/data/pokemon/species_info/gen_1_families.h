@@ -5841,9 +5841,9 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     [SPECIES_ODDISH] =
     {
         .baseHP        = 45,
-        .baseAttack    = 50,
+        .baseAttack    = 30,
         .baseDefense   = 55,
-        .baseSpeed     = 30,
+        .baseSpeed     = 50,
         .baseSpAttack  = 75,
         .baseSpDefense = P_UPDATED_STATS >= GEN_2 ? 65 : 75,
         .types = MON_TYPES(TYPE_GRASS, TYPE_POISON),
@@ -5915,9 +5915,9 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     [SPECIES_GLOOM] =
     {
         .baseHP        = 60,
-        .baseAttack    = 65,
+        .baseAttack    = 40,
         .baseDefense   = 70,
-        .baseSpeed     = 40,
+        .baseSpeed     = 65,
         .baseSpAttack  = 85,
         .baseSpDefense = P_UPDATED_STATS >= GEN_2 ? 75 : 85,
         .types = MON_TYPES(TYPE_GRASS, TYPE_POISON),
@@ -6025,7 +6025,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_GRASS),
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_NONE, ABILITY_EFFECT_SPORE },
+        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_GRASSY_SURGE, ABILITY_EFFECT_SPORE },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Vileplume"),
         .cryId = CRY_VILEPLUME,
@@ -6091,12 +6091,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     [SPECIES_BELLOSSOM] =
     {
         .baseHP        = 75,
-        .baseAttack    = 80,
-        .baseDefense   = P_UPDATED_STATS >= GEN_6 ? 95 : 85,
-        .baseSpeed     = 50,
-        .baseSpAttack  = 90,
+        .baseAttack    = 50,
+        .baseDefense   = P_UPDATED_STATS >= GEN_6 ? 85 : 85,
+        .baseSpeed     = 80,
+        .baseSpAttack  = 110,
         .baseSpDefense = 100,
-        .types = MON_TYPES(TYPE_GRASS),
+        .types = MON_TYPES(TYPE_POISON, TYPE_FAIRY),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
         .expYield = 245,
@@ -6114,7 +6114,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_GRASS),
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_NONE, ABILITY_HEALER },
+        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_MISTY_SURGE, ABILITY_HEALER },
         .bodyColor = BODY_COLOR_GREEN,
         .speciesName = _("Bellossom"),
         .cryId = CRY_BELLOSSOM,
@@ -6162,7 +6162,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconSprite = gMonIcon_Bellossom,
         .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
-        SHADOW(0, 0, SHADOW_SIZE_S)
+        SHADOW(-2, 0, SHADOW_SIZE_S)
         FOOTPRINT(Bellossom)
         OVERWORLD(
             sPicTable_Bellossom,
