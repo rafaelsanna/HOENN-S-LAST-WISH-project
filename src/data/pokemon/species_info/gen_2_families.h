@@ -776,10 +776,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(32, 56) : MON_COORDS_SIZE(40, 64),
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 2,
         .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(0, 15),
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(0, 50),
+            ANIMCMD_FRAME(1, 60),
+            ANIMCMD_FRAME(1, 60),
+            ANIMCMD_FRAME(0, 60),
         ),
         .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
         .backPic = gMonBackPic_Sentret,
@@ -791,7 +791,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconSprite = gMonIcon_Sentret,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(0, 11, SHADOW_SIZE_S)
+        SHADOW(0, 14, SHADOW_SIZE_M)
         FOOTPRINT(Sentret)
         OVERWORLD(
             sPicTable_Sentret,
@@ -847,10 +847,20 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .frontPicSize = MON_COORDS_SIZE(48, 56),
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 7 : 4,
         .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 35),
-            ANIMCMD_FRAME(0, 5),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
         ),
-        .frontAnimId = ANIM_H_JUMPS_V_STRETCH,
+        .frontAnimId = ANIM_RAPID_H_HOPS,
         .backPic = gMonBackPic_Furret,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 48) : MON_COORDS_SIZE(64, 56),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 8 : 6,
@@ -860,7 +870,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconSprite = gMonIcon_Furret,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-1, 9, SHADOW_SIZE_M)
+        SHADOW(-1, 8, SHADOW_SIZE_L)
         FOOTPRINT(Furret)
         OVERWORLD(
             sPicTable_Furret,
@@ -6622,10 +6632,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
     {
         .baseHP        = 70,
         .baseAttack    = 30,
-        .baseDefense   = 95,
-        .baseSpeed     = 95,
-        .baseSpAttack  = 135,
-        .baseSpDefense = 95,
+        .baseDefense   = 100,
+        .baseSpeed     = 65,
+        .baseSpAttack  = 145,
+        .baseSpDefense = 100,
         .types = MON_TYPES(TYPE_WATER, TYPE_FAIRY),
         .catchRate = 30,
         .expYield = 179,
@@ -6635,7 +6645,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_WATER_3),
-        .abilities = { ABILITY_SOUNDPROOF, ABILITY_LIQUID_VOICE, ABILITY_QUEENLY_MAJESTY },
+        .abilities = { ABILITY_WEAK_ARMOR, ABILITY_LIQUID_VOICE, ABILITY_QUEENLY_MAJESTY },
         .bodyColor = BODY_COLOR_WHITE,
         .speciesName = _("Cursola"),
         .cryId = CRY_CURSOLA,
