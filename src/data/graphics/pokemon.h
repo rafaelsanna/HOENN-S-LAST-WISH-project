@@ -8841,7 +8841,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
 
-    const u32 gMonFrontPic_Cursola[] = INCBIN_U32("graphics/pokemon/cursola/front.4bpp.smol");
+    const u32 gMonFrontPic_Cursola[] = INCBIN_U32("graphics/pokemon/cursola/anim_front.4bpp.smol");
     const u16 gMonPalette_Cursola[] = INCBIN_U16("graphics/pokemon/cursola/normal.gbapal");
     const u32 gMonBackPic_Cursola[] = INCBIN_U32("graphics/pokemon/cursola/back.4bpp.smol");
     const u16 gMonShinyPalette_Cursola[] = INCBIN_U16("graphics/pokemon/cursola/shiny.gbapal");

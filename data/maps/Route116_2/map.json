@@ -1,7 +1,7 @@
 {
-  "id": "MAP_ROUTE116",
-  "name": "Route116",
-  "layout": "LAYOUT_ROUTE116",
+  "id": "MAP_ROUTE116_2",
+  "name": "Route116_2",
+  "layout": "LAYOUT_ROUTE116_2",
   "music": "MUS_ROUTE104",
   "region_map_section": "MAPSEC_ROUTE_116",
   "requires_flash": false,
@@ -14,19 +14,9 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_VERDANTURF_TOWN",
-      "offset": 80,
-      "direction": "down"
-    },
-    {
-      "map": "MAP_RUSTBORO_CITY",
-      "offset": 0,
-      "direction": "left"
-    },
-    {
-      "map": "MAP_ROUTE116_2",
-      "offset": 14,
-      "direction": "down"
+      "map": "MAP_ROUTE116",
+      "offset": -14,
+      "direction": "up"
     }
   ],
   "object_events": [

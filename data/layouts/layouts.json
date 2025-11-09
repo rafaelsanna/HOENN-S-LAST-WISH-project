@@ -4500,6 +4500,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/OldaleTown_OldTunel/border.bin",
       "blockdata_filepath": "data/layouts/OldaleTown_OldTunel/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE116_2",
+      "name": "Route116_2_Layout",
+      "width": 30,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Route116_2/border.bin",
+      "blockdata_filepath": "data/layouts/Route116_2/map.bin"
     }
   ]
 }

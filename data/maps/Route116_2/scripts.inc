@@ -1,0 +1,2 @@
+Route116_2_MapScripts::
+	.byte 0
