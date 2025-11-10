@@ -1064,6 +1064,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sMightyenaLevelUpLearnset,
         .teachableLearnset = sMightyenaTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_DARKRAI}),
     },
 #endif //P_FAMILY_POOCHYENA
 
@@ -1228,6 +1229,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .levelUpLearnset = sLinooneLevelUpLearnset,
         .teachableLearnset = sLinooneTeachableLearnset,
         .formSpeciesIdTable = sLinooneFormSpeciesIdTable,
+        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_OBSTAGOON, CONDITIONS({IF_TIME, TIME_NIGHT})}),
     },
 
 #if P_GALARIAN_FORMS
@@ -1366,13 +1368,13 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
 
     [SPECIES_OBSTAGOON] =
     {
-        .baseHP        = 93,
+        .baseHP        = 90,
         .baseAttack    = 90,
-        .baseDefense   = 101,
-        .baseSpeed     = 95,
-        .baseSpAttack  = 60,
-        .baseSpDefense = 81,
-        .types = MON_TYPES(TYPE_DARK, TYPE_NORMAL),
+        .baseDefense   = 70,
+        .baseSpeed     = 130,
+        .baseSpAttack  = 70,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_NORMAL),
         .catchRate = 45,
         .expYield = 260,
         .evYield_Defense = 3,
@@ -1401,8 +1403,17 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontPic = gMonFrontPic_Obstagoon,
         .frontPicSize = MON_COORDS_SIZE(56, 64),
         .frontPicYOffset = 0,
-        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
-        //.frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 60),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_BACK_FLIP,
         .backPic = gMonBackPic_Obstagoon,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 1,
@@ -1412,7 +1423,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconSprite = gMonIcon_Obstagoon,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 13, SHADOW_SIZE_M)
+        SHADOW(2, 13, SHADOW_SIZE_L)
         FOOTPRINT(Obstagoon)
         OVERWORLD(
             sPicTable_Obstagoon,

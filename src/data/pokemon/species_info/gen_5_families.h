@@ -10755,35 +10755,41 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
 #if P_FAMILY_DRUDDIGON
     [SPECIES_DRUDDIGON] =
     {
-        .baseHP        = 77,
-        .baseAttack    = 120,
-        .baseDefense   = 90,
-        .baseSpeed     = 48,
-        .baseSpAttack  = 60,
-        .baseSpDefense = 90,
-        .types = MON_TYPES(TYPE_DRAGON),
+        .baseHP        = 91,
+        .baseAttack    = 100,
+        .baseDefense   = 100,
+        .baseSpeed     = 80,
+        .baseSpAttack  = 134,
+        .baseSpDefense = 95,
+        .types = MON_TYPES(TYPE_DRAGON, TYPE_WATER),
         .catchRate = 45,
-        .expYield = 170,
-        .evYield_Attack = 2,
-        .itemRare = ITEM_DRAGON_FANG,
+    #if P_UPDATED_EXP_YIELDS >= GEN_8
+        .expYield = 300,
+    #elif P_UPDATED_EXP_YIELDS >= GEN_5
+        .expYield = 270,
+    #else
+        .expYield = 218,
+    #endif
+        .evYield_Attack = 3,
+        .itemRare = ITEM_DRAGON_SCALE,
         .genderRatio = PERCENT_FEMALE(50),
-        .eggCycles = 30,
-        .friendship = STANDARD_FRIENDSHIP,
-        .growthRate = GROWTH_MEDIUM_FAST,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_DRAGON, EGG_GROUP_MONSTER),
-        .abilities = { ABILITY_ROUGH_SKIN, ABILITY_SHEER_FORCE, ABILITY_MOLD_BREAKER },
-        .bodyColor = BODY_COLOR_RED,
-        .speciesName = _("Druddigon"),
+        .eggCycles = 40,
+        .friendship = 35,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_DRAGON),
+        .abilities = { ABILITY_SHED_SKIN, ABILITY_NONE, ABILITY_MULTISCALE },
+        .bodyColor = BODY_COLOR_BLUE,
+        .speciesName = _("Dragonami"),
         .cryId = CRY_DRUDDIGON,
         .natDexNum = NATIONAL_DEX_DRUDDIGON,
-        .categoryName = _("Cave"),
-        .height = 16,
-        .weight = 1390,
+        .categoryName = _("Dragon"),
+        .height = 45,
+        .weight = 2390,
         .description = COMPOUND_STRING(
-            "It warms its body by absorbing sunlight\n"
-            "with its wings. When its body temperature\n"
-            "falls, it can no longer move. It uses its\n"
-            "sharp claws to catch prey."),
+            "A Dragonair stores an enormous amount of\n"
+            "energy inside its body. It is said to alter\n"
+            "the weather around it by loosing energy\n"
+            "from the crystals on its neck and tail."),
         .pokemonScale = 259,
         .pokemonOffset = 1,
         .trainerScale = 296,

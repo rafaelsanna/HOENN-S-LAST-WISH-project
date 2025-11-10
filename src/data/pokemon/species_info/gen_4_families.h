@@ -7182,65 +7182,58 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
 #if P_FAMILY_DARKRAI
     [SPECIES_DARKRAI] =
     {
-        .baseHP        = 70,
-        .baseAttack    = 90,
-        .baseDefense   = 90,
-        .baseSpeed     = 125,
-        .baseSpAttack  = 135,
-        .baseSpDefense = 90,
+        .baseHP        = 100,
+        .baseAttack    = 110,
+        .baseDefense   = 80,
+        .baseSpeed     = 90,
+        .baseSpAttack  = 60,
+        .baseSpDefense = 80,
         .types = MON_TYPES(TYPE_DARK),
-        .catchRate = 3,
-    #if P_UPDATED_EXP_YIELDS >= GEN_8
-        .expYield = 300,
-    #elif P_UPDATED_EXP_YIELDS >= GEN_5
-        .expYield = 270,
-    #else
-        .expYield = 210,
-    #endif
-        .evYield_Speed = 1,
-        .evYield_SpAttack = 2,
-        .genderRatio = MON_GENDERLESS,
-        .eggCycles = 120,
-        .friendship = 0,
-        .growthRate = GROWTH_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
-        .abilities = { ABILITY_BAD_DREAMS, ABILITY_NONE, ABILITY_NONE },
-        .bodyColor = BODY_COLOR_BLACK,
-        .speciesName = _("Darkrai"),
-        .cryId = CRY_DARKRAI,
+        .catchRate = 50,  // Aumentei de 3 para 50 (mais comum)
+        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 220 : 200,  // Aumentei EXP
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,  // Adicionei ciclos de ovo
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),  // Mudei para FIELD
+        .abilities = { ABILITY_INTIMIDATE, ABILITY_STRONG_JAW, ABILITY_MOXIE },
+        .bodyColor = BODY_COLOR_GRAY,  // Mudei para GRAY
+        .speciesName = _("Howlyena"),
+        .cryId = CRY_MIGHTYENA,  // Use o cry do Mightyena
         .natDexNum = NATIONAL_DEX_DARKRAI,
-        .categoryName = _("Pitch-Black"),
-        .height = 15,
-        .weight = 505,
+        .categoryName = _("Crunch"),  // Mudei categoria
+        .height = 14,  // Reduzi altura
+        .weight = 900,  // Reduzi peso
         .description = COMPOUND_STRING(
-            "It chases people and Pokémon from its\n"
-            "territory by causing them to experience\n"
-            "deep, nightmarish slumbers. However,\n"
-            "it means no harm."),
-        .pokemonScale = 268,
-        .pokemonOffset = 2,
-        .trainerScale = 271,
+            "The evolved form of Mightyena. It leads\n"
+            "packs with absolute authority. Its\n"
+            "howl can be heard for miles."),
+        .pokemonScale = 320,
+        .pokemonOffset = 5,
+        .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Darkrai,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 3,
+        .frontPicYOffset = 0,
         .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 50),
-            ANIMCMD_FRAME(1, 30),
-            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(0, 20),
+            ANIMCMD_FRAME(1, 8),
+            ANIMCMD_FRAME(0, 8),
+            ANIMCMD_FRAME(1, 8),
+            ANIMCMD_FRAME(0, 8),
         ),
-        .frontAnimId = ANIM_GLOW_BLACK,
-        .enemyMonElevation = 4,
+        .frontAnimId = ANIM_V_SHAKE,  // Mudei animação
         .backPic = gMonBackPic_Darkrai,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 0,
-        .backAnimId = BACK_ANIM_SHRINK_GROW_VIBRATE,
+        .backAnimId = BACK_ANIM_H_SHAKE,  // Mudei animação
         .palette = gMonPalette_Darkrai,
         .shinyPalette = gMonShinyPalette_Darkrai,
         .iconSprite = gMonIcon_Darkrai,
-        .iconPalIndex = 0,
+        .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(4, 12, SHADOW_SIZE_M)
+        SHADOW(3, 15, SHADOW_SIZE_L)
         FOOTPRINT(Darkrai)
         OVERWORLD(
             sPicTable_Darkrai,
@@ -7251,11 +7244,12 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
             gOverworldPalette_Darkrai,
             gShinyOverworldPalette_Darkrai
         )
-        .isMythical = TRUE,
-        .isFrontierBanned = TRUE,
-        .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
-        .levelUpLearnset = sDarkraiLevelUpLearnset,
-        .teachableLearnset = sDarkraiTeachableLearnset,
+        // REMOVE estas linhas:
+        // .isMythical = TRUE,
+        // .isFrontierBanned = TRUE, 
+        // .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
+        .levelUpLearnset = sMightyenaLevelUpLearnset,  // Use learnset do Mightyena
+        .teachableLearnset = sMightyenaTeachableLearnset,  // Use TMs do Mightyena
     },
 #endif //P_FAMILY_DARKRAI
 

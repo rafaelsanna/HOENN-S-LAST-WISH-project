@@ -19890,8 +19890,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         )
         .levelUpLearnset = sDragonairLevelUpLearnset,
         .teachableLearnset = sDragonairTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 55, SPECIES_DRAGONITE}),
-    },
+        .evolutions = EVOLUTION({EVO_LEVEL, 55, SPECIES_DRAGONITE}, {EVO_ITEM, ITEM_WATER_STONE, SPECIES_DRUDDIGON}),
+},
 
     [SPECIES_DRAGONITE] =
     {
