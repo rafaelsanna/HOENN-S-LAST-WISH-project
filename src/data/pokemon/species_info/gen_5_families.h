@@ -10756,9 +10756,9 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
     [SPECIES_DRUDDIGON] =
     {
         .baseHP        = 91,
-        .baseAttack    = 100,
+        .baseAttack    = 105,
         .baseDefense   = 100,
-        .baseSpeed     = 80,
+        .baseSpeed     = 75,
         .baseSpAttack  = 134,
         .baseSpDefense = 95,
         .types = MON_TYPES(TYPE_DRAGON, TYPE_WATER),
@@ -10786,10 +10786,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .height = 45,
         .weight = 2390,
         .description = COMPOUND_STRING(
-            "A Dragonair stores an enormous amount of\n"
-            "energy inside its body. It is said to alter\n"
-            "the weather around it by loosing energy\n"
-            "from the crystals on its neck and tail."),
+            "Rarely glimpsed in the abyssal depths,\n"
+            "it glides with a quiet, reverent grace.\n"
+            "The pearls and crystals on its body shine\n"
+            "with a light said to calm even raging seas."),
         .pokemonScale = 259,
         .pokemonOffset = 1,
         .trainerScale = 296,
@@ -10799,14 +10799,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .frontPicYOffset = 4,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 22),
-            ANIMCMD_FRAME(1, 22),
-            ANIMCMD_FRAME(0, 22),
-            ANIMCMD_FRAME(1, 22),
-            ANIMCMD_FRAME(0, 22),
-            ANIMCMD_FRAME(1, 22),
+            ANIMCMD_FRAME(1, 60),
             ANIMCMD_FRAME(0, 11),
         ),
-        .frontAnimId = ANIM_BOUNCE_ROTATE_TO_SIDES_SMALL_SLOW,
+        .frontAnimId = ANIM_H_SHAKE,
         .backPic = gMonBackPic_Druddigon,
         .backPicSize = MON_COORDS_SIZE(64, 56),
         .backPicYOffset = 8,
@@ -10816,7 +10812,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .iconSprite = gMonIcon_Druddigon,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(3, 9, SHADOW_SIZE_M)
+        SHADOW(0, 7, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Druddigon)
         OVERWORLD(
             sPicTable_Druddigon,

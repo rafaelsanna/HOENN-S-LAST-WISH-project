@@ -115,7 +115,9 @@
     "OldaleTown_PokemonCenter_1F",
     "OldaleTown_PokemonCenter_2F",
     "OldaleTown_Mart",
-    "OldaleTown_OldTunel"
+    "OldaleTown_OldTunel",
+    "OldaleTown_OldTunel_2",
+    "OldaleTown_OldTunel_3"
   ],
   "gMapGroup_IndoorDewford": [
     "DewfordTown_House1",

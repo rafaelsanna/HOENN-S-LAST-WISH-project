@@ -4510,6 +4510,26 @@
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/Route116_2/border.bin",
       "blockdata_filepath": "data/layouts/Route116_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_OLDALE_TOWN_OLD_TUNEL_2",
+      "name": "OldaleTown_OldTunel_2_Layout",
+      "width": 23,
+      "height": 23,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/OldaleTown_OldTunel_2/border.bin",
+      "blockdata_filepath": "data/layouts/OldaleTown_OldTunel_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_OLDALE_TOWN_OLD_TUNEL_3",
+      "name": "OldaleTown_OldTunel_3_Layout",
+      "width": 11,
+      "height": 14,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/OldaleTown_OldTunel_3/border.bin",
+      "blockdata_filepath": "data/layouts/OldaleTown_OldTunel_3/map.bin"
     }
   ]
 }

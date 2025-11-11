@@ -7206,9 +7206,10 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .height = 14,  // Reduzi altura
         .weight = 900,  // Reduzi peso
         .description = COMPOUND_STRING(
-            "The evolved form of Mightyena. It leads\n"
-            "packs with absolute authority. Its\n"
-            "howl can be heard for miles."),
+        "Known for the strongest bite of any Pokémon,\n"
+        "it commands its pack with unwavering resolve.\n"
+        "Rivalries with Obstagoon are constant and fierce,\n"
+        "battles often echoing through the wilds at night."),
         .pokemonScale = 320,
         .pokemonOffset = 5,
         .trainerScale = 256,

@@ -1178,3 +1178,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/OldaleTown_OldTunel/scripts.inc"
 
 	.include "data/maps/Route116_2/scripts.inc"
+
+	.include "data/maps/OldaleTown_OldTunel_2/scripts.inc"
+
+	.include "data/maps/OldaleTown_OldTunel_3/scripts.inc"

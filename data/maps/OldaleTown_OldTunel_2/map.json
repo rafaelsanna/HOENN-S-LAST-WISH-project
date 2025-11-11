@@ -1,10 +1,10 @@
 {
-  "id": "MAP_OLDALE_TOWN_OLD_TUNEL",
-  "name": "OldaleTown_OldTunel",
-  "layout": "LAYOUT_OLDALE_TOWN_OLD_TUNEL",
+  "id": "MAP_OLDALE_TOWN_OLD_TUNEL_2",
+  "name": "OldaleTown_OldTunel_2",
+  "layout": "LAYOUT_OLDALE_TOWN_OLD_TUNEL_2",
   "music": "MUS_RG_SEVII_CAVE",
   "region_map_section": "MAPSEC_OLDALE_TOWN",
-  "requires_flash": false,
+  "requires_flash": true,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_UNDERGROUND",
   "allow_cycling": false,
@@ -16,8 +16,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(SENTRET)",
-      "x": 13,
-      "y": 4,
+      "x": 15,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
       "movement_range_x": 2,
@@ -28,9 +28,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZUBAT)",
-      "x": 16,
-      "y": 10,
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SENTRET)",
+      "x": 6,
+      "y": 19,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -41,9 +41,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZUBAT)",
-      "x": 0,
-      "y": 1,
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SENTRET)",
+      "x": 1,
+      "y": 5,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -52,21 +52,47 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 7,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_ROCK_1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 7,
+      "y": 7,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_ROCK_1"
     }
   ],
   "warp_events": [
     {
-      "x": 4,
-      "y": 10,
+      "x": 13,
+      "y": 5,
       "elevation": 0,
-      "dest_map": "MAP_OLDALE_FIELD",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_OLDALE_TOWN_OLD_TUNEL",
+      "dest_warp_id": "1"
     },
     {
-      "x": 4,
-      "y": 2,
+      "x": 6,
+      "y": 1,
       "elevation": 0,
-      "dest_map": "MAP_OLDALE_TOWN_OLD_TUNEL_2",
+      "dest_map": "MAP_OLDALE_TOWN_OLD_TUNEL_3",
       "dest_warp_id": "0"
     }
   ],
