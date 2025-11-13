@@ -78,7 +78,7 @@
 #define FLAG_HIDE_WALLY_CLONE    0x41 
 #define FLAG_HIDE_PIDGEOT_CLONE     0x42 
 #define FLAG_RECEIVED_SHINY_LARVITAR    0x43 
-#define FLAG_UNUSED_0x044    0x44 // Unused Flag
+#define B_FLAG_NO_BAG_USE     0x44 // Unused Flag
 #define FLAG_UNUSED_0x045    0x45 // Unused Flag
 #define FLAG_UNUSED_0x046    0x46 // Unused Flag
 #define FLAG_UNUSED_0x047    0x47 // Unused Flag
