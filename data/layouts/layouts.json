@@ -4530,6 +4530,26 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/OldaleTown_OldTunel_3/border.bin",
       "blockdata_filepath": "data/layouts/OldaleTown_OldTunel_3/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE115_2",
+      "name": "Route115_2_Layout",
+      "width": 26,
+      "height": 26,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/Route115_2/border.bin",
+      "blockdata_filepath": "data/layouts/Route115_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE115_LONELY_CAVE",
+      "name": "Route115_lonely_cave_Layout",
+      "width": 17,
+      "height": 12,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/Route115_lonely_cave/border.bin",
+      "blockdata_filepath": "data/layouts/Route115_lonely_cave/map.bin"
     }
   ]
 }
