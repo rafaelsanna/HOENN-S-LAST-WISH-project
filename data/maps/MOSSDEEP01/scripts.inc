@@ -431,6 +431,15 @@ MOSSDEEP01_EventScript_Torchic::
 	release
 	end
 
+MOSSDEEP01_EventScript_WINGULL::
+	lock
+	faceplayer
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+
 // ====================================================================
 // WALLY NPC - SIMPLIFIED
 // ====================================================================

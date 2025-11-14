@@ -601,7 +601,29 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex::
 	special SetUnlockedPokedexFlags
 	setflag FLAG_RECEIVED_POKEDEX_FROM_BIRCH
 	setvar VAR_CABLE_CLUB_TUTORIAL_STATE, 1
+	call DifficultySelection_Event
 	return
+
+/// ========================================
+//// SCRIPT DE SELEÇÃO DE DIFICULDADE
+/// ========================================
+
+DifficultySelection_Event::
+	msgbox DifficultySelection_Text_AskHardMode, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq DifficultySelection_Hard
+	goto DifficultySelection_Normal
+
+DifficultySelection_Hard::
+	setvar 0x404E, 1
+	msgbox DifficultySelection_Text_HardModeSelected, MSGBOX_DEFAULT
+	return
+
+DifficultySelection_Normal::
+	setvar 0x404E, 0
+	return
+
+///////////////////////=====/////////////////
 
 LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait, MSGBOX_DEFAULT
@@ -1086,4 +1108,15 @@ LittlerootTown_ProfessorBirchsLab_Text_UseInfiniteCandyWisely:
 	.string "wisely! Remember that natural growth\l"
 	.string "is also important for your POKéMON\l"
 	.string "to develop strong bonds.$"
+
+///DifficultySelection////
+
+DifficultySelection_Text_AskHardMode:
+	.string "PROF. BIRCH: Do you want to play on\n"
+	.string "HARD mode where trainers are\l"
+	.string "optimized for competitive battle?$"
+
+DifficultySelection_Text_HardModeSelected:
+	.string "PROF. BIRCH: Hard mode selected!\n"
+	.string "Good luck - you'll need it!$"
 

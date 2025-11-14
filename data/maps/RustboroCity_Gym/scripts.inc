@@ -2,7 +2,22 @@ RustboroCity_Gym_MapScripts::
 	.byte 0
 
 RustboroCity_Gym_EventScript_Roxanne::
+	lock
+	faceplayer
+	@ === VERIFICAÇÃO MANUAL DA DIFICULDADE ===
+	checkvar 0x404E
+	compare VAR_RESULT, 1
+	goto_if_eq RustboroCity_Gym_RoxanneHard
+	
+	@ Modo Normal - TRAINER_ROXANNE (3 Eevee)
+	trainerbattle_single TRAINER_ROXANNE, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	goto RustboroCity_Gym_AfterBattle
+
+RustboroCity_Gym_RoxanneHard::
+	@ Modo Hard - TRAINER_ROXANNE_1 (3 Pikachu)
 	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+
+RustboroCity_Gym_AfterBattle::
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
 	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
@@ -57,6 +72,24 @@ RustboroCity_Gym_EventScript_GymGuide::
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_RUSTBORO_GYM, RustboroCity_Gym_EventScript_GymGuidePostVictory
+	
+	@ === PERGUNTA DE DIFICULDADE ===
+	msgbox RustboroCity_Gym_Text_AskDifficulty, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq RustboroCity_Gym_HardMode
+	goto RustboroCity_Gym_NormalMode
+
+RustboroCity_Gym_HardMode::
+	setvar 0x404E, 1
+	msgbox RustboroCity_Gym_Text_HardSelected, MSGBOX_DEFAULT
+	goto RustboroCity_Gym_EventScript_GymGuideAdvice
+
+RustboroCity_Gym_NormalMode::
+	setvar 0x404E, 0
+	msgbox RustboroCity_Gym_Text_NormalSelected, MSGBOX_DEFAULT
+	goto RustboroCity_Gym_EventScript_GymGuideAdvice
+
+RustboroCity_Gym_EventScript_GymGuideAdvice::
 	msgbox RustboroCity_Gym_Text_GymGuideAdvice, MSGBOX_DEFAULT
 	release
 	end
@@ -281,3 +314,18 @@ RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
 	.string "You only have one POKéMON with you?\p"
 	.string "Please return with at least one more\n"
 	.string "POKéMON.$"
+
+RustboroCity_Gym_Text_AskDifficulty:
+	.string "GYM GUIDE: Before you challenge\n"
+	.string "ROXANNE, I can adjust the difficulty!\p"
+	.string "Play on HARD mode where trainers\n"
+	.string "have optimized teams?$"
+
+RustboroCity_Gym_Text_HardSelected:
+	.string "GYM GUIDE: Hard mode selected!\n"
+	.string "ROXANNE will have 3 PIKACHU!$"
+
+RustboroCity_Gym_Text_NormalSelected:
+	.string "GYM GUIDE: Normal mode selected!\n"
+	.string "ROXANNE will have 3 EEVEE!$"
+

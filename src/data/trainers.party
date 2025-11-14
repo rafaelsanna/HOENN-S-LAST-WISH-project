@@ -4804,6 +4804,34 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 - Crunch
 
+=== TRAINER_ROXANNE ===
+Name: ROXANNE
+Class: Leader
+Pic: Leader Roxanne
+Gender: Female
+Music: Female
+Items: Potion / Potion
+Double Battle: No
+AI: Basic Trainer
+
+Eevee @ Oran Berry
+Level: 14
+- Tackle
+- Tail Whip
+- Quick Attack
+
+Eevee @ Oran Berry  
+Level: 14
+- Tackle
+- Tail Whip
+- Sand Attack
+
+Eevee @ Sitrus Berry
+Level: 15
+- Tackle
+- Growl
+- Swift
+
 === TRAINER_ROXANNE_1 ===
 Name: ROXANNE
 Class: Leader
@@ -4814,32 +4842,23 @@ Items: Potion / Potion
 Double Battle: No
 AI: Basic Trainer
 
-Lileep @ Focus Band  
-Ability: Storm Drain 
+Pikachu @ Focus Band
 Level: 14
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe  
-- Mega Drain  
-- Stealth Rock  
-- Ancient Power  
-- Recover 
+- Thunderbolt
+- Quick Attack
+- Double Team
 
-Gligar @ Salac Berry  
-Ability: Hyper Cutter  
+Pikachu @ Light Ball
 Level: 14  
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe 
-- Wing Attack  
-- Spikes  
-- Bulldoze  
-- Rock Tomb
+- Volt Tackle
+- Iron Tail
+- Thunder Wave
 
-Nosepass @ Sitrus Berry  
-Ability: Sturdy  
-Level: 15  
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
-- Psybeam  
-- Ancient Power  
-- Calm Mind  
-- Shock Wave
+Pikachu @ Sitrus Berry
+Level: 15
+- Thunder
+- Brick Break
+- Surf
 
 === TRAINER_BRAWLY_1 ===
 Name: BRAWLY
