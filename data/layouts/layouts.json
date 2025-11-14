@@ -4424,8 +4424,8 @@
     {
       "id": "LAYOUT_MOSSDEEP01",
       "name": "MOSSDEEP01_Layout",
-      "width": 81,
-      "height": 81,
+      "width": 82,
+      "height": 82,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mossdeep",
       "border_filepath": "data/layouts/MOSSDEEP01/border.bin",

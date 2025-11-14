@@ -350,7 +350,7 @@ MOSSDEEP01_EventScript_MightyenaZone::
 	setflag FLAG_WALLY_ATTACKED_BY_MIGHTYENA
 	
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
-	warp MAP_MOSSDEEP01, 11, 71
+	warp MAP_MOSSDEEP01, 14, 67
 	waitstate
 	releaseall
 	end
