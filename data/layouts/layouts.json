@@ -4414,10 +4414,10 @@
     {
       "id": "LAYOUT_LITTLEROOT_TOWN_01",
       "name": "LITTLEROOT_TOWN_01_Layout",
-      "width": 39,
-      "height": 35,
+      "width": 20,
+      "height": 20,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_MeteorFalls",
+      "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/LITTLEROOT_TOWN_01/border.bin",
       "blockdata_filepath": "data/layouts/LITTLEROOT_TOWN_01/map.bin"
     },
