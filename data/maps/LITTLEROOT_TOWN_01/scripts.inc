@@ -420,7 +420,7 @@ LittlerootTown_01_Stay::
 	delay 60
 	
 	// === WARP TO MOSSDEEP01 (INSIDE TENT) ===
-	warp MAP_MOSSDEEP01, 11, 64
+	warp MAP_MOSSDEEP01, 14, 64
 	waitstate
 	
 	// Continue black (still sleeping)
