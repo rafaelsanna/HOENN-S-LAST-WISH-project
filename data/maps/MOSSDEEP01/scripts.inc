@@ -394,6 +394,13 @@ MOSSDEEP01_EventScript_MightyenaFriendly::
 	releaseall
 	end
 
+MOSSDEEP01_EventScript_MightyenaBusy::
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaFriendly
+	delay 20
+	releaseall
+	end
+
 // ====================================================================
 // POKEMON NPC INTERACTIONS
 // ====================================================================
@@ -817,6 +824,21 @@ MOSSDEEP01_Movement_CrossWailordUp:
 	walk_up
 	walk_up  
 	step_end	
+
+MOSSDEEP01_EventScript_BattleBlocksPath::
+    lockall
+    msgbox MOSSDEEP01_Text_BattleBlocksPath, MSGBOX_DEFAULT
+    closemessage
+    applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkUp
+    waitmovement 0
+    releaseall
+    end
+
+MOSSDEEP01_EventScript_BattlePathClear::
+    // Path is clear, do nothing
+    end
+
+
 
 // ====================================================================
 // JIRACHI WAKE EVENT - TRIGGER BASED
@@ -1466,6 +1488,13 @@ MOSSDEEP01_Text_WailordIdle:
 
 MOSSDEEP01_Text_WailmerIdle:
     .string "The WAILMER are splashing playfully!$"
+
+MOSSDEEP01_Text_BattleBlocksPath:
+    .string "There's a battle going on!\p"
+    .string "Solve what you need quickly...$"	
+
+MOSSDEEP01_Text_BattlePathClear:
+	.string "...$"
 
 MOSSDEEP01_Text_CelebiCallsWailord:
     .string "CELEBI calls out to the ocean!\p"

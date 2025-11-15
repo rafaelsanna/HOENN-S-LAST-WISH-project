@@ -10,7 +10,7 @@
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
-  "show_map_name": true,
+  "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
   "object_events": [
@@ -270,19 +270,6 @@
       "flag": "FLAG_HIDE_WAILORD_PATH"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
-      "x": 20,
-      "y": 68,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)",
       "x": 46,
       "y": 49,
@@ -339,12 +326,12 @@
       "x": 46,
       "y": 48,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WANDER_RIGHT_AND_LEFT",
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "MOSSDEEP01_EventScript_WallyNotReady::",
       "flag": "FLAG_HIDE_WALLY_CLONE"
     },
     {
@@ -370,8 +357,8 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_Mightyena",
-      "flag": "0"
+      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)",
@@ -383,8 +370,8 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_Mightyena",
-      "flag": "0"
+      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)",
@@ -396,8 +383,8 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_Mightyena",
-      "flag": "0"
+      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(BULBASAUR)",
@@ -422,8 +409,8 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_Mightyena",
-      "flag": "0"
+      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(TOTODILE)",
@@ -452,61 +439,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
-      "x": 27,
-      "y": 68,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
-      "x": 23,
-      "y": 65,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
       "x": 10,
       "y": 67,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
-      "x": 17,
-      "y": 65,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
-      "x": 10,
-      "y": 61,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -576,19 +511,6 @@
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(AZELF)",
-      "x": 41,
-      "y": 23,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-      "movement_range_x": 4,
-      "movement_range_y": 4,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
@@ -708,7 +630,7 @@
     {
       "type": "trigger",
       "x": 33,
-      "y": 21,
+      "y": 22,
       "elevation": 0,
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "1",
@@ -717,7 +639,7 @@
     {
       "type": "trigger",
       "x": 32,
-      "y": 21,
+      "y": 22,
       "elevation": 0,
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "1",
@@ -725,7 +647,7 @@
     },
     {
       "type": "trigger",
-      "x": 33,
+      "x": 36,
       "y": 20,
       "elevation": 0,
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
@@ -734,26 +656,26 @@
     },
     {
       "type": "trigger",
-      "x": 32,
+      "x": 37,
+      "y": 21,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 36,
+      "y": 21,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 37,
       "y": 20,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 32,
-      "y": 19,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 33,
-      "y": 19,
       "elevation": 0,
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "1",
@@ -776,6 +698,24 @@
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "1",
       "script": "MOSSDEEP01_EventScript_WailordJumpOver"
+    },
+    {
+      "type": "trigger",
+      "x": 48,
+      "y": 48,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_BattlePathClear"
+    },
+    {
+      "type": "trigger",
+      "x": 48,
+      "y": 48,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_BattleBlocksPath"
     }
   ],
   "bg_events": [],
