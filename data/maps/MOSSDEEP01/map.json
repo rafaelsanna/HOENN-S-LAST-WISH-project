@@ -270,7 +270,6 @@
       "flag": "FLAG_HIDE_WAILORD_PATH"
     },
     {
-<<<<<<< HEAD
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
       "x": 20,
       "y": 68,
@@ -284,8 +283,6 @@
       "flag": "0"
     },
     {
-=======
->>>>>>> b1ae5e980b131a4232d75eeef1fed39797622c4c
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)",
       "x": 46,
       "y": 49,
@@ -456,13 +453,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
-<<<<<<< HEAD
       "x": 27,
       "y": 68,
-=======
-      "x": 22,
-      "y": 67,
->>>>>>> b1ae5e980b131a4232d75eeef1fed39797622c4c
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -473,13 +465,8 @@
       "flag": "0"
     },
     {
-<<<<<<< HEAD
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
       "x": 23,
-=======
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
-      "x": 14,
->>>>>>> b1ae5e980b131a4232d75eeef1fed39797622c4c
       "y": 65,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -491,7 +478,6 @@
       "flag": "0"
     },
     {
-<<<<<<< HEAD
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
       "x": 10,
       "y": 67,
@@ -531,8 +517,6 @@
       "flag": "0"
     },
     {
-=======
->>>>>>> b1ae5e980b131a4232d75eeef1fed39797622c4c
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 40,
       "y": 54,
@@ -560,7 +544,6 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
-<<<<<<< HEAD
       "x": 61,
       "y": 26,
       "elevation": 0,
@@ -576,10 +559,6 @@
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 62,
       "y": 55,
-=======
-      "x": 69,
-      "y": 59,
->>>>>>> b1ae5e980b131a4232d75eeef1fed39797622c4c
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 0,
@@ -601,7 +580,6 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
       "flag": "0"
-<<<<<<< HEAD
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(AZELF)",
@@ -615,8 +593,6 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
       "flag": "0"
-=======
->>>>>>> b1ae5e980b131a4232d75eeef1fed39797622c4c
     }
   ],
   "warp_events": [],

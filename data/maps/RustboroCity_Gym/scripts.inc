@@ -5,8 +5,8 @@ RustboroCity_Gym_EventScript_Roxanne::
 	lock
 	faceplayer
 	@ === VERIFICAÇÃO MANUAL DA DIFICULDADE ===
-	checkvar 0x404E
-	compare VAR_RESULT, 1
+	copyvar VAR_0x8000, 0x404E
+	compare VAR_0x8000, 1
 	goto_if_eq RustboroCity_Gym_RoxanneHard
 	
 	@ Modo Normal - TRAINER_ROXANNE (3 Eevee)
@@ -24,7 +24,7 @@ RustboroCity_Gym_AfterBattle::
 	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
 	release
 	end
-
+	
 RustboroCity_Gym_EventScript_RoxanneDefeated::
 	message RustboroCity_Gym_Text_ReceivedStoneBadge
 	waitmessage
