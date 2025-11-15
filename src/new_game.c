@@ -252,7 +252,7 @@ void NewGameInitData(void)
     SetWarpDestination(MAP_GROUP(MAP_LITTLEROOT_TOWN_01), 
                        MAP_NUM(MAP_LITTLEROOT_TOWN_01), 
                        WARP_ID_NONE, 
-                       10, 12);
+                       2, 3);
     WarpIntoMap();
     
     // Execute map reset script

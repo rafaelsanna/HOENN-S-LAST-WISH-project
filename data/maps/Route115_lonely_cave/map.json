@@ -6,7 +6,7 @@
   "region_map_section": "MAPSEC_ROUTE_115",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
-  "map_type": "MAP_TYPE_NONE",
+  "map_type": "MAP_TYPE_UNDERGROUND",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
@@ -15,6 +15,13 @@
   "connections": null,
   "object_events": [],
   "warp_events": [
+    {
+      "x": 7,
+      "y": 10,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE115_2",
+      "dest_warp_id": "0"
+    },
     {
       "x": 7,
       "y": 11,
