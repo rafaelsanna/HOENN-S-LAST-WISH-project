@@ -2928,7 +2928,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PichuSpikyEared,
         .shinyPalette = gMonShinyPalette_PichuSpikyEared,
         .iconSprite = gMonIcon_PichuSpikyEared,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_PichuSpikyEared,
+        .shinyIconPalette = gMonShinyIconPalette_PichuSpikyEared,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(2, 0, SHADOW_SIZE_S)
         FOOTPRINT(Pichu)
@@ -3141,7 +3142,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuRockStar,
         .shinyPalette = gMonShinyPalette_PikachuRockStar,
         .iconSprite = gMonIcon_PikachuRockStar,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_PikachuRockStar,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuRockStar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3194,7 +3196,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuBelle,
         .shinyPalette = gMonShinyPalette_PikachuBelle,
         .iconSprite = gMonIcon_PikachuBelle,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuBelle,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuBelle,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3247,7 +3250,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuPopStar,
         .shinyPalette = gMonShinyPalette_PikachuPopStar,
         .iconSprite = gMonIcon_PikachuPopStar,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuPopStar,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuPopStar,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3299,7 +3303,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuPhD,
         .shinyPalette = gMonShinyPalette_PikachuPhD,
         .iconSprite = gMonIcon_PikachuPhD,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_PikachuPhD,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuPhD,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3351,7 +3356,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuLibre,
         .shinyPalette = gMonShinyPalette_PikachuLibre,
         .iconSprite = gMonIcon_PikachuLibre,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuLibre,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuLibre,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3411,7 +3417,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuOriginal,
         .shinyPalette = gMonShinyPalette_PikachuOriginal,
         .iconSprite = gMonIcon_PikachuOriginal,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuOriginal,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuOriginal,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3467,7 +3474,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuHoenn,
         .shinyPalette = gMonShinyPalette_PikachuHoenn,
         .iconSprite = gMonIcon_PikachuHoenn,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuHoenn,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuHoenn,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3523,7 +3531,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuSinnoh,
         .shinyPalette = gMonShinyPalette_PikachuSinnoh,
         .iconSprite = gMonIcon_PikachuSinnoh,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuSinnoh,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuSinnoh,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3579,7 +3588,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuUnova,
         .shinyPalette = gMonShinyPalette_PikachuUnova,
         .iconSprite = gMonIcon_PikachuUnova,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuUnova,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuUnova,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3635,7 +3645,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuKalos,
         .shinyPalette = gMonShinyPalette_PikachuKalos,
         .iconSprite = gMonIcon_PikachuKalos,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuKalos,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuKalos,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3691,7 +3702,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuAlola,
         .shinyPalette = gMonShinyPalette_PikachuAlola,
         .iconSprite = gMonIcon_PikachuAlola,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuAlola,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuAlola,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3748,7 +3760,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuPartner,
         .shinyPalette = gMonShinyPalette_PikachuPartner,
         .iconSprite = gMonIcon_PikachuPartner,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuPartner,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuPartner,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
@@ -3804,7 +3817,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_PikachuWorld,
         .shinyPalette = gMonShinyPalette_PikachuWorld,
         .iconSprite = gMonIcon_PikachuWorld,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_PikachuWorld,
+        .shinyIconPalette = gMonShinyIconPalette_PikachuWorld,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
