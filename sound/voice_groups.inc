@@ -5,6 +5,7 @@
 .include "sound/voicegroups/drumsets/frlg.inc"
 .include "sound/voicegroups/drumsets/emerald_1.inc"
 .include "sound/voicegroups/drumsets/emerald_2.inc"
+.include "sound/voicegroups/drumsets/custom_drum.inc"
 
 @ key splits
 .include "sound/voicegroups/keysplits/piano.inc"
