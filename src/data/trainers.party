@@ -4818,14 +4818,14 @@ Ability: Suction Cups
 Level: 13  
 - Astonish  
 - Constrict  
-- Acid  
+- Rock Tomb  
 - Ingrain  
 
 Corsola  
 Ability: Natural Cure  
 Level: 14
-- Tackle  
-- Bubble  
+- Rock Tomb  
+- Water Gun  
 - Harden  
 - Refresh  
 
@@ -6056,11 +6056,7 @@ Geodude
 Level: 13
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Sentret
-Level: 13
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-
-Aron
+Rhyhorn
 Level: 13
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -6074,12 +6070,12 @@ Double Battle: No
 AI: Check Bad Move
 
 Geodude
-Level: 12
-IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 13 Spe
-
-Sentret
 Level: 13
-IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Aron
+Level: 13
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_JOEY ===
 Name: JOEY
