@@ -17,8 +17,8 @@
     {
       "local_id": "OBJ_EVENT_GFX_JIRACHI",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(JIRACHI)",
-      "x": 10,
-      "y": 11,
+      "x": 2,
+      "y": 2,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_RUN_IN_PLACE_DOWN",
       "movement_range_x": 1,
@@ -31,8 +31,8 @@
     {
       "local_id": "OBJ_EVENT_GFX_CELEBI",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CELEBI)",
-      "x": 8,
-      "y": 11,
+      "x": 3,
+      "y": 4,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 3,
