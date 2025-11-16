@@ -2,7 +2,7 @@
   "id": "MAP_LITTLEROOT_TOWN_01",
   "name": "LITTLEROOT_TOWN_01",
   "layout": "LAYOUT_LITTLEROOT_TOWN_01",
-  "music": "MUS_ABANDONED_SHIP",
+  "music": "MUS_RG_TITLE",
   "region_map_section": "MAPSEC_LITTLEROOT_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

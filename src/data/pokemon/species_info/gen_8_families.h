@@ -4169,7 +4169,7 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         OVERWORLD(
             sPicTable_Polteageist,
             SIZE_32x32,
-            SHADOW_SIZE_M,
+            SHADOW_SIZE_NONE,
             TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Polteageist,

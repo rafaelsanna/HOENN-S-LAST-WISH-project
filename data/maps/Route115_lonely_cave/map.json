@@ -21,13 +21,6 @@
       "elevation": 0,
       "dest_map": "MAP_ROUTE115_2",
       "dest_warp_id": "0"
-    },
-    {
-      "x": 7,
-      "y": 11,
-      "elevation": 0,
-      "dest_map": "MAP_ROUTE115_2",
-      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],
