@@ -315,6 +315,22 @@ PetalburgWoods_EventScript_JamesRematch::
 	msgbox PetalburgWoods_Text_IveBeenTrainingHard, MSGBOX_AUTOCLOSE
 	end
 
+PetalburgWoods_EventScript_WURMPLEpw::
+	lock
+	faceplayer
+	playmoncry SPECIES_WURMPLE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+PetalburgWoods_EventScript_SHROOMISHpw::
+	lock
+	faceplayer
+	playmoncry SPECIES_SHROOMISH, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 PetalburgWoods_Text_NotAOneToBeFound:
 	.string "Hmmm…\n"
 	.string "Not a one to be found…$"

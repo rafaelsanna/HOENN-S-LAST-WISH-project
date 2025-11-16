@@ -73,6 +73,22 @@ Route102_EventScript_Allen::
 	msgbox Route102_Text_AllenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route102_EventScript_SURSKIT102::
+	lock
+	faceplayer
+	playmoncry SPECIES_SURSKIT, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+Route102_EventScript_ZIGZAGOON102::
+	lock
+	faceplayer
+	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 Route102_Text_WatchMeCatchPokemon:
 	.string "WALLY: {PLAYER}…\n"
 	.string "POKéMON hide in tall grass like this,\l"

@@ -15,10 +15,20 @@ OldaleField_EventScript_Sentret_Girl::
 	release
 	end
 
+OldaleField_EventScript_SentretOT::
+	lock
+	faceplayer
+	playmoncry SPECIES_SENTRET, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 OldaleField_Text_Abra_Man:
 	.string "I was looking for rare POKéMON!\n"
-	.string "I explored this dark cave to the fullest!\p"
-	.string "I found this Abra, which doesn't even have an attack.\n"
+	.string "I explored this dark cave to the\l"
+	.string "fullest!\p"
+	.string "I found this Abra, which doesn't\n"
+	.string "even have an attack.\p"
 	.string "What am I going to do with this now?$"
 
 OldaleField_Text_Sentret_Girl:

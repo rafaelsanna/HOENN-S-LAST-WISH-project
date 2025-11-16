@@ -152,7 +152,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route102_EventScript_ZIGZAGOON102",
       "flag": "0"
     },
     {
@@ -165,7 +165,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route102_EventScript_SURSKIT102",
       "flag": "0"
     }
   ],

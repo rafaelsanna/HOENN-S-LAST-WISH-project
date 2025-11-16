@@ -994,6 +994,31 @@ Route104_EventScript_Darian::
 	msgbox Route104_Text_DarianPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route104_EventScript_MARILL104::
+	lock
+	faceplayer
+	playmoncry SPECIES_MARILL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+Route104_EventScript_PIDGEY104::
+	lock
+	faceplayer
+	playmoncry SPECIES_PIDGEY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+Route104_EventScript_ODDISH104::
+	lock
+	faceplayer
+	playmoncry SPECIES_ODDISH, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+
 Route104_Text_BrineyLivesInSeasideCottage:
 	.string "That seaside cottage is where\n"
 	.string "MR. BRINEY lives.\p"
