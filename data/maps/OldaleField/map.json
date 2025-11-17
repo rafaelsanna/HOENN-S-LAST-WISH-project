@@ -17,13 +17,18 @@
       "map": "MAP_OLDALE_TOWN",
       "offset": 0,
       "direction": "left"
+    },
+    {
+      "map": "MAP_ROUTE103",
+      "offset": -20,
+      "direction": "up"
     }
   ],
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_3",
-      "x": 15,
-      "y": 13,
+      "x": 14,
+      "y": 14,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -35,8 +40,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 10,
-      "y": 3,
+      "x": 6,
+      "y": 13,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -48,7 +53,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(SENTRET)",
-      "x": 9,
+      "x": 12,
       "y": 16,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
@@ -61,8 +66,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ABRA)",
-      "x": 9,
-      "y": 3,
+      "x": 5,
+      "y": 13,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -75,8 +80,8 @@
   ],
   "warp_events": [
     {
-      "x": 9,
-      "y": 6,
+      "x": 11,
+      "y": 7,
       "elevation": 0,
       "dest_map": "MAP_OLDALE_TOWN_OLD_TUNEL",
       "dest_warp_id": "0"

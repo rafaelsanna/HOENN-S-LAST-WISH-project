@@ -22,6 +22,11 @@
       "map": "MAP_ROUTE110",
       "offset": -60,
       "direction": "right"
+    },
+    {
+      "map": "MAP_OLDALE_FIELD",
+      "offset": 20,
+      "direction": "down"
     }
   ],
   "object_events": [
