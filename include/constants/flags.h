@@ -78,11 +78,11 @@
 #define FLAG_HIDE_WALLY_CLONE    0x41 
 #define FLAG_HIDE_PIDGEOT_CLONE     0x42 
 #define FLAG_RECEIVED_SHINY_LARVITAR    0x43 
-#define B_FLAG_NO_BAG_USE     0x44 // Unused Flag
-#define I_EXP_SHARE_FLAG     0x45 // Unused Flag
-#define P_FLAG_FORCE_SHINY      0x46 // Unused Flag
-#define P_FLAG_FORCE_NO_SHINY    0x47 // Unused Flag
-#define FLAG_UNUSED_0x048    0x48 // Unused Flag
+#define B_FLAG_NO_BAG_USE     0x44 
+#define I_EXP_SHARE_FLAG     0x45 
+#define P_FLAG_FORCE_SHINY      0x46
+#define P_FLAG_FORCE_NO_SHINY    0x47 
+#define FLAG_LEVELCAP9_AQUA_GRUNT_DEFEATED    0x48
 #define FLAG_UNUSED_0x049    0x49 // Unused Flag
 #define FLAG_UNUSED_0x04A    0x4A // Unused Flag
 #define FLAG_UNUSED_0x04B    0x4B // Unused Flag

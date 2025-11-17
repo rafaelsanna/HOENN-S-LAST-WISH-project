@@ -23,6 +23,14 @@ OldaleField_EventScript_SentretOT::
 	release
 	end
 
+OldaleField_EventScript_AbraOT::
+	lock
+	faceplayer
+	playmoncry SPECIES_ABRA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 OldaleField_Text_Abra_Man:
 	.string "I was looking for rare POKéMON!\n"
 	.string "I explored this dark cave to the\l"

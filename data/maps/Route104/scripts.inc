@@ -1010,6 +1010,14 @@ Route104_EventScript_PIDGEY104::
 	release
 	end
 
+Route104_EventScript_LOTAD104::
+	lock
+	faceplayer
+	playmoncry SPECIES_LOTAD, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 Route104_EventScript_ODDISH104::
 	lock
 	faceplayer
