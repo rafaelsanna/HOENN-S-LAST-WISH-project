@@ -964,16 +964,19 @@ LittlerootTown_Text_ComeHomeIfAnythingHappens:
 	.string "Go on, go get them, honey!$"
 
 LittlerootTown_Text_CanUsePCToStoreItems:
-	.string "If you use a PC, you can store items\n"
-	.string "and POKéMON.\p"
-	.string "The power of science is staggering!$"
+	.string "Whoa, what's with that outfit?\n"
+	.string "Is it Halloween already?\p"
+	.string "You look like you stepped out of\n"
+	.string "a book or something! Hahaha!$"
 
 LittlerootTown_Text_BirchSpendsDaysInLab:
-	.string "PROF. BIRCH spends days in his LAB\n"
-	.string "studying, then he'll suddenly go out in\l"
-	.string "the wild to do more research…\p"
-	.string "When does PROF. BIRCH spend time\n"
-	.string "at home?$"
+	.string "I saw a really weird meteor streak\n"
+	.string "across the sky last night.\p"
+	.string "It turned the whole sky dark for a\n"
+	.string "moment... it was so strange.\p"
+	.string "People say it only appears once every\n"
+	.string "thousand years.\p"
+	.string "Gave me chills just thinking about it.$"
 
 LittlerootTown_Text_IfYouGoInGrassPokemonWillJumpOut:
 	.string "Um, um, um!\p"

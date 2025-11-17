@@ -340,8 +340,12 @@ OldaleTown_Movement_ReturnToOriginalPosition:
 	step_end
 
 OldaleTown_Text_SavingMyProgress:
-	.string "I want to take a rest, so I'm saving my\n"
-	.string "progress.$"
+	.string "You look familiar, but also kind of\n"
+	.string "strange... I can't explain it.\p"
+	.string "Lately everything has felt a little off.\n"
+	.string "Even this town feels different.\p"
+	.string "It's like something changed after last\n"
+	.string "night... really strange.$"
 
 OldaleTown_Text_IWorkAtPokemonMart:
 	.string "Hi!\n"
@@ -370,16 +374,20 @@ OldaleTown_Text_WaitDontComeInHere:
 	.string "them, okay?$"
 
 OldaleTown_Text_DiscoveredFootprints:
-	.string "I just discovered the footprints of\n"
-	.string "a rare POKéMON!\p"
-	.string "Wait until I finish sketching\n"
-	.string "them, okay?$"
+	.string "Hey, hold it right there!\n"
+	.string "I've never seen anyone dressed like\n"
+	.string "that before.\p"
+	.string "A cape? That weird outfit?\n"
+	.string "What are you supposed to be?\p"
+	.string "I'm not letting you pass until I'm sure\n"
+	.string "you're not trouble.$"
 
 OldaleTown_Text_FinishedSketchingFootprints:
-	.string "I finished sketching the footprints of\n"
-	.string "a rare POKéMON.\p"
-	.string "But it turns out they were only my\n"
-	.string "own footprints…$"
+	.string "Well... I guess since you have POKEMON\n"
+	.string "and I don't, I can't really stop you\n"
+	.string "for long.\p"
+	.string "You can go, but I'm still keeping an\n"
+	.string "eye on you...$"
 
 OldaleTown_Text_MayLetsGoBack:
 	.string "MAY: {PLAYER}{KUN}!\n"

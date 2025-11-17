@@ -38,25 +38,30 @@ OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable::
 	end
 
 OldaleTown_PokemonCenter_1F_Text_TrainersCanUsePC:
-	.string "That PC in the corner there is\n"
-	.string "for any POKéMON TRAINER to use.\p"
-	.string "Naturally, that means you're welcome\n"
-	.string "to use it, too.$"
+    .string "Did you see the sky last night?\n"
+    .string "That comet lit everything up like day.\p"
+    .string "People say it only appears once every\n"
+    .string "thousand years.\p"
+    .string "Makes you wonder what it means...$"
 
 OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat:
-	.string "POKéMON CENTERS are great!\p"
-	.string "You can use their services as much\n"
-	.string "as you like, and it's all for free.\l"
-	.string "You never have to worry!$"
+    .string "I swear something feels off today.\p"
+    .string "Ever since that bright streak crossed\n"
+    .string "the sky, the town feels different.\p"
+    .string "Like the world shifted just a little.$"
 
 OldaleTown_PokemonCenter_1F_Text_WirelessClubNotAvailable:
-	.string "The POKéMON WIRELESS CLUB on\n"
-	.string "the second floor was built recently.\p"
-	.string "But they say they're still making\n"
-	.string "adjustments.$"
+    .string "Everyone keeps talking about the\n"
+    .string "Millennium Comet.\p"
+    .string "Some people said they made a wish\n"
+    .string "when it passed.\p"
+    .string "If the stories are true... maybe their\n"
+    .string "lives really will change.$"
 
 OldaleTown_PokemonCenter_1F_Text_TradedInWirelessClub:
-	.string "The POKéMON WIRELESS CLUB on\n"
-	.string "the second floor was built recently.\p"
-	.string "I traded POKéMON right away.$"
+    .string "Hey, your outfit is... something.\n"
+    .string "A cape? Layers like that?\p"
+    .string "Guess fashion is getting wild lately.\n"
+    .string "Or maybe the comet messed with more\n"
+    .string "than just the sky.$"
 
