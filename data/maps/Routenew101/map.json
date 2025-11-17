@@ -15,15 +15,15 @@
   "connections": [
     {
       "map": "MAP_ROUTE101",
-      "offset": -2,
+      "offset": 0,
       "direction": "left"
     }
   ],
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZIGZAGOON)",
-      "x": 6,
-      "y": 7,
+      "x": 14,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 3,
