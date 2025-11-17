@@ -1020,34 +1020,48 @@ Route104_EventScript_ODDISH104::
 
 
 Route104_Text_BrineyLivesInSeasideCottage:
-	.string "That seaside cottage is where\n"
-	.string "MR. BRINEY lives.\p"
+	.string "That old sailor lives in the\n"
+	.string "seaside cottage.\p"
 	.string "He was once a mighty sailor who never\n"
-	.string "feared the sea, however stormy.$"
+	.string "feared the sea, however stormy.\p"
+	.string "Though lately, the sea has grown\n"
+	.string "strangely more dangerous.\p"
+	.string "Legends say ships were swallowed\n"
+	.string "whole by the storms.$"
 
 Route104_Text_WhatsItLikeAtBottomOfSea:
 	.string "The sea, huh?\p"
 	.string "I wonder what it's like at the bottom\n"
-	.string "of the sea?$"
+	.string "of the sea?\p"
+	.string "They say there are huge monsters\n"
+	.string "and dangerous sea creatures down there.\p"
+	.string "So scary…$"
 
 Route104_Text_ThrowBallAtWeakenedPokemon:
 	.string "If you're going to throw a POKé BALL,\n"
 	.string "weaken the wild POKéMON first.\p"
 	.string "It will be easier to catch if it's been\n"
-	.string "poisoned, burned, or lulled to sleep.$"
+	.string "poisoned, burned, or lulled to sleep.\p"
+	.string "Once I tried to catch a SENTRET, and\n"
+	.string "it grabbed the POKé BALL and threw it\l"
+	.string "right back at me with full force!\p"
+	.string "Those SENTRET may look cute,\n"
+	.string "but they're feisty little fighters…$"
 
 Route104_Text_OnlyThrowBallAtWildPokemon:
-	.string "You're a thief if you try to steal\n"
-	.string "someone else's POKéMON.\p"
-	.string "You should throw POKé BALLS only at\n"
-	.string "wild POKéMON.$"
+	.string "Imagine a world without POKé BALLS…\n"
+	.string "It would be terrible, wouldn't it?\p"
+	.string "We couldn't train POKéMON properly.\n"
+	.string "What would we even do?\p"
+	.string "Thank goodness they exist…$"
 
 Route104_Text_ImNotATrainer:
 	.string "Oh, no, I'm not a TRAINER.\p"
-	.string "But that's right, if TRAINERS lock eyes,\n"
-	.string "it's a challenge to battle.\p"
-	.string "If you don't want to battle, stay out\n"
-	.string "of their sight.$"
+	.string "I prefer observing POKéMON behavior\n"
+	.string "in their natural habitat.\p"
+	.string "Lately, I've noticed the wild POKéMON\n"
+	.string "acting strangely… more aggressive.\p"
+	.string "Something feels different in the air.$"
 
 Route104_Text_LikeFillingMouthWithSeedsTakeThis:
 	.string "I like filling my mouth with seeds,\n"
@@ -1058,10 +1072,12 @@ Route104_Text_LikeFillingMouthWithSeedsTakeThis:
 
 Route104_Text_TMsAreOneTimeUse:
 	.string "A word of advice!\p"
-	.string "A TM, TECHNICAL MACHINE, is good only\n"
-	.string "for one-time use.\p"
-	.string "Once you use it, it's gone.\n"
-	.string "Think twice before using it!$"
+	.string "Back in the old days, TMs could only\n"
+	.string "be used once. You had to be really\l"
+	.string "careful about when to use them!\p"
+	.string "Thankfully, technology has advanced\n"
+	.string "and now TMs can be used repeatedly!\p"
+	.string "Thank you, technology!$"
 
 Route104_Text_DontNeedThisTakeIt:
 	.string "This FLOWER SHOP started selling\n"
@@ -1092,15 +1108,15 @@ Route104_Text_PrettyPetalFlowShop:
 	.string "PRETTY PETAL FLOWER SHOP$"
 
 Route104_Text_TrainerTipsDoubleBattles:
-	.string "TRAINER TIPS\p"
-	.string "In the HOENN region there are pairs\n"
-	.string "of TRAINERS who challenge others\l"
-	.string "for 2-on-2 POKéMON battles called\l"
-	.string "DOUBLE BATTLES.\p"
-	.string "In a DOUBLE BATTLE, the TRAINER must\n"
-	.string "send out two POKéMON, the one at the\l"
-	.string "left of the list and the top one.\l"
-	.string "Watch how POKéMON are lined up.$"
+	.string "You know what's really exciting?\n"
+	.string "Double battles!\p"
+	.string "Watching two TRAINERS team up with\n"
+	.string "four POKéMON battling at once…\p"
+	.string "The strategy gets so much deeper when\n"
+	.string "you have to coordinate two POKéMON\l"
+	.string "working together.\p"
+	.string "It's like a beautiful, chaotic dance\n"
+	.string "of attacks and teamwork!$"
 
 Route104_Text_MayWeShouldRegister:
 	.string "MAY: Oh, hi, {PLAYER}{KUN}!\p"

@@ -88,7 +88,7 @@ PetalburgWoods_EventScript_DevonResearcherPostBattle::
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox PetalburgWoods_Text_ThatWasAwfullyClose, MSGBOX_DEFAULT
-	giveitem ITEM_GREAT_BALL
+	giveitem ITEM_ABILITY_PATCH
 	goto_if_eq VAR_RESULT, FALSE, PetalburgWoods_EventScript_BagFull
 	goto PetalburgWoods_EventScript_DevonResearcherFinish
 	end
@@ -352,14 +352,20 @@ PetalburgWoods_Text_HandOverThosePapers:
 
 PetalburgWoods_Text_YouHaveToHelpMe:
 	.string "Aiyeeeh!\p"
-	.string "You're a POKéMON TRAINER, aren't you?\n"
-	.string "You've got to help me, please!$"
+	.string "You with that funny outfit,\n"
+	.string "almost like a hero cape!\p"
+	.string "HELP ME! You must be a TRAINER,\n"
+	.string "there's no way a normal person\l"
+	.string "would wear clothes like that!\p"
+	.string "Give me a hand here!$"
 
 PetalburgWoods_Text_NoOneCrossesTeamAqua:
 	.string "Hunh? What do you think you're doing?\n"
 	.string "What, you're going to protect him?\p"
+	.string "And what's with that ridiculous outfit\n"
+	.string "you're draped in? Some kind of rag?\p"
 	.string "No one who crosses TEAM AQUA\n"
-	.string "gets any mercy, not even a kid!\p"
+	.string "gets any mercy!\p"
 	.string "Come on and battle me!$"
 
 PetalburgWoods_Text_YoureKiddingMe:
@@ -367,21 +373,21 @@ PetalburgWoods_Text_YoureKiddingMe:
 
 PetalburgWoods_Text_YouveGotSomeNerve:
 	.string "Grrr… You've got some nerve\n"
-	.string "meddling with TEAM AQUA!\l"
-	.string "Come on and battle me again!\p"
-	.string "I wish I could say that, but I'm out of\n"
-	.string "POKéMON…\p"
-	.string "And, hey, we of TEAM AQUA are also\n"
-	.string "after something in RUSTBORO.\p"
-	.string "I'll let you go today!$"
+	.string "meddling with TEAM AQUA!\p"
+	.string "Don't think this is over!\n"
+	.string "We have business in RUSTBORO too.\p"
+	.string "Consider this a temporary retreat.\n"
+	.string "We'll meet again!$"
 
 PetalburgWoods_Text_ThatWasAwfullyClose:
 	.string "Whew…\n"
 	.string "That was awfully close!\p"
 	.string "Thanks to you, he didn't rob me of\n"
 	.string "these important papers.\p"
-	.string "I know, I'll give you a GREAT BALL as\n"
-	.string "my thanks!$"
+	.string "I know, I'll give you this ABILITY\n"
+	.string "PATCH as my thanks!\p"
+	.string "It can change a POKéMON's ability\n"
+	.string "to its rare hidden ability!$"
 
 PetalburgWoods_Text_TeamAquaAfterSomethingInRustboro:
 	.string "Didn't that TEAM AQUA thug say\n"
@@ -394,7 +400,7 @@ PetalburgWoods_Text_ICantBeWastingTime:
 
 PetalburgWoods_Text_YoureLoadedWithItems:
 	.string "You're loaded with items.\n"
-	.string "I can't give you this GREAT BALL.$"
+	.string "I can't give you this ABILITY PATCH.$"
 
 PetalburgWoods_Text_GoBugPokemonTeam:
 	.string "I caught a whole bunch of POKéMON!\p"
@@ -406,8 +412,14 @@ PetalburgWoods_Text_ICouldntWin:
 	.string "but I couldn't win…$"
 
 PetalburgWoods_Text_ImOutOfPokeBalls:
-	.string "I caught a bunch of POKéMON.\n"
-	.string "Now I'm out of POKé BALLS.$"
+	.string "I came here last night searching for\n"
+	.string "rare POKéMON…\p"
+	.string "And I found something terrifying -\n"
+	.string "a black, masked insect POKéMON.\p"
+	.string "It looked like some twisted form of\n"
+	.string "beatle… so unsettling…\p"
+	.string "I threw all my POKé BALLS at it,\n"
+	.string "but none could contain it.$"
 
 PetalburgWoods_Text_InstantlyPopularWithBugPokemon:
 	.string "If you take BUG POKéMON to school,\n"
@@ -417,8 +429,13 @@ PetalburgWoods_Text_CantBePopularIfILose:
 	.string "I can't be popular if I lose.$"
 
 PetalburgWoods_Text_PeopleRespectYou:
-	.string "If you have a big BUG POKéMON,\n"
-	.string "people respect you for it.$"
+	.string "This forest has grown more sinister\n"
+	.string "in recent years…\p"
+	.string "At night, people tell frightening\n"
+	.string "legends about shadowy figures\l"
+	.string "moving between the trees.\p"
+	.string "Some say the woods themselves\n"
+	.string "have become alive and watchful…$"
 
 PetalburgWoods_Text_IWantRematch1:
 	.string "I want a rematch when my BUG\n"
@@ -443,11 +460,13 @@ PetalburgWoods_Text_IveBeenTrainingHard:
 	.string "So, I've been training hard.$"
 
 PetalburgWoods_Text_StayOutOfTallGrass:
-	.string "Yo, there!\n"
-	.string "Your POKéMON doing okay?\p"
-	.string "If your POKéMON are weak and you want\n"
-	.string "to avoid battles, you should stay out\l"
-	.string "of tall grass.$"
+	.string "You know, despite all the rumors\n"
+	.string "and legends about this forest…\p"
+	.string "I'm not afraid to come here.\n"
+	.string "In fact, I find it peaceful.\p"
+	.string "Being surrounded by nature like this…\n"
+	.string "It's so relaxing and tranquil.\p"
+	.string "Isn't it wonderful?$"
 
 PetalburgWoods_Text_HiddenItemsExplanation:
 	.string "Sometimes, there are things on the\n"
@@ -470,20 +489,21 @@ PetalburgWoods_Text_MiracleSeedExplanation:
 	.string "to hold.$"
 
 PetalburgWoods_Text_TrainerTipsExperience:
-	.string "TRAINER TIPS\p"
-	.string "Any POKéMON that appears even once\n"
-	.string "in a battle is awarded EXP Points.\p"
-	.string "To raise a weak POKéMON, put it at the\n"
-	.string "left of the team list.\p"
-	.string "As soon as a battle starts, switch it\n"
-	.string "out. It will earn EXP Points without\l"
-	.string "being exposed to any harm.$"
+	.string "FOREST WHISPERS\p"
+	.string "They say this forest remembers every\n"
+	.string "step taken within its shadowy depths.\p"
+	.string "Ancient tales speak of travelers who\n"
+	.string "entered and emerged changed…\p"
+	.string "Their eyes holding secrets the woods\n"
+	.string "had whispered to them in the dark.$"
 
 PetalburgWoods_Text_TrainerTipsPP:
-	.string "TRAINER TIPS\p"
-	.string "In addition to Hit Points (HP), POKéMON\n"
-	.string "have Power Points (PP) that are used to\l"
-	.string "make moves during battle.\p"
-	.string "If a POKéMON runs out of PP, it must be\n"
-	.string "taken to a POKéMON CENTER.$"
+	.string "FOREST LEGENDS\p"
+	.string "Local folklore tells of a time when\n"
+	.string "the trees themselves would move,\p"
+	.string "shifting paths to lead wanderers\n"
+	.string "toward hidden clearings where rare\l"
+	.string "POKéMON gathered under moonlight.\p"
+	.string "Some say the forest still tests those\n"
+	.string "who walk its tangled paths today.$"
 
