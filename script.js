@@ -18,7 +18,6 @@ window.addEventListener('scroll', function() {
     }
 });
 
-
 // Slideshow functionality
 class Slideshow {
     constructor() {
@@ -92,3 +91,4 @@ document.addEventListener('DOMContentLoaded', () => {
     new Slideshow();
 });
 
+console.log('Hoenn\'s Last Wish website loaded successfully!');
