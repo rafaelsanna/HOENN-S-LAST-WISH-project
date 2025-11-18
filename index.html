@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon: Hoenn's Last Wish</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
@@ -15,7 +16,6 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
                 <li><a href="#story">Story</a></li>
                 <li><a href="#screenshots">Screenshots</a></li>
                 <li><a href="#download">Download</a></li>
@@ -23,46 +23,16 @@
         </nav>
     </header>
 
-<section id="home" class="hero">
-    <div class="hero-with-banner">
-        <div class="banner-container">
-            <img src="images/banner.png" alt="Pokémon: Hoenn's Last Wish" class="hero-banner">
-        </div>
-        <div class="hero-content-overlay">
-            <!-- TEXTO REMOVIDO - só o botão -->
-            <a href="#download" class="cta-button">Download Patch</a>
-        </div>
-    </div>
-</section>
-
-    <section id="features" class="features">
-        <div class="container">
-            <h2>🌟 Key Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>🔄 Updated Roster</h3>
-                    <p>All Pokémon up to Generation 4</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🎨 Enhanced Graphics</h3>
-                    <p>Updated sprites and tiles</p>
-                </div>
-                <div class="feature-card">
-                    <h3>⚡ Physical/Special Split</h3>
-                    <p>Modern battle system</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🎯 Increased Difficulty</h3>
-                    <p>Improved AI and trainer battles</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🛍️ New Items</h3>
-                    <p>Additional items and mechanics</p>
-                </div>
-                <div class="feature-card">
-                    <h3>📖 Expanded Story</h3>
-                    <p>New narrative elements</p>
-                </div>
+    <section id="home" class="hero">
+        <div class="hero-with-banner">
+            <div class="banner-container">
+                <img src="images/banner.png" alt="Pokémon: Hoenn's Last Wish" class="hero-banner">
+            </div>
+            <div class="hero-content-overlay">
+                <a href="#download" class="cta-button">Download Patch</a>
+                <a href="https://discord.gg/hgzbE8s2" class="discord-button" target="_blank">
+                    <i class="fab fa-discord"></i> Join Discord
+                </a>
             </div>
         </div>
     </section>
@@ -71,44 +41,45 @@
         <div class="container">
             <h2>📖 The Story</h2>
             <div class="story-content">
-                <p>Experience Hoenn like never before! "Hoenn's Last Wish" takes the classic Emerald version and expands it with:</p>
-                <ul>
-                    <li>New story elements that deepen the lore</li>
-                    <li>Additional post-game content</li>
-                    <li>Reimagined character interactions</li>
-                    <li>Fresh challenges for veteran trainers</li>
-                </ul>
+                <p>A parallel universe where Rayquaza failed to stop Groudon and Kyogre, which caused a natural collapse in Hoenn...</p>
+                <p>After long years of natural destruction, the entire Hoenn region was practically devastated, the era of trainers / pokeballs ended, the pokémons became wild animals, and the nomadic people trying to survive...</p>
+                <p>After years the plot is the millennium comet (Jirachi) and Celebi (time traveler), giving the player an opportunity to go back in time and prevent this disaster from happening...</p>
+                <p>With the return in time, some things from Hoenn destroyed for many years affect the "normal" Hoenn of the past, generating new forms of pokémon, new characters, new villains, gym leaders, etc...</p>
             </div>
         </div>
     </section>
 
-<section id="screenshots" class="screenshots">
-    <div class="container">
-        <h2>🖼️ Screenshots</h2>
-        <div class="simple-slideshow">
-            <img id="slideshow-image" src="images/screenshots/pokeemerald-0.png" alt="In-Game Screenshot">
+    <section id="screenshots" class="screenshots">
+        <div class="container">
+            <h2>🖼️ Screenshots</h2>
+            <div class="simple-slideshow">
+                <img id="slideshow-image" src="images/screenshots/pokeemerald-0.png" alt="In-Game Screenshot">
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="download" class="download">
         <div class="container">
             <h2>📥 Download</h2>
             <div class="download-info">
                 <h3>Patch File</h3>
-                <p>Download the .ips or .bps patch file and apply it to a clean Pokémon Emerald ROM (1.0 US version).</p>
+                <p>Download the .bps patch file and apply it to a clean Pokémon Emerald ROM (1.0 US version).</p>
                 
                 <div class="download-links">
-                    <a href="downloads/hoenns_last_wish.ips" class="download-btn">Download IPS Patch</a>
-                    <a href="downloads/hoenns_last_wish.bps" class="download-btn">Download BPS Patch</a>
+                    <a href="https://drive.google.com/drive/folders/1Kczj59U4ZCFtgkXeLXAMmM9c05i0XHek?usp=sharing" class="download-btn" target="_blank">
+                        Download BPS Patch
+                    </a>
+                    <a href="https://www.romhacking.net/patch/" class="download-btn secondary" target="_blank">
+                        How to Apply Patch
+                    </a>
                 </div>
 
                 <div class="installation-guide">
                     <h4>📋 Installation Guide</h4>
                     <ol>
                         <li>Get a clean Pokémon Emerald (US) ROM</li>
-                        <li>Download the patch file above</li>
-                        <li>Use a patching tool (Lunar IPS, FLIPS, etc.)</li>
+                        <li>Download the BPS patch file above</li>
+                        <li>Use a patching tool (FLIPS, etc.)</li>
                         <li>Apply patch to your clean ROM</li>
                         <li>Enjoy your new adventure!</li>
                     </ol>
@@ -121,6 +92,9 @@
         <div class="container">
             <p>Pokémon: Hoenn's Last Wish - A Pokémon ROM Hack</p>
             <p>This is a non-profit fan project. Pokémon is © Nintendo/Creatures Inc./GAME FREAK Inc.</p>
+            <a href="https://docs.google.com/document/d/1K_1i6doDUI3dhyyjtoNYlCZQZiFuHJBfjhZC-yJ3x-s/edit?usp=sharing" class="credits-btn" target="_blank">
+                View Credits
+            </a>
         </div>
     </footer>
 
