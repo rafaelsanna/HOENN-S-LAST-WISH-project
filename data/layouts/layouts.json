@@ -4550,6 +4550,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/Route115_lonely_cave/border.bin",
       "blockdata_filepath": "data/layouts/Route115_lonely_cave/map.bin"
+    },
+    {
+      "id": "LAYOUT_GRANITE_HILL",
+      "name": "GraniteHill_Layout",
+      "width": 27,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Dewford",
+      "border_filepath": "data/layouts/GraniteHill/border.bin",
+      "blockdata_filepath": "data/layouts/GraniteHill/map.bin"
     }
   ]
 }
