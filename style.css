@@ -283,7 +283,7 @@ footer {
 
 .hero-content-overlay {
     position: absolute;
-    top: 75%;
+    top: 85%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -313,7 +313,7 @@ footer {
     }
     
     .hero-content-overlay {
-        top: 70%; /* 👈 Ajuste para mobile também */
+        top: 80%; /* 👈 Ajuste para mobile também */
     }
 }
 
