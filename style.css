@@ -283,7 +283,7 @@ footer {
 
 .hero-content-overlay {
     position: absolute;
-    top: 50%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -292,18 +292,6 @@ footer {
     text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
     width: 90%;
     max-width: 800px;
-}
-
-.hero-content-overlay h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-
-.hero-content-overlay p {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    opacity: 0.95;
 }
 
 /* Overlay escuro para melhor legibilidade */
@@ -324,12 +312,8 @@ footer {
         height: 400px;
     }
     
-    .hero-content-overlay h2 {
-        font-size: 2rem;
-    }
-    
-    .hero-content-overlay p {
-        font-size: 1.1rem;
+    .hero-content-overlay {
+        top: 70%; /* 👈 Ajuste para mobile também */
     }
 }
 
@@ -365,18 +349,16 @@ footer {
     justify-content: center;
 }
 
-.slide.active {
-    opacity: 1;
-}
-
 .slide img {
     width: 100%;
-    height: 300px;
+    height: 350px;  /* Aumentei para usar o espaço da legenda */
     object-fit: contain;
     background: #2c3e50;
     border-radius: 8px;
 }
 
+/* REMOVA ou COMENTE esta parte se quiser sem legenda: */
+/*
 .slide p {
     margin-top: 1rem;
     font-size: 1.2rem;
@@ -384,6 +366,7 @@ footer {
     color: var(--pokemon-dark);
     text-align: center;
 }
+*/
 
 .slideshow-controls {
     display: flex;
