@@ -18,77 +18,38 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Slideshow functionality
-class Slideshow {
-    constructor() {
-        this.slides = document.querySelectorAll('.slide');
-        this.dotsContainer = document.querySelector('.dots-container');
-        this.currentSlide = 0;
-        this.autoPlayInterval = null;
-        
-        this.init();
-    }
-    
-    init() {
-        this.createDots();
-        this.startAutoPlay();
-        this.addEventListeners();
-    }
-    
-    createDots() {
-        this.slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => this.goToSlide(index));
-            this.dotsContainer.appendChild(dot);
-        });
-    }
-    
-    addEventListeners() {
-        document.querySelector('.prev-btn').addEventListener('click', () => this.prevSlide());
-        document.querySelector('.next-btn').addEventListener('click', () => this.nextSlide());
-        
-        // Pause on hover
-        document.querySelector('.slideshow').addEventListener('mouseenter', () => {
-            clearInterval(this.autoPlayInterval);
-        });
-        
-        document.querySelector('.slideshow').addEventListener('mouseleave', () => {
-            this.startAutoPlay();
-        });
-    }
-    
-    goToSlide(index) {
-        this.slides[this.currentSlide].classList.remove('active');
-        this.dotsContainer.children[this.currentSlide].classList.remove('active');
-        
-        this.currentSlide = index;
-        
-        this.slides[this.currentSlide].classList.add('active');
-        this.dotsContainer.children[this.currentSlide].classList.add('active');
-    }
-    
-    nextSlide() {
-        const next = (this.currentSlide + 1) % this.slides.length;
-        this.goToSlide(next);
-    }
-    
-    prevSlide() {
-        const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
-        this.goToSlide(prev);
-    }
-    
-    startAutoPlay() {
-        this.autoPlayInterval = setInterval(() => {
-            this.nextSlide();
-        }, 3000); // Muda a cada 3 segundos
-    }
+// SIMPLE SLIDESHOW THAT WORKS!
+const slideshowImages = [
+    'pokeemerald-0.png',
+    'pokeemerald-1.png', 
+    'pokeemerald-2.png',
+    'pokeemerald-3.png',
+    'pokeemerald-4.png',
+    'pokeemerald-5.png',
+    'pokeemerald-6.png',
+    'pokeemerald-7.png',
+    'pokeemerald-8.png',
+    'pokeemerald-9.png',
+    'pokeemerald-10.png',
+    'pokeemerald-11.png',
+    'pokeemerald-12.png',
+    'pokeemerald-13.png',
+    'pokeemerald-14.png',
+    'pokeemerald-15.png',
+    'pokeemerald-16.png',
+    'pokeemerald-17.png',
+    'pokeemerald-18.png'
+];
+
+let currentSlide = 0;
+const slideshowElement = document.getElementById('slideshow-image');
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slideshowImages.length;
+    slideshowElement.src = `images/screenshots/${slideshowImages[currentSlide]}`;
 }
 
-// Initialize slideshow when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    new Slideshow();
-});
+// Start slideshow - change image every 3 seconds
+setInterval(nextSlide, 3000);
 
-console.log('Hoenn\'s Last Wish website loaded successfully!');
+console.log('Hoenn\'s Last Wish website loaded successfully! Slideshow active!');

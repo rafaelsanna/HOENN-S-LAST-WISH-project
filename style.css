@@ -317,96 +317,23 @@ footer {
     }
 }
 
-/* Slideshow Styles */
-.slideshow-container {
-    position: relative;
+/* Simple Slideshow */
+.simple-slideshow {
     max-width: 600px;
     margin: 2rem auto;
     background: white;
     border-radius: 15px;
     padding: 1rem;
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
-.slideshow {
-    position: relative;
-    height: 400px;
-    overflow: hidden;
-    border-radius: 10px;
-}
-
-.slide {
-    position: absolute;
-    top: 0;
-    left: 0;
+.simple-slideshow img {
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.slide img {
-    width: 100%;
-    height: 350px;  /* Aumentei para usar o espaço da legenda */
+    height: 350px;
     object-fit: contain;
     background: #2c3e50;
     border-radius: 8px;
+    border: 3px solid var(--pokemon-green);
 }
-
-/* REMOVA ou COMENTE esta parte se quiser sem legenda: */
-/*
-.slide p {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--pokemon-dark);
-    text-align: center;
-}
-*/
-
-.slideshow-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.prev-btn, .next-btn {
-    background: var(--pokemon-blue);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background 0.3s;
-}
-
-.prev-btn:hover, .next-btn:hover {
-    background: var(--pokemon-dark);
-}
-
-.dots-container {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ccc;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.dot.active {
-    background: var(--pokemon-red);
-}
-
 
