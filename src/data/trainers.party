@@ -326,13 +326,26 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Poochyena
-Level: 15
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Luvdisc @ Oran Berry  
+Ability: Prankster  
+- Water Pulse  
+- Bite  
+- Swagger  
+- Taunt  
 
-Carvanha
-Level: 15
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Carvanha @ Oran Berry  
+Ability: Speed Boost  
+- Bite  
+- Aqua Jet  
+- Ice Fang  
+- Brine  
+
+Zubat @ Oran Berry  
+Ability: Inner Focus  
+- Bite  
+- Wing Attack  
+- Confuse Ray  
+- Poison Fang  
 
 === TRAINER_GRUNT_WEATHER_INST_1 ===
 Name: GRUNT

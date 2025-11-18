@@ -83,7 +83,7 @@
 #define P_FLAG_FORCE_SHINY      0x46
 #define P_FLAG_FORCE_NO_SHINY    0x47 
 #define FLAG_LEVELCAP9_AQUA_GRUNT_DEFEATED    0x48
-#define FLAG_UNUSED_0x049    0x49 // Unused Flag
+#define FLAG_RECEIVED_CHOPLE_BERRY_ROUTE106    0x49 // Unused Flag
 #define FLAG_UNUSED_0x04A    0x4A // Unused Flag
 #define FLAG_UNUSED_0x04B    0x4B // Unused Flag
 #define FLAG_UNUSED_0x04C    0x4C // Unused Flag
