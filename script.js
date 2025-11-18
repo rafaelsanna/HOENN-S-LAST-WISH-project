@@ -53,3 +53,4 @@ function nextSlide() {
 setInterval(nextSlide, 3000);
 
 console.log('Hoenn\'s Last Wish website loaded successfully! Slideshow active!');
+EOF
