@@ -32,10 +32,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Header & Navigation */
-/* Header & Navigation com Imagem Personalizada */
 header {
-    background: url('images/header-bg.png') no-repeat center center;
-    background-size: cover; /* Preenche todo o header */
+    background: url('images/header-bg.png') no-repeat center center, 
+                linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background-size: cover;
     position: fixed;
     width: 100%;
     top: 0;
