@@ -4886,6 +4886,47 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Calm Mind
 - Shock Wave
 
+=== TRAINER_BRAWLY ===
+Name: BRAWLY
+Class: Leader
+Pic: Leader Brawly
+Gender: Male
+Music: Male
+Items: Super Potion / Super Potion
+Double Battle: No
+AI: Basic Trainer
+
+Mankey  
+Level: 22  
+- Low Kick  
+- Fury Swipes    
+- Focus Energy  
+- Leer  
+
+Breloom  
+Ability: Technician  
+Shiny: Yes   
+Level: 24 
+- Headbutt
+- Counter
+- Mega Drain 
+- Leech Seed
+
+Furret @ Expert Belt  
+Ability: Adaptability  
+Level: 25  
+- Rock Smash 
+- Dig 
+- Rollout  
+- Bulk Up  
+
+Heracross 
+Level: 23 
+- Arm Thrust 
+- Aerial Ace
+- Horn Leech 
+- Endure
+
 === TRAINER_BRAWLY_1 ===
 Name: BRAWLY
 Class: Leader
