@@ -12203,6 +12203,75 @@
               }
             ]
           }
+        },
+        {
+          "map": "MAP_GRANITE_HILL",
+          "base_label": "gGraniteHill",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_KRABBY"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_KRABBY"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_WINGULL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_WINGULL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_WINGULL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_MARILL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_MARILL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_SEEDOT"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_SEEDOT"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_ODDISH"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_ODDISH"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_ODDISH"
+              }
+            ]
+          }
         }
       ]
     },
