@@ -4554,7 +4554,7 @@
     {
       "id": "LAYOUT_GRANITE_HILL",
       "name": "GraniteHill_Layout",
-      "width": 27,
+      "width": 28,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dewford",
