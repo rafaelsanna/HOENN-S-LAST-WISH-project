@@ -111,7 +111,41 @@
 #define TRAINER_PIC_AQUA_GRUNT_M2         93
 #define TRAINER_PIC_AQUA_GRUNT_F2         94
 #define TRAINER_PIC_AQUA_GRUNT_DOUBLE     95
-#define TRAINER_PIC_COUNT                 96
+#define TRAINER_PIC_ARTIST               96
+#define TRAINER_PIC_PUNK                 97
+#define TRAINER_PIC_MAGMA_GRUNT_F2       98
+#define TRAINER_PIC_MAGMA_GRUNT_F3       99
+#define TRAINER_PIC_MAGMA_GRUNT_DOUBLES  100
+#define TRAINER_PIC_MAGMA_GRUNT_M2       101
+#define TRAINER_PIC_MAGMA_GRUNT_M3       102
+#define TRAINER_PIC_ACE                  103
+#define TRAINER_PIC_ACE2                 104
+#define TRAINER_PIC_BUG_CATCHER_F        105
+#define TRAINER_PIC_AROMA_LADY2          106
+#define TRAINER_PIC_LADY2                107
+#define TRAINER_PIC_ACE3                 108
+#define TRAINER_PIC_LADY3                109
+#define TRAINER_PIC_LADY4                110
+#define TRAINER_PIC_ARTISTOLD            111
+#define TRAINER_PIC_HIKERCLIMBER         112
+#define TRAINER_PIC_BIRDKEEPER           113
+#define TRAINER_PIC_ARTISTOLD2           114
+#define TRAINER_PIC_FISHERMAN2           115
+#define TRAINER_PIC_PUNK2                116
+#define TRAINER_PIC_SWIMMER_F2           117
+#define TRAINER_PIC_SWIMMER_F3           118
+#define TRAINER_PIC_SWIMMER_F4           119
+#define TRAINER_PIC_SWIMMER_F5           120
+#define TRAINER_PIC_SWIMMER_M2           121
+#define TRAINER_PIC_SWIMMER_M3           122
+#define TRAINER_PIC_SWIMMER_M4           123
+#define TRAINER_PIC_NINJA_BOY2           124
+#define TRAINER_PIC_NINJA_GIRL           125
+#define TRAINER_PIC_GUITARIST_F          126
+
+// COUNT
+#define TRAINER_PIC_COUNT                127
+
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
 #define TRAINER_BACK_PIC_BRENDAN                0
@@ -205,8 +239,11 @@
 #define FACILITY_CLASS_LEAF                  0x4f
 #define FACILITY_CLASS_RS_BRENDAN            0x50
 #define FACILITY_CLASS_RS_MAY                0x51
+#define FACILITY_CLASS_ClIMBER               0x52
+#define FACILITY_CLASS_ARTIST                0x53
+#define FACILITY_CLASS_PUNK                  0x53
 
-#define FACILITY_CLASSES_COUNT               0x52
+#define FACILITY_CLASSES_COUNT               0x54
 
 #define RS_FACILITY_CLASS_AQUA_LEADER_ARCHIE    0x0
 #define RS_FACILITY_CLASS_AQUA_GRUNT_M          0x1
@@ -356,6 +393,9 @@ enum TrainerClassID
     TRAINER_CLASS_PIKE_QUEEN,
     TRAINER_CLASS_PYRAMID_KING,
     TRAINER_CLASS_RS_PROTAG,
+    TRAINER_CLASS_CLIMBER,
+    TRAINER_CLASS_ARTIST,
+    TRAINER_CLASS_PUNK,
     TRAINER_CLASS_COUNT,
 };
 

@@ -4826,7 +4826,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Crunch
 
 === TRAINER_ROXANNE ===
-Name: ROXANNE
+Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
 Gender: Female
@@ -4859,7 +4859,7 @@ Level: 15
 - Block  
 
 === TRAINER_ROXANNE_1 ===
-Name: ROXANNE
+Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
 Gender: Female
@@ -4895,7 +4895,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Shock Wave
 
 === TRAINER_BRAWLY ===
-Name: BRAWLY
+Name: RENTON
 Class: Leader
 Pic: Leader Brawly
 Gender: Male
@@ -4936,7 +4936,7 @@ Level: 23
 - Endure
 
 === TRAINER_BRAWLY_1 ===
-Name: BRAWLY
+Name: RENTON
 Class: Leader
 Pic: Leader Brawly
 Gender: Male
@@ -6107,8 +6107,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_JOSH ===
 Name: JOSH
-Class: Youngster
-Pic: Youngster
+Class: Climber
+Pic: Hikerclimber
 Gender: Male
 Music: Male
 Double Battle: No
@@ -6124,8 +6124,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_TOMMY ===
 Name: TOMMY
-Class: Youngster
-Pic: Youngster
+Class: Climber
+Pic: Hikerclimber
 Gender: Male
 Music: Male
 Double Battle: No
@@ -7989,14 +7989,18 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 === TRAINER_LAURA ===
 Name: LAURA
-Class: Battle Girl
-Pic: Battle Girl
+Class: Punk
+Pic: Punk2
 Gender: Female
 Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
 Meditite
+Level: 13
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Sentret
 Level: 13
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -10704,8 +10708,8 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MARC ===
 Name: MARC
-Class: Hiker
-Pic: Hiker
+Class: Punk
+Pic: Punk
 Gender: Male
 Music: Hiker
 Double Battle: No

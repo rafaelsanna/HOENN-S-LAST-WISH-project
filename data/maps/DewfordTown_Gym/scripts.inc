@@ -324,110 +324,116 @@ DewfordTown_Gym_Text_TakaoIntro:
 	.string "Come on!$"
 
 DewfordTown_Gym_Text_TakaoDefeat:
-	.string "Not enough power…$"
+	.string "Not enough power...$"
 
 DewfordTown_Gym_Text_TakaoPostBattle:
 	.string "Your skill overcame my strength!\n"
 	.string "Your technique is commendable!$"
 
+
 DewfordTown_Gym_Text_JocelynIntro:
-	.string "No way I'm letting RENTON handle this!\n"
-	.string "Trust me… you don't want that!\p"
-	.string "I'd rather deal with wild POKéMON,\n"
-	.string "dark caves, even the ELITE FOUR\n"
-	.string "than get caught up in one of his\n"
+	.string "No way I am letting RENTON handle this!\n"
+	.string "Trust me... you do NOT want that!\p"
+	.string "I would rather deal with wild Pokemon,\n"
+	.string "dark caves, even the ELITE FOUR,\n"
+	.string "than get dragged into one of his\n"
 	.string "crazy street brawls!\p"
 	.string "He demolished the old Gym Leader,\n"
-	.string "and it wasn't even a POKéMON battle!\n"
-	.string "Hahahahaha!$"
+	.string "and it was NOT even a Pokemon battle!\n"
+	.string "Hahaha!$"
 
 DewfordTown_Gym_Text_JocelynDefeat:
-	.string "You're tough... but be careful!\n"
-	.string "Don't go acting all cocky around RENTON,\p"
-	.string "or you'll end up in real trouble!\n"
-	.string "Then again… he does respect tough\n"
-	.string "fighters like you…$"
+	.string "You are tough... but be careful!\n"
+	.string "Do not go acting all cocky around RENTON,\p"
+	.string "or you will end up in real trouble!\n"
+	.string "Then again... he does respect tough\n"
+	.string "fighters like you...$"
 
 DewfordTown_Gym_Text_JocelynPostBattle:
-	.string "That battle really fired me up!\n"
-	.string "I'm gonna train like crazy and get stronger!\p"
-	.string "One day I'll be totally badass…\n"
+	.string "That battle fired me up!\n"
+	.string "I am gonna train like crazy!\p"
+	.string "One day I will be totally badass...\n"
 	.string "just like RENTON!$"
 
+
 DewfordTown_Gym_Text_LauraIntro:
-	.string "Don't you dare brush me off!\n"
-	.string "I'm already stressed training under RENTON!\p"
-	.string "He's got this weird temper… always into\n"
-	.string "street brawls and wild nights.\p"
-	.string "That's why he keeps the Gym pitch dark!\n"
-	.string "The old Leader never did that, but after\n"
-	.string "RENTON beat him up so badly…\n"
-	.string "it's been like this every day...$"
+	.string "Do NOT brush me off!\n"
+	.string "I am the one blasting ROCK music in here!\p"
+	.string "The dark? I do not care about that!\n"
+	.string "I grew up hanging out with RENTON!\p"
+	.string "Street fights, loud nights, bad lighting...\n"
+	.string "This Gym is exactly my vibe!$"
 
 DewfordTown_Gym_Text_LauraDefeat:
-	.string "Waaaaaaah!\n"
-	.string "I lost! Again...$"
+	.string "Waaaah!\n"
+	.string "I lost! No way...$"
 
 DewfordTown_Gym_Text_LauraPostBattle:
-	.string "No, I guess I still need tons of training\n"
-	.string "to be as tough as you… or even like RENTON.\p"
-	.string "Ugh, I don't know where I went wrong…\n"
-	.string "what a pain…$"
+	.string "Huh? Me and RENTON?\n"
+	.string "A thing? No way!\p"
+	.string "We are just friends, do not be weird!\n"
+	.string "Seriously, stop imagining stuff!$"
 
 DewfordTown_Gym_Text_LilithIntro:
-	.string "Ufufu…\n"
-	.string "You, with that wierd clothes!\n"
-	.string "Are you stumbling around in the dark?$"
+	.string "Ufufu...\n"
+	.string "You, with those weird clothes!\n"
+	.string "Are you just stumbling around in the dark?$"
 
 DewfordTown_Gym_Text_LilithDefeat:
-	.string "Oh, you… Wierdo...\n"
-	.string "I don't want to know you!$"
+	.string "Oh, you... weirdo...\n"
+	.string "I do NOT want to know you!$"
 
 DewfordTown_Gym_Text_LilithPostBattle:
-	.string "You deserve to stay lost and end up\n"
+	.string "You deserve to get lost and end up\n"
 	.string "back at the entrance again!\p"
-	.string "After some time in the dark,we get used.\n"
-	.string "Just like street fights the more we pick,\n"
-	.string "the better we get!$"
+	.string "After a while in the dark, we get used to it.\n"
+	.string "Just like street fights... the more we get,\n"
+	.string "the better we become!$"
+
 
 DewfordTown_Gym_Text_BrendenIntro:
 	.string "HAHAHA! During one of RENTON's wild nights,\n"
 	.string "I ended up becoming friends with him!\p"
 	.string "We threw hands, and I got beat up real bad,\n"
-	.string "HAHAHA but he saw I was tough, so now\n"
-	.string "we're pals!\p"
-	.string "And you, with that weird-looking cape…\n"
-	.string "let's see if you can handle yourself!$"
+	.string "HAHAHA! But he saw I was tough, so now\n"
+	.string "we are pals!\p"
+	.string "I am a sailor, y'know! I have seen storms,\n"
+	.string "ship brawls, bar fights, you name it!\p"
+	.string "So come on, cape guy!\n"
+	.string "Show me what you got!$"
 
 DewfordTown_Gym_Text_BrendenDefeat:
-	.string "But hey, this was nothing compared to\n"
+	.string "Not bad! But this was nothing compared to\n"
 	.string "the beatdowns RENTON gives me!\p"
-	.string "That was easy stuff,\n"
-	.string "you've still got a long way to go!$"
+	.string "That was easy stuff!\n"
+	.string "You still got a long way to go!$"
 
 DewfordTown_Gym_Text_BrendenPostBattle:
-	.string "But rules are rules, y’know.\n"
-	.string "Go on you're about to take an\n"
+	.string "Rules are rules, yknow.\n"
+	.string "Go on, you are about to take an\n"
 	.string "ancient beatdown from RENTON!\p"
 	.string "After that, we can sail off and\n"
 	.string "drink till sunrise!\n"
-	.string "RENTON's the man!$"
+	.string "RENTON is the man!$"
+
 
 DewfordTown_Gym_Text_CristianIntro:
-	.string "If you mean to pass, you'll have to\n"
-	.string "go through me first!\p"
-	.string "Around here, strength matters\n"
-	.string "just like in any street brawl!$"
-
+	.string "If you want to pass, you fight me first!\p"
+	.string "Around here, strength matters...\n"
+	.string "just like in any street brawl!\p"
+	.string "I am a punk, and proud of it!\n"
+	.string "Only reason I am in this Gym is because\n"
+	.string "I grew up with RENTON!\n"
+	.string "We have been scrapping since kindergarten!$"
 
 DewfordTown_Gym_Text_CristianDefeat:
 	.string "Grrrrr!\n"
 	.string "Vastly overpowered!$"
 
 DewfordTown_Gym_Text_CristianPostBattle:
-	.string "You win!\n"
+	.string "Fine! You win!\n"
 	.string "Go after that BADGE!\p"
-	.string "With moves like that, you'd survive\n"
+	.string "With moves like that, you would survive\n"
 	.string "a real street fight too!$"
 
 DewfordTown_Gym_Text_BrawlyIntro:

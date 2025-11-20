@@ -171,42 +171,49 @@ RustboroCity_Gym_Text_GymGuidePostVictory:
 	.string "That's got to feel awesome!$"
 
 RustboroCity_Gym_Text_JoshIntro:
-	.string "Don't take us GYM TRAINERS lightly!\n"
-	.string "I'll show you why we're better!$"
+	.string "Heh... I'm a totally fearless CLIMBER!\n"
+	.string "Yep, not scared of heights at all!\p"
+	.string "Get ready to see some real skill!$"
 
 RustboroCity_Gym_Text_JoshDefeat:
-	.string "You were too good for me...$"
+	.string "Oof... Guess my 'cool guy' act\n"
+	.string "wasn't enough... What a fall!$"
 
 RustboroCity_Gym_Text_JoshPostBattle:
-	.string "You haven't seen anything of the ROCK\n"
-	.string "type's terrifying power!$"
+	.string "Alright, alright... I admit it!\n"
+	.string "I'm actually TERRIFIED of heights!\p"
+	.string "I only carry this climbing gear to\n"
+	.string "impress girls...$"
 
 RustboroCity_Gym_Text_TommyIntro:
-	.string "If you can't beat me, you won't stand\n"
-	.string "a chance against TERRA!$"
+	.string "Think you can beat me?\n"
+	.string "Heh! I've climbed the tallest peaks\n"
+	.string "in HOENN alongside TERRA!\p"
+	.string "Show me what you're made of!$"
 
 RustboroCity_Gym_Text_TommyDefeat:
-	.string "Wow! You've got some potential!$"
+	.string "Wow! You've really got potential!$"
 
 RustboroCity_Gym_Text_TommyPostBattle:
-	.string "TERRA is stronger than me by\n"
-	.string "several times.\p"
-	.string "You'd better be on your guard!$"
+	.string "TERRA's strength is on a whole\n"
+	.string "different level.\p"
+	.string "You'd better come prepared!$"
 
 RustboroCity_Gym_Text_MarcIntro:
-	.string "We might be in the middle of town,\n"
-	.string "but so what?\p"
+	.string "We're in the middle of town, sure...\n"
+	.string "But mountains are always in my heart!\p"
 	.string "My ROCK POKEMON need room to\n"
-	.string "rampage!$"
+	.string "stretch out and rampage!$"
 
 RustboroCity_Gym_Text_MarcDefeat:
-	.string "Oh man, oh man!\n"
-	.string "Our challenger is one feisty customer!$"
+	.string "Whoooa! Our challenger's got\n"
+	.string "some real fire!$"
 
 RustboroCity_Gym_Text_MarcPostBattle:
-	.string "I have to hand it to our LEADER.\p"
-	.string "It took smarts and sense for her to\n"
-	.string "pick the ROCK type at her young age.$"
+	.string "I've explored Hoenn's peaks for years.\p"
+	.string "That's how I met our LEADER, TERRA.\n"
+	.string "Smart kid, she chose the ROCK type\n"
+	.string "because she knows it stands strong.$"
 
 RustboroCity_Gym_Text_RoxanneIntro:
 	.string "Hey! I'm TERRA, the RUSTBORO CITY\n"
