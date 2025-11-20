@@ -292,6 +292,16 @@ const u8 gTrainerBackPic_Steven[] = INCBIN_U8("graphics/trainers/back_pics/steve
 const u16 gTrainerBackPicPalette_Red[] = INCBIN_U16("graphics/trainers/back_pics/red.gbapal");
 const u16 gTrainerBackPicPalette_Leaf[] = INCBIN_U16("graphics/trainers/back_pics/leaf.gbapal");
 
+const u32 gTrainerFrontPic_AquaGruntM2[] = INCBIN_U32("graphics/trainers/front_pics/aqua_grunt_m2.4bpp.smol");
+const u16 gTrainerPalette_AquaGruntM2[] = INCBIN_U16("graphics/trainers/front_pics/aqua_grunt_m2.gbapal");
+
+const u32 gTrainerFrontPic_AquaGruntF2[] = INCBIN_U32("graphics/trainers/front_pics/aqua_grunt_f2.4bpp.smol");
+const u16 gTrainerPalette_AquaGruntF2[] = INCBIN_U16("graphics/trainers/front_pics/aqua_grunt_f2.gbapal");
+
+const u32 gTrainerFrontPic_AquaGruntDouble[] = INCBIN_U32("graphics/trainers/front_pics/aqua_grunt_double.4bpp.smol");
+const u16 gTrainerPalette_AquaGruntDouble[] = INCBIN_U16("graphics/trainers/front_pics/aqua_grunt_double.gbapal");
+
+
 // The first two parameters invoke a front pic and palette by
 // calling a "TRAINER_PIC" constant (e.g. TRAINER_PIC_HIKER), and
 // gTrainerFrontPic/gTrainerPalette pointers, (e.g "gTrainerFrontPic_Hiker" and "gTrainerPalette_Hiker").
@@ -401,6 +411,9 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_LEAF, gTrainerFrontPic_Leaf, gTrainerPalette_Leaf),
     TRAINER_SPRITE(TRAINER_PIC_RS_BRENDAN, gTrainerFrontPic_RubySapphireBrendan, gTrainerPalette_RubySapphireBrendan),
     TRAINER_SPRITE(TRAINER_PIC_RS_MAY, gTrainerFrontPic_RubySapphireMay, gTrainerPalette_RubySapphireMay),
+    TRAINER_SPRITE(TRAINER_PIC_AQUA_GRUNT_M2, gTrainerFrontPic_AquaGruntM2, gTrainerPalette_AquaGruntM2),
+    TRAINER_SPRITE(TRAINER_PIC_AQUA_GRUNT_F2, gTrainerFrontPic_AquaGruntF2, gTrainerPalette_AquaGruntF2),
+    TRAINER_SPRITE(TRAINER_PIC_AQUA_GRUNT_DOUBLE, gTrainerFrontPic_AquaGruntDouble, gTrainerPalette_AquaGruntDouble),
 };
 
 static const union AnimCmd sAnimCmd_Hoenn[] =

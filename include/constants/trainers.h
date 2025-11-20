@@ -108,7 +108,10 @@
 #define TRAINER_PIC_LEAF                  90
 #define TRAINER_PIC_RS_BRENDAN            91
 #define TRAINER_PIC_RS_MAY                92
-#define TRAINER_PIC_COUNT                 93
+#define TRAINER_PIC_AQUA_GRUNT_M2         93
+#define TRAINER_PIC_AQUA_GRUNT_F2         94
+#define TRAINER_PIC_AQUA_GRUNT_DOUBLE     95
+#define TRAINER_PIC_COUNT                 96
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
 #define TRAINER_BACK_PIC_BRENDAN                0

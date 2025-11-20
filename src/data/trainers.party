@@ -225,19 +225,27 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_GRUNT_PETALBURG_WOODS ===
 Name: GRUNT
 Class: Team Aqua
-Pic: Aqua Grunt M
+Pic: Aqua Grunt Double
 Gender: Male
 Music: Aqua
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move
 
-Carvanha
+Marill
 Level: 9
-IVs: 10 HP / 31 Atk / 10 Def / 10 SpA / 10 SpD / 31 Spe
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 Zubat
 Level: 9
-IVs: 10 HP / 31 Atk / 10 Def / 10 SpA / 10 SpD / 31 Spe
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Carvanha
+Level: 9
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Wingull
+Level: 9
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_MARCEL ===
 Name: MARCEL
