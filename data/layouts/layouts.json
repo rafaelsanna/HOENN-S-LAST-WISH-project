@@ -4454,8 +4454,8 @@
     {
       "id": "LAYOUT_LITTLEROOT_TOWN_2",
       "name": "LittlerootTown_2_Layout",
-      "width": 20,
-      "height": 20,
+      "width": 24,
+      "height": 23,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/LittlerootTown_2/border.bin",
@@ -4544,8 +4544,8 @@
     {
       "id": "LAYOUT_ROUTE115_LONELY_CAVE",
       "name": "Route115_lonely_cave_Layout",
-      "width": 17,
-      "height": 12,
+      "width": 13,
+      "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/Route115_lonely_cave/border.bin",
@@ -4560,6 +4560,36 @@
       "secondary_tileset": "gTileset_Dewford",
       "border_filepath": "data/layouts/GraniteHill/border.bin",
       "blockdata_filepath": "data/layouts/GraniteHill/map.bin"
+    },
+    {
+      "id": "LAYOUT_LITTLEROOT_COAST",
+      "name": "LittlerootCoast_Layout",
+      "width": 24,
+      "height": 23,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/LittlerootCoast/border.bin",
+      "blockdata_filepath": "data/layouts/LittlerootCoast/map.bin"
+    },
+    {
+      "id": "LAYOUT_LONELY_CAVE_B1",
+      "name": "LonelyCave_B1_Layout",
+      "width": 27,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/LonelyCave_B1/border.bin",
+      "blockdata_filepath": "data/layouts/LonelyCave_B1/map.bin"
+    },
+    {
+      "id": "LAYOUT_LONELY_CAVE_B2",
+      "name": "LonelyCave_B2_Layout",
+      "width": 25,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/LonelyCave_B2/border.bin",
+      "blockdata_filepath": "data/layouts/LonelyCave_B2/map.bin"
     }
   ]
 }

@@ -102,7 +102,10 @@
     "OldaleField",
     "Route116_2",
     "Route115_2",
-    "Route115_lonely_cave"
+    "Route115_lonely_cave",
+    "LittlerootCoast",
+    "LonelyCave_B1",
+    "LonelyCave_B2"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

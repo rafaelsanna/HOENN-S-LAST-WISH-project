@@ -19,8 +19,8 @@
       "direction": "up"
     },
     {
-      "map": "MAP_LITTLEROOT_TOWN_2",
-      "offset": 0,
+      "map": "MAP_LITTLEROOT_COAST",
+      "offset": -4,
       "direction": "down"
     }
   ],
