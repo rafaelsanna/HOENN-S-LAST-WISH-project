@@ -9,12 +9,12 @@ RustboroCity_Gym_EventScript_Roxanne::
 	compare VAR_0x8000, 1
 	goto_if_eq RustboroCity_Gym_RoxanneHard
 	
-	@ Modo Normal - TRAINER_ROXANNE (3 Eevee)
+	@ Modo Normal - TRAINER_ROXANNE 
 	trainerbattle_single TRAINER_ROXANNE, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 	goto RustboroCity_Gym_AfterBattle
 
 RustboroCity_Gym_RoxanneHard::
-	@ Modo Hard - TRAINER_ROXANNE_1 (3 Pikachu)
+	@ Modo Hard - TRAINER_ROXANNE_1 
 	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 
 RustboroCity_Gym_AfterBattle::
@@ -140,32 +140,27 @@ RustboroCity_Gym_Text_GymGuideAdvice:
 	.string "Yo, how's it going?\p"
 	.string "Listen, my friend!\n"
 	.string "Would you like to become the CHAMPION?\p"
-	.string "I'm no TRAINER, not me, but I can\n"
-	.string "sure give you winning advice.\p"
-	.string "That's settled, then! We'll aim for the\n"
-	.string "POKEMON CHAMPIONSHIP together!\p"
-	.string "It's your job as a TRAINER to collect\n"
+	.string "I'm no TRAINER, but I can\n"
+	.string "give you winning advice.\p"
+	.string "We'll aim for the POKEMON\n"
+	.string "CHAMPIONSHIP together!\p"
+	.string "It's your job to collect\n"
 	.string "GYM BADGES, am I right?\p"
-	.string "But GYM LEADERS aren't pushovers!\p"
-	.string "And that's where I come in!\n"
-	.string "I'm here to provide expert advice!\p"
-	.string "TERRA, the GYM LEADER, is a user\n"
-	.string "of ROCK-type POKEMON.\p"
-	.string "The ROCK type is very durable, but\n"
-	.string "it can't stand WATER-type and\n"
-	.string "GRASS-type moves.\p"
-	.string "Come see me afterwards, if you beat\n"
+	.string "But GYM LEADERS aren't pushovers!\n"
+	.string "That's where I come in!\p"
+	.string "TERRA uses ROCK-type POKEMON.\p"
+	.string "ROCK type is durable, but\n"
+	.string "can't stand WATER and GRASS moves.\p"
+	.string "Come see me if you beat\n"
 	.string "the GYM LEADER.\p"
 	.string "Well, go for it!$"
 
 RustboroCity_Gym_Text_GymGuidePostVictory:
 	.string "Whoa! What a breathtaking victory!\n"
 	.string "My cheering must've worked!\p"
-	.string "Great!\n"
-	.string "Check your TRAINER CARD.\p"
+	.string "Great! Check your TRAINER CARD.\p"
 	.string "The STONE BADGE you got should be\n"
-	.string "properly recorded on it.\p"
-	.string "In other words...\p"
+	.string "recorded on it.\p"
 	.string "You've climbed the first step on\n"
 	.string "the stairs to the CHAMPIONSHIP!\p"
 	.string "That's got to feel awesome!$"
@@ -182,13 +177,12 @@ RustboroCity_Gym_Text_JoshDefeat:
 RustboroCity_Gym_Text_JoshPostBattle:
 	.string "Alright, alright... I admit it!\n"
 	.string "I'm actually TERRIFIED of heights!\p"
-	.string "I only carry this climbing gear to\n"
-	.string "impress girls...$"
+	.string "I only carry this climbing gear\n"
+	.string "to impress girls...$"
 
 RustboroCity_Gym_Text_TommyIntro:
 	.string "Think you can beat me?\n"
-	.string "Heh! I've climbed the tallest peaks\n"
-	.string "in HOENN alongside TERRA!\p"
+	.string "I've climbed HOENN's tallest peaks!\p"
 	.string "Show me what you're made of!$"
 
 RustboroCity_Gym_Text_TommyDefeat:
@@ -200,8 +194,8 @@ RustboroCity_Gym_Text_TommyPostBattle:
 	.string "You'd better come prepared!$"
 
 RustboroCity_Gym_Text_MarcIntro:
-	.string "We're in the middle of town, sure...\n"
-	.string "But mountains are always in my heart!\p"
+	.string "We're in town, sure...\n"
+	.string "But mountains are in my heart!\p"
 	.string "My ROCK POKEMON need room to\n"
 	.string "stretch out and rampage!$"
 
@@ -211,28 +205,23 @@ RustboroCity_Gym_Text_MarcDefeat:
 
 RustboroCity_Gym_Text_MarcPostBattle:
 	.string "I've explored Hoenn's peaks for years.\p"
-	.string "That's how I met our LEADER, TERRA.\n"
-	.string "Smart kid, she chose the ROCK type\n"
-	.string "because she knows it stands strong.$"
+	.string "That's how I met TERRA. Smart kid,\n"
+	.string "chose ROCK type for its strength.$"
 
 RustboroCity_Gym_Text_RoxanneIntro:
-	.string "Hey! I'm TERRA, the RUSTBORO CITY\n"
-	.string "POKEMON GYM LEADER and pro climber!\p"
+	.string "Hey! I'm TERRA, RUSTBORO CITY\n"
+	.string "GYM LEADER and pro climber!\p"
 	.string "I trained on cliffs and mountains,\n"
-	.string "always pushing my limits alongside my\n"
-	.string "Rock-type POKEMON.\p"
+	.string "pushing my limits with my Rock-types.\p"
 	.string "Show me how you battle, and which\n"
 	.string "POKEMON you brought to climb this!$"
 
 RustboroCity_Gym_Text_RoxanneDefeat:
 	.string "Whoa... No way...\n"
 	.string "So I really lost...\p"
-	.string "Damn, this feels just like failing a\n"
+	.string "Damn, this feels like failing a\n"
 	.string "climbing route... Sucks...\p"
-	.string "But... I get it.\p"
-	.string "According to the POKEMON LEAGUE rules,\n"
-	.string "TRAINERS who defeat a GYM LEADER must\n"
-	.string "be awarded this.\p"
+	.string "But... I get it.\n"
 	.string "Please accept the official POKEMON\n"
 	.string "LEAGUE STONE BADGE.$"
 
@@ -248,20 +237,18 @@ RustboroCity_Gym_Text_StoneBadgeInfoTakeThis:
 	.string "Please take this with you, too.$"
 
 RustboroCity_Gym_Text_ExplainRockTomb:
-	.string "That TECHNICAL MACHINE, TM39,\n"
-	.string "contains ROCK TOMB.\p"
-	.string "It not only inflicts damage by dropping\n"
-	.string "rocks, it also lowers SPEED.\p"
-	.string "If you use a TM, it instantly teaches\n"
-	.string "the move to a POKEMON.\p"
+	.string "That TM39 contains ROCK TOMB.\p"
+	.string "It inflicts damage and lowers SPEED.\p"
+	.string "A TM instantly teaches the move\n"
+	.string "to a POKEMON.\p"
 	.string "Remember, a TM can be used only once,\n"
 	.string "so think before you use it.$"
 
 RustboroCity_Gym_Text_RoxannePostBattle:
-	.string "If you ever want a real challenge, come\n"
+	.string "If you want a real challenge, come\n"
 	.string "back later - I'll have my true team ready.\p"
-	.string "And who knows? Maybe we can even hit a\n"
-	.string "climbing route together someday!$"
+	.string "Maybe we can even hit a climbing\n"
+	.string "route together someday!$"
 
 RustboroCity_Gym_Text_GymStatue:
 	.string "RUSTBORO CITY POKEMON GYM$"
@@ -276,16 +263,14 @@ RustboroCity_Gym_Text_RoxanneRegisterCall:
 	.string "... ... ... ... ... Beep!\p"
 	.string "TERRA: Hey, {PLAYER}!\n"
 	.string "It's TERRA from RUSTBORO CITY.\p"
-	.string "I heard from BRAWLY that you're\n"
-	.string "climbing the ranks crazy fast.\n"
-	.string "Nice work!\p"
-	.string "But don't think for a second that\n"
-	.string "I'm letting you stay ahead of me.\p"
-	.string "I'm training hard and tuning up my\n"
-	.string "GYM - next time, I'll have a real wall\n"
-	.string "for you to climb!\p"
-	.string "I hope you're as excited for our\n"
-	.string "rematch as I am!\p"
+	.string "RENTON called me - said there's some\n"
+	.string "rookie with a cape who looks badass.\p"
+	.string "Then he invited me for a night out\n"
+	.string "to get into trouble around town.\p"
+	.string "Obviously I said no! I've got rocks\n"
+	.string "to climb and a Gym to run!\p"
+	.string "But don't get too comfortable ahead!\n"
+	.string "I'm training hard for our rematch!\p"
 	.string "... ... ... ... ... ...\n"
 	.string "... ... ... ... ... Click!$"
 
@@ -296,12 +281,11 @@ RustboroCity_Gym_Text_RegisteredRoxanne:
 RustboroCity_Gym_Text_RoxannePreRematch:
 	.string "TERRA: Hey, you're back! Great to see\n"
 	.string "you again on my mountain.\p"
-	.string "I'm TERRA, the GYM LEADER here - and since\n"
-	.string "our last battle, I hit the summit and\n"
-	.string "encountered some badass Rock-type POKEMON.\p"
-	.string "I've been training nonstop with them.\n"
-	.string "Now I want to see how much we've both\n"
-	.string "leveled up!\p"
+	.string "I'm TERRA - since our last battle,\n"
+	.string "I hit the summit and found some\l"
+	.string "badass Rock-type POKEMON.\p"
+	.string "I've been training nonstop.\n"
+	.string "Let's see how much we've leveled up!\p"
 	.string "Ready for a real rematch?\n"
 	.string "Let's CLIMB!$"
 
@@ -311,21 +295,19 @@ RustboroCity_Gym_Text_RoxanneRematchDefeat:
 
 RustboroCity_Gym_Text_RoxannePostRematch:
 	.string "TERRA: Guess I've still got some climbing\n"
-	.string "to do when it comes to POKEMON battles.\p"
-	.string "But realizing that just fires me up even\n"
-	.string "more - there's always another peak to reach!$"
+	.string "to do in POKEMON battles.\p"
+	.string "But that fires me up - there's always\n"
+	.string "another peak to reach!$"
 
 RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
-	.string "TERRA: Hey, you're back! Always good to\n"
-	.string "see you on my mountain.\p"
-	.string "We've both climbed through tons of\n"
-	.string "battles since last time, huh?\p"
-	.string "I was hoping to see how much stronger\n"
-	.string "we've both become...\p"
+	.string "TERRA: Hey, you're back! Always good\n"
+	.string "to see you on my mountain.\p"
+	.string "We've both climbed through tons\n"
+	.string "of battles since last time, huh?\p"
 	.string "Oh - hold up.\n"
-	.string "You've only got one POKEMON with you?\p"
-	.string "Come back with at least one more so we\n"
-	.string "can have a real climb of a battle!$"
+	.string "You've only got one POKEMON?\p"
+	.string "Come back with at least one more\n"
+	.string "for a real climb of a battle!$"
 
 RustboroCity_Gym_Text_AskDifficulty:
 	.string "GYM GUIDE: Before you challenge\n"
@@ -340,5 +322,7 @@ RustboroCity_Gym_Text_HardSelected:
 RustboroCity_Gym_Text_NormalSelected:
 	.string "GYM GUIDE: Casual mode selected!\n"
 	.string "TERRA is waiting!$"
+
+
 
 

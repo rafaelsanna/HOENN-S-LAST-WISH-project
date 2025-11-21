@@ -7,7 +7,7 @@ DewfordTown_Gym_OnTransition:
 	end
 
 DewfordTown_Gym_EventScript_SetFlashLevel::
-	goto_if_defeated TRAINER_BRAWLY_1, DewfordTown_Gym_EventScript_SetLightsOn
+	goto_if_set FLAG_DEFEATED_DEWFORD_GYM, DewfordTown_Gym_EventScript_SetLightsOn
 	call DewfordTown_Gym_EventScript_CountTrainersDefeated
 	copyvar VAR_0x8001, VAR_0x8000
 	goto_if_eq VAR_0x8000, 0, DewfordTown_Gym_EventScript_SetFlashLevel7
@@ -133,39 +133,56 @@ DewfordTown_Gym_EventScript_StopCountingTrainers::
 	return
 
 DewfordTown_Gym_EventScript_Brawly::
-	trainerbattle_single TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
-	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
-	msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
-	release
-	end
+    lock
+    faceplayer
+
+    @ === MANUAL DIFFICULTY CHECK ===
+    copyvar VAR_0x8000, 0x5050
+    compare VAR_0x8000, 1
+    goto_if_eq DewfordTown_Gym_BrawlyHard
+
+    @ Normal - TRAINER_BRAWLY_1
+    trainerbattle_single TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
+    goto DewfordTown_Gym_AfterBattle
+
+DewfordTown_Gym_BrawlyHard::
+    @ Hard - TRAINER_BRAWLY
+    trainerbattle_single TRAINER_BRAWLY, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
+
+DewfordTown_Gym_AfterBattle::
+    specialvar VAR_RESULT, ShouldTryRematchBattle
+    goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
+    goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
+    msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
+    release
+    end	
 
 DewfordTown_Gym_EventScript_BrawlyDefeated::
-	call DewfordTown_Gym_EventScript_AnimateFlashFullBrightness
-	message DewfordTown_Gym_Text_ReceivedKnuckleBadge
-	waitmessage
-	call Common_EventScript_PlayGymBadgeFanfare
-	msgbox DewfordTown_Gym_Text_KnuckleBadgeInfoTakeThis, MSGBOX_DEFAULT
-	setflag FLAG_DEFEATED_DEWFORD_GYM
-	setflag FLAG_BADGE02_GET
-	addvar VAR_PETALBURG_GYM_STATE, 1
-	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
-	setvar VAR_0x8008, 2
-	call Common_EventScript_SetGymTrainers
-	call DewfordTown_Gym_EventScript_GiveBulkUp
-	closemessage
-	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox DewfordTown_Gym_Text_RegisteredBrawly, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_ENABLE_BRAWLY_MATCH_CALL
-	setvar VAR_ROXANNE_CALL_STEP_COUNTER, 0
-	setflag FLAG_ENABLE_ROXANNE_FIRST_CALL
-	release
-	end
+    call DewfordTown_Gym_EventScript_AnimateFlashFullBrightness
+    message DewfordTown_Gym_Text_ReceivedKnuckleBadge
+    waitmessage
+    call Common_EventScript_PlayGymBadgeFanfare
+    msgbox DewfordTown_Gym_Text_KnuckleBadgeInfoTakeThis, MSGBOX_DEFAULT
+    setflag FLAG_DEFEATED_DEWFORD_GYM
+    setflag FLAG_BADGE02_GET
+    addvar VAR_PETALBURG_GYM_STATE, 1
+    call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
+    setvar VAR_0x8008, 2
+    call Common_EventScript_SetGymTrainers
+    call DewfordTown_Gym_EventScript_GiveBulkUp
+    closemessage
+    delay 30
+    playfanfare MUS_REGISTER_MATCH_CALL
+    msgbox DewfordTown_Gym_Text_RegisteredBrawly, MSGBOX_DEFAULT
+    waitfanfare
+    closemessage
+    delay 30
+    setflag FLAG_ENABLE_BRAWLY_MATCH_CALL
+    setvar VAR_ROXANNE_CALL_STEP_COUNTER, 0
+    setflag FLAG_ENABLE_ROXANNE_FIRST_CALL
+    release
+    end
+
 
 DewfordTown_Gym_EventScript_GiveBulkUp::
 	giveitem ITEM_TM_BULK_UP
@@ -304,14 +321,13 @@ DewfordTown_Gym_EventScript_GymStatue::
 DewfordTown_Gym_Text_GymGuideAdvice:
 	.string "Hey, how's it going, CHAMPION-\n"
 	.string "bound {PLAYER}?\p"
-	.string "RENTON, DEWFORD's GYM LEADER, is wild!\n"
-	.string "He loves tough battles and hits hard,\l"
-	.string "so prepare for serious FIGHTING power!\p"
-	.string "Going in with NORMAL-types is asking\n"
-	.string "for trouble FIGHTING moves crush them!\p"
-	.string "And yeah… the Gym is super dark.\n"
-	.string "RENTON likes it that way.\p"
-	.string "Beat the TRAINERS and it gets brighter.\n"
+	.string "RENTON loves tough battles and\n"
+	.string "hits hard. Prepare for FIGHTING power!\p"
+	.string "NORMAL-types are asking for trouble.\n"
+	.string "FIGHTING moves crush them!\p"
+	.string "The Gym is super dark. RENTON likes\n"
+	.string "it that way.\p"
+	.string "Beat TRAINERS and it gets brighter.\n"
 	.string "Good luck!$"
 
 DewfordTown_Gym_Text_GymGuidePostVictory:
@@ -330,37 +346,32 @@ DewfordTown_Gym_Text_TakaoPostBattle:
 	.string "Your skill overcame my strength!\n"
 	.string "Your technique is commendable!$"
 
-
 DewfordTown_Gym_Text_JocelynIntro:
-	.string "No way I am letting RENTON handle this!\n"
-	.string "Trust me... you do NOT want that!\p"
-	.string "I would rather deal with wild Pokemon,\n"
-	.string "dark caves, even the ELITE FOUR,\n"
-	.string "than get dragged into one of his\n"
-	.string "crazy street brawls!\p"
+	.string "No way I'm letting RENTON handle this!\n"
+	.string "You do NOT want that!\p"
+	.string "I'd rather face wild Pokemon or even\n"
+	.string "the ELITE FOUR than his street brawls!\p"
 	.string "He demolished the old Gym Leader,\n"
-	.string "and it was NOT even a Pokemon battle!\n"
+	.string "and it wasn't even a Pokemon battle!\n"
 	.string "Hahaha!$"
 
 DewfordTown_Gym_Text_JocelynDefeat:
-	.string "You are tough... but be careful!\n"
-	.string "Do not go acting all cocky around RENTON,\p"
-	.string "or you will end up in real trouble!\n"
-	.string "Then again... he does respect tough\n"
-	.string "fighters like you...$"
+	.string "You're tough... but be careful!\n"
+	.string "Don't get cocky around RENTON,\p"
+	.string "or you'll end up in real trouble!\n"
+	.string "But he respects fighters like you...$"
 
 DewfordTown_Gym_Text_JocelynPostBattle:
 	.string "That battle fired me up!\n"
-	.string "I am gonna train like crazy!\p"
-	.string "One day I will be totally badass...\n"
+	.string "I'm gonna train like crazy!\p"
+	.string "One day I'll be totally badass...\n"
 	.string "just like RENTON!$"
 
-
 DewfordTown_Gym_Text_LauraIntro:
-	.string "Do NOT brush me off!\n"
-	.string "I am the one blasting ROCK music in here!\p"
-	.string "The dark? I do not care about that!\n"
-	.string "I grew up hanging out with RENTON!\p"
+	.string "Don't brush me off!\n"
+	.string "I blast ROCK music in here!\p"
+	.string "The dark? I don't care about that!\n"
+	.string "I grew up hanging with RENTON!\p"
 	.string "Street fights, loud nights, bad lighting...\n"
 	.string "This Gym is exactly my vibe!$"
 
@@ -371,91 +382,84 @@ DewfordTown_Gym_Text_LauraDefeat:
 DewfordTown_Gym_Text_LauraPostBattle:
 	.string "Huh? Me and RENTON?\n"
 	.string "A thing? No way!\p"
-	.string "We are just friends, do not be weird!\n"
-	.string "Seriously, stop imagining stuff!$"
+	.string "We're just friends, don't be weird!\n"
+	.string "Stop imagining stuff!$"
 
 DewfordTown_Gym_Text_LilithIntro:
 	.string "Ufufu...\n"
 	.string "You, with those weird clothes!\n"
-	.string "Are you just stumbling around in the dark?$"
+	.string "Stumbling around in the dark?$"
 
 DewfordTown_Gym_Text_LilithDefeat:
 	.string "Oh, you... weirdo...\n"
-	.string "I do NOT want to know you!$"
+	.string "I don't want to know you!$"
 
 DewfordTown_Gym_Text_LilithPostBattle:
 	.string "You deserve to get lost and end up\n"
-	.string "back at the entrance again!\p"
-	.string "After a while in the dark, we get used to it.\n"
-	.string "Just like street fights... the more we get,\n"
+	.string "back at the entrance!\p"
+	.string "We get used to the dark here.\n"
+	.string "Just like street fights... the more,\n"
 	.string "the better we become!$"
 
-
 DewfordTown_Gym_Text_BrendenIntro:
-	.string "HAHAHA! During one of RENTON's wild nights,\n"
-	.string "I ended up becoming friends with him!\p"
-	.string "We threw hands, and I got beat up real bad,\n"
-	.string "HAHAHA! But he saw I was tough, so now\n"
-	.string "we are pals!\p"
-	.string "I am a sailor, y'know! I have seen storms,\n"
-	.string "ship brawls, bar fights, you name it!\p"
+	.string "HAHAHA! During one of RENTON's wild\n"
+	.string "nights, we became friends!\p"
+	.string "We threw hands, I got beat up bad,\n"
+	.string "HAHAHA! But he saw I was tough!\p"
+	.string "I'm a sailor! I've seen storms,\n"
+	.string "ship brawls, bar fights, everything!\p"
 	.string "So come on, cape guy!\n"
 	.string "Show me what you got!$"
 
 DewfordTown_Gym_Text_BrendenDefeat:
-	.string "Not bad! But this was nothing compared to\n"
-	.string "the beatdowns RENTON gives me!\p"
+	.string "Not bad! But this was nothing compared\n"
+	.string "to RENTON's beatdowns!\p"
 	.string "That was easy stuff!\n"
-	.string "You still got a long way to go!$"
+	.string "You've got a long way to go!$"
 
 DewfordTown_Gym_Text_BrendenPostBattle:
-	.string "Rules are rules, yknow.\n"
-	.string "Go on, you are about to take an\n"
-	.string "ancient beatdown from RENTON!\p"
+	.string "Rules are rules, y'know.\n"
+	.string "Go on, take your beatdown from RENTON!\p"
 	.string "After that, we can sail off and\n"
-	.string "drink till sunrise!\n"
-	.string "RENTON is the man!$"
-
+	.string "drink till sunrise! RENTON's the man!$"
 
 DewfordTown_Gym_Text_CristianIntro:
 	.string "If you want to pass, you fight me first!\p"
-	.string "Around here, strength matters...\n"
+	.string "Strength matters here...\n"
 	.string "just like in any street brawl!\p"
-	.string "I am a punk, and proud of it!\n"
-	.string "Only reason I am in this Gym is because\n"
-	.string "I grew up with RENTON!\n"
-	.string "We have been scrapping since kindergarten!$"
+	.string "I'm a punk, and proud of it!\n"
+	.string "I'm here because I grew up with RENTON!\n"
+	.string "We've been scrapping since kindergarten!$"
 
 DewfordTown_Gym_Text_CristianDefeat:
 	.string "Grrrrr!\n"
-	.string "Vastly overpowered!$"
+	.string "You got lucky!$"
 
 DewfordTown_Gym_Text_CristianPostBattle:
 	.string "Fine! You win!\n"
 	.string "Go after that BADGE!\p"
-	.string "With moves like that, you would survive\n"
+	.string "With moves like that, you'd survive\n"
 	.string "a real street fight too!$"
 
 DewfordTown_Gym_Text_BrawlyIntro:
 	.string "Yo! I'm RENTON!\n"
 	.string "DEWFORD's new GYM LEADER!\p"
-	.string "I'm forged in street brawls and back-alley fights,\n"
-	.string "where fists fly harder than any fancy move\l"
-	.string "you learn in a cave!\p"
-	.string "Heh... I took down the last Gym Leader here\n"
-	.string "with my own fists. Can't even remember his name!\p"
+	.string "I'm forged in street brawls and\n"
+	.string "back-alley fights. Fists fly harder\l"
+	.string "than any fancy cave move!\p"
+	.string "I took down the last Leader here\n"
+	.string "with my own fists. Forgot his name!\p"
 	.string "So, you wanna challenge me?\n"
-	.string "Then show me what you're made of!$"
+	.string "Show me what you're made of!$"
 
 DewfordTown_Gym_Text_BrawlyDefeat:
-	.string "Whoah, damn! You hit way harder than I\n"
-	.string "thought you would!\p"
-	.string "You totally wrecked me!\p"
-	.string "Alright, alright, you got me.\n"
-	.string "Take this GYM BADGE!\p"
-	.string "But you'd better run along now, kid...\n"
-	.string "or you might end up picking a real fight\n"
-	.string "with me! HAHAHAHAHA!$"
+	.string "Whoah, damn! You hit way harder than\n"
+	.string "I thought you would!\p"
+	.string "You totally wrecked me!\n"
+	.string "Alright, take this GYM BADGE!\p"
+	.string "But you'd better run along now...\n"
+	.string "or you might pick a real fight with me!\n"
+	.string "HAHAHAHAHA!$"
 
 DewfordTown_Gym_Text_ReceivedKnuckleBadge:
 	.string "{PLAYER} received the KNUCKLE BADGE\n"
@@ -463,17 +467,15 @@ DewfordTown_Gym_Text_ReceivedKnuckleBadge:
 
 DewfordTown_Gym_Text_KnuckleBadgeInfoTakeThis:
 	.string "The KNUCKLE BADGE makes all POKéMON\n"
-	.string "up to Level 30, even those you get in\l"
-	.string "trades, obey without question.\p"
-	.string "And, you'll be able to use the HM move\n"
-	.string "FLASH outside of battle.\p"
+	.string "up to Level 30 obey without question.\p"
+	.string "And you can use FLASH outside\n"
+	.string "of battle.\p"
 	.string "If you'd like, use this TECHNICAL\n"
 	.string "MACHINE, too.$"
 
 DewfordTown_Gym_Text_ExplainBulkUp:
 	.string "That TM08 contains BULK UP.\p"
-	.string "It's a move that raises both ATTACK\n"
-	.string "and DEFENSE stats.\p"
+	.string "It raises both ATTACK and DEFENSE.\p"
 	.string "… … … … … …$"
 
 DewfordTown_Gym_Text_RegisteredBrawly:
@@ -481,12 +483,11 @@ DewfordTown_Gym_Text_RegisteredBrawly:
 	.string "in the POKéNAV.$"
 
 DewfordTown_Gym_Text_BrawlyPostBattle:
-	.string "Heh, I can tell you've been in plenty of\n"
-	.string "fights out there, kid... HAHAHA!\l"
-	.string "Looks like you know how to have fun!\p"
+	.string "Heh, I can tell you've been in plenty\n"
+	.string "of fights, kid... HAHAHA!\l"
+	.string "You know how to have fun!\p"
 	.string "Let's clash again someday, yeah?\n"
-	.string "Or maybe just hang out and trade stories\n"
-	.string "from the streets next time!\n"
+	.string "Or hang out and trade street stories!\n"
 	.string "HAHAHAHAHA!$"
 
 DewfordTown_Gym_Text_GymStatue:
@@ -494,55 +495,51 @@ DewfordTown_Gym_Text_GymStatue:
 
 DewfordTown_Gym_Text_GymStatueCertified:
 	.string "DEWFORD TOWN POKéMON GYM\p"
-	.string "BRAWLY'S CERTIFIED TRAINERS:\n"
+	.string "RENTON'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 DewfordTown_Gym_Text_BrawlyPreRematch:
-	.string "RENTON: Heh, look who decided to show up.\n"
-	.string "A real fighter always comes back for more.\p"
+	.string "RENTON: Heh, look who showed up.\n"
+	.string "A real fighter always comes back.\p"
 	.string "I knew you'd return, kiddo!\n"
-	.string "Could see it in the way you threw down!\p"
-	.string "Now come on, show me how much tougher\n"
-	.string "you've gotten since last time!$"
+	.string "Saw it in how you threw down!\p"
+	.string "Now show me how much tougher\n"
+	.string "you've gotten!$"
 
 DewfordTown_Gym_Text_BrawlyRematchDefeat:
 	.string "HAHAHAHA! That was insane!\n"
-	.string "Now THAT was a real fight!$"
-	.string "I'm so pumped up I'm gonna go\n"
-	.string "get completely wasted after this!\n"
-	.string "And who knows maybe I'll end up in\n"
-	.string "an awesome brawl with some sailor\n"
-	.string "out there! HAHAHAHAHA!$"
+	.string "Now THAT was a real fight!\p"
+	.string "I'm so pumped I'm gonna go get\n"
+	.string "wasted after this! Maybe find a\l"
+	.string "brawl with some sailor out there!\n"
+	.string "HAHAHAHAHA!$"
 
 DewfordTown_Gym_Text_BrawlyPostRematch:
-	.string "RENTON: Fighting’s wild and endless,\n"
-	.string "kid you never really see the bottom.\l"
-	.string "There’s always someone tougher out there\n"
+	.string "RENTON: Fighting's wild and endless,\n"
+	.string "kid. You never see the bottom.\p"
+	.string "There's always someone tougher\n"
 	.string "waiting to throw down!$"
 
 DewfordTown_Gym_Text_BrawlyRematchNeedTwoMons:
 	.string "RENTON: Heh, knew you'd come back,\n"
 	.string "kid! Real fighters always do.\p"
-	.string "But hold up...\n"
-	.string "You've only got one POKéMON\n"
-	.string "ready to throw down.\p"
-	.string "C’mon, don't make this a boring clash.\n"
-	.string "Bring at least two POKéMON and then\n"
-	.string "we'll have a real fight!$"
+	.string "But hold up... You've only got one\n"
+	.string "POKéMON ready to throw down.\p"
+	.string "Bring at least two POKéMON and\n"
+	.string "then we'll have a real fight!$"
 
 DewfordTown_Gym_Text_AskDifficulty:
 	.string "GYM GUIDE: Before you face RENTON,\n"
 	.string "I can adjust the challenge!\p"
-	.string "Want to battle on HARD mode where\n"
-	.string "TRAINERS use optimized teams?$"
+	.string "Want HARD mode where TRAINERS\n"
+	.string "use optimized teams?$"
 
 DewfordTown_Gym_Text_HardSelected:
 	.string "GYM GUIDE: Hard mode selected!\n"
-	.string "Get ready RENTON doesn't hold back!$"
+	.string "RENTON won't hold back!$"
 
 DewfordTown_Gym_Text_NormalSelected:
 	.string "GYM GUIDE: Casual mode selected!\n"
 	.string "RENTON is waiting!$"
-
 
 
