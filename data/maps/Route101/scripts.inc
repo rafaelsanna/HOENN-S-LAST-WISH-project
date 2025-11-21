@@ -109,6 +109,7 @@ Route101_Movement_ZigzagoonChaseInCircles:
 	walk_fast_right
 	walk_fast_down
 	walk_fast_down
+	walk_fast_down
 	walk_fast_left
 	walk_fast_left
 	step_end
@@ -137,6 +138,8 @@ Route101_Movement_EnterScene:
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
+	walk_fast_up
+	walk_fast_left
 	walk_in_place_faster_left
 	step_end
 
@@ -222,7 +225,7 @@ Route101_EventScript_BirchsBag::
 	setflag FLAG_RESCUED_BIRCH
 	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_ROUTE101_ZIGZAGOON
-	setobjectxy LOCALID_PLAYER, 6, 13
+	setobjectxy LOCALID_PLAYER, 11, 13
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	special ChooseStarter

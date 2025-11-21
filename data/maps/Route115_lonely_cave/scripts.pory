@@ -1,0 +1,9 @@
+mapscripts Route115_lonely_cave_MapScripts {}
+
+script LonelyCave1F_Hiker {
+	lock
+  faceplayer
+	msgbox(format("The bottom floor of this place is quite eerie!"))
+	release
+	end
+}
