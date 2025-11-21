@@ -12,48 +12,14 @@
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
-  "object_events": [
+  "connections": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_M)",
-      "x": 9,
-      "y": 16,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_F)",
-      "x": 18,
-      "y": 16,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SCIENTIST_2",
-      "x": 7,
-      "y": 7,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "LittlerootTown_2_EventScript_MoonStoneResearcher",
-      "flag": "0"
+      "map": "MAP_LITTLEROOT_COAST",
+      "offset": -3,
+      "direction": "right"
     }
   ],
+  "object_events": [],
   "warp_events": [],
   "coord_events": [],
   "bg_events": []
