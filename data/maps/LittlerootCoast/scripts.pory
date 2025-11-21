@@ -1,0 +1,17 @@
+mapscripts LittlerootCoast_MapScripts {}
+
+script BirdKeeperLee {
+  trainerbattle_single(TRAINER_LEE, LeeIntro, LeeLose)
+	lock
+	msgbox(format("I'm trying to catch a wingull!"))
+	release
+	end
+}
+
+text LeeIntro {
+	"Did you know most birds can fly?"
+}
+
+text LeeLose {
+	"But they can't always win..."
+}

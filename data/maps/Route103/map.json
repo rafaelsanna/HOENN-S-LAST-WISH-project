@@ -15,7 +15,7 @@
   "connections": [
     {
       "map": "MAP_OLDALE_TOWN",
-      "offset": 0,
+      "offset": -2,
       "direction": "down"
     },
     {
@@ -25,7 +25,7 @@
     },
     {
       "map": "MAP_OLDALE_FIELD",
-      "offset": 20,
+      "offset": 22,
       "direction": "down"
     }
   ],
