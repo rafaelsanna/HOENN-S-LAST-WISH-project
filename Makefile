@@ -1,12 +1,12 @@
 # GBA rom header
-TITLE       := POKEMON EMER
+TITLE       := POKEMON HLW
 GAME_CODE   := BPEE
 MAKER_CODE  := 01
 REVISION    := 0
 KEEP_TEMPS  ?= 0
 
 # `File name`.gba
-FILE_NAME := pokeemerald
+FILE_NAME := Pokemon_HLW
 BUILD_DIR := build
 
 # Compares the ROM to a checksum of the original - only makes sense using when non-modern

@@ -24,8 +24,8 @@
       "direction": "left"
     },
     {
-      "map": "MAP_ROUTE116_2",
-      "offset": 14,
+      "map": "MAP_RUSTURF_GROVE",
+      "offset": 20,
       "direction": "down"
     }
   ],
@@ -445,6 +445,20 @@
       "elevation": 0,
       "dest_map": "MAP_TERRA_CAVE_ENTRANCE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 49,
+      "y": 15,
+      "elevation": 0,
+      "dest_map": "MAP_RUSTURF_GROVE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 50,
+      "y": 15,
+      "elevation": 0,
+      "dest_map": "MAP_RUSTURF_GROVE",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

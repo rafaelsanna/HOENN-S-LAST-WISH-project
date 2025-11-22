@@ -1185,7 +1185,7 @@ EventScript_VsSeekerChargingDone::
 
 	.include "data/maps/Route115_2/scripts.inc"
 
-	.include "data/maps/Route115_lonely_cave/scripts.inc"
+	.include "data/maps/LonelyCave_1F/scripts.inc"
 
 	.include "data/maps/GraniteHill/scripts.inc"
 
@@ -1194,3 +1194,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LonelyCave_B1/scripts.inc"
 
 	.include "data/maps/LonelyCave_B2/scripts.inc"
+
+	.include "data/maps/RusturfGrove/scripts.inc"

@@ -4542,14 +4542,14 @@
       "blockdata_filepath": "data/layouts/Route115_2/map.bin"
     },
     {
-      "id": "LAYOUT_ROUTE115_LONELY_CAVE",
-      "name": "Route115_lonely_cave_Layout",
+      "id": "LAYOUT_LONELY_CAVE_1F",
+      "name": "LonelyCave_1F_Layout",
       "width": 13,
       "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/Route115_lonely_cave/border.bin",
-      "blockdata_filepath": "data/layouts/Route115_lonely_cave/map.bin"
+      "border_filepath": "data/layouts/LonelyCave_1F/border.bin",
+      "blockdata_filepath": "data/layouts/LonelyCave_1F/map.bin"
     },
     {
       "id": "LAYOUT_GRANITE_HILL",
@@ -4590,6 +4590,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/LonelyCave_B2/border.bin",
       "blockdata_filepath": "data/layouts/LonelyCave_B2/map.bin"
+    },
+    {
+      "id": "LAYOUT_RUSTURF_GROVE",
+      "name": "RusturfGrove_Layout",
+      "width": 48,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/RusturfGrove/border.bin",
+      "blockdata_filepath": "data/layouts/RusturfGrove/map.bin"
     }
   ]
 }

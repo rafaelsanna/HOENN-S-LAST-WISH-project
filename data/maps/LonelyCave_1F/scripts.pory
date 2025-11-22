@@ -1,4 +1,4 @@
-mapscripts Route115_lonely_cave_MapScripts {}
+mapscripts LonelyCave_1F_MapScripts {}
 
 script LonelyCave1F_Hiker {
 	lock

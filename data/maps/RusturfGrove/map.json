@@ -1,0 +1,41 @@
+{
+  "id": "MAP_RUSTURF_GROVE",
+  "name": "RusturfGrove",
+  "layout": "LAYOUT_RUSTURF_GROVE",
+  "music": "MUS_DUMMY",
+  "region_map_section": "MAPSEC_ROUTE_116",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": true,
+  "allow_running": true,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_ROUTE116",
+      "offset": -20,
+      "direction": "up"
+    }
+  ],
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 29,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE116",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 30,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE116",
+      "dest_warp_id": "6"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

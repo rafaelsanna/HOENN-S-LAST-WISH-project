@@ -74,7 +74,7 @@
     "Route115",
     "Route115_2",
     "Route116",
-    "Route116_2",
+    "RusturfGrove",
     "Route117",
     "Route118",
     "Route119",
@@ -103,9 +103,7 @@
     "LITTLEROOT_TOWN_01",
     "MOSSDEEP01",
     "Littleroottown_House01",
-    "Route115_lonely_cave",
-    "LonelyCave_B1",
-    "LonelyCave_B2"
+    "Route116_2"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",
@@ -340,6 +338,9 @@
     "Route121_SafariZoneEntrance"
   ],
   "gMapGroup_Dungeons": [
+    "LonelyCave_1F",
+    "LonelyCave_B1",
+    "LonelyCave_B2",
     "MeteorFalls_1F_1R",
     "MeteorFalls_1F_2R",
     "MeteorFalls_B1F_1R",

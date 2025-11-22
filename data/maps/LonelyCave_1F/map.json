@@ -1,7 +1,7 @@
 {
-  "id": "MAP_ROUTE115_LONELY_CAVE",
-  "name": "Route115_lonely_cave",
-  "layout": "LAYOUT_ROUTE115_LONELY_CAVE",
+  "id": "MAP_LONELY_CAVE_1F",
+  "name": "LonelyCave_1F",
+  "layout": "LAYOUT_LONELY_CAVE_1F",
   "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_ROUTE_115",
   "requires_flash": false,
