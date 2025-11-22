@@ -6143,6 +6143,23 @@ Meditite
 Level: 12
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
+=== TRAINER_CAESAR ===
+Name: CAESAR
+Class: Camper
+Pic: Camper
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Poliwag
+Level: 7
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Mankey
+Level: 7
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
 === TRAINER_BILLY ===
 Name: BILLY
 Class: Youngster
@@ -13240,7 +13257,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Wingull
-Level: 9
+Level: 8
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Magikarp

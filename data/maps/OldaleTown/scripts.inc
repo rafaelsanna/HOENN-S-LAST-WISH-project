@@ -15,6 +15,10 @@ OldaleTown_EventScript_SetOldaleState::
 	setvar VAR_OLDALE_TOWN_STATE, 1
 	return
 
+OldaleTown_EventScript_ShopSign::
+	msgbox OldaleTown_Text_ShopSign, MSGBOX_SIGN
+	end
+
 OldaleTown_EventScript_BlockWestEntrance::
 	setobjectxyperm LOCALID_FOOTPRINTS_MAN, 1, 11
 	setobjectmovementtype LOCALID_FOOTPRINTS_MAN, MOVEMENT_TYPE_FACE_LEFT
@@ -403,3 +407,6 @@ OldaleTown_Text_TownSign:
 	.string "OLDALE TOWN\n"
 	.string "“Where things start off scarce.”$"
 
+OldaleTown_Text_ShopSign:
+	.string "OLDALE SHOP\n"
+	.string "We got cool stuff!$"
