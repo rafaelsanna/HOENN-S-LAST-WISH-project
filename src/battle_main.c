@@ -371,6 +371,15 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_CLIMBER] = { _("CLIMBER"), 10 },
     [TRAINER_CLASS_ARTIST] = { _("ARTIST"), 10 },
     [TRAINER_CLASS_PUNK] = { _("PUNK"), 10 },
+    [TRAINER_CLASS_WORKER] = { _("WORKER"), 10 },
+    [TRAINER_CLASS_DIVER] = { _("DIVER"), 10 },
+    [TRAINER_CLASS_CHEERLEADER] = { _("CHEERLEADER"), 10 },
+    [TRAINER_CLASS_BAKER] = { _("BAKER"), 10 },
+    [TRAINER_CLASS_PHOTOGRAPHER] = { _("PHOTOGRAPHER"), 10 },
+    [TRAINER_CLASS_KIMONO_LADY] = { _("KIMONO LADY"), 10 },
+    [TRAINER_CLASS_TEACHER] = { _("TEACHER"), 10 },
+    [TRAINER_CLASS_NERD] = { _("NERD"), 10 },
+    [TRAINER_CLASS_SAGE] = { _("SAGE"), 10 },
 };
 
 static void (*const sTurnActionsFuncsTable[])(void) =

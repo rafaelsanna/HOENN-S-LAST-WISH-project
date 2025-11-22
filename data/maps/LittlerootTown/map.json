@@ -68,8 +68,8 @@
     {
       "local_id": "LOCALID_LITTLEROOT_MOM",
       "graphics_id": "OBJ_EVENT_GFX_MOM",
-      "x": 7,
-      "y": 7,
+      "x": -22,
+      "y": 4,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
@@ -195,7 +195,7 @@
       "dest_warp_id": "1"
     },
     {
-      "x": 7,
+      "x": 9,
       "y": 7,
       "elevation": 0,
       "dest_map": "MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F",

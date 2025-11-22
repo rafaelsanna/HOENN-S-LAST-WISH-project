@@ -142,9 +142,28 @@
 #define TRAINER_PIC_NINJA_BOY2           124
 #define TRAINER_PIC_NINJA_GIRL           125
 #define TRAINER_PIC_GUITARIST_F          126
-
+#define TRAINER_PIC_CHEERLEADER          127
+#define TRAINER_PIC_BAKER                128
+#define TRAINER_PIC_HIKERCLIMBER_F       129
+#define TRAINER_PIC_HIKER2               130
+#define TRAINER_PIC_DIVER                131
+#define TRAINER_PIC_DIVER2               132
+#define TRAINER_PIC_DIVER3               133
+#define TRAINER_PIC_HIKERCLIMBER_F2      134
+#define TRAINER_PIC_WORKER               135
+#define TRAINER_PIC_WORKER2              136
+#define TRAINER_PIC_WORKER3              137
+#define TRAINER_PIC_WORKER_F             138
+#define TRAINER_PIC_SAGE                 139
+#define TRAINER_PIC_SUPERNERD            140
+#define TRAINER_PIC_TEACHER              141
+#define TRAINER_PIC_KIMONOLADY           142
+#define TRAINER_PIC_ARTIST2              143
+#define TRAINER_PIC_PHOTOGRAPHER         144
+#define TRAINER_PIC_WORKER_F2            145
 // COUNT
-#define TRAINER_PIC_COUNT                127
+
+#define TRAINER_PIC_COUNT                146
 
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
@@ -242,8 +261,17 @@
 #define FACILITY_CLASS_ClIMBER               0x52
 #define FACILITY_CLASS_ARTIST                0x53
 #define FACILITY_CLASS_PUNK                  0x53
+#define FACILITY_CLASS_WORKER                0x54
+#define FACILITY_CLASS_DIVER                 0x55
+#define FACILITY_CLASS_CHEERLEADER           0x56
+#define FACILITY_CLASS_BAKER                 0x57
+#define FACILITY_CLASS_PHOTOGRAPHER          0x58
+#define FACILITY_CLASS_KIMONO_LADY           0x59
+#define FACILITY_CLASS_TEACHER               0x5A
+#define FACILITY_CLASS_NERD                  0x5B
+#define FACILITY_CLASS_SAGE                  0x5C
 
-#define FACILITY_CLASSES_COUNT               0x54
+#define FACILITY_CLASSES_COUNT               0x5D
 
 #define RS_FACILITY_CLASS_AQUA_LEADER_ARCHIE    0x0
 #define RS_FACILITY_CLASS_AQUA_GRUNT_M          0x1
@@ -396,6 +424,15 @@ enum TrainerClassID
     TRAINER_CLASS_CLIMBER,
     TRAINER_CLASS_ARTIST,
     TRAINER_CLASS_PUNK,
+    TRAINER_CLASS_WORKER,
+    TRAINER_CLASS_DIVER,
+    TRAINER_CLASS_CHEERLEADER,
+    TRAINER_CLASS_BAKER,
+    TRAINER_CLASS_PHOTOGRAPHER,
+    TRAINER_CLASS_KIMONO_LADY,
+    TRAINER_CLASS_TEACHER,
+    TRAINER_CLASS_NERD,
+    TRAINER_CLASS_SAGE,
     TRAINER_CLASS_COUNT,
 };
 
