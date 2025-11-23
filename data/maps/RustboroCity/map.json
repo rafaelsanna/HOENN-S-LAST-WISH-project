@@ -188,7 +188,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "ITEM_X_DEFEND",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_RUSTBORO_CITY_X_DEFEND"
+      "flag": "FLAG_ITEM_RUSTBORO_CITY_TINY_MUSHROOM"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_4",
@@ -253,9 +253,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_X_DEFEND",
+      "trainer_sight_or_berry_tree_id": "ITEM_TINY_MUSHROOM",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_RUSTBORO_CITY_X_DEFEND"
+      "flag": "FLAG_ITEM_RUSTBORO_CITY_TINY_MUSHROOM"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",

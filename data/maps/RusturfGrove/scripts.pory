@@ -1,0 +1,17 @@
+mapscripts RusturfGrove_MapScripts {}
+
+script ArtistFragonard {
+  trainerbattle_single(TRAINER_FRAGONARD, FragonardIntro, FragonardLose)
+	lock
+	msgbox(format("My favorite thing to paint are forests, but I get jumped by wild pokémon sometimes!"))
+	release
+	end
+}
+
+text FragonardIntro {
+	"Isn't this place just beautiful?"
+}
+
+text FragonardLose {
+	"If only I were as strong as this place was pretty..."
+}

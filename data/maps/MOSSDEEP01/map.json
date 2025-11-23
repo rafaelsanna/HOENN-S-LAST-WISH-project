@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "JIRACHI",
+      "local_id": "LOCALID_MOSSDEEP_JIRACHI",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(BASCULIN)",
       "x": 24,
       "y": 12,
@@ -29,7 +29,7 @@
       "flag": "0"
     },
     {
-      "local_id": "item_quest_01",
+      "local_id": "LOCALID_TIME_GEAR_1",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
       "x": 43,
       "y": 25,
@@ -43,7 +43,7 @@
       "flag": "FLAG_MOSSDEEP_COLLECTED_ITEM_1"
     },
     {
-      "local_id": "item_quest_02",
+      "local_id": "LOCALID_TIME_GEAR_2",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
       "x": 63,
       "y": 46,
@@ -57,7 +57,7 @@
       "flag": "FLAG_MOSSDEEP_COLLECTED_ITEM_2"
     },
     {
-      "local_id": "item_quest_03",
+      "local_id": "LOCALID_TIME_GEAR_3",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
       "x": 22,
       "y": 28,
@@ -71,7 +71,7 @@
       "flag": "FLAG_MOSSDEEP_COLLECTED_ITEM_3"
     },
     {
-      "local_id": "MillenniumComet01",
+      "local_id": "LOCALID_MILLENNIUM_COMET",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZWEILOUS)",
       "x": 25,
       "y": 11,
@@ -85,6 +85,7 @@
       "flag": "FLAG_HIDE_MOSSDEEP_COMET"
     },
     {
+      "local_id": "LOCALID_WINGULL",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 45,
       "y": 64,
@@ -111,7 +112,7 @@
       "flag": "0"
     },
     {
-      "local_id": "CELEBI_STATIC",
+      "local_id": "LOCALID_CELEBI_STATIC",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CELEBI)",
       "x": 53,
       "y": 25,
@@ -204,6 +205,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SURVIVOR",
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
       "x": 20,
       "y": 65,
@@ -256,7 +258,7 @@
       "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
     },
     {
-      "local_id": "WAILORD_BLOCKER",
+      "local_id": "LOCALID_WAILORD_BLOCKER",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZEKROM)",
       "x": 33,
       "y": 22,
@@ -331,7 +333,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MOSSDEEP01_EventScript_WallyNotReady::",
+      "script": "MOSSDEEP01_EventScript_WallyNotReady",
       "flag": "FLAG_HIDE_WALLY_CLONE"
     },
     {
@@ -357,7 +359,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "script": "MOSSDEEP01_EventScript_MightyenaFriendly",
       "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
@@ -370,7 +372,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "script": "MOSSDEEP01_EventScript_MightyenaFriendly",
       "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
@@ -383,7 +385,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "script": "MOSSDEEP01_EventScript_MightyenaFriendly",
       "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
@@ -409,7 +411,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_MightyenaBusy",
+      "script": "MOSSDEEP01_EventScript_MightyenaFriendly",
       "flag": "FLAG_MOSSDEEP_CELEBI_RESCUED"
     },
     {
@@ -732,7 +734,7 @@
       "elevation": 0,
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_BattlePathClear"
+      "script": "MOSSDEEP01_EventScript_WailordPathClear"
     },
     {
       "type": "trigger",
@@ -741,7 +743,7 @@
       "elevation": 0,
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "0",
-      "script": "MOSSDEEP01_EventScript_BattleBlocksPath"
+      "script": "MOSSDEEP01_EventScript_WailordBlocksPath"
     }
   ],
   "bg_events": [],

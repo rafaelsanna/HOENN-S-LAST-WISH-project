@@ -6160,6 +6160,23 @@ Mankey
 Level: 7
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
+=== TRAINER_FRAGONARD ===
+Name: FRAGONARD
+Class: Artist
+Pic: Artist2
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move
+
+Pidgey
+Level: 12
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Oddish
+Level: 12
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
 === TRAINER_BILLY ===
 Name: BILLY
 Class: Youngster

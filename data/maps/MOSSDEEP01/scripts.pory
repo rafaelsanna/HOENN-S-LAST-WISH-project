@@ -5,8 +5,8 @@
 mapscripts MOSSDEEP01_MapScripts {
   MAP_SCRIPT_ON_FRAME_TABLE: MOSSDEEP01_OnFrame
   MAP_SCRIPT_ON_TRANSITION {
-    MOSSDEEP01_OnTransition
-  }
+		call(MOSSDEEP01_OnTransition)
+	}
   MAP_SCRIPT_ON_RESUME: MOSSDEEP01_OnResume
 
 }
@@ -22,7 +22,7 @@ const LOCALID_MILLENNIUM_COMET = 5
 const LOCALID_TIME_GEAR_1 = 2
 const LOCALID_TIME_GEAR_2 = 3
 const LOCALID_TIME_GEAR_3 = 4
-const LOCALID_MIGHTYENA =   6
+const LOCALID_WINGULL = 6
 const LOCALID_CELEBI_STATIC = 8
 const LOCALID_CELEBI_FOLLOWER = 14
 const LOCALID_SURVIVOR = 15
@@ -33,7 +33,7 @@ const LOCALID_WAILORD_BLOCKER = 20
 const LOCALID_WALLY = 29
 
 script MOSSDEEP01_OnFrame {
-  //setvar(VAR_TEMP_0, 0)
+  setvar(VAR_TEMP_0, 0)
 }
 
 script MOSSDEEP01_OnTransition {
@@ -169,7 +169,7 @@ script MOSSDEEP01_EventScript_Prologue {
   msgbox(MOSSDEEP01_Text_PlayerDecision, MSGBOX_DEFAULT)
   closemessage
   delay(15)
-  msgbox(msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT)
+  msgbox(MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT)
   closemessage
 
   setflag(FLAG_MOSSDEEP_PROLOGUE_COMPLETED)
@@ -206,16 +206,7 @@ script MOSSDEEP01_ShowWailord {
   return
 }
 
-raw ` 
-MOSSDEEP01_EventScript_HideWailord::
-	setflag FLAG_HIDE_WAILORD_PATH
-	return
-
-MOSSDEEP01_EventScript_ShowWailord::
-	clearflag FLAG_HIDE_WAILORD_PATH
-	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
-	return
-
+raw `
 MOSSDEEP01_EventScript_HideComet::
 	setflag FLAG_HIDE_MOSSDEEP_COMET
 	return
@@ -392,7 +383,7 @@ MOSSDEEP01_EventScript_MightyenaZone::
 	end
 
 MOSSDEEP01_EventScript_FindNearestMightyena::
-	setvar VAR_0x8008, LOCALID_MIGHTYENA
+	setvar VAR_0x8008, 6
 	return
 
 MOSSDEEP01_MightyenaZone_Safe::

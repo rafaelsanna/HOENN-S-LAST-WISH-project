@@ -36,10 +36,6 @@
     "gMapGroup_IndoorRoute124"
   ],
   "gMapGroup_TownsAndRoutes": [
-    "PetalburgCity",
-    "SlateportCity",
-    "MauvilleCity",
-    "RustboroCity",
     "FortreeCity",
     "LilycoveCity",
     "MossdeepCity",
@@ -50,8 +46,12 @@
     "LittlerootTown",
     "OldaleTown",
     "OldaleField",
+    "PetalburgCity",
+    "RustboroCity",
     "DewfordTown",
     "GraniteHill",
+    "SlateportCity",
+    "MauvilleCity",
     "LavaridgeTown",
     "FallarborTown",
     "VerdanturfTown",
