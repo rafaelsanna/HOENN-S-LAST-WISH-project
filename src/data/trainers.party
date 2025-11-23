@@ -6103,15 +6103,37 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 === TRAINER_LEE ===
 Name: LEE
 Class: Bird Keeper
-Pic: Bird Keeper
+Pic: Birdkeeper
 Gender: Male
 Music: Male
 Double Battle: No
 AI: Check Bad Move
 
 Taillow
-Level: 3
+Level: 4
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Hoothoot
+Level: 4
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+=== TRAINER_PORTINARI ===
+Name: PORTINARI
+Class: Artist
+Pic: Artistold2
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Surskit
+Level: 4
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Oddish
+Level: 4
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
 
 === TRAINER_SELENE ===
 Name: SELENE
@@ -6211,10 +6233,10 @@ Rhyhorn
 Level: 13
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-=== TRAINER_TOMMY ===
-Name: TOMMY
+=== TRAINER_RABOUTOU ===
+Name: RABOUTOU
 Class: Climber
-Pic: Hikerclimber
+Pic: Hikerclimber F
 Gender: Male
 Music: Male
 Double Battle: No
@@ -10807,13 +10829,13 @@ Numel
 Level: 22
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-=== TRAINER_MARC ===
-Name: MARC
-Class: Hiker
-Pic: Hiker
-Gender: Male
+=== TRAINER_JANJA ===
+Name: JANJA
+Class: Climber
+Pic: Hikerclimber F2
+Gender: Female
 Music: Hiker
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move
 
 Rhyhorn
@@ -11617,7 +11639,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JAMES_1 ===
 Name: JAMES
-Class: Bug Catcher
+Class: Bug Maniac
 Pic: Bug Catcher
 Gender: Male
 Music: Male
@@ -11634,7 +11656,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JAMES_2 ===
 Name: JAMES
-Class: Bug Catcher
+Class: Bug Maniac
 Pic: Bug Catcher
 Gender: Male
 Music: Male

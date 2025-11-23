@@ -58,14 +58,14 @@ RustboroCity_Gym_EventScript_Josh::
 	msgbox RustboroCity_Gym_Text_JoshPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-RustboroCity_Gym_EventScript_Tommy::
-	trainerbattle_single TRAINER_TOMMY, RustboroCity_Gym_Text_TommyIntro, RustboroCity_Gym_Text_TommyDefeat
-	msgbox RustboroCity_Gym_Text_TommyPostBattle, MSGBOX_AUTOCLOSE
+RustboroCity_Gym_EventScript_Raboutou::
+	trainerbattle_single TRAINER_RABOUTOU, RustboroCity_Gym_Text_RaboutouIntro, RustboroCity_Gym_Text_RaboutouDefeat
+	msgbox RustboroCity_Gym_Text_RaboutouPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-RustboroCity_Gym_EventScript_Marc::
-	trainerbattle_single TRAINER_MARC, RustboroCity_Gym_Text_MarcIntro, RustboroCity_Gym_Text_MarcDefeat
-	msgbox RustboroCity_Gym_Text_MarcPostBattle, MSGBOX_AUTOCLOSE
+RustboroCity_Gym_EventScript_Janja::
+	trainerbattle_single TRAINER_JANJA, RustboroCity_Gym_Text_JanjaIntro, RustboroCity_Gym_Text_JanjaDefeat
+	msgbox RustboroCity_Gym_Text_JanjaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 RustboroCity_Gym_EventScript_GymGuide::
@@ -180,30 +180,30 @@ RustboroCity_Gym_Text_JoshPostBattle:
 	.string "I only carry this climbing gear\n"
 	.string "to impress girls...$"
 
-RustboroCity_Gym_Text_TommyIntro:
+RustboroCity_Gym_Text_RaboutouIntro:
 	.string "Think you can beat me?\n"
 	.string "I've climbed HOENN's tallest peaks!\p"
 	.string "Show me what you're made of!$"
 
-RustboroCity_Gym_Text_TommyDefeat:
+RustboroCity_Gym_Text_RaboutouDefeat:
 	.string "Wow! You've really got potential!$"
 
-RustboroCity_Gym_Text_TommyPostBattle:
+RustboroCity_Gym_Text_RaboutouPostBattle:
 	.string "TERRA's strength is on a whole\n"
 	.string "different level.\p"
 	.string "You'd better come prepared!$"
 
-RustboroCity_Gym_Text_MarcIntro:
+RustboroCity_Gym_Text_JanjaIntro:
 	.string "We're in town, sure...\n"
 	.string "But mountains are in my heart!\p"
 	.string "My ROCK POKEMON need room to\n"
 	.string "stretch out and rampage!$"
 
-RustboroCity_Gym_Text_MarcDefeat:
+RustboroCity_Gym_Text_JanjaDefeat:
 	.string "Whoooa! Our challenger's got\n"
 	.string "some real fire!$"
 
-RustboroCity_Gym_Text_MarcPostBattle:
+RustboroCity_Gym_Text_JanjaPostBattle:
 	.string "I've explored Hoenn's peaks for years.\p"
 	.string "That's how I met TERRA. Smart kid,\n"
 	.string "chose ROCK type for its strength.$"

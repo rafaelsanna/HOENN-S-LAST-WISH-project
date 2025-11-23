@@ -41,7 +41,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
       "x": 7,
       "y": 7,
       "elevation": 3,
@@ -50,7 +50,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "RustboroCity_Gym_EventScript_Tommy",
+      "script": "RustboroCity_Gym_EventScript_Raboutou",
       "flag": "0"
     },
     {
@@ -67,7 +67,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_HIKER",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_1",
       "x": 4,
       "y": 11,
       "elevation": 3,
@@ -76,7 +76,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "RustboroCity_Gym_EventScript_Marc",
+      "script": "RustboroCity_Gym_EventScript_Janja",
       "flag": "0"
     },
     {

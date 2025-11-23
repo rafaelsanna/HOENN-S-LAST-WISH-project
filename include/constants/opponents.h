@@ -324,7 +324,7 @@
 #define TRAINER_CALVIN_1                    318
 #define TRAINER_BILLY                       319
 #define TRAINER_JOSH                        320
-#define TRAINER_TOMMY                       321
+#define TRAINER_RABOUTOU                    321
 #define TRAINER_JOEY                        322
 #define TRAINER_BEN                         323
 #define TRAINER_QUINCY                      324
@@ -574,7 +574,7 @@
 #define TRAINER_GRUNT_UNUSED                568
 #define TRAINER_GRUNT_MT_PYRE_4             569
 #define TRAINER_GRUNT_JAGGED_PASS           570
-#define TRAINER_MARC                        571
+#define TRAINER_JANJA                       571
 #define TRAINER_BRENDEN                     572
 #define TRAINER_LILITH                      573
 #define TRAINER_CRISTIAN                    574
@@ -865,12 +865,13 @@
 #define TRAINER_WILL                        859
 #define TRAINER_CAESAR                      860
 #define TRAINER_FRAGONARD                   861
+#define TRAINER_PORTINARI                   862
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      862
+#define TRAINERS_COUNT                      863
 #define MAX_TRAINERS_COUNT                  900
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 
