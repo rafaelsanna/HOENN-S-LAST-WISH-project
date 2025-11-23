@@ -620,3 +620,288 @@ footer {
 
 /* ===== HAMBURGER MENU HTML ===== */
 /* Adicione este botão no seu nav (antes do .nav-links) */
+
+/* ===== DARK MODE PERMANENTE ===== */
+body {
+    background: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+/* Header já está escuro - manter */
+
+/* Hero Section - ajustar overlay para dark mode */
+.banner-container::after {
+    background: rgba(0,0,0,0.5) !important; /* Overlay mais escuro */
+}
+
+/* Story Section */
+.story {
+    background: #2d2d2d !important; /* Cinza mais escuro */
+    color: #e0e0e0 !important;
+}
+
+/* Features Section */
+.features {
+    background: #252525 !important;
+}
+
+.feature-card {
+    background: #363636 !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #404040;
+}
+
+.feature-card h3 {
+    color: #ffffff !important;
+}
+
+/* Screenshots Section */
+.screenshots {
+    background: #2d2d2d !important;
+}
+
+.simple-slideshow {
+    background: #363636 !important;
+    border: 1px solid #404040;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
+}
+
+.simple-slideshow img {
+    background: #2d2d2d !important;
+    border: 2px solid var(--pokemon-green) !important;
+}
+
+/* Download Section */
+.download {
+    background: #252525 !important;
+    color: #e0e0e0 !important;
+}
+
+.installation-guide {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid #404040;
+    color: #e0e0e0 !important;
+}
+
+.installation-guide h4 {
+    color: #ffffff !important;
+}
+
+/* Footer */
+footer {
+    background: #1a1a1a !important;
+    border-top: 1px solid #333;
+}
+
+/* Links e textos */
+a {
+    color: #4a90e2 !important;
+}
+
+a:hover {
+    color: #6ba8ff !important;
+}
+
+/* Botões - manter as cores Pokémon mas ajustar contraste */
+.cta-button {
+    background: var(--pokemon-blue) !important;
+    color: white !important;
+}
+
+.cta-button:hover {
+    background: #357abd !important;
+}
+
+.discord-button {
+    background: #5865f2 !important;
+    color: white !important;
+}
+
+.discord-button:hover {
+    background: #4752c4 !important;
+}
+
+.download-btn {
+    background: var(--pokemon-red) !important;
+    color: white !important;
+}
+
+.download-btn:hover {
+    background: #c0392b !important;
+}
+
+.download-btn.secondary {
+    background: var(--pokemon-green) !important;
+}
+
+.download-btn.secondary:hover {
+    background: #219653 !important;
+}
+
+.credits-btn {
+    background: var(--pokemon-green) !important;
+    color: white !important;
+}
+
+.credits-btn:hover {
+    background: #219653 !important;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+}
+
+/* Textos secundários */
+p, li {
+    color: #cccccc !important;
+}
+
+/* Placeholders e elementos vazios */
+.screenshot-placeholder {
+    background: #404040 !important;
+    color: #888 !important;
+    border: 1px solid #555;
+}
+
+/* Menu mobile */
+@media (max-width: 768px) {
+    .nav-links {
+        background: #2d2d2d !important;
+        border-top: 1px solid #404040;
+    }
+    
+    .nav-links a {
+        color: #e0e0e0 !important;
+        border-bottom: 1px solid #404040;
+    }
+    
+    .nav-links a:hover {
+        background: #363636;
+        color: var(--pokemon-yellow) !important;
+    }
+}
+
+/* Ajustes de contraste para melhor legibilidade */
+.container {
+    color: #e0e0e0 !important;
+}
+
+.story-content p, 
+.download-info p, 
+.installation-guide li {
+    color: #cccccc !important;
+    line-height: 1.6;
+}
+
+/* Sombras e profundidade */
+.feature-card, 
+.simple-slideshow, 
+.installation-guide {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+}
+
+
+/* ===== LIGHT MODE ===== */
+body.light-mode {
+    background: #ffffff !important;
+    color: #333333 !important;
+}
+
+body.light-mode .story {
+    background: #f8f9fa !important;
+    color: #333333 !important;
+}
+
+body.light-mode .features {
+    background: #ffffff !important;
+}
+
+body.light-mode .feature-card {
+    background: #ffffff !important;
+    color: #333333 !important;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+}
+
+body.light-mode .feature-card h3 {
+    color: #2c3e50 !important;
+}
+
+body.light-mode .screenshots {
+    background: #f8f9fa !important;
+}
+
+body.light-mode .simple-slideshow {
+    background: #ffffff !important;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+}
+
+body.light-mode .simple-slideshow img {
+    background: #ffffff !important;
+    border: 2px solid var(--pokemon-green) !important;
+}
+
+body.light-mode .download {
+    background: #2c3e50 !important; /* Mantém escuro por contraste */
+    color: #ffffff !important;
+}
+
+body.light-mode .installation-guide {
+    background: rgba(255,255,255,0.15) !important;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #ffffff !important;
+}
+
+body.light-mode footer {
+    background: #2c3e50 !important;
+    color: #ffffff !important;
+}
+
+body.light-mode p, 
+body.light-mode li {
+    color: inherit !important;
+}
+
+body.light-mode .container {
+    color: inherit !important;
+}
+
+/* ===== TOGGLE BUTTON ===== */
+.theme-toggle {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--pokemon-dark);
+    border: 2px solid var(--pokemon-yellow);
+    border-radius: 50px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.theme-toggle:hover {
+    background: var(--pokemon-blue);
+    transform: scale(1.05);
+}
+
+.theme-toggle i {
+    margin-right: 5px;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 75px;
+        right: 10px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+

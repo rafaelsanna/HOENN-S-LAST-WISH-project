@@ -1,4 +1,34 @@
-// Smooth scrolling for navigation links
+// Theme Toggle Functionality
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+
+// Função para aplicar o tema
+function applyTheme(theme) {
+    if (theme === 'light') {
+        body.classList.add('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.classList.remove('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Verificar tema salvo ou usar dark mode como padrão
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+
+// Toggle no clique do botão
+themeToggle.addEventListener('click', () => {
+    if (body.classList.contains('light-mode')) {
+        applyTheme('dark');
+    } else {
+        applyTheme('light');
+    }
+});
+
+// Smooth scrolling (seu código existente)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -8,7 +38,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// SIMPLE SLIDESHOW THAT WORKS!
+// Slideshow (seu código existente)
 const slideshowImages = [
     'pokeemerald-0.png',
     'pokeemerald-1.png', 
@@ -39,24 +69,23 @@ function nextSlide() {
     slideshowElement.src = `images/screenshots/${slideshowImages[currentSlide]}`;
 }
 
-// Start slideshow - change image every 3 seconds
 setInterval(nextSlide, 3000);
 
-console.log('Hoenn\'s Last Wish website loaded successfully! Slideshow active!');
-
-// Mobile Menu Toggle
+// Mobile Menu (seu código existente)
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('nav-links');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-});
-
-// Close menu when clicking on a link
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
+if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
     });
-});
 
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+}
+
+console.log('Pokémon: Hoenn\'s Last Wish website loaded successfully!');
 
