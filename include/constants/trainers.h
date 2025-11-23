@@ -161,9 +161,10 @@
 #define TRAINER_PIC_ARTIST2              143
 #define TRAINER_PIC_PHOTOGRAPHER         144
 #define TRAINER_PIC_WORKER_F2            145
+#define TRAINER_PIC_BUG_CATCHER_F2       146
 // COUNT
 
-#define TRAINER_PIC_COUNT                146
+#define TRAINER_PIC_COUNT                147
 
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
