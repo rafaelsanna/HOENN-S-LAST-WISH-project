@@ -437,3 +437,186 @@ footer {
 .download-btn.secondary:hover {
     background: #357abd;
 }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    /* Header Mobile */
+    header {
+        height: 70px !important;
+        background-size: contain !important;
+        background-position: center !important;
+    }
+    
+    nav {
+        padding: 0 1rem;
+    }
+    
+    .logo {
+        display: none; /* Remove texto do logo */
+    }
+    
+    /* Menu Mobile - Hamburger */
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--pokemon-dark);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 2rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+    
+    .nav-links.active {
+        left: 0;
+    }
+    
+    .nav-links li {
+        margin: 1rem 0;
+    }
+    
+    .nav-links a {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+        display: block;
+    }
+    
+    /* Hamburger Icon */
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        z-index: 1001;
+    }
+    
+    /* Hero Banner Mobile */
+    .hero-with-banner {
+        height: 40vh !important;
+        margin-top: 70px;
+    }
+    
+    .hero-banner {
+        object-fit: cover;
+        object-position: top center;
+    }
+    
+    .hero-content-overlay {
+        top: 70% !important;
+        flex-direction: column;
+        gap: 1rem;
+        width: 95%;
+    }
+    
+    .cta-button, .discord-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+        width: 200px;
+        text-align: center;
+    }
+    
+    /* Sections Mobile */
+    .story, .features, .screenshots, .download {
+        padding: 3rem 0 !important;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    /* Slideshow Mobile */
+    .simple-slideshow {
+        max-width: 100% !important;
+        margin: 1rem auto !important;
+        padding: 0.5rem;
+    }
+    
+    .simple-slideshow img {
+        height: 200px !important;
+        object-fit: contain;
+    }
+    
+    /* Download Section Mobile */
+    .download-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .download-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 15px 20px;
+        text-align: center;
+        margin: 0.5rem 0;
+    }
+    
+    .installation-guide {
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    /* Story Content Mobile */
+    .story-content p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+    
+    /* Footer Mobile */
+    footer {
+        padding: 1.5rem 0;
+    }
+    
+    footer p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    
+    .credits-btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes para telas muito pequenas */
+    .hero-with-banner {
+        height: 35vh !important;
+    }
+    
+    .hero-content-overlay {
+        top: 65% !important;
+    }
+    
+    h2 {
+        font-size: 1.6rem !important;
+    }
+    
+    .simple-slideshow img {
+        height: 180px !important;
+    }
+    
+    .feature-card, .story-content, .installation-guide {
+        padding: 1.5rem;
+    }
+}
+
+/* Hide hamburger on desktop */
+.hamburger {
+    display: none;
+}
+
+/* ===== HAMBURGER MENU HTML ===== */
+/* Adicione este botão no seu nav (antes do .nav-links) */
