@@ -157,7 +157,7 @@
     {
       "type": "hidden_item",
       "x": 5,
-      "y": 56,
+      "y": 57,
       "elevation": 3,
       "item": "ITEM_BIG_PEARL",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_105_BIG_PEARL"

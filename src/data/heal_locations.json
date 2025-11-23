@@ -123,8 +123,8 @@
     {
       "id": "HEAL_LOCATION_DEWFORD_TOWN",
       "map": "MAP_DEWFORD_TOWN",
-      "x": 2,
-      "y": 11,
+      "x": 4,
+      "y": 12,
       "respawn_map": "MAP_DEWFORD_TOWN_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_DEWFORD_NURSE"
     },

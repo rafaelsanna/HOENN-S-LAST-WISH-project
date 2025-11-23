@@ -20,12 +20,12 @@
     },
     {
       "map": "MAP_DEWFORD_TOWN",
-      "offset": 60,
+      "offset": 54,
       "direction": "down"
     },
     {
       "map": "MAP_GRANITE_HILL",
-      "offset": 32,
+      "offset": 26,
       "direction": "down"
     }
   ],
