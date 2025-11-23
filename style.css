@@ -801,71 +801,153 @@ p, li {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
 }
 
-
-/* ===== LIGHT MODE ===== */
+/* ===== LIGHT MODE MELHORADO ===== */
 body.light-mode {
-    background: #ffffff !important;
-    color: #333333 !important;
+    background: #f8f9fa !important;
+    color: #2c3e50 !important;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.7;
 }
 
 body.light-mode .story {
-    background: #f8f9fa !important;
-    color: #333333 !important;
+    background: #ffffff !important;
+    color: #2c3e50 !important;
+    border-top: 3px solid var(--pokemon-blue);
+    border-bottom: 3px solid var(--pokemon-green);
 }
 
 body.light-mode .features {
-    background: #ffffff !important;
+    background: #f1f3f5 !important;
 }
 
 body.light-mode .feature-card {
     background: #ffffff !important;
-    color: #333333 !important;
-    border: 1px solid #dee2e6;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    color: #2c3e50 !important;
+    border: 2px solid #e9ecef;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+    border-left: 4px solid var(--pokemon-blue);
 }
 
 body.light-mode .feature-card h3 {
-    color: #2c3e50 !important;
+    color: var(--pokemon-dark) !important;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
 }
 
 body.light-mode .screenshots {
-    background: #f8f9fa !important;
+    background: #ffffff !important;
+    border-top: 3px solid var(--pokemon-yellow);
 }
 
 body.light-mode .simple-slideshow {
     background: #ffffff !important;
-    border: 1px solid #dee2e6;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    border: 2px solid #dee2e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1) !important;
 }
 
 body.light-mode .simple-slideshow img {
-    background: #ffffff !important;
-    border: 2px solid var(--pokemon-green) !important;
+    background: #f8f9fa !important;
+    border: 3px solid var(--pokemon-green) !important;
 }
 
 body.light-mode .download {
-    background: #2c3e50 !important; /* Mantém escuro por contraste */
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
     color: #ffffff !important;
+    border-top: 3px solid var(--pokemon-red);
 }
 
 body.light-mode .installation-guide {
     background: rgba(255,255,255,0.15) !important;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
     color: #ffffff !important;
+    backdrop-filter: blur(10px);
 }
 
 body.light-mode footer {
     background: #2c3e50 !important;
     color: #ffffff !important;
+    border-top: 3px solid var(--pokemon-blue);
 }
 
-body.light-mode p, 
-body.light-mode li {
-    color: inherit !important;
+/* ===== TIPOGRAFIA MELHORADA ===== */
+body.light-mode h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--pokemon-dark) !important;
+    margin-bottom: 1rem;
 }
 
+body.light-mode h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--pokemon-dark) !important;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 2px solid var(--pokemon-yellow);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+body.light-mode h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--pokemon-blue) !important;
+    margin-bottom: 1rem;
+}
+
+body.light-mode h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--pokemon-green) !important;
+    margin-bottom: 0.8rem;
+}
+
+/* Parágrafos com melhor hierarquia */
+body.light-mode .story-content p {
+    color: #2c3e50 !important;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+body.light-mode .story-content p:first-of-type {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--pokemon-blue) !important;
+}
+
+body.light-mode .download-info p {
+    color: #e0e0e0 !important;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Listas */
+body.light-mode .installation-guide ol {
+    margin-left: 1.5rem;
+}
+
+body.light-mode .installation-guide li {
+    color: #e0e0e0 !important;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+    padding-left: 0.5rem;
+}
+
+/* Container e espaçamento */
 body.light-mode .container {
     color: inherit !important;
+}
+
+body.light-mode .story-content {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--pokemon-green);
 }
 
 /* ===== TOGGLE BUTTON ===== */

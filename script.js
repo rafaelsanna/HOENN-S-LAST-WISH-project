@@ -10,7 +10,7 @@ function applyTheme(theme) {
         localStorage.setItem('theme', 'light');
     } else {
         body.classList.remove('light-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode'; 
         localStorage.setItem('theme', 'dark');
     }
 }
