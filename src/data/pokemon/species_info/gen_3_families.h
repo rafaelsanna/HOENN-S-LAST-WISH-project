@@ -11205,6 +11205,9 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
         ),
         .frontAnimId = ANIM_H_SLIDE_WOBBLE,
         .backPic = gMonBackPic_Relicanth,
@@ -11222,7 +11225,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .backPicSizeFemale = MON_COORDS_SIZE(64, 40),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-3, 8, SHADOW_SIZE_L)
+        SHADOW(-3, 10, SHADOW_SIZE_L)
         FOOTPRINT(Relicanth)
         OVERWORLD(
             sPicTable_Relicanth,

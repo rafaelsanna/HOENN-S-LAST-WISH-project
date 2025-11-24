@@ -986,4 +986,70 @@ body.light-mode .story-content {
     }
 }
 
+/* ===== TIPOGRAFIA MELHORADA PARA STORY ===== */
+.story-content .intro {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--pokemon-blue) !important;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-style: italic;
+}
+
+.story-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.story-content strong {
+    font-weight: 700;
+    color: var(--pokemon-red);
+}
+
+.story-content .highlight {
+    background: rgba(241, 196, 15, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--pokemon-yellow);
+    font-weight: 500;
+}
+
+.story-content .highlight strong {
+    color: var(--pokemon-dark);
+}
+
+.story-content ul {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.story-content li {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+}
+
+.story-content li strong {
+    color: var(--pokemon-green);
+}
+
+/* Light Mode Adjustments */
+body.light-mode .story-content .intro {
+    color: var(--pokemon-blue) !important;
+}
+
+body.light-mode .story-content strong {
+    color: var(--pokemon-red);
+}
+
+body.light-mode .story-content .highlight {
+    background: rgba(52, 152, 219, 0.1);
+    border-left: 4px solid var(--pokemon-blue);
+}
+
+body.light-mode .story-content li strong {
+    color: var(--pokemon-green);
+}
 
