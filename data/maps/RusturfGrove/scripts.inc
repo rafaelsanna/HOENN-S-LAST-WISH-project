@@ -29,53 +29,55 @@ Cutter::
 # 30 "data/maps/RusturfGrove/scripts.pory"
 	applymovement LOCALID_CUTTER, CutterSurprised
 # 31 "data/maps/RusturfGrove/scripts.pory"
-	lock
+	delay 15
 # 32 "data/maps/RusturfGrove/scripts.pory"
-	msgbox CutterDialogueBefore, MSGBOX_NPC
+	faceplayer
 # 33 "data/maps/RusturfGrove/scripts.pory"
+	lock
+# 34 "data/maps/RusturfGrove/scripts.pory"
+	msgbox CutterDialogueBefore, MSGBOX_NPC
+# 35 "data/maps/RusturfGrove/scripts.pory"
 	compare VAR_DIFFICULTY, 0
 	goto_if_eq Cutter_2
-# 36 "data/maps/RusturfGrove/scripts.pory"
+# 38 "data/maps/RusturfGrove/scripts.pory"
 	trainerbattle_no_intro TRAINER_TSUBAKI_HARD, CutterLose
 Cutter_1:
-# 38 "data/maps/RusturfGrove/scripts.pory"
+# 40 "data/maps/RusturfGrove/scripts.pory"
 	goto CutterPostBattle
 	return
 
 Cutter_2:
-# 34 "data/maps/RusturfGrove/scripts.pory"
+# 36 "data/maps/RusturfGrove/scripts.pory"
 	trainerbattle_no_intro TRAINER_TSUBAKI_EASY, CutterLose
 	goto Cutter_1
 
 
 CutterPostBattle::
-# 42 "data/maps/RusturfGrove/scripts.pory"
-	msgbox CutterDialogueAfter1, MSGBOX_DEFAULT
-# 43 "data/maps/RusturfGrove/scripts.pory"
-	giveitem ITEM_HM01, 1
 # 44 "data/maps/RusturfGrove/scripts.pory"
-	msgbox CutterDialogueAfter2, MSGBOX_DEFAULT
+	msgbox CutterDialogueAfter1, MSGBOX_DEFAULT
 # 45 "data/maps/RusturfGrove/scripts.pory"
-	fadescreen FADE_TO_BLACK
+	giveitem ITEM_HM01, 1
 # 46 "data/maps/RusturfGrove/scripts.pory"
-	delay 45
+	msgbox CutterDialogueAfter2, MSGBOX_DEFAULT
 # 47 "data/maps/RusturfGrove/scripts.pory"
-	setflag FLAG_HIDE_CUTTER
+	fadescreen FADE_TO_BLACK
 # 48 "data/maps/RusturfGrove/scripts.pory"
-	removeobject LOCALID_CUTTER
+	delay 45
 # 49 "data/maps/RusturfGrove/scripts.pory"
-	fadescreen FADE_FROM_BLACK
+	setflag FLAG_HIDE_CUTTER
 # 50 "data/maps/RusturfGrove/scripts.pory"
+	removeobject LOCALID_CUTTER
+# 51 "data/maps/RusturfGrove/scripts.pory"
+	fadescreen FADE_FROM_BLACK
+# 52 "data/maps/RusturfGrove/scripts.pory"
 	release
 	end
 
 
-# 54 "data/maps/RusturfGrove/scripts.pory"
-CutterSurprised:
-# 55 "data/maps/RusturfGrove/scripts.pory"
-	emote_exclamation_mark
 # 56 "data/maps/RusturfGrove/scripts.pory"
-	face_player
+CutterSurprised:
+# 57 "data/maps/RusturfGrove/scripts.pory"
+	emote_exclamation_mark
 	step_end
 
 ArtistFragonard_Text_0:
@@ -93,7 +95,7 @@ FragonardLose::
 	.string "If only I were as strong as this place was pretty...$"
 
 CutterDialogueBefore::
-# 59 "data/maps/RusturfGrove/scripts.pory"
+# 60 "data/maps/RusturfGrove/scripts.pory"
 	.string "Oh hey! I didn't see you there.\p"
 	.string "My grandpa sent you here to battle me?\n"
 	.string "Well then, let me introduce myself.\p"
@@ -103,18 +105,18 @@ CutterDialogueBefore::
 	.string "Now, let's stop yapping and battle!$"
 
 CutterDialogueAfter1::
-# 67 "data/maps/RusturfGrove/scripts.pory"
+# 68 "data/maps/RusturfGrove/scripts.pory"
 	.string "TSUBAKI: Wow, you're very strong!\n"
 	.string "Here, I want you to have this.\p"
 	.string "$"
 
 CutterDialogueAfter2::
-# 73 "data/maps/RusturfGrove/scripts.pory"
+# 74 "data/maps/RusturfGrove/scripts.pory"
 	.string "That is the hidden machine CUT!\n"
 	.string "It can cut down small trees with ease!\p"
 	.string "I'm gonna go elsewhere to train.\n"
 	.string "Hope to battle you again someday!$"
 
 CutterLose::
-# 81 "data/maps/RusturfGrove/scripts.pory"
+# 82 "data/maps/RusturfGrove/scripts.pory"
 	.string "$"

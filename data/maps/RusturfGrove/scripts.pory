@@ -28,6 +28,8 @@ text FragonardLose {
 
 script Cutter {
 	applymovement(LOCALID_CUTTER, CutterSurprised)
+	delay(15)
+	faceplayer
 	lock
 	msgbox(CutterDialogueBefore, MSGBOX_NPC)
 	if (var(VAR_DIFFICULTY) == 0) {
@@ -53,7 +55,6 @@ script CutterPostBattle {
 
 movement CutterSurprised {
 	emote_exclamation_mark
-	face_player
 }
 
 text CutterDialogueBefore {

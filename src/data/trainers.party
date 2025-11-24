@@ -6204,7 +6204,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_TSUBAKI_EASY ===
 Name: TSUBAKI
-Class: Lass
+Class: Ninja Boy
 Pic: Elite Four Sidney
 Gender: Female
 Music: Female
@@ -6229,7 +6229,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_TSUBAKI_HARD ===
 Name: TSUBAKI
-Class: Lass
+Class: Ninja Boy
 Pic: Elite Four Sidney
 Gender: Female
 Music: Female
