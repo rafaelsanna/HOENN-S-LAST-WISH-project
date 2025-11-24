@@ -22,8 +22,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_ARTIST",
-      "x": 27,
-      "y": 5,
+      "x": 32,
+      "y": 12,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -35,7 +35,7 @@
     },
     {
       "local_id": "LOCALID_CUTTER",
-      "graphics_id": "OBJ_EVENT_GFX_LASS",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(WORMADAM)",
       "x": 20,
       "y": 7,
       "elevation": 3,
