@@ -12813,7 +12813,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
             "Does more damage every turn\n"
             "it is used."),
         .effect = EFFECT_ECHOED_VOICE,
-        .power = 40,
+        .power = 25,
         .type = TYPE_NORMAL,
         .accuracy = 100,
         .pp = 15,

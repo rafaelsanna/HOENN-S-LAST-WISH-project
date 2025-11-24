@@ -6076,7 +6076,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .baseSpeed     = 20,
         .baseSpAttack  = 70,
         .baseSpDefense = 40,
-        .types = MON_TYPES(TYPE_FIRE),
+        .types = MON_TYPES(TYPE_POISON),
         .catchRate = 190,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 50 : 78,
         .evYield_SpAttack = 1,
@@ -6147,7 +6147,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .baseSpeed     = 30,
         .baseSpAttack  = P_UPDATED_STATS >= GEN_7 ? 90 : 80,
         .baseSpDefense = 80,
-        .types = MON_TYPES(TYPE_FIRE, TYPE_ROCK),
+        .types = MON_TYPES(TYPE_POISON, TYPE_ROCK),
         .catchRate = 75,
     #if P_UPDATED_EXP_YIELDS >= GEN_7
         .expYield = 151,

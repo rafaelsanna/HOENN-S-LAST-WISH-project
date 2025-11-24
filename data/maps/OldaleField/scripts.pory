@@ -1,0 +1,58 @@
+mapscripts OldaleField_MapScripts {}
+
+script OldaleFieldAbraMan {
+  lock
+  faceplayer
+  msgbox(OldaleFieldAbraManDialogue, MSGBOX_NPC)
+  release
+  end
+}
+
+script OldaleFieldGirl {
+  lock
+  faceplayer
+  msgbox(OldaleFieldGirlDialogue, MSGBOX_NPC)
+  release
+  end
+}
+
+script SentretOverworld {
+  lock
+  faceplayer
+  playmoncry(SPECIES_SENTRET, CRY_MODE_NORMAL)
+  waitmoncry
+  release
+  end
+}
+
+script AbraOverworld {
+  lock
+  faceplayer
+  playmoncry(SPECIES_ABRA, CRY_MODE_NORMAL)
+  waitmoncry
+  release
+  end
+}
+
+script OldTunnelSign {
+  lock
+  faceplayer
+  msgbox("OLD TUNNEL", MSGBOX_SIGN)
+  release
+  end
+}
+
+text OldaleFieldAbraManDialogue {
+  format(
+    "I explored this dark cave to the fullest in seach of rare POKéMON!\p
+    I found this Abra, which doesn't even have an attack.
+    What am I going to do with this now?")
+}
+
+text OldaleFieldGirlDialogue {
+  format(
+    "Beware of those Sentret!\n
+    They are so cute! I know...\p
+    But they are stressed and energetic.
+    They're always starting fights!")
+}
