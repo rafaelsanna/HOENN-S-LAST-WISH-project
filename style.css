@@ -986,11 +986,10 @@ body.light-mode .story-content {
     }
 }
 
-/* ===== TIPOGRAFIA MELHORADA PARA STORY ===== */
+/* ===== TIPOGRAFIA SIMPLIFICADA - UMA COR ONLY ===== */
 .story-content .intro {
     font-size: 1.3rem;
     font-weight: 500;
-    color: var(--pokemon-blue) !important;
     line-height: 1.8;
     margin-bottom: 2rem;
     text-align: center;
@@ -1006,19 +1005,16 @@ body.light-mode .story-content {
 
 .story-content strong {
     font-weight: 700;
-    color: var(--pokemon-red);
+    /* SEM COR DIFERENTE - mesma cor do texto */
 }
 
 .story-content .highlight {
-    background: rgba(241, 196, 15, 0.1);
+    background: rgba(0, 0, 0, 0.05);
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid var(--pokemon-yellow);
+    border-left: 4px solid #ccc;
     font-weight: 500;
-}
-
-.story-content .highlight strong {
-    color: var(--pokemon-dark);
+    margin: 2rem 0;
 }
 
 .story-content ul {
@@ -1032,24 +1028,12 @@ body.light-mode .story-content {
 }
 
 .story-content li strong {
-    color: var(--pokemon-green);
+    font-weight: 700;
 }
 
 /* Light Mode Adjustments */
-body.light-mode .story-content .intro {
-    color: var(--pokemon-blue) !important;
-}
-
-body.light-mode .story-content strong {
-    color: var(--pokemon-red);
-}
-
 body.light-mode .story-content .highlight {
-    background: rgba(52, 152, 219, 0.1);
-    border-left: 4px solid var(--pokemon-blue);
-}
-
-body.light-mode .story-content li strong {
-    color: var(--pokemon-green);
+    background: rgba(0, 0, 0, 0.03);
+    border-left: 4px solid #ddd;
 }
 
