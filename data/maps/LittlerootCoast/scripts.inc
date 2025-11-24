@@ -8,57 +8,44 @@ BirdKeeperLee::
 # 5 "data/maps/LittlerootCoast/scripts.pory"
 	lock
 # 6 "data/maps/LittlerootCoast/scripts.pory"
-	msgbox BirdKeeperLee_Text_0
+	msgbox LeeDialogue
 # 7 "data/maps/LittlerootCoast/scripts.pory"
 	release
 	end
 
-
-BirdKeeperLee_Text_0:
-    .string "I'm trying to catch a WINGULL!\n"
-    .string "All my other birds get crushed by ROCK-types,\n"
-    .string "so I need one that can actually fight back!$"
-
-LeeIntro::
-    .string "Birds are amazing, you know?\n"
-    .string "Some glide, some dive, some just scream.\n"
-    .string "But every one of them has style!\p"
-    .string "Think you can handle me?$"
-
-LeeLose::
-    .string "That's why I need a WINGULL!\n"
-    .string "Terra, Rustboro Gym Leader her ROCK-types\n"
-    .string "flatten every other bird I have!\p"
-    .string "But a WINGULL… THAT one might stand a chance!$"
 
 ArtistPortinari::
-# 4 "data/maps/LittlerootCoast/scripts.pory"
+# 32 "data/maps/LittlerootCoast/scripts.pory"
 	trainerbattle_single TRAINER_PORTINARI, PortinariIntro, PortinariLose
-# 5 "data/maps/LittlerootCoast/scripts.pory"
+# 33 "data/maps/LittlerootCoast/scripts.pory"
 	lock
-# 6 "data/maps/LittlerootCoast/scripts.pory"
-	msgbox ArtistPortinari_Text_0
-# 7 "data/maps/LittlerootCoast/scripts.pory"
+# 34 "data/maps/LittlerootCoast/scripts.pory"
+	msgbox PortinariDialogue
+# 35 "data/maps/LittlerootCoast/scripts.pory"
 	release
 	end
 
 
-ArtistPortinari_Text_0:
-# 6 "data/maps/LittlerootCoast/scripts.pory"
-	.string "I came here to watch the waves.\n"
-	.string "This peaceful coast always inspires my art.$"
+LeeDialogue::
+# 11 "data/maps/LittlerootCoast/scripts.pory"
+	.string "I'm trying to catch a WINGULL!\n All my other birds get crushed by ROCK-types,\n so I need one that can actually fight back!$"
+
+LeeIntro::
+# 17 "data/maps/LittlerootCoast/scripts.pory"
+	.string "Birds are amazing, you know?\n Some glide, some dive, some just scream.\n But every one of them has style!\n Think you can handle me?$"
+
+LeeLose::
+# 24 "data/maps/LittlerootCoast/scripts.pory"
+	.string "That's why I need a WINGULL!\n Terra, the Rustboro Gym Leader's ROCK-types\n flatten every other bird I have!\p But a WINGULL… THAT one might stand a chance!$"
+
+PortinariDialogue::
+# 39 "data/maps/LittlerootCoast/scripts.pory"
+	.string "I came here to watch the waves.\n This peaceful coast always inspires my art.$"
 
 PortinariIntro::
-# 11 "data/maps/LittlerootCoast/scripts.pory"
-	.string "The rhythm of the sea… the waves...\n"
-	.string "All of it fuels my creativity!\p"
-	.string "Let me capture your style in battle!$"
+# 44 "data/maps/LittlerootCoast/scripts.pory"
+	.string "The rhythm of the sea… the waves...\n All of it fuels my creativity!\p Let me capture your style in battle!$"
 
 PortinariLose::
-# 15 "data/maps/LittlerootCoast/scripts.pory"
-	.string "Defeated… yet inspired.\n"
-	.string "Your technique has given me a new idea\n"
-	.string "for my next painting!$"
-
-
-	
+# 50 "data/maps/LittlerootCoast/scripts.pory"
+	.string "Defeated… yet inspired.\n Your technique has given me a new idea\n for my next painting!$"

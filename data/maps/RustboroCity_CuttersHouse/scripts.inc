@@ -1,52 +1,37 @@
 RustboroCity_CuttersHouse_MapScripts::
 	.byte 0
 
-RustboroCity_CuttersHouse_EventScript_Cutter::
+
+Elder::
+# 4 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
 	lock
+# 5 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
 	faceplayer
-	goto_if_set FLAG_RECEIVED_HM_CUT, RustboroCity_CuttersHouse_EventScript_ExplainCut
-	msgbox RustboroCity_CuttersHouse_Text_YouCanPutThisHMToGoodUse, MSGBOX_DEFAULT
-	giveitem ITEM_HM_CUT
-	setflag FLAG_RECEIVED_HM_CUT
-	msgbox RustboroCity_CuttersHouse_Text_ExplainCut, MSGBOX_DEFAULT
+# 6 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
+	msgbox ElderDialogue, MSGBOX_NPC
+# 7 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
+	clearflag FLAG_HIDE_CUTTER
+# 8 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
 	release
 	end
 
-RustboroCity_CuttersHouse_EventScript_ExplainCut::
-	msgbox RustboroCity_CuttersHouse_Text_ExplainCut, MSGBOX_DEFAULT
+
+CuttersGrandma::
+# 23 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
+	lock
+# 24 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
+	faceplayer
+# 25 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
+	msgbox CuttersGrandmaDialogue, MSGBOX_NPC
+# 26 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
 	release
 	end
 
-RustboroCity_CuttersHouse_EventScript_Lass::
-	msgbox RustboroCity_CuttersHouse_Text_DadHelpedClearLandOfTrees, MSGBOX_NPC
-	end
 
-RustboroCity_CuttersHouse_Text_YouCanPutThisHMToGoodUse:
-	.string "That determined expression…\n"
-	.string "That limber way you move…\l"
-	.string "And your well-trained POKéMON…\p"
-	.string "You're obviously a skilled TRAINER!\p"
-	.string "No, wait, don't say a word.\n"
-	.string "I can tell just by looking at you.\p"
-	.string "I'm sure that you can put this\n"
-	.string "HIDDEN MACHINE to good use.\p"
-	.string "No need to be modest or shy.\n"
-	.string "Go on, take it!$"
+ElderDialogue::
+# 12 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
+	.string "That determined expression...\p The limber way you move...\l And your well-trained POKéMON…\p You seem like a skilled TRAINER!\p My granddaughter is in Rusturf\n Grove practicing her cutting.\p You should go battle her!$"
 
-RustboroCity_CuttersHouse_Text_ExplainCut:
-	.string "That HIDDEN MACHINE, or HM for\n"
-	.string "short, is CUT.\p"
-	.string "An HM move is one that can be used\n"
-	.string "by POKéMON outside of battle.\p"
-	.string "Any POKéMON that's learned CUT can\n"
-	.string "chop down thin trees if the TRAINER\l"
-	.string "has earned the STONE BADGE.\p"
-	.string "And, unlike a TM, an HM can be used\n"
-	.string "more than once.$"
-
-RustboroCity_CuttersHouse_Text_DadHelpedClearLandOfTrees:
-	.string "When they were expanding the city of\n"
-	.string "RUSTBORO, my dad helped out.\p"
-	.string "He made his POKéMON use CUT to clear\n"
-	.string "the land of trees.$"
-
+CuttersGrandmaDialogue::
+# 30 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
+	.string "When they were expanding the city of\n RUSTBORO, my husband helped out.\p He made his POKéMON use the hidden\n technique CUT to clear the land of\p the many trees that once were here.$"

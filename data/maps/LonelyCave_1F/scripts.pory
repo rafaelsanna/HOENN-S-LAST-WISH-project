@@ -3,7 +3,8 @@ mapscripts LonelyCave_1F_MapScripts {}
 script LonelyCave1F_Hiker {
 	lock
   faceplayer
-	msgbox(format("The bottom floor of this place is quite eerie!"))
+	msgbox
+	(format("I'm getting a strange feeling from this place. Could it be GHOST-type pokémon?"))
 	release
 	end
 }

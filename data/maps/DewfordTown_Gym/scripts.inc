@@ -137,8 +137,8 @@ DewfordTown_Gym_EventScript_Brawly::
     faceplayer
 
     @ === MANUAL DIFFICULTY CHECK ===
-    copyvar VAR_0x8000, 0x5050
-    compare VAR_0x8000, 1
+    copyvar VAR_DIFFICULTY, 0x5050
+    compare VAR_DIFFICULTY, 1
     goto_if_eq DewfordTown_Gym_BrawlyHard
 
     @ Normal - TRAINER_BRAWLY_1

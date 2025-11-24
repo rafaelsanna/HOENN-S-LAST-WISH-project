@@ -34,6 +34,7 @@ const LOCALID_WALLY = 29
 
 script MOSSDEEP01_OnFrame {
   setvar(VAR_TEMP_0, 0)
+	return
 }
 
 script MOSSDEEP01_OnTransition {
@@ -91,7 +92,6 @@ script MOSSDEEP01_ContinueTransition {
     call(MOSSDEEP01_EventScript_ShowInitialWally)
     call(MOSSDEEP01_EventScript_HideCloneWally)
   }
-
   end
 }
 
@@ -105,7 +105,7 @@ script MOSSDEEP01_OnResume {
 
 script MOSSDEEP01_EventScript_Prologue {
   setvar(VAR_TEMP_0, 1)
-  lockall
+  lock
   delay(120)
 
   // Earthquake effects
@@ -119,12 +119,6 @@ script MOSSDEEP01_EventScript_Prologue {
   delay(80)
 
   playse(SE_M_ROCK_THROW)
-  setvar(VAR_0x8004, 4)
-  setvar(VAR_0x8005, 4)
-  setvar(VAR_0x8006, 10)
-  setvar(VAR_0x8007, 12)
-  special(ShakeCamera)
-  waitstate
   delay(100)
 
   // Player exits tent

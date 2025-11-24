@@ -615,12 +615,12 @@ DifficultySelection_Event::
 	goto DifficultySelection_Normal
 
 DifficultySelection_Hard::
-	setvar 0x404E, 1
+	setvar VAR_DIFFICULTY, 1
 	msgbox DifficultySelection_Text_HardModeSelected, MSGBOX_DEFAULT
 	return
 
 DifficultySelection_Normal::
-	setvar 0x404E, 0
+	setvar VAR_DIFFICULTY, 0
 	return
 
 ///////////////////////=====/////////////////

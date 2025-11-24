@@ -334,7 +334,8 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Luvdisc @ Oran Berry  
+Luvdisc @ Oran Berry
+Level: 14
 Ability: Prankster  
 - Water Pulse  
 - Bite  
@@ -342,13 +343,15 @@ Ability: Prankster
 - Taunt  
 
 Carvanha @ Oran Berry  
+Level: 14
 Ability: Speed Boost  
 - Bite  
 - Aqua Jet  
 - Ice Fang  
 - Brine  
 
-Zubat @ Oran Berry  
+Zubat @ Oran Berry
+Level: 16
 Ability: Inner Focus  
 - Bite  
 - Wing Attack  
@@ -6198,6 +6201,72 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Oddish
 Level: 12
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+=== TRAINER_TSUBAKI_EASY ===
+Name: TSUBAKI
+Class: Lass
+Pic: Elite Four Sidney
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Basic Trainer
+
+Koffing
+Level: 13
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+- Tackle
+- Smog
+- Spite
+- Clear Smog
+
+Delcatty
+Level: 15
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+- Sucker Punch
+- Shadow Sneak
+- Sing
+- Cut
+
+=== TRAINER_TSUBAKI_HARD ===
+Name: TSUBAKI
+Class: Lass
+Pic: Elite Four Sidney
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Basic Trainer
+
+Koffing
+Level: 13
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+- Tackle
+- Smog
+- Spite
+- Clear Smog
+
+Sneasel @ Kings Rock
+Level: 14
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+- Cut
+- Ice Shard
+- Water Pulse
+- Aerial Ace
+
+Scyther
+Level: 13
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+- Cut
+- Swift
+- Double Team
+- Thief
+
+Delcatty @ Sitrus Berry
+Level: 16
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+- Sucker Punch
+- Shadow Sneak
+- Sing
+- Cut
 
 === TRAINER_BILLY ===
 Name: BILLY

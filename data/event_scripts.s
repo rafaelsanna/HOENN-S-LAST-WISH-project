@@ -1196,3 +1196,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LonelyCave_B2/scripts.inc"
 
 	.include "data/maps/RusturfGrove/scripts.inc"
+
+	.include "data/maps/RuinousValley/scripts.inc"

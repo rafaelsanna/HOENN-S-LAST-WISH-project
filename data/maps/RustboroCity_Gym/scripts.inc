@@ -5,8 +5,8 @@ RustboroCity_Gym_EventScript_Roxanne::
 	lock
 	faceplayer
 	@ === VERIFICAÇÃO MANUAL DA DIFICULDADE ===
-	copyvar VAR_0x8000, 0x404E
-	compare VAR_0x8000, 1
+	copyvar VAR_DIFFICULTY, 0x404E
+	compare VAR_DIFFICULTY, 1
 	goto_if_eq RustboroCity_Gym_RoxanneHard
 	
 	@ Modo Normal - TRAINER_ROXANNE 

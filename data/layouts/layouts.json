@@ -4600,6 +4600,16 @@
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/RusturfGrove/border.bin",
       "blockdata_filepath": "data/layouts/RusturfGrove/map.bin"
+    },
+    {
+      "id": "LAYOUT_RUINOUS_VALLEY",
+      "name": "RuinousValley_Layout",
+      "width": 60,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/RuinousValley/border.bin",
+      "blockdata_filepath": "data/layouts/RuinousValley/map.bin"
     }
   ]
 }

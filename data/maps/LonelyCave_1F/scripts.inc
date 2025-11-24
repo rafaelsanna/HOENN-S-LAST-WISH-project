@@ -9,12 +9,12 @@ LonelyCave1F_Hiker::
 	faceplayer
 # 6 "data/maps/LonelyCave_1F/scripts.pory"
 	msgbox LonelyCave1F_Hiker_Text_0
-# 7 "data/maps/LonelyCave_1F/scripts.pory"
+# 8 "data/maps/LonelyCave_1F/scripts.pory"
 	release
 	end
 
 
 LonelyCave1F_Hiker_Text_0:
-# 6 "data/maps/LonelyCave_1F/scripts.pory"
-	.string "The bottom floor of this place is quite\n"
-	.string "eerie!$"
+# 7 "data/maps/LonelyCave_1F/scripts.pory"
+	.string "I'm getting a strange feeling from this\n"
+	.string "place. Could it be GHOST-type pokémon?$"
