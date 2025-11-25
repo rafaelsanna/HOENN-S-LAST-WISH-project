@@ -220,7 +220,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BRENDAN_NORMAL",
-      "x": 19,
+      "x": 18,
       "y": 67,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",

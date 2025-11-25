@@ -11163,12 +11163,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_RELICANTH] =
     {
         .baseHP        = 100,
-        .baseAttack    = 90,
-        .baseDefense   = 130,
+        .baseAttack    = 30,
+        .baseDefense   = 90,
         .baseSpeed     = 55,
-        .baseSpAttack  = 45,
-        .baseSpDefense = 65,
-        .types = MON_TYPES(TYPE_WATER, TYPE_ROCK),
+        .baseSpAttack  = 115,
+        .baseSpDefense = 130,
+        .types = MON_TYPES(TYPE_GHOST, TYPE_ROCK),
         .catchRate = 25,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 170 : 198,
         .evYield_HP = 1,
@@ -11179,7 +11179,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_WATER_2),
-        .abilities = { ABILITY_SWIFT_SWIM, ABILITY_ROCK_HEAD, ABILITY_STURDY },
+        .abilities = { ABILITY_CURSED_BODY, ABILITY_WATER_ABSORB, ABILITY_STORM_DRAIN },
         .bodyColor = BODY_COLOR_GRAY,
         .speciesName = _("Relicanth"),
         .cryId = CRY_RELICANTH,
@@ -11187,11 +11187,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .categoryName = _("Longevity"),
         .height = 10,
         .weight = 234,
-        .description = COMPOUND_STRING(
-            "A Pokémon that was once believed to have\n"
-            "been extinct. The species has not changed\n"
-            "its form for 100 million years. It walks on\n"
-            "the seafloor using its pectoral fins."),
+            .description = COMPOUND_STRING(
+        "In flooded caverns, its spectral form drifts\n"
+        "between stone pillars. Once ancient and still,\n"
+        "it now haunts the depths, its presence causing\n"
+        "echoes that freeze the hearts of explorers."),
         .pokemonScale = 316,
         .pokemonOffset = 7,
         .trainerScale = 256,
