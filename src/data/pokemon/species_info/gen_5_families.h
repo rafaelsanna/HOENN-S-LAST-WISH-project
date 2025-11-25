@@ -12260,57 +12260,66 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
 #if P_FAMILY_VIRIZION
     [SPECIES_VIRIZION] =
     {
-        .baseHP        = 91,
-        .baseAttack    = 90,
-        .baseDefense   = 72,
-        .baseSpeed     = 108,
-        .baseSpAttack  = 90,
-        .baseSpDefense = 129,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_FIGHTING),
-        .catchRate = 3,
-        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 290 : 261,
-        .evYield_SpDefense = 3,
-        .genderRatio = MON_GENDERLESS,
-        .eggCycles = 80,
-        .friendship = 35,
-        .growthRate = GROWTH_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
-        .abilities = { ABILITY_JUSTIFIED, ABILITY_NONE, ABILITY_NONE },
+        .baseHP        = 60,
+        .baseAttack    = 130,
+        .baseDefense   = 60,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 60,
+        .baseSpDefense = 80,
+        .types = MON_TYPES(TYPE_POISON, TYPE_FAIRY),
+        .catchRate = 90,
+        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 161 : 165,
+        .evYield_Attack = 2,
+        .itemCommon = ITEM_TINY_MUSHROOM,
+        .itemRare = ITEM_BIG_MUSHROOM,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 15,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_FLUCTUATING,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY, EGG_GROUP_GRASS),
+    #if P_UPDATED_ABILITIES >= GEN_4
+        .abilities = { ABILITY_EFFECT_SPORE, ABILITY_POISON_HEAL, ABILITY_TECHNICIAN },
+    #else
+        .abilities = { ABILITY_EFFECT_SPORE, ABILITY_NONE, ABILITY_TECHNICIAN },
+    #endif
         .bodyColor = BODY_COLOR_GREEN,
-        .speciesName = _("Virizion"),
-        .cryId = CRY_VIRIZION,
-        .natDexNum = NATIONAL_DEX_VIRIZION,
-        .categoryName = _("Grassland"),
-        .height = 20,
-        .weight = 2000,
+        .speciesName = _("Mandraloom"),
+        .cryId = CRY_BRELOOM,
+        .natDexNum = NATIONAL_DEX_BRELOOM,
+        .categoryName = _("Mushroom"),
+        .height = 12,
+        .weight = 392,
         .description = COMPOUND_STRING(
-            "Its head sprouts horns as sharp as blades.\n"
-            "Legends say this Pokémon used\n"
-            "whirlwind-like movements to confound\n"
-            "and swiftly cut its opponents."),
-        .pokemonScale = 261,
-        .pokemonOffset = 1,
-        .trainerScale = 344,
-        .trainerOffset = 4,
+            "It scatters spores from holes in the cap\n"
+            "on its head. It loves warm and humid\n"
+            "climates. It feeds on trees and plants in\n"
+            "fields and forests."),
+        .pokemonScale = 324,
+        .pokemonOffset = 6,
+        .trainerScale = 256,
+        .trainerOffset = 0,
         .frontPic = gMonFrontPic_Virizion,
-        .frontPicSize = MON_COORDS_SIZE(48, 64),
-        .frontPicYOffset = 2,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 56) : MON_COORDS_SIZE(48, 64),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 3,
         .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(0, 20),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 7),
         ),
-        .frontAnimId = ANIM_GROW_VIBRATE,
+        .frontAnimId = ANIM_BOUNCE_ROTATE_TO_SIDES,
         .backPic = gMonBackPic_Virizion,
-        .backPicSize = MON_COORDS_SIZE(64, 56),
-        .backPicYOffset = 8,
-        .backAnimId = BACK_ANIM_H_SHAKE,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 3,
+        .backAnimId = BACK_ANIM_JOLT_RIGHT,
         .palette = gMonPalette_Virizion,
         .shinyPalette = gMonShinyPalette_Virizion,
         .iconSprite = gMonIcon_Virizion,
         .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(1, 12, SHADOW_SIZE_M)
-        FOOTPRINT(Virizion)
+        SHADOW(0, 15, SHADOW_SIZE_L)
+        FOOTPRINT(Breloom)
         OVERWORLD(
             sPicTable_Virizion,
             SIZE_32x32,
@@ -12320,8 +12329,6 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
             gOverworldPalette_Virizion,
             gShinyOverworldPalette_Virizion
         )
-        .isLegendary = TRUE,
-        .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
         .levelUpLearnset = sVirizionLevelUpLearnset,
         .teachableLearnset = sVirizionTeachableLearnset,
     },
