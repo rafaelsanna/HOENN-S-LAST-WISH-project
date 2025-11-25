@@ -60,6 +60,7 @@
 #include "malloc.h"
 #include "constants/event_objects.h"
 #include "constants/map_types.h"
+#include "paintings.h"
 
 typedef u16 (*SpecialFunc)(void);
 typedef void (*NativeFunc)(struct ScriptContext *ctx);
@@ -1988,6 +1989,14 @@ bool8 ScrCmd_showmonpic(struct ScriptContext *ctx)
 
     ScriptMenu_ShowPokemonPic(species, x, y);
     return FALSE;
+}
+
+bool8 ScrCmd_showpainting(struct ScriptContext *ctx)
+{
+    u16 paintingId = VarGet(ScriptReadHalfword(ctx));
+    ShowPainting(paintingId, ctx);  // Pass ctx to ShowPainting
+    ScriptContext_Enable();
+    return TRUE;
 }
 
 bool8 ScrCmd_hidemonpic(struct ScriptContext *ctx)

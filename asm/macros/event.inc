@@ -959,6 +959,12 @@
 	.byte SCR_OP_HIDEMONPIC
 	.endm
 
+	@ Displays a full-screen painting
+    .macro showpainting paintingid:req
+    .byte SCR_OP_SHOWPAINTING
+    .2byte \paintingid
+    .endm
+
 	@ Draws an image of the winner of the contest. winnerId is any CONTEST_WINNER_* constant.
 	.macro showcontestpainting winnerId:req
 	.byte SCR_OP_SHOWCONTESTPAINTING
