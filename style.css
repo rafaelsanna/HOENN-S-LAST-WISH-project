@@ -1073,3 +1073,100 @@ body.light-mode .main-screenshot {
         max-width: 95%;
     }
 }
+
+/* ===== TEAM SECTION ===== */
+.team-section {
+    padding: 4rem 0;
+    background: #2d2d2d;
+    text-align: center;
+}
+
+.team-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #ffffff !important;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.team-member {
+    background: #363636;
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+    border: 2px solid #404040;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    border-color: var(--pokemon-yellow);
+}
+
+.team-member h3 {
+    color: var(--pokemon-yellow) !important;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.team-member p {
+    color: #cccccc !important;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Light Mode */
+body.light-mode .team-section {
+    background: #f8f9fa;
+}
+
+body.light-mode .team-section h2 {
+    color: var(--pokemon-dark) !important;
+}
+
+body.light-mode .team-member {
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+body.light-mode .team-member h3 {
+    color: var(--pokemon-blue) !important;
+}
+
+body.light-mode .team-member p {
+    color: #2c3e50 !important;
+}
+
+body.light-mode .team-member:hover {
+    border-color: var(--pokemon-blue);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .team-section {
+        padding: 3rem 0;
+    }
+    
+    .team-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .team-member {
+        padding: 1.5rem 1rem;
+    }
+}
