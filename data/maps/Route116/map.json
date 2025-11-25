@@ -27,6 +27,11 @@
       "map": "MAP_RUSTURF_GROVE",
       "offset": 20,
       "direction": "down"
+    },
+    {
+      "map": "MAP_ROUTE115_2",
+      "offset": 0,
+      "direction": "up"
     }
   ],
   "object_events": [

@@ -43,6 +43,7 @@ static void TilesetAnim_MauvilleGym(u16);
 static void TilesetAnim_BikeShop(u16);
 static void TilesetAnim_BattlePyramid(u16);
 static void TilesetAnim_BattleDome(u16);
+static void TilesetAnim_DreamRealm(u16);
 static void QueueAnimTiles_General_Flower(u16);
 static void QueueAnimTiles_General_Flower_2(u16);
 static void QueueAnimTiles_General_Water(u16);
@@ -74,6 +75,7 @@ static void QueueAnimTiles_MauvilleGym_ElectricGates(u16);
 static void QueueAnimTiles_SootopolisGym_Waterfalls(u16);
 static void QueueAnimTiles_EliteFour_GroundLights(u16);
 static void QueueAnimTiles_EliteFour_WallLights(u16);
+static void QueueAnimTiles_DreamRealm_FallingStar(u16);
 
 const u16 gTilesetAnims_General_Flower_Frame1[] = INCBIN_U16("data/tilesets/primary/general/anim/flower/1.4bpp");
 const u16 gTilesetAnims_General_Flower_Frame0[] = INCBIN_U16("data/tilesets/primary/general/anim/flower/0.4bpp");
@@ -96,6 +98,34 @@ const u16 *const gTilesetAnims_General_Flower_2[] = {
     gTilesetAnims_General_Flower_2_Frame1,
     gTilesetAnims_General_Flower_2_Frame0,
     gTilesetAnims_General_Flower_2_Frame2
+};
+
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame0[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/0.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame1[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/1.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame2[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/2.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame3[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/3.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame4[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/4.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame5[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/5.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame6[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/6.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame7[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/7.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame8[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/8.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame9[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/9.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame10[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/10.4bpp");
+const u16 gTilesetAnims_DreamRealm_FallingStar_Frame11[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/11.4bpp");
+
+const u16 *const gTilesetAnims_DreamRealm_FallingStar[] = {
+    gTilesetAnims_DreamRealm_FallingStar_Frame0,
+    gTilesetAnims_DreamRealm_FallingStar_Frame1,
+    gTilesetAnims_DreamRealm_FallingStar_Frame2,
+    gTilesetAnims_DreamRealm_FallingStar_Frame3,
+    gTilesetAnims_DreamRealm_FallingStar_Frame4,
+    gTilesetAnims_DreamRealm_FallingStar_Frame5,
+    gTilesetAnims_DreamRealm_FallingStar_Frame6,
+    gTilesetAnims_DreamRealm_FallingStar_Frame7,
+    gTilesetAnims_DreamRealm_FallingStar_Frame8,
+    gTilesetAnims_DreamRealm_FallingStar_Frame9,
+    gTilesetAnims_DreamRealm_FallingStar_Frame10,
+    gTilesetAnims_DreamRealm_FallingStar_Frame11
 };
 
 const u16 gTilesetAnims_General_Water_Frame0[] = INCBIN_U16("data/tilesets/primary/general/anim/water/0.4bpp");
@@ -634,6 +664,13 @@ void InitTilesetAnim_General(void)
     sPrimaryTilesetAnimCallback = TilesetAnim_General;
 }
 
+void InitTilesetAnim_DreamRealm(void)
+{
+    sPrimaryTilesetAnimCounter = 0;
+    sPrimaryTilesetAnimCounterMax = 256;
+    sPrimaryTilesetAnimCallback = TilesetAnim_DreamRealm;
+}
+
 void InitTilesetAnim_Building(void)
 {
     sPrimaryTilesetAnimCounter = 0;
@@ -656,6 +693,12 @@ static void TilesetAnim_General(u16 timer)
         QueueAnimTiles_General_LandWaterEdge(timer / 16);
 }
 
+static void TilesetAnim_DreamRealm(u16 timer)
+{
+    if (timer % 16 == 0)
+        QueueAnimTiles_DreamRealm_FallingStar(timer / 16);
+}
+
 static void TilesetAnim_Building(u16 timer)
 {
     if (timer % 8 == 0)
@@ -666,6 +709,12 @@ static void QueueAnimTiles_General_Flower(u16 timer)
 {
     u16 i = timer % ARRAY_COUNT(gTilesetAnims_General_Flower);
     AppendTilesetAnimToBuffer(gTilesetAnims_General_Flower[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(508)), 4 * TILE_SIZE_4BPP);
+}
+
+static void QueueAnimTiles_DreamRealm_FallingStar(u16 timer)
+{
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_DreamRealm_FallingStar);
+    AppendTilesetAnimToBuffer(gTilesetAnims_DreamRealm_FallingStar[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(194)), 4 * TILE_SIZE_4BPP);
 }
 
 static void QueueAnimTiles_General_Flower_2(u16 timer)

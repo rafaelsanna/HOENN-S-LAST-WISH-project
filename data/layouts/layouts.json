@@ -184,8 +184,8 @@
     {
       "id": "LAYOUT_ROUTE103",
       "name": "Route103_Layout",
-      "width": 80,
-      "height": 22,
+      "width": 86,
+      "height": 24,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/Route103/border.bin",
@@ -4414,10 +4414,10 @@
     {
       "id": "LAYOUT_LITTLEROOT_TOWN_01",
       "name": "LITTLEROOT_TOWN_01_Layout",
-      "width": 10,
-      "height": 10,
+      "width": 22,
+      "height": 23,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_MeteorFalls",
+      "secondary_tileset": "gTileset_DreamRealm",
       "border_filepath": "data/layouts/LITTLEROOT_TOWN_01/border.bin",
       "blockdata_filepath": "data/layouts/LITTLEROOT_TOWN_01/map.bin"
     },
@@ -4534,8 +4534,8 @@
     {
       "id": "LAYOUT_ROUTE115_2",
       "name": "Route115_2_Layout",
-      "width": 26,
-      "height": 26,
+      "width": 28,
+      "height": 29,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fallarbor",
       "border_filepath": "data/layouts/Route115_2/border.bin",
@@ -4604,12 +4604,22 @@
     {
       "id": "LAYOUT_RUINOUS_VALLEY",
       "name": "RuinousValley_Layout",
-      "width": 60,
+      "width": 66,
       "height": 32,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/RuinousValley/border.bin",
       "blockdata_filepath": "data/layouts/RuinousValley/map.bin"
+    },
+    {
+      "id": "LAYOUT_DREAM_REALM",
+      "name": "DreamRealm_Layout",
+      "width": 22,
+      "height": 23,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_DreamRealm",
+      "border_filepath": "data/layouts/DreamRealm/border.bin",
+      "blockdata_filepath": "data/layouts/DreamRealm/map.bin"
     }
   ]
 }

@@ -249,10 +249,10 @@ void NewGameInitData(void)
     
     // CRITICAL: Set initial warp destination to LITTLEROOT_TOWN_01
     // This ensures the NPC interaction works from the start
-    SetWarpDestination(MAP_GROUP(MAP_LITTLEROOT_TOWN_01), 
-                       MAP_NUM(MAP_LITTLEROOT_TOWN_01), 
+    SetWarpDestination(MAP_GROUP(MAP_DREAM_REALM), 
+                       MAP_NUM(MAP_DREAM_REALM), 
                        WARP_ID_NONE, 
-                       2, 3);
+                       10, 17);
     WarpIntoMap();
     
     // Execute map reset script
