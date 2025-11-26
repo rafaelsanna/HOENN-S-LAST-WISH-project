@@ -42,8 +42,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 5,
-      "y": 14,
+      "x": 27,
+      "y": 18,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -55,8 +55,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 3,
-      "y": 14,
+      "x": 6,
+      "y": 25,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -68,8 +68,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 2,
-      "y": 16,
+      "x": 24,
+      "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -81,8 +81,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 7,
-      "y": 12,
+      "x": 16,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -94,8 +94,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 4,
-      "y": 22,
+      "x": 23,
+      "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -107,8 +107,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 6,
-      "y": 22,
+      "x": 9,
+      "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -120,8 +120,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 3,
-      "y": 21,
+      "x": 5,
+      "y": 24,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -134,15 +134,15 @@
   ],
   "warp_events": [
     {
-      "x": 29,
-      "y": 13,
+      "x": 26,
+      "y": 15,
       "elevation": 3,
       "dest_map": "MAP_GRANITE_CAVE_B1F",
       "dest_warp_id": "2"
     },
     {
-      "x": 28,
-      "y": 21,
+      "x": 27,
+      "y": 23,
       "elevation": 3,
       "dest_map": "MAP_GRANITE_CAVE_B1F",
       "dest_warp_id": "3"
@@ -167,6 +167,13 @@
       "elevation": 3,
       "dest_map": "MAP_GRANITE_CAVE_B1F",
       "dest_warp_id": "6"
+    },
+    {
+      "x": 9,
+      "y": 12,
+      "elevation": 3,
+      "dest_map": "MAP_GRANITE_CAVE_B1F",
+      "dest_warp_id": "7"
     }
   ],
   "coord_events": [],
@@ -181,7 +188,7 @@
     },
     {
       "type": "hidden_item",
-      "x": 15,
+      "x": 13,
       "y": 11,
       "elevation": 3,
       "item": "ITEM_EVERSTONE",

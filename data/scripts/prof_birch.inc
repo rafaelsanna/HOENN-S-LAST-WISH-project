@@ -1,4 +1,4 @@
-ProfBirch_EventScript_UpdateLocation::
+ProfAcacia_EventScript_UpdateLocation::
 	goto_if_eq VAR_PETALBURG_GYM_STATE, 0, Common_EventScript_NopReturn
 	goto_if_set FLAG_SYS_GAME_CLEAR, ProfBirch_EventScript_MoveToLab
 	call_if_eq VAR_BIRCH_STATE, 0, ProfBirch_EventScript_MoveToLab
