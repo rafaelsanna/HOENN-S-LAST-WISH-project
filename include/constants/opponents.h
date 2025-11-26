@@ -868,12 +868,14 @@
 #define TRAINER_PORTINARI                   862
 #define TRAINER_TSUBAKI_EASY                863
 #define TRAINER_TSUBAKI_HARD                864
+#define TRAINER_SID                         865
+#define TRAINER_PENNY                       866
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      865
+#define TRAINERS_COUNT                      867
 #define MAX_TRAINERS_COUNT                  900
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 

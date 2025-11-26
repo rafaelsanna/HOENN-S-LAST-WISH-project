@@ -6272,6 +6272,44 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Sing
 - Cut
 
+=== TRAINER_SID ===
+Name: SID
+Class: Collector
+Pic: Collector
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Magnemite
+Level: 16
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Grimer
+Level: 17
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+=== TRAINER_PENNY ===
+Name: PENNY
+Class: Picnicker
+Pic: Picnicker
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move
+
+Nidoran_F
+Level: 15
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Poochyena
+Level: 15
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Phanpy
+Level: 16
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
 === TRAINER_BILLY ===
 Name: BILLY
 Class: Youngster

@@ -4,7 +4,7 @@ Route101_MapScripts::
 	.byte 0
 
 Route101_OnTransition:
-	call ProfBirch_EventScript_UpdateLocation
+	call ProfAcacia_EventScript_UpdateLocation
 	end
 
 Route101_OnFrame:
@@ -16,24 +16,24 @@ Route101_EventScript_HideMapNamePopup::
 	setvar VAR_ROUTE101_STATE, 1
 	end
 
-Route101_EventScript_StartBirchRescue::
+Route101_EventScript_StartAcaciaRescue::
 	lockall
 	playbgm MUS_HELP, TRUE
 	msgbox Route101_Text_HelpMe, MSGBOX_DEFAULT
 	closemessage
-	setobjectxy LOCALID_ROUTE101_BIRCH, 0, 15
+	setobjectxy LOCALID_ROUTE101_ACACIA, 0, 15
 	setobjectxy LOCALID_ROUTE101_ZIGZAGOON, 0, 16
 	applymovement LOCALID_PLAYER, Route101_Movement_EnterScene
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunAway1
+	applymovement LOCALID_ROUTE101_ACACIA, Route101_Movement_AcaciaRunAway1
 	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonChase1
 	waitmovement 0
 	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonChaseInCircles
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunInCircles
+	applymovement LOCALID_ROUTE101_ACACIA, Route101_Movement_AcaciaRunInCircles
 	waitmovement 0
-	applymovement LOCALID_ROUTE101_BIRCH, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_ROUTE101_ACACIA, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonFaceBirch
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchFaceZigzagoon
+	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonFaceAcacia
+	applymovement LOCALID_ROUTE101_ACACIA, Route101_Movement_AcaciaFaceZigzagoon
 	waitmovement 0
 	msgbox Route101_Text_PleaseHelp, MSGBOX_DEFAULT
 	closemessage
@@ -127,7 +127,7 @@ Route101_Movement_ZigzagoonChase1:
 @ Leftover data? This command is unused.
 	step_end
 
-Route101_Movement_ZigzagoonFaceBirch:
+Route101_Movement_ZigzagoonFaceAcacia:
 	walk_in_place_fast_left
 	walk_in_place_fast_left
 	walk_in_place_fast_left
@@ -144,7 +144,7 @@ Route101_Movement_EnterScene:
 	walk_in_place_faster_left
 	step_end
 
-Route101_Movement_BirchRunInCircles:
+Route101_Movement_AcaciaRunInCircles:
 	walk_fast_up
 	walk_fast_up
 	walk_fast_right
@@ -177,7 +177,7 @@ Route101_Movement_BirchRunInCircles:
 	walk_fast_left
 	step_end
 
-Route101_Movement_BirchRunAway1:
+Route101_Movement_AcaciaRunAway1:
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -189,7 +189,7 @@ Route101_Movement_BirchRunAway1:
 @ Leftover data? This command is unused.
 	step_end
 
-Route101_Movement_BirchFaceZigzagoon:
+Route101_Movement_AcaciaFaceZigzagoon:
 	walk_in_place_fast_right
 	walk_in_place_fast_right
 	walk_in_place_fast_right
@@ -219,7 +219,15 @@ Route101_EventScript_RouteSign::
 	msgbox Route101_Text_RouteSign, MSGBOX_SIGN
 	end
 
-Route101_EventScript_BirchsBag::
+Route101_EventScript_WurmpleOverworld::
+	lock
+	faceplayer
+	playmoncry SPECIES_WURMPLE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+Route101_EventScript_AcaciasBag::
 	lock
 	faceplayer
 	setflag FLAG_SYS_POKEMON_GET
@@ -231,7 +239,7 @@ Route101_EventScript_BirchsBag::
 	waitmovement 0
 	special ChooseStarter
 	waitstate
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchApproachPlayer
+	applymovement LOCALID_ROUTE101_ACACIA, Route101_Movement_AcaciaApproachPlayer
 	waitmovement 0
 	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
 	special HealPlayerParty
@@ -257,7 +265,7 @@ Route101_EventScript_HideBrendanInBedroom::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	return
 
-Route101_Movement_BirchApproachPlayer:
+Route101_Movement_AcaciaApproachPlayer:
 	walk_right
 	step_end
 
@@ -275,7 +283,7 @@ Route101_Text_DontLeaveMe:
 	.string "Don't leave me like this!$"
 
 Route101_Text_YouSavedMe:
-	.string "PROF. BIRCH: Whew…\p"
+	.string "PROF. ACACIA: Whew…\p"
 	.string "I was in the tall grass studying wild\n"
 	.string "POKéMON when I was jumped.\p"
 	.string "You saved me.\n"

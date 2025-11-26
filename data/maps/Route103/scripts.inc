@@ -5,11 +5,19 @@ Route103_MapScripts::
 
 Route103_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
-	call ProfBirch_EventScript_UpdateLocation
+	call ProfAcacia_EventScript_UpdateLocation
 	end
 
 Route103_OnLoad:
 	call_if_set FLAG_SYS_GAME_CLEAR, Route103_EventScript_OpenAlteringCave
+	end
+
+Route103_EventScript_WingullOverworld::
+	lock
+	faceplayer
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	waitmoncry
+	release
 	end
 
 Route103_EventScript_OpenAlteringCave::
