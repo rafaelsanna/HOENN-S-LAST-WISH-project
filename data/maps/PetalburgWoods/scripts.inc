@@ -172,19 +172,16 @@ PetalburgWoods_Movement_AquaFEntrance:
 PetalburgWoods_Movement_AquaFApproachResearcherLeft:
 	walk_fast_down
 	walk_fast_down
-	walk_fast_right
 	step_end
 
 PetalburgWoods_Movement_AquaFApproachResearcherRight:
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
-	walk_fast_right
 	step_end
 
 PetalburgWoods_Movement_AquaFApproachPlayer:
 	walk_down
-	walk_right
 	step_end
 
 PetalburgWoods_Movement_AquaFBackOff:
