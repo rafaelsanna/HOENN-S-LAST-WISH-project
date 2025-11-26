@@ -261,6 +261,14 @@ static const struct SpriteFrameImage sPicTable_Hiker[] = {
     overworld_ascending_frames(gObjectEventPic_Hiker, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_Hiker2[] = {
+    overworld_ascending_frames(gObjectEventPic_Hiker2, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_Hiker3[] = {
+    overworld_ascending_frames(gObjectEventPic_Hiker3, 2, 4),
+};
+
 static const struct SpriteFrameImage sPicTable_CyclingTriathleteM[] = {
     overworld_ascending_frames(gObjectEventPic_CyclingTriathleteM, 4, 4),
 };
