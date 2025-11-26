@@ -1033,22 +1033,33 @@ RustboroCity_Text_HaveYouChallengedGym:
 	.string "realize what is required of them.$"
 
 RustboroCity_Text_HeyThatsRustborosGymBadge:
-	.string "Hey, that's RUSTBORO's GYM BADGE!\p"
-	.string "Out of all the POKéMON GYM BADGES,\n"
-	.string "RUSTBORO's is the coolest, I'd say.$"
+.string "Hah! You want the RUSTBORO GYM BADGE?\p"
+.string "You'll have to face TERRA!\p"
+.string "She's tough! And a formidable\n"
+.string "climber! Look at you, with those\l"
+.string "weird clothes, all scrawny, and those\l"
+.string "dark circles under your eyes...\p"
+.string "I'm not sure you stand a chance...\p"
+.string "I got mine after like 20 attempts,\n"
+.string "and I think TERRA went easy on me\l"
+.string "'cause we're climbing buddies!\p"
+.string "Good luck! HAHAHAH!$"
 
 RustboroCity_Text_YoureNewAroundHere:
-	.string "Oh? Who might you be?\n"
-	.string "You're a new face around these parts.\p"
-	.string "Have you just transferred into the\n"
-	.string "POKéMON TRAINER'S SCHOOL?$"
+.string "Oh? Who might you be?\n"
+.string "You're a new face around these parts.\p"
+.string "With those weird clothes of yours,\n"
+.string "they won't accept you at the school!\l"
+.string "Where's your uniform?$"
 
 RustboroCity_Text_GymLeaderIsntEasyWithFire:
-	.string "I challenged the GYM LEADER, but…\p"
-	.string "It's not going to be easy winning with\n"
-	.string "my FIRE-type POKéMON…\p"
-	.string "FIRE-type POKéMON don't match up\n"
-	.string "well against ROCK-type POKéMON…$"
+    .string "you know TERRA, the GYM LEADER?\n"
+    .string "Amazing rock climber! People say she\n"
+    .string "climbed Mt. Chimney with no equipment.\p"
+    .string "I went to meet her just to ask for an\n"
+    .string "autograph, but she challenged me to a\n"
+    .string "battle instead...\p"
+    .string "I got beaten really badly...$"
 
 RustboroCity_Text_MrBrineyWalksInTheTunnel:
 	.string "The old sailor MR. BRINEY lives in\n"
@@ -1075,19 +1086,28 @@ RustboroCity_Text_CatchRarePokemonIfIGoToSchool:
 	.string "to catch rare POKéMON easily?$"
 
 RustboroCity_Text_PokemonCanChangeLookFromExp:
-	.string "If a POKéMON gains experience in\n"
-	.string "battles, it can sometimes change in\l"
-	.string "the way it looks.$"
+    .string "RUSTBORO CITY always feels so alive…\n"
+    .string "The streets are full of students, workers,\l"
+    .string "and travelers passing through.\p"
+    .string "Every corner has someone tinkering with a\n"
+    .string "machine or studying something new.\l"
+    .string "Makes you wonder what discoveries will\n"
+    .string "come out of this place next.$"
 
 RustboroCity_Text_PokemonChangeShape:
-	.string "A POKéMON changes shape?\n"
-	.string "If one did that, I would be shocked!$"
+    .string "I've heard there are caves and rocky paths\n"
+    .string "north of here, past ROUTE 116.\p"
+    .string "Explorers say strange echoes come from the\n"
+    .string "deep tunnels… almost like something hidden\l"
+    .string "is shifting around in the dark.$"
 
 RustboroCity_Text_TradePokemonGrowFast:
-	.string "A POKéMON you get in a trade from\n"
-	.string "someone grows fast.\p"
-	.string "But if you don't have certain GYM\n"
-	.string "BADGES, it may not obey you…$"
+    .string "Hmph… Those climbers around Rustboro\n"
+    .string "think they're so tough, climbing all\l"
+    .string "day and bragging about their ROCK Pokémon.\p"
+    .string "I can't stand that rowdy bunch, so I train\n"
+    .string "WATER-types just to wash them off their\l"
+    .string "precious mountains.$"
 
 RustboroCity_Text_OutOfTheWay:
 	.string "Get out!\n"
@@ -1136,7 +1156,7 @@ RustboroCity_Text_MayHiLetsRegister:
 	.string "… … … … … …$"
 
 RustboroCity_Text_RegisteredMay:
-	.string "Registered MAY\n"
+	.string "Registered ZINNIA\n"
 	.string "in the POKéNAV.$"
 
 RustboroCity_Text_MayPassedBrineyWantToBattle:
@@ -1183,7 +1203,7 @@ RustboroCity_Text_BrendanHiLetsRegister:
 	.string "… … … … … …$"
 
 RustboroCity_Text_RegisteredBrendan:
-	.string "Registered BRENDAN\n"
+	.string "Registered ZENNO\n"
 	.string "in the POKéNAV.$"
 
 RustboroCity_Text_BrendanPassedBrineyWantToBattle:
