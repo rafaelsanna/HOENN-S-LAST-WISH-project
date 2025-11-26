@@ -1974,9 +1974,9 @@ static void Task_WaitStopSurfing(u8 taskId)
 #define FISHING_STICKY_BOOST    36
 
 #if I_FISHING_BITE_ODDS >= GEN_4
-    #define FISHING_OLD_ROD_ODDS 75
-    #define FISHING_GOOD_ROD_ODDS 50
-    #define FISHING_SUPER_ROD_ODDS 25
+    #define FISHING_OLD_ROD_ODDS 40 //was 75, 50, 25
+    #define FISHING_GOOD_ROD_ODDS 25
+    #define FISHING_SUPER_ROD_ODDS 0
 #elif I_FISHING_BITE_ODDS >= GEN_3
     #define FISHING_OLD_ROD_ODDS 50
     #define FISHING_GOOD_ROD_ODDS 50
@@ -2205,9 +2205,9 @@ static bool32 Fishing_ChangeMinigame(struct Task *task)
 static bool32 Fishing_WaitForA(struct Task *task)
 {
     const s16 reelTimeouts[3] = {
-        [OLD_ROD]   = 36,
-        [GOOD_ROD]  = 33,
-        [SUPER_ROD] = 30
+        [OLD_ROD]   = 25, //was 36, 33, 30
+        [GOOD_ROD]  = 20,
+        [SUPER_ROD] = 15
     };
 
     AlignFishingAnimationFrames();

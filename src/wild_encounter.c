@@ -288,8 +288,10 @@ static u32 ChooseWildMonIndex_Fishing(u8 rod)
     case OLD_ROD:
         if (rand < ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_0)
             wildMonIndex = 0;
-        else
+        if (rand >= ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_1 && rand < ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_2)
             wildMonIndex = 1;
+        else
+            wildMonIndex = 2;
 
         if (swap)
             wildMonIndex = 1 - wildMonIndex;
