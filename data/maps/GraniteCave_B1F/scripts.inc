@@ -51,7 +51,7 @@ PicnickerPenny_Text_0:
 
 SidIntro::
 # 21 "data/maps/GraniteCave_B1F/scripts.pory"
-	.string "I'm here to find rare POKéMON! Do you have any cool ones?$"
+	.string "I'm here to find rare POKéMON!\n Do you have any cool ones?$"
 
 SidLose::
 # 25 "data/maps/GraniteCave_B1F/scripts.pory"

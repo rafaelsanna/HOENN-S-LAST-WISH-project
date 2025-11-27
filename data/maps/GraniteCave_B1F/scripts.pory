@@ -19,7 +19,7 @@ script CollectorSid {
 }
 
 text SidIntro {
-  "I'm here to find rare POKéMON! Do you have any cool ones?"
+  "I'm here to find rare POKéMON!\n Do you have any cool ones?"
 }
 
 text SidLose {
