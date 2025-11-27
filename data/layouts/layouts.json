@@ -627,7 +627,7 @@
       "width": 11,
       "height": 8,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_Shop",
+      "secondary_tileset": "gTileset_PrettyPetalFlowerShop",
       "border_filepath": "data/layouts/Mart/border.bin",
       "blockdata_filepath": "data/layouts/Mart/map.bin"
     },
