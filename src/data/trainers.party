@@ -17360,3 +17360,54 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 Sentret @ Nugget
 Level: 13
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_RITA ===
+Name: RITA
+Class: Aroma Lady
+Pic: Aroma Lady
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move
+
+Zigzagoon
+Level: 17
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Krabby
+Level: 17
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_MAYA ===
+Name: MAYA
+Class: Artist
+Pic: Artist2
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move
+
+Nidorina
+Level: 17
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Spearow
+Level: 17
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_LEO ===
+Name: LEO
+Class: Artist
+Pic: Artist
+Gender: Male
+Music: Male
+Double Battle: Yes
+AI: Check Bad Move
+
+Wingull
+Level: 17
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Oddish
+Level: 17
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe

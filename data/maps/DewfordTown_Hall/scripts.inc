@@ -20,7 +20,16 @@ DewfordTown_Hall_EventScript_Woman::
 	lock
 	faceplayer
 	call Common_EventScript_BufferTrendyPhrase
-	msgbox DewfordTown_Hall_Text_TeachingMonAboutTrend, MSGBOX_DEFAULT
+	goto_if_set FLAG_DEFEATED_DEWFORD_HALL_WOMAN, DewfordTown_Hall_EventScript_WomanDefeated
+	msgbox DewfordTown_Hall_Text_WomanChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_RITA, DewfordTown_Hall_Text_WomanDefeat
+	msgbox DewfordTown_Hall_Text_WomanPostBattle, MSGBOX_DEFAULT
+	setflag FLAG_DEFEATED_DEWFORD_HALL_WOMAN
+	release
+	end
+
+DewfordTown_Hall_EventScript_WomanDefeated::
+	msgbox DewfordTown_Hall_Text_WomanPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
@@ -28,19 +37,24 @@ DewfordTown_Hall_EventScript_Man::
 	lock
 	faceplayer
 	call Common_EventScript_BufferTrendyPhrase
+	goto_if_set FLAG_DEFEATED_DEWFORD_HALL_MAN, DewfordTown_Hall_EventScript_ManDefeated
 	special BufferDeepLinkPhrase
-	msgbox DewfordTown_Hall_Text_DeepLinkBetweenXAndY, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, DewfordTown_Hall_EventScript_ConfirmTrendLink
-	goto_if_eq VAR_RESULT, NO, DewfordTown_Hall_EventScript_RejectTrendLink
-	end
-
-DewfordTown_Hall_EventScript_ConfirmTrendLink::
-	msgbox DewfordTown_Hall_Text_MyHunchWasRight, MSGBOX_DEFAULT
+	msgbox DewfordTown_Hall_Text_ManChallenge, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, DewfordTown_Hall_EventScript_ManDecline
+	trainerbattle_no_intro TRAINER_MAYA, DewfordTown_Hall_Text_ManDefeat
+	msgbox DewfordTown_Hall_Text_ManPostBattle, MSGBOX_DEFAULT
+	setflag FLAG_DEFEATED_DEWFORD_HALL_MAN
 	release
 	end
 
-DewfordTown_Hall_EventScript_RejectTrendLink::
+DewfordTown_Hall_EventScript_ManDecline::
 	msgbox DewfordTown_Hall_Text_NotEasyToKeepUp, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_Hall_EventScript_ManDefeated::
+	special BufferDeepLinkPhrase
+	msgbox DewfordTown_Hall_Text_ManPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
@@ -70,7 +84,16 @@ DewfordTown_Hall_EventScript_LittleBoy::
 	lock
 	faceplayer
 	call Common_EventScript_BufferTrendyPhrase
-	msgbox DewfordTown_Hall_Text_CollectTrendMerchandise, MSGBOX_DEFAULT
+	goto_if_set FLAG_DEFEATED_DEWFORD_HALL_LITTLE_BOY, DewfordTown_Hall_EventScript_LittleBoyDefeated
+	msgbox DewfordTown_Hall_Text_LittleBoyChallenge, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_LEO, DewfordTown_Hall_Text_LittleBoyDefeat
+	msgbox DewfordTown_Hall_Text_LittleBoyPostBattle, MSGBOX_DEFAULT
+	setflag FLAG_DEFEATED_DEWFORD_HALL_LITTLE_BOY
+	release
+	end
+
+DewfordTown_Hall_EventScript_LittleBoyDefeated::
+	msgbox DewfordTown_Hall_Text_LittleBoyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
@@ -254,36 +277,74 @@ DewfordTown_Hall_EventScript_ReceivedSludgeBomb::
 	release
 	end
 
+@ New Trainer Battle Texts
+DewfordTown_Hall_Text_WomanChallenge:
+	.string "This RENTON guy came in like\n"
+	.string "a hurricane, disrupting everything!\p"
+	.string "We artists don't accept his\n"
+	.string "violent attitude!\p"
+	.string "I'll show you that true strength\n"
+	.string "comes from art, not from street fights!$"
+
+DewfordTown_Hall_Text_WomanDefeat:
+	.string "Even in defeat, we maintain\n"
+	.string "our elegance!$"
+
+DewfordTown_Hall_Text_WomanPostBattle:
+	.string "RENTON may have beaten the old\n"
+	.string "Gym Leader, but he'll never understand\l"
+	.string "Dewford's refined culture.\p"
+	.string "Here we value art and trends,\n"
+	.string "not brute force!$"
+
+DewfordTown_Hall_Text_ManChallenge:
+	.string "RENTON's thuggish behavior is\n"
+	.string "killing our island's creative spirit!\p"
+	.string "We used to discuss art and trends,\n"
+	.string "now everyone talks about his brawls.\p"
+	.string "Let me show you what real\n"
+	.string "Dewford culture is about!$"
+
+DewfordTown_Hall_Text_ManDefeat:
+	.string "Alas! Our artistic ways are\n"
+	.string "losing to brute force...$"
+
+DewfordTown_Hall_Text_ManPostBattle:
+	.string "Before RENTON, this hall was filled\n"
+	.string "with poets and artists discussing\l"
+	.string "the latest trends.\p"
+	.string "Now it's all about who he beat up\n"
+	.string "last night. What has our town become?$"
+
+DewfordTown_Hall_Text_LittleBoyChallenge:
+	.string "RENTON ruined everything!\n"
+	.string "He made fun of my paintings!\p"
+	.string "He said real artists don't paint\n"
+	.string "flowers and rainbows...\p"
+	.string "Well, my Pokémon and I will show him\n"
+	.string "that art can be powerful too!$"
+
+DewfordTown_Hall_Text_LittleBoyDefeat:
+	.string "My art wasn't strong enough...$"
+
+DewfordTown_Hall_Text_LittleBoyPostBattle:
+	.string "Maybe RENTON was right...\n"
+	.string "Maybe I need to make my art tougher.\p"
+	.string "But I'll never give up painting!\n"
+	.string "I'll just paint angrier flowers!$"
+
+@ Original Texts (kept for reference)
 DewfordTown_Hall_Text_CantImagineLifeWithoutTrend:
 	.string "What's in vogue? Why, it has to be\n"
-	.string "“{STR_VAR_1}”!\p"
+	.string "{STR_VAR_1}!\p"
 	.string "I can't imagine what life would be like\n"
-	.string "without “{STR_VAR_1}”!$"
+	.string "without {STR_VAR_1}!$"
 
 DewfordTown_Hall_Text_GettingBoredOfTrend:
 	.string "What's in vogue? Why, it has to be\n"
-	.string "“{STR_VAR_1}”!\p"
+	.string "{STR_VAR_1}!\p"
 	.string "But I'm getting kind of bored with it.\p"
 	.string "I should look for the next big thing.$"
-
-DewfordTown_Hall_Text_TeachingMonAboutTrend:
-	.string "I'm teaching my POKéMON about\n"
-	.string "“{STR_VAR_1},”\l"
-	.string "but it's not going well.\p"
-	.string "It's a bit too much, I think.$"
-
-DewfordTown_Hall_Text_DeepLinkBetweenXAndY:
-	.string "I'm studying up on the hip and trendy\n"
-	.string "“{STR_VAR_1}” now.\p"
-	.string "Is it true that there's a deep link\n"
-	.string "between “{STR_VAR_1}”\l"
-	.string "and “{STR_VAR_2}”?$"
-
-DewfordTown_Hall_Text_MyHunchWasRight:
-	.string "Oh!\n"
-	.string "So, my hunch was right!\p"
-	.string "I'm one step closer to being hip and\n"
-	.string "happening, yowza!$"
 
 DewfordTown_Hall_Text_NotEasyToKeepUp:
 	.string "What?!\n"
@@ -293,58 +354,44 @@ DewfordTown_Hall_Text_NotEasyToKeepUp:
 
 DewfordTown_Hall_Text_TVShowAboutTrend:
 	.string "This whole business about\n"
-	.string "“{STR_VAR_1}”…\l"
+	.string "{STR_VAR_1}…\l"
 	.string "Isn't there a TV show on it?$"
 
 DewfordTown_Hall_Text_IsTrendMorePopularAcrossSea:
 	.string "Across the sea…\p"
-	.string "Is “{STR_VAR_1}”\n"
+	.string "Is {STR_VAR_1}\n"
 	.string "even more popular?$"
-
-DewfordTown_Hall_Text_CollectTrendMerchandise:
-	.string "I collect official\n"
-	.string "“{STR_VAR_1}”\l"
-	.string "licensed merchandise.\p"
-	.string "I have official\n"
-	.string "“{STR_VAR_1}” DOLLS…\p"
-	.string "Official “{STR_VAR_1}”\n"
-	.string "brand clothing…\p"
-	.string "And officially licensed\n"
-	.string "“{STR_VAR_1}”\l"
-	.string "picture books.\p"
-	.string "Heheh, I own!\n"
-	.string "I'm not sharing anything with you!$"
 
 DewfordTown_Hall_Text_BooksAboutTrend:
 	.string "IDENTIFYING GOOD\n"
-	.string "“{STR_VAR_1}” &\l"
-	.string "BAD “{STR_VAR_1}”…\p"
+	.string "{STR_VAR_1} &\l"
+	.string "BAD {STR_VAR_1}…\p"
 	.string "THE LINK BETWEEN\n"
-	.string "“{STR_VAR_1}” AND\l"
+	.string "{STR_VAR_1} AND\l"
 	.string "POKéMON…\p"
 	.string "USEFUL\n"
-	.string "“{STR_VAR_1}”…\p"
+	.string "{STR_VAR_1}…\p"
 	.string "It's neatly jammed with books about\n"
-	.string "“{STR_VAR_1}.”$"
+	.string "{STR_VAR_1}.$"
 
 DewfordTown_Hall_Text_TrendsScream:
-	.string "“{STR_VAR_1}'S\n"
-	.string "SCREAM” is the title.$"
+	.string "{STR_VAR_1}'S\n"
+	.string "SCREAM is the title.$"
 
 DewfordTown_Hall_Text_TrendsSmile:
-	.string "“{STR_VAR_1}'S\n"
-	.string "SMILE” is the title.$"
+	.string "{STR_VAR_1}'S\n"
+	.string "SMILE is the title.$"
 
 DewfordTown_Hall_Text_LastTrend:
-	.string "It's titled “THE LAST\n"
-	.string "{STR_VAR_1}”.$"
+	.string "It's titled THE LAST\n"
+	.string "{STR_VAR_1}.$"
 
 DewfordTown_Hall_Text_BirthOfTrend:
-	.string "It's titled “THE BIRTH OF\n"
-	.string "{STR_VAR_1}”.$"
-
+	.string "It's titled THE BIRTH OF\n"
+	.string "{STR_VAR_1}.$"
+	
 DewfordTown_Hall_Text_SawTrendCoolestThing:
-	.string "I saw “{STR_VAR_1}”!\n"
+	.string "I saw {STR_VAR_1}!\n"
 	.string "Cool, huh?\p"
 	.string "It's, like, the coolest thing going!\p"
 	.string "It was awesome!\n"
@@ -353,7 +400,7 @@ DewfordTown_Hall_Text_SawTrendCoolestThing:
 DewfordTown_Hall_Text_AllegedTrendNotAuthentic:
 	.string "Oh, no, no, no.\p"
 	.string "That alleged\n"
-	.string "“{STR_VAR_1}”\l"
+	.string "{STR_VAR_1}\l"
 	.string "you claim to have seen--it's not.\p"
 	.string "The authentic article is much…\n"
 	.string "How should I say it?\l"
@@ -362,8 +409,8 @@ DewfordTown_Hall_Text_AllegedTrendNotAuthentic:
 
 DewfordTown_Hall_Text_ComposedTrendThemeSong:
 	.string "Hey, listen, I composed a theme song\n"
-	.string "for “{STR_VAR_1}.”\p"
-	.string "“{STR_VAR_1}”\n"
+	.string "for {STR_VAR_1}.\p"
+	.string "{STR_VAR_1}\n"
 	.string "is really popular right now.\p"
 	.string "Okay, listen!\n"
 	.string "… …\p"
@@ -377,27 +424,27 @@ DewfordTown_Hall_Text_WorkOnYourSinging:
 	.string "I dare say, chap, it would pay for you\n"
 	.string "to work on your singing before you\l"
 	.string "trifle yourself with\l"
-	.string "“{STR_VAR_1}.”$"
+	.string "{STR_VAR_1}.$"
 
 DewfordTown_Hall_Text_OrganizeTrendParty:
 	.string "Anyway, as I was saying earlier, we\n"
 	.string "should get together and organize a\l"
-	.string "“{STR_VAR_1}” party\l"
+	.string "{STR_VAR_1} party\l"
 	.string "on the island.$"
 
 DewfordTown_Hall_Text_BrilliantIndeed:
 	.string "Oh, a smashing good idea!\p"
 	.string "It will settle once and for all\n"
 	.string "who is the best at\l"
-	.string "“{STR_VAR_1}.”\l"
+	.string "{STR_VAR_1}.\l"
 	.string "Brilliant, indeed!\p"
 	.string "Starting today, our lives will revolve\n"
-	.string "around “{STR_VAR_1}”!$"
+	.string "around {STR_VAR_1}!$"
 
 DewfordTown_Hall_Text_TrendHasBecomePartOfLife:
 	.string "I was thinking, though…\p"
 	.string "Wouldn't you agree that\n"
-	.string "“{STR_VAR_1}” has\l"
+	.string "{STR_VAR_1} has\l"
 	.string "grown from being something trendy to\l"
 	.string "being a part of our daily lives?$"
 
@@ -405,22 +452,22 @@ DewfordTown_Hall_Text_TrendWeighsHeavilyOnMind:
 	.string "Beg pardon?\n"
 	.string "That much, what?\p"
 	.string "However, it's true that\n"
-	.string "“{STR_VAR_1}”\l"
+	.string "{STR_VAR_1}\l"
 	.string "weighs heavily on your mind, whether\l"
 	.string "you're awake or asleep.\p"
 	.string "Absolutely, you're the\n"
-	.string "“{STR_VAR_1}”\l"
+	.string "{STR_VAR_1}\l"
 	.string "PROFESSOR, old sport!$"
 
 DewfordTown_Hall_Text_IfWeTeamUpWellBeInvincible:
 	.string "If you and me team up as a combo,\n"
 	.string "we'll be invincible when it comes to all\l"
-	.string "things “{STR_VAR_1}”!$"
+	.string "things {STR_VAR_1}!$"
 
 DewfordTown_Hall_Text_WellBeTrendDuo:
 	.string "Spot on, my friend!\p"
 	.string "We shall be the\n"
-	.string "“{STR_VAR_1}” DUO!\p"
+	.string "{STR_VAR_1} DUO!\p"
 	.string "Isn't that a ripe image?\n"
 	.string "Hahahah!$"
 
@@ -435,6 +482,6 @@ DewfordTown_Hall_Text_GiveYouSludgeBomb:
 DewfordTown_Hall_Text_LoveSludgeBombButTrendInToo:
 	.string "I love SLUDGE BOMB.\p"
 	.string "But POKéMON with the move\n"
-	.string "“{STR_VAR_1}”\l"
+	.string "{STR_VAR_1}\l"
 	.string "are in, too.$"
 
