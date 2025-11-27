@@ -1867,7 +1867,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .trainerOffset = 8,
         .frontPic = gMonFrontPic_Pidgeotto,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 56) : MON_COORDS_SIZE(56, 56),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 0,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 6,
+        .enemyMonElevation = P_GBA_STYLE_SPECIES_GFX ? 8 : 12,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 5),
             ANIMCMD_FRAME(1, 5),
