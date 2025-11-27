@@ -744,6 +744,24 @@
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "0",
       "script": "MOSSDEEP01_EventScript_WailordBlocksPath"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 67,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_DreamTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 68,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_DreamTrigger"
     }
   ],
   "bg_events": [],
