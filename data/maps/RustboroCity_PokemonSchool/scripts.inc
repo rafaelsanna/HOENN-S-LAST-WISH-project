@@ -351,7 +351,7 @@ RustboroCity_PokemonSchool_Text_ScottMetAlreadyStoneBadge:
 	.string "a TRAINER from a LEAGUE BADGE.$"
 
 RustboroCity_PokemonSchool_Text_NiloIntro:
-	.string "NILO: I've been studying hard about\n"
+	.string "I've been studying hard about\n"
 	.string "Pokémon battles!\p"
 	.string "Let me show you what I've learned!$"
 
@@ -359,15 +359,15 @@ RustboroCity_PokemonSchool_Text_NiloDefeat:
 	.string "Wow! You're really strong!$"
 
 RustboroCity_PokemonSchool_Text_NiloPostBattle:
-	.string "NILO: I need to study more…\n"
+	.string "I need to study more…\n"
 	.string "But battling is so much fun!$"
 
 RustboroCity_PokemonSchool_Text_NiloNotEnoughMons:
-	.string "NILO: You need two Pokémon to battle\n"
+	.string "You need two Pokémon to battle\n"
 	.string "with me!$"
 
 RustboroCity_PokemonSchool_Text_JoleneIntro:
-	.string "JOLENE: My friends and I practice\n"
+	.string "My friends and I practice\n"
 	.string "battling together.\p"
 	.string "Want to join our training session?$"
 
@@ -375,15 +375,15 @@ RustboroCity_PokemonSchool_Text_JoleneDefeat:
 	.string "You're really good at this!$"
 
 RustboroCity_PokemonSchool_Text_JolenePostBattle:
-	.string "JOLENE: I'll keep practicing until\n"
+	.string "I'll keep practicing until\n"
 	.string "I become a great Trainer!$"
 
 RustboroCity_PokemonSchool_Text_JoleneNotEnoughMons:
-	.string "JOLENE: Oh, you don't have enough\n"
+	.string "Oh, you don't have enough\n"
 	.string "Pokémon for a double battle.$"
 
 RustboroCity_PokemonSchool_Text_LianIntro:
-	.string "LIAN: My family is quite wealthy,\n"
+	.string "My family is quite wealthy,\n"
 	.string "but I prefer Pokémon battles over\l"
 	.string "material possessions!\p"
 	.string "Let's see how you fare against my\n"
@@ -394,31 +394,31 @@ RustboroCity_PokemonSchool_Text_LianDefeat:
 	.string "my wealth!$"
 
 RustboroCity_PokemonSchool_Text_LianPostBattle:
-	.string "LIAN: True strength comes from\n"
+	.string "True strength comes from\n"
 	.string "training, not money.\p"
 	.string "I respect your abilities.$"
 
 RustboroCity_PokemonSchool_Text_LianNotEnoughMons:
-	.string "LIAN: A proper double battle requires\n"
+	.string "A proper double battle requires\n"
 	.string "two Pokémon on each side.$"
 
 RustboroCity_PokemonSchool_Text_StudentsWhoDefeatAllGetWiseGlasses:
-	.string "TEACHER: Congratulations on defeating\n"
-	.string "all of our top students!\p"
+	.string "Whoa! Congratulations on defeating\n"
+	.string "all of our top students! Amazing.\p"
 	.string "You've demonstrated excellent battle\n"
-	.string "skills and strategy.\p"
+	.string "skills and strategy. Great joob!\p"
 	.string "Please accept these WISE GLASSES as\n"
 	.string "a reward for your accomplishment.$"
 
 RustboroCity_PokemonSchool_Text_TeacherRegular:
-	.string "TEACHER: Our top students are ready\n"
-	.string "for battles if you want to test your\l"
-	.string "skills!$"
+	.string "Our top students are ready for\n"
+	.string "battles if you want to test your\l"
+	.string "skills! Don't be shy...$"
 
 RustboroCity_PokemonSchool_Text_TeacherTwoDefeated:
-	.string "TEACHER: You're doing great! Defeat\n"
-	.string "all three students for a special reward!$"
+	.string "You're doing great! Defeat all \n"
+	.string "three students for a special reward!$"
 
 RustboroCity_PokemonSchool_Text_ExplainWiseGlasses:
-	.string "TEACHER: The WISE GLASSES boost\n"
+	.string "The WISE GLASSES boost the\n"
 	.string "special attack power. Use them wisely!$"
