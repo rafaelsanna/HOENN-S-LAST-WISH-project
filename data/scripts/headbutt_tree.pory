@@ -1,0 +1,8 @@
+script HeadbuttTree {
+  msgbox(format("Headbutt this tree?"), MSGBOX_YESNO)
+  if (var(VAR_RESULT) == YES) {
+    closemessage
+    msgbox(format("Use headbutt on this tree?"), MSGBOX_YESNO)
+  }
+  end
+}
