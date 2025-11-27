@@ -58,16 +58,22 @@ RustboroCity_PokemonSchool_EventScript_GameboyKid2::
 	msgbox RustboroCity_PokemonSchool_Text_AlwaysWantedSeedot, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_RichBoy::
-	msgbox RustboroCity_PokemonSchool_Text_PokemontCantUseManMadeItems, MSGBOX_NPC
+RustboroCity_PokemonSchool_EventScript_SchoolKidM::
+	trainerbattle_double TRAINER_NILO, RustboroCity_PokemonSchool_Text_NiloIntro, RustboroCity_PokemonSchool_Text_NiloDefeat, RustboroCity_PokemonSchool_Text_NiloNotEnoughMons
+	msgbox RustboroCity_PokemonSchool_Text_NiloPostBattle, MSGBOX_AUTOCLOSE
+	setflag FLAG_DEFEATED_TRAINER_NILO
 	end
 
 RustboroCity_PokemonSchool_EventScript_Lass::
-	msgbox RustboroCity_PokemonSchool_Text_ConfusedPokemonAttacksItself, MSGBOX_NPC
+	trainerbattle_double TRAINER_JOLENE, RustboroCity_PokemonSchool_Text_JoleneIntro, RustboroCity_PokemonSchool_Text_JoleneDefeat, RustboroCity_PokemonSchool_Text_JoleneNotEnoughMons
+	msgbox RustboroCity_PokemonSchool_Text_JolenePostBattle, MSGBOX_AUTOCLOSE
+	setflag FLAG_DEFEATED_TRAINER_JOLENE
 	end
 
-RustboroCity_PokemonSchool_EventScript_SchoolKidM::
-	msgbox RustboroCity_PokemonSchool_Text_PokemonHealItselfWithBerry, MSGBOX_NPC
+RustboroCity_PokemonSchool_EventScript_RichBoy::
+	trainerbattle_double TRAINER_LIAN, RustboroCity_PokemonSchool_Text_LianIntro, RustboroCity_PokemonSchool_Text_LianDefeat, RustboroCity_PokemonSchool_Text_LianNotEnoughMons
+	msgbox RustboroCity_PokemonSchool_Text_LianPostBattle, MSGBOX_AUTOCLOSE
+	setflag FLAG_DEFEATED_TRAINER_LIAN
 	end
 
 RustboroCity_PokemonSchool_EventScript_StudentNotebook::
@@ -77,16 +83,40 @@ RustboroCity_PokemonSchool_EventScript_StudentNotebook::
 RustboroCity_PokemonSchool_EventScript_Teacher::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_QUICK_CLAW, RustboroCity_PokemonSchool_EventScript_GaveQuickClaw
-	call_if_eq VAR_FACING, DIR_EAST, RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsEast
-	call_if_eq VAR_FACING, DIR_WEST, RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest
-	msgbox RustboroCity_PokemonSchool_Text_StudentsWhoDontStudyGetQuickClaw, MSGBOX_DEFAULT
-	giveitem ITEM_QUICK_CLAW
+	goto_if_set FLAG_RECEIVED_QUICK_CLAW, RustboroCity_PokemonSchool_EventScript_GaveWiseGlasses
+	goto_if_set FLAG_DEFEATED_TRAINER_NILO, RustboroCity_PokemonSchool_EventScript_CheckJolene
+	msgbox RustboroCity_PokemonSchool_Text_TeacherRegular, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_PokemonSchool_EventScript_CheckJolene::
+	goto_if_set FLAG_DEFEATED_TRAINER_JOLENE, RustboroCity_PokemonSchool_EventScript_CheckLian
+	msgbox RustboroCity_PokemonSchool_Text_TeacherTwoDefeated, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_PokemonSchool_EventScript_CheckLian::
+	goto_if_set FLAG_DEFEATED_TRAINER_LIAN, RustboroCity_PokemonSchool_EventScript_GiveWiseGlasses
+	msgbox RustboroCity_PokemonSchool_Text_TeacherTwoDefeated, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_PokemonSchool_EventScript_GiveWiseGlasses::
+	msgbox RustboroCity_PokemonSchool_Text_StudentsWhoDefeatAllGetWiseGlasses, MSGBOX_DEFAULT
+	giveitem ITEM_WISE_GLASSES
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	setflag FLAG_RECEIVED_QUICK_CLAW
+	release
+	end
+
+RustboroCity_PokemonSchool_EventScript_GaveWiseGlasses::
+	msgbox RustboroCity_PokemonSchool_Text_ExplainWiseGlasses, MSGBOX_DEFAULT
+	closemessage
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	release
 	end
 
@@ -99,14 +129,6 @@ RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest::
 	applymovement VAR_LAST_TALKED, RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest
 	waitmovement 0
 	return
-
-RustboroCity_PokemonSchool_EventScript_GaveQuickClaw::
-	msgbox RustboroCity_PokemonSchool_Text_ExplainQuickClaw, MSGBOX_DEFAULT
-	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
-	release
-	end
 
 RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest:
 	walk_left
@@ -243,22 +265,6 @@ RustboroCity_PokemonSchool_Text_ExplainFreeze:
 	.string "It will remain frozen after battle.\n"
 	.string "Thaw it out using an ICE HEAL.$"
 
-RustboroCity_PokemonSchool_Text_StudentsWhoDontStudyGetQuickClaw:
-	.string "Students who don't study get a little\n"
-	.string "taste of my QUICK CLAW.\p"
-	.string "Whether or not you are a good student \n"
-	.string "will be evident from the way you use\l"
-	.string "this item.$"
-
-RustboroCity_PokemonSchool_Text_ExplainQuickClaw:
-	.string "A POKéMON holding the QUICK CLAW will\n"
-	.string "occasionally speed up and get to move\l"
-	.string "before its opponent.\p"
-	.string "There are many other items that are\n"
-	.string "meant to be held by POKéMON.\p"
-	.string "Just those alone will give you many\n"
-	.string "topics to study!$"
-
 RustboroCity_PokemonSchool_Text_TradingRightNow:
 	.string "I'm trading POKéMON with my friend\n"
 	.string "right now.$"
@@ -266,11 +272,6 @@ RustboroCity_PokemonSchool_Text_TradingRightNow:
 RustboroCity_PokemonSchool_Text_AlwaysWantedSeedot:
 	.string "I always wanted a SEEDOT, and\n"
 	.string "I'm finally getting one!$"
-
-RustboroCity_PokemonSchool_Text_PokemontCantUseManMadeItems:
-	.string "POKéMON can hold items, but they\n"
-	.string "don't know what to do with man-made\l"
-	.string "items like POTION and ANTIDOTE.$"
 
 RustboroCity_PokemonSchool_Text_ConfusedPokemonAttacksItself:
 	.string "You know how some POKéMON moves can\n"
@@ -349,3 +350,75 @@ RustboroCity_PokemonSchool_Text_ScottMetAlreadyStoneBadge:
 	.string "It's hard to tell what you're like as\n"
 	.string "a TRAINER from a LEAGUE BADGE.$"
 
+RustboroCity_PokemonSchool_Text_NiloIntro:
+	.string "NILO: I've been studying hard about\n"
+	.string "Pokémon battles!\p"
+	.string "Let me show you what I've learned!$"
+
+RustboroCity_PokemonSchool_Text_NiloDefeat:
+	.string "Wow! You're really strong!$"
+
+RustboroCity_PokemonSchool_Text_NiloPostBattle:
+	.string "NILO: I need to study more…\n"
+	.string "But battling is so much fun!$"
+
+RustboroCity_PokemonSchool_Text_NiloNotEnoughMons:
+	.string "NILO: You need two Pokémon to battle\n"
+	.string "with me!$"
+
+RustboroCity_PokemonSchool_Text_JoleneIntro:
+	.string "JOLENE: My friends and I practice\n"
+	.string "battling together.\p"
+	.string "Want to join our training session?$"
+
+RustboroCity_PokemonSchool_Text_JoleneDefeat:
+	.string "You're really good at this!$"
+
+RustboroCity_PokemonSchool_Text_JolenePostBattle:
+	.string "JOLENE: I'll keep practicing until\n"
+	.string "I become a great Trainer!$"
+
+RustboroCity_PokemonSchool_Text_JoleneNotEnoughMons:
+	.string "JOLENE: Oh, you don't have enough\n"
+	.string "Pokémon for a double battle.$"
+
+RustboroCity_PokemonSchool_Text_LianIntro:
+	.string "LIAN: My family is quite wealthy,\n"
+	.string "but I prefer Pokémon battles over\l"
+	.string "material possessions!\p"
+	.string "Let's see how you fare against my\n"
+	.string "well-bred Pokémon!$"
+
+RustboroCity_PokemonSchool_Text_LianDefeat:
+	.string "Incredible! Your skill surpasses\n"
+	.string "my wealth!$"
+
+RustboroCity_PokemonSchool_Text_LianPostBattle:
+	.string "LIAN: True strength comes from\n"
+	.string "training, not money.\p"
+	.string "I respect your abilities.$"
+
+RustboroCity_PokemonSchool_Text_LianNotEnoughMons:
+	.string "LIAN: A proper double battle requires\n"
+	.string "two Pokémon on each side.$"
+
+RustboroCity_PokemonSchool_Text_StudentsWhoDefeatAllGetWiseGlasses:
+	.string "TEACHER: Congratulations on defeating\n"
+	.string "all of our top students!\p"
+	.string "You've demonstrated excellent battle\n"
+	.string "skills and strategy.\p"
+	.string "Please accept these WISE GLASSES as\n"
+	.string "a reward for your accomplishment.$"
+
+RustboroCity_PokemonSchool_Text_TeacherRegular:
+	.string "TEACHER: Our top students are ready\n"
+	.string "for battles if you want to test your\l"
+	.string "skills!$"
+
+RustboroCity_PokemonSchool_Text_TeacherTwoDefeated:
+	.string "TEACHER: You're doing great! Defeat\n"
+	.string "all three students for a special reward!$"
+
+RustboroCity_PokemonSchool_Text_ExplainWiseGlasses:
+	.string "TEACHER: The WISE GLASSES boost\n"
+	.string "special attack power. Use them wisely!$"

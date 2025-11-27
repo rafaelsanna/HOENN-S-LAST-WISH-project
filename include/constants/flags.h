@@ -83,10 +83,10 @@
 #define P_FLAG_FORCE_SHINY      0x46
 #define P_FLAG_FORCE_NO_SHINY    0x47 
 #define FLAG_LEVELCAP9_AQUA_GRUNT_DEFEATED    0x48
-#define FLAG_RECEIVED_CHOPLE_BERRY_ROUTE106    0x49 // Unused Flag
-#define FLAG_UNUSED_0x04A    0x4A // Unused Flag
-#define FLAG_UNUSED_0x04B    0x4B // Unused Flag
-#define FLAG_UNUSED_0x04C    0x4C // Unused Flag
+#define FLAG_RECEIVED_CHOPLE_BERRY_ROUTE106    0x49 
+#define FLAG_DEFEATED_TRAINER_NILO    0x4A 
+#define FLAG_DEFEATED_TRAINER_JOLENE   0x4B 
+#define FLAG_DEFEATED_TRAINER_LIAN    0x4C 
 #define FLAG_UNUSED_0x04D    0x4D // Unused Flag
 #define FLAG_UNUSED_0x04E    0x4E // Unused Flag
 #define FLAG_UNUSED_0x04F    0x4F // Unused Flag
