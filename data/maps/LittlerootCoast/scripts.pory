@@ -1,5 +1,23 @@
 mapscripts LittlerootCoast_MapScripts {}
 
+script NidoranMOverworld {
+	lock
+	faceplayer
+	playmoncry(SPECIES_NIDORAN_M, CRY_MODE_NORMAL)
+	waitmoncry
+	release
+	end
+}
+
+script NidoranFOverworld {
+	lock
+	faceplayer
+	playmoncry(SPECIES_NIDORAN_F, CRY_MODE_NORMAL)
+	waitmoncry
+	release
+	end
+}
+
 script BirdKeeperLee {
   trainerbattle_single(TRAINER_LEE, LeeIntro, LeeLose)
 	lock

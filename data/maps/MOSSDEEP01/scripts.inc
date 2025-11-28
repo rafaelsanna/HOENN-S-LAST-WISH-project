@@ -349,6 +349,16 @@ MOSSDEEP01_MightyenaZone_Safe::
 	releaseall
 	end
 
+// Wing Interaction
+MOSSDEEP01_EventScript_Wingull::
+	lock
+	faceplayer
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+
 // ====================================================================
 // MIGHTYENA NPC INTERACTION
 // ====================================================================
@@ -1127,7 +1137,7 @@ MOSSDEEP01_Text_AlreadyHelped:
 
 MOSSDEEP01_Text_FoundItem1:
 	.string "{PLAYER} found something shining\n"
-	.string "in the sand...$"
+	.string "in the grass...$"
 
 MOSSDEEP01_Text_ObtainedTimeGear1:
 	.string "{PLAYER} obtained the TIME GEAR\n"

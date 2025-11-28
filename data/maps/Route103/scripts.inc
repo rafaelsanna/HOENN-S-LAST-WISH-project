@@ -20,6 +20,14 @@ Route103_EventScript_WingullOverworld::
 	release
 	end
 
+Route103_EventScript_CorphishOverworld::
+	lock
+	faceplayer
+	playmoncry SPECIES_CORPHISH, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 Route103_EventScript_OpenAlteringCave::
 	setmetatile 45, 5, METATILE_General_CaveEntrance_Top, TRUE
 	setmetatile 45, 6, METATILE_General_CaveEntrance_Bottom, FALSE

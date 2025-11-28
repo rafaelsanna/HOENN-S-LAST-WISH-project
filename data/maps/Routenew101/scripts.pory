@@ -1,9 +1,9 @@
 mapscripts Routenew101_MapScripts {}
 
-script ZigzagoonOverworld {
+script JigglypuffOverworld {
   lock
   faceplayer
-  playmoncry(SPECIES_ZIGZAGOON, CRY_MODE_NORMAL)
+  playmoncry(SPECIES_JIGGLYPUFF, CRY_MODE_NORMAL)
 	waitmoncry
   release
   end
@@ -17,6 +17,6 @@ script RouteNew101TrainerTips {
 }
 
 text RouteNew101TrainerTipsText {
-  "COOL POKéMON FACT 1\p
-  The sum of SPINDA's base stats is a full 360!"
+  "COOL POKéMON FACT 1:\p
+  The sum of SPINDA's base stats is a\n full 360!"
 }
