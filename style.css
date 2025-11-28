@@ -1170,3 +1170,40 @@ body.light-mode .team-member:hover {
         padding: 1.5rem 1rem;
     }
 }
+
+/* ===== MAIN VIDEO SECTION ===== */
+.video-main {
+    padding: 3rem 0;
+    background: var(--pokemon-dark);
+    text-align: center;
+}
+
+.main-video {
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid var(--pokemon-yellow);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+/* Light Mode */
+body.light-mode .video-main {
+    background: #f8f9fa;
+}
+
+body.light-mode .main-video {
+    border: 3px solid var(--pokemon-blue);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .video-main {
+        padding: 2rem 0;
+    }
+    
+    .main-video {
+        max-width: 95%;
+    }
+}
