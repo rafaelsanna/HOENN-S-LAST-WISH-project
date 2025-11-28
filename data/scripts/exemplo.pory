@@ -1,7 +1,0 @@
-script MeuPrimeiroScript {
-    lock
-    faceplayer
-    msgbox("HOENN'S LAST WISH com Poryscript!")
-    release
-    end
-}

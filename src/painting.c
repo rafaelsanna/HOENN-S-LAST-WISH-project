@@ -13,6 +13,17 @@
 #include "constants/rgb.h"
 #include "menu.h"
 
+static const u8 sPainting1_Palette[] = INCBIN_U8("graphics/paintings/painting1.gbapal");
+static const u8 sPainting1_Tiles[] = INCBIN_U8("graphics/paintings/painting1.4bpp.lz");
+static const u8 sPainting1_Tilemap[] = INCBIN_U8("graphics/paintings/painting1_Tilemap.bin.lz");
+
+static const u8 sPainting2_Palette[] = INCBIN_U8("graphics/paintings/painting2.gbapal");
+static const u8 sPainting2_Tiles[] = INCBIN_U8("graphics/paintings/painting2.4bpp.lz");
+static const u8 sPainting2_Tilemap[] = INCBIN_U8("graphics/paintings/painting2_Tilemap.bin.lz");
+
+static const u8 sPainting3_Palette[] = INCBIN_U8("graphics/paintings/painting3.gbapal");
+static const u8 sPainting3_Tiles[] = INCBIN_U8("graphics/paintings/painting3.4bpp.lz");
+static const u8 sPainting3_Tilemap[] = INCBIN_U8("graphics/paintings/painting3_Tilemap.bin.lz");
 
 struct PaintingData
 {
@@ -21,31 +32,46 @@ struct PaintingData
     const u8 *palette;
 };
 
-// COMENTE ESTA ESTRUTURA COMPLETA:
-/*
 static const struct PaintingData sPaintingData[PAINTING_COUNT] = {
     [PAINTING_1] = {
-        .tiles = sPainting_Oh_Oh_Sunset_Tiles,
-        .tilemap = sPainting_Oh_Oh_Sunset_Tilemap,
-        .palette = sPainting_Oh_Oh_Sunset_Palette
+        .tiles = sPainting1_Tiles,
+        .tilemap = sPainting1_Tilemap,
+        .palette = sPainting1_Palette
     },
     [PAINTING_2] = {
-        .tiles = sPainting_Charmander_Chilling_In_The_Middle_Tiles,
-        .tilemap = sPainting_Charmander_Chilling_In_The_Middle_Tilemap,
-        .palette = sPaintingCrater_Charmander_Chilling_In_The_Middle_Palette
+        .tiles = sPainting2_Tiles,
+        .tilemap = sPainting2_Tilemap,
+        .palette = sPainting2_Palette
     },
     [PAINTING_3] = {
-        .tiles = sPainting_Aqua_Attack_Tiles,
-        .tilemap = sPainting_Aqua_Attack_Tilemap,
-        .palette = sPaintingCrater_Aqua_Attack_Palette
+        .tiles = sPainting3_Tiles,
+        .tilemap = sPainting3_Tilemap,
+        .palette = sPainting3_Palette
     }
 };
-*/
 
-// E substitua por uma vazia:
-static const struct PaintingData sPaintingData[PAINTING_COUNT] = {};
+static const struct BgTemplate sPaintingBgTemplate = {
+    .bg = 0,
+    .charBaseIndex = 0,
+    .mapBaseIndex = 31,
+    .screenSize = 0,
+    .paletteMode = 0,
+    .priority = 0,
+    .baseTile = 0
+};
 
-/*
+#define tState data[0]
+#define tPaintingId data[1]
+
+static void Task_ShowPainting(u8 taskId);
+static void VBlankCB_Painting(void);
+static void CB2_PaintingMain(void);
+
+static EWRAM_DATA u8 *sBg0TilemapBuffer = NULL;
+static EWRAM_DATA MainCallback sPreviousCallback = NULL;
+static EWRAM_DATA bool8 sAllocedBg0TilemapBuffer = FALSE;
+static EWRAM_DATA struct ScriptContext *sScriptContext = NULL;
+
 void ShowPainting(u8 paintingId, struct ScriptContext *ctx)
 {
     u8 taskId;
@@ -88,16 +114,69 @@ void ShowPainting(u8 paintingId, struct ScriptContext *ctx)
     SetMainCallback2(CB2_PaintingMain);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
 }
-*/
 
-// Substitua por uma função vazia
-void ShowPainting(u8 paintingId, struct ScriptContext *ctx)
+static void Task_ShowPainting(u8 taskId)
 {
-    // Função temporariamente desativada
-    if (ctx != NULL)
+    switch (gTasks[taskId].tState)
     {
-        ctx->scriptPtr++; // Avança o script
+    case 0:
+        if (!FreeTempTileDataBuffersIfPossible() && !IsDma3ManagerBusyWithBgCopy())
+        {
+            gTasks[taskId].tState++;
+        }
+        break;
+        
+    case 1:
+        if (!gPaletteFade.active)
+            gTasks[taskId].tState++;
+        break;
+        
+    case 2:
+        if (JOY_NEW(A_BUTTON | B_BUTTON))
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gTasks[taskId].tState++;
+        }
+        break;
+        
+    case 3:
+        if (!gPaletteFade.active)
+        {
+            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 32, 32);
+            CopyBgTilemapBufferToVram(0);
+            
+            if (sAllocedBg0TilemapBuffer && sBg0TilemapBuffer != NULL)
+            {
+                Free(sBg0TilemapBuffer);
+                sBg0TilemapBuffer = NULL;
+            }
+            
+            if (sScriptContext != NULL)
+            {
+                sScriptContext->scriptPtr++;
+                sScriptContext = NULL;
+            }
+            
+            DestroyTask(taskId);
+            SetMainCallback2(sPreviousCallback);
+        }
+        break;
     }
+}
+
+static void CB2_PaintingMain(void)
+{
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+}
+
+static void VBlankCB_Painting(void)
+{
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
 #undef tState

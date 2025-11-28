@@ -2,7 +2,7 @@
 #define GUARD_PAINTINGS_H
 
 #include "constants/paintings.h"
-#include "script.h"  // ADD THIS LINE
+#include "script.h"
 
 void ShowPainting(u8 paintingId, struct ScriptContext *ctx);
 

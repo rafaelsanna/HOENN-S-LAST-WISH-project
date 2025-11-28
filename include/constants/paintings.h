@@ -7,4 +7,3 @@
 #define PAINTING_COUNT 3
 
 #endif // GUARD_CONSTANTS_PAINTINGS_H
-

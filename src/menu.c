@@ -24,6 +24,7 @@
 #include "window.h"
 #include "config/overworld.h"
 #include "constants/songs.h"
+#include "paintings.h"
 
 struct MenuInfoIcon
 {
