@@ -5704,15 +5704,21 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
             targetSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, CHECK_EVO);
         }
 
-        if (targetSpecies != SPECIES_NONE)
-        {
-            GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, DO_EVO);
-            //RemoveBagItem(gSpecialVar_ItemId, 1);  // COMENTADA! ← PRIMEIRA
-            FreePartyPointers();
-            gCB2_AfterEvolution = gPartyMenu.exitCallback;
-            BeginEvolutionScene(mon, targetSpecies, canStopEvo, gPartyMenu.slotId);
-            DestroyTask(taskId);
-        }
+if (targetSpecies != SPECIES_NONE)
+{
+    GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, DO_EVO);
+    
+    // Remove o item apenas se NÃO for o Infinite Candy
+    if (gSpecialVar_ItemId != ITEM_INFINITE_CANDY)
+    {
+        RemoveBagItem(gSpecialVar_ItemId, 1);
+    }
+    
+    FreePartyPointers();
+    gCB2_AfterEvolution = gPartyMenu.exitCallback;
+    BeginEvolutionScene(mon, targetSpecies, canStopEvo, gPartyMenu.slotId);
+    DestroyTask(taskId);
+}
         else
         {
             gPartyMenuUseExitCallback = FALSE;
@@ -5722,12 +5728,18 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
         }
     }
     else
+{
+    sFinalLevel = GetMonData(mon, MON_DATA_LEVEL, NULL);
+    gPartyMenuUseExitCallback = TRUE;
+    UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
+    
+    // Remove o item apenas se NÃO for o Infinite Candy
+    if (gSpecialVar_ItemId != ITEM_INFINITE_CANDY)
     {
-        sFinalLevel = GetMonData(mon, MON_DATA_LEVEL, NULL);
-        gPartyMenuUseExitCallback = TRUE;
-        UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
-        //RemoveBagItem(gSpecialVar_ItemId, 1);  // COMENTADA! ← SEGUNDA
-        GetMonNickname(mon, gStringVar1);
+        RemoveBagItem(gSpecialVar_ItemId, 1);
+    }
+    
+    GetMonNickname(mon, gStringVar1);
         if (sFinalLevel > sInitialLevel)
         {
             PlayFanfareByFanfareNum(FANFARE_LEVEL_UP);
