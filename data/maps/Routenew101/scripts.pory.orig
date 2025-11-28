@@ -1,0 +1,22 @@
+mapscripts Routenew101_MapScripts {}
+
+script JigglypuffOverworld {
+  lock
+  faceplayer
+  playmoncry(SPECIES_JIGGLYPUFF, CRY_MODE_NORMAL)
+	waitmoncry
+  release
+  end
+}
+
+script RouteNew101TrainerTips {
+  lock
+  msgbox(RouteNew101TrainerTipsText, MSGBOX_SIGN)
+  release
+  end
+}
+
+text RouteNew101TrainerTipsText {
+  "COOL POKéMON FACT 1:\p
+  The sum of SPINDA's base stats is a\n full 360!"
+}

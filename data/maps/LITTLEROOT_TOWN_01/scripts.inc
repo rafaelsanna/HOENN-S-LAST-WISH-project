@@ -448,6 +448,10 @@ LittlerootTown_Movement_JirachiCircleComplete:
 LittlerootTown_CelebiScript::
 	lock
 	faceplayer
+	showpainting PAINTING_1
+	waitstate
+	showpainting PAINTING_2
+	waitstate
 	msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
 	random 3
 	switch VAR_RESULT

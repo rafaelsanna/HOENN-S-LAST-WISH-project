@@ -21,6 +21,7 @@
 #include "constants/items.h"
 #include "constants/script_menu.h"
 #include "constants/songs.h"
+#include "paintings.h"
 
 #include "data/script_menu.h"
 
@@ -67,6 +68,7 @@ static void MultichoiceDynamicEventDebug_OnDestroy(struct DynamicListMenuEventAr
 static void MultichoiceDynamicEventShowItem_OnInit(struct DynamicListMenuEventArgs *eventArgs);
 static void MultichoiceDynamicEventShowItem_OnSelectionChanged(struct DynamicListMenuEventArgs *eventArgs);
 static void MultichoiceDynamicEventShowItem_OnDestroy(struct DynamicListMenuEventArgs *eventArgs);
+static void Task_PaintingWindow(u8 taskId);
 
 static const struct DynamicListMenuEventCollection sDynamicListMenuEventCollections[] =
 {
@@ -983,6 +985,27 @@ bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
     }
 }
 
+#define tPaintWindowId    data[0]
+#define tPaintState       data[1]
+#define tPaintingId       data[2]
+#define tPaintSpriteId    data[3]
+
+static void Task_PaintingWindow(u8 taskId)
+{
+    if (JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        DestroySprite(&gSprites[gTasks[taskId].tPaintSpriteId]);
+        ClearStdWindowAndFrame(gTasks[taskId].tPaintWindowId, TRUE);
+        RemoveWindow(gTasks[taskId].tPaintWindowId);
+        DestroyTask(taskId);
+    }
+}
+
+#undef tPaintWindowId
+#undef tPaintState
+#undef tPaintingId
+#undef tPaintSpriteId
+
 bool8 (*ScriptMenu_HidePokemonPic(void))(void)
 {
     u8 taskId = FindTaskIdByFunc(Task_PokemonPicWindow);
@@ -1105,6 +1128,8 @@ static void InitMultichoiceNoWrap(bool8 ignoreBPress, u8 unusedCount, u8 windowI
 #undef tDoWrap
 #undef tWindowId
 #undef tMultichoiceId
+#undef tPaintingId
+#undef tSpriteId
 
 static int DisplayTextAndGetWidthInternal(const u8 *str)
 {

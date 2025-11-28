@@ -58,6 +58,7 @@
 #include "constants/trade.h"
 #include "constants/trainer_hill.h"
 #include "constants/trainers.h"
+#include "constants/paintings.h"
 #include "constants/tv.h"
 #include "constants/union_room.h"
 #include "constants/vars.h"
