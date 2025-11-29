@@ -214,7 +214,7 @@ static const struct MatchCallBirch sProfBirchMatchCallHeader =
     .mapSec = 0,
     .flag = FLAG_ENABLE_PROF_BIRCH_MATCH_CALL,
     .desc = COMPOUND_STRING("{PKMN} PROF."),
-    .name = COMPOUND_STRING("PROF. BIRCH")
+    .name = COMPOUND_STRING("PROF. ACACIA")
 };
 
 static const match_call_text_data_t sMomTextScripts[] = {
