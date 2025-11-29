@@ -175,28 +175,28 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	
 	// 0. ARCTIBAX - forgotten age
 	showmonpic SPECIES_ARCTIBAX, 10, 3
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_LATIOS, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory1, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// 0.1. ARCTOVISH - Hoenn was a paradise
 	showmonpic SPECIES_ARCTOVISH, 10, 3
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_SWAMPERT, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory2, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20	
 
 	// 0.2. ARCTOZOLT - People and Pokémon lived as one
 	showmonpic SPECIES_ARCTOZOLT, 10, 3
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory3, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20	
 
 	// 0.3. ARMAROUGE - the balance
 	showmonpic SPECIES_ARMAROUGE, 10, 3
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playse SE_M_FLY
 	msgbox LittlerootTown_Text_GrandmaStory4, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20	
@@ -225,66 +225,77 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	
 	// 4. AMAURA - The FLOOD
 	showmonpic SPECIES_AMAURA, 10, 3
+	playse SE_M_BUBBLE_BEAM
 	msgbox LittlerootTown_Text_GrandmaStory8, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// 5. AROMATISSE - TSUNAMI
 	showmonpic SPECIES_AROMATISSE, 10, 3
+	playse SE_M_SURF
 	msgbox LittlerootTown_Text_GrandmaStory9, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// 6. ARROKUDA - VOLCANO
 	showmonpic SPECIES_ARROKUDA, 10, 3
+	playse SE_M_HEAT_WAVE
 	msgbox LittlerootTown_Text_GrandmaStory10, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// 7. AUDINO - DESTROYED CITIES
 	showmonpic SPECIES_AUDINO, 10, 3
+	playse SE_M_EARTHQUAKE
 	msgbox LittlerootTown_Text_GrandmaStory11, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// 8. AURORUS - FLOODED CITIES
 	showmonpic SPECIES_AURORUS, 10, 3
+	playse SE_M_SURF
 	msgbox LittlerootTown_Text_GrandmaStory12, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// 9. AMOONGUSS - LAVA ON THE LANDS
 	showmonpic SPECIES_AMOONGUSS, 10, 3
+	playse SE_M_HEAT_WAVE
 	msgbox LittlerootTown_Text_GrandmaStory13, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 	
 	// 10. APPLIN - A legend appears jirachi and celebi
 	showmonpic SPECIES_APPLIN, 10, 3
+	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory14, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 	
 	// 11. APPLETUN - The MAGIC SHRINE
 	showmonpic SPECIES_APPLETUN, 10, 3
+	playse SE_M_TELEPORT
 	msgbox LittlerootTown_Text_GrandmaStory15, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// 12. AXEW - JIRACHI USING ITS POWERS TO GRANT A WISH
 	showmonpic SPECIES_AXEW, 10, 3
+	playmoncry SPECIES_HOOTHOOT, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory16, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 	
 	// 13. ARBOLIVA - JIRACHI USING ITS POWERS TO GRANT A WISH
 	showmonpic SPECIES_ARBOLIVA, 10, 3
+	playmoncry SPECIES_JIRACHI, CRY_MODE_ENCOUNTER
 	msgbox LittlerootTown_Text_GrandmaStory17, MSGBOX_DEFAULT
 	hidemonpic
 	delay 20
 
 	// Final - MILLENION COMMET
 	showmonpic SPECIES_ARCHEN, 10, 3
+	playse SE_M_COSMIC_POWER
 	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
 
