@@ -187,14 +187,14 @@ LittlerootTown_MaysHouse_1F_EventScript_MeetRival::
 	call_if_eq VAR_0x8008, 2, LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer2
 	msgbox RivalsHouse_1F_Text_MayWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_0x8008, 0, LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs0
-	call_if_eq VAR_0x8008, 1, LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs1
-	call_if_eq VAR_0x8008, 2, LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs2
+	call_if_eq VAR_0x8008, 0, LittlerootTown_MaysHouse_1F_EventScript_MayExitHouse0
+	call_if_eq VAR_0x8008, 1, LittlerootTown_MaysHouse_1F_EventScript_MayExitHouse1
+	call_if_eq VAR_0x8008, 2, LittlerootTown_MaysHouse_1F_EventScript_MayExitHouse2
 	playse SE_EXIT
 	removeobject LOCALID_RIVALS_HOUSE_1F_RIVAL
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MAY
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
 	delay 30
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
 	setvar VAR_LITTLEROOT_TOWN_STATE, 1
@@ -270,22 +270,22 @@ LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs2::
 LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit0:
 	delay_16
 	delay_8
-	walk_in_place_faster_right
+	walk_in_place_faster_down  // <-- Agora olhando pra porta
 	step_end
 
 LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit1:
 	delay_16
 	delay_8
-	walk_in_place_faster_right
+	walk_in_place_faster_down  // <-- Agora olhando pra porta
 	delay_16
 	delay_16
-	walk_in_place_faster_up
+	walk_in_place_faster_down
 	step_end
 
 LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit2:
 	delay_16
 	delay_8
-	walk_in_place_faster_left
+	walk_in_place_faster_down  // <-- Agora olhando pra porta
 	step_end
 
 LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs0:
@@ -314,6 +314,51 @@ LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs2:
 	walk_in_place_faster_up
 	walk_up
 	walk_up
+	step_end
+
+LittlerootTown_MaysHouse_1F_EventScript_MayExitHouse0::
+	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit0
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayExitHouse0
+	waitmovement 0
+	return
+
+LittlerootTown_MaysHouse_1F_EventScript_MayExitHouse1::
+	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit1
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayExitHouse1
+	waitmovement 0
+	return
+
+LittlerootTown_MaysHouse_1F_EventScript_MayExitHouse2::
+	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit2
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayExitHouse2
+	waitmovement 0
+	return
+
+LittlerootTown_MaysHouse_1F_Movement_MayExitHouse0:
+	walk_in_place_faster_right
+	walk_right
+	walk_in_place_faster_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+LittlerootTown_MaysHouse_1F_Movement_MayExitHouse1:
+	walk_in_place_faster_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+LittlerootTown_MaysHouse_1F_Movement_MayExitHouse2:
+	walk_in_place_faster_left
+	walk_left
+	walk_in_place_faster_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
 	step_end
 
 RivalsHouse_1F_Text_OhYoureTheNewNeighbor:

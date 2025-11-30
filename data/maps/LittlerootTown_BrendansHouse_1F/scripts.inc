@@ -154,14 +154,15 @@ LittlerootTown_BrendansHouse_1F_EventScript_MeetRival::
 	call_if_eq VAR_0x8008, 2, LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer2
 	msgbox RivalsHouse_1F_Text_BrendanWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_0x8008, 0, LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs0
-	call_if_eq VAR_0x8008, 1, LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs1
-	call_if_eq VAR_0x8008, 2, LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs2
+	call_if_eq VAR_0x8008, 0, LittlerootTown_BrendansHouse_1F_EventScript_BrendanExitHouse0
+	call_if_eq VAR_0x8008, 1, LittlerootTown_BrendansHouse_1F_EventScript_BrendanExitHouse1
+	call_if_eq VAR_0x8008, 2, LittlerootTown_BrendansHouse_1F_EventScript_BrendanExitHouse2
 	playse SE_EXIT
 	removeobject LOCALID_RIVALS_HOUSE_1F_RIVAL
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_BRENDAN
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 	@clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	delay 30
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
 	setvar VAR_LITTLEROOT_TOWN_STATE, 1
@@ -237,22 +238,22 @@ LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs2::
 LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit0:
 	delay_16
 	delay_8
-	walk_in_place_faster_right
+	walk_in_place_faster_down  // <-- Agora olhando pra porta
 	step_end
 
 LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit1:
 	delay_16
 	delay_8
-	walk_in_place_faster_right
+	walk_in_place_faster_down  // <-- Agora olhando pra porta
 	delay_16
 	delay_16
-	walk_in_place_faster_up
+	walk_in_place_faster_down
 	step_end
 
 LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit2:
 	delay_16
 	delay_8
-	walk_in_place_faster_left
+	walk_in_place_faster_down  // <-- Agora olhando pra porta
 	step_end
 
 LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs0:
@@ -281,6 +282,51 @@ LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs2:
 	walk_in_place_faster_up
 	walk_up
 	walk_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanExitHouse0::
+	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit0
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanExitHouse0
+	waitmovement 0
+	return
+
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanExitHouse1::
+	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit1
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanExitHouse1
+	waitmovement 0
+	return
+
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanExitHouse2::
+	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit2
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanExitHouse2
+	waitmovement 0
+	return
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanExitHouse0:
+	walk_in_place_faster_right
+	walk_right
+	walk_in_place_faster_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanExitHouse1:
+	walk_in_place_faster_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanExitHouse2:
+	walk_in_place_faster_left
+	walk_left
+	walk_in_place_faster_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
 	step_end
 
 PlayersHouse_1F_Text_IsntItNiceInHere:
