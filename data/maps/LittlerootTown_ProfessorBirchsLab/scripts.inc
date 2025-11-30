@@ -755,17 +755,17 @@ LittlerootTown_ProfessorBirchsLab_Text_BirchEnjoysRivalsHelpToo:
 	.string "PROF. ACACIA is studying the habitats\n"
 	.string "and distribution of POKéMON.\p"
 	.string "The PROF enjoys {RIVAL}'s help, too.\n"
-	.string "There's a lot of love there.$"
+	.string "There's a lot of potential there.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_LikeYouToHavePokemon:
 	.string "PROF. ACACIA: So, {PLAYER}{KUN}.\p"
-	.string "I've heard so much about you from\n"
-	.string "your father.\p"
-	.string "I've heard that you don't have your\n"
+	.string "Your grandmother has told me so\n"
+	.string "much about you.\p"
+	.string "I understand you don't have your\n"
 	.string "own POKéMON yet.\p"
 	.string "But the way you battled earlier,\n"
 	.string "you pulled it off with aplomb!\p"
-	.string "Oh, yes. As thanks for rescuing me,\n"
+	.string "As thanks for rescuing me,\n"
 	.string "I'd like you to have the POKéMON you\l"
 	.string "used earlier.\p"
 	.string "{PLAYER} received the {STR_VAR_1}!$"
@@ -778,7 +778,7 @@ LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival:
 	.string "PROF. ACACIA: If you work at POKéMON\n"
 	.string "and gain experience, I think you'll make\l"
 	.string "an extremely good TRAINER.\p"
-	.string "My kid, {RIVAL}, is also studying\n"
+	.string "Your neighbor, {RIVAL}, is also studying\n"
 	.string "POKéMON while helping me out.\p"
 	.string "{PLAYER}{KUN}, don't you think it might be\n"
 	.string "a good idea to go see {RIVAL}?$"
@@ -791,13 +791,17 @@ LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou:
 
 LittlerootTown_ProfessorBirchsLab_Text_DontBeThatWay:
 	.string "PROF. ACACIA: Oh, don't be that way.\n"
-	.string "You should go meet my kid.$"
+	.string "You should go meet your neighbor.\p"
+	.string "Go north on ROUTE 103...\n"
+	.string "Just past OLDALE TOWN!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_BirchRivalGoneHome:
 	.string "PROF. ACACIA: {RIVAL}?\n"
-	.string "Gone home, I think.\p"
-	.string "Or maybe that kid's scrabbling around\n"
-	.string "in tall grass again somewhere…\p"
+	.string "Came by earlier asking about POKéMON.\p"
+	.string "Not sure where they went though...\n"
+	.string "Maybe checking out ROUTE 103 again?\p"
+	.string "They mentioned finding rare POKéMON\n"
+	.string "there. You might have to explore around.\p"
 	.string "If you or your POKéMON get tired,\n"
 	.string "you should get some rest at home.$"
 
@@ -820,18 +824,24 @@ LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex:
 	.string "PROF. ACACIA: The POKéDEX is a high-tech\n"
 	.string "tool that automatically makes a record\l"
 	.string "of any POKéMON you meet or catch.\p"
-	.string "My kid, {RIVAL}, goes everywhere\n"
+	.string "{RIVAL}, goes everywhere helping me\n"
 	.string "with it.\p"
-	.string "Whenever my kid catches a rare POKéMON\n"
-	.string "and records its data in the POKéDEX,\l"
-	.string "why, {RIVAL} looks for me while I'm out\l"
-	.string "doing fieldwork, and shows me.$"
+	.string "There are many special POKéMON\n"
+	.string "waiting to be discovered out there.\p"
+	.string "Explore thoroughly, and just like\n"
+	.string "{RIVAL}, keep searching and learning.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
-	.string "PROF. ACACIA: Countless POKéMON\n"
-	.string "await you!\p"
-	.string "Argh, I'm getting the itch to get out\n"
-	.string "and do fieldwork again!$"
+	.string "PROF. ACACIA: So many POKéMON still\n"
+	.string "wait to be discovered!\p"
+	.string "But now I'm focusing on researching\n"
+	.string "that strange meteor that passed over HOENN...\p"
+	.string "The Millennium Comet is so mysterious,\n"
+	.string "we know so little about it still.\p"
+	.string "I hope to make new discoveries,\n"
+	.string "maybe even find a new POKéMON!\p"
+	.string "I'm getting excited just thinking\n"
+	.string "about it, can't wait to start!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese:
 	.string "ZINNIA: Oh, wow, {PLAYER}{KUN}!\n"
@@ -851,9 +861,12 @@ LittlerootTown_ProfessorBirchsLab_Text_OhYourBagsFull:
 	.string "Oh? Your BAG's full.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_MayWhereShouldIGoNext:
-	.string "ZINNIA: I wonder where I should go look\n"
-	.string "for POKéMON next?$"
-
+	.string "ZINNIA: Have you checked out the cave\n"
+	.string "east of OLDALE yet?\p"
+	.string "I heard it's really dark and dangerous,\n"
+	.string "but if you're brave enough, it's full of\l"
+	.string "amazing POKéMON!$"
+	
 LittlerootTown_ProfessorBirchsLab_Text_BrendanGotPokedexTooTakeThese:
 	.string "ZENNO: Huh…\n"
 	.string "So you got a POKéDEX, too.\p"
@@ -872,8 +885,11 @@ LittlerootTown_ProfessorBirchsLab_Text_HeyYourBagsFull:
 	.string "Hey, your BAG's full.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_BrendanWhereShouldIGoNext:
-	.string "ZENNO: Where should I look for\n"
-	.string "POKéMON next…$"
+	.string "ZENNO: I'm thinking of exploring that\n"
+	.string "cave east of OLDALE next.\p"
+	.string "Heard it's pretty intense, super dark\n"
+	.string "and full of tough POKéMON.\p"
+	.string "Perfect for some real training!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_SeriousLookingMachine:
 	.string "It's a serious-looking machine.\n"
