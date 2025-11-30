@@ -284,8 +284,8 @@ LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs2:
 	step_end
 
 PlayersHouse_1F_Text_IsntItNiceInHere:
-	.string "MOM: See, {PLAYER}?\n"
-	.string "Isn't it nice in here, too?$"
+	.string "GRANDMA: Did you sleep well, dear?\n"
+	.string "Or did you have those strange dreams?$"
 
 PlayersHouse_1F_Text_MoversPokemonGoSetClock:
 	.string "The mover's POKéMON do all the work\n"
@@ -298,52 +298,55 @@ PlayersHouse_1F_Text_MoversPokemonGoSetClock:
 	.string "Don't forget to set it!$"
 
 PlayersHouse_1F_Text_ArentYouInterestedInRoom:
-	.string "MOM: Well, {PLAYER}?\p"
+	.string "GRANDMA: Well, {PLAYER}?\p"
 	.string "Aren't you interested in seeing your\n"
 	.string "very own room?$"
 
 PlayersHouse_1F_Text_GoSetTheClock:
-	.string "MOM: {PLAYER}.\p"
+	.string "GRANDMA: {PLAYER}.\p"
 	.string "Go set the clock in your room, honey.$"
 
 PlayersHouse_1F_Text_OhComeQuickly:
-	.string "MOM: Oh! {PLAYER}, {PLAYER}!\n"
+	.string "GRANDMA: Oh! {PLAYER}, {PLAYER}!\n"
 	.string "Quick! Come quickly!$"
 
 PlayersHouse_1F_Text_MaybeDadWillBeOn:
-	.string "MOM: Look! It's PETALBURG GYM!\n"
+	.string "GRANDMA: Look! It's PETALBURG GYM!\n"
 	.string "Maybe DAD will be on!$"
 
 PlayersHouse_1F_Text_ItsOverWeMissedHim:
-	.string "MOM: Oh… It's over.\p"
+	.string "GRANDMA: Oh… It's over.\p"
 	.string "I think DAD was on, but we missed him.\n"
 	.string "Too bad.$"
 
 PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor:
-	.string "Oh, yes.\n"
-	.string "One of DAD's friends lives in town.\p"
-	.string "PROF. ACACIA is his name.\p"
-	.string "He lives right next door, so you should\n"
-	.string "go over and introduce yourself.$"
+	.string "Oh, that's right.\n"
+	.string "PROFESSOR ACACIA mentioned you should\l"
+	.string "visit her one of these days.\p"
+	.string "Why don't you go see her?\n"
+	.string "Might be a good way to get your mind\l"
+	.string "off things...$"
 
 PlayersHouse_1F_Text_SeeYouHoney:
-	.string "MOM: See you, honey!$"
+	.string "GRANDMA: See you, dear!$"
 
 PlayersHouse_1F_Text_DidYouMeetProfBirch:
-	.string "MOM: Did you introduce yourself to\n"
-	.string "PROF. ACACIA?$"
+	.string "GRANDMA: Did you went to talk\n"
+	.string "to PROF. ACACIA?$"
 
 PlayersHouse_1F_Text_YouShouldRestABit:
-	.string "MOM: How are you doing, {PLAYER}?\n"
+	.string "GRANDMA: How are you doing, {PLAYER}?\n"
 	.string "You look a little tired.\p"
 	.string "I think you should rest a bit.$"
 
 PlayersHouse_1F_Text_TakeCareHoney:
-	.string "MOM: Take care, honey!$"
+	.string "GRANDMA: Take care, honey!$"
 
 PlayersHouse_1F_Text_GotDadsBadgeHeresSomethingFromMom:
-	.string "MOM: Oh? Did DAD give you that BADGE?\p"
-	.string "Then here's something from your MOM!$"
+	.string "GRANDMA: Oh my! You've already come\n"
+	.string "so far on your journey?\p"
+	.string "That's incredible, dear...\n"
+	.string "Here, I think this might help you...$"
 
 PlayersHouse_1F_Text_DontPushYourselfTooHard:
 	.string "Don't push yourself too hard, dear.\n"
@@ -351,14 +354,15 @@ PlayersHouse_1F_Text_DontPushYourselfTooHard:
 	.string "Go for it, honey!$"
 
 PlayersHouse_1F_Text_IsThatAPokenav:
-	.string "MOM: What is that, honey? A POKéNAV?\n"
-	.string "Someone from DEVON gave it to you?\p"
-	.string "Well, honey, how about registering\n"
-	.string "your mom?\p"
-	.string "… … …$"
+	.string "GRANDMA: What's that thing, dear?\n"
+	.string "A POKé-WHAT? From the DEVON people?\p"
+	.string "Back in my day, we just shouted\n"
+	.string "really loud to talk to people!\p"
+	.string "Do I need to plug it in somewhere?\n"
+	.string "Or does it run on wishes?$"
 
 PlayersHouse_1F_Text_RegisteredMom:
-	.string "Registered MOM\n"
+	.string "Registered GRANDMA\n"
 	.string "in the POKéNAV.$"
 
 PlayersHouse_1F_Text_Vigoroth1:
@@ -378,12 +382,12 @@ PlayersHouse_1F_Text_TheresAMovieOnTV:
 	.string "Better get going!$"
 
 PlayersHouse_1F_Text_RunningShoesManual:
-	.string "It's the instruction booklet for the\n"
-	.string "RUNNING SHOES.\p"
-	.string "“Press the B Button to run while\n"
-	.string "wearing your RUNNING SHOES.\p"
-	.string "“Lace up your RUNNING SHOES and hit\n"
-	.string "the road running!”$"
+	.string "It's an ancient text about a mythical\n"
+	.string "being from the forest...\p"
+	.string "“It travels across time, appearing\n"
+	.string "wherever forests bloom with life.\p"
+	.string "“When the pure heart calls, it emerges\n"
+	.string "from the depths of Ilex's embrace...”$"
 
 PlayersHouse_1F_Text_TicketFromBrineyCameForYou:
 	.string "DAD: Hm?\p"
@@ -407,30 +411,43 @@ PlayersHouse_1F_Text_BetterGetBackToGym:
 	.string "while I'm away.$"
 
 PlayersHouse_1F_Text_DadShouldStayLonger:
-	.string "MOM: That DAD of yours…\p"
+	.string "GRANDMA: That DAD of yours…\p"
 	.string "He comes home for the first time in a\n"
 	.string "while, but all he talks about is POKéMON.\p"
 	.string "He should relax and stay a little longer.$"
 
 PlayersHouse_1F_Text_IsThatABreakingStory:
-	.string "MOM: Is that a breaking news story?$"
+	.string "GRANDMA: Is that a breaking news story?$"
 
 PlayersHouse_1F_Text_LatiEmergencyNewsFlash:
-	.string "We bring you this emergency\n"
-	.string "news flash!\p"
-	.string "In various HOENN locales, there have\n"
-	.string "been reports of a BZZT…colored\l"
-	.string "POKéMON in flight.\p"
-	.string "The identity of this POKéMON is\n"
-	.string "currently unknown.\p"
-	.string "We now return you to the regular\n"
-	.string "movie program.$"
+	.string "We interrupt with a special\n"
+	.string "astronomical bulletin!\p"
+	.string "Last night, a magnificent comet\n"
+	.string "was visible across all of HOENN,\l"
+	.string "illuminating the entire sky.\p"
+	.string "Rumors suggest this celestial event\n"
+	.string "occurs only once every thousand years.\p"
+	.string "Some are linking it to a POKéMON,\n"
+	.string "many made wishes upon its light,\p"
+	.string "yet it remains shrouded in mystery.\n"
+	.string "Still, the lights felt truly magical...\p"
+	.string "We now return you to your regular\n"
+	.string "programming.$"
 
 PlayersHouse_1F_Text_WhatColorDidTheySay:
-	.string "MOM: {PLAYER}, did you catch that?\p"
-	.string "What color did the announcer say\n"
-	.string "that POKéMON was?$"
+	.string "GRANDMA: {PLAYER}, you're still having\n"
+	.string "those strange dreams almost every night...\p"
+	.string "And now this comet...\n"
+	.string "Perhaps it's a sign... A heavenly sign...\p"
+	.string "Please be careful out there, dear.$"
 
 PlayersHouse_1F_Text_StillUnknownPokemon:
-	.string "MOM: Well, isn't that something!\n"
-	.string "There are still unknown POKéMON.$"
+	.string "GRANDMA: Isn't it amazing, the mysteries\n"
+	.string "this world still holds?\p"
+	.string "Perhaps traveling will help you make\n"
+	.string "sense of those strange dreams, dear.\p"
+	.string "But do be careful out there.$"
+
+
+
+
