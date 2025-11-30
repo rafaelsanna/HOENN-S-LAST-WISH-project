@@ -1130,6 +1130,6 @@ DifficultySelection_Text_AskHardMode:
 
 DifficultySelection_Text_HardModeSelected:
 	.string "PROF. ACACIA: Hard mode selected!\n"
-	.string "Good luck - you'll need it!$"
+	.string "Good luck! You'll need it!$"
 	
 
