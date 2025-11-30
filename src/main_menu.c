@@ -1287,6 +1287,8 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
 
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
+    int i;
+
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     InitBgFromTemplate(&sBirchBgTemplate);
@@ -1298,16 +1300,33 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 0);
 
+    // Carrega gfx/tiles (shadow + bg map) — permanece exatamente como você editou.
     DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)VRAM);
     DecompressDataWithHeaderVram(sBirchSpeechBgMap, (void *)(BG_SCREEN_ADDR(7)));
+
+    // Carrega paletas do background (1 e 2) normalmente...
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+
+    // --- Importante para "fixar" a paleta: sincroniza os buffers faded/unfaded
+    // Se as paletas carregadas ocuparem os primeiros 32 entradas (padrão aqui),
+    // copiamos essas entradas para ambos os buffers para evitar qualquer diferença.
+    // Copiamos 32 entradas porque carregamos 2 * PLTT_SIZE_4BPP acima.
+    for (i = 0; i < 32; ++i)
+    {
+        gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
+    }
+
+    // Evita qualquer scanline/fade/palette transient
     ScanlineEffect_Stop();
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetAllPicSprites();
     AddBirchSpeechObjects(taskId);
-    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+
+    // Não começar qualquer palette fade — queremos a imagem estática e sem transição.
+    // (Em vez de BeginNormalPaletteFade(...), deixamos as paletas carregadas fixas.)
+
     gTasks[taskId].tBG1HOFS = 0;
     gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowBirch;
     gTasks[taskId].tPlayerSpriteId = SPRITE_NONE;
@@ -1925,20 +1944,10 @@ static void Task_NewGameBirchSpeech_FadeOutTarget1InTarget2(u8 taskId)
 
 static void NewGameBirchSpeech_StartFadeOutTarget1InTarget2(u8 taskId, u8 delay)
 {
-    u8 taskId2;
-
-    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_OBJ);
-    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
-    SetGpuReg(REG_OFFSET_BLDY, 0);
-    gTasks[taskId].tIsDoneFadingSprites = 0;
-    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadeOutTarget1InTarget2, 0);
-    gTasks[taskId2].tMainTask = taskId;
-    gTasks[taskId2].tAlphaCoeff1 = 16;
-    gTasks[taskId2].tAlphaCoeff2 = 0;
-    gTasks[taskId2].tDelay = delay;
-    gTasks[taskId2].tDelayTimer = delay;
+    // Não mexer em BLDCNT / BLDALPHA — tudo é estático.
+    gTasks[taskId].tIsDoneFadingSprites = TRUE;
+    (void)delay;
 }
-
 static void Task_NewGameBirchSpeech_FadeInTarget1OutTarget2(u8 taskId)
 {
     int alphaCoeff2;
@@ -1964,18 +1973,10 @@ static void Task_NewGameBirchSpeech_FadeInTarget1OutTarget2(u8 taskId)
 
 static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay)
 {
-    u8 taskId2;
-
-    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_OBJ);
-    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 16));
-    SetGpuReg(REG_OFFSET_BLDY, 0);
-    gTasks[taskId].tIsDoneFadingSprites = 0;
-    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadeInTarget1OutTarget2, 0);
-    gTasks[taskId2].tMainTask = taskId;
-    gTasks[taskId2].tAlphaCoeff1 = 0;
-    gTasks[taskId2].tAlphaCoeff2 = 16;
-    gTasks[taskId2].tDelay = delay;
-    gTasks[taskId2].tDelayTimer = delay;
+    // Não mexer em BLDCNT / BLDALPHA — evita blends que mudam a aparência/paleta.
+    // Apenas sinaliza imediatamente que o fade está concluído.
+    gTasks[taskId].tIsDoneFadingSprites = TRUE;
+    (void)delay;
 }
 
 #undef tMainTask
