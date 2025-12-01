@@ -1138,61 +1138,68 @@ PetalburgCity_Gym_EventScript_GymStatue::
 	end
 
 PetalburgCity_Gym_Text_DadYoureHereWithYourPokemon:
-	.string "DAD: Hm?\p"
-	.string "Well, if it isn't {PLAYER}!\n"
-	.string "So you're all finished moving in?\p"
-	.string "I'm surprised that you managed to\n"
-	.string "get here by yourself.\p"
-	.string "Oh, I see.\n"
-	.string "You're with your POKéMON.\p"
-	.string "Hm… Then I guess you're going to\n"
-	.string "become a TRAINER like me, {PLAYER}.\p"
-	.string "That's great news!\n"
-	.string "I'll be looking forward to it!$"
+    .string "CALENDULA: Oh?\p"
+    .string "You must be {PLAYER}, right?\n"
+    .string "ACACIA told me you would be arriving.\p"
+    .string "She and I first met long ago, back when\n"
+    .string "we were both young in school!\p"
+    .string "I eventually chose a different path,\n"
+    .string "the life of a full-time GYM LEADER.\p"
+    .string "But I never stopped guiding those who\n"
+    .string "show real promise.\p"
+    .string "And you…\n"
+    .string "I can already sense something unique.\p"
+    .string "ACACIA rarely speaks so highly of\n"
+    .string "both you and rival {RIVAL}.\p"
+    .string "If she believes in your potential,\n"
+    .string "then I will help you grow.\p"
+    .string "Welcome to the PETALBURG GYM,\n"
+    .string "{PLAYER}. Let this be the start of\n"
+    .string "your journey as a true TRAINER.$"
 
 PetalburgCity_Gym_Text_WallyIdLikeAPokemon:
-	.string "Um… I…\n"
-	.string "I'd like to get a POKéMON, please…$"
+    .string "CALENDULA: Perfect timing!$"
 
 PetalburgCity_Gym_Text_DadOhYoureWallyRight:
-	.string "DAD: Hm? You're… Uh… Oh, right.\n"
-	.string "You're WALLY, right?$"
+    .string "CALENDULA: {PLAYER}, this is LUKA.\n"
+    .string "My neighbor… and one of my prodigies!$"
 
 PetalburgCity_Gym_Text_WallyIveNeverCaughtAPokemon:
-	.string "WALLY: I'm going to go stay with my\n"
-	.string "relatives in VERDANTURF TOWN.\p"
-	.string "I thought I would be lonely by myself,\n"
-	.string "so I wanted to take a POKéMON along.\p"
-	.string "But I've never caught a POKéMON before.\n"
-	.string "I don't know how…$"
+    .string "LUKA: I'm heading out soon to stay in\n"
+    .string "VERDANTURF for a while.\p"
+    .string "But before that, I was hoping for a real\n"
+    .string "battle, something worthy of a sendoff.$"
 
 PetalburgCity_Gym_Text_DadHmISee:
-	.string "DAD: Hm. I see.$"
+    .string "CALENDULA: Hm… I see.\n"
+    .string "Looks like the two of you arrived at the\n"
+    .string "perfect moment.$"
 
 PetalburgCity_Gym_Text_DadPlayerGoWithWally:
-	.string "DAD: {PLAYER}, you heard that,\n"
-	.string "right?\p"
-	.string "Go with WALLY and make sure that he\n"
-	.string "safely catches a POKéMON.$"
+    .string "CALENDULA: {PLAYER}, ACACIA has her\n"
+    .string "own eye for talent… and so do I.\p"
+    .string "LUKA here? He's sharp, fearless, and\n"
+    .string "never backs away from a challenge.\p"
+    .string "So how about it?\n"
+    .string "Go to ROUTE 101 and give him a battle\n"
+    .string "worthy of the title 'prodigy'.\p"
+    .string "And when you're done…\n"
+    .string "both of you come tell me the result.$"
 
 PetalburgCity_Gym_Text_IllLoanYouMyZigzagoon:
-	.string "WALLY, here, I'll loan you my POKéMON.\p"
-	.string "WALLY received a ZIGZAGOON!$"
+    .string "LUKA's fully prepared for a real fight!$"
 
 PetalburgCity_Gym_Text_WallyThankYouAndDadGivesPokeBall:
-	.string "WALLY: Oh, wow!\n"
-	.string "A POKéMON!\p"
-	.string "DAD: Hm. I'll give you a POKé BALL, too.\n"
-	.string "Go for it!\p"
-	.string "WALLY received a POKé BALL!$"
+    .string "LUKA: Don’t worry, CALENDULA.\n"
+    .string "I’ve got everything I need.$"
 
 PetalburgCity_Gym_Text_WallyOhWowThankYou:
-	.string "WALLY: Oh, wow!\n"
-	.string "Thank you!$"
+    .string "LUKA: Heh… thanks anyway!$"
 
 PetalburgCity_Gym_Text_WouldYouReallyComeWithMe:
-	.string "{PLAYER}… Would you really come\n"
-	.string "with me?$"
+    .string "LUKA: {PLAYER}, you ready?\n"
+    .string "Let's head to ROUTE 101 and make this\n"
+    .string "a battle worth remembering.$"
 
 PetalburgCity_Gym_Text_DadSoDidItWorkOut:
 	.string "DAD: So, did it work out?$"

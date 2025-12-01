@@ -30,45 +30,44 @@ PetalburgCity_OnFrame:
 	.2byte 0
 
 PetalburgCity_EventScript_WallyTutorial::
-	lockall
-	clearflag 0x44 // can catch
-	special SavePlayerParty
-	special LoadWallyZigzagoon
-	applymovement LOCALID_PETALBURG_WALLY, PetalburgCity_Movement_WallyTutorialWally
-	applymovement LOCALID_PLAYER, PetalburgCity_Movement_WallyTutorialPlayer
-	waitmovement 0
-	msgbox Route102_Text_WatchMeCatchPokemon, MSGBOX_DEFAULT
-	special StartWallyTutorialBattle
-	waitstate
-	setflag 0x44 // // can't use bag
-	msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
-	applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
-	waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
-	msgbox Route102_Text_LetsGoBack, MSGBOX_DEFAULT
-	closemessage
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
-	setvar VAR_PETALBURG_CITY_STATE, 3
-	fadedefaultbgm
-	clearflag FLAG_DONT_TRANSITION_MUSIC
-	special LoadPlayerParty
-	setvar VAR_PETALBURG_GYM_STATE, 1
-	warp MAP_PETALBURG_CITY_GYM, 4, 108
-	waitstate
-	releaseall
-	end
+    lockall
+    special SavePlayerParty
+    applymovement LOCALID_PETALBURG_WALLY, PetalburgCity_Movement_WallyTutorialWally
+    applymovement LOCALID_PLAYER, PetalburgCity_Movement_WallyTutorialPlayer
+    waitmovement 0
+    msgbox Route102_Text_WatchMeCatchPokemon, MSGBOX_DEFAULT
+    // Em vez da captura, inicia uma batalha contra o Wally
+    trainerbattle_single TRAINER_WALLY_VR_6, PetalburgCity_Text_WallyIntro, PetalburgCity_Text_WallyDefeat, PetalburgCity_EventScript_AfterWallyBattle
+    end
+
+PetalburgCity_EventScript_AfterWallyBattle::
+    msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
+    applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
+    waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
+    msgbox Route102_Text_LetsGoBack, MSGBOX_DEFAULT
+    closemessage
+    clearflag FLAG_HIDE_MAP_NAME_POPUP
+    setvar VAR_PETALBURG_CITY_STATE, 3
+    fadedefaultbgm
+    clearflag FLAG_DONT_TRANSITION_MUSIC
+    special LoadPlayerParty
+    setvar VAR_PETALBURG_GYM_STATE, 1
+    warp MAP_PETALBURG_CITY_GYM, 4, 108
+    waitstate
+    releaseall
+    end
+
 
 PetalburgCity_EventScript_WalkToWallyHouse::
 	lockall
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	applymovement LOCALID_PETALBURG_WALLYS_DAD, PetalburgCity_Movement_WalkToWallyHouseWallysDad
-	applymovement LOCALID_PLAYER, PetalburgCity_Movement_WalkToWallyHousePlayer
 	waitmovement 0
 	setvar VAR_0x8004, 7
 	setvar VAR_0x8005, 5
 	opendoor VAR_0x8004, VAR_0x8005
 	waitdooranim
 	applymovement LOCALID_PETALBURG_WALLYS_DAD, PetalburgCity_Movement_WalkInsideHouseWallysDad
-	applymovement LOCALID_PLAYER, PetalburgCity_Movement_WalkInsideHousePlayer
 	waitmovement 0
 	setflag FLAG_HIDE_PETALBURG_CITY_WALLYS_DAD
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
@@ -742,15 +741,16 @@ PetalburgCity_Text_FullPartyExplanation:
 
 PetalburgCity_Text_GymSign:
 	.string "PETALBURG CITY POKéMON GYM\n"
-	.string "LEADER: NORMAN\l"
-	.string "“A man in pursuit of power!”$"
+    .string "LEADER: CALENDULA\l"
+    .string "A professor who blends knowledge\n"
+    .string "with battle skill.$"
 
 PetalburgCity_Text_CitySign:
 	.string "PETALBURG CITY\n"
 	.string "“Where people mingle with nature.”$"
 
 PetalburgCity_Text_WallyHouseSign:
-	.string "WALLY'S HOUSE$"
+	.string "LUKAS 'S HOUSE$"
 
 PetalburgCity_Text_AreYouATrainer:
     .string "Excuse me!\p"
@@ -776,3 +776,10 @@ PetalburgCity_Text_ImLookingForTalentedTrainers:
     .string "There's a mission I can't handle alone.\n"
     .string "If only I could find the right person…$"
 
+PetalburgCity_Text_WallyIntro:
+    .string "Lukas: Oh, {PLAYER}!\n"
+    .string "Vou mostrar o que aprendi!$"
+
+PetalburgCity_Text_WallyDefeat:
+    .string "Uau, você é forte mesmo!$"
+	
