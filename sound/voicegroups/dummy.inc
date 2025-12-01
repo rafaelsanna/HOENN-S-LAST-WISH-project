@@ -1,5 +1,5 @@
 voice_group dummy
-	voice_keysplit_all voicegroup_rs_drumset
+	voice_keysplit_all voicegroup_custom_drum_drumset
 	voice_keysplit voicegroup_piano_keysplit, keysplit_piano
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
@@ -59,7 +59,7 @@ voice_group dummy
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_keysplit voicegroup_french_horn_keysplit, keysplit_french_horn
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
@@ -78,23 +78,15 @@ voice_group dummy
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_square_2 60, 0, 2, 0, 1, 6, 0
-	voice_programmable_wave 60, 0, ProgrammableWaveData_3, 0, 7, 15, 1
-	voice_square_1 60, 0, 0, 2, 0, 1, 6, 0
+	voice_directsound 60, 0, DirectSoundWaveData_sd90_classical_shakuhachi, 255, 0, 255, 204
+	voice_square_2_alt 60, 0, 2, 1, 1, 5, 1
+	voice_square_2_alt 60, 0, 2, 1, 1, 7, 1
+	voice_square_2_alt 60, 0, 2, 0, 0, 7, 1
 	voice_square_2 60, 0, 3, 0, 1, 6, 0
-	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_square_2_alt 60, 0, 2, 0, 0, 8, 1
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 0, 0, 1, 6, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_directsound 60, 0, DirectSoundWaveData_classical_choir_voice_ahhs, 255, 0, 255, 0
-	voice_directsound 60, 0, DirectSoundWaveData_sd90_classical_oboe, 255, 165, 154, 127
-	voice_directsound 60, 0, DirectSoundWaveData_unused_sd90_oboe, 255, 165, 154, 127
-	voice_directsound 60, 0, DirectSoundWaveData_unused_guitar_separates_power_chord, 255, 165, 206, 127
-	voice_directsound 60, 0, DirectSoundWaveData_unused_sc88pro_unison_slap, 255, 165, 206, 127
-	voice_directsound 60, 0, DirectSoundWaveData_unknown_snare, 255, 0, 255, 0
-	voice_directsound 60, 0, DirectSoundWaveData_ethnic_flavours_ohtsuzumi, 255, 0, 255, 0
-	voice_directsound 60, 0, DirectSoundWaveData_ethnic_flavours_hyoushigi, 255, 0, 255, 0
+	voice_square_1_alt 60, 0, 0, 0, 1, 4, 3, 6
 

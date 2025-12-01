@@ -53,5 +53,16 @@ voice_group custom_drum_drumset
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_directsound_no_resample 66, 34, DirectSoundWaveData_sc88pro_tambourine, 255, 127, 77, 204
+	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_directsound 64, 54, DirectSoundWaveData_sc88pro_orchestra_cymbal_crash, 8, 0, 0, 255
+	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_directsound 60, 0, DirectSoundWaveData_sc88pro_open_low_conga, 255, 0, 255, 0
+	voice_directsound 64, 0, DirectSoundWaveData_sc88pro_open_low_conga, 255, 0, 255, 0
+	voice_directsound 60, 0, DirectSoundWaveData_sc88pro_mute_high_conga, 255, 0, 255, 0
 	
 
