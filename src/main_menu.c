@@ -1644,20 +1644,22 @@ static void Task_NewGameBirchSpeech_ProcessNameYesNoMenu(u8 taskId)
 
 static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8 taskId)
 {
-    if (gTasks[taskId].tBG1HOFS)
-    {
-        gTasks[taskId].tBG1HOFS += 2;
-        SetGpuReg(REG_OFFSET_BG1HOFS, gTasks[taskId].tBG1HOFS);
-    }
-    else
-    {
-        gTasks[taskId].func = Task_NewGameBirchSpeech_ReshowBirchLotad;
-    }
+    // Garante que o BG1 esteja em 0 (parado)
+    ChangeBgX(1, 0, BG_COORD_SET);
+
+    // Avança imediatamente para a próxima Task (ReshowBirchLotad), pulando a animação de slide.
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ReshowBirchLotad;
 }
 
 static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
 {
     u8 spriteId;
+
+    // NOVO: TRAVA DE POSIÇÃO.
+    // Esta linha será executada em CADA FRAME em que esta Task estiver ativa,
+    // garantindo que o offset horizontal do BG1 seja sempre 0,
+    // sobrescrevendo qualquer comando de movimento anterior ou posterior.
+    ChangeBgX(1, 0, BG_COORD_SET);
 
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
