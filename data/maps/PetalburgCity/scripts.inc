@@ -777,9 +777,12 @@ PetalburgCity_Text_ImLookingForTalentedTrainers:
     .string "If only I could find the right person…$"
 
 PetalburgCity_Text_WallyIntro:
-    .string "Lukas: Oh, {PLAYER}!\n"
-    .string "Vou mostrar o que aprendi!$"
+    .string "LUKA: {PLAYER}! The Professor said\n"
+    .string "you're special, but so am I!\p"
+    .string "I've been training for long so...\n"
+    .string "Let me show you what I've learned!$"
 
 PetalburgCity_Text_WallyDefeat:
-    .string "Uau, você é forte mesmo!$"
+    .string "LUKA: Incredible…\n"
+    .string "You're really good!$"
 	

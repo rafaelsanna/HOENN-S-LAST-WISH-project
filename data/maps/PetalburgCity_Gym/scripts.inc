@@ -88,6 +88,9 @@ PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox PetalburgCity_Gym_Text_DadGoCollectBadges, MSGBOX_DEFAULT
+	giveegg SPECIES_EEVEE
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox PetalburgCity_Gym_Text_CalendulaGaveEevee, MSGBOX_DEFAULT
 	setvar VAR_PETALBURG_GYM_STATE, 2
 	releaseall
 	end
@@ -1198,41 +1201,49 @@ PetalburgCity_Gym_Text_WallyOhWowThankYou:
 
 PetalburgCity_Gym_Text_WouldYouReallyComeWithMe:
     .string "LUKA: {PLAYER}, you ready?\n"
-    .string "Let's head to ROUTE 101 and make this\n"
-    .string "a battle worth remembering.$"
+    .string "Let's head to ROUTE 102 and make this\n"
+    .string "a battle worth remembering!$"
 
 PetalburgCity_Gym_Text_DadSoDidItWorkOut:
-	.string "DAD: So, did it work out?$"
+    .string "CALENDULA: Excellent work, really\n"
+    .string "well done both of you!$"
 
 PetalburgCity_Gym_Text_WallyThankYouBye:
-	.string "WALLY: Thank you, yes, it did.\n"
-	.string "Here's your POKéMON back.\p"
-	.string "{PLAYER}, thank you for coming along\n"
-	.string "with me.\p"
-	.string "You two are why I was able to catch\n"
-	.string "my POKéMON.\p"
-	.string "I promise I'll take really good\n"
-	.string "care of it.\p"
-	.string "Oh! My mom's waiting for me,\n"
-	.string "so I have to go!\p"
-	.string "Bye, {PLAYER}!$"
+    .string "LUKA: That was a great battle!\n"
+    .string "You really pushed me, {PLAYER}.\p"
+    .string "I lost, sure. but I did hold back\n"
+    .string "a little since I thought you were\l"
+    .string "just starting out.\p"
+    .string "Next time, though? No holding back.\n"
+    .string "I wanna face your full strength.\p"
+    .string "Anyway, I have to run!\n"
+    .string "There's something strange about that\l"
+    .string "meteor that passed over HOENN.\p"
+    .string "I can't stop thinking about it...\n"
+    .string "I need to learn more!\p"
+    .string "See you soon, {PLAYER}!$"
+
 
 PetalburgCity_Gym_Text_DadGoCollectBadges:
-	.string "DAD: Now…\p"
-	.string "{PLAYER}, if you want to become a\n"
-	.string "strong TRAINER, here's my advice.\p"
-	.string "Head for RUSTBORO CITY beyond this\n"
-	.string "town.\p"
-	.string "There, you should challenge\n"
-	.string "the GYM LEADER, ROXANNE.\p"
-	.string "After her, go on to other POKéMON\n"
-	.string "GYMS and defeat their LEADERS.\p"
-	.string "Collect BADGES from them,\n"
-	.string "understood?\p"
-	.string "Of course, I'm a GYM LEADER, too.\n"
-	.string "We'll battle one day, {PLAYER}.\p"
-	.string "But that's only after you become\n"
-	.string "stronger.$"
+    .string "CALENDULA: Now...\n"
+    .string "{PLAYER}, if you want to grow into a\n"
+    .string "real TRAINER, listen carefully.\p"
+    .string "First, head to RUSTBORO CITY.\n"
+    .string "Seek out TERRA, the ROCK-type GYM\l"
+    .string "LEADER.\p"
+    .string "Defeat her, then continue your\n"
+    .string "journey across HOENN, challenging\l"
+    .string "other GYM LEADERS and earning their\l"
+    .string "BADGES.\p"
+    .string "But be careful out there.\n"
+    .string "Strange things have been happening\l"
+    .string "all over HOENN... And theres this\l"
+    .string "wierd comet that passed yesterday.\p"
+    .string "I have a bad feeling about it...\n"
+    .string "So stay alert, {PLAYER}.\p"
+    .string "Come back to me when you're stronger.\n"
+    .string "Then we'll have our official GYM\l"
+    .string "battle. I'll be waiting!$"
 
 PetalburgCity_Gym_Text_NormanGoToRustboro:
 	.string "DAD: Hm? Aren't you going to the\n"
@@ -1595,4 +1606,15 @@ PetalburgCity_Gym_Text_NormanRematchNeedTwoMons:
 	.string "capable of battle?\p"
 	.string "Sorry, but you'll have to come back\n"
 	.string "with at least two POKéMON.$"
+
+PetalburgCity_Gym_Text_CalendulaGaveEevee:
+    .string "CALENDULA: Oh, before you go...\p"
+	.string "Since Acacia likes you I can give you\l"
+    .string "something. She isn't the only one who\l"
+    .string "likes helping promising students!\p"
+    .string "Take this little one.\n"
+    .string "It's an EEVEE.\p"
+    .string "My first partner was one, and I'd\n"
+    .string "love for you to start your path with\n"
+    .string "a loyal friend too.$"
 
