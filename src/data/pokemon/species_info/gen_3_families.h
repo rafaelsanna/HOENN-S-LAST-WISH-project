@@ -318,10 +318,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .height = 4,
         .weight = 25,
         .description = COMPOUND_STRING(
-            "If attacked, it strikes back by spitting\n"
-            "balls of fire it forms in its stomach.\n"
-            "A Torchic dislikes darkness because it\n"
-            "can't see its surroundings."),
+            "If threatened, it attacks using its wings,\n"
+            "which are made of sharp plant leaves.\n"
+            "It can slash foes with great precision,\n"
+            "making it a dangerous opponent."),
         .pokemonScale = 566,
         .pokemonOffset = 19,
         .trainerScale = 256,
@@ -403,10 +403,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .height = 9,
         .weight = 195,
         .description = COMPOUND_STRING(
-            "It lashes out with 10 kicks per second.\n"
-            "Its strong fighting instinct compels it\n"
-            "to keep up its offensive until the\n"
-            "opponent gives up."),
+            "It uses its small leaf-covered wings to leap\n"
+            "high into the air, slashing at foes below.\n"
+            "By spreading its wings, it can glide long\n"
+            "distances, but it cannot truly fly."),
         .pokemonScale = 343,
         .pokemonOffset = 5,
         .trainerScale = 256,

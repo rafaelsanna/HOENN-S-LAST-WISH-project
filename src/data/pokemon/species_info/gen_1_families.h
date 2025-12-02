@@ -5430,10 +5430,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 5,
         .weight = 55,
         .description = COMPOUND_STRING(
-            "Nothing can avoid falling asleep hearing a\n"
-            "Jigglypuff's song. The sound waves of its\n"
-            "singing voice match the brain waves of\n"
-            "someone in a deep sleep."),
+            "This balloon-like Pokémon is made of clouds.\n"
+            "It floats gracefully through the sky and\n"
+            "enjoys resting among the soft clouds,\n"
+            "drifting peacefully as it sleeps."),
         .pokemonScale = 433,
         .pokemonOffset = 2,
         .trainerScale = 256,
@@ -7990,10 +7990,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 6,
         .weight = 124,
         .description = COMPOUND_STRING(
-            "It is possible to see this Pokémon's spiral\n"
-            "innards right through its thin skin.\n"
-            "However, the skin is also very flexible.\n"
-            "Even sharp fangs bounce right off it."),
+            "Its swirling markings shimmer like lightning\n"
+            "and pulse with dangerously strong energy.\n"
+            "This highly electric Pokémon can release\n"
+            "high voltage, so swimming near it is risky."),
         .pokemonScale = 369,
         .pokemonOffset = 20,
         .trainerScale = 256,
@@ -8061,10 +8061,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 10,
         .weight = 200,
         .description = COMPOUND_STRING(
-            "Its body surface is always wet and slick\n"
-            "with an oily fluid. Because of this greasy\n"
-            "covering, it can easily slip and slide out\n"
-            "of the clutches of any enemy in battle."),
+            "Its body is coated in a thin, charged moisture\n"
+            "that constantly crackles with stored energy.\n"
+            "This slippery surface lets it escape grips,\n"
+            "while releasing shocks at those who grab it."),
         .pokemonScale = 288,
         .pokemonOffset = 11,
         .trainerScale = 256,
