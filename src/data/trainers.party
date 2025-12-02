@@ -12683,12 +12683,12 @@ Double Battle: Yes
 AI: Basic Trainer
 
 Pidgey
-Level: 8
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+Level: 7
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 Eevee
-Level: 7
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+Level: 6
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_BRENDAN_LILYCOVE_MUDKIP ===
 Name: ZENNO

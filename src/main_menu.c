@@ -1291,40 +1291,38 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     InitBgFromTemplate(&sBirchBgTemplate);
+    
+    // Configura janela/blend corretamente
     SetGpuReg(REG_OFFSET_WIN0H, 0);
     SetGpuReg(REG_OFFSET_WIN0V, 0);
     SetGpuReg(REG_OFFSET_WININ, 0);
     SetGpuReg(REG_OFFSET_WINOUT, 0);
-    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);  // *** Começa com blend DESATIVADO ***
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 0);
 
-    // Carrega gfx/tiles (shadow + bg map) — permanece exatamente como você editou.
+    // Carrega gfx/tiles
     DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)VRAM);
     DecompressDataWithHeaderVram(sBirchSpeechBgMap, (void *)(BG_SCREEN_ADDR(7)));
 
-    // Carrega paletas do background (1 e 2) normalmente...
+    // Carrega paletas do background
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
 
-    // --- Importante para "fixar" a paleta: sincroniza os buffers faded/unfaded
-    // Se as paletas carregadas ocuparem os primeiros 32 entradas (padrão aqui),
-    // copiamos essas entradas para ambos os buffers para evitar qualquer diferença.
-    // Copiamos 32 entradas porque carregamos 2 * PLTT_SIZE_4BPP acima.
+    // Sincroniza buffers de paleta
     for (i = 0; i < 32; ++i)
     {
         gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
     }
 
-    // Evita qualquer scanline/fade/palette transient
     ScanlineEffect_Stop();
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetAllPicSprites();
     AddBirchSpeechObjects(taskId);
 
-    // Não começar qualquer palette fade — queremos a imagem estática e sem transição.
-    // (Em vez de BeginNormalPaletteFade(...), deixamos as paletas carregadas fixas.)
+    // *** Fade inicial apenas para objetos (não afeta BG) ***
+    BeginNormalPaletteFade(PALETTES_OBJECTS, 0, 16, 0, RGB_BLACK);
 
     gTasks[taskId].tBG1HOFS = 0;
     gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowBirch;
@@ -1351,8 +1349,10 @@ static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
         gSprites[spriteId].y = 60;
         gSprites[spriteId].invisible = FALSE;
         gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        
+        // Usa a função de fade restaurada
         NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 10);
-        ///NewGameBirchSpeech_StartFadePlatformOut(taskId, 20);
+        
         gTasks[taskId].tTimer = 80;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome;
     }
@@ -1363,6 +1363,9 @@ static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId)
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
         gSprites[gTasks[taskId].tBirchSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+        // *** REMOVER ESTA LINHA: ***
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        
         if (gTasks[taskId].tTimer)
         {
             gTasks[taskId].tTimer--;
@@ -1433,11 +1436,14 @@ static void Task_NewGameBirchSpeech_StartBirchLotadPlatformFade(u8 taskId)
 
 static void Task_NewGameBirchSpeech_SlidePlatformAway(u8 taskId)
 {
-    // Define BG1 na posição final imediatamente
-    gTasks[taskId].tBG1HOFS = 0;
-    SetGpuReg(REG_OFFSET_BG1HOFS, gTasks[taskId].tBG1HOFS);
-
-    // Avança para a próxima etapa da cutscene
+    // *** ALTERAÇÃO: Remove o movimento do BG1 ***
+    // Original movia BG1 de -2 em -2 até -60
+    // Agora apenas define como 0 e avança imediatamente
+    
+    gTasks[taskId].tBG1HOFS = 0;  // Mantém BG1 parado
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+    
+    // Avança direto (sem esperar loop de movimento)
     gTasks[taskId].func = Task_NewGameBirchSpeech_StartPlayerFadeIn;
 }
 
@@ -1448,6 +1454,10 @@ static void Task_NewGameBirchSpeech_StartPlayerFadeIn(u8 taskId)
     {
         gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
+        
+        // Desativa blend antes de começar novo fade
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        
         if (gTasks[taskId].tTimer)
         {
             gTasks[taskId].tTimer--;
@@ -1462,8 +1472,10 @@ static void Task_NewGameBirchSpeech_StartPlayerFadeIn(u8 taskId)
             gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
             gTasks[taskId].tPlayerSpriteId = spriteId;
             gTasks[taskId].tPlayerGender = MALE;
+            
+            // Usa fade restaurado
             NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
-            ///NewGameBirchSpeech_StartFadePlatformOut(taskId, 1);
+            
             gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForPlayerFadeIn;
         }
     }
@@ -1474,6 +1486,8 @@ static void Task_NewGameBirchSpeech_WaitForPlayerFadeIn(u8 taskId)
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
         gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+        // *** REMOVER ESTA LINHA: ***
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
         gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
     }
 }
@@ -1503,11 +1517,6 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
     switch (gender)
     {
         case MALE:
-            PlaySE(SE_SELECT);
-            gSaveBlock2Ptr->playerGender = gender;
-            NewGameBirchSpeech_ClearGenderWindow(1, 1);
-            gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
-            break;
         case FEMALE:
             PlaySE(SE_SELECT);
             gSaveBlock2Ptr->playerGender = gender;
@@ -1515,12 +1524,16 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
             gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
             break;
     }
+    
     gender2 = Menu_GetCursorPos();
     if (gender2 != gTasks[taskId].tPlayerGender)
     {
         gTasks[taskId].tPlayerGender = gender2;
         gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        
+        // Usa fade restaurado para transição de sprites
         NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 0);
+        
         gTasks[taskId].func = Task_NewGameBirchSpeech_SlideOutOldGenderSprite;
     }
 }
@@ -1640,11 +1653,14 @@ static void Task_NewGameBirchSpeech_ProcessNameYesNoMenu(u8 taskId)
 
 static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8 taskId)
 {
-    // Mantém BG1 na posição inicial (ou valor desejado)
-    gTasks[taskId].tBG1HOFS = 0;
-    SetGpuReg(REG_OFFSET_BG1HOFS, gTasks[taskId].tBG1HOFS);
-
-    // Avança para o próximo passo da cutscene
+    // *** ALTERAÇÃO: Remove o movimento de retorno do BG1 ***
+    // Original movia BG1 de volta de -60 para 0
+    // Agora apenas confirma posição e avança
+    
+    gTasks[taskId].tBG1HOFS = 0;  // Mantém BG1 parado
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+    
+    // Avança direto (sem esperar loop de movimento)
     gTasks[taskId].func = Task_NewGameBirchSpeech_ReshowBirchLotad;
 }
 
@@ -1938,10 +1954,22 @@ static void Task_NewGameBirchSpeech_FadeOutTarget1InTarget2(u8 taskId)
 
 static void NewGameBirchSpeech_StartFadeOutTarget1InTarget2(u8 taskId, u8 delay)
 {
-    // Não mexer em BLDCNT / BLDALPHA — tudo é estático.
-    gTasks[taskId].tIsDoneFadingSprites = TRUE;
-    (void)delay;
+    u8 taskId2;
+
+    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadeOutTarget1InTarget2, 0);
+    gTasks[taskId2].tMainTask = taskId;
+    gTasks[taskId2].tAlphaCoeff1 = 16;
+    gTasks[taskId2].tAlphaCoeff2 = 0;
+    gTasks[taskId2].tDelay = delay;
+    gTasks[taskId2].tDelayTimer = delay;
+    
+    // *** CHAVE: Configurar blend APENAS para sprites (OBJ), sem afetar BG ***
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_OBJ | BLDCNT_TGT2_OBJ);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
+    
+    gTasks[taskId].tIsDoneFadingSprites = FALSE;
 }
+
 static void Task_NewGameBirchSpeech_FadeInTarget1OutTarget2(u8 taskId)
 {
     int alphaCoeff2;
@@ -1967,10 +1995,20 @@ static void Task_NewGameBirchSpeech_FadeInTarget1OutTarget2(u8 taskId)
 
 static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay)
 {
-    // Não mexer em BLDCNT / BLDALPHA — evita blends que mudam a aparência/paleta.
-    // Apenas sinaliza imediatamente que o fade está concluído.
-    gTasks[taskId].tIsDoneFadingSprites = TRUE;
-    (void)delay;
+    u8 taskId2;
+
+    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadeInTarget1OutTarget2, 0);
+    gTasks[taskId2].tMainTask = taskId;
+    gTasks[taskId2].tAlphaCoeff1 = 0;
+    gTasks[taskId2].tAlphaCoeff2 = 16;
+    gTasks[taskId2].tDelay = delay;
+    gTasks[taskId2].tDelayTimer = delay;
+    
+    // *** CHAVE: Configurar blend APENAS para sprites (OBJ), sem afetar BG ***
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_OBJ | BLDCNT_TGT2_OBJ);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 16));
+    
+    gTasks[taskId].tIsDoneFadingSprites = FALSE;
 }
 
 #undef tMainTask
