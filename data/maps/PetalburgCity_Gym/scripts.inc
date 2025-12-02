@@ -89,11 +89,15 @@ PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 	waitmovement 0
 	msgbox PetalburgCity_Gym_Text_DadGoCollectBadges, MSGBOX_DEFAULT
 	giveegg SPECIES_EEVEE
+	msgbox PetalburgCity_Gym_Text_RecievedEgg, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
 	msgbox PetalburgCity_Gym_Text_CalendulaGaveEevee, MSGBOX_DEFAULT
 	setvar VAR_PETALBURG_GYM_STATE, 2
 	releaseall
 	end
+
+PetalburgCity_Gym_Text_RecievedEgg:
+	.string "{PLAYER} recieved EEVEE egg!$"
 
 PetalburgCity_Gym_Movement_WallyExitGym:
 	walk_down
@@ -1152,8 +1156,8 @@ PetalburgCity_Gym_Text_DadYoureHereWithYourPokemon:
     .string "show real promise.\p"
     .string "And you…\n"
     .string "I can already sense something unique.\p"
-    .string "ACACIA rarely speaks so highly of\n"
-    .string "both you and rival {RIVAL}.\p"
+    .string "ACACIA speaks highly of both\l"
+    .string "you and {RIVAL}.\p"
     .string "If she believes in your potential,\n"
     .string "then I will help you grow.\p"
     .string "Welcome to the PETALBURG GYM,\n"

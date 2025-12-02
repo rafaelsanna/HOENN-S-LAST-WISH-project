@@ -408,4 +408,4 @@ OldaleTown_Text_TownSign:
 
 OldaleTown_Text_ShopSign:
 	.string "OLDALE SHOP\n"
-	.string "We got cool stuff!$"
+	.string "“We got cool stuff!”$"
