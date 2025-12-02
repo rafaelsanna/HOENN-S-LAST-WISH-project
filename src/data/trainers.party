@@ -12676,17 +12676,17 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 === TRAINER_WALLY_VR_6 ===
 Name: LUKA
 Class: Rival
-Pic: Wally
+Pic: Luka
 Gender: Male
 Music: Male
 Double Battle: Yes
 AI: Basic Trainer
 
 Pidgey
-Level: 7
+Level: 8
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Zigzagoon
+Eevee
 Level: 7
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
