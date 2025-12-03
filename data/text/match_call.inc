@@ -2587,19 +2587,19 @@ MatchCall_Text_Brendan15::
 	.string "envious!$"
 
 MatchCall_Text_Wally1::
-	.string "WALLY: Oh, {PLAYER}!\p"
+	.string "LUKA: Oh, {PLAYER}!\p"
 	.string "I've been getting healthier and\n"
 	.string "more physically fit.\p"
 	.string "I hope I can become a TRAINER like\n"
 	.string "you soon, {PLAYER}!$"
 
 MatchCall_Text_Wally2::
-	.string "WALLY: {PLAYER}, hello!\p"
+	.string "LUKA: {PLAYER}, hello!\p"
 	.string "After RUSTURF TUNNEL went\n"
 	.string "through, WANDA's been very happy!$"
 
 MatchCall_Text_Wally3::
-	.string "WALLY: Oh, {PLAYER}!\p"
+	.string "LUKA: Oh, {PLAYER}!\p"
 	.string "I… I left my uncle's place in\n"
 	.string "VERDANTURF without telling anyone.\p"
 	.string "I wonder if he's furious with me…\p"
@@ -2607,7 +2607,7 @@ MatchCall_Text_Wally3::
 	.string "I feel, don't you?$"
 
 MatchCall_Text_Wally4::
-	.string "WALLY: {PLAYER}?\n"
+	.string "LUKA: {PLAYER}?\n"
 	.string "It's me, WALLY!\p"
 	.string "The world of TRAINERS is amazing!\p"
 	.string "When I have my POKéMON with me,\n"
@@ -2616,7 +2616,7 @@ MatchCall_Text_Wally4::
 	.string "connected through POKéMON!$"
 
 MatchCall_Text_Wally5::
-	.string "WALLY: {PLAYER}? It's awesome!\n"
+	.string "LUKA: {PLAYER}? It's awesome!\n"
 	.string "That RALTS we caught together?\l"
 	.string "It evolved, {PLAYER}!\p"
 	.string "Maybe I'm talented…\p"
@@ -2632,7 +2632,7 @@ MatchCall_Text_Wally6::
 	.string "the POKéNAV's service area…$"
 
 MatchCall_Text_Wally7::
-	.string "WALLY: Oh, {PLAYER}!\p"
+	.string "LUKA: Oh, {PLAYER}!\p"
 	.string "Before I met you, I hardly ever\n"
 	.string "left my house…\p"
 	.string "But now, I'm on an adventure with\n"
@@ -2710,15 +2710,15 @@ MatchCall_Text_Scott7::
 	.string "the POKéNAV's service area…$"
 
 MatchCall_Text_Norman1::
-	.string "DAD: In RUSTBORO, there's a man\n"
-	.string "that goes by the odd name of\l"
+	.string "CALENDULA: In RUSTBORO, there's a\n"
+	.string "man that goes by the odd name of\l"
 	.string "the CUTTER.\p"
 	.string "If you're in the area, you should\n"
 	.string "pay him a visit.$"
 
 MatchCall_Text_Norman2::
-	.string "DAD: Hm… Little by little, but also\n"
-	.string "very surely, you're getting\l"
+	.string "CALENDULA: Hm… Little by little, but\n"
+	.string "also very surely, you're getting\l"
 	.string "tougher, {PLAYER}.\p"
 	.string "The stronger you get, the farther\n"
 	.string "and higher you soar from Mother\l"
@@ -2726,7 +2726,7 @@ MatchCall_Text_Norman2::
 	.string "This feeling is hard to explain.$"
 
 MatchCall_Text_Norman3::
-	.string "DAD: I see…\n"
+	.string "CALENDULA: I see…\n"
 	.string "You've collected four GYM BADGES…\p"
 	.string "There's no avoiding it now.\n"
 	.string "We will battle like I promised.\p"
@@ -2734,7 +2734,7 @@ MatchCall_Text_Norman3::
 	.string "We'll all be waiting for you!$"
 
 MatchCall_Text_Norman4::
-	.string "DAD: {PLAYER}! You'd better go visit\n"
+	.string "CALENDULA: {PLAYER}! You'd better go visit\n"
 	.string "Mother every so often.\p"
 	.string "I'm going to remain here and\n"
 	.string "redouble my training.\p"
@@ -2742,27 +2742,27 @@ MatchCall_Text_Norman4::
 	.string "and unforgiving!$"
 
 MatchCall_Text_Norman5::
-	.string "DAD: Oh, hi, {PLAYER}!\p"
+	.string "CALENDULA: Oh, hi, {PLAYER}!\p"
 	.string "What's that? MAGMA EMBLEM?\n"
 	.string "I don't know what that's about.\p"
 	.string "But with a name like that, it may\n"
 	.string "be somehow linked to a volcano!$"
 
 MatchCall_Text_Norman6::
-	.string "DAD: Hiyah! Haah! Dwah!\p"
+	.string "CALENDULA: Hiyah! Haah! Dwah!\p"
 	.string "…Oh? {PLAYER}!\p"
 	.string "You caught me right in the middle\n"
 	.string "of a POKéMON training session!$"
 
 MatchCall_Text_Norman7::
-	.string "DAD: {PLAYER}!\p"
+	.string "CALENDULA: {PLAYER}!\p"
 	.string "Who would've thought you'd become\n"
 	.string "the POKéMON LEAGUE CHAMPION…\p"
 	.string "Okay!\n"
 	.string "I won't be left behind!$"
 
 MatchCall_Text_Norman8::
-	.string "DAD: Hm? {PLAYER}?\n"
+	.string "CALENDULA: Hm? {PLAYER}?\n"
 	.string "What good timing!\p"
 	.string "This time, I'm going to challenge\n"
 	.string "you to battle.\p"
@@ -2770,7 +2770,7 @@ MatchCall_Text_Norman8::
 	.string "Accept my challenge anytime!$"
 
 MatchCall_Text_Norman9::
-	.string "DAD: …You amaze me, {PLAYER}.\n"
+	.string "CALENDULA: …You amaze me, {PLAYER}.\n"
 	.string "How much higher will you soar?$"
 
 MatchCall_Text_Steven1::

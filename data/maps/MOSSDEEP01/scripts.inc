@@ -1410,7 +1410,7 @@ MOSSDEEP01_Text_JirachiStillSleeping:
 	.string "Maybe you should approach it?$"
 
 MOSSDEEP01_Text_WallyIntro:
-	.string "WALLY: Hello, {PLAYER}!\p"
+	.string "LUKA: Hello, {PLAYER}!\p"
 	.string "Did you know that in the past people\n"
 	.string "could train POKÉMON normally?\p"
 	.string "There were POKÉ BALLS, devices that\n"
@@ -1422,18 +1422,18 @@ MOSSDEEP01_Text_WallyIntro:
 	.string "A more natural, purer connection.$"
 
 MOSSDEEP01_Text_WallyAfterCelebi:
-	.string "WALLY: {PLAYER}, you did it!\p"
+	.string "LUKA: {PLAYER}, you did it!\p"
 	.string "CELEBI calmed all the wild POKÉMON.\n"
 	.string "Amazing!\p"
 	.string "The connection between POKÉMON and\n"
 	.string "humans is being restored!$"
 
 MOSSDEEP01_Text_WallyWarped:
-	.string "WALLY: I'll head there first!\p"
+	.string "LUKA: I'll head there first!\p"
 	.string "Meet me ahead, {PLAYER}!$"
 
 MOSSDEEP01_Text_WallyNotReady:
-	.string "WALLY: Hello, {PLAYER}!\p"
+	.string "LUKA: Hello, {PLAYER}!\p"
 	.string "Be careful out there! The wild\n"
 	.string "POKÉMON are very aggressive.\p"
 	.string "If you get into trouble, come\n"

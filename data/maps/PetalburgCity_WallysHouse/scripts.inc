@@ -90,7 +90,7 @@ PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally:
 
 
 PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing:
-	.string "I wonder how our Lauka is doing?$"
+	.string "I wonder how our LUKA is doing?$"
 
 PetalburgCity_WallysHouse_Text_PleaseExcuseUs:
     .string "{PLAYER}{KUN}! Please excuse us for\n"

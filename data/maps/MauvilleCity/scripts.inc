@@ -465,7 +465,7 @@ MauvilleCity_Text_UncleHesTooPeppy:
 	.string "But he's become a bit too peppy…$"
 
 MauvilleCity_Text_WallyWantToChallengeGym:
-	.string "WALLY: Aww, UNCLE, please?\p"
+	.string "LUKA: Aww, UNCLE, please?\p"
 	.string "I want to challenge this GYM and see\n"
 	.string "how much better I've become.\p"
 	.string "Please? May I, please?$"
@@ -478,12 +478,12 @@ MauvilleCity_Text_UncleYourePushingIt:
 	.string "to suddenly challenge a GYM?$"
 
 MauvilleCity_Text_WallyWeCanBeatAnyone:
-	.string "WALLY: I'm not pushing it.\p"
+	.string "LUKA: I'm not pushing it.\p"
 	.string "If I combine forces with RALTS,\n"
 	.string "we can beat anyone!$"
 
 MauvilleCity_Text_WallyWillYouBattleMe:
-	.string "WALLY: Oh! Hi, {PLAYER}!\p"
+	.string "LUKA: Oh! Hi, {PLAYER}!\p"
 	.string "I've gotten a lot stronger since\n"
 	.string "we met.\p"
 	.string "{PLAYER}, I want you and my UNCLE to\n"
@@ -492,7 +492,7 @@ MauvilleCity_Text_WallyWillYouBattleMe:
 	.string "a battle with me?$"
 
 MauvilleCity_Text_WallyMyUncleWontKnowImStrong:
-	.string "WALLY: Oh… If you won't battle me,\n"
+	.string "LUKA: Oh… If you won't battle me,\n"
 	.string "{PLAYER}, my UNCLE won't know that I've\l"
 	.string "become really strong.$"
 
@@ -504,20 +504,20 @@ MauvilleCity_Text_UncleCanYouBattleWally:
 	.string "any reason the way he is now.$"
 
 MauvilleCity_Text_WallyPleaseBattleMe:
-	.string "WALLY: {PLAYER}, please!\n"
+	.string "LUKA: {PLAYER}, please!\n"
 	.string "Battle with me, please.$"
 
 MauvilleCity_Text_WallyHereICome:
-	.string "WALLY: {PLAYER}, thank you.\p"
+	.string "LUKA: {PLAYER}, thank you.\p"
 	.string "Okay… Here I come!$"
 
 MauvilleCity_Text_WallyDefeat:
-	.string "WALLY: … … … … … … …\p"
+	.string "LUKA: … … … … … … …\p"
 	.string "… … … … … … … …\p"
 	.string "I lost…$"
 
 MauvilleCity_Text_WallyIllGoBackToVerdanturf:
-	.string "WALLY: UNCLE…\n"
+	.string "LUKA: UNCLE…\n"
 	.string "I'll go back to VERDANTURF…$"
 
 MauvilleCity_Text_ThankYouNotEnoughToBattle:
@@ -548,7 +548,7 @@ MauvilleCity_Text_UncleVisitUsSometime:
 MauvilleCity_Text_WallyPokenavCall:
 	.string "… … … … … …\n"
 	.string "… … … … … Beep!\p"
-	.string "WALLY: Oh, hello, {PLAYER}!\p"
+	.string "LUKA: Oh, hello, {PLAYER}!\p"
 	.string "I just wanted to tell you that\n"
 	.string "my uncle bought me a POKéNAV!\p"
 	.string "Now I can get in touch with you\n"
