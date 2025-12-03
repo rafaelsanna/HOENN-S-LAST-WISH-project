@@ -142,39 +142,46 @@ nav {
     z-index: 2;
 }
 
-/* Features Section */
-.features {
-    padding: 5rem 0;
-    background: white;
+/* Discord Button */
+.discord-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #5865f2;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left: 1rem;
+    transition: background 0.3s;
 }
 
-.features h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
+.discord-button:hover {
+    background: #4752c4;
 }
 
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+.discord-button i {
+    margin-right: 8px;
 }
 
-.feature-card {
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s;
+/* YouTube Button */
+.youtube-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #FF0000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left: 1rem;
+    transition: background 0.3s;
 }
 
-.feature-card:hover {
-    transform: translateY(-5px);
+.youtube-button:hover {
+    background: #CC0000;
 }
 
-.feature-card h3 {
-    margin-bottom: 1rem;
-    color: #2c3e50;
+.youtube-button i {
+    margin-right: 8px;
 }
 
 /* Story Section */
@@ -296,60 +303,13 @@ footer {
         flex-direction: column;
         align-items: center;
     }
-}
-
-/* Hero Section with Banner */
-.hero-with-banner {
-    position: relative;
-    height: 500px;
-    overflow: hidden;
-}
-
-.banner-container {
-    width: 100%;
-    height: 100%;
-}
-
-.hero-banner {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.hero-content-overlay {
-    position: absolute;
-    top: 85%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    z-index: 3;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    width: 90%;
-    max-width: 800px;
-}
-
-/* Overlay escuro para melhor legibilidade */
-.banner-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 2;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .hero-with-banner {
-        height: 400px;
-    }
     
-    .hero-content-overlay {
-        top: 80%; /* 👈 Ajuste para mobile também */
+    .cta-button, .discord-button, .youtube-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+        width: 200px;
+        text-align: center;
     }
 }
 
@@ -371,27 +331,6 @@ footer {
     background: #2c3e50;
     border-radius: 8px;
     border: 3px solid var(--pokemon-green);
-}
-
-/* Discord Button */
-.discord-button {
-    display: inline-block;
-    padding: 12px 25px;
-    background: #5865f2;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-left: 1rem;
-    transition: background 0.3s;
-}
-
-.discord-button:hover {
-    background: #4752c4;
-}
-
-.discord-button i {
-    margin-right: 8px;
 }
 
 /* Banner 100% Width */
@@ -513,7 +452,7 @@ footer {
         width: 95%;
     }
     
-    .cta-button, .discord-button {
+    .cta-button, .discord-button, .youtube-button {
         padding: 12px 20px;
         font-size: 0.9rem;
         margin: 0.5rem 0;
@@ -618,9 +557,6 @@ footer {
     display: none;
 }
 
-/* ===== HAMBURGER MENU HTML ===== */
-/* Adicione este botão no seu nav (antes do .nav-links) */
-
 /* ===== DARK MODE PERMANENTE ===== */
 body {
     background: #1a1a1a !important;
@@ -719,6 +655,15 @@ a:hover {
 
 .discord-button:hover {
     background: #4752c4 !important;
+}
+
+.youtube-button {
+    background: #FF0000 !important;
+    color: white !important;
+}
+
+.youtube-button:hover {
+    background: #CC0000 !important;
 }
 
 .download-btn {
@@ -868,6 +813,15 @@ body.light-mode footer {
     background: #2c3e50 !important;
     color: #ffffff !important;
     border-top: 3px solid var(--pokemon-blue);
+}
+
+body.light-mode .youtube-button {
+    background: #FF0000 !important;
+    color: white !important;
+}
+
+body.light-mode .youtube-button:hover {
+    background: #CC0000 !important;
 }
 
 /* ===== TIPOGRAFIA MELHORADA ===== */
