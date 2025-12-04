@@ -51,12 +51,14 @@ gText_Birch_YourePlayer::
 	.string "$"
 
 gText_Birch_AreYouReady::
-	.string "The legendary POKéMON have sensed\n"
-	.string "a great threat approaching HOENN.\l"
-	.string "They need your help!\p"
-	.string "Meet me at the ancient POKéMON LAB\n"
-	.string "to begin our sacred mission.\p"
-	.string "$"
+    .string "Don't be afraid, {PLAYER}.\p"
+    .string "The DREAM WORLD may feel strange\n"
+    .string "at first… but you're not alone.\p"
+    .string "We’re here to guide you.\n"
+    .string "Just breathe… and trust us.\p"
+    .string "Step forward and follow the path\n"
+    .string "that fate has chosen for you.$"
+
 
 
 
