@@ -210,3 +210,6 @@ const u16 gMetatileAttributes_UnionRoom[] = INCBIN_U16("data/tilesets/secondary/
 
 const u16 gMetatiles_DreamRealm[] = INCBIN_U16("data/tilesets/secondary/dream_realm/metatiles.bin");
 const u16 gMetatileAttributes_DreamRealm[] = INCBIN_U16("data/tilesets/secondary/dream_realm/metatile_attributes.bin");
+
+const u16 gMetatiles_Forest[] = INCBIN_U16("data/tilesets/secondary/forest/metatiles.bin");
+const u16 gMetatileAttributes_Forest[] = INCBIN_U16("data/tilesets/secondary/forest/metatile_attributes.bin");
