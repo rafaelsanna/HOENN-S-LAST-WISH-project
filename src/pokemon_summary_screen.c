@@ -3656,8 +3656,12 @@ static void PrintEggMemo(void)
             text = gText_PeculiarEggNicePlace;
         else if (DidMonComeFromGBAGames() == FALSE || DoesMonOTMatchOwner() == FALSE)
             text = gText_PeculiarEggTrade;
-        else if (sum->metLocation == METLOC_SPECIAL_EGG)
-            text = (DidMonComeFromRSE() == TRUE) ? gText_EggFromHotSprings : gText_EggFromTraveler;
+        else if (sum->metLocation == METLOC_SPECIAL_EGG) {
+            if (sum->species == 133) //133 = SPECIES_EEVEE
+                text = gText_EggFromPetalburgCity;
+            else
+                text = gText_EggFromHotSprings;
+        }
         else
             text = gText_OddEggFoundByCouple;
     }
