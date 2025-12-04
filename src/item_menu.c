@@ -590,7 +590,7 @@ void ResetBagScrollPositions(void)
 
 void CB2_BagMenuFromStartMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_FIELD, POCKETS_COUNT, CB2_ReturnToFullScreenStartMenu);
+    GoToBagMenu(ITEMMENULOCATION_FIELD, POCKETS_COUNT, CB2_ReturnToFieldWithOpenMenu);
 }
 
 void CB2_BagMenuFromBattle(void)
