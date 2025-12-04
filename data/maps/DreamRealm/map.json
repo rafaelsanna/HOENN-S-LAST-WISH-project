@@ -15,7 +15,6 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "OBJ_EVENT_GFX_JIRACHI",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(JIRACHI)",
       "x": 11,
       "y": 7,
@@ -29,12 +28,11 @@
       "flag": "0"
     },
     {
-      "local_id": "OBJ_EVENT_GFX_CELEBI",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CELEBI)",
       "x": 10,
-      "y": 8,
+      "y": 9,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_type": "MOVEMENT_TYPE_RUN_IN_PLACE_DOWN",
       "movement_range_x": 2,
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",

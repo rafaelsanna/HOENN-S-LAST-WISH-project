@@ -457,29 +457,38 @@ LittlerootTown_Movement_JirachiCircleComplete:
 
 // Celebi Scripts
 LittlerootTown_CelebiScript::
-	msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
-	random 3
-	switch VAR_RESULT
-	case 0, LittlerootTown_Celebi_Case0
-	case 1, LittlerootTown_Celebi_Case1
-	case 2, LittlerootTown_Celebi_Case2
-	release
-	end
+    lockall
+    faceplayer
+    msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
+    random 3
+    switch VAR_RESULT
+    case 0, LittlerootTown_Celebi_Case0
+    case 1, LittlerootTown_Celebi_Case1
+    case 2, LittlerootTown_Celebi_Case2
+    releaseall
+    end
 
 LittlerootTown_Celebi_Case0::
-	msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
-	release
-	end
+    lockall
+    faceplayer
+    msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
+    releaseall
+    end
 
 LittlerootTown_Celebi_Case1::
-	msgbox LittlerootTown_01_Text_CelebiHelp, MSGBOX_DEFAULT
-	release
-	end
+    lockall
+    faceplayer
+    msgbox LittlerootTown_01_Text_CelebiHelp, MSGBOX_DEFAULT
+    releaseall
+    end
 
 LittlerootTown_Celebi_Case2::
-	msgbox LittlerootTown_01_Text_CelebiForest, MSGBOX_DEFAULT
-	release
-	end
+    lockall
+    faceplayer
+    msgbox LittlerootTown_01_Text_CelebiForest, MSGBOX_DEFAULT
+    releaseall
+    end
+
 
 // Jirachi Scripts
 LittlerootTown_JirachiScript::
@@ -538,31 +547,40 @@ LittlerootTown_01_Text_No:
 	.string "Alright, start the journey.$"
 
 LittlerootTown_01_Text_CelebiWarning:
-	.string "Celebi: Greetings, traveler of time...\p"
-	.string "I have witnessed centuries pass\n"
-	.string "and seen Hoenn's beauty flourish.\p"
-	.string "Your journey ahead is filled with\n"
-	.string "wonder and discovery.\p"
-	.string "Cherish each moment, for every\n"
-	.string "step shapes your legend!$"
+	.string "Celebi: {PLAYER}{KUN},...\p"
+	.string "A strange light surrounds you…\p"
+	.string "Do not fear this place.\n"
+	.string "What you see is only a dream…\p"
+	.string "A fragment of a future that must\n"
+	.string "never be allowed to happen.\p"
+	.string "Walk carefully, traveler.\n"
+	.string "Hoenn's fate is already shifting.$"
 
 LittlerootTown_01_Text_CelebiLost:
 	.string "Celebi: The forests whisper tales\n"
-	.string "of trainers who became legends.\p"
-	.string "Your path is yours to create - \n"
-	.string "make it memorable!$"
+	.string "The winds of time are trembling…\p"
+	.string "I have seen a Hoenn drowned in fire\n"
+	.string "and swallowed by ancient storms.\p"
+	.string "But that future is not final.\n"
+	.string "Your choices can rewrite it.$"
+
 
 LittlerootTown_01_Text_CelebiHelp:
-	.string "Celebi: Every great champion\n"
-	.string "started with a single step.\p"
-	.string "Your adventure begins today -\n"
-	.string "where will it lead you?$"
+	.string "Celebi: We need your help...\n"
+	.string "Dreams ewith the voices of those\n"
+	.string "who still believe in hope...\p"
+	.string "You were called because the world\n"
+	.string "cannot heal itself alone.\p"
+	.string "Walk forward.\n"
+	.string "Hoenn is waiting for you.$"
 
 LittlerootTown_01_Text_CelebiForest:
 	.string "Celebi: Time flows like a river,\n"
-	.string "and your journey is about to begin.\p"
-	.string "The memories you'll create...\n"
-	.string "they will last forever!$"
+	.string "but it flows strangely here…\n"
+	.string "as if past and future overlap.\p"
+	.string "Follow the path you feel within.\n"
+	.string "Your soul remembers the truth,\p"
+	.string "even if your mind does not.$"
 
 LittlerootTown_01_Text_JirachiWish:
 	.string "Jirachi: I am the Wish Pokemon!\nMake a wish and I might grant it!$"
