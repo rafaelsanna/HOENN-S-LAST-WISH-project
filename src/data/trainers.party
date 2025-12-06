@@ -447,6 +447,32 @@ Carvanha
 Level: 14
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+=== TRAINER_GRUNT_GRANITE_CAVE ===
+Name: GRUNT
+Class: Team Magma
+Pic: Magma Grunt Doubles
+Gender: Male
+Music: Magma
+Double Battle: Yes
+AI: Check Bad Move
+
+Zubat
+Level: 19
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Gulpin
+Level: 19
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Numel
+Level: 19
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Slugma
+Level: 19
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+
 === TRAINER_GRUNT_SPACE_CENTER_1 ===
 Name: GRUNT
 Class: Team Magma

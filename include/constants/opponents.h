@@ -877,12 +877,13 @@
 #define TRAINER_MAYA                        871
 #define TRAINER_LEO                         872
 #define TRAINER_WALLY_VR_6                  873
+#define TRAINER_GRUNT_GRANITE_CAVE          874
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      874
+#define TRAINERS_COUNT                      875
 #define MAX_TRAINERS_COUNT                  900
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 

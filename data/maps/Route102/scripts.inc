@@ -90,20 +90,18 @@ Route102_EventScript_ZIGZAGOON102::
 	end
 
 Route102_Text_WatchMeCatchPokemon:
-	.string "LUKA: {PLAYER}…\n"
-	.string "POKéMON hide in tall grass like this,\l"
-	.string "don't they?\p"
-	.string "Please watch me and see if I can\n"
-	.string "catch one properly.\p"
-	.string "…Whoa!$"
+.string "My heart's racing for a real battle!\n"
+.string "So let's see what you can do!$"
 
 Route102_Text_WallyIDidIt:
-	.string "LUKA: I did it… It's my…\n"
-	.string "My POKéMON!$"
+.string "LUKA: Congrats, {PLAYER}!\n"
+.string "You really proved you're an\n"
+.string "excellent TRAINER.$"
 
 Route102_Text_LetsGoBack:
-	.string "{PLAYER}, thank you!\n"
-	.string "Let's go back to the GYM!$"
+.string "I'm honestly surprised… and fired up!\n"
+.string "This just makes me want to train!\l"
+.string "Now, let's head back to the GYM.$"
 
 Route102_Text_ImNotVeryTall:
 	.string "I'm…not very tall, so I sink right\n"
