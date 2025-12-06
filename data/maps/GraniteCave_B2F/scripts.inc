@@ -75,8 +75,6 @@ GraniteCave_Text_MagmaIntro:
     .string "And then YOU stroll in here with that\n"
     .string "ridiculous outfit like you own the place.\p"
     .string "You got Pokemon on you?\p"
-    .string "Hah! Judging by those clothes, you're\n"
-    .string "definitely not rolling in money.\p"
     .string "How about you hand over your Pokemon\n"
     .string "and get out of our way so we can keep\l"
     .string "working this cave in peace?\p"
