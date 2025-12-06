@@ -193,6 +193,7 @@
     "SlateportCity_OceanicMuseum_2F",
     "SlateportCity_Harbor",
     "SlateportCity_House",
+    "SlateportCity_House2",
     "SlateportCity_PokemonCenter_1F",
     "SlateportCity_PokemonCenter_2F",
     "SlateportCity_Mart"
@@ -355,6 +356,7 @@
     "GraniteCave_B2F",
     "GraniteCave_StevensRoom",
     "PetalburgWoods",
+    "PetalburgWoods_East",
     "MtChimney",
     "JaggedPass",
     "FieryPath",

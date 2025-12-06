@@ -509,7 +509,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PELIPPER)",
       "x": 34,
-      "y": 5,
+      "y": 6,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -522,7 +522,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 35,
-      "y": 5,
+      "y": 6,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -535,7 +535,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 33,
-      "y": 5,
+      "y": 6,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -628,7 +628,7 @@
       "x": 33,
       "y": 40,
       "elevation": 0,
-      "dest_map": "MAP_SLATEPORT_CITY_HOUSE",
+      "dest_map": "MAP_SLATEPORT_CITY_HOUSE2",
       "dest_warp_id": "0"
     }
   ],
@@ -742,8 +742,8 @@
     },
     {
       "type": "sign",
-      "x": 14,
-      "y": 32,
+      "x": 16,
+      "y": 37,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "SlateportCity_EventScript_BerryCrushRankingsSign"

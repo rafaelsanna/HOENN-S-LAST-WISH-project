@@ -588,15 +588,15 @@
       "x": 32,
       "y": 42,
       "elevation": 3,
-      "dest_map": "MAP_PETALBURG_WOODS",
-      "dest_warp_id": "4"
+      "dest_map": "MAP_PETALBURG_WOODS_EAST",
+      "dest_warp_id": "2"
     },
     {
       "x": 33,
       "y": 42,
       "elevation": 3,
-      "dest_map": "MAP_PETALBURG_WOODS",
-      "dest_warp_id": "5"
+      "dest_map": "MAP_PETALBURG_WOODS_EAST",
+      "dest_warp_id": "3"
     }
   ],
   "coord_events": [

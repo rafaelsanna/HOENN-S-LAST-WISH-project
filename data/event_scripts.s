@@ -1201,3 +1201,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/RuinousValley/scripts.inc"
 
 	.include "data/maps/DreamRealm/scripts.inc"
+
+	.include "data/maps/SlateportCity_House2/scripts.inc"
+
+	.include "data/maps/PetalburgWoods_East/scripts.inc"

@@ -3451,24 +3451,24 @@
                 "species": "SPECIES_SLAKOTH"
               },
               {
-                "min_level": 5,
-                "max_level": 7,
-                "species": "SPECIES_WURMPLE"
-              },
-              {
-                "min_level": 5,
+                "min_level": 6,
                 "max_level": 8,
-                "species": "SPECIES_PINSIR"
+                "species": "SPECIES_CASCOON"
               },
               {
-                "min_level": 5,
-                "max_level": 7,
-                "species": "SPECIES_WURMPLE"
-              },
-              {
-                "min_level": 5,
+                "min_level": 6,
                 "max_level": 8,
-                "species": "SPECIES_PINSIR"
+                "species": "SPECIES_SILCOON"
+              },
+              {
+                "min_level": 6,
+                "max_level": 8,
+                "species": "SPECIES_CASCOON"
+              },
+              {
+                "min_level": 6,
+                "max_level": 8,
+                "species": "SPECIES_SILCOON"
               }
             ]
           }
@@ -17666,6 +17666,282 @@
                 "min_level": 25,
                 "max_level": 30,
                 "species": "SPECIES_XATU"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_PETALBURG_WOODS_EAST",
+          "base_label": "gPetalburgWoods_East_Day",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_ODDISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SHROOMISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SILCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_CASCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_PETALBURG_WOODS_EAST",
+          "base_label": "gPetalburgWoods_East_Morning",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_ODDISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SHROOMISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SILCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_CASCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_PETALBURG_WOODS_EAST",
+          "base_label": "gPetalburgWoods_East_Evening",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_ODDISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SHROOMISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SILCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_CASCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_PETALBURG_WOODS_EAST",
+          "base_label": "gPetalburgWoods_East_Night",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_ODDISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SHROOMISH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_WURMPLE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SILCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_CASCOON"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SURSKIT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_PINSIR"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_SLAKOTH"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_PINSIR"
               }
             ]
           }
