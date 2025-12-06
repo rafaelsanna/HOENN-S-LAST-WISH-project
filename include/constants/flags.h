@@ -662,11 +662,12 @@
 #define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POTION                (FLAG_HIDDEN_ITEMS_START + 0x75)
 #define FLAG_HIDDEN_ITEM_GRANITE_CAVE_B1F_RARE_CANDY         (FLAG_HIDDEN_ITEMS_START + 0x76)
 
-#define FLAG_UNUSED_0x26B  0x26B // Unused Flag
-#define FLAG_UNUSED_0x26C  0x26C // Unused Flag
-#define FLAG_UNUSED_0x26D  0x26D // Unused Flag
-#define FLAG_UNUSED_0x26E  0x26E // Unused Flag
-#define FLAG_UNUSED_0x26F  0x26F // Unused Flag
+
+#define DN_FLAG_SEARCHING   0x26B // Unused Flag
+#define DN_FLAG_DEXNAV_GET  0x26C // Unused Flag
+#define DN_FLAG_DETECTOR_MODE  0x26D // Unused Flag
+#define DN_VAR_SPECIES  0x26E // Unused Flag
+#define DN_VAR_STEP_COUNTER  0x26F // Unused Flag
 #define FLAG_UNUSED_0x270  0x270 // Unused Flag
 #define FLAG_UNUSED_0x271  0x271 // Unused Flag
 #define FLAG_UNUSED_0x272  0x272 // Unused Flag

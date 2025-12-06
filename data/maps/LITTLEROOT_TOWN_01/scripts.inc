@@ -456,7 +456,13 @@ LittlerootTown_Movement_JirachiCircleComplete:
 	step_end
 
 // Celebi Scripts
-LittlerootTown_CelebiScript::
+LittlerootTown_CelebiScript::  
+setflag   DN_FLAG_SEARCHING             
+setflag   DN_FLAG_DEXNAV_GET           
+setflag   DN_FLAG_DETECTOR_MODE        
+setflag   DN_VAR_SPECIES               
+setflag   DN_VAR_STEP_COUNTER      
+
     lockall
     faceplayer
     msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
