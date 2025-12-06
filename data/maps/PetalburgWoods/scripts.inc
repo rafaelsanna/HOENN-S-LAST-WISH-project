@@ -412,6 +412,7 @@ PetalburgWoods_EventScript_James::
 	setvar VAR_0x8004, TRAINER_JAMES_1
 	specialvar VAR_RESULT, IsTrainerRegistered
 	goto_if_eq VAR_RESULT, FALSE, PetalburgWoods_EventScript_TryRegisterJames2
+	lock
 	msgbox PetalburgWoods_Text_PeopleRespectYou, MSGBOX_DEFAULT
 	release
 	end
@@ -420,10 +421,12 @@ PetalburgWoods_EventScript_TryRegisterJames::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	goto_if_set FLAG_HAS_MATCH_CALL, PetalburgWoods_EventScript_RegisterJames
+	lock
 	release
 	end
 
 PetalburgWoods_EventScript_RegisterJames::
+	lock
 	msgbox PetalburgWoods_Text_IWantRematch1, MSGBOX_DEFAULT
 	register_matchcall TRAINER_JAMES_1
 	release
