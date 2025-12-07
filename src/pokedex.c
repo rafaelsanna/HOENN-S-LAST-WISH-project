@@ -4358,33 +4358,18 @@ u8* ConvertMonHeightToString(u32 height)
         return ConvertMonHeightToMetricString(height);
 }
 
-static void PrintOwnedMonWeight(u16 species)
+static void PrintMonHeight(u16 height, u8 left, u8 top)
 {
-    u32 weight = GetSpeciesWeight(species);
-    u8* weightString;
-    u32 x = GetMeasurementTextPositions(DEX_MEASUREMENT_X);
-    u32 yBottom = GetMeasurementTextPositions(DEX_Y_BOTTOM);
+    u8 buffer[16];
+    u32 inches, feet;
+    u8 i = 0;
+    int offset;
+    u8 result;
+    offset = 0;
 
-    weightString = ConvertMonWeightToString(weight);
-
-    PrintInfoScreenText(weightString, x, yBottom);
-    Free(weightString);
-}
-
-u8* ConvertMonWeightToString(u32 weight)
-{
-    if (UNITS == UNITS_IMPERIAL)
-        return ConvertMonWeightToImperialString(weight);
-    else
-        return ConvertMonWeightToMetricString(weight);
-}
-
-static u8* ConvertMonHeightToImperialString(u32 height)
-{
-    u8* heightString = Alloc(WEIGHT_HEIGHT_STR_MEM);
-    u32 inches, feet, index = 0;
-
-    inches = (height * 10000) / CM_PER_INCH_FACTOR;
+    if (gSaveBlock2Ptr->optionsUnitSystem == 0) //Imperial
+    {
+    inches = (height * 10000) / 254;
     if (inches % 10 >= 5)
         inches += 10;
     feet = inches / INCHES_IN_FOOT_FACTOR;
@@ -4403,13 +4388,54 @@ static u8* ConvertMonHeightToImperialString(u32 height)
         heightString[index++] = feet / 10 + CHAR_0;
         heightString[index++] = (feet % 10) + CHAR_0;
     }
-    heightString[index++] = CHAR_SGL_QUOTE_RIGHT;
-    heightString[index++] = (inches / 10) + CHAR_0;
-    heightString[index++] = (inches % 10) + CHAR_0;
-    heightString[index++] = CHAR_DBL_QUOTE_RIGHT;
-    heightString[index++] = EOS;
+    buffer[i++] = CHAR_SGL_QUOTE_RIGHT;
+    buffer[i++] = (inches / 10) + CHAR_0;
+    buffer[i++] = (inches % 10) + CHAR_0;
+    buffer[i++] = CHAR_DBL_QUOTE_RIGHT;
+    buffer[i++] = EOS;
+    PrintInfoScreenText(buffer, left, top);
+    }
+    else //Metric
+    {
+        buffer[i++] = EXT_CTRL_CODE_BEGIN;
+        buffer[i++] = EXT_CTRL_CODE_CLEAR_TO;
+        i++;
+        buffer[i++] = CHAR_SPACE;
+        buffer[i++] = CHAR_SPACE;
+        buffer[i++] = CHAR_SPACE;
+        buffer[i++] = CHAR_SPACE;
+        buffer[i++] = CHAR_SPACE;
 
-    return heightString;
+        result = (height / 1000);
+        if (result == 0)
+        {
+            offset = 6;
+        }
+        else
+        {
+            buffer[i++] = result + CHAR_0;
+        }
+
+        result = (height % 1000) / 100;
+        if (result == 0 && offset != 0)
+        {
+            offset += 6;
+        }
+        else
+        {
+            buffer[i++] = result + CHAR_0;
+        }
+
+        buffer[i++] = (((height % 1000) % 100) / 10) + CHAR_0;
+        buffer[i++] = CHAR_COMMA;
+        buffer[i++] = (((height % 1000) % 100) % 10) + CHAR_0;
+        buffer[i++] = CHAR_SPACE;
+        buffer[i++] = CHAR_m;
+
+        buffer[i++] = EOS;
+        buffer[2] = offset;
+        PrintInfoScreenText(buffer, left, top);   
+    }
 }
 
 static u8* ConvertMonHeightToMetricString(u32 height)
@@ -4424,10 +4450,16 @@ static u8* ConvertMonHeightToMetricString(u32 height)
 
 static u8* ConvertMonWeightToImperialString(u32 weight)
 {
-    u8* weightString = Alloc(WEIGHT_HEIGHT_STR_MEM);
-    bool32 output = FALSE;
-    u32 index = 0, lbs = (weight * 100000) / DECAGRAMS_IN_POUND;
+    u8 buffer[16];
+    u8 buffer_metric[18];
+    bool8 output;
+    u8 i = 0;
+    u32 lbs = (weight * 100000) / 4536;
+    int offset = 0;
+    u8 result;
 
+    if (gSaveBlock2Ptr->optionsUnitSystem == 0) //Imperial
+    {
     if (lbs % 10u >= 5)
         lbs += 10;
 
@@ -4466,16 +4498,50 @@ static u8* ConvertMonWeightToImperialString(u32 weight)
     lbs %= 1000;
     weightString[index++] = (lbs / 100) + CHAR_0;
     lbs %= 100;
-    weightString[index++] = CHAR_DEC_SEPARATOR;
-    weightString[index++] = (lbs / 10) + CHAR_0;
-    weightString[index++] = CHAR_SPACE;
-    weightString[index++] = CHAR_l;
-    weightString[index++] = CHAR_b;
-    weightString[index++] = CHAR_s;
-    weightString[index++] = CHAR_PERIOD;
-    weightString[index++] = EOS;
+    buffer[i++] = CHAR_PERIOD;
+    buffer[i++] = (lbs / 10) + CHAR_0;
+    buffer[i++] = CHAR_SPACE;
+    buffer[i++] = CHAR_l;
+    buffer[i++] = CHAR_b;
+    buffer[i++] = CHAR_s;
+    buffer[i++] = CHAR_PERIOD;
+    buffer[i++] = EOS;
+    PrintInfoScreenText(buffer, left, top);
+    }
+    else //Metric
+    {
+        buffer_metric[i++] = EXT_CTRL_CODE_BEGIN;
+        buffer_metric[i++] = EXT_CTRL_CODE_CLEAR_TO;
+        i++;
+        buffer_metric[i++] = CHAR_SPACE;
+        buffer_metric[i++] = CHAR_SPACE;
+        buffer_metric[i++] = CHAR_SPACE;
+        buffer_metric[i++] = CHAR_SPACE;
+        buffer_metric[i++] = CHAR_SPACE;
 
-    return weightString;
+        result = (weight / 1000);
+        if (result == 0)
+            offset = 6;
+        else
+            buffer_metric[i++] = result + CHAR_0;
+
+        result = (weight % 1000) / 100;
+        if (result == 0 && offset != 0)
+            offset += 6;
+        else
+            buffer_metric[i++] = result + CHAR_0;
+
+        buffer_metric[i++] = (((weight % 1000) % 100) / 10) + CHAR_0;
+        buffer_metric[i++] = CHAR_COMMA;
+        buffer_metric[i++] = (((weight % 1000) % 100) % 10) + CHAR_0;
+        buffer_metric[i++] = CHAR_SPACE;
+        buffer_metric[i++] = CHAR_k;
+        buffer_metric[i++] = CHAR_g;
+
+        buffer_metric[i++] = EOS;
+        buffer_metric[2] = offset;
+        PrintInfoScreenText(buffer_metric, left, top);
+    }
 }
 
 static u8* ConvertMonWeightToMetricString(u32 weight)
