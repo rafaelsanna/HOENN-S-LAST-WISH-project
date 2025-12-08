@@ -1053,11 +1053,11 @@ RustboroCity_Text_YoureNewAroundHere:
 .string "Where's your uniform?$"
 
 RustboroCity_Text_GymLeaderIsntEasyWithFire:
-    .string "you know TERRA, the GYM LEADER?\n"
-    .string "Amazing rock climber! People say she\n"
+    .string "You know TERRA, the GYM LEADER?\n"
+    .string "Amazing rock climber! People say she\l"
     .string "climbed Mt. Chimney with no equipment.\p"
     .string "I went to meet her just to ask for an\n"
-    .string "autograph, but she challenged me to a\n"
+    .string "autograph, but she challenged me to a\l"
     .string "battle instead...\p"
     .string "I got beaten really badly...$"
 
