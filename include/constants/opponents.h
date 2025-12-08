@@ -268,7 +268,7 @@
 #define TRAINER_PHOEBE                      262
 #define TRAINER_GLACIA                      263
 #define TRAINER_DRAKE                       264
-#define TRAINER_ROXANNE_1                   265
+#define TRAINER_TERRA_HARD                  265
 #define TRAINER_BRAWLY_1                    266
 #define TRAINER_WATTSON_1                   267
 #define TRAINER_FLANNERY_1                  268
@@ -858,7 +858,7 @@
 #define TRAINER_LEAF                        852
 #define TRAINER_BRENDAN_PLACEHOLDER         853
 #define TRAINER_MAY_PLACEHOLDER             854
-#define TRAINER_ROXANNE                     855
+#define TRAINER_TERRA_CASUAL                855
 #define TRAINER_BRAWLY                      856
 #define TRAINER_LEE                         857
 #define TRAINER_SELENE                      858
@@ -866,7 +866,7 @@
 #define TRAINER_CAESAR                      860
 #define TRAINER_FRAGONARD                   861
 #define TRAINER_PORTINARI                   862
-#define TRAINER_TSUBAKI_EASY                863
+#define TRAINER_TSUBAKI_CASUAL              863
 #define TRAINER_TSUBAKI_HARD                864
 #define TRAINER_SID                         865
 #define TRAINER_PENNY                       866

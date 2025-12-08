@@ -548,17 +548,9 @@ EventScript_RegisterProfBirch::
 LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_HeardYouBeatRivalTakePokedex, MSGBOX_DEFAULT
 	call LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_AfterGivePokedex
 	
-	// Novo evento: Oferecer o Infinite Candy
-	msgbox LittlerootTown_ProfessorBirchsLab_Text_WouldYouLikeInfiniteCandy, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_GiveInfiniteCandy
-	goto LittlerootTown_ProfessorBirchsLab_EventScript_AfterCandyChoice
-	
-LittlerootTown_ProfessorBirchsLab_EventScript_GiveInfiniteCandy::
-	giveitem ITEM_INFINITE_CANDY
-	msgbox LittlerootTown_ProfessorBirchsLab_Text_UseInfiniteCandyWisely, MSGBOX_DEFAULT
-	
-LittlerootTown_ProfessorBirchsLab_EventScript_AfterCandyChoice::
+LittlerootTown_ProfessorBirchsLab_EventScript_AfterGivePokedex::
 	setflag FLAG_HIDE_LITTLEROOT_RESEARCH_ASSISTANT
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex, MSGBOX_DEFAULT
 	closemessage
@@ -601,29 +593,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex::
 	special SetUnlockedPokedexFlags
 	setflag FLAG_RECEIVED_POKEDEX_FROM_BIRCH
 	setvar VAR_CABLE_CLUB_TUTORIAL_STATE, 1
-	call DifficultySelection_Event
 	return
-
-/// ========================================
-//// SCRIPT DE SELEÇÃO DE DIFICULDADE
-/// ========================================
-
-DifficultySelection_Event::
-	msgbox DifficultySelection_Text_AskHardMode, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq DifficultySelection_Hard
-	goto DifficultySelection_Normal
-
-DifficultySelection_Hard::
-	setvar VAR_DIFFICULTY, 1
-	msgbox DifficultySelection_Text_HardModeSelected, MSGBOX_DEFAULT
-	return
-
-DifficultySelection_Normal::
-	setvar VAR_DIFFICULTY, 0
-	return
-
-///////////////////////=====/////////////////
 
 LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait, MSGBOX_DEFAULT

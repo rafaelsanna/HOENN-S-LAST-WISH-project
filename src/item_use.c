@@ -897,6 +897,16 @@ void ItemUseOutOfBattle_RareCandy(u8 taskId)
     SetUpItemUseCallback(taskId);
 }
 
+void ItemUseOutOfBattle_InfiniteCandy(u8 taskId)
+{
+    if (gSaveBlock2Ptr->optionsInfiniteCandy == OPTIONS_INFINITECANDY_OFF) {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    } else {
+        gItemUseCB = ItemUseCB_RareCandy;
+        SetUpItemUseCallback(taskId);
+    }
+}
+
 void ItemUseOutOfBattle_DynamaxCandy(u8 taskId)
 {
     gItemUseCB = ItemUseCB_DynamaxCandy;

@@ -135,11 +135,8 @@ DewfordTown_Gym_EventScript_StopCountingTrainers::
 DewfordTown_Gym_EventScript_Brawly::
     lock
     faceplayer
-
-    @ === MANUAL DIFFICULTY CHECK ===
-    copyvar VAR_DIFFICULTY, 0x5050
-    compare VAR_DIFFICULTY, 1
-    goto_if_eq DewfordTown_Gym_BrawlyHard
+		getdifficulty VAR_RESULT
+		goto_if_eq VAR_RESULT, 1, DewfordTown_Gym_BrawlyHard
 
     @ Normal - TRAINER_BRAWLY_1
     trainerbattle_single TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
@@ -268,21 +265,6 @@ DewfordTown_Gym_EventScript_GymGuide::
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_DEWFORD_GYM, DewfordTown_Gym_EventScript_GymGuidePostVictory
-
-	@ === PERGUNTA DE DIFICULDADE ===
-	msgbox DewfordTown_Gym_Text_AskDifficulty, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq DewfordTown_Gym_HardMode
-	goto DewfordTown_Gym_NormalMode
-
-DewfordTown_Gym_HardMode::
-	setvar 0x5050, 1   @ você pode trocar o número do var se quiser outro
-	msgbox DewfordTown_Gym_Text_HardSelected, MSGBOX_DEFAULT
-	goto DewfordTown_Gym_EventScript_GymGuideAdvice
-
-DewfordTown_Gym_NormalMode::
-	setvar 0x5050, 0
-	msgbox DewfordTown_Gym_Text_NormalSelected, MSGBOX_DEFAULT
 	goto DewfordTown_Gym_EventScript_GymGuideAdvice
 
 DewfordTown_Gym_EventScript_GymGuideAdvice::
@@ -294,7 +276,6 @@ DewfordTown_Gym_EventScript_GymGuidePostVictory::
 	msgbox DewfordTown_Gym_Text_GymGuidePostVictory, MSGBOX_DEFAULT
 	release
 	end
-
 
 DewfordTown_Gym_EventScript_LeftGymStatue::
 	lockall

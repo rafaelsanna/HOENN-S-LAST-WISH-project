@@ -4870,7 +4870,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 - Crunch
 
-=== TRAINER_ROXANNE ===
+=== TRAINER_TERRA_CASUAL ===
 Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
@@ -4903,7 +4903,7 @@ Level: 15
 - Harden  
 - Block  
 
-=== TRAINER_ROXANNE_1 ===
+=== TRAINER_TERRA_HARD ===
 Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
@@ -6230,7 +6230,7 @@ Oddish
 Level: 12
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-=== TRAINER_TSUBAKI_EASY ===
+=== TRAINER_TSUBAKI_CASUAL ===
 Name: TSUBAKI
 Class: Ninja Boy
 Pic: Elite Four Sidney

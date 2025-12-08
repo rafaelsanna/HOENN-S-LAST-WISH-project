@@ -14601,11 +14601,11 @@ const struct Item gItemsInfo[] =
             "Raises level by one\n"
             "until level cap.\n"
             "Reusable."),
-        .importance = 1,    
+        .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .sortType = ITEM_TYPE_LEVEL_UP_ITEM,
         .type = ITEM_USE_PARTY_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_RareCandy,
+        .fieldUseFunc = ItemUseOutOfBattle_InfiniteCandy,
         .effect = gItemEffect_RareCandy,
         .iconPic = gItemIcon_DynamaxCandy,
         .iconPalette = gItemIconPalette_DynamaxCandy,

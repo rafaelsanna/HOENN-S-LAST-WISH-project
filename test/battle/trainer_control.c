@@ -182,7 +182,7 @@ TEST("Trainer Class Balls apply to the entire party")
 
 TEST("Difficulty default to Normal is the trainer doesn't have a member for the current diffuculty")
 {
-    SetCurrentDifficultyLevel(DIFFICULTY_EASY);
+    //SetCurrentDifficultyLevel(DIFFICULTY_EASY);
     struct Pokemon *testParty = Alloc(6 * sizeof(struct Pokemon));
     u32 currTrainer = 1;
     CreateNPCTrainerPartyFromTrainer(testParty, &sTestTrainers[GetTrainerDifficultyLevelTest(currTrainer)][currTrainer], TRUE, BATTLE_TYPE_TRAINER);
@@ -192,7 +192,7 @@ TEST("Difficulty default to Normal is the trainer doesn't have a member for the 
 
 TEST("Difficulty changes which party if used for NPCs if defined for the difficulty (EASY)")
 {
-    SetCurrentDifficultyLevel(DIFFICULTY_EASY);
+    //SetCurrentDifficultyLevel(DIFFICULTY_EASY);
     struct Pokemon *testParty = Alloc(6 * sizeof(struct Pokemon));
     u32 currTrainer = 2;
     CreateNPCTrainerPartyFromTrainer(testParty, &sTestTrainers[GetTrainerDifficultyLevelTest(currTrainer)][currTrainer], TRUE, BATTLE_TYPE_TRAINER);

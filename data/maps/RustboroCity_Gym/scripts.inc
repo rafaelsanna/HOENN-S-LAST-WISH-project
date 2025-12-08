@@ -4,18 +4,16 @@ RustboroCity_Gym_MapScripts::
 RustboroCity_Gym_EventScript_Roxanne::
 	lock
 	faceplayer
-	@ === VERIFICAÇÃO MANUAL DA DIFICULDADE ===
-	copyvar VAR_DIFFICULTY, 0x404E
-	compare VAR_DIFFICULTY, 1
-	goto_if_eq RustboroCity_Gym_RoxanneHard
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, RustboroCity_Gym_RoxanneHard
 	
-	@ Modo Normal - TRAINER_ROXANNE 
-	trainerbattle_single TRAINER_ROXANNE, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	@ Modo Normal - TRAINER_TERRA_CASUAL 
+	trainerbattle_single TRAINER_TERRA_CASUAL, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 	goto RustboroCity_Gym_AfterBattle
 
 RustboroCity_Gym_RoxanneHard::
-	@ Modo Hard - TRAINER_ROXANNE_1 
-	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	@ Modo Hard - TRAINER_TERRA_HARD 
+	trainerbattle_single TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 
 RustboroCity_Gym_AfterBattle::
 	specialvar VAR_RESULT, ShouldTryRematchBattle
@@ -49,7 +47,7 @@ RustboroCity_Gym_EventScript_GiveRockTomb::
 	end
 
 RustboroCity_Gym_EventScript_RoxanneRematch::
-	trainerbattle_rematch_double TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxannePreRematch, RustboroCity_Gym_Text_RoxanneRematchDefeat, RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons
+	trainerbattle_rematch_double TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxannePreRematch, RustboroCity_Gym_Text_RoxanneRematchDefeat, RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons
 	msgbox RustboroCity_Gym_Text_RoxannePostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -72,21 +70,6 @@ RustboroCity_Gym_EventScript_GymGuide::
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_RUSTBORO_GYM, RustboroCity_Gym_EventScript_GymGuidePostVictory
-	
-	@ === PERGUNTA DE DIFICULDADE ===
-	msgbox RustboroCity_Gym_Text_AskDifficulty, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq RustboroCity_Gym_HardMode
-	goto RustboroCity_Gym_NormalMode
-
-RustboroCity_Gym_HardMode::
-	setvar 0x404E, 1
-	msgbox RustboroCity_Gym_Text_HardSelected, MSGBOX_DEFAULT
-	goto RustboroCity_Gym_EventScript_GymGuideAdvice
-
-RustboroCity_Gym_NormalMode::
-	setvar 0x404E, 0
-	msgbox RustboroCity_Gym_Text_NormalSelected, MSGBOX_DEFAULT
 	goto RustboroCity_Gym_EventScript_GymGuideAdvice
 
 RustboroCity_Gym_EventScript_GymGuideAdvice::

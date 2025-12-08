@@ -6,10 +6,7 @@
 
 enum DifficultyLevel GetCurrentDifficultyLevel(void)
 {
-    if (!B_VAR_DIFFICULTY)
-        return DIFFICULTY_NORMAL;
-
-    return VarGet(B_VAR_DIFFICULTY);
+    return gSaveBlock2Ptr->optionsNpcTeams;
 }
 
 void SetCurrentDifficultyLevel(enum DifficultyLevel desiredDifficulty)
