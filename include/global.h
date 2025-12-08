@@ -605,6 +605,7 @@ struct SaveBlock2
     u8 optionsNpcTeams; //OPTIONS_NPCTEAMS_[CASUAL/HARD]
     u8 optionsInfiniteCandy; //OPTINOS_INFINITECANDY_[OFF/ON]
     u8 optionsLevelCaps; //OPTIONS_LEVELCAPS_[ON/OFF]
+    u8 optionsBattleItems; //OPTIONS_BATTLEITEMS_[ON/OFF]
 }; // sizeof=0xF2C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;

@@ -46,6 +46,7 @@ enum //General's Menu Items
 enum //Difficulty's Menu Items
 {
     MENUITEM_DIF_NPCTEAMS,
+    MENUITEM_DIF_BATTLEITEMS,
     MENUITEM_DIF_BATTLESTYLE,
     MENUITEM_DIF_INFCANDY,
     MENUITEM_DIF_LEVELCAPS,
@@ -163,6 +164,7 @@ static void DrawChoices_Sound(int selection, int y);
 static void DrawChoices_ButtonMode(int selection, int y);
 static void DrawChoices_FrameType(int selection, int y);
 static void DrawChoices_NpcTeams(int selection, int y);
+static void DrawChoices_BattleItems(int selection, int y);
 static void DrawChoices_BattleStyle(int selection, int y);
 static void DrawChoices_InfCandy(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
@@ -212,6 +214,7 @@ struct // PAGE_DIFFICULTY
 } static const sItemFunctionsDifficulty[MENUITEM_DIF_COUNT] =
 {
     [MENUITEM_DIF_NPCTEAMS]      = {DrawChoices_NpcTeams,    ProcessInput_Options_Two},
+    [MENUITEM_DIF_BATTLEITEMS]   = {DrawChoices_BattleItems, ProcessInput_Options_Two},
     [MENUITEM_DIF_BATTLESTYLE]   = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
     [MENUITEM_DIF_INFCANDY]      = {DrawChoices_InfCandy,    ProcessInput_Options_Two}, 
     [MENUITEM_DIF_LEVELCAPS]     = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
@@ -220,6 +223,7 @@ struct // PAGE_DIFFICULTY
 
 // Menu left side option names text
 static const u8 sText_NpcTeams[]       = _("NPC TEAMS");
+static const u8 sText_BattleItems[]    = _("BTL ITEMS");
 static const u8 sText_InfiniteCandy[]  = _("INF. CANDY");
 static const u8 sText_LevelCaps[]      = _("LEVEL CAPS");
 static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
@@ -235,6 +239,7 @@ static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
 static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
 {
     [MENUITEM_DIF_NPCTEAMS]       = sText_NpcTeams,
+    [MENUITEM_DIF_BATTLEITEMS]    = sText_BattleItems,
     [MENUITEM_DIF_BATTLESTYLE]    = gText_BattleStyle,
     [MENUITEM_DIF_INFCANDY]       = sText_InfiniteCandy,
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
@@ -271,6 +276,7 @@ static bool8 CheckConditions(int selection)
         switch(selection)
         {
         case MENUITEM_DIF_NPCTEAMS:         return TRUE;
+        case MENUITEM_DIF_BATTLEITEMS:      return TRUE;
         case MENUITEM_DIF_BATTLESTYLE:      return TRUE;
         case MENUITEM_DIF_INFCANDY:         return TRUE;
         case MENUITEM_DIF_LEVELCAPS:        return TRUE;
@@ -300,12 +306,16 @@ static const u8 sText_Desc_BattleStyle_Shift[]  = _("Get the option to switch yo
 static const u8 sText_Desc_BattleStyle_Set[]    = _("No free switch after fainting the\nenemies POKéMON.");
 static const u8 sText_Desc_LevelCapsOn[]        = _("Your POKéMON cannot outlevel the\nace of the next gym leader.");
 static const u8 sText_Desc_LevelCapsOff[]       = _("Your POKéMON can reach any level,\nbut may disobey if too overleveled.");
+static const u8 sText_Desc_BattleItemsOn[]      = _("Permits the use of items in battle.");
+static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items in battle.");
 
 // Option strings
-static const u8 sText_OptionInfCandyOff[]       = _("OFF");
-static const u8 sText_OptionInfCandyOn[]        = _("ON");
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
 static const u8 sText_OptionNpcTeamsHard[]      = _("HARD");
+static const u8 sText_OptionBattleItemsOn[]     = _("ON");
+static const u8 sText_OptionBattleItemsOff[]    = _("OFF");
+static const u8 sText_OptionInfCandyOff[]       = _("OFF");
+static const u8 sText_OptionInfCandyOn[]        = _("ON");
 static const u8 sText_OptionLevelCapsOn[]       = _("ON");
 static const u8 sText_OptionLevelCapsOff[]      = _("OFF");
 
@@ -322,6 +332,7 @@ static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3]
 static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT][2] =
 {
     [MENUITEM_DIF_NPCTEAMS]     = {sText_Desc_NpcTeams,           sText_Empty},
+    [MENUITEM_DIF_BATTLEITEMS]  = {sText_Desc_BattleItemsOn,      sText_Desc_BattleItemsOff},
     [MENUITEM_DIF_BATTLESTYLE]  = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set},
     [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,   sText_Desc_InfiniteCandyOn},
     [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff},
@@ -344,6 +355,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_C
 static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_COUNT] =
 {
     [MENUITEM_DIF_NPCTEAMS]     = sText_Empty,
+    [MENUITEM_DIF_BATTLEITEMS]  = sText_Empty,
     [MENUITEM_DIF_BATTLESTYLE]  = sText_Empty,
     [MENUITEM_DIF_INFCANDY]     = sText_Empty,
     [MENUITEM_DIF_LEVELCAPS]    = sText_Empty,
@@ -590,6 +602,7 @@ void CB2_InitOptionMenu(void)
         sOptions->sel[MENUITEM_GEN_FRAMETYPE]   = gSaveBlock2Ptr->optionsWindowFrameType;
         
         sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS]     = gSaveBlock2Ptr->optionsNpcTeams;
+        sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]  = gSaveBlock2Ptr->optionsBattleItems;
         sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]  = gSaveBlock2Ptr->optionsBattleStyle;
         sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]     = gSaveBlock2Ptr->optionsInfiniteCandy;
         sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = gSaveBlock2Ptr->optionsLevelCaps;
@@ -777,6 +790,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsWindowFrameType  = sOptions->sel[MENUITEM_GEN_FRAMETYPE];
 
     gSaveBlock2Ptr->optionsNpcTeams         = sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS];
+    gSaveBlock2Ptr->optionsBattleItems      = sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS];
     gSaveBlock2Ptr->optionsBattleStyle      = sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE];
     gSaveBlock2Ptr->optionsInfiniteCandy    = sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY];
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
@@ -1031,9 +1045,19 @@ static void DrawChoices_NpcTeams(int selection, int y)
     DrawOptionMenuChoice(sText_OptionNpcTeamsHard, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionNpcTeamsHard, 198), y, styles[1], active);
 }
 
+static void DrawChoices_BattleItems(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIF_BATTLEITEMS);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_OptionBattleItemsOn, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionBattleItemsOff, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionBattleItemsOff, 198), y, styles[1], active);
+}
+
 static void DrawChoices_InfCandy(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_DIF_NPCTEAMS);
+    bool8 active = CheckConditions(MENUITEM_DIF_INFCANDY);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
