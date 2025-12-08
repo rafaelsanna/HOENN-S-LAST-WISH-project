@@ -106,6 +106,9 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SET;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
+    gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    gSaveBlock2Ptr->optionsInfiniteCandy = OPTIONS_INFINITECANDY_OFF;
+    gSaveBlock2Ptr->optionsLevelCaps = OPTIONS_LEVELCAPS_ON;
 }
 
 // Pokédex initialization
