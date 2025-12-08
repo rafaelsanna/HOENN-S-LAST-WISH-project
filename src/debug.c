@@ -2006,15 +2006,10 @@ static void DebugAction_FlagsVars_TrainerSeeOnOff(u8 taskId)
 
 static void DebugAction_FlagsVars_BagUseOnOff(u8 taskId)
 {
-#if B_FLAG_NO_BAG_USE == 0
-    Debug_DestroyMenu_Full_Script(taskId, Debug_FlagsNotSetBattleConfigMessage);
-#else
-    if (FlagGet(B_FLAG_NO_BAG_USE))
-        PlaySE(SE_PC_OFF);
-    else
-        PlaySE(SE_PC_LOGIN);
-    FlagToggle(B_FLAG_NO_BAG_USE);
-#endif
+if (gSaveBlock2Ptr->optionsBattleItems == OPTIONS_BATTLEITEMS_OFF)
+    PlaySE(SE_PC_OFF);
+else
+    PlaySE(SE_PC_LOGIN);
 }
 
 static void DebugAction_FlagsVars_CatchingOnOff(u8 taskId)
