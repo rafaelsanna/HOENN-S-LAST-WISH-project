@@ -11730,6 +11730,27 @@ Cascoon
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+=== TRAINER_LYLA ===
+Name: LYLA
+Class: Bug Catcher
+Pic: Bug Catcher F
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move
+
+Wurmple
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Surskit
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Silcoon
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 === TRAINER_JOSE ===
 Name: JOSE
 Class: Bug Catcher

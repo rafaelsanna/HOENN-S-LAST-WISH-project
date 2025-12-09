@@ -405,6 +405,14 @@ PetalburgWoods_EventScript_Lyle::
 	msgbox PetalburgWoods_Text_ImOutOfPokeBalls, MSGBOX_AUTOCLOSE
 	end
 
+PetalburgWoods_EventScript_Lyla::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_LYLA, PetalburgWoods_Text_GoBugPokemonTeamF, PetalburgWoods_Text_ICouldntWinF
+	msgbox PetalburgWoods_Text_ImOutOfPokeBallsF, MSGBOX_AUTOCLOSE
+	release
+	end
+
 PetalburgWoods_EventScript_James::
 	trainerbattle_single TRAINER_JAMES_1, PetalburgWoods_Text_InstantlyPopularWithBugPokemon, PetalburgWoods_Text_CantBePopularIfILose, PetalburgWoods_EventScript_TryRegisterJames
 	specialvar VAR_RESULT, ShouldTryRematchBattle
@@ -484,6 +492,27 @@ PetalburgWoods_Text_ImOutOfPokeBalls:
 	.string "beetle… so unsettling…\p"
 	.string "I threw all my POKÉ BALLS at it,\n"
 	.string "but none could contain it.$"
+
+PetalburgWoods_Text_GoBugPokemonTeamF:
+	.string "I’ve been gathering BUG POKéMON\n"
+	.string "all morning!\p"
+	.string "Come on, let’s see what my tiny\n"
+	.string "partners can do!$"
+
+PetalburgWoods_Text_ICouldntWinF:
+	.string "Aww… even with all my BUG POKéMON,\n"
+	.string "I still couldn't win.$"
+
+PetalburgWoods_Text_ImOutOfPokeBallsF:
+	.string "I came here looking for mushrooms\n"
+	.string "for my BUG POKéMON!\p"
+	.string "This forest is so peaceful during the\n"
+	.string "day… almost magical.\p"
+	.string "But at night?\n"
+	.string "I get this strange chill, like the whole\l"
+	.string "woods are holding their breath.\p"
+	.string "If you're exploring after sunset,\n"
+	.string "be careful, okay?$"
 
 PetalburgWoods_Text_InstantlyPopularWithBugPokemon:
 	.string "If you take BUG POKÉMON to school,\n"
