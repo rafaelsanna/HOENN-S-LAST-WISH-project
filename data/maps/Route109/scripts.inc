@@ -389,6 +389,11 @@ Route109_EventScript_Huey::
 	msgbox Route109_Text_HueyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route109_EventScript_Gong::
+	trainerbattle_single TRAINER_GONG, Route109_Text_GongIntro, Route109_Text_GongDefeated
+	msgbox Route109_Text_GongPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 Route109_EventScript_Edmond::
 	trainerbattle_single TRAINER_EDMOND, Route109_Text_EdmondIntro, Route109_Text_EdmondDefeated
 	msgbox Route109_Text_EdmondPostBattle, MSGBOX_AUTOCLOSE

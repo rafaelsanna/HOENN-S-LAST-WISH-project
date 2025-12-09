@@ -987,11 +987,16 @@ SlateportCity_Text_GoingToCompeteInBattleTent:
 	.string "some POKéMON!$"
 
 SlateportCity_Text_BushedHikingFromMauville:
-	.string "Whew… I'm just bushed…\p"
-	.string "I hiked over from MAUVILLE CITY.\n"
-	.string "But, boy, this city's huge.\p"
-	.string "If I'd known this, I would've ridden\n"
-	.string "my BIKE here.$"
+.string "Whew… I'm worn out…\p"
+.string "I came here from MAUVILLE CITY, but\n"
+.string "something feels different lately.\p"
+.string "The tide’s been acting strange…\n"
+.string "Some days the waves rise out of nowhere,\l"
+.string "crashing harder than they should.\p"
+.string "The sea feels unpredictable now… almost\n"
+.string "dangerous.\p"
+.string "Better be careful near the shore.$"
+
 
 SlateportCity_Text_EveryoneCallsHimCaptStern:
 	.string "STERN, the fellow who built the\n"
@@ -1004,10 +1009,13 @@ SlateportCity_Text_WhatsLongLineOverThere:
 	.string "That long line…$"
 
 SlateportCity_Text_VisitedMuseumOften:
-	.string "When I was a child, I visited\n"
-	.string "the MUSEUM often.\p"
-	.string "I used to dream about the mysteries of\n"
-	.string "the sea after seeing the exhibits.$"
+.string "I came to the MUSEUM hoping to find\n"
+.string "something about that strange meteor\l"
+.string "that flashed across the sky.\p"
+.string "But there was nothing… no records,\n"
+.string "no theories, not even a mention.\p"
+.string "Amazing how many mysteries are still\n"
+.string "waiting to be uncovered.$"
 
 SlateportCity_Text_QuitPushing:
 	.string "Hey, there! Quit pushing!\n"
@@ -1019,18 +1027,32 @@ SlateportCity_Text_AquaHasPolicy:
 	.string "the operation site.$"
 
 SlateportCity_Text_BossIsBrilliant:
-	.string "Our BOSS is brilliant.\p"
-	.string "What would he want to do with\n"
-	.string "a MUSEUM now?$"
+.string "Hey, kid!\n"
+.string "What are you looking at?\p"
+.string "With that goofy look on your face,\n"
+.string "wierd cloths, you'd better beat it.\p"
+.string "Mind your own business unless you\n"
+.string "want some trouble!$"
+
 
 SlateportCity_Text_WhatsNewSchemeIWonder:
-	.string "What's the new scheme, I wonder?\p"
-	.string "Our BOSS is scary when he's mad, so\n"
-	.string "I'd better not screw things up…$"
+.string "Huh? You lookin' to join TEAM AQUA\n"
+.string "or somethin'?\p"
+.string "Please… with that goofy face?\n"
+.string "You wouldn't last a minute.\p"
+.string "Do yourself a favor and scram\n"
+.string "before you get in trouble.$"
 
 SlateportCity_Text_ShouldTakeItAll:
-	.string "If there's something we need in\n"
-	.string "the MUSEUM, we should take it all!$"
+.string "Heh… the AQUA revolution is\n"
+.string "comin', kid.\p"
+.string "You're either with us when it hits,\n"
+.string "or you're gonna get swept under.\p"
+.string "If I were you, I'd start learnin'\n"
+.string "about the cause…\p"
+.string "Break the system, y'know?\n"
+.string "It's the only way forward.$"
+
 
 SlateportCity_Text_DontButtIn:
 	.string "Hey, you there!\n"
@@ -1061,10 +1083,12 @@ SlateportCity_Text_SaysSomethingLikeSeaIsEndless:
 	.string "it says.$"
 
 SlateportCity_Text_ShouldveBroughtMyGameBoy:
-	.string "Grumble…\p"
-	.string "I should've brought my Game Boy\n"
-	.string "Advance so I wouldn't get bored in line…\p"
-	.string "Grumble…$"
+.string "Grumble…\p"
+.string "Man, bein' here is wild.\n"
+.string "You’ll see, TEAM AQUA's gonna\l"
+.string "change the whole region.\p"
+.string "Nothing's gonna stay the same…\n"
+.string "and that's the fun of it!$"
 
 SlateportCity_Text_HotSpringsAfterOperation:
 	.string "When this operation's over, I'll take\n"
@@ -1078,25 +1102,34 @@ SlateportCity_Text_SeaIsSoWet:
 	.string "the tears shed by POKéMON?$"
 
 SlateportCity_Text_SinkOldBoats:
-	.string "Do you know what they do with old\n"
-	.string "ships that become too creaky to sail?\p"
-	.string "They sink them in the sea so they\n"
-	.string "become habitats for POKéMON.$"
+.string "Do you know what they do with old\n"
+.string "ships that get too creaky to sail?\p"
+.string "They sink them so they become new\n"
+.string "habitats for POKéMON.\p"
+.string "The sea's been wild lately… furious,\n"
+.string "almost like some great power is\l"
+.string "stirring beneath the waves.$"
 
 SlateportCity_Text_BuyTooMuch:
 	.string "Whenever I visit here, I get carried\n"
 	.string "away and buy too much.$"
 
 SlateportCity_Text_GetNameRaterToHelpYou:
-	.string "If you want to change your POKéMON's\n"
-	.string "nickname, you'll have to get the NAME\l"
-	.string "RATER to help you.$"
+.string "Dude, port towns are awesome.\n"
+.string "People from all over come through.\p"
+.string "There's always something new to\n"
+.string "see and do.\p"
+.string "But watch yourself… shady types show\n"
+.string "up here too.\n"
+.string "Keep your guard up!$"
 
 SlateportCity_Text_CantChangeTradeMonName:
-	.string "Any POKéMON you get in a trade,\n"
-	.string "you can't change its nickname.\p"
-	.string "The original TRAINER's love for that\n"
-	.string "POKéMON is in the nickname.$"
+.string "Whoa, you beat RENTON?\n"
+.string "No way… He wiped the floor with me! \p"
+.string "Guess you're tougher than you look.\n"
+.string "Haha! Maybe you can teach me a few\n"
+.string "tricks sometime!$"
+
 
 SlateportCity_Text_BattleTentBuiltRecently:
 	.string "Recently, a BATTLE TENT was built\n"

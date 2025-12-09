@@ -1003,6 +1003,24 @@ Route109_Text_ElijahPostBattle:
 	.string "is the perfect setting!\p"
 	.string "I guess I'll head for SLATEPORT.$"
 
+Route109_Text_GongIntro:
+	.string "Watching the tides is everything\n"
+	.string "for a fisherman like me.\p"
+	.string "The sea tells you when to cast\n"
+	.string "and when to wait.$"
+
+Route109_Text_GongDefeated:
+	.string "Heh… even the best get swept away\n"
+	.string "sometimes.$"
+
+Route109_Text_GongPostBattle:
+	.string "Did you know the moon controls\n"
+	.string "the tides?\p"
+	.string "But lately… things feel off.\n"
+	.string "That strange meteor shook the sea.\p"
+	.string "The waves are rougher now… almost\n"
+	.string "like something woke up out there.$"
+
 Route110_Text_JacobIntro:
 	.string "Whoa! Watch it!\n"
 	.string "I guess you're not used to BIKE racing.$"
