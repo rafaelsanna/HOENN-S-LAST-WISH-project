@@ -52,7 +52,37 @@
     F(SKILL_SWAP) \
     F(SNATCH) \
     F(OVERHEAT) \
-    F(NIGHT_SHADE)
+    F(NIGHT_SHADE) \
+    F(DAZZLING_GLEAM) \
+    F(DRAGON_PULSE) \
+    F(SHADOW_CLAW) \
+    F(POISON_JAB) \
+    F(ROCK_SLIDE) \
+    F(DARK_PULSE) \
+    F(FLASH_CANNON) \
+    F(X_SCISSOR) \
+    F(AURA_SPHERE) \
+    F(KNOCK_OFF) \
+    F(WILL_O_WISP) \
+    F(VOLT_SWITCH) \
+    F(U_TURN) \
+    F(SLASH) \
+    F(TRICK_ROOM) \
+    F(FIRE_PUNCH) \
+    F(THUNDER_PUNCH) \
+    F(ICE_PUNCH) \
+    F(SLEEP_TALK) \
+    F(DREAM_EATER) \
+    F(THUNDER_WAVE) \
+    F(FREEZE_DRY) \
+    F(SPIKES) \
+    F(HEAL_BELL) \
+    F(HAZE) \
+    F(WOOD_HAMMER) \
+    F(DRAGON_TAIL) \
+    F(PSYCHO_CUT) \
+    F(PLAY_ROUGH) 
+
 
 #define FOREACH_HM(F) \
     F(CUT) \
