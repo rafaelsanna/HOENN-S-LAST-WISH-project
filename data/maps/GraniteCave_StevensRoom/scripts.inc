@@ -20,6 +20,8 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	closemessage
 	delay 30
 	setflag FLAG_REGISTERED_STEVEN_POKENAV
+	showpainting(PAINTING_1)
+    waitstate
 	msgbox GraniteCave_StevensRoom_Text_IveGotToHurryAlong, MSGBOX_DEFAULT
 	closemessage
 	call_if_eq VAR_FACING, DIR_NORTH, GraniteCave_StevensRoom_EventScript_StevenExitNorth
@@ -80,38 +82,51 @@ GraniteCave_StevensRoom_Movement_StevenExitSouth:
 	step_end
 
 GraniteCave_StevensRoom_Text_ImStevenLetterForMe:
-	.string "My name is STEVEN.\p"
-	.string "I'm interested in rare stones,\n"
-	.string "so I travel here and there.\p"
-	.string "Oh?\n"
-	.string "A LETTER for me?$"
+	.string "My name is STELLA.\p"
+	.string "What are you doing in this cave\n"
+	.string "with such strange clothes?\p"
+	.string "Don't tell me you're with\n"
+	.string "TEAM MAGMA...\p"
+	.string "Oh? You're just exploring?\n"
+	.string "Good. You startled me.\p"
+	.string "A LETTER for me?\n"
+	.string "Really? Thank you.$"
 
 GraniteCave_StevensRoom_Text_ThankYouTakeThis:
-	.string "STEVEN: Okay, thank you.\p"
-	.string "You went through all this trouble to\n"
-	.string "deliver that. I need to thank you.\p"
-	.string "Let me see…\n"
-	.string "I'll give you this TM.\p"
-	.string "It contains my favorite move,\n"
-	.string "STEEL WING.$"
+	.string "STELLA: You beat two MAGMA grunts\n"
+	.string "alone and still made it here...\p"
+	.string "Just to deliver this to me.\n"
+	.string "Thank you wierd friend!\p"
+	.string "Here, take this TM, STEEL WING.\n"
+	.string "It's my favorite move.$"
 
 GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:
-	.string "STEVEN: Your POKéMON appear quite\n"
-	.string "capable.\p"
-	.string "If you keep training, you could even\n"
-	.string "become the CHAMPION of the POKéMON\l"
-	.string "LEAGUE one day. That's what I think.\p"
-	.string "I know, since we've gotten to know each\n"
-	.string "other, let's register one another in\l"
-	.string "our POKéNAVS.\p"
+	.string "STELLA: I don't know what MAGMA is\n"
+	.string "after here... Rare ore? Energy?\p"
+	.string "Whatever it is, it's bad news.\n"
+	.string "But you beat them easily.\p"
+	.string "Let's register in the POKéNAV.\n"
+	.string "If anything happens, we can talk.\p"
 	.string "… … … … … …$"
 
+
 GraniteCave_StevensRoom_Text_RegisteredSteven:
-	.string "Registered STEVEN\n"
+	.string "Registered STELLA\n"
 	.string "in the POKéNAV.$"
 
 GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
-	.string "Now, I've got to hurry along.$"
+	.string "STELLA: I came to study this old\n"
+	.string "painting. It must be thousands of\n"
+	.string "years old. Maybe even more...\p"
+	.string "It shows two titans... One of land,\n"
+	.string "one of sea. Ancient guardians.\p"
+	.string "That strange meteor in the sky made\n"
+	.string "me wonder if it was connected.\p"
+	.string "Maybe Tean MAGMA was looking for this,\n"
+	.string "but good thing you stopped them.\p"
+	.string "I should go. I think Team MAGMA may be\n"
+	.string "exploring other caves in HOENN.\p"
+	.string "Good luck out there.$"
 
 GraniteCave_StevensRoom_Text_OhBagIsFull:
 	.string "Oh, your BAG is full…\n"
