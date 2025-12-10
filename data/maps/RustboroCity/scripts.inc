@@ -675,7 +675,15 @@ RustboroCity_EventScript_Rival::
 	call_if_unset FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
 	waitmovement 0
+	call_if_unset FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL, RustboroCity_EventScript_GiveExpShare
 	goto RustboroCity_EventScript_RivalEncounter
+
+RustboroCity_EventScript_GiveExpShare::
+	giveitem ITEM_EXP_SHARE
+	playfanfare MUS_OBTAIN_ITEM
+	setflag I_EXP_SHARE_FLAG
+	setflag FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL
+	return
 
 RustboroCity_EventScript_PlayRivalMusic::
 	checkplayergender
@@ -1149,6 +1157,13 @@ RustboroCity_Text_PleaseComeWithMe:
 
 RustboroCity_Text_MayHiLetsRegister:
 	.string "ZINNIA: Oh, hi, {PLAYER}{KUN}!\p"
+	.string "Good thing I found you!\n"
+	.string "CALENDULA gave me this and\l"
+	.string "asked me to deliver it to you!\p"
+	.string "It's an EXP. SHARE!\p"
+	.string "It makes all POKéMON in your party\n"
+	.string "gain experience from battles!\p"
+	.string "Anyway, another thing…\p"
 	.string "You had a MATCH CALL feature put\n"
 	.string "on your POKéNAV!\p"
 	.string "Let's register each other so we can\n"
@@ -1196,6 +1211,13 @@ RustboroCity_Text_MayMrBrineyHint:
 
 RustboroCity_Text_BrendanHiLetsRegister:
 	.string "ZENNO: Oh, hey, {PLAYER}!\p"
+	.string "Lucky I ran into you!\n"
+	.string "CALENDULA gave me something and\l"
+	.string "told me to give it to you!\p"
+	.string "It's an EXP. SHARE!\p"
+	.string "When you use it, all POKéMON in\n"
+	.string "your party will gain experience!\p"
+	.string "Oh, and one more thing…\p"
 	.string "You had a MATCH CALL feature put\n"
 	.string "on your POKéNAV! Cool!\p"
 	.string "Let's register each other so we can\n"

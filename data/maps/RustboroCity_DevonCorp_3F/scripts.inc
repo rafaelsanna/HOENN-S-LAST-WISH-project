@@ -160,9 +160,13 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone::
 
 RustboroCity_DevonCorp_3F_EventScript_GiveExpShare::
 	msgbox RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter, MSGBOX_DEFAULT
-	giveitem ITEM_EXP_SHARE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_EXP_SHARE
+	setflag   DN_FLAG_SEARCHING             
+	setflag   DN_FLAG_DEXNAV_GET           
+	setflag   DN_FLAG_DETECTOR_MODE        
+	setflag   DN_VAR_SPECIES               
+	setflag   DN_VAR_STEP_COUNTER  
 	msgbox RustboroCity_DevonCorp_3F_Text_ExplainExpShare, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
@@ -243,19 +247,23 @@ RustboroCity_DevonCorp_3F_Text_CountingOnYou:
 	.string "MR. STONE: I'm counting on you!$"
 
 RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter:
-	.string "MR. STONE: You delivered my LETTER?\n"
-	.string "Thank you kindly!\p"
-	.string "This is my way of thanking you.\n"
-	.string "It should help you, a TRAINER.$"
+	.string "MR. STONE: Ah, you delivered my\n"
+	.string "LETTER? Wonderful!\p"
+	.string "You've helped Devon greatly.\n"
+	.string "Please take this prototype as\l"
+	.string "my thanks.$"
 
 RustboroCity_DevonCorp_3F_Text_ExplainExpShare:
-	.string "MR. STONE: A POKéMON holding that\n"
-	.string "EXP. SHARE will be given some of the\l"
-	.string "EXP Points from battle.\p"
-	.string "It will get EXP Points even if it didn't\n"
-	.string "actually battle.\p"
-	.string "I would say EXP. SHARE is quite useful\n"
-	.string "for raising weak POKéMON.$"
+	.string "MR. STONE: This device is called\n"
+	.string "the DEXNAV.\p"
+	.string "It's an advanced scanner that\n"
+	.string "detects nearby POKéMON.\p"
+	.string "It can reveal traits, moves,\n"
+	.string "and even hidden strengths.\p"
+	.string "The more you explore, the more\n"
+	.string "the DEXNAV improves.\p"
+	.string "Use it well, {PLAYER}.\n"
+	.string "It will aid you on your journey.$"
 
 RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends:
 	.string "MR. STONE: Since my youth, I've immersed\n"

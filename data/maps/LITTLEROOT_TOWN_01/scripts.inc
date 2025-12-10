@@ -457,14 +457,11 @@ LittlerootTown_Movement_JirachiCircleComplete:
 
 // Celebi Scripts
 LittlerootTown_CelebiScript::  
-setflag   DN_FLAG_SEARCHING             
-setflag   DN_FLAG_DEXNAV_GET           
-setflag   DN_FLAG_DETECTOR_MODE        
-setflag   DN_VAR_SPECIES               
-setflag   DN_VAR_STEP_COUNTER      
-
     lockall
     faceplayer
+	giveitem ITEM_EXP_SHARE
+	playfanfare MUS_OBTAIN_ITEM
+	setflag I_EXP_SHARE_FLAG
     msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
     random 3
     switch VAR_RESULT
