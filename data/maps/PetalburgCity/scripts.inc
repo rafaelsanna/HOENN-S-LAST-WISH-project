@@ -750,7 +750,7 @@ PetalburgCity_Text_CitySign:
 	.string "“Where people mingle with nature.”$"
 
 PetalburgCity_Text_WallyHouseSign:
-	.string "LUKAS 'S HOUSE$"
+	.string "LUKAS'S HOUSE$"
 
 PetalburgCity_Text_AreYouATrainer:
     .string "Excuse me!\p"

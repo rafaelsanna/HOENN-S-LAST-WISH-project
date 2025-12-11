@@ -20,8 +20,11 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	closemessage
 	delay 30
 	setflag FLAG_REGISTERED_STEVEN_POKENAV
+	msgbox GraniteCave_StevensRoom_Text_LookAnciantPainting, MSGBOX_DEFAULT
 	showpainting(PAINTING_1)
     waitstate
+	lock
+	faceplayer
 	msgbox GraniteCave_StevensRoom_Text_IveGotToHurryAlong, MSGBOX_DEFAULT
 	closemessage
 	call_if_eq VAR_FACING, DIR_NORTH, GraniteCave_StevensRoom_EventScript_StevenExitNorth
@@ -55,6 +58,9 @@ GraniteCave_StevensRoom_EventScript_BagFull::
 	return
 
 GraniteCave_StevensRoom_Movement_StevenExit:
+	walk_left
+	walk_up
+	walk_up
 	walk_up
 	walk_up
 	walk_up
@@ -75,11 +81,20 @@ GraniteCave_StevensRoom_Movement_StevenExitSouth:
 	walk_up
 	walk_up
 	walk_up
-	walk_right
+	walk_up
+	walk_up
 	walk_up
 	walk_up
 	delay_8
 	step_end
+
+GraniteCave_StevensRoom_EventScript_AncientPaiting::
+	lock
+	faceplayer
+	showpainting(PAINTING_1)
+    waitstate
+	release
+	end
 
 GraniteCave_StevensRoom_Text_ImStevenLetterForMe:
 	.string "My name is STELLA.\p"
@@ -108,11 +123,14 @@ GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:
 	.string "Let's register in the POKéNAV.\n"
 	.string "If anything happens, we can talk.\p"
 	.string "… … … … … …$"
-
-
+	
 GraniteCave_StevensRoom_Text_RegisteredSteven:
 	.string "Registered STELLA\n"
 	.string "in the POKéNAV.$"
+
+GraniteCave_StevensRoom_Text_LookAnciantPainting:
+	.string "STELLA: Now take a look at this \n"
+	.string "ancient painting on the wall.$"
 
 GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 	.string "STELLA: I came to study this old\n"
@@ -122,7 +140,7 @@ GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 	.string "one of sea. Ancient guardians.\p"
 	.string "That strange meteor in the sky made\n"
 	.string "me wonder if it was connected.\p"
-	.string "Maybe Tean MAGMA was looking for this,\n"
+	.string "Maybe Team MAGMA was looking for this,\n"
 	.string "but good thing you stopped them.\p"
 	.string "I should go. I think Team MAGMA may be\n"
 	.string "exploring other caves in HOENN.\p"
