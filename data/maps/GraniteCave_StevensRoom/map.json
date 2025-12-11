@@ -17,8 +17,8 @@
     {
       "local_id": "LOCALID_GRANITE_CAVE_STEVEN",
       "graphics_id": "OBJ_EVENT_GFX_STEVEN",
-      "x": 7,
-      "y": 8,
+      "x": 8,
+      "y": 10,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
