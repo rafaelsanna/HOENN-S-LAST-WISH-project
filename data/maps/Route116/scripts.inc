@@ -236,6 +236,11 @@ Route116_EventScript_Jose::
 	msgbox Route116_Text_JosePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route116_EventScript_Joji::
+	trainerbattle_single TRAINER_JOJI, Route116_Text_JojiIntro, Route116_Text_JojiDefeat
+	msgbox Route116_Text_JojiPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 Route116_EventScript_Jerry::
 	trainerbattle_single TRAINER_JERRY_1, Route116_Text_JerryIntro, Route116_Text_JerryDefeat, Route116_EventScript_TryRegisterJerryAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle

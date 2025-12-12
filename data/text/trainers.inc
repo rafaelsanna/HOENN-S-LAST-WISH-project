@@ -2224,6 +2224,22 @@ Route116_Text_JosePostBattle:
 	.string "BUG POKéMON evolve quickly.\n"
 	.string "So they get strong quickly, too.$"
 
+Route116_Text_JojiIntro:
+	.string "I love BUG POKéMON!\n"
+	.string "They're small, but full of spirit!\p"
+	.string "Come on, let's battle!$"
+
+Route116_Text_JojiDefeat:
+	.string "Whoa… I lost?\n"
+	.string "They gave it their all!$"
+
+Route116_Text_JojiPostBattle:
+	.string "I'm training to beat TERRA, but\n"
+	.string "it's been tough with only BUG types.\p"
+	.string "She has the advantage, and she's\n"
+	.string "really strong… but I'll keep trying!$"
+
+
 Route116_Text_JaniceIntro:
 	.string "Let me teach you how strong my\n"
 	.string "adorable POKéMON is!$"

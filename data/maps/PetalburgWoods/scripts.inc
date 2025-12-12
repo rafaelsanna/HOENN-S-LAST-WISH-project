@@ -473,6 +473,14 @@ PetalburgWoods_EventScript_SHROOMISHpw::
 	release
 	end
 
+PetalburgWoods_EventScript_Herbalistpw::
+	lock
+	faceplayer
+	msgbox PetalburgWoods_Text_Herbalistpw, MSGBOX_AUTOCLOSE
+	release
+	end
+
+
 @ Remaining text strings (keeping your custom ones)
 PetalburgWoods_Text_GoBugPokemonTeam:
 	.string "I caught a whole bunch of POKÉMON!\p"
@@ -599,4 +607,13 @@ PetalburgWoods_Text_TrainerTipsPP:
 	.string "POKÉMON gathered under moonlight.\p"
 	.string "Some say the forest still tests those\n"
 	.string "who walk its tangled paths today.$"
+
+PetalburgWoods_Text_Herbalistpw:
+	.string "I come here a lot to look for herbs\n"
+	.string "and ingredients for potions.\p"
+	.string "I feel safe in this forest… except\n"
+	.string "at night.\p"
+	.string "Strange POKéMON appear then, and\n"
+	.string "some of them are really scary…$"
+
 
