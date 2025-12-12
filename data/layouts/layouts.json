@@ -4,7 +4,7 @@
     {
       "id": "LAYOUT_PETALBURG_CITY",
       "name": "PetalburgCity_Layout",
-      "width": 30,
+      "width": 34,
       "height": 30,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
@@ -224,7 +224,7 @@
     {
       "id": "LAYOUT_ROUTE107",
       "name": "Route107_Layout",
-      "width": 60,
+      "width": 64,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dewford",
@@ -274,7 +274,7 @@
     {
       "id": "LAYOUT_ROUTE112",
       "name": "Route112_Layout",
-      "width": 40,
+      "width": 44,
       "height": 60,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lavaridge",
@@ -284,7 +284,7 @@
     {
       "id": "LAYOUT_ROUTE113",
       "name": "Route113_Layout",
-      "width": 100,
+      "width": 104,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fallarbor",
