@@ -163,9 +163,11 @@
 #define TRAINER_PIC_WORKER_F2            145
 #define TRAINER_PIC_BUG_CATCHER_F2       146
 #define TRAINER_PIC_LUKA                 147
+#define TRAINER_PIC_HERBALIST            148
+#define TRAINER_PIC_CHANNELER            149
 // COUNT
 
-#define TRAINER_PIC_COUNT                148
+#define TRAINER_PIC_COUNT                150
 
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
@@ -435,6 +437,8 @@ enum TrainerClassID
     TRAINER_CLASS_TEACHER,
     TRAINER_CLASS_NERD,
     TRAINER_CLASS_SAGE,
+    TRAINER_CLASS_HERBALIST,
+    TRAINER_CLASS_CHANNELER,
     TRAINER_CLASS_COUNT,
 };
 

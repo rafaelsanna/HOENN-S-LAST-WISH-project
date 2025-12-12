@@ -474,6 +474,14 @@ const u16 gTrainerPalette_WorkerF2[] = INCBIN_U16("graphics/trainers/front_pics/
 const u32 gTrainerFrontPic_LUKA[] = INCBIN_U32("graphics/trainers/front_pics/luka.4bpp.smol");
 const u16 gTrainerPalette_LUKA[] = INCBIN_U16("graphics/trainers/front_pics/luka.gbapal");
 
+// HERBALIST
+const u32 gTrainerFrontPic_Herbalist[] = INCBIN_U32("graphics/trainers/front_pics/herbalist.4bpp.smol");
+const u16 gTrainerPalette_Herbalist[] = INCBIN_U16("graphics/trainers/front_pics/herbalist.gbapal");
+
+// CHANNELER
+const u32 gTrainerFrontPic_Channeler[] = INCBIN_U32("graphics/trainers/front_pics/channeler.4bpp.smol");
+const u16 gTrainerPalette_Channeler[] = INCBIN_U16("graphics/trainers/front_pics/channeler.gbapal");
+
 // The first two parameters invoke a front pic and palette by
 // calling a "TRAINER_PIC" constant (e.g. TRAINER_PIC_HIKER), and
 // gTrainerFrontPic/gTrainerPalette pointers, (e.g "gTrainerFrontPic_Hiker" and "gTrainerPalette_Hiker").
@@ -637,6 +645,9 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_PHOTOGRAPHER, gTrainerFrontPic_Photographer, gTrainerPalette_Photographer),
     TRAINER_SPRITE(TRAINER_PIC_WORKER_F2, gTrainerFrontPic_WorkerF2, gTrainerPalette_WorkerF2),
     TRAINER_SPRITE(TRAINER_PIC_LUKA, gTrainerFrontPic_LUKA, gTrainerPalette_LUKA),
+    TRAINER_SPRITE(TRAINER_PIC_HERBALIST, gTrainerFrontPic_Herbalist, gTrainerPalette_Herbalist),
+    TRAINER_SPRITE(TRAINER_PIC_CHANNELER, gTrainerFrontPic_Channeler, gTrainerPalette_Channeler),
+
 
 
 };

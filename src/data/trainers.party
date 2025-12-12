@@ -702,6 +702,40 @@ Roselia
 Level: 14
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+=== TRAINER_CECILIA ===
+Name: Cecilia
+Class: Herbalist
+Pic: Herbalist
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move
+
+Seedot
+Level: 14
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Oddish
+Level: 14
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_UZUMAKI ===
+Name: Uzumaki
+Class: Channeler
+Pic: Channeler
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move
+
+Gastly
+Level: 14
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Hoothoot
+Level: 14
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 === TRAINER_ROSE_1 ===
 Name: ROSE
 Class: Aroma Lady

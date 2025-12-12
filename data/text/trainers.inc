@@ -584,7 +584,7 @@ Route106_Text_DouglasDefeated:
 	.string "I give up!$"
 
 Route106_Text_DouglasPostBattle:
-	.string "I wouldn't lose in a swim race…$"
+	.string "I wouldn't lose in a swim race…$"	
 
 Route106_Text_KylaIntro:
 	.string "The sea is my backyard. I'm not going\n"
@@ -597,6 +597,27 @@ Route106_Text_KylaDefeated:
 Route106_Text_KylaPostBattle:
 	.string "Drifting along with the waves…\n"
 	.string "I love it! Why don't you give it a try?$"
+
+GraniteHill_Text_CeciliaIntro:
+	.string "Oh! You scared me.\n"
+	.string "I was just picking some flowers.\p"
+	.string "Since you're here, how about a\n"
+	.string "quick battle?$"
+
+GraniteHill_Text_CeciliaDefeated:
+	.string "I come out here to collect flowers\n"
+	.string "because it's peaceful.\p"
+	.string "Renton’s always blasting loud music\n"
+	.string "back in town…\p"
+	.string "Out here, at least, I get some quiet.$"
+	
+GraniteHill_Text_CeciliaPostBattle:
+	.string "Gasp… Gasp…\n"
+	.string "I'm wiped out…\p"
+	.string "The going's easy. It's the leaving\n"
+	.string "that's the hard part.\p"
+	.string "Will I have any energy left to make\n"
+	.string "the return trip?$"	
 
 Route107_Text_DarrinIntro:
 	.string "Yawn…\p"
@@ -2013,6 +2034,22 @@ Route114_Text_AngelinaPostBattle:
 	.string "Some POKéMON change so much when\n"
 	.string "they evolve, it's startling!$"
 
+LonelyCaveB1_Text_UzumakiIntro:
+	.string "Are you afraid of spirits?\n"
+	.string "I’m not, what about you?\p"
+	.string "How about a battle now?\n"
+
+LonelyCaveB1_Text_UzumakiDefeat:
+	.string "Oh…\n"
+	.string "I didn’t expect you to be so strong.$"
+
+LonelyCaveB1_Text_UzumakiPostBattle:
+	.string "I come here to light incense\n"
+	.string "in honor of those who have passed.\p"
+	.string "Few have the courage to enter this\n"
+	.string "cave… but I feel calm and full\n"
+	.string "of energy here.$"
+	
 Route115_Text_TimothyIntro:
 	.string "Hm…\n"
 	.string "You seem rather capable…\l"
