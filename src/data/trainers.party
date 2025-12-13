@@ -5095,8 +5095,8 @@ Ability: Intimidate
 Level: 34  
 - Volt Switch  
 - Discharge  
-- Flamethrower  
-- Substitute  
+- Fire Fang
+- Ice Fang
 
 Magnezone @ Air Balloon  
 Ability: Magnet Pull  
@@ -5111,9 +5111,9 @@ Politoed @ Damp Rock
 Ability: Drizzle  
 Modest Nature
 Level: 34  
-- Earth Power  
-- Ice Beam  
-- Weather Ball  
+- Mud Shot  
+- Icy Wind 
+- Water Pulse  
 - Discharge   
 
 === TRAINER_FLANNERY_1 ===
@@ -12571,16 +12571,16 @@ Level: 27
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_WALLY_MAUVILLE ===
-Name: WALLY
+Name: LUKA
 Class: Rival
-Pic: Wally
+Pic: Luka
 Gender: Male
 Music: Male
 Double Battle: Yes
 AI: Basic Trainer
 
 Pidgeotto @ Sitrus Berry
-Level: 27
+Level: 30
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Air Cutter
 - Psybeam
@@ -12588,7 +12588,7 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Magic Coat
 
 Umbreon @ Lum Berry
-Level: 27
+Level: 30
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Snarl
 - Protect
@@ -12598,7 +12598,7 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 Delcatty @ Chople Berry 
 Ability: Sharpness
 Shiny: Yes  
-Level: 27
+Level: 30
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Fake Out
 - Slash
@@ -12606,7 +12606,7 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Protect
 
 Dustox @ Lum Berry
-Level: 27
+Level: 30
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Bug Bite
 - Protect
