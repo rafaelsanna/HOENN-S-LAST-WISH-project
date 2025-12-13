@@ -885,12 +885,13 @@
 #define TRAINER_CECILIA                     879
 #define TRAINER_CAMILE                      880
 #define TRAINER_UZUMAKI                     881
+#define TRAINER_DEN_CASUAL                  882
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      882
+#define TRAINERS_COUNT                      883
 #define MAX_TRAINERS_COUNT                  900
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 

@@ -7,12 +7,12 @@ RustboroCity_Gym_EventScript_Roxanne::
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, RustboroCity_Gym_RoxanneHard
 	
-	@ Modo Normal - TRAINER_TERRA_CASUAL 
+	@ Normal Mode - TRAINER_TERRA_CASUAL 
 	trainerbattle_single TRAINER_TERRA_CASUAL, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 	goto RustboroCity_Gym_AfterBattle
 
 RustboroCity_Gym_RoxanneHard::
-	@ Modo Hard - TRAINER_TERRA_HARD 
+	@ Hard Mode - TRAINER_TERRA_HARD 
 	trainerbattle_single TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 
 RustboroCity_Gym_AfterBattle::

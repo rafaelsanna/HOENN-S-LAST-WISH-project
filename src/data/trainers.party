@@ -5063,8 +5063,54 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Bullet Seed  
 - Rock Blast  
 
+=== TRAINER_DEN_CASUAL ===
+Name: DEN
+Class: Leader
+Pic: Leader Wattson
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Basic Trainer
+
+Plusle  
+Ability: Lightning Rod 
+Level: 31 
+- Shock Wave  
+- Nuzzle  
+- Super Fang  
+- Wish  
+
+Minun  
+Ability: Volt Absorb  
+Level: 31  
+- Shock Wave  
+- Nuzzle  
+- Fake Tears  
+- Swift  
+
+Volbeat (M) 
+Level: 32  
+- Shock Wave  
+- Struggle Bug  
+- Chilling Water  
+- Metronome  
+
+Magnezone   
+Level: 33  
+- Shock Wave  
+- Tri Attack  
+- Iron Head  
+- Magnet Rise
+
+Politoed @ Sitrus Berry  
+Level: 34  
+- Shock Wave  
+- Water Pulse  
+- Encore  
+- Icy Wind  
+
 === TRAINER_WATTSON_1 ===
-Name: WATTSON
+Name: DEN
 Class: Leader
 Pic: Leader Wattson
 Gender: Male

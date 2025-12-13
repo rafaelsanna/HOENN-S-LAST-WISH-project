@@ -74,7 +74,20 @@ MauvilleCity_Gym_EventScript_DeactivatePuzzle::
 	end
 
 MauvilleCity_Gym_EventScript_Wattson::
+	lock
+	faceplayer
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, MauvilleCity_Gym_WattsonHard
+
+	@ Normal Mode
+	trainerbattle_single TRAINER_DEN_CASUAL, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
+	goto MauvilleCity_Gym_AfterBattle
+
+MauvilleCity_Gym_WattsonHard::
+	@ Hard Mode
 	trainerbattle_single TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
+
+MauvilleCity_Gym_AfterBattle::
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_Gym_EventScript_WattsonRematch
 	goto_if_unset FLAG_RECEIVED_TM_SHOCK_WAVE, MauvilleCity_Gym_EventScript_GiveShockWave2
@@ -259,7 +272,7 @@ MauvilleCity_Gym_EventScript_GymStatue::
 MauvilleCity_Gym_Text_GymGuideAdvice:
 	.string "Hey, how's it going, CHAMPION-\n"
 	.string "bound {PLAYER}?\p"
-	.string "WATTSON, the LEADER of MAUVILLE\n"
+	.string "DEN, the LEADER of MAUVILLE\n"
 	.string "GYM, uses ELECTRIC-type POKéMON.\p"
 	.string "If you challenge him with WATER-type\n"
 	.string "POKéMON, he'll zap them! Bzzt!\p"
@@ -284,76 +297,103 @@ MauvilleCity_Gym_Text_KirkPostBattle:
 	.string "whoa-yeah!$"
 
 MauvilleCity_Gym_Text_ShawnIntro:
-	.string "I trained under WATTSON!\n"
-	.string "There ain't no way I'll lose easily!$"
+	.string "I trained under DEN!\n"
+	.string "No way I'm losing easily!$"
 
 MauvilleCity_Gym_Text_ShawnDefeat:
-	.string "Unplugged and turned off…$"
+	.string "Overloaded…\n"
+	.string "System failure…$"
 
 MauvilleCity_Gym_Text_ShawnPostBattle:
-	.string "WATTSON, our GYM LEADER, has been\n"
-	.string "around for a long, long time.\p"
-	.string "He was battling even before your\n"
-	.string "daddy was born, that tough coot.$"
+	.string "DEN isn't just strong.\p"
+	.string "He's a genius.\n"
+	.string "He solves insane calculations\n"
+	.string "while building his machines.\p"
+	.string "He says only those who can think\n"
+	.string "fast deserve to challenge him.$"
 
 MauvilleCity_Gym_Text_BenIntro:
-	.string "This GYM's got puzzles!\n"
-	.string "Isn't it fun?$"
+	.string "This GYM is full of puzzles!\n"
+	.string "Think you can handle them?$"
 
 MauvilleCity_Gym_Text_BenDefeat:
-	.string "It's no fun to lose…$"
+	.string "Guess I wasn't clever enough…$"
 
 MauvilleCity_Gym_Text_BenPostBattle:
-	.string "WATTSON says he likes setting up\n"
-	.string "little traps with switches.$"
+	.string "DEN believes strength isn't enough.\p"
+	.string "He says only TRAINERS with sharp\n"
+	.string "minds deserve to face him.\p"
+	.string "Every switch is a test…\n"
+	.string "Not just of power, but of intellect.$"
 
 MauvilleCity_Gym_Text_VivianIntro:
-	.string "With my charm and my POKéMON's moves,\n"
-	.string "you'll be shocked!$"
+	.string "Careful now!\p"
+	.string "Between my charm and my POKéMON,\n"
+	.string "you might get shocked!$"
 
 MauvilleCity_Gym_Text_VivianDefeat:
-	.string "I'm shocked by your power!$"
+	.string "Wow…\p"
+	.string "That shock was real.$"
 
 MauvilleCity_Gym_Text_VivianPostBattle:
-	.string "I've heard that MAUVILLE was founded\n"
-	.string "by WATTSON.\p"
-	.string "He was a TRAINER long before we\n"
-	.string "became TRAINERS.\l"
-	.string "He must know all sorts of things!$"
+	.string "DEN isn't like other LEADERS.\p"
+	.string "Since he was a child,\n"
+	.string "he solved impossible formulas.\p"
+	.string "Machines, energy, circuits…\n"
+	.string "they make sense to him.\p"
+	.string "Sometimes I wonder if\n"
+	.string "electricity thinks like DEN does.$"
 
 MauvilleCity_Gym_Text_AngeloIntro:
-	.string "I love shiny things!$"
+	.string "You came for DEN?\p"
+	.string "Heh… be careful.\n"
+	.string "That man isn't normal.\p"
+	.string "Electricity listens to him.$"
 
 MauvilleCity_Gym_Text_AngeloDefeat:
-	.string "Oh…\n"
-	.string "My eyes are frazzled…$"
+	.string "Tch… figures.\p"
+	.string "If you beat me,\n"
+	.string "DEN will fry you.$"
 
 MauvilleCity_Gym_Text_AngeloPostBattle:
-	.string "MAUVILLE GYM's WATTSON has a shiny\n"
-	.string "forehead. It makes me happy!$"
+	.string "Hey, word of advice!\p"
+	.string "Don't get too close to DEN.\p"
+	.string "That guy is always carrying\n"
+	.string "some high-voltage machine!\p"
+	.string "Hahaha! Seriously, though...\n"
+	.string "One wrong step and ZAP!$"
 
 MauvilleCity_Gym_Text_WattsonIntro:
-	.string "I've given up on my plans to convert\n"
-	.string "the city, I have.\p"
-	.string "And so, I put my time into making\n"
-	.string "door traps in my GYM.\p"
-	.string "Oh? Now, what are you doing here?\p"
-	.string "What's that? You say you've gotten\n"
-	.string "past all my rigged doors?\p"
-	.string "Wahahahah!\n"
-	.string "Now, that is amusing!\p"
-	.string "Then, I, WATTSON, the LEADER of\n"
-	.string "MAUVILLE GYM, shall electrify you!$"
+	.string "DEN: Hehehe...\p"
+	.string "I used to dream about powering\n"
+	.string "the whole city, all by myself.\p"
+	.string "Circuits, volts, equations...\n"
+	.string "They speak to me.\p"
+	.string "But dreams change.\p"
+	.string "Now I spend my days building\n"
+	.string "traps and testing limits.\p"
+	.string "Electric limits.\p"
+	.string "Oh?\n"
+	.string "You made it through my doors?\p"
+	.string "Heh... interesting.\p"
+	.string "I've taken more shocks than\n"
+	.string "any normal human should survive.\p"
+	.string "My body learned to adapt...\n"
+	.string "I am DEN, the LEADER of\n"
+	.string "MAUVILLE GYM.\p"
+	.string "Let's see if you can endure\n"
+	.string "my electricity!$"
 
 MauvilleCity_Gym_Text_WattsonDefeat:
-	.string "Wahahahah!\n"
-	.string "Fine, I lost!\p"
-	.string "You ended up giving me a thrill!\n"
-	.string "Take this BADGE!$"
+	.string "Ahahaha…!\p"
+	.string "My circuits failed!\n"
+	.string "What a shock… what a shock!\p"
+	.string "You earned this.\n"
+	.string "Take the BADGE.$"
 
 MauvilleCity_Gym_Text_ReceivedDynamoBadge:
 	.string "{PLAYER} received the DYNAMO BADGE\n"
-	.string "from WATTSON.$"
+	.string "from DEN.$"
 
 MauvilleCity_Gym_Text_ExplainDynamoBadgeTakeThis:
 	.string "With the DYNAMO BADGE, POKéMON can\n"
@@ -370,23 +410,25 @@ MauvilleCity_Gym_Text_ExplainShockWave:
 	.string "… … … … … …$"
 
 MauvilleCity_Gym_Text_RegisteredWattson:
-	.string "Registered GYM LEADER WATTSON\n"
+	.string "Registered GYM LEADER DEN\n"
 	.string "in the POKéNAV.$"
 
 MauvilleCity_Gym_Text_WattsonPostBattle:
-	.string "I swell with optimism, seeing a promising\n"
-	.string "young TRAINER like you!$"
+	.string "Heh… interesting.\p"
+	.string "You kept up with my circuits.\n"
+	.string "Not many can do that.$"
 
 MauvilleCity_Gym_Text_WattsonGoForthAndEndeavor:
-	.string "Wahahahah!\n"
-	.string "Go forth and endeavor, youngster!$"
+	.string "This was fun.\p"
+	.string "Go test yourself out there.\n"
+	.string "Hoenn won't go easy on you.$"
 
 MauvilleCity_Gym_Text_GymStatue:
 	.string "MAUVILLE CITY POKéMON GYM$"
 
 MauvilleCity_Gym_Text_GymStatueCertified:
 	.string "MAUVILLE CITY POKéMON GYM\p"
-	.string "WATTSON'S CERTIFIED TRAINERS:\n"
+	.string "DEN'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 MauvilleCity_Gym_Text_WattsonPreRematch:
