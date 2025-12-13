@@ -5069,41 +5069,52 @@ Class: Leader
 Pic: Leader Wattson
 Gender: Male
 Music: Male
-Items: Super Potion / Super Potion
 Double Battle: No
 AI: Basic Trainer
 
-Voltorb
-Level: 20
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Rollout
-- Spark
-- Self Destruct
-- Shock Wave
+Volbeat (M) @ Sitrus Berry  
+Ability: Volt Absorb 
+Timid Nature  
+Level: 34  
+- Volt Switch  
+- Silver Wind 
+- Dazzling Gleam  
+- Discharge 
 
-Electrike
-Level: 20
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Shock Wave
-- Leer
-- Quick Attack
-- Howl
+Electabuzz @ Eviolite  
+Ability: Static  
+Jolly Nature 
+Level: 34   
+- Thunder Punch  
+- Bulk Up  
+- Ice Punch  
+- Fire Punch  
 
-Magneton
-Level: 22
-IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Supersonic
-- Shock Wave
-- Thunder Wave
-- Sonic Boom
+Manectric @ Life Orb  
+Ability: Intimidate  
+Level: 34  
+- Volt Switch  
+- Discharge  
+- Flamethrower  
+- Substitute  
 
-Manectric @ Sitrus Berry
-Level: 24
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Quick Attack
-- Thunder Wave
-- Shock Wave
-- Howl
+Magnezone @ Air Balloon  
+Ability: Magnet Pull  
+Modest Nature  
+Level: 34  
+- Discharge   
+- Flash Cannon  
+- Volt Switch  
+- Magnet Rise  
+
+Politoed @ Damp Rock  
+Ability: Drizzle  
+Modest Nature
+Level: 34  
+- Earth Power  
+- Ice Beam  
+- Weather Ball  
+- Discharge   
 
 === TRAINER_FLANNERY_1 ===
 Name: FLANNERY
