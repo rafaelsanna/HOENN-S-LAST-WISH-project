@@ -279,12 +279,13 @@ PetalburgCity_EventScript_ShowGymToPlayer::
 	call_if_eq VAR_0x8008, 2, PetalburgCity_EventScript_LeadPlayerToGym2
 	call_if_eq VAR_0x8008, 3, PetalburgCity_EventScript_LeadPlayerToGym3
 	msgbox PetalburgCity_Text_ThisIsPetalburgGym, MSGBOX_DEFAULT
-	applymovement LOCALID_GYM_BOY, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_GYM_BOY, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox PetalburgCity_Text_ThisIsGymSign, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_GYM_BOY, PetalburgCity_Movement_BoyWalkAway
+	call PetalburgCity_EventScript_MoveGymBoyToWestEntrance
 	waitmovement 0
 	fadedefaultbgm
 	releaseall
@@ -350,6 +351,7 @@ PetalburgCity_Movement_Delay48::
 PetalburgCity_Movement_BoyApproachPlayer0:
 	walk_right
 	walk_right
+	walk_down
 	walk_right
 	walk_in_place_faster_up
 	step_end
@@ -357,12 +359,15 @@ PetalburgCity_Movement_BoyApproachPlayer0:
 PetalburgCity_Movement_BoyApproachPlayer1:
 	walk_right
 	walk_right
+	walk_down
+	walk_in_place_faster_right
 	step_end
 
 PetalburgCity_Movement_BoyApproachPlayer2:
 	walk_right
 	walk_right
 	walk_right
+	walk_down
 	walk_in_place_faster_down
 	step_end
 
@@ -382,8 +387,12 @@ PetalburgCity_Movement_BoyWalkToGym0:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
 	walk_up
 	walk_right
+	walk_up
+	walk_right
+	walk_up
 	walk_in_place_faster_up
 	step_end
 
@@ -391,6 +400,7 @@ PetalburgCity_Movement_BoyWalkToGym1:
 	walk_down
 	walk_right
 	walk_right
+	walk_up
 	walk_right
 	walk_right
 	walk_right
@@ -398,8 +408,11 @@ PetalburgCity_Movement_BoyWalkToGym1:
 	walk_right
 	walk_right
 	walk_up
+	walk_right
 	walk_up
 	walk_right
+	walk_right
+	walk_up
 	walk_in_place_faster_up
 	step_end
 
@@ -413,6 +426,10 @@ PetalburgCity_Movement_BoyWalkToGym2:
 	walk_right
 	walk_up
 	walk_right
+	walk_up
+	walk_right
+	walk_right
+	walk_up
 	walk_in_place_faster_up
 	step_end
 
@@ -434,6 +451,8 @@ PetalburgCity_Movement_BoyWalkAway:
 	walk_down
 	walk_left
 	walk_left
+	walk_down
+	walk_down
 	walk_left
 	walk_left
 	walk_left
@@ -454,19 +473,28 @@ PetalburgCity_Movement_PlayerWalkToGym0:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_up
+	walk_right
+	walk_up
 	walk_up
 	step_end
 
 PetalburgCity_Movement_PlayerWalkToGym1:
 	delay_16
 	delay_16
-	walk_down
+	walk_in_place_faster_right
+	delay_16
+	delay_16
 	walk_right
 	walk_right
 	walk_right
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
+	walk_up
 	walk_right
 	walk_up
 	walk_up
@@ -479,6 +507,10 @@ PetalburgCity_Movement_PlayerWalkToGym2:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_up
 	walk_right
 	walk_right
 	walk_up
@@ -700,7 +732,7 @@ PetalburgCity_EventScript_GymBoy::
 	end
 
 PetalburgCity_Text_WhereIsWally:
-	.string "Where has our WALLY gone?\p"
+	.string "Where has our LUKA gone?\p"
 	.string "We have to leave for VERDANTURF TOWN\n"
 	.string "very soon…$"
 
@@ -710,7 +742,7 @@ PetalburgCity_Text_AreYouRookieTrainer:
     .string "You've got that 'what did I walk into'\n"
     .string "look on your face.\p"
     .string "Petalburg's been… odd lately.\n"
-    .string "People keep hearing footsteps in the\n"
+    .string "People keep hearing footsteps in the\l"
     .string "woods even when the wind is still.\p"
     .string "If I were you, I'd keep my guard up.\n"
     .string "This place has seen strange things.$"
