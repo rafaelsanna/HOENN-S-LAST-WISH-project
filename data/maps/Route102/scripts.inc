@@ -95,7 +95,7 @@ Route102_Text_WatchMeCatchPokemon:
 
 Route102_Text_WallyIDidIt:
 .string "LUKA: Congrats, {PLAYER}!\n"
-.string "You really proved you're an\n"
+.string "You really proved you're an\l"
 .string "excellent TRAINER.$"
 
 Route102_Text_LetsGoBack:

@@ -155,6 +155,8 @@ PetalburgCity_Movement_WallyTutorialPlayer:
 	walk_down
 	walk_down
 	walk_down
+	walk_down
+	walk_down
 	walk_right
 	walk_right
 	walk_right
@@ -189,6 +191,8 @@ PetalburgCity_Movement_WallyTutorialWally:
 	walk_down
 	walk_down
 	walk_down
+	walk_down
+	walk_down
 	walk_right
 	walk_right
 	walk_right
@@ -213,10 +217,9 @@ PetalburgCity_Movement_WallyTutorialWally:
 	walk_up
 	walk_right
 	delay_16
-	walk_in_place_faster_up
 	delay_16
 	delay_16
-	walk_in_place_faster_right
+	walk_in_place_faster_left
 	step_end
 
 PetalburgCity_EventScript_GymSign::
