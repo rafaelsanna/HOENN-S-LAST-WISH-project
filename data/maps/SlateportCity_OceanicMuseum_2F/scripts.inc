@@ -52,7 +52,8 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	closemessage
 	applymovement LOCALID_OCEANIC_MUSEUM_2F_ARCHIE, SlateportCity_OceanicMuseum_2F_Movement_ArchieApproachPlayer
 	waitmovement 0
-	msgbox SlateportCity_OceanicMuseum_2F_Text_ArchieWarning, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_ALEJANDRO_1, SlateportCity_OceanicMuseum_2F_Text_AlejandroDefeat
+	msgbox SlateportCity_OceanicMuseum_2F_Text_AlejandroAfterBattle, MSGBOX_DEFAULT
 	closemessage
 	savebgm MUS_DUMMY
 	fadedefaultbgm
@@ -320,7 +321,6 @@ SlateportCity_OceanicMuseum_2F_Text_ArchieWarning:
 	.string "We are TEAM AQUA.\n"
 	.string "The sea is our future.\p"
 	.string "I am a CAPTAIN of TEAM AQUA.\n"
-	.string "Not its ruler, but its voice.\p"
 	.string "Why do you interfere with us?\p"
 	.string "…No.\n"
 	.string "You're not with TEAM MAGMA.\p"
@@ -351,7 +351,6 @@ SlateportCity_OceanicMuseum_2F_Text_ArchieWarning:
 	.string "and you will be treated as an enemy.\p"
 	.string "History will move forward,\n"
 	.string "with or without you.$"
-
 
 SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs:
 	.string "CAPT. STERN: You're…\n"
@@ -443,3 +442,19 @@ SlateportCity_OceanicMuseum_2F_Text_SSAnneReplica:
 	.string "“S.S. ANNE\p"
 	.string "“A replica of the luxury liner that\n"
 	.string "circles the globe.”$"
+
+///////////// ALEJANDRO PART
+
+SlateportCity_OceanicMuseum_2F_Text_AlejandroDefeat:
+	.string "Impressive…$"
+
+SlateportCity_OceanicMuseum_2F_Text_AlejandroAfterBattle:
+	.string "What a surprise, I didn't expect a\n"
+	.string "competent trainer.\p"
+	.string "You with those weird clothes there,\n"
+	.string "I heard about a young person who has\l"
+	.string "been causing trouble for TEAM AQUA.\p"
+	.string "Well, I was careless and brought few\n"
+	.string "POKéMON this time.\p"
+	.string "I didn't think I would have problems.\p"
+	.string "Next time won't be so easy!$"

@@ -607,6 +607,33 @@ Golbat
 Level: 34
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
+=== TRAINER_ALEJANDRO_1 ===
+Name: ALEJANDRO
+Class: Aqua Admin
+Pic: Alejandro
+Gender: Male
+Music: Aqua
+Double Battle: Yes
+AI: Smart Trainer
+
+Milotic @ Sitrus Berry  
+Ability: Competitive  
+Level: 27
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+- Water Pulse  
+- Protect  
+- Icy Wind  
+- Draining Kiss
+
+Masquerain @ Rocky Helmet  
+Ability: Water Bubble  
+Level: 27
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+- Air Slash  
+- Chilling Water  
+- Protect  
+- Tailwind
+
 === TRAINER_ZANDER ===
 Name: ZANDER
 Class: Black Belt

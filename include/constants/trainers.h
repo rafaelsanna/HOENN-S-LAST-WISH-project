@@ -165,9 +165,10 @@
 #define TRAINER_PIC_LUKA                 147
 #define TRAINER_PIC_HERBALIST            148
 #define TRAINER_PIC_CHANNELER            149
+#define TRAINER_PIC_ALEJANDRO            150
 // COUNT
 
-#define TRAINER_PIC_COUNT                150
+#define TRAINER_PIC_COUNT                151
 
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
