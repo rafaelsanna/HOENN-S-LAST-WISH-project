@@ -550,7 +550,7 @@ LittlerootTown_01_Text_No:
 	.string "Alright, start the journey.$"
 
 LittlerootTown_01_Text_CelebiWarning:
-	.string "Celebi: {PLAYER}{KUN},...\p"
+	.string "Celebi: {PLAYER}{KUN}...\p"
 	.string "A strange light surrounds you…\p"
 	.string "Do not fear this place.\n"
 	.string "What you see is only a dream…\p"

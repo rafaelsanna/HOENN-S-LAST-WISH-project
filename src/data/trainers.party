@@ -427,8 +427,12 @@ Double Battle: No
 AI: Check Bad Move
 
 Carvanha
-Level: 15
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Level: 25
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Luvdisc
+Level: 25
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_GRUNT_MUSEUM_2 ===
 Name: GRUNT
@@ -439,13 +443,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 14
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Golbat
+Level: 25
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
-Carvanha
-Level: 14
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Tentacool
+Level: 25
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_GRUNT_GRANITE_CAVE ===
 Name: GRUNT
@@ -4944,7 +4948,7 @@ Pic: Leader Roxanne
 Gender: Female
 Music: Female
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Lileep @ Focus Band
 Ability: Storm Drain 
@@ -5020,7 +5024,7 @@ Pic: Leader Brawly
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Poliwhirl @ Eviolite  
 Level: 25  
@@ -5113,7 +5117,7 @@ Pic: Leader Wattson
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Volbeat (M) @ Sitrus Berry  
 Ability: Volt Absorb 
@@ -5166,7 +5170,7 @@ Pic: Leader Flannery
 Gender: Female
 Music: Female
 Double Battle: No
-AI: Smart Trainer / Smart Mon Choices / Prediction
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Ninetales @ Heat Rock  
 Ability: Drought  
@@ -11399,11 +11403,11 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Lotad
-Level: 13
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Oddish
+Level: 15
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Torchic
+Totodile
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -11523,11 +11527,11 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer
 
-Slugma
-Level: 13
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Oddish
+Level: 15
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Mudkip
+Bulbasaur
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -11540,11 +11544,11 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Force Setup First Turn
 
-Wingull
-Level: 13
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Poliwag
+Level: 15
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Treecko
+Torchic
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -12622,7 +12626,7 @@ Pic: Luka
 Gender: Male
 Music: Male
 Double Battle: Yes
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Pidgeotto @ Sitrus Berry
 Level: 30
@@ -12640,15 +12644,13 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Confuse Ray
 - Moonlight
 
-Delcatty @ Chople Berry 
-Ability: Sharpness
-Shiny: Yes  
-Level: 30
+Tentacruel @ Black Sludge  
+Ability: Liquid Ooze   
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
-- Fake Out
-- Slash
-- Substitute
-- Protect
+- Toxic  
+- Protect  
+- Chilling Water  
+- Venoshock
 
 Dustox @ Lum Berry
 Level: 30
@@ -14797,11 +14799,11 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Lotad
-Level: 13
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Oddish
+Level: 15
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Torchic
+Totodile
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
