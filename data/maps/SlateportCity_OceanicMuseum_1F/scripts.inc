@@ -241,13 +241,21 @@ SlateportCity_OceanicMuseum_1F_Text_CatchUpWithYourGroup:
 	.string "You'd better go catch up to them!$"
 
 SlateportCity_OceanicMuseum_1F_Text_AquaExistForGoodOfAll:
-	.string "We, TEAM AQUA, exist for the good\n"
-	.string "of all!$"
+	.string "So what are you doing here?\n"
+	.string "Get lost before you find trouble,\l"
+	.string "weirdo with the cape.\p"
+	.string "Don't mistake our restraint for mercy.\n"
+	.string "Don't mess with TEAM AQUA.$"
 
 SlateportCity_OceanicMuseum_1F_Text_OurBossIsntHere:
-	.string "We were told to assemble here,\n"
-	.string "so we did, but…\p"
-	.string "Our BOSS, the linchpin, isn't here.$"
+	.string "Don't bother asking me about plans.\n"
+	.string "I don't know much, and I don't want to.\p"
+	.string "Orders were simple:\n"
+	.string "stand here and keep quiet.\p"
+	.string "So do yourself a favor.\n"
+	.string "Walk away.\p"
+	.string "If you get involved with TEAM AQUA,\n"
+	.string "you won't like how it ends.$"
 
 SlateportCity_OceanicMuseum_1F_Text_WouldStuffHereMakeMeRich:
 	.string "If I ripped off the stuff here,\n"

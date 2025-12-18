@@ -10,13 +10,21 @@ SlateportCity_House_EventScript_Girl::
 	end
 
 SlateportCity_House_Text_NatureToDoWithStatGains:
-	.string "My POKéMON has a HASTY nature.\p"
-	.string "It has higher SPEED compared to\n"
-	.string "my other POKéMON.\p"
-	.string "Maybe their nature has something to\n"
-	.string "do with the stat gains of POKéMON.$"
+	.string "They say Slateport grew from nothing\n"
+	.string "but clean water and abundant food.\p"
+	.string "Now ships and people from all\n"
+	.string "over Hoenn come here to trade.\p"
+	.string "Some nights, fishermen swear they\n"
+	.string "heard whispers carried by the tide.\p"
+	.string "Ancient tales speak of deep currents\n"
+	.string "that hide secrets beneath the waves…$"
 
 SlateportCity_House_Text_MustBeGoingToBattleTent:
-	.string "You're a TRAINER, aren't you?\p"
-	.string "Since you came to SLATEPORT CITY,\n"
-	.string "you must be going to the BATTLE TENT.$"
+	.string "Welcome to Slateport City.\n"
+	.string "This place is where people and\n"
+	.string "POKéMON cross paths with nature.\p"
+	.string "A market grew from clean water,\n"
+	.string "and a lighthouse guards the bay.\p"
+	.string "Some sailors swear the ocean here\n"
+	.string "holds echoes of things long lost…\p"
+	.string "Why are you really here?$"
