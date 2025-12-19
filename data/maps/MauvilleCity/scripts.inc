@@ -592,7 +592,7 @@ MauvilleCity_Text_ScottYouDidntHoldBack:
 	.string "I'll be cheering for you!$"
 
 MauvilleCity_Text_WattsonNeedFavorTakeKey:
-	.string "WATTSON: Oh, {PLAYER}{KUN}!\n"
+	.string "DEN: Oh, {PLAYER}{KUN}!\n"
 	.string "You look like you have a lot of zip!\l"
 	.string "That's a good thing, wahahahaha!\p"
 	.string "Fine! I've decided!\n"
@@ -607,7 +607,7 @@ MauvilleCity_Text_WattsonNeedFavorTakeKey:
 	.string "NEW MAUVILLE.$"
 
 MauvilleCity_Text_WattsonWontBeChallenge:
-	.string "WATTSON: Don't you worry about it.\n"
+	.string "DEN: Don't you worry about it.\n"
 	.string "It won't be a challenge to you.\p"
 	.string "The entrance to NEW MAUVILLE is just\n"
 	.string "a short SURF away from ROUTE 110.\p"
@@ -615,7 +615,7 @@ MauvilleCity_Text_WattsonWontBeChallenge:
 	.string "Wahahahaha!$"
 
 MauvilleCity_Text_WattsonThanksTakeTM:
-	.string "WATTSON: Wahahahaha!\p"
+	.string "DEN: Wahahahaha!\p"
 	.string "I knew it, {PLAYER}{KUN}! I knew I'd made\n"
 	.string "the right choice asking you!\p"
 	.string "This is my thanks--a TM containing\n"
@@ -623,21 +623,34 @@ MauvilleCity_Text_WattsonThanksTakeTM:
 	.string "Go on, you've earned it!$"
 
 MauvilleCity_Text_WattsonYoungTakeCharge:
-	.string "WATTSON: Wahahahaha!\p"
+	.string "DEN: Wahahahaha!\p"
 	.string "It pleases me to no end to see\n"
 	.string "the young step up and take charge!$"
 
 MauvilleCity_Text_NurseHurtMonBackToHealth:
-	.string "You know, it's cool to have POKéMON\n"
-	.string "battles and stuff…\p"
-	.string "But if your POKéMON gets hurt,\n"
-	.string "you have to nurse it back to health.$"
+	.string "You have heard about DEN, right?\n"
+	.string "The Gym Leader here.\p"
+	.string "They say he is a genius with\n"
+	.string "electricity and POKéMON.\p"
+	.string "But also a little unstable.\n"
+	.string "His experiments go too far sometimes.\p"
+	.string "Strange machines, sparks everywhere,\n"
+	.string "lights flashing all night.\p"
+	.string "Some people find him scary.\n"
+	.string "Others call him brilliant.\p"
+	.string "Maybe both are true.$"
 
 MauvilleCity_Text_AllSortsOfPeopleComeThrough:
-	.string "The roads of this town stretch north\n"
-	.string "and south, and east and west.\p"
-	.string "Because of that, we get all sorts of\n"
-	.string "people coming through.$"
+	.string "Mauville sits at the crossroads.\n"
+	.string "People come from every direction.\p"
+	.string "Trainers, merchants, engineers,\n"
+	.string "and travelers just passing through.\p"
+	.string "I've seen all kinds of outfits here.\n"
+	.string "Nothing really surprises me anymore.\p"
+	.string "But someone dressed like you?\n"
+	.string "That cape is something else.\p"
+	.string "Kind of stylish, I guess.\n"
+	.string "Not my look, though. Haha.$"
 
 MauvilleCity_Text_RydelVeryGenerous:
 	.string "Have you been to RYDEL'S CYCLES yet?\p"
@@ -645,17 +658,25 @@ MauvilleCity_Text_RydelVeryGenerous:
 	.string "man.$"
 
 MauvilleCity_Text_PokemonCanJumpYouOnBike:
-	.string "Even if you're riding a BIKE,\n"
-	.string "wild POKéMON could jump you.$"
+	.string "Mauville City hums with power.\n"
+	.string "They say the energy here is so strong\n"
+	.string "it can make PokéMON behave strangely.\p"
+	.string "Some trainers claim they felt their\n"
+	.string "own POKéMON twitch without warning.\p"
+	.string "Others swear strange lights flicker\n"
+	.string "near the power grid at night.\p"
+	.string "If you pay attention, you might\n"
+	.string "discover something no one else has.$"
+
 
 MauvilleCity_Text_CitySign:
 	.string "MAUVILLE CITY\n"
 	.string "“The bright and shiny city of fun!”$"
 
 MauvilleCity_Text_GymSign:
-	.string "MAUVILLE CITY POKéMON GYM\n"
-	.string "LEADER: WATTSON\l"
-	.string "“The cheerfully electrifying man!”$"
+	.string "MAUVILLE CITY POKeMON GYM\n"
+	.string "LEADER: DEN\l"
+	.string "The brilliant, electrifying prodigy!$"
 
 MauvilleCity_Text_BikeShopSign:
 	.string "“Ride in gravel and shake up your\n"
@@ -667,16 +688,17 @@ MauvilleCity_Text_GameCornerSign:
 	.string "MAUVILLE GAME CORNER$"
 
 MauvilleCity_Text_ExplainTV:
-	.string "Hi, do you check out TV at all?\p"
-	.string "They've added a bunch of cool new\n"
-	.string "shows recently.\p"
-	.string "TV is so cool. I've seen my friends on\n"
-	.string "TV just out of the blue.\p"
-	.string "And, sometimes, they even put you on TV\n"
-	.string "without telling you.\p"
-	.string "I wish I would be on TV sometime.\p"
-	.string "That's why I think you should check\n"
-	.string "out TVs whenever you can.$"
+	.string "Hey, have you seen the news lately?\p"
+	.string "Ever since that meteor passed,\n"
+	.string "it's all they talk about on TV.\p"
+	.string "No one knows where it came from,\n"
+	.string "or what it really was.\p"
+	.string "People are curious.\n"
+	.string "Some are even scared.\p"
+	.string "I keep watching, hoping they find\n"
+	.string "some new clue or explanation.\p"
+	.string "You should watch TV too.\n"
+	.string "You never know what you might learn.$"
 
 MauvilleCity_Text_BeenCheckingOutTV:
 	.string "Hi, have you been checking out TVs?$"

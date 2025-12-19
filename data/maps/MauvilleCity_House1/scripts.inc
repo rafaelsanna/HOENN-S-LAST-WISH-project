@@ -19,28 +19,33 @@ MauvilleCity_House1_EventScript_ReceivedRockSmash::
 	end
 
 MauvilleCity_House1_Text_ImRockSmashDudeTakeThis:
-	.string "Woohoo!\p"
-	.string "I hear people call me the ROCK SMASH\n"
-	.string "GUY, but I find that sort of degrading.\p"
-	.string "I think I deserve a bit more respect,\n"
-	.string "like maybe the ROCK SMASH DUDE.\p"
-	.string "Woohoo!\p"
-	.string "Anyways, your POKéMON look pretty\n"
-	.string "strong.\p"
-	.string "I like that!\n"
-	.string "Here, take this HIDDEN MACHINE!$"
+	.string "Hold on. Wait a second.\p"
+	.string "You fought RENTON back in\n"
+	.string "the second Gym city?\p"
+	.string "And you beat him?\p"
+	.string "Hah. That's impressive, kid.\p"
+	.string "Renton and I go way back.\n"
+	.string "Drinks, fights, broken tables.\p"
+	.string "He respected strength.\n"
+	.string "So did I.\p"
+	.string "They used to call me the\n"
+	.string "ROCK SMASH DUDE.\p"
+	.string "If Renton acknowledged you,\n"
+	.string "then you earned this.\p"
+	.string "Take it.$"
 
 MauvilleCity_House1_Text_ExplainRockSmash:
-	.string "That HM contains ROCK SMASH.\p"
-	.string "If you come across large boulders\n"
-	.string "that block your path…\p"
-	.string "Well, use that HM move and smash\n"
-	.string "them right out of your way!\p"
-	.string "Yes, sir! Smash rocks aside, I say!\n"
-	.string "Woohoo!$"
+	.string "That HM teaches ROCK SMASH.\p"
+	.string "Some obstacles are not meant\n"
+	.string "to be avoided.\p"
+	.string "They are meant to be broken.\p"
+	.string "Use it on cracked rocks.\n"
+	.string "Make your own path.$"
 
 MauvilleCity_House1_Text_MonCanFlyOutOfSmashedRock:
-	.string "Oh, yes, if you smash a rock, a POKéMON\n"
-	.string "could come flying out of hiding.\p"
-	.string "Woohoo!$"
+	.string "One warning.\p"
+	.string "When you smash rocks,\n"
+	.string "something might strike back.\p"
+	.string "Strength always draws attention.$"
+	
 
