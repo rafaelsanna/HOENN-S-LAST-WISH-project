@@ -4996,7 +4996,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Rock Tomb
 
 Nosepass @ Sitrus Berry
-Ability: Sturdy
+Ability: Levitate
 Level: 15
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Psybeam
@@ -5150,6 +5150,7 @@ Volbeat (M) @ Sitrus Berry
 Ability: Volt Absorb 
 Timid Nature  
 Level: 34  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
 - Volt Switch  
 - Silver Wind 
 - Dazzling Gleam  
@@ -5159,6 +5160,7 @@ Electabuzz @ Eviolite
 Ability: Static  
 Jolly Nature 
 Level: 34   
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
 - Thunder Punch  
 - Bulk Up  
 - Ice Punch  
@@ -5167,6 +5169,7 @@ Level: 34
 Manectric @ Life Orb  
 Ability: Intimidate  
 Level: 34  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
 - Volt Switch  
 - Discharge  
 - Fire Fang
@@ -5176,6 +5179,7 @@ Magnezone @ Air Balloon
 Ability: Magnet Pull  
 Modest Nature  
 Level: 34  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
 - Discharge   
 - Flash Cannon  
 - Volt Switch  
@@ -5185,13 +5189,14 @@ Politoed @ Damp Rock
 Ability: Drizzle  
 Modest Nature
 Level: 34  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
 - Mud Shot  
 - Icy Wind 
 - Water Pulse  
 - Discharge   
 
 === TRAINER_FLANNERY_1 ===
-Name: FLANNERY
+Name: BRASA
 Class: Leader
 Pic: Leader Flannery
 Gender: Female
@@ -5243,6 +5248,50 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Dark Pulse  
 - Flamethrower  
 - Taunt  
+
+=== TRAINER_FLANNERY_CASUAL ===
+Name: BRASA
+Class: Leader
+Pic: Leader Flannery
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Smart Trainer
+
+Granbull   
+Level: 41   
+- Fire Punch  
+- Brick Break  
+- Rest 
+- Roar 
+
+Arcanine 
+Level: 40  
+- Extreme Speed  
+- Flamethrower 
+- Morning Sun 
+- Wild Charge  
+
+Flareon   
+Level: 40    
+- Dig
+- Temper Flare 
+- Protect  
+- Quick Attack 
+
+Houndoom 
+Level: 40  
+- Will-O-Wisp 
+- Dark Pulse  
+- Flamethrower  
+- Trailblaze  
+
+Ninetales @ Mental Herb
+Level: 42  
+- Dazzling Gleam  
+- Flamethrower  
+- Energy Ball
+- Overheat 
 
 === TRAINER_NORMAN_1 ===
 Name: NORMAN
