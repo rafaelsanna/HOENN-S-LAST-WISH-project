@@ -211,6 +211,11 @@ static void DisplayCannotDismountBikeMessage(u8 taskId, bool8 isUsingRegisteredK
     DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, sText_CantDismountBike);
 }
 
+static void DisplayCannotUseInfiniteCandyMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField)
+{
+    DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gText_CannotUseInfiniteCandy);
+}
+
 static void Task_CloseCantUseKeyItemMessage(u8 taskId)
 {
     ClearDialogWindowAndFrame(0, TRUE);
@@ -900,7 +905,7 @@ void ItemUseOutOfBattle_RareCandy(u8 taskId)
 void ItemUseOutOfBattle_InfiniteCandy(u8 taskId)
 {
     if (gSaveBlock2Ptr->optionsInfiniteCandy == OPTIONS_INFINITECANDY_OFF) {
-        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        DisplayCannotUseInfiniteCandyMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
     } else {
         gItemUseCB = ItemUseCB_RareCandy;
         SetUpItemUseCallback(taskId);
