@@ -391,6 +391,8 @@ PetalburgCity_Movement_BoyWalkToGym0:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
 	walk_up
 	walk_right
 	walk_up
@@ -404,6 +406,8 @@ PetalburgCity_Movement_BoyWalkToGym1:
 	walk_right
 	walk_right
 	walk_up
+	walk_right
+	walk_right
 	walk_right
 	walk_right
 	walk_right
@@ -427,6 +431,8 @@ PetalburgCity_Movement_BoyWalkToGym2:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
 	walk_up
 	walk_right
 	walk_up
@@ -437,6 +443,8 @@ PetalburgCity_Movement_BoyWalkToGym2:
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym3:
+	walk_right
+	walk_right
 	walk_right
 	walk_right
 	walk_right
@@ -477,6 +485,8 @@ PetalburgCity_Movement_PlayerWalkToGym0:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
 	walk_up
 	walk_right
 	walk_up
@@ -489,6 +499,8 @@ PetalburgCity_Movement_PlayerWalkToGym1:
 	walk_in_place_faster_right
 	delay_16
 	delay_16
+	walk_right
+	walk_right
 	walk_right
 	walk_right
 	walk_right
@@ -512,6 +524,8 @@ PetalburgCity_Movement_PlayerWalkToGym2:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
 	walk_up
 	walk_up
 	walk_right
@@ -521,6 +535,8 @@ PetalburgCity_Movement_PlayerWalkToGym2:
 
 PetalburgCity_Movement_PlayerWalkToGym3:
 	walk_up
+	walk_right
+	walk_right
 	walk_right
 	walk_right
 	walk_right
