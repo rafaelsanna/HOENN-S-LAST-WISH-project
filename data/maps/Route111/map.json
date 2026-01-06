@@ -484,7 +484,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMPER",
-      "x": 26,
+      "x": 24,
       "y": 132,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -497,7 +497,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
-      "x": 20,
+      "x": 18,
       "y": 132,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",

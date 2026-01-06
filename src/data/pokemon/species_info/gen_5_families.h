@@ -12041,13 +12041,13 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
 
     [SPECIES_VOLCARONA] =
     {
-        .baseHP        = 85,
+        .baseHP        = 80,
         .baseAttack    = 60,
-        .baseDefense   = 65,
-        .baseSpeed     = 100,
-        .baseSpAttack  = 135,
-        .baseSpDefense = 105,
-        .types = MON_TYPES(TYPE_BUG, TYPE_FIRE),
+        .baseDefense   = 62,
+        .baseSpeed     = 110,
+        .baseSpAttack  = 110,
+        .baseSpDefense = 82,
+        .types = MON_TYPES(TYPE_BUG, TYPE_FLYING),
         .catchRate = 15,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 275 : 248,
         .evYield_SpAttack = 3,
@@ -12057,24 +12057,24 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .eggCycles = 40,
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),
-        .abilities = { ABILITY_FLAME_BODY, ABILITY_NONE, ABILITY_SWARM },
-        .bodyColor = BODY_COLOR_WHITE,
-        .speciesName = _("Volcarona"),
-        .cryId = CRY_VOLCARONA,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_BUG),
+        .abilities = { ABILITY_INTIMIDATE, ABILITY_UNNERVE, ABILITY_WATER_BUBBLE },
+        .bodyColor = BODY_COLOR_BLUE,
+        .speciesName = _("Masquerain"),
+        .cryId = CRY_MASQUERAIN,
         .natDexNum = NATIONAL_DEX_VOLCARONA,
-        .categoryName = _("Sun"),
+        .categoryName = _("Eyeball"),
         .height = 16,
-        .weight = 460,
+        .weight = 76,
         .description = COMPOUND_STRING(
-            "When volcanic ash darkened the\n"
-            "atmosphere, it appeared and saved Pokémon\n"
-            "from freezing, Volcarona's fire provided a\n"
-            "replacement for the sun."),
-        .pokemonScale = 259,
-        .pokemonOffset = 1,
-        .trainerScale = 296,
-        .trainerOffset = 1,
+            "It intimidates foes with the large eyelike\n"
+            "patterns on its antennae. Because it can't\n"
+            "fly if its wings get wet, it shelters itself\n"
+            "from rain under large trees and eaves."),
+        .pokemonScale = 378,
+        .pokemonOffset = 8,
+        .trainerScale = 256,
+        .trainerOffset = 0,
         .frontPic = gMonFrontPic_Volcarona,
         .frontPicSize = MON_COORDS_SIZE(64, 56),
         .frontPicYOffset = 4,
