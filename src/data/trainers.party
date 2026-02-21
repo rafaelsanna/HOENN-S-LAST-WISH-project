@@ -5359,7 +5359,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe
 
 
 === TRAINER_WINONA_1 ===
-Name: SKYLER
+Name: TAKA
 Class: Leader
 Pic: Leader Winona
 Gender: Female
@@ -5467,47 +5467,57 @@ Gender: Male
 Music: Male
 Items: Hyper Potion / Hyper Potion
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
-Luvdisc
-Level: 41
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Water Pulse
-- Attract
-- Sweet Kiss
-- Flail
+Pelipper  
+Ability: Rain Dish  
+Tera Type: Water  
+IVs: 0 Atk  
+- Rain Dance  
+- Surf  
+- Air Slash  
+- Roost  
 
-Whiscash
-Level: 41
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Rain Dance
-- Water Pulse
-- Amnesia
-- Earthquake
+Cursola  
+Ability: Weak Armor  
+Tera Type: Ghost  
+IVs: 0 Atk  
+- Moonblast  
+- Surf  
+- Heal Bell  
+- Perish Song  
 
-Sealeo
-Level: 43
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Encore
-- Body Slam
-- Aurora Beam
-- Water Pulse
+Venusaur  
+Ability: Torrent  
+Tera Type: Grass  
+- Earthquake  
+- Waterfall  
+- Dragon Tail  
+- Crunch  
 
-Crawdaunt
-Level: 43
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Water Pulse
-- Crabhammer
-- Taunt
-- Leer
+Ludicolo  
+Ability: Swift Swim  
+Tera Type: Water  
+- Surf  
+- Giga Drain  
+- Leech Seed  
+- Fake Out  
 
-Kingdra @ Chesto Berry
-Level: 46
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Water Pulse
-- Double Team
-- Ice Beam
-- Rest
+Starmie  
+Ability: Natural Cure  
+Tera Type: Water  
+- Rapid Spin  
+- Surf  
+- Psyshock  
+- Power Gem  
+
+Azumarill  
+Ability: Huge Power  
+Tera Type: Water  
+- Waterfall  
+- Aqua Jet  
+- Play Rough  
+- Brick Break  
 
 === TRAINER_JERRY_1 ===
 Name: JERRY
