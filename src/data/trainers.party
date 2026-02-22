@@ -5255,7 +5255,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Taunt  
 
 === TRAINER_FLANNERY_CASUAL ===
-Name: BRASA
+Name: AMATERASU
 Class: Leader
 Pic: Leader Flannery
 Gender: Female
@@ -5299,7 +5299,7 @@ Level: 42
 - Overheat 
 
 === TRAINER_NORMAN_1 ===
-Name: NORMAN
+Name: CALENDULA
 Class: Leader
 Pic: Leader Norman
 Gender: Male
@@ -5374,7 +5374,8 @@ Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Wigglytuff @ Assault Vest  
-Ability: Competitive  
+Ability: Competitive 
+Level: 55  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
 - Heat Wave  
 - Moonblast  
@@ -5382,7 +5383,8 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Energy Ball  
 
 Pidgeot @ Blunder Policy  
-Ability: Magic Bounce  
+Ability: Magic Bounce
+Level: 55    
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
 - Hurricane  
 - Heat Wave  
@@ -5391,36 +5393,39 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 
 Gliscor @ Toxic Orb  
 Ability: Poison Heal  
+Level: 55  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Protect  
 - Facade  
 - Swords Dance  
 - Earthquake  
 
-Masquerain @ Heavy-Duty Boots  
-Ability: Water Bubble  
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
-- Surf  
-- Bug Buzz  
-- Air Slash  
-- Quiver Dance  
-
 Gyarados @ Wacan Berry  
 Ability: Intimidate  
+Level: 55  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Dragon Dance  
 - Waterfall  
 - Earthquake  
 - Ice Fang  
 
-Aerodactyl @ Power Herb  
-Ability: Rock Head  
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Aerial Ace  
-- Stone Edge  
-- Earthquake  
-- Sky Attack  
+Blaziken @ Yache Berry  
+Ability: Speed Boost
+Level: 55  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
+- Defog  
+- Giga Drain  
+- Air Slash  
+- Earth Power
 
+Masquerain @ Heavy-Duty Boots  
+Ability: Water Bubble  
+Level: 55  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
+- Surf  
+- Bug Buzz  
+- Air Slash  
+- Quiver Dance  
 
 === TRAINER_TATE_AND_LIZA_1 ===
 Name: TATE&LIZA
