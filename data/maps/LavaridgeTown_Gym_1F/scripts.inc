@@ -181,43 +181,56 @@ LavaridgeTown_Gym_1F_EventScript_GymStatue::
 	end
 
 LavaridgeTown_Gym_1F_Text_GymGuideAdvice:
-	.string "Hey, how's it going, CHAMPION-\n"
-	.string "bound {PLAYER}?\p"
-	.string "LAVARIDGE's GYM LEADER FLANNERY\n"
-	.string "uses FIRE-type POKéMON.\p"
-	.string "Her passion for POKéMON burns stronger\n"
-	.string "and hotter than a volcano.\p"
-	.string "Don't get too close to her--you'll burn!\n"
-	.string "Hose her down with water and then\l"
-	.string "go for it!$"
+	.string "Hey! How's it going,\n"
+	.string "CHAMPION-bound {PLAYER}?\p"
+	.string "LAVARIDGE's LEADER is AMATERASU,\n"
+	.string "the blazing idol of Hoenn!\p"
+	.string "She battles with fierce FIRE\n"
+	.string "POKéMON, many like loyal hounds.\p"
+	.string "Her passion burns hotter than\n"
+	.string "the volcano itself!\p"
+	.string "Water will cool the flames,\n"
+	.string "but don't underestimate her rhythm!$"
 
 LavaridgeTown_Gym_1F_Text_GymGuidePostVictory:
 	.string "Yow! That was a scorching-hot battle!$"
 
 LavaridgeTown_Gym_1F_Text_ColeIntro:
 	.string "Owowowowow!\n"
-	.string "Yikes, it's hot!$"
+	.string "It's so hot in here!\p"
+	.string "I only came to get an autograph\n"
+	.string "from AMATERASU…\p"
+	.string "But I got burned instead!$"
 
 LavaridgeTown_Gym_1F_Text_ColeDefeat:
-	.string "I'm blinded by sweat in my eyes…$"
+	.string "Whoa… you're pretty tough…\p"
+	.string "If you get close to AMATERASU,\n"
+	.string "can you ask for her autograph\n"
+	.string "for me?$"
 
 LavaridgeTown_Gym_1F_Text_ColePostBattle:
-	.string "Being buried in hot sand promotes\n"
-	.string "circulation.\p"
-	.string "It's effective for healing pain in\n"
-	.string "your joints.$"
+	.string "AMATERASU is a rising idol star.\p"
+	.string "Her voice warms every heart.\p"
+	.string "But in battle, her flames\n"
+	.string "burn fierce and wild.$"
 
 LavaridgeTown_Gym_1F_Text_AxleIntro:
-	.string "I'm trying to relieve my stress.\n"
-	.string "Don't come along and stress me out!$"
+	.string "Hey! I'm not here because\n"
+	.string "of AMATERASU, okay?\p"
+	.string "I just like intense battles\n"
+	.string "and blazing heat!$"
 
 LavaridgeTown_Gym_1F_Text_AxleDefeat:
-	.string "I hope FLANNERY flames you good!$"
+	.string "I hope AMATERASU flames you good!$"
 
 LavaridgeTown_Gym_1F_Text_AxlePostBattle:
-	.string "Haaah… Whew…\p"
-	.string "If you spend too much time buried in\n"
-	.string "hot sand, it tuckers you out…$"
+	.string "Okay… maybe I'm a little\n"
+	.string "bit of an AMATERASU simp…\p"
+	.string "But I've got my own fire\n"
+	.string "burning inside!\p"
+	.string "Get too close to us,\n"
+	.string "and that strange cape of yours\n"
+	.string "might catch flame!$"
 
 LavaridgeTown_Gym_B1F_Text_KeeganIntro:
 	.string "You must be getting tired by now.\n"
@@ -232,7 +245,7 @@ LavaridgeTown_Gym_B1F_Text_KeeganDefeat:
 
 LavaridgeTown_Gym_B1F_Text_KeeganPostBattle:
 	.string "Your skill is real…\n"
-	.string "But our LEADER FLANNERY is strong.\p"
+	.string "But our LEADER AMATERASU is strong.\p"
 	.string "If you don't watch yourself, you'll be\n"
 	.string "burned seriously.$"
 
@@ -250,84 +263,109 @@ LavaridgeTown_Gym_1F_Text_GeraldPostBattle:
 	.string "easily survive in magma.$"
 
 LavaridgeTown_Gym_1F_Text_DanielleIntro:
-	.string "Um…\n"
-	.string "Okay, I'll battle with you.$"
+	.string "Um… hi wierdo…\n"
+	.string "I'll battle you now!$"
 
 LavaridgeTown_Gym_1F_Text_DanielleDefeat:
 	.string "Oh, but you're too strong.$"
 
 LavaridgeTown_Gym_1F_Text_DaniellePostBattle:
-	.string "I'm going to be a pretty and strong\n"
-	.string "TRAINER just like FLANNERY.$"
+	.string "AMATERASU shines on stage\n"
+	.string "with flames and fireworks.\p"
+	.string "I want to be strong and radiant\n"
+	.string "just like her someday!$"
 
 LavaridgeTown_Gym_B1F_Text_JaceIntro:
-	.string "Come on, get with it!\n"
-	.string "Let's go before my feelings cool!$"
+	.string "Have you ever seen her show?\n"
+	.string "Flames dancing in the dark!\p"
+	.string "That night changed my life.\n"
+	.string "Let's burn bright!$"
 
 LavaridgeTown_Gym_B1F_Text_JaceDefeat:
-	.string "It's so hot, and yet my heart is\n"
-	.string "clutched by ice…$"
+	.string "The fireworks faded…\n"
+	.string "and so did my spark…$"
 
 LavaridgeTown_Gym_B1F_Text_JacePostBattle:
-	.string "The way the battling spirit burns\n"
-	.string "within you, you may stand a chance\l"
-	.string "against our LEADER.$"
+	.string "AMATERASU's stage is pure fire!\p"
+	.string "The night I saw her perform,\n"
+	.string "I fell in love with flames!\p"
+	.string "If your spirit burns like that,\n"
+	.string "you might rival her.$"
 
 LavaridgeTown_Gym_B1F_Text_JeffIntro:
-	.string "See how the flames blaze wildly?\n"
-	.string "They flare in anticipation of my win!$"
+	.string "You see those flames?\n"
+	.string "They burn with loyalty!\p"
+	.string "Just like AMATERASU's\n"
+	.string "faithful POKéMON!$"
 
 LavaridgeTown_Gym_B1F_Text_JeffDefeat:
-	.string "Something didn't go right.$"
+	.string "Heh… So that's your strength.\n"
+	.string "No wonder you made it this far.$"
 
 LavaridgeTown_Gym_B1F_Text_JeffPostBattle:
-	.string "Well, so what? I say so what?\n"
-	.string "I can walk on hot coals barefoot!\p"
-	.string "…Don't even think about trying it!$"
+	.string "AMATERASU loves cute and\n"
+	.string "loyal FIRE POKéMON.\p"
+	.string "But don't mistake that\n"
+	.string "for weakness.\p"
+	.string "She's a natural talent.\n"
+	.string "Born to command flames.$"
 
 LavaridgeTown_Gym_B1F_Text_EliIntro:
-	.string "As much as I love mountains,\n"
-	.string "I especially love volcanoes.$"
+	.string "Did you see the comet that day?\n"
+	.string "It streaked across the sky!\p"
+	.string "It reminded me of AMATERASU!$"
 
 LavaridgeTown_Gym_B1F_Text_EliDefeat:
-	.string "Well, it seems to me I lost without\n"
-	.string "ever being in control.$"
+	.string "Just like that comet…\n"
+	.string "you burned past me.$"
 
 LavaridgeTown_Gym_B1F_Text_EliPostBattle:
-	.string "I stay here because I became a fan\n"
-	.string "of FLANNERY's power.\p"
-	.string "Hehehehe.$"
+	.string "When I saw that comet blaze,\n"
+	.string "I thought of AMATERASU.\p"
+	.string "Her shows light up the night\n"
+	.string "just like that burning star.$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryIntro:
-	.string "Welcome… No, wait.\p"
-	.string "Puny TRAINER, how good to see you've\n"
-	.string "made it here!\p"
-	.string "I have been entrusted with the…\n"
-	.string "No, wait.\p"
-	.string "I am FLANNERY, and I'm the GYM\n"
-	.string "LEADER here!\p"
-	.string "Uh…\n"
-	.string "Dare not underestimate me, though\l"
-	.string "I have been LEADER only a short time!\p"
-	.string "With skills inherited from my grand-\n"
-	.string "father, I shall, uh…demonstrate the\l"
-	.string "hot moves we have honed on this land!$"
+	.string "La la la…\n"
+	.string "Ah… The stage is set.\p"
+	.string "Welcome, darling TRAINER!\p"
+	.string "You should feel honored.\n"
+	.string "Tonight's performance is\l"
+	.string "live… and exclusive!\p"
+	.string "I am AMATERASU! Bet you know me!\p"
+	.string "The idol whose flames light\n"
+	.string "both the stage and the battlefield!\p"
+	.string "I adore music…\n"
+	.string "And I adore loyal FIRE POKéMON,\l"
+	.string "especially my beloved canines!\p"
+	.string "Their howls, their pride,\n"
+	.string "their blazing devotion…\p"
+	.string "They burn with me in perfect harmony!\p"
+	.string "So listen closely.\p"
+	.string "Can you hear it?\p"
+	.string "The rhythm of drums…\n"
+	.string "The roar of the flames…\p"
+	.string "Let us begin our duet!\p"
+	.string "Try not to get burned\n"
+	.string "by my blazing passion!$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
-	.string "Oh…\n"
-	.string "I guess I was trying too hard…\p"
-	.string "I… I've only recently become\n"
-	.string "a GYM LEADER.\p"
-	.string "I tried too hard to be someone\n"
-	.string "I'm not.\p"
-	.string "I have to do things my natural way. If\n"
-	.string "I don't, my POKéMON will be confused.\p"
-	.string "Thanks for teaching me that.\n"
-	.string "For that, you deserve this.$"
+	.string "Ahh… What a performance!\n"
+	.string "My heart is racing!\p"
+	.string "You didn't just battle me,\n"
+	.string "you matched my rhythm perfectly!\p"
+	.string "Battles like this are why I\n"
+	.string "love the stage so much.\p"
+	.string "When flames clash and spirits\n"
+	.string "ignite… that's true passion!\p"
+	.string "You pushed me to burn brighter.\n"
+	.string "And I respect that.\p"
+	.string "Take this BADGE.\n"
+	.string "You earned it fair and square.$"
 
 LavaridgeTown_Gym_1F_Text_ReceivedHeatBadge:
 	.string "{PLAYER} received the HEAT BADGE\n"
-	.string "from FLANNERY.$"
+	.string "from AMATERASU.$"
 
 LavaridgeTown_Gym_1F_Text_ExplainHeatBadgeTakeThis:
 	.string "If you have a HEAT BADGE, all POKéMON\n"
@@ -348,24 +386,31 @@ LavaridgeTown_Gym_1F_Text_ExplainOverheat:
 	.string "be suitable for longer battles.$"
 
 LavaridgeTown_Gym_1F_Text_RegisteredFlannery:
-	.string "Registered GYM LEADER FLANNERY\n"
+	.string "Registered GYM LEADER AMATERASU\n"
 	.string "in the POKéNAV.$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryPostBattle:
-	.string "Your power reminds me of someone…\p"
-	.string "Oh! I know! You battle like NORMAN,\n"
-	.string "the GYM LEADER of PETALBURG.$"
+	.string "WOW… That battle was CRAZY!\n"
+	.string "My heart is still pounding!\p"
+	.string "The flames, the pressure,\n"
+	.string "the emotion! It was perfect!\p"
+	.string "I'm seriously impressed.\n"
+	.string "That was incredible!\p"
+	.string "I need to write a song about\n"
+	.string "this moment right now!\p"
+	.string "Hey! Do you have paper?\n"
+	.string "A pen? Inspiration can't wait!$"
 
 LavaridgeTown_Gym_1F_Text_GymStatue:
 	.string "LAVARIDGE TOWN POKéMON GYM$"
 
 LavaridgeTown_Gym_1F_Text_GymStatueCertified:
 	.string "LAVARIDGE TOWN POKéMON GYM\p"
-	.string "FLANNERY'S CERTIFIED TRAINERS:\n"
+	.string "AMATERASU'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryPreRematch:
-	.string "FLANNERY: Losing a battle isn't going\n"
+	.string "AMATERASU: Losing a battle isn't going\n"
 	.string "to deflate me.\p"
 	.string "I love POKéMON.\n"
 	.string "I love to battle.\l"
