@@ -135,123 +135,129 @@ FortreeCity_Gym_EventScript_GymStatue::
 	end
 
 FortreeCity_Gym_Text_GymGuideAdvice:
-	.string "Yo, how's it going, CHAMPION-\n"
-	.string "bound {PLAYER}?\p"
-	.string "FORTREE GYM LEADER WINONA is\n"
-	.string "a master of FLYING-type POKéMON.\p"
-	.string "She's waiting at the back of this GYM,\n"
-	.string "behind the rotating doors.\p"
-	.string "She's waiting for new challengers\n"
-	.string "who are trying to take wing!\p"
-	.string "Okay, go for it!$"
+	.string "Yo, CHAMPION-bound {PLAYER}!\p"
+	.string "TAKA, our LEADER, lives\n"
+	.string "for the open sky.\p"
+	.string "He says battle should feel\n"
+	.string "like riding the wind.\p"
+	.string "Keep your footing steady,\n"
+	.string "or you'll fall fast!$"
 
 FortreeCity_Gym_Text_GymGuidePostVictory:
 	.string "You did it!\n"
-	.string "You've achieved liftoff!$"
+	.string "You soared past gravity!$"
 
 FortreeCity_Gym_Text_JaredIntro:
-	.string "Behold the elegant battle style of\n"
-	.string "BIRD POKéMON!$"
+	.string "Feel that breeze?\n"
+	.string "That's freedom calling!\p"
+	.string "Let's see if you can\n"
+	.string "stay airborne!$"
 
 FortreeCity_Gym_Text_JaredDefeat:
-	.string "You…\n"
-	.string "You're strong…$"
+	.string "Wow…\n"
+	.string "The wind slipped away…$"
 
 FortreeCity_Gym_Text_JaredPostBattle:
-	.string "A TRAINER has to be smart to keep\n"
-	.string "up with unexpected turns of events.\p"
-	.string "Do you have the smarts to get to\n"
-	.string "our LEADER?$"
+	.string "Battles shift like currents.\p"
+	.string "If you panic midair,\n"
+	.string "you'll lose control.\p"
+	.string "Can you stay steady\n"
+	.string "against TAKA?$"
 
 FortreeCity_Gym_Text_EdwardoIntro:
-	.string "The lovers of BIRD POKéMON aspire\n"
-	.string "to join this GYM.\p"
-	.string "As a member of the FORTREE GYM,\n"
-	.string "I'm not allowed to lose!$"
+	.string "Only those who love the sky\n"
+	.string "truly belong here.\p"
+	.string "I won't fall easily!$"
 
 FortreeCity_Gym_Text_EdwardoDefeat:
-	.string "It was too much of a load for me\n"
-	.string "to bear…$"
+	.string "The height overwhelmed me…$"
 
 FortreeCity_Gym_Text_EdwardoPostBattle:
-	.string "The world is huge, and there are\n"
-	.string "countless tough TRAINERS.\p"
-	.string "I'm going to keep training and make\n"
-	.string "myself even stronger.$"
+	.string "The world below looks small\n"
+	.string "from up high.\p"
+	.string "But the fall is always\n"
+	.string "a risk.\p"
+	.string "I'll fly higher again.$"
 
 FortreeCity_Gym_Text_FlintIntro:
-	.string "There's no need for WINONA, our GYM\n"
-	.string "LEADER, to deal with you!\p"
-	.string "I'm plenty good enough for you!$"
+	.string "You think you can face TAKA?\p"
+	.string "You'll have to get past\n"
+	.string "this gust first!$"
 
 FortreeCity_Gym_Text_FlintDefeat:
-	.string "WINONA, I…\n"
+	.string "TAKA, I…\n"
 	.string "I lost!$"
 
 FortreeCity_Gym_Text_FlintPostBattle:
-	.string "WINONA is cute and she's strong.\n"
-	.string "She's the ultimate LEADER!\p"
-	.string "Blush…$"
+	.string "TAKA doesn't fear heights.\n"
+	.string "He embraces them.\p"
+	.string "Up there, he's untouchable.$"
 
 FortreeCity_Gym_Text_AshleyIntro:
-	.string "WINONA taught me personally!\n"
-	.string "You can't beat me easily!$"
+	.string "TAKA taught me to trust\n"
+	.string "the wind beneath me!\p"
+	.string "I won't lose balance!$"
 
 FortreeCity_Gym_Text_AshleyDefeat:
-	.string "I was beaten…$"
+	.string "I couldn't keep altitude…$"
 
 FortreeCity_Gym_Text_AshleyPostBattle:
-	.string "Thanks to WINONA, the people of\n"
-	.string "FORTREE can live without fear.$"
+	.string "Because of TAKA,\n"
+	.string "we're not afraid of falling.\p"
+	.string "We learn to rise again.$"
 
 FortreeCity_Gym_Text_HumbertoIntro:
-	.string "When WINONA takes to battle, her face\n"
-	.string "shines with beautiful determination…\p"
-	.string "I'm not letting you witness that\n"
-	.string "lovely sight!$"
+	.string "When TAKA battles,\n"
+	.string "he looks completely free.\p"
+	.string "I won't let you\n"
+	.string "see that sky today!$"
 
 FortreeCity_Gym_Text_HumbertoDefeat:
 	.string "Urk!\n"
 	.string "I couldn't stop you.$"
 
 FortreeCity_Gym_Text_HumbertoPostBattle:
-	.string "You'd better watch it!\n"
-	.string "Don't get distracted staring at WINONA\l"
-	.string "or you'll go crashing down in a heap!$"
+	.string "Careful up there.\n"
+	.string "One wrong move,\l"
+	.string "and you plummet.\p"
+	.string "Freedom demands courage!$"
 
 FortreeCity_Gym_Text_DariusIntro:
-	.string "You'd better know that there are all\n"
-	.string "sorts of FLYING-type POKéMON.\p"
-	.string "You do know that, right?$"
+	.string "Flying POKEMON aren't\n"
+	.string "all the same.\p"
+	.string "Some soar.\n"
+	.string "Some dive.\p"
+	.string "Can you handle both?$"
 
 FortreeCity_Gym_Text_DariusDefeat:
-	.string "You seem to know your stuff!$"
+	.string "You handled the air well.$"
 
 FortreeCity_Gym_Text_DariusPostBattle:
-	.string "Sure, you beat me all right.\n"
-	.string "But you'd better watch it! Our LEADER\l"
-	.string "WINONA's POKéMON are all business.$"
+	.string "Sure, you beat me.\p"
+	.string "But TAKA moves like\n"
+	.string "a shifting gale.\p"
+	.string "Stay sharp up there.$"
 
 FortreeCity_Gym_Text_WinonaIntro:
-	.string "I am WINONA. I am the LEADER of\n"
-	.string "the FORTREE POKéMON GYM.\p"
-	.string "I have become one with BIRD POKéMON\n"
-	.string "and have soared the skies…\p"
-	.string "However grueling the battle, we have\n"
-	.string "triumphed with grace…\p"
-	.string "Witness the elegant choreography\n"
-	.string "of BIRD POKéMON and I!$"
+	.string "So you've made it this high.\p"
+	.string "I am TAKA, Leader of\n"
+	.string "the FORTREE GYM.\p"
+	.string "The sky is my true home.\n"
+	.string "Up there, I feel limitless.\p"
+	.string "With my FLYING POKEMON,\n"
+	.string "I chase the wind itself.\p"
+	.string "Show me, can you battle\n"
+	.string "with the same freedom?$"
 
 FortreeCity_Gym_Text_WinonaDefeat:
-	.string "Never before have I seen a TRAINER\n"
-	.string "command POKéMON with more grace\l"
-	.string "than I…\p"
-	.string "In recognition of your prowess,\n"
-	.string "I present to you this GYM BADGE.$"
+	.string "Incredible…\n"
+	.string "You rode the wind perfectly.\p"
+	.string "Very well.\n"
+	.string "You have earned this GYM BADGE.$"
 
 FortreeCity_Gym_Text_ReceivedFeatherBadge:
 	.string "{PLAYER} received the FEATHER BADGE\n"
-	.string "from WINONA.$"
+	.string "from TAKA.$"
 
 FortreeCity_Gym_Text_ExplainFeatherBadgeTakeThis:
 	.string "With the FEATHER BADGE, all POKéMON up\n"
@@ -269,23 +275,25 @@ FortreeCity_Gym_Text_ExplainAerialAce:
 	.string "… … … … … …$"
 
 FortreeCity_Gym_Text_RegisteredWinona:
-	.string "Registered GYM LEADER WINONA\n"
+	.string "Registered GYM LEADER TAKA\n"
 	.string "in the POKéNAV.$"
 
 FortreeCity_Gym_Text_WinonaPostBattle:
-	.string "Though I fell to you, I will remain\n"
-	.string "devoted to BIRD POKéMON.$"
+	.string "Even in defeat, I feel lighter.\p"
+	.string "A true battle is like flight,\n"
+	.string "you must trust the wind.\p"
+	.string "Keep chasing new heights!$"
 
 FortreeCity_Gym_Text_GymStatue:
 	.string "FORTREE CITY POKéMON GYM$"
 
 FortreeCity_Gym_Text_GymStatueCertified:
 	.string "FORTREE CITY POKéMON GYM\p"
-	.string "WINONA'S CERTIFIED TRAINERS:\n"
+	.string "TAKA'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 FortreeCity_Gym_Text_WinonaPreRematch:
-	.string "WINONA: We humans can never escape\n"
+	.string "TAKA: We humans can never escape\n"
 	.string "gravity's pull on the ground.\p"
 	.string "But by striving for excellence,\n"
 	.string "we have the power to soar!\p"
@@ -298,14 +306,14 @@ FortreeCity_Gym_Text_WinonaRematchDefeat:
 	.string "I failed to reach your height again…$"
 
 FortreeCity_Gym_Text_WinonaPostRematch:
-	.string "WINONA: Even though I have lost,\n"
+	.string "TAKA: Even though I have lost,\n"
 	.string "the wings of my heart remain unbroken.\p"
 	.string "I can rise and soar again and\n"
 	.string "yet again.\p"
 	.string "I am convinced of it!$"
 
 FortreeCity_Gym_Text_WinonaRematchNeedTwoMons:
-	.string "WINONA: We humans can never escape\n"
+	.string "TAKA: We humans can never escape\n"
 	.string "gravity's pull on the ground.\p"
 	.string "But by striving for excellence,\n"
 	.string "we have the power to soar!\p"

@@ -1319,23 +1319,32 @@ PetalburgCity_Gym_Text_PleaseComeWithMe:
 	.string "I have something I want you to have.$"
 
 PetalburgCity_Gym_Text_LetMeBorrowPlayer:
-	.string "NORMAN, you don't mind, do you?\p"
+	.string "CALENDULA, you don't mind, do you?\p"
 	.string "Let me borrow your {PLAYER}{KUN} for\n"
 	.string "a minute or two.$"
 
 PetalburgCity_Gym_Text_DadGoingToKeepTraining:
-	.string "CALENDULA: {PLAYER}, you should go visit\n"
-	.string "your mother every so often.\p"
-	.string "I'm going to stay here and redouble\n"
-	.string "my training.\p"
-	.string "It would bother me as a TRAINER to\n"
-	.string "not avenge my loss to you, {PLAYER}!$"
+	.string "CALENDULA: {PLAYER}, I'm really proud\n"
+	.string "of how far you've come.\p"
+	.string "Battles aren't about revenge.\n"
+	.string "They're about growth for both of us.\p"
+	.string "I'll continue training and learning,\n"
+	.string "so I can guide new trainers better.\p"
+	.string "And when you have the time,\n"
+	.string "go visit ACACIA.\p"
+	.string "She cares about you deeply,\n"
+	.string "and she's always cheering you on.$"
 
 PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough:
-	.string "CALENDULA: {PLAYER}, how are things going?\p"
-	.string "The world of POKéMON is deep.\p"
-	.string "I honestly think that no amount of\n"
-	.string "training would ever be enough.$"
+	.string "CALENDULA: {PLAYER}, how are your\n"
+	.string "journey going?\p"
+	.string "The world of POKéMON is incredibly deep.\n"
+	.string "There is always something new to learn.\p"
+	.string "Research, observation, and sharing\n"
+	.string "knowledge with young trainers\l"
+	.string "that is what truly strengthens us.\p"
+	.string "Battles are important, yes…\n"
+	.string "but understanding POKéMON is deeper.$"
 
 PetalburgCity_Gym_Text_GymGuideAdvice:
 	.string "Hey, how's it going, CHAMPION-\n"
@@ -1356,11 +1365,12 @@ PetalburgCity_Gym_Text_GymGuideAdvice:
 	.string "Well, hey, go for it!$"
 
 PetalburgCity_Gym_Text_GymGuidePostVictory:
-	.string "{PLAYER}! Whoa! You've overcome even\n"
-	.string "your own father!\p"
-	.string "Like, whoa!\n"
-	.string "What a stunning turn of events!$"
-
+	.string "{PLAYER}! Whoa!\p"
+	.string "You defeated CALENDULA?\n"
+	.string "Even with all her knowledge?\p"
+	.string "That's incredible!\n"
+	.string "What an unexpected outcome!$"
+	
 PetalburgCity_Gym_Text_RandallIntro:
 	.string "The ability to attack before the\n"
 	.string "opponent…\p"
@@ -1414,12 +1424,13 @@ PetalburgCity_Gym_Text_GeorgeDefeat:
 	.string "What ATTACK power…$"
 
 PetalburgCity_Gym_Text_GeorgePostBattle:
-	.string "I should have expected no less from\n"
-	.string "our LEADER's kid.\p"
-	.string "No, wait! A TRAINER's abilities are\n"
-	.string "earned only through effort.\p"
-	.string "I lost because my own efforts\n"
-	.string "weren't enough.\p"
+	.string "I shouldn't be surprised.\p"
+	.string "Anyone who challenges CALENDULA\n"
+	.string "must have real determination.\p"
+	.string "No, wait! A TRAINER's strength\n"
+	.string "is earned through study and effort.\p"
+	.string "I lost because I still have more\n"
+	.string "to learn.\p"
 	.string "Go on! The ONE-HIT KO ROOM is next.$"
 
 PetalburgCity_Gym_Text_GeorgePostBadge:
@@ -1427,27 +1438,33 @@ PetalburgCity_Gym_Text_GeorgePostBadge:
 	.string "One day, I'll become a LEADER.$"
 
 PetalburgCity_Gym_Text_BerkeIntro:
-	.string "I'm not going to take it easy just\n"
-	.string "because you're our LEADER's kid.\p"
-	.string "I'll show you how horrid it is for\n"
-	.string "a POKéMON to take a critical hit!$"
-
+	.string "I'm not going to take it easy\n"
+	.string "just because you're her apprentice.\p"
+	.string "I'll show you how brutal it is\n"
+	.string "when a POKEMON takes a critical hit!$"
+	
 PetalburgCity_Gym_Text_BerkeDefeat:
 	.string "Your power…\n"
 	.string "You're the real deal.$"
 
 PetalburgCity_Gym_Text_BerkePostBattle:
-	.string "Your father really is strong.\n"
-	.string "He's a TRAINER worth my respect.\p"
-	.string "And, I sense the same glow coming\n"
-	.string "from you as your father.\p"
-	.string "I hope that you'll stage a terrific\n"
-	.string "battle with your father!$"
+	.string "CALENDULA is more than a\n"
+	.string "GYM LEADER.\p"
+	.string "Her knowledge of the POKEMON\n"
+	.string "world is incredibly vast.\p"
+	.string "Battling her means facing\n"
+	.string "both strength and wisdom.\p"
+	.string "If you keep growing,\n"
+	.string "you may shine just as brightly.$"
 
 PetalburgCity_Gym_Text_BerkePostBadge:
-	.string "Since your dad became the LEADER,\n"
-	.string "the TRAINERS of PETALBURG CITY have\l"
-	.string "become a lot tougher.$"
+	.string "Since CALENDULA became our\n"
+	.string "LEADER, we've grown a lot.\p"
+	.string "We've learned so much about\n"
+	.string "the POKEMON world,\l"
+	.string "beyond just battling.\p"
+	.string "Knowledge and strategy matter\n"
+	.string "as much as strength now.$"
 
 PetalburgCity_Gym_Text_MaryIntro:
 	.string "Giggle…\n"
@@ -1493,20 +1510,22 @@ PetalburgCity_Gym_Text_AlexiaPostBadge:
 	.string "Hi! Have you tried using SURF?$"
 
 PetalburgCity_Gym_Text_JodyIntro:
-	.string "Our GYM LEADER told us to go all out\n"
-	.string "and beat you.\p"
-	.string "Even if you happen to be the\n"
-	.string "LEADER's kid!$"
+	.string "CALENDULA taught us to battle\n"
+	.string "with focus and discipline.\p"
+	.string "So I'll face you seriously,\n"
+	.string "no holding back!$"
 
 PetalburgCity_Gym_Text_JodyDefeat:
 	.string "But… I went all out!$"
 
 PetalburgCity_Gym_Text_JodyPostBattle:
-	.string "The way you use your POKéMON…\n"
-	.string "It's like your father's style.\p"
-	.string "Go on through! The GYM LEADER, your\n"
-	.string "father, is waiting!$"
-
+	.string "The way you battle…\n"
+	.string "It's all strategy and control.\p"
+	.string "It almost reminds me of\n"
+	.string "CALENDULA's style.\p"
+	.string "You're a real prodigy.\n"
+	.string "Go on ahead!$"
+	
 PetalburgCity_Gym_Text_JodyPostBadge:
 	.string "Sure, it's fine to make your POKéMON\n"
 	.string "stronger.\p"

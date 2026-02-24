@@ -1396,11 +1396,8 @@ Double Battle: No
 AI: Basic Trainer
 
 Swellow
-Level: 26
+Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Quick Attack
-- Agility
-- Wing Attack
 
 === TRAINER_PARKER ===
 Name: PARKER
@@ -1413,11 +1410,8 @@ Double Battle: No
 AI: Basic Trainer
 
 Spinda
-Level: 26
+Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Teeter Dance
-- Dizzy Punch
-- Focus Punch
 
 === TRAINER_GEORGE ===
 Name: GEORGE
@@ -1429,12 +1423,9 @@ Items: Hyper Potion
 Double Battle: No
 AI: Basic Trainer
 
-Slakoth @ Sitrus Berry
-Level: 26
+Porygon @ Eviolite
+Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Slack Off
-- Counter
-- Shadow Ball
 
 === TRAINER_BERKE ===
 Name: BERKE
@@ -1446,11 +1437,9 @@ Items: Hyper Potion
 Double Battle: No
 AI: Basic Trainer
 
-Vigoroth
-Level: 26
+Girafarig
+Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Focus Energy
-- Slash
 
 === TRAINER_BRAXTON ===
 Name: BRAXTON
@@ -1786,11 +1775,9 @@ Items: Hyper Potion
 Double Battle: No
 AI: Basic Trainer
 
-Delcatty
-Level: 26
+Chansey
+Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Feint Attack
-- Shock Wave
 
 === TRAINER_ALEXIA ===
 Name: ALEXIA
@@ -1802,12 +1789,9 @@ Items: Hyper Potion
 Double Battle: No
 AI: Basic Trainer
 
-Wigglytuff
-Level: 26
+Munchlax
+Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Defense Curl
-- Double Edge
-- Shadow Ball
 
 === TRAINER_JODY ===
 Name: JODY
@@ -1819,11 +1803,9 @@ Items: Hyper Potion
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Force Setup First Turn
 
-Zangoose
-Level: 26
+Vigoroth
+Level: 39
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Swords Dance
-- Slash
 
 === TRAINER_WENDY ===
 Name: WENDY
@@ -3714,12 +3696,12 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Slugma
-Level: 22
+Vulpix
+Level: 34
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Slugma
-Level: 22
+Level: 34
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_AXLE ===
@@ -3748,8 +3730,12 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Slugma
-Level: 23
+Magmar
+Level: 35
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Ponyta
+Level: 35
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_KEEGAN ===
@@ -3761,9 +3747,17 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Slugma
-Level: 23
+Houndour
+Level: 34
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
+
+Growlithe
+Level: 34
+IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
+
+Magby
+Level: 35
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 
 === TRAINER_BERNIE_1 ===
 Name: BERNIE
@@ -7975,16 +7969,16 @@ Music: Cool
 Double Battle: No
 AI: Check Bad Move
 
-Doduo
-Level: 27
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-
-Skarmory
-Level: 27
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-
 Tropius
-Level: 27
+Level: 34
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Gligar
+Level: 34
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Golbat
+Level: 34
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_HUMBERTO ===
@@ -7996,8 +7990,12 @@ Music: Cool
 Double Battle: No
 AI: Check Bad Move
 
-Skarmory
-Level: 30
+Fearow 
+Level: 44
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+
+Swellow
+Level: 44
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 
 === TRAINER_PRESLEY ===
@@ -8026,12 +8024,12 @@ Music: Cool
 Double Battle: No
 AI: Check Bad Move
 
-Doduo
-Level: 29
+Dodrio
+Level: 34
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Pelipper
-Level: 29
+Level: 34
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_COLIN ===
@@ -9798,7 +9796,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Numel
-Level: 23
+Level: 34
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Totodile
+Level: 34
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Growlithe
+Level: 34
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_ANNIKA ===
@@ -12709,12 +12715,12 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Swellow
-Level: 29
+Mantine
+Level: 34
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Xatu
-Level: 29
+Scyther
+Level: 34
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_ASHLEY ===
@@ -12726,16 +12732,16 @@ Music: Girl
 Double Battle: No
 AI: Check Bad Move
 
-Swablu
-Level: 27
+Togetic
+Level: 33
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Swablu
-Level: 27
+Xatu
+Level: 33
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Swablu
-Level: 27
+Masquerain
+Level: 33
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_WALLY_MAUVILLE ===
@@ -16647,11 +16653,23 @@ Class: Bird Keeper
 Pic: Bird Keeper
 Gender: Male
 Music: Cool
-Double Battle: No
+Double Battle: Yes
 AI: Basic Trainer
 
-Tropius
-Level: 30
+Murkrow @ Eviolite
+Level: 34
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Masquerain
+Level: 34
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Crobat
+Level: 34
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Pelipper
+Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_STEVEN ===
