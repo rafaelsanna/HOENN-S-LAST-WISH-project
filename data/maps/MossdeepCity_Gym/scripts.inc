@@ -53,14 +53,29 @@ MossdeepCity_Gym_EventScript_SetSwitch4Metatiles::
 	setmetatile 5, 24, METATILE_RSMossdeepGym_Switch_Down, TRUE
 	end
 
+// Mossdeep City Gym - Tate & Liza
 MossdeepCity_Gym_EventScript_TateAndLiza::
-	trainerbattle_double TRAINER_TATE_AND_LIZA_1, MossdeepCity_Gym_Text_TateAndLizaIntro, MossdeepCity_Gym_Text_TateAndLizaDefeat, MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons, MossdeepCity_Gym_EventScript_TateAndLizaDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, MossdeepCity_Gym_EventScript_TateAndLizaRematch
-	goto_if_unset FLAG_RECEIVED_TM_CALM_MIND, MossdeepCity_Gym_EventScript_GiveCalmMind2
-	msgbox MossdeepCity_Gym_Text_TateAndLizaPostBattle, MSGBOX_DEFAULT
-	release
-	end
+    lock
+    faceplayer
+    getdifficulty VAR_RESULT
+    goto_if_eq VAR_RESULT, 1, MossdeepCity_Gym_EventScript_TateAndLizaHard
+
+    // Casual Mode 
+    trainerbattle_double TRAINER_SOULLUNA_CASUAL, MossdeepCity_Gym_Text_TateAndLizaIntro, MossdeepCity_Gym_Text_TateAndLizaDefeat, MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons, MossdeepCity_Gym_EventScript_TateAndLizaDefeated, NO_MUSIC
+    goto MossdeepCity_Gym_EventScript_TateAndLizaAfterBattle
+
+MossdeepCity_Gym_EventScript_TateAndLizaHard::
+    // Hard Mode
+    trainerbattle_double TRAINER_TATE_AND_LIZA_1, MossdeepCity_Gym_Text_TateAndLizaIntro, MossdeepCity_Gym_Text_TateAndLizaDefeat, MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons, MossdeepCity_Gym_EventScript_TateAndLizaDefeated, NO_MUSIC
+    // Fall through to AfterBattle
+
+MossdeepCity_Gym_EventScript_TateAndLizaAfterBattle::
+    specialvar VAR_RESULT, ShouldTryRematchBattle
+    goto_if_eq VAR_RESULT, TRUE, MossdeepCity_Gym_EventScript_TateAndLizaRematch
+    goto_if_unset FLAG_RECEIVED_TM_CALM_MIND, MossdeepCity_Gym_EventScript_GiveCalmMind2
+    msgbox MossdeepCity_Gym_Text_TateAndLizaPostBattle, MSGBOX_DEFAULT
+    release
+    end
 
 MossdeepCity_Gym_EventScript_TateAndLizaDefeated::
 	message MossdeepCity_Gym_Text_ReceivedMindBadge
@@ -372,16 +387,19 @@ MossdeepCity_Gym_EventScript_RedFloorSwitch::
 MossdeepCity_Gym_Text_GymGuideAdvice:
 	.string "Yo, how's it going, CHAMPION-bound\n"
 	.string "{PLAYER}?\p"
-	.string "The GYM LEADERS here use\n"
-	.string "PSYCHIC-type POKéMON.\p"
-	.string "If you go up against them with\n"
-	.string "FIGHTING- or POISON-type POKéMON,\l"
-	.string "they'll inflict horrible damage!\p"
-	.string "Plus, they'll come at you with\n"
-	.string "outstanding combination attacks.\p"
-	.string "If you want to win, you'll need to show\n"
-	.string "them how tight you are with your\l"
-	.string "POKéMON. Go for it!$"
+	.string "This GYM is a split challenge!\n"
+	.string "Two LEADERS, two styles!\p"
+	.string "One commands FAIRY-type POKEMON,\n"
+	.string "bright, tricky, and unpredictable.\p"
+	.string "The other wields DARK-type POKEMON,\n"
+	.string "ruthless, tactical, and merciless.\p"
+	.string "If you rush in blindly, you'll get\n"
+	.string "outplayed from both sides.\p"
+	.string "They fight like opposites\n"
+	.string "light and shadow in sync.\p"
+	.string "If you want to win, you'll need more\n"
+	.string "than strength. You'll need strategy.\n"
+	.string "Show them your bond is unbreakable!$"
 
 MossdeepCity_Gym_Text_GymGuidePostVictory:
 	.string "Wow, you're astounding!\n"
@@ -389,76 +407,88 @@ MossdeepCity_Gym_Text_GymGuidePostVictory:
 
 MossdeepCity_Gym_Text_PrestonIntro:
 	.string "Battles hinge on the strength of your\n"
-	.string "spirit! The weak-spirited will never win!$"
+	.string "spirit!\p"
+	.string "This GYM used to follow only one path.\n"
+	.string "But Luna and Soul changed that.\p"
+	.string "They became the first in HOENN\n"
+	.string "to lead a split GYM.\p"
+	.string "FAIRY and DARK.\n"
+	.string "Light and shadow in balance.$"
 
 MossdeepCity_Gym_Text_PrestonDefeat:
-	.string "I lost!\n"
-	.string "I must temper my spirit again!$"
+	.string "I lost…\n"
+	.string "My spirit still wavers.$"
 
 MossdeepCity_Gym_Text_PrestonPostBattle:
-	.string "The indecisive lose.\n"
-	.string "That's my warning to you.$"
+	.string "Luna's brilliance can blind you.\p"
+	.string "Soul's darkness can trap you.\p"
+	.string "They are formidaveis together.\n"
+	.string "Do not hesitate when you face them.$"
 
 MossdeepCity_Gym_Text_VirgilIntro:
-	.string "Let me see your talent!$"
+	.string "Let me see your talent.\p"
+	.string "I'm training under LUNA,\n"
+	.string "master of DARK-type POKEMON.$"
 
 MossdeepCity_Gym_Text_VirgilDefeat:
-	.string "You possess spectacular talent!$"
+	.string "Your light cut through my shadows…$"
 
 MossdeepCity_Gym_Text_VirgilPostBattle:
-	.string "If there are prodigies in the world,\n"
-	.string "then our GYM LEADERS are them!\p"
-	.string "However, you may be even more talented\n"
-	.string "than them…$"
+	.string "LUNA teaches that darkness isn't evil.\p"
+	.string "It's something you must control,\n"
+	.string "not fear.\p"
+	.string "I'm still learning to master it.$"
 
 MossdeepCity_Gym_Text_BlakeIntro:
-	.string "Fufufufu… Watch me levitate a POKé\n"
-	.string "BALL telekinetically!\p"
-	.string "Wrooooooooaaaar!\n"
-	.string "… … … … … … …\p"
-	.string "Sometimes, I'm out of sync…$"
+	.string "Did you know?\n"
+	.string "LUNA and SOUL are twin sisters.\p"
+	.string "Same blood.\n"
+	.string "Completely different presences.\p"
+	.string "One walks in shadow.\n"
+	.string "The other shines like starlight.$"
 
 MossdeepCity_Gym_Text_BlakeDefeat:
-	.string "My POKéMON battling skills are out\n"
-	.string "of sync, too!$"
+	.string "Even opposites can move in perfect\n"
+	.string "harmony… I see that now.$"
 
 MossdeepCity_Gym_Text_BlakePostBattle:
-	.string "A POKé BALL was too heavy to lift\n"
-	.string "psychically. But this dust bunny…\p"
-	.string "Whoooooooooooooooh!\n"
-	.string "… … … … … …\p"
-	.string "No, I'm not cheating!\n"
-	.string "I didn't blow on it! Honestly!$"
+	.string "LUNA dresses in dark elegance.\p"
+	.string "SOUL prefers soft, radiant colors.\p"
+	.string "Their battle styles are opposites.\n"
+	.string "Their personalities too.\p"
+	.string "Yet together… they are unstoppable.$"
 
 MossdeepCity_Gym_Text_HannahIntro:
-	.string "When you lose to me, don't be too hard\n"
-	.string "on yourself.\p"
-	.string "It's not that you're weak--I'm just\n"
-	.string "too strong!$"
+	.string "If I win, don't be too upset!\p"
+	.string "SOUL always says battles should be\n"
+	.string "fun and full of energy!$"
 
 MossdeepCity_Gym_Text_HannahDefeat:
-	.string "You're just too strong!$"
+	.string "You're amazing!\n"
+	.string "That was exciting!$"
 
 MossdeepCity_Gym_Text_HannahPostBattle:
-	.string "I'm not going to get down on myself for\n"
-	.string "losing. I just need to train harder.\p"
-	.string "Positive thinking--that's my strong\n"
-	.string "point!$"
+	.string "I learned from SOUL to stay positive.\p"
+	.string "She smiles even in tough fights.\n"
+	.string "That energy is contagious!\p"
+	.string "I'll keep improving with that same\n"
+	.string "enthusiasm!$"
 
 MossdeepCity_Gym_Text_SamanthaIntro:
-	.string "I see it…\n"
-	.string "I see your future…\p"
-	.string "If you can beat me, I will tell you\n"
-	.string "your future!$"
+	.string "Do you believe in opposites?\p"
+	.string "Light and shadow.\n"
+	.string "Softness and severity.\p"
+	.string "Let's see how you handle both.$"
 
 MossdeepCity_Gym_Text_SamanthaDefeat:
-	.string "I surrender!$"
+	.string "You balanced both sides…$"
 
 MossdeepCity_Gym_Text_SamanthaPostBattle:
-	.string "You will wage a terrifically intense\n"
-	.string "battle with our GYM LEADERS…\p"
-	.string "The result…\n"
-	.string "You won't hear it from me!$"
+	.string "LUNA and SOUL prove something.\p"
+	.string "Opposites don't always clash.\n"
+	.string "Sometimes, they complete each other.\p"
+	.string "When two extremes unite,\n"
+	.string "the result can be unstoppable.$"
 
 MossdeepCity_Gym_Text_MauraIntro:
 	.string "The roads you have traveled…\n"
@@ -477,30 +507,38 @@ MossdeepCity_Gym_Text_MauraPostBattle:
 	.string "What goes around comes around…$"
 
 MossdeepCity_Gym_Text_SylviaIntro:
-	.string "Even at the risk of life, I will win\n"
-	.string "this battle!$"
+	.string "You may have come this far…\p"
+	.string "But against our LEADERS,\n"
+	.string "you won't stand a chance!$"
 
 MossdeepCity_Gym_Text_SylviaDefeat:
-	.string "What you do…\n"
-	.string "It horrifies me…$"
+	.string "Impossible…\n"
+	.string "You broke through…$"
 
 MossdeepCity_Gym_Text_SylviaPostBattle:
-	.string "How dare you beat me…\p"
-	.string "It won't be my fault if something\n"
-	.string "horrible befalls you…$"
+	.string "LUNA and SOUL are prodigies.\p"
+	.string "Two minds, two styles,\n"
+	.string "perfectly in sync.\p"
+	.string "To challenge them is to face\n"
+	.string "true genius.$"
 
 MossdeepCity_Gym_Text_NateIntro:
 	.string "Hohoho.\p"
-	.string "You need me to show you how tenacious\n"
-	.string "the PSYCHIC type can be.$"
+	.string "In this GYM, you don't face just\n"
+	.string "strength, you face contrast.\p"
+	.string "Tell me… can you stand between\n"
+	.string "two extremes without wavering?$"
 
 MossdeepCity_Gym_Text_NateDefeat:
 	.string "Oh! My, my!\n"
-	.string "Your battle style is fantastic!$"
+	.string "You held your ground perfectly!$"
 
 MossdeepCity_Gym_Text_NatePostBattle:
-	.string "I… I don't let defeat rattle m-me,\n"
-	.string "however b-badly.$"
+	.string "Most TRAINERS lean too far\n"
+	.string "to one side.\p"
+	.string "But real mastery lies in balance.\n"
+	.string "Neither consumed by light,\l"
+	.string "nor swallowed by shadow.$"
 
 MossdeepCity_Gym_Text_KathleenIntro:
 	.string "Let me show you a perfectly awful,\n"
@@ -526,17 +564,19 @@ MossdeepCity_Gym_Text_CliffordPostBattle:
 	.string "your youthful energy.$"
 
 MossdeepCity_Gym_Text_MaceyIntro:
-	.string "You're not getting through to the end!\n"
-	.string "Not if I can help it!$"
+	.string "You're not getting to the end!\n"
+	.string "Not without proving yourself first!$"
 
 MossdeepCity_Gym_Text_MaceyDefeat:
-	.string "How could you be so ludicrously\n"
-	.string "strong?$"
+	.string "How are you that strong…?$"
 
 MossdeepCity_Gym_Text_MaceyPostBattle:
-	.string "Humph! You may be strong, but you're\n"
-	.string "not suitable for the PSYCHIC type!\p"
-	.string "The way you battle is somehow brutal!$"
+	.string "Humph! Strength alone isn't enough\n"
+	.string "for this GYM.\p"
+	.string "LUNA and SOUL demand control\n"
+	.string "and awareness.\p"
+	.string "If you lose yourself to one side,\n"
+	.string "you'll never defeat them.$"
 
 MossdeepCity_Gym_Text_NicholasIntro:
 	.string "Wroooar! Have a taste of my super\n"
@@ -551,63 +591,81 @@ MossdeepCity_Gym_Text_NicholasPostBattle:
 	.string "invincible POKéMON power next.$"
 
 MossdeepCity_Gym_Text_TateAndLizaIntro:
-	.string "TATE: Hehehe… Were you surprised?\p"
-	.string "LIZA: Fufufu… Were you surprised?\p"
-	.string "TATE: That there are two GYM LEADERS?\n"
-	.string "LIZA: That there are two GYM LEADERS?\p"
-	.string "TATE: We're twins!\n"
-	.string "LIZA: We're twins!\p"
-	.string "TATE: We don't need to talk because…\n"
-	.string "LIZA: We can each determine what…\p"
-	.string "TATE: The other is thinking…\n"
-	.string "LIZA: All in our minds!\p"
-	.string "TATE: This combination of ours…\n"
-	.string "LIZA: Can you beat it?$"
+	.string "LUNA: So… you've reached us.\p"
+	.string "SOUL: Hehe… did the contrast surprise you?\p"
+	.string "LUNA: Two LEADERS.\n"
+	.string "SOUL: Two paths.\p"
+	.string "LUNA: We are twin sisters.\n"
+	.string "SOUL: Born beneath the same sky.\p"
+	.string "LUNA: Yet I walk in shadow.\n"
+	.string "SOUL: And I shine in light.\p"
+	.string "LUNA: DARKNESS is calm. Precise.\n"
+	.string "SOUL: FAIRY light is radiant. Hopeful.\p"
+	.string "LUNA: Opposites since birth.\n"
+	.string "SOUL: But never apart.\p"
+	.string "LUNA: Like Yin and Yang.\n"
+	.string "SOUL: Different… yet whole.\p"
+	.string "LUNA: We do not clash.\n"
+	.string "SOUL: We complete.\p"
+	.string "LUNA: Two minds.\n"
+	.string "SOUL: One rhythm.\p"
+	.string "LUNA: Our battle is balance.\n"
+	.string "SOUL: Our strength is unity.\p"
+	.string "LUNA: Can you stand between shadow and light?\n"
+	.string "SOUL: Can you endure perfect harmony?$"
 
 MossdeepCity_Gym_Text_TateAndLizaDefeat:
-	.string "TATE: What?! Our combination…\n"
-	.string "LIZA: Was shattered!\p"
-	.string "TATE: It can't be helped. You've won…\n"
-	.string "LIZA: So, in recognition, take this.$"
+	.string "LUNA: Our harmony…\n"
+	.string "SOUL: You broke through it…\p"
+	.string "LUNA: You stood between shadow and light…\n"
+	.string "SOUL: And did not falter.\p"
+	.string "LUNA: That is no small feat.\n"
+	.string "SOUL: Not against us.\p"
+	.string "LUNA: We were born as opposites.\n"
+	.string "SOUL: But we fight as one.\p"
+	.string "LUNA: Today…\n"
+	.string "SOUL: You surpassed that unity.\p"
+	.string "LUNA: Accept this as proof.\n"
+	.string "SOUL: You've earned it.$"
 
 MossdeepCity_Gym_Text_ReceivedMindBadge:
 	.string "{PLAYER} received the MIND BADGE\n"
-	.string "from TATE and LIZA.$"
+	.string "from SOUL and LUNA.$"
 
 MossdeepCity_Gym_Text_ExplainMindBadgeTakeThis:
-	.string "TATE: The MIND BADGE enhances the\n"
+	.string "LUNA: The MIND BADGE enhances the\n"
 	.string "SP. ATK and SP. DEF of POKéMON.\p"
-	.string "LIZA: It also lets you use the HM move\n"
+	.string "SOUL: It also lets you use the HM move\n"
 	.string "DIVE outside of battle.\p"
-	.string "TATE: You should also take this, too.$"
+	.string "SOUL: You should also take this, too.$"
 
 MossdeepCity_Gym_Text_ExplainCalmMind:
-	.string "TATE: That TM04 contains…\n"
-	.string "LIZA: CALM MIND!\p"
-	.string "TATE: It raises SP. ATK and…\n"
-	.string "LIZA: It raises SP. DEF!\p"
-	.string "TATE: It's a move that's perfect…\n"
-	.string "LIZA: For PSYCHIC POKéMON!\p"
+	.string "LUNA: That TM04 contains…\n"
+	.string "SOUL: CALM MIND!\p"
+	.string "LUNA: It raises SP. ATK and…\n"
+	.string "SOUL: It raises SP. DEF!\p"
+	.string "LUNA: It's a move that's perfect…\n"
+	.string "SOUL: For ofense and defense!\p"
 	.string "… … … … … …$"
 
 MossdeepCity_Gym_Text_RegisteredTateAndLiza:
-	.string "Registered GYM LEADERS TATE & LIZA\n"
+	.string "Registered GYM LEADERS SOUL & LUNA\n"
 	.string "in the POKéNAV.$"
 
 MossdeepCity_Gym_Text_TateAndLizaPostBattle:
-	.string "TATE: Looks like the bond between you\n"
+	.string "LUNA: Looks like the bond between you\n"
 	.string "and your POKéMON is far stronger than\l"
 	.string "the bond that we share as twins.\p"
-	.string "LIZA: You will become even stronger!\n"
+	.string "SOUL: You will become even stronger!\n"
 	.string "We've battled you, so we know.$"
 
 MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons:
-	.string "TATE: Hehehe… Were you surprised?\p"
-	.string "LIZA: That there are two GYM LEADERS?\p"
-	.string "TATE: Oops, you have only one…\n"
-	.string "LIZA: POKéMON that can battle.\p"
-	.string "TATE: We can't battle that way!\p"
-	.string "LIZA: If you want to challenge us,\n"
+	.string "LUNA: Hehehe… Were you surprised?\p"
+	.string "SOUL: That there are two GYM LEADERS?\p"
+	.string "LUNA: Oops, you have only one…\n"
+	.string "SOUL: POKéMON that can battle.\p"
+	.string "LUNA: We can't battle that way!\p"
+	.string "SOUL: If you want to challenge us,\n"
 	.string "bring some more POKéMON.$"
 
 MossdeepCity_Gym_Text_GymStatue:
@@ -615,7 +673,7 @@ MossdeepCity_Gym_Text_GymStatue:
 
 MossdeepCity_Gym_Text_GymStatueCertified:
 	.string "MOSSDEEP CITY POKéMON GYM\p"
-	.string "LIZA AND TATE'S CERTIFIED TRAINERS:\n"
+	.string "SOUL AND LUNA'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 MossdeepCity_Gym_Text_TateAndLizaPreRematch:

@@ -888,12 +888,16 @@
 #define TRAINER_DEN_CASUAL                  882
 #define TRAINER_ALEJANDRO_1                 883
 #define TRAINER_FLANNERY_CASUAL             884
+#define TRAINER_CALENDULA_CASUAL            885
+#define TRAINER_TAKA_CASUAL                 886
+#define TRAINER_SOULLUNA_CASUAL             887
+#define TRAINER_RIO_CASUAL                  888
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      885
+#define TRAINERS_COUNT                      889
 #define MAX_TRAINERS_COUNT                  900
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 

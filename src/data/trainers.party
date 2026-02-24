@@ -2250,21 +2250,14 @@ Items: Full Restore
 Double Battle: No
 AI: Check Bad Move
 
-Luvdisc @ Nugget
-Level: 39
+Milotic @ Nugget
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Attract
-- Sweet Kiss
-- Flail
-- Water Pulse
 
-Luvdisc @ Nugget
-Level: 39
+Azumarill @ Nugget
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Attract
-- Safeguard
-- Take Down
-- Water Pulse
+
 
 === TRAINER_GRUNT_SPACE_CENTER_2 ===
 Name: GRUNT
@@ -2314,7 +2307,19 @@ Double Battle: No
 AI: Check Bad Move
 
 Seaking @ Nugget
-Level: 40
+Level: 50
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Tentacruel @ Nugget
+Level: 50
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Gyarados @ Nugget
+Level: 50
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Surskit @ Eviolite
+Level: 50
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_NAOMI ===
@@ -2464,8 +2469,12 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Goldeen
-Level: 40
+Seadra
+Level: 50
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Wailmer
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_BRIDGET ===
@@ -2478,7 +2487,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Azumarill
-Level: 40
+Level: 50
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Staryu
+Level: 50
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Corsola
+Level: 50
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_OLIVIA ===
@@ -2490,28 +2507,17 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Clamperl
-Level: 35
+Pelipper
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Iron Defense
-- Whirlpool
-- Rain Dance
-- Water Pulse
 
-Corphish
-Level: 37
+Lanturn
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Taunt
-- Crabhammer
-- Water Pulse
 
 Lombre
-Level: 39
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Uproar
-- Fury Swipes
-- Fake Out
-- Water Pulse
 
 === TRAINER_TIFFANY ===
 Name: TIFFANY
@@ -2522,12 +2528,12 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Carvanha
-Level: 39
+Kingler
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Sharpedo
-Level: 39
+Tentacruel
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_JESSICA_2 ===
@@ -4267,8 +4273,12 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Kirlia
-Level: 36
+Luvdisc
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Nuzleaf 
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_VIRGIL ===
@@ -4280,8 +4290,12 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Ralts
-Level: 36
+Houndoom 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Sableye 
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_BLAKE ===
@@ -4293,8 +4307,16 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Girafarig
-Level: 36
+Pinsir
+Level: 40   
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Sneasel 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Sharpedo 
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_WILLIAM ===
@@ -4439,8 +4461,16 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Kirlia
-Level: 36
+Togetic @ Eviolite
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Ninetales 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Gloom
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_SAMANTHA ===
@@ -4452,8 +4482,16 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Xatu
-Level: 36
+Wigglytuff 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Mawile 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Togetic 
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_MAURA ===
@@ -4465,8 +4503,12 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Kadabra
-Level: 36
+Kirlia 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Clefable 
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_KAYLA ===
@@ -5347,7 +5389,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe
 - Body Slam  
 - Fire Punch  
 
-Linoone @ Life Orb  
+Obstagoon @ Life Orb  
 Ability: Quick Feet  
 Level: 45  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe  
@@ -5356,6 +5398,62 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe
 - Facade  
 - Strength  
 
+=== TRAINER_CALENDULA_CASUAL ===
+Name: CALENDULA
+Class: Leader
+Pic: Leader Norman
+Gender: Female
+Music: Female
+Items: Hyper Potion / Hyper Potion
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Eevee @ Eviolite  
+Ability: Technician  
+Level: 43  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
+- Last Resort 
+
+Ambipom  
+Level: 43  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
+- Fake Out  
+- Double Hit 
+- Shadow Claw  
+- U-turn 
+
+Porygon2     
+Level: 44  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe 
+- Icy Wind  
+- Recover  
+- Tri Attack  
+- Thunderbolt   
+
+Ursaluna   
+Level: 44
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe  
+- Facade  
+- High Horsepower
+- Rest
+- Protect 
+
+Munchlax @ Chesto Berry    
+Level: 43  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe   
+- Rest  
+- Sleep Talk  
+- Body Slam  
+- Crunch
+
+Obstagoon @ Sitrus Berry 
+Ability: Quick Feet  
+Level: 45  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe  
+- Extreme Speed  
+- Shadow Claw  
+- Facade  
+- Protect  
 
 === TRAINER_WINONA_1 ===
 Name: TAKA
@@ -5421,6 +5519,65 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Air Slash  
 - Quiver Dance  
 
+=== TRAINER_TAKA_CASUAL ===
+Name: TAKA
+Class: Leader
+Pic: Leader Winona
+Gender: Male
+Music: Male
+Items: Hyper Potion / Hyper Potion
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Wigglytuff  
+Level: 47  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
+- Air Slash  
+- Draining Kiss  
+- Icy Wind  
+- Soft-Boiled 
+
+Pidgeot  
+Level: 48    
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
+- Air Cutter  
+- Mirror Move  
+- Psychic  
+- Twister  
+
+Gliscor  
+Level: 48  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Protect  
+- Fly  
+- U-turn  
+- Earthquake  
+
+Mantine 
+Level: 48  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Surf  
+- Roost  
+- Air Slash  
+- Whirlpool  
+
+Tropius
+Level: 49  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
+- Leaf Blade  
+- Defog 
+- Air Slash  
+- Leech Seed
+
+Masquerain @ Heavy-Duty Boots  
+Ability: Water Bubble  
+Level: 50  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
+- Surf  
+- Bug Buzz  
+- Air Slash  
+- Roost  
+
 === TRAINER_TATE_AND_LIZA_1 ===
 Name: SOUL&LUNA
 Class: Leader
@@ -5431,37 +5588,120 @@ Items: Hyper Potion / Hyper Potion / Hyper Potion / Hyper Potion
 Double Battle: Yes
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
-Sylveon
+Sylveon @ Assault Vest  
 Level: 55
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Earthquake
-- Ancient Power
-- Psychic
-- Light Screen
+Ability: Pixilate  
+- Hyper Voice  
+- Quick Attack  
+- Psyshock  
+- Shadow Ball  
 
-Umbreon
+Umbreon @ Leftovers  
 Level: 55
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Psychic
-- Sunny Day
-- Confuse Ray
-- Calm Mind
+Ability: Synchronize  
+- Wish  
+- Protect  
+- Helping Hand  
+- Foul Play  
 
-Lunatone @ Sitrus Berry
-Level: 42
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Light Screen
-- Psychic
-- Hypnosis
-- Calm Mind
+Togekiss @ Sitrus Berry 
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
+Ability: Serene Grace  
+- Air Slash  
+- Draining Kiss  
+- Roost  
+- Thunder Wave  
 
-Solrock @ Sitrus Berry
-Level: 42
+Honchkrow @ Heavy-Duty Boots 
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
+Ability: Moxie  
+Tera Type: Dark  
+- Tailwind  
+- Brave Bird  
+- Sucker Punch  
+- U-turn  
+
+Gorebyss @ Focus Sash  
+Level: 55
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Sunny Day
-- Solar Beam
-- Psychic
-- Flamethrower
+Ability: Cursed Body  
+- Shell Smash  
+- Moonblast  
+- Shadow Ball  
+- Protect  
+
+Huntail @ White Herb  
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Ability: Strong Jaw   
+- Shell Smash  
+- Crunch  
+- Poltergeist  
+- Shadow Sneak  
+
+=== TRAINER_SOULLUNA_CASUAL ===
+Name: SOUL&LUNA
+Class: Leader
+Pic: Leader Tate And Liza
+Gender: Male
+Music: Female
+Items: Hyper Potion / Hyper Potion / Hyper Potion / Hyper Potion
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Gorebyss @ Sitrus Berry  
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Ability: Cursed Body  
+- Baton Pass  
+- Moonblast  
+- Shadow Ball  
+- Protect  
+
+Huntail @ Sitrus Berry 
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Ability: Strong Jaw   
+- Baton Pass 
+- Crunch  
+- Poltergeist  
+- Shadow Sneak  
+
+Sylveon   
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Moonblast 
+- Protect  
+- Wish  
+- Helping Hand  
+
+Umbreon 
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Wish  
+- Protect  
+- Helping Hand  
+- Foul Play  
+
+Togekiss 
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
+- Air Slash  
+- Draining Kiss  
+- Roost  
+- Protect  
+
+Honchkrow 
+Level: 55
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
+- Protect  
+- Fly 
+- Sucker Punch  
+- U-turn  
 
 === TRAINER_JUAN_1 ===
 Name: RIO
@@ -5473,55 +5713,109 @@ Items: Hyper Potion / Hyper Potion
 Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
+Pelipper @ Damp Rock  
+Level: 60
+Ability: Rain Dish    
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
+- U-turn  
+- Surf  
+- Hurricane  
+- Roost  
+
+Cursola @ Sitrus Berry
+Level: 60  
+Ability: Liquid Voice  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe   
+- Moonblast  
+- Hyper Voice  
+- Wish  
+- Sing  
+
+Venusaur @ Rindo Berry
+Level: 60   
+Ability: Swift Swim  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe   
+- Earthquake  
+- Waterfall  
+- Dragon Tail  
+- Crunch  
+
+Ludicolo @ Life Orb  
+Level: 60   
+Ability: Swift Swim  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
+- Surf  
+- Giga Drain  
+- Ice Beam  
+- Rain Dance  
+
+Starmie @ Assault Vest   
+Level: 60  
+Ability: Natural Cure  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
+- Rapid Spin  
+- Surf  
+- Psyshock  
+- Thunderbolt
+
+Crawdaunt @ Focus Sash  
+Ability: Adaptability  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Waterfall  
+- Aqua Jet  
+- Dragon Dance 
+- Knock Off   
+
+=== TRAINER_RIO_CASUAL ===
+Name: RIO
+Class: Leader
+Pic: Leader Juan
+Gender: Male
+Music: Male
+Items: Hyper Potion / Hyper Potion
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
 Pelipper  
-Level: 55
-Ability: Rain Dish  
-Tera Type: Water  
-IVs: 0 Atk  
+Level: 58
 - Rain Dance  
 - Surf  
 - Air Slash  
 - Roost  
 
 Cursola  
-Ability: Weak Armor  
-Tera Type: Ghost  
-IVs: 0 Atk  
+Level: 60
 - Moonblast  
 - Surf  
 - Heal Bell  
-- Perish Song  
+- Sing  
 
 Venusaur  
-Ability: Torrent  
-Tera Type: Grass  
-- Earthquake  
+Level: 60 
+- Bulldoze  
 - Waterfall  
 - Dragon Tail  
 - Crunch  
 
 Ludicolo  
-Ability: Swift Swim  
-Tera Type: Water  
+Level: 60 
 - Surf  
 - Giga Drain  
 - Leech Seed  
 - Fake Out  
 
 Starmie  
-Ability: Natural Cure  
-Tera Type: Water  
+Level: 60 
 - Rapid Spin  
 - Surf  
 - Psyshock  
 - Power Gem  
 
-Azumarill  
-Ability: Huge Power  
-Tera Type: Water  
+Crawdaunt
+Level: 60 
 - Waterfall  
 - Aqua Jet  
-- Play Rough  
+- Knock Off 
 - Brick Break  
 
 === TRAINER_JERRY_1 ===
@@ -6063,16 +6357,16 @@ Music: Twins
 Double Battle: No
 AI: Check Bad Move
 
-Azurill @ Oran Berry
-Level: 35
+Quagsire @ Oran Berry
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Marill @ Oran Berry
-Level: 37
+Whiscash @ Oran Berry
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Azumarill @ Oran Berry
-Level: 39
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_ISABEL_1 ===
@@ -9816,21 +10110,14 @@ Music: Twins
 Double Battle: No
 AI: Check Bad Move
 
-Feebas @ Oran Berry
-Level: 39
+Vaporeon @ Oran Berry
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Flail
-- Water Pulse
-- Return
-- Attract
 
-Feebas @ Oran Berry
-Level: 39
+Corsola @ Oran Berry
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Flail
-- Water Pulse
-- Return
-- Attract
+
 
 === TRAINER_JAZMYN ===
 Name: JAZMYN
@@ -11288,9 +11575,18 @@ Music: Suspicious
 Double Battle: No
 AI: Check Bad Move
 
-Meditite
-Level: 36
+Sableye 
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Absol 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Murkrow @ Eviolite
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
 
 === TRAINER_LEONARDO ===
 Name: LEONARDO
@@ -11389,8 +11685,12 @@ Music: Rich
 Double Battle: No
 AI: Check Bad Move
 
-Spoink
-Level: 36
+Mawile 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Jumpluff
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_KATHLEEN ===
@@ -11402,8 +11702,12 @@ Music: Suspicious
 Double Battle: No
 AI: Check Bad Move
 
-Kadabra
-Level: 36
+Murkrow @ Eviolite
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Cacturne 
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_CLIFFORD ===
@@ -11415,9 +11719,13 @@ Music: Rich
 Double Battle: No
 AI: Check Bad Move
 
-Girafarig
-Level: 36
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Gloom 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Azumarill
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_NICHOLAS ===
 Name: NICHOLAS
@@ -11428,9 +11736,13 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Wobbuffet
-Level: 36
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Crawdaunt 
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Zangoose
+Level: 40
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_GRUNT_SPACE_CENTER_3 ===
 Name: GRUNT
@@ -11510,8 +11822,12 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Natu
-Level: 36
+Clefable
+Level: 40
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Kirlia
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BRENDAN_RUSTBORO_TREECKO ===
@@ -11903,8 +12219,12 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Luvdisc
-Level: 40
+Golduck
+Level: 50
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Lanturn
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_CRISSY ===
@@ -11916,12 +12236,12 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Goldeen
-Level: 39
+Slowbro
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Wailmer
-Level: 39
+Wailord
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_RICK ===
