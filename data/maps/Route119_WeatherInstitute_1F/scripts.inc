@@ -72,7 +72,11 @@ Route119_WeatherInstitute_1F_Text_Grunt1Intro:
 	.string "The BOSS got interested in\n"
 	.string "the research they have going here,\l"
 	.string "so he sent us out.\p"
-	.string "You quit meddling!$"
+	.string "Weather patterns. Ocean currents.\n"
+	.string "Energy potential.\p"
+	.string "You think this is just science?\n"
+	.string "This is the future of power.\l"
+	.string "Now quit meddling!$"
 
 Route119_WeatherInstitute_1F_Text_Grunt1Defeat:
 	.string "Blast it…\n"
@@ -80,12 +84,16 @@ Route119_WeatherInstitute_1F_Text_Grunt1Defeat:
 
 Route119_WeatherInstitute_1F_Text_Grunt1PostBattle:
 	.string "Our BOSS knows everything.\p"
+	.string "The oceans can generate energy\n"
+	.string "beyond your imagination.\p"
 	.string "But I'm just a GRUNT. What would I know\n"
 	.string "about what he's thinking?$"
 
 Route119_WeatherInstitute_1F_Text_Grunt4Intro:
 	.string "Huh?\n"
-	.string "What's a kid doing here?$"
+	.string "What's a kid doing here?\p"
+	.string "This doesn't concern you.\n"
+	.string "Go play somewhere else.$"
 
 Route119_WeatherInstitute_1F_Text_Grunt4Defeat:
 	.string "Huh?\n"
@@ -94,16 +102,23 @@ Route119_WeatherInstitute_1F_Text_Grunt4Defeat:
 Route119_WeatherInstitute_1F_Text_Grunt4PostBattle:
 	.string "Oh, no…\n"
 	.string "I'll catch an earful for losing to a kid…\p"
-	.string "I should just take a nap in the bed…$"
+	.string "The BOSS won't forgive failure.\n"
+	.string "Not when the REVOLUTION is so close.\p"
+	.string "Get lost! Before is too late!$"
 
 Route119_WeatherInstitute_1F_Text_EveryoneWentUpstairs:
 	.string "While I was sleeping, everyone went\n"
-	.string "upstairs!$"
+	.string "upstairs!\p"
+	.string "They must have found the research\n"
+	.string "on tidal energy generation.$"
 
 Route119_WeatherInstitute_1F_Text_WowYoureStrong:
 	.string "Wow, you're really strong!\p"
 	.string "I wish I could be a POKéMON TRAINER\n"
-	.string "like you!$"
+	.string "like you!\p"
+	.string "Those TEAM AQUA people... they kept\n"
+	.string "talking about hydraulic energy,\l"
+	.string "World flood... It sounded scary.$"
 
 Route119_WeatherInstitute_1F_Text_ProfStudyingRain:
 	.string "The PROFESSOR loves rain.\n"
@@ -111,7 +126,10 @@ Route119_WeatherInstitute_1F_Text_ProfStudyingRain:
 	.string "But if it keeps raining, people will be in\n"
 	.string "trouble. That's another fact.\p"
 	.string "And thus, the PROFESSOR is studying\n"
-	.string "if the rain can be put to good use.$"
+	.string "if the rain can be put to good use.\p"
+	.string "But those AQUA people... they want\n"
+	.string "to weaponize it. Control the tides.\l"
+	.string "Generate power through controlled floods.$"
 
 Route119_WeatherInstitute_1F_Text_NoticingAbnormalWeather:
 	.string "On the 2nd floor of the INSTITUTE,\n"
@@ -119,13 +137,24 @@ Route119_WeatherInstitute_1F_Text_NoticingAbnormalWeather:
 	.string "the HOENN region.\p"
 	.string "We've been noticing temporary and\n"
 	.string "isolated cases of droughts and\l"
-	.string "heavy rain lately…$"
+	.string "heavy rain lately…\p"
+	.string "At first we thought it was natural.\n"
+	.string "But now... we suspect manipulation.\p"
+	.string "If someone could control ocean currents,\n"
+	.string "they could generate limitless\l"
+	.string "hydroelectric power.\p"
+	.string "The flooding would be devastating...\n"
+	.string "but they see it as a small price.$"
 
 Route119_WeatherInstitute_1F_Text_WhatWereAquasUpTo:
 	.string "Hello!\n"
 	.string "We've been saved by your actions!\p"
 	.string "What I don't understand is what on\n"
-	.string "earth the AQUAS were up to.$"
+	.string "earth the AQUAS were up to.\p"
+	.string "They kept muttering about expanding\n"
+	.string "the oceans and infinite energy.\p"
+	.string "As if drowning coastal cities is\n"
+	.string "not a big deal...$"
 
 Route119_WeatherInstitute_1F_Text_TakeRestInBed:
 	.string "There's a bed…\n"

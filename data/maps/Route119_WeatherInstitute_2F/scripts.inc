@@ -205,38 +205,64 @@ Route119_WeatherInstitute_2F_EventScript_WeatherScientist::
 
 Route119_WeatherInstitute_2F_Text_Grunt2Intro:
 	.string "The INSTITUTE created a type of\n"
-	.string "POKéMON that has something to do with\l"
-	.string "the weather. We're here to take them!$"
+	.string "POKéMON that can influence weather patterns.\l"
+	.string "We're here to secure them.\p"
+	.string "You understand, don't you?\n"
+	.string "Control the weather... control production.\l"
+	.string "Control the rain... control the crops.\l"
+	.string "Control the sun... control energy output.\p"
+	.string "All for the revolution!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt2Defeat:
-	.string "Our plan's being spoiled by a kid?$"
+	.string "Our plan's being spoiled by a kid?\n"
+	.string "The BOSS won't believe this.$"
 
 Route119_WeatherInstitute_2F_Text_Grunt2PostBattle:
 	.string "If the POKéMON they made here can\n"
 	.string "control the weather freely, then we of\l"
-	.string "TEAM AQUA definitely need it!$"
+	.string "TEAM AQUA definitely need it!\p"
+	.string "With weather control, we can amplify\n"
+	.string "ocean currents. Generate power.\l"
+	.string "Create rain cycles that never end.\p"
+	.string "The hydroelectric potential alone...\n"
+	.string "worth more than you can imagine!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt3Intro:
 	.string "We're TEAM AQUA!\n"
-	.string "We appear wherever anything rare is\l"
-	.string "found!$"
+	.string "We appear wherever valuable assets\l"
+	.string "are found!\p"
+	.string "Weather manipulation technology...\n"
+	.string "Do you have any idea what that's worth?\p"
+	.string "The droughts. The floods.\n"
+	.string "We could control both.\l"
+	.string "And sell the solution to both.$"
 
 Route119_WeatherInstitute_2F_Text_Grunt3Defeat:
-	.string "You got me!$"
+	.string "You got me!\n"
+	.string "But you haven't won anything.$"
 
 Route119_WeatherInstitute_2F_Text_Grunt3PostBattle:
 	.string "You don't have any idea what we of\n"
 	.string "TEAM AQUA are working towards!\l"
-	.string "You stay out of our way!$"
+	.string "You stay out of our way!\p"
+	.string "When we control the seas,\n"
+	.string "we control the trade.\l"
+	.string "When we control the trade...\l"
+	.string "we control everything!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt5Intro:
 	.string "Don't tell me you're looking for that\n"
 	.string "weather POKéMON, too?\p"
 	.string "That's a no-no!\n"
-	.string "We were here to get it first!$"
+	.string "We were here to get it first!\p"
+	.string "Do you know what unlimited energy\n"
+	.string "would do for our cause?\p"
+	.string "Coastal cities may be gone...\n"
+	.string "A small price...$"
 
 Route119_WeatherInstitute_2F_Text_Grunt5Defeat:
-	.string "Oh, will you look at my POKéMON?$"
+	.string "You are the one they talk about?\n"
+	.string "Defeating everyone... Damn you!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt5PostBattle:
 	.string "Humph, so what?\n"
@@ -251,42 +277,66 @@ Route119_WeatherInstitute_2F_Text_ShellyIntro:
 	.string "You're either absolutely fearless,\n"
 	.string "simply ignorant, or both!\p"
 	.string "You're so cute, you're disgusting!\n"
-	.string "I'll put you down, kiddy!$"
+	.string "I'll put you down, kiddy!\p"
+	.string "Do you understand economics?\n"
+	.string "Supply and demand?\p"
+	.string "If we control the tides,\n"
+	.string "we control the supply.\l"
+	.string "If we control the supply...\l"
+	.string "we name the price.$"
 
 Route119_WeatherInstitute_2F_Text_ShellyDefeat:
 	.string "Ahahahaha!\n"
-	.string "You're disgustingly strong!$"
+	.string "You're disgustingly strong!\n"
+	.string "And annoyingly idealistic.$"
 
 Route119_WeatherInstitute_2F_Text_ShellyPostBattle:
 	.string "It's bad enough to have TEAM MAGMA\n"
 	.string "blunder about, but now there's you!\p"
 	.string "What makes you want to sniff around\n"
-	.string "in our business, anyway?$"
+	.string "in our business, anyway?\p"
+	.string "This is about survival.\n"
+	.string "About progress.\p"
+	.string "The world runs on energy.\n"
+	.string "Whoever controls it... runs the world.\p"
+	.string "But you're just a child.\n"
+	.string "You wouldn't understand.$"
 
 Route119_WeatherInstitute_2F_Text_TeamMagmaJustPassedBy:
 	.string "We have a situation here!\p"
 	.string "A TEAM MAGMA mob just passed\n"
 	.string "the WEATHER INSTITUTE.\p"
 	.string "They appear to be headed for\n"
-	.string "MT. PYRE!$"
+	.string "MT. PYRE!\p"
+	.string "If they get there first...\n"
+	.string "the ORBS. The ancient relics.\p"
+	.string "They'll control the land's resources\n"
+	.string "completely. We can't let that happen.$"
 
 Route119_WeatherInstitute_2F_Text_WeHaveToHurryToMtPyre:
 	.string "What?!\p"
 	.string "We can't waste any more time here!\n"
 	.string "We have to hurry to MT. PYRE, too!\p"
 	.string "Ahahahaha!\n"
-	.string "TEAM MAGMA, just you wait!$"
+	.string "TEAM MAGMA, just you wait!\p"
+	.string "This isn't about ideology anymore.\n"
+	.string "This is about who controls HOENN's future.$"
 
 Route119_WeatherInstitute_2F_Text_ThanksPleaseTakePokemon:
 	.string "Thanks!\n"
 	.string "Thanks to you, we're safe!\p"
 	.string "It might be an odd way of thanking you,\n"
-	.string "but take this POKéMON.$"
+	.string "but take this POKéMON.\p"
+	.string "It responds to weather.\n"
+	.string "Maybe it'll help you understand\l"
+	.string "why controlling nature is so... tempting.$"
 
 @ Unused
 Route119_WeatherInstitute_2F_Text_NoRoomForPokemon:
 	.string "Hm? You don't seem to have any room\n"
-	.string "for this POKéMON.$"
+	.string "for this POKéMON.\p"
+	.string "Come back when you're ready.\n"
+	.string "The world isn't going to wait.$"
 
 Route119_WeatherInstitute_2F_Text_PlayerReceivedCastform:
 	.string "{PLAYER} received CASTFORM!$"
@@ -295,12 +345,18 @@ Route119_WeatherInstitute_2F_Text_PokemonChangesWithWeather:
 	.string "That POKéMON changes shape according\n"
 	.string "to the weather conditions.\p"
 	.string "There're plenty of them in the\n"
-	.string "INSTITUTE--go ahead and take it.$"
+	.string "INSTITUTE--go ahead and take it.\p"
+	.string "A reminder that nature adapts.\n"
+	.string "But can it survive exploitation?$"
 
 Route119_WeatherInstitute_2F_Text_ChangingWeatherRidiculous:
 	.string "I've been researching rain for many\n"
 	.string "years, but it's ridiculous to think that\l"
-	.string "humans can freely change the weather.$"
+	.string "humans can freely change the weather.\p"
+	.string "And yet... these corporations.\n"
+	.string "These teams. They're trying.\p"
+	.string "And they might just succeed.\n"
+	.string "God help us all if they do.$"
 
 Route119_WeatherInstitute_2F_Text_GroudonWeather:
 	.string "I track weather patterns over\n"
@@ -308,7 +364,9 @@ Route119_WeatherInstitute_2F_Text_GroudonWeather:
 	.string "Presently, a drought has been recorded\n"
 	.string "in {STR_VAR_1}.\p"
 	.string "Could that mean, somewhere near\n"
-	.string "{STR_VAR_1}…$"
+	.string "{STR_VAR_1}…\p"
+	.string "Something is awakening.\n"
+	.string "Something that thirsts.$"
 
 Route119_WeatherInstitute_2F_Text_KyogreWeather:
 	.string "I track weather patterns over\n"
@@ -316,11 +374,18 @@ Route119_WeatherInstitute_2F_Text_KyogreWeather:
 	.string "Presently, heavy rainfall has been\n"
 	.string "recorded over {STR_VAR_1}.\p"
 	.string "Could that mean, somewhere near\n"
-	.string "{STR_VAR_1}…$"
+	.string "{STR_VAR_1}…\p"
+	.string "Something stirs beneath the waves.\n"
+	.string "Something ancient. Hungry.$"
 
 Route119_WeatherInstitute_2F_Text_NoAbnormalWeather:
 	.string "Abnormal weather conditions are\n"
 	.string "no longer being reported.\p"
 	.string "The occasional rainfall is a blessing,\n"
-	.string "really.$"
+	.string "really.\p"
+	.string "For now... balance holds.\n"
+	.string "But for how long?\p"
+	.string "The corporations are watching.\n"
+	.string "The teams are waiting.\l"
+	.string "And we're just counting raindrops.$"
 
