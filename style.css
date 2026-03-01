@@ -1028,7 +1028,7 @@ body.light-mode .main-screenshot {
     }
 }
 
-/* ===== TEAM SECTION ATUALIZADA ===== */
+/* ===== TEAM SECTION ===== */
 .team-section {
     padding: 4rem 0;
     background: #2d2d2d;
@@ -1041,18 +1041,7 @@ body.light-mode .main-screenshot {
     color: #ffffff !important;
 }
 
-/* Linha centralizada */
-.team-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-}
-
-.team-row.center {
-    margin-bottom: 2rem;
-}
-
-/* Grid para 4 membros */
+/* Grid para 4 membros - uniforme */
 .team-row.grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1061,13 +1050,9 @@ body.light-mode .main-screenshot {
     margin: 0 auto 3rem auto;
 }
 
-/* Grid para 3 membros */
-.team-row.grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
+/* Última linha sem margem inferior */
+.team-row.grid-4:last-child {
+    margin-bottom: 0;
 }
 
 .team-member {
@@ -1077,17 +1062,15 @@ body.light-mode .main-screenshot {
     border: 2px solid #404040;
     transition: transform 0.3s ease, border-color 0.3s ease;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .team-member:hover {
     transform: translateY(-5px);
     border-color: var(--pokemon-yellow);
-}
-
-/* Membro destacado (Rafael) */
-.team-member.featured {
-    max-width: 400px;
-    margin: 0 auto;
 }
 
 .team-member h3 {
@@ -1142,20 +1125,21 @@ body.light-mode .team-member:hover {
         margin-bottom: 2rem;
     }
     
-    .team-row.grid-4,
-    .team-row.grid-3 {
-        grid-template-columns: 1fr;
+    .team-row.grid-4 {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas no tablet */
         gap: 1.5rem;
         padding: 0 1rem;
         margin-bottom: 1.5rem;
     }
+}
+
+@media (max-width: 480px) {
+    .team-row.grid-4 {
+        grid-template-columns: 1fr; /* 1 coluna no celular */
+    }
     
     .team-member {
         padding: 1.5rem 1rem;
-    }
-    
-    .team-member.featured {
-        max-width: 100%;
     }
 }
 
