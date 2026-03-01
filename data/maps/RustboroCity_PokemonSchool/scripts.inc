@@ -81,13 +81,19 @@ RustboroCity_PokemonSchool_EventScript_StudentNotebook::
 	end
 
 RustboroCity_PokemonSchool_EventScript_Teacher::
-	lock
-	faceplayer
-	goto_if_set FLAG_RECEIVED_QUICK_CLAW, RustboroCity_PokemonSchool_EventScript_GaveWiseGlasses
-	goto_if_set FLAG_DEFEATED_TRAINER_NILO, RustboroCity_PokemonSchool_EventScript_CheckJolene
-	msgbox RustboroCity_PokemonSchool_Text_TeacherRegular, MSGBOX_DEFAULT
-	release
-	end
+    lock
+    faceplayer
+    goto_if_set FLAG_RECEIVED_QUICK_CLAW, RustboroCity_PokemonSchool_EventScript_GaveWiseGlasses
+    goto_if_unset FLAG_DEFEATED_TRAINER_NILO, RustboroCity_PokemonSchool_EventScript_TeacherRegular
+    goto_if_unset FLAG_DEFEATED_TRAINER_JOLENE, RustboroCity_PokemonSchool_EventScript_TeacherRegular
+    goto_if_unset FLAG_DEFEATED_TRAINER_LIAN, RustboroCity_PokemonSchool_EventScript_TeacherRegular
+    goto RustboroCity_PokemonSchool_EventScript_GiveWiseGlasses
+    end
+
+RustboroCity_PokemonSchool_EventScript_TeacherRegular::
+    msgbox RustboroCity_PokemonSchool_Text_TeacherRegular, MSGBOX_DEFAULT
+    release
+    end
 
 RustboroCity_PokemonSchool_EventScript_CheckJolene::
 	goto_if_set FLAG_DEFEATED_TRAINER_JOLENE, RustboroCity_PokemonSchool_EventScript_CheckLian
@@ -413,11 +419,22 @@ RustboroCity_PokemonSchool_Text_StudentsWhoDefeatAllGetWiseGlasses:
 RustboroCity_PokemonSchool_Text_TeacherRegular:
 	.string "Our top students are ready for\n"
 	.string "battles if you want to test your\l"
-	.string "skills! Don't be shy...$"
+	.string "skills! Don't be shy... After\l"
+	.string "defeating all the students, make sure\l"
+	.string "to talk to each one to see if they\l"
+	.string "have something to share... After that,\l"
+	.string "talk to me to receive a prize for your\l"
+	.string "dedication to studies!$"
 
 RustboroCity_PokemonSchool_Text_TeacherTwoDefeated:
 	.string "You're doing great! Defeat all \n"
-	.string "three students for a special reward!$"
+	.string "three students for a special reward!\p"
+	.string "After defeating all the students, \n"
+	.string "make sure to talk to each one to \l"
+	.string "see if they have something to \l"
+	.string "share... After that, talk to me to \l"
+	.string "receive a prize for your dedication \l"
+	.string "to studies!$"
 
 RustboroCity_PokemonSchool_Text_ExplainWiseGlasses:
 	.string "The WISE GLASSES boost the\n"

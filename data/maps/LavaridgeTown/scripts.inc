@@ -292,9 +292,9 @@ LavaridgeTown_Text_MayExplainGoGogglesChallengeDad:
 	.string "You're trying hard because you don't\n"
 	.string "want to lose to me, I bet!\p"
 	.string "{PLAYER}{KUN}, I think I should challenge\n"
-	.string "your dad in PETALBURG GYM.\p"
+	.string "Professor CALENDULA at the PETALBURG GYM.\p"
 	.string "See you again!$"
-
+	
 LavaridgeTown_Text_BrendanNiceBadgesTakeThis:
 	.string "ZENNO: {PLAYER}, hey, it's been a while.\n"
 	.string "How's it going?\p"
@@ -311,10 +311,9 @@ LavaridgeTown_Text_BrendanExplainGoGogglesChallengeDad:
 	.string "are exclusively desert-dwellers.\l"
 	.string "You might look around for those.\p"
 	.string "As for me…\n"
-	.string "I'm considering challenging NORMAN,\l"
-	.string "the GYM LEADER of PETALBURG.\p"
-	.string "Unlike you, {PLAYER}, your dad looks like\n"
-	.string "he really is tough.\p"
+	.string "I'm thinking... are we ready to face\l"
+	.string "Professor CALENDULA at the GYM?\p"
+	.string "Hmm... I think I'll try anyway!\n"
 	.string "See you around!$"
 
 LavaridgeTown_Text_HaveEggWillYouTakeIt:
