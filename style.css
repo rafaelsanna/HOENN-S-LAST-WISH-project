@@ -1052,12 +1052,21 @@ body.light-mode .main-screenshot {
     margin-bottom: 2rem;
 }
 
-/* Grid para 4 membros (agora 4 na segunda linha) */
-.team-row.grid-3 {
+/* Grid para 4 membros */
+.team-row.grid-4 {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     max-width: 1000px;
+    margin: 0 auto 3rem auto;
+}
+
+/* Grid para 3 membros */
+.team-row.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -1077,7 +1086,7 @@ body.light-mode .main-screenshot {
 
 /* Membro destacado (Rafael) */
 .team-member.featured {
-    max-width: 400px; /* Largura máxima para o card centralizado */
+    max-width: 400px;
     margin: 0 auto;
 }
 
@@ -1133,10 +1142,12 @@ body.light-mode .team-member:hover {
         margin-bottom: 2rem;
     }
     
+    .team-row.grid-4,
     .team-row.grid-3 {
-        grid-template-columns: 1fr; /* Uma coluna no mobile */
+        grid-template-columns: 1fr;
         gap: 1.5rem;
         padding: 0 1rem;
+        margin-bottom: 1.5rem;
     }
     
     .team-member {
