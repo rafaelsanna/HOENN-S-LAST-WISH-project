@@ -1028,7 +1028,7 @@ body.light-mode .main-screenshot {
     }
 }
 
-/* ===== TEAM SECTION ===== */
+/* ===== TEAM SECTION ATUALIZADA ===== */
 .team-section {
     padding: 4rem 0;
     background: #2d2d2d;
@@ -1041,9 +1041,21 @@ body.light-mode .main-screenshot {
     color: #ffffff !important;
 }
 
-.team-grid {
+/* Linha centralizada */
+.team-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.team-row.center {
+    margin-bottom: 2rem;
+}
+
+/* Grid para 4 membros (agora 4 na segunda linha) */
+.team-row.grid-3 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
     gap: 2rem;
     max-width: 1000px;
     margin: 0 auto;
@@ -1055,11 +1067,18 @@ body.light-mode .main-screenshot {
     border-radius: 10px;
     border: 2px solid #404040;
     transition: transform 0.3s ease, border-color 0.3s ease;
+    width: 100%;
 }
 
 .team-member:hover {
     transform: translateY(-5px);
     border-color: var(--pokemon-yellow);
+}
+
+/* Membro destacado (Rafael) */
+.team-member.featured {
+    max-width: 400px; /* Largura máxima para o card centralizado */
+    margin: 0 auto;
 }
 
 .team-member h3 {
@@ -1074,6 +1093,66 @@ body.light-mode .main-screenshot {
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0;
+}
+
+/* Light Mode */
+body.light-mode .team-section {
+    background: #f8f9fa;
+}
+
+body.light-mode .team-section h2 {
+    color: var(--pokemon-dark) !important;
+}
+
+body.light-mode .team-member {
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+body.light-mode .team-member h3 {
+    color: var(--pokemon-blue) !important;
+}
+
+body.light-mode .team-member p {
+    color: #2c3e50 !important;
+}
+
+body.light-mode .team-member:hover {
+    border-color: var(--pokemon-blue);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .team-section {
+        padding: 3rem 0;
+    }
+    
+    .team-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .team-row.grid-3 {
+        grid-template-columns: 1fr; /* Uma coluna no mobile */
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .team-member {
+        padding: 1.5rem 1rem;
+    }
+    
+    .team-member.featured {
+        max-width: 100%;
+    }
+}
+
+/* Para telas muito pequenas */
+@media (max-width: 480px) {
+    .team-row.grid-3 {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Light Mode */

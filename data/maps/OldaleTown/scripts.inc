@@ -395,12 +395,12 @@ OldaleTown_Text_FinishedSketchingFootprints:
 OldaleTown_Text_MayLetsGoBack:
 	.string "ZINNIA: {PLAYER}{KUN}!\n"
 	.string "Over here!\l"
-	.string "Let's hurry home!$"
+	.string "Let's hurry!$"
 
 OldaleTown_Text_BrendanLetsGoBack:
-	.string "ZENNO: I'm heading back to my dad's\n"
-	.string "LAB now.\l"
-	.string "{PLAYER}, you should hustle back, too.$"
+	.string "ZENNO: {PLAYER}{KUN}!\n"
+	.string "Over here!\l"
+	.string "Let's hurry!$"
 
 OldaleTown_Text_TownSign:
 	.string "OLDALE TOWN\n"
