@@ -2104,12 +2104,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_SEEDOT] =
     {
         .baseHP        = 40,
-        .baseAttack    = 40,
+        .baseAttack    = 30,
         .baseDefense   = 50,
         .baseSpeed     = 30,
-        .baseSpAttack  = 30,
+        .baseSpAttack  = 40,
         .baseSpDefense = 30,
-        .types = MON_TYPES(TYPE_GRASS),
+        .types = MON_TYPES(TYPE_FIRE, TYPE_STEEL),
         .catchRate = 255,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 44 : 74,
         .evYield_Defense = 1,
@@ -2119,7 +2119,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_GRASS),
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_EARLY_BIRD, ABILITY_PICKPOCKET },
+        .abilities = { ABILITY_AFTERMATH, ABILITY_SOUNDPROOF, ABILITY_FLASH_FIRE },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Seedot"),
         .cryId = CRY_SEEDOT,
@@ -2180,12 +2180,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_NUZLEAF] =
     {
         .baseHP        = 70,
-        .baseAttack    = 70,
+        .baseAttack    = 60,
         .baseDefense   = 40,
         .baseSpeed     = 60,
-        .baseSpAttack  = 60,
+        .baseSpAttack  = 70,
         .baseSpDefense = 40,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_DARK),
+        .types = MON_TYPES(TYPE_FIRE, TYPE_STEEL),
         .catchRate = 120,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 119 : 141,
         .evYield_Attack = 2,
@@ -2195,7 +2195,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_GRASS),
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_EARLY_BIRD, ABILITY_PICKPOCKET },
+        .abilities = { ABILITY_AFTERMATH, ABILITY_SOUNDPROOF, ABILITY_FLASH_FIRE },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Nuzleaf"),
         .cryId = CRY_NUZLEAF,
@@ -2267,13 +2267,13 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
 
     [SPECIES_SHIFTRY] =
     {
-        .baseHP        = 90,
+        .baseHP        = 60,
         .baseAttack    = 100,
         .baseDefense   = 60,
         .baseSpeed     = 80,
-        .baseSpAttack  = 90,
+        .baseSpAttack  = 120,
         .baseSpDefense = 60,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_DARK),
+        .types = MON_TYPES(TYPE_FIRE, TYPE_STEEL),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
         .expYield = 240,
@@ -2290,7 +2290,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_GRASS),
     #if P_UPDATED_ABILITIES >= GEN_9
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_WIND_RIDER, ABILITY_PICKPOCKET },
+        .abilities = { ABILITY_AFTERMATH, ABILITY_SOUNDPROOF, ABILITY_FLASH_FIRE },
     #else
         .abilities = { ABILITY_CHLOROPHYLL, ABILITY_EARLY_BIRD, ABILITY_PICKPOCKET },
     #endif

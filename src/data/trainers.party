@@ -5117,6 +5117,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Poliwhirl @ Eviolite  
+Ability: Iron Fist
 Level: 25  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
 - Thunder Punch  
@@ -5130,7 +5131,7 @@ Shiny: Yes
 Level: 25 
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Mach Punch  
-- Spore 
+- Aerial Ace 
 - Rock Tomb  
 - Bullet Seed  
 
@@ -5139,20 +5140,20 @@ Ability: Adaptability
 Level: 25  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 Jolly Nature  
-- Brick Break  
+- Double Kick 
 - Bulldoze 
 - Ice Punch  
 - Thunder Punch  
 
 Heracross @ Coba Berry 
-Ability: Moxie  
+Ability: Swarm
 Adamant Nature  
 Level: 25  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Brick Break  
 - Bug Bite  
 - Bullet Seed  
-- Rock Blast  
+- Rock Tomb 
 
 === TRAINER_DEN_CASUAL ===
 Name: DEN
