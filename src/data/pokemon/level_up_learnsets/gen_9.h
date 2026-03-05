@@ -7665,6 +7665,7 @@ static const struct LevelUpMove sSeedotLevelUpLearnset[] = {
 
 static const struct LevelUpMove sNuzleafLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 0, MOVE_RAZOR_LEAF),
+    LEVEL_UP_MOVE( 1, MOVE_MIND_BLOWN),
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 1, MOVE_ABSORB),
     LEVEL_UP_MOVE( 1, MOVE_HARDEN),
@@ -15184,6 +15185,7 @@ static const struct LevelUpMove sVirizionLevelUpLearnset[] = {
     LEVEL_UP_MOVE(31, MOVE_TAKE_DOWN),
     LEVEL_UP_MOVE(32, MOVE_COVET),
     LEVEL_UP_MOVE(33, MOVE_BODY_SLAM),
+    LEVEL_UP_MOVE(35, MOVE_COMET_PUNCH),
     LEVEL_UP_MOVE(39, MOVE_TOXIC_SPIKES),
     LEVEL_UP_MOVE(41, MOVE_DIZZY_PUNCH),
     LEVEL_UP_MOVE(44, MOVE_PLAY_ROUGH),

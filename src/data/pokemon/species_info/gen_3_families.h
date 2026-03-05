@@ -2262,7 +2262,9 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sNuzleafLevelUpLearnset,
         .teachableLearnset = sNuzleafTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_SHIFTRY}),
+    #if P_GEN_9_CROSS_EVOS
+        .evolutions = EVOLUTION({EVO_LEVEL, 0, SPECIES_SHIFTRY, CONDITIONS({IF_USED_MOVE_X_TIMES, MOVE_MIND_BLOWN, 1})}),
+    #endif
     },
 
     [SPECIES_SHIFTRY] =
