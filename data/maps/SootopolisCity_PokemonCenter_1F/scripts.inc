@@ -44,27 +44,36 @@ SootopolisCity_PokemonCenter_1F_EventScript_WomanNoLegendaries::
 	end
 
 SootopolisCity_PokemonCenter_1F_Text_WallaceToughestInHoenn:
-	.string "WALLACE is rumored to be the toughest\n"
-	.string "TRAINER in the whole HOENN region.\p"
-	.string "This town's GYM is led by the TRAINER\n"
-	.string "who taught WALLACE.\p"
-	.string "But the ELITE FOUR… They're said to be\n"
-	.string "even stronger than WALLACE's mentor.\p"
-	.string "How strong could they be?$"
+	.string "STELLA STONE doesn't show up here\n"
+	.string "much anymore. Not since the comet.\p"
+	.string "They say she felt it more than most.\n"
+	.string "Being this close to the Cave of Origin.\p"
+	.string "Like something deep underground\n"
+	.string "called to her. And she's still listening.$"
 
 SootopolisCity_PokemonCenter_1F_Text_EveryoneTakenRefuge:
-	.string "Everyone in town has taken refuge\n"
-	.string "and won't come out of their homes.\p"
-	.string "Even I would rather not venture\n"
-	.string "outside.$"
+	.string "The water here is too calm.\n"
+	.string "Too perfect. Like glass.\p"
+	.string "Old divers say the sea floor\n"
+	.string "dropped deeper that night.\p"
+	.string "As if the city rose.\n"
+	.string "Or something pulled us higher.$"
 
 SootopolisCity_PokemonCenter_1F_Text_AlwaysBeFriendsWithPokemon:
-	.string "Whenever, wherever, and whatever\n"
-	.string "happens, I will always be friends with\l"
-	.string "POKéMON.\p"
-	.string "Because it's fun to be with POKéMON!$"
+	.string "My Pókemon used to sleep beside me.\n"
+	.string "Now it watches the door all night.\p"
+	.string "Growls at nothing. Guards me from\n"
+	.string "things I can't see.\p"
+	.string "It knows something's coming.\n"
+	.string "And it's decided I'm worth protecting.$"
 
 SootopolisCity_PokemonCenter_1F_Text_ArentPokemonOurFriends:
-	.string "Aren't POKéMON our friends?\p"
-	.string "Why are they going wild this way?$"
+	.string "When the comet passed, every Pokémon\n"
+	.string "in Sootopolis fell silent.\p"
+	.string "Thousands of them. Just... stopped.\n"
+	.string "Stared at the sky together.\p"
+	.string "For three minutes, this city\n"
+	.string "didn't make a sound.\p"
+	.string "They knew. They all knew.\n"
+	.string "And none of them warned us.$"
 

@@ -53,42 +53,41 @@ PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType::
 	return
 
 PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
-	.string "That PC-based POKéMON Storage\n"
-	.string "System…\p"
-	.string "Whoever made it must be some kind\n"
-	.string "of a scientific wizard!$"
+	.string "You know, I never saw someone\n"
+	.string "using a cape like yours!\p"
+	.string "Not exactly Petalburg fashion!\n"
+	.string "You from out of region? Or just...\l"
+	.string "from somewhere else?$"
 
 PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:
-	.string "When my POKéMON ate an\n"
-	.string "ORAN BERRY, it regained HP!$"
+	.string "The berries near the woods have been\n"
+	.string "ripening wrong. Too fast. Too bright.\p"
+	.string "Probably nothing. but just pay\n"
+	.string "attention to what you keep.$"
 
 PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
-	.string "There are many types of POKéMON.\p"
-	.string "All types have their strengths and\n"
-	.string "weaknesses against other types.\p"
-	.string "Depending on the types of POKéMON,\n"
-	.string "a battle could be easy or hard.$"
+	.string "Professor Calendula spent years\n"
+	.string "in research labs across Hoenn.\p"
+	.string "Could have stayed in academia forever.\n"
+	.string "Published papers. Lived quietly.\p"
+	.string "But she chose the Gym instead.\n"
+	.string "Says she learned more from one real\l"
+	.string "battle than ten years of theory.$"
 
-PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType:
-	.string "For example, your TREECKO\n"
-	.string "is a GRASS type.\p"
-	.string "It's strong against the WATER and\n"
-	.string "GROUND types.\p"
-	.string "But, it's weak against FIRE-type\n"
-	.string "POKéMON.$"
+PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType:  
+	.string "Calendula studied Grass-types for\n"
+	.string "years. Wrote papers on their empathy.\p"
+	.string "She'd tell you that Torchic bond\n"
+	.string "deeper than most. Trust that.$"
 
-PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType:
-	.string "For example, your TORCHIC\n"
-	.string "is a FIRE type.\p"
-	.string "It's strong against the GRASS and\n"
-	.string "BUG types.\p"
-	.string "But, it's weak against WATER-type\n"
-	.string "POKéMON.$"
+PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType:   
+	.string "Fire-types as Calendula's say are\n"
+	.string "heated! She says they're unpredictable\l"
+	.string "lately. More intense.\p"
+	.string "Watch your Totodile carefully.$"
 
-PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:
-	.string "For example, your MUDKIP\n"
-	.string "is a WATER type.\p"
-	.string "It's strong against the FIRE type.\p"
-	.string "But, it's weak against GRASS-type\n"
-	.string "and ELECTRIC-type POKéMON.$"
-
+PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:   
+	.string "Calendula mentioned Water-types\n"
+	.string "are gathering near strange currents.\p"
+	.string "Your Bulbasaur might sense things\n"
+	.string "you can't. Follow its lead.$"

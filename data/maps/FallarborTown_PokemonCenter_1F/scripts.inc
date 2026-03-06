@@ -99,13 +99,21 @@ FallarborTown_PokemonCenter_1F_Text_LanetteGreeting:
 	.string "My house is on ROUTE 114.$"
 
 FallarborTown_PokemonCenter_1F_Text_FossilManiacEdgeOfTown:
-	.string "I wonder what POKéMON looked like\n"
-	.string "long, long ago?\p"
-	.string "Maybe the FOSSIL MANIAC at the edge\n"
-	.string "of town will know.$"
+	.string "I've been studying fossil records\n"
+	.string "from across HOENN.\p"
+	.string "POKéMON today are different from even\n"
+	.string "a hundred years ago. Subtle changes.\p"
+	.string "Larger teeth. Different eyes.\n"
+	.string "Almost like they're adapting to\l"
+	.string "something we can't see yet.$"
 
 FallarborTown_PokemonCenter_1F_Text_PlantHardyTrees:
-	.string "In the fields of FALLARBOR, we plant\n"
-	.string "seedlings of hardy trees that thrive\l"
-	.string "even in volcanic ash.$"
+	.string "Volcanic ash covers everything.\n"
+	.string "Chokes the life right out of you.\p"
+	.string "But give it time. The same earth that\n"
+	.string "buries will feed.\p"
+	.string "Nothing grows richer than soil born\n"
+	.string "from fire and destruction.\p"
+	.string "The comet, the mountain... maybe\n"
+	.string "something beautiful comes after.$"
 

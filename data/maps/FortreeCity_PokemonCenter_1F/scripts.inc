@@ -28,28 +28,32 @@ FortreeCity_PokemonCenter_1F_EventScript_Boy::
 	end
 
 FortreeCity_PokemonCenter_1F_Text_GoToSafariZone:
-	.string "Listen, kid, are you working\n"
-	.string "on a POKéDEX?\p"
-	.string "Hmm… Go to the SAFARI ZONE.\n"
-	.string "That's my suggestion.$"
+	.string "They say the trees here have grown\n"
+	.string "for three thousand years.\p"
+	.string "Roots so deep they touch something\n"
+	.string "ancient. Something sleeping.\p"
+	.string "Lately, the canopy whispers.\n"
+	.string "Not wind. Voices. Old voices.\p"
+	.string "The elder says the trees remember\n"
+	.string "the last time the comet came.\p"
+	.string "And they're trying to warn us.$"
 
 FortreeCity_PokemonCenter_1F_Text_RecordCornerIsNeat:
-	.string "Have you done anything at\n"
-	.string "the RECORD CORNER?\p"
-	.string "It's pretty neat. It mixes and matches\n"
-	.string "the records of TRAINERS.\p"
-	.string "I don't know quite how it works,\n"
-	.string "but it's cool. It's exciting, even!$"
-
+	.string "My grandfather built this house\n"
+	.string "with his own hands. Fifty years ago.\p"
+	.string "Last week, I found old carvings\n"
+	.string "hidden beneath the floorboards.\p"
+	.string "Symbols I've never seen.\n"
+	.string "Dates that haven't happened yet.\p"
+	.string "He knew something. They all did.$"
+	
 FortreeCity_PokemonCenter_1F_Text_DoYouKnowAboutPokenav:
-	.string "Oh, wow, you have a POKéNAV!\n"
-	.string "And it's just like mine!\p"
-	.string "Do you know about POKéNAV's\n"
-	.string "MATCH CALL system?\p"
-	.string "Access it, and you can chat with\n"
-	.string "registered TRAINERS anytime.\p"
-	.string "It also shows you which TRAINERS\n"
-	.string "want a rematch with you.\p"
-	.string "It's really nifty! Those DEVON guys\n"
-	.string "sure know what they're doing!$"
+	.string "A POKéNAV? From Devon?\n"
+	.string "They've been quiet lately.\p"
+	.string "Heard their satellites pick up\n"
+	.string "signals from empty frequencies.\p"
+	.string "Voices where there should be silence.\n"
+	.string "Coordinates that lead to nowhere.\p"
+	.string "Technology sees what we can't.\n"
+	.string "Question is... should it?$"
 

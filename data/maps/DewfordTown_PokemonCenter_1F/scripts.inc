@@ -31,7 +31,10 @@ DewfordTown_PokemonCenter_1F_Text_StoneCavern:
 	.string "there.$"
 
 DewfordTown_PokemonCenter_1F_Text_FaintedMonCanUseHM:
-	.string "Even if a POKéMON faints and can't\n"
-	.string "battle, it can still use a move learned\l"
-	.string "from a HIDDEN MACHINE (HM).$"
+	.string "BRINEY's boat hasn't moved in days.\n"
+	.string "He just stares at the horizon.\p"
+	.string "Claims he saw something emerge from\n"
+	.string "the water that night. Something old.\p"
+	.string "Won't talk about it. Just whispers\n"
+	.string "about currents changing...$"
 

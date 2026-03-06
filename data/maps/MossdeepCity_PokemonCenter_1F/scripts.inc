@@ -24,13 +24,27 @@ MossdeepCity_PokemonCenter_1F_EventScript_Girl::
 	end
 
 MossdeepCity_PokemonCenter_1F_Text_GymLeaderDuoFormidable:
-	.string "The GYM LEADERS in this town are\n"
-	.string "a formidable duo.\p"
-	.string "Their combination attacks are, like,\n"
-	.string "excellent and wow!$"
+	.string "When the comet passed... it filled\n"
+	.string "the entire sky. Overwhelming.\p"
+	.string "But here? In Mossdeep?\n"
+	.string "It felt... gentle. Almost welcoming.\p"
+	.string "Like the city itself exhaled\n"
+	.string "and the comet exhaled back.\p"
+	.string "People came from everywhere after.\n"
+	.string "Refugees. Survivors. They said other\l"
+	.string "towns felt the weight of it.\p"
+	.string "Here, we just felt... seen.$"
 
 MossdeepCity_PokemonCenter_1F_Text_AbilitiesMightChangeMoves:
-	.string "Depending on the special abilities of\n"
-	.string "POKéMON, some moves might change\l"
-	.string "or not work at all.$"
+	.string "The space center detected something\n"
+	.string "that night. A reading they won't share.\p"
+	.string "But the engineers talk when they drink.\n"
+	.string "Say the comet wasn't passing by.\p"
+	.string "It was stopping. Right above us.\n"
+	.string "Hovering. Watching.\p"
+	.string "And for those few minutes,\n"
+	.string "Mossdeep existed somewhere else.\p"
+	.string "Somewhere safe.\n"
+	.string "I don't know why we were chosen.\p"
+	.string "But I'm grateful. And terrified.$"
 

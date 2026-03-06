@@ -25,18 +25,25 @@ VerdanturfTown_PokemonCenter_1F_EventScript_ExpertM::
 	end
 
 VerdanturfTown_PokemonCenter_1F_Text_FaithInYourPokemon:
-	.string "You can't consider yourself a real\n"
-	.string "TRAINER if you don't have faith\l"
-	.string "in your POKéMON.\p"
-	.string "Only those people who can believe\n"
-	.string "in their battling POKéMON can win\l"
-	.string "through to the very end.$"
+	.string "My grandfather always said:\n"
+	.string "'Trust your POKéMON more than yourself.'\p"
+	.string "I thought I understood.\n"
+	.string "Until last week.\p"
+	.string "My MANECTRIC woke me up at 3am.\n"
+	.string "Dragged me outside. Just stood there\l"
+	.string "staring at the sky. Trembling.\p"
+	.string "Nothing there. But he knew something.\n"
+	.string "He was warning me about... what?\p"
+	.string "Faith isn't blind anymore.\n"
+	.string "It's survival...$"
 
 VerdanturfTown_PokemonCenter_1F_Text_VisitForBattleTent:
-	.string "The reason why anyone would visit\n"
-	.string "VERDANTURF…\p"
-	.string "It's the BATTLE TENT. It goes without\n"
-	.string "saying.\p"
-	.string "Or is there somebody here that you\n"
-	.string "came to see?$"
+	.string "You ever feel like you're living in\n"
+	.string "a world that's already ended?\p"
+	.string "The BATTLE TENT is still open.\n"
+	.string "People still fight. Still cheer.\p"
+	.string "But sometimes I catch them staring\n"
+	.string "off into nothing. Mid-match.\p"
+	.string "Like everyone's waiting for the other\n"
+	.string "shoe to drop. Including me.$"
 

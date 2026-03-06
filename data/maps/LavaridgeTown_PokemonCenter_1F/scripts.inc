@@ -29,20 +29,26 @@ LavaridgeTown_PokemonCenter_1F_EventScript_Gentleman::
 	end
 
 LavaridgeTown_PokemonCenter_1F_Text_TrainersPokemonSpendTimeTogether:
-	.string "I think POKéMON get closer to their\n"
-	.string "TRAINERS if they spend time together.\p"
-	.string "The longer the better.\n"
-	.string "That's what I think.$"
+	.string "Something changed after the comet.\n"
+	.string "My POKéMON look at me differently now.\p"
+	.string "Like they understand more than they\n"
+	.string "did before. Deeper. It's unsettling.\p"
+	.string "Maybe we never really knew each other\n"
+	.string "until that night.$"
 
 LavaridgeTown_PokemonCenter_1F_Text_HotSpringCanInvigorate:
-	.string "It's sort of magical how just sitting\n"
-	.string "in a hot-spring pool can invigorate.\p"
-	.string "I wish I could let my POKéMON\n"
-	.string "soak, too.$"
+	.string "The springs have been hotter lately.\n"
+	.string "Much hotter than normal years.\p"
+	.string "Old folks say the last time they\n"
+	.string "heated up like this was eighty years ago.\p"
+	.string "Right before the great eruption at\n"
+	.string "MT. CHIMNEY. Makes you think, doesn't it?$"
 
 LavaridgeTown_PokemonCenter_1F_Text_TrainersShouldRestToo:
-	.string "Hohoho! Hey, kid, you can reach\n"
-	.string "the hot springs from here.\p"
-	.string "If POKéMON are getting rest, so too\n"
-	.string "should their TRAINERS.$"
-
+	.string "Hohoho! You look exhausted, kid.\n"
+	.string "Those bags under your eyes...\p"
+	.string "The springs are just through that door.\n"
+	.string "Go soak. Let the heat burn away whatever's\l"
+	.string "keeping you awake at night.\p"
+	.string "Trust me. These waters have cured\n"
+	.string "worse than sleeplessness.$"

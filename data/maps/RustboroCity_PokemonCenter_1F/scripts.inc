@@ -29,19 +29,30 @@ RustboroCity_PokemonCenter_1F_EventScript_Girl::
 	end
 
 RustboroCity_PokemonCenter_1F_Text_PokemonHavePersonalities:
-	.string "My POKéMON has a NAIVE nature, and my\n"
-	.string "friend's has a JOLLY nature.\p"
-	.string "It's fascinating how POKéMON have\n"
-	.string "personalities!$"
+	.string "I work at the Devon Corporation.\n"
+	.string "Research division.\p"
+	.string "After the comet, we started detecting\n"
+	.string "energy signatures that don't match\l"
+	.string "any known Pokémon.\p"
+	.string "Something is bleeding through from\n"
+	.string "somewhere. The question is where.$"
 
 RustboroCity_PokemonCenter_1F_Text_MaleAndFemalePokemon:
-	.string "Just like people, there are male and\n"
-	.string "female POKéMON.\p"
-	.string "But no one seems to have any idea how\n"
-	.string "they're different.$"
+	.string "My grandfather helped found\n"
+	.string "the Pokémon Trainer's School here.\p"
+	.string "He used to say that Rustboro would\n"
+	.string "outlast any disaster. Too much\l"
+	.string "knowledge stored in these walls.\p"
+	.string "I hope he was right. I really do.$"
 
 RustboroCity_PokemonCenter_1F_Text_HMCutNextDoor:
-	.string "The man next door gave me an HM!\p"
-	.string "I used it to teach my POKéMON how to\n"
-	.string "CUT down skinny trees.$"
+	.string "Have you heard the rumor?\n"
+	.string "A woman who moves like wind through trees.\p"
+	.string "They say she can slice through\n"
+	.string "the thickest branches with one strike.\p"
+	.string "Learned the art from her grandfather.\n"
+	.string "But she only teaches those who can\l"
+	.string "defeat her in battle.\p"
+	.string "I've searched everywhere. Never found her.\n"
+	.string "Maybe she doesn't want to be found.$"
 
