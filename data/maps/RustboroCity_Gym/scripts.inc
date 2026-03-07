@@ -224,8 +224,10 @@ RustboroCity_Gym_Text_ExplainRockTomb:
 	.string "It inflicts damage and lowers SPEED.\p"
 	.string "A TM instantly teaches the move\n"
 	.string "to a POKEMON.\p"
-	.string "Remember, a TM can be used only once,\n"
-	.string "so think before you use it.$"
+	.string "In the past, TMs could only be used once,\n"
+	.string "but technology has evolved, hasn't it?\p"
+	.string "Now we can use them indefinitely,\n"
+	.string "that's just great!$"
 
 RustboroCity_Gym_Text_RoxannePostBattle:
 	.string "If you want a real challenge, come\n"

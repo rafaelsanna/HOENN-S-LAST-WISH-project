@@ -64,6 +64,10 @@ SlateportCity_NameRatersHouse_EventScript_NewNameDifferent::
 SlateportCity_NameRatersHouse_Text_PleasedToRateMonNickname:
 	.string "Hi, hi! I'm the NAME RATER!\n"
 	.string "I'm the fortune-teller of names!\p"
+	.string "Nowadays, you can change your\n"
+	.string "POKéMON's nickname yourself...\p"
+	.string "But even so, some still like to do it\n"
+	.string "like in the old days... Hahahahaha.\p"
 	.string "I shall be pleased to rate your\n"
 	.string "POKéMON's nickname.$"
 
