@@ -8155,7 +8155,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Poliwrath,
         .shinyPalette = gMonShinyPalette_Poliwrath,
         .iconSprite = gMonIcon_Poliwrath,
-        .iconPalIndex = 0,
+        .iconPalIndex = 4,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 7, SHADOW_SIZE_L)
         FOOTPRINT(Poliwrath)
@@ -8235,7 +8235,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Politoed,
         .shinyPalette = gMonShinyPalette_Politoed,
         .iconSprite = gMonIcon_Politoed,
-        .iconPalIndex = 1,
+        .iconPalIndex = 4,
 #if P_GENDER_DIFFERENCES
         .frontPicFemale = gMonFrontPic_PolitoedF,
         .frontPicSizeFemale = MON_COORDS_SIZE(48, 56),
