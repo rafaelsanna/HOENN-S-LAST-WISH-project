@@ -1,5 +1,6 @@
 #ifndef GUARD_POKEMON_STORAGE_SYSTEM_H
 #define GUARD_POKEMON_STORAGE_SYSTEM_H
+#include "main.h"
 
 #define TOTAL_BOXES_COUNT       14
 #define IN_BOX_ROWS             5 // Number of rows, 6 Pokémon per row
@@ -37,6 +38,9 @@ u8 CountPartyMons(void);
 u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n);
 void ShowPokemonStorageSystemPC(void);
 void ResetPokemonStorageSystem(void);
+void ShowPokemonPCFromParty(void);
+void CB2_ShowPokemonPCFromParty(void);
+void PokemonPC_SetReturnToPartyCallback(MainCallback cb);
 s16 CompactPartySlots(void);
 u8 StorageGetCurrentBox(void);
 u32 GetBoxMonDataAt(u8 boxId, u8 boxPosition, s32 request);

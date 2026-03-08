@@ -227,6 +227,14 @@ static EWRAM_DATA u16 sPartyMenuItemId = 0;
 EWRAM_DATA u8 gBattlePartyCurrentOrder[PARTY_SIZE / 2] = {0}; // bits 0-3 are the current pos of Slot 1, 4-7 are Slot 2, and so on
 static EWRAM_DATA u8 sInitialLevel = 0;
 static EWRAM_DATA u8 sFinalLevel = 0;
+// For opening PC from party menu
+static EWRAM_DATA u8 sSavedPartyMenuType = 0;
+static EWRAM_DATA u8 sSavedPartyLayout = 0;
+static EWRAM_DATA u8 sSavedPartyAction = 0;
+static EWRAM_DATA u8 sSavedPartySlotId = 0;
+static EWRAM_DATA u16 sSavedPartyMessageId = 0;
+static EWRAM_DATA TaskFunc sSavedPartyTask = NULL;
+static EWRAM_DATA MainCallback sSavedPartyExitCallback = NULL;
 
 // IWRAM common
 COMMON_DATA void (*gItemUseCB)(u8, TaskFunc) = NULL;
@@ -291,6 +299,8 @@ static void CreatePartyMonIconSprite(struct Pokemon *, struct PartyMenuBox *, u3
 static void CreatePartyMonStatusSprite(struct Pokemon *, struct PartyMenuBox *);
 static u8 CreateSmallPokeballButtonSprite(u8, u8);
 static void DrawCancelConfirmButtons(void);
+static void SavePartyMenuStateForPC(void);
+static void CB2_ReopenPartyMenuFromPC(void);
 static u8 CreatePokeballButtonSprite(u8, u8);
 static void AnimateSelectedPartyIcon(u8, u8);
 static void PartyMenuStartSpriteAnim(u8, u8);
@@ -1392,6 +1402,33 @@ u8 GetPartyMenuType(void)
     return gPartyMenu.menuType;
 }
 
+// Save states to recreate the party menu when exiting PC storage
+static void SavePartyMenuStateForPC(void)
+{
+    sSavedPartyMenuType = gPartyMenu.menuType;
+    sSavedPartyLayout = gPartyMenu.layout;
+    sSavedPartyAction = gPartyMenu.action;
+    sSavedPartySlotId = 0;
+    if (sPartyMenuInternal != NULL)
+        sSavedPartyMessageId = sPartyMenuInternal->messageId;
+    else
+        sSavedPartyMessageId = PARTY_MSG_CHOOSE_MON;
+    sSavedPartyTask = Task_HandleChooseMonInput;
+    sSavedPartyExitCallback = gPartyMenu.exitCallback;
+}
+
+static void CB2_ReopenPartyMenuFromPC(void)
+{
+    if (sSavedPartyTask == NULL)
+        sSavedPartyTask = Task_HandleChooseMonInput;
+    if (sSavedPartyExitCallback == NULL)
+        sSavedPartyExitCallback = CB2_ReturnToField;
+    if (sSavedPartySlotId > PARTY_SIZE)
+        sSavedPartySlotId = 0;
+    gPartyMenu.slotId = sSavedPartySlotId;
+    InitPartyMenu(sSavedPartyMenuType, sSavedPartyLayout, sSavedPartyAction, TRUE, sSavedPartyMessageId, sSavedPartyTask, sSavedPartyExitCallback);
+}
+
 void Task_HandleChooseMonInput(u8 taskId)
 {
     if (!gPaletteFade.active && MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
@@ -1411,6 +1448,21 @@ void Task_HandleChooseMonInput(u8 taskId)
             {
                 PlaySE(SE_SELECT);
                 MoveCursorToConfirm();
+            }
+            break;
+        case R_BUTTON:
+            if (PARTY_MENU_PC_ACCESS
+                && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON
+                && gPartyMenu.layout == PARTY_LAYOUT_SINGLE
+                && (gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD
+                    || gPartyMenu.menuType == PARTY_MENU_TYPE_DAYCARE))
+            {
+                PlaySE(SE_SELECT);
+                SavePartyMenuStateForPC();
+                PokemonPC_SetReturnToPartyCallback(CB2_ReopenPartyMenuFromPC);
+                sPartyMenuInternal->exitCallback = CB2_ShowPokemonPCFromParty;
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+                Task_ClosePartyMenu(taskId);
             }
             break;
         }
@@ -1678,21 +1730,30 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
         movementDir = MENU_DIR_RIGHT;
         break;
     default:
-        switch (GetLRKeysPressedAndHeld())
+        if (PARTY_MENU_PC_ACCESS)
         {
-        case MENU_L_PRESSED:
-            movementDir = MENU_DIR_UP;
-            break;
-        case MENU_R_PRESSED:
-            movementDir = MENU_DIR_DOWN;
-            break;
-        default:
             movementDir = 0;
-            break;
+        }
+        else
+        {
+            switch (GetLRKeysPressedAndHeld())
+            {
+            case MENU_L_PRESSED:
+                movementDir = MENU_DIR_UP;
+                break;
+            case MENU_R_PRESSED:
+                movementDir = MENU_DIR_DOWN;
+                break;
+            default:
+                movementDir = 0;
+                break;
+            }
         }
         break;
     }
 
+    if (PARTY_MENU_PC_ACCESS && JOY_NEW(R_BUTTON))
+        return R_BUTTON;
     if (JOY_NEW(START_BUTTON))
         return START_BUTTON;
 

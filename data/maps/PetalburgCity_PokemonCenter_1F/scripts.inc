@@ -91,3 +91,6 @@ PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:
 	.string "are gathering near strange currents.\p"
 	.string "Your Bulbasaur might sense things\n"
 	.string "you can't. Follow its lead.$"
+
+
+

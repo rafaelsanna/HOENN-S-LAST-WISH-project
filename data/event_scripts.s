@@ -665,13 +665,14 @@ EventScript_MoveMrBrineyToRoute109::
 	end
 
 EverGrandeCity_HallOfFame_EventScript_ResetEliteFour::
-	clearflag FLAG_DEFEATED_ELITE_4_SIDNEY
-	clearflag FLAG_DEFEATED_ELITE_4_PHOEBE
-	clearflag FLAG_DEFEATED_ELITE_4_GLACIA
-	clearflag FLAG_DEFEATED_ELITE_4_DRAKE
-	setvar VAR_ELITE_4_STATE, 0
-	return
-
+        clearflag FLAG_DEFEATED_ELITE_4_SIDNEY
+        clearflag FLAG_DEFEATED_ELITE_4_PHOEBE
+        clearflag FLAG_DEFEATED_ELITE_4_GLACIA
+        clearflag FLAG_DEFEATED_ELITE_4_DRAKE
+        setvar VAR_ELITE_4_STATE, 0
+        setflag FLAG_PARTY_MENU_PC_ACCESS
+        return
+		
 Common_EventScript_UpdateBrineyLocation::
 	goto_if_unset FLAG_RECEIVED_POKENAV, Common_EventScript_NopReturn
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, Common_EventScript_NopReturn

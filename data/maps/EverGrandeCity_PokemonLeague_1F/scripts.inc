@@ -17,6 +17,7 @@ EverGrandeCity_PokemonLeague_1F_EventScript_GuardsBlockDoor::
 EverGrandeCity_PokemonLeague_1F_EventScript_Nurse::
 	setvar VAR_0x800B, LOCALID_LEAGUE_NURSE
 	call Common_EventScript_PkmnCenterNurse
+	setflag FLAG_PARTY_MENU_PC_ACCESS
 	waitmessage
 	waitbuttonpress
 	release
@@ -68,6 +69,7 @@ EverGrandeCity_PokemonLeague_1F_EventScript_DoorGuard::
 	copyobjectxytoperm LOCALID_LEAGUE_GUARD_1
 	copyobjectxytoperm LOCALID_LEAGUE_GUARD_2
 	setflag FLAG_ENTERED_ELITE_FOUR
+	clearflag FLAG_PARTY_MENU_PC_ACCESS
 	releaseall
 	end
 
@@ -93,7 +95,7 @@ EverGrandeCity_PokemonLeague_1F_EventScript_GoForth::
 	msgbox EverGrandeCity_PokemonLeague_1F_Text_GoForth, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	waitmovement 0 
 	releaseall
 	end
 
