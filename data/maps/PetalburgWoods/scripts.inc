@@ -479,8 +479,6 @@ PetalburgWoods_EventScript_Herbalistpw::
 	msgbox PetalburgWoods_Text_Herbalistpw, MSGBOX_AUTOCLOSE
 	release
 	end
-
-
 @ Remaining text strings (keeping your custom ones)
 PetalburgWoods_Text_GoBugPokemonTeam:
 	.string "I caught a whole bunch of POKÉMON!\p"

@@ -1,0 +1,18 @@
+RustboroCity_House2_2F_MapScripts::
+	.byte 0
+
+RustboroCity_House2_2F_EventScript_PinsirEncounter::
+	lock
+	faceplayer
+	waitse
+	playmoncry SPECIES_PINSIR, CRY_MODE_NORMAL
+	msgbox RustboroCity_House2_2F_Text_PinsirEncounter, MSGBOX_DEFAULT
+	waitmoncry
+	release
+	end
+
+RustboroCity_House2_2F_Text_PinsirEncounter:
+	.string "PINSIR: GYAAAAAH!\n"
+	.string "BEEP! BEEP! BEEP!\p"
+	.string "WHOAH! That's TERRIFYING!!!!!$"
+

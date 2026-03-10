@@ -1206,3 +1206,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/SlateportCity_House2/scripts.inc"
 
 	.include "data/maps/PetalburgWoods_East/scripts.inc"
+
+	.include "data/maps/RustboroCity_House2_2F/scripts.inc"

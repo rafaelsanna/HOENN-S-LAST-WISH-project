@@ -225,7 +225,8 @@
     "RustboroCity_Flat2_1F",
     "RustboroCity_Flat2_2F",
     "RustboroCity_Flat2_3F",
-    "RustboroCity_House3"
+    "RustboroCity_House3",
+    "RustboroCity_House2_2F"
   ],
   "gMapGroup_IndoorFortree": [
     "FortreeCity_House1",

@@ -1227,7 +1227,7 @@ PetalburgCity_Gym_Text_DadPlayerGoWithWally:
     .string "{PLAYER}, ACACIA has an eye\n"
     .string "for talent… and so do I.\p"
     .string "LUKA is sharp and fearless.\p"
-    .string "Go to ROUTE 101 and battle him.\p"
+    .string "Go to ROUTE 102 and battle him.\p"
     .string "Then come tell me the result.$"
 
 PetalburgCity_Gym_Text_IllLoanYouMyZigzagoon:

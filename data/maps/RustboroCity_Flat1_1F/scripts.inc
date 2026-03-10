@@ -9,10 +9,30 @@ RustboroCity_Flat1_1F_EventScript_Woman::
 	msgbox RustboroCity_Flat1_1F_Text_PokemonStrange, MSGBOX_NPC
 	end
 
+RustboroCity_Flat1_1F_EventScript_OldLadyAndVulpix::
+    lock
+    faceplayer
+    playmoncry SPECIES_VULPIX, CRY_MODE_NORMAL
+	playse SE_M_FLAMETHROWER
+    msgbox RustboroCity_Flat1_1F_Text_VulpixEmber, MSGBOX_DEFAULT
+    waitmessage
+    release
+    end
+
 RustboroCity_Flat1_1F_Text_EveryPokemonHasAbility:
-	.string "Every POKéMON has a special ability\n"
-	.string "that it can use.$"
+	.string "Did you know GYM LEADER TERRA has an\n"
+	.string "older brother? They say he's even more\l"
+	.string "famous than her… He's like, a total\n"
+	.string "celebrity all across HOENN!$"
 
 RustboroCity_Flat1_1F_Text_PokemonStrange:
-	.string "POKéMON are such strange creatures.$"
+	.string "Oh, hello there! Would you like some\n"
+	.string "coffee? I just made it hot and fresh!\p"
+	.string "My Vulpix helps me warm it with its\n"
+	.string "flame. Such a dear little helper!\p"
+	.string "I simply love coffee… And Pokémon are\n"
+	.string "truly amazing, aren't they?$"
 
+RustboroCity_Flat1_1F_Text_VulpixEmber:
+	.string "VULPIX uses EMBER!\n"
+	.string "UUUUH! HOT! HOT! HOT!$"

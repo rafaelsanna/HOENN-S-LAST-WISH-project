@@ -10,10 +10,18 @@ RustboroCity_Flat2_3F_EventScript_Woman::
 	end
 
 RustboroCity_Flat2_3F_Text_PresidentCollectsRareStones:
-	.string "DEVON's PRESIDENT likes to collect\n"
-	.string "rare stones.$"
+	.string "PORYGON is fascinating, a POKéMON made\n"
+	.string "entirely of binary computer code!\p"
+	.string "It can digitize itself and explore\n"
+	.string "cyberspace. I'ts so amazing!\p"
+	.string "But PORYGON2 and PORYGON Z? Their\n"
+	.string "behavior is… kinda wierd, honestly.$"
 
 RustboroCity_Flat2_3F_Text_PresidentsSonAlsoCollectsRareStones:
-	.string "I think the PRESIDENT's son also\n"
-	.string "collects rare stones.$"
+	.string "My boyfriend's a computer genius at\n"
+	.string "DEVON. He programs PORYGON!\p"
+	.string "But honestly? He's such a nerd. Always\n"
+	.string "mumbling about computers and data…\p"
+	.string "I just want to go on an exciting\n"
+	.string "adventure for once! Right?$"
 

@@ -474,3 +474,127 @@ Text_MonUsedRockClimb:
 Text_CantRockClimb:
     .string "The cliff is steep.\n"
     .string "A Pokémon may be able to climb it.$"
+
+@ Interact with a headbuttable tree
+EventScript_Headbutt::
+    lockall
+    checkfieldmove FIELD_MOVE_HEADBUTT, TRUE
+    goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantHeadbuttTree
+    setfieldeffectargument 0, VAR_RESULT
+    bufferpartymonnick STR_VAR_1, VAR_RESULT
+    buffermovename STR_VAR_2, MOVE_HEADBUTT
+    msgbox Text_WantToHeadbutt, MSGBOX_YESNO
+    goto_if_eq VAR_RESULT, NO, EventScript_CancelHeadbutt
+    msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
+    closemessage
+    dofieldeffect FLDEFF_USE_ROCK_SMASH
+    waitstate
+    special RockSmashWildEncounter
+    playse SE_M_EARTHQUAKE
+    setvar VAR_0x8004, 6
+    setvar VAR_0x8005, 6
+    setvar VAR_0x8006, 6
+    setvar VAR_0x8007, 6
+    special ShakeCamera
+    compare VAR_RESULT, FALSE
+    goto_if_eq EventScript_HeadbuttNoEncounter
+    waitstate
+    releaseall
+    end
+
+EventScript_HeadbuttNoEncounter::
+    random 100
+    copyvar VAR_0x8008, VAR_RESULT
+    compare VAR_0x8008, 5
+    goto_if_ge EventScript_HeadbuttEnd
+    random 100
+    goto_if_le VAR_RESULT, 24, EventScript_HeadbuttItem_TinyMushroom
+    goto_if_le VAR_RESULT, 44, EventScript_HeadbuttItem_BigMushroom
+    goto_if_le VAR_RESULT, 59, EventScript_HeadbuttItem_HealPowder
+    goto_if_le VAR_RESULT, 69, EventScript_HeadbuttItem_BalmMushroom
+    goto_if_le VAR_RESULT, 79, EventScript_HeadbuttItem_EnergyRoot
+    goto_if_le VAR_RESULT, 84, EventScript_HeadbuttItem_RevivalHerb
+    goto_if_le VAR_RESULT, 89, EventScript_HeadbuttItem_MiracleSeed
+    goto_if_le VAR_RESULT, 93, EventScript_HeadbuttItem_SilverPowder
+    goto_if_le VAR_RESULT, 96, EventScript_HeadbuttItem_LeafStone
+    goto EventScript_HeadbuttItem_BigRoot
+
+EventScript_HeadbuttItem_HealPowder::
+    setvar VAR_0x8000, ITEM_HEAL_POWDER
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_EnergyRoot::
+    setvar VAR_0x8000, ITEM_ENERGY_ROOT
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_RevivalHerb::
+    setvar VAR_0x8000, ITEM_REVIVAL_HERB
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_BalmMushroom::
+    setvar VAR_0x8000, ITEM_BALM_MUSHROOM
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_TinyMushroom::
+    setvar VAR_0x8000, ITEM_TINY_MUSHROOM
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_BigMushroom::
+    setvar VAR_0x8000, ITEM_BIG_MUSHROOM
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_LeafStone::
+    setvar VAR_0x8000, ITEM_LEAF_STONE
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_MiracleSeed::
+    setvar VAR_0x8000, ITEM_MIRACLE_SEED
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_SilverPowder::
+    setvar VAR_0x8000, ITEM_SILVER_POWDER
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttItem_BigRoot::
+    setvar VAR_0x8000, ITEM_BIG_ROOT
+    setvar VAR_0x8001, 1
+    goto EventScript_HeadbuttGiveItem
+
+EventScript_HeadbuttGiveItem::
+    msgbox Text_HeadbuttFoundItem, MSGBOX_DEFAULT
+    call Std_ObtainItem
+    releaseall
+    end
+
+EventScript_HeadbuttEnd::
+    releaseall
+    end
+
+Text_HeadbuttFoundItem:
+    .string "Something fell from the tree!\p"
+    .string "You found an item!$"
+
+EventScript_CantHeadbuttTree::
+    buffermovename STR_VAR_2, MOVE_HEADBUTT
+    msgbox Text_CantUseHeadbutt, MSGBOX_DEFAULT
+    releaseall
+    end
+EventScript_CancelHeadbutt::
+    closemessage
+    releaseall
+    end
+Text_WantToHeadbutt:
+    .string "{STR_VAR_1} wants to use {STR_VAR_2}!\p"
+    .string "Headbutt the tree?$"
+Text_CantUseHeadbutt:
+    .string "No Pokémon in your party\n"
+    .string "knows {STR_VAR_2}!$"

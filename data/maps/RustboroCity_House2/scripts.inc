@@ -10,12 +10,19 @@ RustboroCity_House2_EventScript_LittleGirl::
 	end
 
 RustboroCity_House2_Text_TrainerSchoolExcellent:
-	.string "The TRAINER'S SCHOOL is excellent.\p"
-	.string "If you study there, you could even\n"
-	.string "become a GYM LEADER.$"
+	.string "Have you seen my husband, Gregor?\n"
+	.string "He left for work days ago…\p"
+	.string "He was a traveling salesman, always\n"
+	.string "on the road. But he always came home.\p"
+	.string "Something… something must have\n"
+	.string "happened to him.$"
 
 RustboroCity_House2_Text_RoxanneKnowsALot:
-	.string "TERRA, the GYM LEADER, really knows\n"
-	.string "a lot about POKéMON.\p"
-	.string "She's really strong, too!$"
+	.string "Mom's worried sick about Dad…\p"
+	.string "I keep telling her, maybe he just\n"
+	.string "…changed? Into something else?\p"
+	.string "Ever since that strange comet passed\n"
+	.string "through the sky… weird things happen.\p"
+	.string "I heard strange clicking noises\n"
+	.string "upstairs last night… It's terrifying.$"
 
