@@ -22,7 +22,7 @@ gText_Birch_MainSpeech::
 	.string "Rayquaza...\n"
 	.string "For centuries he ruled the sky...\p"
 	.string "Strong enough to appease a primordial\n"
-	.string "elemental battle between the embodiment\p"
+	.string "elemental battle between the controler\p"
 	.string "of the sea and the creator of the land.\n"
 	.string "Unfortunately human interference\l"
 	.string "broke this balance forever...\p"

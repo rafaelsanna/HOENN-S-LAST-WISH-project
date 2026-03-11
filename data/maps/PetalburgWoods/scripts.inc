@@ -367,7 +367,11 @@ PetalburgWoods_Text_YoureLoadedWithItems:
 	.string "You're loaded with items.\n"
 	.string "I can't give you this ABILITY PATCH.$"
 
-@ Other NPCs (unchanged)
+@ Other NPCs
+PetalburgWoods_EventScript_BoyWantsHeadbutt::
+	msgbox PetalburgWoods_Text_BoyWantsHeadbutt, MSGBOX_NPC
+	end
+
 PetalburgWoods_EventScript_Boy1::
 	msgbox PetalburgWoods_Text_StayOutOfTallGrass, MSGBOX_NPC
 	end
@@ -613,5 +617,16 @@ PetalburgWoods_Text_Herbalistpw:
 	.string "at night.\p"
 	.string "Strange POKéMON appear then, and\n"
 	.string "some of them are really scary…$"
+
+PetalburgWoods_Text_BoyWantsHeadbutt:
+	.string "I really wish I had a POKéMON that\n"
+	.string "knows HEADBUTT... My WURMPLE just\l"
+	.string "can't learn it no matter what!\p"
+	.string "They say some huge trees around HOENN\n"
+	.string "hide rare POKéMON inside them.\p"
+	.string "And if you shake them hard enough with\n"
+	.string "HEADBUTT, items might fall out too!\p"
+	.string "Isn't that amazing? I need to find a\n"
+	.string "POKÉMON that knows that move…$"
 
 

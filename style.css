@@ -1235,3 +1235,41 @@ body.light-mode .main-video {
         max-width: 95%;
     }
 }
+
+/* HackDex Button */
+.hackdex-button {
+    display: inline-block;
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+    vertical-align: middle;
+}
+
+.hackdex-button:hover {
+    transform: scale(1.05);
+}
+
+.hackdex-button img {
+    display: block;
+    border-radius: 5px;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+    .hackdex-button {
+        margin: 0.5rem 0;
+        width: 190px;
+    }
+    
+    .hackdex-button img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Ajuste para telas muito pequenas */
+@media (max-width: 480px) {
+    .hackdex-button {
+        width: 160px;
+    }
+}
+

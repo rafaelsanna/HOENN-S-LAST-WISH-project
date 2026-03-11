@@ -1238,6 +1238,8 @@ enum HoennDexOrder
     HOENN_DEX_GRUMPIG,
     HOENN_DEX_SANDSHREW,
     HOENN_DEX_SANDSLASH,
+    HOENN_DEX_PINECO,
+    HOENN_DEX_FORRETRESS,
     HOENN_DEX_SPINDA,
     HOENN_DEX_SKARMORY,
     // Scyther line - após Skarmory
