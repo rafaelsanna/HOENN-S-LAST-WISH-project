@@ -114,74 +114,154 @@ nav {
     max-width: 800px;
 }
 
-/* Botões no banner */
-.cta-button {
-    display: inline-block;
-    padding: 12px 30px;
-    background: #337fd7;
+/* Button Row - NOVO */
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
+/* Ajustes para todos os botões */
+.cta-button, .discord-button, .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    height: 50px; /* Altura fixa para alinhar com o botão do HackDex */
+}
+
+.cta-button {
+    background: #337fd7;
 }
 
 .cta-button:hover {
     background: #6660d2;
 }
 
-/* Overlay escuro para melhor legibilidade */
-.banner-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 2;
-}
-
-/* Discord Button */
 .discord-button {
-    display: inline-block;
-    padding: 12px 25px;
     background: #5865f2;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-left: 1rem;
-    transition: background 0.3s;
 }
 
 .discord-button:hover {
     background: #4752c4;
 }
 
-.discord-button i {
-    margin-right: 8px;
-}
-
-/* YouTube Button */
 .youtube-button {
-    display: inline-block;
-    padding: 12px 25px;
     background: #FF0000;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-left: 1rem;
-    transition: background 0.3s;
 }
 
 .youtube-button:hover {
     background: #CC0000;
 }
 
-.youtube-button i {
+.discord-button i, .youtube-button i {
     margin-right: 8px;
+}
+
+/* HackDex Button - AJUSTADO */
+.hackdex-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    height: 50px; /* Mesma altura dos outros botões */
+}
+
+.hackdex-button:hover {
+    transform: scale(1.05);
+}
+
+.hackdex-button img {
+    display: block;
+    height: 50px; /* Altura fixa para igualar aos botões */
+    width: auto; /* Largura automática para manter proporção */
+    border-radius: 5px;
+}
+
+/* Desktop - todos em linha */
+@media (min-width: 1024px) {
+    .button-row {
+        gap: 1.5rem;
+    }
+}
+
+/* Tablet - ajuste */
+@media (max-width: 1023px) and (min-width: 769px) {
+    .button-row {
+        gap: 1rem;
+    }
+    
+    .cta-button, .discord-button, .youtube-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        height: 45px;
+    }
+    
+    .hackdex-button {
+        height: 45px;
+    }
+    
+    .hackdex-button img {
+        height: 45px;
+    }
+}
+
+/* Mobile - empilhado */
+@media (max-width: 768px) {
+    .button-row {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+    
+    .cta-button, .discord-button, .youtube-button {
+        width: 220px;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        height: auto;
+        white-space: normal;
+    }
+    
+    .hackdex-button {
+        width: 220px;
+        height: auto;
+    }
+    
+    .hackdex-button img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 480px) {
+    .cta-button, .discord-button, .youtube-button, .hackdex-button {
+        width: 200px;
+    }
+}
+
+/* Hero Content Overlay - ajuste */
+.hero-content-overlay {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 3;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
 }
 
 /* Story Section */
