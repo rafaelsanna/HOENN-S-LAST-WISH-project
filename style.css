@@ -1316,40 +1316,109 @@ body.light-mode .main-video {
     }
 }
 
-/* HackDex Button */
-.hackdex-button {
-    display: inline-block;
-    margin-left: 1rem;
-    transition: transform 0.3s ease;
-    vertical-align: middle;
+/* Download Section - Atualizado */
+.download-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
 }
 
-.hackdex-button:hover {
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    background: #e74c3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    min-width: 180px;
+    height: 50px; /* Altura fixa para alinhamento */
+    white-space: nowrap;
+}
+
+.download-btn:hover {
+    background: #8940ab;
+    transform: translateY(-2px);
+}
+
+.download-btn.secondary {
+    background: var(--pokemon-blue);
+}
+
+.download-btn.secondary:hover {
+    background: #357abd;
+}
+
+/* HackDex Download Button */
+.download-btn.hackdex-download {
+    background: transparent;
+    padding: 0;
+    min-width: auto;
+    background: #1a1a1a; /* Fundo escuro para combinar com o badge */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.download-btn.hackdex-download:hover {
     transform: scale(1.05);
+    background: #1a1a1a;
 }
 
-.hackdex-button img {
+.download-btn.hackdex-download img {
     display: block;
+    height: 50px;
+    width: auto;
     border-radius: 5px;
 }
 
-/* Ajuste para mobile */
+/* Light Mode - Ajuste para o botão HackDex */
+body.light-mode .download-btn.hackdex-download {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+}
+
+body.light-mode .download-btn.hackdex-download:hover {
+    background: #e0e0e0;
+}
+
+/* Mobile - Ajustes */
 @media (max-width: 768px) {
-    .hackdex-button {
-        margin: 0.5rem 0;
-        width: 190px;
+    .download-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
     }
     
-    .hackdex-button img {
+    .download-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 15px 20px;
+        height: auto;
+        white-space: normal;
+    }
+    
+    .download-btn.hackdex-download {
+        padding: 0;
+        height: auto;
+    }
+    
+    .download-btn.hackdex-download img {
         width: 100%;
         height: auto;
+        max-width: 280px;
     }
 }
 
-/* Ajuste para telas muito pequenas */
 @media (max-width: 480px) {
-    .hackdex-button {
-        width: 160px;
+    .download-btn, .download-btn.hackdex-download img {
+        max-width: 240px;
     }
 }
+
 
