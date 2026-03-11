@@ -795,7 +795,7 @@ Route104_EventScript_ArriveInDewford::
 # 408 "data/maps/Route104/scripts.pory"
 	waitmovement 0
 # 409 "data/maps/Route104/scripts.pory"
-	setobjectxyperm LOCALID_DEWFORD_BRINEY, 12, 8
+	setobjectxyperm LOCALID_DEWFORD_BRINEY, 18, 8
 # 410 "data/maps/Route104/scripts.pory"
 	addobject LOCALID_DEWFORD_BRINEY
 # 411 "data/maps/Route104/scripts.pory"

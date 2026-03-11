@@ -236,10 +236,14 @@ Route116_EventScript_Jose::
 	msgbox Route116_Text_JosePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+
 Route116_EventScript_Joji::
-	trainerbattle_single TRAINER_JOJI, Route116_Text_JojiIntro, Route116_Text_JojiDefeat
-	msgbox Route116_Text_JojiPostBattle, MSGBOX_AUTOCLOSE
-	end
+    lock
+    faceplayer
+    trainerbattle_single TRAINER_JOJI, Route116_Text_JojiIntro_Local, Route116_Text_JojiDefeat_Local
+    msgbox Route116_Text_JojiPostBattle_Local, MSGBOX_AUTOCLOSE
+    release
+    end
 
 Route116_EventScript_Jerry::
 	trainerbattle_single TRAINER_JERRY_1, Route116_Text_JerryIntro, Route116_Text_JerryDefeat, Route116_EventScript_TryRegisterJerryAfterBattle
@@ -472,4 +476,19 @@ Route116_Text_TrainerTipsBagHasPockets:
 	.string "placed in the appropriate POCKETS.\p"
 	.string "No TRAINER can afford to be without\n"
 	.string "a BAG of their own.$"
+
+Route116_Text_JojiIntro_Local:
+    .string "I love BUG POKéMON!\n"
+    .string "They're small, but full of spirit!\p"
+    .string "Come on, let's battle!$"
+
+Route116_Text_JojiDefeat_Local:
+    .string "Whoa… I lost?\n"
+    .string "They gave it their all!$"
+
+Route116_Text_JojiPostBattle_Local:
+    .string "I'm training to beat TERRA, but\n"
+    .string "it's been tough with only BUG types.\p"
+    .string "She has the advantage, and she's\n"
+    .string "really strong… but I'll keep trying!$"
 
