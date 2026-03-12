@@ -6739,7 +6739,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .baseSpeed     = 35,
         .baseSpAttack  = 65,
         .baseSpDefense = 45,
-        .types = MON_TYPES(TYPE_FIRE, TYPE_GROUND),
+        .types = MON_TYPES(TYPE_WATER),
         .catchRate = 255,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 61 : 88,
         .evYield_SpAttack = 1,
@@ -6759,7 +6759,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .natDexNum = NATIONAL_DEX_NUMEL,
         .categoryName = _("Numb"),
         .height = 7,
-        .weight = 240,
+        .weight = 640,
         .description = COMPOUND_STRING(
             "A Numel stores boiling magma in the hump\n"
             "on its back. It is a hardy Pokémon that can\n"
@@ -6771,7 +6771,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Numel,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 40) : MON_COORDS_SIZE(40, 48),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 15 : 9,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 15 : 3,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 15),
@@ -6779,10 +6779,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 40),
         ),
-        .frontAnimId = ANIM_V_SLIDE,
+        .frontAnimId = ANIM_V_JUMPS_H_JUMPS,
         .backPic = gMonBackPic_Numel,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 48) : MON_COORDS_SIZE(56, 56),
-        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 6,
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 7,
         .backAnimId = BACK_ANIM_V_SHAKE_LOW,
         .palette = gMonPalette_Numel,
         .shinyPalette = gMonShinyPalette_Numel,
@@ -6795,7 +6795,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .backPicSizeFemale = MON_COORDS_SIZE(56, 56),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
-        SHADOW(4, 2, SHADOW_SIZE_S)
+        SHADOW(4, 7, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Numel)
         OVERWORLD(
             sPicTable_Numel,
