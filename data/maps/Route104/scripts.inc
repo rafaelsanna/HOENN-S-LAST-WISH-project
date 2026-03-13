@@ -721,9 +721,8 @@ Route104_EventScript_SailToDewford::
 # 371 "data/maps/Route104/scripts.pory"
 	call Common_EventScript_PlayBrineysBoatMusic
 # 372 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_ENABLE_NORMAN_MATCH_CALL, Route104_EventScript_SailToDewfordNoCall
 # 373 "data/maps/Route104/scripts.pory"
-	goto_if_unset FLAG_ENABLE_NORMAN_MATCH_CALL, Route104_EventScript_SailToDewfordDadCalls
+	goto Route104_EventScript_SailToDewfordNoCall
 # 374 "data/maps/Route104/scripts.pory"
 	end
 # 375 "data/maps/Route104/scripts.pory"

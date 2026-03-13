@@ -50,12 +50,13 @@ RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
 	giveitem ITEM_LETTER
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
-	message RustboroCity_DevonCorp_3F_Text_ReceivedPokenav
+	message RustboroCity_DevonCorp_3F_Text_ReceivedDexnav
 	waitfanfare
-	setflag FLAG_SYS_POKENAV_GET
-	setflag FLAG_RECEIVED_POKENAV
+	setflag DN_FLAG_DEXNAV_GET
+	setflag DN_FLAG_SEARCHING
+	setflag DN_FLAG_DETECTOR_MODE
 	setflag FLAG_HIDE_RUSTBORO_CITY_POKEMON_SCHOOL_SCOTT
-	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenavRestUp, MSGBOX_DEFAULT
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainDexnavRestUp, MSGBOX_DEFAULT
 	closemessage
 	call Common_EventScript_OutOfCenterPartyHeal
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneGoWithCautionAndCare, MSGBOX_DEFAULT
@@ -219,20 +220,21 @@ RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis:
 	.string "I am a great PRESIDENT.\p"
 	.string "So, I'd never be so cheap as to ask\n"
 	.string "a favor for nothing in return.\p"
-	.string "That's why I want you to have this!$"
+	.string "That's why I want you to have this\n"
+	.string "prototype device the DEXéNAV!$"
 
-RustboroCity_DevonCorp_3F_Text_ReceivedPokenav:
-	.string "{PLAYER} received a POKéNAV.$"
+RustboroCity_DevonCorp_3F_Text_ReceivedDexnav:
+	.string "{PLAYER} received the DEXéNAV!$"
 
-RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenavRestUp:
-	.string "MR. STONE: That device…\p"
-	.string "It's a POKéMON NAVIGATOR, or POKéNAV\n"
-	.string "for short.\p"
-	.string "It's an indispensable tool for any\n"
-	.string "TRAINER on an adventure.\p"
-	.string "It has a map of the HOENN region.\p"
-	.string "You can check the locations of\n"
-	.string "DEWFORD and SLATEPORT easily!\p"
+RustboroCity_DevonCorp_3F_Text_MrStoneExplainDexnavRestUp:
+	.string "MR. STONE: That device is the\n"
+	.string "DEXéNAV a DEVON prototype.\p"
+	.string "It's an advanced scanner that\n"
+	.string "detects POKéMON hiding nearby.\p"
+	.string "It can reveal their moves, traits,\n"
+	.string "and hidden strengths.\p"
+	.string "The more you explore, the more\n"
+	.string "data it collects.\p"
 	.string "By the way, I've heard that sinister\n"
 	.string "criminals--MAGMA and AQUA, I believe--\l"
 	.string "have been making trouble far and wide.\p"
@@ -280,13 +282,13 @@ RustboroCity_DevonCorp_3F_Text_ThisIs3rdFloorWaitHere:
 	.string "this floor.\p"
 	.string "Anyway, I can't tell you how much I'm\n"
 	.string "grateful for what you've done.\p"
-	.string "Um… By the way, that parcel\n"
-	.string "you got back for us…\p"
+	.string "By the way, that parcel\n"
+	.string "you got back for us.\p"
 	.string "Could I get you to deliver that to\n"
 	.string "the SHIPYARD in SLATEPORT?\p"
 	.string "It would be awful if those robbers\n"
 	.string "tried to take it again.\p"
-	.string "Uh… Hehehe, so, uh, could I count\n"
+	.string "Uh, Hehehe, so, uh, could I count\n"
 	.string "on you to do that for me?\p"
 	.string "Oh, that's right.\n"
 	.string "Could you wait here a second?$"
@@ -311,4 +313,3 @@ RustboroCity_DevonCorp_3F_Text_RepeatAndTimerHugelyPopular:
 RustboroCity_DevonCorp_3F_Text_RareRocksDisplay:
 	.string "It's a collection of rare rocks and\n"
 	.string "stones assembled by the PRESIDENT.$"
-
