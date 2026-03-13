@@ -20,10 +20,6 @@
 *.latfont
 *.hwjpnfont
 *.fwjpnfont
-sound/**/*.bin
-sound/songs/midi/*.s
-tools/agbcc
-tools/poryscript/poryscript
 *.map
 *.bat
 *.dump
@@ -33,8 +29,6 @@ build/
 .DS_Store
 *.ddump
 .idea/
-porymap.*.cfg
-prefabs.json
 .vscode/
 *.a
 .fuse_hidden*
@@ -44,15 +38,6 @@ prefabs.json
 *.js
 /pokeemerald-*.png
 /Pokemon_HLW-*.png
-src/data/map_group_count.h
-include/constants/heal_locations.h
-tools/trainerproc/trainerproc
-src/data/battle_partners.h
-src/data/trainers.h
-src/data/debug_trainers.h
-test/battle/trainer_control.h
-tools/compresSmol/compresSmol
-tools/compresSmol/compresSmolTilemap
 *.Identifier
 *.smol
 *.fastSmol
