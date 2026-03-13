@@ -87,7 +87,8 @@
 #define PSS_LABEL_WINDOW_END 20
 
 // Dynamic fields for the Pokémon Info page
-#include "pokedex.h"
+#define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
+#define PSS_DATA_WINDOW_INFO_ID 1
 #define PSS_DATA_WINDOW_INFO_ABILITY 2
 #define PSS_DATA_WINDOW_INFO_MEMO 3
 
@@ -195,6 +196,7 @@ static EWRAM_DATA u16 sSummaryDexSpecies = SPECIES_NONE;
 static EWRAM_DATA u32 sSummaryDexPersonality = 0;
 static EWRAM_DATA bool8 sSummaryDexIsShiny = FALSE;
 static EWRAM_DATA u8 sSummaryDexTaskId;
+static EWRAM_DATA bool8 sSummaryDexTaskStarted;
 static EWRAM_DATA MainCallback sSummaryDexReturnCallback = NULL;
 
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
@@ -4804,7 +4806,8 @@ static void StartSummaryPokedex(u8 taskId)
     sSummaryDexIsShiny = sMonSummaryScreen->summary.isShiny;
     sSummaryDexPersonality = sMonSummaryScreen->summary.pid;
     sSummaryDexReturnCallback = sMonSummaryScreen->callback;
-    sSummaryDexTaskId = TASK_NONE;
+    sSummaryDexTaskStarted = FALSE;
+    sSummaryDexTaskId = 0;
     sMonSummaryScreen->callback = CB2_OpenSummaryPokedexEntry;
     BeginCloseSummaryScreen(taskId);
 }
@@ -4814,10 +4817,11 @@ static void CB2_OpenSummaryPokedexEntry(void)
     if (sSummaryDexReturnCallback == NULL)
         return;
 
-    if (sSummaryDexTaskId == TASK_NONE)
+    if (!sSummaryDexTaskStarted)
     {
         sSummaryDexTaskId = DisplayCaughtMonDexPage(sSummaryDexSpecies, sSummaryDexIsShiny, sSummaryDexPersonality);
-        if (sSummaryDexTaskId == TASK_NONE)
+        sSummaryDexTaskStarted = TRUE;
+        if (!gTasks[sSummaryDexTaskId].isActive)
         {
             MainCallback callback = sSummaryDexReturnCallback;
             sSummaryDexReturnCallback = NULL;
@@ -4829,7 +4833,8 @@ static void CB2_OpenSummaryPokedexEntry(void)
 
     if (!gTasks[sSummaryDexTaskId].isActive)
     {
-        sSummaryDexTaskId = TASK_NONE;
+        sSummaryDexTaskStarted = FALSE;
+        sSummaryDexTaskId = 0;
         MainCallback callback = sSummaryDexReturnCallback;
         sSummaryDexReturnCallback = NULL;
         if (callback != NULL)
