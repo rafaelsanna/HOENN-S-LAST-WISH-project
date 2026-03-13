@@ -460,9 +460,6 @@ LittlerootTown_Movement_JirachiCircleComplete:
 LittlerootTown_CelebiScript::  
     lockall
     faceplayer
-	giveitem ITEM_EXP_SHARE
-	playfanfare MUS_OBTAIN_ITEM
-	setflag I_EXP_SHARE_FLAG
     msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
     random 3
     switch VAR_RESULT

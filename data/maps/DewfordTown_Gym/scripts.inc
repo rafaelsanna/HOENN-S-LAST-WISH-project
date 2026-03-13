@@ -169,14 +169,9 @@ DewfordTown_Gym_EventScript_BrawlyDefeated::
     call DewfordTown_Gym_EventScript_GiveBulkUp
     closemessage
     delay 30
-    playfanfare MUS_REGISTER_MATCH_CALL
-    msgbox DewfordTown_Gym_Text_RegisteredBrawly, MSGBOX_DEFAULT
     waitfanfare
     closemessage
     delay 30
-    setflag FLAG_ENABLE_BRAWLY_MATCH_CALL
-    setvar VAR_ROXANNE_CALL_STEP_COUNTER, 0
-    setflag FLAG_ENABLE_ROXANNE_FIRST_CALL
     release
     end
 

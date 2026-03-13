@@ -84,12 +84,9 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated::
 	call LavaridgeTown_Gym_1F_EventScript_GiveOverheat
 	closemessage
 	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox LavaridgeTown_Gym_1F_Text_RegisteredFlannery, MSGBOX_DEFAULT
 	waitfanfare
 	closemessage
 	delay 30
-	setflag FLAG_ENABLE_FLANNERY_MATCH_CALL
 	release
 	end
 

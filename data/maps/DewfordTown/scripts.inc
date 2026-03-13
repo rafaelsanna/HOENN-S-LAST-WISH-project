@@ -160,7 +160,7 @@ DewfordTown_EventScript_SailToSlateport::
 	showobjectat LOCALID_PLAYER, MAP_ROUTE109
 	applymovement LOCALID_PLAYER, DewfordTown_Movement_ExitBoatSlateport
 	waitmovement 0
-	setobjectxyperm LOCALID_ROUTE109_BRINEY, 21, 26
+	setobjectxyperm LOCALID_ROUTE109_BRINEY, 21, 28
 	addobject LOCALID_ROUTE109_BRINEY
 	setobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109, 0
 	applymovement LOCALID_ROUTE109_BRINEY, DewfordTown_Movement_BrineyExitBoat
