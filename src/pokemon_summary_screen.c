@@ -87,8 +87,7 @@
 #define PSS_LABEL_WINDOW_END 20
 
 // Dynamic fields for the Pokémon Info page
-#define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
-#define PSS_DATA_WINDOW_INFO_ID 1
+#include "pokedex.h"
 #define PSS_DATA_WINDOW_INFO_ABILITY 2
 #define PSS_DATA_WINDOW_INFO_MEMO 3
 
@@ -195,7 +194,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
 static EWRAM_DATA u16 sSummaryDexSpecies = SPECIES_NONE;
 static EWRAM_DATA u32 sSummaryDexPersonality = 0;
 static EWRAM_DATA bool8 sSummaryDexIsShiny = FALSE;
-static EWRAM_DATA u8 sSummaryDexTaskId = TASK_NONE;
+static EWRAM_DATA u8 sSummaryDexTaskId;
 static EWRAM_DATA MainCallback sSummaryDexReturnCallback = NULL;
 
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
