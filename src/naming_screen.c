@@ -13,6 +13,7 @@
 #include "field_player_avatar.h"
 #include "event_object_movement.h"
 #include "event_data.h"
+#include "nuzlocke.h"
 #include "constants/songs.h"
 #include "pokemon_storage_system.h"
 #include "graphics.h"
@@ -669,6 +670,15 @@ static bool8 MainState_MoveToOKButton(void)
 
 static bool8 MainState_PressedOKButton(void)
 {
+    if (Nuzlocke_IsEnabled()
+     && ((sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON)
+      || (sNamingScreen->templateNum == NAMING_SCREEN_NICKNAME && !FlagGet(FLAG_SYS_POKEDEX_GET)))
+     && StringCompare(sNamingScreen->textBuffer, GetSpeciesName(sNamingScreen->monSpecies)) == 0)
+    {
+        PlaySE(SE_FAILURE);
+        return FALSE;
+    }
+
     SaveInputText();
     SetInputState(INPUT_STATE_DISABLED);
     SetCursorFlashing(FALSE);
