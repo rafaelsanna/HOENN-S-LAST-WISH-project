@@ -8,7 +8,65 @@
 #include "constants/map_types.h"
 #include "constants/battle.h"
 
+static const u8 sTextNuzlockeLoneMonPenalty[] = _("You lost with Nuzlocke, so your only Pokemon lost 2 levels.");
+
 EWRAM_DATA static bool8 sNuzlockeCanThrowBallThisBattle = FALSE;
+EWRAM_DATA static bool8 sNuzlockeShowLoneMonPenaltyMessage = FALSE;
+
+static u16 CountOwnedNonEggMons(void)
+{
+    u16 count = 0;
+    s32 i;
+    s32 box;
+    s32 slot;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE
+         && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+        {
+            count++;
+        }
+    }
+
+    for (box = 0; box < TOTAL_BOXES_COUNT; box++)
+    {
+        for (slot = 0; slot < IN_BOX_COUNT; slot++)
+        {
+            struct BoxPokemon *boxMon = &gPokemonStoragePtr->boxes[box][slot];
+            if (GetBoxMonData(boxMon, MON_DATA_SPECIES) != SPECIES_NONE
+             && !GetBoxMonData(boxMon, MON_DATA_IS_EGG))
+            {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+static bool8 TryApplyLoneMonPenalty(struct Pokemon *mon)
+{
+    u16 species;
+    u32 exp;
+    u8 level;
+    u8 targetLevel;
+
+    if (CountOwnedNonEggMons() != 1)
+        return FALSE;
+    if (GetMonData(mon, MON_DATA_HP) != 0)
+        return FALSE;
+
+    species = GetMonData(mon, MON_DATA_SPECIES);
+    level = GetMonData(mon, MON_DATA_LEVEL);
+    targetLevel = (level > 2) ? (level - 2) : 1;
+    exp = gExperienceTables[gSpeciesInfo[species].growthRate][targetLevel];
+
+    SetMonData(mon, MON_DATA_EXP, &exp);
+    CalculateMonStats(mon);
+    sNuzlockeShowLoneMonPenaltyMessage = TRUE;
+    return TRUE;
+}
 
 static bool8 IsTrackableWildBattle(void)
 {
@@ -28,6 +86,11 @@ bool8 Nuzlocke_IsEnabled(void)
     return gSaveBlock2Ptr != NULL && gSaveBlock2Ptr->optionsNuzlocke == OPTIONS_NUZLOCKE_ON;
 }
 
+static bool8 Nuzlocke_HasStarted(void)
+{
+    return Nuzlocke_IsEnabled() && FlagGet(FLAG_SYS_POKEDEX_GET);
+}
+
 void Nuzlocke_OnBattleStart(void)
 {
     u8 mapSecId;
@@ -36,7 +99,7 @@ void Nuzlocke_OnBattleStart(void)
 
     sNuzlockeCanThrowBallThisBattle = FALSE;
 
-    if (!Nuzlocke_IsEnabled() || !IsTrackableWildBattle())
+    if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return;
 
     mapSecId = gMapHeader.regionMapSectionId;
@@ -52,7 +115,7 @@ void Nuzlocke_OnBattleStart(void)
 
 bool8 Nuzlocke_CanThrowBallThisBattle(void)
 {
-    if (!Nuzlocke_IsEnabled() || !IsTrackableWildBattle())
+    if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return TRUE;
 
     return sNuzlockeCanThrowBallThisBattle;
@@ -63,7 +126,7 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void)
     bool8 removedAny = FALSE;
     s32 i;
 
-    if (!Nuzlocke_IsEnabled())
+    if (!Nuzlocke_HasStarted())
         return;
 
     for (i = 0; i < PARTY_SIZE; i++)
@@ -75,6 +138,9 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void)
         if (GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
             continue;
 
+        if (TryApplyLoneMonPenalty(&gPlayerParty[i]))
+            continue;
+
         // Nuzlocke release: dead party mons are deleted permanently.
         ZeroMonData(&gPlayerParty[i]);
         removedAny = TRUE;
@@ -82,4 +148,21 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void)
 
     if (removedAny)
         CompactPartySlots();
+}
+
+bool8 Nuzlocke_HasLoneMonPenaltyMessage(void)
+{
+    return sNuzlockeShowLoneMonPenaltyMessage;
+}
+
+bool8 Nuzlocke_ConsumeLoneMonPenaltyMessage(void)
+{
+    bool8 hadMessage = sNuzlockeShowLoneMonPenaltyMessage;
+    sNuzlockeShowLoneMonPenaltyMessage = FALSE;
+    return hadMessage;
+}
+
+const u8 *Nuzlocke_GetLoneMonPenaltyMessage(void)
+{
+    return sTextNuzlockeLoneMonPenalty;
 }
