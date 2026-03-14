@@ -4,13 +4,13 @@
 #define DEXNAV_ENABLED                TRUE
 #define USE_DEXNAV_SEARCH_LEVELS      TRUE
 
-#define DN_FLAG_SEARCHING              0x26B  
-#define DN_FLAG_DEXNAV_GET             0x26C  
-#define DN_FLAG_DETECTOR_MODE          0x26D  
+#define DN_FLAG_SEARCHING              0x271
+#define DN_FLAG_DEXNAV_GET             0x272
+#define DN_FLAG_DETECTOR_MODE          0x273
 
-// Verifique se estão livres:
-#define DN_VAR_SPECIES                 0x26E  
-#define DN_VAR_STEP_COUNTER            0x26F 
+// Persistent vars must be in the 0x4000+ range.
+#define DN_VAR_SPECIES                 0x40F8
+#define DN_VAR_STEP_COUNTER            0x40F9
 
 // Search parameters
 #define DEXNAV_TIMEOUT                  15
