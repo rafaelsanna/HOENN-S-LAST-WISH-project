@@ -376,31 +376,72 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
 
 static const u8 *const OptionTextDescription(void)
 {
-    u8 menuItem = sOptions->menuCursor[sOptions->submenu];
-    u8 selection;
-
     switch (sOptions->submenu)
     {
     case PAGE_GENERAL:
-        if (menuItem >= MENUITEM_GEN_COUNT)
-            return sText_Empty;
-        if (!CheckConditions(menuItem))
-            return sOptionMenuItemDescriptionsDisabledGeneral[menuItem];
-        selection = sOptions->sel[menuItem];
-        if (menuItem == MENUITEM_GEN_TEXTSPEED || menuItem == MENUITEM_GEN_FRAMETYPE)
-            selection = 0;
-        return sOptionMenuItemDescriptionsGeneral[menuItem][selection];
+        switch (sOptions->menuCursor[PAGE_GENERAL])
+        {
+        case MENUITEM_GEN_TEXTSPEED:
+            if (!CheckConditions(MENUITEM_GEN_TEXTSPEED))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_TEXTSPEED];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_TEXTSPEED][0];
+        case MENUITEM_GEN_BATTLESCENE:
+            if (!CheckConditions(MENUITEM_GEN_BATTLESCENE))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_BATTLESCENE];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_BATTLESCENE][sOptions->sel[MENUITEM_GEN_BATTLESCENE]];
+        case MENUITEM_GEN_SOUND:
+            if (!CheckConditions(MENUITEM_GEN_SOUND))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_SOUND];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_SOUND][sOptions->sel[MENUITEM_GEN_SOUND]];
+        case MENUITEM_GEN_BUTTONMODE:
+            if (!CheckConditions(MENUITEM_GEN_BUTTONMODE))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_BUTTONMODE];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_BUTTONMODE][sOptions->sel[MENUITEM_GEN_BUTTONMODE]];
+        case MENUITEM_GEN_FRAMETYPE:
+            if (!CheckConditions(MENUITEM_GEN_FRAMETYPE))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_FRAMETYPE];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_FRAMETYPE][0];
+        case MENUITEM_GEN_CANCEL:
+            if (!CheckConditions(MENUITEM_GEN_CANCEL))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_CANCEL];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_CANCEL][0];
+        }
+        return sText_Empty;
     case PAGE_DIFFICULTY:
-        if (menuItem >= MENUITEM_DIF_COUNT)
-            return sText_Empty;
-        if (!CheckConditions(menuItem))
-            return sOptionMenuItemDescriptionsDisabledDifficulty[menuItem];
-        selection = sOptions->sel_difficulty[menuItem];
-        if (menuItem == MENUITEM_DIF_NPCTEAMS || menuItem == MENUITEM_DIF_BATTLESTYLE)
-            selection = 0;
-        return sOptionMenuItemDescriptionsDifficulty[menuItem][selection];
+        switch (sOptions->menuCursor[PAGE_DIFFICULTY])
+        {
+        case MENUITEM_DIF_NPCTEAMS:
+            if (!CheckConditions(MENUITEM_DIF_NPCTEAMS))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_NPCTEAMS];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_NPCTEAMS][0];
+        case MENUITEM_DIF_BATTLEITEMS:
+            if (!CheckConditions(MENUITEM_DIF_BATTLEITEMS))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_BATTLEITEMS];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_BATTLEITEMS][sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]];
+        case MENUITEM_DIF_BATTLESTYLE:
+            if (!CheckConditions(MENUITEM_DIF_BATTLESTYLE))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_BATTLESTYLE];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_BATTLESTYLE][0];
+        case MENUITEM_DIF_INFCANDY:
+            if (!CheckConditions(MENUITEM_DIF_INFCANDY))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_INFCANDY];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_INFCANDY][sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]];
+        case MENUITEM_DIF_LEVELCAPS:
+            if (!CheckConditions(MENUITEM_DIF_LEVELCAPS))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_LEVELCAPS];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_LEVELCAPS][sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]];
+        case MENUITEM_DIF_NUZLOCKE:
+            if (!CheckConditions(MENUITEM_DIF_NUZLOCKE))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_NUZLOCKE];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_NUZLOCKE][sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]];
+        case MENUITEM_DIF_CANCEL:
+            if (!CheckConditions(MENUITEM_DIF_CANCEL))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_CANCEL];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_CANCEL][0];
+        }
+        return sText_Empty;
     }
-    return 0;
+    return sText_Empty;
 }
 
 static u8 MenuItemCount(void)
