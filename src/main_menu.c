@@ -249,8 +249,8 @@ static void NewGameBirchSpeech_CreateDialogueWindowBorder(u8, u8, u8, u8, u8, u8
 // .rodata
 
 static const u16 sBirchSpeechBgPals[][16] = {
-    INCBIN_U16("graphics/birch_speech/bg0.gbapal"),
-    INCBIN_U16("graphics/birch_speech/bg1.gbapal")
+    INCBIN_U16("graphics/birch_speech/shadow.gbapal"),
+    INCBIN_U16("graphics/birch_speech/shadow.gbapal")
 };
 
 static const u32 sBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/shadow.4bpp.smol");
@@ -1264,7 +1264,7 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
 
     // Carrega paletas do background
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-    LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+   // LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
 
     // Sincroniza buffers de paleta
     for (i = 0; i < 32; ++i)
