@@ -314,8 +314,8 @@ static const u8 sText_Desc_LevelCapsOn[]        = _("Your POKéMON cannot outlev
 static const u8 sText_Desc_LevelCapsOff[]       = _("Your POKéMON can reach any level,\nbut may disobey if too overleveled.");
 static const u8 sText_Desc_BattleItemsOn[]      = _("Permits the use of items in battle.");
 static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items in battle.");
-static const u8 sText_Desc_NuzlockeOff[]        = _("Classic rules are disabled.\nPlay without permadeath limits.");
-static const u8 sText_Desc_NuzlockeOn[]         = _("Classic rules enabled:\none encounter per area, poke nickname and faint = death.");
+static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
+static const u8 sText_Desc_NuzlockeOn[]         = _("One encounter per area, nickname required and poke permadeath.");
 
 // Option strings
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");

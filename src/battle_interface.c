@@ -28,6 +28,7 @@
 #include "item.h"
 #include "item_icon.h"
 #include "item_use.h"
+#include "nuzlocke.h"
 #include "test_runner.h"
 #include "constants/battle_anim.h"
 #include "constants/rgb.h"
@@ -2913,6 +2914,8 @@ bool32 CanThrowLastUsedBall(void)
     if (gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_FRONTIER))
         return FALSE;
     if (!CheckBagHasItem(gBallToDisplay, 1))
+        return FALSE;
+    if (!Nuzlocke_CanThrowBallThisBattle())
         return FALSE;
 
     return TRUE;
