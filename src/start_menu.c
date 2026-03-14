@@ -162,7 +162,7 @@ static const struct WindowTemplate sWindowTemplate_StartClock = {
     .bg = 0, 
     .tilemapLeft = 1, 
     .tilemapTop = 1, 
-    .width = 20,
+    .width = 16,
     .height = 10,
     .paletteNum = 15,
     .baseBlock = 0x30
@@ -467,29 +467,53 @@ static void ShowPyramidFloorWindow(void)
     CopyWindowToVram(sBattlePyramidFloorWindowId, COPYWIN_GFX);
 }
 
-static const u8 sText_GameTime[] = _("Game Time:");
-static const u8 sText_RealTime[] = _("Real Time:");
 static const u8 sText_Name[] = _("Name:");
 static const u8 sText_LevelCapPrefix[] = _("Level CAP: ");
 static const u8 sText_MoneyPrefix[] = _("Money: $ ");
 
-const u8 gText_Saturday[] = _("Saturday,");
-const u8 gText_Sunday[] = _("Sunday,");
-const u8 gText_Monday[] = _("Monday,");
-const u8 gText_Tuesday[] = _("Tuesday,");
-const u8 gText_Wednesday[] = _("Wednesday,");
-const u8 gText_Thursday[] = _("Thursday,");
-const u8 gText_Friday[] = _("Friday,");
+static const u8 sText_Saturday[] = _("Saturday,");
+static const u8 sText_Sunday[] = _("Sunday,");
+static const u8 sText_Monday[] = _("Monday,");
+static const u8 sText_Tuesday[] = _("Tuesday,");
+static const u8 sText_Wednesday[] = _("Wednesday,");
+static const u8 sText_Thursday[] = _("Thursday,");
+static const u8 sText_Friday[] = _("Friday,");
 
-const u8 *const gDayNameStringsTable[7] = {
-    gText_Saturday,
-    gText_Sunday,
-    gText_Monday,
-    gText_Tuesday,
-    gText_Wednesday,
-    gText_Thursday,
-    gText_Friday,
+static const u8 sText_Sabado[] = _("Sabado,");
+static const u8 sText_Domingo[] = _("Domingo,");
+static const u8 sText_Lunes[] = _("Lunes,");
+static const u8 sText_Martes[] = _("Martes,");
+static const u8 sText_Miercoles[] = _("Miercoles,");
+static const u8 sText_Jueves[] = _("Jueves,");
+static const u8 sText_Viernes[] = _("Viernes,");
+
+static const u8 *const sDayNameStringsTableEnglish[7] = {
+    sText_Saturday,
+    sText_Sunday,
+    sText_Monday,
+    sText_Tuesday,
+    sText_Wednesday,
+    sText_Thursday,
+    sText_Friday,
 };
+
+static const u8 *const sDayNameStringsTableSpanish[7] = {
+    sText_Sabado,
+    sText_Domingo,
+    sText_Lunes,
+    sText_Martes,
+    sText_Miercoles,
+    sText_Jueves,
+    sText_Viernes,
+};
+
+static const u8 *GetLocalizedDayName(u8 day)
+{
+    if (gGameLanguage == LANGUAGE_SPANISH)
+        return sDayNameStringsTableSpanish[day % 7];
+
+    return sDayNameStringsTableEnglish[day % 7];
+}
 
 static void Build12HourTimeString(u8 *dest)
 {
@@ -534,39 +558,28 @@ static void ShowTimeWindow(void)
     PutWindowTilemap(sStartClockWindowId);
     DrawStdWindowFrame(sStartClockWindowId, FALSE);
 
-    AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, sText_GameTime, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 10;
-
-    StringCopy(gStringVar4, gDayNameStringsTable[gLocalTime.days % 7]);
+    StringCopy(gStringVar4, GetLocalizedDayName(gLocalTime.days));
     StringAppend(gStringVar4, gText_Space);
     Build12HourTimeString(gStringVar1);
     StringAppend(gStringVar4, gStringVar1);
     AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
     y += 10;
 
-    AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, sText_RealTime, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 10;
-
-    FormatDecimalTime(gStringVar4, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
-    AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 10;
-
-    AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, sText_Name, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 10;
-
-    StringCopy(gStringVar4, gSaveBlock2Ptr->playerName);
-    AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 10;
-
-    StringCopy(gStringVar4, sText_LevelCapPrefix);
-    ptr = StringAppend(gStringVar4, gText_EmptyString2);
-    ConvertIntToDecimalStringN(ptr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringCopy(gStringVar4, sText_Name);
+    ptr = StringAppend(gStringVar4, gText_Space);
+    StringCopy(ptr, gSaveBlock2Ptr->playerName);
     AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
     y += 10;
 
     StringCopy(gStringVar4, sText_MoneyPrefix);
     ptr = StringAppend(gStringVar4, gText_EmptyString2);
     ConvertIntToDecimalStringN(ptr, GetMoney(&gSaveBlock1Ptr->money), STR_CONV_MODE_LEFT_ALIGN, 6);
+    AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
+    y += 10;
+
+    StringCopy(gStringVar4, sText_LevelCapPrefix);
+    ptr = StringAppend(gStringVar4, gText_EmptyString2);
+    ConvertIntToDecimalStringN(ptr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
     AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
 
     CopyWindowToVram(sStartClockWindowId, COPYWIN_GFX);
