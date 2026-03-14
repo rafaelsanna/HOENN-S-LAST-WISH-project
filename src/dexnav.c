@@ -107,6 +107,7 @@ struct DexNavSearch
     u8 starSpriteIds[3];
     u8 ownedIconSpriteId;
     u8 exclamationSpriteId;
+    u8 previousBikeState;
     u8 hiddenSearch:1;
     u8 isHiddenMon:1;
     u8 unk:6;
@@ -860,6 +861,17 @@ static void Task_SetUpDexNavSearch(u8 taskId)
         DexNavUpdateSearchWindow(sDexNavSearchDataPtr->proximity, searchLevel);
     }
 
+    // Save bike type and force on-foot while a search is active.
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
+        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_MACH_BIKE;
+    else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
+        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_ACRO_BIKE;
+    else
+        sDexNavSearchDataPtr->previousBikeState = 0;
+
+    if (sDexNavSearchDataPtr->previousBikeState != 0)
+        SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
+
     FlagSet(DN_FLAG_SEARCHING);
     gPlayerAvatar.creeping = TRUE;  //initialize as true in case mon appears beside you
     task->tProximity = gSprites[gPlayerAvatar.spriteId].x;
@@ -997,11 +1009,16 @@ bool8 TryStartDexNavSearch(void)
 
 void EndDexNavSearch(u8 taskId)
 {
+    u8 previousBikeState = sDexNavSearchDataPtr->previousBikeState;
+
     FlagClear(DN_FLAG_SEARCHING);
     DestroyTask(taskId);
     RemoveDexNavWindowAndGfx();
     FieldEffectStop(&gSprites[sDexNavSearchDataPtr->fldEffSpriteId], sDexNavSearchDataPtr->fldEffId);
     Free(sDexNavSearchDataPtr);
+
+    if (previousBikeState != 0)
+        SetPlayerAvatarTransitionFlags(previousBikeState);
 }
 
 static void EndDexNavSearchSetupScript(const u8 *script, u8 taskId)
@@ -1111,6 +1128,8 @@ static void Task_DexNavSearch(u8 taskId)
 
     if (sDexNavSearchDataPtr->proximity < 1)
     {
+        u8 previousBikeState = sDexNavSearchDataPtr->previousBikeState;
+
         gDexNavSpecies = sDexNavSearchDataPtr->species;
         CreateDexNavWildMon(sDexNavSearchDataPtr->species, sDexNavSearchDataPtr->potential, sDexNavSearchDataPtr->monLevel,
                             sDexNavSearchDataPtr->abilityNum, sDexNavSearchDataPtr->heldItem, sDexNavSearchDataPtr->moves);
@@ -1119,6 +1138,9 @@ static void Task_DexNavSearch(u8 taskId)
         ScriptContext_SetupScript(EventScript_StartDexNavBattle);
         Free(sDexNavSearchDataPtr);
         DestroyTask(taskId);
+
+        if (previousBikeState != 0)
+            SetPlayerAvatarTransitionFlags(previousBikeState);
         return;
     }
 
