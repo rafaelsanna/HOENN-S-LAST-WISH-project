@@ -220,7 +220,7 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_BATTLESTYLE]   = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
     [MENUITEM_DIF_INFCANDY]      = {DrawChoices_InfCandy,    ProcessInput_Options_Two}, 
     [MENUITEM_DIF_LEVELCAPS]     = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
-    [MENUITEM_DIF_NUZLOCKE]      = {DrawChoices_Nuzlocke,    ProcessInput_Options_Two},
+    [MENUITEM_DIF_NUZLOCKE]      = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
     [MENUITEM_DIF_CANCEL]        = {NULL, NULL},
 };
 
@@ -315,7 +315,8 @@ static const u8 sText_Desc_LevelCapsOff[]       = _("Your POKéMON can reach any
 static const u8 sText_Desc_BattleItemsOn[]      = _("Permits the use of items in battle.");
 static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items in battle.");
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
-static const u8 sText_Desc_NuzlockeOn[]         = _("One encounter per area, nickname required and poke permadeath.");
+static const u8 sText_Desc_NuzlockeNormal[]     = _("One non-shiny capture per route,\nbut any shiny may still be caught.");
+static const u8 sText_Desc_NuzlockeHard[]       = _("Only the first wild POKeMON seen\nin each route may be captured.");
 
 // Option strings
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
@@ -327,7 +328,8 @@ static const u8 sText_OptionInfCandyOn[]        = _("ON");
 static const u8 sText_OptionLevelCapsOn[]       = _("ON");
 static const u8 sText_OptionLevelCapsOff[]      = _("OFF");
 static const u8 sText_OptionNuzlockeOff[]       = _("OFF");
-static const u8 sText_OptionNuzlockeOn[]        = _("ON");
+static const u8 sText_OptionNuzlockeNormal[]    = _("NORMAL");
+static const u8 sText_OptionNuzlockeHard[]      = _("HARD");
 
 static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3] =
 {
@@ -339,15 +341,15 @@ static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3]
     [MENUITEM_GEN_CANCEL]       = {sText_Desc_Save,                 sText_Empty,                sText_Empty},
 };
 
-static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT][2] =
+static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT][3] =
 {
-    [MENUITEM_DIF_NPCTEAMS]     = {sText_Desc_NpcTeams,           sText_Empty},
-    [MENUITEM_DIF_BATTLEITEMS]  = {sText_Desc_BattleItemsOn,      sText_Desc_BattleItemsOff},
-    [MENUITEM_DIF_BATTLESTYLE]  = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set},
-    [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,   sText_Desc_InfiniteCandyOn},
-    [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff},
-    [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,        sText_Desc_NuzlockeOn},
-    [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,               sText_Empty},
+    [MENUITEM_DIF_NPCTEAMS]     = {sText_Desc_NpcTeams,           sText_Empty,               sText_Empty},
+    [MENUITEM_DIF_BATTLEITEMS]  = {sText_Desc_BattleItemsOn,      sText_Desc_BattleItemsOff, sText_Empty},
+    [MENUITEM_DIF_BATTLESTYLE]  = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set, sText_Empty},
+    [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,   sText_Desc_InfiniteCandyOn, sText_Empty},
+    [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff, sText_Empty},
+    [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,        sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
+    [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,               sText_Empty,               sText_Empty},
 };
 
 // Disabled Descriptions
@@ -421,7 +423,7 @@ static const u8 *const OptionTextDescription(void)
         case MENUITEM_DIF_BATTLESTYLE:
             if (!CheckConditions(MENUITEM_DIF_BATTLESTYLE))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_BATTLESTYLE];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_BATTLESTYLE][0];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_BATTLESTYLE][sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]];
         case MENUITEM_DIF_INFCANDY:
             if (!CheckConditions(MENUITEM_DIF_INFCANDY))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_INFCANDY];
@@ -1021,9 +1023,9 @@ static void DrawChoices_Options_Three(const u8 *const *const strings, int select
     styles[selection] = 1;
     xMid = GetMiddleX(strings[0], strings[1], strings[2]);
 
-    DrawOptionMenuChoice(gText_TextSpeedSlow, 104, y, styles[0], active);
-    DrawOptionMenuChoice(gText_TextSpeedMid, xMid, y, styles[1], active);
-    DrawOptionMenuChoice(gText_TextSpeedFast, GetStringRightAlignXOffset(1, gText_TextSpeedFast, 198), y, styles[2], active);
+    DrawOptionMenuChoice(strings[0], 104, y, styles[0], active);
+    DrawOptionMenuChoice(strings[1], xMid, y, styles[1], active);
+    DrawOptionMenuChoice(strings[2], GetStringRightAlignXOffset(1, strings[2], 198), y, styles[2], active);
 }
 
 static void ReDrawAll(void)
@@ -1183,11 +1185,14 @@ static void DrawChoices_LevelCaps(int selection, int y)
 static void DrawChoices_Nuzlocke(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_DIF_NUZLOCKE);
-    u8 styles[2] = {0};
-    styles[selection] = 1;
+    static const u8 *const sTextNuzlockeChoices[] =
+    {
+        sText_OptionNuzlockeOff,
+        sText_OptionNuzlockeNormal,
+        sText_OptionNuzlockeHard,
+    };
 
-    DrawOptionMenuChoice(sText_OptionNuzlockeOff, 104, y, styles[0], active);
-    DrawOptionMenuChoice(sText_OptionNuzlockeOn, GetStringRightAlignXOffset(1, sText_OptionNuzlockeOn, 198), y, styles[1], active);
+    DrawChoices_Options_Three(sTextNuzlockeChoices, selection, y, active);
 }
 
 

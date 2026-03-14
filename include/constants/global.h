@@ -168,7 +168,8 @@
 #define OPTIONS_LEVELCAPS_OFF 1
 
 #define OPTIONS_NUZLOCKE_OFF 0
-#define OPTIONS_NUZLOCKE_ON 1
+#define OPTIONS_NUZLOCKE_NORMAL 1
+#define OPTIONS_NUZLOCKE_HARD 2
 
 #define NUZLOCKE_AREA_FLAGS_COUNT 32 // 256 bits, one per possible map section id.
 
