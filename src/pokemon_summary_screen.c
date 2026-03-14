@@ -1723,6 +1723,7 @@ static void Task_HandleInput(u8 taskId)
                 {
                     StopPokemonAnimations();
                     PlaySE(SE_SELECT);
+                    SetPokedexTargetSpecies(sMonSummaryScreen->summary.species);
                     sMonSummaryScreen->callback = CB2_OpenPokedex;
                     BeginCloseSummaryScreen(taskId);
                 }
