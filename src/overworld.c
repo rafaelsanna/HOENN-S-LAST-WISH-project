@@ -43,6 +43,7 @@
 #include "mirage_tower.h"
 #include "money.h"
 #include "new_game.h"
+#include "nuzlocke.h"
 #include "palette.h"
 #include "play_time.h"
 #include "random.h"
@@ -363,6 +364,8 @@ static bool8 (*const sLinkPlayerFacingHandlers[])(struct LinkPlayerObjectEvent *
 
 static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
 static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+static void FieldCB_WarpExitFadeFromBlack_NuzlockePenalty(void);
+static void FieldCB_RushInjuredPokemonToCenter_NuzlockePenalty(void);
 
 // These handlers are run after an attempted movement.
 static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *) =
@@ -381,6 +384,20 @@ void DoWhiteOut(void)
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();
     WarpIntoMap();
+}
+
+static void FieldCB_WarpExitFadeFromBlack_NuzlockePenalty(void)
+{
+    FieldCB_WarpExitFadeFromBlack();
+    if (Nuzlocke_ConsumeLoneMonPenaltyMessage())
+        ShowFieldMessage(Nuzlocke_GetLoneMonPenaltyMessage());
+}
+
+static void FieldCB_RushInjuredPokemonToCenter_NuzlockePenalty(void)
+{
+    FieldCB_RushInjuredPokemonToCenter();
+    if (Nuzlocke_ConsumeLoneMonPenaltyMessage())
+        ShowFieldMessage(Nuzlocke_GetLoneMonPenaltyMessage());
 }
 
 void Overworld_ResetStateAfterFly(void)
@@ -1814,9 +1831,9 @@ void CB2_WhiteOut(void)
         ScriptContext_Init();
         UnlockPlayerFieldControls();
         if (IsWhiteoutCutscene())
-            gFieldCallback = FieldCB_RushInjuredPokemonToCenter;
+            gFieldCallback = Nuzlocke_HasLoneMonPenaltyMessage() ? FieldCB_RushInjuredPokemonToCenter_NuzlockePenalty : FieldCB_RushInjuredPokemonToCenter;
         else
-            gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+            gFieldCallback = Nuzlocke_HasLoneMonPenaltyMessage() ? FieldCB_WarpExitFadeFromBlack_NuzlockePenalty : FieldCB_WarpExitFadeFromBlack;
         state = 0;
         SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_NONE);
         DoMapLoadLoop(&state);
