@@ -203,7 +203,7 @@ struct // PAGE_GENERAL
 {
     [MENUITEM_GEN_TEXTSPEED]     = {DrawChoices_TextSpeed,   ProcessInput_Options_Three},
     [MENUITEM_GEN_BATTLESCENE]   = {DrawChoices_BattleScene, ProcessInput_Options_Two},
-    [MENUITEM_GEN_SOUND]         = {DrawChoices_Sound,       ProcessInput_Options_Two},
+    [MENUITEM_GEN_SOUND]         = {DrawChoices_Sound,       ProcessInput_Sound},
     [MENUITEM_GEN_BUTTONMODE]    = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
     [MENUITEM_GEN_FRAMETYPE]     = {DrawChoices_FrameType,   ProcessInput_FrameType},
     [MENUITEM_GEN_CANCEL]        = {NULL, NULL},
@@ -390,7 +390,7 @@ static const u8 *const OptionTextDescription(void)
         return sOptionMenuItemDescriptionsGeneral[menuItem][selection];
     case PAGE_DIFFICULTY:
         if (!CheckConditions(menuItem))
-            return sOptionMenuItemDescriptionsDisabledGeneral[menuItem];
+            return sOptionMenuItemDescriptionsDisabledDifficulty[menuItem];
         selection = sOptions->sel_difficulty[menuItem];
         if (menuItem == MENUITEM_DIF_NPCTEAMS || menuItem == MENUITEM_DIF_BATTLESTYLE)
             selection = 0;
@@ -555,7 +555,7 @@ static void HighlightOptionMenuItem(void)
 
 void CB2_InitOptionMenu(void)
 {
-    u32 i, taskId;
+    u32 i;
     switch (gMain.state)
     {
     default:
@@ -640,7 +640,7 @@ void CB2_InitOptionMenu(void)
         gMain.state++;
         break;
     case 10:
-        taskId = CreateTask(Task_OptionMenuFadeIn, 0);
+        CreateTask(Task_OptionMenuFadeIn, 0);
         
         sOptions->arrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 240 / 2, 20, 110, MENUITEM_GEN_COUNT - 1, 110, 110, 0);
 
@@ -672,7 +672,6 @@ static void Task_OptionMenuFadeIn(u8 taskId)
 
 static void Task_OptionMenuProcessInput(u8 taskId)
 {
-    int i = 0;
     u8 optionsToDraw = min(OPTIONS_ON_SCREEN , MenuItemCount());
     if (JOY_NEW(A_BUTTON))
     {
@@ -971,16 +970,8 @@ static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style, bool8 act
 
 static void DrawChoices_Options_Three(const u8 *const *const strings, int selection, int y, bool8 active)
 {
-    static const u8 choiceOrders[][3] =
-    {
-        {0, 1, 2},
-        {0, 1, 2},
-        {1, 2, 3},
-        //{1, 2, 3},
-    };
     u8 styles[3] = {0};
     int xMid;
-    const u8 *order = choiceOrders[selection];
 
     styles[selection] = 1;
     xMid = GetMiddleX(strings[0], strings[1], strings[2]);
@@ -1007,7 +998,6 @@ static void ReDrawAll(void)
     else
     {
         if (sOptions->arrowTaskId == TASK_NONE)
-            sOptions->arrowTaskId = sOptions->arrowTaskId;
             sOptions->arrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 240 / 2, 20, 110, MenuItemCount() - 1, 110, 110, 0);
 
     }
