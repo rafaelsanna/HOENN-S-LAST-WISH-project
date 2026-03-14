@@ -30,6 +30,7 @@
 #include "m4a.h"
 #include "mail.h"
 #include "event_data.h"
+#include "nuzlocke.h"
 #include "pokemon_storage_system.h"
 #include "task.h"
 #include "naming_screen.h"
@@ -14355,6 +14356,14 @@ void BattleDestroyYesNoCursorAt(u8 cursorPosition)
 static void Cmd_trygivecaughtmonnick(void)
 {
     CMD_ARGS();
+
+    // In Nuzlocke, nicknaming a caught mon is mandatory.
+    if (Nuzlocke_IsEnabled()
+     && gBattleCommunication[MULTIUSE_STATE] == 0)
+    {
+        gBattleCommunication[MULTIUSE_STATE] = 2;
+        BeginFastPaletteFade(3);
+    }
 
     switch (gBattleCommunication[MULTIUSE_STATE])
     {

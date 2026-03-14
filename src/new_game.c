@@ -110,6 +110,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsBattleItems = OPTIONS_BATTLEITEMS_ON;
     gSaveBlock2Ptr->optionsInfiniteCandy = OPTIONS_INFINITECANDY_OFF;
     gSaveBlock2Ptr->optionsLevelCaps = OPTIONS_LEVELCAPS_ON;
+    gSaveBlock2Ptr->optionsNuzlocke = OPTIONS_NUZLOCKE_OFF;
 }
 
 // Pokédex initialization
