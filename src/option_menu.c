@@ -50,6 +50,7 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_BATTLESTYLE,
     MENUITEM_DIF_INFCANDY,
     MENUITEM_DIF_LEVELCAPS,
+    MENUITEM_DIF_NUZLOCKE,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
 };
@@ -168,6 +169,7 @@ static void DrawChoices_BattleItems(int selection, int y);
 static void DrawChoices_BattleStyle(int selection, int y);
 static void DrawChoices_InfCandy(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
+static void DrawChoices_Nuzlocke(int selection, int y);
 static void DrawBgWindowFrames(void);
 
 // EWRAM vars
@@ -218,6 +220,7 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_BATTLESTYLE]   = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
     [MENUITEM_DIF_INFCANDY]      = {DrawChoices_InfCandy,    ProcessInput_Options_Two}, 
     [MENUITEM_DIF_LEVELCAPS]     = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
+    [MENUITEM_DIF_NUZLOCKE]      = {DrawChoices_Nuzlocke,    ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]        = {NULL, NULL},
 };
 
@@ -226,6 +229,7 @@ static const u8 sText_NpcTeams[]       = _("NPC TEAMS");
 static const u8 sText_BattleItems[]    = _("BTL ITEMS");
 static const u8 sText_InfiniteCandy[]  = _("INF. CANDY");
 static const u8 sText_LevelCaps[]      = _("LEVEL CAPS");
+static const u8 sText_Nuzlocke[]       = _("NUZLOCKE");
 static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
 {
     [MENUITEM_GEN_TEXTSPEED]     = gText_TextSpeed,
@@ -243,6 +247,7 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_BATTLESTYLE]    = gText_BattleStyle,
     [MENUITEM_DIF_INFCANDY]       = sText_InfiniteCandy,
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
+    [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
 };
 
@@ -280,6 +285,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_BATTLESTYLE:      return TRUE;
         case MENUITEM_DIF_INFCANDY:         return TRUE;
         case MENUITEM_DIF_LEVELCAPS:        return TRUE;
+        case MENUITEM_DIF_NUZLOCKE:         return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
         case MENUITEM_DIF_COUNT:            return TRUE;
         }
@@ -308,6 +314,8 @@ static const u8 sText_Desc_LevelCapsOn[]        = _("Your POKéMON cannot outlev
 static const u8 sText_Desc_LevelCapsOff[]       = _("Your POKéMON can reach any level,\nbut may disobey if too overleveled.");
 static const u8 sText_Desc_BattleItemsOn[]      = _("Permits the use of items in battle.");
 static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items in battle.");
+static const u8 sText_Desc_NuzlockeOff[]        = _("Classic rules are disabled.\nPlay without permadeath limits.");
+static const u8 sText_Desc_NuzlockeOn[]         = _("Classic rules enabled:\none encounter per area, poke nickname and faint = death.");
 
 // Option strings
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
@@ -318,6 +326,8 @@ static const u8 sText_OptionInfCandyOff[]       = _("OFF");
 static const u8 sText_OptionInfCandyOn[]        = _("ON");
 static const u8 sText_OptionLevelCapsOn[]       = _("ON");
 static const u8 sText_OptionLevelCapsOff[]      = _("OFF");
+static const u8 sText_OptionNuzlockeOff[]       = _("OFF");
+static const u8 sText_OptionNuzlockeOn[]        = _("ON");
 
 static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3] =
 {
@@ -336,6 +346,7 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_BATTLESTYLE]  = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set},
     [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,   sText_Desc_InfiniteCandyOn},
     [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff},
+    [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,        sText_Desc_NuzlockeOn},
     [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,               sText_Empty},
 };
 
@@ -359,6 +370,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_BATTLESTYLE]  = sText_Empty,
     [MENUITEM_DIF_INFCANDY]     = sText_Empty,
     [MENUITEM_DIF_LEVELCAPS]    = sText_Empty,
+    [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
 };
 
@@ -606,6 +618,7 @@ void CB2_InitOptionMenu(void)
         sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]  = gSaveBlock2Ptr->optionsBattleStyle;
         sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]     = gSaveBlock2Ptr->optionsInfiniteCandy;
         sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = gSaveBlock2Ptr->optionsLevelCaps;
+        sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]     = gSaveBlock2Ptr->optionsNuzlocke;
 
         sOptions->submenu = PAGE_GENERAL;
 
@@ -794,6 +807,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsBattleStyle      = sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE];
     gSaveBlock2Ptr->optionsInfiniteCandy    = sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY];
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
+    gSaveBlock2Ptr->optionsNuzlocke         = sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE];
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -1129,6 +1143,16 @@ static void DrawChoices_LevelCaps(int selection, int y)
 
     DrawOptionMenuChoice(sText_OptionLevelCapsOn, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_OptionLevelCapsOff, GetStringRightAlignXOffset(1, sText_OptionLevelCapsOff, 198), y, styles[1], active);
+}
+
+static void DrawChoices_Nuzlocke(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIF_NUZLOCKE);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_OptionNuzlockeOff, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionNuzlockeOn, GetStringRightAlignXOffset(1, sText_OptionNuzlockeOn, 198), y, styles[1], active);
 }
 
 

@@ -5,6 +5,7 @@
 #include "battle_tower.h"
 #include "battle_transition.h"
 #include "main.h"
+#include "nuzlocke.h"
 #include "task.h"
 #include "safari_zone.h"
 #include "script.h"
@@ -590,6 +591,8 @@ static void CB2_EndWildBattle(void)
             HealPlayerParty();
     }
 
+    Nuzlocke_ApplyPermadeathToPlayerParty();
+
     if (IsPlayerDefeated(gBattleOutcome) == TRUE && CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE && !InBattlePike())
     {
         SetMainCallback2(CB2_WhiteOut);
@@ -606,6 +609,8 @@ static void CB2_EndScriptedWildBattle(void)
 {
     CpuFill16(0, (void *)(BG_PLTT), BG_PLTT_SIZE);
     ResetOamRange(0, 128);
+
+    Nuzlocke_ApplyPermadeathToPlayerParty();
 
     if (IsPlayerDefeated(gBattleOutcome) == TRUE)
     {
@@ -1297,6 +1302,8 @@ static void CB2_EndTrainerBattle(void)
             HealPlayerParty();
     }
 
+    Nuzlocke_ApplyPermadeathToPlayerParty();
+
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
         DowngradeBadPoison();
@@ -1327,6 +1334,8 @@ static void CB2_EndTrainerBattle(void)
 
 static void CB2_EndRematchBattle(void)
 {
+    Nuzlocke_ApplyPermadeathToPlayerParty();
+
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
         DowngradeBadPoison();

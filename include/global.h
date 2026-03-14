@@ -581,7 +581,8 @@ struct SaveBlock2
              u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
              u16 optionsBattleSceneOff:1; // whether battle animations are disabled
              u16 regionMapZoom:1; // whether the map is zoomed in
-             //u16 padding1:4;
+             u16 optionsNuzlocke:1; // OPTIONS_NUZLOCKE_[OFF/ON]
+             //u16 padding1:3;
              //u16 padding2;
     /*0x18*/ struct Pokedex pokedex;
     /*0x90*/ u8 filler_90[0x8];
@@ -606,7 +607,8 @@ struct SaveBlock2
     u8 optionsInfiniteCandy; //OPTINOS_INFINITECANDY_[OFF/ON]
     u8 optionsLevelCaps; //OPTIONS_LEVELCAPS_[ON/OFF]
     u8 optionsBattleItems; //OPTIONS_BATTLEITEMS_[ON/OFF]
-}; // sizeof=0xF2C
+    u8 nuzlockeEncounterMapFlags[NUZLOCKE_AREA_FLAGS_COUNT]; // Tracks whether first encounter was already used for each map section.
+}; // sizeof=0xF4C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;
 

@@ -41,6 +41,7 @@
 #include "party_menu.h"
 #include "pokeball.h"
 #include "pokedex.h"
+#include "nuzlocke.h"
 #include "pokemon.h"
 #include "random.h"
 #include "recorded_battle.h"
@@ -3789,6 +3790,8 @@ static void TryDoEventsBeforeFirstTurn(void)
     switch ((enum FirstTurnEventsStates)gBattleStruct->eventsBeforeFirstTurnState)
     {
     case FIRST_TURN_EVENTS_START:
+        Nuzlocke_OnBattleStart();
+
         // Set invalid mons as absent(for example when starting a double battle with only one pokemon).
         if (!(gBattleTypeFlags & BATTLE_TYPE_SAFARI))
         {
