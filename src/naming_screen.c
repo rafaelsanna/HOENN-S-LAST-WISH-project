@@ -672,7 +672,7 @@ static bool8 MainState_PressedOKButton(void)
 {
     if (Nuzlocke_IsEnabled()
      && ((sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON)
-      || (sNamingScreen->templateNum == NAMING_SCREEN_NICKNAME && !FlagGet(FLAG_SYS_POKEDEX_GET)))
+            || (sNamingScreen->templateNum == NAMING_SCREEN_NICKNAME))
      && StringCompare(sNamingScreen->textBuffer, GetSpeciesName(sNamingScreen->monSpecies)) == 0)
     {
         PlaySE(SE_FAILURE);

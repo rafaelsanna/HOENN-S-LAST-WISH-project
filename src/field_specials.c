@@ -73,6 +73,7 @@
 #include "palette.h"
 #include "battle_util.h"
 #include "naming_screen.h"
+#include "nuzlocke.h"
 
 #define TAG_ITEM_ICON 5500
 
@@ -1381,6 +1382,11 @@ bool8 IsStarterInParty(void)
             return TRUE;
     }
     return FALSE;
+}
+
+bool8 ShouldForceStarterNickname(void)
+{
+    return Nuzlocke_IsEnabled();
 }
 
 bool8 ScriptCheckFreePokemonStorageSpace(void)
