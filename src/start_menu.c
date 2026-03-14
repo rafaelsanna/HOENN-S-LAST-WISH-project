@@ -563,19 +563,19 @@ static void ShowTimeWindow(void)
     Build12HourTimeString(gStringVar1);
     StringAppend(gStringVar4, gStringVar1);
     AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 12;
+    y += 14;
 
     StringCopy(gStringVar4, sText_Name);
     ptr = StringAppend(gStringVar4, gText_Space);
     StringCopy(ptr, gSaveBlock2Ptr->playerName);
     AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 12;
+    y += 14;
 
     StringCopy(gStringVar4, sText_MoneyPrefix);
     ptr = StringAppend(gStringVar4, gText_EmptyString2);
     ConvertIntToDecimalStringN(ptr, GetMoney(&gSaveBlock1Ptr->money), STR_CONV_MODE_LEFT_ALIGN, 6);
     AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
-    y += 12;
+    y += 14;
 
     StringCopy(gStringVar4, sText_LevelCapPrefix);
     ptr = StringAppend(gStringVar4, gText_EmptyString2);
