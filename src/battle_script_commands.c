@@ -14430,8 +14430,19 @@ static void Cmd_trygivecaughtmonnick(void)
     case 3:
         if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
         {
-            SetMonData(GetBattlerMon(gBattlerTarget), MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
-            gBattleCommunication[MULTIUSE_STATE]++;
+            struct Pokemon *caughtMon = GetBattlerMon(gBattlerTarget);
+            u16 species = GetMonData(caughtMon, MON_DATA_SPECIES);
+
+            if (Nuzlocke_IsEnabled() && StringCompare(gBattleStruct->caughtMonNick, GetSpeciesName(species)) == 0)
+            {
+                gBattleCommunication[MULTIUSE_STATE] = 2;
+                BeginFastPaletteFade(3);
+            }
+            else
+            {
+                SetMonData(caughtMon, MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
+                gBattleCommunication[MULTIUSE_STATE]++;
+            }
         }
         break;
     case 4:
