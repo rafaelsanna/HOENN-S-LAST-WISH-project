@@ -382,6 +382,8 @@ static const u8 *const OptionTextDescription(void)
     switch (sOptions->submenu)
     {
     case PAGE_GENERAL:
+        if (menuItem >= MENUITEM_GEN_COUNT)
+            return sText_Empty;
         if (!CheckConditions(menuItem))
             return sOptionMenuItemDescriptionsDisabledGeneral[menuItem];
         selection = sOptions->sel[menuItem];
@@ -389,6 +391,8 @@ static const u8 *const OptionTextDescription(void)
             selection = 0;
         return sOptionMenuItemDescriptionsGeneral[menuItem][selection];
     case PAGE_DIFFICULTY:
+        if (menuItem >= MENUITEM_DIF_COUNT)
+            return sText_Empty;
         if (!CheckConditions(menuItem))
             return sOptionMenuItemDescriptionsDisabledDifficulty[menuItem];
         selection = sOptions->sel_difficulty[menuItem];

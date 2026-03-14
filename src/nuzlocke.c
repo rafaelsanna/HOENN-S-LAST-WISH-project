@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "nuzlocke.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
