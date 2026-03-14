@@ -49,6 +49,7 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/party_menu.h"
+#include "constants/flags.h"
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -192,13 +193,6 @@ static EWRAM_DATA struct PokemonSummaryScreenData
     u8 categoryIconSpriteId;
 } *sMonSummaryScreen = NULL;
 
-static EWRAM_DATA u16 sSummaryDexSpecies = SPECIES_NONE;
-static EWRAM_DATA u32 sSummaryDexPersonality = 0;
-static EWRAM_DATA bool8 sSummaryDexIsShiny = FALSE;
-static EWRAM_DATA u8 sSummaryDexTaskId;
-static EWRAM_DATA bool8 sSummaryDexTaskStarted;
-static EWRAM_DATA MainCallback sSummaryDexReturnCallback = NULL;
-
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
 static EWRAM_DATA u8 sMoveSlotToReplace = 0;
 ALIGNED(4) static EWRAM_DATA u8 sAnimDelayTaskId = 0;
@@ -327,8 +321,7 @@ static void SummaryScreen_DestroyAnimDelayTask(void);
 static bool32 ShouldShowMoveRelearner(void);
 static bool32 ShouldShowRename(void);
 static bool32 ShouldShowIvEvPrompt(void);
-static void StartSummaryPokedex(u8 taskId);
-static void CB2_OpenSummaryPokedexEntry(void);
+static bool32 ShouldShowSummaryPokedexPrompt(void);
 static void BufferLeftColumnIvEvStats(void);
 static void CB2_ReturnToSummaryScreenFromNamingScreen(void);
 static void CB2_PssChangePokemonNickname(void);
@@ -1726,7 +1719,13 @@ static void Task_HandleInput(u8 taskId)
         {
             if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
             {
-                StartSummaryPokedex(taskId);
+                if (ShouldShowSummaryPokedexPrompt())
+                {
+                    StopPokemonAnimations();
+                    PlaySE(SE_SELECT);
+                    sMonSummaryScreen->callback = CB2_OpenPokedex;
+                    BeginCloseSummaryScreen(taskId);
+                }
             }
             else
             {
@@ -4709,6 +4708,11 @@ static inline bool32 ShouldShowIvEvPrompt(void)
     return FALSE;
 }
 
+static inline bool32 ShouldShowSummaryPokedexPrompt(void)
+{
+    return (!sMonSummaryScreen->summary.isEgg && FlagGet(FLAG_SYS_POKEDEX_GET));
+}
+
 static inline void ShowUtilityPrompt(s16 mode)
 {
     const u8 *promptText = NULL;
@@ -4727,7 +4731,7 @@ static inline void ShowUtilityPrompt(s16 mode)
     }
     else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
     {
-        if (!sMonSummaryScreen->summary.isEgg)
+        if (ShouldShowSummaryPokedexPrompt())
         {
             promptText = gText_Pokedex;
             if (ShouldShowIvEvPrompt())
@@ -4791,54 +4795,6 @@ static inline void ShowUtilityPrompt(s16 mode)
     {
         int secondaryXPos = GetStringRightAlignXOffset(FONT_NORMAL, secondaryText, 62);
         PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_UTILITY, secondaryText, secondaryXPos, 9, 0, 0);
-    }
-}
-
-static void StartSummaryPokedex(u8 taskId)
-{
-    if (sMonSummaryScreen->summary.isEgg)
-        return;
-
-    if (sMonSummaryScreen->summary.species == SPECIES_NONE)
-        return;
-
-    sSummaryDexSpecies = sMonSummaryScreen->summary.species;
-    sSummaryDexIsShiny = sMonSummaryScreen->summary.isShiny;
-    sSummaryDexPersonality = sMonSummaryScreen->summary.pid;
-    sSummaryDexReturnCallback = sMonSummaryScreen->callback;
-    sSummaryDexTaskStarted = FALSE;
-    sSummaryDexTaskId = 0;
-    sMonSummaryScreen->callback = CB2_OpenSummaryPokedexEntry;
-    BeginCloseSummaryScreen(taskId);
-}
-
-static void CB2_OpenSummaryPokedexEntry(void)
-{
-    if (sSummaryDexReturnCallback == NULL)
-        return;
-
-    if (!sSummaryDexTaskStarted)
-    {
-        sSummaryDexTaskId = DisplayCaughtMonDexPage(sSummaryDexSpecies, sSummaryDexIsShiny, sSummaryDexPersonality);
-        sSummaryDexTaskStarted = TRUE;
-        if (!gTasks[sSummaryDexTaskId].isActive)
-        {
-            MainCallback callback = sSummaryDexReturnCallback;
-            sSummaryDexReturnCallback = NULL;
-            if (callback != NULL)
-                SetMainCallback2(callback);
-        }
-        return;
-    }
-
-    if (!gTasks[sSummaryDexTaskId].isActive)
-    {
-        sSummaryDexTaskStarted = FALSE;
-        sSummaryDexTaskId = 0;
-        MainCallback callback = sSummaryDexReturnCallback;
-        sSummaryDexReturnCallback = NULL;
-        if (callback != NULL)
-            SetMainCallback2(callback);
     }
 }
 
