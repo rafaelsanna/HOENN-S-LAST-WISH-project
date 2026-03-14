@@ -552,6 +552,7 @@ static void ShowTimeWindow(void)
 {
     u8 y = 2;
     u8 *ptr;
+    bool8 showLevelCap = (B_EXP_CAP_TYPE != EXP_CAP_NONE && gSaveBlock2Ptr->optionsLevelCaps == OPTIONS_LEVELCAPS_ON);
 
     // print window
     sStartClockWindowId = AddWindow(&sWindowTemplate_StartClock);
@@ -577,10 +578,13 @@ static void ShowTimeWindow(void)
     AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
     y += 14;
 
-    StringCopy(gStringVar4, sText_LevelCapPrefix);
-    ptr = StringAppend(gStringVar4, gText_EmptyString2);
-    ConvertIntToDecimalStringN(ptr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
-    AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
+    if (showLevelCap)
+    {
+        StringCopy(gStringVar4, sText_LevelCapPrefix);
+        ptr = StringAppend(gStringVar4, gText_EmptyString2);
+        ConvertIntToDecimalStringN(ptr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
+        AddTextPrinterParameterized(sStartClockWindowId, FONT_NORMAL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
+    }
 
     CopyWindowToVram(sStartClockWindowId, COPYWIN_GFX);
 }
