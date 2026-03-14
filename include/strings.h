@@ -453,7 +453,9 @@ extern const u8 gText_Plus[];
 //Pokédex text
 extern const u8 gText_CryOf[];
 extern const u8 gText_SizeComparedTo[];
+extern const u8 gText_Pokedex[];
 extern const u8 gText_PokedexRegistration[];
+extern const u8 gText_Select[];
 extern const u8 gText_NumberClear01[];
 extern const u8 gText_5MarksPokemon[];
 extern const u8 gText_UnkHeight[];

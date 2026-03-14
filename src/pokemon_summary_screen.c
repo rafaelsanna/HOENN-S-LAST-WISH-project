@@ -37,6 +37,7 @@
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
+#include "pokedex.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -48,6 +49,7 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/party_menu.h"
+#include "constants/flags.h"
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -319,6 +321,7 @@ static void SummaryScreen_DestroyAnimDelayTask(void);
 static bool32 ShouldShowMoveRelearner(void);
 static bool32 ShouldShowRename(void);
 static bool32 ShouldShowIvEvPrompt(void);
+static bool32 ShouldShowSummaryPokedexPrompt(void);
 static void BufferLeftColumnIvEvStats(void);
 static void CB2_ReturnToSummaryScreenFromNamingScreen(void);
 static void CB2_PssChangePokemonNickname(void);
@@ -1714,7 +1717,18 @@ static void Task_HandleInput(u8 taskId)
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            if (sMonSummaryScreen->currPageIndex != PSS_PAGE_SKILLS)
+            if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
+            {
+                if (ShouldShowSummaryPokedexPrompt())
+                {
+                    StopPokemonAnimations();
+                    PlaySE(SE_SELECT);
+                    SetPokedexTargetSpecies(sMonSummaryScreen->summary.species);
+                    sMonSummaryScreen->callback = CB2_OpenPokedex;
+                    BeginCloseSummaryScreen(taskId);
+                }
+            }
+            else
             {
                 if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
                 {
@@ -1735,14 +1749,13 @@ static void Task_HandleInput(u8 taskId)
                     SwitchToMoveSelection(taskId);
                 }
             }
-            if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
-            {
-                if (ShouldShowIvEvPrompt())
-                {
-                    ShowMonSkillsInfo(taskId, IncrementSkillsStatsMode(sMonSummaryScreen->skillsPageMode));
-                    PlaySE(SE_SELECT);
-                }
-            }
+        }
+        else if (JOY_NEW(SELECT_BUTTON)
+                && sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS
+                && ShouldShowIvEvPrompt())
+        {
+            ShowMonSkillsInfo(taskId, IncrementSkillsStatsMode(sMonSummaryScreen->skillsPageMode));
+            PlaySE(SE_SELECT);
         }
         else if (JOY_NEW(B_BUTTON))
         {
@@ -4696,12 +4709,19 @@ static inline bool32 ShouldShowIvEvPrompt(void)
     return FALSE;
 }
 
+static inline bool32 ShouldShowSummaryPokedexPrompt(void)
+{
+    return (!sMonSummaryScreen->summary.isEgg && FlagGet(FLAG_SYS_POKEDEX_GET));
+}
+
 static inline void ShowUtilityPrompt(s16 mode)
 {
-    const u8* promptText = NULL;
-    const u8* gText_SkillPageIvs = COMPOUND_STRING("IVs");
-    const u8* gText_SkillPageEvs = COMPOUND_STRING("EVs");
-    const u8* gText_SkillPageStats = COMPOUND_STRING("STATS");
+    const u8 *promptText = NULL;
+    const u8 *secondaryText = NULL;
+    const u8 *skillModeText = NULL;
+    const u8 *gText_SkillPageIvs = COMPOUND_STRING("IVs");
+    const u8 *gText_SkillPageEvs = COMPOUND_STRING("EVs");
+    const u8 *gText_SkillPageStats = COMPOUND_STRING("STATS");
 
     if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
     {
@@ -4712,25 +4732,36 @@ static inline void ShowUtilityPrompt(s16 mode)
     }
     else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
     {
-        if (ShouldShowIvEvPrompt())
+        if (ShouldShowSummaryPokedexPrompt())
         {
-            if (mode == SUMMARY_SKILLS_MODE_STATS)
+            promptText = gText_Pokedex;
+            if (ShouldShowIvEvPrompt())
             {
-                if (P_SUMMARY_SCREEN_EV_ONLY)
-                    promptText = gText_SkillPageEvs;
-                else
-                    promptText = gText_SkillPageIvs;
-            }
-            else if (mode == SUMMARY_SKILLS_MODE_IVS)
-            {
-                if (P_SUMMARY_SCREEN_IV_ONLY)
-                    promptText = gText_SkillPageStats;
-                else
-                    promptText = gText_SkillPageEvs;
-            }
-            else if (mode == SUMMARY_SKILLS_MODE_EVS)
-            {
-                promptText = gText_SkillPageStats;
+                if (mode == SUMMARY_SKILLS_MODE_STATS)
+                {
+                    if (P_SUMMARY_SCREEN_EV_ONLY)
+                        skillModeText = gText_SkillPageEvs;
+                    else
+                        skillModeText = gText_SkillPageIvs;
+                }
+                else if (mode == SUMMARY_SKILLS_MODE_IVS)
+                {
+                    if (P_SUMMARY_SCREEN_IV_ONLY)
+                        skillModeText = gText_SkillPageStats;
+                    else
+                        skillModeText = gText_SkillPageEvs;
+                }
+                else if (mode == SUMMARY_SKILLS_MODE_EVS)
+                {
+                    skillModeText = gText_SkillPageStats;
+                }
+                if (skillModeText != NULL)
+                {
+                    StringCopy(gStringVar1, gText_Select);
+                    StringAppend(gStringVar1, gText_Space);
+                    StringAppend(gStringVar1, skillModeText);
+                    secondaryText = gStringVar1;
+                }
             }
         }
     }
@@ -4760,6 +4791,12 @@ static inline void ShowUtilityPrompt(s16 mode)
 
     PrintAOrBButtonIcon(PSS_LABEL_WINDOW_PROMPT_UTILITY, FALSE, iconXPos);
     PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_UTILITY, promptText, stringXPos, 1, 0, 0);
+
+    if (secondaryText != NULL)
+    {
+        int secondaryXPos = GetStringRightAlignXOffset(FONT_NORMAL, secondaryText, 62);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_UTILITY, secondaryText, secondaryXPos, 9, 0, 0);
+    }
 }
 
 static void CB2_ReturnToSummaryScreenFromNamingScreen(void)

@@ -123,6 +123,7 @@ static EWRAM_DATA struct PokedexView *sPokedexView = NULL;
 static EWRAM_DATA u16 sLastSelectedPokemon = 0;
 static EWRAM_DATA u8 sPokeBallRotation = 0;
 static EWRAM_DATA struct PokedexListItem *sPokedexListItem = NULL;
+EWRAM_DATA u16 sPokedexTargetDexNum = 0;
 
 // This is written to, but never read.
 COMMON_DATA u8 gUnusedPokedexU8 = 0;
@@ -229,6 +230,7 @@ static bool8 LoadPokedexListPage(u8);
 static void LoadPokedexBgPalette(bool8);
 static void FreeWindowAndBgBuffers(void);
 static void CreatePokedexList(u8, u8);
+static void TryApplyPokedexTargetSelection(void);
 static void CreateMonDexNum(u16, u8, u8, u16);
 static void CreateCaughtBall(u16, u8, u8, u16);
 static u8 CreateMonName(u16, u8, u8);
@@ -1603,6 +1605,14 @@ static void ResetPokedexView(struct PokedexView *pokedexView)
         pokedexView->unkArr3[i] = 0;
 }
 
+void SetPokedexTargetSpecies(u16 species)
+{
+    if (species == SPECIES_NONE)
+        sPokedexTargetDexNum = 0;
+    else
+        sPokedexTargetDexNum = SpeciesToNationalPokedexNum(species);
+}
+
 void CB2_OpenPokedex(void)
 {
     if (POKEDEX_PLUS_HGSS)
@@ -1661,9 +1671,32 @@ void CB2_OpenPokedex(void)
         SetVBlankCallback(VBlankCB_Pokedex);
         SetMainCallback2(CB2_Pokedex);
         CreatePokedexList(sPokedexView->dexMode, sPokedexView->dexOrder);
+        TryApplyPokedexTargetSelection();
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, TRACKS_ALL, 0x80);
         break;
     }
+}
+
+static void TryApplyPokedexTargetSelection(void)
+{
+    u16 i;
+
+    if (sPokedexTargetDexNum == 0)
+        return;
+
+    for (i = 0; i < sPokedexView->pokemonListCount; i++)
+    {
+        if (sPokedexView->pokedexList[i].dexNum == sPokedexTargetDexNum)
+        {
+            sPokedexView->selectedPokemon = i;
+            sPokedexView->pokeBallRotation = i * 16 + POKEBALL_ROTATION_TOP;
+            sLastSelectedPokemon = i;
+            sPokeBallRotation = sPokedexView->pokeBallRotation;
+            break;
+        }
+    }
+
+    sPokedexTargetDexNum = 0;
 }
 
 static void CB2_Pokedex(void)
