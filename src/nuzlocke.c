@@ -1,15 +1,26 @@
 #include "global.h"
 #include "battle.h"
+#include "event_data.h"
 #include "nuzlocke.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
+#include "constants/flags.h"
+#include "constants/map_types.h"
 #include "constants/battle.h"
 
 EWRAM_DATA static bool8 sNuzlockeCanThrowBallThisBattle = FALSE;
 
 static bool8 IsTrackableWildBattle(void)
 {
-    return !(gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_SAFARI | BATTLE_TYPE_WALLY_TUTORIAL));
+    if (gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_SAFARI | BATTLE_TYPE_WALLY_TUTORIAL))
+        return FALSE;
+
+    // Nuzlocke encounter lock starts only after obtaining the Pokedex.
+    if (!FlagGet(FLAG_SYS_POKEDEX_GET))
+        return FALSE;
+
+    // Encounter areas are route map sections.
+    return gMapHeader.mapType == MAP_TYPE_ROUTE || gMapHeader.mapType == MAP_TYPE_OCEAN_ROUTE;
 }
 
 bool8 Nuzlocke_IsEnabled(void)
