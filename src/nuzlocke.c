@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "nuzlocke.h"
 #include "pokemon.h"
+#include "pokemon_storage_system.h"
 #include "constants/battle.h"
 
 EWRAM_DATA static bool8 sNuzlockeCanThrowBallThisBattle = FALSE;
