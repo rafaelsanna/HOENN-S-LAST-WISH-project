@@ -13,6 +13,24 @@ static const u8 sTextNuzlockeLoneMonPenalty[] = _("You lost with Nuzlocke, so yo
 EWRAM_DATA static bool8 sNuzlockeCanThrowBallThisBattle = FALSE;
 EWRAM_DATA static bool8 sNuzlockeShowLoneMonPenaltyMessage = FALSE;
 
+static bool8 IsCurrentRouteShinyEncounter(void)
+{
+    if (!(gBattleTypeFlags & BATTLE_TYPE_WILD) || gBattlersCount <= B_POSITION_OPPONENT_LEFT)
+        return FALSE;
+
+    return GetMonData(&gEnemyParty[gBattlerPartyIndexes[B_POSITION_OPPONENT_LEFT]], MON_DATA_IS_SHINY);
+}
+
+static bool8 GetMapFlag(const u8 *flags, u8 mapSecId)
+{
+    return flags[mapSecId >> 3] & (1 << (mapSecId & 7));
+}
+
+static void SetMapFlag(u8 *flags, u8 mapSecId)
+{
+    flags[mapSecId >> 3] |= 1 << (mapSecId & 7);
+}
+
 static u16 CountOwnedNonEggMons(void)
 {
     u16 count = 0;
@@ -83,42 +101,78 @@ static bool8 IsTrackableWildBattle(void)
 
 bool8 Nuzlocke_IsEnabled(void)
 {
-    return gSaveBlock2Ptr != NULL && gSaveBlock2Ptr->optionsNuzlocke == OPTIONS_NUZLOCKE_ON;
+    return gSaveBlock2Ptr != NULL && gSaveBlock2Ptr->optionsNuzlocke != OPTIONS_NUZLOCKE_OFF;
+}
+
+u8 Nuzlocke_GetMode(void)
+{
+    if (gSaveBlock2Ptr == NULL)
+        return OPTIONS_NUZLOCKE_OFF;
+
+    if (gSaveBlock2Ptr->optionsNuzlocke > OPTIONS_NUZLOCKE_HARD)
+        return OPTIONS_NUZLOCKE_OFF;
+
+    return gSaveBlock2Ptr->optionsNuzlocke;
 }
 
 static bool8 Nuzlocke_HasStarted(void)
 {
-    return Nuzlocke_IsEnabled() && FlagGet(FLAG_SYS_POKEDEX_GET);
+    return Nuzlocke_GetMode() != OPTIONS_NUZLOCKE_OFF && FlagGet(FLAG_SYS_POKEDEX_GET);
 }
 
 void Nuzlocke_OnBattleStart(void)
 {
+    u8 mode;
     u8 mapSecId;
-    u8 index;
-    u8 bit;
 
     sNuzlockeCanThrowBallThisBattle = FALSE;
 
     if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return;
 
-    mapSecId = gMapHeader.regionMapSectionId;
-    index = mapSecId >> 3;
-    bit = 1 << (mapSecId & 7);
+    mode = Nuzlocke_GetMode();
+    if (mode != OPTIONS_NUZLOCKE_HARD)
+        return;
 
-    if (!(gSaveBlock2Ptr->nuzlockeEncounterMapFlags[index] & bit))
+    mapSecId = gMapHeader.regionMapSectionId;
+
+    if (!GetMapFlag(gSaveBlock2Ptr->nuzlockeEncounterMapFlags, mapSecId))
     {
-        gSaveBlock2Ptr->nuzlockeEncounterMapFlags[index] |= bit;
+        SetMapFlag(gSaveBlock2Ptr->nuzlockeEncounterMapFlags, mapSecId);
         sNuzlockeCanThrowBallThisBattle = TRUE;
     }
 }
 
 bool8 Nuzlocke_CanThrowBallThisBattle(void)
 {
+    u8 mode;
+
     if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return TRUE;
 
+    mode = Nuzlocke_GetMode();
+
+    if (mode == OPTIONS_NUZLOCKE_NORMAL)
+    {
+        if (IsCurrentRouteShinyEncounter())
+            return TRUE;
+
+        return !GetMapFlag(gSaveBlock2Ptr->nuzlockeCaptureMapFlags, gMapHeader.regionMapSectionId);
+    }
+
     return sNuzlockeCanThrowBallThisBattle;
+}
+
+void Nuzlocke_OnMonCaught(struct Pokemon *mon)
+{
+    if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
+        return;
+    if (Nuzlocke_GetMode() != OPTIONS_NUZLOCKE_NORMAL)
+        return;
+    if (GetMonData(mon, MON_DATA_IS_SHINY))
+        return;
+
+    SetMapFlag(gSaveBlock2Ptr->nuzlockeCaptureMapFlags, gMapHeader.regionMapSectionId);
 }
 
 void Nuzlocke_ApplyPermadeathToPlayerParty(void)

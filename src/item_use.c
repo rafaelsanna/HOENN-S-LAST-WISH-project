@@ -1163,7 +1163,7 @@ bool32 CanThrowBall(void)
 static const u8 sText_CantThrowPokeBall_TwoMons[] = _("Cannot throw a ball!\nThere are two Pokémon out there!\p");
 static const u8 sText_CantThrowPokeBall_SemiInvulnerable[] = _("Cannot throw a ball!\nThere's no Pokémon in sight!\p");
 static const u8 sText_CantThrowPokeBall_Disabled[] = _("POKé BALLS cannot be used\nright now!\p");
-static const u8 sText_CantThrowPokeBall_Nuzlocke[] = _("Nuzlocke rule: only the first\nencounter in this area may be caught.\p");
+static const u8 sText_CantThrowPokeBall_Nuzlocke[] = _("Nuzlocke rule: this route\ncannot give another capture.\p");
 static const u8 sText_CantUseRevive_Nuzlocke[] = _("Nuzlocke rule: Revives are\ndisabled. Fainted means dead.\p");
 void ItemUseInBattle_PokeBall(u8 taskId)
 {
