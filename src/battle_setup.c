@@ -579,6 +579,8 @@ static void DowngradeBadPoison(void)
 
 static void CB2_EndWildBattle(void)
 {
+    bool8 nuzlockePartyWiped;
+
     CpuFill16(0, (void *)(BG_PLTT), BG_PLTT_SIZE);
     ResetOamRange(0, 128);
 
@@ -592,8 +594,10 @@ static void CB2_EndWildBattle(void)
     }
 
     Nuzlocke_ApplyPermadeathToPlayerParty();
+    nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
-    if (IsPlayerDefeated(gBattleOutcome) == TRUE && CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE && !InBattlePike())
+    if ((IsPlayerDefeated(gBattleOutcome) == TRUE || nuzlockePartyWiped)
+     && CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE && !InBattlePike())
     {
         SetMainCallback2(CB2_WhiteOut);
     }
@@ -607,12 +611,15 @@ static void CB2_EndWildBattle(void)
 
 static void CB2_EndScriptedWildBattle(void)
 {
+    bool8 nuzlockePartyWiped;
+
     CpuFill16(0, (void *)(BG_PLTT), BG_PLTT_SIZE);
     ResetOamRange(0, 128);
 
     Nuzlocke_ApplyPermadeathToPlayerParty();
+    nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
-    if (IsPlayerDefeated(gBattleOutcome) == TRUE)
+    if (IsPlayerDefeated(gBattleOutcome) == TRUE || nuzlockePartyWiped)
     {
         if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
             SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
@@ -1291,6 +1298,8 @@ static void HandleBattleVariantEndParty(void)
 
 static void CB2_EndTrainerBattle(void)
 {
+    bool8 nuzlockePartyWiped;
+
     HandleBattleVariantEndParty();
 
     if (FollowerNPCIsBattlePartner())
@@ -1303,15 +1312,17 @@ static void CB2_EndTrainerBattle(void)
     }
 
     Nuzlocke_ApplyPermadeathToPlayerParty();
+    nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
         DowngradeBadPoison();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }
-    else if (IsPlayerDefeated(gBattleOutcome) == TRUE)
+    else if (IsPlayerDefeated(gBattleOutcome) == TRUE || nuzlockePartyWiped)
     {
-        if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InTrainerHillChallenge() || (!NoAliveMonsForPlayer()) || FlagGet(B_FLAG_NO_WHITEOUT))
+        if ((CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InTrainerHillChallenge() || FlagGet(B_FLAG_NO_WHITEOUT))
+         && !nuzlockePartyWiped)
             SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         else
             SetMainCallback2(CB2_WhiteOut);
@@ -1334,14 +1345,17 @@ static void CB2_EndTrainerBattle(void)
 
 static void CB2_EndRematchBattle(void)
 {
+    bool8 nuzlockePartyWiped;
+
     Nuzlocke_ApplyPermadeathToPlayerParty();
+    nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
         DowngradeBadPoison();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }
-    else if (IsPlayerDefeated(gBattleOutcome) == TRUE)
+    else if (IsPlayerDefeated(gBattleOutcome) == TRUE || nuzlockePartyWiped)
     {
         SetMainCallback2(CB2_WhiteOut);
     }

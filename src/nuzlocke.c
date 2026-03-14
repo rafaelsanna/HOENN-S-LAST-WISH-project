@@ -2,7 +2,6 @@
 #include "battle.h"
 #include "nuzlocke.h"
 #include "pokemon.h"
-#include "pokemon_storage_system.h"
 #include "constants/battle.h"
 
 EWRAM_DATA static bool8 sNuzlockeCanThrowBallThisBattle = FALSE;
@@ -50,24 +49,9 @@ bool8 Nuzlocke_CanThrowBallThisBattle(void)
 void Nuzlocke_ApplyPermadeathToPlayerParty(void)
 {
     bool8 removedAny = FALSE;
-    bool8 hasUsableMon = FALSE;
     s32 i;
 
     if (!Nuzlocke_IsEnabled())
-        return;
-
-    for (i = 0; i < PARTY_SIZE; i++)
-    {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE
-         && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
-         && GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
-        {
-            hasUsableMon = TRUE;
-            break;
-        }
-    }
-
-    if (!hasUsableMon)
         return;
 
     for (i = 0; i < PARTY_SIZE; i++)
@@ -79,11 +63,9 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void)
         if (GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
             continue;
 
-        if (CopyMonToPC(&gPlayerParty[i]) != MON_CANT_GIVE)
-        {
-            ZeroMonData(&gPlayerParty[i]);
-            removedAny = TRUE;
-        }
+        // Nuzlocke release: dead party mons are deleted permanently.
+        ZeroMonData(&gPlayerParty[i]);
+        removedAny = TRUE;
     }
 
     if (removedAny)
