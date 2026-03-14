@@ -861,17 +861,6 @@ static void Task_SetUpDexNavSearch(u8 taskId)
         DexNavUpdateSearchWindow(sDexNavSearchDataPtr->proximity, searchLevel);
     }
 
-    // Save bike type and force on-foot while a search is active.
-    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
-        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_MACH_BIKE;
-    else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
-        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_ACRO_BIKE;
-    else
-        sDexNavSearchDataPtr->previousBikeState = 0;
-
-    if (sDexNavSearchDataPtr->previousBikeState != 0)
-        SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
-
     FlagSet(DN_FLAG_SEARCHING);
     gPlayerAvatar.creeping = TRUE;  //initialize as true in case mon appears beside you
     task->tProximity = gSprites[gPlayerAvatar.spriteId].x;
@@ -882,10 +871,18 @@ static void Task_SetUpDexNavSearch(u8 taskId)
 
 static void DexNavSearchBail(u8 taskId, const u8 *script)
 {
+    u8 previousBikeState = 0;
+
+    if (sDexNavSearchDataPtr != NULL)
+        previousBikeState = sDexNavSearchDataPtr->previousBikeState;
+
     TRY_FREE_AND_SET_NULL(sDexNavSearchDataPtr);
     FreeMonIconPalettes();
     ScriptContext_SetupScript(script);
     DestroyTask(taskId);
+
+    if (previousBikeState != 0)
+        SetPlayerAvatarTransitionFlags(previousBikeState);
 }
 
 static void Task_InitDexNavSearch(u8 taskId)
@@ -905,6 +902,18 @@ static void Task_InitDexNavSearch(u8 taskId)
     sDexNavSearchDataPtr->species = species;
     sDexNavSearchDataPtr->environment = environment;  //updated in DexNavTryGenerateMonLevel if hidden mon
     sDexNavSearchDataPtr->isHiddenMon = (environment == ENCOUNTER_TYPE_HIDDEN) ? TRUE : FALSE;
+
+    // Save bike type and force on-foot before tile search logic runs.
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
+        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_MACH_BIKE;
+    else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
+        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_ACRO_BIKE;
+    else
+        sDexNavSearchDataPtr->previousBikeState = 0;
+
+    if (sDexNavSearchDataPtr->previousBikeState != 0)
+        SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
+
     sDexNavSearchDataPtr->monLevel = DexNavTryGenerateMonLevel(species, environment);
 
     if (GetFlashLevel() > 0)
@@ -2619,22 +2628,43 @@ bool8 TryFindHiddenPokemon(void)
             return FALSE;
 
         sDexNavSearchDataPtr = AllocZeroed(sizeof(struct DexNavSearch));
+        if (sDexNavSearchDataPtr == NULL)
+            return FALSE;
 
         // init search data
         sDexNavSearchDataPtr->isHiddenMon = isHiddenMon;
         sDexNavSearchDataPtr->species = species;
         sDexNavSearchDataPtr->hiddenSearch = TRUE;
         sDexNavSearchDataPtr->environment = environment;    // updated in DexNavTryGenerateMonLevel if hidden mon
+
+        // Save bike type and force on-foot before tile search logic runs.
+        if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
+            sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_MACH_BIKE;
+        else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
+            sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_ACRO_BIKE;
+        else
+            sDexNavSearchDataPtr->previousBikeState = 0;
+
+        if (sDexNavSearchDataPtr->previousBikeState != 0)
+            SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
+
         sDexNavSearchDataPtr->monLevel = DexNavTryGenerateMonLevel(species, environment);
         if (sDexNavSearchDataPtr->monLevel == MON_LEVEL_NONEXISTENT)
         {
+            if (sDexNavSearchDataPtr->previousBikeState != 0)
+                SetPlayerAvatarTransitionFlags(sDexNavSearchDataPtr->previousBikeState);
             Free(sDexNavSearchDataPtr);
             return FALSE;
         }
 
         // find tile for hidden mon and start effect if possible
         if (!TryStartHiddenMonFieldEffect(sDexNavSearchDataPtr->environment, 8, 8, TRUE))
+        {
+            if (sDexNavSearchDataPtr->previousBikeState != 0)
+                SetPlayerAvatarTransitionFlags(sDexNavSearchDataPtr->previousBikeState);
+            Free(sDexNavSearchDataPtr);
             return FALSE;
+        }
 
         // exclamation mark over player
         gFieldEffectArguments[0] = gSaveBlock1Ptr->pos.x;
