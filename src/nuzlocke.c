@@ -15,7 +15,7 @@ EWRAM_DATA static bool8 sNuzlockeShowLoneMonPenaltyMessage = FALSE;
 
 static bool8 IsCurrentRouteShinyEncounter(void)
 {
-    if (!(gBattleTypeFlags & BATTLE_TYPE_WILD) || gBattlersCount <= B_POSITION_OPPONENT_LEFT)
+    if (gBattlersCount <= B_POSITION_OPPONENT_LEFT)
         return FALSE;
 
     return GetMonData(&gEnemyParty[gBattlerPartyIndexes[B_POSITION_OPPONENT_LEFT]], MON_DATA_IS_SHINY);
