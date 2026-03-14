@@ -861,6 +861,17 @@ static void Task_SetUpDexNavSearch(u8 taskId)
         DexNavUpdateSearchWindow(sDexNavSearchDataPtr->proximity, searchLevel);
     }
 
+    // Save bike type and force on-foot while a search is active.
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
+        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_MACH_BIKE;
+    else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
+        sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_ACRO_BIKE;
+    else
+        sDexNavSearchDataPtr->previousBikeState = 0;
+
+    if (sDexNavSearchDataPtr->previousBikeState != 0)
+        SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
+
     FlagSet(DN_FLAG_SEARCHING);
     gPlayerAvatar.creeping = TRUE;  //initialize as true in case mon appears beside you
     task->tProximity = gSprites[gPlayerAvatar.spriteId].x;
