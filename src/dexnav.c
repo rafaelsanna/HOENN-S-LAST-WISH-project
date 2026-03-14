@@ -614,6 +614,7 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
     u8 scale = 0;
     u8 weight = 0;
     enum MapType currMapType = GetCurrentMapType();
+    const struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     u8 tileBehaviour;
     u8 tileBuffer = 2;
     u8 *xPos = AllocZeroed((botX - topX) * (botY - topY) * sizeof(u8));
@@ -666,7 +667,7 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
                     if (currMapType == MAP_TYPE_UNDERGROUND)
                     {
                         // inside (cave)
-                        if (IsElevationMismatchAt(gObjectEvents[gPlayerAvatar.spriteId].currentElevation, topX, topY))
+                        if (IsElevationMismatchAt(playerObjEvent->currentElevation, topX, topY))
                             break; //occurs at same z coord
 
                         scale = 440 - (smallScan * 200) - (GetPlayerDistance(topX, topY) / 2)  - (2 * (topX + topY));
@@ -684,7 +685,7 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
                 if (MetatileBehavior_IsSurfableWaterOrUnderwater(tileBehaviour))
                 {
                     u8 scale = 320 - (smallScan * 200) - (GetPlayerDistance(topX, topY) / 2);
-                    if (IsElevationMismatchAt(gObjectEvents[gPlayerAvatar.spriteId].currentElevation, topX, topY))
+                    if (IsElevationMismatchAt(playerObjEvent->currentElevation, topX, topY))
                         break;
 
                     weight = (Random() % scale <= 1) && !MapGridGetCollisionAt(topX, topY);
