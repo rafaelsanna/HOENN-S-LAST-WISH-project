@@ -4872,7 +4872,7 @@ Gender: Female
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: Yes
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Green
 
 Chimecho
@@ -4928,55 +4928,65 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Protect
 
 === TRAINER_GLACIA ===
-Name: GLACIA
+Name: STARK
 Class: Elite Four
 Pic: Elite Four Glacia
-Gender: Female
+Gender: Male
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Pink
 
-Sealeo
-Level: 50
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Encore
-- Body Slam
-- Hail
-- Ice Ball
+Torkoal @ Icy Rock  
+Level: 70
+Ability: Snow Warning   
+- Rapid Spin  
+- Stealth Rock  
+- Toxic  
+- Icy Wind  
 
-Glalie
-Level: 50
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Light Screen
-- Crunch
-- Icy Wind
-- Ice Beam
+Jumpluff @ Babiri Berry  
+Level: 70
+Ability: Huge Power  
+- Belly Drum  
+- Ice Shard  
+- Play Rough  
+- Strength  
 
-Sealeo
-Level: 52
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Attract
-- Double Edge
-- Hail
-- Blizzard
+Mamoswine @ Life Orb  
+Level: 70
+Ability: Snow Cloak  
+- Ice Shard  
+- Earthquake  
+- Knock Off  
+- Icicle Crash  
 
-Glalie
-Level: 52
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Shadow Ball
-- Explosion
-- Hail
-- Ice Beam
+Froslass (F) @ Focus Sash  
+Level: 70
+Ability: Snow Cloak  
+IVs: 0 Atk  
+- Destiny Bond  
+- Weather Ball  
+- Shadow Ball  
+- Taunt  
 
-Walrein @ Sitrus Berry
-Level: 53
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Surf
-- Body Slam
-- Ice Beam
-- Sheer Cold
+Cacturne @ Chople Berry  
+Level: 70
+Ability: Snow Cloak  
+- Curse  
+- Drain Punch  
+- Sucker Punch  
+- Avalanche  
+
+Lapras @ Assault Vest  
+Level: 70
+Ability: Water Absorb  
+Shiny: Yes  
+- Freeze-Dry  
+- Ice Beam  
+- Surf  
+- Earthquake  
 
 === TRAINER_DRAKE ===
 Name: DRAKE
@@ -4986,48 +4996,54 @@ Gender: Male
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Blue
 
-Shelgon
-Level: 52
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Rock Tomb
-- Dragon Claw
-- Protect
-- Double Edge
+Kingdra @ Mental Herb  
+Level: 70
+Ability: Damp  
+Tera Type: Water  
+- Dragon Dance  
+- Liquidation  
+- Iron Head  
+- Substitute  
 
-Altaria
-Level: 54
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Edge
-- Dragon Breath
-- Dragon Dance
-- Aerial Ace
+Flygon @ Life Orb  
+Level: 70
+Ability: Levitate  
+Tera Type: Ground  
+- U-turn  
+- First Impression  
+- Dragon Claw  
+- Fire Punch  
 
-Kingdra
-Level: 53
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Smokescreen
-- Dragon Dance
-- Surf
-- Body Slam
+Altaria @ Sitrus Berry  
+Level: 70
+Ability: Natural Cure  
+Tera Type: Dragon  
+- Dragon Dance  
+- Refresh  
+- Body Slam  
+- Earthquake  
 
-Flygon
-Level: 53
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Flamethrower
-- Crunch
-- Dragon Breath
-- Earthquake
+Dragonite @ Weakness Policy  
+Level: 70
+Ability: Multiscale  
+Tera Type: Dragon  
+- Dragon Dance  
+- Extreme Speed  
+- Roost  
+- Dragon Claw  
 
-Salamence @ Sitrus Berry
-Level: 55
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Flamethrower
-- Dragon Claw
-- Rock Slide
-- Crunch
+Druddigon @ Assault Vest 
+Level: 70 
+Ability: Multiscale  
+Tera Type: Dragon  
+IVs: 0 Atk  
+- Draco Meteor  
+- Dragon Pulse  
+- Hydro Pump  
+- Ice Beam  
 
 === TRAINER_TERRA_CASUAL ===
 Name: TERRA
@@ -7217,63 +7233,55 @@ Level: 20
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_WALLACE ===
-Name: WALLACE
+Name: STELLA
 Class: Champion
 Pic: Champion Wallace
-Gender: Male
-Music: Male
+Gender: Female
+Music: Female
 Items: Full Restore / Full Restore / Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Yellow
 
-Wailord
-Level: 57
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Rain Dance
-- Water Spout
-- Double Edge
-- Blizzard
+Skarmory @ Leftovers
+Level: 70 
+Ability: Weak Armor  
+- Swords Dance  
+- Iron Head  
+- Close Combat  
+- Agility  
 
-Tentacruel
-Level: 55
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Toxic
-- Hydro Pump
-- Sludge Bomb
-- Ice Beam
+Shiftry @ Air Balloon  
+Level: 70 
+Ability: Mega Launcher  
+- Flash Cannon  
+- Aura Sphere  
+- Mind Blown  
+- Dark Pulse  
 
-Ludicolo
-Level: 56
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Giga Drain
-- Surf
-- Leech Seed
-- Double Team
+Mawile @ Sitrus Berry 
+Level: 70  
+Ability: Huge Power  
+- Swords Dance  
+- Sucker Punch  
+- Iron Head  
+- Play Rough  
 
-Whiscash
-Level: 56
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Earthquake
-- Surf
-- Amnesia
-- Hyper Beam
+Scizor @ Leftovers  
+Level: 70 
+Ability: Technician  
+- Bullet Punch  
+- Swords Dance  
+- Roost  
+- Bug Bite  
 
-Gyarados
-Level: 56
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Dragon Dance
-- Earthquake
-- Hyper Beam
-- Surf
-
-Milotic @ Sitrus Berry
-Level: 58
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Recover
-- Surf
-- Ice Beam
-- Toxic
+Metagross @ Weakness Policy
+Level: 70 
+Ability: Clear Body  
+- Agility  
+- Earthquake  
+- Meteor Mash  
+- Zen Headbutt  
 
 === TRAINER_ANDREW ===
 Name: ANDREW
