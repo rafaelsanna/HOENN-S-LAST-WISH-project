@@ -66,23 +66,25 @@ EverGrandeCity_SidneysRoom_EventScript_Defeated::
 	end
 
 EverGrandeCity_SidneysRoom_Text_IntroSpeech:
-	.string "Welcome, challenger!\n"
-	.string "I'm SIDNEY of the ELITE FOUR.\p"
-	.string "I like that look you're giving me.\n"
-	.string "I guess you'll give me a good match.\l"
-	.string "That's good! Looking real good!\p"
-	.string "All right! You and me, let's enjoy\n"
-	.string "a battle that can only be staged\l"
-	.string "here in the POKéMON LEAGUE!$"
+	.string "TSUBAKI: ...So the one who sensed me\n"
+	.string "in the grove has reached this peak.\p"
+	.string "I am TSUBAKI, no master, no pupil.\n"
+	.string "Simply a blade that moves in shadow.\p"
+	.string "Across Hoenn, I've watched from dark\n"
+	.string "corners, unseen, unheard...\p"
+	.string "Now, before the LEAGUE, I step into\n"
+	.string "the light-just this once.\p"
+	.string "Can you strike one who lives in\n"
+	.string "shadows? Come, let's find out.$"
 
 EverGrandeCity_SidneysRoom_Text_Defeat:
-	.string "Well, how do you like that? I lost!\n"
-	.string "Eh, it was fun, so it doesn't matter.$"
+	.string "TSUBAKI: Heh... My shadow...\n"
+	.string "couldn't hide from your light...$"
 
 EverGrandeCity_SidneysRoom_Text_PostBattleSpeech:
-	.string "Well, listen to what this loser has\n"
-	.string "to say.\p"
-	.string "You've got what it takes to go far.\n"
-	.string "Now, go on to the next room and enjoy\l"
-	.string "your next battle!$"
-
+	.string "TSUBAKI: You saw through every feint.\n"
+	.string "Every flicker. Every silence.\p"
+	.string "Perhaps you too walk between worlds\n"
+	.string "light and shadow, seen and unseen.\p"
+	.string "Go now. The next room waits.\n"
+	.string "And I... return to where I belong.$"
