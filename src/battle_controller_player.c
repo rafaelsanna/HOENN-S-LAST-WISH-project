@@ -1654,7 +1654,7 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
         gDisplayedStringBattle[0] = EOS;
         if (TryGetUnambiguousEffectivenessByMove(battler, move, &effectiveness))
         {
-            if (effectiveness != EFFECTIVENESS_NORMAL)
+            if (effectiveness != 3)
                 AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
@@ -2499,7 +2499,6 @@ static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
     static const u8 sColorSuperEffective[] = _("{COLOR_HIGHLIGHT_SHADOW GREEN 14 LIGHT_GREEN}");
     static const u8 sColorNotVeryEffective[] = _("{COLOR_HIGHLIGHT_SHADOW RED 14 LIGHT_RED}");
     static const u8 sColorNoEffect[] = _("{COLOR_HIGHLIGHT_SHADOW 12 14 11}");
-    static const u8 sColorNormal[] = _("{COLOR_HIGHLIGHT_SHADOW 13 14 15}");
 
     switch (effectiveness)
     {
