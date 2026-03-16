@@ -51,7 +51,7 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_INFCANDY,
     MENUITEM_DIF_LEVELCAPS,
     MENUITEM_DIF_NUZLOCKE,
-    MENUITEM_DIF_DEBUGMENU,     // <--- ADICIONADO
+    MENUITEM_DIF_DEBUGMENU,    
     MENUITEM_DIF_EFFECTIVEHELPER,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
@@ -328,8 +328,8 @@ static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items 
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
 static const u8 sText_Desc_NuzlockeNormal[]     = _("One non-shiny capture per route,\nbut any shiny may still be caught.");
 static const u8 sText_Desc_NuzlockeHard[]       = _("Only the first wild POKeMON seen\nin each route may be captured.");
-static const u8 sText_Desc_EffectiveHelperOn[]  = _("Show color moves effective in battle.");
-static const u8 sText_Desc_EffectiveHelperOff[] = _("Don't color effectiveness.");
+static const u8 sText_Desc_EffectiveHelperOn[]  = _("Show color moves effectives in battle.\nGreen = 2x, Red = 0.5x, Blue = status.");
+static const u8 sText_Desc_EffectiveHelperOff[] = _("Don't show effectiveness with colors.");
 
 // Option strings
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
@@ -343,8 +343,8 @@ static const u8 sText_OptionLevelCapsOff[]      = _("OFF");
 static const u8 sText_OptionNuzlockeOff[]       = _("OFF");
 static const u8 sText_OptionNuzlockeNormal[]    = _("NORMAL");
 static const u8 sText_OptionNuzlockeHard[]      = _("HARD");
-static const u8 sText_OptionFalse[]             = _("FALSE");
-static const u8 sText_OptionTrue[]              = _("TRUE");
+static const u8 sText_OptionFalse[]             = _("OFF");
+static const u8 sText_OptionTrue[]              = _("ON");
 
 static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3] =
 {
