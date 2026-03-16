@@ -100,6 +100,10 @@ static u32 CheckTypeEffectiveness(u32 battlerAtk, u32 battlerDef);
 static u32 CheckTargetTypeEffectiveness(u32 battler);
 static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness);
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler);
+static void DestroyMoveTypeIconSprite(void);
+static void MoveSelectionDisplayMoveTypeIcon(u32 type);
+
+static u8 sMoveTypeIconSpriteId = 0xFF;
 
 static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(u32 battler) =
 {
@@ -187,6 +191,9 @@ static void PlayerBufferRunCommand(u32 battler)
 {
     if (IsBattleControllerActiveOnLocal(battler))
     {
+        if (gBattleResources->bufferA[battler][0] != CONTROLLER_CHOOSEMOVE)
+            DestroyMoveTypeIconSprite();
+
         if (gBattleResources->bufferA[battler][0] < ARRAY_COUNT(sPlayerBufferCommands))
             sPlayerBufferCommands[gBattleResources->bufferA[battler][0]](battler);
         else
@@ -1697,10 +1704,8 @@ static void MoveSelectionDisplayPpNumber(u32 battler)
 
 static void MoveSelectionDisplayMoveType(u32 battler)
 {
-    u8 *txtPtr, *end;
     u32 speciesId = gBattleMons[battler].species;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
-    txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
     u32 move = moveInfo->moves[gMoveSelectionCursor[battler]];
     u32 type = GetMoveType(move);
     enum BattleMoveEffects effect = GetMoveEffect(move);
@@ -1733,10 +1738,9 @@ static void MoveSelectionDisplayMoveType(u32 battler)
         struct Pokemon *mon = GetBattlerMon(battler);
         type = CheckDynamicMoveType(mon, move, battler, MON_IN_BATTLE);
     }
-    end = StringCopy(txtPtr, gTypesInfo[type].name);
-
-    PrependFontIdToFit(txtPtr, end, FONT_NORMAL, WindowWidthPx(B_WIN_MOVE_TYPE) - 25);
+    StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
+    MoveSelectionDisplayMoveTypeIcon(type);
 }
 
 static void TryMoveSelectionDisplayMoveDescription(u32 battler)
@@ -2019,6 +2023,8 @@ static void HandleChooseActionAfterDma3(u32 battler)
 static void PlayerHandleChooseAction(u32 battler)
 {
     s32 i;
+
+    DestroyMoveTypeIconSprite();
 
     gBattlerControllerFuncs[battler] = HandleChooseActionAfterDma3;
     BattleTv_ClearExplosionFaintCause();
@@ -2505,6 +2511,35 @@ static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
     default:
         break;
     }
+}
+
+static void DestroyMoveTypeIconSprite(void)
+{
+    if (sMoveTypeIconSpriteId != 0xFF)
+    {
+        DestroySprite(&gSprites[sMoveTypeIconSpriteId]);
+        sMoveTypeIconSpriteId = 0xFF;
+    }
+}
+
+static void MoveSelectionDisplayMoveTypeIcon(u32 type)
+{
+    struct Sprite *sprite;
+
+    if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
+        LoadCompressedSpriteSheet(&gSpriteSheet_MoveTypes);
+
+    LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
+
+    if (sMoveTypeIconSpriteId == 0xFF)
+        sMoveTypeIconSpriteId = CreateSprite(&gSpriteTemplate_MoveTypes, 0, 0, 1);
+
+    sprite = &gSprites[sMoveTypeIconSpriteId];
+    StartSpriteAnim(sprite, type);
+    sprite->oam.paletteNum = gTypesInfo[type].palette;
+    sprite->x = 208;
+    sprite->y = 144;
+    sprite->invisible = FALSE;
 }
 
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler)
