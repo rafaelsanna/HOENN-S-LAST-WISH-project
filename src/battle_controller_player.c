@@ -80,6 +80,7 @@ static void MoveSelectionDisplayPpNumber(u32 battler);
 static void MoveSelectionDisplayPpString(u32 battler);
 static void MoveSelectionDisplayMoveType(u32 battler);
 static void MoveSelectionDisplayMoveNames(u32 battler);
+static void MoveSelectionClearAllCursors(void);
 static void TryMoveSelectionDisplayMoveDescription(u32 battler);
 static void MoveSelectionDisplayMoveDescription(u32 battler);
 static void WaitForMonSelection(u32 battler);
@@ -1819,6 +1820,14 @@ void MoveSelectionDestroyCursorAt(u8 cursorPosition)
     CopyBgTilemapBufferToVram(0);
 }
 
+static void MoveSelectionClearAllCursors(void)
+{
+    u32 i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+        MoveSelectionDestroyCursorAt(i);
+}
+
 void ActionSelectionCreateCursorAt(u8 cursorPosition, u8 baseTileNum)
 {
     u16 src[2];
@@ -2082,6 +2091,7 @@ void HandleChooseMoveAfterDma3(u32 battler)
     {
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = DISPLAY_HEIGHT * 2;
+        MoveSelectionClearAllCursors();
         MoveSelectionDisplayMoveNames(battler);
         MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
         if (B_SHOW_EFFECTIVENESS)
@@ -2139,6 +2149,7 @@ void InitMoveSelectionsVarsAndStrings(u32 battler)
 {
     LoadTypeIcons(battler);
     gMultiUsePlayerCursor = 0xFF;
+    MoveSelectionClearAllCursors();
     MoveSelectionDisplayMoveNames(battler);
     MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
     if (B_SHOW_EFFECTIVENESS)
