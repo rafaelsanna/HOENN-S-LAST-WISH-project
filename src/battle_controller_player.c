@@ -92,11 +92,11 @@ static void Task_UpdateLvlInHealthbox(u8);
 static void PrintLinkStandbyMsg(void);
 
 static void ReloadMoveNames(u32 battler);
+static u32 CheckTypeEffectivenessByMove(u32 battlerAtk, u32 battlerDef, u16 move);
+static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u16 move);
 static u32 CheckTypeEffectiveness(u32 battlerAtk, u32 battlerDef);
-static u32 CheckTypeEffectivenessByMove(u32 battlerAtk, u32 battlerDef, u32 move);
 static u32 CheckTargetTypeEffectiveness(u32 battler);
-static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u32 move);
-static u8 *AppendMoveEffectivenessTextColor(u8 *dst, u32 effectiveness);
+static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness);
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler);
 
 static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(u32 battler) =
@@ -1636,6 +1636,7 @@ static void PlayerHandleYesNoInput(u32 battler)
 static void MoveSelectionDisplayMoveNames(u32 battler)
 {
     s32 i;
+    u32 effectiveness;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     gNumberOfMovesToChoose = 0;
 
@@ -1646,17 +1647,17 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
         if (IsGimmickSelected(battler, GIMMICK_DYNAMAX) || GetActiveGimmick(battler) == GIMMICK_DYNAMAX)
             move = GetMaxMove(battler, move);
 
-        if (B_SHOW_EFFECTIVENESS && move != MOVE_NONE && !IsBattleMoveStatus(move))
+        gDisplayedStringBattle[0] = EOS;
+        if (B_SHOW_EFFECTIVENESS && moveInfo->moves[i] != MOVE_NONE && !IsBattleMoveStatus(move))
         {
-            u32 effectiveness = CheckTargetTypeEffectivenessByMove(battler, move);
-            u8 *txtPtr = AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
-
-            StringCopy(txtPtr, GetMoveName(move));
+            effectiveness = CheckTargetTypeEffectivenessByMove(battler, move);
+            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
         }
         else
         {
-            StringCopy(gDisplayedStringBattle, GetMoveName(move));
+            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, EFFECTIVENESS_NORMAL);
         }
+        StringAppend(gDisplayedStringBattle, GetMoveName(move));
 
         // Prints on windows B_WIN_MOVE_NAME_1, B_WIN_MOVE_NAME_2, B_WIN_MOVE_NAME_3, B_WIN_MOVE_NAME_4
         BattlePutTextOnWindow(gDisplayedStringBattle, i + B_WIN_MOVE_NAME_1);
@@ -2377,13 +2378,7 @@ static bool32 ShouldShowTypeEffectiveness(u32 targetId)
     return TRUE;
 }
 
-static u32 CheckTypeEffectiveness(u32 battlerAtk, u32 battlerDef)
-{
-    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battlerAtk][4]);
-    return CheckTypeEffectivenessByMove(battlerAtk, battlerDef, moveInfo->moves[gMoveSelectionCursor[battlerAtk]]);
-}
-
-static u32 CheckTypeEffectivenessByMove(u32 battlerAtk, u32 battlerDef, u32 move)
+static u32 CheckTypeEffectivenessByMove(u32 battlerAtk, u32 battlerDef, u16 move)
 {
     struct DamageContext ctx = {0};
 
@@ -2403,30 +2398,25 @@ static u32 CheckTypeEffectivenessByMove(u32 battlerAtk, u32 battlerDef, u32 move
         return EFFECTIVENESS_CANNOT_VIEW;
 
     if (modifier == UQ_4_12(0.0))
-        return EFFECTIVENESS_NO_EFFECT; // No effect
+        return EFFECTIVENESS_NO_EFFECT;
     else if (modifier <= UQ_4_12(0.5))
-        return EFFECTIVENESS_NOT_VERY_EFFECTIVE; // Not very effective
+        return EFFECTIVENESS_NOT_VERY_EFFECTIVE;
     else if (modifier >= UQ_4_12(2.0))
-        return EFFECTIVENESS_SUPER_EFFECTIVE; // Super effective
-    return EFFECTIVENESS_NORMAL; // Normal effectiveness
+        return EFFECTIVENESS_SUPER_EFFECTIVE;
+
+    return EFFECTIVENESS_NORMAL;
 }
 
-static u32 CheckTargetTypeEffectiveness(u32 battler)
+static u32 CheckTypeEffectiveness(u32 battlerAtk, u32 battlerDef)
 {
-    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
-
-    return CheckTargetTypeEffectivenessByMove(battler, moveInfo->moves[gMoveSelectionCursor[battler]]);
+    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battlerAtk][4]);
+    return CheckTypeEffectivenessByMove(battlerAtk, battlerDef, moveInfo->moves[gMoveSelectionCursor[battlerAtk]]);
 }
 
-static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u32 move)
+static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u16 move)
 {
     u32 battlerFoe = BATTLE_OPPOSITE(GetBattlerPosition(battler));
-    u32 foeEffectiveness;
-
-    if (gMultiUsePlayerCursor != 0xFF)
-        return CheckTypeEffectivenessByMove(battler, gMultiUsePlayerCursor, move);
-
-    foeEffectiveness = CheckTypeEffectivenessByMove(battler, battlerFoe, move);
+    u32 foeEffectiveness = CheckTypeEffectivenessByMove(battler, battlerFoe, move);
 
     if (IsDoubleBattle())
     {
@@ -2438,40 +2428,34 @@ static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u32 move)
          && partnerFoeEffectiveness > foeEffectiveness)
             return partnerFoeEffectiveness;
     }
-    return foeEffectiveness; // fallthrough for any other circumstance
+    return foeEffectiveness;
 }
 
-static u8 *AppendMoveEffectivenessTextColor(u8 *dst, u32 effectiveness)
+static u32 CheckTargetTypeEffectiveness(u32 battler)
+{
+    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
+    return CheckTargetTypeEffectivenessByMove(battler, moveInfo->moves[gMoveSelectionCursor[battler]]);
+}
+
+static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
 {
     switch (effectiveness)
     {
     case EFFECTIVENESS_SUPER_EFFECTIVE:
-        *(dst++) = EXT_CTRL_CODE_BEGIN;
-        *(dst++) = EXT_CTRL_CODE_COLOR;
-        *(dst++) = TEXT_COLOR_LIGHT_GREEN;
-        *(dst++) = EXT_CTRL_CODE_BEGIN;
-        *(dst++) = EXT_CTRL_CODE_SHADOW;
-        *(dst++) = TEXT_COLOR_GREEN;
+        StringAppend(str, _("{COLOR GREEN}{SHADOW LIGHT_GREEN}"));
         break;
     case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
-        *(dst++) = EXT_CTRL_CODE_BEGIN;
-        *(dst++) = EXT_CTRL_CODE_COLOR;
-        *(dst++) = TEXT_COLOR_LIGHT_RED;
-        *(dst++) = EXT_CTRL_CODE_BEGIN;
-        *(dst++) = EXT_CTRL_CODE_SHADOW;
-        *(dst++) = TEXT_COLOR_RED;
+        StringAppend(str, _("{COLOR RED}{SHADOW LIGHT_RED}"));
         break;
     case EFFECTIVENESS_NO_EFFECT:
-        *(dst++) = EXT_CTRL_CODE_BEGIN;
-        *(dst++) = EXT_CTRL_CODE_COLOR;
-        *(dst++) = TEXT_COLOR_LIGHT_GRAY;
-        *(dst++) = EXT_CTRL_CODE_BEGIN;
-        *(dst++) = EXT_CTRL_CODE_SHADOW;
-        *(dst++) = TEXT_COLOR_DARK_GRAY;
+        StringAppend(str, _("{COLOR 12}{SHADOW 11}"));
+        break;
+    case EFFECTIVENESS_CANNOT_VIEW:
+    case EFFECTIVENESS_NORMAL:
+    default:
+        StringAppend(str, _("{COLOR 13}{SHADOW 15}"));
         break;
     }
-
-    return dst;
 }
 
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler)
@@ -2483,8 +2467,6 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
     static const u8 immuneIcon[] =  _("{BIG_MULT_X}");
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     u8 *txtPtr;
-
-    MoveSelectionDisplayMoveNames(battler);
 
     txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
 
@@ -2512,5 +2494,4 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
     }
 
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP);
-    MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
 }
