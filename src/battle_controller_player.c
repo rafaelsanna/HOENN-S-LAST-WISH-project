@@ -93,7 +93,6 @@ static void Task_SetControllerToWaitForString(u8);
 static void Task_GiveExpWithExpBar(u8);
 static void Task_UpdateLvlInHealthbox(u8);
 static void Task_RefreshMoveMenuUi(u8);
-static void Task_RefreshTargetSelectionUi(u8);
 static void PrintLinkStandbyMsg(void);
 
 static void ReloadMoveNames(u32 battler);
@@ -106,7 +105,6 @@ static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness);
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler);
 static void DestroyMoveTypeIconSprite(void);
 static void MoveSelectionDisplayMoveTypeIcon(u32 type);
-static void ScheduleTargetSelectionUiRefresh(u32 battler);
 
 static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(u32 battler) =
 {
@@ -528,7 +526,9 @@ void HandleInputChooseTarget(u32 battler)
         }
         if (B_SHOW_EFFECTIVENESS)
             MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
-        ScheduleTargetSelectionUiRefresh(battler);
+        MoveSelectionDisplayMoveNames(battler);
+        MoveSelectionClearAllCursors();
+        MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
         gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
     }
     else if (JOY_NEW(DPAD_RIGHT | DPAD_DOWN))
@@ -580,7 +580,9 @@ void HandleInputChooseTarget(u32 battler)
 
         if (B_SHOW_EFFECTIVENESS)
             MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
-        ScheduleTargetSelectionUiRefresh(battler);
+        MoveSelectionDisplayMoveNames(battler);
+        MoveSelectionClearAllCursors();
+        MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
 
         gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
     }
@@ -774,7 +776,7 @@ void HandleInputChooseMove(u32 battler)
                 gMultiUsePlayerCursor = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
             if (B_SHOW_EFFECTIVENESS)
                 MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
-            ScheduleTargetSelectionUiRefresh(battler);
+            MoveSelectionDisplayMoveNames(battler);
 
             gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
             break;
@@ -2142,39 +2144,6 @@ static void Task_RefreshMoveMenuUi(u8 taskId)
         MoveSelectionDisplayMoveType(battler);
         DestroyTask(taskId);
     }
-}
-
-static void Task_RefreshTargetSelectionUi(u8 taskId)
-{
-    u32 battler = gTasks[taskId].data[0];
-
-    if (gBattlerControllerFuncs[battler] != HandleInputChooseTarget)
-    {
-        DestroyTask(taskId);
-        return;
-    }
-
-    if (!IsDma3ManagerBusyWithBgCopy())
-    {
-        MoveSelectionDisplayMoveNames(battler);
-        DestroyTask(taskId);
-    }
-}
-
-static void ScheduleTargetSelectionUiRefresh(u32 battler)
-{
-    u32 i;
-
-    for (i = 0; i < NUM_TASKS; i++)
-    {
-        if (gTasks[i].isActive
-         && gTasks[i].func == Task_RefreshTargetSelectionUi
-         && gTasks[i].data[0] == battler)
-            return;
-    }
-
-    i = CreateTask(Task_RefreshTargetSelectionUi, 0);
-    gTasks[i].data[0] = battler;
 }
 
 // arenaMindPoints is used here as a placeholder for a timer.
