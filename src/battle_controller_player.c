@@ -2448,18 +2448,18 @@ static u8 *AppendMoveEffectivenessTextColor(u8 *dst, u32 effectiveness)
     case EFFECTIVENESS_SUPER_EFFECTIVE:
         *(dst++) = EXT_CTRL_CODE_BEGIN;
         *(dst++) = EXT_CTRL_CODE_COLOR;
-        *(dst++) = TEXT_COLOR_GREEN;
+        *(dst++) = TEXT_COLOR_LIGHT_GREEN;
         *(dst++) = EXT_CTRL_CODE_BEGIN;
         *(dst++) = EXT_CTRL_CODE_SHADOW;
-        *(dst++) = TEXT_COLOR_LIGHT_GREEN;
+        *(dst++) = TEXT_COLOR_GREEN;
         break;
     case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
         *(dst++) = EXT_CTRL_CODE_BEGIN;
         *(dst++) = EXT_CTRL_CODE_COLOR;
-        *(dst++) = TEXT_COLOR_RED;
+        *(dst++) = TEXT_COLOR_LIGHT_RED;
         *(dst++) = EXT_CTRL_CODE_BEGIN;
         *(dst++) = EXT_CTRL_CODE_SHADOW;
-        *(dst++) = TEXT_COLOR_LIGHT_RED;
+        *(dst++) = TEXT_COLOR_RED;
         break;
     case EFFECTIVENESS_NO_EFFECT:
         *(dst++) = EXT_CTRL_CODE_BEGIN;
@@ -2512,4 +2512,5 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
     }
 
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP);
+    MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
 }
