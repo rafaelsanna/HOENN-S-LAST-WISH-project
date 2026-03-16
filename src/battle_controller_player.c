@@ -1671,8 +1671,8 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
         }
         else if (TryGetDisplayedEffectivenessForMove(battler, i, &effectiveness))
         {
-            if (gSaveBlock2Ptr->optionsEffectiveHelper == OPTIONS_EFFECTIVE_HELPER_TRUE
-             && effectiveness != EFFECTIVENESS_NORMAL)
+                if (gSaveBlock2Ptr->optionsEffectiveHelper == OPTIONS_EFFECTIVE_HELPER_TRUE
+                 && effectiveness != 3)
                 AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
