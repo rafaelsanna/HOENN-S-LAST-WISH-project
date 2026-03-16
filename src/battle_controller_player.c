@@ -1654,11 +1654,8 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
         gDisplayedStringBattle[0] = EOS;
         if (TryGetUnambiguousEffectivenessByMove(battler, move, &effectiveness))
         {
-            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
-        }
-        else
-        {
-            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, 0);
+            if (effectiveness != EFFECTIVENESS_NORMAL)
+                AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
 
@@ -2518,7 +2515,6 @@ static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
     case EFFECTIVENESS_CANNOT_VIEW:
     case EFFECTIVENESS_NORMAL:
     default:
-        StringAppend(str, sColorNormal);
         break;
     }
 }
