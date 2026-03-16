@@ -1643,7 +1643,6 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
     {
         u16 move = moveInfo->moves[i];
 
-        MoveSelectionDestroyCursorAt(i);
         if (IsGimmickSelected(battler, GIMMICK_DYNAMAX) || GetActiveGimmick(battler) == GIMMICK_DYNAMAX)
             move = GetMaxMove(battler, move);
 
@@ -2485,6 +2484,8 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     u8 *txtPtr;
 
+    MoveSelectionDisplayMoveNames(battler);
+
     txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
 
     if (!IsBattleMoveStatus(moveInfo->moves[gMoveSelectionCursor[battler]]))
@@ -2510,6 +2511,5 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
         }
     }
 
-    MoveSelectionDisplayMoveNames(battler);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP);
 }
