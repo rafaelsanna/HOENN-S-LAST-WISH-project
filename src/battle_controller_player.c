@@ -1671,7 +1671,8 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
         }
         else if (TryGetDisplayedEffectivenessForMove(battler, i, &effectiveness))
         {
-            if (effectiveness != 3)
+            if (gSaveBlock2Ptr->optionsEffectiveHelper == OPTIONS_EFFECTIVE_HELPER_TRUE
+             && effectiveness != EFFECTIVENESS_NORMAL)
                 AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
@@ -2598,7 +2599,7 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     StartSpriteAnim(sprite, type);
     sprite->oam.paletteNum = gTypesInfo[type].palette;
     sprite->oam.priority = 0;
-    sprite->x = 208;
+    sprite->x = 210;
     sprite->y = 143;
     sprite->invisible = FALSE;
 }
