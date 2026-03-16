@@ -1641,6 +1641,7 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
 {
     s32 i;
     u32 effectiveness = 0;
+    static const u8 sColorStatus[] = _("{COLOR BLUE}{SHADOW LIGHT_BLUE}");
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     gNumberOfMovesToChoose = 0;
 
@@ -1652,7 +1653,11 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
             move = GetMaxMove(battler, move);
 
         gDisplayedStringBattle[0] = EOS;
-        if (TryGetUnambiguousEffectivenessByMove(battler, move, &effectiveness))
+        if (move != MOVE_NONE && IsBattleMoveStatus(move))
+        {
+            StringAppend(gDisplayedStringBattle, sColorStatus);
+        }
+        else if (TryGetUnambiguousEffectivenessByMove(battler, move, &effectiveness))
         {
             if (effectiveness != 3)
                 AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
@@ -2496,9 +2501,9 @@ static u32 CheckTargetTypeEffectiveness(u32 battler)
 
 static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
 {
-    static const u8 sColorSuperEffective[] = _("{COLOR_HIGHLIGHT_SHADOW GREEN 14 LIGHT_GREEN}");
-    static const u8 sColorNotVeryEffective[] = _("{COLOR_HIGHLIGHT_SHADOW RED 14 LIGHT_RED}");
-    static const u8 sColorNoEffect[] = _("{COLOR_HIGHLIGHT_SHADOW 12 14 11}");
+    static const u8 sColorSuperEffective[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}");
+    static const u8 sColorNotVeryEffective[] = _("{COLOR RED}{SHADOW LIGHT_RED}");
+    static const u8 sColorNoEffect[] = _("{COLOR LIGHT_GRAY}{SHADOW DARK_GRAY}");
 
     switch (effectiveness)
     {
