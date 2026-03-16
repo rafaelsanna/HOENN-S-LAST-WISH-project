@@ -2128,8 +2128,8 @@ void PlayerHandleChooseMove(u32 battler)
 void InitMoveSelectionsVarsAndStrings(u32 battler)
 {
     LoadTypeIcons(battler);
-    MoveSelectionDisplayMoveNames(battler);
     gMultiUsePlayerCursor = 0xFF;
+    MoveSelectionDisplayMoveNames(battler);
     MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
     if (B_SHOW_EFFECTIVENESS)
         MoveSelectionDisplayMoveEffectiveness(CheckTargetTypeEffectiveness(battler), battler);
