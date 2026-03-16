@@ -94,6 +94,7 @@ static void PrintLinkStandbyMsg(void);
 static void ReloadMoveNames(u32 battler);
 static u32 CheckTypeEffectivenessByMove(u32 battlerAtk, u32 battlerDef, u16 move);
 static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u16 move);
+static bool32 TryGetUnambiguousEffectivenessByMove(u32 battler, u16 move, u32 *effectiveness);
 static u32 CheckTypeEffectiveness(u32 battlerAtk, u32 battlerDef);
 static u32 CheckTargetTypeEffectiveness(u32 battler);
 static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness);
@@ -1636,7 +1637,7 @@ static void PlayerHandleYesNoInput(u32 battler)
 static void MoveSelectionDisplayMoveNames(u32 battler)
 {
     s32 i;
-    u32 effectiveness;
+    u32 effectiveness = EFFECTIVENESS_CANNOT_VIEW;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     gNumberOfMovesToChoose = 0;
 
@@ -1648,14 +1649,13 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
             move = GetMaxMove(battler, move);
 
         gDisplayedStringBattle[0] = EOS;
-        if (B_SHOW_EFFECTIVENESS && moveInfo->moves[i] != MOVE_NONE && !IsBattleMoveStatus(move))
+        if (TryGetUnambiguousEffectivenessByMove(battler, move, &effectiveness))
         {
-            effectiveness = CheckTargetTypeEffectivenessByMove(battler, move);
             AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
         }
         else
         {
-            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, 0);
+            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, EFFECTIVENESS_NORMAL);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
 
@@ -2416,7 +2416,13 @@ static u32 CheckTypeEffectiveness(u32 battlerAtk, u32 battlerDef)
 static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u16 move)
 {
     u32 battlerFoe = BATTLE_OPPOSITE(GetBattlerPosition(battler));
-    u32 foeEffectiveness = CheckTypeEffectivenessByMove(battler, battlerFoe, move);
+    u32 foeEffectiveness;
+
+    // When choosing a target in doubles, reflect the currently highlighted target.
+    if (gMultiUsePlayerCursor != 0xFF)
+        return CheckTypeEffectivenessByMove(battler, gMultiUsePlayerCursor, move);
+
+    foeEffectiveness = CheckTypeEffectivenessByMove(battler, battlerFoe, move);
 
     if (IsDoubleBattle())
     {
@@ -2429,6 +2435,57 @@ static u32 CheckTargetTypeEffectivenessByMove(u32 battler, u16 move)
             return partnerFoeEffectiveness;
     }
     return foeEffectiveness;
+}
+
+static bool32 TryGetUnambiguousEffectivenessByMove(u32 battler, u16 move, u32 *effectiveness)
+{
+    s32 i;
+    u32 side = IsOnPlayerSide(battler);
+    s32 targetableOpponent = -1;
+
+    if (!B_SHOW_EFFECTIVENESS || move == MOVE_NONE || IsBattleMoveStatus(move))
+        return FALSE;
+
+    // In target selection mode, only trust the currently highlighted foe.
+    if (gMultiUsePlayerCursor != 0xFF)
+    {
+        if (gMultiUsePlayerCursor < gBattlersCount
+         && IsOnPlayerSide(gMultiUsePlayerCursor) != side
+         && CanTargetBattler(battler, gMultiUsePlayerCursor, move))
+        {
+            *effectiveness = CheckTypeEffectivenessByMove(battler, gMultiUsePlayerCursor, move);
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    // Singles are always unambiguous.
+    if (!IsDoubleBattle())
+    {
+        *effectiveness = CheckTargetTypeEffectivenessByMove(battler, move);
+        return TRUE;
+    }
+
+    // Doubles without active target cursor: only color if exactly one targetable opposing battler exists.
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (IsOnPlayerSide(i) == side)
+            continue;
+        if (!IsBattlerAlive(i))
+            continue;
+        if (!CanTargetBattler(battler, i, move))
+            continue;
+
+        if (targetableOpponent != -1)
+            return FALSE;
+        targetableOpponent = i;
+    }
+
+    if (targetableOpponent == -1)
+        return FALSE;
+
+    *effectiveness = CheckTypeEffectivenessByMove(battler, targetableOpponent, move);
+    return TRUE;
 }
 
 static u32 CheckTargetTypeEffectiveness(u32 battler)
