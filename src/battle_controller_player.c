@@ -1665,14 +1665,16 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
             move = GetMaxMove(battler, move);
 
         gDisplayedStringBattle[0] = EOS;
-        if (move != MOVE_NONE && IsBattleMoveStatus(move))
+        if (move != MOVE_NONE
+         && IsBattleMoveStatus(move)
+         && gSaveBlock2Ptr->optionsEffectiveHelper == OPTIONS_EFFECTIVE_HELPER_TRUE)
         {
             StringAppend(gDisplayedStringBattle, sColorStatus);
         }
         else if (TryGetDisplayedEffectivenessForMove(battler, i, &effectiveness))
         {
-                if (gSaveBlock2Ptr->optionsEffectiveHelper == OPTIONS_EFFECTIVE_HELPER_TRUE
-                 && effectiveness != 3)
+            if (gSaveBlock2Ptr->optionsEffectiveHelper == OPTIONS_EFFECTIVE_HELPER_TRUE
+             && effectiveness != 3)
                 AppendMoveEffectivenessTextColor(gDisplayedStringBattle, effectiveness);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
