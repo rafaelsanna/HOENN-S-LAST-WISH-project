@@ -2599,7 +2599,7 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     sprite->oam.paletteNum = gTypesInfo[type].palette;
     sprite->oam.priority = 0;
     sprite->x = 208;
-    sprite->y = 146;
+    sprite->y = 142;
     sprite->invisible = FALSE;
 }
 
