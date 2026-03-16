@@ -1655,7 +1655,7 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
         }
         else
         {
-            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, EFFECTIVENESS_NORMAL);
+            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, 0);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
 
@@ -2439,21 +2439,26 @@ static u32 CheckTargetTypeEffectiveness(u32 battler)
 
 static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
 {
+    static const u8 sColorSuperEffective[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}");
+    static const u8 sColorNotVeryEffective[] = _("{COLOR RED}{SHADOW LIGHT_RED}");
+    static const u8 sColorNoEffect[] = _("{COLOR 12}{SHADOW 11}");
+    static const u8 sColorNormal[] = _("{COLOR 13}{SHADOW 15}");
+
     switch (effectiveness)
     {
     case EFFECTIVENESS_SUPER_EFFECTIVE:
-        StringAppend(str, _("{COLOR GREEN}{SHADOW LIGHT_GREEN}"));
+        StringAppend(str, sColorSuperEffective);
         break;
     case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
-        StringAppend(str, _("{COLOR RED}{SHADOW LIGHT_RED}"));
+        StringAppend(str, sColorNotVeryEffective);
         break;
     case EFFECTIVENESS_NO_EFFECT:
-        StringAppend(str, _("{COLOR 12}{SHADOW 11}"));
+        StringAppend(str, sColorNoEffect);
         break;
     case EFFECTIVENESS_CANNOT_VIEW:
     case EFFECTIVENESS_NORMAL:
     default:
-        StringAppend(str, _("{COLOR 13}{SHADOW 15}"));
+        StringAppend(str, sColorNormal);
         break;
     }
 }
