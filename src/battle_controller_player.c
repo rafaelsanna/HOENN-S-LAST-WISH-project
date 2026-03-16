@@ -2598,8 +2598,8 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     StartSpriteAnim(sprite, type);
     sprite->oam.paletteNum = gTypesInfo[type].palette;
     sprite->oam.priority = 0;
-    sprite->x = 200;
-    sprite->y = 122;
+    sprite->x = 208;
+    sprite->y = 130;
     sprite->invisible = FALSE;
 }
 
