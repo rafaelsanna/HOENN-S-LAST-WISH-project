@@ -527,8 +527,6 @@ void HandleInputChooseTarget(u32 battler)
         if (B_SHOW_EFFECTIVENESS)
             MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
         MoveSelectionDisplayMoveNames(battler);
-        MoveSelectionClearAllCursors();
-        MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
         gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
     }
     else if (JOY_NEW(DPAD_RIGHT | DPAD_DOWN))
@@ -581,8 +579,6 @@ void HandleInputChooseTarget(u32 battler)
         if (B_SHOW_EFFECTIVENESS)
             MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
         MoveSelectionDisplayMoveNames(battler);
-        MoveSelectionClearAllCursors();
-        MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
 
         gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
     }
