@@ -1637,7 +1637,7 @@ static void PlayerHandleYesNoInput(u32 battler)
 static void MoveSelectionDisplayMoveNames(u32 battler)
 {
     s32 i;
-    u32 effectiveness = EFFECTIVENESS_CANNOT_VIEW;
+    u32 effectiveness = 0;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     gNumberOfMovesToChoose = 0;
 
@@ -1655,7 +1655,7 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
         }
         else
         {
-            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, EFFECTIVENESS_NORMAL);
+            AppendMoveEffectivenessTextColor(gDisplayedStringBattle, 0);
         }
         StringAppend(gDisplayedStringBattle, GetMoveName(move));
 
