@@ -2082,6 +2082,14 @@ void HandleChooseMoveAfterDma3(u32 battler)
     {
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = DISPLAY_HEIGHT * 2;
+        MoveSelectionDisplayMoveNames(battler);
+        MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
+        if (B_SHOW_EFFECTIVENESS)
+            MoveSelectionDisplayMoveEffectiveness(CheckTargetTypeEffectiveness(battler), battler);
+        else
+            MoveSelectionDisplayPpString(battler);
+        MoveSelectionDisplayPpNumber(battler);
+        MoveSelectionDisplayMoveType(battler);
         gBattlerControllerFuncs[battler] = HandleInputChooseMove;
     }
 }
