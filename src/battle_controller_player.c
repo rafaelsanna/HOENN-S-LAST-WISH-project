@@ -105,8 +105,6 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
 static void DestroyMoveTypeIconSprite(void);
 static void MoveSelectionDisplayMoveTypeIcon(u32 type);
 
-static u8 sMoveTypeIconSpriteId = 0xFF;
-
 static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(u32 battler) =
 {
     [CONTROLLER_GETMONDATA]               = BtlController_HandleGetMonData,
@@ -2517,15 +2515,23 @@ static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
 
 static void DestroyMoveTypeIconSprite(void)
 {
-    if (sMoveTypeIconSpriteId != 0xFF)
+    u32 i;
+
+    for (i = 0; i < MAX_SPRITES; i++)
     {
-        DestroySprite(&gSprites[sMoveTypeIconSpriteId]);
-        sMoveTypeIconSpriteId = 0xFF;
+        struct Sprite *sprite = &gSprites[i];
+
+        if (sprite->inUse
+         && sprite->template == &gSpriteTemplate_MoveTypes
+         && sprite->data[7] == 1)
+            DestroySprite(sprite);
     }
 }
 
 static void MoveSelectionDisplayMoveTypeIcon(u32 type)
 {
+    u32 i;
+    u8 spriteId = 0xFF;
     struct Sprite *sprite;
 
     if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
@@ -2533,10 +2539,26 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
 
     LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
 
-    if (sMoveTypeIconSpriteId == 0xFF)
-        sMoveTypeIconSpriteId = CreateSprite(&gSpriteTemplate_MoveTypes, 0, 0, 1);
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (gSprites[i].inUse
+         && gSprites[i].template == &gSpriteTemplate_MoveTypes
+         && gSprites[i].data[7] == 1)
+        {
+            spriteId = i;
+            break;
+        }
+    }
 
-    sprite = &gSprites[sMoveTypeIconSpriteId];
+    if (spriteId == 0xFF)
+    {
+        spriteId = CreateSprite(&gSpriteTemplate_MoveTypes, 0, 0, 1);
+        if (spriteId == MAX_SPRITES)
+            return;
+        gSprites[spriteId].data[7] = 1;
+    }
+
+    sprite = &gSprites[spriteId];
     StartSpriteAnim(sprite, type);
     sprite->oam.paletteNum = gTypesInfo[type].palette;
     sprite->x = 208;
