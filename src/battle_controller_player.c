@@ -2091,8 +2091,8 @@ void HandleChooseMoveAfterDma3(u32 battler)
     {
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = DISPLAY_HEIGHT * 2;
-        MoveSelectionClearAllCursors();
         MoveSelectionDisplayMoveNames(battler);
+        MoveSelectionClearAllCursors();
         MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
         if (B_SHOW_EFFECTIVENESS)
             MoveSelectionDisplayMoveEffectiveness(CheckTargetTypeEffectiveness(battler), battler);
@@ -2149,8 +2149,8 @@ void InitMoveSelectionsVarsAndStrings(u32 battler)
 {
     LoadTypeIcons(battler);
     gMultiUsePlayerCursor = 0xFF;
-    MoveSelectionClearAllCursors();
     MoveSelectionDisplayMoveNames(battler);
+    MoveSelectionClearAllCursors();
     MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
     if (B_SHOW_EFFECTIVENESS)
         MoveSelectionDisplayMoveEffectiveness(CheckTargetTypeEffectiveness(battler), battler);
