@@ -2499,10 +2499,10 @@ static u32 CheckTargetTypeEffectiveness(u32 battler)
 
 static void AppendMoveEffectivenessTextColor(u8 *str, u32 effectiveness)
 {
-    static const u8 sColorSuperEffective[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}");
-    static const u8 sColorNotVeryEffective[] = _("{COLOR RED}{SHADOW LIGHT_RED}");
-    static const u8 sColorNoEffect[] = _("{COLOR 12}{SHADOW 11}");
-    static const u8 sColorNormal[] = _("{COLOR 13}{SHADOW 15}");
+    static const u8 sColorSuperEffective[] = _("{COLOR_HIGHLIGHT_SHADOW GREEN 14 LIGHT_GREEN}");
+    static const u8 sColorNotVeryEffective[] = _("{COLOR_HIGHLIGHT_SHADOW RED 14 LIGHT_RED}");
+    static const u8 sColorNoEffect[] = _("{COLOR_HIGHLIGHT_SHADOW 12 14 11}");
+    static const u8 sColorNormal[] = _("{COLOR_HIGHLIGHT_SHADOW 13 14 15}");
 
     switch (effectiveness)
     {
