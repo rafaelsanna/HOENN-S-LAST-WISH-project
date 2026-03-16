@@ -237,6 +237,7 @@ static void Debug_DestroyMenu(u8 taskId);
 static void DebugAction_Cancel(u8 taskId);
 static void DebugAction_DestroyExtraWindow(u8 taskId);
 static void Debug_RefreshListMenu(u8 taskId);
+static bool8 Debug_CanOpen(void);
 
 static void DebugAction_OpenSubMenu(u8 taskId, const struct DebugMenuOption *items);
 static void DebugAction_OpenSubMenuFlagsVars(u8 taskId, const struct DebugMenuOption *items);
@@ -723,9 +724,22 @@ static bool32 Debug_SaveCallbackMenu(struct DebugMenuOption *callbackItems);
 // Functions universal
 void Debug_ShowMainMenu(void)
 {
+    if (!Debug_CanOpen())
+        return;
+
     sDebugMenuListData = AllocZeroed(sizeof(*sDebugMenuListData));
     sDebugMenuListData->listId = 0;
     Debug_ShowMenu(DebugTask_HandleMenuInput_General, sDebugMenu_Actions_Main);
+}
+
+static bool8 Debug_CanOpen(void)
+{
+    if (gSaveBlock2Ptr->optionsDebugMenu == TRUE)
+        FlagSet(FLAG_UNUSED_0x275);
+    else
+        FlagClear(FLAG_UNUSED_0x275);
+
+    return FlagGet(FLAG_UNUSED_0x275);
 }
 
 #define tMenuTaskId          data[0]

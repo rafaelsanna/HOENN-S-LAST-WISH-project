@@ -51,6 +51,7 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_INFCANDY,
     MENUITEM_DIF_LEVELCAPS,
     MENUITEM_DIF_NUZLOCKE,
+    MENUITEM_DIF_DEBUGMENU,     // <--- ADICIONADO
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
 };
@@ -163,6 +164,7 @@ static void DrawChoices_TextSpeed(int selection, int y);
 static void DrawChoices_BattleScene(int selection, int y);
 static void DrawChoices_Sound(int selection, int y);
 static void DrawChoices_ButtonMode(int selection, int y);
+static void DrawChoices_OnOff(int selection, int y);
 static void DrawChoices_FrameType(int selection, int y);
 static void DrawChoices_NpcTeams(int selection, int y);
 static void DrawChoices_BattleItems(int selection, int y);
@@ -221,6 +223,7 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_INFCANDY]      = {DrawChoices_InfCandy,    ProcessInput_Options_Two}, 
     [MENUITEM_DIF_LEVELCAPS]     = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
     [MENUITEM_DIF_NUZLOCKE]      = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
+    [MENUITEM_DIF_DEBUGMENU]     = {DrawChoices_OnOff,       ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]        = {NULL, NULL},
 };
 
@@ -248,6 +251,7 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_INFCANDY]       = sText_InfiniteCandy,
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
+    [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("DEBUG MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
 };
 
@@ -286,6 +290,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_INFCANDY:         return TRUE;
         case MENUITEM_DIF_LEVELCAPS:        return TRUE;
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
+        case MENUITEM_DIF_DEBUGMENU:        return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
         case MENUITEM_DIF_COUNT:            return TRUE;
         }
@@ -349,6 +354,11 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,   sText_Desc_InfiniteCandyOn, sText_Empty},
     [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff, sText_Empty},
     [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,        sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
+    [MENUITEM_DIF_DEBUGMENU]    = {  // <--- NOVO
+        COMPOUND_STRING("Disables the debug menu completely."),
+        COMPOUND_STRING("Enables the debug menu (R+START in overworld)."),
+        COMPOUND_STRING("")
+    },
     [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,               sText_Empty,               sText_Empty},
 };
 
@@ -666,6 +676,7 @@ void CB2_InitOptionMenu(void)
         sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]     = gSaveBlock2Ptr->optionsInfiniteCandy;
         sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = gSaveBlock2Ptr->optionsLevelCaps;
         sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]     = gSaveBlock2Ptr->optionsNuzlocke;
+        sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]    = gSaveBlock2Ptr->optionsDebugMenu; // <--- NOVO
 
         sOptions->submenu = PAGE_GENERAL;
 
@@ -854,6 +865,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsInfiniteCandy    = sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY];
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
     gSaveBlock2Ptr->optionsNuzlocke         = sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE];
+    gSaveBlock2Ptr->optionsDebugMenu        = sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]; // <--- NOVO
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -1193,6 +1205,17 @@ static void DrawChoices_Nuzlocke(int selection, int y)
     };
 
     DrawChoices_Options_Three(sTextNuzlockeChoices, selection, y, active);
+}
+
+static void DrawChoices_OnOff(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIF_DEBUGMENU);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    // Use existing ON/OFF strings from other options as a fallback
+    DrawOptionMenuChoice(sText_OptionLevelCapsOff, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionLevelCapsOn, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionLevelCapsOn, 198), y, styles[1], active);
 }
 
 

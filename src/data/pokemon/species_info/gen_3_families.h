@@ -394,7 +394,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_SPEED_BOOST },
+        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_SPEED_BOOST },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Combusken"),
         .cryId = CRY_COMBUSKEN,
@@ -481,7 +481,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_SPEED_BOOST },
+        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_SPEED_BOOST },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Blaziken"),
         .cryId = CRY_BLAZIKEN,
@@ -2262,9 +2262,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sNuzleafLevelUpLearnset,
         .teachableLearnset = sNuzleafTeachableLearnset,
-    #if P_GEN_9_CROSS_EVOS
-        .evolutions = EVOLUTION({EVO_LEVEL, 0, SPECIES_SHIFTRY, CONDITIONS({IF_USED_MOVE_X_TIMES, MOVE_MIND_BLOWN, 1})}),
-    #endif
+.evolutions = EVOLUTION(
+    {EVO_LEVEL, 0, SPECIES_SHIFTRY, CONDITIONS({IF_USED_MOVE_X_TIMES, MOVE_MIND_BLOWN, 1})},
+    {EVO_LEVEL, 0, SPECIES_SHIFTRY, CONDITIONS({IF_USED_MOVE_X_TIMES, MOVE_EXPLOSION, 1})}
+),
     },
 
     [SPECIES_SHIFTRY] =

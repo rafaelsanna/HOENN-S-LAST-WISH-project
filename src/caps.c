@@ -22,6 +22,11 @@ u32 GetCurrentLevelCap(void)
 
     u32 i;
 
+    // Se o jogador desativou o level cap no menu (optionsLevelCaps != 0 = OFF),
+    // ignora o cap e retorna MAX_LEVEL
+    if (gSaveBlock2Ptr->optionsLevelCaps != 0)
+        return MAX_LEVEL;
+
     if (B_LEVEL_CAP_TYPE == LEVEL_CAP_FLAG_LIST)
     {
         for (i = 0; i < ARRAY_COUNT(sLevelCapFlagMap); i++)
@@ -44,10 +49,16 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
     static const u32 sExpScalingUp[5]   = { 16, 8, 4, 2, 1 };
 
     u32 levelDifference;
-    u32 currentLevelCap = GetCurrentLevelCap();
+    u32 currentLevelCap;
+
+    // Se o jogador desativou o level cap no menu, passa a exp sem modificação
+    if (gSaveBlock2Ptr->optionsLevelCaps != 0)
+        return expValue;
 
     if (B_EXP_CAP_TYPE == EXP_CAP_NONE)
         return expValue;
+
+    currentLevelCap = GetCurrentLevelCap();
 
     if (level < currentLevelCap)
     {

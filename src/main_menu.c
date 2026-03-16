@@ -249,8 +249,8 @@ static void NewGameBirchSpeech_CreateDialogueWindowBorder(u8, u8, u8, u8, u8, u8
 // .rodata
 
 static const u16 sBirchSpeechBgPals[][16] = {
-    INCBIN_U16("graphics/birch_speech/bg0.gbapal"),
-    INCBIN_U16("graphics/birch_speech/bg1.gbapal")
+    INCBIN_U16("graphics/birch_speech/shadow.gbapal"),
+    INCBIN_U16("graphics/birch_speech/shadow.gbapal")
 };
 
 static const u32 sBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/shadow.4bpp.smol");
@@ -474,49 +474,12 @@ static const struct MenuAction sMenuActions_Gender[] = {
 };
 
 static const u8 *const sMalePresetNames[] = {
-    COMPOUND_STRING("STU"),
-    COMPOUND_STRING("MILTON"),
-    COMPOUND_STRING("TOM"),
-    COMPOUND_STRING("KENNY"),
-    COMPOUND_STRING("REID"),
-    COMPOUND_STRING("JUDE"),
-    COMPOUND_STRING("JAXSON"),
-    COMPOUND_STRING("EASTON"),
-    COMPOUND_STRING("WALKER"),
-    COMPOUND_STRING("TERU"),
-    COMPOUND_STRING("JOHNNY"),
-    COMPOUND_STRING("BRETT"),
-    COMPOUND_STRING("SETH"),
-    COMPOUND_STRING("TERRY"),
-    COMPOUND_STRING("CASEY"),
-    COMPOUND_STRING("DARREN"),
-    COMPOUND_STRING("LANDON"),
-    COMPOUND_STRING("COLLIN"),
-    COMPOUND_STRING("STANLEY"),
-    COMPOUND_STRING("QUINCY")
+    COMPOUND_STRING("ZENNO"),
+
 };
 
 static const u8 *const sFemalePresetNames[] = {
-    COMPOUND_STRING("KIMMY"),
-    COMPOUND_STRING("TIARA"),
-    COMPOUND_STRING("BELLA"),
-    COMPOUND_STRING("JAYLA"),
-    COMPOUND_STRING("ALLIE"),
-    COMPOUND_STRING("LIANNA"),
-    COMPOUND_STRING("SARA"),
-    COMPOUND_STRING("MONICA"),
-    COMPOUND_STRING("CAMILA"),
-    COMPOUND_STRING("AUBREE"),
-    COMPOUND_STRING("RUTHIE"),
-    COMPOUND_STRING("HAZEL"),
-    COMPOUND_STRING("NADINE"),
-    COMPOUND_STRING("TANJA"),
-    COMPOUND_STRING("YASMIN"),
-    COMPOUND_STRING("NICOLA"),
-    COMPOUND_STRING("LILLIE"),
-    COMPOUND_STRING("TERRA"),
-    COMPOUND_STRING("LUCY"),
-    COMPOUND_STRING("HALIE")
+    COMPOUND_STRING("ZINNIA"),
 };
 
 // The number of male vs. female names is assumed to be the same.
@@ -1301,7 +1264,7 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
 
     // Carrega paletas do background
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-    LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+   // LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
 
     // Sincroniza buffers de paleta
     for (i = 0; i < 32; ++i)
