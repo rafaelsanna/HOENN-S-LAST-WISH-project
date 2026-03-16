@@ -92,6 +92,7 @@ static void Task_PrepareToGiveExpWithExpBar(u8);
 static void Task_SetControllerToWaitForString(u8);
 static void Task_GiveExpWithExpBar(u8);
 static void Task_UpdateLvlInHealthbox(u8);
+static void Task_RefreshMoveMenuUi(u8);
 static void PrintLinkStandbyMsg(void);
 
 static void ReloadMoveNames(u32 battler);
@@ -2095,6 +2096,8 @@ void HandleChooseMoveAfterDma3(u32 battler)
 {
     if (!IsDma3ManagerBusyWithBgCopy())
     {
+        u8 taskId;
+
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = DISPLAY_HEIGHT * 2;
         MoveSelectionDisplayMoveNames(battler);
@@ -2106,7 +2109,37 @@ void HandleChooseMoveAfterDma3(u32 battler)
             MoveSelectionDisplayPpString(battler);
         MoveSelectionDisplayPpNumber(battler);
         MoveSelectionDisplayMoveType(battler);
+
+        // One delayed refresh fixes first-frame tile artifacts in move-name windows.
+        taskId = CreateTask(Task_RefreshMoveMenuUi, 0);
+        gTasks[taskId].data[0] = battler;
+
         gBattlerControllerFuncs[battler] = HandleInputChooseMove;
+    }
+}
+
+static void Task_RefreshMoveMenuUi(u8 taskId)
+{
+    u32 battler = gTasks[taskId].data[0];
+
+    if (gBattlerControllerFuncs[battler] != HandleInputChooseMove)
+    {
+        DestroyTask(taskId);
+        return;
+    }
+
+    if (!IsDma3ManagerBusyWithBgCopy())
+    {
+        MoveSelectionDisplayMoveNames(battler);
+        MoveSelectionClearAllCursors();
+        MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
+        if (B_SHOW_EFFECTIVENESS)
+            MoveSelectionDisplayMoveEffectiveness(CheckTargetTypeEffectiveness(battler), battler);
+        else
+            MoveSelectionDisplayPpString(battler);
+        MoveSelectionDisplayPpNumber(battler);
+        MoveSelectionDisplayMoveType(battler);
+        DestroyTask(taskId);
     }
 }
 
