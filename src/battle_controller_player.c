@@ -1742,7 +1742,7 @@ static void MoveSelectionDisplayMoveType(u32 battler)
         struct Pokemon *mon = GetBattlerMon(battler);
         type = CheckDynamicMoveType(mon, move, battler, MON_IN_BATTLE);
     }
-    gDisplayedStringBattle[0] = EOS;
+    StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
     MoveSelectionDisplayMoveTypeIcon(type);
 }
@@ -2597,6 +2597,7 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     sprite = &gSprites[spriteId];
     StartSpriteAnim(sprite, type);
     sprite->oam.paletteNum = gTypesInfo[type].palette;
+    sprite->oam.priority = 0;
     sprite->x = 200;
     sprite->y = 122;
     sprite->invisible = FALSE;
