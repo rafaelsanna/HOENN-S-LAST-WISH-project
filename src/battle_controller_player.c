@@ -511,6 +511,7 @@ void HandleInputChooseTarget(u32 battler)
                 }
                 if (B_SHOW_EFFECTIVENESS)
                     MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
+                MoveSelectionDisplayMoveNames(battler);
 
                 if (gAbsentBattlerFlags & (1u << gMultiUsePlayerCursor)
                  || !CanTargetBattler(battler, gMultiUsePlayerCursor, move)
@@ -562,6 +563,7 @@ void HandleInputChooseTarget(u32 battler)
                 }
                 if (B_SHOW_EFFECTIVENESS)
                     MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
+                MoveSelectionDisplayMoveNames(battler);
 
                 if (gAbsentBattlerFlags & (1u << gMultiUsePlayerCursor)
                  || !CanTargetBattler(battler, gMultiUsePlayerCursor, move)
@@ -762,6 +764,7 @@ void HandleInputChooseMove(u32 battler)
                 gMultiUsePlayerCursor = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
             if (B_SHOW_EFFECTIVENESS)
                 MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
+            MoveSelectionDisplayMoveNames(battler);
 
             gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
             break;
@@ -2446,7 +2449,7 @@ static bool32 TryGetUnambiguousEffectivenessByMove(u32 battler, u16 move, u32 *e
     if (!B_SHOW_EFFECTIVENESS || move == MOVE_NONE || IsBattleMoveStatus(move))
         return FALSE;
 
-    // In target selection mode, only trust the currently highlighted foe.
+    // In target selection mode, trust the highlighted foe only when it is a valid opposing target.
     if (gMultiUsePlayerCursor != 0xFF)
     {
         if (gMultiUsePlayerCursor < gBattlersCount
@@ -2456,7 +2459,7 @@ static bool32 TryGetUnambiguousEffectivenessByMove(u32 battler, u16 move, u32 *e
             *effectiveness = CheckTypeEffectivenessByMove(battler, gMultiUsePlayerCursor, move);
             return TRUE;
         }
-        return FALSE;
+        // If cursor is not a valid foe target here, ignore it and continue with normal logic.
     }
 
     // Singles are always unambiguous.
