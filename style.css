@@ -134,44 +134,44 @@ nav {
     z-index: 1;
 }
 
-/* Nuvens Animadas - VERSÃO FINAL */
+/* Nuvens Animadas - VERSÃO EXTREMA */
 .cloud {
     position: absolute;
     z-index: 2;
     pointer-events: none;
-    width: 140%; /* Aumentado de 120% para 140% */
-    height: 140%; /* Aumentado de 120% para 140% */
+    width: 180%; /* Muito maior */
+    height: 180%; /* Muito maior */
     object-fit: contain;
     opacity: 0.7;
 }
 
 .cloud-left {
-    left: -25%; /* Aumentado de -10% para -25% (mais para fora) */
-    bottom: -15%; /* Aumentado de -5% para -15% (mais para baixo) */
+    left: -60%; /* Extremamente para esquerda */
+    bottom: -40%; /* Muito para baixo (cortado) */
     object-position: left bottom;
-    animation: floatCloudLeft 15s ease-in-out infinite;
+    animation: floatCloudLeft 18s ease-in-out infinite;
 }
 
 .cloud-right {
-    right: -25%; /* Aumentado de -10% para -25% (mais para fora) */
-    bottom: -15%; /* Aumentado de -5% para -15% (mais para baixo) */
+    right: -60%; /* Extremamente para direita */
+    bottom: -40%; /* Muito para baixo (cortado) */
     object-position: right bottom;
-    animation: floatCloudRight 18s ease-in-out infinite;
+    animation: floatCloudRight 20s ease-in-out infinite;
 }
 
-/* Animações com mais movimento e scale */
+/* Animações com movimento extremo */
 @keyframes floatCloudLeft {
     0% {
         transform: translateX(0) translateY(0) scale(1);
     }
     25% {
-        transform: translateX(20px) translateY(-10px) scale(1.05);
+        transform: translateX(30px) translateY(-15px) scale(1.08);
     }
     50% {
-        transform: translateX(35px) translateY(-20px) scale(1.1);
+        transform: translateX(50px) translateY(-25px) scale(1.15);
     }
     75% {
-        transform: translateX(15px) translateY(-8px) scale(1.03);
+        transform: translateX(20px) translateY(-10px) scale(1.05);
     }
     100% {
         transform: translateX(0) translateY(0) scale(1);
@@ -183,13 +183,13 @@ nav {
         transform: translateX(0) translateY(0) scale(1);
     }
     25% {
-        transform: translateX(-20px) translateY(-12px) scale(1.06);
+        transform: translateX(-30px) translateY(-18px) scale(1.1);
     }
     50% {
-        transform: translateX(-35px) translateY(-22px) scale(1.12);
+        transform: translateX(-50px) translateY(-30px) scale(1.18);
     }
     75% {
-        transform: translateX(-15px) translateY(-8px) scale(1.04);
+        transform: translateX(-20px) translateY(-12px) scale(1.06);
     }
     100% {
         transform: translateX(0) translateY(0) scale(1);
@@ -199,19 +199,19 @@ nav {
 /* Ajuste para mobile */
 @media (max-width: 768px) {
     .cloud-left {
-        width: 180%;
-        height: 180%;
-        left: -40%;
-        bottom: -20%;
-        animation: floatCloudLeft 12s ease-in-out infinite;
+        width: 220%;
+        height: 220%;
+        left: -80%;
+        bottom: -50%;
+        animation: floatCloudLeft 15s ease-in-out infinite;
     }
     
     .cloud-right {
-        width: 180%;
-        height: 180%;
-        right: -40%;
-        bottom: -20%;
-        animation: floatCloudRight 14s ease-in-out infinite;
+        width: 220%;
+        height: 220%;
+        right: -80%;
+        bottom: -50%;
+        animation: floatCloudRight 17s ease-in-out infinite;
     }
 }
 
@@ -325,22 +325,6 @@ nav {
     border-radius: 5px;
 }
 
-/* ===== ANIMAÇÕES ===== */
-@keyframes floatLeft {
-    0% { transform: translateX(0) translateY(0) rotate(0deg); }
-    25% { transform: translateX(8px) translateY(-3px) rotate(1deg); }
-    50% { transform: translateX(12px) translateY(-6px) rotate(2deg); }
-    75% { transform: translateX(5px) translateY(-2px) rotate(1deg); }
-    100% { transform: translateX(0) translateY(0) rotate(0deg); }
-}
-
-@keyframes floatRight {
-    0% { transform: translateX(0) translateY(0) rotate(0deg); }
-    25% { transform: translateX(-8px) translateY(3px) rotate(-1deg); }
-    50% { transform: translateX(-12px) translateY(6px) rotate(-2deg); }
-    75% { transform: translateX(-5px) translateY(2px) rotate(-1deg); }
-    100% { transform: translateX(0) translateY(0) rotate(0deg); }
-}
 
 /* ===== VIDEO SECTION ===== */
 .video-main {
@@ -1125,5 +1109,3 @@ body.light-mode .download-btn.hackdex-download {
         height: 180px !important;
     }
 }
-
-
