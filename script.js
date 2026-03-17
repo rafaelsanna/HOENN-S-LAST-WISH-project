@@ -151,3 +151,49 @@ if (document.readyState === 'loading') {
 // Mensagem de boas-vindas
 console.log('🎮 Pokémon: Hoenn\'s Last Wish website loaded successfully!');
 
+// Header Animated Image Hover
+function initHeaderAnimation() {
+    const headerImg = document.querySelector('.animated-header-img');
+    
+    if (!headerImg) {
+        console.log('📝 No header animated image found');
+        return;
+    }
+    
+    const normalSrc = headerImg.dataset.normal;
+    const hoverSrc = headerImg.dataset.hover;
+    
+    if (!normalSrc || !hoverSrc) {
+        console.warn('⚠️ Header image missing data-normal or data-hover');
+        return;
+    }
+    
+    // Pré-carregar as imagens
+    const imgNormal = new Image();
+    imgNormal.src = normalSrc;
+    
+    const imgHover = new Image();
+    imgHover.src = hoverSrc;
+    
+    headerImg.addEventListener('mouseenter', () => {
+        headerImg.src = hoverSrc;
+    });
+    
+    headerImg.addEventListener('mouseleave', () => {
+        headerImg.src = normalSrc;
+    });
+    
+    console.log('✨ Header animation initialized');
+}
+
+// Adicionar à inicialização
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initWishDexHover();
+        initHeaderAnimation();
+    });
+} else {
+    initWishDexHover();
+    initHeaderAnimation();
+}
+

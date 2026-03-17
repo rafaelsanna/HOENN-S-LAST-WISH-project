@@ -30,25 +30,36 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <nav>
-            <a href="#home" class="logo-link">
-                <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
-            </a>
-            
-            <button class="hamburger" id="hamburger">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-<ul class="nav-links" id="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#story">Story</a></li>
-    <li><a href="#screenshots">Screenshots</a></li>
-    <li><a href="#download">Download</a></li>
-    <li><a href="wishdex.html">WishDex</a></li> <!-- NOVO -->
-</ul>
-        </nav>
-    </header>
+<header>
+    <nav>
+        <!-- Logo esquerda -->
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
+        </a>
+        
+        <!-- NOVO: Imagem central animada -->
+        <div class="header-animated">
+            <img src="images/jirachi-celebi00.png" 
+                 alt="Jirachi & Celebi" 
+                 class="animated-header-img"
+                 data-normal="images/jirachi-celebi00.png"
+                 data-hover="images/jirachi-celebi01.png">
+        </div>
+        
+        <!-- Botão Hamburger -->
+        <button class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#story">Story</a></li>
+            <li><a href="index.html#screenshots">Screenshots</a></li>
+            <li><a href="index.html#download">Download</a></li>
+            <li><a href="wishdex.html">WishDex</a></li>
+        </ul>
+    </nav>
+</header>
 
     <!-- Theme Toggle -->
     <button class="theme-toggle" id="themeToggle">

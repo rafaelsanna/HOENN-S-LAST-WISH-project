@@ -594,6 +594,7 @@ nav {
     border-radius: 10px;
     border: 2px solid #404040;
     transition: transform 0.3s ease, border-color 0.3s ease;
+    text-align: center; /* ← ADICIONE ESTA LINHA */
 }
 
 .team-member.large:hover {
@@ -1233,6 +1234,48 @@ body.light-mode .pokemon-card:hover {
     .pokemon-grid {
         grid-template-columns: 1fr;
         max-width: 280px;
+    }
+}
+
+/* Header animated image */
+.header-animated {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 1001;
+}
+
+.animated-header-img {
+    height: 70px;
+    width: auto;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.animated-header-img:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+    .header-animated {
+        display: none; /* Esconde no mobile para não poluir */
+    }
+    
+    .animated-header-img {
+        height: 50px;
+    }
+}
+
+/* Ajuste para tablet */
+@media (max-width: 1023px) and (min-width: 769px) {
+    .animated-header-img {
+        height: 55px;
     }
 }
 
