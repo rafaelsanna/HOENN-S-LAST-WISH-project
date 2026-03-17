@@ -46,6 +46,67 @@ header {
     align-items: center;
 }
 
+/* Logo Styles */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 100%;
+    padding: 10px 0;
+}
+
+.logo-img {
+    height: 60px; /* Ajuste conforme o tamanho da sua logo */
+    width: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste do header para acomodar a logo */
+header {
+    background: url('images/header-bg.png') no-repeat center center, 
+                linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background-size: cover;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    header {
+        height: 70px !important;
+    }
+    
+    .logo-img {
+        height: 45px; /* Logo menor no mobile */
+    }
+    
+    nav {
+        padding: 0 1rem;
+    }
+}
+
 nav {
     display: flex;
     justify-content: space-between;
