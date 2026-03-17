@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wish Dex - Hoenn's Last Wish</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="wishdex.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">Hoenn's Last Wish</a>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#story">Story</a></li>
+                <li><a href="index.html#screenshots">Screenshots</a></li>
+                <li><a href="wishdex.html" class="active">Wish Dex</a></li>
+                <li><a href="index.html#download">Download</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i> Light Mode
+    </button>
+
+    <main class="wishdex-container">
+        <div class="wishdex-header">
+            <h1>✦ Wish Dex ✦</h1>
+            <p class="wishdex-subtitle">Alternate Forms - Hoenn's Last Wish</p>
+            <p class="wishdex-description">Temporal distortions have created new Pokémon forms. Here are the first discovered ones:</p>
+        </div>
+
+        <!-- Kanto Starters -->
+        <div class="region-section">
+            <h2 class="region-title">Kanto Anomalies</h2>
+            <div class="pokemon-grid" id="kanto-grid">
+                <!-- Bulbasaur -->
+                <div class="pokemon-card" data-pokemon="bulbasaur">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/bulbasaur/anim_front.png" alt="Bulbasaur" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Bulbasaur</h3>
+                    <p class="pokemon-type">Grass/Poison</p>
+                    <p class="pokemon-desc">Temporal Vine Form</p>
+                </div>
+                
+                <!-- Ivysaur -->
+                <div class="pokemon-card" data-pokemon="ivysaur">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/ivysaur/anim_front.png" alt="Ivysaur" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Ivysaur</h3>
+                    <p class="pokemon-type">Grass/Poison</p>
+                    <p class="pokemon-desc">Temporal Bloom Form</p>
+                </div>
+                
+                <!-- Venusaur -->
+                <div class="pokemon-card" data-pokemon="venusaur">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/venusaur/anim_front.png" alt="Venusaur" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Venusaur</h3>
+                    <p class="pokemon-type">Grass/Poison</p>
+                    <p class="pokemon-desc">Temporal Jungle Form</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Johto Starters -->
+        <div class="region-section">
+            <h2 class="region-title">Johto Anomalies</h2>
+            <div class="pokemon-grid" id="johto-grid">
+                <!-- Totodile -->
+                <div class="pokemon-card" data-pokemon="totodile">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/totodile/anim_front.png" alt="Totodile" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Totodile</h3>
+                    <p class="pokemon-type">Water</p>
+                    <p class="pokemon-desc">Primal Ripple Form</p>
+                </div>
+                
+                <!-- Croconaw -->
+                <div class="pokemon-card" data-pokemon="croconaw">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/croconaw/anim_front.png" alt="Croconaw" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Croconaw</h3>
+                    <p class="pokemon-type">Water</p>
+                    <p class="pokemon-desc">Primal Wave Form</p>
+                </div>
+                
+                <!-- Feraligatr -->
+                <div class="pokemon-card" data-pokemon="feraligatr">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/feraligatr/anim_front.png" alt="Feraligatr" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Feraligatr</h3>
+                    <p class="pokemon-type">Water</p>
+                    <p class="pokemon-desc">Primal Tidal Form</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hoenn Starters -->
+        <div class="region-section">
+            <h2 class="region-title">Hoenn Anomalies</h2>
+            <div class="pokemon-grid" id="hoenn-grid">
+                <!-- Torchic -->
+                <div class="pokemon-card" data-pokemon="torchic">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/torchic/anim_front.png" alt="Torchic" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Torchic</h3>
+                    <p class="pokemon-type">Fire</p>
+                    <p class="pokemon-desc">Ember Wisp Form</p>
+                </div>
+                
+                <!-- Combusken -->
+                <div class="pokemon-card" data-pokemon="combusken">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/combusken/anim_front.png" alt="Combusken" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Combusken</h3>
+                    <p class="pokemon-type">Fire/Fighting</p>
+                    <p class="pokemon-desc">Blaze Kick Form</p>
+                </div>
+                
+                <!-- Blaziken -->
+                <div class="pokemon-card" data-pokemon="blaziken">
+                    <div class="sprite-container">
+                        <img src="graphics/pokemon/blaziken/anim_front.png" alt="Blaziken" class="pokemon-sprite" data-anim="true">
+                    </div>
+                    <h3>Blaziken</h3>
+                    <p class="pokemon-type">Fire/Fighting</p>
+                    <p class="pokemon-desc">Inferno Crest Form</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Pokémon: Hoenn's Last Wish - A Pokémon ROM Hack</p>
+            <p>This is a non-profit fan project. Pokémon is © Nintendo/Creatures Inc./GAME FREAK Inc.</p>
+            <a href="https://docs.google.com/document/d/1K_1i6doDUI3dhyyjtoNYlCZQZiFuHJBfjhZC-yJ3x-s/edit?usp=sharing" class="credits-btn" target="_blank">
+                View Credits
+            </a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="wishdex.js"></script>
+</body>
+</html>
