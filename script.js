@@ -98,3 +98,17 @@ fetch('https://api.counterapi.dev/v1/hoennslastwish/site/up')
   })
   .catch(error => console.log('Erro no contador:', error));
 
+// WishDex Hover Effect
+document.querySelectorAll('.pokemon-sprite').forEach(sprite => {
+    const normalSrc = sprite.dataset.normal;
+    const frameSrc = sprite.dataset.frame;
+    
+    sprite.addEventListener('mouseenter', () => {
+        sprite.src = frameSrc;
+    });
+    
+    sprite.addEventListener('mouseleave', () => {
+        sprite.src = normalSrc;
+    });
+});  
+

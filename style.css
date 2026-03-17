@@ -815,6 +815,30 @@ body.light-mode .download-btn.hackdex-download {
     border: 1px solid #ddd;
 }
 
+/* Footer Logo */
+.footer-logo-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo-link:hover {
+    transform: scale(1.05);
+}
+
+.footer-logo {
+    height: 60px;
+    width: auto;
+    border-radius: 5px;
+}
+
+/* Ajuste mobile */
+@media (max-width: 768px) {
+    .footer-logo {
+        height: 50px;
+    }
+}
+
 /* ===== TABLET ===== */
 @media (max-width: 1023px) and (min-width: 769px) {
     .button-row {
@@ -1106,6 +1130,109 @@ body.light-mode .download-btn.hackdex-download {
     
     .simple-slideshow img {
         height: 160px !important;
+    }
+}
+
+/* ===== WISHDEX ===== */
+.wishdex-header {
+    padding: 120px 0 2rem 0;
+    text-align: center;
+    background: #2d2d2d;
+}
+
+.wishdex-title {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+}
+
+.wishdex-grid {
+    padding: 3rem 0 5rem 0;
+    background: #2d2d2d;
+    min-height: 60vh;
+}
+
+.pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.pokemon-card {
+    background: #363636;
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #404040;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--pokemon-yellow);
+}
+
+.pokemon-sprite {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    transition: transform 0.2s ease;
+}
+
+.pokemon-sprite:hover {
+    transform: scale(1.1);
+}
+
+/* Light Mode */
+body.light-mode .wishdex-header,
+body.light-mode .wishdex-grid {
+    background: #f8f9fa;
+}
+
+body.light-mode .pokemon-card {
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+}
+
+body.light-mode .pokemon-card:hover {
+    border-color: var(--pokemon-blue);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .wishdex-header {
+        padding: 90px 0 1.5rem 0;
+    }
+    
+    .wishdex-title {
+        max-width: 300px;
+    }
+    
+    .pokemon-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .pokemon-card {
+        padding: 1rem;
+    }
+    
+    .pokemon-sprite {
+        max-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pokemon-grid {
+        grid-template-columns: 1fr;
+        max-width: 280px;
     }
 }
 
