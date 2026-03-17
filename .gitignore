@@ -36,6 +36,8 @@ build/
 *.diff
 *.sym
 *.js
+!rom-patcher-js/*.js
+!rom-patcher-js/modules/**/*.js
 /pokeemerald-*.png
 /Pokemon_HLW-*.png
 *.Identifier
