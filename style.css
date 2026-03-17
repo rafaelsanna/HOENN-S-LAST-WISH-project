@@ -134,25 +134,28 @@ nav {
     z-index: 1;
 }
 
-/* Nuvens Animadas */
+/* Nuvens Animadas - CORRIGIDO (sem duplicação) */
 .cloud {
     position: absolute;
     z-index: 2;
     pointer-events: none;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     opacity: 0.7;
-    max-width: 100%;
-    height: auto;
 }
 
 .cloud-left {
     left: 0;
-    bottom: 20%;
+    top: 0;
+    object-position: left center;
     animation: floatLeft 8s ease-in-out infinite;
 }
 
 .cloud-right {
     right: 0;
-    top: 15%;
+    top: 0;
+    object-position: right center;
     animation: floatRight 10s ease-in-out infinite;
 }
 
@@ -612,22 +615,6 @@ nav {
     margin: 0;
 }
 
-.team-member.large .team-link {
-    color: var(--pokemon-blue);
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--pokemon-blue);
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.team-member.large .team-link:hover {
-    background: var(--pokemon-blue);
-    color: white;
-}
-
 /* Grid para 4 membros */
 .team-row.grid-4 {
     display: grid;
@@ -670,19 +657,26 @@ nav {
     color: #cccccc !important;
     font-size: 0.95rem;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin: 0;
 }
 
-.team-link {
-    color: var(--pokemon-blue);
+/* Team Cards Clicáveis */
+.team-card-link {
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
-.team-link:hover {
-    color: var(--pokemon-yellow);
-    text-decoration: underline;
+.team-card-link[data-no-link="true"] {
+    cursor: default;
+}
+
+.team-card-link:hover .team-member,
+.team-card-link:hover .team-member.large {
+    transform: translateY(-5px);
+    border-color: var(--pokemon-yellow);
 }
 
 /* ===== FOOTER ===== */
@@ -807,6 +801,11 @@ body.light-mode .team-member.large p {
     color: #2c3e50 !important;
 }
 
+body.light-mode .team-card-link:hover .team-member,
+body.light-mode .team-card-link:hover .team-member.large {
+    border-color: var(--pokemon-blue);
+}
+
 body.light-mode footer {
     background: #2c3e50 !important;
 }
@@ -892,12 +891,10 @@ body.light-mode .download-btn.hackdex-download {
     
     .cloud-left {
         max-width: 150px;
-        bottom: 10%;
     }
     
     .cloud-right {
         max-width: 150px;
-        top: 10%;
     }
     
     .hero-content-overlay {
@@ -928,7 +925,29 @@ body.light-mode .download-btn.hackdex-download {
         height: auto;
     }
     
-    /* Team Section */
+    /* Team Section Mobile */
+    .team-section {
+        padding: 3rem 0;
+    }
+    
+    .team-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .team-founder {
+        margin-bottom: 3rem;
+    }
+    
+    .team-member.large {
+        max-width: 350px;
+        padding: 2rem 1.5rem;
+    }
+    
+    .team-member.large h3 {
+        font-size: 1.5rem;
+    }
+    
     .team-row.grid-4 {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
@@ -936,12 +955,20 @@ body.light-mode .download-btn.hackdex-download {
         margin-bottom: 1.5rem;
     }
     
-    .team-member.large {
-        max-width: 350px;
+    .team-member {
+        padding: 1.5rem 1rem;
+    }
+    
+    .team-member h3 {
+        font-size: 1.2rem;
+    }
+    
+    .team-member p {
+        font-size: 0.9rem;
     }
     
     /* Sections */
-    .story, .features, .screenshots, .download {
+    .story, .screenshots, .download {
         padding: 3rem 0 !important;
     }
     
@@ -1022,6 +1049,16 @@ body.light-mode .download-btn.hackdex-download {
     
     .team-row.grid-4 {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .team-member.large {
+        max-width: 300px;
+        padding: 1.5rem 1rem;
+    }
+    
+    .team-member.large h3 {
+        font-size: 1.3rem;
     }
     
     h2 {
