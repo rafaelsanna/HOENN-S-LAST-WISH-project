@@ -98,17 +98,36 @@ fetch('https://api.counterapi.dev/v1/hoennslastwish/site/up')
   })
   .catch(error => console.log('Erro no contador:', error));
 
-// WishDex Hover Effect
-document.querySelectorAll('.pokemon-sprite').forEach(sprite => {
-    const normalSrc = sprite.dataset.normal;
-    const frameSrc = sprite.dataset.frame;
-    
-    sprite.addEventListener('mouseenter', () => {
-        sprite.src = frameSrc;
+// Contador invisível de visitas
+fetch('https://api.counterapi.dev/v1/hoennslastwish/site/up')
+  .then(response => response.json())
+  .then(data => {
+    console.log('📊 Total de visitas:', data.count);
+  })
+  .catch(error => console.log('Erro no contador:', error));
+
+// WishDex Hover Effect - CORRIGIDO
+function initWishDexHover() {
+    document.querySelectorAll('.pokemon-sprite').forEach(sprite => {
+        const normalSrc = sprite.dataset.normal;
+        const frameSrc = sprite.dataset.frame;
+        
+        sprite.addEventListener('mouseenter', () => {
+            sprite.src = frameSrc;
+        });
+        
+        sprite.addEventListener('mouseleave', () => {
+            sprite.src = normalSrc;
+        });
     });
-    
-    sprite.addEventListener('mouseleave', () => {
-        sprite.src = normalSrc;
-    });
-});  
+    console.log('✨ WishDex hover initialized');
+}
+
+// Executar quando a página carregar
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWishDexHover);
+} else {
+    // Se a página já carregou, executa imediatamente
+    initWishDexHover();
+}
 
