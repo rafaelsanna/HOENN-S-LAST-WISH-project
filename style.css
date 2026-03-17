@@ -1,4 +1,4 @@
-/* ADICIONE ISSO NO INÍCIO DO CSS (logo após os imports) */
+/* ===== VARIÁVEIS ===== */
 :root {
     --pokemon-blue: #4a90e2;
     --pokemon-green: #27ae60;
@@ -8,6 +8,7 @@
     --pokemon-light: #ecf0f1;
 }
 
+/* ===== RESET E BASE ===== */
 * {
     margin: 0;
     padding: 0;
@@ -18,55 +19,24 @@ body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: #333;
+    background: #1a1a1a !important;
+    color: #e0e0e0 !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Oxanium', cursive;
     font-weight: 700;
+    color: #ffffff !important;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    color: #e0e0e0 !important;
 }
 
-/* Header & Navigation */
-header {
-    background: url('images/header-bg.png') no-repeat center center, 
-                linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    background-size: cover;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-    height: 100px; /* Altura da sua imagem */
-    display: flex;
-    align-items: center;
-}
-
-/* Logo Styles */
-.logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    height: 100%;
-    padding: 10px 0;
-}
-
-.logo-img {
-    height: 60px; /* Ajuste conforme o tamanho da sua logo */
-    width: auto;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.logo-img:hover {
-    transform: scale(1.05);
-}
-
-/* Ajuste do header para acomodar a logo */
+/* ===== HEADER ===== */
 header {
     background: url('images/header-bg.png') no-repeat center center, 
                 linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
@@ -92,36 +62,24 @@ nav {
     height: 100%;
 }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
-    header {
-        height: 70px !important;
-    }
-    
-    .logo-img {
-        height: 45px; /* Logo menor no mobile */
-    }
-    
-    nav {
-        padding: 0 1rem;
-    }
-}
-
-nav {
+.logo-link {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    text-decoration: none;
+    height: 100%;
+    padding: 10px 0;
+    z-index: 1001;
 }
 
-.logo h1 {
-    color: #ffffff;
-    font-size: 1.4rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+.logo-img {
+    height: 60px;
+    width: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
 }
 
 .nav-links {
@@ -139,10 +97,27 @@ nav {
 }
 
 .nav-links a:hover {
-    color: var(--pokemon-yellow); /* Destaque amarelo */
+    color: var(--pokemon-yellow);
 }
 
-/* Banner Container - Agora com posição relativa para as camadas */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* ===== HERO SECTION ===== */
+.hero-with-banner {
+    position: relative;
+    height: 70vh;
+    overflow: hidden;
+    margin-top: 100px;
+}
+
 .banner-container {
     width: 100%;
     height: 100%;
@@ -159,15 +134,14 @@ nav {
     z-index: 1;
 }
 
-/* Estilos das nuvens */
+/* Nuvens Animadas */
 .cloud {
     position: absolute;
     z-index: 2;
-    pointer-events: none; /* Para não interferir com cliques */
-    opacity: 0.7; /* Ajuste conforme necessário */
-    width: auto;
-    height: auto;
+    pointer-events: none;
+    opacity: 0.7;
     max-width: 100%;
+    height: auto;
 }
 
 .cloud-left {
@@ -182,7 +156,7 @@ nav {
     animation: floatRight 10s ease-in-out infinite;
 }
 
-/* Logo central */
+/* Logo Central */
 .banner-logo-link {
     position: absolute;
     top: 50%;
@@ -201,104 +175,27 @@ nav {
 .banner-logo {
     width: auto;
     height: auto;
-    max-width: 400px; /* Ajuste conforme necessário */
-    max-height: 200px; /* Ajuste conforme necessário */
+    max-width: 400px;
+    max-height: 200px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
-/* Animações das nuvens */
-@keyframes floatLeft {
-    0% {
-        transform: translateX(0) translateY(0);
-    }
-    50% {
-        transform: translateX(10px) translateY(-5px);
-    }
-    100% {
-        transform: translateX(0) translateY(0);
-    }
+/* Hero Overlay */
+.hero-content-overlay {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 3;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
 }
 
-@keyframes floatRight {
-    0% {
-        transform: translateX(0) translateY(0);
-    }
-    50% {
-        transform: translateX(-10px) translateY(5px);
-    }
-    100% {
-        transform: translateX(0) translateY(0);
-    }
-}
-
-/* Ajustes para mobile */
-@media (max-width: 768px) {
-    .banner-logo {
-        max-width: 250px;
-        max-height: 120px;
-    }
-    
-    .cloud-left {
-        max-width: 150px;
-        bottom: 10%;
-    }
-    
-    .cloud-right {
-        max-width: 150px;
-        top: 10%;
-    }
-}
-
-@media (max-width: 480px) {
-    .banner-logo {
-        max-width: 180px;
-        max-height: 90px;
-    }
-    
-    .cloud-left, .cloud-right {
-        max-width: 100px;
-        opacity: 0.5;
-    }
-}
-
-/* Opção de animação mais elaborada */
-@keyframes floatLeft {
-    0% {
-        transform: translateX(0) translateY(0) rotate(0deg);
-    }
-    25% {
-        transform: translateX(8px) translateY(-3px) rotate(1deg);
-    }
-    50% {
-        transform: translateX(12px) translateY(-6px) rotate(2deg);
-    }
-    75% {
-        transform: translateX(5px) translateY(-2px) rotate(1deg);
-    }
-    100% {
-        transform: translateX(0) translateY(0) rotate(0deg);
-    }
-}
-
-@keyframes floatRight {
-    0% {
-        transform: translateX(0) translateY(0) rotate(0deg);
-    }
-    25% {
-        transform: translateX(-8px) translateY(3px) rotate(-1deg);
-    }
-    50% {
-        transform: translateX(-12px) translateY(6px) rotate(-2deg);
-    }
-    75% {
-        transform: translateX(-5px) translateY(2px) rotate(-1deg);
-    }
-    100% {
-        transform: translateX(0) translateY(0) rotate(0deg);
-    }
-}
-
-/* Button Row - NOVO */
+/* Button Row */
 .button-row {
     display: flex;
     flex-wrap: wrap;
@@ -308,7 +205,6 @@ nav {
     margin: 0 auto;
 }
 
-/* Ajustes para todos os botões */
 .cta-button, .discord-button, .youtube-button {
     display: inline-flex;
     align-items: center;
@@ -320,7 +216,7 @@ nav {
     font-weight: bold;
     transition: all 0.3s ease;
     white-space: nowrap;
-    height: 50px; /* Altura fixa para alinhar com o botão do HackDex */
+    height: 50px;
 }
 
 .cta-button {
@@ -351,13 +247,12 @@ nav {
     margin-right: 8px;
 }
 
-/* HackDex Button - AJUSTADO */
 .hackdex-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease;
-    height: 50px; /* Mesma altura dos outros botões */
+    height: 50px;
 }
 
 .hackdex-button:hover {
@@ -366,92 +261,49 @@ nav {
 
 .hackdex-button img {
     display: block;
-    height: 50px; /* Altura fixa para igualar aos botões */
-    width: auto; /* Largura automática para manter proporção */
+    height: 50px;
+    width: auto;
     border-radius: 5px;
 }
 
-/* Desktop - todos em linha */
-@media (min-width: 1024px) {
-    .button-row {
-        gap: 1.5rem;
-    }
+/* ===== ANIMAÇÕES ===== */
+@keyframes floatLeft {
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
+    25% { transform: translateX(8px) translateY(-3px) rotate(1deg); }
+    50% { transform: translateX(12px) translateY(-6px) rotate(2deg); }
+    75% { transform: translateX(5px) translateY(-2px) rotate(1deg); }
+    100% { transform: translateX(0) translateY(0) rotate(0deg); }
 }
 
-/* Tablet - ajuste */
-@media (max-width: 1023px) and (min-width: 769px) {
-    .button-row {
-        gap: 1rem;
-    }
-    
-    .cta-button, .discord-button, .youtube-button {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-        height: 45px;
-    }
-    
-    .hackdex-button {
-        height: 45px;
-    }
-    
-    .hackdex-button img {
-        height: 45px;
-    }
+@keyframes floatRight {
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
+    25% { transform: translateX(-8px) translateY(3px) rotate(-1deg); }
+    50% { transform: translateX(-12px) translateY(6px) rotate(-2deg); }
+    75% { transform: translateX(-5px) translateY(2px) rotate(-1deg); }
+    100% { transform: translateX(0) translateY(0) rotate(0deg); }
 }
 
-/* Mobile - empilhado */
-@media (max-width: 768px) {
-    .button-row {
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-    }
-    
-    .cta-button, .discord-button, .youtube-button {
-        width: 220px;
-        padding: 12px 20px;
-        font-size: 0.95rem;
-        height: auto;
-        white-space: normal;
-    }
-    
-    .hackdex-button {
-        width: 220px;
-        height: auto;
-    }
-    
-    .hackdex-button img {
-        width: 100%;
-        height: auto;
-    }
-}
-
-/* Telas muito pequenas */
-@media (max-width: 480px) {
-    .cta-button, .discord-button, .youtube-button, .hackdex-button {
-        width: 200px;
-    }
-}
-
-/* Hero Content Overlay - ajuste */
-.hero-content-overlay {
-    position: absolute;
-    top: 85%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* ===== VIDEO SECTION ===== */
+.video-main {
+    padding: 3rem 0;
+    background: var(--pokemon-dark);
     text-align: center;
-    color: white;
-    z-index: 3;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    width: 100%;
-    max-width: 1200px;
-    padding: 0 20px;
 }
 
-/* Story Section */
+.main-video {
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid var(--pokemon-yellow);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+/* ===== STORY SECTION ===== */
 .story {
     padding: 5rem 0;
-    background: #ecf0f1;
+    background: #2d2d2d !important;
+    color: #e0e0e0 !important;
 }
 
 .story h2 {
@@ -465,753 +317,14 @@ nav {
     margin: 0 auto;
 }
 
-.story-content ul {
-    margin-top: 1rem;
-    margin-left: 2rem;
-}
-
-/* Screenshots Section */
-.screenshots {
-    padding: 5rem 0;
-    background: white;
-}
-
-.screenshots h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
-}
-
-.screenshot-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-}
-
-.screenshot-placeholder {
-    background: #bdc3c7;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    color: #7f8c8d;
-}
-
-/* Download Section */
-.download {
-    padding: 5rem 0;
-    background: #34495e;
-    color: white;
-}
-
-.download h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
-}
-
-.download-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin: 2rem 0;
-}
-
-.download-btn {
-    padding: 12px 25px;
-    background: #e74c3c;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-.download-btn:hover {
-    background: #8940ab;
-}
-
-.installation-guide {
-    background: rgba(255,255,255,0.1);
-    padding: 2rem;
-    border-radius: 10px;
-    margin-top: 2rem;
-}
-
-.installation-guide ol {
-    margin-left: 2rem;
-    margin-top: 1rem;
-}
-
-/* Footer */
-footer {
-    background: #2c3e50;
-    color: white;
-    text-align: center;
-    padding: 2rem 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .nav-links {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .hero-content h2 {
-        font-size: 2rem;
-    }
-    
-    .download-links {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .cta-button, .discord-button, .youtube-button {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-        margin: 0.5rem 0;
-        width: 200px;
-        text-align: center;
-    }
-}
-
-/* Simple Slideshow */
-.simple-slideshow {
-    max-width: 600px;
-    margin: 2rem auto;
-    background: white;
-    border-radius: 15px;
-    padding: 1rem;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-.simple-slideshow img {
-    width: 100%;
-    height: 350px;
-    object-fit: contain;
-    background: #2c3e50;
-    border-radius: 8px;
-    border: 3px solid var(--pokemon-green);
-}
-
-/* Banner 100% Width */
-.hero-with-banner {
-    position: relative;
-    height: 70vh; /* Altura maior */
-    overflow: hidden;
-}
-
-.banner-container {
-    width: 100%;
-    height: 100%;
-}
-
-.hero-banner {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Preenche todo o espaço */
-    object-position: center;
-}
-
-/* Credits Button */
-.credits-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 10px 20px;
-    background: var(--pokemon-green);
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-.credits-btn:hover {
-    background: #219653;
-}
-
-/* Secondary Download Button */
-.download-btn.secondary {
-    background: var(--pokemon-blue);
-}
-
-.download-btn.secondary:hover {
-    background: #357abd;
-}
-
-/* ===== MOBILE RESPONSIVE ===== */
-@media (max-width: 768px) {
-    /* Header Mobile */
-    header {
-        height: 70px !important;
-        background-size: contain !important;
-        background-position: center !important;
-    }
-    
-    nav {
-        padding: 0 1rem;
-    }
-    
-    .logo {
-        display: none; /* Remove texto do logo */
-    }
-    
-    /* Menu Mobile - Hamburger */
-    .nav-links {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background: var(--pokemon-dark);
-        flex-direction: column;
-        justify-content: flex-start;
-        padding-top: 2rem;
-        transition: left 0.3s ease;
-        z-index: 1000;
-    }
-    
-    .nav-links.active {
-        left: 0;
-    }
-    
-    .nav-links li {
-        margin: 1rem 0;
-    }
-    
-    .nav-links a {
-        font-size: 1.2rem;
-        padding: 1rem 2rem;
-        display: block;
-    }
-    
-    /* Hamburger Icon */
-    .hamburger {
-        display: block;
-        cursor: pointer;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        z-index: 1001;
-    }
-    
-    /* Hero Banner Mobile */
-    .hero-with-banner {
-        height: 40vh !important;
-        margin-top: 70px;
-    }
-    
-    .hero-banner {
-        object-fit: cover;
-        object-position: top center;
-    }
-    
-    .hero-content-overlay {
-        top: 70% !important;
-        flex-direction: column;
-        gap: 1rem;
-        width: 95%;
-    }
-    
-    .cta-button, .discord-button, .youtube-button {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-        margin: 0.5rem 0;
-        width: 200px;
-        text-align: center;
-    }
-    
-    /* Sections Mobile */
-    .story, .features, .screenshots, .download {
-        padding: 3rem 0 !important;
-    }
-    
-    .container {
-        padding: 0 15px;
-    }
-    
-    h2 {
-        font-size: 1.8rem !important;
-        margin-bottom: 2rem !important;
-    }
-    
-    /* Slideshow Mobile */
-    .simple-slideshow {
-        max-width: 100% !important;
-        margin: 1rem auto !important;
-        padding: 0.5rem;
-    }
-    
-    .simple-slideshow img {
-        height: 200px !important;
-        object-fit: contain;
-    }
-    
-    /* Download Section Mobile */
-    .download-links {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .download-btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 15px 20px;
-        text-align: center;
-        margin: 0.5rem 0;
-    }
-    
-    .installation-guide {
-        padding: 1.5rem;
-        margin-top: 1.5rem;
-    }
-    
-    /* Story Content Mobile */
-    .story-content p {
-        font-size: 0.95rem;
-        line-height: 1.5;
-        margin-bottom: 1rem;
-    }
-    
-    /* Footer Mobile */
-    footer {
-        padding: 1.5rem 0;
-    }
-    
-    footer p {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-    
-    .credits-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Ajustes para telas muito pequenas */
-    .hero-with-banner {
-        height: 35vh !important;
-    }
-    
-    .hero-content-overlay {
-        top: 65% !important;
-    }
-    
-    h2 {
-        font-size: 1.6rem !important;
-    }
-    
-    .simple-slideshow img {
-        height: 180px !important;
-    }
-    
-    .feature-card, .story-content, .installation-guide {
-        padding: 1.5rem;
-    }
-}
-
-/* Hide hamburger on desktop */
-.hamburger {
-    display: none;
-}
-
-/* ===== DARK MODE PERMANENTE ===== */
-body {
-    background: #1a1a1a !important;
-    color: #e0e0e0 !important;
-}
-
-/* Header já está escuro - manter */
-
-/* Hero Section - ajustar overlay para dark mode */
-.banner-container::after {
-    background: rgba(0,0,0,0.5) !important; /* Overlay mais escuro */
-}
-
-/* Story Section */
-.story {
-    background: #2d2d2d !important; /* Cinza mais escuro */
-    color: #e0e0e0 !important;
-}
-
-/* Features Section */
-.features {
-    background: #252525 !important;
-}
-
-.feature-card {
-    background: #363636 !important;
-    color: #e0e0e0 !important;
-    border: 1px solid #404040;
-}
-
-.feature-card h3 {
-    color: #ffffff !important;
-}
-
-/* Screenshots Section */
-.screenshots {
-    background: #2d2d2d !important;
-}
-
-.simple-slideshow {
-    background: #363636 !important;
-    border: 1px solid #404040;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
-}
-
-.simple-slideshow img {
-    background: #2d2d2d !important;
-    border: 2px solid var(--pokemon-green) !important;
-}
-
-/* Download Section */
-.download {
-    background: #252525 !important;
-    color: #e0e0e0 !important;
-}
-
-.installation-guide {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid #404040;
-    color: #e0e0e0 !important;
-}
-
-.installation-guide h4 {
-    color: #ffffff !important;
-}
-
-/* Footer */
-footer {
-    background: #1a1a1a !important;
-    border-top: 1px solid #333;
-}
-
-/* Links e textos */
-a {
-    color: #4a90e2 !important;
-}
-
-a:hover {
-    color: #6ba8ff !important;
-}
-
-/* Botões - manter as cores Pokémon mas ajustar contraste */
-.cta-button {
-    background: var(--pokemon-blue) !important;
-    color: white !important;
-}
-
-.cta-button:hover {
-    background: #357abd !important;
-}
-
-.discord-button {
-    background: #5865f2 !important;
-    color: white !important;
-}
-
-.discord-button:hover {
-    background: #4752c4 !important;
-}
-
-.youtube-button {
-    background: #FF0000 !important;
-    color: white !important;
-}
-
-.youtube-button:hover {
-    background: #CC0000 !important;
-}
-
-.download-btn {
-    background: var(--pokemon-red) !important;
-    color: white !important;
-}
-
-.download-btn:hover {
-    background: #c0392b !important;
-}
-
-.download-btn.secondary {
-    background: var(--pokemon-green) !important;
-}
-
-.download-btn.secondary:hover {
-    background: #219653 !important;
-}
-.download-btn.info {
-    background: var(--pokemon-blue) !important;
-}
-
-.download-btn.info:hover {
-    background: #213c96 !important;
-}
-
-.credits-btn {
-    background: var(--pokemon-green) !important;
-    color: white !important;
-}
-
-.credits-btn:hover {
-    background: #219653 !important;
-}
-
-/* Títulos */
-h1, h2, h3, h4, h5, h6 {
-    color: #ffffff !important;
-}
-
-/* Textos secundários */
-p, li {
+.story-content p {
     color: #cccccc !important;
-}
-
-/* Placeholders e elementos vazios */
-.screenshot-placeholder {
-    background: #404040 !important;
-    color: #888 !important;
-    border: 1px solid #555;
-}
-
-/* Menu mobile */
-@media (max-width: 768px) {
-    .nav-links {
-        background: #2d2d2d !important;
-        border-top: 1px solid #404040;
-    }
-    
-    .nav-links a {
-        color: #e0e0e0 !important;
-        border-bottom: 1px solid #404040;
-    }
-    
-    .nav-links a:hover {
-        background: #363636;
-        color: var(--pokemon-yellow) !important;
-    }
-}
-
-/* Ajustes de contraste para melhor legibilidade */
-.container {
-    color: #e0e0e0 !important;
-}
-
-.story-content p, 
-.download-info p, 
-.installation-guide li {
-    color: #cccccc !important;
-    line-height: 1.6;
-}
-
-/* Sombras e profundidade */
-.feature-card, 
-.simple-slideshow, 
-.installation-guide {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
-}
-
-/* ===== LIGHT MODE MELHORADO ===== */
-body.light-mode {
-    background: #f8f9fa !important;
-    color: #2c3e50 !important;
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.7;
-}
-
-body.light-mode .story {
-    background: #ffffff !important;
-    color: #2c3e50 !important;
-    border-top: 3px solid var(--pokemon-blue);
-    border-bottom: 3px solid var(--pokemon-green);
-}
-
-body.light-mode .features {
-    background: #f1f3f5 !important;
-}
-
-body.light-mode .feature-card {
-    background: #ffffff !important;
-    color: #2c3e50 !important;
-    border: 2px solid #e9ecef;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
-    border-left: 4px solid var(--pokemon-blue);
-}
-
-body.light-mode .feature-card h3 {
-    color: var(--pokemon-dark) !important;
-    font-weight: 700;
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-}
-
-body.light-mode .screenshots {
-    background: #ffffff !important;
-    border-top: 3px solid var(--pokemon-yellow);
-}
-
-body.light-mode .simple-slideshow {
-    background: #ffffff !important;
-    border: 2px solid #dee2e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1) !important;
-}
-
-body.light-mode .simple-slideshow img {
-    background: #f8f9fa !important;
-    border: 3px solid var(--pokemon-green) !important;
-}
-
-body.light-mode .download {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
-    color: #ffffff !important;
-    border-top: 3px solid var(--pokemon-red);
-}
-
-body.light-mode .installation-guide {
-    background: rgba(255,255,255,0.15) !important;
-    border: 2px solid rgba(255,255,255,0.3);
-    color: #ffffff !important;
-    backdrop-filter: blur(10px);
-}
-
-body.light-mode footer {
-    background: #2c3e50 !important;
-    color: #ffffff !important;
-    border-top: 3px solid var(--pokemon-blue);
-}
-
-body.light-mode .youtube-button {
-    background: #FF0000 !important;
-    color: white !important;
-}
-
-body.light-mode .youtube-button:hover {
-    background: #CC0000 !important;
-}
-
-/* ===== TIPOGRAFIA MELHORADA ===== */
-body.light-mode h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--pokemon-dark) !important;
-    margin-bottom: 1rem;
-}
-
-body.light-mode h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--pokemon-dark) !important;
-    margin-bottom: 2rem;
-    text-align: center;
-    border-bottom: 2px solid var(--pokemon-yellow);
-    padding-bottom: 0.5rem;
-    display: inline-block;
-}
-
-body.light-mode h3 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--pokemon-blue) !important;
-    margin-bottom: 1rem;
-}
-
-body.light-mode h4 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--pokemon-green) !important;
-    margin-bottom: 0.8rem;
-}
-
-/* Parágrafos com melhor hierarquia */
-body.light-mode .story-content p {
-    color: #2c3e50 !important;
     font-size: 1.1rem;
     line-height: 1.8;
     margin-bottom: 1.5rem;
     text-align: justify;
 }
 
-body.light-mode .story-content p:first-of-type {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--pokemon-blue) !important;
-}
-
-body.light-mode .download-info p {
-    color: #e0e0e0 !important;
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-}
-
-/* Listas */
-body.light-mode .installation-guide ol {
-    margin-left: 1.5rem;
-}
-
-body.light-mode .installation-guide li {
-    color: #e0e0e0 !important;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 0.8rem;
-    padding-left: 0.5rem;
-}
-
-/* Container e espaçamento */
-body.light-mode .container {
-    color: inherit !important;
-}
-
-body.light-mode .story-content {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border-left: 4px solid var(--pokemon-green);
-}
-
-/* ===== TOGGLE BUTTON ===== */
-.theme-toggle {
-    position: fixed;
-    top: 90px;
-    right: 20px;
-    z-index: 1000;
-    background: var(--pokemon-dark);
-    border: 2px solid var(--pokemon-yellow);
-    border-radius: 50px;
-    padding: 8px 12px;
-    cursor: pointer;
-    color: white;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.theme-toggle:hover {
-    background: var(--pokemon-blue);
-    transform: scale(1.05);
-}
-
-.theme-toggle i {
-    margin-right: 5px;
-}
-
-/* Ajuste para mobile */
-@media (max-width: 768px) {
-    .theme-toggle {
-        top: 75px;
-        right: 10px;
-        padding: 6px 10px;
-        font-size: 0.8rem;
-    }
-}
-
-/* ===== TIPOGRAFIA SIMPLIFICADA - UMA COR ONLY ===== */
 .story-content .intro {
     font-size: 1.3rem;
     font-weight: 500;
@@ -1219,18 +332,6 @@ body.light-mode .story-content {
     margin-bottom: 2rem;
     text-align: center;
     font-style: italic;
-}
-
-.story-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-    text-align: justify;
-}
-
-.story-content strong {
-    font-weight: 700;
-    /* SEM COR DIFERENTE - mesma cor do texto */
 }
 
 .story-content .highlight {
@@ -1248,266 +349,71 @@ body.light-mode .story-content {
 }
 
 .story-content li {
+    color: #cccccc !important;
     margin-bottom: 0.8rem;
     line-height: 1.6;
 }
 
-.story-content li strong {
+.story-content strong {
     font-weight: 700;
 }
 
-/* Light Mode Adjustments */
-body.light-mode .story-content .highlight {
-    background: rgba(0, 0, 0, 0.03);
-    border-left: 4px solid #ddd;
+/* ===== SCREENSHOTS SECTION ===== */
+.screenshots {
+    padding: 5rem 0;
+    background: #2d2d2d !important;
 }
 
-/* ===== MAIN SCREENSHOT SECTION ===== */
-.screenshot-main {
-    padding: 3rem 0;
-    background: var(--pokemon-dark);
+.screenshots h2 {
     text-align: center;
-}
-
-.main-screenshot {
-    width: 100%;
-    max-width: 720px;
-    height: auto;
-    border-radius: 10px;
-    border: 3px solid var(--pokemon-yellow);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-}
-
-/* Light Mode */
-body.light-mode .screenshot-main {
-    background: #f8f9fa;
-}
-
-body.light-mode .main-screenshot {
-    border: 3px solid var(--pokemon-blue);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .screenshot-main {
-        padding: 2rem 0;
-    }
-    
-    .main-screenshot {
-        max-width: 95%;
-    }
-}
-
-/* ===== TEAM SECTION ===== */
-.team-section {
-    padding: 4rem 0;
-    background: #2d2d2d;
-    text-align: center;
-}
-
-.team-section h2 {
-    font-size: 2.5rem;
     margin-bottom: 3rem;
-    color: #ffffff !important;
+    font-size: 2.5rem;
 }
 
-/* Grid para 4 membros - uniforme */
-.team-row.grid-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto 3rem auto;
-}
-
-/* Última linha sem margem inferior */
-.team-row.grid-4:last-child {
-    margin-bottom: 0;
-}
-
-.team-member {
-    background: #363636;
-    padding: 2rem 1.5rem;
-    border-radius: 10px;
-    border: 2px solid #404040;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.team-member:hover {
-    transform: translateY(-5px);
-    border-color: var(--pokemon-yellow);
-}
-
-.team-member h3 {
-    color: var(--pokemon-yellow) !important;
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
-    font-weight: 600;
-}
-
-.team-member p {
-    color: #cccccc !important;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* Light Mode */
-body.light-mode .team-section {
-    background: #f8f9fa;
-}
-
-body.light-mode .team-section h2 {
-    color: var(--pokemon-dark) !important;
-}
-
-body.light-mode .team-member {
-    background: #ffffff;
-    border: 2px solid #e9ecef;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-body.light-mode .team-member h3 {
-    color: var(--pokemon-blue) !important;
-}
-
-body.light-mode .team-member p {
-    color: #2c3e50 !important;
-}
-
-body.light-mode .team-member:hover {
-    border-color: var(--pokemon-blue);
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .team-section {
-        padding: 3rem 0;
-    }
-    
-    .team-section h2 {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .team-row.grid-4 {
-        grid-template-columns: repeat(2, 1fr); /* 2 colunas no tablet */
-        gap: 1.5rem;
-        padding: 0 1rem;
-        margin-bottom: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .team-row.grid-4 {
-        grid-template-columns: 1fr; /* 1 coluna no celular */
-    }
-    
-    .team-member {
-        padding: 1.5rem 1rem;
-    }
-}
-
-/* Para telas muito pequenas */
-@media (max-width: 480px) {
-    .team-row.grid-3 {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Light Mode */
-body.light-mode .team-section {
-    background: #f8f9fa;
-}
-
-body.light-mode .team-section h2 {
-    color: var(--pokemon-dark) !important;
-}
-
-body.light-mode .team-member {
-    background: #ffffff;
-    border: 2px solid #e9ecef;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-body.light-mode .team-member h3 {
-    color: var(--pokemon-blue) !important;
-}
-
-body.light-mode .team-member p {
-    color: #2c3e50 !important;
-}
-
-body.light-mode .team-member:hover {
-    border-color: var(--pokemon-blue);
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .team-section {
-        padding: 3rem 0;
-    }
-    
-    .team-section h2 {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .team-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 0 1rem;
-    }
-    
-    .team-member {
-        padding: 1.5rem 1rem;
-    }
-}
-
-/* ===== MAIN VIDEO SECTION ===== */
-.video-main {
-    padding: 3rem 0;
-    background: var(--pokemon-dark);
+.simple-slideshow {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #363636 !important;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
     text-align: center;
+    border: 1px solid #404040;
 }
 
-.main-video {
+.simple-slideshow img {
     width: 100%;
-    max-width: 720px;
-    height: auto;
-    border-radius: 10px;
-    border: 3px solid var(--pokemon-yellow);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    height: 350px;
+    object-fit: contain;
+    background: #2d2d2d !important;
+    border-radius: 8px;
+    border: 3px solid var(--pokemon-green) !important;
 }
 
-/* Light Mode */
-body.light-mode .video-main {
-    background: #f8f9fa;
+/* ===== DOWNLOAD SECTION ===== */
+.download {
+    padding: 5rem 0;
+    background: #252525 !important;
+    color: #e0e0e0 !important;
 }
 
-body.light-mode .main-video {
-    border: 3px solid var(--pokemon-blue);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+.download h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-    .video-main {
-        padding: 2rem 0;
-    }
-    
-    .main-video {
-        max-width: 95%;
-    }
+.download-info h3 {
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
-/* Download Section - Atualizado */
+.download-info p {
+    color: #cccccc !important;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
 .download-links {
     display: flex;
     flex-wrap: wrap;
@@ -1522,43 +428,49 @@ body.light-mode .main-video {
     align-items: center;
     justify-content: center;
     padding: 12px 25px;
-    background: #e74c3c;
+    background: var(--pokemon-red) !important;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     transition: all 0.3s ease;
     font-weight: bold;
     min-width: 180px;
-    height: 50px; /* Altura fixa para alinhamento */
+    height: 50px;
     white-space: nowrap;
 }
 
 .download-btn:hover {
-    background: #8940ab;
+    background: #c0392b !important;
     transform: translateY(-2px);
 }
 
 .download-btn.secondary {
-    background: var(--pokemon-blue);
+    background: var(--pokemon-green) !important;
 }
 
 .download-btn.secondary:hover {
-    background: #357abd;
+    background: #219653 !important;
 }
 
-/* HackDex Download Button */
+.download-btn.info {
+    background: var(--pokemon-blue) !important;
+}
+
+.download-btn.info:hover {
+    background: #213c96 !important;
+}
+
 .download-btn.hackdex-download {
-    background: transparent;
+    background: #1a1a1a !important;
     padding: 0;
     min-width: auto;
-    background: #1a1a1a; /* Fundo escuro para combinar com o badge */
     border-radius: 5px;
     overflow: hidden;
 }
 
 .download-btn.hackdex-download:hover {
     transform: scale(1.05);
-    background: #1a1a1a;
+    background: #1a1a1a !important;
 }
 
 .download-btn.hackdex-download img {
@@ -1568,51 +480,31 @@ body.light-mode .main-video {
     border-radius: 5px;
 }
 
-/* Light Mode - Ajuste para o botão HackDex */
-body.light-mode .download-btn.hackdex-download {
-    background: #f0f0f0;
-    border: 1px solid #ddd;
+.installation-guide {
+    background: rgba(255,255,255,0.05) !important;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    border: 1px solid #404040;
+    color: #e0e0e0 !important;
 }
 
-body.light-mode .download-btn.hackdex-download:hover {
-    background: #e0e0e0;
+.installation-guide h4 {
+    color: #ffffff !important;
+    margin-bottom: 1rem;
 }
 
-/* Mobile - Ajustes */
-@media (max-width: 768px) {
-    .download-links {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .download-btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 15px 20px;
-        height: auto;
-        white-space: normal;
-    }
-    
-    .download-btn.hackdex-download {
-        padding: 0;
-        height: auto;
-    }
-    
-    .download-btn.hackdex-download img {
-        width: 100%;
-        height: auto;
-        max-width: 280px;
-    }
+.installation-guide ol {
+    margin-left: 2rem;
+    margin-top: 1rem;
 }
 
-@media (max-width: 480px) {
-    .download-btn, .download-btn.hackdex-download img {
-        max-width: 240px;
-    }
+.installation-guide li {
+    color: #cccccc !important;
+    margin-bottom: 0.5rem;
 }
 
-/* Apply Patch section fixes */
+/* ===== PATCH SECTION ===== */
 #applypatch .download-info {
     max-width: 980px;
     margin: 0 auto;
@@ -1664,66 +556,481 @@ body.light-mode .download-btn.hackdex-download:hover {
     box-shadow: none !important;
 }
 
-#applypatch .installation-guide > div {
-    height: auto !important;
-    min-height: 0;
-}
-
-#applypatch #rom-patcher-container {
+#rom-patcher-container {
     width: 100%;
     max-width: 760px;
     margin: 0 auto;
     padding: 1.5rem 1.25rem;
-    border-radius: 12px;
 }
 
-#applypatch #rom-patcher-container .rom-patcher-row {
-    gap: 0.75rem;
+/* ===== TEAM SECTION ===== */
+.team-section {
+    padding: 4rem 0;
+    background: #2d2d2d;
+    text-align: center;
 }
 
-#applypatch #rom-patcher-container .rom-patcher-row > div:first-child {
-    width: 130px;
-    flex: 0 0 130px;
+.team-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #ffffff !important;
 }
 
-#applypatch #rom-patcher-container .rom-patcher-row > div:last-child {
-    width: auto;
-    flex: 1 1 auto;
-    min-width: 0;
+/* Rafael Sanna - Centralizado */
+.team-founder {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.team-member.large {
+    max-width: 400px;
+    width: 100%;
+    padding: 2.5rem 2rem;
+    background: #363636;
+    border-radius: 10px;
+    border: 2px solid #404040;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.team-member.large:hover {
+    transform: translateY(-5px);
+    border-color: var(--pokemon-yellow);
+}
+
+.team-member.large h3 {
+    color: var(--pokemon-yellow) !important;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.team-member.large p {
+    color: #cccccc !important;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.team-member.large .team-link {
+    color: var(--pokemon-blue);
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--pokemon-blue);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.team-member.large .team-link:hover {
+    background: var(--pokemon-blue);
+    color: white;
+}
+
+/* Grid para 4 membros */
+.team-row.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto 3rem auto;
+}
+
+.team-row.grid-4:last-child {
+    margin-bottom: 0;
+}
+
+.team-member {
+    background: #363636;
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+    border: 2px solid #404040;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    border-color: var(--pokemon-yellow);
+}
+
+.team-member h3 {
+    color: var(--pokemon-yellow) !important;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.team-member p {
+    color: #cccccc !important;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.team-link {
+    color: var(--pokemon-blue);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.team-link:hover {
+    color: var(--pokemon-yellow);
+    text-decoration: underline;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: #1a1a1a !important;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid #333;
+}
+
+footer p {
+    color: #cccccc !important;
+    margin-bottom: 1rem;
+}
+
+.credits-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 10px 20px;
+    background: var(--pokemon-green) !important;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.credits-btn:hover {
+    background: #219653 !important;
+}
+
+/* ===== THEME TOGGLE ===== */
+.theme-toggle {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--pokemon-dark);
+    border: 2px solid var(--pokemon-yellow);
+    border-radius: 50px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.theme-toggle:hover {
+    background: var(--pokemon-blue);
+    transform: scale(1.05);
+}
+
+.theme-toggle i {
+    margin-right: 5px;
+}
+
+/* ===== LIGHT MODE ===== */
+body.light-mode {
+    background: #f8f9fa !important;
+    color: #2c3e50 !important;
+}
+
+body.light-mode header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+}
+
+body.light-mode .story {
+    background: #ffffff !important;
+    color: #2c3e50 !important;
+}
+
+body.light-mode .story-content p,
+body.light-mode .story-content li {
+    color: #2c3e50 !important;
+}
+
+body.light-mode .screenshots {
+    background: #ffffff !important;
+}
+
+body.light-mode .simple-slideshow {
+    background: #ffffff !important;
+    border: 2px solid #dee2e6;
+}
+
+body.light-mode .simple-slideshow img {
+    background: #f8f9fa !important;
+}
+
+body.light-mode .download {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+}
+
+body.light-mode .download-info p,
+body.light-mode .installation-guide li {
+    color: #e0e0e0 !important;
+}
+
+body.light-mode .team-section {
+    background: #f8f9fa;
+}
+
+body.light-mode .team-section h2 {
+    color: var(--pokemon-dark) !important;
+}
+
+body.light-mode .team-member,
+body.light-mode .team-member.large {
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+body.light-mode .team-member h3,
+body.light-mode .team-member.large h3 {
+    color: var(--pokemon-blue) !important;
+}
+
+body.light-mode .team-member p,
+body.light-mode .team-member.large p {
+    color: #2c3e50 !important;
+}
+
+body.light-mode footer {
+    background: #2c3e50 !important;
+}
+
+body.light-mode .download-btn.hackdex-download {
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 1023px) and (min-width: 769px) {
+    .button-row {
+        gap: 1rem;
+    }
+    
+    .cta-button, .discord-button, .youtube-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        height: 45px;
+    }
+    
+    .hackdex-button {
+        height: 45px;
+    }
+    
+    .hackdex-button img {
+        height: 45px;
+    }
 }
 
 @media (max-width: 768px) {
-    #applypatch #rom-patcher-container .rom-patcher-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.35rem;
+    /* Header */
+    header {
+        height: 70px !important;
     }
-
-    #applypatch #rom-patcher-container .rom-patcher-row > div:first-child,
-    #applypatch #rom-patcher-container .rom-patcher-row > div:last-child {
+    
+    .logo-img {
+        height: 45px;
+    }
+    
+    .hamburger {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
         width: 100%;
-        flex: 1 1 auto;
-        text-align: left;
+        height: calc(100vh - 70px);
+        background: var(--pokemon-dark);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 2rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
     }
-
-    #applypatch .patch-accordion > summary {
-        font-size: 1.05rem;
-        padding: 0.9rem 1rem;
+    
+    .nav-links.active {
+        left: 0;
+    }
+    
+    .nav-links li {
+        margin: 1rem 0;
+    }
+    
+    .nav-links a {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+        display: block;
+    }
+    
+    /* Hero */
+    .hero-with-banner {
+        height: 40vh !important;
+        margin-top: 70px;
+    }
+    
+    .banner-logo {
+        max-width: 250px;
+        max-height: 120px;
+    }
+    
+    .cloud-left {
+        max-width: 150px;
+        bottom: 10%;
+    }
+    
+    .cloud-right {
+        max-width: 150px;
+        top: 10%;
+    }
+    
+    .hero-content-overlay {
+        top: 70% !important;
+    }
+    
+    .button-row {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+    
+    .cta-button, .discord-button, .youtube-button {
+        width: 220px;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        height: auto;
+        white-space: normal;
+    }
+    
+    .hackdex-button {
+        width: 220px;
+        height: auto;
+    }
+    
+    .hackdex-button img {
+        width: 100%;
+        height: auto;
+    }
+    
+    /* Team Section */
+    .team-row.grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 0 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .team-member.large {
+        max-width: 350px;
+    }
+    
+    /* Sections */
+    .story, .features, .screenshots, .download {
+        padding: 3rem 0 !important;
+    }
+    
+    h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    .simple-slideshow {
+        max-width: 100% !important;
+        margin: 1rem auto !important;
+        padding: 0.5rem;
+    }
+    
+    .simple-slideshow img {
+        height: 200px !important;
+    }
+    
+    .download-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .download-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 15px 20px;
+        height: auto;
+        white-space: normal;
+    }
+    
+    .download-btn.hackdex-download {
+        padding: 0;
+        height: auto;
+    }
+    
+    .download-btn.hackdex-download img {
+        width: 100%;
+        height: auto;
+        max-width: 280px;
+    }
+    
+    .theme-toggle {
+        top: 75px;
+        right: 10px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
     }
 }
 
-body.light-mode #applypatch .patch-accordion {
-    border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.12);
-}
-
-body.light-mode #applypatch .patch-accordion > summary {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-}
-
-body.light-mode #applypatch .patch-accordion[open] > summary {
-    border-bottom-color: rgba(255, 255, 255, 0.35);
+@media (max-width: 480px) {
+    .hero-with-banner {
+        height: 35vh !important;
+    }
+    
+    .banner-logo {
+        max-width: 180px;
+        max-height: 90px;
+    }
+    
+    .cloud-left, .cloud-right {
+        max-width: 100px;
+        opacity: 0.5;
+    }
+    
+    .hero-content-overlay {
+        top: 65% !important;
+    }
+    
+    .cta-button, .discord-button, .youtube-button, .hackdex-button {
+        width: 200px;
+    }
+    
+    .download-btn, .download-btn.hackdex-download img {
+        max-width: 240px;
+    }
+    
+    .team-row.grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    h2 {
+        font-size: 1.6rem !important;
+    }
+    
+    .simple-slideshow img {
+        height: 180px !important;
+    }
 }
 
 

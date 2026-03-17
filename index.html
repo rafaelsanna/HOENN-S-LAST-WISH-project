@@ -9,114 +9,111 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="apple-touch-icon" href="images/favicon.png">
-    
-    <!-- Para dispositivos Apple -->
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
     
-    <!-- Meta tags para melhor aparência quando compartilhado -->
+    <!-- Meta tags -->
     <meta property="og:image" content="images/favicon.png">
     
+    <!-- Fonts & CSS -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link type="text/css" rel="stylesheet" href="./rom-patcher-js/style.css" media="all" />
 </head>
 <body>
-<header>
-    <nav>
-        <!-- Logo clicável -->
-        <a href="#home" class="logo-link">
-            <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
-        </a>
-        
-        <!-- Botão Hamburger -->
-        <button class="hamburger" id="hamburger">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <ul class="nav-links" id="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#story">Story</a></li>
-            <li><a href="#screenshots">Screenshots</a></li>
-            <li><a href="#download">Download</a></li>
-        </ul>
-    </nav>
-</header>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#home" class="logo-link">
+                <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
+            </a>
+            
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#story">Story</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- Theme Toggle Button -->
+    <!-- Theme Toggle -->
     <button class="theme-toggle" id="themeToggle">
         <i class="fas fa-sun"></i> Light Mode
     </button>
     
-<section id="home" class="hero">
-    <div class="hero-with-banner">
-        <div class="banner-container">
-            <!-- Camada de fundo (banner estático) -->
-            <img src="images/banner.png" alt="Pokémon: Hoenn's Last Wish" class="hero-banner">
-            
-            <!-- Camadas de nuvens animadas -->
-            <img src="images/cloud-left.png" alt="" class="cloud cloud-left">
-            <img src="images/cloud-right.png" alt="" class="cloud cloud-right">
-            
-            <!-- Logo clicável no centro -->
-            <a href="#home" class="banner-logo-link">
-                <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="banner-logo">
-            </a>
-        </div>
-        
-        <div class="hero-content-overlay">
-            <div class="button-row">
-                <a href="#download" class="cta-button">Download Patch</a>
-                <a href="https://discord.gg/nfzXFsPbgS" class="discord-button" target="_blank">
-                    <i class="fab fa-discord"></i> Join Discord
-                </a>
-                <a href="https://www.youtube.com/@hoennslastwish" class="youtube-button" target="_blank">
-                    <i class="fab fa-youtube"></i> YouTube Channel
-                </a>
-                <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="hackdex-button" target="_blank">
-                    <img src="./images/download_banner.png" alt="Download now at hackdex.app">
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-with-banner">
+            <div class="banner-container">
+                <img src="images/banner.png" alt="Pokémon: Hoenn's Last Wish" class="hero-banner">
+                <img src="images/cloud-left.png" alt="" class="cloud cloud-left">
+                <img src="images/cloud-right.png" alt="" class="cloud cloud-right">
+                
+                <a href="#home" class="banner-logo-link">
+                    <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="banner-logo">
                 </a>
             </div>
+            
+            <div class="hero-content-overlay">
+                <div class="button-row">
+                    <a href="#download" class="cta-button">Download Patch</a>
+                    <a href="https://discord.gg/nfzXFsPbgS" class="discord-button" target="_blank">
+                        <i class="fab fa-discord"></i> Join Discord
+                    </a>
+                    <a href="https://www.youtube.com/@hoennslastwish" class="youtube-button" target="_blank">
+                        <i class="fab fa-youtube"></i> YouTube Channel
+                    </a>
+                    <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="hackdex-button" target="_blank">
+                        <img src="./images/download_banner.png" alt="Download now at hackdex.app">
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
    
-<!-- Video Section -->
-<section class="video-main">
-    <div class="container">
-        <video class="main-video" controls autoplay muted loop>
-            <source src="images/video01.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-</section>
-
-<section id="story" class="story">
-    <div class="container">
-        <h2>The Story</h2>
-        <div class="story-content">
-            <p class="intro">Imagine a world where <strong>Rayquaza failed to stop the primal clash</strong> between Groudon and Kyogre a catastrophic failure that triggered the <strong>complete ecological collapse of the Hoenn region</strong>.</p>
-            
-            <p>Years of relentless natural disasters have left Hoenn in ruins. <strong>The age of Pokémon trainers has ended</strong>, Poké Balls are forgotten relics, and civilization has crumbled. What remains are nomadic tribes of survivors, scavenging in a world where Pokémon have reclaimed the land as wild, untamed forces of nature.</p>
-            
-            <p>But hope emerges from the ashes. <strong>The Millennium Comet arrives</strong>, carrying with it <strong>Jirachi, the wish-granter</strong>, and <strong>Celebi, the time traveler</strong>. Together, they offer one last chance: <strong>a journey back through time to prevent the catastrophe before it begins</strong>.</p>
-            
-            <p>As you return to the past, you discover that <strong>echoes of the ruined future are already seeping into the timeline</strong>. The Hoenn you remember is changing:</p>
-            
-            <ul>
-                <li><strong>New Pokémon forms</strong> emerging from temporal distortions</li>
-                <li><strong>Familiar characters transformed</strong> by glimpses of the doomed future</li>
-                <li><strong>Mysterious factions</strong> with conflicting agendas for the timeline</li>
-                <li><strong>Gym Leaders facing unprecedented challenges</strong> in a world on the brink</li>
-            </ul>
-            
-            <p class="highlight">This is no ordinary Pokémon journey. You carry the weight of two timelines <strong>racing against time to heal the wounds of a future that should never exist</strong>, while navigating a present that grows more unstable with each passing moment.</p>
-            
-            <p>Every battle, every choice, every alliance could mean the difference between <strong>salvation and absolute destruction</strong>. The fate of Hoenn rests in your hands, in this <strong>last wish for redemption</strong>.</p>
+    <!-- Video Section -->
+    <section class="video-main">
+        <div class="container">
+            <video class="main-video" controls autoplay muted loop>
+                <source src="images/video01.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
-    </div>
-</section>
+    </section>
 
+    <!-- Story Section -->
+    <section id="story" class="story">
+        <div class="container">
+            <h2>The Story</h2>
+            <div class="story-content">
+                <p class="intro">Imagine a world where <strong>Rayquaza failed to stop the primal clash</strong> between Groudon and Kyogre a catastrophic failure that triggered the <strong>complete ecological collapse of the Hoenn region</strong>.</p>
+                
+                <p>Years of relentless natural disasters have left Hoenn in ruins. <strong>The age of Pokémon trainers has ended</strong>, Poké Balls are forgotten relics, and civilization has crumbled. What remains are nomadic tribes of survivors, scavenging in a world where Pokémon have reclaimed the land as wild, untamed forces of nature.</p>
+                
+                <p>But hope emerges from the ashes. <strong>The Millennium Comet arrives</strong>, carrying with it <strong>Jirachi, the wish-granter</strong>, and <strong>Celebi, the time traveler</strong>. Together, they offer one last chance: <strong>a journey back through time to prevent the catastrophe before it begins</strong>.</p>
+                
+                <p>As you return to the past, you discover that <strong>echoes of the ruined future are already seeping into the timeline</strong>. The Hoenn you remember is changing:</p>
+                
+                <ul>
+                    <li><strong>New Pokémon forms</strong> emerging from temporal distortions</li>
+                    <li><strong>Familiar characters transformed</strong> by glimpses of the doomed future</li>
+                    <li><strong>Mysterious factions</strong> with conflicting agendas for the timeline</li>
+                    <li><strong>Gym Leaders facing unprecedented challenges</strong> in a world on the brink</li>
+                </ul>
+                
+                <p class="highlight">This is no ordinary Pokémon journey. You carry the weight of two timelines <strong>racing against time to heal the wounds of a future that should never exist</strong>, while navigating a present that grows more unstable with each passing moment.</p>
+                
+                <p>Every battle, every choice, every alliance could mean the difference between <strong>salvation and absolute destruction</strong>. The fate of Hoenn rests in your hands, in this <strong>last wish for redemption</strong>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
     <section id="screenshots" class="screenshots">
         <div class="container">
             <h2>Screenshots</h2>
@@ -126,163 +123,170 @@
         </div>
     </section>
 
-<section id="download" class="download">
-    <div class="container">
-        <h2>Download</h2>
-        <div class="download-info">
-            <h3>Patch File</h3>
-            <p>Download the .bps patch file and apply it to a clean Pokémon Emerald ROM (1.0 US version).</p>
-            
-            <div class="download-links">
-                <a href="https://drive.google.com/drive/folders/1Kczj59U4ZCFtgkXeLXAMmM9c05i0XHek?usp=sharing" class="download-btn" target="_blank">
-                    Download BPS Patch
-                </a>
-                <a href="#applypatch" class="download-btn info">
-                    Apply Patch
-                </a>
-                <a href="https://www.romhacking.net/patch/" class="download-btn secondary" target="_blank">
-                    How to Apply Patch
-                </a>
-                <!-- NOVO BOTÃO DO HACKDEX NA SEÇÃO DOWNLOAD -->
-                <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="download-btn hackdex-download" target="_blank">
-                    <img src="./images/download_banner.png" alt="Download now at hackdex.app">
-                </a>
-            </div>
-
-            <div class="installation-guide">
-                <h4>Installation Guide</h4>
-                <ol>
-                    <li>Get a clean Pokémon Emerald (US) ROM</li>
-                    <li>Download the BPS patch file above</li>
-                    <li>Use a patching tool (FLIPS, etc.)</li>
-                    <li>Apply patch to your clean ROM</li>
-                    <li>Enjoy your new adventure!</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section id="applypatch" class="download">
-    <div class="container">
-        <h2>Apply Patch</h2>
-        <div class="download-info">
-            <details class="patch-accordion">
-                <summary>Patch Application</summary>
-                <div class="installation-guide">
-                    <div>
-                        <!---->
-                        <div id="rom-patcher-container">
-                        <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-rom">
-                            <div class="text-right"><label for="rom-patcher-input-file-rom" data-localize="yes">ROM file:</label></div>
-                            <div class="rom-patcher-container-input">
-                                <input type="file" id="rom-patcher-input-file-rom" class="empty" disabled />
-                            </div>
-                        </div>
-                        <div class="margin-bottom text-selectable text-mono text-muted" id="rom-patcher-rom-info">
-                            <div class="rom-patcher-row">
-                                <div class="text-right">CRC32:</div>
-                                <div class="text-truncate"><span id="rom-patcher-span-crc32"></span></div>
-                            </div>
-                            <div class="rom-patcher-row">
-                                <div class="text-right">MD5:</div>
-                                <div class="text-truncate"><span id="rom-patcher-span-md5"></span></div>
-                            </div>
-                            <div class="rom-patcher-row">
-                                <div class="text-right">SHA-1:</div>
-                                <div class="text-truncate"><span id="rom-patcher-span-sha1"></span></div>
-                            </div>
-                            <div class="rom-patcher-row" id="rom-patcher-row-info-rom">
-                                <div class="text-right">ROM:</div>
-                                <div class="text-truncate"><span id="rom-patcher-span-rom-info"></span></div>
-                            </div>
-                        </div>
-
-                        <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-patch">
-                            <div class="text-right"><label for="rom-patcher-input-file-patch" data-localize="yes">Patch file:</label>
-                            </div>
-                            <div class="rom-patcher-container-input">
-                                <select id="rom-patcher-select-patch"></select>
-                            </div>
-                        </div>
-                        <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-patch-description">
-                            <div class="text-right text-mono text-muted" data-localize="yes">Description:</div>
-                            <div class="text-truncate" id="rom-patcher-patch-description"></div>
-                        </div>
-                        <div class="rom-patcher-row margin-bottom text-selectable text-mono text-muted"
-                            id="rom-patcher-row-patch-requirements">
-                            <div class="text-right text-mono" id="rom-patcher-patch-requirements-type">ROM requirements:</div>
-                            <div class="text-truncate" id="rom-patcher-patch-requirements-value"></div>
-                        </div>
-
-                        <div class="text-center" id="rom-patcher-row-apply">
-                            <div id="rom-patcher-row-error-message" class="margin-bottom"><span id="rom-patcher-error-message"></span>
-                            </div>
-                            <button id="rom-patcher-button-apply" data-localize="yes" disabled>Apply patch</button>
-                        </div>
-                        </div>
-                        <!---->
-                    </div>
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Download</h2>
+            <div class="download-info">
+                <h3>Patch File</h3>
+                <p>Download the .bps patch file and apply it to a clean Pokémon Emerald ROM (1.0 US version).</p>
+                
+                <div class="download-links">
+                    <a href="https://drive.google.com/drive/folders/1Kczj59U4ZCFtgkXeLXAMmM9c05i0XHek?usp=sharing" class="download-btn" target="_blank">
+                        Download BPS Patch
+                    </a>
+                    <a href="#applypatch" class="download-btn info">
+                        Apply Patch
+                    </a>
+                    <a href="https://www.romhacking.net/patch/" class="download-btn secondary" target="_blank">
+                        How to Apply Patch
+                    </a>
+                    <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="download-btn hackdex-download" target="_blank">
+                        <img src="./images/download_banner.png" alt="Download now at hackdex.app">
+                    </a>
                 </div>
-            </details>
-        </div>
-    </div>
-</section>
 
-<!-- Team Section -->
-<section class="team-section">
-    <div class="container">
-        <h2>OUR TEAM</h2>
-        
-        <!-- Primeira linha: 4 membros -->
-        <div class="team-row grid-4">
-            <div class="team-member">
-                <h3>Rafael Sanna</h3>
-                <p>Creator / Main Dev / Art Director / Spriter / Code</p>
-            </div>
-            
-            <div class="team-member">
-                <h3>coffelover42</h3>
-                <p>Mapper / Scriptor</p>
-            </div>
-            
-            <div class="team-member">
-                <h3>Eric Serbinenko</h3>
-                <p>Graphics / Dev</p>
-            </div>
-            
-            <div class="team-member">
-                <h3>Kirb</h3>
-                <p>OST / Musics / Ideas / Play Test</p>
+                <div class="installation-guide">
+                    <h4>Installation Guide</h4>
+                    <ol>
+                        <li>Get a clean Pokémon Emerald (US) ROM</li>
+                        <li>Download the BPS patch file above</li>
+                        <li>Use a patching tool (FLIPS, etc.)</li>
+                        <li>Apply patch to your clean ROM</li>
+                        <li>Enjoy your new adventure!</li>
+                    </ol>
+                </div>
             </div>
         </div>
-        
-        <!-- Segunda linha: 4 membros -->
-        <div class="team-row grid-4">
-            <div class="team-member">
-                <h3>Ember</h3>
-                <p>Sprites / Playtest</p>
-            </div>
-            
-            <div class="team-member">
-                <h3>Gerbo</h3>
-                <p>Sprites / Concept Artist</p>
-            </div>
-            
-            <div class="team-member">
-                <h3>Kazioko</h3>
-                <p>Sprites / Concept Artist</p>
-            </div>
-            
-            <div class="team-member">
-                <h3>DoodleLordElias</h3>
-                <p>Sprites / Concept Artist</p>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
+    <!-- Apply Patch Section -->
+    <section id="applypatch" class="download">
+        <div class="container">
+            <h2>Apply Patch</h2>
+            <div class="download-info">
+                <details class="patch-accordion">
+                    <summary>Patch Application</summary>
+                    <div class="installation-guide">
+                        <div>
+                            <div id="rom-patcher-container">
+                                <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-rom">
+                                    <div class="text-right"><label for="rom-patcher-input-file-rom" data-localize="yes">ROM file:</label></div>
+                                    <div class="rom-patcher-container-input">
+                                        <input type="file" id="rom-patcher-input-file-rom" class="empty" disabled />
+                                    </div>
+                                </div>
+                                <div class="margin-bottom text-selectable text-mono text-muted" id="rom-patcher-rom-info">
+                                    <div class="rom-patcher-row">
+                                        <div class="text-right">CRC32:</div>
+                                        <div class="text-truncate"><span id="rom-patcher-span-crc32"></span></div>
+                                    </div>
+                                    <div class="rom-patcher-row">
+                                        <div class="text-right">MD5:</div>
+                                        <div class="text-truncate"><span id="rom-patcher-span-md5"></span></div>
+                                    </div>
+                                    <div class="rom-patcher-row">
+                                        <div class="text-right">SHA-1:</div>
+                                        <div class="text-truncate"><span id="rom-patcher-span-sha1"></span></div>
+                                    </div>
+                                    <div class="rom-patcher-row" id="rom-patcher-row-info-rom">
+                                        <div class="text-right">ROM:</div>
+                                        <div class="text-truncate"><span id="rom-patcher-span-rom-info"></span></div>
+                                    </div>
+                                </div>
+
+                                <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-patch">
+                                    <div class="text-right"><label for="rom-patcher-input-file-patch" data-localize="yes">Patch file:</label></div>
+                                    <div class="rom-patcher-container-input">
+                                        <select id="rom-patcher-select-patch"></select>
+                                    </div>
+                                </div>
+                                <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-patch-description">
+                                    <div class="text-right text-mono text-muted" data-localize="yes">Description:</div>
+                                    <div class="text-truncate" id="rom-patcher-patch-description"></div>
+                                </div>
+                                <div class="rom-patcher-row margin-bottom text-selectable text-mono text-muted" id="rom-patcher-row-patch-requirements">
+                                    <div class="text-right text-mono" id="rom-patcher-patch-requirements-type">ROM requirements:</div>
+                                    <div class="text-truncate" id="rom-patcher-patch-requirements-value"></div>
+                                </div>
+
+                                <div class="text-center" id="rom-patcher-row-apply">
+                                    <div id="rom-patcher-row-error-message" class="margin-bottom"><span id="rom-patcher-error-message"></span></div>
+                                    <button id="rom-patcher-button-apply" data-localize="yes" disabled>Apply patch</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2>OUR TEAM</h2>
+            
+            <!-- Rafael Sanna - Centralizado -->
+            <div class="team-founder">
+                <div class="team-member large">
+                    <h3>Rafael Sanna</h3>
+                    <p>Creator / Main Dev / Art Director / Spriter / Code</p>
+                    <a href="https://www.behance.net/rafaelsanna" class="team-link" target="_blank">Behance</a>
+                </div>
+            </div>
+            
+            <!-- Primeira linha: 4 membros -->
+            <div class="team-row grid-4">
+                <div class="team-member">
+                    <h3>coffelover42</h3>
+                    <p>Mapper / Scriptor</p>
+                </div>
+                
+                <div class="team-member">
+                    <h3>Eric Serbinenko</h3>
+                    <p>Graphics / Dev</p>
+                </div>
+                
+                <div class="team-member">
+                    <h3>_pablo</h3>
+                    <p>Dev / Scripter</p>
+                </div>
+                
+                <div class="team-member">
+                    <h3>Kirb</h3>
+                    <p>OST / Musics / Ideas / Play Test</p>
+                </div>
+            </div>
+            
+            <!-- Segunda linha: 4 membros -->
+            <div class="team-row grid-4">
+                <div class="team-member">
+                    <h3>Ember</h3>
+                    <p>Sprites / Playtest</p>
+                </div>
+                
+                <div class="team-member">
+                    <h3>Gerbo</h3>
+                    <p>Sprites / Concept Artist</p>
+                    <a href="https://ko-fi.com/gerbo" class="team-link" target="_blank">Ko-fi</a>
+                </div>
+                
+                <div class="team-member">
+                    <h3>Kazioko</h3>
+                    <p>Sprites / Concept Artist</p>
+                    <a href="https://www.instagram.com/_kaziio_ko_/" class="team-link" target="_blank">Instagram</a>
+                </div>
+                
+                <div class="team-member">
+                    <h3>DoodleLordElias</h3>
+                    <p>Sprites / Concept Artist</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <p>Pokémon: Hoenn's Last Wish - A Pokémon ROM Hack</p>
@@ -293,14 +297,15 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="script.js"></script>
     <script type="text/javascript" src="rom-patcher-js/RomPatcher.webapp.js"></script>
     <script type="text/javascript">
         window.addEventListener('load', function(){
             const myPatcherSettings={
                 language: 'en',
-                requireValidation: true, /* if true, user won't be able to apply patch if the provided ROM is not valid*/
-                allowDropFiles: true /* if true, it adds basic drag and drop support */
+                requireValidation: true,
+                allowDropFiles: true
             };
             
             RomPatcherWeb.initialize(myPatcherSettings, {
@@ -311,8 +316,6 @@
                 description: 'Last Updated Patch for Pokemon Hoenn Last Wish.',
                 outputName: 'Hoenn Last Wish v0.3.21 (Patched).gba'
             });
-
-
         });
     </script>
 </body>
