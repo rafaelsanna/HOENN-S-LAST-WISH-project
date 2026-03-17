@@ -139,24 +139,24 @@ nav {
     position: absolute;
     z-index: 2;
     pointer-events: none;
-    width: 120%; /* Maior que o container para ficar para fora */
-    height: 120%; /* Maior que o container para ficar para fora */
+    width: 140%; /* Aumentado de 120% para 140% */
+    height: 140%; /* Aumentado de 120% para 140% */
     object-fit: contain;
     opacity: 0.7;
 }
 
 .cloud-left {
-    left: -10%; /* Puxa para esquerda (fica para fora) */
-    bottom: -5%; /* Coloca na parte de baixo e puxa para fora */
+    left: -25%; /* Aumentado de -10% para -25% (mais para fora) */
+    bottom: -15%; /* Aumentado de -5% para -15% (mais para baixo) */
     object-position: left bottom;
-    animation: floatCloudLeft 15s ease-in-out infinite; /* Mais lento */
+    animation: floatCloudLeft 15s ease-in-out infinite;
 }
 
 .cloud-right {
-    right: -10%; /* Puxa para direita (fica para fora) */
-    bottom: -5%; /* Coloca na parte de baixo e puxa para fora */
+    right: -25%; /* Aumentado de -10% para -25% (mais para fora) */
+    bottom: -15%; /* Aumentado de -5% para -15% (mais para baixo) */
     object-position: right bottom;
-    animation: floatCloudRight 18s ease-in-out infinite; /* Mais lento */
+    animation: floatCloudRight 18s ease-in-out infinite;
 }
 
 /* Animações com mais movimento e scale */
@@ -165,13 +165,13 @@ nav {
         transform: translateX(0) translateY(0) scale(1);
     }
     25% {
-        transform: translateX(15px) translateY(-8px) scale(1.05);
+        transform: translateX(20px) translateY(-10px) scale(1.05);
     }
     50% {
-        transform: translateX(25px) translateY(-15px) scale(1.08);
+        transform: translateX(35px) translateY(-20px) scale(1.1);
     }
     75% {
-        transform: translateX(10px) translateY(-5px) scale(1.03);
+        transform: translateX(15px) translateY(-8px) scale(1.03);
     }
     100% {
         transform: translateX(0) translateY(0) scale(1);
@@ -183,13 +183,13 @@ nav {
         transform: translateX(0) translateY(0) scale(1);
     }
     25% {
-        transform: translateX(-15px) translateY(-10px) scale(1.06);
+        transform: translateX(-20px) translateY(-12px) scale(1.06);
     }
     50% {
-        transform: translateX(-25px) translateY(-18px) scale(1.1);
+        transform: translateX(-35px) translateY(-22px) scale(1.12);
     }
     75% {
-        transform: translateX(-10px) translateY(-5px) scale(1.04);
+        transform: translateX(-15px) translateY(-8px) scale(1.04);
     }
     100% {
         transform: translateX(0) translateY(0) scale(1);
@@ -199,18 +199,18 @@ nav {
 /* Ajuste para mobile */
 @media (max-width: 768px) {
     .cloud-left {
-        width: 150%;
-        height: 150%;
-        left: -25%;
-        bottom: -10%;
+        width: 180%;
+        height: 180%;
+        left: -40%;
+        bottom: -20%;
         animation: floatCloudLeft 12s ease-in-out infinite;
     }
     
     .cloud-right {
-        width: 150%;
-        height: 150%;
-        right: -25%;
-        bottom: -10%;
+        width: 180%;
+        height: 180%;
+        right: -40%;
+        bottom: -20%;
         animation: floatCloudRight 14s ease-in-out infinite;
     }
 }
