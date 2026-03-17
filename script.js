@@ -89,3 +89,12 @@ if (hamburger && navLinks) {
 
 console.log('Pokémon: Hoenn\'s Last Wish website loaded successfully!');
 
+// Contador invisível de visitas
+fetch('https://api.counterapi.dev/v1/hoennslastwish/site/up')
+  .then(response => response.json())
+  .then(data => {
+    console.log('📊 Total de visitas:', data.count);
+    // Não mostra nada na tela, só fica no seu console
+  })
+  .catch(error => console.log('Erro no contador:', error));
+
