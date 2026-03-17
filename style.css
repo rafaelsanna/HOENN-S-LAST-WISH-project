@@ -762,6 +762,13 @@ a:hover {
 .download-btn.secondary:hover {
     background: #219653 !important;
 }
+.download-btn.info {
+    background: var(--pokemon-blue) !important;
+}
+
+.download-btn.info:hover {
+    background: #213c96 !important;
+}
 
 .credits-btn {
     background: var(--pokemon-green) !important;
@@ -1419,6 +1426,120 @@ body.light-mode .download-btn.hackdex-download:hover {
     .download-btn, .download-btn.hackdex-download img {
         max-width: 240px;
     }
+}
+
+/* Apply Patch section fixes */
+#applypatch .download-info {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+#applypatch .patch-accordion {
+    border: 1px solid #404040;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+#applypatch .patch-accordion > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1rem 1.25rem;
+    font-family: 'Oxanium', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid transparent;
+}
+
+#applypatch .patch-accordion > summary::-webkit-details-marker {
+    display: none;
+}
+
+#applypatch .patch-accordion[open] > summary {
+    border-bottom-color: #404040;
+}
+
+#applypatch .patch-accordion > summary::after {
+    content: '+';
+    float: right;
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+#applypatch .patch-accordion[open] > summary::after {
+    content: '-';
+}
+
+#applypatch .patch-accordion .installation-guide {
+    margin-top: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#applypatch .installation-guide > div {
+    height: auto !important;
+    min-height: 0;
+}
+
+#applypatch #rom-patcher-container {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem;
+    border-radius: 12px;
+}
+
+#applypatch #rom-patcher-container .rom-patcher-row {
+    gap: 0.75rem;
+}
+
+#applypatch #rom-patcher-container .rom-patcher-row > div:first-child {
+    width: 130px;
+    flex: 0 0 130px;
+}
+
+#applypatch #rom-patcher-container .rom-patcher-row > div:last-child {
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+    #applypatch #rom-patcher-container .rom-patcher-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.35rem;
+    }
+
+    #applypatch #rom-patcher-container .rom-patcher-row > div:first-child,
+    #applypatch #rom-patcher-container .rom-patcher-row > div:last-child {
+        width: 100%;
+        flex: 1 1 auto;
+        text-align: left;
+    }
+
+    #applypatch .patch-accordion > summary {
+        font-size: 1.05rem;
+        padding: 0.9rem 1rem;
+    }
+}
+
+body.light-mode #applypatch .patch-accordion {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+body.light-mode #applypatch .patch-accordion > summary {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.light-mode #applypatch .patch-accordion[open] > summary {
+    border-bottom-color: rgba(255, 255, 255, 0.35);
 }
 
 
