@@ -146,15 +146,15 @@ nav {
 }
 
 .cloud-left {
-    left: -60%; /* Extremamente para esquerda */
-    bottom: -40%; /* Muito para baixo (cortado) */
+    left: -80%; /* Extremamente para esquerda */
+    bottom: -50%; /* Muito para baixo (cortado) */
     object-position: left bottom;
     animation: floatCloudLeft 18s ease-in-out infinite;
 }
 
 .cloud-right {
-    right: -60%; /* Extremamente para direita */
-    bottom: -40%; /* Muito para baixo (cortado) */
+    right: -80%; /* Extremamente para direita */
+    bottom: -50%; /* Muito para baixo (cortado) */
     object-position: right bottom;
     animation: floatCloudRight 20s ease-in-out infinite;
 }
