@@ -149,7 +149,6 @@ nav {
     position: relative;
     height: 70vh;
     overflow: hidden;
-    margin-top: 100px;
 }
 
 .banner-container {
@@ -941,7 +940,6 @@ body.light-mode .download-btn.hackdex-download {
     /* Hero Mobile */
     .hero-with-banner {
         height: 50vh !important;
-        margin-top: 70px;
     }
 
     @media (max-width: 768px) {
