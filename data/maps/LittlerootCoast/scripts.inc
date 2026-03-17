@@ -56,7 +56,7 @@ ArtistPortinari::
 
 LeeDialogue::
 # 29 "data/maps/LittlerootCoast/scripts.pory"
-	.string "I'm trying to catch a WINGULL!\n All my other birds get crushed by ROCK-types,\n so I need one that can actually fight back!$"
+	.string "I'm trying to catch a WINGULL...\nTo deal with ROCK-type POKéMON!\n He can actually fight back!$"
 
 LeeIntro::
 # 35 "data/maps/LittlerootCoast/scripts.pory"
