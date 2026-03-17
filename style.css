@@ -142,17 +142,12 @@ nav {
     color: var(--pokemon-yellow); /* Destaque amarelo */
 }
 
-/* Hero Section with Banner */
-.hero-with-banner {
-    position: relative;
-    height: 70vh;
-    overflow: hidden;
-    margin-top: 100px; /* mesma altura do header */
-}
-
+/* Banner Container - Agora com posição relativa para as camadas */
 .banner-container {
     width: 100%;
     height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-banner {
@@ -160,19 +155,147 @@ nav {
     height: 100%;
     object-fit: cover;
     object-position: center;
+    position: relative;
+    z-index: 1;
 }
 
-.hero-content-overlay {
+/* Estilos das nuvens */
+.cloud {
     position: absolute;
-    top: 85%;
+    z-index: 2;
+    pointer-events: none; /* Para não interferir com cliques */
+    opacity: 0.7; /* Ajuste conforme necessário */
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+
+.cloud-left {
+    left: 0;
+    bottom: 20%;
+    animation: floatLeft 8s ease-in-out infinite;
+}
+
+.cloud-right {
+    right: 0;
+    top: 15%;
+    animation: floatRight 10s ease-in-out infinite;
+}
+
+/* Logo central */
+.banner-logo-link {
+    position: absolute;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
     z-index: 3;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    width: 90%;
-    max-width: 800px;
+    display: block;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.banner-logo-link:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.banner-logo {
+    width: auto;
+    height: auto;
+    max-width: 400px; /* Ajuste conforme necessário */
+    max-height: 200px; /* Ajuste conforme necessário */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Animações das nuvens */
+@keyframes floatLeft {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(10px) translateY(-5px);
+    }
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes floatRight {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(-10px) translateY(5px);
+    }
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+    .banner-logo {
+        max-width: 250px;
+        max-height: 120px;
+    }
+    
+    .cloud-left {
+        max-width: 150px;
+        bottom: 10%;
+    }
+    
+    .cloud-right {
+        max-width: 150px;
+        top: 10%;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-logo {
+        max-width: 180px;
+        max-height: 90px;
+    }
+    
+    .cloud-left, .cloud-right {
+        max-width: 100px;
+        opacity: 0.5;
+    }
+}
+
+/* Opção de animação mais elaborada */
+@keyframes floatLeft {
+    0% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateX(8px) translateY(-3px) rotate(1deg);
+    }
+    50% {
+        transform: translateX(12px) translateY(-6px) rotate(2deg);
+    }
+    75% {
+        transform: translateX(5px) translateY(-2px) rotate(1deg);
+    }
+    100% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+    }
+}
+
+@keyframes floatRight {
+    0% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateX(-8px) translateY(3px) rotate(-1deg);
+    }
+    50% {
+        transform: translateX(-12px) translateY(6px) rotate(-2deg);
+    }
+    75% {
+        transform: translateX(-5px) translateY(2px) rotate(-1deg);
+    }
+    100% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+    }
 }
 
 /* Button Row - NOVO */
