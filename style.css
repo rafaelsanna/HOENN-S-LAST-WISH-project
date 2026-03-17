@@ -51,6 +51,40 @@ header {
     align-items: center;
 }
 
+/* ===== HEADER TRANSPARENTE COM BLUR ===== */
+header {
+    background: rgba(44, 62, 80, 0.3) !important; /* Sobrescreve o background anterior */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header animated image - 2x maior */
+.animated-header-img {
+    height: 140px !important; /* 2x maior */
+    width: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.animated-header-img:hover {
+    transform: scale(1.1);
+}
+
+/* Light mode - header mais claro */
+body.light-mode header {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .nav-links a {
+    color: #2c3e50;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -909,6 +943,20 @@ body.light-mode .download-btn.hackdex-download {
         height: 50vh !important;
         margin-top: 70px;
     }
+
+    @media (max-width: 768px) {
+    /* ... seu código existente ... */
+    
+    /* Header mobile com blur */
+    header {
+        background: rgba(44, 62, 80, 0.4) !important;
+        backdrop-filter: blur(5px);
+    }
+    
+    .header-animated {
+        display: none; /* Esconde no mobile */
+    }
+}
     
     /* Esconde a logo central no mobile */
     .banner-logo-link {
