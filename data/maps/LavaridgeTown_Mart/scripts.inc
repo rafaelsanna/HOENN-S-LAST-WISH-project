@@ -33,13 +33,27 @@ LavaridgeTown_Mart_EventScript_OldWoman::
 	end
 
 LavaridgeTown_Mart_Text_XSpeedFirstStrike:
-	.string "Use X SPEED to add to a POKéMON's\n"
-	.string "SPEED in battle.\p"
-	.string "That will help it get in the first\n"
-	.string "strike--a decided advantage!$"
+	.string "Welcome to LAVARIDGE TOWN, jewel\n"
+	.string "of HOENN's rugged mountain range.\p"
+	.string "Our hot springs bubble with natural\n"
+	.string "heat from deep within the earth.\p"
+	.string "Folks come from all over just to\n"
+	.string "soak away their troubles here.\p"
+	.string "They say the steam carries whispers\n"
+	.string "of ancient POKéMON dreams...$"
 
 LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney:
-	.string "On MT. CHIMNEY's peak, there's a local\n"
-	.string "specialty that you can buy only there.\p"
-	.string "Give it to a POKéMON--it will be elated.$"
+	.string "MT. CHIMNEY looms above us, its peak\n"
+	.string "shrouded in eternal steam and mystery.\p"
+	.string "Elders speak of a time before memory,\n"
+	.string "when the mountain roared with fury.\p"
+	.string "They say two colossal beings clashed\n"
+	.string "in the skies, one wielding sunlight,\l"
+	.string "the other, depths of the ocean.\p"
+	.string "Their battle scarred the peak forever.\n"
+	.string "Even now, the volcano remembers...$"
+
+
+	
+
 

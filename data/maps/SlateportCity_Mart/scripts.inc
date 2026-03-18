@@ -33,14 +33,20 @@ SlateportCity_Mart_EventScript_Man::
 	end
 
 SlateportCity_Mart_Text_SomeItemsOnlyAtMart:
-	.string "The MARKET does have some interesting\n"
-	.string "merchandise.\p"
-	.string "But there are some items you can only\n"
-	.string "get at a POKéMON MART.$"
+	.string "Welcome to SLATEPORT, Hoenn's busiest\n"
+	.string "harbor! Ships from every region dock here.\p"
+	.string "The MARKET's great for trinkets, but for\n"
+	.string "reliable gear, you want the MART.\p"
+	.string "We've served sailors and trainers for\n"
+	.string "generations trust what works.$"
 
 SlateportCity_Mart_Text_GreatBallIsBetter:
-	.string "A GREAT BALL is better than a POKé BALL\n"
-	.string "at catching POKéMON.\p"
-	.string "With this, I should be able to get that\n"
-	.string "elusive POKéMON…$"
+	.string "Generations ago, SLATEPORT was just\n"
+	.string "a humble fishing village.\p"
+	.string "Now? It's HOENN's gateway to the world.\n"
+	.string "Ships from JOHTO, KANTO, even far off\l"
+	.string "regions dock here every week.\p"
+	.string "The city's soul is salt and sea.$"
+
+
 

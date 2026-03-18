@@ -36,16 +36,23 @@ MauvilleCity_Mart_EventScript_Man::
 	end
 
 MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats:
-	.string "There are items that temporarily\n"
-	.string "elevate the stats of POKéMON.\p"
-	.string "The ones I know you use in battle\n"
-	.string "are X ATTACK and X DEFEND…\p"
-	.string "I do believe that there are others\n"
-	.string "like them.$"
+	.string "Our GYM LEADER DEN? He's a certifiable\n"
+	.string "genius since he was a little kid.\p"
+	.string "Never played outside, he was indoors\n"
+	.string "building contraptions that sparked...\p"
+	.string "Rumors say he can command electricity\n"
+	.string "with his mind after all his experiments.\p"
+	.string "But I know the truth, he's just a man who\n"
+	.string "never stopped studying. The weird glow in\l"
+	.string "his GYM? Probably just a faulty wire...$"
 
 MauvilleCity_Mart_Text_DecisionsDetermineBattle:
-	.string "Use a certain move, or use an item\n"
-	.string "instead…\p"
-	.string "The TRAINER's decisions determine how\n"
-	.string "battles turn out, I think.$"
+	.string "Mauville City is the true heart of Hoenn.\n"
+	.string "Roads lead out to every corner from here.\p"
+	.string "Travelers from the desert, the coast,\n"
+	.string "and the countryside all pass through.\p"
+	.string "You can feel the energy of the whole\n"
+	.string "region flowing through this place.$"
+
+	
 

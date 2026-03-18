@@ -52,13 +52,20 @@ FallarborTown_Mart_Text_DecidingSkittyEvolve:
 	.string "but it's so hard to decide…\p"
 	.string "If I make it evolve, it will become\n"
 	.string "much stronger.\p"
-	.string "But it will look so different, too.$"
+	.string "But it will look so different, too...$"
 
 FallarborTown_Mart_Text_Skitty:
 	.string "SKITTY: Miyao?$"
 
 FallarborTown_Mart_Text_SellNuggetIFound:
-	.string "This NUGGET I found here…\n"
-	.string "I suppose I'll have to sell it, seeing\l"
-	.string "as how it has no other use.$"
+	.string "We FALLARBOR folk are used to ash\n"
+	.string "and soot-it's in our blood now.\p"
+	.string "The volcano gave us fertile land,\n"
+	.string "but took some things we can't get back.\p"
+	.string "Sometimes, after a storm, the earth\n"
+	.string "offers up little gifts. Shiny ones.\p"
+	.string "We take it as a sign the mountain\n"
+	.string "still watches over us.$"
+
+
 

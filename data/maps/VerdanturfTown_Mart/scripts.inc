@@ -39,20 +39,33 @@ VerdanturfTown_Mart_EventScript_Lass::
 	end
 
 VerdanturfTown_Mart_Text_XSpecialIsCrucial:
-	.string "For any POKéMON match, X SPECIAL\n"
-	.string "is crucial.\p"
-	.string "It jacks up the power of some moves\n"
-	.string "even though it's only for one battle.$"
+	.string "Welcome to VERDANTURF, where the wind\n"
+	.string "carries the sweet scent of grass.\p"
+	.string "Strange as it seems, volcanic ash from\n"
+	.string "MT. CHIMNEY never falls here.\p"
+	.string "The breeze protects us, keeps the air\n"
+	.string "pure and clean for all who visit.\p"
+	.string "Folks say it's why the flowers bloom\n"
+	.string "so brightly, even in the mountains.$"
 
 VerdanturfTown_Mart_Text_NoStrategyGuidesForBattleTent:
-	.string "They don't seem to sell any winning\n"
-	.string "strategy guides for the BATTLE TENT…\p"
-	.string "It seems one must rely on one's\n"
-	.string "own wits after all…$"
+	.string "The BATTLE TENT stands where contests\n"
+	.string "once echoed with cheering crowds.\p"
+	.string "That was before the great clash…\n"
+	.string "When land and sea went to war.\p"
+	.string "Now, trainers come to test a different\n"
+	.string "kind of bond letting their Pokémon\l"
+	.string "fight on instinct alone.\p"
+	.string "No guide can teach you that.\n"
+	.string "You must learn to trust.$"
 
 VerdanturfTown_Mart_Text_NestBallOnWeakenedPokemon:
-	.string "The NEST BALL works better on\n"
-	.string "weakened POKéMON.\p"
-	.string "VERDANTURF is the only place you can\n"
-	.string "buy it.$"
+	.string "The NEST BALL works best on wounded\n"
+	.string "foes, the weaker, the better.\p"
+	.string "We're the only MART in HOENN that\n"
+	.string "sells them, lucky for you.\p"
+	.string "It's said the design was inspired by\n"
+	.string "the gentle breezes that protect our\l"
+	.string "town from volcanic ash.$"
 
+	

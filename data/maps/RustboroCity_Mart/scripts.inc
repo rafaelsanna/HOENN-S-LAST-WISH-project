@@ -65,20 +65,35 @@ RustboroCity_Mart_EventScript_BugCatcher::
 	end
 
 RustboroCity_Mart_Text_BuyingHealsInCaseOfShroomish:
-	.string "I'm buying some PARLYZ HEALS and\n"
-	.string "ANTIDOTES.\p"
-	.string "Just in case I run into SHROOMISH\n"
-	.string "in PETALBURG WOODS.$"
+	.string "Have you heard about TERRA, our GYM\n"
+	.string "LEADER? She's an incredible climber!\p"
+	.string "They say she benn where no one\n"
+	.string "else dares to even approach.\p"
+	.string "Her climbing skills let her reach\n"
+	.string "altitudes where rare POKéMON live,\l"
+	.string "places no one has ever seen before.\p"
+	.string "Sometimes I wonder what she's found\n"
+	.string "up there... Must be amazing!$"
 
 RustboroCity_Mart_Text_ShouldBuySuperPotionsInstead:
-	.string "My POKéMON evolved.\n"
-	.string "It has a lot of HP now.\p"
-	.string "I should buy SUPER POTIONS for it\n"
-	.string "instead of ordinary POTIONS.$"
+	.string "Last night I tried to cross\n"
+	.string "PETALBURG WOODS after dark.\p"
+	.string "Big mistake. Really big mistake.\p"
+	.string "My poor POKéMON took a beating from\n"
+	.string "all the wild ones hiding in shadows.\p"
+	.string "Regular POTIONS won't cut it anymore.\n"
+	.string "Time to upgrade to SUPER POTIONS!$"
 
 RustboroCity_Mart_Text_GettingEscapeRopeJustInCase:
-	.string "I'm getting an ESCAPE ROPE just in\n"
-	.string "case I get lost in a cave.\p"
-	.string "I just need to use it to get back to\n"
-	.string "the entrance.$"
+	.string "They say there's a mysterious cave\n"
+	.string "hidden near RUSTBORO… somewhere.\p"
+	.string "I've always wanted to explore it,\n"
+	.string "but… I'm scared of ghosts.\p"
+	.string "What if there are spirits inside?\n"
+	.string "What if I can't find my way out?\p"
+	.string "That's why I'm getting an ESCAPE ROPE.\n"
+	.string "Or maybe a POKéMON with DIG…\l"
+	.string "Just in case I need to scape...$"
+
+
 
