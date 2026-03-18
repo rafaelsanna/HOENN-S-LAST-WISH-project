@@ -68,10 +68,8 @@ if (slideshowElement) {
         updateSlide();
     }
 
-    // Auto play
     autoPlayInterval = setInterval(nextSlide, 3000);
 
-    // Navegação manual (pausa o auto play por 5 segundos)
     document.getElementById('next-slide')?.addEventListener('click', () => {
         clearInterval(autoPlayInterval);
         nextSlide();
@@ -141,73 +139,15 @@ function initHeaderAnimation() {
     }
 }
 
-// Main Characters Animation (3 frames)
-function initMainCharsAnimation() {
-    // Animação do personagem principal
-    const mainChar = document.querySelector('.main-chars-image');
-    if (mainChar) {
-        const frames = [
-            mainChar.dataset.frame1,
-            mainChar.dataset.frame2,
-            mainChar.dataset.frame3
-        ];
-        
-        if (frames.every(f => f)) {
-            let currentFrame = 0;
-            let interval;
-            
-            mainChar.addEventListener('mouseenter', () => {
-                interval = setInterval(() => {
-                    currentFrame = (currentFrame + 1) % frames.length;
-                    mainChar.src = frames[currentFrame];
-                }, 200);
-            });
-            
-            mainChar.addEventListener('mouseleave', () => {
-                clearInterval(interval);
-                mainChar.src = frames[0];
-            });
-        }
-    }
-    
-    // Animação dos 3 Pokémon
-    document.querySelectorAll('.pokemon-icon').forEach(icon => {
-        const frames = [
-            icon.dataset.frame1,
-            icon.dataset.frame2,
-            icon.dataset.frame3
-        ];
-        
-        if (frames.every(f => f)) {
-            let currentFrame = 0;
-            let interval;
-            
-            icon.addEventListener('mouseenter', () => {
-                interval = setInterval(() => {
-                    currentFrame = (currentFrame + 1) % frames.length;
-                    icon.src = frames[currentFrame];
-                }, 200);
-            });
-            
-            icon.addEventListener('mouseleave', () => {
-                clearInterval(interval);
-                icon.src = frames[0];
-            });
-        }
-    });
-}
-
 // Inicialização
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initWishDexHover();
         initHeaderAnimation();
-        initMainCharsAnimation();
     });
 } else {
     initWishDexHover();
     initHeaderAnimation();
-    initMainCharsAnimation();
 }
 
 console.log('🎮 Pokémon: Hoenn\'s Last Wish website loaded successfully!');
