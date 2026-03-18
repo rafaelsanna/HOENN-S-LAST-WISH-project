@@ -38,7 +38,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Slideshow com navegação
+// Slideshow
 const slideshowElement = document.getElementById('slideshow-image');
 if (slideshowElement) {
     const slideshowImages = [
@@ -52,6 +52,7 @@ if (slideshowElement) {
     ];
 
     let currentSlide = 0;
+    let autoPlayInterval;
 
     function updateSlide() {
         slideshowElement.src = `images/screenshots/${slideshowImages[currentSlide]}`;
@@ -67,12 +68,25 @@ if (slideshowElement) {
         updateSlide();
     }
 
-    // Auto play (3 segundos)
-    setInterval(nextSlide, 3000);
+    // Auto play
+    autoPlayInterval = setInterval(nextSlide, 3000);
 
-    // Navegação manual
-    document.getElementById('next-slide')?.addEventListener('click', nextSlide);
-    document.getElementById('prev-slide')?.addEventListener('click', prevSlide);
+    // Navegação manual (pausa o auto play por 5 segundos)
+    document.getElementById('next-slide')?.addEventListener('click', () => {
+        clearInterval(autoPlayInterval);
+        nextSlide();
+        setTimeout(() => {
+            autoPlayInterval = setInterval(nextSlide, 3000);
+        }, 5000);
+    });
+
+    document.getElementById('prev-slide')?.addEventListener('click', () => {
+        clearInterval(autoPlayInterval);
+        prevSlide();
+        setTimeout(() => {
+            autoPlayInterval = setInterval(nextSlide, 3000);
+        }, 5000);
+    });
 }
 
 // Mobile Menu
@@ -111,7 +125,6 @@ function initWishDexHover() {
             sprite.addEventListener('mouseleave', () => sprite.src = normalSrc);
         }
     });
-    console.log('✨ WishDex hover initialized');
 }
 
 // Header Animation
@@ -126,36 +139,62 @@ function initHeaderAnimation() {
         headerImg.addEventListener('mouseenter', () => headerImg.src = hoverSrc);
         headerImg.addEventListener('mouseleave', () => headerImg.src = normalSrc);
     }
-    console.log('✨ Header animation initialized');
 }
 
 // Main Characters Animation (3 frames)
 function initMainCharsAnimation() {
-    const mainChars = document.querySelector('.main-chars-image');
-    if (!mainChars) return;
-    
-    const frames = [
-        mainChars.dataset.frame1,
-        mainChars.dataset.frame2,
-        mainChars.dataset.frame3
-    ];
-    
-    if (frames.every(f => f)) {
-        let currentFrame = 0;
-        let interval;
+    // Animação do personagem principal
+    const mainChar = document.querySelector('.main-chars-image');
+    if (mainChar) {
+        const frames = [
+            mainChar.dataset.frame1,
+            mainChar.dataset.frame2,
+            mainChar.dataset.frame3
+        ];
         
-        mainChars.addEventListener('mouseenter', () => {
-            interval = setInterval(() => {
-                currentFrame = (currentFrame + 1) % frames.length;
-                mainChars.src = frames[currentFrame];
-            }, 200);
-        });
-        
-        mainChars.addEventListener('mouseleave', () => {
-            clearInterval(interval);
-            mainChars.src = frames[0];
-        });
+        if (frames.every(f => f)) {
+            let currentFrame = 0;
+            let interval;
+            
+            mainChar.addEventListener('mouseenter', () => {
+                interval = setInterval(() => {
+                    currentFrame = (currentFrame + 1) % frames.length;
+                    mainChar.src = frames[currentFrame];
+                }, 200);
+            });
+            
+            mainChar.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+                mainChar.src = frames[0];
+            });
+        }
     }
+    
+    // Animação dos 3 Pokémon
+    document.querySelectorAll('.pokemon-icon').forEach(icon => {
+        const frames = [
+            icon.dataset.frame1,
+            icon.dataset.frame2,
+            icon.dataset.frame3
+        ];
+        
+        if (frames.every(f => f)) {
+            let currentFrame = 0;
+            let interval;
+            
+            icon.addEventListener('mouseenter', () => {
+                interval = setInterval(() => {
+                    currentFrame = (currentFrame + 1) % frames.length;
+                    icon.src = frames[currentFrame];
+                }, 200);
+            });
+            
+            icon.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+                icon.src = frames[0];
+            });
+        }
+    });
 }
 
 // Inicialização

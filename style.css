@@ -1,9 +1,9 @@
 /* ===== VARIÁVEIS ===== */
 :root {
     --pokemon-blue: #4a90e2;
-    --pokemon-purple: #9b59b6; /* NOVO: Roxo no lugar do amarelo */
     --pokemon-green: #27ae60;
     --pokemon-red: #e74c3c;
+    --pokemon-yellow: #f1c40f;
     --pokemon-dark: #2c3e50;
     --pokemon-light: #ecf0f1;
 }
@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #e0e0e0 !important;
 }
 
-/* ===== HEADER ===== */
+/* ===== HEADER (VOLTAR AO NORMAL) ===== */
 header {
     position: fixed;
     width: 100%;
@@ -122,12 +122,7 @@ nav {
 }
 
 .nav-links a:hover {
-    color: var(--pokemon-purple); /* Roxo no hover */
-}
-
-.nav-links a.active {
-    color: var(--pokemon-purple);
-    border-bottom: 2px solid var(--pokemon-purple);
+    color: var(--pokemon-yellow); /* VOLTOU AMARELO */
 }
 
 .hamburger {
@@ -314,18 +309,17 @@ nav {
     border-radius: 5px;
 }
 
-/* ===== MAIN CHARACTERS SECTION (novo) ===== */
+/* ===== MAIN CHARACTERS SECTION (SIMPLES) ===== */
 .main-chars-section {
     padding: 4rem 0;
-    background: #2d2d2d; /* Mesma cor do story */
-    position: relative;
+    background: #2d2d2d;
 }
 
 .main-chars-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 4rem;
 }
 
 .main-chars-left {
@@ -334,8 +328,12 @@ nav {
     justify-content: center;
 }
 
+.main-chars-left a {
+    display: block;
+}
+
 .main-chars-image {
-    max-width: 100%;
+    max-width: 200px; /* 2x maior */
     height: auto;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -349,37 +347,28 @@ nav {
 
 .main-chars-right {
     flex: 1;
-    text-align: left;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
 }
 
-.main-chars-right h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: #ffffff !important;
+.pokemon-icon {
+    width: 120px; /* 2x maior */
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
-.main-chars-right p {
-    color: #cccccc !important;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
+.pokemon-icon:hover {
+    transform: scale(1.05);
 }
 
-/* Animações para o main chars */
-@keyframes floatChar {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-.main-chars-image {
-    animation: floatChar 4s ease-in-out infinite;
-}
-
-/* ===== VIDEO SECTION (agora integrado) ===== */
+/* ===== VIDEO SECTION ===== */
 .video-main {
     padding: 3rem 0;
-    background: #2d2d2d; /* Mesma cor do story */
+    background: #2d2d2d;
     text-align: center;
 }
 
@@ -388,7 +377,7 @@ nav {
     max-width: 720px;
     height: auto;
     border-radius: 10px;
-    border: 3px solid var(--pokemon-purple); /* Roxo */
+    border: 3px solid var(--pokemon-yellow);
     box-shadow: 0 8px 25px rgba(0,0,0,0.5);
 }
 
@@ -428,10 +417,10 @@ nav {
 }
 
 .story-content .highlight {
-    background: rgba(155, 89, 182, 0.1); /* Roxo suave */
+    background: rgba(0, 0, 0, 0.05);
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid var(--pokemon-purple);
+    border-left: 4px solid var(--pokemon-yellow);
     font-weight: 500;
     margin: 2rem 0;
 }
@@ -451,7 +440,7 @@ nav {
     font-weight: 700;
 }
 
-/* ===== SCREENSHOTS SECTION (com navegação) ===== */
+/* ===== SCREENSHOTS SECTION ===== */
 .screenshots {
     padding: 5rem 0;
     background: #2d2d2d !important;
@@ -476,7 +465,6 @@ nav {
     box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
     text-align: center;
     border: 1px solid #404040;
-    position: relative;
 }
 
 .simple-slideshow img {
@@ -485,7 +473,7 @@ nav {
     object-fit: contain;
     background: #2d2d2d !important;
     border-radius: 8px;
-    border: 3px solid var(--pokemon-purple) !important; /* Roxo */
+    border: 3px solid var(--pokemon-yellow) !important;
 }
 
 .slideshow-nav {
@@ -496,8 +484,8 @@ nav {
 }
 
 .slideshow-nav button {
-    background: var(--pokemon-purple);
-    color: white;
+    background: var(--pokemon-yellow);
+    color: var(--pokemon-dark);
     border: none;
     width: 40px;
     height: 40px;
@@ -511,7 +499,7 @@ nav {
 }
 
 .slideshow-nav button:hover {
-    background: #8e44ad;
+    background: #f39c12;
     transform: scale(1.1);
 }
 
@@ -570,11 +558,11 @@ nav {
 }
 
 .download-btn.secondary {
-    background: var(--pokemon-purple) !important; /* Roxo */
+    background: var(--pokemon-green) !important;
 }
 
 .download-btn.secondary:hover {
-    background: #8e44ad !important;
+    background: #219653 !important;
 }
 
 .download-btn.info {
@@ -730,11 +718,11 @@ nav {
 
 .team-member.large:hover {
     transform: translateY(-5px);
-    border-color: var(--pokemon-purple); /* Roxo */
+    border-color: var(--pokemon-yellow);
 }
 
 .team-member.large h3 {
-    color: var(--pokemon-purple) !important; /* Roxo */
+    color: var(--pokemon-yellow) !important;
     font-size: 1.8rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -777,11 +765,11 @@ nav {
 
 .team-member:hover {
     transform: translateY(-5px);
-    border-color: var(--pokemon-purple); /* Roxo */
+    border-color: var(--pokemon-yellow);
 }
 
 .team-member h3 {
-    color: var(--pokemon-purple) !important; /* Roxo */
+    color: var(--pokemon-yellow) !important;
     font-size: 1.3rem;
     margin-bottom: 0.8rem;
     font-weight: 600;
@@ -811,7 +799,7 @@ nav {
 .team-card-link:hover .team-member,
 .team-card-link:hover .team-member.large {
     transform: translateY(-5px);
-    border-color: var(--pokemon-purple);
+    border-color: var(--pokemon-yellow);
 }
 
 /* ===== FOOTER ===== */
@@ -856,7 +844,7 @@ footer p {
 .footer-credits .credits-btn {
     display: inline-block;
     padding: 8px 20px;
-    background: var(--pokemon-purple) !important; /* Roxo */
+    background: var(--pokemon-green) !important;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -865,7 +853,7 @@ footer p {
 }
 
 .footer-credits .credits-btn:hover {
-    background: #8e44ad !important;
+    background: #219653 !important;
 }
 
 .footer-copyright {
@@ -881,7 +869,7 @@ footer p {
     right: 20px;
     z-index: 1000;
     background: var(--pokemon-dark);
-    border: 2px solid var(--pokemon-purple); /* Roxo */
+    border: 2px solid var(--pokemon-yellow);
     border-radius: 50px;
     padding: 8px 12px;
     cursor: pointer;
@@ -892,7 +880,7 @@ footer p {
 }
 
 .theme-toggle:hover {
-    background: var(--pokemon-purple);
+    background: var(--pokemon-blue);
     transform: scale(1.05);
 }
 
@@ -917,7 +905,7 @@ body.light-mode .nav-links a {
 }
 
 body.light-mode .nav-links a:hover {
-    color: var(--pokemon-purple);
+    color: var(--pokemon-yellow);
 }
 
 body.light-mode .story {
@@ -933,10 +921,6 @@ body.light-mode .story-content li {
 body.light-mode .main-chars-section,
 body.light-mode .video-main {
     background: #ffffff !important;
-}
-
-body.light-mode .main-chars-right p {
-    color: #2c3e50 !important;
 }
 
 body.light-mode .screenshots {
@@ -978,7 +962,7 @@ body.light-mode .team-member.large {
 
 body.light-mode .team-member h3,
 body.light-mode .team-member.large h3 {
-    color: var(--pokemon-purple) !important;
+    color: var(--pokemon-yellow) !important;
 }
 
 body.light-mode .team-member p,
@@ -988,7 +972,7 @@ body.light-mode .team-member.large p {
 
 body.light-mode .team-card-link:hover .team-member,
 body.light-mode .team-card-link:hover .team-member.large {
-    border-color: var(--pokemon-purple);
+    border-color: var(--pokemon-yellow);
 }
 
 body.light-mode footer {
@@ -1022,11 +1006,15 @@ body.light-mode .download-btn.hackdex-download {
     
     .main-chars-container {
         flex-direction: column;
-        text-align: center;
+        gap: 2rem;
     }
     
     .main-chars-right {
-        text-align: center;
+        gap: 1rem;
+    }
+    
+    .pokemon-icon {
+        width: 100px;
     }
 }
 
@@ -1137,15 +1125,16 @@ body.light-mode .download-btn.hackdex-download {
     
     .main-chars-container {
         flex-direction: column;
-        text-align: center;
+        gap: 2rem;
     }
     
     .main-chars-right {
-        text-align: center;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
     
-    .main-chars-right h2 {
-        font-size: 2rem;
+    .pokemon-icon {
+        width: 90px;
     }
     
     .team-section {
@@ -1305,8 +1294,8 @@ body.light-mode .download-btn.hackdex-download {
         height: 180px !important;
     }
     
-    .main-chars-right h2 {
-        font-size: 1.8rem;
+    .pokemon-icon {
+        width: 80px;
     }
 }
 
@@ -1350,7 +1339,7 @@ body.light-mode .download-btn.hackdex-download {
 
 .pokemon-card:hover {
     transform: translateY(-5px);
-    border-color: var(--pokemon-purple);
+    border-color: var(--pokemon-yellow);
 }
 
 .pokemon-sprite {
@@ -1373,7 +1362,7 @@ body.light-mode .pokemon-card {
 }
 
 body.light-mode .pokemon-card:hover {
-    border-color: var(--pokemon-purple);
+    border-color: var(--pokemon-yellow);
 }
 
 @media (max-width: 768px) {
