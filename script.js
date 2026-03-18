@@ -1,8 +1,7 @@
-// Theme Toggle Functionality - CORRIGIDO (com verificação)
+// Theme Toggle Functionality
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
-// Função para aplicar o tema (agora segura)
 function applyTheme(theme) {
     if (theme === 'light') {
         body.classList.add('light-mode');
@@ -15,11 +14,9 @@ function applyTheme(theme) {
     }
 }
 
-// Verificar tema salvo ou usar dark mode como padrão
 const savedTheme = localStorage.getItem('theme') || 'dark';
 applyTheme(savedTheme);
 
-// Toggle no clique do botão (só se existir)
 if (themeToggle) {
     themeToggle.addEventListener('click', () => {
         if (body.classList.contains('light-mode')) {
@@ -30,52 +27,52 @@ if (themeToggle) {
     });
 }
 
-// Smooth scrolling (só funciona na página principal)
+// Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
+            target.scrollIntoView({ behavior: 'smooth' });
         }
     });
 });
 
-// Slideshow (só funciona na página principal)
+// Slideshow com navegação
 const slideshowElement = document.getElementById('slideshow-image');
 if (slideshowElement) {
     const slideshowImages = [
-        'pokeemerald-0.png',
-        'pokeemerald-1.png', 
-        'pokeemerald-2.png',
-        'pokeemerald-3.png',
-        'pokeemerald-4.png',
-        'pokeemerald-5.png',
-        'pokeemerald-6.png',
-        'pokeemerald-7.png',
-        'pokeemerald-8.png',
-        'pokeemerald-9.png',
-        'pokeemerald-10.png',
-        'pokeemerald-11.png',
-        'pokeemerald-12.png',
-        'pokeemerald-13.png',
-        'pokeemerald-14.png',
-        'pokeemerald-15.png',
-        'pokeemerald-16.png',
-        'pokeemerald-17.png',
+        'pokeemerald-0.png', 'pokeemerald-1.png', 'pokeemerald-2.png',
+        'pokeemerald-3.png', 'pokeemerald-4.png', 'pokeemerald-5.png',
+        'pokeemerald-6.png', 'pokeemerald-7.png', 'pokeemerald-8.png',
+        'pokeemerald-9.png', 'pokeemerald-10.png', 'pokeemerald-11.png',
+        'pokeemerald-12.png', 'pokeemerald-13.png', 'pokeemerald-14.png',
+        'pokeemerald-15.png', 'pokeemerald-16.png', 'pokeemerald-17.png',
         'pokeemerald-18.png'
     ];
 
     let currentSlide = 0;
 
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slideshowImages.length;
+    function updateSlide() {
         slideshowElement.src = `images/screenshots/${slideshowImages[currentSlide]}`;
     }
 
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slideshowImages.length;
+        updateSlide();
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slideshowImages.length) % slideshowImages.length;
+        updateSlide();
+    }
+
+    // Auto play (3 segundos)
     setInterval(nextSlide, 3000);
+
+    // Navegação manual
+    document.getElementById('next-slide')?.addEventListener('click', nextSlide);
+    document.getElementById('prev-slide')?.addEventListener('click', prevSlide);
 }
 
 // Mobile Menu
@@ -94,106 +91,85 @@ if (hamburger && navLinks) {
     });
 }
 
-// Contador invisível de visitas (apenas uma vez)
+// Contador de visitas
 fetch('https://api.counterapi.dev/v1/hoennslastwish/site/up')
-  .then(response => response.json())
-  .then(data => {
-    console.log('📊 Total de visitas:', data.count);
-  })
-  .catch(error => console.log('Erro no contador:', error));
+    .then(response => response.json())
+    .then(data => console.log('📊 Total de visitas:', data.count))
+    .catch(error => console.log('Erro no contador:', error));
 
-// WishDex Hover Effect - VERSÃO FINAL CORRIGIDA
+// WishDex Hover Effect
 function initWishDexHover() {
     const sprites = document.querySelectorAll('.pokemon-sprite');
+    if (sprites.length === 0) return;
     
-    if (sprites.length === 0) {
-        console.log('📝 Não há sprites na página');
-        return;
-    }
-    
-    console.log(`🎯 Encontrados ${sprites.length} sprites`);
-    
-    sprites.forEach((sprite, index) => {
+    sprites.forEach(sprite => {
         const normalSrc = sprite.dataset.normal;
         const frameSrc = sprite.dataset.frame;
         
-        if (!normalSrc || !frameSrc) {
-            console.warn(`⚠️ Sprite ${index + 1} sem data-normal ou data-frame`);
-            return;
+        if (normalSrc && frameSrc) {
+            sprite.addEventListener('mouseenter', () => sprite.src = frameSrc);
+            sprite.addEventListener('mouseleave', () => sprite.src = normalSrc);
         }
-        
-        // Verificar se as imagens existem (opcional)
-        const imgNormal = new Image();
-        imgNormal.src = normalSrc;
-        
-        const imgFrame = new Image();
-        imgFrame.src = frameSrc;
-        
-        sprite.addEventListener('mouseenter', () => {
-            sprite.src = frameSrc;
-        });
-        
-        sprite.addEventListener('mouseleave', () => {
-            sprite.src = normalSrc;
-        });
     });
-    
     console.log('✨ WishDex hover initialized');
 }
 
-// Executar quando a página carregar
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initWishDexHover);
-} else {
-    initWishDexHover();
-}
-
-// Mensagem de boas-vindas
-console.log('🎮 Pokémon: Hoenn\'s Last Wish website loaded successfully!');
-
-// Header Animated Image Hover
+// Header Animation
 function initHeaderAnimation() {
     const headerImg = document.querySelector('.animated-header-img');
-    
-    if (!headerImg) {
-        console.log('📝 No header animated image found');
-        return;
-    }
+    if (!headerImg) return;
     
     const normalSrc = headerImg.dataset.normal;
     const hoverSrc = headerImg.dataset.hover;
     
-    if (!normalSrc || !hoverSrc) {
-        console.warn('⚠️ Header image missing data-normal or data-hover');
-        return;
+    if (normalSrc && hoverSrc) {
+        headerImg.addEventListener('mouseenter', () => headerImg.src = hoverSrc);
+        headerImg.addEventListener('mouseleave', () => headerImg.src = normalSrc);
     }
-    
-    // Pré-carregar as imagens
-    const imgNormal = new Image();
-    imgNormal.src = normalSrc;
-    
-    const imgHover = new Image();
-    imgHover.src = hoverSrc;
-    
-    headerImg.addEventListener('mouseenter', () => {
-        headerImg.src = hoverSrc;
-    });
-    
-    headerImg.addEventListener('mouseleave', () => {
-        headerImg.src = normalSrc;
-    });
-    
     console.log('✨ Header animation initialized');
 }
 
-// Adicionar à inicialização
+// Main Characters Animation (3 frames)
+function initMainCharsAnimation() {
+    const mainChars = document.querySelector('.main-chars-image');
+    if (!mainChars) return;
+    
+    const frames = [
+        mainChars.dataset.frame1,
+        mainChars.dataset.frame2,
+        mainChars.dataset.frame3
+    ];
+    
+    if (frames.every(f => f)) {
+        let currentFrame = 0;
+        let interval;
+        
+        mainChars.addEventListener('mouseenter', () => {
+            interval = setInterval(() => {
+                currentFrame = (currentFrame + 1) % frames.length;
+                mainChars.src = frames[currentFrame];
+            }, 200);
+        });
+        
+        mainChars.addEventListener('mouseleave', () => {
+            clearInterval(interval);
+            mainChars.src = frames[0];
+        });
+    }
+}
+
+// Inicialização
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initWishDexHover();
         initHeaderAnimation();
+        initMainCharsAnimation();
     });
 } else {
     initWishDexHover();
     initHeaderAnimation();
+    initMainCharsAnimation();
 }
+
+console.log('🎮 Pokémon: Hoenn\'s Last Wish website loaded successfully!');
 

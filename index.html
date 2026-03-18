@@ -11,16 +11,16 @@
     <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
     
-<!-- Discord / Social Media Preview -->
-<meta property="og:title" content="Pokémon: Hoenn's Last Wish">
-<meta property="og:description" content="A Pokémon ROM Hack where Rayquaza failed to stop Groudon and Kyogre. Travel through time with Jirachi and Celebi to save Hoenn!">
-<meta property="og:image" content="https://rafaelsanna.github.io/HOENN-S-LAST-WISH-project/images/banner-preview.png">
-<meta property="og:url" content="https://rafaelsanna.github.io/HOENN-S-LAST-WISH-project/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Pokémon: Hoenn's Last Wish">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+    <!-- Discord / Social Media Preview -->
+    <meta property="og:title" content="Pokémon: Hoenn's Last Wish">
+    <meta property="og:description" content="A Pokémon ROM Hack where Rayquaza failed to stop Groudon and Kyogre. Travel through time with Jirachi and Celebi to save Hoenn!">
+    <meta property="og:image" content="https://rafaelsanna.github.io/HOENN-S-LAST-WISH-project/images/banner-preview.png">
+    <meta property="og:url" content="https://rafaelsanna.github.io/HOENN-S-LAST-WISH-project/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pokémon: Hoenn's Last Wish">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     
     <!-- Fonts & CSS -->
     <link rel="stylesheet" href="style.css">
@@ -30,36 +30,33 @@
 </head>
 <body>
     <!-- Header -->
-<header>
-    <nav>
-        <!-- Logo esquerda -->
-        <a href="index.html" class="logo-link">
-            <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
-        </a>
-        
-        <!-- NOVO: Imagem central animada -->
-        <div class="header-animated">
-            <img src="images/jirachi-celebi00.png" 
-                 alt="Jirachi & Celebi" 
-                 class="animated-header-img"
-                 data-normal="images/jirachi-celebi00.png"
-                 data-hover="images/jirachi-celebi01.png">
-        </div>
-        
-        <!-- Botão Hamburger -->
-        <button class="hamburger" id="hamburger">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <ul class="nav-links" id="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#story">Story</a></li>
-            <li><a href="index.html#screenshots">Screenshots</a></li>
-            <li><a href="index.html#download">Download</a></li>
-            <li><a href="wishdex.html">WishDex</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
+            </a>
+            
+            <div class="header-animated">
+                <img src="images/jirachi-celebi00.png" 
+                     alt="Jirachi & Celebi" 
+                     class="animated-header-img"
+                     data-normal="images/jirachi-celebi00.png"
+                     data-hover="images/jirachi-celebi01.png">
+            </div>
+            
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#story">Story</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="wishdex.html">WishDex</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <!-- Theme Toggle -->
     <button class="theme-toggle" id="themeToggle">
@@ -96,6 +93,29 @@
         </div>
     </section>
    
+    <!-- Main Characters Section (NOVA) -->
+    <section class="main-chars-section">
+        <div class="container">
+            <div class="main-chars-container">
+                <div class="main-chars-left">
+                    <a href="wishdex.html">
+                        <img src="images/mainchars01.png" 
+                             alt="Main Characters" 
+                             class="main-chars-image"
+                             data-frame1="images/mainchars01.png"
+                             data-frame2="images/mainchars02.png"
+                             data-frame3="images/mainchars03.png">
+                    </a>
+                </div>
+                <div class="main-chars-right">
+                    <h2>Meet the Heroes</h2>
+                    <p>Jirachi and Celebi have joined forces to grant one last wish - the chance to save Hoenn from its tragic fate. Click on their image to explore the WishDex and discover all the Pokémon that await you in this extraordinary journey through time.</p>
+                    <p>The Millennium Comet approaches, bringing with it the power to rewrite history. Will you be able to prevent the catastrophe that destroyed everything?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Video Section -->
     <section class="video-main">
         <div class="container">
@@ -133,12 +153,18 @@
         </div>
     </section>
 
-    <!-- Screenshots Section -->
+    <!-- Screenshots Section (COM NAVEGAÇÃO) -->
     <section id="screenshots" class="screenshots">
         <div class="container">
             <h2>Screenshots</h2>
-            <div class="simple-slideshow">
-                <img id="slideshow-image" src="images/screenshots/pokeemerald-0.png" alt="In-Game Screenshot">
+            <div class="slideshow-container">
+                <div class="simple-slideshow">
+                    <img id="slideshow-image" src="images/screenshots/pokeemerald-0.png" alt="In-Game Screenshot">
+                </div>
+                <div class="slideshow-nav">
+                    <button id="prev-slide"><i class="fas fa-chevron-left"></i></button>
+                    <button id="next-slide"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
         </div>
     </section>
@@ -188,162 +214,108 @@
                 <details class="patch-accordion">
                     <summary>Patch Application</summary>
                     <div class="installation-guide">
-                        <div>
-                            <div id="rom-patcher-container">
-                                <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-rom">
-                                    <div class="text-right"><label for="rom-patcher-input-file-rom" data-localize="yes">ROM file:</label></div>
-                                    <div class="rom-patcher-container-input">
-                                        <input type="file" id="rom-patcher-input-file-rom" class="empty" disabled />
-                                    </div>
-                                </div>
-                                <div class="margin-bottom text-selectable text-mono text-muted" id="rom-patcher-rom-info">
-                                    <div class="rom-patcher-row">
-                                        <div class="text-right">CRC32:</div>
-                                        <div class="text-truncate"><span id="rom-patcher-span-crc32"></span></div>
-                                    </div>
-                                    <div class="rom-patcher-row">
-                                        <div class="text-right">MD5:</div>
-                                        <div class="text-truncate"><span id="rom-patcher-span-md5"></span></div>
-                                    </div>
-                                    <div class="rom-patcher-row">
-                                        <div class="text-right">SHA-1:</div>
-                                        <div class="text-truncate"><span id="rom-patcher-span-sha1"></span></div>
-                                    </div>
-                                    <div class="rom-patcher-row" id="rom-patcher-row-info-rom">
-                                        <div class="text-right">ROM:</div>
-                                        <div class="text-truncate"><span id="rom-patcher-span-rom-info"></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-patch">
-                                    <div class="text-right"><label for="rom-patcher-input-file-patch" data-localize="yes">Patch file:</label></div>
-                                    <div class="rom-patcher-container-input">
-                                        <select id="rom-patcher-select-patch"></select>
-                                    </div>
-                                </div>
-                                <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-patch-description">
-                                    <div class="text-right text-mono text-muted" data-localize="yes">Description:</div>
-                                    <div class="text-truncate" id="rom-patcher-patch-description"></div>
-                                </div>
-                                <div class="rom-patcher-row margin-bottom text-selectable text-mono text-muted" id="rom-patcher-row-patch-requirements">
-                                    <div class="text-right text-mono" id="rom-patcher-patch-requirements-type">ROM requirements:</div>
-                                    <div class="text-truncate" id="rom-patcher-patch-requirements-value"></div>
-                                </div>
-
-                                <div class="text-center" id="rom-patcher-row-apply">
-                                    <div id="rom-patcher-row-error-message" class="margin-bottom"><span id="rom-patcher-error-message"></span></div>
-                                    <button id="rom-patcher-button-apply" data-localize="yes" disabled>Apply patch</button>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="rom-patcher-container"></div>
                     </div>
                 </details>
             </div>
         </div>
     </section>
 
-<!-- Team Section -->
-<section class="team-section">
-    <div class="container">
-        <h2>OUR TEAM</h2>
-        
-        <!-- Rafael Sanna - Centralizado e clicável -->
-        <div class="team-founder">
-            <a href="https://www.behance.net/rafaelsanna" target="_blank" class="team-card-link">
-                <div class="team-member large">
-                    <h3>Rafael Sanna</h3>
-                    <p>Creator / Main Dev / Art Director / Spriter / Code</p>
-                </div>
-            </a>
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2>OUR TEAM</h2>
+            
+            <div class="team-founder">
+                <a href="https://www.behance.net/rafaelsanna" target="_blank" class="team-card-link">
+                    <div class="team-member large">
+                        <h3>Rafael Sanna</h3>
+                        <p>Creator / Main Dev / Art Director / Spriter / Code</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="team-row grid-4">
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>coffelover42</h3>
+                        <p>Mapper / Scriptor</p>
+                    </div>
+                </a>
+                
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>Eric Serbinenko</h3>
+                        <p>Graphics / Dev</p>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/mariante" target="_blank" class="team-card-link">
+                    <div class="team-member">
+                        <h3>_pablo</h3>
+                        <p>Dev / Scripter</p>
+                    </div>
+                </a>
+                
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>Kirb</h3>
+                        <p>OST / Musics / Ideas / Play Test</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="team-row grid-4">
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>Ember</h3>
+                        <p>Sprites / Playtest</p>
+                    </div>
+                </a>
+                
+                <a href="https://ko-fi.com/gerbo" target="_blank" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Gerbo</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.instagram.com/_kaziio_ko_/" target="_blank" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Kazioko</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+                
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>DoodleLordElias</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+            </div>
         </div>
-        
-        <!-- Primeira linha: 4 membros -->
-        <div class="team-row grid-4">
-            <!-- coffelover42 - sem link -->
-            <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
-                <div class="team-member">
-                    <h3>coffelover42</h3>
-                    <p>Mapper / Scriptor</p>
-                </div>
-            </a>
-            
-            <!-- Eric Serbinenko - sem link -->
-            <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
-                <div class="team-member">
-                    <h3>Eric Serbinenko</h3>
-                    <p>Graphics / Dev</p>
-                </div>
-            </a>
-            
-            <!-- _pablo - com link para GitHub -->
-            <a href="https://github.com/mariante" target="_blank" class="team-card-link">
-                <div class="team-member">
-                    <h3>_pablo</h3>
-                    <p>Dev / Scripter</p>
-                </div>
-            </a>
-            
-            <!-- Kirb - sem link -->
-            <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
-                <div class="team-member">
-                    <h3>Kirb</h3>
-                    <p>OST / Musics / Ideas / Play Test</p>
-                </div>
-            </a>
-        </div>
-        
-        <!-- Segunda linha: 4 membros -->
-        <div class="team-row grid-4">
-            <!-- Ember - sem link -->
-            <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
-                <div class="team-member">
-                    <h3>Ember</h3>
-                    <p>Sprites / Playtest</p>
-                </div>
-            </a>
-            
-            <!-- Gerbo - com link para Ko-fi -->
-            <a href="https://ko-fi.com/gerbo" target="_blank" class="team-card-link">
-                <div class="team-member">
-                    <h3>Gerbo</h3>
-                    <p>Sprites / Concept Artist</p>
-                </div>
-            </a>
-            
-            <!-- Kazioko - com link para Instagram -->
-            <a href="https://www.instagram.com/_kaziio_ko_/" target="_blank" class="team-card-link">
-                <div class="team-member">
-                    <h3>Kazioko</h3>
-                    <p>Sprites / Concept Artist</p>
-                </div>
-            </a>
-            
-            <!-- DoodleLordElias - sem link -->
-            <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
-                <div class="team-member">
-                    <h3>DoodleLordElias</h3>
-                    <p>Sprites / Concept Artist</p>
-                </div>
-            </a>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <!-- Sua logo pessoal clicável -->
-        <a href="https://www.behance.net/rafaelsanna" target="_blank" class="footer-logo-link">
-            <img src="images/rs-logo.png" alt="RS - Rafael Sanna Graphics" class="footer-logo">
-        </a>
-        
-        <p>Pokémon: Hoenn's Last Wish - A Pokémon ROM Hack</p>
-        <p>This is a non-profit fan project. Pokémon is © Nintendo/Creatures Inc./GAME FREAK Inc.</p>
-        <a href="https://docs.google.com/document/d/1K_1i6doDUI3dhyyjtoNYlCZQZiFuHJBfjhZC-yJ3x-s/edit?usp=sharing" class="credits-btn" target="_blank">
-            View Credits
-        </a>
-    </div>
-</footer>
+    <!-- Footer (REORGANIZADO) -->
+    <footer>
+        <div class="container">
+            <a href="https://www.behance.net/rafaelsanna" target="_blank" class="footer-logo-link">
+                <img src="images/rs-logo.png" alt="RS - Rafael Sanna Graphics" class="footer-logo">
+            </a>
+            
+            <div class="footer-credits">
+                <p>Made by: Rafael Sanna</p>
+                <a href="https://docs.google.com/document/d/1K_1i6doDUI3dhyyjtoNYlCZQZiFuHJBfjhZC-yJ3x-s/edit?usp=sharing" class="credits-btn" target="_blank">
+                    View Credits
+                </a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>This is a non-profit fan project. Pokémon is © Nintendo/Creatures Inc./GAME FREAK Inc.</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="script.js"></script>
