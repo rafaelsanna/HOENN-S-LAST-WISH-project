@@ -6,6 +6,7 @@
 #include "bg.h"
 #include "graphics.h"
 #include "menu.h"
+#include "constants/rgb.h"
 
 const u8 gTextWindowFrame1_Gfx[] = INCBIN_U8("graphics/text_window/1.4bpp");
 static const u8 sTextWindowFrame2_Gfx[] = INCBIN_U8("graphics/text_window/2.4bpp");
@@ -196,6 +197,32 @@ const u16 *GetTextWindowPalette(u8 id)
 
 const u16 *GetOverworldTextboxPalettePtr(void)
 {
+    // Dark palette: colors swapped so near-black background (index 1)
+    // has white text (index 2) and dark shadow (index 3).
+    // All other entries mirror the default message_box.gbapal exactly.
+    static const u16 sMessageBox_DarkPal[16] = {
+        RGB(14, 25, 20), // [0] transparent (unchanged)
+        RGB( 4,  4,  5), // [1] window background — near-black
+        RGB(31, 31, 31), // [2] text foreground — white (swap from dark-gray)
+        RGB(10, 10, 10), // [3] text shadow — dark (swap from light-gray)
+        RGB(28,  1,  1), // [4-15] unchanged from original palette
+        RGB(31, 23, 14),
+        RGB( 4, 19,  1),
+        RGB(18, 30, 18),
+        RGB( 6, 10, 25),
+        RGB(20, 24, 30),
+        RGB(31, 31, 31),
+        RGB(28, 29, 28),
+        RGB(31, 31, 31),
+        RGB(30, 16, 24),
+        RGB(25, 12, 25),
+        RGB( 9, 14, 20),
+    };
+
+    if (gSaveBlock2Ptr != NULL
+     && gSaveBlock2Ptr->optionsColorPalette == OPTIONS_COLOR_PALETTE_BLACK)
+        return sMessageBox_DarkPal;
+
     return gMessageBox_Pal;
 }
 
