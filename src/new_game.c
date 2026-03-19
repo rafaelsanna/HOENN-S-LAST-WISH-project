@@ -111,6 +111,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsInfiniteCandy = OPTIONS_INFINITECANDY_OFF;
     gSaveBlock2Ptr->optionsLevelCaps = OPTIONS_LEVELCAPS_ON;
     gSaveBlock2Ptr->optionsEffectiveHelper = OPTIONS_EFFECTIVE_HELPER_TRUE;
+    gSaveBlock2Ptr->optionsColorPalette = OPTIONS_COLOR_PALETTE_WHITE;
     gSaveBlock2Ptr->optionsNuzlocke = OPTIONS_NUZLOCKE_OFF;
 }
 

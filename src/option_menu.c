@@ -39,6 +39,7 @@ enum //General's Menu Items
     MENUITEM_GEN_SOUND,
     MENUITEM_GEN_BUTTONMODE,
     MENUITEM_GEN_FRAMETYPE,
+    MENUITEM_GEN_COLORPALETTE,
     MENUITEM_GEN_CANCEL,
     MENUITEM_GEN_COUNT,
 };
@@ -167,6 +168,8 @@ static void DrawChoices_Sound(int selection, int y);
 static void DrawChoices_ButtonMode(int selection, int y);
 static void DrawChoices_OnOff(int selection, int y);
 static void DrawChoices_FrameType(int selection, int y);
+static void DrawChoices_ColorPalette(int selection, int y);
+static int ProcessInput_ColorPalette(int selection);
 static void DrawChoices_NpcTeams(int selection, int y);
 static void DrawChoices_BattleItems(int selection, int y);
 static void DrawChoices_BattleStyle(int selection, int y);
@@ -209,8 +212,9 @@ struct // PAGE_GENERAL
     [MENUITEM_GEN_BATTLESCENE]   = {DrawChoices_BattleScene, ProcessInput_Options_Two},
     [MENUITEM_GEN_SOUND]         = {DrawChoices_Sound,       ProcessInput_Sound},
     [MENUITEM_GEN_BUTTONMODE]    = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
-    [MENUITEM_GEN_FRAMETYPE]     = {DrawChoices_FrameType,   ProcessInput_FrameType},
-    [MENUITEM_GEN_CANCEL]        = {NULL, NULL},
+    [MENUITEM_GEN_FRAMETYPE]      = {DrawChoices_FrameType,       ProcessInput_FrameType},
+    [MENUITEM_GEN_COLORPALETTE]   = {DrawChoices_ColorPalette,   ProcessInput_ColorPalette},
+    [MENUITEM_GEN_CANCEL]         = {NULL, NULL},
 };
 
 struct // PAGE_DIFFICULTY
@@ -243,8 +247,9 @@ static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
     [MENUITEM_GEN_BATTLESCENE]   = gText_BattleScene,
     [MENUITEM_GEN_SOUND]         = gText_Sound,
     [MENUITEM_GEN_BUTTONMODE]    = gText_ButtonMode,
-    [MENUITEM_GEN_FRAMETYPE]     = gText_Frame,
-    [MENUITEM_GEN_CANCEL]        = gText_OptionMenuSave,
+    [MENUITEM_GEN_FRAMETYPE]      = gText_Frame,
+    [MENUITEM_GEN_COLORPALETTE]   = COMPOUND_STRING("COLOR PALLETE"),
+    [MENUITEM_GEN_CANCEL]         = gText_OptionMenuSave,
 };
 
 static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
@@ -283,6 +288,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_GEN_SOUND:            return TRUE;
         case MENUITEM_GEN_BUTTONMODE:       return TRUE;
         case MENUITEM_GEN_FRAMETYPE:        return TRUE;
+        case MENUITEM_GEN_COLORPALETTE:     return TRUE;
         case MENUITEM_GEN_CANCEL:           return TRUE;
         case MENUITEM_GEN_COUNT:            return TRUE;
         }
@@ -316,6 +322,8 @@ static const u8 sText_Desc_ButtonMode[]         = _("All buttons work as normal.
 static const u8 sText_Desc_ButtonMode_LR[]      = _("On some screens the L and R buttons\nact as left and right.");
 static const u8 sText_Desc_ButtonMode_LA[]      = _("The L button acts as another A\nbutton for one-handed play.");
 static const u8 sText_Desc_FrameType[]          = _("Choose the frame surrounding the\nwindows.");
+static const u8 sText_Desc_ColorPalette_White[] = _("Menus use a white (light) background.");
+static const u8 sText_Desc_ColorPalette_Black[] = _("Menus use a dark (near-black) background.");
 static const u8 sText_Desc_NpcTeams[]           = _("The difficulty of NPC trainers'\nteams.");
 static const u8 sText_Desc_InfiniteCandyOff[]   = _("Disables the use of the infinite\ncandy.");
 static const u8 sText_Desc_InfiniteCandyOn[]    = _("Enables the use of the infinite candy.");
@@ -352,8 +360,9 @@ static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3]
     [MENUITEM_GEN_BATTLESCENE]  = {sText_Desc_BattleScene_On,       sText_Desc_BattleScene_Off, sText_Empty},
     [MENUITEM_GEN_SOUND]        = {sText_Desc_SoundMono,            sText_Desc_SoundStereo,     sText_Empty},
     [MENUITEM_GEN_BUTTONMODE]   = {sText_Desc_ButtonMode,           sText_Desc_ButtonMode_LR,   sText_Desc_ButtonMode_LA},
-    [MENUITEM_GEN_FRAMETYPE]    = {sText_Desc_FrameType,            sText_Empty,                sText_Empty},
-    [MENUITEM_GEN_CANCEL]       = {sText_Desc_Save,                 sText_Empty,                sText_Empty},
+    [MENUITEM_GEN_FRAMETYPE]      = {sText_Desc_FrameType,             sText_Empty,                    sText_Empty},
+    [MENUITEM_GEN_COLORPALETTE]   = {sText_Desc_ColorPalette_White,   sText_Desc_ColorPalette_Black,  sText_Empty},
+    [MENUITEM_GEN_CANCEL]         = {sText_Desc_Save,                 sText_Empty,                    sText_Empty},
 };
 
 static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT][3] =
@@ -381,8 +390,9 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_C
     [MENUITEM_GEN_BATTLESCENE]  = sText_Empty,
     [MENUITEM_GEN_SOUND]        = sText_Empty,
     [MENUITEM_GEN_BUTTONMODE]   = sText_Empty,
-    [MENUITEM_GEN_FRAMETYPE]    = sText_Empty,
-    [MENUITEM_GEN_CANCEL]       = sText_Empty,
+    [MENUITEM_GEN_FRAMETYPE]     = sText_Empty,
+    [MENUITEM_GEN_COLORPALETTE]  = sText_Empty,
+    [MENUITEM_GEN_CANCEL]        = sText_Empty,
 };
 
 // Disabled Difficulty
@@ -426,6 +436,10 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_GEN_FRAMETYPE))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_FRAMETYPE];
             return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_FRAMETYPE][0];
+        case MENUITEM_GEN_COLORPALETTE:
+            if (!CheckConditions(MENUITEM_GEN_COLORPALETTE))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_COLORPALETTE];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COLORPALETTE][sOptions->sel[MENUITEM_GEN_COLORPALETTE]];
         case MENUITEM_GEN_CANCEL:
             if (!CheckConditions(MENUITEM_GEN_CANCEL))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_CANCEL];
@@ -689,7 +703,8 @@ void CB2_InitOptionMenu(void)
         sOptions->sel[MENUITEM_GEN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
         sOptions->sel[MENUITEM_GEN_SOUND]       = gSaveBlock2Ptr->optionsSound;
         sOptions->sel[MENUITEM_GEN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
-        sOptions->sel[MENUITEM_GEN_FRAMETYPE]   = gSaveBlock2Ptr->optionsWindowFrameType;
+        sOptions->sel[MENUITEM_GEN_FRAMETYPE]       = gSaveBlock2Ptr->optionsWindowFrameType;
+        sOptions->sel[MENUITEM_GEN_COLORPALETTE]    = gSaveBlock2Ptr->optionsColorPalette;
         
         sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS]     = gSaveBlock2Ptr->optionsNpcTeams;
         sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]  = gSaveBlock2Ptr->optionsBattleItems;
@@ -882,6 +897,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsSound            = sOptions->sel[MENUITEM_GEN_SOUND];
     gSaveBlock2Ptr->optionsButtonMode       = sOptions->sel[MENUITEM_GEN_BUTTONMODE];
     gSaveBlock2Ptr->optionsWindowFrameType  = sOptions->sel[MENUITEM_GEN_FRAMETYPE];
+    gSaveBlock2Ptr->optionsColorPalette     = sOptions->sel[MENUITEM_GEN_COLORPALETTE];
 
     gSaveBlock2Ptr->optionsNpcTeams         = sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS];
     gSaveBlock2Ptr->optionsBattleItems      = sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS];
@@ -1266,6 +1282,26 @@ static void DrawChoices_TrueFalse(int selection, int y)
 
     DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
+}
+
+static const u8 sText_ColorPalette_White[] = _("WHITE");
+static const u8 sText_ColorPalette_Black[] = _("BLACK");
+
+static void DrawChoices_ColorPalette(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_GEN_COLORPALETTE);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_ColorPalette_White, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_ColorPalette_Black, GetStringRightAlignXOffset(FONT_NORMAL, sText_ColorPalette_Black, 198), y, styles[1], active);
+}
+
+static int ProcessInput_ColorPalette(int selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+        selection ^= 1;
+    return selection;
 }
 
 
