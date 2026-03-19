@@ -668,6 +668,7 @@ static bool32 InitStartMenuStep(void)
     case 2:
         LoadMessageBoxAndBorderGfx();
         DrawStdWindowFrame(AddStartMenuWindow(sNumStartMenuActions), FALSE);
+        FillWindowPixelBuffer(GetStartMenuWindowId(), PIXEL_FILL(2));
         sInitStartMenuData[1] = 0;
         sInitStartMenuData[0]++;
         break;
@@ -1485,9 +1486,9 @@ static void Task_SaveAfterLinkBattle(u8 taskId)
                                         gText_SavingDontTurnOffPower,
                                         TEXT_SKIP_DRAW,
                                         NULL,
+                                        TEXT_COLOR_LIGHT_GRAY,
                                         TEXT_COLOR_DARK_GRAY,
-                                        TEXT_COLOR_WHITE,
-                                        TEXT_COLOR_LIGHT_GRAY);
+                                        TEXT_COLOR_DARK_GRAY);
             DrawTextBorderOuter(0, 8, 14);
             PutWindowTilemap(0);
             CopyWindowToVram(0, COPYWIN_FULL);
