@@ -5522,11 +5522,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Balloon"),
         .height = 10,
         .weight = 120,
-        .description = COMPOUND_STRING(
-            "Its fur is the ultimate in luxuriousness.\n"
-            "Sleeping alongside a Wigglytuff is simply\n"
-            "divine. Its body expands seemingly without\n"
-            "end when it inhales."),
+.description = COMPOUND_STRING(
+    "A cloud given form and breath, it drifts\n"
+    "above the world on unseen winds.\n"
+    "Its body expands with each sigh, catching\n"
+    "moonlight that gleams through its form.$"),
         .pokemonScale = 328,
         .pokemonOffset = 11,
         .trainerScale = 256,
@@ -5865,11 +5865,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Weed"),
         .height = 5,
         .weight = 54,
-        .description = COMPOUND_STRING(
-            "This Pokémon grows by absorbing moonlight.\n"
-            "During the daytime, it buries itself in the\n"
-            "ground, leaving only its leaves exposed to\n"
-            "avoid detection by its enemies."),
+.description = COMPOUND_STRING(
+    "It dwells in mystical forests, absorbing\n"
+    "moonlight through its leaves at night.\p"
+    "Its body emits a sweet, enchanting aroma\n"
+    "that calms both people and wild POKéMON.$"),
         .pokemonScale = 423,
         .pokemonOffset = 19,
         .trainerScale = 256,
@@ -5939,11 +5939,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Weed"),
         .height = 8,
         .weight = 86,
-        .description = COMPOUND_STRING(
-            "A horribly noxious honey drools from its\n"
-            "mouth. One whiff of the honey can result\n"
-            "in memory loss. Some fans are said to\n"
-            "enjoy this overwhelming stink, however."),
+.description = COMPOUND_STRING(
+    "A sweet, magical nectar drips from its\n"
+    "mouth, said to grant vivid dreams to those\n"
+    "who smell it. Lost travelers often follow\n"
+    "its scent deeper into enchanted forests.$"),
         .pokemonScale = 329,
         .pokemonOffset = 13,
         .trainerScale = 256,
@@ -6034,11 +6034,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Flower"),
         .height = 12,
         .weight = 186,
-        .description = COMPOUND_STRING(
-            "In seasons when it produces more pollen,\n"
-            "the air around a Vileplume turns yellow\n"
-            "with the powder as it walks. The pollen is\n"
-            "highly toxic and causes paralysis."),
+.description = COMPOUND_STRING(
+    "Its night blooming flower opens under the\n"
+    "full moon, scattering glowing pollen dust.\p"
+    "The enchanting scent grants visions of\n"
+    "ancient fairy forests long forgotten.$"),
         .pokemonScale = 256,
         .pokemonOffset = 4,
         .trainerScale = 256,
@@ -6123,11 +6123,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Flower"),
         .height = 4,
         .weight = 58,
-        .description = COMPOUND_STRING(
-            "Its flower petals deepen in color through\n"
-            "exposure to sunlight. When cloudy weather\n"
-            "persists, it does a dance that is thought\n"
-            "to be a ritual for summoning the sun."),
+.description = COMPOUND_STRING(
+    "Its radiant petals hide a poisonous nectar,\n"
+    "luring the unsuspecting with beauty.\p"
+    "It dances under moonlight, not for joy,\n"
+    "but to lure prey into its toxic embrace.$"),
         .pokemonScale = 472,
         .pokemonOffset = 21,
         .trainerScale = 256,
@@ -8046,10 +8046,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 10,
         .weight = 200,
         .description = COMPOUND_STRING(
-            "Its body is coated in a thin, charged moisture\n"
-            "that constantly crackles with stored energy.\n"
-            "This slippery surface lets it escape grips,\n"
-            "while releasing shocks at those who grab it."),
+    "Its body is coated in a thin, charged moisture\n"
+    "that constantly crackles with stored energy.\n"
+    "This slippery surface lets it escape grips,\n"
+    "while releasing shocks at those who grab it."),
         .pokemonScale = 288,
         .pokemonOffset = 11,
         .trainerScale = 256,
@@ -8131,11 +8131,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Tadpole"),
         .height = 13,
         .weight = 540,
-        .description = COMPOUND_STRING(
-            "Its highly developed muscles never grow\n"
-            "fatigued, however much it exercises.\n"
-            "This Pokémon can swim back and forth\n"
-            "across the Pacific Ocean without effort."),
+.description = COMPOUND_STRING(
+    "Its muscular body surges with electric\n"
+    "power in every movement. It electrifies\n"
+    "water currents to stun prey from afar.\n"
+    "Rumored to have sunk ships with one punch."),
         .pokemonScale = 256,
         .pokemonOffset = 6,
         .trainerScale = 256,
@@ -8206,11 +8206,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .categoryName = _("Frog"),
         .height = 11,
         .weight = 339,
-        .description = COMPOUND_STRING(
-            "The curled hair on its head proves its\n"
-            "status as a king. It is said that the\n"
-            "longer and curlier the hair, the more\n"
-            "respect it earns from its peers."),
+.description = COMPOUND_STRING(
+    "Its lightning-bolt crown draws storms\n"
+    "and serves as a living lightning rod.\p"
+    "Each absorbed strike amplifies its power\n"
+    "to terrifying, cataclysmic levels.$"),
         .pokemonScale = 289,
         .pokemonOffset = 6,
         .trainerScale = 256,

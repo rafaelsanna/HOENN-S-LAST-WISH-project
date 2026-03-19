@@ -2203,11 +2203,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .categoryName = _("Wily"),
         .height = 10,
         .weight = 280,
-        .description = COMPOUND_STRING(
-            "A forest-dwelling Pokémon that is skilled\n"
-            "at climbing trees. Its long and pointed\n"
-            "nose is its weak point. It loses power if\n"
-            "the nose is gripped."),
+.description = COMPOUND_STRING(
+    "Its body is packed with volatile compounds\n"
+    "that ignite under pressure. If threatened,\n"
+    "it triggers a cataclysmic explosion its\n"
+    "final act before rebirth from the ashes.$"),
         .pokemonScale = 299,
         .pokemonOffset = 10,
         .trainerScale = 256,
@@ -4290,10 +4290,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .height = 10,
         .weight = 970,
         .description = COMPOUND_STRING(
-            "Its body emits a powerful magnetism.\n"
-            "It feeds on prey that is pulled in by the\n"
-            "force. Its magnetism is stronger in cold\n"
-            "seasons."),
+"Its body emits a powerful psychic field.\n"
+"It manipulates nearby rocks with its mind,\n"
+"guiding them with precise control. Its\n"
+"magnetism enhances its telekinetic power."),
         .pokemonScale = 256,
         .pokemonOffset = 9,
         .trainerScale = 289,
@@ -4369,10 +4369,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .height = 14,
         .weight = 3400,
         .description = COMPOUND_STRING(
-            "It freely controls three units called\n"
-            "Mini-Noses using magnetic force.\n"
-            "With them, it can attack its foes from\n"
-            "three directions."),
+"A mysterious crystal on its head amplifies\n"
+"its immense psychic power. It commands its\n"
+"Mini-Noses telekinetically, striking foes\n"
+"with coordinated attacks from all sides."),
         .pokemonScale = 265,
         .pokemonOffset = 2,
         .trainerScale = 262,
@@ -4445,11 +4445,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .categoryName = _("Kitten"),
         .height = 6,
         .weight = 110,
-        .description = COMPOUND_STRING(
-            "A Skitty's adorably cute behavior makes it\n"
-            "highly popular. In battle, it makes its tail\n"
-            "puff out. It threatens foes with a sharp\n"
-            "growl."),
+.description = COMPOUND_STRING(
+    "Behind its adorable, kitten-like face\n"
+    "lies a lethal predator. Its bladed tail\n"
+    "unfolds in an instant cute, then deadly,\n"
+    "with no warning between.$"),
         .pokemonScale = 492,
         .pokemonOffset = 19,
         .trainerScale = 256,
@@ -4524,14 +4524,14 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .speciesName = _("Delcatty"),
         .cryId = CRY_DELCATTY,
         .natDexNum = NATIONAL_DEX_DELCATTY,
-        .categoryName = _("Prim"),
+        .categoryName = _("Ninja Cat"),
         .height = 11,
         .weight = 326,
-        .description = COMPOUND_STRING(
-            "Rather than keeping a permanent lair,\n"
-            "it habitually seeks comfortable spots and\n"
-            "sleeps there. It is nocturnal and becomes\n"
-            "active at dusk."),
+.description = COMPOUND_STRING(
+    "Its bladed tail, forged through countless\n"
+    "battles, gleams with deadly pride.\p"
+    "It strikes with blinding speed and precision\n"
+    "a true master of the silent kill.$"),
         .pokemonScale = 322,
         .pokemonOffset = 10,
         .trainerScale = 256,
@@ -6219,11 +6219,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .categoryName = _("Stomach"),
         .height = 4,
         .weight = 103,
-        .description = COMPOUND_STRING(
-            "This Pokémon's stomach fluid can even\n"
-            "digest scrap iron. In one gulp, it can\n"
-            "swallow something that is as large as\n"
-            "itself."),
+.description = COMPOUND_STRING(
+    "Its stomach burns with intense inner flame,\n"
+    "melting anything it swallows into fuel.\n"
+    "It can gulp down prey larger than itself,\n"
+    "converting them to fiery energy instantly.$"),
         .pokemonScale = 593,
         .pokemonOffset = 23,
         .trainerScale = 256,
@@ -6298,18 +6298,18 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .growthRate = GROWTH_FLUCTUATING,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_AMORPHOUS),
         .abilities = { ABILITY_FLASH_FIRE, ABILITY_FLAME_BODY, ABILITY_GLUTTONY },
-        .bodyColor = BODY_COLOR_PURPLE,
+        .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Swalot"),
         .cryId = CRY_SWALOT,
         .natDexNum = NATIONAL_DEX_SWALOT,
-        .categoryName = _("Poison Bag"),
+        .categoryName = _("Fire Bag"),
         .height = 17,
         .weight = 800,
-        .description = COMPOUND_STRING(
-            "Its powerful stomach acid is capable of\n"
-            "digesting almost anything. The one thing\n"
-            "in the whole world a Swalot can't digest is\n"
-            "its own stomach."),
+.description = COMPOUND_STRING(
+    "Its stomach houses an inextinguishable\n"
+    "flame that reduces all matter to ash.\n"
+    "Legends say the fire has burned since\n"
+    "ancient times, consuming all except itself.$"),
         .pokemonScale = 256,
         .pokemonOffset = 6,
         .trainerScale = 345,
