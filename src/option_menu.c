@@ -900,6 +900,21 @@ static void Task_OptionMenuFadeOut(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
+        if (sOptions != NULL && sOptions->arrowTaskId != TASK_NONE)
+        {
+            RemoveScrollIndicatorArrowPair(sOptions->arrowTaskId);
+            sOptions->arrowTaskId = TASK_NONE;
+        }
+
+        // Ensure option menu-specific window/blend state does not leak to the next callback.
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ, 0);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+
         DestroyTask(taskId);
         FreeAllWindowBuffers();
         FREE_AND_SET_NULL(sOptions);
