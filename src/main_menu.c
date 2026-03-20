@@ -2175,7 +2175,7 @@ void CreateYesNoMenuParameterized(u8 x, u8 y, u16 baseTileNum, u16 baseBlock, u8
 
 static void NewGameBirchSpeech_ShowDialogueWindow(u8 windowId, u8 copyToVram)
 {
-    CallWindowFunction(windowId, NewGameBirchSpeech_CreateDialogueWindowBorder);
+    ////CallWindowFunction(windowId, NewGameBirchSpeech_CreateDialogueWindowBorder); <essa função não é mais necessária, pois o diálogo agora usa uma janela sem borda personalizada> 
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
     PutWindowTilemap(windowId);
     if (copyToVram == TRUE)
