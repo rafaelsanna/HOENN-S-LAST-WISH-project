@@ -1395,3 +1395,230 @@ body.light-mode .pokemon-card:hover {
         max-width: 280px;
     }
 }
+
+/* ===== POKEMON INFO PAGE ===== */
+.pokemon-info-section {
+    padding: 120px 0 4rem 0;
+    min-height: 100vh;
+    background: #2d2d2d;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--pokemon-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    transition: gap 0.3s ease;
+}
+
+.back-link:hover {
+    gap: 0.8rem;
+    color: #f39c12;
+}
+
+.pokemon-info-card {
+    background: #363636;
+    border-radius: 20px;
+    padding: 2rem;
+    border: 2px solid #404040;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.pokemon-info-header {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.pokemon-sprite-large {
+    flex-shrink: 0;
+    background: #2d2d2d;
+    border-radius: 15px;
+    padding: 1rem;
+    border: 2px solid var(--pokemon-yellow);
+}
+
+.pokemon-sprite-large img {
+    width: 150px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.pokemon-title h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--pokemon-yellow) !important;
+}
+
+.pokemon-title .species {
+    color: #aaaaaa;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.types {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.type {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.type-water {
+    background: #4a90e2;
+}
+
+.type-ground {
+    background: #d4a017;
+}
+
+.pokemon-description {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #404040;
+}
+
+.pokemon-description h3,
+.pokemon-stats h3,
+.pokemon-details h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--pokemon-yellow);
+}
+
+.stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.stat {
+    display: grid;
+    grid-template-columns: 100px 50px 1fr;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-name {
+    font-weight: 600;
+    color: #cccccc;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: var(--pokemon-yellow);
+}
+
+.stat-bar {
+    background: #404040;
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    background: var(--pokemon-yellow);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.pokemon-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background: #2d2d2d;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.detail-item h4 {
+    font-size: 0.9rem;
+    color: #aaaaaa;
+    margin-bottom: 0.3rem;
+}
+
+.detail-item p {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.next-evo {
+    margin-top: 0.3rem;
+    color: var(--pokemon-yellow);
+    font-size: 0.9rem;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 3rem;
+    color: #cccccc;
+    font-size: 1.2rem;
+}
+
+.error a {
+    color: var(--pokemon-yellow);
+}
+
+/* Light Mode */
+body.light-mode .pokemon-info-section {
+    background: #f8f9fa;
+}
+
+body.light-mode .pokemon-info-card {
+    background: #ffffff;
+    border-color: #e9ecef;
+}
+
+body.light-mode .pokemon-sprite-large {
+    background: #f8f9fa;
+    border-color: var(--pokemon-yellow);
+}
+
+body.light-mode .stat-bar {
+    background: #e9ecef;
+}
+
+body.light-mode .pokemon-details {
+    background: #f8f9fa;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .pokemon-info-section {
+        padding: 90px 0 2rem 0;
+    }
+    
+    .pokemon-info-header {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .stat {
+        grid-template-columns: 80px 40px 1fr;
+        gap: 0.3rem;
+    }
+    
+    .stat-name {
+        font-size: 0.9rem;
+    }
+    
+    .pokemon-details {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
