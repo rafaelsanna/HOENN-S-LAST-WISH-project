@@ -15,12 +15,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header (igual ao index) -->
+    <!-- Header -->
     <header>
         <nav>
             <a href="index.html" class="logo-link">
                 <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
             </a>
+            
+            <div class="header-animated">
+                <img src="images/jirachi-celebi00.png" 
+                     alt="Jirachi & Celebi" 
+                     class="animated-header-img"
+                     data-normal="images/jirachi-celebi00.png"
+                     data-hover="images/jirachi-celebi01.png">
+            </div>
             
             <button class="hamburger" id="hamburger">
                 <i class="fas fa-bars"></i>
@@ -48,38 +56,34 @@
         <div class="container">
             <div class="pokemon-grid">
                 <!-- Pokémon 01 -->
-<div class="pokemon-card">
-    <a href="pokemon.html?id=1" class="pokemon-card-link">
-        <img src="images/wishdex/01.png" 
-             alt="Pokémon #01" 
-             class="pokemon-sprite"
-             data-normal="images/wishdex/01.png"
-             data-frame="images/wishdex/01-frame.png">
-    </a>
-</div>
+                <div class="pokemon-card" data-pokemon-id="1">
+                    <img src="images/wishdex/01.png" 
+                         alt="Bulbasaur" 
+                         class="pokemon-sprite"
+                         data-normal="images/wishdex/01.png"
+                         data-frame="images/wishdex/01-frame.png">
+                </div>
                 
-<div class="pokemon-card">
-    <a href="pokemon.html?id=2" class="pokemon-card-link">
-        <img src="images/wishdex/02.png" 
-             alt="Pokémon #02" 
-             class="pokemon-sprite"
-             data-normal="images/wishdex/02.png"
-             data-frame="images/wishdex/02-frame.png">
-    </a>
-</div>
+                <!-- Pokémon 02 -->
+                <div class="pokemon-card" data-pokemon-id="2">
+                    <img src="images/wishdex/02.png" 
+                         alt="Ivysaur" 
+                         class="pokemon-sprite"
+                         data-normal="images/wishdex/02.png"
+                         data-frame="images/wishdex/02-frame.png">
+                </div>
                 
-<div class="pokemon-card">
-    <a href="pokemon.html?id=3" class="pokemon-card-link">
-        <img src="images/wishdex/03.png" 
-             alt="Pokémon #03" 
-             class="pokemon-sprite"
-             data-normal="images/wishdex/03.png"
-             data-frame="images/wishdex/03-frame.png">
-    </a>
-</div>
+                <!-- Pokémon 03 -->
+                <div class="pokemon-card" data-pokemon-id="3">
+                    <img src="images/wishdex/03.png" 
+                         alt="Venusaur" 
+                         class="pokemon-sprite"
+                         data-normal="images/wishdex/03.png"
+                         data-frame="images/wishdex/03-frame.png">
+                </div>
                 
                 <!-- Pokémon 04 -->
-                <div class="pokemon-card">
+                <div class="pokemon-card" data-pokemon-id="4">
                     <img src="images/wishdex/04.png" 
                          alt="Pokémon #04" 
                          class="pokemon-sprite"
@@ -88,7 +92,7 @@
                 </div>
                 
                 <!-- Pokémon 05 -->
-                <div class="pokemon-card">
+                <div class="pokemon-card" data-pokemon-id="5">
                     <img src="images/wishdex/05.png" 
                          alt="Pokémon #05" 
                          class="pokemon-sprite"
@@ -97,7 +101,7 @@
                 </div>
                 
                 <!-- Pokémon 06 -->
-                <div class="pokemon-card">
+                <div class="pokemon-card" data-pokemon-id="6">
                     <img src="images/wishdex/06.png" 
                          alt="Pokémon #06" 
                          class="pokemon-sprite"
@@ -106,7 +110,7 @@
                 </div>
                 
                 <!-- Pokémon 07 -->
-                <div class="pokemon-card">
+                <div class="pokemon-card" data-pokemon-id="7">
                     <img src="images/wishdex/07.png" 
                          alt="Pokémon #07" 
                          class="pokemon-sprite"
@@ -115,7 +119,7 @@
                 </div>
                 
                 <!-- Pokémon 08 -->
-                <div class="pokemon-card">
+                <div class="pokemon-card" data-pokemon-id="8">
                     <img src="images/wishdex/08.png" 
                          alt="Pokémon #08" 
                          class="pokemon-sprite"
@@ -124,7 +128,7 @@
                 </div>
                 
                 <!-- Pokémon 09 -->
-                <div class="pokemon-card">
+                <div class="pokemon-card" data-pokemon-id="9">
                     <img src="images/wishdex/09.png" 
                          alt="Pokémon #09" 
                          class="pokemon-sprite"
@@ -134,6 +138,17 @@
             </div>
         </div>
     </section>
+
+    <!-- MODAL (popup) -->
+    <div id="pokemon-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
+                <!-- Conteúdo será preenchido via JavaScript -->
+                <div class="loading">Loading...</div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -153,14 +168,4 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-<div class="pokemon-card">
-    <a href="pokemon.html?id=1">
-        <img src="images/wishdex/01.png" 
-             alt="Pokémon #01" 
-             class="pokemon-sprite"
-             data-normal="images/wishdex/01.png"
-             data-frame="images/wishdex/01-frame.png">
-    </a>
-</div>
 
