@@ -3085,6 +3085,7 @@ static void LoadChatWindowGfx(void)
 
     LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     ptr = DecompressAndCopyTileDataToVram(2, gUnionRoomChat_Background_Gfx, 0, 0, 0);
+    LoadUserWindowBorderGfxOnBg(2, 0xA, BG_PLTT_ID(2));
     if (ptr)
     {
         // The below is nonsense. Tiles 0x11 and 0x21 of the background tileset are

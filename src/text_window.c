@@ -98,7 +98,6 @@ const struct TilesPal *GetWindowFrameTilesPal(u8 id)
 void LoadMessageBoxGfx(u8 windowId, u16 destOffset, u8 palOffset)
 {
     LoadBgTiles(GetWindowAttribute(windowId, WINDOW_BG), gMessageBox_Gfx, 0x1C0, destOffset);
-    // LoadBgTiles(GetWindowAttribute(windowId, WINDOW_BG), gTextWindowFrame1_Gfx, 0x120, destOffset);
     LoadPalette(GetOverworldTextboxPalettePtr(), palOffset, PLTT_SIZE_4BPP);
 }
 
