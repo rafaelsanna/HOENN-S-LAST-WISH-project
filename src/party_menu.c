@@ -2342,10 +2342,10 @@ static void LoadPartyMenuWindows(void)
     u32 i;
     DeactivateAllTextPrinters();
     for (i = 0; i < PARTY_SIZE; i++)
-        FillWindowPixelBuffer(i, PIXEL_FILL(0));
+        FillWindowPixelBuffer(i, PIXEL_FILL(1));
     LoadUserWindowBorderGfx(0, 0x4F, BG_PLTT_ID(13));
     LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
-    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
 }
 
 static void CreateCancelConfirmWindows(bool8 chooseHalf)
@@ -2360,7 +2360,7 @@ static void CreateCancelConfirmWindows(bool8 chooseHalf)
         if (chooseHalf == TRUE)
         {
             confirmWindowId = AddWindow(&sConfirmButtonWindowTemplate);
-            FillWindowPixelBuffer(confirmWindowId, PIXEL_FILL(0));
+            FillWindowPixelBuffer(confirmWindowId, PIXEL_FILL(1));
             mainOffset = GetStringCenterAlignXOffset(FONT_SMALL, gMenuText_Confirm, 48);
             AddTextPrinterParameterized4(confirmWindowId, FONT_SMALL, mainOffset, 1, 0, 0, sFontColorTable[0], TEXT_SKIP_DRAW, gMenuText_Confirm);
             PutWindowTilemap(confirmWindowId);
@@ -2373,7 +2373,7 @@ static void CreateCancelConfirmWindows(bool8 chooseHalf)
             cancelWindowId = AddWindow(&sCancelButtonWindowTemplate);
             offset = 3;
         }
-        FillWindowPixelBuffer(cancelWindowId, PIXEL_FILL(0));
+        FillWindowPixelBuffer(cancelWindowId, PIXEL_FILL(1));
 
         // Branches are functionally identical. Second branch is never reached, Spin Trade wasnt fully implemented
         if (gPartyMenu.menuType != PARTY_MENU_TYPE_SPIN_TRADE)
@@ -6381,33 +6381,33 @@ static void DeleteInvalidFusionMoves(struct Pokemon *mon, u32 species)
     }
 }
 
-static void SwapFusionMonMoves(struct Pokemon *mon, const u16 moveTable[][2], u32 mode)
-{
-    u32 oldMoveIndex, newMoveIndex;
-    if (mode == FUSE_MON)
-    {
-        oldMoveIndex = 0;
-        newMoveIndex = 1;
-    }
-    else //mode == UNFUSE_MON
-    {
-        oldMoveIndex = 1;
-        newMoveIndex = 0;
-    }
-    for (u32 i = 0; i < MAX_MON_MOVES; i++)
-    {
-        u32 move = GetMonData(mon, MON_DATA_MOVE1 + i);
-        for (u32 j = 0; j < 2; j++)
-        {
-            if (move == moveTable[j][oldMoveIndex])
-            {
-                SetMonData(mon, MON_DATA_MOVE1 + i, &moveTable[j][newMoveIndex]);
-                SetMonData(mon, MON_DATA_PP1 + i, &gMovesInfo[moveTable[j][newMoveIndex]].pp);
-            }
-        }
-    }
+// static void SwapFusionMonMoves(struct Pokemon *mon, const u16 moveTable[][2], u32 mode)
+// {
+//     u32 oldMoveIndex, newMoveIndex;
+//     if (mode == FUSE_MON)
+//     {
+//         oldMoveIndex = 0;
+//         newMoveIndex = 1;
+//     }
+//     else //mode == UNFUSE_MON
+//     {
+//         oldMoveIndex = 1;
+//         newMoveIndex = 0;
+//     }
+//     for (u32 i = 0; i < MAX_MON_MOVES; i++)
+//     {
+//         u32 move = GetMonData(mon, MON_DATA_MOVE1 + i);
+//         for (u32 j = 0; j < 2; j++)
+//         {
+//             if (move == moveTable[j][oldMoveIndex])
+//             {
+//                 SetMonData(mon, MON_DATA_MOVE1 + i, &moveTable[j][newMoveIndex]);
+//                 SetMonData(mon, MON_DATA_PP1 + i, &gMovesInfo[moveTable[j][newMoveIndex]].pp);
+//             }
+//         }
+//     }
 
-}
+// }
 static void Task_TryItemUseFusionChange(u8 taskId)
 {
     struct Pokemon *mon = &gPlayerParty[gTasks[taskId].firstFusionSlot];
