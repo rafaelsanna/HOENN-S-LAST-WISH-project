@@ -56,7 +56,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconSprite = gMonIcon_Bulbasaur,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 1 : 4,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
-        SHADOW(1, -1, SHADOW_SIZE_S)
+        SHADOW(1, 0, SHADOW_SIZE_M)
         FOOTPRINT(Bulbasaur)
         OVERWORLD(
             sPicTable_Bulbasaur,
@@ -185,7 +185,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .trainerOffset = 6,
         .frontPic = gMonFrontPic_Venusaur,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 4,
+        .frontPicYOffset = 0,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 10),
             ANIMCMD_FRAME(1, 25),
@@ -4618,7 +4618,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconSprite = gMonIcon_NidoranM,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
-        SHADOW(1, 0, SHADOW_SIZE_S)
+        SHADOW(1, 6, SHADOW_SIZE_S)
         FOOTPRINT(NidoranM)
         OVERWORLD(
             sPicTable_NidoranM,
@@ -4691,7 +4691,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconSprite = gMonIcon_Nidorino,
         .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 1, SHADOW_SIZE_L)
+        SHADOW(2, 4, SHADOW_SIZE_L)
         FOOTPRINT(Nidorino)
         OVERWORLD(
             sPicTable_Nidorino,
