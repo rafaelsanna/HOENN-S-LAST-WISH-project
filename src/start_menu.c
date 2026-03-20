@@ -668,7 +668,7 @@ static bool32 InitStartMenuStep(void)
     case 2:
         LoadMessageBoxAndBorderGfx();
         DrawStdWindowFrame(AddStartMenuWindow(sNumStartMenuActions), FALSE);
-        FillWindowPixelBuffer(GetStartMenuWindowId(), PIXEL_FILL(2));
+        FillWindowPixelBuffer(GetStartMenuWindowId(), PIXEL_FILL(1));
         sInitStartMenuData[1] = 0;
         sInitStartMenuData[0]++;
         break;
@@ -1120,7 +1120,8 @@ void SaveGame(void)
 static void ShowSaveMessage(const u8 *message, u8 (*saveCallback)(void))
 {
     StringExpandPlaceholders(gStringVar4, message);
-    LoadMessageBoxAndFrameGfx(0, TRUE);
+    LoadMessageBoxAndBorderGfx();
+    DrawStdWindowFrame(0, TRUE);
     AddTextPrinterForMessage_2(TRUE);
     sSavingComplete = TRUE;
     sSaveDialogCallback = saveCallback;
