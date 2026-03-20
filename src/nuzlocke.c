@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "event_data.h"
 #include "nuzlocke.h"
+#include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
 #include "constants/flags.h"
@@ -99,6 +100,24 @@ static bool8 IsTrackableWildBattle(void)
     return gMapHeader.mapType == MAP_TYPE_ROUTE || gMapHeader.mapType == MAP_TYPE_OCEAN_ROUTE;
 }
 
+static bool8 HasUncaughtWildMonInBattle(void)
+{
+    s32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData(&gEnemyParty[i], MON_DATA_SPECIES);
+
+        if (species == SPECIES_NONE)
+            continue;
+
+        if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
 bool8 Nuzlocke_IsEnabled(void)
 {
     return gSaveBlock2Ptr != NULL && gSaveBlock2Ptr->optionsNuzlocke != OPTIONS_NUZLOCKE_OFF;
@@ -132,6 +151,9 @@ void Nuzlocke_OnBattleStart(void)
 
     mode = Nuzlocke_GetMode();
     if (mode != OPTIONS_NUZLOCKE_HARD)
+        return;
+
+    if (!HasUncaughtWildMonInBattle())
         return;
 
     mapSecId = gMapHeader.regionMapSectionId;
