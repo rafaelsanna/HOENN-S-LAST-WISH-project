@@ -152,3 +152,20 @@ if (document.readyState === 'loading') {
 
 console.log('🎮 Pokémon: Hoenn\'s Last Wish website loaded successfully!');
 
+// WishDex Hover Effect - Funciona mesmo com o link
+function initWishDexHover() {
+    const sprites = document.querySelectorAll('.pokemon-sprite');
+    if (sprites.length === 0) return;
+    
+    sprites.forEach(sprite => {
+        const normalSrc = sprite.dataset.normal;
+        const frameSrc = sprite.dataset.frame;
+        
+        if (normalSrc && frameSrc) {
+            // O hover funciona na sprite, mas como o card inteiro é um link,
+            // o mouse vai passar pela sprite naturalmente
+            sprite.addEventListener('mouseenter', () => sprite.src = frameSrc);
+            sprite.addEventListener('mouseleave', () => sprite.src = normalSrc);
+        }
+    });
+}
