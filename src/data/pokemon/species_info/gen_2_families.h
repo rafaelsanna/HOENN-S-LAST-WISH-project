@@ -2657,7 +2657,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 20,
         .friendship = STANDARD_FRIENDSHIP,
-        .growthRate = GROWTH_MEDIUM_SLOW,
+        .growthRate = GROWTH_MEDIUM_SLOW, 
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY, EGG_GROUP_GRASS),
     #if P_UPDATED_ABILITIES >= GEN_4
         .abilities = { ABILITY_HUGE_POWER, ABILITY_NONE, ABILITY_INFILTRATOR },
@@ -4874,18 +4874,18 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .growthRate = GROWTH_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_FAIRY),
         .abilities = { ABILITY_INTIMIDATE, ABILITY_RUN_AWAY, ABILITY_RATTLED },
-        .bodyColor = BODY_COLOR_PINK,
+        .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Snubbull"),
         .cryId = CRY_SNUBBULL,
         .natDexNum = NATIONAL_DEX_SNUBBULL,
-        .categoryName = _("Fairy"),
+        .categoryName = _("Pup"),
         .height = 6,
         .weight = 78,
         .description = COMPOUND_STRING(
-            "By baring its fangs and making a scary\n"
-            "face, it sends smaller Pokémon scurrying\n"
-            "in terror. The Snubbull does seem a\n"
-            "little sad at making its foes flee."),
+    "Its powerful jaw burns with inner fire\n"
+    "when threatened, leaving scorch marks on\n"
+    "anything it clamps onto. Most predators\n"
+    "think twice before challenging it again.$"),
         .pokemonScale = 465,
         .pokemonOffset = 19,
         .trainerScale = 256,
@@ -4954,14 +4954,14 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .speciesName = _("Granbull"),
         .cryId = CRY_GRANBULL,
         .natDexNum = NATIONAL_DEX_GRANBULL,
-        .categoryName = _("Fairy"),
+        .categoryName = _("Inferno"),
         .height = 14,
         .weight = 487,
-        .description = COMPOUND_STRING(
-            "It has a particularly well-developed lower\n"
-            "jaw. The huge fangs are heavy, causing\n"
-            "it to tilt its head. Unless it is startled,\n"
-            "it will not try to bite."),
+.description = COMPOUND_STRING(
+    "A formidable brawler whose fury ignites\n"
+    "its jaws to unimaginable temperatures.\n"
+    "Its bite shatters steel, melts rock, and\n"
+    "leaves nothing but ash in its wake.$"),
         .pokemonScale = 256,
         .pokemonOffset = 4,
         .trainerScale = 256,
@@ -6171,11 +6171,11 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .categoryName = _("Lava"),
         .height = 8,
         .weight = 550,
-        .description = COMPOUND_STRING(
-            "The shell on its back is made of hardened\n"
-            "magma. Tens of thousands of years spent\n"
-            "living in volcanic craters have turned\n"
-            "Magcargo's bodies into magma."),
+.description = COMPOUND_STRING(
+    "It drills through mountains with corrosive\n"
+    "saliva, leaving winding tunnels behind.\n"
+    "The stone it swallows hardens into armor,\n"
+    "gleaming with toxic residue and power.$"),
         .pokemonScale = 332,
         .pokemonOffset = 15,
         .trainerScale = 256,
