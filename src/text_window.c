@@ -91,13 +91,14 @@ const struct TilesPal *GetWindowFrameTilesPal(u8 id)
 {
     if (id >= WINDOW_FRAMES_COUNT)
         return &sWindowFrames[0];
-    else
-        return &sWindowFrames[id];
+
+    return &sWindowFrames[id];
 }
 
 void LoadMessageBoxGfx(u8 windowId, u16 destOffset, u8 palOffset)
 {
     LoadBgTiles(GetWindowAttribute(windowId, WINDOW_BG), gMessageBox_Gfx, 0x1C0, destOffset);
+    // LoadBgTiles(GetWindowAttribute(windowId, WINDOW_BG), gTextWindowFrame1_Gfx, 0x120, destOffset);
     LoadPalette(GetOverworldTextboxPalettePtr(), palOffset, PLTT_SIZE_4BPP);
 }
 
@@ -219,11 +220,7 @@ const u16 *GetOverworldTextboxPalettePtr(void)
         RGB( 9, 14, 20),
     };
 
-    if (gSaveBlock2Ptr != NULL
-     && gSaveBlock2Ptr->optionsColorPalette == OPTIONS_COLOR_PALETTE_BLACK)
-        return sMessageBox_DarkPal;
-
-    return gMessageBox_Pal;
+    return sMessageBox_DarkPal;
 }
 
 // Effectively LoadUserWindowBorderGfx but specifying the bg directly instead of a window from that bg

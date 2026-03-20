@@ -2407,7 +2407,7 @@ static bool32 Display_UpdateMessageBuffer(u8 *state)
     {
     case 0:
         GetBufferSelectionRegion(&x, &width);
-        FillTextEntryWindow(x, width, 0);
+        FillTextEntryWindow(x, width, PIXEL_FILL(1));
         str = GetMessageEntryBuffer();
         DrawTextEntryMessage(0, str, 3, 1, 2);
         CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_GFX);
@@ -2437,7 +2437,7 @@ static bool32 Display_AskRegisterText(u8 *state)
         x = GetLimitedMessageStartPos();
         str = GetLimitedMessageStartPtr();
         length = StringLength_Multibyte(str);
-        FillTextEntryWindow(x, length, PIXEL_FILL(6));
+        FillTextEntryWindow(x, length, PIXEL_FILL(1));
         DrawTextEntryMessage(x, str, 0, 4, 5);
         CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_GFX);
         break;
@@ -2478,7 +2478,7 @@ static bool32 Display_CancelRegister(u8 *state)
         x = GetLimitedMessageStartPos();
         str = GetLimitedMessageStartPtr();
         length = StringLength_Multibyte(str);
-        FillTextEntryWindow(x, length, PIXEL_FILL(0));
+        FillTextEntryWindow(x, length, PIXEL_FILL(1));
         DrawTextEntryMessage(x, str, 3, 1, 2);
         CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_GFX);
         break;
@@ -2911,7 +2911,7 @@ static void PrintCurrentKeyboardPage(void)
     u8 str[45];
     u8 *str2;
 
-    FillWindowPixelBuffer(WIN_KEYBOARD, PIXEL_FILL(15));
+    FillWindowPixelBuffer(WIN_KEYBOARD, PIXEL_FILL(1));
     page = GetCurrentKeyboardPage();
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_5;
@@ -3083,7 +3083,7 @@ static void LoadChatWindowGfx(void)
 {
     u8 *ptr;
 
-    LoadPalette(gUnionRoomChat_Background_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     ptr = DecompressAndCopyTileDataToVram(2, gUnionRoomChat_Background_Gfx, 0, 0, 0);
     if (ptr)
     {
@@ -3107,7 +3107,7 @@ static void LoadChatUnkPalette(void)
 
 static void LoadChatMessagesWindow(void)
 {
-    LoadPalette(sChatMessagesWindow_Pal, BG_PLTT_ID(15), sizeof(sChatMessagesWindow_Pal));
+    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     PutWindowTilemap(WIN_CHAT_HISTORY);
     FillWindowPixelBuffer(WIN_CHAT_HISTORY, PIXEL_FILL(1));
     CopyWindowToVram(WIN_CHAT_HISTORY, COPYWIN_FULL);
@@ -3128,7 +3128,7 @@ static void LoadTextEntryWindow(void)
     for (i = 0; i < MAX_MESSAGE_LENGTH; i++)
         BlitBitmapToWindow(WIN_TEXT_ENTRY, sDisplay->textEntryTiles, i * 8, 0, 8, 16);
 
-    FillWindowPixelBuffer(WIN_TEXT_ENTRY, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_TEXT_ENTRY, PIXEL_FILL(1));
     PutWindowTilemap(WIN_TEXT_ENTRY);
     CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_FULL);
 }
@@ -3138,7 +3138,7 @@ static void LoadKeyboardSwapWindow(void)
     FillWindowPixelBuffer(WIN_SWAP_MENU, PIXEL_FILL(1));
     LoadUserWindowBorderGfx(WIN_SWAP_MENU, 1, BG_PLTT_ID(13));
     LoadUserWindowBorderGfx_(WIN_SWAP_MENU, 0xA, BG_PLTT_ID(2));
-    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
+    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
 }
 
 static void InitScanlineEffect(void)
