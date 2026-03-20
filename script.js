@@ -112,14 +112,25 @@ function initHeaderAnimation() {
     }
 }
 
-// ===== WISHDEX HOVER (TROCA DE SPRITE) =====
+// ===== WISHDEX HOVER - TROCA A FRAME NO CARD TODO =====
 function initWishDexHover() {
-    document.querySelectorAll('.pokemon-sprite').forEach(sprite => {
+    document.querySelectorAll('.pokemon-card').forEach(card => {
+        const sprite = card.querySelector('.pokemon-sprite');
+        if (!sprite) return;
+        
         const normalSrc = sprite.dataset.normal;
         const frameSrc = sprite.dataset.frame;
+        
         if (normalSrc && frameSrc) {
-            sprite.addEventListener('mouseenter', () => sprite.src = frameSrc);
-            sprite.addEventListener('mouseleave', () => sprite.src = normalSrc);
+            // Quando o mouse entra no CARD (não só na sprite)
+            card.addEventListener('mouseenter', () => {
+                sprite.src = frameSrc;
+            });
+            
+            // Quando o mouse sai do CARD
+            card.addEventListener('mouseleave', () => {
+                sprite.src = normalSrc;
+            });
         }
     });
 }
