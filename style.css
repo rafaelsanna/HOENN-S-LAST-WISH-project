@@ -9,6 +9,8 @@
     --pokemon-light: #ecf0f1;
 }
 
+/* ===== GOOGLE FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
 
 /* ===== RESET E BASE ===== */
 * {
@@ -118,9 +120,12 @@ nav {
 .nav-links a {
     text-decoration: none;
     color: #ffffff;
-    font-weight: 600;
+    font-family: 'Tiny5', 'Oxanium', cursive;
+    font-weight: 400;
+    font-size: 1rem;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
     transition: color 0.3s;
+    letter-spacing: 0.05em;
 }
 
 .nav-links a:hover {
