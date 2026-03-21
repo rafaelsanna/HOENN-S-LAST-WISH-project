@@ -1937,6 +1937,23 @@ body.light-mode .shiny-toggle.active {
     margin-bottom: 1rem;
 }
 
+/* ===== WISHDEX HEADER LOGO ===== */
+.wishdex-logo-link {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.wishdex-logo-link:hover {
+    transform: scale(1.05);
+}
+
+.wishdex-logo {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
 .wishdex-intro-content {
     max-width: 900px; 
     margin: 0 auto;
