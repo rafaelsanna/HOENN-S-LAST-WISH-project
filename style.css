@@ -1913,33 +1913,40 @@ body.light-mode .shiny-toggle.active {
 
 /* ===== WISHDEX INTRO SECTION ===== */
 .wishdex-intro {
-    padding: 120px 0 20px 0; /* Espaço para o header fixo */
-    background-color: #1a1a1a !important; /* Cor exata do seu fundo */
-}
-
-.wishdex-intro-content {
-    max-width: 900px; /* Largura para caber as 5/6 linhas confortavelmente */
-    margin: 0 auto;
-    text-align: center;
-    background: transparent !important;
-    padding: 0 20px;
+    padding: 120px 0 30px 0; /* Espaço para o header não cobrir o texto */
+    background: transparent !important; /* Remove qualquer cor sólida */
     border: none !important;
 }
 
+.wishdex-intro-content {
+    max-width: 900px; 
+    margin: 0 auto;
+    text-align: center;
+    background: transparent !important; /* Garante transparência total */
+    padding: 0 20px;
+    border: none !important;
+    box-shadow: none !important; /* Remove qualquer sombra que possa parecer uma barra */
+}
+
 .wishdex-intro-content p {
-    color: #cccccc;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    color: #e0e0e0; /* Cor clara para ler bem no fundo escuro */
+    font-size: 1.15rem;
+    line-height: 1.7;
     margin-bottom: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Sombra leve no texto para destacar do fundo */
 }
 
 .wishdex-intro-content strong {
     color: var(--pokemon-purple);
 }
 
-/* Light Mode Adjustment */
+/* Ajuste para o Light Mode se necessário */
 body.light-mode .wishdex-intro {
-    background-color: #f8f9fa !important;
+    background: transparent !important;
+}
+body.light-mode .wishdex-intro-content p {
+    color: #2c3e50;
+    text-shadow: none;
 }
 
 /* Mobile */
