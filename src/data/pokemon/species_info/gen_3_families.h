@@ -417,9 +417,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 8),
             ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(1, 25),
             ANIMCMD_FRAME(0, 12),
         ),
-        .frontAnimId = ANIM_V_JUMPS_H_JUMPS,
+        .frontAnimId = ANIM_RISING_WOBBLE,
         .backPic = gMonBackPic_Combusken,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 0 : 1,

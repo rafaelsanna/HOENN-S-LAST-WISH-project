@@ -371,9 +371,9 @@ function renderPokemonModal(pokemon) {
             <div class="pokemon-info-header">
                 <div class="pokemon-sprite-large">
                     <img id="modal-sprite" src="${pokemon.sprite}" alt="${pokemon.name}" data-normal="${pokemon.sprite}" data-shiny="${pokemon.shinySprite}">
-                    <button class="shiny-toggle" id="shiny-toggle-btn" title="Toggle Shiny Form">
-                        <i class="fas fa-star"></i>
-                    </button>
+<button class="shiny-toggle" id="shiny-toggle-btn" title="Toggle Shiny Form">
+    <span class="shiny-icon">✦</span> <!-- Estrela de 4 pontas -->
+</button>
                 </div>
                 <div class="pokemon-title">
                     <h1>${pokemon.name}</h1>

@@ -4,6 +4,7 @@
     --pokemon-green: #27ae60;
     --pokemon-red: #e74c3c;
     --pokemon-yellow: #f1c40f;
+    --pokemon-purple: #9b59b6;
     --pokemon-dark: #2c3e50;
     --pokemon-light: #ecf0f1;
 }
@@ -122,7 +123,7 @@ nav {
 }
 
 .nav-links a:hover {
-    color: var(--pokemon-yellow); /* VOLTOU AMARELO */
+    color: var(--pokemon-purple); /* VOLTOU AMARELO */
 }
 
 .hamburger {
@@ -377,7 +378,7 @@ nav {
     max-width: 720px;
     height: auto;
     border-radius: 10px;
-    border: 3px solid var(--pokemon-yellow);
+    border: 3px solid var(--pokemon-purple);
     box-shadow: 0 8px 25px rgba(0,0,0,0.5);
 }
 
@@ -420,7 +421,7 @@ nav {
     background: rgba(0, 0, 0, 0.05);
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid var(--pokemon-yellow);
+    border-left: 4px solid var(--pokemon-purple);
     font-weight: 500;
     margin: 2rem 0;
 }
@@ -473,7 +474,7 @@ nav {
     object-fit: contain;
     background: #2d2d2d !important;
     border-radius: 8px;
-    border: 3px solid var(--pokemon-yellow) !important;
+    border: 3px solid var(--pokemon-purple) !important;
 }
 
 .slideshow-nav {
@@ -484,7 +485,7 @@ nav {
 }
 
 .slideshow-nav button {
-    background: var(--pokemon-yellow);
+    background: var(--pokemon-purple);
     color: var(--pokemon-dark);
     border: none;
     width: 40px;
@@ -718,11 +719,11 @@ nav {
 
 .team-member.large:hover {
     transform: translateY(-5px);
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 .team-member.large h3 {
-    color: var(--pokemon-yellow) !important;
+    color: var(--pokemon-purple) !important;
     font-size: 1.8rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -765,11 +766,11 @@ nav {
 
 .team-member:hover {
     transform: translateY(-5px);
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 .team-member h3 {
-    color: var(--pokemon-yellow) !important;
+    color: var(--pokemon-purple) !important;
     font-size: 1.3rem;
     margin-bottom: 0.8rem;
     font-weight: 600;
@@ -799,7 +800,7 @@ nav {
 .team-card-link:hover .team-member,
 .team-card-link:hover .team-member.large {
     transform: translateY(-5px);
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 /* ===== FOOTER ===== */
@@ -869,7 +870,7 @@ footer p {
     right: 20px;
     z-index: 1000;
     background: var(--pokemon-dark);
-    border: 2px solid var(--pokemon-yellow);
+    border: 2px solid var(--pokemon-purple);
     border-radius: 50px;
     padding: 8px 12px;
     cursor: pointer;
@@ -905,7 +906,7 @@ body.light-mode .nav-links a {
 }
 
 body.light-mode .nav-links a:hover {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 body.light-mode .story {
@@ -962,7 +963,7 @@ body.light-mode .team-member.large {
 
 body.light-mode .team-member h3,
 body.light-mode .team-member.large h3 {
-    color: var(--pokemon-yellow) !important;
+    color: var(--pokemon-purple) !important;
 }
 
 body.light-mode .team-member p,
@@ -972,7 +973,7 @@ body.light-mode .team-member.large p {
 
 body.light-mode .team-card-link:hover .team-member,
 body.light-mode .team-card-link:hover .team-member.large {
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 body.light-mode footer {
@@ -1340,7 +1341,7 @@ body.light-mode .download-btn.hackdex-download {
 
 .pokemon-card:hover {
     transform: translateY(-5px);
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 .pokemon-sprite {
@@ -1363,7 +1364,7 @@ body.light-mode .pokemon-card {
 }
 
 body.light-mode .pokemon-card:hover {
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 @media (max-width: 768px) {
@@ -1408,7 +1409,7 @@ body.light-mode .pokemon-card:hover {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
     text-decoration: none;
     font-weight: 600;
     margin-bottom: 2rem;
@@ -1442,7 +1443,7 @@ body.light-mode .pokemon-card:hover {
     background: #2d2d2d;
     border-radius: 15px;
     padding: 1rem;
-    border: 2px solid var(--pokemon-yellow);
+    border: 2px solid var(--pokemon-purple);
 }
 
 .pokemon-sprite-large img {
@@ -1455,7 +1456,7 @@ body.light-mode .pokemon-card:hover {
 .pokemon-title h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    color: var(--pokemon-yellow) !important;
+    color: var(--pokemon-purple) !important;
 }
 
 .pokemon-title .species {
@@ -1509,7 +1510,7 @@ body.light-mode .pokemon-card:hover {
 .pokemon-details h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 .stats-grid {
@@ -1533,7 +1534,7 @@ body.light-mode .pokemon-card:hover {
 
 .stat-value {
     font-weight: 600;
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 .stat-bar {
@@ -1544,7 +1545,7 @@ body.light-mode .pokemon-card:hover {
 }
 
 .stat-fill {
-    background: var(--pokemon-yellow);
+    background: var(--pokemon-purple);
     height: 100%;
     border-radius: 10px;
     transition: width 0.5s ease;
@@ -1572,7 +1573,7 @@ body.light-mode .pokemon-card:hover {
 
 .next-evo {
     margin-top: 0.3rem;
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
     font-size: 0.9rem;
 }
 
@@ -1584,7 +1585,7 @@ body.light-mode .pokemon-card:hover {
 }
 
 .error a {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 /* Light Mode */
@@ -1599,7 +1600,7 @@ body.light-mode .pokemon-info-card {
 
 body.light-mode .pokemon-sprite-large {
     background: #f8f9fa;
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 body.light-mode .stat-bar {
@@ -1661,7 +1662,7 @@ body.light-mode .pokemon-details {
 
 .pokemon-card:hover {
     transform: translateY(-5px);
-    border-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-purple);
 }
 
 /* O hover da sprite também funciona dentro do card */
@@ -1693,7 +1694,7 @@ body.light-mode .pokemon-details {
     overflow-y: auto;
     position: relative;
     animation: modalFadeIn 0.3s ease;
-    border: 2px solid var(--pokemon-yellow);
+    border: 2px solid var(--pokemon-purple);
 }
 
 @keyframes modalFadeIn {
@@ -1720,7 +1721,7 @@ body.light-mode .pokemon-details {
 }
 
 .close-modal:hover {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 /* Conteúdo do modal (reutiliza o estilo da página Pokémon) */
@@ -1750,7 +1751,7 @@ body.light-mode .close-modal {
 }
 
 body.light-mode .close-modal:hover {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 /* Mobile */
@@ -1780,7 +1781,7 @@ body.light-mode .close-modal:hover {
 .pokemon-moveset h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 .moveset-grid {
@@ -1802,7 +1803,7 @@ body.light-mode .close-modal:hover {
 }
 
 .moveset-grid::-webkit-scrollbar-thumb {
-    background: var(--pokemon-yellow);
+    background: var(--pokemon-purple);
     border-radius: 3px;
 }
 
@@ -1816,7 +1817,7 @@ body.light-mode .close-modal:hover {
 }
 
 .move-level {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
     font-weight: 600;
     font-family: monospace;
     font-size: 0.8rem;
@@ -1869,7 +1870,7 @@ body.light-mode .move-name {
     bottom: -10px;
     right: -10px;
     background: #2d2d2d;
-    border: 2px solid var(--pokemon-yellow);
+    border: 2px solid var(--pokemon-purple);
     border-radius: 50%;
     width: 36px;
     height: 36px;
@@ -1878,7 +1879,7 @@ body.light-mode .move-name {
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
     font-size: 1.2rem;
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(4px);
@@ -1887,12 +1888,12 @@ body.light-mode .move-name {
 
 .shiny-toggle:hover {
     transform: scale(1.1);
-    background: var(--pokemon-yellow);
+    background: var(--pokemon-purple);
     color: #2d2d2d;
 }
 
 .shiny-toggle.active {
-    background: var(--pokemon-yellow);
+    background: var(--pokemon-purple);
     color: #2d2d2d;
     border-color: #fff;
     box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
@@ -1901,45 +1902,40 @@ body.light-mode .move-name {
 /* Light Mode */
 body.light-mode .shiny-toggle {
     background: rgba(255,255,255,0.8);
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 body.light-mode .shiny-toggle:hover,
 body.light-mode .shiny-toggle.active {
-    background: var(--pokemon-yellow);
+    background: var(--pokemon-purple);
     color: white;
 }
 
-/* ===== WISHDEX INTRO SECTION ===== */
+/* ===== WISHDEX INTRO SECTION (TEXTO REDUZIDO) ===== */
 .wishdex-intro {
-    padding: 2rem 0 0 0;
+    padding: 0.5rem 0 0 0;
     background: #2d2d2d;
 }
 
 .wishdex-intro-content {
-    max-width: 800px;
+    max-width: 400px; /* 1/3 do tamanho original (era 1200px) */
     margin: 0 auto;
     text-align: center;
-    background: #363636;
-    padding: 2rem;
-    border-radius: 15px;
-    border: 1px solid #404040;
-    margin-bottom: 2rem;
+    background: transparent;
+    padding: 0;
+    border: none;
+    margin-bottom: 1rem;
 }
 
 .wishdex-intro-content p {
     color: #cccccc;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
-
-.wishdex-intro-content p:last-child {
+    font-size: 0.8rem;
+    line-height: 1.3;
     margin-bottom: 0;
 }
 
 .wishdex-intro-content strong {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 .wishdex-note {
@@ -1950,7 +1946,7 @@ body.light-mode .shiny-toggle.active {
 }
 
 .wishdex-note i {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
     margin-right: 0.5rem;
 }
 
@@ -1969,7 +1965,7 @@ body.light-mode .wishdex-intro-content p {
 }
 
 body.light-mode .wishdex-intro-content strong {
-    color: var(--pokemon-yellow);
+    color: var(--pokemon-purple);
 }
 
 body.light-mode .wishdex-note {
