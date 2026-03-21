@@ -19,7 +19,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    background-color: #242424 !important; 
+    background-color: #2c3e50 !important; 
     color: #e0e0e0 !important;
 }
 
@@ -1913,7 +1913,7 @@ body.light-mode .shiny-toggle.active {
 /* ===== WISHDEX INTRO SECTION (REVISADO) ===== */
 .wishdex-intro {
     padding: 120px 0 20px 0;
-    background-color: #242424 !important; /* MESMA COR EXATA DO SITE */
+    background-color: #2c3e50 !important; /* MESMA COR EXATA DO SITE */
     border: none !important;
     outline: none !important;
 }
@@ -1922,7 +1922,7 @@ body.light-mode .shiny-toggle.active {
     max-width: 900px; 
     margin: 0 auto;
     text-align: center;
-    background-color: #242424 !important; /* REFORÇANDO A COR */
+    background-color: #2c3e50 !important; /* REFORÇANDO A COR */
     padding: 0 20px;
     border: none !important;
     box-shadow: none !important;
