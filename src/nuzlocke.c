@@ -14,6 +14,113 @@ static const u8 sTextNuzlockeLoneMonPenalty[] = _("You lost with Nuzlocke, so yo
 EWRAM_DATA static bool8 sNuzlockeCanThrowBallThisBattle = FALSE;
 EWRAM_DATA static bool8 sNuzlockeShowLoneMonPenaltyMessage = FALSE;
 
+static void Nuzlocke_EnsureMapFlagsInit(void)
+{
+    if (FlagGet(FLAG_SYS_NUZLOCKE_FLAGS_INITIALIZED))
+        return;
+    if (gSaveBlock2Ptr == NULL)
+        return;
+
+    memset(gSaveBlock2Ptr->nuzlockeEncounterMapFlags, 0, NUZLOCKE_AREA_FLAGS_COUNT);
+    memset(gSaveBlock2Ptr->nuzlockeCaptureMapFlags, 0, NUZLOCKE_AREA_FLAGS_COUNT);
+    if (gSaveBlock1Ptr != NULL)
+        memset(gSaveBlock1Ptr->nuzlockeReleasedSpeciesFlags, 0, ROUND_BITS_TO_BYTES(NUM_SPECIES));
+    FlagSet(FLAG_SYS_NUZLOCKE_FLAGS_INITIALIZED);
+}
+
+static bool8 Nuzlocke_IsSpeciesFlagSet(const u8 *flags, u16 species)
+{
+    if (species == SPECIES_NONE || species >= NUM_SPECIES)
+        return FALSE;
+
+    return flags[species >> 3] & (1 << (species & 7));
+}
+
+static void Nuzlocke_SetSpeciesFlag(u8 *flags, u16 species)
+{
+    if (species == SPECIES_NONE || species >= NUM_SPECIES)
+        return;
+
+    flags[species >> 3] |= 1 << (species & 7);
+}
+
+static bool8 Nuzlocke_IsSpeciesInPlayerCollection(u16 species)
+{
+    s32 i;
+    s32 box;
+    s32 slot;
+
+    if (species == SPECIES_NONE)
+        return FALSE;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == species)
+            return TRUE;
+    }
+
+    if (gPokemonStoragePtr == NULL)
+        return FALSE;
+
+    for (box = 0; box < TOTAL_BOXES_COUNT; box++)
+    {
+        for (slot = 0; slot < IN_BOX_COUNT; slot++)
+        {
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[box][slot], MON_DATA_SPECIES) == species)
+                return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+static bool8 Nuzlocke_IsSpeciesAlreadyOwned(u16 species)
+{
+    u16 dexNum;
+
+    if (species == SPECIES_NONE || gSaveBlock2Ptr == NULL)
+        return FALSE;
+
+    dexNum = SpeciesToNationalPokedexNum(species);
+    if (dexNum != 0 && dexNum <= NATIONAL_DEX_COUNT
+     && GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT))
+        return TRUE;
+
+    if (Nuzlocke_IsSpeciesInPlayerCollection(species))
+        return TRUE;
+
+    if (gSaveBlock1Ptr != NULL && Nuzlocke_IsSpeciesFlagSet(gSaveBlock1Ptr->nuzlockeReleasedSpeciesFlags, species))
+        return TRUE;
+
+    return FALSE;
+}
+
+static bool8 Nuzlocke_HasAvailableWildSpecies(void)
+{
+    s32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData(&gEnemyParty[i], MON_DATA_SPECIES);
+
+        if (species == SPECIES_NONE)
+            continue;
+
+        if (!Nuzlocke_IsSpeciesAlreadyOwned(species))
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+static void Nuzlocke_RecordReleasedSpecies(u16 species)
+{
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    Nuzlocke_SetSpeciesFlag(gSaveBlock1Ptr->nuzlockeReleasedSpeciesFlags, species);
+}
+
 static bool8 IsCurrentRouteShinyEncounter(void)
 {
     if (gBattlersCount <= B_POSITION_OPPONENT_LEFT)
@@ -102,20 +209,7 @@ static bool8 IsTrackableWildBattle(void)
 
 static bool8 HasUncaughtWildMonInBattle(void)
 {
-    s32 i;
-
-    for (i = 0; i < PARTY_SIZE; i++)
-    {
-        u16 species = GetMonData(&gEnemyParty[i], MON_DATA_SPECIES);
-
-        if (species == SPECIES_NONE)
-            continue;
-
-        if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
-            return TRUE;
-    }
-
-    return FALSE;
+    return Nuzlocke_HasAvailableWildSpecies();
 }
 
 bool8 Nuzlocke_IsEnabled(void)
@@ -141,6 +235,7 @@ static bool8 Nuzlocke_HasStarted(void)
 
 void Nuzlocke_OnBattleStart(void)
 {
+    Nuzlocke_EnsureMapFlagsInit();
     u8 mode;
     u8 mapSecId;
 
@@ -167,6 +262,7 @@ void Nuzlocke_OnBattleStart(void)
 
 bool8 Nuzlocke_CanThrowBallThisBattle(void)
 {
+    Nuzlocke_EnsureMapFlagsInit();
     u8 mode;
 
     if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
@@ -179,6 +275,9 @@ bool8 Nuzlocke_CanThrowBallThisBattle(void)
         if (IsCurrentRouteShinyEncounter())
             return TRUE;
 
+        if (!Nuzlocke_HasAvailableWildSpecies())
+            return FALSE;
+
         return !GetMapFlag(gSaveBlock2Ptr->nuzlockeCaptureMapFlags, gMapHeader.regionMapSectionId);
     }
 
@@ -187,6 +286,7 @@ bool8 Nuzlocke_CanThrowBallThisBattle(void)
 
 void Nuzlocke_OnMonCaught(struct Pokemon *mon)
 {
+    Nuzlocke_EnsureMapFlagsInit();
     if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return;
     if (Nuzlocke_GetMode() != OPTIONS_NUZLOCKE_NORMAL)
@@ -218,6 +318,7 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void)
             continue;
 
         // Nuzlocke release: dead party mons are deleted permanently.
+        Nuzlocke_RecordReleasedSpecies(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES));
         ZeroMonData(&gPlayerParty[i]);
         removedAny = TRUE;
     }
