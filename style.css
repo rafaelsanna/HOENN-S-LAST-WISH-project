@@ -1062,11 +1062,16 @@ body.light-mode .download-btn.hackdex-download {
         margin: 1rem 0;
     }
     
-    .nav-links a {
-        font-size: 1.2rem;
-        padding: 1rem 2rem;
-        display: block;
-    }
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Press Start 2P', 'Oxanium', cursive;
+    font-weight: 400;
+    font-size: 0.7rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    transition: color 0.3s;
+    letter-spacing: 0.05em;
+}
     
     .hero-with-banner {
         height: 50vh !important;
