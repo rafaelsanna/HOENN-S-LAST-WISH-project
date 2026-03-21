@@ -19,8 +19,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background: #1a1a1a !important;
+    background-color: #242424 !important; 
     color: #e0e0e0 !important;
 }
 
@@ -402,16 +401,16 @@ nav {
 
 .story-content p {
     color: #cccccc !important;
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 1.0rem;
+    line-height: 1.5;
     margin-bottom: 1.5rem;
     text-align: justify;
 }
 
 .story-content .intro {
-    font-size: 1.3rem;
+    font-size: 1.0rem;
     font-weight: 500;
-    line-height: 1.8;
+    line-height: 1.5;
     margin-bottom: 2rem;
     text-align: center;
     font-style: italic;
@@ -1911,26 +1910,27 @@ body.light-mode .shiny-toggle.active {
     color: white;
 }
 
-/* ===== WISHDEX INTRO SECTION (TEXTO REDUZIDO) ===== */
+/* ===== WISHDEX INTRO SECTION (REVISADO) ===== */
 .wishdex-intro {
-    padding: 0.5rem 0 0 0;
-    background: #2d2d2d;
+    padding: 120px 0 20px 0;
+    background: transparent !important; /* ISSO TIRA A BARRA */
+    border: none !important;
 }
 
 .wishdex-intro-content {
-    max-width: 400px; /* 1/3 do tamanho original (era 1200px) */
+    max-width: 900px; 
     margin: 0 auto;
     text-align: center;
-    background: transparent;
-    padding: 0;
-    border: none;
-    margin-bottom: 1rem;
+    background: transparent !important; /* ISSO TIRA A COR INTERNA */
+    padding: 0 20px;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .wishdex-intro-content p {
-    color: #cccccc;
-    font-size: 0.8rem;
-    line-height: 1.3;
+    color: #e0e0e0; 
+    font-size: 1.15rem; /* Texto maior */
+    line-height: 1.7;   /* Espaçamento melhor */
     margin-bottom: 0;
 }
 
@@ -1938,22 +1938,11 @@ body.light-mode .shiny-toggle.active {
     color: var(--pokemon-purple);
 }
 
-/* Light Mode */
-body.light-mode .wishdex-intro {
-    background: #f8f9fa;
-}
-
+/* Garante que no Light Mode também fique limpo */
+body.light-mode .wishdex-intro,
 body.light-mode .wishdex-intro-content {
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-}
-
-body.light-mode .wishdex-intro-content p {
-    color: #2c3e50;
-}
-
-body.light-mode .wishdex-intro-content strong {
-    color: var(--pokemon-purple);
+    background: transparent !important;
+    border: none !important;
 }
 
 /* Mobile */
