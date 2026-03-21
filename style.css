@@ -1923,7 +1923,7 @@ body.light-mode .shiny-toggle.active {
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    color: var(--pokemon-purple) !important;
+    color: var(--pokemon-light) !important;
     text-decoration: underline;
     margin-bottom: 1rem;
 }
