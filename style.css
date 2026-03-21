@@ -1938,11 +1938,6 @@ body.light-mode .shiny-toggle.active {
     color: var(--pokemon-purple);
 }
 
-.wishdex-note i {
-    color: var(--pokemon-purple);
-    margin-right: 0.5rem;
-}
-
 /* Light Mode */
 body.light-mode .wishdex-intro {
     background: #f8f9fa;
@@ -1959,10 +1954,6 @@ body.light-mode .wishdex-intro-content p {
 
 body.light-mode .wishdex-intro-content strong {
     color: var(--pokemon-purple);
-}
-
-body.light-mode .wishdex-note {
-    border-top-color: #e9ecef;
 }
 
 /* Mobile */
