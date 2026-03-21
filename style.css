@@ -9,10 +9,6 @@
     --pokemon-light: #ecf0f1;
 }
 
-/* ===== GOOGLE FONTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
-
-
 
 /* ===== RESET E BASE ===== */
 * {
@@ -29,7 +25,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Pixelify Sans', 'Oxanium', cursive;
+    font-family: 'Tiny5', 'Oxanium', cursive;
     font-weight: 700;
     color: #ffffff !important;
     letter-spacing: 0.02em; 
@@ -1377,10 +1373,6 @@ body.light-mode .pokemon-card:hover {
         padding: 90px 0 1.5rem 0;
     }
     
-    .wishdex-title {
-        max-width: 300px;
-    }
-    
     .pokemon-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
@@ -1924,13 +1916,13 @@ body.light-mode .shiny-toggle.active {
 }
 
 .wishdex-title {
-    display: flex;
-    line-height: 1.2;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
     font-size: 2rem;
-    font-family: 'Pixelify Sans', 'Oxanium', cursive; 
+    font-family: 'Tiny5', 'Oxanium', cursive; 
     font-weight: 700; 
+    letter-spacing: 2px;
     color: var(--pokemon-light) !important;
     margin-bottom: 1rem;
 }
