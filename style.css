@@ -9,6 +9,9 @@
     --pokemon-light: #ecf0f1;
 }
 
+/* ===== GOOGLE FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
 /* ===== RESET E BASE ===== */
 * {
     margin: 0;
@@ -24,9 +27,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Pixelify Sans', 'Oxanium', cursive;
     font-weight: 700;
     color: #ffffff !important;
+    letter-spacing: 0.02em; 
 }
 
 .container {
@@ -1913,7 +1917,7 @@ body.light-mode .shiny-toggle.active {
 /* ===== WISHDEX INTRO SECTION (REVISADO) ===== */
 .wishdex-intro {
     padding: 20px 0 20px 0;
-    background: transparent !important; /* ISSO TIRA A BARRA */
+    background: transparent !important;
     border: none !important;
 }
 
@@ -1923,8 +1927,9 @@ body.light-mode .shiny-toggle.active {
     justify-content: center;
     align-items: center;
     font-size: 2rem;
+    font-family: 'Pixelify Sans', 'Oxanium', cursive; 
+    font-weight: 700; 
     color: var(--pokemon-light) !important;
-    text-decoration: underline;
     margin-bottom: 1rem;
 }
 
