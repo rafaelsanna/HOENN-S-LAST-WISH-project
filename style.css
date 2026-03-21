@@ -1455,7 +1455,7 @@ body.light-mode .pokemon-card:hover {
 .pokemon-title h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    color: var(--pokemon-purple) !important;
+    color: var(--pokemon-light) !important;
 }
 
 .pokemon-title .species {
