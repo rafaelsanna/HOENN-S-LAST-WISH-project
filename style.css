@@ -12,6 +12,8 @@
 /* ===== GOOGLE FONTS ===== */
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* ===== RESET E BASE ===== */
 * {
     margin: 0;
@@ -27,10 +29,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Pixelify Sans', 'Oxanium', cursive;
-    font-weight: 700;
+    font-family: 'Press Start 2P', 'Oxanium', cursive;
+    font-weight: 400; 
     color: #ffffff !important;
-    letter-spacing: 0.02em; 
+    letter-spacing: 0.02em;
 }
 
 .container {
@@ -1923,14 +1925,14 @@ body.light-mode .shiny-toggle.active {
 
 .wishdex-title {
     display: flex;
-    line-height: 1.2;
+    line-height: 1.4; 
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    font-family: 'Pixelify Sans', 'Oxanium', cursive; 
-    font-weight: 700; 
+    font-family: 'Press Start 2P', 'Oxanium', cursive;
+    font-weight: 400;
     color: var(--pokemon-light) !important;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .wishdex-intro-content {
