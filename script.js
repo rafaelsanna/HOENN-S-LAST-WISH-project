@@ -477,3 +477,4 @@ if (document.readyState === 'loading') {
 }
 
 console.log('🎮 Pokémon: Hoenn\'s Last Wish website loaded successfully!');
+
