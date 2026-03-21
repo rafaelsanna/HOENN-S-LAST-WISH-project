@@ -128,33 +128,85 @@ function initWishDexHover() {
     });
 }
 
-// ===== POKÉMON DATA COM SHINY PARA TODOS =====
+// ===== POKÉMON DATA COMPLETO (TODOS OS 9) =====
 const pokemonData = {
-    // Bulbasaur Family (IDs 1-3)
+    // 1 - Bulbasaur
     1: {
         id: 1, name: "Bulbasaur", species: "Toad Pokémon", 
         sprite: "images/wishdex/01.png",
-        shinySprite: "images/wishdex/01-shiny.png", // ✅ TEM SHINY
-        // ... resto dos dados
+        shinySprite: "images/wishdex/01-shiny.png",
+        hp: 45, attack: 49, defense: 49, speed: 45, spAttack: 65, spDefense: 65,
+        types: ["Water"], height: "0.7 m", weight: "6.9 kg",
+        abilities: ["Torrent", "Swift Swim (Hidden)"],
+        description: "It lounges in muddy banks where water and earth meet. Its moist skin draws nutrient rich mud into its body, and when threat approaches it burrows deep and surges out.",
+        evolution: "Evolves at level 16", nextEvolution: "Ivysaur",
+        moveset: [
+            { level: 1, move: "Tackle" }, { level: 1, move: "Growl" },
+            { level: 6, move: "Water Gun" }, { level: 9, move: "Mud-Slap" },
+            { level: 12, move: "Tail Slap" }, { level: 15, move: "Mud Shot" },
+            { level: 16, move: "Spikes" }, { level: 18, move: "Dig" },
+            { level: 20, move: "Water Pulse" }, { level: 23, move: "Ancient Power" },
+            { level: 25, move: "Take Down" }, { level: 27, move: "Aqua Ring" },
+            { level: 30, move: "Muddy Water" }, { level: 31, move: "Soak" },
+            { level: 35, move: "Earth Power" }, { level: 40, move: "Hydro Pump" },
+            { level: 50, move: "Hyper Voice" }
+        ]
     },
+    // 2 - Ivysaur
     2: {
         id: 2, name: "Ivysaur", species: "Toad Pokémon", 
         sprite: "images/wishdex/02.png",
-        shinySprite: "images/wishdex/02-shiny.png", // ✅ TEM SHINY
-        // ...
+        shinySprite: "images/wishdex/02-shiny.png",
+        hp: 60, attack: 62, defense: 63, speed: 60, spAttack: 80, spDefense: 80,
+        types: ["Water", "Ground"], height: "1.0 m", weight: "13.0 kg",
+        abilities: ["Torrent", "Swift Swim (Hidden)"],
+        description: "Its long tail helps it glide through muddy waters and balance on soft ground. It grows stronger by channeling the flow of earth and water through its sturdy body.",
+        evolution: "Evolves at level 36", nextEvolution: "Venusaur",
+        moveset: [
+            { level: 1, move: "Tackle" }, { level: 1, move: "Growl" },
+            { level: 1, move: "Water Gun" }, { level: 1, move: "Mud-Slap" },
+            { level: 1, move: "Dig" }, { level: 12, move: "Mud Shot" },
+            { level: 15, move: "Mud Sport" }, { level: 16, move: "Spikes" },
+            { level: 18, move: "Bubble Beam" }, { level: 22, move: "Water Pulse" },
+            { level: 24, move: "Ancient Power" }, { level: 26, move: "Take Down" },
+            { level: 28, move: "Crunch" }, { level: 30, move: "Aqua Ring" },
+            { level: 32, move: "Muddy Water" }, { level: 34, move: "Soak" },
+            { level: 38, move: "Earth Power" }, { level: 44, move: "Rain Dance" },
+            { level: 50, move: "Hydro Pump" }, { level: 52, move: "Headlong Rush" },
+            { level: 60, move: "Hyper Voice" }
+        ]
     },
+    // 3 - Venusaur
     3: {
         id: 3, name: "Venusaur", species: "Seed Pokémon", 
         sprite: "images/wishdex/03.png",
-        shinySprite: "images/wishdex/03-shiny.png", // ✅ TEM SHINY
-        // ...
+        shinySprite: "images/wishdex/03-shiny.png",
+        hp: 80, attack: 82, defense: 83, speed: 80, spAttack: 100, spDefense: 100,
+        types: ["Water", "Ground"], height: "2.0 m", weight: "100.0 kg",
+        abilities: ["Torrent", "Swift Swim (Hidden)"],
+        description: "A massive fin rises from its back like an ancient spine, letting it swim through swamps and mangroves. Its mighty roar can shake the earth and split the ground.",
+        evolution: "Fully evolved", nextEvolution: null,
+        moveset: [
+            { level: 1, move: "Ancient Power" }, { level: 1, move: "Crunch" },
+            { level: 1, move: "Dig" }, { level: 1, move: "Growl" },
+            { level: 1, move: "Water Gun" }, { level: 1, move: "Mud-Slap" },
+            { level: 1, move: "Mud Shot" }, { level: 1, move: "Mud Sport" },
+            { level: 1, move: "Aqua Ring" }, { level: 1, move: "Spikes" },
+            { level: 1, move: "Roar" }, { level: 1, move: "Soak" },
+            { level: 18, move: "Bubble Beam" }, { level: 22, move: "Water Pulse" },
+            { level: 26, move: "Take Down" }, { level: 30, move: "Muddy Water" },
+            { level: 36, move: "Earth Power" }, { level: 38, move: "Dragon Tail" },
+            { level: 42, move: "Rain Dance" }, { level: 45, move: "Roar" },
+            { level: 48, move: "Earthquake" }, { level: 54, move: "Hydro Pump" },
+            { level: 56, move: "Headlong Rush" }, { level: 60, move: "Fissure" },
+            { level: 65, move: "Hyper Voice" }
+        ]
     },
-    
-    // Totodile Family (IDs 4-6)
+    // 4 - Totodile
     4: {
         id: 4, name: "Totodile", species: "Big Jaw Pokémon", 
         sprite: "images/wishdex/04.png",
-        shinySprite: "images/wishdex/04-shiny.png", // ✅ ADICIONADO
+        shinySprite: "images/wishdex/04-shiny.png",
         hp: 50, attack: 55, defense: 54, speed: 43, spAttack: 64, spDefense: 48,
         types: ["Fire"], height: "0.6 m", weight: "9.5 kg",
         abilities: ["Blaze", "Sheer Force (Hidden)"],
@@ -173,10 +225,11 @@ const pokemonData = {
             { level: 64, move: "Outrage" }
         ]
     },
+    // 5 - Croconaw
     5: {
         id: 5, name: "Croconaw", species: "Big Jaw Pokémon", 
         sprite: "images/wishdex/05.png",
-        shinySprite: "images/wishdex/05-shiny.png", // ✅ ADICIONADO
+        shinySprite: "images/wishdex/05-shiny.png",
         hp: 65, attack: 80, defense: 80, speed: 58, spAttack: 59, spDefense: 63,
         types: ["Fire"], height: "1.1 m", weight: "25.0 kg",
         abilities: ["Blaze", "Sheer Force (Hidden)"],
@@ -195,10 +248,11 @@ const pokemonData = {
             { level: 66, move: "Eruption" }, { level: 70, move: "Outrage" }
         ]
     },
+    // 6 - Feraligatr
     6: {
         id: 6, name: "Feraligatr", species: "Big Jaw Pokémon", 
         sprite: "images/wishdex/06.png",
-        shinySprite: "images/wishdex/06-shiny.png", // ✅ ADICIONADO
+        shinySprite: "images/wishdex/06-shiny.png",
         hp: 70, attack: 100, defense: 70, speed: 80, spAttack: 130, spDefense: 80,
         types: ["Fire", "Dragon"], height: "2.3 m", weight: "88.8 kg",
         abilities: ["Blaze", "Sheer Force (Hidden)"],
@@ -217,12 +271,11 @@ const pokemonData = {
             { level: 70, move: "Eruption" }, { level: 80, move: "Outrage" }
         ]
     },
-    
-    // Torchic Family (IDs 7-9)
+    // 7 - Torchic
     7: {
         id: 7, name: "Torchic", species: "Chick Pokémon", 
         sprite: "images/wishdex/07.png",
-        shinySprite: "images/wishdex/07-shiny.png", // ✅ ADICIONADO
+        shinySprite: "images/wishdex/07-shiny.png",
         hp: 45, attack: 60, defense: 40, speed: 45, spAttack: 70, spDefense: 50,
         types: ["Grass"], height: "0.4 m", weight: "2.5 kg",
         abilities: ["Overgrow", "Speed Boost (Hidden)"],
@@ -240,10 +293,11 @@ const pokemonData = {
             { level: 46, move: "Brave Bird" }
         ]
     },
+    // 8 - Combusken
     8: {
         id: 8, name: "Combusken", species: "Young Fowl Pokémon", 
         sprite: "images/wishdex/08.png",
-        shinySprite: "images/wishdex/08-shiny.png", // ✅ ADICIONADO
+        shinySprite: "images/wishdex/08-shiny.png",
         hp: 60, attack: 85, defense: 60, speed: 55, spAttack: 85, spDefense: 60,
         types: ["Grass"], height: "0.9 m", weight: "19.5 kg",
         abilities: ["Overgrow", "Speed Boost (Hidden)"],
@@ -264,10 +318,11 @@ const pokemonData = {
             { level: 60, move: "Brave Bird" }
         ]
     },
+    // 9 - Blaziken
     9: {
         id: 9, name: "Blaziken", species: "Blaze Pokémon", 
         sprite: "images/wishdex/09.png",
-        shinySprite: "images/wishdex/09-shiny.png", // ✅ ADICIONADO
+        shinySprite: "images/wishdex/09-shiny.png",
         hp: 80, attack: 120, defense: 70, speed: 80, spAttack: 110, spDefense: 70,
         types: ["Grass", "Flying"], height: "1.9 m", weight: "52.0 kg",
         abilities: ["Overgrow", "Speed Boost (Hidden)"],
@@ -290,9 +345,6 @@ const pokemonData = {
     }
 };
 
-// ===== VARIÁVEL GLOBAL PARA CONTROLAR O ESTADO SHINY =====
-let currentShinyState = false;
-
 // ===== RENDER MODAL (COM BOTÃO SHINY) =====
 function renderPokemonModal(pokemon) {
     if (!pokemon) return '<div class="error">Pokémon not found!</div>';
@@ -302,7 +354,6 @@ function renderPokemonModal(pokemon) {
         return `<div class="stat-bar"><div class="stat-fill" style="width: ${percentage}%;"></div></div>`;
     }
     
-    // Gerar lista de moveset
     let movesetHtml = '';
     if (pokemon.moveset && pokemon.moveset.length > 0) {
         movesetHtml = `
@@ -393,8 +444,6 @@ function openModal(pokemonId) {
         modalBody.innerHTML = renderPokemonModal(pokemon);
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        
-        // Inicializar o shiny toggle após o modal ser aberto
         setTimeout(initShinyToggle, 50);
     }
 }
@@ -428,4 +477,3 @@ if (document.readyState === 'loading') {
 }
 
 console.log('🎮 Pokémon: Hoenn\'s Last Wish website loaded successfully!');
-
