@@ -401,23 +401,22 @@ nav {
 
 .story-content p {
     color: #cccccc !important;
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 1.0rem;
+    line-height: 1.5;
     margin-bottom: 1.5rem;
     text-align: justify;
 }
 
 .story-content .intro {
-    font-size: 1.3rem;
+    font-size: 1.0rem;
     font-weight: 500;
-    line-height: 1.8;
+    line-height: 1.5;
     margin-bottom: 2rem;
     text-align: center;
     font-style: italic;
 }
 
 .story-content .highlight {
-    background: rgba(0, 0, 0, 0.05);
     padding: 1.5rem;
     border-radius: 8px;
     border-left: 4px solid var(--pokemon-purple);
