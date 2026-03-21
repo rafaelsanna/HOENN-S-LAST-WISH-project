@@ -1911,35 +1911,35 @@ body.light-mode .shiny-toggle.active {
     color: white;
 }
 
-/* ===== WISHDEX INTRO SECTION (REVISADO) ===== */
+/* ===== WISHDEX INTRO SECTION ===== */
 .wishdex-intro {
-    padding: 100px 0 2rem 0; /* Espaço para não ficar colado no header */
-    background: transparent; /* Remove qualquer cor de fundo */
+    padding: 120px 0 20px 0; /* Espaço para o header fixo */
+    background-color: #1a1a1a !important; /* Cor exata do seu fundo */
 }
 
 .wishdex-intro-content {
-    max-width: 800px; /* Aumentado para o texto respirar */
+    max-width: 900px; /* Largura para caber as 5/6 linhas confortavelmente */
     margin: 0 auto;
     text-align: center;
-    background: transparent;
+    background: transparent !important;
     padding: 0 20px;
-    border: none;
+    border: none !important;
 }
 
 .wishdex-intro-content p {
     color: #cccccc;
-    font-size: 1.1rem; /* Texto maior e mais legível */
-    line-height: 1.6;   /* Espaçamento entre linhas melhor */
+    font-size: 1.1rem;
+    line-height: 1.6;
     margin-bottom: 0;
 }
 
-/* Garante que no Light Mode também acompanhe o fundo */
-body.light-mode .wishdex-intro {
-    background: #f8f9fa;
+.wishdex-intro-content strong {
+    color: var(--pokemon-purple);
 }
 
-body.light-mode .wishdex-intro-content p {
-    color: #2c3e50;
+/* Light Mode Adjustment */
+body.light-mode .wishdex-intro {
+    background-color: #f8f9fa !important;
 }
 
 /* Mobile */
