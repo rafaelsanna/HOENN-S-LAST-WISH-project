@@ -1301,15 +1301,16 @@ body.light-mode .download-btn.hackdex-download {
 
 /* ===== WISHDEX ===== */
 .wishdex-header {
-    padding: 120px 0 2rem 0;
+    padding: 120px 0 1rem 0;
     text-align: center;
     background: #2d2d2d;
 }
 
-.wishdex-title {
-    max-width: 400px;
+.wishdex-logo {
+    max-width: 300px;
     width: 100%;
     height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .wishdex-grid {
@@ -2000,6 +2001,5 @@ body.light-mode .wishdex-note {
         font-size: 0.85rem;
     }
 }
-
 
 
