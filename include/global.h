@@ -1175,6 +1175,7 @@ struct SaveBlock1
     /*0x3???*/ struct TrainerHillSave trainerHill;
 #endif //FREE_TRAINER_HILL
     /*0x3???*/ struct WaldaPhrase waldaPhrase;
+    /*0x3???*/ u8 nuzlockeReleasedSpeciesFlags[ROUND_BITS_TO_BYTES(NUM_SPECIES)]; // Tracks species released under Nuzlocke.
     // sizeof: 0x3???
 };
 
