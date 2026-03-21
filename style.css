@@ -1320,10 +1320,12 @@ body.light-mode .download-btn.hackdex-download {
 
 .pokemon-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    max-width: 800px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1160px; /* Mesma largura do texto acima */
     margin: 0 auto;
+    padding-bottom: 50px;
 }
 
 .pokemon-card {
@@ -1909,28 +1911,28 @@ body.light-mode .shiny-toggle.active {
     color: white;
 }
 
-/* ===== WISHDEX INTRO SECTION (REVISADO) ===== */
+/* ===== WISHDEX INTRO SECTION (EQUILIBRADO) ===== */
 .wishdex-intro {
-    padding: 120px 0 20px 0;
-    background: transparent !important; /* ISSO TIRA A BARRA */
-    border: none !important;
+    padding: 120px 0 40px 0; /* Espaço superior para o header */
+    width: 100%;
 }
 
 .wishdex-intro-content {
-    max-width: 900px; 
+    /* A largura 1160px é o segredo: 1200px da container menos os paddings laterais */
+    /* Isso faz o texto alinhar perfeitamente com a borda externa dos cards */
+    max-width: 1160px; 
     margin: 0 auto;
     text-align: center;
-    background: transparent !important; /* ISSO TIRA A COR INTERNA */
-    padding: 0 20px;
-    border: none !important;
-    box-shadow: none !important;
+    padding: 0; /* Remove padding interno para não encolher o texto */
 }
 
 .wishdex-intro-content p {
-    color: #e0e0e0; 
-    font-size: 1.15rem; /* Texto maior */
-    line-height: 1.7;   /* Espaçamento melhor */
-    margin-bottom: 0;
+    color: #e0e0e0;
+    font-size: 1.25rem; /* Um pouco maior para preencher melhor as 5-6 linhas */
+    line-height: 1.8;   /* Mais respiro vertical */
+    margin: 0;
+    text-align: justify; /* Opcional: deixa as bordas laterais retas como no seu desenho */
+    text-align-last: center; /* Centraliza a última linha do parágrafo */
 }
 
 .wishdex-intro-content strong {
