@@ -19,8 +19,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #242424 !important;
+    background-color: #242424 !important; 
     color: #e0e0e0 !important;
 }
 
@@ -1914,15 +1913,16 @@ body.light-mode .shiny-toggle.active {
 /* ===== WISHDEX INTRO SECTION (REVISADO) ===== */
 .wishdex-intro {
     padding: 120px 0 20px 0;
-    background: transparent !important; /* ISSO TIRA A BARRA */
+    background-color: #242424 !important; /* MESMA COR EXATA DO SITE */
     border: none !important;
+    outline: none !important;
 }
 
 .wishdex-intro-content {
     max-width: 900px; 
     margin: 0 auto;
     text-align: center;
-    background: transparent !important; /* ISSO TIRA A COR INTERNA */
+    background-color: #242424 !important; /* REFORÇANDO A COR */
     padding: 0 20px;
     border: none !important;
     box-shadow: none !important;
@@ -1930,13 +1930,9 @@ body.light-mode .shiny-toggle.active {
 
 .wishdex-intro-content p {
     color: #e0e0e0; 
-    font-size: 1.15rem; /* Texto maior */
-    line-height: 1.7;   /* Espaçamento melhor */
+    font-size: 1.2rem;
+    line-height: 1.7;
     margin-bottom: 0;
-}
-
-.wishdex-intro-content strong {
-    color: var(--pokemon-purple);
 }
 
 /* Garante que no Light Mode também fique limpo */
