@@ -1912,9 +1912,20 @@ body.light-mode .shiny-toggle.active {
 
 /* ===== WISHDEX INTRO SECTION (REVISADO) ===== */
 .wishdex-intro {
-    padding: 120px 0 20px 0;
+    padding: 20px 0 20px 0;
     background: transparent !important; /* ISSO TIRA A BARRA */
     border: none !important;
+}
+
+.wishdex-title {
+    display: flex;
+    line-height: 1.2;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: var(--pokemon-purple) !important;
+    text-decoration: underline;
+    margin-bottom: 1rem;
 }
 
 .wishdex-intro-content {
