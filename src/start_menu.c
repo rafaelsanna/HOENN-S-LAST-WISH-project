@@ -480,9 +480,9 @@ static void ShowPyramidFloorWindow(void)
     CopyWindowToVram(sBattlePyramidFloorWindowId, COPYWIN_GFX);
 }
 
-static const u8 sText_Name[] = _("Name:");
-static const u8 sText_LevelCapPrefix[] = _("Level CAP: ");
-static const u8 sText_MoneyPrefix[] = _("Money: $ ");
+static const u8 sText_Name[] = _("NAME:  ");
+static const u8 sText_LevelCapPrefix[] = _("LEVEL CAP:  ");
+static const u8 sText_MoneyPrefix[] = _("MONEY:  ¥ ");
 
 static const u8 sText_Saturday[] = _("Saturday,");
 static const u8 sText_Sunday[] = _("Sunday,");
