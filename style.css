@@ -1909,5 +1909,97 @@ body.light-mode .shiny-toggle.active {
     color: white;
 }
 
+/* ===== WISHDEX INTRO SECTION ===== */
+.wishdex-intro {
+    padding: 2rem 0 0 0;
+    background: #2d2d2d;
+}
+
+.wishdex-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    background: #363636;
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid #404040;
+    margin-bottom: 2rem;
+}
+
+.wishdex-intro-content p {
+    color: #cccccc;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.wishdex-intro-content p:last-child {
+    margin-bottom: 0;
+}
+
+.wishdex-intro-content strong {
+    color: var(--pokemon-yellow);
+}
+
+.wishdex-note {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #404040;
+    font-size: 0.9rem;
+}
+
+.wishdex-note i {
+    color: var(--pokemon-yellow);
+    margin-right: 0.5rem;
+}
+
+/* Light Mode */
+body.light-mode .wishdex-intro {
+    background: #f8f9fa;
+}
+
+body.light-mode .wishdex-intro-content {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+}
+
+body.light-mode .wishdex-intro-content p {
+    color: #2c3e50;
+}
+
+body.light-mode .wishdex-intro-content strong {
+    color: var(--pokemon-yellow);
+}
+
+body.light-mode .wishdex-note {
+    border-top-color: #e9ecef;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .wishdex-intro {
+        padding: 1rem 0 0 0;
+    }
+    
+    .wishdex-intro-content {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .wishdex-intro-content p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .wishdex-intro-content {
+        padding: 1.2rem;
+    }
+    
+    .wishdex-intro-content p {
+        font-size: 0.85rem;
+    }
+}
+
 
 
