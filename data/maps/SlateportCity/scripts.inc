@@ -125,12 +125,11 @@ SlateportCity_EventScript_EnergyGuru::
 
 	.align 2
 SlateportCity_Pokemart_EnergyGuru:
-	.2byte ITEM_PROTEIN
-	.2byte ITEM_IRON
-	.2byte ITEM_CARBOS
-	.2byte ITEM_ZINC
-	.2byte ITEM_CALCIUM
-	.2byte ITEM_HP_UP
+	.2byte ITEM_EVERSTONE
+	.2byte ITEM_FIRE_STONE
+	.2byte ITEM_WATER_STONE
+	.2byte ITEM_THUNDER_STONE
+	.2byte ITEM_LEAF_STONE
 	pokemartlistend
 
 SlateportCity_EventScript_EffortRibbonWoman::
@@ -920,7 +919,7 @@ SlateportCity_EventScript_BerryCrushRankingsSign::
 	end
 
 SlateportCity_Text_EnergyGuruSellWhatYouNeed:
-	.string "I'm the ENERGY GURU! I'll go for it and\n"
+	.string "I'm the STONE GURU! I'll go for it and\n"
 	.string "sell you what you need!$"
 
 SlateportCity_Text_OhYourPokemon:

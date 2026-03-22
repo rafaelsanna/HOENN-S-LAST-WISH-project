@@ -25,6 +25,10 @@ LilycoveCity_DepartmentStore_4F_EventScript_ClerkLeft::
 
 	.align 2
 LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs:
+	.2byte ITEM_TM_PLAY_ROUGH
+	.2byte ITEM_TM_WOOD_HAMMER
+	.2byte ITEM_TM_DREAM_EATER
+	.2byte ITEM_TM_DRAGON_TAIL
 	.2byte ITEM_TM_FIRE_BLAST
 	.2byte ITEM_TM_THUNDER
 	.2byte ITEM_TM_BLIZZARD
@@ -47,6 +51,11 @@ LilycoveCity_DepartmentStore_4F_Pokemart_DefenseTMs:
 	.2byte ITEM_TM_SAFEGUARD
 	.2byte ITEM_TM_REFLECT
 	.2byte ITEM_TM_LIGHT_SCREEN
+	.2byte ITEM_TM_HAZE
+	.2byte ITEM_TM_HEAL_BELL
+	.2byte ITEM_TM_THUNDER_WAVE
+	.2byte ITEM_TM_SPIKES
+	.2byte ITEM_TM_SLEEP_TALK
 	pokemartlistend
 
 LilycoveCity_DepartmentStore_4F_Text_AttackOrDefenseTM:
