@@ -6753,7 +6753,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
     #if P_UPDATED_ABILITIES >= GEN_4
-        .abilities = { ABILITY_OBLIVIOUS, ABILITY_SIMPLE, ABILITY_OWN_TEMPO },
+        .abilities = { ABILITY_OBLIVIOUS, ABILITY_THICK_FAT, ABILITY_OWN_TEMPO },
     #else
         .abilities = { ABILITY_OBLIVIOUS, ABILITY_NONE, ABILITY_OWN_TEMPO },
     #endif
@@ -6763,12 +6763,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .natDexNum = NATIONAL_DEX_NUMEL,
         .categoryName = _("Numb"),
         .height = 7,
-        .weight = 640,
+        .weight = 840,
         .description = COMPOUND_STRING(
-            "A Numel stores boiling magma in the hump\n"
-            "on its back. It is a hardy Pokémon that can\n"
-            "transport a 220-pound load. It has served\n"
-            "humans at work since long ago."),
+    "It plunges into the darkest ocean depths,\n"
+    "exploring trenches untouched by sunlight.\n"
+    "Its cute form hides immense resilience\n"
+    "nothing in the sea can crush its spirit.$"),
         .pokemonScale = 342,
         .pokemonOffset = 17,
         .trainerScale = 256,
@@ -6831,7 +6831,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .baseSpeed     = 40,
         .baseSpAttack  = 105,
         .baseSpDefense = 75,
-        .types = MON_TYPES(TYPE_FIRE, TYPE_GROUND),
+        .types = MON_TYPES(TYPE_WATER),
         .catchRate = 150,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 161 : 175,
         .evYield_Attack = 1,
@@ -6842,7 +6842,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
     #if P_UPDATED_ABILITIES >= GEN_4
-        .abilities = { ABILITY_MAGMA_ARMOR, ABILITY_SOLID_ROCK, ABILITY_SHEER_FORCE },
+        .abilities = { ABILITY_MAGMA_ARMOR, ABILITY_THICK_FAT, ABILITY_SHEER_FORCE },
     #else
         .abilities = { ABILITY_MAGMA_ARMOR, ABILITY_NONE, ABILITY_ANGER_POINT },
     #endif

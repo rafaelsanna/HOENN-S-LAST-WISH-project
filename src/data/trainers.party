@@ -346,29 +346,29 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Luvdisc @ Oran Berry
-Level: 14
-Ability: Prankster  
-- Water Pulse  
-- Bite  
-- Swagger  
-- Taunt  
-
 Carvanha @ Oran Berry  
-Level: 14
+Level: 18
 Ability: Speed Boost  
 - Bite  
 - Aqua Jet  
 - Ice Fang  
-- Brine  
+- Brine
 
-Zubat @ Oran Berry
-Level: 16
-Ability: Inner Focus  
+Numel @ Oran Berry
+Level: 18
+Ability: Thick Fat  
+- Water Pulse  
+- Heavy Slam  
+- Amnesia
+- Rock Tomb
+
+Luvdisc @ Oran Berry
+Level: 18
+Ability: Prankster  
+- Water Pulse  
 - Bite  
-- Wing Attack  
-- Confuse Ray  
-- Poison Fang  
+- Swagger  
+- Taunt      
 
 === TRAINER_GRUNT_WEATHER_INST_1 ===
 Name: GRUNT
@@ -11932,11 +11932,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Oddish
-Level: 15
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Totodile
-Level: 15
+Tentacool
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Croconaw
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_BRENDAN_RUSTBORO_MUDKIP ===
@@ -11948,12 +11952,16 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Wingull
-Level: 13
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Vulpix
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Treecko
-Level: 15
+Tentacool
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Combusken
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_PAXTON ===
@@ -12071,12 +12079,16 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer
 
-Oddish
-Level: 15
+Growlithe
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Bulbasaur
-Level: 15
+Oddish
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Ivysaur
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MAY_RUSTBORO_MUDKIP ===
@@ -12088,12 +12100,16 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Force Setup First Turn
 
-Poliwag
-Level: 15
+Vulpix
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Torchic
-Level: 15
+Tentacool
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Combusken
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MAXIE_MAGMA_HIDEOUT ===
@@ -15393,11 +15409,15 @@ Double Battle: No
 AI: Basic Trainer
 
 Oddish
-Level: 15
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Totodile
-Level: 15
+Tentacool
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Croconaw
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MAY_RUSTBORO_TORCHIC ===
@@ -15409,12 +15429,16 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Torkoal
-Level: 13
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Growlithe
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Mudkip
-Level: 15
+Oddish
+Level: 20
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Ivysaur
+Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_ROXANNE_2 ===

@@ -552,12 +552,30 @@ RustboroCity_EventScript_EmployeeFacePlayerRight::
 	return
 
 RustboroCity_EventScript_Rival::
-	lockall
-	call_if_unset FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_PlayRivalMusic
-	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
-	waitmovement 0
-	call_if_unset FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL, RustboroCity_EventScript_GiveExpShare
-	goto RustboroCity_EventScript_RivalEncounter
+    lockall
+    // Se já derrotou, vai direto para a dica
+    goto_if_set FLAG_DEFEATED_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalAfterBattle
+    // Se é o primeiro encontro 
+    goto_if_unset FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalFirstMeeting
+    // Se já se conhecem mas ainda não batalharam
+    call RustboroCity_EventScript_PlayRivalMusic
+    applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
+    waitmovement 0
+    goto RustboroCity_EventScript_RivalEncounter
+
+RustboroCity_EventScript_RivalFirstMeeting::
+    call RustboroCity_EventScript_PlayRivalMusic
+    applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
+    waitmovement 0
+    // Dá o EXP Share apenas no primeiro encontro
+    call RustboroCity_EventScript_GiveExpShare
+    goto RustboroCity_EventScript_RivalEncounter
+
+RustboroCity_EventScript_RivalAfterBattle::
+    checkplayergender
+    goto_if_eq VAR_RESULT, MALE, RustboroCity_EventScript_MayBrineyHint
+    goto_if_eq VAR_RESULT, FEMALE, RustboroCity_EventScript_BrendanBrineyHint
+    end
 
 RustboroCity_EventScript_GiveExpShare::
 	giveitem ITEM_EXP_SHARE
@@ -580,21 +598,24 @@ RustboroCity_EventScript_PlayBrendanMusic::
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	return
 
+/// Modifique os triggers do rival para garantir que o jogador não pode passar
 RustboroCity_EventScript_RivalTrigger0::
-	lockall
-	call RustboroCity_EventScript_PlayRivalMusic
-	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
-	playse SE_PIN
-	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_Delay48
-	waitmovement 0
-	applymovement LOCALID_RUSTBORO_RIVAL, RustboroCity_Movement_RivalApproachPlayer0
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	goto RustboroCity_EventScript_RivalEncounter
+    lockall
+    // Verifica se o jogador já interagiu com o rival
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
+    call RustboroCity_EventScript_PlayRivalMusic
+    applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
+    waitmovement 0
+    playse SE_PIN
+    applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_ExclamationMark
+    waitmovement 0
+    applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_Delay48
+    waitmovement 0
+    applymovement LOCALID_RUSTBORO_RIVAL, RustboroCity_Movement_RivalApproachPlayer0
+    waitmovement 0
+    applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+    waitmovement 0
+    goto RustboroCity_EventScript_RivalEncounter
 
 RustboroCity_EventScript_RivalTrigger1::
 	lockall
@@ -714,6 +735,16 @@ RustboroCity_EventScript_RivalEncounter::
 	goto_if_eq VAR_RESULT, FEMALE, RustboroCity_EventScript_BrendanEncounter
 	end
 
+RustboroCity_EventScript_BlockPlayer::
+    lockall
+    msgbox RustboroCity_Text_NeedToTalkToRival, MSGBOX_DEFAULT
+    releaseall
+    end
+
+RustboroCity_EventScript_RivalTriggerAfter::
+    releaseall
+    end	
+
 RustboroCity_EventScript_MayEncounter::
 	goto_if_set FLAG_DEFEATED_RIVAL_RUSTBORO, RustboroCity_EventScript_MayBrineyHint
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_MayAskToBattle
@@ -754,10 +785,13 @@ RustboroCity_EventScript_BattleMay::
 	end
 
 RustboroCity_EventScript_MayBrineyHint::
-	msgbox RustboroCity_Text_MayMrBrineyHint, MSGBOX_DEFAULT
-	call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
-	releaseall
-	end
+    lock
+    faceplayer
+    msgbox RustboroCity_Text_MayMrBrineyHint, MSGBOX_DEFAULT
+    call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
+    release
+    end
+
 
 RustboroCity_EventScript_RestoreBgm::
 	savebgm MUS_DUMMY
@@ -820,10 +854,12 @@ RustboroCity_EventScript_BattleBrendan::
 	end
 
 RustboroCity_EventScript_BrendanBrineyHint::
-	msgbox RustboroCity_Text_BrendanMrBrineyHint, MSGBOX_DEFAULT
-	call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
-	releaseall
-	end
+    lock
+    faceplayer
+    msgbox RustboroCity_Text_BrendanMrBrineyHint, MSGBOX_DEFAULT
+    call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
+    release
+    end
 
 RustboroCity_EventScript_BattleBrendanTreecko::
 	trainerbattle_no_intro TRAINER_BRENDAN_RUSTBORO_TREECKO, RustboroCity_Text_BrendanDefeat
@@ -1046,16 +1082,11 @@ RustboroCity_Text_MayHiLetsRegister:
 	.string "It makes all POKéMON in your party\n"
 	.string "gain experience from battles!\p"
 	.string "Anyway, another thing…\p"
-	.string "You had a MATCH CALL feature put\n"
-	.string "on your POKéNAV!\p"
-	.string "Let's register each other so we can\n"
-	.string "contact one another anytime!\p"
 	.string "… … … … … …$"
 
 RustboroCity_Text_RegisteredMay:
-	.string "Registered ZINNIA\n"
-	.string "in the POKéNAV.$"
-
+	.string "… … … … … …$"
+	
 RustboroCity_Text_MayPassedBrineyWantToBattle:
 	.string "ZINNIA: Oh, by the way, I passed\n"
 	.string "MR. BRINEY in PETALBURG WOODS.\p"
@@ -1100,15 +1131,10 @@ RustboroCity_Text_BrendanHiLetsRegister:
 	.string "When you use it, all POKéMON in\n"
 	.string "your party will gain experience!\p"
 	.string "Oh, and one more thing…\p"
-	.string "You had a MATCH CALL feature put\n"
-	.string "on your POKéNAV! Cool!\p"
-	.string "Let's register each other so we can\n"
-	.string "get in touch anytime!\p"
 	.string "… … … … … …$"
 
 RustboroCity_Text_RegisteredBrendan:
-	.string "Registered ZENNO\n"
-	.string "in the POKéNAV.$"
+	.string "… … … … … …$"
 
 RustboroCity_Text_BrendanPassedBrineyWantToBattle:
 	.string "ZENNO: By the way, {PLAYER}, I walked\n"
@@ -1215,5 +1241,8 @@ RustboroCity_Text_YouCanHave2On2Battle:
 	.string "Don't you think it'd be cool if you\n"
 	.string "could beat two TRAINERS by yourself?$"
 
-
+RustboroCity_Text_NeedToTalkToRival:
+    .string "Hey! Wait up!\p"
+    .string "Don't you want to talk to\n"
+    .string "your rival first?$"
 
