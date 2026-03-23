@@ -766,7 +766,8 @@ void HandleInputChooseMove(u32 battler)
             BtlController_Complete(battler);
             break;
         case 1:
-            gBattlerControllerFuncs[battler] = HandleInputChooseTarget;
+        {
+            u8 taskId;
 
             if (moveTarget & MOVE_TARGET_USER)
                 gMultiUsePlayerCursor = battler;
@@ -778,8 +779,14 @@ void HandleInputChooseMove(u32 battler)
                 MoveSelectionDisplayMoveEffectiveness(CheckTypeEffectiveness(battler, GetBattlerPosition(gMultiUsePlayerCursor)), battler);
             MoveSelectionDisplayMoveNames(battler);
 
+            taskId = CreateTask(Task_RefreshMoveMenuUi, 0);
+            gTasks[taskId].data[0] = battler;
+
+            gBattlerControllerFuncs[battler] = HandleInputChooseTarget;
+
             gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
             break;
+        }
         case 2:
             gBattlerControllerFuncs[battler] = HandleInputShowTargets;
             break;
@@ -2128,7 +2135,8 @@ static void Task_RefreshMoveMenuUi(u8 taskId)
 {
     u32 battler = gTasks[taskId].data[0];
 
-    if (gBattlerControllerFuncs[battler] != HandleInputChooseMove)
+    if (gBattlerControllerFuncs[battler] != HandleInputChooseMove
+     && gBattlerControllerFuncs[battler] != HandleInputChooseTarget)
     {
         DestroyTask(taskId);
         return;
