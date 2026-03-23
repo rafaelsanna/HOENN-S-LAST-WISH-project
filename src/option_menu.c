@@ -52,7 +52,6 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_LEVELCAPS,
     MENUITEM_DIF_NUZLOCKE,
     MENUITEM_DIF_DEBUGMENU,    
-    MENUITEM_DIF_EFFECTIVEHELPER,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
 };
@@ -173,7 +172,6 @@ static void DrawChoices_BattleStyle(int selection, int y);
 static void DrawChoices_InfCandy(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
 static void DrawChoices_Nuzlocke(int selection, int y);
-static void DrawChoices_TrueFalse(int selection, int y);
 static void DrawBgWindowFrames(void);
 
 // EWRAM vars
@@ -226,7 +224,6 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_LEVELCAPS]     = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
     [MENUITEM_DIF_NUZLOCKE]      = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
     [MENUITEM_DIF_DEBUGMENU]     = {DrawChoices_OnOff,       ProcessInput_Options_Two},
-    [MENUITEM_DIF_EFFECTIVEHELPER] = {DrawChoices_TrueFalse, ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]        = {NULL, NULL},
 };
 
@@ -236,7 +233,6 @@ static const u8 sText_BattleItems[]    = _("BTL ITEMS");
 static const u8 sText_InfiniteCandy[]  = _("INF. CANDY");
 static const u8 sText_LevelCaps[]      = _("LEVEL CAPS");
 static const u8 sText_Nuzlocke[]       = _("NUZLOCKE");
-static const u8 sText_EffectiveHelper[] = _("EFFECTIVE HELPER");
 static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
 {
     [MENUITEM_GEN_TEXTSPEED]     = gText_TextSpeed,
@@ -256,7 +252,6 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
     [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("DEBUG MENU"),
-    [MENUITEM_DIF_EFFECTIVEHELPER] = sText_EffectiveHelper,
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
 };
 
@@ -296,7 +291,6 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_LEVELCAPS:        return TRUE;
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
-        case MENUITEM_DIF_EFFECTIVEHELPER:  return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
         case MENUITEM_DIF_COUNT:            return TRUE;
         }
@@ -328,8 +322,6 @@ static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items 
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
 static const u8 sText_Desc_NuzlockeNormal[]     = _("One non-shiny capture per route,\nbut any shiny may still be caught.");
 static const u8 sText_Desc_NuzlockeHard[]       = _("Only the first wild POKeMON seen\nin each route may be captured.");
-static const u8 sText_Desc_EffectiveHelperOn[]  = _("Show color moves effectives in battle.\nGreen = 2x, Red = 0.5x, Blue = status.");
-static const u8 sText_Desc_EffectiveHelperOff[] = _("Don't show effectiveness with colors.");
 
 // Option strings
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
@@ -369,7 +361,6 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
         COMPOUND_STRING("Enables the debug menu (R+START in overworld)."),
         COMPOUND_STRING("")
     },
-    [MENUITEM_DIF_EFFECTIVEHELPER] = {sText_Desc_EffectiveHelperOff, sText_Desc_EffectiveHelperOn, sText_Empty},
     [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,               sText_Empty,               sText_Empty},
 };
 
@@ -395,7 +386,6 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_LEVELCAPS]    = sText_Empty,
     [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
-    [MENUITEM_DIF_EFFECTIVEHELPER] = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
 };
 
@@ -463,10 +453,6 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_DEBUGMENU))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_DEBUGMENU];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_DEBUGMENU][sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]];
-        case MENUITEM_DIF_EFFECTIVEHELPER:
-            if (!CheckConditions(MENUITEM_DIF_EFFECTIVEHELPER))
-                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_EFFECTIVEHELPER];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_EFFECTIVEHELPER][sOptions->sel_difficulty[MENUITEM_DIF_EFFECTIVEHELPER]];
         case MENUITEM_DIF_CANCEL:
             if (!CheckConditions(MENUITEM_DIF_CANCEL))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_CANCEL];
@@ -698,9 +684,6 @@ void CB2_InitOptionMenu(void)
         sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = gSaveBlock2Ptr->optionsLevelCaps;
         sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]     = gSaveBlock2Ptr->optionsNuzlocke;
         sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]    = gSaveBlock2Ptr->optionsDebugMenu; // <--- NOVO
-        sOptions->sel_difficulty[MENUITEM_DIF_EFFECTIVEHELPER] = gSaveBlock2Ptr->optionsEffectiveHelper;
-        if (sOptions->sel_difficulty[MENUITEM_DIF_EFFECTIVEHELPER] > OPTIONS_EFFECTIVE_HELPER_TRUE)
-            sOptions->sel_difficulty[MENUITEM_DIF_EFFECTIVEHELPER] = OPTIONS_EFFECTIVE_HELPER_TRUE;
 
         sOptions->submenu = PAGE_GENERAL;
 
@@ -890,7 +873,6 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
     gSaveBlock2Ptr->optionsNuzlocke         = sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE];
     gSaveBlock2Ptr->optionsDebugMenu        = sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]; // <--- NOVO
-    gSaveBlock2Ptr->optionsEffectiveHelper  = sOptions->sel_difficulty[MENUITEM_DIF_EFFECTIVEHELPER];
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -1256,16 +1238,6 @@ static void DrawChoices_OnOff(int selection, int y)
     // Use existing ON/OFF strings from other options as a fallback
     DrawOptionMenuChoice(sText_OptionLevelCapsOff, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_OptionLevelCapsOn, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionLevelCapsOn, 198), y, styles[1], active);
-}
-
-static void DrawChoices_TrueFalse(int selection, int y)
-{
-    bool8 active = CheckConditions(MENUITEM_DIF_EFFECTIVEHELPER);
-    u8 styles[2] = {0};
-    styles[selection] = 1;
-
-    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
-    DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
 }
 
 // Background tilemap
