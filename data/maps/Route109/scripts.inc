@@ -238,6 +238,10 @@ Route109_Movement_SailToDewford:
 	walk_fast_left
 	walk_left
 	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
 	walk_in_place_faster_down
 	step_end
 

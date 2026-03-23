@@ -535,6 +535,10 @@ DewfordTown_Movement_SailToSlateport:
 	walk_faster_right
 	walk_fast_right
 	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
 	walk_fast_up
 	walk_fast_up
 	walk_faster_up
