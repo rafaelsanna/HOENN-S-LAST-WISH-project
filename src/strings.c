@@ -161,6 +161,7 @@ const u8 gText_ThrewAwayVar2Var1s[] = _("Threw away {STR_VAR_2}\n{STR_VAR_1}.");
 const u8 gText_ConfirmTossItems[] = _("Is it okay to\nthrow away {STR_VAR_2}\n{STR_VAR_1}?");
 const u8 gText_DadsAdvice[] = _("Common sense…\n{PLAYER}, there's a time and place for\leverything!{PAUSE_UNTIL_PRESS}");
 const u8 gText_CannotUseInfiniteCandy[] = _("The use of this item is disabled!\nRe-enable it the DIFFICULTY OPTIONS!{PAUSE_UNTIL_PRESS}");
+const u8 gText_InfiniteCandyLevelCapOnly[] = _("INFINITE CANDY works only while\nthe LEVEL CAP option is ON!{PAUSE_UNTIL_PRESS}");
 const u8 gText_PlayerUsedVar2[] = _("{PLAYER} used the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
 const u8 gText_RepelEffectsLingered[] = _("But the effects of a REPEL\nlingered from earlier.{PAUSE_UNTIL_PRESS}");
 const u8 gText_LureEffectsLingered[] = _("But the effects of a Lure\nlingered from earlier.{PAUSE_UNTIL_PRESS}");

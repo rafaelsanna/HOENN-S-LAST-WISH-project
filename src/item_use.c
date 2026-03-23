@@ -212,9 +212,10 @@ static void DisplayCannotDismountBikeMessage(u8 taskId, bool8 isUsingRegisteredK
     DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, sText_CantDismountBike);
 }
 
-static void DisplayCannotUseInfiniteCandyMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField)
+static void DisplayCannotUseInfiniteCandyMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField, bool8 levelCapOnly)
 {
-    DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gText_CannotUseInfiniteCandy);
+    const u8 *text = levelCapOnly ? gText_InfiniteCandyLevelCapOnly : gText_CannotUseInfiniteCandy;
+    DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, text);
 }
 
 static void Task_CloseCantUseKeyItemMessage(u8 taskId)
@@ -906,11 +907,18 @@ void ItemUseOutOfBattle_RareCandy(u8 taskId)
 void ItemUseOutOfBattle_InfiniteCandy(u8 taskId)
 {
     if (gSaveBlock2Ptr->optionsInfiniteCandy == OPTIONS_INFINITECANDY_OFF) {
-        DisplayCannotUseInfiniteCandyMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
-    } else {
-        gItemUseCB = ItemUseCB_RareCandy;
-        SetUpItemUseCallback(taskId);
+        DisplayCannotUseInfiniteCandyMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem, FALSE);
+        return;
     }
+
+    if (gSaveBlock2Ptr->optionsLevelCaps != OPTIONS_LEVELCAPS_ON)
+    {
+        DisplayCannotUseInfiniteCandyMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem, TRUE);
+        return;
+    }
+
+    gItemUseCB = ItemUseCB_RareCandy;
+    SetUpItemUseCallback(taskId);
 }
 
 void ItemUseOutOfBattle_DynamaxCandy(u8 taskId)
