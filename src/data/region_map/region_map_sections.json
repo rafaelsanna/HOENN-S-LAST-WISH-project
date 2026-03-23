@@ -10,7 +10,7 @@
     },
     {
       "id": "MAPSEC_OLDALE_TOWN",
-      "name": "OLDALE TOWN",
+      "name": "OLD TUNEL",
       "x": 4,
       "y": 9,
       "width": 1,
@@ -242,7 +242,7 @@
     },
     {
       "id": "MAPSEC_ROUTE_115",
-      "name": "ROUTE 115",
+      "name": "LONELY CAVE",
       "x": 0,
       "y": 2,
       "width": 1,
@@ -250,7 +250,7 @@
     },
     {
       "id": "MAPSEC_ROUTE_116",
-      "name": "ROUTE 116",
+      "name": "Verdant Veil",
       "x": 1,
       "y": 5,
       "width": 4,

@@ -91,6 +91,9 @@ PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 	giveegg SPECIES_EEVEE
 	msgbox PetalburgCity_Gym_Text_RecievedEgg, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
+	giveitem ITEM_EVERSTONE
+	msgbox PetalburgCity_Gym_Text_Everstone, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
 	msgbox PetalburgCity_Gym_Text_CalendulaGaveEevee, MSGBOX_DEFAULT
 	setvar VAR_PETALBURG_GYM_STATE, 2
 	releaseall
@@ -98,6 +101,9 @@ PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 
 PetalburgCity_Gym_Text_RecievedEgg:
 	.string "{PLAYER} recieved EEVEE egg!$"
+
+PetalburgCity_Gym_Text_Everstone:
+	.string "{PLAYER} recieved an Everstone!$"	
 
 PetalburgCity_Gym_Movement_WallyExitGym:
 	walk_down
@@ -1659,13 +1665,24 @@ PetalburgCity_Gym_Text_NormanRematchNeedTwoMons:
 	.string "with at least two POKéMON.$"
 
 PetalburgCity_Gym_Text_CalendulaGaveEevee:
-  .string "CALENDULA: Oh, before you go...\p"
-	.string "Since Acacia likes you I can give you\n"
-  .string "something. She isn't the only one who\l"
-  .string "likes helping promising students!\p"
-  .string "Take this little one.\n"
-  .string "It's an EEVEE.\p"
-  .string "My first partner was one, and I'd\n"
-  .string "love for you to start your path with\l"
-  .string "a loyal friend too.$"
+    .string "CALENDULA: Oh, before you go...\p"
+    .string "Since Acacia likes you, I can give\n"
+    .string "you something. She isn't the only one\l"
+    .string "who likes helping promising students!\p"
+    .string "Take this little one.\n"
+    .string "It's an EEVEE.\p"
+    .string "My first partner was one, and I'd\n"
+    .string "love for you to start your path with\l"
+    .string "a loyal friend too.\p"
+    .string "Ah! I almost forgot!\n"
+    .string "Here's an EVERSTONE as well.\p"
+    .string "If you give this stone to EEVEE to\n"
+    .string "hold, it will prevent it from evolving.\p"
+    .string "That way, you can take your time\n"
+    .string "deciding which evolution is right for\l"
+    .string "your new partner!\p"
+    .string "Just take the stone away when you're\n"
+    .string "ready for EEVEE to evolve.$"
+
+
 

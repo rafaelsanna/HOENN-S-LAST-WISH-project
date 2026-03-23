@@ -2,7 +2,7 @@
   "id": "MAP_ROUTE116_2",
   "name": "Route116_2",
   "layout": "LAYOUT_ROUTE116_2",
-  "music": "MUS_ROUTE104",
+  "music": "MUS_PETALBURG_WOODS",
   "region_map_section": "MAPSEC_ROUTE_116",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",

@@ -2,7 +2,7 @@
   "id": "MAP_LONELY_CAVE_B2",
   "name": "LonelyCave_B2",
   "layout": "LAYOUT_LONELY_CAVE_B2",
-  "music": "MUS_MT_PYRE",
+  "music": "MUS_PETALBURG_WOODS",
   "region_map_section": "MAPSEC_ROUTE_115",
   "requires_flash": false,
   "weather": "WEATHER_FOG_HORIZONTAL",
