@@ -204,7 +204,7 @@ static bool8 IsTrackableWildBattle(void)
         return FALSE;
 
     // Encounter areas are route map sections.
-    return gMapHeader.mapType == MAP_TYPE_ROUTE || gMapHeader.mapType == MAP_TYPE_OCEAN_ROUTE;
+    return gMapHeader.mapType == MAP_TYPE_ROUTE || gMapHeader.mapType == MAP_TYPE_OCEAN_ROUTE || gMapHeader.mapType == MAP_TYPE_UNDERWATER || gMapHeader.mapType == MAP_TYPE_SECRET_BASE || gMapHeader.mapType == MAP_TYPE_TOWN || gMapHeader.mapType == MAP_TYPE_CITY || gMapHeader.mapType == MAP_TYPE_UNDERGROUND || gMapHeader.mapType == MAP_TYPE_INDOOR || gMapHeader.mapType == MAP_TYPE_UNKNOWN;
 }
 
 static bool8 HasUncaughtWildMonInBattle(void)
