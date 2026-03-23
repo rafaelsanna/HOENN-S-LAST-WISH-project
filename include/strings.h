@@ -727,6 +727,7 @@ extern const u8 gText_Anna[];
 
 extern const u8 gText_DadsAdvice[];
 extern const u8 gText_CannotUseInfiniteCandy[];
+extern const u8 gText_InfiniteCandyLevelCapOnly[];
 extern const u8 gText_PlayerUsedVar2[];
 extern const u8 gText_RepelEffectsLingered[];
 extern const u8 gText_LureEffectsLingered[];

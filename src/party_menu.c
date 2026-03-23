@@ -5740,10 +5740,29 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
     u8 holdEffectParam = GetItemHoldEffectParam(*itemPtr);
 
     sInitialLevel = GetMonData(mon, MON_DATA_LEVEL);
-    if (!(B_RARE_CANDY_CAP && sInitialLevel >= GetCurrentLevelCap()))
+    u32 currentLevelCap = GetCurrentLevelCap();
+    u8 effectiveLevelCap = currentLevelCap > MAX_LEVEL ? MAX_LEVEL : currentLevelCap;
+
+    if (!(B_RARE_CANDY_CAP && sInitialLevel >= currentLevelCap))
     {
         BufferMonStatsToTaskData(mon, arrayPtr);
-        cannotUseEffect = ExecuteTableBasedItemEffect(mon, *itemPtr, gPartyMenu.slotId, 0);
+        if (gSpecialVar_ItemId == ITEM_INFINITE_CANDY)
+        {
+            bool8 effectApplied = FALSE;
+
+            while (GetMonData(mon, MON_DATA_LEVEL, NULL) < effectiveLevelCap)
+            {
+                if (ExecuteTableBasedItemEffect(mon, *itemPtr, gPartyMenu.slotId, 0))
+                    break;
+                effectApplied = TRUE;
+            }
+
+            cannotUseEffect = !effectApplied;
+        }
+        else
+        {
+            cannotUseEffect = ExecuteTableBasedItemEffect(mon, *itemPtr, gPartyMenu.slotId, 0);
+        }
         BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
     }
     else
@@ -5765,21 +5784,21 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
             targetSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, CHECK_EVO);
         }
 
-if (targetSpecies != SPECIES_NONE)
-{
-    GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, DO_EVO);
-    
-    // Remove o item apenas se NÃO for o Infinite Candy
-    if (gSpecialVar_ItemId != ITEM_INFINITE_CANDY)
-    {
-        RemoveBagItem(gSpecialVar_ItemId, 1);
-    }
-    
-    FreePartyPointers();
-    gCB2_AfterEvolution = gPartyMenu.exitCallback;
-    BeginEvolutionScene(mon, targetSpecies, canStopEvo, gPartyMenu.slotId);
-    DestroyTask(taskId);
-}
+        if (targetSpecies != SPECIES_NONE)
+        {
+            GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, DO_EVO);
+            
+            // Remove o item apenas se NÃO for o Infinite Candy
+            if (gSpecialVar_ItemId != ITEM_INFINITE_CANDY)
+            {
+                RemoveBagItem(gSpecialVar_ItemId, 1);
+            }
+            
+            FreePartyPointers();
+            gCB2_AfterEvolution = gPartyMenu.exitCallback;
+            BeginEvolutionScene(mon, targetSpecies, canStopEvo, gPartyMenu.slotId);
+            DestroyTask(taskId);
+        }
         else
         {
             gPartyMenuUseExitCallback = FALSE;
@@ -5789,18 +5808,20 @@ if (targetSpecies != SPECIES_NONE)
         }
     }
     else
-{
-    sFinalLevel = GetMonData(mon, MON_DATA_LEVEL, NULL);
-    gPartyMenuUseExitCallback = TRUE;
-    UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
-    
-    // Remove o item apenas se NÃO for o Infinite Candy
-    if (gSpecialVar_ItemId != ITEM_INFINITE_CANDY)
     {
-        RemoveBagItem(gSpecialVar_ItemId, 1);
-    }
-    
-    GetMonNickname(mon, gStringVar1);
+        sFinalLevel = GetMonData(mon, MON_DATA_LEVEL, NULL);
+        if (gSpecialVar_ItemId == ITEM_INFINITE_CANDY && sFinalLevel > effectiveLevelCap)
+            sFinalLevel = effectiveLevelCap;
+        gPartyMenuUseExitCallback = TRUE;
+        UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
+        
+        // Remove o item apenas se NÃO for o Infinite Candy
+        if (gSpecialVar_ItemId != ITEM_INFINITE_CANDY)
+        {
+            RemoveBagItem(gSpecialVar_ItemId, 1);
+        }
+        
+        GetMonNickname(mon, gStringVar1);
         if (sFinalLevel > sInitialLevel)
         {
             PlayFanfareByFanfareNum(FANFARE_LEVEL_UP);
