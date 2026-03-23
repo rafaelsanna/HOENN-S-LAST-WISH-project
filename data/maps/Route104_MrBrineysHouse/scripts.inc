@@ -5,7 +5,7 @@ Route104_MrBrineysHouse_MapScripts::
 Route104_MrBrineysHouse_OnTransition:
 	setflag FLAG_LANDMARK_MR_BRINEY_HOUSE
 	call_if_eq VAR_BRINEY_HOUSE_STATE, 1, Route104_MrBrineysHouse_EventScript_SetBrineyPeekoPos
-	call_if_set FLAG_RECEIVED_POKENAV, Route104_MrBrineysHouse_EventScript_HideRustboroRival
+	call_if_set DN_FLAG_DEXNAV_GET, Route104_MrBrineysHouse_EventScript_HideRustboroRival
 	end
 
 Route104_MrBrineysHouse_EventScript_HideRustboroRival::

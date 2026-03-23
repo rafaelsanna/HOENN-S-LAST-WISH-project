@@ -51,7 +51,7 @@ RustboroCity_EventScript_Man1HaveBadge::
 RustboroCity_EventScript_Boy2::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_POKENAV, RustboroCity_EventScript_Boy2BrineyLeftTunnel
+	goto_if_set DN_FLAG_DEXNAV_GET, RustboroCity_EventScript_Boy2BrineyLeftTunnel
 	msgbox RustboroCity_Text_MrBrineyWalksInTheTunnel, MSGBOX_DEFAULT
 	release
 	end
