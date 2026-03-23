@@ -100,6 +100,22 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
 static void DestroyMoveTypeIconSprite(void);
 static void MoveSelectionDisplayMoveTypeIcon(u32 type);
 
+static const u8 sMoveTypeColorNormal[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}");
+static const u8 sMoveTypeColorNotVeryEffective[] = _("{COLOR RED}{SHADOW LIGHT_RED}");
+static const u8 sMoveTypeColorImmune[] = _("{COLOR LIGHT_GRAY}{SHADOW DARK_GRAY}");
+static const u8 sMoveTypeColorSuperEffective[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}");
+static const u8 sMoveTypeColorStatus[] = _("{COLOR BLUE}{SHADOW LIGHT_BLUE}");
+
+// Order based numerically, with EFFECTIVENESS_CANNOT_VIEW at 0 to always prioritize any other effectiveness during comparison
+enum
+{
+    EFFECTIVENESS_CANNOT_VIEW,
+    EFFECTIVENESS_NO_EFFECT,
+    EFFECTIVENESS_NOT_VERY_EFFECTIVE,
+    EFFECTIVENESS_NORMAL,
+    EFFECTIVENESS_SUPER_EFFECTIVE,
+};
+
 static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(u32 battler) =
 {
     [CONTROLLER_GETMONDATA]               = BtlController_HandleGetMonData,
@@ -1716,7 +1732,33 @@ static void MoveSelectionDisplayMoveType(u32 battler)
         struct Pokemon *mon = GetBattlerMon(battler);
         type = CheckDynamicMoveType(mon, move, battler, MON_IN_BATTLE);
     }
-    StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
+    const u8 *typeColor = sMoveTypeColorNormal;
+    if (IsBattleMoveStatus(move))
+    {
+        typeColor = sMoveTypeColorStatus;
+    }
+    else
+    {
+        u32 foeEffectiveness = CheckTargetTypeEffectiveness(battler);
+
+        switch (foeEffectiveness)
+        {
+            case EFFECTIVENESS_NO_EFFECT:
+                typeColor = sMoveTypeColorImmune;
+                break;
+            case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
+                typeColor = sMoveTypeColorNotVeryEffective;
+                break;
+            case EFFECTIVENESS_SUPER_EFFECTIVE:
+                typeColor = sMoveTypeColorSuperEffective;
+                break;
+            default:
+                break;
+        }
+    }
+
+    StringCopy(gDisplayedStringBattle, typeColor);
+    StringAppend(gDisplayedStringBattle, gText_MoveInterfaceType);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
     MoveSelectionDisplayMoveTypeIcon(type);
 }
@@ -2346,16 +2388,6 @@ static void PlayerHandleBattleDebug(u32 battler)
     SetMainCallback2(CB2_BattleDebugMenu);
     gBattlerControllerFuncs[battler] = Controller_WaitForDebug;
 }
-
-// Order based numerically, with EFFECTIVENESS_CANNOT_VIEW at 0 to always prioritize any other effectiveness during comparison
-enum
-{
-    EFFECTIVENESS_CANNOT_VIEW,
-    EFFECTIVENESS_NO_EFFECT,
-    EFFECTIVENESS_NOT_VERY_EFFECTIVE,
-    EFFECTIVENESS_NORMAL,
-    EFFECTIVENESS_SUPER_EFFECTIVE,
-};
 
 static bool32 ShouldShowTypeEffectiveness(u32 targetId)
 {
