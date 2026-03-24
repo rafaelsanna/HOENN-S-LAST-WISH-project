@@ -7,7 +7,7 @@ SlateportCity_OnTransition:
 	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 0
 	call SlateportCity_EventScript_EnterSlateport
 	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_MovePeopleForSternInterview
-	call_if_eq VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_SetReadyForScottScene
+	///// call_if_eq VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_SetReadyForScottScene /// remove scott 
 	end
 
 SlateportCity_EventScript_EnterSlateport::
@@ -33,21 +33,21 @@ SlateportCity_EventScript_MovePeopleForSternInterview::
 	setobjectmovementtype LOCALID_SLATEPORT_MAN_1, MOVEMENT_TYPE_FACE_LEFT
 	return
 
-SlateportCity_EventScript_SetReadyForScottScene::
-	setflag FLAG_HIDE_MAP_NAME_POPUP
-	getplayerxy VAR_0x8004, VAR_0x8005
-	goto_if_eq VAR_0x8004, 30, SlateportCity_EventScript_MoveScottLeft
-	setobjectxyperm LOCALID_SLATEPORT_SCOTT, 23, 27
-	setobjectmovementtype LOCALID_SLATEPORT_SCOTT, MOVEMENT_TYPE_FACE_RIGHT
-	return
+/////SlateportCity_EventScript_SetReadyForScottScene:: /// remove scott 
+	/////setflag FLAG_HIDE_MAP_NAME_POPUP
+	/////getplayerxy VAR_0x8004, VAR_0x8005
+	/////goto_if_eq VAR_0x8004, 30, SlateportCity_EventScript_MoveScottLeft
+	////setobjectxyperm LOCALID_SLATEPORT_SCOTT, 23, 27
+	////setobjectmovementtype LOCALID_SLATEPORT_SCOTT, MOVEMENT_TYPE_FACE_RIGHT
+	////return
 
-SlateportCity_EventScript_MoveScottLeft::
-	setobjectxyperm LOCALID_SLATEPORT_SCOTT, 22, 27
-	setobjectmovementtype LOCALID_SLATEPORT_SCOTT, MOVEMENT_TYPE_FACE_RIGHT
-	return
+////SlateportCity_EventScript_MoveScottLeft:: /// remove scott 
+	////setobjectxyperm LOCALID_SLATEPORT_SCOTT, 22, 27
+	////setobjectmovementtype LOCALID_SLATEPORT_SCOTT, MOVEMENT_TYPE_FACE_RIGHT
+	////return
 
 SlateportCity_OnFrame:
-	map_script_2 VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_ScottScene
+	/////////// map_script_2 VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_ScottScene //// remove scott
 	.2byte 0
 
 SlateportCity_EventScript_ScottScene::
