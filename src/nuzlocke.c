@@ -5,8 +5,8 @@
 #include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
+#include "wild_encounter.h"
 #include "constants/flags.h"
-#include "constants/map_types.h"
 #include "constants/battle.h"
 
 static const u8 sTextNuzlockeLoneMonPenalty[] = _("You lost with Nuzlocke, so your only Pokemon lost 2 levels.");
@@ -18,13 +18,12 @@ static void Nuzlocke_EnsureMapFlagsInit(void)
 {
     if (FlagGet(FLAG_SYS_NUZLOCKE_FLAGS_INITIALIZED))
         return;
-    if (gSaveBlock2Ptr == NULL)
+    if (gSaveBlock3Ptr == NULL)
         return;
 
-    memset(gSaveBlock2Ptr->nuzlockeEncounterMapFlags, 0, NUZLOCKE_AREA_FLAGS_COUNT);
-    memset(gSaveBlock2Ptr->nuzlockeCaptureMapFlags, 0, NUZLOCKE_AREA_FLAGS_COUNT);
     if (gSaveBlock1Ptr != NULL)
         memset(gSaveBlock1Ptr->nuzlockeReleasedSpeciesFlags, 0, ROUND_BITS_TO_BYTES(NUM_SPECIES));
+    memset(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, 0, NUZLOCKE_WILD_HEADER_FLAG_BYTES);
     FlagSet(FLAG_SYS_NUZLOCKE_FLAGS_INITIALIZED);
 }
 
@@ -42,6 +41,17 @@ static void Nuzlocke_SetSpeciesFlag(u8 *flags, u16 species)
         return;
 
     flags[species >> 3] |= 1 << (species & 7);
+}
+
+static bool8 Nuzlocke_IsWildHeaderFlagSet(const u8 *flags, u16 headerId, u8 bit)
+{
+    u16 bitIndex;
+
+    if (headerId == HEADER_NONE || headerId >= NUZLOCKE_WILD_HEADER_COUNT || bit > 1)
+        return FALSE;
+
+    bitIndex = headerId * 2 + bit;
+    return flags[bitIndex >> 3] & (1 << (bitIndex & 7));
 }
 
 static bool8 Nuzlocke_IsSpeciesInPlayerCollection(u16 species)
@@ -129,14 +139,15 @@ static bool8 IsCurrentRouteShinyEncounter(void)
     return GetMonData(&gEnemyParty[gBattlerPartyIndexes[B_POSITION_OPPONENT_LEFT]], MON_DATA_IS_SHINY);
 }
 
-static bool8 GetMapFlag(const u8 *flags, u8 mapSecId)
+static void Nuzlocke_SetWildHeaderFlag(u8 *flags, u16 headerId, u8 bit)
 {
-    return flags[mapSecId >> 3] & (1 << (mapSecId & 7));
-}
+    u16 bitIndex;
 
-static void SetMapFlag(u8 *flags, u8 mapSecId)
-{
-    flags[mapSecId >> 3] |= 1 << (mapSecId & 7);
+    if (headerId == HEADER_NONE || headerId >= NUZLOCKE_WILD_HEADER_COUNT || bit > 1)
+        return;
+
+    bitIndex = headerId * 2 + bit;
+    flags[bitIndex >> 3] |= 1 << (bitIndex & 7);
 }
 
 static u16 CountOwnedNonEggMons(void)
@@ -203,8 +214,7 @@ static bool8 IsTrackableWildBattle(void)
     if (!FlagGet(FLAG_SYS_POKEDEX_GET))
         return FALSE;
 
-    // Encounter areas are route map sections.
-    return gMapHeader.mapType == MAP_TYPE_ROUTE || gMapHeader.mapType == MAP_TYPE_OCEAN_ROUTE || gMapHeader.mapType == MAP_TYPE_UNDERWATER || gMapHeader.mapType == MAP_TYPE_SECRET_BASE || gMapHeader.mapType == MAP_TYPE_TOWN || gMapHeader.mapType == MAP_TYPE_CITY || gMapHeader.mapType == MAP_TYPE_UNDERGROUND || gMapHeader.mapType == MAP_TYPE_INDOOR || gMapHeader.mapType == MAP_TYPE_UNKNOWN;
+    return GetCurrentMapWildMonHeaderId() != HEADER_NONE;
 }
 
 static bool8 HasUncaughtWildMonInBattle(void)
@@ -237,9 +247,12 @@ void Nuzlocke_OnBattleStart(void)
 {
     Nuzlocke_EnsureMapFlagsInit();
     u8 mode;
-    u8 mapSecId;
+    u16 headerId;
 
     sNuzlockeCanThrowBallThisBattle = FALSE;
+
+    if (gSaveBlock3Ptr == NULL)
+        return;
 
     if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return;
@@ -251,11 +264,11 @@ void Nuzlocke_OnBattleStart(void)
     if (!HasUncaughtWildMonInBattle())
         return;
 
-    mapSecId = gMapHeader.regionMapSectionId;
+    headerId = GetCurrentMapWildMonHeaderId();
 
-    if (!GetMapFlag(gSaveBlock2Ptr->nuzlockeEncounterMapFlags, mapSecId))
+    if (!Nuzlocke_IsWildHeaderFlagSet(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, headerId, 0))
     {
-        SetMapFlag(gSaveBlock2Ptr->nuzlockeEncounterMapFlags, mapSecId);
+        Nuzlocke_SetWildHeaderFlag(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, headerId, 0);
         sNuzlockeCanThrowBallThisBattle = TRUE;
     }
 }
@@ -264,6 +277,9 @@ bool8 Nuzlocke_CanThrowBallThisBattle(void)
 {
     Nuzlocke_EnsureMapFlagsInit();
     u8 mode;
+
+    if (gSaveBlock3Ptr == NULL)
+        return TRUE;
 
     if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return TRUE;
@@ -278,7 +294,7 @@ bool8 Nuzlocke_CanThrowBallThisBattle(void)
         if (!Nuzlocke_HasAvailableWildSpecies())
             return FALSE;
 
-        return !GetMapFlag(gSaveBlock2Ptr->nuzlockeCaptureMapFlags, gMapHeader.regionMapSectionId);
+        return !Nuzlocke_IsWildHeaderFlagSet(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, GetCurrentMapWildMonHeaderId(), 1);
     }
 
     return sNuzlockeCanThrowBallThisBattle;
@@ -287,6 +303,8 @@ bool8 Nuzlocke_CanThrowBallThisBattle(void)
 void Nuzlocke_OnMonCaught(struct Pokemon *mon)
 {
     Nuzlocke_EnsureMapFlagsInit();
+    if (gSaveBlock3Ptr == NULL)
+        return;
     if (!Nuzlocke_HasStarted() || !IsTrackableWildBattle())
         return;
     if (Nuzlocke_GetMode() != OPTIONS_NUZLOCKE_NORMAL)
@@ -294,7 +312,7 @@ void Nuzlocke_OnMonCaught(struct Pokemon *mon)
     if (GetMonData(mon, MON_DATA_IS_SHINY))
         return;
 
-    SetMapFlag(gSaveBlock2Ptr->nuzlockeCaptureMapFlags, gMapHeader.regionMapSectionId);
+    Nuzlocke_SetWildHeaderFlag(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, GetCurrentMapWildMonHeaderId(), 1);
 }
 
 void Nuzlocke_ApplyPermadeathToPlayerParty(void)

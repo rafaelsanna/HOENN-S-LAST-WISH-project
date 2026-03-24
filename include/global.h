@@ -251,6 +251,7 @@ struct SaveBlock3
     u8 dexNavSearchLevels[NUM_SPECIES];
 #endif
     u8 dexNavChain;
+    u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES]; // Two bits per wild encounter header: encounter and capture.
 }; /* max size 1624 bytes */
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;
@@ -610,8 +611,6 @@ struct SaveBlock2
     u8 optionsInfiniteCandy; //OPTINOS_INFINITECANDY_[OFF/ON]
     u8 optionsLevelCaps; //OPTIONS_LEVELCAPS_[ON/OFF]
     u8 optionsBattleItems; //OPTIONS_BATTLEITEMS_[ON/OFF]
-    u8 nuzlockeEncounterMapFlags[NUZLOCKE_AREA_FLAGS_COUNT]; // Tracks whether the first encounter was already seen for each map section.
-    u8 nuzlockeCaptureMapFlags[NUZLOCKE_AREA_FLAGS_COUNT]; // Tracks whether a non-shiny capture was already made for each map section.
 }; // sizeof=0xF4C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;

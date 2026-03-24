@@ -12,6 +12,8 @@
 #include "config/summary_screen.h"
 #include "config/ai.h"
 #include "config/follower_npc.h"
+#include "constants/region_map_sections.h"
+#include "constants/map_types.h"
 
 // Invalid Versions show as "----------" in Gen 4 and Gen 5's summary screen.
 // In Gens 6 and 7, invalid versions instead show "a distant land" in the summary screen.
@@ -177,7 +179,8 @@
 #define OPTIONS_NUZLOCKE_NORMAL 1
 #define OPTIONS_NUZLOCKE_HARD 2
 
-#define NUZLOCKE_AREA_FLAGS_COUNT 32 // 256 bits, one per possible map section id.
+#define NUZLOCKE_WILD_HEADER_COUNT 139
+#define NUZLOCKE_WILD_HEADER_FLAG_BYTES ROUND_BITS_TO_BYTES(NUZLOCKE_WILD_HEADER_COUNT * 2) // Two bits per wild encounter header.
 
 #define DIR_NONE        0
 #define DIR_SOUTH       1
