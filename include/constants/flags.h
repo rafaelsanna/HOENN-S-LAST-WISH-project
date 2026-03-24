@@ -663,15 +663,15 @@
 #define FLAG_HIDDEN_ITEM_GRANITE_CAVE_B1F_RARE_CANDY         (FLAG_HIDDEN_ITEMS_START + 0x76)
 
 
-#define DN_FLAG_SEARCHING   0x271
-#define DN_FLAG_DEXNAV_GET  0x272
-#define DN_FLAG_DETECTOR_MODE  0x273
-#define DN_VAR_SPECIES  0x40F8
-#define DN_VAR_STEP_COUNTER  0x40F9
+#define DN_FLAG_SEARCHING                   0x271
+#define DN_FLAG_DEXNAV_GET                  0x272
+#define DN_FLAG_DETECTOR_MODE               0x273
+#define DN_VAR_SPECIES                      0x40F8
+#define DN_VAR_STEP_COUNTER                 0x40F9
 #define FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL  0x270 
-#define FLAG_OW_FLAG_NO_COLLISION  0x274 
-#define FLAG_UNUSED_0x275  0x275 // Unused Flag
-#define FLAG_UNUSED_0x276  0x276 // Unused Flag
+#define FLAG_OW_FLAG_NO_COLLISION           0x274 
+#define FLAG_UNUSED_0x275                   0x275 // USED on src/start_menu.c
+#define FLAG_RECEIVED_ELECTIRIZER           0x276 
 #define FLAG_UNUSED_0x277  0x277 // Unused Flag
 #define FLAG_UNUSED_0x278  0x278 // Unused Flag
 #define FLAG_UNUSED_0x279  0x279 // Unused Flag

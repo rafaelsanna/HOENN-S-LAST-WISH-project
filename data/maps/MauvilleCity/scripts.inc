@@ -34,6 +34,58 @@ MauvilleCity_EventScript_RichBoy::
 	msgbox MauvilleCity_Text_PokemonCanJumpYouOnBike, MSGBOX_NPC
 	end
 
+MauvilleCity_EventScript_Electirizer::
+    lock
+    faceplayer
+    goto_if_set FLAG_RECEIVED_ELECTIRIZER, MauvilleCity_EventScript_AlreadyGotItem
+    goto_if_set FLAG_BADGE03_GET, MauvilleCity_EventScript_GiveElectirizer
+    msgbox MauvilleCity_Text_Electirizer_NotReady, MSGBOX_DEFAULT
+    release
+    end
+
+MauvilleCity_EventScript_GiveElectirizer::
+    msgbox MauvilleCity_Text_Electirizer_Congrats, MSGBOX_DEFAULT
+    giveitem ITEM_ELECTIRIZER
+    goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+    setflag FLAG_RECEIVED_ELECTIRIZER
+    msgbox MauvilleCity_Text_Electirizer_Goodbye, MSGBOX_DEFAULT
+    release
+    end
+
+MauvilleCity_EventScript_AlreadyGotItem::
+    msgbox MauvilleCity_Text_Electirizer_AlreadyGot, MSGBOX_DEFAULT
+    release
+    end
+
+MauvilleCity_Text_Electirizer_NotReady:
+    .string "Hmm… Den is a formidable young man.\p"
+    .string "Ever since he was a child, he had a\n"
+    .string "brilliant mind…\p"
+    .string "These days, he solves calculations and\n"
+    .string "formulas better than I do…\p"
+    .string "I was his engineering teacher for\n"
+    .string "many years.\p"
+    .string "You seem like a smart trainer,\n"
+    .string "but do you have what it takes to\l"
+    .string "defeat him?$"
+
+MauvilleCity_Text_Electirizer_Congrats:
+    .string "Hmm… You defeated Den!\p"
+    .string "I knew you had potential.\p"
+    .string "As his former teacher, it makes me\n"
+    .string "happy to see talented young people.\p"
+    .string "Here, take this as a token of\n"
+    .string "recognition.$"
+
+MauvilleCity_Text_Electirizer_Goodbye:
+    .string "Use that Electirizer wisely.\n"
+    .string "It can evolve certain Pokémon.\p"
+    .string "Keep up the good training, young one!$"
+
+MauvilleCity_Text_Electirizer_AlreadyGot:
+    .string "Hmm… You already got the Electirizer.\n"
+    .string "Make good use of it!$"
+
 MauvilleCity_EventScript_CitySign::
 	msgbox MauvilleCity_Text_CitySign, MSGBOX_SIGN
 	end
@@ -158,16 +210,16 @@ MauvilleCity_EventScript_DefeatedWally::
 	setflag FLAG_DEFEATED_WALLY_MAUVILLE
 	setvar VAR_WALLY_CALL_STEP_COUNTER, 0
 	setflag FLAG_ENABLE_FIRST_WALLY_POKENAV_CALL
-	call_if_eq VAR_FACING, DIR_NORTH, MauvilleCity_EventScript_ScottApproachPlayerNorth
-	call_if_eq VAR_FACING, DIR_EAST, MauvilleCity_EventScript_ScottApproachPlayerEast
+	//////// call_if_eq VAR_FACING, DIR_NORTH, MauvilleCity_EventScript_ScottApproachPlayerNorth
+	/////// call_if_eq VAR_FACING, DIR_EAST, MauvilleCity_EventScript_ScottApproachPlayerEast
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox MauvilleCity_Text_ScottYouDidntHoldBack, MSGBOX_DEFAULT
-	closemessage
-	addvar VAR_SCOTT_STATE, 1
-	call_if_eq VAR_FACING, DIR_NORTH, MauvilleCity_EventScript_ScottExitNorth
-	call_if_eq VAR_FACING, DIR_EAST, MauvilleCity_EventScript_ScottExitEast
-	removeobject LOCALID_MAUVILLE_SCOTT
+	////////msgbox MauvilleCity_Text_ScottYouDidntHoldBack, MSGBOX_DEFAULT
+	//////// closemessage
+	//////// addvar VAR_SCOTT_STATE, 1
+	//////// call_if_eq VAR_FACING, DIR_NORTH, MauvilleCity_EventScript_ScottExitNorth
+	/////// call_if_eq VAR_FACING, DIR_EAST, MauvilleCity_EventScript_ScottExitEast
+	////////// removeobject LOCALID_MAUVILLE_SCOTT
 	releaseall
 	end
 
@@ -228,10 +280,16 @@ MauvilleCity_Movement_WallyExitNorth1:
 	walk_left
 	walk_down
 	walk_down
+	walk_down
+	walk_down
+	walk_down
 	walk_left
 	step_end
 
 MauvilleCity_Movement_WallyExitEast1:
+	walk_down
+	walk_down
+	walk_down
 	walk_down
 	walk_down
 	walk_left
@@ -336,6 +394,11 @@ MauvilleCity_Movement_WallysUncleApproachPlayerEast:
 	step_end
 
 MauvilleCity_Movement_WallysUncleExitNorth2:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_left
 	walk_left
 	walk_left
 	walk_left
@@ -348,6 +411,10 @@ MauvilleCity_Movement_WallysUncleExitNorth2:
 
 MauvilleCity_Movement_WallysUncleExitEast2:
 	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_left
 	walk_left
 	walk_left
 	walk_left
