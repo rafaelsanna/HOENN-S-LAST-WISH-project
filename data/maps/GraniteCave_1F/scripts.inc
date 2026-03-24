@@ -1,17 +1,17 @@
 GraniteCave_1F_MapScripts::
 	.byte 0
 
-GraniteCave_1F_EventScript_Hiker::
+GraniteCave_1F_EventScript_Aurora::
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_HM_FLASH, GraniteCave_1F_EventScript_ReceivedFlash
-	goto_if_set FLAG_DEFEATED_GRANITE_CAVE_HIKER, GraniteCave_1F_EventScript_GiveFlash
+	goto_if_set FLAG_DEFEATED_GRANITE_CAVE_AURORA, GraniteCave_1F_EventScript_GiveFlash
 	msgbox GraniteCave_1F_Text_WantToBattle, MSGBOX_DEFAULT
-	trainerbattle_single TRAINER_LIO, GraniteCave_1F_Text_Intro, GraniteCave_1F_Text_Defeat, GraniteCave_1F_EventScript_BattleEnd
+	trainerbattle_single TRAINER_AURORA, GraniteCave_1F_Text_Intro, GraniteCave_1F_Text_Defeat, GraniteCave_1F_EventScript_BattleEnd
 	end
 
 GraniteCave_1F_EventScript_BattleEnd::
-	setflag FLAG_DEFEATED_GRANITE_CAVE_HIKER
+	setflag FLAG_DEFEATED_GRANITE_CAVE_AURORA
 	msgbox GraniteCave_1F_Text_CometWasAmazing, MSGBOX_DEFAULT
 	goto GraniteCave_1F_EventScript_GiveFlash
 	end
@@ -30,51 +30,47 @@ GraniteCave_1F_EventScript_ReceivedFlash::
 	end
 
 GraniteCave_1F_Text_WantToBattle:
-	.string "Hey, you!\n"
-	.string "You look like a strong TRAINER.\p"
-	.string "I've been itching for a battle ever\n"
-	.string "since I saw that comet light up the sky!\p"
-	.string "What do you say?\n"
-	.string "Let's battle!$"
+	.string "AURORA: The comet's light blessed me\n"
+	.string "with power beyond imagination!\p"
+	.string "You carry a strange energy yourself…\n"
+	.string "Let me test its strength!\p"
+	.string "Face the will of the comet!$"
 
 GraniteCave_1F_Text_Intro:
-	.string "I've been training extra hard since\n"
-	.string "that comet passed through Hoenn!\p"
-	.string "Its light was something else!\n"
-	.string "Now show me what you've got!$"
+	.string "The celestial light flows through me!\n"
+	.string "I see things others cannot…\p"
+	.string "This comet is no mere rock in the sky.\n"
+	.string "It is a message from beyond!\p"
+	.string "Now witness the power it granted me!$"
 
 GraniteCave_1F_Text_Defeat:
-	.string "Whoa…\n"
-	.string "You're stronger than I expected!$"
+	.string "How…?\n"
+	.string "Your light rivals the comet itself!$"
 
 GraniteCave_1F_Text_CometWasAmazing:
-	.string "That comet was incredible, wasn't it?\n"
-	.string "The way it lit up the whole region…\p"
-	.string "I've been obsessed with it ever since.\n"
-	.string "Couldn't stop thinking about that light.\p"
-	.string "But you… you've got a different kind\n"
-	.string "of light in your eyes.\p"
-	.string "Alright, take this.\n"
-	.string "It'll help you explore deeper.$"
+	.string "When the comet passed over Hoenn,\n"
+	.string "I felt its call deep in my soul.\p"
+	.string "It showed me visions… warnings…\n"
+	.string "A great crisis approaches this land.\p"
+	.string "But you… you carry a different light.\n"
+	.string "Perhaps you are the one destined to\l"
+	.string "prevent what is to come.\p"
+	.string "Take this. It will help you navigate\n"
+	.string "the darkness ahead.$"
 
 GraniteCave_1F_Text_GetsDarkAheadHereYouGo:
-	.string "It gets awfully dark ahead.\n"
-	.string "It'll be tough trying to explore.\p"
-	.string "That guy who came by earlier…\n"
-	.string "STEVEN, I think it was.\p"
-	.string "He knew how to use FLASH, so he ought\n"
-	.string "to be all right, but…\p"
-	.string "Well, for us HIKERS, helping out those\n"
-	.string "that we meet is our motto.\p"
-	.string "Here you go, I'll pass this on to you.$"
+	.string "The caves ahead hold secrets.\n"
+	.string "Secrets even the comet couldn't reveal.\p"
+	.string "Use this FLASH to light your way.\n"
+	.string "May it guide you as the comet guided me.$"
 
 GraniteCave_1F_Text_ExplainFlash:
-	.string "Teach that hidden move FLASH to\n"
-	.string "a POKéMON and use it.\p"
-	.string "It lights up even the inky darkness\n"
-	.string "of caves.\p"
-	.string "But, to use it, you need the GYM BADGE\n"
-	.string "from DEWFORD's POKéMON GYM.$"
+	.string "FLASH illuminates even the deepest\n"
+	.string "darkness of caves.\p"
+	.string "But to use it, you need the GYM BADGE\n"
+	.string "from DEWFORD's POKéMON GYM.\p"
+	.string "Go now. The path awaits, and with it,\n"
+	.string "answers about the comet's message.$"
 
 
 

@@ -7368,26 +7368,46 @@ Lotad
 Level: 20
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
-=== TRAINER_LIO ===
-Name: LIO
-Class: Hiker
-Pic: Hiker
-Gender: Male
+=== TRAINER_AURORA ===
+Name: AURORA
+Class: Cultist
+Pic: Aurora
+Gender: Female
 Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
+Koffing
+Level: 22
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+- Flash
+- Self-Destruct  
+- Clear Smog
+- Assurance
+
 Kadabra
-Level: 22
-IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
-
-Nuzleaf
-Level: 22
-IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
-
-Electabuzz
 Level: 23
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+- Flash
+- Recover  
+- Confusion  
+- Swift
+
+Chinchou
+Level: 22
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+- Flash
+- Thunder Wave  
+- Spark 
+- Water Gun
+
+Nuzleaf
+Level: 23
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+- Flash
+- Self-Destruct  
+- Magnet Bomb
+- Flame Wheel
 
 === TRAINER_NED ===
 Name: NED
