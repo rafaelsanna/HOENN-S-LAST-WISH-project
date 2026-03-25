@@ -44,7 +44,7 @@ static const struct OamData sVsLetter_V_OamData =
     .size = SPRITE_SIZE(64x64),
     .tileNum = 0,
     .priority = 0,
-    .paletteNum = 5,
+    .paletteNum = 0,
     .affineParam = 0,
 };
 
@@ -114,25 +114,29 @@ static const struct CompressedSpriteSheet sVsLettersSpriteSheet =
     gVsLettersGfx, 0x1000, TAG_VS_LETTERS
 };
 
-// DARK UI - Paleta com near-black (não transparente)
+// Defina suas cores em RGB15 (5 bits por cor)
+// Preto: RGB(0, 0, 0) -> 0x0000
+// Cinza escuro: RGB(8, 8, 8) -> 0x4210
+// Branco: RGB(31, 31, 31) -> 0x7FFF
+
 static const u16 sCustomBattleWindowPalette[] =
 {
-    RGB(4, 4, 5),        // Cor 0 - near-black (não transparente!) - fundo principal
-    RGB(8, 8, 8),        // Cor 1 - cinza escuro
-    RGB(16, 16, 16),     // Cor 2 - cinza médio escuro
-    RGB(24, 24, 24),     // Cor 3 - cinza médio
-    RGB(4, 4, 5),        // Cor 4 - mesmo near-black
-    RGB(4, 4, 5),        // Cor 5
-    RGB(4, 4, 5),        // Cor 6
-    RGB(4, 4, 5),        // Cor 7
-    RGB(4, 4, 5),        // Cor 8
-    RGB(4, 4, 5),        // Cor 9
-    RGB(4, 4, 5),        // Cor 10
-    RGB(4, 4, 5),        // Cor 11
-    RGB(31, 31, 31),     // Cor 12 - branco
-    RGB(31, 31, 31),     // Cor 13 - branco (texto principal)
-    RGB(4, 4, 5),        // Cor 14 - mesmo near-black (fundo do texto)
-    RGB(16, 16, 16),     // Cor 15 - cinza médio (sombra)
+    RGB_BLACK,           // Cor 0 - fundo
+    RGB(8, 8, 8),        // Cor 1
+    RGB(16, 16, 16),     // Cor 2
+    RGB(24, 24, 24),     // Cor 3
+    RGB_BLACK,           // Cor 4
+    RGB_BLACK,           // Cor 5
+    RGB_BLACK,           // Cor 6
+    RGB_BLACK,           // Cor 7
+    RGB_BLACK,           // Cor 8
+    RGB_BLACK,           // Cor 9
+    RGB_BLACK,           // Cor 10
+    RGB_BLACK,           // Cor 11
+    RGB(31, 31, 31),     // Cor 12
+    RGB(31, 31, 31),     // Cor 13 - Branco (texto)
+    RGB(8, 8, 8),        // Cor 14 - Cinza escuro (fundo do texto)
+    RGB(16, 16, 16),     // Cor 15 - Cinza médio (sombra)
 };
 
 const struct BgTemplate gBattleBgTemplates[] =
@@ -737,7 +741,8 @@ void LoadBattleMenuWindowGfx(void)
 {
     LoadUserWindowBorderGfx(2, 0x12, BG_PLTT_ID(1));
     LoadUserWindowBorderGfx(2, 0x22, BG_PLTT_ID(1));
-    LoadPalette(gBattleWindowTextPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
+    // LoadPalette(gBattleWindowTextPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
+    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
 
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
     {
