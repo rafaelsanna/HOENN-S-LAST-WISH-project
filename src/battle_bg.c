@@ -44,7 +44,7 @@ static const struct OamData sVsLetter_V_OamData =
     .size = SPRITE_SIZE(64x64),
     .tileNum = 0,
     .priority = 0,
-    .paletteNum = 0,
+    .paletteNum = 5,
     .affineParam = 0,
 };
 
@@ -114,6 +114,27 @@ static const struct CompressedSpriteSheet sVsLettersSpriteSheet =
     gVsLettersGfx, 0x1000, TAG_VS_LETTERS
 };
 
+// DARK UI - Paleta com near-black (não transparente)
+static const u16 sCustomBattleWindowPalette[] =
+{
+    RGB(4, 4, 5),        // Cor 0 - near-black (não transparente!) - fundo principal
+    RGB(8, 8, 8),        // Cor 1 - cinza escuro
+    RGB(16, 16, 16),     // Cor 2 - cinza médio escuro
+    RGB(24, 24, 24),     // Cor 3 - cinza médio
+    RGB(4, 4, 5),        // Cor 4 - mesmo near-black
+    RGB(4, 4, 5),        // Cor 5
+    RGB(4, 4, 5),        // Cor 6
+    RGB(4, 4, 5),        // Cor 7
+    RGB(4, 4, 5),        // Cor 8
+    RGB(4, 4, 5),        // Cor 9
+    RGB(4, 4, 5),        // Cor 10
+    RGB(4, 4, 5),        // Cor 11
+    RGB(31, 31, 31),     // Cor 12 - branco
+    RGB(31, 31, 31),     // Cor 13 - branco (texto principal)
+    RGB(4, 4, 5),        // Cor 14 - mesmo near-black (fundo do texto)
+    RGB(16, 16, 16),     // Cor 15 - cinza médio (sombra)
+};
+
 const struct BgTemplate gBattleBgTemplates[] =
 {
     {
@@ -162,7 +183,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 15,
         .width = 26,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x0090,
     },
     [B_WIN_ACTION_PROMPT] = {
@@ -171,7 +192,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 35,
         .width = 14,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x01c0,
     },
     [B_WIN_ACTION_MENU] = {
@@ -351,7 +372,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 6,
         .height = 2,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x00a0,
     },
     [B_WIN_VS_OUTCOME_LEFT] = {
@@ -360,7 +381,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 7,
         .height = 2,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x00a0,
     },
     [B_WIN_VS_OUTCOME_RIGHT] = {
@@ -369,7 +390,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 7,
         .height = 2,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x00b0,
     },
     [B_WIN_MOVE_DESCRIPTION] = {
@@ -392,7 +413,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 15,
         .width = 26,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x0090,
     },
     [B_WIN_ACTION_PROMPT] = {
@@ -401,7 +422,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 35,
         .width = 14,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x01c0,
     },
     [B_WIN_ACTION_MENU] = {
