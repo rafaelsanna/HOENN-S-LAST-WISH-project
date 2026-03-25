@@ -9126,9 +9126,9 @@ F_TRAINER_FEMALE |
 #line 3515
         .trainerName = _("KIRK"),
 #line 3516
-        .trainerClass = TRAINER_CLASS_GUITARIST,
+        .trainerClass = TRAINER_CLASS_NERD,
 #line 3517
-        .trainerPic = TRAINER_PIC_GUITARIST,
+        .trainerPic = TRAINER_PIC_SUPERNERD,
         .encounterMusic_gender =
 #line 3519
             TRAINER_ENCOUNTER_MUSIC_INTENSE,
@@ -9137,7 +9137,7 @@ F_TRAINER_FEMALE |
 #line 3521
         .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
 #line 0
-        .trainerBackPic = TRAINER_PIC_GUITARIST,
+        .trainerBackPic = TRAINER_PIC_SUPERNERD,
         .partySize = 2,
         .party = (const struct TrainerMon[])
         {
