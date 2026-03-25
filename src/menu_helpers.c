@@ -135,6 +135,20 @@ void DisplayMessageAndContinueTask(u8 taskId, u8 windowId, u16 tileNum, u8 palet
     gTasks[taskId].func = Task_ContinueTaskAfterMessagePrints;
 }
 
+void DisplayMessageAndContinueTaskStdFrame(u8 taskId, u8 windowId, u16 tileNum, u8 paletteNum, u8 fontId, u8 textSpeed, const u8 *string, void *taskFunc)
+{
+    sMessageWindowId = windowId;
+    DrawStdFrameWithCustomTileAndPalette(windowId, TRUE, tileNum, paletteNum);
+
+    if (string != gStringVar4)
+        StringExpandPlaceholders(gStringVar4, string);
+
+    gTextFlags.canABSpeedUpPrint = 1;
+    AddTextPrinterParameterized2(windowId, fontId, gStringVar4, textSpeed, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+    sMessageNextTask = taskFunc;
+    gTasks[taskId].func = Task_ContinueTaskAfterMessagePrints;
+}
+
 bool16 RunTextPrintersRetIsActive(u8 textPrinterId)
 {
     RunTextPrinters();
