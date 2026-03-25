@@ -2094,7 +2094,8 @@ static bool32 Fishing_InitDots(struct Task *task)
 {
     u32 randVal;
 
-    LoadMessageBoxAndFrameGfx(0, TRUE);
+    LoadMessageBoxAndBorderGfx();
+    DrawStdFrameWithCustomTileAndPalette(0, TRUE, STD_WINDOW_BASE_TILE_NUM, STD_WINDOW_PALETTE_NUM);
     task->tStep = FISHING_SHOW_DOTS;
     task->tFrameCounter = 0;
     task->tNumDots = 0;
@@ -2284,7 +2285,7 @@ static bool32 Fishing_StartEncounter(struct Task *task)
                 SetSurfBlob_PlayerOffset(gObjectEvents[gPlayerAvatar.objectEventId].fieldEffectSpriteId, FALSE, 0);
             gSprites[gPlayerAvatar.spriteId].x2 = 0;
             gSprites[gPlayerAvatar.spriteId].y2 = 0;
-            ClearDialogWindowAndFrame(0, TRUE);
+            ClearStdWindowAndFrame(0, TRUE);
             task->tFrameCounter++;
             return FALSE;
         }
@@ -2356,7 +2357,7 @@ static bool32 Fishing_EndNoMon(struct Task *task)
         gPlayerAvatar.preventStep = FALSE;
         UnlockPlayerFieldControls();
         UnfreezeObjectEvents();
-        ClearDialogWindowAndFrame(0, TRUE);
+        ClearStdWindowAndFrame(0, TRUE);
         RecordFishingAttemptForTV(FALSE);
         DestroyTask(FindTaskIdByFunc(Task_Fishing));
     }
