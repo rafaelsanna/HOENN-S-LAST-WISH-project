@@ -601,7 +601,7 @@ MtChimney_Text_MaxieYouHaventSeenLastOfMagma:
 
 MtChimney_Text_TabithaIntro:
 	.string "Netsu: Hehehe!\p"
-	.string "So you're the wierdo everyone's been\n"
+	.string "So you're the weirdo everyone's been\n"
 	.string "whispering about!\p"
 	.string "I heard some brat in a cape has been\n"
 	.string "playing hero and actually managed to\l"
@@ -609,7 +609,7 @@ MtChimney_Text_TabithaIntro:
 	.string "that damn annoying TEAM AQUA!\p"
 	.string "That weird rich boy is my rival,\n"
 	.string "and I can't stand him!\l"
-	.string "Pretentious spoiled boy! I hate Alejandro!\p"
+	.string "That spoiled boy! I hate Alejandro!\p"
 	.string "Anyway...\n"
 	.string "Why are you so interested in poking\l"
 	.string "your nose into our revolution?\p"

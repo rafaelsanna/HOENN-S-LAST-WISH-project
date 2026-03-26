@@ -7108,11 +7108,11 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .categoryName = _("Armor Bird"),
         .height = 17,
         .weight = 505,
-        .description = COMPOUND_STRING(
-            "A Pokémon that has lost its wings but retains\n"
-            "its steel body. Now a flightless fighter, it uses\n"
-            "its powerful legs to kick and charge. People still\n"
-            "use its fallen feathers to make sharp weapons."),
+.description = COMPOUND_STRING(
+    "It lost its wings but kept its steel body.\n"
+    "This flightless fighter kicks and charges\n"
+    "with powerful legs. Its fallen feathers\n"
+    "are forged into sharp weapons.$"),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 271,

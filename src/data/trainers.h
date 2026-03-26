@@ -1072,7 +1072,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 479
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 481
             .iv = TRAINER_PARTY_IVS(10, 10, 10, 10, 10, 10),
@@ -1117,7 +1117,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 497
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 499
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -4737,7 +4737,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 1884
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 1886
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -5080,7 +5080,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 2010
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 2012
             .iv = TRAINER_PARTY_IVS(13, 13, 13, 13, 13, 13),
@@ -5140,7 +5140,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 2032
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 2034
             .iv = TRAINER_PARTY_IVS(14, 14, 14, 14, 14, 14),
@@ -5200,7 +5200,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 2054
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 2056
             .iv = TRAINER_PARTY_IVS(15, 15, 15, 15, 15, 15),
@@ -5845,7 +5845,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 2287
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 2289
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -7289,7 +7289,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 2818
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 2820
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -9646,7 +9646,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 3713
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3715
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -15359,7 +15359,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 5930
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5932
             .iv = TRAINER_PARTY_IVS(1, 1, 1, 1, 1, 1),
@@ -23724,7 +23724,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 9086
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 9088
             .iv = TRAINER_PARTY_IVS(1, 1, 1, 1, 1, 1),
@@ -23767,7 +23767,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 9103
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 9105
             .iv = TRAINER_PARTY_IVS(2, 2, 2, 2, 2, 2),
@@ -23828,7 +23828,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 9128
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 9130
             .iv = TRAINER_PARTY_IVS(3, 3, 3, 3, 3, 3),
@@ -25105,7 +25105,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 9594
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 9596
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -26798,7 +26798,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 10226
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 10228
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -27774,7 +27774,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 10602
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 10604
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -27987,7 +27987,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 10682
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 10684
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -28423,7 +28423,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 10842
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 10844
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -30599,7 +30599,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 11649
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 11651
             .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
@@ -32312,7 +32312,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 12288
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12290
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -33342,7 +33342,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 12670
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12672
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -33499,7 +33499,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 12729
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12731
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -36512,7 +36512,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 13894
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 13896
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -37943,7 +37943,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 14446
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14448
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -38102,7 +38102,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 14505
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14507
             .iv = TRAINER_PARTY_IVS(10, 10, 10, 10, 10, 10),
@@ -38477,7 +38477,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 14646
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14648
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -38567,7 +38567,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 14680
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14682
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -38805,7 +38805,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 14771
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14773
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -38911,7 +38911,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 14810
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14812
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -38981,7 +38981,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 14836
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14838
             .iv = TRAINER_PARTY_IVS(9, 9, 9, 9, 9, 9),
@@ -39645,7 +39645,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 15084
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 15086
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -40262,7 +40262,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 15311
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 15313
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -40521,7 +40521,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 15408
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 15410
             .iv = TRAINER_PARTY_IVS(1, 1, 1, 1, 1, 1),
@@ -46675,7 +46675,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 17886
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 17888
             .iv = TRAINER_PARTY_IVS(2, 2, 2, 2, 2, 2),
@@ -46731,7 +46731,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 17907
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_SNUBBULL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 17909
             .iv = TRAINER_PARTY_IVS(3, 3, 3, 3, 3, 3),
