@@ -1977,6 +1977,9 @@ extern const u32 gSummaryPage_Skills_Tilemap[];
 extern const u32 gSummaryPage_BattleMoves_Tilemap[];
 extern const u32 gSummaryPage_ContestMoves_Tilemap[];
 extern const u16 gPPTextPalette[];
+extern const u16 gBattleWindowIndependentPalette[];
+extern const u16 gBattleTextboxDarkPalette[];
+extern const u16 gBattleTextboxRedPalette[];
 extern const u16 gMoveTypes_Pal[];
 
 extern const u16 gSummaryScreen_MoveEffect_Battle_Tilemap[];
