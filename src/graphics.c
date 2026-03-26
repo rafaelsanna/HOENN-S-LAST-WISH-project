@@ -1337,6 +1337,9 @@ const u16 gBattleArenaJudgmentSymbolsPalette[] = INCBIN_U16("graphics/battle_fro
 
 const u16 gBattleWindowTextPalette[] = INCBIN_U16("graphics/battle_interface/text.gbapal");
 const u16 gPPTextPalette[] = INCBIN_U16("graphics/battle_interface/text_pp.gbapal");
+const u16 gBattleWindowIndependentPalette[] = INCBIN_U16("graphics/battle_interface/battle_window_text.gbapal");
+const u16 gBattleTextboxDarkPalette[] = INCBIN_U16("graphics/battle_interface/battle_textbox_dark.gbapal");
+const u16 gBattleTextboxRedPalette[] = INCBIN_U16("graphics/battle_interface/battle_textbox_red.gbapal");
 
 const u16 gTilesetAnims_BattleDomePals0_0[] = INCBIN_U16("graphics/battle_frontier/dome_anim1.gbapal");
 const u16 gTilesetAnims_BattleDomePals0_1[] = INCBIN_U16("graphics/battle_frontier/dome_anim2.gbapal");
