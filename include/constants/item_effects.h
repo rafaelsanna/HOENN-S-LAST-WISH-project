@@ -49,6 +49,7 @@
 #define ITEM5_FRIENDSHIP_ALL    (ITEM5_FRIENDSHIP_LOW | ITEM5_FRIENDSHIP_MID | ITEM5_FRIENDSHIP_HIGH)
 
 #define ITEM10_IS_VITAMIN       0x1
+#define ITEM10_IS_IV_VITAMIN    0x2
 
 // fields 6 and onwards (except field 10) are item-specific arguments
 #define ITEM_EFFECT_ARG_START 6
