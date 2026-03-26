@@ -950,6 +950,16 @@ static const u8 sGetMonDataEVConstants[] =
     MON_DATA_SPATK_EV
 };
 
+static const u8 sGetMonDataIVConstants[] =
+{
+    MON_DATA_HP_IV,
+    MON_DATA_ATK_IV,
+    MON_DATA_DEF_IV,
+    MON_DATA_SPEED_IV,
+    MON_DATA_SPDEF_IV,
+    MON_DATA_SPATK_IV
+};
+
 // For stat-raising items
 static const u8 sStatsToRaise[] =
 {
@@ -4000,68 +4010,95 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     {
                     case 0: // ITEM4_EV_HP
                     case 1: // ITEM4_EV_ATK
-                        evCount = GetMonEVCount(mon);
-                        temp2 = itemEffect[itemEffectParam];
-                        dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1], NULL);
-                        evChange = temp2;
-
-                        if (evChange > 0) // Increasing EV (HP or Atk)
+                        // Check if this is an IV vitamin
+                        if (itemEffect[10] & ITEM10_IS_IV_VITAMIN)
                         {
-                            // Check if the total EV limit is reached
-                            if (evCount >= maxAllowedEVs)
+                            // IV upgrade logic
+                            u8 ivIndex = temp1; // 0 for HP, 1 for ATK
+                            u32 currentIV = GetMonData(mon, sGetMonDataIVConstants[ivIndex], NULL);
+                            u8 ivIncrease = itemEffect[itemEffectParam];
+                            
+                            // Check if IV is already at max (31)
+                            if (currentIV >= 31)
                                 return TRUE;
-
-                            // Ensure the increase does not exceed the max EV per stat (252)
-                            evCap = (itemEffect[10] & ITEM10_IS_VITAMIN) ? EV_ITEM_RAISE_LIMIT : MAX_PER_STAT_EVS;
-
-                            // Check if the per-stat limit is reached
-                            if (dataSigned >= evCap)
-                                return TRUE;  // Prevents item use if the per-stat cap is already reached
-
-                            if (dataSigned + evChange > evCap)
-                                temp2 = evCap - dataSigned;
-                            else
-                                temp2 = evChange;
-
-                            // Ensure the total EVs do not exceed the maximum allowed (510)
-                            if (evCount + temp2 > maxAllowedEVs)
-                                temp2 = maxAllowedEVs - evCount;
-
-                            // Prevent item use if no EVs can be increased
-                            if (temp2 == 0)
-                                return TRUE;
-
-                            // Apply the EV increase
-                            dataSigned += temp2;
+                            
+                            // Increment IV, capped at 31
+                            currentIV += ivIncrease;
+                            if (currentIV > 31)
+                                currentIV = 31;
+                            
+                            // Update IV and recalculate stats
+                            SetMonData(mon, sGetMonDataIVConstants[ivIndex], &currentIV);
+                            CalculateMonStats(mon);
+                            itemEffectParam++;
+                            retVal = FALSE;
                         }
-                        else if (evChange < 0) // Decreasing EV (HP or Atk)
+                        else
                         {
-                            if (dataSigned == 0)
+                            // EV upgrade logic (original code)
+                            evCount = GetMonEVCount(mon);
+                            temp2 = itemEffect[itemEffectParam];
+                            dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1], NULL);
+                            evChange = temp2;
+
+                            if (evChange > 0) // Increasing EV (HP or Atk)
                             {
-                                // No EVs to lose, but make sure friendship updates anyway
-                                friendshipOnly = TRUE;
-                                itemEffectParam++;
-                                break;
+                                // Check if the total EV limit is reached
+                                if (evCount >= maxAllowedEVs)
+                                    return TRUE;
+
+                                // Ensure the increase does not exceed the max EV per stat (252)
+                                evCap = (itemEffect[10] & ITEM10_IS_VITAMIN) ? EV_ITEM_RAISE_LIMIT : MAX_PER_STAT_EVS;
+
+                                // Check if the per-stat limit is reached
+                                if (dataSigned >= evCap)
+                                    return TRUE;  // Prevents item use if the per-stat cap is already reached
+
+                                if (dataSigned + evChange > evCap)
+                                    temp2 = evCap - dataSigned;
+                                else
+                                    temp2 = evChange;
+
+                                // Ensure the total EVs do not exceed the maximum allowed (510)
+                                if (evCount + temp2 > maxAllowedEVs)
+                                    temp2 = maxAllowedEVs - evCount;
+
+                                // Prevent item use if no EVs can be increased
+                                if (temp2 == 0)
+                                    return TRUE;
+
+                                // Apply the EV increase
+                                dataSigned += temp2;
                             }
-                            dataSigned += evChange;
-                            if (I_BERRY_EV_JUMP == GEN_4 && dataSigned > 100)
-                                dataSigned = 100;
-                            if (dataSigned < 0)
+                            else if (evChange < 0) // Decreasing EV (HP or Atk)
+                            {
+                                if (dataSigned == 0)
+                                {
+                                    // No EVs to lose, but make sure friendship updates anyway
+                                    friendshipOnly = TRUE;
+                                    itemEffectParam++;
+                                    break;
+                                }
+                                dataSigned += evChange;
+                                if (I_BERRY_EV_JUMP == GEN_4 && dataSigned > 100)
+                                    dataSigned = 100;
+                                if (dataSigned < 0)
+                                    dataSigned = 0;
+                            }
+                            else // Reset EV (HP or Atk)
+                            {
+                                if (dataSigned == 0)
+                                    break;
+
                                 dataSigned = 0;
-                        }
-                        else // Reset EV (HP or Atk)
-                        {
-                            if (dataSigned == 0)
-                                break;
+                            }
 
-                            dataSigned = 0;
+                            // Update EVs and stats
+                            SetMonData(mon, sGetMonDataEVConstants[temp1], &dataSigned);
+                            CalculateMonStats(mon);
+                            itemEffectParam++;
+                            retVal = FALSE;
                         }
-
-                        // Update EVs and stats
-                        SetMonData(mon, sGetMonDataEVConstants[temp1], &dataSigned);
-                        CalculateMonStats(mon);
-                        itemEffectParam++;
-                        retVal = FALSE;
                         break;
 
                     case 2: // ITEM4_HEAL_HP
@@ -4189,67 +4226,94 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 1: // ITEM5_EV_SPEED
                     case 2: // ITEM5_EV_SPDEF
                     case 3: // ITEM5_EV_SPATK
-                        evCount = GetMonEVCount(mon);
-                        temp2 = itemEffect[itemEffectParam];
-                        dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1 + 2], NULL);
-                        evChange = temp2;
-                        if (evChange > 0) // Increasing EV
+                        // Check if this is an IV vitamin
+                        if (itemEffect[10] & ITEM10_IS_IV_VITAMIN)
                         {
-                            // Check if the total EV limit is reached
-                            if (evCount >= maxAllowedEVs)
+                            // IV upgrade logic
+                            u8 ivIndex = temp1 + 2; // Map 0-3 to 2-5 (DEF, SPEED, SPDEF, SPATK in sGetMonDataIVConstants)
+                            u32 currentIV = GetMonData(mon, sGetMonDataIVConstants[ivIndex], NULL);
+                            u8 ivIncrease = itemEffect[itemEffectParam];
+                            
+                            // Check if IV is already at max (31)
+                            if (currentIV >= 31)
                                 return TRUE;
-
-                            // Ensure the increase does not exceed the max EV per stat (252)
-                            evCap = (itemEffect[10] & ITEM10_IS_VITAMIN) ? EV_ITEM_RAISE_LIMIT : MAX_PER_STAT_EVS;
-
-                            // Check if the per-stat limit is reached
-                            if (dataSigned >= evCap)
-                                return TRUE;  // Prevents item use if the per-stat cap is already reached
-
-                            if (dataSigned + evChange > evCap)
-                                temp2 = evCap - dataSigned;
-                            else
-                                temp2 = evChange;
-
-                            // Ensure the total EVs do not exceed the maximum allowed (510)
-                            if (evCount + temp2 > maxAllowedEVs)
-                                temp2 = maxAllowedEVs - evCount;
-
-                            // Prevent item use if no EVs can be increased
-                            if (temp2 == 0)
-                                return TRUE;
-
-                            // Apply the EV increase
-                            dataSigned += temp2;
+                            
+                            // Increment IV, capped at 31
+                            currentIV += ivIncrease;
+                            if (currentIV > 31)
+                                currentIV = 31;
+                            
+                            // Update IV and recalculate stats
+                            SetMonData(mon, sGetMonDataIVConstants[ivIndex], &currentIV);
+                            CalculateMonStats(mon);
+                            itemEffectParam++;
+                            retVal = FALSE;
                         }
-                        else if (evChange < 0) // Decreasing EV
+                        else
                         {
-                            if (dataSigned == 0)
+                            // EV upgrade logic (original code)
+                            evCount = GetMonEVCount(mon);
+                            temp2 = itemEffect[itemEffectParam];
+                            dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1 + 2], NULL);
+                            evChange = temp2;
+                            if (evChange > 0) // Increasing EV
                             {
-                                // No EVs to lose, but make sure friendship updates anyway
-                                friendshipOnly = TRUE;
-                                itemEffectParam++;
-                                break;
+                                // Check if the total EV limit is reached
+                                if (evCount >= maxAllowedEVs)
+                                    return TRUE;
+
+                                // Ensure the increase does not exceed the max EV per stat (252)
+                                evCap = (itemEffect[10] & ITEM10_IS_VITAMIN) ? EV_ITEM_RAISE_LIMIT : MAX_PER_STAT_EVS;
+
+                                // Check if the per-stat limit is reached
+                                if (dataSigned >= evCap)
+                                    return TRUE;  // Prevents item use if the per-stat cap is already reached
+
+                                if (dataSigned + evChange > evCap)
+                                    temp2 = evCap - dataSigned;
+                                else
+                                    temp2 = evChange;
+
+                                // Ensure the total EVs do not exceed the maximum allowed (510)
+                                if (evCount + temp2 > maxAllowedEVs)
+                                    temp2 = maxAllowedEVs - evCount;
+
+                                // Prevent item use if no EVs can be increased
+                                if (temp2 == 0)
+                                    return TRUE;
+
+                                // Apply the EV increase
+                                dataSigned += temp2;
                             }
-                            dataSigned += evChange;
-                            if (I_BERRY_EV_JUMP == GEN_4 && dataSigned > 100)
-                                dataSigned = 100;
-                            if (dataSigned < 0)
+                            else if (evChange < 0) // Decreasing EV
+                            {
+                                if (dataSigned == 0)
+                                {
+                                    // No EVs to lose, but make sure friendship updates anyway
+                                    friendshipOnly = TRUE;
+                                    itemEffectParam++;
+                                    break;
+                                }
+                                dataSigned += evChange;
+                                if (I_BERRY_EV_JUMP == GEN_4 && dataSigned > 100)
+                                    dataSigned = 100;
+                                if (dataSigned < 0)
+                                    dataSigned = 0;
+                            }
+                            else // Reset EV
+                            {
+                                if (dataSigned == 0)
+                                    break;
+
                                 dataSigned = 0;
-                        }
-                        else // Reset EV
-                        {
-                            if (dataSigned == 0)
-                                break;
+                            }
 
-                            dataSigned = 0;
+                            // Update EVs and stats
+                            SetMonData(mon, sGetMonDataEVConstants[temp1 + 2], &dataSigned);
+                            CalculateMonStats(mon);
+                            retVal = FALSE;
+                            itemEffectParam++;
                         }
-
-                        // Update EVs and stats
-                        SetMonData(mon, sGetMonDataEVConstants[temp1 + 2], &dataSigned);
-                        CalculateMonStats(mon);
-                        retVal = FALSE;
-                        itemEffectParam++;
                         break;
 
                     case 4: // ITEM5_PP_MAX
