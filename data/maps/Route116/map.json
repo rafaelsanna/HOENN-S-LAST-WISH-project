@@ -15,7 +15,7 @@
   "connections": [
     {
       "map": "MAP_VERDANTURF_TOWN",
-      "offset": 80,
+      "offset": 70,
       "direction": "down"
     },
     {

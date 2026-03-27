@@ -100,6 +100,7 @@ const u16 *const gTilesetAnims_General_Flower_2[] = {
     gTilesetAnims_General_Flower_2_Frame2
 };
 
+
 const u16 gTilesetAnims_DreamRealm_FallingStar_Frame0[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/0.4bpp");
 const u16 gTilesetAnims_DreamRealm_FallingStar_Frame1[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/1.4bpp");
 const u16 gTilesetAnims_DreamRealm_FallingStar_Frame2[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/2.4bpp");
@@ -1253,4 +1254,54 @@ static void BlendAnimPalette_BattleDome_FloorLightsNoBlend(u16 timer)
         if (!--sSecondaryTilesetAnimCounterMax)
             sSecondaryTilesetAnimCallback = NULL;
     }
+}
+
+// Adicione no topo do arquivo com as outras declarações
+static void QueueAnimTiles_hlwcustom1_Flowers(u16, u8);
+static void TilesetAnim_hlwcustom1(u16);
+void InitTilesetAnim_hlwcustom1(void);
+
+// Adicione no final do arquivo
+static void QueueAnimTiles_hlwcustom1_Flowers(u16 timer_div, u8 timer_mod)
+{
+    timer_div -= timer_mod;
+    if (timer_div < min(ARRAY_COUNT(gTilesetAnims_Mauville_Flower1), ARRAY_COUNT(gTilesetAnims_Mauville_Flower2)))
+    {
+        timer_div %= min(ARRAY_COUNT(gTilesetAnims_Mauville_Flower1), ARRAY_COUNT(gTilesetAnims_Mauville_Flower2));
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower1[timer_div], gTilesetAnims_Mauville_Flower1_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower2[timer_div], gTilesetAnims_Mauville_Flower2_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+    }
+    else
+    {
+        timer_div %= min(ARRAY_COUNT(gTilesetAnims_Mauville_Flower1_B), ARRAY_COUNT(gTilesetAnims_Mauville_Flower2_B));
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower1_B[timer_div], gTilesetAnims_Mauville_Flower1_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower2_B[timer_div], gTilesetAnims_Mauville_Flower2_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+    }
+}
+
+static void TilesetAnim_hlwcustom1(u16 timer)
+{
+    if (timer % 8 == 0)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 0);
+    if (timer % 8 == 1)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 1);
+    if (timer % 8 == 2)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 2);
+    if (timer % 8 == 3)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 3);
+    if (timer % 8 == 4)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 4);
+    if (timer % 8 == 5)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 5);
+    if (timer % 8 == 6)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 6);
+    if (timer % 8 == 7)
+        QueueAnimTiles_hlwcustom1_Flowers(timer / 8, 7);
+}
+
+void InitTilesetAnim_hlwcustom1(void)
+{
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 256;
+    sSecondaryTilesetAnimCallback = TilesetAnim_hlwcustom1;
 }
