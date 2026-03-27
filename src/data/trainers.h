@@ -32909,7 +32909,7 @@ F_TRAINER_FEMALE |
 #line 12505
         .trainerName = _("JOJI"),
 #line 12506
-        .trainerClass = TRAINER_CLASS_BUG_CATCHER,
+        .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 12507
         .trainerPic = TRAINER_PIC_BUG_MANIAC,
         .encounterMusic_gender =

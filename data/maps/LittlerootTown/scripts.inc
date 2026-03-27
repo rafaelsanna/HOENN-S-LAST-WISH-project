@@ -52,7 +52,7 @@ LittlerootTown_OnTransition:
 LittlerootTown_EventScript_Poochyena::
 	lock
 	faceplayer
-	playmoncry SPECIES_POOCHYENA, CRY_MODE_NORMAL
+	playmoncry SPECIES_EEVEE, CRY_MODE_NORMAL
 	waitmoncry
 	release
 	end

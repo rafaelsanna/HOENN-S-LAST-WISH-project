@@ -27,8 +27,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_3",
-      "x": 12,
-      "y": 14,
+      "x": 16,
+      "y": 15,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -40,8 +40,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 7,
-      "y": 10,
+      "x": 13,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -53,7 +53,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(SENTRET)",
-      "x": 10,
+      "x": 16,
       "y": 16,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
@@ -66,8 +66,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ABRA)",
-      "x": 6,
-      "y": 10,
+      "x": 12,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -80,7 +80,7 @@
   ],
   "warp_events": [
     {
-      "x": 9,
+      "x": 15,
       "y": 7,
       "elevation": 0,
       "dest_map": "MAP_OLDALE_TOWN_OLD_TUNEL",
@@ -91,7 +91,7 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 11,
+      "x": 17,
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",

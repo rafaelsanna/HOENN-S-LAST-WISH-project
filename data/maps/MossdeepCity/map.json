@@ -233,8 +233,8 @@
     {
       "local_id": "LOCALID_MOSSDEEP_SCOTT",
       "graphics_id": "OBJ_EVENT_GFX_SCOTT",
-      "x": 61,
-      "y": 29,
+      "x": 57,
+      "y": 52,
       "elevation": 5,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN_AND_LEFT",
       "movement_range_x": 0,
