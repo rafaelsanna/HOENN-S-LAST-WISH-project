@@ -45,3 +45,4 @@ build/
 *.fastSmol
 *.smolTM
 __pycache__
+porymap.user.cfg

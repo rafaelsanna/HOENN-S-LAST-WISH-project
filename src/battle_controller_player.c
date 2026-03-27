@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_arena.h"
+#include "battle_bg.h"
 #include "battle_controllers.h"
 #include "battle_dome.h"
 #include "battle_interface.h"
@@ -21,6 +22,7 @@
 #include "m4a.h"
 #include "palette.h"
 #include "party_menu.h"
+#include "menu.h"
 #include "pokeball.h"
 #include "pokemon.h"
 #include "random.h"
@@ -1673,6 +1675,80 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
     }
 }
 
+static void DrawMoveSelectionFrame(u8 tilemapLeft, u8 tilemapTop, u8 width, u8 height)
+{
+    s32 i;
+
+    FillBgTilemapBufferRect(0,
+                            STD_WINDOW_BASE_TILE_NUM + 0,
+                            tilemapLeft - 1,
+                            tilemapTop - 1,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(0,
+                            STD_WINDOW_BASE_TILE_NUM + 1,
+                            tilemapLeft,
+                            tilemapTop - 1,
+                            width,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(0,
+                            STD_WINDOW_BASE_TILE_NUM + 2,
+                            tilemapLeft + width,
+                            tilemapTop - 1,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+
+    for (i = tilemapTop; i < tilemapTop + height; i++)
+    {
+        FillBgTilemapBufferRect(0,
+                                STD_WINDOW_BASE_TILE_NUM + 3,
+                                tilemapLeft - 1,
+                                i,
+                                1,
+                                1,
+                                STD_WINDOW_PALETTE_NUM);
+        FillBgTilemapBufferRect(0,
+                                STD_WINDOW_BASE_TILE_NUM + 5,
+                                tilemapLeft + width,
+                                i,
+                                1,
+                                1,
+                                STD_WINDOW_PALETTE_NUM);
+    }
+
+    FillBgTilemapBufferRect(0,
+                            STD_WINDOW_BASE_TILE_NUM + 6,
+                            tilemapLeft - 1,
+                            tilemapTop + height,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(0,
+                            STD_WINDOW_BASE_TILE_NUM + 7,
+                            tilemapLeft,
+                            tilemapTop + height,
+                            width,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(0,
+                            STD_WINDOW_BASE_TILE_NUM + 8,
+                            tilemapLeft + width,
+                            tilemapTop + height,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+}
+
+static void DrawBattleMoveSelectionFrames(void)
+{
+    DrawMoveSelectionFrame(2, 55, 17, 4);
+    DrawMoveSelectionFrame(21, 55, 8, 4);
+    CopyBgTilemapBufferToVram(0);
+}
+
 static void MoveSelectionDisplayPpString(u32 battler)
 {
     StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
@@ -2037,6 +2113,9 @@ static void PlayerHandleChooseAction(u32 battler)
     s32 i;
 
     DestroyMoveTypeIconSprite();
+    LoadBattleTextboxAndBackground();
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
 
     gBattlerControllerFuncs[battler] = HandleChooseActionAfterDma3;
     BattleTv_ClearExplosionFaintCause();
@@ -2157,6 +2236,7 @@ void PlayerHandleChooseMove(u32 battler)
 void InitMoveSelectionsVarsAndStrings(u32 battler)
 {
     LoadTypeIcons(battler);
+    DrawBattleMoveSelectionFrames();
     MoveSelectionDisplayMoveNames(battler);
     gMultiUsePlayerCursor = 0xFF;
     MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
