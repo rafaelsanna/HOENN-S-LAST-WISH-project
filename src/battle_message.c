@@ -1683,13 +1683,13 @@ static const struct BattleWindowText sTextOnWindowsInfo_Normal[] =
         .shadowColor = 15,
     },
     [B_WIN_YESNO] = {
-        .fillValue = PIXEL_FILL(0),
+        .fillValue = PIXEL_FILL(1),
         .fontId = FONT_NORMAL,
         .x = 0,
         .y = 1,
         .speed = 0,
         .fgColor = 13,
-        .bgColor = 0,
+        .bgColor = 1,
         .shadowColor = 15,
     },
     [B_WIN_LEVEL_UP_BOX] = {
@@ -1802,7 +1802,7 @@ static const struct BattleWindowText sTextOnWindowsInfo_Normal[] =
         .shadowColor = 15,
     },
     [B_WIN_MOVE_DESCRIPTION] = {
-        .fillValue = PIXEL_FILL(0),
+        .fillValue = PIXEL_FILL(1),
         .fontId = FONT_NARROW,
         .x = 0,
         .y = 1,
