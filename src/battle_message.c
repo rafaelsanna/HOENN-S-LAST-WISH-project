@@ -1568,9 +1568,9 @@ static const struct BattleWindowText sTextOnWindowsInfo_Normal[] =
         .x = 0,
         .y = 1,
         .speed = 1,
-        .fgColor = 15,
-        .bgColor = 1,
-        .shadowColor = 6,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
     },
     [B_WIN_ACTION_PROMPT] = {
         .fillValue = PIXEL_FILL(0xF),
@@ -1820,9 +1820,9 @@ static const struct BattleWindowText sTextOnWindowsInfo_Arena[] =
         .x = 0,
         .y = 1,
         .speed = 1,
-        .fgColor = 1,
-        .bgColor = 15,
-        .shadowColor = 6,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
     },
     [B_WIN_ACTION_PROMPT] = {
         .fillValue = PIXEL_FILL(0xF),
@@ -2065,6 +2065,44 @@ static const struct BattleWindowText *const sBattleTextOnWindowsInfo[] =
 
 static const u8 sRecordedBattleTextSpeeds[] = {8, 4, 1, 0};
 
+static bool32 ShouldDrawBattleEncounterFrame(u32 windowId)
+{
+    return windowId == B_WIN_MSG;
+}
+
+static bool32 ShouldDrawBattleActionSelectionFrame(u32 windowId)
+{
+    switch (windowId)
+    {
+    case B_WIN_ACTION_PROMPT:
+    case B_WIN_ACTION_MENU:
+    case B_WIN_SWITCH_PROMPT:
+    case B_WIN_YESNO:
+    case B_WIN_LEVEL_UP_BOX:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static bool32 ShouldDrawBattleOutcomeFrame(u32 windowId)
+{
+    switch (windowId)
+    {
+    case B_WIN_VS_PLAYER:
+    case B_WIN_VS_OPPONENT:
+    case B_WIN_VS_MULTI_PLAYER_1:
+    case B_WIN_VS_MULTI_PLAYER_2:
+    case B_WIN_VS_MULTI_PLAYER_3:
+    case B_WIN_VS_MULTI_PLAYER_4:
+    case B_WIN_VS_OUTCOME_DRAW:
+    case B_WIN_VS_OUTCOME_LEFT:
+    case B_WIN_VS_OUTCOME_RIGHT:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
 void BufferStringBattle(enum StringID stringID, u32 battler)
 {
     s32 i;
@@ -3438,6 +3476,11 @@ void BattlePutTextOnWindow(const u8 *text, u8 windowId)
     }
     else
     {
+        if (ShouldDrawBattleEncounterFrame(windowId)
+         || ShouldDrawBattleActionSelectionFrame(windowId)
+         || ShouldDrawBattleOutcomeFrame(windowId))
+            DrawStdWindowFrame(windowId, FALSE);
+
         FillWindowPixelBuffer(windowId, textInfo[windowId].fillValue);
         copyToVram = TRUE;
     }

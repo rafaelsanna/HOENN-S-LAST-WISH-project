@@ -3624,6 +3624,9 @@ static void DoBattleIntro(void)
     case BATTLE_INTRO_STATE_INTRO_TEXT:
         if (!IsBattlerMarkedForControllerExec(GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)))
         {
+            LoadBattleTextboxAndBackground();
+            gBattle_BG0_X = 0;
+            gBattle_BG0_Y = 0;
             PrepareStringBattle(STRINGID_INTROMSG, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT));
             gBattleStruct->introState++;
         }

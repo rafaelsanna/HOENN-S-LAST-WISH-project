@@ -722,6 +722,7 @@ void LoadBattleMenuWindowGfx(void)
 {
     LoadUserWindowBorderGfx(2, 0x12, BG_PLTT_ID(1));
     LoadUserWindowBorderGfx(2, 0x22, BG_PLTT_ID(1));
+    LoadUserWindowBorderGfxOnBg(0, STD_WINDOW_BASE_TILE_NUM, BG_PLTT_ID(STD_WINDOW_PALETTE_NUM));
 
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
     {
@@ -747,6 +748,8 @@ void DrawMainBattleBackground(void)
 // This ensures that changing battle backgrounds won't affect window text/menu colors
 static void LoadBattleUIPalettes(void)
 {
+    Menu_LoadStdPal();
+
     // Load dark textbox background palette at slot 0 (2 palettes wide) - custom color #4A4252
     LoadPalette(gBattleTextboxDarkPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     
@@ -760,7 +763,7 @@ static void LoadBattleUIPalettes(void)
 void LoadBattleTextboxAndBackground(void)
 {
     DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
-    CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
+    FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 0);
     CopyBgTilemapBufferToVram(0);
     LoadBattleUIPalettes();
     LoadBattleMenuWindowGfx();
@@ -1117,9 +1120,9 @@ bool8 LoadChosenBattleElement(u8 caseId)
     {
     case 0:
         DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
+        FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 0);
         break;
     case 1:
-        CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
         CopyBgTilemapBufferToVram(0);
         break;
     case 2:
