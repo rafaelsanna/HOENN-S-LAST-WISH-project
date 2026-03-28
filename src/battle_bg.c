@@ -162,7 +162,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 15,
         .width = 26,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x0090,
     },
     [B_WIN_ACTION_PROMPT] = {
@@ -171,7 +171,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 35,
         .width = 14,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x01c0,
     },
     [B_WIN_ACTION_MENU] = {
@@ -351,7 +351,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 6,
         .height = 2,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x00a0,
     },
     [B_WIN_VS_OUTCOME_LEFT] = {
@@ -360,7 +360,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 7,
         .height = 2,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x00a0,
     },
     [B_WIN_VS_OUTCOME_RIGHT] = {
@@ -369,7 +369,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 7,
         .height = 2,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x00b0,
     },
     [B_WIN_MOVE_DESCRIPTION] = {
@@ -392,7 +392,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 15,
         .width = 26,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x0090,
     },
     [B_WIN_ACTION_PROMPT] = {
@@ -401,7 +401,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 35,
         .width = 14,
         .height = 4,
-        .paletteNum = 0,
+        .paletteNum = 5,
         .baseBlock = 0x01c0,
     },
     [B_WIN_ACTION_MENU] = {
@@ -712,11 +712,31 @@ void InitBattleBgsVideo(void)
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJWIN_ON | DISPCNT_WIN0_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
 }
 
+static const u16 sCustomBattleWindowPalette[] =
+{
+    RGB_BLACK,           // 0  - SEMPRE TRANSPARENTE (não usar)
+    RGB(4, 4, 5),        // 1  - cinza escuro #212129 ← fundo real
+    RGB(16, 16, 16),     // 2
+    RGB(24, 24, 24),     // 3
+    RGB(4, 4, 5),        // 4
+    RGB(4, 4, 5),        // 5
+    RGB(4, 4, 5),        // 6
+    RGB(4, 4, 5),        // 7
+    RGB(4, 4, 5),        // 8
+    RGB(4, 4, 5),        // 9
+    RGB(4, 4, 5),        // 10
+    RGB(4, 4, 5),        // 11
+    RGB(31, 31, 31),     // 12 - white
+    RGB(31, 31, 31),     // 13 - white (text fg)
+    RGB(4, 4, 5),        // 14 - cinza (text bg)
+    RGB(16, 16, 16),     // 15 - gray (shadow)
+};
+
 void LoadBattleMenuWindowGfx(void)
 {
     LoadUserWindowBorderGfx(2, 0x12, BG_PLTT_ID(1));
     LoadUserWindowBorderGfx(2, 0x22, BG_PLTT_ID(1));
-    LoadPalette(gBattleWindowTextPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
+    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
 
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
     {
@@ -738,7 +758,7 @@ void LoadBattleTextboxAndBackground(void)
     DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
     CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
     CopyBgTilemapBufferToVram(0);
-    LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadBattleMenuWindowGfx();
     if (B_TERRAIN_BG_CHANGE == TRUE)
         DrawTerrainTypeBattleBackground();
@@ -1099,7 +1119,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         CopyBgTilemapBufferToVram(0);
         break;
     case 2:
-        LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+        LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         break;
     case 3:
         DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));
