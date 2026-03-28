@@ -644,7 +644,7 @@
     {
       "id": "LAYOUT_DEWFORD_TOWN_GYM",
       "name": "DewfordTown_Gym_Layout",
-      "width": 18,
+      "width": 28,
       "height": 28,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_DewfordGym",
