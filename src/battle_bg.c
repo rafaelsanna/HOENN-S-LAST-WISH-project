@@ -114,12 +114,6 @@ static const struct CompressedSpriteSheet sVsLettersSpriteSheet =
     gVsLettersGfx, 0x1000, TAG_VS_LETTERS
 };
 
-// Defina suas cores em RGB15 (5 bits por cor)
-// Preto: RGB(0, 0, 0) -> 0x0000
-// Cinza escuro: RGB(8, 8, 8) -> 0x4210
-// Branco: RGB(31, 31, 31) -> 0x7FFF
-// NOTE: Removed old sCustomBattleWindowPalette - using external gBattleWindowIndependentPalette instead
-
 const struct BgTemplate gBattleBgTemplates[] =
 {
     {
@@ -168,7 +162,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 15,
         .width = 26,
         .height = 4,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x0090,
     },
     [B_WIN_ACTION_PROMPT] = {
@@ -177,7 +171,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 35,
         .width = 14,
         .height = 4,
-        .paletteNum = 6,
+        .paletteNum = 0,
         .baseBlock = 0x01c0,
     },
     [B_WIN_ACTION_MENU] = {
@@ -357,7 +351,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 6,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x00a0,
     },
     [B_WIN_VS_OUTCOME_LEFT] = {
@@ -366,7 +360,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 7,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x00a0,
     },
     [B_WIN_VS_OUTCOME_RIGHT] = {
@@ -375,7 +369,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 2,
         .width = 7,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x00b0,
     },
     [B_WIN_MOVE_DESCRIPTION] = {
@@ -398,7 +392,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 15,
         .width = 26,
         .height = 4,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x0090,
     },
     [B_WIN_ACTION_PROMPT] = {
@@ -407,7 +401,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 35,
         .width = 14,
         .height = 4,
-        .paletteNum = 6,
+        .paletteNum = 0,
         .baseBlock = 0x01c0,
     },
     [B_WIN_ACTION_MENU] = {
@@ -722,7 +716,7 @@ void LoadBattleMenuWindowGfx(void)
 {
     LoadUserWindowBorderGfx(2, 0x12, BG_PLTT_ID(1));
     LoadUserWindowBorderGfx(2, 0x22, BG_PLTT_ID(1));
-    LoadUserWindowBorderGfxOnBg(0, STD_WINDOW_BASE_TILE_NUM, BG_PLTT_ID(STD_WINDOW_PALETTE_NUM));
+    LoadPalette(gBattleWindowTextPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
 
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
     {
@@ -739,33 +733,12 @@ void DrawMainBattleBackground(void)
     LoadBattleEnvironmentGfx(GetBattleEnvironmentOverride());
 }
 
-// Loads battle UI palettes in isolation to prevent interference from background changes
-// Palette slots 0 and 5 are reserved exclusively for battle UI during battle
-// Slot 0: Textbox background (gBattleTextboxDarkPalette) - DARK MODE #4A4252
-// Slot 5: Menu windows/text (gBattleWindowIndependentPalette) - DARK MODE
-// Slot 6: Left action prompt text (gBattleTextboxRedPalette) - debug red
-// Slot 2: Battle environment backgrounds (loaded separately, does not interfere)
-// This ensures that changing battle backgrounds won't affect window text/menu colors
-static void LoadBattleUIPalettes(void)
-{
-    Menu_LoadStdPal();
-
-    // Load dark textbox background palette at slot 0 (2 palettes wide) - custom color #4A4252
-    LoadPalette(gBattleTextboxDarkPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-    
-    // Load independent menu window/text palette at slot 5 (1 palette, completely isolated)
-    LoadPalette(gBattleWindowIndependentPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
-
-    // Load red debug palette at slot 6 for the left action prompt only
-    LoadPalette(gBattleTextboxRedPalette, BG_PLTT_ID(6), PLTT_SIZE_4BPP);
-}
-
 void LoadBattleTextboxAndBackground(void)
 {
     DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
-    FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 0);
+    CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
     CopyBgTilemapBufferToVram(0);
-    LoadBattleUIPalettes();
+    LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadBattleMenuWindowGfx();
     if (B_TERRAIN_BG_CHANGE == TRUE)
         DrawTerrainTypeBattleBackground();
@@ -1120,9 +1093,9 @@ bool8 LoadChosenBattleElement(u8 caseId)
     {
     case 0:
         DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
-        FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 0);
         break;
     case 1:
+        CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
         CopyBgTilemapBufferToVram(0);
         break;
     case 2:
@@ -1169,4 +1142,3 @@ void DrawTerrainTypeBattleBackground(void)
         break;
     }
 }
-
