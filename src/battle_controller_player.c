@@ -2,7 +2,6 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_arena.h"
-#include "battle_bg.h"
 #include "battle_controllers.h"
 #include "battle_dome.h"
 #include "battle_interface.h"
@@ -13,8 +12,6 @@
 #include "battle_gimmick.h"
 #include "bg.h"
 #include "data.h"
-#include "decompress.h"
-#include "graphics.h"
 #include "item.h"
 #include "item_menu.h"
 #include "link.h"
@@ -22,7 +19,6 @@
 #include "m4a.h"
 #include "palette.h"
 #include "party_menu.h"
-#include "menu.h"
 #include "pokeball.h"
 #include "pokemon.h"
 #include "random.h"
@@ -51,6 +47,8 @@
 #include "pokemon_summary_screen.h"
 #include "type_icons.h"
 #include "pokedex.h"
+#include "decompress.h"
+#include "graphics.h"
 
 static void PlayerHandleLoadMonSprite(u32 battler);
 static void PlayerHandleDrawTrainerPic(u32 battler);
@@ -101,22 +99,6 @@ static u32 CheckTargetTypeEffectiveness(u32 battler);
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler);
 static void DestroyMoveTypeIconSprite(void);
 static void MoveSelectionDisplayMoveTypeIcon(u32 type);
-
-static const u8 sMoveTypeColorNormal[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}");
-static const u8 sMoveTypeColorNotVeryEffective[] = _("{COLOR RED}{SHADOW LIGHT_RED}");
-static const u8 sMoveTypeColorImmune[] = _("{COLOR LIGHT_GRAY}{SHADOW DARK_GRAY}");
-static const u8 sMoveTypeColorSuperEffective[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}");
-static const u8 sMoveTypeColorStatus[] = _("{COLOR BLUE}{SHADOW LIGHT_BLUE}");
-
-// Order based numerically, with EFFECTIVENESS_CANNOT_VIEW at 0 to always prioritize any other effectiveness during comparison
-enum
-{
-    EFFECTIVENESS_CANNOT_VIEW,
-    EFFECTIVENESS_NO_EFFECT,
-    EFFECTIVENESS_NOT_VERY_EFFECTIVE,
-    EFFECTIVENESS_NORMAL,
-    EFFECTIVENESS_SUPER_EFFECTIVE,
-};
 
 static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(u32 battler) =
 {
@@ -1675,80 +1657,6 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
     }
 }
 
-static void DrawMoveSelectionFrame(u8 tilemapLeft, u8 tilemapTop, u8 width, u8 height)
-{
-    s32 i;
-
-    FillBgTilemapBufferRect(0,
-                            STD_WINDOW_BASE_TILE_NUM + 0,
-                            tilemapLeft - 1,
-                            tilemapTop - 1,
-                            1,
-                            1,
-                            STD_WINDOW_PALETTE_NUM);
-    FillBgTilemapBufferRect(0,
-                            STD_WINDOW_BASE_TILE_NUM + 1,
-                            tilemapLeft,
-                            tilemapTop - 1,
-                            width,
-                            1,
-                            STD_WINDOW_PALETTE_NUM);
-    FillBgTilemapBufferRect(0,
-                            STD_WINDOW_BASE_TILE_NUM + 2,
-                            tilemapLeft + width,
-                            tilemapTop - 1,
-                            1,
-                            1,
-                            STD_WINDOW_PALETTE_NUM);
-
-    for (i = tilemapTop; i < tilemapTop + height; i++)
-    {
-        FillBgTilemapBufferRect(0,
-                                STD_WINDOW_BASE_TILE_NUM + 3,
-                                tilemapLeft - 1,
-                                i,
-                                1,
-                                1,
-                                STD_WINDOW_PALETTE_NUM);
-        FillBgTilemapBufferRect(0,
-                                STD_WINDOW_BASE_TILE_NUM + 5,
-                                tilemapLeft + width,
-                                i,
-                                1,
-                                1,
-                                STD_WINDOW_PALETTE_NUM);
-    }
-
-    FillBgTilemapBufferRect(0,
-                            STD_WINDOW_BASE_TILE_NUM + 6,
-                            tilemapLeft - 1,
-                            tilemapTop + height,
-                            1,
-                            1,
-                            STD_WINDOW_PALETTE_NUM);
-    FillBgTilemapBufferRect(0,
-                            STD_WINDOW_BASE_TILE_NUM + 7,
-                            tilemapLeft,
-                            tilemapTop + height,
-                            width,
-                            1,
-                            STD_WINDOW_PALETTE_NUM);
-    FillBgTilemapBufferRect(0,
-                            STD_WINDOW_BASE_TILE_NUM + 8,
-                            tilemapLeft + width,
-                            tilemapTop + height,
-                            1,
-                            1,
-                            STD_WINDOW_PALETTE_NUM);
-}
-
-static void DrawBattleMoveSelectionFrames(void)
-{
-    DrawMoveSelectionFrame(2, 55, 17, 4);
-    DrawMoveSelectionFrame(21, 55, 8, 4);
-    CopyBgTilemapBufferToVram(0);
-}
-
 static void MoveSelectionDisplayPpString(u32 battler)
 {
     StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
@@ -1808,33 +1716,7 @@ static void MoveSelectionDisplayMoveType(u32 battler)
         struct Pokemon *mon = GetBattlerMon(battler);
         type = CheckDynamicMoveType(mon, move, battler, MON_IN_BATTLE);
     }
-    const u8 *typeColor = sMoveTypeColorNormal;
-    if (IsBattleMoveStatus(move))
-    {
-        typeColor = sMoveTypeColorStatus;
-    }
-    else
-    {
-        u32 foeEffectiveness = CheckTargetTypeEffectiveness(battler);
-
-        switch (foeEffectiveness)
-        {
-            case EFFECTIVENESS_NO_EFFECT:
-                typeColor = sMoveTypeColorImmune;
-                break;
-            case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
-                typeColor = sMoveTypeColorNotVeryEffective;
-                break;
-            case EFFECTIVENESS_SUPER_EFFECTIVE:
-                typeColor = sMoveTypeColorSuperEffective;
-                break;
-            default:
-                break;
-        }
-    }
-
-    StringCopy(gDisplayedStringBattle, typeColor);
-    StringAppend(gDisplayedStringBattle, gText_MoveInterfaceType);
+    StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
     MoveSelectionDisplayMoveTypeIcon(type);
 }
@@ -2113,9 +1995,6 @@ static void PlayerHandleChooseAction(u32 battler)
     s32 i;
 
     DestroyMoveTypeIconSprite();
-    LoadBattleTextboxAndBackground();
-    gBattle_BG0_X = 0;
-    gBattle_BG0_Y = 0;
 
     gBattlerControllerFuncs[battler] = HandleChooseActionAfterDma3;
     BattleTv_ClearExplosionFaintCause();
@@ -2236,7 +2115,6 @@ void PlayerHandleChooseMove(u32 battler)
 void InitMoveSelectionsVarsAndStrings(u32 battler)
 {
     LoadTypeIcons(battler);
-    DrawBattleMoveSelectionFrames();
     MoveSelectionDisplayMoveNames(battler);
     gMultiUsePlayerCursor = 0xFF;
     MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 0);
@@ -2469,6 +2347,16 @@ static void PlayerHandleBattleDebug(u32 battler)
     gBattlerControllerFuncs[battler] = Controller_WaitForDebug;
 }
 
+// Order based numerically, with EFFECTIVENESS_CANNOT_VIEW at 0 to always prioritize any other effectiveness during comparison
+enum
+{
+    EFFECTIVENESS_CANNOT_VIEW,
+    EFFECTIVENESS_NO_EFFECT,
+    EFFECTIVENESS_NOT_VERY_EFFECTIVE,
+    EFFECTIVENESS_NORMAL,
+    EFFECTIVENESS_SUPER_EFFECTIVE,
+};
+
 static bool32 ShouldShowTypeEffectiveness(u32 targetId)
 {
     if (B_SHOW_EFFECTIVENESS == SHOW_EFFECTIVENESS_CAUGHT)
@@ -2526,6 +2414,44 @@ static u32 CheckTargetTypeEffectiveness(u32 battler)
     return foeEffectiveness; // fallthrough for any other circumstance
 }
 
+static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler)
+{
+    static const u8 noIcon[] =  _("");
+    static const u8 effectiveIcon[] =  _("{CIRCLE_HOLLOW}");
+    static const u8 superEffectiveIcon[] =  _("{CIRCLE_DOT}");
+    static const u8 notVeryEffectiveIcon[] =  _("{TRIANGLE}");
+    static const u8 immuneIcon[] =  _("{BIG_MULT_X}");
+    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
+    u8 *txtPtr;
+
+    txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
+
+    if (!IsBattleMoveStatus(moveInfo->moves[gMoveSelectionCursor[battler]]))
+    {
+        switch (foeEffectiveness)
+        {
+        case EFFECTIVENESS_SUPER_EFFECTIVE:
+            StringCopy(txtPtr, superEffectiveIcon);
+            break;
+        case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
+            StringCopy(txtPtr, notVeryEffectiveIcon);
+            break;
+        case EFFECTIVENESS_NO_EFFECT:
+            StringCopy(txtPtr, immuneIcon);
+            break;
+        case EFFECTIVENESS_NORMAL:
+            StringCopy(txtPtr, effectiveIcon);
+            break;
+        default:
+        case EFFECTIVENESS_CANNOT_VIEW:
+            StringCopy(txtPtr, noIcon);
+            break;
+        }
+    }
+
+    BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP);
+}
+
 static void DestroyMoveTypeIconSprite(void)
 {
     u32 i;
@@ -2575,45 +2501,7 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     StartSpriteAnim(sprite, type);
     sprite->oam.paletteNum = gTypesInfo[type].palette;
     sprite->oam.priority = 0;
-    sprite->x = 210;
-    sprite->y = 143;
+    sprite->x = 208;
+    sprite->y = 144;
     sprite->invisible = FALSE;
-}
-
-static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler)
-{
-    static const u8 noIcon[] =  _("");
-    static const u8 effectiveIcon[] =  _("{CIRCLE_HOLLOW}");
-    static const u8 superEffectiveIcon[] =  _("{CIRCLE_DOT}");
-    static const u8 notVeryEffectiveIcon[] =  _("{TRIANGLE}");
-    static const u8 immuneIcon[] =  _("{BIG_MULT_X}");
-    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
-    u8 *txtPtr;
-
-    txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
-
-    if (!IsBattleMoveStatus(moveInfo->moves[gMoveSelectionCursor[battler]]))
-    {
-        switch (foeEffectiveness)
-        {
-        case EFFECTIVENESS_SUPER_EFFECTIVE:
-            StringCopy(txtPtr, superEffectiveIcon);
-            break;
-        case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
-            StringCopy(txtPtr, notVeryEffectiveIcon);
-            break;
-        case EFFECTIVENESS_NO_EFFECT:
-            StringCopy(txtPtr, immuneIcon);
-            break;
-        case EFFECTIVENESS_NORMAL:
-            StringCopy(txtPtr, effectiveIcon);
-            break;
-        default:
-        case EFFECTIVENESS_CANNOT_VIEW:
-            StringCopy(txtPtr, noIcon);
-            break;
-        }
-    }
-
-    BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP);
 }
