@@ -728,9 +728,7 @@ static const u16 sCustomBattleWindowPalette[] =
     RGB(4, 4, 5),        // 11
     RGB(31, 31, 31),     // 12 - white
     RGB(31, 31, 31),     // 13 - white (text fg)
-    RGB(12, 12, 12),     // 14
-    RGB(7, 7, 8),        // 15 - shadow
-    RGB(4, 4, 5),        // 14 - cinza (text bg)
+    RGB(4, 4, 5),        // 14 - cinza (text bg) ← ERA RGB(12,12,12), CAUSA DO 2º TOM
     RGB(16, 16, 16),     // 15 - gray (shadow)
 };
 
