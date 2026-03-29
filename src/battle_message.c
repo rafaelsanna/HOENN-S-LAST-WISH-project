@@ -1809,9 +1809,9 @@ static const struct BattleWindowText sTextOnWindowsInfo_Normal[] =
         .letterSpacing = 0,
         .lineSpacing = 0,
         .speed = 0,
-        .fgColor = TEXT_DYNAMIC_COLOR_4,
-        .bgColor = TEXT_DYNAMIC_COLOR_5,
-        .shadowColor = TEXT_DYNAMIC_COLOR_6,
+        .fgColor = 13,
+        .bgColor = 1,
+        .shadowColor = 15,
     },
 };
 
@@ -1938,13 +1938,13 @@ static const struct BattleWindowText sTextOnWindowsInfo_Arena[] =
         .shadowColor = 15,
     },
     [B_WIN_YESNO] = {
-        .fillValue = PIXEL_FILL(0xE),
+        .fillValue = PIXEL_FILL(1),
         .fontId = FONT_NORMAL,
         .x = 0,
         .y = 1,
         .speed = 0,
         .fgColor = 13,
-        .bgColor = 14,
+        .bgColor = 1,
         .shadowColor = 15,
     },
     [B_WIN_LEVEL_UP_BOX] = {
@@ -2047,7 +2047,7 @@ static const struct BattleWindowText sTextOnWindowsInfo_Arena[] =
         .shadowColor = 3,
     },
     [B_WIN_MOVE_DESCRIPTION] = {
-        .fillValue = PIXEL_FILL(0xE),
+        .fillValue = PIXEL_FILL(1),
         .fontId = FONT_NARROW,
         .x = 0,
         .y = 1,
@@ -2055,7 +2055,7 @@ static const struct BattleWindowText sTextOnWindowsInfo_Arena[] =
         .lineSpacing = 0,
         .speed = 0,
         .fgColor = TEXT_DYNAMIC_COLOR_4,
-        .bgColor = TEXT_DYNAMIC_COLOR_5,
+        .bgColor =  14,
         .shadowColor = TEXT_DYNAMIC_COLOR_6,
     },
 };
