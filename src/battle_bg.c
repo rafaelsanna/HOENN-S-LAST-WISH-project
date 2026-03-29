@@ -728,6 +728,8 @@ static const u16 sCustomBattleWindowPalette[] =
     RGB(4, 4, 5),        // 11
     RGB(31, 31, 31),     // 12 - white
     RGB(31, 31, 31),     // 13 - white (text fg)
+    RGB(12, 12, 12),     // 14
+    RGB(7, 7, 8),        // 15 - shadow
     RGB(4, 4, 5),        // 14 - cinza (text bg)
     RGB(16, 16, 16),     // 15 - gray (shadow)
 };
@@ -758,12 +760,15 @@ void LoadBattleTextboxAndBackground(void)
     DecompressDataWithHeaderVram(gBattleTextboxTiles, (void *)(BG_CHAR_ADDR(0)));
     CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
     CopyBgTilemapBufferToVram(0);
-    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-    LoadBattleMenuWindowGfx();
+    // Load environment first so it doesn't overwrite the dark mode textbox palette
     if (B_TERRAIN_BG_CHANGE == TRUE)
         DrawTerrainTypeBattleBackground();
     else
         DrawMainBattleBackground();
+    
+    // Now load custom battle window palette to BG_PLTT_ID(0)
+    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    LoadBattleMenuWindowGfx();
 }
 
 static void DrawLinkBattleParticipantPokeballs(u8 taskId, u8 multiplayerId, u8 bgId, u8 destX, u8 destY)
