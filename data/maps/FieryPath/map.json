@@ -17,23 +17,16 @@
   "warp_events": [
     {
       "x": 26,
-      "y": 35,
+      "y": 36,
       "elevation": 3,
       "dest_map": "MAP_ROUTE112",
       "dest_warp_id": "4"
     },
     {
       "x": 26,
-      "y": 3,
+      "y": 4,
       "elevation": 3,
       "dest_map": "MAP_ROUTE112",
-      "dest_warp_id": "5"
-    },
-    {
-      "x": 29,
-      "y": 76,
-      "elevation": 3,
-      "dest_map": "MAP_LAVARIDGE_TOWN",
       "dest_warp_id": "5"
     }
   ],
