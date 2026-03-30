@@ -3885,7 +3885,7 @@ static void InitPalettesAndSprites(void)
 {
     LoadPalette(sInterface_Pal, BG_PLTT_ID(0), sizeof(sInterface_Pal));
     LoadPalette(sPkmnDataGray_Pal, BG_PLTT_ID(2), sizeof(sPkmnDataGray_Pal));
-    LoadPalette(sTextWindows_Pal, BG_PLTT_ID(15), sizeof(sTextWindows_Pal));
+    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     if (sStorage->boxOption != OPTION_MOVE_ITEMS)
         LoadPalette(sScrollingBg_Pal, BG_PLTT_ID(3), sizeof(sScrollingBg_Pal));
     else
@@ -8108,6 +8108,7 @@ static void AddMenu(void)
     sStorage->menuWindowId = AddWindow(&sStorage->menuWindow);
     ClearWindowTilemap(sStorage->menuWindowId);
     DrawStdFrameWithCustomTileAndPalette(sStorage->menuWindowId, FALSE, 11, 14);
+    FillWindowPixelBuffer(sStorage->menuWindowId, PIXEL_FILL(1));
     PrintMenuTable(sStorage->menuWindowId, sStorage->menuItemsCount, (void *)sStorage->menuItems);
     InitMenuInUpperLeftCornerNormal(sStorage->menuWindowId, sStorage->menuItemsCount, 0);
     ScheduleBgCopyTilemapToVram(0);
@@ -8310,7 +8311,7 @@ static bool8 MultiMove_Cancel(void)
         if (!IsDma3ManagerBusyWithBgCopy())
         {
             SetCursorPriorityTo1();
-            LoadPalette(GetTextWindowPalette(3), BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+            LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
             ShowBg(0);
             return FALSE;
         }
@@ -8416,7 +8417,7 @@ static bool8 MultiMove_PlaceMons(void)
     case 3:
         if (!IsDma3ManagerBusyWithBgCopy())
         {
-            LoadPalette(GetTextWindowPalette(3), BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+            LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
             SetCursorPriorityTo1();
             ShowBg(0);
             return FALSE;
