@@ -1998,9 +1998,9 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Rare Candies"),
         .price = (I_PRICE >= GEN_7) ? 10000 : 10000,
         .description = COMPOUND_STRING(
-            "Raises the level\n"
-            "of a Pokémon by\n"
-            "one."),
+            "Raises level by one\n"
+            "and greatly boosts\n"
+            "friendship."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_LEVEL_UP_ITEM,
         .type = ITEM_USE_PARTY_MENU,
@@ -14722,7 +14722,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_LEVEL_UP_ITEM,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_InfiniteCandy,
-        .effect = gItemEffect_RareCandy,
+        .effect = gItemEffect_InfiniteCandy,
         .iconPic = gItemIcon_DynamaxCandy,
         .iconPalette = gItemIconPalette_DynamaxCandy,
     },  

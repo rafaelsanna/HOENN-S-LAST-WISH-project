@@ -320,7 +320,15 @@ const u8 gItemEffect_RareCandy[10] = {
     [4] = ITEM4_REVIVE | ITEM4_HEAL_HP,
     [5] = ITEM5_FRIENDSHIP_ALL,
     [6] = ITEM6_HEAL_HP_LVL_UP,
-    VITAMIN_FRIENDSHIP_CHANGE(7),
+    [7] = 50, // 0 – 99
+    [8] = 50, // 100 – 199
+    [9] = 50, // 200 – 255
+};
+
+const u8 gItemEffect_InfiniteCandy[10] = {
+    [3] = ITEM3_LEVEL_UP,
+    [4] = ITEM4_REVIVE | ITEM4_HEAL_HP,
+    [6] = ITEM6_HEAL_HP_LVL_UP,
 };
 
 const u8 gItemEffect_PPUp[9] = {

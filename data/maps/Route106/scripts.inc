@@ -30,14 +30,22 @@ Route106_EventScript_ElliotRegisterMatchCallAfterBattle::
 	end
 
 Route106_EventScript_BerryGirl::
-	lock
-	faceplayer
-	msgbox Route106_Text_BerryGirlStory, MSGBOX_DEFAULT
-	giveitem ITEM_CHOPLE_BERRY
-	msgbox Route106_Text_BerryGirlAfterGift, MSGBOX_DEFAULT
-	setflag FLAG_RECEIVED_CHOPLE_BERRY_ROUTE106
-	release
-	end	
+    lock
+    faceplayer
+
+    checkflag FLAG_GOT_BERRY_GIRL_ROUTE106
+    goto_if TRUE, Route106_BerryGirl_After
+
+    msgbox Route106_Text_BerryGirl_Give, MSGBOX_DEFAULT
+    giveitem ITEM_CHOPLE_BERRY, 1
+    setflag FLAG_GOT_BERRY_GIRL_ROUTE106
+    release
+    end
+
+Route106_BerryGirl_After:
+    msgbox Route106_Text_BerryGirl_After, MSGBOX_DEFAULT
+    release
+    end	
 
 Route106_EventScript_ElliotRematch::
 	trainerbattle_rematch TRAINER_ELLIOT_1, Route106_Text_ElliotRematchIntro, Route106_Text_ElliotRematchDefeated
@@ -54,21 +62,22 @@ Route106_Text_TrainerTips:
 	.string "Advice on catching POKéMON with a ROD:\n"
 	.string "Press the A Button if you get a bite.$"
 
-Route106_Text_BerryGirlStory:
-	.string "Yo! You're a trainer too?\n"
-	.string "Let me tell you something...\p"
-	.string "I was trying to beat the Gym Leader\n"
-	.string "here, and I trained really hard!\p"
-	.string "To prepare, I grew lots of\n"
-	.string "Chople Berries, which are super\l"
-	.string "useful against Fighting-type moves.\p"
-	.string "And guess what? I managed to beat\n"
-	.string "the Gym Leader! It was amazing!\p"
-	.string "I ended up with so many Chople\n"
-	.string "Berries that I can share one\l"
-	.string "with you! Here!$"
+Route106_Text_BerryGirl_Give:
+    .string "Yo! You're a trainer too?\n"
+    .string "Let me tell you something...\p"
+    .string "I was trying to beat the Gym Leader\n"
+    .string "here, and I trained really hard!\p"
+    .string "To prepare, I grew lots of\n"
+    .string "Chople Berries, which are super\l"
+    .string "useful against Fighting-type moves.\p"
+    .string "I ended up with so many Chople\n"
+    .string "Berries that I can share one\l"
+    .string "with you! Here!$"
 
-Route106_Text_BerryGirlAfterGift:
-	.string "It's so hot here...\p"
-	.string "I hope you can beat the gym!$"
+Route106_Text_BerryGirl_After:
+    .string "It's so hot here...\p"
+    .string "I hope you can beat the gym!$"
+
+
+
 
