@@ -101,7 +101,7 @@
     {
       "local_id": "LOCALID_LAVARIDGE_RIVAL_ON_BIKE",
       "graphics_id": "OBJ_EVENT_GFX_VAR_3",
-      "x": 8,
+      "x": 9,
       "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -115,7 +115,7 @@
     {
       "local_id": "LOCALID_LAVARIDGE_RIVAL",
       "graphics_id": "OBJ_EVENT_GFX_VAR_0",
-      "x": 25,
+      "x": 26,
       "y": 15,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -143,13 +143,13 @@
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(BIBAREL)",
       "x": 16,
       "y": 4,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN_AND_RIGHT",
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "LavaridgeTown_EventScript_HotSpringsOldWoman1",
+      "script": "NULL",
       "flag": "0"
     }
   ],
@@ -195,6 +195,13 @@
       "elevation": 3,
       "dest_map": "MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F",
       "dest_warp_id": "3"
+    },
+    {
+      "x": 7,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_FIERY_PATH",
+      "dest_warp_id": "2"
     }
   ],
   "coord_events": [
@@ -219,8 +226,8 @@
     },
     {
       "type": "sign",
-      "x": 21,
-      "y": 15,
+      "x": 9,
+      "y": 4,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "LavaridgeTown_EventScript_GymSign"
