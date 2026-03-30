@@ -354,7 +354,7 @@ Ability: Speed Boost
 - Ice Fang  
 - Brine
 
-Numel @ Oran Berry
+Krabby  @ Oran Berry
 Level: 18
 Ability: Thick Fat  
 - Water Pulse  
@@ -8891,8 +8891,8 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Meditite
-Level: 13
+Tyrogue @ Eviolite
+Level: 19
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 === TRAINER_LAURA ===

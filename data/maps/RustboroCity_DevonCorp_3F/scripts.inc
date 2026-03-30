@@ -53,8 +53,6 @@ RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
 	message RustboroCity_DevonCorp_3F_Text_ReceivedDexnav
 	waitfanfare
 	setflag DN_FLAG_DEXNAV_GET
-	setflag DN_FLAG_SEARCHING
-	setflag DN_FLAG_DETECTOR_MODE
 	setflag FLAG_HIDE_RUSTBORO_CITY_POKEMON_SCHOOL_SCOTT
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainDexnavRestUp, MSGBOX_DEFAULT
 	closemessage
@@ -69,6 +67,8 @@ RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
 	clearflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
 	setvar VAR_DEVON_CORP_3F_STATE, 1
 	setvar VAR_RUSTBORO_CITY_STATE, 7
+	clearflag DN_FLAG_SEARCHING
+	clearflag DN_FLAG_DETECTOR_MODE
 	releaseall
 	end
 

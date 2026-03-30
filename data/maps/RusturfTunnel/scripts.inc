@@ -290,7 +290,7 @@ RusturfTunnel_EventScript_Peeko::
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	playmoncry SPECIES_NUMEL, CRY_MODE_NORMAL
 	msgbox RusturfTunnel_Text_Peeko, MSGBOX_DEFAULT
 	waitmoncry
 	release
@@ -423,7 +423,7 @@ RusturfTunnel_Text_ComeAndGetSome:
 	.string "Come and get some, then!$"
 
 RusturfTunnel_Text_Peeko:
-	.string "PEEKO: Pii pihyoh!$"
+	.string "NAMI: Mooouuuh...$"
 
 RusturfTunnel_Text_GruntIntro:
 	.string "Grah, keelhaul it all!\p"
@@ -448,11 +448,11 @@ RusturfTunnel_Text_GruntTakePackage:
 	.string "You want it back that badly, take it!$"
 
 RusturfTunnel_Text_PeekoGladToSeeYouSafe:
-	.string "PEEKO!\n"
+	.string "NAMI!\n"
 	.string "Am I glad to see you're safe!$"
 
 RusturfTunnel_Text_ThankYouLetsGoHomePeeko:
-	.string "PEEKO owes her life to you!\p"
+	.string "NAMI owes her life to you!\p"
 	.string "They call me MR. BRINEY.\n"
 	.string "And, you are?\p"
 	.string "… … … … … … … …\n"
@@ -463,9 +463,9 @@ RusturfTunnel_Text_ThankYouLetsGoHomePeeko:
 	.string "you, don't hesitate to tell me!\p"
 	.string "You can usually find me in my cottage\n"
 	.string "by the sea near PETALBURG WOODS.\p"
-	.string "Come, PEEKO, we should make our way\n"
+	.string "Come, NAMI, we should make our way\n"
 	.string "home.\p"
-	.string "PEEKO: Pihyoh!$"
+	.string "NAMI: Mooouuuh...$"
 
 RusturfTunnel_Text_WhyCantTheyKeepDigging:
 	.string "… …\p"

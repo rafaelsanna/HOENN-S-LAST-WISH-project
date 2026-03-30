@@ -747,7 +747,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 357
-            .species = SPECIES_NUMEL,
+            .species = SPECIES_KRABBY,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 357
             .heldItem = ITEM_ORAN_BERRY,
@@ -23197,12 +23197,14 @@ F_TRAINER_FEMALE |
         {
             {
 #line 8894
-            .species = SPECIES_MEDITITE,
+            .species = SPECIES_TYROGUE,
             .gender = TRAINER_MON_RANDOM_GENDER,
+#line 8894
+            .heldItem = ITEM_EVIOLITE,
 #line 8896
             .iv = TRAINER_PARTY_IVS(15, 15, 15, 15, 15, 15),
 #line 8895
-            .lvl = 13,
+            .lvl = 19,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
