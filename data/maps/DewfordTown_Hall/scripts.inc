@@ -72,11 +72,24 @@ DewfordTown_Hall_EventScript_ExpertM::
 DewfordTown_Hall_EventScript_Twin::
 	lock
 	faceplayer
-	call Common_EventScript_BufferTrendyPhrase
-	msgbox DewfordTown_Hall_Text_IsTrendMorePopularAcrossSea, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_DEWFORD_HALL_TWIN, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	goto_if_set FLAG_RECEIVED_DEWFORD_HALL_SUN_STONE, DewfordTown_Hall_EventScript_TwinAlreadyGave
+	goto_if_unset FLAG_DEFEATED_DEWFORD_HALL_WOMAN, DewfordTown_Hall_EventScript_TwinNotYet
+	goto_if_unset FLAG_DEFEATED_DEWFORD_HALL_MAN, DewfordTown_Hall_EventScript_TwinNotYet
+	goto_if_unset FLAG_DEFEATED_DEWFORD_HALL_LITTLE_BOY, DewfordTown_Hall_EventScript_TwinNotYet
+	msgbox DewfordTown_Hall_Text_TwinGiveSunStone, MSGBOX_DEFAULT
+	giveitem ITEM_SUN_STONE
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_DEWFORD_HALL_SUN_STONE
+	release
+	end
+
+DewfordTown_Hall_EventScript_TwinNotYet::
+	msgbox DewfordTown_Hall_Text_TwinNotYet, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_Hall_EventScript_TwinAlreadyGave::
+	msgbox DewfordTown_Hall_Text_TwinAlreadyGave, MSGBOX_DEFAULT
 	release
 	end
 
@@ -484,4 +497,31 @@ DewfordTown_Hall_Text_LoveSludgeBombButTrendInToo:
 	.string "But POKéMON with the move\n"
 	.string "{STR_VAR_1}\l"
 	.string "are in, too.$"
+
+DewfordTown_Hall_Text_TwinGiveSunStone:
+    .string "You defeated all of them!\n"
+    .string "Your battles were incredible...\p"
+    .string "You even inspired me to paint\n"
+    .string "a brand new picture! Hihihi...\p"
+    .string "Here, you deserve this\n"
+    .string "SUN STONE!$"
+
+DewfordTown_Hall_Text_TwinNotYet:
+    .string "Here in Dewford, us artists\n"
+    .string "really treasure the SUN...\p"
+    .string "The island where the sun\n"
+    .string "shines the brightest!\p"
+    .string "My grandpa gave me this stone!\n"
+    .string "You seem cool...\p"
+    .string "Let's make a deal! Defeat all\n"
+    .string "the artists in this room\p"
+    .string "and I'll give it to you!$"
+
+DewfordTown_Hall_Text_TwinAlreadyGave:
+    .string "When I grow up I'll be an\n"
+    .string "amazing artist, for sure!\p"
+    .string "I just love painting the Sun...\p"
+    .string "Your battles inspired me to\n"
+    .string "paint a brand new picture!\n"
+    .string "Hihihi...$"
 

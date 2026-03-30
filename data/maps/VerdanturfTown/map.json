@@ -94,7 +94,7 @@
   ],
   "warp_events": [
     {
-      "x": 11,
+      "x": 8,
       "y": 4,
       "elevation": 0,
       "dest_map": "MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY",
@@ -115,7 +115,7 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 19,
+      "x": 20,
       "y": 14,
       "elevation": 0,
       "dest_map": "MAP_VERDANTURF_TOWN_WANDAS_HOUSE",
@@ -129,7 +129,7 @@
       "dest_warp_id": "1"
     },
     {
-      "x": 12,
+      "x": 13,
       "y": 8,
       "elevation": 0,
       "dest_map": "MAP_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE",
@@ -202,7 +202,7 @@
     },
     {
       "type": "sign",
-      "x": 10,
+      "x": 7,
       "y": 4,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
