@@ -113,7 +113,25 @@
     {
       "type": "trigger",
       "x": 4,
-      "y": 38,
+      "y": 37,
+      "elevation": 0,
+      "var": "VAR_UNUSED_0x40BB",
+      "var_value": "0",
+      "script": "RustboroCity_Gym_EventScript_ClimbCheck"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_UNUSED_0x40BB",
+      "var_value": "0",
+      "script": "RustboroCity_Gym_EventScript_ClimbCheck"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 19,
       "elevation": 0,
       "var": "VAR_UNUSED_0x40BB",
       "var_value": "0",
@@ -131,7 +149,7 @@
     {
       "type": "trigger",
       "x": 5,
-      "y": 18,
+      "y": 17,
       "elevation": 0,
       "var": "VAR_UNUSED_0x40BB",
       "var_value": "0",

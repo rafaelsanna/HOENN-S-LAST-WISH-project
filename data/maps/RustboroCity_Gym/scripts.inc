@@ -123,7 +123,7 @@ RustboroCity_Gym_EventScript_RegisterRoxanne::
 RustboroCity_Gym_EventScript_ClimbCheck::
 	goto_if_set FLAG_DEFEATED_RUSTBORO_GYM, RustboroCity_Gym_EventScript_ClimbCheck_End
 	random 3
-	goto_if_eq VAR_RESULT, 1, RustboroCity_Gym_EventScript_Climb_Fall
+	goto_if_lt VAR_RESULT, 1, RustboroCity_Gym_EventScript_Climb_Fall
 RustboroCity_Gym_EventScript_ClimbCheck_End::
 	end
 
@@ -135,9 +135,11 @@ RustboroCity_Gym_EventScript_ClimbCheck_End::
 @ ============================================================
 RustboroCity_Gym_EventScript_Climb_Fall::
 	lockall
+	msgbox RustboroCity_Gym_Text_SlipperyRock, MSGBOX_DEFAULT
 	playse SE_BIKE_HOP
 	applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_Gym_Movement_Fall
 	waitmovement 0
+	playse SE_WALL_HIT
 	releaseall
 	end
 
@@ -145,8 +147,12 @@ RustboroCity_Gym_Movement_Fall:
 	slide_down
 	slide_down
 	slide_down
+	slide_down
 	step_end
 
+RustboroCity_Gym_Text_SlipperyRock:
+	.string "Oops! You lost your grip!$"
+	
 RustboroCity_Gym_Text_GymGuideAdvice:
 	.string "Yo, how's it going?\p"
 	.string "Listen, my friend!\n"
