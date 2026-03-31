@@ -151,7 +151,7 @@ RustboroCity_Gym_Movement_Fall:
 	step_end
 
 RustboroCity_Gym_Text_SlipperyRock:
-	.string "Oops! You lost your grip!$"
+	.string "Ops! You lost your grip!$"
 	
 RustboroCity_Gym_Text_GymGuideAdvice:
 	.string "Yo, how's it going?\p"
