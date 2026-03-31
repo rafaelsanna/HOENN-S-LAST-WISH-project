@@ -123,7 +123,7 @@ RustboroCity_Gym_EventScript_RegisterRoxanne::
 RustboroCity_Gym_EventScript_ClimbCheck::
 	goto_if_set FLAG_DEFEATED_RUSTBORO_GYM, RustboroCity_Gym_EventScript_ClimbCheck_End
 	random 3
-	goto_if_lt VAR_RESULT, 1, RustboroCity_Gym_EventScript_Climb_Fall
+	goto_if_eq VAR_RESULT, 1, RustboroCity_Gym_EventScript_Climb_Fall
 RustboroCity_Gym_EventScript_ClimbCheck_End::
 	end
 
