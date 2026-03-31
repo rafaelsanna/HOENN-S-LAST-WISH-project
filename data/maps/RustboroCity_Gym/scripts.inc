@@ -114,6 +114,40 @@ RustboroCity_Gym_EventScript_RegisterRoxanne::
 	releaseall
 	end
 
+@ ============================================================
+@ SISTEMA DE ESCALADA — 30% chance passar
+@ coord_events no events.inc apontam para ClimbCheck.
+@ Após a FLAG_DEFEATED_RUSTBORO_GYM ser setada, triggers
+@ ficam silenciosos (jogador pode subir livremente).
+@ ============================================================
+RustboroCity_Gym_EventScript_ClimbCheck::
+	goto_if_set FLAG_DEFEATED_RUSTBORO_GYM, RustboroCity_Gym_EventScript_ClimbCheck_End
+	random 3
+	goto_if_lt VAR_RESULT, 1, RustboroCity_Gym_EventScript_Climb_Fall
+RustboroCity_Gym_EventScript_ClimbCheck_End::
+	end
+
+@ ============================================================
+@ QUEDA: slide_down move o player fisicamente,
+@ sem necessidade de warp ou fadescreen.
+@ Ajuste a quantidade de slide_down conforme a altura
+@ do ponto de escalada no mapa (1 slide = 1 tile para baixo).
+@ ============================================================
+RustboroCity_Gym_EventScript_Climb_Fall::
+	lockall
+	playse SE_BIKE_HOP
+	applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_Gym_Movement_Fall
+	waitmovement 0
+	end
+
+RustboroCity_Gym_Movement_Fall:
+	playse SE_BIKE_HOP
+	slide_down
+	slide_down
+	slide_down
+	releaseall
+	step_end
+
 RustboroCity_Gym_Text_GymGuideAdvice:
 	.string "Yo, how's it going?\p"
 	.string "Listen, my friend!\n"
@@ -302,7 +336,3 @@ RustboroCity_Gym_Text_HardSelected:
 RustboroCity_Gym_Text_NormalSelected:
 	.string "GYM GUIDE: Casual mode selected!\n"
 	.string "TERRA is waiting!$"
-
-
-
-
