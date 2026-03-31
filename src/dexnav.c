@@ -615,7 +615,6 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
     u8 scale = 0;
     u8 weight = 0;
     enum MapType currMapType = GetCurrentMapType();
-    const struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     u8 tileBehaviour;
     u8 tileBuffer = 2;
     u8 *xPos = AllocZeroed((botX - topX) * (botY - topY) * sizeof(u8));
@@ -668,7 +667,7 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
                     if (currMapType == MAP_TYPE_UNDERGROUND)
                     {
                         // inside (cave)
-                        if (IsElevationMismatchAt(playerObjEvent->currentElevation, topX, topY))
+                        if (IsElevationMismatchAt(gObjectEvents[gPlayerAvatar.spriteId].currentElevation, topX, topY))
                             break; //occurs at same z coord
 
                         scale = 440 - (smallScan * 200) - (GetPlayerDistance(topX, topY) / 2)  - (2 * (topX + topY));
@@ -686,7 +685,7 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
                 if (MetatileBehavior_IsSurfableWaterOrUnderwater(tileBehaviour))
                 {
                     u8 scale = 320 - (smallScan * 200) - (GetPlayerDistance(topX, topY) / 2);
-                    if (IsElevationMismatchAt(playerObjEvent->currentElevation, topX, topY))
+                    if (IsElevationMismatchAt(gObjectEvents[gPlayerAvatar.spriteId].currentElevation, topX, topY))
                         break;
 
                     weight = (Random() % scale <= 1) && !MapGridGetCollisionAt(topX, topY);
@@ -1037,16 +1036,6 @@ static void EndDexNavSearchSetupScript(const u8 *script, u8 taskId)
     ScriptContext_SetupScript(script);
 }
 
-static u8 GetMovementProximityBySearchLevel(void)
-{
-    if (sDexNavSearchDataPtr->searchLevel < 20)
-        return 2;
-    else if (sDexNavSearchDataPtr->searchLevel < 50)
-        return 3;
-    else
-        return 4;
-}
-
 static void Task_RevealHiddenMon(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
@@ -1137,8 +1126,6 @@ static void Task_DexNavSearch(u8 taskId)
 
     if (sDexNavSearchDataPtr->proximity < 1)
     {
-        u8 previousBikeState = sDexNavSearchDataPtr->previousBikeState;
-
         gDexNavSpecies = sDexNavSearchDataPtr->species;
         CreateDexNavWildMon(sDexNavSearchDataPtr->species, sDexNavSearchDataPtr->potential, sDexNavSearchDataPtr->monLevel,
                             sDexNavSearchDataPtr->abilityNum, sDexNavSearchDataPtr->heldItem, sDexNavSearchDataPtr->moves);
@@ -1148,8 +1135,6 @@ static void Task_DexNavSearch(u8 taskId)
         Free(sDexNavSearchDataPtr);
         DestroyTask(taskId);
 
-        if (previousBikeState != 0)
-            SetPlayerAvatarTransitionFlags(previousBikeState);
         return;
     }
 
@@ -1167,22 +1152,6 @@ static void Task_DexNavSearch(u8 taskId)
         return;
     }
 
-    //Caves and water the pokemon moves around
-    if ((sDexNavSearchDataPtr->environment == ENCOUNTER_TYPE_WATER || GetCurrentMapType() == MAP_TYPE_UNDERGROUND)
-        && sDexNavSearchDataPtr->proximity < GetMovementProximityBySearchLevel() && sDexNavSearchDataPtr->movementCount < 2
-        && task->tRevealed)
-    {
-        FieldEffectStop(&gSprites[sDexNavSearchDataPtr->fldEffSpriteId], sDexNavSearchDataPtr->fldEffId);
-
-        if (!TryStartHiddenMonFieldEffect(sDexNavSearchDataPtr->environment, 10, 10, TRUE))
-        {
-            EndDexNavSearchSetupScript(EventScript_PokemonGotAway, taskId);
-            return;
-        }
-
-        sDexNavSearchDataPtr->movementCount++;
-    }
-
     DexNavProximityUpdate();
     if (task->tProximity != sDexNavSearchDataPtr->proximity)
     {
@@ -1192,6 +1161,9 @@ static void Task_DexNavSearch(u8 taskId)
 
         task->tProximity = sDexNavSearchDataPtr->proximity;
     }
+
+    if (JOY_NEW(B_BUTTON))
+        EndDexNavSearch(taskId);
 
     task->tFrameCount++;
 }
@@ -2637,22 +2609,9 @@ bool8 TryFindHiddenPokemon(void)
         sDexNavSearchDataPtr->hiddenSearch = TRUE;
         sDexNavSearchDataPtr->environment = environment;    // updated in DexNavTryGenerateMonLevel if hidden mon
 
-        // Save bike type and force on-foot before tile search logic runs.
-        if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
-            sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_MACH_BIKE;
-        else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
-            sDexNavSearchDataPtr->previousBikeState = PLAYER_AVATAR_FLAG_ACRO_BIKE;
-        else
-            sDexNavSearchDataPtr->previousBikeState = 0;
-
-        if (sDexNavSearchDataPtr->previousBikeState != 0)
-            SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
-
         sDexNavSearchDataPtr->monLevel = DexNavTryGenerateMonLevel(species, environment);
         if (sDexNavSearchDataPtr->monLevel == MON_LEVEL_NONEXISTENT)
         {
-            if (sDexNavSearchDataPtr->previousBikeState != 0)
-                SetPlayerAvatarTransitionFlags(sDexNavSearchDataPtr->previousBikeState);
             Free(sDexNavSearchDataPtr);
             return FALSE;
         }
@@ -2660,8 +2619,6 @@ bool8 TryFindHiddenPokemon(void)
         // find tile for hidden mon and start effect if possible
         if (!TryStartHiddenMonFieldEffect(sDexNavSearchDataPtr->environment, 8, 8, TRUE))
         {
-            if (sDexNavSearchDataPtr->previousBikeState != 0)
-                SetPlayerAvatarTransitionFlags(sDexNavSearchDataPtr->previousBikeState);
             Free(sDexNavSearchDataPtr);
             return FALSE;
         }
