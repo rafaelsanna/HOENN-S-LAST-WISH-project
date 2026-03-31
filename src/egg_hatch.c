@@ -24,6 +24,7 @@
 #include "m4a.h"
 #include "window.h"
 #include "graphics.h"
+#include "battle_bg.h"
 #include "constants/abilities.h"
 #include "daycare.h"
 #include "overworld.h"
@@ -61,7 +62,6 @@ struct EggHatchData
     u8 unused_9;
     u8 unused_A;
     u16 species;
-    u8 textColor[3];
 };
 
 extern const u8 gText_HatchedFromEgg[];
@@ -162,6 +162,8 @@ static const struct SpritePalette sEgg_SpritePalette =
     .data = sEggPalette,
     .tag = PALTAG_EGG
 };
+
+static const u8 sEggHatchTextColors[] = { TEXT_COLOR_TRANSPARENT, 12, 15 };
 
 static const struct SpriteTemplate sSpriteTemplate_Egg =
 {
@@ -533,7 +535,7 @@ static void CB2_LoadEggHatch(void)
     case 2:
         DecompressAndLoadBgGfxUsingHeap(0, gBattleTextboxTiles, 0, 0, 0);
         CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
-        LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        LoadBattleTextboxPalette();
         gMain.state++;
         break;
     case 3:
@@ -917,11 +919,8 @@ static void CreateEggShardSprite(u8 x, u8 y, s16 velocityX, s16 velocityY, s16 a
 
 static void EggHatchPrintMessage(u8 windowId, u8 *string, u8 x, u8 y, u8 speed)
 {
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(15));
-    sEggHatchData->textColor[0] = 0;
-    sEggHatchData->textColor[1] = 5;
-    sEggHatchData->textColor[2] = 6;
-    AddTextPrinterParameterized4(windowId, FONT_NORMAL, x, y, 0, 0, sEggHatchData->textColor, speed, string);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, x, y, 0, 0, sEggHatchTextColors, speed, string);
 }
 
 u8 GetEggCyclesToSubtract(void)

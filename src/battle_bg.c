@@ -748,6 +748,11 @@ void LoadBattleMenuWindowGfx(void)
     }
 }
 
+void LoadBattleTextboxPalette(void)
+{
+    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+}
+
 void DrawMainBattleBackground(void)
 {
     LoadBattleEnvironmentGfx(GetBattleEnvironmentOverride());
@@ -763,9 +768,9 @@ void LoadBattleTextboxAndBackground(void)
         DrawTerrainTypeBattleBackground();
     else
         DrawMainBattleBackground();
-    
+
     // Now load custom battle window palette to BG_PLTT_ID(0)
-    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    LoadBattleTextboxPalette();
     LoadBattleMenuWindowGfx();
 }
 
