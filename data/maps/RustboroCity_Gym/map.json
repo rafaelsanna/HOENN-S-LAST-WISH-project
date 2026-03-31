@@ -115,7 +115,7 @@
       "x": 4,
       "y": 38,
       "elevation": 0,
-      "var": "0",
+      "var": "VAR_UNUSED_0x40BB",
       "var_value": "0",
       "script": "RustboroCity_Gym_EventScript_ClimbCheck"
     },
@@ -124,7 +124,7 @@
       "x": 4,
       "y": 35,
       "elevation": 0,
-      "var": "0",
+      "var": "VAR_UNUSED_0x40BB",
       "var_value": "0",
       "script": "RustboroCity_Gym_EventScript_ClimbCheck"
     },
@@ -133,7 +133,7 @@
       "x": 5,
       "y": 18,
       "elevation": 0,
-      "var": "0",
+      "var": "VAR_UNUSED_0x40BB",
       "var_value": "0",
       "script": "RustboroCity_Gym_EventScript_ClimbCheck"
     }

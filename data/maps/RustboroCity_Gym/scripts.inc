@@ -138,14 +138,13 @@ RustboroCity_Gym_EventScript_Climb_Fall::
 	playse SE_BIKE_HOP
 	applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_Gym_Movement_Fall
 	waitmovement 0
+	releaseall
 	end
 
 RustboroCity_Gym_Movement_Fall:
-	playse SE_BIKE_HOP
 	slide_down
 	slide_down
 	slide_down
-	releaseall
 	step_end
 
 RustboroCity_Gym_Text_GymGuideAdvice:
