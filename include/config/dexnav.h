@@ -13,7 +13,7 @@
 #define DN_VAR_STEP_COUNTER            0x40F9
 
 // Search parameters
-#define DEXNAV_TIMEOUT                  15
+#define DEXNAV_TIMEOUT                  60
 #define SNEAKING_PROXIMITY              4
 #define CREEPING_PROXIMITY              2
 #define MAX_PROXIMITY                   20
