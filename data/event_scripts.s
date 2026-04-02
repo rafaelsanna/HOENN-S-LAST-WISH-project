@@ -1209,3 +1209,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/RustboroCity_House2_2F/scripts.inc"
 
 	.include "data/maps/DewdropJungle/scripts.inc"
+
+	.include "data/maps/Farmers_Club/scripts.inc"

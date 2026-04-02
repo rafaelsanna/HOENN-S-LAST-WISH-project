@@ -113,6 +113,13 @@
       "elevation": 0,
       "dest_map": "MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 7,
+      "y": 23,
+      "elevation": 0,
+      "dest_map": "MAP_FARMERS_CLUB",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

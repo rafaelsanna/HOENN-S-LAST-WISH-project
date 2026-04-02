@@ -1,12 +1,12 @@
 {
-  "id": "MAP_FARMERSCLUB",
-  "name": "farmersclub",
-  "layout": "LAYOUT_FARMERSCLUB",
-  "music": "MUS_DUMMY",
+  "id": "MAP_FARMERS_CLUB",
+  "name": "Farmers_Club",
+  "layout": "LAYOUT_FARMERS_CLUB",
+  "music": "MUS_FALLARBOR",
   "region_map_section": "MAPSEC_FALLARBOR_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
-  "map_type": "MAP_TYPE_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": true,
@@ -17,17 +17,17 @@
   "warp_events": [
     {
       "x": 7,
-      "y": 8,
+      "y": 9,
       "elevation": 0,
       "dest_map": "MAP_FALLARBOR_TOWN",
-      "dest_warp_id": "0"
+      "dest_warp_id": "5"
     },
     {
       "x": 8,
-      "y": 8,
+      "y": 9,
       "elevation": 0,
       "dest_map": "MAP_FALLARBOR_TOWN",
-      "dest_warp_id": "0"
+      "dest_warp_id": "5"
     }
   ],
   "coord_events": [],

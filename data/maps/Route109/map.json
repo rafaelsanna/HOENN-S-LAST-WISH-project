@@ -15,7 +15,7 @@
   "connections": [
     {
       "map": "MAP_SLATEPORT_CITY",
-      "offset": -4,
+      "offset": -18,
       "direction": "up"
     },
     {

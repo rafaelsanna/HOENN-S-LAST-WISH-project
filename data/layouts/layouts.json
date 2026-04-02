@@ -2942,16 +2942,6 @@
       "blockdata_filepath": "data/layouts/FieryPath/map.bin"
     },
     {
-      "id": "LAYOUT_FARMERSCLUB",
-      "name": "farmersclub_Layout",
-      "width": 16,
-      "height": 10,
-      "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_GenericBuilding",
-      "border_filepath": "data/layouts/FarmersClub/border.bin",
-      "blockdata_filepath": "data/layouts/FarmersClub/map.bin"
-    },
-    {
       "id": "LAYOUT_RUSTBORO_CITY_FLAT2_1F",
       "name": "RustboroCity_Flat2_1F_Layout",
       "width": 14,
@@ -4680,6 +4670,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/RustboroCity_House2_2F/border.bin",
       "blockdata_filepath": "data/layouts/RustboroCity_House2_2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_FARMERS_CLUB",
+      "name": "Farmers_Club_Layout",
+      "width": 16,
+      "height": 11,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/Farmers_Club/border.bin",
+      "blockdata_filepath": "data/layouts/Farmers_Club/map.bin"
     }
   ]
 }

@@ -31,7 +31,7 @@
     {
       "id": "HEAL_LOCATION_SLATEPORT_CITY",
       "map": "MAP_SLATEPORT_CITY",
-      "x": 17,
+      "x": 31,
       "y": 18,
       "respawn_map": "MAP_SLATEPORT_CITY_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_SLATEPORT_NURSE"
@@ -131,7 +131,7 @@
     {
       "id": "HEAL_LOCATION_LAVARIDGE_TOWN",
       "map": "MAP_LAVARIDGE_TOWN",
-      "x": 9,
+      "x": 23,
       "y": 7,
       "respawn_map": "MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_LAVARIDGE_NURSE"

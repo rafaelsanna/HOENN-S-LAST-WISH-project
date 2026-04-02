@@ -2,7 +2,7 @@
   "id": "MAP_FIERY_PATH",
   "name": "FieryPath",
   "layout": "LAYOUT_FIERY_PATH",
-  "music": "MUS_PETALBURG_WOODS",
+  "music": "MUS_RG_CINNABAR",
   "region_map_section": "MAPSEC_FIERY_PATH",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -17,14 +17,14 @@
   "warp_events": [
     {
       "x": 26,
-      "y": 36,
+      "y": 35,
       "elevation": 3,
       "dest_map": "MAP_ROUTE112",
       "dest_warp_id": "4"
     },
     {
       "x": 26,
-      "y": 4,
+      "y": 3,
       "elevation": 3,
       "dest_map": "MAP_ROUTE112",
       "dest_warp_id": "5"
