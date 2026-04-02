@@ -758,6 +758,15 @@
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "0",
       "script": "MOSSDEEP01_EventScript_WailordBlocksPath"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 17,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter"
     }
   ],
   "bg_events": [],

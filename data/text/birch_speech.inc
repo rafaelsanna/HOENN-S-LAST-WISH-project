@@ -1,13 +1,14 @@
 gText_Birch_Welcome::
 .string "The world hasn't been the same for long,\p"
 .string "Hoenn isn't the same...\p"
-.string "I am Celebi, the Time Travel POKéMON.\p"
-.string "I have traveled from Johto to Hoenn to\n"
-.string "help Jirachi, the wish-granting POKéMON.\p"
+.string "I am CELEBI, the Time Travel POKéMON.\p"
+.string "I've traveled from Johto to Hoenn to help\n"
+.string "JIRACHI, the wish-granting POKéMON.\p"
+.string "But we cannot save Hoenn alone...\p"
 .string "$"
 
-gText_Birch_Pokemon::
-	.string "But we cannot save Hoenn alone.”\p"
+gText_Birch_Pokemon:: @ useless text, never used in the game
+	.string "But we cannot save Hoenn alone...”\p"
 	.string "\n"
 	.string "$"
 
@@ -17,45 +18,46 @@ gText_Birch_MainSpeech::
 	.string "It lives in the ozone layer, feeding on\n"
 	.string "meteoroids, and only descends to Earth\l"
 	.string "to stop the clashes between...\p"
-	.string "Kyogre and Groudon.\n"
+	.string "KYOGRE and GROUDON...\n"
 	.string "Him... The Dragon God POKéMON:\p"
-	.string "Rayquaza...\n"
+	.string "RAYQUAZA...\n"
 	.string "For centuries he ruled the sky...\p"
-	.string "Strong enough to appease a primordial\n"
+	.string "Supreme enough to appease a primordial\n"
 	.string "elemental battle between the controler\p"
 	.string "of the sea and the creator of the land.\n"
-	.string "Unfortunately human interference\l"
-	.string "broke this balance forever...\p"
+	.string "Unfortunately evil human interference\l"
+	.string "broke this prefect balance forever...\p"
 	.string "$"
 
 gText_Birch_AndYouAre::
-	.string "And you are?$"
+	.string "And tell us, YOU are?$"
 
 gText_Birch_BoyOrGirl::
-	.string "Are you a boy?\n"
-	.string "Or are you a girl?$"
+	.string "Are YOU a boy?\n"
+	.string "Or are YOU a girl?$"
 
 gText_Birch_WhatsYourName::
-	.string "You were chosen...\n"
-	.string "What's your name?$"
+	.string "You were chosen by destiny...\n"
+	.string "What's was your name again?$"
 
 gText_Birch_SoItsPlayer::
-	.string "Yes we already know your name...\p"
+	.string "Yes, we already knew your name...\p"
 	.string "{PLAYER}{KUN}?$"
 
 gText_Birch_YourePlayer::
 	.string "Ah...\p"
-	.string "You're {PLAYER}{KUN}, the one chosen by\n"
-	.string "CELEBI and JIRACHI to protect the\l"
-	.string "HOENN region from darkness!\p"
+	.string "You're {PLAYER}{KUN}, the one chosen by us,\n"
+	.string "CELEBI and JIRACHI to save HOENN from\l"
+	.string "human kind endless greed...\p"
 	.string "$"
 
 gText_Birch_AreYouReady::
     .string "Don't be afraid, {PLAYER}.\p"
-    .string "The DREAM WORLD may feel strange\n"
-    .string "at first… but you're not alone.\p"
+    .string "The DREAM WORLD may feel strange at\n"
+    .string "first… but you're not alone.\p"
     .string "We’re here to guide you.\n"
     .string "Just breathe… and trust us.\p"
-    .string "Step forward and follow the path\n"
-    .string "that fate has chosen for you.$"
+    .string "Step forward and follow the path that\n"
+    .string "fate has chosen for you...\p"
+	.string "$"
 

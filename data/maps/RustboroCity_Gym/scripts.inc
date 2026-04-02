@@ -127,6 +127,19 @@ RustboroCity_Gym_EventScript_ClimbCheck::
 RustboroCity_Gym_EventScript_ClimbCheck_End::
 	end
 
+/// climb slow x climb fast
+
+RustboroCity_Gym_EventScript_ClimbSlow::
+	setflag DN_FLAG_SEARCHING
+	setflag DN_FLAG_DETECTOR_MODE
+	end
+
+RustboroCity_Gym_EventScript_ClimbFast::
+	clearflag DN_FLAG_SEARCHING
+	clearflag DN_FLAG_DETECTOR_MODE
+	end
+
+
 @ ============================================================
 @ QUEDA: slide_down move o player fisicamente,
 @ sem necessidade de warp ou fadescreen.
@@ -137,9 +150,11 @@ RustboroCity_Gym_EventScript_Climb_Fall::
 	lockall
 	msgbox RustboroCity_Gym_Text_SlipperyRock, MSGBOX_DEFAULT
 	playse SE_BIKE_HOP
+	waitse
 	applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_Gym_Movement_Fall
 	waitmovement 0
 	playse SE_WALL_HIT
+	waitse
 	releaseall
 	end
 
@@ -211,19 +226,27 @@ RustboroCity_Gym_Text_RaboutouPostBattle:
 	.string "You'd better come prepared!$"
 
 RustboroCity_Gym_Text_JanjaIntro:
-	.string "We're in town, sure...\n"
-	.string "But mountains are in my heart!\p"
-	.string "My ROCK POKEMON need room to\n"
-	.string "stretch out and rampage!$"
+	.string "You think climbing these walls is tough?\n"
+	.string "Try scaling a cliff with no rope!\p"
+	.string "My ROCK POKEMON and I have faced\n"
+	.string "the harshest peaks in HOENN.\p"
+	.string "Every fall, every scrape… it only made\n"
+	.string "us stronger.\p"
+	.string "Now, let's see if your team can handle\n"
+	.string "the pressure of a true mountain climb!$"
 
 RustboroCity_Gym_Text_JanjaDefeat:
 	.string "Whoooa! Our challenger's got\n"
-	.string "some real fire!$"
+	.string "some real guts!$"
 
 RustboroCity_Gym_Text_JanjaPostBattle:
-	.string "I've explored Hoenn's peaks for years.\p"
-	.string "That's how I met TERRA. Smart kid,\n"
-	.string "chose ROCK type for its strength.$"
+	.string "I've explored Hoenn's peaks for years!\p"
+	.string "That's how I met TERRA. Young, brave,\n"
+	.string "fearless... Just like the mountains.\p"
+	.string "Smart girl. Chose ROCK type for\n"
+	.string "its strength and endurance.\p"
+	.string "You've got that same spirit!.\n"
+	.string "Keep climbing.$"
 
 RustboroCity_Gym_Text_RoxanneIntro:
 	.string "Hey! I'm TERRA, RUSTBORO CITY\n"

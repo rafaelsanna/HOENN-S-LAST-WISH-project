@@ -781,6 +781,8 @@ MOSSDEEP01_EventScript_Wailmer::
 
 MOSSDEEP01_EventScript_WailordJumpOver::
 	lockall
+	setflag DN_FLAG_SEARCHING
+	setflag DN_FLAG_DETECTOR_MODE
 	// Pula no lugar virado para cima
 	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_JumpOverWailordUp
 	waitmovement 0
@@ -804,6 +806,11 @@ MOSSDEEP01_Movement_CrossWailordUp:
 	walk_up
 	walk_up  
 	step_end	
+
+MOSSDEEP01_EventScript_WailordJumpOverAfter::
+	clearflag DN_FLAG_SEARCHING
+	clearflag DN_FLAG_DETECTOR_MODE
+	end
 
 // ====================================================================
 // JIRACHI WAKE EVENT - TRIGGER BASED
