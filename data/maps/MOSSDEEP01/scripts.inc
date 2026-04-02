@@ -803,14 +803,22 @@ MOSSDEEP01_Movement_JumpOverWailordUp:
 
 MOSSDEEP01_Movement_CrossWailordUp:
 	walk_up              // Atravessa o Wailord
-	walk_up
-	walk_up  
 	step_end	
 
 MOSSDEEP01_EventScript_WailordJumpOverAfter::
 	clearflag DN_FLAG_SEARCHING
 	clearflag DN_FLAG_DETECTOR_MODE
 	end
+
+MOSSDEEP01_EventScript_WailordJumpOverAfter2::
+	clearflag DN_FLAG_SEARCHING
+	clearflag DN_FLAG_DETECTOR_MODE
+	lock
+    faceplayer
+    msgbox MOSSDEEP01_Text_AfterTimeGears, MSGBOX_DEFAULT
+    release
+	end
+
 
 // ====================================================================
 // JIRACHI WAKE EVENT - TRIGGER BASED
@@ -1463,3 +1471,8 @@ MOSSDEEP01_Text_CelebiCallsWailord:
     .string "CELEBI calls out to the ocean!\p"
     .string "A massive WAILORD appears and\n"
     .string "creates a path across the water!$"
+
+MOSSDEEP01_Text_AfterTimeGears:
+    .string "CELEBI: We are close, I can feel it...$"
+
+

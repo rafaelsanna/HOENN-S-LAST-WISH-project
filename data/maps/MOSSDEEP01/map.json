@@ -761,12 +761,39 @@
     },
     {
       "type": "trigger",
-      "x": 31,
+      "x": 32,
       "y": 17,
       "elevation": 0,
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "1",
       "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 17,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter"
+    },
+    {
+      "type": "trigger",
+      "x": 34,
+      "y": 14,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter2"
+    },
+    {
+      "type": "trigger",
+      "x": 35,
+      "y": 14,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
+      "var_value": "1",
+      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter2"
     }
   ],
   "bg_events": [],
