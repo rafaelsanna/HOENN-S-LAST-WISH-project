@@ -20,13 +20,18 @@
     },
     {
       "map": "MAP_ROUTE107",
-      "offset": 0,
+      "offset": 1,
       "direction": "right"
     },
     {
       "map": "MAP_GRANITE_HILL",
       "offset": 0,
       "direction": "left"
+    },
+    {
+      "map": "MAP_DEWDROP_JUNGLE",
+      "offset": 0,
+      "direction": "down"
     }
   ],
   "object_events": [

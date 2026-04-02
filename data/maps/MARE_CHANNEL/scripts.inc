@@ -1,0 +1,6 @@
+@ Scripts for MARE_CHANNEL (Canal da Mare)
+@ Placeholder scripts for the map
+
+MARE_CHANNEL_MapScripts::
+    @ Add your map scripts here
+    end

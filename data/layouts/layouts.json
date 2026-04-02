@@ -14,7 +14,7 @@
     {
       "id": "LAYOUT_SLATEPORT_CITY",
       "name": "SlateportCity_Layout",
-      "width": 46,
+      "width": 60,
       "height": 54,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Slateport",
@@ -115,7 +115,7 @@
       "id": "LAYOUT_DEWFORD_TOWN",
       "name": "DewfordTown_Layout",
       "width": 26,
-      "height": 24,
+      "height": 30,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dewford",
       "border_filepath": "data/layouts/DewfordTown/border.bin",
@@ -184,12 +184,22 @@
     {
       "id": "LAYOUT_ROUTE103",
       "name": "Route103_Layout",
-      "width": 86,
+      "width": 94,
       "height": 24,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/Route103/border.bin",
       "blockdata_filepath": "data/layouts/Route103/map.bin"
+    },
+    {
+      "id": "LAYOUT_RARE_POKEBALLSHOP",
+      "name": "RarePokeballshop_Layout",
+      "width": 12,
+      "height": 11,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/PokeballShop/border.bin",
+      "blockdata_filepath": "data/layouts/PokeballShop/map.bin"
     },
     {
       "id": "LAYOUT_ROUTE104",
@@ -214,7 +224,7 @@
     {
       "id": "LAYOUT_ROUTE106",
       "name": "Route106_Layout",
-      "width": 80,
+      "width": 100,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dewford",
@@ -2932,6 +2942,16 @@
       "blockdata_filepath": "data/layouts/FieryPath/map.bin"
     },
     {
+      "id": "LAYOUT_FARMERSCLUB",
+      "name": "farmersclub_Layout",
+      "width": 16,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/FarmersClub/border.bin",
+      "blockdata_filepath": "data/layouts/FarmersClub/map.bin"
+    },
+    {
       "id": "LAYOUT_RUSTBORO_CITY_FLAT2_1F",
       "name": "RustboroCity_Flat2_1F_Layout",
       "width": 14,
@@ -4640,6 +4660,16 @@
       "secondary_tileset": "gTileset_Forest",
       "border_filepath": "data/layouts/PetalburgWoods_East/border.bin",
       "blockdata_filepath": "data/layouts/PetalburgWoods_East/map.bin"
+    },
+    {
+      "id": "LAYOUT_DEWDROP_JUNGLE",
+      "name": "DewdropJungle_Layout",
+      "width": 26,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Dewford",
+      "border_filepath": "data/layouts/DewdropJungle/border.bin",
+      "blockdata_filepath": "data/layouts/DewdropJungle/map.bin"
     },
     {
       "id": "LAYOUT_RUSTBORO_CITY_HOUSE2_2F",
