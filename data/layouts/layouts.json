@@ -14,7 +14,7 @@
     {
       "id": "LAYOUT_SLATEPORT_CITY",
       "name": "SlateportCity_Layout",
-      "width": 46,
+      "width": 60,
       "height": 54,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Slateport",
@@ -115,7 +115,7 @@
       "id": "LAYOUT_DEWFORD_TOWN",
       "name": "DewfordTown_Layout",
       "width": 26,
-      "height": 24,
+      "height": 30,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dewford",
       "border_filepath": "data/layouts/DewfordTown/border.bin",
@@ -184,7 +184,7 @@
     {
       "id": "LAYOUT_ROUTE103",
       "name": "Route103_Layout",
-      "width": 86,
+      "width": 93,
       "height": 24,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
@@ -214,7 +214,7 @@
     {
       "id": "LAYOUT_ROUTE106",
       "name": "Route106_Layout",
-      "width": 80,
+      "width": 92,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dewford",
@@ -4650,6 +4650,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/RustboroCity_House2_2F/border.bin",
       "blockdata_filepath": "data/layouts/RustboroCity_House2_2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_MARE_CHANNEL",
+      "name": "MARE_CHANNEL_Layout",
+      "width": 20,
+      "height": 62,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Slateport",
+      "border_filepath": "data/layouts/MARE_CHANNEL/border.bin",
+      "blockdata_filepath": "data/layouts/MARE_CHANNEL/map.bin"
     }
   ]
 }

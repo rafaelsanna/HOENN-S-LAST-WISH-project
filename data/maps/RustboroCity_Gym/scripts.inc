@@ -127,6 +127,20 @@ RustboroCity_Gym_EventScript_ClimbCheck::
 RustboroCity_Gym_EventScript_ClimbCheck_End::
 	end
 
+
+////////////// sistema de andar devagar //////
+RustboroCity_Gym_EventScript_ClimbStart::
+	setflag DN_FLAG_SEARCHING
+	setflag DN_FLAG_DETECTOR_MODE
+	releaseall
+	end
+
+RustboroCity_Gym_EventScript_ClimbEnd::
+	clearflag DN_FLAG_SEARCHING
+	clearflag DN_FLAG_DETECTOR_MODE
+	releaseall
+	end
+
 @ ============================================================
 @ QUEDA: slide_down move o player fisicamente,
 @ sem necessidade de warp ou fadescreen.
@@ -138,8 +152,8 @@ RustboroCity_Gym_EventScript_Climb_Fall::
 	msgbox RustboroCity_Gym_Text_SlipperyRock, MSGBOX_DEFAULT
 	playse SE_BIKE_HOP
 	applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_Gym_Movement_Fall
-	waitmovement 0
 	playse SE_WALL_HIT
+	waitmovement 0
 	releaseall
 	end
 

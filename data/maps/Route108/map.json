@@ -22,6 +22,11 @@
       "map": "MAP_ROUTE109",
       "offset": -44,
       "direction": "right"
+    },
+    {
+      "map": "MAP_MARE_CHANNEL",
+      "offset": 0,
+      "direction": "up"
     }
   ],
   "object_events": [

@@ -1,5 +1,5 @@
-gText_Birch_Welcome::
-.string "The world hasn't been the same for long,\p"
+ gText_Birch_Welcome::
+.string "Textos e interpretacao, por: Ivan Albuquerque.\p"
 .string "Hoenn isn't the same...\p"
 .string "I am Celebi, the Time Travel POKéMON.\p"
 .string "I have traveled from Johto to Hoenn to\n"

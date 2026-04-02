@@ -1,0 +1,31 @@
+{
+  "id": "MAP_MARE_CHANNEL",
+  "name": "MARE_CHANNEL",
+  "layout": "LAYOUT_MARE_CHANNEL",
+  "music": "MUS_DUMMY",
+  "region_map_section": "MAPSEC_MARE_CHANNEL",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_ROUTE108",
+      "offset": 0,
+      "direction": "down"
+    },
+    {
+      "map": "MAP_LITTLEROOT_COAST",
+      "offset": 0,
+      "direction": "up"
+    }
+  ],
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [],
+  "bg_events": []
+}
