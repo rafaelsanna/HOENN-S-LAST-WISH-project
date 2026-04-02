@@ -59,7 +59,3 @@ gText_Birch_AreYouReady::
     .string "Step forward and follow the path\n"
     .string "that fate has chosen for you.$"
 
-
-
-
-
