@@ -43,7 +43,6 @@ PlayersHouse_1F_EventScript_MomGoSeeRoom::
 LittlerootTown_PlayersHouse_2F_EventScript_InfiniteCandyTrigger::
 	lockall
 	msgbox YouFeelSomethingInBag, MSGBOX_SIGN
-	giveitem ITEM_TOWN_MAP
 	giveitem ITEM_INFINITE_CANDY
 	setvar VAR_GOT_INFINITECANDY, 1
 	releaseall

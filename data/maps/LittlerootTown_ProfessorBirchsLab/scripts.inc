@@ -563,6 +563,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AfterGivePokedex::
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls
 	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_HereTakeMap, MSGBOX_DEFAULT
+	giveitem ITEM_TOWN_MAP
 	setvar VAR_BIRCH_LAB_STATE, 5
 	setflag FLAG_ADVENTURE_STARTED
 	setvar VAR_OLDALE_TOWN_STATE, 1
@@ -831,6 +833,12 @@ LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
     .string "She will teach you lessons no book ever\l"
     .string "could. Go on, what are you waiting for?$"
 
+LittlerootTown_ProfessorBirchsLab_Text_HereTakeMap:
+    .string "Oh, and before you go, take this!\p"
+    .string "It's a TOWN MAP.\n"
+    .string "If you ever get lost on your journey,\l"
+    .string "use this map to guide yourself!\p"
+    .string "Good luck, {PLAYER}!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese:
 	.string "ZINNIA: Oh, wow, {PLAYER}{KUN}!\n"
