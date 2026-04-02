@@ -783,28 +783,31 @@ MOSSDEEP01_EventScript_WailordJumpOver::
 	lockall
 	setflag DN_FLAG_SEARCHING
 	setflag DN_FLAG_DETECTOR_MODE
-	// Pula no lugar virado para cima
+	
+	// Player faz o pulo no lugar
 	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_JumpOverWailordUp
 	waitmovement 0
 	playse SE_BIKE_HOP
 	
-	// Move o jogador para o outro lado (atravessa o Wailord)
+	// Player e Celebi atravessam juntos (walk_up)
 	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_CrossWailordUp
+	applymovement OBJ_EVENT_ID_FOLLOWER, MOSSDEEP01_Movement_CrossWailordUp
 	waitmovement 0
 	playse SE_BIKE_HOP
+	
 	releaseall
 	end
 
 MOSSDEEP01_Movement_JumpOverWailordUp:
-	jump_in_place_up     // EXISTE - pulo no lugar virado para cima
+	jump_in_place_up
 	delay_4
-	jump_in_place_up     // Segundo pulo para efeito
+	jump_in_place_up
 	step_end
 
 MOSSDEEP01_Movement_CrossWailordUp:
-	walk_up              // Atravessa o Wailord
-	step_end	
-
+	walk_up
+	step_end
+	
 MOSSDEEP01_EventScript_WailordJumpOverAfter::
 	clearflag DN_FLAG_SEARCHING
 	clearflag DN_FLAG_DETECTOR_MODE
