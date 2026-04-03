@@ -4680,6 +4680,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/Farmers_Club/border.bin",
       "blockdata_filepath": "data/layouts/Farmers_Club/map.bin"
+    },
+    {
+      "id": "LAYOUT_FIERY_PATH_ENTRANCE",
+      "name": "Fiery_Path_Entrance_Layout",
+      "width": 15,
+      "height": 15,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/Fiery_Path_Entrance/border.bin",
+      "blockdata_filepath": "data/layouts/Fiery_Path_Entrance/map.bin"
     }
   ]
 }

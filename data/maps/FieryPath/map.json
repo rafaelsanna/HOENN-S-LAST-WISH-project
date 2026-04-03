@@ -60,8 +60,8 @@
       "x": 29,
       "y": 76,
       "elevation": 0,
-      "dest_map": "MAP_LAVARIDGE_TOWN",
-      "dest_warp_id": "6"
+      "dest_map": "MAP_FIERY_PATH_ENTRANCE",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [],

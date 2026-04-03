@@ -200,8 +200,8 @@
       "x": 7,
       "y": 17,
       "elevation": 0,
-      "dest_map": "MAP_FIERY_PATH",
-      "dest_warp_id": "2"
+      "dest_map": "MAP_FIERY_PATH_ENTRANCE",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

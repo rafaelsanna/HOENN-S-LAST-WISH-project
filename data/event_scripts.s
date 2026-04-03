@@ -1211,3 +1211,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/DewdropJungle/scripts.inc"
 
 	.include "data/maps/Farmers_Club/scripts.inc"
+
+	.include "data/maps/Fiery_Path_Entrance/scripts.inc"
