@@ -257,7 +257,7 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
     [MENUITEM_DIF_AUTOFISHING]    = sText_AutoFishing,
-    [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("DEBUG MENU"),
+    [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("WISH MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
 };
 
@@ -317,7 +317,7 @@ static const u8 sText_Desc_ButtonMode[]         = _("All buttons work as normal.
 static const u8 sText_Desc_ButtonMode_LR[]      = _("On some screens the L and R buttons\nact as left and right.");
 static const u8 sText_Desc_ButtonMode_LA[]      = _("The L button acts as another A\nbutton for one-handed play.");
 static const u8 sText_Desc_FrameType[]          = _("Choose the frame surrounding the\nwindows.");
-static const u8 sText_Desc_NpcTeams[]           = _("The difficulty of NPC trainers'\nteams.");
+static const u8 sText_Desc_NpcTeams[]           = _("The difficulty of NPC teams,\ncasual = vanilla, hard = competitive.");
 static const u8 sText_Desc_InfiniteCandyOff[]   = _("Disables the use of the infinite\ncandy.");
 static const u8 sText_Desc_InfiniteCandyOn[]    = _("Enables the use of the infinite candy.");
 static const u8 sText_Desc_BattleStyle_Shift[]  = _("Get the option to switch your\nPOKéMON after the enemies faints.");
@@ -366,9 +366,9 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff, sText_Empty},
     [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,        sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
     [MENUITEM_DIF_AUTOFISHING]  = {sText_Desc_AutoFishingOff,     sText_Desc_AutoFishingOn,  sText_Empty},
-    [MENUITEM_DIF_DEBUGMENU]    = {  // <--- NOVO
+    [MENUITEM_DIF_DEBUGMENU]    = {
         COMPOUND_STRING("Disables the debug menu completely."),
-        COMPOUND_STRING("Enables the debug menu (R+START in overworld)."),
+        COMPOUND_STRING("Enables the wish menu (debug menu)."),
         COMPOUND_STRING("")
     },
     [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,               sText_Empty,               sText_Empty},

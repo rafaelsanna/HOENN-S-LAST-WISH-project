@@ -87,6 +87,8 @@ enum {
     MSG_WAS_RELEASED,
     MSG_BYE_BYE,
     MSG_MARK_POKE,
+    MSG_DEBUG_MON,
+    MSG_NORMAL_MON,
     MSG_LAST_POKE,
     MSG_PARTY_FULL,
     MSG_HOLDING_POKE,
@@ -650,7 +652,6 @@ static void SaveMovingMon(void);
 static void LoadSavedMovingMon(void);
 static void InitSummaryScreenData(void);
 static void SetSelectionAfterSummaryScreen(void);
-static void SetMonMarkings(u8);
 static bool8 IsRemovingLastPartyMon(void);
 static bool8 CanPlaceMon(void);
 static bool8 CanShiftMon(void);
@@ -1055,6 +1056,8 @@ static const struct StorageMessage sMessages[] =
     [MSG_WAS_RELEASED]         = {COMPOUND_STRING("{DYNAMIC 0} was released."),  MSG_VAR_RELEASE_MON_1},
     [MSG_BYE_BYE]              = {COMPOUND_STRING("Bye-bye, {DYNAMIC 0}!"),      MSG_VAR_RELEASE_MON_3},
     [MSG_MARK_POKE]            = {COMPOUND_STRING("Mark your POKéMON."),         MSG_VAR_NONE},
+    [MSG_DEBUG_MON]  = {COMPOUND_STRING("This Pokémon was generated\nby debug menu."), MSG_VAR_NONE},
+    [MSG_NORMAL_MON] = {COMPOUND_STRING("This is a normal Pokémon."), MSG_VAR_NONE},
     [MSG_LAST_POKE]            = {COMPOUND_STRING("That's your last POKéMON!"),  MSG_VAR_NONE},
     [MSG_PARTY_FULL]           = {gText_YourPartysFull,                          MSG_VAR_NONE},
     [MSG_HOLDING_POKE]         = {COMPOUND_STRING("You're holding a POKéMON!"),  MSG_VAR_NONE},
@@ -3055,25 +3058,18 @@ static void Task_ReleaseMon(u8 taskId)
 
 static void Task_ShowMarkMenu(u8 taskId)
 {
-    switch (sStorage->state)
+    u8 markings = sStorage->displayMonMarkings;
+
+    if (markings & 0x04) // triângulo = debug
     {
-    case 0:
-        PrintMessage(MSG_MARK_POKE);
-        sStorage->markMenu.markings = sStorage->displayMonMarkings;
-        OpenMonMarkingsMenu(sStorage->displayMonMarkings, 0xb0, 0x10);
-        sStorage->state++;
-        break;
-    case 1:
-        if (!HandleMonMarkingsMenuInput())
-        {
-            FreeMonMarkingsMenu();
-            ClearBottomWindow();
-            SetMonMarkings(sStorage->markMenu.markings);
-            RefreshDisplayMonData();
-            SetPokeStorageTask(Task_PokeStorageMain);
-        }
-        break;
+        PrintMessage(MSG_DEBUG_MON);
     }
+    else
+    {
+        PrintMessage(MSG_NORMAL_MON);
+    }
+
+    SetPokeStorageTask(Task_PokeStorageMain);
 }
 
 static void Task_TakeItemForMoving(u8 taskId)
@@ -6829,22 +6825,6 @@ s16 CompactPartySlots(void)
         ZeroMonData(&gPlayerParty[last]);
 
     return retVal;
-}
-
-static void SetMonMarkings(u8 markings)
-{
-    sStorage->displayMonMarkings = markings;
-    if (sIsMonBeingMoved)
-    {
-        SetMonData(&sStorage->movingMon, MON_DATA_MARKINGS, &markings);
-    }
-    else
-    {
-        if (sCursorArea == CURSOR_AREA_IN_PARTY)
-            SetMonData(&gPlayerParty[sCursorPosition], MON_DATA_MARKINGS, &markings);
-        if (sCursorArea == CURSOR_AREA_IN_BOX)
-            SetCurrentBoxMonData(sCursorPosition, MON_DATA_MARKINGS, &markings);
-    }
 }
 
 static bool8 IsRemovingLastPartyMon(void)

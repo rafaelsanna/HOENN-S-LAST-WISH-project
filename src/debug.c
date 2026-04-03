@@ -309,7 +309,6 @@ static void DebugAction_Give_Item_SelectId(u8 taskId);
 static void DebugAction_Give_Item_SelectQuantity(u8 taskId);
 static void DebugAction_Give_PokemonSimple(u8 taskId);
 static void DebugAction_Give_PokemonComplex(u8 taskId);
-static void DebugAction_Give_NewEgg(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectId(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId);
@@ -593,7 +592,6 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
     { COMPOUND_STRING("Give item XYZ…"),    DebugAction_Give_Item },
     { COMPOUND_STRING("Pokémon (Basic)"),   DebugAction_Give_PokemonSimple },
     { COMPOUND_STRING("Pokémon (Complex)"), DebugAction_Give_PokemonComplex },
-    { COMPOUND_STRING("Give Egg"),          DebugAction_Give_NewEgg },
     { COMPOUND_STRING("Give Decoration…"),  DebugAction_Give_Decoration },
     { COMPOUND_STRING("Max Money"),         DebugAction_Give_MaxMoney },
     { COMPOUND_STRING("Max Coins"),         DebugAction_Give_MaxCoins },
@@ -2320,13 +2318,6 @@ static void DebugAction_Give_Pokemon_SelectId(u8 taskId)
             gTasks[taskId].func = DebugAction_Give_Pokemon_SelectLevel;
             return;
         }
-
-        ScriptGiveEgg(sDebugMonData->species);
-        PlaySE(SE_SELECT);
-        Free(sDebugMonData);
-        FreeMonIconPalettes();
-        FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
-        DebugAction_DestroyExtraWindow(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
@@ -2362,11 +2353,34 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
     {
         FreeMonIconPalettes();
         FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
+
         if (gTasks[taskId].tIsComplex == FALSE)
         {
+
+if (gPlayerPartyCount >= PARTY_SIZE)
+{
+    PlaySE(SE_FAILURE);
+
+    Free(sDebugMonData);
+    FreeMonIconPalettes();
+    FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
+    DebugAction_DestroyExtraWindow(taskId);
+
+    return;
+}
+
             PlaySE(MUS_LEVEL_UP);
             ScriptGiveMon(sDebugMonData->species, gTasks[taskId].tInput, ITEM_NONE);
-            // Set flag for user convenience
+
+            // ✅ MARCA TRIÂNGULO
+            {
+                struct Pokemon *mon = &gPlayerParty[gPlayerPartyCount - 1];
+
+                u8 markings = GetMonData(mon, MON_DATA_MARKINGS, NULL);
+                markings |= 0x04;
+                SetMonData(mon, MON_DATA_MARKINGS, &markings);
+            }
+
             FlagSet(FLAG_SYS_POKEMON_GET);
             Free(sDebugMonData);
             DebugAction_DestroyExtraWindow(taskId);
@@ -2400,18 +2414,22 @@ static void Debug_Display_Nature(u32 natureId, u32 digit, u8 windowId)
     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
 }
 
-static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId)
+static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) //// you can't gain shinys now
 {
     if (JOY_NEW(DPAD_ANY))
     {
         PlaySE(SE_SELECT);
         gTasks[taskId].tInput ^= JOY_NEW(DPAD_UP | DPAD_DOWN) > 0;
+        // Debug_Display_TrueFalse(gTasks[taskId].tInput, gTasks[taskId].tSubWindowId, sDebugText_PokemonShiny);
+        // Forçar sempre FALSE (não shiny)
+        gTasks[taskId].tInput = 0;
         Debug_Display_TrueFalse(gTasks[taskId].tInput, gTasks[taskId].tSubWindowId, sDebugText_PokemonShiny);
     }
 
     if (JOY_NEW(A_BUTTON))
     {
-        sDebugMonData->isShiny = gTasks[taskId].tInput;
+        // sDebugMonData->isShiny = gTasks[taskId].tInput;
+        sDebugMonData->isShiny = FALSE; // Forçar sempre não shiny
         gTasks[taskId].tInput = 0;
         gTasks[taskId].tDigit = 0;
         Debug_Display_Nature(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
@@ -2827,7 +2845,20 @@ static void DebugAction_Give_Pokemon_Move(u8 taskId)
 }
 
 static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://github.com/ghoulslash/pokeemerald/tree/custom-givemon
-{
+    {
+    // +++ BLOQUEIO PARTY CHEIA +++
+    if (gPlayerPartyCount >= PARTY_SIZE)
+    {
+        PlaySE(SE_FAILURE);
+
+        Free(sDebugMonData);
+        FreeMonIconPalettes();
+        FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
+        DebugAction_DestroyExtraWindow(taskId);
+
+        return;
+    }
+    // +++ FIM +++
     enum NationalDexOrder nationalDexNum;
     int sentToPc;
     struct Pokemon mon;
@@ -2839,7 +2870,7 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     u8 ev_val;
     u16 species     = sDebugMonData->species;
     u8 level        = sDebugMonData->level;
-    bool8 isShiny   = sDebugMonData->isShiny;
+    bool8 isShiny   = FALSE; // Desabilitado - não permitir shiny pelo debug menu
     u8 nature       = sDebugMonData->nature;
     u8 abilityNum   = sDebugMonData->abilityNum;
     u32 teraType    = sDebugMonData->teraType;
@@ -2913,6 +2944,17 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
 
     SetMonData(&mon, MON_DATA_ABILITY_NUM, &abilityNum);
 
+    
+// +++ MARCA DEBUG (TRIÂNGULO) +++
+
+{
+    u8 currentMarkings = (u8)GetMonData(&mon, MON_DATA_MARKINGS, NULL);
+    u8 debugMarking = currentMarkings | 0x04;
+    SetMonData(&mon, MON_DATA_MARKINGS, &debugMarking);
+}
+
+// +++ FIM +++
+
     //Update mon stats before giving it to the player
     CalculateMonStats(&mon);
 
@@ -2971,42 +3013,6 @@ static void Debug_Display_DecorationInfo(u32 itemId, u32 digit, u8 windowId)
     ConvertIntToDecimalStringN(gStringVar3, itemId, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_ITEMS);
     StringExpandPlaceholders(gStringVar4, COMPOUND_STRING("Decor ID: {STR_VAR_3}\n{STR_VAR_1}{CLEAR_TO 90}\n\n{STR_VAR_2}"));
     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
-}
-
-static void DebugAction_Give_NewEgg(u8 taskId)
-{
-    u8 windowId;
-
-    //Mon data struct
-    sDebugMonData = AllocZeroed(sizeof(struct DebugMonData));
-    ResetMonDataStruct(sDebugMonData);
-
-    //Window initialization
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
-    RemoveWindow(gTasks[taskId].tWindowId);
-
-    HideMapNamePopUpWindow();
-    LoadMessageBoxAndBorderGfx();
-    windowId = AddWindow(&sDebugMenuWindowTemplateExtra);
-    DrawStdWindowFrame(windowId, FALSE);
-
-    CopyWindowToVram(windowId, COPYWIN_FULL);
-
-    // Display initial Pokémon
-    Debug_Display_SpeciesInfo(sDebugMonData->species, 0, windowId);
-
-    //Set task data
-    gTasks[taskId].func = DebugAction_Give_Pokemon_SelectId;
-    gTasks[taskId].tSubWindowId = windowId;
-    gTasks[taskId].tInput = sDebugMonData->species;
-    gTasks[taskId].tDigit = 0;
-    gTasks[taskId].tIsComplex = FALSE;
-    gTasks[taskId].tIsEgg = TRUE;
-
-    FreeMonIconPalettes();
-    LoadMonIconPalette(gTasks[taskId].tInput);
-    gTasks[taskId].tSpriteId = CreateMonIcon(gTasks[taskId].tInput, SpriteCB_MonIcon, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4, 0);
-    gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
 }
 
 static void DebugAction_Give_Decoration(u8 taskId)
