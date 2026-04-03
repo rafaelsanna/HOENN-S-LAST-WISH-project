@@ -619,6 +619,26 @@ GraniteHill_Text_CeciliaPostBattle:
 	.string "Will I have any energy left to make\n"
 	.string "the return trip?$"	
 
+DewdropJungle_Text_DrewIntro:
+	.string "Oh! A visitor in the jungle!\n"
+	.string "I love to explore here!\p"
+	.string "I've tracked rare insects through\n"
+	.string "every vine and shadow here.\p"
+	.string "Let's battle! Show me what\n"
+	.string "you've learned in the wild!$"
+
+DewdropJungle_Text_DrewDefeated:
+	.string "You're a rare find, just like\n"
+	.string "the bugs I chase out here.$"
+
+DewdropJungle_Text_DrewPostBattle:
+	.string "RENTON thinks loud music is exciting.\n"
+	.string "He's never heard the jungle at midnight.\p"
+	.string "Crickets singing, NINCADA humming…\n"
+	.string "That's real music.\p"
+	.string "Come back anytime, the jungle\n"
+	.string "always has more secrets!$"
+
 Route107_Text_DarrinIntro:
 	.string "Yawn…\p"
 	.string "I must have drifted off to sleep while\n"
