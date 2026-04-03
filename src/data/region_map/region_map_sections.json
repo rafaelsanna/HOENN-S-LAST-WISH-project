@@ -1238,6 +1238,10 @@
     {
       "id": "MAPSEC_TANGLED_THICKET",
       "name": "TANGLED THICKET"
+    },
+    {
+      "id": "MAPSEC_PETALBURG_CAVE",
+      "name": "PETALBURG CAVE"
     }
   ]
 }

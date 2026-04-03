@@ -204,7 +204,7 @@
     {
       "id": "LAYOUT_ROUTE104",
       "name": "Route104_Layout",
-      "width": 40,
+      "width": 48,
       "height": 80,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Rustboro",
@@ -4694,12 +4694,22 @@
     {
       "id": "LAYOUT_TANGLED_THICKET",
       "name": "TangledThicket_Layout",
-      "width": 41,
-      "height": 38,
+      "width": 39,
+      "height": 60,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/TangledThicket/border.bin",
       "blockdata_filepath": "data/layouts/TangledThicket/map.bin"
+    },
+    {
+      "id": "LAYOUT_PETALBURG_CAVE",
+      "name": "PetalburgCave_Layout",
+      "width": 20,
+      "height": 26,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/PetalburgCave/border.bin",
+      "blockdata_filepath": "data/layouts/PetalburgCave/map.bin"
     }
   ]
 }

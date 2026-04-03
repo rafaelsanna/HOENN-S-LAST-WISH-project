@@ -457,7 +457,8 @@
     "TerraCave_End",
     "AlteringCave",
     "MeteorFalls_StevensCave",
-    "Fiery_Path_Entrance"
+    "Fiery_Path_Entrance",
+    "PetalburgCave"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",
