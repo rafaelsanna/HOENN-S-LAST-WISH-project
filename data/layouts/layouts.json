@@ -4690,6 +4690,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/Fiery_Path_Entrance/border.bin",
       "blockdata_filepath": "data/layouts/Fiery_Path_Entrance/map.bin"
+    },
+    {
+      "id": "LAYOUT_TANGLED_THICKET",
+      "name": "TangledThicket_Layout",
+      "width": 41,
+      "height": 38,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/TangledThicket/border.bin",
+      "blockdata_filepath": "data/layouts/TangledThicket/map.bin"
     }
   ]
 }

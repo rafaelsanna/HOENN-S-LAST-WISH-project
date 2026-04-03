@@ -216,3 +216,6 @@ const u16 gMetatileAttributes_Forest[] = INCBIN_U16("data/tilesets/secondary/for
 
 const u16 gMetatiles_hlwcustom1[] = INCBIN_U16("data/tilesets/secondary/hlwcustom_1/metatiles.bin");
 const u16 gMetatileAttributes_hlwcustom1[] = INCBIN_U16("data/tilesets/secondary/hlwcustom_1/metatile_attributes.bin");
+
+const u16 gMetatiles_hlwcustom2[] = INCBIN_U16("data/tilesets/secondary/hlwcustom_2/metatiles.bin");
+const u16 gMetatileAttributes_hlwcustom2[] = INCBIN_U16("data/tilesets/secondary/hlwcustom_2/metatile_attributes.bin");

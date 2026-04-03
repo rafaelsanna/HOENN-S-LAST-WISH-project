@@ -863,3 +863,14 @@ const struct Tileset gTileset_hlwcustom1 =
     .metatileAttributes = gMetatileAttributes_hlwcustom1,
     .callback = InitTilesetAnim_hlwcustom1,  
 };
+
+const struct Tileset gTileset_hlwcustom2 =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_hlwcustom2,
+    .palettes = gTilesetPalettes_hlwcustom2,
+    .metatiles = gMetatiles_hlwcustom2,
+    .metatileAttributes = gMetatileAttributes_hlwcustom2,
+    .callback = NULL,
+};
