@@ -2,7 +2,7 @@
   "id": "MAP_OLDALE_TOWN_OLD_TUNEL_2",
   "name": "OldaleTown_OldTunel_2",
   "layout": "LAYOUT_OLDALE_TOWN_OLD_TUNEL_2",
-  "music": "MUS_RG_SEVII_CAVE",
+  "music": "MUS_RG_MT_MOON",
   "region_map_section": "MAPSEC_OLDALE_TOWN",
   "requires_flash": true,
   "weather": "WEATHER_NONE",

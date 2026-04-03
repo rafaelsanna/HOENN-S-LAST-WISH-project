@@ -386,6 +386,8 @@ mus_rustboro_1_B1:
 	.byte	GOTO
 	 .word	mus_rustboro_1_B1
 mus_rustboro_1_B2:
+	.byte		VOICE , 1
+	.byte		        1
 	.byte		PAN   , c_v+0
 	.byte		        c_v+0
 	.byte		BEND  , c_v+0
@@ -826,14 +828,11 @@ mus_rustboro_3:
 	.byte	KEYSH , mus_rustboro_key+0
 @ 000   ----------------------------------------
 	.byte		VOICE , 81
+	.byte		VOL   , 88*mus_rustboro_mvl/mxv
 	.byte		PAN   , c_v+0
-	.byte		VOL   , 100*mus_rustboro_mvl/mxv
-	.byte		PAN   , c_v+0
-	.byte		VOL   , 100*mus_rustboro_mvl/mxv
-	.byte		PAN   , c_v+0
-	.byte		VOL   , 100*mus_rustboro_mvl/mxv
-	.byte		PAN   , c_v+0
-	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte		BEND  , c_v+0
 	.byte		        c_v+0
 	.byte		        c_v+0
@@ -1079,9 +1078,7 @@ mus_rustboro_3_B2:
 	.byte		VOICE , 81
 	.byte		        81
 	.byte		PAN   , c_v+0
-	.byte		VOL   , 100*mus_rustboro_mvl/mxv
-	.byte		PAN   , c_v+0
-	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		        c_v+0
 	.byte		BEND  , c_v+0
 	.byte		        c_v+0
 	.byte	FINE
@@ -1935,7 +1932,7 @@ mus_rustboro_7:
 	.byte	KEYSH , mus_rustboro_key+0
 @ 000   ----------------------------------------
 	.byte		VOICE , 86
-	.byte		VOL   , 59*mus_rustboro_mvl/mxv
+	.byte		VOL   , 63*mus_rustboro_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte		        c_v+0
 	.byte		        c_v+0
@@ -2195,11 +2192,254 @@ mus_rustboro_7_B2:
 	.byte		        c_v+0
 	.byte	FINE
 
+@**************** Track 8 (Midi-Chn.8) ****************@
+
+mus_rustboro_8:
+	.byte	KEYSH , mus_rustboro_key+0
+@ 000   ----------------------------------------
+	.byte		VOICE , 126
+	.byte		PAN   , c_v+0
+	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		BEND  , c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte	W84
+mus_rustboro_8_B1:
+	.byte		N06   , An4 , v112
+	.byte	W12
+@ 001   ----------------------------------------
+mus_rustboro_8_001:
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte		        An4 , v064
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte	PEND
+@ 002   ----------------------------------------
+mus_rustboro_8_002:
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte		        An4 , v064
+	.byte	W12
+	.byte		        An4 , v104
+	.byte	W12
+	.byte		        An4 , v064
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte	PEND
+@ 003   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 004   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 005   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 006   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 007   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 008   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 009   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 010   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 011   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 012   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 013   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 014   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 015   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 016   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 017   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 018   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 019   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 020   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 021   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 022   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 023   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_001
+@ 024   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_002
+@ 025   ----------------------------------------
+mus_rustboro_8_025:
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte		N03   , En4 
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W12
+	.byte		N06   , An4 
+	.byte	W12
+	.byte	PEND
+@ 026   ----------------------------------------
+mus_rustboro_8_026:
+	.byte		N03   , En4 , v112
+	.byte	W12
+	.byte		N06   , An4 
+	.byte	W12
+	.byte		N03   , En4 
+	.byte	W12
+	.byte		N03   
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte	PEND
+@ 027   ----------------------------------------
+	.byte		        An4 , v064
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte		N03   , En4 
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W12
+@ 028   ----------------------------------------
+	.byte		N03   
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W12
+	.byte		N06   , An4 
+	.byte	W12
+	.byte		        An4 , v064
+	.byte	W24
+	.byte		N06   
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+@ 029   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_025
+@ 030   ----------------------------------------
+	.byte	PATT
+	 .word	mus_rustboro_8_026
+@ 031   ----------------------------------------
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		        An4 , v112
+	.byte	W12
+	.byte		N03   , En4 
+	.byte	W12
+	.byte		N06   , An4 , v064
+	.byte	W12
+	.byte		N03   , En4 , v112
+	.byte	W24
+@ 032   ----------------------------------------
+	.byte		N03   
+	.byte	W12
+	.byte		N03   
+	.byte	W12
+	.byte		N03   
+	.byte	W12
+	.byte		N06   , An4 
+	.byte	W12
+	.byte		N06   
+	.byte	W12
+	.byte		N15   , En4 
+	.byte	W24
+	.byte	GOTO
+	 .word	mus_rustboro_8_B1
+mus_rustboro_8_B2:
+	.byte		VOICE , 126
+	.byte		        126
+	.byte		PAN   , c_v+0
+	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		VOL   , 100*mus_rustboro_mvl/mxv
+	.byte		BEND  , c_v+0
+	.byte		        c_v+0
+	.byte	FINE
+
 @******************************************************@
 	.align	2
 
 mus_rustboro:
-	.byte	7	@ NumTrks
+	.byte	8	@ NumTrks
 	.byte	0	@ NumBlks
 	.byte	mus_rustboro_pri	@ Priority
 	.byte	mus_rustboro_rev	@ Reverb.
@@ -2213,5 +2453,6 @@ mus_rustboro:
 	.word	mus_rustboro_5
 	.word	mus_rustboro_6
 	.word	mus_rustboro_7
+	.word	mus_rustboro_8
 
 	.end

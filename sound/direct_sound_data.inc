@@ -6463,3 +6463,7 @@ DirectSoundWaveData_acoustic_bass::
 	.align 2
 DirectSoundWaveData_muted_trumpet::
 	.incbin "sound/direct_sound_samples/muted_trumpet.bin"
+
+	.align 2
+DirectSoundWaveData_muted_trumpet2::
+	.incbin "sound/direct_sound_samples/muted_trumpet2.bin"

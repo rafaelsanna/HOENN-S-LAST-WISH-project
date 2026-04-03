@@ -784,6 +784,7 @@ struct BattleStruct
     u8 hazardsCounter:4; // Counter for applying hazard on switch in
     u8 incrementEchoedVoice:1;
     u8 echoedVoiceCounter:3;
+    bool8 lastMonMusicPlayed; // Evita tocar a musica a musica repetidas vezes
 };
 
 struct AiBattleData
