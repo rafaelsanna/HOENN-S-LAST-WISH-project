@@ -1215,3 +1215,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Fiery_Path_Entrance/scripts.inc"
 
 	.include "data/maps/TangledThicket/scripts.inc"
+
+	.include "data/maps/PetalburgCave/scripts.inc"
