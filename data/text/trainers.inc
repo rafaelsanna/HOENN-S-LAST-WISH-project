@@ -639,6 +639,45 @@ DewdropJungle_Text_DrewPostBattle:
 	.string "Come back anytime, the jungle\n"
 	.string "always has more secrets!$"
 
+DewdropJungle_Text_AriaIntro:
+	.string "Oh! A fellow traveler in this\n"
+	.string "beutiful place!\p"
+	.string "I came here seeking inspiration\n"
+	.string "for my paintings, the shadows,\l"
+	.string "the light, the hidden wonders...\p"
+	.string "Let's battle! Perhaps your spirit\n"
+	.string "will spark my next masterpiece!$"
+
+DewdropJungle_Text_AriaDefeated:
+	.string "Your colors burned brighter\n"
+	.string "than mine today.$"
+
+DewdropJungle_Text_AriaPostBattle:
+	.string "This jungle breathes art.\n"
+	.string "Every leaf tells a story.\p"
+	.string "I'll capture its soul on canvas\n"
+	.string "before I leave.\p"
+	.string "Thank you for the inspiration,\n"
+	.string "may our paths cross again!$"
+
+DewdropJungle_Text_XanderIntro:
+	.string "Hey there! I came to this jungle\n"
+	.string "looking for adventure and strong\l"
+	.string "rock solid POKéMON...\p"
+	.string "But all I've found so far is\n"
+	.string "plants, rain, and mud...\p"
+	.string "At least you showed up, let's\n"
+	.string "fight! Maybe that'll save my trip.$"
+
+DewdropJungle_Text_XanderDefeated:
+	.string "Great... now I'm wet AND defeated.$"
+
+DewdropJungle_Text_XanderPostBattle:
+	.string "My boots are full of water, my\n"
+	.string "map turned into mush...\p"
+	.string "I'm done. Next time, I'm staying\n"
+	.string "somewhere dry. This jungle hates me.$"
+
 Route107_Text_DarrinIntro:
 	.string "Yawn…\p"
 	.string "I must have drifted off to sleep while\n"
