@@ -416,7 +416,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RELLOR)",
-      "x": 6,
+      "x": 21,
       "y": 17,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",

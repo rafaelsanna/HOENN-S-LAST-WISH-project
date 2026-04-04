@@ -894,6 +894,9 @@
 #define TRAINER_RIO_CASUAL                  888
 #define TRAINER_AURORA                      889
 #define TRAINER_DEW                         890
+#define TRAINER_XANDER                      891
+#define TRAINER_ARIA                        892
+
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
