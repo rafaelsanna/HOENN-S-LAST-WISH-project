@@ -2614,7 +2614,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
             ANIMCMD_FRAME(1, 25),
             ANIMCMD_FRAME(0, 25),
         ),
-        .frontAnimId = ANIM_V_SLIDE_WOBBLE,
+        .frontAnimId = ANIM_H_JUMPS_V_STRETCH,
         .enemyMonElevation = P_GBA_STYLE_SPECIES_GFX ? 11 : 15,
         .backPic = gMonBackPic_Hoppip,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 48) : MON_COORDS_SIZE(64, 48),
@@ -2625,7 +2625,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconSprite = gMonIcon_Hoppip,
         .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-5, 12, SHADOW_SIZE_S)
+        SHADOW(-4, 7, SHADOW_SIZE_S)
         FOOTPRINT(Hoppip)
         OVERWORLD(
             sPicTable_Hoppip,
@@ -2693,7 +2693,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
             ANIMCMD_FRAME(1, 12),
             ANIMCMD_FRAME(0, 15),
         ),
-        .frontAnimId = ANIM_RISING_WOBBLE,
+        .frontAnimId = ANIM_BOUNCE_ROTATE_TO_SIDES_SLOW,
         .enemyMonElevation = P_GBA_STYLE_SPECIES_GFX ? 12 : 15,
         .backPic = gMonBackPic_Skiploom,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 40) : MON_COORDS_SIZE(64, 56),
@@ -2702,9 +2702,9 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .palette = gMonPalette_Skiploom,
         .shinyPalette = gMonShinyPalette_Skiploom,
         .iconSprite = gMonIcon_Skiploom,
-        .iconPalIndex = 2,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-1, 10, SHADOW_SIZE_S)
+        SHADOW(-3, 3, SHADOW_SIZE_M)
         FOOTPRINT(Skiploom)
         OVERWORLD(
             sPicTable_Skiploom,
