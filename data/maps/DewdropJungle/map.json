@@ -35,8 +35,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
-      "x": 8,
-      "y": 11,
+      "x": 5,
+      "y": 24,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 2,
@@ -74,8 +74,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
-      "x": 4,
-      "y": 19,
+      "x": -7,
+      "y": -5,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 2,
