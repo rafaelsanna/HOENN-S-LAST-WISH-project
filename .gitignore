@@ -46,3 +46,12 @@ build/
 *.smolTM
 __pycache__
 porymap.user.cfg
+porymap.cfg
+porymap.ini
+.porymap/
+*.porymap.user
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
