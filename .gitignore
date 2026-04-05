@@ -47,8 +47,6 @@ build/
 __pycache__
 porymap.user.cfg
 porymap.cfg
-porymap.ini
-.porymap/
 *.porymap.user
 .vscode/
 .idea/
