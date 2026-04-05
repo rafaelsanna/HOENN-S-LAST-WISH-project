@@ -54,4 +54,5 @@ porymap.ini
 .idea/
 *.swp
 *.swo
-*~
+*~porymap.user.cfg
+porymap.user.cfg
