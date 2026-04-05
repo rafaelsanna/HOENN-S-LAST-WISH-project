@@ -768,11 +768,120 @@ Double Battle: Yes
 AI: Check Bad Move
 
 Carvanha
-Level: 25
+Level: 30
 IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Rhyhorn
-Level: 25
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+=== TRAINER_EVA ===
+Name: Eva
+Class: Guitarist
+Pic: Guitarist F
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move
+
+Snubbull
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Koffing
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Haunter
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Houndour
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+=== TRAINER_LOCH ===
+Name: Loch
+Class: Ruin Maniac
+Pic: Ruin Maniac
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Nosepass
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Zubat
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Sableye
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+=== TRAINER_SATSUKI ===
+Name: Satsuki
+Class: Channeler
+Pic: Channeler
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move
+
+Chimecho
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Meowth
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Xatu
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+=== TRAINER_JAIME ===
+Name: Jaime
+Class: Photographer
+Pic: Photographer
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Togetic
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Flareon
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Aipom
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+=== TRAINER_FLEMING ===
+Name: Fleming
+Class: Kindler
+Pic: Kindler
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Magby
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Totodile
+Level: 30
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Snubbull
+Level: 30
 IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_DEW ===

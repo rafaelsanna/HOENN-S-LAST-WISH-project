@@ -641,6 +641,126 @@ FieryPath_Text_DaxonPostBattle:
 	.string "Stay sharp down here. The PATH\n"
 	.string "doesn't forgive carelessness.$"
 
+FieryPath_Text_FlemingIntro:
+	.string "Heh... you felt that tremor too,\n"
+	.string "didn't you?\p"
+	.string "Most trainers turn back when the\n"
+	.string "ground starts breathing like this.\p"
+	.string "But not me. I'm waiting for\n"
+	.string "something to break through.\p"
+	.string "If you're sticking around...\n"
+	.string "prove you can handle the heat!$"
+
+FieryPath_Text_FlemingDefeated:
+	.string "Tch...\n"
+	.string "You are good!$"
+
+FieryPath_Text_FlemingPostBattle:
+	.string "Listen closely... between the\n"
+	.string "rumbling, there's another sound.\p"
+	.string "Like something shifting far\n"
+	.string "below us... not just magma.\p"
+	.string "People say it's just pressure.\n"
+	.string "I think it's something waking up.\p"
+	.string "If it reaches the surface...\n"
+	.string "this cave won't be just hot...$"
+
+FieryPath_Text_EvaIntro:
+	.string "Huh. Another trainer crawling through\n"
+	.string "this oven? Whatever...\p"
+	.string "You heard that AMASTERASU girl?\n"
+	.string "Her pop songs make my ears bleed.\p"
+	.string "This cave? This HEAT? Now THAT's\n"
+	.string "real, loud, raw, and vulcanic!\p"
+	.string "Let's crank up the volume!\n"
+	.string "Show me you don't suck!$"
+
+FieryPath_Text_EvaDefeated:
+	.string "Tch... not bad.\n"
+	.string "You've got some fire after all.$"
+
+FieryPath_Text_EvaPostBattle:
+	.string "AMATERASU can keep her bubblegum\n"
+	.string "trash. I'll take heat over melody.\p"
+	.string "Down here is PURE, fire is real...\n"
+	.string "No autotune, no filters, just power.\p"
+	.string "If you ever want a REAL concert,\n"
+	.string "find me where the ground burns.\p"
+	.string "Later. Don't get cooked.$"
+
+FieryPath_Text_JaimeIntro:
+	.string "Hey! Don't move!\p"
+	.string "That pose, that light hitting the\n"
+	.string "lava... it's perfect!\p"
+	.string "I'm professional photographer chasing\n"
+	.string "shots no one else dares to take!\p"
+	.string "Only solidified lava formations\n"
+	.string "like these can create scenery\n"
+	.string "this unreal!\p"
+	.string "But a great photo needs action!\n"
+	.string "Battle me, this will be legendary!$"
+
+FieryPath_Text_JaimeDefeated:
+	.string "Wait, hold that look!\n"
+	.string "That was PERFECT!$"
+
+FieryPath_Text_JaimePostBattle:
+	.string "Your performance... spectacular!\p"
+	.string "And that outfit, straight out of\n"
+	.string "a hero's journey!\p"
+	.string "These shots are incredible!\n"
+	.string "You HAVE to see them!\p"
+	.string "I'm winning an award for sure\n"
+	.string "with this set!$"
+
+FieryPath_Text_LochIntro:
+	.string "...?\p"
+	.string "Not many people come this far\n"
+	.string "into the FIERY PATH.\p"
+	.string "I've been looking around for\n"
+	.string "anything... unusual.\p"
+	.string "Old markings, strange rocks...\n"
+	.string "stuff like that.\p"
+	.string "Heh... maybe I'm just seeing\n"
+	.string "things in the heat.\p"
+	.string "Anyway, let's battle!$"
+
+FieryPath_Text_LochDefeated:
+	.string "Guess I got carried away...$"
+
+FieryPath_Text_LochPostBattle:
+	.string "Still... some of these walls\n"
+	.string "don't look right.\p"
+	.string "Like they weren't formed by\n"
+	.string "lava alone.\p"
+	.string "Eh, probably nothing.\n"
+	.string "Or maybe not...$"
+
+FieryPath_Text_SatsukiIntro:
+	.string "The flames here... they never\n"
+	.string "truly go out.\p"
+	.string "Long ago, people brought\n"
+	.string "their offerings to this place.\p"
+	.string "Everything cast into the lava...\n"
+	.string "burned, and was made pure.\p"
+	.string "An old ritual, forgotten by most.\p"
+	.string "...\p"
+	.string "You there, child.\n"
+	.string "Let me read your aura...$"
+
+FieryPath_Text_SatsukiDefeated:
+	.string "Ahh... the flames flicker\n"
+	.string "around you...$"
+
+FieryPath_Text_SatsukiPostBattle:
+	.string "The fire spirits whisper...\n"
+	.string "though their voices are unclear.\p"
+	.string "They speak of a path set apart\n"
+	.string "from all others...\p"
+	.string "Whether it leads to light...\n"
+	.string "or to ashes...\p"
+	.string "That, even they will not say.$"
+
 DewdropJungle_Text_DrewIntro:
 	.string "Oh! A visitor in the jungle!\n"
 	.string "I love to explore here!\p"

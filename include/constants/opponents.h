@@ -897,7 +897,11 @@
 #define TRAINER_XANDER                      891
 #define TRAINER_ARIA                        892
 #define TRAINER_DAXON                       893
-
+#define TRAINER_FLEMING                     894
+#define TRAINER_EVA                         895
+#define TRAINER_JAIME                       896
+#define TRAINER_LOCH                        897
+#define TRAINER_SATSUKI                     898
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
