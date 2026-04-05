@@ -58,11 +58,65 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_COUNT,
 };
 
-enum //Windows
+#define YPOS_TEXTSPEED    (MENUITEM_TEXTSPEED * 16)
+#define YPOS_BATTLESCENE  (MENUITEM_BATTLESCENE * 16)
+#define YPOS_BATTLESTYLE  (MENUITEM_BATTLESTYLE * 16)
+#define YPOS_SOUND        (MENUITEM_SOUND * 16)
+#define YPOS_BUTTONMODE   (MENUITEM_BUTTONMODE * 16)
+#define YPOS_FRAMETYPE    (MENUITEM_FRAMETYPE * 16)
+
+static void Task_OptionMenuFadeIn(u8 taskId);
+static void Task_OptionMenuProcessInput(u8 taskId);
+static void Task_OptionMenuSave(u8 taskId);
+static void Task_OptionMenuFadeOut(u8 taskId);
+static void HighlightOptionMenuItem(u8 selection);
+static u8 TextSpeed_ProcessInput(u8 selection);
+static void TextSpeed_DrawChoices(u8 selection);
+static u8 BattleScene_ProcessInput(u8 selection);
+static void BattleScene_DrawChoices(u8 selection);
+static u8 BattleStyle_ProcessInput(u8 selection);
+static void BattleStyle_DrawChoices(u8 selection);
+static u8 Sound_ProcessInput(u8 selection);
+static void Sound_DrawChoices(u8 selection);
+static u8 FrameType_ProcessInput(u8 selection);
+static void FrameType_DrawChoices(u8 selection);
+static u8 ButtonMode_ProcessInput(u8 selection);
+static void ButtonMode_DrawChoices(u8 selection);
+static void DrawHeaderText(void);
+static void DrawOptionMenuTexts(void);
+static void DrawBgWindowFrames(void);
+
+EWRAM_DATA static bool8 sArrowPressed = FALSE;
+
+static const u8 gText_Option[]             = _("OPTION");
+static const u8 gText_TextSpeedSlow[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SLOW");
+static const u8 gText_TextSpeedMid[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MID");
+static const u8 gText_TextSpeedFast[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}FAST");
+static const u8 gText_BattleSceneOn[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
+static const u8 gText_BattleSceneOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+static const u8 gText_BattleStyleShift[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SHIFT");
+static const u8 gText_BattleStyleSet[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SET");
+static const u8 gText_SoundMono[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MONO");
+static const u8 gText_SoundStereo[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}STEREO");
+static const u8 gText_FrameType[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}TYPE");
+static const u8 gText_FrameTypeNumber[]    = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}");
+static const u8 gText_ButtonTypeNormal[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}NORMAL");
+static const u8 gText_ButtonTypeLR[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}LR");
+static const u8 gText_ButtonTypeLEqualsA[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}L=A");
+
+static const u16 sOptionMenuText_Pal[] = INCBIN_U16("graphics/interface/option_menu_text.gbapal");
+// note: this is only used in the Japanese release
+static const u8 sEqualSignGfx[] = INCBIN_U8("graphics/interface/option_menu_equals_sign.4bpp");
+
+static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 {
-    WIN_TOPBAR,
-    WIN_OPTIONS,
-    WIN_DESCRIPTION
+    [MENUITEM_TEXTSPEED]   = COMPOUND_STRING("TEXT SPEED"),
+    [MENUITEM_BATTLESCENE] = COMPOUND_STRING("BATTLE SCENE"),
+    [MENUITEM_BATTLESTYLE] = COMPOUND_STRING("BATTLE STYLE"),
+    [MENUITEM_SOUND]       = COMPOUND_STRING("SOUND"),
+    [MENUITEM_BUTTONMODE]  = COMPOUND_STRING("BUTTON MODE"),
+    [MENUITEM_FRAMETYPE]   = COMPOUND_STRING("FRAME"),
+    [MENUITEM_CANCEL]      = COMPOUND_STRING("CANCEL"),
 };
 
 static const struct WindowTemplate sOptionMenuWinTemplates[] =
