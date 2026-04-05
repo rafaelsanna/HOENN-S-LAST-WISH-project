@@ -1217,3 +1217,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/TangledThicket/scripts.inc"
 
 	.include "data/maps/PetalburgCave/scripts.inc"
+
+	.include "data/maps/DEWFORD_POKEMART/scripts.inc"

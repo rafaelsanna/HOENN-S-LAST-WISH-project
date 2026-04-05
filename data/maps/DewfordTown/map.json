@@ -138,6 +138,13 @@
       "elevation": 0,
       "dest_map": "MAP_DEWFORD_TOWN_HOUSE2",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 6,
+      "y": 16,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_POKEMART",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [],

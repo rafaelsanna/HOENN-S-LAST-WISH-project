@@ -4710,6 +4710,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/PetalburgCave/border.bin",
       "blockdata_filepath": "data/layouts/PetalburgCave/map.bin"
+    },
+    {
+      "id": "LAYOUT_DEWFORD_POKEMART",
+      "name": "DEWFORD_POKEMART_Layout",
+      "width": 14,
+      "height": 11,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/DEWFORD_POKEMART/border.bin",
+      "blockdata_filepath": "data/layouts/DEWFORD_POKEMART/map.bin"
     }
   ]
 }
