@@ -896,6 +896,7 @@
 #define TRAINER_DEW                         890
 #define TRAINER_XANDER                      891
 #define TRAINER_ARIA                        892
+#define TRAINER_DAXON                       893
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows

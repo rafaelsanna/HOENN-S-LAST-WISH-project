@@ -12,3 +12,9 @@ FieryPath_EventScript_MoveScottToFallarbor::
 	clearflag FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT
 	return
 
+FieryPath__EventScript_HikerDaxon::
+	trainerbattle_single TRAINER_DAXON, FieryPath_Text_DaxonIntro, FieryPath_Text_DaxonDefeated
+	msgbox FieryPath_Text_DaxonPostBattle, MSGBOX_AUTOCLOSE
+	end	
+
+

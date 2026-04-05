@@ -758,6 +758,23 @@ Oddish
 Level: 14
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+=== TRAINER_DAXON ===
+Name: Daxon
+Class: Hiker
+Pic: Hiker2
+Gender: Male
+Music: Male
+Double Battle: Yes
+AI: Check Bad Move
+
+Carvanha
+Level: 25
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Rhyhorn
+Level: 25
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
 === TRAINER_DEW ===
 Name: Dew
 Class: Bug Catcher

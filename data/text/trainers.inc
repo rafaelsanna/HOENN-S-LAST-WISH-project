@@ -619,6 +619,28 @@ GraniteHill_Text_CeciliaPostBattle:
 	.string "Will I have any energy left to make\n"
 	.string "the return trip?$"	
 
+FieryPath_Text_DaxonIntro:
+	.string "Whoa! You're exploring the FIERY PATH\n"
+	.string "too? This place is no joke!\p"
+	.string "Legends say its depths were sealed\n"
+	.string "long ago, impossible to enter.\p"
+	.string "But strange forces cracked the earth,\n"
+	.string "opening a way through volcanic rock.\p"
+	.string "Let's battle! Maybe you're tougher\n"
+	.string "than this scorching maze!$"
+
+FieryPath_Text_DaxonDefeated:
+	.string "Guess I'm not as tough\n"
+	.string "as the magma below...$"
+
+FieryPath_Text_DaxonPostBattle:
+	.string "They tell storys about a path\n"
+	.string "deep beneath the molten stone.\p"
+	.string "Something dangerous were waken.\n"
+	.string "The heat's been rising ever since.\p"
+	.string "Stay sharp down here. The PATH\n"
+	.string "doesn't forgive carelessness.$"
+
 DewdropJungle_Text_DrewIntro:
 	.string "Oh! A visitor in the jungle!\n"
 	.string "I love to explore here!\p"
