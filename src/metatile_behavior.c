@@ -1551,3 +1551,11 @@ bool8 MetatileBehavior_IsRockClimbable(u8 metatileBehavior)
     else
         return FALSE;
 }
+
+bool8 MetatileBehavior_IsOmnidirectionalJump(u8 metatileBehavior)
+{
+    if (metatileBehavior == MB_OMNIDIRECTIONAL_JUMP)
+        return TRUE;
+    else
+        return FALSE;
+}
