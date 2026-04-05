@@ -17,10 +17,10 @@
     {
       "local_id": "LOCALID_SOOTOPOLIS_MART_CLERK",
       "graphics_id": "OBJ_EVENT_GFX_MART_EMPLOYEE",
-      "x": 0,
-      "y": 3,
+      "x": 6,
+      "y": 4,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -30,8 +30,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
-      "x": 5,
-      "y": 5,
+      "x": 12,
+      "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -43,7 +43,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
-      "x": 9,
+      "x": 1,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -57,15 +57,15 @@
   ],
   "warp_events": [
     {
-      "x": 3,
-      "y": 7,
+      "x": 6,
+      "y": 10,
       "elevation": 0,
       "dest_map": "MAP_SOOTOPOLIS_CITY",
       "dest_warp_id": "1"
     },
     {
-      "x": 4,
-      "y": 7,
+      "x": 5,
+      "y": 10,
       "elevation": 0,
       "dest_map": "MAP_SOOTOPOLIS_CITY",
       "dest_warp_id": "1"
