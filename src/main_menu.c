@@ -545,6 +545,9 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
     ResetPaletteFade();
     LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    // Muda o fundo de verde para lilás suave
+    u16 softLilac = RGB(30, 24, 31);  // Quase branco com tom lilás
+    LoadPalette(&softLilac, BG_PLTT_ID(0) + 0, PLTT_SIZEOF(1));
     ScanlineEffect_Stop();
     ResetTasks();
     ResetSpriteData();
@@ -847,7 +850,7 @@ static bool8 HandleMainMenuInput(u8 taskId)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        IsWirelessAdapterConnected();   // why bother calling this here? debug? Task_HandleMainMenuAPressed will check too
+        IsWirelessAdapterConnected();
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
         gTasks[taskId].func = Task_HandleMainMenuAPressed;
     }
@@ -861,6 +864,8 @@ static bool8 HandleMainMenuInput(u8 taskId)
     }
     else if ((JOY_NEW(DPAD_UP)) && tCurrItem > 0)
     {
+        PlaySE(SE_SELECT);  // ← SOM AO SUBIR
+        
         if (tMenuType == HAS_MYSTERY_EVENTS && tIsScrolled == TRUE && tCurrItem == 1)
         {
             ChangeBgY(0, 0x2000, BG_COORD_SUB);
@@ -873,6 +878,8 @@ static bool8 HandleMainMenuInput(u8 taskId)
     }
     else if ((JOY_NEW(DPAD_DOWN)) && tCurrItem < tItemCount - 1)
     {
+        PlaySE(SE_SELECT);  // ← SOM AO DESCER
+        
         if (tMenuType == HAS_MYSTERY_EVENTS && tCurrItem == 3 && tIsScrolled == FALSE)
         {
             ChangeBgY(0, 0x2000, BG_COORD_ADD);
