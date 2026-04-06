@@ -884,6 +884,41 @@ Snubbull
 Level: 30
 IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
 
+=== TRAINER_MARCIA ===
+Name: Marcia
+Class: Expert
+Pic: Expert F
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move
+
+Zubat
+Level: 15
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Slowpoke
+Level: 15
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+=== TRAINER_EDWIN ===
+Name: Edwin
+Class: Collector
+Pic: Collector
+Gender: Male
+Music: Male
+Double Battle: Yes
+AI: Check Bad Move
+
+Spinarak
+Level: 15
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Geodude
+Level: 15
+IVs: 20 HP / 20 Atk /20 Def / 20 SpA / 20 SpD / 20 Spe
+
+
 === TRAINER_DEW ===
 Name: Dew
 Class: Bug Catcher

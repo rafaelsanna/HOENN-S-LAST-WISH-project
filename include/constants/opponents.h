@@ -902,6 +902,8 @@
 #define TRAINER_JAIME                       896
 #define TRAINER_LOCH                        897
 #define TRAINER_SATSUKI                     898
+#define TRAINER_MARCIA                      899
+#define TRAINER_EDWIN                       900
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled

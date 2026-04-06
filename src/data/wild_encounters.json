@@ -18606,6 +18606,75 @@
               }
             ]
           }
+        },
+        {
+          "map": "MAP_PETALBURG_CAVE",
+          "base_label": "gPetalburgCave",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_ZUBAT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SENTRET"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_GEODUDE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_GEODUDE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SPINARAK"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SPINARAK"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SPINARAK"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_ZUBAT"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SPINARAK"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SLOWPOKE"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SPINARAK"
+              },
+              {
+                "min_level": 7,
+                "max_level": 10,
+                "species": "SPECIES_SLOWPOKE"
+              }
+            ]
+          }
         }
       ]
     },
