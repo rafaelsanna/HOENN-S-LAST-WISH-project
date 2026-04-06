@@ -1219,3 +1219,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/PetalburgCave/scripts.inc"
 
 	.include "data/maps/DEWFORD_POKEMART/scripts.inc"
+
+	.include "data/maps/Underwater_Route131/scripts.inc"

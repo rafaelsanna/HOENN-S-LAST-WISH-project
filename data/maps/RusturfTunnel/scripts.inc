@@ -418,6 +418,13 @@ RusturfTunnel_EventScript_Mike::
 	msgbox RusturfTunnel_Text_MikePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+RusturfTunnel_EventScript_TooScaredToHop::
+	lock
+	faceplayer
+	msgbox RusturfTunnel_Text_SacaredToHop, MSGBOX_AUTOCLOSE
+	release
+	end
+
 RusturfTunnel_Text_ComeAndGetSome:
 	.string "What, are you coming?\n"
 	.string "Come and get some, then!$"
@@ -525,3 +532,19 @@ RusturfTunnel_Text_MikePostBattle:
 	.string "protect POKéMON, right?\l"
 	.string "There's a feel-good story!$"
 
+RusturfTunnel_Text_SacaredToHop:
+	.string "I-I’m gonna jump...\p"
+	.string "I just need a second to build\n"
+	.string "up the courage...\p"
+	.string "They say if you fall down there,\n"
+	.string "you never come back.\p"
+	.string "An endless, dark abyss...\n"
+	.string "no way out...\p"
+	.string "S-Sometimes...\n"
+	.string "you can hear echoes from below...\p"
+	.string "L-like people calling for help...\p"
+	.string "...\p"
+	.string "O-Okay... I can do this...\n"
+	.string "3... 2... 1...\p"
+	.string "...\p"
+	.string "M-Maybe next time.$"

@@ -6549,6 +6549,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .teachableLearnset = sCorsolaTeachableLearnset,
         .eggMoveLearnset = sCorsolaEggMoveLearnset,
         .formSpeciesIdTable = sCorsolaFormSpeciesIdTable,
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_HEART_SCALE, SPECIES_CURSOLA, CONDITIONS({IF_IN_MAP, MAP_UNDERWATER_ROUTE131})}),
     },
 
 #if P_GALARIAN_FORMS

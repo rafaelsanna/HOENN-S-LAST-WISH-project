@@ -2940,15 +2940,16 @@ const struct Item gItemsInfo[] =
     [ITEM_HEART_SCALE] =
     {
         .name = ITEM_NAME("Heart Scale"),
-        .price = 100,
+        .price = (I_PRICE >= GEN_7) ? 3000 : 100,  // Ajuste o preço se quiser
         .description = COMPOUND_STRING(
             "A lovely scale.\n"
             "It is coveted by\n"
             "collectors."),
         .pocket = POCKET_ITEMS,
-        .sortType = ITEM_TYPE_SELLABLE,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .sortType = ITEM_TYPE_EVOLUTION_STONE,  // ← MUDE PARA EVOLUTION_STONE
+        .type = ITEM_USE_PARTY_MENU,            // ← MUDE PARA PARTY_MENU
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,  // ← ADICIONE
+        .effect = gItemEffect_EvoItem,          // ← ADICIONE
         .flingPower = 30,
         .iconPic = gItemIcon_HeartScale,
         .iconPalette = gItemIconPalette_HeartScale,
