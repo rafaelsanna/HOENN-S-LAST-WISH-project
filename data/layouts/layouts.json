@@ -4730,6 +4730,26 @@
       "secondary_tileset": "gTileset_Underwater",
       "border_filepath": "data/layouts/Underwater_Route131/border.bin",
       "blockdata_filepath": "data/layouts/Underwater_Route131/map.bin"
+    },
+    {
+      "id": "LAYOUT_CARGO_SHIP",
+      "name": "CargoShip_Layout",
+      "width": 25,
+      "height": 12,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/CargoShip/border.bin",
+      "blockdata_filepath": "data/layouts/CargoShip/map.bin"
+    },
+    {
+      "id": "LAYOUT_SEABREEZE_SHIPPING",
+      "name": "SeabreezeShipping_Layout",
+      "width": 16,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/SeabreezeShipping/border.bin",
+      "blockdata_filepath": "data/layouts/SeabreezeShipping/map.bin"
     }
   ]
 }

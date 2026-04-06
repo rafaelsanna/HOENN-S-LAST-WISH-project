@@ -1221,3 +1221,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/DEWFORD_POKEMART/scripts.inc"
 
 	.include "data/maps/Underwater_Route131/scripts.inc"
+
+	.include "data/maps/CargoShip/scripts.inc"
+
+	.include "data/maps/SeabreezeShipping/scripts.inc"
