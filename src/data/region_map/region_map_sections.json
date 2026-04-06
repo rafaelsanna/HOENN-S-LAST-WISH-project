@@ -1244,7 +1244,8 @@
       "name": "PETALBURG CAVE"
     },
     {
-      "id": "MAPSEC_CARGO_SHIP"
+      "id": "MAPSEC_CARGO_SHIP",
+      "name": "CARGO SHIP"
     },
     {
       "id": "MAPSEC_SEABREEZE_SHIPPING",
