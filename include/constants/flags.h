@@ -661,6 +661,13 @@
 #define FLAG_HIDDEN_ITEM_RUSTURF_GROVE_SUPER_REPEL           (FLAG_HIDDEN_ITEMS_START + 0x74)
 #define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POTION                (FLAG_HIDDEN_ITEMS_START + 0x75)
 #define FLAG_HIDDEN_ITEM_GRANITE_CAVE_B1F_RARE_CANDY         (FLAG_HIDDEN_ITEMS_START + 0x76)
+#define FLAG_HIDDEN_ITEM_CARGO_SHIP_DIVE_BALL                (FLAG_HIDDEN_ITEMS_START + 0x77)
+#define FLAG_HIDDEN_ITEM_FIERY_PATH_PROTEIN                  (FLAG_HIDDEN_ITEMS_START + 0x78)
+#define FLAG_HIDDEN_ITEM_FIERY_PATH_PP_UP                    (FLAG_HIDDEN_ITEMS_START + 0x79)
+#define FLAG_HIDDEN_ITEM_FIERY_PATH_ULTRA_BALL               (FLAG_HIDDEN_ITEMS_START + 0x7A)
+#define FLAG_HIDDEN_ITEM_FIERY_PATH_STAR_PIECE               (FLAG_HIDDEN_ITEMS_START + 0x7B)
+#define FLAG_HIDDEN_ITEM_FIERY_PATH_REVIVE                   (FLAG_HIDDEN_ITEMS_START + 0x7C)
+#define FLAG_HIDDEN_ITEM_PETALBURG_CAVE_STAR_PIECE           (FLAG_HIDDEN_ITEMS_START + 0x7D)
 
 
 #define DN_FLAG_SEARCHING                       0x271
@@ -1145,6 +1152,7 @@
 #define FLAG_ITEM_ABANDONED_SHIP_ROOMS_1F_HARBOR_MAIL               0x447
 #define FLAG_ITEM_ABANDONED_SHIP_ROOMS_B1F_ESCAPE_ROPE              0x448
 #define FLAG_ITEM_ABANDONED_SHIP_ROOMS_2_B1F_DIVE_BALL              0x449
+#define FLAG_ITEM_CARGO_SHIP_WATER_STONE                            0x44A
 #define FLAG_ITEM_ABANDONED_SHIP_ROOMS_B1F_TM_ICE_BEAM              0x44A
 #define FLAG_ITEM_ABANDONED_SHIP_ROOMS_2_1F_REVIVE                  0x44B
 #define FLAG_ITEM_ABANDONED_SHIP_CAPTAINS_OFFICE_STORAGE_KEY        0x44C
@@ -1192,7 +1200,7 @@
 #define FLAG_ITEM_ROUTE_111_ELIXIR                                  0x476
 #define FLAG_ITEM_ROUTE_113_HYPER_POTION                            0x477
 #define FLAG_ITEM_ROUTE_115_HEAL_POWDER                             0x478
-#define FLAG_UNUSED_0x479                                           0x479 // Unused Flag
+#define FLAG_ITEM_ROUTE_104_KINGS_ROCK                               0x479
 #define FLAG_ITEM_ROUTE_116_POTION                                  0x47A
 #define FLAG_ITEM_ROUTE_119_ELIXIR_2                                0x47B
 #define FLAG_ITEM_ROUTE_120_REVIVE                                  0x47C
@@ -1219,8 +1227,8 @@
 #define FLAG_ITEM_SAFARI_ZONE_NORTH_EAST_NUGGET                     0x491
 #define FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL                  0x492
 
-#define FLAG_UNUSED_0x493                                           0x493 // Unused Flag
-#define FLAG_UNUSED_0x494                                           0x494 // Unused Flag
+#define FLAG_ITEM_MT_CHIMNEY_TM_FIRE_PUNCH                           0x493
+#define FLAG_ITEM_PETALBURG_CAVE_GREAT_BALL                          0x494
 #define FLAG_UNUSED_0x495                                           0x495 // Unused Flag
 #define FLAG_UNUSED_0x496                                           0x496 // Unused Flag
 #define FLAG_UNUSED_0x497                                           0x497 // Unused Flag

@@ -221,5 +221,46 @@
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [
+    {
+      "type": "hidden_item",
+      "x": 8,
+      "y": 11,
+      "elevation": 0,
+      "item": "ITEM_PROTEIN",
+      "flag": "FLAG_HIDDEN_ITEM_FIERY_PATH_PROTEIN"
+    },
+    {
+      "type": "hidden_item",
+      "x": 5,
+      "y": 29,
+      "elevation": 0,
+      "item": "ITEM_PP_UP",
+      "flag": "FLAG_HIDDEN_ITEM_FIERY_PATH_PP_UP"
+    },
+    {
+      "type": "hidden_item",
+      "x": 31,
+      "y": 3,
+      "elevation": 0,
+      "item": "ITEM_ULTRA_BALL",
+      "flag": "FLAG_HIDDEN_ITEM_FIERY_PATH_ULTRA_BALL"
+    },
+    {
+      "type": "hidden_item",
+      "x": 11,
+      "y": 37,
+      "elevation": 0,
+      "item": "ITEM_STAR_PIECE",
+      "flag": "FLAG_HIDDEN_ITEM_FIERY_PATH_STAR_PIECE"
+    },
+    {
+      "type": "hidden_item",
+      "x": 7,
+      "y": 70,
+      "elevation": 0,
+      "item": "ITEM_REVIVE",
+      "flag": "FLAG_HIDDEN_ITEM_FIERY_PATH_REVIVE"
+    }
+  ]
 }
