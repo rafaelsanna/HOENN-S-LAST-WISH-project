@@ -16,4 +16,4 @@ SeabreezeShipping_EventScript_Elevatorman::
 
 SeabreezeShipping_Text_Elevatorman_1:
 	.string "Sorry, kid. We're closed.$"
-	
+

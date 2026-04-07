@@ -8793,13 +8793,14 @@ const struct Item gItemsInfo[] =
         .holdEffect = HOLD_EFFECT_DOUBLE_PRIZE,
         .description = sLuckIncenseDesc,
         .pocket = POCKET_ITEMS,
-        .sortType = ITEM_TYPE_HELD_ITEM,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .sortType = ITEM_TYPE_EVOLUTION_STONE,          // ← permite uso como stone
+        .type = ITEM_USE_PARTY_MENU,                    // ← usar em Pokémon
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone, // ← evolução
+        .effect = gItemEffect_EvoItem,                  // ← necessário
         .flingPower = 30,
         .iconPic = gItemIcon_AmuletCoin,
         .iconPalette = gItemIconPalette_AmuletCoin,
-    },
+},
 
     [ITEM_CLEANSE_TAG] =
     {

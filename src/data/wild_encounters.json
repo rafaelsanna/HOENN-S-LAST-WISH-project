@@ -16975,7 +16975,7 @@
               {
                 "min_level": 6,
                 "max_level": 8,
-                "species": "SPECIES_GEODUDE"
+                "species": "SPECIES_MEDITITE"
               },
               {
                 "min_level": 6,
@@ -16995,7 +16995,7 @@
               {
                 "min_level": 6,
                 "max_level": 8,
-                "species": "SPECIES_MEDITITE"
+                "species": "SPECIES_MEOWTH"
               },
               {
                 "min_level": 6,
@@ -17005,7 +17005,7 @@
               {
                 "min_level": 6,
                 "max_level": 8,
-                "species": "SPECIES_MEDITITE"
+                "species": "SPECIES_MEOWTH"
               }
             ]
           }
