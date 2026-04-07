@@ -1424,7 +1424,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .palette = gMonPalette_Obstagoon,
         .shinyPalette = gMonShinyPalette_Obstagoon,
         .iconSprite = gMonIcon_Obstagoon,
-        .iconPalIndex = 0,
+        .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(2, 13, SHADOW_SIZE_L)
         FOOTPRINT(Obstagoon)
@@ -10157,7 +10157,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .palette = gMonPalette_Chingling,
         .shinyPalette = gMonShinyPalette_Chingling,
         .iconSprite = gMonIcon_Chingling,
-        .iconPalIndex = 1,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, -2, SHADOW_SIZE_S)
         FOOTPRINT(Chingling)
