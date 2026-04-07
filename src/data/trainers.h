@@ -48553,3 +48553,48 @@ F_TRAINER_FEMALE |
             },
         },
     },
+#line 18585
+    [DIFFICULTY_NORMAL][TRAINER_AQUA_MEMBER_CARGO_SHIP] =
+    {
+#line 18586
+        .trainerName = _("GRUNT"),
+#line 18587
+        .trainerClass = TRAINER_CLASS_TEAM_AQUA,
+#line 18588
+        .trainerPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .encounterMusic_gender =
+#line 18590
+            TRAINER_ENCOUNTER_MUSIC_AQUA,
+#line 18591
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 18592
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .partySize = 2,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 18594
+            .species = SPECIES_NUMEL,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 18596
+            .iv = TRAINER_PARTY_IVS(10, 10, 10, 10, 10, 10),
+#line 18595
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 18598
+            .species = SPECIES_LUVDISC,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 18600
+            .iv = TRAINER_PARTY_IVS(10, 10, 10, 10, 10, 10),
+#line 18599
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },

@@ -5050,3 +5050,16 @@ VSSeeker_Text_TrainersNotReady::
 	.string "The other Trainers don't appear\n"
 	.string "to be ready for battle.\p"
 	.string "Let's wait till later.{PAUSE_UNTIL_PRESS}$"
+
+CargoShip_Text_AquaMemberIntro::
+	.string "You! What are you doing on this ship?\p"
+	.string "If you're here to cause trouble, you've\n"
+	.string "picked the wrong place!$"
+
+CargoShip_Text_AquaMemberDefeated::
+	.string "I'm getting fired for this...\n"
+	.string "I just know it...$"
+
+CargoShip_Text_AquaMemberPostBattle::
+	.string "Fine. Do whatever you want.\n"
+	.string "I'm getting fired anyway.$"

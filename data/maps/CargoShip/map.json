@@ -13,7 +13,86 @@
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
-  "object_events": [],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SCIENTIST_1",
+      "x": 9,
+      "y": 6,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CargoShip_EventScript_Scientist1",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
+      "x": 13,
+      "y": 9,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CargoShip_EventScript_AquaMemberM",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_F",
+      "x": 9,
+      "y": 9,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CargoShip_EventScript_AquaMemberF",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SCIENTIST_2",
+      "x": 21,
+      "y": 5,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CargoShip_EventScript_Scientist2",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 18,
+      "y": 11,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_WATER_STONE",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_CARGO_SHIP_WATER_STONE"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
+      "x": 7,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "CargoShip_EventScript_AquaMemberM_Trainer",
+      "flag": "0"
+    }
+  ],
   "warp_events": [
     {
       "x": 10,
@@ -24,5 +103,14 @@
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [
+    {
+      "type": "hidden_item",
+      "x": 12,
+      "y": 5,
+      "elevation": 0,
+      "item": "ITEM_DIVE_BALL",
+      "flag": "FLAG_HIDDEN_ITEM_CARGO_SHIP_DIVE_BALL"
+    }
+  ]
 }
