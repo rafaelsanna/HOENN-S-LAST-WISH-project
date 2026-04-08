@@ -26,6 +26,10 @@ CargoShip_EventScript_Scientist2::
 	msgbox CargoShip_Text_Scientist2_1, MSGBOX_NPC
 	end
 
+CargoShip_EventScript_Sailor::
+	msgbox CargoShip_Text_Sailor_1, MSGBOX_NPC
+	end
+
 CargoShip_Text_Scientist1_1:
 	.string "My coworkers are the shady sort, but\nthe research potential is unbeatable!$"
 
@@ -37,3 +41,11 @@ CargoShip_Text_AquaMemberF_1:
 
 CargoShip_Text_Scientist2_1:
 	.string "This ship could really use a better\nengine.\pIf everything goes well, we should\nbe able to afford one soon.$"
+
+CargoShip_Text_Sailor_1:
+	.string "You want to battle me?\n"
+	.string "To get through here?\p"
+	.string "Sorry, kid. I have more sense than\n"
+	.string "the loser you fought at the door.\p"
+	.string "Scram.$"
+

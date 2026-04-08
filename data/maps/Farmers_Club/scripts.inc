@@ -1,2 +1,31 @@
 Farmers_Club_MapScripts::
 	.byte 0
+
+Farmers_Club_EventScript_Oldman::
+	msgbox Farmers_Club_Text_Oldman_1, MSGBOX_NPC
+	end
+
+Farmers_Club_Text_Oldman_1:
+	.string "Are you interested in farming?\n"
+	.string "Feel free to use the plots outside.\p"
+	.string "We have more than enough fertile\n"
+	.string "farmland here to share.$"
+
+Farmers_Club_EventScript_Hiker::
+	msgbox Farmers_Club_Text_Hiker_1, MSGBOX_NPC
+	end
+
+Farmers_Club_Text_Hiker_1:
+	.string "When I go into the mountains,\n"
+	.string "I bring back seeds to plant here.\p"
+	.string "Not all berries are easy to find!$"
+
+Farmers_Club_EventScript_Cook::
+	msgbox Farmers_Club_Text_Cook_1, MSGBOX_NPC
+	end
+
+Farmers_Club_Text_Cook_1:
+	.string "There's nothing like cooking with\n"
+	.string "fresh ingredients.\p"
+	.string "And there are none fresher\n"
+	.string "than what we grow on this farm!$"
