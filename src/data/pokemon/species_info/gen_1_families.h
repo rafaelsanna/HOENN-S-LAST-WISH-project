@@ -7818,7 +7818,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Annihilape,
         .shinyPalette = gMonShinyPalette_Annihilape,
         .iconSprite = gMonIcon_Annihilape,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Annihilape,
+        .shinyIconPalette = gMonShinyIconPalette_Annihilape,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 13, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Annihilape)

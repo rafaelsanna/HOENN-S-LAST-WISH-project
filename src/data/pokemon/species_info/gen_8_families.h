@@ -2808,7 +2808,8 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         .palette = gMonPalette_Dipplin,
         .shinyPalette = gMonShinyPalette_Dipplin,
         .iconSprite = gMonIcon_Dipplin,
-        .iconPalIndex = 1,
+        .iconPalette = gMonIconPalette_Dipplin,
+        .shinyIconPalette = gMonShinyIconPalette_Dipplin,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(-4, 8, SHADOW_SIZE_S)
         FOOTPRINT(Dipplin)
@@ -2872,7 +2873,8 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         .palette = gMonPalette_Hydrapple,
         .shinyPalette = gMonShinyPalette_Hydrapple,
         .iconSprite = gMonIcon_Hydrapple,
-        .iconPalIndex = 5,
+        .iconPalette = gMonIconPalette_Hydrapple,
+        .shinyIconPalette = gMonShinyIconPalette_Hydrapple,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(1, 12, SHADOW_SIZE_L)
         FOOTPRINT(Hydrapple)
@@ -6615,7 +6617,8 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         .palette = gMonPalette_Archaludon,
         .shinyPalette = gMonShinyPalette_Archaludon,
         .iconSprite = gMonIcon_Archaludon,
-        .iconPalIndex = 0,
+        .iconPalette = gMonIconPalette_Archaludon,
+        .shinyIconPalette = gMonShinyIconPalette_Archaludon,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(4, 14, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Archaludon)
