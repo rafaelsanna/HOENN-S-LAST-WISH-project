@@ -6161,7 +6161,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Bellossom,
         .shinyPalette = gMonShinyPalette_Bellossom,
         .iconSprite = gMonIcon_Bellossom,
-        .iconPalIndex = 1,
+        .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(-2, 0, SHADOW_SIZE_S)
         FOOTPRINT(Bellossom)
