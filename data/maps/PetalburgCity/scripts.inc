@@ -763,11 +763,12 @@ PetalburgCity_Text_AreYouRookieTrainer:
     .string "Petalburg's been… odd lately.\n"
     .string "People keep hearing footsteps in the\l"
     .string "woods even when the wind is still.\p"
-    .string "If I were you, I'd keep my guard up.\n"
-    .string "This place has seen strange things.$"
+    .string "Calendula wants to speak with any new\n"
+    .string "visitors before they go into the woods.$"
 
 PetalburgCity_Text_ThisIsPetalburgGym:
-	.string "See? This is PETALBURG CITY's GYM.$"
+	.string "See? This is PETALBURG CITY's GYM./n"
+	.string "You'll find Calendula inside.$"
 
 PetalburgCity_Text_ThisIsGymSign:
 	.string "This is the GYM's sign. Look for it\n"
@@ -792,7 +793,7 @@ PetalburgCity_Text_FullPartyExplanation:
 
 PetalburgCity_Text_GymSign:
 	.string "PETALBURG CITY POKéMON GYM\n"
-    .string "LEADER: CALENDULA\l"
+    .string "LEADER: CALENDULA\p"
     .string "A professor who blends knowledge\n"
     .string "with battle skill.$"
 
@@ -807,13 +808,13 @@ PetalburgCity_Text_AreYouATrainer:
     .string "Excuse me!\p"
     .string "Is that… your actual outfit?\n"
     .string "Is this the new TRAINER trend now?\p"
-    .string "Capes, layers, mysterious vibes…\n"
+    .string "Capes, layers, and mysterious vibes…\n"
     .string "Guess fashion really is evolving!$"
 
 PetalburgCity_Text_WellMaybeNot:
     .string "… … … … … …\p"
     .string "Hmm… actually, never mind.\n"
-    .string "Your clothes look… pretty worn out.\p"
+    .string "Your clothes look pretty worn out.\p"
     .string "All torn edges and old fabric…\n"
     .string "Like they're from another era.\p"
     .string "Are you a TRAINER or did you just\n"
@@ -821,7 +822,7 @@ PetalburgCity_Text_WellMaybeNot:
 
 PetalburgCity_Text_ImLookingForTalentedTrainers:
     .string "I'm traveling around because I heard\n"
-    .string "something… worrying.\p"
+    .string "something worrying.\p"
     .string "I'm searching for a truly talented\n"
     .string "TRAINER, someone capable.\p"
     .string "There's a mission I can't handle alone.\n"
@@ -830,7 +831,7 @@ PetalburgCity_Text_ImLookingForTalentedTrainers:
 PetalburgCity_Text_WallyIntro:
     .string "LUKA: {PLAYER}! The Professor said\n"
     .string "you're special, but so am I!\p"
-    .string "I've been training for long so...\n"
+    .string "I've been training for so long...\n"
     .string "Let me show you what I've learned!$"
 
 PetalburgCity_Text_WallyDefeat:

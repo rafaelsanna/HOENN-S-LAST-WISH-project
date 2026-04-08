@@ -10,7 +10,7 @@
     },
     {
       "id": "MAPSEC_OLDALE_TOWN",
-      "name": "OLD TOWN",
+      "name": "OLDALE TOWN",
       "x": 4,
       "y": 9,
       "width": 1,
@@ -1250,6 +1250,10 @@
     {
       "id": "MAPSEC_SEABREEZE_SHIPPING",
       "name": "SEABREEZE HQ"
+    },
+    {
+      "id": "MAPSEC_OLDALE_FIELD",
+      "name": "OLDALE FIELD"
     }
   ]
 }

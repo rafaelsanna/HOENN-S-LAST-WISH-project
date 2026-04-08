@@ -20,8 +20,8 @@ RustboroCity_Flat2_3F_Text_PresidentCollectsRareStones:
 RustboroCity_Flat2_3F_Text_PresidentsSonAlsoCollectsRareStones:
 	.string "My boyfriend's a computer genius at\n"
 	.string "DEVON. He programs PORYGON!\p"
-	.string "But honestly? He's such a nerd. Always\n"
-	.string "mumbling about computers and data…\p"
+	.string "But honestly, he's such a nerd. Always\n"
+	.string "mumbling about computers and data.\p"
 	.string "I just want to go on an exciting\n"
 	.string "adventure for once! Right?$"
 

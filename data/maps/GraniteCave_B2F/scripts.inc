@@ -74,8 +74,8 @@ GraniteCave_Text_MagmaIntro:
     .string "digging for whatever the boss wants...\p"
     .string "And then YOU stroll in here with that\n"
     .string "ridiculous outfit like you own the place.\p"
-    .string "You got Pokemon on you?\p"
-    .string "How about you hand over your Pokemon\n"
+    .string "You got POKéMON on you?\p"
+    .string "How about you hand over your POKéMON\n"
     .string "and get out of our way so we can keep\l"
     .string "working this cave in peace?\p"
     .string "Not leaving?\n"
@@ -87,7 +87,7 @@ GraniteCave_Text_MagmaIntro:
 
 GraniteCave_Text_MagmaLose:
     .string "You've gotta be kidding...\n"
-    .string "We lose! And you dressed like that?\p"
+    .string "We lose! And to a kid dressed like that?\p"
     .string "Ugh... Whatever.\n"
     .string "We're getting out of this stupid cave.\p"
     .string "But don't think this is over.\n"

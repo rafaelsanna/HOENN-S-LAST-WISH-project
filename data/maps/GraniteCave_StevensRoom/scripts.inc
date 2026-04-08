@@ -111,7 +111,7 @@ GraniteCave_StevensRoom_Text_ThankYouTakeThis:
 	.string "STELLA: You beat two MAGMA grunts\n"
 	.string "alone and still made it here...\p"
 	.string "Just to deliver this to me.\n"
-	.string "Thank you wierd friend!\p"
+	.string "Thank you, weird friend!\p"
 	.string "Here, take this TM, STEEL WING.\n"
 	.string "It's my favorite move.$"
 
@@ -136,7 +136,7 @@ GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 	.string "STELLA: I came to study this old\n"
 	.string "painting. It must be thousands of\n"
 	.string "years old. Maybe even more...\p"
-	.string "It shows two titans... One of land,\n"
+	.string "It shows two titans - one of land,\n"
 	.string "one of sea. Ancient guardians.\p"
 	.string "That strange meteor in the sky made\n"
 	.string "me wonder if it was connected.\p"

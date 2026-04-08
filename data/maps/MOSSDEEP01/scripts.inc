@@ -1437,7 +1437,10 @@ MOSSDEEP01_Text_WallyIntro:
 	.string "The technology was lost.\p"
 	.string "That's why the connection with POKÉMON\n"
 	.string "has to be made in another way...\p"
-	.string "A more natural, purer connection.$"
+	.string "A more natural, pure connection\n"
+	.string "like what I have with PIDGEOT.\p"
+	.string "If wild POKÉMON are giving you\n"
+	.string "trouble, PIDGEOT and I will help.$"
 
 MOSSDEEP01_Text_WallyAfterCelebi:
 	.string "LUKA: {PLAYER}, you did it!\p"

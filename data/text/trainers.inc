@@ -783,10 +783,9 @@ DewdropJungle_Text_DrewPostBattle:
 
 DewdropJungle_Text_AriaIntro:
 	.string "Oh! A fellow traveler in this\n"
-	.string "beutiful place!\p"
+	.string "beautiful place!\p"
 	.string "I came here seeking inspiration\n"
-	.string "for my paintings, the shadows,\l"
-	.string "the light, the hidden wonders...\p"
+	.string "for my paintings.\p"
 	.string "Let's battle! Perhaps your spirit\n"
 	.string "will spark my next masterpiece!$"
 
@@ -804,11 +803,11 @@ DewdropJungle_Text_AriaPostBattle:
 
 DewdropJungle_Text_XanderIntro:
 	.string "Hey there! I came to this jungle\n"
-	.string "looking for adventure and strong\l"
+	.string "looking for adventure and strong,\l"
 	.string "rock solid POKéMON...\p"
 	.string "But all I've found so far is\n"
-	.string "plants, rain, and mud...\p"
-	.string "At least you showed up, let's\n"
+	.string "plants, rain, and mud.\p"
+	.string "At least you showed up. Let's\n"
 	.string "fight! Maybe that'll save my trip.$"
 
 DewdropJungle_Text_XanderDefeated:
@@ -2237,7 +2236,7 @@ Route114_Text_AngelinaPostBattle:
 
 LonelyCaveB1_Text_UzumakiIntro:
 	.string "Are you afraid of spirits?\n"
-	.string "I’m not, what about you?\p"
+	.string "I’m not. What about you?\p"
 	.string "How about a battle now?\n"
 
 LonelyCaveB1_Text_UzumakiDefeat:
@@ -2248,7 +2247,7 @@ LonelyCaveB1_Text_UzumakiPostBattle:
 	.string "I come here to light incense\n"
 	.string "in honor of those who have passed.\p"
 	.string "Few have the courage to enter this\n"
-	.string "cave… but I feel calm and full\n"
+	.string "cave, but I feel calm and full\n"
 	.string "of energy here.$"
 	
 Route115_Text_TimothyIntro:

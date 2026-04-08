@@ -29,8 +29,8 @@ RustboroCity_PokemonCenter_1F_EventScript_Girl::
 	end
 
 RustboroCity_PokemonCenter_1F_Text_PokemonHavePersonalities:
-	.string "I work at the Devon Corporation.\n"
-	.string "Research division.\p"
+	.string "I work in the Devon Corporation's\n"
+	.string "research division.\p"
 	.string "After the comet, we started detecting\n"
 	.string "energy signatures that don't match\l"
 	.string "any known Pokémon.\p"
@@ -41,8 +41,8 @@ RustboroCity_PokemonCenter_1F_Text_MaleAndFemalePokemon:
 	.string "My grandfather helped found\n"
 	.string "the Pokémon Trainer's School here.\p"
 	.string "He used to say that Rustboro would\n"
-	.string "outlast any disaster. Too much\l"
-	.string "knowledge stored in these walls.\p"
+	.string "outlast any disaster, but there\l"
+	.string "have been so many earthquakes lately.\p"
 	.string "I hope he was right. I really do.$"
 
 RustboroCity_PokemonCenter_1F_Text_HMCutNextDoor:
@@ -50,9 +50,9 @@ RustboroCity_PokemonCenter_1F_Text_HMCutNextDoor:
 	.string "A woman who moves like wind through trees.\p"
 	.string "They say she can slice through\n"
 	.string "the thickest branches with one strike.\p"
-	.string "Learned the art from her grandfather.\n"
-	.string "But she only teaches those who can\l"
+	.string "She learned the art from her grandfather,\n"
+	.string "but she only teaches those who can\l"
 	.string "defeat her in battle.\p"
-	.string "I've searched everywhere. Never found her.\n"
+	.string "I've searched everywhere but never found her.\n"
 	.string "Maybe she doesn't want to be found.$"
 

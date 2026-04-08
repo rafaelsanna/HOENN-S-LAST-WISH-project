@@ -996,9 +996,9 @@ RustboroCity_Text_MrBrineyLovesPeeko:
 	.string "The old sailor MR. BRINEY lives in\n"
 	.string "a cottage by the sea.\p"
 	.string "He said he was going shopping in\n"
-	.string "SLATEPORT for his pet, PEEKO.\p"
+	.string "SLATEPORT for his pet, NAMI.\p"
 	.string "That old sea dog, he must really love\n"
-	.string "that PEEKO.$"
+	.string "that NAMI.$"
 
 RustboroCity_Text_WowYouHavePokemon:
 	.string "Wow, you have POKéMON with you, too.\p"
@@ -1063,7 +1063,9 @@ RustboroCity_Text_YouGotItThankYou:
 	.string "You really are a great TRAINER!\p"
 	.string "I know! As my thanks, I'll give you\n"
 	.string "this ABILITY CAPSULE! It's DEVON's\l"
-	.string "latest breakthrough switch abilities!$"
+	.string "latest breakthrough.\p"
+	.string "With it, you can switch a\n"
+	.string "POKéMON's abilities!$"
 
 RustboroCity_Text_YoureLoadedWithItems:
 	.string "You're loaded with items.\n"

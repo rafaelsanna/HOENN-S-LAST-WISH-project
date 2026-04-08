@@ -16,7 +16,7 @@ PetalburgCity_House2_Text_NormanBecameGymLeader:
 	.string "famed PROF. ACACIA!$"
 
 PetalburgCity_House2_Text_BattledNormanOnce:
-	.string "I battled CALENDULA once, but,\n"
+	.string "I battled CALENDULA once, but\n"
 	.string "whew, she was way too strong.\p"
 	.string "How would I put it?\p"
 	.string "I just got the feeling that she\n"

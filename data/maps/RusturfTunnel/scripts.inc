@@ -506,7 +506,8 @@ RusturfTunnel_Text_ExplainStrength:
 RusturfTunnel_Text_WandaReunion:
 	.string "WANDA!\n"
 	.string "Now I can see you anytime!\p"
-	.string "WANDA: That's…wonderful.\p"
+	.string "WANDA: That's wonderful!\p"
+	.string "You must be exhausted.\n"
 	.string "Please, take some rest at my home.$"
 
 RusturfTunnel_Text_BoyfriendOnOtherSideOfRock:

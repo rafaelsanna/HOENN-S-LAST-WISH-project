@@ -116,7 +116,7 @@ Route104_MrBrineysHouse_Text_ItsYouLetsSailToDewford:
 Route104_MrBrineysHouse_Text_SetSailForDewford:
 	.string "MR. BRINEY: DEWFORD it is, then!\p"
 	.string "Anchors aweigh!\n"
-	.string "PEEKO, we're setting sail, my darling!$"
+	.string "NAMI, we're setting sail, my darling!$"
 
 Route104_MrBrineysHouse_Text_DeclineDeliverySail:
 	.string "MR. BRINEY: Is that so?\n"
@@ -149,7 +149,7 @@ Route104_MrBrineysHouse_Text_WhereAreWeBound:
 
 Route104_MrBrineysHouse_Text_TellMeWheneverYouWantToSail:
 	.string "MR. BRINEY: Is that so?\n"
-	.string "Well, PEEKO owes her life to you.\p"
+	.string "Well, NAMI owes her life to you.\p"
 	.string "You just go on and tell me whenever\n"
 	.string "you want to set sail!$"
 
