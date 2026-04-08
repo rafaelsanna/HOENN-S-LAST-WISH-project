@@ -93,3 +93,13 @@ FallarborTown_Text_MoveTutorSign:
 	.string "MOVE TUTOR'S HOUSE\n"
 	.string "“New moves taught to POKéMON.”$"
 
+FallarborTown_EventScript_Farminglady::
+	msgbox FallarborTown_Text_Farminglady_1, MSGBOX_NPC
+	end
+
+FallarborTown_Text_Farminglady_1:
+	.string "The soil on this farm is more\n"
+	.string "fertile than anywhere else in Hoenn.\p"
+	.string "Plant as much as you like here.\n"
+	.string "We have more than enough space!$"
+
