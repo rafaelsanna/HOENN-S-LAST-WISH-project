@@ -149,7 +149,7 @@
             },
             {
 #line 131
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 133
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -217,7 +217,7 @@
         {
             {
 #line 157
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 159
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -285,7 +285,7 @@
         {
             {
 #line 183
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 185
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -473,7 +473,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 254
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 256
             .iv = TRAINER_PARTY_IVS(10, 10, 10, 10, 10, 10),
@@ -657,7 +657,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 323
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 325
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -725,7 +725,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 349
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 349
             .heldItem = ITEM_ORAN_BERRY,
@@ -870,7 +870,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 403
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 405
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -926,7 +926,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 424
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 426
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -960,7 +960,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 437
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 439
             .iv = TRAINER_PARTY_IVS(10, 10, 10, 10, 10, 10),
@@ -1185,7 +1185,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 523
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 525
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -1230,7 +1230,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 540
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 542
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -1266,7 +1266,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 553
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 555
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -1302,7 +1302,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 566
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 568
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -1567,7 +1567,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 667
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 669
             .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
@@ -1847,7 +1847,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 770
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 772
             .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
@@ -8083,7 +8083,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 3115
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3117
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -8252,7 +8252,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 3179
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3181
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -8320,7 +8320,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 3205
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3207
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -8365,7 +8365,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 3222
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3224
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -8444,7 +8444,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 3252
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3254
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -8580,7 +8580,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 3304
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3306
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -8602,7 +8602,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 3312
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3314
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -9822,7 +9822,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 3777
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 3779
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -19684,7 +19684,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 7562
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7564
             .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
@@ -20061,7 +20061,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 7708
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7710
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -20241,7 +20241,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 7776
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7778
             .iv = TRAINER_PARTY_IVS(2, 2, 2, 2, 2, 2),
@@ -20308,7 +20308,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 7801
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7803
             .iv = TRAINER_PARTY_IVS(3, 3, 3, 3, 3, 3),
@@ -31455,7 +31455,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 11969
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 11971
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -36629,7 +36629,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 13934
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 13936
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -37623,7 +37623,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 14327
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14329
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -37668,7 +37668,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 14344
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14346
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -37713,7 +37713,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 14361
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14363
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -37915,7 +37915,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 14437
-            .species = SPECIES_CARVANHA,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 14439
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
