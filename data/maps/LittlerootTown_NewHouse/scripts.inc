@@ -26,10 +26,10 @@ LittlerootTown_NewHouse_EventScript_EeeveeLR::
 
 
 LittlerootTown_NewHouse_Text_L_woman:
-	.string "Back in the day, we were trainers!\n"
-	.string "Now we just chill here, with our eevees!\p"
-	.string "It's good when you find your soulmate.\n"
-	.string "But sometimes I miss the hard battles!$"
+	.string "Back in the day, we were trainers.\n"
+	.string "Now we just chill here with our eevees.\p"
+	.string "It's good when you find your soulmate,\n"
+	.string "but sometimes I miss the hard battles!$"
 
 LittlerootTown_NewHouse_Text_Girlfriend:
 	.string "My girlfriend always talks about\n"

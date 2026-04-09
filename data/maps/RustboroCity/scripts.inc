@@ -939,6 +939,10 @@ RustboroCity_EventScript_Boy1::
 	msgbox RustboroCity_Text_YouCanHave2On2Battle, MSGBOX_NPC
 	end
 
+RustboroCity_EventScript_Devonearthquake::
+	msgbox RustboroCity_Text_Devonearthquake, MSGBOX_NPC
+	end
+
 RustboroCity_Text_WeShortenItToDevon:
 	.string "The DEVON CORPORATION…\n"
 	.string "We all just shorten it to DEVON.\p"
@@ -951,11 +955,11 @@ RustboroCity_Text_SneakyLookingManWentAroundCorner:
 	.string "looking guy went around the corner.$"
 
 RustboroCity_Text_HaveYouChallengedGym:
-	.string "Have you taken the POKéMON GYM\n"
-	.string "challenge?\p"
-	.string "When you get that shiny GYM BADGE\n"
-	.string "in hand, I guess TRAINERS begin to\l"
-	.string "realize what is required of them.$"
+	.string "RUSTBORO has always had frequent\n"
+	.string "earthquakes, but they've gotten\l"
+	.string "more intense lately.\p"
+	.string "We're barely keeping up with the\n"
+	.string "damage as it is!$"
 
 RustboroCity_Text_HeyThatsRustborosGymBadge:
 .string "Hah! You want the RUSTBORO GYM BADGE?\p"
@@ -996,9 +1000,9 @@ RustboroCity_Text_MrBrineyLovesPeeko:
 	.string "The old sailor MR. BRINEY lives in\n"
 	.string "a cottage by the sea.\p"
 	.string "He said he was going shopping in\n"
-	.string "SLATEPORT for his pet, PEEKO.\p"
+	.string "SLATEPORT for his pet, NAMI.\p"
 	.string "That old sea dog, he must really love\n"
-	.string "that PEEKO.$"
+	.string "that NAMI.$"
 
 RustboroCity_Text_WowYouHavePokemon:
 	.string "Wow, you have POKéMON with you, too.\p"
@@ -1011,28 +1015,29 @@ RustboroCity_Text_CatchRarePokemonIfIGoToSchool:
 	.string "to catch rare POKéMON easily?$"
 
 RustboroCity_Text_PokemonCanChangeLookFromExp:
-    .string "RUSTBORO CITY always feels so alive…\n"
-    .string "The streets are full of students, workers,\l"
-    .string "and travelers passing through.\p"
-    .string "Every corner has someone tinkering with a\n"
-    .string "machine or studying something new.\l"
-    .string "Makes you wonder what discoveries will\n"
+    .string "RUSTBORO CITY always feels so alive.\n"
+    .string "The streets are full of students,\l"
+    .string "workers, and travelers passing through.\p"
+    .string "Every corner has someone tinkering with\n"
+    .string "a machine or studying something new.\l"
+    .string "I wonder what discoveries will\l"
     .string "come out of this place next.$"
 
 RustboroCity_Text_PokemonChangeShape:
-    .string "I've heard there are caves and rocky paths\n"
+    .string "I've heard there's a cave\n"
     .string "north of here, past ROUTE 116.\p"
-    .string "Explorers say strange echoes come from the\n"
-    .string "deep tunnels… almost like something hidden\l"
+    .string "Explorers say echoes come from the\n"
+    .string "deep tunnels… like something hidden\l"
     .string "is shifting around in the dark.$"
 
 RustboroCity_Text_TradePokemonGrowFast:
     .string "Hmph… Those climbers around Rustboro\n"
     .string "think they're so tough, climbing all\l"
-    .string "day and bragging about their ROCK Pokémon.\p"
-    .string "I can't stand that rowdy bunch, so I train\n"
-    .string "WATER-types just to wash them off their\l"
-    .string "precious mountains.$"
+    .string "day and bragging about their ROCK\l"
+	.string "Pokémon.\p"
+    .string "I can't stand that rowdy bunch,\n"
+	.string "so I train WATER-types just to wash\l"
+	.string "them off their precious mountains.$"
 
 RustboroCity_Text_OutOfTheWay:
 	.string "Get out!\n"
@@ -1063,7 +1068,9 @@ RustboroCity_Text_YouGotItThankYou:
 	.string "You really are a great TRAINER!\p"
 	.string "I know! As my thanks, I'll give you\n"
 	.string "this ABILITY CAPSULE! It's DEVON's\l"
-	.string "latest breakthrough switch abilities!$"
+	.string "latest breakthrough.\p"
+	.string "With it, you can switch a\n"
+	.string "POKéMON's abilities!$"
 
 RustboroCity_Text_YoureLoadedWithItems:
 	.string "You're loaded with items.\n"
@@ -1245,4 +1252,11 @@ RustboroCity_Text_NeedToTalkToRival:
     .string "Hey! Wait up!\p"
     .string "Don't you want to talk to\n"
     .string "your rival first?$"
+
+RustboroCity_Text_Devonearthquake:
+	.string "The earthquakes have been going\n"
+	.string "on for years, but with each one,\l"
+	.string "the land cracks open more and more.\p"
+	.string "The DEVON building may even end\n"
+	.string "up falling into the sea soon!$"
 

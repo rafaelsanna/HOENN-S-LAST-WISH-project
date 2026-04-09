@@ -534,9 +534,9 @@ PetalburgWoods_Text_CantBePopularIfILose:
 PetalburgWoods_Text_PeopleRespectYou:
 	.string "This forest has grown more sinister\n"
 	.string "in recent years…\p"
-	.string "At night, people tell frightening\n"
+	.string "Lately, people tell frightening\n"
 	.string "legends about shadowy figures\l"
-	.string "moving between the trees.\p"
+	.string "moving between the trees at night.\p"
 	.string "Some say the woods themselves\n"
 	.string "have become alive and watchful…$"
 
@@ -611,7 +611,7 @@ PetalburgWoods_Text_TrainerTipsPP:
 	.string "who walk its tangled paths today.$"
 
 PetalburgWoods_Text_Herbalistpw:
-	.string "I come here a lot to look for herbs\n"
+	.string "I come here often to look for herbs\n"
 	.string "and ingredients for potions.\p"
 	.string "I feel safe in this forest… except\n"
 	.string "at night.\p"

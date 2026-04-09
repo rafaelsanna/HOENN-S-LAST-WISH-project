@@ -67,10 +67,10 @@ RustboroCity_Mart_EventScript_BugCatcher::
 RustboroCity_Mart_Text_BuyingHealsInCaseOfShroomish:
 	.string "Have you heard about TERRA, our GYM\n"
 	.string "LEADER? She's an incredible climber!\p"
-	.string "They say she benn where no one\n"
+	.string "They say she been where no one\n"
 	.string "else dares to even approach.\p"
 	.string "Her climbing skills let her reach\n"
-	.string "altitudes where rare POKéMON live,\l"
+	.string "altitudes where rare POKéMON live and\l"
 	.string "places no one has ever seen before.\p"
 	.string "Sometimes I wonder what she's found\n"
 	.string "up there... Must be amazing!$"
@@ -93,7 +93,7 @@ RustboroCity_Mart_Text_GettingEscapeRopeJustInCase:
 	.string "What if I can't find my way out?\p"
 	.string "That's why I'm getting an ESCAPE ROPE.\n"
 	.string "Or maybe a POKéMON with DIG…\l"
-	.string "Just in case I need to scape...$"
+	.string "Just in case I need to escape...$"
 
 
 

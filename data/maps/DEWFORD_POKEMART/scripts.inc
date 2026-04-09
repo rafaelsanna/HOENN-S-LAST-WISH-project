@@ -44,8 +44,8 @@ DEWFORD_POKEMART_Text_SomeItemsOnlyAtMart:
 
 DEWFORD_POKEMART_Text_GreatBallIsBetter:
 	.string "Life here moves with the tide.\p"
-	.string "The caves, the waves...\n"
-	.string "they shape everything.\p"
+	.string "The caves and the waves\n"
+	.string "shape everything.\p"
 	.string "Trainers come for the GYM,\n"
 	.string "but most don't stay long.\p"
 	.string "Guess not everyone gets used\n"

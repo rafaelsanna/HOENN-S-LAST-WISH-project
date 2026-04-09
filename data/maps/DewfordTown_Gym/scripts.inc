@@ -384,7 +384,7 @@ DewfordTown_Gym_Text_BrendenIntro:
 	.string "HAHAHA! But he saw I was tough!\p"
 	.string "I'm a sailor! I've seen storms,\n"
 	.string "ship brawls, bar fights, everything!\p"
-	.string "So come on, cape guy!\n"
+	.string "So come on, cape brat!\n"
 	.string "Show me what you got!$"
 
 DewfordTown_Gym_Text_BrendenDefeat:
@@ -401,9 +401,9 @@ DewfordTown_Gym_Text_BrendenPostBattle:
 
 DewfordTown_Gym_Text_CristianIntro:
 	.string "If you want to pass, you fight me first!\p"
-	.string "Strength matters here...\n"
+	.string "Strength matters here\n"
 	.string "just like in any street brawl!\p"
-	.string "I'm a punk, and proud of it!\n"
+	.string "I'm a punk and proud of it!\n"
 	.string "I'm here because I grew up with RENTON!\n"
 	.string "We've been scrapping since kindergarten!$"
 

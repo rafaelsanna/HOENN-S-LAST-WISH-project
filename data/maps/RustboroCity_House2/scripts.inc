@@ -13,7 +13,7 @@ RustboroCity_House2_Text_TrainerSchoolExcellent:
 	.string "Have you seen my husband, Gregor?\n"
 	.string "He left for work days ago…\p"
 	.string "He was a traveling salesman, always\n"
-	.string "on the road. But he always came home.\p"
+	.string "on the road, but he always came home.\p"
 	.string "Something… something must have\n"
 	.string "happened to him.$"
 

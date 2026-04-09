@@ -292,7 +292,11 @@ RustboroCity_DevonCorp_2F_Text_WeFinallyMadeNewBalls:
 RustboroCity_DevonCorp_2F_Text_IMadePokenav:
 	.string "I made the POKéNAV!\p"
 	.string "As an engineer, I feel blessed to have\n"
-	.string "made something so great!$"
+	.string "made something so great!\p"
+	.string "The only issue is that a person could\n"
+	.string "receive calls constantly with no\l"
+	.string "ability to turn the POKéNAV off.\p"
+	.string "But surely people wouldn't do that!$"
 
 RustboroCity_DevonCorp_2F_Text_WowThatsAPokenav:
 	.string "Oh, wow!\n"

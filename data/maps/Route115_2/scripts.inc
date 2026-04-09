@@ -9,8 +9,8 @@ Route115_EventScript_Sinister_Woman::
 	end
 
 Route115_Text_Sinister_Woman:
-	.string "I come here when I want to relax...\n"
-	.string "There's something calm here...\p"
+	.string "I come here when I want to relax.\n"
+	.string "There's something calm here.\p"
 	.string "Lonely Cave, right?\n"
 	.string "I can relate to this name...$"
 	

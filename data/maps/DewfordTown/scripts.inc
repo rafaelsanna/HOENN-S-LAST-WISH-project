@@ -57,6 +57,10 @@ DewfordTown_EventScript_Woman::
 	msgbox DewfordTown_Text_TinyIslandCommunity, MSGBOX_NPC
 	end
 
+DewfordTown_EventScript_Newpokemart::
+	msgbox DewfordTown_Text_Newpokemart, MSGBOX_NPC
+	end
+
 DewfordTown_EventScript_TownSign::
 	msgbox DewfordTown_Text_TownSign, MSGBOX_SIGN
 	end
@@ -640,6 +644,8 @@ DewfordTown_Text_TownSign:
 
 DewfordTown_Text_GymSign:
 	.string "DEWFORD TOWN POKéMON GYM\n"
+	.string "The sign has graffiti all over it,\n"
+	.string "but it seems to have previously said:\p"
 	.string "LEADER: BRAWLY\l"
 	.string "“A big wave in fighting!”$"
 
@@ -651,7 +657,7 @@ Route104_Text_LandedInDewfordDeliverLetter:
 	.string "MR. BRINEY: Ahoy!\n"
 	.string "We've hit land in DEWFORD.\p"
 	.string "I suppose you're off to deliver that\n"
-	.string "LETTER to, who was it now, STEVEN!$"
+	.string "LETTER to, who was it now, STELLA!$"
 
 DewfordTown_Text_SetSailBackToPetalburg:
 	.string "MR. BRINEY: Have you delivered your\n"
@@ -662,7 +668,7 @@ DewfordTown_Text_SetSailBackToPetalburg:
 DewfordTown_Text_PetalburgWereSettingSail2:
 	.string "MR. BRINEY: PETALBURG it is, then!\p"
 	.string "Anchors aweigh!\n"
-	.string "PEEKO, we're setting sail, my darling!$"
+	.string "NAMI, we're setting sail, my darling!$"
 
 DewfordTown_Text_GoDeliverIllBeWaiting:
 	.string "MR. BRINEY: Then you go on and deliver\n"
@@ -682,12 +688,12 @@ DewfordTown_Text_WhereAreWeBound:
 DewfordTown_Text_PetalburgWereSettingSail:
 	.string "MR. BRINEY: PETALBURG, is it?\p"
 	.string "Anchors aweigh!\n"
-	.string "PEEKO, we're setting sail, my darling!$"
+	.string "NAMI, we're setting sail, my darling!$"
 
 DewfordTown_Text_SlateportWereSettingSail:
 	.string "MR. BRINEY: SLATEPORT, is it?\p"
 	.string "Anchors aweigh!\n"
-	.string "PEEKO, we're setting sail, my darling!$"
+	.string "NAMI, we're setting sail, my darling!$"
 
 DewfordTown_Text_JustTellMeWhenYouNeedToSetSail:
 	.string "MR. BRINEY: You just tell me whenever\n"
@@ -791,3 +797,10 @@ DewfordTown_Text_YeahDefinitionOfInRightNow:
 	.string "Yeah, absolutely right!\p"
 	.string "“{STR_VAR_1}” is the\n"
 	.string "definition of “in” right now.$"
+
+DewfordTown_Text_Newpokemart:
+	.string "When RENTON showed up, he brought\n"
+	.string "tons of new people with him too.\p"
+	.string "This POKEMART was recently built\n"
+	.string "as a result.$"
+

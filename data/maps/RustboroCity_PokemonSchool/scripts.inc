@@ -341,19 +341,19 @@ RustboroCity_PokemonSchool_Text_StudentsWhoDefeatAllGetWiseGlasses:
 	.string "Whoa! Congratulations on defeating\n"
 	.string "all of our top students! Amazing.\p"
 	.string "You've demonstrated excellent battle\n"
-	.string "skills and strategy. Great joob!\p"
+	.string "skills and strategy. Great job!\p"
 	.string "Please accept these WISE GLASSES as\n"
 	.string "a reward for your accomplishment.$"
 
 RustboroCity_PokemonSchool_Text_TeacherRegular:
 	.string "Our top students are ready for\n"
 	.string "battles if you want to test your\l"
-	.string "skills! Don't be shy... After\l"
+	.string "skills! Don't be shy. After\l"
 	.string "defeating all the students, make sure\l"
 	.string "to talk to each one to see if they\l"
-	.string "have something to share... After that,\l"
+	.string "have something to share. After that,\l"
 	.string "talk to me to receive a prize for your\l"
-	.string "dedication to studies!$"
+	.string "dedication to your studies!$"
 
 RustboroCity_PokemonSchool_Text_TeacherTwoDefeated:
 	.string "You're doing great! Defeat all \n"
@@ -361,10 +361,10 @@ RustboroCity_PokemonSchool_Text_TeacherTwoDefeated:
 	.string "After defeating all the students, \n"
 	.string "make sure to talk to each one to \l"
 	.string "see if they have something to \l"
-	.string "share... After that, talk to me to \l"
+	.string "share. After that, talk to me to \l"
 	.string "receive a prize for your dedication \l"
-	.string "to studies!$"
+	.string "to your studies!$"
 
 RustboroCity_PokemonSchool_Text_ExplainWiseGlasses:
-	.string "The WISE GLASSES boost the\n"
+	.string "The WISE GLASSES boost\n"
 	.string "special attack power. Use them wisely!$"

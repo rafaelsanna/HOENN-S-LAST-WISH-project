@@ -358,7 +358,7 @@ Route103_Text_BrendanDefeated:
 Route103_Text_BrendanTimeToHeadBack:
     .string "ZENNO: Yeah… I see it now.\p"
     .string "ACACIA was right to keep an eye on\n"
-    .string "you! You are really good {PLAYER}!\p"
+    .string "you! You are really good, {PLAYER}!\p"
     .string "Your POKéMON already trusts you,\n"
     .string "and you just met it.\p"
     .string "With that kind of bond, you'll be able\n"
