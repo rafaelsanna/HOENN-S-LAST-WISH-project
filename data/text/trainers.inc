@@ -2247,7 +2247,7 @@ LonelyCaveB1_Text_UzumakiPostBattle:
 	.string "I come here to light incense\n"
 	.string "in honor of those who have passed.\p"
 	.string "Few have the courage to enter this\n"
-	.string "cave, but I feel calm and full\n"
+	.string "cave, but I feel calm and full\l"
 	.string "of energy here.$"
 	
 Route115_Text_TimothyIntro:

@@ -707,7 +707,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_Intern::
-	msgbox LittlerootTown_ProfessorBirchsLab_Text_Intern, MSGBOX_DEFAULT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_Intern, MSGBOX_NPC
 	release
 	end
 
