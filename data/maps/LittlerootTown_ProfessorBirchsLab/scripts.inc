@@ -706,6 +706,11 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall::
 	releaseall
 	end
 
+LittlerootTown_ProfessorBirchsLab_EventScript_Intern::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_Intern, MSGBOX_DEFAULT
+	release
+	end
+
 LittlerootTown_ProfessorBirchsLab_Text_BirchAwayOnFieldwork:
 	.string "Hunh? PROF. ACACIA?\p"
 	.string "The PROF's away on fieldwork.\n"
@@ -1129,4 +1134,9 @@ DifficultySelection_Text_HardModeSelected:
 	.string "PROF. ACACIA: Hard mode selected!\n"
 	.string "Good luck! You'll need it!$"
 	
+LittlerootTown_ProfessorBirchsLab_Text_Intern:
+	.string "I was lucky enough to land a\n"
+	.string "position as an intern here at\l"
+	.string "PROF. ACACIA's lab! If I work here\l"
+	.string "long enough, maybe I'll even get paid!$"
 
