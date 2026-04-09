@@ -31,10 +31,10 @@ DewfordTown_PokemonCenter_1F_Text_StoneCavern:
 	.string "there.$"
 
 DewfordTown_PokemonCenter_1F_Text_FaintedMonCanUseHM:
-	.string "BRINEY's boat hasn't moved in days.\n"
-	.string "He just stares at the horizon.\p"
+	.string "BRINEY seemed pretty shaken up\n"
+	.string "just a few days ago.\p"
 	.string "Claims he saw something emerge from\n"
-	.string "the water that night. Something old.\p"
-	.string "Won't talk about it. Just whispers\n"
-	.string "about currents changing...$"
+	.string "the water one night.\p"
+	.string "He won't talk about it. Glad he\n"
+	.string "seems to be back to normal now.$"
 

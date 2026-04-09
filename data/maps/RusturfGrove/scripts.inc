@@ -85,7 +85,7 @@ CutterDialogueBefore::
 	.string "I'm Tsubaki, and I'm training to be a\n"
 	.string "ninja and a master of the hidden\l"
 	.string "technique CUT!\p"
-	.string "Now, let's stop yapping and battle!$"
+	.string "Now, enough yapping. Let's battle!$"
 
 CutterDialogueAfter1::
 # 68 "data/maps/RusturfGrove/scripts.pory"

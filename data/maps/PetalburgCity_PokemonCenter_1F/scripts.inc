@@ -61,29 +61,29 @@ PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
 
 PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:
 	.string "The berries near the woods have been\n"
-	.string "ripening wrong. Too fast. Too bright.\p"
-	.string "Probably nothing. but just pay\n"
+	.string "ripening wrong - too fast and too bright.\p"
+	.string "It's probably nothing, but just pay\n"
 	.string "attention to what you keep.$"
 
 PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
 	.string "Professor Calendula spent years\n"
 	.string "in research labs across Hoenn.\p"
-	.string "Could have stayed in academia forever.\n"
-	.string "Published papers. Lived quietly.\p"
+	.string "She could have stayed in academia forever,\n"
+	.string "publishing papers and living quietly.\p"
 	.string "But she chose the Gym instead.\n"
 	.string "Says she learned more from one real\l"
 	.string "battle than ten years of theory.$"
 
 PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType:  
 	.string "Calendula studied Grass-types for\n"
-	.string "years. Wrote papers on their empathy.\p"
+	.string "years. She wrote papers on their empathy.\p"
 	.string "She'd tell you that Torchic bond\n"
 	.string "deeper than most. Trust that.$"
 
 PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType:   
-	.string "Fire-types as Calendula's say are\n"
+	.string "Fire-types, as Calendula says, are\n"
 	.string "heated! She says they're unpredictable\l"
-	.string "lately. More intense.\p"
+	.string "and more intense than other types.\p"
 	.string "Watch your Totodile carefully.$"
 
 PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:   

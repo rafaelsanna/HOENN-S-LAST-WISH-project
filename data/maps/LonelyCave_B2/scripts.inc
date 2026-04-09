@@ -28,11 +28,11 @@ PsychicWill::
 
 HexManiacSelene_Text_0:
 # 6 "data/maps/LonelyCave_B2/scripts.pory"
-	.string "Spirits dwell this cave. But for what?$"
+	.string "Spirits dwell in this cave, but for what?$"
 
 PsychicWill_Text_0:
 # 22 "data/maps/LonelyCave_B2/scripts.pory"
-	.string "I always come here to train my pokemon.\n"
+	.string "I always come here to train my POKéMON.\n"
 	.string "It's nice and quiet.$"
 
 SeleneIntro::
@@ -41,7 +41,7 @@ SeleneIntro::
 
 SeleneLose::
 # 15 "data/maps/LonelyCave_B2/scripts.pory"
-	.string "Well you're not scared of battle I see.$"
+	.string "Well you're not scared of battle, I see.$"
 
 WillIntro::
 # 27 "data/maps/LonelyCave_B2/scripts.pory"

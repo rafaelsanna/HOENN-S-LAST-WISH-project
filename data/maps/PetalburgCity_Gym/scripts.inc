@@ -1237,7 +1237,7 @@ PetalburgCity_Gym_Text_DadPlayerGoWithWally:
     .string "Then come tell me the result.$"
 
 PetalburgCity_Gym_Text_IllLoanYouMyZigzagoon:
-    .string "Calendula: Remember your training!$"
+    .string "Calendula: Luka, remember your training!$"
 
 PetalburgCity_Gym_Text_WallyThankYouAndDadGivesPokeBall:
     .string "LUKA: Don’t worry, CALENDULA.\n"
@@ -1254,15 +1254,17 @@ PetalburgCity_Gym_Text_WouldYouReallyComeWithMe:
 
 PetalburgCity_Gym_Text_DadSoDidItWorkOut:
     .string "CALENDULA: Excellent work!\n"
-    .string "You both did great.\l"
-    .string "Your bond with your POKéMON has grown.$"
+    .string "You both did great.\p"
+    .string "{PLAYER}, I am confident you'll be\n"
+	.string "safe in the woods if your bond with\l"
+	.string "your POKéMON is this strong.$"
 
 PetalburgCity_Gym_Text_WallyThankYouBye:
     .string "LUKA: That was a great battle!\n"
     .string "You pushed me, {PLAYER}.\p"
     .string "I lost, but I held back a bit.\n"
     .string "Next time, I’ll give my full strength.\p"
-    .string "I must go! That strange comet\n"
+    .string "Gotta go! That strange comet\n"
     .string "in HOENN is on my mind.\p"
     .string "I need to learn more.\n"
     .string "See you soon, {PLAYER}!$"
@@ -1274,11 +1276,11 @@ PetalburgCity_Gym_Text_DadGoCollectBadges:
     .string "First, go to RUSTBORO CITY.\n"
     .string "Challenge TERRA, the ROCK-type\l"
     .string "GYM LEADER.\p"
-    .string "Defeat her, then continue across HOENN,\n"
-    .string "earn badges from other GYM LEADERS.\p"
+    .string "Defeat her, then continue across HOENN\n"
+    .string "and earn badges from other GYM LEADERS.\p"
     .string "But be cautious.\n"
     .string "Strange events have been happening,\l"
-    .string "and a mysterious comet passed recently.\p"
+    .string "and that mysterious comet passed recently.\p"
     .string "I have a bad feeling about it.\n"
     .string "Stay alert, {PLAYER}, and come back\l"
     .string "stronger for our GYM battle.$"
@@ -1289,8 +1291,8 @@ PetalburgCity_Gym_Text_NormanGoToRustboro:
     .string "You still have much to learn.\p"
     .string "Keep exploring, {PLAYER}.\n"
     .string "I want to help you grow.\p"
-    .string "Return after you earn 4 BADGES.\n"
-    .string "Then challenge me!$"
+    .string "Return after you earn 4 BADGES,\n"
+    .string "then challenge me!$"
 
 
 PetalburgCity_Gym_Text_NormanGoToDewford:
@@ -1299,7 +1301,7 @@ PetalburgCity_Gym_Text_NormanGoToDewford:
 	.string "But there are many more TRAINERS\n"
 	.string "who are stronger than you, {PLAYER}.\p"
 	.string "Across the sea in DEWFORD TOWN is a\n"
-	.string "GYM LEADER named BRAWLY.\p"
+	.string "GYM LEADER named RENTON.\p"
 	.string "You should go challenge him.$"
 
 PetalburgCity_Gym_Text_YouHaveGottenStronger:
@@ -1315,7 +1317,7 @@ PetalburgCity_Gym_Text_NormanIntro:
 	.string "a POKéMON battle.\p"
 	.string "{PLAYER}…\p"
 	.string "I'm so happy that I can have\n"
-	.string "a real battle with my own child.\p"
+	.string "a real battle with my own student.\p"
 	.string "But, a battle is a battle!\p"
 	.string "I will do everything in my power as\n"
 	.string "a GYM LEADER to win.\p"
@@ -1332,7 +1334,7 @@ PetalburgCity_Gym_Text_NormanDefeat:
 
 PetalburgCity_Gym_Text_ReceivedBalanceBadge:
 	.string "{PLAYER} received the BALANCE BADGE\n"
-	.string "from DAD!$"
+	.string "from CALENDULA!$"
 
 PetalburgCity_Gym_Text_ExplainBalanceBadgeTakeThis:
 	.string "CALENDULA: With that BADGE, the DEFENSE\n"
@@ -1353,7 +1355,7 @@ PetalburgCity_Gym_Text_ExplainFacade:
 PetalburgCity_Gym_Text_DadHappyAndSad:
 	.string "CALENDULA: As the GYM LEADER, I can't\n"
 	.string "express how upset I am…\p"
-	.string "But as a father, it makes me both\n"
+	.string "But as a mentor, it makes me both\n"
 	.string "happy and a little sad. It's odd…$"
 
 PetalburgCity_Gym_Text_PleaseComeWithMe:
@@ -1363,7 +1365,7 @@ PetalburgCity_Gym_Text_PleaseComeWithMe:
 
 PetalburgCity_Gym_Text_LetMeBorrowPlayer:
 	.string "CALENDULA, you don't mind, do you?\p"
-	.string "Let me borrow your {PLAYER}{KUN} for\n"
+	.string "Let me borrow {PLAYER}{KUN} for\n"
 	.string "a minute or two.$"
 
 PetalburgCity_Gym_Text_DadGoingToKeepTraining:
@@ -1379,15 +1381,15 @@ PetalburgCity_Gym_Text_DadGoingToKeepTraining:
 	.string "and she's always cheering you on.$"
 
 PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough:
-	.string "CALENDULA: {PLAYER}, how are your\n"
+	.string "CALENDULA: {PLAYER}, how is your\n"
 	.string "journey going?\p"
 	.string "The world of POKéMON is incredibly deep.\n"
 	.string "There is always something new to learn.\p"
 	.string "Research, observation, and sharing\n"
-	.string "knowledge with young trainers\l"
+	.string "knowledge with young trainers -\l"
 	.string "that is what truly strengthens us.\p"
 	.string "Battles are important, yes…\n"
-	.string "but understanding POKéMON is deeper.$"
+	.string "but understanding POKéMON is essential.$"
 
 PetalburgCity_Gym_Text_GymGuideAdvice:
 	.string "Hey, how's it going, CHAMPION-\n"
@@ -1504,10 +1506,10 @@ PetalburgCity_Gym_Text_BerkePostBadge:
 	.string "Since CALENDULA became our\n"
 	.string "LEADER, we've grown a lot.\p"
 	.string "We've learned so much about\n"
-	.string "the POKEMON world,\l"
+	.string "the POKEMON world\l"
 	.string "beyond just battling.\p"
 	.string "Knowledge and strategy matter\n"
-	.string "as much as strength now.$"
+	.string "just as much as strength now.$"
 
 PetalburgCity_Gym_Text_MaryIntro:
 	.string "Giggle…\n"
@@ -1624,7 +1626,7 @@ PetalburgCity_Gym_Text_GymStatue:
 
 PetalburgCity_Gym_Text_GymStatueCertified:
 	.string "PETALBURG CITY POKéMON GYM\p"
-	.string "NORMAN'S CERTIFIED TRAINERS:\n"
+	.string "CALENDULA'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 PetalburgCity_Gym_Text_NormanPreRematch:
@@ -1634,8 +1636,8 @@ PetalburgCity_Gym_Text_NormanPreRematch:
 	.string "a challenge from you.\p"
 	.string "You do understand, don't you?\p"
 	.string "Inside a GYM, it doesn't matter that\n"
-	.string "we are a parent and child.\p"
-	.string "…No, because we are parent and child,\n"
+	.string "we are a student and mentor.\p"
+	.string "…No, because we are student and mentor,\n"
 	.string "we owe it to each other to do the best\l"
 	.string "we can. Isn't that right, {PLAYER}?$"
 

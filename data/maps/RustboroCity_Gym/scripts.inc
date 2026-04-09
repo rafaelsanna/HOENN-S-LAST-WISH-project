@@ -166,7 +166,7 @@ RustboroCity_Gym_Movement_Fall:
 	step_end
 
 RustboroCity_Gym_Text_SlipperyRock:
-	.string "Ops! You lost your grip!$"
+	.string "Oops! You lost your grip!$"
 	
 RustboroCity_Gym_Text_GymGuideAdvice:
 	.string "Yo, how's it going?\p"
@@ -230,7 +230,7 @@ RustboroCity_Gym_Text_JanjaIntro:
 	.string "Try scaling a cliff with no rope!\p"
 	.string "My ROCK POKEMON and I have faced\n"
 	.string "the harshest peaks in HOENN.\p"
-	.string "Every fall, every scrape… it only made\n"
+	.string "Every fall and scrape only made\n"
 	.string "us stronger.\p"
 	.string "Now, let's see if your team can handle\n"
 	.string "the pressure of a true mountain climb!$"
@@ -241,19 +241,19 @@ RustboroCity_Gym_Text_JanjaDefeat:
 
 RustboroCity_Gym_Text_JanjaPostBattle:
 	.string "I've explored Hoenn's peaks for years!\p"
-	.string "That's how I met TERRA. Young, brave,\n"
-	.string "fearless... Just like the mountains.\p"
-	.string "Smart girl. Chose ROCK type for\n"
+	.string "That's how I met TERRA. She's brave and\n"
+	.string "fearless, just like the mountains.\p"
+	.string "She wisely chose ROCK type for\n"
 	.string "its strength and endurance.\p"
-	.string "You've got that same spirit!.\n"
+	.string "You've got that same spirit!\n"
 	.string "Keep climbing.$"
 
 RustboroCity_Gym_Text_RoxanneIntro:
-	.string "Hey! I'm TERRA, RUSTBORO CITY\n"
+	.string "Hey! I'm TERRA, RUSTBORO CITY's\n"
 	.string "GYM LEADER and pro climber!\p"
 	.string "I trained on cliffs and mountains,\n"
 	.string "pushing my limits with my Rock-types.\p"
-	.string "Show me how you battle, and which\n"
+	.string "Show me how you battle and which\n"
 	.string "POKEMON you brought to climb this!$"
 
 RustboroCity_Gym_Text_RoxanneDefeat:
