@@ -75,7 +75,8 @@ FragonardIntro::
 
 FragonardLose::
 # 25 "data/maps/RusturfGrove/scripts.pory"
-	.string "If only I were as strong as this place was pretty...$"
+	.string "If only I were as strong as\n"
+	.string "this place was pretty...$"
 
 CutterDialogueBefore::
 # 60 "data/maps/RusturfGrove/scripts.pory"
