@@ -4654,8 +4654,8 @@
     {
       "id": "LAYOUT_DEWDROP_JUNGLE",
       "name": "DewdropJungle_Layout",
-      "width": 50,
-      "height": 30,
+      "width": 54,
+      "height": 34,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dewford",
       "border_filepath": "data/layouts/DewdropJungle/border.bin",

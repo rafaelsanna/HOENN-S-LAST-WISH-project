@@ -16,6 +16,34 @@ DewdropJungle_EventScript_HikerXander::
 	msgbox DewdropJungle_Text_XanderPostBattle, MSGBOX_AUTOCLOSE
 	end		
 
+DewdropJungle_EventScript_BattleGirlKayla::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_BGKAYLA, DewdropJungle_Text_KaylaIntro, DewdropJungle_Text_KaylaDefeated
+	msgbox DewdropJungle_Text_KaylaPostBattle, MSGBOX_AUTOCLOSE
+	end
 
+DewdropJungle_EventScript_ChefLouis::
+	trainerbattle_single TRAINER_LOUIS, DewdropJungle_Text_LouisIntro, DewdropJungle_Text_LouisDefeated
+	msgbox DewdropJungle_Text_LouisPostBattle, MSGBOX_AUTOCLOSE
+	end
 
+DewdropJungle_EventScript_BugCatcherNoah::
+	trainerbattle_single TRAINER_NOAH, DewdropJungle_Text_NoahIntro, DewdropJungle_Text_NoahDefeated
+	msgbox DewdropJungle_Text_NoahPostBattle, MSGBOX_AUTOCLOSE
+	end
 
+DewdropJungle_EventScript_FisherBryce::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_BRYCE, DewdropJungle_Text_BryceIntro, DewdropJungle_Text_BryceDefeated
+	msgbox DewdropJungle_Text_BrycePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+DewdropJungle_EventScript_Waterfallgirl::
+	msgbox DewdropJungle_Text_Waterfallgirl, MSGBOX_NPC
+	end
+
+DewdropJungle_Text_Waterfallgirl:
+	.string "I like to come out here to watch\n"
+	.string "the waterfall. So peaceful...$"

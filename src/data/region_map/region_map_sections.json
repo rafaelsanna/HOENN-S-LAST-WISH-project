@@ -1254,6 +1254,10 @@
     {
       "id": "MAPSEC_OLDALE_FIELD",
       "name": "OLDALE FIELD"
+    },
+    {
+      "id": "MAPSEC_GRANITE_HILL",
+      "name": "GRANITE HILL"
     }
   ]
 }

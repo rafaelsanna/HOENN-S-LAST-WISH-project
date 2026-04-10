@@ -974,6 +974,70 @@ Aipom
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+=== TRAINER_NOAH ===
+Name: Noah
+Class: Bug Catcher
+Pic: Bug Catcher
+Gender: Male
+Music: Male
+Double Battle: Yes
+AI: Check Bad Move
+
+Spinarak
+Level: 19
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Beautifly
+Level: 19
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_BGKAYLA ===
+Name: Kayla
+Class: Battle Girl
+Pic: Battle Girl
+Gender: Female
+Music: Intense
+Double Battle: No
+AI: Check Bad Move
+
+Breloom
+Level: 20
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+=== TRAINER_BRYCE ===
+Name: Bryce
+Class: Fisherman
+Pic: Fisherman
+Gender: Male
+Music: Hiker
+Double Battle: No
+AI: Check Bad Move
+
+Barboach
+Level: 19
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Numel
+Level: 19
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_LOUIS ===
+Name: Louis
+Class: Hiker
+Pic: Hiker
+Gender: Male
+Music: Hiker
+Double Battle: No
+AI: Check Bad Move
+
+Totodile
+Level: 19
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
+Growlithe
+Level: 19
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+
 === TRAINER_UZUMAKI ===
 Name: Uzumaki
 Class: Channeler
@@ -18614,7 +18678,7 @@ AI: Check Bad Move
 
 Smeargle  
 Ability: Technician  
-Level: 17
+Level: 14
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Shock Wave  
 - Ancient Power  
@@ -18623,7 +18687,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Smeargle  
 Ability: Technician  
-Level: 17
+Level: 14
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Fake Out  
 - Protect
@@ -18640,7 +18704,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Sandshrew
-Level: 19
+Level: 16
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_RYUX ===
@@ -18653,9 +18717,9 @@ Double Battle: No
 AI: Check Bad Move
 
 Mankey
-Level: 17
+Level: 14
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Mankey
-Level: 17
+Level: 14
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe

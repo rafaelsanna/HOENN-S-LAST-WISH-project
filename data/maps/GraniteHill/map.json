@@ -3,14 +3,14 @@
   "name": "GraniteHill",
   "layout": "LAYOUT_GRANITE_HILL",
   "music": "MUS_DEWFORD",
-  "region_map_section": "MAPSEC_DEWFORD_TOWN",
+  "region_map_section": "MAPSEC_GRANITE_HILL",
   "requires_flash": false,
-  "weather": "WEATHER_NONE",
+  "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_ROUTE",
   "allow_cycling": true,
   "allow_escaping": false,
   "allow_running": true,
-  "show_map_name": false,
+  "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
@@ -25,7 +25,7 @@
     },
     {
       "map": "MAP_DEWDROP_JUNGLE",
-      "offset": 0,
+      "offset": 5,
       "direction": "down"
     }
   ],
@@ -45,8 +45,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ARTIST",
-      "x": 21,
-      "y": 25,
+      "x": 22,
+      "y": 23,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 4,
