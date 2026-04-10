@@ -858,6 +858,58 @@ DewdropJungle_Text_XanderPostBattle:
 	.string "I'm done. Next time, I'm staying\n"
 	.string "somewhere dry. This jungle hates me.$"
 
+DewdropJungle_Text_KaylaIntro:
+	.string "There you are! Perfect timing.\n"
+	.string "This rock's been my training partner\l"
+	.string "all day, but it doesn't hit back!$"
+
+DewdropJungle_Text_KaylaDefeated:
+	.string "Okay... you hit back.$"
+
+DewdropJungle_Text_KaylaPostBattle:
+	.string "I came out here to get stronger,\n"
+	.string "and I'll stay out here as long as I\l"
+	.string "need to so that I can face everyone\l"
+	.string "back at the gym!$"
+
+DewdropJungle_Text_BryceIntro:
+	.string "Nothing ever bites in this pond!$"
+
+DewdropJungle_Text_BryceDefeated:
+	.string "I guess I'm not reeling anything\n"
+	.string "in today.$"
+
+DewdropJungle_Text_BrycePostBattle:
+	.string "Maybe I need to change the bait\n"
+	.string "I'm using.$"
+
+DewdropJungle_Text_NoahIntro:
+	.string "Careful! There are big scary bugs\n"
+	.string "all over this place! Cool, right?$"
+
+DewdropJungle_Text_NoahDefeated:
+	.string "You're way scarier than the bugs!$"
+
+DewdropJungle_Text_NoahPostBattle:
+	.string "Everyone underestimates bug types.\n"
+	.string "In a place like this, though, bugs\l"
+	.string "are the ones who really run things.$"
+
+DewdropJungle_Text_LouisIntro:
+	.string "This area is full of rare\n"
+	.string "ingredients. Hey, will you try\l"
+	.string "out my new recipe?$"
+
+DewdropJungle_Text_LouisDefeated:
+	.string "Ah... I burnt it.$"
+
+DewdropJungle_Text_LouisPostBattle:
+	.string "You ever notice how different\n"
+	.string "POKéMON of the same species seem\l"
+	.string "to prefer different flavors?\p"
+	.string "I want to make something that all\n"
+	.string "POKéMON will enjoy!$"
+
 Route107_Text_DarrinIntro:
 	.string "Yawn…\p"
 	.string "I must have drifted off to sleep while\n"
