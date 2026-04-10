@@ -1672,7 +1672,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 706
-            .species = SPECIES_CROBAT,
+            .species = SPECIES_GOLBAT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 708
             .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
@@ -32806,7 +32806,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 12474
-            .species = SPECIES_CROBAT,
+            .species = SPECIES_GOLBAT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12476
             .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
@@ -39878,7 +39878,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 15167
-            .species = SPECIES_CROBAT,
+            .species = SPECIES_GOLBAT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 15169
             .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
@@ -45638,7 +45638,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 17487
-            .species = SPECIES_CROBAT,
+            .species = SPECIES_GOLBAT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 17489
             .iv = TRAINER_PARTY_IVS(24, 24, 24, 24, 24, 24),
