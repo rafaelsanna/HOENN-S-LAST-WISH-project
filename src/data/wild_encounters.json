@@ -18575,9 +18575,9 @@
                 "species": "SPECIES_ODDISH"
               },
               {
-                "min_level": 13,
-                "max_level": 18,
-                "species": "SPECIES_ODDISH"
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_GLOOM"
               },
               {
                 "min_level": 13,
@@ -18585,8 +18585,8 @@
                 "species": "SPECIES_NINCADA"
               },
               {
-                "min_level": 13,
-                "max_level": 18,
+                "min_level": 15,
+                "max_level": 20,
                 "species": "SPECIES_NINCADA"
               },
               {
@@ -18600,8 +18600,8 @@
                 "species": "SPECIES_SCYTHER"
               },
               {
-                "min_level": 13,
-                "max_level": 18,
+                "min_level": 15,
+                "max_level": 20,
                 "species": "SPECIES_SCYTHER"
               }
             ]
@@ -18633,6 +18633,66 @@
                 "min_level": 13,
                 "max_level": 18,
                 "species": "SPECIES_SCYTHER"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 2,
+                "max_level": 5,
+                "species": "SPECIES_MAGIKARP"
+              },
+              {
+                "min_level": 2,
+                "max_level": 5,
+                "species": "SPECIES_WOOPER"
+              },
+              {
+                "min_level": 2,
+                "max_level": 5,
+                "species": "SPECIES_KRABBY"
+              },
+              {
+                "min_level": 10,
+                "max_level": 25,
+                "species": "SPECIES_WOOPER"
+              },
+              {
+                "min_level": 10,
+                "max_level": 25,
+                "species": "SPECIES_KRABBY"
+              },
+              {
+                "min_level": 10,
+                "max_level": 25,
+                "species": "SPECIES_CORPHISH"
+              },
+              {
+                "min_level": 20,
+                "max_level": 35,
+                "species": "SPECIES_KRABBY"
+              },
+              {
+                "min_level": 20,
+                "max_level": 35,
+                "species": "SPECIES_CORPHISH"
+              },
+              {
+                "min_level": 25,
+                "max_level": 35,
+                "species": "SPECIES_QUAGSIRE"
+              },
+              {
+                "min_level": 30,
+                "max_level": 40,
+                "species": "SPECIES_GYARADOS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 40,
+                "species": "SPECIES_GYARADOS"
               }
             ]
           }

@@ -30,7 +30,7 @@
     },
     {
       "map": "MAP_DEWDROP_JUNGLE",
-      "offset": 0,
+      "offset": -24,
       "direction": "down"
     }
   ],

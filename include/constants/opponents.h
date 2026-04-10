@@ -905,14 +905,18 @@
 #define TRAINER_MARCIA                      899
 #define TRAINER_EDWIN                       900
 #define TRAINER_AQUA_MEMBER_CARGO_SHIP      901
+#define TRAINER_ARCHIBALD                   902
+#define TRAINER_MARKUS                      903
+#define TRAINER_RYUX                        904
+
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      902
-#define MAX_TRAINERS_COUNT                  903
+#define TRAINERS_COUNT                      905
+#define MAX_TRAINERS_COUNT                  906
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

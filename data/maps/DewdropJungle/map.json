@@ -15,6 +15,11 @@
   "connections": [
     {
       "map": "MAP_DEWFORD_TOWN",
+      "offset": 24,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_GRANITE_HILL",
       "offset": 0,
       "direction": "up"
     }
@@ -22,7 +27,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_BUG_CATCHER",
-      "x": 18,
+      "x": 42,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN_AND_LEFT",
@@ -35,7 +40,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
-      "x": 5,
+      "x": 30,
       "y": 25,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -48,7 +53,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_2",
-      "x": 9,
+      "x": 33,
       "y": 6,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -61,7 +66,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
-      "x": 19,
+      "x": 43,
       "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -74,7 +79,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
-      "x": -7,
+      "x": 17,
       "y": -5,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -87,7 +92,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
-      "x": 15,
+      "x": 39,
       "y": 8,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -100,7 +105,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(AIPOM)",
-      "x": 13,
+      "x": 37,
       "y": 23,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -113,7 +118,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(AIPOM)",
-      "x": 10,
+      "x": 34,
       "y": 23,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",

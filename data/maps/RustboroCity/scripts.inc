@@ -1020,8 +1020,8 @@ RustboroCity_Text_PokemonCanChangeLookFromExp:
     .string "workers, and travelers passing through.\p"
     .string "Every corner has someone tinkering with\n"
     .string "a machine or studying something new.\l"
-    .string "I wonder what discoveries will\l"
-    .string "come out of this place next.$"
+    .string "I wonder what discoveries will come out\l"
+    .string "of this place next.$"
 
 RustboroCity_Text_PokemonChangeShape:
     .string "I've heard there's a cave\n"
