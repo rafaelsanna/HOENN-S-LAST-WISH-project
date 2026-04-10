@@ -1023,8 +1023,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LOUIS ===
 Name: Louis
-Class: Hiker
-Pic: Hiker
+Class: Baker
+Pic: Baker
 Gender: Male
 Music: Hiker
 Double Battle: No
@@ -18676,23 +18676,13 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Smeargle  
-Ability: Technician  
+Oddish
 Level: 14
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Shock Wave  
-- Ancient Power  
-- Water Pulse  
-- Magical Leaf
 
-Smeargle  
-Ability: Technician  
+Natu
 Level: 14
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Fake Out  
-- Protect
-- Helping Hand
-- Wide Guard
 
 === TRAINER_MARKUS ===
 Name: MARKUS
