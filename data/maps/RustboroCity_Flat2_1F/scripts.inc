@@ -17,8 +17,8 @@ RustboroCity_Flat2_1F_EventScript_Skitty::
 
 RustboroCity_Flat2_1F_Text_DevonWorkersLiveHere:
 	.string "This old building has been here since\n"
-	.string "before I was a bride. My husband was\n"
-	.string "one of the workers who built it. Now\n"
+	.string "before I was a bride. My husband was\l"
+	.string "one of the workers who built it. Now\l"
 	.string "it's just me, staring at these walls.$"
 
 RustboroCity_Flat2_1F_Text_Skitty:

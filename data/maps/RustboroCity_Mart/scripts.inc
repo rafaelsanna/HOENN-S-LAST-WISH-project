@@ -67,7 +67,7 @@ RustboroCity_Mart_EventScript_BugCatcher::
 RustboroCity_Mart_Text_BuyingHealsInCaseOfShroomish:
 	.string "Have you heard about TERRA, our GYM\n"
 	.string "LEADER? She's an incredible climber!\p"
-	.string "They say she been where no one\n"
+	.string "They say she's been where no one\n"
 	.string "else dares to even approach.\p"
 	.string "Her climbing skills let her reach\n"
 	.string "altitudes where rare POKéMON live and\l"

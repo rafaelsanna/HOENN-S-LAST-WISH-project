@@ -22,7 +22,7 @@ RustboroCity_Flat1_1F_EventScript_OldLadyAndVulpix::
 RustboroCity_Flat1_1F_Text_EveryPokemonHasAbility:
 	.string "Did you know GYM LEADER TERRA has an\n"
 	.string "older brother? They say he's even more\l"
-	.string "famous than her… He's like, a total\n"
+	.string "famous than her… He's like, a total\l"
 	.string "celebrity all across HOENN!$"
 
 RustboroCity_Flat1_1F_Text_PokemonStrange:

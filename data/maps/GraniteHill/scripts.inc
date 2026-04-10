@@ -8,3 +8,21 @@ GraniteHill_EventScript_Herbalistgh::
 	msgbox GraniteHill_Text_CeciliaPostBattle, MSGBOX_AUTOCLOSE
 	release
 	end	
+
+GraniteHill_EventScript_Archibald::
+	trainerbattle_single TRAINER_ARCHIBALD, GraniteHill_Text_ArchibaldIntro, GraniteHill_Text_ArchibaldDefeated
+	msgbox GraniteHill_Text_ArchibaldPostBattle, MSGBOX_AUTOCLOSE
+	release
+	end	
+
+GraniteHill_EventScript_Markus::
+	trainerbattle_single TRAINER_MARKUS, GraniteHill_Text_MarkusIntro, GraniteHill_Text_MarkusDefeated
+	msgbox GraniteHill_Text_MarkusPostBattle, MSGBOX_AUTOCLOSE
+	release
+	end	
+
+GraniteHill_EventScript_Ryux::
+	trainerbattle_single TRAINER_RYUX, GraniteHill_Text_RyuxIntro, GraniteHill_Text_RyuxDefeated
+	msgbox GraniteHill_Text_RyuxPostBattle, MSGBOX_AUTOCLOSE
+	release
+	end	

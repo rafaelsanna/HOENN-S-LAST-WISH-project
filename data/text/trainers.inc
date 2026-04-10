@@ -619,6 +619,45 @@ GraniteHill_Text_CeciliaPostBattle:
 	.string "Will I have any energy left to make\n"
 	.string "the return trip?$"	
 
+GraniteHill_Text_ArchibaldIntro:
+	.string "Have you ever seen more beautiful\n"
+	.string "scenery?$"
+
+GraniteHill_Text_ArchibaldDefeated:
+	.string "Smeargle! Quick! We must capture\n"
+	.string "this moment!$"
+
+GraniteHill_Text_ArchibaldPostBattle:
+	.string "This island has been mostly\n"
+	.string "untouched for years. We can observe\l"
+	.string "nature here in its truest form.$"
+
+GraniteHill_Text_MarkusIntro:
+	.string "I've been waiting for this trip\n"
+	.string "for ages! A battle is the perfect\l"
+	.string "way to settle in.$"
+
+GraniteHill_Text_MarkusDefeated:
+	.string "Whew, we'll sleep well tonight.$"
+
+GraniteHill_Text_MarkusPostBattle:
+	.string "I spent a year preparing for this,\n"
+	.string "but I only get to stay for a week.\p"
+	.string "Life's unfair.$"
+
+GraniteHill_Text_RyuxIntro:
+	.string "They kicked me out of the gym here.\n"
+	.string "They said I was making people\l"
+	.string "uncomfortable. They'll have to let me\l"
+	.string "in if they see my super cool moves!$"
+
+GraniteHill_Text_RyuxDefeated:
+	.string "No way I lost! You must have cheated!$"
+
+GraniteHill_Text_RyuxPostBattle:
+	.string "Check out this sword I got at the mall!\p"
+	.string "WHOOSH WHOOSH WHOOSH WHOOSH$"
+
 FieryPath_Text_DaxonIntro:
 	.string "Whoa! You're exploring the FIERY PATH\n"
 	.string "too? This place is no joke!\p"

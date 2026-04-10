@@ -34,4 +34,4 @@ ElderDialogue::
 
 CuttersGrandmaDialogue::
 # 30 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
-	.string "When they were expanding the city of\n RUSTBORO, my husband helped out.\p He made his POKéMON use the hidden\n technique CUT to clear the land of\p the many trees that once were here.$"
+	.string "When they were expanding the city of\n RUSTBORO, my husband helped out.\p He made his POKéMON use the hidden\n technique CUT to clear the land of\l the many trees that once were here.$"

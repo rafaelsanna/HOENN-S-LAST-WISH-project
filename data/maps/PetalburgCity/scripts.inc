@@ -764,7 +764,8 @@ PetalburgCity_Text_AreYouRookieTrainer:
     .string "People keep hearing footsteps in the\l"
     .string "woods even when the wind is still.\p"
     .string "Calendula wants to speak with any new\n"
-    .string "visitors before they go into the woods.$"
+    .string "visitors before they go into the woods.\l"
+	.string "You should visit her if you haven't.$"
 
 PetalburgCity_Text_ThisIsPetalburgGym:
 	.string "See? This is PETALBURG CITY's GYM./n"
@@ -776,7 +777,7 @@ PetalburgCity_Text_ThisIsGymSign:
 
 PetalburgCity_Text_WaterReflection:
     .string "Funny thing about reflections…\n"
-    .string "they show you, but not the parts\n"
+    .string "they show you, but not the parts\l"
     .string "you try to hide.\p"
     .string "When I stare long enough, mine looks\n"
     .string "almost like it's drifting away.\p"

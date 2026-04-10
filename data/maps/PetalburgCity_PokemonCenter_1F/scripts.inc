@@ -61,14 +61,14 @@ PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
 
 PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:
 	.string "The berries near the woods have been\n"
-	.string "ripening wrong - too fast and too bright.\p"
+	.string "ripening wrong - too fast and bright.\p"
 	.string "It's probably nothing, but just pay\n"
 	.string "attention to what you keep.$"
 
 PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
 	.string "Professor Calendula spent years\n"
 	.string "in research labs across Hoenn.\p"
-	.string "She could have stayed in academia forever,\n"
+	.string "She could have been an academic forever,\n"
 	.string "publishing papers and living quietly.\p"
 	.string "But she chose the Gym instead.\n"
 	.string "Says she learned more from one real\l"

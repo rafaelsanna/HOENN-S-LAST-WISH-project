@@ -24,7 +24,7 @@ RustboroCity_Flat2_2F_EventScript_GavePremierBall::
 RustboroCity_Flat2_2F_Text_DevonWasTinyInOldDays:
 	.string "I gave my whole life to DEVON… Now my\n"
 	.string "son works there too. Time just flies.\l"
-	.string "That's why I spoil my grandson rotten,\n"
+	.string "That's why I spoil my grandson rotten,\l"
 	.string "so he won't grow up lonely like his dad.$"
 
 RustboroCity_Flat2_2F_Text_MyDaddyMadeThisYouCanHaveIt:

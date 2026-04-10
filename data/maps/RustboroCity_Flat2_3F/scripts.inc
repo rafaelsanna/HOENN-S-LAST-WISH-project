@@ -15,7 +15,7 @@ RustboroCity_Flat2_3F_Text_PresidentCollectsRareStones:
 	.string "It can digitize itself and explore\n"
 	.string "cyberspace. I'ts so amazing!\p"
 	.string "But PORYGON2 and PORYGON Z? Their\n"
-	.string "behavior is… kinda wierd, honestly.$"
+	.string "behavior is… kinda weird, honestly.$"
 
 RustboroCity_Flat2_3F_Text_PresidentsSonAlsoCollectsRareStones:
 	.string "My boyfriend's a computer genius at\n"

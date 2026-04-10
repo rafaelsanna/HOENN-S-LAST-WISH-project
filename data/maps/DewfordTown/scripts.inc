@@ -644,7 +644,7 @@ DewfordTown_Text_TownSign:
 
 DewfordTown_Text_GymSign:
 	.string "DEWFORD TOWN POKéMON GYM\n"
-	.string "The sign has graffiti all over it,\n"
+	.string "The sign has graffiti all over it,\l"
 	.string "but it seems to have previously said:\p"
 	.string "LEADER: BRAWLY\l"
 	.string "“A big wave in fighting!”$"
