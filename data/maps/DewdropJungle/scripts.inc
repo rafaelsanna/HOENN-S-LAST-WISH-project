@@ -19,7 +19,7 @@ DewdropJungle_EventScript_HikerXander::
 DewdropJungle_EventScript_BattleGirlKayla::
 	lock
 	faceplayer
-	trainerbattle_single TRAINER_BGKAYLA, DewdropJungle_Text_KaylaIntro, DewdropJungle_Text_KaylaDefeated
+	trainerbattle_single TRAINER_PEGGY, DewdropJungle_Text_KaylaIntro, DewdropJungle_Text_KaylaDefeated
 	msgbox DewdropJungle_Text_KaylaPostBattle, MSGBOX_AUTOCLOSE
 	end
 

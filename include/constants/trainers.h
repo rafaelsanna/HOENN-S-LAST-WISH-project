@@ -168,9 +168,10 @@
 #define TRAINER_PIC_ALEJANDRO            150
 #define TRAINER_PIC_NETSU                151
 #define TRAINER_PIC_AURORA               152
+#define TRAINER_PIC_CHEF                 153
 // COUNT
 
-#define TRAINER_PIC_COUNT                153
+#define TRAINER_PIC_COUNT                15
 
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
@@ -443,6 +444,7 @@ enum TrainerClassID
     TRAINER_CLASS_HERBALIST,
     TRAINER_CLASS_CHANNELER,
     TRAINER_CLASS_CULTIST,
+    TRAINER_CLASS_CHEF,
     TRAINER_CLASS_COUNT,
 };
 

@@ -991,8 +991,8 @@ Beautifly
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_BGKAYLA ===
-Name: Kayla
+=== TRAINER_PEGGY ===
+Name: PEGGY
 Class: Battle Girl
 Pic: Battle Girl
 Gender: Female
@@ -1022,15 +1022,15 @@ Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LOUIS ===
-Name: Louis
-Class: Baker
-Pic: Baker
+Name: LOUIS
+Class: Chef
+Pic: Chef
 Gender: Male
 Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Totodile
+Tentacool
 Level: 19
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 

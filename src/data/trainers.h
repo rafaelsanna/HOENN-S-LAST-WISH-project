@@ -2450,10 +2450,10 @@ F_TRAINER_FEMALE |
         },
     },
 #line 994
-    [DIFFICULTY_NORMAL][TRAINER_BGKAYLA] =
+    [DIFFICULTY_NORMAL][TRAINER_PEGGY] =
     {
 #line 995
-        .trainerName = _("Kayla"),
+        .trainerName = _("PEGGY"),
 #line 996
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 997
@@ -2534,11 +2534,11 @@ F_TRAINER_FEMALE |
     [DIFFICULTY_NORMAL][TRAINER_LOUIS] =
     {
 #line 1025
-        .trainerName = _("Louis"),
+        .trainerName = _("LOUIS"),
 #line 1026
-        .trainerClass = TRAINER_CLASS_BAKER,
+        .trainerClass = TRAINER_CLASS_CHEF,
 #line 1027
-        .trainerPic = TRAINER_PIC_BAKER,
+        .trainerPic = TRAINER_PIC_CHEF,
         .encounterMusic_gender =
 #line 1029
             TRAINER_ENCOUNTER_MUSIC_HIKER,
@@ -2547,13 +2547,13 @@ F_TRAINER_FEMALE |
 #line 1031
         .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
 #line 0
-        .trainerBackPic = TRAINER_PIC_BAKER,
+        .trainerBackPic = TRAINER_PIC_CHEF,
         .partySize = 2,
         .party = (const struct TrainerMon[])
         {
             {
 #line 1033
-            .species = SPECIES_TOTODILE,
+            .species = SPECIES_TENTACOOL,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 1035
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
