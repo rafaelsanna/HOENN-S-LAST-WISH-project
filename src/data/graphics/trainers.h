@@ -495,8 +495,8 @@ const u32 gTrainerFrontPic_Aurora[] = INCBIN_U32("graphics/trainers/front_pics/a
 const u16 gTrainerPalette_Aurora[] = INCBIN_U16("graphics/trainers/front_pics/aurora.gbapal");
 
 // CHEF
-const u32 gTrainerFrontPic_Chef[] = INCBIN_U32("graphics/trainers/front_pics/aurora.4bpp.smol");
-const u16 gTrainerPalette_Chef[] = INCBIN_U16("graphics/trainers/front_pics/aurora.gbapal");
+const u32 gTrainerFrontPic_Chef[] = INCBIN_U32("graphics/trainers/front_pics/chef.4bpp.smol");
+const u16 gTrainerPalette_Chef[] = INCBIN_U16("graphics/trainers/front_pics/chef.gbapal");
 
 
 // The first two parameters invoke a front pic and palette by
