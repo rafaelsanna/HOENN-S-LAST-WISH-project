@@ -908,7 +908,7 @@
 #define TRAINER_ARCHIBALD                   902
 #define TRAINER_MARKUS                      903
 #define TRAINER_RYUX                        904
-#define TRAINER_BGKAYLA                       905
+#define TRAINER_PEGGY                       905
 #define TRAINER_BRYCE                       906
 #define TRAINER_NOAH                        907
 #define TRAINER_LOUIS                       908

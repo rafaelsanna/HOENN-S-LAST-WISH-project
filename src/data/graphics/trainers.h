@@ -494,6 +494,10 @@ const u16 gTrainerPalette_Netsu[] = INCBIN_U16("graphics/trainers/front_pics/net
 const u32 gTrainerFrontPic_Aurora[] = INCBIN_U32("graphics/trainers/front_pics/aurora.4bpp.smol");
 const u16 gTrainerPalette_Aurora[] = INCBIN_U16("graphics/trainers/front_pics/aurora.gbapal");
 
+// CHEF
+const u32 gTrainerFrontPic_Chef[] = INCBIN_U32("graphics/trainers/front_pics/chef.4bpp.smol");
+const u16 gTrainerPalette_Chef[] = INCBIN_U16("graphics/trainers/front_pics/chef.gbapal");
+
 
 // The first two parameters invoke a front pic and palette by
 // calling a "TRAINER_PIC" constant (e.g. TRAINER_PIC_HIKER), and
@@ -662,7 +666,8 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_CHANNELER, gTrainerFrontPic_Channeler, gTrainerPalette_Channeler),
     TRAINER_SPRITE(TRAINER_PIC_ALEJANDRO, gTrainerFrontPic_Alejandro, gTrainerPalette_Alejandro),
     TRAINER_SPRITE(TRAINER_PIC_NETSU, gTrainerFrontPic_Netsu, gTrainerPalette_Netsu),
-    TRAINER_SPRITE(TRAINER_PIC_AURORA, gTrainerFrontPic_Aurora, gTrainerPalette_Aurora)
+    TRAINER_SPRITE(TRAINER_PIC_AURORA, gTrainerFrontPic_Aurora, gTrainerPalette_Aurora),
+    TRAINER_SPRITE(TRAINER_PIC_CHEF, gTrainerFrontPic_Chef, gTrainerPalette_Chef),
 
 
 

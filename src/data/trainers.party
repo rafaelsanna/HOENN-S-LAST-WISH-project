@@ -703,7 +703,7 @@ Mightyena
 Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Crobat
+Golbat
 Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -991,8 +991,8 @@ Beautifly
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_BGKAYLA ===
-Name: Kayla
+=== TRAINER_PEGGY ===
+Name: PEGGY
 Class: Battle Girl
 Pic: Battle Girl
 Gender: Female
@@ -1022,15 +1022,15 @@ Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LOUIS ===
-Name: Louis
-Class: Hiker
-Pic: Hiker
+Name: LOUIS
+Class: Chef
+Pic: Chef
 Gender: Male
 Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Totodile
+Krabby
 Level: 19
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -12471,7 +12471,7 @@ Mightyena
 Level: 37
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Crobat
+Golbat
 Level: 38
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -15164,7 +15164,7 @@ Mightyena
 Level: 42
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Crobat
+Golbat
 Level: 43
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -17484,7 +17484,7 @@ Masquerain
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
-Crobat
+Golbat
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
@@ -18676,23 +18676,13 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Smeargle  
-Ability: Technician  
+Oddish
 Level: 14
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Shock Wave  
-- Ancient Power  
-- Water Pulse  
-- Magical Leaf
 
-Smeargle  
-Ability: Technician  
+Natu
 Level: 14
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Fake Out  
-- Protect
-- Helping Hand
-- Wide Guard
 
 === TRAINER_MARKUS ===
 Name: MARKUS
