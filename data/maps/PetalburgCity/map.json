@@ -232,7 +232,7 @@
     {
       "type": "trigger",
       "x": 7,
-      "y": 7,
+      "y": 3,
       "elevation": 3,
       "var": "VAR_SCOTT_PETALBURG_ENCOUNTER",
       "var_value": "0",
@@ -317,7 +317,7 @@
     },
     {
       "type": "sign",
-      "x": 12,
+      "x": 11,
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",

@@ -347,7 +347,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Tentacool @ Oran Berry  
-Level: 18
+Level: 15
 Ability: Speed Boost  
 - Bite  
 - Aqua Jet  
@@ -355,7 +355,7 @@ Ability: Speed Boost
 - Brine
 
 Krabby  @ Oran Berry
-Level: 18
+Level: 15
 Ability: Thick Fat  
 - Water Pulse  
 - Heavy Slam  
@@ -363,7 +363,7 @@ Ability: Thick Fat
 - Rock Tomb
 
 Luvdisc @ Oran Berry
-Level: 18
+Level: 16
 Ability: Prankster  
 - Water Pulse  
 - Bite  
@@ -7641,15 +7641,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Magikarp
-Level: 20
+Level: 15
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 Tentacool
-Level: 20
+Level: 15
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 Lotad
-Level: 20
+Level: 15
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_AURORA ===
@@ -7703,11 +7703,11 @@ Double Battle: No
 AI: Check Bad Move
 
 Krabby
-Level: 20
+Level: 16
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 Wingull
-Level: 20
+Level: 16
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 === TRAINER_DALE ===
@@ -12277,15 +12277,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Vulpix
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Tentacool
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Combusken
-Level: 20
+Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_BRENDAN_RUSTBORO_MUDKIP ===
@@ -12298,15 +12298,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Oddish
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Tentacool
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Croconaw
-Level: 20
+Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_PAXTON ===
@@ -12425,15 +12425,15 @@ Double Battle: No
 AI: Basic Trainer
 
 Growlithe
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Oddish
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Ivysaur
-Level: 20
+Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MAY_RUSTBORO_MUDKIP ===
@@ -12446,15 +12446,15 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Force Setup First Turn
 
 Oddish
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Tentacool
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Croconaw
-Level: 20
+Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MAXIE_MAGMA_HIDEOUT ===
@@ -15754,15 +15754,15 @@ Double Battle: No
 AI: Basic Trainer
 
 Vulpix
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Tentacool
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Combusken
-Level: 20
+Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MAY_RUSTBORO_TORCHIC ===
@@ -15775,15 +15775,15 @@ Double Battle: No
 AI: Basic Trainer
 
 Growlithe
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Oddish
-Level: 20
+Level: 16
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Ivysaur
-Level: 20
+Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_ROXANNE_2 ===
