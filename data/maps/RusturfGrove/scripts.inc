@@ -27,13 +27,12 @@ Cutter::
 	msgbox CutterDialogueBefore, MSGBOX_NPC
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, Cutter_Hard
-	trainerbattle_no_intro TRAINER_TSUBAKI_CASUAL, CutterLose
-	goto CutterPostBattle
+	trainerbattle_single TRAINER_TSUBAKI_CASUAL, CutterIntro, CutterLose, CutterPostBattle
+	return
 
 Cutter_Hard:
-	trainerbattle_no_intro TRAINER_TSUBAKI_HARD, CutterLose
-	goto CutterPostBattle
-
+	trainerbattle_single TRAINER_TSUBAKI_HARD, CutterIntro, CutterLose, CutterPostBattle
+	return
 
 CutterPostBattle::
 # 44 "data/maps/RusturfGrove/scripts.pory"
@@ -101,6 +100,11 @@ CutterDialogueAfter2::
 	.string "I'm gonna go elsewhere to train.\n"
 	.string "Hope to battle you again someday!$"
 
+CutterIntro::
+	.string "You want to test your strength against\n"
+	.string "a ninja-in-training? Bring it on!$"
+
 CutterLose::
-# 82 "data/maps/RusturfGrove/scripts.pory"
-	.string "$"
+	.string "I wasn't expecting a defeat...$"
+
+

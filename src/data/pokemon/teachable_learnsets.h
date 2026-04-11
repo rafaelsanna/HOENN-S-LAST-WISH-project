@@ -27083,6 +27083,8 @@ static const u16 sSliggooTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_TOXIC,
     MOVE_WATER_PULSE,
+    MOVE_SURF,
+    MOVE_DIVE,
     MOVE_UNAVAILABLE,
 };
 
