@@ -4487,7 +4487,7 @@
               {
                 "min_level": 5,
                 "max_level": 5,
-                "species": "SPECIES_DRATINI"
+                "species": "SPECIES_NONE"
               }
             ]
           }
@@ -16642,17 +16642,17 @@
               {
                 "min_level": 12,
                 "max_level": 15,
-                "species": "SPECIES_MARILL"
+                "species": "SPECIES_SILCOON"
               },
               {
                 "min_level": 12,
                 "max_level": 15,
-                "species": "SPECIES_MARILL"
+                "species": "SPECIES_CASCOON"
               },
               {
-                "min_level": 12,
-                "max_level": 15,
-                "species": "SPECIES_MARILL"
+                "min_level": 14,
+                "max_level": 16,
+                "species": "SPECIES_LOMBRE"
               },
               {
                 "min_level": 12,
@@ -18557,12 +18557,12 @@
               {
                 "min_level": 13,
                 "max_level": 18,
-                "species": "SPECIES_CASCOON"
+                "species": "SPECIES_NINCADA"
               },
               {
                 "min_level": 13,
                 "max_level": 18,
-                "species": "SPECIES_SILCOON"
+                "species": "SPECIES_SPINARAK"
               },
               {
                 "min_level": 13,
@@ -18582,17 +18582,17 @@
               {
                 "min_level": 13,
                 "max_level": 18,
-                "species": "SPECIES_NINCADA"
-              },
-              {
-                "min_level": 15,
-                "max_level": 20,
-                "species": "SPECIES_NINCADA"
-              },
-              {
-                "min_level": 13,
-                "max_level": 18,
                 "species": "SPECIES_WOOPER"
+              },
+              {
+                "min_level": 16,
+                "max_level": 20,
+                "species": "SPECIES_BEAUTIFLY"
+              },
+              {
+                "min_level": 16,
+                "max_level": 20,
+                "species": "SPECIES_DUSTOX"
               },
               {
                 "min_level": 13,
@@ -18692,7 +18692,7 @@
               {
                 "min_level": 30,
                 "max_level": 40,
-                "species": "SPECIES_GYARADOS"
+                "species": "SPECIES_DRATINI"
               }
             ]
           }
