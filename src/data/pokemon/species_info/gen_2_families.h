@@ -6651,10 +6651,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 10,
         .weight = 4,
         .description = COMPOUND_STRING(
-            "Its shell is overflowing with its\n"
-            "heightened otherworldly energy. The\n"
-            "ectoplasm serves as protection for this\n"
-            "Pokémon's core spirit."),
+            "Its body shimmers with a mystical\n"
+            "energy as it dances gracefully in\n"
+            "the water. Its heart shaped scales\n"
+            "glow as it sings to calm the ocean."),
         .pokemonScale = 305,
         .pokemonOffset = 7,
         .trainerScale = 257,
