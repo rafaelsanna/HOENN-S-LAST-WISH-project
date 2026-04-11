@@ -2553,7 +2553,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 1033
-            .species = SPECIES_TENTACOOL,
+            .species = SPECIES_KRABBY,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 1035
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
