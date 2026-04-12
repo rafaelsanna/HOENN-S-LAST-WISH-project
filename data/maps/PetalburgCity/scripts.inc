@@ -768,7 +768,7 @@ PetalburgCity_Text_AreYouRookieTrainer:
 	.string "You should visit her if you haven't.$"
 
 PetalburgCity_Text_ThisIsPetalburgGym:
-	.string "See? This is PETALBURG CITY's GYM./n"
+	.string "See? This is PETALBURG CITY's GYM.\n"
 	.string "You'll find Calendula inside.$"
 
 PetalburgCity_Text_ThisIsGymSign:

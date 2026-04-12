@@ -260,8 +260,8 @@ RustboroCity_Gym_Text_RoxanneDefeat:
 	.string "Whoa... No way...\n"
 	.string "So I really lost...\p"
 	.string "Damn, this feels like failing a\n"
-	.string "climbing route... Sucks...\p"
-	.string "But... I get it.\n"
+	.string "climbing route... Sucks...\l"
+	.string "But... I get it.\p"
 	.string "Please accept the official POKEMON\n"
 	.string "LEAGUE STONE BADGE.$"
 
