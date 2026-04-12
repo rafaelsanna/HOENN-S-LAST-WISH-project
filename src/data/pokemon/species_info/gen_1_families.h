@@ -5693,30 +5693,24 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Golbat,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(64, 56),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 7,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 15,
         .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 1),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
         ),
         .frontAnimId = ANIM_H_SLIDE_WOBBLE,
-        .enemyMonElevation = P_GBA_STYLE_SPECIES_GFX ? 8 : 10,
+        .enemyMonElevation = P_GBA_STYLE_SPECIES_GFX ? 8 : 6,
         .backPic = gMonBackPic_Golbat,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(56, 40),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 13,
@@ -5732,7 +5726,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .backPicSizeFemale = MON_COORDS_SIZE(56, 40),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 14, SHADOW_SIZE_M)
+        SHADOW(0, 0, SHADOW_SIZE_L)
         FOOTPRINT(Golbat)
         OVERWORLD(
             sPicTable_Golbat,
@@ -5866,7 +5860,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .weight = 54,
 .description = COMPOUND_STRING(
     "It dwells in mystical forests, absorbing\n"
-    "moonlight through its leaves at night.\p"
+    "moonlight through its leaves at night.\n"
     "Its body emits a sweet, enchanting aroma\n"
     "that calms both people and wild POKéMON.$"),
         .pokemonScale = 423,

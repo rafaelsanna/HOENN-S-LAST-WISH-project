@@ -360,17 +360,17 @@ LittlerootTown_MaysHouse_1F_Movement_MayExitHouse2:
 	walk_down
 	walk_down
 	step_end
-
+	
 RivalsHouse_1F_Text_OhYoureTheNewNeighbor:
 	.string "Oh, hello {PLAYER}! Come in, come in!\p"
 	.string "Did you come to talk about that\n"
 	.string "beautiful comet from last night?\p"
 	.string "It was absolutely stunning, wasn't it?\n"
-	.string "Lit up the whole sky!\p"
-	.string "{STR_VAR_1} is upstairs studying about it\n"
-	.string "right now, actually.\p"
-	.string "Go on up, I'm sure {STR_VAR_1} would\n"
-	.string "love to discuss it with you!$"
+	.string "It lit up the whole sky!\p"
+	.string "{RIVAL} may be upstairs...\n"
+	.string "I'm not sure, actually...\p"
+	.string "I've been a bit distracted today!\p"
+	.string "Go on up and take a look...$"
 
 RivalsHouse_1F_Text_LikeChildLikeFather:
 	.string "PROFESSOR ACACIA is truly the pride\n"
@@ -409,11 +409,11 @@ RivalsHouse_1F_Text_MayWhoAreYou:
 	.string "So strange and beautiful...\p"
 	.string "I made a wish when I saw it.\n"
 	.string "Got goosebumps all over!\p"
-	.string "Anyway... I remembered something!\n"
+	.string "Anyway... I remembered something!\p"
 	.string "PROFESSOR ACACIA says we both have\n"
 	.string "a lot of potential as TRAINERS.\p"
-	.string "Anyway, I should get back to studying\n"
-	.string "on the computer.\p"
+	.string "Anyway, I should get going.\n"
+	.string "I want to train more!\p"
 	.string "See you later, {PLAYER}!$"
 
 RivalsHouse_1F_Text_BrendanWhoAreYou:
@@ -425,9 +425,9 @@ RivalsHouse_1F_Text_BrendanWhoAreYou:
 	.string "this weird purple light!\p"
 	.string "I made a wish too, hope it comes\n"
 	.string "true, whatever it was!\p"
-	.string "And I remembered something!\n"
+	.string "And I remembered something!\p"
 	.string "PROFESSOR ACACIA said it might be\n"
-	.string "connected to POKéMON somehow.\p"
+	.string "connected to POKeMON somehow.\p"
 	.string "Anyway, I should get going.\n"
 	.string "Got some training to do.\p"
 	.string "Catch you later, neighbor!$"
