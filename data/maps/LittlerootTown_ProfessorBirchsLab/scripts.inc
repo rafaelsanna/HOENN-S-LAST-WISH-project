@@ -754,12 +754,12 @@ LittlerootTown_ProfessorBirchsLab_Text_WhyNotGiveNicknameToMon:
 	.string "give a nickname to that {STR_VAR_1}?$"
 
 LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival:
-	.string "PROF. ACACIA: If you work at POKéMON\n"
-	.string "and gain experience, I think you'll make\l"
-	.string "an extremely good TRAINER.\p"
-	.string "Your neighbor, {RIVAL}, is also studying\n"
-	.string "POKéMON while helping me out.\p"
-	.string "{PLAYER}{KUN}, don't you think it might be\n"
+	.string "PROF. ACACIA: If you work alongside\n"
+	.string "your POKéMON and gain experience,\n"
+	.string "you will become a strong TRAINER.\p"
+	.string "Your neighbor, {RIVAL}, is also\n"
+	.string "studying POKéMON while helping me.\p"
+	.string "{PLAYER}{KUN}, don't you think it is\n"
 	.string "a good idea to go see {RIVAL}?$"
 
 LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou:
@@ -800,19 +800,19 @@ LittlerootTown_ProfessorBirchsLab_Text_ReceivedPokedex:
 	.string "{PLAYER} received the POKéDEX!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex:
-    .string "PROF. ACACIA: The POKEDEX is a high-tech\n"
+    .string "PROF. ACACIA: The POKéDEX is a high-tech\n"
     .string "tool that automatically makes a record\l"
-    .string "of any POKEMON you meet or catch.\p"
+    .string "of any POKéMON you meet or catch.\p"
     .string "{RIVAL} goes everywhere helping me\n"
     .string "with it.\p"
-    .string "There are many special POKEMON\n"
+    .string "There are many special POKéMON\n"
     .string "waiting to be discovered out there.\p"
     .string "Explore thoroughly, and just like\n"
     .string "{RIVAL}, keep searching and learning.\p"
     .string "My partner, CALENDULA, and I met long\n"
-    .string "ago while researching rare POKEMON.\l"
+    .string "ago while researching rare POKéMON.\l"
     .string "We traveled through forests, caverns,\l"
-    .string "and ruins... and somewhere along the way,\l"
+    .string "and ruins... somewhere along the way,\l"
     .string "research turned into something more.\p"
     .string "Now she is the GYM LEADER of PETALBURG\n"
     .string "CITY, calm, brilliant, and one of the\l"

@@ -298,8 +298,8 @@ Route101_Text_TakeTiredPokemonToPokeCenter:
 	.string "character of an rpg?$"
 
 Route101_Text_WildPokemonInTallGrass:
-	.string "What are you wearing?\p"
-	.string "You look like you live here!$"
+	.string "Those are some weird clothes...\p"
+	.string "You don't look like you live here!$"
 
 Route101_Text_RouteSign:
 	.string "ROUTE 101\n"

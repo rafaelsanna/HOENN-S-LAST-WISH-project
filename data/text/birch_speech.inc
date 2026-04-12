@@ -1,9 +1,9 @@
 gText_Birch_Welcome::
-.string "The world hasn't been the same for long,\p"
-.string "Hoenn isn't the same...\p"
+.string "The world has collapsed...\p"
+.string "Hoenn isn't the same anymore...\p"
 .string "I am CELEBI, the Time Travel POKéMON.\p"
-.string "I've traveled from Johto to Hoenn to help\n"
-.string "JIRACHI, the wish-granting POKéMON.\p"
+.string "I've traveled from Johto to Hoenn...\n"
+.string "to find JIRACHI, the wish-granting...\p"
 .string "But we cannot save Hoenn alone...\p"
 .string "$"
 
@@ -15,18 +15,18 @@ gText_Birch_Pokemon:: @ useless text, never used in the game
 gText_Birch_MainSpeech::
 	.string "Have you heard the legends of HIM?\n"
 	.string "Known as the Sky High POKéMON.\p"
-	.string "It lives in the ozone layer, feeding on\n"
-	.string "meteoroids, and only descends to Earth\l"
+	.string "He lives in the ozone layer, feeding on\n"
+	.string "meteoroids, only descending to Earth\l"
 	.string "to stop the clashes between...\p"
 	.string "KYOGRE and GROUDON...\n"
 	.string "Him... The Dragon God POKéMON:\p"
 	.string "RAYQUAZA...\n"
 	.string "For centuries he ruled the sky...\p"
 	.string "Supreme enough to appease a primordial\n"
-	.string "elemental battle between the controler\p"
+	.string "elemental battle between the ruler\p"
 	.string "of the sea and the creator of the land.\n"
 	.string "Unfortunately evil human interference\l"
-	.string "broke this prefect balance forever...\p"
+	.string "broke this perfect balance forever...\p"
 	.string "$"
 
 gText_Birch_AndYouAre::
@@ -38,18 +38,20 @@ gText_Birch_BoyOrGirl::
 
 gText_Birch_WhatsYourName::
 	.string "You were chosen by destiny...\n"
-	.string "What's was your name again?$"
+	.string "What was your name again?$"
 
 gText_Birch_SoItsPlayer::
 	.string "Yes, we already knew your name...\p"
 	.string "{PLAYER}{KUN}?$"
 
 gText_Birch_YourePlayer::
-	.string "Ah...\p"
-	.string "You're {PLAYER}{KUN}, the one chosen by us,\n"
-	.string "CELEBI and JIRACHI to save HOENN from\l"
-	.string "human kind endless greed...\p"
-	.string "$"
+    .string "CELEBI: Perfect...\p"
+    .string "Trust me, everything will be fine.\p"
+    .string "This is, in truth, a dream...\n"
+    .string "A special connection we share.\p"
+    .string "We need your help to save Hoenn\n"
+    .string "from a cruel fate born of greed...\p"
+    .string "$"
 
 gText_Birch_AreYouReady::
     .string "Don't be afraid, {PLAYER}.\p"
@@ -60,4 +62,8 @@ gText_Birch_AreYouReady::
     .string "Step forward and follow the path that\n"
     .string "fate has chosen for you...\p"
 	.string "$"
+
+
+	
+
 

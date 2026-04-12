@@ -308,16 +308,16 @@ Route103_Text_MayRoute103Pokemon:
 
 Route103_Text_MayLetsBattle:
     .string "Oh, hi, {PLAYER}{KUN}!\p"
-    .string "So you got a POKéMON from\n"
+    .string "So you got a POKeMON from\n"
     .string "Professor ACACIA too?\p"
-    .string "Makes sense… after that strange\n"
-    .string "comet passed over HOENN, she’s\l"
-    .string "been studying everything closely.\p"
-    .string "If she's helping you as well,\n"
+    .string "Makes sense... after that strange\n"
+    .string "comet passed over HOENN,\n"
+    .string "she has been studying it closely.\p"
+    .string "If she is helping you as well,\n"
     .string "then something big must be ahead.\p"
     .string "I'm already training, so how about\n"
     .string "we battle?\p"
-    .string "Let’s see what you can do!$"
+    .string "Let's see what you can do!$"
 
 Route103_Text_MayDefeated:
 	.string "Wow! That's great!\n"

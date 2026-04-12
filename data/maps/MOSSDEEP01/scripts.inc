@@ -385,8 +385,15 @@ MOSSDEEP01_EventScript_Mightyena::
 	end
 
 MOSSDEEP01_EventScript_MightyenaFriendly::
+	lock
+	faceplayer
 	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_Mightyena_NotReady
 	msgbox MOSSDEEP01_Text_MightyenaFriendly, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_Mightyena_NotReady::
 	releaseall
 	end
 
@@ -434,6 +441,11 @@ MOSSDEEP01_EventScript_Torchic::
 MOSSDEEP01_EventScript_Wally::
 	lock
 	faceplayer
+
+	// PRIORIDADE MAXIMA (depois do Celebi)
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
+
+	// fluxo normal
 	goto_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_WallyAfterIntro
 	
 	// Check if attacked by Mightyenas
@@ -461,11 +473,19 @@ MOSSDEEP01_EventScript_Wally::
 	end
 
 MOSSDEEP01_EventScript_WallyNotReady::
+	lock
+	faceplayer
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
 	msgbox MOSSDEEP01_Text_WallyNotReady, MSGBOX_DEFAULT
 	release
 	end
 
 MOSSDEEP01_EventScript_WallyAfterIntro::
+	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
+	release
+	end
+
+MOSSDEEP01_EventScript_WallyAfterCelebi::
 	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
 	release
 	end
@@ -1443,11 +1463,14 @@ MOSSDEEP01_Text_WallyIntro:
 	.string "trouble, PIDGEOT and I will help.$"
 
 MOSSDEEP01_Text_WallyAfterCelebi:
-	.string "LUKA: {PLAYER}, you did it!\p"
-	.string "CELEBI calmed all the wild POKÉMON.\n"
-	.string "Amazing!\p"
-	.string "The connection between POKÉMON and\n"
-	.string "humans is being restored!$"
+	.string "LUKA: Wow... what is that Pokemon\n"
+	.string "following you?\p"
+	.string "It feels so magical...\n"
+	.string "I have never seen anything like it.\p"
+	.string "It reminds me of the old legends\n"
+	.string "our grandparents used to tell...\p"
+	.string "Maybe those dreams you had...\n"
+	.string "they were real after all.$"
 
 MOSSDEEP01_Text_WallyWarped:
 	.string "LUKA: I'll head there first!\p"
