@@ -11,7 +11,7 @@ OldaleTown_House2_EventScript_Man::
 
 OldaleTown_House2_Text_PokemonLevelUp:
     .string "Things have been really strange lately.\n"
-    .string "I was walking around and saw a cave to\n"
+    .string "I was walking around and saw a cave to\l"
     .string "the east.\p"
     .string "I must be going crazy, but I swear I\n"
     .string "don't remember that cave being there.\p"

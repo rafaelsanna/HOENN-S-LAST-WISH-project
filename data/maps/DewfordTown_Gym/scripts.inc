@@ -328,7 +328,7 @@ DewfordTown_Gym_Text_JocelynIntro:
 	.string "I'd rather face wild Pokemon or even\n"
 	.string "the ELITE FOUR than his street brawls!\p"
 	.string "He demolished the old Gym Leader,\n"
-	.string "and it wasn't even a Pokemon battle!\n"
+	.string "and it wasn't even a Pokemon battle!\l"
 	.string "Hahaha!$"
 
 DewfordTown_Gym_Text_JocelynDefeat:
@@ -362,7 +362,7 @@ DewfordTown_Gym_Text_LauraPostBattle:
 	.string "Stop imagining stuff!$"
 
 DewfordTown_Gym_Text_LilithIntro:
-	.string "Ufufu...\n"
+	.string "Ufufu...\p"
 	.string "You, with those weird clothes!\n"
 	.string "Stumbling around in the dark?$"
 
@@ -374,7 +374,7 @@ DewfordTown_Gym_Text_LilithPostBattle:
 	.string "You deserve to get lost and end up\n"
 	.string "back at the entrance!\p"
 	.string "We get used to the dark here.\n"
-	.string "Just like street fights... the more,\n"
+	.string "Just like street fights... the more,\l"
 	.string "the better we become!$"
 
 DewfordTown_Gym_Text_BrendenIntro:
@@ -404,7 +404,7 @@ DewfordTown_Gym_Text_CristianIntro:
 	.string "Strength matters here\n"
 	.string "just like in any street brawl!\p"
 	.string "I'm a punk and proud of it!\n"
-	.string "I'm here because I grew up with RENTON!\n"
+	.string "I'm here because I grew up with RENTON!\l"
 	.string "We've been scrapping since kindergarten!$"
 
 DewfordTown_Gym_Text_CristianDefeat:
@@ -434,7 +434,7 @@ DewfordTown_Gym_Text_BrawlyDefeat:
 	.string "You totally wrecked me!\n"
 	.string "Alright, take this GYM BADGE!\p"
 	.string "But you'd better run along now...\n"
-	.string "or you might pick a real fight with me!\n"
+	.string "or you might pick a real fight with me!\p"
 	.string "HAHAHAHAHA!$"
 
 DewfordTown_Gym_Text_ReceivedKnuckleBadge:
@@ -463,7 +463,7 @@ DewfordTown_Gym_Text_BrawlyPostBattle:
 	.string "of fights, kid... HAHAHA!\l"
 	.string "You know how to have fun!\p"
 	.string "Let's clash again someday, yeah?\n"
-	.string "Or hang out and trade street stories!\n"
+	.string "Or hang out and trade street stories!\p"
 	.string "HAHAHAHAHA!$"
 
 DewfordTown_Gym_Text_GymStatue:
@@ -487,7 +487,7 @@ DewfordTown_Gym_Text_BrawlyRematchDefeat:
 	.string "Now THAT was a real fight!\p"
 	.string "I'm so pumped I'm gonna go get\n"
 	.string "wasted after this! Maybe find a\l"
-	.string "brawl with some sailor out there!\n"
+	.string "brawl with some sailor out there!\l"
 	.string "HAHAHAHAHA!$"
 
 DewfordTown_Gym_Text_BrawlyPostRematch:
