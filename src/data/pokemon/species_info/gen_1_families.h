@@ -6029,7 +6029,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .weight = 186,
 .description = COMPOUND_STRING(
     "Its night blooming flower opens under the\n"
-    "full moon, scattering glowing pollen dust.\p"
+    "full moon, scattering glowing pollen dust.\n"
     "The enchanting scent grants visions of\n"
     "ancient fairy forests long forgotten.$"),
         .pokemonScale = 256,
@@ -6108,7 +6108,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_GRASS),
-        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_MISTY_SURGE, ABILITY_HEALER },
+        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_HEALER, ABILITY_MISTY_SURGE },
         .bodyColor = BODY_COLOR_GREEN,
         .speciesName = _("Bellossom"),
         .cryId = CRY_BELLOSSOM,
@@ -6118,7 +6118,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .weight = 58,
 .description = COMPOUND_STRING(
     "Its radiant petals hide a poisonous nectar,\n"
-    "luring the unsuspecting with beauty.\p"
+    "luring the unsuspecting with beauty.\n"
     "It dances under moonlight, not for joy,\n"
     "but to lure prey into its toxic embrace.$"),
         .pokemonScale = 472,
@@ -8201,7 +8201,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .weight = 339,
 .description = COMPOUND_STRING(
     "Its lightning-bolt crown draws storms\n"
-    "and serves as a living lightning rod.\p"
+    "and serves as a living lightning rod.\n"
     "Each absorbed strike amplifies its power\n"
     "to terrifying, cataclysmic levels.$"),
         .pokemonScale = 289,
