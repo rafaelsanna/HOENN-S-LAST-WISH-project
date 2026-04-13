@@ -151,7 +151,7 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_EXP_SHARE, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor
-	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveExpShare
+	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveHardStone
 	msgbox RustboroCity_DevonCorp_3F_Text_CountingOnYou, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
@@ -159,16 +159,12 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_GiveExpShare::
+RustboroCity_DevonCorp_3F_EventScript_GiveHardStone::
 	msgbox RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter, MSGBOX_DEFAULT
+	giveitem ITEM_HARD_STONE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_EXP_SHARE
-	setflag   DN_FLAG_SEARCHING             
-	setflag   DN_FLAG_DEXNAV_GET           
-	setflag   DN_FLAG_DETECTOR_MODE        
-	setflag   DN_VAR_SPECIES               
-	setflag   DN_VAR_STEP_COUNTER  
-	msgbox RustboroCity_DevonCorp_3F_Text_ExplainExpShare, MSGBOX_DEFAULT
+	msgbox RustboroCity_DevonCorp_3F_Text_ExplainHardStone, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -251,21 +247,19 @@ RustboroCity_DevonCorp_3F_Text_CountingOnYou:
 RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter:
 	.string "MR. STONE: Ah, you delivered my\n"
 	.string "LETTER? Wonderful!\p"
-	.string "You've helped Devon greatly.\n"
-	.string "Please take this prototype as\l"
-	.string "my thanks.$"
+	.string "You've helped our family greatly.\n"
+	.string "Please take this as my thanks.$"
 
-RustboroCity_DevonCorp_3F_Text_ExplainExpShare:
-	.string "MR. STONE: This device is called\n"
-	.string "the DEXNAV.\p"
-	.string "It's an advanced scanner that\n"
-	.string "detects nearby POKéMON.\p"
-	.string "It can reveal traits, moves,\n"
-	.string "and even hidden strengths.\p"
-	.string "The more you explore, the more\n"
-	.string "the DEXNAV improves.\p"
-	.string "Use it well, {PLAYER}.\n"
-	.string "It will aid you on your journey.$"
+RustboroCity_DevonCorp_3F_Text_ExplainHardStone:
+	.string "MR. STONE: This is a HARD STONE,\n"
+	.string "a precious gem that has been in\l"
+	.string "our family for generations.\p"
+	.string "It's said to slightly boost the\n"
+	.string "power of ROCK-type moves.\p"
+	.string "It may not be as flashy as modern\n"
+	.string "devices, but it carries our\l"
+	.string "family's pride.\p"
+	.string "Use it well, {PLAYER}.$"
 
 RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends:
 	.string "MR. STONE: Since my youth, I've immersed\n"
