@@ -1119,14 +1119,14 @@ SlateportCity_Text_GetNameRaterToHelpYou:
 .string "There's always something new to\n"
 .string "see and do.\p"
 .string "But watch yourself… shady types show\n"
-.string "up here too.\n"
+.string "up here too.\p"
 .string "Keep your guard up!$"
 
 SlateportCity_Text_CantChangeTradeMonName:
 .string "Whoa, you beat RENTON?\n"
 .string "No way… He wiped the floor with me! \p"
 .string "Guess you're tougher than you look.\n"
-.string "Haha! Maybe you can teach me a few\n"
+.string "Haha! Maybe you can teach me a few\l"
 .string "tricks sometime!$"
 
 

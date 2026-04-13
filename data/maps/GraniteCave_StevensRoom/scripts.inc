@@ -118,23 +118,19 @@ GraniteCave_StevensRoom_Text_ThankYouTakeThis:
 GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:
 	.string "STELLA: I don't know what MAGMA is\n"
 	.string "after here... Rare ore? Energy?\p"
-	.string "Whatever it is, it's bad news.\n"
-	.string "But you beat them easily.\p"
-	.string "Let's register in the POKéNAV.\n"
-	.string "If anything happens, we can talk.\p"
-	.string "… … … … … …$"
+	.string "Whatever it is, it's bad news,\n"
+	.string "but you beat them easily.$"
 	
 GraniteCave_StevensRoom_Text_RegisteredSteven:
-	.string "Registered STELLA\n"
-	.string "in the POKéNAV.$"
+	.string "...$"
 
 GraniteCave_StevensRoom_Text_LookAnciantPainting:
-	.string "STELLA: Now take a look at this \n"
+	.string "STELLA: Now, take a look at this\n"
 	.string "ancient painting on the wall.$"
 
 GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 	.string "STELLA: I came to study this old\n"
-	.string "painting. It must be thousands of\n"
+	.string "painting. It must be thousands of\l"
 	.string "years old. Maybe even more...\p"
 	.string "It shows two titans - one of land,\n"
 	.string "one of sea. Ancient guardians.\p"
