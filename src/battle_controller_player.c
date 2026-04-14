@@ -2455,6 +2455,7 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
 static void DestroyMoveTypeIconSprite(void)
 {
     u32 i;
+    bool32 anyDestroyed = FALSE;
 
     for (i = 0; i < MAX_SPRITES; i++)
     {
@@ -2463,8 +2464,15 @@ static void DestroyMoveTypeIconSprite(void)
         if (sprite->inUse
          && sprite->template == &gSpriteTemplate_MoveTypes
          && sprite->data[7] == 1)
+        {
             DestroySprite(sprite);
+            anyDestroyed = TRUE;
+        }
     }
+
+    // Libera os tiles da VRAM ao fechar o menu de moves
+    if (anyDestroyed)
+        FreeSpriteTilesByTag(gSpriteSheet_MoveTypes.tag);
 }
 
 static void MoveSelectionDisplayMoveTypeIcon(u32 type)
@@ -2474,9 +2482,11 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     struct Sprite *sprite;
 
     if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
+    {
         LoadCompressedSpriteSheet(&gSpriteSheet_MoveTypes);
-
-    LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
+        // Paleta carregada apenas uma vez, junto com a sheet
+        LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
+    }
 
     for (i = 0; i < MAX_SPRITES; i++)
     {
