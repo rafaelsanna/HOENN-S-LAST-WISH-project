@@ -18756,12 +18756,12 @@
               {
                 "min_level": 9,
                 "max_level": 12,
-                "species": "SPECIES_MUDKIP"
+                "species": "SPECIES_RATTATA"
               },
               {
                 "min_level": 11,
                 "max_level": 14,
-                "species": "SPECIES_MUDKIP"
+                "species": "SPECIES_RATTATA"
               }
             ]
           }
