@@ -576,10 +576,6 @@ RustboroCity_EventScript_RivalAfterBattle::
 RustboroCity_EventScript_GiveExpShareAfterBattle::
     goto_if_set FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL, RustboroCity_EventScript_AlreadyGotExpShare
     giveitem ITEM_EXP_SHARE
-    playfanfare MUS_OBTAIN_ITEM
-    message RustboroCity_Text_ReceivedExpShare
-    waitfanfare
-    waitmessage
     setflag FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL
     return
 
@@ -1272,7 +1268,5 @@ RustboroCity_Text_Devonearthquake:
 	.string "The DEVON building may even end\n"
 	.string "up falling into the sea soon!$"
 
-RustboroCity_Text_ReceivedExpShare:
-    .string "{PLAYER} received the EXP. SHARE\n"
-    .string "from ZINNIA!$"
-	
+
+

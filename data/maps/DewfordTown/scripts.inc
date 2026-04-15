@@ -393,6 +393,7 @@ DewfordTown_Movement_SailToSlateport:
 	walk_right
 	walk_fast_right
 	walk_fast_right
+	walk_down
 	walk_faster_right
 	walk_faster_right
 	walk_faster_right

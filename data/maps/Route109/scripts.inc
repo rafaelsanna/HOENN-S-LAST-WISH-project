@@ -236,10 +236,11 @@ Route109_Movement_SailToDewford:
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
+	walk_fast_left
 	walk_left
 	walk_left
 	walk_left
-	walk_left
+	walk_up
 	walk_left
 	walk_left
 	walk_in_place_faster_down
@@ -251,7 +252,6 @@ Route109_Movement_PlayerEnterBoatSouth:
 	step_end
 
 Route109_Movement_PlayerExitBoat:
-	walk_down
 	walk_down
 	walk_down
 	walk_left
