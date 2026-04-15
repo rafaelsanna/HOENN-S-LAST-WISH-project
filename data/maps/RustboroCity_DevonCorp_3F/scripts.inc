@@ -151,7 +151,7 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_EXP_SHARE, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor
-	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveHardStone
+	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveShinyStone
 	msgbox RustboroCity_DevonCorp_3F_Text_CountingOnYou, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
@@ -159,12 +159,12 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_GiveHardStone::
+RustboroCity_DevonCorp_3F_EventScript_GiveShinyStone::
 	msgbox RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter, MSGBOX_DEFAULT
-	giveitem ITEM_HARD_STONE
+	giveitem ITEM_SHINY_STONE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_EXP_SHARE
-	msgbox RustboroCity_DevonCorp_3F_Text_ExplainHardStone, MSGBOX_DEFAULT
+	msgbox RustboroCity_DevonCorp_3F_Text_ExplainShinyStone, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -250,16 +250,16 @@ RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter:
 	.string "You've helped our family greatly.\n"
 	.string "Please take this as my thanks.$"
 
-RustboroCity_DevonCorp_3F_Text_ExplainHardStone:
-	.string "MR. STONE: This is a HARD STONE,\n"
-	.string "a precious gem that has been in\l"
-	.string "our family for generations.\p"
-	.string "It's said to slightly boost the\n"
-	.string "power of ROCK-type moves.\p"
-	.string "It may not be as flashy as modern\n"
-	.string "devices, but it carries our\l"
-	.string "family's pride.\p"
-	.string "Use it well, {PLAYER}.$"
+RustboroCity_DevonCorp_3F_Text_ExplainShinyStone:
+    .string "MR. STONE: This is a SHINY STONE,\n"
+    .string "a rare gem that has been in\l"
+    .string "our family for generations.\p"
+    .string "It's said to enable the evolution\n"
+    .string "of certain POKéMON...\p"
+    .string "It may not be as flashy as modern\n"
+    .string "devices, but it carries our\l"
+    .string "family's pride.\p"
+    .string "Use it well, {PLAYER}.$"
 
 RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends:
 	.string "MR. STONE: Since my youth, I've immersed\n"

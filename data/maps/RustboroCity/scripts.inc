@@ -553,11 +553,8 @@ RustboroCity_EventScript_EmployeeFacePlayerRight::
 
 RustboroCity_EventScript_Rival::
     lockall
-    // Se já derrotou, vai direto para a dica
     goto_if_set FLAG_DEFEATED_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalAfterBattle
-    // Se é o primeiro encontro 
     goto_if_unset FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalFirstMeeting
-    // Se já se conhecem mas ainda não batalharam
     call RustboroCity_EventScript_PlayRivalMusic
     applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
     waitmovement 0
@@ -567,8 +564,7 @@ RustboroCity_EventScript_RivalFirstMeeting::
     call RustboroCity_EventScript_PlayRivalMusic
     applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
     waitmovement 0
-    // Dá o EXP Share apenas no primeiro encontro
-    call RustboroCity_EventScript_GiveExpShare
+    setflag FLAG_MET_RIVAL_RUSTBORO
     goto RustboroCity_EventScript_RivalEncounter
 
 RustboroCity_EventScript_RivalAfterBattle::
@@ -577,12 +573,18 @@ RustboroCity_EventScript_RivalAfterBattle::
     goto_if_eq VAR_RESULT, FEMALE, RustboroCity_EventScript_BrendanBrineyHint
     end
 
-RustboroCity_EventScript_GiveExpShare::
-	giveitem ITEM_EXP_SHARE
-	playfanfare MUS_OBTAIN_ITEM
-	setflag I_EXP_SHARE_FLAG
-	setflag FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL
-	return
+RustboroCity_EventScript_GiveExpShareAfterBattle::
+    goto_if_set FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL, RustboroCity_EventScript_AlreadyGotExpShare
+    giveitem ITEM_EXP_SHARE
+    playfanfare MUS_OBTAIN_ITEM
+    message RustboroCity_Text_ReceivedExpShare
+    waitfanfare
+    waitmessage
+    setflag FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL
+    return
+
+RustboroCity_EventScript_AlreadyGotExpShare::
+    return
 
 RustboroCity_EventScript_PlayRivalMusic::
 	checkplayergender
@@ -598,10 +600,8 @@ RustboroCity_EventScript_PlayBrendanMusic::
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	return
 
-/// Modifique os triggers do rival para garantir que o jogador não pode passar
 RustboroCity_EventScript_RivalTrigger0::
     lockall
-    // Verifica se o jogador já interagiu com o rival
     goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
     call RustboroCity_EventScript_PlayRivalMusic
     applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
@@ -619,6 +619,7 @@ RustboroCity_EventScript_RivalTrigger0::
 
 RustboroCity_EventScript_RivalTrigger1::
 	lockall
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
 	call RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -635,6 +636,7 @@ RustboroCity_EventScript_RivalTrigger1::
 
 RustboroCity_EventScript_RivalTrigger2::
 	lockall
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
 	call RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -651,6 +653,7 @@ RustboroCity_EventScript_RivalTrigger2::
 
 RustboroCity_EventScript_RivalTrigger3::
 	lockall
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
 	call RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -667,6 +670,7 @@ RustboroCity_EventScript_RivalTrigger3::
 
 RustboroCity_EventScript_RivalTrigger4::
 	lockall
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
 	call RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -683,6 +687,7 @@ RustboroCity_EventScript_RivalTrigger4::
 
 RustboroCity_EventScript_RivalTrigger5::
 	lockall
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
 	call RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -699,6 +704,7 @@ RustboroCity_EventScript_RivalTrigger5::
 
 RustboroCity_EventScript_RivalTrigger6::
 	lockall
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
 	call RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -715,6 +721,7 @@ RustboroCity_EventScript_RivalTrigger6::
 
 RustboroCity_EventScript_RivalTrigger7::
 	lockall
+    goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalTriggerAfter
 	call RustboroCity_EventScript_PlayRivalMusic
 	applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -792,7 +799,6 @@ RustboroCity_EventScript_MayBrineyHint::
     release
     end
 
-
 RustboroCity_EventScript_RestoreBgm::
 	savebgm MUS_DUMMY
 	fadedefaultbgm
@@ -801,18 +807,21 @@ RustboroCity_EventScript_RestoreBgm::
 RustboroCity_EventScript_BattleMayTreecko::
 	trainerbattle_no_intro TRAINER_MAY_RUSTBORO_TREECKO, RustboroCity_Text_MayDefeat
 	setflag FLAG_DEFEATED_RIVAL_RUSTBORO
+	call RustboroCity_EventScript_GiveExpShareAfterBattle
 	goto RustboroCity_EventScript_MayBrineyHint
 	end
 
 RustboroCity_EventScript_BattleMayTorchic::
 	trainerbattle_no_intro TRAINER_MAY_RUSTBORO_TORCHIC, RustboroCity_Text_MayDefeat
 	setflag FLAG_DEFEATED_RIVAL_RUSTBORO
+	call RustboroCity_EventScript_GiveExpShareAfterBattle
 	goto RustboroCity_EventScript_MayBrineyHint
 	end
 
 RustboroCity_EventScript_BattleMayMudkip::
 	trainerbattle_no_intro TRAINER_MAY_RUSTBORO_MUDKIP, RustboroCity_Text_MayDefeat
 	setflag FLAG_DEFEATED_RIVAL_RUSTBORO
+	call RustboroCity_EventScript_GiveExpShareAfterBattle
 	goto RustboroCity_EventScript_MayBrineyHint
 	end
 
@@ -864,18 +873,21 @@ RustboroCity_EventScript_BrendanBrineyHint::
 RustboroCity_EventScript_BattleBrendanTreecko::
 	trainerbattle_no_intro TRAINER_BRENDAN_RUSTBORO_TREECKO, RustboroCity_Text_BrendanDefeat
 	setflag FLAG_DEFEATED_RIVAL_RUSTBORO
+	call RustboroCity_EventScript_GiveExpShareAfterBattle
 	goto RustboroCity_EventScript_BrendanBrineyHint
 	end
 
 RustboroCity_EventScript_BattleBrendanTorchic::
 	trainerbattle_no_intro TRAINER_BRENDAN_RUSTBORO_TORCHIC, RustboroCity_Text_BrendanDefeat
 	setflag FLAG_DEFEATED_RIVAL_RUSTBORO
+	call RustboroCity_EventScript_GiveExpShareAfterBattle
 	goto RustboroCity_EventScript_BrendanBrineyHint
 	end
 
 RustboroCity_EventScript_BattleBrendanMudkip::
 	trainerbattle_no_intro TRAINER_BRENDAN_RUSTBORO_MUDKIP, RustboroCity_Text_BrendanDefeat
 	setflag FLAG_DEFEATED_RIVAL_RUSTBORO
+	call RustboroCity_EventScript_GiveExpShareAfterBattle
 	goto RustboroCity_EventScript_BrendanBrineyHint
 	end
 
@@ -1260,3 +1272,7 @@ RustboroCity_Text_Devonearthquake:
 	.string "The DEVON building may even end\n"
 	.string "up falling into the sea soon!$"
 
+RustboroCity_Text_ReceivedExpShare:
+    .string "{PLAYER} received the EXP. SHARE\n"
+    .string "from ZINNIA!$"
+	
