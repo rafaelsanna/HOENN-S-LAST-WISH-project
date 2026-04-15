@@ -4735,34 +4735,9 @@ static inline void ShowUtilityPrompt(s16 mode)
         if (ShouldShowSummaryPokedexPrompt())
         {
             promptText = gText_Pokedex;
-            if (ShouldShowIvEvPrompt())
-            {
-                if (mode == SUMMARY_SKILLS_MODE_STATS)
-                {
-                    if (P_SUMMARY_SCREEN_EV_ONLY)
-                        skillModeText = gText_SkillPageEvs;
-                    else
-                        skillModeText = gText_SkillPageIvs;
-                }
-                else if (mode == SUMMARY_SKILLS_MODE_IVS)
-                {
-                    if (P_SUMMARY_SCREEN_IV_ONLY)
-                        skillModeText = gText_SkillPageStats;
-                    else
-                        skillModeText = gText_SkillPageEvs;
-                }
-                else if (mode == SUMMARY_SKILLS_MODE_EVS)
-                {
-                    skillModeText = gText_SkillPageStats;
-                }
-                if (skillModeText != NULL)
-                {
-                    StringCopy(gStringVar1, gText_Select);
-                    StringAppend(gStringVar1, gText_Space);
-                    StringAppend(gStringVar1, skillModeText);
-                    secondaryText = gStringVar1;
-                }
-            }
+            // Remove o texto secundário do SELECT, mas a funcionalidade continua ativa
+            // O jogador ainda pode apertar SELECT para ver IVs, mas não verá o texto
+            secondaryText = NULL;
         }
     }
     else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES

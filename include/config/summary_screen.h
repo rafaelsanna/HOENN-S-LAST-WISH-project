@@ -7,9 +7,9 @@
 #define P_SUMMARY_MOVE_RELEARNER_FULL_PP TRUE   // If TRUE, the move relearner in the summary screen restores relearned moves' PP to full.
 #define P_SUMMARY_SCREEN_RENAME          TRUE   // If TRUE, an option to change Pokémon nicknames replaces the cancel prompt on the summary screen info page.
 #define P_SUMMARY_SCREEN_IV_EV_INFO      TRUE   // Allow cycling through Stats, IVs, and EVs in the summary screen.
-#define P_SUMMARY_SCREEN_IV_EV_BOX_ONLY  TRUE   // Allow cycling through Stats, IVs, and EVs in the PC storage box.
+#define P_SUMMARY_SCREEN_IV_EV_BOX_ONLY  FALSE   // Allow cycling through Stats, IVs, and EVs in the PC storage box.
 #define P_SUMMARY_SCREEN_IV_HYPERTRAIN   TRUE   // Show 31/S for Hyper Trained stats.
-#define P_SUMMARY_SCREEN_IV_EV_TILESET   TRUE   // Load alternate tileset for "STATS" label change.
+#define P_SUMMARY_SCREEN_IV_EV_TILESET   FALSE   // Load alternate tileset for "STATS" label change.
 #define P_SUMMARY_SCREEN_IV_EV_VALUES    TRUE   // Show actual IV values instead of letter grades.
 
 /* 
@@ -28,7 +28,7 @@ Info taken from https://bulbapedia.bulbagarden.net/wiki/Stats_judge.
 #define P_SUMMARY_SCREEN_EV_ONLY         FALSE  // If TRUE, will only show EV info in the summary screen.
 
 // Flags
-#define P_FLAG_SUMMARY_SCREEN_IV_EV_INFO 0      // If this flag is set, will allow player to cycle through the Stats, IVs, and EVs in the summary screen skills page. Note: if P_SUMMARY_SCREEN_IV_EV_INFO is TRUE, this flag does nothing.
+#define P_FLAG_SUMMARY_SCREEN_IV_EV_INFO 1      // If this flag is set, will allow player to cycle through the Stats, IVs, and EVs in the summary screen skills page. Note: if P_SUMMARY_SCREEN_IV_EV_INFO is TRUE, this flag does nothing.
 
 #endif // GUARD_CONFIG_SUMMARY_SCREEN_H
 
