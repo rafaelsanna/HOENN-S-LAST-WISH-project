@@ -49,19 +49,15 @@ VerdanturfTown_Mart_Text_XSpecialIsCrucial:
 	.string "so brightly, even in the mountains.$"
 
 VerdanturfTown_Mart_Text_NoStrategyGuidesForBattleTent:
-	.string "The BATTLE TENT stands where contests\n"
-	.string "once echoed with cheering crowds.\p"
-	.string "That was before the great clash…\n"
-	.string "When land and sea went to war.\p"
-	.string "Now, trainers come to test a different\n"
-	.string "kind of bond letting their Pokémon\l"
-	.string "fight on instinct alone.\p"
-	.string "No guide can teach you that.\n"
-	.string "You must learn to trust.$"
+	.string "I've lived here my whole life,\n"
+	.string "but something feels different.\p"
+	.string "I swear there used to be some giant\n"
+	.string "tent here where trainers would battle.\p"
+	.string "Was that all a dream?$"
 
 VerdanturfTown_Mart_Text_NestBallOnWeakenedPokemon:
-	.string "The NEST BALL works best on wounded\n"
-	.string "foes, the weaker, the better.\p"
+	.string "The NEST BALL works best on weaker\n"
+	.string "foes. The lower level, the better.\p"
 	.string "We're the only MART in HOENN that\n"
 	.string "sells them, lucky for you.\p"
 	.string "It's said the design was inspired by\n"

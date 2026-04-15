@@ -596,5 +596,6 @@ Text_WantToHeadbutt:
     .string "{STR_VAR_1} wants to use {STR_VAR_2}!\p"
     .string "Headbutt the tree?$"
 Text_CantUseHeadbutt:
-    .string "No Pokémon in your party\n"
-    .string "knows {STR_VAR_2}!$"
+    .string "This is a big tree!\p"
+	.string "Something might fall out if it's\n"
+	.string "hit hard enough.$"

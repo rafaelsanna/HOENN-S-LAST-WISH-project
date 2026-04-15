@@ -1124,7 +1124,7 @@ SlateportCity_Text_GetNameRaterToHelpYou:
 
 SlateportCity_Text_CantChangeTradeMonName:
 .string "Whoa, you beat RENTON?\n"
-.string "No way… He wiped the floor with me! \p"
+.string "No way… He wiped the floor with me!\p"
 .string "Guess you're tougher than you look.\n"
 .string "Haha! Maybe you can teach me a few\l"
 .string "tricks sometime!$"

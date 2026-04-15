@@ -144,7 +144,7 @@
     {
       "id": "LAYOUT_VERDANTURF_TOWN",
       "name": "VerdanturfTown_Layout",
-      "width": 30,
+      "width": 38,
       "height": 34,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_hlwcustom1",
@@ -334,7 +334,7 @@
     {
       "id": "LAYOUT_ROUTE117",
       "name": "Route117_Layout",
-      "width": 60,
+      "width": 64,
       "height": 30,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",

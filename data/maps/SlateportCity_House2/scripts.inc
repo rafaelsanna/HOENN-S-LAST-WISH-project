@@ -6,4 +6,7 @@ SlateportCity_House2_EventScript_Lass::
 	end
 
 SlateportCity_House2_Text_Placeholder:
-	.string "PLACEHOLDER$"
+	.string "My dad works on one of the cargo\n"
+	.string "ships that docks in town.\p"
+	.string "He has such a cool job!\n"
+	.string "I do miss him sometimes though...$"

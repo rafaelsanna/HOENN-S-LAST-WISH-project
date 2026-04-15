@@ -726,8 +726,8 @@ MauvilleCity_Text_RydelVeryGenerous:
 
 MauvilleCity_Text_PokemonCanJumpYouOnBike:
 	.string "Mauville City hums with power.\n"
-	.string "They say the energy here is so strong\n"
-	.string "it can make PokéMON behave strangely.\p"
+	.string "They say the energy here is so strong\l"
+	.string "it can make POKéMON behave strangely.\p"
 	.string "Some trainers claim they felt their\n"
 	.string "own POKéMON twitch without warning.\p"
 	.string "Others swear strange lights flicker\n"
