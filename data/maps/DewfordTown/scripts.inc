@@ -72,14 +72,26 @@ DewfordTown_EventScript_GymSign::
 DewfordTown_EventScript_HallSign::
 	msgbox DewfordTown_Text_HallSign, MSGBOX_SIGN
 	end
-
+	
 DewfordTown_EventScript_OldRodFisherman::
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_OLD_ROD, DewfordTown_EventScript_HowsFishing
-	msgbox DewfordTown_Text_GettingItchToFish, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_GiveOldRod
-	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_NotGettingItchToFish
+
+	msgbox DewfordTown_Text_FishingAncientArt, MSGBOX_DEFAULT
+
+	special Special_CheckPartyHasWaterMon
+	goto_if_eq VAR_RESULT, TRUE, DewfordTown_EventScript_GiveOldRod
+
+	msgbox DewfordTown_Text_NoWaterMon, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_CheckWaterResult::
+	compare VAR_TEMP_0, 1
+	goto_if_eq DewfordTown_EventScript_GiveOldRod
+	msgbox DewfordTown_Text_NoWaterMon, MSGBOX_DEFAULT
+	release
 	end
 
 DewfordTown_EventScript_GiveOldRod::
@@ -804,4 +816,19 @@ DewfordTown_Text_Newpokemart:
 	.string "tons of new people with him too.\p"
 	.string "This POKEMART was recently built\n"
 	.string "as a result.$"
+
+DewfordTown_Text_FishingAncientArt:
+	.string "Fishing... it's an ancient art.\n"
+	.string "Passed down for generations.\p"
+	.string "But nowadays...\n"
+	.string "people don't value it anymore.\p"
+	.string "Hmm... those clothes...\n"
+	.string "You've got style!\p"
+	.string "Tell you what!\n"
+	.string "Show me a WATER-type POKeMON\n"
+	.string "and I'll give you my OLD ROD!$"
+
+DewfordTown_Text_NoWaterMon:
+	.string "No WATER-type?\n"
+	.string "Come back when you have one.$"
 

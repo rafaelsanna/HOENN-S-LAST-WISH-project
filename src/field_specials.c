@@ -74,6 +74,7 @@
 #include "battle_util.h"
 #include "naming_screen.h"
 #include "nuzlocke.h"
+#include "constants/species.h"
 
 #define TAG_ITEM_ICON 5500
 
@@ -4274,4 +4275,31 @@ void SetHiddenNature(void)
     u32 hiddenNature = gSpecialVar_Result;
     SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HIDDEN_NATURE, &hiddenNature);
     CalculateMonStats(&gPlayerParty[gSpecialVar_0x8004]);
+}
+
+void Special_CheckPartyHasWaterMon(void)
+{
+    u8 i;
+    gSpecialVar_Result = FALSE;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
+
+        if (species == SPECIES_NONE)
+            continue;
+
+        if (GetMonData(&gPlayerParty[i], MON_DATA_HP) == 0)
+            continue;
+
+        // pega os tipos pela species
+        u8 type1 = gSpeciesInfo[species].types[0];
+        u8 type2 = gSpeciesInfo[species].types[1];
+
+        if (type1 == TYPE_WATER || type2 == TYPE_WATER)
+        {
+            gSpecialVar_Result = TRUE;
+            return;
+        }
+    }
 }

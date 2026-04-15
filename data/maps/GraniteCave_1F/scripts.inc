@@ -109,7 +109,7 @@ GraniteCave_1F_Text_ExplainFlash:
 	.string "answers about the comet's message.$"
 
 GraniteCave_1F_Text_HikerBlock:
-	.string "HIKER: Hey kid, wait up!\n"
+	.string "Huh! Hey kid, wait up!\n"
 	.string "Are you crazy?$"
 
 GraniteCave_1F_Text_HikerDanger:
@@ -118,7 +118,7 @@ GraniteCave_1F_Text_HikerDanger:
 	.string "NO CHANCE! Turn back while you still can.$"
 
 GraniteCave_1F_Text_HikerNormal:
-	.string "HIKER: This Granite Cave has been\n"
+	.string "Yo! This Granite Cave has been\n"
 	.string "coveted for its precious stones…\p"
 	.string "Be careful if you're going to explore.\n"
 	.string "Strangers have been lurking around here.$"

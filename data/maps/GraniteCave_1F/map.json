@@ -90,8 +90,8 @@
       "x": 20,
       "y": 10,
       "elevation": 3,
-      "var": "VAR_DEWFORD_TOWN_STATE",
-      "var_value": "1",
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
       "script": "GraniteCave_1F_EventScript_TriggerFlash"
     }
   ],
