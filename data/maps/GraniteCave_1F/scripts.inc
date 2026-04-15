@@ -21,6 +21,14 @@ GraniteCave_1F_EventScript_GiveFlash::
 	giveitem ITEM_HM_FLASH
 	setflag FLAG_RECEIVED_HM_FLASH
 	msgbox GraniteCave_1F_Text_ExplainFlash, MSGBOX_DEFAULT
+	closemessage
+	closemessage
+	playse SE_M_TELEPORT
+	fadescreen FADE_TO_BLACK
+	delay 60
+	removeobject VAR_LAST_TALKED
+	setflag FLAG_HIDE_GRANITE_CAVE_AURORA
+	fadescreen FADE_FROM_BLACK
 	release
 	end
 
@@ -28,6 +36,34 @@ GraniteCave_1F_EventScript_ReceivedFlash::
 	msgbox GraniteCave_1F_Text_ExplainFlash, MSGBOX_DEFAULT
 	release
 	end
+
+GraniteCave_1F_EventScript_HikerFlash::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_GRANITE_CAVE_AURORA, GraniteCave_1F_EventScript_HikerPostAurora
+	msgbox GraniteCave_1F_Text_HikerBlock, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, GraniteCave_1F_Movement_PushBack
+	waitmovement 0
+	msgbox GraniteCave_1F_Text_HikerDanger, MSGBOX_DEFAULT
+	release
+	end
+
+GraniteCave_1F_EventScript_HikerPostAurora::
+	msgbox GraniteCave_1F_Text_HikerNormal, MSGBOX_DEFAULT
+	release
+	end
+
+GraniteCave_1F_EventScript_TriggerFlash::
+	goto_if_set FLAG_DEFEATED_GRANITE_CAVE_AURORA, GraniteCave_1F_EventScript_TriggerPass
+	goto GraniteCave_1F_EventScript_HikerFlash
+
+GraniteCave_1F_EventScript_TriggerPass::
+	end
+
+GraniteCave_1F_Movement_PushBack:
+	walk_right
+	step_end
 
 GraniteCave_1F_Text_WantToBattle:
 	.string "AURORA: The comet's light blessed me\n"
@@ -71,6 +107,23 @@ GraniteCave_1F_Text_ExplainFlash:
 	.string "from DEWFORD's POKéMON GYM.\p"
 	.string "Go now. The path awaits, and with it,\n"
 	.string "answers about the comet's message.$"
+
+GraniteCave_1F_Text_HikerBlock:
+	.string "HIKER: Hey kid, wait up!\n"
+	.string "Are you crazy?$"
+
+GraniteCave_1F_Text_HikerDanger:
+	.string "Going into this cave without any way\n"
+	.string "to light up the path is way too dangerous!\p"
+	.string "NO CHANCE! Turn back while you still can.$"
+
+GraniteCave_1F_Text_HikerNormal:
+	.string "HIKER: This Granite Cave has been\n"
+	.string "coveted for its precious stones…\p"
+	.string "Be careful if you're going to explore.\n"
+	.string "Strangers have been lurking around here.$"
+
+
 
 
 
