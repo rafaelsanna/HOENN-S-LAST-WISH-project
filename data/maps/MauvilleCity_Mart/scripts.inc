@@ -36,8 +36,8 @@ MauvilleCity_Mart_EventScript_Man::
 	end
 
 MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats:
-	.string "Our GYM LEADER DEN? He's a certifiable\n"
-	.string "genius since he was a little kid.\p"
+	.string "Our GYM LEADER DEN? He's been a\n"
+	.string "certifiable genius since he was a kid.\p"
 	.string "Never played outside, he was indoors\n"
 	.string "building contraptions that sparked...\p"
 	.string "Rumors say he can command electricity\n"
