@@ -717,9 +717,12 @@ DewfordTown_Text_GettingItchToFish:
 	.string "Are you getting the itch to fish?$"
 
 DewfordTown_Text_GiveYouOneOfMyRods:
-	.string "I hear you, and I like what\n"
-	.string "you're saying!\p"
-	.string "I'll give you one of my fishing RODS.$"
+	.string "Incredible!\n"
+	.string "Without even a fishing rod...\p"
+	.string "you managed to catch\n"
+	.string "a fine one like that!\p"
+	.string "Hahaha! I like you!\n"
+	.string "Here, take one of my OLD RODS!$"
 
 DewfordTown_Text_ThrowInFishingAdvice:
 	.string "And, as an added bonus, I'll even throw\n"
@@ -819,14 +822,16 @@ DewfordTown_Text_Newpokemart:
 
 DewfordTown_Text_FishingAncientArt:
 	.string "Fishing... it's an ancient art.\n"
-	.string "Passed down for generations.\p"
-	.string "But nowadays...\n"
-	.string "people don't value it anymore.\p"
-	.string "Hmm... those clothes...\n"
-	.string "You've got style!\p"
+	.string "A tradition here in DEWFORD.\p"
+	.string "But these days...\n"
+	.string "fewer folks truly respect it.\p"
+	.string "Hm... those clothes...\n"
+	.string "They look rather old-fashioned.\p"
+	.string "Maybe you do understand\n"
+	.string "the value of old traditions.\p"
 	.string "Tell you what!\n"
-	.string "Show me a WATER-type POKeMON\n"
-	.string "and I'll give you my OLD ROD!$"
+	.string "Show me a WATER-type POKeMON,\n"
+	.string "and I'll give you an OLD ROD!$"
 
 DewfordTown_Text_NoWaterMon:
 	.string "No WATER-type?\n"
