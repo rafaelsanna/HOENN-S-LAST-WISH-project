@@ -52,8 +52,9 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_INFCANDY,
     MENUITEM_DIF_LEVELCAPS,
     MENUITEM_DIF_NUZLOCKE,
+    MENUITEM_DIF_RANDOMIZER,   
     MENUITEM_DIF_AUTOFISHING,
-    MENUITEM_DIF_DEBUGMENU,    
+    MENUITEM_DIF_DEBUGMENU, 
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
 };
@@ -175,6 +176,7 @@ static void DrawChoices_InfCandy(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
 static void DrawChoices_Nuzlocke(int selection, int y);
 static void DrawChoices_AutoFishing(int selection, int y);
+static void DrawChoices_Randomizer(int selection, int y);
 static void DrawBgWindowFrames(void);
 
 // EWRAM vars
@@ -226,6 +228,7 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_INFCANDY]      = {DrawChoices_InfCandy,    ProcessInput_Options_Two}, 
     [MENUITEM_DIF_LEVELCAPS]     = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
     [MENUITEM_DIF_NUZLOCKE]      = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
+    [MENUITEM_DIF_RANDOMIZER]    = {DrawChoices_Randomizer, ProcessInput_Options_Two},
     [MENUITEM_DIF_AUTOFISHING]   = {DrawChoices_AutoFishing, ProcessInput_Options_Two},
     [MENUITEM_DIF_DEBUGMENU]     = {DrawChoices_OnOff,       ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]        = {NULL, NULL},
@@ -237,6 +240,7 @@ static const u8 sText_BattleItems[]    = _("BTL ITEMS");
 static const u8 sText_InfiniteCandy[]  = _("INF. CANDY");
 static const u8 sText_LevelCaps[]      = _("LEVEL CAPS");
 static const u8 sText_Nuzlocke[]       = _("NUZLOCKE");
+static const u8 sText_Randomizer[]     = _("RANDOMIZER");
 static const u8 sText_AutoFishing[]    = _("AUTO FISH");
 static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
 {
@@ -256,6 +260,7 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_INFCANDY]       = sText_InfiniteCandy,
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
+    [MENUITEM_DIF_RANDOMIZER]     = sText_Randomizer,
     [MENUITEM_DIF_AUTOFISHING]    = sText_AutoFishing,
     [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("WISH MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
@@ -296,6 +301,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_INFCANDY:         return TRUE;
         case MENUITEM_DIF_LEVELCAPS:        return TRUE;
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
+        case MENUITEM_DIF_RANDOMIZER:       return TRUE;
         case MENUITEM_DIF_AUTOFISHING:      return TRUE;
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
@@ -329,6 +335,8 @@ static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items 
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
 static const u8 sText_Desc_NuzlockeNormal[]     = _("One non-shiny capture per route,\nbut any shiny may still be caught.");
 static const u8 sText_Desc_NuzlockeHard[]       = _("Only the first wild POKeMON seen\nin each route may be captured.");
+static const u8 sText_Desc_RandomizerOff[]    = _("All wild and trainer Pokémon appear\nnormally.");
+static const u8 sText_Desc_RandomizerOn[]     = _("Wild and trainer Pokémon are\nrandomized.");
 static const u8 sText_Desc_AutoFishingOff[]      = _("Fishing uses the normal wait timer\nand A-button check.");
 static const u8 sText_Desc_AutoFishingOn[]       = _("Fishing advances automatically.");
 
@@ -365,6 +373,7 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,   sText_Desc_InfiniteCandyOn, sText_Empty},
     [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff, sText_Empty},
     [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,        sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
+    [MENUITEM_DIF_RANDOMIZER]   = {sText_Desc_RandomizerOff,      sText_Desc_RandomizerOn,   sText_Empty}, 
     [MENUITEM_DIF_AUTOFISHING]  = {sText_Desc_AutoFishingOff,     sText_Desc_AutoFishingOn,  sText_Empty},
     [MENUITEM_DIF_DEBUGMENU]    = {
         COMPOUND_STRING("Disables the debug menu completely."),
@@ -460,6 +469,10 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_NUZLOCKE))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_NUZLOCKE];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_NUZLOCKE][sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]];
+        case MENUITEM_DIF_RANDOMIZER:
+            if (!CheckConditions(MENUITEM_DIF_RANDOMIZER))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER]];
         case MENUITEM_DIF_AUTOFISHING:
             if (!CheckConditions(MENUITEM_DIF_AUTOFISHING))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_AUTOFISHING];
@@ -698,8 +711,9 @@ void CB2_InitOptionMenu(void)
         sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]     = gSaveBlock2Ptr->optionsInfiniteCandy;
         sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = gSaveBlock2Ptr->optionsLevelCaps;
         sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]     = gSaveBlock2Ptr->optionsNuzlocke;
+        sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
         sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]  = FlagGet(FLAG_AUTO_FISHING);
-        sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]    = gSaveBlock2Ptr->optionsDebugMenu; // <--- NOVO
+        sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]    = gSaveBlock2Ptr->optionsDebugMenu; // <--- NEW
 
         sOptions->submenu = PAGE_GENERAL;
 
@@ -888,6 +902,16 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsInfiniteCandy    = sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY];
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
     gSaveBlock2Ptr->optionsNuzlocke         = sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE];
+    if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER])
+{
+    FlagSet(RANDOMIZER_FLAG_WILD_MON);
+    FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+}
+else
+{
+    FlagClear(RANDOMIZER_FLAG_WILD_MON);
+    FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
+}
     if (sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING])
         FlagSet(FLAG_AUTO_FISHING);
     else
@@ -1258,6 +1282,17 @@ static void DrawChoices_OnOff(int selection, int y)
     // Use existing ON/OFF strings from other options as a fallback
     DrawOptionMenuChoice(sText_OptionLevelCapsOff, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_OptionLevelCapsOn, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionLevelCapsOn, 198), y, styles[1], active);
+}
+
+static void DrawChoices_Randomizer(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIF_RANDOMIZER);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    // Use as strings padrão do jogo em vez de criar novas
+    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
 }
 
 static void DrawChoices_AutoFishing(int selection, int y)

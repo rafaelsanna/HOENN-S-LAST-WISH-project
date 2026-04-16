@@ -687,8 +687,8 @@
 #define FLAG_UNUSED_0x27C  0x27C // Unused Flag
 #define FLAG_UNUSED_0x27D  0x27D // Unused Flag
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag
-#define FLAG_UNUSED_0x27F  0x27F // Unused Flag
-#define FLAG_UNUSED_0x280  0x280 // Unused Flag
+#define FLAG_RANDOMIZER_WILD  0x27F // RANDOMIZER 1 
+#define FLAG_RANDOMIZER_TRAINER  0x280 // RANDOMIZER 2
 #define FLAG_AUTO_FISHING   0x281 // Enables auto-fishing.
 #define FLAG_UNUSED_0x282  0x282 // Unused Flag
 #define FLAG_UNUSED_0x283  0x283 // Unused Flag

@@ -24,6 +24,7 @@
 #include "constants/items.h"
 #include "constants/layouts.h"
 #include "constants/weather.h"
+#include "randomizer.h"
 
 extern const u8 EventScript_SprayWoreOff[];
 
@@ -575,19 +576,37 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum 
     if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
         return FALSE;
 
-    CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);
+    // --- PATCH RANDOMIZADOR ---
+    u16 originalSpecies = wildMonInfo->wildPokemon[wildMonIndex].species;
+    u16 randomizedSpecies = Randomizer_OnWildEncounter(originalSpecies,
+                                                       gSaveBlock1Ptr->location.mapGroup,
+                                                       gSaveBlock1Ptr->location.mapNum,
+                                                       area,      // WILD_AREA_LAND=0, WATER=1, ROCKS=2, FISHING=3
+                                                       wildMonIndex);
+    CreateWildMon(randomizedSpecies, level);
+    // --- FIM PATCH ---
+
     return TRUE;
 }
 
 static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 rod)
 {
     u8 wildMonIndex = ChooseWildMonIndex_Fishing(rod);
-    u16 wildMonSpecies = wildMonInfo->wildPokemon[wildMonIndex].species;
+    u16 originalSpecies = wildMonInfo->wildPokemon[wildMonIndex].species;
     u8 level = ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, WILD_AREA_FISHING);
 
     UpdateChainFishingStreak();
-    CreateWildMon(wildMonSpecies, level);
-    return wildMonSpecies;
+
+    // --- PATCH RANDOMIZADOR ---
+    u16 randomizedSpecies = Randomizer_OnWildEncounter(originalSpecies,
+                                                       gSaveBlock1Ptr->location.mapGroup,
+                                                       gSaveBlock1Ptr->location.mapNum,
+                                                       WILD_AREA_FISHING,  // = 3
+                                                       wildMonIndex);
+    CreateWildMon(randomizedSpecies, level);
+    // --- FIM PATCH ---
+
+    return randomizedSpecies;
 }
 
 static bool8 SetUpMassOutbreakEncounter(u8 flags)
