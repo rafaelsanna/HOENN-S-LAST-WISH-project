@@ -1939,9 +1939,9 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             if (trainer->battleType != TRAINER_BATTLE_TYPE_SINGLES)
                 personalityValue = 0x80;
             else if (trainer->encounterMusic_gender & F_TRAINER_FEMALE)
-                personalityValue = 0x78; // Use personality more likely to result in a female Pokémon
+                personalityValue = 0x78;
             else
-                personalityValue = 0x88; // Use personality more likely to result in a male Pokémon
+                personalityValue = 0x88;
 
             personalityValue += personalityHash << 8;
             if (partyData[monIndex].gender == TRAINER_MON_MALE)
@@ -1956,14 +1956,23 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 otIdType = OT_ID_PRESET;
                 fixedOtId = HIHALF(personalityValue) ^ LOHALF(personalityValue);
             }
+
             // --- PATCH RANDOMIZADOR ---
             u16 originalSpecies = partyData[monIndex].species;
             u16 randomizedSpecies = Randomizer_OnTrainerMon(originalSpecies, trainerId, i);
             // --- FIM PATCH ---
-            CreateMon(&party[i], randomizedSpecies, partyData[monIndex].lvl, 0, TRUE, personalityValue, otIdType, fixedOtId);
-            SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[monIndex].heldItem);
 
-            CustomTrainerPartyAssignMoves(&party[i], &partyData[monIndex]);
+            CreateMon(&party[i], randomizedSpecies, partyData[monIndex].lvl, 0, TRUE, personalityValue, otIdType, fixedOtId);
+
+            // --- PATCH: Só aplica moveset original se NÃO randomizou ---
+            if (randomizedSpecies == originalSpecies)
+            {
+                CustomTrainerPartyAssignMoves(&party[i], &partyData[monIndex]);
+            }
+            // Se randomizou, NÃO chama nada - o jogo atribui os movimentos de level-up automaticamente!
+            // --- FIM PATCH ---
+
+            SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[monIndex].heldItem);
             SetMonData(&party[i], MON_DATA_IVS, &(partyData[monIndex].iv));
             if (partyData[monIndex].ev != NULL)
             {
