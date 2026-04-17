@@ -53,6 +53,7 @@
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
 #include "wild_encounter.h"
+#include "randomizer.h"
 
 enum {
     TRANSITION_TYPE_NORMAL,

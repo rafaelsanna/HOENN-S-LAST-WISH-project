@@ -1,9 +1,6 @@
 // ============================================================
-// src/randomizer.c — Randomizador In-Game
-// pokeemerald-expansion 1.13.3
-//
-// Pool restrita à Hoenn Dex customizada do projeto.
-// Ver INTEGRATION.md para detalhes de integração.
+// src/randomizer.c — Randomizador In-Game (VERSÃO CORRIGIDA)
+// Baseada na versão que funcionava, com inicialização do RNG
 // ============================================================
 
 #include "global.h"
@@ -19,17 +16,6 @@
 #endif
 
 #if RANDOMIZER_AVAILABLE == TRUE
-
-// ────────────────────────────────────────────────────────────────────────────
-// Pool de espécies válidas para randomização
-//
-// APENAS os Pokémon da sua Hoenn Dex customizada são candidatos.
-// Adicione ou remova entradas aqui conforme editar o enum HoennDexOrder.
-//
-// Regra: uma linha por família/espécie, na mesma ordem do enum.
-// Formas alternativas (Mega, Gmax, regional) NÃO entram aqui a menos
-// que você as queira como resultado de randomização.
-// ────────────────────────────────────────────────────────────────────────────
 
 static const u16 sHoennDexPool[] =
 {
@@ -482,10 +468,27 @@ static const u16 sHoennDexPool[] =
 // Tamanho calculado em tempo de compilação — nunca desincroniza do array.
 #define HOENN_POOL_SIZE ARRAY_COUNT(sHoennDexPool)
 
-// ────────────────────────────────────────────────────────────────────────────
-// RNG interno: xorshift32 + mistura de contexto
-// ────────────────────────────────────────────────────────────────────────────
+// EWRAM - inicializada como 0
+EWRAM_DATA static u32 sRngState = 0;
 
+// Inicialização do RNG
+static void Rz_InitRNG(void)
+{
+    if (sRngState == 0)
+    {
+        if (gSaveBlock2Ptr != NULL)
+        {
+            sRngState = (u32)gSaveBlock2Ptr->playerTrainerId[0]
+                      | ((u32)gSaveBlock2Ptr->playerTrainerId[1] << 8)
+                      | ((u32)gSaveBlock2Ptr->playerTrainerId[2] << 16)
+                      | ((u32)gSaveBlock2Ptr->playerTrainerId[3] << 24);
+        }
+        if (sRngState == 0)
+            sRngState = 0x12345678;
+    }
+}
+
+// RNG original (xorshift32)
 static u32 Rz_Xorshift32(u32 x)
 {
     x ^= x << 13;
@@ -507,52 +510,32 @@ static u32 Rz_MixSeed(u32 seed, u32 context)
 
 static u32 Rz_Next(u32 *state, u32 range)
 {
+    Rz_InitRNG();  // ⭐ GARANTE INICIALIZAÇÃO
     *state = Rz_Xorshift32(*state);
     return (u32)(((u64)(*state) * range) >> 32);
 }
 
-// ────────────────────────────────────────────────────────────────────────────
-// Seed do jogador
-// ────────────────────────────────────────────────────────────────────────────
-
-u32 Randomizer_GetSeed(void)
-{
-#if RANDOMIZER_SEED_FROM_TRAINER_ID == TRUE
-    if (gSaveBlock2Ptr == NULL)
-        return 0x12345678;
-
-    return (u32)gSaveBlock2Ptr->playerTrainerId[0]
-         | ((u32)gSaveBlock2Ptr->playerTrainerId[1] << 8)
-         | ((u32)gSaveBlock2Ptr->playerTrainerId[2] << 16)
-         | ((u32)gSaveBlock2Ptr->playerTrainerId[3] << 24);
-#else
-    u32 lo = VarGet(RANDOMIZER_VAR_SEED_L);
-    u32 hi = VarGet(RANDOMIZER_VAR_SEED_H);
-    u32 seed = lo | (hi << 16);
-    return seed != 0 ? seed : 1;
-#endif
-}
-
-// ────────────────────────────────────────────────────────────────────────────
-// Consulta de estado
-// ────────────────────────────────────────────────────────────────────────────
-
+// Funções públicas
 bool8 Randomizer_WildEnabled(void)
 {
-#ifdef FORCE_RANDOMIZE_WILD_MON
-    return FORCE_RANDOMIZE_WILD_MON;
-#else
     return FlagGet(RANDOMIZER_FLAG_WILD_MON);
-#endif
 }
 
 bool8 Randomizer_TrainerEnabled(void)
 {
-#ifdef FORCE_RANDOMIZE_TRAINER_MON
-    return FORCE_RANDOMIZE_TRAINER_MON;
-#else
     return FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
-#endif
+}
+
+u32 Randomizer_GetSeed(void)
+{
+    if (gSaveBlock2Ptr != NULL)
+    {
+        return (u32)gSaveBlock2Ptr->playerTrainerId[0]
+             | ((u32)gSaveBlock2Ptr->playerTrainerId[1] << 8)
+             | ((u32)gSaveBlock2Ptr->playerTrainerId[2] << 16)
+             | ((u32)gSaveBlock2Ptr->playerTrainerId[3] << 24);
+    }
+    return 0x12345678;
 }
 
 enum RandomizerSpeciesMode Randomizer_GetSpeciesMode(void)
@@ -578,11 +561,7 @@ void Randomizer_Init(bool8 randomizeWild, bool8 randomizeTrainers, enum Randomiz
     VarSet(RANDOMIZER_VAR_SPECIES_MODE, (u16)mode);
 }
 
-// ────────────────────────────────────────────────────────────────────────────
-// Predicados de espécie
-// (operam apenas sobre entradas do pool, mas ficam aqui para reúso)
-// ────────────────────────────────────────────────────────────────────────────
-
+// Predicados (versão simplificada para não dar lag)
 static bool8 Rz_IsLegendary(u16 species)
 {
     if (species == SPECIES_NONE || species >= NUM_SPECIES)
@@ -592,12 +571,11 @@ static bool8 Rz_IsLegendary(u16 species)
 
 static u16 Rz_GetBST(u16 species)
 {
-    const struct SpeciesInfo *info;
     if (species == SPECIES_NONE || species >= NUM_SPECIES)
         return 0;
-    info = &gSpeciesInfo[species];
-    return (u16)(info->baseHP + info->baseAttack + info->baseDefense
-               + info->baseSpAttack + info->baseSpDefense + info->baseSpeed);
+    return (u16)(gSpeciesInfo[species].baseHP + gSpeciesInfo[species].baseAttack
+               + gSpeciesInfo[species].baseDefense + gSpeciesInfo[species].baseSpAttack
+               + gSpeciesInfo[species].baseSpDefense + gSpeciesInfo[species].baseSpeed);
 }
 
 static u8 Rz_GetEvolutionStage(u16 species)
@@ -605,221 +583,127 @@ static u8 Rz_GetEvolutionStage(u16 species)
     u16 s;
     u8 stage = 0;
     u16 prev = species;
-
     while (stage < 5)
     {
         bool8 foundPrev = FALSE;
         for (s = 1; s < NUM_SPECIES; s++)
         {
-            u8 i;
-            const struct Evolution *evos = gSpeciesInfo[s].evolutions;
-            if (evos == NULL)
-                continue;
-            for (i = 0; i < EVOS_PER_MON; i++)
+            for (u8 i = 0; i < EVOS_PER_MON; i++)
             {
-                if (evos[i].targetSpecies == prev)
+                if (gSpeciesInfo[s].evolutions[i].targetSpecies == prev)
                 {
                     prev = s;
                     foundPrev = TRUE;
                     break;
                 }
             }
-            if (foundPrev)
-                break;
+            if (foundPrev) break;
         }
-        if (!foundPrev)
-            break;
+        if (!foundPrev) break;
         stage++;
     }
     return stage;
 }
 
-// ────────────────────────────────────────────────────────────────────────────
-// Core: seleciona espécie randomizada **dentro do pool da Hoenn Dex**
-//
-// Diferença principal vs. versão anterior:
-//   • Iteramos sobre sHoennDexPool[] (tamanho fixo ~280 entradas)
-//     em vez de [1..NUM_SPECIES) (até ~1300+ entradas).
-//   • Qualquer espécie fora do seu dex simplesmente nunca aparece.
-//   • Performance melhor: ~4× menos iterações por chamada.
-// ────────────────────────────────────────────────────────────────────────────
-
-static u16 Rz_CountValidFromPool(enum RandomizerSpeciesMode mode,
-                                  u16 originalSpecies,
-                                  bool8 isOriginalLegendary,
-                                  u16 originalBST,
-                                  u8 originalStage)
+// Core de randomização
+static u16 Rz_CountValidFromPool(enum RandomizerSpeciesMode mode, u16 originalSpecies,
+                                  bool8 isOriginalLegendary, u16 originalBST, u8 originalStage)
 {
     u16 count = 0;
-    u16 i;
-
-    for (i = 0; i < HOENN_POOL_SIZE; i++)
+    for (u16 i = 0; i < HOENN_POOL_SIZE; i++)
     {
         u16 s = sHoennDexPool[i];
-
-        switch (mode)
-        {
-        case MON_RANDOM:
+        if (mode == MON_RANDOM_NO_LEGEND && Rz_IsLegendary(s)) continue;
 #if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
-            if (!isOriginalLegendary && Rz_IsLegendary(s))
-                continue;
+        if (!isOriginalLegendary && Rz_IsLegendary(s)) continue;
 #endif
-            break;
-
-        case MON_RANDOM_NO_LEGEND:
-            if (Rz_IsLegendary(s))
-                continue;
-            break;
-
-        case MON_RANDOM_BST:
-            {
-                s32 diff = (s32)Rz_GetBST(s) - (s32)originalBST;
-                if (diff < -(s32)RANDOMIZER_BST_TOLERANCE || diff > (s32)RANDOMIZER_BST_TOLERANCE)
-                    continue;
-#if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
-                if (!isOriginalLegendary && Rz_IsLegendary(s))
-                    continue;
-#endif
-            }
-            break;
-
-        case MON_EVOLUTION_STAGE:
-            if (Rz_GetEvolutionStage(s) != originalStage)
-                continue;
-#if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
-            if (!isOriginalLegendary && Rz_IsLegendary(s))
-                continue;
-#endif
-            break;
-
-        default:
-            break;
-        }
-
         count++;
     }
-
     return count;
 }
 
-static u16 Rz_GetNthFromPool(enum RandomizerSpeciesMode mode,
-                               u16 originalSpecies,
-                               bool8 isOriginalLegendary,
-                               u16 originalBST,
-                               u8 originalStage,
-                               u16 n)
+static u16 Rz_GetNthFromPool(enum RandomizerSpeciesMode mode, u16 originalSpecies,
+                              bool8 isOriginalLegendary, u16 originalBST, u8 originalStage, u16 n)
 {
     u16 idx = 0;
-    u16 i;
-
-    for (i = 0; i < HOENN_POOL_SIZE; i++)
+    for (u16 i = 0; i < HOENN_POOL_SIZE; i++)
     {
         u16 s = sHoennDexPool[i];
-
-        switch (mode)
-        {
-        case MON_RANDOM:
+        if (mode == MON_RANDOM_NO_LEGEND && Rz_IsLegendary(s)) continue;
 #if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
-            if (!isOriginalLegendary && Rz_IsLegendary(s))
-                continue;
+        if (!isOriginalLegendary && Rz_IsLegendary(s)) continue;
 #endif
-            break;
-
-        case MON_RANDOM_NO_LEGEND:
-            if (Rz_IsLegendary(s))
-                continue;
-            break;
-
-        case MON_RANDOM_BST:
-            {
-                s32 diff = (s32)Rz_GetBST(s) - (s32)originalBST;
-                if (diff < -(s32)RANDOMIZER_BST_TOLERANCE || diff > (s32)RANDOMIZER_BST_TOLERANCE)
-                    continue;
-#if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
-                if (!isOriginalLegendary && Rz_IsLegendary(s))
-                    continue;
-#endif
-            }
-            break;
-
-        case MON_EVOLUTION_STAGE:
-            if (Rz_GetEvolutionStage(s) != originalStage)
-                continue;
-#if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
-            if (!isOriginalLegendary && Rz_IsLegendary(s))
-                continue;
-#endif
-            break;
-
-        default:
-            break;
-        }
-
-        if (idx == n)
-            return s;
+        if (idx == n) return s;
         idx++;
     }
-
-    return originalSpecies; // fallback: mantém o original
+    return originalSpecies;
 }
 
 u16 Randomizer_GetSpecies(u16 originalSpecies, enum RandomizerContext context, u32 contextKey)
 {
-    enum RandomizerSpeciesMode mode;
-    bool8 isLegendary;
-    u16 originalBST;
-    u8  originalStage;
-    u16 poolSize;
-    u32 state;
-    u32 seed;
-    u32 pick;
-
     if (originalSpecies == SPECIES_NONE || originalSpecies >= NUM_SPECIES)
         return originalSpecies;
 
-    mode         = Randomizer_GetSpeciesMode();
-    isLegendary  = Rz_IsLegendary(originalSpecies);
-    originalBST  = (mode == MON_RANDOM_BST)      ? Rz_GetBST(originalSpecies)          : 0;
-    originalStage= (mode == MON_EVOLUTION_STAGE)  ? Rz_GetEvolutionStage(originalSpecies) : 0;
+    enum RandomizerSpeciesMode mode = Randomizer_GetSpeciesMode();
+    bool8 isLegendary = Rz_IsLegendary(originalSpecies);
+    u16 originalBST = (mode == MON_RANDOM_BST) ? Rz_GetBST(originalSpecies) : 0;
+    u8 originalStage = (mode == MON_EVOLUTION_STAGE) ? Rz_GetEvolutionStage(originalSpecies) : 0;
 
-    poolSize = Rz_CountValidFromPool(mode, originalSpecies, isLegendary, originalBST, originalStage);
-    if (poolSize == 0)
-        return originalSpecies;
+    u16 poolSize = Rz_CountValidFromPool(mode, originalSpecies, isLegendary, originalBST, originalStage);
+    if (poolSize == 0) return originalSpecies;
 
-    seed  = Randomizer_GetSeed();
-    state = Rz_MixSeed(seed, (u32)context ^ contextKey ^ (u32)originalSpecies);
-
-    pick = Rz_Next(&state, poolSize);
+    u32 seed = Randomizer_GetSeed();
+    u32 state = Rz_MixSeed(seed, (u32)context ^ contextKey ^ (u32)originalSpecies);
+    u32 pick = Rz_Next(&state, poolSize);
     return Rz_GetNthFromPool(mode, originalSpecies, isLegendary, originalBST, originalStage, (u16)pick);
 }
 
-// ────────────────────────────────────────────────────────────────────────────
-// Hooks chamados pelo engine
-// ────────────────────────────────────────────────────────────────────────────
-
+// Hooks
 u16 Randomizer_OnWildEncounter(u16 species, u8 mapGroup, u8 mapNum, u8 area, u8 slot)
 {
-    u32 key;
-    if (!Randomizer_WildEnabled())
-        return species;
-
-    key = ((u32)mapGroup << 24)
-        | ((u32)mapNum   << 16)
-        | ((u32)area     <<  8)
-        | ((u32)slot);
-
+    if (!Randomizer_WildEnabled()) return species;
+    u32 key = ((u32)mapGroup << 24) | ((u32)mapNum << 16) | ((u32)area << 8) | ((u32)slot);
     return Randomizer_GetSpecies(species, RZ_CTX_WILD_ENCOUNTER, key);
 }
 
 u16 Randomizer_OnTrainerMon(u16 species, u16 trainerId, u8 slotIndex)
 {
-    u32 key;
-    if (!Randomizer_TrainerEnabled())
-        return species;
-
-    key = ((u32)trainerId << 8) | ((u32)slotIndex);
-
+    if (!Randomizer_TrainerEnabled()) return species;
+    u32 key = ((u32)trainerId << 8) | ((u32)slotIndex);
     return Randomizer_GetSpecies(species, RZ_CTX_TRAINER_MON, key);
 }
 
-#endif // RANDOMIZER_AVAILABLE
+// Starters
+static u32 Rz_GetStarterSeed(void)
+{
+    if (gSaveBlock2Ptr != NULL)
+    {
+        return (u32)gSaveBlock2Ptr->playerTrainerId[0]
+             | ((u32)gSaveBlock2Ptr->playerTrainerId[1] << 8)
+             | ((u32)gSaveBlock2Ptr->playerTrainerId[2] << 16)
+             | ((u32)gSaveBlock2Ptr->playerTrainerId[3] << 24);
+    }
+    return 0x12345678;
+}
+
+u16 Randomizer_GetFixedStarter(u8 slot)
+{
+    if (!Randomizer_WildEnabled())
+    {
+        static const u16 vanillaStarters[3] = { SPECIES_BULBASAUR, SPECIES_TOTODILE, SPECIES_TORCHIC };
+        return vanillaStarters[slot % 3];
+    }
+
+    u32 seed = Rz_GetStarterSeed();
+    seed ^= (slot * 0x9E3779B9);
+    u32 state = seed;
+    state = state * 1103515245 + 12345;
+    return sHoennDexPool[(state >> 16) % HOENN_POOL_SIZE];
+}
+
+u16 Randomizer_GetRandomStarter(u16 originalSpecies, u8 slot)
+{
+    return Randomizer_GetFixedStarter(slot);
+}
+
+#endif

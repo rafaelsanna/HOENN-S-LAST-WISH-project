@@ -23,6 +23,7 @@
 #include "window.h"
 #include "constants/songs.h"
 #include "constants/rgb.h"
+#include "randomizer.h"
 
 #define STARTER_MON_COUNT   3
 
@@ -48,6 +49,11 @@ static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y);
 static void SpriteCB_SelectionHand(struct Sprite *sprite);
 static void SpriteCB_Pokeball(struct Sprite *sprite);
 static void SpriteCB_StarterPokemon(struct Sprite *sprite);
+static void ResetStarterRandomization(void);
+static void ResetStarterRandomization(void);
+// Randomizer cache para starters fixos
+static u16 sRandomizedStarters[3];
+static bool8 sStartersInitialized = FALSE;
 
 static u16 sStarterLabelWindowId;
 
@@ -59,6 +65,8 @@ const u32 gBirchGrassTilemap[] = INCBIN_U32("graphics/starter_choose/birch_grass
 const u32 gBirchBagGrass_Gfx[] = INCBIN_U32("graphics/starter_choose/tiles.4bpp.smol");
 const u32 gPokeballSelection_Gfx[] = INCBIN_U32("graphics/starter_choose/pokeball_selection.4bpp.smol");
 static const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/starter_choose/starter_circle.4bpp.smol");
+static u16 sRandomizedStarters[STARTER_MON_COUNT];
+static bool8 sStartersRandomized = FALSE;
 
 static const struct WindowTemplate sWindowTemplates[] =
 {
@@ -347,11 +355,35 @@ static const struct SpriteTemplate sSpriteTemplate_StarterCircle =
     .callback = SpriteCB_StarterPokemon
 };
 
+static void InitRandomizedStarters(void)
+{
+    u8 i;
+    if (sStartersInitialized)
+        return;
+    for (i = 0; i < 3; i++)
+        sRandomizedStarters[i] = Randomizer_GetFixedStarter(i);
+    sStartersInitialized = TRUE;
+}
+
+static void ResetStarterState(void)
+{
+    sStartersInitialized = FALSE;
+}
+
 // .text
 u16 GetStarterPokemon(u16 chosenStarterId)
 {
-    if (chosenStarterId > STARTER_MON_COUNT)
+    if (chosenStarterId >= STARTER_MON_COUNT)
         chosenStarterId = 0;
+ 
+#if RANDOMIZER_AVAILABLE == TRUE
+    if (Randomizer_WildEnabled())
+    {
+        InitRandomizedStarters();
+        return sRandomizedStarters[chosenStarterId];
+    }
+#endif
+ 
     return sStarterMon[chosenStarterId];
 }
 
@@ -373,6 +405,7 @@ static void VblankCB_StarterChoose(void)
 
 void CB2_ChooseStarter(void)
 {
+    ResetStarterState();
     u8 taskId;
     u8 spriteId;
 
@@ -542,9 +575,9 @@ static void Task_HandleConfirmStarterInput(u8 taskId)
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
     case 0:  // YES
-        // Return the starter choice and exit.
         gSpecialVar_Result = gTasks[taskId].tStarterSelection;
         ResetAllPicSprites();
+        ResetStarterRandomization();  // <-- ADICIONAR
         SetMainCallback2(gMain.savedCallback);
         break;
     case 1:  // NO
@@ -557,6 +590,7 @@ static void Task_HandleConfirmStarterInput(u8 taskId)
         spriteId = gTasks[taskId].tCircleSpriteId;
         FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
         DestroySprite(&gSprites[spriteId]);
+        ResetStarterRandomization();  // <-- ADICIONAR (opcional mas recomendado)
         gTasks[taskId].func = Task_DeclineStarter;
         break;
     }
@@ -665,3 +699,10 @@ static void SpriteCB_StarterPokemon(struct Sprite *sprite)
     if (sprite->y < STARTER_PKMN_POS_Y)
         sprite->y += 2;
 }
+
+// Chame esta função quando a escolha do starter for finalizada
+void ResetStarterRandomization(void)
+{
+    sStartersRandomized = FALSE;
+}
+

@@ -14,4 +14,9 @@
 #define RANDOMIZER_ALLOW_REGIONAL_FORMS FALSE
 #define RANDOMIZER_BST_TOLERANCE 30
 
+// Starter minimum BST (250 exclude Caterpie, Magikarp, etc.)
+#ifndef RANDOMIZER_STARTER_MIN_BST
+#define RANDOMIZER_STARTER_MIN_BST 250
+#endif
+
 #endif

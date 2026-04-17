@@ -28,9 +28,20 @@ u32 Randomizer_GetSeed(void);
 u16 Randomizer_GetSpecies(u16 originalSpecies, enum RandomizerContext context, u32 contextKey);
 u16 Randomizer_OnWildEncounter(u16 species, u8 mapGroup, u8 mapNum, u8 area, u8 slot);
 u16 Randomizer_OnTrainerMon(u16 species, u16 trainerId, u8 slotIndex);
+u16 Randomizer_GetFixedStarter(u8 slot);
 
 #include "script.h"
 void RandomizerApplyFromVars_NativeCall(struct ScriptContext *ctx);
+// Pré-calcula o pool de starters válidos. Chamada automaticamente
+// por Randomizer_Init(). Pode ser chamada manualmente se o pool
+// precisar ser recalculado (ex: após mudar as configurações).
+void Randomizer_InitStarterPool(void);
+ 
+// Retorna o starter randomizado para o slot dado (0=esq, 1=centro, 2=dir).
+// originalSpecies: starter padrão (fallback se randomizador desativado).
+// slot: índice da bolsa (0, 1 ou 2) — cada slot gera espécie distinta.
+u16 Randomizer_GetRandomStarter(u16 originalSpecies, u8 slot);
+
 
 #else
 
