@@ -1,0 +1,1 @@
+include/constants/mining_minigame.h
