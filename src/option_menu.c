@@ -52,9 +52,10 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_INFCANDY,
     MENUITEM_DIF_LEVELCAPS,
     MENUITEM_DIF_NUZLOCKE,
-    MENUITEM_DIF_RANDOMIZER,   
+    MENUITEM_DIF_RANDOMIZER_E,
+    MENUITEM_DIF_RANDOMIZER_T,
     MENUITEM_DIF_AUTOFISHING,
-    MENUITEM_DIF_DEBUGMENU, 
+    MENUITEM_DIF_DEBUGMENU,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
 };
@@ -176,7 +177,8 @@ static void DrawChoices_InfCandy(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
 static void DrawChoices_Nuzlocke(int selection, int y);
 static void DrawChoices_AutoFishing(int selection, int y);
-static void DrawChoices_Randomizer(int selection, int y);
+static void DrawChoices_RandomizerE(int selection, int y);
+static void DrawChoices_RandomizerT(int selection, int y);
 static void DrawBgWindowFrames(void);
 
 // EWRAM vars
@@ -222,26 +224,29 @@ struct // PAGE_DIFFICULTY
     int (*processInput)(int selection);
 } static const sItemFunctionsDifficulty[MENUITEM_DIF_COUNT] =
 {
-    [MENUITEM_DIF_NPCTEAMS]      = {DrawChoices_NpcTeams,    ProcessInput_Options_Two},
-    [MENUITEM_DIF_BATTLEITEMS]   = {DrawChoices_BattleItems, ProcessInput_Options_Two},
-    [MENUITEM_DIF_BATTLESTYLE]   = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
-    [MENUITEM_DIF_INFCANDY]      = {DrawChoices_InfCandy,    ProcessInput_Options_Two}, 
-    [MENUITEM_DIF_LEVELCAPS]     = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
-    [MENUITEM_DIF_NUZLOCKE]      = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
-    [MENUITEM_DIF_RANDOMIZER]    = {DrawChoices_Randomizer, ProcessInput_Options_Two},
-    [MENUITEM_DIF_AUTOFISHING]   = {DrawChoices_AutoFishing, ProcessInput_Options_Two},
-    [MENUITEM_DIF_DEBUGMENU]     = {DrawChoices_OnOff,       ProcessInput_Options_Two},
-    [MENUITEM_DIF_CANCEL]        = {NULL, NULL},
+    [MENUITEM_DIF_NPCTEAMS]       = {DrawChoices_NpcTeams,    ProcessInput_Options_Two},
+    [MENUITEM_DIF_BATTLEITEMS]    = {DrawChoices_BattleItems, ProcessInput_Options_Two},
+    [MENUITEM_DIF_BATTLESTYLE]    = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
+    [MENUITEM_DIF_INFCANDY]       = {DrawChoices_InfCandy,    ProcessInput_Options_Two},
+    [MENUITEM_DIF_LEVELCAPS]      = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
+    [MENUITEM_DIF_NUZLOCKE]       = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
+    [MENUITEM_DIF_RANDOMIZER_E]   = {DrawChoices_RandomizerE, ProcessInput_Options_Two},
+    [MENUITEM_DIF_RANDOMIZER_T]   = {DrawChoices_RandomizerT, ProcessInput_Options_Two},
+    [MENUITEM_DIF_AUTOFISHING]    = {DrawChoices_AutoFishing,  ProcessInput_Options_Two},
+    [MENUITEM_DIF_DEBUGMENU]      = {DrawChoices_OnOff,        ProcessInput_Options_Two},
+    [MENUITEM_DIF_CANCEL]         = {NULL, NULL},
 };
 
 // Menu left side option names text
-static const u8 sText_NpcTeams[]       = _("NPC TEAMS");
-static const u8 sText_BattleItems[]    = _("BTL ITEMS");
-static const u8 sText_InfiniteCandy[]  = _("INF. CANDY");
-static const u8 sText_LevelCaps[]      = _("LEVEL CAPS");
-static const u8 sText_Nuzlocke[]       = _("NUZLOCKE");
-static const u8 sText_Randomizer[]     = _("RANDOMIZER");
-static const u8 sText_AutoFishing[]    = _("AUTO FISH");
+static const u8 sText_NpcTeams[]        = _("NPC TEAMS");
+static const u8 sText_BattleItems[]     = _("BTL ITEMS");
+static const u8 sText_InfiniteCandy[]   = _("INF. CANDY");
+static const u8 sText_LevelCaps[]       = _("LEVEL CAPS");
+static const u8 sText_Nuzlocke[]        = _("NUZLOCKE");
+static const u8 sText_RandomizerE[]     = _("RANDOM POKéMON");
+static const u8 sText_RandomizerT[]     = _("RANDOM TRAINERS");
+static const u8 sText_AutoFishing[]     = _("AUTO FISH");
+
 static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
 {
     [MENUITEM_GEN_TEXTSPEED]     = gText_TextSpeed,
@@ -260,7 +265,8 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_INFCANDY]       = sText_InfiniteCandy,
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
-    [MENUITEM_DIF_RANDOMIZER]     = sText_Randomizer,
+    [MENUITEM_DIF_RANDOMIZER_E]   = sText_RandomizerE,
+    [MENUITEM_DIF_RANDOMIZER_T]   = sText_RandomizerT,
     [MENUITEM_DIF_AUTOFISHING]    = sText_AutoFishing,
     [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("WISH MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
@@ -301,7 +307,8 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_INFCANDY:         return TRUE;
         case MENUITEM_DIF_LEVELCAPS:        return TRUE;
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
-        case MENUITEM_DIF_RANDOMIZER:       return TRUE;
+        case MENUITEM_DIF_RANDOMIZER_E:     return TRUE;
+        case MENUITEM_DIF_RANDOMIZER_T:     return TRUE;
         case MENUITEM_DIF_AUTOFISHING:      return TRUE;
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
@@ -335,10 +342,12 @@ static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items 
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
 static const u8 sText_Desc_NuzlockeNormal[]     = _("One non-shiny capture per route,\nbut any shiny may still be caught.");
 static const u8 sText_Desc_NuzlockeHard[]       = _("Only the first wild POKeMON seen\nin each route may be captured.");
-static const u8 sText_Desc_RandomizerOff[]    = _("All wild and trainer Pokémon appear\nnormally.");
-static const u8 sText_Desc_RandomizerOn[]     = _("Wild and trainer Pokémon are\nrandomized.");
-static const u8 sText_Desc_AutoFishingOff[]      = _("Fishing uses the normal wait timer\nand A-button check.");
-static const u8 sText_Desc_AutoFishingOn[]       = _("Fishing advances automatically.");
+static const u8 sText_Desc_RandomizerEOff[]     = _("Wild POKéMON appear normally.");
+static const u8 sText_Desc_RandomizerEOn[]      = _("Wild POKéMON are randomized.");
+static const u8 sText_Desc_RandomizerTOff[]     = _("Trainer teams appear normally.");
+static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.");
+static const u8 sText_Desc_AutoFishingOff[]     = _("Fishing uses the normal wait timer\nand A-button check.");
+static const u8 sText_Desc_AutoFishingOn[]      = _("Fishing advances automatically.");
 
 // Option strings
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
@@ -367,20 +376,21 @@ static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3]
 
 static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT][3] =
 {
-    [MENUITEM_DIF_NPCTEAMS]     = {sText_Desc_NpcTeams,           sText_Empty,               sText_Empty},
-    [MENUITEM_DIF_BATTLEITEMS]  = {sText_Desc_BattleItemsOn,      sText_Desc_BattleItemsOff, sText_Empty},
-    [MENUITEM_DIF_BATTLESTYLE]  = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set, sText_Empty},
-    [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,   sText_Desc_InfiniteCandyOn, sText_Empty},
-    [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,        sText_Desc_LevelCapsOff, sText_Empty},
-    [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,        sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
-    [MENUITEM_DIF_RANDOMIZER]   = {sText_Desc_RandomizerOff,      sText_Desc_RandomizerOn,   sText_Empty}, 
-    [MENUITEM_DIF_AUTOFISHING]  = {sText_Desc_AutoFishingOff,     sText_Desc_AutoFishingOn,  sText_Empty},
+    [MENUITEM_DIF_NPCTEAMS]     = {sText_Desc_NpcTeams,            sText_Empty,               sText_Empty},
+    [MENUITEM_DIF_BATTLEITEMS]  = {sText_Desc_BattleItemsOn,       sText_Desc_BattleItemsOff, sText_Empty},
+    [MENUITEM_DIF_BATTLESTYLE]  = {sText_Desc_BattleStyle_Shift,   sText_Desc_BattleStyle_Set, sText_Empty},
+    [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,    sText_Desc_InfiniteCandyOn, sText_Empty},
+    [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,         sText_Desc_LevelCapsOff,   sText_Empty},
+    [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,         sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
+    [MENUITEM_DIF_RANDOMIZER_E] = {sText_Desc_RandomizerEOff,      sText_Desc_RandomizerEOn,  sText_Empty},
+    [MENUITEM_DIF_RANDOMIZER_T] = {sText_Desc_RandomizerTOff,      sText_Desc_RandomizerTOn,  sText_Empty},
+    [MENUITEM_DIF_AUTOFISHING]  = {sText_Desc_AutoFishingOff,      sText_Desc_AutoFishingOn,  sText_Empty},
     [MENUITEM_DIF_DEBUGMENU]    = {
         COMPOUND_STRING("Disables the debug menu completely."),
         COMPOUND_STRING("Enables the wish menu (debug menu)."),
         COMPOUND_STRING("")
     },
-    [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,               sText_Empty,               sText_Empty},
+    [MENUITEM_DIF_CANCEL]       = {sText_Desc_Save,                sText_Empty,               sText_Empty},
 };
 
 // Disabled Descriptions
@@ -404,6 +414,8 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_INFCANDY]     = sText_Empty,
     [MENUITEM_DIF_LEVELCAPS]    = sText_Empty,
     [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
+    [MENUITEM_DIF_RANDOMIZER_E] = sText_Empty,
+    [MENUITEM_DIF_RANDOMIZER_T] = sText_Empty,
     [MENUITEM_DIF_AUTOFISHING]  = sText_Empty,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
@@ -469,10 +481,14 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_NUZLOCKE))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_NUZLOCKE];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_NUZLOCKE][sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]];
-        case MENUITEM_DIF_RANDOMIZER:
-            if (!CheckConditions(MENUITEM_DIF_RANDOMIZER))
-                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER]];
+        case MENUITEM_DIF_RANDOMIZER_E:
+            if (!CheckConditions(MENUITEM_DIF_RANDOMIZER_E))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER_E];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER_E][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]];
+        case MENUITEM_DIF_RANDOMIZER_T:
+            if (!CheckConditions(MENUITEM_DIF_RANDOMIZER_T))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER_T];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER_T][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]];
         case MENUITEM_DIF_AUTOFISHING:
             if (!CheckConditions(MENUITEM_DIF_AUTOFISHING))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_AUTOFISHING];
@@ -705,15 +721,16 @@ void CB2_InitOptionMenu(void)
         sOptions->sel[MENUITEM_GEN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
         sOptions->sel[MENUITEM_GEN_FRAMETYPE]       = gSaveBlock2Ptr->optionsWindowFrameType;
         
-        sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS]     = gSaveBlock2Ptr->optionsNpcTeams;
-        sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]  = gSaveBlock2Ptr->optionsBattleItems;
-        sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]  = gSaveBlock2Ptr->optionsBattleStyle;
-        sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]     = gSaveBlock2Ptr->optionsInfiniteCandy;
-        sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = gSaveBlock2Ptr->optionsLevelCaps;
-        sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]     = gSaveBlock2Ptr->optionsNuzlocke;
-        sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
-        sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]  = FlagGet(FLAG_AUTO_FISHING);
-        sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]    = gSaveBlock2Ptr->optionsDebugMenu; // <--- NEW
+        sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS]       = gSaveBlock2Ptr->optionsNpcTeams;
+        sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]    = gSaveBlock2Ptr->optionsBattleItems;
+        sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]    = gSaveBlock2Ptr->optionsBattleStyle;
+        sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]       = gSaveBlock2Ptr->optionsInfiniteCandy;
+        sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]      = gSaveBlock2Ptr->optionsLevelCaps;
+        sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
+        sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
+        sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
+        sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]    = FlagGet(FLAG_AUTO_FISHING);
+        sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
 
         sOptions->submenu = PAGE_GENERAL;
 
@@ -902,21 +919,23 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsInfiniteCandy    = sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY];
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
     gSaveBlock2Ptr->optionsNuzlocke         = sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE];
-    if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER])
-{
-    FlagSet(RANDOMIZER_FLAG_WILD_MON);
-    FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
-}
-else
-{
-    FlagClear(RANDOMIZER_FLAG_WILD_MON);
-    FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
-}
+
+    if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E])
+        FlagSet(RANDOMIZER_FLAG_WILD_MON);
+    else
+        FlagClear(RANDOMIZER_FLAG_WILD_MON);
+
+    if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T])
+        FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+    else
+        FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
+
     if (sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING])
         FlagSet(FLAG_AUTO_FISHING);
     else
         FlagClear(FLAG_AUTO_FISHING);
-    gSaveBlock2Ptr->optionsDebugMenu        = sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]; // <--- NOVO
+
+    gSaveBlock2Ptr->optionsDebugMenu        = sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU];
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -967,6 +986,7 @@ static void ScrollMenu(int direction)
     DrawLeftSideOptionText(menuItem, (pos * Y_DIFF) + 1);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_GFX);
 }
+
 static void ScrollAll(int direction) // to bottom or top
 {
     int i, y, menuItem, pos;
@@ -1279,18 +1299,26 @@ static void DrawChoices_OnOff(int selection, int y)
     u8 styles[2] = {0};
     styles[selection] = 1;
 
-    // Use existing ON/OFF strings from other options as a fallback
     DrawOptionMenuChoice(sText_OptionLevelCapsOff, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_OptionLevelCapsOn, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionLevelCapsOn, 198), y, styles[1], active);
 }
 
-static void DrawChoices_Randomizer(int selection, int y)
+static void DrawChoices_RandomizerE(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_DIF_RANDOMIZER);
+    bool8 active = CheckConditions(MENUITEM_DIF_RANDOMIZER_E);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
-    // Use as strings padrão do jogo em vez de criar novas
+    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
+}
+
+static void DrawChoices_RandomizerT(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIF_RANDOMIZER_T);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
     DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
 }
