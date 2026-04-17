@@ -50,10 +50,6 @@ static void SpriteCB_SelectionHand(struct Sprite *sprite);
 static void SpriteCB_Pokeball(struct Sprite *sprite);
 static void SpriteCB_StarterPokemon(struct Sprite *sprite);
 static void ResetStarterRandomization(void);
-static void ResetStarterRandomization(void);
-// Randomizer cache para starters fixos
-static u16 sRandomizedStarters[3];
-static bool8 sStartersInitialized = FALSE;
 
 static u16 sStarterLabelWindowId;
 
@@ -66,7 +62,7 @@ const u32 gBirchBagGrass_Gfx[] = INCBIN_U32("graphics/starter_choose/tiles.4bpp.
 const u32 gPokeballSelection_Gfx[] = INCBIN_U32("graphics/starter_choose/pokeball_selection.4bpp.smol");
 static const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/starter_choose/starter_circle.4bpp.smol");
 static u16 sRandomizedStarters[STARTER_MON_COUNT];
-static bool8 sStartersRandomized = FALSE;
+static bool8 sStartersInitialized = FALSE;
 
 static const struct WindowTemplate sWindowTemplates[] =
 {
@@ -703,6 +699,6 @@ static void SpriteCB_StarterPokemon(struct Sprite *sprite)
 // Chame esta função quando a escolha do starter for finalizada
 void ResetStarterRandomization(void)
 {
-    sStartersRandomized = FALSE;
+    sStartersInitialized = FALSE;  
 }
 
