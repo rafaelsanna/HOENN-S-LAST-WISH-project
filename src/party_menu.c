@@ -1257,6 +1257,8 @@ static void CreateCancelConfirmPokeballSprites(void)
         }
         else
         {
+            CopyToBgTilemapBufferRect_ChangePalette(1, sCancelButton_Tilemap, 23, 17, 7, 2, 17);
+            ScheduleBgCopyTilemapToVram(1);
             sPartyMenuInternal->spriteIdCancelPokeball = CreatePokeballButtonSprite(198, 148);
         }
         AnimatePartySlot(gPartyMenu.slotId, 1);
@@ -2373,7 +2375,7 @@ static void CreateCancelConfirmWindows(bool8 chooseHalf)
             cancelWindowId = AddWindow(&sCancelButtonWindowTemplate);
             offset = 3;
         }
-        FillWindowPixelBuffer(cancelWindowId, PIXEL_FILL(1));
+        FillWindowPixelBuffer(cancelWindowId, PIXEL_FILL(0));
 
         // Branches are functionally identical. Second branch is never reached, Spin Trade wasnt fully implemented
         if (gPartyMenu.menuType != PARTY_MENU_TYPE_SPIN_TRADE)

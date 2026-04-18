@@ -2160,8 +2160,8 @@ static void LoadBirchSpeechTextboxPalette(void)
     // RGB( 4,  4,  5)
     palette[0] = RGB( 4,  4,  5);
     palette[1] = RGB_WHITE;
-    palette[2] = RGB( 4,  4,  5);
-    palette[3] = RGB_WHITE;
+    palette[2] = RGB(12, 12, 12); // text — dark gray
+    palette[3] = RGB(20, 20, 20); // shadow — mid gray
     palette[5] = RGB( 4,  4,  5);
 
     LoadPalette(palette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);

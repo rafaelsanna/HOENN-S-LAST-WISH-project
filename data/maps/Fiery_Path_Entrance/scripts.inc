@@ -9,3 +9,5 @@ Fiery_Path_Entrance_EventScript_OldLadyLikesHot::
 	release
 	end
 	
+
+	

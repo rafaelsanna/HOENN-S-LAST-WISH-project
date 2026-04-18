@@ -269,6 +269,16 @@ static void LoadTypeIconsPerBattler(u32 battler, u32 position)
     u32 typeNum, types[2];
     u32 battlerId = GetBattlerAtPosition(position);
     bool32 useDoubleBattleCoords = UseDoubleBattleCoords(battlerId);
+    u32 spriteId;
+
+    // Verifica se já existe sprite de type icon nessa posição
+    for (spriteId = 0; spriteId < MAX_SPRITES; ++spriteId)
+    {
+        if (gSprites[spriteId].inUse
+            && gSprites[spriteId].callback == SpriteCB_TypeIcon
+            && gSprites[spriteId].tMonPosition == position)
+            return;
+    }
 
     if (!IsBattlerAlive(battlerId))
         return;
@@ -456,24 +466,23 @@ static void DestroyTypeIcon(struct Sprite* sprite)
 {
     u32 spriteId, tag;
 
-    DestroySpriteAndFreeResources(sprite);
+    DestroySprite(sprite); // só destrói o sprite, não os recursos
 
+    // verifica se ainda tem sprites usando os tags
     for (spriteId = 0; spriteId < MAX_SPRITES; ++spriteId)
     {
         if (!gSprites[spriteId].inUse)
             continue;
-
         for (tag = 0; tag < 2; tag++)
         {
             if (gSprites[spriteId].template->paletteTag == typeIconTags[tag])
                 return;
-
             if (gSprites[spriteId].template->tileTag == typeIconTags[tag])
                 return;
         }
     }
 
-    FreeAllTypeIconResources();
+    FreeAllTypeIconResources(); // só libera quando não tem mais nenhum sprite
 }
 
 static void FreeAllTypeIconResources(void)

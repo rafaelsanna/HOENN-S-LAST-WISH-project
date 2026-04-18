@@ -96,7 +96,7 @@ static const struct WindowTemplate sWindowTemplate_StarterLabel =
     .tilemapTop = 0,
     .width = 13,
     .height = 4,
-    .paletteNum = 14,
+    .paletteNum = 15,
     .baseBlock = 0x0274
 };
 
@@ -615,6 +615,12 @@ static void CreateStarterPokemonLabel(u8 selection)
 
     sStarterLabelWindowId = AddWindow(&winTemplate);
     FillWindowPixelBuffer(sStarterLabelWindowId, PIXEL_FILL(0));
+
+    // Load a minimal palette into slot 15 for white text, without touching palette 14 (textbox)
+    {
+        static const u16 sLabelPal[3] = {0x0000, 0x7FFF, 0x5AD6}; // transparent, white, light gray
+        LoadPalette(sLabelPal, BG_PLTT_ID(15), sizeof(sLabelPal));
+    }
 
     width = GetStringCenterAlignXOffset(FONT_NARROW, categoryText, 0x68);
     AddTextPrinterParameterized3(sStarterLabelWindowId, FONT_NARROW, width, 1, sTextColors, 0, categoryText);
