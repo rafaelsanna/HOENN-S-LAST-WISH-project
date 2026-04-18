@@ -4461,7 +4461,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(4, 56),
+            ANIMCMD_FRAME(1, 56),
             ANIMCMD_FRAME(1, 5),
             ANIMCMD_FRAME(0, 9),
         ),

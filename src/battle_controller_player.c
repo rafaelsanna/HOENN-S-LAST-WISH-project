@@ -860,21 +860,25 @@ void HandleInputChooseMove(u32 battler)
         }
     }
     else if (B_MOVE_REARRANGEMENT_IN_BATTLE < GEN_4 && JOY_NEW(SELECT_BUTTON) && !gBattleStruct->zmove.viewing && !gBattleStruct->descriptionSubmenu)
+{
+    if (gNumberOfMovesToChoose > 1 && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
     {
-        if (gNumberOfMovesToChoose > 1 && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
-        {
-            MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 29);
+        // Destroi o ícone de tipo do golpe antes de entrar no switch
+        DestroyMoveTypeIconSprite();
+        
+        MoveSelectionCreateCursorAt(gMoveSelectionCursor[battler], 29);
 
-            if (gMoveSelectionCursor[battler] != 0)
-                gMultiUsePlayerCursor = 0;
-            else
-                gMultiUsePlayerCursor = gMoveSelectionCursor[battler] + 1;
+        if (gMoveSelectionCursor[battler] != 0)
+            gMultiUsePlayerCursor = 0;
+        else
+            gMultiUsePlayerCursor = gMoveSelectionCursor[battler] + 1;
 
-            MoveSelectionCreateCursorAt(gMultiUsePlayerCursor, 27);
-            BattlePutTextOnWindow(gText_BattleSwitchWhich, B_WIN_SWITCH_PROMPT);
-            gBattlerControllerFuncs[battler] = HandleMoveSwitching;
-        }
+        MoveSelectionCreateCursorAt(gMultiUsePlayerCursor, 27);
+        FillWindowPixelBuffer(B_WIN_SWITCH_PROMPT, PIXEL_FILL(1));
+        BattlePutTextOnWindow(gText_BattleSwitchWhich, B_WIN_SWITCH_PROMPT);
+        gBattlerControllerFuncs[battler] = HandleMoveSwitching;
     }
+}
     else if (gBattleStruct->descriptionSubmenu)
     {
         if (JOY_NEW(B_MOVE_DESCRIPTION_BUTTON) || JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
@@ -2481,12 +2485,11 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     u8 spriteId = 0xFF;
     struct Sprite *sprite;
 
-    if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
-    {
-        LoadCompressedSpriteSheet(&gSpriteSheet_MoveTypes);
-        // Paleta carregada apenas uma vez, junto com a sheet
-        LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
-    }
+if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
+{
+    LoadCompressedSpriteSheet(&gSpriteSheet_MoveTypes);
+    LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP); 
+}
 
     for (i = 0; i < MAX_SPRITES; i++)
     {
