@@ -13,6 +13,7 @@
 #include "field_effect_helpers.h"
 #include "field_message_box.h"
 #include "field_player_avatar.h"
+#include "randomizer.h"
 #include "field_screen_effect.h"
 #include "fieldmap.h"
 #include "gpu_regs.h"
@@ -1002,6 +1003,9 @@ bool8 TryStartDexNavSearch(void)
 {
     u8 taskId;
     u16 val = VarGet(DN_VAR_SPECIES);
+
+    if (Randomizer_WildEnabled())
+        return FALSE;
 
     if (FlagGet(DN_FLAG_SEARCHING) || (val & DEXNAV_MASK_SPECIES) == SPECIES_NONE)
         return FALSE;
@@ -2350,6 +2354,11 @@ void Task_OpenDexNavFromStartMenu(u8 taskId)
     {   // must have it enabled to enter
         DebugPrintfLevel(MGBA_LOG_ERROR, "DexNav was opened when DEXNAV_ENABLED config was disabled! Check include/config/dexnav.h");
         DestroyTask(taskId);
+    }
+    else if (Randomizer_WildEnabled() && !gPaletteFade.active)
+    {   // DexNav disabled while wild randomizer is active
+        DestroyTask(taskId);
+        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
     }
     else if (!gPaletteFade.active)
     {
