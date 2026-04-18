@@ -4750,6 +4750,56 @@
       "secondary_tileset": "gTileset_Shop",
       "border_filepath": "data/layouts/SeabreezeShipping/border.bin",
       "blockdata_filepath": "data/layouts/SeabreezeShipping/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_GROTTO",
+      "name": "ForestGrotto_Layout",
+      "width": 9,
+      "height": 18,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Forest",
+      "border_filepath": "data/layouts/ForestGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/ForestGrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_GRASSY_GROTTO",
+      "name": "GrassyGrotto_Layout",
+      "width": 8,
+      "height": 18,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/GrassyGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/GrassyGrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_BEACH",
+      "name": "Beach_Layout",
+      "width": 22,
+      "height": 25,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Slateport",
+      "border_filepath": "data/layouts/Beach/border.bin",
+      "blockdata_filepath": "data/layouts/Beach/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_GROTTO",
+      "name": "CaveGrotto_Layout",
+      "width": 18,
+      "height": 21,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/CaveGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/CaveGrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_PETALBURG_WOODS_EAST_GROTTO",
+      "name": "PetalburgWoodsEastGrotto_Layout",
+      "width": 9,
+      "height": 18,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Forest",
+      "border_filepath": "data/layouts/PetalburgWoodsEastGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/PetalburgWoodsEastGrotto/map.bin"
     }
   ]
 }
