@@ -1225,3 +1225,13 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/CargoShip/scripts.inc"
 
 	.include "data/maps/SeabreezeShipping/scripts.inc"
+
+	.include "data/maps/ForestGrotto/scripts.inc"
+
+	.include "data/maps/GrassyGrotto/scripts.inc"
+
+	.include "data/maps/Beach/scripts.inc"
+
+	.include "data/maps/CaveGrotto/scripts.inc"
+
+	.include "data/maps/PetalburgWoodsEastGrotto/scripts.inc"

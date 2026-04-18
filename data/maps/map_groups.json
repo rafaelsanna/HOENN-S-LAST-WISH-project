@@ -33,7 +33,8 @@
     "gMapGroup_IndoorRoute113",
     "gMapGroup_IndoorRoute123",
     "gMapGroup_IndoorRoute119",
-    "gMapGroup_IndoorRoute124"
+    "gMapGroup_IndoorRoute124",
+    "gMapGroup_HiddenGrottos"
   ],
   "gMapGroup_TownsAndRoutes": [
     "FortreeCity",
@@ -653,5 +654,12 @@
   ],
   "gMapGroup_IndoorRoute124": [
     "Route124_DivingTreasureHuntersHouse"
+  ],
+  "gMapGroup_HiddenGrottos": [
+    "ForestGrotto",
+    "GrassyGrotto",
+    "Beach",
+    "CaveGrotto",
+    "PetalburgWoodsEastGrotto"
   ]
 }
