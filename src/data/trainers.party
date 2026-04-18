@@ -484,6 +484,31 @@ Slugma
 Level: 19
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
+=== TRAINER_GRUNT_FIERY_PATH ===
+Name: GRUNT
+Class: Team Magma
+Pic: Magma Grunt Doubles
+Gender: Male
+Music: Magma
+Double Battle: Yes
+AI: Check Bad Move
+
+Carvanha
+Level: 30
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Snubbull
+Level: 30
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Swalot
+Level: 30
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Magmar
+Level: 30
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
 
 === TRAINER_GRUNT_SPACE_CENTER_1 ===
 Name: GRUNT

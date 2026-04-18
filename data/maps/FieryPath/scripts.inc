@@ -2,6 +2,9 @@ FieryPath_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, FieryPath_OnTransition
 	.byte 0
 
+.equ LOCALID_MAGMA_GRUNT_F, 17
+.equ LOCALID_MAGMA_GRUNT_M, 18
+
 FieryPath_OnTransition:
 	call_if_unset FLAG_LANDMARK_FIERY_PATH, FieryPath_EventScript_MoveScottToFallarbor
 	setflag FLAG_LANDMARK_FIERY_PATH
@@ -53,6 +56,72 @@ FieryPath__EventScript_ChanelerSatsuki::
 	release
 	end	
 
+FieryPath_EventScript_MagmaTriggerLeft::
+    lockall
+    goto_if_set FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE, FieryPath_EventScript_MagmaEnd
+    playbgm MUS_ENCOUNTER_MAGMA, FALSE
+    applymovement LOCALID_MAGMA_GRUNT_M, FieryPath_Movement_MagmaM_2Left
+    waitmovement 0
+    goto FieryPath_EventScript_MagmaCore
+
+FieryPath_EventScript_MagmaTriggerMid::
+    lockall
+    goto_if_set FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE, FieryPath_EventScript_MagmaEnd
+    playbgm MUS_ENCOUNTER_MAGMA, FALSE
+    applymovement LOCALID_MAGMA_GRUNT_F, FieryPath_Movement_MagmaF_1Right
+    applymovement LOCALID_MAGMA_GRUNT_M, FieryPath_Movement_MagmaM_1Left
+    waitmovement 0
+    goto FieryPath_EventScript_MagmaCore
+
+FieryPath_EventScript_MagmaTriggerRight::
+    lockall
+    goto_if_set FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE, FieryPath_EventScript_MagmaEnd
+    playbgm MUS_ENCOUNTER_MAGMA, FALSE
+    applymovement LOCALID_MAGMA_GRUNT_F, FieryPath_Movement_MagmaF_2Right
+    waitmovement 0
+    goto FieryPath_EventScript_MagmaCore
+
+FieryPath_EventScript_MagmaCore:
+    applymovement LOCALID_MAGMA_GRUNT_F, Common_Movement_FacePlayer
+    applymovement LOCALID_MAGMA_GRUNT_M, Common_Movement_FacePlayer
+    waitmovement 0
+    msgbox FieryPath_Text_MagmaIntro_F, MSGBOX_DEFAULT
+    closemessage
+    msgbox FieryPath_Text_MagmaIntro_M, MSGBOX_DEFAULT
+    closemessage
+    msgbox FieryPath_Text_MagmaChallenge, MSGBOX_DEFAULT
+    closemessage
+    trainerbattle_no_intro TRAINER_GRUNT_FIERY_PATH, FieryPath_Text_MagmaAfterLoss
+    fadescreen FADE_TO_BLACK
+    delay 30
+    removeobject LOCALID_MAGMA_GRUNT_F
+    removeobject LOCALID_MAGMA_GRUNT_M
+    setflag FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE
+    fadedefaultbgm
+    fadescreen FADE_FROM_BLACK
+
+FieryPath_EventScript_MagmaEnd:
+    releaseall
+    end
+
+FieryPath_Movement_MagmaF_1Right:
+    walk_right
+    step_end
+
+FieryPath_Movement_MagmaF_2Right:
+    walk_right
+    walk_right
+    step_end
+
+FieryPath_Movement_MagmaM_1Left:
+    walk_left
+    step_end
+
+FieryPath_Movement_MagmaM_2Left:
+    walk_left
+    walk_left
+    step_end
+
 ///// TEXT STRINGS /////
 
 FieryPath_Text_FisherGotBurned:
@@ -60,12 +129,32 @@ FieryPath_Text_FisherGotBurned:
 	.string "Don't go fishing in the lava...\n" 
 	.string "But I heard SHARPEDO swim in these\n"
 	.string "magma rivers! LAVA SHARKS!\p"
-	.string "I just wanted to catch one…\n"
+	.string "I just wanted to catch one...\n"
 	.string "Just ONE! IMAGINE IT!\p"
 	.string "But my rod melted in seconds.\n"
 	.string "Poof. Gone. Just like that.\p"
 	.string "Now I'm burned, my rod's destroyed,\n"
-	.string "and I've got no story to tell…\p"
+	.string "and I've got no story to tell...\p"
 	.string "Guess I'll just sit here and\n"
 	.string "watch the lava flow...$"
 
+FieryPath_Text_MagmaIntro_F:
+    .string "Ugh... ALL day in this heat,\n"
+    .string "and we found absolutely nothing.$"
+
+FieryPath_Text_MagmaIntro_M:
+    .string "Hold on... that outfit.\n"
+    .string "You're that kid who wants to\l"
+    .string "play hero, aren't you?$"
+
+FieryPath_Text_MagmaChallenge:
+    .string "You've got some nerve, kid.\p"
+    .string "Fine - both of us, right now!\n"
+    .string "Let's see how tough you really are!$"
+
+FieryPath_Text_MagmaAfterLoss:
+    .string "...Damn. You're actually strong.\p"
+    .string "Whatever. We found nothing useful\n"
+    .string "in this cave anyway.\p"
+    .string "Next time we WON'T hold back.\n"
+    .string "So frustrating...$"

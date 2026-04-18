@@ -1193,14 +1193,14 @@
 #define FLAG_ITEM_ROUTE_104_POTION                                  0x46F
 #define FLAG_ITEM_FIERY_PATH_BURN_HEAL                              0x470 
 #define FLAG_ITEM_ROUTE_103_PP_UP                                   0x471
-#define FLAG_ITEM_RUSTURF_TUNNEL_AIR_BALLOON                        0x472 // Unused Flag
+#define FLAG_ITEM_RUSTURF_TUNNEL_AIR_BALLOON                        0x472 
 #define FLAG_ITEM_ROUTE_108_STAR_PIECE                              0x473
 #define FLAG_ITEM_ROUTE_109_POTION                                  0x474
 #define FLAG_ITEM_ROUTE_110_ELIXIR                                  0x475
 #define FLAG_ITEM_ROUTE_111_ELIXIR                                  0x476
 #define FLAG_ITEM_ROUTE_113_HYPER_POTION                            0x477
 #define FLAG_ITEM_ROUTE_115_HEAL_POWDER                             0x478
-#define FLAG_ITEM_ROUTE_104_KINGS_ROCK                               0x479
+#define FLAG_ITEM_ROUTE_104_KINGS_ROCK                              0x479
 #define FLAG_ITEM_ROUTE_116_POTION                                  0x47A
 #define FLAG_ITEM_ROUTE_119_ELIXIR_2                                0x47B
 #define FLAG_ITEM_ROUTE_120_REVIVE                                  0x47C
@@ -1227,9 +1227,9 @@
 #define FLAG_ITEM_SAFARI_ZONE_NORTH_EAST_NUGGET                     0x491
 #define FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL                  0x492
 
-#define FLAG_ITEM_MT_CHIMNEY_TM_FIRE_PUNCH                           0x493
-#define FLAG_ITEM_PETALBURG_CAVE_GREAT_BALL                          0x494
-#define FLAG_UNUSED_0x495                                           0x495 // Unused Flag
+#define FLAG_ITEM_MT_CHIMNEY_TM_FIRE_PUNCH                          0x493
+#define FLAG_ITEM_PETALBURG_CAVE_GREAT_BALL                         0x494
+#define FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE                           0x495 
 #define FLAG_UNUSED_0x496                                           0x496 // Unused Flag
 #define FLAG_UNUSED_0x497                                           0x497 // Unused Flag
 #define FLAG_UNUSED_0x498                                           0x498 // Unused Flag
