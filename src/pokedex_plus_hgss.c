@@ -582,6 +582,7 @@ static void TryDestroyStatBars(void);
 static void TryDestroyStatBarsBg(void);
 static void CreateStatBars(struct PokedexListItem *dexMon);
 static void CreateStatBarsBg(void);
+
 static void SpriteCB_StatBars(struct Sprite *sprite);
 static void SpriteCB_StatBarsBg(struct Sprite *sprite);
 
@@ -3525,13 +3526,9 @@ static void SpriteCB_DexListStartMenuCursor(struct Sprite *sprite)
 
 //Stat bars on main screen, code by DizzyEgg, idea by Jaizu
 #define PIXEL_COORDS_TO_OFFSET(x, y)(           \
-/*Add tiles by X*/                              \
 ((y / 8) * 32 * 8)                              \
-/*Add tiles by X*/                              \
 + ((x / 8) * 32)                                \
-/*Add pixels by Y*/                             \
 + ((((y) - ((y / 8) * 8))) * 4)                 \
-/*Add pixels by X*/                             \
 + ((((x) - ((x / 8) * 8)) / 2)))
 
 static inline void WritePixel(u8 *dst, u32 x, u32 y, u32 value)
@@ -3547,34 +3544,24 @@ static inline void WritePixel(u8 *dst, u32 x, u32 y, u32 value)
         dst[PIXEL_COORDS_TO_OFFSET(x, y)] |= (value);
     }
 }
+
 #define STAT_BAR_X_OFFSET 10
+
 static void CreateStatBar(u8 *dst, u32 y, u32 width)
 {
     u32 i, color;
 
     switch (width)
     {
-    case 0 ... 5:
-        color = COLOR_WORST;
-        break;
-    case 6 ... 15:
-        color = COLOR_BAD;
-        break;
-    case 16 ... 25:
-        color = COLOR_AVERAGE;
-        break;
-    case 26 ... 31:
-        color = COLOR_GOOD;
-        break;
-    case 32 ... 37:
-        color = COLOR_VERY_GOOD;
-        break;
-    default:
-        color = COLOR_BEST;
-        break;
+    case 0 ... 5: color = COLOR_WORST; break;
+    case 6 ... 15: color = COLOR_BAD; break;
+    case 16 ... 25: color = COLOR_AVERAGE; break;
+    case 26 ... 31: color = COLOR_GOOD; break;
+    case 32 ... 37: color = COLOR_VERY_GOOD; break;
+    default: color = COLOR_BEST; break;
     }
 
-    // white pixes left side
+    // white pixels left side
     WritePixel(dst, STAT_BAR_X_OFFSET, y + 0, COLOR_ID_BAR_WHITE);
     WritePixel(dst, STAT_BAR_X_OFFSET, y + 1, COLOR_ID_BAR_WHITE);
     WritePixel(dst, STAT_BAR_X_OFFSET, y + 2, COLOR_ID_BAR_WHITE);
@@ -3598,6 +3585,7 @@ static void CreateStatBar(u8 *dst, u32 y, u32 width)
         WritePixel(dst, STAT_BAR_X_OFFSET + i, y + 4, COLOR_ID_BAR_WHITE);
     }
 }
+
 static const u8 sBaseStatOffsets[] =
 {
     offsetof(struct SpeciesInfo, baseHP),
@@ -3607,35 +3595,98 @@ static const u8 sBaseStatOffsets[] =
     offsetof(struct SpeciesInfo, baseSpDefense),
     offsetof(struct SpeciesInfo, baseSpeed),
 };
+
 static void TryDestroyStatBars(void)
 {
     if (sPokedexView->statBarsSpriteId != 0xFF)
     {
         FreeSpriteTilesByTag(TAG_STAT_BAR);
-        //FreeSpriteOamMatrix(&gSprites[sPokedexView->statBarsSpriteId]);
         DestroySprite(&gSprites[sPokedexView->statBarsSpriteId]);
         sPokedexView->statBarsSpriteId = 0xFF;
     }
 }
+
 static void TryDestroyStatBarsBg(void)
 {
     if (sPokedexView->statBarsBgSpriteId != 0xFF)
     {
         FreeSpriteTilesByTag(TAG_STAT_BAR_BG);
-        //FreeSpriteOamMatrix(&gSprites[sPokedexView->statBarsBgSpriteId]);
         DestroySprite(&gSprites[sPokedexView->statBarsBgSpriteId]);
         sPokedexView->statBarsBgSpriteId = 0xFF;
     }
 }
+
+
+// Mini-fonte 3x5 para dígitos 0-9, desenhada direto no sprite 4bpp.
+// Cada dígito é uma máscara de 5 linhas x 3 colunas (bit 2=esq, 1=meio, 0=dir).
+static const u8 sDigitFont[10][5] = {
+    {0b111, 0b101, 0b101, 0b101, 0b111}, // 0
+    {0b010, 0b110, 0b010, 0b010, 0b111}, // 1
+    {0b111, 0b001, 0b111, 0b100, 0b111}, // 2
+    {0b111, 0b001, 0b111, 0b001, 0b111}, // 3
+    {0b101, 0b101, 0b111, 0b001, 0b001}, // 4
+    {0b111, 0b100, 0b111, 0b001, 0b111}, // 5
+    {0b111, 0b100, 0b111, 0b101, 0b111}, // 6
+    {0b111, 0b001, 0b001, 0b001, 0b001}, // 7
+    {0b111, 0b101, 0b111, 0b101, 0b111}, // 8
+    {0b111, 0b101, 0b111, 0b001, 0b111}, // 9
+};
+
+// Desenha um dígito no buffer do sprite em (x, y) usando COLOR_ID_FONT
+static void DrawDigitOnSprite(u8 *gfx, u32 x, u32 y, u8 digit)
+{
+    u32 row, col;
+    for (row = 0; row < 5; row++)
+    {
+        for (col = 0; col < 3; col++)
+        {
+            u8 color = (sDigitFont[digit][row] >> (2 - col)) & 1
+                       ? COLOR_ID_FONT
+                       : COLOR_ID_ALPHA;
+            WritePixel(gfx, x + col, y + row, color);
+        }
+    }
+}
+
+// Desenha valor numérico (0-255) com até 3 dígitos no sprite em (x, y)
+static void DrawStatValueOnSprite(u8 *gfx, u32 x, u32 y, u32 value)
+{
+    u8 hundreds = value / 100;
+    u8 tens     = (value % 100) / 10;
+    u8 ones     = value % 10;
+
+    // Dígitos de 3px largura, sem espaço entre eles = 9px total para 3 dígitos.
+    // Posição x=0..8 do sprite (antes da barra que começa em x=10).
+    // Alinhado à direita para ficar encostado na barra.
+    if (hundreds > 0)
+    {
+        // 3 dígitos: x=0, x=3, x=6
+        DrawDigitOnSprite(gfx, x + 0, y, hundreds);
+        DrawDigitOnSprite(gfx, x + 3, y, tens);
+        DrawDigitOnSprite(gfx, x + 6, y, ones);
+    }
+    else if (tens > 0)
+    {
+        // 2 dígitos: centralizado em x=1, x=4 (margem de 1px dos lados no espaço de 7px)
+        DrawDigitOnSprite(gfx, x + 1, y, tens);
+        DrawDigitOnSprite(gfx, x + 5, y, ones);
+    }
+    else
+    {
+        // 1 dígito: centralizado em x=3
+        DrawDigitOnSprite(gfx, x + 3, y, ones);
+    }
+}
+
 static void CreateStatBars(struct PokedexListItem *dexMon)
 {
-    u8 offset_x = 184; //Moves the complete stat box left/right
-    u8 offset_y = 16; //Moves the complete stat box up/down
+    u8 offset_x = 184;
+    u8 offset_y = 16;
     TryDestroyStatBars();
 
     sPokedexView->justScrolled = FALSE;
 
-    if (dexMon->owned) // Show filed bars
+    if (dexMon->owned)
     {
         u8 i;
         u32 width, statValue;
@@ -3643,11 +3694,21 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
         static const u8 sBarsYOffset[] = {3, 13, 23, 33, 43, 53};
         struct SpriteSheet sheet = {gfx, 64 * 64, TAG_STAT_BAR};
         u32 species = NationalPokedexNumToSpecies(dexMon->dexNum);
+        u8 statValues[NUM_STATS];
+        
+        statValues[0] = gSpeciesInfo[species].baseHP;
+        statValues[1] = gSpeciesInfo[species].baseAttack;
+        statValues[2] = gSpeciesInfo[species].baseDefense;
+        statValues[3] = gSpeciesInfo[species].baseSpAttack;
+        statValues[4] = gSpeciesInfo[species].baseSpDefense;
+        statValues[5] = gSpeciesInfo[species].baseSpeed;
 
         memcpy(gfx, sStatBarsGfx, sizeof(sStatBarsGfx));
+        
         for (i = 0; i < NUM_STATS; i++)
         {
-            statValue = *((u8*)(&gSpeciesInfo[species]) + sBaseStatOffsets[i]);
+            statValue = statValues[i];
+            
             if (statValue <= 100)
             {
                 width = statValue / 3;
@@ -3655,47 +3716,56 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
                     width -= 1;
             }
             else
+            {
                 width = (100 / 3) + ((statValue - 100) / 14);
+            }
 
-            if (width > 39) // Max pixels
+            if (width > 39)
                 width = 39;
             if (width < 3)
                 width = 3;
 
             CreateStatBar(gfx, sBarsYOffset[i], width);
+
+            // Desenha o valor numérico DIRETO no sprite, ANTES da barra.
+            // X=0: início do sprite (pixels 0..8), barra começa em x=10.
+            // Y=sBarsYOffset[i]: mesma linha da barra — alinhamento garantido!
+            DrawStatValueOnSprite(gfx, 40, sBarsYOffset[i], statValues[i]);
         }
 
         LoadSpriteSheet(&sheet);
         Free(gfx);
     }
-    else if (dexMon->seen) // Just HP/ATK/DEF
+    else if (dexMon->seen)
     {
         static const struct SpriteSheet sheet = {sStatBarsGfx, 64 * 64, TAG_STAT_BAR};
-
         LoadSpriteSheet(&sheet);
     }
-    else // neither seen nor owned
+    else
     {
         return;
     }
+    
     sPokedexView->statBarsSpriteId = CreateSprite(&sStatBarSpriteTemplate, 36+offset_x, 107+offset_y, 10);
 }
-static void CreateStatBarsBg(void) //stat bars background text
+
+static void CreateStatBarsBg(void)
 {
     static const struct SpriteSheet sheetStatBarsBg = {sStatBarsGfx, 64 * 64, TAG_STAT_BAR_BG};
-    u8 offset_x = 184; //Moves the complete stat box left/right
-    u8 offset_y = 16; //Moves the complete stat box up/down
+    u8 offset_x = 184;
+    u8 offset_y = 16;
 
     TryDestroyStatBarsBg();
 
     LoadSpriteSheet(&sheetStatBarsBg);
     sPokedexView->statBarsBgSpriteId = CreateSprite(&sStatBarBgSpriteTemplate, 36+offset_x, 107+offset_y, 0);
 }
-// Hack to destroy sprites when a pokemon data is being loaded in
+
 static bool32 IsMonInfoBeingLoaded(void)
 {
     return (gSprites[sPokedexView->selectedMonSpriteId].callback == SpriteCB_MoveMonForInfoScreen);
 }
+
 static void SpriteCB_StatBars(struct Sprite *sprite)
 {
     if (IsMonInfoBeingLoaded())
@@ -3708,6 +3778,7 @@ static void SpriteCB_StatBars(struct Sprite *sprite)
         sPokedexView->statBarsSpriteId = 0xFF;
     }
 }
+
 static void SpriteCB_StatBarsBg(struct Sprite *sprite)
 {
     if (IsMonInfoBeingLoaded())
@@ -3720,7 +3791,6 @@ static void SpriteCB_StatBarsBg(struct Sprite *sprite)
         sPokedexView->statBarsBgSpriteId = 0xFF;
     }
 }
-
 
 
 //************************************
