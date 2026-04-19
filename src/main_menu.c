@@ -38,6 +38,7 @@
 #include "title_screen.h"
 #include "window.h"
 #include "mystery_gift_menu.h"
+#include "ui_main_menu.h"
 
 /*
  * Main menu state machine
@@ -552,10 +553,8 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
     ResetTasks();
     ResetSpriteData();
     FreeAllSpritePalettes();
-    if (returningFromOptionsMenu)
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK); // fade to black
-    else
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_WHITEALPHA); // fade to white
+    // Fades removidos: o Task_OpenMainMenu em ui_main_menu.c gerencia o fade-in do novo menu.
+    // Mantê-los aqui causaria double-fade e tela travada.
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
     ChangeBgX(0, 0, BG_COORD_SET);
@@ -714,6 +713,14 @@ static void Task_DisplayMainMenu(u8 taskId)
     s16 *data = gTasks[taskId].data;
     u16 palette;
 
+    // Redireciona para o novo menu UI com mugshot.
+    // O tMenuType já foi determinado por Task_MainMenuCheckSaveFile antes de chegar aqui.
+    gTasks[taskId].func = Task_OpenMainMenu;
+    return;
+
+    // O código abaixo é preservado mas nunca executado.
+    // Importante: não remover, pois as funções referenciadas são usadas
+    // em outros caminhos (ex: retorno de erro de save file).
     if (!gPaletteFade.active)
     {
         SetGpuReg(REG_OFFSET_WIN0H, 0);
@@ -1228,6 +1235,36 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
 #define tBrendanSpriteId data[10]
 #define tMaySpriteId data[11]
 
+// Ponto de entrada para New Game quando vindo do NOVO menu (ui_main_menu.c).
+// Combina a inicialização do Birch Speech com o setup correto vindo de fora do menu antigo.
+void CB2_NewGameBirchSpeech_FromNewMainMenu(void)
+{
+    u8 taskId;
+
+    // Reseta o estado da GPU completamente — o novo menu deixa BGs,
+    // paletas e VRAM em estado desconhecido ao chamar este callback.
+    SetVBlankCallback(NULL);
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    DmaFill16(3, 0, (void *)PLTT, PLTT_SIZE);
+    DmaFill16(3, 0, (void *)VRAM, VRAM_SIZE);
+    DmaFill32(3, 0, (void *)OAM,  OAM_SIZE);
+    ResetPaletteFade();
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
+    ScanlineEffect_Stop();
+    ResetTasks();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+
+    // Delega para Task_NewGameBirchSpeech_Init — que já funciona
+    // corretamente e nunca gerou pixels FF00FF.
+    taskId = CreateTask(Task_NewGameBirchSpeech_Init, 0);
+    gTasks[taskId].tTimer = 0;
+
+    SetVBlankCallback(VBlankCB_MainMenu);
+    SetMainCallback2(CB2_MainMenu);
+}
+
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
     int i;
@@ -1295,9 +1332,10 @@ static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
         gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
         
         // Usa a função de fade restaurada
-        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 10);
+        // Delay 0: Birch aparece imediatamente quando vindo do novo menu (tTimer=0 em CB2_NewGameBirchSpeech_FromNewMainMenu)
+        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 0);
         
-        gTasks[taskId].tTimer = 80;
+        gTasks[taskId].tTimer = 0;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome;
     }
 }
@@ -1736,9 +1774,9 @@ static void Task_NewGameBirchSpeech_Cleanup(u8 taskId)
 
 static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
 {
+    u16 savedIme;
     u8 taskId;
     u8 spriteId;
-    u16 savedIme;
 
     ResetBgsAndClearDma3BusyFlags(0);
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
