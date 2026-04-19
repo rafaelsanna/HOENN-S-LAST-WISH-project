@@ -688,8 +688,8 @@ static const u16 sStatBarPalette[16] = {
     [COLOR_ID_FILL + COLOR_WORST * 2] = RGB(25, 4, 2),
     [COLOR_ID_FILL_SHADOW + COLOR_WORST * 2] = RGB(27, 15, 13),
 
-    [COLOR_ID_FONT] = RGB_BLACK,
-    [COLOR_ID_FONT_SHADOW] = RGB(22, 22, 22),
+    [COLOR_ID_FONT] = RGB_WHITE,
+    [COLOR_ID_FONT_SHADOW] = RGB(8, 8, 8),
 };
 static const struct SpritePalette sStatBarSpritePal[] = //{sStatBarPalette, TAG_STAT_BAR};
 {
@@ -4390,9 +4390,20 @@ static void PrintInfoScreenTextWhite(const u8* str, u8 left, u8 top)
 static void PrintInfoScreenTextSmall(const u8* str, u8 fontId, u8 left, u8 top)
 {
     u8 color[3];
-    color[0] = TEXT_COLOR_TRANSPARENT;
-    color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = TEXT_COLOR_LIGHT_GRAY;
+    
+    if (HGSS_DARK_MODE)
+    {
+        // Dark Mode: texto branco com sombra preta
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_COLOR_WHITE;      // Branco para o texto
+        color[2] = TEXT_COLOR_DARK_GRAY;  // Cinza escuro para sombra
+    }
+    else
+    {
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_DYNAMIC_COLOR_6;
+        color[2] = TEXT_COLOR_LIGHT_GRAY;
+    }
 
     AddTextPrinterParameterized4(0, fontId, left, top, 0, 0, color, 0, str);
 }
@@ -4409,9 +4420,19 @@ static void UNUSED PrintInfoScreenTextSmallWhite(const u8* str, u8 left, u8 top)
 static void PrintStatsScreenTextSmall(u8 windowId, const u8* str, u8 left, u8 top)
 {
     u8 color[3];
-    color[0] = TEXT_COLOR_TRANSPARENT;
-    color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = TEXT_COLOR_LIGHT_GRAY;
+    
+    if (HGSS_DARK_MODE)
+    {
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_COLOR_WHITE;      // Branco
+        color[2] = TEXT_COLOR_DARK_GRAY;  // Sombra escura
+    }
+    else
+    {
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_DYNAMIC_COLOR_6;
+        color[2] = TEXT_COLOR_LIGHT_GRAY;
+    }
 
     AddTextPrinterParameterized4(windowId, 0, left, top, 0, 0, color, 0, str);
 }
@@ -8893,3 +8914,4 @@ static void ClearSearchParameterBoxText(void)
 {
     ClearSearchMenuRect(144, 8, 96, 96);
 }
+
