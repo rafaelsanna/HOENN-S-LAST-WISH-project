@@ -78,7 +78,8 @@ struct OverworldArea
     u16 regionMapSectionId;
 };
 
-struct
+// PASSO 1: dar nome ao tipo do struct (adicionar "PokedexAreaScreen" antes de {)
+typedef struct PokedexAreaScreen
 {
     /*0x000*/ void (*callback)(void); // unused
     /*0x004*/ MainCallback prev; // unused
@@ -108,7 +109,11 @@ struct
     /*0xFBC*/ u8 areaUnknownGraphicsBuffer[0x600];
     /*0xFC0*/ u8 areaScreenLabelIds[NUM_LABEL_WINDOWS];
     /*0xFC8*/ u8 areaState;
-} static EWRAM_DATA *sPokedexAreaScreen = NULL;
+} PokedexAreaScreen;
+
+// PASSO 2: buffer estático e ponteiro declarados separadamente
+static EWRAM_DATA PokedexAreaScreen sPokedexAreaScreenBuffer;
+static EWRAM_DATA PokedexAreaScreen *sPokedexAreaScreen = NULL;
 
 EWRAM_DATA u8 gAreaTimeOfDay = 0;
 
@@ -117,7 +122,7 @@ static void BuildAreaGlowTilemap(void);
 static void SetAreaHasMon(u16, u16);
 static void SetSpecialMapHasMon(u16, u16);
 static u16 GetRegionMapSectionId(u8, u8);
-static bool8 MapHasSpecies(const struct WildEncounterTypes *, u16);
+static bool8 MapHasSpecies(const struct WildEncounterTypes *, u16, bool8);
 static bool8 MonListHasSpecies(const struct WildPokemonInfo *, u16, u16);
 static void DoAreaGlow(void);
 static void Task_ShowPokedexAreaScreen(u8 taskId);
@@ -301,6 +306,7 @@ static void FindMapsWithMon(u16 species)
 {
     u16 i;
     struct Roamer *roamer;
+    bool8 playerInAlteringCave;  // pré-calculado uma única vez
 
     sPokedexAreaScreen->alteringCaveCounter = 0;
     sPokedexAreaScreen->alteringCaveId = VarGet(VAR_ALTERING_CAVE_WILD_SET);
@@ -310,18 +316,23 @@ static void FindMapsWithMon(u16 species)
     sPokedexAreaScreen->numOverworldAreas = 0;
     sPokedexAreaScreen->numSpecialAreas = 0;
 
-    // Check if this species should be hidden from the area map.
-    // This only applies to Wynaut, to hide the encounters on Mirage Island.
+    // CORREÇÃO O(N²) → O(N):
+    // GetCurrentMapWildMonHeaderId() percorre gWildMonHeaders internamente (O(N)).
+    // Chamá-la dentro do loop tornava FindMapsWithMon O(N²).
+    // Calculamos uma única vez aqui e passamos como parâmetro.
+    {
+        u32 headerId = GetCurrentMapWildMonHeaderId();
+        playerInAlteringCave = (GetRegionMapSectionId(
+            gWildMonHeaders[headerId].mapGroup,
+            gWildMonHeaders[headerId].mapNum) == MAPSEC_ALTERING_CAVE);
+    }
+
     for (i = 0; i < ARRAY_COUNT(sSpeciesHiddenFromAreaScreen); i++)
     {
         if (sSpeciesHiddenFromAreaScreen[i] == species)
             return;
     }
 
-    // Add Pokémon with special encounter circumstances (i.e. not listed
-    // in the regular wild encounter table) to the area map.
-    // This only applies to Feebas on Route 119, but it was clearly set
-    // up to allow handling others.
     for (i = 0; sFeebasData[i][0] != NUM_SPECIES; i++)
     {
         if (species == sFeebasData[i][0])
@@ -339,10 +350,10 @@ static void FindMapsWithMon(u16 species)
         }
     }
 
-    // Add regular species to the area map
+    // Passa playerInAlteringCave (já calculado) em vez de chamar GetCurrentMapWildMonHeaderId() aqui
     for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)
     {
-        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaTimeOfDay], species))
+        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaTimeOfDay], species, playerInAlteringCave))
         {
             switch (gWildMonHeaders[i].mapGroup)
             {
@@ -357,13 +368,11 @@ static void FindMapsWithMon(u16 species)
         }
     }
 
-    // Add roamers to the area map
     for (i = 0; i < ROAMER_COUNT; i++)
     {
         roamer = &gSaveBlock1Ptr->roamer[i];
         if (species == roamer->species && roamer->active)
         {
-            // This is a roamer's species, show where this roamer is currently
             struct OverworldArea *roamerLocation = &sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas];
             GetRoamerLocation(i, &roamerLocation->mapGroup, &roamerLocation->mapNum);
             roamerLocation->regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(roamerLocation->mapGroup, roamerLocation->mapNum)->regionMapSectionId;
@@ -428,13 +437,10 @@ static u16 GetRegionMapSectionId(u8 mapGroup, u8 mapNum)
     return Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->regionMapSectionId;
 }
 
-static bool8 MapHasSpecies(const struct WildEncounterTypes *info, u16 species)
+// Recebe playerInAlteringCave pré-calculado — elimina GetCurrentMapWildMonHeaderId() no loop
+static bool8 MapHasSpecies(const struct WildEncounterTypes *info, u16 species, bool8 playerInAlteringCave)
 {
-    u32 headerId = GetCurrentMapWildMonHeaderId();
-    u8 currentMapGroup = gWildMonHeaders[headerId].mapGroup;
-    u8 currentMapNum = gWildMonHeaders[headerId].mapNum;
-    // If this is a header for Altering Cave, skip it if it's not the current Altering Cave encounter set
-    if (GetRegionMapSectionId(currentMapGroup, currentMapNum) == MAPSEC_ALTERING_CAVE)
+    if (playerInAlteringCave)
     {
         sPokedexAreaScreen->alteringCaveCounter++;
         if (sPokedexAreaScreen->alteringCaveCounter != sPokedexAreaScreen->alteringCaveId + 1)
@@ -445,8 +451,6 @@ static bool8 MapHasSpecies(const struct WildEncounterTypes *info, u16 species)
         return TRUE;
     if (MonListHasSpecies(info->waterMonsInfo, species, WATER_WILD_COUNT))
         return TRUE;
-// When searching the fishing encounters, this incorrectly uses the size of the land encounters.
-// As a result it's reading out of bounds of the fishing encounters tables.
 #ifdef BUGFIX
     if (MonListHasSpecies(info->fishingMonsInfo, species, FISH_WILD_COUNT))
 #else
@@ -457,7 +461,6 @@ static bool8 MapHasSpecies(const struct WildEncounterTypes *info, u16 species)
         return TRUE;
     return FALSE;
 }
-
 static bool8 MonListHasSpecies(const struct WildPokemonInfo *info, u16 species, u16 size)
 {
     u16 i;
@@ -482,19 +485,27 @@ static void BuildAreaGlowTilemap(void)
 
     // For each area with this species, scan the region map layout and find any locations that have a matching mapsec.
     // Add a "full glow" indicator for these matching spaces.
-    for (i = 0; i < sPokedexAreaScreen->numOverworldAreas; i++)
+{
+    u16 secId;
+    u16 numAreas = sPokedexAreaScreen->numOverworldAreas;
+    j = 0;
+    for (y = 0; y < AREA_SCREEN_HEIGHT; y++)
     {
-        j = 0;
-        for (y = 0; y < AREA_SCREEN_HEIGHT; y++)
+        for (x = 0; x < AREA_SCREEN_WIDTH; x++)
         {
-            for (x = 0; x < AREA_SCREEN_WIDTH; x++)
+            secId = GetRegionMapSecIdAt(x, y);
+            for (i = 0; i < numAreas; i++)
             {
-                if (GetRegionMapSecIdAt(x, y) == sPokedexAreaScreen->overworldAreasWithMons[i].regionMapSectionId)
+                if (secId == sPokedexAreaScreen->overworldAreasWithMons[i].regionMapSectionId)
+                {
                     sPokedexAreaScreen->areaGlowTilemap[j] = GLOW_FULL;
-                j++;
+                    break; // achou, não precisa checar outras áreas
+                }
             }
+            j++;
         }
     }
+}
 
     // Scan the tilemap. For every "full glow" indicator added above, fill in its edges and corners.
     j = 0;
@@ -714,10 +725,23 @@ void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum TimeOfDay
 {
     u8 taskId;
 
-    sPokedexAreaScreen = AllocZeroed(sizeof(*sPokedexAreaScreen));
+    // Usar buffer estático, zerando apenas os campos necessários
+    sPokedexAreaScreen = &sPokedexAreaScreenBuffer;
+    // Zerar apenas a parte que muda entre chamadas (campos de estado)
+    // O tilemap e overworldAreas serão sobrescritos por FindMapsWithMon/BuildAreaGlowTilemap
+    sPokedexAreaScreen->numOverworldAreas = 0;
+    sPokedexAreaScreen->numSpecialAreas = 0;
+    sPokedexAreaScreen->drawAreaGlowState = 0;
+    sPokedexAreaScreen->numAreaMarkerSprites = 0;
+    sPokedexAreaScreen->showingMarkers = FALSE;
+    sPokedexAreaScreen->markerTimer = 0;
+    sPokedexAreaScreen->glowTimer = 0;
+    sPokedexAreaScreen->areaShadeBldArgLo = 0;
+    sPokedexAreaScreen->areaShadeBldArgHi = 64;
+    sPokedexAreaScreen->markerFlashCounter = 1;
+    sPokedexAreaScreen->areaState = areaState;
     sPokedexAreaScreen->species = species;
     sPokedexAreaScreen->screenSwitchState = screenSwitchState;
-    sPokedexAreaScreen->areaState = areaState;
     gAreaTimeOfDay = timeOfDay;
     screenSwitchState[0] = 0;
 
@@ -923,12 +947,12 @@ static void Task_HandlePokedexAreaScreenInput(u8 taskId)
             RemoveAllWindowsOnBg(LABEL_WINDOW_BG);
         }
 
-        sPokedexAreaScreen->screenSwitchState[0] = gTasks[taskId].data[1];
-        ResetPokedexAreaMapBg();
-        DestroyTask(taskId);
-        FreePokedexAreaMapBgNum();
-        FREE_AND_SET_NULL(sPokedexAreaScreen);
-        return;
+    sPokedexAreaScreen->screenSwitchState[0] = gTasks[taskId].data[1];
+    ResetPokedexAreaMapBg();
+    DestroyTask(taskId);
+    FreePokedexAreaMapBgNum();
+    sPokedexAreaScreen = NULL;  // apenas nulifica o ponteiro, sem free
+    return;
     }
 
     gTasks[taskId].tState++;

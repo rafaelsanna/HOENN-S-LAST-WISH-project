@@ -571,7 +571,7 @@ static void DrawOptionMenuTexts(void) //left side text
 {
     u8 i;
 
-    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
+    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(2));
     for (i = 0; i < MenuItemCount(); i++)
         DrawLeftSideOptionText(i, (i * Y_DIFF) + 1);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
@@ -581,10 +581,10 @@ static void DrawDescriptionText(void)
 {
     u8 color_gray[3];
     color_gray[0] = TEXT_COLOR_TRANSPARENT;
-    color_gray[1] = TEXT_COLOR_OPTIONS_GRAY_FG;
-    color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
+    color_gray[1] = TEXT_COLOR_WHITE;  // BRANCO (índice 1)
+    color_gray[2] = 4;  // CINZA ESCURO (índice 2) - sombra
         
-    FillWindowPixelBuffer(WIN_DESCRIPTION, PIXEL_FILL(1));
+    FillWindowPixelBuffer(WIN_DESCRIPTION, PIXEL_FILL(2));
     AddTextPrinterParameterized4(WIN_DESCRIPTION, FONT_NORMAL, 8, 1, 0, 0, color_gray, TEXT_SKIP_DRAW, OptionTextDescription());
     CopyWindowToVram(WIN_DESCRIPTION, COPYWIN_FULL);
 }
@@ -592,50 +592,49 @@ static void DrawDescriptionText(void)
 static void DrawLeftSideOptionText(int selection, int y)
 {
     u8 color_yellow[3];
-    u8 color_gray[3];
+    u8 color_white[3];
 
     color_yellow[0] = TEXT_COLOR_TRANSPARENT;
     color_yellow[1] = TEXT_COLOR_OPTIONS_ORANGE_FG;
     color_yellow[2] = TEXT_COLOR_OPTIONS_ORANGE_SHADOW;
-    color_gray[0] = TEXT_COLOR_TRANSPARENT;
-    color_gray[1] = TEXT_COLOR_OPTIONS_GRAY_LIGHT_FG;
-    color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
+    color_white[0] = TEXT_COLOR_TRANSPARENT;
+    color_white[1] = TEXT_COLOR_WHITE;  // BRANCO (índice 1)
+    color_white[2] = 4;  // CINZA ESCURO (índice 2) - sombra
 
     if (CheckConditions(selection))
         AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, 8, y, 0, 0, color_yellow, TEXT_SKIP_DRAW, OptionTextRight(selection));
     else
-        AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, 8, y, 0, 0, color_gray, TEXT_SKIP_DRAW, OptionTextRight(selection));
+        AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, 8, y, 0, 0, color_white, TEXT_SKIP_DRAW, OptionTextRight(selection));
 }
 
 static void DrawRightSideChoiceText(const u8 *text, int x, int y, bool8 chosen, bool8 active)
 {
     u8 color_red[3];
-    u8 color_gray[3];
+    u8 color_white[3];
 
     if (active)
     {
         color_red[0] = TEXT_COLOR_TRANSPARENT;
         color_red[1] = TEXT_COLOR_OPTIONS_RED_FG;
         color_red[2] = TEXT_COLOR_OPTIONS_RED_SHADOW;
-        color_gray[0] = TEXT_COLOR_TRANSPARENT;
-        color_gray[1] = TEXT_COLOR_OPTIONS_GRAY_FG;
-        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
+        color_white[0] = TEXT_COLOR_TRANSPARENT;
+        color_white[1] = TEXT_COLOR_WHITE;  // BRANCO (índice 1)
+        color_white[2] = 4;  // CINZA ESCURO (índice 2) - sombra
     }
     else
     {
         color_red[0] = TEXT_COLOR_TRANSPARENT;
         color_red[1] = TEXT_COLOR_OPTIONS_RED_DARK_FG;
         color_red[2] = TEXT_COLOR_OPTIONS_RED_DARK_SHADOW;
-        color_gray[0] = TEXT_COLOR_TRANSPARENT;
-        color_gray[1] = TEXT_COLOR_OPTIONS_GRAY_LIGHT_FG;
-        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
+        color_white[0] = TEXT_COLOR_TRANSPARENT;
+        color_white[1] = TEXT_COLOR_WHITE;  // BRANCO (índice 1)
+        color_white[2] = 4;  // CINZA ESCURO (índice 2) - sombra
     }
-
 
     if (chosen)
         AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, x, y, 0, 0, color_red, TEXT_SKIP_DRAW, text);
     else
-        AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, x, y, 0, 0, color_gray, TEXT_SKIP_DRAW, text);
+        AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, x, y, 0, 0, color_white, TEXT_SKIP_DRAW, text);
 }
 
 static void DrawChoices(u32 id, int y) //right side draw function
@@ -980,7 +979,7 @@ static void ScrollMenu(int direction)
     // Hide one
     ScrollWindow(WIN_OPTIONS, direction, Y_DIFF, PIXEL_FILL(0));
     // Show one
-    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(1), 0, Y_DIFF * pos, 26 * 8, Y_DIFF);
+    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(2), 0, Y_DIFF * pos, 26 * 8, Y_DIFF);
     // Print
     DrawChoices(menuItem, pos * Y_DIFF);
     DrawLeftSideOptionText(menuItem, (pos * Y_DIFF) + 1);
@@ -1011,7 +1010,7 @@ static void ScrollAll(int direction) // to bottom or top
         y = 0;
     }
 
-    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(1), 0, y, 26 * 8, Y_DIFF * scrollCount);
+    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(2), 0, y, 26 * 8, Y_DIFF * scrollCount);
     // Print new texts
     for (i = 0; i < scrollCount; i++)
     {
@@ -1147,7 +1146,7 @@ static void ReDrawAll(void)
 
     }
 
-    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
+    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(2));
     for (i = 0; i < optionsToDraw; i++)
     {
         DrawChoices(menuItem+i, i * Y_DIFF);
