@@ -874,3 +874,14 @@ const struct Tileset gTileset_hlwcustom2 =
     .metatileAttributes = gMetatileAttributes_hlwcustom2,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_Desert =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Desert,
+    .palettes = gTilesetPalettes_Desert,
+    .metatiles = gMetatiles_Desert,
+    .metatileAttributes = gMetatileAttributes_Desert,
+    .callback = NULL,
+};
