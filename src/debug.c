@@ -4777,60 +4777,23 @@ void DebugNative_GetAbilityNames(void)
 #define tPartyId               data[5]
 #define tFriendship            data[6]
 
-static void Debug_Display_FriendshipInfo(s32 oldFriendship, s32 newFriendship, u32 digit, u8 windowId)
-{
-    ConvertIntToDecimalStringN(gStringVar1, oldFriendship, STR_CONV_MODE_LEADING_ZEROS, 3);
-    ConvertIntToDecimalStringN(gStringVar2, newFriendship, STR_CONV_MODE_LEADING_ZEROS, 3);
-    StringCopy(gStringVar3, gText_DigitIndicator[digit]);
-    StringExpandPlaceholders(gStringVar4, COMPOUND_STRING("Friendship:\n{STR_VAR_1} {RIGHT_ARROW} {STR_VAR_2}\n\n{STR_VAR_3}"));
-    AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
-}
+// static void Debug_Display_FriendshipInfo(s32 oldFriendship, s32 newFriendship, u32 digit, u8 windowId)
+// {
+//     ConvertIntToDecimalStringN(gStringVar1, oldFriendship, STR_CONV_MODE_LEADING_ZEROS, 3);
+//     ConvertIntToDecimalStringN(gStringVar2, newFriendship, STR_CONV_MODE_LEADING_ZEROS, 3);
+//     StringCopy(gStringVar3, gText_DigitIndicator[digit]);
+//     StringExpandPlaceholders(gStringVar4, COMPOUND_STRING("Friendship:\n{STR_VAR_1} {RIGHT_ARROW} {STR_VAR_2}\n\n{STR_VAR_3}"));
+//     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
+// }
 
-static void DebugNativeStep_Party_SetFriendshipSelect(u8 taskId)
-{
-    if (JOY_NEW(A_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        gTasks[taskId].tFriendship = gTasks[taskId].tInput;
-        SetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_FRIENDSHIP, &gTasks[taskId].tInput);
-    }
-    else if (JOY_NEW(B_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        DebugNativeStep_CloseDebugWindow(taskId);
-        return;
-    }
-
-    Debug_HandleInput_Numeric(taskId, 0, 255, 3);
-
-    if (JOY_NEW(DPAD_ANY) || JOY_NEW(A_BUTTON))
-        Debug_Display_FriendshipInfo(gTasks[taskId].tFriendship, gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
-}
-
-static void DebugNativeStep_Party_SetFriendshipMain(u8 taskId)
-{
-    u8 windowId = DebugNativeStep_CreateDebugWindow();
-    u32 friendship = GetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_FRIENDSHIP);
-
-    // Display initial flag
-    Debug_Display_FriendshipInfo(friendship, friendship, 0, windowId);
-
-    gTasks[taskId].func = DebugNativeStep_Party_SetFriendshipSelect;
-    gTasks[taskId].tSubWindowId = windowId;
-    gTasks[taskId].tFriendship = friendship;
-    gTasks[taskId].tInput = friendship;
-    gTasks[taskId].tDigit = 0;
-    gTasks[taskId].tPartyId = 0;
-}
-
-void DebugNative_Party_SetFriendship(void)
-{
-    if (gSpecialVar_0x8004 < PARTY_SIZE)
-    {
-        u32 taskId = CreateTask(DebugNativeStep_Party_SetFriendshipMain, 1);
-        gTasks[taskId].tPartyId = gSpecialVar_0x8004;
-    }
-}
+// void DebugNative_Party_SetFriendship(void)
+// {
+//     if (gSpecialVar_0x8004 < PARTY_SIZE)
+//     {
+//         u32 taskId = CreateTask(DebugNativeStep_Party_SetFriendshipMain, 1);
+//         gTasks[taskId].tPartyId = gSpecialVar_0x8004;
+//     }
+// }
 
 #undef tFriendship
 
@@ -4851,27 +4814,27 @@ static void Debug_Display_PokerusDaysLeftInfo(s32 daysLeft, s32 strain, u32 digi
     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
 }
 
-static void DebugNativeStep_Party_SetPokerusDaysLeftSelect(u8 taskId)
-{
-    if (JOY_NEW(A_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        SetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_POKERUS_DAYS_LEFT, &gTasks[taskId].tInput);
-        DebugNativeStep_CloseDebugWindow(taskId);
-        return;
-    }
-    else if (JOY_NEW(B_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        DebugNativeStep_CloseDebugWindow(taskId);
-        return;
-    }
+// static void DebugNativeStep_Party_SetPokerusDaysLeftSelect(u8 taskId)
+// {
+//     if (JOY_NEW(A_BUTTON))
+//     {
+//         PlaySE(SE_SELECT);
+//         SetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_POKERUS_DAYS_LEFT, &gTasks[taskId].tInput);
+//         DebugNativeStep_CloseDebugWindow(taskId);
+//         return;
+//     }
+//     else if (JOY_NEW(B_BUTTON))
+//     {
+//         PlaySE(SE_SELECT);
+//         DebugNativeStep_CloseDebugWindow(taskId);
+//         return;
+//     }
 
-    Debug_HandleInput_Numeric(taskId, 0, 15, 2);
+//     Debug_HandleInput_Numeric(taskId, 0, 15, 2);
 
-    if (JOY_NEW(DPAD_ANY) || JOY_NEW(A_BUTTON))
-        Debug_Display_PokerusDaysLeftInfo(gTasks[taskId].tInput, gTasks[taskId].tStrain, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
-}
+//     if (JOY_NEW(DPAD_ANY) || JOY_NEW(A_BUTTON))
+//         Debug_Display_PokerusDaysLeftInfo(gTasks[taskId].tInput, gTasks[taskId].tStrain, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
+// }
 
 static void Debug_Display_PokerusStrainInfo(s32 strain, u32 digit, u8 windowId)
 {
@@ -4881,30 +4844,30 @@ static void Debug_Display_PokerusStrainInfo(s32 strain, u32 digit, u8 windowId)
     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
 }
 
-static void DebugNativeStep_Party_SetPokerusStrainSelect(u8 taskId)
-{
-    if (JOY_NEW(A_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        gTasks[taskId].tStrain = gTasks[taskId].tInput;
-        SetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_POKERUS_STRAIN, &gTasks[taskId].tInput);
-        gTasks[taskId].tInput = GetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_POKERUS_DAYS_LEFT);
-        Debug_Display_PokerusDaysLeftInfo(gTasks[taskId].tInput, gTasks[taskId].tStrain, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
-        gTasks[taskId].func = DebugNativeStep_Party_SetPokerusDaysLeftSelect;
-        return;
-    }
-    else if (JOY_NEW(B_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        DebugNativeStep_CloseDebugWindow(taskId);
-        return;
-    }
+// static void DebugNativeStep_Party_SetPokerusStrainSelect(u8 taskId)
+// {
+//     if (JOY_NEW(A_BUTTON))
+//     {
+//         PlaySE(SE_SELECT);
+//         gTasks[taskId].tStrain = gTasks[taskId].tInput;
+//         SetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_POKERUS_STRAIN, &gTasks[taskId].tInput);
+//         // gTasks[taskId].tInput = GetMonData(&gPlayerParty[gTasks[taskId].tPartyId], MON_DATA_POKERUS_DAYS_LEFT);
+//         Debug_Display_PokerusDaysLeftInfo(gTasks[taskId].tInput, gTasks[taskId].tStrain, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
+//         // gTasks[taskId].func = DebugNativeStep_Party_SetPokerusDaysLeftSelect;
+//         return;
+//     }
+//     else if (JOY_NEW(B_BUTTON))
+//     {
+//         PlaySE(SE_SELECT);
+//         DebugNativeStep_CloseDebugWindow(taskId);
+//         return;
+//     }
 
-    Debug_HandleInput_Numeric(taskId, 0, 15, 2);
+//     Debug_HandleInput_Numeric(taskId, 0, 15, 2);
 
-    if (JOY_NEW(DPAD_ANY) || JOY_NEW(A_BUTTON))
-        Debug_Display_PokerusStrainInfo(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
-}
+//     if (JOY_NEW(DPAD_ANY) || JOY_NEW(A_BUTTON))
+//         Debug_Display_PokerusStrainInfo(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
+// }
 
 static void DebugNativeStep_Party_SetPokerusMain(u8 taskId)
 {
@@ -4914,11 +4877,11 @@ static void DebugNativeStep_Party_SetPokerusMain(u8 taskId)
     // Display initial flag
     Debug_Display_PokerusStrainInfo(strain, 0, windowId);
 
-    gTasks[taskId].func = DebugNativeStep_Party_SetPokerusStrainSelect;
-    gTasks[taskId].tSubWindowId = windowId;
+    // gTasks[taskId].func = DebugNativeStep_Party_SetPokerusStrainSelect;
+    // gTasks[taskId].tSubWindowId = windowId;
     gTasks[taskId].tStrain = strain;
-    gTasks[taskId].tInput = strain;
-    gTasks[taskId].tDigit = 0;
+    // gTasks[taskId].tInput = strain;
+    // gTasks[taskId].tDigit = 0;
     gTasks[taskId].tPartyId = 0;
 }
 

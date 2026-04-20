@@ -1716,6 +1716,7 @@ static void MoveSelectionDisplayPpNumber(enum BattlerId battler)
 
 static void MoveSelectionDisplayMoveType(enum BattlerId battler)
 {
+    u8 *txtPtr;
     u32 speciesId = gBattleMons[battler].species;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);

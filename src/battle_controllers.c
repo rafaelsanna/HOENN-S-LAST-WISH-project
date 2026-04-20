@@ -155,7 +155,8 @@ void SetUpBattleVarsAndBirchZigzagoon(void)
     if (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)
     {
         ZeroEnemyPartyMons();
-        CreateMon(&gEnemyParty[0], SPECIES_SENTRET, 4, USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+        // CreateMon(&gEnemyParty[0], SPECIES_SENTRET, 4, USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+        CreateWildMon(SPECIES_SENTRET, 4);
         i = 0;
         SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, &i);
     }

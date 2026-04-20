@@ -2989,8 +2989,8 @@ bool32 TryFieldEffects(enum FieldEffectCases caseId)
             BattleScriptPushCursorAndCallback(BattleScript_OverworldTerrain);
             effect = TRUE;
         }
-    case ABILITYEFFECT_SWITCH_IN_WEATHER:
-        gBattleScripting.battler = battler;
+    // case ABILITYEFFECT_SWITCH_IN_WEATHER:
+        // gBattleScripting.battler = battler;
         // else if (B_OVERWORLD_FOG >= GEN_8
         //       && (GetCurrentWeather() == WEATHER_FOG_HORIZONTAL || GetCurrentWeather() == WEATHER_FOG_DIAGONAL)
         //       && !(gFieldStatuses & STATUS_FIELD_MISTY_TERRAIN))

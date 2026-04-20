@@ -1403,6 +1403,17 @@ void CreateRandomMonWithIVs(struct Pokemon *mon, u16 species, u8 level, u8 fixed
     GiveMonInitialMoveset(mon);
 }
 
+void CreateMonV1(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
+{
+    u32 mail;
+    ZeroMonData(mon);
+    CreateBoxMon(&mon->box, species, level, fixedIV, hasFixedPersonality, fixedPersonality, otIdType, fixedOtId);
+    SetMonData(mon, MON_DATA_LEVEL, &level);
+    mail = MAIL_NONE;
+    SetMonData(mon, MON_DATA_MAIL, &mail);
+    CalculateMonStats(mon);
+}
+
 void CreateMon(struct Pokemon *mon, u16 species, u8 level, u32 personality, struct OriginalTrainerId trainerId)
 {
     u32 mail;

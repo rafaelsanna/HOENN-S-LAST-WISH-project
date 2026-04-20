@@ -1753,3 +1753,4 @@ enum
 };
 
 #endif // GUARD_CONSTANTS_POKEDEX_H
+#endif

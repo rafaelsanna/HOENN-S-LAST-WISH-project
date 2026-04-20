@@ -1456,7 +1456,6 @@ static void CB2_EndTrainerBattle(void)
     Nuzlocke_ApplyPermadeathToPlayerParty();
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
-    if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL)
     {
         if (IsPlayerDefeated(gBattleOutcome) == TRUE)

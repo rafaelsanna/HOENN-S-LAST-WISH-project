@@ -227,19 +227,9 @@ enum Gender
 #define NUZLOCKE_WILD_HEADER_COUNT 139
 #define NUZLOCKE_WILD_HEADER_FLAG_BYTES ROUND_BITS_TO_BYTES(NUZLOCKE_WILD_HEADER_COUNT * 2) // Two bits per wild encounter header.
 
-#define DIR_NONE        0
-#define DIR_SOUTH       1
-#define DIR_NORTH       2
-#define DIR_WEST        3
-#define DIR_EAST        4
-#define DIR_SOUTHWEST   5
-#define DIR_SOUTHEAST   6
-#define DIR_NORTHWEST   7
-#define DIR_NORTHEAST   8
-#define CARDINAL_DIRECTION_COUNT DIR_SOUTHWEST
 enum __attribute__((packed)) Direction
 {
-    DIR_NONE,
+    DIR_NONE = 0,
     DIR_SOUTH,
     DIR_NORTH,
     DIR_WEST,
@@ -250,6 +240,17 @@ enum __attribute__((packed)) Direction
     DIR_NORTHWEST,
     DIR_NORTHEAST,
 };
+
+#define DIR_NONE        0
+#define DIR_SOUTH       1
+#define DIR_NORTH       2
+#define DIR_WEST        3
+#define DIR_EAST        4
+#define DIR_SOUTHWEST   5
+#define DIR_SOUTHEAST   6
+#define DIR_NORTHWEST   7
+#define DIR_NORTHEAST   8
+#define CARDINAL_DIRECTION_COUNT DIR_SOUTHWEST
 
 enum Connection
 {

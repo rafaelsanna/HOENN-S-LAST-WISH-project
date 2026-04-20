@@ -7,54 +7,143 @@
 #line 1 "test/battle/trainer_control.party"
 
 #line 1
-    [DIFFICULTY_NORMAL][0] =
+    [DIFFICULTY_NORMAL][TRAINER_NONE] =
     {
-#line 2
-        .trainerName = _("Test1"),
 #line 3
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
 #line 4
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
+        .trainerPic = TRAINER_PIC_FRONT_HIKER,
+#line 5
+        .gender = TRAINER_GENDER_MALE,
 #line 6
-            TRAINER_ENCOUNTER_MUSIC_MALE,
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
 #line 7
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
+        .trainerBackPic = TRAINER_PIC_FRONT_HIKER,
+        .partySize = 0,
+        .party = (const struct TrainerMon[])
+        {
+        },
+    },
+#line 9
+    [DIFFICULTY_NORMAL][1] =
+    {
+#line 10
+        .trainerName = _("RED"),
+#line 11
+        .trainerClass = TRAINER_CLASS_RIVAL,
+#line 12
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 13
+        .gender = TRAINER_GENDER_MALE,
+#line 14
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 15
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 0
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+        .partySize = 1,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 17
+            .species = SPECIES_CHARMANDER,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 19
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
+#line 18
+            .lvl = 5,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 21
+    [DIFFICULTY_NORMAL][2] =
+    {
+#line 22
+        .trainerName = _("LEAF"),
+#line 23
+        .trainerClass = TRAINER_CLASS_RIVAL,
+#line 24
+        .trainerPic = TRAINER_PIC_FRONT_LEAF,
+#line 25
+        .gender = TRAINER_GENDER_FEMALE,
+#line 26
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 27
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 0
+        .trainerBackPic = TRAINER_PIC_FRONT_LEAF,
+        .partySize = 1,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 29
+            .species = SPECIES_BULBASAUR,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 31
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
+#line 30
+            .lvl = 5,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 34
+    [DIFFICULTY_NORMAL][3] =
+    {
+#line 35
+        .trainerName = _("Test1"),
+#line 36
+        .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
+#line 37
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 38
+        .gender = TRAINER_GENDER_MALE,
+#line 39
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 40
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 0
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
         .partySize = 3,
         .party = (const struct TrainerMon[])
         {
             {
-#line 9
+#line 42
             .nickname = COMPOUND_STRING("Bubbles"),
-#line 9
+#line 42
             .species = SPECIES_WOBBUFFET,
-#line 9
+#line 42
             .gender = TRAINER_MON_FEMALE,
-#line 9
+#line 42
             .heldItem = ITEM_ASSAULT_VEST,
-#line 14
+#line 47
             .ev = TRAINER_PARTY_EVS(252, 0, 0, 252, 4, 0),
-#line 13
+#line 46
             .iv = TRAINER_PARTY_IVS(25, 26, 27, 28, 29, 30),
-#line 12
+#line 45
             .ability = ABILITY_TELEPATHY,
-#line 11
+#line 44
             .lvl = 67,
-#line 17
-            .ball = ITEM_MASTER_BALL,
-#line 15
+#line 50
+            .ball = BALL_MASTER,
+#line 48
             .friendship = 42,
-#line 10
+#line 43
             .nature = NATURE_HASTY,
-#line 16
+#line 49
             .isShiny = TRUE,
-#line 18
+#line 51
             .dynamaxLevel = 5,
             .shouldUseDynamax = TRUE,
             .moves = {
-#line 19
+#line 52
                 MOVE_AIR_SLASH,
                 MOVE_BARRIER,
                 MOVE_SOLAR_BEAM,
@@ -62,753 +151,900 @@
             },
             },
             {
-#line 24
+#line 57
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 27
+#line 60
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
-#line 26
+#line 59
             .ability = ABILITY_SHADOW_TAG,
-#line 25
+#line 58
             .lvl = 5,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 29
+#line 62
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 31
-            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
-#line 30
-            .lvl = 5,
-            .nature = NATURE_HARDY,
-            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-            },
-        },
-    },
-#line 33
-#line 40
-    [DIFFICULTY_NORMAL][1] =
-    {
-#line 34
-        .trainerName = _("Test2"),
-#line 35
-        .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 36
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 38
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 39
-        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
-#line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-        .partySize = 1,
-        .party = (const struct TrainerMon[])
-        {
-            {
-#line 42
-            .species = SPECIES_MEWTWO,
-            .gender = TRAINER_MON_RANDOM_GENDER,
-#line 44
-            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 43
-            .lvl = 5,
-            .nature = NATURE_HARDY,
-            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-            },
-        },
-    },
-#line 45
-#line 52
-    [DIFFICULTY_NORMAL][2] =
-    {
-#line 46
-        .trainerName = _("Test2"),
-#line 47
-        .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 48
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 50
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 51
-        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
-#line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-        .partySize = 1,
-        .party = (const struct TrainerMon[])
-        {
-            {
-#line 54
-            .species = SPECIES_MEWTWO,
-            .gender = TRAINER_MON_RANDOM_GENDER,
-#line 56
-            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 55
-            .lvl = 50,
-            .nature = NATURE_HARDY,
-            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-            },
-        },
-    },
-#line 57
 #line 64
-    [DIFFICULTY_EASY][2] =
-    {
-#line 58
-        .trainerName = _("Test2"),
-#line 59
-        .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 60
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 62
-            TRAINER_ENCOUNTER_MUSIC_MALE,
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
 #line 63
+            .lvl = 5,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 66
+#line 73
+    [DIFFICULTY_NORMAL][4] =
+    {
+#line 67
+        .trainerName = _("Test2"),
+#line 68
+        .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
+#line 69
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 70
+        .gender = TRAINER_GENDER_MALE,
+#line 71
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 72
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
         .partySize = 1,
         .party = (const struct TrainerMon[])
         {
             {
-#line 66
+#line 75
+            .species = SPECIES_MEWTWO,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 77
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 76
+            .lvl = 5,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 78
+#line 85
+    [DIFFICULTY_NORMAL][5] =
+    {
+#line 79
+        .trainerName = _("Test2"),
+#line 80
+        .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
+#line 81
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 82
+        .gender = TRAINER_GENDER_MALE,
+#line 83
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 84
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 0
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+        .partySize = 1,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 87
+            .species = SPECIES_MEWTWO,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 89
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 88
+            .lvl = 50,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 90
+#line 97
+    [DIFFICULTY_EASY][5] =
+    {
+#line 91
+        .trainerName = _("Test2"),
+#line 92
+        .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
+#line 93
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 94
+        .gender = TRAINER_GENDER_MALE,
+#line 95
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 96
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 0
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+        .partySize = 1,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 99
             .species = SPECIES_METAPOD,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 68
+#line 101
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 67
+#line 100
             .lvl = 1,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
         },
     },
-#line 69
-#line 76
-    [DIFFICULTY_HARD][2] =
+#line 102
+#line 109
+    [DIFFICULTY_HARD][5] =
     {
-#line 70
+#line 103
         .trainerName = _("Test2"),
-#line 71
+#line 104
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 72
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 74
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 75
+#line 105
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 106
+        .gender = TRAINER_GENDER_MALE,
+#line 107
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 108
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
         .partySize = 1,
         .party = (const struct TrainerMon[])
         {
             {
-#line 78
+#line 111
             .species = SPECIES_ARCEUS,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 80
+#line 113
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 79
+#line 112
             .lvl = 99,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
         },
     },
-#line 81
-    [DIFFICULTY_NORMAL][3] =
+#line 114
+    [DIFFICULTY_NORMAL][6] =
     {
-#line 82
+#line 115
         .trainerName = _("Test3"),
-#line 83
+#line 116
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 84
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 86
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 87
+#line 117
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 118
+        .gender = TRAINER_GENDER_MALE,
+#line 119
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 120
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 88
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 121
         .partySize = 1,
         .poolSize = 4,
         .party = (const struct TrainerMon[])
         {
             {
-#line 90
+#line 123
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 91
+#line 124
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 91
+#line 124
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 92
+#line 125
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 93
+#line 126
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 93
+#line 126
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 94
+#line 127
             .species = SPECIES_EEVEE,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 95
+#line 128
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 95
+#line 128
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 96
+#line 129
             .species = SPECIES_MEW,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 97
+#line 130
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 97
+#line 130
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
         },
     },
-#line 98
-    [DIFFICULTY_NORMAL][4] =
+#line 131
+    [DIFFICULTY_NORMAL][7] =
     {
-#line 99
+#line 132
         .trainerName = _("Test4"),
-#line 100
+#line 133
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 101
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 103
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 104
+#line 134
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 135
+        .gender = TRAINER_GENDER_MALE,
+#line 136
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 137
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 105
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 138
         .partySize = 3,
         .poolSize = 6,
         .party = (const struct TrainerMon[])
         {
             {
-#line 107
+#line 140
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 108
+#line 141
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 108
+#line 141
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 109
+#line 142
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 111
+#line 144
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 111
+#line 144
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 110
+#line 143
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 112
+#line 145
             .species = SPECIES_EEVEE,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 114
+#line 147
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 114
+#line 147
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 113
+#line 146
             .tags = MON_POOL_TAG_ACE,
             },
             {
-#line 115
+#line 148
             .species = SPECIES_MEW,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 116
+#line 149
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 116
+#line 149
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 117
+#line 150
             .species = SPECIES_ODDISH,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 119
+#line 152
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 119
+#line 152
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 118
+#line 151
             .tags = MON_POOL_TAG_ACE,
             },
             {
-#line 120
+#line 153
             .species = SPECIES_ARON,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 122
+#line 155
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 122
+#line 155
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 121
+#line 154
             .tags = MON_POOL_TAG_LEAD,
             },
         },
     },
-#line 123
-    [DIFFICULTY_NORMAL][5] =
+#line 156
+    [DIFFICULTY_NORMAL][8] =
     {
-#line 124
+#line 157
         .trainerName = _("Test5"),
-#line 125
+#line 158
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 126
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 128
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 129
+#line 159
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 160
+        .gender = TRAINER_GENDER_MALE,
+#line 161
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 162
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
-#line 131
+#line 164
         .poolRuleIndex = POOL_RULESET_WEATHER_DOUBLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 130
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 163
         .partySize = 3,
         .poolSize = 10,
         .party = (const struct TrainerMon[])
         {
             {
-#line 133
+#line 166
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 135
+#line 168
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 135
+#line 168
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 134
+#line 167
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 136
+#line 169
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 138
+#line 171
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 138
+#line 171
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 137
+#line 170
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 139
+#line 172
             .species = SPECIES_VULPIX,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 141
+#line 174
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 141
+#line 174
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 140
+#line 173
             .tags = MON_POOL_TAG_LEAD | MON_POOL_TAG_WEATHER_SETTER,
             },
             {
-#line 142
+#line 175
             .species = SPECIES_BULBASAUR,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 144
+#line 177
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 144
+#line 177
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 143
+#line 176
             .tags = MON_POOL_TAG_LEAD | MON_POOL_TAG_WEATHER_ABUSER,
             },
             {
-#line 145
+#line 178
             .species = SPECIES_TORKOAL,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 147
+#line 180
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 147
+#line 180
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 146
+#line 179
             .tags = MON_POOL_TAG_LEAD | MON_POOL_TAG_WEATHER_SETTER,
             },
             {
-#line 148
+#line 181
             .species = SPECIES_CHERRIM,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 150
+#line 183
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 150
+#line 183
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 149
+#line 182
             .tags = MON_POOL_TAG_LEAD | MON_POOL_TAG_WEATHER_ABUSER,
             },
             {
-#line 151
+#line 184
             .species = SPECIES_MEW,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 153
+#line 186
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 153
+#line 186
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 152
+#line 185
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 154
+#line 187
             .species = SPECIES_ARON,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 156
+#line 189
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 156
+#line 189
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 155
+#line 188
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 157
+#line 190
             .species = SPECIES_ODDISH,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 158
+#line 191
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 158
+#line 191
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 159
+#line 192
             .species = SPECIES_EEVEE,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 160
+#line 193
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 160
+#line 193
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
         },
     },
-#line 161
-    [DIFFICULTY_NORMAL][6] =
+#line 194
+    [DIFFICULTY_NORMAL][9] =
     {
-#line 162
+#line 195
         .trainerName = _("Test6"),
-#line 163
+#line 196
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 164
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 166
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 167
+#line 197
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 198
+        .gender = TRAINER_GENDER_MALE,
+#line 199
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 200
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
-#line 169
+#line 202
         .poolRuleIndex = POOL_RULESET_BASIC,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 168
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 201
         .partySize = 2,
         .poolSize = 3,
         .party = (const struct TrainerMon[])
         {
             {
-#line 171
+#line 204
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 173
+#line 206
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 173
+#line 206
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 172
+#line 205
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 174
+#line 207
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 176
+#line 209
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 176
+#line 209
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 175
+#line 208
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 177
+#line 210
             .species = SPECIES_EEVEE,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 179
+#line 212
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 179
+#line 212
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 178
+#line 211
             .tags = MON_POOL_TAG_LEAD,
             },
         },
     },
-#line 180
-    [DIFFICULTY_NORMAL][7] =
+#line 213
+    [DIFFICULTY_NORMAL][10] =
     {
-#line 181
+#line 214
         .trainerName = _("Test1"),
-#line 182
+#line 215
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 183
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 185
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 186
+#line 216
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 217
+        .gender = TRAINER_GENDER_MALE,
+#line 218
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 219
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
-#line 188
+#line 221
         .poolRuleIndex = POOL_RULESET_BASIC,
-#line 189
+#line 222
         .poolPruneIndex = POOL_PRUNE_TEST,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 187
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 220
         .partySize = 2,
         .poolSize = 3,
         .party = (const struct TrainerMon[])
         {
             {
-#line 191
+#line 224
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 192
+#line 225
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 192
+#line 225
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 193
+#line 226
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 195
+#line 228
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 195
+#line 228
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 194
+#line 227
             .tags = MON_POOL_TAG_LEAD,
             },
             {
-#line 196
+#line 229
             .species = SPECIES_EEVEE,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 197
+#line 230
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 197
+#line 230
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
         },
     },
-#line 198
-    [DIFFICULTY_NORMAL][8] =
+#line 231
+    [DIFFICULTY_NORMAL][11] =
     {
-#line 199
+#line 232
         .trainerName = _("Test1"),
-#line 200
+#line 233
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 201
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 203
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 204
+#line 234
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 235
+        .gender = TRAINER_GENDER_MALE,
+#line 236
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 237
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
-#line 206
+#line 239
         .poolRuleIndex = POOL_RULESET_BASIC,
-#line 207
+#line 240
         .poolPickIndex = POOL_PICK_LOWEST,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 205
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 238
         .partySize = 2,
         .poolSize = 3,
         .party = (const struct TrainerMon[])
         {
             {
-#line 209
+#line 242
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 211
+#line 244
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 211
+#line 244
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 210
+#line 243
             .tags = MON_POOL_TAG_ACE,
             },
             {
-#line 212
+#line 245
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 213
+#line 246
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 213
+#line 246
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 214
+#line 247
             .species = SPECIES_EEVEE,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 216
+#line 249
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 216
+#line 249
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-#line 215
+#line 248
             .tags = MON_POOL_TAG_LEAD,
             },
         },
     },
-#line 217
-    [DIFFICULTY_NORMAL][9] =
+#line 250
+    [DIFFICULTY_NORMAL][12] =
     {
-#line 218
+#line 251
         .trainerName = _("Test9"),
-#line 219
+#line 252
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 220
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 222
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 223
+#line 253
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 254
+        .gender = TRAINER_GENDER_MALE,
+#line 255
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 256
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 224
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 257
         .partySize = 2,
         .poolSize = 2,
         .party = (const struct TrainerMon[])
         {
             {
-#line 226
+#line 259
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 227
+#line 260
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 227
+#line 260
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 228
+#line 261
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 229
+#line 262
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 229
+#line 262
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
         },
     },
-#line 230
-    [DIFFICULTY_NORMAL][10] =
+#line 263
+    [DIFFICULTY_NORMAL][13] =
     {
-#line 231
+#line 264
         .trainerName = _("Test10"),
-#line 232
+#line 265
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,
-#line 233
-        .trainerPic = TRAINER_PIC_RED,
-        .encounterMusic_gender =
-#line 235
-            TRAINER_ENCOUNTER_MUSIC_MALE,
-#line 236
+#line 266
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 267
+        .gender = TRAINER_GENDER_MALE,
+#line 268
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 269
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 0
-        .trainerBackPic = TRAINER_PIC_RED,
-#line 237
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 270
         .partySize = 2,
         .poolSize = 2,
         .party = (const struct TrainerMon[])
         {
             {
-#line 239
+#line 272
             .species = SPECIES_WYNAUT,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 240
+#line 273
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 240
+#line 273
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
             {
-#line 241
+#line 274
             .species = SPECIES_WOBBUFFET,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 242
+#line 275
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 242
+#line 275
             .lvl = 100,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 276
+    [DIFFICULTY_NORMAL][14] =
+    {
+#line 277
+        .trainerName = _("Test11"),
+#line 278
+        .trainerClass = TRAINER_CLASS_BLACK_BELT,
+#line 279
+        .trainerPic = TRAINER_PIC_FRONT_RED,
+#line 280
+        .gender = TRAINER_GENDER_MALE,
+#line 281
+        .encounterMusic = TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 282
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 0
+        .trainerBackPic = TRAINER_PIC_FRONT_RED,
+#line 283
+        .partySize = 6,
+        .poolSize = 6,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 285
+            .species = SPECIES_WYNAUT,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 286
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 286
+            .lvl = 100,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 287
+            .species = SPECIES_WOBBUFFET,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 288
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 288
+            .lvl = 100,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 289
+            .species = SPECIES_EEVEE,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 290
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 290
+            .lvl = 100,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 291
+            .species = SPECIES_MEW,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 292
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 292
+            .lvl = 100,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 293
+            .species = SPECIES_ODDISH,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 294
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 294
+            .lvl = 100,
+            .ball = POKEBALL_COUNT,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 295
+            .species = SPECIES_ARON,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 296
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 296
+            .lvl = 100,
+            .ball = POKEBALL_COUNT,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
