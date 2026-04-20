@@ -1,55 +1,76 @@
-# About `pokeemerald-expansion`
+<img width="720" height="479" alt="main-screenshot" src="https://github.com/user-attachments/assets/4fa36037-b764-48bf-a753-d488e8f25a07" />
 
-![Gif that shows debugging functionality that is unique to pokeemerald-expansion such as rerolling Trainer ID, Cheat Start, PC from Debug Menu, Debug PC Fill, Pokémon Sprite Visualizer, Debug Warp to Map, and Battle Debug Menu](https://github.com/user-attachments/assets/cf9dfbee-4c6b-4bca-8e0a-07f116ef891c) ![Gif that shows overworld functionality that is unique to pokeemerald-expansion such as indoor running, BW2 style map popups, overworld followers, DNA Splicers, Gen 1 style fishing, OW Item descriptions, Quick Run from Battle, Use Last Ball, Wild Double Battles, and Catch from EXP](https://github.com/user-attachments/assets/383af243-0904-4d41-bced-721492fbc48e) ![Gif that shows off a number of modern Pokémon battle mechanics happening in the pokeemerald-expansion engine: 2 vs 1 battles, modern Pokémon, items, moves, abilities, fully customizable opponents and partners, Trainer Slides, and generational gimmicks](https://github.com/user-attachments/assets/50c576bc-415e-4d66-a38f-ad712f3316be)
+POKÉMON - HOENN'S LAST WISH​
 
-<!-- If you want to re-record or change these gifs, here are some notes that I used: https://files.catbox.moe/05001g.md -->
+Description: A parallel universe where Rayquaza failed to stop Groudon and Kyogre, which caused a natural collapse in Hoenn... After long years of natural destruction, the entire Hoenn region was practically devastated, the era of trainers / pokeballs ended, the pokémons became wild animals, and the nomadic people trying to survive... After years the plot is the millennium comet (Jirachi) and Celebi (time traveler), giving the player an opportunity to go back in time and prevent this disaster from happening... With the return in time, some things from Hoenn destroyed for many years affect the "normal" Hoenn of the past, generating new forms of pokémon, new characters, new villains, gym leaders, etc...
 
-**`pokeemerald-expansion`** is a GBA ROM hack base that equips developers with a comprehensive toolkit for creating Pokémon ROM hacks. **`pokeemerald-expansion`** is built on top of [pret's `pokeemerald`](https://github.com/pret/pokeemerald) decompilation project. **It is not a playable Pokémon game on its own.** 
+HOENN'S LAST WISH (emerald) decomp project (pokeemerald expansion)
+DOWNLOAD BETA PATCH LINK: version: 0.4.1 HERE (GOOGLE DRIVE)
 
-# [Features](FEATURES.md)
+Project Type: ROM Hack (pokeemerald expasion)
+Project Completion: 50% (hard to tell)
+Compensation: Credited in game, your sprites / design in game (it's a for fun project so no payment, all for the love for the game )
+Contact: DM / email : rafaelsanna96@gmail.com
+Timezone: BRT
+DISCORD: HERE
 
-**`pokeemerald-expansion`** offers hundreds of features from various [core series Pokémon games](https://bulbapedia.bulbagarden.net/wiki/Core_series), along with popular quality-of-life enhancements designed to streamline development and improve the player experience. A full list of those features can be found in [`FEATURES.md`](FEATURES.md).
+rafael sanna: creator / main dev / spriter / art director
+eric serbinenko: graphics / dev
+WhoisJeb: Mapper / Scprit
+kirb: OST / MUSICS /
+Ember: Sprites / Mapper
+_Pablo: Dev
+Gerbo: Sprites
+Kazioko: Sprites
+DoodleElias: Sprites
 
-# [Credits](CREDITS.md)
+> made with: pokeemeraldexpasion (click here to see all features)
 
- [![](https://img.shields.io/github/all-contributors/rh-hideout/pokeemerald-expansion/upcoming)](CREDITS.md)
+- physical / special split
+- relearnable moves (in the party menu, go to your moves and press Start)
+- HM's are forgettable and buffed
+- moves are rebalanced and have higher accuracy (those that were too low)
+- balanced stats / learnsets
+- no more EVs (EVs are disabled in-game, all set to 0 to avoid grinding)
+- trade evo item (Linking Cable)
+- all new moves and abilities (up to Gen 9 are in the game)
+- IVs can now be increased using items that used to raise EVs (like Protein, Calcium, etc.), each use raises IV by 1 (max is 31)
+- Rare Candies now highly boost happiness (and give 1 level)
+- Exp All (works like in newer gens, can be turned off if you want)
+- headbutting trees will drop items and Pokemon
+- selling evo stones in Slateport
+- selling all Nature Mints in Oldale Town (so you can fix bad natures)
+- better AI (from expansion v1.13.3)
+- follower Pokemon
+- throw Poke Ball by pressing "R"
+- day / night system
+- faster egg hatching
+- shinies are buffed (and you can get a Shiny Charm by playing the prologue)
+- skipping prologue (for faster replaying / resetting)
+- updated graphics, Pokemon sprites are in Gen 4 style with 2-frame animations
+- game uses FR/LG overworld sprites for trainers (not Emerald)
+- custom DARK UI for all text screens, menus, and battle screen
+- no more PokeNav (the item is disabled from the game)
+- DexNav (works just like ORAS DexNav)
+- access your PC in the party menu (press R)
+- more slots for bag items
+- access the Pokedex from your party menu (open summary and press "A")
+- auto run (press R + B)
+- run inside houses and buildings
+- repels can be used again automatically when they run out
+- change your bike from Mach to Acro (pressing R)
+- custom difficulty menu (press R in the options menu)
+- difficulties: Casual and Hard (vanilla or competitive)
+- battle items (on / off)
+- infinite candy that takes you to the level cap (on / off)
+- level cap (on / off)
+- nuzlocke mode (off, normal, and hard)
+- auto fish mode (can be enabled in the difficulty menu)
+- debug menu (Wish Menu) can be enabled in the difficulty menu
+- any Pokemon taken from debug menu (Wish Menu) will be permanently marked as "wished"
+- Pokemon can be traded between games (and they will keep their "wished" tags)
+- you can challenge other players to battles just like trading (emulating link cables)
 
-If you use **`pokeemerald-expansion`**, please credit **RHH (Rom Hacking Hideout)**. Optionally, include the version number for clarity.
 
-```
-Based off RHH's pokeemerald-expansion 1.13.2 https://github.com/rh-hideout/pokeemerald-expansion/
-```
+ ALL CREDITS SO FAR: https://docs.google.com/document/d/1K_1i6doDUI3dhyyjtoNYlCZQZiFuHJBfjhZC-yJ3x-s/edit?usp=sharing
 
-Please consider [crediting all contributors](CREDITS.md) involved in the project!
-
-# Choosing `pokeemerald` or **`pokeemerald-expansion`**
-
-- **`pokeemerald-expansion`** supports multiplayer functionality with other games built on **`pokeemerald-expansion`**. It is not compatible with official Pokémon games.
-- If compatibility with official games is important, use [`pokeemerald`](https://github.com/pret/pokeemerald). Otherwise, we recommend using **`pokeemerald-expansion`**.
-- **`pokeemerald-expansion`** incorporates regular updates from `pokeemerald`, including bug fixes and documentation improvements.
-
-# [Getting Started](INSTALL.md)
-
-❗❗ **Important**: Do not use GitHub's "Download Zip" option as it will not include commit history. This is necessary if you want to update or merge other feature branches. 
-
-If you're new to git and GitHub, [Team Aqua's Asset Repo](https://github.com/Pawkkie/Team-Aquas-Asset-Repo/) has a [guide to forking and cloning the repository](https://github.com/Pawkkie/Team-Aquas-Asset-Repo/wiki/The-Basics-of-GitHub). Then you can follow one of the following guides:
-
-## 📥 [Installing **`pokeemerald-expansion`**](INSTALL.md)
-## 🏗️ [Building **`pokeemerald-expansion`**](INSTALL.md#Building-pokeemerald-expansion)
-## 🚚 [Migrating from **`pokeemerald`**](INSTALL.md#Migrating-from-pokeemerald)
-## 🚀 [Updating **`pokeemerald-expansion`**](INSTALL.md#Updating-pokeemerald-expansion)
-
-# [Documentation](https://rh-hideout.github.io/pokeemerald-expansion/)
-
-For detailed documentation, visit the [pokeemerald-expansion documentation page](https://rh-hideout.github.io/pokeemerald-expansion/).
-
-# [Contributions](CONTRIBUTING.md)
-If you are looking to [report a bug](CONTRIBUTING.md#Bug-Report), [open a pull request](CONTRIBUTING.md#Pull-Requests), or [request a feature](CONTRIBUTING.md#Feature-Request), our [`CONTRIBUTING.md`](CONTRIBUTING.md) has guides for each.
-
-# [Community](https://discord.gg/6CzjAG6GZk)
-
-[![](https://dcbadge.limes.pink/api/server/6CzjAG6GZk)](https://discord.gg/6CzjAG6GZk)
-
-Our community uses the [ROM Hacking Hideout (RHH) Discord server](https://discord.gg/6CzjAG6GZk) to communicate and organize. Most of our discussions take place there, and we welcome anybody to join us!
-# HOENN-S-LAST-WISH
-# HOENN-S-LAST-WISH-project
