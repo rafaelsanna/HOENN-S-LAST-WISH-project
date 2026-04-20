@@ -43,6 +43,7 @@
 #include "mystery_event_menu.h"
 #include "mystery_gift_menu.h"
 #include "link.h"
+#include "random.h"
 
 /*
  * 
@@ -96,6 +97,10 @@ enum
         Free(*ptr__);                  \
 })
 
+#define NUM_STARS 20
+#define STAR_TAG  5000
+#define STAR_PRIORITY 2
+
 //==========EWRAM==========//
 static EWRAM_DATA struct MainMenuResources *sMainMenuDataPtr = NULL;
 static EWRAM_DATA u8 *sBg1TilemapBuffer = NULL;
@@ -123,6 +128,11 @@ static u32 GetHPEggCyclePercent(u32 partyIndex);
 static void CreatePartyMonIcons();
 static void DestroyMonIcons();
 
+static u8 sStarSpriteIds[NUM_STARS];
+static void Task_FloatingStars(u8 taskId);
+static void CreateStars(void);
+static void LoadStarGfx(void);
+
 
 //==========Background and Window Data==========//
 static const struct BgTemplate sMainMenuBgTemplates[] =
@@ -131,19 +141,19 @@ static const struct BgTemplate sMainMenuBgTemplates[] =
         .bg = 0,                // Text Background
         .charBaseIndex = 0,
         .mapBaseIndex = 31,
-        .priority = 0
+        .priority = 0           // máxima prioridade
     }, 
     {
-        .bg = 1,                // Main Background
+        .bg = 1,                // Main Background (UI)
         .charBaseIndex = 3,
         .mapBaseIndex = 30,
-        .priority = 2
+        .priority = 1           // ALTERADO: de 2 para 1 (atrás dos sprites, mas à frente das estrelas)
     },
     {
-        .bg = 2,                // Scroll Background
+        .bg = 2,                // Fundo estático
         .charBaseIndex = 2,
         .mapBaseIndex = 28,
-        .priority = 2
+        .priority = 3           // ALTERADO: de 2 para 3 (atrás de tudo)
     }
 };
 
@@ -171,6 +181,32 @@ static const struct WindowTemplate sMainMenuWindowTemplates[] =
         .baseBlock = 1 + (18 * 2), // tile start in VRAM
     },
     DUMMY_WIN_TEMPLATE
+};
+
+static const u32 sStarTile[] =
+{
+    0x00010000,
+    0x00010000,
+    0x00111000,
+    0x01111100,
+    0x00111000,
+    0x00010000,
+    0x00010000,
+    0x00000000,
+};
+
+static const u16 sStarPalette[] =
+{
+    RGB(0,0,0),        // transparente
+    RGB(31,31,31),     // branco forte
+    RGB(20,24,31),     // azul claro
+    RGB(10,12,20),     // azul escuro
+};
+
+struct SpritePalette palette =
+{
+    .data = sStarPalette,
+    .tag = STAR_TAG
 };
 
 //  Positions of Hardware/GPU Windows
@@ -530,15 +566,18 @@ static bool8 MainMenu_DoGfxSetup(void)
         MainMenu_InitWindows();
         gMain.state++;
         break;
-    case 5: // Here is where the sprites are drawn and text is printed
-        PrintToWindow(WINDOW_HEADER, FONT_WHITE);
-        CreateIconShadow();
-        CreatePartyMonIcons();
-        CreateMugshot();
-        CreateTask(Task_MainMenuWaitFadeIn, 0);
-        BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
-        gMain.state++;
-        break;
+case 5:
+    PrintToWindow(WINDOW_HEADER, FONT_WHITE);
+    CreateIconShadow();
+    CreatePartyMonIcons();
+    CreateMugshot();
+
+    CreateStars(); 
+
+    CreateTask(Task_MainMenuWaitFadeIn, 0);
+    BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
+    gMain.state++;
+    break;
     case 6:
         ShowBg(0);
         ShowBg(1);
@@ -896,6 +935,103 @@ static void PrintToWindow(u8 windowId, u8 colorIdx)
     CopyWindowToVram(WINDOW_HEADER, 3);
     PutWindowTilemap(WINDOW_MIDDLE);
     CopyWindowToVram(WINDOW_MIDDLE, 3);
+}
+
+static const struct OamData sOamData_Star =
+{
+    .shape = SPRITE_SHAPE(8x8),
+    .size = SPRITE_SIZE(8x8),
+    .priority = STAR_PRIORITY,
+};
+
+static const union AnimCmd sStarAnim[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sStarAnimTable[] =
+{
+    sStarAnim
+};
+
+static const struct SpriteTemplate sStarSpriteTemplate =
+{
+    .tileTag = STAR_TAG,
+    .paletteTag = STAR_TAG,
+    .oam = &sOamData_Star,
+    .anims = sStarAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static void Task_FloatingStars(u8 taskId)
+{
+    for (int i = 0; i < NUM_STARS; i++)
+    {
+        struct Sprite *spr = &gSprites[sStarSpriteIds[i]];
+
+        if (!spr->inUse)
+            continue;
+
+        spr->y += 1 + (i % 2);
+
+        // leve movimento lateral
+        spr->x += (Random2() & 1) ? 1 : -1;
+
+        if (spr->y > 160)
+        {
+            spr->y = 0;
+            spr->x = Random2() % 240;
+        }
+    }
+}
+
+static void LoadStarGfx(void)
+{
+    struct SpriteSheet sheet =
+    {
+        .data = sStarTile,
+        .size = 32,
+        .tag = STAR_TAG
+    };
+
+    struct SpritePalette palette =
+    {
+        .data = (u16[]){
+            RGB(0,0,0),
+            RGB(31,31,31),
+            RGB(20,20,31),
+            RGB(10,10,20)
+        },
+        .tag = STAR_TAG
+    };
+
+    LoadSpriteSheet(&sheet);
+    LoadSpritePalette(&palette);
+}
+
+static void CreateStars(void)
+{
+    LoadStarGfx();
+
+    for (int i = 0; i < NUM_STARS; i++)
+    {
+        u8 spriteId = CreateSprite(   // ← AQUI
+            &sStarSpriteTemplate,
+            Random2() % 240,
+            Random2() % 100,
+            STAR_PRIORITY
+        );
+
+        if (spriteId != MAX_SPRITES)
+            sStarSpriteIds[i] = spriteId;
+        else
+            sStarSpriteIds[i] = SPRITE_NONE;
+    }
+
+    CreateTask(Task_FloatingStars, 0);
 }
 
 
