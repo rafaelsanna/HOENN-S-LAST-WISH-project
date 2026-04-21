@@ -1676,7 +1676,7 @@ static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId)
         {
             jirachiDone = TRUE;
             gSprites[jirachiId].hFlip = FALSE;
-            gSprites[jirachiId].x = 90;   // posição final exata
+            gSprites[jirachiId].x = 90;   // posição final exata da sprite
             gSprites[jirachiId].y = 52;
         }
 
