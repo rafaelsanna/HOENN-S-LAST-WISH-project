@@ -1518,15 +1518,18 @@ static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
     else
     {
         spriteId = gTasks[taskId].tBirchSpriteId;
+        // Começa fora da tela (Y = 160) e invisível
         gSprites[spriteId].x = 120;
-        gSprites[spriteId].y = 60;
+        gSprites[spriteId].y = 160;               // <-- Posição inicial abaixo da tela
         gSprites[spriteId].invisible = FALSE;
         gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-        
-        // Usa a função de fade restaurada
-        // Delay 0: Birch aparece imediatamente quando vindo do novo menu (tTimer=0 em CB2_NewGameBirchSpeech_FromNewMainMenu)
-        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 0);
-        
+
+        // Inicia o fade-in (já existente)
+        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 4);
+
+        // Marca que é a primeira aparição (para usar movimento)
+        gTasks[taskId].data[12] = 1;   // Flag: 1 = primeira aparição (voo)
+
         gTasks[taskId].tTimer = 0;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome;
     }
@@ -1534,30 +1537,43 @@ static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
 
 static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId)
 {
-    if (gTasks[taskId].tIsDoneFadingSprites)
+    u8 spriteId = gTasks[taskId].tBirchSpriteId;
+
+    if (gTasks[taskId].data[12] && gSprites[spriteId].y > 60)
     {
-        gSprites[gTasks[taskId].tBirchSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
-        // *** REMOVER ESTA LINHA: ***
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        // 1. Movimento vertical mais lento
+        gSprites[spriteId].y -= 1;   // Era 2, agora sobe 1 pixel por frame
+
+        u8 phase = gTasks[taskId].data[13];
+        s16 amplitude = 20;  // Era 30, agora oscila menos lateralmente
         
-        if (gTasks[taskId].tTimer)
-        {
-            gTasks[taskId].tTimer--;
-        }
-        else
-        {
-            InitWindows(sNewGameBirchSpeechTextWindows);
-            LoadMainMenuWindowFrameTiles(0, 0xF3);
-            LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
-            LoadBirchSpeechTextboxPalette();
-            NewGameBirchSpeech_ShowDialogueWindow(0, 1);
-            PutWindowTilemap(0);
-            CopyWindowToVram(0, COPYWIN_GFX);
-            NewGameBirchSpeech_ClearWindow(0);
-            StringExpandPlaceholders(gStringVar4, gText_Birch_Welcome);
-            AddTextPrinterForMessage(TRUE);
-            gTasks[taskId].func = Task_NewGameBirchSpeech_ThisIsAPokemon;
-        }
+        // Reduz a amplitude nos últimos 20 pixels para um pouso suave
+        if (gSprites[spriteId].y < 80)
+            amplitude = (gSprites[spriteId].y - 60) * 2 / 2;  // Decaimento mais gradual
+
+        // Calcula offset X usando seno
+        s16 offsetX = (gSineTable[phase] * amplitude) >> 8;
+        gSprites[spriteId].x = 120 + offsetX;
+
+        // Avança a fase mais lentamente (onda mais longa)
+        gTasks[taskId].data[13] = (phase + 4) & 0xFF;  // Era 8, agora incremento de 4
+
+        return;
+    }
+    else
+    {
+        // Seu código original de inicialização das janelas de texto
+        InitWindows(sNewGameBirchSpeechTextWindows);
+        LoadMainMenuWindowFrameTiles(0, 0xF3);
+        LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+        LoadBirchSpeechTextboxPalette();
+        NewGameBirchSpeech_ShowDialogueWindow(0, 1);
+        PutWindowTilemap(0);
+        CopyWindowToVram(0, COPYWIN_GFX);
+        NewGameBirchSpeech_ClearWindow(0);
+        StringExpandPlaceholders(gStringVar4, gText_Birch_Welcome);
+        AddTextPrinterForMessage(TRUE);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ThisIsAPokemon;
     }
 }
 
