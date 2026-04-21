@@ -276,6 +276,11 @@ static const u8 gText_WirelessNotConnected[] = _("The Wireless Adapter is not\nc
 static const u8 gText_MysteryGiftCantUse[] = _("MYSTERY GIFT can't be used while\nthe Wireless Adapter is attached.");
 static const u8 gText_MysteryEventsCantUse[] = _("MYSTERY EVENTS can't be used while\nthe Wireless Adapter is attached.");
 
+static const u32 sJirachiGfx[] = INCBIN_U32("graphics/birch_speech/jirachi.4bpp.lz");
+static const u16 sJirachiPal[]  = INCBIN_U16("graphics/birch_speech/jirachi.gbapal");
+static const u32 sCelebiGfx[]   = INCBIN_U32("graphics/birch_speech/celebi.4bpp.lz");
+static const u16 sCelebiPal[]   = INCBIN_U16("graphics/birch_speech/celebi.gbapal");
+
 #define MENU_LEFT 2
 #define MENU_TOP_WIN0 1
 #define MENU_TOP_WIN1 5
@@ -303,6 +308,13 @@ static const u8 gText_MysteryEventsCantUse[] = _("MYSTERY EVENTS can't be used w
 #define MENU_WIN_HCOORDS WIN_RANGE(((MENU_LEFT - 1) * 8) + MENU_SHADOW_PADDING, (MENU_LEFT + MENU_WIDTH + 1) * 8 - MENU_SHADOW_PADDING)
 #define MENU_WIN_VCOORDS(n) WIN_RANGE(((MENU_TOP_WIN##n - 1) * 8) + MENU_SHADOW_PADDING, (MENU_TOP_WIN##n + MENU_HEIGHT_WIN##n + 1) * 8 - MENU_SHADOW_PADDING)
 #define MENU_SCROLL_SHIFT WIN_RANGE(32, 32)
+
+#define tJirachiSpriteId data[14]
+#define tCelebiSpriteId  data[15]
+
+// ========== TAGS PARA JIRACHI E CELEBI ==========
+#define TAG_JIRACHI     5001
+#define TAG_CELEBI      5002
 
 static const struct WindowTemplate sWindowTemplates_MainMenu[] =
 {
@@ -558,6 +570,58 @@ static const struct SpriteTemplate sBirchStarTemplate = {
     .oam        = &sBirchOamData_Star,
     .anims      = sBirchStarAnimTable,
     .callback   = SpriteCallbackDummy,
+};
+
+// ========== SPRITE TEMPLATE: JIRACHI ==========
+static const struct OamData sOamData_Jirachi = {
+    .shape = SPRITE_SHAPE(64x64),
+    .size  = SPRITE_SIZE(64x64),
+    .priority = 0
+};
+
+static const union AnimCmd sSpriteAnim_Jirachi[] = {
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnimTable_Jirachi[] = {
+    sSpriteAnim_Jirachi
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Jirachi = {
+    .tileTag = TAG_JIRACHI,
+    .paletteTag = TAG_JIRACHI,
+    .oam = &sOamData_Jirachi,
+    .anims = sAnimTable_Jirachi,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+// ========== SPRITE TEMPLATE: CELEBI ==========
+static const struct OamData sOamData_Celebi = {
+    .shape = SPRITE_SHAPE(64x64),
+    .size  = SPRITE_SIZE(64x64),
+    .priority = 0
+};
+
+static const union AnimCmd sSpriteAnim_Celebi[] = {
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnimTable_Celebi[] = {
+    sSpriteAnim_Celebi
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Celebi = {
+    .tileTag = TAG_CELEBI,
+    .paletteTag = TAG_CELEBI,
+    .oam = &sOamData_Celebi,
+    .anims = sAnimTable_Celebi,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
 };
 
 static void Birch_LoadStarGfx(void)
@@ -1401,6 +1465,28 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
 #define tBrendanSpriteId data[10]
 #define tMaySpriteId data[11]
 
+static const struct CompressedSpriteSheet sSpriteSheet_Jirachi = {
+    .data = sJirachiGfx,
+    .size = 0x800,  // Ajuste para o tamanho real (ex: 64x64/2 = 0x800)
+    .tag = TAG_JIRACHI
+};
+
+static const struct SpritePalette sSpritePal_Jirachi = {
+    .data = sJirachiPal,
+    .tag = TAG_JIRACHI
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_Celebi = {
+    .data = sCelebiGfx,
+    .size = 0x800,
+    .tag = TAG_CELEBI
+};
+
+static const struct SpritePalette sSpritePal_Celebi = {
+    .data = sCelebiPal,
+    .tag = TAG_CELEBI
+};
+
 // Ponto de entrada para New Game quando vindo do NOVO menu (ui_main_menu.c).
 // Combina a inicialização do Birch Speech com o setup correto vindo de fora do menu antigo.
 void CB2_NewGameBirchSpeech_FromNewMainMenu(void)
@@ -1437,7 +1523,6 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     // === INICIALIZAÇÃO DO BG2 + JANELAS (completa) ===
     ResetBgsAndClearDma3BusyFlags(0);
 
-    // ++ ADD THESE TWO LINES ++
     // Initialize BG0 (for the text windows) and BG1
     InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
     InitBgFromTemplate(&sBirchBgTemplate);
@@ -1474,7 +1559,7 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     DmaFill16(3, 0, (void *)PLTT, PLTT_SIZE);
     ResetPaletteFade();
 
-    // Carregamento de gráficos originais (pode ser mantido ou removido se não usado)
+    // Carregamento de gráficos originais
     DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
     DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
@@ -1485,6 +1570,14 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetAllPicSprites();
+
+    // 🔥 CARREGAR GRÁFICOS DE JIRACHI E CELEBI ANTES DE CRIAR OS SPRITES
+    LoadCompressedSpriteSheet(&sSpriteSheet_Jirachi);
+    LoadSpritePalette(&sSpritePal_Jirachi);
+    LoadCompressedSpriteSheet(&sSpriteSheet_Celebi);
+    LoadSpritePalette(&sSpritePal_Celebi);
+
+    // Agora sim, cria os sprites (eles encontrarão os tiles carregados)
     AddBirchSpeechObjects(taskId);
     
     gTasks[taskId].tBG1HOFS = 0;
@@ -1509,26 +1602,33 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
 
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
 {
-    u8 spriteId;
-
     if (gTasks[taskId].tTimer)
     {
         gTasks[taskId].tTimer--;
     }
     else
     {
-        spriteId = gTasks[taskId].tBirchSpriteId;
-        // Começa fora da tela (Y = 160) e invisível
-        gSprites[spriteId].x = 120;
-        gSprites[spriteId].y = 160;               // <-- Posição inicial abaixo da tela
-        gSprites[spriteId].invisible = FALSE;
-        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        u8 jirachiId = gTasks[taskId].tJirachiSpriteId;
+        u8 celebiId  = gTasks[taskId].tCelebiSpriteId;
 
-        // Inicia o fade-in (já existente)
+        // Posições iniciais: esquerda e direita, abaixo da tela
+        gSprites[jirachiId].x = 40;   // Esquerda
+        gSprites[jirachiId].y = 160;
+        gSprites[jirachiId].invisible = FALSE;
+        gSprites[jirachiId].oam.objMode = ST_OAM_OBJ_BLEND;
+
+        gSprites[celebiId].x = 200;   // Direita
+        gSprites[celebiId].y = 160;
+        gSprites[celebiId].invisible = FALSE;
+        gSprites[celebiId].oam.objMode = ST_OAM_OBJ_BLEND;
+
+        // Inicia fade-in para ambos
         NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 4);
 
-        // Marca que é a primeira aparição (para usar movimento)
-        gTasks[taskId].data[12] = 1;   // Flag: 1 = primeira aparição (voo)
+        // Flags para controlar a animação
+gTasks[taskId].data[12] = 1;   // Flag voo ativo
+gTasks[taskId].data[13] = 0;   // Fase Jirachi
+gTasks[taskId].data[0]  = 0;   // Fase Celebi (emprestado)
 
         gTasks[taskId].tTimer = 0;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome;
@@ -1537,64 +1637,119 @@ static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
 
 static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId)
 {
-    u8 spriteId = gTasks[taskId].tBirchSpriteId;
+    u8 jirachiId = gTasks[taskId].tJirachiSpriteId;
+    u8 celebiId  = gTasks[taskId].tCelebiSpriteId;
+    bool8 jirachiDone = FALSE, celebiDone = FALSE;
 
-    if (gTasks[taskId].data[12] && gSprites[spriteId].y > 60)
+    // Movimento único: cruzamento + afastamento natural (sem fases extras)
+    if (gTasks[taskId].data[12] == 1)
     {
-        // 1. Movimento vertical mais lento
-        gSprites[spriteId].y -= 1;   // Era 2, agora sobe 1 pixel por frame
+        // ========== Jirachi (vindo da esquerda) ==========
+        if (gSprites[jirachiId].y > 52)  // alvo final Y=52
+        {
+            gSprites[jirachiId].y -= 1;
 
-        u8 phase = gTasks[taskId].data[13];
-        s16 amplitude = 20;  // Era 30, agora oscila menos lateralmente
-        
-        // Reduz a amplitude nos últimos 20 pixels para um pouso suave
-        if (gSprites[spriteId].y < 80)
-            amplitude = (gSprites[spriteId].y - 60) * 2 / 2;  // Decaimento mais gradual
+            u8 phase = gTasks[taskId].data[13];
+            s16 amplitude = 25;
+            
+            // A partir de Y=60, reduz amplitude e desloca o centro para a esquerda
+            s16 centerX = 120;
+            if (gSprites[jirachiId].y <= 60)
+            {
+                // Progresso de 60 até 52: desloca centro de 120 para 90
+                u8 progress = 60 - gSprites[jirachiId].y;  // 0 a 8
+                centerX = 120 - (30 * progress / 8);       // 120 -> 90
+                amplitude = 25 - (25 * progress / 8);      // 25 -> 0
+            }
 
-        // Calcula offset X usando seno
-        s16 offsetX = (gSineTable[phase] * amplitude) >> 8;
-        gSprites[spriteId].x = 120 + offsetX;
+            s16 offsetX = (gSineTable[phase] * amplitude) >> 8;
+            s16 newX = centerX + offsetX;
 
-        // Avança a fase mais lentamente (onda mais longa)
-        gTasks[taskId].data[13] = (phase + 4) & 0xFF;  // Era 8, agora incremento de 4
+            if (newX > gSprites[jirachiId].x)
+                gSprites[jirachiId].hFlip = FALSE;
+            else if (newX < gSprites[jirachiId].x)
+                gSprites[jirachiId].hFlip = TRUE;
 
+            gSprites[jirachiId].x = newX;
+        }
+        else
+        {
+            jirachiDone = TRUE;
+            gSprites[jirachiId].hFlip = FALSE;
+            gSprites[jirachiId].x = 90;   // posição final exata
+            gSprites[jirachiId].y = 52;
+        }
+
+        // ========== Celebi (vindo da direita) ==========
+        if (gSprites[celebiId].y > 52)
+        {
+            gSprites[celebiId].y -= 1;
+
+            u8 phase = gTasks[taskId].data[0];
+            s16 amplitude = 25;
+            
+            s16 centerX = 120;
+            if (gSprites[celebiId].y <= 60)
+            {
+                u8 progress = 60 - gSprites[celebiId].y;
+                centerX = 120 + (30 * progress / 8);       // 120 -> 150
+                amplitude = 25 - (25 * progress / 8);
+            }
+
+            // Fase defasada em 128 para movimento espelhado
+            s16 offsetX = (gSineTable[(phase + 128) & 0xFF] * amplitude) >> 8;
+            s16 newX = centerX + offsetX;
+
+            if (newX > gSprites[celebiId].x)
+                gSprites[celebiId].hFlip = FALSE;
+            else if (newX < gSprites[celebiId].x)
+                gSprites[celebiId].hFlip = TRUE;
+
+            gSprites[celebiId].x = newX;
+        }
+        else
+        {
+            celebiDone = TRUE;
+            gSprites[celebiId].hFlip = FALSE;
+            gSprites[celebiId].x = 150;
+            gSprites[celebiId].y = 52;
+        }
+
+        // Avança as fases da onda
+        gTasks[taskId].data[13] = (gTasks[taskId].data[13] + 4) & 0xFF;
+        gTasks[taskId].data[0]  = (gTasks[taskId].data[0] + 4) & 0xFF;
+
+        // Quando ambos terminarem, avança para o estado final
+        if (jirachiDone && celebiDone)
+        {
+            gTasks[taskId].data[12] = 0;   // finaliza animação
+        }
         return;
     }
-    else
-    {
-        // Seu código original de inicialização das janelas de texto
-        InitWindows(sNewGameBirchSpeechTextWindows);
-        LoadMainMenuWindowFrameTiles(0, 0xF3);
-        LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
-        LoadBirchSpeechTextboxPalette();
-        NewGameBirchSpeech_ShowDialogueWindow(0, 1);
-        PutWindowTilemap(0);
-        CopyWindowToVram(0, COPYWIN_GFX);
-        NewGameBirchSpeech_ClearWindow(0);
-        StringExpandPlaceholders(gStringVar4, gText_Birch_Welcome);
-        AddTextPrinterForMessage(TRUE);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_ThisIsAPokemon;
-    }
-}
 
-static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8 taskId)
-{
-    if (!gPaletteFade.active && !RunTextPrintersAndIsPrinter0Active())
-    {
-        // Pula direto para o discurso principal
-        gTasks[taskId].func = Task_NewGameBirchSpeech_MainSpeech;
-    }
-}
+    // Aguarda o fade-in terminar (caso ainda não tenha terminado)
+    if (!gTasks[taskId].tIsDoneFadingSprites)
+        return;
 
+    // Restaura sprites
+    gSprites[jirachiId].oam.objMode = ST_OAM_OBJ_NORMAL;
+    gSprites[jirachiId].oam.priority = 0;
+    gSprites[celebiId].oam.objMode = ST_OAM_OBJ_NORMAL;
+    gSprites[celebiId].oam.priority = 0;
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
 
-static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId)
-{
-    if (!RunTextPrintersAndIsPrinter0Active())
-    {
-        StringExpandPlaceholders(gStringVar4, gText_Birch_MainSpeech);
-        AddTextPrinterForMessage(TRUE);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
-    }
+    // Inicialização das janelas de texto
+    InitWindows(sNewGameBirchSpeechTextWindows);
+    LoadMainMenuWindowFrameTiles(0, 0xF3);
+    LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    LoadBirchSpeechTextboxPalette();
+    NewGameBirchSpeech_ShowDialogueWindow(0, 1);
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_GFX);
+    NewGameBirchSpeech_ClearWindow(0);
+    StringExpandPlaceholders(gStringVar4, gText_Birch_Welcome);
+    AddTextPrinterForMessage(TRUE);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ThisIsAPokemon;
 }
 
 #define tState data[0]
@@ -1644,9 +1799,12 @@ static void Task_NewGameBirchSpeech_StartPlayerFadeIn(u8 taskId)
     {
         gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
-        
-        // Desativa blend antes de começar novo fade
+        // Oculta Jirachi e Celebi (sprites da primeira aparição)
+        gSprites[gTasks[taskId].tJirachiSpriteId].invisible = TRUE;
+        gSprites[gTasks[taskId].tCelebiSpriteId].invisible = TRUE;
+
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
+
         
         if (gTasks[taskId].tTimer)
         {
@@ -2096,10 +2254,24 @@ static void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *sprite)
 static void AddBirchSpeechObjects(u8 taskId)
 {
     u8 birchSpriteId;
-    u8 brendanSpriteId;
-    u8 maySpriteId;
+    u8 jirachiSpriteId, celebiSpriteId;
+    u8 brendanSpriteId, maySpriteId;
 
-    // Sprite do Jirachi (substitui o Birch original)
+    // ========== Sprites individuais para a primeira aparição ==========
+    jirachiSpriteId = CreateSprite(&sSpriteTemplate_Jirachi, 0, 160, 0);
+    gSprites[jirachiSpriteId].callback = SpriteCB_Null;
+    gSprites[jirachiSpriteId].oam.priority = 0;
+    gSprites[jirachiSpriteId].invisible = TRUE;
+    gTasks[taskId].tJirachiSpriteId = jirachiSpriteId;
+
+    celebiSpriteId = CreateSprite(&sSpriteTemplate_Celebi, 240, 160, 0);
+    gSprites[celebiSpriteId].callback = SpriteCB_Null;
+    gSprites[celebiSpriteId].oam.priority = 0;
+    gSprites[celebiSpriteId].invisible = TRUE;
+    gTasks[taskId].tCelebiSpriteId = celebiSpriteId;
+    // ==================================================================
+
+    // Sprite do Birch (original, usado na segunda aparição e como fallback)
     birchSpriteId = AddNewGameBirchObject(0x88, 0x3C, 1);
     gSprites[birchSpriteId].callback = SpriteCB_Null;
     gSprites[birchSpriteId].oam.priority = 0;
@@ -2107,17 +2279,16 @@ static void AddBirchSpeechObjects(u8 taskId)
     gTasks[taskId].tBirchSpriteId = birchSpriteId;
 
     // REMOVIDO: Lotad não é mais usado
-    // Define sprite ID inválido para evitar crashes
     gTasks[taskId].tLotadSpriteId = SPRITE_NONE;
 
-    // Sprite do Brendan - CENTRALIZADO
+    // Sprite do Brendan
     brendanSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_BRENDAN), 120, 60, 0, NULL);
     gSprites[brendanSpriteId].callback = SpriteCB_Null;
     gSprites[brendanSpriteId].invisible = TRUE;
     gSprites[brendanSpriteId].oam.priority = 0;
     gTasks[taskId].tBrendanSpriteId = brendanSpriteId;
 
-    // Sprite da May - CENTRALIZADO
+    // Sprite da May
     maySpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_MAY), 120, 60, 0, NULL);
     gSprites[maySpriteId].callback = SpriteCB_Null;
     gSprites[maySpriteId].invisible = TRUE;
@@ -2460,6 +2631,25 @@ static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
     {
         NewGameBirchSpeech_ShowDialogueWindow(0, 1);
         gTasks[taskId].func = Task_NewGameBirchSpeech_SoItsPlayerName;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8 taskId)
+{
+    if (!gPaletteFade.active && !RunTextPrintersAndIsPrinter0Active())
+    {
+        // Pula direto para o discurso principal (já que removemos o Pokéball/Lotad)
+        gTasks[taskId].func = Task_NewGameBirchSpeech_MainSpeech;
+    }
+}
+
+static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        StringExpandPlaceholders(gStringVar4, gText_Birch_MainSpeech);
+        AddTextPrinterForMessage(TRUE);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
     }
 }
 
