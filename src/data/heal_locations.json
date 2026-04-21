@@ -40,7 +40,7 @@
       "id": "HEAL_LOCATION_MAUVILLE_CITY",
       "map": "MAP_MAUVILLE_CITY",
       "x": 21,
-      "y": 15,
+      "y": 20,
       "respawn_map": "MAP_MAUVILLE_CITY_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_MAUVILLE_NURSE"
     },

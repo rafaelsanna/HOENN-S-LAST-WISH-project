@@ -1262,6 +1262,10 @@
     {
       "id": "MAPSEC_GROTTO",
       "name": "PBWOODS GROTTO"
+    },
+    {
+      "id": "MAPSEC_ROGUE_CANYON",
+      "name": "ROGUE CANYON"
     }
   ]
 }
