@@ -39,6 +39,8 @@
 #include "window.h"
 #include "mystery_gift_menu.h"
 #include "ui_main_menu.h"
+#include "random.h"
+#include "trig.h"
 
 /*
  * Main menu state machine
@@ -240,12 +242,20 @@ static void MainMenu_FormatSavegameTime(void);
 static void MainMenu_FormatSavegameBadges(void);
 static void NewGameBirchSpeech_CreateDialogueWindowBorder(u8, u8, u8, u8, u8, u8);
 static void LoadBirchSpeechTextboxPalette(void);
+static void Birch_TaskFloatingStars(u8 taskId);
+static void Birch_CreateStars(void);
+static void Birch_LoadStarGfx(void);
+static void Birch_DestroyStars(void);
 // .rodata
 
 static const u16 sBirchSpeechBgPals[][16] = {
     INCBIN_U16("graphics/birch_speech/shadow.gbapal"),
     INCBIN_U16("graphics/birch_speech/shadow.gbapal")
 };
+
+static const u32 sBirchSpeechBgTiles[] = INCBIN_U32("graphics/birch_speech/birchspeech.4bpp.lz");
+static const u32 sBirchSpeechBgTilemap[] = INCBIN_U32("graphics/birch_speech/birchspeech.bin.lz");
+static const u16 sBirchSpeechBgPalette[] = INCBIN_U16("graphics/birch_speech/birchspeech.gbapal");
 
 static const u32 sBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/shadow.4bpp.smol");
 static const u32 sBirchSpeechBgMap[] = INCBIN_U32("graphics/birch_speech/map.bin.smolTM");
@@ -381,6 +391,27 @@ static const struct WindowTemplate sWindowTemplates_MainMenu[] =
     DUMMY_WIN_TEMPLATE
 };
 
+static const struct BgTemplate sMainMenuBgTemplates[] = {
+    {
+        .bg = 0,
+    .charBaseIndex = 2,
+    .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+    .charBaseIndex = 0,
+    .mapBaseIndex = 7,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
 static const struct WindowTemplate sNewGameBirchSpeechTextWindows[] =
 {
     {
@@ -416,27 +447,6 @@ static const struct WindowTemplate sNewGameBirchSpeechTextWindows[] =
 static const u8 sTextColor_Headers[] = {TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sTextColor_MenuInfo[] = {TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 
-static const struct BgTemplate sMainMenuBgTemplates[] = {
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 30,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 7,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 3,
-        .baseTile = 0
-    }
-};
-
 static const struct BgTemplate sBirchBgTemplate = {
     .bg = 0,
     .charBaseIndex = 3,
@@ -444,6 +454,16 @@ static const struct BgTemplate sBirchBgTemplate = {
     .screenSize = 0,
     .paletteMode = 0,
     .priority = 0,
+    .baseTile = 0
+};
+
+static const struct BgTemplate sBirchSpeechBgTemplate = {
+    .bg = 2,                      // Usaremos BG2 para o fundo
+    .charBaseIndex = 1,           // Escolha um índice livre (ex.: 1)
+    .mapBaseIndex = 28,           // Escolha um índice livre (ex.: 28)
+    .screenSize = 0,
+    .paletteMode = 0,
+    .priority = 3,                // Prioridade baixa (fundo)
     .baseTile = 0
 };
 
@@ -476,6 +496,151 @@ static const u8 *const sFemalePresetNames[] = {
 // The number of male vs. female names is assumed to be the same.
 // If they aren't, the smaller of the two sizes will be used and any extra names will be ignored.
 #define NUM_PRESET_NAMES min(ARRAY_COUNT(sMalePresetNames), ARRAY_COUNT(sFemalePresetNames))
+
+// ========== STARFIELD FOR BIRCH SPEECH ========== //
+#define NUM_BIRCH_STARS    30
+#define BIRCH_STAR_TAG     5100
+#define BIRCH_STAR_PRIORITY 2
+
+enum {
+    BIRCH_STAR_SIZE_MEDIUM,
+    BIRCH_STAR_SIZE_LARGE,
+    BIRCH_STAR_SIZE_COUNT
+};
+
+static u8 sBirchStarSpriteIds[NUM_BIRCH_STARS];
+
+// Star tiles (medium and large)
+static const u32 sBirchStarTiles[][8] = {
+    // Medium
+    {
+        0x00000000, 0x00010000, 0x00111000, 0x00010000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    },
+    // Large
+    {
+        0x00010000, 0x00010000, 0x00111000, 0x01111100,
+        0x00111000, 0x00010000, 0x00010000, 0x00000000,
+    },
+};
+
+// Brightness levels
+static const u16 sBirchStarPal0[4] = { RGB(0,0,0), RGB( 7, 9,14), RGB(0,0,0), RGB(0,0,0) };
+static const u16 sBirchStarPal1[4] = { RGB(0,0,0), RGB(14,16,22), RGB(0,0,0), RGB(0,0,0) };
+static const u16 sBirchStarPal2[4] = { RGB(0,0,0), RGB(22,24,29), RGB(0,0,0), RGB(0,0,0) };
+static const u16 sBirchStarPal3[4] = { RGB(0,0,0), RGB(31,31,31), RGB(0,0,0), RGB(0,0,0) };
+
+static const struct SpriteSheet sBirchStarSheet = {
+    .data = sBirchStarTiles,
+    .size = sizeof(sBirchStarTiles),
+    .tag  = BIRCH_STAR_TAG,
+};
+
+static const u16 sBirchStarPalDummy[4] = { RGB(0,0,0), RGB(31,31,31), RGB(0,0,0), RGB(0,0,0) };
+static const struct SpritePalette sBirchStarPaletteDummy = {
+    .data = sBirchStarPalDummy,
+    .tag  = BIRCH_STAR_TAG + 0,
+};
+
+static const struct OamData sBirchOamData_Star = {
+    .shape    = SPRITE_SHAPE(8x8),
+    .size     = SPRITE_SIZE(8x8),
+    .priority = BIRCH_STAR_PRIORITY,
+};
+
+static const union AnimCmd sBirchStarAnimMedium[] = { ANIMCMD_FRAME(BIRCH_STAR_SIZE_MEDIUM, 0), ANIMCMD_END };
+static const union AnimCmd sBirchStarAnimLarge[]  = { ANIMCMD_FRAME(BIRCH_STAR_SIZE_LARGE,  0), ANIMCMD_END };
+static const union AnimCmd *const sBirchStarAnimTable[] = { sBirchStarAnimMedium, sBirchStarAnimLarge };
+
+static const struct SpriteTemplate sBirchStarTemplate = {
+    .tileTag    = BIRCH_STAR_TAG,
+    .paletteTag = BIRCH_STAR_TAG + 0,
+    .oam        = &sBirchOamData_Star,
+    .anims      = sBirchStarAnimTable,
+    .callback   = SpriteCallbackDummy,
+};
+
+static void Birch_LoadStarGfx(void)
+{
+    LoadSpriteSheet(&sBirchStarSheet);
+    LoadSpritePalette(&sBirchStarPaletteDummy);
+    LoadPalette(sBirchStarPal0, OBJ_PLTT_ID(8),  sizeof(sBirchStarPal0));
+    LoadPalette(sBirchStarPal1, OBJ_PLTT_ID(9),  sizeof(sBirchStarPal1));
+    LoadPalette(sBirchStarPal2, OBJ_PLTT_ID(10), sizeof(sBirchStarPal2));
+    LoadPalette(sBirchStarPal3, OBJ_PLTT_ID(11), sizeof(sBirchStarPal3));
+}
+
+static void Birch_CreateStars(void)
+{
+    Birch_LoadStarGfx();
+
+    for (int i = 0; i < NUM_BIRCH_STARS; i++)
+    {
+        u8 id = CreateSprite(&sBirchStarTemplate,
+                             Random2() % DISPLAY_WIDTH,
+                             Random2() % DISPLAY_HEIGHT,
+                             0);
+        if (id == MAX_SPRITES)
+        {
+            sBirchStarSpriteIds[i] = SPRITE_NONE;
+            continue;
+        }
+
+        sBirchStarSpriteIds[i] = id;
+
+        u8 sizeType = (Random2() % 10 < 6) ? BIRCH_STAR_SIZE_MEDIUM : BIRCH_STAR_SIZE_LARGE;
+        StartSpriteAnim(&gSprites[id], sizeType);
+
+        gSprites[id].data[0] = (s16)(Random2() & 0xFF);
+        gSprites[id].data[1] = 0;
+        gSprites[id].data[2] = (sizeType == BIRCH_STAR_SIZE_MEDIUM) ? 1 : 2;
+        gSprites[id].data[3] = 0;
+        gSprites[id].data[4] = (s16)sizeType;
+    }
+
+    CreateTask(Birch_TaskFloatingStars, 0);
+}
+
+static void Birch_TaskFloatingStars(u8 taskId)
+{
+    for (int i = 0; i < NUM_BIRCH_STARS; i++)
+    {
+        struct Sprite *spr = &gSprites[sBirchStarSpriteIds[i]];
+        if (!spr->inUse) continue;
+
+        spr->data[3]++;
+        if (spr->data[3] >= spr->data[2] * 4)
+        {
+            spr->y += 1;
+            spr->data[3] = 0;
+        }
+
+        if (spr->y > DISPLAY_HEIGHT + 16)
+        {
+            spr->y = -8;
+            spr->x = Random2() % DISPLAY_WIDTH;
+        }
+
+        spr->data[1] = (spr->data[1] + 1) & 0xFF;
+        u8 phase = (u8)((spr->data[1] + spr->data[0]) & 0xFF);
+        u8 tv    = (phase < 128) ? phase : (u8)(255 - phase);
+        u8 hiPhase = (tv >= 64) ? 1 : 0;
+
+        u8 depth = (u8)spr->data[4];
+        spr->oam.paletteNum = 9 + depth + hiPhase;
+    }
+}
+
+static void Birch_DestroyStars(void)
+{
+    u8 taskId = FindTaskIdByFunc(Birch_TaskFloatingStars);
+    if (taskId != TASK_NONE)
+        DestroyTask(taskId);
+    for (int i = 0; i < NUM_BIRCH_STARS; i++)
+        if (sBirchStarSpriteIds[i] != SPRITE_NONE)
+            DestroySprite(&gSprites[sBirchStarSpriteIds[i]]);
+}
+//////
 
 enum
 {
@@ -578,7 +743,8 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
     SetMainCallback2(CB2_MainMenu);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     ShowBg(0);
-    HideBg(1);
+    ShowBg(1);
+    ShowBg(2);
     CreateTask(Task_MainMenuCheckSaveFile, 0);
 
     return 0;
@@ -1241,23 +1407,22 @@ void CB2_NewGameBirchSpeech_FromNewMainMenu(void)
 {
     u8 taskId;
 
-    // Reseta o estado da GPU completamente — o novo menu deixa BGs,
-    // paletas e VRAM em estado desconhecido ao chamar este callback.
+    // Para tudo e limpa memória de vídeo completamente
     SetVBlankCallback(NULL);
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     DmaFill16(3, 0, (void *)PLTT, PLTT_SIZE);
     DmaFill16(3, 0, (void *)VRAM, VRAM_SIZE);
     DmaFill32(3, 0, (void *)OAM,  OAM_SIZE);
+
+    // Reset de sistemas — sem carregar nada de BG ou sprites aqui.
+    // Task_NewGameBirchSpeech_Init fará TODA a inicialização, espelhando
+    // o que CB2_NewGameBirchSpeech_ReturnFromNamingScreen faz diretamente.
     ResetPaletteFade();
-    ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
     ScanlineEffect_Stop();
     ResetTasks();
     ResetSpriteData();
     FreeAllSpritePalettes();
 
-    // Delega para Task_NewGameBirchSpeech_Init — que já funciona
-    // corretamente e nunca gerou pixels FF00FF.
     taskId = CreateTask(Task_NewGameBirchSpeech_Init, 0);
     gTasks[taskId].tTimer = 0;
 
@@ -1267,52 +1432,79 @@ void CB2_NewGameBirchSpeech_FromNewMainMenu(void)
 
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
-    int i;
+    u16 black = RGB_BLACK;
 
+    // === INICIALIZAÇÃO DO BG2 + JANELAS (completa) ===
+    ResetBgsAndClearDma3BusyFlags(0);
+
+    // ++ ADD THESE TWO LINES ++
+    // Initialize BG0 (for the text windows) and BG1
+    InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
+    InitBgFromTemplate(&sBirchBgTemplate);
+
+    // BG2 - fundo estático
+    InitBgFromTemplate(&sBirchSpeechBgTemplate);
+    DecompressAndCopyTileDataToVram(2, sBirchSpeechBgTiles, 0, 0, 0);
+    DecompressDataWithHeaderVram(sBirchSpeechBgTilemap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(sBirchSpeechBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+
+    // Configuração de display e resets
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-    InitBgFromTemplate(&sBirchBgTemplate);
-    
-    // Configura janela/blend corretamente
+
+    SetGpuReg(REG_OFFSET_BG2CNT, 0);
+    SetGpuReg(REG_OFFSET_BG1CNT, 0);
+    SetGpuReg(REG_OFFSET_BG0CNT, 0);
+    SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+    SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG0VOFS, 0);
     SetGpuReg(REG_OFFSET_WIN0H, 0);
     SetGpuReg(REG_OFFSET_WIN0V, 0);
     SetGpuReg(REG_OFFSET_WININ, 0);
     SetGpuReg(REG_OFFSET_WINOUT, 0);
-    SetGpuReg(REG_OFFSET_BLDCNT, 0);  // *** Começa com blend DESATIVADO ***
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 0);
 
-    // Carrega gfx/tiles
-    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)VRAM);
-    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (void *)(BG_SCREEN_ADDR(7)));
+    // Limpeza de OAM e PLTT (VRAM não é limpa para preservar BG2)
+    DmaFill32(3, 0, (void *)OAM, OAM_SIZE);
+    DmaFill16(3, 0, (void *)PLTT, PLTT_SIZE);
+    ResetPaletteFade();
 
-    // Carrega paletas do background
+    // Carregamento de gráficos originais (pode ser mantido ou removido se não usado)
+    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
+    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-   // LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+    LoadPalette(&black, BG_PLTT_ID(0), sizeof(black));
 
-    // Sincroniza buffers de paleta
-    for (i = 0; i < 32; ++i)
-    {
-        gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
-    }
-
+    // Inicialização de sprites
     ScanlineEffect_Stop();
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetAllPicSprites();
     AddBirchSpeechObjects(taskId);
-
-    // *** Fade inicial apenas para objetos (não afeta BG) ***
-    BeginNormalPaletteFade(PALETTES_OBJECTS, 0, 16, 0, RGB_BLACK);
-
+    
     gTasks[taskId].tBG1HOFS = 0;
-    gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowBirch;
     gTasks[taskId].tPlayerSpriteId = SPRITE_NONE;
     gTasks[taskId].data[3] = 0xFF;
     gTasks[taskId].tTimer = 0xD8;
+    
     PlayBGM(MUS_RG_TITLE);
+    
+    // Ativa todos os BGs
     ShowBg(0);
     ShowBg(1);
+    ShowBg(2);
+    
+    // Cria estrelas (uma única vez)
+    Birch_CreateStars();
+    
+    // Inicia fade
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowBirch;
 }
 
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
@@ -1762,6 +1954,8 @@ static void Task_NewGameBirchSpeech_FadePlayerToWhite(u8 taskId)
 
 static void Task_NewGameBirchSpeech_Cleanup(u8 taskId)
 {
+    Birch_DestroyStars();  // <-- ADICIONE ESTA LINHA
+
     if (!gPaletteFade.active)
     {
         FreeAllWindowBuffers();
@@ -1781,8 +1975,18 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     ResetBgsAndClearDma3BusyFlags(0);
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    
+    // ========== INICIALIZAÇÃO DO BG2 (FUNDO ESTÁTICO) ==========
+    InitBgFromTemplate(&sBirchSpeechBgTemplate);
+    DecompressAndCopyTileDataToVram(2, sBirchSpeechBgTiles, 0, 0, 0);
+    DecompressDataWithHeaderVram(sBirchSpeechBgTilemap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(sBirchSpeechBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    // ==========================================================
+    
+    // Inicializa os BGs originais (BG0 e BG1)
     InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
     InitBgFromTemplate(&sBirchBgTemplate);
+    
     SetVBlankCallback(NULL);
     SetGpuReg(REG_OFFSET_BG2CNT, 0);
     SetGpuReg(REG_OFFSET_BG1CNT, 0);
@@ -1800,7 +2004,11 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
     DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-    /////LoadPalette(&sBirchSpeechBgGradientPal[1], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+
+    /* Corrige a transparencia do fundo: define a cor de indice 0 como preto */
+    u16 black = RGB_BLACK;
+    LoadPalette(&black, BG_PLTT_ID(0), sizeof(black));
+
     ResetTasks();
     taskId = CreateTask(Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox, 0);
     gTasks[taskId].tTimer = 5;
@@ -1820,6 +2028,8 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
         gTasks[taskId].tPlayerGender = MALE;
         spriteId = gTasks[taskId].tBrendanSpriteId;
     }
+    /* Destroi estrelas antigas e recria */
+    Birch_DestroyStars();
     gSprites[spriteId].x = 180;
     gSprites[spriteId].y = 60;
     gSprites[spriteId].invisible = FALSE;
@@ -1835,6 +2045,11 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     SetGpuReg(REG_OFFSET_BLDY, 0);
     ShowBg(0);
     ShowBg(1);
+    ShowBg(2);   // <-- ADICIONADO
+
+    /* Cria as estrelas novamente apos a reinicializacao da cena */
+    Birch_CreateStars();
+
     savedIme = REG_IME;
     REG_IME = 0;
     REG_IE |= 1;

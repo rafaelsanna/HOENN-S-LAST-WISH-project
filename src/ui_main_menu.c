@@ -94,11 +94,11 @@ enum
         Free(*ptr__);                  \
 })
 
-#define NUM_STARS 20
-#define STAR_TAG  5000
-#define STAR_PRIORITY 2
+#define NUM_STARS       30
+#define STAR_TAG        5000
+#define STAR_PRIORITY   2
 
-// Tipos de tamanho de estrela
+// Apenas dois tamanhos: MEDIUM e LARGE
 enum {
     STAR_SIZE_MEDIUM,
     STAR_SIZE_LARGE,
@@ -627,7 +627,7 @@ static void PrintToWindow(u8 windowId, u8 colorIdx)
 //==========STARS (SPRITES)==========//
 // Múltiplos tiles para simular tamanhos diferentes (todos 8x8)
 static const u32 sStarTiles[][8] = {
-    // Média
+    // Média (cruz 3x3)
     {
         0x00000000,
         0x00010000,
@@ -638,7 +638,7 @@ static const u32 sStarTiles[][8] = {
         0x00000000,
         0x00000000,
     },
-    // Grande (original)
+    // Grande (cruz 5x5 original)
     {
         0x00010000,
         0x00010000,
@@ -651,18 +651,11 @@ static const u32 sStarTiles[][8] = {
     },
 };
 
-static const u16 sStarPalNormal[4] = {
-    RGB(0,0,0),        // transparente
-    RGB(28,28,31),     // branco levemente azulado
-    RGB(18,20,24),     // tom médio
-    RGB(31,31,31),     // branco puro (reserva)
-};
-static const u16 sStarPalBright[4] = {
-    RGB(0,0,0),
-    RGB(31,31,31),     // brilhante
-    RGB(22,24,28),
-    RGB(28,28,31),
-};
+// Quatro níveis de brilho (OBJ palette slots 8-11)
+static const u16 sStarPal0[4] = { RGB(0,0,0), RGB( 7, 9,14), RGB(0,0,0), RGB(0,0,0) }; // muito escuro
+static const u16 sStarPal1[4] = { RGB(0,0,0), RGB(14,16,22), RGB(0,0,0), RGB(0,0,0) }; // escuro-médio
+static const u16 sStarPal2[4] = { RGB(0,0,0), RGB(22,24,29), RGB(0,0,0), RGB(0,0,0) }; // médio-claro
+static const u16 sStarPal3[4] = { RGB(0,0,0), RGB(31,31,31), RGB(0,0,0), RGB(0,0,0) }; // brilhante
 
 static const struct SpriteSheet sStarSheet = {
     .data = sStarTiles,
@@ -670,34 +663,23 @@ static const struct SpriteSheet sStarSheet = {
     .tag  = STAR_TAG,
 };
 
-static const struct SpritePalette sStarPaletteNormal = {
-    .data = sStarPalNormal,
+// Paleta dummy para satisfazer o sistema de tags (será sobrescrita pelos LoadPalette)
+static const u16 sStarPalDummy[4] = { RGB(0,0,0), RGB(31,31,31), RGB(0,0,0), RGB(0,0,0) };
+static const struct SpritePalette sStarPaletteDummy = {
+    .data = sStarPalDummy,
     .tag  = STAR_TAG + 0,
-};
-static const struct SpritePalette sStarPaletteBright = {
-    .data = sStarPalBright,
-    .tag  = STAR_TAG + 1,
 };
 
 static const struct OamData sOamData_Star = {
-    .shape = SPRITE_SHAPE(8x8),
-    .size  = SPRITE_SIZE(8x8),
+    .shape    = SPRITE_SHAPE(8x8),
+    .size     = SPRITE_SIZE(8x8),
     .priority = STAR_PRIORITY,
 };
 
-// Animação para cada tamanho (fixo)
-static const union AnimCmd sStarAnimMedium[] = {
-    ANIMCMD_FRAME(STAR_SIZE_MEDIUM, 0),
-    ANIMCMD_END
-};
-static const union AnimCmd sStarAnimLarge[] = {
-    ANIMCMD_FRAME(STAR_SIZE_LARGE, 0),
-    ANIMCMD_END
-};
-static const union AnimCmd *const sStarAnimTable[] = {
-    sStarAnimMedium,
-    sStarAnimLarge,
-};
+// Animações fixas para cada tamanho
+static const union AnimCmd sStarAnimMedium[] = { ANIMCMD_FRAME(STAR_SIZE_MEDIUM, 0), ANIMCMD_END };
+static const union AnimCmd sStarAnimLarge[]  = { ANIMCMD_FRAME(STAR_SIZE_LARGE,  0), ANIMCMD_END };
+static const union AnimCmd *const sStarAnimTable[] = { sStarAnimMedium, sStarAnimLarge };
 
 static const struct SpriteTemplate sStarTemplate = {
     .tileTag    = STAR_TAG,
@@ -710,9 +692,11 @@ static const struct SpriteTemplate sStarTemplate = {
 static void LoadStarGfx(void)
 {
     LoadSpriteSheet(&sStarSheet);
-    // Carrega as duas paletas em slots consecutivos (OBJ_PLTT_ID(8) e (9))
-    LoadPalette(sStarPalNormal, OBJ_PLTT_ID(8), sizeof(sStarPalNormal));
-    LoadPalette(sStarPalBright, OBJ_PLTT_ID(9), sizeof(sStarPalBright));
+    LoadSpritePalette(&sStarPaletteDummy);               // registra a tag
+    LoadPalette(sStarPal0, OBJ_PLTT_ID(8),  sizeof(sStarPal0)); // dim
+    LoadPalette(sStarPal1, OBJ_PLTT_ID(9),  sizeof(sStarPal1)); // escuro-médio
+    LoadPalette(sStarPal2, OBJ_PLTT_ID(10), sizeof(sStarPal2)); // médio-claro
+    LoadPalette(sStarPal3, OBJ_PLTT_ID(11), sizeof(sStarPal3)); // brilhante
 }
 
 static void CreateStars(void)
@@ -725,31 +709,28 @@ static void CreateStars(void)
                              Random2() % DISPLAY_WIDTH,
                              Random2() % DISPLAY_HEIGHT,
                              0);
-        if (id != MAX_SPRITES)
-        {
-            sStarSpriteIds[i] = id;
-            // Escolhe tamanho aleatório
-            // Escolhe tamanho aleatório (apenas médio ou grande)
-            u8 sizeType = Random2() % STAR_SIZE_COUNT;
-            // Define a animação (frame) correspondente ao tamanho
-            StartSpriteAnim(&gSprites[id], sizeType);
-            
-            // Configura dados: data[0] = fase do seno (não usado agora), data[1] = timer brilho, 
-            // data[2] = velocidade base, data[3] = contador de delay
-            gSprites[id].data[0] = Random2();
-            gSprites[id].data[1] = 0;
-            // Velocidades diferentes por tamanho (parallax): média mais rápida, grande mais lenta
-            switch (sizeType) {
-                case STAR_SIZE_MEDIUM: gSprites[id].data[2] = 2; break;
-                case STAR_SIZE_LARGE:  gSprites[id].data[2] = 1; break;
-            }
-            gSprites[id].data[3] = 0;
-            gSprites[id].oam.paletteNum = 0;
-        }
-        else
+        if (id == MAX_SPRITES)
         {
             sStarSpriteIds[i] = SPRITE_NONE;
+            continue;
         }
+
+        sStarSpriteIds[i] = id;
+
+        // Distribuição: ~60% medium, ~40% large
+        u8 sizeType = (Random2() % 10 < 6) ? STAR_SIZE_MEDIUM : STAR_SIZE_LARGE;
+        StartSpriteAnim(&gSprites[id], sizeType);
+
+        // data[0] = fase de glow aleatória (0-255)
+        gSprites[id].data[0] = (s16)(Random2() & 0xFF);
+        // data[1] = contador de glow (incrementado a cada frame)
+        gSprites[id].data[1] = 0;
+        // data[2] = intervalo de queda (medium mais rápido, large mais lento)
+        gSprites[id].data[2] = (sizeType == STAR_SIZE_MEDIUM) ? 1 : 2;
+        // data[3] = delay de movimento
+        gSprites[id].data[3] = 0;
+        // data[4] = tipo de profundidade (0 = medium, 1 = large)
+        gSprites[id].data[4] = (s16)sizeType;
     }
 
     CreateTask(Task_FloatingStars, 0);
@@ -762,7 +743,7 @@ static void Task_FloatingStars(u8 taskId)
         struct Sprite *spr = &gSprites[sStarSpriteIds[i]];
         if (!spr->inUse) continue;
 
-        // Queda suave com delay baseado na velocidade
+        // Movimento de queda com delay
         spr->data[3]++;
         if (spr->data[3] >= spr->data[2] * 4)
         {
@@ -777,12 +758,15 @@ static void Task_FloatingStars(u8 taskId)
             spr->x = Random2() % DISPLAY_WIDTH;
         }
 
-        // Brilho pulsante
-        spr->data[1]++;
-        if ((spr->data[1] & 0x3F) < 32)
-            spr->oam.paletteNum = 8;
-        else
-            spr->oam.paletteNum = 9;
+        // Glow pulsante suave: onda triangular de 256 frames
+        spr->data[1] = (spr->data[1] + 1) & 0xFF;
+        u8 phase = (u8)((spr->data[1] + spr->data[0]) & 0xFF);
+        u8 tv    = (phase < 128) ? phase : (u8)(255 - phase); // 0-127
+        u8 hiPhase = (tv >= 64) ? 1 : 0;
+
+        // depth: 0 = medium (usa slots 9-10), 1 = large (usa slots 10-11)
+        u8 depth = (u8)spr->data[4];
+        spr->oam.paletteNum = 9 + depth + hiPhase;
     }
 }
 
@@ -815,7 +799,7 @@ static void Task_MainMenuMain(u8 taskId)
             sSelectedOption = HW_WIN_NEW_GAME;
         else if (sSelectedOption == HW_WIN_NEW_GAME)
             sSelectedOption = HW_WIN_OPTIONS;
-        else // OPTIONS
+        else
             sSelectedOption = HW_WIN_CONTINUE;
         MoveHWindowsWithInput();
     }
@@ -825,7 +809,7 @@ static void Task_MainMenuMain(u8 taskId)
             sSelectedOption = HW_WIN_OPTIONS;
         else if (sSelectedOption == HW_WIN_NEW_GAME)
             sSelectedOption = HW_WIN_CONTINUE;
-        else // OPTIONS
+        else
             sSelectedOption = HW_WIN_NEW_GAME;
         MoveHWindowsWithInput();
     }
