@@ -98,6 +98,13 @@ enum
 #define STAR_TAG  5000
 #define STAR_PRIORITY 2
 
+// Tipos de tamanho de estrela
+enum {
+    STAR_SIZE_MEDIUM,
+    STAR_SIZE_LARGE,
+    STAR_SIZE_COUNT
+};
+
 //==========EWRAM==========//
 static EWRAM_DATA struct MainMenuResources *sMainMenuDataPtr = NULL;
 static EWRAM_DATA u8 *sBg1TilemapBuffer = NULL;
@@ -197,9 +204,9 @@ static const u16 sMainBgPalette[]  = INCBIN_U16("graphics/ui_main_menu/main_tile
 static const u32 sMainBgTilesFem[]   = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.4bpp.lz");
 static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.bin.lz");
 static const u16 sMainBgPaletteFem[] = INCBIN_U16("graphics/ui_main_menu/main_tiles_fem.gbapal");
-static const u32 sStaticBgTiles[]   = INCBIN_U32("graphics/ui_main_menu/BG.4bpp.lz");
-static const u32 sStaticBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/BG.bin.lz");
-static const u16 sStaticBgPalette[] = INCBIN_U16("graphics/ui_main_menu/BG.gbapal");
+static const u32 sStaticBgTiles[]   = INCBIN_U32("graphics/ui_main_menu/BG5.4bpp.lz");
+static const u32 sStaticBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/BG5.bin.lz");
+static const u16 sStaticBgPalette[] = INCBIN_U16("graphics/ui_main_menu/BG5.gbapal");
 static const u16 sIconBox_Pal[]    = INCBIN_U16("graphics/ui_main_menu/icon_shadow.gbapal");
 static const u32 sIconBox_Gfx[]    = INCBIN_U32("graphics/ui_main_menu/icon_shadow.4bpp.lz");
 static const u16 sIconBox_PalFem[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_fem.gbapal");
@@ -267,7 +274,7 @@ void Task_OpenMainMenu(u8 taskId)
             case HAS_SAVED_GAME:
             case HAS_MYSTERY_GIFT:
             case HAS_MYSTERY_EVENTS:
-                menuType = data[0];
+                menuType = HAS_SAVED_GAME;   // Força apenas 3 opções
                 break;
         }
         CleanupOverworldWindowsAndTilemaps();
@@ -442,20 +449,21 @@ static void MainMenu_InitializeGPUWindows(void)
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN1_ON | DISPCNT_WIN0_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(HWinCoords[sSelectedOption].winh.left, HWinCoords[sSelectedOption].winh.right));
     SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(HWinCoords[sSelectedOption].winv.left, HWinCoords[sSelectedOption].winv.right));
-    switch (menuType)
-    {
-        case HAS_SAVED_GAME:
-            SetGpuReg(REG_OFFSET_WIN1H, WIN_RANGE(HWinCoords[HW_WIN_MYSTERY_BOTH].winh.left, HWinCoords[HW_WIN_MYSTERY_BOTH].winh.right));
-            SetGpuReg(REG_OFFSET_WIN1V, WIN_RANGE(HWinCoords[HW_WIN_MYSTERY_BOTH].winv.left, HWinCoords[HW_WIN_MYSTERY_BOTH].winv.right));
-            break;
-        case HAS_MYSTERY_GIFT:
-            SetGpuReg(REG_OFFSET_WIN1H, WIN_RANGE(HWinCoords[HW_WIN_MYSTERY_EVENT].winh.left, HWinCoords[HW_WIN_MYSTERY_EVENT].winh.right));
-            SetGpuReg(REG_OFFSET_WIN1V, WIN_RANGE(HWinCoords[HW_WIN_MYSTERY_EVENT].winv.left, HWinCoords[HW_WIN_MYSTERY_EVENT].winv.right));
-            break;
-    }
-    SetGpuReg(REG_OFFSET_WININ, (WININ_WIN1_BG0 | WININ_WIN1_BG2) | (WININ_WIN0_BG_ALL | WININ_WIN0_OBJ));
+
+    // Window 1 desativada – não precisamos mais dela
+    SetGpuReg(REG_OFFSET_WIN1H, 0);
+    SetGpuReg(REG_OFFSET_WIN1V, 0);
+
+    // Ajuste no WININ: remova referências a WIN1 já que não será usada
+    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ);
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_ALL);
-    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1);
+
+    // Efeito de escurecimento para highlight (continua funcionando)
+    SetGpuReg(REG_OFFSET_BLDCNT,
+        BLDCNT_EFFECT_DARKEN
+        | BLDCNT_TGT1_BG0
+        | BLDCNT_TGT1_BG1
+    );
     SetGpuReg(REG_OFFSET_BLDY, 7);
 }
 
@@ -617,15 +625,30 @@ static void PrintToWindow(u8 windowId, u8 colorIdx)
 }
 
 //==========STARS (SPRITES)==========//
-static const u32 sStarTile[8] = {
-    0x00010000,
-    0x00010000,
-    0x00111000,
-    0x01111100,
-    0x00111000,
-    0x00010000,
-    0x00010000,
-    0x00000000,
+// Múltiplos tiles para simular tamanhos diferentes (todos 8x8)
+static const u32 sStarTiles[][8] = {
+    // Média
+    {
+        0x00000000,
+        0x00010000,
+        0x00111000,
+        0x00010000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+    },
+    // Grande (original)
+    {
+        0x00010000,
+        0x00010000,
+        0x00111000,
+        0x01111100,
+        0x00111000,
+        0x00010000,
+        0x00010000,
+        0x00000000,
+    },
 };
 
 static const u16 sStarPalNormal[4] = {
@@ -642,13 +665,14 @@ static const u16 sStarPalBright[4] = {
 };
 
 static const struct SpriteSheet sStarSheet = {
-    .data = sStarTile,
-    .size = sizeof(sStarTile),
+    .data = sStarTiles,
+    .size = sizeof(sStarTiles),
     .tag  = STAR_TAG,
 };
+
 static const struct SpritePalette sStarPaletteNormal = {
     .data = sStarPalNormal,
-    .tag  = STAR_TAG + 0,   // slot 8 relativo? Usaremos OBJ_PLTT_ID diretamente
+    .tag  = STAR_TAG + 0,
 };
 static const struct SpritePalette sStarPaletteBright = {
     .data = sStarPalBright,
@@ -661,11 +685,25 @@ static const struct OamData sOamData_Star = {
     .priority = STAR_PRIORITY,
 };
 
+// Animação para cada tamanho (fixo)
+static const union AnimCmd sStarAnimMedium[] = {
+    ANIMCMD_FRAME(STAR_SIZE_MEDIUM, 0),
+    ANIMCMD_END
+};
+static const union AnimCmd sStarAnimLarge[] = {
+    ANIMCMD_FRAME(STAR_SIZE_LARGE, 0),
+    ANIMCMD_END
+};
+static const union AnimCmd *const sStarAnimTable[] = {
+    sStarAnimMedium,
+    sStarAnimLarge,
+};
+
 static const struct SpriteTemplate sStarTemplate = {
     .tileTag    = STAR_TAG,
-    .paletteTag = STAR_TAG + 0,   // será sobrescrito no CreateStars para usar o slot correto
+    .paletteTag = STAR_TAG + 0,
     .oam        = &sOamData_Star,
-    .anims      = gDummySpriteAnimTable,
+    .anims      = sStarAnimTable,
     .callback   = SpriteCallbackDummy,
 };
 
@@ -683,7 +721,6 @@ static void CreateStars(void)
 
     for (int i = 0; i < NUM_STARS; i++)
     {
-        // Usa o template, mas depois ajusta paletteTag manualmente
         u8 id = CreateSprite(&sStarTemplate,
                              Random2() % DISPLAY_WIDTH,
                              Random2() % DISPLAY_HEIGHT,
@@ -691,12 +728,23 @@ static void CreateStars(void)
         if (id != MAX_SPRITES)
         {
             sStarSpriteIds[i] = id;
-            // Configura dados: data[0] = fase do seno, data[1] = timer brilho, data[2] = velocidade Y
+            // Escolhe tamanho aleatório
+            // Escolhe tamanho aleatório (apenas médio ou grande)
+            u8 sizeType = Random2() % STAR_SIZE_COUNT;
+            // Define a animação (frame) correspondente ao tamanho
+            StartSpriteAnim(&gSprites[id], sizeType);
+            
+            // Configura dados: data[0] = fase do seno (não usado agora), data[1] = timer brilho, 
+            // data[2] = velocidade base, data[3] = contador de delay
             gSprites[id].data[0] = Random2();
             gSprites[id].data[1] = 0;
-gSprites[id].data[2] = 1 + (i % 2);  // 1 ou 2 (base menor)
-gSprites[id].data[3] = 0;            // contador de delay
-            gSprites[id].oam.paletteNum = 0; // será ajustado na task
+            // Velocidades diferentes por tamanho (parallax): média mais rápida, grande mais lenta
+            switch (sizeType) {
+                case STAR_SIZE_MEDIUM: gSprites[id].data[2] = 2; break;
+                case STAR_SIZE_LARGE:  gSprites[id].data[2] = 1; break;
+            }
+            gSprites[id].data[3] = 0;
+            gSprites[id].oam.paletteNum = 0;
         }
         else
         {
@@ -714,14 +762,9 @@ static void Task_FloatingStars(u8 taskId)
         struct Sprite *spr = &gSprites[sStarSpriteIds[i]];
         if (!spr->inUse) continue;
 
-        // Movimento senoidal suave (amplitude 1)
-        spr->data[0] = (spr->data[0] + 1) & 0xFF;
-        spr->x += Sin(spr->data[0], 1);
-
-        // 🌙 QUEDA MAIS LENTA (com delay)
-        spr->data[3]++; // contador
-
-        if (spr->data[3] >= spr->data[2] * 4) // quanto maior, mais lento
+        // Queda suave com delay baseado na velocidade
+        spr->data[3]++;
+        if (spr->data[3] >= spr->data[2] * 4)
         {
             spr->y += 1;
             spr->data[3] = 0;
@@ -732,15 +775,14 @@ static void Task_FloatingStars(u8 taskId)
         {
             spr->y = -8;
             spr->x = Random2() % DISPLAY_WIDTH;
-            spr->data[0] = Random2();
         }
 
-        // ✨ Brilho mais suave (transição mais lenta)
+        // Brilho pulsante
         spr->data[1]++;
-        if ((spr->data[1] & 0x3F) < 32) // antes era 0x1F (rápido)
-            spr->oam.paletteNum = 8;   // normal
+        if ((spr->data[1] & 0x3F) < 32)
+            spr->oam.paletteNum = 8;
         else
-            spr->oam.paletteNum = 9;   // brilhante
+            spr->oam.paletteNum = 9;
     }
 }
 
@@ -768,26 +810,32 @@ static void Task_MainMenuMain(u8 taskId)
     }
     if (JOY_NEW(DPAD_DOWN))
     {
-        switch (menuType) {
-            case HAS_SAVED_GAME: if (sSelectedOption == HW_WIN_CONTINUE) sSelectedOption = HW_WIN_NEW_GAME; else if (sSelectedOption == HW_WIN_NEW_GAME || sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_CONTINUE; break;
-            case HAS_MYSTERY_GIFT: if (sSelectedOption == HW_WIN_CONTINUE) sSelectedOption = HW_WIN_NEW_GAME; else if (sSelectedOption == HW_WIN_NEW_GAME || sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_MYSTERY_GIFT; else sSelectedOption = HW_WIN_CONTINUE; break;
-            case HAS_MYSTERY_EVENTS: if (sSelectedOption == HW_WIN_CONTINUE) sSelectedOption = HW_WIN_NEW_GAME; else if (sSelectedOption == HW_WIN_NEW_GAME) sSelectedOption = HW_WIN_MYSTERY_GIFT; else if (sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_MYSTERY_EVENT; else sSelectedOption = HW_WIN_CONTINUE; break;
-        } MoveHWindowsWithInput();
+        // Apenas 3 opções: Continue(0), New Game(1), Option(2)
+        if (sSelectedOption == HW_WIN_CONTINUE)
+            sSelectedOption = HW_WIN_NEW_GAME;
+        else if (sSelectedOption == HW_WIN_NEW_GAME)
+            sSelectedOption = HW_WIN_OPTIONS;
+        else // OPTIONS
+            sSelectedOption = HW_WIN_CONTINUE;
+        MoveHWindowsWithInput();
     }
     if (JOY_NEW(DPAD_UP))
     {
-        switch (menuType) {
-            case HAS_SAVED_GAME: if (sSelectedOption == HW_WIN_CONTINUE) sSelectedOption = HW_WIN_NEW_GAME; else if (sSelectedOption == HW_WIN_NEW_GAME || sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_CONTINUE; break;
-            case HAS_MYSTERY_GIFT: if (sSelectedOption == HW_WIN_CONTINUE) sSelectedOption = HW_WIN_MYSTERY_GIFT; else if (sSelectedOption == HW_WIN_NEW_GAME || sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_CONTINUE; else sSelectedOption = HW_WIN_NEW_GAME; break;
-            case HAS_MYSTERY_EVENTS: if (sSelectedOption == HW_WIN_CONTINUE) sSelectedOption = HW_WIN_MYSTERY_GIFT; else if (sSelectedOption == HW_WIN_NEW_GAME) sSelectedOption = HW_WIN_CONTINUE; else if (sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_CONTINUE; else if (sSelectedOption == HW_WIN_MYSTERY_GIFT) sSelectedOption = HW_WIN_NEW_GAME; else if (sSelectedOption == HW_WIN_MYSTERY_EVENT) sSelectedOption = HW_WIN_OPTIONS; break;
-        } MoveHWindowsWithInput();
+        if (sSelectedOption == HW_WIN_CONTINUE)
+            sSelectedOption = HW_WIN_OPTIONS;
+        else if (sSelectedOption == HW_WIN_NEW_GAME)
+            sSelectedOption = HW_WIN_CONTINUE;
+        else // OPTIONS
+            sSelectedOption = HW_WIN_NEW_GAME;
+        MoveHWindowsWithInput();
     }
     if (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_RIGHT))
     {
-        switch (menuType) {
-            case HAS_SAVED_GAME: if (sSelectedOption == HW_WIN_NEW_GAME) sSelectedOption = HW_WIN_OPTIONS; else if (sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_NEW_GAME; break;
-            case HAS_MYSTERY_GIFT: if (sSelectedOption == HW_WIN_NEW_GAME) sSelectedOption = HW_WIN_OPTIONS; else if (sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_NEW_GAME; break;
-            case HAS_MYSTERY_EVENTS: if (sSelectedOption == HW_WIN_NEW_GAME) sSelectedOption = HW_WIN_OPTIONS; else if (sSelectedOption == HW_WIN_OPTIONS) sSelectedOption = HW_WIN_NEW_GAME; else if (sSelectedOption == HW_WIN_MYSTERY_GIFT) sSelectedOption = HW_WIN_MYSTERY_EVENT; else if (sSelectedOption == HW_WIN_MYSTERY_EVENT) sSelectedOption = HW_WIN_MYSTERY_GIFT; break;
-        } MoveHWindowsWithInput();
+        // Alterna entre New Game e Option (Continue não participa)
+        if (sSelectedOption == HW_WIN_NEW_GAME)
+            sSelectedOption = HW_WIN_OPTIONS;
+        else if (sSelectedOption == HW_WIN_OPTIONS)
+            sSelectedOption = HW_WIN_NEW_GAME;
+        MoveHWindowsWithInput();
     }
 }
