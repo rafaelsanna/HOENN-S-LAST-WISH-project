@@ -25,7 +25,7 @@
       "id": "LAYOUT_MAUVILLE_CITY",
       "name": "MauvilleCity_Layout",
       "width": 41,
-      "height": 31,
+      "height": 36,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",
       "border_filepath": "data/layouts/MauvilleCity/border.bin",
@@ -4800,6 +4800,16 @@
       "secondary_tileset": "gTileset_Forest",
       "border_filepath": "data/layouts/PetalburgWoodsEastGrotto/border.bin",
       "blockdata_filepath": "data/layouts/PetalburgWoodsEastGrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROGUE_CANYON",
+      "name": "RogueCanyon_Layout",
+      "width": 36,
+      "height": 96,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Desert",
+      "border_filepath": "data/layouts/RogueCanyon/border.bin",
+      "blockdata_filepath": "data/layouts/RogueCanyon/map.bin"
     }
   ]
 }

@@ -1235,3 +1235,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/CaveGrotto/scripts.inc"
 
 	.include "data/maps/PetalburgWoodsEastGrotto/scripts.inc"
+
+	.include "data/maps/RogueCanyon/scripts.inc"
