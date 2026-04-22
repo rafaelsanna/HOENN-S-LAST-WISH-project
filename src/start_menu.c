@@ -148,6 +148,9 @@ static void Task_SaveAfterLinkBattle(u8 taskId);
 static void Task_WaitForBattleTowerLinkSave(u8 taskId);
 static bool8 FieldCB_ReturnToFieldStartMenu(void);
 
+static u16 sOriginalColor5 = 0;
+static u16 sOriginalColor6 = 0;
+
 static const struct WindowTemplate sWindowTemplate_SafariBalls = {
     .bg = 0,
     .tilemapLeft = 1,
@@ -1567,22 +1570,40 @@ static void ShowSaveInfoWindow(void)
     textRightEdge = saveInfoWindow.width * 8;
 
     gender = gSaveBlock2Ptr->playerGender;
-    color = TEXT_COLOR_RED;  // Red when female, blue when male.
-
+    // Use TEXT_DYNAMIC_COLOR_6 para feminino (roxo), TEXT_COLOR_LIGHT_BLUE para masculino
+    color = TEXT_COLOR_LIGHT_GREEN;  // será roxo
     if (gender == MALE)
     {
-        color = TEXT_COLOR_BLUE;
+        color = TEXT_COLOR_LIGHT_BLUE; // mantém azul claro
     }
 
-    // Print region name
+    // ----- SALVAR CORES ORIGINAIS DOS ÍNDICES QUE VAMOS MODIFICAR -----
+    // TEXT_DYNAMIC_COLOR_5 = 0xE (usado para o local, antes era verde)
+    // TEXT_DYNAMIC_COLOR_6 = 0xF (usado para nome/badges/etc, antes era vermelho)
+    sOriginalColor5 = gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5];
+    sOriginalColor6 = gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6];
+
+    // Definir novas cores (use os valores RGB que preferir)
+    // lilás claro: R=200, G=160, B=255 -> valores GBA: 200/8=25, 160/8=20, 255/8=31
+    // roxo: R=160, G=80, B=200 -> 160/8=20, 80/8=10, 200/8=25
+    #define RGB_LILAS   ( (25) | (20 << 5) | (31 << 10) )
+    #define RGB_PURPLE2 ( (20) | (10 << 5) | (25 << 10) )  // nome diferente para não conflitar
+
+    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
+    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
+    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
+    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
+    UpdatePaletteFade();
+
+    // Print region name (antes usava TEXT_COLOR_GREEN, agora usa TEXT_DYNAMIC_COLOR_5 = lilás)
     yOffset = 1;
-    BufferSaveMenuText(SAVE_MENU_LOCATION, gStringVar4, TEXT_COLOR_GREEN);
+    BufferSaveMenuText(SAVE_MENU_LOCATION, gStringVar4, TEXT_DYNAMIC_COLOR_5);
     AddTextPrinterParameterized(sSaveInfoWindowId, FONT_NORMAL, gStringVar4, 0, yOffset, TEXT_SKIP_DRAW, NULL);
 
     // Print player name
     yOffset += 16;
     AddTextPrinterParameterized(sSaveInfoWindowId, FONT_NORMAL, gText_SavingPlayer, 0, yOffset, TEXT_SKIP_DRAW, NULL);
-    BufferSaveMenuText(SAVE_MENU_NAME, gStringVar4, color);
+    BufferSaveMenuText(SAVE_MENU_NAME, gStringVar4, color);  // color já é TEXT_DYNAMIC_COLOR_6 (roxo) ou azul
     xOffset = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, textRightEdge);
     PrintPlayerNameOnWindow(sSaveInfoWindowId, gStringVar4, xOffset, yOffset);
 
@@ -1615,6 +1636,13 @@ static void ShowSaveInfoWindow(void)
 
 static void RemoveSaveInfoWindow(void)
 {
+    // Restaurar as cores originais dos índices dinâmicos
+    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5] = sOriginalColor5;
+    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6] = sOriginalColor6;
+    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5] = sOriginalColor5;
+    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6] = sOriginalColor6;
+    UpdatePaletteFade();
+
     ClearStdWindowAndFrame(sSaveInfoWindowId, FALSE);
     RemoveWindow(sSaveInfoWindowId);
 }
