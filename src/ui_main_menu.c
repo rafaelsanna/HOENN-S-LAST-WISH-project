@@ -432,6 +432,93 @@ static bool8 MainMenu_DoGfxSetup(void)
     return FALSE;
 }
 
+static bool8 MainMenu_LoadGraphics(void)
+{
+    switch (sMainMenuDataPtr->gfxLoadState)
+    {
+    case 0:
+        ResetTempTileDataBuffers();
+        if (gSaveBlock2Ptr->playerGender == MALE) 
+            DecompressAndCopyTileDataToVram(1, sMainBgTiles, 0, 0, 0);
+        else 
+            DecompressAndCopyTileDataToVram(1, sMainBgTilesFem, 0, 0, 0);
+        sMainMenuDataPtr->gfxLoadState++; 
+        break;
+    case 1:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            // Descomprime o tilemap da UI (BG1) no buffer
+            if (gSaveBlock2Ptr->playerGender == MALE) 
+                DecompressDataWithHeaderWram(sMainBgTilemap, sBg1TilemapBuffer);
+            else 
+                DecompressDataWithHeaderWram(sMainBgTilemapFem, sBg1TilemapBuffer);
+            
+            // ============================================================
+            // REMOVE OS BOTÕES MYSTERY GIFT E MYSTERY EVENTS DO TILEMAP
+            // As coordenadas (em tiles) são:
+            //   - Linhas 16 a 19 (Y = 128 a 159 pixels)
+            //   - Colunas 0 a 29 (X = 0 a 231 pixels) – cobre ambos os botões
+            // Substitui cada tile por 0 (transparente) ou 2 (totalmente vazio)
+            // ============================================================
+            u16 *tilemap = (u16 *)sBg1TilemapBuffer;
+            for (int y = 16; y <= 19; y++)
+            {
+                for (int x = 0; x <= 29; x++)
+                {
+                    int idx = y * 32 + x;
+                    // Use 2 porque o tile 2 é completamente transparente (sem pixels brancos)
+                    tilemap[idx] = 2;
+                }
+            }
+            // Força a atualização do tilemap para a VRAM
+            ScheduleBgCopyTilemapToVram(1);
+            
+            sMainMenuDataPtr->gfxLoadState++;
+        } 
+        break;
+    case 2:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(2, sStaticBgTiles, 0, 0, 0);
+        sMainMenuDataPtr->gfxLoadState++; 
+        break;
+    case 3:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            u16 *bgTilemap = (u16 *)sBg2TilemapBuffer;
+            DecompressDataWithHeaderWram(sStaticBgTilemap, sBg2TilemapBuffer);
+            for (int i = 0; i < 1024; i++) 
+                bgTilemap[i] = (bgTilemap[i] & 0x0FFF) | (1 << 12);
+            ScheduleBgCopyTilemapToVram(2);
+            sMainMenuDataPtr->gfxLoadState++;
+        } 
+        break;
+    case 4:
+        if (gSaveBlock2Ptr->playerGender == MALE)
+        {
+            LoadCompressedSpriteSheet(&sSpriteSheet_IconBox);
+            LoadSpritePalette(&sSpritePal_IconBox);
+            LoadCompressedSpriteSheet(&sSpriteSheet_BrendanMugshot);
+            LoadSpritePalette(&sSpritePal_BrendanMugshot);
+            LoadPalette(sMainBgPalette, 0, 32);
+        }
+        else
+        {
+            LoadCompressedSpriteSheet(&sSpriteSheet_IconBoxFem);
+            LoadSpritePalette(&sSpritePal_IconBoxFem);
+            LoadCompressedSpriteSheet(&sSpriteSheet_MayMugshot);
+            LoadSpritePalette(&sSpritePal_MayMugshot);
+            LoadPalette(sMainBgPaletteFem, 0, 32);
+        }
+        LoadPalette(sStaticBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        sMainMenuDataPtr->gfxLoadState++; 
+        break;
+    default:
+        sMainMenuDataPtr->gfxLoadState = 0; 
+        return TRUE;
+    }
+    return FALSE;
+}
+
 static bool8 MainMenu_InitBgs(void)
 {
     ResetAllBgsCoordinates();
@@ -471,60 +558,6 @@ static void MoveHWindowsWithInput(void)
 {
     SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(HWinCoords[sSelectedOption].winh.left, HWinCoords[sSelectedOption].winh.right));
     SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(HWinCoords[sSelectedOption].winv.left, HWinCoords[sSelectedOption].winv.right));
-}
-
-static bool8 MainMenu_LoadGraphics(void)
-{
-    switch (sMainMenuDataPtr->gfxLoadState)
-    {
-    case 0:
-        ResetTempTileDataBuffers();
-        if (gSaveBlock2Ptr->playerGender == MALE) DecompressAndCopyTileDataToVram(1, sMainBgTiles, 0, 0, 0);
-        else DecompressAndCopyTileDataToVram(1, sMainBgTilesFem, 0, 0, 0);
-        sMainMenuDataPtr->gfxLoadState++; break;
-    case 1:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            if (gSaveBlock2Ptr->playerGender == MALE) DecompressDataWithHeaderWram(sMainBgTilemap, sBg1TilemapBuffer);
-            else DecompressDataWithHeaderWram(sMainBgTilemapFem, sBg1TilemapBuffer);
-            sMainMenuDataPtr->gfxLoadState++;
-        } break;
-    case 2:
-        ResetTempTileDataBuffers();
-        DecompressAndCopyTileDataToVram(2, sStaticBgTiles, 0, 0, 0);
-        sMainMenuDataPtr->gfxLoadState++; break;
-    case 3:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            u16 *bgTilemap = (u16 *)sBg2TilemapBuffer;
-            DecompressDataWithHeaderWram(sStaticBgTilemap, sBg2TilemapBuffer);
-            for (int i = 0; i < 1024; i++) bgTilemap[i] = (bgTilemap[i] & 0x0FFF) | (1 << 12);
-            ScheduleBgCopyTilemapToVram(2);
-            sMainMenuDataPtr->gfxLoadState++;
-        } break;
-    case 4:
-        if (gSaveBlock2Ptr->playerGender == MALE)
-        {
-            LoadCompressedSpriteSheet(&sSpriteSheet_IconBox);
-            LoadSpritePalette(&sSpritePal_IconBox);
-            LoadCompressedSpriteSheet(&sSpriteSheet_BrendanMugshot);
-            LoadSpritePalette(&sSpritePal_BrendanMugshot);
-            LoadPalette(sMainBgPalette, 0, 32);
-        }
-        else
-        {
-            LoadCompressedSpriteSheet(&sSpriteSheet_IconBoxFem);
-            LoadSpritePalette(&sSpritePal_IconBoxFem);
-            LoadCompressedSpriteSheet(&sSpriteSheet_MayMugshot);
-            LoadSpritePalette(&sSpritePal_MayMugshot);
-            LoadPalette(sMainBgPaletteFem, 0, 32);
-        }
-        LoadPalette(sStaticBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
-        sMainMenuDataPtr->gfxLoadState++; break;
-    default:
-        sMainMenuDataPtr->gfxLoadState = 0; return TRUE;
-    }
-    return FALSE;
 }
 
 static void MainMenu_InitWindows(void)
