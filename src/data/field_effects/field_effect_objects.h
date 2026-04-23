@@ -1,5 +1,6 @@
 const struct SpritePalette gSpritePalette_GeneralFieldEffect0 = {gFieldEffectObjectPalette0, FLDEFF_PAL_TAG_GENERAL_0};
 const struct SpritePalette gSpritePalette_GeneralFieldEffect1 = {gFieldEffectObjectPalette1, FLDEFF_PAL_TAG_GENERAL_1};
+const struct SpritePalette gSpritePalette_DryGrass = {gFieldEffectObjectPalette_DryGrass, FLDEFF_PAL_TAG_DRY_GRASS};
 
 static const union AnimCmd sAnim_Shadow[] =
 {
@@ -147,6 +148,39 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_TallGrass = {
     .images = sPicTable_TallGrass,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = UpdateTallGrassFieldEffect,
+};
+
+static const struct SpriteFrameImage sPicTable_DryGrass[] = {
+    overworld_frame(gFieldEffectObjectPic_DryGrass, 2, 2, 0),
+    overworld_frame(gFieldEffectObjectPic_DryGrass, 2, 2, 1),
+    overworld_frame(gFieldEffectObjectPic_DryGrass, 2, 2, 2),
+    overworld_frame(gFieldEffectObjectPic_DryGrass, 2, 2, 3),
+    overworld_frame(gFieldEffectObjectPic_DryGrass, 2, 2, 4),
+};
+
+static const union AnimCmd sAnim_DryGrass[] =
+{
+    ANIMCMD_FRAME(1, 10),
+    ANIMCMD_FRAME(2, 10),
+    ANIMCMD_FRAME(3, 10),
+    ANIMCMD_FRAME(4, 10),
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_DryGrass[] =
+{
+    sAnim_DryGrass,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_DryGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_DRY_GRASS,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_DryGrass,
+    .images = sPicTable_DryGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateDryGrassFieldEffect,
 };
 
 static const struct SpriteFrameImage sPicTable_Ripple[] = {
@@ -379,6 +413,37 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_JumpTallGrass = {
     .oam = &gObjectEventBaseOam_16x8,
     .anims = sAnimTable_JumpTallGrass,
     .images = sPicTable_JumpTallGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateJumpImpactEffect,
+};
+
+static const struct SpriteFrameImage sPicTable_JumpDryGrass[] = {
+    overworld_frame(gFieldEffectObjectPic_JumpDryGrass, 2, 1, 0),
+    overworld_frame(gFieldEffectObjectPic_JumpDryGrass, 2, 1, 1),
+    overworld_frame(gFieldEffectObjectPic_JumpDryGrass, 2, 1, 2),
+    overworld_frame(gFieldEffectObjectPic_JumpDryGrass, 2, 1, 3),
+};
+
+static const union AnimCmd sAnim_JumpDryGrass[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_JumpDryGrass[] =
+{
+    sAnim_JumpDryGrass,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_JumpDryGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_DRY_GRASS,
+    .oam = &gObjectEventBaseOam_16x8,
+    .anims = sAnimTable_JumpDryGrass,
+    .images = sPicTable_JumpDryGrass,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = UpdateJumpImpactEffect,
 };

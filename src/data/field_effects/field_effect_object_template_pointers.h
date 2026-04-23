@@ -3,12 +3,14 @@ extern const struct SpriteTemplate gFieldEffectObjectTemplate_ShadowMedium;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_ShadowLarge;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_ShadowExtraLarge;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_TallGrass;
+extern const struct SpriteTemplate gFieldEffectObjectTemplate_DryGrass;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_Ripple;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_Ash;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_SurfBlob;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_Arrow;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_GroundImpactDust;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_JumpTallGrass;
+extern const struct SpriteTemplate gFieldEffectObjectTemplate_JumpDryGrass;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_SandFootprints;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_JumpBigSplash;
 extern const struct SpriteTemplate gFieldEffectObjectTemplate_Splash;
@@ -49,12 +51,14 @@ const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[] = {
     [FLDEFFOBJ_SHADOW_L]              = &gFieldEffectObjectTemplate_ShadowLarge,
     [FLDEFFOBJ_SHADOW_XL]             = &gFieldEffectObjectTemplate_ShadowExtraLarge,
     [FLDEFFOBJ_TALL_GRASS]            = &gFieldEffectObjectTemplate_TallGrass,
+    [FLDEFFOBJ_DRY_GRASS]             = &gFieldEffectObjectTemplate_DryGrass,
     [FLDEFFOBJ_RIPPLE]                = &gFieldEffectObjectTemplate_Ripple,
     [FLDEFFOBJ_ASH]                   = &gFieldEffectObjectTemplate_Ash,
     [FLDEFFOBJ_SURF_BLOB]             = &gFieldEffectObjectTemplate_SurfBlob,
     [FLDEFFOBJ_ARROW]                 = &gFieldEffectObjectTemplate_Arrow,
     [FLDEFFOBJ_GROUND_IMPACT_DUST]    = &gFieldEffectObjectTemplate_GroundImpactDust,
     [FLDEFFOBJ_JUMP_TALL_GRASS]       = &gFieldEffectObjectTemplate_JumpTallGrass,
+    [FLDEFFOBJ_JUMP_DRY_GRASS]        = &gFieldEffectObjectTemplate_JumpDryGrass,
     [FLDEFFOBJ_SAND_FOOTPRINTS]       = &gFieldEffectObjectTemplate_SandFootprints,
     [FLDEFFOBJ_JUMP_BIG_SPLASH]       = &gFieldEffectObjectTemplate_JumpBigSplash,
     [FLDEFFOBJ_SPLASH]                = &gFieldEffectObjectTemplate_Splash,
