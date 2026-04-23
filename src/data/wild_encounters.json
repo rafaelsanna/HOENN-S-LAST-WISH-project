@@ -19065,6 +19065,75 @@
               }
             ]
           }
+        },
+        {
+          "map": "MAP_ROGUE_CANYON",
+          "base_label": "gRogueCanyon",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_SANDSHREW"
+              },
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_VOLTORB"
+              },
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_SANDSHREW"
+              },
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_GLIGAR"
+              },
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_BALTOY"
+              },
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_GLIGAR"
+              },
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_PHANPY"
+              },
+              {
+                "min_level": 37,
+                "max_level": 42,
+                "species": "SPECIES_ELECTRODE"
+              },
+              {
+                "min_level": 37,
+                "max_level": 42,
+                "species": "SPECIES_CLAYDOL"
+              },
+              {
+                "min_level": 35,
+                "max_level": 40,
+                "species": "SPECIES_SEVIPER"
+              },
+              {
+                "min_level": 37,
+                "max_level": 42,
+                "species": "SPECIES_SEVIPER"
+              },
+              {
+                "min_level": 37,
+                "max_level": 42,
+                "species": "SPECIES_GLISCOR"
+              }
+            ]
+          }
         }
       ]
     },
