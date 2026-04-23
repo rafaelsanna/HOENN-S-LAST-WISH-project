@@ -977,7 +977,7 @@ static void ScrollMenu(int direction)
         menuItem = sOptions->menuCursor[sOptions->submenu] - NUM_OPTIONS_FROM_BORDER, pos = 0;
 
     // Hide one
-    ScrollWindow(WIN_OPTIONS, direction, Y_DIFF, PIXEL_FILL(0));
+    ScrollWindow(WIN_OPTIONS, direction, Y_DIFF, PIXEL_FILL(2));
     // Show one
     FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(2), 0, Y_DIFF * pos, 26 * 8, Y_DIFF);
     // Print
@@ -995,7 +995,7 @@ static void ScrollAll(int direction) // to bottom or top
     scrollCount = MenuItemCount() - optionsToDraw;
 
     // Move items up/down
-    ScrollWindow(WIN_OPTIONS, direction, Y_DIFF * scrollCount, PIXEL_FILL(1));
+    ScrollWindow(WIN_OPTIONS, direction, Y_DIFF * scrollCount, PIXEL_FILL(2));
 
     // Clear moved items
     if (direction == 0)

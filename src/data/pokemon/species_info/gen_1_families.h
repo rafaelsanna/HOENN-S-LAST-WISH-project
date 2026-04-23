@@ -12576,10 +12576,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .pokemonScale = 256,
         .pokemonOffset = 2,
         .trainerScale = 256,
-        .trainerOffset = 0,
+        .trainerOffset = 7,
         .frontPic = gMonFrontPic_Kingler,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(64, 48),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 8,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 1,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 50),
             ANIMCMD_FRAME(0, 14),
@@ -12595,7 +12595,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconSprite = gMonIcon_Kingler,
         .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 2 : 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-2, 4, SHADOW_SIZE_XL_BATTLE_ONLY)
+        SHADOW(0, 16, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Kingler)
         OVERWORLD(
             sPicTable_Kingler,

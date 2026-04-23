@@ -417,6 +417,7 @@ static bool8 MainMenu_DoGfxSetup(void)
         CreateStars();
         CreateTask(Task_MainMenuWaitFadeIn, 0);
         BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
+        PlayBGM(MUS_RG_TITLE);
         gMain.state++;
         break;
     case 6:
@@ -834,6 +835,7 @@ static void Task_MainMenuMain(u8 taskId)
             sSelectedOption = HW_WIN_OPTIONS;
         else
             sSelectedOption = HW_WIN_CONTINUE;
+        PlaySE(SE_SELECT);          // ← LINHA ADICIONADA
         MoveHWindowsWithInput();
     }
     if (JOY_NEW(DPAD_UP))
@@ -844,6 +846,7 @@ static void Task_MainMenuMain(u8 taskId)
             sSelectedOption = HW_WIN_CONTINUE;
         else
             sSelectedOption = HW_WIN_NEW_GAME;
+        PlaySE(SE_SELECT);          // ← LINHA ADICIONADA
         MoveHWindowsWithInput();
     }
     if (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_RIGHT))
@@ -853,6 +856,7 @@ static void Task_MainMenuMain(u8 taskId)
             sSelectedOption = HW_WIN_OPTIONS;
         else if (sSelectedOption == HW_WIN_OPTIONS)
             sSelectedOption = HW_WIN_NEW_GAME;
+        PlaySE(SE_SELECT);          // ← LINHA ADICIONADA
         MoveHWindowsWithInput();
     }
 }

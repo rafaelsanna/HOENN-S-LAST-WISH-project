@@ -81,6 +81,7 @@ static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
 static void CB2_OpenPokeblockFromBag(void);
 static void ItemUseOnFieldCB_Honey(u8 taskId);
 static bool32 IsValidLocationForVsSeeker(void);
+void ItemUseOutOfBattle_ChangePokeball(u8 taskId);
 
 static const u8 sText_CantDismountBike[] = _("You can't dismount your BIKE here.{PAUSE_UNTIL_PRESS}");
 static const u8 sText_ItemFinderNearby[] = _("Huh?\nThe ITEMFINDER's responding!\pThere's an item buried around here!{PAUSE_UNTIL_PRESS}");
@@ -1642,6 +1643,30 @@ void ItemUseOutOfBattle_TownMap(u8 taskId)
     {
         gTasks[taskId].func = ItemUseOnFieldCB_TownMap;
     }
+}
+
+static void ItemUseCB_ChangePokeball(u8 taskId, void (*unused)(u8));
+
+void ItemUseOutOfBattle_ChangePokeball(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_ChangePokeball;
+    SetUpItemUseCallback(taskId);
+}
+
+static void ItemUseCB_ChangePokeball(u8 taskId, void (*unused)(u8))
+{
+    u16 itemId = gSpecialVar_ItemId;
+    u8  slot   = gPartyMenu.slotId;
+    struct Pokemon *mon = &gPlayerParty[slot];
+    u32 ballId = GetItemSecondaryId(itemId);
+
+    if (!GetMonData(mon, MON_DATA_IS_EGG))
+    {
+        SetMonData(mon, MON_DATA_POKEBALL, &ballId);
+        RemoveBagItem(itemId, 1);
+    }
+
+    unused(taskId);
 }
 
 #undef tUsingRegisteredKeyItem
