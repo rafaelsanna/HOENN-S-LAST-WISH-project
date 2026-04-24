@@ -2008,4 +2008,39 @@ body.light-mode .wishdex-intro-content {
     }
 }
 
+/* ===== SHEETS BUTTON (Documentation) ===== */
+.sheets-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    background: #0F9D58 !important;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    height: 50px;
+}
 
+.sheets-button:hover {
+    background: #0B7E46 !important;
+    transform: translateY(-2px);
+}
+
+.sheets-button i {
+    margin-right: 8px;
+}
+
+/* Mobile adjustment for sheets button */
+@media (max-width: 768px) {
+    .sheets-button {
+        width: 260px;
+        padding: 14px 20px;
+        font-size: 1rem;
+        height: auto;
+        white-space: normal;
+        margin: 0 auto;
+    }
+}
