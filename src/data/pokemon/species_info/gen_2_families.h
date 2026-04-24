@@ -539,8 +539,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 6,
         .weight = 95,
         .description = COMPOUND_STRING(
-            "Despite its small body, Totodile's tail\n"
-            "and mane burn intensely. While it may think it\n"
+            "Despite its small body, Totodile's tail and\n"
+            "mane burn intensely. While it may think it\n"
             "is just playfully embers, its flames have\n"
             "enough heat to cause serious burns."),
         .pokemonScale = 487,
@@ -613,10 +613,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .height = 11,
         .weight = 250,
         .description = COMPOUND_STRING(
-            "When its fiery tail and mane flare, it wil\n"
-            "absolutely not stop burning. Because the flames\n"
-            "are fueled by its inner rage, they become\n"
-            "inextinguishable and cause severe burns."),
+"When its flaming tail and mane flare up,\n"
+"its inner rage fuels inextinguishable fire.\n"
+"Those caught in its savage blaze suffer\n"
+"severe, unrelenting burns that never heal.$"),
         .pokemonScale = 378,
         .pokemonOffset = 13,
         .trainerScale = 256,
@@ -687,14 +687,14 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .speciesName = _("Feraligatr"),
         .cryId = CRY_FERALIGATR,
         .natDexNum = NATIONAL_DEX_FERALIGATR,
-        .categoryName = _("Big Jaw"),
+        .categoryName = _("Dragon Jaw"),
         .height = 23,
         .weight = 888,
         .description = COMPOUND_STRING(
-            "It opens its huge mouth to unleash a dragon's\n"
-            "fire that can melt boulders. In battle, the more\n"
-            "enraged it becomes, the larger and hotter its\n"
-            "flames grow, scorching everything in its path."),
+"It opens its huge mouth wide, unleashing\n"
+"a dragon's fire that melts boulders.\n"
+"The more enraged it becomes in battle,\n"
+"the hotter its flames grow scorching all.$"),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 342,

@@ -12067,10 +12067,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .height = 16,
         .weight = 76,
         .description = COMPOUND_STRING(
-            "It intimidates foes with the large eyelike\n"
-            "patterns on its antennae. Because it can't\n"
-            "fly if its wings get wet, it shelters itself\n"
-            "from rain under large trees and eaves."),
+"Stunning wing patterns are visible from\n"
+"miles away a beauty that intimidates.\n"
+"Foes who recognize the design know well\n"
+"to keep their distance from this force.$"),
         .pokemonScale = 378,
         .pokemonOffset = 8,
         .trainerScale = 256,

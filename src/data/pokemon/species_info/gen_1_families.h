@@ -30,10 +30,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 7,
         .weight = 69,
         .description = COMPOUND_STRING(
-            "It lounges in muddy banks where water\n"
-            "and earth meet. Its moist skin draws nutrient\n"
+            "It lounges in muddy banks where water and\n"
+            "earth meet. Its moist skin draws nutrient\n"
             "rich mud into its body, and when threat\n"
-            "approaches it burrows deep and surges out."),
+            "comes it burrows deep and surges out."),
         .pokemonScale = 356,
         .pokemonOffset = 17,
         .trainerScale = 256,
@@ -101,9 +101,9 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .weight = 130,
         .description = COMPOUND_STRING(
             "Its long tail helps it glide through muddy\n"
-            "waters and balance on soft ground. It grows\n"
-            "stronger by channeling the flow of earth\n"
-            "and water through its sturdy body."),
+            "waters and balance on the ground. It can\n"
+            "grow stronger by channeling the flow of\n"
+            "earth and water through its sturdy body."),
         .pokemonScale = 335,
         .pokemonOffset = 13,
         .trainerScale = 256,
@@ -171,7 +171,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .speciesName = _("Venusaur"),
         .cryId = CRY_VENUSAUR,
         .natDexNum = NATIONAL_DEX_VENUSAUR,
-        .categoryName = _("Seed"),
+        .categoryName = _("Brute"),
         .height = 20,
         .weight = 1000,
         .description = COMPOUND_STRING(
@@ -1774,10 +1774,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 3,
         .weight = 18,
         .description = COMPOUND_STRING(
-            "Its extraordinarily sharp senses guide it\n"
-            "unerringly back home, no matter the distance.\n"
-            "This keen awareness hints at latent\n"
-            "psychic abilities waiting to awaken."),
+"Its sharp senses guide it unerringly\n"
+"back home, no matter the distance.\n"
+"This keen awareness hints at psychic\n"
+"powers waiting to awaken within.$"),    
         .pokemonScale = 508,
         .pokemonOffset = -3,
         .trainerScale = 256,
@@ -8039,10 +8039,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .height = 10,
         .weight = 200,
         .description = COMPOUND_STRING(
-    "Its body is coated in a thin, charged moisture\n"
-    "that constantly crackles with stored energy.\n"
-    "This slippery surface lets it escape grips,\n"
-    "while releasing shocks at those who grab it."),
+"Its body is coated in charged moisture\n"
+"that crackles with stored energy.\n"
+"This slick surface lets it escape grips,\n"
+"releasing shocks at those who grab it.$"),
         .pokemonScale = 288,
         .pokemonOffset = 11,
         .trainerScale = 256,

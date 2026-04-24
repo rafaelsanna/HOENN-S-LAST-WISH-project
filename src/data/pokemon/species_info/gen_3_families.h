@@ -403,10 +403,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .height = 9,
         .weight = 195,
         .description = COMPOUND_STRING(
-            "It uses its small leaf-covered wings to leap\n"
-            "high into the air, slashing at foes below.\n"
-            "By spreading its wings, it can glide long\n"
-            "distances, but it cannot truly fly."),
+"It uses small leaf covered wings to leap\n"
+"high, slashing at foes below.\n"
+"Spreading its wings, it glides long\n"
+"distances, but cannot truly fly.$"),
         .pokemonScale = 343,
         .pokemonOffset = 5,
         .trainerScale = 256,
@@ -489,7 +489,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .speciesName = _("Blaziken"),
         .cryId = CRY_BLAZIKEN,
         .natDexNum = NATIONAL_DEX_BLAZIKEN,
-        .categoryName = _("Blaze"),
+        .categoryName = _("Brave Bird"),
         .height = 19,
         .weight = 520,
         .description = COMPOUND_STRING(

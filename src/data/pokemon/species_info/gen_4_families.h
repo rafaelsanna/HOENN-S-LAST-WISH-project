@@ -1037,10 +1037,10 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .height = 10,
         .weight = 315,
         .description = COMPOUND_STRING(
-            "It makes its nest by damming streams\n"
-            "with bark and mud. A river dammed by\n"
-            "Bibarel will never overflow its banks,\n"
-            "which is appreciated by people nearby."),
+"It nests near hot springs and calm streams,\n"
+"relaxing in warm waters for hours on end.\n"
+"Where Ratybara rests, the springs stay\n"
+"clear and peaceful a gift to each traveler.$"),
         .pokemonScale = 305,
         .pokemonOffset = 8,
         .trainerScale = 257,
@@ -7208,10 +7208,10 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .height = 14,  // Reduzi altura
         .weight = 900,  // Reduzi peso
         .description = COMPOUND_STRING(
-        "Known for the strongest bite of any Pokémon,\n"
-        "it commands its pack with unwavering resolve.\n"
-        "Rivalries with Obstagoon are constant and fierce,\n"
-        "battles often echoing through the wilds at night."),
+"Its bite is strongest of any Pokémon.\n"
+"It leads its pack with fierce resolve.\n"
+"Rivalries with OBSTAGOON rage nightly,\n"
+"battles echoing through the wild dark.$"),
         .pokemonScale = 320,
         .pokemonOffset = 5,
         .trainerScale = 256,
