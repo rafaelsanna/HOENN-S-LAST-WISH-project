@@ -54,6 +54,7 @@
                 <li><a href="#screenshots">Screenshots</a></li>
                 <li><a href="#download">Download</a></li>
                 <li><a href="wishdex.html">WishDex</a></li>
+                <li><a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588" target="_blank">Documentation</a></li>
             </ul>
         </nav>
     </header>
@@ -85,10 +86,6 @@
                     <a href="https://www.youtube.com/@hoennslastwish" class="youtube-button" target="_blank">
                         <i class="fab fa-youtube"></i> YouTube Channel
                     </a>
-                    <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="hackdex-button" target="_blank">
-                        <img src="./images/download_banner.png" alt="Download now at hackdex.app">
-                    </a>
-                    <!-- NEW SHEETS BUTTON -->
                     <a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588" class="sheets-button" target="_blank">
                         <i class="fas fa-table"></i> Documentation
                     </a>
@@ -104,6 +101,11 @@
                 <source src="images/video01.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="hackdex-button" target="_blank">
+                    <img src="./images/download_banner.png" alt="Download now at hackdex.app">
+                </a>
+            </div>
         </div>
     </section>
 
@@ -195,7 +197,14 @@
                 <details class="patch-accordion">
                     <summary>Patch Application</summary>
                     <div class="installation-guide">
-                        <div id="rom-patcher-container"></div>
+                        <div id="rom-patcher-container">
+                            <p style="text-align:center; padding: 1rem;">
+                                To apply the patch, use an online tool like 
+                                <a href="https://www.romhacking.net/patch/" target="_blank" style="color: var(--accent, #7ec8e3); text-decoration: underline;">
+                                    RomHacking.net Patcher
+                                </a>.
+                            </p>
+                        </div>
                     </div>
                 </details>
             </div>
@@ -246,35 +255,36 @@
                 </a>
             </div>
 
-<div class="team-row grid-4">
-    <a href="#" class="team-card-link">
-        <div class="team-member">
-            <h3>Eric Serbinenko</h3>
-            <p>Spriter / Dev</p>
+            <div class="team-row grid-4">
+                <a href="#" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Eric Serbinenko</h3>
+                        <p>Spriter / Dev</p>
+                    </div>
+                </a>
+                
+                <a href="https://ko-fi.com/gerbo" target="_blank" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Gerbo</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.instagram.com/_kaziio_ko_/" target="_blank" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Kazioko</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="team-card-link">
+                    <div class="team-member">
+                        <h3>DoodleLordElias</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+            </div>
         </div>
-    </a>
-    
-    <a href="https://ko-fi.com/gerbo" target="_blank" class="team-card-link">
-        <div class="team-member">
-            <h3>Gerbo</h3>
-            <p>Sprites / Concept Artist</p>
-        </div>
-    </a>
-    
-    <a href="https://www.instagram.com/_kaziio_ko_/" target="_blank" class="team-card-link">
-        <div class="team-member">
-            <h3>Kazioko</h3>
-            <p>Sprites / Concept Artist</p>
-        </div>
-    </a>
-    
-    <a href="#" class="team-card-link">
-        <div class="team-member">
-            <h3>DoodleLordElias</h3>
-            <p>Sprites / Concept Artist</p>
-        </div>
-    </a>
-</div>
     </section>
 
     <!-- Footer -->
@@ -302,20 +312,22 @@
     <script type="text/javascript" src="rom-patcher-js/RomPatcher.webapp.js"></script>
     <script type="text/javascript">
         window.addEventListener('load', function(){
-            const myPatcherSettings={
-                language: 'en',
-                requireValidation: true,
-                allowDropFiles: true
-            };
-            
-            RomPatcherWeb.initialize(myPatcherSettings, {
-                file: 'rom-patcher-js/HLW v0.3.21.bps',
-                name: 'Hoenn Last Wish v0.3.21',
-                inputCrc32: 0x2144df1c,
-                inputMd5: 'fcc1c8ce5c6d3b1943a8b1c9807f8a32',
-                description: 'Last Updated Patch for Pokemon Hoenn Last Wish.',
-                outputName: 'Hoenn Last Wish v0.3.21 (Patched).gba'
-            });
+            if (typeof RomPatcherWeb !== 'undefined') {
+                const myPatcherSettings={
+                    language: 'en',
+                    requireValidation: true,
+                    allowDropFiles: true
+                };
+                
+                RomPatcherWeb.initialize(myPatcherSettings, {
+                    file: 'rom-patcher-js/HLW v0.3.21.bps',
+                    name: 'Hoenn Last Wish v0.3.21',
+                    inputCrc32: 0x2144df1c,
+                    inputMd5: 'fcc1c8ce5c6d3b1943a8b1c9807f8a32',
+                    description: 'Last Updated Patch for Pokemon Hoenn Last Wish.',
+                    outputName: 'Hoenn Last Wish v0.3.21 (Patched).gba'
+                });
+            }
         });
     </script>
 </body>
