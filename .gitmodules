@@ -4,6 +4,3 @@
 [submodule "poryscript"]
 	path = poryscript
 	url = https://github.com/huderlem/poryscript.git
-[submodule "porytiles"]
-	path = porytiles
-	url = https://github.com/grunt-lucas/porytiles.git
