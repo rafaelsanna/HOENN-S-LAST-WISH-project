@@ -15765,6 +15765,26 @@ void BS_RunStatChangeItems(void)
     ItemBattleEffects(ITEMEFFECT_STATS_CHANGED, GetBattlerForBattleScript(cmd->battler));
 }
 
+static bool8 IsSimilarMove(u16 moveArg, u16 usedMove)
+{
+    switch (moveArg)
+    {
+    case MOVE_EXPLOSION:
+    case MOVE_SELF_DESTRUCT:
+    case MOVE_MISTY_EXPLOSION:
+    case MOVE_MIND_BLOWN:
+        return (usedMove == MOVE_EXPLOSION || usedMove == MOVE_SELF_DESTRUCT ||
+                usedMove == MOVE_MISTY_EXPLOSION || usedMove == MOVE_MIND_BLOWN);
+
+    case MOVE_DOUBLE_KICK:
+    case MOVE_TRIPLE_KICK:
+        return (usedMove == MOVE_DOUBLE_KICK || usedMove == MOVE_TRIPLE_KICK);
+
+    default:
+        return (moveArg == usedMove);
+    }
+}
+
 static void TryUpdateEvolutionTracker(u32 evolutionCondition, u32 upAmount, u16 usedMove)
 {
     u32 i, j;
@@ -15799,7 +15819,7 @@ static void TryUpdateEvolutionTracker(u32 evolutionCondition, u32 upAmount, u16 
                     switch (evolutionCondition)
                     {
                         case IF_USED_MOVE_X_TIMES:
-                            if (evolutions[i].params[j].arg1 == usedMove)
+                            if (IsSimilarMove(evolutions[i].params[j].arg1, usedMove))
                                 SetMonData(monAtk, MON_DATA_EVOLUTION_TRACKER, &val);
                             break;
                         case IF_RECOIL_DAMAGE_GE:

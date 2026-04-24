@@ -913,6 +913,9 @@
 #define TRAINER_NOAH                        907
 #define TRAINER_LOUIS                       908
 #define TRAINER_GRUNT_FIERY_PATH            909
+#define TRAINER_LILLO                       910
+#define TRAINER_PEDRO                       911
+#define TRAINER_AGATHA                      912
 
 
 
@@ -920,8 +923,8 @@
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      910
-#define MAX_TRAINERS_COUNT                  911
+#define TRAINERS_COUNT                      950
+#define MAX_TRAINERS_COUNT                  951
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

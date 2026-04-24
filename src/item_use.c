@@ -1645,12 +1645,25 @@ void ItemUseOutOfBattle_TownMap(u8 taskId)
     }
 }
 
+// Forward declaration
 static void ItemUseCB_ChangePokeball(u8 taskId, void (*unused)(u8));
 
 void ItemUseOutOfBattle_ChangePokeball(u8 taskId)
 {
+    // NÃO usa SetUpItemUseCallback — é UB para ITEM_USE_BAG_MENU.
+    // Abre o party menu manualmente, igual ao que SetUpItemUseCallback
+    // faria para ITEM_USE_PARTY_MENU.
     gItemUseCB = ItemUseCB_ChangePokeball;
-    SetUpItemUseCallback(taskId);
+    if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+    {
+        gBagMenu->newScreenCallback = CB2_ShowPartyMenuForItemUse;
+        Task_FadeAndCloseBagMenu(taskId);
+    }
+    else
+    {
+        gPyramidBagMenu->newScreenCallback = CB2_ShowPartyMenuForItemUse;
+        CloseBattlePyramidBag(taskId);
+    }
 }
 
 static void ItemUseCB_ChangePokeball(u8 taskId, void (*unused)(u8))
@@ -1664,9 +1677,14 @@ static void ItemUseCB_ChangePokeball(u8 taskId, void (*unused)(u8))
     {
         SetMonData(mon, MON_DATA_POKEBALL, &ballId);
         RemoveBagItem(itemId, 1);
+
+        // Som de abertura da Pokébola
+        PlaySE(SE_BALL_OPEN);
+        // Som de clique da Pokébola
+        PlaySE(SE_RG_BALL_CLICK);
     }
 
-    unused(taskId);
+    gTasks[taskId].func = unused;
 }
 
 #undef tUsingRegisteredKeyItem

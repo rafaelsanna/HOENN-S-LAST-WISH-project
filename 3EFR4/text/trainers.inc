@@ -1247,6 +1247,58 @@ Route111_Text_DrewPostBattle:
 	.string "get through sandstorms.\l"
 	.string "That makes me happy!$"
 
+RogueCanyon_Text_LilloIntro::
+	.string "I'm a maniac for rare Pokémon!\n"
+	.string "I'm combing every corner of this\l"
+	.string "canyon to find them.\p"
+	.string "They say Hoenn is a natural paradise,\n"
+	.string "and these canyons were carved by\l"
+	.string "earthquakes so powerful they split\l"
+	.string "the ground open.\p"
+	.string "Now, let's see what you've got!$"
+
+RogueCanyon_Text_LilloDefeat::
+	.string "You must have some rare ones too!$"
+
+RogueCanyon_Text_LilloPostBattle::
+	.string "The canyon walls hide many secrets.\n"
+	.string "Keep searching and you might find\l"
+	.string "rare Pokémon nesting in the crevices.$"
+
+RogueCanyon_Text_PedroIntro::
+	.string "I've climbed mountains all over,\n"
+	.string "but this canyon is something else.\p"
+	.string "Every boulder has a story, every\n"
+	.string "cliff a memory of past adventures.\p"
+	.string "Let's add a battle to your story\n"
+	.string "right now!$"
+
+RogueCanyon_Text_PedroDefeat::
+	.string "Your strength echoes through\n"
+	.string "the canyon!$"
+
+RogueCanyon_Text_PedroPostBattle::
+	.string "The best adventures are shared\n"
+	.string "with Pokémon.\p"
+	.string "May your journey be as thrilling\n"
+	.string "as a mountain ascent.$"
+
+RogueCanyon_Text_AgathaIntro::
+	.string "Phew… This canyon heat is exhausting.\n"
+	.string "I miss the cool, damp caves of home.\p"
+	.string "Dry air just isn't for me.\n"
+	.string "Let's finish this quickly so I can\l"
+	.string "find some shade.$"
+
+RogueCanyon_Text_AgathaDefeat::
+	.string "Even under this blazing sun,\n"
+	.string "you're cooler.$"
+
+RogueCanyon_Text_AgathaPostBattle::
+	.string "I'm done with canyons.\n"
+	.string "If you find a cool stream or a shady\l"
+	.string "forest, let me know, will you?$"
+
 Route111_Text_HeidiIntro:
 	.string "I'm having a picnic in the desert.\p"
 	.string "You can always find a TRAINER,\n"
