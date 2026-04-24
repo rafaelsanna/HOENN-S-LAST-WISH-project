@@ -12,14 +12,14 @@ Route102_Text_CalvinPostBattle:
 	.string "you should have told me before!$"
 
 Route102_Text_CalvinRegister:
-	.string "I've been working hard at this since\n"
-	.string "I saw you before.\p"
-	.string "I'd like to battle you again, so can\n"
-	.string "you register me in your POKéNAV?$"
+	.string "I've been training nonstop since our\n"
+	.string "last battle. You're still way ahead,\l"
+	.string "but one day… one day I'll catch up.\l"
+	.string "Just you wait!$"
 
 Route102_Text_CalvinRegisterShort:
-	.string "I'd like to battle you again, so can\n"
-	.string "you register me in your POKéNAV?$"
+	.string "You're still way ahead, but one day\n"
+	.string "I'll catch up. Just you wait!$"
 
 Route102_Text_CalvinRematchIntro:
 	.string "Ever since I lost to you, I desperately\n"
@@ -322,16 +322,16 @@ Route104_Text_HaleyPostBattle:
 	.string "turn out.$"
 
 Route104_Text_HaleyRegister1:
-	.string "You're strong, but should I register\n"
-	.string "you in my POKéNAV?\l"
-	.string "Maybe I shouldn't…\p"
-	.string "Okay, sure, I will register you!$"
+	.string "You're strong, but should I keep\n"
+	.string "an eye on your progress?\l"
+	.string "Maybe that's weird…\p"
+	.string "Ah, whatever! I'm doing it anyway!$"
 
 Route104_Text_HaleyRegister2:
-	.string "You're strong, but should I register\n"
-	.string "you in my POKéNAV?\l"
-	.string "Maybe I shouldn't…\p"
-	.string "Okay, sure, I will register you!$"
+	.string "You're strong, but should I keep\n"
+	.string "an eye on your progress?\l"
+	.string "Maybe that's weird…\p"
+	.string "Ah, whatever! I'm doing it anyway!$"
 
 Route104_Text_HaleyRematchIntro:
 	.string "Come on, battle with me!$"
@@ -358,15 +358,15 @@ Route104_Text_WinstonPostBattle:
 
 Route104_Text_WinstonRegister1:
 	.string "Hm?\n"
-	.string "Ah, you've obtained a POKéNAV.\p"
-	.string "I will gladly register you.\n"
-	.string "After all, I have plenty of money.$"
+	.string "Ah, you're a strong trainer.\p"
+	.string "I'll remember your name.\n"
+	.string "After all, I have a memory for talent.$"
 
 Route104_Text_WinstonRegister2:
 	.string "Hm?\n"
-	.string "Ah, you've obtained a POKéNAV.\p"
-	.string "I will gladly register you.\n"
-	.string "After all, I have plenty of money.$"
+	.string "Ah, you're a strong trainer.\p"
+	.string "I'll remember your name.\n"
+	.string "After all, I have a memory for talent.$"
 
 Route104_Text_WinstonRematchIntro:
 	.string "After I lost to you, I learned a bunch\n"
@@ -394,14 +394,15 @@ Route104_Text_CindyPostBattle:
 
 Route104_Text_CindyRegister1:
 	.string "Hello, we meet again.\p"
-	.string "We seem to be drawn together. Let's\n"
-	.string "register each other in our POKéNAVS.$"
+	.string "We seem to be drawn together.\n"
+	.string "I won't forget you or our battles.\l"
+	.string "Let's keep crossing paths!$"
 
 Route104_Text_CindyRegister2:
 	.string "We should commemorate how we seem\n"
 	.string "to be drawn to each other.\p"
-	.string "Let's register each other in our\n"
-	.string "POKéNAVS.$"
+	.string "Fate keeps bringing us together.\n"
+	.string "I'll remember you always!$"
 
 Route104_Text_CindyRematchIntro:
 	.string "Hello, we meet again.\n"
@@ -505,8 +506,8 @@ Route105_Text_AndresPostBattle:
 	.string "I mean to find them all!$"
 
 Route105_Text_AndresRegister:
-	.string "Huh? I'm so weak, but you're willing\n"
-	.string "to register me in your POKéNAV?$"
+	.string "Huh? I'm so weak, but you're still\n"
+	.string "willing to acknowledge me?$"
 
 Route105_Text_AndresRematchIntro:
 	.string "I've told you that I'm weak…\n"
@@ -1087,7 +1088,7 @@ Route108_Text_CoryPostBattle:
 
 Route108_Text_CoryRegister:
 	.string "I love tough TRAINERS, too!\n"
-	.string "Register me in your POKéNAV!$"
+	.string "Let's battle again someday!$"
 
 Route108_Text_CoryRematchIntro:
 	.string "Win or lose, I love battling at sea!$"
@@ -1633,8 +1634,8 @@ Route111_Text_DustyPostBattle:
 Route111_Text_DustyRegister:
 	.string "I haven't been searching for any\n"
 	.string "tough POKéMON.\p"
-	.string "But, for some reason, I sure do like\n"
-	.string "POKéNAVS.$"
+	.string "But, for some reason, I sure do\n"
+	.string "like battling strong trainers.$"
 
 Route111_Text_DustyRematchIntro:
 	.string "For thirty years I have searched for\n"
@@ -1874,8 +1875,7 @@ Route112_Text_TrentRegister:
 	.string "Ow, my legs have cramped up.\n"
 	.string "Can you grab me some bandages from\l"
 	.string "my backpack?\p"
-	.string "No, that's my POKéNAV!\n"
-	.string "Oh, fine, I'll register you.$"
+	.string "No, that's my LUNCHBOX!$"
 
 Route112_Text_TrentRematchIntro:
 	.string "I've been keeping fit by hiking.\n"
@@ -1981,7 +1981,7 @@ Route113_Text_MadelinePostBattle:
 
 Route113_Text_MadelineRegister:
 	.string "Here, slide under my parasol.\n"
-	.string "Let me register you in my POKéNAV.$"
+	.string "I'll remember you, you are cool.$"
 
 Route113_Text_MadelineRematchIntro:
 	.string "Oh, hello, hasn't it been a while?\n"
@@ -2007,7 +2007,7 @@ Route113_Text_LaoPostBattle:
 
 Route113_Text_LaoRegister:
 	.string "Yiiyaah! Witness the ancient ninja\n"
-	.string "technique of POKéNAV registration!$"
+	.string "art of acknowledging your equal!$"
 
 Route113_Text_LaoRematchIntro:
 	.string "From out of the ashes I leap! Hiyah!\n"
@@ -2579,16 +2579,16 @@ Route116_Text_JerryPostBattle:
 
 Route116_Text_JerryRegister1:
 	.string "I learned at the TRAINER'S SCHOOL\n"
-	.string "that a POKéNAV can register TRAINERS.\p"
+	.string "that strong trainers keep a list.\p"
 	.string "I don't really get what that means,\n"
-	.string "so can I just try it?$"
+	.string "so can I just add you to mine?$"
 
 Route116_Text_JerryRegister2:
 	.string "I learned at the TRAINER'S SCHOOL\n"
-	.string "that a POKéNAV can register TRAINERS.\p"
+	.string "that strong trainers keep a list.\p"
 	.string "I don't really get what that means,\n"
-	.string "so can I just try it?$"
-
+	.string "so can I just add you to mine?$"
+	
 Route116_Text_JerryRematchIntro:
 	.string "I've been studying seriously at the\n"
 	.string "TRAINER'S SCHOOL.\l"
@@ -2615,12 +2615,18 @@ Route116_Text_KarenPostBattle:
 	.string "TRAINER like ROXANNE this way!$"
 
 Route116_Text_KarenRegister1:
-	.string "Oh, wow! Isn't that a POKéNAV?\n"
-	.string "I have one, too! Please register me!$"
+	.string "Oh, wow! Is that a DEXNAV?\n"
+	.string "If they weren't so expensive,\l"
+	.string "I'd buy one in a heartbeat.\p"
+	.string "Guess I'll just have to dream...\n"
+	.string "Lucky you!$"
 
 Route116_Text_KarenRegister2:
-	.string "Oh, wow! Isn't that a POKéNAV?\n"
-	.string "I have one, too! Please register me!$"
+	.string "Oh, wow! Is that a DEXNAV?\n"
+	.string "If they weren't so expensive,\l"
+	.string "I'd buy one in a heartbeat.\p"
+	.string "Guess I'll just have to dream...\n"
+	.string "Lucky you!$"
 
 Route116_Text_KarenRematchIntro:
 	.string "I studied a whole lot since I saw you.\n"
@@ -2936,8 +2942,10 @@ Route118_Text_RosePostBattle:
 	.string "I'll pass.$"
 
 Route118_Text_RoseRegister:
-	.string "Sniff… That odor--it's a POKéNAV!\n"
-	.string "We must register each other!$"
+	.string "Sniff… That scent… It's the mark\n"
+	.string "of a truly formidable trainer.\p"
+	.string "You carry the smell of a champion.\n"
+	.string "I won't forget you, that's for sure!$"
 
 Route118_Text_RoseRematchIntro:
 	.string "Were you drawn here by the sweet\n"
@@ -3155,10 +3163,11 @@ Route119_Text_CatherinePostBattle:
 	.string "physically, too.$"
 
 Route119_Text_CatherineRegister:
-	.string "Do you have a POKéNAV?\n"
-	.string "It's a must-have tool for any TRAINER.\p"
+	.string "Do you have a DEXNAV?\n"
+	.string "It's the perfect tool for finding\l"
+	.string "rare and adorable POKéMON!\p"
 	.string "Oh, you do have one!\n"
-	.string "Let's register each other, then!$"
+	.string "I use mine all the time it'S PERFECT!$"
 
 Route119_Text_CatherineRematchIntro:
 	.string "How's your journey with POKéMON\n"
@@ -3312,8 +3321,10 @@ Route120_Text_RobertPostBattle:
 	.string "you can count on.$"
 
 Route120_Text_RobertRegister:
-	.string "You can be counted on to get better.\n"
-	.string "I'd like to register you in my POKéNAV!$"
+	.string "Dude… I wish I was half\n"
+	.string "as cool as you.\p"
+	.string "You've got that vibe.\n"
+	.string "Definitely not forgetting you!$"
 
 Route120_Text_RobertRematchIntro:
 	.string "A POKéMON that grows steadily is one\n"
@@ -3367,7 +3378,7 @@ Route120_Text_JeffreyPostBattle:
 Route120_Text_JeffreyRegister:
 	.string "… … … … … …\n"
 	.string "… … … … … …\l"
-	.string "Do you have a POKéNAV…?$"
+	.string "Do you have a DEXNAV…?$"
 
 Route120_Text_JeffreyRematchIntro:
 	.string "… … … … … …\n"
@@ -3615,8 +3626,10 @@ Route121_Text_CristinPostBattle:
 
 Route121_Text_CristinRegister:
 	.string "That was total humiliation!\n"
-	.string "I won't forget you…\l"
-	.string "Hand over your POKéNAV!$"
+	.string "But I won't forget you…\l"
+	.string "You deserve a handshake!\p"
+	.string "You're something else, really.$"
+
 
 Route121_Text_CristinRematchIntro:
 	.string "I have this new routine.\n"
@@ -3733,9 +3746,9 @@ Route123_Text_CameronPostBattle:
 
 Route123_Text_CameronRegister:
 	.string "I sense it!\n"
-	.string "You and I shall battle again!\l"
-	.string "I can't tell if I'll win, though…\p"
-	.string "Let's see your POKéNAV.$"
+	.string "You'll be a legendary trainer.\p"
+	.string "I wouldn't be shocked to see\n"
+	.string "you on television one day!$"
 
 Route123_Text_CameronRematchIntro:
 	.string "I've convinced myself that I won't\n"
@@ -3946,8 +3959,8 @@ Route124_Text_SpencerDefeat:
 
 Route124_Text_SpencerPostBattle:
 	.string "Many people lose their bearings at sea.\p"
-	.string "If you're that sort, you should refer\n"
-	.string "to the POKéNAV's MAP.$"
+	.string "Not me, I know these waters like the\n"
+	.string "back of my hand. No map needed here.$"
 
 Route124_Text_RolandIntro:
 	.string "Hm! You're riding a POKéMON instead\n"
@@ -3978,8 +3991,10 @@ Route124_Text_JennyPostBattle:
 	.string "of their own.$"
 
 Route124_Text_JennyRegister:
-	.string "It's only on a whim, but maybe I'll get\n"
-	.string "you to register me in your POKéNAV.$"
+	.string "It's only on a whim, but maybe I'll\n"
+	.string "ask you to remember my name.\p"
+	.string "No big deal if you don't, though.\n"
+	.string "Just a thought...$"
 
 Route124_Text_JennyRematchIntro:
 	.string "If you just float in the sea like this,\n"
@@ -4186,8 +4201,8 @@ Route125_Text_ErnestPostBattle:
 	.string "high tide to low tide. Did you know?$"
 
 Route125_Text_ErnestRegister:
-	.string "Register me in your POKéNAV,\n"
-	.string "and I'll tell you something good.$"
+	.string "Stay on my good side, and maybe\n"
+	.string "I'll let you in on something good.$"
 
 Route125_Text_ErnestRematchIntro:
 	.string "It's high time I get my payback\n"
@@ -4505,9 +4520,9 @@ Route128_Text_IsaiahPostBattle:
 	.string "but I will never give up!$"
 
 Route128_Text_IsaiahRegister:
-	.string "I know I'm not good now, but I think\n"
-	.string "I can win eventually.\p"
-	.string "Please register me in your POKéNAV.$"
+	.string "I'm not strong yet, but someday\n"
+	.string "I'll be for sure.\p"
+	.string "Just remember me until then.$"
 
 Route128_Text_IsaiahRematchIntro:
 	.string "I'm still feeling good. I'll keep on\n"

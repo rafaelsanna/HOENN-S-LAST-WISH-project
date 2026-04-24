@@ -853,7 +853,7 @@ Route104_EventScript_Billy::
 	end
 
 Route104_EventScript_Haley::
-	trainerbattle_single TRAINER_HALEY_1, Route104_Text_HaleyIntro, Route104_Text_HaleyDefeat, Route104_EventScript_TryRegisterHaleyAfterBattle
+	trainerbattle_single TRAINER_HALEY_1, Route104_Text_HaleyIntro, Route104_Text_HaleyDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route104_EventScript_RematchHaley
 	setvar VAR_0x8004, TRAINER_HALEY_1
@@ -894,7 +894,7 @@ Route104_EventScript_RematchHaley::
 	end
 
 Route104_EventScript_Winston::
-	trainerbattle_single TRAINER_WINSTON_1, Route104_Text_WinstonIntro, Route104_Text_WinstonDefeat, Route104_EventScript_TryRegisterWinstonAfterBattle
+	trainerbattle_single TRAINER_WINSTON_1, Route104_Text_WinstonIntro, Route104_Text_WinstonDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route104_EventScript_RematchWinston
 	setvar VAR_0x8004, TRAINER_WINSTON_1
@@ -935,7 +935,7 @@ Route104_EventScript_RematchWinston::
 	end
 
 Route104_EventScript_Cindy::
-	trainerbattle_single TRAINER_CINDY_1, Route104_Text_CindyIntro, Route104_Text_CindyDefeat, Route104_EventScript_TryRegisterCindyAfterBattle
+	trainerbattle_single TRAINER_CINDY_1, Route104_Text_CindyIntro, Route104_Text_CindyDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route104_EventScript_RematchCindy
 	setvar VAR_0x8004, TRAINER_CINDY_1
