@@ -2607,9 +2607,11 @@ void DeterminePokemonRarityAndNewStatus(void)
     u16 newPokemonChance;
     u16 randomValue;
     u32 attempts = 1000;
+    u32 outerAttempts = 50;
 
-    while (TRUE)
+    while (outerAttempts > 0)
     {
+        outerAttempts--;
         randomValue = (Random() % 100);  // Generate random value between 0 and 100
 
         // Determine Rarity based on the chances
@@ -2646,8 +2648,17 @@ void DeterminePokemonRarityAndNewStatus(void)
 
         if (totalNotOwned <= 0)
         {
-            // If all Pokémon of the selected rarity are owned, restart the process (reroll)
-            continue;  // This will make the loop restart from the beginning
+            // fallback para COMMON se esgotou tentativas
+            if (outerAttempts <= 0)
+            {
+                sGacha->Rarity = RARITY_COMMON;
+                totalMax = GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_COMMON);
+                totalNotOwned = totalMax;
+            }
+            else
+            {
+                continue;
+            }
         }
 
         // Generate a random value for the chances
@@ -2680,6 +2691,8 @@ void DeterminePokemonRarityAndNewStatus(void)
             } while (IsNotValidUnownedSpecies(species));  // Continue if owned (IsNotValidUnownedSpecies returns TRUE)
 
             // If we've broken out of the loop, we have a new Pokémon
+            if (species == SPECIES_NONE || species == 0)
+                species = sGachaBasicSpeciesCommon[0];
             sGacha->CalculatedSpecies = species;  // Store the species of the new Pokémon
             break;  // Exit the loop after finding a new Pokémon
         }
@@ -2707,9 +2720,11 @@ void DeterminePokemonRarityAndNewStatus(void)
                 }
 
                 // If the Pokémon is owned, we have an owned Pokémon
-            } while (IsNotValidOwnedSpecies(species));  // Continue if not owned
+            } while (IsNotValidOwnedSpecies(species) && sGacha->ownedCommon + sGacha->ownedUncommon + sGacha->ownedRare + sGacha->ownedUltraRare > 0);  // Continue if not owned
 
             // If we've broken out of the loop, we have an owned Pokémon
+            if (species == SPECIES_NONE || species == 0)
+                species = sGachaBasicSpeciesCommon[0];
             sGacha->CalculatedSpecies = species;  // Store the species of the owned Pokémon
             break;  // Exit the loop after finding an owned Pokémon
         }

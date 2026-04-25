@@ -776,3 +776,22 @@ MauvilleCity_GameCorner_Text_CantPlayWithNoCoinCase:
 	.string "You can't play if you don't have\n"
 	.string "a COIN CASE.$"
 
+
+@ ============================================================
+@ DEBUG - acesso direto sem custo (remover antes do release)
+@ ============================================================
+
+MauvilleCity_GameCorner_EventScript_DebugGacha::
+	lockall
+	setvar VAR_0x8004, 0
+	special StartGacha
+	waitstate
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugBlackjack::
+	lockall
+	special StartBlackJack
+	waitstate
+	releaseall
+	end
