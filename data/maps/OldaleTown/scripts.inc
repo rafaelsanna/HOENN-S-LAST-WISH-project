@@ -36,6 +36,10 @@ OldaleTown_EventScript_Girl::
 	msgbox OldaleTown_Text_SavingMyProgress, MSGBOX_NPC
 	end
 
+OldaleTown_EventScript_Girl2::
+	msgbox OldaleTown_Text_PieceofMind, MSGBOX_NPC
+	end
+
 OldaleTown_EventScript_MartEmployee::
 	lock
 	faceplayer
@@ -349,6 +353,16 @@ OldaleTown_Text_SavingMyProgress:
 	.string "Even this town feels different.\p"
 	.string "It's like something changed after last\n"
 	.string "night... really strange.$"
+
+OldaleTown_Text_PieceofMind:
+	.string "I just want my peace of mind, calm,\n"
+	.string "quiet days without any rush.\p"
+	.string "I don't like spending all day on\n"
+	.string "computers or watching TV.\p"
+	.string "Here in OLDALE, time moves slowly.\n"
+	.string "I feel truly at ease.\p"
+	.string "I would never trade this for\n"
+	.string "a hectic life in the big city.$"
 
 OldaleTown_Text_IWorkAtPokemonMart:
 	.string "Hi!\n"

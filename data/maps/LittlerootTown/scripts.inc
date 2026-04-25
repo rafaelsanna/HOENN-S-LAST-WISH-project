@@ -262,6 +262,10 @@ LittlerootTown_EventScript_Boy::
 	msgbox LittlerootTown_Text_BirchSpendsDaysInLab, MSGBOX_NPC
 	end
 
+LittlerootTown_EventScript_LittleBoy::
+	msgbox LittlerootTown_Text_WantPKM, MSGBOX_NPC
+	end	
+
 LittlerootTown_EventScript_Twin::
 	lock
 	faceplayer
@@ -989,6 +993,17 @@ LittlerootTown_Text_BirchSpendsDaysInLab:
 	.string "People say it only appears once every\n"
 	.string "thousand years.\p"
 	.string "Gave me chills just thinking about it.$"
+
+LittlerootTown_Text_WantPKM:
+	.string "My dream is to have my very own\n"
+	.string "POKéMON...\p"
+	.string "When that comet passed through\n"
+	.string "the sky that night... I made a wish!\p"
+	.string "hi hi hi!\p"
+	.string "Maybe someday PROFESSOR ACACIA\n"
+	.string "will make my dream come true and\l"
+	.string "give me a POKéMON to start my journey!$"
+
 
 LittlerootTown_Text_IfYouGoInGrassPokemonWillJumpOut:
 	.string "Um, um, um!\p"
