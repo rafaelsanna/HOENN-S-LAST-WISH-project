@@ -795,3 +795,10 @@ MauvilleCity_GameCorner_EventScript_DebugBlackjack::
 	waitstate
 	releaseall
 	end
+
+MauvilleCity_GameCorner_EventScript_DebugPinball::
+	lockall
+	callnative PlayMeowthPinballGame
+	waitstate
+	releaseall
+	end
