@@ -275,7 +275,7 @@
       "y": 7,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "MauvilleCity_GameCorner_EventScript_SlotMachine10"
+      "script": "MauvilleCity_GameCorner_EventScript_DebugGacha"
     },
     {
       "type": "sign",
@@ -283,7 +283,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "MauvilleCity_GameCorner_EventScript_SlotMachine11"
+      "script": "MauvilleCity_GameCorner_EventScript_DebugBlackjack"
     },
     {
       "type": "sign",
