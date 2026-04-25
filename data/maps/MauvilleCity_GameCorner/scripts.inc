@@ -802,3 +802,10 @@ MauvilleCity_GameCorner_EventScript_DebugPinball::
 	waitstate
 	releaseall
 	end
+
+MauvilleCity_GameCorner_EventScript_DebugFlappy::
+lockall
+callnative StartFlappyBird
+waitstate
+releaseall
+end
