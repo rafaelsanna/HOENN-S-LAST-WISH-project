@@ -1230,7 +1230,7 @@
 #define FLAG_ITEM_MT_CHIMNEY_TM_FIRE_PUNCH                          0x493
 #define FLAG_ITEM_PETALBURG_CAVE_GREAT_BALL                         0x494
 #define FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE                           0x495 
-#define FLAG_UNUSED_0x496                                           0x496 // Unused Flag
+#define FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM                     0x496 
 #define FLAG_UNUSED_0x497                                           0x497 // Unused Flag
 #define FLAG_UNUSED_0x498                                           0x498 // Unused Flag
 #define FLAG_UNUSED_0x499                                           0x499 // Unused Flag

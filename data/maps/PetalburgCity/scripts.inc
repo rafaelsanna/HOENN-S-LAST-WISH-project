@@ -5,11 +5,16 @@ PetalburgCity_MapScripts::
 
 PetalburgCity_OnTransition:
 	setflag FLAG_VISITED_PETALBURG_CITY
+	call_if_eq VAR_LUKA_PETALBURG_ENCOUNTER, 0, PetalburgCity_EventScript_HideLukaAfterGym
 	call_if_eq VAR_PETALBURG_CITY_STATE, 0, PetalburgCity_EventScript_MoveGymBoyToWestEntrance
 	call_if_eq VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_GYM_STATE, 8, PetalburgCity_EventScript_SetGymDoorsUnlocked
 	end
+
+PetalburgCity_EventScript_HideLukaAfterGym::
+	setflag FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM
+	return
 
 PetalburgCity_EventScript_MoveGymBoyToWestEntrance::
 	setobjectxyperm LOCALID_GYM_BOY, 5, 11
@@ -750,6 +755,104 @@ PetalburgCity_EventScript_GymBoy::
 	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_NPC
 	end
 
+PetalburgCity_EventScript_LukaAfterGym_Center::
+	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_LukaAfterGym_Center_Battle
+	end
+
+PetalburgCity_EventScript_LukaAfterGym_Center_Battle::
+	lockall
+	addobject LOCALID_PETALBURG_LUKA_AFTER_GYM
+	setobjectxy LOCALID_PETALBURG_LUKA_AFTER_GYM, 20, 12
+	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_Approach4
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox PetalburgCity_Text_LukaAfterGym_Intro, MSGBOX_DEFAULT
+	closemessage
+	trainerbattle_single TRAINER_LUKA_PETALBURG_GYM, PetalburgCity_Text_LukaAfterGym_BattleStart, PetalburgCity_Text_LukaAfterGym_Defeat, PetalburgCity_EventScript_LukaAfterGym_AfterBattle
+	end
+
+PetalburgCity_EventScript_LukaAfterGym_Left::
+	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_LukaAfterGym_Left_Battle
+	end
+
+PetalburgCity_EventScript_LukaAfterGym_Left_Battle::
+	lockall
+	addobject LOCALID_PETALBURG_LUKA_AFTER_GYM
+	setobjectxy LOCALID_PETALBURG_LUKA_AFTER_GYM, 20, 12
+	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_Approach5
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox PetalburgCity_Text_LukaAfterGym_Intro, MSGBOX_DEFAULT
+	closemessage
+	trainerbattle_single TRAINER_LUKA_PETALBURG_GYM, PetalburgCity_Text_LukaAfterGym_BattleStart, PetalburgCity_Text_LukaAfterGym_Defeat, PetalburgCity_EventScript_LukaAfterGym_AfterBattle
+	end
+
+PetalburgCity_EventScript_LukaAfterGym_Right::
+	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_LukaAfterGym_Right_Battle
+	end
+
+PetalburgCity_EventScript_LukaAfterGym_Right_Battle::
+	lockall
+	addobject LOCALID_PETALBURG_LUKA_AFTER_GYM
+	setobjectxy LOCALID_PETALBURG_LUKA_AFTER_GYM, 20, 12
+	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_Approach5
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	msgbox PetalburgCity_Text_LukaAfterGym_Intro, MSGBOX_DEFAULT
+	closemessage
+	trainerbattle_single TRAINER_LUKA_PETALBURG_GYM, PetalburgCity_Text_LukaAfterGym_BattleStart, PetalburgCity_Text_LukaAfterGym_Defeat, PetalburgCity_EventScript_LukaAfterGym_AfterBattle
+	end
+
+PetalburgCity_EventScript_LukaAfterGym_AfterBattle::
+	msgbox PetalburgCity_Text_LukaAfterGym_PostBattle1, MSGBOX_DEFAULT
+	closemessage
+	msgbox PetalburgCity_Text_LukaAfterGym_PostBattle2, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_Exit
+	waitmovement 0
+	setflag FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM
+	removeobject LOCALID_PETALBURG_LUKA_AFTER_GYM
+	setvar VAR_LUKA_PETALBURG_ENCOUNTER, 1
+	releaseall
+	end
+
+PetalburgCity_Movement_LukaAfterGym_Approach4:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+PetalburgCity_Movement_LukaAfterGym_Approach5:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+PetalburgCity_Movement_LukaAfterGym_Exit:
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	set_invisible
+	step_end
+
 PetalburgCity_Text_WhereIsWally:
 	.string "Where has our LUKA gone?\p"
 	.string "We have to leave for VERDANTURF TOWN\n"
@@ -838,4 +941,37 @@ PetalburgCity_Text_WallyIntro:
 PetalburgCity_Text_WallyDefeat:
     .string "LUKA: Incredible…\n"
     .string "You're really good!$"
-	
+
+PetalburgCity_Text_LukaAfterGym_Intro:
+    .string "LUKA: {PLAYER}!\n"
+    .string "You actually beat Calendula…$"
+	.string "I knew you were strong, but this…\n"
+	.string "I had to come see for myself.\p"
+	.string "Before you go further into the world,\n"
+	.string "I want to test you one more time.\p"
+	.string "Come on. Show me what you've got!$"
+
+PetalburgCity_Text_LukaAfterGym_BattleStart:
+    .string "LUKA: I won't hold back!\n"
+    .string "Not even a little!$"
+
+PetalburgCity_Text_LukaAfterGym_Defeat:
+    .string "LUKA: …You win. Again.\n"
+    .string "How do you do that?$"
+
+PetalburgCity_Text_LukaAfterGym_PostBattle1:
+    .string "LUKA: Listen… while you were in there,\n"
+    .string "I heard some things.\p"
+    .string "Team Magma and Team Aqua have been\n"
+    .string "spotted near the woods.\p"
+    .string "They're not just passing through.\n"
+    .string "Something is going on between them.$"
+
+PetalburgCity_Text_LukaAfterGym_PostBattle2:
+    .string "LUKA: I'm going to keep an eye on it.\n"
+    .string "You keep moving forward.\p"
+    .string "But be careful, {PLAYER}.\n"
+    .string "Whatever they're after… it's serious.\p"
+    .string "We'll meet again soon.\n"
+    .string "Count on it!$"
+

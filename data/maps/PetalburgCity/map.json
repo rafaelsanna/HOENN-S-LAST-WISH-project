@@ -146,6 +146,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
       "flag": "FLAG_HIDE_PETALBURG_CITY_SCOTT"
+    },
+    {
+      "local_id": "LOCALID_PETALBURG_LUKA_AFTER_GYM",
+      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "x": 20,
+      "y": 12,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM"
     }
   ],
   "warp_events": [
@@ -264,6 +278,33 @@
       "var": "VAR_SCOTT_PETALBURG_ENCOUNTER",
       "var_value": "0",
       "script": "PetalburgCity_EventScript_Scott0"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 8,
+      "elevation": 3,
+      "var": "VAR_LUKA_PETALBURG_ENCOUNTER",
+      "var_value": "0",
+      "script": "PetalburgCity_EventScript_LukaAfterGym_Center"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 7,
+      "elevation": 3,
+      "var": "VAR_LUKA_PETALBURG_ENCOUNTER",
+      "var_value": "0",
+      "script": "PetalburgCity_EventScript_LukaAfterGym_Left"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 7,
+      "elevation": 3,
+      "var": "VAR_LUKA_PETALBURG_ENCOUNTER",
+      "var_value": "0",
+      "script": "PetalburgCity_EventScript_LukaAfterGym_Right"
     }
   ],
   "bg_events": [

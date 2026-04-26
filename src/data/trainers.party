@@ -13649,6 +13649,65 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Dazzling Gleam
 - Wing Attack
 
+=== TRAINER_LUKA_PETALBURG_GYM ===
+Name: LUKA
+Class: Rival
+Pic: Luka
+Gender: Male
+Music: Male
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Pidgeot @ Sitrus Berry
+Level: 45
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Air Cutter
+- Psybeam
+- Protect
+- Magic Coat
+
+Umbreon @ Lum Berry
+Level: 45
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Snarl
+- Protect
+- Confuse Ray
+- Moonlight
+
+Tentacruel @ Black Sludge  
+Level: 45
+Ability: Liquid Ooze   
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Toxic  
+- Protect  
+- Chilling Water  
+- Venoshock
+
+Dragonair @ Weakness Policy
+Level: 45
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Dragon Breath
+- Protect
+- Surf
+- Thunder Wave
+
+Ninetales @ Life Orb
+Level: 45
+Ability: Flash Fire
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Will-O-Wisp  
+- Protect  
+- Flame Burst
+- Moonblast
+
+Dustox @ Lum Berry
+Level: 45
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Bug Bite
+- Protect
+- Dazzling Gleam
+- Wing Attack
+
 === TRAINER_WALLY_VR_2 ===
 Name: WALLY
 Class: Rival
