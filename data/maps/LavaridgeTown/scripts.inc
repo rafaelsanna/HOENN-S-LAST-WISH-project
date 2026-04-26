@@ -217,6 +217,10 @@ LavaridgeTown_EventScript_Twin::
 	msgbox LavaridgeTown_Text_BatheInHotSpringsEveryDay, MSGBOX_NPC
 	end
 
+LavaridgeTown_EventScript_Boy::
+	msgbox LavaridgeTown_Text_Boy, MSGBOX_NPC
+	end
+
 LavaridgeTown_EventScript_HotSpringsOldWoman1::
 	msgbox LavaridgeTown_Text_IfPokemonInHotSprings, MSGBOX_NPC
 	end
@@ -402,4 +406,17 @@ LavaridgeTown_Text_GymSign:
 LavaridgeTown_Text_HerbShopSign:
 	.string "POKéMON HERB SHOP\n"
 	.string "“Bitter taste--better cure!”$"
+
+LavaridgeTown_Text_Boy:
+    .string "Yo! My grandpa says\n"
+    .string "it wasn't this hot before here.\p"
+    .string "Something must've changed\n"
+    .string "deep in the mountain...\p"
+    .string "When I grow up, I'm going\n"
+    .string "to check out FIERY PATH\l"
+    .string "and find rare POKéMON!$"
+
+
+
+
 

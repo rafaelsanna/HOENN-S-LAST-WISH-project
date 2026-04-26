@@ -755,6 +755,10 @@ PetalburgCity_EventScript_GymBoy::
 	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_NPC
 	end
 
+PetalburgCity_EventScript_AdventureBoy::
+	msgbox PetalburgCity_Text_AdventureBoy, MSGBOX_NPC
+	end	
+
 PetalburgCity_EventScript_LukaAfterGym_Center::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_LukaAfterGym_Center_Battle
 	end
@@ -974,4 +978,16 @@ PetalburgCity_Text_LukaAfterGym_PostBattle2:
     .string "Whatever they're after… it's serious.\p"
     .string "We'll meet again soon.\n"
     .string "Count on it!$"
+
+PetalburgCity_Text_AdventureBoy:
+    .string "This city's pretty calm.\n"
+    .string "Or at least, it seems that way.\p"
+    .string "But the forest to the north...\n"
+    .string "It feels different somehow.\p"
+    .string "Even when it's quiet...\n"
+    .string "I get this strange feeling.\p"
+    .string "Like something's watching.\p"
+    .string "You should be careful, okay?$"
+
+
 
