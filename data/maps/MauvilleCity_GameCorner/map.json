@@ -81,8 +81,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_POKEFAN_M",
-      "x": 22,
-      "y": 20,
+      "x": 20,
+      "y": 19,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -429,14 +429,6 @@
     },
     {
       "type": "sign",
-      "x": 11,
-      "y": 7,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "MauvilleCity_GameCorner_EventScript_DebugPinball"
-    },
-    {
-      "type": "sign",
       "x": 2,
       "y": 3,
       "elevation": 0,
@@ -445,16 +437,8 @@
     },
     {
       "type": "sign",
-      "x": 5,
-      "y": 7,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "MauvilleCity_GameCorner_EventScript_DebugPinball"
-    },
-    {
-      "type": "sign",
-      "x": 9,
-      "y": 7,
+      "x": 3,
+      "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
       "script": "MauvilleCity_GameCorner_EventScript_DebugPinball"
