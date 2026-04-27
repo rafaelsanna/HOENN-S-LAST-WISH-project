@@ -18848,3 +18848,39 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 Mankey
 Level: 14
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+=== TRAINER_HAKARI ===
+Name: HAKARI
+Class: Gambler
+Pic: Gambler
+Gender: Male
+Music: Intense
+Double Battle: Yes
+AI: Check Bad Move
+
+Voltorb
+Level: 25
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Selfdestruct
+- Metronome
+- Protect
+
+Meowth
+Level: 25
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Metronome
+- Protect
+- Destiny Bond
+
+Clefairy @ Eviolite
+Level: 25
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Metronome
+- Protect
+
+Sableye
+Level: 25
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Metronome
+- Protect
+- Destiny Bond

@@ -49261,3 +49261,95 @@ F_TRAINER_FEMALE |
             },
         },
     },
+#line 18852
+    [DIFFICULTY_NORMAL][TRAINER_HAKARI] =
+    {
+#line 18853
+        .trainerName = _("HAKARI"),
+#line 18854
+        .trainerClass = TRAINER_CLASS_GAMBLER,
+#line 18855
+        .trainerPic = TRAINER_PIC_GAMBLER,
+        .encounterMusic_gender =
+#line 18857
+            TRAINER_ENCOUNTER_MUSIC_INTENSE,
+#line 18858
+        .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
+#line 18859
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_GAMBLER,
+        .partySize = 4,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 18861
+            .species = SPECIES_VOLTORB,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 18863
+            .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
+#line 18862
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 18864
+                MOVE_SELFDESTRUCT,
+                MOVE_METRONOME,
+                MOVE_PROTECT,
+            },
+            },
+            {
+#line 18868
+            .species = SPECIES_MEOWTH,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 18870
+            .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
+#line 18869
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 18871
+                MOVE_METRONOME,
+                MOVE_PROTECT,
+                MOVE_DESTINY_BOND,
+            },
+            },
+            {
+#line 18875
+            .species = SPECIES_CLEFAIRY,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 18875
+            .heldItem = ITEM_EVIOLITE,
+#line 18877
+            .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
+#line 18876
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 18878
+                MOVE_METRONOME,
+                MOVE_PROTECT,
+            },
+            },
+            {
+#line 18881
+            .species = SPECIES_SABLEYE,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 18883
+            .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
+#line 18882
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 18884
+                MOVE_METRONOME,
+                MOVE_PROTECT,
+                MOVE_DESTINY_BOND,
+            },
+            },
+        },
+    },

@@ -498,6 +498,10 @@ const u16 gTrainerPalette_Aurora[] = INCBIN_U16("graphics/trainers/front_pics/au
 const u32 gTrainerFrontPic_Chef[] = INCBIN_U32("graphics/trainers/front_pics/chef.4bpp.smol");
 const u16 gTrainerPalette_Chef[] = INCBIN_U16("graphics/trainers/front_pics/chef.gbapal");
 
+// GAMBLER  
+const u32 gTrainerFrontPic_Gambler[] = INCBIN_U32("graphics/trainers/front_pics/gambler.4bpp.smol");
+const u16 gTrainerPalette_Gambler[] = INCBIN_U16("graphics/trainers/front_pics/gambler.gbapal");
+
 
 // The first two parameters invoke a front pic and palette by
 // calling a "TRAINER_PIC" constant (e.g. TRAINER_PIC_HIKER), and
@@ -668,7 +672,7 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_NETSU, gTrainerFrontPic_Netsu, gTrainerPalette_Netsu),
     TRAINER_SPRITE(TRAINER_PIC_AURORA, gTrainerFrontPic_Aurora, gTrainerPalette_Aurora),
     TRAINER_SPRITE(TRAINER_PIC_CHEF, gTrainerFrontPic_Chef, gTrainerPalette_Chef),
-
+    TRAINER_SPRITE(TRAINER_PIC_GAMBLER, gTrainerFrontPic_Gambler, gTrainerPalette_Gambler),
 
 
 };
