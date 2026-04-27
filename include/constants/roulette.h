@@ -1,6 +1,8 @@
 #ifndef GUARD_CONSTANTS_ROULETTE_H
 #define GUARD_CONSTANTS_ROULETTE_H
 
+// Flag set in gSpecialVar_0x8004 when playing the high-stakes roulette table
+#define ROULETTE_HIGH_STAKES (1 << 6)
 // Flag set in gSpecialVar_0x8004 when playing Roulette on a Game Corner service day
 #define ROULETTE_SPECIAL_RATE (1 << 7)
 

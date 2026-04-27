@@ -11,33 +11,59 @@ MauvilleCity_GameCorner_MapScripts::
 
 	.set COINS_PRICE_50,  1000
 	.set COINS_PRICE_500, 10000
+	.set COINS_PRICE_5000, 100000
+	.set SLOT_MACHINE_HIGH_STAKES_OFFSET, 6
 
 MauvilleCity_GameCorner_EventScript_CoinsClerk::
 	lock
-	faceplayer
-	msgbox MauvilleCity_GameCorner_Text_ThisIsMauvilleGameCorner, MSGBOX_DEFAULT
+	msgbox MauvilleCity_GameCorner_Text_CoinExchangeATM, MSGBOX_DEFAULT
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NeedCoinCase
-	message MauvilleCity_GameCorner_Text_WereYouLookingForCoins
+	message MauvilleCity_GameCorner_Text_SelectATMTransaction
 	waitmessage
 	showmoneybox 0, 0
 	showcoinsbox 1, 6
-	goto MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50
+	goto MauvilleCity_GameCorner_EventScript_ChooseATMTransaction
+
+MauvilleCity_GameCorner_EventScript_ChooseATMTransaction::
+	multichoicedefault 15, 0, MULTI_GAME_CORNER_ATM, 0, FALSE
+	switch VAR_RESULT
+	case 0, MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50
+	case 1, MauvilleCity_GameCorner_EventScript_ChooseCashOutDefault50
+	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
+	end
 
 MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50::
+	message MauvilleCity_GameCorner_Text_SelectCoinsToPurchase
+	waitmessage
 	multichoicedefault 15, 0, MULTI_GAME_CORNER_COINS, 0, FALSE
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_Buy50Coins
 	case 1, MauvilleCity_GameCorner_EventScript_Buy500Coins
+	case 2, MauvilleCity_GameCorner_EventScript_Buy5000Coins
 	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
 	end
 
 @ Unused
 MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault500::
+	message MauvilleCity_GameCorner_Text_SelectCoinsToPurchase
+	waitmessage
 	multichoicedefault 15, 0, MULTI_GAME_CORNER_COINS, 1, FALSE
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_Buy50Coins
 	case 1, MauvilleCity_GameCorner_EventScript_Buy500Coins
+	case 2, MauvilleCity_GameCorner_EventScript_Buy5000Coins
+	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
+	end
+
+MauvilleCity_GameCorner_EventScript_ChooseCashOutDefault50::
+	message MauvilleCity_GameCorner_Text_SelectCoinsToCashOut
+	waitmessage
+	multichoicedefault 15, 0, MULTI_GAME_CORNER_CASH_OUT, 0, FALSE
+	switch VAR_RESULT
+	case 0, MauvilleCity_GameCorner_EventScript_CashOut50Coins
+	case 1, MauvilleCity_GameCorner_EventScript_CashOut500Coins
+	case 2, MauvilleCity_GameCorner_EventScript_CashOut5000Coins
 	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
 	end
 
@@ -51,7 +77,7 @@ MauvilleCity_GameCorner_EventScript_Buy50Coins::
 	updatemoneybox
 	updatecoinsbox 1, 6
 	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_ThankYouHereAreYourCoins, MSGBOX_DEFAULT
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedCoins, MSGBOX_DEFAULT
 	hidemoneybox
 	hidecoinsbox 0, 5
 	release
@@ -67,7 +93,65 @@ MauvilleCity_GameCorner_EventScript_Buy500Coins::
 	updatemoneybox
 	updatecoinsbox 1, 6
 	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_ThankYouHereAreYourCoins, MSGBOX_DEFAULT
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedCoins, MSGBOX_DEFAULT
+	hidemoneybox
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_Buy5000Coins::
+	checkcoins VAR_TEMP_1
+	goto_if_ge VAR_TEMP_1, (MAX_COINS + 1 - 5000), MauvilleCity_GameCorner_EventScript_NoRoomForCoins
+	checkmoney COINS_PRICE_5000
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NotEnoughMoney
+	addcoins 5000
+	removemoney COINS_PRICE_5000
+	updatemoneybox
+	updatecoinsbox 1, 6
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedCoins, MSGBOX_DEFAULT
+	hidemoneybox
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_CashOut50Coins::
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, 50, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsToCashOut
+	removecoins 50
+	addmoney COINS_PRICE_50, 0
+	updatemoneybox
+	updatecoinsbox 1, 6
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedMoney, MSGBOX_DEFAULT
+	hidemoneybox
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_CashOut500Coins::
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, 500, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsToCashOut
+	removecoins 500
+	addmoney COINS_PRICE_500, 0
+	updatemoneybox
+	updatecoinsbox 1, 6
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedMoney, MSGBOX_DEFAULT
+	hidemoneybox
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_CashOut5000Coins::
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, 5000, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsToCashOut
+	removecoins 5000
+	addmoney COINS_PRICE_5000, 0
+	updatemoneybox
+	updatecoinsbox 1, 6
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedMoney, MSGBOX_DEFAULT
 	hidemoneybox
 	hidecoinsbox 0, 5
 	release
@@ -94,6 +178,13 @@ MauvilleCity_GameCorner_EventScript_CancelBuyCoins::
 
 MauvilleCity_GameCorner_EventScript_NoRoomForCoins::
 	msgbox MauvilleCity_GameCorner_Text_CoinCaseIsFull, MSGBOX_DEFAULT
+	hidemoneybox
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_NotEnoughCoinsToCashOut::
+	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoinsToCashOut, MSGBOX_DEFAULT
 	hidemoneybox
 	hidecoinsbox 0, 5
 	release
@@ -372,6 +463,38 @@ MauvilleCity_GameCorner_EventScript_Woman2::
 	msgbox MauvilleCity_GameCorner_Text_CoinsAreNeededToPlay, MSGBOX_NPC
 	end
 
+MauvilleCity_GameCorner_EventScript_InfoClerk::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_WelcomeToGameCorner, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_AskGameCornerInfo
+	end
+
+MauvilleCity_GameCorner_EventScript_AskGameCornerInfo::
+	message MauvilleCity_GameCorner_Text_WhatWouldYouLikeToKnow
+	waitmessage
+	multichoicedefault 16, 4, MULTI_GAME_CORNER_INFO, 0, FALSE
+	switch VAR_RESULT
+	case 0, MauvilleCity_GameCorner_EventScript_ExplainPrizes
+	case 1, MauvilleCity_GameCorner_EventScript_ExplainCoinExchange
+	goto MauvilleCity_GameCorner_EventScript_EndInfo
+	end
+
+MauvilleCity_GameCorner_EventScript_ExplainPrizes::
+	msgbox MauvilleCity_GameCorner_Text_InfoPrizes, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_AskGameCornerInfo
+	end
+
+MauvilleCity_GameCorner_EventScript_ExplainCoinExchange::
+	msgbox MauvilleCity_GameCorner_Text_InfoCoinExchange, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_AskGameCornerInfo
+	end
+
+MauvilleCity_GameCorner_EventScript_EndInfo::
+	msgbox MauvilleCity_GameCorner_Text_ComeAgainForInfo, MSGBOX_DEFAULT
+	release
+	end
+
 MauvilleCity_GameCorner_EventScript_Gentleman::
 	msgbox MauvilleCity_GameCorner_Text_RouletteOnlyLuck, MSGBOX_NPC
 	end
@@ -506,8 +629,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine0::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 0
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	addvar VAR_TEMP_1, SLOT_MACHINE_HIGH_STAKES_OFFSET
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -516,8 +643,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine1::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 1
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -526,8 +656,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine2::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 2
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -536,8 +669,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine3::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 3
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	addvar VAR_TEMP_1, SLOT_MACHINE_HIGH_STAKES_OFFSET
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -546,8 +683,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine4::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 4
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -556,8 +696,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine5::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 5
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -566,8 +709,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine6::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 6
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -576,8 +722,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine7::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 7
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -586,8 +735,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine8::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 8
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -596,8 +748,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine9::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 9
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -606,8 +761,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine10::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 10
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -616,8 +774,11 @@ MauvilleCity_GameCorner_EventScript_SlotMachine11::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 11
-	specialvar VAR_RESULT, GetSlotMachineId
-	playslotmachine VAR_RESULT
+	specialvar VAR_TEMP_1, GetSlotMachineId
+	special ShowSlotMachineMinWagerPrompt
+	waitstate
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
+	playslotmachine VAR_TEMP_1
 	releaseall
 	end
 
@@ -626,35 +787,58 @@ MauvilleCity_GameCorner_EventScript_NoCoinCase::
 	releaseall
 	end
 
+MauvilleCity_GameCorner_EventScript_CancelSlotMachine::
+	releaseall
+	end
+
 MauvilleCity_GameCorner_Text_ThisIsMauvilleGameCorner:
 	.string "This is MAUVILLE GAME CORNER.$"
 
+MauvilleCity_GameCorner_Text_CoinExchangeATM:
+	.string "MAUVILLE GAME CORNER\n"
+	.string "COIN EXCHANGE ATM.$"
+
 MauvilleCity_GameCorner_Text_NeedCoinCaseForCoins:
-	.string "Okay, you wanted some COINS for\n"
-	.string "the games?\p"
-	.string "But you don't have a COIN CASE for\n"
-	.string "stowing the COINS.$"
+	.string "COIN CASE not detected.\p"
+	.string "Please obtain a COIN CASE before\n"
+	.string "using this ATM.$"
 
-MauvilleCity_GameCorner_Text_WereYouLookingForCoins:
-	.string "Were you looking for COINS?\p"
-	.string "It's ¥1000 for 50 COINS.\n"
-	.string "Would you like some?$"
+MauvilleCity_GameCorner_Text_SelectATMTransaction:
+	.string "Select a transaction.$"
 
-MauvilleCity_GameCorner_Text_ThankYouHereAreYourCoins:
-	.string "Thank you very much!\n"
-	.string "Here are your COINS!$"
+MauvilleCity_GameCorner_Text_SelectCoinsToPurchase:
+	.string "Select the amount of COINS\n"
+	.string "to purchase.$"
+
+MauvilleCity_GameCorner_Text_SelectCoinsToCashOut:
+	.string "Select the amount of COINS\n"
+	.string "to exchange for cash.$"
+
+MauvilleCity_GameCorner_Text_ATMDispensedCoins:
+	.string "Transaction complete.\n"
+	.string "COINS dispensed.$"
+
+MauvilleCity_GameCorner_Text_ATMDispensedMoney:
+	.string "Transaction complete.\n"
+	.string "Cash dispensed.$"
 
 MauvilleCity_GameCorner_Text_DontHaveEnoughMoney:
-	.string "Um… You don't appear to have\n"
-	.string "enough money…$"
+	.string "Insufficient funds.\p"
+	.string "Please insert more money and\n"
+	.string "try again.$"
 
 MauvilleCity_GameCorner_Text_CoinCaseIsFull:
-	.string "Oh?\n"
-	.string "Your COIN CASE is full.$"
+	.string "COIN CASE capacity reached.\p"
+	.string "Please use some COINS and\n"
+	.string "try again.$"
 
 MauvilleCity_GameCorner_Text_DontNeedCoinsThen:
-	.string "Oh… You don't need COINS, then?\n"
-	.string "Good luck on your adventure!$"
+	.string "Transaction canceled.$"
+
+MauvilleCity_GameCorner_Text_NotEnoughCoinsToCashOut:
+	.string "Insufficient COINS.\p"
+	.string "You do not have enough COINS for\n"
+	.string "that exchange.$"
 
 MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes:
 	.string "Welcome.\p"
@@ -738,8 +922,10 @@ MauvilleCity_GameCorner_Text_RouletteTablesDifferentRates:
 	.string "pick a table.$"
 
 MauvilleCity_GameCorner_Text_EasyToLoseTrackOfTime:
-	.string "It's easy to lose track of time in here. \n"
-	.string "I should get back to work.$"
+	.string "Our food is top notch and dirt cheap!\p"
+	.string "The casino makes so much money off\n"
+	.string "gamblers, it's worth it to lure them\l"
+	.string "in with great food.$"
 
 MauvilleCity_GameCorner_Text_CoinsAreNeededToPlay:
 	.string "COINS are needed to play here\n"
@@ -752,7 +938,10 @@ MauvilleCity_GameCorner_Text_RouletteOnlyLuck:
 
 MauvilleCity_GameCorner_Text_UpTo3CoinsCanBeUsed:
 	.string "Up to three COINS can be used to play\n"
-	.string "the SLOTS.$"
+	.string "these SLOTS. If you want to bet more,\l"
+	.string "you can try the red machines.\p"
+	.string "Be careful, though. I've seen people\n"
+	.string "lose everything to those.$"
 
 MauvilleCity_GameCorner_Text_DifficultToStopOn7:
 	.string "It's very difficult to make it stop\n"
@@ -775,6 +964,253 @@ MauvilleCity_GameCorner_Text_HeresSomeSlotsInfo:
 MauvilleCity_GameCorner_Text_CantPlayWithNoCoinCase:
 	.string "You can't play if you don't have\n"
 	.string "a COIN CASE.$"
+
+MauvilleCity_GameCorner_Text_SlotMinimumWager3:
+	.string "The minimum wager at this machine\n"
+	.string "is 1 COIN. Do you want to play?$"
+
+MauvilleCity_GameCorner_Text_SlotMinimumWager30:
+	.string "The minimum wager at this machine\n"
+	.string "is 10 COINS. Do you want to play?$"
+
+MauvilleCity_GameCorner_Text_WelcomeToGameCorner:
+	.string "Welcome to the MAUVILLE\n"
+	.string "GAME CORNER!$"
+
+MauvilleCity_GameCorner_Text_WhatWouldYouLikeToKnow:
+	.string "What would you like to know\n"
+	.string "about?$"
+
+MauvilleCity_GameCorner_Text_InfoPrizes:
+	.string "You can exchange your COINS for\n"
+	.string "prizes with the ladies behind the\l"
+	.string "counter.$"
+
+MauvilleCity_GameCorner_Text_InfoCoinExchange:
+	.string "If you need to exchange COINS or\n"
+	.string "money, use the ATMs to the right\l"
+	.string "of the entrance.$"
+
+MauvilleCity_GameCorner_Text_ComeAgainForInfo:
+	.string "Please enjoy your time at the\n"
+	.string "GAME CORNER!$"
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc1::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder1, MSGBOX_DEFAULT
+	applymovement VAR_LAST_TALKED, MauvilleCity_GameCorner_Movement_PlaceholderFaceDown
+	waitmovement 0
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc2::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder2, MSGBOX_DEFAULT
+	applymovement VAR_LAST_TALKED, MauvilleCity_GameCorner_Movement_PlaceholderFaceDown
+	waitmovement 0
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc3::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder3, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc4::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder4, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc5::
+	lock
+	msgbox MauvilleCity_GameCorner_Text_Placeholder5, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_Movement_PlaceholderFaceDown:
+	face_down
+	step_end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc6::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder6, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc7::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder7, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc8::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder8, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc9::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder9, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc10::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder10, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc11::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder11, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc12::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder12, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc13::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder13, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc14::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder14, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc15::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder15, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc16::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder16, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderNpc17::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_Placeholder17, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PlaceholderSign1::
+	msgbox MauvilleCity_GameCorner_Text_Placeholder18, MSGBOX_SIGN
+	end
+
+MauvilleCity_GameCorner_Text_Placeholder1:
+	.string "Hello! If you want to play blackjack,\n"
+	.string "please choose a spot at the table.$"
+
+MauvilleCity_GameCorner_Text_Placeholder2:
+	.string "Hello! If you want to play blackjack,\n"
+	.string "please choose a spot at the table.$"
+
+MauvilleCity_GameCorner_Text_Placeholder3:
+	.string "I'm a pro at this game!\p"
+	.string "Bet you can't beat my high score!$"
+
+MauvilleCity_GameCorner_Text_Placeholder4:
+	.string "The low stakes slots are a nice place\n"
+	.string "to spend an evening if you want a\l"
+	.string "little excitement without much risk.$"
+
+MauvilleCity_GameCorner_Text_Placeholder5:
+	.string "The woman is rubbing and tapping the\n"
+	.string "screen as if performing a ritual.\p"
+	.string "She doesn't notice you at all.$"
+
+MauvilleCity_GameCorner_Text_Placeholder6:
+	.string "My mom says pinball is the only\n"
+	.string "game I'm allowed to play in here.\p"
+	.string "Just once, though, I'd like to try\n"
+	.string "something more exciting!$"
+
+MauvilleCity_GameCorner_Text_Placeholder7:
+	.string "I just come here for the pinball.\n"
+	.string "You can't lose your entire savings\l"
+	.string "on pinball!$"
+
+MauvilleCity_GameCorner_Text_Placeholder8:
+	.string "My wife always paces around nervously\n"
+	.string "while I'm here.\p"
+	.string "Just you wait. I'll make us rich!$"
+
+MauvilleCity_GameCorner_Text_Placeholder9:
+	.string "I have enough money that losing here\n"
+	.string "doesn't bother me. I just like to\l"
+	.string "watch the races.$"
+
+MauvilleCity_GameCorner_Text_Placeholder10:
+	.string "Uh... I really have no idea which\n"
+	.string "Pokemon to bet on. Got any suggestions?$"
+
+MauvilleCity_GameCorner_Text_Placeholder11:
+	.string "My husband spends all day here betting\n"
+	.string "on races. We've just barely been\l"
+	.string "breaking even.\p"
+	.string "Hopefully he doesn't lose our entire\n"
+	.string "retirement fund...$"
+
+MauvilleCity_GameCorner_Text_Placeholder12:
+	.string "I brought my girlfriend here on a\n"
+	.string "date, but I didn't expect our luck to\l"
+	.string "be this good!\p"
+	.string "Our next date will be on a cruise!$"
+
+MauvilleCity_GameCorner_Text_Placeholder13:
+	.string "My boyfriend is on a winning streak!$"
+
+MauvilleCity_GameCorner_Text_Placeholder14:
+	.string "I've already spent so many credits\n"
+	.string "on the gacha machines here...\p"
+	.string "Well, surely a little more won't hurt!$"
+
+MauvilleCity_GameCorner_Text_Placeholder15:
+	.string "I lost everything...\p"
+	.string "I can't even afford a drink to\n"
+	.string "drown my sorrows.$"
+
+MauvilleCity_GameCorner_Text_Placeholder16:
+	.string "My husband and I come here for\n"
+	.string "date nights. The food is fantastic!$"
+
+MauvilleCity_GameCorner_Text_Placeholder17:
+	.string "The food here is a great deal\n"
+	.string "because they expect to make money\l"
+	.string "off you in other ways.\p"
+	.string "The key is to not gamble!$"
+
+MauvilleCity_GameCorner_Text_Placeholder18:
+	.string "It's a Pokemon race! Place your\n"
+	.string "bet at the terminals on either side.$"
 
 
 @ ============================================================
