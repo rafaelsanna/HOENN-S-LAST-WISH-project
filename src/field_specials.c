@@ -125,6 +125,7 @@ static void Task_MoveElevator(u8);
 static void MoveElevatorWindowLights(u16, bool8);
 static void Task_MoveElevatorWindowLights(u8);
 static void Task_ShowScrollableMultichoice(u8);
+static void Task_HandleSlotMachineMinWagerInput(u8);
 static void FillFrontierExchangeCornerWindowAndItemIcon(u16, u16);
 static void ShowBattleFrontierTutorWindow(u8, u16);
 static void InitScrollableMultichoice(void);
@@ -161,6 +162,8 @@ static const u8 sText_99TimesPlus[] = _("99 times +");
 static const u8 sText_1MinutePlus[] = _("1 minute +");
 static const u8 sText_SpaceSeconds[] = _(" seconds");
 static const u8 sText_SpaceTimes[] = _(" time(s)");
+static const u8 sText_SlotMachineMinimumWager1[] = _("The minimum wager at this machine\nis 1 COIN. Do you want to play?");
+static const u8 sText_SlotMachineMinimumWager10[] = _("The minimum wager at this machine\nis 10 COINS. Do you want to play?");
 
 void Special_ShowDiploma(void)
 {
@@ -816,6 +819,27 @@ void ShowFieldMessageStringVar4(void)
     ShowFieldMessage(gStringVar4);
 }
 
+void ShowSlotMachineMinWagerPrompt(void)
+{
+    const u8 *text;
+
+    if (gSpecialVar_0x8004 == 0 || gSpecialVar_0x8004 == 3)
+        text = sText_SlotMachineMinimumWager10;
+    else
+        text = sText_SlotMachineMinimumWager1;
+
+    LoadMessageBoxAndBorderGfx();
+    DrawStdWindowFrame(0, TRUE);
+    AddTextPrinterParameterized(0, FONT_NORMAL, text, 0, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(0, COPYWIN_FULL);
+
+    gSpecialVar_Result = 0xFF;
+    DisplayYesNoMenuDefaultYes();
+    CreateTask(Task_HandleSlotMachineMinWagerInput, 0x50);
+}
+
+#define tMenuInputDelay data[2]
+
 void StorePlayerCoordsInVars(void)
 {
     gSpecialVar_0x8004 = gSaveBlock1Ptr->pos.x;
@@ -1441,6 +1465,35 @@ static void Task_ShakeCamera(u8 taskId)
         }
     }
 }
+
+static void Task_HandleSlotMachineMinWagerInput(u8 taskId)
+{
+    if (gTasks[taskId].tMenuInputDelay < 5)
+    {
+        gTasks[taskId].tMenuInputDelay++;
+        return;
+    }
+
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case MENU_NOTHING_CHOSEN:
+        return;
+    case MENU_B_PRESSED:
+    case 1:
+        PlaySE(SE_SELECT);
+        gSpecialVar_Result = 0;
+        break;
+    case 0:
+        gSpecialVar_Result = 1;
+        break;
+    }
+
+    ClearDialogWindowAndFrame(0, TRUE);
+    DestroyTask(taskId);
+    ScriptContext_Enable();
+}
+
+#undef tMenuInputDelay
 
 static void StopCameraShake(u8 taskId)
 {

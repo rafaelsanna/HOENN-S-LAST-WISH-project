@@ -30,6 +30,8 @@
 
 #define SLOTMACHINE_GFX_TILES 233
 #define MAX_BET 3
+#define HIGH_STAKES_BET_MULTIPLIER 10
+#define SLOT_MACHINE_HIGH_STAKES_OFFSET NUM_SLOT_MACHINE_IDS
 
 #define SYMBOLS_PER_REEL   21
 #define REEL_SYMBOL_HEIGHT 24
@@ -364,28 +366,29 @@ struct SlotMachine
     /*0x00*/ u8 state;
     /*0x01*/ u8 machineId;
     /*0x02*/ u8 pikaPowerBolts;
-    /*0x03*/ bool8 luckyGame;
-    /*0x04*/ u8 machineBias;
-    /*0x05*/ u8 reelTimeDraw;
-    /*0x06*/ bool8 didNotFailBias;
-    /*0x07*/ u8 biasSymbol;
-    /*0x08*/ u16 matches;
-    /*0x0A*/ u8 reelTimeSpinsLeft;
-    /*0x0B*/ u8 reelTimeSpinsUsed;
-    /*0x0C*/ s16 coins;
-    /*0x0E*/ s16 payout;
-    /*0x10*/ s16 netCoinLoss; // never negative
-    /*0x12*/ s16 bet;
-    /*0x14*/ s16 reeltimePixelOffset;
-    /*0x16*/ s16 reeltimePosition;
-    /*0x18*/ s16 currentReel;
-    /*0x1A*/ s16 reelSpeed;
-    /*0x1C*/ s16 reelPixelOffsets[NUM_REELS];
-    /*0x22*/ u16 reelShockOffsets[NUM_REELS];
-    /*0x28*/ s16 reelPositions[NUM_REELS];
-    /*0x2E*/ s16 reelExtraTurns[NUM_REELS];
-    /*0x34*/ s16 winnerRows[NUM_REELS];
-    /*0x3A*/ u8 slotReelTasks[NUM_REELS];
+    /*0x03*/ bool8 highStakes;
+    /*0x04*/ bool8 luckyGame;
+    /*0x05*/ u8 machineBias;
+    /*0x06*/ u8 reelTimeDraw;
+    /*0x07*/ bool8 didNotFailBias;
+    /*0x08*/ u8 biasSymbol;
+    /*0x0A*/ u16 matches;
+    /*0x0C*/ u8 reelTimeSpinsLeft;
+    /*0x0D*/ u8 reelTimeSpinsUsed;
+    /*0x0E*/ s16 coins;
+    /*0x10*/ s16 payout;
+    /*0x12*/ s16 netCoinLoss; // never negative
+    /*0x14*/ s16 bet;
+    /*0x16*/ s16 reeltimePixelOffset;
+    /*0x18*/ s16 reeltimePosition;
+    /*0x1A*/ s16 currentReel;
+    /*0x1C*/ s16 reelSpeed;
+    /*0x1E*/ s16 reelPixelOffsets[NUM_REELS];
+    /*0x24*/ u16 reelShockOffsets[NUM_REELS];
+    /*0x2A*/ s16 reelPositions[NUM_REELS];
+    /*0x30*/ s16 reelExtraTurns[NUM_REELS];
+    /*0x36*/ s16 winnerRows[NUM_REELS];
+    /*0x3C*/ u8 slotReelTasks[NUM_REELS];
     /*0x3D*/ u8 digDisplayTaskId;
     /*0x3E*/ u8 pikaPowerBoltTaskId;
     /*0x3F*/ u8 reelTimePikachuSpriteId;
@@ -482,6 +485,12 @@ static bool8 PayoutTask_Init(struct Task *);
 static bool8 PayoutTask_GivePayout(struct Task *);
 static bool8 PayoutTask_Free(struct Task *);
 static u8 GetSymbolAtRest(u8, s16);
+static bool8 IsHighStakesMachineId(u8 machineId);
+static u8 GetBetStepCost(void);
+static u16 GetCurrentBetCost(void);
+static u16 GetMatchPayout(u8 match);
+static const u8 *GetNeedCoinsText(void);
+static const u8 *GetInfoBoxBetText(void);
 static void CreateReelTasks(void);
 static void SpinSlotReel(u8);
 static void StopSlotReel(u8);
@@ -1124,6 +1133,9 @@ static void SlotMachine_InitFromTask(void)
 {
     struct Task *task = &gTasks[FindTaskIdByFunc(SlotMachineDummyTask)];
     sSlotMachine->machineId = task->tMachineId;
+    sSlotMachine->highStakes = IsHighStakesMachineId(sSlotMachine->machineId);
+    if (sSlotMachine->highStakes)
+        sSlotMachine->machineId -= SLOT_MACHINE_HIGH_STAKES_OFFSET;
     LoadWordFromTwoHalfwords((u16 *)&task->tExitCallback, (u32 *)&sSlotMachine->prevMainCb);
 }
 
@@ -1341,6 +1353,7 @@ static bool8 SlotTask_AskInsertBet(struct Task *task)
 static bool8 SlotTask_HandleBetInput(struct Task *task)
 {
     s16 i;
+    u16 betStepCost = GetBetStepCost();
 
     if (JOY_NEW(SELECT_BUTTON))
     {
@@ -1350,11 +1363,12 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
     // Try to bet the max amount
     else if (JOY_NEW(R_BUTTON))
     {
-        if (sSlotMachine->coins - (MAX_BET - sSlotMachine->bet) >= 0)
+        u16 coinsNeeded = (MAX_BET - sSlotMachine->bet) * betStepCost;
+        if (sSlotMachine->coins >= coinsNeeded)
         {
             for (i = sSlotMachine->bet; i < MAX_BET; i++)
                 LightenBetTiles(i);
-            sSlotMachine->coins -= (MAX_BET - sSlotMachine->bet);
+            sSlotMachine->coins -= coinsNeeded;
             sSlotMachine->bet = MAX_BET;
             sSlotMachine->state = SLOTTASK_START_SPIN;
             PlaySE(SE_SHOP);
@@ -1368,11 +1382,11 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
     else
     {
         // Increase bet
-        if (JOY_NEW(DPAD_DOWN) && sSlotMachine->coins != 0)
+        if (JOY_NEW(DPAD_DOWN) && sSlotMachine->coins >= betStepCost)
         {
             PlaySE(SE_SHOP);
             LightenBetTiles(sSlotMachine->bet);
-            sSlotMachine->coins--;
+            sSlotMachine->coins -= betStepCost;
             sSlotMachine->bet++;
         }
 
@@ -1391,7 +1405,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
 static bool8 SlotTask_PrintMsg_Need3Coins(struct Task *task)
 {
     DrawDialogueFrame(0, FALSE);
-    AddTextPrinterParameterized(0, FONT_NORMAL, gText_YouDontHaveThreeCoins, 0, 1, 0, 0);
+    AddTextPrinterParameterized(0, FONT_NORMAL, GetNeedCoinsText(), 0, 1, 0, 0);
     CopyWindowToVram(0, COPYWIN_FULL);
     sSlotMachine->state = SLOTTASK_WAIT_MSG_NEED_3_COINS;
     return FALSE;
@@ -1556,7 +1570,7 @@ static bool8 SlotTask_CheckMatches(struct Task *task)
     {
         CreateDigitalDisplayScene(DIG_DISPLAY_LOSE);
         sSlotMachine->state = SLOTTASK_NO_MATCHES;
-        if ((sSlotMachine->netCoinLoss += sSlotMachine->bet) > MAX_COINS)
+        if ((sSlotMachine->netCoinLoss += GetCurrentBetCost()) > MAX_COINS)
             sSlotMachine->netCoinLoss = MAX_COINS;
     }
     return FALSE;
@@ -1673,7 +1687,7 @@ static bool8 SlotTask_HandleQuitInput(struct Task *task)
         DarkenBetTiles(0);
         DarkenBetTiles(1);
         DarkenBetTiles(2);
-        sSlotMachine->coins += sSlotMachine->bet;
+        sSlotMachine->coins += GetCurrentBetCost();
         sSlotMachine->state = SLOTTASK_END;
     }
     else if (input == 1 || input == -1) // Chose not to quit
@@ -1998,7 +2012,7 @@ static void CheckMatch_CenterRow(void)
     match = GetMatchFromSymbols(sym1, sym2, sym3);
     if (match != MATCH_NONE)
     {
-        sSlotMachine->payout += sSlotPayouts[match];
+        sSlotMachine->payout += GetMatchPayout(match);
         sSlotMachine->matches |= sSlotMatchFlags[match];
         FlashMatchLine(MATCH_MIDDLE_ROW);
     }
@@ -2016,7 +2030,7 @@ static void CheckMatch_TopAndBottom(void)
     {
         if (match == MATCH_CHERRY)
             match = MATCH_TOPBOT_CHERRY;
-        sSlotMachine->payout += sSlotPayouts[match];
+        sSlotMachine->payout += GetMatchPayout(match);
         sSlotMachine->matches |= sSlotMatchFlags[match];
         FlashMatchLine(MATCH_TOP_ROW);
     }
@@ -2028,7 +2042,7 @@ static void CheckMatch_TopAndBottom(void)
     {
         if (match == MATCH_CHERRY)
             match = MATCH_TOPBOT_CHERRY;
-        sSlotMachine->payout += sSlotPayouts[match];
+        sSlotMachine->payout += GetMatchPayout(match);
         sSlotMachine->matches |= sSlotMatchFlags[match];
         FlashMatchLine(MATCH_BOTTOM_ROW);
     }
@@ -2048,7 +2062,7 @@ static void CheckMatch_Diagonals(void)
         // CheckMatch_TopAndBottom().
         if (match != MATCH_CHERRY)
         {
-            sSlotMachine->payout += sSlotPayouts[match];
+            sSlotMachine->payout += GetMatchPayout(match);
             sSlotMachine->matches |= sSlotMatchFlags[match];
         }
         FlashMatchLine(MATCH_NWSE_DIAG);
@@ -2063,7 +2077,7 @@ static void CheckMatch_Diagonals(void)
         // CheckMatch_TopAndBottom().
         if (match != MATCH_CHERRY)
         {
-            sSlotMachine->payout += sSlotPayouts[match];
+            sSlotMachine->payout += GetMatchPayout(match);
             sSlotMachine->matches |= sSlotMatchFlags[match];
         }
         FlashMatchLine(MATCH_NESW_DIAG);
@@ -2081,6 +2095,47 @@ static u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3)
     if (sym1 == SYMBOL_CHERRY)
         return MATCH_CHERRY;
     return MATCH_NONE;
+}
+
+static bool8 IsHighStakesMachineId(u8 machineId)
+{
+    return machineId >= SLOT_MACHINE_HIGH_STAKES_OFFSET;
+}
+
+static u8 GetBetStepCost(void)
+{
+    if (sSlotMachine->highStakes)
+        return HIGH_STAKES_BET_MULTIPLIER;
+    return 1;
+}
+
+static u16 GetCurrentBetCost(void)
+{
+    return sSlotMachine->bet * GetBetStepCost();
+}
+
+static u16 GetMatchPayout(u8 match)
+{
+    u16 payout = sSlotPayouts[match];
+
+    if (sSlotMachine->highStakes)
+        payout *= HIGH_STAKES_BET_MULTIPLIER;
+
+    return payout;
+}
+
+static const u8 *GetNeedCoinsText(void)
+{
+    if (sSlotMachine->highStakes)
+        return gText_YouDontHaveEnoughCoins;
+    return gText_YouDontHaveThreeCoins;
+}
+
+static const u8 *GetInfoBoxBetText(void)
+{
+    if (sSlotMachine->highStakes)
+        return gText_SlotBetHelpHighStakes;
+    return gText_SlotBetHelp;
 }
 
 static void AwardPayout(void)
@@ -3929,7 +3984,8 @@ static void InfoBox_DrawWindow(struct Task *task)
 
 static void InfoBox_AddText(struct Task *task)
 {
-    AddTextPrinterParameterized3(1, FONT_NORMAL, 2, 5, sColors_ReeltimeHelp, 0, gText_ReelTimeHelp);
+    AddTextPrinterParameterized3(1, FONT_NORMAL, 2, 5, sColors_ReeltimeHelp, 0, GetInfoBoxBetText());
+    AddTextPrinterParameterized3(1, FONT_NORMAL, 2, 21, sColors_ReeltimeHelp, 0, gText_ReelTimeHelp);
     CopyWindowToVram(1, COPYWIN_FULL);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     task->tState++;

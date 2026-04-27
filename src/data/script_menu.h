@@ -279,6 +279,22 @@ static const struct MenuAction MultichoiceList_GameCornerCoins[] =
 {
     {COMPOUND_STRING("  50 COINS    ¥1,000")},
     {COMPOUND_STRING("500 COINS  ¥10,000")},
+    {COMPOUND_STRING("5000 COINS ¥100,000")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerAtm[] =
+{
+    {COMPOUND_STRING("BUY COINS")},
+    {COMPOUND_STRING("CASH OUT")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerCashOut[] =
+{
+    {COMPOUND_STRING("  50 COINS -> ¥1,000")},
+    {COMPOUND_STRING("500 COINS -> ¥10,000")},
+    {COMPOUND_STRING("5000 COINS -> ¥100,000")},
     {gText_Exit},
 };
 
@@ -286,6 +302,13 @@ static const struct MenuAction MultichoiceList_HowsFishing[] =
 {
     {COMPOUND_STRING("Excellent")},
     {COMPOUND_STRING("Not so good")},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerInfo[] =
+{
+    {COMPOUND_STRING("PRIZES")},
+    {COMPOUND_STRING("COIN EXCHANGE")},
+    {gText_Exit},
 };
 
 static const struct MenuAction MultichoiceList_SSTidalSlateportWithBF[] =
@@ -831,8 +854,8 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_MECHADOLL5_Q1]              = MULTICHOICE(MultichoiceList_Mechadoll5_Q1),
     [MULTI_MECHADOLL5_Q2]              = MULTICHOICE(MultichoiceList_Mechadoll5_Q2),
     [MULTI_MECHADOLL5_Q3]              = MULTICHOICE(MultichoiceList_Mechadoll5_Q3),
-    [MULTI_UNUSED_40]                  = MULTICHOICE(MultichoiceList_Exit),
-    [MULTI_UNUSED_41]                  = MULTICHOICE(MultichoiceList_Exit),
+    [MULTI_GAME_CORNER_ATM]            = MULTICHOICE(MultichoiceList_GameCornerAtm),
+    [MULTI_GAME_CORNER_CASH_OUT]       = MULTICHOICE(MultichoiceList_GameCornerCashOut),
     [MULTI_VENDING_MACHINE]            = MULTICHOICE(MultichoiceList_VendingMachine),
     [MULTI_MACH_BIKE_INFO]             = MULTICHOICE(MultichoiceList_MachBikeInfo),
     [MULTI_ACRO_BIKE_INFO]             = MULTICHOICE(MultichoiceList_AcroBikeInfo),
@@ -842,7 +865,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_GAME_CORNER_DOLLS]          = MULTICHOICE(MultichoiceList_GameCornerDolls),
     [MULTI_GAME_CORNER_COINS]          = MULTICHOICE(MultichoiceList_GameCornerCoins),
     [MULTI_HOWS_FISHING]               = MULTICHOICE(MultichoiceList_HowsFishing),
-    [MULTI_UNUSED_51]                  = MULTICHOICE(MultichoiceList_Exit),
+    [MULTI_GAME_CORNER_INFO]           = MULTICHOICE(MultichoiceList_GameCornerInfo),
     [MULTI_SSTIDAL_SLATEPORT_WITH_BF]  = MULTICHOICE(MultichoiceList_SSTidalSlateportWithBF),
     [MULTI_SSTIDAL_BATTLE_FRONTIER]    = MULTICHOICE(MultichoiceList_SSTidalBattleFrontier),
     [MULTI_RIGHTLEFT]                  = MULTICHOICE(MultichoiceList_RightLeft),
