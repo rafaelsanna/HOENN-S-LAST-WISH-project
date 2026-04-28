@@ -570,3 +570,8 @@ gSpecials::
         def_special StartMining
         def_special StartGacha
         def_special StartBlackJack
+        def_special StartSnake
+        def_special StartBlockStacker
+        def_special StartDerby
+        def_special GetNewDerby
+        def_special Special_ViewVoltorbFlip

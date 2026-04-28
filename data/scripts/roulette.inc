@@ -1,8 +1,11 @@
 Roulette_EventScript_Table1::
+	lockall
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 0
 	addvar VAR_0x8004, ROULETTE_HIGH_STAKES
+	checkcoins VAR_TEMP_1
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
 	getpokenewsactive POKENEWS_GAME_CORNER
 	goto_if_eq VAR_RESULT, FALSE, Roulette_EventScript_Play
 	addvar VAR_0x8004, ROULETTE_SPECIAL_RATE
@@ -10,9 +13,12 @@ Roulette_EventScript_Table1::
 	end
 
 Roulette_EventScript_Table2::
+	lockall
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 1
+	checkcoins VAR_TEMP_1
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
 	getpokenewsactive POKENEWS_GAME_CORNER
 	goto_if_eq VAR_RESULT, FALSE, Roulette_EventScript_Play
 	addvar VAR_0x8004, ROULETTE_SPECIAL_RATE
@@ -22,6 +28,8 @@ Roulette_EventScript_Table2::
 Roulette_EventScript_Play::
 	special PlayRoulette
 	waitstate
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
 	end
 
 Roulette_Text_PlayMinimumWagerIsX::

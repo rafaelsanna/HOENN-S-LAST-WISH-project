@@ -38,6 +38,7 @@
 #include "random.h"
 #include "rayquaza_scene.h"
 #include "region_map.h"
+#include "rogue_voltorbflip.h"
 #include "rtc.h"
 #include "script.h"
 #include "script_menu.h"
@@ -168,6 +169,13 @@ static const u8 sText_SlotMachineMinimumWager10[] = _("The minimum wager at this
 void Special_ShowDiploma(void)
 {
     SetMainCallback2(CB2_ShowDiploma);
+    LockPlayerFieldControls();
+}
+
+void Special_ViewVoltorbFlip(void)
+{
+    gMain.savedCallback = CB2_ReturnToField;
+    SetMainCallback2(CB2_ShowVoltorbFlip);
     LockPlayerFieldControls();
 }
 
