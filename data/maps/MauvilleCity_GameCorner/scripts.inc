@@ -1239,6 +1239,24 @@ MauvilleCity_GameCorner_EventScript_DebugPinball::
 	releaseall
 	end
 
+MauvilleCity_GameCorner_EventScript_DebugPinballDiglett::
+	callnative PlayDiglettPinballGame
+	waitstate
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugPinballSeel::
+	callnative PlaySeelPinballGame
+	waitstate
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugPinballGengar::
+	callnative PlayGengarPinballGame
+	waitstate
+	releaseall
+	end
+
 MauvilleCity_GameCorner_EventScript_DebugFlappy::
 lockall
 callnative StartFlappyBird
