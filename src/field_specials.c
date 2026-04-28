@@ -2386,6 +2386,46 @@ void ShowScrollableMultichoice(void)
         task->tKeepOpenAfterSelect = FALSE;
         task->tTaskId = taskId;
         break;
+    case SCROLL_MULTI_GAME_CORNER_TMS:
+        task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
+        task->tNumItems = 6;
+        task->tLeft = 14;
+        task->tTop = 1;
+        task->tWidth = 15;
+        task->tHeight = 12;
+        task->tKeepOpenAfterSelect = FALSE;
+        task->tTaskId = taskId;
+        break;
+    case SCROLL_MULTI_GAME_CORNER_MINTS:
+        task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
+        task->tNumItems = 22;
+        task->tLeft = 14;
+        task->tTop = 1;
+        task->tWidth = 15;
+        task->tHeight = 12;
+        task->tKeepOpenAfterSelect = FALSE;
+        task->tTaskId = taskId;
+        break;
+    case SCROLL_MULTI_GAME_CORNER_TRAINING:
+        task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
+        task->tNumItems = 10;
+        task->tLeft = 14;
+        task->tTop = 1;
+        task->tWidth = 15;
+        task->tHeight = 12;
+        task->tKeepOpenAfterSelect = FALSE;
+        task->tTaskId = taskId;
+        break;
+    case SCROLL_MULTI_GAME_CORNER_EVOLUTION:
+        task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
+        task->tNumItems = 14;
+        task->tLeft = 14;
+        task->tTop = 1;
+        task->tWidth = 15;
+        task->tHeight = 12;
+        task->tKeepOpenAfterSelect = FALSE;
+        task->tTaskId = taskId;
+        break;
     default:
         gSpecialVar_Result = MULTI_B_PRESSED;
         DestroyTask(taskId);
@@ -2546,6 +2586,70 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
         gText_Underpowered,
         gText_WhenInDanger,
         gText_Exit
+    },
+    [SCROLL_MULTI_GAME_CORNER_TMS] =
+    {
+        COMPOUND_STRING("TM32{CLEAR_TO 0x68}1,500"),
+        COMPOUND_STRING("TM29{CLEAR_TO 0x68}3,500"),
+        COMPOUND_STRING("TM35{CLEAR_TO 0x68}4,000"),
+        COMPOUND_STRING("TM24{CLEAR_TO 0x68}4,000"),
+        COMPOUND_STRING("TM13{CLEAR_TO 0x68}4,000"),
+        gText_Exit
+    },
+    [SCROLL_MULTI_GAME_CORNER_MINTS] =
+    {
+        COMPOUND_STRING("LONELY MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("ADAMANT MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("NAUGHTY MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("BRAVE MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("BOLD MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("IMPISH MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("LAX MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("RELAXED MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("MODEST MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("MILD MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("RASH MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("QUIET MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("CALM MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("GENTLE MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("CAREFUL MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("SASSY MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("TIMID MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("HASTY MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("JOLLY MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("NAIVE MINT{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("SERIOUS MINT{CLEAR_TO 0x68}1,000"),
+        gText_Exit
+    },
+    [SCROLL_MULTI_GAME_CORNER_TRAINING] =
+    {
+        COMPOUND_STRING("ABILITY PATCH{CLEAR_TO 0x68}6,000"),
+        COMPOUND_STRING("ABILITY CAPSULE{CLEAR_TO 0x68}3,000"),
+        COMPOUND_STRING("HP UP{CLEAR_TO 0x70}400"),
+        COMPOUND_STRING("PROTEIN{CLEAR_TO 0x70}400"),
+        COMPOUND_STRING("IRON{CLEAR_TO 0x70}400"),
+        COMPOUND_STRING("CALCIUM{CLEAR_TO 0x70}400"),
+        COMPOUND_STRING("ZINC{CLEAR_TO 0x70}400"),
+        COMPOUND_STRING("CARBOS{CLEAR_TO 0x70}400"),
+        COMPOUND_STRING("PP UP{CLEAR_TO 0x70}400"),
+        gText_Exit
+    },
+    [SCROLL_MULTI_GAME_CORNER_EVOLUTION] =
+    {
+        COMPOUND_STRING("DAWN STONE{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("DUSK STONE{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("ICE STONE{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("LINKING CORD{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("REAPER CLOTH{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("PEAT BLOCK{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("SHINY STONE{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("BLACK AUGURITE{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("LOADED DICE{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("AMULET COIN{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("RAZOR CLAW{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("RAZOR FANG{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("DESTINY KNOT{CLEAR_TO 0x68}1,000"),
+        gText_Exit
     }
 };
 
@@ -2573,7 +2677,9 @@ static void Task_ShowScrollableMultichoice(u8 taskId)
         width = DisplayTextAndGetWidth(text, width);
     }
 
-    task->tWidth = ConvertPixelWidthToTileWidth(width);
+    width = ConvertPixelWidthToTileWidth(width);
+    if (width > task->tWidth)
+        task->tWidth = width;
 
     if (task->tLeft + task->tWidth > MAX_MULTICHOICE_WIDTH + 1)
     {

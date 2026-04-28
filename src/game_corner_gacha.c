@@ -38,6 +38,7 @@
 #include "window.h"
 #include "constants/coins.h"
 #include "constants/flags.h"
+#include "constants/pokedex.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/vars.h"
@@ -107,13 +108,13 @@ enum {
 };
 
 #define RARITY_COMMON_ODDS 50
-#define RARITY_UNCOMMON_ODDS 30
+#define RARITY_UNCOMMON_ODDS 34
 #define RARITY_RARE_ODDS 15
-#define RARITY_ULTRA_RARE_ODDS 5
+#define RARITY_ULTRA_RARE_ODDS 1
 
-#define GACHA_BASIC_MIN_WAGER 50
-#define GACHA_GREAT_MIN_WAGER 250
-#define GACHA_ULTRA_MIN_WAGER 1000
+#define GACHA_BASIC_MIN_WAGER 100
+#define GACHA_GREAT_MIN_WAGER 500
+#define GACHA_ULTRA_MIN_WAGER 2000
 #define GACHA_MASTER_MIN_WAGER 4500
 
 #define SPR_CREDIT_DIGITS SPR_CREDIT_DIG_1
@@ -150,8 +151,10 @@ struct Gacha {
     u8 monSpriteId;
     u16 CalculatedSpecies;
     u16 wager;
+    u16 refundCoins;
     u32 waitTimer;
     u8 canGiveMon;
+    bool8 refundExtraCoins;
 };    
 
 static const u8 sText_FromGacha[] = _("You got {STR_VAR_1}!");
@@ -180,6 +183,9 @@ static void InitGachaScreen(void);
 static void GachaVBlankCallback(void);
 static void SpriteCB_BouncingPokeball(struct Sprite *);
 static void SpriteCB_BouncingPokeballArrive(struct Sprite *);
+static u16 GetMaxAvailableGachaRaritySpecies(u32 gachaId, u32 rarity);
+static u16 GetGachaMon(u16 randNum);
+static inline bool32 CheckIfOwned(u16 species);
 
 static const u8 sMessageText[] = _("NEW POKéMON : {STR_VAR_1}%");
 
@@ -2207,6 +2213,219 @@ static void StartTradeScreen(void)
     sGacha->state = STATE_FADE;
 }
 
+static u16 CountValidGachaSpecies(const u16 *speciesList, u16 speciesCount)
+{
+    u16 i;
+    u16 validCount = 0;
+
+    for (i = 0; i < speciesCount; i++)
+    {
+        if (IsSpeciesInHoennDex(speciesList[i]))
+            validCount++;
+    }
+
+    return validCount;
+}
+
+static u16 GetMinWagerForCurrentGacha(void)
+{
+    switch (sGacha->GachaId)
+    {
+    default:
+    case GACHA_BASIC:
+        return GACHA_BASIC_MIN_WAGER;
+    case GACHA_GREAT:
+        return GACHA_GREAT_MIN_WAGER;
+    case GACHA_ULTRA:
+        return GACHA_ULTRA_MIN_WAGER;
+    case GACHA_MASTER:
+        return GACHA_MASTER_MIN_WAGER;
+    }
+}
+
+static u16 GetNthValidGachaSpecies(const u16 *speciesList, u16 speciesCount, u16 validIndex)
+{
+    u16 i;
+
+    for (i = 0; i < speciesCount; i++)
+    {
+        if (!IsSpeciesInHoennDex(speciesList[i]))
+            continue;
+
+        if (validIndex == 0)
+            return speciesList[i];
+
+        validIndex--;
+    }
+
+    return SPECIES_NONE;
+}
+
+static u8 GetOwnedCountForCurrentRarity(void)
+{
+    switch (sGacha->Rarity)
+    {
+    default:
+    case RARITY_COMMON:
+        return sGacha->ownedCommon;
+    case RARITY_UNCOMMON:
+        return sGacha->ownedUncommon;
+    case RARITY_RARE:
+        return sGacha->ownedRare;
+    case RARITY_ULTRA_RARE:
+        return sGacha->ownedUltraRare;
+    }
+}
+
+static u16 GetTotalOwnedGachaSpecies(void)
+{
+    return sGacha->ownedCommon + sGacha->ownedUncommon + sGacha->ownedRare + sGacha->ownedUltraRare;
+}
+
+static u16 GetTotalAvailableGachaSpecies(void)
+{
+    return GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_COMMON)
+         + GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_UNCOMMON)
+         + GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_RARE)
+         + GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_ULTRA_RARE);
+}
+
+static u16 GetTotalUnownedGachaSpecies(void)
+{
+    u16 totalAvailable = GetTotalAvailableGachaSpecies();
+    u16 totalOwned = GetTotalOwnedGachaSpecies();
+
+    return (totalAvailable > totalOwned) ? (totalAvailable - totalOwned) : 0;
+}
+
+static void RollGachaRarity(void)
+{
+    u16 randomValue = Random() % 100;
+
+    if (randomValue < RARITY_COMMON_ODDS)
+        sGacha->Rarity = RARITY_COMMON;
+    else if (randomValue < (RARITY_COMMON_ODDS + RARITY_UNCOMMON_ODDS))
+        sGacha->Rarity = RARITY_UNCOMMON;
+    else if (randomValue < (RARITY_COMMON_ODDS + RARITY_UNCOMMON_ODDS + RARITY_RARE_ODDS))
+        sGacha->Rarity = RARITY_RARE;
+    else
+        sGacha->Rarity = RARITY_ULTRA_RARE;
+}
+
+static u16 GetSpeciesForRarityIndex(u8 rarity, u16 index)
+{
+    u8 savedRarity = sGacha->Rarity;
+    u16 species;
+
+    sGacha->Rarity = rarity;
+    species = GetGachaMon(index);
+    sGacha->Rarity = savedRarity;
+    return species;
+}
+
+static u16 FindFallbackGachaSpecies(bool32 wantsNew)
+{
+    u8 rarity;
+    u16 i;
+    u16 totalMax;
+    u16 species;
+
+    for (rarity = RARITY_COMMON; rarity <= RARITY_ULTRA_RARE; rarity++)
+    {
+        totalMax = GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, rarity);
+        for (i = 0; i < totalMax; i++)
+        {
+            species = GetSpeciesForRarityIndex(rarity, i);
+            if (species == SPECIES_NONE)
+                continue;
+
+            if (wantsNew)
+            {
+                if (!CheckIfOwned(species))
+                {
+                    sGacha->Rarity = rarity;
+                    return species;
+                }
+            }
+            else
+            {
+                if (CheckIfOwned(species))
+                {
+                    sGacha->Rarity = rarity;
+                    return species;
+                }
+            }
+        }
+    }
+
+    return SPECIES_NONE;
+}
+
+static void DeterminePokemonRarityAndNewStatusSafe(void)
+{
+    u16 species = SPECIES_NONE;
+    u16 totalMax;
+    u16 newPokemonChance;
+    u16 totalOwned;
+    u16 totalUnowned;
+    bool32 wantsNew;
+    u32 attempts = 5000;
+
+    totalUnowned = GetTotalUnownedGachaSpecies();
+    totalOwned = GetTotalOwnedGachaSpecies();
+    wantsNew = (sGacha->newMonOdds > (Random() % 100));
+
+    if (totalUnowned == 0)
+        wantsNew = FALSE;
+    else if (totalOwned == 0)
+        wantsNew = TRUE;
+
+    while (attempts-- > 0)
+    {
+        RollGachaRarity();
+        totalMax = GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, sGacha->Rarity);
+        totalOwned = GetOwnedCountForCurrentRarity();
+
+        if (totalMax == 0)
+            continue;
+
+        if (wantsNew && totalOwned >= totalMax)
+            continue;
+
+        if (!wantsNew && totalOwned == 0)
+            continue;
+
+        newPokemonChance = Random() % totalMax;
+        species = GetGachaMon(newPokemonChance);
+        if (species == SPECIES_NONE)
+            continue;
+
+        if (wantsNew)
+        {
+            if (!CheckIfOwned(species))
+                break;
+        }
+        else
+        {
+            if (CheckIfOwned(species))
+                break;
+        }
+    }
+
+    if (species == SPECIES_NONE || species == 0)
+    {
+        species = FindFallbackGachaSpecies(wantsNew);
+
+        if (species == SPECIES_NONE)
+            species = FindFallbackGachaSpecies(FALSE);
+
+        if (species == SPECIES_NONE)
+            species = GetSpeciesForRarityIndex(RARITY_COMMON, 0);
+    }
+
+    sGacha->CalculatedSpecies = species;
+}
+
 static u16 GetMaxAvailableGachaRaritySpecies(u32 gachaId, u32 rarity)
 {
     // Get the number of available Pokémon based on rarity
@@ -2218,52 +2437,52 @@ static u16 GetMaxAvailableGachaRaritySpecies(u32 gachaId, u32 rarity)
         {
         default:
         case RARITY_COMMON:
-            return ARRAY_COUNT(sGachaBasicSpeciesCommon);
+            return CountValidGachaSpecies(sGachaBasicSpeciesCommon, ARRAY_COUNT(sGachaBasicSpeciesCommon));
         case RARITY_UNCOMMON:
-            return ARRAY_COUNT(sGachaBasicSpeciesUncommon);
+            return CountValidGachaSpecies(sGachaBasicSpeciesUncommon, ARRAY_COUNT(sGachaBasicSpeciesUncommon));
         case RARITY_RARE:
-            return ARRAY_COUNT(sGachaBasicSpeciesRare);
+            return CountValidGachaSpecies(sGachaBasicSpeciesRare, ARRAY_COUNT(sGachaBasicSpeciesRare));
         case RARITY_ULTRA_RARE:
-            return ARRAY_COUNT(sGachaBasicSpeciesUltraRare);
+            return CountValidGachaSpecies(sGachaBasicSpeciesUltraRare, ARRAY_COUNT(sGachaBasicSpeciesUltraRare));
         }
     case GACHA_GREAT:
         switch (rarity)
         {
         default:
         case RARITY_COMMON:
-            return ARRAY_COUNT(sGachaGreatSpeciesCommon);
+            return CountValidGachaSpecies(sGachaGreatSpeciesCommon, ARRAY_COUNT(sGachaGreatSpeciesCommon));
         case RARITY_UNCOMMON:
-            return ARRAY_COUNT(sGachaGreatSpeciesUncommon);
+            return CountValidGachaSpecies(sGachaGreatSpeciesUncommon, ARRAY_COUNT(sGachaGreatSpeciesUncommon));
         case RARITY_RARE:
-            return ARRAY_COUNT(sGachaGreatSpeciesRare);
+            return CountValidGachaSpecies(sGachaGreatSpeciesRare, ARRAY_COUNT(sGachaGreatSpeciesRare));
         case RARITY_ULTRA_RARE:
-            return ARRAY_COUNT(sGachaGreatSpeciesUltraRare);
+            return CountValidGachaSpecies(sGachaGreatSpeciesUltraRare, ARRAY_COUNT(sGachaGreatSpeciesUltraRare));
         }
     case GACHA_ULTRA:
         switch (rarity)
         {
         default:
         case RARITY_COMMON:
-            return ARRAY_COUNT(sGachaUltraSpeciesCommon);
+            return CountValidGachaSpecies(sGachaUltraSpeciesCommon, ARRAY_COUNT(sGachaUltraSpeciesCommon));
         case RARITY_UNCOMMON:
-            return ARRAY_COUNT(sGachaUltraSpeciesUncommon);
+            return CountValidGachaSpecies(sGachaUltraSpeciesUncommon, ARRAY_COUNT(sGachaUltraSpeciesUncommon));
         case RARITY_RARE:
-            return ARRAY_COUNT(sGachaUltraSpeciesRare);
+            return CountValidGachaSpecies(sGachaUltraSpeciesRare, ARRAY_COUNT(sGachaUltraSpeciesRare));
         case RARITY_ULTRA_RARE:
-            return ARRAY_COUNT(sGachaUltraSpeciesUltraRare);
+            return CountValidGachaSpecies(sGachaUltraSpeciesUltraRare, ARRAY_COUNT(sGachaUltraSpeciesUltraRare));
         }
     case GACHA_MASTER:
         switch (rarity)
         {
         default:
         case RARITY_COMMON:
-            return ARRAY_COUNT(sGachaMasterSpeciesCommon);
+            return CountValidGachaSpecies(sGachaMasterSpeciesCommon, ARRAY_COUNT(sGachaMasterSpeciesCommon));
         case RARITY_UNCOMMON:
-            return ARRAY_COUNT(sGachaMasterSpeciesUncommon);
+            return CountValidGachaSpecies(sGachaMasterSpeciesUncommon, ARRAY_COUNT(sGachaMasterSpeciesUncommon));
         case RARITY_RARE:
-            return ARRAY_COUNT(sGachaMasterSpeciesRare);
+            return CountValidGachaSpecies(sGachaMasterSpeciesRare, ARRAY_COUNT(sGachaMasterSpeciesRare));
         case RARITY_ULTRA_RARE:
-            return ARRAY_COUNT(sGachaMasterSpeciesUltraRare);
+            return CountValidGachaSpecies(sGachaMasterSpeciesUltraRare, ARRAY_COUNT(sGachaMasterSpeciesUltraRare));
         }
     }
     return 0; // failsafe
@@ -2285,13 +2504,13 @@ static inline u16 GetGachaBasicSpecies(u16 randNum)
     {
     default:
     case RARITY_COMMON:
-        return sGachaBasicSpeciesCommon[randNum];
+        return GetNthValidGachaSpecies(sGachaBasicSpeciesCommon, ARRAY_COUNT(sGachaBasicSpeciesCommon), randNum);
     case RARITY_UNCOMMON:
-        return sGachaBasicSpeciesUncommon[randNum];
+        return GetNthValidGachaSpecies(sGachaBasicSpeciesUncommon, ARRAY_COUNT(sGachaBasicSpeciesUncommon), randNum);
     case RARITY_RARE:
-        return sGachaBasicSpeciesRare[randNum];
+        return GetNthValidGachaSpecies(sGachaBasicSpeciesRare, ARRAY_COUNT(sGachaBasicSpeciesRare), randNum);
     case RARITY_ULTRA_RARE:
-        return sGachaBasicSpeciesUltraRare[randNum];
+        return GetNthValidGachaSpecies(sGachaBasicSpeciesUltraRare, ARRAY_COUNT(sGachaBasicSpeciesUltraRare), randNum);
     }
 
     return -1; // Return -1 if customNumber is not found
@@ -2313,13 +2532,13 @@ static inline u16 GetGachaGreatSpecies(u16 randNum)
     {
     default:
     case RARITY_COMMON:
-        return sGachaGreatSpeciesCommon[randNum];
+        return GetNthValidGachaSpecies(sGachaGreatSpeciesCommon, ARRAY_COUNT(sGachaGreatSpeciesCommon), randNum);
     case RARITY_UNCOMMON:
-        return sGachaGreatSpeciesUncommon[randNum];
+        return GetNthValidGachaSpecies(sGachaGreatSpeciesUncommon, ARRAY_COUNT(sGachaGreatSpeciesUncommon), randNum);
     case RARITY_RARE:
-        return sGachaGreatSpeciesRare[randNum];
+        return GetNthValidGachaSpecies(sGachaGreatSpeciesRare, ARRAY_COUNT(sGachaGreatSpeciesRare), randNum);
     case RARITY_ULTRA_RARE:
-        return sGachaGreatSpeciesUltraRare[randNum];
+        return GetNthValidGachaSpecies(sGachaGreatSpeciesUltraRare, ARRAY_COUNT(sGachaGreatSpeciesUltraRare), randNum);
     }
 
     return -1; // Return -1 if customNumber is not found
@@ -2341,13 +2560,13 @@ static inline u16 GetGachaUltraSpecies(u16 randNum)
     {
     default:
     case RARITY_COMMON:
-        return sGachaUltraSpeciesCommon[randNum];
+        return GetNthValidGachaSpecies(sGachaUltraSpeciesCommon, ARRAY_COUNT(sGachaUltraSpeciesCommon), randNum);
     case RARITY_UNCOMMON:
-        return sGachaUltraSpeciesUncommon[randNum];
+        return GetNthValidGachaSpecies(sGachaUltraSpeciesUncommon, ARRAY_COUNT(sGachaUltraSpeciesUncommon), randNum);
     case RARITY_RARE:
-        return sGachaUltraSpeciesRare[randNum];
+        return GetNthValidGachaSpecies(sGachaUltraSpeciesRare, ARRAY_COUNT(sGachaUltraSpeciesRare), randNum);
     case RARITY_ULTRA_RARE:
-        return sGachaUltraSpeciesUltraRare[randNum];
+        return GetNthValidGachaSpecies(sGachaUltraSpeciesUltraRare, ARRAY_COUNT(sGachaUltraSpeciesUltraRare), randNum);
     }
 
     return -1; // Return -1 if customNumber is not found
@@ -2367,13 +2586,13 @@ static inline u16 GetGachaMasterSpecies(u16 randNum)
     {
     default:
     case RARITY_COMMON:
-        return sGachaMasterSpeciesCommon[randNum];
+        return GetNthValidGachaSpecies(sGachaMasterSpeciesCommon, ARRAY_COUNT(sGachaMasterSpeciesCommon), randNum);
     case RARITY_UNCOMMON:
-        return sGachaMasterSpeciesUncommon[randNum];
+        return GetNthValidGachaSpecies(sGachaMasterSpeciesUncommon, ARRAY_COUNT(sGachaMasterSpeciesUncommon), randNum);
     case RARITY_RARE:
-        return sGachaMasterSpeciesRare[randNum];
+        return GetNthValidGachaSpecies(sGachaMasterSpeciesRare, ARRAY_COUNT(sGachaMasterSpeciesRare), randNum);
     case RARITY_ULTRA_RARE:
-        return sGachaMasterSpeciesUltraRare[randNum];
+        return GetNthValidGachaSpecies(sGachaMasterSpeciesUltraRare, ARRAY_COUNT(sGachaMasterSpeciesUltraRare), randNum);
     }
 
     return -1; // Return -1 if customNumber is not found
@@ -2426,12 +2645,28 @@ static inline bool32 IsNotValidUnownedSpecies(u16 species)
     return CheckIfOwned(species);
 }
 
-static void GetPokemonOwned(void)
+static u8 CountOwnedGachaSpecies(const u16 *speciesList, u16 speciesCount)
 {
+    u16 i;
     u16 species;
     int nationalDexNo;
-    int i;
+    u8 ownedCount = 0;
 
+    for (i = 0; i < speciesCount; i++)
+    {
+        species = speciesList[i];
+        if (!IsSpeciesInHoennDex(species))
+            continue;
+
+        nationalDexNo = SpeciesToNationalPokedexNum(species);
+        ownedCount += GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT);
+    }
+
+    return ownedCount;
+}
+
+static void GetPokemonOwned(void)
+{
     sGacha->ownedCommon = 0;
     sGacha->ownedUncommon = 0;
     sGacha->ownedRare = 0;
@@ -2441,108 +2676,28 @@ static void GetPokemonOwned(void)
     {
     default:
     case GACHA_BASIC:
-        for (i = 0; i < ARRAY_COUNT(sGachaBasicSpeciesCommon); i++)
-        {
-            species = sGachaBasicSpeciesCommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedCommon = (sGacha->ownedCommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaBasicSpeciesUncommon); i++)
-        {
-            species = sGachaBasicSpeciesUncommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUncommon = (sGacha->ownedUncommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaBasicSpeciesRare); i++)
-        {
-            species = sGachaBasicSpeciesRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedRare = (sGacha->ownedRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaBasicSpeciesUltraRare); i++)
-        {
-            species = sGachaBasicSpeciesUltraRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUltraRare = (sGacha->ownedUltraRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
+        sGacha->ownedCommon = CountOwnedGachaSpecies(sGachaBasicSpeciesCommon, ARRAY_COUNT(sGachaBasicSpeciesCommon));
+        sGacha->ownedUncommon = CountOwnedGachaSpecies(sGachaBasicSpeciesUncommon, ARRAY_COUNT(sGachaBasicSpeciesUncommon));
+        sGacha->ownedRare = CountOwnedGachaSpecies(sGachaBasicSpeciesRare, ARRAY_COUNT(sGachaBasicSpeciesRare));
+        sGacha->ownedUltraRare = CountOwnedGachaSpecies(sGachaBasicSpeciesUltraRare, ARRAY_COUNT(sGachaBasicSpeciesUltraRare));
         break;
     case GACHA_GREAT:
-        for (i = 0; i < ARRAY_COUNT(sGachaGreatSpeciesCommon); i++)
-        {
-            species = sGachaGreatSpeciesCommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedCommon = (sGacha->ownedCommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaGreatSpeciesUncommon); i++)
-        {
-            species = sGachaGreatSpeciesUncommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUncommon = (sGacha->ownedUncommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaGreatSpeciesRare); i++)
-        {
-            species = sGachaGreatSpeciesRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedRare = (sGacha->ownedRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaGreatSpeciesUltraRare); i++)
-        {
-            species = sGachaGreatSpeciesUltraRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUltraRare = (sGacha->ownedUltraRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
+        sGacha->ownedCommon = CountOwnedGachaSpecies(sGachaGreatSpeciesCommon, ARRAY_COUNT(sGachaGreatSpeciesCommon));
+        sGacha->ownedUncommon = CountOwnedGachaSpecies(sGachaGreatSpeciesUncommon, ARRAY_COUNT(sGachaGreatSpeciesUncommon));
+        sGacha->ownedRare = CountOwnedGachaSpecies(sGachaGreatSpeciesRare, ARRAY_COUNT(sGachaGreatSpeciesRare));
+        sGacha->ownedUltraRare = CountOwnedGachaSpecies(sGachaGreatSpeciesUltraRare, ARRAY_COUNT(sGachaGreatSpeciesUltraRare));
         break;
     case GACHA_ULTRA:
-        for (i = 0; i < ARRAY_COUNT(sGachaUltraSpeciesCommon); i++)
-        {
-            species = sGachaUltraSpeciesCommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedCommon = (sGacha->ownedCommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaUltraSpeciesUncommon); i++)
-        {
-            species = sGachaUltraSpeciesUncommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUncommon = (sGacha->ownedUncommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaUltraSpeciesRare); i++)
-        {
-            species = sGachaUltraSpeciesRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedRare = (sGacha->ownedRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaUltraSpeciesUltraRare); i++)
-        {
-            species = sGachaUltraSpeciesUltraRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUltraRare = (sGacha->ownedUltraRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
+        sGacha->ownedCommon = CountOwnedGachaSpecies(sGachaUltraSpeciesCommon, ARRAY_COUNT(sGachaUltraSpeciesCommon));
+        sGacha->ownedUncommon = CountOwnedGachaSpecies(sGachaUltraSpeciesUncommon, ARRAY_COUNT(sGachaUltraSpeciesUncommon));
+        sGacha->ownedRare = CountOwnedGachaSpecies(sGachaUltraSpeciesRare, ARRAY_COUNT(sGachaUltraSpeciesRare));
+        sGacha->ownedUltraRare = CountOwnedGachaSpecies(sGachaUltraSpeciesUltraRare, ARRAY_COUNT(sGachaUltraSpeciesUltraRare));
         break;
     case GACHA_MASTER:
-        for (i = 0; i < ARRAY_COUNT(sGachaMasterSpeciesCommon); i++)
-        {
-            species = sGachaMasterSpeciesCommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedCommon = (sGacha->ownedCommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaMasterSpeciesUncommon); i++)
-        {
-            species = sGachaMasterSpeciesUncommon[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUncommon = (sGacha->ownedUncommon + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaMasterSpeciesRare); i++)
-        {
-            species = sGachaMasterSpeciesRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedRare = (sGacha->ownedRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
-        for (i = 0; i < ARRAY_COUNT(sGachaMasterSpeciesUltraRare); i++)
-        {
-            species = sGachaMasterSpeciesUltraRare[i];
-            nationalDexNo = SpeciesToNationalPokedexNum(species);
-            sGacha->ownedUltraRare = (sGacha->ownedUltraRare + GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT));
-        }
+        sGacha->ownedCommon = CountOwnedGachaSpecies(sGachaMasterSpeciesCommon, ARRAY_COUNT(sGachaMasterSpeciesCommon));
+        sGacha->ownedUncommon = CountOwnedGachaSpecies(sGachaMasterSpeciesUncommon, ARRAY_COUNT(sGachaMasterSpeciesUncommon));
+        sGacha->ownedRare = CountOwnedGachaSpecies(sGachaMasterSpeciesRare, ARRAY_COUNT(sGachaMasterSpeciesRare));
+        sGacha->ownedUltraRare = CountOwnedGachaSpecies(sGachaMasterSpeciesUltraRare, ARRAY_COUNT(sGachaMasterSpeciesUltraRare));
         break;
     }
 }
@@ -2733,30 +2888,16 @@ void DeterminePokemonRarityAndNewStatus(void)
 
 static void CalculatePullOdds(void)
 {
-    u16 totalCommonAvailable;
-    u16 totalUncommonAvailable;
-    u16 totalRareAvailable;
-    u16 totalUltraRareAvailable;
-    u16 wager;
-    u8 totalChance;
+    u16 wager = sGacha->wager;
+    u16 minWager = GetMinWagerForCurrentGacha();
+    u16 maxGuaranteedWager = minWager * 2;
 
-    totalCommonAvailable = GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_COMMON);
-    totalUncommonAvailable = GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_UNCOMMON);
-    totalRareAvailable = GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_RARE);
-    totalUltraRareAvailable = GetMaxAvailableGachaRaritySpecies(sGacha->GachaId, RARITY_ULTRA_RARE);
-
-    wager = sGacha->wager;  // Player's wager (0-9999)
-
-    // Add up the chances from each rarity
-    totalChance = CalculateChanceForCategory(sGacha->ownedCommon, totalCommonAvailable, RARITY_COMMON_ODDS, wager);
-    totalChance += CalculateChanceForCategory(sGacha->ownedUncommon, totalUncommonAvailable, RARITY_UNCOMMON_ODDS, wager);
-    totalChance += CalculateChanceForCategory(sGacha->ownedRare, totalRareAvailable, RARITY_RARE_ODDS, wager);
-    totalChance += CalculateChanceForCategory(sGacha->ownedUltraRare, totalUltraRareAvailable, RARITY_ULTRA_RARE_ODDS, wager);
-
-    if (totalChance <= 100)
-        sGacha->newMonOdds = totalChance;
-    else
+    if (wager <= minWager)
+        sGacha->newMonOdds = 20;
+    else if (wager >= maxGuaranteedWager)
         sGacha->newMonOdds = 100;
+    else
+        sGacha->newMonOdds = 20 + (((wager - minWager) * 80) / minWager);
 }
 
 static void AButton(void)
@@ -2810,6 +2951,9 @@ static void UpdateWagerDigit(int direction)
         d = d / 10;
     }
     maxWager = GetCoins();  // Maximum wager is the current coins
+    minWager = GetMinWagerForCurrentGacha();
+    if (maxWager > minWager * 2)
+        maxWager = minWager * 2;
     
     // wagerDigits[0] = Thousands place
     // wagerDigits[1] = Hundreds place
@@ -2843,31 +2987,20 @@ static void UpdateWagerDigit(int direction)
         {
             // Decrease the digit by 1
             wagerDigits[place]--;
-            sGacha->wager = (wagerDigits[0] * 1000) + (wagerDigits[1] * 100) + (wagerDigits[2] * 10) + wagerDigits[3];
-            PlaySE(SE_SELECT);
+            newWager = (wagerDigits[0] * 1000) + (wagerDigits[1] * 100) + (wagerDigits[2] * 10) + wagerDigits[3];
+            if (newWager < minWager)
+                newWager = minWager;
+            if (newWager != sGacha->wager)
+            {
+                sGacha->wager = newWager;
+                PlaySE(SE_SELECT);
+            }
         }
     }
 
     // Update sprite animation based on the new value
     gSprites[sGacha->ArrowsSpriteId].animNum = (wagerDigits[place] == 0) ? 1 : 0;
     SetPlayerDigits(sGacha->wager);  // Update the displayed wager
-
-    switch (sGacha->GachaId)
-    {
-    default:
-    case GACHA_BASIC:
-        minWager = GACHA_BASIC_MIN_WAGER;
-        break;
-    case GACHA_GREAT:
-        minWager = GACHA_GREAT_MIN_WAGER;
-        break;
-    case GACHA_ULTRA:
-        minWager = GACHA_ULTRA_MIN_WAGER;
-        break;
-    case GACHA_MASTER:
-        minWager = GACHA_MASTER_MIN_WAGER;
-        break;
-    }
 
     if (sGacha->wager >= minWager && sGacha->canGiveMon)
     {
@@ -3070,9 +3203,21 @@ static void GachaMain(u8 taskId)
         ExitGacha();
         break;
     case STATE_INIT_A: // Initial state
-        DeterminePokemonRarityAndNewStatus();
+            DeterminePokemonRarityAndNewStatusSafe();
+        if (GetTotalUnownedGachaSpecies() == 0 && sGacha->wager > GetMinWagerForCurrentGacha())
+        {
+            sGacha->refundExtraCoins = TRUE;
+            sGacha->refundCoins = sGacha->wager - GetMinWagerForCurrentGacha();
+        }
+        else
+        {
+            sGacha->refundExtraCoins = FALSE;
+            sGacha->refundCoins = 0;
+        }
+        VarSet(VAR_TEMP_4, sGacha->refundCoins);
+        VarSet(VAR_TEMP_5, sGacha->refundExtraCoins);
         PlaySE(SE_SHOP);
-        RemoveCoins(sGacha->wager);
+        RemoveCoins(sGacha->wager - sGacha->refundCoins);
         sGacha->wager = 0;
         ResetMessage();
         gSprites[sGacha->CTAspriteId].animNum = 0;
@@ -3294,7 +3439,8 @@ static bool32 GachaGfxSetup(void)
         CreateCreditSprites();
         CreatePlayerSprites();
         SetCreditDigits(GetCoins());
-        SetPlayerDigits(0);    
+        sGacha->wager = GetMinWagerForCurrentGacha();
+        SetPlayerDigits(sGacha->wager);
         CreateCreditMenu();    
         CreatePlayerMenu();
         CreateLotteryJPN();
@@ -3310,8 +3456,17 @@ static bool32 GachaGfxSetup(void)
     case 5:
         UpdateCursorPosition(gSprites[sGacha->ArrowsSpriteId].x);
         sGacha->waitTimer = 0;
+        sGacha->refundCoins = 0;
+        sGacha->refundExtraCoins = FALSE;
+        VarSet(VAR_TEMP_4, 0);
+        VarSet(VAR_TEMP_5, 0);
         sGacha->canGiveMon = !IsPlayerPartyAndPokemonStorageFull();
         GetPokemonOwned();
+        CalculatePullOdds();
+        sGacha->canBetWager = sGacha->canGiveMon;
+        gSprites[sGacha->CTAspriteId].animNum = sGacha->canGiveMon ? 1 : 0;
+        ResetMessage();
+        ShowMessage();
         gMain.state++;
         break;
     case 6:
@@ -3351,4 +3506,3 @@ static void InitGachaScreen(void)
             break;
     }
 }
-
