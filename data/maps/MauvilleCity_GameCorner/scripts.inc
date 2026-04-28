@@ -8,11 +8,33 @@ MauvilleCity_GameCorner_MapScripts::
 	.set TM_THUNDERBOLT_COINS, 4000
 	.set TM_ICE_BEAM_COINS, 4000
 	.set DOLL_COINS, 1000
+	.set MINT_COINS, 1000
+	.set ABILITY_PATCH_COINS, 6000
+	.set ABILITY_CAPSULE_COINS, 3000
+	.set TRAINING_ITEM_COINS, 400
+	.set EVOLUTION_ITEM_COINS, 1000
+	.set PRIZE_MENU_TMS, 1
+	.set PRIZE_MENU_MINTS, 2
+	.set PRIZE_MENU_TRAINING, 3
+	.set PRIZE_MENU_EVOLUTION, 4
 
 	.set COINS_PRICE_50,  1000
 	.set COINS_PRICE_500, 10000
 	.set COINS_PRICE_5000, 100000
 	.set SLOT_MACHINE_HIGH_STAKES_OFFSET, 6
+	.set PINBALL_MEOWTH_COINS, 25
+	.set PINBALL_DIGLETT_COINS, 50
+	.set PINBALL_SEEL_COINS, 25
+	.set PINBALL_GENGAR_COINS, 100
+	.set FLAPPY_BIRD_COINS, 25
+	.set SNAKE_COINS, 25
+	.set BLOCK_STACKER_COINS, 25
+	.set PACHINKO_COINS, 3
+	.set VOLTORB_FLIP_COINS, 50
+	.set DERBY_MIN_BET_COINS, 10
+	.set GAME_CORNER_VAR_START_COINS, VAR_0x8008
+	.set GAME_CORNER_VAR_CURRENT_COINS, VAR_0x8009
+	.set GAME_CORNER_VAR_COIN_DELTA, VAR_0x800A
 
 MauvilleCity_GameCorner_EventScript_CoinsClerk::
 	lock
@@ -190,116 +212,30 @@ MauvilleCity_GameCorner_EventScript_NotEnoughCoinsToCashOut::
 	release
 	end
 
-MauvilleCity_GameCorner_EventScript_PrizeCornerDolls::
+MauvilleCity_GameCorner_EventScript_PrizeCornerMints::
 	lock
 	faceplayer
 	msgbox MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes, MSGBOX_DEFAULT
 	checkitem ITEM_COIN_CASE
-	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_OpenMintPrizeMenu
 	release
 	end
 
-MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage::
-	message MauvilleCity_GameCorner_Text_WhichPrize
-	waitmessage
-	setvar VAR_TEMP_1, 0
-	showcoinsbox 1, 1
-	goto MauvilleCity_GameCorner_EventScript_ChooseDollPrize
-
-MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize::
-	message MauvilleCity_GameCorner_Text_WhichPrize
-	waitmessage
-	goto MauvilleCity_GameCorner_EventScript_ChooseDollPrize
-
-MauvilleCity_GameCorner_EventScript_ChooseDollPrize::
-	multichoice 12, 0, MULTI_GAME_CORNER_DOLLS, FALSE
-	switch VAR_RESULT
-	case 0, MauvilleCity_GameCorner_EventScript_TreeckoDoll
-	case 1, MauvilleCity_GameCorner_EventScript_TorchicDoll
-	case 2, MauvilleCity_GameCorner_EventScript_MudkipDoll
-	case 3, MauvilleCity_GameCorner_EventScript_CancelDollSelect
-	goto MauvilleCity_GameCorner_EventScript_CancelDollSelect
+MauvilleCity_GameCorner_EventScript_PrizeCornerTraining::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes, MSGBOX_DEFAULT
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_OpenTrainingPrizeMenu
+	release
 	end
 
-MauvilleCity_GameCorner_EventScript_TreeckoDoll::
-	setvar VAR_TEMP_1, 1
-	bufferdecorationname STR_VAR_1, DECOR_TREECKO_DOLL
-	goto MauvilleCity_GameCorner_EventScript_ConfirmDollPrize
-
-MauvilleCity_GameCorner_EventScript_TorchicDoll::
-	setvar VAR_TEMP_1, 2
-	bufferdecorationname STR_VAR_1, DECOR_TORCHIC_DOLL
-	goto MauvilleCity_GameCorner_EventScript_ConfirmDollPrize
-
-MauvilleCity_GameCorner_EventScript_MudkipDoll::
-	setvar VAR_TEMP_1, 3
-	bufferdecorationname STR_VAR_1, DECOR_MUDKIP_DOLL
-	goto MauvilleCity_GameCorner_EventScript_ConfirmDollPrize
-
-MauvilleCity_GameCorner_EventScript_ConfirmDollPrize::
-	msgbox MauvilleCity_GameCorner_Text_SoYourChoiceIsX, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelDollSelect
-	switch VAR_TEMP_1
-	case 1, MauvilleCity_GameCorner_EventScript_BuyTreeckoDoll
-	case 2, MauvilleCity_GameCorner_EventScript_BuyTorchicDoll
-	case 3, MauvilleCity_GameCorner_EventScript_BuyMudkipDoll
-	end
-
-MauvilleCity_GameCorner_EventScript_BuyTreeckoDoll::
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, DOLL_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll
-	bufferdecorationname STR_VAR_2, DECOR_TREECKO_DOLL
-	checkdecorspace DECOR_TREECKO_DOLL
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForDoll
-	removecoins DOLL_COINS
-	adddecoration DECOR_TREECKO_DOLL
-	updatecoinsbox 1, 1
-	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_SendToYourHomePC, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_BuyTorchicDoll::
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, DOLL_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll
-	bufferdecorationname STR_VAR_2, DECOR_TORCHIC_DOLL
-	checkdecorspace DECOR_TORCHIC_DOLL
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForDoll
-	removecoins DOLL_COINS
-	adddecoration DECOR_TORCHIC_DOLL
-	updatecoinsbox 1, 1
-	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_SendToYourHomePC, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_BuyMudkipDoll::
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, DOLL_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll
-	bufferdecorationname STR_VAR_2, DECOR_MUDKIP_DOLL
-	checkdecorspace DECOR_MUDKIP_DOLL
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForDoll
-	removecoins DOLL_COINS
-	adddecoration DECOR_MUDKIP_DOLL
-	updatecoinsbox 1, 1
-	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_SendToYourHomePC, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll::
-	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_NoRoomForDoll::
-	call Common_EventScript_NoRoomForDecor
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_CancelDollSelect::
-	msgbox MauvilleCity_GameCorner_Text_OhIsThatSo, MSGBOX_DEFAULT
-	hidecoinsbox 0, 0
+MauvilleCity_GameCorner_EventScript_PrizeCornerEvolution::
+	lock
+	faceplayer
+	msgbox MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes, MSGBOX_DEFAULT
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_OpenEvolutionPrizeMenu
 	release
 	end
 
@@ -308,152 +244,388 @@ MauvilleCity_GameCorner_EventScript_PrizeCornerTMs::
 	faceplayer
 	msgbox MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes, MSGBOX_DEFAULT
 	checkitem ITEM_COIN_CASE
-	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_ChooseTMPrizeMessage
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_OpenTMPrizeMenu
 	release
 	end
 
-MauvilleCity_GameCorner_EventScript_ChooseTMPrizeMessage::
+MauvilleCity_GameCorner_EventScript_OpenTMPrizeMenu::
 	message MauvilleCity_GameCorner_Text_WhichPrize
 	waitmessage
-	setvar VAR_TEMP_1, 0
 	showcoinsbox 1, 1
-	goto MauvilleCity_GameCorner_EventScript_ChooseTMPrize
-
-MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize::
-	message MauvilleCity_GameCorner_Text_WhichPrize
-	waitmessage
-	goto MauvilleCity_GameCorner_EventScript_ChooseTMPrize
-
-MauvilleCity_GameCorner_EventScript_ChooseTMPrize::
-	multichoice 12, 0, MULTI_GAME_CORNER_TMS, FALSE
+	setvar VAR_TEMP_6, PRIZE_MENU_TMS
+	setvar VAR_0x8004, SCROLL_MULTI_GAME_CORNER_TMS
+	special ShowScrollableMultichoice
+	waitstate
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_TMDoubleTeam
 	case 1, MauvilleCity_GameCorner_EventScript_TMPsychic
 	case 2, MauvilleCity_GameCorner_EventScript_TMFlamethrower
 	case 3, MauvilleCity_GameCorner_EventScript_TMThunderbolt
 	case 4, MauvilleCity_GameCorner_EventScript_TMIceBeam
-	case 5, MauvilleCity_GameCorner_EventScript_CancelTMSelect
-	goto MauvilleCity_GameCorner_EventScript_CancelTMSelect
+	case 5, MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	goto MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
 	end
 
 MauvilleCity_GameCorner_EventScript_TMDoubleTeam::
-	setvar VAR_TEMP_1, 1
-	bufferitemname STR_VAR_1, ITEM_TM_DOUBLE_TEAM
 	setvar VAR_0x8004, ITEM_TM_DOUBLE_TEAM
-	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
+	setvar VAR_0x8005, TM_DOUBLE_TEAM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
 
 MauvilleCity_GameCorner_EventScript_TMPsychic::
-	setvar VAR_TEMP_1, 2
-	bufferitemname STR_VAR_1, ITEM_TM_PSYCHIC
 	setvar VAR_0x8004, ITEM_TM_PSYCHIC
-	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
+	setvar VAR_0x8005, TM_PSYCHIC_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
 
 MauvilleCity_GameCorner_EventScript_TMFlamethrower::
-	setvar VAR_TEMP_1, 3
-	bufferitemname STR_VAR_1, ITEM_TM_FLAMETHROWER
 	setvar VAR_0x8004, ITEM_TM_FLAMETHROWER
-	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
+	setvar VAR_0x8005, TM_FLAMETHROWER_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
 
 MauvilleCity_GameCorner_EventScript_TMThunderbolt::
-	setvar VAR_TEMP_1, 4
-	bufferitemname STR_VAR_1, ITEM_TM_THUNDERBOLT
 	setvar VAR_0x8004, ITEM_TM_THUNDERBOLT
-	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
+	setvar VAR_0x8005, TM_THUNDERBOLT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
 
 MauvilleCity_GameCorner_EventScript_TMIceBeam::
-	setvar VAR_TEMP_1, 5
-	bufferitemname STR_VAR_1, ITEM_TM_ICE_BEAM
 	setvar VAR_0x8004, ITEM_TM_ICE_BEAM
-	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
+	setvar VAR_0x8005, TM_ICE_BEAM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
 
-MauvilleCity_GameCorner_EventScript_ConfirmTMPrize::
-	special BufferTMHMMoveName
-	msgbox MauvilleCity_GameCorner_Text_SoYourChoiceIsTheTMX, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelTMSelect
-	switch VAR_TEMP_1
-	case 1, MauvilleCity_GameCorner_EventScript_BuyTMDoubleTeam
-	case 2, MauvilleCity_GameCorner_EventScript_BuyTMPsychic
-	case 3, MauvilleCity_GameCorner_EventScript_BuyTMFlamethrower
-	case 4, MauvilleCity_GameCorner_EventScript_BuyTMThunderbolt
-	case 5, MauvilleCity_GameCorner_EventScript_BuyTMIceBeam
+MauvilleCity_GameCorner_EventScript_OpenMintPrizeMenu::
+	message MauvilleCity_GameCorner_Text_WhichPrize
+	waitmessage
+	showcoinsbox 1, 1
+	setvar VAR_TEMP_6, PRIZE_MENU_MINTS
+	setvar VAR_0x8004, SCROLL_MULTI_GAME_CORNER_MINTS
+	special ShowScrollableMultichoice
+	waitstate
+	switch VAR_RESULT
+	case 0, MauvilleCity_GameCorner_EventScript_PrizeLonelyMint
+	case 1, MauvilleCity_GameCorner_EventScript_PrizeAdamantMint
+	case 2, MauvilleCity_GameCorner_EventScript_PrizeNaughtyMint
+	case 3, MauvilleCity_GameCorner_EventScript_PrizeBraveMint
+	case 4, MauvilleCity_GameCorner_EventScript_PrizeBoldMint
+	case 5, MauvilleCity_GameCorner_EventScript_PrizeImpishMint
+	case 6, MauvilleCity_GameCorner_EventScript_PrizeLaxMint
+	case 7, MauvilleCity_GameCorner_EventScript_PrizeRelaxedMint
+	case 8, MauvilleCity_GameCorner_EventScript_PrizeModestMint
+	case 9, MauvilleCity_GameCorner_EventScript_PrizeMildMint
+	case 10, MauvilleCity_GameCorner_EventScript_PrizeRashMint
+	case 11, MauvilleCity_GameCorner_EventScript_PrizeQuietMint
+	case 12, MauvilleCity_GameCorner_EventScript_PrizeCalmMint
+	case 13, MauvilleCity_GameCorner_EventScript_PrizeGentleMint
+	case 14, MauvilleCity_GameCorner_EventScript_PrizeCarefulMint
+	case 15, MauvilleCity_GameCorner_EventScript_PrizeSassyMint
+	case 16, MauvilleCity_GameCorner_EventScript_PrizeTimidMint
+	case 17, MauvilleCity_GameCorner_EventScript_PrizeHastyMint
+	case 18, MauvilleCity_GameCorner_EventScript_PrizeJollyMint
+	case 19, MauvilleCity_GameCorner_EventScript_PrizeNaiveMint
+	case 20, MauvilleCity_GameCorner_EventScript_PrizeSeriousMint
+	case 21, MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	goto MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
 	end
 
-MauvilleCity_GameCorner_EventScript_BuyTMDoubleTeam::
+MauvilleCity_GameCorner_EventScript_OpenTrainingPrizeMenu::
+	message MauvilleCity_GameCorner_Text_WhichPrize
+	waitmessage
+	showcoinsbox 1, 1
+	setvar VAR_TEMP_6, PRIZE_MENU_TRAINING
+	setvar VAR_0x8004, SCROLL_MULTI_GAME_CORNER_TRAINING
+	special ShowScrollableMultichoice
+	waitstate
+	switch VAR_RESULT
+	case 0, MauvilleCity_GameCorner_EventScript_PrizeAbilityPatch
+	case 1, MauvilleCity_GameCorner_EventScript_PrizeAbilityCapsule
+	case 2, MauvilleCity_GameCorner_EventScript_PrizeHpUp
+	case 3, MauvilleCity_GameCorner_EventScript_PrizeProtein
+	case 4, MauvilleCity_GameCorner_EventScript_PrizeIron
+	case 5, MauvilleCity_GameCorner_EventScript_PrizeCalcium
+	case 6, MauvilleCity_GameCorner_EventScript_PrizeZinc
+	case 7, MauvilleCity_GameCorner_EventScript_PrizeCarbos
+	case 8, MauvilleCity_GameCorner_EventScript_PrizePpUp
+	case 9, MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	goto MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	end
+
+MauvilleCity_GameCorner_EventScript_OpenEvolutionPrizeMenu::
+	message MauvilleCity_GameCorner_Text_WhichPrize
+	waitmessage
+	showcoinsbox 1, 1
+	setvar VAR_TEMP_6, PRIZE_MENU_EVOLUTION
+	setvar VAR_0x8004, SCROLL_MULTI_GAME_CORNER_EVOLUTION
+	special ShowScrollableMultichoice
+	waitstate
+	switch VAR_RESULT
+	case 0, MauvilleCity_GameCorner_EventScript_PrizeDawnStone
+	case 1, MauvilleCity_GameCorner_EventScript_PrizeDuskStone
+	case 2, MauvilleCity_GameCorner_EventScript_PrizeIceStone
+	case 3, MauvilleCity_GameCorner_EventScript_PrizeLinkingCord
+	case 4, MauvilleCity_GameCorner_EventScript_PrizeReaperCloth
+	case 5, MauvilleCity_GameCorner_EventScript_PrizePeatBlock
+	case 6, MauvilleCity_GameCorner_EventScript_PrizeShinyStone
+	case 7, MauvilleCity_GameCorner_EventScript_PrizeBlackAugurite
+	case 8, MauvilleCity_GameCorner_EventScript_PrizeLoadedDice
+	case 9, MauvilleCity_GameCorner_EventScript_PrizeAmuletCoin
+	case 10, MauvilleCity_GameCorner_EventScript_PrizeRazorClaw
+	case 11, MauvilleCity_GameCorner_EventScript_PrizeRazorFang
+	case 12, MauvilleCity_GameCorner_EventScript_PrizeDestinyKnot
+	case 13, MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	goto MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	end
+
+MauvilleCity_GameCorner_EventScript_PrizeLonelyMint::
+	setvar VAR_0x8004, ITEM_LONELY_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeAdamantMint::
+	setvar VAR_0x8004, ITEM_ADAMANT_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeNaughtyMint::
+	setvar VAR_0x8004, ITEM_NAUGHTY_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeBraveMint::
+	setvar VAR_0x8004, ITEM_BRAVE_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeBoldMint::
+	setvar VAR_0x8004, ITEM_BOLD_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeImpishMint::
+	setvar VAR_0x8004, ITEM_IMPISH_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeLaxMint::
+	setvar VAR_0x8004, ITEM_LAX_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeRelaxedMint::
+	setvar VAR_0x8004, ITEM_RELAXED_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeModestMint::
+	setvar VAR_0x8004, ITEM_MODEST_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeMildMint::
+	setvar VAR_0x8004, ITEM_MILD_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeRashMint::
+	setvar VAR_0x8004, ITEM_RASH_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeQuietMint::
+	setvar VAR_0x8004, ITEM_QUIET_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeCalmMint::
+	setvar VAR_0x8004, ITEM_CALM_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeGentleMint::
+	setvar VAR_0x8004, ITEM_GENTLE_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeCarefulMint::
+	setvar VAR_0x8004, ITEM_CAREFUL_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeSassyMint::
+	setvar VAR_0x8004, ITEM_SASSY_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeTimidMint::
+	setvar VAR_0x8004, ITEM_TIMID_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeHastyMint::
+	setvar VAR_0x8004, ITEM_HASTY_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeJollyMint::
+	setvar VAR_0x8004, ITEM_JOLLY_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeNaiveMint::
+	setvar VAR_0x8004, ITEM_NAIVE_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeSeriousMint::
+	setvar VAR_0x8004, ITEM_SERIOUS_MINT
+	setvar VAR_0x8005, MINT_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeAbilityPatch::
+	setvar VAR_0x8004, ITEM_ABILITY_PATCH
+	setvar VAR_0x8005, ABILITY_PATCH_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeAbilityCapsule::
+	setvar VAR_0x8004, ITEM_ABILITY_CAPSULE
+	setvar VAR_0x8005, ABILITY_CAPSULE_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeHpUp::
+	setvar VAR_0x8004, ITEM_HP_UP
+	setvar VAR_0x8005, TRAINING_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeProtein::
+	setvar VAR_0x8004, ITEM_PROTEIN
+	setvar VAR_0x8005, TRAINING_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeIron::
+	setvar VAR_0x8004, ITEM_IRON
+	setvar VAR_0x8005, TRAINING_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeCalcium::
+	setvar VAR_0x8004, ITEM_CALCIUM
+	setvar VAR_0x8005, TRAINING_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeZinc::
+	setvar VAR_0x8004, ITEM_ZINC
+	setvar VAR_0x8005, TRAINING_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeCarbos::
+	setvar VAR_0x8004, ITEM_CARBOS
+	setvar VAR_0x8005, TRAINING_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizePpUp::
+	setvar VAR_0x8004, ITEM_PP_UP
+	setvar VAR_0x8005, TRAINING_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeDawnStone::
+	setvar VAR_0x8004, ITEM_DAWN_STONE
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeDuskStone::
+	setvar VAR_0x8004, ITEM_DUSK_STONE
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeIceStone::
+	setvar VAR_0x8004, ITEM_ICE_STONE
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeLinkingCord::
+	setvar VAR_0x8004, ITEM_LINKING_CORD
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeReaperCloth::
+	setvar VAR_0x8004, ITEM_REAPER_CLOTH
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizePeatBlock::
+	setvar VAR_0x8004, ITEM_PEAT_BLOCK
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeShinyStone::
+	setvar VAR_0x8004, ITEM_SHINY_STONE
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeBlackAugurite::
+	setvar VAR_0x8004, ITEM_BLACK_AUGURITE
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeLoadedDice::
+	setvar VAR_0x8004, ITEM_LOADED_DICE
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeAmuletCoin::
+	setvar VAR_0x8004, ITEM_AMULET_COIN
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeRazorClaw::
+	setvar VAR_0x8004, ITEM_RAZOR_CLAW
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeRazorFang::
+	setvar VAR_0x8004, ITEM_RAZOR_FANG
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeDestinyKnot::
+	setvar VAR_0x8004, ITEM_DESTINY_KNOT
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem::
+	bufferitemname STR_VAR_1, VAR_0x8004
+	buffernumberstring STR_VAR_2, VAR_0x8005
+	msgbox MauvilleCity_GameCorner_Text_PrizeChoiceCost, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_ReturnToCurrentPrizePage
 	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, TM_DOUBLE_TEAM_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM_DOUBLE_TEAM
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForTM
-	removecoins TM_DOUBLE_TEAM_COINS
-	additem ITEM_TM_DOUBLE_TEAM
+	compare VAR_TEMP_2, VAR_0x8005
+	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForPrize
+	checkitemspace VAR_0x8004, 1
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForPrize
+	removecoins VAR_0x8005
+	additem VAR_0x8004, 1
 	updatecoinsbox 1, 1
 	playse SE_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
+	goto MauvilleCity_GameCorner_EventScript_ReturnToCurrentPrizePage
 	end
 
-MauvilleCity_GameCorner_EventScript_BuyTMPsychic::
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, TM_PSYCHIC_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM_PSYCHIC
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForTM
-	removecoins TM_PSYCHIC_COINS
-	additem ITEM_TM_PSYCHIC
-	updatecoinsbox 1, 1
-	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_BuyTMFlamethrower::
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, TM_FLAMETHROWER_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM_FLAMETHROWER
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForTM
-	removecoins TM_FLAMETHROWER_COINS
-	additem ITEM_TM_FLAMETHROWER
-	updatecoinsbox 1, 1
-	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_BuyTMThunderbolt::
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, TM_THUNDERBOLT_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM_THUNDERBOLT
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForTM
-	removecoins TM_THUNDERBOLT_COINS
-	additem ITEM_TM_THUNDERBOLT
-	updatecoinsbox 1, 1
-	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_BuyTMIceBeam::
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, TM_ICE_BEAM_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM_ICE_BEAM
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForTM
-	removecoins TM_ICE_BEAM_COINS
-	additem ITEM_TM_ICE_BEAM
-	updatecoinsbox 1, 1
-	playse SE_SHOP
-	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
-	end
-
-MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM::
+MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForPrize::
 	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
+	goto MauvilleCity_GameCorner_EventScript_ReturnToCurrentPrizePage
 	end
 
-MauvilleCity_GameCorner_EventScript_NoRoomForTM::
+MauvilleCity_GameCorner_EventScript_NoRoomForPrize::
 	call Common_EventScript_BagIsFull
-	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
+	goto MauvilleCity_GameCorner_EventScript_ReturnToCurrentPrizePage
 	end
 
-MauvilleCity_GameCorner_EventScript_CancelTMSelect::
+MauvilleCity_GameCorner_EventScript_ReturnToCurrentPrizePage::
+	switch VAR_TEMP_6
+	case PRIZE_MENU_TMS, MauvilleCity_GameCorner_EventScript_OpenTMPrizeMenu
+	case PRIZE_MENU_MINTS, MauvilleCity_GameCorner_EventScript_OpenMintPrizeMenu
+	case PRIZE_MENU_TRAINING, MauvilleCity_GameCorner_EventScript_OpenTrainingPrizeMenu
+	case PRIZE_MENU_EVOLUTION, MauvilleCity_GameCorner_EventScript_OpenEvolutionPrizeMenu
+	goto MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	end
+
+MauvilleCity_GameCorner_EventScript_CancelPrizeSelect::
 	msgbox MauvilleCity_GameCorner_Text_OhIsThatSo, MSGBOX_DEFAULT
 	hidecoinsbox 0, 0
 	release
@@ -473,10 +645,12 @@ MauvilleCity_GameCorner_EventScript_InfoClerk::
 MauvilleCity_GameCorner_EventScript_AskGameCornerInfo::
 	message MauvilleCity_GameCorner_Text_WhatWouldYouLikeToKnow
 	waitmessage
-	multichoicedefault 16, 4, MULTI_GAME_CORNER_INFO, 0, FALSE
+	multichoicedefault 16, 1, MULTI_GAME_CORNER_INFO, 0, FALSE
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_ExplainPrizes
 	case 1, MauvilleCity_GameCorner_EventScript_ExplainCoinExchange
+	case 2, MauvilleCity_GameCorner_EventScript_ExplainGames
+	case 3, MauvilleCity_GameCorner_EventScript_ExplainLottery
 	goto MauvilleCity_GameCorner_EventScript_EndInfo
 	end
 
@@ -487,6 +661,16 @@ MauvilleCity_GameCorner_EventScript_ExplainPrizes::
 
 MauvilleCity_GameCorner_EventScript_ExplainCoinExchange::
 	msgbox MauvilleCity_GameCorner_Text_InfoCoinExchange, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_AskGameCornerInfo
+	end
+
+MauvilleCity_GameCorner_EventScript_ExplainGames::
+	msgbox MauvilleCity_GameCorner_Text_InfoGames, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_AskGameCornerInfo
+	end
+
+MauvilleCity_GameCorner_EventScript_ExplainLottery::
+	msgbox MauvilleCity_GameCorner_Text_InfoLottery, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_AskGameCornerInfo
 	end
 
@@ -631,10 +815,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine0::
 	setvar VAR_0x8004, 0
 	specialvar VAR_TEMP_1, GetSlotMachineId
 	addvar VAR_TEMP_1, SLOT_MACHINE_HIGH_STAKES_OFFSET
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager30, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -644,10 +830,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine1::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 1
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -657,10 +845,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine2::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 2
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -671,10 +861,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine3::
 	setvar VAR_0x8004, 3
 	specialvar VAR_TEMP_1, GetSlotMachineId
 	addvar VAR_TEMP_1, SLOT_MACHINE_HIGH_STAKES_OFFSET
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager30, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -684,10 +876,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine4::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 4
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -697,10 +891,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine5::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 5
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -710,10 +906,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine6::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 6
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -723,10 +921,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine7::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 7
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -736,10 +936,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine8::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 8
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -749,10 +951,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine9::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 9
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -762,10 +966,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine10::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 10
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -775,10 +981,12 @@ MauvilleCity_GameCorner_EventScript_SlotMachine11::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 11
 	specialvar VAR_TEMP_1, GetSlotMachineId
-	special ShowSlotMachineMinWagerPrompt
-	waitstate
+	checkcoins VAR_TEMP_2
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_SlotMinimumWager3, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelSlotMachine
 	playslotmachine VAR_TEMP_1
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
@@ -848,6 +1056,10 @@ MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes:
 MauvilleCity_GameCorner_Text_WhichPrize:
 	.string "Which prize would you like?$"
 
+MauvilleCity_GameCorner_Text_PrizeChoiceCost:
+	.string "{STR_VAR_1} costs {STR_VAR_2}\n"
+	.string "COINS. Is that okay?$"
+
 MauvilleCity_GameCorner_Text_SoYourChoiceIsTheTMX:
 	.string "So your choice is\n"
 	.string "the {STR_VAR_1} {STR_VAR_2}?$"
@@ -865,9 +1077,8 @@ MauvilleCity_GameCorner_Text_NoRoomForPlacingDecor:
 	.string "placing {STR_VAR_1}.$"
 
 MauvilleCity_GameCorner_Text_OhIsThatSo:
-	.string "Oh, is that so? \n"
-	.string "You need to save some COINS before\l"
-	.string "coming back here.$"
+	.string "Enjoy your time at the\n"
+	.string "GAME CORNER!$"
 
 MauvilleCity_GameCorner_Text_SoYourChoiceIsX:
 	.string "So your choice is {STR_VAR_1}?$"
@@ -984,12 +1195,29 @@ MauvilleCity_GameCorner_Text_WhatWouldYouLikeToKnow:
 MauvilleCity_GameCorner_Text_InfoPrizes:
 	.string "You can exchange your COINS for\n"
 	.string "prizes with the ladies behind the\l"
-	.string "counter.$"
+	.string "counter.\p"
+	.string "They offer TMs, MINTS, training\n"
+	.string "items, and evolution items.$"
 
 MauvilleCity_GameCorner_Text_InfoCoinExchange:
 	.string "If you need to exchange COINS or\n"
 	.string "money, use the ATMs to the right\l"
 	.string "of the entrance.$"
+
+MauvilleCity_GameCorner_Text_InfoGames:
+	.string "We offer high and low stakes SLOTS\n"
+	.string "and ROULETTE, plus PINBALL,\p"
+	.string "arcade games, VOLTORB FLIP,\n"
+	.string "BLACKJACK, and the DERBY.$"
+
+MauvilleCity_GameCorner_Text_InfoLottery:
+	.string "The three LOTTERY machines are\n"
+	.string "behind the prize counter.\p"
+	.string "BASIC, GREAT, and ULTRA machines\n"
+	.string "have different wager tiers,\p"
+	.string "and each one can award COMMON,\n"
+	.string "UNCOMMON, RARE, or ULTRA-RARE\l"
+	.string "POKeMON.$"
 
 MauvilleCity_GameCorner_Text_ComeAgainForInfo:
 	.string "Please enjoy your time at the\n"
@@ -1219,29 +1447,412 @@ MauvilleCity_GameCorner_Text_Placeholder18:
 
 MauvilleCity_GameCorner_EventScript_DebugGacha::
 	lockall
-	setvar VAR_0x8004, 0
+	setvar VAR_0x8004, 1
 	special StartGacha
 	waitstate
 	releaseall
 	end
 
+MauvilleCity_GameCorner_EventScript_GachaBasic::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, 100, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayGachaBasic, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	setvar VAR_0x8004, 1
+	special StartGacha
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_HandleGachaResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_GachaGreat::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, 500, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayGachaGreat, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	setvar VAR_0x8004, 2
+	special StartGacha
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_HandleGachaResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_GachaUltra::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, 2000, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayGachaUltra, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	setvar VAR_0x8004, 3
+	special StartGacha
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_HandleGachaResult
+	releaseall
+	end
+
 MauvilleCity_GameCorner_EventScript_DebugBlackjack::
 	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayBlackjack, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
 	special StartBlackJack
 	waitstate
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
 MauvilleCity_GameCorner_EventScript_DebugPinball::
 	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, PINBALL_MEOWTH_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayPinballMeowth, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins PINBALL_MEOWTH_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
 	callnative PlayMeowthPinballGame
 	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugPinballDiglett::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, PINBALL_DIGLETT_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayPinballDiglett, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins PINBALL_DIGLETT_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
+	callnative PlayDiglettPinballGame
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugPinballSeel::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, PINBALL_SEEL_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayPinballSeel, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins PINBALL_SEEL_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
+	callnative PlaySeelPinballGame
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugPinballGengar::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, PINBALL_GENGAR_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayPinballGengar, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins PINBALL_GENGAR_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
+	callnative PlayGengarPinballGame
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
 	releaseall
 	end
 
 MauvilleCity_GameCorner_EventScript_DebugFlappy::
-lockall
-callnative StartFlappyBird
-waitstate
-releaseall
-end
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, FLAPPY_BIRD_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayFlappyBird, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins FLAPPY_BIRD_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
+	callnative StartFlappyBird
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugSnake::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, SNAKE_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlaySnake, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins SNAKE_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
+	special StartSnake
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugBlockStacker::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, BLOCK_STACKER_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayBlockStacker, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins BLOCK_STACKER_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
+	special StartBlockStacker
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugPachinko::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, PACHINKO_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayPachinko, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	callnative PlayPachinko
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugVoltorbFlip::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, VOLTORB_FLIP_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayVoltorbFlip, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	removecoins VOLTORB_FLIP_COINS
+	playse SE_SHOP
+	setvar VAR_TEMP_4, 0
+	special Special_ViewVoltorbFlip
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_DebugVoltorbFlipHandleResult
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_DebugVoltorbFlipHandleResult::
+	goto_if_eq VAR_RESULT, 1, MauvilleCity_GameCorner_EventScript_DebugVoltorbFlipKeepGoing
+	setvar VAR_TEMP_4, 0
+	return
+
+MauvilleCity_GameCorner_EventScript_DebugVoltorbFlipKeepGoing::
+	buffernumberstring STR_VAR_1, VAR_TEMP_4
+	msgbox MauvilleCity_GameCorner_Text_DebugVoltorbFlipKeepGoing, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_DebugVoltorbFlipCashOut
+	special Special_ViewVoltorbFlip
+	waitstate
+	goto MauvilleCity_GameCorner_EventScript_DebugVoltorbFlipHandleResult
+
+MauvilleCity_GameCorner_EventScript_DebugVoltorbFlipCashOut::
+	addcoins VAR_TEMP_4
+	setvar VAR_TEMP_4, 0
+	return
+
+MauvilleCity_GameCorner_EventScript_DebugDerby::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, DERBY_MIN_BET_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame
+	copyvar GAME_CORNER_VAR_START_COINS, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_PlayDerby, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame
+	setvar VAR_TEMP_4, 0
+	special StartDerby
+	waitstate
+	call MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings
+	call MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_CancelArcadeMinigame::
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_HandleGachaResult::
+	goto_if_eq VAR_TEMP_5, FALSE, MauvilleCity_GameCorner_EventScript_NoGachaRefundMessage
+	buffernumberstring STR_VAR_1, VAR_TEMP_4
+	msgbox MauvilleCity_GameCorner_Text_GachaRefundExtraCoins, MSGBOX_DEFAULT
+	setvar VAR_TEMP_4, 0
+	setvar VAR_TEMP_5, FALSE
+	return
+
+MauvilleCity_GameCorner_EventScript_NoGachaRefundMessage::
+	return
+
+MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForArcadeGame::
+	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_CollectDebugMinigameWinnings::
+	goto_if_eq VAR_TEMP_4, 0, MauvilleCity_GameCorner_EventScript_NoDebugMinigameWinnings
+	addcoins VAR_TEMP_4
+	setvar VAR_TEMP_4, 0
+	return
+
+MauvilleCity_GameCorner_EventScript_NoDebugMinigameWinnings::
+	return
+
+MauvilleCity_GameCorner_EventScript_ShowArcadeCoinResult::
+	checkcoins GAME_CORNER_VAR_CURRENT_COINS
+	compare GAME_CORNER_VAR_CURRENT_COINS, GAME_CORNER_VAR_START_COINS
+	goto_if_eq MauvilleCity_GameCorner_EventScript_ArcadeCoinResultEven
+	goto_if_gt MauvilleCity_GameCorner_EventScript_ArcadeCoinResultWon
+	copyvar GAME_CORNER_VAR_COIN_DELTA, GAME_CORNER_VAR_START_COINS
+	subvar GAME_CORNER_VAR_COIN_DELTA, GAME_CORNER_VAR_CURRENT_COINS
+	buffernumberstring STR_VAR_1, GAME_CORNER_VAR_COIN_DELTA
+	msgbox MauvilleCity_GameCorner_Text_ArcadeCoinsLost, MSGBOX_DEFAULT
+	return
+
+MauvilleCity_GameCorner_EventScript_ArcadeCoinResultWon::
+	copyvar GAME_CORNER_VAR_COIN_DELTA, GAME_CORNER_VAR_CURRENT_COINS
+	subvar GAME_CORNER_VAR_COIN_DELTA, GAME_CORNER_VAR_START_COINS
+	buffernumberstring STR_VAR_1, GAME_CORNER_VAR_COIN_DELTA
+	msgbox MauvilleCity_GameCorner_Text_ArcadeCoinsWon, MSGBOX_DEFAULT
+	return
+
+MauvilleCity_GameCorner_EventScript_ArcadeCoinResultEven::
+	msgbox MauvilleCity_GameCorner_Text_ArcadeCoinsEven, MSGBOX_DEFAULT
+	return
+
+MauvilleCity_GameCorner_Text_PlayPinballMeowth:
+	.string "Play MEOWTH PINBALL for\n"
+	.string "25 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayGachaBasic:
+	.string "Play BASIC GACHA for\n"
+	.string "100 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayGachaGreat:
+	.string "Play GREAT GACHA for\n"
+	.string "500 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayGachaUltra:
+	.string "Play ULTRA GACHA for\n"
+	.string "2000 COINS?$"
+
+MauvilleCity_GameCorner_Text_GachaRefundExtraCoins:
+	.string "You've already collected every\n"
+	.string "possible POKeMON from this machine.\p"
+	.string "We refunded the extra {STR_VAR_1}\n"
+	.string "COINS from your wager.$"
+
+MauvilleCity_GameCorner_Text_PlayPinballDiglett:
+	.string "Play DIGLETT PINBALL for\n"
+	.string "50 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayPinballSeel:
+	.string "Play SEEL PINBALL for\n"
+	.string "25 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayPinballGengar:
+	.string "Play GENGAR PINBALL for\n"
+	.string "100 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayFlappyBird:
+	.string "Play FLUTTERFREE for\n"
+	.string "25 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlaySnake:
+	.string "Play ONIX for\n"
+	.string "25 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayBlockStacker:
+	.string "Play BLOCK BUILDER for\n"
+	.string "25 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayPachinko:
+	.string "Play PACHINKO?\p"
+	.string "Each drop costs 3 COINS.$"
+
+MauvilleCity_GameCorner_Text_DebugVoltorbFlipKeepGoing:
+	.string "Current winnings: {STR_VAR_1} COINS.\p"
+	.string "Keep going?$"
+
+MauvilleCity_GameCorner_Text_PlayVoltorbFlip:
+	.string "Play VOLTORB FLIP for\n"
+	.string "50 COINS?$"
+
+MauvilleCity_GameCorner_Text_PlayDerby:
+	.string "Enter the MAUVILLE DERBY?\p"
+	.string "Bets start at 10 COINS.$"
+
+MauvilleCity_GameCorner_Text_PlayBlackjack:
+	.string "Play BLACKJACK?$"
+
+MauvilleCity_GameCorner_Text_ArcadeCoinsWon:
+	.string "You're up {STR_VAR_1} COINS!$"
+
+MauvilleCity_GameCorner_Text_ArcadeCoinsLost:
+	.string "You're down {STR_VAR_1} COINS!$"
+
+MauvilleCity_GameCorner_Text_ArcadeCoinsEven:
+	.string "You're even on COINS.$"

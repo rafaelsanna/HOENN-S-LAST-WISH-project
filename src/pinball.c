@@ -2158,7 +2158,6 @@ static const s16 *const sTiltVelocityDeltas[] = {
 
 void PlayMeowthPinballGame(void)
 {
-    sPinballDecompressionBuffer = AllocZeroed(0x4000);
     PlayPinballGame(GAME_TYPE_MEOWTH);
 }
 
@@ -2234,6 +2233,8 @@ static void PlayPinballGame(u8 gameType)
     u8 taskId;
 
     ScriptContext_Stop();
+    if (sPinballDecompressionBuffer == NULL)
+        sPinballDecompressionBuffer = AllocZeroed(0x4000);
     sPinballGame = AllocZeroed(sizeof(*sPinballGame));
     sPinballGame->gameType = gameType;
     sPinballGame->returnMainCallback = CB2_ReturnToFieldContinueScriptPlayMapMusic;

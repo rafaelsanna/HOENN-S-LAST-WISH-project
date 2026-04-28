@@ -275,6 +275,106 @@ static const struct MenuAction MultichoiceList_GameCornerTMs[] =
     {gText_Exit},
 };
 
+static const struct MenuAction MultichoiceList_GameCornerMintsPage1[] =
+{
+    {COMPOUND_STRING("LONELY MINT")},
+    {COMPOUND_STRING("ADAMANT MINT")},
+    {COMPOUND_STRING("NAUGHTY MINT")},
+    {COMPOUND_STRING("BRAVE MINT")},
+    {COMPOUND_STRING("BOLD MINT")},
+    {COMPOUND_STRING("Next Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerMintsPage2[] =
+{
+    {COMPOUND_STRING("IMPISH MINT")},
+    {COMPOUND_STRING("LAX MINT")},
+    {COMPOUND_STRING("RELAXED MINT")},
+    {COMPOUND_STRING("MODEST MINT")},
+    {COMPOUND_STRING("MILD MINT")},
+    {COMPOUND_STRING("Next Page")},
+    {COMPOUND_STRING("Previous Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerMintsPage3[] =
+{
+    {COMPOUND_STRING("RASH MINT")},
+    {COMPOUND_STRING("QUIET MINT")},
+    {COMPOUND_STRING("CALM MINT")},
+    {COMPOUND_STRING("GENTLE MINT")},
+    {COMPOUND_STRING("CAREFUL MINT")},
+    {COMPOUND_STRING("Next Page")},
+    {COMPOUND_STRING("Previous Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerMintsPage4[] =
+{
+    {COMPOUND_STRING("SASSY MINT")},
+    {COMPOUND_STRING("TIMID MINT")},
+    {COMPOUND_STRING("HASTY MINT")},
+    {COMPOUND_STRING("JOLLY MINT")},
+    {COMPOUND_STRING("NAIVE MINT")},
+    {COMPOUND_STRING("SERIOUS MINT")},
+    {COMPOUND_STRING("Previous Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerTrainingPage1[] =
+{
+    {COMPOUND_STRING("ABILITY PATCH")},
+    {COMPOUND_STRING("ABILITY CAPSULE")},
+    {COMPOUND_STRING("HP UP")},
+    {COMPOUND_STRING("PROTEIN")},
+    {COMPOUND_STRING("IRON")},
+    {COMPOUND_STRING("Next Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerTrainingPage2[] =
+{
+    {COMPOUND_STRING("CALCIUM")},
+    {COMPOUND_STRING("ZINC")},
+    {COMPOUND_STRING("CARBOS")},
+    {COMPOUND_STRING("PP UP")},
+    {COMPOUND_STRING("Previous Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerEvolutionPage1[] =
+{
+    {COMPOUND_STRING("DAWN STONE")},
+    {COMPOUND_STRING("DUSK STONE")},
+    {COMPOUND_STRING("ICE STONE")},
+    {COMPOUND_STRING("LINKING CORD")},
+    {COMPOUND_STRING("REAPER CLOTH")},
+    {COMPOUND_STRING("Next Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerEvolutionPage2[] =
+{
+    {COMPOUND_STRING("PEAT BLOCK")},
+    {COMPOUND_STRING("SHINY STONE")},
+    {COMPOUND_STRING("BLACK AUGURITE")},
+    {COMPOUND_STRING("LOADED DICE")},
+    {COMPOUND_STRING("AMULET COIN")},
+    {COMPOUND_STRING("Next Page")},
+    {COMPOUND_STRING("Previous Page")},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerEvolutionPage3[] =
+{
+    {COMPOUND_STRING("RAZOR CLAW")},
+    {COMPOUND_STRING("RAZOR FANG")},
+    {COMPOUND_STRING("DESTINY KNOT")},
+    {COMPOUND_STRING("Previous Page")},
+    {gText_Exit},
+};
+
 static const struct MenuAction MultichoiceList_GameCornerCoins[] =
 {
     {COMPOUND_STRING("  50 COINS    ¥1,000")},
@@ -308,6 +408,8 @@ static const struct MenuAction MultichoiceList_GameCornerInfo[] =
 {
     {COMPOUND_STRING("PRIZES")},
     {COMPOUND_STRING("COIN EXCHANGE")},
+    {COMPOUND_STRING("GAMES")},
+    {COMPOUND_STRING("LOTTERY")},
     {gText_Exit},
 };
 
@@ -929,6 +1031,16 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_FALLARBOR_TENT_RULES]       = MULTICHOICE(MultichoiceList_FallarborTentRules),
     [MULTI_TAG_MATCH_TYPE]             = MULTICHOICE(MultichoiceList_TagMatchType),
     [MULTI_BERRY_PLOT]                 = MULTICHOICE(MultichoiceList_BerryPlot),
+    [MULTI_GAME_CORNER_TMS_PAGE_1]       = MULTICHOICE(MultichoiceList_GameCornerTMs),
+    [MULTI_GAME_CORNER_MINTS_PAGE_1]     = MULTICHOICE(MultichoiceList_GameCornerMintsPage1),
+    [MULTI_GAME_CORNER_MINTS_PAGE_2]     = MULTICHOICE(MultichoiceList_GameCornerMintsPage2),
+    [MULTI_GAME_CORNER_MINTS_PAGE_3]     = MULTICHOICE(MultichoiceList_GameCornerMintsPage3),
+    [MULTI_GAME_CORNER_MINTS_PAGE_4]     = MULTICHOICE(MultichoiceList_GameCornerMintsPage4),
+    [MULTI_GAME_CORNER_TRAINING_PAGE_1]  = MULTICHOICE(MultichoiceList_GameCornerTrainingPage1),
+    [MULTI_GAME_CORNER_TRAINING_PAGE_2]  = MULTICHOICE(MultichoiceList_GameCornerTrainingPage2),
+    [MULTI_GAME_CORNER_EVOLUTION_PAGE_1] = MULTICHOICE(MultichoiceList_GameCornerEvolutionPage1),
+    [MULTI_GAME_CORNER_EVOLUTION_PAGE_2] = MULTICHOICE(MultichoiceList_GameCornerEvolutionPage2),
+    [MULTI_GAME_CORNER_EVOLUTION_PAGE_3] = MULTICHOICE(MultichoiceList_GameCornerEvolutionPage3),
 };
 
 const u8 *const gStdStrings[] =
