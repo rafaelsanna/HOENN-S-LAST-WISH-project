@@ -360,16 +360,18 @@ MauvilleCity_GameCorner_EventScript_OpenEvolutionPrizeMenu::
 	case 1, MauvilleCity_GameCorner_EventScript_PrizeDuskStone
 	case 2, MauvilleCity_GameCorner_EventScript_PrizeIceStone
 	case 3, MauvilleCity_GameCorner_EventScript_PrizeLinkingCord
-	case 4, MauvilleCity_GameCorner_EventScript_PrizeReaperCloth
-	case 5, MauvilleCity_GameCorner_EventScript_PrizePeatBlock
-	case 6, MauvilleCity_GameCorner_EventScript_PrizeShinyStone
-	case 7, MauvilleCity_GameCorner_EventScript_PrizeBlackAugurite
-	case 8, MauvilleCity_GameCorner_EventScript_PrizeLoadedDice
-	case 9, MauvilleCity_GameCorner_EventScript_PrizeAmuletCoin
-	case 10, MauvilleCity_GameCorner_EventScript_PrizeRazorClaw
-	case 11, MauvilleCity_GameCorner_EventScript_PrizeRazorFang
-	case 12, MauvilleCity_GameCorner_EventScript_PrizeDestinyKnot
-	case 13, MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
+	case 4, MauvilleCity_GameCorner_EventScript_PrizePrismScale
+	case 5, MauvilleCity_GameCorner_EventScript_PrizeProtector
+	case 6, MauvilleCity_GameCorner_EventScript_PrizeReaperCloth
+	case 7, MauvilleCity_GameCorner_EventScript_PrizePeatBlock
+	case 8, MauvilleCity_GameCorner_EventScript_PrizeShinyStone
+	case 9, MauvilleCity_GameCorner_EventScript_PrizeBlackAugurite
+	case 10, MauvilleCity_GameCorner_EventScript_PrizeLoadedDice
+	case 11, MauvilleCity_GameCorner_EventScript_PrizeAmuletCoin
+	case 12, MauvilleCity_GameCorner_EventScript_PrizeRazorClaw
+	case 13, MauvilleCity_GameCorner_EventScript_PrizeRazorFang
+	case 14, MauvilleCity_GameCorner_EventScript_PrizeDestinyKnot
+	case 15, MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
 	goto MauvilleCity_GameCorner_EventScript_CancelPrizeSelect
 	end
 
@@ -540,6 +542,16 @@ MauvilleCity_GameCorner_EventScript_PrizeIceStone::
 
 MauvilleCity_GameCorner_EventScript_PrizeLinkingCord::
 	setvar VAR_0x8004, ITEM_LINKING_CORD
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizePrismScale::
+	setvar VAR_0x8004, ITEM_PRISM_SCALE
+	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
+	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
+
+MauvilleCity_GameCorner_EventScript_PrizeProtector::
+	setvar VAR_0x8004, ITEM_PROTECTOR
 	setvar VAR_0x8005, EVOLUTION_ITEM_COINS
 	goto MauvilleCity_GameCorner_EventScript_ConfirmPrizeItem
 
@@ -1207,17 +1219,24 @@ MauvilleCity_GameCorner_Text_InfoCoinExchange:
 MauvilleCity_GameCorner_Text_InfoGames:
 	.string "We offer high and low stakes SLOTS\n"
 	.string "and ROULETTE, plus PINBALL,\p"
-	.string "arcade games, VOLTORB FLIP,\n"
+	.string "various arcade games, VOLTORB FLIP,\n"
 	.string "BLACKJACK, and the DERBY.$"
 
 MauvilleCity_GameCorner_Text_InfoLottery:
 	.string "The three LOTTERY machines are\n"
 	.string "behind the prize counter.\p"
 	.string "BASIC, GREAT, and ULTRA machines\n"
-	.string "have different wager tiers,\p"
-	.string "and each one can award COMMON,\n"
-	.string "UNCOMMON, RARE, or ULTRA-RARE\l"
-	.string "POKeMON.$"
+	.string "have different wager tiers, and each\l"
+	.string "one can award COMMON,UNCOMMON, RARE,\l"
+	.string "or ULTRA-RARE POKeMON.\p"
+	.string "Each machine has different POKeMON,\n"
+	.string "and between the three machines,\l"
+	.string "you can obtain every POKeMON in the\l"
+	.string "region aside from mythical or\l"
+	.string "legendary POKeMON.\p"
+	.string "You can wager extra coins to increase\n"
+	.string "your chance of winning a POKeMON you\l"
+	.string "haven't seen before.$"
 
 MauvilleCity_GameCorner_Text_ComeAgainForInfo:
 	.string "Please enjoy your time at the\n"
