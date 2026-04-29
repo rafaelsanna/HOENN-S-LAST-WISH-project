@@ -5242,7 +5242,25 @@ BattleScript_LocalBattleWonReward::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_PayDayMoneyAndPickUpItems::
 	givepaydaymoney
+	setbyte gBattleCommunication, 0
+	setbyte gBattleCommunication + 2, 0
+BattleScript_TryPickupItem::
+	setbyte gBattleCommunication + 1, FALSE
 	pickup
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 1, FALSE, BattleScript_PickupItemsEnd
+	printstring STRINGID_PICKEDUPITEM
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_TryPickupItem
+BattleScript_PickupItemsEnd:
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 2, 0, BattleScript_PickupItemsFinished
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 2, 1, BattleScript_PickupItemPlacedInBag
+	printstring STRINGID_PICKEDUPITEMSPLACEDINBAG
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_PickupItemsFinished
+BattleScript_PickupItemPlacedInBag:
+	printstring STRINGID_PICKEDUPITEMPLACEDINBAG
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_PickupItemsFinished:
 	end2
 
 BattleScript_LocalBattleLost::

@@ -13419,8 +13419,9 @@ static void Cmd_pickup(void)
     if (!InBattlePike()) // No items in Battle Pike.
     {
         bool32 isInPyramid = CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE;
-        for (i = 0; i < PARTY_SIZE; i++)
+        for (i = gBattleCommunication[0]; i < PARTY_SIZE; i++)
         {
+            gBattleCommunication[0] = i + 1;
             species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
             heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
             lvlDivBy10 = (GetMonData(&gPlayerParty[i], MON_DATA_LEVEL)-1) / 10; //Moving this here makes it easier to add in abilities like Honey Gather.
@@ -13450,11 +13451,23 @@ static void Cmd_pickup(void)
                         percentTotal += sPickupTable[j].percentage[lvlDivBy10];
                         if (rand < percentTotal)
                         {
-                            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &sPickupTable[j].itemId);
+                            heldItem = sPickupTable[j].itemId;
+                            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &heldItem);
                             break;
                         }
                     }
                 }
+
+                gBattleCommunication[1] = TRUE;
+                PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT), i);
+                PREPARE_ITEM_BUFFER(gBattleTextBuff2, heldItem);
+                if (AddBagItem(heldItem, 1) == TRUE)
+                {
+                    heldItem = ITEM_NONE;
+                    SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &heldItem);
+                    gBattleCommunication[2]++;
+                }
+                break;
             }
             else if (ability == ABILITY_HONEY_GATHER
                 && species != 0
