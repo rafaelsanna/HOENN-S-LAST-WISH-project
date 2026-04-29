@@ -2418,7 +2418,7 @@ void ShowScrollableMultichoice(void)
         break;
     case SCROLL_MULTI_GAME_CORNER_EVOLUTION:
         task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
-        task->tNumItems = 14;
+        task->tNumItems = 16;
         task->tLeft = 14;
         task->tTop = 1;
         task->tWidth = 15;
@@ -2640,6 +2640,8 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
         COMPOUND_STRING("DUSK STONE{CLEAR_TO 0x68}1,000"),
         COMPOUND_STRING("ICE STONE{CLEAR_TO 0x68}1,000"),
         COMPOUND_STRING("LINKING CORD{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("PRISM SCALE{CLEAR_TO 0x68}1,000"),
+        COMPOUND_STRING("PROTECTOR{CLEAR_TO 0x68}1,000"),
         COMPOUND_STRING("REAPER CLOTH{CLEAR_TO 0x68}1,000"),
         COMPOUND_STRING("PEAT BLOCK{CLEAR_TO 0x68}1,000"),
         COMPOUND_STRING("SHINY STONE{CLEAR_TO 0x68}1,000"),
