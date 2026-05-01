@@ -2000,8 +2000,7 @@ static void Task_ExitRoulette(u8 taskId)
         ResetPaletteFade();
         ResetSpriteData();
         FreeRoulette();
-        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
-        SetMainCallback2(CB2_ReturnToField);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         DestroyTask(taskId);
     }
 }

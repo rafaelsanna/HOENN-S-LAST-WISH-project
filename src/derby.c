@@ -2599,6 +2599,7 @@ static void ExitDerby(void)
 {
     if (!gPaletteFade.active)
     {
+        Overworld_ResetMapMusic();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         FREE_AND_SET_NULL(sDerby);
         FREE_AND_SET_NULL(sDerbyBgBuffer);

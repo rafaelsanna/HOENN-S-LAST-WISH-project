@@ -1024,7 +1024,7 @@ static void Task_VoltorbFlipFadeOut(u8 taskId)
         sVoltorbFlipState = NULL;
         FreeAllWindowBuffers();
         DestroyTask(taskId);
-        SetMainCallback2(CB2_ReturnToFieldContinueScript);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }
 }
 
