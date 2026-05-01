@@ -14755,8 +14755,70 @@ const struct Item gItemsInfo[] =
         .effect = gItemEffect_InfiniteCandy,
         .iconPic = gItemIcon_DynamaxCandy,
         .iconPalette = gItemIconPalette_DynamaxCandy,
-    },  
-};      
+    },
+
+    [ITEM_SKITTIES] =
+    {
+        .name = ITEM_NAME("Skitties"),
+        .pluralName = ITEM_PLURAL_NAME("Skitties"),
+        .price = 500,
+        .holdEffectParam = 10,
+        .description = COMPOUND_STRING(
+            "A chewy candy that\n"
+            "restores 10 PP to\n"
+            "one selected move."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_PP_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU_MOVES,
+        .fieldUseFunc = ItemUseOutOfBattle_PPRecovery,
+        .battleUsage = EFFECT_ITEM_RESTORE_PP,
+        .effect = gItemEffect_Ether,
+        .flingPower = 30,
+        .iconPic = gItemIcon_Skitties,
+        .iconPalette = gItemIconPalette_Skitties,
+    },
+
+    [ITEM_GUMMY_WURMPLES] =
+    {
+        .name = ITEM_NAME("Gummy Wurmples"),
+        .pluralName = ITEM_PLURAL_NAME("Gummy Wurmples"),
+        .price = 450,
+        .holdEffectParam = 100,
+        .description = COMPOUND_STRING(
+            "A gummy treat that\n"
+            "restores HP by\n"
+            "100 points."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Medicine,
+        .battleUsage = EFFECT_ITEM_RESTORE_HP,
+        .effect = gItemEffect_MoomooMilk,
+        .flingPower = 30,
+        .iconPic = gItemIcon_GummyWurmples,
+        .iconPalette = gItemIconPalette_GummyWurmples,
+    },
+
+    [ITEM_NUMEL_NOUGAT] =
+    {
+        .name = ITEM_NAME("Numel Nougat"),
+        .pluralName = ITEM_PLURAL_NAME("Numel Nougat"),
+        .price = 550,
+        .description = COMPOUND_STRING(
+            "A rich candy that\n"
+            "cures all status\n"
+            "conditions."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_STATUS_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Medicine,
+        .battleUsage = EFFECT_ITEM_CURE_STATUS,
+        .effect = gItemEffect_FullHeal,
+        .flingPower = 30,
+        .iconPic = gItemIcon_NumelNougat,
+        .iconPalette = gItemIconPalette_NumelNougat,
+    },
+};
 
 #undef ITEM_NAME
 #undef ITEM_PLURAL_NAME

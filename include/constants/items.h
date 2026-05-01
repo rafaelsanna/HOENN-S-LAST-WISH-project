@@ -995,12 +995,15 @@
 #define ITEM_INFINITE_CANDY 828
 
 #define ITEM_STRANGE_BALL 829
+#define ITEM_SKITTIES 830
+#define ITEM_GUMMY_WURMPLES 831
+#define ITEM_NUMEL_NOUGAT 832
 
 
 // HOPO BERRY
 // LEGEND PLATE
 
-#define ITEMS_COUNT 829
+#define ITEMS_COUNT 833
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations

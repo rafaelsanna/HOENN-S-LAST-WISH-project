@@ -2099,3 +2099,12 @@ const u16 gItemIconPalette_SwapSnack[] = INCBIN_U16("graphics/items/icon_palette
 
 const u32 gItemIcon_TwiceSpicedRadish[] = INCBIN_U32("graphics/items/icons/twice_spiced_radish.4bpp.smol");
 const u16 gItemIconPalette_TwiceSpicedRadish[] = INCBIN_U16("graphics/items/icon_palettes/twice_spiced_radish.gbapal");
+
+const u32 gItemIcon_Skitties[] = INCBIN_U32("graphics/items/icons/skitties.4bpp.smol");
+const u16 gItemIconPalette_Skitties[] = INCBIN_U16("graphics/items/icon_palettes/skitties.gbapal");
+
+const u32 gItemIcon_GummyWurmples[] = INCBIN_U32("graphics/items/icons/gummywurmples.4bpp.smol");
+const u16 gItemIconPalette_GummyWurmples[] = INCBIN_U16("graphics/items/icon_palettes/gummywurmples.gbapal");
+
+const u32 gItemIcon_NumelNougat[] = INCBIN_U32("graphics/items/icons/numelnougat.4bpp.smol");
+const u16 gItemIconPalette_NumelNougat[] = INCBIN_U16("graphics/items/icon_palettes/numelnougat.gbapal");

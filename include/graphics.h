@@ -1739,6 +1739,12 @@ extern const u32 gItemIcon_SwapSnack[];
 extern const u16 gItemIconPalette_SwapSnack[];
 extern const u32 gItemIcon_TwiceSpicedRadish[];
 extern const u16 gItemIconPalette_TwiceSpicedRadish[];
+extern const u32 gItemIcon_Skitties[];
+extern const u16 gItemIconPalette_Skitties[];
+extern const u32 gItemIcon_GummyWurmples[];
+extern const u16 gItemIconPalette_GummyWurmples[];
+extern const u32 gItemIcon_NumelNougat[];
+extern const u16 gItemIconPalette_NumelNougat[];
 
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u16 gItemIconPalette_ReturnToFieldArrow[];
