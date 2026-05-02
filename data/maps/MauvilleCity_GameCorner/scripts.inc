@@ -13,6 +13,9 @@ MauvilleCity_GameCorner_MapScripts::
 	.set ABILITY_CAPSULE_COINS, 3000
 	.set TRAINING_ITEM_COINS, 400
 	.set EVOLUTION_ITEM_COINS, 1000
+	.set VENDING_GUMMY_WURMPLES_PRICE, 450
+	.set VENDING_SKITTIES_PRICE, 500
+	.set VENDING_NUMEL_NOUGAT_PRICE, 550
 	.set PRIZE_MENU_TMS, 1
 	.set PRIZE_MENU_MINTS, 2
 	.set PRIZE_MENU_TRAINING, 3
@@ -20,6 +23,7 @@ MauvilleCity_GameCorner_MapScripts::
 
 	.set COINS_PRICE_50,  1000
 	.set COINS_PRICE_500, 10000
+	.set COINS_PRICE_1000, 20000
 	.set COINS_PRICE_5000, 100000
 	.set SLOT_MACHINE_HIGH_STAKES_OFFSET, 6
 	.set PINBALL_MEOWTH_COINS, 25
@@ -62,7 +66,8 @@ MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50::
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_Buy50Coins
 	case 1, MauvilleCity_GameCorner_EventScript_Buy500Coins
-	case 2, MauvilleCity_GameCorner_EventScript_Buy5000Coins
+	case 2, MauvilleCity_GameCorner_EventScript_Buy1000Coins
+	case 3, MauvilleCity_GameCorner_EventScript_Buy5000Coins
 	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
 	end
 
@@ -74,7 +79,8 @@ MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault500::
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_Buy50Coins
 	case 1, MauvilleCity_GameCorner_EventScript_Buy500Coins
-	case 2, MauvilleCity_GameCorner_EventScript_Buy5000Coins
+	case 2, MauvilleCity_GameCorner_EventScript_Buy1000Coins
+	case 3, MauvilleCity_GameCorner_EventScript_Buy5000Coins
 	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
 	end
 
@@ -85,7 +91,8 @@ MauvilleCity_GameCorner_EventScript_ChooseCashOutDefault50::
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_CashOut50Coins
 	case 1, MauvilleCity_GameCorner_EventScript_CashOut500Coins
-	case 2, MauvilleCity_GameCorner_EventScript_CashOut5000Coins
+	case 2, MauvilleCity_GameCorner_EventScript_CashOut1000Coins
+	case 3, MauvilleCity_GameCorner_EventScript_CashOut5000Coins
 	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
 	end
 
@@ -112,6 +119,22 @@ MauvilleCity_GameCorner_EventScript_Buy500Coins::
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NotEnoughMoney
 	addcoins 500
 	removemoney COINS_PRICE_500
+	updatemoneybox
+	updatecoinsbox 1, 6
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedCoins, MSGBOX_DEFAULT
+	hidemoneybox
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_Buy1000Coins::
+	checkcoins VAR_TEMP_1
+	goto_if_ge VAR_TEMP_1, (MAX_COINS + 1 - 1000), MauvilleCity_GameCorner_EventScript_NoRoomForCoins
+	checkmoney COINS_PRICE_1000
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NotEnoughMoney
+	addcoins 1000
+	removemoney COINS_PRICE_1000
 	updatemoneybox
 	updatecoinsbox 1, 6
 	playse SE_SHOP
@@ -156,6 +179,20 @@ MauvilleCity_GameCorner_EventScript_CashOut500Coins::
 	goto_if_lt VAR_TEMP_1, 500, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsToCashOut
 	removecoins 500
 	addmoney COINS_PRICE_500, 0
+	updatemoneybox
+	updatecoinsbox 1, 6
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_ATMDispensedMoney, MSGBOX_DEFAULT
+	hidemoneybox
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_EventScript_CashOut1000Coins::
+	checkcoins VAR_TEMP_1
+	goto_if_lt VAR_TEMP_1, 1000, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsToCashOut
+	removecoins 1000
+	addmoney COINS_PRICE_1000, 0
 	updatemoneybox
 	updatecoinsbox 1, 6
 	playse SE_SHOP
@@ -1372,6 +1409,194 @@ MauvilleCity_GameCorner_EventScript_PlaceholderSign1::
 	msgbox MauvilleCity_GameCorner_Text_Placeholder18, MSGBOX_SIGN
 	end
 
+MauvilleCity_GameCorner_EventScript_VendingMachine::
+	lockall
+	message MauvilleCity_GameCorner_Text_WhichSnackWouldYouLike
+	waitmessage
+	showmoneybox 0, 0
+	goto MauvilleCity_GameCorner_EventScript_ChooseSnack
+	end
+
+MauvilleCity_GameCorner_EventScript_DrinkVendingMachine::
+	lockall
+	message MauvilleCity_GameCorner_Text_WhichDrinkWouldYouLike
+	waitmessage
+	showmoneybox 0, 0
+	goto MauvilleCity_GameCorner_EventScript_ChooseDrink
+	end
+
+MauvilleCity_GameCorner_EventScript_ChooseSnack::
+	multichoice 15, 0, MULTI_GAME_CORNER_VENDING_MACHINE, FALSE
+	copyvar VAR_TEMP_1, VAR_RESULT
+	switch VAR_TEMP_1
+	case 0, MauvilleCity_GameCorner_EventScript_BuyGummyWurmples
+	case 1, MauvilleCity_GameCorner_EventScript_BuySkitties
+	case 2, MauvilleCity_GameCorner_EventScript_BuyNumelNougat
+	msgbox MauvilleCity_GameCorner_Text_DecidedAgainstSnack, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ExitSnackMachine
+	end
+
+MauvilleCity_GameCorner_EventScript_BuySkitties::
+	setvar VAR_TEMP_0, ITEM_SKITTIES
+	goto MauvilleCity_GameCorner_EventScript_TryBuySnack
+	end
+
+MauvilleCity_GameCorner_EventScript_BuyGummyWurmples::
+	setvar VAR_TEMP_0, ITEM_GUMMY_WURMPLES
+	goto MauvilleCity_GameCorner_EventScript_TryBuySnack
+	end
+
+MauvilleCity_GameCorner_EventScript_BuyNumelNougat::
+	setvar VAR_TEMP_0, ITEM_NUMEL_NOUGAT
+	goto MauvilleCity_GameCorner_EventScript_TryBuySnack
+	end
+
+MauvilleCity_GameCorner_EventScript_CheckMoneyGummyWurmples::
+	checkmoney VENDING_GUMMY_WURMPLES_PRICE
+	return
+
+MauvilleCity_GameCorner_EventScript_CheckMoneySkitties::
+	checkmoney VENDING_SKITTIES_PRICE
+	return
+
+MauvilleCity_GameCorner_EventScript_CheckMoneyNumelNougat::
+	checkmoney VENDING_NUMEL_NOUGAT_PRICE
+	return
+
+MauvilleCity_GameCorner_EventScript_RemoveMoneyGummyWurmples::
+	removemoney VENDING_GUMMY_WURMPLES_PRICE
+	return
+
+MauvilleCity_GameCorner_EventScript_RemoveMoneySkitties::
+	removemoney VENDING_SKITTIES_PRICE
+	return
+
+MauvilleCity_GameCorner_EventScript_RemoveMoneyNumelNougat::
+	removemoney VENDING_NUMEL_NOUGAT_PRICE
+	return
+
+MauvilleCity_GameCorner_EventScript_TryBuySnack::
+	call_if_eq VAR_TEMP_1, 0, MauvilleCity_GameCorner_EventScript_CheckMoneyGummyWurmples
+	call_if_eq VAR_TEMP_1, 1, MauvilleCity_GameCorner_EventScript_CheckMoneySkitties
+	call_if_eq VAR_TEMP_1, 2, MauvilleCity_GameCorner_EventScript_CheckMoneyNumelNougat
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NotEnoughMoneyForSnack
+	checkitemspace VAR_TEMP_0
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForSnack
+	call_if_eq VAR_TEMP_1, 0, MauvilleCity_GameCorner_EventScript_RemoveMoneyGummyWurmples
+	call_if_eq VAR_TEMP_1, 1, MauvilleCity_GameCorner_EventScript_RemoveMoneySkitties
+	call_if_eq VAR_TEMP_1, 2, MauvilleCity_GameCorner_EventScript_RemoveMoneyNumelNougat
+	updatemoneybox
+	bufferitemname STR_VAR_1, VAR_TEMP_0
+	playse SE_VEND
+	msgbox MauvilleCity_GameCorner_Text_SnackDroppedDown, MSGBOX_DEFAULT
+	additem VAR_TEMP_0
+	bufferitemname STR_VAR_2, VAR_TEMP_0
+	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ChooseSnack
+	end
+
+MauvilleCity_GameCorner_EventScript_NotEnoughMoneyForSnack::
+	msgbox MauvilleCity_GameCorner_Text_NotEnoughMoneyForSnack, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ExitSnackMachine
+	end
+
+MauvilleCity_GameCorner_EventScript_NoRoomForSnack::
+	msgbox gText_TheBagIsFull, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ExitSnackMachine
+	end
+
+MauvilleCity_GameCorner_EventScript_ExitSnackMachine::
+	hidemoneybox
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_ChooseDrink::
+	multichoice 16, 0, MULTI_VENDING_MACHINE, FALSE
+	copyvar VAR_TEMP_1, VAR_RESULT
+	switch VAR_TEMP_1
+	case 0, MauvilleCity_GameCorner_EventScript_FreshWater
+	case 1, MauvilleCity_GameCorner_EventScript_SodaPop
+	case 2, MauvilleCity_GameCorner_EventScript_Lemonade
+	msgbox MauvilleCity_GameCorner_Text_DecidedAgainstBuyingDrink, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ExitDrinkVendingMachine
+	end
+
+MauvilleCity_GameCorner_EventScript_FreshWater::
+	setvar VAR_TEMP_0, ITEM_FRESH_WATER
+	goto MauvilleCity_GameCorner_EventScript_TryBuyDrink
+	end
+
+MauvilleCity_GameCorner_EventScript_SodaPop::
+	setvar VAR_TEMP_0, ITEM_SODA_POP
+	goto MauvilleCity_GameCorner_EventScript_TryBuyDrink
+	end
+
+MauvilleCity_GameCorner_EventScript_Lemonade::
+	setvar VAR_TEMP_0, ITEM_LEMONADE
+	goto MauvilleCity_GameCorner_EventScript_TryBuyDrink
+	end
+
+MauvilleCity_GameCorner_EventScript_CheckMoneyFreshWater::
+	checkmoney 200
+	return
+
+MauvilleCity_GameCorner_EventScript_CheckMoneySodaPop::
+	checkmoney 300
+	return
+
+MauvilleCity_GameCorner_EventScript_CheckMoneyLemonade::
+	checkmoney 350
+	return
+
+MauvilleCity_GameCorner_EventScript_RemoveMoneyFreshWater::
+	removemoney 200
+	return
+
+MauvilleCity_GameCorner_EventScript_RemoveMoneySodaPop::
+	removemoney 300
+	return
+
+MauvilleCity_GameCorner_EventScript_RemoveMoneyLemonade::
+	removemoney 350
+	return
+
+MauvilleCity_GameCorner_EventScript_TryBuyDrink::
+	call_if_eq VAR_TEMP_1, 0, MauvilleCity_GameCorner_EventScript_CheckMoneyFreshWater
+	call_if_eq VAR_TEMP_1, 1, MauvilleCity_GameCorner_EventScript_CheckMoneySodaPop
+	call_if_eq VAR_TEMP_1, 2, MauvilleCity_GameCorner_EventScript_CheckMoneyLemonade
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NotEnoughMoneyForDrink
+	checkitemspace VAR_TEMP_0
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoRoomForDrink
+	call_if_eq VAR_TEMP_1, 0, MauvilleCity_GameCorner_EventScript_RemoveMoneyFreshWater
+	call_if_eq VAR_TEMP_1, 1, MauvilleCity_GameCorner_EventScript_RemoveMoneySodaPop
+	call_if_eq VAR_TEMP_1, 2, MauvilleCity_GameCorner_EventScript_RemoveMoneyLemonade
+	updatemoneybox
+	bufferitemname STR_VAR_1, VAR_TEMP_0
+	playse SE_VEND
+	msgbox MauvilleCity_GameCorner_Text_CanOfDrinkDroppedDown, MSGBOX_DEFAULT
+	additem VAR_TEMP_0
+	bufferitemname STR_VAR_2, VAR_TEMP_0
+	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ExitDrinkVendingMachine
+	end
+
+MauvilleCity_GameCorner_EventScript_NotEnoughMoneyForDrink::
+	msgbox MauvilleCity_GameCorner_Text_NotEnoughMoneyForDrink, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ExitDrinkVendingMachine
+	end
+
+MauvilleCity_GameCorner_EventScript_NoRoomForDrink::
+	msgbox gText_TheBagIsFull, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ExitDrinkVendingMachine
+	end
+
+MauvilleCity_GameCorner_EventScript_ExitDrinkVendingMachine::
+	hidemoneybox
+	releaseall
+	end
+
 MauvilleCity_GameCorner_Text_Placeholder1:
 	.string "Hello! If you want to play blackjack,\n"
 	.string "please choose a spot at the table.$"
@@ -1866,6 +2091,34 @@ MauvilleCity_GameCorner_Text_PlayDerby:
 
 MauvilleCity_GameCorner_Text_PlayBlackjack:
 	.string "Play BLACKJACK?$"
+
+MauvilleCity_GameCorner_Text_WhichSnackWouldYouLike:
+	.string "A vending machine full of snacks!\p"
+	.string "Which one would you like?$"
+
+MauvilleCity_GameCorner_Text_WhichDrinkWouldYouLike:
+	.string "It's a VENDING MACHINE.\n"
+	.string "Which drink would you like?$"
+
+MauvilleCity_GameCorner_Text_SnackDroppedDown:
+	.string "Clunk!\p"
+	.string "{STR_VAR_1} dropped down.$"
+
+MauvilleCity_GameCorner_Text_CanOfDrinkDroppedDown:
+	.string "Clang!\p"
+	.string "A can of {STR_VAR_1} dropped down.$"
+
+MauvilleCity_GameCorner_Text_NotEnoughMoneyForSnack:
+	.string "You don't have enough money.$"
+
+MauvilleCity_GameCorner_Text_NotEnoughMoneyForDrink:
+	.string "You don't have enough money.$"
+
+MauvilleCity_GameCorner_Text_DecidedAgainstSnack:
+	.string "Maybe another time.$"
+
+MauvilleCity_GameCorner_Text_DecidedAgainstBuyingDrink:
+	.string "Maybe another time.$"
 
 MauvilleCity_GameCorner_Text_ArcadeCoinsWon:
 	.string "You're up {STR_VAR_1} COINS!$"

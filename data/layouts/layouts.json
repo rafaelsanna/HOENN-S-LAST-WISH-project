@@ -4810,6 +4810,16 @@
       "secondary_tileset": "gTileset_Desert",
       "border_filepath": "data/layouts/RogueCanyon/border.bin",
       "blockdata_filepath": "data/layouts/RogueCanyon/map.bin"
+    },
+    {
+      "id": "LAYOUT_CARGO_SHIP_B1FHOLD",
+      "name": "CargoShipB1FHold_Layout",
+      "width": 25,
+      "height": 12,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/CargoShipB1FHold/border.bin",
+      "blockdata_filepath": "data/layouts/CargoShipB1FHold/map.bin"
     }
   ]
 }

@@ -205,7 +205,8 @@
     "SlateportCity_PokemonCenter_2F",
     "SlateportCity_Mart",
     "CargoShip",
-    "SeabreezeShipping"
+    "SeabreezeShipping",
+    "CargoShipB1FHold"
   ],
   "gMapGroup_IndoorMauville": [
     "MauvilleCity_Gym",
