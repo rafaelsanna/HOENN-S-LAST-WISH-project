@@ -1266,6 +1266,10 @@
     {
       "id": "MAPSEC_ROGUE_CANYON",
       "name": "ROGUE CANYON"
+    },
+    {
+      "id": "MAPSEC_LITTLEROOT_COAST",
+      "name": "LITTLEROOT COAST"
     }
   ]
 }

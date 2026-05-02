@@ -4820,6 +4820,16 @@
       "secondary_tileset": "gTileset_Facility",
       "border_filepath": "data/layouts/CargoShipB1FHold/border.bin",
       "blockdata_filepath": "data/layouts/CargoShipB1FHold/map.bin"
+    },
+    {
+      "id": "LAYOUT_LITTLEROOT_COAST2",
+      "name": "LittlerootCoast2_Layout",
+      "width": 20,
+      "height": 70,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Pacifidlog",
+      "border_filepath": "data/layouts/LittlerootCoast2/border.bin",
+      "blockdata_filepath": "data/layouts/LittlerootCoast2/map.bin"
     }
   ]
 }

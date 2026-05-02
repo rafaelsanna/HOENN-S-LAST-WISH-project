@@ -1239,3 +1239,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/RogueCanyon/scripts.inc"
 
 	.include "data/maps/CargoShipB1FHold/scripts.inc"
+
+	.include "data/maps/LittlerootCoast2/scripts.inc"
