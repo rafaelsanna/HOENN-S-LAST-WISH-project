@@ -667,6 +667,33 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Protect  
 - Tailwind
 
+=== TRAINER_LAZULI_1 ===
+Name: LAZULI
+Class: Aqua Admin
+Pic: Lazuli
+Gender: Female
+Music: Aqua
+Double Battle: Yes
+AI: Smart Trainer
+
+Pelipper @ Sitrus Berry  
+Level: 48
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Slowbro @ Rocky Helmet  
+Level: 48
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+
+Umbreon @ Sitrus Berry  
+Level: 48
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Crawdaunt @ Rocky Helmet  
+Level: 48
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+
 === TRAINER_ZANDER ===
 Name: ZANDER
 Class: Black Belt

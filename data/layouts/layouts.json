@@ -4827,7 +4827,7 @@
       "width": 20,
       "height": 70,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Pacifidlog",
+      "secondary_tileset": "gTileset_Slateport",
       "border_filepath": "data/layouts/LittlerootCoast2/border.bin",
       "blockdata_filepath": "data/layouts/LittlerootCoast2/map.bin"
     }

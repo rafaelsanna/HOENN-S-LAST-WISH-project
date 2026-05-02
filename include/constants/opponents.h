@@ -918,6 +918,7 @@
 #define TRAINER_AGATHA                      912
 #define TRAINER_LUKA_PETALBURG_GYM          913
 #define TRAINER_HAKARI                      914
+#define TRAINER_LAZULI_1                    915
 
 
 
