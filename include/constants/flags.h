@@ -1232,8 +1232,8 @@
 #define FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE                           0x495 
 #define FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM                     0x496 
 #define FLAG_HIDE_MAUVILLE_HOUSE2_KIRARA                            0x497 
-#define FLAG_UNUSED_0x498                                           0x498 // Unused Flag
-#define FLAG_UNUSED_0x499                                           0x499 // Unused Flag
+#define FLAG_HIDE_PETALBURG_CITY_AQUA_GRUNTS                        0x498 
+#define FLAG_AQUA_GRUNTS_PETALBURG_DONE                             0x499 
 #define FLAG_UNUSED_0x49A                                           0x49A // Unused Flag
 #define FLAG_UNUSED_0x49B                                           0x49B // Unused Flag
 #define FLAG_UNUSED_0x49C                                           0x49C // Unused Flag

@@ -10,10 +10,27 @@ PetalburgCity_OnTransition:
 	call_if_eq VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_GYM_STATE, 8, PetalburgCity_EventScript_SetGymDoorsUnlocked
+	call PetalburgCity_EventScript_HandleAquaGrunts
 	end
 
 PetalburgCity_EventScript_HideLukaAfterGym::
 	setflag FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM
+	return
+
+@ Aqua Grunt blocker logic:
+@ - Shown ONLY after 5th gym is defeated
+@ - Hidden again once the player completes the relevant tasks (FLAG_AQUA_GRUNTS_PETALBURG_DONE)
+PetalburgCity_EventScript_HandleAquaGrunts::
+	goto_if_set FLAG_AQUA_GRUNTS_PETALBURG_DONE, PetalburgCity_EventScript_HideAquaGrunts
+	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_ShowAquaGrunts
+	goto PetalburgCity_EventScript_HideAquaGrunts
+
+PetalburgCity_EventScript_ShowAquaGrunts::
+	clearflag FLAG_HIDE_PETALBURG_CITY_AQUA_GRUNTS
+	return
+
+PetalburgCity_EventScript_HideAquaGrunts::
+	setflag FLAG_HIDE_PETALBURG_CITY_AQUA_GRUNTS
 	return
 
 PetalburgCity_EventScript_MoveGymBoyToWestEntrance::
@@ -755,6 +772,14 @@ PetalburgCity_EventScript_GymBoy::
 	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_NPC
 	end
 
+PetalburgCity_EventScript_AquaGruntBlock::
+	lock
+	faceplayer
+	msgbox PetalburgCity_Text_AquaGruntBlock, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
 PetalburgCity_EventScript_AdventureBoy::
 	msgbox PetalburgCity_Text_AdventureBoy, MSGBOX_NPC
 	end	
@@ -978,6 +1003,15 @@ PetalburgCity_Text_LukaAfterGym_PostBattle2:
     .string "Whatever they're after… it's serious.\p"
     .string "We'll meet again soon.\n"
     .string "Count on it!$"
+
+PetalburgCity_Text_AquaGruntBlock:
+	.string "Hmm… this route is off-limits\n"
+	.string "right now, pal.\p"
+	.string "Orders straight from the top.\n"
+	.string "People way above my pay grade.\p"
+	.string "I just do what I'm told.\n"
+	.string "So do yourself a favor…\l"
+	.string "and get lost.$"
 
 PetalburgCity_Text_AdventureBoy:
     .string "This city's pretty calm.\n"
