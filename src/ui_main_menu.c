@@ -610,7 +610,7 @@ static void CreatePartyMonIcons(void)
     LoadMonIconPalettes();
     for (u8 i = 0; i < gPlayerPartyCount; i++)
     {
-        s16 x, y;
+        s16 x = 0, y = 0; /// that line was glitching the compiler 
         switch (i) {
             case 0: x = ICON_BOX_1_START_X; y = ICON_BOX_1_START_Y; break;
             case 1: x = ICON_BOX_1_START_X + ICON_BOX_X_DIFFERENCE; y = ICON_BOX_1_START_Y; break;
