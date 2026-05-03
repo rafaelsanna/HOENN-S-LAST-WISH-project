@@ -4830,6 +4830,16 @@
       "secondary_tileset": "gTileset_Slateport",
       "border_filepath": "data/layouts/LittlerootCoast2/border.bin",
       "blockdata_filepath": "data/layouts/LittlerootCoast2/map.bin"
+    },
+    {
+      "id": "LAYOUT_ABANDONED_SHIP_TEAM_AQUA",
+      "name": "AbandonedShip_TeamAqua_Layout",
+      "width": 10,
+      "height": 12,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_InsideShip",
+      "border_filepath": "data/layouts/AbandonedShip_TeamAqua/border.bin",
+      "blockdata_filepath": "data/layouts/AbandonedShip_TeamAqua/map.bin"
     }
   ]
 }

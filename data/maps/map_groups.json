@@ -466,7 +466,8 @@
     "AlteringCave",
     "MeteorFalls_StevensCave",
     "Fiery_Path_Entrance",
-    "PetalburgCave"
+    "PetalburgCave",
+    "AbandonedShip_TeamAqua"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

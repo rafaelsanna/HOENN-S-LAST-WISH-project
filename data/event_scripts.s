@@ -1241,3 +1241,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/CargoShipB1FHold/scripts.inc"
 
 	.include "data/maps/LittlerootCoast2/scripts.inc"
+
+	.include "data/maps/AbandonedShip_TeamAqua/scripts.inc"
