@@ -6259,6 +6259,73 @@ u8 GetCollisionInDirection(struct ObjectEvent *objectEvent, u8 direction)
     s16 x = objectEvent->currentCoords.x;
     s16 y = objectEvent->currentCoords.y;
     MoveCoords(direction, &x, &y);
+
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(SOLGALEO))
+    {
+        s16 ei, ej;
+        s16 edgeX0, edgeX1, edgeY0, edgeY1;
+
+        // Passo 1: verifica o tile do pé com toda a lógica normal.
+        // Cobre: range de movimento, elevação, impassabilidade direcional,
+        // escadas laterais, E colisão de objetos nos 16 tiles do corpo inteiro
+        // (via GetVanillaCollision → DoesObjectCollideWithObjectAt → DoesBigObjectCollideAt).
+        u8 footCollision = GetCollisionAtCoords(objectEvent, x, y, direction);
+        if (footCollision != COLLISION_NONE)
+            return footCollision;
+
+        // Passo 2: verifica os 4 tiles da "borda líder" para paredes/bordas de mapa.
+        // São os únicos tiles realmente novos ao mover em `direction`.
+        // Corpo do Solgaleo (4×4): largura [x-2 .. x+1], altura [y-3 .. y], pé em (x,y).
+        //
+        //   NORTE: nova linha topo  → j = y-3  (antiga era y-2)
+        //   SUL:   nova linha base  → j = y    (antiga era y-1)
+        //   OESTE: nova coluna esq  → i = x-2  (antiga era x-1)
+        //   LESTE: nova coluna dir  → i = x+1  (antiga era x)
+        switch (direction)
+        {
+        case DIR_NORTH:
+            edgeX0 = x - 2; edgeX1 = x + 1;
+            edgeY0 = y - 3; edgeY1 = y - 3;
+            break;
+        case DIR_SOUTH:
+            edgeX0 = x - 2; edgeX1 = x + 1;
+            edgeY0 = y;     edgeY1 = y;
+            break;
+        case DIR_WEST:
+            edgeX0 = x - 2; edgeX1 = x - 2;
+            edgeY0 = y - 3; edgeY1 = y;
+            break;
+        case DIR_EAST:
+            edgeX0 = x + 1; edgeX1 = x + 1;
+            edgeY0 = y - 3; edgeY1 = y;
+            break;
+        default:
+            return COLLISION_NONE;
+        }
+
+        for (ei = edgeX0; ei <= edgeX1; ei++)
+        {
+            for (ej = edgeY0; ej <= edgeY1; ej++)
+            {
+                // Ao mover para SUL, o tile do pé (x, y) cai na borda líder.
+                // Ele já foi verificado completo no passo 1; pula aqui.
+                if (ei == x && ej == y)
+                    continue;
+
+                // Parede sólida ou borda do mapa.
+                if (MapGridGetCollisionAt(ei, ej) || GetMapBorderIdAt(ei, ej) == -1)
+                    return COLLISION_IMPASSABLE;
+
+                // Colisão de objetos nos tiles da borda líder.
+                // (Complementa o DoesBigObjectCollideAt do passo 1 para garantir
+                //  cobertura caso o objeto esteja exatamente nestes tiles.)
+                if (GetObjectObjectCollidesWith(objectEvent, ei, ej, FALSE) < OBJECT_EVENTS_COUNT)
+                    return COLLISION_OBJECT_EVENT;
+            }
+        }
+        return COLLISION_NONE;
+    }
+
     return GetCollisionAtCoords(objectEvent, x, y, direction);
 }
 
@@ -6484,19 +6551,57 @@ u32 GetObjectObjectCollidesWith(struct ObjectEvent *objectEvent, s16 x, s16 y, b
          )
         {
             // check for collision if curObject is active, not the object in question, and not exempt from collisions
-            if ((curObject->currentCoords.x == x && curObject->currentCoords.y == y) || (curObject->previousCoords.x == x && curObject->previousCoords.y == y))
+            if (curObject->graphicsId == OBJ_EVENT_GFX_SPECIES(SOLGALEO))
             {
-                if (AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
-                    return i;
+                // Para bloquear jogador/NPCs: usa apenas a linha do pé (y == cy),
+                // largura total [cx-2..cx+1]. Cobre as extremidades laterais sem
+                // criar colisão invisível acima do sprite visual.
+                // Para 2 linhas de altura troque "y == cy" por "y >= cy-1 && y <= cy".
+                s16 cx = curObject->currentCoords.x;
+                s16 cy = curObject->currentCoords.y;
+                s16 px = curObject->previousCoords.x;
+                s16 py = curObject->previousCoords.y;
+                bool32 inCurrentBody  = (x >= cx - 2 && x <= cx + 1 && y == cy);
+                bool32 inPreviousBody = (x >= px - 2 && x <= px + 1 && y == py);
+                if (inCurrentBody || inPreviousBody)
+                {
+                    if (AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
+                        return i;
+                }
+            }
+            else
+            {
+                if ((curObject->currentCoords.x == x && curObject->currentCoords.y == y) || (curObject->previousCoords.x == x && curObject->previousCoords.y == y))
+                {
+                    if (AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
+                        return i;
+                }
             }
         }
     }
     return OBJECT_EVENTS_COUNT;
 }
 
+static bool32 DoesBigObjectCollideAt(struct ObjectEvent *objectEvent, s16 baseX, s16 baseY)
+{
+    // Verifica cada tile do retângulo 4x4 ocupado pelo Solgaleo
+    for (s16 i = baseX - 2; i <= baseX + 1; i++)
+    {
+        for (s16 j = baseY - 3; j <= baseY; j++)
+        {
+            if (GetObjectObjectCollidesWith(objectEvent, i, j, FALSE) < OBJECT_EVENTS_COUNT)
+                return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    return (GetObjectObjectCollidesWith(objectEvent, x, y, FALSE) < OBJECT_EVENTS_COUNT);
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(SOLGALEO))
+        return DoesBigObjectCollideAt(objectEvent, x, y);
+    else
+        return (GetObjectObjectCollidesWith(objectEvent, x, y, FALSE) < OBJECT_EVENTS_COUNT);
 }
 
 bool8 IsBerryTreeSparkling(u8 localId, u8 mapNum, u8 mapGroup)

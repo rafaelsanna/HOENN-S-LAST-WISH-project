@@ -5454,7 +5454,7 @@ static const struct SpriteFrameImage sPicTable_Cosmoem[] = {
     overworld_ascending_frames(gObjectEventPic_Cosmoem, 4, 4),
 };
 static const struct SpriteFrameImage sPicTable_Solgaleo[] = {
-    overworld_ascending_frames(gObjectEventPic_Solgaleo, 4, 4),
+    overworld_ascending_frames(gObjectEventPic_Solgaleo, 8, 8),
 };
 static const struct SpriteFrameImage sPicTable_Lunala[] = {
     overworld_ascending_frames(gObjectEventPic_Lunala, 4, 4),
