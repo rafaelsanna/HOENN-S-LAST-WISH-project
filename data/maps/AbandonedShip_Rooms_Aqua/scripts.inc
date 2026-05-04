@@ -10,10 +10,12 @@ AbandonedShip_Rooms_Aqua_EventScript_Keys::
 	waitfanfare
 	msgbox AbandonedShip_Rooms_Aqua_Text_FoundKeys, MSGBOX_DEFAULT
 	setflag FLAG_AQUA_SHIP_KEYS
+	release
 	end
 
 AbandonedShip_Rooms_Aqua_Keys_AlreadyGot::
 	msgbox AbandonedShip_Rooms_Aqua_Text_AlreadyHasKeys, MSGBOX_DEFAULT
+	release
 	end
 
 AbandonedShip_Rooms_Aqua_Text_FoundKeys:
@@ -49,6 +51,7 @@ AbandonedShip_Text_Grunt_PostBattle:
 @ -------------------------------------------------------
 AbandonedShip_TeamAqua_Book::
 	msgbox AbandonedShip_Text_Book, MSGBOX_DEFAULT
+	release
 	end
 
 AbandonedShip_Text_Book:
