@@ -268,6 +268,7 @@ MOSSDEEP01_EventScript_Celebi::
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
 
+	call_if_unset FLAG_TALKED_TO_CELEBI, MOSSDEEP01_EventScript_CelebiIntroduction
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
 	closemessage
 	playse SE_M_HYPER_BEAM
@@ -299,8 +300,16 @@ MOSSDEEP01_EventScript_CelebiNeedGears::
 	showmonpic SPECIES_ARAQUANID, 10, 3
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
 	hidemonpic
+	setflag FLAG_TALKED_TO_CELEBI
 	release
 	end
+
+MOSSDEEP01_EventScript_CelebiIntroduction::
+	showmonpic SPECIES_ARAQUANID, 10, 3
+	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	waitmessage
+	hidemonpic
+	return
 
 MOSSDEEP01_EventScript_CelebiAlreadyRescued::
 	msgbox MOSSDEEP01_Text_CelebiThanks, MSGBOX_DEFAULT
@@ -1149,7 +1158,7 @@ MOSSDEEP01_Text_NeedCelebiFirst:
 MOSSDEEP01_Text_NeedItems:
 	.string "JIRACHI: Thank you for saving CELEBI!\p"
 	.string "Unfortunately, the flow of time is broken.\p"
-	.string "Please find the 3 TIME GEARS\n"
+	.string "Please find the three TIME GEARS\n"
 	.string "scattered around this place.\p"
 	.string "Only then can I send you home!$"
 
@@ -1202,7 +1211,7 @@ MOSSDEEP01_Text_AlreadyCollected:
 MOSSDEEP01_Text_CelebiHelp:
 	.string "CELEBI: … … …\p"
 	.string "The flow of time is broken…\p"
-	.string "Please... find the 3 TIME GEARS…\n"
+	.string "Please… find the three TIME GEARS…\n"
 	.string "Only then can I be freed…$"
 
 MOSSDEEP01_Text_CelebiPower:
@@ -1429,7 +1438,7 @@ MOSSDEEP01_Text_JirachiNeedCelebi:
 MOSSDEEP01_Text_JirachiNeedItems:
 	.string "JIRACHI: Thank you for saving CELEBI!\n"
 	.string "But time is still broken…\p"
-	.string "Please find the 3 TIME GEARS\n"
+	.string "Please find the three TIME GEARS\n"
 	.string "to restore temporal flow!$"
 
 MOSSDEEP01_Text_JirachiCompleted:

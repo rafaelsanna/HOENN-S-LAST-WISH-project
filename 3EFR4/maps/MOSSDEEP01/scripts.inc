@@ -458,7 +458,7 @@ MOSSDEEP01_EventScript_Celebi::
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_CelebiNeedGears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
-	
+	call_if_unset FLAG_TALKED_TO_CELEBI, MOSSDEEP01_EventScript_CelebiIntroduction
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
 	closemessage
 	
@@ -492,8 +492,13 @@ MOSSDEEP01_EventScript_Celebi::
 
 MOSSDEEP01_EventScript_CelebiNeedGears::
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	setflag FLAG_TALKED_TO_CELEBI
 	release
 	end
+
+MOSSDEEP01_EventScript_CelebiIntroduction::
+	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	return
 
 MOSSDEEP01_EventScript_CelebiAlreadyRescued::
 	msgbox MOSSDEEP01_Text_CelebiThanks, MSGBOX_DEFAULT

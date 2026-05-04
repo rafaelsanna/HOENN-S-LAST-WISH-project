@@ -1095,7 +1095,7 @@ LittlerootTown_01_Text_JirachiTimeWarp:
 # 548 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_No:
 # 549 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Alright, start the journey.$"
+	.string "Then, start the journey.$"
 # 550 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 551 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
