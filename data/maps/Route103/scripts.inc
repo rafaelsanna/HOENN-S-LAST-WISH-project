@@ -6,8 +6,9 @@ Route103_MapScripts::
 Route103_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call ProfAcacia_EventScript_UpdateLocation
+	call PetalburgCity_EventScript_HandleAquaGrunts
 	end
-
+	
 Route103_OnLoad:
 	call_if_set FLAG_SYS_GAME_CLEAR, Route103_EventScript_OpenAlteringCave
 	end
