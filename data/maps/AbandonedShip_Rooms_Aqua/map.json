@@ -1,0 +1,77 @@
+{
+  "id": "MAP_ABANDONED_SHIP_ROOMS_AQUA",
+  "name": "AbandonedShip_Rooms_Aqua",
+  "layout": "LAYOUT_ABANDONED_SHIP_ROOMS_AQUA",
+  "music": "MUS_ABANDONED_SHIP",
+  "region_map_section": "MAPSEC_ABANDONED_SHIP",
+  "requires_flash": false,
+  "weather": "WEATHER_SHADE",
+  "map_type": "MAP_TYPE_UNDERGROUND",
+  "allow_cycling": true,
+  "allow_escaping": true,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
+      "x": 2,
+      "y": 6,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "AbandonedShip_Rooms_Aqua_EventScript_Keys",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 4,
+      "y": 16,
+      "elevation": 3,
+      "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 5,
+      "y": 16,
+      "elevation": 3,
+      "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 13,
+      "y": 16,
+      "elevation": 3,
+      "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 14,
+      "y": 16,
+      "elevation": 3,
+      "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "elevation": 3,
+      "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
+      "dest_warp_id": "4"
+    },
+    {
+      "x": 13,
+      "y": 1,
+      "elevation": 3,
+      "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
+      "dest_warp_id": "5"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}
