@@ -524,74 +524,73 @@ LittlerootTown_Jirachi_Case2::
 // ====================================================================
 
 LittlerootTown_Text_GentleIntroduction:
-	.string "Do not be alarmed...\n"
-	.string "You are in the dream realm.\p"
-	.string "I will tell you the story of HOENN...\n"
-	.string "The story that shaped our world...$"
+	.string "Do not be alarmed…\n"
+	.string "You are in the DREAM REALM.\p"
+	.string "I will tell you the story of HOENN…\n"
+	.string "The story that shaped our world.$"
 
 LittlerootTown_01_Text_JirachiIntro:
-	.string "Jirachi: I am the wish Pokemon!\n"
+	.string "JIRACHI: I am the wish POKéMON!\n"
 	.string "I can warp time and space!\p"
-	.string "Before we begin...$"
+	.string "Before we begin…$"
 
 LittlerootTown_01_Text_JirachiCloseEyes:
-	.string "Close your eyes and remember...\n"
-	.string "Remember how it all happened...$"
+	.string "Close your eyes and remember…\n"
+	.string "Remember how it all happened…$"
 
 LittlerootTown_01_Text_Question:
 	.string "Skip prologue?$"
 
 LittlerootTown_01_Text_JirachiTimeWarp:
-	.string "Jirachi: Your wish is my command!\n"
+	.string "JIRACHI: Your wish is my command!\n"
 	.string "TIME WARP - ACTIVATE!$"
 
 LittlerootTown_01_Text_No:
 	.string "Alright, start the journey.$"
 
 LittlerootTown_01_Text_CelebiWarning:
-	.string "Celebi: {PLAYER}{KUN}...\p"
-	.string "A strange light surrounds you…\p"
-	.string "Do not fear this place.\n"
+	.string "CELEBI: {PLAYER}{KUN}…\p"
+	.string "Do not fear this place.\p"
 	.string "What you see is only a dream…\p"
 	.string "A fragment of a future that must\n"
 	.string "never be allowed to happen.\p"
 	.string "Walk carefully, traveler.\n"
-	.string "Hoenn's fate is already shifting.$"
+	.string "HOENN's fate is already shifting.$"
 
 LittlerootTown_01_Text_CelebiLost:
-	.string "Celebi: The forests whisper tales\n"
+	.string "CELEBI: The forests whisper tales\n"
 	.string "The winds of time are trembling…\p"
-	.string "I have seen a Hoenn drowned in fire\n"
+	.string "I have seen a HOENN drowned in fire\n"
 	.string "and swallowed by ancient storms.\p"
 	.string "But that future is not final.\n"
 	.string "Your choices can rewrite it.$"
 
 
 LittlerootTown_01_Text_CelebiHelp:
-	.string "Celebi: We need your help...\n"
+	.string "CELEBI: We need your help…\n"
 	.string "Dreams ewith the voices of those\n"
-	.string "who still believe in hope...\p"
+	.string "who still believe in hope…\p"
 	.string "You were called because the world\n"
 	.string "cannot heal itself alone.\p"
 	.string "Walk forward.\n"
-	.string "Hoenn is waiting for you.$"
+	.string "HOENN is waiting for you.$"
 
 LittlerootTown_01_Text_CelebiForest:
-	.string "Celebi: Time flows like a river,\n"
-	.string "but it flows strangely here…\n"
-	.string "as if past and future overlap.\p"
-	.string "Follow the path you feel within.\n"
-	.string "Your soul remembers the truth,\p"
+	.string "CELEBI: Time flows like a river,\n"
+	.string "but it flows strangely here…\l"
+	.string "As if past and future overlap.\p"
+	.string "Follow the path you feel within.\p"
+	.string "Your soul remembers the truth,\n"
 	.string "even if your mind does not.$"
 
 LittlerootTown_01_Text_JirachiWish:
-	.string "Jirachi: I am the Wish Pokemon!\nMake a wish and I might grant it!$"
+	.string "JIRACHI: I am the Wish POKéMON!\nMake a wish and I might grant it!$"
 
 LittlerootTown_01_Text_JirachiSleep:
-	.string "Jirachi: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
+	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
 
 LittlerootTown_01_Text_JirachiGrant:
-	.string "Jirachi: They say I can grant any wish!\nWhat would you wish for?$"
+	.string "JIRACHI: They say I can grant any wish!\nWhat would you wish for?$"
 
 
 // ====================================================================
@@ -600,85 +599,85 @@ LittlerootTown_01_Text_JirachiGrant:
 
 LittlerootTown_Text_GrandmaStory1:
 	.string "In a forgotten age,\n"
-	.string "before the great calamity...$"
+	.string "before the great calamity…$"
 
 LittlerootTown_Text_GrandmaStory2:
 	.string "HOENN was a paradise divided\n"
-	.string "between sea and land...$"
+	.string "between sea and land…$"
 
 LittlerootTown_Text_GrandmaStory3:
-	.string "People and Pokémon lived as one,\n"
-	.string "their hearts beating in harmony...$"
+	.string "People and POKéMON lived as one,\n"
+	.string "their hearts beating in harmony…$"
 
 LittlerootTown_Text_GrandmaStory4:
 	.string "A delicate balance maintained\n"
-	.string "by ancient forces...$"
+	.string "by ancient forces…$"
 
 LittlerootTown_Text_GrandmaStory5:
 	.string "KYOGRE, deity of the ocean depths,\n"
-	.string "keeper of the seas...$"
+	.string "keeper of the seas…$"
 
 LittlerootTown_Text_GrandmaStory6:
 	.string "GROUDON, titan of the land,\n"
-	.string "master of the continents...$"
+	.string "master of the continents…$"
 
 LittlerootTown_Text_GrandmaStory7:
 	.string "Their eternal conflict erupted\n"
-	.string "into a world-shattering battle...$"
+	.string "into a world-shattering battle…$"
 
 LittlerootTown_Text_GrandmaStory8:
 	.string "The seas rose with terrifying floods,\n"
-	.string "swallowing coastal cities...$"
+	.string "swallowing coastal cities…$"
 
 LittlerootTown_Text_GrandmaStory9:
 	.string "Colossal tsunamis swept across\n"
-	.string "what remained of the land...$"
+	.string "what remained of the land…$"
 
 LittlerootTown_Text_GrandmaStory10:
 	.string "Volcanoes erupted in response,\n"
-	.string "scorching the earth with fire...$"
+	.string "scorching the earth with fire…$"
 
 LittlerootTown_Text_GrandmaStory11:
 	.string "Cities crumbled to dust and ruins\n"
-	.string "under nature's wrath...$"
+	.string "under nature's wrath…$"
 
 LittlerootTown_Text_GrandmaStory12:
 	.string "The land became submerged,\n"
-	.string "an archipelago of memories...$"
+	.string "an archipelago of memories…$"
 
 LittlerootTown_Text_GrandmaStory13:
 	.string "Rivers of lava flowed where\n"
-	.string "forests once stood...$"
+	.string "forests once stood…$"
 
 LittlerootTown_Text_GrandmaStory14:
 	.string "In despair, they turned to legends\n"
-	.string "of time-travel and wish-granting...$"
+	.string "of time-travel and wish-granting…$"
 
 LittlerootTown_Text_GrandmaStory15:
 	.string "Ancient shrines were built\n"
-	.string "to mythical guardians...$"
+	.string "to mythical guardians…$"
 
 LittlerootTown_Text_GrandmaStory16:
 	.string "JIRACHI awakened to grant\n"
-	.string "a desperate wish for salvation...$"
+	.string "a desperate wish for salvation…$"
 
 LittlerootTown_Text_GrandmaStory17:
 	.string "The millennium comet appeared,\n"
-	.string "a celestial beacon of hope...$"
+	.string "a celestial beacon of hope…$"
 
 LittlerootTown_Text_GrandmaEncouragement:
 	.string "This is the world we inherited.\n"
-	.string "Your journey begins where hope remains...$"
+	.string "Your journey begins where hope remains…$"
 
 
 //////////////////////////////// TALE END ////////////////////////
 
 LittlerootTown_Text_StoryConclusion:
 	.string "This is the story of all that happened\n"
-	.string "in HOENN...\p"
+	.string "in HOENN…\p"
 	.string "And now, only the chosen one can help\n"
 	.string "change destiny and alter the past,\l"
-	.string "so the future may be prosperous again...$"
+	.string "so the future may be prosperous again…$"
 
 LittlerootTown_Text_WelcomeToNewWorld:
 	.string "Welcome to your new world,\n"
@@ -686,7 +685,7 @@ LittlerootTown_Text_WelcomeToNewWorld:
 	.string "A new adventure awaits you!$"
 
 LittlerootTown_Text_JirachiContinue:
-	.string "Jirachi: Then let us continue...\n"
+	.string "JIRACHI: Then let us continue…\n"
 	.string "Your adventure awaits!$"
 
 
