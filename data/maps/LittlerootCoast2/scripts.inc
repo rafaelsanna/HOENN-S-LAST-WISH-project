@@ -6,7 +6,7 @@ LittlerootCoast2_MapScripts::
 @ ============================================================
 LittlerootCoast2_AquaAdmLazuli::
 	trainerbattle_single TRAINER_LAZULI_1, LittlerootCoast2_Text_Lazuli_Intro, LittlerootCoast2_Text_Lazuli_Defeat
-	setflag FLAG_AQUA_GRUNTS_PETALBURG_DONE
+	//////setflag FLAG_AQUA_GRUNTS_PETALBURG_DONE
 	msgbox LittlerootCoast2_Text_Lazuli_PostBattle, MSGBOX_AUTOCLOSE
 	end
 

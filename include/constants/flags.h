@@ -1235,7 +1235,7 @@
 #define FLAG_HIDE_PETALBURG_CITY_AQUA_GRUNTS                        0x498 
 #define FLAG_AQUA_GRUNTS_PETALBURG_DONE                             0x499 
 #define FLAG_AQUA_SHIP_KEYS                                         0x49A // Unused Flag
-#define FLAG_UNUSED_0x49B                                           0x49B // Unused Flag
+#define FLAG_HIDE_ABANDONED_SHIP_ROOMS_STELLA                       0x49B // Unused Flag
 #define FLAG_UNUSED_0x49C                                           0x49C // Unused Flag
 #define FLAG_UNUSED_0x49D                                           0x49D // Unused Flag
 #define FLAG_UNUSED_0x49E                                           0x49E // Unused Flag
