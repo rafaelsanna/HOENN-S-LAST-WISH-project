@@ -524,7 +524,7 @@ LittlerootTown_Jirachi_Case2::
 // ====================================================================
 
 LittlerootTown_Text_GentleIntroduction:
-	.string "Do not be alarmed…\n"
+	.string "JIRACHI: Do not be alarmed…\n"
 	.string "You are in the DREAM REALM.\p"
 	.string "I will tell you the story of HOENN…\n"
 	.string "The story that shaped our world.$"
@@ -550,7 +550,7 @@ LittlerootTown_01_Text_No:
 
 LittlerootTown_01_Text_CelebiWarning:
 	.string "CELEBI: {PLAYER}{KUN}…\p"
-	.string "Do not fear this place.\p"
+	.string "Do not fear this place.\n"
 	.string "What you see is only a dream…\p"
 	.string "A fragment of a future that must\n"
 	.string "never be allowed to happen.\p"
@@ -558,7 +558,7 @@ LittlerootTown_01_Text_CelebiWarning:
 	.string "HOENN's fate is already shifting.$"
 
 LittlerootTown_01_Text_CelebiLost:
-	.string "CELEBI: The forests whisper tales\n"
+	.string "The forests whisper tales\n"
 	.string "The winds of time are trembling…\p"
 	.string "I have seen a HOENN drowned in fire\n"
 	.string "and swallowed by ancient storms.\p"
@@ -567,8 +567,7 @@ LittlerootTown_01_Text_CelebiLost:
 
 
 LittlerootTown_01_Text_CelebiHelp:
-	.string "CELEBI: We need your help…\n"
-	.string "Dreams ewith the voices of those\n"
+	.string "Dreams with the voices of those\n"
 	.string "who still believe in hope…\p"
 	.string "You were called because the world\n"
 	.string "cannot heal itself alone.\p"
@@ -662,7 +661,7 @@ LittlerootTown_Text_GrandmaStory16:
 	.string "a desperate wish for salvation…$"
 
 LittlerootTown_Text_GrandmaStory17:
-	.string "The millennium comet appeared,\n"
+	.string "The MILLENNIUM COMET appeared,\n"
 	.string "a celestial beacon of hope…$"
 
 LittlerootTown_Text_GrandmaEncouragement:

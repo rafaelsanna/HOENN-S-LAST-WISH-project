@@ -618,8 +618,8 @@ MOSSDEEP01_Text_NeedItems:
 
 MOSSDEEP01_Text_ThankYou:
 	.string "JIRACHI: You found all the TIME GEARS!\p"
-	.string "The temporal flow is restoring...\n"
-	.string "Look! The Millennium Comet!$"
+	.string "The temporal flow is restoring…\n"
+	.string "Look! The MILLENNIUM COMET!$"
 
 MOSSDEEP01_Text_CometAppears:
 	.string "The sky begins to glow!\p"
@@ -628,7 +628,7 @@ MOSSDEEP01_Text_CometAppears:
 
 MOSSDEEP01_Text_TimeToWakeUp:
 	.string "JIRACHI: The timeline is restored!\p"
-	.string "It's time to wake up from this dream...$"
+	.string "It's time to wake up from this dream…$"
 
 MOSSDEEP01_Text_AlreadyHelped:
 	.string "JIRACHI: You already helped restore\n"
@@ -637,7 +637,7 @@ MOSSDEEP01_Text_AlreadyHelped:
 
 MOSSDEEP01_Text_FoundItem1:
 	.string "{PLAYER} found something shining\n"
-	.string "in the sand...$"
+	.string "in the sand…$"
 
 MOSSDEEP01_Text_ObtainedTimeGear1:
 	.string "{PLAYER} obtained the TIME GEAR\n"
@@ -645,7 +645,7 @@ MOSSDEEP01_Text_ObtainedTimeGear1:
 
 MOSSDEEP01_Text_FoundItem2:
 	.string "{PLAYER} discovered something glowing\n"
-	.string "among the rocks...$"
+	.string "among the rocks…$"
 
 MOSSDEEP01_Text_ObtainedTimeGear2:
 	.string "{PLAYER} obtained the TIME GEAR\n"
@@ -653,14 +653,14 @@ MOSSDEEP01_Text_ObtainedTimeGear2:
 
 MOSSDEEP01_Text_FoundItem3:
 	.string "{PLAYER} noticed a strange light\n"
-	.string "in the distance...$"
+	.string "in the distance…$"
 
 MOSSDEEP01_Text_ObtainedTimeGear3:
 	.string "{PLAYER} obtained the TIME GEAR\n"
 	.string "of the FUTURE!$"
 
 MOSSDEEP01_Text_AlreadyCollected:
-	.string "Nothing here anymore...$"
+	.string "Nothing here anymore…$"
 
 MOSSDEEP01_Text_CelebiHelp:
 	.string "CELEBI: Help! Those Mightyena\n"
@@ -677,7 +677,7 @@ MOSSDEEP01_Text_CelebiPower:
 
 MOSSDEEP01_Text_CelebiCalmed:
 	.string "The Mightyena have been calmed!\p"
-	.string "They won't attack anymore...$"
+	.string "They won't attack anymore…$"
 
 MOSSDEEP01_Text_CelebiFollows:
 	.string "CELEBI: Thank you!\n"
@@ -693,70 +693,69 @@ MOSSDEEP01_Text_MightyenaAttack:
 
 MOSSDEEP01_Text_MightyenaBlackedOut:
 	.string "You blacked out!\p"
-	.string "Returning to safety...$"
+	.string "Returning to safety…$"
 
 MOSSDEEP01_Text_HealerWelcome:
-	.string "Survivor: You look tired!\n"
-	.string "Let me heal your Pokémon.$"
+	.string "SURVIVOR: You look tired!\n"
+	.string "Let me heal your POKéMON.$"
 
 MOSSDEEP01_Text_Healing:
 	.string "Using residual energies from\n"
-	.string "the meteor to heal...$"
+	.string "the meteor to heal…$"
 
 MOSSDEEP01_Text_HealedComplete:
 	.string "Done! Your Pokémon are\n"
 	.string "fully recovered!$"
 
 MOSSDEEP01_Text_SurvivorTrapped:
-	.string "Survivor: Watch out!\n"
-	.string "Those Mightyena are attacking\l"
+	.string "SURVIVOR: Watch out!\n"
+	.string "Those MIGHTYENA are attacking\l"
 	.string "everyone who passes by!\p"
 	.string "I've been trapped down here\n"
-	.string "for days...$"
+	.string "for days…$"
 
 MOSSDEEP01_Text_SurvivorAmazed:
-	.string "Survivor: What... what was that\n"
+	.string "SURVIVOR: What… What was that\n"
 	.string "incredible light?!\p"
-	.string "The Mightyena... they're friendly now!$"
+	.string "The MIGHTYENA… they're friendly now!$"
 
 MOSSDEEP01_Text_SurvivorGoing:
-	.string "Survivor: I can finally go check on them!\n"
-	.string "Let me see...$"
+	.string "SURVIVOR: I can finally go check on them!\n"
+	.string "Let me see…$"
 
 MOSSDEEP01_Text_SurvivorHappy:
-	.string "Survivor: Amazing! I can even pet them!\p"
+	.string "SURVIVOR: Amazing! I can even pet them!\p"
 	.string "Was it that strange Pokémon\n"
 	.string "following you?\p"
 	.string "Thank you so much!$"
 
 MOSSDEEP01_Text_GrandmaWelcome:
-	.string "Grandma: Oh, you're awake!\p"
-	.string "Thank goodness...\n"
+	.string "GRANDMA: Oh, you're awake!\p"
+	.string "Thank goodness…\n"
 	.string "You've been having nightmares.$"
 
 MOSSDEEP01_Text_EarthquakeWarning:
-	.string "Grandma: Wait... do you feel that?\p"
+	.string "GRANDMA: Wait… do you feel that?\p"
 	.string "Not again!$"
 
 MOSSDEEP01_Text_HoennDestroyed:
-	.string "Grandma: Ever since the Great Disaster,\n"
-	.string "these quakes won't stop...\p"
+	.string "GRANDMA: Ever since the Great Disaster,\n"
+	.string "these quakes won't stop…\p"
 	.string "The land is tearing itself apart.\n"
 	.string "Storms rage without end.\p"
-	.string "Hoenn is dying, child.\n"
-	.string "And no one knows why.$"
+	.string "HOENN is dying, child.$"
 
 MOSSDEEP01_Text_PlayerDecision:
-	.string "{PLAYER} feels a strange pull...\p"
-	.string "Those recurring dreams...\n"
-	.string "The ruined altar...\p"
+	.string "{PLAYER} feels a strange pull…\p"
+	.string "Those recurring dreams…\n"
+	.string "The ruined altar…\p"
 	.string "There has to be a connection.$"
 
 MOSSDEEP01_Text_GoodLuck:
-	.string "Grandma: Please, be careful out there.\p"
+	.string "GRANDMA: Please, be careful out there.\p"
 	.string "The path to the ruins is treacherous.$"
 
 MOSSDEEP01_Text_GrandmaReminder:
-	.string "Grandma: Take care of yourself,\n"
+	.string "GRANDMA: Take care of yourself,\n"
 	.string "and remember what I told you.$"
 

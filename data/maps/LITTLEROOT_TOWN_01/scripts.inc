@@ -1051,31 +1051,31 @@ LittlerootTown_Jirachi_Case2::
 # 526 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GentleIntroduction:
 # 527 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Do not be alarmed...\n"
+	.string "JIRACHI: Do not be alarmed…\n"
 # 528 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "You are in the dream realm.\p"
+	.string "You are in the DREAM REALM.\p"
 # 529 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "I will tell you the story of HOENN...\n"
+	.string "I will tell you the story of HOENN…\n"
 # 530 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The story that shaped our world...$"
+	.string "The story that shaped our world.$"
 # 531 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 532 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiIntro:
 # 533 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Jirachi: I am the wish Pokemon!\n"
+	.string "JIRACHI: I am the wish POKéMON!\n"
 # 534 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "I can warp time and space!\p"
 # 535 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Before we begin...$"
+	.string "Before we begin…$"
 # 536 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 537 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiCloseEyes:
 # 538 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Close your eyes and remember...\n"
+	.string "Close your eyes and remember…\n"
 # 539 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Remember how it all happened...$"
+	.string "Remember how it all happened…$"
 # 540 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 541 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -1087,7 +1087,7 @@ LittlerootTown_01_Text_Question:
 # 544 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiTimeWarp:
 # 545 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Jirachi: Your wish is my command!\n"
+	.string "JIRACHI: Your wish is my command!\n"
 # 546 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "TIME WARP - ACTIVATE!$"
 # 547 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -1101,280 +1101,276 @@ LittlerootTown_01_Text_No:
 # 551 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_CelebiWarning:
 # 552 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Celebi: {PLAYER}{KUN}...\p"
+	.string "CELEBI: {PLAYER}{KUN}…\p"
 # 553 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "A strange light surrounds you…\p"
-# 554 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Do not fear this place.\n"
-# 555 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 554 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "What you see is only a dream…\p"
-# 556 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 555 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "A fragment of a future that must\n"
-# 557 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 556 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "never be allowed to happen.\p"
-# 558 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 557 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Walk carefully, traveler.\n"
+# 558 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "HOENN's fate is already shifting.$"
 # 559 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Hoenn's fate is already shifting.$"
-# 560 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
-# 561 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 560 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_CelebiLost:
+# 561 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "The forests whisper tales\n"
 # 562 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Celebi: The forests whisper tales\n"
-# 563 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "The winds of time are trembling…\p"
+# 563 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "I have seen a HOENN drowned in fire\n"
 # 564 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "I have seen a Hoenn drowned in fire\n"
-# 565 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "and swallowed by ancient storms.\p"
-# 566 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 565 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "But that future is not final.\n"
-# 567 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 566 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Your choices can rewrite it.$"
+# 567 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 568 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 569 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 570 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_CelebiHelp:
+# 570 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "Dreams with the voices of those\n"
 # 571 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Celebi: We need your help...\n"
+	.string "who still believe in hope…\p"
 # 572 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Dreams ewith the voices of those\n"
-# 573 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "who still believe in hope...\p"
-# 574 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "You were called because the world\n"
-# 575 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 573 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "cannot heal itself alone.\p"
-# 576 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 574 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Walk forward.\n"
+# 575 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "HOENN is waiting for you.$"
+# 576 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 577 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Hoenn is waiting for you.$"
-# 578 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 579 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_CelebiForest:
+# 578 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "CELEBI: Time flows like a river,\n"
+# 579 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "but it flows strangely here…\l"
 # 580 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Celebi: Time flows like a river,\n"
+	.string "As if past and future overlap.\p"
 # 581 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "but it flows strangely here…\n"
+	.string "Follow the path you feel within.\p"
 # 582 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "as if past and future overlap.\p"
+	.string "Your soul remembers the truth,\n"
 # 583 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Follow the path you feel within.\n"
-# 584 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Your soul remembers the truth,\p"
-# 585 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "even if your mind does not.$"
-# 586 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 584 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
-# 587 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 585 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiWish:
+# 586 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "JIRACHI: I am the Wish POKéMON!\nMake a wish and I might grant it!$"
+# 587 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 588 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Jirachi: I am the Wish Pokemon!\nMake a wish and I might grant it!$"
-# 589 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 590 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiSleep:
+# 589 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
+# 590 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 591 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Jirachi: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
-# 592 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 593 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiGrant:
+# 592 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "JIRACHI: They say I can grant any wish!\nWhat would you wish for?$"
+# 593 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 594 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Jirachi: They say I can grant any wish!\nWhat would you wish for?$"
+
 # 595 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+// ====================================================================
 # 596 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+// OPTIMIZED STORY TEXTS (English - Coherent with All Images)
 # 597 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 // ====================================================================
 # 598 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// OPTIMIZED STORY TEXTS (English - Coherent with All Images)
+
 # 599 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// ====================================================================
-# 600 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 601 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory1:
-# 602 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 600 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "In a forgotten age,\n"
+# 601 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "before the great calamity…$"
+# 602 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 603 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "before the great calamity...$"
-# 604 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 605 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory2:
-# 606 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 604 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "HOENN was a paradise divided\n"
+# 605 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "between sea and land…$"
+# 606 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 607 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "between sea and land...$"
-# 608 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 609 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory3:
+# 608 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "People and POKéMON lived as one,\n"
+# 609 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "their hearts beating in harmony…$"
 # 610 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "People and Pokémon lived as one,\n"
+
 # 611 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "their hearts beating in harmony...$"
-# 612 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 613 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory4:
-# 614 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 612 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "A delicate balance maintained\n"
+# 613 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "by ancient forces…$"
+# 614 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 615 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "by ancient forces...$"
-# 616 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 617 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory5:
-# 618 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 616 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "KYOGRE, deity of the ocean depths,\n"
+# 617 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "keeper of the seas…$"
+# 618 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 619 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "keeper of the seas...$"
-# 620 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 621 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory6:
-# 622 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 620 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "GROUDON, titan of the land,\n"
+# 621 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "master of the continents…$"
+# 622 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 623 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "master of the continents...$"
-# 624 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 625 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory7:
-# 626 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 624 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Their eternal conflict erupted\n"
+# 625 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "into a world-shattering battle…$"
+# 626 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 627 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "into a world-shattering battle...$"
-# 628 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 629 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory8:
-# 630 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 628 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "The seas rose with terrifying floods,\n"
+# 629 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "swallowing coastal cities…$"
+# 630 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 631 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "swallowing coastal cities...$"
-# 632 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 633 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory9:
-# 634 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 632 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Colossal tsunamis swept across\n"
+# 633 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "what remained of the land…$"
+# 634 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 635 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "what remained of the land...$"
-# 636 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 637 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory10:
-# 638 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 636 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Volcanoes erupted in response,\n"
+# 637 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "scorching the earth with fire…$"
+# 638 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 639 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "scorching the earth with fire...$"
-# 640 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 641 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory11:
-# 642 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 640 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Cities crumbled to dust and ruins\n"
+# 641 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "under nature's wrath…$"
+# 642 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 643 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "under nature's wrath...$"
-# 644 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 645 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory12:
-# 646 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 644 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "The land became submerged,\n"
+# 645 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "an archipelago of memories…$"
+# 646 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 647 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "an archipelago of memories...$"
-# 648 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 649 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory13:
-# 650 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 648 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Rivers of lava flowed where\n"
+# 649 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "forests once stood…$"
+# 650 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 651 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "forests once stood...$"
-# 652 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 653 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory14:
-# 654 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 652 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "In despair, they turned to legends\n"
+# 653 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "of time-travel and wish-granting…$"
+# 654 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 655 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "of time-travel and wish-granting...$"
-# 656 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 657 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory15:
-# 658 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 656 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Ancient shrines were built\n"
+# 657 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "to mythical guardians…$"
+# 658 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 659 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "to mythical guardians...$"
-# 660 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 661 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory16:
-# 662 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 660 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "JIRACHI awakened to grant\n"
+# 661 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "a desperate wish for salvation…$"
+# 662 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 663 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "a desperate wish for salvation...$"
-# 664 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 665 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaStory17:
+# 664 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "The MILLENNIUM COMET appeared,\n"
+# 665 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "a celestial beacon of hope…$"
 # 666 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The millennium comet appeared,\n"
+
 # 667 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "a celestial beacon of hope...$"
-# 668 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 669 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_GrandmaEncouragement:
-# 670 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 668 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "This is the world we inherited.\n"
-# 671 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Your journey begins where hope remains...$"
-# 672 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 669 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "Your journey begins where hope remains…$"
+# 670 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
+# 671 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 672 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+//////////////////////////////// TALE END ////////////////////////
 # 673 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 674 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-//////////////////////////////// TALE END ////////////////////////
-# 675 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 676 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_StoryConclusion:
-# 677 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 675 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "This is the story of all that happened\n"
-# 678 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "in HOENN...\p"
-# 679 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 676 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "in HOENN…\p"
+# 677 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "And now, only the chosen one can help\n"
-# 680 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 678 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "change destiny and alter the past,\l"
+# 679 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "so the future may be prosperous again…$"
+# 680 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
 # 681 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "so the future may be prosperous again...$"
-# 682 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 683 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_WelcomeToNewWorld:
-# 684 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 682 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Welcome to your new world,\n"
-# 685 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 683 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "{PLAYER}!\p"
-# 686 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 684 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "A new adventure awaits you!$"
-# 687 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 685 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
-# 688 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 686 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_Text_JirachiContinue:
-# 689 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Jirachi: Then let us continue...\n"
-# 690 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 687 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "JIRACHI: Then let us continue…\n"
+# 688 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Your adventure awaits!$"

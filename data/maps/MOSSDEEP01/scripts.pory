@@ -1140,7 +1140,7 @@ MOSSDEEP01_Movement_CometCrossingSky:
 // ====================================================================
 
 MOSSDEEP01_Text_NeedCelebiFirst:
-	.string "JIRACHI: I sense something...\p"
+	.string "JIRACHI: I sense something…\p"
 	.string "The Guardian of the Forest,\n"
 	.string "CELEBI, is in danger!\p"
 	.string "Please, help CELEBI first!\n"
@@ -1148,15 +1148,15 @@ MOSSDEEP01_Text_NeedCelebiFirst:
 
 MOSSDEEP01_Text_NeedItems:
 	.string "JIRACHI: Thank you for saving CELEBI!\p"
-	.string "Now, the flow of time is broken!\p"
+	.string "Unfortunately, the flow of time is broken.\p"
 	.string "Please find the 3 TIME GEARS\n"
 	.string "scattered around this place.\p"
 	.string "Only then can I send you home!$"
 
 MOSSDEEP01_Text_ThankYou:
 	.string "JIRACHI: You found all the TIME GEARS!\p"
-	.string "The temporal flow is restoring...\n"
-	.string "Look! The Millennium Comet!$"
+	.string "The temporal flow is restoring…\n"
+	.string "Look! The MILLENNIUM COMET!$"
 
 MOSSDEEP01_Text_CometAppears:
 	.string "The sky begins to glow!\p"
@@ -1165,7 +1165,7 @@ MOSSDEEP01_Text_CometAppears:
 
 MOSSDEEP01_Text_TimeToWakeUp:
 	.string "JIRACHI: The timeline is restored!\p"
-	.string "It's time to wake up from this dream...$"
+	.string "It's time to wake up from this dream…$"
 
 MOSSDEEP01_Text_AlreadyHelped:
 	.string "JIRACHI: You already helped restore\n"
@@ -1174,7 +1174,7 @@ MOSSDEEP01_Text_AlreadyHelped:
 
 MOSSDEEP01_Text_FoundItem1:
 	.string "{PLAYER} found something shining\n"
-	.string "in the grass...$"
+	.string "in the grass…$"
 
 MOSSDEEP01_Text_ObtainedTimeGear1:
 	.string "{PLAYER} obtained the TIME GEAR\n"
@@ -1182,7 +1182,7 @@ MOSSDEEP01_Text_ObtainedTimeGear1:
 
 MOSSDEEP01_Text_FoundItem2:
 	.string "{PLAYER} discovered something glowing\n"
-	.string "among the rocks...$"
+	.string "among the rocks…$"
 
 MOSSDEEP01_Text_ObtainedTimeGear2:
 	.string "{PLAYER} obtained the TIME GEAR\n"
@@ -1190,7 +1190,7 @@ MOSSDEEP01_Text_ObtainedTimeGear2:
 
 MOSSDEEP01_Text_FoundItem3:
 	.string "{PLAYER} noticed something sparkling\n"
-	.string "in the water...$"
+	.string "in the water…$"
 
 MOSSDEEP01_Text_ObtainedTimeGear3:
 	.string "{PLAYER} obtained the TIME GEAR\n"
@@ -1200,10 +1200,10 @@ MOSSDEEP01_Text_AlreadyCollected:
 	.string "This place seems peaceful now.$"
 
 MOSSDEEP01_Text_CelebiHelp:
-	.string "CELEBI: ... ... ...\p"
-	.string "The flow of time is broken...\p"
-	.string "Please... find the 3 TIME GEARS...\n"
-	.string "Only then can I be freed...$"
+	.string "CELEBI: … … …\p"
+	.string "The flow of time is broken…\p"
+	.string "Please... find the 3 TIME GEARS…\n"
+	.string "Only then can I be freed…$"
 
 MOSSDEEP01_Text_CelebiPower:
 	.string "CELEBI: You found all the TIME GEARS!\p"
@@ -1240,7 +1240,7 @@ MOSSDEEP01_Text_SurvivorAmazed:
 	.string "What happened?$"
 
 MOSSDEEP01_Text_SurvivorGoing:
-	.string "SURVIVOR: I'm going to find a safer\n"
+	.string "I'm going to find a safer\n"
 	.string "place. Thank you!$"
 
 MOSSDEEP01_Text_SurvivorHappy:
@@ -1251,7 +1251,7 @@ MOSSDEEP01_Text_HealerWelcome:
 	.string "HEALER: Let me heal your POKÉMON.$"
 
 MOSSDEEP01_Text_Healing:
-	.string "Healing POKÉMON...$"
+	.string "Healing POKÉMON…$"
 
 MOSSDEEP01_Text_HealedComplete:
 	.string "HEALER: Your POKÉMON are fully\n"
@@ -1259,8 +1259,8 @@ MOSSDEEP01_Text_HealedComplete:
 
 MOSSDEEP01_Text_GrandmaWelcome:
 	.string "GRANDMA: {PLAYER}! You're awake!\p"
-	.string "The earthquake was terrible...\n"
-	.string "Many people are trapped...$"
+	.string "The earthquake was terrible…\n"
+	.string "Many people are trapped…$"
 
 MOSSDEEP01_Text_EarthquakeWarning:
 	.string "GRANDMA: Another tremor!\n"
@@ -1276,8 +1276,8 @@ MOSSDEEP01_Text_GrandmaCharmExplanation:
 	.string "Use it well!$"
 
 MOSSDEEP01_Text_HoennDestroyed:
-	.string "GRANDMA: The HOENN region...\n"
-	.string "It's been completely destroyed...\p"
+	.string "GRANDMA: The HOENN region…\n"
+	.string "It's been completely destroyed…\p"
 	.string "But there are survivors who need\n"
 	.string "help. Please, {PLAYER}, help them!$"
 
@@ -1290,77 +1290,70 @@ MOSSDEEP01_Text_GoodLuck:
 	.string "Be very careful!$"
 
 MOSSDEEP01_Text_GrandmaEncouragement:
-	.string "GRANDMA: You're doing great, {PLAYER}!\n"
+	.string "You're doing great, {PLAYER}!\n"
 	.string "Keep helping people!$"
 
 MOSSDEEP01_Text_GrandpaFirstTalk:
-	.string "GRANDPA: The world has changed...\n"
-	.string "Everything is so different now...$"
+	.string "GRANDPA: The world has changed…\n"
+	.string "Everything is so different now…$"
 
 MOSSDEEP01_Text_GrandpaAfterTalk:
 	.string "GRANDPA: Thank you for helping\n"
 	.string "everyone, {PLAYER}. You're a hero!$"
 
 MOSSDEEP01_Text_GrandmaStory1:
-	.string "GRANDMA: This was the beginning...$"
+	.string "This was the beginning…$"
 
 MOSSDEEP01_Text_GrandmaStory2:
-	.string "GRANDMA: Then the conflict started...$"
+	.string "Then the conflict started…$"
 
 MOSSDEEP01_Text_GrandmaStory3:
-	.string "GRANDMA: The great battle between\n"
-	.string "land and sea...$"
+	.string "The great battle between land and\n"
+	.string "sea…$"
 
 MOSSDEEP01_Text_GrandmaStory4:
-	.string "GRANDMA: The tsunami devastated\n"
-	.string "everything...$"
+	.string "The tsunami devastated everything…$"
 
 MOSSDEEP01_Text_GrandmaStory5:
-	.string "GRANDMA: Volcanoes erupted across\n"
-	.string "the land...$"
+	.string "Volcanoes erupted across the land…$"
 
 MOSSDEEP01_Text_GrandmaStory6:
-	.string "GRANDMA: The land became a barren\n"
-	.string "wasteland...$"
+	.string "The land became a barren wasteland…$"
 
 MOSSDEEP01_Text_GrandmaStory7:
-	.string "GRANDMA: The oceans raged with\n"
-	.string "unending storms...$"
+	.string "The oceans raged with unending\n"
+	.string "storms…$"
 
 MOSSDEEP01_Text_GrandmaStory8:
-	.string "GRANDMA: Survivors gathered in\n"
-	.string "camps...$"
+	.string "Survivors gathered in camps…$"
 
 MOSSDEEP01_Text_GrandmaStory9:
-	.string "GRANDMA: Hope began to fade...$"
+	.string "Hope began to fade…$"
 
 MOSSDEEP01_Text_GrandmaStory10:
-	.string "GRANDMA: But then a legend\n"
-	.string "appeared...$"
+	.string "But then a legend appeared…$"
 
 MOSSDEEP01_Text_GrandmaStory11:
-	.string "GRANDMA: The sky guardian descended\n"
-	.string "from above...$"
+	.string "The sky guardian descended from\n"
+	.string "above…$"
 
 MOSSDEEP01_Text_GrandmaStory12:
-	.string "GRANDMA: Peace was restored,\n"
-	.string "but at a cost...$"
+	.string "Peace was restored, but at a cost…$"
 
 MOSSDEEP01_Text_GrandmaStory13:
-	.string "GRANDMA: And this is how our world\n"
-	.string "became what it is today...$"
+	.string "And this is how our world became what it\n"
+	.string "is today…$"
 
 MOSSDEEP01_Text_GrandmaAskStory:
-	.string "GRANDMA: Hello, {PLAYER}!\p"
-	.string "Would you like to hear the legends\n"
-	.string "and stories of how HOENN arrived\l"
-	.string "in the state it is now?$"
+	.string "GRANDMA: Hi, {PLAYER}.\p"
+	.string "Would you like to hear the stories\n"
+	.string "of how HOENN became what it is now?$"
 
 MOSSDEEP01_Text_GrandmaBeCareful:
-	.string "GRANDMA: I understand.\p"
+	.string "I understand.\p"
 	.string "Please be very careful when exploring\n"
 	.string "the MOSSDEEP ruins.\p"
-	.string "There are many dangers out there...$"
+	.string "There are many dangers out there…$"
 
 MOSSDEEP01_Text_GrandmaAskAgain:
 	.string "GRANDMA: Would you like to hear\n"
@@ -1386,13 +1379,12 @@ MOSSDEEP01_Text_RivalMale04:
 	.string "Together we'll save everyone!$"
 
 MOSSDEEP01_Text_RivalFemale01:
-	.string "RIVAL: {PLAYER}! I'm so glad\n"
-	.string "you're safe!\p"
+	.string "RIVAL: {PLAYER}! I'm so glad you're safe!\p"
 	.string "Let's help the survivors together!$"
 
 MOSSDEEP01_Text_RivalFemale02:
 	.string "RIVAL: The wild POKÉMON are\n"
-	.string "acting so strange...\p"
+	.string "acting so strange…\p"
 	.string "Something must be wrong!$"
 
 MOSSDEEP01_Text_RivalFemale03:
@@ -1405,16 +1397,16 @@ MOSSDEEP01_Text_RivalFemale04:
 	.string "{PLAYER}! Let's keep going!$"
 
 MOSSDEEP01_Text_Child01:
-	.string "CHILD: I'm scared...\n"
+	.string "CHILD: I'm scared…\n"
 	.string "Where are my parents?$"
 
 MOSSDEEP01_Text_Child02:
-	.string "CHILD: The ground shook really hard...\n"
-	.string "Then everything changed...$"
+	.string "CHILD: The ground shook really hard…\n"
+	.string "Then everything changed…$"
 
 MOSSDEEP01_Text_WailordBlocking:
 	.string "A massive WAILORD blocks the path!\p"
-	.string "It seems agitated by the chaos...\n"
+	.string "It seems agitated by the chaos…\n"
 	.string "You can't get through.$"
 
 MOSSDEEP01_Text_PathNowOpen:
@@ -1423,20 +1415,20 @@ MOSSDEEP01_Text_PathNowOpen:
 
 MOSSDEEP01_Text_JirachiWaking:
 	.string "A mysterious POKÉMON is sleeping\n"
-	.string "near the rocks...\p"
+	.string "near the rocks…\p"
 	.string "It seems to be waking up!$"
 
 MOSSDEEP01_Text_JirachiAwoken:
 	.string "JIRACHI has awoken!$"
 
 MOSSDEEP01_Text_JirachiNeedCelebi:
-	.string "JIRACHI: I sense temporal disturbance...\n"
+	.string "JIRACHI: I sense temporal disturbance…\n"
 	.string "The forest guardian needs help!\p"
 	.string "Please rescue CELEBI first!$"
 
 MOSSDEEP01_Text_JirachiNeedItems:
 	.string "JIRACHI: Thank you for saving CELEBI!\n"
-	.string "But time is still broken...\p"
+	.string "But time is still broken…\p"
 	.string "Please find the 3 TIME GEARS\n"
 	.string "to restore temporal flow!$"
 
@@ -1445,7 +1437,7 @@ MOSSDEEP01_Text_JirachiCompleted:
 	.string "Thank you, time traveler!$"
 
 MOSSDEEP01_Text_JirachiStillSleeping:
-	.string "JIRACHI is sleeping peacefully...\n"
+	.string "JIRACHI is sleeping peacefully…\n"
 	.string "Maybe you should approach it?$"
 
 MOSSDEEP01_Text_WallyIntro:
@@ -1454,23 +1446,23 @@ MOSSDEEP01_Text_WallyIntro:
 	.string "could train POKÉMON normally?\p"
 	.string "There were POKÉ BALLS, devices that\n"
 	.string "captured and stored POKÉMON.\p"
-	.string "But now... they don't make them anymore.\n"
+	.string "But now… they don't make them anymore.\n"
 	.string "The technology was lost.\p"
 	.string "That's why the connection with POKÉMON\n"
-	.string "has to be made in another way...\p"
-	.string "A more natural, pure connection\n"
-	.string "like what I have with PIDGEOT.\p"
-	.string "If wild POKÉMON are giving you\n"
-	.string "trouble, PIDGEOT and I will help.$"
+	.string "has to be made in another way…\p"
+	.string "A more natural, pure connection, like\n"
+	.string "what I have with PIDGEOT.\p"
+	.string "If wild POKÉMON are giving you trouble,\n"
+	.string "PIDGEOT and I will help.$"
 
 MOSSDEEP01_Text_WallyAfterCelebi:
-	.string "LUKA: Wow... what is that Pokemon\n"
+	.string "LUKA: Wow… What is that Pokemon\n"
 	.string "following you?\p"
-	.string "It feels so magical...\n"
+	.string "It feels so magical…\n"
 	.string "I have never seen anything like it.\p"
 	.string "It reminds me of the old legends\n"
-	.string "our grandparents used to tell...\p"
-	.string "Maybe those dreams you had...\n"
+	.string "our grandparents used to tell…\p"
+	.string "Maybe those dreams you had…\n"
 	.string "they were real after all.$"
 
 MOSSDEEP01_Text_WallyWarped:
@@ -1485,11 +1477,11 @@ MOSSDEEP01_Text_WallyNotReady:
 	.string "talk to me!$"
 
 MOSSDEEP01_Text_PidgeotGreeting:
-	.string "Pidgeot: Piiidgeoo!$"
+	.string "PIDGEOT: Piiidgeoo!$"
 
 MOSSDEEP01_Text_WailordBlocks:
     .string "There's only water ahead!\p"
-    .string "You can't cross without help...$"
+    .string "You can't cross without help…$"
 
 MOSSDEEP01_Text_WailordIdle:
     .string "WAILORD is calmly floating on the water.$"
@@ -1503,7 +1495,7 @@ MOSSDEEP01_Text_CelebiCallsWailord:
     .string "creates a path across the water!$"
 
 MOSSDEEP01_Text_AfterTimeGears:
-    .string "CELEBI: We are close, I can feel it...$"
+    .string "CELEBI: We are close, I can feel it…$"
 
 
 `
