@@ -1,0 +1,15 @@
+raw `
+Fiery_Path_Entrance_MapScripts::
+	.byte 0
+
+Fiery_Path_Entrance_EventScript_OldLadyLikesHot::
+	lock
+	faceplayer
+	fadescreen FADE_TO_BLACK
+	special StartMining
+	release
+	end
+	
+
+	
+`

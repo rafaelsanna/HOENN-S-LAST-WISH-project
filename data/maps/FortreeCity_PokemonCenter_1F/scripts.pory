@@ -1,0 +1,61 @@
+raw `
+FortreeCity_PokemonCenter_1F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, FortreeCity_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
+	.byte 0
+
+FortreeCity_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_FORTREE_CITY
+	end
+
+FortreeCity_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_FORTREE_NURSE
+	call Common_EventScript_PkmnCenterNurse
+	waitmessage
+	waitbuttonpress
+	release
+	end
+
+FortreeCity_PokemonCenter_1F_EventScript_Gentleman::
+	msgbox FortreeCity_PokemonCenter_1F_Text_GoToSafariZone, MSGBOX_NPC
+	end
+
+FortreeCity_PokemonCenter_1F_EventScript_Man::
+	msgbox FortreeCity_PokemonCenter_1F_Text_RecordCornerIsNeat, MSGBOX_NPC
+	end
+
+FortreeCity_PokemonCenter_1F_EventScript_Boy::
+	msgbox FortreeCity_PokemonCenter_1F_Text_DoYouKnowAboutPokenav, MSGBOX_NPC
+	end
+
+FortreeCity_PokemonCenter_1F_Text_GoToSafariZone:
+	.string "They say the trees here have grown\n"
+	.string "for three thousand years.\p"
+	.string "Roots so deep they touch something\n"
+	.string "ancient. Something sleeping.\p"
+	.string "Lately, the canopy whispers.\n"
+	.string "Not wind. Voices. Old voices.\p"
+	.string "The elder says the trees remember\n"
+	.string "the last time the comet came.\p"
+	.string "And they're trying to warn us.$"
+
+FortreeCity_PokemonCenter_1F_Text_RecordCornerIsNeat:
+	.string "My grandfather built this house\n"
+	.string "with his own hands. Fifty years ago.\p"
+	.string "Last week, I found old carvings\n"
+	.string "hidden beneath the floorboards.\p"
+	.string "Symbols I've never seen.\n"
+	.string "Dates that haven't happened yet.\p"
+	.string "He knew something. They all did.$"
+	
+FortreeCity_PokemonCenter_1F_Text_DoYouKnowAboutPokenav:
+	.string "A POKéNAV? From Devon?\n"
+	.string "They've been quiet lately.\p"
+	.string "Heard their satellites pick up\n"
+	.string "signals from empty frequencies.\p"
+	.string "Voices where there should be silence.\n"
+	.string "Coordinates that lead to nowhere.\p"
+	.string "Technology sees what we can't.\n"
+	.string "Question is... should it?$"
+
+`
