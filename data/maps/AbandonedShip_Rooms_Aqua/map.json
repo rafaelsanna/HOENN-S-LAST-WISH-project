@@ -122,13 +122,6 @@
       "elevation": 3,
       "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
       "dest_warp_id": "5"
-    },
-    {
-      "x": 10,
-      "y": 1,
-      "elevation": 3,
-      "dest_map": "MAP_ABANDONED_SHIP_TEAM_AQUA",
-      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

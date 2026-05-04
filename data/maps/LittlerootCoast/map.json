@@ -45,8 +45,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_M)",
-      "x": 11,
-      "y": 16,
+      "x": 14,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -58,8 +58,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_F)",
-      "x": 13,
-      "y": 15,
+      "x": 16,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -73,7 +73,7 @@
       "local_id": "LOCALID_BIRDKEEPER_LEE",
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
       "x": 9,
-      "y": 13,
+      "y": 11,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -85,7 +85,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 17,
+      "x": 14,
       "y": 6,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -98,7 +98,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ARTIST",
-      "x": 5,
+      "x": 6,
       "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
