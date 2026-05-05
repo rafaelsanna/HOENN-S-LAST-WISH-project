@@ -5,8 +5,8 @@
   "music": "MUS_ROUTE104",
   "region_map_section": "MAPSEC_LITTLEROOT_COAST",
   "requires_flash": false,
-  "weather": "WEATHER_NONE",
-  "map_type": "MAP_TYPE_ROUTE",
+  "weather": "WEATHER_RAIN_THUNDERSTORM",
+  "map_type": "MAP_TYPE_OCEAN_ROUTE",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
@@ -27,13 +27,13 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_F",
-      "x": 11,
+      "x": 10,
       "y": 46,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
       "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "5",
       "script": "LittlerootCoast2_AquaAdmLazuli",
       "flag": "FLAG_AQUA_GRUNTS_PETALBURG_DONE"
@@ -76,6 +76,32 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
       "flag": "FLAG_AQUA_GRUNTS_PETALBURG_DONE"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 15,
+      "y": 41,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_DIVE_BALL",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_LITTLEROOTCOAST2_DIVE_BALL"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 5,
+      "y": 20,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_PEARL",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_LITTLEROOTCOAST2_PEARL"
     }
   ],
   "warp_events": [

@@ -150,7 +150,7 @@
     {
       "local_id": "LOCALID_PETALBURG_LUKA_AFTER_GYM",
       "graphics_id": "OBJ_EVENT_GFX_WALLY",
-      "x": 20,
+      "x": 13,
       "y": 12,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -333,8 +333,8 @@
     },
     {
       "type": "trigger",
-      "x": 20,
-      "y": 8,
+      "x": 13,
+      "y": 7,
       "elevation": 3,
       "var": "VAR_LUKA_PETALBURG_ENCOUNTER",
       "var_value": "0",
@@ -342,8 +342,8 @@
     },
     {
       "type": "trigger",
-      "x": 19,
-      "y": 7,
+      "x": 12,
+      "y": 6,
       "elevation": 3,
       "var": "VAR_LUKA_PETALBURG_ENCOUNTER",
       "var_value": "0",
@@ -351,8 +351,8 @@
     },
     {
       "type": "trigger",
-      "x": 21,
-      "y": 7,
+      "x": 14,
+      "y": 6,
       "elevation": 3,
       "var": "VAR_LUKA_PETALBURG_ENCOUNTER",
       "var_value": "0",

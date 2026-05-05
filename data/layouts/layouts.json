@@ -4840,6 +4840,16 @@
       "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_TeamAqua/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_TeamAqua/map.bin"
+    },
+    {
+      "id": "LAYOUT_ABANDONED_SHIP_ROOMS_AQUA",
+      "name": "AbandonedShip_Rooms_Aqua_Layout",
+      "width": 18,
+      "height": 17,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_InsideShip",
+      "border_filepath": "data/layouts/AbandonedShip_Rooms_Aqua/border.bin",
+      "blockdata_filepath": "data/layouts/AbandonedShip_Rooms_Aqua/map.bin"
     }
   ]
 }

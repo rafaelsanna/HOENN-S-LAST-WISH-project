@@ -919,6 +919,7 @@
 #define TRAINER_LUKA_PETALBURG_GYM          913
 #define TRAINER_HAKARI                      914
 #define TRAINER_LAZULI_1                    915
+#define TRAINER_GRUNT_AQUA_SHIP             916
 
 
 
