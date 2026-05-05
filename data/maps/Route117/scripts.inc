@@ -6,7 +6,7 @@ Route117_MapScripts::
 	.byte 0
 
 Route117_OnTransition:
-	call Route117_EventScript_TryMoveDayCareMan
+	call Route117_EventScript_UpdateDayCareEggIndicator
 	@ set flags for OW daycare mons
 	setflag FLAG_TEMP_1
 	setflag FLAG_TEMP_2
@@ -43,10 +43,13 @@ Route117_EventScript_DaycareMonMaxCompatibility: @ facing; walk in place
 	setobjectmovementtype LOCALID_DAYCARE_MON_1, MOVEMENT_TYPE_WALK_IN_PLACE_LEFT
 	return
 
-Route117_EventScript_TryMoveDayCareMan::
-	goto_if_unset FLAG_PENDING_DAYCARE_EGG, Route117_EventScript_StopMoveDayCareMan
-	setobjectxyperm LOCALID_DAYCARE_MAN, 47, 6
-Route117_EventScript_StopMoveDayCareMan::
+Route117_EventScript_UpdateDayCareEggIndicator::
+	goto_if_unset FLAG_PENDING_DAYCARE_EGG, Route117_EventScript_HideDayCareEggIndicator
+	setobjectxyperm LOCALID_DAYCARE_EGG_INDICATOR, 53, 16
+	return
+
+Route117_EventScript_HideDayCareEggIndicator::
+	setobjectxyperm LOCALID_DAYCARE_EGG_INDICATOR, 40, 0
 	return
 
 Route117_EventScript_Woman::

@@ -17,6 +17,8 @@ Route117_EventScript_DaycareEggWaiting::
 	goto_if_eq VAR_RESULT, YES, Route117_EventScript_DaycareAcceptEgg
 	msgbox Route117_Text_IllKeepIt, MSGBOX_DEFAULT
 	clearflag FLAG_PENDING_DAYCARE_EGG
+	setobjectxy LOCALID_DAYCARE_EGG_INDICATOR, 40, 0
+	setobjectxyperm LOCALID_DAYCARE_EGG_INDICATOR, 40, 0
 	special RejectEggFromDayCare
 	release
 	end
@@ -36,6 +38,8 @@ Route117_EventScript_DaycareReceiveEgg::
 	msgbox Route117_Text_TakeGoodCareOfIt, MSGBOX_DEFAULT
 	special GiveEggFromDaycare
 	clearflag FLAG_PENDING_DAYCARE_EGG
+	setobjectxy LOCALID_DAYCARE_EGG_INDICATOR, 40, 0
+	setobjectxyperm LOCALID_DAYCARE_EGG_INDICATOR, 40, 0
 	release
 	end
 
