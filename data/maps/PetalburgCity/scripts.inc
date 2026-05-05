@@ -58,11 +58,9 @@ PetalburgCity_EventScript_WallyTutorial::
     applymovement LOCALID_PLAYER, PetalburgCity_Movement_WallyTutorialPlayer
     waitmovement 0
     msgbox Route102_Text_WatchMeCatchPokemon, MSGBOX_DEFAULT
-    // Em vez da captura, inicia uma batalha contra o Wally
-    trainerbattle_single TRAINER_WALLY_VR_6, PetalburgCity_Text_WallyIntro, PetalburgCity_Text_WallyDefeat, PetalburgCity_EventScript_AfterWallyBattle
-    end
-
-PetalburgCity_EventScript_AfterWallyBattle::
+    msgbox PetalburgCity_Text_WallyIntro, MSGBOX_DEFAULT
+    closemessage
+    trainerbattle_no_intro TRAINER_WALLY_VR_6, PetalburgCity_Text_WallyDefeat
     msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
     applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
     waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
@@ -78,7 +76,6 @@ PetalburgCity_EventScript_AfterWallyBattle::
     waitstate
     releaseall
     end
-
 
 PetalburgCity_EventScript_WalkToWallyHouse::
 	lockall
