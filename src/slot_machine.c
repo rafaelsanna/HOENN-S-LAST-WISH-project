@@ -1805,6 +1805,12 @@ static void DrawMachineBias(void)
 
     if (sSlotMachine->reelTimeSpinsLeft == 0)
     {
+        if (sSlotMachine->pikaPowerBolts >= 16)
+        {
+            sSlotMachine->machineBias |= BIAS_REELTIME;
+            return;
+        }
+
         if (!(sSlotMachine->machineBias & (BIAS_STRAIGHT_7 | BIAS_MIXED_7)))
         {
             if (ShouldTrySpecialBias())
