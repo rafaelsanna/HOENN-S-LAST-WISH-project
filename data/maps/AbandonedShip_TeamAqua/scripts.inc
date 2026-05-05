@@ -4,12 +4,18 @@ AbandonedShip_TeamAqua_MapScripts::
 AbandonedShip_TeamAqua_NeedKeys::
 	checkflag FLAG_AQUA_SHIP_KEYS
 	goto_if TRUE, AbandonedShip_TeamAqua_NeedKeys_End
+	playse SE_WALL_HIT
+	applymovement OBJ_EVENT_ID_PLAYER, AbandonedShip_TeamAqua_Movement_FaceUp
 	msgbox AbandonedShip_TeamAqua_Text_Locked, MSGBOX_SIGN
 	applymovement OBJ_EVENT_ID_PLAYER, AbandonedShip_TeamAqua_Movement_StepBack
 	waitmovement 0
 
 AbandonedShip_TeamAqua_NeedKeys_End::
 	end
+
+AbandonedShip_TeamAqua_Movement_FaceUp:
+	face_up
+	step_end
 
 AbandonedShip_TeamAqua_Movement_StepBack:
 	face_up
