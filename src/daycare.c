@@ -7,6 +7,7 @@
 #include "mail.h"
 #include "pokemon_storage_system.h"
 #include "event_data.h"
+#include "event_object_movement.h"
 #include "random.h"
 #include "main.h"
 #include "egg_hatch.h"
@@ -25,6 +26,9 @@
 #include "constants/form_change_types.h"
 #include "constants/items.h"
 #include "constants/hold_effects.h"
+#include "constants/map_event_ids.h"
+#include "constants/map_groups.h"
+#include "constants/maps.h"
 #include "constants/moves.h"
 #include "constants/region_map_sections.h"
 
@@ -35,6 +39,7 @@ static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *
 static void DaycarePrintMonInfo(u8 windowId, u32 daycareSlotId, u8 y);
 static u8 ModifyBreedingScoreForOvalCharm(u8 score);
 static u16 GetEggSpecies(u16 species);
+static void TryAnimateRoute117DaycareEggIndicator(void);
 
 // RAM buffers used to assist with BuildEggMoveset()
 EWRAM_DATA static u16 sHatchedEggLevelUpMoves[EGG_LVL_UP_MOVES_ARRAY_COUNT] = {0};
@@ -53,6 +58,69 @@ static const struct WindowTemplate sDaycareLevelMenuWindowTemplate =
     .paletteNum = 15,
     .baseBlock = 8
 };
+
+static const union AffineAnimCmd sAffineAnim_DaycareEggIndicatorAppear[] =
+{
+    AFFINEANIMCMD_FRAME(0x40, 0x40, 0, 0),
+    AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
+    AFFINEANIMCMD_FRAME(0xC0, 0xC0, 0, 0),
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_DaycareEggIndicatorAppear[] =
+{
+    sAffineAnim_DaycareEggIndicatorAppear,
+};
+
+static void Task_DaycareEggIndicatorAppear(u8 taskId)
+{
+    struct Sprite *sprite = &gSprites[gTasks[taskId].data[0]];
+
+    if (++gTasks[taskId].data[1] >= 8)
+    {
+        sprite->affineAnimEnded = TRUE;
+        FreeSpriteOamMatrix(sprite);
+        sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+        DestroyTask(taskId);
+    }
+}
+
+static void TryAnimateRoute117DaycareEggIndicator(void)
+{
+    u8 objectEventId;
+    u8 taskId;
+
+    if (gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(MAP_ROUTE117)
+     || gSaveBlock1Ptr->location.mapNum != MAP_NUM(MAP_ROUTE117))
+        return;
+
+    SetObjEventTemplateCoords(LOCALID_DAYCARE_EGG_INDICATOR, 53, 16);
+    TryMoveObjectEventToMapCoords(LOCALID_DAYCARE_EGG_INDICATOR,
+                                  gSaveBlock1Ptr->location.mapNum,
+                                  gSaveBlock1Ptr->location.mapGroup,
+                                  53,
+                                  16);
+
+    if (TryGetObjectEventIdByLocalIdAndMap(LOCALID_DAYCARE_EGG_INDICATOR,
+                                           gSaveBlock1Ptr->location.mapNum,
+                                           gSaveBlock1Ptr->location.mapGroup,
+                                           &objectEventId))
+        return;
+
+    gObjectEvents[objectEventId].invisible = FALSE;
+    gSprites[gObjectEvents[objectEventId].spriteId].affineAnims = sAffineAnims_DaycareEggIndicatorAppear;
+    gSprites[gObjectEvents[objectEventId].spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    InitSpriteAffineAnim(&gSprites[gObjectEvents[objectEventId].spriteId]);
+    StartSpriteAffineAnim(&gSprites[gObjectEvents[objectEventId].spriteId], 0);
+
+    taskId = FindTaskIdByFunc(Task_DaycareEggIndicatorAppear);
+    if (taskId != TASK_NONE)
+        DestroyTask(taskId);
+
+    taskId = CreateTask(Task_DaycareEggIndicatorAppear, 5);
+    gTasks[taskId].data[0] = gObjectEvents[objectEventId].spriteId;
+}
 
 // Indices here are assigned by Task_HandleDaycareLevelMenuInput to VAR_RESULT,
 // which is copied to VAR_0x8004 and used as an index for GetDaycareCost
@@ -587,6 +655,7 @@ static void _TriggerPendingDaycareEgg(struct DayCare *daycare)
     }
 
     FlagSet(FLAG_PENDING_DAYCARE_EGG);
+    TryAnimateRoute117DaycareEggIndicator();
 }
 
 // Functionally unused
