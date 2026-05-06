@@ -1233,7 +1233,11 @@
     },
     {
       "id": "MAPSEC_DEWDROP_JUNGLE",
-      "name": "DEWDROP JUNGLE"
+      "name": "DEWDROP JUNGLE",
+      "x": 0,
+      "y": 14,
+      "width": 1,
+      "height": 1
     },
     {
       "id": "MAPSEC_TANGLED_THICKET",
@@ -1253,11 +1257,19 @@
     },
     {
       "id": "MAPSEC_OLDALE_FIELD",
-      "name": "OLDALE FIELD"
+      "name": "OLDALE FIELD",
+      "x": 5,
+      "y": 9,
+      "width": 1,
+      "height": 1
     },
     {
       "id": "MAPSEC_GRANITE_HILL",
-      "name": "GRANITE HILL"
+      "name": "GRANITE HILL",
+      "x": 1,
+      "y": 14,
+      "width": 1,
+      "height": 1
     },
     {
       "id": "MAPSEC_GROTTO",
@@ -1269,7 +1281,11 @@
     },
     {
       "id": "MAPSEC_LITTLEROOT_COAST",
-      "name": "LITTLEROOT COAST"
+      "name": "LITTLEROOT COAST",
+      "x": 4,
+      "y": 12,
+      "width": 1,
+      "height": 1
     }
   ]
 }
