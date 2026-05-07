@@ -41,6 +41,9 @@
 #include "constants/metatile_behaviors.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
+#include "event_object_lock.h"
+#include "option_menu.h"
+#include "party_menu.h"
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPrevMetatileBehavior = 0;
@@ -229,8 +232,27 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
     if (input->pressedStartButton)
     {
-        PlaySE(SE_WIN_OPEN);
-        ShowStartMenu();
+        if (JOY_HELD(R_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            ScriptContext_Enable();
+            FreezeObjectEvents();
+            gMain.savedCallback = CB2_ReturnToField;
+            SetMainCallback2(CB2_InitOptionMenu);
+        }
+        else if (JOY_HELD(L_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            ScriptContext_Enable();
+            FreezeObjectEvents();
+            gMain.savedCallback = CB2_ReturnToField;
+            SetMainCallback2(CB2_PartyMenuFromStartMenu);
+        }
+        else
+        {
+            PlaySE(SE_WIN_OPEN);
+            ShowStartMenu();
+        }
         return TRUE;
     }
 
