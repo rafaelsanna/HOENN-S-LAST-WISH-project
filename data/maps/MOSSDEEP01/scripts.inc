@@ -270,8 +270,6 @@ MOSSDEEP01_EventScript_Celebi::
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
 	closemessage
 	playse SE_M_HYPER_BEAM
-
-	giveitem ITEM_TIME_GEAR
 	
 	// Transform static Celebi into follower
 	fadescreenswapbuffers FADE_TO_BLACK
@@ -293,6 +291,7 @@ MOSSDEEP01_EventScript_Celebi::
 
 	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
 	closemessage
+	giveitem ITEM_TIME_GEAR
 	release
 	end
 
