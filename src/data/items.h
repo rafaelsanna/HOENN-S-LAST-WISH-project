@@ -14818,6 +14818,22 @@ const struct Item gItemsInfo[] =
         .iconPic = gItemIcon_NumelNougat,
         .iconPalette = gItemIconPalette_NumelNougat,
     },
+
+    [ITEM_TIME_GEAR] =
+{
+    .name = ITEM_NAME("Time Gear"),
+    .price = 0,
+    .description = COMPOUND_STRING(
+        "A mysterious gear\n"
+        "that shifts time.\n"
+        "Reusable."),
+    .importance = 1,
+    .pocket = POCKET_KEY_ITEMS,
+    .type = ITEM_USE_FIELD,
+    .fieldUseFunc = ItemUseOutOfBattle_TimeGear,
+    .iconPic = gItemIcon_TimeGear,
+    .iconPalette = gItemIconPalette_TimeGear,
+},
 };
 
 #undef ITEM_NAME

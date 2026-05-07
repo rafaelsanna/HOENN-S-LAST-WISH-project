@@ -999,11 +999,13 @@
 #define ITEM_GUMMY_WURMPLES 831
 #define ITEM_NUMEL_NOUGAT 832
 
+#define ITEM_TIME_GEAR 833
+
 
 // HOPO BERRY
 // LEGEND PLATE
 
-#define ITEMS_COUNT 833
+#define ITEMS_COUNT 834
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations

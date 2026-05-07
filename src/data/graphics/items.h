@@ -2108,3 +2108,6 @@ const u16 gItemIconPalette_GummyWurmples[] = INCBIN_U16("graphics/items/icon_pal
 
 const u32 gItemIcon_NumelNougat[] = INCBIN_U32("graphics/items/icons/numelnougat.4bpp.smol");
 const u16 gItemIconPalette_NumelNougat[] = INCBIN_U16("graphics/items/icon_palettes/numelnougat.gbapal");
+
+const u32 gItemIcon_TimeGear[] = INCBIN_U32("graphics/items/icons/time_gear.4bpp.smol");
+const u16 gItemIconPalette_TimeGear[] = INCBIN_U16("graphics/items/icon_palettes/time_gear.gbapal");
