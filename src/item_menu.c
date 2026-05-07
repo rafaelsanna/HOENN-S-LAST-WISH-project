@@ -402,6 +402,10 @@ static const struct ScrollArrowsTemplate sBagScrollArrowsTemplate = {
     .palNum = 0,
 };
 
+// Adicionar antes da função, perto de sRegisteredSelect_Gfx:
+static const u8 sText_RButton[] = _("R");
+static const u8 sText_LButton[] = _("L");
+
 static const u8 sRegisteredSelect_Gfx[] = INCBIN_U8("graphics/bag/select_button.4bpp");
 
 enum {
@@ -410,6 +414,7 @@ enum {
     COLORID_GRAY_CURSOR,
     COLORID_UNUSED,
     COLORID_TMHM_INFO,
+    COLORID_RED_TEXT,
     COLORID_NONE = 0xFF
 };
 static const u8 sFontColorTable[][3] = {
@@ -418,6 +423,7 @@ static const u8 sFontColorTable[][3] = {
     [COLORID_POCKET_NAME] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_RED},
     [COLORID_GRAY_CURSOR] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_GREEN},
     [COLORID_UNUSED]      = {TEXT_COLOR_DARK_GRAY,   TEXT_COLOR_WHITE,      TEXT_COLOR_LIGHT_GRAY},
+    [COLORID_RED_TEXT] = {TEXT_COLOR_TRANSPARENT, 5, TEXT_COLOR_DARK_GRAY},
     [COLORID_TMHM_INFO]   = {TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_5,  TEXT_DYNAMIC_COLOR_1}
 };
 
@@ -853,13 +859,17 @@ static bool8 LoadBagMenu_Graphics(void)
             gBagMenu->graphicsLoadState++;
         }
         break;
-    case 2:
-        if (!IsWallysBag() && gSaveBlock2Ptr->playerGender != MALE)
-            LoadPalette(gBagScreenFemale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-        else
-            LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-        gBagMenu->graphicsLoadState++;
-        break;
+case 2:
+    if (!IsWallysBag() && gSaveBlock2Ptr->playerGender != MALE)
+        LoadPalette(gBagScreenFemale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    else
+        LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+
+    // Força o slot TEXT_COLOR_RED da paleta da bag para vermelho real
+    ((u16 *)BG_PLTT)[TEXT_COLOR_RED] = RGB(31, 0, 0);
+
+    gBagMenu->graphicsLoadState++;
+    break;
     case 3:
         if (IsWallysBag() == TRUE || gSaveBlock2Ptr->playerGender == MALE)
             LoadCompressedSpriteSheet(&gBagMaleSpriteSheet);
@@ -1016,8 +1026,19 @@ static void BagMenu_ItemPrintCallback(u8 windowId, u32 itemIndex, u8 y)
         else
         {
             // Print registered icon
-            if (gSaveBlock1Ptr->registeredItem != ITEM_NONE && gSaveBlock1Ptr->registeredItem == itemSlot.itemId)
-                BlitBitmapToWindow(windowId, sRegisteredSelect_Gfx, 96, y - 1, 24, 16);
+// Dentro do else{}, substituir as linhas de R e L:
+
+// SELECT mantém igual
+if (gSaveBlock1Ptr->registeredItem != ITEM_NONE && gSaveBlock1Ptr->registeredItem == itemSlot.itemId)
+    BlitBitmapToWindow(windowId, sRegisteredSelect_Gfx, 96, y - 1, 24, 16);
+
+// R: x=97 (dentro da janela, cobre x=97..102)
+if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE && gSaveBlock1Ptr->registeredItemR == itemSlot.itemId)
+    BagMenu_Print(windowId, FONT_SMALL, sText_RButton, 97, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
+
+// L: x=109 (dentro da janela, cobre x=109..114)
+if (gSaveBlock1Ptr->registeredItemL != ITEM_NONE && gSaveBlock1Ptr->registeredItemL == itemSlot.itemId)
+    BagMenu_Print(windowId, FONT_SMALL, sText_LButton, 109, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
         }
     }
 }
@@ -1285,6 +1306,42 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                 }
                 return;
             }
+if (JOY_NEW(R_BUTTON) || JOY_NEW(L_BUTTON))
+{
+    u16 itemId;
+    ListMenuGetScrollAndRow(tListTaskId, scrollPos, cursorPos);
+    itemId = GetBagItemIdAndQuantity(gBagPosition.pocket, *scrollPos + *cursorPos).itemId;
+    if (itemId != ITEM_NONE && GetItemFieldFunc(itemId) != NULL)
+    {
+        // NOVO: bloquear se já registrado no SELECT
+        if (gSaveBlock1Ptr->registeredItem == itemId)
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
+
+if (JOY_NEW(R_BUTTON))
+{
+    if (gSaveBlock1Ptr->registeredItemR == itemId)
+        gSaveBlock1Ptr->registeredItemR = ITEM_NONE;  // desregistra
+    else
+        gSaveBlock1Ptr->registeredItemR = itemId;     // registra
+}
+else if (JOY_NEW(L_BUTTON))
+{
+    if (gSaveBlock1Ptr->registeredItemL == itemId)
+        gSaveBlock1Ptr->registeredItemL = ITEM_NONE;  // desregistra
+    else
+        gSaveBlock1Ptr->registeredItemL = itemId;     // registra
+}
+        PlaySE(SE_PC_LOGIN);
+
+        DestroyListMenuTask(tListTaskId, NULL, NULL);
+        tListTaskId = ListMenuInit(&gMultiuseListMenuTemplate, *scrollPos, *cursorPos);
+        ScheduleBgCopyTilemapToVram(0);
+        return;
+    }
+}
             else if (JOY_NEW(START_BUTTON))
             {
                 if ((gBagMenu->numItemStacks[gBagPosition.pocket] - 1) <= 1) //can't sort with 0 or 1 item in bag
@@ -1990,6 +2047,18 @@ static void ItemMenu_Register(u8 taskId)
     u16 *scrollPos = &gBagPosition.scrollPosition[gBagPosition.pocket];
     u16 *cursorPos = &gBagPosition.cursorPosition[gBagPosition.pocket];
 
+    // NOVO: se já está no R ou L, bloquear registro no SELECT
+    if (gSaveBlock1Ptr->registeredItem != gSpecialVar_ItemId) // só bloqueia ao registrar (não ao desregistrar)
+    {
+        if (gSaveBlock1Ptr->registeredItemR == gSpecialVar_ItemId ||
+            gSaveBlock1Ptr->registeredItemL == gSpecialVar_ItemId)
+        {
+            PlaySE(SE_FAILURE);
+            ItemMenu_Cancel(taskId);
+            return;
+        }
+    }
+
     if (gSaveBlock1Ptr->registeredItem == gSpecialVar_ItemId)
         gSaveBlock1Ptr->registeredItem = ITEM_NONE;
     else
@@ -2149,6 +2218,62 @@ bool8 UseRegisteredKeyItemOnField(void)
     }
     ScriptContext_SetupScript(EventScript_SelectWithoutRegisteredItem);
     return TRUE;
+}
+
+bool8 UseRegisteredKeyItemOnField_R(void)
+{
+    u8 taskId;
+    if (InUnionRoom() == TRUE || CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InBattlePike() || InMultiPartnerRoom() == TRUE)
+        return FALSE;
+    HideMapNamePopUpWindow();
+    ChangeBgY_ScreenOff(0, 0, BG_COORD_SET);
+    if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE)
+    {
+        if (CheckBagHasItem(gSaveBlock1Ptr->registeredItemR, 1) == TRUE)
+        {
+            LockPlayerFieldControls();
+            FreezeObjectEvents();
+            PlayerFreeze();
+            StopPlayerAvatar();
+            gSpecialVar_ItemId = gSaveBlock1Ptr->registeredItemR;
+            taskId = CreateTask(GetItemFieldFunc(gSaveBlock1Ptr->registeredItemR), 8);
+            gTasks[taskId].tUsingRegisteredKeyItem = TRUE;
+            return TRUE;
+        }
+        else
+        {
+            gSaveBlock1Ptr->registeredItemR = ITEM_NONE;
+        }
+    }
+    return FALSE;
+}
+
+bool8 UseRegisteredKeyItemOnField_L(void)
+{
+    u8 taskId;
+    if (InUnionRoom() == TRUE || CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InBattlePike() || InMultiPartnerRoom() == TRUE)
+        return FALSE;
+    HideMapNamePopUpWindow();
+    ChangeBgY_ScreenOff(0, 0, BG_COORD_SET);
+    if (gSaveBlock1Ptr->registeredItemL != ITEM_NONE)
+    {
+        if (CheckBagHasItem(gSaveBlock1Ptr->registeredItemL, 1) == TRUE)
+        {
+            LockPlayerFieldControls();
+            FreezeObjectEvents();
+            PlayerFreeze();
+            StopPlayerAvatar();
+            gSpecialVar_ItemId = gSaveBlock1Ptr->registeredItemL;
+            taskId = CreateTask(GetItemFieldFunc(gSaveBlock1Ptr->registeredItemL), 8);
+            gTasks[taskId].tUsingRegisteredKeyItem = TRUE;
+            return TRUE;
+        }
+        else
+        {
+            gSaveBlock1Ptr->registeredItemL = ITEM_NONE;
+        }
+    }
+    return FALSE;
 }
 
 #undef tUsingRegisteredKeyItem
