@@ -688,6 +688,7 @@ void GoToBagMenu(u8 location, u8 pocket, void ( *exitCallback)())
 void CB2_BagMenuRun(void)
 {
     RunTasks();
+    AdvanceComfyAnimations();
     AnimateSprites();
     BuildOamBuffer();
     DoScheduledBgTilemapCopiesToVram();
@@ -976,6 +977,47 @@ static void GetItemNameFromPocket(u8 *dest, u16 itemId)
     }
 }
 
+// Callback atribuído temporariamente ao sprite do ícone durante a animação de entrada.
+// sprite->data[0] = ID da ComfyAnim alocada (ou INVALID_COMFY_ANIM se inativa)
+static void SpriteCB_ItemIconSpring(struct Sprite *sprite)
+{
+    u8 animId = (u8)sprite->data[0];
+
+    if (gComfyAnims[animId].completed)
+    {
+        // Garante posição final exata, libera a anim e desativa o callback
+        sprite->y = Q_24_8_TO_INT(gComfyAnims[animId].config.data.spring.to);
+        ReleaseComfyAnim(animId);
+        sprite->data[0] = INVALID_COMFY_ANIM; // marca como sem anim ativa
+        sprite->callback = SpriteCallbackDummy;
+    }
+    else
+    {
+        sprite->y = ReadComfyAnimValueSmooth(&gComfyAnims[animId]);
+    }
+}
+
+// Libera a ComfyAnim de um sprite caso ele ainda esteja animando.
+// Deve ser chamado antes de destruir (RemoveBagItemIconSprite) qualquer sprite
+// que possa ter sido colocado em SpriteCB_ItemIconSpring.
+static void CancelItemIconSpringAnim(u8 spriteId)
+{
+    struct Sprite *sprite;
+
+    if (spriteId == SPRITE_NONE)
+        return;
+
+    sprite = &gSprites[spriteId];
+
+    // Só libera se o callback ainda é o de spring E há uma anim válida alocada
+    if (sprite->callback == SpriteCB_ItemIconSpring
+        && (u8)sprite->data[0] != INVALID_COMFY_ANIM)
+    {
+        ReleaseComfyAnim((u8)sprite->data[0]);
+        sprite->data[0] = INVALID_COMFY_ANIM;
+    }
+}
+
 static void BagMenu_MoveCursorCallback(s32 itemIndex, bool8 onInit, struct ListMenu *list)
 {
     if (onInit != TRUE)
@@ -985,11 +1027,52 @@ static void BagMenu_MoveCursorCallback(s32 itemIndex, bool8 onInit, struct ListM
     }
     if (gBagMenu->toSwapPos == NOT_SWAPPING)
     {
+        // ── Correção do Bug 2: libera anim pendente ANTES de destruir o sprite ──
+        {
+            u8 oldSpriteId = gBagMenu->spriteIds[ITEMMENUSPRITE_ITEM + (gBagMenu->itemIconSlot ^ 1)];
+            CancelItemIconSpringAnim(oldSpriteId);
+        }
+
         RemoveBagItemIconSprite(gBagMenu->itemIconSlot ^ 1);
+
         if (itemIndex != LIST_CANCEL)
-           AddBagItemIconSprite(GetBagItemId(gBagPosition.pocket, itemIndex), gBagMenu->itemIconSlot);
+            AddBagItemIconSprite(GetBagItemId(gBagPosition.pocket, itemIndex), gBagMenu->itemIconSlot);
         else
-           AddBagItemIconSprite(ITEM_LIST_END, gBagMenu->itemIconSlot);
+            AddBagItemIconSprite(ITEM_LIST_END, gBagMenu->itemIconSlot);
+
+        // ── Correção do Bug 1: anima apenas itens reais, nunca LIST_CANCEL ──
+        if (itemIndex != LIST_CANCEL)
+        {
+            u8 newSpriteId = gBagMenu->spriteIds[ITEMMENUSPRITE_ITEM + gBagMenu->itemIconSlot];
+            if (newSpriteId != SPRITE_NONE)
+            {
+                struct Sprite *sprite = &gSprites[newSpriteId];
+                s16 targetY = sprite->y; // posição final definida por AddBagItemIconSprite
+
+                struct ComfyAnimSpringConfig cfg;
+                InitComfyAnimConfig_Spring(&cfg);
+                cfg.from       = Q_24_8(targetY - 24); // começa 24 px acima
+                cfg.to         = Q_24_8(targetY);
+                cfg.tension    = Q_24_8(300);
+                cfg.friction   = Q_24_8(450);
+                cfg.mass       = Q_24_8(80);
+                cfg.clampAfter = 0;
+
+                u8 animId = CreateComfyAnim_Spring(&cfg);
+                if (animId != INVALID_COMFY_ANIM)
+                {
+                    sprite->data[0] = animId;
+                    sprite->callback = SpriteCB_ItemIconSpring;
+                    sprite->y = targetY - 24; // posição inicial (acima)
+                }
+                else
+                {
+                    // Slots esgotados: mantém posição final sem animar
+                    sprite->data[0] = INVALID_COMFY_ANIM;
+                }
+            }
+        }
+
         gBagMenu->itemIconSlot ^= 1;
         if (!gBagMenu->inhibitItemDescriptionPrint)
             PrintItemDescription(itemIndex);
@@ -1036,11 +1119,11 @@ if (gSaveBlock1Ptr->registeredItem != ITEM_NONE && gSaveBlock1Ptr->registeredIte
 
 // R: x=97 (dentro da janela, cobre x=97..102)
 if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE && gSaveBlock1Ptr->registeredItemR == itemSlot.itemId)
-    BagMenu_Print(windowId, FONT_SMALL, sText_RButton, 97, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
+    BagMenu_Print(windowId, FONT_SMALL, sText_RButton, 109, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
 
 // L: x=109 (dentro da janela, cobre x=109..114)
 if (gSaveBlock1Ptr->registeredItemL != ITEM_NONE && gSaveBlock1Ptr->registeredItemL == itemSlot.itemId)
-    BagMenu_Print(windowId, FONT_SMALL, sText_LButton, 109, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
+    BagMenu_Print(windowId, FONT_SMALL, sText_LButton, 97, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
         }
     }
 }

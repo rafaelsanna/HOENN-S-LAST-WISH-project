@@ -42,6 +42,9 @@
 #include "ui_main_menu.h"
 #include "random.h"
 #include "trig.h"
+#include "comfy_anim.h"
+
+#pragma GCC diagnostic ignored "-Wunused-function"
 
 /*
  * Main menu state machine
@@ -247,6 +250,13 @@ static void Birch_TaskFloatingStars(u8 taskId);
 static void Birch_CreateStars(void);
 static void Birch_LoadStarGfx(void);
 static void Birch_DestroyStars(void);
+static struct ComfyAnim sJirachiSpringX;
+static struct ComfyAnim sCelebiSpringX;
+static bool8 sJirachiSpringActive = FALSE;
+static bool8 sCelebiSpringActive = FALSE;
+static struct ComfyAnim sGenderSlideX;
+static bool8 sGenderSlideActive = FALSE;
+static void Task_NewGameBirchSpeech_GenderSlideIn(u8);
 // .rodata
 
 static const u16 sBirchSpeechBgPals[][16] = {
@@ -732,6 +742,7 @@ enum
 static void CB2_MainMenu(void)
 {
     RunTasks();
+    AdvanceComfyAnimations();   // confy anim
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
@@ -1723,13 +1734,57 @@ static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId)
         gTasks[taskId].data[0]  = (gTasks[taskId].data[0] + 4) & 0xFF;
 
         // Quando ambos terminarem, avança para o estado final
-        if (jirachiDone && celebiDone)
-        {
-            gTasks[taskId].data[12] = 0;   // finaliza animação
-        }
+if (jirachiDone && celebiDone)
+{
+    gTasks[taskId].data[12] = 0;
+
+    // Inicia molas para o “quique” final
+    struct ComfyAnimSpringConfig cfg;
+    InitComfyAnimConfig_Spring(&cfg);
+
+    // Jirachi: da posição atual até 90
+    cfg.from = Q_24_8(gSprites[jirachiId].x);
+    cfg.to   = Q_24_8(90);
+    cfg.tension  = Q_24_8(400);
+    cfg.friction = Q_24_8(600);
+    cfg.mass     = Q_24_8(80);
+    cfg.clampAfter = 1;   // apenas um overshoot e volta
+    InitComfyAnim_Spring(&cfg, &sJirachiSpringX);
+    sJirachiSpringActive = TRUE;
+
+    // Celebi: da posição atual até 150
+    cfg.from = Q_24_8(gSprites[celebiId].x);
+    cfg.to   = Q_24_8(150);
+    InitComfyAnim_Spring(&cfg, &sCelebiSpringX);
+    sCelebiSpringActive = TRUE;
+}
         return;
     }
+// Atualiza as molas e reposiciona os sprites enquanto estiverem ativas
+if (sJirachiSpringActive)
+{
+    TryAdvanceComfyAnim(&sJirachiSpringX);
+    gSprites[jirachiId].x = ReadComfyAnimValueSmooth(&sJirachiSpringX);
+    if (sJirachiSpringX.completed)
+    {
+        gSprites[jirachiId].x = 90;   // posição final exata
+        sJirachiSpringActive = FALSE;
+    }
+}
+if (sCelebiSpringActive)
+{
+    TryAdvanceComfyAnim(&sCelebiSpringX);
+    gSprites[celebiId].x = ReadComfyAnimValueSmooth(&sCelebiSpringX);
+    if (sCelebiSpringX.completed)
+    {
+        gSprites[celebiId].x = 150;
+        sCelebiSpringActive = FALSE;
+    }
+}
 
+// Aguarda o fade-in terminar...
+if (!gTasks[taskId].tIsDoneFadingSprites)
+    return;
     // Aguarda o fade-in terminar (caso ainda não tenha terminado)
     if (!gTasks[taskId].tIsDoneFadingSprites)
         return;
@@ -1860,11 +1915,43 @@ static void Task_NewGameBirchSpeech_WaitToShowGenderMenu(u8 taskId)
     }
 }
 
+// Helper: esconde sprite atual, exibe o novo e reinicia a mola do slide.
+// Chamado tanto em ChooseGender quanto em GenderSlideIn para evitar duplicação.
+static void StartGenderSlide(u8 taskId, int newGender)
+{
+    struct ComfyAnimSpringConfig cfg;
+    u8 newSpriteId;
+
+    gSprites[gTasks[taskId].tPlayerSpriteId].invisible = TRUE;
+
+    newSpriteId = (newGender != MALE) ? gTasks[taskId].tMaySpriteId
+                                      : gTasks[taskId].tBrendanSpriteId;
+    gSprites[newSpriteId].x           = 260;
+    gSprites[newSpriteId].y           = 60;
+    gSprites[newSpriteId].invisible   = FALSE;
+    gSprites[newSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+
+    gTasks[taskId].tPlayerSpriteId = newSpriteId;
+    gTasks[taskId].tPlayerGender   = newGender;
+
+    InitComfyAnimConfig_Spring(&cfg);
+    cfg.from       = Q_24_8(260);
+    cfg.to         = Q_24_8(180);
+    cfg.tension    = Q_24_8(300);
+    cfg.friction   = Q_24_8(450);
+    cfg.mass       = Q_24_8(80);
+    cfg.clampAfter = 0;
+    InitComfyAnim_Spring(&cfg, &sGenderSlideX);
+    sGenderSlideActive = TRUE;
+}
+
 static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
 {
-    int gender = NewGameBirchSpeech_ProcessGenderMenuInput();
-    int gender2;
+    // Processa o input do menu — isso atualiza o cursor interno antes de Menu_GetCursorPos()
+    int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
+    int cursorPos = Menu_GetCursorPos();
 
+    // Jogador confirmou com A
     switch (gender)
     {
         case MALE:
@@ -1873,20 +1960,61 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
             gSaveBlock2Ptr->playerGender = gender;
             NewGameBirchSpeech_ClearGenderWindow(1, 1);
             gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
-            break;
+            return;
     }
-    
-    gender2 = Menu_GetCursorPos();
-    if (gender2 != gTasks[taskId].tPlayerGender)
+
+    // Cursor mudou → inicia slide imediatamente
+    if (cursorPos != gTasks[taskId].tPlayerGender)
     {
-        gTasks[taskId].tPlayerGender = gender2;
-        gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-        
-        // Usa fade restaurado para transição de sprites
-        NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 0);
-        
-        gTasks[taskId].func = Task_NewGameBirchSpeech_SlideOutOldGenderSprite;
+        StartGenderSlide(taskId, cursorPos);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSlideIn;
     }
+}
+
+static void Task_NewGameBirchSpeech_GenderSlideIn(u8 taskId)
+{
+    u8  spriteId  = gTasks[taskId].tPlayerSpriteId;
+    // CORREÇÃO: processar o input AQUI também, a cada frame,
+    // para que Menu_GetCursorPos() reflita o estado real do botão.
+    int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
+    int cursorPos = Menu_GetCursorPos();
+
+    // Confirmação com A aceita mesmo durante a animação
+    switch (gender)
+    {
+        case MALE:
+        case FEMALE:
+            PlaySE(SE_SELECT);
+            sGenderSlideActive = FALSE;
+            gSaveBlock2Ptr->playerGender = gender;
+            NewGameBirchSpeech_ClearGenderWindow(1, 1);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+            return;
+    }
+
+    // Cursor mudou durante o slide → reinicia sem nenhum delay
+    if (cursorPos != gTasks[taskId].tPlayerGender)
+    {
+        sGenderSlideActive = FALSE;
+        StartGenderSlide(taskId, cursorPos);
+        return; // permanece em GenderSlideIn para a nova animação
+    }
+
+    // Avança a física da mola
+    if (sGenderSlideActive)
+    {
+        TryAdvanceComfyAnim(&sGenderSlideX);
+        gSprites[spriteId].x = ReadComfyAnimValueSmooth(&sGenderSlideX);
+        if (sGenderSlideX.completed)
+        {
+            gSprites[spriteId].x = 180;
+            sGenderSlideActive   = FALSE;
+        }
+    }
+
+    // Animação concluída → volta ao handler principal
+    if (!sGenderSlideActive)
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
 }
 
 static void Task_NewGameBirchSpeech_SlideOutOldGenderSprite(u8 taskId)
