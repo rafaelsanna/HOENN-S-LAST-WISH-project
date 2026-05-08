@@ -234,7 +234,9 @@ static const struct MenuAction sItemStorage_MenuActions[] =
 
 static const u16 sNewGamePCItems[][2] =
 {
-    { ITEM_POTION, 1 },
+    { ITEM_SKITTIES, 1 },
+    { ITEM_GUMMY_WURMPLES, 1 },
+    { ITEM_NUMEL_NOUGAT, 1 },
     { ITEM_NONE, 0 }
 };
 

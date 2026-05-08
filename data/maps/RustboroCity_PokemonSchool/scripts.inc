@@ -188,6 +188,41 @@ RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast:
 	walk_left
 	step_end
 
+@ ========================================
+@ NEW NPC SCRIPTS
+@ ========================================
+
+RustboroCity_PokemonSchool_EventScript_GirlLikesArt::
+	msgbox RustboroCity_PokemonSchool_Text_GirlLikesArt, MSGBOX_NPC
+	end
+
+RustboroCity_PokemonSchool_EventScript_GirlAnsiousAboutExams::
+	msgbox RustboroCity_PokemonSchool_Text_GirlAnxiousAboutExams, MSGBOX_NPC
+	end
+
+RustboroCity_PokemonSchool_EventScript_GirlLookingForBooks::
+	msgbox RustboroCity_PokemonSchool_Text_GirlLookingForBooks, MSGBOX_NPC
+	end
+
+RustboroCity_PokemonSchool_EventScript_smallBoycantReadthesigns::
+	lock
+	faceplayer
+	msgbox RustboroCity_PokemonSchool_Text_SmallBoyCannotRead, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, RustboroCity_PokemonSchool_EventScript_SmallBoyDeclined
+	msgbox RustboroCity_PokemonSchool_Text_SmallBoySignContent, MSGBOX_DEFAULT
+	msgbox RustboroCity_PokemonSchool_Text_SmallBoyThanks, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_PokemonSchool_EventScript_SmallBoyDeclined::
+	msgbox RustboroCity_PokemonSchool_Text_SmallBoyDeclined, MSGBOX_DEFAULT
+	release
+	end
+
+@ ========================================
+@ ORIGINAL TEXTS
+@ ========================================
+
 RustboroCity_PokemonSchool_Text_BlackboardListsStatusChanges:
 	.string "The blackboard lists status changes\n"
 	.string "that may affect POKéMON in battle.$"
@@ -368,3 +403,49 @@ RustboroCity_PokemonSchool_Text_TeacherTwoDefeated:
 RustboroCity_PokemonSchool_Text_ExplainWiseGlasses:
 	.string "The WISE GLASSES boost\n"
 	.string "special attack power. Use them wisely!$"
+
+@ ========================================
+@ NEW NPC TEXTS
+@ ========================================
+
+RustboroCity_PokemonSchool_Text_GirlLikesArt:
+	.string "I love drawing POKéMON way more\n"
+	.string "than writing notes!\p"
+	.string "My favorite is RALTS.\n"
+	.string "She looks so graceful and pretty!$"
+
+RustboroCity_PokemonSchool_Text_GirlAnxiousAboutExams:
+	.string "Oh no, oh no…\n"
+	.string "The exam is coming so soon!\p"
+	.string "I haven't studied nearly enough!\n"
+	.string "What if I forget everything?!$"
+
+RustboroCity_PokemonSchool_Text_SmallBoyCannotRead:
+	.string "Hey, you! Could you read that\n"
+	.string "notice board for me, please?\p"
+	.string "I keep stretching on my tiptoes\n"
+	.string "but it's way too high for me…\p"
+	.string "Will you read it?$"
+
+RustboroCity_PokemonSchool_Text_SmallBoySignContent:
+	.string "You read the notice board aloud:\p"
+	.string "STUDENT NOTICES:\n"
+	.string "- Label all your notebooks.\p"
+	.string "- No running in the hallways.\p"
+	.string "- Return borrowed books before\n"
+	.string "  the exam week. Thank you!$"
+
+RustboroCity_PokemonSchool_Text_SmallBoyThanks:
+	.string "Wow, thanks a lot!\p"
+	.string "I'm gonna grow real tall someday\n"
+	.string "and read everything by myself!$"
+
+RustboroCity_PokemonSchool_Text_SmallBoyDeclined:
+	.string "Aww…\n"
+	.string "Okay, I'll ask someone else…$"
+
+RustboroCity_PokemonSchool_Text_GirlLookingForBooks:
+	.string "Hmm… I'm sure I left my\n"
+	.string "study book around here…\p"
+	.string "Have you seen a blue notebook\n"
+	.string "with POKéMON stickers on it?$"
