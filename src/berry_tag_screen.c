@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "berry_tag_screen.h"
 #include "berry.h"
 #include "decompress.h"
@@ -248,6 +249,7 @@ static bool8 InitBerryTagScreen(void)
     case 5:
         if (!MenuHelpers_IsLinkActive())
             ResetTasks();
+            ReleaseComfyAnims();
         gMain.state++;
         break;
     case 6:

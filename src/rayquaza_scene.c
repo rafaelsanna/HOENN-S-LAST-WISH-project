@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "rayquaza_scene.h"
 #include "event_object_movement.h"
 #include "sprite.h"
@@ -1311,6 +1312,7 @@ static void CB2_InitRayquazaScene(void)
     ResetPaletteFade();
     ResetSpriteData();
     ResetTasks();
+    ReleaseComfyAnims();
     FillPalette(RGB_BLACK, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     CreateTask(sTasksForAnimations[sRayScene->animId], 0);
     SetMainCallback2(CB2_RayquazaScene);

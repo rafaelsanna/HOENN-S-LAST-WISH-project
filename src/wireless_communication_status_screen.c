@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "task.h"
 #include "bg.h"
 #include "palette.h"
@@ -211,6 +212,7 @@ static void CB2_InitWirelessCommunicationScreen(void)
     ResetPaletteFade();
     ResetSpriteData();
     ResetTasks();
+    ReleaseComfyAnims();
     ScanlineEffect_Stop();
     m4aSoundVSyncOn();
     SetVBlankCallback(VBlankCB_WirelessCommunicationScreen);

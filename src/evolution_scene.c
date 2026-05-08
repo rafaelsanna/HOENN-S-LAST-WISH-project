@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "battle.h"
 #include "battle_message.h"
@@ -243,6 +244,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
     ResetSpriteData();
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     FreeAllSpritePalettes();
 
     gReservedSpritePaletteCount = 4;

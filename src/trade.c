@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "battle_anim.h"
 #include "battle_interface.h"
@@ -397,6 +398,7 @@ static void InitTradeMenu(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetPaletteFade();
 
     gPaletteFade.bufferTransferDisabled = TRUE;
@@ -2816,6 +2818,7 @@ void CB2_LinkTrade(void)
         sTradeAnim = AllocZeroed(sizeof(*sTradeAnim));
         AllocateMonSpritesGfx();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         SetVBlankCallback(VBlankCB_TradeAnim);
@@ -2983,6 +2986,7 @@ static void CB2_InitInGameTrade(void)
         sTradeAnim = AllocZeroed(sizeof(*sTradeAnim));
         AllocateMonSpritesGfx();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         SetVBlankCallback(VBlankCB_TradeAnim);

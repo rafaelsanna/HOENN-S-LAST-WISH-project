@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "task.h"
 #include "text.h"
 #include "menu.h"
@@ -155,6 +156,7 @@ static bool8 SetupClearSaveDataScreen(void)
         for (i = 0; i < 0x400; i++)
             ((u16 *)(BG_SCREEN_ADDR(30)))[i] = 0x0001;
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         ResetBgsAndClearDma3BusyFlags(0);
         InitBgsFromTemplates(0, sClearSaveBgTemplates, ARRAY_COUNT(sClearSaveBgTemplates));

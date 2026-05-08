@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "event_data.h"
 #include "option_menu.h"
 #include "bg.h"
@@ -696,6 +697,7 @@ void CB2_InitOptionMenu(void)
         ResetPaletteFade();
         ScanlineEffect_Stop();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         gMain.state++;
         break;

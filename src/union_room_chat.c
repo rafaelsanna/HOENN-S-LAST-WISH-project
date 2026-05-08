@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "bg.h"
 #include "decompress.h"
@@ -950,6 +951,7 @@ static void CB2_LoadInterface(void)
     {
     case 0:
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         TryAllocDisplay();

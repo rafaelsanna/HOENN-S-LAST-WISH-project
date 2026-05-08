@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "bg.h"
 #include "coins.h"
@@ -1194,6 +1195,7 @@ static void CB2_LoadRoulette(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetTempTileDataBuffers();
         break;
     case 3:

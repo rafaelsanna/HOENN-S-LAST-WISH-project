@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
@@ -531,6 +532,7 @@ static void CB2_StartShowContestResults(void)
     ResetPaletteFade();
     ResetSpriteData();
     ResetTasks();
+    ReleaseComfyAnims();
     FreeAllSpritePalettes();
     LoadContestResultsBgGfx();
     LoadAllContestMonIconPalettes();

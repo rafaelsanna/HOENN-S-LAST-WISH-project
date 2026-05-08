@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "naming_screen.h"
 #include "malloc.h"
 #include "palette.h"
@@ -441,6 +442,7 @@ static void CB2_LoadNamingScreen(void)
         break;
     case 4:
         ResetTasks();
+        ReleaseComfyAnims();
         gMain.state++;
         break;
     case 5:

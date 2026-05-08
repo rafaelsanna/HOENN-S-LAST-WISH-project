@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "overworld.h"
 #include "field_effect.h"
 #include "random.h"
@@ -1236,6 +1237,7 @@ static void SlotMachineSetup_InitPalsSpritesTasks(void)
     gOamLimit = 0x80;
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
 }
 
 static void SlotMachineSetup_InitTilemaps(void)

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "ui_main_menu.h"
 #include "strings.h"
 #include "bg.h"
@@ -394,6 +395,7 @@ static bool8 MainMenu_DoGfxSetup(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         MainMenu_InitializeGPUWindows();
         gMain.state++;
         break;

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "braille_puzzles.h"
 #include "decompress.h"
 #include "event_data.h"
@@ -140,6 +141,7 @@ void CB2_DoChangeMap(void)
     DmaFill16(3, 0, (void *)(PLTT + 2), PLTT_SIZE - 2);
     ResetPaletteFade();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ime = REG_IME;
     REG_IME = 0;

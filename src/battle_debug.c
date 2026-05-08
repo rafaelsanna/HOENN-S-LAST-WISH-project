@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_message.h"
@@ -682,6 +683,7 @@ void CB2_BattleDebugMenu(void)
         ResetPaletteFade();
         ScanlineEffect_Stop();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         gMain.state++;
         break;

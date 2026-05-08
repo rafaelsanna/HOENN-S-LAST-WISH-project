@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "bg.h"
 #include "decompress.h"
 #include "event_data.h"
@@ -262,6 +263,7 @@ static void CB2_LoadCableCar(void)
     case 1:
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         FreeAllSpritePalettes();
         ResetPaletteFade();
         ResetTempTileDataBuffers();
@@ -386,6 +388,7 @@ static void CB2_EndCableCar(void)
         gWeatherPtr->sprites.s2.ashSprites[i] = NULL;
 
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetPaletteFade();
     UnsetBgTilemapBuffer(0);

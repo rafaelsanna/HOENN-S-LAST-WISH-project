@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "bg.h"
 #include "decompress.h"
@@ -692,6 +693,7 @@ void StartDodrioBerryPicking(u16 partyId, void (*exitCallback)(void))
 static void ResetTasksAndSprites(void)
 {
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     FreeAllSpritePalettes();
 }

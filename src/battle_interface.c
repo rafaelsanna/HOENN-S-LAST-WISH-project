@@ -35,6 +35,7 @@
 #include "constants/songs.h"
 #include "constants/items.h"
 #include "caps.h"
+#include "comfy_anim.h"
 
 enum
 {   // Corresponds to gHealthboxElementsGfxTable (and the tables after it) in graphics.c
@@ -208,6 +209,8 @@ static void Task_FreeAbilityPopUpGfx(u8);
 static void SpriteCB_LastUsedBall(struct Sprite *);
 static void SpriteCB_LastUsedBallWin(struct Sprite *);
 static void SpriteCB_MoveInfoWin(struct Sprite *sprite);
+
+static struct ComfyAnim sLastUsedBallAnim;
 
 static const struct OamData sOamData_64x32 =
 {
@@ -2967,6 +2970,14 @@ void TryAddLastUsedBallItemSprites(void)
         gSprites[gBattleStruct->moveInfoSpriteId].sHide = TRUE;
         gLastUsedBallMenuPresent = TRUE;
     }
+    // Configura animação suave (easing) da posição X
+struct ComfyAnimEasingConfig cfg;
+InitComfyAnimConfig_Easing(&cfg);
+cfg.durationFrames = 15;                       // ~0.25 segundos
+cfg.from = Q_24_8(LAST_BALL_WIN_X_0);          // posição inicial (fora da tela)
+cfg.to   = Q_24_8(LAST_BALL_WIN_X_F);          // posição final
+cfg.easingFunc = ComfyAnimEasing_EaseOutCubic; // desaceleração suave
+InitComfyAnim_Easing(&cfg, &sLastUsedBallAnim);
     if (B_LAST_USED_BALL_CYCLE == TRUE)
         ArrowsChangeColorLastBallCycle(0); //Default the arrows to be invisible
 }
@@ -3022,16 +3033,20 @@ static void SpriteCB_LastUsedBallWin(struct Sprite *sprite)
 {
     if (sprite->sHide)
     {
+        // Esconde: volta para a esquerda com easing? Ou mantém linear.
+        // Para manter simples, vamos manter o hide linear mesmo.
         if (sprite->x != LAST_BALL_WIN_X_0)
             sprite->x--;
-
         if (sprite->x == LAST_BALL_WIN_X_0)
             DestroyLastUsedBallWinGfx(sprite);
     }
     else
     {
-        if (sprite->x != LAST_BALL_WIN_X_F)
-            sprite->x++;
+        // Atualiza a animação e posiciona o sprite
+        TryAdvanceComfyAnim(&sLastUsedBallAnim);
+        sprite->x = ReadComfyAnimValueSmooth(&sLastUsedBallAnim);
+        if (sLastUsedBallAnim.completed)
+            sprite->x = LAST_BALL_WIN_X_F; // garante posição final exata
     }
 }
 

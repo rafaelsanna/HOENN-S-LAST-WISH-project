@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle.h"
 #include "battle_factory_screen.h"
 #include "battle_factory.h"
@@ -1180,6 +1181,7 @@ static void CB2_InitSelectScreen(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         FreeAllSpritePalettes();
         CpuCopy16(gFrontierFactoryMenu_Gfx, sSelectMenuTilesetBuffer, sizeof(gFrontierFactoryMenu_Gfx));
         CpuCopy16(sMonPicBg_Gfx, sSelectMonPicBgTilesetBuffer, sizeof(sMonPicBg_Gfx));
@@ -3297,6 +3299,7 @@ static void CB2_InitSwapScreen(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         FreeAllSpritePalettes();
         ResetAllPicSprites();
         CpuCopy16(gFrontierFactoryMenu_Gfx, sSwapMenuTilesetBuffer, sizeof(gFrontierFactoryMenu_Gfx));

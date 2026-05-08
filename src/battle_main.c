@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_main.h"
@@ -561,6 +562,7 @@ static void CB2_InitBattleInternal(void)
     LoadBattleTextboxAndBackground();
     ResetSpriteData();
     ResetTasks();
+    ReleaseComfyAnims();
     if (B_FAST_INTRO_NO_SLIDE == FALSE && !gTestRunnerHeadless)
         DrawBattleEntryBackground();
     FreeAllSpritePalettes();
@@ -1773,6 +1775,7 @@ void BattleMainCB2(void)
     RunTextPrinters();
     UpdatePaletteFade();
     RunTasks();
+    AdvanceComfyAnimations();
 
     if (JOY_HELD(B_BUTTON) && gBattleTypeFlags & BATTLE_TYPE_RECORDED && RecordedBattle_CanStopPlayback())
     {
@@ -2238,6 +2241,7 @@ void CB2_InitEndLinkBattle(void)
         LoadBattleMenuWindowGfx();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         DrawBattleEntryBackground();
         SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
         FreeAllSpritePalettes();
@@ -2444,6 +2448,7 @@ static void CB2_InitAskRecordBattle(void)
 
     ResetSpriteData();
     ResetTasks();
+    ReleaseComfyAnims();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = MAX_BATTLERS_COUNT;
     SetVBlankCallback(VBlankCB_Battle);

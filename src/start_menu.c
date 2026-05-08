@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
@@ -52,6 +53,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "rtc.h"
+#include "comfy_anim.h"
 
 // Menu actions
 enum
@@ -147,6 +149,9 @@ static void SaveGameTask(u8 taskId);
 static void Task_SaveAfterLinkBattle(u8 taskId);
 static void Task_WaitForBattleTowerLinkSave(u8 taskId);
 static bool8 FieldCB_ReturnToFieldStartMenu(void);
+
+// Animação persistente do cursor (uma mola)
+static struct ComfyAnim sCursorAnim;
 
 static u16 sOriginalColor5 = 0;
 static u16 sOriginalColor6 = 0;
@@ -1436,6 +1441,7 @@ static bool32 InitSaveWindowAfterLinkBattle(u8 *state)
     case 1:
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetPaletteFade();
         ScanlineEffect_Clear();
         break;

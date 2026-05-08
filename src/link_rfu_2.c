@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "battle.h"
 #include "berry_blender.h"
@@ -2573,6 +2574,7 @@ static void UNUSED Debug_RfuIdle(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetPaletteFade();
     SetVBlankCallback(VBlank_RfuIdle);
     if (IsWirelessAdapterConnected())

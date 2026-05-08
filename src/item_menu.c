@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "item_menu.h"
 #include "battle.h"
 #include "battle_controllers.h"
@@ -750,6 +751,7 @@ static bool8 SetupBagMenu(void)
     case 6:
         if (!MenuHelpers_IsLinkActive())
             ResetTasks();
+            ReleaseComfyAnims();
         gMain.state++;
         break;
     case 7:

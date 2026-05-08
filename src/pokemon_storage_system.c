@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "bg.h"
 #include "data.h"
@@ -2015,6 +2016,7 @@ static void CB2_PokeStorage(void)
 void EnterPokeStorage(u8 boxOption)
 {
     ResetTasks();
+    ReleaseComfyAnims();
     sCurrentBoxOption = boxOption;
     sStorage = Alloc(sizeof(*sStorage));
     if (sStorage == NULL)
@@ -2036,6 +2038,7 @@ void EnterPokeStorage(u8 boxOption)
 static void CB2_ReturnToPokeStorage(void)
 {
     ResetTasks();
+    ReleaseComfyAnims();
     sStorage = Alloc(sizeof(*sStorage));
     if (sStorage == NULL)
     {

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "main.h"
 #include "palette.h"
 #include "scanline_effect.h"
@@ -1089,6 +1090,7 @@ static u8 SetUpCopyrightScreen(void)
         LoadCopyrightGraphics(0, 0x3800, BG_PLTT_ID(0));
         ScanlineEffect_Stop();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_WHITEALPHA);

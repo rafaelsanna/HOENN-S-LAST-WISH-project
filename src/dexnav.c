@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle_main.h"
 #include "battle_setup.h"
 #include "bg.h"
@@ -2263,6 +2264,7 @@ static bool8 DexNav_DoGfxSetup(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         gMain.state++;
         break;
     case 4:

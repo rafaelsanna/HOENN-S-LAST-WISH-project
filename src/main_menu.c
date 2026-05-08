@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "trainer_pokemon_sprites.h"
 #include "bg.h"
 #include "constants/rgb.h"
@@ -780,6 +781,7 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
     LoadPalette(&softLilac, BG_PLTT_ID(0) + 0, PLTT_SIZEOF(1));
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     FreeAllSpritePalettes();
     // Fades removidos: o Task_OpenMainMenu em ui_main_menu.c gerencia o fade-in do novo menu.
@@ -1506,6 +1508,7 @@ void CB2_NewGameBirchSpeech_FromNewMainMenu(void)
     ResetPaletteFade();
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     FreeAllSpritePalettes();
 
@@ -2184,6 +2187,7 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     LoadPalette(&black, BG_PLTT_ID(0), sizeof(black));
 
     ResetTasks();
+    ReleaseComfyAnims();
     taskId = CreateTask(Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox, 0);
     gTasks[taskId].tTimer = 5;
     gTasks[taskId].tBG1HOFS = 0;

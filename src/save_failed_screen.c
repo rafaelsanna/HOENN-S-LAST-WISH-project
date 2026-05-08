@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "text.h"
 #include "main.h"
 #include "malloc.h"
@@ -222,6 +223,7 @@ static void CB2_SaveFailedScreen(void)
         DeactivateAllTextPrinters();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetPaletteFade();
         LoadPalette(gBirchBagGrass_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         LoadPalette(sSaveFailedClockPal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
@@ -443,6 +445,7 @@ void CB2_FlashNotDetectedScreen(void)
     LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
     DeactivateAllTextPrinters();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetPaletteFade();
     LoadPalette(gTextWindowFrame1_Pal, 0xE0, 0x20);
     LoadPalette(gStandardMenuPalette, 0xF0, 0x20);

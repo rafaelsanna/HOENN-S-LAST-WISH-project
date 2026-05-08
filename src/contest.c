@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "gpu_regs.h"
 #include "bg.h"
 #include "malloc.h"
@@ -1288,6 +1289,7 @@ void CB2_StartContest(void)
         gPaletteFade.bufferTransferDisabled = TRUE;
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 4;
         eContestDebugMode = CONTEST_DEBUG_MODE_OFF;

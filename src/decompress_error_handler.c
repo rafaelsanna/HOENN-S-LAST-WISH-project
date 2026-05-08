@@ -1,5 +1,6 @@
 #include "decompress_error_handler.h"
 #include "global.h"
+#include "comfy_anim.h"
 #include "data.h"
 #include "menu.h"
 #include "menu_helpers.h"
@@ -156,6 +157,7 @@ void DecompressionError_CB2(void)
     LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
     DeactivateAllTextPrinters();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetPaletteFade();
     LoadPalette(gTextWindowFrame1_Pal, 0xE0, 0x20);
     LoadPalette(gStandardMenuPalette, 0xF0, 0x20);

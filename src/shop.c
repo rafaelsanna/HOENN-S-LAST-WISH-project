@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "bg.h"
 #include "data.h"
 #include "decompress.h"
@@ -516,6 +517,7 @@ static void CB2_InitBuyMenu(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         ClearScheduledBgCopiesToVram();
         sShopData = AllocZeroed(sizeof(struct ShopData));
         sShopData->scrollIndicatorsTaskId = TASK_NONE;

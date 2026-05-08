@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -631,6 +632,7 @@ static bool8 ShowPartyMenu(void)
     case 5:
         if (!MenuHelpers_IsLinkActive())
             ResetTasks();
+            ReleaseComfyAnims();
         gMain.state++;
         break;
     case 6:

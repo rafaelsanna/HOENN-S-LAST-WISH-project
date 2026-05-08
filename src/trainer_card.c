@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "scanline_effect.h"
 #include "palette.h"
 #include "task.h"
@@ -913,6 +914,7 @@ static void SetTrainerCardCb2(void)
 static void SetUpTrainerCardTask(void)
 {
     ResetTasks();
+    ReleaseComfyAnims();
     ScanlineEffect_Stop();
     CreateTask(Task_TrainerCard, 0);
     InitTrainerCardData();

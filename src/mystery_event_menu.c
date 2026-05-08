@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "mystery_event_menu.h"
 #include "link.h"
 #include "main.h"
@@ -82,6 +83,7 @@ void CB2_InitMysteryEventMenu(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
     SetVBlankCallback(VBlankCB);
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
