@@ -1500,6 +1500,216 @@ static const union AffineAnimCmd *const sAffineAnimTable_KyogreGroudon[] = {
     sAffineAnim_KyogreGroudon_DipEast,      // Unused
 };
 
+static const union AnimCmd sAnim_GoSouthSpheal[] =
+{
+    ANIMCMD_FRAME(3, 2),
+    ANIMCMD_FRAME(4, 2),
+    ANIMCMD_FRAME(5, 2),
+    ANIMCMD_FRAME(6, 2),
+    ANIMCMD_FRAME(7, 2),
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(9, 2),
+    ANIMCMD_FRAME(10, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoNorthSpheal[] =
+{
+    ANIMCMD_FRAME(11, 2),
+    ANIMCMD_FRAME(12, 2),
+    ANIMCMD_FRAME(13, 2),
+    ANIMCMD_FRAME(14, 2),
+    ANIMCMD_FRAME(15, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(17, 2),
+    ANIMCMD_FRAME(18, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoWestSpheal[] =
+{
+    ANIMCMD_FRAME(19, 2),
+    ANIMCMD_FRAME(20, 2),
+    ANIMCMD_FRAME(21, 2),
+    ANIMCMD_FRAME(22, 2),
+    ANIMCMD_FRAME(23, 2),
+    ANIMCMD_FRAME(24, 2),
+    ANIMCMD_FRAME(25, 2),
+    ANIMCMD_FRAME(26, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoEastSpheal[] =
+{
+    ANIMCMD_FRAME(19, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(20, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(21, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(22, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(23, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(24, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(25, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(26, 2, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoSouthFastSpheal[] =
+{
+    ANIMCMD_FRAME(3, 1),
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_FRAME(5, 1),
+    ANIMCMD_FRAME(6, 1),
+    ANIMCMD_FRAME(7, 1),
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_FRAME(9, 1),
+    ANIMCMD_FRAME(10, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoNorthFastSpheal[] =
+{
+    ANIMCMD_FRAME(11, 1),
+    ANIMCMD_FRAME(12, 1),
+    ANIMCMD_FRAME(13, 1),
+    ANIMCMD_FRAME(14, 1),
+    ANIMCMD_FRAME(15, 1),
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_FRAME(17, 1),
+    ANIMCMD_FRAME(18, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoWestFastSpheal[] =
+{
+    ANIMCMD_FRAME(19, 1),
+    ANIMCMD_FRAME(20, 1),
+    ANIMCMD_FRAME(21, 1),
+    ANIMCMD_FRAME(22, 1),
+    ANIMCMD_FRAME(23, 1),
+    ANIMCMD_FRAME(24, 1),
+    ANIMCMD_FRAME(25, 1),
+    ANIMCMD_FRAME(26, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoEastFastSpheal[] =
+{
+    ANIMCMD_FRAME(19, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(20, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(21, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(22, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(23, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(24, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(25, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(26, 1, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoSouthFasterSpheal[] =
+{
+    ANIMCMD_FRAME(3, 1),
+    ANIMCMD_FRAME(5, 1),
+    ANIMCMD_FRAME(7, 1),
+    ANIMCMD_FRAME(9, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoNorthFasterSpheal[] =
+{
+    ANIMCMD_FRAME(11, 1),
+    ANIMCMD_FRAME(13, 1),
+    ANIMCMD_FRAME(15, 1),
+    ANIMCMD_FRAME(17, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoWestFasterSpheal[] =
+{
+    ANIMCMD_FRAME(19, 1),
+    ANIMCMD_FRAME(21, 1),
+    ANIMCMD_FRAME(23, 1),
+    ANIMCMD_FRAME(25, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoEastFasterSpheal[] =
+{
+    ANIMCMD_FRAME(19, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(21, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(23, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(25, 1, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoSouthFastestSpheal[] =
+{
+    ANIMCMD_FRAME(3, 1),
+    ANIMCMD_FRAME(5, 1),
+    ANIMCMD_FRAME(7, 1),
+    ANIMCMD_FRAME(9, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoNorthFastestSpheal[] =
+{
+    ANIMCMD_FRAME(13, 1),
+    ANIMCMD_FRAME(15, 1),
+    ANIMCMD_FRAME(17, 1),
+    ANIMCMD_FRAME(11, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoWestFastestSpheal[] =
+{
+    ANIMCMD_FRAME(21, 1),
+    ANIMCMD_FRAME(23, 1),
+    ANIMCMD_FRAME(25, 1),
+    ANIMCMD_FRAME(19, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoEastFastestSpheal[] =
+{
+    ANIMCMD_FRAME(21, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(23, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(25, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(19, 1, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const sAnimTable_Spheal[] = {
+    // Parado (já existiam)
+    [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
+    [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth,
+    [ANIM_STD_FACE_WEST] = sAnim_FaceWest,
+    [ANIM_STD_FACE_EAST] = sAnim_FaceEast,
+    // Andar normal (use suas animações de rolagem)
+    [ANIM_STD_GO_SOUTH] = sAnim_GoSouthSpheal,
+    [ANIM_STD_GO_NORTH] = sAnim_GoNorthSpheal,
+    [ANIM_STD_GO_WEST] = sAnim_GoWestSpheal,
+    [ANIM_STD_GO_EAST] = sAnim_GoEastSpheal,
+    // Corrida normal (suas animações de rolagem rápida)
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_GoSouthFastSpheal,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_GoNorthFastSpheal,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_GoWestFastSpheal,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_GoEastFastSpheal,
+    // ↓ AGORA OS SLOTS QUE FALTAVAM ↓
+    // Entrar na Pokébola (usado só em velocidade 'Faster')
+    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_EnterSouth,
+    [ANIM_STD_GO_FASTER_NORTH] = sAnim_EnterNorth,
+    [ANIM_STD_GO_FASTER_WEST] = sAnim_EnterWest,
+    [ANIM_STD_GO_FASTER_EAST] = sAnim_EnterEast,
+    // Sair da Pokébola (velocidade 'Fastest')
+    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_ExitPokeballSouth,
+    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_ExitPokeballNorth,
+    [ANIM_STD_GO_FASTEST_WEST] = sAnim_ExitPokeballWest,
+    [ANIM_STD_GO_FASTEST_EAST] = sAnim_ExitPokeballEast,
+    // Sair rápido da Pokébola (slots extras)
+    [ANIM_EXIT_POKEBALL_FAST_SOUTH] = sAnim_ExitPokeballFastSouth,
+    [ANIM_EXIT_POKEBALL_FAST_NORTH] = sAnim_ExitPokeballFastNorth,
+    [ANIM_EXIT_POKEBALL_FAST_WEST] = sAnim_ExitPokeballFastWest,
+    [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_ExitPokeballFastEast,
+};
+
 // For animations with alternating steps
 static const struct StepAnimTable sStepAnimTables[] = {
     {
