@@ -1245,3 +1245,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/AbandonedShip_TeamAqua/scripts.inc"
 
 	.include "data/maps/AbandonedShip_Rooms_Aqua/scripts.inc"
+
+	.include "data/maps/RustboroCity_PokemonSchool2F/scripts.inc"

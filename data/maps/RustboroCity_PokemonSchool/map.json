@@ -16,8 +16,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_GAMEBOY_KID",
-      "x": 10,
-      "y": 17,
+      "x": 11,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -29,8 +29,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GAMEBOY_KID",
-      "x": 11,
-      "y": 17,
+      "x": 12,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -115,7 +115,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "RustboroCity_PokemonSchool_EventScript_RichBoy",
+      "script": "RustboroCity_PokemonSchool_EventScript_Reception2",
       "flag": "0"
     },
     {
@@ -128,7 +128,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "RustboroCity_PokemonSchool_EventScript_RichBoy",
+      "script": "RustboroCity_PokemonSchool_EventScript_Reception1",
       "flag": "0"
     },
     {
@@ -182,6 +182,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RustboroCity_PokemonSchool_EventScript_GirlLookingForBooks",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
+      "x": 9,
+      "y": 19,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "RustboroCity_PokemonSchool_EventScript_Couchlady",
+      "flag": "0"
     }
   ],
   "warp_events": [
@@ -198,6 +211,20 @@
       "elevation": 0,
       "dest_map": "MAP_RUSTBORO_CITY",
       "dest_warp_id": "4"
+    },
+    {
+      "x": 13,
+      "y": 15,
+      "elevation": 0,
+      "dest_map": "MAP_RUSTBORO_CITY_POKEMON_SCHOOL2F",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 14,
+      "y": 15,
+      "elevation": 0,
+      "dest_map": "MAP_RUSTBORO_CITY_POKEMON_SCHOOL2F",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [],
