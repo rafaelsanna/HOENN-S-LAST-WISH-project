@@ -1049,21 +1049,21 @@ static void BagMenu_MoveCursorCallback(s32 itemIndex, bool8 onInit, struct ListM
                 struct Sprite *sprite = &gSprites[newSpriteId];
                 s16 targetY = sprite->y; // posição final definida por AddBagItemIconSprite
 
-                struct ComfyAnimSpringConfig cfg;
-                InitComfyAnimConfig_Spring(&cfg);
-                cfg.from       = Q_24_8(targetY - 24); // começa 24 px acima
-                cfg.to         = Q_24_8(targetY);
-                cfg.tension    = Q_24_8(300);
-                cfg.friction   = Q_24_8(450);
-                cfg.mass       = Q_24_8(80);
-                cfg.clampAfter = 0;
+struct ComfyAnimSpringConfig cfg;
+InitComfyAnimConfig_Spring(&cfg);
+cfg.from       = Q_24_8(targetY - 12);   // apenas 12 px acima (metade)
+cfg.to         = Q_24_8(targetY);
+cfg.tension    = Q_24_8(400);            // um pouco mais tensa
+cfg.friction   = Q_24_8(600);            // freio mais forte → menos re-ricochete
+cfg.mass       = Q_24_8(60);             // mais leve, movimentação mais rápida
+cfg.clampAfter = 0;
 
                 u8 animId = CreateComfyAnim_Spring(&cfg);
                 if (animId != INVALID_COMFY_ANIM)
                 {
                     sprite->data[0] = animId;
                     sprite->callback = SpriteCB_ItemIconSpring;
-                    sprite->y = targetY - 24; // posição inicial (acima)
+                    sprite->y = targetY - 12; // posição inicial (acima)
                 }
                 else
                 {

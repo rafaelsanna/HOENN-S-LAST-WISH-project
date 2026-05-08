@@ -1926,7 +1926,7 @@ static void StartGenderSlide(u8 taskId, int newGender)
 
     newSpriteId = (newGender != MALE) ? gTasks[taskId].tMaySpriteId
                                       : gTasks[taskId].tBrendanSpriteId;
-    gSprites[newSpriteId].x           = 260;
+    gSprites[newSpriteId].x           = 220;   // antes 260 (só 40 px de distância agora)
     gSprites[newSpriteId].y           = 60;
     gSprites[newSpriteId].invisible   = FALSE;
     gSprites[newSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
@@ -1935,11 +1935,11 @@ static void StartGenderSlide(u8 taskId, int newGender)
     gTasks[taskId].tPlayerGender   = newGender;
 
     InitComfyAnimConfig_Spring(&cfg);
-    cfg.from       = Q_24_8(260);
+    cfg.from       = Q_24_8(220);   // mesma posição inicial
     cfg.to         = Q_24_8(180);
-    cfg.tension    = Q_24_8(300);
-    cfg.friction   = Q_24_8(450);
-    cfg.mass       = Q_24_8(80);
+    cfg.tension    = Q_24_8(350);   // um pouco mais tensa (antes 300)
+    cfg.friction   = Q_24_8(600);   // freio mais forte, sem overshoot (antes 450)
+    cfg.mass       = Q_24_8(60);    // mais leve, resposta mais rápida (antes 80)
     cfg.clampAfter = 0;
     InitComfyAnim_Spring(&cfg, &sGenderSlideX);
     sGenderSlideActive = TRUE;
