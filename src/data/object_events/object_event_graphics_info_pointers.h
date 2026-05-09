@@ -257,6 +257,8 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Alejandro;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirdKeeper1;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirdKeeper2;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kindler;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RuinManiac;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_CoolTrainerF;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -510,6 +512,8 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_BIRD_KEEPER_1] =            &gObjectEventGraphicsInfo_BirdKeeper1,
     [OBJ_EVENT_GFX_BIRD_KEEPER_2] =            &gObjectEventGraphicsInfo_BirdKeeper2,
     [OBJ_EVENT_GFX_KINDLER] =                  &gObjectEventGraphicsInfo_Kindler,
+    [OBJ_EVENT_GFX_RUIN_MANIAC] =              &gObjectEventGraphicsInfo_RuinManiac,
+    [OBJ_EVENT_GFX_COOL_TRAINER_F] =           &gObjectEventGraphicsInfo_CoolTrainerF,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {
