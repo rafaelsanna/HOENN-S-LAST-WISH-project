@@ -399,6 +399,8 @@ const u16 gObjectEventPaletteNeonLight[] = INCBIN_U16("graphics/object_events/pa
 const u32 gObjectEventPic_Punkgirl[] = INCBIN_U32("graphics/object_events/pics/people/punkgirl.4bpp");
 const u32 gObjectEventPic_Punkboy[] = INCBIN_U32("graphics/object_events/pics/people/punkboy.4bpp");
 
+const u32 gObjectEventPic_Lazuli[] = INCBIN_U32("graphics/object_events/pics/people/lazuli.4bpp");
+
 
 
 #if OW_FOLLOWERS_POKEBALLS
