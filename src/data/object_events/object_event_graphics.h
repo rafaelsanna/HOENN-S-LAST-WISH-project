@@ -119,6 +119,9 @@ const u32 gObjectEventPic_TuberM[] = INCBIN_U32("graphics/object_events/pics/peo
 const u32 gObjectEventPic_Hiker[] = INCBIN_U32("graphics/object_events/pics/people/hiker.4bpp");
 const u32 gObjectEventPic_Hiker2[] = INCBIN_U32("graphics/object_events/pics/people/hiker_2.4bpp");
 const u32 gObjectEventPic_Hiker3[] = INCBIN_U32("graphics/object_events/pics/people/hiker_3.4bpp");
+const u32 gObjectEventPic_Punkgirl[] = INCBIN_U32("graphics/object_events/pics/people/punkgirl.4bpp");
+const u32 gObjectEventPic_Punkboy[] = INCBIN_U32("graphics/object_events/pics/people/punkboy.4bpp");
+const u32 gObjectEventPic_Lazuli[] = INCBIN_U32("graphics/object_events/pics/people/lazuli.4bpp");
 const u32 gObjectEventPic_CyclingTriathleteM[] = INCBIN_U32("graphics/object_events/pics/people/cycling_triathlete_m.4bpp");
 const u32 gObjectEventPic_CyclingTriathleteF[] = INCBIN_U32("graphics/object_events/pics/people/cycling_triathlete_f.4bpp");
 const u32 gObjectEventPic_Man4[] = INCBIN_U32("graphics/object_events/pics/people/man_4.4bpp");
@@ -395,11 +398,6 @@ const u16 gObjectEventPal_Substitute[] = INCBIN_U16("graphics/object_events/pics
 
 const u16 gObjectEventPaletteEmotes[] = INCBIN_U16("graphics/misc/emotes.gbapal");
 const u16 gObjectEventPaletteNeonLight[] = INCBIN_U16("graphics/object_events/palettes/neon_light.gbapal");
-
-const u32 gObjectEventPic_Punkgirl[] = INCBIN_U32("graphics/object_events/pics/people/punkgirl.4bpp");
-const u32 gObjectEventPic_Punkboy[] = INCBIN_U32("graphics/object_events/pics/people/punkboy.4bpp");
-
-const u32 gObjectEventPic_Lazuli[] = INCBIN_U32("graphics/object_events/pics/people/lazuli.4bpp");
 
 
 
