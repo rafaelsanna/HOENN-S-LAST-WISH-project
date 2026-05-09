@@ -254,6 +254,9 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Punkgirl;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Punkboy;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lazuli;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Alejandro;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirdKeeper1;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirdKeeper2;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kindler;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -504,6 +507,9 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_PUNKBOY] =                  &gObjectEventGraphicsInfo_Punkboy,
     [OBJ_EVENT_GFX_LAZULI] =                   &gObjectEventGraphicsInfo_Lazuli,
     [OBJ_EVENT_GFX_ALEJANDRO] =                &gObjectEventGraphicsInfo_Alejandro,
+    [OBJ_EVENT_GFX_BIRD_KEEPER_1] =            &gObjectEventGraphicsInfo_BirdKeeper1,
+    [OBJ_EVENT_GFX_BIRD_KEEPER_2] =            &gObjectEventGraphicsInfo_BirdKeeper2,
+    [OBJ_EVENT_GFX_KINDLER] =                  &gObjectEventGraphicsInfo_Kindler,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {
