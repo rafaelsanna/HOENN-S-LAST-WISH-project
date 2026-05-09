@@ -281,6 +281,10 @@ static const struct SpriteFrameImage sPicTable_Lazuli[] = {
     overworld_ascending_frames(gObjectEventPic_Lazuli, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_Alejandro[] = {
+    overworld_ascending_frames(gObjectEventPic_Alejandro, 2, 4),
+};
+
 static const struct SpriteFrameImage sPicTable_CyclingTriathleteM[] = {
     overworld_ascending_frames(gObjectEventPic_CyclingTriathleteM, 4, 4),
 };
