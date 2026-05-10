@@ -26,6 +26,8 @@ const u8 gWeatherCloudTiles[] = INCBIN_U8("graphics/weather/cloud.4bpp");
 const u8 gWeatherSnow1Tiles[] = INCBIN_U8("graphics/weather/snow0.4bpp");
 const u8 gWeatherSnow2Tiles[] = INCBIN_U8("graphics/weather/snow1.4bpp");
 const u8 gWeatherBubbleTiles[] = INCBIN_U8("graphics/weather/bubble.4bpp");
+const u8 gWeatherStarTiles[]   = INCBIN_U8("graphics/weather/star.4bpp");
+const u16 gWeatherStarPalette[] = INCBIN_U16("graphics/weather/star.gbapal");
 const u8 gWeatherAshTiles[] = INCBIN_U8("graphics/weather/ash.4bpp");
 const u8 gWeatherRainTiles[] = INCBIN_U8("graphics/weather/rain.4bpp");
 const u8 gWeatherSandstormTiles[] = INCBIN_U8("graphics/weather/sandstorm.4bpp");
@@ -990,6 +992,286 @@ static void UpdateSnowflakeSprite(struct Sprite *sprite)
 #undef tFallDuration
 #undef tDeltaY2
 
+//------------------------------------------------------------------------------
+// WEATHER_STARS — Estrelas caindo com brilho animado e blending suave
+//------------------------------------------------------------------------------
+
+// 22 estrelas: 13 grandes (cruz 5x7) + 9 pequenas (cruz 3x3)
+// Formas extraídas dos sprites usados no menu/title screen
+#define NUM_STAR_SPRITES       22
+#define NUM_BIG_STAR_SPRITES   13
+#define GFXTAG_STAR            200
+#define PALTAG_STAR            200
+
+// Tiles em graphics/weather/star.4bpp (4 tiles de 8x8):
+//   tile 0 = estrela grande brilhante  (branco + azulado)
+//   tile 1 = estrela grande apagada    (azul fraco)
+//   tile 2 = estrela pequena brilhante
+//   tile 3 = estrela pequena apagada
+
+static const struct SpriteSheet sStarSpriteSheet =
+{
+    .data = gWeatherStarTiles,
+    .size = sizeof(gWeatherStarTiles),
+    .tag  = GFXTAG_STAR,
+};
+
+static const struct SpritePalette sStarSpritePalette =
+{
+    .data = gWeatherStarPalette,
+    .tag  = PALTAG_STAR,
+};
+
+static const struct OamData sStarSpriteOamData =
+{
+    .y           = 0,
+    .affineMode  = ST_OAM_AFFINE_OFF,
+    .objMode     = ST_OAM_OBJ_BLEND,   // blend hardware — igual ao Birch speech
+    .mosaic      = FALSE,
+    .bpp         = ST_OAM_4BPP,
+    .shape       = SPRITE_SHAPE(8x8),
+    .x           = 0,
+    .matrixNum   = 0,
+    .size        = SPRITE_SIZE(8x8),
+    .tileNum     = 0,
+    .priority    = 1,
+    .paletteNum  = 0,
+    .affineParam = 0,
+};
+
+// Fase A: começa brilhante, pulsa devagar
+static const union AnimCmd sStarAnimBigA[] =
+{
+    ANIMCMD_FRAME(0, 22),
+    ANIMCMD_FRAME(1, 14),
+    ANIMCMD_FRAME(0, 18),
+    ANIMCMD_FRAME(1, 10),
+    ANIMCMD_JUMP(0),
+};
+// Fase B: começa apagada
+static const union AnimCmd sStarAnimBigB[] =
+{
+    ANIMCMD_FRAME(1, 16),
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_FRAME(1, 12),
+    ANIMCMD_FRAME(0, 24),
+    ANIMCMD_JUMP(0),
+};
+// Fase C: flash rápido
+static const union AnimCmd sStarAnimBigC[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 20),
+    ANIMCMD_FRAME(0, 6),
+    ANIMCMD_FRAME(1, 24),
+    ANIMCMD_JUMP(0),
+};
+// Estrela pequena fase A
+static const union AnimCmd sStarAnimSmallA[] =
+{
+    ANIMCMD_FRAME(2, 24),
+    ANIMCMD_FRAME(3, 16),
+    ANIMCMD_FRAME(2, 20),
+    ANIMCMD_JUMP(0),
+};
+// Estrela pequena fase B
+static const union AnimCmd sStarAnimSmallB[] =
+{
+    ANIMCMD_FRAME(3, 18),
+    ANIMCMD_FRAME(2, 22),
+    ANIMCMD_FRAME(3, 12),
+    ANIMCMD_FRAME(2, 18),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sStarAnimCmds[] =
+{
+    sStarAnimBigA,
+    sStarAnimBigB,
+    sStarAnimBigC,
+    sStarAnimSmallA,
+    sStarAnimSmallB,
+};
+
+static void UpdateStarSprite(struct Sprite *sprite);
+static bool8 CreateStarSprite(void);
+static bool8 DestroyStarSprite(void);
+static void  InitStarSpriteMovement(struct Sprite *sprite);
+
+static const struct SpriteTemplate sStarSpriteTemplate =
+{
+    .tileTag     = GFXTAG_STAR,
+    .paletteTag  = PALTAG_STAR,
+    .oam         = &sStarSpriteOamData,
+    .anims       = sStarAnimCmds,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = UpdateStarSprite,
+};
+
+#define tStarPosY   data[0]
+#define tStarDeltaY data[1]
+#define tStarId     data[4]
+#define tStarPhase  data[5]
+
+void Stars_InitVars(void)
+{
+    gWeatherPtr->initStep = 0;
+    gWeatherPtr->weatherGfxLoaded = FALSE;
+    gWeatherPtr->targetColorMapIndex = 0;
+    gWeatherPtr->colorMapStepDelay = 20;
+    gWeatherPtr->targetSnowflakeSpriteCount = NUM_STAR_SPRITES;
+    gWeatherPtr->snowflakeVisibleCounter = 0;
+    gWeatherPtr->snowflakeSpriteCount = 0;
+    gWeatherPtr->noShadows = FALSE;
+    // OBJ invisíveis ao entrar: EVA=0, EVB=16 (igual às clouds)
+    Weather_SetBlendCoeffs(0, 16);
+}
+
+void Stars_InitAll(void)
+{
+    Stars_InitVars();
+    LoadSpriteSheet(&sStarSpriteSheet);
+    LoadSpritePalette(&sStarSpritePalette);
+    while (gWeatherPtr->snowflakeSpriteCount < gWeatherPtr->targetSnowflakeSpriteCount)
+        CreateStarSprite();
+    SetGpuReg(REG_OFFSET_BLDCNT,
+        BLDCNT_TGT1_OBJ |
+        BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 |
+        BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 |
+        BLDCNT_EFFECT_BLEND);
+    Weather_SetBlendCoeffs(10, 8);
+    gWeatherPtr->weatherGfxLoaded = TRUE;
+}
+
+void Stars_Main(void)
+{
+    switch (gWeatherPtr->initStep)
+    {
+    case 0:
+        LoadSpriteSheet(&sStarSpriteSheet);
+        LoadSpritePalette(&sStarSpritePalette);
+        while (gWeatherPtr->snowflakeSpriteCount < gWeatherPtr->targetSnowflakeSpriteCount)
+            CreateStarSprite();
+        SetGpuReg(REG_OFFSET_BLDCNT,
+            BLDCNT_TGT1_OBJ |
+            BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 |
+            BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 |
+            BLDCNT_EFFECT_BLEND);
+        gWeatherPtr->initStep++;
+        break;
+    case 1:
+        // Fade suave: invisível → semi-transparente (EVA=10, EVB=8)
+        Weather_SetTargetBlendCoeffs(10, 8, 1);
+        gWeatherPtr->initStep++;
+        break;
+    case 2:
+        if (Weather_UpdateBlend())
+        {
+            gWeatherPtr->weatherGfxLoaded = TRUE;
+            gWeatherPtr->initStep++;
+        }
+        break;
+    // case 3+: sprites já criados, UpdateStarSprite faz tudo frame-a-frame
+    }
+}
+
+bool8 Stars_Finish(void)
+{
+    switch (gWeatherPtr->finishStep)
+    {
+    case 0:
+        Weather_SetTargetBlendCoeffs(0, 16, 1);
+        gWeatherPtr->finishStep++;
+        return TRUE;
+    case 1:
+        if (Weather_UpdateBlend())
+        {
+            while (gWeatherPtr->snowflakeSpriteCount)
+                DestroyStarSprite();
+            FreeSpriteTilesByTag(GFXTAG_STAR);
+            FreeSpritePaletteByTag(PALTAG_STAR);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            gWeatherPtr->finishStep++;
+        }
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static bool8 CreateStarSprite(void)
+{
+    u8 spriteId = CreateSpriteAtEnd(&sStarSpriteTemplate, 0, 0, 78);
+    if (spriteId == MAX_SPRITES)
+        return FALSE;
+    gSprites[spriteId].tStarId = gWeatherPtr->snowflakeSpriteCount;
+    InitStarSpriteMovement(&gSprites[spriteId]);
+    gSprites[spriteId].coordOffsetEnabled = TRUE;
+    gWeatherPtr->sprites.s1.snowflakeSprites[gWeatherPtr->snowflakeSpriteCount++] = &gSprites[spriteId];
+    return TRUE;
+}
+
+static bool8 DestroyStarSprite(void)
+{
+    if (gWeatherPtr->snowflakeSpriteCount)
+    {
+        DestroySprite(gWeatherPtr->sprites.s1.snowflakeSprites[--gWeatherPtr->snowflakeSpriteCount]);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static void InitStarSpriteMovement(struct Sprite *sprite)
+{
+    u16   rand  = Random();
+    u8    id    = sprite->tStarId;
+    bool8 isBig = (id < NUM_BIG_STAR_SPRITES);
+
+    // X distribuído uniformemente + leve aleatoriedade
+    s16 x = (s16)((id * 17) % 240) + (s16)(rand & 7) - 4;
+
+    // Metade começa em Y aleatório (já visível), metade nasce no topo
+    if (id & 1)
+        sprite->y = -4 - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
+    else
+        sprite->y = (s16)(rand % 152) - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
+
+    sprite->x         = x - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+    sprite->tStarPosY = sprite->y * 128;
+    sprite->x2        = 0;
+
+    // Grandes caem levemente mais devagar que as pequenas
+    sprite->tStarDeltaY = isBig ? (u16)((rand & 3) * 8  + 28)
+                                : (u16)((rand & 3) * 10 + 35);
+
+    // 3 fases para grande (cmds 0/1/2), 2 fases para pequena (cmds 3/4)
+    sprite->tStarPhase = isBig ? id % 3 : 3 + (id & 1);
+    StartSpriteAnim(sprite, sprite->tStarPhase);
+}
+
+static void UpdateStarSprite(struct Sprite *sprite)
+{
+    s16 y;
+
+    sprite->tStarPosY += sprite->tStarDeltaY;
+    sprite->y          = sprite->tStarPosY >> 7;
+
+    y = (sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY) & 0x1FF;
+    if (y & 0x100)
+        y |= -0x100;
+
+    if (y > 164)
+    {
+        sprite->y         = -4 - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
+        sprite->tStarPosY = sprite->y * 128;
+        sprite->x         = (s16)(Random() % 240) - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+    }
+}
+
+#undef tStarPosY
+#undef tStarDeltaY
+#undef tStarId
+#undef tStarPhase
 //------------------------------------------------------------------------------
 // WEATHER_RAIN_THUNDERSTORM
 //------------------------------------------------------------------------------
@@ -2630,6 +2912,7 @@ static u8 TranslateWeatherNum(u8 weather)
     case WEATHER_DOWNPOUR:           return WEATHER_DOWNPOUR;
     case WEATHER_UNDERWATER_BUBBLES: return WEATHER_UNDERWATER_BUBBLES;
     case WEATHER_ABNORMAL:           return WEATHER_ABNORMAL;
+    case WEATHER_STARS:              return WEATHER_STARS;
     case WEATHER_ROUTE119_CYCLE:     return sWeatherCycleRoute119[gSaveBlock1Ptr->weatherCycleStage];
     case WEATHER_ROUTE123_CYCLE:     return sWeatherCycleRoute123[gSaveBlock1Ptr->weatherCycleStage];
     default:                         return WEATHER_NONE;
