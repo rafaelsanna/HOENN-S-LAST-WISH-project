@@ -33,6 +33,10 @@ const u16 gWeatherForestLightPal[]  = INCBIN_U16("graphics/weather/forest_light.
 const u8 gWeatherPinkLeafTiles[]    = INCBIN_U8("graphics/weather/pink_leaves.4bpp");
 const u16 gPinkLeavesWeatherPalette[] = INCBIN_U16("graphics/weather/pink_leaves.gbapal");
 const struct SpritePalette sPinkLeavesSpritePalette = {gPinkLeavesWeatherPalette, GFXTAG_PINK_LEAVES};
+
+const u8 gWeatherSmokeTiles[] = INCBIN_U8("graphics/weather/smoke.4bpp");
+const u16 gWeatherSmokePalette[] = INCBIN_U16("graphics/weather/smoke.gbapal");
+const struct SpritePalette sSmokePalette = {gWeatherSmokePalette, GFXTAG_SMOKE};
 const u8 gWeatherAshTiles[] = INCBIN_U8("graphics/weather/ash.4bpp");
 const u8 gWeatherRainTiles[] = INCBIN_U8("graphics/weather/rain.4bpp");
 const u8 gWeatherSandstormTiles[] = INCBIN_U8("graphics/weather/sandstorm.4bpp");
@@ -2892,6 +2896,207 @@ static void UpdateBubbleSprite(struct Sprite *sprite)
 
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+// WEATHER_SMOKE — Fumaça subindo (cópia exata das estrelas, direção invertida)
+//------------------------------------------------------------------------------
+
+#define NUM_SMOKE_SPRITES 6      // menos sprites, mais espaçados
+#define GFXTAG_SMOKE      0x1214
+#define PALTAG_SMOKE      0x1215
+
+static void UpdateSmokeSprite(struct Sprite *sprite);
+static bool8 CreateSmokeSprite(void);
+static bool8 DestroySmokeSprite(void);
+static void  InitSmokeSpriteMovement(struct Sprite *sprite);
+
+static const struct SpriteSheet sSmokeSpriteSheet =
+{
+    .data = gWeatherSmokeTiles,
+    .size = sizeof(gWeatherSmokeTiles),
+    .tag  = GFXTAG_SMOKE,
+};
+
+static const struct SpritePalette sSmokeSpritePalette =
+{
+    .data = gWeatherSmokePalette,
+    .tag  = PALTAG_SMOKE,
+};
+
+static const struct OamData sSmokeOamData =
+{
+    .y           = 0,
+    .affineMode  = ST_OAM_AFFINE_OFF,
+    .objMode     = ST_OAM_OBJ_BLEND,
+    .mosaic      = FALSE,
+    .bpp         = ST_OAM_4BPP,
+    .shape       = SPRITE_SHAPE(16x16),
+    .x           = 0,
+    .matrixNum   = 0,
+    .size        = SPRITE_SIZE(16x16),
+    .tileNum     = 0,
+    .priority    = 1,
+    .paletteNum  = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sSmokeAnimCmd0[] =
+{
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_FRAME(4, 20),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sSmokeAnimCmds[] =
+{
+    sSmokeAnimCmd0,
+};
+
+static const struct SpriteTemplate sSmokeSpriteTemplate =
+{
+    .tileTag     = GFXTAG_SMOKE,
+    .paletteTag  = PALTAG_SMOKE,
+    .oam         = &sSmokeOamData,
+    .anims       = sSmokeAnimCmds,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = UpdateSmokeSprite,
+};
+
+#define tSmokePosY   data[0]
+#define tSmokeDeltaY data[1]
+#define tSmokeId     data[4]
+
+void Smoke_InitVars(void)
+{
+    gWeatherPtr->initStep = 0;
+    gWeatherPtr->weatherGfxLoaded = FALSE;
+    gWeatherPtr->targetColorMapIndex = 0;
+    gWeatherPtr->colorMapStepDelay = 20;
+    gWeatherPtr->targetPinkLeafSpriteCount = NUM_SMOKE_SPRITES;
+    gWeatherPtr->pinkLeafVisibleCounter = 0;
+    gWeatherPtr->pinkLeafSpriteCount = 0;
+    gWeatherPtr->noShadows = FALSE;
+    Weather_SetBlendCoeffs(10, 8);
+}
+
+void Smoke_InitAll(void)
+{
+    Smoke_InitVars();
+    LoadSpriteSheet(&sSmokeSpriteSheet);
+    LoadSpritePalette(&sSmokeSpritePalette);
+    while (gWeatherPtr->pinkLeafSpriteCount < gWeatherPtr->targetPinkLeafSpriteCount)
+        CreateSmokeSprite();
+    SetGpuReg(REG_OFFSET_BLDCNT,
+        BLDCNT_TGT1_OBJ |
+        BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 |
+        BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 |
+        BLDCNT_EFFECT_BLEND);
+    gWeatherPtr->weatherGfxLoaded = TRUE;
+}
+
+void Smoke_Main(void)
+{
+    // Nada necessário – os sprites se reciclam automaticamente
+}
+
+bool8 Smoke_Finish(void)
+{
+    switch (gWeatherPtr->finishStep)
+    {
+    case 0:
+        Weather_SetTargetBlendCoeffs(0, 16, 1);
+        gWeatherPtr->finishStep++;
+        return TRUE;
+    case 1:
+        if (Weather_UpdateBlend())
+        {
+            while (gWeatherPtr->pinkLeafSpriteCount)
+                DestroySmokeSprite();
+            FreeSpriteTilesByTag(GFXTAG_SMOKE);
+            FreeSpritePaletteByTag(PALTAG_SMOKE);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            gWeatherPtr->finishStep++;
+        }
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static bool8 CreateSmokeSprite(void)
+{
+    u8 spriteId = CreateSpriteAtEnd(&sSmokeSpriteTemplate, 0, 0, 78);
+    if (spriteId == MAX_SPRITES)
+        return FALSE;
+    gSprites[spriteId].tSmokeId = gWeatherPtr->pinkLeafSpriteCount;
+    InitSmokeSpriteMovement(&gSprites[spriteId]);
+    gSprites[spriteId].coordOffsetEnabled = TRUE;   // fixa no mundo (igual estrelas)
+    gWeatherPtr->sprites.s1.rainSprites[gWeatherPtr->pinkLeafSpriteCount++] = &gSprites[spriteId];
+    return TRUE;
+}
+
+static bool8 DestroySmokeSprite(void)
+{
+    if (gWeatherPtr->pinkLeafSpriteCount)
+    {
+        DestroySprite(gWeatherPtr->sprites.s1.rainSprites[--gWeatherPtr->pinkLeafSpriteCount]);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static void InitSmokeSpriteMovement(struct Sprite *sprite)
+{
+    u16 rand = Random();
+    u8  id   = sprite->tSmokeId;
+
+    // X bem espaçado (usa id * 40 para distanciamento)
+    s16 x = (s16)((id * 40) % 240) + (s16)(rand & 15) - 7;
+    sprite->x = x - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+
+    // Y inicial: espalhado por toda a altura da tela
+    s16 y;
+    if (id < 2)
+        y = 20 + (rand % 40);                      // parte alta
+    else if (id < 4)
+        y = 70 + (rand % 40);                      // meio
+    else
+        y = 120 + (rand % 40);                     // parte baixa
+
+    sprite->y = y - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
+    sprite->tSmokePosY = sprite->y * 128;
+
+    // Velocidade de subida (aleatória, moderada)
+    sprite->tSmokeDeltaY = (rand & 7) + 15;        // 15..22 subpixels/frame
+    StartSpriteAnim(sprite, 0);
+}
+
+static void UpdateSmokeSprite(struct Sprite *sprite)
+{
+    // Sobe no mundo (Y diminui) – igual às estrelas, mas ao contrário
+    sprite->tSmokePosY -= sprite->tSmokeDeltaY;
+    sprite->y = sprite->tSmokePosY >> 7;
+
+    s16 y = (sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY) & 0x1FF;
+    if (y & 0x100)
+        y |= -0x100;
+
+    // Quando some pelo topo da tela, reaparece na base (relativo à câmera atual)
+    if (y < -20)
+    {
+        u16 rand = Random();
+        s16 newScreenY = 160 + (rand % 20);         // 160..179 (abaixo da tela visível)
+        sprite->y = newScreenY - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
+        sprite->tSmokePosY = sprite->y * 128;
+        sprite->x = (s16)(rand % 240) - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+    }
+}
+
+#undef tSmokePosY
+#undef tSmokeDeltaY
+#undef tSmokeId
+
+/////////////////////// 
+
 #define tState         data[0]
 #define tWeatherA      data[1]
 #define tWeatherB      data[2]
@@ -3063,6 +3268,7 @@ static u8 TranslateWeatherNum(u8 weather)
     case WEATHER_UNDERWATER_BUBBLES: return WEATHER_UNDERWATER_BUBBLES;
     case WEATHER_ABNORMAL:           return WEATHER_ABNORMAL;
     case WEATHER_STARS:              return WEATHER_STARS;
+    case WEATHER_SMOKE:              return WEATHER_SMOKE;
     case WEATHER_FOREST_LIGHT:       return WEATHER_FOREST_LIGHT;
     case WEATHER_FALLING_LEAVES:     return WEATHER_FALLING_LEAVES;
     case WEATHER_ROUTE119_CYCLE:     return sWeatherCycleRoute119[gSaveBlock1Ptr->weatherCycleStage];
@@ -3111,7 +3317,7 @@ void PinkLeaves_InitVars(void)
     gWeatherPtr->targetPinkLeafSpriteCount = NUM_SNOWFLAKE_SPRITES;
     gWeatherPtr->pinkLeafVisibleCounter = 0;
     gWeatherPtr->noShadows = FALSE;
-    Weather_SetBlendCoeffs(10, 8);
+    Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY);
 }
 
 void PinkLeaves_InitAll(void)
@@ -3180,7 +3386,7 @@ static const struct OamData sPinkLeafSpriteOamData =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_BLEND,
+    .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = FALSE,
     .bpp = ST_OAM_4BPP,
     .shape = SPRITE_SHAPE(16x16),

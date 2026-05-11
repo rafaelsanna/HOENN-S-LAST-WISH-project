@@ -17,6 +17,7 @@ enum {
     GFXTAG_FOREST_LIGHT,
     PALTAG_STAR,
     PALTAG_FOREST_LIGHT,
+    GFXTAG_SMOKE,
 };
 enum {
     PALTAG_WEATHER = TAG_WEATHER_START,
@@ -244,6 +245,10 @@ void Bubbles_InitVars(void);
 void Bubbles_Main(void);
 void Bubbles_InitAll(void);
 bool8 Bubbles_Finish(void);
+void Smoke_InitVars(void);
+void Smoke_Main(void);
+void Smoke_InitAll(void);
+bool8 Smoke_Finish(void);
 
 u8 GetSavedWeather(void);
 void SetSavedWeather(u32 weather);

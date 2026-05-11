@@ -126,6 +126,7 @@ const u32 gObjectEventPic_Punkboy[] = INCBIN_U32("graphics/object_events/pics/pe
 const u32 gObjectEventPic_Lazuli[] = INCBIN_U32("graphics/object_events/pics/people/lazuli.4bpp");
 const u32 gObjectEventPic_Alejandro[] = INCBIN_U32("graphics/object_events/pics/people/alejandro.4bpp");
 const u32 gObjectEventPic_Netsu[] = INCBIN_U32("graphics/object_events/pics/people/netsu.4bpp");
+const u32 gObjectEventPic_Pokefan2[] = INCBIN_U32("graphics/object_events/pics/people/pokefan_2.4bpp");
 const u32 gObjectEventPic_BirdKeeper1[] = INCBIN_U32("graphics/object_events/pics/people/bird_keeper_1.4bpp");
 const u32 gObjectEventPic_BirdKeeper2[] = INCBIN_U32("graphics/object_events/pics/people/bird_keeper_2.4bpp");
 const u32 gObjectEventPic_Kindler[] = INCBIN_U32("graphics/object_events/pics/people/kindler.4bpp");

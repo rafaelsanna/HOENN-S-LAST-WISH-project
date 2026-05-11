@@ -135,6 +135,7 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     [WEATHER_DOWNPOUR]           = {Downpour_InitVars,      Thunderstorm_Main,  Downpour_InitAll,      Thunderstorm_Finish},
     [WEATHER_UNDERWATER_BUBBLES] = {Bubbles_InitVars,       Bubbles_Main,       Bubbles_InitAll,       Bubbles_Finish},
     [WEATHER_STARS]              = {Stars_InitVars,        Stars_Main,         Stars_InitAll,         Stars_Finish},
+    [WEATHER_SMOKE]              = {Smoke_InitVars,        Smoke_Main,         Smoke_InitAll,         Smoke_Finish},
     [WEATHER_FOREST_LIGHT]       = {ForestLight_InitVars,  ForestLight_Main,   ForestLight_InitAll,   ForestLight_Finish},
     [WEATHER_FALLING_LEAVES]     = {PinkLeaves_InitVars,   PinkLeaves_Main,    PinkLeaves_InitAll,    PinkLeaves_Finish},
 };
@@ -1039,6 +1040,9 @@ static void UNUSED SetFieldWeather(u8 weather)
     case WEATHER_STARS:
         SetWeather(WEATHER_STARS);
         break;
+    case WEATHER_SMOKE:
+        SetWeather(WEATHER_SMOKE);
+        break;
     case WEATHER_FOREST_LIGHT:
         SetWeather(WEATHER_FOREST_LIGHT);
         break;
@@ -1188,6 +1192,7 @@ static const u8 sWeatherNames[WEATHER_COUNT][24] = {
     [WEATHER_ROUTE123_CYCLE]     = _("ROUTE123 CYCLE"),
     [WEATHER_FOG]                = _("FOG"),
     [WEATHER_STARS]          = _("FALLING STARS"),
+    [WEATHER_SMOKE]          = _("CAVE SMOKE"),
     [WEATHER_FOREST_LIGHT]   = _("FOREST LIGHT"),
     [WEATHER_FALLING_LEAVES]  = _("FALLING LEAVES"),
 };

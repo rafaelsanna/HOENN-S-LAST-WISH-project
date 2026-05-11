@@ -264,6 +264,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_CoolTrainer
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Netsu;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RichBoy2;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lass2;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Pokefan2;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -522,6 +523,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_NETSU] =                    &gObjectEventGraphicsInfo_Netsu,
     [OBJ_EVENT_GFX_RICH_BOY_2] =               &gObjectEventGraphicsInfo_RichBoy2,
     [OBJ_EVENT_GFX_LASS_2] =                   &gObjectEventGraphicsInfo_Lass2,
+    [OBJ_EVENT_GFX_POKEFAN_2] =                &gObjectEventGraphicsInfo_Pokefan2,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {
