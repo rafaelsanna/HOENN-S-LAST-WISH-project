@@ -38,7 +38,6 @@ struct WeatherCallbacks
     bool8 (*finish)(void);
 };
 
-// This file's functions.
 static bool8 LightenSpritePaletteInFog(u8);
 static void UpdateWeatherColorMap(void);
 static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex);
@@ -107,8 +106,6 @@ static const u8 sContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32] =
     {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31}
 };
 
-// The drought weather effect uses a precalculated color lookup table. Presumably this
-// is because the underlying color shift calculation is slow.
 static const u16 sDroughtWeatherColors[][0x1000] = {
     INCBIN_U16("graphics/weather/drought/colors_0.bin"),
     INCBIN_U16("graphics/weather/drought/colors_1.bin"),
@@ -118,10 +115,6 @@ static const u16 sDroughtWeatherColors[][0x1000] = {
     INCBIN_U16("graphics/weather/drought/colors_5.bin"),
 };
 
-// This is a pointer to gWeather. All code in this file accesses gWeather directly,
-// while code in other field weather files accesses gWeather through this pointer.
-// This is likely the result of compiler optimization, since using the pointer in
-// this file produces the same result as accessing gWeather directly.
 struct Weather *const gWeatherPtr = &gWeather;
 
 static const struct WeatherCallbacks sWeatherFuncs[] =
@@ -141,7 +134,9 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     [WEATHER_DROUGHT]            = {Drought_InitVars,       Drought_Main,       Drought_InitAll,       Drought_Finish},
     [WEATHER_DOWNPOUR]           = {Downpour_InitVars,      Thunderstorm_Main,  Downpour_InitAll,      Thunderstorm_Finish},
     [WEATHER_UNDERWATER_BUBBLES] = {Bubbles_InitVars,       Bubbles_Main,       Bubbles_InitAll,       Bubbles_Finish},
-    [WEATHER_STARS]          = {Stars_InitVars,        Stars_Main,         Stars_InitAll,         Stars_Finish},
+    [WEATHER_STARS]              = {Stars_InitVars,        Stars_Main,         Stars_InitAll,         Stars_Finish},
+    [WEATHER_FOREST_LIGHT]       = {ForestLight_InitVars,  ForestLight_Main,   ForestLight_InitAll,   ForestLight_Finish},
+    [WEATHER_FALLING_LEAVES]     = {PinkLeaves_InitVars,   PinkLeaves_Main,    PinkLeaves_InitAll,    PinkLeaves_Finish},
 };
 
 void (*const gWeatherPalStateFuncs[])(void) =
@@ -152,43 +147,19 @@ void (*const gWeatherPalStateFuncs[])(void) =
     [WEATHER_PAL_STATE_IDLE]              = DoNothing,
 };
 
-// This table specifies which of the color maps should be
-// applied to each of the background and sprite palettes.
 static const u8 ALIGNED(2) sBasePaletteColorMapTypes[32] =
 {
-    // background palettes
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_NONE,
     COLOR_MAP_NONE,
-    COLOR_MAP_NONE,
-    // sprite palettes
-    COLOR_MAP_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST, COLOR_MAP_DARK_CONTRAST,
     COLOR_MAP_DARK_CONTRAST,
 };
 
@@ -204,7 +175,7 @@ void StartWeather(void)
         sPaletteColorMapTypes = sBasePaletteColorMapTypes;
 
         gWeatherPtr->contrastColorMapSpritePalIndex = index;
-        gWeatherPtr->weatherPicSpritePalIndex = 0xFF; // defer allocation until needed
+        gWeatherPtr->weatherPicSpritePalIndex = 0xFF;
         gWeatherPtr->rainSpriteCount = 0;
         gWeatherPtr->curRainSpriteIndex = 0;
         gWeatherPtr->cloudSpritesCreated = 0;
@@ -216,6 +187,9 @@ void StartWeather(void)
         gWeatherPtr->sandstormSwirlSpritesCreated = 0;
         gWeatherPtr->bubblesSpritesCreated = 0;
         gWeatherPtr->lightenedFogSpritePalsCount = 0;
+        gWeatherPtr->pinkLeafSpriteCount = 0;
+        gWeatherPtr->pinkLeafVisibleCounter = 0;
+        gWeatherPtr->targetPinkLeafSpriteCount = 0;
         Weather_SetBlendCoeffs(16, 0);
         gWeatherPtr->currWeather = 0;
         gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
@@ -271,15 +245,12 @@ void SetCurrentAndNextWeatherNoDelay(u8 weather)
     PlayRainStoppingSoundEffect();
     gWeatherPtr->currWeather = weather;
     gWeatherPtr->nextWeather = weather;
-    // Overrides the normal delay during screen fading.
     gWeatherPtr->readyForInit = TRUE;
     UpdateWeatherForms();
 }
 
 static void Task_WeatherInit(u8 taskId)
 {
-    // Waits until it's ok to initialize weather.
-    // When the screen fades in, this is set to TRUE.
     if (gWeatherPtr->readyForInit)
     {
         UpdateCameraPanning();
@@ -295,7 +266,6 @@ static void Task_WeatherMain(u8 taskId)
         if (!sWeatherFuncs[gWeatherPtr->currWeather].finish()
             && gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_OUT)
         {
-            // Finished cleaning up previous weather. Now transition to next weather.
             sWeatherFuncs[gWeatherPtr->nextWeather].initVars();
             gWeatherPtr->colorMapStepCounter = 0;
             gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_CHANGING_WEATHER;
@@ -314,7 +284,7 @@ static void Task_WeatherMain(u8 taskId)
 
 static void None_Init(void)
 {
-    Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY); // Indoor shadows
+    Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY);
     gWeatherPtr->noShadows = FALSE;
     gWeatherPtr->targetColorMapIndex = 0;
     gWeatherPtr->colorMapStepDelay = 0;
@@ -1069,6 +1039,12 @@ static void UNUSED SetFieldWeather(u8 weather)
     case WEATHER_STARS:
         SetWeather(WEATHER_STARS);
         break;
+    case WEATHER_FOREST_LIGHT:
+        SetWeather(WEATHER_FOREST_LIGHT);
+        break;
+    case WEATHER_FALLING_LEAVES:
+        SetWeather(WEATHER_FALLING_LEAVES);
+        break;
     case COORD_EVENT_WEATHER_RAIN_THUNDERSTORM:
         SetWeather(WEATHER_RAIN_THUNDERSTORM);
         break;
@@ -1212,6 +1188,8 @@ static const u8 sWeatherNames[WEATHER_COUNT][24] = {
     [WEATHER_ROUTE123_CYCLE]     = _("ROUTE123 CYCLE"),
     [WEATHER_FOG]                = _("FOG"),
     [WEATHER_STARS]          = _("FALLING STARS"),
+    [WEATHER_FOREST_LIGHT]   = _("FOREST LIGHT"),
+    [WEATHER_FALLING_LEAVES]  = _("FALLING LEAVES"),
 };
 
 static const u8 sDebugText_WeatherNotDefined[] = _("NOT DEFINED!!!");

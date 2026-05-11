@@ -13,6 +13,10 @@ enum {
     GFXTAG_SANDSTORM,
     GFXTAG_BUBBLE,
     GFXTAG_RAIN,
+    GFXTAG_PINK_LEAVES,
+    GFXTAG_FOREST_LIGHT,
+    PALTAG_STAR,
+    PALTAG_FOREST_LIGHT,
 };
 enum {
     PALTAG_WEATHER = TAG_WEATHER_START,
@@ -131,6 +135,10 @@ struct Weather
     s16 droughtState;
     u8 loadDroughtPalsIndex;
     u8 loadDroughtPalsOffset;
+    // Pink Leaves / Forest Light (campos compartilhados)
+    u8 targetPinkLeafSpriteCount;
+    u8 pinkLeafVisibleCounter;
+    u8 pinkLeafSpriteCount;
 };
 
 // field_weather.c
@@ -193,6 +201,14 @@ void Stars_InitVars(void);
 void Stars_Main(void);
 void Stars_InitAll(void);
 bool8 Stars_Finish(void);
+void PinkLeaves_InitVars(void);
+void PinkLeaves_Main(void);
+void PinkLeaves_InitAll(void);
+bool8 PinkLeaves_Finish(void);
+void ForestLight_InitVars(void);
+void ForestLight_Main(void);
+void ForestLight_InitAll(void);
+bool8 ForestLight_Finish(void);
 void Thunderstorm_InitVars(void);
 void Thunderstorm_Main(void);
 void Thunderstorm_InitAll(void);
