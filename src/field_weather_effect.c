@@ -2897,12 +2897,10 @@ static void UpdateBubbleSprite(struct Sprite *sprite)
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// WEATHER_SMOKE — Fumaça subindo (cópia exata das estrelas, direção invertida)
+// WEATHER_SMOKE
 //------------------------------------------------------------------------------
 
-#define NUM_SMOKE_SPRITES 6      // menos sprites, mais espaçados
-#define GFXTAG_SMOKE      0x1214
-#define PALTAG_SMOKE      0x1215
+#define NUM_SMOKE_SPRITES 8
 
 static void UpdateSmokeSprite(struct Sprite *sprite);
 static bool8 CreateSmokeSprite(void);
@@ -2962,9 +2960,11 @@ static const struct SpriteTemplate sSmokeSpriteTemplate =
     .callback    = UpdateSmokeSprite,
 };
 
-#define tSmokePosY   data[0]
-#define tSmokeDeltaY data[1]
-#define tSmokeId     data[4]
+#define tSmokePosY    data[0]
+#define tSmokeDeltaY  data[1]
+#define tSmokeWaveIdx data[2]
+#define tSmokeWaveInc data[3]
+#define tSmokeId      data[4]
 
 void Smoke_InitVars(void)
 {
@@ -2972,11 +2972,10 @@ void Smoke_InitVars(void)
     gWeatherPtr->weatherGfxLoaded = FALSE;
     gWeatherPtr->targetColorMapIndex = 0;
     gWeatherPtr->colorMapStepDelay = 20;
-    gWeatherPtr->targetPinkLeafSpriteCount = NUM_SMOKE_SPRITES;
-    gWeatherPtr->pinkLeafVisibleCounter = 0;
-    gWeatherPtr->pinkLeafSpriteCount = 0;
+    gWeatherPtr->targetSmokeSpriteCount = NUM_SMOKE_SPRITES;
+    gWeatherPtr->smokeSpriteCount = 0;
     gWeatherPtr->noShadows = FALSE;
-    Weather_SetBlendCoeffs(10, 8);
+    Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY);
 }
 
 void Smoke_InitAll(void)
@@ -2984,7 +2983,7 @@ void Smoke_InitAll(void)
     Smoke_InitVars();
     LoadSpriteSheet(&sSmokeSpriteSheet);
     LoadSpritePalette(&sSmokeSpritePalette);
-    while (gWeatherPtr->pinkLeafSpriteCount < gWeatherPtr->targetPinkLeafSpriteCount)
+    while (gWeatherPtr->smokeSpriteCount < gWeatherPtr->targetSmokeSpriteCount)
         CreateSmokeSprite();
     SetGpuReg(REG_OFFSET_BLDCNT,
         BLDCNT_TGT1_OBJ |
@@ -2996,7 +2995,6 @@ void Smoke_InitAll(void)
 
 void Smoke_Main(void)
 {
-    // Nada necessário – os sprites se reciclam automaticamente
 }
 
 bool8 Smoke_Finish(void)
@@ -3010,7 +3008,7 @@ bool8 Smoke_Finish(void)
     case 1:
         if (Weather_UpdateBlend())
         {
-            while (gWeatherPtr->pinkLeafSpriteCount)
+            while (gWeatherPtr->smokeSpriteCount)
                 DestroySmokeSprite();
             FreeSpriteTilesByTag(GFXTAG_SMOKE);
             FreeSpritePaletteByTag(PALTAG_SMOKE);
@@ -3027,18 +3025,18 @@ static bool8 CreateSmokeSprite(void)
     u8 spriteId = CreateSpriteAtEnd(&sSmokeSpriteTemplate, 0, 0, 78);
     if (spriteId == MAX_SPRITES)
         return FALSE;
-    gSprites[spriteId].tSmokeId = gWeatherPtr->pinkLeafSpriteCount;
+    gSprites[spriteId].tSmokeId = gWeatherPtr->smokeSpriteCount;
     InitSmokeSpriteMovement(&gSprites[spriteId]);
-    gSprites[spriteId].coordOffsetEnabled = TRUE;   // fixa no mundo (igual estrelas)
-    gWeatherPtr->sprites.s1.rainSprites[gWeatherPtr->pinkLeafSpriteCount++] = &gSprites[spriteId];
+    gSprites[spriteId].coordOffsetEnabled = TRUE;
+    gWeatherPtr->sprites.s1.rainSprites[gWeatherPtr->smokeSpriteCount++] = &gSprites[spriteId];
     return TRUE;
 }
 
 static bool8 DestroySmokeSprite(void)
 {
-    if (gWeatherPtr->pinkLeafSpriteCount)
+    if (gWeatherPtr->smokeSpriteCount)
     {
-        DestroySprite(gWeatherPtr->sprites.s1.rainSprites[--gWeatherPtr->pinkLeafSpriteCount]);
+        DestroySprite(gWeatherPtr->sprites.s1.rainSprites[--gWeatherPtr->smokeSpriteCount]);
         return TRUE;
     }
     return FALSE;
@@ -3048,51 +3046,66 @@ static void InitSmokeSpriteMovement(struct Sprite *sprite)
 {
     u16 rand = Random();
     u8  id   = sprite->tSmokeId;
-
-    // X bem espaçado (usa id * 40 para distanciamento)
-    s16 x = (s16)((id * 40) % 240) + (s16)(rand & 15) - 7;
-    sprite->x = x - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
-
-    // Y inicial: espalhado por toda a altura da tela
+    s16 x;
     s16 y;
-    if (id < 2)
-        y = 20 + (rand % 40);                      // parte alta
-    else if (id < 4)
-        y = 70 + (rand % 40);                      // meio
-    else
-        y = 120 + (rand % 40);                     // parte baixa
 
+    x = (((id * 5) & 7) * 30) + (rand % 14) + 8;
+    y = DISPLAY_HEIGHT - ((id * DISPLAY_HEIGHT) / NUM_SMOKE_SPRITES) + (rand % 16) - 8;
+
+    sprite->x = x - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
     sprite->y = y - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
     sprite->tSmokePosY = sprite->y * 128;
-
-    // Velocidade de subida (aleatória, moderada)
-    sprite->tSmokeDeltaY = (rand & 7) + 15;        // 15..22 subpixels/frame
+    sprite->x2 = 0;
+    sprite->tSmokeDeltaY = (rand & 3) * 5 + 64;
+    sprite->tSmokeWaveIdx = 0;
+    sprite->tSmokeWaveInc = ((rand & 3) == 0) ? 3 : 2;
     StartSpriteAnim(sprite, 0);
 }
 
 static void UpdateSmokeSprite(struct Sprite *sprite)
 {
-    // Sobe no mundo (Y diminui) – igual às estrelas, mas ao contrário
+    s16 screenX;
+    s16 screenY;
+
     sprite->tSmokePosY -= sprite->tSmokeDeltaY;
     sprite->y = sprite->tSmokePosY >> 7;
+    sprite->tSmokeWaveIdx += sprite->tSmokeWaveInc;
+    sprite->tSmokeWaveIdx &= 0xFF;
+    sprite->x2 = gSineTable[sprite->tSmokeWaveIdx] / 32;
 
-    s16 y = (sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY) & 0x1FF;
-    if (y & 0x100)
-        y |= -0x100;
+    screenX = (sprite->x + sprite->centerToCornerVecX + gSpriteCoordOffsetX) & 0x1FF;
+    if (screenX & 0x100)
+        screenX |= -0x100;
+    screenY = (sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY) & 0x1FF;
+    if (screenY & 0x100)
+        screenY |= -0x100;
 
-    // Quando some pelo topo da tela, reaparece na base (relativo à câmera atual)
-    if (y < -20)
+    if (screenX < -3)
+        sprite->x = 242 - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+    else if (screenX > 242)
+        sprite->x = -3 - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+
+    if (screenY < -24)
     {
         u16 rand = Random();
-        s16 newScreenY = 160 + (rand % 20);         // 160..179 (abaixo da tela visível)
-        sprite->y = newScreenY - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
+        sprite->x = ((((sprite->tSmokeId * 5) & 7) * 30) + (rand % 14) + 8) - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+        sprite->y = (DISPLAY_HEIGHT + ((sprite->tSmokeId & 3) * 8) + (rand & 7)) - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
         sprite->tSmokePosY = sprite->y * 128;
-        sprite->x = (s16)(rand % 240) - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+        sprite->tSmokeDeltaY = (rand & 3) * 5 + 64;
+    }
+    else if (screenY > DISPLAY_HEIGHT + 24)
+    {
+        u16 rand = Random();
+        sprite->x = ((((sprite->tSmokeId * 5) & 7) * 30) + (rand % 14) + 8) - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+        sprite->y = ((sprite->tSmokeId * DISPLAY_HEIGHT) / NUM_SMOKE_SPRITES) - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
+        sprite->tSmokePosY = sprite->y * 128;
     }
 }
 
 #undef tSmokePosY
 #undef tSmokeDeltaY
+#undef tSmokeWaveIdx
+#undef tSmokeWaveInc
 #undef tSmokeId
 
 /////////////////////// 

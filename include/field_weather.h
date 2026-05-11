@@ -21,7 +21,8 @@ enum {
 };
 enum {
     PALTAG_WEATHER = TAG_WEATHER_START,
-    PALTAG_WEATHER_2
+    PALTAG_WEATHER_2,
+    PALTAG_SMOKE
 };
 
 #define NUM_WEATHER_COLOR_MAPS 19
@@ -140,6 +141,9 @@ struct Weather
     u8 targetPinkLeafSpriteCount;
     u8 pinkLeafVisibleCounter;
     u8 pinkLeafSpriteCount;
+    // Smoke
+    u8 targetSmokeSpriteCount;
+    u8 smokeSpriteCount;
 };
 
 // field_weather.c
