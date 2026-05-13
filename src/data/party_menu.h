@@ -63,13 +63,13 @@ static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects[] =
     {
         BlitBitmapToPartyWindow_Equal,
         {
-            // x, y, width, height para cada informação
-            34,  24, 40, 13, // Nickname  (row 3, y=24..36)
-             3,  25, 32,  8, // Level
-            28,  24,  8,  8, // Gender
-            40,   12, 24,  8, // HP        (row 1, y=1..8)
-            55,   12, 24,  8, // Max HP    (row 1, y=1..8)
-            48,  10, 56,  3  // HP bar    (row 1, y=10..12 — dentro do trilho)
+        // x, y, width, height para cada informação
+        34,  1, 40, 13, // Nickname
+        3,  25, 32,  8, // Level
+        28,  24,  8,  8, // Gender
+        34,  12, 24,  8, // HP
+        49,  12, 24,  8, // Max HP
+        48,  26, 56,  3  // HP bar
         },
         33, 13, 64, 16      // Description text
     },
@@ -656,9 +656,9 @@ static const u8 sSlotTilemap_WideEmpty[] = INCBIN_U8("graphics/party_menu/slot_w
 // Custom party menu
 static const u8 sEqualMainSlotTileNums[] = {
     43, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 45,
+    49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
+    49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
     49, 33, 33, 33, 52, 53, 51, 51, 51, 51, 51, 51, 51, 54,
-    49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
-    49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
     55, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 57,
 };
 

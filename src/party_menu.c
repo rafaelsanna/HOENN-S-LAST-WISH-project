@@ -161,7 +161,21 @@ enum {
 #define MENU_DIR_RIGHT    2
 #define MENU_DIR_LEFT    -2
 
-#define TAG_ITEM_ICON 30005 
+#define TAG_ITEM_ICON 30005
+#define TAG_ITEM_ICON_PALETTE (TAG_ITEM_ICON + 0x10)
+
+// Posição do item icon no canto superior direito de cada slot do layout Equal.
+// x = (tilemapLeft + width)*8 - 10  (2px para dentro da borda)
+// y = tilemapTop*8 + 10             (2px para baixo da borda)
+static const u8 sEqualItemIconPos[PARTY_SIZE][2] =
+{
+    {105, 11},  // slot 0 — esquerda
+    {217, 19},  // slot 1 — direita
+    {105, 51},  // slot 2 — esquerda
+    {217, 59},  // slot 3 — direita
+    {105, 91},  // slot 4 — esquerda
+    {217, 99},  // slot 5 — direita
+};
 
 enum {
     CAN_LEARN_MOVE,
@@ -506,6 +520,23 @@ static void ShowMoveSelectWindow(u8 slot);
 static void Task_HandleWhichMoveInput(u8 taskId);
 static void Task_HideFollowerNPCForTeleport(u8);
 static void FieldCallback_RockClimb(void);
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_75[] =
+{
+    AFFINEANIMCMD_FRAME(192, 192, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd *const sAffineAnims_ItemIcon_75[] =
+{
+    sAffineAnim_ItemIcon_75
+};
+
+static void ScaleItemIconSprite(u8 spriteId, u16 scaleFactor8_8);
+
+#ifndef ST_OAM_AFFINE_NORMAL
+#define ST_OAM_AFFINE_NORMAL 1
+#endif
 
 static void BlitBitmapToPartyWindow_Equal(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 isEgg);
 #include "data/party_menu.h"
@@ -1278,19 +1309,27 @@ static void CreateCancelConfirmPokeballSprites(void)
 //// CreatePartyMonHeldItemSpriteParameterized
 static void CreatePartyMonHeldItemSpriteParameterized(u16 species, u16 item, struct PartyMenuBox *menuBox)
 {
-    if (species != SPECIES_NONE && item != ITEM_NONE)
+    if (item != ITEM_NONE)
     {
-        u8 slotIndex = menuBox - sPartyMenuBoxes;
-        u16 tag = TAG_ITEM_ICON + slotIndex;
-        menuBox->itemSpriteId = AddItemIconSprite(tag, tag, item);
+        u8 slot = menuBox - sPartyMenuBoxes;
+        u16 tilesTag = TAG_ITEM_ICON + slot;
+        u16 palTag   = TAG_ITEM_ICON_PALETTE + slot; // paleta individual por slot
+        menuBox->itemSpriteId = AddItemIconSprite(tilesTag, palTag, item);
         if (menuBox->itemSpriteId != SPRITE_NONE)
         {
-            u8 windowId = menuBox->windowId;
-            gSprites[menuBox->itemSpriteId].x = GetWindowAttribute(windowId, WINDOW_TILEMAP_LEFT) * 8
-                                                + GetWindowAttribute(windowId, WINDOW_WIDTH) * 8 - 12;
-            gSprites[menuBox->itemSpriteId].y = GetWindowAttribute(windowId, WINDOW_TILEMAP_TOP) * 8
-                                                + GetWindowAttribute(windowId, WINDOW_HEIGHT) * 8 - 10;
+            if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
+            {
+                gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
+                gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
+            }
+            else
+            {
+                gSprites[menuBox->itemSpriteId].x = menuBox->spriteCoords[2] + 4;
+                gSprites[menuBox->itemSpriteId].y = menuBox->spriteCoords[3];
+            }
             gSprites[menuBox->itemSpriteId].oam.priority = 1;
+
+            ScaleItemIconSprite(menuBox->itemSpriteId, 0xC0);
         }
     }
     else
@@ -3431,9 +3470,14 @@ static void SwitchPartyMon(void)
     *mon2 = *monBuffer;
     Free(monBuffer);
     SwitchMenuBoxSprites(&menuBoxes[0]->pokeballSpriteId, &menuBoxes[1]->pokeballSpriteId);
-    SwitchMenuBoxSprites(&menuBoxes[0]->itemSpriteId, &menuBoxes[1]->itemSpriteId);
     SwitchMenuBoxSprites(&menuBoxes[0]->monSpriteId, &menuBoxes[1]->monSpriteId);
     SwitchMenuBoxSprites(&menuBoxes[0]->statusSpriteId, &menuBoxes[1]->statusSpriteId);
+
+    // Ícones de item: recriar com paletas corretas por slot em vez de só trocar o spriteId.
+    // Cada slot tem palTag própria (TAG_ITEM_ICON+slot), então trocar o spriteId deixaria
+    // o sprite do slot0 renderizando com a paleta do slot1 e vice-versa.
+    ShowOrHideHeldItemSprite(GetMonData(mon1, MON_DATA_HELD_ITEM), menuBoxes[0]);
+    ShowOrHideHeldItemSprite(GetMonData(mon2, MON_DATA_HELD_ITEM), menuBoxes[1]);
 }
 
 // Finish switching mons or using Softboiled
@@ -4492,24 +4536,54 @@ static void SpriteCB_UpdatePartyMonIcon(struct Sprite *sprite)
     UpdateMonIconFrame(sprite);
 }
 
+static void ScaleItemIconSprite(u8 spriteId, u16 scaleFactor8_8)
+{
+    struct Sprite *sprite = &gSprites[spriteId];
+    
+    // Libera matriz anterior, se houver
+    FreeSpriteOamMatrix(sprite);
+    
+    // Tenta alocar uma nova matriz para affine
+    u8 matrixNum = AllocOamMatrix();
+    if (matrixNum == 0xFF)
+        return;
+
+    sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    sprite->oam.matrixNum = matrixNum;
+    sprite->affineAnims = sAffineAnims_ItemIcon_75;
+    StartSpriteAffineAnim(sprite, 0);
+    
+    // Ajusta posição para centralizar o sprite reduzido
+    u8 offset = (32 - (32 * scaleFactor8_8) / 256) / 2;
+    sprite->x += offset;
+    sprite->y += offset;
+}
+
 // CreatePartyMonHeldItemSprite
 static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
     u16 item = GetMonData(mon, MON_DATA_HELD_ITEM);
-    u8 slotIndex = menuBox - sPartyMenuBoxes;
-    u16 tag = TAG_ITEM_ICON + slotIndex;
-
     if (item != ITEM_NONE)
     {
-        menuBox->itemSpriteId = AddItemIconSprite(tag, tag, item);
+        u8 slot = menuBox - sPartyMenuBoxes;
+        u16 tilesTag = TAG_ITEM_ICON + slot;
+        u16 palTag   = TAG_ITEM_ICON_PALETTE + slot; // paleta individual por slot
+        menuBox->itemSpriteId = AddItemIconSprite(tilesTag, palTag, item);
         if (menuBox->itemSpriteId != SPRITE_NONE)
         {
-            u8 windowId = menuBox->windowId;
-            gSprites[menuBox->itemSpriteId].x = GetWindowAttribute(windowId, WINDOW_TILEMAP_LEFT) * 8
-                                                + GetWindowAttribute(windowId, WINDOW_WIDTH) * 8 - 12;   // +3px pra direita
-            gSprites[menuBox->itemSpriteId].y = GetWindowAttribute(windowId, WINDOW_TILEMAP_TOP) * 8
-                                                + GetWindowAttribute(windowId, WINDOW_HEIGHT) * 8 - 10;    // -8px pra baixo
+            if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
+            {
+                gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
+                gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
+            }
+            else
+            {
+                gSprites[menuBox->itemSpriteId].x = menuBox->spriteCoords[2] + 4;
+                gSprites[menuBox->itemSpriteId].y = menuBox->spriteCoords[3];
+            }
             gSprites[menuBox->itemSpriteId].oam.priority = 1;
+
+            ScaleItemIconSprite(menuBox->itemSpriteId, 0xC0);
         }
     }
     else
@@ -4521,27 +4595,38 @@ static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBo
 /// ShowOrHideHeldItemSprite
 static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
 {
-    u8 slotIndex = menuBox - sPartyMenuBoxes;
-    u16 tag = TAG_ITEM_ICON + slotIndex;
+    u8 slot = menuBox - sPartyMenuBoxes;
+    u16 tilesTag = TAG_ITEM_ICON + slot;
+    u16 palTag   = TAG_ITEM_ICON_PALETTE + slot; // paleta individual por slot
 
+    // Destruir sprite antigo e liberar tiles + paleta do slot
     if (menuBox->itemSpriteId != SPRITE_NONE)
     {
-        FreeSpriteTilesByTag(tag);
+        FreeSpriteOamMatrix(&gSprites[menuBox->itemSpriteId]);
         DestroySprite(&gSprites[menuBox->itemSpriteId]);
+        FreeSpriteTilesByTag(tilesTag);
+        FreeSpritePaletteByTag(palTag);
         menuBox->itemSpriteId = SPRITE_NONE;
     }
 
+    // Criar novo sprite com paleta própria do item
     if (item != ITEM_NONE)
     {
-        menuBox->itemSpriteId = AddItemIconSprite(tag, tag, item);
+        menuBox->itemSpriteId = AddItemIconSprite(tilesTag, palTag, item);
         if (menuBox->itemSpriteId != SPRITE_NONE)
         {
-            u8 windowId = menuBox->windowId;
-            gSprites[menuBox->itemSpriteId].x = GetWindowAttribute(windowId, WINDOW_TILEMAP_LEFT) * 8
-                                                + GetWindowAttribute(windowId, WINDOW_WIDTH) * 8 - 12;
-            gSprites[menuBox->itemSpriteId].y = GetWindowAttribute(windowId, WINDOW_TILEMAP_TOP) * 8
-                                                + GetWindowAttribute(windowId, WINDOW_HEIGHT) * 8 - 10;
+            if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
+            {
+                gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
+                gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
+            }
+            else
+            {
+                gSprites[menuBox->itemSpriteId].x = menuBox->spriteCoords[2] + 4;
+                gSprites[menuBox->itemSpriteId].y = menuBox->spriteCoords[3];
+            }
             gSprites[menuBox->itemSpriteId].oam.priority = 1;
+            ScaleItemIconSprite(menuBox->itemSpriteId, 0xC0);  // 75%
         }
     }
 }
