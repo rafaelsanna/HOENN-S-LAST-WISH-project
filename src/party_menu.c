@@ -1540,6 +1540,12 @@ void Task_HandleChooseMonInput(u8 taskId)
                 Task_ClosePartyMenu(taskId);
             }
             break;
+        case SELECT_BUTTON:
+            if (gPartyMenu.action == PARTY_ACTION_CHOOSE_MON && *slotPtr != PARTY_SIZE)
+            {
+                CursorCb_Switch(taskId);
+            }
+            break;
         }
     }
 }
@@ -1831,6 +1837,8 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
         return R_BUTTON;
     if (JOY_NEW(START_BUTTON))
         return START_BUTTON;
+    if (JOY_NEW(SELECT_BUTTON))
+        return SELECT_BUTTON;
 
     if (movementDir && gPlayerPartyCount != 0)
     {
@@ -4599,9 +4607,15 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
     u16 tilesTag = TAG_ITEM_ICON + slot;
     u16 palTag   = TAG_ITEM_ICON_PALETTE + slot; // paleta individual por slot
 
-    // Destruir sprite antigo e liberar tiles + paleta do slot
-    if (menuBox->itemSpriteId != SPRITE_NONE)
+    // Salvar posições do sprite antigo para preservar durante animações
+    s16 oldX = 0, oldY = 0, oldX2 = 0, oldY2 = 0;
+    bool8 hadSprite = menuBox->itemSpriteId != SPRITE_NONE;
+    if (hadSprite)
     {
+        oldX = gSprites[menuBox->itemSpriteId].x;
+        oldY = gSprites[menuBox->itemSpriteId].y;
+        oldX2 = gSprites[menuBox->itemSpriteId].x2;
+        oldY2 = gSprites[menuBox->itemSpriteId].y2;
         FreeSpriteOamMatrix(&gSprites[menuBox->itemSpriteId]);
         DestroySprite(&gSprites[menuBox->itemSpriteId]);
         FreeSpriteTilesByTag(tilesTag);
@@ -4627,6 +4641,14 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
             }
             gSprites[menuBox->itemSpriteId].oam.priority = 1;
             ScaleItemIconSprite(menuBox->itemSpriteId, 0xC0);  // 75%
+            // Preservar posições se havia sprite antigo
+            if (hadSprite)
+            {
+                gSprites[menuBox->itemSpriteId].x = oldX;
+                gSprites[menuBox->itemSpriteId].y = oldY;
+                gSprites[menuBox->itemSpriteId].x2 = oldX2;
+                gSprites[menuBox->itemSpriteId].y2 = oldY2;
+            }
         }
     }
 }
