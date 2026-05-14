@@ -87,6 +87,7 @@
 #define PARTY_MSG_NO_POKEMON                29
 #define PARTY_MSG_CHOOSE_MON_FOR_BOX        30
 #define PARTY_MSG_MOVE_ITEM_WHERE           31
+#define PARTY_MSG_DO_WHAT_WITH_FOLLOWER     32
 
 #define PARTY_MSG_NONE                      127
 
@@ -111,5 +112,6 @@
 #define SELECTWINDOW_MOVES       3
 #define SELECTWINDOW_CATALOG     4
 #define SELECTWINDOW_ZYGARDECUBE 5
+#define SELECTWINDOW_FOLLOWER    6
 
 #endif // GUARD_CONSTANTS_PARTY_MENU_H

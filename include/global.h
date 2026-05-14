@@ -252,8 +252,9 @@ struct SaveBlock3
     u8 dexNavSearchLevels[NUM_SPECIES];
 #endif
     u8 dexNavChain;
-    u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES]; // Two bits per wild encounter header: encounter and capture.
-}; /* max size 1624 bytes */
+    u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES];
+    u8 followerIndex;
+};
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;
 

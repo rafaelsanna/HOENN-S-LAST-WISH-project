@@ -56,6 +56,7 @@
 #include "constants/trainer_types.h"
 #include "constants/union_room.h"
 #include "constants/weather.h"
+#include "constants/layouts.h"
 
 #define SPECIAL_LOCALIDS_START (min(LOCALID_CAMERA, \
                                 min(LOCALID_PLAYER, \
@@ -1913,6 +1914,53 @@ u8 CreateObjectGraphicsSpriteWithTag(u16 graphicsId, void (*callback)(struct Spr
     return spriteId;
 }
 
+static bool8 InBattleFacilityOrContestHall(void)
+{
+    return gMapHeader.mapLayoutId == LAYOUT_BATTLE_COLOSSEUM_2P
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_COLOSSEUM_4P
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_ELEVATOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_CORRIDOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_THREE_PATH_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_NORMAL
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_FINAL
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_ARENA_CORRIDOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_UNUSED
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_CORRIDOR
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR
+        || gMapHeader.mapLayoutId == LAYOUT_FALLARBOR_TOWN_LEFTOVER_RSCONTEST_HALL
+        || gMapHeader.mapLayoutId == LAYOUT_LILYCOVE_CITY_CONTEST_HALL
+        || gMapHeader.mapLayoutId == LAYOUT_CONTEST_HALL
+        || gMapHeader.mapLayoutId == LAYOUT_CONTEST_HALL_BEAUTY
+        || gMapHeader.mapLayoutId == LAYOUT_CONTEST_HALL_TOUGH
+        || gMapHeader.mapLayoutId == LAYOUT_CONTEST_HALL_COOL
+        || gMapHeader.mapLayoutId == LAYOUT_CONTEST_HALL_SMART
+        || gMapHeader.mapLayoutId == LAYOUT_CONTEST_HALL_CUTE;
+}
+
+// This and the above function could probably use some clean-up/optimization
+// The general order of operations is:
+// 1. If the follower has been recalled to its ball, return NULL
+// 2. If no preferred follower has been set or the player is in battle facility or contest hall, use default behavior
+// 3. Use preferred follower
+// 4. If preferred follower is fainted or an egg (hopefully this shouldn't be possible), use default behavior
+// Default: Return address of first conscious party mon or NULL
+
 u8 CreateObjectGraphicsSprite(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority)
 {
     return CreateObjectGraphicsSpriteWithTag(graphicsId, callback, x, y, subpriority, TAG_NONE);
@@ -1977,20 +2025,65 @@ u8 CreateVirtualObject(u16 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevati
 }
 
 // Return address of first conscious party mon or NULL
+// Return address of first conscious party mon or NULL
 struct Pokemon *GetFirstLiveMon(void)
 {
     u32 i;
+    u32 j = gSaveBlock3Ptr->followerIndex;
+
+    if (j == OW_FOLLOWER_RECALLED)
+        return NULL;
+    
+    if (j == OW_FOLLOWER_NOT_SET || InBattleFacilityOrContestHall())
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            struct Pokemon *mon = &gPlayerParty[i];
+            
+            // Suas verificações personalizadas
+            if ((OW_FOLLOWERS_ALLOWED_SPECIES && GetMonData(mon, MON_DATA_SPECIES_OR_EGG) != VarGet(OW_FOLLOWERS_ALLOWED_SPECIES))
+             || (OW_FOLLOWERS_ALLOWED_MET_LVL && GetMonData(mon, MON_DATA_MET_LEVEL) != VarGet(OW_FOLLOWERS_ALLOWED_MET_LVL))
+             || (OW_FOLLOWERS_ALLOWED_MET_LOC && GetMonData(mon, MON_DATA_MET_LOCATION) != VarGet(OW_FOLLOWERS_ALLOWED_MET_LOC)))
+                continue; // Pula este Pokémon se não atender aos requisitos
+
+            if (mon->hp > 0 && !(mon->box.isEgg || mon->box.isBadEgg))
+                return mon;
+        }
+        return NULL;
+    }
+    
+    // Verifica o seguidor preferido
+    if (gPlayerParty[j].hp > 0 && !(gPlayerParty[j].box.isEgg || gPlayerParty[j].box.isBadEgg))
+    {
+        // Verifica se o seguidor preferido atende às suas condições personalizadas
+        struct Pokemon *mon = &gPlayerParty[j];
+        if ((OW_FOLLOWERS_ALLOWED_SPECIES && GetMonData(mon, MON_DATA_SPECIES_OR_EGG) != VarGet(OW_FOLLOWERS_ALLOWED_SPECIES))
+         || (OW_FOLLOWERS_ALLOWED_MET_LVL && GetMonData(mon, MON_DATA_MET_LEVEL) != VarGet(OW_FOLLOWERS_ALLOWED_MET_LVL))
+         || (OW_FOLLOWERS_ALLOWED_MET_LOC && GetMonData(mon, MON_DATA_MET_LOCATION) != VarGet(OW_FOLLOWERS_ALLOWED_MET_LOC)))
+        {
+            // Seguidor preferido não atende aos requisitos, cai no fallback
+        }
+        else
+        {
+            return &gPlayerParty[j];
+        }
+    }
+    
+    // Fallback: procura qualquer Pokémon vivo que atenda aos requisitos
     for (i = 0; i < PARTY_SIZE; i++)
     {
         struct Pokemon *mon = &gPlayerParty[i];
+        
+        // Suas verificações personalizadas
         if ((OW_FOLLOWERS_ALLOWED_SPECIES && GetMonData(mon, MON_DATA_SPECIES_OR_EGG) != VarGet(OW_FOLLOWERS_ALLOWED_SPECIES))
          || (OW_FOLLOWERS_ALLOWED_MET_LVL && GetMonData(mon, MON_DATA_MET_LEVEL) != VarGet(OW_FOLLOWERS_ALLOWED_MET_LVL))
          || (OW_FOLLOWERS_ALLOWED_MET_LOC && GetMonData(mon, MON_DATA_MET_LOCATION) != VarGet(OW_FOLLOWERS_ALLOWED_MET_LOC)))
             continue;
 
-        if (gPlayerParty[i].hp > 0 && !(gPlayerParty[i].box.isEgg || gPlayerParty[i].box.isBadEgg))
-            return &gPlayerParty[i];
+        if (mon->hp > 0 && !(mon->box.isEgg || mon->box.isBadEgg))
+            return mon;
     }
+    
     return NULL;
 }
 

@@ -241,6 +241,7 @@ void NewGameInitData(void)
     ClearRankingHallRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    gSaveBlock3Ptr->followerIndex = OW_FOLLOWER_NOT_SET;
     WipeTrainerNameRecords();
     
     // Mystery and special events
