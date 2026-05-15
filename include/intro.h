@@ -11,6 +11,7 @@ void CB2_InitCopyrightScreenAfterTitleScreen(void);
 void PanFadeAndZoomScreen(u16 screenX, u16 screenY, u16 zoom, u16 alpha);
 void MainCB2_Intro(void);
 void Task_Scene1_Load(u8);
+void CB2_HWLIntro(void);
 
 
 #endif // GUARD_INTRO_H

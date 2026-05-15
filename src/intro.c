@@ -27,6 +27,7 @@
 #include "expansion_intro.h"
 #include "constants/rgb.h"
 #include "constants/battle_anim.h"
+#include "hwl_intro.h"
 
 /*
     The intro is grouped into the following scenes
@@ -1125,8 +1126,7 @@ static u8 SetUpCopyrightScreen(void)
         if (UpdatePaletteFade())
             break;
 #if EXPANSION_INTRO == TRUE
-        SetMainCallback2(CB2_ExpansionIntro);
-        CreateTask(Task_HandleExpansionIntro, 0);
+        SetMainCallback2(CB2_HWLIntro);   // mostra sua logo e depois chama CB2_ExpansionIntro
 #else
         CreateTask(Task_Scene1_Load, 0);
         SetMainCallback2(MainCB2_Intro);
