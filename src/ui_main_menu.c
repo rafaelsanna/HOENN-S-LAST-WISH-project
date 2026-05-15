@@ -141,10 +141,7 @@ static void Task_FloatingStars(u8 taskId);
 static void CreateStars(void);
 static void LoadStarGfx(void);
 
-static u8 sCreditsCurrentPage = 0;
-
 static void Task_ReturnToMainMenu(u8 taskId);
-static void Task_CreditsNavigation(u8 taskId);
 
 //==========BACKGROUND TEMPLATES==========//
 static const struct BgTemplate sMainMenuBgTemplates[] =
@@ -915,27 +912,8 @@ case HW_WIN_CREDITS:
 
 static void Task_CreditsNavigation(u8 taskId)
 {
-    if (JOY_NEW(DPAD_LEFT))
-    {
-        PlaySE(SE_SELECT);
-        if (sCreditsCurrentPage == 0)
-            sCreditsCurrentPage = 2;
-        else
-            sCreditsCurrentPage--;
-        ShowPainting(CREDITS_PAGE_1 + sCreditsCurrentPage, NULL);
-    }
-    else if (JOY_NEW(DPAD_RIGHT))
-    {
-        PlaySE(SE_SELECT);
-        sCreditsCurrentPage = (sCreditsCurrentPage + 1) % 3;
-        ShowPainting(CREDITS_PAGE_1 + sCreditsCurrentPage, NULL);
-    }
-    else if (JOY_NEW(B_BUTTON))
-    {
-        PlaySE(SE_PC_OFF);
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
-        gTasks[taskId].func = Task_ReturnToMainMenu;
-    }
+    CB2_ShowCreditsViewer();
+    DestroyTask(taskId);
 }
 
 static void Task_ReturnToMainMenu(u8 taskId)
