@@ -1516,10 +1516,10 @@ void Task_HandleChooseMonInput(u8 taskId)
 
         switch (PartyMenuButtonHandler(slotPtr))
         {
-        case A_BUTTON: // Selected mon
+        case A_BUTTON:
             HandleChooseMonSelection(taskId, slotPtr);
             break;
-        case B_BUTTON: // Selected Cancel / pressed B
+        case B_BUTTON:
             HandleChooseMonCancel(taskId, slotPtr);
             break;
         case START_BUTTON:
@@ -1544,7 +1544,15 @@ void Task_HandleChooseMonInput(u8 taskId)
                 Task_ClosePartyMenu(taskId);
             }
             break;
-                    case SELECT_BUTTON:
+        case L_BUTTON:  // ← NOVO: Abre o SUMMARY com o botão L
+            if (gPartyMenu.action == PARTY_ACTION_CHOOSE_MON && *slotPtr != PARTY_SIZE)
+            {
+                PlaySE(SE_SELECT);
+                gPartyMenu.slotId = *slotPtr;
+                CursorCb_Summary(taskId);
+            }
+            break;    
+        case SELECT_BUTTON:
             if (gPartyMenu.action == PARTY_ACTION_CHOOSE_MON && *slotPtr != PARTY_SIZE)
             {
                 CursorCb_Switch(taskId);
@@ -1837,8 +1845,14 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
         break;
     }
 
+    // Botão R - abre o PC (já existente)
     if (PARTY_MENU_PC_ACCESS && JOY_NEW(R_BUTTON))
         return R_BUTTON;
+    
+    // Botão L - abre o SUMMARY (NOVO)
+    if (!PARTY_MENU_PC_ACCESS && JOY_NEW(L_BUTTON))
+        return L_BUTTON;
+    
     if (JOY_NEW(START_BUTTON))
         return START_BUTTON;
     if (JOY_NEW(SELECT_BUTTON))

@@ -25,6 +25,19 @@ static const u8 sPainting3_Palette[] = INCBIN_U8("graphics/paintings/painting3.g
 static const u8 sPainting3_Tiles[] = INCBIN_U8("graphics/paintings/painting3.4bpp.lz");
 static const u8 sPainting3_Tilemap[] = INCBIN_U8("graphics/paintings/painting3_Tilemap.bin.lz");
 
+// Suas páginas de créditos
+static const u16 sCreditsPage1_Pal[] = INCBIN_U16("graphics/paintings/credits_01.gbapal");
+static const u8 sCreditsPage1_Tiles[] = INCBIN_U8("graphics/paintings/credits_01.4bpp.lz");
+static const u8 sCreditsPage1_Map[] = INCBIN_U8("graphics/paintings/credits_01.bin.lz");
+
+static const u16 sCreditsPage2_Pal[] = INCBIN_U16("graphics/paintings/credits_02.gbapal");
+static const u8 sCreditsPage2_Tiles[] = INCBIN_U8("graphics/paintings/credits_02.4bpp.lz");
+static const u8 sCreditsPage2_Map[] = INCBIN_U8("graphics/paintings/credits_02.bin.lz");
+
+static const u16 sCreditsPage3_Pal[] = INCBIN_U16("graphics/paintings/credits_03.gbapal");
+static const u8 sCreditsPage3_Tiles[] = INCBIN_U8("graphics/paintings/credits_03.4bpp.lz");
+static const u8 sCreditsPage3_Map[] = INCBIN_U8("graphics/paintings/credits_03.bin.lz");
+
 struct PaintingData
 {
     const u8 *tiles;
@@ -47,7 +60,23 @@ static const struct PaintingData sPaintingData[PAINTING_COUNT] = {
         .tiles = sPainting3_Tiles,
         .tilemap = sPainting3_Tilemap,
         .palette = sPainting3_Palette
-    }
+    },
+    // Suas páginas de créditos:
+    [CREDITS_PAGE_1] = {
+        .tiles = sCreditsPage1_Tiles,
+        .tilemap = sCreditsPage1_Map,
+        .palette = (const u8*)sCreditsPage1_Pal   // Cuidado: sCreditsPage1_Pal é u16*
+    },
+    [CREDITS_PAGE_2] = {
+        .tiles = sCreditsPage2_Tiles,
+        .tilemap = sCreditsPage2_Map,
+        .palette = (const u8*)sCreditsPage2_Pal
+    },
+    [CREDITS_PAGE_3] = {
+        .tiles = sCreditsPage3_Tiles,
+        .tilemap = sCreditsPage3_Map,
+        .palette = (const u8*)sCreditsPage3_Pal
+    },
 };
 
 static const struct BgTemplate sPaintingBgTemplate = {

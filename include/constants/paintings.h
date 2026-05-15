@@ -4,6 +4,9 @@
 #define PAINTING_1  0
 #define PAINTING_2  1
 #define PAINTING_3  2
-#define PAINTING_COUNT 3
+#define CREDITS_PAGE_1 3
+#define CREDITS_PAGE_2 4
+#define CREDITS_PAGE_3 5
+#define PAINTING_COUNT 6
 
 #endif // GUARD_CONSTANTS_PAINTINGS_H
