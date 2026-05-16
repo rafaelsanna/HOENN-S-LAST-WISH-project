@@ -110,6 +110,21 @@ static void SpriteCB_RayquazaOrb(struct Sprite *sprite);
 
 static void MainCB2_EndIntro(void);
 
+// =========================================================================
+// Scene 0 (Pre-intro) — task forward declarations
+// =========================================================================
+// Task_Scene0_Load and CB2_Scene0Intro are non-static — called from expansion_intro.c
+void Task_Scene0_Load(u8);
+void CB2_Scene0Intro(void);
+static void Task_Scene0_Main(u8);
+
+// Scene 0 helper functions
+static void Scene0_LoadBgSet(u8 setIndex);
+static void SpriteCB_Scene0Shrine(struct Sprite *sprite);
+static void SpriteCB_Scene0ShootingStar(struct Sprite *sprite);
+static void SpriteCB_Scene0Celebi(struct Sprite *sprite);
+static void SpriteCB_Scene0Jirachi(struct Sprite *sprite);
+
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct SpritePalette gBattleAnimPaletteTable[];
 extern const struct SpriteTemplate gAncientPowerRockSpriteTemplate;
@@ -134,6 +149,12 @@ enum {
 
 #define TAG_FLYGON_SILHOUETTE 2002
 #define TAG_RAYQUAZA_ORB      2003
+
+// Scene 0 (pre-intro) sprite tags — range 1600-1603, safe from existing 1500-1505, 2000-2003
+#define TAG_SCENE0_SHRINE     1600
+#define TAG_SCENE0_STAR       1601   // uses sparkle gfx, own palette slot
+#define TAG_SCENE0_CELEBI     1602
+#define TAG_SCENE0_JIRACHI    1603
 
 #define COLOSSEUM_GAME_CODE 0x65366347 // "Gc6e" in ASCII
 
@@ -183,21 +204,69 @@ static EWRAM_DATA u16 sFlygonYOffset = 0;
 COMMON_DATA u32 gIntroFrameCounter = 0;
 COMMON_DATA struct GcmbStruct gMultibootProgramStruct = {0};
 
+// =========================================================================
+// Scene 0 (Pre-intro) — graphics assets
+// All graphics live in graphics/intro/scene_0/
+//
+// BG naming convention:
+//   bgsky0N = sky background (full 16-color palette, no transparency needed)
+//   bg0N    = forest foreground (transparent color 0 reveals the sky behind)
+//
+// Tileset format: 256×160 px, 4bpp, 16 colors
+// Both bg and bgsky are rendered together per set (GBA only allows 16 colors per layer)
+// =========================================================================
+
+// --- Set 00: opening sky + forest (shrine visible) ---
+static const u16 sScene0BgSky00_Pal[]     = INCBIN_U16("graphics/intro/scene_0/bgsky00.gbapal");
+static const u32 sScene0BgSky00_Gfx[]     = INCBIN_U32("graphics/intro/scene_0/bgsky00.4bpp.smol");
+static const u32 sScene0BgSky00_Map[]     = INCBIN_U32("graphics/intro/scene_0/bgsky00.bin");
+static const u16 sScene0Bg00_Pal[]        = INCBIN_U16("graphics/intro/scene_0/bg00.gbapal");
+static const u32 sScene0Bg00_Gfx[]        = INCBIN_U32("graphics/intro/scene_0/bg00.4bpp.smol");
+static const u32 sScene0Bg00_Map[]        = INCBIN_U32("graphics/intro/scene_0/bg00.bin");
+
+// --- Set 01: middle sky + forest (transition mood) ---
+static const u16 sScene0BgSky01_Pal[]     = INCBIN_U16("graphics/intro/scene_0/bgsky01.gbapal");
+static const u32 sScene0BgSky01_Gfx[]     = INCBIN_U32("graphics/intro/scene_0/bgsky01.4bpp.smol");
+static const u32 sScene0BgSky01_Map[]     = INCBIN_U32("graphics/intro/scene_0/bgsky01.bin");
+static const u16 sScene0Bg01_Pal[]        = INCBIN_U16("graphics/intro/scene_0/bg01.gbapal");
+static const u32 sScene0Bg01_Gfx[]        = INCBIN_U32("graphics/intro/scene_0/bg01.4bpp.smol");
+static const u32 sScene0Bg01_Map[]        = INCBIN_U32("graphics/intro/scene_0/bg01.bin");
+
+// --- Set 02: final sky (star-filled / dawn) + forest — holds longest ---
+static const u16 sScene0BgSky02_Pal[]     = INCBIN_U16("graphics/intro/scene_0/bgsky02.gbapal");
+static const u32 sScene0BgSky02_Gfx[]     = INCBIN_U32("graphics/intro/scene_0/bgsky02.4bpp.smol");
+static const u32 sScene0BgSky02_Map[]     = INCBIN_U32("graphics/intro/scene_0/bgsky02.bin");
+static const u16 sScene0Bg02_Pal[]        = INCBIN_U16("graphics/intro/scene_0/bg02.gbapal");
+static const u32 sScene0Bg02_Gfx[]        = INCBIN_U32("graphics/intro/scene_0/bg02.4bpp.smol");
+static const u32 sScene0Bg02_Map[]        = INCBIN_U32("graphics/intro/scene_0/bg02.bin");
+
+// --- Shrine (static 64×64 sprite, centered in scene) ---
+static const u16 sScene0Shrine_Pal[]      = INCBIN_U16("graphics/intro/scene_0/shrine.gbapal");
+static const u32 sScene0Shrine_Gfx[]      = INCBIN_U32("graphics/intro/scene_0/shrine.4bpp.smol");
+
+// --- Celebi (4-frame fly anim, sheet = 64×256, same layout as HWL logo) ---
+static const u16 sScene0Celebi_Pal[]      = INCBIN_U16("graphics/intro/scene_0/celebi.gbapal");
+static const u32 sScene0Celebi_Gfx[]      = INCBIN_U32("graphics/intro/scene_0/celebi.4bpp.smol");
+
+// --- Jirachi (4-frame fly anim, sheet = 64×256) ---
+static const u16 sScene0Jirachi_Pal[]     = INCBIN_U16("graphics/intro/scene_0/jirachi.gbapal");
+static const u32 sScene0Jirachi_Gfx[]     = INCBIN_U32("graphics/intro/scene_0/jirachi.4bpp.smol");
+
 static const u16 sIntroDrops_Pal[]            = INCBIN_U16("graphics/intro/scene_1/drops.gbapal");
 static const u16 sIntroLogo_Pal[]             = INCBIN_U16("graphics/intro/scene_1/logo.gbapal");
 static const u32 sIntroDropsLogo_Gfx[]        = INCBIN_U32("graphics/intro/scene_1/drops_logo.4bpp.smol");
 static const u16 sIntro1Bg_Pal[]              = INCBIN_U16("graphics/intro/scene_1/bg.gbapal"); // 16 x 16
-static const u32 sIntro1Bg0_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg0_map.bin.smolTM");
-static const u32 sIntro1Bg1_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg1_map.bin.smolTM");
-static const u32 sIntro1Bg2_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg2_map.bin.smolTM");
-static const u32 sIntro1Bg3_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg3_map.bin.smolTM");
+static const u32 sIntro1Bg0_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg0_map.bin");
+static const u32 sIntro1Bg1_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg1_map.bin");
+static const u32 sIntro1Bg2_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg2_map.bin");
+static const u32 sIntro1Bg3_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg3_map.bin");
 static const u32 sIntro1Bg_Gfx[]              = INCBIN_U32("graphics/intro/scene_1/bg.4bpp.smol");
 static const u16 sIntroPokeball_Pal[]         = INCBIN_U16("graphics/intro/scene_3/pokeball.gbapal");
-static const u32 sIntroPokeball_Tilemap[]     = INCBIN_U32("graphics/intro/scene_3/pokeball_map.bin.smolTM");
+static const u32 sIntroPokeball_Tilemap[]     = INCBIN_U32("graphics/intro/scene_3/pokeball_map.bin");
 static const u32 sIntroPokeball_Gfx[]         = INCBIN_U32("graphics/intro/scene_3/pokeball.8bpp.smol");
 static const u16 sIntroStreaks_Pal[]          = INCBIN_U16("graphics/intro/scene_3/streaks.gbapal"); // Unused
 static const u32 sIntroStreaks_Gfx[]          = INCBIN_U32("graphics/intro/scene_3/streaks.4bpp.smol"); // Unused
-static const u32 sIntroStreaks_Tilemap[]      = INCBIN_U32("graphics/intro/scene_3/streaks_map.bin.smolTM"); // Unused
+static const u32 sIntroStreaks_Tilemap[]      = INCBIN_U32("graphics/intro/scene_3/streaks_map.bin"); // Unused
 static const u16 sIntroRayquzaOrb_Pal[]       = INCBIN_U16("graphics/intro/scene_3/rayquaza_orb.gbapal");
 static const u16 sIntroMisc_Pal[]             = INCBIN_U16("graphics/intro/scene_3/misc.gbapal"); // Unused
 static const u32 sIntroMisc_Gfx[]             = INCBIN_U32("graphics/intro/scene_3/misc.4bpp.smol"); // Rayquza orb, and misc unused gfx
@@ -1033,6 +1102,224 @@ static const struct SpritePalette sSpritePalette_RayquazaOrb[] =
 };
 
 
+// =========================================================================
+// Scene 0 — sprite data tables
+// =========================================================================
+
+// ---------------------------------------------------------------------------
+// Shrine — static 64×64, sits in front of the forest BG layer
+//   OAM priority 0 so it renders above BG1 (forest, BG priority 0)
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Shrine =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,   // in front of all BGs
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+static const union AnimCmd sAnim_Scene0Shrine[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_END,
+};
+static const union AnimCmd *const sAnims_Scene0Shrine[] =
+{
+    sAnim_Scene0Shrine,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Shrine[] =
+{
+    // 64×64 px, 4bpp = 2048 bytes (0x800)
+    {sScene0Shrine_Gfx, 0x800, TAG_SCENE0_SHRINE},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Shrine[] =
+{
+    {sScene0Shrine_Pal, TAG_SCENE0_SHRINE},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Shrine =
+{
+    .tileTag = TAG_SCENE0_SHRINE,
+    .paletteTag = TAG_SCENE0_SHRINE,
+    .oam = &sOamData_Scene0Shrine,
+    .anims = sAnims_Scene0Shrine,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Scene0Shrine,
+};
+
+// ---------------------------------------------------------------------------
+// Shooting Star — reuses gIntroSparkle_Gfx (already in ROM) under its own tag
+//   OAM priority 1: renders BEHIND forest BG (priority 0) but ABOVE sky BG (priority 1)
+//   → the star travels across the sky layer, hidden by forest tiles
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Star =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,   // behind forest (BG priority 0), in front of sky (BG priority 1)
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+static const union AnimCmd sAnim_Scene0Star[] =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(4, 2),
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(12, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Star[] =
+{
+    sAnim_Scene0Star,
+};
+// gIntroSparkle_Gfx and gIntroLightning_Pal are declared in intro_credits_graphics.h
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Star[] =
+{
+    {gIntroSparkle_Gfx, 0x400, TAG_SCENE0_STAR},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Star[] =
+{
+    {gIntroLightning_Pal, TAG_SCENE0_STAR},  // same bright palette used in scene_1 sparkles
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Star =
+{
+    .tileTag = TAG_SCENE0_STAR,
+    .paletteTag = TAG_SCENE0_STAR,
+    .oam = &sOamData_Scene0Star,
+    .anims = sAnims_Scene0Star,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Scene0ShootingStar,
+};
+
+// ---------------------------------------------------------------------------
+// Celebi — 4 frames × 64×64, fly animation (same layout as HWL logo sprites)
+//   Sheet: 64 px wide × 256 px tall (4 frames stacked vertically)
+//   Each frame tile offset: 0, 64, 128, 192 (in 8×8 tile units)
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Celebi =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+static const union AnimCmd sAnim_Scene0Celebi_Fly[] =
+{
+    ANIMCMD_FRAME(0,   6),
+    ANIMCMD_FRAME(64,  6),
+    ANIMCMD_FRAME(128, 6),
+    ANIMCMD_FRAME(192, 6),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Celebi[] =
+{
+    sAnim_Scene0Celebi_Fly,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Celebi[] =
+{
+    // 4 frames × 64×64 px, 4bpp = 4 × 2048 = 8192 bytes (0x2000)
+    {sScene0Celebi_Gfx, 0x2000, TAG_SCENE0_CELEBI},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Celebi[] =
+{
+    {sScene0Celebi_Pal, TAG_SCENE0_CELEBI},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Celebi =
+{
+    .tileTag = TAG_SCENE0_CELEBI,
+    .paletteTag = TAG_SCENE0_CELEBI,
+    .oam = &sOamData_Scene0Celebi,
+    .anims = sAnims_Scene0Celebi,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Scene0Celebi,
+};
+
+// ---------------------------------------------------------------------------
+// Jirachi — same structure as Celebi
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Jirachi =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+static const union AnimCmd sAnim_Scene0Jirachi_Fly[] =
+{
+    ANIMCMD_FRAME(0,   6),
+    ANIMCMD_FRAME(64,  6),
+    ANIMCMD_FRAME(128, 6),
+    ANIMCMD_FRAME(192, 6),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Jirachi[] =
+{
+    sAnim_Scene0Jirachi_Fly,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Jirachi[] =
+{
+    {sScene0Jirachi_Gfx, 0x2000, TAG_SCENE0_JIRACHI},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Jirachi[] =
+{
+    {sScene0Jirachi_Pal, TAG_SCENE0_JIRACHI},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Jirachi =
+{
+    .tileTag = TAG_SCENE0_JIRACHI,
+    .paletteTag = TAG_SCENE0_JIRACHI,
+    .oam = &sOamData_Scene0Jirachi,
+    .anims = sAnims_Scene0Jirachi,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Scene0Jirachi,
+};
+
 static void VBlankCB_Intro(void)
 {
     LoadOam();
@@ -1126,9 +1413,12 @@ static u8 SetUpCopyrightScreen(void)
         if (UpdatePaletteFade())
             break;
 #if EXPANSION_INTRO == TRUE
-        SetMainCallback2(CB2_HWLIntro);   // mostra sua logo e depois chama CB2_ExpansionIntro
+        // CB2_HWLIntro → CB2_ExpansionIntro → CB2_Scene0Intro (in expansion_intro.c)
+        // CB2_Scene0Intro calls CreateTask(Task_Scene0_Load, 0) + SetMainCallback2(MainCB2_Intro)
+        SetMainCallback2(CB2_HWLIntro);
 #else
-        CreateTask(Task_Scene1_Load, 0);
+        // Non-expansion path: Scene 0 → Scene 1 directly
+        CreateTask(Task_Scene0_Load, 0);
         SetMainCallback2(MainCB2_Intro);
 #endif
         if (gMultibootProgramStruct.gcmb_field_2 != 0)
@@ -3444,3 +3734,505 @@ static void SpriteCB_RayquazaOrb(struct Sprite *sprite)
         break;
     }
 }
+
+// =========================================================================
+// Scene 0 (Pre-intro) — task data accessors
+// =========================================================================
+// Task data layout for Task_Scene0_Main:
+//   data[0]  = tState   — main state machine
+//   data[1]  = tTimer   — general purpose frame counter
+//   data[2]  = tBgSet   — current BG set index (0, 1, 2)
+//   data[3]  = tShrineId
+//   data[4]  = tStarId
+//   data[5]  = tCelebiId
+//   data[6]  = tJirachiId
+//   data[7]  = tGrowTimer — for bgsky02 grow (mosaic / affine scale)
+#define tState      data[0]
+#define tTimer      data[1]
+#define tBgSet      data[2]
+#define tShrineId   data[3]
+#define tStarId     data[4]
+#define tCelebiId   data[5]
+#define tJirachiId  data[6]
+#define tGrowTimer  data[7]
+
+// Scene 0 state machine values
+enum {
+    S0_FADE_IN_SET00 = 0,
+    S0_HOLD_SET00,
+    S0_FADE_TO_SET01,
+    S0_HOLD_SET01,
+    S0_FADE_TO_SET02,
+    S0_HOLD_SET02_GROW,
+    S0_LAUNCH_STAR,
+    S0_WAIT_STAR,
+    S0_LAUNCH_SPRITES,
+    S0_WAIT_SPRITES,
+    S0_FADE_OUT,
+    S0_DONE,
+};
+
+// BG VRAM layout for Scene 0:
+//   charbase 1 (0x4000): sky tile graphics
+//   charbase 2 (0x8000): forest tile graphics
+//   screenbase 26 (0xD000): sky tilemap
+//   screenbase 27 (0xD800): forest tilemap
+#define S0_SKY_CHARBASE    1
+#define S0_FOREST_CHARBASE 2
+#define S0_SKY_SCREEN      26
+#define S0_FOREST_SCREEN   27
+
+// Palette slots:
+//   BG_PLTT_ID(8)  = sky palette    (slot 8, 16 colors)
+//   BG_PLTT_ID(9)  = forest palette (slot 9, 16 colors)
+// Sky uses sub-palette 0 (tile entries have pal=0 from gbagfx, no patching needed)
+// Forest uses sub-palette 1 (tile entries are patched after load to set pal nibble = 1)
+#define S0_SKY_PAL_SLOT    0
+#define S0_FOREST_PAL_SLOT 1
+
+// =========================================================================
+// Scene0_LoadBgSet — swap both BG tile/map/palette to the new set index
+// =========================================================================
+static void Scene0_LoadBgSet(u8 setIndex)
+{
+    const u16 *skyPal, *fgPal;
+    const u32 *skyGfx, *fgGfx;
+    const void *skyMap, *fgMap;
+
+    switch (setIndex)
+    {
+    default:
+    case 0:
+        skyPal = sScene0BgSky00_Pal; fgPal = sScene0Bg00_Pal;
+        skyGfx = sScene0BgSky00_Gfx; fgGfx = sScene0Bg00_Gfx;
+        skyMap = sScene0BgSky00_Map; fgMap = sScene0Bg00_Map;
+        break;
+    case 1:
+        skyPal = sScene0BgSky01_Pal; fgPal = sScene0Bg01_Pal;
+        skyGfx = sScene0BgSky01_Gfx; fgGfx = sScene0Bg01_Gfx;
+        skyMap = sScene0BgSky01_Map; fgMap = sScene0Bg01_Map;
+        break;
+    case 2:
+        skyPal = sScene0BgSky02_Pal; fgPal = sScene0Bg02_Pal;
+        skyGfx = sScene0BgSky02_Gfx; fgGfx = sScene0Bg02_Gfx;
+        skyMap = sScene0BgSky02_Map; fgMap = sScene0Bg02_Map;
+        break;
+    }
+
+    DecompressDataWithHeaderVram(skyGfx, (void *)(BG_CHAR_ADDR(S0_SKY_CHARBASE)));
+    DecompressDataWithHeaderVram(fgGfx,  (void *)(BG_CHAR_ADDR(S0_FOREST_CHARBASE)));
+
+    CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), BG_SCREEN_SIZE);
+    CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), BG_SCREEN_SIZE);
+    CpuCopy16(skyMap, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), 32 * 20 * 2);
+    CpuCopy16(fgMap,  (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), 32 * 20 * 2);
+
+    // Normalise palette fields in the decompressed tilemaps to match where
+    // we load palettes. Some exported maps may reference other palette slots
+    // (e.g. 4), which ends up reading the wrong palette at runtime.
+    // Ensure sky uses palette slot 0 and forest uses slot 1.
+    {
+        u16 *screenSky = (u16 *)BG_SCREEN_ADDR(S0_SKY_SCREEN);
+        u16 *screenFg  = (u16 *)BG_SCREEN_ADDR(S0_FOREST_SCREEN);
+        u16 i;
+        for (i = 0; i < 32 * 32; i++)
+            screenSky[i] = (screenSky[i] & 0x0FFF) | (0 << 12);
+        for (i = 0; i < 32 * 32; i++)
+            screenFg[i]  = (screenFg[i]  & 0x0FFF) | (1 << 12);
+    }
+
+    LoadPalette(skyPal, BG_PLTT_ID(S0_SKY_PAL_SLOT),    PLTT_SIZE_4BPP);
+    LoadPalette(fgPal,  BG_PLTT_ID(S0_FOREST_PAL_SLOT), PLTT_SIZE_4BPP);
+}
+
+// =========================================================================
+// Task_Scene0_Load — entry point, called by CB2_ExpansionIntro (or directly)
+// =========================================================================
+void Task_Scene0_Load(u8 taskId)
+{
+    SetVBlankCallback(NULL);
+    IntroResetGpuRegs();
+
+    // BG registers:
+    //   BG0 = sky     — lowest priority, fills entire screen
+    //   BG1 = forest  — priority 0, transparent color 0 shows sky beneath
+    SetGpuReg(REG_OFFSET_BG0CNT,
+        BGCNT_PRIORITY(1)
+        | BGCNT_CHARBASE(S0_SKY_CHARBASE)
+        | BGCNT_SCREENBASE(S0_SKY_SCREEN)
+        | BGCNT_16COLOR
+        | BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG1CNT,
+        BGCNT_PRIORITY(0)
+        | BGCNT_CHARBASE(S0_FOREST_CHARBASE)
+        | BGCNT_SCREENBASE(S0_FOREST_SCREEN)
+        | BGCNT_16COLOR
+        | BGCNT_TXT256x256);
+
+    Scene0_LoadBgSet(0);
+
+    // Load all Scene 0 sprites
+    LoadCompressedSpriteSheet(sSpriteSheet_Scene0Shrine);
+    LoadSpritePalettes(sSpritePalette_Scene0Shrine);
+    LoadCompressedSpriteSheet(sSpriteSheet_Scene0Star);
+    LoadSpritePalettes(sSpritePalette_Scene0Star);
+    LoadCompressedSpriteSheet(sSpriteSheet_Scene0Celebi);
+    LoadSpritePalettes(sSpritePalette_Scene0Celebi);
+    LoadCompressedSpriteSheet(sSpriteSheet_Scene0Jirachi);
+    LoadSpritePalettes(sSpritePalette_Scene0Jirachi);
+
+    // Create shrine sprite (static, centered at bottom-center)
+    gTasks[taskId].tShrineId  = CreateSprite(&sSpriteTemplate_Scene0Shrine,
+                                              DISPLAY_WIDTH / 2,
+                                              DISPLAY_HEIGHT - 40, 0);
+    gTasks[taskId].tStarId    = SPRITE_NONE;
+    gTasks[taskId].tCelebiId  = SPRITE_NONE;
+    gTasks[taskId].tJirachiId = SPRITE_NONE;
+
+    // Initialize task state
+    gTasks[taskId].tState    = S0_FADE_IN_SET00;
+    gTasks[taskId].tTimer    = 0;
+    gTasks[taskId].tBgSet    = 0;
+    gTasks[taskId].tGrowTimer = 0;
+
+    // Start fully black, we'll fade in
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    SetVBlankCallback(VBlankCB_Intro);
+    SetGpuReg(REG_OFFSET_DISPCNT,
+        DISPCNT_MODE_0
+        | DISPCNT_OBJ_1D_MAP
+        | DISPCNT_BG0_ON
+        | DISPCNT_BG1_ON
+        | DISPCNT_OBJ_ON);
+
+    gTasks[taskId].func = Task_Scene0_Main;
+}
+
+// =========================================================================
+// Task_Scene0_Main — drives the full pre-intro sequence
+// =========================================================================
+static void Task_Scene0_Main(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    // ------------------------------------------------------------------
+    case S0_FADE_IN_SET00:
+        if (!UpdatePaletteFade())
+        {
+            task->tTimer = 0;
+            task->tState = S0_HOLD_SET00;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_HOLD_SET00:
+        // Hold set 00 for ~3 seconds (180 frames @ 60fps)
+        if (++task->tTimer >= 180)
+        {
+            BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
+            task->tTimer = 0;
+            task->tState = S0_FADE_TO_SET01;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_FADE_TO_SET01:
+        if (!UpdatePaletteFade())
+        {
+            Scene0_LoadBgSet(1);
+            task->tBgSet = 1;
+            BeginNormalPaletteFade(PALETTES_BG, 8, 16, 0, RGB_BLACK);
+            task->tTimer = 0;
+            task->tState = S0_HOLD_SET01;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_HOLD_SET01:
+        if (!UpdatePaletteFade())
+        {
+            // Hold set 01 for ~2.5 seconds
+            if (++task->tTimer >= 150)
+            {
+                BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
+                task->tTimer = 0;
+                task->tState = S0_FADE_TO_SET02;
+            }
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_FADE_TO_SET02:
+        if (!UpdatePaletteFade())
+        {
+            Scene0_LoadBgSet(2);
+            task->tBgSet = 2;
+            BeginNormalPaletteFade(PALETTES_BG, 8, 16, 0, RGB_BLACK);
+            task->tTimer = 0;
+            task->tGrowTimer = 0;
+            task->tState = S0_HOLD_SET02_GROW;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_HOLD_SET02_GROW:
+        if (!UpdatePaletteFade())
+        {
+            // Slow light mosaic grow effect on BG0 (sky only)
+            // Mosaic increases from 0→3 over ~180 frames, giving a subtle zoom feel
+            if (++task->tGrowTimer % 45 == 0)
+            {
+                u8 mosaicLevel = task->tGrowTimer / 45;
+                if (mosaicLevel > 3)
+                    mosaicLevel = 3;
+                // REG_MOSAIC layout: bits[3:0]=BG H, bits[7:4]=BG V, bits[11:8]=OBJ H, bits[15:12]=OBJ V
+                SetGpuReg(REG_OFFSET_MOSAIC,
+                    (mosaicLevel) | (mosaicLevel << 4));
+                // Apply mosaic to sky BG0 only
+                SetGpuReg(REG_OFFSET_BG0CNT,
+                    BGCNT_PRIORITY(1)
+                    | BGCNT_CHARBASE(S0_SKY_CHARBASE)
+                    | BGCNT_SCREENBASE(S0_SKY_SCREEN)
+                    | BGCNT_16COLOR
+                    | BGCNT_TXT256x256
+                    | BGCNT_MOSAIC);
+            }
+            // Hold ~4 seconds then launch shooting star
+            if (task->tGrowTimer >= 240)
+            {
+                task->tState = S0_LAUNCH_STAR;
+            }
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_LAUNCH_STAR:
+    {
+        // Spawn shooting star in upper-left, sprite callback will move it diagonally
+        u8 starId = CreateSprite(&sSpriteTemplate_Scene0Star, 20, 20, 1);
+        gSprites[starId].invisible = FALSE;
+        task->tStarId = starId;
+        task->tTimer  = 0;
+        task->tState  = S0_WAIT_STAR;
+        break;
+    }
+
+    // ------------------------------------------------------------------
+    case S0_WAIT_STAR:
+        // SpriteCB_Scene0ShootingStar signals done by setting invisible=TRUE after leaving screen
+        if (task->tStarId != SPRITE_NONE
+            && gSprites[task->tStarId].invisible == TRUE)
+        {
+            // Remove the star sprite
+            DestroySprite(&gSprites[task->tStarId]);
+            task->tStarId = SPRITE_NONE;
+            task->tState  = S0_LAUNCH_SPRITES;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_LAUNCH_SPRITES:
+    {
+        // Celebi: enters from left side, flies toward upper-right
+        u8 celebiId = CreateSprite(&sSpriteTemplate_Scene0Celebi, -64, DISPLAY_HEIGHT / 2, 0);
+        gSprites[celebiId].invisible = FALSE;
+        task->tCelebiId = celebiId;
+
+        // Jirachi: enters from right side, flies toward upper-left (mirrored)
+        u8 jirachiId = CreateSprite(&sSpriteTemplate_Scene0Jirachi, DISPLAY_WIDTH + 64, DISPLAY_HEIGHT / 2 - 20, 0);
+        gSprites[jirachiId].invisible = FALSE;
+        gSprites[jirachiId].hFlip = TRUE; // Mirror for opposing direction
+        task->tJirachiId = jirachiId;
+
+        task->tTimer = 0;
+        task->tState = S0_WAIT_SPRITES;
+        break;
+    }
+
+    // ------------------------------------------------------------------
+    case S0_WAIT_SPRITES:
+        // Wait until both Pokemon have left the screen (signaled by invisible)
+        {
+            bool8 celebiDone   = (task->tCelebiId  == SPRITE_NONE
+                                  || gSprites[task->tCelebiId].invisible  == TRUE);
+            bool8 jirachiDone  = (task->tJirachiId == SPRITE_NONE
+                                  || gSprites[task->tJirachiId].invisible == TRUE);
+
+            if (celebiDone && jirachiDone)
+            {
+                if (task->tCelebiId  != SPRITE_NONE) DestroySprite(&gSprites[task->tCelebiId]);
+                if (task->tJirachiId != SPRITE_NONE) DestroySprite(&gSprites[task->tJirachiId]);
+                task->tCelebiId  = SPRITE_NONE;
+                task->tJirachiId = SPRITE_NONE;
+                // Brief hold then fade out
+                task->tTimer = 0;
+                task->tState = S0_FADE_OUT;
+            }
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_FADE_OUT:
+        if (++task->tTimer == 1)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        }
+        if (!UpdatePaletteFade() && task->tTimer > 1)
+        {
+            task->tState = S0_DONE;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_DONE:
+    default:
+        // Clean up mosaic, destroy shrine, hand off to Scene 1
+        SetGpuReg(REG_OFFSET_MOSAIC, 0);
+        SetGpuReg(REG_OFFSET_BG0CNT,
+            BGCNT_PRIORITY(1)
+            | BGCNT_CHARBASE(S0_SKY_CHARBASE)
+            | BGCNT_SCREENBASE(S0_SKY_SCREEN)
+            | BGCNT_16COLOR
+            | BGCNT_TXT256x256);
+        if (task->tShrineId != SPRITE_NONE)
+        {
+            DestroySprite(&gSprites[task->tShrineId]);
+            task->tShrineId = SPRITE_NONE;
+        }
+        DestroyTask(taskId);
+        // Hand off to the main intro (Scene 1 and beyond)
+        CreateTask(Task_Scene1_Load, 0);
+        break;
+    }
+}
+
+#undef tState
+#undef tTimer
+#undef tBgSet
+#undef tShrineId
+#undef tStarId
+#undef tCelebiId
+#undef tJirachiId
+#undef tGrowTimer
+
+// =========================================================================
+// CB2_Scene0Intro — entry point called by CB2_ExpansionIntro at its end
+// Mirrors the same CB2 pattern used in CB2_InitCopyrightScreenAfterBootup
+// =========================================================================
+void CB2_Scene0Intro(void)
+{
+    ResetTasks();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetPaletteFade();
+    SetVBlankCallback(NULL);
+
+    CreateTask(Task_Scene0_Load, 0);
+    SetMainCallback2(MainCB2_Intro);
+}
+
+// =========================================================================
+// SpriteCB_Scene0Shrine — static, just sits there
+// =========================================================================
+static void SpriteCB_Scene0Shrine(struct Sprite *sprite)
+{
+    // Nothing — shrine is stationary throughout Scene 0
+    (void)sprite;
+}
+
+// =========================================================================
+// SpriteCB_Scene0ShootingStar — diagonal flight across sky
+// Moves from upper-left to lower-right, signals done by going invisible
+// Uses sparkle animation frames (already set up via AnimCmd)
+// =========================================================================
+#define sStarX    data[0]   // fixed-point x (8.8)
+#define sStarY    data[1]   // fixed-point y (8.8)
+
+static void SpriteCB_Scene0ShootingStar(struct Sprite *sprite)
+{
+    // On first frame: initialize sub-pixel position
+    if (sprite->data[7] == 0)
+    {
+        sprite->data[7] = 1;
+        sprite->sStarX = sprite->x << 8;
+        sprite->sStarY = sprite->y << 8;
+        sprite->invisible = FALSE;
+    }
+
+    // Move diagonally: 3px right, 2px down per frame (smooth)
+    sprite->sStarX += (3 << 8);
+    sprite->sStarY += (2 << 8);
+    sprite->x = sprite->sStarX >> 8;
+    sprite->y = sprite->sStarY >> 8;
+
+    // Done when off-screen
+    if (sprite->x > DISPLAY_WIDTH + 16 || sprite->y > DISPLAY_HEIGHT + 16)
+    {
+        sprite->invisible = TRUE;
+    }
+}
+
+#undef sStarX
+#undef sStarY
+
+// =========================================================================
+// SpriteCB_Scene0Celebi — flies from left to right-top, animation loops
+// =========================================================================
+#define sCelebiX  data[0]   // fixed-point x (8.8)
+#define sCelebiY  data[1]   // fixed-point y (8.8)
+
+static void SpriteCB_Scene0Celebi(struct Sprite *sprite)
+{
+    if (sprite->data[7] == 0)
+    {
+        sprite->data[7] = 1;
+        sprite->sCelebiX = sprite->x << 8;
+        sprite->sCelebiY = sprite->y << 8;
+        sprite->invisible = FALSE;
+    }
+
+    // Fly right and slightly upward
+    sprite->sCelebiX += (2 << 8) + 128; // ~2.5 px/frame
+    sprite->sCelebiY -= (0 << 8) + 64;  // ~0.25 px/frame upward drift
+
+    sprite->x = sprite->sCelebiX >> 8;
+    sprite->y = sprite->sCelebiY >> 8;
+
+    if (sprite->x > DISPLAY_WIDTH + 64)
+        sprite->invisible = TRUE;
+}
+
+#undef sCelebiX
+#undef sCelebiY
+
+// =========================================================================
+// SpriteCB_Scene0Jirachi — flies from right to left-top (mirrored)
+// =========================================================================
+#define sJirachiX data[0]
+#define sJirachiY data[1]
+
+static void SpriteCB_Scene0Jirachi(struct Sprite *sprite)
+{
+    if (sprite->data[7] == 0)
+    {
+        sprite->data[7] = 1;
+        sprite->sJirachiX = sprite->x << 8;
+        sprite->sJirachiY = sprite->y << 8;
+        sprite->invisible = FALSE;
+    }
+
+    // Fly left and slightly upward
+    sprite->sJirachiX -= (2 << 8) + 128;
+    sprite->sJirachiY -= (0 << 8) + 64;
+
+    sprite->x = sprite->sJirachiX >> 8;
+    sprite->y = sprite->sJirachiY >> 8;
+
+    if (sprite->x < -64)
+        sprite->invisible = TRUE;
+}
+
+#undef sJirachiX
+#undef sJirachiY

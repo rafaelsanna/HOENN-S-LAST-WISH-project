@@ -71,6 +71,7 @@ static void ExpansionIntro_InitBgs();
 static void ExpansionIntro_StartBlend();
 static void ExpansionIntro_LoadGraphics();
 static void ExpansionIntro_CreateSprites();
+extern void CB2_Scene0Intro(void);
 
 static const union AnimCmd sAnimCmd_DizzyWalking[] =
 {
@@ -278,8 +279,8 @@ void Task_HandleExpansionIntro(u8 taskId)
             ResetSpriteData();
             FreeAllSpritePalettes();
             DestroyTask(taskId);
-            CreateTask(Task_Scene1_Load, 0);
-            SetMainCallback2(MainCB2_Intro);
+            // Inicia a Scene 0 (shrine, celebi, jirachi) em vez de ir direto para Scene 1
+            SetMainCallback2(CB2_Scene0Intro);
         }
         break;
     }
