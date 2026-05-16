@@ -127,6 +127,8 @@ static void SpriteCB_Scene0Celebi(struct Sprite *sprite);
 static void SpriteCB_Scene0Jirachi(struct Sprite *sprite);
 static void SpriteCB_Scene0Comet(struct Sprite *sprite);
 static void SpriteCB_Scene0Sparkle(struct Sprite *sprite);
+static void SpriteCB_Scene0Celebi2(struct Sprite *sprite);
+static void SpriteCB_Scene0Jirachi2(struct Sprite *sprite);
 
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct SpritePalette gBattleAnimPaletteTable[];
@@ -160,6 +162,8 @@ enum {
 #define TAG_SCENE0_MOON       1603   // lua central (64x64, glow)
 #define TAG_SCENE0_COMET      1604   // novo cometa 4×64×64
 #define TAG_SCENE0_SPARKLE    1605   // sparkles durante o cometa (reutiliza gIntroSparkle_Gfx)
+#define TAG_SCENE0_CELEBI2    1606
+#define TAG_SCENE0_JIRACHI2   1607
 // 1604 reservado para uso futuro
 
 #define COLOSSEUM_GAME_CODE 0x65366347 // "Gc6e" in ASCII
@@ -275,6 +279,12 @@ static const u32 sScene0Moon_Gfx[]    = INCBIN_U32("graphics/intro/scene_0/moon.
 // --- Cometa: 4 frames 64x64, cruza diagonal direita->esquerda rapido ---
 static const u16 sScene0Comet_Pal[]   = INCBIN_U16("graphics/intro/scene_0/comet.gbapal");
 static const u32 sScene0Comet_Gfx[]   = INCBIN_U32("graphics/intro/scene_0/comet.4bpp.smol");
+
+// Celebi2 e Jirachi2 — segundo voo (ceu noturno, set03)
+static const u16 sScene0Celebi2_Pal[]  = INCBIN_U16("graphics/intro/scene_0/celebi2.gbapal");
+static const u32 sScene0Celebi2_Gfx[]  = INCBIN_U32("graphics/intro/scene_0/celebi2.4bpp.smol");
+static const u16 sScene0Jirachi2_Pal[] = INCBIN_U16("graphics/intro/scene_0/jirachi2.gbapal");
+static const u32 sScene0Jirachi2_Gfx[] = INCBIN_U32("graphics/intro/scene_0/jirachi2.4bpp.smol");
 
 // --- Big overlay tilesets (aparece sobre o bg depois do voo) ---
 // Ambos em 4bpp, tilemaps crus (.bin = raw 16-bit entries, sem header).
@@ -1298,6 +1308,97 @@ static const struct SpriteTemplate sSpriteTemplate_Scene0Jirachi =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_Scene0Jirachi,
+};
+
+// ---------------------------------------------------------------------------
+// Celebi2 — segundo voo: de baixo pra cima, vindo da esquerda da lua
+// priority=1: frente do bg03, atras das nuvens (BG1 prio=0)
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Celebi2 =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(64x64),
+    .size       = SPRITE_SIZE(64x64),
+    .priority   = 1,   // atras das nuvens, frente do ceu
+};
+static const union AnimCmd sAnim_Scene0Celebi2_Fly[] =
+{
+    ANIMCMD_FRAME(  0, 8),
+    ANIMCMD_FRAME( 64, 8),
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_FRAME(192, 8),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Celebi2[] =
+{
+    sAnim_Scene0Celebi2_Fly,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Celebi2[] =
+{
+    {sScene0Celebi2_Gfx, 0x2000, TAG_SCENE0_CELEBI2},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Celebi2[] =
+{
+    {sScene0Celebi2_Pal, TAG_SCENE0_CELEBI2},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Celebi2 =
+{
+    .tileTag     = TAG_SCENE0_CELEBI2,
+    .paletteTag  = TAG_SCENE0_CELEBI2,
+    .oam         = &sOamData_Scene0Celebi2,
+    .anims       = sAnims_Scene0Celebi2,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_Scene0Celebi2,
+};
+
+// ---------------------------------------------------------------------------
+// Jirachi2 — segundo voo: de baixo pra cima, vindo da direita da lua
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Jirachi2 =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(64x64),
+    .size       = SPRITE_SIZE(64x64),
+    .priority   = 0,
+};
+static const union AnimCmd sAnim_Scene0Jirachi2_Fly[] =
+{
+    ANIMCMD_FRAME(  0, 8),
+    ANIMCMD_FRAME( 64, 8),
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_FRAME(192, 8),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Jirachi2[] =
+{
+    sAnim_Scene0Jirachi2_Fly,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Jirachi2[] =
+{
+    {sScene0Jirachi2_Gfx, 0x2000, TAG_SCENE0_JIRACHI2},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Jirachi2[] =
+{
+    {sScene0Jirachi2_Pal, TAG_SCENE0_JIRACHI2},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Jirachi2 =
+{
+    .tileTag     = TAG_SCENE0_JIRACHI2,
+    .paletteTag  = TAG_SCENE0_JIRACHI2,
+    .oam         = &sOamData_Scene0Jirachi2,
+    .anims       = sAnims_Scene0Jirachi2,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_Scene0Jirachi2,
 };
 
 // ---------------------------------------------------------------------------
@@ -3900,6 +4001,8 @@ enum {
     S0_HOLD_SET03,         // fade in do set03, nuvens comecam a mover
     S0_LAUNCH_COMET,       // cometa cruza + sparkles espalhados
     S0_WAIT_COMET,
+    S0_LAUNCH_SPRITES2,    // celebi2 + jirachi2 voam pelo ceu noturno
+    S0_WAIT_SPRITES2,
     S0_FADE_OUT,
     S0_DONE,
 };
@@ -3995,6 +4098,126 @@ static void Scene0_LoadSet03(void)
 }
 
 // =========================================================================
+// Falling stars para bg03 — sistema idêntico ao Birch, tags separadas
+// Prioridade: lua=1, estrelas=2, nuvens=0 (nuvem na frente de tudo)
+// =========================================================================
+#define NUM_S0_STARS      25
+#define S0_STAR_TAG       1610
+
+static u8 sS0StarSpriteIds[NUM_S0_STARS];
+
+// Tiles idênticos ao Birch (medium e large, 8x8)
+static const u32 sS0StarTiles[][8] = {
+    { 0x00000000, 0x00010000, 0x00111000, 0x00010000,
+      0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+    { 0x00010000, 0x00010000, 0x00111000, 0x01111100,
+      0x00111000, 0x00010000, 0x00010000, 0x00000000 },
+};
+static const u16 sS0StarPal0[4] = { RGB(0,0,0), RGB( 7, 9,14), RGB(0,0,0), RGB(0,0,0) };
+static const u16 sS0StarPal1[4] = { RGB(0,0,0), RGB(14,16,22), RGB(0,0,0), RGB(0,0,0) };
+static const u16 sS0StarPal2[4] = { RGB(0,0,0), RGB(22,24,29), RGB(0,0,0), RGB(0,0,0) };
+static const u16 sS0StarPal3[4] = { RGB(0,0,0), RGB(31,31,31), RGB(0,0,0), RGB(0,0,0) };
+static const u16 sS0StarPalDummy[4] = { RGB(0,0,0), RGB(31,31,31), RGB(0,0,0), RGB(0,0,0) };
+
+static const struct SpriteSheet sS0StarSheet = {
+    .data = sS0StarTiles,
+    .size = sizeof(sS0StarTiles),
+    .tag  = S0_STAR_TAG,
+};
+static const struct SpritePalette sS0StarPalette = {
+    .data = sS0StarPalDummy,
+    .tag  = S0_STAR_TAG,
+};
+static const struct OamData sOamData_S0Star = {
+    .shape    = SPRITE_SHAPE(8x8),
+    .size     = SPRITE_SIZE(8x8),
+    .priority = 1,  
+};
+static const union AnimCmd sAnim_S0StarMedium[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
+static const union AnimCmd sAnim_S0StarLarge[]  = { ANIMCMD_FRAME(1, 0), ANIMCMD_END };
+static const union AnimCmd *const sAnims_S0Star[] = { sAnim_S0StarMedium, sAnim_S0StarLarge };
+static const struct SpriteTemplate sSpriteTemplate_S0Star = {
+    .tileTag    = S0_STAR_TAG,
+    .paletteTag = S0_STAR_TAG,
+    .oam        = &sOamData_S0Star,
+    .anims      = sAnims_S0Star,
+    .callback   = SpriteCallbackDummy,
+};
+
+static void Scene0_CreateStars(void)
+{
+    LoadSpriteSheet(&sS0StarSheet);
+    LoadSpritePalette(&sS0StarPalette);
+    // Paletas de brilho nos slots OBJ 4–7 (longe dos slots do cometa/lua/sparkle)
+    LoadPalette(sS0StarPal0, OBJ_PLTT_ID(4), sizeof(sS0StarPal0));
+    LoadPalette(sS0StarPal1, OBJ_PLTT_ID(5), sizeof(sS0StarPal1));
+    LoadPalette(sS0StarPal2, OBJ_PLTT_ID(6), sizeof(sS0StarPal2));
+    LoadPalette(sS0StarPal3, OBJ_PLTT_ID(7), sizeof(sS0StarPal3));
+
+    for (int i = 0; i < NUM_S0_STARS; i++)
+    {
+        u8 id = CreateSprite(&sSpriteTemplate_S0Star,
+                             Random2() % DISPLAY_WIDTH,
+                             Random2() % DISPLAY_HEIGHT, 2);
+        sS0StarSpriteIds[i] = (id == MAX_SPRITES) ? SPRITE_NONE : id;
+        if (id == MAX_SPRITES) continue;
+
+        u8 sizeType = (Random2() % 10 < 6) ? 0 : 1;
+        StartSpriteAnim(&gSprites[id], sizeType);
+        gSprites[id].data[0] = (s16)(Random2() & 0xFF);   // fase inicial
+        gSprites[id].data[1] = 0;                          // contador de pulso
+        gSprites[id].data[2] = (sizeType == 0) ? 1 : 2;   // velocidade de queda
+        gSprites[id].data[3] = 0;                          // sub-counter de queda
+        gSprites[id].data[4] = (s16)sizeType;              // tamanho (para paleta)
+    }
+}
+
+static void Scene0_UpdateStars(void)
+{
+    for (int i = 0; i < NUM_S0_STARS; i++)
+    {
+        if (sS0StarSpriteIds[i] == SPRITE_NONE) continue;
+        struct Sprite *spr = &gSprites[sS0StarSpriteIds[i]];
+        if (!spr->inUse) continue;
+
+        // Queda lenta (idêntica ao Birch)
+        spr->data[3]++;
+        if (spr->data[3] >= spr->data[2] * 4)
+        {
+            spr->y += 1;
+            spr->data[3] = 0;
+        }
+        if (spr->y > DISPLAY_HEIGHT + 16)
+        {
+            spr->y = -8;
+            spr->x = Random2() % DISPLAY_WIDTH;
+        }
+
+        // Pulso de brilho (idêntico ao Birch)
+        spr->data[1] = (spr->data[1] + 1) & 0xFF;
+        u8 phase   = (u8)((spr->data[1] + spr->data[0]) & 0xFF);
+        u8 tv      = (phase < 128) ? phase : (u8)(255 - phase);
+        u8 hiPhase = (tv >= 64) ? 1 : 0;
+        u8 depth   = (u8)spr->data[4];
+        spr->oam.paletteNum = 4 + depth + hiPhase;  // slots 4-7 (não colide com Birch 9-11)
+    }
+}
+
+static void Scene0_DestroyStars(void)
+{
+    FreeSpriteTilesByTag(S0_STAR_TAG);
+    FreeSpritePaletteByTag(S0_STAR_TAG);
+    for (int i = 0; i < NUM_S0_STARS; i++)
+    {
+        if (sS0StarSpriteIds[i] != SPRITE_NONE)
+        {
+            DestroySprite(&gSprites[sS0StarSpriteIds[i]]);
+            sS0StarSpriteIds[i] = SPRITE_NONE;
+        }
+    }
+}
+
+// =========================================================================
 // Task_Scene0_Load
 // =========================================================================
 void Task_Scene0_Load(u8 taskId)
@@ -4080,7 +4303,7 @@ static void Task_Scene0_Main(u8 taskId)
 
     // ------------------------------------------------------------------
     case S0_HOLD_SET00:
-        if (++task->tTimer >= 180)   // ~3 s
+        if (++task->tTimer >= 190)   // 1.5 s
         {
             BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
             task->tTimer = 0;
@@ -4192,45 +4415,62 @@ static void Task_Scene0_Main(u8 taskId)
         task->tTimer++;
         if (!gPaletteFade.active && task->tTimer > 1)
         {
-            // Limpa sprites dos sets anteriores
-            if (task->tShrineId != SPRITE_NONE)
-            {
-                DestroySprite(&gSprites[task->tShrineId]);
-                task->tShrineId = SPRITE_NONE;
-            }
-            // Desativa blend ANTES de limpar sprites/paletas —
-            // evita o flash branco (EFFECT_LIGHTEN + paleta zerada = branco por 1 frame)
-            SetGpuReg(REG_OFFSET_BLDCNT,   0);
-            SetGpuReg(REG_OFFSET_BLDY,     0);
-            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            // Desliga display e blend ANTES de mexer na VRAM
+            SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
 
+            // Libera recursos antigos
+            if (task->tShrineId != SPRITE_NONE)
+                DestroySprite(&gSprites[task->tShrineId]);
             ResetSpriteData();
+
+            // Temporariamente desativa transferências automáticas de paleta
+            gPaletteFade.bufferTransferDisabled = TRUE;
+
             FreeAllSpritePalettes();
 
-            // Carrega set03 + clouds
+            // Carrega nova cena (display desligado)
             Scene0_LoadSet03();
 
-            // Restaura blend para o glow da lua (OBJ → lighten)
+            // Recria blend para o glow da lua (será restaurado ao religar)
             SetGpuReg(REG_OFFSET_BLDCNT,
                 BLDCNT_TGT1_OBJ | BLDCNT_EFFECT_LIGHTEN);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
 
-            // Carrega sprites do set03
+            // Reserve os primeiros 8 slots OBJ para elementos fixos (estrelas, etc.)
+            gReservedSpritePaletteCount = 8;
+
+            // Carrega sprites (lua, cometa, sparkles e segundos voos)
             LoadCompressedSpriteSheet(sSpriteSheet_Scene0Moon);
             LoadSpritePalettes(sSpritePalette_Scene0Moon);
             LoadCompressedSpriteSheet(sSpriteSheet_Scene0Comet);
             LoadSpritePalettes(sSpritePalette_Scene0Comet);
             LoadCompressedSpriteSheet(sSpriteSheet_Scene0Sparkle);
             LoadSpritePalettes(sSpritePalette_Scene0Sparkle);
+            LoadCompressedSpriteSheet(sSpriteSheet_Scene0Celebi2);
+            LoadSpritePalettes(sSpritePalette_Scene0Celebi2);
+            LoadCompressedSpriteSheet(sSpriteSheet_Scene0Jirachi2);
+            LoadSpritePalettes(sSpritePalette_Scene0Jirachi2);
 
-            // Lua — começa pequena (escala 768 ≈ 1/3) e cresce manualmente via
-            // SpriteCB_Scene0Moon que chama SetOamMatrix a cada frame.
-            // data[1] = PA/PD atual (768→256). data[2] = fase do pulso BLDY.
+            Scene0_CreateStars();
+
+            // Após carregar elementos fixos, permitir alocação normal de paletas
+            gReservedSpritePaletteCount = 0;
+
+            // As paletas foram atualizadas enquanto o display estava desligado; força uma
+            // transferência imediata para a PAL durante o VBlank
+            gPaletteFade.bufferTransferDisabled = FALSE;
+            TransferPlttBuffer();
+
+            // Cria a lua
             task->tMoonId = CreateSprite(&sSpriteTemplate_Scene0Moon,
                                          DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, 1);
             gSprites[task->tMoonId].invisible = FALSE;
-            gSprites[task->tMoonId].data[1]   = 768;  // escala inicial: ~1/3 do tamanho real
-            gSprites[task->tMoonId].data[2]   = 0;    // fase BLDY
+            gSprites[task->tMoonId].data[1] = 768;
+            gSprites[task->tMoonId].data[2] = 0;
 
+            // RELIGA O DISPLAY (agora sem flash)
             SetGpuReg(REG_OFFSET_DISPCNT,
                 DISPCNT_MODE_0
                 | DISPCNT_OBJ_1D_MAP
@@ -4238,28 +4478,20 @@ static void Task_Scene0_Main(u8 taskId)
                 | DISPCNT_BG1_ON
                 | DISPCNT_OBJ_ON);
 
-            task->tTimer        = 0;
-            task->tCloudScroll  = 0;
+            task->tTimer = 0;
+            task->tCloudScroll = 0;
             task->tSparkleTimer = 0;
-            task->tState        = S0_HOLD_SET03;
+            BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
+            PlaySE(SE_M_MOONLIGHT);
+            task->tState = S0_HOLD_SET03;
         }
         break;
 
     // ------------------------------------------------------------------
-    // Fade in do set03 igual aos outros sets: speed=8, timer só conta
-    // depois que a tela abriu completamente (gPaletteFade.active == FALSE).
-    // Aguarda ~3s limpos após o fade-in antes de lançar o cometa.
     case S0_HOLD_SET03:
-        if (task->tTimer == 0)
-        {
-            BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
-            PlaySE(SE_M_MOONLIGHT);
-        }
-
-        // Scroll lento das nuvens sempre
         task->tCloudScroll++;
         SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
-
+    Scene0_UpdateStars();   // mesma frequência do Birch: a cada frame
         task->tTimer++;
 
         // Igual S0_HOLD_SET01/02: pausa até o fade-in terminar, depois conta
@@ -4291,17 +4523,18 @@ static void Task_Scene0_Main(u8 taskId)
         break;
     }
 
-    // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
     case S0_WAIT_COMET:
     {
         // Scroll das nuvens continua
         task->tCloudScroll++;
         SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
+        Scene0_UpdateStars();   // mesma frequência do Birch: a cada frame
 
-        // Sparkles ao longo da trajetoria do cometa (menos frequentes — mais bonito)
+        // Sparkles ao longo da trajetória do cometa (menos frequentes — mais bonito)
         if (task->tCometId != SPRITE_NONE && ++task->tSparkleTimer % 8 == 0)
         {
-            // Spawna perto da posicao atual do cometa para simular rastro
+            // Spawna perto da posição atual do cometa para simular rastro
             s16 cx = gSprites[task->tCometId].x;
             s16 cy = gSprites[task->tCometId].y;
             s16 rx = cx + (s16)((Random() % 40) - 20);
@@ -4318,19 +4551,69 @@ static void Task_Scene0_Main(u8 taskId)
             DestroySprite(&gSprites[task->tCometId]);
             task->tCometId = SPRITE_NONE;
             task->tTimer   = 0;
-            task->tState   = S0_FADE_OUT;
+            task->tState   = S0_LAUNCH_SPRITES2;  // próxima etapa: segundo par de sprites
+        }
+        break;
+    }
+
+    // ------------------------------------------------------------------
+    case S0_LAUNCH_SPRITES2:
+        // Delay de 1.5s (90 frames) apos o cometa, ceu fica respirando
+        task->tCloudScroll++;
+        SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
+        Scene0_UpdateStars();
+        if (++task->tTimer < 90)
+            break;
+        // Após o delay, cria os sprites
+        {
+            u8 celebiId = CreateSprite(&sSpriteTemplate_Scene0Celebi2,
+                                       48, DISPLAY_HEIGHT + 32, 2);
+            gSprites[celebiId].invisible = FALSE;
+            task->tCelebiId = celebiId;
+
+            u8 jirachiId = CreateSprite(&sSpriteTemplate_Scene0Jirachi2,
+                                        192, DISPLAY_HEIGHT + 32, 2);
+            gSprites[jirachiId].invisible = FALSE;
+            task->tJirachiId = jirachiId;
+
+            task->tTimer = 0;
+            task->tState = S0_WAIT_SPRITES2;
+        }
+        break;
+    case S0_WAIT_SPRITES2:
+    {
+        task->tCloudScroll++;
+        SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
+        Scene0_UpdateStars();
+
+        bool8 cDone = (task->tCelebiId  == SPRITE_NONE
+                       || gSprites[task->tCelebiId].invisible);
+        bool8 jDone = (task->tJirachiId == SPRITE_NONE
+                       || gSprites[task->tJirachiId].invisible);
+
+        if (cDone && jDone)
+        {
+            if (task->tCelebiId  != SPRITE_NONE)
+                DestroySprite(&gSprites[task->tCelebiId]);
+            if (task->tJirachiId != SPRITE_NONE)
+                DestroySprite(&gSprites[task->tJirachiId]);
+            task->tCelebiId  = SPRITE_NONE;
+            task->tJirachiId = SPRITE_NONE;
+            task->tTimer     = 0;
+            task->tState     = S0_FADE_OUT;
         }
         break;
     }
 
     // ------------------------------------------------------------------
     case S0_FADE_OUT:
-        // Delay generoso apos o cometa: glow das estrelas + nuvens + lua por ~2.5s
+        // Delay generoso após os sprites: glow das estrelas + nuvens + lua por ~2.5s
         // Scroll das nuvens e lua continuam durante todo o delay
         task->tCloudScroll++;
         SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
+        Scene0_UpdateStars();
 
-        // Sparkles aleatorios continuam por mais um tempo
+        // Sparkles aleatórios continuam por mais um tempo
         if (++task->tSparkleTimer % 10 == 0 && task->tTimer < 120)
         {
             u16 rx = (u16)((Random() % 220) + 10);
@@ -4338,9 +4621,10 @@ static void Task_Scene0_Main(u8 taskId)
             CreateSprite(&sSpriteTemplate_Scene0Sparkle, (s16)rx, (s16)ry, 0);
         }
 
-        // Inicia o fade apenas apos ~4s de delay (240 frames)
+        // Inicia o fade apenas após ~4s de delay (240 frames)
         if (++task->tTimer == 240)
             BeginNormalPaletteFade(PALETTES_ALL, 8, 0, 16, RGB_BLACK);
+
         if (!gPaletteFade.active && task->tTimer > 240)
             task->tState = S0_DONE;
         break;
@@ -4355,6 +4639,7 @@ static void Task_Scene0_Main(u8 taskId)
         SetGpuReg(REG_OFFSET_BLDY,     0);
         DmaClear16(3, (void *)BG_SCREEN_ADDR(S0_SKY_SCREEN),    2048);
         DmaClear16(3, (void *)BG_SCREEN_ADDR(S0_FOREST_SCREEN), 2048);
+        Scene0_DestroyStars();
         ResetSpriteData();
         FreeAllSpritePalettes();
         ResetPaletteFade();
@@ -4418,6 +4703,36 @@ static void SpriteCB_Scene0Jirachi(struct Sprite *sprite)
     if (++sprite->data[0] % 4 == 0)
         sprite->y -= 1;
     if (sprite->x < -64)
+        sprite->invisible = TRUE;
+}
+
+// =========================================================================
+// SpriteCB_Scene0Celebi2 — voa de baixo pra cima em linha reta (x fixo)
+// Entra pela base da tela, passa pela frente da lua, some no topo
+// =========================================================================
+static void SpriteCB_Scene0Celebi2(struct Sprite *sprite)
+{
+    // 4px a cada 3 frames = 4/3 px/frame = 3x mais lento que 4px/frame
+    // data[0] = acumulador: +4 por frame; quando >=3 subtrai 3 e move 1px
+    sprite->data[0] += 4;
+    while (sprite->data[0] >= 3)
+    {
+        sprite->data[0] -= 3;
+        sprite->y--;
+    }
+    if (sprite->y < -64)
+        sprite->invisible = TRUE;
+}
+
+static void SpriteCB_Scene0Jirachi2(struct Sprite *sprite)
+{
+    sprite->data[0] += 4;
+    while (sprite->data[0] >= 3)
+    {
+        sprite->data[0] -= 3;
+        sprite->y--;
+    }
+    if (sprite->y < -64)
         sprite->invisible = TRUE;
 }
 
