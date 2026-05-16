@@ -124,6 +124,7 @@ static void SpriteCB_Scene0Shrine(struct Sprite *sprite);
 static void SpriteCB_Scene0ShootingStar(struct Sprite *sprite);
 static void SpriteCB_Scene0Celebi(struct Sprite *sprite);
 static void SpriteCB_Scene0Jirachi(struct Sprite *sprite);
+static void SpriteCB_Scene0Comet(struct Sprite *sprite);
 
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct SpritePalette gBattleAnimPaletteTable[];
@@ -152,9 +153,14 @@ enum {
 
 // Scene 0 (pre-intro) sprite tags — range 1600-1603, safe from existing 1500-1505, 2000-2003
 #define TAG_SCENE0_SHRINE     1600
-#define TAG_SCENE0_STAR       1601   // uses sparkle gfx, own palette slot
+#define TAG_SCENE0_STAR       1601   // usa gIntroSparkle_Gfx — reutiliza asset da scene_1
 #define TAG_SCENE0_CELEBI     1602
 #define TAG_SCENE0_JIRACHI    1603
+#define TAG_SCENE0_COMET      1604   // reutiliza sparkle/lightning da scene_1
+// Comet reutiliza assets existentes — sem PNG proprio necessario
+#define sScene0Comet_Gfx gIntroSparkle_Gfx
+#define sScene0Comet_Pal gIntroLightning_Pal
+// 1604 reservado para uso futuro
 
 #define COLOSSEUM_GAME_CODE 0x65366347 // "Gc6e" in ASCII
 
@@ -252,17 +258,29 @@ static const u32 sScene0Celebi_Gfx[]      = INCBIN_U32("graphics/intro/scene_0/c
 static const u16 sScene0Jirachi_Pal[]     = INCBIN_U16("graphics/intro/scene_0/jirachi.gbapal");
 static const u32 sScene0Jirachi_Gfx[]     = INCBIN_U32("graphics/intro/scene_0/jirachi.4bpp.smol");
 
+// --- Big overlay tilesets (aparece sobre o bg depois do voo) ---
+// Ambos em 4bpp, tilemaps crus (.bin = raw 16-bit entries, sem header).
+// jirachibig vai no charbase 1 (reutiliza slot do sky) e
+// celebibig vai no charbase 2 (reutiliza slot da floresta),
+// carregados enquanto a tela está preta para evitar glitch.
+static const u16 sScene0JirachiBig_Pal[]  = INCBIN_U16("graphics/intro/scene_0/jirachibig.gbapal");
+static const u32 sScene0JirachiBig_Gfx[]  = INCBIN_U32("graphics/intro/scene_0/jirachibig.4bpp.smol");
+static const u32 sScene0JirachiBig_Map[]  = INCBIN_U32("graphics/intro/scene_0/jirachibig.bin");
+static const u16 sScene0CelebiBig_Pal[]   = INCBIN_U16("graphics/intro/scene_0/celebibig.gbapal");
+static const u32 sScene0CelebiBig_Gfx[]   = INCBIN_U32("graphics/intro/scene_0/celebibig.4bpp.smol");
+static const u32 sScene0CelebiBig_Map[]   = INCBIN_U32("graphics/intro/scene_0/celebibig.bin");
+
 static const u16 sIntroDrops_Pal[]            = INCBIN_U16("graphics/intro/scene_1/drops.gbapal");
 static const u16 sIntroLogo_Pal[]             = INCBIN_U16("graphics/intro/scene_1/logo.gbapal");
 static const u32 sIntroDropsLogo_Gfx[]        = INCBIN_U32("graphics/intro/scene_1/drops_logo.4bpp.smol");
 static const u16 sIntro1Bg_Pal[]              = INCBIN_U16("graphics/intro/scene_1/bg.gbapal"); // 16 x 16
-static const u32 sIntro1Bg0_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg0_map.bin");
-static const u32 sIntro1Bg1_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg1_map.bin");
-static const u32 sIntro1Bg2_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg2_map.bin");
-static const u32 sIntro1Bg3_Tilemap[]         = INCBIN_U32("graphics/intro/scene_1/bg3_map.bin");
+static const u16 sIntro1Bg0_Tilemap[]         = INCBIN_U16("graphics/intro/scene_1/bg0_map.bin");
+static const u16 sIntro1Bg1_Tilemap[]         = INCBIN_U16("graphics/intro/scene_1/bg1_map.bin");
+static const u16 sIntro1Bg2_Tilemap[]         = INCBIN_U16("graphics/intro/scene_1/bg2_map.bin");
+static const u16 sIntro1Bg3_Tilemap[]         = INCBIN_U16("graphics/intro/scene_1/bg3_map.bin");
 static const u32 sIntro1Bg_Gfx[]              = INCBIN_U32("graphics/intro/scene_1/bg.4bpp.smol");
 static const u16 sIntroPokeball_Pal[]         = INCBIN_U16("graphics/intro/scene_3/pokeball.gbapal");
-static const u32 sIntroPokeball_Tilemap[]     = INCBIN_U32("graphics/intro/scene_3/pokeball_map.bin");
+static const u16 sIntroPokeball_Tilemap[]     = INCBIN_U16("graphics/intro/scene_3/pokeball_map.bin");
 static const u32 sIntroPokeball_Gfx[]         = INCBIN_U32("graphics/intro/scene_3/pokeball.8bpp.smol");
 static const u16 sIntroStreaks_Pal[]          = INCBIN_U16("graphics/intro/scene_3/streaks.gbapal"); // Unused
 static const u32 sIntroStreaks_Gfx[]          = INCBIN_U32("graphics/intro/scene_3/streaks.4bpp.smol"); // Unused
@@ -1214,6 +1232,59 @@ static const struct SpriteTemplate sSpriteTemplate_Scene0Star =
 };
 
 // ---------------------------------------------------------------------------
+// Cometa — 4 frames × 16×32 px, cruza o céu diagonalmente (direita→esquerda)
+//   Tile offsets: 0, 8, 16, 24  (cada frame ocupa 8 tiles de 8×8)
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Comet =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .mosaic     = FALSE,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(16x32),
+    .x = 0,
+    .matrixNum  = 0,
+    .size       = SPRITE_SIZE(16x32),
+    .tileNum    = 0,
+    .priority   = 1,   // atrás da floresta, na frente do céu (igual à estrela)
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+static const union AnimCmd sAnim_Scene0Comet[] =
+{
+    ANIMCMD_FRAME( 0, 4),
+    ANIMCMD_FRAME( 8, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(24, 4),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Comet[] =
+{
+    sAnim_Scene0Comet,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Comet[] =
+{
+    {sScene0Comet_Gfx, 0x400, TAG_SCENE0_COMET},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Comet[] =
+{
+    {sScene0Comet_Pal, TAG_SCENE0_COMET},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Comet =
+{
+    .tileTag     = TAG_SCENE0_COMET,
+    .paletteTag  = TAG_SCENE0_COMET,
+    .oam         = &sOamData_Scene0Comet,
+    .anims       = sAnims_Scene0Comet,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_Scene0Comet,
+};
+
+// ---------------------------------------------------------------------------
 // Celebi — 4 frames × 64×64, fly animation (same layout as HWL logo sprites)
 //   Sheet: 64 px wide × 256 px tall (4 frames stacked vertically)
 //   Each frame tile offset: 0, 64, 128, 192 (in 8×8 tile units)
@@ -1470,20 +1541,26 @@ void CB2_InitCopyrightScreenAfterTitleScreen(void)
 void Task_Scene1_Load(u8 taskId)
 {
     SetVBlankCallback(NULL);
+    // FIX: Scene0 deixa tiles OBJ alocados na VRAM. Sem este reset, os
+    // LoadCompressedSpriteSheet da Scene1 carregam nos offsets errados
+    // (o alocador continua de onde parou) causando o glitch visual.
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    IntroResetGpuRegs();  // RESET GPU antes de usar VRAM
     sIntroCharacterGender = MOD(Random(), GENDER_COUNT);
-    IntroResetGpuRegs();
     SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+
     SetGpuReg(REG_OFFSET_BG2VOFS, 80);
     SetGpuReg(REG_OFFSET_BG1VOFS, 24);
     SetGpuReg(REG_OFFSET_BG0VOFS, 40);
     DecompressDataWithHeaderVram(sIntro1Bg_Gfx, (void *)VRAM);
-    DecompressDataWithHeaderVram(sIntro1Bg0_Tilemap, (void *)(BG_CHAR_ADDR(2)));
+    DmaCopy16(3, sIntro1Bg0_Tilemap, (void *)(BG_SCREEN_ADDR(16)), BG_SCREEN_SIZE);
     DmaClear16(3, BG_SCREEN_ADDR(17), BG_SCREEN_SIZE);
-    DecompressDataWithHeaderVram(sIntro1Bg1_Tilemap, (void *)(BG_SCREEN_ADDR(18)));
+    DmaCopy16(3, sIntro1Bg1_Tilemap, (void *)(BG_SCREEN_ADDR(18)), BG_SCREEN_SIZE);
     DmaClear16(3, BG_SCREEN_ADDR(19), BG_SCREEN_SIZE);
-    DecompressDataWithHeaderVram(sIntro1Bg2_Tilemap, (void *)(BG_SCREEN_ADDR(20)));
+    DmaCopy16(3, sIntro1Bg2_Tilemap, (void *)(BG_SCREEN_ADDR(20)), BG_SCREEN_SIZE);
     DmaClear16(3, BG_SCREEN_ADDR(21), BG_SCREEN_SIZE);
-    DecompressDataWithHeaderVram(sIntro1Bg3_Tilemap, (void *)(BG_SCREEN_ADDR(22)));
+    DmaCopy16(3, sIntro1Bg3_Tilemap, (void *)(BG_SCREEN_ADDR(22)), BG_SCREEN_SIZE);
     DmaClear16(3, BG_SCREEN_ADDR(23), BG_SCREEN_SIZE);
     LoadPalette(sIntro1Bg_Pal, BG_PLTT_ID(0), sizeof(sIntro1Bg_Pal));
     SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(22) | BGCNT_16COLOR | BGCNT_TXT256x512);
@@ -2023,7 +2100,7 @@ static void Task_Scene3_Load(u8 taskId)
 {
     IntroResetGpuRegs();
     DecompressDataWithHeaderVram(sIntroPokeball_Gfx, (void *)VRAM);
-    DecompressDataWithHeaderVram(sIntroPokeball_Tilemap, (void *)(BG_CHAR_ADDR(1)));
+    DmaCopy16(3, sIntroPokeball_Tilemap, (void *)(BG_SCREEN_ADDR(8)), 0x400);
     LoadPalette(sIntroPokeball_Pal, BG_PLTT_ID(0), sizeof(sIntroPokeball_Pal));
     gTasks[taskId].tAlpha = 0;
     gTasks[taskId].tZoomDiv = 0;
@@ -2078,7 +2155,7 @@ static void Task_Scene3_LoadGroudon(u8 taskId)
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 8;
         DecompressDataWithHeaderVram(gIntroGroudon_Gfx, (void *)VRAM);
-        DecompressDataWithHeaderVram(gIntroGroudon_Tilemap, (void *)(BG_CHAR_ADDR(3)));
+        DecompressDataWithHeaderVram(gIntroGroudon_Tilemap, (void *)(BG_SCREEN_ADDR(24)));
         DecompressDataWithHeaderVram(gIntroLegendBg_Gfx, (void *)(BG_CHAR_ADDR(1)));
         DecompressDataWithHeaderVram(gIntroGroudonBg_Tilemap, (void *)(BG_SCREEN_ADDR(28)));
         LoadCompressedSpriteSheetUsingHeap(&gBattleAnimPicTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_ROCKS)]);
@@ -2355,8 +2432,10 @@ static void SpriteCB_GroudonRocks(struct Sprite *sprite)
 static void Task_Scene3_LoadKyogre(u8 taskId)
 {
     ResetSpriteData();
+    FreeAllSpritePalettes();
+    gReservedSpritePaletteCount = 8;
     DecompressDataWithHeaderVram(gIntroKyogre_Gfx, (void *)VRAM);
-    DecompressDataWithHeaderVram(gIntroKyogre_Tilemap, (void *)(BG_CHAR_ADDR(3)));
+    DecompressDataWithHeaderVram(gIntroKyogre_Tilemap, (void *)(BG_SCREEN_ADDR(24)));
     DecompressDataWithHeaderVram(gIntroKyogreBg_Tilemap, (void *)(BG_SCREEN_ADDR(28)));
     LoadCompressedSpriteSheet(sSpriteSheet_Bubbles);
     LoadSpritePalette(sSpritePalette_Bubbles);
@@ -2567,11 +2646,7 @@ static void CreateKyogreBubbleSprites_Fins(void)
                                 sKyogreBubbleData[i + NUM_BUBBLES_IN_SET][1],
                                 i);
         gSprites[spriteId].invisible = TRUE;
-#ifdef BUGFIX
         gSprites[spriteId].sDelay = sKyogreBubbleData[i + NUM_BUBBLES_IN_SET][2];
-#else
-        gSprites[spriteId].sDelay = sKyogreBubbleData[i][2]; // Using the wrong set of delays here
-#endif
         gSprites[spriteId].sUnk = 64;
     }
 }
@@ -2671,7 +2746,7 @@ static void Task_Scene3_LoadClouds1(u8 taskId)
 
 static void Task_Scene3_LoadClouds2(u8 taskId)
 {
-    DecompressDataWithHeaderVram(gIntroCloudsLeft_Tilemap, (void *)(BG_CHAR_ADDR(3)));
+    DecompressDataWithHeaderVram(gIntroCloudsLeft_Tilemap, (void *)(BG_SCREEN_ADDR(24)));
     DecompressDataWithHeaderVram(gIntroCloudsRight_Tilemap, (void *)(BG_SCREEN_ADDR(26)));
     gTasks[taskId].func = Task_Scene3_InitClouds;
 }
@@ -2731,7 +2806,7 @@ static void Task_Scene3_Clouds(u8 taskId)
 static void Task_Scene3_LoadLightning(u8 taskId)
 {
     DecompressDataWithHeaderVram(gIntroRayquaza_Tilemap, (void *)(BG_SCREEN_ADDR(28)));
-    DecompressDataWithHeaderVram(gIntroRayquazaClouds_Tilemap, (void *)(BG_CHAR_ADDR(3)));
+    DecompressDataWithHeaderVram(gIntroRayquazaClouds_Tilemap, (void *)(BG_SCREEN_ADDR(24)));
     DecompressDataWithHeaderVram(gIntroRayquaza_Gfx, (void *)(BG_CHAR_ADDR(1)));
     DecompressDataWithHeaderVram(gIntroRayquazaClouds_Gfx, (void *)VRAM);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
@@ -3736,17 +3811,15 @@ static void SpriteCB_RayquazaOrb(struct Sprite *sprite)
 }
 
 // =========================================================================
-// Scene 0 (Pre-intro) — task data accessors
-// =========================================================================
 // Task data layout for Task_Scene0_Main:
-//   data[0]  = tState   — main state machine
-//   data[1]  = tTimer   — general purpose frame counter
-//   data[2]  = tBgSet   — current BG set index (0, 1, 2)
-//   data[3]  = tShrineId
-//   data[4]  = tStarId
-//   data[5]  = tCelebiId
-//   data[6]  = tJirachiId
-//   data[7]  = tGrowTimer — for bgsky02 grow (mosaic / affine scale)
+//   data[0] = tState
+//   data[1] = tTimer
+//   data[2] = tBgSet
+//   data[3] = tShrineId
+//   data[4] = tStarId
+//   data[5] = tCelebiId
+//   data[6] = tJirachiId
+//   data[7] = tCometId  (substituiu tGrowTimer — grow removido)
 #define tState      data[0]
 #define tTimer      data[1]
 #define tBgSet      data[2]
@@ -3754,44 +3827,43 @@ static void SpriteCB_RayquazaOrb(struct Sprite *sprite)
 #define tStarId     data[4]
 #define tCelebiId   data[5]
 #define tJirachiId  data[6]
-#define tGrowTimer  data[7]
+#define tCometId    data[7]
 
-// Scene 0 state machine values
 enum {
     S0_FADE_IN_SET00 = 0,
     S0_HOLD_SET00,
     S0_FADE_TO_SET01,
     S0_HOLD_SET01,
     S0_FADE_TO_SET02,
-    S0_HOLD_SET02_GROW,
+    S0_HOLD_SET02,
+    S0_LAUNCH_COMET,
+    S0_WAIT_COMET,
     S0_LAUNCH_STAR,
     S0_WAIT_STAR,
     S0_LAUNCH_SPRITES,
     S0_WAIT_SPRITES,
+    S0_DELAY_BEFORE_BIG,
+    S0_FADE_TO_BLACK_BIG,
+    S0_LOAD_JIRACHI_BIG,
+    S0_GROW_JIRACHI,
+    S0_HOLD_JIRACHI,
+    S0_FADE_JIRACHI_OUT,
+    S0_LOAD_CELEBI_BIG,
+    S0_GROW_CELEBI,
+    S0_HOLD_CELEBI,
     S0_FADE_OUT,
     S0_DONE,
 };
 
-// BG VRAM layout for Scene 0:
-//   charbase 1 (0x4000): sky tile graphics
-//   charbase 2 (0x8000): forest tile graphics
-//   screenbase 26 (0xD000): sky tilemap
-//   screenbase 27 (0xD800): forest tilemap
-#define S0_SKY_CHARBASE    1
-#define S0_FOREST_CHARBASE 2
-#define S0_SKY_SCREEN      26
-#define S0_FOREST_SCREEN   27
-
-// Palette slots:
-//   BG_PLTT_ID(8)  = sky palette    (slot 8, 16 colors)
-//   BG_PLTT_ID(9)  = forest palette (slot 9, 16 colors)
-// Sky uses sub-palette 0 (tile entries have pal=0 from gbagfx, no patching needed)
-// Forest uses sub-palette 1 (tile entries are patched after load to set pal nibble = 1)
+#define S0_SKY_CHARBASE    0
+#define S0_FOREST_CHARBASE 1
+#define S0_SKY_SCREEN      24
+#define S0_FOREST_SCREEN   28
 #define S0_SKY_PAL_SLOT    0
 #define S0_FOREST_PAL_SLOT 1
 
 // =========================================================================
-// Scene0_LoadBgSet — swap both BG tile/map/palette to the new set index
+// Scene0_LoadBgSet
 // =========================================================================
 static void Scene0_LoadBgSet(u8 setIndex)
 {
@@ -3821,16 +3893,12 @@ static void Scene0_LoadBgSet(u8 setIndex)
 
     DecompressDataWithHeaderVram(skyGfx, (void *)(BG_CHAR_ADDR(S0_SKY_CHARBASE)));
     DecompressDataWithHeaderVram(fgGfx,  (void *)(BG_CHAR_ADDR(S0_FOREST_CHARBASE)));
-
-    CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), BG_SCREEN_SIZE);
+    CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)),    BG_SCREEN_SIZE);
     CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), BG_SCREEN_SIZE);
-    CpuCopy16(skyMap, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), 32 * 20 * 2);
+    CpuCopy16(skyMap, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)),    32 * 20 * 2);
     CpuCopy16(fgMap,  (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), 32 * 20 * 2);
 
-    // Normalise palette fields in the decompressed tilemaps to match where
-    // we load palettes. Some exported maps may reference other palette slots
-    // (e.g. 4), which ends up reading the wrong palette at runtime.
-    // Ensure sky uses palette slot 0 and forest uses slot 1.
+    // Garante que sky usa slot 0 e floresta usa slot 1
     {
         u16 *screenSky = (u16 *)BG_SCREEN_ADDR(S0_SKY_SCREEN);
         u16 *screenFg  = (u16 *)BG_SCREEN_ADDR(S0_FOREST_SCREEN);
@@ -3846,16 +3914,14 @@ static void Scene0_LoadBgSet(u8 setIndex)
 }
 
 // =========================================================================
-// Task_Scene0_Load — entry point, called by CB2_ExpansionIntro (or directly)
+// Task_Scene0_Load
 // =========================================================================
 void Task_Scene0_Load(u8 taskId)
 {
     SetVBlankCallback(NULL);
+    m4aSongNumStart(MUS_RG_TITLE);
     IntroResetGpuRegs();
 
-    // BG registers:
-    //   BG0 = sky     — lowest priority, fills entire screen
-    //   BG1 = forest  — priority 0, transparent color 0 shows sky beneath
     SetGpuReg(REG_OFFSET_BG0CNT,
         BGCNT_PRIORITY(1)
         | BGCNT_CHARBASE(S0_SKY_CHARBASE)
@@ -3871,31 +3937,28 @@ void Task_Scene0_Load(u8 taskId)
 
     Scene0_LoadBgSet(0);
 
-    // Load all Scene 0 sprites
     LoadCompressedSpriteSheet(sSpriteSheet_Scene0Shrine);
     LoadSpritePalettes(sSpritePalette_Scene0Shrine);
     LoadCompressedSpriteSheet(sSpriteSheet_Scene0Star);
     LoadSpritePalettes(sSpritePalette_Scene0Star);
+    LoadCompressedSpriteSheet(sSpriteSheet_Scene0Comet);
+    LoadSpritePalettes(sSpritePalette_Scene0Comet);
     LoadCompressedSpriteSheet(sSpriteSheet_Scene0Celebi);
     LoadSpritePalettes(sSpritePalette_Scene0Celebi);
     LoadCompressedSpriteSheet(sSpriteSheet_Scene0Jirachi);
     LoadSpritePalettes(sSpritePalette_Scene0Jirachi);
 
-    // Create shrine sprite (static, centered at bottom-center)
     gTasks[taskId].tShrineId  = CreateSprite(&sSpriteTemplate_Scene0Shrine,
                                               DISPLAY_WIDTH / 2,
                                               DISPLAY_HEIGHT - 40, 0);
     gTasks[taskId].tStarId    = SPRITE_NONE;
+    gTasks[taskId].tCometId   = SPRITE_NONE;
     gTasks[taskId].tCelebiId  = SPRITE_NONE;
     gTasks[taskId].tJirachiId = SPRITE_NONE;
+    gTasks[taskId].tState     = S0_FADE_IN_SET00;
+    gTasks[taskId].tTimer     = 0;
+    gTasks[taskId].tBgSet     = 0;
 
-    // Initialize task state
-    gTasks[taskId].tState    = S0_FADE_IN_SET00;
-    gTasks[taskId].tTimer    = 0;
-    gTasks[taskId].tBgSet    = 0;
-    gTasks[taskId].tGrowTimer = 0;
-
-    // Start fully black, we'll fade in
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     SetVBlankCallback(VBlankCB_Intro);
     SetGpuReg(REG_OFFSET_DISPCNT,
@@ -3909,7 +3972,7 @@ void Task_Scene0_Load(u8 taskId)
 }
 
 // =========================================================================
-// Task_Scene0_Main — drives the full pre-intro sequence
+// Task_Scene0_Main
 // =========================================================================
 static void Task_Scene0_Main(u8 taskId)
 {
@@ -3919,7 +3982,7 @@ static void Task_Scene0_Main(u8 taskId)
     {
     // ------------------------------------------------------------------
     case S0_FADE_IN_SET00:
-        if (!UpdatePaletteFade())
+        if (!gPaletteFade.active)
         {
             task->tTimer = 0;
             task->tState = S0_HOLD_SET00;
@@ -3928,7 +3991,7 @@ static void Task_Scene0_Main(u8 taskId)
 
     // ------------------------------------------------------------------
     case S0_HOLD_SET00:
-        // Hold set 00 for ~3 seconds (180 frames @ 60fps)
+        // ~3 segundos no set 00 (floresta diurna + shrine)
         if (++task->tTimer >= 180)
         {
             BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
@@ -3939,7 +4002,7 @@ static void Task_Scene0_Main(u8 taskId)
 
     // ------------------------------------------------------------------
     case S0_FADE_TO_SET01:
-        if (!UpdatePaletteFade())
+        if (!gPaletteFade.active)
         {
             Scene0_LoadBgSet(1);
             task->tBgSet = 1;
@@ -3951,81 +4014,86 @@ static void Task_Scene0_Main(u8 taskId)
 
     // ------------------------------------------------------------------
     case S0_HOLD_SET01:
-        if (!UpdatePaletteFade())
+        // Aguarda fade-in terminar, depois segura ~2.5 s
+        if (gPaletteFade.active)
+            break;
+        if (++task->tTimer >= 150)
         {
-            // Hold set 01 for ~2.5 seconds
-            if (++task->tTimer >= 150)
-            {
-                BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
-                task->tTimer = 0;
-                task->tState = S0_FADE_TO_SET02;
-            }
+            BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
+            task->tTimer = 0;
+            task->tState = S0_FADE_TO_SET02;
         }
         break;
 
     // ------------------------------------------------------------------
     case S0_FADE_TO_SET02:
-        if (!UpdatePaletteFade())
+        if (!gPaletteFade.active)
         {
             Scene0_LoadBgSet(2);
             task->tBgSet = 2;
             BeginNormalPaletteFade(PALETTES_BG, 8, 16, 0, RGB_BLACK);
             task->tTimer = 0;
-            task->tGrowTimer = 0;
-            task->tState = S0_HOLD_SET02_GROW;
+            task->tState = S0_HOLD_SET02;
         }
         break;
 
     // ------------------------------------------------------------------
-    case S0_HOLD_SET02_GROW:
-        if (!UpdatePaletteFade())
+    // FIX: sem mosaic/grow — era a causa do softlock original.
+    // gPaletteFade.active checado separado do timer para evitar o bug
+    // onde PALETTES_BG fades nao zeram gPaletteFade.active corretamente.
+    case S0_HOLD_SET02:
+        if (gPaletteFade.active)
+            break;
+        // Segura ~4 segundos com o ceu noturno estatico
+        if (++task->tTimer >= 240)
         {
-            // Slow light mosaic grow effect on BG0 (sky only)
-            // Mosaic increases from 0→3 over ~180 frames, giving a subtle zoom feel
-            if (++task->tGrowTimer % 45 == 0)
-            {
-                u8 mosaicLevel = task->tGrowTimer / 45;
-                if (mosaicLevel > 3)
-                    mosaicLevel = 3;
-                // REG_MOSAIC layout: bits[3:0]=BG H, bits[7:4]=BG V, bits[11:8]=OBJ H, bits[15:12]=OBJ V
-                SetGpuReg(REG_OFFSET_MOSAIC,
-                    (mosaicLevel) | (mosaicLevel << 4));
-                // Apply mosaic to sky BG0 only
-                SetGpuReg(REG_OFFSET_BG0CNT,
-                    BGCNT_PRIORITY(1)
-                    | BGCNT_CHARBASE(S0_SKY_CHARBASE)
-                    | BGCNT_SCREENBASE(S0_SKY_SCREEN)
-                    | BGCNT_16COLOR
-                    | BGCNT_TXT256x256
-                    | BGCNT_MOSAIC);
-            }
-            // Hold ~4 seconds then launch shooting star
-            if (task->tGrowTimer >= 240)
-            {
-                task->tState = S0_LAUNCH_STAR;
-            }
+            task->tTimer = 0;
+            task->tState = S0_LAUNCH_COMET;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_LAUNCH_COMET:
+    {
+        // Cometa entra pelo canto superior-direito, cruza na diagonal
+        u8 id = CreateSprite(&sSpriteTemplate_Scene0Comet, 230, 5, 1);
+        gSprites[id].invisible = FALSE;
+        task->tCometId = id;
+        PlaySE(SE_M_HYPER_BEAM);
+        task->tState = S0_WAIT_COMET;
+        break;
+    }
+
+    // ------------------------------------------------------------------
+    case S0_WAIT_COMET:
+        if (task->tCometId != SPRITE_NONE
+            && gSprites[task->tCometId].invisible)
+        {
+            DestroySprite(&gSprites[task->tCometId]);
+            task->tCometId = SPRITE_NONE;
+            task->tTimer   = 0;
+            task->tState   = S0_LAUNCH_STAR;
         }
         break;
 
     // ------------------------------------------------------------------
     case S0_LAUNCH_STAR:
-    {
-        // Spawn shooting star in upper-left, sprite callback will move it diagonally
-        u8 starId = CreateSprite(&sSpriteTemplate_Scene0Star, 20, 20, 1);
-        gSprites[starId].invisible = FALSE;
-        task->tStarId = starId;
-        task->tTimer  = 0;
-        task->tState  = S0_WAIT_STAR;
+        // Pequena pausa de 0.5s apos o cometa, depois lanca a estrela
+        if (++task->tTimer >= 30)
+        {
+            u8 starId = CreateSprite(&sSpriteTemplate_Scene0Star, 20, 20, 1);
+            gSprites[starId].invisible = FALSE;
+            task->tStarId = starId;
+            task->tTimer  = 0;
+            task->tState  = S0_WAIT_STAR;
+        }
         break;
-    }
 
     // ------------------------------------------------------------------
     case S0_WAIT_STAR:
-        // SpriteCB_Scene0ShootingStar signals done by setting invisible=TRUE after leaving screen
         if (task->tStarId != SPRITE_NONE
-            && gSprites[task->tStarId].invisible == TRUE)
+            && gSprites[task->tStarId].invisible)
         {
-            // Remove the star sprite
             DestroySprite(&gSprites[task->tStarId]);
             task->tStarId = SPRITE_NONE;
             task->tState  = S0_LAUNCH_SPRITES;
@@ -4035,15 +4103,17 @@ static void Task_Scene0_Main(u8 taskId)
     // ------------------------------------------------------------------
     case S0_LAUNCH_SPRITES:
     {
-        // Celebi: enters from left side, flies toward upper-right
-        u8 celebiId = CreateSprite(&sSpriteTemplate_Scene0Celebi, -64, DISPLAY_HEIGHT / 2, 0);
+        // Celebi: entra pela esquerda, voa para a direita
+        u8 celebiId = CreateSprite(&sSpriteTemplate_Scene0Celebi,
+                                   -64, DISPLAY_HEIGHT / 2, 0);
         gSprites[celebiId].invisible = FALSE;
         task->tCelebiId = celebiId;
 
-        // Jirachi: enters from right side, flies toward upper-left (mirrored)
-        u8 jirachiId = CreateSprite(&sSpriteTemplate_Scene0Jirachi, DISPLAY_WIDTH + 64, DISPLAY_HEIGHT / 2 - 20, 0);
+        // Jirachi: entra pela direita, voa para a esquerda
+        u8 jirachiId = CreateSprite(&sSpriteTemplate_Scene0Jirachi,
+                                    DISPLAY_WIDTH + 32, DISPLAY_HEIGHT / 2 - 20, 0);
         gSprites[jirachiId].invisible = FALSE;
-        gSprites[jirachiId].hFlip = TRUE; // Mirror for opposing direction
+        gSprites[jirachiId].hFlip    = TRUE;
         task->tJirachiId = jirachiId;
 
         task->tTimer = 0;
@@ -4053,56 +4123,193 @@ static void Task_Scene0_Main(u8 taskId)
 
     // ------------------------------------------------------------------
     case S0_WAIT_SPRITES:
-        // Wait until both Pokemon have left the screen (signaled by invisible)
+    {
+        bool8 cDone = (task->tCelebiId  == SPRITE_NONE
+                       || gSprites[task->tCelebiId].invisible);
+        bool8 jDone = (task->tJirachiId == SPRITE_NONE
+                       || gSprites[task->tJirachiId].invisible);
+        if (cDone && jDone)
         {
-            bool8 celebiDone   = (task->tCelebiId  == SPRITE_NONE
-                                  || gSprites[task->tCelebiId].invisible  == TRUE);
-            bool8 jirachiDone  = (task->tJirachiId == SPRITE_NONE
-                                  || gSprites[task->tJirachiId].invisible == TRUE);
+            if (task->tCelebiId  != SPRITE_NONE) DestroySprite(&gSprites[task->tCelebiId]);
+            if (task->tJirachiId != SPRITE_NONE) DestroySprite(&gSprites[task->tJirachiId]);
+            task->tCelebiId  = SPRITE_NONE;
+            task->tJirachiId = SPRITE_NONE;
+            task->tTimer     = 0;
+            task->tState     = S0_DELAY_BEFORE_BIG;
+        }
+        break;
+    }
 
-            if (celebiDone && jirachiDone)
+    // ------------------------------------------------------------------
+    case S0_DELAY_BEFORE_BIG:
+        if (++task->tTimer >= 60)
+        {
+            task->tTimer = 0;
+            task->tState = S0_FADE_TO_BLACK_BIG;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_FADE_TO_BLACK_BIG:
+        if (task->tTimer == 0)
+            BeginNormalPaletteFade(PALETTES_ALL, 4, 0, 16, RGB_BLACK);
+        task->tTimer++;
+        if (!gPaletteFade.active && task->tTimer > 1)
+        {
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP);
+            if (task->tShrineId != SPRITE_NONE)
             {
-                if (task->tCelebiId  != SPRITE_NONE) DestroySprite(&gSprites[task->tCelebiId]);
-                if (task->tJirachiId != SPRITE_NONE) DestroySprite(&gSprites[task->tJirachiId]);
-                task->tCelebiId  = SPRITE_NONE;
-                task->tJirachiId = SPRITE_NONE;
-                // Brief hold then fade out
-                task->tTimer = 0;
-                task->tState = S0_FADE_OUT;
+                DestroySprite(&gSprites[task->tShrineId]);
+                task->tShrineId = SPRITE_NONE;
             }
+            ResetSpriteData();
+            FreeAllSpritePalettes();
+            task->tTimer = 0;
+            task->tState = S0_LOAD_JIRACHI_BIG;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_LOAD_JIRACHI_BIG:
+        SetGpuReg(REG_OFFSET_MOSAIC, 0);
+        DecompressDataWithHeaderVram(sScene0JirachiBig_Gfx,
+                                     (void *)(BG_CHAR_ADDR(S0_SKY_CHARBASE)));
+        DmaCopy16(3, sScene0JirachiBig_Map,
+                  (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), 1280);
+        LoadPalette(sScene0JirachiBig_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+        SetGpuReg(REG_OFFSET_BG0CNT,
+            BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_SKY_CHARBASE)
+            | BGCNT_SCREENBASE(S0_SKY_SCREEN) | BGCNT_16COLOR
+            | BGCNT_TXT256x256 | BGCNT_MOSAIC);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON);
+        task->tTimer = 0;
+        task->tState = S0_GROW_JIRACHI;
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_GROW_JIRACHI:
+        if (task->tTimer == 0)
+            BeginNormalPaletteFade(PALETTES_BG, 8, 16, 0, RGB_BLACK);
+        {
+            u8 m = (task->tTimer < 66) ? (u8)(3 - task->tTimer / 22) : 0;
+            SetGpuReg(REG_OFFSET_MOSAIC, m | (m << 4));
+        }
+        task->tTimer++;
+        if (!gPaletteFade.active && task->tTimer > 1)
+        {
+            SetGpuReg(REG_OFFSET_MOSAIC, 0);
+            // Remove BGCNT_MOSAIC flag apos o grow
+            SetGpuReg(REG_OFFSET_BG0CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_SKY_CHARBASE)
+                | BGCNT_SCREENBASE(S0_SKY_SCREEN) | BGCNT_16COLOR
+                | BGCNT_TXT256x256);
+            task->tTimer = 0;
+            task->tState = S0_HOLD_JIRACHI;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_HOLD_JIRACHI:
+        if (++task->tTimer >= 120)
+        {
+            task->tTimer = 0;
+            task->tState = S0_FADE_JIRACHI_OUT;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_FADE_JIRACHI_OUT:
+        if (task->tTimer == 0)
+            BeginNormalPaletteFade(PALETTES_BG, 6, 0, 16, RGB_BLACK);
+        task->tTimer++;
+        if (!gPaletteFade.active && task->tTimer > 1)
+        {
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP);
+            task->tTimer = 0;
+            task->tState = S0_LOAD_CELEBI_BIG;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_LOAD_CELEBI_BIG:
+        SetGpuReg(REG_OFFSET_MOSAIC, 0);
+        DecompressDataWithHeaderVram(sScene0CelebiBig_Gfx,
+                                     (void *)(BG_CHAR_ADDR(S0_FOREST_CHARBASE)));
+        DmaCopy16(3, sScene0CelebiBig_Map,
+                  (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), 1280);
+        // patch pal=1 (celebibig usa slot 1)
+        {
+            u16 *s = (u16 *)BG_SCREEN_ADDR(S0_FOREST_SCREEN);
+            u16 i;
+            for (i = 0; i < 32 * 20; i++)
+                s[i] = (s[i] & 0x0FFF) | (1 << 12);
+        }
+        LoadPalette(sScene0CelebiBig_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        SetGpuReg(REG_OFFSET_BG1CNT,
+            BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_FOREST_CHARBASE)
+            | BGCNT_SCREENBASE(S0_FOREST_SCREEN) | BGCNT_16COLOR
+            | BGCNT_TXT256x256 | BGCNT_MOSAIC);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON);
+        task->tTimer = 0;
+        task->tState = S0_GROW_CELEBI;
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_GROW_CELEBI:
+        if (task->tTimer == 0)
+            BeginNormalPaletteFade(PALETTES_BG, 8, 16, 0, RGB_BLACK);
+        {
+            u8 m = (task->tTimer < 66) ? (u8)(3 - task->tTimer / 22) : 0;
+            SetGpuReg(REG_OFFSET_MOSAIC, m | (m << 4));
+        }
+        task->tTimer++;
+        if (!gPaletteFade.active && task->tTimer > 1)
+        {
+            SetGpuReg(REG_OFFSET_MOSAIC, 0);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_FOREST_CHARBASE)
+                | BGCNT_SCREENBASE(S0_FOREST_SCREEN) | BGCNT_16COLOR
+                | BGCNT_TXT256x256);
+            task->tTimer = 0;
+            task->tState = S0_HOLD_CELEBI;
+        }
+        break;
+
+    // ------------------------------------------------------------------
+    case S0_HOLD_CELEBI:
+        if (++task->tTimer >= 120)
+        {
+            task->tTimer = 0;
+            task->tState = S0_FADE_OUT;
         }
         break;
 
     // ------------------------------------------------------------------
     case S0_FADE_OUT:
-        if (++task->tTimer == 1)
-        {
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
-        }
-        if (!UpdatePaletteFade() && task->tTimer > 1)
-        {
+        if (task->tTimer == 0)
+            BeginNormalPaletteFade(PALETTES_ALL, 4, 0, 16, RGB_BLACK);
+        task->tTimer++;
+        if (!gPaletteFade.active && task->tTimer > 1)
             task->tState = S0_DONE;
-        }
         break;
 
     // ------------------------------------------------------------------
     case S0_DONE:
     default:
-        // Clean up mosaic, destroy shrine, hand off to Scene 1
-        SetGpuReg(REG_OFFSET_MOSAIC, 0);
-        SetGpuReg(REG_OFFSET_BG0CNT,
-            BGCNT_PRIORITY(1)
-            | BGCNT_CHARBASE(S0_SKY_CHARBASE)
-            | BGCNT_SCREENBASE(S0_SKY_SCREEN)
-            | BGCNT_16COLOR
-            | BGCNT_TXT256x256);
-        if (task->tShrineId != SPRITE_NONE)
-        {
-            DestroySprite(&gSprites[task->tShrineId]);
-            task->tShrineId = SPRITE_NONE;
-        }
+        // Reset COMPLETO antes da Scene 1 — garante VRAM limpa sem glitch
+        SetGpuReg(REG_OFFSET_DISPCNT,  0);
+        SetGpuReg(REG_OFFSET_MOSAIC,   0);
+        SetGpuReg(REG_OFFSET_BLDCNT,   0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY,     0);
+        DmaClear16(3, (void *)BG_SCREEN_ADDR(S0_SKY_SCREEN),    2048);
+        DmaClear16(3, (void *)BG_SCREEN_ADDR(S0_FOREST_SCREEN), 2048);
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        ResetPaletteFade();
         DestroyTask(taskId);
-        // Hand off to the main intro (Scene 1 and beyond)
         CreateTask(Task_Scene1_Load, 0);
         break;
     }
@@ -4115,11 +4322,10 @@ static void Task_Scene0_Main(u8 taskId)
 #undef tStarId
 #undef tCelebiId
 #undef tJirachiId
-#undef tGrowTimer
+#undef tCometId
 
 // =========================================================================
-// CB2_Scene0Intro — entry point called by CB2_ExpansionIntro at its end
-// Mirrors the same CB2 pattern used in CB2_InitCopyrightScreenAfterBootup
+// CB2_Scene0Intro
 // =========================================================================
 void CB2_Scene0Intro(void)
 {
@@ -4128,111 +4334,63 @@ void CB2_Scene0Intro(void)
     FreeAllSpritePalettes();
     ResetPaletteFade();
     SetVBlankCallback(NULL);
-
     CreateTask(Task_Scene0_Load, 0);
     SetMainCallback2(MainCB2_Intro);
 }
 
 // =========================================================================
-// SpriteCB_Scene0Shrine — static, just sits there
+// SpriteCB_Scene0Shrine — estatico
 // =========================================================================
 static void SpriteCB_Scene0Shrine(struct Sprite *sprite)
 {
-    // Nothing — shrine is stationary throughout Scene 0
     (void)sprite;
 }
 
 // =========================================================================
-// SpriteCB_Scene0ShootingStar — diagonal flight across sky
-// Moves from upper-left to lower-right, signals done by going invisible
-// Uses sparkle animation frames (already set up via AnimCmd)
+// SpriteCB_Scene0ShootingStar — diagonal esquerda->direita
 // =========================================================================
-#define sStarX    data[0]   // fixed-point x (8.8)
-#define sStarY    data[1]   // fixed-point y (8.8)
-
 static void SpriteCB_Scene0ShootingStar(struct Sprite *sprite)
 {
-    // On first frame: initialize sub-pixel position
-    if (sprite->data[7] == 0)
-    {
-        sprite->data[7] = 1;
-        sprite->sStarX = sprite->x << 8;
-        sprite->sStarY = sprite->y << 8;
-        sprite->invisible = FALSE;
-    }
-
-    // Move diagonally: 3px right, 2px down per frame (smooth)
-    sprite->sStarX += (3 << 8);
-    sprite->sStarY += (2 << 8);
-    sprite->x = sprite->sStarX >> 8;
-    sprite->y = sprite->sStarY >> 8;
-
-    // Done when off-screen
+    sprite->x += 3;
+    sprite->y += 2;
     if (sprite->x > DISPLAY_WIDTH + 16 || sprite->y > DISPLAY_HEIGHT + 16)
-    {
         sprite->invisible = TRUE;
-    }
 }
 
-#undef sStarX
-#undef sStarY
+// =========================================================================
+// SpriteCB_Scene0Comet — diagonal direita->esquerda (sem fixed-point)
+// FIX: versao anterior usava x<<8 que estoura s16 para x=220
+// =========================================================================
+static void SpriteCB_Scene0Comet(struct Sprite *sprite)
+{
+    sprite->x -= 3;
+    sprite->y += 2;
+    if (sprite->x < -32 || sprite->y > DISPLAY_HEIGHT + 16)
+        sprite->invisible = TRUE;
+}
 
 // =========================================================================
-// SpriteCB_Scene0Celebi — flies from left to right-top, animation loops
+// SpriteCB_Scene0Celebi — esquerda->direita, deriva levemente para cima
+// FIX: sem fixed-point (x=-64 << 8 = -16384 cabe, mas estoura apos ~77 frames)
 // =========================================================================
-#define sCelebiX  data[0]   // fixed-point x (8.8)
-#define sCelebiY  data[1]   // fixed-point y (8.8)
-
 static void SpriteCB_Scene0Celebi(struct Sprite *sprite)
 {
-    if (sprite->data[7] == 0)
-    {
-        sprite->data[7] = 1;
-        sprite->sCelebiX = sprite->x << 8;
-        sprite->sCelebiY = sprite->y << 8;
-        sprite->invisible = FALSE;
-    }
-
-    // Fly right and slightly upward
-    sprite->sCelebiX += (2 << 8) + 128; // ~2.5 px/frame
-    sprite->sCelebiY -= (0 << 8) + 64;  // ~0.25 px/frame upward drift
-
-    sprite->x = sprite->sCelebiX >> 8;
-    sprite->y = sprite->sCelebiY >> 8;
-
+    sprite->x += 3;
+    if (++sprite->data[0] % 4 == 0)
+        sprite->y -= 1;
     if (sprite->x > DISPLAY_WIDTH + 64)
         sprite->invisible = TRUE;
 }
 
-#undef sCelebiX
-#undef sCelebiY
-
 // =========================================================================
-// SpriteCB_Scene0Jirachi — flies from right to left-top (mirrored)
+// SpriteCB_Scene0Jirachi — direita->esquerda, deriva levemente para cima
+// FIX: x=304 << 8 = 77824 estourava s16 — sprite nascia no meio da tela
 // =========================================================================
-#define sJirachiX data[0]
-#define sJirachiY data[1]
-
 static void SpriteCB_Scene0Jirachi(struct Sprite *sprite)
 {
-    if (sprite->data[7] == 0)
-    {
-        sprite->data[7] = 1;
-        sprite->sJirachiX = sprite->x << 8;
-        sprite->sJirachiY = sprite->y << 8;
-        sprite->invisible = FALSE;
-    }
-
-    // Fly left and slightly upward
-    sprite->sJirachiX -= (2 << 8) + 128;
-    sprite->sJirachiY -= (0 << 8) + 64;
-
-    sprite->x = sprite->sJirachiX >> 8;
-    sprite->y = sprite->sJirachiY >> 8;
-
+    sprite->x -= 3;
+    if (++sprite->data[0] % 4 == 0)
+        sprite->y -= 1;
     if (sprite->x < -64)
         sprite->invisible = TRUE;
 }
-
-#undef sJirachiX
-#undef sJirachiY
