@@ -120,11 +120,13 @@ static void Task_Scene0_Main(u8);
 
 // Scene 0 helper functions
 static void Scene0_LoadBgSet(u8 setIndex);
+static void Scene0_LoadSet03(void);
 static void SpriteCB_Scene0Shrine(struct Sprite *sprite);
-static void SpriteCB_Scene0ShootingStar(struct Sprite *sprite);
+static void SpriteCB_Scene0Moon(struct Sprite *sprite);
 static void SpriteCB_Scene0Celebi(struct Sprite *sprite);
 static void SpriteCB_Scene0Jirachi(struct Sprite *sprite);
 static void SpriteCB_Scene0Comet(struct Sprite *sprite);
+static void SpriteCB_Scene0Sparkle(struct Sprite *sprite);
 
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct SpritePalette gBattleAnimPaletteTable[];
@@ -153,13 +155,11 @@ enum {
 
 // Scene 0 (pre-intro) sprite tags — range 1600-1603, safe from existing 1500-1505, 2000-2003
 #define TAG_SCENE0_SHRINE     1600
-#define TAG_SCENE0_STAR       1601   // usa gIntroSparkle_Gfx — reutiliza asset da scene_1
-#define TAG_SCENE0_CELEBI     1602
-#define TAG_SCENE0_JIRACHI    1603
-#define TAG_SCENE0_COMET      1604   // reutiliza sparkle/lightning da scene_1
-// Comet reutiliza assets existentes — sem PNG proprio necessario
-#define sScene0Comet_Gfx gIntroSparkle_Gfx
-#define sScene0Comet_Pal gIntroLightning_Pal
+#define TAG_SCENE0_CELEBI     1601
+#define TAG_SCENE0_JIRACHI    1602
+#define TAG_SCENE0_MOON       1603   // lua central (64x64, glow)
+#define TAG_SCENE0_COMET      1604   // novo cometa 4×64×64
+#define TAG_SCENE0_SPARKLE    1605   // sparkles durante o cometa (reutiliza gIntroSparkle_Gfx)
 // 1604 reservado para uso futuro
 
 #define COLOSSEUM_GAME_CODE 0x65366347 // "Gc6e" in ASCII
@@ -257,6 +257,24 @@ static const u32 sScene0Celebi_Gfx[]      = INCBIN_U32("graphics/intro/scene_0/c
 // --- Jirachi (4-frame fly anim, sheet = 64×256) ---
 static const u16 sScene0Jirachi_Pal[]     = INCBIN_U16("graphics/intro/scene_0/jirachi.gbapal");
 static const u32 sScene0Jirachi_Gfx[]     = INCBIN_U32("graphics/intro/scene_0/jirachi.4bpp.smol");
+
+// --- Set 03: ceu noturno com lua (cena do cometa) ---
+static const u16 sScene0Bg03_Pal[]    = INCBIN_U16("graphics/intro/scene_0/bg03.gbapal");
+static const u32 sScene0Bg03_Gfx[]    = INCBIN_U32("graphics/intro/scene_0/bg03.4bpp.smol");
+static const u32 sScene0Bg03_Map[]    = INCBIN_U32("graphics/intro/scene_0/bg03.bin");
+
+// --- Nuvens: camada sobre bg03, com scroll lento ---
+static const u16 sScene0Clouds_Pal[]  = INCBIN_U16("graphics/intro/scene_0/clouds.gbapal");
+static const u32 sScene0Clouds_Gfx[]  = INCBIN_U32("graphics/intro/scene_0/clouds.4bpp.smol");
+static const u32 sScene0Clouds_Map[]  = INCBIN_U32("graphics/intro/scene_0/clouds.bin");
+
+// --- Lua: sprite 64x64 estatica com glow centralizado ---
+static const u16 sScene0Moon_Pal[]    = INCBIN_U16("graphics/intro/scene_0/moon.gbapal");
+static const u32 sScene0Moon_Gfx[]    = INCBIN_U32("graphics/intro/scene_0/moon.4bpp.smol");
+
+// --- Cometa: 4 frames 64x64, cruza diagonal direita->esquerda rapido ---
+static const u16 sScene0Comet_Pal[]   = INCBIN_U16("graphics/intro/scene_0/comet.gbapal");
+static const u32 sScene0Comet_Gfx[]   = INCBIN_U32("graphics/intro/scene_0/comet.4bpp.smol");
 
 // --- Big overlay tilesets (aparece sobre o bg depois do voo) ---
 // Ambos em 4bpp, tilemaps crus (.bin = raw 16-bit entries, sem header).
@@ -1176,115 +1194,6 @@ static const struct SpriteTemplate sSpriteTemplate_Scene0Shrine =
 };
 
 // ---------------------------------------------------------------------------
-// Shooting Star — reuses gIntroSparkle_Gfx (already in ROM) under its own tag
-//   OAM priority 1: renders BEHIND forest BG (priority 0) but ABOVE sky BG (priority 1)
-//   → the star travels across the sky layer, hidden by forest tiles
-// ---------------------------------------------------------------------------
-static const struct OamData sOamData_Scene0Star =
-{
-    .y = DISPLAY_HEIGHT,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = FALSE,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(16x16),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(16x16),
-    .tileNum = 0,
-    .priority = 1,   // behind forest (BG priority 0), in front of sky (BG priority 1)
-    .paletteNum = 0,
-    .affineParam = 0,
-};
-static const union AnimCmd sAnim_Scene0Star[] =
-{
-    ANIMCMD_FRAME(0, 2),
-    ANIMCMD_FRAME(4, 2),
-    ANIMCMD_FRAME(8, 2),
-    ANIMCMD_FRAME(12, 2),
-    ANIMCMD_FRAME(16, 2),
-    ANIMCMD_JUMP(0),
-};
-static const union AnimCmd *const sAnims_Scene0Star[] =
-{
-    sAnim_Scene0Star,
-};
-// gIntroSparkle_Gfx and gIntroLightning_Pal are declared in intro_credits_graphics.h
-static const struct CompressedSpriteSheet sSpriteSheet_Scene0Star[] =
-{
-    {gIntroSparkle_Gfx, 0x400, TAG_SCENE0_STAR},
-    {},
-};
-static const struct SpritePalette sSpritePalette_Scene0Star[] =
-{
-    {gIntroLightning_Pal, TAG_SCENE0_STAR},  // same bright palette used in scene_1 sparkles
-    {},
-};
-static const struct SpriteTemplate sSpriteTemplate_Scene0Star =
-{
-    .tileTag = TAG_SCENE0_STAR,
-    .paletteTag = TAG_SCENE0_STAR,
-    .oam = &sOamData_Scene0Star,
-    .anims = sAnims_Scene0Star,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_Scene0ShootingStar,
-};
-
-// ---------------------------------------------------------------------------
-// Cometa — 4 frames × 16×32 px, cruza o céu diagonalmente (direita→esquerda)
-//   Tile offsets: 0, 8, 16, 24  (cada frame ocupa 8 tiles de 8×8)
-// ---------------------------------------------------------------------------
-static const struct OamData sOamData_Scene0Comet =
-{
-    .y = DISPLAY_HEIGHT,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode    = ST_OAM_OBJ_NORMAL,
-    .mosaic     = FALSE,
-    .bpp        = ST_OAM_4BPP,
-    .shape      = SPRITE_SHAPE(16x32),
-    .x = 0,
-    .matrixNum  = 0,
-    .size       = SPRITE_SIZE(16x32),
-    .tileNum    = 0,
-    .priority   = 1,   // atrás da floresta, na frente do céu (igual à estrela)
-    .paletteNum = 0,
-    .affineParam = 0,
-};
-static const union AnimCmd sAnim_Scene0Comet[] =
-{
-    ANIMCMD_FRAME( 0, 4),
-    ANIMCMD_FRAME( 8, 4),
-    ANIMCMD_FRAME(16, 4),
-    ANIMCMD_FRAME(24, 4),
-    ANIMCMD_JUMP(0),
-};
-static const union AnimCmd *const sAnims_Scene0Comet[] =
-{
-    sAnim_Scene0Comet,
-};
-static const struct CompressedSpriteSheet sSpriteSheet_Scene0Comet[] =
-{
-    {sScene0Comet_Gfx, 0x400, TAG_SCENE0_COMET},
-    {},
-};
-static const struct SpritePalette sSpritePalette_Scene0Comet[] =
-{
-    {sScene0Comet_Pal, TAG_SCENE0_COMET},
-    {},
-};
-static const struct SpriteTemplate sSpriteTemplate_Scene0Comet =
-{
-    .tileTag     = TAG_SCENE0_COMET,
-    .paletteTag  = TAG_SCENE0_COMET,
-    .oam         = &sOamData_Scene0Comet,
-    .anims       = sAnims_Scene0Comet,
-    .images      = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback    = SpriteCB_Scene0Comet,
-};
-
-// ---------------------------------------------------------------------------
 // Celebi — 4 frames × 64×64, fly animation (same layout as HWL logo sprites)
 //   Sheet: 64 px wide × 256 px tall (4 frames stacked vertically)
 //   Each frame tile offset: 0, 64, 128, 192 (in 8×8 tile units)
@@ -1307,10 +1216,10 @@ static const struct OamData sOamData_Scene0Celebi =
 };
 static const union AnimCmd sAnim_Scene0Celebi_Fly[] =
 {
-    ANIMCMD_FRAME(0,   6),
-    ANIMCMD_FRAME(64,  6),
-    ANIMCMD_FRAME(128, 6),
-    ANIMCMD_FRAME(192, 6),
+    ANIMCMD_FRAME(0,   20),
+    ANIMCMD_FRAME(64,  20),
+    ANIMCMD_FRAME(128, 20),
+    ANIMCMD_FRAME(192, 20),
     ANIMCMD_JUMP(0),
 };
 static const union AnimCmd *const sAnims_Scene0Celebi[] =
@@ -1360,10 +1269,10 @@ static const struct OamData sOamData_Scene0Jirachi =
 };
 static const union AnimCmd sAnim_Scene0Jirachi_Fly[] =
 {
-    ANIMCMD_FRAME(0,   6),
-    ANIMCMD_FRAME(64,  6),
-    ANIMCMD_FRAME(128, 6),
-    ANIMCMD_FRAME(192, 6),
+    ANIMCMD_FRAME(0,   20),
+    ANIMCMD_FRAME(64,  20),
+    ANIMCMD_FRAME(128, 20),
+    ANIMCMD_FRAME(192, 20),
     ANIMCMD_JUMP(0),
 };
 static const union AnimCmd *const sAnims_Scene0Jirachi[] =
@@ -1389,6 +1298,150 @@ static const struct SpriteTemplate sSpriteTemplate_Scene0Jirachi =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_Scene0Jirachi,
+};
+
+// ---------------------------------------------------------------------------
+// Moon — sprite 64x64 centralizado, glow estatico
+// ---------------------------------------------------------------------------
+// Moon — OAM com affine normal para o grow manual via SetOamMatrix
+// O grow é controlado diretamente no SpriteCB_Scene0Moon (data[1] = escala PA).
+// SetOamMatrix(matrixNum, PA, PB, PC, PD):
+//   PA=PD=256 → 1:1 (tamanho real). PA=PD=768 → 1/3 do tamanho.
+//   Decrementamos PA/PD de 768→256 a 4px/frame = ~128 frames (~2.1s) de crescimento.
+static const struct OamData sOamData_Scene0Moon =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_NORMAL, // affinematrix controlada manualmente
+    .objMode    = ST_OAM_OBJ_BLEND,    // hardware lighten glow (BLDY)
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(64x64),
+    .size       = SPRITE_SIZE(64x64),
+    .matrixNum  = 0,
+    .priority   = 1,
+};
+static const union AnimCmd sAnim_Scene0Moon[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Moon[] =
+{
+    sAnim_Scene0Moon,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Moon[] =
+{
+    {sScene0Moon_Gfx, 0x800, TAG_SCENE0_MOON},   // 1 frame 64x64 = 2048 bytes
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Moon[] =
+{
+    {sScene0Moon_Pal, TAG_SCENE0_MOON},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Moon =
+{
+    .tileTag     = TAG_SCENE0_MOON,
+    .paletteTag  = TAG_SCENE0_MOON,
+    .oam         = &sOamData_Scene0Moon,
+    .anims       = sAnims_Scene0Moon,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable, // grow é manual, não via affine anim
+    .callback    = SpriteCB_Scene0Moon,
+};
+
+// ---------------------------------------------------------------------------
+// Cometa — 4 frames 64x64, animacao rapida, cruza diagonal direita->esquerda
+//   Sheet: 4 × 64×64 × 4bpp = 4 × 2048 = 8192 = 0x2000 bytes
+//   Tile offsets: 0, 64, 128, 192
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Comet =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(64x64),
+    .size       = SPRITE_SIZE(64x64),
+    .priority   = 0,
+};
+static const union AnimCmd sAnim_Scene0Comet[] =
+{
+    ANIMCMD_FRAME(  0, 3),   // rapido: 3 frames cada = ~20fps
+    ANIMCMD_FRAME( 64, 3),
+    ANIMCMD_FRAME(128, 3),
+    ANIMCMD_FRAME(192, 3),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Scene0Comet[] =
+{
+    sAnim_Scene0Comet,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Comet[] =
+{
+    {sScene0Comet_Gfx, 0x2000, TAG_SCENE0_COMET},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Comet[] =
+{
+    {sScene0Comet_Pal, TAG_SCENE0_COMET},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Comet =
+{
+    .tileTag     = TAG_SCENE0_COMET,
+    .paletteTag  = TAG_SCENE0_COMET,
+    .oam         = &sOamData_Scene0Comet,
+    .anims       = sAnims_Scene0Comet,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_Scene0Comet,
+};
+
+// ---------------------------------------------------------------------------
+// Sparkle — reutiliza gIntroSparkle_Gfx (ja compilado no jogo)
+//   Aparece em posicoes aleatorias durante a passagem do cometa
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_Scene0Sparkle =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(16x32),
+    .size       = SPRITE_SIZE(16x32),
+    .priority   = 0,
+};
+static const union AnimCmd sAnim_Scene0Sparkle[] =
+{
+    ANIMCMD_FRAME( 0, 4),
+    ANIMCMD_FRAME( 8, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(24, 4),
+    ANIMCMD_END,
+};
+static const union AnimCmd *const sAnims_Scene0Sparkle[] =
+{
+    sAnim_Scene0Sparkle,
+};
+static const struct CompressedSpriteSheet sSpriteSheet_Scene0Sparkle[] =
+{
+    {gIntroSparkle_Gfx, 0x400, TAG_SCENE0_SPARKLE},
+    {},
+};
+static const struct SpritePalette sSpritePalette_Scene0Sparkle[] =
+{
+    {gIntroLightning_Pal, TAG_SCENE0_SPARKLE},
+    {},
+};
+static const struct SpriteTemplate sSpriteTemplate_Scene0Sparkle =
+{
+    .tileTag     = TAG_SCENE0_SPARKLE,
+    .paletteTag  = TAG_SCENE0_SPARKLE,
+    .oam         = &sOamData_Scene0Sparkle,
+    .anims       = sAnims_Scene0Sparkle,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_Scene0Sparkle,
 };
 
 static void VBlankCB_Intro(void)
@@ -3813,21 +3866,26 @@ static void SpriteCB_RayquazaOrb(struct Sprite *sprite)
 // =========================================================================
 // Task data layout for Task_Scene0_Main:
 //   data[0] = tState
-//   data[1] = tTimer
-//   data[2] = tBgSet
-//   data[3] = tShrineId
-//   data[4] = tStarId
+//   data[1] = tTimer        — contador generico de frames
+//   data[2] = tBgSet        — BG set atual (0/1/2/3)
+//   data[3] = tShrineId     — sprite do shrine (set 0/1/2)
+//   data[4] = tMoonId       — sprite da lua (set 3)
 //   data[5] = tCelebiId
 //   data[6] = tJirachiId
-//   data[7] = tCometId  (substituiu tGrowTimer — grow removido)
-#define tState      data[0]
-#define tTimer      data[1]
-#define tBgSet      data[2]
-#define tShrineId   data[3]
-#define tStarId     data[4]
-#define tCelebiId   data[5]
-#define tJirachiId  data[6]
-#define tCometId    data[7]
+//   data[7] = tCometId
+//   data[8] = tCloudScroll  — sub-pixel scroll das nuvens (1/2 pixel por frame)
+//   data[9] = tSparkleTimer — frame counter para spawn de sparkles
+// =========================================================================
+#define tState        data[0]
+#define tTimer        data[1]
+#define tBgSet        data[2]
+#define tShrineId     data[3]
+#define tMoonId       data[4]
+#define tCelebiId     data[5]
+#define tJirachiId    data[6]
+#define tCometId      data[7]
+#define tCloudScroll  data[8]
+#define tSparkleTimer data[9]
 
 enum {
     S0_FADE_IN_SET00 = 0,
@@ -3836,21 +3894,12 @@ enum {
     S0_HOLD_SET01,
     S0_FADE_TO_SET02,
     S0_HOLD_SET02,
-    S0_LAUNCH_COMET,
-    S0_WAIT_COMET,
-    S0_LAUNCH_STAR,
-    S0_WAIT_STAR,
-    S0_LAUNCH_SPRITES,
+    S0_LAUNCH_SPRITES,     // Jirachi + Celebi voam (com cry)
     S0_WAIT_SPRITES,
-    S0_DELAY_BEFORE_BIG,
-    S0_FADE_TO_BLACK_BIG,
-    S0_LOAD_JIRACHI_BIG,
-    S0_GROW_JIRACHI,
-    S0_HOLD_JIRACHI,
-    S0_FADE_JIRACHI_OUT,
-    S0_LOAD_CELEBI_BIG,
-    S0_GROW_CELEBI,
-    S0_HOLD_CELEBI,
+    S0_FADE_TO_SET03,      // tela preta -> carrega bg03 + clouds + moon
+    S0_HOLD_SET03,         // fade in do set03, nuvens comecam a mover
+    S0_LAUNCH_COMET,       // cometa cruza + sparkles espalhados
+    S0_WAIT_COMET,
     S0_FADE_OUT,
     S0_DONE,
 };
@@ -3863,7 +3912,7 @@ enum {
 #define S0_FOREST_PAL_SLOT 1
 
 // =========================================================================
-// Scene0_LoadBgSet
+// Scene0_LoadBgSet — sets 0, 1, 2 (floresta + ceu)
 // =========================================================================
 static void Scene0_LoadBgSet(u8 setIndex)
 {
@@ -3897,8 +3946,6 @@ static void Scene0_LoadBgSet(u8 setIndex)
     CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), BG_SCREEN_SIZE);
     CpuCopy16(skyMap, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)),    32 * 20 * 2);
     CpuCopy16(fgMap,  (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), 32 * 20 * 2);
-
-    // Garante que sky usa slot 0 e floresta usa slot 1
     {
         u16 *screenSky = (u16 *)BG_SCREEN_ADDR(S0_SKY_SCREEN);
         u16 *screenFg  = (u16 *)BG_SCREEN_ADDR(S0_FOREST_SCREEN);
@@ -3908,9 +3955,43 @@ static void Scene0_LoadBgSet(u8 setIndex)
         for (i = 0; i < 32 * 32; i++)
             screenFg[i]  = (screenFg[i]  & 0x0FFF) | (1 << 12);
     }
-
     LoadPalette(skyPal, BG_PLTT_ID(S0_SKY_PAL_SLOT),    PLTT_SIZE_4BPP);
     LoadPalette(fgPal,  BG_PLTT_ID(S0_FOREST_PAL_SLOT), PLTT_SIZE_4BPP);
+}
+
+// =========================================================================
+// Scene0_LoadSet03 — bg03 (ceu noturno) + clouds (overlay com scroll)
+// Chamado enquanto a tela esta preta (dentro de S0_FADE_TO_SET03)
+// BG0 = bg03, BG1 = clouds
+// =========================================================================
+static void Scene0_LoadSet03(void)
+{
+    // bg03 — ceu noturno com lua: charbase 0, screenbase 24
+    DecompressDataWithHeaderVram(sScene0Bg03_Gfx, (void *)(BG_CHAR_ADDR(S0_SKY_CHARBASE)));
+    CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), BG_SCREEN_SIZE);
+    CpuCopy16(sScene0Bg03_Map, (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), 32 * 20 * 2);
+    LoadPalette(sScene0Bg03_Pal, BG_PLTT_ID(S0_SKY_PAL_SLOT), PLTT_SIZE_4BPP);
+
+    // clouds — overlay semitransparente: charbase 1, screenbase 28
+    DecompressDataWithHeaderVram(sScene0Clouds_Gfx, (void *)(BG_CHAR_ADDR(S0_FOREST_CHARBASE)));
+    CpuFill16(0, (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), BG_SCREEN_SIZE);
+    CpuCopy16(sScene0Clouds_Map, (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), 32 * 20 * 2);
+    LoadPalette(sScene0Clouds_Pal, BG_PLTT_ID(S0_FOREST_PAL_SLOT), PLTT_SIZE_4BPP);
+
+    SetGpuReg(REG_OFFSET_BG0CNT,
+        BGCNT_PRIORITY(1)
+        | BGCNT_CHARBASE(S0_SKY_CHARBASE)
+        | BGCNT_SCREENBASE(S0_SKY_SCREEN)
+        | BGCNT_16COLOR
+        | BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG1CNT,
+        BGCNT_PRIORITY(0)
+        | BGCNT_CHARBASE(S0_FOREST_CHARBASE)
+        | BGCNT_SCREENBASE(S0_FOREST_SCREEN)
+        | BGCNT_16COLOR
+        | BGCNT_TXT256x256);
+
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
 }
 
 // =========================================================================
@@ -3921,6 +4002,15 @@ void Task_Scene0_Load(u8 taskId)
     SetVBlankCallback(NULL);
     m4aSongNumStart(MUS_RG_TITLE);
     IntroResetGpuRegs();
+
+    // Blend hardware — TGT1=OBJ, EFFECT=LIGHTEN (BLDY).
+    // Ativo durante toda a Scene0; BLDY é controlado individualmente
+    // pela lua (pulso lento) e pelo cometa (flash rápido).
+    // Zerado em S0_DONE antes de passar para a Scene1.
+    SetGpuReg(REG_OFFSET_BLDCNT,
+        BLDCNT_TGT1_OBJ
+        | BLDCNT_EFFECT_LIGHTEN);
+    SetGpuReg(REG_OFFSET_BLDY, 0);
 
     SetGpuReg(REG_OFFSET_BG0CNT,
         BGCNT_PRIORITY(1)
@@ -3937,27 +4027,26 @@ void Task_Scene0_Load(u8 taskId)
 
     Scene0_LoadBgSet(0);
 
+    // Sprites do set 0/1/2
     LoadCompressedSpriteSheet(sSpriteSheet_Scene0Shrine);
     LoadSpritePalettes(sSpritePalette_Scene0Shrine);
-    LoadCompressedSpriteSheet(sSpriteSheet_Scene0Star);
-    LoadSpritePalettes(sSpritePalette_Scene0Star);
-    LoadCompressedSpriteSheet(sSpriteSheet_Scene0Comet);
-    LoadSpritePalettes(sSpritePalette_Scene0Comet);
     LoadCompressedSpriteSheet(sSpriteSheet_Scene0Celebi);
     LoadSpritePalettes(sSpritePalette_Scene0Celebi);
     LoadCompressedSpriteSheet(sSpriteSheet_Scene0Jirachi);
     LoadSpritePalettes(sSpritePalette_Scene0Jirachi);
 
-    gTasks[taskId].tShrineId  = CreateSprite(&sSpriteTemplate_Scene0Shrine,
-                                              DISPLAY_WIDTH / 2,
-                                              DISPLAY_HEIGHT - 40, 0);
-    gTasks[taskId].tStarId    = SPRITE_NONE;
-    gTasks[taskId].tCometId   = SPRITE_NONE;
-    gTasks[taskId].tCelebiId  = SPRITE_NONE;
-    gTasks[taskId].tJirachiId = SPRITE_NONE;
-    gTasks[taskId].tState     = S0_FADE_IN_SET00;
-    gTasks[taskId].tTimer     = 0;
-    gTasks[taskId].tBgSet     = 0;
+    gTasks[taskId].tShrineId    = CreateSprite(&sSpriteTemplate_Scene0Shrine,
+                                               DISPLAY_WIDTH / 2,
+                                               DISPLAY_HEIGHT - 40, 0);
+    gTasks[taskId].tMoonId      = SPRITE_NONE;
+    gTasks[taskId].tCelebiId    = SPRITE_NONE;
+    gTasks[taskId].tJirachiId   = SPRITE_NONE;
+    gTasks[taskId].tCometId     = SPRITE_NONE;
+    gTasks[taskId].tState       = S0_FADE_IN_SET00;
+    gTasks[taskId].tTimer       = 0;
+    gTasks[taskId].tBgSet       = 0;
+    gTasks[taskId].tCloudScroll = 0;
+    gTasks[taskId].tSparkleTimer = 0;
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     SetVBlankCallback(VBlankCB_Intro);
@@ -3991,8 +4080,7 @@ static void Task_Scene0_Main(u8 taskId)
 
     // ------------------------------------------------------------------
     case S0_HOLD_SET00:
-        // ~3 segundos no set 00 (floresta diurna + shrine)
-        if (++task->tTimer >= 180)
+        if (++task->tTimer >= 180)   // ~3 s
         {
             BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
             task->tTimer = 0;
@@ -4014,10 +4102,9 @@ static void Task_Scene0_Main(u8 taskId)
 
     // ------------------------------------------------------------------
     case S0_HOLD_SET01:
-        // Aguarda fade-in terminar, depois segura ~2.5 s
         if (gPaletteFade.active)
             break;
-        if (++task->tTimer >= 150)
+        if (++task->tTimer >= 150)   // ~2.5 s
         {
             BeginNormalPaletteFade(PALETTES_BG, 8, 0, 16, RGB_BLACK);
             task->tTimer = 0;
@@ -4038,83 +4125,36 @@ static void Task_Scene0_Main(u8 taskId)
         break;
 
     // ------------------------------------------------------------------
-    // FIX: sem mosaic/grow — era a causa do softlock original.
-    // gPaletteFade.active checado separado do timer para evitar o bug
-    // onde PALETTES_BG fades nao zeram gPaletteFade.active corretamente.
     case S0_HOLD_SET02:
         if (gPaletteFade.active)
             break;
-        // Segura ~4 segundos com o ceu noturno estatico
-        if (++task->tTimer >= 240)
+        if (++task->tTimer >= 150)   // ~2.5 s
         {
             task->tTimer = 0;
-            task->tState = S0_LAUNCH_COMET;
+            task->tState = S0_LAUNCH_SPRITES;
         }
         break;
 
     // ------------------------------------------------------------------
-    case S0_LAUNCH_COMET:
-    {
-        // Cometa entra pelo canto superior-direito, cruza na diagonal
-        u8 id = CreateSprite(&sSpriteTemplate_Scene0Comet, 230, 5, 1);
-        gSprites[id].invisible = FALSE;
-        task->tCometId = id;
-        PlaySE(SE_M_HYPER_BEAM);
-        task->tState = S0_WAIT_COMET;
-        break;
-    }
-
-    // ------------------------------------------------------------------
-    case S0_WAIT_COMET:
-        if (task->tCometId != SPRITE_NONE
-            && gSprites[task->tCometId].invisible)
-        {
-            DestroySprite(&gSprites[task->tCometId]);
-            task->tCometId = SPRITE_NONE;
-            task->tTimer   = 0;
-            task->tState   = S0_LAUNCH_STAR;
-        }
-        break;
-
-    // ------------------------------------------------------------------
-    case S0_LAUNCH_STAR:
-        // Pequena pausa de 0.5s apos o cometa, depois lanca a estrela
-        if (++task->tTimer >= 30)
-        {
-            u8 starId = CreateSprite(&sSpriteTemplate_Scene0Star, 20, 20, 1);
-            gSprites[starId].invisible = FALSE;
-            task->tStarId = starId;
-            task->tTimer  = 0;
-            task->tState  = S0_WAIT_STAR;
-        }
-        break;
-
-    // ------------------------------------------------------------------
-    case S0_WAIT_STAR:
-        if (task->tStarId != SPRITE_NONE
-            && gSprites[task->tStarId].invisible)
-        {
-            DestroySprite(&gSprites[task->tStarId]);
-            task->tStarId = SPRITE_NONE;
-            task->tState  = S0_LAUNCH_SPRITES;
-        }
-        break;
-
-    // ------------------------------------------------------------------
+    // Jirachi e Celebi voam pela tela com seus cries
     case S0_LAUNCH_SPRITES:
     {
-        // Celebi: entra pela esquerda, voa para a direita
+        // Celebi: esquerda -> direita
         u8 celebiId = CreateSprite(&sSpriteTemplate_Scene0Celebi,
                                    -64, DISPLAY_HEIGHT / 2, 0);
         gSprites[celebiId].invisible = FALSE;
         task->tCelebiId = celebiId;
 
-        // Jirachi: entra pela direita, voa para a esquerda
+        // Jirachi: direita -> esquerda (espelhado)
         u8 jirachiId = CreateSprite(&sSpriteTemplate_Scene0Jirachi,
                                     DISPLAY_WIDTH + 32, DISPLAY_HEIGHT / 2 - 20, 0);
         gSprites[jirachiId].invisible = FALSE;
         gSprites[jirachiId].hFlip    = TRUE;
         task->tJirachiId = jirachiId;
+
+        // Cries
+        PlayCryInternal(SPECIES_CELEBI,  0, 120, 10, 0);
+        PlayCryInternal(SPECIES_JIRACHI, 0, 120, 10, 0);
 
         task->tTimer = 0;
         task->tState = S0_WAIT_SPRITES;
@@ -4128,177 +4168,186 @@ static void Task_Scene0_Main(u8 taskId)
                        || gSprites[task->tCelebiId].invisible);
         bool8 jDone = (task->tJirachiId == SPRITE_NONE
                        || gSprites[task->tJirachiId].invisible);
+
         if (cDone && jDone)
         {
-            if (task->tCelebiId  != SPRITE_NONE) DestroySprite(&gSprites[task->tCelebiId]);
-            if (task->tJirachiId != SPRITE_NONE) DestroySprite(&gSprites[task->tJirachiId]);
+            if (task->tCelebiId  != SPRITE_NONE)
+                DestroySprite(&gSprites[task->tCelebiId]);
+            if (task->tJirachiId != SPRITE_NONE)
+                DestroySprite(&gSprites[task->tJirachiId]);
             task->tCelebiId  = SPRITE_NONE;
             task->tJirachiId = SPRITE_NONE;
             task->tTimer     = 0;
-            task->tState     = S0_DELAY_BEFORE_BIG;
+            task->tState     = S0_FADE_TO_SET03;
         }
         break;
     }
 
     // ------------------------------------------------------------------
-    case S0_DELAY_BEFORE_BIG:
-        if (++task->tTimer >= 60)
-        {
-            task->tTimer = 0;
-            task->tState = S0_FADE_TO_BLACK_BIG;
-        }
-        break;
-
-    // ------------------------------------------------------------------
-    case S0_FADE_TO_BLACK_BIG:
+    // Fade to black, libera sprites antigos, carrega set03 + moon + comet
+    // Speed 8 = fade suave (~2.1s para escurecer completamente), RGB_BLACK
+    case S0_FADE_TO_SET03:
         if (task->tTimer == 0)
-            BeginNormalPaletteFade(PALETTES_ALL, 4, 0, 16, RGB_BLACK);
+            BeginNormalPaletteFade(PALETTES_ALL, 8, 0, 16, RGB_BLACK);
         task->tTimer++;
         if (!gPaletteFade.active && task->tTimer > 1)
         {
-            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP);
+            // Limpa sprites dos sets anteriores
             if (task->tShrineId != SPRITE_NONE)
             {
                 DestroySprite(&gSprites[task->tShrineId]);
                 task->tShrineId = SPRITE_NONE;
             }
+            // Desativa blend ANTES de limpar sprites/paletas —
+            // evita o flash branco (EFFECT_LIGHTEN + paleta zerada = branco por 1 frame)
+            SetGpuReg(REG_OFFSET_BLDCNT,   0);
+            SetGpuReg(REG_OFFSET_BLDY,     0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+
             ResetSpriteData();
             FreeAllSpritePalettes();
-            task->tTimer = 0;
-            task->tState = S0_LOAD_JIRACHI_BIG;
+
+            // Carrega set03 + clouds
+            Scene0_LoadSet03();
+
+            // Restaura blend para o glow da lua (OBJ → lighten)
+            SetGpuReg(REG_OFFSET_BLDCNT,
+                BLDCNT_TGT1_OBJ | BLDCNT_EFFECT_LIGHTEN);
+
+            // Carrega sprites do set03
+            LoadCompressedSpriteSheet(sSpriteSheet_Scene0Moon);
+            LoadSpritePalettes(sSpritePalette_Scene0Moon);
+            LoadCompressedSpriteSheet(sSpriteSheet_Scene0Comet);
+            LoadSpritePalettes(sSpritePalette_Scene0Comet);
+            LoadCompressedSpriteSheet(sSpriteSheet_Scene0Sparkle);
+            LoadSpritePalettes(sSpritePalette_Scene0Sparkle);
+
+            // Lua — começa pequena (escala 768 ≈ 1/3) e cresce manualmente via
+            // SpriteCB_Scene0Moon que chama SetOamMatrix a cada frame.
+            // data[1] = PA/PD atual (768→256). data[2] = fase do pulso BLDY.
+            task->tMoonId = CreateSprite(&sSpriteTemplate_Scene0Moon,
+                                         DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, 1);
+            gSprites[task->tMoonId].invisible = FALSE;
+            gSprites[task->tMoonId].data[1]   = 768;  // escala inicial: ~1/3 do tamanho real
+            gSprites[task->tMoonId].data[2]   = 0;    // fase BLDY
+
+            SetGpuReg(REG_OFFSET_DISPCNT,
+                DISPCNT_MODE_0
+                | DISPCNT_OBJ_1D_MAP
+                | DISPCNT_BG0_ON
+                | DISPCNT_BG1_ON
+                | DISPCNT_OBJ_ON);
+
+            task->tTimer        = 0;
+            task->tCloudScroll  = 0;
+            task->tSparkleTimer = 0;
+            task->tState        = S0_HOLD_SET03;
         }
         break;
 
     // ------------------------------------------------------------------
-    case S0_LOAD_JIRACHI_BIG:
-        SetGpuReg(REG_OFFSET_MOSAIC, 0);
-        DecompressDataWithHeaderVram(sScene0JirachiBig_Gfx,
-                                     (void *)(BG_CHAR_ADDR(S0_SKY_CHARBASE)));
-        DmaCopy16(3, sScene0JirachiBig_Map,
-                  (void *)(BG_SCREEN_ADDR(S0_SKY_SCREEN)), 1280);
-        LoadPalette(sScene0JirachiBig_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
-        SetGpuReg(REG_OFFSET_BG0CNT,
-            BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_SKY_CHARBASE)
-            | BGCNT_SCREENBASE(S0_SKY_SCREEN) | BGCNT_16COLOR
-            | BGCNT_TXT256x256 | BGCNT_MOSAIC);
-        SetGpuReg(REG_OFFSET_DISPCNT,
-            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON);
-        task->tTimer = 0;
-        task->tState = S0_GROW_JIRACHI;
-        break;
-
-    // ------------------------------------------------------------------
-    case S0_GROW_JIRACHI:
+    // Fade in do set03 igual aos outros sets: speed=8, timer só conta
+    // depois que a tela abriu completamente (gPaletteFade.active == FALSE).
+    // Aguarda ~3s limpos após o fade-in antes de lançar o cometa.
+    case S0_HOLD_SET03:
         if (task->tTimer == 0)
-            BeginNormalPaletteFade(PALETTES_BG, 8, 16, 0, RGB_BLACK);
         {
-            u8 m = (task->tTimer < 66) ? (u8)(3 - task->tTimer / 22) : 0;
-            SetGpuReg(REG_OFFSET_MOSAIC, m | (m << 4));
+            BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
+            PlaySE(SE_M_MOONLIGHT);
         }
+
+        // Scroll lento das nuvens sempre
+        task->tCloudScroll++;
+        SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
+
         task->tTimer++;
-        if (!gPaletteFade.active && task->tTimer > 1)
+
+        // Igual S0_HOLD_SET01/02: pausa até o fade-in terminar, depois conta
+        if (gPaletteFade.active)
+            break;
+        if (task->tTimer >= 180)   // ~3s depois que a tela abriu
         {
-            SetGpuReg(REG_OFFSET_MOSAIC, 0);
-            // Remove BGCNT_MOSAIC flag apos o grow
-            SetGpuReg(REG_OFFSET_BG0CNT,
-                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_SKY_CHARBASE)
-                | BGCNT_SCREENBASE(S0_SKY_SCREEN) | BGCNT_16COLOR
-                | BGCNT_TXT256x256);
             task->tTimer = 0;
-            task->tState = S0_HOLD_JIRACHI;
+            task->tState = S0_LAUNCH_COMET;
         }
         break;
 
     // ------------------------------------------------------------------
-    case S0_HOLD_JIRACHI:
-        if (++task->tTimer >= 120)
-        {
-            task->tTimer = 0;
-            task->tState = S0_FADE_JIRACHI_OUT;
-        }
+    case S0_LAUNCH_COMET:
+    {
+        // Trajetoria EXATA: diagonal 45 graus cruzando o quadrado central 160x160
+        // GBA: 240x160. Quadrado central 160x160 ocupa x=[40,200], y=[0,160].
+        // Entra pelo canto superior-direito (x=200, y=0) e sai pelo canto
+        // inferior-esquerdo (x=40, y=160). Sprite 64x64, começa alem da borda.
+        // vx=-3, vy=+3 → slope perfeitamente 1:1 (45 graus).
+        u8 id = CreateSprite(&sSpriteTemplate_Scene0Comet,
+                             232, -32, 0);   // fora da tela: x=200+32, y=-32
+        gSprites[id].invisible = FALSE;
+        PlaySE(SE_M_HYPER_BEAM2);            // som do cometa
+        task->tCometId      = id;
+        task->tTimer        = 0;
+        task->tSparkleTimer = 0;
+        task->tState        = S0_WAIT_COMET;
         break;
+    }
 
     // ------------------------------------------------------------------
-    case S0_FADE_JIRACHI_OUT:
-        if (task->tTimer == 0)
-            BeginNormalPaletteFade(PALETTES_BG, 6, 0, 16, RGB_BLACK);
-        task->tTimer++;
-        if (!gPaletteFade.active && task->tTimer > 1)
-        {
-            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP);
-            task->tTimer = 0;
-            task->tState = S0_LOAD_CELEBI_BIG;
-        }
-        break;
+    case S0_WAIT_COMET:
+    {
+        // Scroll das nuvens continua
+        task->tCloudScroll++;
+        SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
 
-    // ------------------------------------------------------------------
-    case S0_LOAD_CELEBI_BIG:
-        SetGpuReg(REG_OFFSET_MOSAIC, 0);
-        DecompressDataWithHeaderVram(sScene0CelebiBig_Gfx,
-                                     (void *)(BG_CHAR_ADDR(S0_FOREST_CHARBASE)));
-        DmaCopy16(3, sScene0CelebiBig_Map,
-                  (void *)(BG_SCREEN_ADDR(S0_FOREST_SCREEN)), 1280);
-        // patch pal=1 (celebibig usa slot 1)
+        // Sparkles ao longo da trajetoria do cometa (menos frequentes — mais bonito)
+        if (task->tCometId != SPRITE_NONE && ++task->tSparkleTimer % 8 == 0)
         {
-            u16 *s = (u16 *)BG_SCREEN_ADDR(S0_FOREST_SCREEN);
-            u16 i;
-            for (i = 0; i < 32 * 20; i++)
-                s[i] = (s[i] & 0x0FFF) | (1 << 12);
+            // Spawna perto da posicao atual do cometa para simular rastro
+            s16 cx = gSprites[task->tCometId].x;
+            s16 cy = gSprites[task->tCometId].y;
+            s16 rx = cx + (s16)((Random() % 40) - 20);
+            s16 ry = cy + (s16)((Random() % 40) - 20);
+            u8 spk = CreateSprite(&sSpriteTemplate_Scene0Sparkle,
+                                  rx, ry, 0);
+            StartSpriteAnim(&gSprites[spk], 0);
         }
-        LoadPalette(sScene0CelebiBig_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
-        SetGpuReg(REG_OFFSET_BG1CNT,
-            BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_FOREST_CHARBASE)
-            | BGCNT_SCREENBASE(S0_FOREST_SCREEN) | BGCNT_16COLOR
-            | BGCNT_TXT256x256 | BGCNT_MOSAIC);
-        SetGpuReg(REG_OFFSET_DISPCNT,
-            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON);
-        task->tTimer = 0;
-        task->tState = S0_GROW_CELEBI;
-        break;
 
-    // ------------------------------------------------------------------
-    case S0_GROW_CELEBI:
-        if (task->tTimer == 0)
-            BeginNormalPaletteFade(PALETTES_BG, 8, 16, 0, RGB_BLACK);
+        // Verifica se o cometa saiu da tela
+        if (task->tCometId != SPRITE_NONE
+            && gSprites[task->tCometId].invisible)
         {
-            u8 m = (task->tTimer < 66) ? (u8)(3 - task->tTimer / 22) : 0;
-            SetGpuReg(REG_OFFSET_MOSAIC, m | (m << 4));
-        }
-        task->tTimer++;
-        if (!gPaletteFade.active && task->tTimer > 1)
-        {
-            SetGpuReg(REG_OFFSET_MOSAIC, 0);
-            SetGpuReg(REG_OFFSET_BG1CNT,
-                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(S0_FOREST_CHARBASE)
-                | BGCNT_SCREENBASE(S0_FOREST_SCREEN) | BGCNT_16COLOR
-                | BGCNT_TXT256x256);
-            task->tTimer = 0;
-            task->tState = S0_HOLD_CELEBI;
+            DestroySprite(&gSprites[task->tCometId]);
+            task->tCometId = SPRITE_NONE;
+            task->tTimer   = 0;
+            task->tState   = S0_FADE_OUT;
         }
         break;
-
-    // ------------------------------------------------------------------
-    case S0_HOLD_CELEBI:
-        if (++task->tTimer >= 120)
-        {
-            task->tTimer = 0;
-            task->tState = S0_FADE_OUT;
-        }
-        break;
+    }
 
     // ------------------------------------------------------------------
     case S0_FADE_OUT:
-        if (task->tTimer == 0)
-            BeginNormalPaletteFade(PALETTES_ALL, 4, 0, 16, RGB_BLACK);
-        task->tTimer++;
-        if (!gPaletteFade.active && task->tTimer > 1)
+        // Delay generoso apos o cometa: glow das estrelas + nuvens + lua por ~2.5s
+        // Scroll das nuvens e lua continuam durante todo o delay
+        task->tCloudScroll++;
+        SetGpuReg(REG_OFFSET_BG1HOFS, (u16)(task->tCloudScroll >> 1));
+
+        // Sparkles aleatorios continuam por mais um tempo
+        if (++task->tSparkleTimer % 10 == 0 && task->tTimer < 120)
+        {
+            u16 rx = (u16)((Random() % 220) + 10);
+            u16 ry = (u16)((Random() % 120) + 10);
+            CreateSprite(&sSpriteTemplate_Scene0Sparkle, (s16)rx, (s16)ry, 0);
+        }
+
+        // Inicia o fade apenas apos ~4s de delay (240 frames)
+        if (++task->tTimer == 240)
+            BeginNormalPaletteFade(PALETTES_ALL, 8, 0, 16, RGB_BLACK);
+        if (!gPaletteFade.active && task->tTimer > 240)
             task->tState = S0_DONE;
         break;
 
     // ------------------------------------------------------------------
     case S0_DONE:
     default:
-        // Reset COMPLETO antes da Scene 1 — garante VRAM limpa sem glitch
         SetGpuReg(REG_OFFSET_DISPCNT,  0);
         SetGpuReg(REG_OFFSET_MOSAIC,   0);
         SetGpuReg(REG_OFFSET_BLDCNT,   0);
@@ -4319,10 +4368,12 @@ static void Task_Scene0_Main(u8 taskId)
 #undef tTimer
 #undef tBgSet
 #undef tShrineId
-#undef tStarId
+#undef tMoonId
 #undef tCelebiId
 #undef tJirachiId
 #undef tCometId
+#undef tCloudScroll
+#undef tSparkleTimer
 
 // =========================================================================
 // CB2_Scene0Intro
@@ -4347,31 +4398,7 @@ static void SpriteCB_Scene0Shrine(struct Sprite *sprite)
 }
 
 // =========================================================================
-// SpriteCB_Scene0ShootingStar — diagonal esquerda->direita
-// =========================================================================
-static void SpriteCB_Scene0ShootingStar(struct Sprite *sprite)
-{
-    sprite->x += 3;
-    sprite->y += 2;
-    if (sprite->x > DISPLAY_WIDTH + 16 || sprite->y > DISPLAY_HEIGHT + 16)
-        sprite->invisible = TRUE;
-}
-
-// =========================================================================
-// SpriteCB_Scene0Comet — diagonal direita->esquerda (sem fixed-point)
-// FIX: versao anterior usava x<<8 que estoura s16 para x=220
-// =========================================================================
-static void SpriteCB_Scene0Comet(struct Sprite *sprite)
-{
-    sprite->x -= 3;
-    sprite->y += 2;
-    if (sprite->x < -32 || sprite->y > DISPLAY_HEIGHT + 16)
-        sprite->invisible = TRUE;
-}
-
-// =========================================================================
 // SpriteCB_Scene0Celebi — esquerda->direita, deriva levemente para cima
-// FIX: sem fixed-point (x=-64 << 8 = -16384 cabe, mas estoura apos ~77 frames)
 // =========================================================================
 static void SpriteCB_Scene0Celebi(struct Sprite *sprite)
 {
@@ -4384,7 +4411,6 @@ static void SpriteCB_Scene0Celebi(struct Sprite *sprite)
 
 // =========================================================================
 // SpriteCB_Scene0Jirachi — direita->esquerda, deriva levemente para cima
-// FIX: x=304 << 8 = 77824 estourava s16 — sprite nascia no meio da tela
 // =========================================================================
 static void SpriteCB_Scene0Jirachi(struct Sprite *sprite)
 {
@@ -4393,4 +4419,98 @@ static void SpriteCB_Scene0Jirachi(struct Sprite *sprite)
         sprite->y -= 1;
     if (sprite->x < -64)
         sprite->invisible = TRUE;
+}
+
+// =========================================================================
+// =========================================================================
+// SpriteCB_Scene0Comet — diagonal 45 graus, mais rápido com glow
+// Velocidade: 5px/frame (era 3px) → cruzamento em ~33 frames (~0.55s)
+// Glow: oscila BLDY entre 4 e 8 a cada 3 frames (flash rápido e brilhante)
+// =========================================================================
+static void SpriteCB_Scene0Comet(struct Sprite *sprite)
+{
+    // Movimento: 5px diagonal, mais rápido que antes
+    sprite->x -= 5;
+    sprite->y += 5;
+
+    // Glow pulsante rápido: BLDY oscila 4→8→4 a cada 3 frames
+    // data[1] = contador de frames para o glow
+    {
+        u8 phase = (u8)(++sprite->data[1] % 6);
+        // 0,1,2 → sobe 4→6→8; 3,4,5 → desce 8→6→4
+        static const u8 bldy_table[6] = {4, 5, 6, 7, 8, 7};
+        SetGpuReg(REG_OFFSET_BLDY, bldy_table[phase]);
+    }
+
+    if (sprite->x < -64 || sprite->y > DISPLAY_HEIGHT + 64)
+    {
+        // Restaura BLDY para o pulso da lua ao sair da tela
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+        sprite->invisible = TRUE;
+    }
+}
+
+// =========================================================================
+// SpriteCB_Scene0Sparkle — toca animacao uma vez e se destroi
+// =========================================================================
+static void SpriteCB_Scene0Sparkle(struct Sprite *sprite)
+{
+    // A animacao tem 4 frames x 4 game-frames = 16 frames total
+    // ANIMCMD_END vai travar o sprite — destruimos apos 20 frames
+    if (++sprite->data[0] >= 20)
+        DestroySprite(sprite);
+}
+
+// =========================================================================
+// SpriteCB_Scene0Moon
+//
+// GROW: data[1] guarda o valor atual de PA/PD (escala inversa do GBA).
+//   PA=256 = tamanho 100%. PA=768 = ~33% (começa pequena).
+//   Decrementamos 3 por frame até chegar em 256 → ~171 frames ≈ 2.85s de crescimento.
+//   Depois que chegou em 256, o valor para de mudar.
+//
+// BLDY PULSE: data[2] = contador de fase (0..119).
+//   Triângulo suave: 0→3→0 em 120 frames (2s por ciclo).
+//   Só escreve BLDY se o cometa não está ativo (detectado por BLDY >= 4).
+// =========================================================================
+static void SpriteCB_Scene0Moon(struct Sprite *sprite)
+{
+    s16 scale;
+    u8  phase;
+    u8  bldy;
+
+    if (sprite->invisible)
+        return;
+
+    // --- Grow suave: escala PA/PD de 768 → 256 a 3 por frame ---
+    scale = sprite->data[1];
+    if (scale > 256)
+    {
+        // data[3] = sub-contador: so decrementa nos frames pares
+        // media: -1.5/frame → ~341 frames ≈ 5.7s (metade da velocidade anterior)
+        if (++sprite->data[3] % 2 == 0)
+        {
+            scale -= 3;
+            if (scale < 256)
+                scale = 256;
+            sprite->data[1] = scale;
+        }
+    }
+    // SetOamMatrix(matrixNum, PA, PB, PC, PD)
+    // PB=PC=0 (sem rotação/skew), PA=PD=scale (escala uniforme)
+    SetOamMatrix((u8)sprite->oam.matrixNum, (u16)scale, 0, 0, (u16)scale);
+
+    // --- Pulso BLDY suave: triângulo 0→3→0 em 120 frames ---
+    phase = (u8)(++sprite->data[2]);
+    if (sprite->data[2] >= 120)
+        sprite->data[2] = 0;
+
+    if (phase < 60)
+        bldy = (u8)((phase * 3 + 29) / 59);
+    else
+        bldy = (u8)(((119 - phase) * 3 + 29) / 59);
+
+    // Respeita o flash do cometa (cometa usa BLDY >= 4)
+    if (GetGpuReg(REG_OFFSET_BLDY) < 4)
+        SetGpuReg(REG_OFFSET_BLDY, bldy);
 }
