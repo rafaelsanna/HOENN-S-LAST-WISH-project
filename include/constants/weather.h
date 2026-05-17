@@ -20,7 +20,11 @@
 #define WEATHER_ROUTE119_CYCLE          20
 #define WEATHER_ROUTE123_CYCLE          21
 #define WEATHER_FOG                     22  // Aggregate of WEATHER_FOG_HORIZONTAL and WEATHER_FOG_DIAGONAL 
-#define WEATHER_COUNT                   23
+#define WEATHER_STARS                   23  // Custom HLW stars
+#define WEATHER_FOREST_LIGHT            24  // Custom HLW forest light rays
+#define WEATHER_FALLING_LEAVES          25  
+#define WEATHER_SMOKE                   26
+#define WEATHER_COUNT                   27
 
 // These are used in maps' coord_weather_event entries.
 // They are not a one-to-one mapping with the engine's

@@ -270,25 +270,20 @@ MOSSDEEP01_EventScript_Celebi::
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
 	closemessage
 	playse SE_M_HYPER_BEAM
-	
 	// Transform static Celebi into follower
 	fadescreenswapbuffers FADE_TO_BLACK
 	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
 	fadescreenswapbuffers FADE_FROM_BLACK
-	
 	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
-	
 	// Show Wailord path and set subpriority to walk over it
 	clearflag FLAG_HIDE_WAILORD_PATH
 	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
 	msgbox MOSSDEEP01_Text_CelebiCallsWailord, MSGBOX_DEFAULT
 	closemessage
 	delay 20
-
 	// Set Celebi as follower
 	destroyfollowernpc
 	setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
-
 	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
 	closemessage
 	giveitem ITEM_TIME_GEAR
@@ -850,7 +845,8 @@ MOSSDEEP01_EventScript_WailordJumpOverAfter2::
 
 MOSSDEEP01_EventScript_JirachiTrigger::
 	lockall
-	
+	setweather 23
+	doweather
 	goto_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiAlreadyAwake
 	
 	msgbox MOSSDEEP01_Text_JirachiWaking, MSGBOX_DEFAULT
@@ -943,6 +939,8 @@ MOSSDEEP01_EventScript_QuestComplete::
 	playse SE_M_SACRED_FIRE
 	delay 20
 	special SpawnCameraObject
+	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraUp8Tiles
+	waitmovement 0
 	playse SE_M_SWIFT
 	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
 	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometCrossingSky
@@ -963,7 +961,7 @@ MOSSDEEP01_EventScript_QuestComplete::
 	closemessage
 	delay 30
 	playse SE_M_TELEPORT
-	fadescreenspeed FADE_TO_BLACK, 12
+	fadescreenspeed FADE_TO_WHITE, 12
 	delay 80
 	delay 60
 	
@@ -1008,6 +1006,17 @@ MOSSDEEP01_WarpMale::
 // ====================================================================
 // MOVEMENT SCRIPTS
 // ====================================================================
+
+MOSSDEEP01_Movement_CameraUp8Tiles:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
 
 MOSSDEEP01_Movement_CameraFollowComet:
 	walk_fast_left

@@ -18,6 +18,7 @@
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item.h"
+#include "item_icon.h"
 #include "link.h"
 #include "m4a.h"
 #include "malloc.h"
@@ -112,6 +113,7 @@ enum
 {
     SPRITE_ARR_ID_MON,
     SPRITE_ARR_ID_BALL,
+    SPRITE_ARR_ID_ITEM,
     SPRITE_ARR_ID_STATUS,
     SPRITE_ARR_ID_TYPE, // 2 for mon types, 5 for move types(4 moves and 1 to learn), used interchangeably, because mon types and move types aren't shown on the same screen
     SPRITE_ARR_ID_MOVE_SELECTOR1 = SPRITE_ARR_ID_TYPE + TYPE_ICON_SPRITE_COUNT, // 10 sprites that make up the selector
@@ -758,6 +760,7 @@ static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
 #define TAG_MOVE_TYPES 30002
 #define TAG_MON_MARKINGS 30003
 #define TAG_CATEGORY_ICONS 30004
+#define TAG_ITEM_ICON 30005
 
 static const struct OamData sOamData_CategoryIcons =
 {
@@ -1417,6 +1420,135 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
+// ============================================================
+// Tema escuro — sobrescreve os tons verdes da paleta original
+// Slots BG 0-7 são carregados de gSummaryScreen_Pal; aqui
+// remapeamos os índices de fundo/UI sem tocar nas cores de
+// texto (branco/preto) nem nas cores de tipo Pokémon.
+// ============================================================
+static void ApplySummaryScreenDarkTheme(void)
+{
+    u8  i;
+    u16 base;
+
+    // ─── 1. BACKDROP ──────────────────────────────────────────────────────────
+    gPlttBufferUnfaded[BG_PLTT_ID(0) + 0] = RGB(4, 4, 5);    // #212129
+
+    // ─── 2. SLOTS 0-5 — UI + fundos de seção ────────────────────────────────
+    // Índices de texto (colorId):
+    //   [1],[2] = fg/shadow colorId0 (DESCRIPTION, texto geral) → não tocar, já branco/preto
+    //   [3]     = fg colorId1 (nomes dos moves)  → preto
+    //   [4]     = shadow colorId1                → #4A4A6B
+    //   [7-15]  = fundos coloridos das seções    → gradiente escuro
+    for (i = 0; i < 6; i++)
+    {
+        base = BG_PLTT_ID(i);
+        gPlttBufferUnfaded[base +  3] = RGB(0,  0,  0);   // preto  - fg nomes moves
+        gPlttBufferUnfaded[base +  4] = RGB(9,  9, 13);   // #4A4A6B - shadow moves
+        gPlttBufferUnfaded[base +  6] = RGB(5,  5,  7);   // #2E2E3C - sombra frame
+        gPlttBufferUnfaded[base +  7] = RGB(9,  9, 13);   // #4A4A6B
+        gPlttBufferUnfaded[base +  8] = RGB(8,  8, 12);
+        gPlttBufferUnfaded[base +  9] = RGB(7,  7, 10);   // #3A3A52
+        gPlttBufferUnfaded[base + 10] = RGB(6,  6,  9);
+        gPlttBufferUnfaded[base + 11] = RGB(5,  5,  7);   // #2E2E3C
+        gPlttBufferUnfaded[base + 12] = RGB(9,  9, 13);
+        gPlttBufferUnfaded[base + 13] = RGB(7,  7, 10);
+        gPlttBufferUnfaded[base + 14] = RGB(5,  5,  7);
+        gPlttBufferUnfaded[base + 15] = RGB(4,  4,  5);   // #212129
+    }
+
+    // ─── 3. SLOT 6 — fundo de todas as janelas de texto (paletteNum=6) ───────
+    // [0] = PIXEL_FILL = fundo da caixa de texto → escuro
+    // [1] = fg (texto description/geral)         → branco (não tocar)
+    // [2] = shadow                               → preto  (não tocar)
+    base = BG_PLTT_ID(6);
+    gPlttBufferUnfaded[base + 0] = RGB(4, 4, 5);    // #212129 - fundo escuro
+
+    // ─── 4. SLOT 7 — janela RENAME/INFO/START (paletteNum=7) ─────────────────
+    // [0] = fundo → escuro
+    // [1] = fg texto → BRANCO (precisa ser explícito, original pode ser preto)
+    // [2] = shadow  → preto
+    // [5-14] = CORES DE TIPO → não tocar
+    base = BG_PLTT_ID(7);
+    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - fundo escuro
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // branco  - texto RENAME/INFO
+    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // preto   - sombra
+    gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // #3A3A52
+
+    // ─── 5. SLOT 8 — PP values (paletteNum=8, recebe gPPTextPalette) ─────────
+    // gPPTextPalette é carregado em BG_PLTT_ID(8)+1 (índices 1-15)
+    // ppState 9-12 → colorId 9-12 → {0,1,2} / {0,3,4} / {0,5,6} / {0,7,8}
+    // Cores:  full=preto | médio=amarelo | baixo=laranja | zerado=vermelho
+    base = BG_PLTT_ID(8);
+    gPlttBufferUnfaded[base +  0] = RGB(4,  4,  5);   // fundo escuro
+    gPlttBufferUnfaded[base +  1] = RGB(0,  0,  0);   // PRETO   — PP cheio fg
+    gPlttBufferUnfaded[base +  2] = RGB(8,  8, 10);   // sombra escura
+    gPlttBufferUnfaded[base +  3] = RGB(26, 22,  0);  // AMARELO — PP médio fg  (~#D4B400)
+    gPlttBufferUnfaded[base +  4] = RGB(13, 11,  0);  // sombra amarela
+    gPlttBufferUnfaded[base +  5] = RGB(29, 12,  0);  // LARANJA — PP baixo fg  (~#E86000)
+    gPlttBufferUnfaded[base +  6] = RGB(14,  6,  0);  // sombra laranja
+    gPlttBufferUnfaded[base +  7] = RGB(31,  0,  0);  // VERMELHO — PP zerado fg
+    gPlttBufferUnfaded[base +  8] = RGB(15,  0,  0);  // sombra vermelha
+
+    // ─── 6. SLOT 15 — janela RELEARN/START (paletteNum=15) ───────────────────
+    // [0] = fundo → escuro
+    // [1] = fg → BRANCO
+    // [2] = shadow → preto
+    base = BG_PLTT_ID(15);
+    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - fundo escuro
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // branco  - texto START/Relearn
+    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // preto   - sombra
+
+    // ─── 7. Sincroniza faded para evitar flash no fade-in ────────────────────
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(0),
+        gPlttBufferFaded   + BG_PLTT_ID(0),
+        8 * PLTT_SIZE_4BPP
+    );
+    // Slot 8 (PP) e slot 15 (Relearn) estão fora dos primeiros 8 — sincronizar separado
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(8),
+        gPlttBufferFaded   + BG_PLTT_ID(8),
+        PLTT_SIZE_4BPP
+    );
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(15),
+        gPlttBufferFaded   + BG_PLTT_ID(15),
+        PLTT_SIZE_4BPP
+    );
+}
+
+static void ApplyMoveSelectorDarkTheme(void)
+{
+    // ─── OBJ: paleta das bolinhas indicadoras e linhas divisórias ────────────
+    // gSummaryMoveSelect_Pal carrega no slot OBJ determinado por IndexOfSpritePaletteTag.
+    // As cores roxas/coloridas precisam virar tons neutros do tema escuro:
+    //   [0] = transparente         → mantido (0x0000)
+    //   [1] = cor principal bolinha → #4A4A6B (detalhe)
+    //   [2] = highlight bolinha     → #736B84 (realce)
+    //   [3] = sombra/contorno       → #212129 (fundo)
+    //   [4] = cor linha divisória   → #4A4A6B (detalhe)
+    //   demais índices              → #3A3A52 (intermediário)
+    u8  slot = IndexOfSpritePaletteTag(TAG_MOVE_SELECTOR);
+    if (slot == 0xFF)
+        return; // paleta ainda não carregada
+    u16 base = OBJ_PLTT_ID(slot);
+    u8  j;
+
+    gPlttBufferUnfaded[base + 1]  = RGB(9,  9, 13);   // #4A4A6B - bolinha principal
+    gPlttBufferUnfaded[base + 2]  = RGB(14, 13, 16);  // #736B84 - bolinha highlight
+    gPlttBufferUnfaded[base + 3]  = RGB(4,  4,  5);   // #212129 - contorno/sombra
+    gPlttBufferUnfaded[base + 4]  = RGB(9,  9, 13);   // #4A4A6B - linha divisória
+    for (j = 5; j < 16; j++)
+        gPlttBufferUnfaded[base + j] = RGB(7, 7, 10); // #3A3A52 - demais
+
+    CpuCopy16(
+        gPlttBufferUnfaded + base,
+        gPlttBufferFaded   + base,
+        PLTT_SIZE_4BPP
+    );
+}
+
 static bool8 DecompressGraphics(void)
 {
     switch (sMonSummaryScreen->switchCounter)
@@ -1452,6 +1584,7 @@ static bool8 DecompressGraphics(void)
     case 6:
         LoadPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
         LoadPalette(&gPPTextPalette, BG_PLTT_ID(8) + 1, PLTT_SIZEOF(16 - 1));
+        ApplySummaryScreenDarkTheme();
         sMonSummaryScreen->switchCounter++;
         break;
     case 7:
@@ -1472,6 +1605,7 @@ static bool8 DecompressGraphics(void)
         break;
     case 11:
         LoadSpritePalette(&sMoveSelectorSpritePal);
+        ApplyMoveSelectorDarkTheme();  // sobrescreve roxo → tons neutros escuros
         sMonSummaryScreen->switchCounter++;
         break;
     case 12:
@@ -1968,6 +2102,13 @@ static void Task_ChangeSummaryMon(u8 taskId)
         break;
     case 2:
         DestroySpriteAndFreeResources(&gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]]);
+        if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
+        {
+            FreeSpriteTilesByTag(TAG_ITEM_ICON);
+            FreeSpritePaletteByTag(TAG_ITEM_ICON);
+            DestroySprite(&gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]]);
+            sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] = SPRITE_NONE;
+        }
         break;
     case 3:
         CopyMonToSummaryStruct(&sMonSummaryScreen->currentMon);
@@ -4557,11 +4698,32 @@ static void RemoveAndCreateMonMarkingsSprite(struct Pokemon *mon)
 static void CreateCaughtBallSprite(struct Pokemon *mon)
 {
     enum PokeBall ball = GetMonData(mon, MON_DATA_POKEBALL);
+    u16 item = GetMonData(mon, MON_DATA_HELD_ITEM);
 
+    // Pokébola — posição original
     LoadBallGfx(ball);
     sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gBallSpriteTemplates[ball], 16, 136, 0);
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].callback = SpriteCallbackDummy;
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].oam.priority = 3;
+
+    // Ícone do item segurado — ao lado do apelido/gênero (altura do nickname)
+    // Nickname window: tilemapLeft=1 (x=8), tilemapTop=12 (y=96), width=9 tiles (72px)
+    // Ícone posicionado no final da janela, na altura central do nickname
+    if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
+    {
+        DestroySprite(&gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]]);
+        sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] = SPRITE_NONE;
+    }
+    if (item != ITEM_NONE)
+    {
+        sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] = AddItemIconSprite(TAG_ITEM_ICON, TAG_ITEM_ICON, item);
+        if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
+        {
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].x = 72;  // final da janela de apelido
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].y = 104; // altura central do nickname
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].oam.priority = 3;
+        }
+    }
 }
 
 static void CreateSetStatusSprite(void)

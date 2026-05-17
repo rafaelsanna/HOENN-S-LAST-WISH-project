@@ -181,6 +181,7 @@ static void DrawChoices_AutoFishing(int selection, int y);
 static void DrawChoices_RandomizerE(int selection, int y);
 static void DrawChoices_RandomizerT(int selection, int y);
 static void DrawBgWindowFrames(void);
+static EWRAM_DATA u8 sOptionMenuStartPage = PAGE_GENERAL;
 
 // EWRAM vars
 EWRAM_DATA static struct OptionMenu *sOptions = NULL;
@@ -715,28 +716,32 @@ void CB2_InitOptionMenu(void)
         gMain.state++;
         break;
     case 6:
-        sOptions = AllocZeroed(sizeof(*sOptions));
-        sOptions->sel[MENUITEM_GEN_TEXTSPEED]   = gSaveBlock2Ptr->optionsTextSpeed;
-        sOptions->sel[MENUITEM_GEN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
-        sOptions->sel[MENUITEM_GEN_SOUND]       = gSaveBlock2Ptr->optionsSound;
-        sOptions->sel[MENUITEM_GEN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
-        sOptions->sel[MENUITEM_GEN_FRAMETYPE]       = gSaveBlock2Ptr->optionsWindowFrameType;
-        
-        sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS]       = gSaveBlock2Ptr->optionsNpcTeams;
-        sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]    = gSaveBlock2Ptr->optionsBattleItems;
-        sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]    = gSaveBlock2Ptr->optionsBattleStyle;
-        sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]       = gSaveBlock2Ptr->optionsInfiniteCandy;
-        sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]      = gSaveBlock2Ptr->optionsLevelCaps;
-        sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
-        sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
-        sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
-        sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]    = FlagGet(FLAG_AUTO_FISHING);
-        sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
+    sOptions = AllocZeroed(sizeof(*sOptions));
+    sOptions->sel[MENUITEM_GEN_TEXTSPEED]   = gSaveBlock2Ptr->optionsTextSpeed;
+    sOptions->sel[MENUITEM_GEN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
+    sOptions->sel[MENUITEM_GEN_SOUND]       = gSaveBlock2Ptr->optionsSound;
+    sOptions->sel[MENUITEM_GEN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
+    sOptions->sel[MENUITEM_GEN_FRAMETYPE]   = gSaveBlock2Ptr->optionsWindowFrameType;
+    
+    sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS]       = gSaveBlock2Ptr->optionsNpcTeams;
+    sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]    = gSaveBlock2Ptr->optionsBattleItems;
+    sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]    = gSaveBlock2Ptr->optionsBattleStyle;
+    sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]       = gSaveBlock2Ptr->optionsInfiniteCandy;
+    sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]      = gSaveBlock2Ptr->optionsLevelCaps;
+    sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
+    sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
+    sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
+    sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]    = FlagGet(FLAG_AUTO_FISHING);
+    sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
 
-        sOptions->submenu = PAGE_GENERAL;
+    // NOVO: Usar a página inicial configurada
+    sOptions->submenu = sOptionMenuStartPage;
+    
+    // Reset para a página padrão para a próxima vez
+    sOptionMenuStartPage = PAGE_GENERAL;
 
-        gMain.state++;
-        break;
+    gMain.state++;
+    break;
     case 7:
         PutWindowTilemap(WIN_TOPBAR);
         DrawTopBarText();
@@ -1368,4 +1373,10 @@ static void DrawBgWindowFrames(void)
     FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28, 19,  1,  1,  7);
 
     CopyBgTilemapBufferToVram(1);
+}
+
+void CB2_InitOptionMenu_DifficultyTab(void)
+{
+    sOptionMenuStartPage = PAGE_DIFFICULTY;
+    CB2_InitOptionMenu();
 }

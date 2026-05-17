@@ -5,7 +5,7 @@
   "music": "MUS_RG_TITLE",
   "region_map_section": "MAPSEC_DREAM_REALM",
   "requires_flash": false,
-  "weather": "WEATHER_NONE",
+  "weather": "WEATHER_STARS",
   "map_type": "MAP_TYPE_UNDERGROUND",
   "allow_cycling": false,
   "allow_escaping": false,

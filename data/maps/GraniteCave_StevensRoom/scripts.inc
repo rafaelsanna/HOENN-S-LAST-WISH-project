@@ -22,7 +22,9 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	setflag FLAG_REGISTERED_STEVEN_POKENAV
 	msgbox GraniteCave_StevensRoom_Text_LookAnciantPainting, MSGBOX_DEFAULT
 	showpainting(PAINTING_1)
-    waitstate
+	waitstate
+	showpainting(PAINTING_2)
+	waitstate
 	lock
 	faceplayer
 	msgbox GraniteCave_StevensRoom_Text_IveGotToHurryAlong, MSGBOX_DEFAULT
@@ -92,6 +94,8 @@ GraniteCave_StevensRoom_EventScript_AncientPaiting::
 	lock
 	faceplayer
 	showpainting(PAINTING_1)
+	waitstate
+	showpainting(PAINTING_2)
     waitstate
 	release
 	end
