@@ -192,6 +192,18 @@ RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast:
 @ NEW NPC SCRIPTS
 @ ========================================
 
+RustboroCity_PokemonSchool_EventScript_Reception1::
+	msgbox RustboroCity_PokemonSchool_Text_ReceptionClassroomAndLibrary, MSGBOX_NPC
+	end
+
+RustboroCity_PokemonSchool_EventScript_Reception2::
+	msgbox RustboroCity_PokemonSchool_Text_ReceptionClassesAreFree, MSGBOX_NPC
+	end
+
+RustboroCity_PokemonSchool_EventScript_Couchlady::
+	msgbox RustboroCity_PokemonSchool_Text_CouchladyWaitingForBrother, MSGBOX_NPC
+	end
+
 RustboroCity_PokemonSchool_EventScript_GirlLikesArt::
 	msgbox RustboroCity_PokemonSchool_Text_GirlLikesArt, MSGBOX_NPC
 	end
@@ -407,6 +419,24 @@ RustboroCity_PokemonSchool_Text_ExplainWiseGlasses:
 @ ========================================
 @ NEW NPC TEXTS
 @ ========================================
+
+RustboroCity_PokemonSchool_Text_ReceptionClassroomAndLibrary:
+	.string "Welcome to the POKéMON SCHOOL!\p"
+	.string "The classroom is on your left.\n"
+	.string "The library is up the stairs to\l"
+	.string "the right.$"
+
+RustboroCity_PokemonSchool_Text_ReceptionClassesAreFree:
+	.string "Classes here are free for all\n"
+	.string "TRAINERS.\p"
+	.string "Please feel welcome to sit in\n"
+	.string "and learn with us!$"
+
+RustboroCity_PokemonSchool_Text_CouchladyWaitingForBrother:
+	.string "I'm waiting to pick up my little\n"
+	.string "brother from class.\p"
+	.string "He always comes out talking about\n"
+	.string "some new POKéMON fact he learned.$"
 
 RustboroCity_PokemonSchool_Text_GirlLikesArt:
 	.string "I love drawing POKéMON way more\n"

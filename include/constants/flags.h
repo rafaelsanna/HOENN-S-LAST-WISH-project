@@ -683,7 +683,7 @@
 #define FLAG_GOT_BERRY_GIRL_ROUTE106            0x278 
 #define FLAG_RECEIVED_DEWFORD_HALL_SUN_STONE    0x279 // Unused Flag
 #define FLAG_HIDE_GRANITE_CAVE_AURORA           0x27A // Unused Flag
-#define FLAG_UNUSED_0x27B  0x27B // Unused Flag
+#define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POKEMON_SCHOOL_2F_GUMMY_WURMPLES  0x27B
 #define FLAG_UNUSED_0x27C  0x27C // Unused Flag
 #define FLAG_UNUSED_0x27D  0x27D // Unused Flag
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag
