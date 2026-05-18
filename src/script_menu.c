@@ -433,6 +433,8 @@ void DrawMultichoiceMenuInternal(u8 left, u8 top, u8 multichoiceId, bool8 ignore
     }
 
     newWidth = ConvertPixelWidthToTileWidth(width);
+    if (multichoiceId == MULTI_GAME_CORNER_COINS || multichoiceId == MULTI_GAME_CORNER_CASH_OUT)
+        newWidth = 16;
     left = ScriptMenu_AdjustLeftCoordFromWidth(left, newWidth);
     windowId = CreateWindowFromRect(left, top, newWidth, count * 2);
     SetStandardWindowBorderStyle(windowId, FALSE);

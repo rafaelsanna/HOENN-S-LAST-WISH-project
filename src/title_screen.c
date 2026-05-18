@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle.h"
 #include "title_screen.h"
 #include "sprite.h"
@@ -607,6 +608,7 @@ void CB2_InitTitleScreen(void)
         DecompressDataWithHeaderVram(gTitleScreenCloudsTilemap, (void *)(BG_SCREEN_ADDR(27)));
         ScanlineEffect_Stop();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 9;

@@ -1994,9 +1994,10 @@ bool8 ScrCmd_showmonpic(struct ScriptContext *ctx)
 bool8 ScrCmd_showpainting(struct ScriptContext *ctx)
 {
     u16 paintingId = VarGet(ScriptReadHalfword(ctx));
+
+    Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
     ShowPainting(paintingId, ctx);
-    ScriptContext_Enable();
-    return TRUE;
+    return FALSE;
 }
 
 bool8 ScrCmd_hidemonpic(struct ScriptContext *ctx)

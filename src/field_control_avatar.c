@@ -41,6 +41,9 @@
 #include "constants/metatile_behaviors.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
+#include "event_object_lock.h"
+#include "option_menu.h"
+#include "party_menu.h"
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPrevMetatileBehavior = 0;
@@ -229,8 +232,38 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
     if (input->pressedStartButton)
     {
-        PlaySE(SE_WIN_OPEN);
-        ShowStartMenu();
+        if (JOY_HELD(R_BUTTON))
+        {
+            // R + Start → Options
+            PlaySE(SE_SELECT);
+            ScriptContext_Enable();
+            FreezeObjectEvents();
+            gMain.savedCallback = CB2_ReturnToField;
+            SetMainCallback2(CB2_InitOptionMenu);
+        }
+        else if (JOY_HELD(L_BUTTON))
+        {
+            // L + Start → Party
+            PlaySE(SE_SELECT);
+            ScriptContext_Enable();
+            FreezeObjectEvents();
+            gMain.savedCallback = CB2_ReturnToField;
+            SetMainCallback2(CB2_PartyMenuFromStartMenu);
+        }
+        else if (JOY_HELD(A_BUTTON))
+        {
+            // A + Start → Bag
+            PlaySE(SE_SELECT);
+            ScriptContext_Enable();
+            FreezeObjectEvents();
+            gMain.savedCallback = CB2_ReturnToField;
+            SetMainCallback2(CB2_BagMenuFromStartMenu);
+        }
+        else
+        {
+            PlaySE(SE_WIN_OPEN);
+            ShowStartMenu();
+        }
         return TRUE;
     }
 
@@ -240,11 +273,19 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
         return TRUE;
 
-    if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
+    if (input->pressedRButton && UseRegisteredKeyItemOnField_R() == TRUE)
         return TRUE;
 
-    if (input->pressedRButton && TryStartDexNavSearch())
+    if (input->pressedLButton && UseRegisteredKeyItemOnField_L() == TRUE)
         return TRUE;
+
+if (input->pressedRButton)
+{
+    if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE && UseRegisteredKeyItemOnField_R() == TRUE)
+        return TRUE;
+    else if (TryStartDexNavSearch())
+        return TRUE;
+}
 
     if(input->input_field_1_2 && DEBUG_OVERWORLD_MENU && !DEBUG_OVERWORLD_IN_MENU)
     {

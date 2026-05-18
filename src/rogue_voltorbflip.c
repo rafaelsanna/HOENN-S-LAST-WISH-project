@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "constants/songs.h"
 
 #include "palette.h"
@@ -721,6 +722,7 @@ void CB2_ShowVoltorbFlip(void)
     DmaFill16(3, 0, PLTT, PLTT_SIZE);
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();
@@ -1024,7 +1026,7 @@ static void Task_VoltorbFlipFadeOut(u8 taskId)
         sVoltorbFlipState = NULL;
         FreeAllWindowBuffers();
         DestroyTask(taskId);
-        SetMainCallback2(CB2_ReturnToFieldContinueScript);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }
 }
 

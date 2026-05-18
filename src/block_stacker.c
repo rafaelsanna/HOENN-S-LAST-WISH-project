@@ -162,6 +162,7 @@ struct BlockStacker {
     u8 LivesSpriteId;
     u8 Rhydon2SpriteId;
     u8 RhydonBlockSpriteId;
+    u16 backupMapMusic;
 };    
 
 static EWRAM_DATA struct BlockStacker *sBlockStacker = NULL;
@@ -839,6 +840,7 @@ static const struct SpriteTemplate sSpriteTemplate_Rhydon =
 void StartBlockStacker(void)
 {
     sBlockStacker = AllocZeroed(sizeof(struct BlockStacker));
+    sBlockStacker->backupMapMusic = GetCurrentMapMusic();
     CreateTask(FadeToBlockStackerScreen, 0);
 }
 
@@ -2040,6 +2042,8 @@ static void ExitBlockStacker(void)
 {
     if (!gPaletteFade.active)
     {
+        if (GetCurrentMapMusic() != sBlockStacker->backupMapMusic)
+            PlayNewMapMusic(sBlockStacker->backupMapMusic);
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         FREE_AND_SET_NULL(sBlockStacker);
     }
@@ -2132,12 +2136,12 @@ static void BlockStackerMain(u8 taskId)
             else if (sBlockStacker->CurrentRow == 7)
             {
                 CreateLevel_7();
-                PlayBGM(MUS_RG_TRAINER_TOWER);
+                PlayNewMapMusic(MUS_RG_TRAINER_TOWER);
             }
             else if (sBlockStacker->CurrentRow == 8)
             {
                 CreateLevel_8();
-                PlayBGM(MUS_RG_SEVII_ROUTE);
+                PlayNewMapMusic(MUS_RG_SEVII_ROUTE);
             }
             UpdateLives();
             sBlockStacker->ToggleButtons = 1;

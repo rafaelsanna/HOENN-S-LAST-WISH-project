@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle_records.h"
 #include "bg.h"
 #include "window.h"
@@ -430,6 +431,7 @@ static void ClearTasksAndGraphicalStructs(void)
 {
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();

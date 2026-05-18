@@ -935,6 +935,7 @@ static void ExitSnake(void)
 {
     if (!gPaletteFade.active)
     {
+        Overworld_ResetMapMusic();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         FREE_AND_SET_NULL(sSnake);
     }

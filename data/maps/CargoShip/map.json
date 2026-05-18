@@ -113,6 +113,13 @@
       "elevation": 0,
       "dest_map": "MAP_SLATEPORT_CITY",
       "dest_warp_id": "13"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "elevation": 0,
+      "dest_map": "MAP_CARGO_SHIP_B1FHOLD",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

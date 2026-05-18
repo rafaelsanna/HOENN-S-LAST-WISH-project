@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "m4a.h"
 #include "malloc.h"
 #include "reload_save.h"
@@ -285,6 +286,7 @@ static void UNUSED LinkTestScreen(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
     SetVBlankCallback(VBlankCB_LinkError);
     ResetBlockSend();
     gLinkType = LINKTYPE_TRADE;
@@ -1565,6 +1567,7 @@ void CB2_LinkError(void)
     ResetPaletteFadeControl();
     SetBackdropFromColor(RGB_BLACK);
     ResetTasks();
+    ReleaseComfyAnims();
     ScanlineEffect_Stop();
     if (gWirelessCommType)
     {

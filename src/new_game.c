@@ -206,6 +206,8 @@ void NewGameInitData(void)
     SetMoney(&gSaveBlock1Ptr->money, 3000);
     SetCoins(0);
     gSaveBlock1Ptr->registeredItem = ITEM_NONE;
+    gSaveBlock1Ptr->registeredItemR = ITEM_NONE;
+    gSaveBlock1Ptr->registeredItemL = ITEM_NONE;
     
     // Inventory systems
     ClearBag();
@@ -239,6 +241,7 @@ void NewGameInitData(void)
     ClearRankingHallRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    gSaveBlock3Ptr->followerIndex = OW_FOLLOWER_NOT_SET;
     WipeTrainerNameRecords();
     
     // Mystery and special events

@@ -46,6 +46,9 @@
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/songs.h"
+#include "rtc.h"
+#include "fake_rtc.h"
+#include "constants/rtc.h"
 
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
@@ -1685,6 +1688,32 @@ static void ItemUseCB_ChangePokeball(u8 taskId, void (*unused)(u8))
     }
 
     gTasks[taskId].func = unused;
+}
+
+void ItemUseOutOfBattle_TimeGear(u8 taskId)
+{
+    enum TimeOfDay current = GetTimeOfDay();
+
+    switch (current)
+    {
+        case TIME_MORNING:
+            FakeRtc_ForwardTimeTo(DAY_HOUR_BEGIN, 0, 0);
+            break;
+        case TIME_DAY:
+            FakeRtc_ForwardTimeTo(EVENING_HOUR_BEGIN, 0, 0);
+            break;
+        case TIME_EVENING:
+            FakeRtc_ForwardTimeTo(NIGHT_HOUR_BEGIN, 0, 0);
+            break;
+        case TIME_NIGHT:
+        default:
+            FakeRtc_ForwardTimeTo(MORNING_HOUR_BEGIN, 0, 0);
+            break;
+    }
+
+    PlaySE(SE_M_TELEPORT);
+    DestroyTask(taskId);
+    SetMainCallback2(CB2_LoadMap);
 }
 
 #undef tUsingRegisteredKeyItem

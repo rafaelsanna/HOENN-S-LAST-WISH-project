@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "bg.h"
 #include "data.h"
 #include "decompress.h"
@@ -439,6 +440,7 @@ void CB2_ChooseStarter(void)
     ClearScheduledBgCopiesToVram();
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();

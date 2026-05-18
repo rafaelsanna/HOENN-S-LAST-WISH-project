@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "bard_music.h"
 #include "bg.h"
@@ -1297,6 +1298,7 @@ void DoEasyChatScreen(u8 type, u16 *words, MainCallback exitCallback, u8 display
     u8 taskId;
 
     ResetTasks();
+    ReleaseComfyAnims();
     taskId = CreateTask(Task_InitEasyChatScreen, 0);
     gTasks[taskId].tType = type;
     gTasks[taskId].tPersonType = displayedPersonType;
@@ -1599,6 +1601,7 @@ static void EnterQuizLadyScreen(u16 funcId)
 
     i = GetQuizLadyScreenByFuncId(funcId);
     ResetTasks();
+    ReleaseComfyAnims();
     ExitEasyChatScreen(sQuizLadyEasyChatScreens[i].callback);
 }
 

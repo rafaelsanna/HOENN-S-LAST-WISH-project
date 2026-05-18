@@ -28,6 +28,9 @@
 
 #define SKIP_OBJECT_EVENT_LOAD  1
 
+#define OW_FOLLOWER_NOT_SET            0xFE
+#define OW_FOLLOWER_RECALLED           0xFF
+
 // trigger a time-of-day blend once
 #define HOURS_BLEND_ONCE 25
 // don't update gTimeBlend
@@ -174,6 +177,7 @@ bool32 Overworld_SendKeysToLinkIsRunning(void);
 bool32 IsSendingKeysOverCable(void);
 void ClearLinkPlayerObjectEvents(void);
 bool16 SetTimeOfDay(u16 hours);
+extern const union AnimCmd *const sAnimTable_Spheal[];
 
 // Item Description Headers
 enum ItemObtainFlags

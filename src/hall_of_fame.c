@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "hall_of_fame.h"
 #include "task.h"
 #include "palette.h"
@@ -1281,6 +1282,7 @@ static void LoadHofGfx(void)
 {
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetTempTileDataBuffers();
     ResetAllPicSprites();

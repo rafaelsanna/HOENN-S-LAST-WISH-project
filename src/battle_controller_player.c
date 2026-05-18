@@ -49,6 +49,7 @@
 #include "pokedex.h"
 #include "decompress.h"
 #include "graphics.h"
+#include "comfy_anim.h"
 
 static void PlayerHandleLoadMonSprite(u32 battler);
 static void PlayerHandleDrawTrainerPic(u32 battler);
@@ -99,6 +100,8 @@ static u32 CheckTargetTypeEffectiveness(u32 battler);
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 battler);
 static void DestroyMoveTypeIconSprite(void);
 static void MoveSelectionDisplayMoveTypeIcon(u32 type);
+
+static void SpriteCB_TypeIconSlideIn(struct Sprite *sprite);
 
 static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(u32 battler) =
 {
@@ -2469,14 +2472,29 @@ static void DestroyMoveTypeIconSprite(void)
          && sprite->template == &gSpriteTemplate_MoveTypes
          && sprite->data[7] == 1)
         {
+            // Libera a animação de slide se ativa
+            if (sprite->callback == SpriteCB_TypeIconSlideIn)
+                ReleaseComfyAnim(sprite->data[0]);
+
             DestroySprite(sprite);
             anyDestroyed = TRUE;
         }
     }
 
-    // Libera os tiles da VRAM ao fechar o menu de moves
     if (anyDestroyed)
         FreeSpriteTilesByTag(gSpriteSheet_MoveTypes.tag);
+}
+
+static void SpriteCB_TypeIconSlideIn(struct Sprite *sprite)
+{
+    u8 animId = sprite->data[0];
+    sprite->x = ReadComfyAnimValueSmooth(&gComfyAnims[animId]);
+    if (gComfyAnims[animId].completed)
+    {
+        sprite->x = 208;   // Posição final fixa (já que sabemos o destino)
+        ReleaseComfyAnim(animId);
+        sprite->callback = SpriteCallbackDummy;
+    }
 }
 
 static void MoveSelectionDisplayMoveTypeIcon(u32 type)
@@ -2485,11 +2503,11 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
     u8 spriteId = 0xFF;
     struct Sprite *sprite;
 
-if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
-{
-    LoadCompressedSpriteSheet(&gSpriteSheet_MoveTypes);
-    LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP); 
-}
+    if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
+    {
+        LoadCompressedSpriteSheet(&gSpriteSheet_MoveTypes);
+        LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
+    }
 
     for (i = 0; i < MAX_SPRITES; i++)
     {
@@ -2514,7 +2532,23 @@ if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
     StartSpriteAnim(sprite, type);
     sprite->oam.paletteNum = gTypesInfo[type].palette;
     sprite->oam.priority = 0;
-    sprite->x = 208;
+
+    // Se já havia uma animação em andamento, libera antes de criar outra
+    if (sprite->callback == SpriteCB_TypeIconSlideIn)
+        ReleaseComfyAnim(sprite->data[0]);
+
+    // Cria nova animação de entrada (easing) no array global
+    struct ComfyAnimEasingConfig cfg;
+    InitComfyAnimConfig_Easing(&cfg);
+    cfg.durationFrames = 8;
+    cfg.from = Q_24_8(248);
+    cfg.to   = Q_24_8(208);
+    cfg.easingFunc = ComfyAnimEasing_EaseOutCubic;
+    u8 animId = CreateComfyAnim_Easing(&cfg);
+
+    sprite->data[0] = animId;
+    sprite->callback = SpriteCB_TypeIconSlideIn;
+
     sprite->y = 144;
     sprite->invisible = FALSE;
 }

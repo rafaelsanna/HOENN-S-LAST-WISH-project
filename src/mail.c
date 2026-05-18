@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "mail.h"
 #include "constants/items.h"
 #include "main.h"
@@ -518,6 +519,7 @@ static bool8 MailReadBuildGraphics(void)
             break;
         case 3:
             ResetTasks();
+            ReleaseComfyAnims();
             break;
         case 4:
             ResetSpriteData();

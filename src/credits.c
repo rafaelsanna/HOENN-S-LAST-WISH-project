@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "palette.h"
 #include "main.h"
 #include "task.h"
@@ -405,6 +406,7 @@ void CB2_StartCreditsSequence(void)
     InitHeap(gHeap, HEAP_SIZE);
     ResetPaletteFade();
     ResetTasks();
+    ReleaseComfyAnims();
     InitCreditsBgsAndWindows();
 
     taskId = CreateTask(Task_WaitPaletteFade, 0);

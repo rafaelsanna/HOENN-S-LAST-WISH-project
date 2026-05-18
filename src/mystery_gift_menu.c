@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "main.h"
 #include "text.h"
 #include "task.h"
@@ -391,6 +392,7 @@ static bool32 HandleMysteryGiftOrEReaderSetup(s32 isEReader)
         ResetSpriteData();
         FreeAllSpritePalettes();
         ResetTasks();
+        ReleaseComfyAnims();
         ScanlineEffect_Stop();
         ResetBgsAndClearDma3BusyFlags(0);
 

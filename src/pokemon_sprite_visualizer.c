@@ -1,5 +1,6 @@
 //Credits: Gamer2020, AsparagusEduardo, TheXaman, ShinyDragonHunter
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_gfx_sfx_util.h"
@@ -1240,6 +1241,7 @@ void CB2_Pokemon_Sprite_Visualizer(void)
         case 1:
             ScanlineEffect_Stop();
             ResetTasks();
+            ReleaseComfyAnims();
             ResetSpriteData();
             ResetPaletteFade();
             FreeAllSpritePalettes();

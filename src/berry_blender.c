@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "overworld.h"
 #include "berry_blender.h"
 #include "bg.h"
@@ -1498,6 +1499,7 @@ static void InitBlenderBgs(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
 
     SetVBlankCallback(VBlankCB_BerryBlender);
 

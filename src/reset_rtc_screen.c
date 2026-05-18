@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "reset_rtc_screen.h"
 #include "event_data.h"
 #include "fake_rtc.h"
@@ -608,6 +609,7 @@ void CB2_InitResetRtcScreen(void)
     ScanlineEffect_Clear();
     ResetSpriteData();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetPaletteFade();
     InitResetRtcScreenBgAndWindows();
     SetVBlankCallback(VBlankCB);

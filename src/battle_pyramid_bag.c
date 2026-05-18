@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle.h"
 #include "battle_controllers.h"
 #include "battle_pyramid_bag.h"
@@ -486,6 +487,7 @@ static bool8 LoadPyramidBagMenu(void)
         case 5:
             if (!MenuHelpers_IsLinkActive())
                 ResetTasks();
+                ReleaseComfyAnims();
             gMain.state++;
             break;
         case 6:

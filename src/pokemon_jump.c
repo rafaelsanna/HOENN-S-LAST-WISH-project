@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "battle_anim.h"
 #include "bg.h"
@@ -418,6 +419,7 @@ void StartPokemonJump(u16 partyId, MainCallback exitCallback)
         if (sPokemonJump)
         {
             ResetTasks();
+            ReleaseComfyAnims();
             taskId = CreateTask(Task_StartPokemonJump, 1);
             sPokemonJump->mainState = 0;
             sPokemonJump->exitCallback = exitCallback;

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle.h"
 #include "task.h"
 #include "text.h"
@@ -120,6 +121,7 @@ void CB2_UnionRoomBattle(void)
         ResetSpriteData();
         FreeAllSpritePalettes();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetBgsAndClearDma3BusyFlags(0);
         InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
         ResetTempTileDataBuffers();

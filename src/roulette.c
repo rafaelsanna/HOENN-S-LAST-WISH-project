@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "bg.h"
 #include "coins.h"
@@ -1194,6 +1195,7 @@ static void CB2_LoadRoulette(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetTempTileDataBuffers();
         break;
     case 3:
@@ -1224,6 +1226,7 @@ static void CB2_LoadRoulette(void)
         SetBallCounterNumLeft(BALLS_PER_ROUND);
         SetMultiplierSprite(SELECTION_NONE);
         DrawGridBackground(SELECTION_NONE);
+        FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
         DrawStdWindowFrame(sTextWindowId, FALSE);
         AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_ControlsInstruction, 0, 1, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1295,6 +1298,7 @@ static void Task_StartPlaying(u8 taskId)
 static void Task_AskKeepPlaying(u8 taskId)
 {
     DisplayYesNoMenuDefaultYes();
+    FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
     DrawStdWindowFrame(sTextWindowId, FALSE);
     AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_KeepPlaying, 0, 1, TEXT_SKIP_DRAW, 0);
     CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1807,6 +1811,7 @@ static void Task_PrintSpinResult(u8 taskId)
         if (gTasks[taskId].tMultiplier == MAX_MULTIPLIER)
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
+            FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
             DrawStdWindowFrame(sTextWindowId, FALSE);
             AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_Jackpot, 0, 1, TEXT_SKIP_DRAW, NULL);
             CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1814,6 +1819,7 @@ static void Task_PrintSpinResult(u8 taskId)
         else
         {
             PlayFanfare(MUS_SLOTS_WIN);
+            FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
             DrawStdWindowFrame(sTextWindowId, FALSE);
             AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_ItsAHit, 0, 1, TEXT_SKIP_DRAW, NULL);
             CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1822,6 +1828,7 @@ static void Task_PrintSpinResult(u8 taskId)
     case FALSE:
     default:
         m4aSongNumStart(SE_FAILURE);
+        FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
         DrawStdWindowFrame(sTextWindowId, FALSE);
         AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_NothingDoing, 0, 1, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1867,6 +1874,7 @@ static void Task_PrintPayout(u8 taskId)
 {
     ConvertIntToDecimalStringN(gStringVar1, (sRoulette->minBet * gTasks[taskId].tMultiplier), STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar4, Roulette_Text_YouveWonXCoins);
+    FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
     DrawStdWindowFrame(sTextWindowId, FALSE);
     AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, gStringVar4, 0, 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1903,6 +1911,7 @@ static void Task_TryPrintEndTurnMsg(u8 taskId)
         if (gTasks[taskId].tBallNum == BALLS_PER_ROUND)
         {
             // Reached Ball 6, clear board
+            FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
             DrawStdWindowFrame(sTextWindowId, FALSE);
             AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_BoardWillBeCleared, 0, 1, TEXT_SKIP_DRAW, NULL);
             CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1911,6 +1920,7 @@ static void Task_TryPrintEndTurnMsg(u8 taskId)
         else if (gTasks[taskId].tCoins == MAX_COINS)
         {
             // Player maxed out coins
+            FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
             DrawStdWindowFrame(sTextWindowId, FALSE);
             AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_CoinCaseIsFull, 0, 1, TEXT_SKIP_DRAW, NULL);
             CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1925,6 +1935,7 @@ static void Task_TryPrintEndTurnMsg(u8 taskId)
     else
     {
         // Player out of coins
+        FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
         DrawStdWindowFrame(sTextWindowId, FALSE);
         AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_NoCoinsLeft, 0, 1, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1950,6 +1961,7 @@ static void Task_ClearBoard(u8 taskId)
 
     if (gTasks[taskId].tCoins == MAX_COINS)
     {
+        FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(14));
         DrawStdWindowFrame(sTextWindowId, FALSE);
         AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, Roulette_Text_CoinCaseIsFull, 0, 1, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
@@ -1990,8 +2002,7 @@ static void Task_ExitRoulette(u8 taskId)
         ResetPaletteFade();
         ResetSpriteData();
         FreeRoulette();
-        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
-        SetMainCallback2(CB2_ReturnToField);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         DestroyTask(taskId);
     }
 }

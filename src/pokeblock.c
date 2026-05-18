@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "battle.h"
 #include "battle_controllers.h"
@@ -554,6 +555,7 @@ static bool8 InitPokeblockMenu(void)
     case 5:
         if (sPokeblockMenu->caseId != PBLOCK_CASE_BATTLE)
             ResetTasks();
+            ReleaseComfyAnims();
         gMain.state++;
         break;
     case 6:

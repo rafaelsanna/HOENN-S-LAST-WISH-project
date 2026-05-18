@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "diploma.h"
 #include "palette.h"
 #include "main.h"
@@ -69,6 +70,7 @@ void CB2_ShowDiploma(void)
     DmaFill16(3, 0, PLTT, PLTT_SIZE);
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();

@@ -77,6 +77,7 @@
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
+#include "comfy_anim.h"
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -1750,6 +1751,7 @@ void CB2_Overworld(void)
     if (fading)
         SetVBlankCallback(NULL);
     OverworldBasic();
+    AdvanceComfyAnimations();   // confy animations 
     if (fading)
     {
         SetFieldVBlankCallback();
@@ -2412,6 +2414,7 @@ static void InitOverworldGraphicsRegisters(void)
 static void ResumeMap(bool32 a1)
 {
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetPaletteFade();
     ScanlineEffect_Clear();

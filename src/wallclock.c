@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "bg.h"
 #include "clock.h"
 #include "decompress.h"
@@ -661,6 +662,7 @@ static void LoadWallClockGraphics(void)
     ClearScheduledBgCopiesToVram();
     ScanlineEffect_Stop();
     ResetTasks();
+    ReleaseComfyAnims();
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();

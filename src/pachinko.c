@@ -209,6 +209,7 @@ struct PinballGame
     bool8 completed;
     u8 exitTimer;
     bool8 waitExitScene;
+    u16 backupMapMusic;
     MainCallback returnMainCallback;
 };
 
@@ -1133,6 +1134,7 @@ static void PlayPinballGame(void)
 {
     ScriptContext_Stop();
     sPinballGame = AllocZeroed(sizeof(*sPinballGame));
+    sPinballGame->backupMapMusic = GetCurrentMapMusic();
     sPinballGame->returnMainCallback = CB2_ReturnToFieldContinueScriptPlayMapMusic;
     CreateTask(FadeToPinballScreen, 0);
 }
@@ -1894,6 +1896,7 @@ static void LoseBall(void)
     {
         if (!sPinballGame->waitExitScene)
         {
+            StopMapMusic();
             PlayFanfare(MUS_TOO_BAD);
             sScore->Multiplier = 1;
             sScore->GameStart = 0;
@@ -2313,6 +2316,8 @@ static void ExitPinballGame(void)
     {
         FREE_AND_SET_NULL(sPinballGame->diglett.collisionMap);
 
+        if (GetCurrentMapMusic() != sPinballGame->backupMapMusic)
+            PlayNewMapMusic(sPinballGame->backupMapMusic);
         SetMainCallback2(sPinballGame->returnMainCallback);
         FREE_AND_SET_NULL(sPinballGame);
         FREE_AND_SET_NULL(sScore);

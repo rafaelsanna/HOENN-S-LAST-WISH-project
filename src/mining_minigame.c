@@ -2,6 +2,7 @@
 #include "gba/types.h"
 #include "gba/defines.h"
 #include "global.h"
+#include "comfy_anim.h"
 #include "main.h"
 #include "bg.h"
 #include "text_window.h"
@@ -1456,6 +1457,7 @@ static void Mining_SetupCB(void)
             ResetPaletteFade();
             ResetSpriteData();
             ResetTasks();
+            ReleaseComfyAnims();
             BuildOamBuffer();
             LoadOam();
             gMain.state++;

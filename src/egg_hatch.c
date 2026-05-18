@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "pokemon.h"
 #include "egg_hatch.h"
 #include "pokedex.h"
@@ -523,6 +524,7 @@ static void CB2_LoadEggHatch(void)
         FreeAllSpritePalettes();
         ResetSpriteData();
         ResetTasks();
+        ReleaseComfyAnims();
         ScanlineEffect_Stop();
         m4aSoundVSyncOn();
         gMain.state++;

@@ -110,7 +110,8 @@
     "DewdropJungle",
     "TangledThicket",
     "Underwater_Route131",
-    "RogueCanyon"
+    "RogueCanyon",
+    "LittlerootCoast2"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",
@@ -205,7 +206,8 @@
     "SlateportCity_PokemonCenter_2F",
     "SlateportCity_Mart",
     "CargoShip",
-    "SeabreezeShipping"
+    "SeabreezeShipping",
+    "CargoShipB1FHold"
   ],
   "gMapGroup_IndoorMauville": [
     "MauvilleCity_Gym",
@@ -464,7 +466,9 @@
     "AlteringCave",
     "MeteorFalls_StevensCave",
     "Fiery_Path_Entrance",
-    "PetalburgCave"
+    "PetalburgCave",
+    "AbandonedShip_TeamAqua",
+    "AbandonedShip_Rooms_Aqua"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "main.h"
 #include "battle.h"
 #include "battle_util.h"
@@ -396,6 +397,7 @@ void CB2_InitLearnMove(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
     ClearScheduledBgCopiesToVram();
     sMoveRelearnerStruct = AllocZeroed(sizeof(*sMoveRelearnerStruct));
     sMoveRelearnerStruct->partyMon = gSpecialVar_0x8004;
@@ -424,6 +426,7 @@ static void CB2_InitLearnMoveReturnFromSelectMove(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
+    ReleaseComfyAnims();
     ClearScheduledBgCopiesToVram();
     sMoveRelearnerStruct = AllocZeroed(sizeof(*sMoveRelearnerStruct));
     sMoveRelearnerStruct->state = MENU_STATE_FADE_FROM_SUMMARY_SCREEN;

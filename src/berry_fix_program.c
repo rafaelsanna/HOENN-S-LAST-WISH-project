@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "gpu_regs.h"
 #include "multiboot.h"
 #include "malloc.h"
@@ -200,6 +201,7 @@ void CB2_InitBerryFixProgram(void)
     SetVBlankCallback(NULL);
     ResetSpriteData();
     ResetTasks();
+    ReleaseComfyAnims();
     ScanlineEffect_Stop();
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     sBerryFix = AllocZeroed(sizeof(*sBerryFix));

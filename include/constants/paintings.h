@@ -1,9 +1,11 @@
 #ifndef GUARD_CONSTANTS_PAINTINGS_H
 #define GUARD_CONSTANTS_PAINTINGS_H
 
+// IDs para pinturas do overworld (chamadas por scripts)
 #define PAINTING_1  0
 #define PAINTING_2  1
 #define PAINTING_3  2
+
 #define PAINTING_COUNT 3
 
-#endif // GUARD_CONSTANTS_PAINTINGS_H
+#endif

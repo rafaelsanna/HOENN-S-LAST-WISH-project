@@ -216,6 +216,14 @@ static const struct MenuAction MultichoiceList_VendingMachine[] =
     {gText_Exit},
 };
 
+static const struct MenuAction MultichoiceList_GameCornerVendingMachine[] =
+{
+    {COMPOUND_STRING("GUMMY WURMPLES{CLEAR_TO 0x58}¥450")},
+    {COMPOUND_STRING("SKITTIES{CLEAR_TO 0x58}¥500")},
+    {COMPOUND_STRING("NUMEL NOUGAT{CLEAR_TO 0x58}¥550")},
+    {gText_Exit},
+};
+
 static const struct MenuAction MultichoiceList_MachBikeInfo[] =
 {
     {COMPOUND_STRING("HOW TO RIDE")},
@@ -377,9 +385,10 @@ static const struct MenuAction MultichoiceList_GameCornerEvolutionPage3[] =
 
 static const struct MenuAction MultichoiceList_GameCornerCoins[] =
 {
-    {COMPOUND_STRING("  50 COINS    ¥1,000")},
-    {COMPOUND_STRING("500 COINS  ¥10,000")},
-    {COMPOUND_STRING("5000 COINS ¥100,000")},
+    {COMPOUND_STRING("¥1,000{CLEAR_TO 0x38}->{CLEAR_TO 0x60}50 C")},
+    {COMPOUND_STRING("¥10,000{CLEAR_TO 0x38}->{CLEAR_TO 0x5A}500 C")},
+    {COMPOUND_STRING("¥20,000{CLEAR_TO 0x38}->{CLEAR_TO 0x54}1000 C")},
+    {COMPOUND_STRING("¥100,000{CLEAR_TO 0x38}->{CLEAR_TO 0x54}5000 C")},
     {gText_Exit},
 };
 
@@ -392,9 +401,10 @@ static const struct MenuAction MultichoiceList_GameCornerAtm[] =
 
 static const struct MenuAction MultichoiceList_GameCornerCashOut[] =
 {
-    {COMPOUND_STRING("  50 COINS -> ¥1,000")},
-    {COMPOUND_STRING("500 COINS -> ¥10,000")},
-    {COMPOUND_STRING("5000 COINS -> ¥100,000")},
+    {COMPOUND_STRING("50 C{CLEAR_TO 0x30}->{CLEAR_TO 0x52}¥1,000")},
+    {COMPOUND_STRING("500 C{CLEAR_TO 0x30}->{CLEAR_TO 0x4C}¥10,000")},
+    {COMPOUND_STRING("1000 C{CLEAR_TO 0x30}->{CLEAR_TO 0x4C}¥20,000")},
+    {COMPOUND_STRING("5000 C{CLEAR_TO 0x30}->{CLEAR_TO 0x46}¥100,000")},
     {gText_Exit},
 };
 
@@ -959,6 +969,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_GAME_CORNER_ATM]            = MULTICHOICE(MultichoiceList_GameCornerAtm),
     [MULTI_GAME_CORNER_CASH_OUT]       = MULTICHOICE(MultichoiceList_GameCornerCashOut),
     [MULTI_VENDING_MACHINE]            = MULTICHOICE(MultichoiceList_VendingMachine),
+    [MULTI_GAME_CORNER_VENDING_MACHINE]= MULTICHOICE(MultichoiceList_GameCornerVendingMachine),
     [MULTI_MACH_BIKE_INFO]             = MULTICHOICE(MultichoiceList_MachBikeInfo),
     [MULTI_ACRO_BIKE_INFO]             = MULTICHOICE(MultichoiceList_AcroBikeInfo),
     [MULTI_SATISFACTION]               = MULTICHOICE(MultichoiceList_Satisfaction),

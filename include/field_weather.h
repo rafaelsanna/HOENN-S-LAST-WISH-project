@@ -13,10 +13,16 @@ enum {
     GFXTAG_SANDSTORM,
     GFXTAG_BUBBLE,
     GFXTAG_RAIN,
+    GFXTAG_PINK_LEAVES,
+    GFXTAG_FOREST_LIGHT,
+    PALTAG_STAR,
+    PALTAG_FOREST_LIGHT,
+    GFXTAG_SMOKE,
 };
 enum {
     PALTAG_WEATHER = TAG_WEATHER_START,
-    PALTAG_WEATHER_2
+    PALTAG_WEATHER_2,
+    PALTAG_SMOKE
 };
 
 #define NUM_WEATHER_COLOR_MAPS 19
@@ -131,6 +137,13 @@ struct Weather
     s16 droughtState;
     u8 loadDroughtPalsIndex;
     u8 loadDroughtPalsOffset;
+    // Pink Leaves / Forest Light (campos compartilhados)
+    u8 targetPinkLeafSpriteCount;
+    u8 pinkLeafVisibleCounter;
+    u8 pinkLeafSpriteCount;
+    // Smoke
+    u8 targetSmokeSpriteCount;
+    u8 smokeSpriteCount;
 };
 
 // field_weather.c
@@ -189,6 +202,18 @@ void Snow_InitVars(void);
 void Snow_Main(void);
 void Snow_InitAll(void);
 bool8 Snow_Finish(void);
+void Stars_InitVars(void);
+void Stars_Main(void);
+void Stars_InitAll(void);
+bool8 Stars_Finish(void);
+void PinkLeaves_InitVars(void);
+void PinkLeaves_Main(void);
+void PinkLeaves_InitAll(void);
+bool8 PinkLeaves_Finish(void);
+void ForestLight_InitVars(void);
+void ForestLight_Main(void);
+void ForestLight_InitAll(void);
+bool8 ForestLight_Finish(void);
 void Thunderstorm_InitVars(void);
 void Thunderstorm_Main(void);
 void Thunderstorm_InitAll(void);
@@ -224,6 +249,10 @@ void Bubbles_InitVars(void);
 void Bubbles_Main(void);
 void Bubbles_InitAll(void);
 bool8 Bubbles_Finish(void);
+void Smoke_InitVars(void);
+void Smoke_Main(void);
+void Smoke_InitAll(void);
+bool8 Smoke_Finish(void);
 
 u8 GetSavedWeather(void);
 void SetSavedWeather(u32 weather);

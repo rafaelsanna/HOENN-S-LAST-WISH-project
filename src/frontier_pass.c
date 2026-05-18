@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "gpu_regs.h"
 #include "main.h"
 #include "trainer_card.h"
@@ -741,6 +742,7 @@ static bool32 InitFrontierPass(void)
         break;
     case 2:
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         ResetPaletteFade();
@@ -848,6 +850,7 @@ static bool32 HideFrontierPass(void)
     case 4:
         ResetGpuRegsAndBgs();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         break;
@@ -1371,6 +1374,7 @@ static void ShowFrontierMap(void (*callback)(void))
     sMapData = AllocZeroed(sizeof(*sMapData));
     sMapData->callback = callback;
     ResetTasks();
+    ReleaseComfyAnims();
     CreateTask(Task_HandleFrontierMap, 0);
     SetMainCallback2(CB2_FrontierPass);
 }
@@ -1378,6 +1382,7 @@ static void ShowFrontierMap(void (*callback)(void))
 static void FreeFrontierMap(void)
 {
     ResetTasks();
+    ReleaseComfyAnims();
     SetMainCallback2(sMapData->callback);
     memset(sMapData, 0, sizeof(*sMapData)); // Pointless memory clear.
     FREE_AND_SET_NULL(sMapData);

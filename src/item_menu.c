@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "item_menu.h"
 #include "battle.h"
 #include "battle_controllers.h"
@@ -402,6 +403,10 @@ static const struct ScrollArrowsTemplate sBagScrollArrowsTemplate = {
     .palNum = 0,
 };
 
+// Adicionar antes da função, perto de sRegisteredSelect_Gfx:
+static const u8 sText_RButton[] = _("R");
+static const u8 sText_LButton[] = _("L");
+
 static const u8 sRegisteredSelect_Gfx[] = INCBIN_U8("graphics/bag/select_button.4bpp");
 
 enum {
@@ -410,6 +415,7 @@ enum {
     COLORID_GRAY_CURSOR,
     COLORID_UNUSED,
     COLORID_TMHM_INFO,
+    COLORID_RED_TEXT,
     COLORID_NONE = 0xFF
 };
 static const u8 sFontColorTable[][3] = {
@@ -418,6 +424,7 @@ static const u8 sFontColorTable[][3] = {
     [COLORID_POCKET_NAME] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_RED},
     [COLORID_GRAY_CURSOR] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_GREEN},
     [COLORID_UNUSED]      = {TEXT_COLOR_DARK_GRAY,   TEXT_COLOR_WHITE,      TEXT_COLOR_LIGHT_GRAY},
+    [COLORID_RED_TEXT] = {TEXT_COLOR_TRANSPARENT, 5, TEXT_COLOR_DARK_GRAY},
     [COLORID_TMHM_INFO]   = {TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_5,  TEXT_DYNAMIC_COLOR_1}
 };
 
@@ -681,6 +688,7 @@ void GoToBagMenu(u8 location, u8 pocket, void ( *exitCallback)())
 void CB2_BagMenuRun(void)
 {
     RunTasks();
+    AdvanceComfyAnimations();
     AnimateSprites();
     BuildOamBuffer();
     DoScheduledBgTilemapCopiesToVram();
@@ -744,6 +752,7 @@ static bool8 SetupBagMenu(void)
     case 6:
         if (!MenuHelpers_IsLinkActive())
             ResetTasks();
+            ReleaseComfyAnims();
         gMain.state++;
         break;
     case 7:
@@ -853,13 +862,17 @@ static bool8 LoadBagMenu_Graphics(void)
             gBagMenu->graphicsLoadState++;
         }
         break;
-    case 2:
-        if (!IsWallysBag() && gSaveBlock2Ptr->playerGender != MALE)
-            LoadPalette(gBagScreenFemale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-        else
-            LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-        gBagMenu->graphicsLoadState++;
-        break;
+case 2:
+    if (!IsWallysBag() && gSaveBlock2Ptr->playerGender != MALE)
+        LoadPalette(gBagScreenFemale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    else
+        LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+
+    // Força o slot TEXT_COLOR_RED da paleta da bag para vermelho real
+    ((u16 *)BG_PLTT)[TEXT_COLOR_RED] = RGB(31, 0, 0);
+
+    gBagMenu->graphicsLoadState++;
+    break;
     case 3:
         if (IsWallysBag() == TRUE || gSaveBlock2Ptr->playerGender == MALE)
             LoadCompressedSpriteSheet(&gBagMaleSpriteSheet);
@@ -964,6 +977,47 @@ static void GetItemNameFromPocket(u8 *dest, u16 itemId)
     }
 }
 
+// Callback atribuído temporariamente ao sprite do ícone durante a animação de entrada.
+// sprite->data[0] = ID da ComfyAnim alocada (ou INVALID_COMFY_ANIM se inativa)
+static void SpriteCB_ItemIconSpring(struct Sprite *sprite)
+{
+    u8 animId = (u8)sprite->data[0];
+
+    if (gComfyAnims[animId].completed)
+    {
+        // Garante posição final exata, libera a anim e desativa o callback
+        sprite->y = Q_24_8_TO_INT(gComfyAnims[animId].config.data.spring.to);
+        ReleaseComfyAnim(animId);
+        sprite->data[0] = INVALID_COMFY_ANIM; // marca como sem anim ativa
+        sprite->callback = SpriteCallbackDummy;
+    }
+    else
+    {
+        sprite->y = ReadComfyAnimValueSmooth(&gComfyAnims[animId]);
+    }
+}
+
+// Libera a ComfyAnim de um sprite caso ele ainda esteja animando.
+// Deve ser chamado antes de destruir (RemoveBagItemIconSprite) qualquer sprite
+// que possa ter sido colocado em SpriteCB_ItemIconSpring.
+static void CancelItemIconSpringAnim(u8 spriteId)
+{
+    struct Sprite *sprite;
+
+    if (spriteId == SPRITE_NONE)
+        return;
+
+    sprite = &gSprites[spriteId];
+
+    // Só libera se o callback ainda é o de spring E há uma anim válida alocada
+    if (sprite->callback == SpriteCB_ItemIconSpring
+        && (u8)sprite->data[0] != INVALID_COMFY_ANIM)
+    {
+        ReleaseComfyAnim((u8)sprite->data[0]);
+        sprite->data[0] = INVALID_COMFY_ANIM;
+    }
+}
+
 static void BagMenu_MoveCursorCallback(s32 itemIndex, bool8 onInit, struct ListMenu *list)
 {
     if (onInit != TRUE)
@@ -973,11 +1027,52 @@ static void BagMenu_MoveCursorCallback(s32 itemIndex, bool8 onInit, struct ListM
     }
     if (gBagMenu->toSwapPos == NOT_SWAPPING)
     {
+        // ── Correção do Bug 2: libera anim pendente ANTES de destruir o sprite ──
+        {
+            u8 oldSpriteId = gBagMenu->spriteIds[ITEMMENUSPRITE_ITEM + (gBagMenu->itemIconSlot ^ 1)];
+            CancelItemIconSpringAnim(oldSpriteId);
+        }
+
         RemoveBagItemIconSprite(gBagMenu->itemIconSlot ^ 1);
+
         if (itemIndex != LIST_CANCEL)
-           AddBagItemIconSprite(GetBagItemId(gBagPosition.pocket, itemIndex), gBagMenu->itemIconSlot);
+            AddBagItemIconSprite(GetBagItemId(gBagPosition.pocket, itemIndex), gBagMenu->itemIconSlot);
         else
-           AddBagItemIconSprite(ITEM_LIST_END, gBagMenu->itemIconSlot);
+            AddBagItemIconSprite(ITEM_LIST_END, gBagMenu->itemIconSlot);
+
+        // ── Correção do Bug 1: anima apenas itens reais, nunca LIST_CANCEL ──
+        if (itemIndex != LIST_CANCEL)
+        {
+            u8 newSpriteId = gBagMenu->spriteIds[ITEMMENUSPRITE_ITEM + gBagMenu->itemIconSlot];
+            if (newSpriteId != SPRITE_NONE)
+            {
+                struct Sprite *sprite = &gSprites[newSpriteId];
+                s16 targetY = sprite->y; // posição final definida por AddBagItemIconSprite
+
+struct ComfyAnimSpringConfig cfg;
+InitComfyAnimConfig_Spring(&cfg);
+cfg.from       = Q_24_8(targetY - 12);   // apenas 12 px acima (metade)
+cfg.to         = Q_24_8(targetY);
+cfg.tension    = Q_24_8(400);            // um pouco mais tensa
+cfg.friction   = Q_24_8(600);            // freio mais forte → menos re-ricochete
+cfg.mass       = Q_24_8(60);             // mais leve, movimentação mais rápida
+cfg.clampAfter = 0;
+
+                u8 animId = CreateComfyAnim_Spring(&cfg);
+                if (animId != INVALID_COMFY_ANIM)
+                {
+                    sprite->data[0] = animId;
+                    sprite->callback = SpriteCB_ItemIconSpring;
+                    sprite->y = targetY - 12; // posição inicial (acima)
+                }
+                else
+                {
+                    // Slots esgotados: mantém posição final sem animar
+                    sprite->data[0] = INVALID_COMFY_ANIM;
+                }
+            }
+        }
+
         gBagMenu->itemIconSlot ^= 1;
         if (!gBagMenu->inhibitItemDescriptionPrint)
             PrintItemDescription(itemIndex);
@@ -1016,8 +1111,19 @@ static void BagMenu_ItemPrintCallback(u8 windowId, u32 itemIndex, u8 y)
         else
         {
             // Print registered icon
-            if (gSaveBlock1Ptr->registeredItem != ITEM_NONE && gSaveBlock1Ptr->registeredItem == itemSlot.itemId)
-                BlitBitmapToWindow(windowId, sRegisteredSelect_Gfx, 96, y - 1, 24, 16);
+// Dentro do else{}, substituir as linhas de R e L:
+
+// SELECT mantém igual
+if (gSaveBlock1Ptr->registeredItem != ITEM_NONE && gSaveBlock1Ptr->registeredItem == itemSlot.itemId)
+    BlitBitmapToWindow(windowId, sRegisteredSelect_Gfx, 96, y - 1, 24, 16);
+
+// R: x=97 (dentro da janela, cobre x=97..102)
+if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE && gSaveBlock1Ptr->registeredItemR == itemSlot.itemId)
+    BagMenu_Print(windowId, FONT_SMALL, sText_RButton, 109, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
+
+// L: x=109 (dentro da janela, cobre x=109..114)
+if (gSaveBlock1Ptr->registeredItemL != ITEM_NONE && gSaveBlock1Ptr->registeredItemL == itemSlot.itemId)
+    BagMenu_Print(windowId, FONT_SMALL, sText_LButton, 97, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
         }
     }
 }
@@ -1285,6 +1391,42 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                 }
                 return;
             }
+if (JOY_NEW(R_BUTTON) || JOY_NEW(L_BUTTON))
+{
+    u16 itemId;
+    ListMenuGetScrollAndRow(tListTaskId, scrollPos, cursorPos);
+    itemId = GetBagItemIdAndQuantity(gBagPosition.pocket, *scrollPos + *cursorPos).itemId;
+    if (itemId != ITEM_NONE && GetItemFieldFunc(itemId) != NULL)
+    {
+        // NOVO: bloquear se já registrado no SELECT
+        if (gSaveBlock1Ptr->registeredItem == itemId)
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
+
+if (JOY_NEW(R_BUTTON))
+{
+    if (gSaveBlock1Ptr->registeredItemR == itemId)
+        gSaveBlock1Ptr->registeredItemR = ITEM_NONE;  // desregistra
+    else
+        gSaveBlock1Ptr->registeredItemR = itemId;     // registra
+}
+else if (JOY_NEW(L_BUTTON))
+{
+    if (gSaveBlock1Ptr->registeredItemL == itemId)
+        gSaveBlock1Ptr->registeredItemL = ITEM_NONE;  // desregistra
+    else
+        gSaveBlock1Ptr->registeredItemL = itemId;     // registra
+}
+        PlaySE(SE_PC_LOGIN);
+
+        DestroyListMenuTask(tListTaskId, NULL, NULL);
+        tListTaskId = ListMenuInit(&gMultiuseListMenuTemplate, *scrollPos, *cursorPos);
+        ScheduleBgCopyTilemapToVram(0);
+        return;
+    }
+}
             else if (JOY_NEW(START_BUTTON))
             {
                 if ((gBagMenu->numItemStacks[gBagPosition.pocket] - 1) <= 1) //can't sort with 0 or 1 item in bag
@@ -1990,6 +2132,18 @@ static void ItemMenu_Register(u8 taskId)
     u16 *scrollPos = &gBagPosition.scrollPosition[gBagPosition.pocket];
     u16 *cursorPos = &gBagPosition.cursorPosition[gBagPosition.pocket];
 
+    // NOVO: se já está no R ou L, bloquear registro no SELECT
+    if (gSaveBlock1Ptr->registeredItem != gSpecialVar_ItemId) // só bloqueia ao registrar (não ao desregistrar)
+    {
+        if (gSaveBlock1Ptr->registeredItemR == gSpecialVar_ItemId ||
+            gSaveBlock1Ptr->registeredItemL == gSpecialVar_ItemId)
+        {
+            PlaySE(SE_FAILURE);
+            ItemMenu_Cancel(taskId);
+            return;
+        }
+    }
+
     if (gSaveBlock1Ptr->registeredItem == gSpecialVar_ItemId)
         gSaveBlock1Ptr->registeredItem = ITEM_NONE;
     else
@@ -2149,6 +2303,62 @@ bool8 UseRegisteredKeyItemOnField(void)
     }
     ScriptContext_SetupScript(EventScript_SelectWithoutRegisteredItem);
     return TRUE;
+}
+
+bool8 UseRegisteredKeyItemOnField_R(void)
+{
+    u8 taskId;
+    if (InUnionRoom() == TRUE || CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InBattlePike() || InMultiPartnerRoom() == TRUE)
+        return FALSE;
+    HideMapNamePopUpWindow();
+    ChangeBgY_ScreenOff(0, 0, BG_COORD_SET);
+    if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE)
+    {
+        if (CheckBagHasItem(gSaveBlock1Ptr->registeredItemR, 1) == TRUE)
+        {
+            LockPlayerFieldControls();
+            FreezeObjectEvents();
+            PlayerFreeze();
+            StopPlayerAvatar();
+            gSpecialVar_ItemId = gSaveBlock1Ptr->registeredItemR;
+            taskId = CreateTask(GetItemFieldFunc(gSaveBlock1Ptr->registeredItemR), 8);
+            gTasks[taskId].tUsingRegisteredKeyItem = TRUE;
+            return TRUE;
+        }
+        else
+        {
+            gSaveBlock1Ptr->registeredItemR = ITEM_NONE;
+        }
+    }
+    return FALSE;
+}
+
+bool8 UseRegisteredKeyItemOnField_L(void)
+{
+    u8 taskId;
+    if (InUnionRoom() == TRUE || CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InBattlePike() || InMultiPartnerRoom() == TRUE)
+        return FALSE;
+    HideMapNamePopUpWindow();
+    ChangeBgY_ScreenOff(0, 0, BG_COORD_SET);
+    if (gSaveBlock1Ptr->registeredItemL != ITEM_NONE)
+    {
+        if (CheckBagHasItem(gSaveBlock1Ptr->registeredItemL, 1) == TRUE)
+        {
+            LockPlayerFieldControls();
+            FreezeObjectEvents();
+            PlayerFreeze();
+            StopPlayerAvatar();
+            gSpecialVar_ItemId = gSaveBlock1Ptr->registeredItemL;
+            taskId = CreateTask(GetItemFieldFunc(gSaveBlock1Ptr->registeredItemL), 8);
+            gTasks[taskId].tUsingRegisteredKeyItem = TRUE;
+            return TRUE;
+        }
+        else
+        {
+            gSaveBlock1Ptr->registeredItemL = ITEM_NONE;
+        }
+    }
+    return FALSE;
 }
 
 #undef tUsingRegisteredKeyItem

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "malloc.h"
 #include "task.h"
 #include "main.h"
@@ -323,6 +324,7 @@ void CB2_InitPokeNav(void)
     {
         InitPokenavResources(gPokenavResources);
         ResetTasks();
+        ReleaseComfyAnims();
         SetVBlankCallback(NULL);
         CreateTask(Task_Pokenav, 0);
         SetMainCallback2(CB2_Pokenav);
@@ -352,6 +354,7 @@ static void CB2_InitPokenavForTutorial(void)
         InitPokenavResources(gPokenavResources);
         gPokenavResources->mode = POKENAV_MODE_FORCE_CALL_READY;
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         FreeAllSpritePalettes();
         SetVBlankCallback(NULL);

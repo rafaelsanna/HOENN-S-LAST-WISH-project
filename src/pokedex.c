@@ -1,4 +1,5 @@
 #include "global.h"
+#include "comfy_anim.h"
 #include "battle_main.h"
 #include "battle_script_commands.h"
 #include "bg.h"
@@ -1635,6 +1636,7 @@ void CB2_OpenPokedex(void)
     case 1:
         ScanlineEffect_Stop();
         ResetTasks();
+        ReleaseComfyAnims();
         ResetSpriteData();
         ResetPaletteFade();
         FreeAllSpritePalettes();

@@ -1739,6 +1739,12 @@ extern const u32 gItemIcon_SwapSnack[];
 extern const u16 gItemIconPalette_SwapSnack[];
 extern const u32 gItemIcon_TwiceSpicedRadish[];
 extern const u16 gItemIconPalette_TwiceSpicedRadish[];
+extern const u32 gItemIcon_Skitties[];
+extern const u16 gItemIconPalette_Skitties[];
+extern const u32 gItemIcon_GummyWurmples[];
+extern const u16 gItemIconPalette_GummyWurmples[];
+extern const u32 gItemIcon_NumelNougat[];
+extern const u16 gItemIconPalette_NumelNougat[];
 
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u16 gItemIconPalette_ReturnToFieldArrow[];
@@ -3403,5 +3409,8 @@ extern const u32 gBattleIcons_Gfx1[];
 extern const u32 gBattleIcons_Gfx2[];
 extern const u16 gBattleIcons_Pal1[];
 extern const u16 gBattleIcons_Pal2[];
+
+extern const u32 gItemIcon_TimeGear[];
+extern const u16 gItemIconPalette_TimeGear[];
 
 #endif //GUARD_GRAPHICS_H
