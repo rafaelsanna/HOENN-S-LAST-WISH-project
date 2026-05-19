@@ -229,7 +229,7 @@ static void NewGameBirchSpeech_ShowGenderBg(u8);
 static void NewGameBirchSpeech_StartGenderBgSlide(u8, u8);
 static void NewGameBirchSpeech_UpdateGenderBgSlide(u8);
 static void NewGameBirchSpeech_HideGenderBg(u8);
-static void NewGameBirchSpeech_LoadGenderBgTilemap(u8, bool8);
+static void NewGameBirchSpeech_LoadGenderBgTilemap(u8);
 static void NewGameBirchSpeech_LoadGenderUnderlay(void);
 static void Task_NewGameBirchSpeech_WhatsYourName(u8);
 static void Task_NewGameBirchSpeech_SlideOutOldGenderSprite(u8);
@@ -271,8 +271,10 @@ static bool8 sGenderSlideActive = FALSE;
 // Cooldown em frames para evitar spam de scroll do tileset (120 frames = 2s)
 static u8 sGenderScrollCooldown = 0;
 static void Task_NewGameBirchSpeech_GenderSlideIn(u8);
-static EWRAM_DATA u16 sGenderBg3Tilemap[0x800];
-static EWRAM_DATA u16 sGenderBg3SourceTilemap[0x400];
+// Buffer exato de um tilemap GBA 32x32 (BG_SCREEN_SIZE / sizeof(u16) = 0x400 entradas).
+// Antes era 0x800 para suportar slide com offset; agora usa fade, entao 0x400 e suficiente.
+static EWRAM_DATA u16 sGenderBg3Tilemap[0x400];
+// sGenderBg3SourceTilemap removido: tilemaps agora lidos diretamente de sGenderCombinedTilemaps.
 // .rodata
 
 static const u16 sBirchSpeechBgPals[][16] = {
@@ -288,13 +290,20 @@ static const u32 sBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/sha
 static const u32 sBirchSpeechBgMap[] = INCBIN_U32("graphics/birch_speech/map.bin.smolTM");
 static const u16 sBirchSpeechBgGradientPal[] = INCBIN_U16("graphics/birch_speech/bg2.gbapal");
 
-static const u32 sGenderBoyGfx[] = INCBIN_U32("graphics/birch_speech/boy.4bpp.lz");
-static const u16 sGenderBoyPal[] = INCBIN_U16("graphics/birch_speech/boy.gbapal");
-static const u32 sGenderBoyTilemap[] = INCBIN_U32("graphics/birch_speech/boy.bin.lz");
+// Tileset combinado: boy (tiles 0–240) + girl (tiles 241–451) em um único sheet.
+// O .bin tem dois tilemaps de 32×16 empacotados: bytes 0–1023 = boy, 1024–2047 = girl.
+static const u32 sGenderCombinedGfx[]      = INCBIN_U32("graphics/birch_speech/zinneazenno.4bpp.lz");
+static const u16 sGenderCombinedPal[]      = INCBIN_U16("graphics/birch_speech/zinneazenno.gbapal");
+static const u8  sGenderCombinedTilemaps[] = INCBIN_U8("graphics/birch_speech/zinneazenno.bin");
 
-static const u32 sGenderGirlGfx[] = INCBIN_U32("graphics/birch_speech/girl.4bpp.lz");
-static const u16 sGenderGirlPal[] = INCBIN_U16("graphics/birch_speech/girl.gbapal");
-static const u32 sGenderGirlTilemap[] = INCBIN_U32("graphics/birch_speech/girl.bin.lz");
+// Ponteiros para cada metade do .bin (512 u16 = 32×16 tiles por personagem).
+#define BIRCH_GENDER_TILEMAP_ROWS    16
+#define BIRCH_GENDER_TILEMAP_STRIDE  (BIRCH_GENDER_BG_WIDTH * BIRCH_GENDER_TILEMAP_ROWS)
+// Linhas vazias no topo para alinhar o personagem (128px) ao rodape da tela (160px).
+// 20 linhas de tela - 16 linhas do personagem = 4 linhas em branco no topo.
+#define BIRCH_GENDER_Y_OFFSET        4
+#define sGenderBoyTilemapSrc  ((const u16 *)(sGenderCombinedTilemaps))
+#define sGenderGirlTilemapSrc ((const u16 *)(sGenderCombinedTilemaps + BIRCH_GENDER_TILEMAP_STRIDE * sizeof(u16)))
 
 static const u8 gText_SaveFileCorrupted[] = _("The save file is corrupted. The\nprevious save file will be loaded.");
 static const u8 gText_SaveFileErased[] = _("The save file has been erased\ndue to corruption or damage.");
@@ -516,9 +525,9 @@ static const struct BgTemplate sBirchSpeechBgTemplate = {
 
 static const struct BgTemplate sBirchGenderBgTemplate = {
     .bg = 3,
-    .charBaseIndex = 0,
-    .mapBaseIndex = 16,
-    .screenSize = 1,
+    .charBaseIndex = 2,
+    .mapBaseIndex = 23,  // 0x600B800 — logo apos os 14336 bytes de GFX em charbase 2 (0x6008000+0x3800)
+    .screenSize = 0,     // 256x256 — slide removido, um screenbase e suficiente
     .paletteMode = 0,
     .priority = 1,
     .baseTile = 0
@@ -774,7 +783,7 @@ enum
 #define BIRCH_DLG_BASE_TILE_NUM 0xFC
 #define BIRCH_GENDER_BG         3
 #define BIRCH_GENDER_BG_PAL     3
-#define BIRCH_GENDER_BG_MAP     16
+#define BIRCH_GENDER_BG_MAP     23
 #define BIRCH_GENDER_BG_WIDTH   32
 #define BIRCH_GENDER_BG_HEIGHT  20
 #define BIRCH_GENDER_BG_SLIDE   256
@@ -2005,10 +2014,20 @@ static void StartGenderSlide(u8 taskId, int newGender)
 
 static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
 {
-    int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
-    int cursorPos = Menu_GetCursorPos();
+    int gender;
+    int cursorPos;
+
+    // Cooldown bloqueia TODO input — cursor nao se move visualmente.
+    // Decrementa e retorna sem chamar ProcessGenderMenuInput.
     if (sGenderScrollCooldown > 0)
+    {
         sGenderScrollCooldown--;
+        return;
+    }
+
+    gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
+    cursorPos = Menu_GetCursorPos();
+
     switch (gender)
     {
         case MALE:
@@ -2021,41 +2040,28 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
             gTasks[taskId].func = Task_NewGameBirchSpeech_ConfirmGenderFadeOut;
             return;
     }
-    if (cursorPos != gTasks[taskId].tPlayerGender && sGenderScrollCooldown == 0)
+
+    if (cursorPos != gTasks[taskId].tPlayerGender)
     {
-        sGenderScrollCooldown = 120;
+        // Troca instantanea — 1 tileset na VRAM, so copia o tilemap certo.
+        // Sem fade, sem tarefa intermediaria, sem glitch possivel.
         gTasks[taskId].tPlayerGender = cursorPos;
-        BeginNormalPaletteFade(PALETTES_ALL, 1, 0, 16, RGB_BLACK); 
-        gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSwapFadeOut;
+        NewGameBirchSpeech_LoadGenderBgTilemap(cursorPos);
+        SetGpuReg(REG_OFFSET_BG3HOFS, (u16)(cursorPos == MALE ? -25 : 10));
+        InitMenuInUpperLeftCornerNormal(1, ARRAY_COUNT(sMenuActions_Gender), cursorPos);
+        sGenderScrollCooldown = 10;  // 2s: so começa a contar APOS a troca
     }
 }
 
-// Espera o fade-out, troca o tileset do genero sem slide, depois faz fade-in.
+// Stubs mantidos apenas para satisfazer os forward declarations — nunca chamados.
 static void Task_NewGameBirchSpeech_GenderSwapFadeOut(u8 taskId)
 {
-    if (!gPaletteFade.active)
-    {
-        NewGameBirchSpeech_LoadGenderBgTilemap(gTasks[taskId].tPlayerGender, FALSE);
-        SetGpuReg(REG_OFFSET_BG3HOFS, 0);
-        InitMenuInUpperLeftCornerNormal(1, ARRAY_COUNT(sMenuActions_Gender), gTasks[taskId].tPlayerGender);
-        
-        // Força VBlank pra DMA executar AGORA
-        SetVBlankCallback(NULL);
-        SetVBlankCallback(VBlankCB_MainMenu);
-        
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSwapFadeIn;
-    }
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
 }
 
-// Aguarda o fade-in e libera o cooldown so entao.
 static void Task_NewGameBirchSpeech_GenderSwapFadeIn(u8 taskId)
 {
-    if (!gPaletteFade.active)
-    {
-        sGenderScrollCooldown = 0;  // libera input apos a transicao completa
-        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
-    }
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
 }
 
 // Espera o fade-out, restaura a cena do Birch, faz fade-in e vai para WhatsYourName.
@@ -2638,44 +2644,31 @@ static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay)
 #undef tDelay
 #undef tDelayTimer
 
-static void NewGameBirchSpeech_LoadGenderBgTilemap(u8 gender, bool8 placeRight)
+// Copia apenas o tilemap do personagem correto para VRAM.
+// O tileset combinado já foi carregado em ShowGenderBg — nenhuma descompressão aqui.
+// Reconstrói o tilemap em EWRAM e agenda cópia para VRAM no próximo VBlank.
+// Nunca escreve em VRAM mid-frame → sem tearing, sem glitch.
+static void NewGameBirchSpeech_LoadGenderBgTilemap(u8 gender)
 {
-    const u32 *gfx;
-    const u32 *tilemap;
-    const u16 *pal;
-    u32 i, x, y;
-    u16 baseBlock = placeRight ? 0x400 : 0;
+    const u16 *src = (gender == MALE) ? sGenderBoyTilemapSrc : sGenderGirlTilemapSrc;
+    u32 x, y;
 
-    if (gender == MALE)
-    {
-        gfx = sGenderBoyGfx;
-        tilemap = sGenderBoyTilemap;
-        pal = sGenderBoyPal;
-    }
-    else
-    {
-        gfx = sGenderGirlGfx;
-        tilemap = sGenderGirlTilemap;
-        pal = sGenderGirlPal;
-    }
+    CpuFill16(0, sGenderBg3Tilemap, BG_SCREEN_SIZE);
 
-    CpuFill16(0, sGenderBg3Tilemap, sizeof(sGenderBg3Tilemap));
-    DecompressDataWithHeaderWram(tilemap, sGenderBg3SourceTilemap);
-
-    for (y = 0; y < BIRCH_GENDER_BG_HEIGHT; y++)
+    for (y = 0; y < BIRCH_GENDER_TILEMAP_ROWS; y++)
     {
         for (x = 0; x < BIRCH_GENDER_BG_WIDTH; x++)
         {
-            i = y * BIRCH_GENDER_BG_WIDTH + x;
-            sGenderBg3Tilemap[baseBlock + y * BIRCH_GENDER_BG_WIDTH + x] =
-                (sGenderBg3SourceTilemap[i] & 0x0FFF) | (BIRCH_GENDER_BG_PAL << 12);
+            u32 src_i = y * BIRCH_GENDER_BG_WIDTH + x;
+            u32 dst_i = (y + BIRCH_GENDER_Y_OFFSET) * BIRCH_GENDER_BG_WIDTH + x;
+            sGenderBg3Tilemap[dst_i] = (src[src_i] & 0x0FFF) | (BIRCH_GENDER_BG_PAL << 12);
         }
     }
 
-    LoadPalette(pal, BG_PLTT_ID(BIRCH_GENDER_BG_PAL), PLTT_SIZE_4BPP);
-    NewGameBirchSpeech_LoadGenderUnderlay();
-    DecompressDataWithHeaderVram(gfx, (void *)BG_CHAR_ADDR(0));
-    DmaCopy16(3, sGenderBg3Tilemap, (void *)BG_SCREEN_ADDR(BIRCH_GENDER_BG_MAP), sizeof(sGenderBg3Tilemap));
+    // Agenda cópia EWRAM→VRAM para o próximo VBlank via DMA3 manager.
+    // SetBgTilemapBuffer foi chamado em ShowGenderBg, portanto CopyBgTilemapBufferToVram
+    // sabe o endereço de destino correto e o tamanho (BG_SCREEN_SIZE).
+    CopyBgTilemapBufferToVram(BIRCH_GENDER_BG);
 }
 
 static void NewGameBirchSpeech_LoadGenderUnderlay(void)
@@ -2688,8 +2681,27 @@ static void NewGameBirchSpeech_LoadGenderUnderlay(void)
 
 static void NewGameBirchSpeech_ShowGenderBg(u8 gender)
 {
-    NewGameBirchSpeech_LoadGenderBgTilemap(gender, FALSE);
-    ChangeBgX(BIRCH_GENDER_BG, 0, BG_COORD_SET);
+    // Reinicializa BG3 com o template correto — garante charbase/mapbase
+    // corretos tanto na primeira entrada quanto ao voltar do naming screen
+    // (que pode ter alterado BG3CNT via sBirchSpeechCharacterBgTemplate).
+    InitBgFromTemplate(&sBirchGenderBgTemplate);
+
+    // Tileset combinado (boy + girl) em charbase 2 — livre de conflito com
+    // as janelas de texto que usam charbase 0 (BG0).
+    DecompressDataWithHeaderVram(sGenderCombinedGfx, (void *)BG_CHAR_ADDR(2));
+    LoadPalette(sGenderCombinedPal, BG_PLTT_ID(BIRCH_GENDER_BG_PAL), PLTT_SIZE_4BPP);
+
+    // Registra sGenderBg3Tilemap como buffer do BG3 para que
+    // CopyBgTilemapBufferToVram saiba destino e tamanho — chamado uma vez só.
+    SetBgTilemapBuffer(BIRCH_GENDER_BG, sGenderBg3Tilemap);
+
+    // Underlay (BG2) carregado aqui; nas trocas de gênero não é recarregado.
+    NewGameBirchSpeech_LoadGenderUnderlay();
+
+    // Constrói o tilemap em EWRAM e agenda cópia para VBlank.
+    NewGameBirchSpeech_LoadGenderBgTilemap(gender);
+
+    SetGpuReg(REG_OFFSET_BG3HOFS, (u16)(gender == MALE ? -25 : 10));
     ChangeBgY(BIRCH_GENDER_BG, 0, BG_COORD_SET);
     HideBg(1);
     ShowBg(BIRCH_GENDER_BG);
@@ -2700,7 +2712,7 @@ static void NewGameBirchSpeech_StartGenderBgSlide(u8 taskId, u8 newGender)
     struct ComfyAnimEasingConfig cfg;
     bool8 slideFromRight = newGender > gTasks[taskId].data[6];
 
-    NewGameBirchSpeech_LoadGenderBgTilemap(newGender, slideFromRight);
+    NewGameBirchSpeech_LoadGenderBgTilemap(newGender);
 
     InitComfyAnimConfig_Easing(&cfg);
     cfg.durationFrames = 18;
@@ -2718,7 +2730,7 @@ static void NewGameBirchSpeech_UpdateGenderBgSlide(u8 taskId)
     SetGpuReg(REG_OFFSET_BG3HOFS, ReadComfyAnimValueSmooth(&sGenderSlideX));
     if (sGenderSlideX.completed)
     {
-        NewGameBirchSpeech_LoadGenderBgTilemap(gTasks[taskId].data[6], FALSE);
+        NewGameBirchSpeech_LoadGenderBgTilemap(gTasks[taskId].data[6]);
         SetGpuReg(REG_OFFSET_BG3HOFS, 0);
         sGenderSlideActive = FALSE;
     }
