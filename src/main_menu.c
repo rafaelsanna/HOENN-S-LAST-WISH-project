@@ -262,6 +262,8 @@ static bool8 sJirachiSpringActive = FALSE;
 static bool8 sCelebiSpringActive = FALSE;
 static struct ComfyAnim sGenderSlideX;
 static bool8 sGenderSlideActive = FALSE;
+// Cooldown em frames para evitar spam de scroll do tileset (120 frames = 2s)
+static u8 sGenderScrollCooldown = 0;
 static void Task_NewGameBirchSpeech_GenderSlideIn(u8);
 static EWRAM_DATA u16 sGenderBg3Tilemap[0x800];
 static EWRAM_DATA u16 sGenderBg3SourceTilemap[0x400];
@@ -1893,43 +1895,25 @@ static void Task_NewGameBirchSpeech_StartPlayerFadeIn(u8 taskId)
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
         gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
-        gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
-        // Oculta Jirachi e Celebi (sprites da primeira aparição)
+        if (gTasks[taskId].tLotadSpriteId != SPRITE_NONE)
+            gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
+        // Jirachi e Celebi ficam ocultos — nao sao mais necessarios aqui
         gSprites[gTasks[taskId].tJirachiSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tCelebiSpriteId].invisible = TRUE;
-
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
-
-        
-        if (gTasks[taskId].tTimer)
-        {
-            gTasks[taskId].tTimer--;
-        }
-        else
-        {
-            u8 spriteId = gTasks[taskId].tBrendanSpriteId;
-
-            gSprites[spriteId].x = 180;
-            gSprites[spriteId].y = 60;
-            gSprites[spriteId].invisible = FALSE;
-            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-            gTasks[taskId].tPlayerSpriteId = spriteId;
-            gTasks[taskId].tPlayerGender = MALE;
-            
-            // Usa fade restaurado
-            NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
-            
-            gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForPlayerFadeIn;
-        }
+        // Vai direto para BoyOrGirl sem mostrar Brendan — o personagem
+        // correto so aparece APOS a selecao de genero (em HideGenderBg)
+        sGenderScrollCooldown = 0;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
     }
 }
 
 static void Task_NewGameBirchSpeech_WaitForPlayerFadeIn(u8 taskId)
 {
+    // Mantida por compatibilidade com o fluxo de retorno do naming screen
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
         gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
-        // *** REMOVER ESTA LINHA: ***
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
         gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
     }
@@ -1997,11 +1981,14 @@ static void StartGenderSlide(u8 taskId, int newGender)
 
 static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
 {
-    // Processa o input do menu — isso atualiza o cursor interno antes de Menu_GetCursorPos()
     int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
     int cursorPos = Menu_GetCursorPos();
 
-    // Jogador confirmou com A
+    // Decrementa cooldown do scroll a cada frame
+    if (sGenderScrollCooldown > 0)
+        sGenderScrollCooldown--;
+
+    // Confirmacao com A — sem cooldown, sempre responde
     switch (gender)
     {
         case MALE:
@@ -2014,9 +2001,10 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
             return;
     }
 
-    // Cursor mudou → inicia slide imediatamente
-    if (cursorPos != gTasks[taskId].tPlayerGender)
+    // Scroll do tileset so acontece se o cooldown zerou
+    if (cursorPos != gTasks[taskId].tPlayerGender && sGenderScrollCooldown == 0)
     {
+        sGenderScrollCooldown = 120;  // ~2s de bloqueio apos cada scroll
         StartGenderSlide(taskId, cursorPos);
         gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSlideIn;
     }
@@ -2024,12 +2012,13 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
 
 static void Task_NewGameBirchSpeech_GenderSlideIn(u8 taskId)
 {
-    // CORREÇÃO: processar o input AQUI também, a cada frame,
-    // para que Menu_GetCursorPos() reflita o estado real do botão.
     int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
     int cursorPos = Menu_GetCursorPos();
 
-    // Confirmação com A aceita mesmo durante a animação
+    if (sGenderScrollCooldown > 0)
+        sGenderScrollCooldown--;
+
+    // Confirmacao com A aceita mesmo durante a animacao
     switch (gender)
     {
         case MALE:
@@ -2043,21 +2032,18 @@ static void Task_NewGameBirchSpeech_GenderSlideIn(u8 taskId)
             return;
     }
 
-    // Cursor mudou durante o slide → reinicia sem nenhum delay
-    if (cursorPos != gTasks[taskId].tPlayerGender)
+    // Novo scroll so se cooldown zerou (o slide anterior terminou E passou o delay)
+    if (cursorPos != gTasks[taskId].tPlayerGender && sGenderScrollCooldown == 0)
     {
         sGenderSlideActive = FALSE;
+        sGenderScrollCooldown = 120;
         StartGenderSlide(taskId, cursorPos);
-        return; // permanece em GenderSlideIn para a nova animação
+        return;
     }
 
-    // Avança a física da mola
     if (sGenderSlideActive)
-    {
         NewGameBirchSpeech_UpdateGenderBgSlide(taskId);
-    }
 
-    // Animação concluída → volta ao handler principal
     if (!sGenderSlideActive)
         gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
 }
@@ -2190,39 +2176,34 @@ static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8 taskId)
 
 static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
 {
-    u8 spriteId;
-
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
+        // Garante que sprites de personagem estao todos ocultos.
+        // O Jirachi e Celebi (data[14]/data[15]) sao os da PRIMEIRA aparicao
+        // e nao devem reaparecer aqui.
         gSprites[gTasks[taskId].tBrendanSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tMaySpriteId].invisible = TRUE;
-        
-        // Jirachi centralizado
-        spriteId = gTasks[taskId].tBirchSpriteId;
-        gSprites[spriteId].x = 120;  // CENTRALIZADO (era 136)
-        gSprites[spriteId].y = 60;
-        gSprites[spriteId].invisible = FALSE;
-        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-        
-        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
+        gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+
+        // Exibe apenas o texto — sem nenhum sprite de personagem neste momento.
+        // Brendan ou May aparecerao em AreYouReady conforme o genero escolhido.
         NewGameBirchSpeech_ClearWindow(0);
         StringExpandPlaceholders(gStringVar4, gText_Birch_YourePlayer);
         AddTextPrinterForMessage(TRUE);
+        // Marca fade como concluido para que WaitForSpriteFadeInAndTextPrinter
+        // nao fique bloqueado esperando um fade que nao foi iniciado.
+        gTasks[taskId].tIsDoneFadingSprites = TRUE;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter;
     }
 }
-
 
 static void Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter(u8 taskId)
 {
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
-        gSprites[gTasks[taskId].tBirchSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
-        
         if (!RunTextPrintersAndIsPrinter0Active())
         {
-            gSprites[gTasks[taskId].tBirchSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-            NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
             gTasks[taskId].tTimer = 64;
             gTasks[taskId].func = Task_NewGameBirchSpeech_AreYouReady;
         }
@@ -2692,6 +2673,12 @@ static void NewGameBirchSpeech_HideGenderBg(u8 taskId)
     DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(&black, BG_PLTT_ID(0), sizeof(black));
+
+    // Restaura tiles do frame das janelas de texto (charbase 2) que podem ter
+    // sido corrompidos pelos gfx do gender tileset. Sem isso a borda fica glitchada.
+    LoadMainMenuWindowFrameTiles(0, 0xF3);
+    LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    LoadBirchSpeechTextboxPalette();
 
     spriteId = (gSaveBlock2Ptr->playerGender == MALE) ? gTasks[taskId].data[10]
                                                        : gTasks[taskId].data[11];
