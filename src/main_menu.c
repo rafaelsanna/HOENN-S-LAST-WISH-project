@@ -215,7 +215,13 @@ static void LoadMainMenuWindowFrameTiles(u8, u16);
 static void DrawMainMenuWindowBorder(const struct WindowTemplate *, u16);
 static void Task_HighlightSelectedMainMenuItem(u8);
 static void Task_NewGameBirchSpeech_WaitToShowGenderMenu(u8);
+static void Task_NewGameBirchSpeech_FadeToGenderSelect(u8);
+static void Task_NewGameBirchSpeech_WaitGenderFadeIn(u8);
 static void Task_NewGameBirchSpeech_ChooseGender(u8);
+static void Task_NewGameBirchSpeech_GenderSwapFadeOut(u8);
+static void Task_NewGameBirchSpeech_GenderSwapFadeIn(u8);
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeOut(u8);
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeIn(u8);
 static void NewGameBirchSpeech_ShowGenderMenu(void);
 static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void);
 static void NewGameBirchSpeech_ClearGenderWindow(u8, u8);
@@ -1934,14 +1940,32 @@ static void Task_NewGameBirchSpeech_WaitToShowGenderMenu(u8 taskId)
         if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
-            CopyBgTilemapBufferToVram(0);
-            gSprites[gTasks[taskId].tPlayerSpriteId].invisible = TRUE;
-            NewGameBirchSpeech_ShowGenderBg(gTasks[taskId].tPlayerGender);
-            NewGameBirchSpeech_ShowGenderMenu();
-            gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_FadeToGenderSelect;
         }
     }
+}
+
+// Espera o fade-out terminar, monta a tela de selecao de genero e faz fade-in.
+static void Task_NewGameBirchSpeech_FadeToGenderSelect(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+        CopyBgTilemapBufferToVram(0);
+        gSprites[gTasks[taskId].tPlayerSpriteId].invisible = TRUE;
+        NewGameBirchSpeech_ShowGenderBg(gTasks[taskId].tPlayerGender);
+        NewGameBirchSpeech_ShowGenderMenu();
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WaitGenderFadeIn;
+    }
+}
+
+// Aguarda o fade-in terminar antes de aceitar input.
+static void Task_NewGameBirchSpeech_WaitGenderFadeIn(u8 taskId)
+{
+    if (!gPaletteFade.active)
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
 }
 
 // Helper: esconde sprite atual, exibe o novo e reinicia a mola do slide.
@@ -1983,12 +2007,8 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
 {
     int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
     int cursorPos = Menu_GetCursorPos();
-
-    // Decrementa cooldown do scroll a cada frame
     if (sGenderScrollCooldown > 0)
         sGenderScrollCooldown--;
-
-    // Confirmacao com A — sem cooldown, sempre responde
     switch (gender)
     {
         case MALE:
@@ -1996,18 +2016,63 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
             PlaySE(SE_SELECT);
             gSaveBlock2Ptr->playerGender = gender;
             NewGameBirchSpeech_ClearGenderWindow(1, 1);
-            NewGameBirchSpeech_HideGenderBg(taskId);
-            gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+            sGenderSlideActive = FALSE;
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_ConfirmGenderFadeOut;
             return;
     }
-
-    // Scroll do tileset so acontece se o cooldown zerou
     if (cursorPos != gTasks[taskId].tPlayerGender && sGenderScrollCooldown == 0)
     {
-        sGenderScrollCooldown = 120;  // ~2s de bloqueio apos cada scroll
-        StartGenderSlide(taskId, cursorPos);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSlideIn;
+        sGenderScrollCooldown = 120;
+        gTasks[taskId].tPlayerGender = cursorPos;
+        BeginNormalPaletteFade(PALETTES_ALL, 1, 0, 16, RGB_BLACK); 
+        gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSwapFadeOut;
     }
+}
+
+// Espera o fade-out, troca o tileset do genero sem slide, depois faz fade-in.
+static void Task_NewGameBirchSpeech_GenderSwapFadeOut(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        NewGameBirchSpeech_LoadGenderBgTilemap(gTasks[taskId].tPlayerGender, FALSE);
+        SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+        InitMenuInUpperLeftCornerNormal(1, ARRAY_COUNT(sMenuActions_Gender), gTasks[taskId].tPlayerGender);
+        
+        // Força VBlank pra DMA executar AGORA
+        SetVBlankCallback(NULL);
+        SetVBlankCallback(VBlankCB_MainMenu);
+        
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSwapFadeIn;
+    }
+}
+
+// Aguarda o fade-in e libera o cooldown so entao.
+static void Task_NewGameBirchSpeech_GenderSwapFadeIn(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        sGenderScrollCooldown = 0;  // libera input apos a transicao completa
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
+    }
+}
+
+// Espera o fade-out, restaura a cena do Birch, faz fade-in e vai para WhatsYourName.
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeOut(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        NewGameBirchSpeech_HideGenderBg(taskId);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ConfirmGenderFadeIn;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeIn(u8 taskId)
+{
+    if (!gPaletteFade.active)
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
 }
 
 static void Task_NewGameBirchSpeech_GenderSlideIn(u8 taskId)
@@ -2173,27 +2238,24 @@ static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8 taskId)
     gTasks[taskId].func = Task_NewGameBirchSpeech_ReshowBirchLotad;
 }
 
-
 static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
 {
+    u8 spriteId;
+
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
-        // Garante que sprites de personagem estao todos ocultos.
-        // O Jirachi e Celebi (data[14]/data[15]) sao os da PRIMEIRA aparicao
-        // e nao devem reaparecer aqui.
         gSprites[gTasks[taskId].tBrendanSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tMaySpriteId].invisible = TRUE;
-        gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-
-        // Exibe apenas o texto — sem nenhum sprite de personagem neste momento.
-        // Brendan ou May aparecerao em AreYouReady conforme o genero escolhido.
+        
+        // Mostra apenas o Birch
+        spriteId = gTasks[taskId].tBirchSpriteId;
+        gSprites[spriteId].x = 120;
+        gSprites[spriteId].y = 60;
+        gSprites[spriteId].invisible = FALSE;
+        
         NewGameBirchSpeech_ClearWindow(0);
         StringExpandPlaceholders(gStringVar4, gText_Birch_YourePlayer);
         AddTextPrinterForMessage(TRUE);
-        // Marca fade como concluido para que WaitForSpriteFadeInAndTextPrinter
-        // nao fique bloqueado esperando um fade que nao foi iniciado.
-        gTasks[taskId].tIsDoneFadingSprites = TRUE;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter;
     }
 }
@@ -2202,6 +2264,10 @@ static void Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter(u8 taskId)
 {
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
+        // Jirachi ja apareceu — desliga o blend mode dele.
+        gSprites[gTasks[taskId].tJirachiSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+
         if (!RunTextPrintersAndIsPrinter0Active())
         {
             gTasks[taskId].tTimer = 64;
@@ -2218,6 +2284,7 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
     {
         gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
+        gSprites[gTasks[taskId].tJirachiSpriteId].invisible = TRUE;  // oculta Jirachi antes de Brendan/May
         if (gTasks[taskId].tTimer)
         {
             gTasks[taskId].tTimer--;
