@@ -2681,24 +2681,24 @@ static void NewGameBirchSpeech_LoadGenderUnderlay(void)
 
 static void NewGameBirchSpeech_ShowGenderBg(u8 gender)
 {
-    // Reinicializa BG3 com o template correto — garante charbase/mapbase
-    // corretos tanto na primeira entrada quanto ao voltar do naming screen
-    // (que pode ter alterado BG3CNT via sBirchSpeechCharacterBgTemplate).
-    InitBgFromTemplate(&sBirchGenderBgTemplate);
+    // Garante estado limpo no sistema de temp tile buffers antes de qualquer
+    // descompressão. Na segunda entrada (após ReturnFromNamingScreen), esse
+    // sistema pode ter entradas stale que corrompem tiles subsequentes.
+    ResetTempTileDataBuffers();
 
-    // Tileset combinado (boy + girl) em charbase 2 — livre de conflito com
-    // as janelas de texto que usam charbase 0 (BG0).
+    // Reinicializa BG3 com o template correto.
+    InitBgFromTemplate(&sBirchGenderBgTemplate);
+    // Reinicializa BG2 também: ReturnFromNamingScreen zera BG2CNT (linha ~2395)
+    // então ao voltar pelo "No" do naming, BG2 estaria apontando para charbase/mapbase
+    // errados e mostraria magenta. Isso corrige o registro a cada entrada.
+    InitBgFromTemplate(&sBirchSpeechBgTemplate);
+
     DecompressDataWithHeaderVram(sGenderCombinedGfx, (void *)BG_CHAR_ADDR(2));
     LoadPalette(sGenderCombinedPal, BG_PLTT_ID(BIRCH_GENDER_BG_PAL), PLTT_SIZE_4BPP);
 
-    // Registra sGenderBg3Tilemap como buffer do BG3 para que
-    // CopyBgTilemapBufferToVram saiba destino e tamanho — chamado uma vez só.
     SetBgTilemapBuffer(BIRCH_GENDER_BG, sGenderBg3Tilemap);
 
-    // Underlay (BG2) carregado aqui; nas trocas de gênero não é recarregado.
     NewGameBirchSpeech_LoadGenderUnderlay();
-
-    // Constrói o tilemap em EWRAM e agenda cópia para VBlank.
     NewGameBirchSpeech_LoadGenderBgTilemap(gender);
 
     SetGpuReg(REG_OFFSET_BG3HOFS, (u16)(gender == MALE ? -25 : 10));
@@ -2745,7 +2745,12 @@ static void NewGameBirchSpeech_HideGenderBg(u8 taskId)
     ShowBg(1);
     SetGpuReg(REG_OFFSET_BG3HOFS, 0);
     SetGpuReg(REG_OFFSET_BG3VOFS, 0);
-    DecompressAndCopyTileDataToVram(2, sBirchSpeechBgTiles, 0, 0, 0);
+    // Usa decompress síncrono direto para BG_CHAR_ADDR(1) (charbase do BG2).
+    // DecompressAndCopyTileDataToVram é assíncrono e usa o sistema de temp buffers;
+    // na segunda entrada (após ReturnFromNamingScreen) esse sistema pode estar com
+    // estado stale, causando falha no carregamento dos tiles — inclusive das fontes
+    // da tela de nome seguinte.
+    DecompressDataWithHeaderVram(sBirchSpeechBgTiles, (void *)BG_CHAR_ADDR(1));
     DecompressDataWithHeaderVram(sBirchSpeechBgTilemap, (void *)BG_SCREEN_ADDR(28));
     LoadPalette(sBirchSpeechBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
     DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(0));
