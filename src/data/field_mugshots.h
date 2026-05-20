@@ -15,9 +15,9 @@ static const u16 sFieldMugshotPal_CelebiNormal[] = INCBIN_U16("graphics/field_mu
 static const u32 sFieldMugshotGfx_JirachiNormal[] = INCBIN_U32("graphics/field_mugshots/jirachi/normal.4bpp.lz");
 static const u16 sFieldMugshotPal_JirachiNormal[] = INCBIN_U16("graphics/field_mugshots/jirachi/normal.gbapal");
 
-// Calendula
-static const u32 sFieldMugshotGfx_CalendulaNormal[] = INCBIN_U32("graphics/field_mugshots/calendula/normal.4bpp.lz");
-static const u16 sFieldMugshotPal_CalendulaNormal[] = INCBIN_U16("graphics/field_mugshots/calendula/normal.gbapal");
+// Acacia
+static const u32 sFieldMugshotGfx_AcaciaNormal[] = INCBIN_U32("graphics/field_mugshots/acacia/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_AcaciaNormal[] = INCBIN_U16("graphics/field_mugshots/acacia/normal.gbapal");
 
 // Renton
 static const u32 sFieldMugshotGfx_RentonNormal[] = INCBIN_U32("graphics/field_mugshots/renton/normal.4bpp.lz");
@@ -57,9 +57,9 @@ static const struct MugshotGfx sFieldMugshots[MUGSHOT_COUNT][EMOTE_COUNT] =
     {
         [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_JirachiNormal, .pal = sFieldMugshotPal_JirachiNormal },
     },
-    [MUGSHOT_CALENDULA] =
+    [MUGSHOT_ACACIA] =
     {
-        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_CalendulaNormal, .pal = sFieldMugshotPal_CalendulaNormal },
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_AcaciaNormal, .pal = sFieldMugshotPal_AcaciaNormal },
     },
     [MUGSHOT_RENTON] =
     {

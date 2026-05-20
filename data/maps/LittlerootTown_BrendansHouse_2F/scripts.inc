@@ -14,7 +14,9 @@ LittlerootTown_BrendansHouse_2F_OnFrame:
 
 LittlerootTown_BrendansHouse_2F_EventScript_WeirdDreamDialogue::
 	lockall
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL   // adicionado
 	msgbox LittlerootTown_BrendansHouse_2F_Text_WeirdDream, MSGBOX_DEFAULT
+	removefieldmugshot                                 // removido antes do release
 	setvar VAR_LITTLEROOT_INTRO_STATE, 7
 	releaseall
 	end
@@ -81,10 +83,13 @@ LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendan::
 	waitmovement 0
 	delay 10
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
+	// --- MUGSHOT DO ZENNO DURANTE O ENCONTRO COM O RIVAL ---
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL   // adicionado
 	call_if_eq VAR_FACING, DIR_NORTH, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanNorth
 	call_if_eq VAR_FACING, DIR_SOUTH, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanSouth
 	call_if_eq VAR_FACING, DIR_WEST, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanWest
 	call_if_eq VAR_FACING, DIR_EAST, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanEast
+	removefieldmugshot                                  // removido ao final
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM

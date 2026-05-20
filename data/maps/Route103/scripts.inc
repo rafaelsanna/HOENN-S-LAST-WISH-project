@@ -42,6 +42,8 @@ Route103_EventScript_Rival::
 	end
 
 Route103_EventScript_RivalMay::
+	lockall
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox Route103_Text_MayRoute103Pokemon, MSGBOX_DEFAULT
 	closemessage
 	playbgm MUS_ENCOUNTER_MAY, TRUE
@@ -52,6 +54,7 @@ Route103_EventScript_RivalMay::
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	msgbox Route103_Text_MayLetsBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, Route103_EventScript_StartMayBattleTreecko
 	case 1, Route103_EventScript_StartMayBattleTorchic
@@ -59,6 +62,8 @@ Route103_EventScript_RivalMay::
 	end
 
 Route103_EventScript_RivalBrendan::
+	lockall
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route103_Text_BrendanRoute103Pokemon, MSGBOX_DEFAULT
 	closemessage
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
@@ -69,6 +74,7 @@ Route103_EventScript_RivalBrendan::
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	msgbox Route103_Text_BrendanLetsBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, Route103_EventScript_StartBrendanBattleTreecko
 	case 1, Route103_EventScript_StartBrendanBattleTorchic
@@ -106,12 +112,18 @@ Route103_EventScript_StartBrendanBattleMudkip::
 	end
 
 Route103_EventScript_AfterMayBattle::
+	lockall
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox Route103_Text_MayTimeToHeadBack, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto Route103_EventScript_RivalExit
 	end
 
 Route103_EventScript_AfterBrendanBattle::
+	lockall
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route103_Text_BrendanTimeToHeadBack, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto Route103_EventScript_RivalExit
 	end
 

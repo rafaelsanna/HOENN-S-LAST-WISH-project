@@ -5,7 +5,7 @@
 #define MUGSHOT_TEST      1
 #define MUGSHOT_CELEBI    2
 #define MUGSHOT_JIRACHI   3
-#define MUGSHOT_CALENDULA 4
+#define MUGSHOT_ACACIA    4
 #define MUGSHOT_RENTON    5
 #define MUGSHOT_TERRA     6
 #define MUGSHOT_ZENNO     7

@@ -9,7 +9,7 @@
 static EWRAM_DATA u8 sFieldMugshotSpriteId = 0;
 
 #define TAG_MUGSHOT 0x9000
-#define MUGSHOT_X 168 + 32
+#define MUGSHOT_X 12 + 32
 #define MUGSHOT_Y 51  + 32
 
 static const struct OamData sFieldMugshot_Oam = {

@@ -241,7 +241,9 @@ Route101_EventScript_AcaciasBag::
 	waitstate
 	applymovement LOCALID_ROUTE101_ACACIA, Route101_Movement_AcaciaApproachPlayer
 	waitmovement 0
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
 	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
+	removefieldmugshot
 	special HealPlayerParty
 	setflag FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH

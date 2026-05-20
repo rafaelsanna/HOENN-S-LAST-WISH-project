@@ -14,7 +14,9 @@ LittlerootTown_MaysHouse_2F_OnFrame:
 
 LittlerootTown_MaysHouse_2F_EventScript_WeirdDreamDialogue::
 	lockall
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL   // adicionado
 	msgbox LittlerootTown_MaysHouse_2F_Text_WeirdDream, MSGBOX_DEFAULT
+	removefieldmugshot                                 // removido antes do release
 	setvar VAR_LITTLEROOT_INTRO_STATE, 7
 	releaseall
 	end
@@ -82,10 +84,13 @@ LittlerootTown_MaysHouse_2F_EventScript_MeetMay::
 	waitmovement 0
 	delay 10
 	playbgm MUS_ENCOUNTER_MAY, TRUE
+	// --- MUGSHOT DA ZINNIA DURANTE O ENCONTRO COM A RIVAL ---
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL   // adicionado
 	call_if_eq VAR_FACING, DIR_NORTH, LittlerootTown_MaysHouse_2F_EventScript_MeetMayNorth
 	call_if_eq VAR_FACING, DIR_SOUTH, LittlerootTown_MaysHouse_2F_EventScript_MeetMaySouth
 	call_if_eq VAR_FACING, DIR_WEST, LittlerootTown_MaysHouse_2F_EventScript_MeetMayWest
 	call_if_eq VAR_FACING, DIR_EAST, LittlerootTown_MaysHouse_2F_EventScript_MeetMayEast
+	removefieldmugshot                                  // removido ao final
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
