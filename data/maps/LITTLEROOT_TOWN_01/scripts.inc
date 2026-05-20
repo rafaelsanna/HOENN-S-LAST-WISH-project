@@ -166,6 +166,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 
 LittlerootTown_01_EventScript_JirachiCelebi::
 	lockall
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox LittlerootTown_Text_GentleIntroduction, MSGBOX_DEFAULT
 	msgbox LittlerootTown_01_Text_JirachiCloseEyes, MSGBOX_DEFAULT
 	
@@ -458,9 +459,10 @@ LittlerootTown_Movement_JirachiCircleComplete:
 	step_end
 
 // Celebi Scripts
-LittlerootTown_CelebiScript::  
+LittlerootTown_CelebiScript::
     lockall
     faceplayer
+    createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL   @ mostra o sprite
     msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
     random 3
     switch VAR_RESULT
@@ -469,7 +471,7 @@ LittlerootTown_CelebiScript::
     case 2, LittlerootTown_Celebi_Case2
     releaseall
     end
-
+	
 LittlerootTown_Celebi_Case0::
     lockall
     faceplayer

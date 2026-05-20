@@ -94,7 +94,6 @@ Route119_EventScript_DefeatedMay::
 	msgbox Route119_Text_MayPresentForYou, MSGBOX_DEFAULT
 	call Route119_EventScript_GiveFlyHM
 	msgbox Route119_Text_MayExplainFly, MSGBOX_DEFAULT
-	goto Route119_EventScript_RivalExitScottArrive
 	end
 
 Route119_EventScript_BattleBrendan::
@@ -124,7 +123,6 @@ Route119_EventScript_DefeatedBrendan::
 	msgbox Route119_Text_BrendanIllGiveYouThis, MSGBOX_DEFAULT
 	call Route119_EventScript_GiveFlyHM
 	msgbox Route119_Text_BrendanExplainFly, MSGBOX_DEFAULT
-	goto Route119_EventScript_RivalExitScottArrive
 	end
 
 Route119_EventScript_GiveFlyHM::
@@ -476,7 +474,7 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 	end
 
 Route119_Text_MayIntro:
-	.string "MAY: {PLAYER}{KUN}!\n"
+	.string "ZINNEA: {PLAYER}{KUN}!\n"
 	.string "Where were you? I was looking for you!\p"
 	.string "How much stronger have you gotten?\n"
 	.string "Let me check for you!\p"
@@ -490,12 +488,12 @@ Route119_Text_MayDefeat:
 	.string "struggling with your training.$"
 
 Route119_Text_MayPresentForYou:
-	.string "MAY: But I had absolutely nothing to\n"
+	.string "ZINNEA: But I had absolutely nothing to\n"
 	.string "worry about! Keep it up!\p"
 	.string "And, here! I have a present for you.$"
 
 Route119_Text_MayExplainFly:
-	.string "MAY: Use FLY, and your POKéMON will\n"
+	.string "ZINNEA: Use FLY, and your POKéMON will\n"
 	.string "instantly carry you to any town you've\l"
 	.string "already visited.\p"
 	.string "But, to use FLY, you have to get\n"
@@ -574,13 +572,13 @@ Route119_Text_DontGoNearWeatherInstitute:
 	.string "WEATHER INSTITUTE.$"
 
 Route119_Text_ThoughtFlyByCatchingBirdMons:
-	.string "I thought you FLY by catching a whole\n"
-	.string "flock of BIRD POKéMON, and then\l"
-	.string "hanging on to them somehow.\p"
-	.string "But it turns out there's an HM move\n"
-	.string "called FLY!\p"
-	.string "I wish I'd known about that a long\n"
-	.string "time ago…$"
+	.string "They say a trainer once caught dozens\n"
+	.string "of BIRD POKéMON, hung onto them, and\l"
+	.string "flew away, never to be seen again!\p"
+	.string "A urban legend, if you ask me.\n"
+	.string "But you're a TRAINER…\p"
+	.string "Would you have the guts to\n"
+	.string "try flying like that?$"
 
 Route119_Text_TallGrassSnaresBikeTires:
 	.string "Tch…\n"
@@ -589,9 +587,12 @@ Route119_Text_TallGrassSnaresBikeTires:
 	.string "There's no way you can cycle here.$"
 
 Route119_Text_CanYourMonMakeSecretBase:
-	.string "Can your POKéMON use its SECRET POWER\n"
-	.string "on a big pile of grass and make a\l"
-	.string "SECRET BASE?$"
+	.string "Up ahead stands the WEATHER INSTITUTE.\n"
+	.string "Locals whisper of a strange POKéMON\p"
+	.string "locked inside, that can summon\n"
+	.string "or calm storms with a single breath.\p"
+	.string "They say it was born from the sky itself,\n"
+	.string "a gift… or a warning from nature.$"
 
 Route119_Text_RouteSignFortree:
 	.string "ROUTE 119\n"

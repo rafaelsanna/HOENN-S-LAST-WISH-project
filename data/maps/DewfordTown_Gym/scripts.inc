@@ -135,6 +135,7 @@ DewfordTown_Gym_EventScript_StopCountingTrainers::
 DewfordTown_Gym_EventScript_Brawly::
     lock
     faceplayer
+	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL   
 		getdifficulty VAR_RESULT
 		goto_if_eq VAR_RESULT, 1, DewfordTown_Gym_BrawlyHard
 
@@ -147,6 +148,7 @@ DewfordTown_Gym_BrawlyHard::
     trainerbattle_single TRAINER_BRAWLY, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
 
 DewfordTown_Gym_AfterBattle::
+    createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL 
     specialvar VAR_RESULT, ShouldTryRematchBattle
     goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
     goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2

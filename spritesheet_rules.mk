@@ -246,6 +246,9 @@ $(OBJEVENTGFXDIR)/people/punkgirl.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/punkboy.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
+$(OBJEVENTGFXDIR)/people/rob.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 2 -mheight 4
+
 $(OBJEVENTGFXDIR)/people/lazuli.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 

@@ -693,6 +693,31 @@ Crawdaunt @ Rocky Helmet
 Level: 48
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
+=== TRAINER_ROB_WEATHER_INSTITUTE ===
+Name: ROB
+Class: Aqua Admin
+Pic: Rob
+Gender: Male
+Music: Aqua
+Double Battle: Yes
+AI: Check Bad Move
+
+Gyarados @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Cloyster @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Slowbro @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Wailord @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
 === TRAINER_GRUNT_AQUA_SHIP ===
 Name: GRUNT
 Class: Team Aqua

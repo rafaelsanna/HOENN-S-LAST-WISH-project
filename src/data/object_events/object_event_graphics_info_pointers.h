@@ -254,6 +254,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedMauvi
 // Custom HLW event objects 
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Punkgirl;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Punkboy;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Rob;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lazuli;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Alejandro;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirdKeeper1;
@@ -524,6 +525,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_RICH_BOY_2] =               &gObjectEventGraphicsInfo_RichBoy2,
     [OBJ_EVENT_GFX_LASS_2] =                   &gObjectEventGraphicsInfo_Lass2,
     [OBJ_EVENT_GFX_POKEFAN_2] =                &gObjectEventGraphicsInfo_Pokefan2,
+    [OBJ_EVENT_GFX_ROB] =                      &gObjectEventGraphicsInfo_Rob,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {

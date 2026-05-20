@@ -4,6 +4,7 @@ RustboroCity_Gym_MapScripts::
 RustboroCity_Gym_EventScript_Roxanne::
 	lock
 	faceplayer
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL   @ mostra a Terra
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, RustboroCity_Gym_RoxanneHard
 	
@@ -16,6 +17,7 @@ RustboroCity_Gym_RoxanneHard::
 	trainerbattle_single TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 
 RustboroCity_Gym_AfterBattle::
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
 	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
