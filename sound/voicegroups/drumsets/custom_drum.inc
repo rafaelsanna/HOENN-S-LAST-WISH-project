@@ -75,8 +75,8 @@ voice_group custom_drum_drumset
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
+	voice_directsound_no_resample 64, 64, DirectSoundWaveData_ethnic_flavours_ohtsuzumi, 255, 0, 255, 0
+	voice_directsound_no_resample 61, 84, DirectSoundWaveData_ethnic_flavours_hyoushigi, 255, 0, 255, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_directsound_no_resample 64, 39, DirectSoundWaveData_sd90_open_triangle, 255, 242, 103, 188
