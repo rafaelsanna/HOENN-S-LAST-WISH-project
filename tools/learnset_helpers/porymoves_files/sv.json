@@ -23704,6 +23704,7 @@
       "MOVE_FEATHER_DANCE",
       "MOVE_WOOD_HAMMER",
       "MOVE_U_TURN",
+      "MOVE_BULLET_SEED",
       "MOVE_CURSE"
     ],
     "EggMoves": [
@@ -23830,6 +23831,7 @@
       "MOVE_DOUBLE_EDGE",
       "MOVE_COACHING",
       "MOVE_FEATHER_DANCE",
+      "MOVE_BULLET_SEED",
       "MOVE_CURSE"
     ],
     "EggMoves": [
@@ -23978,6 +23980,7 @@
       "MOVE_COACHING",
       "MOVE_FLY",
       "MOVE_FEATHER_DANCE",
+      "MOVE_BULLET_SEED",
       "MOVE_CURSE",
       "MOVE_UPPER_HAND"
     ],

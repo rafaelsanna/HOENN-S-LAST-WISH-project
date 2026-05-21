@@ -3,11 +3,21 @@ OldaleTown_MapScripts::
 	.byte 0
 
 OldaleTown_OnTransition:
-	call Common_EventScript_SetupRivalGfxId
-	setflag FLAG_VISITED_OLDALE_TOWN
-	call_if_unset FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_BlockWestEntrance
-	call_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_SetOldaleState
-	end
+    call Common_EventScript_SetupRivalGfxId
+    setflag FLAG_VISITED_OLDALE_TOWN
+    call_if_unset FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_BlockWestEntrance
+    call_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_SetOldaleState
+    call_if_set FLAG_SHINY_SENTRET_END, OldaleTown_EventScript_ShowSentretWithGirl
+    call_if_unset FLAG_SHINY_SENTRET_END, OldaleTown_EventScript_HideSentretWithGirl
+    end
+
+OldaleTown_EventScript_ShowSentretWithGirl::
+    clearflag FLAG_HIDE_SHINY_SENTRET_WITH_GIRL  
+    return
+
+OldaleTown_EventScript_HideSentretWithGirl::
+    setflag FLAG_HIDE_SHINY_SENTRET_WITH_GIRL    
+    return
 
 @ This script seems pointless because nothing uses VAR_OLDALE_TOWN_STATE
 OldaleTown_EventScript_SetOldaleState::
@@ -38,6 +48,51 @@ OldaleTown_EventScript_Girl::
 
 OldaleTown_EventScript_Girl2::
 	msgbox OldaleTown_Text_PieceofMind, MSGBOX_NPC
+	end
+
+// ====================================================================
+// LITTLE GIRL - Shiny Sentret Quest
+// ====================================================================
+
+OldaleTown_EventScript_LittleGirl::
+	lock
+	faceplayer
+	
+	// If quest is already complete
+	goto_if_set FLAG_SHINY_SENTRET_END, OldaleTown_EventScript_GirlQuestComplete
+	
+	// If Sentret is following player (already found)
+	goto_if_set FLAG_SHINY_SENTRET, OldaleTown_EventScript_ReturnSentret
+	
+	// First conversation (complains Sentret ran away) - NO FLAG NEEDED
+	msgbox OldaleTown_Text_LostMySentret, MSGBOX_DEFAULT
+	release
+	end
+
+OldaleTown_EventScript_ReturnSentret::
+	msgbox OldaleTown_Text_YouFoundHim, MSGBOX_DEFAULT
+	closemessage	
+	// Remove follower
+	destroyfollowernpc
+	// Set quest complete flag
+	setflag FLAG_SHINY_SENTRET_END
+	clearflag FLAG_SHINY_SENTRET  // Clear following flag	
+	// Give reward
+	msgbox OldaleTown_Text_HereIsYourReward, MSGBOX_DEFAULT
+	giveitem ITEM_QUICK_CLAW
+	goto_if_eq VAR_RESULT, FALSE, OldaleTown_EventScript_BagFullReward	
+	msgbox OldaleTown_Text_SentretIsHappy, MSGBOX_DEFAULT
+	release
+	end
+
+OldaleTown_EventScript_BagFullReward::
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
+	release
+	end
+
+OldaleTown_EventScript_GirlQuestComplete::
+	msgbox OldaleTown_Text_ThankYouForReturning, MSGBOX_NPC
+	release
 	end
 
 OldaleTown_EventScript_MartEmployee::
@@ -346,6 +401,24 @@ OldaleTown_Movement_ReturnToOriginalPosition:
 	walk_left
 	step_end
 
+// ====================================================================
+// SENTRET WITH GIRL - After quest complete
+// ====================================================================
+
+OldaleTown_EventScript_SentretWithGirl::
+    lock
+    faceplayer
+    msgbox OldaleTown_Text_SentretWithGirlHappy, MSGBOX_DEFAULT
+    playmoncry SPECIES_SENTRET, CRY_MODE_NORMAL
+    waitmoncry
+    release
+    end
+
+OldaleTown_Text_SentretWithGirlHappy:
+    .string "SENTRET: Sent! Sentret!\n"
+    .string "He plays happily at the girl's feet.\p"
+    .string "They look so content together!$"	
+
 OldaleTown_Text_SavingMyProgress:
 	.string "You look familiar, but also kind of\n"
 	.string "strange... I can't explain it.\p"
@@ -430,3 +503,35 @@ OldaleTown_Text_TownSign:
 OldaleTown_Text_ShopSign:
 	.string "OLDALE SHOP\n"
 	.string "“We got cool stuff!”$"
+
+// ====================================================================
+// Sentret Quest Text
+// ====================================================================
+
+OldaleTown_Text_LostMySentret:
+	.string "Oh no, oh no, oh no!\n"
+	.string "My SENTRET ran away!\p"
+	.string "He's not like the others...\n"
+	.string "He's SHINY! His fur sparkles!\p"
+	.string "Please, if you see him anywhere,\n"
+	.string "please bring him back to me!$"
+
+OldaleTown_Text_YouFoundHim:
+	.string "Oh! You found my SENTRET!\n"
+	.string "Is he okay? Is he hurt?\p"
+	.string "Thank you so much for bringing\n"
+	.string "him back to me!$"
+
+OldaleTown_Text_HereIsYourReward:
+	.string "Here, please take this as a reward\n"
+	.string "for helping us reunite!$"
+
+OldaleTown_Text_SentretIsHappy:
+	.string "SENTRET: Sent! Sentret!\n"
+	.string "He happily nuzzles against the girl!\p"
+	.string "They look so happy together!$"
+
+OldaleTown_Text_ThankYouForReturning:
+	.string "My SENTRET and I will never be\n"
+	.string "separated again!\p"
+	.string "Thank you so much for everything!$"
