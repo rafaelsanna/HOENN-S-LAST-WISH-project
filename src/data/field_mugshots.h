@@ -1,7 +1,7 @@
 #ifndef GUARD_DATA_FIELD_MUGSHOTS_H
 #define GUARD_DATA_FIELD_MUGSHOTS_H
 
-// Original de teste
+// Tes
 static const u32 sFieldMugshotGfx_TestNormal[] = INCBIN_U32("graphics/field_mugshots/test/normal.4bpp.lz");
 static const u32 sFieldMugshotGfx_TestAlt[]   = INCBIN_U32("graphics/field_mugshots/test/alt.4bpp.lz");
 static const u16 sFieldMugshotPal_TestNormal[] = INCBIN_U16("graphics/field_mugshots/test/normal.gbapal");
@@ -34,6 +34,14 @@ static const u16 sFieldMugshotPal_ZennoNormal[] = INCBIN_U16("graphics/field_mug
 // Zinnia
 static const u32 sFieldMugshotGfx_ZinniaNormal[] = INCBIN_U32("graphics/field_mugshots/zinnia/normal.4bpp.lz");
 static const u16 sFieldMugshotPal_ZinniaNormal[] = INCBIN_U16("graphics/field_mugshots/zinnia/normal.gbapal");
+
+// Calendula 
+static const u32 sFieldMugshotGfx_CalendulaNormal[] = INCBIN_U32("graphics/field_mugshots/calendula/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_CalendulaNormal[] = INCBIN_U16("graphics/field_mugshots/calendula/normal.gbapal");
+
+// Luka
+static const u32 sFieldMugshotGfx_LukaNormal[] = INCBIN_U32("graphics/field_mugshots/luka/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_LukaNormal[] = INCBIN_U16("graphics/field_mugshots/luka/normal.gbapal");
 
 
 struct MugshotGfx
@@ -76,6 +84,14 @@ static const struct MugshotGfx sFieldMugshots[MUGSHOT_COUNT][EMOTE_COUNT] =
     [MUGSHOT_ZINNIA] =
     {
         [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_ZinniaNormal, .pal = sFieldMugshotPal_ZinniaNormal },
+    },
+        [MUGSHOT_CALENDULA] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_CalendulaNormal, .pal = sFieldMugshotPal_CalendulaNormal },
+    },
+    [MUGSHOT_LUKA] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_LukaNormal, .pal = sFieldMugshotPal_LukaNormal },
     },
 };
 

@@ -75,6 +75,7 @@ PetalburgCity_Gym_OnFrame:
 
 PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 	lockall
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
 	msgbox PetalburgCity_Gym_Text_DadSoDidItWorkOut, MSGBOX_DEFAULT
 	msgbox PetalburgCity_Gym_Text_WallyThankYouBye, MSGBOX_DEFAULT
 	closemessage
@@ -96,6 +97,7 @@ PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 	playfanfare MUS_OBTAIN_ITEM
 	msgbox PetalburgCity_Gym_Text_CalendulaGaveEevee, MSGBOX_DEFAULT
 	setvar VAR_PETALBURG_GYM_STATE, 2
+	removefieldmugshot
 	releaseall
 	end
 
@@ -120,7 +122,9 @@ PetalburgCity_Gym_EventScript_Norman::
     goto PetalburgCity_Gym_EventScript_NormanCasual
 
 PetalburgCity_Gym_EventScript_NormanCasual::
-    // Modo Casual - 
+    lock
+    faceplayer
+    createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
     switch VAR_PETALBURG_GYM_STATE
     case 2, PetalburgCity_Gym_EventScript_NormanNoBadges
     case 3, PetalburgCity_Gym_EventScript_NormanOneBadge
@@ -131,6 +135,7 @@ PetalburgCity_Gym_EventScript_NormanCasual::
     case 8, PetalburgCity_Gym_EventScript_NormanRematch
     msgbox PetalburgCity_Gym_Text_DadYoureHereWithYourPokemon, MSGBOX_DEFAULT
     closemessage
+    removefieldmugshot
     switch VAR_FACING
     case DIR_SOUTH, PetalburgCity_Gym_EventScript_BeginWallyTutorialSouth
     case DIR_NORTH, PetalburgCity_Gym_EventScript_BeginWallyTutorialNorth
@@ -159,18 +164,26 @@ PetalburgCity_Gym_EventScript_NormanHard::
 
 // Modo Casual - Batalha
 PetalburgCity_Gym_EventScript_NormanBattleCasual::
+    lockall
+    createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
     msgbox PetalburgCity_Gym_Text_NormanIntro, MSGBOX_DEFAULT
-    trainerbattle_no_intro TRAINER_CALENDULA_CASUAL, PetalburgCity_Gym_Text_NormanDefeat  // Precisa criar TRAINER_NORMAN_CASUAL
+    removefieldmugshot
+    trainerbattle_no_intro TRAINER_CALENDULA_CASUAL, PetalburgCity_Gym_Text_NormanDefeat
     goto PetalburgCity_Gym_EventScript_NormanAfterBattle
 
 // Modo Hard - Batalha
 PetalburgCity_Gym_EventScript_NormanBattleHard::
+    lockall
+    createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
     msgbox PetalburgCity_Gym_Text_NormanIntro, MSGBOX_DEFAULT
+    removefieldmugshot
     trainerbattle_no_intro TRAINER_NORMAN_1, PetalburgCity_Gym_Text_NormanDefeat
-    // Fall through para AfterBattle
+    goto PetalburgCity_Gym_EventScript_NormanAfterBattle
 
 // Pós-batalha 
 PetalburgCity_Gym_EventScript_NormanAfterBattle::
+    lockall
+    createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
     message PetalburgCity_Gym_Text_ReceivedBalanceBadge
     waitmessage
     call Common_EventScript_PlayGymBadgeFanfare
@@ -191,6 +204,7 @@ PetalburgCity_Gym_EventScript_NormanAfterBattle::
     delay 30
     msgbox PetalburgCity_Gym_Text_DadHappyAndSad, MSGBOX_DEFAULT
     closemessage
+    removefieldmugshot
     delay 40
     playse SE_DOOR
     delay 10
@@ -203,8 +217,11 @@ PetalburgCity_Gym_EventScript_NormanAfterBattle::
 
 // Rematch 
 PetalburgCity_Gym_EventScript_NormanRematch::
+    lockall
+    createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
     trainerbattle_rematch_double TRAINER_NORMAN_1, PetalburgCity_Gym_Text_NormanPreRematch, PetalburgCity_Gym_Text_NormanRematchDefeat, PetalburgCity_Gym_Text_NormanRematchNeedTwoMons
     msgbox PetalburgCity_Gym_Text_NormanPostRematch, MSGBOX_AUTOCLOSE
+    removefieldmugshot
     end
 
 PetalburgCity_Gym_EventScript_BeginWallyTutorialSouth::
@@ -234,6 +251,8 @@ PetalburgCity_Gym_EventScript_BeginWallyTutorial::
 	call_if_eq VAR_0x8008, 1, PetalburgCity_Gym_EventScript_WallyArriveNorth
 	call_if_eq VAR_0x8008, 2, PetalburgCity_Gym_EventScript_WallyArriveWestEast
 	call_if_eq VAR_0x8008, 3, PetalburgCity_Gym_EventScript_WallyArriveWestEast
+	lockall
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox PetalburgCity_Gym_Text_WallyIdLikeAPokemon, MSGBOX_DEFAULT
 	msgbox PetalburgCity_Gym_Text_DadOhYoureWallyRight, MSGBOX_DEFAULT
 	msgbox PetalburgCity_Gym_Text_WallyIveNeverCaughtAPokemon, MSGBOX_DEFAULT
@@ -260,6 +279,7 @@ PetalburgCity_Gym_EventScript_BeginWallyTutorial::
 	call_if_eq VAR_0x8008, 3, PetalburgCity_Gym_EventScript_WallyFacePlayer
 	msgbox PetalburgCity_Gym_Text_WouldYouReallyComeWithMe, MSGBOX_DEFAULT
 	closemessage
+	removefieldmugshot
 	setflag FLAG_DONT_TRANSITION_MUSIC
 	playbgm MUS_FOLLOW_ME, FALSE
 	call_if_eq VAR_0x8008, 0, PetalburgCity_Gym_EventScript_ExitGymWithWallySouth
@@ -379,9 +399,11 @@ PetalburgCity_Gym_EventScript_WallyFaceDown::
 	return
 
 PetalburgCity_Gym_EventScript_NormanNoBadges::
-	msgbox PetalburgCity_Gym_Text_NormanGoToRustboro, MSGBOX_DEFAULT
-	release
-	end
+    createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+    msgbox PetalburgCity_Gym_Text_NormanGoToRustboro, MSGBOX_DEFAULT
+    removefieldmugshot
+    release
+    end
 
 PetalburgCity_Gym_EventScript_NormanOneBadge::
 	msgbox PetalburgCity_Gym_Text_NormanGoToDewford, MSGBOX_DEFAULT
