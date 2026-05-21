@@ -20,7 +20,6 @@
 #include "constants/songs.h"
 #include "gba/syscall.h"
 
-
 static void   EmulatorCheck_Init(MainCallback callback);
 static void   EmulatorCheck_VBlankCB(void);
 static bool32 EmulatorCheck_InitBgs(void);
