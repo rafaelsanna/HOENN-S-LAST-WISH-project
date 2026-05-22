@@ -519,7 +519,7 @@
 #define FLAG_SHINY_SENTRET_END               0x1DF 
 #define FLAG_HIDE_SHINY_SENTRET_WILD         0x1E0 
 #define FLAG_HIDE_SHINY_SENTRET_WITH_GIRL    0x1E1 
-#define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag
+#define FLAG_DEFEATED_TROY           0x1E2 
 #define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
 
 // Mystery Gift Flags (Unknown)

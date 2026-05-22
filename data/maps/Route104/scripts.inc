@@ -669,28 +669,59 @@ Route104_EventScript_Boy2::
 # 345 "data/maps/Route104/scripts.pory"
 	goto_if_set FLAG_RECEIVED_TM_BULLET_SEED, Route104_EventScript_ReceivedBulletSeed
 # 346 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_LikeFillingMouthWithSeedsTakeThis, MSGBOX_DEFAULT
+	goto_if_set FLAG_DEFEATED_TROY, Route104_EventScript_TroyGiveTM
 # 347 "data/maps/Route104/scripts.pory"
-	giveitem ITEM_TM_BULLET_SEED
+	msgbox Route104_Text_TroyChallenge, MSGBOX_YESNO
 # 348 "data/maps/Route104/scripts.pory"
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	compare VAR_RESULT, YES
 # 349 "data/maps/Route104/scripts.pory"
-	setflag FLAG_RECEIVED_TM_BULLET_SEED
+	goto_if_eq Route104_EventScript_TroyBattle
 # 350 "data/maps/Route104/scripts.pory"
-	release
+	msgbox Route104_Text_TroyNextTime, MSGBOX_DEFAULT
 # 351 "data/maps/Route104/scripts.pory"
-	end
+	release
 # 352 "data/maps/Route104/scripts.pory"
+	end
 
 # 353 "data/maps/Route104/scripts.pory"
-Route104_EventScript_ReceivedBulletSeed::
+Route104_EventScript_TroyBattle::
 # 354 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_TMsAreOneTimeUse, MSGBOX_DEFAULT
+	trainerbattle_single TRAINER_TROY, Route104_Text_TroyIntro, Route104_Text_TroyDefeat, Route104_EventScript_TroyDefeated
 # 355 "data/maps/Route104/scripts.pory"
 	release
 # 356 "data/maps/Route104/scripts.pory"
 	end
+
 # 357 "data/maps/Route104/scripts.pory"
+Route104_EventScript_TroyDefeated::
+# 358 "data/maps/Route104/scripts.pory"
+	setflag FLAG_DEFEATED_TROY
+
+# 359 "data/maps/Route104/scripts.pory"
+Route104_EventScript_TroyGiveTM::
+# 360 "data/maps/Route104/scripts.pory"
+	msgbox Route104_Text_TroyTakeThis, MSGBOX_DEFAULT
+# 361 "data/maps/Route104/scripts.pory"
+	giveitem ITEM_TM_BULLET_SEED
+# 362 "data/maps/Route104/scripts.pory"
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+# 363 "data/maps/Route104/scripts.pory"
+	setflag FLAG_RECEIVED_TM_BULLET_SEED
+# 364 "data/maps/Route104/scripts.pory"
+	msgbox Route104_Text_TMsAreOneTimeUse, MSGBOX_DEFAULT
+# 365 "data/maps/Route104/scripts.pory"
+	release
+# 366 "data/maps/Route104/scripts.pory"
+	end
+
+# 367 "data/maps/Route104/scripts.pory"
+Route104_EventScript_ReceivedBulletSeed::
+# 368 "data/maps/Route104/scripts.pory"
+	msgbox Route104_Text_TroyPostBattle, MSGBOX_DEFAULT
+# 369 "data/maps/Route104/scripts.pory"
+	release
+# 370 "data/maps/Route104/scripts.pory"
+	end
 
 # 358 "data/maps/Route104/scripts.pory"
 Route104_EventScript_Girl2::
@@ -2458,3 +2489,44 @@ CaesarIntro::
 CaesarLose::
 # 13 "data/maps/Route104/scripts.pory"
 	.string "Maybe you can...$"
+
+# 1106 "data/maps/Route104/scripts.pory"
+Route104_Text_TroyChallenge:
+# 1107 "data/maps/Route104/scripts.pory"
+	.string "Hey! I like filling my mouth with seeds\n"
+	.string "and spitting them out super fast!\p"
+	.string "My grass POKéMON taught me that!\n"
+	.string "Wanna battle me?\p"
+	.string "If you win, I'll teach you my secret\n"
+	.string "seed spitting move!$"
+
+# 1108 "data/maps/Route104/scripts.pory"
+Route104_Text_TroyNextTime:
+# 1109 "data/maps/Route104/scripts.pory"
+	.string "Aww, okay... maybe next time then!\n"
+	.string "I'll be practicing with my POKéMON!$"
+
+# 1110 "data/maps/Route104/scripts.pory"
+Route104_Text_TroyIntro:
+# 1111 "data/maps/Route104/scripts.pory"
+	.string "Here I go! Get ready to get\n"
+	.string "showered with seeds!$"
+
+# 1112 "data/maps/Route104/scripts.pory"
+Route104_Text_TroyDefeat:
+# 1113 "data/maps/Route104/scripts.pory"
+	.string "Wow! You're really strong!\n"
+	.string "You beat me fair and square!$"
+
+# 1114 "data/maps/Route104/scripts.pory"
+Route104_Text_TroyTakeThis:
+# 1115 "data/maps/Route104/scripts.pory"
+	.string "You deserve it!\n"
+	.string "I'll teach you my special move!\p"
+	.string "Now you can spit seeds too, just like me!$"
+
+# 1116 "data/maps/Route104/scripts.pory"
+Route104_Text_TroyPostBattle:
+# 1117 "data/maps/Route104/scripts.pory"
+	.string "You're awesome!\n"
+	.string "Let's battle again sometime, okay?$"

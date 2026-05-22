@@ -14762,6 +14762,31 @@ Level: 9
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Tackle
 
+=== TRAINER_TROY ===
+Name: Troy
+Class: Youngster
+Pic: Youngster
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Oddish
+Level: 8
+- Bullet Seed
+- Acid
+
+Shroomish
+Level: 9
+- Bullet Seed
+- Tackle
+
+Lotad
+Level: 8
+- Bullet Seed
+- Astonish
+- Water Gun
+
 === TRAINER_HAILEY ===
 Name: HAILEY
 Class: Tuber F
