@@ -49,6 +49,7 @@
 #include "rtc.h"
 #include "fake_rtc.h"
 #include "constants/rtc.h"
+#include "radio.h"
 
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
@@ -85,6 +86,7 @@ static void CB2_OpenPokeblockFromBag(void);
 static void ItemUseOnFieldCB_Honey(u8 taskId);
 static bool32 IsValidLocationForVsSeeker(void);
 void ItemUseOutOfBattle_ChangePokeball(u8 taskId);
+static void Task_ItemUseRadio_WaitFade(u8 taskId);
 
 static const u8 sText_CantDismountBike[] = _("You can't dismount your BIKE here.{PAUSE_UNTIL_PRESS}");
 static const u8 sText_ItemFinderNearby[] = _("Huh?\nThe ITEMFINDER's responding!\pThere's an item buried around here!{PAUSE_UNTIL_PRESS}");
@@ -1714,6 +1716,25 @@ void ItemUseOutOfBattle_TimeGear(u8 taskId)
     PlaySE(SE_M_TELEPORT);
     DestroyTask(taskId);
     SetMainCallback2(CB2_LoadMap);
+}
+
+void ItemUseOutOfBattle_Radio(u8 taskId)
+{
+    // Play the "use item" sound, fade to black, then open the radio screen.
+    // Music will be managed by radio.c itself.
+    PlaySE(SE_USE_ITEM);
+    FadeScreen(FADE_TO_BLACK, 0);
+    gTasks[taskId].func = Task_ItemUseRadio_WaitFade;
+}
+
+static void Task_ItemUseRadio_WaitFade(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        DestroyTask(taskId);
+        // CB2_ReturnToField restores the overworld after we exit the radio.
+        Radio_Open(CB2_ReturnToField);
+    }
 }
 
 #undef tUsingRegisteredKeyItem

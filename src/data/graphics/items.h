@@ -2111,3 +2111,6 @@ const u16 gItemIconPalette_NumelNougat[] = INCBIN_U16("graphics/items/icon_palet
 
 const u32 gItemIcon_TimeGear[] = INCBIN_U32("graphics/items/icons/time_gear.4bpp.smol");
 const u16 gItemIconPalette_TimeGear[] = INCBIN_U16("graphics/items/icon_palettes/time_gear.gbapal");
+
+const u32 gItemIcon_Radio[]          = INCBIN_U32("graphics/items/icons/radio.4bpp.smol");
+const u16 gItemIconPalette_Radio[]   = INCBIN_U16("graphics/items/icon_palettes/radio.gbapal");

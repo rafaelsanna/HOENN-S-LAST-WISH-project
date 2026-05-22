@@ -3413,4 +3413,7 @@ extern const u16 gBattleIcons_Pal2[];
 extern const u32 gItemIcon_TimeGear[];
 extern const u16 gItemIconPalette_TimeGear[];
 
+extern const u32 gItemIcon_Radio[];
+extern const u16 gItemIconPalette_Radio[];
+
 #endif //GUARD_GRAPHICS_H
