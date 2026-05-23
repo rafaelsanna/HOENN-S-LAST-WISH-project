@@ -1,5 +1,5 @@
 // radio.c
-// Pokémon Radio - Key Item Screen
+// Pokemon Radio - Key Item Screen
 //
 // Stations (SELECT cycles):
 //   ALL      -> every BGM track
@@ -47,7 +47,7 @@ static const u16 sRadioBg_Tilemap[] = INCBIN_U16("graphics/radio/radiobg.bin");
 // ===========================================================================
 // BG templates
 // BG0 = text windows  (charbase 0, screenbase 31)
-// BG1 = radio tileset (charbase 2, screenbase 8)  — loaded raw into VRAM
+// BG1 = radio tileset (charbase 2, screenbase 8)  -- loaded directly into VRAM
 // ===========================================================================
 static const struct BgTemplate sRadioBgTemplates[] =
 {
@@ -94,7 +94,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
 };
 
 // ===========================================================================
-// BGM name list (X-macro — must be defined before any station list uses it)
+// BGM name list (X-macro -- must be defined before any station list uses it)
 // ===========================================================================
 #define RADIO_SOUND_LIST_BGM            \
     X(MUS_LITTLEROOT_TEST)              \
@@ -561,7 +561,7 @@ static EWRAM_DATA MainCallback sRadioReturnCallback = NULL;
 static EWRAM_DATA u16          sRadioCurrentSong    = 0;
 static EWRAM_DATA bool8        sRadioIsPlaying       = FALSE;
 static EWRAM_DATA u8           sRadioStation         = STATION_ALL;
-static EWRAM_DATA u16          sRadioStationIndex    = 0; // index within current station
+static EWRAM_DATA u16          sRadioStationIndex    = 0; // index within the current station
 
 // ===========================================================================
 // Forward declarations
@@ -616,7 +616,7 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
 
     FillWindowPixelBuffer(WIN_MUSIC_INFO, PIXEL_FILL(1));
 
-    // Linha 1: "Track:XXXX   NOW PLAYING" ou "Track:XXXX   PAUSED"
+    // Line 1: "Track:XXXX   NOW PLAYING" or "Track:XXXX   PAUSED"
     ConvertIntToDecimalStringN(numBuf, songId, STR_CONV_MODE_LEADING_ZEROS, 4);
     StringCopy(gStringVar1, numBuf);
     StringExpandPlaceholders(gStringVar4, sRadioText_TrackFmt);
@@ -625,7 +625,7 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
         playing ? sRadioText_Playing : sRadioText_Paused,
         130, 2, TEXT_SKIP_DRAW, NULL);
 
-    // Linha 2: "Song: NOME-DA-MUSICA"
+    // Line 2: "Song: SONG-NAME"
     name = Radio_GetSongName(songId);
     if (name == NULL)
         name = sRadioText_Unknown;
@@ -633,7 +633,7 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
     StringExpandPlaceholders(gStringVar4, sRadioText_SongFmt);
     AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT, gStringVar4, 2, 18, TEXT_SKIP_DRAW, NULL);
 
-    // Linha 3: "Station: NOME-DA-ESTACAO"
+    // Line 3: "Station: STATION-NAME"
     StringCopy(gStringVar1, sStationNames[sRadioStation]);
     StringExpandPlaceholders(gStringVar4, sRadioText_StationFmt);
     AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT, gStringVar4, 2, 34, TEXT_SKIP_DRAW, NULL);
@@ -779,7 +779,7 @@ static void CB2_Radio(void)
 // Tileset loaded DIRECTLY into VRAM (same pattern as intro.c) to avoid
 // any offset/buffer issues with the abstract BG system.
 //   Tiles  -> BG_CHAR_ADDR(2)   = charBaseIndex 2
-//   Tilemap-> BG_SCREEN_ADDR(8) = mapBaseIndex  8
+//   Tilemap -> BG_SCREEN_ADDR(8) = mapBaseIndex  8
 // ===========================================================================
 static void CB2_LoadRadio(void)
 {
@@ -796,9 +796,9 @@ static void CB2_LoadRadio(void)
     case 1:
         ResetBgsAndClearDma3BusyFlags(0);
         InitBgsFromTemplates(0, sRadioBgTemplates, ARRAY_COUNT(sRadioBgTemplates));
-        // InitWindows aloca o buffer de tilemap do BG0 automaticamente (window.c:63-75).
-        // NÃO chamar SetBgTilemapBuffer manualmente — isso conflita com o AllocZeroed
-        // interno e corrompe o heap.
+        // InitWindows automatically allocates the BG0 tilemap buffer (window.c:63-75).
+        // Do NOT call SetBgTilemapBuffer manually -- it conflicts with the internal
+        // AllocZeroed call and corrupts the heap.
         InitWindows(sRadioWindowTemplates);
         InitTextBoxGfxAndPrinters();
         break;
@@ -810,29 +810,35 @@ static void CB2_LoadRadio(void)
         break;
 
     case 3:
-        // PLTT_SIZE_4BPP = 32 bytes = 1 slot (16 cores).
-        // Usar sizeof() é perigoso: se o .gbapal tiver > 32 bytes sobrescreve
-        // slots além do 0, incluindo o slot 15 que a fonte usa.
+        // PLTT_SIZE_4BPP = 32 bytes = 1 slot (16 colors).
+        // Using sizeof() is dangerous: if .gbapal has >32 bytes it overwrites
+        // slots beyond 0, including slot 15 used by the font.
         LoadPalette(sRadioBg_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
         LoadMessageBoxAndBorderGfx();
-        // Tiles direto no charbase 2 — síncrono, sem buffer intermediário.
+        // Load tiles directly into charbase 2 -- synchronous, no intermediate buffer.
         DecompressDataWithHeaderVram(sRadioBg_Gfx, (void *)(BG_CHAR_ADDR(2)));
         break;
 
     case 4:
-        // Tilemap direto no screenbase 8 — igual ao padrão da intro.c.
+        // Load tilemap directly into screenbase 8 -- same pattern as intro.c.
         CpuFill16(0, (void *)(BG_SCREEN_ADDR(8)), BG_SCREEN_SIZE);
         CpuCopy16(sRadioBg_Tilemap, (void *)(BG_SCREEN_ADDR(8)), 32 * 20 * 2);
         break;
 
     case 5:
-        // SetWindowBorderStyle define as bordas SEM escrever direto na VRAM,
+        // Draw window tilemap and content.
         PutWindowTilemap(WIN_MUSIC_INFO);
         Radio_DrawMusicInfo(sRadioCurrentSong, sRadioIsPlaying);
         CopyBgTilemapBufferToVram(0);
         break;
 
     case 6:
+        // Zero all BG scroll registers -- without this the tileset inherits
+        // random scroll values from previous screens and appears misaligned.
+        SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG1VOFS, 0);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
                                        DISPCNT_OBJ_1D_MAP |
                                        DISPCNT_OBJ_ON);
