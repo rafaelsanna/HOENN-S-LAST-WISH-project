@@ -26,6 +26,7 @@
 #include "test_runner.h"
 #include "constants/rgb.h"
 #include "comfy_anim.h"
+#include "emulator_check.h"
 
 static void VBlankIntr(void);
 static void HBlankIntr(void);
@@ -113,7 +114,9 @@ void AgbMain(void)
     ResetBgs();
     SetDefaultFontsPointer();
     InitHeap(gHeap, HEAP_SIZE);
-
+// run emulator accuracy check to block inaccurate emulators from running your hack
+if (IsInaccurateEmulator())
+    RunEmulatorCheckUI(CB2_InitCopyrightScreenAfterBootup);
     gSoftResetDisabled = FALSE;
 
     if (gFlashMemoryPresent != TRUE)

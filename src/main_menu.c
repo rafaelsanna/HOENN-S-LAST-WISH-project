@@ -215,10 +215,22 @@ static void LoadMainMenuWindowFrameTiles(u8, u16);
 static void DrawMainMenuWindowBorder(const struct WindowTemplate *, u16);
 static void Task_HighlightSelectedMainMenuItem(u8);
 static void Task_NewGameBirchSpeech_WaitToShowGenderMenu(u8);
+static void Task_NewGameBirchSpeech_FadeToGenderSelect(u8);
+static void Task_NewGameBirchSpeech_WaitGenderFadeIn(u8);
 static void Task_NewGameBirchSpeech_ChooseGender(u8);
+static void Task_NewGameBirchSpeech_GenderSwapFadeOut(u8);
+static void Task_NewGameBirchSpeech_GenderSwapFadeIn(u8);
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeOut(u8);
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeIn(u8);
 static void NewGameBirchSpeech_ShowGenderMenu(void);
 static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void);
 static void NewGameBirchSpeech_ClearGenderWindow(u8, u8);
+static void NewGameBirchSpeech_ShowGenderBg(u8);
+static void NewGameBirchSpeech_StartGenderBgSlide(u8, u8);
+static void NewGameBirchSpeech_UpdateGenderBgSlide(u8);
+static void NewGameBirchSpeech_HideGenderBg(u8);
+static void NewGameBirchSpeech_LoadGenderBgTilemap(u8);
+static void NewGameBirchSpeech_LoadGenderUnderlay(void);
 static void Task_NewGameBirchSpeech_WhatsYourName(u8);
 static void Task_NewGameBirchSpeech_SlideOutOldGenderSprite(u8);
 static void Task_NewGameBirchSpeech_SlideInNewGenderSprite(u8);
@@ -256,7 +268,13 @@ static bool8 sJirachiSpringActive = FALSE;
 static bool8 sCelebiSpringActive = FALSE;
 static struct ComfyAnim sGenderSlideX;
 static bool8 sGenderSlideActive = FALSE;
+// Cooldown em frames para evitar spam de scroll do tileset (120 frames = 2s)
+static u8 sGenderScrollCooldown = 0;
 static void Task_NewGameBirchSpeech_GenderSlideIn(u8);
+// Buffer exato de um tilemap GBA 32x32 (BG_SCREEN_SIZE / sizeof(u16) = 0x400 entradas).
+// Antes era 0x800 para suportar slide com offset; agora usa fade, entao 0x400 e suficiente.
+static EWRAM_DATA u16 sGenderBg3Tilemap[0x400];
+// sGenderBg3SourceTilemap removido: tilemaps agora lidos diretamente de sGenderCombinedTilemaps.
 // .rodata
 
 static const u16 sBirchSpeechBgPals[][16] = {
@@ -271,6 +289,21 @@ static const u16 sBirchSpeechBgPalette[] = INCBIN_U16("graphics/birch_speech/bir
 static const u32 sBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/shadow.4bpp.smol");
 static const u32 sBirchSpeechBgMap[] = INCBIN_U32("graphics/birch_speech/map.bin.smolTM");
 static const u16 sBirchSpeechBgGradientPal[] = INCBIN_U16("graphics/birch_speech/bg2.gbapal");
+
+// Tileset combinado: boy (tiles 0–240) + girl (tiles 241–451) em um único sheet.
+// O .bin tem dois tilemaps de 32×16 empacotados: bytes 0–1023 = boy, 1024–2047 = girl.
+static const u32 sGenderCombinedGfx[]      = INCBIN_U32("graphics/birch_speech/zinneazenno.4bpp.lz");
+static const u16 sGenderCombinedPal[]      = INCBIN_U16("graphics/birch_speech/zinneazenno.gbapal");
+static const u8  sGenderCombinedTilemaps[] = INCBIN_U8("graphics/birch_speech/zinneazenno.bin");
+
+// Ponteiros para cada metade do .bin (512 u16 = 32×16 tiles por personagem).
+#define BIRCH_GENDER_TILEMAP_ROWS    16
+#define BIRCH_GENDER_TILEMAP_STRIDE  (BIRCH_GENDER_BG_WIDTH * BIRCH_GENDER_TILEMAP_ROWS)
+// Linhas vazias no topo para alinhar o personagem (128px) ao rodape da tela (160px).
+// 20 linhas de tela - 16 linhas do personagem = 4 linhas em branco no topo.
+#define BIRCH_GENDER_Y_OFFSET        4
+#define sGenderBoyTilemapSrc  ((const u16 *)(sGenderCombinedTilemaps))
+#define sGenderGirlTilemapSrc ((const u16 *)(sGenderCombinedTilemaps + BIRCH_GENDER_TILEMAP_STRIDE * sizeof(u16)))
 
 static const u8 gText_SaveFileCorrupted[] = _("The save file is corrupted. The\nprevious save file will be loaded.");
 static const u8 gText_SaveFileErased[] = _("The save file has been erased\ndue to corruption or damage.");
@@ -487,6 +520,16 @@ static const struct BgTemplate sBirchSpeechBgTemplate = {
     .screenSize = 0,
     .paletteMode = 0,
     .priority = 3,                // Prioridade baixa (fundo)
+    .baseTile = 0
+};
+
+static const struct BgTemplate sBirchGenderBgTemplate = {
+    .bg = 3,
+    .charBaseIndex = 2,
+    .mapBaseIndex = 23,  // 0x600B800 — logo apos os 14336 bytes de GFX em charbase 2 (0x6008000+0x3800)
+    .screenSize = 0,     // 256x256 — slide removido, um screenbase e suficiente
+    .paletteMode = 0,
+    .priority = 1,
     .baseTile = 0
 };
 
@@ -738,6 +781,12 @@ enum
 
 #define MAIN_MENU_BORDER_TILE   0x1D5
 #define BIRCH_DLG_BASE_TILE_NUM 0xFC
+#define BIRCH_GENDER_BG         3
+#define BIRCH_GENDER_BG_PAL     3
+#define BIRCH_GENDER_BG_MAP     23
+#define BIRCH_GENDER_BG_WIDTH   32
+#define BIRCH_GENDER_BG_HEIGHT  20
+#define BIRCH_GENDER_BG_SLIDE   256
 
 static void CB2_MainMenu(void)
 {
@@ -1340,7 +1389,7 @@ static void Task_DisplayMainMenuInvalidActionError(u8 taskId)
     switch (gTasks[taskId].tCurrItem)
     {
         case 0:
-            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+            FillBgTilemapBufferRect_Palette0(0, BIRCH_DLG_BASE_TILE_NUM, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
             switch (gTasks[taskId].tMenuType)
             {
                 case 0:
@@ -1540,6 +1589,7 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     // Initialize BG0 (for the text windows) and BG1
     InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
     InitBgFromTemplate(&sBirchBgTemplate);
+    InitBgFromTemplate(&sBirchGenderBgTemplate);
 
     // BG2 - fundo estático
     InitBgFromTemplate(&sBirchSpeechBgTemplate);
@@ -1552,10 +1602,13 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
 
     SetGpuReg(REG_OFFSET_BG2CNT, 0);
+    SetGpuReg(REG_OFFSET_BG3CNT, 0);
     SetGpuReg(REG_OFFSET_BG1CNT, 0);
     SetGpuReg(REG_OFFSET_BG0CNT, 0);
     SetGpuReg(REG_OFFSET_BG2HOFS, 0);
     SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+    SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG3VOFS, 0);
     SetGpuReg(REG_OFFSET_BG1HOFS, 0);
     SetGpuReg(REG_OFFSET_BG1VOFS, 0);
     SetGpuReg(REG_OFFSET_BG0HOFS, 0);
@@ -1605,6 +1658,7 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
+    HideBg(3);
     
     // Cria estrelas (uma única vez)
     Birch_CreateStars();
@@ -1856,43 +1910,25 @@ static void Task_NewGameBirchSpeech_StartPlayerFadeIn(u8 taskId)
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
         gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
-        gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
-        // Oculta Jirachi e Celebi (sprites da primeira aparição)
+        if (gTasks[taskId].tLotadSpriteId != SPRITE_NONE)
+            gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
+        // Jirachi e Celebi ficam ocultos — nao sao mais necessarios aqui
         gSprites[gTasks[taskId].tJirachiSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tCelebiSpriteId].invisible = TRUE;
-
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
-
-        
-        if (gTasks[taskId].tTimer)
-        {
-            gTasks[taskId].tTimer--;
-        }
-        else
-        {
-            u8 spriteId = gTasks[taskId].tBrendanSpriteId;
-
-            gSprites[spriteId].x = 180;
-            gSprites[spriteId].y = 60;
-            gSprites[spriteId].invisible = FALSE;
-            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-            gTasks[taskId].tPlayerSpriteId = spriteId;
-            gTasks[taskId].tPlayerGender = MALE;
-            
-            // Usa fade restaurado
-            NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
-            
-            gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForPlayerFadeIn;
-        }
+        // Vai direto para BoyOrGirl sem mostrar Brendan — o personagem
+        // correto so aparece APOS a selecao de genero (em HideGenderBg)
+        sGenderScrollCooldown = 0;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
     }
 }
 
 static void Task_NewGameBirchSpeech_WaitForPlayerFadeIn(u8 taskId)
 {
+    // Mantida por compatibilidade com o fluxo de retorno do naming screen
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
         gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
-        // *** REMOVER ESTA LINHA: ***
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
         gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
     }
@@ -1910,15 +1946,45 @@ static void Task_NewGameBirchSpeech_WaitToShowGenderMenu(u8 taskId)
 {
     if (!RunTextPrintersAndIsPrinter0Active())
     {
-        NewGameBirchSpeech_ShowGenderMenu();
-        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_FadeToGenderSelect;
+        }
     }
+}
+
+// Espera o fade-out terminar, monta a tela de selecao de genero e faz fade-in.
+static void Task_NewGameBirchSpeech_FadeToGenderSelect(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+        CopyBgTilemapBufferToVram(0);
+        gSprites[gTasks[taskId].tPlayerSpriteId].invisible = TRUE;
+        NewGameBirchSpeech_ShowGenderBg(gTasks[taskId].tPlayerGender);
+        NewGameBirchSpeech_ShowGenderMenu();
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WaitGenderFadeIn;
+    }
+}
+
+// Aguarda o fade-in terminar antes de aceitar input.
+static void Task_NewGameBirchSpeech_WaitGenderFadeIn(u8 taskId)
+{
+    if (!gPaletteFade.active)
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
 }
 
 // Helper: esconde sprite atual, exibe o novo e reinicia a mola do slide.
 // Chamado tanto em ChooseGender quanto em GenderSlideIn para evitar duplicação.
 static void StartGenderSlide(u8 taskId, int newGender)
 {
+    NewGameBirchSpeech_StartGenderBgSlide(taskId, newGender);
+    return;
+
+#if 0
     struct ComfyAnimSpringConfig cfg;
     u8 newSpriteId;
 
@@ -1943,15 +2009,25 @@ static void StartGenderSlide(u8 taskId, int newGender)
     cfg.clampAfter = 0;
     InitComfyAnim_Spring(&cfg, &sGenderSlideX);
     sGenderSlideActive = TRUE;
+#endif
 }
 
 static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
 {
-    // Processa o input do menu — isso atualiza o cursor interno antes de Menu_GetCursorPos()
-    int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
-    int cursorPos = Menu_GetCursorPos();
+    int gender;
+    int cursorPos;
 
-    // Jogador confirmou com A
+    // Cooldown bloqueia TODO input — cursor nao se move visualmente.
+    // Decrementa e retorna sem chamar ProcessGenderMenuInput.
+    if (sGenderScrollCooldown > 0)
+    {
+        sGenderScrollCooldown--;
+        return;
+    }
+
+    gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
+    cursorPos = Menu_GetCursorPos();
+
     switch (gender)
     {
         case MALE:
@@ -1959,27 +2035,61 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
             PlaySE(SE_SELECT);
             gSaveBlock2Ptr->playerGender = gender;
             NewGameBirchSpeech_ClearGenderWindow(1, 1);
-            gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+            sGenderSlideActive = FALSE;
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_ConfirmGenderFadeOut;
             return;
     }
 
-    // Cursor mudou → inicia slide imediatamente
     if (cursorPos != gTasks[taskId].tPlayerGender)
     {
-        StartGenderSlide(taskId, cursorPos);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_GenderSlideIn;
+        // Troca instantanea — 1 tileset na VRAM, so copia o tilemap certo.
+        // Sem fade, sem tarefa intermediaria, sem glitch possivel.
+        gTasks[taskId].tPlayerGender = cursorPos;
+        NewGameBirchSpeech_LoadGenderBgTilemap(cursorPos);
+        SetGpuReg(REG_OFFSET_BG3HOFS, (u16)(cursorPos == MALE ? -25 : 10));
+        InitMenuInUpperLeftCornerNormal(1, ARRAY_COUNT(sMenuActions_Gender), cursorPos);
+        sGenderScrollCooldown = 10;  // 2s: so começa a contar APOS a troca
     }
+}
+
+// Stubs mantidos apenas para satisfazer os forward declarations — nunca chamados.
+static void Task_NewGameBirchSpeech_GenderSwapFadeOut(u8 taskId)
+{
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
+}
+
+static void Task_NewGameBirchSpeech_GenderSwapFadeIn(u8 taskId)
+{
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
+}
+
+// Espera o fade-out, restaura a cena do Birch, faz fade-in e vai para WhatsYourName.
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeOut(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        NewGameBirchSpeech_HideGenderBg(taskId);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ConfirmGenderFadeIn;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ConfirmGenderFadeIn(u8 taskId)
+{
+    if (!gPaletteFade.active)
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
 }
 
 static void Task_NewGameBirchSpeech_GenderSlideIn(u8 taskId)
 {
-    u8  spriteId  = gTasks[taskId].tPlayerSpriteId;
-    // CORREÇÃO: processar o input AQUI também, a cada frame,
-    // para que Menu_GetCursorPos() reflita o estado real do botão.
     int gender    = NewGameBirchSpeech_ProcessGenderMenuInput();
     int cursorPos = Menu_GetCursorPos();
 
-    // Confirmação com A aceita mesmo durante a animação
+    if (sGenderScrollCooldown > 0)
+        sGenderScrollCooldown--;
+
+    // Confirmacao com A aceita mesmo durante a animacao
     switch (gender)
     {
         case MALE:
@@ -1988,31 +2098,23 @@ static void Task_NewGameBirchSpeech_GenderSlideIn(u8 taskId)
             sGenderSlideActive = FALSE;
             gSaveBlock2Ptr->playerGender = gender;
             NewGameBirchSpeech_ClearGenderWindow(1, 1);
+            NewGameBirchSpeech_HideGenderBg(taskId);
             gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
             return;
     }
 
-    // Cursor mudou durante o slide → reinicia sem nenhum delay
-    if (cursorPos != gTasks[taskId].tPlayerGender)
+    // Novo scroll so se cooldown zerou (o slide anterior terminou E passou o delay)
+    if (cursorPos != gTasks[taskId].tPlayerGender && sGenderScrollCooldown == 0)
     {
         sGenderSlideActive = FALSE;
+        sGenderScrollCooldown = 120;
         StartGenderSlide(taskId, cursorPos);
-        return; // permanece em GenderSlideIn para a nova animação
+        return;
     }
 
-    // Avança a física da mola
     if (sGenderSlideActive)
-    {
-        TryAdvanceComfyAnim(&sGenderSlideX);
-        gSprites[spriteId].x = ReadComfyAnimValueSmooth(&sGenderSlideX);
-        if (sGenderSlideX.completed)
-        {
-            gSprites[spriteId].x = 180;
-            sGenderSlideActive   = FALSE;
-        }
-    }
+        NewGameBirchSpeech_UpdateGenderBgSlide(taskId);
 
-    // Animação concluída → volta ao handler principal
     if (!sGenderSlideActive)
         gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
 }
@@ -2142,7 +2244,6 @@ static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8 taskId)
     gTasks[taskId].func = Task_NewGameBirchSpeech_ReshowBirchLotad;
 }
 
-
 static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
 {
     u8 spriteId;
@@ -2152,14 +2253,12 @@ static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
         gSprites[gTasks[taskId].tBrendanSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tMaySpriteId].invisible = TRUE;
         
-        // Jirachi centralizado
+        // Mostra apenas o Birch
         spriteId = gTasks[taskId].tBirchSpriteId;
-        gSprites[spriteId].x = 120;  // CENTRALIZADO (era 136)
+        gSprites[spriteId].x = 120;
         gSprites[spriteId].y = 60;
         gSprites[spriteId].invisible = FALSE;
-        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
         
-        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
         NewGameBirchSpeech_ClearWindow(0);
         StringExpandPlaceholders(gStringVar4, gText_Birch_YourePlayer);
         AddTextPrinterForMessage(TRUE);
@@ -2167,17 +2266,16 @@ static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
     }
 }
 
-
 static void Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter(u8 taskId)
 {
     if (gTasks[taskId].tIsDoneFadingSprites)
     {
-        gSprites[gTasks[taskId].tBirchSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
-        
+        // Jirachi ja apareceu — desliga o blend mode dele.
+        gSprites[gTasks[taskId].tJirachiSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+
         if (!RunTextPrintersAndIsPrinter0Active())
         {
-            gSprites[gTasks[taskId].tBirchSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-            NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
             gTasks[taskId].tTimer = 64;
             gTasks[taskId].func = Task_NewGameBirchSpeech_AreYouReady;
         }
@@ -2192,6 +2290,7 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
     {
         gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
+        gSprites[gTasks[taskId].tJirachiSpriteId].invisible = TRUE;  // oculta Jirachi antes de Brendan/May
         if (gTasks[taskId].tTimer)
         {
             gTasks[taskId].tTimer--;
@@ -2544,6 +2643,138 @@ static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay)
 #undef tDelayBefore
 #undef tDelay
 #undef tDelayTimer
+
+// Copia apenas o tilemap do personagem correto para VRAM.
+// O tileset combinado já foi carregado em ShowGenderBg — nenhuma descompressão aqui.
+// Reconstrói o tilemap em EWRAM e agenda cópia para VRAM no próximo VBlank.
+// Nunca escreve em VRAM mid-frame → sem tearing, sem glitch.
+static void NewGameBirchSpeech_LoadGenderBgTilemap(u8 gender)
+{
+    const u16 *src = (gender == MALE) ? sGenderBoyTilemapSrc : sGenderGirlTilemapSrc;
+    u32 x, y;
+
+    CpuFill16(0, sGenderBg3Tilemap, BG_SCREEN_SIZE);
+
+    for (y = 0; y < BIRCH_GENDER_TILEMAP_ROWS; y++)
+    {
+        for (x = 0; x < BIRCH_GENDER_BG_WIDTH; x++)
+        {
+            u32 src_i = y * BIRCH_GENDER_BG_WIDTH + x;
+            u32 dst_i = (y + BIRCH_GENDER_Y_OFFSET) * BIRCH_GENDER_BG_WIDTH + x;
+            sGenderBg3Tilemap[dst_i] = (src[src_i] & 0x0FFF) | (BIRCH_GENDER_BG_PAL << 12);
+        }
+    }
+
+    // Agenda cópia EWRAM→VRAM para o próximo VBlank via DMA3 manager.
+    // SetBgTilemapBuffer foi chamado em ShowGenderBg, portanto CopyBgTilemapBufferToVram
+    // sabe o endereço de destino correto e o tamanho (BG_SCREEN_SIZE).
+    CopyBgTilemapBufferToVram(BIRCH_GENDER_BG);
+}
+
+static void NewGameBirchSpeech_LoadGenderUnderlay(void)
+{
+    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(1));
+    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    ShowBg(2);
+}
+
+static void NewGameBirchSpeech_ShowGenderBg(u8 gender)
+{
+    // Garante estado limpo no sistema de temp tile buffers antes de qualquer
+    // descompressão. Na segunda entrada (após ReturnFromNamingScreen), esse
+    // sistema pode ter entradas stale que corrompem tiles subsequentes.
+    ResetTempTileDataBuffers();
+
+    // Reinicializa BG3 com o template correto.
+    InitBgFromTemplate(&sBirchGenderBgTemplate);
+    // Reinicializa BG2 também: ReturnFromNamingScreen zera BG2CNT (linha ~2395)
+    // então ao voltar pelo "No" do naming, BG2 estaria apontando para charbase/mapbase
+    // errados e mostraria magenta. Isso corrige o registro a cada entrada.
+    InitBgFromTemplate(&sBirchSpeechBgTemplate);
+
+    DecompressDataWithHeaderVram(sGenderCombinedGfx, (void *)BG_CHAR_ADDR(2));
+    LoadPalette(sGenderCombinedPal, BG_PLTT_ID(BIRCH_GENDER_BG_PAL), PLTT_SIZE_4BPP);
+
+    SetBgTilemapBuffer(BIRCH_GENDER_BG, sGenderBg3Tilemap);
+
+    NewGameBirchSpeech_LoadGenderUnderlay();
+    NewGameBirchSpeech_LoadGenderBgTilemap(gender);
+
+    SetGpuReg(REG_OFFSET_BG3HOFS, (u16)(gender == MALE ? -25 : 10));
+    ChangeBgY(BIRCH_GENDER_BG, 0, BG_COORD_SET);
+    HideBg(1);
+    ShowBg(BIRCH_GENDER_BG);
+}
+
+static void NewGameBirchSpeech_StartGenderBgSlide(u8 taskId, u8 newGender)
+{
+    struct ComfyAnimEasingConfig cfg;
+    bool8 slideFromRight = newGender > gTasks[taskId].data[6];
+
+    NewGameBirchSpeech_LoadGenderBgTilemap(newGender);
+
+    InitComfyAnimConfig_Easing(&cfg);
+    cfg.durationFrames = 18;
+    cfg.from = Q_24_8(slideFromRight ? 0 : BIRCH_GENDER_BG_SLIDE);
+    cfg.to = Q_24_8(slideFromRight ? BIRCH_GENDER_BG_SLIDE : 0);
+    cfg.easingFunc = ComfyAnimEasing_EaseOutCubic;
+    InitComfyAnim_Easing(&cfg, &sGenderSlideX);
+    sGenderSlideActive = TRUE;
+    gTasks[taskId].data[6] = newGender;
+}
+
+static void NewGameBirchSpeech_UpdateGenderBgSlide(u8 taskId)
+{
+    TryAdvanceComfyAnim(&sGenderSlideX);
+    SetGpuReg(REG_OFFSET_BG3HOFS, ReadComfyAnimValueSmooth(&sGenderSlideX));
+    if (sGenderSlideX.completed)
+    {
+        NewGameBirchSpeech_LoadGenderBgTilemap(gTasks[taskId].data[6]);
+        SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+        sGenderSlideActive = FALSE;
+    }
+}
+
+static void NewGameBirchSpeech_HideGenderBg(u8 taskId)
+{
+    u8 spriteId;
+    u16 black = RGB_BLACK;
+
+    HideBg(BIRCH_GENDER_BG);
+    ShowBg(1);
+    SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+    // Usa decompress síncrono direto para BG_CHAR_ADDR(1) (charbase do BG2).
+    // DecompressAndCopyTileDataToVram é assíncrono e usa o sistema de temp buffers;
+    // na segunda entrada (após ReturnFromNamingScreen) esse sistema pode estar com
+    // estado stale, causando falha no carregamento dos tiles — inclusive das fontes
+    // da tela de nome seguinte.
+    DecompressDataWithHeaderVram(sBirchSpeechBgTiles, (void *)BG_CHAR_ADDR(1));
+    DecompressDataWithHeaderVram(sBirchSpeechBgTilemap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(sBirchSpeechBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(0));
+    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
+    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    LoadPalette(&black, BG_PLTT_ID(0), sizeof(black));
+
+    // Restaura tiles do frame das janelas de texto (charbase 2) que podem ter
+    // sido corrompidos pelos gfx do gender tileset. Sem isso a borda fica glitchada.
+    LoadMainMenuWindowFrameTiles(0, 0xF3);
+    LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    LoadBirchSpeechTextboxPalette();
+
+    spriteId = (gSaveBlock2Ptr->playerGender == MALE) ? gTasks[taskId].data[10]
+                                                       : gTasks[taskId].data[11];
+    gSprites[gTasks[taskId].data[10]].invisible = TRUE;
+    gSprites[gTasks[taskId].data[11]].invisible = TRUE;
+    gSprites[spriteId].x = 180;
+    gSprites[spriteId].y = 60;
+    gSprites[spriteId].invisible = FALSE;
+    gSprites[spriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+    gTasks[taskId].data[2] = spriteId;
+    NewGameBirchSpeech_ShowDialogueWindow(0, TRUE);
+}
 
 static void NewGameBirchSpeech_ShowGenderMenu(void)
 {

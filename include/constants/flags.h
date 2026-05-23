@@ -119,7 +119,7 @@
 #define FLAG_MOSSDEEP_GYM_SWITCH_3           0x66 //
 #define FLAG_MOSSDEEP_GYM_SWITCH_4           0x67 //
 
-#define FLAG_NEW_MAGMA_GRUNTS                    0x68  // Unused Flag
+#define FLAG_NEW_MAGMA_GRUNTS                    0x68 
 
 #define FLAG_OCEANIC_MUSEUM_MET_REPORTER     0x69
 #define FLAG_RECEIVED_HM_STRENGTH            0x6A
@@ -515,11 +515,11 @@
 #define FLAG_DEFEATED_HO_OH                  0x1DC
 #define FLAG_DEFEATED_LUGIA                  0x1DD
 
-#define FLAG_UNUSED_0x1DE                    0x1DE // Unused Flag
-#define FLAG_UNUSED_0x1DF                    0x1DF // Unused Flag
-#define FLAG_UNUSED_0x1E0                    0x1E0 // Unused Flag
-#define FLAG_UNUSED_0x1E1                    0x1E1 // Unused Flag
-#define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag
+#define FLAG_SHINY_SENTRET                   0x1DE 
+#define FLAG_SHINY_SENTRET_END               0x1DF 
+#define FLAG_HIDE_SHINY_SENTRET_WILD         0x1E0 
+#define FLAG_HIDE_SHINY_SENTRET_WITH_GIRL    0x1E1 
+#define FLAG_DEFEATED_TROY           0x1E2 
 #define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
 
 // Mystery Gift Flags (Unknown)
@@ -683,7 +683,7 @@
 #define FLAG_GOT_BERRY_GIRL_ROUTE106            0x278 
 #define FLAG_RECEIVED_DEWFORD_HALL_SUN_STONE    0x279 // Unused Flag
 #define FLAG_HIDE_GRANITE_CAVE_AURORA           0x27A // Unused Flag
-#define FLAG_UNUSED_0x27B  0x27B // Unused Flag
+#define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POKEMON_SCHOOL_2F_GUMMY_WURMPLES  0x27B
 #define FLAG_UNUSED_0x27C  0x27C // Unused Flag
 #define FLAG_UNUSED_0x27D  0x27D // Unused Flag
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag

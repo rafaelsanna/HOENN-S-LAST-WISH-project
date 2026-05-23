@@ -693,6 +693,31 @@ Crawdaunt @ Rocky Helmet
 Level: 48
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
+=== TRAINER_ROB_WEATHER_INSTITUTE ===
+Name: ROB
+Class: Aqua Admin
+Pic: Rob
+Gender: Male
+Music: Aqua
+Double Battle: Yes
+AI: Check Bad Move
+
+Gyarados @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Cloyster @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Slowbro @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Wailord @ Sitrus Berry  
+Level: 50
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
 === TRAINER_GRUNT_AQUA_SHIP ===
 Name: GRUNT
 Class: Team Aqua
@@ -14736,6 +14761,31 @@ Magikarp
 Level: 9
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Tackle
+
+=== TRAINER_TROY ===
+Name: Troy
+Class: Youngster
+Pic: Youngster
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Oddish
+Level: 8
+- Bullet Seed
+- Acid
+
+Shroomish
+Level: 9
+- Bullet Seed
+- Tackle
+
+Lotad
+Level: 8
+- Bullet Seed
+- Astonish
+- Water Gun
 
 === TRAINER_HAILEY ===
 Name: HAILEY

@@ -1726,11 +1726,30 @@ void CB2_OpenFlyMap(void)
         LoadFlyDestIcons();
         gMain.state++;
         break;
-    case 9:
-        BlendPalettes(PALETTES_ALL, 16, 0);
-        SetVBlankCallback(VBlankCB_FlyMap);
-        gMain.state++;
-        break;
+case 9:
+    {
+        u16 darkColor = RGB(4, 4, 5); // #212129
+        u32 i;
+        u16 r, g, b;
+
+        // Fundo branco FORA DO FRAME (BG1 = sRegionMapFramePal)
+        {
+            u16 *framePal = &gPlttBufferUnfaded[BG_PLTT_ID(1)];
+            for (i = 1; i < 16; i++) // i=0 é transparente, não toca
+            {
+                r =  framePal[i]        & 0x1F;
+                g = (framePal[i] >> 5)  & 0x1F;
+                b = (framePal[i] >> 10) & 0x1F;
+                if (r > 24 && g > 24 && b > 24)
+                    framePal[i] = darkColor;
+            }
+        }
+    }
+    gPlttBufferUnfaded[0] = RGB(4, 4, 5);
+    BlendPalettes(PALETTES_ALL, 16, 0);
+    SetVBlankCallback(VBlankCB_FlyMap);
+    gMain.state++;
+    break;
     case 10:
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
         SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);

@@ -920,6 +920,8 @@
 #define TRAINER_HAKARI                      914
 #define TRAINER_LAZULI_1                    915
 #define TRAINER_GRUNT_AQUA_SHIP             916
+#define TRAINER_ROB_WEATHER_INSTITUTE       917
+#define TRAINER_TROY                        918
 
 
 

@@ -14834,6 +14834,21 @@ const struct Item gItemsInfo[] =
     .iconPic = gItemIcon_TimeGear,
     .iconPalette = gItemIconPalette_TimeGear,
 },
+[ITEM_RADIO] =
+{
+    .name        = ITEM_NAME("Radio"),
+    .price       = 0,
+    .description = COMPOUND_STRING(
+        "A handheld radio that\n"
+        "plays any tune.\n"
+        "Reusable."),
+    .importance  = 1,
+    .pocket      = POCKET_KEY_ITEMS,
+    .type        = ITEM_USE_FIELD,
+    .fieldUseFunc = ItemUseOutOfBattle_Radio,
+    .iconPic     = gItemIcon_Radio,
+    .iconPalette = gItemIconPalette_Radio,
+},
 };
 
 #undef ITEM_NAME

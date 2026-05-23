@@ -1117,3 +1117,19 @@ EMOJI_BIGANGER = F9 FE
 '\l' = FA @ scroll up window text
 '\p' = FB @ new paragraph
 '\n' = FE @ new line
+
+@ mugshot stuff begins
+
+MUGSHOT_TEST = 01
+MUGSHOT_CELEBI = 02
+MUGSHOT_JIRACHI = 03
+MUGSHOT_CALENDULA = 04
+MUGSHOT_RENTON = 05
+MUGSHOT_TERRA = 06
+MUGSHOT_ZENNO = 07
+MUGSHOT_ZINNEA = 08
+
+EMOTE_NORMAL = 00
+EMOTE_ALT = 01
+
+@ mugshot stuff ends

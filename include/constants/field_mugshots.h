@@ -1,0 +1,22 @@
+#ifndef GUARD_CONSTANTS_FIELD_MUGSHOTS_H
+#define GUARD_CONSTANTS_FIELD_MUGSHOTS_H
+
+#define MUGSHOT_NONE      0
+#define MUGSHOT_TEST      1
+#define MUGSHOT_CELEBI    2
+#define MUGSHOT_JIRACHI   3
+#define MUGSHOT_ACACIA    4
+#define MUGSHOT_RENTON    5
+#define MUGSHOT_TERRA     6
+#define MUGSHOT_ZENNO     7
+#define MUGSHOT_ZINNIA    8
+#define MUGSHOT_CALENDULA 9    
+#define MUGSHOT_LUKA      10
+
+#define MUGSHOT_COUNT 11
+
+#define EMOTE_NORMAL 0
+#define EMOTE_ALT    1
+#define EMOTE_COUNT  2
+
+#endif // GUARD_CONSTANTS_FIELD_MUGSHOTS_H

@@ -166,6 +166,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 
 LittlerootTown_01_EventScript_JirachiCelebi::
 	lockall
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox LittlerootTown_Text_GentleIntroduction, MSGBOX_DEFAULT
 	msgbox LittlerootTown_01_Text_JirachiCloseEyes, MSGBOX_DEFAULT
 	
@@ -300,7 +301,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
 
-// Return to normal screen
+	// Return to normal screen
 	fadescreen FADE_FROM_BLACK
 	delay 20
 	fadeinbgm 1
@@ -309,6 +310,9 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	msgbox LittlerootTown_Text_StoryConclusion, MSGBOX_DEFAULT
 	closemessage
 	delay 20
+	
+	// REMOVE MUGSHOT ANTES DA PERGUNTA (para não tampar)
+	removefieldmugshot
 	
 	// AGORA PERGUNTA SE QUER PULAR
 	msgbox LittlerootTown_01_Text_Question, MSGBOX_YESNO
@@ -352,6 +356,7 @@ LittlerootTown_01_JirachiWarp::
 	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 	setvar VAR_LITTLEROOT_TOWN_STATE, 4
 	
+	removefieldmugshot   // remove mugshot antes do warp
 	checkplayergender
 	compare VAR_RESULT, MALE
 	goto_if_eq LittlerootTown_01_WarpMale
@@ -432,6 +437,8 @@ LittlerootTown_01_Stay::
 	fadescreen FADE_TO_BLACK
 	delay 60
 	
+	removefieldmugshot   // remove mugshot antes do warp
+	
 	// === WARP TO MOSSDEEP01 (INSIDE TENT) ===
 	warp MAP_MOSSDEEP01, 14, 64
 	waitstate
@@ -458,8 +465,9 @@ LittlerootTown_Movement_JirachiCircleComplete:
 	step_end
 
 // Celebi Scripts
-LittlerootTown_CelebiScript::  
+LittlerootTown_CelebiScript::
     lockall
+    createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
     faceplayer
     msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
     random 3
@@ -467,55 +475,60 @@ LittlerootTown_CelebiScript::
     case 0, LittlerootTown_Celebi_Case0
     case 1, LittlerootTown_Celebi_Case1
     case 2, LittlerootTown_Celebi_Case2
+    // Fallback (should not reach)
+    removefieldmugshot
     releaseall
     end
-
+	
 LittlerootTown_Celebi_Case0::
-    lockall
-    faceplayer
+    // lockall/faceplayer already active, do not call again
     msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
+    removefieldmugshot
     releaseall
     end
 
 LittlerootTown_Celebi_Case1::
-    lockall
-    faceplayer
     msgbox LittlerootTown_01_Text_CelebiHelp, MSGBOX_DEFAULT
+    removefieldmugshot
     releaseall
     end
 
 LittlerootTown_Celebi_Case2::
-    lockall
-    faceplayer
     msgbox LittlerootTown_01_Text_CelebiForest, MSGBOX_DEFAULT
+    removefieldmugshot
     releaseall
     end
-
 
 // Jirachi Scripts
 LittlerootTown_JirachiScript::
 	lock
 	faceplayer
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	random 3
 	switch VAR_RESULT
 	case 0, LittlerootTown_Jirachi_Case0
 	case 1, LittlerootTown_Jirachi_Case1
 	case 2, LittlerootTown_Jirachi_Case2
+	// Fallback
+	removefieldmugshot
 	release
 	end
 
 LittlerootTown_Jirachi_Case0::
 	msgbox LittlerootTown_01_Text_JirachiWish, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 LittlerootTown_Jirachi_Case1::
 	msgbox LittlerootTown_01_Text_JirachiSleep, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 LittlerootTown_Jirachi_Case2::
 	msgbox LittlerootTown_01_Text_JirachiGrant, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 

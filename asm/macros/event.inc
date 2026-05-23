@@ -2660,4 +2660,15 @@
 	callnative ScriptChangeFollowerNPCBattlePartner
 	.2byte \battlePartner
 	.endm
+
+	@ exemplo de uso nos scripts de .inc
+	.macro createfieldmugshot id:req, emote:req
+	setorcopyvar VAR_0x8003, \id
+	setorcopyvar VAR_0x8004, \emote
+	callnative CreateFieldMugshot
+	.endm
+
+	.macro removefieldmugshot
+	callnative RemoveFieldMugshot
+	.endm
 	
