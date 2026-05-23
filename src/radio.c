@@ -1,10 +1,19 @@
 // radio.c
 // Pokémon Radio - Key Item Screen
 //
+// Stations (SELECT cycles):
+//   ALL      -> every BGM track
+//   TOWNS    -> town / city themes
+//   ROUTES   -> route / outdoor themes
+//   TRAINERS -> trainer encounter themes
+//   BATTLE   -> battle (VS) themes
+//
 // Controls:
-//   A / START             -> Play / Pause toggle
-//   B                     -> Close radio (music keeps playing if it was on)
-//   L / R / DPAD          -> Previous / Next track
+//   A / START   -> Play / Pause toggle
+//   SELECT      -> Cycle station
+//   L / LEFT    -> Previous track in station
+//   R / RIGHT   -> Next track in station
+//   B           -> Close (music keeps playing)
 
 #include "global.h"
 #include "bg.h"
@@ -29,75 +38,63 @@
 #include "constants/songs.h"
 
 // ===========================================================================
-// Graphics (adjust INCBIN paths for your build — smol or raw)
+// Graphics
 // ===========================================================================
 static const u16 sRadioBg_Pal[]     = INCBIN_U16("graphics/radio/radiobg.gbapal");
 static const u32 sRadioBg_Gfx[]     = INCBIN_U32("graphics/radio/radiobg.4bpp.smol");
-// Tilemap is loaded RAW — CopyToBgTilemapBuffer expects uncompressed data.
-// Do NOT use .smolTM here; that format is only for functions that decompress.
 static const u16 sRadioBg_Tilemap[] = INCBIN_U16("graphics/radio/radiobg.bin");
 
 // ===========================================================================
-// BG templates — BG0: text windows / BG1: radio tileset
+// BG templates
+// BG0 = text windows  (charbase 0, screenbase 31)
+// BG1 = radio tileset (charbase 2, screenbase 8)  — loaded raw into VRAM
 // ===========================================================================
 static const struct BgTemplate sRadioBgTemplates[] =
 {
     {
-        .bg             = 0,
-        .charBaseIndex  = 0,
-        .mapBaseIndex   = 31,
-        .screenSize     = 0,
-        .paletteMode    = 0,
-        .priority       = 0,
-        .baseTile       = 0,
+        .bg            = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex  = 31,
+        .screenSize    = 0,
+        .paletteMode   = 0,
+        .priority      = 0,
+        .baseTile      = 0,
     },
     {
-        .bg             = 1,
-        .charBaseIndex  = 2,
-        .mapBaseIndex   = 8,
-        .screenSize     = 0,
-        .paletteMode    = 0,
-        .priority       = 1,
-        .baseTile       = 0,
+        .bg            = 1,
+        .charBaseIndex = 2,
+        .mapBaseIndex  = 8,
+        .screenSize    = 0,
+        .paletteMode   = 0,
+        .priority      = 1,
+        .baseTile      = 0,
     },
 };
 
 // ===========================================================================
 // Window templates
 // ===========================================================================
-#define WIN_MUSIC_NAME 0
-#define WIN_CONTROLS   1
+#define WIN_MUSIC_INFO  0
 
-#define WIN_MUSIC_NAME_BASE_BLOCK   1
-#define WIN_CONTROLS_BASE_BLOCK     (WIN_MUSIC_NAME_BASE_BLOCK + 28 * 4)
+#define WIN_MUSIC_INFO_BASE_BLOCK   0x20
 
 static const struct WindowTemplate sRadioWindowTemplates[] =
 {
-    [WIN_MUSIC_NAME] =
+    [WIN_MUSIC_INFO] =
     {
         .bg          = 0,
         .tilemapLeft = 1,
-        .tilemapTop  = 11,
+        .tilemapTop  = 13,
         .width       = 28,
-        .height      = 4,
+        .height      = 6,
         .paletteNum  = 15,
-        .baseBlock   = WIN_MUSIC_NAME_BASE_BLOCK,
-    },
-    [WIN_CONTROLS] =
-    {
-        .bg          = 0,
-        .tilemapLeft = 1,
-        .tilemapTop  = 17,
-        .width       = 28,
-        .height      = 2,
-        .paletteNum  = 15,
-        .baseBlock   = WIN_CONTROLS_BASE_BLOCK,
+        .baseBlock   = WIN_MUSIC_INFO_BASE_BLOCK,
     },
     DUMMY_WIN_TEMPLATE,
 };
 
 // ===========================================================================
-// BGM name list
+// BGM name list (X-macro — must be defined before any station list uses it)
 // ===========================================================================
 #define RADIO_SOUND_LIST_BGM            \
     X(MUS_LITTLEROOT_TEST)              \
@@ -310,12 +307,10 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_RG_SLOW_PALLET)               \
     X(MUS_RG_TEACHY_TV_MENU)
 
-// Generate one string per BGM constant
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
 
-// Lookup table indexed by (songId - START_MUS)
 #define X(songId) [songId - START_MUS] = sRadioBGMName_##songId,
 static const u8 *const sRadioBGMNames[END_MUS - START_MUS + 1] =
 {
@@ -324,11 +319,249 @@ static const u8 *const sRadioBGMNames[END_MUS - START_MUS + 1] =
 #undef X
 
 // ===========================================================================
+// Station definitions
+// ===========================================================================
+enum RadioStation
+{
+    STATION_ALL = 0,
+    STATION_TOWNS,
+    STATION_ROUTES,
+    STATION_TRAINERS,
+    STATION_BATTLE,
+    STATION_COUNT,
+};
+
+// Each station is a flat array of song IDs terminated by 0xFFFF.
+#define STATION_END 0xFFFF
+
+static const u16 sStation_All[] = {
+#define X(s) s,
+    RADIO_SOUND_LIST_BGM
+#undef X
+    STATION_END
+};
+
+static const u16 sStation_Towns[] = {
+    MUS_LITTLEROOT,
+    MUS_OLDALE,
+    MUS_PETALBURG,
+    MUS_RUSTBORO,
+    MUS_DEWFORD,
+    MUS_SLATEPORT,
+    MUS_VERDANTURF,
+    MUS_FALLARBOR,
+    MUS_FORTREE,
+    MUS_LILYCOVE,
+    MUS_SOOTOPOLIS,
+    MUS_EVER_GRANDE,
+    MUS_POKE_CENTER,
+    MUS_POKE_MART,
+    MUS_GYM,
+    MUS_BIRCH_LAB,
+    MUS_SCHOOL,
+    MUS_LILYCOVE_MUSEUM,
+    MUS_OCEANIC_MUSEUM,
+    MUS_CABLE_CAR,
+    MUS_GAME_CORNER,
+    MUS_SAFARI_ZONE,
+    MUS_HALL_OF_FAME_ROOM,
+    MUS_B_FRONTIER,
+    MUS_B_DOME_LOBBY,
+    MUS_TRICK_HOUSE,
+    MUS_CONTEST_LOBBY,
+    MUS_C_COMM_CENTER,
+    MUS_RG_PALLET,
+    MUS_RG_OAK_LAB,
+    MUS_RG_POKE_CENTER,
+    MUS_RG_CELADON,
+    MUS_RG_VERMILLION,
+    MUS_RG_FUCHSIA,
+    MUS_RG_PEWTER,
+    MUS_RG_CINNABAR,
+    MUS_RG_SEVII_123,
+    MUS_RG_SEVII_45,
+    MUS_RG_SEVII_67,
+    MUS_GSC_PEWTER,
+    STATION_END
+};
+
+static const u16 sStation_Routes[] = {
+    MUS_ROUTE101,
+    MUS_ROUTE104,
+    MUS_ROUTE110,
+    MUS_ROUTE113,
+    MUS_ROUTE119,
+    MUS_ROUTE120,
+    MUS_ROUTE122,
+    MUS_CYCLING,
+    MUS_SURF,
+    MUS_SAILING,
+    MUS_UNDERWATER,
+    MUS_PETALBURG_WOODS,
+    MUS_MT_CHIMNEY,
+    MUS_DESERT,
+    MUS_CAVE_OF_ORIGIN,
+    MUS_MT_PYRE,
+    MUS_MT_PYRE_EXTERIOR,
+    MUS_AQUA_MAGMA_HIDEOUT,
+    MUS_SEALED_CHAMBER,
+    MUS_ABANDONED_SHIP,
+    MUS_VICTORY_ROAD,
+    MUS_B_PYRAMID,
+    MUS_B_PYRAMID_TOP,
+    MUS_ABNORMAL_WEATHER,
+    MUS_WEATHER_GROUDON,
+    MUS_GSC_ROUTE38,
+    MUS_RG_ROUTE1,
+    MUS_RG_ROUTE3,
+    MUS_RG_ROUTE11,
+    MUS_RG_ROUTE24,
+    MUS_RG_VIRIDIAN_FOREST,
+    MUS_RG_MT_MOON,
+    MUS_RG_SS_ANNE,
+    MUS_RG_SURF,
+    MUS_RG_CYCLING,
+    MUS_RG_POKE_TOWER,
+    MUS_RG_SILPH,
+    MUS_RG_POKE_MANSION,
+    MUS_RG_VICTORY_ROAD,
+    MUS_RG_SEVII_ROUTE,
+    MUS_RG_SEVII_CAVE,
+    MUS_RG_SEVII_DUNGEON,
+    MUS_RG_TRAINER_TOWER,
+    STATION_END
+};
+
+static const u16 sStation_Trainers[] = {
+    MUS_ENCOUNTER_MALE,
+    MUS_ENCOUNTER_FEMALE,
+    MUS_ENCOUNTER_GIRL,
+    MUS_ENCOUNTER_COOL,
+    MUS_ENCOUNTER_INTENSE,
+    MUS_ENCOUNTER_SWIMMER,
+    MUS_ENCOUNTER_RICH,
+    MUS_ENCOUNTER_HIKER,
+    MUS_ENCOUNTER_TWINS,
+    MUS_ENCOUNTER_INTERVIEWER,
+    MUS_ENCOUNTER_AQUA,
+    MUS_ENCOUNTER_MAGMA,
+    MUS_ENCOUNTER_MAY,
+    MUS_ENCOUNTER_BRENDAN,
+    MUS_ENCOUNTER_SUSPICIOUS,
+    MUS_ENCOUNTER_ELITE_FOUR,
+    MUS_ENCOUNTER_CHAMPION,
+    MUS_FOLLOW_ME,
+    MUS_RG_ENCOUNTER_RIVAL,
+    MUS_RG_ENCOUNTER_GYM_LEADER,
+    MUS_RG_ENCOUNTER_ROCKET,
+    MUS_RG_ENCOUNTER_GIRL,
+    MUS_RG_ENCOUNTER_BOY,
+    MUS_RG_ENCOUNTER_DEOXYS,
+    MUS_RG_RIVAL_EXIT,
+    MUS_C_VS_LEGEND_BEAST,
+    STATION_END
+};
+
+static const u16 sStation_Battle[] = {
+    MUS_VS_WILD,
+    MUS_VS_TRAINER,
+    MUS_VS_GYM_LEADER,
+    MUS_VS_RIVAL,
+    MUS_VS_AQUA_MAGMA,
+    MUS_VS_AQUA_MAGMA_LEADER,
+    MUS_VS_ELITE_FOUR,
+    MUS_VS_CHAMPION,
+    MUS_VS_REGI,
+    MUS_VS_KYOGRE_GROUDON,
+    MUS_VS_RAYQUAZA,
+    MUS_VS_MEW,
+    MUS_VS_FRONTIER_BRAIN,
+    MUS_RAYQUAZA_APPEARS,
+    MUS_AWAKEN_LEGEND,
+    MUS_INTRO_BATTLE,
+    MUS_B_ARENA,
+    MUS_B_DOME,
+    MUS_B_FACTORY,
+    MUS_B_PALACE,
+    MUS_B_PIKE,
+    MUS_B_TOWER,
+    MUS_B_TOWER_RS,
+    MUS_RG_VS_WILD,
+    MUS_RG_VS_TRAINER,
+    MUS_RG_VS_GYM_LEADER,
+    MUS_RG_VS_CHAMPION,
+    MUS_RG_VS_DEOXYS,
+    MUS_RG_VS_MEWTWO,
+    MUS_RG_VS_LEGEND,
+    MUS_RG_INTRO_FIGHT,
+    STATION_END
+};
+
+static const u16 *const sStationTracks[STATION_COUNT] = {
+    [STATION_ALL]      = sStation_All,
+    [STATION_TOWNS]    = sStation_Towns,
+    [STATION_ROUTES]   = sStation_Routes,
+    [STATION_TRAINERS] = sStation_Trainers,
+    [STATION_BATTLE]   = sStation_Battle,
+};
+
+// Station display names
+static const u8 sStationName_All[]      = _("ALL TRACKS");
+static const u8 sStationName_Towns[]    = _("TOWNS & CITIES");
+static const u8 sStationName_Routes[]   = _("ROUTES & NATURE");
+static const u8 sStationName_Trainers[] = _("TRAINER THEMES");
+static const u8 sStationName_Battle[]   = _("BATTLE THEMES");
+
+static const u8 *const sStationNames[STATION_COUNT] = {
+    [STATION_ALL]      = sStationName_All,
+    [STATION_TOWNS]    = sStationName_Towns,
+    [STATION_ROUTES]   = sStationName_Routes,
+    [STATION_TRAINERS] = sStationName_Trainers,
+    [STATION_BATTLE]   = sStationName_Battle,
+};
+
+// ===========================================================================
+// Station helpers
+// ===========================================================================
+
+// Count tracks in a station
+static u16 Station_Count(u8 station)
+{
+    u16 i = 0;
+    const u16 *list = sStationTracks[station];
+    while (list[i] != STATION_END)
+        i++;
+    return i;
+}
+
+// Get track at index within station
+static u16 Station_GetTrack(u8 station, u16 index)
+{
+    return sStationTracks[station][index];
+}
+
+// Find the index of songId within station (or 0 if not found)
+static u16 Station_FindTrack(u8 station, u16 songId)
+{
+    const u16 *list = sStationTracks[station];
+    u16 i;
+    for (i = 0; list[i] != STATION_END; i++)
+        if (list[i] == songId)
+            return i;
+    return 0;
+}
+
+// ===========================================================================
+// BGM name list (X-macro over full track list)
+// ===========================================================================
+// ===========================================================================
 // Persistent EWRAM state
 // ===========================================================================
 static EWRAM_DATA MainCallback sRadioReturnCallback = NULL;
 static EWRAM_DATA u16          sRadioCurrentSong    = 0;
 static EWRAM_DATA bool8        sRadioIsPlaying       = FALSE;
+static EWRAM_DATA u8           sRadioStation         = STATION_ALL;
+static EWRAM_DATA u16          sRadioStationIndex    = 0; // index within current station
 
 // ===========================================================================
 // Forward declarations
@@ -350,18 +583,28 @@ static const u8 *Radio_GetSongName(u16 songId)
     return sRadioBGMNames[songId - START_MUS];
 }
 
+// Sync sRadioCurrentSong from station+index, clamping as needed
+static void Radio_SyncSong(void)
+{
+    u16 count = Station_Count(sRadioStation);
+    if (count == 0)
+        return;
+    if (sRadioStationIndex >= count)
+        sRadioStationIndex = 0;
+    sRadioCurrentSong = Station_GetTrack(sRadioStation, sRadioStationIndex);
+}
+
 // ===========================================================================
-// Text strings — ALL at file scope, never inline inside a function call
+// Text strings
 // ===========================================================================
 #define RADIO_FONT  FONT_NORMAL
 
-static const u8 sRadioText_Playing[]  = _("  PLAYING");
-static const u8 sRadioText_Paused[]   = _("  PAUSED");
-static const u8 sRadioText_Unknown[]  = _("---");
-static const u8 sRadioText_TrackFmt[] = _("Track: {STR_VAR_1}");
-// B button intentionally omitted — its hint is shown on the tileset itself
-static const u8 sRadioText_Controls[] =
-    _("{A_BUTTON}:Play  {START_BUTTON}:Pause  {L_BUTTON}:Back  {R_BUTTON}:Next");
+static const u8 sRadioText_TrackFmt[]   = _("Track:{STR_VAR_1}");
+static const u8 sRadioText_Playing[]    = _("NOW PLAYING");
+static const u8 sRadioText_Paused[]     = _("PAUSED");
+static const u8 sRadioText_Unknown[]    = _("---");
+static const u8 sRadioText_SongFmt[]    = _("Song: {STR_VAR_1}");
+static const u8 sRadioText_StationFmt[] = _("Station: {STR_VAR_1}");
 
 // ===========================================================================
 // Draw functions
@@ -371,35 +614,35 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
     u8 numBuf[8];
     const u8 *name;
 
-    FillWindowPixelBuffer(WIN_MUSIC_NAME, PIXEL_FILL(1));
+    FillWindowPixelBuffer(WIN_MUSIC_INFO, PIXEL_FILL(1));
 
+    // Linha 1: "Track:XXXX   NOW PLAYING" ou "Track:XXXX   PAUSED"
     ConvertIntToDecimalStringN(numBuf, songId, STR_CONV_MODE_LEADING_ZEROS, 4);
     StringCopy(gStringVar1, numBuf);
     StringExpandPlaceholders(gStringVar4, sRadioText_TrackFmt);
-    AddTextPrinterParameterized(WIN_MUSIC_NAME, RADIO_FONT, gStringVar4, 2, 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT, gStringVar4, 2, 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT,
+        playing ? sRadioText_Playing : sRadioText_Paused,
+        130, 2, TEXT_SKIP_DRAW, NULL);
 
+    // Linha 2: "Song: NOME-DA-MUSICA"
     name = Radio_GetSongName(songId);
     if (name == NULL)
         name = sRadioText_Unknown;
-    AddTextPrinterParameterized(WIN_MUSIC_NAME, RADIO_FONT, name, 2, 18, TEXT_SKIP_DRAW, NULL);
+    StringCopy(gStringVar1, name);
+    StringExpandPlaceholders(gStringVar4, sRadioText_SongFmt);
+    AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT, gStringVar4, 2, 18, TEXT_SKIP_DRAW, NULL);
 
-    AddTextPrinterParameterized(WIN_MUSIC_NAME, RADIO_FONT,
-        playing ? sRadioText_Playing : sRadioText_Paused,
-        2, 34, TEXT_SKIP_DRAW, NULL);
+    // Linha 3: "Station: NOME-DA-ESTACAO"
+    StringCopy(gStringVar1, sStationNames[sRadioStation]);
+    StringExpandPlaceholders(gStringVar4, sRadioText_StationFmt);
+    AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT, gStringVar4, 2, 34, TEXT_SKIP_DRAW, NULL);
 
-    CopyWindowToVram(WIN_MUSIC_NAME, COPYWIN_FULL);
-}
-
-static void Radio_DrawControls(void)
-{
-    FillWindowPixelBuffer(WIN_CONTROLS, PIXEL_FILL(1));
-    AddTextPrinterParameterized(WIN_CONTROLS, RADIO_FONT, sRadioText_Controls, 2, 2, TEXT_SKIP_DRAW, NULL);
-    CopyWindowToVram(WIN_CONTROLS, COPYWIN_FULL);
+    CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
 }
 
 // ===========================================================================
-// task data aliases — defined ONCE here, used in all three task functions,
-// then undef'd after the last task.  CB2_LoadRadio uses data[0]/data[1] directly.
+// Task data aliases
 // ===========================================================================
 #define tCurrSong   data[0]
 #define tIsPlaying  data[1]
@@ -410,14 +653,43 @@ static void Task_RadioHandleInput(u8 taskId)
     bool8 playing = (bool8)gTasks[taskId].tIsPlaying;
     bool8 changed = FALSE;
 
+    // --- Station cycle (SELECT) ---
+    if (JOY_NEW(SELECT_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        sRadioStation = (sRadioStation + 1) % STATION_COUNT;
+        // Try to keep the current song in the new station; fall back to index 0
+        sRadioStationIndex = Station_FindTrack(sRadioStation, songId);
+        Radio_SyncSong();
+        songId = sRadioCurrentSong;
+
+        if (playing)
+        {
+            m4aSongNumStop(gTasks[taskId].tCurrSong);
+            m4aSongNumStart(songId);
+        }
+        gTasks[taskId].tCurrSong = (s16)songId;
+        Radio_DrawMusicInfo(songId, playing);
+        return;
+    }
+
+    // --- Track navigation (L / R / DPAD) ---
     if (JOY_NEW(DPAD_RIGHT) || JOY_NEW(DPAD_UP) || JOY_NEW(R_BUTTON))
     {
-        songId  = (songId < (u16)END_MUS) ? songId + 1 : (u16)START_MUS;
+        u16 count = Station_Count(sRadioStation);
+        sRadioStationIndex = (sRadioStationIndex + 1 < count)
+                           ? sRadioStationIndex + 1 : 0;
+        Radio_SyncSong();
+        songId  = sRadioCurrentSong;
         changed = TRUE;
     }
     else if (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_DOWN) || JOY_NEW(L_BUTTON))
     {
-        songId  = (songId > (u16)START_MUS) ? songId - 1 : (u16)END_MUS;
+        u16 count = Station_Count(sRadioStation);
+        sRadioStationIndex = (sRadioStationIndex > 0)
+                           ? sRadioStationIndex - 1 : count - 1;
+        Radio_SyncSong();
+        songId  = sRadioCurrentSong;
         changed = TRUE;
     }
 
@@ -433,6 +705,7 @@ static void Task_RadioHandleInput(u8 taskId)
         Radio_DrawMusicInfo(songId, playing);
     }
 
+    // --- Play / Pause (A or START) ---
     if (JOY_NEW(A_BUTTON) || JOY_NEW(START_BUTTON))
     {
         PlaySE(SE_SELECT);
@@ -450,11 +723,12 @@ static void Task_RadioHandleInput(u8 taskId)
         Radio_DrawMusicInfo(songId, playing);
     }
 
+    // --- Close (B) ---
     if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        sRadioCurrentSong = songId;
-        sRadioIsPlaying   = playing;
+        sRadioCurrentSong  = songId;
+        sRadioIsPlaying    = playing;
         gTasks[taskId].func = Task_RadioFadeAndExit;
     }
 }
@@ -502,6 +776,10 @@ static void CB2_Radio(void)
 
 // ===========================================================================
 // Loading sequence
+// Tileset loaded DIRECTLY into VRAM (same pattern as intro.c) to avoid
+// any offset/buffer issues with the abstract BG system.
+//   Tiles  -> BG_CHAR_ADDR(2)   = charBaseIndex 2
+//   Tilemap-> BG_SCREEN_ADDR(8) = mapBaseIndex  8
 // ===========================================================================
 static void CB2_LoadRadio(void)
 {
@@ -510,8 +788,6 @@ static void CB2_LoadRadio(void)
     switch (gMain.state)
     {
     case 0:
-        // ResetVramOamAndBgCntRegs / ResetAllBgsCoordinates don't exist in the
-        // expansion — SetVBlankCallback(NULL) + ScanlineEffect_Stop() is enough.
         SetVBlankCallback(NULL);
         SetHBlankCallback(NULL);
         ScanlineEffect_Stop();
@@ -520,6 +796,9 @@ static void CB2_LoadRadio(void)
     case 1:
         ResetBgsAndClearDma3BusyFlags(0);
         InitBgsFromTemplates(0, sRadioBgTemplates, ARRAY_COUNT(sRadioBgTemplates));
+        // InitWindows aloca o buffer de tilemap do BG0 automaticamente (window.c:63-75).
+        // NÃO chamar SetBgTilemapBuffer manualmente — isso conflita com o AllocZeroed
+        // interno e corrompe o heap.
         InitWindows(sRadioWindowTemplates);
         InitTextBoxGfxAndPrinters();
         break;
@@ -528,29 +807,29 @@ static void CB2_LoadRadio(void)
         ResetPaletteFade();
         ResetSpriteData();
         ResetTasks();
-        ResetTempTileDataBuffers();
         break;
 
     case 3:
-        // Paleta do radio no slot 0. LoadMessageBoxAndBorderGfx usa slot 15 (paletteNum=15).
-        LoadPalette(sRadioBg_Pal, BG_PLTT_ID(0), sizeof(sRadioBg_Pal));
+        // PLTT_SIZE_4BPP = 32 bytes = 1 slot (16 cores).
+        // Usar sizeof() é perigoso: se o .gbapal tiver > 32 bytes sobrescreve
+        // slots além do 0, incluindo o slot 15 que a fonte usa.
+        LoadPalette(sRadioBg_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
         LoadMessageBoxAndBorderGfx();
-        // Carrega tiles direto na VRAM no charbase 2 — igual ao padrão da intro.c.
-        // Evita qualquer offset interno do sistema de BG.
+        // Tiles direto no charbase 2 — síncrono, sem buffer intermediário.
         DecompressDataWithHeaderVram(sRadioBg_Gfx, (void *)(BG_CHAR_ADDR(2)));
         break;
 
     case 4:
-        // Copia tilemap direto no screenbase 8 — igual ao padrão da intro.c.
+        // Tilemap direto no screenbase 8 — igual ao padrão da intro.c.
         CpuFill16(0, (void *)(BG_SCREEN_ADDR(8)), BG_SCREEN_SIZE);
         CpuCopy16(sRadioBg_Tilemap, (void *)(BG_SCREEN_ADDR(8)), 32 * 20 * 2);
         break;
 
     case 5:
-        DrawStdWindowFrame(WIN_MUSIC_NAME, FALSE);
-        DrawStdWindowFrame(WIN_CONTROLS, FALSE);
+        // SetWindowBorderStyle define as bordas SEM escrever direto na VRAM,
+        PutWindowTilemap(WIN_MUSIC_INFO);
         Radio_DrawMusicInfo(sRadioCurrentSong, sRadioIsPlaying);
-        Radio_DrawControls();
+        CopyBgTilemapBufferToVram(0);
         break;
 
     case 6:
@@ -566,8 +845,6 @@ static void CB2_LoadRadio(void)
         if (sRadioIsPlaying)
             m4aSongNumStart(sRadioCurrentSong);
 
-        // FIX: CB2_LoadRadio runs after #undef tCurrSong/tIsPlaying,
-        //      so use data[0]/data[1] directly here.
         taskId = CreateTask(Task_RadioHandleInput, 0);
         gTasks[taskId].data[0] = (s16)sRadioCurrentSong;
         gTasks[taskId].data[1] = (s16)sRadioIsPlaying;
@@ -585,11 +862,15 @@ void Radio_Open(MainCallback returnCallback)
 {
     sRadioReturnCallback = returnCallback;
 
+    // Validate saved state; reset if out of range
     if (sRadioCurrentSong < (u16)START_MUS || sRadioCurrentSong > (u16)END_MUS)
     {
-        sRadioCurrentSong = (u16)START_MUS;
-        sRadioIsPlaying   = FALSE;
+        sRadioCurrentSong  = Station_GetTrack(sRadioStation, 0);
+        sRadioIsPlaying    = FALSE;
     }
+
+    // Sync index into current station
+    sRadioStationIndex = Station_FindTrack(sRadioStation, sRadioCurrentSong);
 
     SetMainCallback2(CB2_LoadRadio);
 }
