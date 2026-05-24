@@ -38,11 +38,291 @@
 #include "constants/songs.h"
 
 // ===========================================================================
+// Persistent EWRAM state — declared first so all functions can see them
+// ===========================================================================
+static EWRAM_DATA MainCallback sRadioReturnCallback = NULL;
+static EWRAM_DATA u16          sRadioCurrentSong    = 0;
+static EWRAM_DATA bool8        sRadioIsPlaying       = FALSE;
+static EWRAM_DATA u8           sRadioStation         = 0; // 0 = STATION_ALL
+static EWRAM_DATA u16          sRadioStationIndex    = 0;
+
+// Sprite IDs — initialized to 0xFF in Radio_Open() before first use.
+// Cannot use = 0xFF at declaration: that forces the variable into .data (discarded in GBA ROM).
+static EWRAM_DATA u8 sRadioJigSpriteId;
+static EWRAM_DATA u8 sRadioStereo1Id;
+static EWRAM_DATA u8 sRadioStereo2Id;
+static EWRAM_DATA u8 sRadioBtnPlayId;
+static EWRAM_DATA u8 sRadioBtnPauseId;
+static EWRAM_DATA u8 sRadioBtnNextId;
+static EWRAM_DATA u8 sRadioBtnBackId;
+static EWRAM_DATA u8 sRadioBtnOffId;
+
+// ===========================================================================
 // Graphics
 // ===========================================================================
 static const u16 sRadioBg_Pal[]     = INCBIN_U16("graphics/radio/radiobg.gbapal");
 static const u32 sRadioBg_Gfx[]     = INCBIN_U32("graphics/radio/radiobg.4bpp.smol");
 static const u16 sRadioBg_Tilemap[] = INCBIN_U16("graphics/radio/radiobg.bin");
+
+// Jigglypuff — 4 frames 64x64 empilhados verticalmente (64x256 total)
+// Sheet: 4 × (64×64×4bpp/2) = 4 × 2048 = 8192 = 0x2000 bytes
+static const u16 sRadioJig_Pal[] = INCBIN_U16("graphics/radio/jig.gbapal");
+static const u32 sRadioJig_Gfx[] = INCBIN_U32("graphics/radio/jig.4bpp.smol");
+
+// Stereo — 1 frame 64x64, affine pulsing (speaker effect)
+// Sheet: 1 × 2048 = 0x800 bytes
+static const u16 sRadioStereo_Pal[] = INCBIN_U16("graphics/radio/stereo.gbapal");
+static const u32 sRadioStereo_Gfx[] = INCBIN_U32("graphics/radio/stereo.4bpp.smol");
+
+// ---------------------------------------------------------------------------
+// Tags de sprite — valores arbitrários únicos no projeto
+// ---------------------------------------------------------------------------
+#define TAG_RADIO_JIG    0xD100
+#define TAG_RADIO_STEREO 0xD101
+
+// ---------------------------------------------------------------------------
+// OAM data
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_RadioJig =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(64x64),
+    .size       = SPRITE_SIZE(64x64),
+    .priority   = 0,  // drawn in front of everything
+};
+
+// Stereo uses affine DOUBLE so it can scale beyond its original size without clipping
+static const struct OamData sOamData_RadioStereo =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(64x64),
+    .size       = SPRITE_SIZE(64x64),
+    .matrixNum  = 0,  // matrix OAM slot 0
+    .priority   = 0,
+};
+
+// ---------------------------------------------------------------------------
+// Anims — Jigglypuff: 4 frames, 8 game-frames cada (~15fps)
+// ---------------------------------------------------------------------------
+// Tile offsets: frame0=0, frame1=64, frame2=128, frame3=192
+// (cada frame 64x64 4bpp = 64 tiles de 8x8)
+static const union AnimCmd sAnim_RadioJig[] =
+{
+    ANIMCMD_FRAME(  0, 8),
+    ANIMCMD_FRAME( 64, 8),
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_FRAME(192, 8),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_RadioJig[] =
+{
+    sAnim_RadioJig,
+};
+
+// Stereo: single static frame — pulsing is done via SetOamMatrix in the callback
+static const union AnimCmd sAnim_RadioStereo[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_RadioStereo[] =
+{
+    sAnim_RadioStereo,
+};
+
+// ---------------------------------------------------------------------------
+// SpriteSheets e Palettes
+// ---------------------------------------------------------------------------
+static const struct CompressedSpriteSheet sSpriteSheet_RadioJig[] =
+{
+    {sRadioJig_Gfx, 0x2000, TAG_RADIO_JIG},  // 4 frames × 2048 bytes
+    {},
+};
+static const struct SpritePalette sSpritePalette_RadioJig[] =
+{
+    {sRadioJig_Pal, TAG_RADIO_JIG},
+    {},
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_RadioStereo[] =
+{
+    {sRadioStereo_Gfx, 0x800, TAG_RADIO_STEREO},  // 1 frame × 2048 bytes
+    {},
+};
+static const struct SpritePalette sSpritePalette_RadioStereo[] =
+{
+    {sRadioStereo_Pal, TAG_RADIO_STEREO},
+    {},
+};
+
+// ---------------------------------------------------------------------------
+// Forward declarations dos callbacks
+// ---------------------------------------------------------------------------
+static void SpriteCB_RadioJig(struct Sprite *sprite);
+static void SpriteCB_RadioStereo(struct Sprite *sprite);
+
+// ---------------------------------------------------------------------------
+// SpriteTemplates
+// ---------------------------------------------------------------------------
+static const struct SpriteTemplate sSpriteTemplate_RadioJig =
+{
+    .tileTag     = TAG_RADIO_JIG,
+    .paletteTag  = TAG_RADIO_JIG,
+    .oam         = &sOamData_RadioJig,
+    .anims       = sAnims_RadioJig,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_RadioJig,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RadioStereo =
+{
+    .tileTag     = TAG_RADIO_STEREO,
+    .paletteTag  = TAG_RADIO_STEREO,
+    .oam         = &sOamData_RadioStereo,
+    .anims       = sAnims_RadioStereo,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,  // escala manual via SetOamMatrix
+    .callback    = SpriteCB_RadioStereo,
+};
+
+// ===========================================================================
+// Button sprites — 5 buttons, each 16x16px, 2 frames (frame0=normal, frame1=pressed)
+// Sheet per button: 2 frames × (16×16 / 2 bytes per px 4bpp) = 2 × 128 = 256 = 0x100
+// BUT the PNG is 32x16 (both frames side by side), so decompressed = 0x200 bytes.
+// ===========================================================================
+static const u16 sRadioBtn_Play_Pal[]  = INCBIN_U16("graphics/radio/play.gbapal");
+static const u32 sRadioBtn_Play_Gfx[]  = INCBIN_U32("graphics/radio/play.4bpp.smol");
+static const u16 sRadioBtn_Pause_Pal[] = INCBIN_U16("graphics/radio/pause.gbapal");
+static const u32 sRadioBtn_Pause_Gfx[] = INCBIN_U32("graphics/radio/pause.4bpp.smol");
+static const u16 sRadioBtn_Next_Pal[]  = INCBIN_U16("graphics/radio/next.gbapal");
+static const u32 sRadioBtn_Next_Gfx[]  = INCBIN_U32("graphics/radio/next.4bpp.smol");
+static const u16 sRadioBtn_Back_Pal[]  = INCBIN_U16("graphics/radio/back.gbapal");
+static const u32 sRadioBtn_Back_Gfx[]  = INCBIN_U32("graphics/radio/back.4bpp.smol");
+static const u16 sRadioBtn_Off_Pal[]   = INCBIN_U16("graphics/radio/off.gbapal");
+static const u32 sRadioBtn_Off_Gfx[]   = INCBIN_U32("graphics/radio/off.4bpp.smol");
+
+#define TAG_RADIO_BTN_PLAY  0xD102
+#define TAG_RADIO_BTN_PAUSE 0xD103
+#define TAG_RADIO_BTN_NEXT  0xD104
+#define TAG_RADIO_BTN_BACK  0xD105
+#define TAG_RADIO_BTN_OFF   0xD106
+
+// Button top-left positions in GBA screen pixels (240x160).
+// Measured pixel-perfect from the reference layout image, shifted +7px right and +7px down.
+// Layout:
+//   [PLAY][PAUSE]         [OFF]
+//   [BACK][NEXT]
+//
+// To fine-tune a button by a few pixels, adjust only its _X or _Y define here.
+// Each unit = 1 GBA pixel. Positive X moves right, positive Y moves down.
+#define RADIO_BTN_PLAY_X   162   // 155 + 7
+#define RADIO_BTN_PLAY_Y    63   //  56 + 7
+#define RADIO_BTN_PAUSE_X  181   // 174 + 7
+#define RADIO_BTN_PAUSE_Y   63   //  56 + 7
+#define RADIO_BTN_BACK_X   162   // 155 + 7
+#define RADIO_BTN_BACK_Y    86   //  79 + 7
+#define RADIO_BTN_NEXT_X   181   // 174 + 7
+#define RADIO_BTN_NEXT_Y    86   //  79 + 7
+#define RADIO_BTN_OFF_X    225   // 218 + 7
+#define RADIO_BTN_OFF_Y     18   //  11 + 7
+
+#define JOY_RELEASED(b)   ((~(gMain.newKeys) & gMain.heldKeys & (b)) != 0)
+
+static const struct OamData sOamData_RadioBtn =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(16x16),
+    .size       = SPRITE_SIZE(16x16),
+    .priority   = 0,
+};
+
+// anim 0 = normal (frame 0), anim 1 = pressed (frame 1, tile offset 4)
+static const union AnimCmd sAnim_RadioBtn_Normal[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd sAnim_RadioBtn_Pressed[] =
+{
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_RadioBtn[] =
+{
+    sAnim_RadioBtn_Normal,   // anim 0
+    sAnim_RadioBtn_Pressed,  // anim 1
+};
+
+// Each button has its own tag (different graphics)
+// Sheet size = 0x200: 32x16 PNG = 2 frames of 16x16 side-by-side = 512 decompressed bytes
+#define DEFINE_BTN_SHEET(name, tag) \
+static const struct CompressedSpriteSheet sSpriteSheet_##name[] = \
+{ \
+    {sRadioBtn_##name##_Gfx, 0x100, tag}, \
+    {}, \
+}; \
+static const struct SpritePalette sSpritePalette_##name[] = \
+{ \
+    {sRadioBtn_##name##_Pal, tag}, \
+    {}, \
+};
+
+DEFINE_BTN_SHEET(Play,  TAG_RADIO_BTN_PLAY)
+DEFINE_BTN_SHEET(Pause, TAG_RADIO_BTN_PAUSE)
+DEFINE_BTN_SHEET(Next,  TAG_RADIO_BTN_NEXT)
+DEFINE_BTN_SHEET(Back,  TAG_RADIO_BTN_BACK)
+DEFINE_BTN_SHEET(Off,   TAG_RADIO_BTN_OFF)
+
+#define DEFINE_BTN_TEMPLATE(name, tag) \
+static const struct SpriteTemplate sSpriteTemplate_RadioBtn_##name = \
+{ \
+    .tileTag     = tag, \
+    .paletteTag  = tag, \
+    .oam         = &sOamData_RadioBtn, \
+    .anims       = sAnims_RadioBtn, \
+    .images      = NULL, \
+    .affineAnims = gDummySpriteAffineAnimTable, \
+    .callback    = SpriteCallbackDummy, \
+};
+
+DEFINE_BTN_TEMPLATE(Play,  TAG_RADIO_BTN_PLAY)
+DEFINE_BTN_TEMPLATE(Pause, TAG_RADIO_BTN_PAUSE)
+DEFINE_BTN_TEMPLATE(Next,  TAG_RADIO_BTN_NEXT)
+DEFINE_BTN_TEMPLATE(Back,  TAG_RADIO_BTN_BACK)
+DEFINE_BTN_TEMPLATE(Off,   TAG_RADIO_BTN_OFF)
+
+// ---------------------------------------------------------------------------
+// Button helpers
+// ---------------------------------------------------------------------------
+static void Radio_PressButton(u8 spriteId)
+{
+    if (spriteId != 0xFF)
+        StartSpriteAnim(&gSprites[spriteId], 1);
+}
+
+static void Radio_ReleaseButton(u8 spriteId)
+{
+    if (spriteId != 0xFF)
+        StartSpriteAnim(&gSprites[spriteId], 0);
+}
+
+// PLAY locked on frame1 while playing; PAUSE locked on frame1 while paused.
+// Both are always visible — frame1 = "this state is active".
+static void Radio_UpdatePlayPauseButtons(bool8 playing)
+{
+    if (sRadioBtnPlayId  != 0xFF) StartSpriteAnim(&gSprites[sRadioBtnPlayId],  playing ? 1 : 0);
+    if (sRadioBtnPauseId != 0xFF) StartSpriteAnim(&gSprites[sRadioBtnPauseId], playing ? 0 : 1);
+}
 
 // ===========================================================================
 // BG templates
@@ -557,12 +837,6 @@ static u16 Station_FindTrack(u8 station, u16 songId)
 // ===========================================================================
 // Persistent EWRAM state
 // ===========================================================================
-static EWRAM_DATA MainCallback sRadioReturnCallback = NULL;
-static EWRAM_DATA u16          sRadioCurrentSong    = 0;
-static EWRAM_DATA bool8        sRadioIsPlaying       = FALSE;
-static EWRAM_DATA u8           sRadioStation         = STATION_ALL;
-static EWRAM_DATA u16          sRadioStationIndex    = 0; // index within the current station
-
 // ===========================================================================
 // Forward declarations
 // ===========================================================================
@@ -581,6 +855,32 @@ static const u8 *Radio_GetSongName(u16 songId)
     if (songId < (u16)START_MUS || songId > (u16)END_MUS)
         return NULL;
     return sRadioBGMNames[songId - START_MUS];
+}
+
+// Converts an internal song name (e.g. "MUS_SEALED_CHAMBER") to display form
+// (e.g. "SEALED CHAMBER"): skips the "MUS_" prefix and replaces underscores with spaces.
+// Escreve no buffer dest (máx destSize bytes incluindo o '\xff' final).
+static void Radio_FormatSongName(const u8 *src, u8 *dest, u32 destSize)
+{
+    // Strings come from _("MUS_XXX") which converts ASCII to GBA charset at
+    // build time.  In that charset underscore '_' becomes CHAR_HYPHEN (0xAE),
+    // so comparing against ASCII '_' never matches.
+    // We also always skip the first 4 chars (the encoded "MUS_") unconditionally.
+    u32 i = 4;
+    u32 d = 0;
+
+    if (src == NULL || dest == NULL || destSize == 0)
+    {
+        if (dest && destSize) dest[0] = EOS;
+        return;
+    }
+
+    while (src[i] != EOS && d < destSize - 1)
+    {
+        dest[d++] = (src[i] == CHAR_HYPHEN) ? CHAR_SPACE : src[i];
+        i++;
+    }
+    dest[d] = EOS;
 }
 
 // Sync sRadioCurrentSong from station+index, clamping as needed
@@ -606,17 +906,15 @@ static const u8 sRadioText_Unknown[]    = _("---");
 static const u8 sRadioText_SongFmt[]    = _("Song: {STR_VAR_1}");
 static const u8 sRadioText_StationFmt[] = _("Station: {STR_VAR_1}");
 
-// ===========================================================================
-// Draw functions
-// ===========================================================================
 static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
 {
     u8 numBuf[8];
-    const u8 *name;
+    const u8 *rawName;
+    u8 formattedName[32];
 
     FillWindowPixelBuffer(WIN_MUSIC_INFO, PIXEL_FILL(1));
 
-    // Line 1: "Track:XXXX   NOW PLAYING" or "Track:XXXX   PAUSED"
+    // Line 1: "Track:XXXX   NOW PLAYING" / "PAUSED"
     ConvertIntToDecimalStringN(numBuf, songId, STR_CONV_MODE_LEADING_ZEROS, 4);
     StringCopy(gStringVar1, numBuf);
     StringExpandPlaceholders(gStringVar4, sRadioText_TrackFmt);
@@ -625,15 +923,14 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
         playing ? sRadioText_Playing : sRadioText_Paused,
         130, 2, TEXT_SKIP_DRAW, NULL);
 
-    // Line 2: "Song: SONG-NAME"
-    name = Radio_GetSongName(songId);
-    if (name == NULL)
-        name = sRadioText_Unknown;
-    StringCopy(gStringVar1, name);
+    // Line 2: "Song: SEALED CHAMBER"  (no MUS_ prefix, underscores as spaces)
+    rawName = Radio_GetSongName(songId);
+    Radio_FormatSongName(rawName != NULL ? rawName : NULL, formattedName, sizeof(formattedName));
+    StringCopy(gStringVar1, formattedName);
     StringExpandPlaceholders(gStringVar4, sRadioText_SongFmt);
     AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT, gStringVar4, 2, 18, TEXT_SKIP_DRAW, NULL);
 
-    // Line 3: "Station: STATION-NAME"
+    // Line 3: "Station: ALL TRACKS"
     StringCopy(gStringVar1, sStationNames[sRadioStation]);
     StringExpandPlaceholders(gStringVar4, sRadioText_StationFmt);
     AddTextPrinterParameterized(WIN_MUSIC_INFO, RADIO_FONT, gStringVar4, 2, 34, TEXT_SKIP_DRAW, NULL);
@@ -682,6 +979,7 @@ static void Task_RadioHandleInput(u8 taskId)
         Radio_SyncSong();
         songId  = sRadioCurrentSong;
         changed = TRUE;
+        Radio_PressButton(sRadioBtnNextId);
     }
     else if (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_DOWN) || JOY_NEW(L_BUTTON))
     {
@@ -691,7 +989,14 @@ static void Task_RadioHandleInput(u8 taskId)
         Radio_SyncSong();
         songId  = sRadioCurrentSong;
         changed = TRUE;
+        Radio_PressButton(sRadioBtnBackId);
     }
+
+    // Release next/back on key up
+    if (JOY_RELEASED(R_BUTTON) || JOY_RELEASED(DPAD_RIGHT) || JOY_RELEASED(DPAD_UP))
+        Radio_ReleaseButton(sRadioBtnNextId);
+    if (JOY_RELEASED(L_BUTTON) || JOY_RELEASED(DPAD_LEFT) || JOY_RELEASED(DPAD_DOWN))
+        Radio_ReleaseButton(sRadioBtnBackId);
 
     if (changed)
     {
@@ -720,13 +1025,23 @@ static void Task_RadioHandleInput(u8 taskId)
             playing = TRUE;
         }
         gTasks[taskId].tIsPlaying = (s16)playing;
+        Radio_UpdatePlayPauseButtons(playing);
         Radio_DrawMusicInfo(songId, playing);
+
+        // Pausa/retoma animações dos sprites junto com o rádio
+        if (sRadioJigSpriteId != 0xFF)
+            gSprites[sRadioJigSpriteId].animPaused = !playing;
+        if (sRadioStereo1Id != 0xFF)
+            gSprites[sRadioStereo1Id].animPaused = !playing;
+        if (sRadioStereo2Id != 0xFF)
+            gSprites[sRadioStereo2Id].animPaused = !playing;
     }
 
     // --- Close (B) ---
     if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
+        Radio_PressButton(sRadioBtnOffId);
         sRadioCurrentSong  = songId;
         sRadioIsPlaying    = playing;
         gTasks[taskId].func = Task_RadioFadeAndExit;
@@ -755,6 +1070,114 @@ static void Task_RadioWaitFadeExit(u8 taskId)
 
 #undef tCurrSong
 #undef tIsPlaying
+
+// ===========================================================================
+// Sprite callbacks
+// ===========================================================================
+
+// ---------------------------------------------------------------------------
+// SpriteCB_RadioJig — Jigglypuff sings on loop (4 frames).
+// No movement; frame animation is handled automatically by the sprite engine.
+// ---------------------------------------------------------------------------
+static void SpriteCB_RadioJig(struct Sprite *sprite)
+{
+    (void)sprite; // frame animation only, no movement logic needed
+}
+
+// ---------------------------------------------------------------------------
+// SpriteCB_RadioStereo — pulsing speaker effect.
+// Oscillates scale between 100% (PA=256) and ~114% (PA=224) — triangle wave, 64 frames.
+// When animPaused=TRUE (radio paused) it freezes at 1:1 scale.
+// Each instance uses its own matrixNum so the two speakers pulse independently.
+// ---------------------------------------------------------------------------
+static void SpriteCB_RadioStereo(struct Sprite *sprite)
+{
+    s16 scale;
+    u8  phase;
+
+    if (sprite->animPaused)
+    {
+        // Freeze at 1:1 scale while paused
+        SetOamMatrix((u8)sprite->oam.matrixNum, 256, 0, 0, 256);
+        return;
+    }
+
+    phase = (u8)(sprite->data[0]);
+    if (phase < 32)
+        scale = 256 - (s16)phase;        // 256 → 224  (engrossa)
+    else
+        scale = 224 + (s16)(phase - 32); // 224 → 256  (afina)
+
+    SetOamMatrix((u8)sprite->oam.matrixNum, (u16)scale, 0, 0, (u16)scale);
+    sprite->data[0] = (sprite->data[0] + 1) % 64;
+}
+
+// ---------------------------------------------------------------------------
+// Radio_CreateSprites — chamado no case 6 do CB2_LoadRadio
+// ---------------------------------------------------------------------------
+// Posições medidas diretamente no tileset (GBA 240x160):
+//   Jig:          quadrado amarelo  → centro x=77,  y=56
+//   Stereo LEFT:  círculo esquerdo  → centro x=179, y=29
+//   Stereo RIGHT: círculo direito   → centro x=216, y=66
+// ---------------------------------------------------------------------------
+#define RADIO_JIG_X       77
+#define RADIO_JIG_Y       56
+#define RADIO_STEREO1_X  179
+#define RADIO_STEREO1_Y   29
+#define RADIO_STEREO2_X  216
+#define RADIO_STEREO2_Y   66
+
+static void Radio_CreateSprites(void)
+{
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioJig);
+    LoadSpritePalettes(sSpritePalette_RadioJig);
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioStereo);
+    LoadSpritePalettes(sSpritePalette_RadioStereo);
+
+    // Jigglypuff
+    sRadioJigSpriteId = CreateSprite(&sSpriteTemplate_RadioJig, RADIO_JIG_X, RADIO_JIG_Y, 0);
+
+    // Stereo LEFT — usa OAM matrix slot 0
+    sRadioStereo1Id = CreateSprite(&sSpriteTemplate_RadioStereo, RADIO_STEREO1_X, RADIO_STEREO1_Y, 0);
+    gSprites[sRadioStereo1Id].oam.matrixNum = 0;
+    gSprites[sRadioStereo1Id].data[0] = 0;   // phase starts at 0
+    SetOamMatrix(0, 256, 0, 0, 256);
+
+    // Stereo RIGHT — uses OAM matrix slot 1 (phase offset 32 so they pulse in opposite directions)
+    sRadioStereo2Id = CreateSprite(&sSpriteTemplate_RadioStereo, RADIO_STEREO2_X, RADIO_STEREO2_Y, 0);
+    gSprites[sRadioStereo2Id].oam.matrixNum = 1;
+    gSprites[sRadioStereo2Id].data[0] = 32;  // offset phase: when speaker 1 grows, speaker 2 shrinks
+    SetOamMatrix(1, 256, 0, 0, 256);
+
+    // Start everything paused if radio is paused
+    if (!sRadioIsPlaying)
+    {
+        gSprites[sRadioJigSpriteId].animPaused  = TRUE;
+        gSprites[sRadioStereo1Id].animPaused     = TRUE;
+        gSprites[sRadioStereo2Id].animPaused     = TRUE;
+    }
+
+    // --- Button sprites ---
+    LoadCompressedSpriteSheet(sSpriteSheet_Play);
+    LoadSpritePalettes(sSpritePalette_Play);
+    LoadCompressedSpriteSheet(sSpriteSheet_Pause);
+    LoadSpritePalettes(sSpritePalette_Pause);
+    LoadCompressedSpriteSheet(sSpriteSheet_Next);
+    LoadSpritePalettes(sSpritePalette_Next);
+    LoadCompressedSpriteSheet(sSpriteSheet_Back);
+    LoadSpritePalettes(sSpritePalette_Back);
+    LoadCompressedSpriteSheet(sSpriteSheet_Off);
+    LoadSpritePalettes(sSpritePalette_Off);
+
+    sRadioBtnPlayId  = CreateSprite(&sSpriteTemplate_RadioBtn_Play,  RADIO_BTN_PLAY_X,  RADIO_BTN_PLAY_Y,  1);
+    sRadioBtnPauseId = CreateSprite(&sSpriteTemplate_RadioBtn_Pause, RADIO_BTN_PAUSE_X, RADIO_BTN_PAUSE_Y, 1);
+    sRadioBtnNextId  = CreateSprite(&sSpriteTemplate_RadioBtn_Next,  RADIO_BTN_NEXT_X,  RADIO_BTN_NEXT_Y,  1);
+    sRadioBtnBackId  = CreateSprite(&sSpriteTemplate_RadioBtn_Back,  RADIO_BTN_BACK_X,  RADIO_BTN_BACK_Y,  1);
+    sRadioBtnOffId   = CreateSprite(&sSpriteTemplate_RadioBtn_Off,   RADIO_BTN_OFF_X,   RADIO_BTN_OFF_Y,   1);
+
+    // Set initial play/pause frame based on current state
+    Radio_UpdatePlayPauseButtons(sRadioIsPlaying);
+}
 
 // ===========================================================================
 // VBlank / main loop callbacks
@@ -846,6 +1269,10 @@ static void CB2_LoadRadio(void)
         ShowBg(1);
         EnableInterrupts(INTR_FLAG_VBLANK);
         SetVBlankCallback(VBlankCB_Radio);
+
+        // Load and create sprites (Jigglypuff + Stereo speakers + buttons)
+        Radio_CreateSprites();
+
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
 
         if (sRadioIsPlaying)
@@ -877,6 +1304,18 @@ void Radio_Open(MainCallback returnCallback)
 
     // Sync index into current station
     sRadioStationIndex = Station_FindTrack(sRadioStation, sRadioCurrentSong);
+
+    // Invalida IDs de sprite (serão preenchidos em Radio_CreateSprites).
+    // Cannot initialize to 0xFF at declaration — that would place the variable
+    // in the .data section which is discarded on GBA. Set it here instead.
+    sRadioJigSpriteId = 0xFF;
+    sRadioStereo1Id   = 0xFF;
+    sRadioStereo2Id   = 0xFF;
+    sRadioBtnPlayId   = 0xFF;
+    sRadioBtnPauseId  = 0xFF;
+    sRadioBtnNextId   = 0xFF;
+    sRadioBtnBackId   = 0xFF;
+    sRadioBtnOffId    = 0xFF;
 
     SetMainCallback2(CB2_LoadRadio);
 }
