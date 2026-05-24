@@ -166,6 +166,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 
 LittlerootTown_01_EventScript_JirachiCelebi::
 	lockall
+	callnative StartSnowballGame
 	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox LittlerootTown_Text_GentleIntroduction, MSGBOX_DEFAULT
 	msgbox LittlerootTown_01_Text_JirachiCloseEyes, MSGBOX_DEFAULT
