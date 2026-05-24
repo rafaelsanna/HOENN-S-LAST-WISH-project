@@ -51,6 +51,7 @@ LittlerootTown_OnTransition:
 
 LittlerootTown_EventScript_Poochyena::
 	lock
+	callnative StartSnowballGame
 	faceplayer
 	playmoncry SPECIES_EEVEE, CRY_MODE_NORMAL
 	waitmoncry
