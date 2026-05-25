@@ -2,6 +2,11 @@
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #include "snowball.h"
 
+// VAR that persists hi-score between sessions (mirrors flappybird's VAR_FLAPPY_HISCORE)
+#ifndef VAR_SNOWBALL_HISCORE
+#define VAR_SNOWBALL_HISCORE VAR_TEMP_6
+#endif
+
 #include "global.h"
 #include "malloc.h"
 #include "bg.h"
@@ -9,6 +14,7 @@
 #include "event_data.h"
 #include "gpu_regs.h"
 #include "graphics.h"
+#include "m4a.h"
 #include "main.h"
 #include "menu.h"
 #include "menu_helpers.h"
@@ -28,6 +34,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/species.h"
+#include "constants/vars.h"
 
 // ============================================================
 // Decompression buffers – one per sprite sheet so DMA sources
@@ -46,7 +53,8 @@ enum {
     SNOWBALL_INIT_SWAP,  // Fading to black before swapping BG
     SNOWBALL_PLAYING,    // Active gameplay
     SNOWBALL_HIT,        // Player was hit; showing impact sprite
-    SNOWBALL_GAMEOVER,   // Showing game-over banner then fading out
+    SNOWBALL_GAMEOVER,   // Showing game-over banner
+    SNOWBALL_HISCORE,    // New hi-score! Show score2 banner
     SNOWBALL_EXIT,       // Fade complete – return to field
 };
 
@@ -92,11 +100,15 @@ struct SnowballGame {
     u8   hitSpriteId;
     u8   startSpriteId;
     u8   gameoverSpriteId;
+    u8   score2SpriteId;   // hi-score banner sprite (score2.png)
     u16  spawnTimer;
     u16  delayTimer;
     u16  ballsThrown;
     u16  speedScale;
     u8   scoreWindowId;
+    bool8 isNewHiScore;    // TRUE once player beats stored hi-score → red text
+    s16  lastPlayerY;      // used for stale-player detection
+    u8   noMoveBalls;      // balls thrown without player moving (task 4)
     u16  subX[MAX_SNOWBALLS];
     struct SnowballEntry balls[MAX_SNOWBALLS];
 
@@ -149,6 +161,7 @@ static const u16 SmallSnowballHitPAL[] = INCBIN_U16("graphics/snowball/smallsnow
 
 static const u32 SnowStartGFX[]    = INCBIN_U32("graphics/snowball/start.4bpp.lz");
 static const u32 SnowGameOverGFX[] = INCBIN_U32("graphics/snowball/gameover.4bpp.lz");
+static const u32 SnowScore2GFX[]   = INCBIN_U32("graphics/snowball/score2.4bpp.lz");  // hi-score banner
 static const u16 SnowTextPAL[]     = INCBIN_U16("graphics/flappybird/text.gbapal");
 
 // ============================================================
@@ -173,6 +186,7 @@ extern const u16 gOverworldPalette_Spheal[];
 #define SPHEAL_GFXTAG           5
 #define SNOW_START_GFXTAG       6
 #define SNOW_GAMEOVER_GFXTAG    7
+#define SNOW_SCORE2_GFXTAG      8   // hi-score banner
 
 #define BIG_SNOW_PALTAG         1
 #define BIG_SNOW_HIT_PALTAG     2
@@ -398,6 +412,20 @@ static const struct SpriteTemplate sSpriteTemplate_SnowGameOver = {
     .callback    = SpriteCallbackDummy,
 };
 
+// hi-score banner (score2.png) – same OAM as start/gameover, static (no blink)
+static const union AnimCmd sAnim_Static[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+static const union AnimCmd *const sAnims_Static[] = { sAnim_Static };
+
+static const struct SpriteTemplate sSpriteTemplate_SnowScore2 = {
+    .tileTag     = SNOW_SCORE2_GFXTAG,
+    .paletteTag  = SNOW_TEXT_PALTAG,
+    .oam         = &sOam_TextBanner,
+    .anims       = sAnims_Static,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCallbackDummy,
+};
+
 // ============================================================
 // Score text window (top-left corner, BG 0)
 // ============================================================
@@ -561,24 +589,32 @@ static const struct WindowTemplate sScoreWindowTemplate = {
 static void DrawScore(void)
 {
     static const u8 sScoreLabel[] = _("Score: ");
+    // Normal colors: transparent bg, black text, gray shadow
+    static const u8 sNormalColors[] = {0, 1, 2};
+    // Hi-score colors: transparent bg, RED text (palette index 3), dark shadow
+    static const u8 sHiColors[]     = {0, 3, 2};
     u8 text[24];
     u8 numStr[8];
     u16 textWidth;
     u8 xOffset;
 
+    // Don't draw while on start screen – score stays hidden until game begins
+    if (sSnow->state == SNOWBALL_INIT || sSnow->state == SNOWBALL_INIT_SWAP)
+        return;
+
     ConvertIntToDecimalStringN(numStr, sSnow->ballsThrown, STR_CONV_MODE_LEFT_ALIGN, 4);
     StringCopy(text, sScoreLabel);
     StringAppend(text, numStr);
 
-    // Center text inside the window (window = 14 tiles × 8px = 112px wide)
     textWidth = GetStringWidth(FONT_SMALL, text, 0);
-    xOffset = (u8)((112 - textWidth) / 2);
-    if (xOffset > 112) xOffset = 0;  // underflow guard
+    xOffset   = (u8)((112 - textWidth) / 2);
+    if (xOffset > 112) xOffset = 0;
 
-    // {background, text-body, shadow} → all black text on transparent bg
-    static const u8 sTextColors[] = {0, 1, 2};
     FillWindowPixelBuffer(sSnow->scoreWindowId, PIXEL_FILL(0));
-    AddTextPrinterParameterized3(sSnow->scoreWindowId, FONT_SMALL, xOffset, 2, sTextColors, 0, text);
+    // Use red palette entry (3) when player has beaten the stored hi-score
+    AddTextPrinterParameterized3(sSnow->scoreWindowId, FONT_SMALL, xOffset, 2,
+                                 sSnow->isNewHiScore ? sHiColors : sNormalColors,
+                                 0, text);
     PutWindowTilemap(sSnow->scoreWindowId);
     CopyWindowToVram(sSnow->scoreWindowId, COPYWIN_GFX);
     CopyBgTilemapBufferToVram(0);
@@ -760,6 +796,20 @@ static void CreateGameOverSprite(void)
     sSnow->gameoverSpriteId = CreateSprite(&sSpriteTemplate_SnowGameOver, 120, 80, 0);
 }
 
+static void CreateScore2Sprite(void)
+{
+    struct SpriteSheet s;
+
+    LoadSpritePalettes(sSnowPalettes);
+    LZ77UnCompWram(SnowScore2GFX, sSnow->bufTextSprite);
+    s.data = sSnow->bufTextSprite;
+    s.size = 0x800;
+    s.tag  = SNOW_SCORE2_GFXTAG;
+    LoadSpriteSheet(&s);
+
+    sSnow->score2SpriteId = CreateSprite(&sSpriteTemplate_SnowScore2, 120, 80, 0);
+}
+
 // ============================================================
 // Player sprite
 // ============================================================
@@ -901,9 +951,18 @@ static void SnowballMain(u8 taskId)
 
             // Reveal player and start spawning
             gSprites[sSnow->playerSpriteId].invisible = FALSE;
-            sSnow->spawnTimer = 60;
+            sSnow->spawnTimer  = 60;
+            sSnow->lastPlayerY = sSnow->playerY;
+            sSnow->noMoveBalls = 0;
 
-            PlaySE(SE_POKENAV_ON);
+            // Music: switch to Pokemon Jump theme + Spheal cry
+            PlayBGM(MUS_RG_POKE_JUMP);
+            PlayCry_Normal(SPECIES_SPHEAL, 0);
+
+            // Show score window now that game is starting
+            PutWindowTilemap(sSnow->scoreWindowId);
+            CopyBgTilemapBufferToVram(0);
+            DrawScore();
 
             // Fade back in
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
@@ -931,10 +990,52 @@ static void SnowballMain(u8 taskId)
         }
         gSprites[sSnow->playerSpriteId].y = sSnow->playerY;
 
+        // ── Stale-player tracking (Task 4) ──────────────────
+        // Reset counter whenever player moves ≥2px
+        if (sSnow->playerY != sSnow->lastPlayerY)
+            sSnow->noMoveBalls = 0;
+        sSnow->lastPlayerY = sSnow->playerY;
+
         // ── Spawn timer ─────────────────────────────────────
         if (sSnow->spawnTimer == 0)
         {
-            SpawnRandomSnowball();
+            sSnow->noMoveBalls++;
+
+            // Every 5 balls without moving → force a big ball at player's Y
+            if (sSnow->noMoveBalls >= 5)
+            {
+                u8 idx;
+                sSnow->noMoveBalls = 0;
+                // Find a free slot
+                for (idx = 0; idx < MAX_SNOWBALLS; idx++)
+                    if (!sSnow->balls[idx].active) break;
+                if (idx < MAX_SNOWBALLS)
+                {
+                    // Spawn big snowball directly at player's Y
+                    u16 spd = (u16)(((u32)BIG_SNOW_SPEED_BASE * sSnow->speedScale) / SPEED_SCALE_BASE);
+                    if (spd < BIG_SNOW_SPEED_BASE) spd = BIG_SNOW_SPEED_BASE;
+                    sSnow->balls[idx].spriteId  = CreateSprite(&sSpriteTemplate_BigSnow, SPAWN_X, (u8)sSnow->playerY, 1);
+                    sSnow->balls[idx].x         = SPAWN_X;
+                    sSnow->balls[idx].y         = (u8)sSnow->playerY;
+                    sSnow->balls[idx].speed256  = (u16)(spd * 256);
+                    sSnow->balls[idx].active    = TRUE;
+                    sSnow->balls[idx].isBig     = TRUE;
+                    sSnow->subX[idx]            = 0;
+                    sSnow->ballsThrown++;
+                    if (sSnow->speedScale < SPEED_SCALE_MAX)
+                        sSnow->speedScale += SPEED_SCALE_PER_BALL;
+                    // Check new hi-score
+                    if (!sSnow->isNewHiScore && sSnow->ballsThrown > VarGet(VAR_SNOWBALL_HISCORE))
+                    {
+                        sSnow->isNewHiScore = TRUE;
+                    }
+                    DrawScore();
+                }
+            }
+            else
+            {
+                SpawnRandomSnowball();
+            }
             sSnow->spawnTimer = (u16)(SPAWN_INTERVAL_MIN +
                                 (Random() % (SPAWN_INTERVAL_MAX - SPAWN_INTERVAL_MIN)));
         }
@@ -995,11 +1096,38 @@ static void SnowballMain(u8 taskId)
             // Remove impact sprite
             DestroySpriteAndFreeResources(&gSprites[sSnow->hitSpriteId]);
 
-            // Play fanfare and show GAME OVER banner
-            PlayFanfare(MUS_TOO_BAD);
-            CreateGameOverSprite();
-            sSnow->delayTimer = GAMEOVER_SHOW_DELAY;
-            sSnow->state      = SNOWBALL_GAMEOVER;
+            // Save hi-score if beaten
+            if (sSnow->ballsThrown > VarGet(VAR_SNOWBALL_HISCORE))
+            {
+                VarSet(VAR_SNOWBALL_HISCORE, sSnow->ballsThrown);
+                // Show hi-score banner instead of regular gameover
+                PlayFanfare(MUS_LEVEL_UP);
+                CreateScore2Sprite();
+                sSnow->delayTimer = GAMEOVER_SHOW_DELAY;
+                sSnow->state      = SNOWBALL_HISCORE;
+            }
+            else
+            {
+                PlayFanfare(MUS_TOO_BAD);
+                CreateGameOverSprite();
+                sSnow->delayTimer = GAMEOVER_SHOW_DELAY;
+                sSnow->state      = SNOWBALL_GAMEOVER;
+            }
+        }
+        break;
+
+    // ----------------------------------------------------------
+    // SNOWBALL_HISCORE – new record! show score2 banner then exit
+    // ----------------------------------------------------------
+    case SNOWBALL_HISCORE:
+        if (sSnow->delayTimer > 0)
+        {
+            sSnow->delayTimer--;
+        }
+        else
+        {
+            DestroySpriteAndFreeResources(&gSprites[sSnow->score2SpriteId]);
+            StartExitSnowballGame();
         }
         break;
 

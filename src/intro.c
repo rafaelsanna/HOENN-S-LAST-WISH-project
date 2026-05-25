@@ -147,6 +147,7 @@ enum {
 #define TAG_LIGHTNING 1503
 #define TAG_BUBBLES   1504
 #define TAG_SPARKLE   1505
+#define TAG_BULBASAUR 1506
 
 #define GFXTAG_DROPS_LOGO 2000
 #define PALTAG_DROPS      2000
@@ -286,6 +287,10 @@ static const u32 sScene0Celebi2_Gfx[]  = INCBIN_U32("graphics/intro/scene_0/cele
 static const u16 sScene0Jirachi2_Pal[] = INCBIN_U16("graphics/intro/scene_0/jirachi2.gbapal");
 static const u32 sScene0Jirachi2_Gfx[] = INCBIN_U32("graphics/intro/scene_0/jirachi2.4bpp.smol");
 
+//// bulbasaur
+static const u32 gIntroBulbasaur_Gfx[] = INCBIN_U32("graphics/intro/scene_2/bulbasaur.4bpp.lz");
+static const u16 gIntroBulbasaur_Pal[] = INCBIN_U16("graphics/intro/scene_2/bulbasaur.gbapal");
+
 // --- Big overlay tilesets (aparece sobre o bg depois do voo) ---
 // Ambos em 4bpp, tilemaps crus (.bin = raw 16-bit entries, sem header).
 // jirachibig vai no charbase 1 (reutiliza slot do sky) e
@@ -390,9 +395,10 @@ static const u8 sSparkleCoords[][2] =
 };
 static const struct CompressedSpriteSheet sSpriteSheet_RunningPokemon[] =
 {
-    {gIntroVolbeat_Gfx, 0x400, TAG_VOLBEAT},
+    {gIntroVolbeat_Gfx, 0x1000, TAG_VOLBEAT},
     {gIntroTorchic_Gfx, 0xC00, TAG_TORCHIC},
     {gIntroManectric_Gfx, 0x2000, TAG_MANECTRIC},
+    {gIntroBulbasaur_Gfx, 0xC00, TAG_BULBASAUR},
     {},
 };
 static const struct SpritePalette sSpritePalettes_RunningPokemon[] =
@@ -400,6 +406,7 @@ static const struct SpritePalette sSpritePalettes_RunningPokemon[] =
     {gIntroVolbeat_Pal, TAG_VOLBEAT},
     {gIntroTorchic_Pal, TAG_TORCHIC},
     {gIntroManectric_Pal, TAG_MANECTRIC},
+    {gIntroBulbasaur_Pal, TAG_BULBASAUR},
     {},
 };
 static const struct OamData sOamData_Volbeat =
@@ -409,10 +416,10 @@ static const struct OamData sOamData_Volbeat =
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = FALSE,
     .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(32x32),
+    .shape = SPRITE_SHAPE(64x64),
     .x = 0,
     .matrixNum = 0,
-    .size = SPRITE_SIZE(32x32),
+    .size = SPRITE_SIZE(64x64),
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
@@ -421,7 +428,7 @@ static const struct OamData sOamData_Volbeat =
 static const union AnimCmd sAnim_Volbeat[] =
 {
     ANIMCMD_FRAME(0, 2),
-    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(64, 2),
     ANIMCMD_JUMP(0),
 };
 static const union AnimCmd *const sAnims_Volbeat[] =
@@ -510,7 +517,7 @@ static const struct OamData sOamData_Manectric =
     .matrixNum = 0,
     .size = SPRITE_SIZE(64x64),
     .tileNum = 0,
-    .priority = 1,
+    .priority = 0,
     .paletteNum = 0,
     .affineParam = 0,
 };
@@ -536,6 +543,61 @@ static const struct SpriteTemplate sSpriteTemplate_Manectric =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_Manectric,
 };
+static const struct OamData sOamData_Bulbasaur =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+static const union AnimCmd sAnim_Bulbasaur_Run[] =
+{
+    ANIMCMD_FRAME(0,  4),   // frame 0 (tile offset 0)
+    ANIMCMD_FRAME(16, 4),   // frame 1 (offset 16 tiles)
+    ANIMCMD_FRAME(32, 4),   // frame 2
+    ANIMCMD_FRAME(48, 4),   // frame 3
+    ANIMCMD_FRAME(64, 4),   // frame 4
+    ANIMCMD_FRAME(80, 4),   // frame 5
+    ANIMCMD_JUMP(0),        // loop
+};
+static void SpriteCB_Bulbasaur(struct Sprite *sprite)
+{
+    // data[0] = delay counter; Bulbasaur waits before entering so it
+    // runs in after Torchic, passes him as he falls, then exits once.
+    if (sprite->data[0] < 200)
+    {
+        sprite->data[0]++;
+        return;
+    }
+
+    // Move left at half speed (every other frame) — slower than Torchic
+    if (++sprite->data[1] % 2 == 0)
+        sprite->x -= 1;
+
+    // Destroy once fully off-screen to the left — no looping
+    if (sprite->x < -32)
+        DestroySprite(sprite);
+}
+static const union AnimCmd *const sAnims_Bulbasaur[] = { sAnim_Bulbasaur_Run };
+static const struct SpriteTemplate sSpriteTemplate_Bulbasaur =
+{
+    .tileTag = TAG_BULBASAUR,
+    .paletteTag = TAG_BULBASAUR,
+    .oam = &sOamData_Bulbasaur,
+    .anims = sAnims_Bulbasaur,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Bulbasaur,
+};
 static const struct CompressedSpriteSheet sSpriteSheet_Lightning[] =
 {
     {gIntroLightning_Gfx, 0xC00, TAG_LIGHTNING},
@@ -558,7 +620,7 @@ static const struct OamData sOamData_Lightning =
     .matrixNum = 0,
     .size = SPRITE_SIZE(32x32),
     .tileNum = 0,
-    .priority = 0,
+    .priority = 2,
     .paletteNum = 0,
     .affineParam = 0,
 };
@@ -1909,12 +1971,17 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     u8 spriteId;
 
     // Load sprite sheets
-    if (sIntroCharacterGender == MALE)
+    // Brendan/May and bicycle sheets are intentionally skipped:
+    // both player PNG files are blank in this ROM hack, so those sprites
+    // are invisible. Skipping them frees ~16 KB of OBJ VRAM, keeping the
+    // total within the GBA's 32 KB limit now that Bulbasaur's sheet was added.
+    /* if (sIntroCharacterGender == MALE)
         LoadCompressedSpriteSheet(gSpriteSheet_IntroBrendan);
     else
         LoadCompressedSpriteSheet(gSpriteSheet_IntroMay);
 
-    LoadCompressedSpriteSheet(gSpriteSheet_IntroBicycle);
+    LoadCompressedSpriteSheet(gSpriteSheet_IntroBicycle); */
+
     LoadCompressedSpriteSheet(gSpriteSheet_IntroFlygon);
 
     // Load sprite palettes
@@ -1927,15 +1994,16 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     // Create Pokémon and player sprites
     CreateSprite(&sSpriteTemplate_Manectric, DISPLAY_WIDTH + 32, 128, 0);
     CreateSprite(&sSpriteTemplate_Torchic, DISPLAY_WIDTH + 48, 110, 1);
+    // Bulbasaur runs below Torchic
+    CreateSprite(&sSpriteTemplate_Bulbasaur, DISPLAY_WIDTH + 48, 120, 2);
 
-    if (sIntroCharacterGender == MALE)
-        spriteId = CreateIntroBrendanSprite(DISPLAY_WIDTH + 32, 100);
-    else
-        spriteId = CreateIntroMaySprite(DISPLAY_WIDTH + 32, 100);
-
-    gSprites[spriteId].callback = SpriteCB_PlayerOnBicycle;
-    gSprites[spriteId].anims = sAnims_PlayerBicycle;
+    // Player sprite creation is skipped because Brendan/May PNGs are blank.
+    // A dummy off-screen sprite is created so that tPlayerSpriteId stays
+    // valid for the state-machine accesses in Task_Scene2_BikeRide.
+    spriteId = CreateSprite(&sSpriteTemplate_Torchic, -64, -64, 3);
+    gSprites[spriteId].invisible = TRUE;
     gTasks[taskId].tPlayerSpriteId = spriteId;
+
     CreateSprite(&sSpriteTemplate_Volbeat, DISPLAY_WIDTH + 32, 80, 4);
     spriteId = CreateIntroFlygonSprite(-64, 60);
     gSprites[spriteId].callback = SpriteCB_Flygon;
