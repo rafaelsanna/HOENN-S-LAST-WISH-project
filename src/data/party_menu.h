@@ -66,9 +66,9 @@ static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects[] =
         // x, y, width, height para cada informação
         34,  1, 40, 13, // Nickname
         3,  25, 32,  8, // Level
-        28,  24,  8,  8, // Gender
-        34,  12, 24,  8, // HP
-        49,  12, 24,  8, // Max HP
+        28,  1,  8,  8, // Gender
+        34,  11, 24,  8, // HP
+        49,  11, 24,  8, // Max HP
         48,  26, 56,  3  // HP bar
         },
         33, 13, 64, 16      // Description text
