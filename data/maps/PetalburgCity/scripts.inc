@@ -1019,6 +1019,3 @@ PetalburgCity_Text_AdventureBoy:
     .string "I get this strange feeling.\p"
     .string "Like something's watching.\p"
     .string "You should be careful, okay?$"
-
-
-
