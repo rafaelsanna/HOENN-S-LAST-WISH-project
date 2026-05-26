@@ -295,11 +295,14 @@ Route101_Text_YouSavedMe:
 	.string "by my POKéMON LAB later, okay?$"
 
 Route101_Text_TakeTiredPokemonToPokeCenter:
-	.string "Why are you dressed like you're the main\n"
-	.string "character of an rpg?$"
+	.string "What's up with those clothes?\p"
+	.string "Oh, I get it.\p"
+	.string "You're cosplaying as the protagonist\n"
+	.string "of SALAMENCE QUEST.\p"
+	.string "I love that game!$"
 
 Route101_Text_WildPokemonInTallGrass:
-	.string "Those are some weird clothes...\p"
+	.string "Those are some weird clothes…\p"
 	.string "You don't look like you live here!$"
 
 Route101_Text_RouteSign:

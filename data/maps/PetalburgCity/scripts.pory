@@ -11,10 +11,27 @@ PetalburgCity_OnTransition:
 	call_if_eq VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_GYM_STATE, 8, PetalburgCity_EventScript_SetGymDoorsUnlocked
+	call PetalburgCity_EventScript_HandleAquaGrunts
 	end
 
 PetalburgCity_EventScript_HideLukaAfterGym::
 	setflag FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM
+	return
+
+@ Aqua Grunt blocker logic:
+@ - Shown ONLY after 5th gym is defeated
+@ - Hidden again once the player completes the relevant tasks (FLAG_AQUA_GRUNTS_PETALBURG_DONE)
+PetalburgCity_EventScript_HandleAquaGrunts::
+	goto_if_set FLAG_AQUA_GRUNTS_PETALBURG_DONE, PetalburgCity_EventScript_HideAquaGrunts
+	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_ShowAquaGrunts
+	goto PetalburgCity_EventScript_HideAquaGrunts
+
+PetalburgCity_EventScript_ShowAquaGrunts::
+	clearflag FLAG_HIDE_PETALBURG_CITY_AQUA_GRUNTS
+	return
+
+PetalburgCity_EventScript_HideAquaGrunts::
+	setflag FLAG_HIDE_PETALBURG_CITY_AQUA_GRUNTS
 	return
 
 PetalburgCity_EventScript_MoveGymBoyToWestEntrance::
@@ -42,11 +59,9 @@ PetalburgCity_EventScript_WallyTutorial::
     applymovement LOCALID_PLAYER, PetalburgCity_Movement_WallyTutorialPlayer
     waitmovement 0
     msgbox Route102_Text_WatchMeCatchPokemon, MSGBOX_DEFAULT
-    // Em vez da captura, inicia uma batalha contra o Wally
-    trainerbattle_single TRAINER_WALLY_VR_6, PetalburgCity_Text_WallyIntro, PetalburgCity_Text_WallyDefeat, PetalburgCity_EventScript_AfterWallyBattle
-    end
-
-PetalburgCity_EventScript_AfterWallyBattle::
+    msgbox PetalburgCity_Text_WallyIntro, MSGBOX_DEFAULT
+    closemessage
+    trainerbattle_no_intro TRAINER_WALLY_VR_6, PetalburgCity_Text_WallyDefeat
     msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
     applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
     waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
@@ -62,7 +77,6 @@ PetalburgCity_EventScript_AfterWallyBattle::
     waitstate
     releaseall
     end
-
 
 PetalburgCity_EventScript_WalkToWallyHouse::
 	lockall
@@ -756,6 +770,14 @@ PetalburgCity_EventScript_GymBoy::
 	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_NPC
 	end
 
+PetalburgCity_EventScript_AquaGruntBlock::
+	lock
+	faceplayer
+	msgbox PetalburgCity_Text_AquaGruntBlock, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
 PetalburgCity_EventScript_AdventureBoy::
 	msgbox PetalburgCity_Text_AdventureBoy, MSGBOX_NPC
 	end	
@@ -980,6 +1002,13 @@ PetalburgCity_Text_LukaAfterGym_PostBattle2:
     .string "We'll meet again soon.\n"
     .string "Count on it!$"
 
+PetalburgCity_Text_AquaGruntBlock:
+	.string "This route is off-limits now, friend.\p"
+	.string "Orders straight from the LEADER.\n"
+	.string "Unquestionable orders.\p"
+	.string "So do us both a favor…\n"
+	.string "And get lost.$"
+
 PetalburgCity_Text_AdventureBoy:
     .string "This city's pretty calm.\n"
     .string "Or at least, it seems that way.\p"
@@ -988,8 +1017,4 @@ PetalburgCity_Text_AdventureBoy:
     .string "Even when it's quiet...\n"
     .string "I get this strange feeling.\p"
     .string "Like something's watching.\p"
-    .string "You should be careful, okay?$"
-
-
-
-`
+    .string "You should be careful, okay?$"`

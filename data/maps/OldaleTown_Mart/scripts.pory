@@ -56,10 +56,10 @@ OldaleTown_Mart_EventScript_Boy::
 
 OldaleTown_Mart_Text_PokeBallsAreSoldOut:
     .string "They say some strange POKéMON have\n"
-    .string "been seen around Oldale lately.\p"
+    .string "been seen around OLDALE lately.\p"
     .string "Because of that, everyone's been buying\n"
     .string "items like crazy.\p"
-    .string "Now the clerk says they're sold out...$"
+    .string "Now the clerk says they're sold out…$"
 
 OldaleTown_Mart_Text_ImGoingToBuyPokeBalls:
     .string "Where did you get that outfit?\n"
@@ -69,7 +69,7 @@ OldaleTown_Mart_Text_ImGoingToBuyPokeBalls:
 
 OldaleTown_Mart_Text_RestoreHPWithPotion:
     .string "If you're heading out to check the\n"
-    .string "weird POKéMON around Oldale, be careful.\p"
+    .string "POKéMON around OLDALE, be careful.\p"
     .string "Keep some POTIONS with you so your\n"
     .string "POKéMON don't faint out there.$"
 

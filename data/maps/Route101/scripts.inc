@@ -593,22 +593,28 @@ Route101_Text_YouSavedMe:
 # 297 "data/maps/Route101/scripts.pory"
 Route101_Text_TakeTiredPokemonToPokeCenter:
 # 298 "data/maps/Route101/scripts.pory"
-	.string "Why are you dressed like you're the main\n"
+	.string "What's up with those clothes?\p"
 # 299 "data/maps/Route101/scripts.pory"
-	.string "character of an rpg?$"
+	.string "Oh, I get it.\p"
 # 300 "data/maps/Route101/scripts.pory"
-
+	.string "You're cosplaying as the protagonist\n"
 # 301 "data/maps/Route101/scripts.pory"
-Route101_Text_WildPokemonInTallGrass:
+	.string "of SALAMENCE QUEST.\p"
 # 302 "data/maps/Route101/scripts.pory"
-	.string "Those are some weird clothes...\p"
+	.string "I love that game!$"
 # 303 "data/maps/Route101/scripts.pory"
-	.string "You don't look like you live here!$"
-# 304 "data/maps/Route101/scripts.pory"
 
+# 304 "data/maps/Route101/scripts.pory"
+Route101_Text_WildPokemonInTallGrass:
 # 305 "data/maps/Route101/scripts.pory"
-Route101_Text_RouteSign:
+	.string "Those are some weird clothes…\p"
 # 306 "data/maps/Route101/scripts.pory"
-	.string "ROUTE 101\n"
+	.string "You don't look like you live here!$"
 # 307 "data/maps/Route101/scripts.pory"
+
+# 308 "data/maps/Route101/scripts.pory"
+Route101_Text_RouteSign:
+# 309 "data/maps/Route101/scripts.pory"
+	.string "ROUTE 101\n"
+# 310 "data/maps/Route101/scripts.pory"
 	.string "{UP_ARROW} OLDALE TOWN$"

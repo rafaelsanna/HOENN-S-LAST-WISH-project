@@ -21,10 +21,11 @@ LittlerootTown_MaysHouse_2F_EventScript_WeirdDreamDialogue::
 	end
 
 LittlerootTown_MaysHouse_2F_Text_WeirdDream:
-	.string "{PLAYER}: What a weird dream...\p"
-	.string "Was that JIRACHI and CELEBI?\n"
-	.string "Maybe it wasn't a dream...\l"
-	.string "Maybe it really happened...$"
+	.string "{PLAYER}: What a weird dream…\p"
+	.string "Were those JIRACHI and CELEBI?\n"
+	.string "Maybe it wasn't a dream…\l"
+	.string "Maybe it really happened…p"
+	.string "…Either way, I have to get going.$"
 
 LittlerootTown_MaysHouse_2F_OnTransition:
 	call_if_lt VAR_LITTLEROOT_RIVAL_STATE, 2, LittlerootTown_MaysHouse_2F_EventScript_CheckSetReadyToMeetMay
@@ -322,47 +323,47 @@ LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC::
 
 RivalsHouse_2F_Text_MayWhoAreYou:
 	.string "Oh, hey {PLAYER}!\n"
-	.string "Didn't see you there.\p"
-	.string "Did you come to talk about that\n"
-	.string "bizarre comet last night?\p"
+	.string "What are you doing here?\p"
+	.string "Oh, but nevermind that.\n"
+	.string "Did you see the comet last night?\p"
 	.string "It lit up the entire sky!\n"
-	.string "So strange and beautiful...\p"
+	.string "It was so beautiful…\p"
 	.string "I made a wish when I saw it.\n"
 	.string "Got goosebumps all over!\p"
-	.string "Anyway... I remembered something!\n"
+	.string "Anyway… I gotta go!\n"
+	.string "I'm going to train on ROUTE 103.\p"
 	.string "PROFESSOR ACACIA says we both have\n"
 	.string "a lot of potential as TRAINERS.\p"
-	.string "Anyway, I should get back to studying\n"
-	.string "on the computer.\p"
+	.string "Wouldn't want to let her down!\n"
 	.string "See you later, {PLAYER}!$"
 
 RivalsHouse_2F_Text_MayGettingReady:
-	.string "Studying about the millennium comet...\n"
+	.string "Studying about the millennium comet…\n"
 	.string "It only passes once every 1000 years!\p"
 	.string "The ancient texts say it has some\n"
-	.string "connection to legendary POKéMON...$"
+	.string "connection to legendary POKéMON…$"
 
 RivalsHouse_2F_Text_BrendanWhoAreYou:
-	.string "Hey {PLAYER}!\n"
-	.string "Over here!\p"
-	.string "Did you see that bizarre comet\n"
-	.string "last night?\p"
-	.string "The whole sky was glowing with\n"
-	.string "this weird purple light!\p"
-	.string "I made a wish too, hope it comes\n"
-	.string "true, whatever it was!\p"
-	.string "And I remembered something!\n"
+	.string "Oh, hey {PLAYER}!\n"
+	.string "What are you doing here?\p"
+	.string "Oh, but nevermind that.\n"
+	.string "Did you see the comet last night?\p"
+	.string "The whole sky was glowing with this\n"
+	.string "weird purple light!\p"
 	.string "PROFESSOR ACACIA said it might be\n"
-	.string "connected to POKéMON somehow.\p"
+	.string "connected to POKeMON somehow.\p"
+	.string "Me? Of course I made a wish.\n"
+	.string "I'm not telling you though, or it won't\n"
+	.string "come true.$"
 	.string "Anyway, I should get going.\n"
-	.string "Got some training to do.\p"
+	.string "Got some training on ROUTE 103 to do.\p"
 	.string "Catch you later, neighbor!$"
 
 RivalsHouse_2F_Text_BrendanGettingReady:
-	.string "Studying about the millennium comet...\n"
+	.string "Studying about the millennium comet…\n"
 	.string "It only passes once every 1000 years!\p"
 	.string "The ancient texts say it has some\n"
-	.string "connection to legendary POKéMON...$"
+	.string "connection to legendary POKéMON…$"
 
 RivalsHouse_2F_Text_ItsRivalsPokeBall:
 	.string "It's {RIVAL}'s POKé BALL!\p"

@@ -21,10 +21,11 @@ LittlerootTown_BrendansHouse_2F_EventScript_WeirdDreamDialogue::
 	end
 
 LittlerootTown_BrendansHouse_2F_Text_WeirdDream:
-	.string "{PLAYER}: What a weird dream...\p"
-	.string "Was that JIRACHI and CELEBI?\n"
-	.string "Maybe it wasn't a dream...\l"
-	.string "Maybe it really happened...$"
+	.string "{PLAYER}: What a weird dream…\p"
+	.string "Were those JIRACHI and CELEBI?\n"
+	.string "Maybe it wasn't a dream…\l"
+	.string "Maybe it really happened…p"
+	.string "…Either way, I have to get going.$"
 
 LittlerootTown_BrendansHouse_2F_OnTransition:
 	call_if_lt VAR_LITTLEROOT_RIVAL_STATE, 2, LittlerootTown_BrendansHouse_2F_EventScript_CheckSetReadyToMeetBrendan
@@ -387,46 +388,46 @@ PlayersHouse_2F_Text_NotebookMaybeLater:
 	.string "You leave the notebook for later.$"
 
 PlayersHouse_2F_Text_NotebookStory1:
-	.string "Page 1: This was the beginning\nof it all...$"
+	.string "Page 1: This was the beginning\nof it all…$"
 
 PlayersHouse_2F_Text_NotebookStory2:
-	.string "Page 2: Then the great conflict\nstarted...$"
+	.string "Page 2: Then the great conflict\nstarted…$"
 
 PlayersHouse_2F_Text_NotebookStory3:
-	.string "Page 3: The epic battle between land\nand sea shook Hoenn...$"
+	.string "Page 3: The epic battle between land\nand sea shook HOENN…$"
 
 PlayersHouse_2F_Text_NotebookStory4:
-	.string "Page 4: Massive tsunamis devastated\nthe coastal regions...$"
+	.string "Page 4: Massive tsunami devastated\nthe coastal regions…$"
 
 PlayersHouse_2F_Text_NotebookStory5:
-	.string "Page 5: Volcanoes erupted across\nthe land...$"
+	.string "Page 5: Volcanoes erupted across\nthe land…$"
 
 PlayersHouse_2F_Text_NotebookStory6:
-	.string "Page 6: The land became a barren\nwasteland...$"
+	.string "Page 6: The land became barren…$"
 
 PlayersHouse_2F_Text_NotebookStory7:
-	.string "Page 7: The oceans raged with\nunending storms...$"
+	.string "Page 7: The oceans raged with\nunending storms…$"
 
 PlayersHouse_2F_Text_NotebookStory8:
-	.string "Page 8: Survivors gathered in\ncamps...$"
+	.string "Page 8: Survivors gathered in\ncamps…$"
 
 PlayersHouse_2F_Text_NotebookStory9:
-	.string "Page 9: Hope began to fade...$"
+	.string "Page 9: Hope began to fade…$"
 
 PlayersHouse_2F_Text_NotebookStory10:
-	.string "Page 10: But then a legend\nappeared...$"
+	.string "Page 10: But then a legend\nappeared…$"
 
 PlayersHouse_2F_Text_NotebookStory11:
-	.string "Page 11: The sky guardian descended\nfrom above...$"
+	.string "Page 11: The sky guardian descended\nfrom above…$"
 
 PlayersHouse_2F_Text_NotebookStory12:
-	.string "Page 12: Peace was restored,\nbut at a cost...$"
+	.string "Page 12: Peace was restored,\nbut at a cost…$"
 
 PlayersHouse_2F_Text_NotebookStory13:
-	.string "Page 13: This is how our world\nbecame what it is today...$"
+	.string "Page 13: This is how our world\nbecame what it is today…$"
 
 PlayersHouse_2F_Text_NotebookFinished:
-	.string "You close the notebook, filled with\nwonder about Hoenn's ancient past.$"
+	.string "You close the notebook, filled with\nwonder about HOENN's ancient past.$"
 
 Common_Text_LookCloserAtMap:
 	.string "{PLAYER} took a closer look at the\n"

@@ -39,11 +39,11 @@ OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable::
 	end
 
 OldaleTown_PokemonCenter_1F_Text_TrainersCanUsePC:
-    .string "Did you see the sky last night?\n"
+    .string "Did you see the sky?\n"
     .string "That comet lit everything up like day.\p"
     .string "People say it only appears once every\n"
     .string "thousand years.\p"
-    .string "Makes you wonder what it means...$"
+    .string "Makes you wonder what it means…$"
 
 OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat:
     .string "I swear something feels off today.\p"
@@ -53,16 +53,16 @@ OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat:
 
 OldaleTown_PokemonCenter_1F_Text_WirelessClubNotAvailable:
     .string "Everyone keeps talking about the\n"
-    .string "Millennium Comet.\p"
+    .string "MILLENNIUM COMET.\p"
     .string "Some people said they made a wish\n"
     .string "when it passed.\p"
-    .string "If the stories are true... maybe their\n"
+    .string "If the stories are true… maybe their\n"
     .string "lives really will change.$"
 
 OldaleTown_PokemonCenter_1F_Text_TradedInWirelessClub:
-    .string "Hey, your outfit is... something.\n"
+    .string "Hey, your outfit is something.\n"
     .string "A cape? Layers like that?\p"
-    .string "Guess fashion is getting wild lately.\n"
+    .string "Guess fashion is getting wild lately.\p"
     .string "Or maybe the comet messed with more\n"
     .string "than just the sky.$"
 

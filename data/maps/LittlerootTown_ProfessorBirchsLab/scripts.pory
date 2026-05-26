@@ -564,8 +564,12 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AfterGivePokedex::
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls
 	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_BIRCHS_LAB_RIVAL, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_HereTakeMap, MSGBOX_DEFAULT
 	giveitem ITEM_TOWN_MAP
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_YourFirstStep, MSGBOX_DEFAULT
 	setvar VAR_BIRCH_LAB_STATE, 5
 	setflag FLAG_ADVENTURE_STARTED
 	setvar VAR_OLDALE_TOWN_STATE, 1
@@ -738,13 +742,14 @@ LittlerootTown_ProfessorBirchsLab_Text_BirchEnjoysRivalsHelpToo:
 	.string "There's a lot of potential there.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_LikeYouToHavePokemon:
-	.string "PROF. ACACIA: So, {PLAYER}{KUN}.\p"
+	.string "PROF. ACACIA: Ah, {PLAYER}{KUN}.\p"
 	.string "Your grandmother has told me so\n"
 	.string "much about you.\p"
 	.string "I understand you don't have your\n"
 	.string "own POKéMON yet.\p"
 	.string "But the way you battled earlier,\n"
-	.string "you pulled it off with composure!\p"
+	.string "you pulled it off with ap-… apl…-\p"
+	.string "Composure!\p"
 	.string "As thanks for rescuing me,\n"
 	.string "I'd like you to have the POKéMON you\l"
 	.string "used earlier.\p"
@@ -756,7 +761,7 @@ LittlerootTown_ProfessorBirchsLab_Text_WhyNotGiveNicknameToMon:
 
 LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival:
 	.string "PROF. ACACIA: If you work alongside\n"
-	.string "your POKéMON and gain experience,\n"
+	.string "your POKéMON and gain experience,\l"
 	.string "you will become a strong TRAINER.\p"
 	.string "Your neighbor, {RIVAL}, is also\n"
 	.string "studying POKéMON while helping me.\p"
@@ -772,27 +777,28 @@ LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou:
 LittlerootTown_ProfessorBirchsLab_Text_DontBeThatWay:
 	.string "PROF. ACACIA: Oh, don't be that way.\n"
 	.string "You should go meet your neighbor.\p"
-	.string "Go north on ROUTE 103...\n"
+	.string "Go north on ROUTE 103…\n"
 	.string "Just past OLDALE TOWN!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_BirchRivalGoneHome:
 	.string "PROF. ACACIA: {RIVAL}?\n"
 	.string "Came by earlier asking about POKéMON.\p"
-	.string "Not sure where they went though...\n"
+	.string "Not sure where they went, though…\n"
 	.string "Maybe checking out ROUTE 103 again?\p"
-	.string "They mentioned finding rare POKéMON\n"
-	.string "there. You might have to explore around.\p"
+	.string "They could also still be home.\n"
+	.string "You might just have to look around!"
 	.string "If you or your POKéMON get tired,\n"
 	.string "you should get some rest at home.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_HeardYouBeatRivalTakePokedex:
-	.string "PROF. ACACIA: Oh, hi, {PLAYER}{KUN}!\p"
+	.string "PROF. ACACIA: There you are, {PLAYER}{KUN}!\p"
 	.string "I heard you beat {RIVAL} on\n"
-	.string "your first try. That's excellent!\p"
+	.string "your first try.\l"
+	.string "That's excellent!\p"
 	.string "{RIVAL}'s been helping with my research\n"
 	.string "for a long time.\p"
-	.string "{RIVAL} has an extensive history as\n"
-	.string "a TRAINER already.\p"
+	.string "Lately, the've picked up POKéMON\n"
+	.string "battling.\p"
 	.string "Here, {PLAYER}{KUN}, I ordered this for my\n"
 	.string "research, but I think you should have\l"
 	.string "this POKéDEX.$"
@@ -806,58 +812,60 @@ LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex:
     .string "of any POKéMON you meet or catch.\p"
     .string "{RIVAL} goes everywhere helping me\n"
     .string "with it.\p"
-    .string "There are many special POKéMON\n"
-    .string "waiting to be discovered out there.\p"
-    .string "Explore thoroughly, and just like\n"
-    .string "{RIVAL}, keep searching and learning.\p"
-    .string "My partner, CALENDULA, and I met long\n"
-    .string "ago while researching rare POKéMON.\l"
-    .string "We traveled through forests, caverns,\l"
-    .string "and ruins... somewhere along the way,\l"
-    .string "research turned into something more.\p"
+	.string "You may wonder why I'm giving you this.\n"
+	.string "Truth is, I have a request for you both.\p"
+	.string "The data is still being collected, but…\p"
+	.string "I'm sure you've already noticed it\n"
+	.string "yourselves.\p"
+	.string "I believe that the passage of the\n"
+	.string "MILLENNIUM COMET might have changed\l"
+	.string "something about our reality.\p"
+	.string "That's why I want to send you out\n"
+	.string "to discover what happened.$"
+
+
+LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
+	.string "PROF. ACACIA: My partner, CALENDULA,\n"
+    .string "and I met long ago while researching\l"
+	.string "rare POKéMON.\p"
+    .string "We traveled through forests, caverns,\n"
+    .string "and ruins…\p"
+	.string "Somewhere along the way, our\n"
+    .string "relationship turned into something\l"
+	.string "more.\p"
     .string "Now she is the GYM LEADER of PETALBURG\n"
-    .string "CITY, calm, brilliant, and one of the\l"
-    .string "strongest NORMAL-type trainers alive.\p"
+    .string "CITY.\p"
+	.string "Calm, brilliant, and one of the strongest\n"
+    .string "NORMAL-type trainers alive.\p"
     .string "If you truly want to become a real\n"
-    .string "POKEMON TRAINER, go meet her.\p"
+    .string "POKEMON TRAINER, go meet her.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_HereTakeMap:
+    .string "PROF. ACACIA: Oh, and before you go,\n"
+	.string "take this!\p"
+    .string "It's a TOWN MAP.\n"
+    .string "If you ever get lost on your journey,\l"
+    .string "use this map to guide yourself!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_YourFirstStep:
+	.string "PROF. ACACIA: To succeed in this journey\n"
+	.string "you will have to get stronger.\p"
     .string "Seek out CALENDULA in PETALBURG CITY.\n"
     .string "She will teach you lessons no book ever\l"
     .string "could.$"
 
-LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
-    .string "My partner, CALENDULA, and I met long\n"
-    .string "ago while researching rare POKEMON.\l"
-    .string "We traveled through forests, caverns,\l"
-    .string "and ruins... and somewhere along the way,\l"
-    .string "research turned into something more.\p"
-    .string "Now she is the GYM LEADER of PETALBURG\n"
-    .string "CITY, calm, brilliant, and one of the\l"
-    .string "strongest NORMAL-type trainers alive.\p"
-    .string "If you truly want to become a real\n"
-    .string "POKEMON TRAINER, go meet her.\p"
-    .string "Seek out CALENDULA in PETALBURG CITY.\n"
-    .string "She will teach you lessons no book ever\l"
-    .string "could. Go on, what are you waiting for?$"
-
-LittlerootTown_ProfessorBirchsLab_Text_HereTakeMap:
-    .string "Oh, and before you go, take this!\p"
-    .string "It's a TOWN MAP.\n"
-    .string "If you ever get lost on your journey,\l"
-    .string "use this map to guide yourself!\p"
-    .string "Good luck, {PLAYER}!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese:
-	.string "ZINNIA: Oh, wow, {PLAYER}{KUN}!\n"
-	.string "You got a POKéDEX, too!\p"
-	.string "That's great! Just like me!\n"
-	.string "I've got something for you, too!$"
+	.string "ZINNIA: That sounds mysterious!\p"
+	.string "{PLAYER}, if you have a POKéDEX now,\n"
+	.string "you might need these!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_CatchCutePokemonWithPokeBalls:
-	.string "ZINNIA: It's fun if you can get a lot of\n"
-	.string "POKéMON!\p"
-	.string "I'm going to look all over the place\n"
-	.string "because I want different POKéMON.\p"
-	.string "If I find any cute POKéMON, I'll catch\n"
+	.string "ZINNIA: This will be my first\n"
+	.string "independent research project.\p"
+	.string "I'm going to look all over the place to\n"
+	.string "learn the mystery of the comet.\p"
+	.string "And if I find any cute POKéMON, I'll catch\n"
 	.string "them with POKé BALLS!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_OhYourBagsFull:
@@ -871,18 +879,18 @@ LittlerootTown_ProfessorBirchsLab_Text_MayWhereShouldIGoNext:
 	.string "amazing POKéMON!$"
 	
 LittlerootTown_ProfessorBirchsLab_Text_BrendanGotPokedexTooTakeThese:
-	.string "ZENNO: Huh…\n"
-	.string "So you got a POKéDEX, too.\p"
-	.string "Well then, here.\n"
+	.string "ZINNIA: That sounds pretty intense.\p"
+	.string "{PLAYER}, you have a POKéDEX now, so\n"
 	.string "I'll give you these.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_CatchCoolPokemonWithPokeBalls:
-	.string "ZENNO: You know it's more fun to\n"
-	.string "have a whole bunch of POKéMON.\p"
-	.string "I'm going to explore all over the place\n"
-	.string "to find different POKéMON.\p"
-	.string "If I find any cool POKéMON, you bet\n"
-	.string "I'll try to get them with POKé BALLS.$"
+	.string "ZENNO: This will be my first\n"
+	.string "independent research project.\p"
+	.string "I'm going to look all over the place to\n"
+	.string "learn the mystery of the comet.\p"
+	.string "And if I find any cool POKéMON, I'll catch\n"
+	.string "them with POKé BALLS!$"
+
 
 LittlerootTown_ProfessorBirchsLab_Text_HeyYourBagsFull:
 	.string "Hey, your BAG's full.$"
@@ -896,7 +904,7 @@ LittlerootTown_ProfessorBirchsLab_Text_BrendanWhereShouldIGoNext:
 
 LittlerootTown_ProfessorBirchsLab_Text_SeriousLookingMachine:
 	.string "It's a serious-looking machine.\n"
-	.string "The PROF must use this for research.$"
+	.string "The PROF. must use this for research.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_PCUsedForResearch:
 	.string "It's a PC used for research.\n"
@@ -1088,28 +1096,28 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 
 LittlerootTown_ProfessorBirchsLab_Text_Register10PokemonForTogepiEgg:
 	.string "We're studying this different Pokémon\n"
-	.string "called Togepi.\p"
+	.string "called TOGEPI.\p"
 	.string "If you register 10 Pokémon in your\n"
-	.string "Pokédex, we'll give you a Togepi Egg!$"
+	.string "Pokédex, we'll give you a TOGEPI EGG!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_YouHave10PokemonHeresTogepiEgg:
 	.string "Wow! You've already registered\n"
 	.string "10 Pokémon in your Pokédex!\p"
-	.string "As promised, here's the Togepi Egg!$"
+	.string "As promised, here's the TOGEPI EGG!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_ReceivedTogepiEgg:
-	.string "{PLAYER} received the Togepi Egg!$"
+	.string "{PLAYER} received the TOGEPI EGG!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_TakeGoodCareOfTogepi:
-	.string "Take good care of that Togepi!\n"
+	.string "Take good care of that TOGEPI!\n"
 	.string "It's a very special Pokémon.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg:
-	.string "Oh, you don't have room for this Egg\n"
+	.string "Oh, you don't have room for this EGG\n"
 	.string "in your party. Come back later!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_HowIsTogepiDoing:
-	.string "How is the Togepi doing?\n"
+	.string "How is the TOGEPI doing?\n"
 	.string "I hope it's growing well!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_WouldYouLikeInfiniteCandy:
@@ -1138,7 +1146,8 @@ DifficultySelection_Text_HardModeSelected:
 LittlerootTown_ProfessorBirchsLab_Text_Intern:
 	.string "I was lucky enough to land a\n"
 	.string "position as an intern here at\l"
-	.string "PROF. ACACIA's lab! If I work here\l"
-	.string "long enough, maybe I'll even get paid!$"
+	.string "PROF. ACACIA's lab!\p"
+	.string "If I work here long enough, maybe\n"
+	.string "I'll even get paid!$"
 
 `
