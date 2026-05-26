@@ -203,7 +203,7 @@ LittlerootTown_01_Text_JirachiTimeWarp:
 	.string "TIME WARP - ACTIVATE!$"
 
 LittlerootTown_01_Text_No:
-	.string "Alright, start the journey.$"
+	.string "Then, start the journey.$"
 
 LittlerootTown_01_Text_CelebiWarning:
 	.string "Celebi: Greetings, traveler of time...\p"

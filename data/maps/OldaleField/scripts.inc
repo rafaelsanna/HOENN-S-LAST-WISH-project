@@ -72,15 +72,15 @@ OldTunnelSign_Text_0:
 
 OldaleFieldAbraManDialogue::
 # 45 "data/maps/OldaleField/scripts.pory"
-	.string "I explored this dark cave to the\n"
-	.string "fullest in seach of rare POKéMON!\p"
-	.string "I found this Abra, which doesn't even\n"
-	.string "have an attack. What am I going to do\l"
-	.string "with this now?$"
+	.string "I explored this dark cave in seach of\n"
+	.string "rare POKéMON!\p"
+	.string "I found this ABRA, but it doesn't even\n"
+	.string "have any damaging moves!\p"
+	.string "What am I going to do with this?$"
 
 OldaleFieldGirlDialogue::
 # 52 "data/maps/OldaleField/scripts.pory"
-	.string "Beware of those Sentret!\n"
-	.string "They are so cute! I know...\p"
-	.string "But they are stressed and energetic.\n"
+	.string "Beware of those SENTRET!\n"
+	.string "They are so cute, I know…\p"
+	.string "But they're very easily stressed!\n"
 	.string "They're always starting fights!$"

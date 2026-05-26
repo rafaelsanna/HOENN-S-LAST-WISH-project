@@ -1,0 +1,51 @@
+raw `
+SlateportCity_PokemonCenter_1F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
+	.byte 0
+
+SlateportCity_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_SLATEPORT_CITY
+	call Common_EventScript_UpdateBrineyLocation
+	end
+
+SlateportCity_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_SLATEPORT_NURSE
+	call Common_EventScript_PkmnCenterNurse
+	waitmessage
+	waitbuttonpress
+	release
+	end
+
+SlateportCity_PokemonCenter_1F_EventScript_Sailor::
+	msgbox SlateportCity_PokemonCenter_1F_Text_RaiseDifferentTypesOfPokemon, MSGBOX_NPC
+	end
+
+SlateportCity_PokemonCenter_1F_EventScript_Woman::
+	msgbox SlateportCity_PokemonCenter_1F_Text_TradedMonWithFriend, MSGBOX_NPC
+	end
+
+SlateportCity_PokemonCenter_1F_Text_RaiseDifferentTypesOfPokemon:
+	.string "Slateport breathes different every\n"
+	.string "morning. Depends which ship docked.\p"
+	.string "Last week, sailors from Kanto.\n"
+	.string "Told stories of a lighthouse that\l"
+	.string "shines where no land exists.\p"
+	.string "Yesterday, a woman from Johto.\n"
+	.string "Said the tides there whisper at night.\l"
+	.string "Words, almost. I believed her.$"
+
+SlateportCity_PokemonCenter_1F_Text_TradedMonWithFriend:
+	.string "My brother was a fisherman.\n"
+	.string "Knew these waters like his own pulse.\p"
+	.string "Took his boat out some weeks ago.\n"
+	.string "Same route he'd sailed a thousand times.\p"
+	.string "The coast guard found the vessel\n"
+	.string "yesterday. Drifting. Empty.\p"
+	.string "No damage. No struggle.\n"
+	.string "Just... gone.\p"
+	.string "The old sailors say the tides have\n"
+	.string "been wrong since the comet.\l"
+	.string "Taking things that don't belong to them.$"
+
+`

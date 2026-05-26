@@ -49,7 +49,7 @@ LittlerootTown_PlayersHouse_2F_EventScript_InfiniteCandyTrigger::
 	end
 
 YouFeelSomethingInBag:
-	.string "You feel something rustling around in\nyour KEY ITEMS pocket...$"
+	.string "You feel something rustling around in\nyour KEY ITEMS pocket…$"
 
 LittlerootTown_BrendansHouse_2F_EventScript_WallClock::
 	lockall

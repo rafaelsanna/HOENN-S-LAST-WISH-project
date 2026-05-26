@@ -1,0 +1,52 @@
+raw `
+MossdeepCity_PokemonCenter_1F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
+	.byte 0
+
+MossdeepCity_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_MOSSDEEP_CITY
+	end
+
+MossdeepCity_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_MOSSDEEP_NURSE
+	call Common_EventScript_PkmnCenterNurse
+	waitmessage
+	waitbuttonpress
+	release
+	end
+
+MossdeepCity_PokemonCenter_1F_EventScript_Woman::
+	msgbox MossdeepCity_PokemonCenter_1F_Text_GymLeaderDuoFormidable, MSGBOX_NPC
+	end
+
+MossdeepCity_PokemonCenter_1F_EventScript_Girl::
+	msgbox MossdeepCity_PokemonCenter_1F_Text_AbilitiesMightChangeMoves, MSGBOX_NPC
+	end
+
+MossdeepCity_PokemonCenter_1F_Text_GymLeaderDuoFormidable:
+	.string "When the comet passed... it filled\n"
+	.string "the entire sky. Overwhelming.\p"
+	.string "But here? In Mossdeep?\n"
+	.string "It felt... gentle. Almost welcoming.\p"
+	.string "Like the city itself exhaled\n"
+	.string "and the comet exhaled back.\p"
+	.string "People came from everywhere after.\n"
+	.string "Refugees. Survivors. They said other\l"
+	.string "towns felt the weight of it.\p"
+	.string "Here, we just felt... seen.$"
+
+MossdeepCity_PokemonCenter_1F_Text_AbilitiesMightChangeMoves:
+	.string "The space center detected something\n"
+	.string "that night. A reading they won't share.\p"
+	.string "But the engineers talk when they drink.\n"
+	.string "Say the comet wasn't passing by.\p"
+	.string "It was stopping. Right above us.\n"
+	.string "Hovering. Watching.\p"
+	.string "And for those few minutes,\n"
+	.string "Mossdeep existed somewhere else.\p"
+	.string "Somewhere safe.\n"
+	.string "I don't know why we were chosen.\p"
+	.string "But I'm grateful. And terrified.$"
+
+`
