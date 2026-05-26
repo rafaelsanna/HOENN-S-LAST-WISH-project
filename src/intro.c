@@ -403,7 +403,7 @@ static const struct CompressedSpriteSheet sSpriteSheet_RunningPokemon[] =
     {gIntroTorchic_Gfx,   0x0C00, TAG_TORCHIC},
     {gIntroManectric_Gfx, 0x2000, TAG_MANECTRIC},
     {gIntroBulbasaur_Gfx, 0x0C00, TAG_BULBASAUR},
-    {gIntroTotodile_Gfx,  0x0C00, TAG_TOTODILE}, 
+    {gIntroTotodile_Gfx, 0x2000, TAG_TOTODILE}, 
     {},
 };
 static const struct SpritePalette sSpritePalettes_RunningPokemon[] =
@@ -411,8 +411,8 @@ static const struct SpritePalette sSpritePalettes_RunningPokemon[] =
     {gIntroVolbeat_Pal,   TAG_VOLBEAT},
     {gIntroTorchic_Pal,   TAG_TORCHIC},
     {gIntroManectric_Pal, TAG_MANECTRIC},
-    {gIntroBulbasaur_Pal, TAG_BULBASAUR},
-    {gIntroTotodile_Pal,  TAG_TOTODILE},           
+    {gIntroTotodile_Pal,  TAG_TOTODILE}, 
+    {gIntroBulbasaur_Pal, TAG_BULBASAUR},          
     {},
 };
 static const struct OamData sOamData_Volbeat =
@@ -611,23 +611,21 @@ static const struct OamData sOamData_Totodile =
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = FALSE,
     .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(32x32),
+    .shape = SPRITE_SHAPE(64x64),
     .x = 0,
     .matrixNum = 0,
-    .size = SPRITE_SIZE(32x32),
+    .size = SPRITE_SIZE(64x64),
     .tileNum = 0,
     .priority = 0,
-    .paletteNum = 8,
+    .paletteNum = 0,
     .affineParam = 0,
 };
 static const union AnimCmd sAnim_Totodile_Run[] =
 {
-    ANIMCMD_FRAME(0,  4),
-    ANIMCMD_FRAME(16, 4),
-    ANIMCMD_FRAME(32, 4),
-    ANIMCMD_FRAME(48, 4),
-    ANIMCMD_FRAME(64, 4),
-    ANIMCMD_FRAME(80, 4),
+    ANIMCMD_FRAME(0,   4),
+    ANIMCMD_FRAME(64,  4),
+    ANIMCMD_FRAME(128, 4),
+    ANIMCMD_FRAME(192, 4),
     ANIMCMD_JUMP(0),
 };
 static const union AnimCmd *const sAnims_Totodile[] = { sAnim_Totodile_Run };
@@ -2049,7 +2047,18 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     for (spriteId = 0; spriteId < ARRAY_COUNT(sSpriteSheet_RunningPokemon) - 1; spriteId++)
         LoadCompressedSpriteSheet(&sSpriteSheet_RunningPokemon[spriteId]);
 
-    LoadSpritePalettes(gSpritePalettes_IntroPlayerFlygon);
+    // gSpritePalettes_IntroPlayerFlygon skipped — it loads ~12 palette slots
+    // including player palettes that are unused (blank PNGs). Loading the full
+    // array leaves no room for all running Pokémon palettes (GBA limit: 16 slots).
+    // We only need Flygon's silhouette palette from that group.
+    {
+        static const struct SpritePalette sFlyonOnly[] = {
+            {sIntroFlygonSilhouette_Pal, TAG_FLYGON_SILHOUETTE},
+            {},
+        };
+        LoadSpritePalettes(sFlyonOnly);
+    }
+    LoadSpritePalettes(sSpritePalettes_RunningPokemon);
     LoadSpritePalettes(sSpritePalettes_RunningPokemon);
 
     // Create Pokémon and player sprites
