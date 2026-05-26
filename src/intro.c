@@ -148,6 +148,7 @@ enum {
 #define TAG_BUBBLES   1504
 #define TAG_SPARKLE   1505
 #define TAG_BULBASAUR 1506
+#define TAG_TOTODILE  1507
 
 #define GFXTAG_DROPS_LOGO 2000
 #define PALTAG_DROPS      2000
@@ -291,6 +292,9 @@ static const u32 sScene0Jirachi2_Gfx[] = INCBIN_U32("graphics/intro/scene_0/jira
 static const u32 gIntroBulbasaur_Gfx[] = INCBIN_U32("graphics/intro/scene_2/bulbasaur.4bpp.lz");
 static const u16 gIntroBulbasaur_Pal[] = INCBIN_U16("graphics/intro/scene_2/bulbasaur.gbapal");
 
+static const u32 gIntroTotodile_Gfx[] = INCBIN_U32("graphics/intro/scene_2/totodile.4bpp.lz");
+static const u16 gIntroTotodile_Pal[] = INCBIN_U16("graphics/intro/scene_2/totodile.gbapal");
+
 // --- Big overlay tilesets (aparece sobre o bg depois do voo) ---
 // Ambos em 4bpp, tilemaps crus (.bin = raw 16-bit entries, sem header).
 // jirachibig vai no charbase 1 (reutiliza slot do sky) e
@@ -395,18 +399,20 @@ static const u8 sSparkleCoords[][2] =
 };
 static const struct CompressedSpriteSheet sSpriteSheet_RunningPokemon[] =
 {
-    {gIntroVolbeat_Gfx, 0x1000, TAG_VOLBEAT},
-    {gIntroTorchic_Gfx, 0xC00, TAG_TORCHIC},
+    {gIntroVolbeat_Gfx,   0x1000, TAG_VOLBEAT},
+    {gIntroTorchic_Gfx,   0x0C00, TAG_TORCHIC},
     {gIntroManectric_Gfx, 0x2000, TAG_MANECTRIC},
-    {gIntroBulbasaur_Gfx, 0xC00, TAG_BULBASAUR},
+    {gIntroBulbasaur_Gfx, 0x0C00, TAG_BULBASAUR},
+    {gIntroTotodile_Gfx,  0x0C00, TAG_TOTODILE}, 
     {},
 };
 static const struct SpritePalette sSpritePalettes_RunningPokemon[] =
 {
-    {gIntroVolbeat_Pal, TAG_VOLBEAT},
-    {gIntroTorchic_Pal, TAG_TORCHIC},
+    {gIntroVolbeat_Pal,   TAG_VOLBEAT},
+    {gIntroTorchic_Pal,   TAG_TORCHIC},
     {gIntroManectric_Pal, TAG_MANECTRIC},
     {gIntroBulbasaur_Pal, TAG_BULBASAUR},
+    {gIntroTotodile_Pal,  TAG_TOTODILE},           
     {},
 };
 static const struct OamData sOamData_Volbeat =
@@ -597,6 +603,61 @@ static const struct SpriteTemplate sSpriteTemplate_Bulbasaur =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_Bulbasaur,
+};
+static const struct OamData sOamData_Totodile =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 8,
+    .affineParam = 0,
+};
+static const union AnimCmd sAnim_Totodile_Run[] =
+{
+    ANIMCMD_FRAME(0,  4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(80, 4),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Totodile[] = { sAnim_Totodile_Run };
+static void SpriteCB_Totodile(struct Sprite *sprite)
+{
+    // Larger delay than Bulbasaur — Totodile enters later and runs slower,
+    // passing below Bulbasaur after Torchic has already fallen.
+    if (sprite->data[0] < 280)
+    {
+        sprite->data[0]++;
+        return;
+    }
+
+    // Move left every 3 frames — slower than Bulbasaur (every 2)
+if (++sprite->data[1] % 2 == 0)
+    sprite->x -= 1;
+
+    // Destroy once off-screen to the left — no looping
+    if (sprite->x < -32)
+        DestroySprite(sprite);
+}
+static const struct SpriteTemplate sSpriteTemplate_Totodile =
+{
+    .tileTag = TAG_TOTODILE,
+    .paletteTag = TAG_TOTODILE,
+    .oam = &sOamData_Totodile,
+    .anims = sAnims_Totodile,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Totodile,
 };
 static const struct CompressedSpriteSheet sSpriteSheet_Lightning[] =
 {
@@ -1996,7 +2057,9 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     CreateSprite(&sSpriteTemplate_Torchic, DISPLAY_WIDTH + 48, 110, 1);
     // Bulbasaur runs below Torchic
     CreateSprite(&sSpriteTemplate_Bulbasaur, DISPLAY_WIDTH + 48, 120, 2);
-
+    CreateSprite(&sSpriteTemplate_Bulbasaur, DISPLAY_WIDTH + 48, 120, 2);
+    // Totodile runs below Bulbasaur, slower and with more delay
+    CreateSprite(&sSpriteTemplate_Totodile, DISPLAY_WIDTH + 48, 135, 2);
     // Player sprite creation is skipped because Brendan/May PNGs are blank.
     // A dummy off-screen sprite is created so that tPlayerSpriteId stays
     // valid for the state-machine accesses in Task_Scene2_BikeRide.
