@@ -566,7 +566,7 @@ static void CB2_CreateTradeMenu(void)
         for (i = 0; i < sTradeMenu->partyCounts[TRADE_PLAYER]; i++)
         {
             struct Pokemon *mon = &gPlayerParty[i];
-            u32 index = LoadCompressedSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
+            u32 index = LoadSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
             sTradeMenu->partySpriteIds[TRADE_PLAYER][i] = CreateMonIcon(GetMonData(mon, MON_DATA_SPECIES_OR_EGG),
                                                          SpriteCB_MonIcon,
                                                          (sTradeMonSpriteCoords[i][0] * 8) + 14,
@@ -580,7 +580,7 @@ static void CB2_CreateTradeMenu(void)
         for (i = 0; i < sTradeMenu->partyCounts[TRADE_PARTNER]; i++)
         {
             struct Pokemon *mon = &gEnemyParty[i];
-            u32 index = LoadCompressedSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
+            u32 index = LoadSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
             sTradeMenu->partySpriteIds[TRADE_PARTNER][i] = CreateMonIcon(GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL),
                                                          SpriteCB_MonIcon,
                                                          (sTradeMonSpriteCoords[i + PARTY_SIZE][0] * 8) + 14,
@@ -760,7 +760,7 @@ static void CB2_ReturnToTradeMenu(void)
         for (i = 0; i < sTradeMenu->partyCounts[TRADE_PLAYER]; i++)
         {
             struct Pokemon *mon = &gPlayerParty[i];
-            u32 index = LoadCompressedSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
+            u32 index = LoadSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
             sTradeMenu->partySpriteIds[TRADE_PLAYER][i] = CreateMonIcon(GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL),
                                                          SpriteCB_MonIcon,
                                                          (sTradeMonSpriteCoords[i][0] * 8) + 14,
@@ -773,7 +773,7 @@ static void CB2_ReturnToTradeMenu(void)
         for (i = 0; i < sTradeMenu->partyCounts[TRADE_PARTNER]; i++)
         {
             struct Pokemon *mon = &gEnemyParty[i];
-            u32 index = LoadCompressedSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
+            u32 index = LoadSpritePaletteWithTag(GetMonFrontSpritePal(mon), GetMonData(mon, MON_DATA_SPECIES_OR_EGG));
             sTradeMenu->partySpriteIds[TRADE_PARTNER][i] = CreateMonIcon(GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL),
                                                          SpriteCB_MonIcon,
                                                          (sTradeMonSpriteCoords[i + PARTY_SIZE][0] * 8) + 14,

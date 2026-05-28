@@ -2033,7 +2033,6 @@ static void VBlankCB_PokeStorage(void)
     }
     LoadOam();
     ProcessSpriteCopyRequests();
-    UnkUtil_Run();
     // Instead of transferring the entire palette buffer, transfer bg and non-dynamic palettes
     if (sPaletteSwapBuffer && !gPaletteFade.bufferTransferDisabled && !gPaletteFade.active && !sStorage->transferWholePlttFrames) 
     {
@@ -4164,10 +4163,8 @@ static void LoadDisplayMonGfx(u16 species, u32 pid)
     if (species != SPECIES_NONE)
     {
         LoadSpecialPokePic(sStorage->tileBuffer, species, pid, TRUE);
-        // LZ77UnCompWram(sStorage->displayMonPalette, sStorage->displayMonPalBuffer);
         CpuFastCopy(sStorage->tileBuffer, sStorage->displayMonTilePtr, MON_PIC_SIZE);
-        LoadCompressedPaletteFast(sStorage->displayMonPalette, sStorage->displayMonPalOffset, PLTT_SIZE_4BPP);
-        // LoadPalette(sStorage->displayMonPalBuffer, sStorage->displayMonPalOffset, 0x20);
+        LoadPalette(sStorage->displayMonPalette, sStorage->displayMonPalOffset, PLTT_SIZE_4BPP);
         sStorage->displayMonSprite->invisible = FALSE;
     }
     else
@@ -4305,7 +4302,7 @@ static void SetUpHidePartyMenu(void)
         u16 species = GetMonData(&sStorage->movingMon, MON_DATA_SPECIES);
         bool8 isShiny = GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY);
         u32 personality = GetMonData(&sStorage->movingMon, MON_DATA_PERSONALITY);
-        LoadSpritePaletteWithTag(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)), PALTAG_MOVING_MON);
+        LoadCompressedSpritePaletteWithTag(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)), PALTAG_MOVING_MON);
         sStorage->movingMonPalOffset = OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_MOVING_MON));
         sStorage->movingMonSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
     }
@@ -4683,13 +4680,10 @@ static const u32 *_GetMonFrontSpritePal(struct Pokemon *mon, u16 *species)
 static void SetBoxMonDynamicPalette(u8 boxId, u8 position) {
   u16 species;
   const u32 *palette = _GetMonFrontSpritePal((struct Pokemon *)&gPokemonStoragePtr->boxes[boxId][position], &species);
-  // Decompress species palette into swap buffer
-  if (species == SPECIES_CASTFORM) { // needs more than 32 bytes of space; so decompress and copy
-      LZ77UnCompWram(palette, gDecompressionBuffer);
-      CpuFastCopy(gDecompressionBuffer, &sPaletteSwapBuffer[(position)*16], 32);
-  } else {
-      LZ77UnCompWram(palette, &sPaletteSwapBuffer[(position)*16]);
-  }
+  u16 ALIGNED(4) buffer[16];
+
+  LZ77UnCompWram(palette, buffer);
+  CpuFastCopy(buffer, &sPaletteSwapBuffer[(position)*16], PLTT_SIZE_4BPP);
   sStorage->boxMonsSprites[position]->oam.paletteNum = ((position / 6) & 1 ? 6 : 0) + (position % 6) + 1;
 }
 
@@ -5254,7 +5248,7 @@ static void SetPlacedMonSprite(u8 boxId, u8 position)
         // If currently using displayed mon palette, load party sprite palette into free party palette slot
         if (sStorage->partySprites[position]->oam.paletteNum == IndexOfSpritePaletteTag(PALTAG_DISPLAY_MON)) {
             paletteNum = FindFreePartyPaletteSlot();
-            LoadCompressedPaletteFast(GetMonFrontSpritePal(&gPlayerParty[position]), paletteNum*16 + 0x100, 32);
+            LoadPalette(GetMonFrontSpritePal(&gPlayerParty[position]), paletteNum*16 + 0x100, 32);
             sStorage->partySprites[position]->oam.paletteNum = paletteNum;
         }
     }

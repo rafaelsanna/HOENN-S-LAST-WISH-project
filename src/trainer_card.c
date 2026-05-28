@@ -1372,9 +1372,9 @@ static void LoadMonIconGfx(void)
         if (!sData->trainerCard.monSpecies[i])
             continue;
 
-        palette = GetMonSpritePalFromSpeciesAndPersonality(sData->trainerCard.monSpecies[i], FALSE, 0);
+        palette = GetIconPalette(sData->trainerCard.monSpecies[i], FALSE, FALSE);
 
-        LZDecompressWram(palette, sData->monIconPal);
+        LZ77UnCompWram(palette, sData->monIconPal);
 
         switch (sData->trainerCard.monIconTint)
         {

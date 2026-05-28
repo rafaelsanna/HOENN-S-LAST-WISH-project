@@ -1,5 +1,6 @@
 #include "global.h"
 #include "data.h"
+#include "decompress.h"
 #include "graphics.h"
 #include "mail.h"
 #include "palette.h"
@@ -241,13 +242,31 @@ u8 CreateMonIcon(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u
     return CreateMonIcon2(species, callback, x, y, subpriority, FALSE, personality);
 }
 
+void LoadMonIconPalette(u16 species)
+{
+    u16 tag = GetIconPalTag(species, FALSE);
+
+    if (IndexOfSpritePaletteTag(tag) < 16)
+        return;
+
+    LoadCompressedSpritePaletteWithTag(GetIconPalette(species, FALSE, FALSE), tag);
+}
+
+void SafeFreeMonIconPalette(u16 species)
+{
+    u16 tag = GetIconPalTag(species, FALSE);
+
+    if (IndexOfSpritePaletteTag(tag) < 16)
+        FreeSpritePaletteByTag(tag);
+}
+
 // Load the palette for a pokemon into paletteNum,
 // optionally overwrite `sprite`'s paletteNum
 void SetMonIconPalette(struct Pokemon *mon, struct Sprite *sprite, u8 paletteNum) 
 {
     if (paletteNum >= 16)
         return;
-    LoadCompressedPalette(GetMonFrontSpritePal(mon), paletteNum*16 + 0x100, 32);
+    LoadPalette(GetMonFrontSpritePal(mon), paletteNum*16 + 0x100, 32);
     if (sprite)
         sprite->oam.paletteNum = paletteNum;
 }

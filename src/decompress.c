@@ -1407,6 +1407,22 @@ bool8 LoadCompressedSpriteSheetUsingHeap(const struct CompressedSpriteSheet *src
     return FALSE;
 }
 
+bool8 LoadCompressedSpritePaletteUsingHeap(const struct CompressedSpritePalette *src)
+{
+    struct SpritePalette dest;
+    void *buffer;
+
+    buffer = AllocZeroed(GetDecompressedDataSize(&src->data[0]));
+    DecompressDataWithHeaderWram(src->data, buffer);
+
+    dest.data = buffer;
+    dest.tag = src->tag;
+
+    LoadSpritePalette(&dest);
+    Free(buffer);
+    return FALSE;
+}
+
 extern const u32 LZ77UnCompWRAMOptimized[];
 extern const u32 LZ77UnCompWRAMOptimized_end[];
 
