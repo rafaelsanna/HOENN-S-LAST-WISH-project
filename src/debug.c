@@ -2242,7 +2242,6 @@ static void DebugAction_Give_PokemonSimple(u8 taskId)
     gTasks[taskId].tIsEgg = FALSE;
 
     FreeMonIconPalettes();
-    LoadMonIconPalette(gTasks[taskId].tInput);
     gTasks[taskId].tSpriteId = CreateMonIcon(gTasks[taskId].tInput, SpriteCB_MonIcon, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4, 0);
     gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
 }
@@ -2277,7 +2276,6 @@ static void DebugAction_Give_PokemonComplex(u8 taskId)
     gTasks[taskId].tIsEgg = FALSE;
 
     FreeMonIconPalettes();
-    LoadMonIconPalette(gTasks[taskId].tInput);
     gTasks[taskId].tSpriteId = CreateMonIcon(gTasks[taskId].tInput, SpriteCB_MonIcon, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4, 0);
     gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
     gTasks[taskId].tIterator = 0;
@@ -2301,7 +2299,6 @@ static void DebugAction_Give_Pokemon_SelectId(u8 taskId)
         Debug_Display_SpeciesInfo(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
         FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
         FreeMonIconPalettes();
-        LoadMonIconPalette(gTasks[taskId].tInput);
         gTasks[taskId].tSpriteId = CreateMonIcon(gTasks[taskId].tInput, SpriteCB_MonIcon, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4, 0);
         gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
     }
@@ -3153,8 +3150,9 @@ static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) //Credit: Sierraffini
     int boxId, boxPosition;
     u32 personality;
     struct BoxPokemon boxMon;
-    u16 species = SPECIES_BULBASAUR;
+    u16 species = SPECIES_GROOKEY;
     u8 speciesName[POKEMON_NAME_LENGTH + 1];
+    bool32 isShiny = TRUE;
 
     personality = Random32();
 
@@ -3169,9 +3167,21 @@ static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) //Credit: Sierraffini
                 StringCopy(speciesName, GetSpeciesName(species));
                 SetBoxMonData(&boxMon, MON_DATA_NICKNAME, &speciesName);
                 SetBoxMonData(&boxMon, MON_DATA_SPECIES, &species);
+                SetBoxMonData(&boxMon, MON_DATA_IS_SHINY, &isShiny);
                 GiveBoxMonInitialMoveset(&boxMon);
                 gPokemonStoragePtr->boxes[boxId][boxPosition] = boxMon;
             }
+
+            if (species == SPECIES_ENAMORUS_INCARNATE)
+                species = SPECIES_MEOWTH_GALAR - 1;
+            if (species == SPECIES_DECIDUEYE_HISUI)
+                species = SPECIES_CRAMORANT_GULPING - 1;
+            if (species == SPECIES_POLTEAGEIST_ANTIQUE)
+                species = SPECIES_EISCUE_NOICE - 1;
+            if (species == SPECIES_BASCULEGION_F)
+                species = SPECIES_VENUSAUR_GMAX - 1;
+            if (species == SPECIES_URSHIFU_RAPID_STRIKE_GMAX)
+                return;
         }
     }
 
