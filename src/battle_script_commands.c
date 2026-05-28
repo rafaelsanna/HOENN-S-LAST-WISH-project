@@ -8943,8 +8943,10 @@ static bool8 SlideOutLevelUpBanner(void)
 static void PutMonIconOnLvlUpBanner(void)
 {
     u8 spriteId;
+    // const u16* iconPal;
     struct SpriteSheet iconSheet;
-    struct SpritePalette iconPalSheet;
+    // struct SpritePalette iconPalSheet;
+    u32 index = AllocSpritePalette(TAG_LVLUP_BANNER_MON_ICON);
 
     struct Pokemon *mon = &gPlayerParty[gBattleStruct->expGetterMonId];
     u32 species = GetMonData(mon, MON_DATA_SPECIES);
@@ -8954,15 +8956,17 @@ static void PutMonIconOnLvlUpBanner(void)
     iconSheet.size = 0x200;
     iconSheet.tag = TAG_LVLUP_BANNER_MON_ICON;
 
-    iconPalSheet.data = GetValidMonIconPalettePtr(species);
-    iconPalSheet.tag = TAG_LVLUP_BANNER_MON_ICON;
+    // iconPal = GetValidMonIconPalettePtr(species);
+    // iconPalSheet.data = iconPal;
+    // iconPalSheet.tag = TAG_LVLUP_BANNER_MON_ICON;
 
     LoadSpriteSheet(&iconSheet);
-    LoadSpritePalette(&iconPalSheet);
+    // LoadSpritePalette(&iconPalSheet);
 
     spriteId = CreateSprite(&sSpriteTemplate_MonIconOnLvlUpBanner, 256, 10, 0);
     gSprites[spriteId].sDestroy = FALSE;
     gSprites[spriteId].sXOffset = gBattle_BG2_X;
+    SetMonIconPalette(&gPlayerParty[gBattleStruct->expGetterMonId], NULL, index);
 }
 
 static void SpriteCB_MonIconOnLvlUpBanner(struct Sprite *sprite)

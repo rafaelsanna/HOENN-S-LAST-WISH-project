@@ -41,6 +41,12 @@ struct SpritePalette
     u16 tag;
 };
 
+struct CompressedSpritePalette
+{
+    const u32 *data;  // LZ77 compressed palette data
+    u16 tag;
+};
+
 struct AnimFrameCmd
 {
     // If the sprite has an array of images, this is the array index.
@@ -312,6 +318,7 @@ void LoadSpritePalettes(const struct SpritePalette *palettes);
 u32 AllocSpritePalette(u16 tag);
 u32 IndexOfSpritePaletteTag(u16 tag);
 u16 GetSpritePaletteTagByPaletteNum(u8 paletteNum);
+u16 SetSpritePaletteTagByPaletteNum(u8 paletteNum, u16 tag);
 void FreeSpritePaletteByTag(u16 tag);
 void SetSubspriteTables(struct Sprite *sprite, const struct SubspriteTable *subspriteTables);
 bool8 AddSpriteToOamBuffer(struct Sprite *sprite, u8 *oamIndex);

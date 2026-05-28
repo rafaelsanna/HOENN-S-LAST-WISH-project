@@ -241,7 +241,38 @@ u32 LoadCompressedSpriteSheetByTemplate(const struct SpriteTemplate *template, s
         return ret;
     }
     return LoadSpriteSheetByTemplate(template, 0, offset);
+}
 
+u8 LoadCompressedSpritePalette(const struct CompressedSpritePalette *src)
+{
+    struct SpritePalette dest;
+    u16 buffer[16];
+
+    LZ77UnCompWram(src->data, buffer);
+    dest.data = buffer;
+    dest.tag = src->tag;
+    return LoadSpritePalette(&dest);
+}
+
+u8 LoadCompressedSpritePaletteWithTag(const u32 *pal, u16 tag)
+{
+    struct SpritePalette dest;
+    u16 buffer[16];
+
+    LZ77UnCompWram(pal, buffer);
+    dest.data = buffer;
+    dest.tag = tag;
+    return LoadSpritePalette(&dest);
+}
+
+void LoadCompressedSpritePaletteOverrideBuffer(const struct CompressedSpritePalette *src, void *buffer)
+{
+    struct SpritePalette dest;
+
+    LZ77UnCompWram(src->data, buffer);
+    dest.data = buffer;
+    dest.tag = src->tag;
+    LoadSpritePalette(&dest);
 }
 
 void DecompressPicFromTable(const struct CompressedSpriteSheet *src, void *buffer)
@@ -1372,6 +1403,22 @@ bool8 LoadCompressedSpriteSheetUsingHeap(const struct CompressedSpriteSheet *src
     dest.tag = src->tag;
 
     LoadSpriteSheet(&dest);
+    Free(buffer);
+    return FALSE;
+}
+
+bool8 LoadCompressedSpritePaletteUsingHeap(const struct CompressedSpritePalette *src)
+{
+    struct SpritePalette dest;
+    void *buffer;
+
+    buffer = AllocZeroed(GetDecompressedDataSize(&src->data[0]));
+    DecompressDataWithHeaderWram(src->data, buffer);
+
+    dest.data = buffer;
+    dest.tag = src->tag;
+
+    LoadSpritePalette(&dest);
     Free(buffer);
     return FALSE;
 }

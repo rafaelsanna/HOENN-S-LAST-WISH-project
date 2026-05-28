@@ -1647,8 +1647,11 @@ u32 IndexOfSpritePaletteTag(u16 tag)
 {
     u32 i;
     for (i = gReservedSpritePaletteCount; i < 16; i++)
+    {
+        //DebugPrintf("test: %d", sSpritePaletteTags[i]);
         if (sSpritePaletteTags[i] == tag)
             return i;
+    }
 
     return 0xFF;
 }
@@ -1656,6 +1659,16 @@ u32 IndexOfSpritePaletteTag(u16 tag)
 u16 GetSpritePaletteTagByPaletteNum(u8 paletteNum)
 {
     return sSpritePaletteTags[paletteNum];
+}
+
+u16 SetSpritePaletteTagByPaletteNum(u8 paletteNum, u16 tag) {
+    u16 oldTag = sSpritePaletteTags[paletteNum];
+    sSpritePaletteTags[paletteNum] = tag;
+    #if DEBUG
+    if (tag == TAG_NONE)
+        FillPalette(0, paletteNum * 16 + 0x100, 32);
+    #endif
+    return oldTag;
 }
 
 void FreeSpritePaletteByTag(u16 tag)
