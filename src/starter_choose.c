@@ -25,6 +25,8 @@
 #include "constants/songs.h"
 #include "constants/rgb.h"
 #include "randomizer.h"
+#include "random.h"
+#include "constants/pokemon.h"
 
 #define STARTER_MON_COUNT   3
 
@@ -46,7 +48,7 @@ static void Task_DeclineStarter(u8 taskId);
 static void Task_MoveStarterChooseCursor(u8 taskId);
 static void Task_CreateStarterLabel(u8 taskId);
 static void CreateStarterPokemonLabel(u8 selection);
-static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y);
+static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y, bool8 isShiny);
 static void SpriteCB_SelectionHand(struct Sprite *sprite);
 static void SpriteCB_Pokeball(struct Sprite *sprite);
 static void SpriteCB_StarterPokemon(struct Sprite *sprite);
@@ -64,6 +66,8 @@ const u32 gPokeballSelection_Gfx[] = INCBIN_U32("graphics/starter_choose/pokebal
 static const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/starter_choose/starter_circle.4bpp.smol");
 static u16 sRandomizedStarters[STARTER_MON_COUNT];
 static bool8 sStartersInitialized = FALSE;
+static bool8 sStarterShiny[STARTER_MON_COUNT];
+static bool8 sChosenStarterShiny;
 
 static const struct WindowTemplate sWindowTemplates[] =
 {
@@ -358,13 +362,30 @@ static void InitRandomizedStarters(void)
     if (sStartersInitialized)
         return;
     for (i = 0; i < 3; i++)
+    {
         sRandomizedStarters[i] = Randomizer_GetFixedStarter(i);
+        sStarterShiny[i] = (Random() % 65536) < SHINY_ODDS;
+    }
+    sStartersInitialized = TRUE;
+}
+
+static void InitStarterShiny(void)
+{
+    u8 i;
+    if (sStartersInitialized)
+        return;
+    for (i = 0; i < STARTER_MON_COUNT; i++)
+        sStarterShiny[i] = (Random() % 65536) < SHINY_ODDS;
     sStartersInitialized = TRUE;
 }
 
 static void ResetStarterState(void)
 {
+    u8 i;
     sStartersInitialized = FALSE;
+    for (i = 0; i < STARTER_MON_COUNT; i++)
+        sStarterShiny[i] = FALSE;
+    sChosenStarterShiny = FALSE;
 }
 
 // .text
@@ -380,7 +401,8 @@ u16 GetStarterPokemon(u16 chosenStarterId)
         return sRandomizedStarters[chosenStarterId];
     }
 #endif
- 
+
+    InitStarterShiny();
     return sStarterMon[chosenStarterId];
 }
 
@@ -527,7 +549,7 @@ static void Task_HandleStarterChooseInput(u8 taskId)
         gTasks[taskId].tCircleSpriteId = spriteId;
 
         // Create Pokémon sprite
-        spriteId = CreatePokemonFrontSprite(GetStarterPokemon(gTasks[taskId].tStarterSelection), sPokeballCoords[selection][0], sPokeballCoords[selection][1]);
+        spriteId = CreatePokemonFrontSprite(GetStarterPokemon(gTasks[taskId].tStarterSelection), sPokeballCoords[selection][0], sPokeballCoords[selection][1], sStarterShiny[selection]);
         gSprites[spriteId].affineAnims = &sAffineAnims_StarterPokemon;
         gSprites[spriteId].callback = SpriteCB_StarterPokemon;
 
@@ -574,6 +596,7 @@ static void Task_HandleConfirmStarterInput(u8 taskId)
     {
     case 0:  // YES
         gSpecialVar_Result = gTasks[taskId].tStarterSelection;
+        sChosenStarterShiny = sStarterShiny[gTasks[taskId].tStarterSelection];
         ResetAllPicSprites();
         ResetStarterRandomization();  // <-- ADICIONAR
         SetMainCallback2(gMain.savedCallback);
@@ -588,7 +611,6 @@ static void Task_HandleConfirmStarterInput(u8 taskId)
         spriteId = gTasks[taskId].tCircleSpriteId;
         FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
         DestroySprite(&gSprites[spriteId]);
-        ResetStarterRandomization();  // <-- ADICIONAR (opcional mas recomendado)
         gTasks[taskId].func = Task_DeclineStarter;
         break;
     }
@@ -664,11 +686,11 @@ static void Task_CreateStarterLabel(u8 taskId)
     gTasks[taskId].func = Task_HandleStarterChooseInput;
 }
 
-static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y)
+static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y, bool8 isShiny)
 {
     u8 spriteId;
 
-    spriteId = CreateMonPicSprite_Affine(species, FALSE, 0, MON_PIC_AFFINE_FRONT, x, y, 14, TAG_NONE);
+    spriteId = CreateMonPicSprite_Affine(species, isShiny, 0, MON_PIC_AFFINE_FRONT, x, y, 14, TAG_NONE);
     gSprites[spriteId].oam.priority = 0;
     return spriteId;
 }
@@ -708,5 +730,10 @@ static void SpriteCB_StarterPokemon(struct Sprite *sprite)
 void ResetStarterRandomization(void)
 {
     sStartersInitialized = FALSE;  
+}
+
+bool8 GetChosenStarterShiny(void)
+{
+    return sChosenStarterShiny;
 }
 

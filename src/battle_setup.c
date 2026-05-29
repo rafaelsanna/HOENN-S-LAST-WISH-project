@@ -49,6 +49,7 @@
 #include "constants/event_objects.h"
 #include "constants/game_stat.h"
 #include "constants/items.h"
+#include "constants/pokemon.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "constants/trainer_hill.h"
@@ -886,7 +887,19 @@ static void CB2_GiveStarter(void)
 
     *GetVarPointer(VAR_STARTER_MON) = gSpecialVar_Result;
     starterMon = GetStarterPokemon(gSpecialVar_Result);
+
+    // Lock shiny result to exactly what was rolled in starter_choose.c.
+    // ScriptGiveMon reads P_FLAG_FORCE_SHINY and P_FLAG_FORCE_NO_SHINY internally.
+    if (GetChosenStarterShiny())
+        FlagSet(P_FLAG_FORCE_SHINY);
+    else
+        FlagSet(P_FLAG_FORCE_NO_SHINY);
+
     ScriptGiveMon(starterMon, 5, ITEM_NONE);
+
+    FlagClear(P_FLAG_FORCE_SHINY);
+    FlagClear(P_FLAG_FORCE_NO_SHINY);
+
     ResetTasks();
     ReleaseComfyAnims();
     PlayBattleBGM();
