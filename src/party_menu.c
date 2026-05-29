@@ -1326,7 +1326,7 @@ static void CreatePartyMonHeldItemSpriteParameterized(u16 species, u16 item, str
     {
         u8 slot = menuBox - sPartyMenuBoxes;
         u16 tilesTag = TAG_ITEM_ICON + slot;
-        u16 palTag   = TAG_ITEM_ICON + slot; // paleta individual por slot
+        u16 palTag   = TAG_ITEM_ICON_PALETTE + slot; // igual ao usado em ShowOrHideHeldItemSprite
         menuBox->itemSpriteId = AddItemIconSprite(tilesTag, palTag, item);
         if (menuBox->itemSpriteId != SPRITE_NONE)
         {
@@ -3619,6 +3619,7 @@ static void SwitchPartyMon(void)
     menuBoxes[1] = &sPartyMenuBoxes[gPartyMenu.slotId2];
     mon1 = &gPlayerParty[gPartyMenu.slotId];
     mon2 = &gPlayerParty[gPartyMenu.slotId2];
+
     monBuffer = Alloc(sizeof(struct Pokemon));
     if (gPartyMenu.slotId == gSaveBlock3Ptr->followerIndex)
     gSaveBlock3Ptr->followerIndex = gPartyMenu.slotId2;
@@ -3632,11 +3633,33 @@ static void SwitchPartyMon(void)
     SwitchMenuBoxSprites(&menuBoxes[0]->monSpriteId, &menuBoxes[1]->monSpriteId);
     SwitchMenuBoxSprites(&menuBoxes[0]->statusSpriteId, &menuBoxes[1]->statusSpriteId);
 
-    // Ícones de item: recriar com paletas corretas por slot em vez de só trocar o spriteId.
-    // Cada slot tem palTag própria (TAG_ITEM_ICON+slot), então trocar o spriteId deixaria
-    // o sprite do slot0 renderizando com a paleta do slot1 e vice-versa.
-    ShowOrHideHeldItemSprite(GetMonData(mon1, MON_DATA_HELD_ITEM), menuBoxes[0]);
-    ShowOrHideHeldItemSprite(GetMonData(mon2, MON_DATA_HELD_ITEM), menuBoxes[1]);
+    // Ícones de item: recriar com paletas corretas por slot.
+    // BUG FIX: quando apenas UM dos pkms segura item, ShowOrHideHeldItemSprite
+    // cria o sprite novo com hadSprite=FALSE → x2=0 (posição de tela normal).
+    // Mas a animação de slide ainda está ativa com os slots fora da tela.
+    // Solução: salvar x2/y2 do mon sprite de CADA slot antes das chamadas
+    // e forçar no item sprite depois — o item acompanha sempre o Pokémon.
+    {
+        s16 x2_0 = gSprites[menuBoxes[0]->monSpriteId].x2;
+        s16 y2_0 = gSprites[menuBoxes[0]->monSpriteId].y2;
+        s16 x2_1 = gSprites[menuBoxes[1]->monSpriteId].x2;
+        s16 y2_1 = gSprites[menuBoxes[1]->monSpriteId].y2;
+
+        ShowOrHideHeldItemSprite(GetMonData(mon1, MON_DATA_HELD_ITEM), menuBoxes[0]);
+        ShowOrHideHeldItemSprite(GetMonData(mon2, MON_DATA_HELD_ITEM), menuBoxes[1]);
+
+        // Forçar x2/y2 correto independente de hadSprite — o item acompanha o mon
+        if (menuBoxes[0]->itemSpriteId != SPRITE_NONE)
+        {
+            gSprites[menuBoxes[0]->itemSpriteId].x2 = x2_0;
+            gSprites[menuBoxes[0]->itemSpriteId].y2 = y2_0;
+        }
+        if (menuBoxes[1]->itemSpriteId != SPRITE_NONE)
+        {
+            gSprites[menuBoxes[1]->itemSpriteId].x2 = x2_1;
+            gSprites[menuBoxes[1]->itemSpriteId].y2 = y2_1;
+        }
+    }
 }
 
 // Finish switching mons or using Softboiled
