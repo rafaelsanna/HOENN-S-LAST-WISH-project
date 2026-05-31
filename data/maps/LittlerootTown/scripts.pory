@@ -58,6 +58,14 @@ LittlerootTown_EventScript_Poochyena::
 	release
 	end
 
+LittlerootTown_EventScript_SnowballGame::
+	lock
+	faceplayer
+	callnative StartSnowballGame
+	waitstate
+	release
+	end
+
 LittlerootTown_EventScript_LeftLabAfterDexUpgrade::
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 3
 	return

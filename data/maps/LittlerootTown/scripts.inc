@@ -116,6 +116,14 @@ LittlerootTown_EventScript_Poochyena::
 	release
 # 59 "data/maps/LittlerootTown/scripts.pory"
 	end
+
+LittlerootTown_EventScript_SnowballGame::
+	lock
+	faceplayer
+	callnative StartSnowballGame
+	waitstate
+	release
+	end
 # 60 "data/maps/LittlerootTown/scripts.pory"
 
 # 61 "data/maps/LittlerootTown/scripts.pory"

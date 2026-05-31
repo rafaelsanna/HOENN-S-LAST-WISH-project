@@ -534,6 +534,8 @@ static void ExitSnowballGame(void)
     if (!gPaletteFade.active)
     {
         Overworld_ResetMapMusic();
+        FreeAllWindowBuffers();
+        UnsetBgTilemapBuffer(0);
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         FREE_AND_SET_NULL(sSnow);
     }
@@ -584,6 +586,10 @@ static const struct WindowTemplate sScoreWindowTemplate = {
     .height       = 2,
     .paletteNum   = 15,
     .baseBlock    = 1,
+};
+
+static const struct WindowTemplate sSnowballWindowTemplates[] = {
+    DUMMY_WIN_TEMPLATE,
 };
 
 static void DrawScore(void)
@@ -638,11 +644,9 @@ static void InitSnowballScreen(void)
     // BG1 (game background) is loaded directly to VRAM below.
     InitBgsFromTemplates(0, sSnowballBGTemplates, ARRAY_COUNT(sSnowballBGTemplates));
 
-    // BG0 tilemap buffer is required by the window system (AddWindow /
-    // CopyWindowToVram). BG1 does NOT use a software tilemap buffer – we write
-    // tiles/map straight to VRAM with LZ77UnCompVram.
-    SetBgTilemapBuffer(0, AllocZeroed(BG_SCREEN_SIZE));
-
+    // AddWindow allocates the BG0 tilemap buffer used by the score window.
+    // BG1 does NOT use a software tilemap buffer – we write tiles/map straight
+    // to VRAM with LZ77UnCompVram.
     // Force both BG control registers to the exact values we need.
     // InitBgsFromTemplates may not write them before vblank enables.
     SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(0)
@@ -688,7 +692,7 @@ static void InitSnowballScreen(void)
     sSnow->speedScale   = SPEED_SCALE_BASE;
 
     // ── Score window (BG 0) ──────────────────────────────────
-    InitWindows(NULL);
+    InitWindows(sSnowballWindowTemplates);
     DeactivateAllTextPrinters();
     sSnow->scoreWindowId = AddWindow(&sScoreWindowTemplate);
     DrawScore();
