@@ -436,7 +436,7 @@ static const u16 sScoreFontPal[16] = {
     0x0000,            // 0 – transparent
     RGB( 0,  0,  0),   // 1 – black text
     RGB(18,18,18),     // 2 – gray shadow
-    RGB(31, 31, 31),   // 3 – white highlight (unused)
+    RGB(31,  0,  0),   // 3 – RED for hi-score text
     0,0,0,0, 0,0,0,0, 0,0,0,0,
 };
 
@@ -570,6 +570,9 @@ static void SwapBgToSnowfield(void)
 {
     LoadBg1Direct(Snowfield_BG_Img, Snowfield_BG_Tilemap,
                   Snowfield_BG_Pal, sizeof(Snowfield_BG_Pal));
+    // Snowfield may have 16 palettes (256 colors) and overwrite ALL BG slots
+    // including slot 15 where our font lives. Reload it now to be safe.
+    LoadPalette(sScoreFontPal, BG_PLTT_ID(15), sizeof(sScoreFontPal));
 }
 
 // ============================================================
@@ -755,9 +758,9 @@ static void LoadAllSnowSheets(void)
     s.tag  = SMALL_SNOW_HIT_GFXTAG;
     LoadSpriteSheet(&s);
 
-    // Spheal: copy 8 west-roll frames (frames 19-26) from ROM → EWRAM
+    // Spheal: copy 8 south/down frames (frames 3-10) from ROM → EWRAM
     {
-        const u32 *src = gObjectEventPic_Spheal + (19 * SPHEAL_FRAME_SIZE / 4);
+        const u32 *src = gObjectEventPic_Spheal + (3 * SPHEAL_FRAME_SIZE / 4);
         CpuCopy32(src, (void *)sSnow->bufSpheal, SPHEAL_FRAME_SIZE * SPHEAL_ROLL_FRAMES);
         s.data = sSnow->bufSpheal;
         s.size = SPHEAL_FRAME_SIZE * SPHEAL_ROLL_FRAMES;
@@ -845,6 +848,9 @@ static void CreateBigSnowball(u8 idx)
     sSnow->ballsThrown++;
     if (sSnow->speedScale < SPEED_SCALE_MAX)
         sSnow->speedScale += SPEED_SCALE_PER_BALL;
+    // Turn score red if this ball beats the stored hi-score
+    if (!sSnow->isNewHiScore && sSnow->ballsThrown > VarGet(VAR_SNOWBALL_HISCORE))
+        sSnow->isNewHiScore = TRUE;
     DrawScore();
 }
 
@@ -865,6 +871,9 @@ static void CreateSmallSnowball(u8 idx)
     sSnow->ballsThrown++;
     if (sSnow->speedScale < SPEED_SCALE_MAX)
         sSnow->speedScale += SPEED_SCALE_PER_BALL;
+    // Turn score red if this ball beats the stored hi-score
+    if (!sSnow->isNewHiScore && sSnow->ballsThrown > VarGet(VAR_SNOWBALL_HISCORE))
+        sSnow->isNewHiScore = TRUE;
     DrawScore();
 }
 
