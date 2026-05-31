@@ -721,10 +721,10 @@ static const u8 sTextColors[][3] =
     {0, 13, 14},
     {0, 7, 8},
     {13, 15, 14},
-    {0, 1, 2},
-    {0, 3, 4},
-    {0, 5, 6},
-    {0, 7, 8}
+    {0, 9, 10},   // ppState 9  = PP full  -> slot6[9]=WHITE,  slot6[10]=shadow
+    {0, 11, 12},  // ppState 10 = PP med   -> slot6[11]=YELLOW, slot6[12]=shadow
+    {0, 13, 14},  // ppState 11 = PP low   -> slot6[13]=ORANGE, slot6[14]=shadow
+    {0, 7, 8},    // ppState 12 = PP empty -> slot6[7]=RED (from gSummaryScreen_Pal - overridden below)
 };
 
 static const u8 sButtons_Gfx[][4 * TILE_SIZE_4BPP] = {
@@ -753,7 +753,13 @@ static const u8 sMemoMiscTextColor[] = _("{COLOR WHITE}{SHADOW DARK_GRAY}"); // 
 static const u8 sStatsLeftColumnLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}\n{DYNAMIC 2}\n{DYNAMIC 3}");
 static const u8 sStatsLeftIVEVColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
 static const u8 sStatsRightColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
-static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
+static const u8 sMovesPPLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}");
+// PP window usa paletteNum=8 — indices referenciam slot 8 (nao conflita com move names).
+// {COLOR}{01} = slot8[1], {COLOR}{03} = slot8[3], etc.
+static const u8 sPPColorFull[]  = _("{COLOR}{01}{SHADOW}{02}"); // cinza escuro — PP cheio
+static const u8 sPPColorMed[]   = _("{COLOR}{03}{SHADOW}{04}"); // AMARELO      — PP medio
+static const u8 sPPColorLow[]   = _("{COLOR}{05}{SHADOW}{06}"); // LARANJA      — PP baixo
+static const u8 sPPColorEmpty[] = _("{COLOR}{07}{SHADOW}{08}"); // VERMELHO     — PP zerado
 
 #define TAG_MOVE_SELECTOR 30000
 #define TAG_MON_STATUS 30001
@@ -1475,20 +1481,19 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // preto   - sombra
     gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // #3A3A52
 
-    // ─── 5. SLOT 8 — PP values (paletteNum=8, recebe gPPTextPalette) ─────────
-    // gPPTextPalette é carregado em BG_PLTT_ID(8)+1 (índices 1-15)
-    // ppState 9-12 → colorId 9-12 → {0,1,2} / {0,3,4} / {0,5,6} / {0,7,8}
-    // Cores:  full=preto | médio=amarelo | baixo=laranja | zerado=vermelho
+    // ─── 5. SLOT 6 (continuação) — PP values agora em slot 6 índices 9-14 ─────
+    // paletteNum do PP window mudado de 8 para 6.
+    // Inline color codes: {COLOR}{01}=branco, {COLOR}{05}=vermelho, {COLOR}{09}=amarelo, {COLOR}{0B}=laranja
+    // PP window usa paletteNum=8, cores nos indices 1,3,5,7 do slot 8
     base = BG_PLTT_ID(8);
-    gPlttBufferUnfaded[base +  0] = RGB(4,  4,  5);   // fundo escuro
-    gPlttBufferUnfaded[base +  1] = RGB(0,  0,  0);   // PRETO   — PP cheio fg
-    gPlttBufferUnfaded[base +  2] = RGB(8,  8, 10);   // sombra escura
-    gPlttBufferUnfaded[base +  3] = RGB(26, 22,  0);  // AMARELO — PP médio fg  (~#D4B400)
-    gPlttBufferUnfaded[base +  4] = RGB(13, 11,  0);  // sombra amarela
-    gPlttBufferUnfaded[base +  5] = RGB(29, 12,  0);  // LARANJA — PP baixo fg  (~#E86000)
-    gPlttBufferUnfaded[base +  6] = RGB(14,  6,  0);  // sombra laranja
-    gPlttBufferUnfaded[base +  7] = RGB(31,  0,  0);  // VERMELHO — PP zerado fg
-    gPlttBufferUnfaded[base +  8] = RGB(15,  0,  0);  // sombra vermelha
+    gPlttBufferUnfaded[base + 1] = RGB(16, 16, 19); // cinza escuro — PP cheio
+    gPlttBufferUnfaded[base + 2] = RGB( 4,  4,  5); // #212129      — sombra PP cheio
+    gPlttBufferUnfaded[base + 3] = RGB(31,  0,  0); // VERMELHO     — PP zerado
+    gPlttBufferUnfaded[base + 4] = RGB(15,  0,  0); // sombra
+    gPlttBufferUnfaded[base + 5] = RGB(26, 22,  0); // AMARELO      — PP medio
+    gPlttBufferUnfaded[base + 6] = RGB(13, 11,  0); // sombra
+    gPlttBufferUnfaded[base + 7] = RGB(29, 12,  0); // LARANJA      — PP acabando
+    gPlttBufferUnfaded[base + 8] = RGB(14,  6,  0); // sombra
 
     // ─── 6. SLOT 15 — janela RELEARN/START (paletteNum=15) ───────────────────
     // [0] = fundo → escuro
@@ -1505,7 +1510,7 @@ static void ApplySummaryScreenDarkTheme(void)
         gPlttBufferFaded   + BG_PLTT_ID(0),
         8 * PLTT_SIZE_4BPP
     );
-    // Slot 8 (PP) e slot 15 (Relearn) estão fora dos primeiros 8 — sincronizar separado
+    // Slot 8 (PP) e slot 15 (Relearn) estão fora dos primeiros 8
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(8),
         gPlttBufferFaded   + BG_PLTT_ID(8),
@@ -4138,8 +4143,8 @@ static void Task_PrintBattleMoves(u8 taskId)
 static void PrintMoveNameAndPP(u8 moveIndex)
 {
     u8 pp;
-    int ppState, x;
-    const u8 *text;
+    int x;
+    const u8 *colorPrefix;
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
     u8 moveNameWindowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_NAMES);
     u8 ppValueWindowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_PP);
@@ -4155,19 +4160,28 @@ static void PrintMoveNameAndPP(u8 moveIndex)
         DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
         DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, gStringVar2);
         DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, sMovesPPLayout);
-        text = gStringVar4;
-        ppState = GetCurrentPpToMaxPpState(summary->pp[moveIndex], pp) + 9;
-        x = GetStringRightAlignXOffset(FONT_NORMAL, text, 44);
+
+        // GetCurrentPpToMaxPpState: 3=cheio, 2=medio, 1=baixo, 0=zerado
+        switch (GetCurrentPpToMaxPpState(summary->pp[moveIndex], pp))
+        {
+        case 3:  colorPrefix = sPPColorFull;  break; // cheio  -> BRANCO
+        case 2:  colorPrefix = sPPColorMed;   break; // medio  -> AMARELO
+        case 1:  colorPrefix = sPPColorLow;   break; // baixo  -> LARANJA
+        default: colorPrefix = sPPColorEmpty; break; // zerado -> VERMELHO
+        }
+        StringCopy(gStringVar3, colorPrefix);
+        StringAppend(gStringVar3, gStringVar4);
+        x = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, 44);
+        PrintTextOnWindow(ppValueWindowId, gStringVar3, x, moveIndex * 16 + 1, 0, 0);
     }
     else
     {
         PrintTextOnWindow(moveNameWindowId, gText_OneDash, 0, moveIndex * 16 + 1, 0, 1);
-        text = gText_TwoDashes;
-        ppState = 12;
-        x = GetStringCenterAlignXOffset(FONT_NORMAL, text, 44);
+        StringCopy(gStringVar3, sPPColorFull);
+        StringAppend(gStringVar3, gText_TwoDashes);
+        x = GetStringCenterAlignXOffset(FONT_NORMAL, gText_TwoDashes, 44);
+        PrintTextOnWindow(ppValueWindowId, gStringVar3, x, moveIndex * 16 + 1, 0, 0);
     }
-
-    PrintTextOnWindow(ppValueWindowId, text, x, moveIndex * 16 + 1, 0, ppState);
 }
 
 static void PrintMovePowerAndAccuracy(u16 moveIndex)
@@ -4321,7 +4335,10 @@ static void PrintNewMoveDetailsOrCancelText(void)
         DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
         DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, gStringVar1);
         DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, sMovesPPLayout);
-        PrintTextOnWindow(windowId2, gStringVar4, GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, 44), 65, 0, 12);
+        // Dark UI: novo move sempre tem PP cheio -> BRANCO
+        StringCopy(gStringVar3, sPPColorFull);
+        StringAppend(gStringVar3, gStringVar4);
+        PrintTextOnWindow(windowId2, gStringVar3, GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, 44), 65, 0, 0);
     }
 }
 
