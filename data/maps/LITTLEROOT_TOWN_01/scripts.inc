@@ -1073,7 +1073,7 @@ LittlerootTown_01_Text_JirachiIntro:
 # 537 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiCloseEyes:
 # 538 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Close your eyes and remember…\n"
+	.string "Close your eyes and remember…\p"
 # 539 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Remember how it all happened…$"
 # 540 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"

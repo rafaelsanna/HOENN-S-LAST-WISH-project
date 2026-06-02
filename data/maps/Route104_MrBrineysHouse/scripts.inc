@@ -195,7 +195,7 @@ Route104_MrBrineysHouse_EventScript_Peeko::
 # 98 "data/maps/Route104_MrBrineysHouse/scripts.pory"
 Route104_MrBrineysHouse_Text_WaitUpPeeko:
 # 99 "data/maps/Route104_MrBrineysHouse/scripts.pory"
-	.string "MR. BRINEY: Hold on, lass!\n"
+	.string "MR. BRINEY: Hold on!\n"
 # 100 "data/maps/Route104_MrBrineysHouse/scripts.pory"
 	.string "Wait up, NAMI!$"
 # 101 "data/maps/Route104_MrBrineysHouse/scripts.pory"

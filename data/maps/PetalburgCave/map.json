@@ -76,7 +76,35 @@
       "dest_warp_id": "8"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_UNUSED_0x40BB",
+      "var_value": "0",
+      "script": "RustboroCity_Gym_EventScript_ClimbFast"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_UNUSED_0x40BB",
+      "var_value": "0",
+      "script": "RustboroCity_Gym_EventScript_ClimbFast"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 18,
+      "elevation": 0,
+      "var": "VAR_UNUSED_0x40BB",
+      "var_value": "0",
+      "script": "RustboroCity_Gym_EventScript_ClimbFast"
+    }
+  ],
   "bg_events": [
     {
       "type": "hidden_item",

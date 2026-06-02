@@ -53,136 +53,158 @@ PetalburgCity_PokemonCenter_1F_EventScript_Youngster::
 # 27 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 
 # 28 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_EventScript_Woman::
+PetalburgCity_PokemonCenter_1F_EventScript_Newgirl::
 # 29 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	lock
+	msgbox PetalburgCity_PokemonCenter_1F_Text_Newgirl, MSGBOX_NPC
 # 30 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	faceplayer
+	end	
 # 31 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	msgbox PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon, MSGBOX_DEFAULT
+
 # 32 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	specialvar VAR_RESULT, IsStarterInParty
+PetalburgCity_PokemonCenter_1F_EventScript_Woman::
 # 33 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo
+	lock
 # 34 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	release
+	faceplayer
 # 35 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	end
+	msgbox PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon, MSGBOX_DEFAULT
 # 36 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-
+	specialvar VAR_RESULT, IsStarterInParty
 # 37 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo::
+	goto_if_eq VAR_RESULT, TRUE, PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo
 # 38 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	call_if_eq VAR_STARTER_MON, 0, PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType
-# 39 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	call_if_eq VAR_STARTER_MON, 1, PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType
-# 40 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	call_if_eq VAR_STARTER_MON, 2, PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType
-# 41 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	release
-# 42 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+# 39 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	end
-# 43 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+# 40 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 
+# 41 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo::
+# 42 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	call_if_eq VAR_STARTER_MON, 0, PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType
+# 43 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	call_if_eq VAR_STARTER_MON, 1, PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType
 # 44 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType::
+	call_if_eq VAR_STARTER_MON, 2, PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType
 # 45 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	msgbox PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType, MSGBOX_DEFAULT
+	release
 # 46 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	return
+	end
 # 47 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 
 # 48 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType::
+PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType::
 # 49 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	msgbox PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType, MSGBOX_DEFAULT
+	msgbox PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType, MSGBOX_DEFAULT
 # 50 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	return
 # 51 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 
 # 52 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType::
+PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType::
 # 53 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	msgbox PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType, MSGBOX_DEFAULT
+	msgbox PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType, MSGBOX_DEFAULT
 # 54 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	return
 # 55 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 
 # 56 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
+PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType::
 # 57 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "You know, I never saw someone\n"
+	msgbox PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType, MSGBOX_DEFAULT
 # 58 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "using a cape like yours!\p"
+	return
 # 59 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Not exactly Petalburg fashion!\n"
+
 # 60 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "You from out of region? Or just...\l"
+PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
 # 61 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "from somewhere else?$"
+	.string "You know, I never saw someone\n"
 # 62 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-
+	.string "using a cape like yours!\p"
 # 63 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:
+	.string "Not exactly Petalburg fashion!\n"
 # 64 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "The berries near the woods have been\n"
+	.string "You from out of region? Or just...\l"
 # 65 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "ripening wrong - too fast and bright.\p"
+	.string "from somewhere else?$"
 # 66 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "It's probably nothing, but just pay\n"
+
 # 67 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "attention to what you keep.$"
+PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:
 # 68 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-
+	.string "The berries near the woods have been\n"
 # 69 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
+	.string "ripening wrong - too fast and bright.\p"
 # 70 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Professor Calendula spent years\n"
+	.string "It's probably nothing, but just pay\n"
 # 71 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "in research labs across Hoenn.\p"
+	.string "attention to what you keep.$"
 # 72 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "She could have been an academic forever,\n"
+
 # 73 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "publishing papers and living quietly.\p"
+PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
 # 74 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "But she chose the Gym instead.\n"
+	.string "Professor Calendula spent years\n"
 # 75 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Says she learned more from one real\l"
+	.string "in research labs across Hoenn.\p"
 # 76 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "battle than ten years of theory.$"
+	.string "She could have been an academic forever,\n"
 # 77 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-
+	.string "publishing papers and living quietly.\p"
 # 78 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType:  
+	.string "But she chose the Gym instead.\n"
 # 79 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Calendula studied Grass-types for\n"
+	.string "Says she learned more from one real\l"
 # 80 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "years. She wrote papers on their empathy.\p"
+	.string "battle than ten years of theory.$"
 # 81 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "She'd tell you that Torchic bond\n"
+
 # 82 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "deeper than most. Trust that.$"
+PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType:  
 # 83 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-
+	.string "Calendula studied Grass-types for\n"
 # 84 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType:   
+	.string "years. She wrote papers on their empathy.\p"
 # 85 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Fire-types, as Calendula says, are\n"
+	.string "She'd tell you that Torchic bond\n"
 # 86 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "heated! She says they're unpredictable\l"
+	.string "deeper than most. Trust that.$"
 # 87 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "and more intense than other types.\p"
-# 88 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Watch your Totodile carefully.$"
-# 89 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 
+# 88 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType:   
+# 89 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "Fire-types, as Calendula says, are\n"
 # 90 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:   
+	.string "heated! She says they're unpredictable\l"
 # 91 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Calendula mentioned Water-types\n"
+	.string "and more intense than other types.\p"
 # 92 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "are gathering near strange currents.\p"
+	.string "Watch your Totodile carefully.$"
 # 93 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "Your Bulbasaur might sense things\n"
+
 # 94 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:   
+# 95 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "Calendula mentioned Water-types\n"
+# 96 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "are gathering near strange currents.\p"
+# 97 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "Your Bulbasaur might sense things\n"
+# 98 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	.string "you can't. Follow its lead.$"
+# 99 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+
+# 100 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+PetalburgCity_PokemonCenter_1F_Text_Newgirl:   
+# 101 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "My dream was to be a POKéMON trainer,\n"
+# 102 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "but sometimes work gets in the way of\n"
+# 103 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "following our dreams, doesn't it?\p"
+# 104 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "Adult life can be difficult sometimes.\n"
+# 105 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
+	.string "We have to enjoy our youth.$"

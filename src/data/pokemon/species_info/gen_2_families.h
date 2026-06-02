@@ -6118,7 +6118,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         ANIMCMD_FRAME(1, 60),
         ANIMCMD_FRAME(0, 20),
     ),
-    .frontAnimId = ANIM_H_VIBRATE,
+    .frontAnimId = ANIM_H_SHAKE,
     .frontAnimDelay = 19,
     .backPic = gMonBackPic_Ursaluna,
     .backPicSize = MON_COORDS_SIZE(64, 64),
@@ -6129,7 +6129,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
     .iconSprite = gMonIcon_Ursaluna,
     .iconPalIndex = 2,
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-    SHADOW(1, 4, SHADOW_SIZE_XL_BATTLE_ONLY)
+    SHADOW(-1, 10, SHADOW_SIZE_XL_BATTLE_ONLY)
     FOOTPRINT(Ursaluna)
     OVERWORLD(
         sPicTable_Ursaluna,

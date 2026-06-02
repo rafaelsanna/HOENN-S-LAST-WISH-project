@@ -96,7 +96,7 @@ Route104_MrBrineysHouse_EventScript_Peeko::
 	end
 
 Route104_MrBrineysHouse_Text_WaitUpPeeko:
-	.string "MR. BRINEY: Hold on, lass!\n"
+	.string "MR. BRINEY: Hold on!\n"
 	.string "Wait up, NAMI!$"
 
 Route104_MrBrineysHouse_Text_ItsYouLetsSailToDewford:

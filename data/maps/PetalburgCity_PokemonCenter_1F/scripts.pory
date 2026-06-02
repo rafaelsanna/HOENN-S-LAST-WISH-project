@@ -25,6 +25,10 @@ PetalburgCity_PokemonCenter_1F_EventScript_Youngster::
 	msgbox PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP, MSGBOX_NPC
 	end
 
+PetalburgCity_PokemonCenter_1F_EventScript_Newgirl::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_Newgirl, MSGBOX_NPC
+	end	
+
 PetalburgCity_PokemonCenter_1F_EventScript_Woman::
 	lock
 	faceplayer
@@ -93,6 +97,12 @@ PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:
 	.string "Your Bulbasaur might sense things\n"
 	.string "you can't. Follow its lead.$"
 
+PetalburgCity_PokemonCenter_1F_Text_Newgirl:   
+	.string "My dream was to be a POKéMON trainer,\n"
+	.string "but sometimes work gets in the way of\n"
+	.string "following our dreams, doesn't it?\p"
+	.string "Adult life can be difficult sometimes.\n"
+	.string "We have to enjoy our youth.$"
 
 
 `
