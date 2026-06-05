@@ -1239,9 +1239,9 @@
 #define FLAG_ITEM_LITTLEROOTCOAST2_DIVE_BALL                        0x49C 
 #define FLAG_ITEM_LITTLEROOTCOAST2_PEARL                            0x49D 
 #define FLAG_ITEM_AQUASHIP_ROOM_DAMP_ROCK                           0x49E 
-#define FLAG_UNUSED_0x49F                                           0x49F // Unused Flag
-#define FLAG_UNUSED_0x4A0                                           0x4A0 // Unused Flag
-#define FLAG_UNUSED_0x4A1                                           0x4A1 // Unused Flag
+#define FLAG_ITEM_PETALBURG_CAVE2_DIVE_BALL                         0x49F 
+#define FLAG_ITEM_PETALBURG_CAVE2_KINGS_ROCK                        0x4A0 
+#define FLAG_ITEM_PETALBURG_CAVE2_RARE_CANDY                        0x4A1 
 #define FLAG_UNUSED_0x4A2                                           0x4A2 // Unused Flag
 #define FLAG_UNUSED_0x4A3                                           0x4A3 // Unused Flag
 #define FLAG_UNUSED_0x4A4                                           0x4A4 // Unused Flag
