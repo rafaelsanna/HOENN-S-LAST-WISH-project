@@ -4860,6 +4860,16 @@
       "secondary_tileset": "gTileset_PokemonSchool",
       "border_filepath": "data/layouts/RustboroCity_PokemonSchool2F/border.bin",
       "blockdata_filepath": "data/layouts/RustboroCity_PokemonSchool2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_PETALBURG_CAVE_2",
+      "name": "PetalburgCave_2_Layout",
+      "width": 26,
+      "height": 35,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/PetalburgCave_2/border.bin",
+      "blockdata_filepath": "data/layouts/PetalburgCave_2/map.bin"
     }
   ]
 }

@@ -1221,7 +1221,7 @@ MossdeepCity_Gym_Text_TateAndLizaIntro:
 # 611 "data/maps/MossdeepCity_Gym/scripts.pory"
 	.string "SOUL: Our strength is unity.\p"
 # 612 "data/maps/MossdeepCity_Gym/scripts.pory"
-	.string "LUNA: Can you stand between shadow and light?\n"
+	.string "LUNA: Can you stand between us?\n"
 # 613 "data/maps/MossdeepCity_Gym/scripts.pory"
 	.string "SOUL: Can you endure perfect harmony?$"
 # 614 "data/maps/MossdeepCity_Gym/scripts.pory"

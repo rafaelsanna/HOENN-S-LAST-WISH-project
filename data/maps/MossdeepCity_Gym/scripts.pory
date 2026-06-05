@@ -609,7 +609,7 @@ MossdeepCity_Gym_Text_TateAndLizaIntro:
 	.string "SOUL: One rhythm.\p"
 	.string "LUNA: Our battle is balance.\n"
 	.string "SOUL: Our strength is unity.\p"
-	.string "LUNA: Can you stand between shadow and light?\n"
+	.string "LUNA: Can you stand between us?\n"
 	.string "SOUL: Can you endure perfect harmony?$"
 
 MossdeepCity_Gym_Text_TateAndLizaDefeat:
