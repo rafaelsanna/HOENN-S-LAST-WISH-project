@@ -222,3 +222,6 @@ const u16 gMetatileAttributes_hlwcustom2[] = INCBIN_U16("data/tilesets/secondary
 
 const u16 gMetatiles_Desert[] = INCBIN_U16("data/tilesets/secondary/desert/metatiles.bin");
 const u16 gMetatileAttributes_Desert[] = INCBIN_U16("data/tilesets/secondary/desert/metatile_attributes.bin");
+
+const u16 gMetatiles_Facility_2[] = INCBIN_U16("data/tilesets/secondary/facility_2/metatiles.bin");
+const u16 gMetatileAttributes_Facility_2[] = INCBIN_U16("data/tilesets/secondary/facility_2/metatile_attributes.bin");

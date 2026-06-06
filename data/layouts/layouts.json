@@ -3037,7 +3037,7 @@
       "width": 50,
       "height": 37,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Facility",
+      "secondary_tileset": "gTileset_Facility_2",
       "border_filepath": "data/layouts/MtPyre_Summit/border.bin",
       "blockdata_filepath": "data/layouts/MtPyre_Summit/map.bin"
     },
