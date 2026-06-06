@@ -61,8 +61,57 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	giveitem ITEM_MAGMA_EMBLEM
 	setflag FLAG_RECEIVED_RED_OR_BLUE_ORB
 	setflag FLAG_HIDE_JAGGED_PASS_MAGMA_GUARD
-	releaseall
+
+	@ -----------------------------------------------------------------------
+	@ Smooth camera pan upward 25 tiles using the camera object system,
+	@ exactly like MOSSDEEP01_EventScript_QuestComplete does for the comet.
+	@ SpawnCameraObject detaches the camera from the player so we can move it.
+	@ applymovement on OBJ_EVENT_ID_CAMERA with walk_fast_up steps pans up.
+	@ RemoveCameraObject snaps the camera back to the player afterward.
+	@ -----------------------------------------------------------------------
+	special SpawnCameraObject
+	applymovement OBJ_EVENT_ID_CAMERA, MtPyre_Summit_Movement_CameraPanUp
+	waitmovement 0
+	delay 20
+
+	@ Fade to black, then hand off to the C cutscene.
+	@ CB2_ReturnToField restores the overworld when the scene ends.
+	fadescreen FADE_TO_BLACK
+	delay 10
+	special RemoveCameraObject
+	special StartTimeWarpScene
+
+	@ The C cutscene restores the overworld — do NOT call releaseall here.
 	end
+
+@ 25 walk_fast_up steps = 25 tiles upward camera pan
+MtPyre_Summit_Movement_CameraPanUp:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
 
 MtPyre_Summit_EventScript_ArchieFacePlayer0::
 	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer0

@@ -575,3 +575,4 @@ gSpecials::
     def_special StartDerby
     def_special GetNewDerby
     def_special Special_ViewVoltorbFlip
+	def_special StartTimeWarpScene
