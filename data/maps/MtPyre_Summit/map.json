@@ -25,7 +25,8 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MtPyre_Summit_EventScript_OldMan",
-      "flag": "0"
+      "flag": "0",
+      "local_id": "LOCALID_MT_PYRE_SUMMIT_OLD_MAN"
     },
     {
       "local_id": "LOCALID_MT_PYRE_SUMMIT_ARCHIE",

@@ -85,18 +85,18 @@ enum
     TWS_DONE,       /* restore field                                           */
 };
 
-/* Warp grow: PA starts at WARP_SCALE_START, decreases 3/frame toward 256.
- * (768-256)/3 = 171 frames ~= 2.85 s — same rate as the moon in intro.c */
+/* Warp grow: PA starts at WARP_SCALE_START, decreases WARP_GROW_SPEED/frame.
+ * (768-256)/4 = 128 frames ~2.1s. Grow and fade-in run simultaneously. */
 #define WARP_SCALE_START  768
 #define WARP_SCALE_FULL   256
-#define WARP_GROW_SPEED     3
+#define WARP_GROW_SPEED     4
 
 /* Frames the warp spins alone (at full size) before the character appears */
 #define SPIN_FRAMES 90
 
-/* Warp centre position on screen — GBA screen is 240x160, centre = (120, 80) */
+/* Warp centre position on screen */
 #define WARP_CENTER_X 120
-#define WARP_CENTER_Y  90
+#define WARP_CENTER_Y 100
 
 /* Character start position (bottom-centre) */
 #define CHAR_START_X  120
@@ -338,15 +338,17 @@ static void Task_TimeWarpScene(u8 taskId)
         tRotAngle = 0;
         tTimer    = 0;
 
-        /* Enable GPU — palette still all black (fade-in happens in TWS_FADEIN) */
+        /* Enable GPU — start fade-in immediately so the grow is VISIBLE.
+         * Grow and fade-in run simultaneously, exactly like the moon in intro.c. */
         SetVBlankCallback(VBlankCB_TimeWarp);
         SetGpuReg(REG_OFFSET_DISPCNT,
                   DISPCNT_MODE_0
                   | DISPCNT_OBJ_1D_MAP
                   | DISPCNT_BG0_ON
                   | DISPCNT_OBJ_ON);
-        /* Keep palette blacked out — grow happens before the fade-in */
+        /* Black out then begin fast fade-in (delay=2 = quick but smooth) */
         BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+        BeginNormalPaletteFade(PALETTES_ALL, 2, 16, 0, RGB_BLACK);
         SetMainCallback2(CB2_TimeWarp);
 
         tState = TWS_GROW;
@@ -355,8 +357,10 @@ static void Task_TimeWarpScene(u8 taskId)
 
     /* ------------------------------------------------------------------ */
     case TWS_GROW:
-        /* Warp grows from small to full size (PA: 768 -> 256), no spin yet.
-         * Rate: -3/frame, same as the moon in intro.c. ~171 frames to finish. */
+        /* Warp grows from small (PA=768) to full (PA=256) while the scene
+         * fades in simultaneously — same as SpriteCB_Scene0Moon in intro.c.
+         * Rate: -4/frame -> (768-256)/4 = 128 frames ~2.1s.
+         * Also starts a slow spin so it looks alive while growing. */
         if (tWarpScale > WARP_SCALE_FULL)
         {
             tWarpScale -= WARP_GROW_SPEED;
@@ -364,21 +368,23 @@ static void Task_TimeWarpScene(u8 taskId)
                 tWarpScale = WARP_SCALE_FULL;
             ApplyWarpGrow(0, tWarpScale);
         }
-        else
+        /* Slow spin during grow (1 unit/frame — subtle rotation while growing) */
+        tRotAngle = (tRotAngle + 1) & 0xFF;
+        /* Once grown AND fade-in finished, move to spin-wait */
+        if (tWarpScale <= WARP_SCALE_FULL && !gPaletteFade.active)
         {
-            /* Warp is full size — begin fade-in and start spinning */
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
-            tRotAngle = 0;
+            tTimer = 0;
             tState = TWS_FADEIN;
         }
         break;
 
     /* ------------------------------------------------------------------ */
     case TWS_FADEIN:
-        /* Spin slowly while fading in from black */
+        /* Grow + fade-in already completed in TWS_GROW.
+         * Now spin at full speed before revealing the character. */
         tRotAngle = (tRotAngle + 3) & 0xFF;
         ApplyWarpRotation(0, (u8)tRotAngle);
-        if (!gPaletteFade.active)
+        if (++tTimer >= SPIN_FRAMES)
         {
             tTimer = 0;
             tState = TWS_SPIN_WAIT;
@@ -387,7 +393,7 @@ static void Task_TimeWarpScene(u8 taskId)
 
     /* ------------------------------------------------------------------ */
     case TWS_SPIN_WAIT:
-        /* Warp spins alone at full size for SPIN_FRAMES before char appears */
+        /* Warp spins alone — character is revealed when timer expires */
         tRotAngle = (tRotAngle + 3) & 0xFF;
         ApplyWarpRotation(0, (u8)tRotAngle);
         if (++tTimer >= SPIN_FRAMES)
@@ -441,11 +447,11 @@ static void Task_TimeWarpScene(u8 taskId)
         }
         else
         {
-            /* Character has fully vanished — hold ~1 s then fade out */
+            /* Character has fully vanished — brief hold then fast flash to black */
             gSprites[tCharId].invisible = TRUE;
-            if (++tTimer >= 60)
+            if (++tTimer >= 20)
             {
-                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+                BeginNormalPaletteFade(PALETTES_ALL, 1, 0, 16, RGB_BLACK);
                 tState = TWS_FADEOUT;
             }
         }
