@@ -61,11 +61,29 @@ PetalburgCity_EventScript_WallyTutorial::
     msgbox Route102_Text_WatchMeCatchPokemon, MSGBOX_DEFAULT
     msgbox PetalburgCity_Text_WallyIntro, MSGBOX_DEFAULT
     closemessage
+    setflag B_FLAG_NO_WHITEOUT
     trainerbattle_no_intro TRAINER_WALLY_VR_6, PetalburgCity_Text_WallyDefeat
+    clearflag B_FLAG_NO_WHITEOUT
+    @ VAR_RESULT: 1 = jogador venceu, 0 = jogador perdeu
+    goto_if_eq VAR_RESULT, 1, PetalburgCity_EventScript_WallyTutorial_Victory
+    goto PetalburgCity_EventScript_WallyTutorial_Defeat
+
+PetalburgCity_EventScript_WallyTutorial_Victory::
     msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
     applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
     waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
     msgbox Route102_Text_LetsGoBack, MSGBOX_DEFAULT
+    goto PetalburgCity_EventScript_WallyTutorial_Shared
+
+PetalburgCity_EventScript_WallyTutorial_Defeat::
+    msgbox PetalburgCity_Text_WallyTutorial_LukaWon, MSGBOX_DEFAULT
+    applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
+    waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
+    msgbox PetalburgCity_Text_WallyTutorial_LukaGoBack, MSGBOX_DEFAULT
+    setvar VAR_WALLY_TUTORIAL_RESULT, 1
+    goto PetalburgCity_EventScript_WallyTutorial_Shared
+
+PetalburgCity_EventScript_WallyTutorial_Shared::
     closemessage
     clearflag FLAG_HIDE_MAP_NAME_POPUP
     setvar VAR_PETALBURG_CITY_STATE, 3
@@ -879,6 +897,17 @@ PetalburgCity_Movement_LukaAfterGym_Exit:
 	walk_fast_left
 	set_invisible
 	step_end
+
+PetalburgCity_Text_WallyTutorial_LukaWon:
+    .string "LUKA: Heh… Not bad, {PLAYER}.\n"
+    .string "But I came out on top this time.$"
+
+PetalburgCity_Text_WallyTutorial_LukaGoBack:
+    .string "LUKA: Don't be down about it.\n"
+    .string "A loss is just the start of\l"
+    .string "something bigger.\p"
+    .string "Come on, let's head back to\n"
+    .string "the GYM and tell CALENDULA.$"
 
 PetalburgCity_Text_WhereIsWally:
 	.string "Where has our LUKA gone?\p"

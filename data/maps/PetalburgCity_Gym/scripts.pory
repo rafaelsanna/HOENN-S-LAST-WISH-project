@@ -76,8 +76,19 @@ PetalburgCity_Gym_OnFrame:
 
 PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 	lockall
+	goto_if_eq VAR_WALLY_TUTORIAL_RESULT, 1, PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial_LukaWon
+	@ --- Jogador VENCEU ---
 	msgbox PetalburgCity_Gym_Text_DadSoDidItWorkOut, MSGBOX_DEFAULT
 	msgbox PetalburgCity_Gym_Text_WallyThankYouBye, MSGBOX_DEFAULT
+	goto PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial_Shared
+
+PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial_LukaWon::
+	@ --- Luka VENCEU, progresso continua igual ---
+	msgbox PetalburgCity_Gym_Text_DadSoDidItWorkOut_LukaWon, MSGBOX_DEFAULT
+	msgbox PetalburgCity_Gym_Text_WallyThankYouBye_LukaWon, MSGBOX_DEFAULT
+	setvar VAR_WALLY_TUTORIAL_RESULT, 0
+
+PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial_Shared::
 	closemessage
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	applymovement LOCALID_PETALBURG_GYM_WALLY, PetalburgCity_Gym_Movement_WallyExitGym
@@ -1253,6 +1264,26 @@ PetalburgCity_Gym_Text_WouldYouReallyComeWithMe:
     .string "LUKA: {PLAYER}, ready?\n"
     .string "Let's head to ROUTE 102 and\l"
     .string "have a battle to remember!$"
+
+PetalburgCity_Gym_Text_DadSoDidItWorkOut_LukaWon:
+    .string "CALENDULA: So… LUKA came out on top?\n"
+    .string "That's fine.\p"
+    .string "{PLAYER}, a loss is not the end.\n"
+    .string "What matters is that you battled\l"
+    .string "with your full heart.\p"
+    .string "Your bond with your POKéMON\n"
+    .string "was clear to see, even in defeat.$"
+
+PetalburgCity_Gym_Text_WallyThankYouBye_LukaWon:
+    .string "LUKA: It was a real battle, {PLAYER}.\n"
+    .string "I pushed hard, and so did you.\p"
+    .string "I hope this makes you want to\n"
+    .string "grow even stronger.\p"
+    .string "Keep chasing your goal.\n"
+    .string "I'll be watching!\p"
+    .string "Gotta go! That strange comet\n"
+    .string "in HOENN is on my mind.\p"
+    .string "See you soon, {PLAYER}!$"
 
 PetalburgCity_Gym_Text_DadSoDidItWorkOut:
     .string "CALENDULA: Excellent work!\n"
