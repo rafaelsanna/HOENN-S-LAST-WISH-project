@@ -225,3 +225,6 @@ const u16 gMetatileAttributes_Desert[] = INCBIN_U16("data/tilesets/secondary/des
 
 const u16 gMetatiles_Facility_2[] = INCBIN_U16("data/tilesets/secondary/facility_2/metatiles.bin");
 const u16 gMetatileAttributes_Facility_2[] = INCBIN_U16("data/tilesets/secondary/facility_2/metatile_attributes.bin");
+
+const u16 gMetatiles_DistortionWorld[] = INCBIN_U16("data/tilesets/secondary/distortion_world/metatiles.bin");
+const u16 gMetatileAttributes_DistortionWorld[] = INCBIN_U16("data/tilesets/secondary/distortion_world/metatile_attributes.bin");

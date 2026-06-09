@@ -64,24 +64,24 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	closemessage
 	delay 20
 
-	@ -----------------------------------------------------------------------
-	@ STATUE SCENE: old lady walks to Jirachi statue, old man walks to Celebi
-	@ statue. Both interact (exclamation mark), then old lady recounts the
-	@ legend of the chosen one. Runs in parallel with waitmovement 0.
-	@ -----------------------------------------------------------------------
+@ -----------------------------------------------------------------------
+@ STATUE SCENE: old lady walks to Jirachi statue, old man walks to Celebi
+@ statue. Both interact (exclamation mark), then old lady recounts the
+@ legend of the chosen one. Runs in parallel with waitmovement 0.
+@ -----------------------------------------------------------------------
 	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, MtPyre_Summit_Movement_OldLadyToJirachi
 	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_MAN, MtPyre_Summit_Movement_OldManToCelebi
 	waitmovement 0
 	delay 15
 
-	@ Both react to the statues simultaneously
+@ Both react to the statues simultaneously
 	playse SE_PIN
 	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, Common_Movement_ExclamationMark
 	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_MAN, Common_Movement_ExclamationMark
 	waitmovement 0
 	delay 20
 
-	@ Old lady turns to face the statue and speaks the legend
+@ Old lady turns to face the statue and speaks the legend
 	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox MtPyre_Summit_Text_LegendOfTheChosen, MSGBOX_DEFAULT
@@ -94,17 +94,17 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	closemessage
 	delay 20
 
-	@ -----------------------------------------------------------------------
-	@ Force player to walk 3 tiles forward (north) toward the warp spot.
-	@ -----------------------------------------------------------------------
+@ -----------------------------------------------------------------------
+@ Force player to walk 3 tiles forward (north) toward the warp spot.
+@ -----------------------------------------------------------------------
 	applymovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerWalkForward
 	waitmovement 0
 	delay 15
 
-	@ -----------------------------------------------------------------------
-	@ Camera pan: detach camera, pan up 25 tiles, then flash-fade and launch
-	@ the C cutscene. fadescreenspeed with speed 8 = fast flash transition.
-	@ -----------------------------------------------------------------------
+@ -----------------------------------------------------------------------
+@ Camera pan: detach camera, pan up 25 tiles, then flash-fade and launch
+@ the C cutscene. fadescreenspeed with speed 8 = fast flash transition.
+@ -----------------------------------------------------------------------
 	special SpawnCameraObject
 	applymovement OBJ_EVENT_ID_CAMERA, MtPyre_Summit_Movement_CameraPanUp
 	waitmovement 0
@@ -114,7 +114,7 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	special RemoveCameraObject
 	special StartTimeWarpScene
 
-	@ The C cutscene restores the overworld — do NOT call releaseall here.
+@ The C cutscene restores the overworld — do NOT call releaseall here.
 	end
 
 @ Old lady walks from player-meeting position up to the Jirachi statue
@@ -167,6 +167,7 @@ MtPyre_Summit_Movement_CameraPanUp:
 	walk_fast_up
 	walk_fast_up
 	step_end
+
 
 MtPyre_Summit_EventScript_ArchieFacePlayer0::
 	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer0
@@ -735,5 +736,20 @@ MtPyre_Summit_Text_LegendContinued:
 	.string "the boundary between times shall\n"
 	.string "open, and they shall be called forth\p"
 	.string "to restore what has been broken.$"
+`
 
+raw `
+@ -----------------------------------------------------------------------
+@ NightmareRealm1_WarpIn
+@ Called by StartTimeWarpScene (C cutscene) via gFieldCallback2 after the
+@ cutscene ends. Screen is still black. Warps player to NIGHTMARE_REALM_1
+@ tile (10,10), waits for map load + fade-in, then releases so the coord
+@ event at that tile fires (NightmareRealm1_Arrival).
+@ -----------------------------------------------------------------------
+NightmareRealm1_WarpIn::
+	lockall
+	warp MAP_NIGHTMARE_REALM_1, 10, 10
+	waitstate
+	releaseall
+	end
 `

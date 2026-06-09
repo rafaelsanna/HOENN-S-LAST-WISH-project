@@ -1,0 +1,30 @@
+{
+  "id": "MAP_NIGHTMARE_REALM_1",
+  "name": "NIGHTMARE_REALM_1",
+  "layout": "LAYOUT_NIGHTMARE_REALM_1",
+  "music": "MUS_DUMMY",
+  "region_map_section": "MAPSEC_NIGHTMARE_REALM",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_NIGHTMARE_STATE",
+      "var_value": "0",
+      "script": "NightmareRealm1_Arrival"
+    }
+  ],
+  "bg_events": []
+}

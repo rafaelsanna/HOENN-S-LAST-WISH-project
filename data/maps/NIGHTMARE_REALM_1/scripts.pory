@@ -1,0 +1,94 @@
+raw `
+NIGHTMARE_REALM_1_MapScripts::
+    map_script MAP_SCRIPT_ON_TRANSITION, NightmareRealm1_OnTransition
+    .byte 0
+
+NightmareRealm1_OnTransition::
+    setflag FLAG_UNUSED_0x1AB
+    setflag FLAG_UNUSED_0x27D
+    setflag FLAG_UNUSED_0x27C
+    end
+
+NightmareRealm1_Arrival::
+    lockall
+
+    @ Jirachi's distress call - telepathic voice from within the rift
+    msgbox NightmareRealm1_Text_JirachiPleas, MSGBOX_DEFAULT
+    closemessage
+    delay 20
+
+    @ Celebi's voice follows
+    msgbox NightmareRealm1_Text_CelebiPleas, MSGBOX_DEFAULT
+    closemessage
+    delay 20
+
+    @ Environmental beat - shadows take shape
+    msgbox NightmareRealm1_Text_ShadowsRise, MSGBOX_DEFAULT
+    closemessage
+    delay 30
+
+    @ Forced double wild battle against Ducklett + Escavalier
+    setwildbattle SPECIES_DUCKLETT, 45, ITEM_NONE, SPECIES_ESCAVALIER, 45, ITEM_NONE
+    setvar VAR_0x8004, 1
+    setvar VAR_0x8005, 22
+    dowildbattle
+
+    compare VAR_RESULT, 1
+    call_if_eq VAR_RESULT, 1, NightmareRealm1_OnVictory
+
+    clearflag FLAG_UNUSED_0x1AB
+    clearflag FLAG_UNUSED_0x27D
+    clearflag FLAG_UNUSED_0x27C
+    setvar VAR_0x8004, 0
+    releaseall
+    end
+
+NightmareRealm1_OnVictory::
+    setvar VAR_NIGHTMARE_STATE, 1
+    clearflag FLAG_UNUSED_0x1AB
+    clearflag FLAG_UNUSED_0x27D
+    clearflag FLAG_UNUSED_0x27C
+    setvar VAR_0x8004, 0
+    msgbox NightmareRealm1_Text_VictoryLight, MSGBOX_DEFAULT
+    closemessage
+    delay 20
+    releaseall
+    end
+
+    .align 2
+NightmareRealm1_Text_JirachiPleas:
+    .string "...Can you hear us...?\p"
+    .string "We are JIRACHI and CELEBI...\p"
+    .string "Something terrible has reached\n"
+    .string "into our realm...\p"
+    .string "The distortion that took the ORBS...\n"
+    .string "it has torn open a rift.\p"
+    .string "Shadows now wear our forms...\n"
+    .string "Chosen one... please... fight them.$"
+
+NightmareRealm1_Text_CelebiPleas:
+    .string "We cannot move on our own...\n"
+    .string "The rift holds us here.\p"
+    .string "Only if you defeat those shadows\n"
+    .string "will the boundary seal again.\p"
+    .string "They are born from the same warp\n"
+    .string "that brought you here...\p"
+    .string "Dark echoes of what we once were.\n"
+    .string "Do not let them break free.$"
+
+NightmareRealm1_Text_ShadowsRise:
+    .string "The air thickens.\n"
+    .string "Two shapes tear from the darkness...\p"
+    .string "They look like DUCKLETT and\n"
+    .string "ESCAVALIER, yet their eyes\l"
+    .string "hold nothing but void.\p"
+    .string "They will not let you pass.$"
+
+NightmareRealm1_Text_VictoryLight:
+    .string "The shadows dissolve into motes\n"
+    .string "of cold light...\p"
+    .string "A voice - both voices - whispers\n"
+    .string "at the edge of hearing:\p"
+    .string "Thank you, chosen one.\n"
+    .string " The rift is sealing...$"
+`

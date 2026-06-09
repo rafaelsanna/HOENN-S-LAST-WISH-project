@@ -62,8 +62,10 @@ PetalburgCity_EventScript_WallyTutorial::
     msgbox PetalburgCity_Text_WallyIntro, MSGBOX_DEFAULT
     closemessage
     setflag B_FLAG_NO_WHITEOUT
+    setflag B_FLAG_NO_RUNNING
     trainerbattle_no_intro TRAINER_WALLY_VR_6, PetalburgCity_Text_WallyDefeat
     clearflag B_FLAG_NO_WHITEOUT
+    clearflag B_FLAG_NO_RUNNING
     @ VAR_RESULT: 1 = jogador venceu, 0 = jogador perdeu
     goto_if_eq VAR_RESULT, 1, PetalburgCity_EventScript_WallyTutorial_Victory
     goto PetalburgCity_EventScript_WallyTutorial_Defeat

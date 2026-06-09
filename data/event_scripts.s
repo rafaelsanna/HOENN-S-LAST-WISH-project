@@ -1250,3 +1250,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/RustboroCity_PokemonSchool2F/scripts.inc"
 
 	.include "data/maps/PetalburgCave_2/scripts.inc"
+
+	.include "data/maps/NIGHTMARE_REALM_1/scripts.inc"
