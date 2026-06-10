@@ -460,7 +460,7 @@
 #define FLAG_REGISTERED_WALLACE              (TRAINER_REGISTERED_FLAGS_START + REMATCH_WALLACE)
 
 #define FLAG_TALKED_TO_CELEBI                    0x1AA // Unused Flag
-#define FLAG_UNUSED_0x1AB                    0x1AB // Unused Flag
+#define B_FLAG_NO_RUNNING                        0x1AB 
 
 #define FLAG_DEFEATED_DEOXYS                 0x1AC
 #define FLAG_BATTLED_DEOXYS                  0x1AD
@@ -519,8 +519,8 @@
 #define FLAG_SHINY_SENTRET_END               0x1DF 
 #define FLAG_HIDE_SHINY_SENTRET_WILD         0x1E0 
 #define FLAG_HIDE_SHINY_SENTRET_WITH_GIRL    0x1E1 
-#define FLAG_DEFEATED_TROY           0x1E2 
-#define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
+#define FLAG_DEFEATED_TROY                   0x1E2 
+#define B_FLAG_NO_CATCHING                   0x1E3 
 
 // Mystery Gift Flags (Unknown)
 #define FLAG_MYSTERY_GIFT_DONE               0x1E4
@@ -684,7 +684,7 @@
 #define FLAG_RECEIVED_DEWFORD_HALL_SUN_STONE    0x279 // Unused Flag
 #define FLAG_HIDE_GRANITE_CAVE_AURORA           0x27A // Unused Flag
 #define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POKEMON_SCHOOL_2F_GUMMY_WURMPLES  0x27B
-#define FLAG_UNUSED_0x27C  0x27C // Unused Flag
+#define FLAG_LOST_NIGHTMARE_BATTLE              0x27C 
 #define FLAG_UNUSED_0x27D  0x27D // Unused Flag
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag
 #define FLAG_RANDOMIZER_WILD  0x27F // RANDOMIZER 1 

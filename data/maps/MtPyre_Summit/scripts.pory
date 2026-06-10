@@ -1,4 +1,29 @@
 raw `
+MtPyre_Summit_EventScript_Relic::
+	lock
+	faceplayer
+	msgbox MtPyre_Summit_Text_RelicRetry, MSGBOX_DEFAULT
+	closemessage
+	delay 15
+	clearflag FLAG_LOST_NIGHTMARE_BATTLE
+	special HealPlayerParty
+	lockall
+	applymovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerWalkForward
+	waitmovement 0
+	delay 10
+	special SpawnCameraObject
+	applymovement OBJ_EVENT_ID_CAMERA, MtPyre_Summit_Movement_CameraPanUp
+	waitmovement 0
+	delay 10
+	call NightmareRealm1_WarpIn
+	end
+
+MtPyre_Summit_Text_RelicRetry:
+	.string "The boundary still trembles\p"
+	.string "The rift is not yet sealed.\p"
+	.string "Your team has been restored.\n"
+	.string "Go back. Try again.$"
+
 MtPyre_Summit_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_Summit_OnTransition
 	.byte 0
@@ -617,6 +642,12 @@ MtPyre_Summit_Text_BothOrbsTakenMagmaLeftThis:
 	.string "I would like you to have it.\n"
 	.string "Perhaps it will be useful in some way.$"
 
+MtPyre_Summit_Text_NightmareRetry:
+	.string "The statues still glow…\p"
+	.string "The rift is not yet sealed.\p"
+	.string "Go back, chosen one.\n"
+	.string "Try again.$"
+
 MtPyre_Summit_Text_OrbsHaveBeenTaken:
 	.string "The BLUE ORB and RED ORB taken by\n"
 	.string "those sinister men…\p"
@@ -736,9 +767,7 @@ MtPyre_Summit_Text_LegendContinued:
 	.string "the boundary between times shall\n"
 	.string "open, and they shall be called forth\p"
 	.string "to restore what has been broken.$"
-`
 
-raw `
 @ -----------------------------------------------------------------------
 @ NightmareRealm1_WarpIn
 @ Called by StartTimeWarpScene (C cutscene) via gFieldCallback2 after the

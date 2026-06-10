@@ -8473,12 +8473,12 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .types = MON_TYPES(TYPE_DARK, TYPE_FAIRY),
         .expYield = 173,
         .evYield_Attack = 2,
-        .genderRatio = PERCENT_FEMALE(50),
+        .genderRatio = MON_GENDERLESS,
         .eggCycles = 15,
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),
-        .abilities = { ABILITY_SWARM, ABILITY_SHELL_ARMOR, ABILITY_OVERCOAT },
+        .abilities = { ABILITY_LEVITATE, ABILITY_SHELL_ARMOR, ABILITY_OVERCOAT },
         .bodyColor = BODY_COLOR_GRAY,
         .speciesName = _("Celebi"),
         .cryId = CRY_CELEBI,
@@ -8503,7 +8503,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
             ANIMCMD_FRAME(1, 25),
             ANIMCMD_FRAME(0, 30),
         ),
-        .frontAnimId = ANIM_BACK_AND_LUNGE,
+        .frontAnimId = ANIM_GLOW_BLACK,
         .backPic = gMonBackPic_Escavalier,
         .backPicSize = MON_COORDS_SIZE(64, 56),
         .backPicYOffset = 9,
@@ -8514,7 +8514,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .iconPalette = gMonIconPalette_Escavalier,
         .shinyIconPalette = gMonShinyIconPalette_Escavalier,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(1, 11, SHADOW_SIZE_M)
+        SHADOW(1, 11, SHADOW_SIZE_S)
         FOOTPRINT(Escavalier)
         OVERWORLD(
             sPicTable_Escavalier,
