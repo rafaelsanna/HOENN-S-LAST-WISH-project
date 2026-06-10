@@ -56,6 +56,7 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_RANDOMIZER_E,
     MENUITEM_DIF_RANDOMIZER_T,
     MENUITEM_DIF_AUTOFISHING,
+    MENUITEM_DIF_FASTSLIDE, 
     MENUITEM_DIF_DEBUGMENU,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
@@ -235,6 +236,7 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_RANDOMIZER_E]   = {DrawChoices_RandomizerE, ProcessInput_Options_Two},
     [MENUITEM_DIF_RANDOMIZER_T]   = {DrawChoices_RandomizerT, ProcessInput_Options_Two},
     [MENUITEM_DIF_AUTOFISHING]    = {DrawChoices_AutoFishing,  ProcessInput_Options_Two},
+    [MENUITEM_DIF_FASTSLIDE]      = {DrawChoices_OnOff,         ProcessInput_Options_Two}, 
     [MENUITEM_DIF_DEBUGMENU]      = {DrawChoices_OnOff,        ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]         = {NULL, NULL},
 };
@@ -248,6 +250,10 @@ static const u8 sText_Nuzlocke[]        = _("NUZLOCKE");
 static const u8 sText_RandomizerE[]     = _("RANDOM POKéMON");
 static const u8 sText_RandomizerT[]     = _("RANDOM TRAINERS");
 static const u8 sText_AutoFishing[]     = _("AUTO FISH");
+static const u8 sText_FastSlide[]       = _("FAST SLIDE");
+
+static const u8 sText_Desc_FastSlideOff[] = _("Display the slide animation at the\nbeginning of battles.");
+static const u8 sText_Desc_FastSlideOn[]  = _("Skip the slide animation at the\nbeginning of battles.");
 
 static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
 {
@@ -270,6 +276,7 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_RANDOMIZER_E]   = sText_RandomizerE,
     [MENUITEM_DIF_RANDOMIZER_T]   = sText_RandomizerT,
     [MENUITEM_DIF_AUTOFISHING]    = sText_AutoFishing,
+    [MENUITEM_DIF_FASTSLIDE]      = sText_FastSlide,
     [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("WISH MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
 };
@@ -312,6 +319,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_RANDOMIZER_E:     return TRUE;
         case MENUITEM_DIF_RANDOMIZER_T:     return TRUE;
         case MENUITEM_DIF_AUTOFISHING:      return TRUE;
+        case MENUITEM_DIF_FASTSLIDE:        return TRUE;
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
         case MENUITEM_DIF_COUNT:            return TRUE;
@@ -387,6 +395,7 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_RANDOMIZER_E] = {sText_Desc_RandomizerEOff,      sText_Desc_RandomizerEOn,  sText_Empty},
     [MENUITEM_DIF_RANDOMIZER_T] = {sText_Desc_RandomizerTOff,      sText_Desc_RandomizerTOn,  sText_Empty},
     [MENUITEM_DIF_AUTOFISHING]  = {sText_Desc_AutoFishingOff,      sText_Desc_AutoFishingOn,  sText_Empty},
+    [MENUITEM_DIF_FASTSLIDE]    = {sText_Desc_FastSlideOff,        sText_Desc_FastSlideOn,    sText_Empty},
     [MENUITEM_DIF_DEBUGMENU]    = {
         COMPOUND_STRING("Disables the debug menu completely."),
         COMPOUND_STRING("Enables the wish menu (debug menu)."),
@@ -419,6 +428,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_RANDOMIZER_E] = sText_Empty,
     [MENUITEM_DIF_RANDOMIZER_T] = sText_Empty,
     [MENUITEM_DIF_AUTOFISHING]  = sText_Empty,
+    [MENUITEM_DIF_FASTSLIDE]    = sText_Empty,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
 };
@@ -495,6 +505,10 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_AUTOFISHING))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_AUTOFISHING];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_AUTOFISHING][sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]];
+        case MENUITEM_DIF_FASTSLIDE:
+            if (!CheckConditions(MENUITEM_DIF_FASTSLIDE))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_FASTSLIDE];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_FASTSLIDE][sOptions->sel_difficulty[MENUITEM_DIF_FASTSLIDE]];
         case MENUITEM_DIF_DEBUGMENU:
             if (!CheckConditions(MENUITEM_DIF_DEBUGMENU))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_DEBUGMENU];
@@ -732,6 +746,7 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]    = FlagGet(FLAG_AUTO_FISHING);
+    sOptions->sel_difficulty[MENUITEM_DIF_FASTSLIDE] = FlagGet(FLAG_FAST_INTRO_NO_SLIDE);
     sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
 
     // NOVO: Usar a página inicial configurada
@@ -942,7 +957,10 @@ static void Task_OptionMenuSave(u8 taskId)
         FlagClear(FLAG_AUTO_FISHING);
 
     gSaveBlock2Ptr->optionsDebugMenu        = sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU];
-
+    if (sOptions->sel_difficulty[MENUITEM_DIF_FASTSLIDE])
+        FlagSet(FLAG_FAST_INTRO_NO_SLIDE);
+    else
+        FlagClear(FLAG_FAST_INTRO_NO_SLIDE);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
 }

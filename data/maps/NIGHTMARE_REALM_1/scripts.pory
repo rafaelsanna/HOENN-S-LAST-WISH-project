@@ -98,6 +98,7 @@ NightmareRealm1_Arrival::
     delay 20
 
     @ --- PHASE 5: BATTLE — double wild, no escape / catch / bag --------------
+    setflag FLAG_FAST_INTRO_NO_SLIDE
     setwildbattle SPECIES_DUCKLETT, 45, ITEM_NONE, SPECIES_ESCAVALIER, 45, ITEM_NONE
     dowildbattle
     waitstate
@@ -108,6 +109,7 @@ NightmareRealm1_Arrival::
     clearflag FLAG_UNUSED_0x1AB
     clearflag FLAG_UNUSED_0x27D
     clearflag FLAG_UNUSED_0x27C
+    clearflag FLAG_FAST_INTRO_NO_SLIDE
     releaseall
     end
 

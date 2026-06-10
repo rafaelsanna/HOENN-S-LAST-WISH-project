@@ -31,6 +31,7 @@
 #include "constants/songs.h"
 #include "pokemon_animation.h"
 #include "overworld.h"
+#include "event_data.h"
 
 static EWRAM_DATA u8 sLinkSendTaskId = 0;
 static EWRAM_DATA u8 sLinkReceiveTaskId = 0;
@@ -2347,7 +2348,7 @@ void BtlController_HandleDrawTrainerPic(u32 battler, u32 trainerPicId, bool32 is
         gSprites[gBattleStruct->trainerSlideSpriteIds[battler]].x2 = DISPLAY_WIDTH;
         gSprites[gBattleStruct->trainerSlideSpriteIds[battler]].sSpeedX = -2;
     }
-    if (B_FAST_INTRO_NO_SLIDE || gTestRunnerHeadless)
+    if (FlagGet(FLAG_FAST_INTRO_NO_SLIDE) || gTestRunnerHeadless)
         gSprites[gBattleStruct->trainerSlideSpriteIds[battler]].callback = SpriteCB_TrainerSpawn;
     else
         gSprites[gBattleStruct->trainerSlideSpriteIds[battler]].callback = SpriteCB_TrainerSlideIn;
