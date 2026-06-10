@@ -30,6 +30,10 @@ const u32 gBattleEnvironmentTiles_Cave[] = INCBIN_U32("graphics/battle_environme
 const u16 gBattleEnvironmentPalette_Cave[] = INCBIN_U16("graphics/battle_environment/cave/palette.gbapal");
 const u32 gBattleEnvironmentTilemap_Cave[] = INCBIN_U32("graphics/battle_environment/cave/map.bin.smolTM");
 
+const u32 gBattleEnvironmentTiles_DistortionWorld[] = INCBIN_U32("graphics/battle_environment/distortion_world/tiles.4bpp.fastSmol");
+const u16 gBattleEnvironmentPalette_DistortionWorld[] = INCBIN_U16("graphics/battle_environment/distortion_world/palette.gbapal");
+const u32 gBattleEnvironmentTilemap_DistortionWorld[] = INCBIN_U32("graphics/battle_environment/distortion_world/map.bin.smolTM");
+
 const u16 gBattleEnvironmentPalette_Plain[] = INCBIN_U16("graphics/battle_environment/plain/palette.gbapal");
 
 const u32 gBattleEnvironmentTiles_Building[] = INCBIN_U32("graphics/battle_environment/building/tiles.4bpp.fastSmol");
@@ -404,6 +408,7 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .naturePower = MOVE_TRI_ATTACK,
         .secretPowerEffect = MOVE_EFFECT_PARALYSIS,
         .camouflageType = TYPE_NORMAL,
+        .background = ENVIRONMENT_BACKGROUND(DistortionWorld),
     },
 
     [BATTLE_ENVIRONMENT_SPACE] =
@@ -432,5 +437,6 @@ static const struct {
     {MAP_BATTLE_SCENE_PHOEBE,   BATTLE_ENVIRONMENT_PHOEBE},
     {MAP_BATTLE_SCENE_GLACIA,   BATTLE_ENVIRONMENT_GLACIA},
     {MAP_BATTLE_SCENE_DRAKE,    BATTLE_ENVIRONMENT_DRAKE},
-    {MAP_BATTLE_SCENE_FRONTIER, BATTLE_ENVIRONMENT_FRONTIER}
+    {MAP_BATTLE_SCENE_FRONTIER,         BATTLE_ENVIRONMENT_FRONTIER},
+    {MAP_BATTLE_SCENE_DISTORTION_WORLD, BATTLE_ENVIRONMENT_DISTORTION_WORLD}
 };

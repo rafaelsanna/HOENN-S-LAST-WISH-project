@@ -993,7 +993,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "MauvilleCity_GameCorner_EventScript_VendingMachine"
+      "script": "MauvilleCity_GameCorner_EventScript_DebugPachinko"
     },
     {
       "type": "sign",
@@ -1001,7 +1001,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "MauvilleCity_GameCorner_EventScript_DrinkVendingMachine"
+      "script": "MauvilleCity_GameCorner_EventScript_DebugPachinko"
     }
   ]
 }
