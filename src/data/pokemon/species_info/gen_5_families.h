@@ -7419,43 +7419,45 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
 #endif //P_FAMILY_SOLOSIS
 
 #if P_FAMILY_DUCKLETT
-    [SPECIES_DUCKLETT] =
+    [SPECIES_DUCKLETT] = ///// SHADOW JIRACHI
     {
-        .baseHP        = 62,
-        .baseAttack    = 44,
-        .baseDefense   = 50,
-        .baseSpeed     = 55,
-        .baseSpAttack  = 44,
-        .baseSpDefense = 50,
-        .types = MON_TYPES(TYPE_WATER, TYPE_FLYING),
-        .catchRate = 190,
-        .expYield = 61,
-        .evYield_HP = 1,
-        .genderRatio = PERCENT_FEMALE(50),
+        .baseHP        = 110,
+        .baseAttack    = 110,
+        .baseDefense   = 110,
+        .baseSpeed     = 110,
+        .baseSpAttack  = 110,
+        .baseSpDefense = 110,
+        .types = MON_TYPES(TYPE_STEEL, TYPE_GHOST),
+        .catchRate = 1,
+        .expYield = 500,
+        .evYield_HP = 3,
+        .itemCommon = ITEM_STAR_PIECE,
+        .itemRare = ITEM_STAR_PIECE,
+        .genderRatio = MON_GENDERLESS,
         .eggCycles = 20,
         .friendship = STANDARD_FRIENDSHIP,
-        .growthRate = GROWTH_MEDIUM_FAST,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_FLYING),
-        .abilities = { ABILITY_KEEN_EYE, ABILITY_BIG_PECKS, ABILITY_HYDRATION },
-        .bodyColor = BODY_COLOR_BLUE,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_LEVITATE, ABILITY_NONE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_GRAY,
         .speciesName = _("Jirachi"),
         .cryId = CRY_JIRACHI,
         .natDexNum = NATIONAL_DEX_DUCKLETT,
-        .categoryName = _("Water Bird"),
-        .height = 5,
-        .weight = 55,
+        .categoryName = _("Shadow"),
+        .height = 3,
+        .weight = 11,
         .description = COMPOUND_STRING(
-            "These bird Pokémon are excellent divers.\n"
-            "They are better at swimming than flying,\n"
-            "and they happily eat their favorite food,\n"
-            "peat moss, as they dive underwater."),
-        .pokemonScale = 432,
-        .pokemonOffset = 14,
+            "Jirachi is said to make wishes come true.\n"
+            "While it sleeps, a tough crystalline shell\n"
+            "envelops the body to protect it from\n"
+            "enemies."),
+        .pokemonScale = 608,
+        .pokemonOffset = -8,
         .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Ducklett,
         .frontPicSize = MON_COORDS_SIZE(32, 40),
-        .frontPicYOffset = 12,
+        .frontPicYOffset = 0,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 15),
@@ -7465,7 +7467,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 50),
         ),
-        .frontAnimId = ANIM_V_STRETCH,
+        .frontAnimId = ANIM_GLOW_BLACK,
         .backPic = gMonBackPic_Ducklett,
         .backPicSize = MON_COORDS_SIZE(48, 48),
         .backPicYOffset = 10,
@@ -7490,7 +7492,6 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .levelUpLearnset = sDucklettLevelUpLearnset,
         .teachableLearnset = sDucklettTeachableLearnset,
         .eggMoveLearnset = sDucklettEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_SWANNA}),
     },
 
     [SPECIES_SWANNA] =
@@ -8458,19 +8459,18 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .levelUpLearnset = sKarrablastLevelUpLearnset,
         .teachableLearnset = sKarrablastTeachableLearnset,
         .eggMoveLearnset = sKarrablastEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_TRADE, 0, SPECIES_ESCAVALIER, CONDITIONS({IF_TRADE_PARTNER_SPECIES, SPECIES_SHELMET})}),
+        .evolutions = EVOLUTION({EVO_TRADE, 0, SPECIES_SHELMET, CONDITIONS({IF_TRADE_PARTNER_SPECIES, SPECIES_SHELMET})}),
     },
 
     [SPECIES_ESCAVALIER] =
     {
-        .baseHP        = 70,
-        .baseAttack    = 135,
-        .baseDefense   = 105,
-        .baseSpeed     = 20,
-        .baseSpAttack  = 60,
-        .baseSpDefense = 105,
-        .types = MON_TYPES(TYPE_BUG, TYPE_STEEL),
-        .catchRate = 75,
+        .baseHP        = 110,
+        .baseAttack    = 110,
+        .baseDefense   = 110,
+        .baseSpeed     = 110,
+        .baseSpAttack  = 110,
+        .baseSpDefense = 110,
+        .types = MON_TYPES(TYPE_DARK, TYPE_FAIRY),
         .expYield = 173,
         .evYield_Attack = 2,
         .genderRatio = PERCENT_FEMALE(50),

@@ -1,94 +1,247 @@
 raw `
+@ =============================================================================
+@ NIGHTMARE_REALM_1 — map scripts
+@ =============================================================================
+
 NIGHTMARE_REALM_1_MapScripts::
     map_script MAP_SCRIPT_ON_TRANSITION, NightmareRealm1_OnTransition
     .byte 0
 
+@ On every transition into this map: set the battle restriction flags.
+@ FLAG_UNUSED_0x1AB = B_FLAG_NO_RUNNING  (can't escape)
+@ FLAG_UNUSED_0x27D = B_FLAG_NO_BAG_USE  (no items)
+@ FLAG_UNUSED_0x27C = no-catch flag (assigned in battle.h)
 NightmareRealm1_OnTransition::
     setflag FLAG_UNUSED_0x1AB
     setflag FLAG_UNUSED_0x27D
     setflag FLAG_UNUSED_0x27C
     end
 
+@ =============================================================================
+@ NightmareRealm1_Arrival
+@ Triggered when the player steps onto y=9 (one tile north of warp landing).
+@ VAR_NIGHTMARE_STATE must be 0 (fires only once).
+@
+@ Scene choreography:
+@   Phase 1 — CHASE: shadows (Ducklett, Escavalier) already pursue Jirachi
+@             and Celebi. We animate them converging toward the player's column.
+@             Jirachi flees RIGHT from x=3 toward center; Ducklett chases it.
+@             Celebi flees LEFT  from x=17 toward center; Escavalier chases it.
+@   Phase 2 — REFUGE: Jirachi and Celebi spot the player and take cover
+@             behind them (move to x=10, y=11 — one tile below player).
+@   Phase 3 — CONFRONTATION: shadows close in on player position.
+@   Phase 4 — DIALOGUE: Jirachi and Celebi speak. Shadows are described as
+@             dark echoes born from the time warp — not named directly.
+@   Phase 5 — BATTLE: forced double wild battle, no escape/catch/bag.
+@ =============================================================================
 NightmareRealm1_Arrival::
     lockall
 
-    @ Jirachi's distress call - telepathic voice from within the rift
+    @ --- PHASE 1: CHASE — run simultaneously, wait for both to finish --------
+    @ Jirachi flees right from x=3 toward x=9 (6 tiles)
+    applymovement LOCALID_NIGHTMARE_JIRACHI, NightmareRealm1_Movement_JirachiFlee
+    @ Ducklett chases right from x=2 toward x=10 (8 tiles), slightly farther
+    applymovement LOCALID_NIGHTMARE_DUCKLETT, NightmareRealm1_Movement_DucklettChase
+    @ Celebi flees left from x=17 toward x=11 (6 tiles)
+    applymovement LOCALID_NIGHTMARE_CELEBI, NightmareRealm1_Movement_CelebiFlee
+    @ Escavalier chases left from x=18 toward x=10 (8 tiles)
+    applymovement LOCALID_NIGHTMARE_ESCAVALIER, NightmareRealm1_Movement_EscavalierChase
+    waitmovement 0
+    delay 15
+
+    @ --- PHASE 2: REFUGE — legendaries notice player, duck behind them -------
+    @ Player is at approx (10,9). Legendaries move to (10,11) — behind player.
+    applymovement LOCALID_NIGHTMARE_JIRACHI, NightmareRealm1_Movement_JirachiToPlayer
+    applymovement LOCALID_NIGHTMARE_CELEBI, NightmareRealm1_Movement_CelebiToPlayer
+    waitmovement 0
+    delay 10
+
+    @ Face legendaries toward player (up = toward camera / player back)
+    applymovement LOCALID_NIGHTMARE_JIRACHI, Common_Movement_WalkInPlaceFasterUp
+    applymovement LOCALID_NIGHTMARE_CELEBI, Common_Movement_WalkInPlaceFasterUp
+    waitmovement 0
+    delay 20
+
+    @ --- PHASE 3: CONFRONTATION — shadows close in on player -----------------
+    @ Ducklett is at ~x=10, moves down to y=9 (player row) from y=8
+    applymovement LOCALID_NIGHTMARE_DUCKLETT, NightmareRealm1_Movement_ShadowCloseIn
+    @ Escavalier is at ~x=10, moves down to y=8 then faces player
+    applymovement LOCALID_NIGHTMARE_ESCAVALIER, NightmareRealm1_Movement_ShadowCloseIn
+    waitmovement 0
+    delay 20
+
+    @ Shadows face down toward player
+    applymovement LOCALID_NIGHTMARE_DUCKLETT, Common_Movement_WalkInPlaceFasterDown
+    applymovement LOCALID_NIGHTMARE_ESCAVALIER, Common_Movement_WalkInPlaceFasterDown
+    waitmovement 0
+    delay 15
+
+    @ Player looks up at the shadows
+    applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+    waitmovement 0
+    delay 20
+
+    @ --- PHASE 4: DIALOGUE ---------------------------------------------------
+    @ Jirachi's telepathic plea — speaks of the rift and the shadows
     msgbox NightmareRealm1_Text_JirachiPleas, MSGBOX_DEFAULT
     closemessage
-    delay 20
+    delay 15
 
-    @ Celebi's voice follows
+    @ Celebi continues — explains the origin of the shadow forms
     msgbox NightmareRealm1_Text_CelebiPleas, MSGBOX_DEFAULT
     closemessage
+    delay 15
+
+    @ Narrator beat — the shadows surge forward
+    msgbox NightmareRealm1_Text_ShadowsSurge, MSGBOX_DEFAULT
+    closemessage
     delay 20
 
-    @ Environmental beat - shadows take shape
-    msgbox NightmareRealm1_Text_ShadowsRise, MSGBOX_DEFAULT
-    closemessage
-    delay 30
-
-    @ Forced double wild battle against Ducklett + Escavalier
+    @ --- PHASE 5: BATTLE — double wild, no escape / catch / bag --------------
+    @ Flags set in NightmareRealm1_OnTransition ensure restrictions apply.
+    @ setwildbattle sets both wild slots for a scripted double encounter.
     setwildbattle SPECIES_DUCKLETT, 45, ITEM_NONE, SPECIES_ESCAVALIER, 45, ITEM_NONE
-    setvar VAR_0x8004, 1
-    setvar VAR_0x8005, 22
     dowildbattle
+    waitstate
 
+    @ Branch on battle result (VAR_RESULT 1 = player won)
     compare VAR_RESULT, 1
     call_if_eq VAR_RESULT, 1, NightmareRealm1_OnVictory
 
+    @ Player lost — clear flags, release, let them retry on next step
     clearflag FLAG_UNUSED_0x1AB
     clearflag FLAG_UNUSED_0x27D
     clearflag FLAG_UNUSED_0x27C
-    setvar VAR_0x8004, 0
     releaseall
     end
 
+@ =============================================================================
+@ NightmareRealm1_OnVictory
+@ =============================================================================
 NightmareRealm1_OnVictory::
     setvar VAR_NIGHTMARE_STATE, 1
+
+    @ Clear battle restriction flags now that the encounter is resolved
     clearflag FLAG_UNUSED_0x1AB
     clearflag FLAG_UNUSED_0x27D
     clearflag FLAG_UNUSED_0x27C
-    setvar VAR_0x8004, 0
+
+    @ Victory dialogue — Jirachi and Celebi acknowledge the player
     msgbox NightmareRealm1_Text_VictoryLight, MSGBOX_DEFAULT
     closemessage
     delay 20
+
     releaseall
     end
 
-    .align 2
+@ =============================================================================
+@ Movement scripts
+@ =============================================================================
+
+@ Jirachi flees right 6 tiles from x=3 to ~x=9, staying at y=8
+NightmareRealm1_Movement_JirachiFlee:
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    step_end
+
+@ Ducklett chases right 8 tiles from x=2 to ~x=10
+NightmareRealm1_Movement_DucklettChase:
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    step_end
+
+@ Celebi flees left 6 tiles from x=17 to ~x=11, staying at y=7
+NightmareRealm1_Movement_CelebiFlee:
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    step_end
+
+@ Escavalier chases left 8 tiles from x=18 to ~x=10
+NightmareRealm1_Movement_EscavalierChase:
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    walk_left
+    step_end
+
+@ Jirachi moves from ~(9,8) to behind player at (10,11): right 1, down 3
+NightmareRealm1_Movement_JirachiToPlayer:
+    walk_right
+    walk_down
+    walk_down
+    walk_down
+    step_end
+
+@ Celebi moves from ~(11,7) to behind player at (10,11): left 1, down 4
+NightmareRealm1_Movement_CelebiToPlayer:
+    walk_left
+    walk_down
+    walk_down
+    walk_down
+    walk_down
+    step_end
+
+@ Shadows were at ~x=10,y=8 after chase; move down 1 to face player at y=9
+NightmareRealm1_Movement_ShadowCloseIn:
+    walk_down
+    step_end
+
+@ =============================================================================
+@ Dialogue strings — shadows are NEVER called by species name.
+@ They are described as dark echoes of the corruption born from the time warp.
+@ =============================================================================
+
 NightmareRealm1_Text_JirachiPleas:
-    .string "...Can you hear us...?\p"
-    .string "We are JIRACHI and CELEBI...\p"
-    .string "Something terrible has reached\n"
-    .string "into our realm...\p"
-    .string "The distortion that took the ORBS...\n"
-    .string "it has torn open a rift.\p"
-    .string "Shadows now wear our forms...\n"
-    .string "Chosen one... please... fight them.$"
+    .string "...You can hear us…\p"
+    .string "We are JIRACHI and CELEBI.\p"
+    .string "The time warp that brought you\n"
+    .string "here… it fractured something.\p"
+    .string "With every year of ruin HOENN\n"
+    .string "suffered in this broken future…\p"
+    .string "the darkness gathered.\n"
+    .string "And it took our shapes.$"
 
 NightmareRealm1_Text_CelebiPleas:
-    .string "We cannot move on our own...\n"
-    .string "The rift holds us here.\p"
-    .string "Only if you defeat those shadows\n"
-    .string "will the boundary seal again.\p"
-    .string "They are born from the same warp\n"
-    .string "that brought you here...\p"
-    .string "Dark echoes of what we once were.\n"
-    .string "Do not let them break free.$"
+    .string "They are not us.\p"
+    .string "They are distillations of every\n"
+    .string "terrible thing that happened\l"
+    .string "since the timeline broke.\p"
+    .string "Every loss. Every scar.\n"
+    .string "Focused into a single purpose:\p"
+    .string "to stop the future\n"
+    .string "from ever being repaired.$"
 
-NightmareRealm1_Text_ShadowsRise:
-    .string "The air thickens.\n"
-    .string "Two shapes tear from the darkness...\p"
-    .string "They look like DUCKLETT and\n"
-    .string "ESCAVALIER, yet their eyes\l"
-    .string "hold nothing but void.\p"
-    .string "They will not let you pass.$"
+NightmareRealm1_Text_ShadowsSurge:
+    .string "The two dark forms lock onto you.\p"
+    .string "They do not speak.\n"
+    .string "They do not need to.\p"
+    .string "Whatever they are, they will not\n"
+    .string "let you take another step forward.$"
 
 NightmareRealm1_Text_VictoryLight:
-    .string "The shadows dissolve into motes\n"
-    .string "of cold light...\p"
-    .string "A voice - both voices - whispers\n"
-    .string "at the edge of hearing:\p"
-    .string "Thank you, chosen one.\n"
-    .string " The rift is sealing...$"
+    .string "The dark forms shatter like glass\n"
+    .string "in cold wind…\p"
+    .string "Both voices speak at once:\p"
+    .string "The rift is sealing.\n"
+    .string "You have done it, chosen one.\p"
+    .string "Go. Fix what was broken.\n"
+    .string "We will hold the rest together.$"
 `
