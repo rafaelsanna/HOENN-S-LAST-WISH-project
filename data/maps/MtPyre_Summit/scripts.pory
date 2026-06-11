@@ -1,16 +1,12 @@
 raw `
 MtPyre_Summit_EventScript_Relic::
 	lock
-	faceplayer
 	msgbox MtPyre_Summit_Text_RelicRetry, MSGBOX_DEFAULT
 	closemessage
 	delay 15
 	clearflag FLAG_LOST_NIGHTMARE_BATTLE
 	special HealPlayerParty
 	lockall
-	applymovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerWalkForward
-	waitmovement 0
-	delay 10
 	special SpawnCameraObject
 	applymovement OBJ_EVENT_ID_CAMERA, MtPyre_Summit_Movement_CameraPanUp
 	waitmovement 0

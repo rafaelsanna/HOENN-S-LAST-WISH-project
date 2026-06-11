@@ -1,6 +1,6 @@
 raw `
 @ =============================================================================
-@ NIGHTMARE_REALM_1 — map scripts
+@ NIGHTMARE_REALM_1 - map scripts
 @ =============================================================================
 
 NIGHTMARE_REALM_1_MapScripts::
@@ -90,11 +90,10 @@ NightmareRealm1_Arrival::
     @ --- PHASE 5: BATTLE — double wild --------------------------------------
     setwildbattle SPECIES_DUCKLETT, 45, ITEM_NONE, SPECIES_ESCAVALIER, 45, ITEM_NONE
     dowildbattle
-    waitstate
 
     @ VAR_RESULT: 1 = player won, 0 = player lost (whiteout already happened)
     goto_if_eq VAR_RESULT, 1, NightmareRealm1_OnVictory
-
+    releaseall
     @ ---- DEFEAT PATH -------------------------------------------------------
     @ Whiteout happened — player is at Pokémon Center, map is reset.
     @ Set FLAG_LOST_NIGHTMARE_BATTLE so the old lady on the Summit detects
@@ -116,24 +115,46 @@ NightmareRealm1_OnVictory::
     clearflag B_SMART_WILD_AI_FLAG
     clearflag B_FAST_INTRO_NO_SLIDE
 
+    @ Fade to black, play teleport sound, remove the shadow NPCs.
+    fadescreen FADE_TO_BLACK
     removeobject 2
     removeobject 4
+    fadescreen FADE_FROM_BLACK
 
-    msgbox NightmareRealm1_Text_VictoryLight, MSGBOX_DEFAULT
-    closemessage
-    delay 20
+    @ Player turns down to face Jirachi and Celebi behind them.
+    applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+    waitmovement 0
+    delay 15
 
-    msgbox NightmareRealm1_Text_JirachiSendBack, MSGBOX_DEFAULT
+    @ Jirachi speaks first.
+    msgbox NightmareRealm1_Text_VictoryJirachi, MSGBOX_DEFAULT
     closemessage
     delay 10
 
-    special HealPlayerParty
+    @ Celebi speaks second.
+    msgbox NightmareRealm1_Text_VictoryCelebi, MSGBOX_DEFAULT
+    closemessage
+    delay 20
 
-    fadescreenswapbuffers FADE_TO_BLACK
-    warp MAP_MT_PYRE_SUMMIT, 14, 10
-    waitstate
-    fadescreenswapbuffers FADE_FROM_BLACK
+    @ Release — player is free to explore and talk to the legendaries.
     releaseall
+    end
+
+@ =============================================================================
+@ Post-victory NPC scripts (Jirachi and Celebi stay on map, can be talked to)
+@ =============================================================================
+NightmareRealm1_EventScript_Jirachi::
+    lock
+    faceplayer
+    msgbox NightmareRealm1_Text_JirachiPostVictory, MSGBOX_DEFAULT
+    release
+    end
+
+NightmareRealm1_EventScript_Celebi::
+    lock
+    faceplayer
+    msgbox NightmareRealm1_Text_CelebiPostVictory, MSGBOX_DEFAULT
+    release
     end
 
 @ =============================================================================
@@ -267,7 +288,7 @@ NightmareRealm1_Movement_EscavalierCloseIn:
 @ =============================================================================
 
 NightmareRealm1_Text_JirachiPleas:
-    .string "…You can hear us…\p"
+    .string "You can hear us...\p"
     .string "We are JIRACHI and CELEBI.\p"
     .string "The time warp that brought you\n"
     .string "here… it fractured something.\p"
@@ -293,19 +314,33 @@ NightmareRealm1_Text_ShadowsSurge:
     .string "Whatever they are, they will not\n"
     .string "let you take another step forward.$"
 
-NightmareRealm1_Text_VictoryLight:
-    .string "The dark forms shatter like glass\n"
-    .string "in cold wind…\p"
-    .string "Both voices speak at once:\p"
-    .string "The rift is sealing.\n"
-    .string "You have done it, chosen one.\p"
-    .string "Go. Fix what was broken.\n"
-    .string "We will hold the rest together.$"
+NightmareRealm1_Text_VictoryJirachi:
+    .string "JIRACHI: They are gone.\p"
+    .string "The darkness that wore our faces…\n"
+    .string "it has dissolved.\p"
+    .string "You did not run.\n"
+    .string "That is why you could end this.$"
 
-NightmareRealm1_Text_JirachiSendBack:
-    .string "JIRACHI: Close your eyes.\p"
-    .string "CELEBI: We will carry you back\n"
-    .string "to where your path continues.\p"
-    .string "The boundary is mending.\n"
-    .string "Do not look back.$"
+NightmareRealm1_Text_VictoryCelebi:
+    .string "CELEBI: The rift is still open.\p"
+    .string "But the shadows that fed on it\n"
+    .string "are no more.\p"
+    .string "You have bought HOENN time,\n"
+    .string "chosen one. Use it well.$"
+
+NightmareRealm1_Text_JirachiPostVictory:
+    .string "JIRACHI: We cannot leave\n"
+    .string "this place yet.\p"
+    .string "The boundary needs anchoring\n"
+    .string "from this side.\p"
+    .string "But you you can still go back.\n"
+    .string "The path forward is yours.$"
+
+NightmareRealm1_Text_CelebiPostVictory:
+    .string "CELEBI: Every moment you spend\n"
+    .string "here, the timeline frays a little\l"
+    .string "more.\p"
+    .string "Go back through the warp.\n"
+    .string "Finish what you started.\p"
+    .string "We will be watching.$"
 `
