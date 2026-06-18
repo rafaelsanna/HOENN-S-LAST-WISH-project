@@ -14475,6 +14475,108 @@ F_TRAINER_FEMALE |
             },
         },
     },
+    [DIFFICULTY_NORMAL][TRAINER_BRAWLY_CASUAL] =
+    {
+#line 5495
+        .trainerName = _("RENTON"),
+#line 5496
+        .trainerClass = TRAINER_CLASS_LEADER,
+#line 5497
+        .trainerPic = TRAINER_PIC_LEADER_BRAWLY,
+        .encounterMusic_gender =
+#line 5499
+            TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 5500
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 5501
+        .aiFlags = AI_FLAG_BASIC_TRAINER,
+#line 0
+        .trainerBackPic = TRAINER_PIC_LEADER_BRAWLY,
+        .partySize = 4,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 5503
+            .species = SPECIES_MANKEY,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 5505
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 5504
+            .lvl = 22,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 5505
+                MOVE_LOW_KICK,
+                MOVE_FURY_SWIPES,
+                MOVE_FOCUS_ENERGY,
+                MOVE_LEER,
+            },
+            },
+            {
+#line 5510
+            .species = SPECIES_BRELOOM,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 5514
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 5511
+            .ability = ABILITY_TECHNICIAN,
+#line 5513
+            .lvl = 24,
+            .nature = NATURE_HARDY,
+#line 5512
+            .isShiny = TRUE,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 5514
+                MOVE_HEADBUTT,
+                MOVE_COUNTER,
+                MOVE_MEGA_DRAIN,
+                MOVE_LEECH_SEED,
+            },
+            },
+            {
+#line 5519
+            .species = SPECIES_FURRET,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 5519
+            .heldItem = ITEM_EXPERT_BELT,
+#line 5522
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 5520
+            .ability = ABILITY_ADAPTABILITY,
+#line 5521
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 5522
+                MOVE_ROCK_SMASH,
+                MOVE_DIG,
+                MOVE_ROLLOUT,
+                MOVE_BULK_UP,
+            },
+            },
+            {
+#line 5527
+            .species = SPECIES_HERACROSS,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 5529
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 5528
+            .lvl = 23,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 5529
+                MOVE_ARM_THRUST,
+                MOVE_AERIAL_ACE,
+                MOVE_HORN_LEECH,
+                MOVE_ENDURE,
+            },
+            },
+        },
+    },
 #line 5534
     [DIFFICULTY_NORMAL][TRAINER_BRAWLY] =
     {

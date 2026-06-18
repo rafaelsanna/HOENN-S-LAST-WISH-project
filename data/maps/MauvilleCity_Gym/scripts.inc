@@ -165,9 +165,17 @@ MauvilleCity_Gym_EventScript_Wattson::
 # 83 "data/maps/MauvilleCity_Gym/scripts.pory"
 	@ Normal Mode
 # 84 "data/maps/MauvilleCity_Gym/scripts.pory"
-	trainerbattle_single TRAINER_DEN_CASUAL, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
+createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
 # 85 "data/maps/MauvilleCity_Gym/scripts.pory"
-	goto MauvilleCity_Gym_AfterBattle
+msgbox MauvilleCity_Gym_Text_WattsonIntro, MSGBOX_DEFAULT
+# 86 "data/maps/MauvilleCity_Gym/scripts.pory"
+removefieldmugshot
+# 87 "data/maps/MauvilleCity_Gym/scripts.pory"
+trainerbattle_no_intro TRAINER_DEN_CASUAL, MauvilleCity_Gym_Text_WattsonDefeat
+# 88 "data/maps/MauvilleCity_Gym/scripts.pory"
+call MauvilleCity_Gym_EventScript_WattsonDefeated
+# 89 "data/maps/MauvilleCity_Gym/scripts.pory"
+goto MauvilleCity_Gym_AfterBattle
 # 86 "data/maps/MauvilleCity_Gym/scripts.pory"
 
 # 87 "data/maps/MauvilleCity_Gym/scripts.pory"

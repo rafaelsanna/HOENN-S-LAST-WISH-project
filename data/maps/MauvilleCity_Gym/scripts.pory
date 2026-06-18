@@ -81,7 +81,11 @@ MauvilleCity_Gym_EventScript_Wattson::
 	goto_if_eq VAR_RESULT, 1, MauvilleCity_Gym_WattsonHard
 
 	@ Normal Mode
-	trainerbattle_single TRAINER_DEN_CASUAL, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
+	createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
+	msgbox MauvilleCity_Gym_Text_WattsonIntro, MSGBOX_DEFAULT
+	removefieldmugshot
+	trainerbattle_no_intro TRAINER_DEN_CASUAL, MauvilleCity_Gym_Text_WattsonDefeat
+	call MauvilleCity_Gym_EventScript_WattsonDefeated
 	goto MauvilleCity_Gym_AfterBattle
 
 MauvilleCity_Gym_WattsonHard::

@@ -922,6 +922,7 @@
 #define TRAINER_GRUNT_AQUA_SHIP             916
 #define TRAINER_ROB_WEATHER_INSTITUTE       917
 #define TRAINER_TROY                        918
+#define TRAINER_BRAWLY_CASUAL               919
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows

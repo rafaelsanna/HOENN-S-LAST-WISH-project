@@ -140,13 +140,12 @@ DewfordTown_Gym_EventScript_Brawly::
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, DewfordTown_Gym_BrawlyHard
 
-	@ Normal - TRAINER_BRAWLY_1
+	@ Normal - TRAINER_BRAWLY_CASUAL
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox DewfordTown_Gym_Text_BrawlyIntro, MSGBOX_DEFAULT
 	removefieldmugshot
-	trainerbattle_no_intro TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyDefeat
-	call DewfordTown_Gym_EventScript_BrawlyDefeated
-	goto DewfordTown_Gym_AfterBattle
+	trainerbattle_no_intro TRAINER_BRAWLY_CASUAL, DewfordTown_Gym_Text_BrawlyDefeat
+	goto DewfordTown_Gym_EventScript_BrawlyDefeated
 
 DewfordTown_Gym_BrawlyHard::
 	@ Hard - TRAINER_BRAWLY
@@ -154,18 +153,7 @@ DewfordTown_Gym_BrawlyHard::
 	msgbox DewfordTown_Gym_Text_BrawlyIntro, MSGBOX_DEFAULT
 	removefieldmugshot
 	trainerbattle_no_intro TRAINER_BRAWLY, DewfordTown_Gym_Text_BrawlyDefeat
-	call DewfordTown_Gym_EventScript_BrawlyDefeated
-	goto DewfordTown_Gym_AfterBattle
-
-DewfordTown_Gym_AfterBattle::
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
-	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
-	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
-	msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
-	removefieldmugshot
-	release
-	end
+	goto DewfordTown_Gym_EventScript_BrawlyDefeated
 
 DewfordTown_Gym_EventScript_BrawlyDefeated::
 	call DewfordTown_Gym_EventScript_AnimateFlashFullBrightness
@@ -181,23 +169,32 @@ DewfordTown_Gym_EventScript_BrawlyDefeated::
 	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
 	setvar VAR_0x8008, 2
 	call Common_EventScript_SetGymTrainers
-	call DewfordTown_Gym_EventScript_GiveBulkUp
-	closemessage
-	delay 30
-	waitfanfare
-	closemessage
-	delay 30
-	return
-
-
-DewfordTown_Gym_EventScript_GiveBulkUp::
+	@ Give TM inline — never go through AfterBattle on first victory
 	giveitem ITEM_TM_BULK_UP
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_BagIsFull
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox DewfordTown_Gym_Text_ExplainBulkUp, MSGBOX_DEFAULT
 	removefieldmugshot
 	setflag FLAG_RECEIVED_TM_BULK_UP
-	return
+	closemessage
+	delay 30
+	waitfanfare
+	closemessage
+	delay 30
+	release
+	end
+
+DewfordTown_Gym_AfterBattle::
+	@ Only reached when player talks to Renton after flag is already set
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+	goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
+	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
+	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
+	msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
 
 DewfordTown_Gym_EventScript_GiveBulkUp2:
 	giveitem ITEM_TM_BULK_UP
@@ -210,13 +207,11 @@ DewfordTown_Gym_EventScript_GiveBulkUp2:
 	end
 
 DewfordTown_Gym_EventScript_BrawlyRematch::
-	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
-	msgbox DewfordTown_Gym_Text_BrawlyPreRematch, MSGBOX_DEFAULT
-	removefieldmugshot
-	trainerbattle_no_intro TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyRematchDefeat
+	trainerbattle_rematch TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyPreRematch, DewfordTown_Gym_Text_BrawlyRematchDefeat
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox DewfordTown_Gym_Text_BrawlyPostRematch, MSGBOX_AUTOCLOSE
 	removefieldmugshot
+	release
 	end
 
 DewfordTown_Gym_EventScript_Takao::

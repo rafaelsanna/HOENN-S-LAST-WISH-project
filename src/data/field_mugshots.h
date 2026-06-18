@@ -43,6 +43,10 @@ static const u16 sFieldMugshotPal_CalendulaNormal[] = INCBIN_U16("graphics/field
 static const u32 sFieldMugshotGfx_LukaNormal[] = INCBIN_U32("graphics/field_mugshots/luka/normal.4bpp.lz");
 static const u16 sFieldMugshotPal_LukaNormal[] = INCBIN_U16("graphics/field_mugshots/luka/normal.gbapal");
 
+// Den
+static const u32 sFieldMugshotGfx_DenNormal[] = INCBIN_U32("graphics/field_mugshots/den/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_DenNormal[] = INCBIN_U16("graphics/field_mugshots/den/normal.gbapal");
+
 
 struct MugshotGfx
 {
@@ -92,6 +96,10 @@ static const struct MugshotGfx sFieldMugshots[MUGSHOT_COUNT][EMOTE_COUNT] =
     [MUGSHOT_LUKA] =
     {
         [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_LukaNormal, .pal = sFieldMugshotPal_LukaNormal },
+    },
+    [MUGSHOT_DEN] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_DenNormal, .pal = sFieldMugshotPal_DenNormal },
     },
 };
 

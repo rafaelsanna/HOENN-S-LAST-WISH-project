@@ -13,7 +13,9 @@
 #define MUGSHOT_CALENDULA 9    
 #define MUGSHOT_LUKA      10
 
-#define MUGSHOT_COUNT 11
+#define MUGSHOT_DEN      11
+
+#define MUGSHOT_COUNT 12
 
 #define EMOTE_NORMAL 0
 #define EMOTE_ALT    1
