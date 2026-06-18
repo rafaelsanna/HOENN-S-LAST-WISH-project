@@ -153,6 +153,7 @@ NightmareRealm1_EventScript_Jirachi::
 NightmareRealm1_EventScript_Celebi::
     lock
     faceplayer
+    special StartMegaRayVisionScene
     msgbox NightmareRealm1_Text_CelebiPostVictory, MSGBOX_DEFAULT
     release
     end

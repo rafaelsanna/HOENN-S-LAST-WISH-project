@@ -576,3 +576,4 @@ gSpecials::
     def_special GetNewDerby
     def_special Special_ViewVoltorbFlip
 	def_special StartTimeWarpScene
+	def_special StartMegaRayVisionScene

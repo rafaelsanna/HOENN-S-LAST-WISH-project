@@ -309,27 +309,27 @@ NightmareRealm1_EventScript_Celebi::
 # 155 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     faceplayer
 # 156 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    msgbox NightmareRealm1_Text_CelebiPostVictory, MSGBOX_DEFAULT
+    special StartMegaRayVisionScene
 # 157 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    release
+    msgbox NightmareRealm1_Text_CelebiPostVictory, MSGBOX_DEFAULT
 # 158 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    end
+    release
 # 159 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    end
 # 160 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ =============================================================================
-# 161 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Movement scripts
-# 162 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ =============================================================================
-# 163 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
 
+# 161 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+@ =============================================================================
+# 162 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+@ Movement scripts
+# 163 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+@ =============================================================================
 # 164 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Jirachi (3,8) → right 14 → (17,8)
+
 # 165 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_JirachiFlee:
+@ Jirachi (3,8) → right 14 → (17,8)
 # 166 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_right
+NightmareRealm1_Movement_JirachiFlee:
 # 167 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 168 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -357,15 +357,15 @@ NightmareRealm1_Movement_JirachiFlee:
 # 179 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 180 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
-# 181 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
-# 182 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Ducklett (2,8) → right 13 → (15,8). y=8 the whole way, never hits player at y=9.
-# 183 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_DucklettChase:
-# 184 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
+# 181 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    step_end
+# 182 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+
+# 183 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+@ Ducklett (2,8) → right 13 → (15,8). y=8 the whole way, never hits player at y=9.
+# 184 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+NightmareRealm1_Movement_DucklettChase:
 # 185 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 186 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -391,15 +391,15 @@ NightmareRealm1_Movement_DucklettChase:
 # 196 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 197 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
+    walk_right
 # 198 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    step_end
 # 199 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Celebi (17,7) → left 14 → (3,7)
+
 # 200 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_CelebiFlee:
+@ Celebi (17,7) → left 14 → (3,7)
 # 201 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_left
+NightmareRealm1_Movement_CelebiFlee:
 # 202 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 203 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -427,15 +427,15 @@ NightmareRealm1_Movement_CelebiFlee:
 # 214 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 215 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
-# 216 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
-# 217 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Escavalier (18,7) → left 13 → (5,7)
-# 218 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_EscavalierChase:
-# 219 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
+# 216 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    step_end
+# 217 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+
+# 218 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+@ Escavalier (18,7) → left 13 → (5,7)
+# 219 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+NightmareRealm1_Movement_EscavalierChase:
 # 220 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 221 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -461,15 +461,15 @@ NightmareRealm1_Movement_EscavalierChase:
 # 231 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 232 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
-# 233 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
-# 234 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Jirachi (17,8) → (9,11): left 8, down 3
-# 235 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_JirachiToPlayer:
-# 236 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
+# 233 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    step_end
+# 234 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+
+# 235 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+@ Jirachi (17,8) → (9,11): left 8, down 3
+# 236 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+NightmareRealm1_Movement_JirachiToPlayer:
 # 237 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 238 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -485,21 +485,21 @@ NightmareRealm1_Movement_JirachiToPlayer:
 # 243 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 244 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_down
+    walk_left
 # 245 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_down
 # 246 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_down
 # 247 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
+    walk_down
 # 248 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    step_end
 # 249 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Celebi (3,7) → (11,11): right 8, down 4
+
 # 250 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_CelebiToPlayer:
+@ Celebi (3,7) → (11,11): right 8, down 4
 # 251 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_right
+NightmareRealm1_Movement_CelebiToPlayer:
 # 252 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 253 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -515,7 +515,7 @@ NightmareRealm1_Movement_CelebiToPlayer:
 # 258 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 259 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_down
+    walk_right
 # 260 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_down
 # 261 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -523,15 +523,15 @@ NightmareRealm1_Movement_CelebiToPlayer:
 # 262 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_down
 # 263 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
+    walk_down
 # 264 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    step_end
 # 265 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Ducklett (15,8) → (9,8): left 6
+
 # 266 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_DucklettCloseIn:
+@ Ducklett (15,8) → (9,8): left 6
 # 267 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_left
+NightmareRealm1_Movement_DucklettCloseIn:
 # 268 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 269 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -543,15 +543,15 @@ NightmareRealm1_Movement_DucklettCloseIn:
 # 272 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_left
 # 273 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
+    walk_left
 # 274 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    step_end
 # 275 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Escavalier (5,7) → (11,8): right 6, down 1
+
 # 276 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Movement_EscavalierCloseIn:
+@ Escavalier (5,7) → (11,8): right 6, down 1
 # 277 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_right
+NightmareRealm1_Movement_EscavalierCloseIn:
 # 278 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 279 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
@@ -563,128 +563,130 @@ NightmareRealm1_Movement_EscavalierCloseIn:
 # 282 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     walk_right
 # 283 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    walk_down
+    walk_right
 # 284 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    step_end
+    walk_down
 # 285 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    step_end
 # 286 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ =============================================================================
+
 # 287 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-@ Dialogue
-# 288 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
 @ =============================================================================
+# 288 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+@ Dialogue
 # 289 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+@ =============================================================================
 # 290 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Text_JirachiPleas:
+
 # 291 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "You can hear us...\p"
+NightmareRealm1_Text_JirachiPleas:
 # 292 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "We are JIRACHI and CELEBI.\p"
+    .string "You can hear us...\p"
 # 293 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "The time warp that brought you\n"
+    .string "We are JIRACHI and CELEBI.\p"
 # 294 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "here… it fractured something.\p"
+    .string "The time warp that brought you\n"
 # 295 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "With every year of ruin HOENN\n"
+    .string "here… it fractured something.\p"
 # 296 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "suffered in this broken future…\p"
+    .string "With every year of ruin HOENN\n"
 # 297 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "the darkness gathered.\n"
+    .string "suffered in this broken future…\p"
 # 298 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "And it took our shapes.$"
+    .string "the darkness gathered.\n"
 # 299 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    .string "And it took our shapes.$"
 # 300 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Text_CelebiPleas:
+
 # 301 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "They are not us.\p"
+NightmareRealm1_Text_CelebiPleas:
 # 302 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "They are distillations of every\n"
+    .string "They are not us.\p"
 # 303 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "terrible thing that happened\l"
+    .string "They are distillations of every\n"
 # 304 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "since the timeline broke.\p"
+    .string "terrible thing that happened\l"
 # 305 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "Every loss. Every scar.\n"
+    .string "since the timeline broke.\p"
 # 306 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "Focused into a single purpose:\p"
+    .string "Every loss. Every scar.\n"
 # 307 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "to stop the future\n"
+    .string "Focused into a single purpose:\p"
 # 308 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "from ever being repaired.$"
+    .string "to stop the future\n"
 # 309 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    .string "from ever being repaired.$"
 # 310 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Text_ShadowsSurge:
+
 # 311 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "The two dark forms lock onto you.\p"
+NightmareRealm1_Text_ShadowsSurge:
 # 312 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "They do not speak.\n"
+    .string "The two dark forms lock onto you.\p"
 # 313 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "They do not need to.\p"
+    .string "They do not speak.\n"
 # 314 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "Whatever they are, they will not\n"
+    .string "They do not need to.\p"
 # 315 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "let you take another step forward.$"
+    .string "Whatever they are, they will not\n"
 # 316 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    .string "let you take another step forward.$"
 # 317 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Text_VictoryJirachi:
+
 # 318 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "JIRACHI: They are gone.\p"
+NightmareRealm1_Text_VictoryJirachi:
 # 319 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "The darkness that wore our faces…\n"
+    .string "JIRACHI: They are gone.\p"
 # 320 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "it has dissolved.\p"
+    .string "The darkness that wore our faces…\n"
 # 321 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "You did not run.\n"
+    .string "it has dissolved.\p"
 # 322 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "That is why you could end this.$"
+    .string "You did not run.\n"
 # 323 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    .string "That is why you could end this.$"
 # 324 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Text_VictoryCelebi:
+
 # 325 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "CELEBI: The rift is still open.\p"
+NightmareRealm1_Text_VictoryCelebi:
 # 326 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "But the shadows that fed on it\n"
+    .string "CELEBI: The rift is still open.\p"
 # 327 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "are no more.\p"
+    .string "But the shadows that fed on it\n"
 # 328 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "You have bought HOENN time,\n"
+    .string "are no more.\p"
 # 329 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "chosen one. Use it well.$"
+    .string "You have bought HOENN time,\n"
 # 330 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-
+    .string "chosen one. Use it well.$"
 # 331 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Text_JirachiPostVictory:
-# 332 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "JIRACHI: We cannot leave\n"
-# 333 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "this place yet.\p"
-# 334 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "The boundary needs anchoring\n"
-# 335 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "from this side.\p"
-# 336 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "But you you can still go back.\n"
-# 337 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "The path forward is yours.$"
-# 338 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
 
+# 332 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+NightmareRealm1_Text_JirachiPostVictory:
+# 333 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    .string "JIRACHI: We cannot leave\n"
+# 334 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    .string "this place yet.\p"
+# 335 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    .string "The boundary needs anchoring\n"
+# 336 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    .string "from this side.\p"
+# 337 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    .string "But you you can still go back.\n"
+# 338 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    .string "The path forward is yours.$"
 # 339 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-NightmareRealm1_Text_CelebiPostVictory:
+
 # 340 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "CELEBI: Every moment you spend\n"
+NightmareRealm1_Text_CelebiPostVictory:
 # 341 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "here, the timeline frays a little\l"
+    .string "CELEBI: Every moment you spend\n"
 # 342 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "more.\p"
+    .string "here, the timeline frays a little\l"
 # 343 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "Go back through the warp.\n"
+    .string "more.\p"
 # 344 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "Finish what you started.\p"
+    .string "Go back through the warp.\n"
 # 345 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
+    .string "Finish what you started.\p"
+# 346 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     .string "We will be watching.$"
