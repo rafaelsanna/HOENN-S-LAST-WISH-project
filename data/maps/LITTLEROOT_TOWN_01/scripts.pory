@@ -166,12 +166,17 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 
 LittlerootTown_01_EventScript_JirachiCelebi::
 	lockall
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL 
 	msgbox LittlerootTown_Text_GentleIntroduction, MSGBOX_DEFAULT
+	removefieldmugshot 
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL 
 	msgbox LittlerootTown_01_Text_JirachiCloseEyes, MSGBOX_DEFAULT
+	removefieldmugshot 
 	
 	// Fade to black and silence music
 	fadeoutbgm 0
 	fadescreen FADE_TO_BLACK
+	removefieldmugshot 
 	delay 40
 	
 	// 0. ARCTIBAX - forgotten age
@@ -461,7 +466,9 @@ LittlerootTown_Movement_JirachiCircleComplete:
 LittlerootTown_CelebiScript::  
     lockall
     faceplayer
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
     msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
+	removefieldmugshot
     random 3
     switch VAR_RESULT
     case 0, LittlerootTown_Celebi_Case0
@@ -473,21 +480,27 @@ LittlerootTown_CelebiScript::
 LittlerootTown_Celebi_Case0::
     lockall
     faceplayer
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
     msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
+	removefieldmugshot 
     releaseall
     end
 
 LittlerootTown_Celebi_Case1::
     lockall
     faceplayer
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
     msgbox LittlerootTown_01_Text_CelebiHelp, MSGBOX_DEFAULT
+	removefieldmugshot 
     releaseall
     end
 
 LittlerootTown_Celebi_Case2::
     lockall
     faceplayer
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
     msgbox LittlerootTown_01_Text_CelebiForest, MSGBOX_DEFAULT
+	removefieldmugshot 
     releaseall
     end
 

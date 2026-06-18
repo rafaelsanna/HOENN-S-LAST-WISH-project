@@ -5,30 +5,34 @@ RustboroCity_Gym_MapScripts::
 RustboroCity_Gym_EventScript_Roxanne::
 	lock
 	faceplayer
+	goto_if_set FLAG_DEFEATED_RUSTBORO_GYM, RustboroCity_Gym_AfterBattle
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, RustboroCity_Gym_RoxanneHard
 	
-	@ Normal Mode - TRAINER_TERRA_CASUAL 
-	trainerbattle_single TRAINER_TERRA_CASUAL, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	@ Normal Mode - TRAINER_TERRA_CASUAL
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
+	msgbox RustboroCity_Gym_Text_RoxanneIntro, MSGBOX_DEFAULT
+	removefieldmugshot
+	trainerbattle_no_intro TRAINER_TERRA_CASUAL, RustboroCity_Gym_Text_RoxanneDefeat
+	call RustboroCity_Gym_EventScript_Victory
 	goto RustboroCity_Gym_AfterBattle
 
 RustboroCity_Gym_RoxanneHard::
-	@ Hard Mode - TRAINER_TERRA_HARD 
-	trainerbattle_single TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	@ Hard Mode - TRAINER_TERRA_HARD
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
+	msgbox RustboroCity_Gym_Text_RoxanneIntro, MSGBOX_DEFAULT
+	removefieldmugshot
+	trainerbattle_no_intro TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxanneDefeat
+	call RustboroCity_Gym_EventScript_Victory
+	goto RustboroCity_Gym_AfterBattle
 
-RustboroCity_Gym_AfterBattle::
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
-	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
-	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
-	release
-	end
-	
-RustboroCity_Gym_EventScript_RoxanneDefeated::
+RustboroCity_Gym_EventScript_Victory::
 	message RustboroCity_Gym_Text_ReceivedStoneBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL 
 	msgbox RustboroCity_Gym_Text_StoneBadgeInfoTakeThis, MSGBOX_DEFAULT
+	removefieldmugshot
 	setflag FLAG_DEFEATED_RUSTBORO_GYM
 	setflag FLAG_BADGE01_GET
 	setvar VAR_RUSTBORO_CITY_STATE, 1
@@ -36,20 +40,36 @@ RustboroCity_Gym_EventScript_RoxanneDefeated::
 	setvar VAR_0x8008, 1
 	call Common_EventScript_SetGymTrainers
 	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
-	goto RustboroCity_Gym_EventScript_GiveRockTomb
-	end
+	return
 
+RustboroCity_Gym_AfterBattle::
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
+	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
+	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+	
 RustboroCity_Gym_EventScript_GiveRockTomb::
 	giveitem ITEM_TM_ROCK_TOMB
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ROCK_TOMB
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
 	msgbox RustboroCity_Gym_Text_ExplainRockTomb, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 RustboroCity_Gym_EventScript_RoxanneRematch::
-	trainerbattle_rematch_double TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxannePreRematch, RustboroCity_Gym_Text_RoxanneRematchDefeat, RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
+	msgbox RustboroCity_Gym_Text_RoxannePreRematch, MSGBOX_DEFAULT
+	removefieldmugshot
+	trainerbattle_no_intro TRAINER_TERRA_HARD, RustboroCity_Gym_Text_RoxanneRematchDefeat
+	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
 	msgbox RustboroCity_Gym_Text_RoxannePostRematch, MSGBOX_AUTOCLOSE
+	removefieldmugshot
 	end
 
 RustboroCity_Gym_EventScript_Josh::
@@ -117,9 +137,6 @@ RustboroCity_Gym_EventScript_RegisterRoxanne::
 
 @ ============================================================
 @ SISTEMA DE ESCALADA — 30% chance passar
-@ coord_events no events.inc apontam para ClimbCheck.
-@ Após a FLAG_DEFEATED_RUSTBORO_GYM ser setada, triggers
-@ ficam silenciosos (jogador pode subir livremente).
 @ ============================================================
 RustboroCity_Gym_EventScript_ClimbCheck::
 	goto_if_set FLAG_DEFEATED_RUSTBORO_GYM, RustboroCity_Gym_EventScript_ClimbCheck_End
@@ -127,8 +144,6 @@ RustboroCity_Gym_EventScript_ClimbCheck::
 	goto_if_lt VAR_RESULT, 1, RustboroCity_Gym_EventScript_Climb_Fall
 RustboroCity_Gym_EventScript_ClimbCheck_End::
 	end
-
-/// climb slow x climb fast
 
 RustboroCity_Gym_EventScript_ClimbSlow::
 	setflag DN_FLAG_SEARCHING
@@ -140,13 +155,6 @@ RustboroCity_Gym_EventScript_ClimbFast::
 	clearflag DN_FLAG_DETECTOR_MODE
 	end
 
-
-@ ============================================================
-@ QUEDA: slide_down move o player fisicamente,
-@ sem necessidade de warp ou fadescreen.
-@ Ajuste a quantidade de slide_down conforme a altura
-@ do ponto de escalada no mapa (1 slide = 1 tile para baixo).
-@ ============================================================
 RustboroCity_Gym_EventScript_Climb_Fall::
 	lockall
 	msgbox RustboroCity_Gym_Text_SlipperyRock, MSGBOX_DEFAULT
@@ -289,7 +297,7 @@ RustboroCity_Gym_Text_ExplainRockTomb:
 
 RustboroCity_Gym_Text_RoxannePostBattle:
 	.string "If you want a real challenge, come\n"
-	.string "back later - I'll have my true team ready.\p"
+	.string "back later! I'll have my true team ready.\p"
 	.string "Maybe we can even hit a climbing\n"
 	.string "route together someday!$"
 
