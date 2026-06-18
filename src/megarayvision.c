@@ -78,11 +78,14 @@ static const u16 sMRVRay_Map[]      = INCBIN_U16("graphics/megarayvision/ray.bin
 /* --------------------------------------------------------------------------
  * BG layout
  *   BG0  charbase 0, screenbase 28, priority 3  -- static background
- *   BG1  charbase 1, screenbase 24, priority 1  -- RayFly / Ray overlay
+ *        bg.4bpp is larger than one charblock, so it also uses part of
+ *        charbase 1. Keep BG1's graphics in charbase 2 to avoid corrupting
+ *        the lower BG0 tiles.
+ *   BG1  charbase 2, screenbase 24, priority 1  -- RayFly / Ray overlay
  * -------------------------------------------------------------------------- */
 #define MRV_BG_CHARBASE     0
 #define MRV_BG_SCREENBASE   28
-#define MRV_OVL_CHARBASE    1
+#define MRV_OVL_CHARBASE    2
 #define MRV_OVL_SCREENBASE  24
 
 /* --------------------------------------------------------------------------
@@ -116,36 +119,54 @@ enum
 /*
  * RayFly scroll (vertical, bottom to top):
  *
- *   rayfly.bin / ray.bin are both confirmed 32x20 tiles (256x160px) -- a
- *   single full screen of art, not a multi-screen-tall image. The OLD code
- *   copied/forced palette over BG_SCREEN_SIZE (2048 bytes = 32x32 tiles),
- *   but the actual array is only 1280 bytes (32x20). That read 768 bytes
- *   PAST the end of the array (garbage ROM data) and wrote it into VRAM
- *   tile rows 20-31 -- that garbage is exactly the checkerboard pollution
- *   seen at the bottom of the screen.
+ *   rayfly.bin is a 32-tile-wide tilemap. Its height is inferred from the
+ *   asset size instead of hardcoded: entries / 32 rows * 8 pixels. The map is
+ *   copied into a cleared 256x512 BG1 canvas after one screen of blank rows:
  *
- *   Because the art is exactly SCREEN_H (160px) tall, making it fully enter
- *   from below and fully exit above requires scrolling a total distance of
- *   SCREEN_H + 160 = 320px. A single 256x256 screenblock only gives 256px
- *   of room before BG1VOFS wraps back onto itself, which isn't enough and
- *   is what caused the visible "looping". So BG1 now uses a 256x512 canvas
- *   (BGCNT_TXT256x512, two contiguous screenblocks) which gives 512px of
- *   travel room -- comfortably more than the 320px we need, so the scroll
- *   never wraps back into view.
+ *       rows  0-19  blank starting area
+ *       rows 20-39  RayFly art
+ *       rows 40-63  blank exit area
  *
- *   On real GBA hardware, BG1VOFS works like this: for screen row Y, the
- *   pixel drawn comes from tilemap row (VOFS + Y) mod CANVAS_H. Increasing
- *   VOFS moves the image UP on screen; decreasing moves it DOWN. We start
- *   at RAYFLY_INITIAL_VOFS (art sits just below the screen, fully hidden)
- *   and increase VOFS every frame. tTimer tracks total distance travelled
- *   with a plain counter (never wraps) so we know exactly when the art has
- *   fully exited, instead of re-reading the wrapped hardware register.
+ *   BG1VOFS starts at 0, so the art begins just below the bottom edge. It
+ *   then scrolls to SCREEN_H + RayFly height without ever touching the
+ *   512px hardware wrap point.
+ *
+ *   BG1VOFS itself wraps in hardware, so tTimer tracks the non-wrapping
+ *   distance travelled. When that reaches screen height + RayFly art height,
+ *   the creature has fully entered from below and fully exited above.
  */
-#define RAYFLY_SCROLL_SPEED    10
-#define RAYFLY_CANVAS_H       512   /* BG1 total height with BGCNT_TXT256x512 */
-#define RAYFLY_HEIGHT_PX      160   /* confirmed: rayfly.bin / ray.bin are 32x20 tiles = 256x160px */
-#define RAYFLY_INITIAL_VOFS   (RAYFLY_CANVAS_H - SCREEN_H)  /* puts the art just below the bottom edge of the screen */
-#define RAYFLY_TRAVEL_PX      (SCREEN_H + RAYFLY_HEIGHT_PX) /* 320px total distance to fully cross + exit */
+#define MRV_MAP_WIDTH_TILES     32
+#define MRV_TILE_SIZE_PX         8
+#define MRV_BG_MAP_ENTRIES     (sizeof(sMRVBg_Map) / sizeof(sMRVBg_Map[0]))
+#define MRV_BG_MAP_SIZE        (MRV_BG_MAP_ENTRIES * sizeof(sMRVBg_Map[0]))
+#define RAYFLY_SCROLL_SPEED     10
+#define RAYFLY_CANVAS_ROWS      64
+#define RAYFLY_CANVAS_H        (RAYFLY_CANVAS_ROWS * MRV_TILE_SIZE_PX)
+#define RAYFLY_MAP_ENTRIES     (sizeof(sMRVRayFly_Map) / sizeof(sMRVRayFly_Map[0]))
+#define RAYFLY_MAP_ROWS        (RAYFLY_MAP_ENTRIES / MRV_MAP_WIDTH_TILES)
+#define RAYFLY_MAP_HEIGHT_PX   (RAYFLY_MAP_ROWS * MRV_TILE_SIZE_PX)
+#define RAYFLY_MAP_SIZE        (RAYFLY_MAP_ENTRIES * sizeof(sMRVRayFly_Map[0]))
+#define RAYFLY_CANVAS_SIZE     (RAYFLY_CANVAS_ROWS * MRV_MAP_WIDTH_TILES * sizeof(u16))
+#define RAYFLY_START_ROW       (SCREEN_H / MRV_TILE_SIZE_PX)
+#define RAYFLY_START_ENTRY     (RAYFLY_START_ROW * MRV_MAP_WIDTH_TILES)
+#define RAYFLY_TILE_LEFT       11
+#define RAYFLY_TILE_RIGHT      21
+#define RAYFLY_TILE_TOP         0
+#define RAYFLY_TILE_BOTTOM     20
+#define RAYFLY_WINDOW_LEFT     88
+#define RAYFLY_WINDOW_RIGHT    168
+#define RAY_TILE_LEFT           8
+#define RAY_TILE_RIGHT         23
+#define RAY_TILE_TOP            4
+#define RAY_TILE_BOTTOM        18
+#define RAY_WINDOW_LEFT        64
+#define RAY_WINDOW_RIGHT       184
+#define RAY_WINDOW_TOP         32
+#define RAY_WINDOW_BOTTOM      144
+#define RAYFLY_INITIAL_VOFS    0
+#define RAYFLY_TRAVEL_PX       (SCREEN_H + RAYFLY_MAP_HEIGHT_PX)
+#define RAY_MAP_ENTRIES        (sizeof(sMRVRay_Map) / sizeof(sMRVRay_Map[0]))
+#define RAY_MAP_SIZE           (RAY_MAP_ENTRIES * sizeof(sMRVRay_Map[0]))
 #define RAY_HOLD_FRAMES       180
 #define FADE_SPEED_NORMAL       4
 #define FADE_SPEED_SLOW         8
@@ -281,10 +302,11 @@ static void CB2_MegaRayVision(void)
  * -------------------------------------------------------------------------- */
 static void LoadMRVBg0(void)
 {
+    u16 *screen = (u16 *)(BG_SCREEN_ADDR(MRV_BG_SCREENBASE));
+
     DecompressDataWithHeaderVram(sMRVBg_Gfx, (void *)(BG_CHAR_ADDR(MRV_BG_CHARBASE)));
-    DmaCopy16(3, sMRVBg_Map,
-              (void *)(BG_SCREEN_ADDR(MRV_BG_SCREENBASE)),
-              BG_SCREEN_SIZE);
+    CpuFill32(0, screen, BG_SCREEN_SIZE);
+    DmaCopy16(3, sMRVBg_Map, screen, MRV_BG_MAP_SIZE);
     LoadPalette(sMRVBg_Pal, BG_PLTT_ID(0), sizeof(sMRVBg_Pal));
     SetGpuReg(REG_OFFSET_BG0CNT,
               BGCNT_PRIORITY(3) | BGCNT_CHARBASE(MRV_BG_CHARBASE)
@@ -304,25 +326,33 @@ static void LoadMRVBg0(void)
 static void LoadMRVRayFly(void)
 {
     u16 *screen = (u16 *)(BG_SCREEN_ADDR(MRV_OVL_SCREENBASE));
-    u16 i;
+    u32 row, col;
 
     DecompressDataWithHeaderVram(sMRVRayFly_Gfx, (void *)(BG_CHAR_ADDR(MRV_OVL_CHARBASE)));
-    DmaCopy16(3, sMRVRayFly_Map, (void *)screen, BG_SCREEN_SIZE);
+    CpuFill32(0, screen, RAYFLY_CANVAS_SIZE);
 
     /*
-     * Force every tile entry to read from BG palette slot 1, regardless of
-     * what palette bits the .bin was actually exported with. This is the
-     * same pattern intro.c uses in Scene0_LoadBgSet (forcing bits 12-15)
-     * and removes any dependency on the toolchain's -pn flag.
+     * Only copy the rectangle that contains RayFly tiles. The source .bin is
+     * a full-screen map, but its empty rows/columns can reveal old-looking
+     * color noise when BG1 scrolls. Keeping the rest of the BG1 map cleared
+     * makes it behave like the stacked tilemaps in intro.c.
      */
-    for (i = 0; i < BG_SCREEN_SIZE / 2; i++)
-        screen[i] = (screen[i] & 0x0FFF) | (1 << 12);
+    for (row = RAYFLY_TILE_TOP; row < RAYFLY_TILE_BOTTOM; row++)
+    {
+        for (col = RAYFLY_TILE_LEFT; col < RAYFLY_TILE_RIGHT; col++)
+        {
+            u32 src = row * MRV_MAP_WIDTH_TILES + col;
+            u32 dst = RAYFLY_START_ENTRY + src;
+
+            screen[dst] = (sMRVRayFly_Map[src] & 0x0FFF) | (1 << 12);
+        }
+    }
 
     LoadPalette(sMRVRayFly_Pal, BG_PLTT_ID(1), sizeof(sMRVRayFly_Pal));
     SetGpuReg(REG_OFFSET_BG1CNT,
               BGCNT_PRIORITY(1) | BGCNT_CHARBASE(MRV_OVL_CHARBASE)
               | BGCNT_SCREENBASE(MRV_OVL_SCREENBASE)
-              | BGCNT_16COLOR | BGCNT_TXT256x256);
+              | BGCNT_16COLOR | BGCNT_TXT256x512);
     SetGpuReg(REG_OFFSET_BG1HOFS, 0);
     /* Start below the visible screen; we scroll upward each frame */
     SetGpuReg(REG_OFFSET_BG1VOFS, (u16)RAYFLY_INITIAL_VOFS);
@@ -334,14 +364,21 @@ static void LoadMRVRayFly(void)
 static void LoadMRVRay(void)
 {
     u16 *screen = (u16 *)(BG_SCREEN_ADDR(MRV_OVL_SCREENBASE));
-    u16 i;
+    u32 row, col;
 
     DecompressDataWithHeaderVram(sMRVRay_Gfx, (void *)(BG_CHAR_ADDR(MRV_OVL_CHARBASE)));
-    DmaCopy16(3, sMRVRay_Map, (void *)screen, BG_SCREEN_SIZE);
+    CpuFill32(0, screen, BG_SCREEN_SIZE);
 
-    /* Same forced-palette-slot fix as LoadMRVRayFly, see comment there. */
-    for (i = 0; i < BG_SCREEN_SIZE / 2; i++)
-        screen[i] = (screen[i] & 0x0FFF) | (1 << 12);
+    /* Same cropped copy and forced-palette-slot fix as LoadMRVRayFly. */
+    for (row = RAY_TILE_TOP; row < RAY_TILE_BOTTOM; row++)
+    {
+        for (col = RAY_TILE_LEFT; col < RAY_TILE_RIGHT; col++)
+        {
+            u32 src = row * MRV_MAP_WIDTH_TILES + col;
+
+            screen[src] = (sMRVRay_Map[src] & 0x0FFF) | (1 << 12);
+        }
+    }
 
     LoadPalette(sMRVRay_Pal, BG_PLTT_ID(1), sizeof(sMRVRay_Pal));
     SetGpuReg(REG_OFFSET_BG1CNT,
@@ -350,6 +387,26 @@ static void LoadMRVRay(void)
               | BGCNT_16COLOR | BGCNT_TXT256x256);
     SetGpuReg(REG_OFFSET_BG1HOFS, 0);
     SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(RAY_WINDOW_LEFT, RAY_WINDOW_RIGHT));
+    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(RAY_WINDOW_TOP, RAY_WINDOW_BOTTOM));
+    SetGpuReg(REG_OFFSET_WININ,
+              WININ_WIN0_BG0 | WININ_WIN0_BG1 | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+    SetGpuReg(REG_OFFSET_WINOUT,
+              WINOUT_WIN01_BG0 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+}
+
+static void SetRayFlyWindow(u16 distance)
+{
+    s16 top = SCREEN_H - distance;
+    s16 bottom = top + RAYFLY_MAP_HEIGHT_PX;
+
+    if (top < 0)
+        top = 0;
+    if (bottom > SCREEN_H)
+        bottom = SCREEN_H;
+
+    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(RAYFLY_WINDOW_LEFT, RAYFLY_WINDOW_RIGHT));
+    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(top, bottom));
 }
 
 /* --------------------------------------------------------------------------
@@ -477,9 +534,15 @@ static void Task_MegaRayVisionScene(u8 taskId)
          * wraps in hardware.
          */
         LoadMRVRayFly();
+        SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(RAYFLY_WINDOW_LEFT, RAYFLY_WINDOW_RIGHT));
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ,
+                  WININ_WIN0_BG0 | WININ_WIN0_BG1 | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+        SetGpuReg(REG_OFFSET_WINOUT,
+                  WINOUT_WIN01_BG0 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
         SetGpuReg(REG_OFFSET_DISPCNT,
                   DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP
-                  | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+                  | DISPCNT_BG0_ON | DISPCNT_OBJ_ON);
         tRayFlyVofs = (s16)RAYFLY_INITIAL_VOFS;
         SetGpuReg(REG_OFFSET_BG1VOFS, (u16)tRayFlyVofs);
         tTimer = 0;
@@ -499,8 +562,19 @@ static void Task_MegaRayVisionScene(u8 taskId)
 
         if (tTimer >= RAYFLY_TRAVEL_PX)
         {
+            SetGpuReg(REG_OFFSET_DISPCNT,
+                      DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP
+                      | DISPCNT_BG0_ON | DISPCNT_OBJ_ON);
             BeginNormalPaletteFade(PALETTES_ALL, FADE_SPEED_NORMAL, 0, 16, RGB_WHITE);
             tState = MRV_FADE_WHITE;
+        }
+        else
+        {
+            SetRayFlyWindow(tTimer);
+            SetGpuReg(REG_OFFSET_DISPCNT,
+                      DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP
+                      | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON
+                      | DISPCNT_WIN0_ON);
         }
         break;
 
@@ -512,7 +586,8 @@ static void Task_MegaRayVisionScene(u8 taskId)
             LoadMRVRay();
             SetGpuReg(REG_OFFSET_DISPCNT,
                       DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP
-                      | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+                      | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON
+                      | DISPCNT_WIN0_ON);
             tState = MRV_RAY_LOAD;
         }
         break;

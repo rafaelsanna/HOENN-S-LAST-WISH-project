@@ -62,7 +62,6 @@ LittlerootTown_EventScript_SnowballGame::
 	lock
 	faceplayer
 	special StartMegaRayVisionScene
-	callnative StartSnowballGame
 	waitstate
 	release
 	end
