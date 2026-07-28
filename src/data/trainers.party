@@ -623,21 +623,28 @@ Level: 30
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_MATT ===
-Name: MATT
+Name: ROB
 Class: Aqua Admin
-Pic: Aqua Admin M
+Pic: Rob
 Gender: Male
 Music: Aqua
-Items: Super Potion
-Double Battle: No
-AI: Basic Trainer
+Double Battle: Yes
+AI: Check Bad Move
 
-Mightyena
-Level: 34
+Bibarel @ Sitrus Berry  
+Level: 60
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Golbat
-Level: 34
+Slowbro @ Sitrus Berry  
+Level: 60
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Snorlax @ Sitrus Berry  
+Level: 60
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+Walrein @ Sitrus Berry  
+Level: 60
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_ALEJANDRO_1 ===
@@ -15341,7 +15348,7 @@ Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TABITHA_MAGMA_HIDEOUT ===
-Name: TABITHA
+Name: NETSU
 Class: Magma Admin
 Pic: Magma Admin
 Gender: Male
@@ -15349,21 +15356,37 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Snubbull
-Level: 26
-IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
+Houndoom @ Weakness Policy
+Level: 53
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Dark Pulse  
+- Fire Blast  
+- Nasty Plot
+- Sludge Bomb
 
-Mightyena
-Level: 28
-IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
+Absol @ Sitrus Berry
+Level: 53
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Knock Off  
+- Sucker Punch 
+- Swords Dance 
+- Slash
 
-Zubat
-Level: 30
-IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
+Granbull @ Passho Berry
+Level: 53
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Earthquake  
+- Bulk Up  
+- Close Combat 
+- Flame Charge
 
-Sharpedo
-Level: 33
-IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
+Magmortar @ Focus Sash
+Level: 53
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Overheat
+- Fire Blast 
+- Thunderbolt 
+- Scorching Sands
 
 === TRAINER_DARCY ===
 Name: DARCY

@@ -142,20 +142,51 @@ NightmareRealm1_OnVictory::
 
 @ =============================================================================
 @ Post-victory NPC scripts (Jirachi and Celebi stay on map, can be talked to)
+@ Either one, whichever the player talks to first, closes out the Nightmare
+@ Realm chapter: post-victory line -> Hoenn's-fate/timeline dialogue -> warp
+@ back to Mt Pyre Summit. No flag needed to guard repeats — the warp takes
+@ the player off this map for good, so the other NPC's script can never
+@ fire afterward.
 @ =============================================================================
 NightmareRealm1_EventScript_Jirachi::
     lock
     faceplayer
     msgbox NightmareRealm1_Text_JirachiPostVictory, MSGBOX_DEFAULT
-    release
+    closemessage
+    goto NightmareRealm1_EventScript_EndingSequence
     end
 
 NightmareRealm1_EventScript_Celebi::
     lock
     faceplayer
-    special StartMegaRayVisionScene
     msgbox NightmareRealm1_Text_CelebiPostVictory, MSGBOX_DEFAULT
-    release
+    closemessage
+    goto NightmareRealm1_EventScript_EndingSequence
+    end
+
+@ =============================================================================
+@ NightmareRealm1_EventScript_EndingSequence
+@ Fires once, from whichever legendary the player talks to first.
+@ Jirachi and Celebi speak together about Hoenn's fate and the connection
+@ between timelines, then the screen fades and the player is warped back to
+@ the exact spot on Mt Pyre Summit they left from.
+@ =============================================================================
+NightmareRealm1_EventScript_EndingSequence::
+    delay 15
+
+    msgbox NightmareRealm1_Text_HoennFateJirachi, MSGBOX_DEFAULT
+    closemessage
+    delay 10
+
+    msgbox NightmareRealm1_Text_HoennFateCelebi, MSGBOX_DEFAULT
+    closemessage
+    delay 20
+
+    fadescreen FADE_TO_BLACK
+    clearflag FLAG_LOST_NIGHTMARE_BATTLE
+    warp MAP_MT_PYRE_SUMMIT, 23, 5
+    waitstate
+    releaseall
     end
 
 @ =============================================================================
@@ -344,4 +375,25 @@ NightmareRealm1_Text_CelebiPostVictory:
     .string "Go back through the warp.\n"
     .string "Finish what you started.\p"
     .string "We will be watching.$"
+
+NightmareRealm1_Text_HoennFateJirachi:
+    .string "JIRACHI: This is where our paths\n"
+    .string "must part, {PLAYER}.\p"
+    .string "HOENN's fate was never written by\n"
+    .string "a single moment, but by the countless\l"
+    .string "threads that connect every timeline.\p"
+    .string "You have proven this thread will not\n"
+    .string "break so easily.$"
+
+NightmareRealm1_Text_HoennFateCelebi:
+    .string "CELEBI: Time is not a single road.\n"
+    .string "It is a river with many branches.\p"
+    .string "What happened here will never be\n"
+    .string "undone, but it need not repeat.\p"
+    .string "Go back to your own thread, chosen\n"
+    .string "one. Carry what you have learned\l"
+    .string "with you.\p"
+    .string "We will remain here, watching over\n"
+    .string "the boundary between what was\l"
+    .string "and what may yet be.$"
 `

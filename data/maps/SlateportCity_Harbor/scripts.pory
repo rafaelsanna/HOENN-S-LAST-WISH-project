@@ -447,15 +447,17 @@ SlateportCity_Harbor_Text_SameThugsTriedToRobAtMuseum:
 	.string "the DEVON GOODS at the MUSEUM.$"
 
 SlateportCity_Harbor_Text_ArchieYouAgainHideoutInLilycove:
-	.string "ARCHIE: Oh?\n"
-	.string "Not you again…\p"
-	.string "You are tenacious to track us here,\n"
-	.string "that much I will give you.\p"
-	.string "But now…\n"
-	.string "No one can stop us! No one!\p"
-	.string "Or, will you follow us back to our\n"
-	.string "HIDEOUT in LILYCOVE CITY?\p"
-	.string "Fwahahahaha…$"
+	.string "INAE: Well… There you are.\n"
+	.string "You really can't stay away, can you,\p"
+	.string "darling?\p"
+	.string "How adorable.\n"
+	.string "Chasing me all this way…\p"
+	.string "But this little game is almost over.\n"
+	.string "No one can stop what's coming.\p"
+	.string "If you still wish to stand against me,\n"
+	.string "come to our HIDEOUT in LILYCOVE CITY.\p"
+	.string "I'll be waiting for you…\n"
+	.string "Don't keep me waiting.$"
 
 SlateportCity_Harbor_Text_CaptSternWhyStealMySubmarine:
 	.string "CAPT. STERN: Why…\p"
