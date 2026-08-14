@@ -1243,7 +1243,7 @@
 #define FLAG_ITEM_PETALBURG_CAVE2_KINGS_ROCK                        0x4A0 
 #define FLAG_ITEM_PETALBURG_CAVE2_RARE_CANDY                        0x4A1 
 #define FLAG_ITEM_ROUTE_105_PEARL                                   0x4A2 
-#define FLAG_UNUSED_0x4A3                                           0x4A3 // Unused Flag
+#define FLAG_LEARNED_MINING                                         0x4A3 
 #define FLAG_UNUSED_0x4A4                                           0x4A4 // Unused Flag
 #define FLAG_UNUSED_0x4A5                                           0x4A5 // Unused Flag
 #define FLAG_UNUSED_0x4A6                                           0x4A6 // Unused Flag
