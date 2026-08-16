@@ -1393,7 +1393,7 @@ void TryDailyMiningWall(void)
         return;
     }
 
-    if (gSaveBlock3Ptr->miningWalls.count >= MINING_WALL_ATTEMPT_COUNT)
+    if (gSaveBlock1Ptr->miningWalls.count >= MINING_WALL_ATTEMPT_COUNT)
     {
         gSpecialVar_Result = MINING_WALL_RESULT_NO_ENERGY;
         return;
@@ -1410,7 +1410,7 @@ static bool8 HasTriedDailyMiningWall(void)
 {
     u16 i;
     u32 attemptId = GetDailyMiningWallAttemptId();
-    struct MiningWallSave *miningWalls = &gSaveBlock3Ptr->miningWalls;
+    struct MiningWallSave *miningWalls = &gSaveBlock1Ptr->miningWalls;
 
     for (i = 0; i < miningWalls->count; i++)
     {
@@ -1423,7 +1423,7 @@ static bool8 HasTriedDailyMiningWall(void)
 
 static void SetTriedDailyMiningWall(void)
 {
-    struct MiningWallSave *miningWalls = &gSaveBlock3Ptr->miningWalls;
+    struct MiningWallSave *miningWalls = &gSaveBlock1Ptr->miningWalls;
 
     if (miningWalls->count >= MINING_WALL_ATTEMPT_COUNT)
         return;
@@ -1445,7 +1445,7 @@ static u32 GetDailyMiningWallAttemptId(void)
 
 static void ClearDailyMiningWallAttemptsIfNewDay(void)
 {
-    struct MiningWallSave *miningWalls = &gSaveBlock3Ptr->miningWalls;
+    struct MiningWallSave *miningWalls = &gSaveBlock1Ptr->miningWalls;
     u16 day = RtcGetLocalDayCount();
 
     if (miningWalls->day != day || miningWalls->count > MINING_WALL_ATTEMPT_COUNT)

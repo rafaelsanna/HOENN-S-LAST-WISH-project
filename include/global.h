@@ -262,7 +262,6 @@ struct SaveBlock3
     u8 dexNavChain;
     u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES];
     u8 followerIndex;
-    struct MiningWallSave miningWalls;
 };
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;
@@ -1189,6 +1188,7 @@ struct SaveBlock1
 #endif //FREE_TRAINER_HILL
     /*0x3???*/ struct WaldaPhrase waldaPhrase;
     /*0x3???*/ u8 nuzlockeReleasedSpeciesFlags[ROUND_BITS_TO_BYTES(NUM_SPECIES)]; // Tracks species released under Nuzlocke.
+    struct MiningWallSave miningWalls;
     // sizeof: 0x3???
 };
 
