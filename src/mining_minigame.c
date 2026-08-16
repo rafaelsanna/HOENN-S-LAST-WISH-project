@@ -31,13 +31,18 @@
 #include "pokedex.h"
 #include "gpu_regs.h"
 #include "random.h"
+#include "event_data.h"
+#include "field_player_avatar.h"
 #include "field_message_box.h"
+#include "rtc.h"
+#include "constants/flags.h"
 #include "constants/items.h"
 #include "item.h"
 #include "data/mining_minigame.h"
 
 /* >> Specials << */
 void StartMining(void);
+void TryDailyMiningWall(void);
 
 /* >> Callbacks << */
 static void Mining_Init(MainCallback callback);
@@ -88,6 +93,11 @@ static bool32 AreAllItemsFound(void);
 #endif
 static void SetBuriedItemsId(u32 index, u32 itemId);
 static void SetBuriedItemStatus(u32 index, bool32 status);
+static u32 GetDailyMiningWallAttemptId(void);
+static void GetDailyMiningWallAttemptKey(u8 *key);
+static bool8 HasTriedDailyMiningWall(void);
+static void SetTriedDailyMiningWall(void);
+static void ClearDailyMiningWallAttemptsIfNewDay(void);
 static u32 GetBuriedBagItemId(u32 index);
 static u32 GetBuriedMiningItemId(u32 index);
 #if MINING_DEBUG_ENABLE == FALSE || MINING_DEBUG_INFINITE_HITS == FALSE
@@ -1366,6 +1376,99 @@ static u32 random(u32 amount)
 void StartMining(void)
 {
     Mining_Init(CB2_ReturnToField);
+}
+
+void TryDailyMiningWall(void)
+{
+    ClearDailyMiningWallAttemptsIfNewDay();
+
+    if (!FlagGet(FLAG_SYS_MINING_WALLS_UNLOCKED))
+    {
+        gSpecialVar_Result = MINING_WALL_RESULT_LOCKED;
+        return;
+    }
+
+    if (HasTriedDailyMiningWall())
+    {
+        gSpecialVar_Result = MINING_WALL_RESULT_ALREADY_TRIED;
+        return;
+    }
+
+    if (gSaveBlock3Ptr->miningWalls.count >= MINING_WALL_ATTEMPT_COUNT)
+    {
+        gSpecialVar_Result = MINING_WALL_RESULT_NO_ENERGY;
+        return;
+    }
+
+    SetTriedDailyMiningWall();
+    if (Random() % 100 < MINING_WALL_SUCCESS_PERCENT)
+        gSpecialVar_Result = MINING_WALL_RESULT_CAN_MINE;
+    else
+        gSpecialVar_Result = MINING_WALL_RESULT_EMPTY;
+}
+
+static bool8 HasTriedDailyMiningWall(void)
+{
+    u16 i;
+    u8 attemptKey[3];
+    struct MiningWallSave *miningWalls = &gSaveBlock3Ptr->miningWalls;
+
+    GetDailyMiningWallAttemptKey(attemptKey);
+    for (i = 0; i < miningWalls->count; i++)
+    {
+        if (miningWalls->attempts[i][0] == attemptKey[0]
+         && miningWalls->attempts[i][1] == attemptKey[1]
+         && miningWalls->attempts[i][2] == attemptKey[2])
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+static void SetTriedDailyMiningWall(void)
+{
+    struct MiningWallSave *miningWalls = &gSaveBlock3Ptr->miningWalls;
+
+    if (miningWalls->count >= MINING_WALL_ATTEMPT_COUNT)
+        return;
+
+    GetDailyMiningWallAttemptKey(miningWalls->attempts[miningWalls->count++]);
+}
+
+static u32 GetDailyMiningWallAttemptId(void)
+{
+    s16 x;
+    s16 y;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+    return ((u8)gSaveBlock1Ptr->location.mapGroup << 24)
+         | ((u8)gSaveBlock1Ptr->location.mapNum << 16)
+         | ((u8)x << 8)
+         | (u8)y;
+}
+
+static void GetDailyMiningWallAttemptKey(u8 *key)
+{
+    u32 attemptId = GetDailyMiningWallAttemptId();
+
+    attemptId ^= attemptId >> 16;
+    attemptId *= 0x45D9F3B;
+    attemptId ^= attemptId >> 16;
+    key[0] = attemptId;
+    key[1] = attemptId >> 8;
+    key[2] = attemptId >> 16;
+}
+
+static void ClearDailyMiningWallAttemptsIfNewDay(void)
+{
+    struct MiningWallSave *miningWalls = &gSaveBlock3Ptr->miningWalls;
+    u16 day = RtcGetLocalDayCount();
+
+    if (miningWalls->day != day || miningWalls->count > MINING_WALL_ATTEMPT_COUNT)
+    {
+        miningWalls->day = day;
+        miningWalls->count = 0;
+    }
 }
 
 static void Mining_Init(MainCallback callback)

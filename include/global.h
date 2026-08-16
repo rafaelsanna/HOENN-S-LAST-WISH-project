@@ -235,7 +235,15 @@ struct NPCFollower
 };
 
 #include "constants/items.h"
+#include "constants/mining_minigame.h"
 #define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
+
+struct MiningWallSave
+{
+    u16 day;
+    u16 count;
+    u8 attempts[MINING_WALL_ATTEMPT_COUNT][3];
+};
 
 struct SaveBlock3
 {
@@ -254,6 +262,7 @@ struct SaveBlock3
     u8 dexNavChain;
     u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES];
     u8 followerIndex;
+    struct MiningWallSave miningWalls;
 };
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;

@@ -568,6 +568,7 @@ gSpecials::
 	def_special SetHiddenNature
 	def_special Special_CheckPartyHasWaterMon
     def_special StartMining
+    def_special TryDailyMiningWall
     def_special StartGacha
     def_special StartBlackJack
     def_special StartSnake

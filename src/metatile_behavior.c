@@ -1569,3 +1569,8 @@ bool8 MetatileBehavior_IsDryGrass(u8 metatileBehavior)
 {
     return metatileBehavior == MB_DRY_GRASS;
 }
+
+bool8 MetatileBehavior_IsMiningWall(u8 metatileBehavior)
+{
+    return metatileBehavior == MB_MINING_WALL;
+}
