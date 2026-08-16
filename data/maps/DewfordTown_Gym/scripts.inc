@@ -283,7 +283,7 @@ DewfordTown_Gym_EventScript_Brawly::
 # 142 "data/maps/DewfordTown_Gym/scripts.pory"
 
 # 143 "data/maps/DewfordTown_Gym/scripts.pory"
-	@ Normal - TRAINER_BRAWLY_CASUAL
+	@ Normal - TRAINER_BRAWLY_1
 # 144 "data/maps/DewfordTown_Gym/scripts.pory"
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 # 145 "data/maps/DewfordTown_Gym/scripts.pory"
@@ -291,7 +291,7 @@ DewfordTown_Gym_EventScript_Brawly::
 # 146 "data/maps/DewfordTown_Gym/scripts.pory"
 	removefieldmugshot
 # 147 "data/maps/DewfordTown_Gym/scripts.pory"
-	trainerbattle_no_intro TRAINER_BRAWLY_CASUAL, DewfordTown_Gym_Text_BrawlyDefeat
+	trainerbattle_no_intro TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyDefeat
 # 148 "data/maps/DewfordTown_Gym/scripts.pory"
 	goto DewfordTown_Gym_EventScript_BrawlyDefeated
 # 149 "data/maps/DewfordTown_Gym/scripts.pory"

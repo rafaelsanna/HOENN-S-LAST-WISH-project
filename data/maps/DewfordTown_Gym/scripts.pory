@@ -140,11 +140,11 @@ DewfordTown_Gym_EventScript_Brawly::
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, DewfordTown_Gym_BrawlyHard
 
-	@ Normal - TRAINER_BRAWLY_CASUAL
+	@ Normal - TRAINER_BRAWLY_1
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox DewfordTown_Gym_Text_BrawlyIntro, MSGBOX_DEFAULT
 	removefieldmugshot
-	trainerbattle_no_intro TRAINER_BRAWLY_CASUAL, DewfordTown_Gym_Text_BrawlyDefeat
+	trainerbattle_no_intro TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyDefeat
 	goto DewfordTown_Gym_EventScript_BrawlyDefeated
 
 DewfordTown_Gym_BrawlyHard::
