@@ -94,7 +94,6 @@ static bool32 AreAllItemsFound(void);
 static void SetBuriedItemsId(u32 index, u32 itemId);
 static void SetBuriedItemStatus(u32 index, bool32 status);
 static u32 GetDailyMiningWallAttemptId(void);
-static void GetDailyMiningWallAttemptKey(u8 *key);
 static bool8 HasTriedDailyMiningWall(void);
 static void SetTriedDailyMiningWall(void);
 static void ClearDailyMiningWallAttemptsIfNewDay(void);
@@ -1410,15 +1409,12 @@ void TryDailyMiningWall(void)
 static bool8 HasTriedDailyMiningWall(void)
 {
     u16 i;
-    u8 attemptKey[3];
+    u32 attemptId = GetDailyMiningWallAttemptId();
     struct MiningWallSave *miningWalls = &gSaveBlock3Ptr->miningWalls;
 
-    GetDailyMiningWallAttemptKey(attemptKey);
     for (i = 0; i < miningWalls->count; i++)
     {
-        if (miningWalls->attempts[i][0] == attemptKey[0]
-         && miningWalls->attempts[i][1] == attemptKey[1]
-         && miningWalls->attempts[i][2] == attemptKey[2])
+        if (miningWalls->attempts[i] == attemptId)
             return TRUE;
     }
 
@@ -1432,7 +1428,7 @@ static void SetTriedDailyMiningWall(void)
     if (miningWalls->count >= MINING_WALL_ATTEMPT_COUNT)
         return;
 
-    GetDailyMiningWallAttemptKey(miningWalls->attempts[miningWalls->count++]);
+    miningWalls->attempts[miningWalls->count++] = GetDailyMiningWallAttemptId();
 }
 
 static u32 GetDailyMiningWallAttemptId(void)
@@ -1445,18 +1441,6 @@ static u32 GetDailyMiningWallAttemptId(void)
          | ((u8)gSaveBlock1Ptr->location.mapNum << 16)
          | ((u8)x << 8)
          | (u8)y;
-}
-
-static void GetDailyMiningWallAttemptKey(u8 *key)
-{
-    u32 attemptId = GetDailyMiningWallAttemptId();
-
-    attemptId ^= attemptId >> 16;
-    attemptId *= 0x45D9F3B;
-    attemptId ^= attemptId >> 16;
-    key[0] = attemptId;
-    key[1] = attemptId >> 8;
-    key[2] = attemptId >> 16;
 }
 
 static void ClearDailyMiningWallAttemptsIfNewDay(void)

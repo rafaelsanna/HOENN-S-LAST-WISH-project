@@ -242,7 +242,7 @@ struct MiningWallSave
 {
     u16 day;
     u16 count;
-    u8 attempts[MINING_WALL_ATTEMPT_COUNT][3];
+    u32 attempts[MINING_WALL_ATTEMPT_COUNT];
 };
 
 struct SaveBlock3

@@ -2,7 +2,7 @@
 #define GUARD_CONFIG_DEXNAV_H
 
 #define DEXNAV_ENABLED                TRUE
-#define USE_DEXNAV_SEARCH_LEVELS      TRUE
+#define USE_DEXNAV_SEARCH_LEVELS      FALSE
 
 #define DN_FLAG_SEARCHING              0x271
 #define DN_FLAG_DEXNAV_GET             0x272
