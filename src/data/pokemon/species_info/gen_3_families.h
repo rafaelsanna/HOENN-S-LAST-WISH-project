@@ -7046,18 +7046,18 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         FOOTPRINT(Camerupt)
         OVERWORLD(
             sPicTable_Camerupt,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
+            SIZE_64x64, 
+            SHADOW_SIZE_L,
+            TRACKS_NONE,
             sAnimTable_Following,
             gOverworldPalette_Camerupt,
             gShinyOverworldPalette_Camerupt
         )
         OVERWORLD_FEMALE(
             sPicTable_CameruptF,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
+            SIZE_64x64, 
+            SHADOW_SIZE_L,
+            TRACKS_NONE,
             sAnimTable_Following
         )
         .levelUpLearnset = sCameruptLevelUpLearnset,

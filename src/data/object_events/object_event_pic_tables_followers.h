@@ -2625,11 +2625,11 @@ static const struct SpriteFrameImage sPicTable_NumelF[] = {
 };
 #endif //P_GENDER_DIFFERENCES
 static const struct SpriteFrameImage sPicTable_Camerupt[] = {
-    overworld_ascending_frames(gObjectEventPic_Camerupt, 4, 4),
+    overworld_ascending_frames(gObjectEventPic_Camerupt, 8, 8),
 };
 #if P_GENDER_DIFFERENCES
 static const struct SpriteFrameImage sPicTable_CameruptF[] = {
-    overworld_ascending_frames(gObjectEventPic_CameruptF, 4, 4),
+    overworld_ascending_frames(gObjectEventPic_CameruptF, 8, 8),
 };
 #endif //P_GENDER_DIFFERENCES
 #if OW_BATTLE_ONLY_FORMS
