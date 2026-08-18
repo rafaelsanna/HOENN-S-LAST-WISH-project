@@ -114,14 +114,15 @@ AbandonedShip_TeamAqua_CinematicRight::
 @ Flow:
 @   1. Alejandro faces DOWN (player is 2 tiles below at y15)
 @   2. Alejandro intro speech
-@   3. Stella enters from door → Alejandro ExclamationMark
-@   4. Player face_right + Stella face_left (look at each other)
-@   5. Stella speaks immediately ("Are you alright?")
-@   6. Both face_up
-@   7. Alejandro retreats speech → walks out
-@   8. Player face_right + Stella face_left (look at each other again)
-@   9. Stella warning → exits
-@  10. setflags, releaseall
+@   3. BATTLE with Alejandro (difficulty-based)
+@   4. Stella enters from door → Alejandro ExclamationMark
+@   5. Player face_right + Stella face_left (look at each other)
+@   6. Stella speaks immediately ("Are you alright?")
+@   7. Both face_up
+@   8. Alejandro retreats speech → walks out
+@   9. Player face_right + Stella face_left (look at each other again)
+@  10. Stella warning → exits
+@  11. setflags, releaseall
 @ -------------------------------------------------------
 AbandonedShip_TeamAqua_CinematicMain::
 	@ Alejandro turns down to face the player below him
@@ -130,6 +131,19 @@ AbandonedShip_TeamAqua_CinematicMain::
 	@ Alejandro confronts the player
 	msgbox AbandonedShip_Text_Alejandro_Intro, MSGBOX_DEFAULT
 	closemessage
+
+	@ ----- BATTLE WITH ALEJANDRO (difficulty check) -----
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, AbandonedShip_TeamAqua_AlejandroHard
+	@ Normal Mode
+	trainerbattle_no_intro TRAINER_ARCHIE_SHIP_CASUAL, AbandonedShip_Text_Alejandro_Defeat
+	goto AbandonedShip_TeamAqua_AfterBattle
+
+AbandonedShip_TeamAqua_AlejandroHard::
+	trainerbattle_no_intro TRAINER_ARCHIE_SHIP_HARD, AbandonedShip_Text_Alejandro_Defeat
+
+AbandonedShip_TeamAqua_AfterBattle::
+	@ ----- CONTINUE CINEMATIC -----
 	@ Stella appears and walks in from the door
 	addobject LOCALID_STELLA
 	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaEnter
@@ -284,6 +298,13 @@ AbandonedShip_Text_Alejandro_Intro:
 	.string "Walk away while you still can.\n"
 	.string "There won't be a second warning.$"
 
+AbandonedShip_Text_Alejandro_Defeat:
+	.string "Tch... You've got more bite\n"
+	.string "than I expected.\p"
+	.string "But this ship is only a piece\n"
+	.string "of the bigger picture.\p"
+	.string "You'll see soon enough.$"
+
 AbandonedShip_Text_Stella_Arrives:
 	.string "STELLA: Are you alright?\p"
 	.string "I can't believe you made it\n"
@@ -293,7 +314,7 @@ AbandonedShip_Text_Stella_Arrives:
 	.string "You shouldn't have come alone.$"
 
 AbandonedShip_Text_Alejandro_Retreats:
-	.string "ALEJANDRO: ...\p"
+	.string "INEA: ...\p"
 	.string "Stella.\p"
 	.string "Of all the people to show up.\p"
 	.string "Two against one, on my own\n"

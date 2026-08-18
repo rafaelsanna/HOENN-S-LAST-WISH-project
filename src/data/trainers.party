@@ -794,10 +794,10 @@ Level: 37
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_ARCHIE ===
-Name: ARCHIE
+Name: INAE
 Class: Aqua Leader
 Pic: Aqua Leader Archie
-Gender: Male
+Gender: Female
 Music: Aqua
 Items: Super Potion / Super Potion
 Double Battle: No
@@ -814,6 +814,105 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 Camerupt
 Level: 43
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+=== TRAINER_ARCHIE_SHIP_CASUAL ===
+Name: INAE
+Class: Aqua Leader
+Pic: Aqua Leader Archie
+Gender: Female
+Music: Aqua
+Items: Super Potion / Super Potion
+Double Battle: Yes
+AI: Basic Trainer
+
+Lapras
+Level: 41
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Pelipper
+Ability: Drizzle
+Level: 41
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Quagsire
+Level: 41
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Slowking
+Level: 41
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Mantine
+Level: 41
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Camerupt
+Level: 43
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+=== TRAINER_ARCHIE_SHIP_HARD ===
+Name: INAE
+Class: Aqua Leader
+Pic: Aqua Leader Archie
+Gender: Female
+Music: Aqua
+Items: Super Potion / Super Potion
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Lapras @ Sitrus Berry
+Ability: Hydration
+Level: 45
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Freeze-Dry
+- Surf
+- Thunderbolt
+- Haze
+
+Pelipper @ Damp Rock
+Ability: Drizzle
+Level: 45
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- U-turn
+- Hurricane
+- Tailwind
+- Protect
+
+Crobat @ Expert Belt
+Ability: Levitate
+Level: 45
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- U-turn
+- Protect
+- Slash
+- Gunk Shot
+
+Quagsire @ Rindo Berry
+Ability: Unaware
+Level: 45
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Recover
+- Toxic
+- Scald
+- Protect
+
+Kingdra @ Lum Berry
+Ability: Swift Swim
+Level: 45
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dragon Dance
+- Liquidation
+- Iron Head
+- Protect
+
+Camerupt @ Assault Vest
+Ability: Thick Fat
+Level: 45
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- Liquidation
+- Earthquake
+- Protect
 
 === TRAINER_LEAH ===
 Name: LEAH
