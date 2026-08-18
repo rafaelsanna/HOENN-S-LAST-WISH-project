@@ -1,85 +1,52 @@
+# 1 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+
+# 2 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 OldaleTown_OldTunel_2_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, OldaleTown_OldTunel_2_OnTransition
+# 3 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	.byte 0
+# 4 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 
-OldaleTown_OldTunel_2_OnTransition:
-	// Hide/show wild Sentret based on flags
-	call_if_unset FLAG_SHINY_SENTRET, OldaleTown_OldTunel_2_ShowWildSentret
-	call_if_set FLAG_SHINY_SENTRET, OldaleTown_OldTunel_2_HideWildSentret
-	call_if_set FLAG_SHINY_SENTRET_END, OldaleTown_OldTunel_2_HideWildSentret
-	end
-
-OldaleTown_OldTunel_2_ShowWildSentret::
-	clearflag FLAG_HIDE_SHINY_SENTRET_WILD
-	return
-
-OldaleTown_OldTunel_2_HideWildSentret::
-	setflag FLAG_HIDE_SHINY_SENTRET_WILD
-	return
-
-// ====================================================================
-// SHINY SENTRET WILD - Interact to make it follow you
-// ====================================================================
-
+# 5 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 OldaleTown_OldTunel_2_EventScript_ShinySentret::
+# 6 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	lock
+# 7 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	faceplayer
-	
-	// If quest is already complete or Sentret is already following
-	goto_if_set FLAG_SHINY_SENTRET_END, OldaleTown_OldTunel_2_SentretAlreadyReturned
-	goto_if_set FLAG_SHINY_SENTRET, OldaleTown_OldTunel_2_SentretAlreadyFollowing
-	
-	// Transform into follower
-	msgbox OldaleTown_OldTunel_2_Text_SentretJoinsYou, MSGBOX_DEFAULT
-	closemessage
-	
-	playse SE_M_HYPER_BEAM
-	delay 20
-	
-	// Hide wild Sentret
-	fadescreenswapbuffers FADE_TO_BLACK
-	setflag FLAG_HIDE_SHINY_SENTRET_WILD
-	fadescreenswapbuffers FADE_FROM_BLACK
-	
-	setflag FLAG_SHINY_SENTRET  // Set following flag
-	
-	// Set as follower
-	destroyfollowernpc
-	setfollowernpc 6, FNPC_ALL, NULL, 0
-	
-	msgbox OldaleTown_OldTunel_2_Text_SentretHappy, MSGBOX_DEFAULT
-	playmoncry SPECIES_SENTRET, CRY_MODE_NORMAL
+# 8 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	setwildbattle SPECIES_SENTRET, 5
+# 9 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	waitse
+# 10 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	playmoncry SPECIES_SENTRET, CRY_MODE_ENCOUNTER
+# 11 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	delay 40
+# 12 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	waitmoncry
-	
+# 13 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	setflag P_FLAG_FORCE_SHINY
+# 14 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+# 15 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	dowildbattle
+# 16 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+# 17 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	clearflag P_FLAG_FORCE_SHINY
+# 18 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	specialvar VAR_RESULT, GetBattleOutcome
+# 19 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, OldaleTown_OldTunel_2_EventScript_SentretFound
+# 20 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	release
+# 21 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	end
+# 22 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 
-OldaleTown_OldTunel_2_SentretAlreadyFollowing::
-	msgbox OldaleTown_OldTunel_2_Text_SentretLooksAtYou, MSGBOX_DEFAULT
-	playmoncry SPECIES_SENTRET, CRY_MODE_NORMAL
-	waitmoncry
+# 23 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+OldaleTown_OldTunel_2_EventScript_SentretFound::
+# 24 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
+	setflag FLAG_SHINY_SENTRET
+# 25 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	release
+# 26 "data/maps/OldaleTown_OldTunel_2/scripts.pory"
 	end
-
-OldaleTown_OldTunel_2_SentretAlreadyReturned::
-	playmoncry SPECIES_SENTRET, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
-// ====================================================================
-// TEXT MESSAGES - OldaleTown_OldTunel_2
-// ====================================================================
-
-OldaleTown_OldTunel_2_Text_SentretJoinsYou:
-	.string "SENTRET: Sent...?\n"
-	.string "The SHINY SENTRET looks at you\n"
-	.string "with trusting eyes.\p"
-	.string "He decides to follow you!$"
-
-OldaleTown_OldTunel_2_Text_SentretHappy:
-	.string "SENTRET: Sent sent!$"
-
-OldaleTown_OldTunel_2_Text_SentretLooksAtYou:
-	.string "The SHINY SENTRET looks at you,\n"
-	.string "waiting to be reunited with his trainer.$"

@@ -494,24 +494,15 @@ PetalburgCity_Gym_EventScript_WallysDadArrives::
 	call_if_eq VAR_0x8008, 2, PetalburgCity_Gym_EventScript_WallysDadApproachPlayerEast
 	call_if_eq VAR_0x8008, 3, PetalburgCity_Gym_EventScript_WallysDadApproachPlayerWest
 	msgbox PetalburgCity_Gym_Text_PleaseComeWithMe, MSGBOX_DEFAULT
-	closemessage
-	delay 20
-	call_if_eq VAR_0x8008, 1, PetalburgCity_Gym_EventScript_WallysDadFaceNormanNorth
-	call_if_eq VAR_0x8008, 2, PetalburgCity_Gym_EventScript_WallysDadFaceNormanEast
-	call_if_eq VAR_0x8008, 3, PetalburgCity_Gym_EventScript_WallysDadFaceNormanWest
 	msgbox PetalburgCity_Gym_Text_LetMeBorrowPlayer, MSGBOX_DEFAULT
 	closemessage
-	setflag FLAG_DONT_TRANSITION_MUSIC
-	playbgm MUS_FOLLOW_ME, FALSE
-	call_if_eq VAR_0x8008, 1, PetalburgCity_Gym_EventScript_ExitGymWithWallysDadNorth
-	call_if_eq VAR_0x8008, 2, PetalburgCity_Gym_EventScript_ExitGymWithWallysDadEast
-	call_if_eq VAR_0x8008, 3, PetalburgCity_Gym_EventScript_ExitGymWithWallysDadWest
+	msgbox PetalburgCity_Gym_Text_LukasGrandparentsHaveSomethingToSay, MSGBOX_DEFAULT
+	closemessage
 	removeobject LOCALID_PETALBURG_GYM_WALLYS_DAD
 	setvar VAR_PETALBURG_CITY_STATE, 4
-	clearflag FLAG_HIDE_PETALBURG_CITY_WALLYS_DAD
-	warp MAP_PETALBURG_CITY, 17, 8
+	warp MAP_PETALBURG_CITY_WALLYS_HOUSE, 2, 4
 	waitstate
-	release
+	releaseall
 	end
 
 PetalburgCity_Gym_EventScript_WallysDadFaceNormanNorth::
@@ -1401,6 +1392,10 @@ PetalburgCity_Gym_Text_LetMeBorrowPlayer:
 	.string "CALENDULA, you don't mind, do you?\p"
 	.string "Let me borrow {PLAYER}{KUN} for\n"
 	.string "a minute or two.$"
+
+PetalburgCity_Gym_Text_LukasGrandparentsHaveSomethingToSay:
+	.string "LUKA's grandparents have something\n"
+	.string "to say to you at his house.$"
 
 PetalburgCity_Gym_Text_DadGoingToKeepTraining:
 	.string "CALENDULA: {PLAYER}, I'm really proud\n"

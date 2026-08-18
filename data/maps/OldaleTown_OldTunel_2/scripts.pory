@@ -1,4 +1,27 @@
 raw `
 OldaleTown_OldTunel_2_MapScripts::
 	.byte 0
+
+OldaleTown_OldTunel_2_EventScript_ShinySentret::
+	lock
+	faceplayer
+	setwildbattle SPECIES_SENTRET, 5
+	waitse
+	playmoncry SPECIES_SENTRET, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	setflag P_FLAG_FORCE_SHINY
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	dowildbattle
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	clearflag P_FLAG_FORCE_SHINY
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, OldaleTown_OldTunel_2_EventScript_SentretFound
+	release
+	end
+
+OldaleTown_OldTunel_2_EventScript_SentretFound::
+	setflag FLAG_SHINY_SENTRET
+	release
+	end
 `
