@@ -16,6 +16,7 @@ Route103_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 # 9 "data/maps/Route103/scripts.pory"
 	call ProfAcacia_EventScript_UpdateLocation
+	call PetalburgCity_EventScript_HandleAquaGrunts
 # 10 "data/maps/Route103/scripts.pory"
 	end
 # 11 "data/maps/Route103/scripts.pory"

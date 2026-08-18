@@ -1,4 +1,11 @@
-mapscripts OldaleField_MapScripts {}
+mapscripts OldaleField_MapScripts {
+  MAP_SCRIPT_ON_TRANSITION: OldaleField_OnTransition
+}
+
+script OldaleField_OnTransition {
+  call(PetalburgCity_EventScript_HandleAquaGrunts)
+  end
+}
 
 script OldaleFieldAbraMan {
   lock

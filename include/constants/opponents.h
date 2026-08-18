@@ -923,6 +923,7 @@
 #define TRAINER_ROB_WEATHER_INSTITUTE       917
 #define TRAINER_TROY                        918
 #define TRAINER_BRAWLY_CASUAL               919
+#define TRAINER_MAXIE_MT_CHIMNEY_HARD       920
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows

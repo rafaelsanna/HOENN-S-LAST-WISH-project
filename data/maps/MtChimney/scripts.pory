@@ -44,7 +44,18 @@ MtChimney_EventScript_Maxie::
 	applymovement LOCALID_MT_CHIMNEY_MAXIE, Common_Movement_Delay48
 	waitmovement 0
 	msgbox MtChimney_Text_MaxieIntro, MSGBOX_DEFAULT
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, MtChimney_EventScript_MaxieHard
+
+	@ Normal Mode - TRAINER_MAXIE_MT_CHIMNEY
 	trainerbattle_no_intro TRAINER_MAXIE_MT_CHIMNEY, MtChimney_Text_MaxieDefeat
+	goto MtChimney_EventScript_MaxieAfterBattle
+
+MtChimney_EventScript_MaxieHard::
+	@ Hard Mode - TRAINER_MAXIE_MT_CHIMNEY_HARD
+	trainerbattle_no_intro TRAINER_MAXIE_MT_CHIMNEY_HARD, MtChimney_Text_MaxieDefeat
+
+MtChimney_EventScript_MaxieAfterBattle::
 	msgbox MtChimney_Text_MaxieYouHaventSeenLastOfMagma, MSGBOX_DEFAULT
 	closemessage
 	delay 30
@@ -55,7 +66,7 @@ MtChimney_EventScript_Maxie::
 	removeobject LOCALID_MT_CHIMNEY_MAGMA_GRUNT_2
 	setflag FLAG_HIDE_MT_CHIMNEY_TEAM_MAGMA
 	fadescreenswapbuffers FADE_FROM_BLACK
-	setobjectxyperm LOCALID_MT_CHIMNEY_ARCHIE, 10, 12
+	setobjectxyperm LOCALID_MT_CHIMNEY_ARCHIE, 10, 18
 	addobject LOCALID_MT_CHIMNEY_ARCHIE
 	call_if_eq VAR_FACING, DIR_EAST, MtChimney_EventScript_ArchieApproachPlayerEast
 	call_if_eq VAR_FACING, DIR_NORTH, MtChimney_EventScript_ArchieApproachPlayerNorth
@@ -149,43 +160,44 @@ MtChimney_EventScript_NotEnoughMoney::
 	end
 
 MtChimney_Movement_ArchieApproachPlayerEast:
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
 	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_right
 	step_end
 
 MtChimney_Movement_ArchieExitEast:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
 	walk_left
-	walk_down
-	walk_down
-	walk_down
-	walk_down
 	walk_down
 	walk_down
 	walk_down
 	step_end
 
 MtChimney_Movement_ArchieApproachPlayerNorth:
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
 	walk_right
 	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_right
 	step_end
 
 MtChimney_Movement_ArchieExitNorth:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
 	walk_left
 	walk_left
-	walk_down
-	walk_down
-	walk_down
-	walk_down
 	walk_down
 	walk_down
 	walk_down
@@ -551,11 +563,11 @@ MtChimney_Text_MeteoriteWillActivateVolcano:
 	.string "power. This world has forgotten its nature.$"
 
 MtChimney_Text_MaxieIntro:
-	.string "MAXIE: Hm?\n"
+	.string "MAGNUS: Hm?\n"
 	.string "Who are you?\p"
 	.string "… … … … … …\n"
 	.string "… … … … … …\p"
-	.string "I'd heard ARCHIE bemoaning a child\n"
+	.string "I'd heard NEREA bemoaning a child\n"
 	.string "who's been meddling in TEAM AQUA's\l"
 	.string "affairs.\p"
 	.string "It must be you he meant.\p"
@@ -585,13 +597,13 @@ MtChimney_Text_MaxieIntro:
 
 MtChimney_Text_MaxieDefeat:
 	.string "What?!\p"
-	.string "I, MAXIE, was caught off guard?!\n"
+	.string "I, MAGNUS, was caught off guard?!\n"
 	.string "This changes nothing.\p"
 	.string "The tectonic shift is inevitable.\n"
 	.string "You've only delayed progress.$"
 
 MtChimney_Text_MaxieYouHaventSeenLastOfMagma:
-	.string "MAXIE: But, enough.\n"
+	.string "MAGNUS: But, enough.\n"
 	.string "I will back off this time.\p"
 	.string "But don't think that this is the last\n"
 	.string "you've seen of TEAM MAGMA.\p"
@@ -730,7 +742,7 @@ MtChimney_Text_Bufoh:
 	.string "Bufoh!$"
 
 MtChimney_Text_ArchieGoStopTeamMagma:
-	.string "ARCHIE: Grr, {PLAYER}!\n"
+	.string "NEREA: Grr, {PLAYER}!\n"
 	.string "I should've guessed you'd show up!\p"
 	.string "See for yourself what the fanatics\n"
 	.string "of TEAM MAGMA are up to!\p"
@@ -743,8 +755,8 @@ MtChimney_Text_ArchieGoStopTeamMagma:
 	.string "Everything we've built. Gone.$"
 
 MtChimney_Text_ArchieIHaveMyHandsFull:
-	.string "ARCHIE: Grrr…\p"
-	.string "I want to stop that MAXIE,\n"
+	.string "NEREA: Grrr…\p"
+	.string "I want to stop that MAGNUS,\n"
 	.string "but I can't!\p"
 	.string "Not when I have my hands full battling\n"
 	.string "three opponents at once!\p"
@@ -755,7 +767,7 @@ MtChimney_Text_ArchieIHaveMyHandsFull:
 	.string "Hahahahahaha!\p"
 	.string "Ambition drives humans to terrible\n"
 	.string "places, doesn't it?\p"
-	.string "That madman MAXIE will reshape all\n"
+	.string "That madman MAGNUS will reshape all\n"
 	.string "of HOENN with his volcanic greed.\p"
 	.string "The tectonic shift alone...\n"
 	.string "entire coastlines will collapse.\p"
@@ -766,7 +778,7 @@ MtChimney_Text_ArchieIHaveMyHandsFull:
 	.string "but a useful one, kid!$"
 
 MtChimney_Text_ArchieThankYou:
-	.string "ARCHIE: {PLAYER}!\n"
+	.string "NEREA: {PLAYER}!\n"
 	.string "Thank you!\p"
 	.string "With your help, we thwarted TEAM\n"
 	.string "MAGMA's destructive plan!\p"

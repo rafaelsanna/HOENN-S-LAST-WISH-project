@@ -12635,7 +12635,7 @@ Level: 39
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_MAXIE_MT_CHIMNEY ===
-Name: MAXIE
+Name: MAGNUS
 Class: Magma Leader
 Pic: Magma Leader Maxie
 Gender: Male
@@ -12644,17 +12644,77 @@ Items: Super Potion / Super Potion
 Double Battle: No
 AI: Basic Trainer
 
+Arcanine
+Level: 34
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
 Mightyena
 Level: 34
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Zubat
-Level: 34
+Donphan
+Level: 35
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Sharpedo
 Level: 35
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+=== TRAINER_MAXIE_MT_CHIMNEY_HARD ===
+Name: MAGNUS
+Class: Magma Leader
+Pic: Magma Leader Maxie
+Gender: Male
+Music: Magma
+Items: Super Potion / Super Potion
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Arcanine @ Rocky Helmet 
+Ability: Intimidate
+Level: 39
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Will-O-Wisp
+- Fire Fang
+- Wild Charge
+- Crunch
+
+Swalot @ Leftovers
+Ability: Flame Body
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Toxic
+- Heat Wave
+- Sludge Bomb
+- Substitute
+
+Darkrai @ Assault Vest 
+Ability: Intimidate
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Crunch
+- Fire Fang
+- Ice Fang
+- Sucker Punch
+
+Donphan @ Sitrus Berry
+Ability: Sturdy
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Rapid Spin
+- Body Press
+- Fire Fang
+- Stomping Tantrum
+
+Sharpedo @ Life Orb
+Ability: Earth Eater
+Level: 41
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fire Fang
+- Thunder Fang
+- Bulldoze
+- Swagger
+
 
 === TRAINER_TIANA ===
 Name: TIANA
