@@ -1383,6 +1383,20 @@ SootopolisCity_EventScript_MrStoneEvil::
 	faceplayer
 	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
 	closemessage
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
+	waitmovement 0
+	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
+	closemessage
+	msgbox SootopolisCity_Text_ArchieShockedAtStone, MSGBOX_DEFAULT
+	closemessage
+	msgbox SootopolisCity_Text_MrStoneMoneyRulesWorld, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
+	waitmovement 0
 	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneBoardBoat
 	waitmovement 0
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE
@@ -1421,6 +1435,26 @@ SootopolisCity_EventScript_DevonBoat::
 	msgbox SootopolisCity_Text_DevonBoatEmpty, MSGBOX_DEFAULT
 	release
 	end
+
+SootopolisCity_Movement_ExclamationMark:
+	emote_exclamation_mark
+	step_end
+
+@ Maxie is positioned to Mr. Stone's left, so he turns right to face him.
+@ Adjust turn_right/turn_left/turn_up/turn_down to match wherever you land the NPCs in porymap.
+SootopolisCity_Movement_MaxieFaceStone:
+	face_right
+	step_end
+
+@ Archie is positioned to Mr. Stone's right, so she turns left to face him.
+SootopolisCity_Movement_ArchieFaceStone:
+	face_left
+	step_end
+
+@ Mr. Stone shoulders past the player on his way to the boat.
+SootopolisCity_Movement_PlayerPushedAside:
+	walk_left
+	step_end
 
 SootopolisCity_Movement_MrStoneBoardBoat:
 	walk_down
@@ -1474,20 +1508,38 @@ SootopolisCity_Text_CitySign:
 	.string "slumbers.”$"
 
 SootopolisCity_Text_MrStoneMastermind:
-	.string "MR. STONE: You believed I was\n"
-	.string "your benefactor, MAGNUS. You believed\n"
-	.string "I was your ally, INAE.\p"
-	.string "The truth is that I funded both of you.\n"
-	.string "You were never more than pawns in my\n"
-	.string "design.\p"
+	.string "MR. STONE: …Hahahaha…\p"
+	.string "Look at how things really are.\p"
+	.string "This whole time, you believed you were\n"
+	.string "helping me, MAGNUS. You believed you\l"
+	.string "were fighting evil, INAE.\p"
+	.string "Things are far more complicated than\n"
+	.string "either of you ever imagined.\p"
+	.string "TEAM MAGMA, TEAM AQUA… it made no\n"
+	.string "difference to me which of you won.\p"
+	.string "I was behind everything, from the\n"
+	.string "very start.$"
+
+SootopolisCity_Text_MaxieShockedAtStone:
+	.string "MAGNUS: …!\n"
+	.string "You?! It was you, all along?!$"
+
+SootopolisCity_Text_ArchieShockedAtStone:
+	.string "INAE: …!\p"
+	.string "Impossible… Everything we did, it was\n"
+	.string "all just part of your design?!$"
+
+SootopolisCity_Text_MrStoneMoneyRulesWorld:
+	.string "MR. STONE: The two of you have no room\n"
+	.string "to complain. I bankrolled you both.\p"
 	.string "Money is what rules this world.\n"
-	.string "Pokémon battles are meaningless. That is\n"
-	.string "why I never trained Pokémon.\p"
-	.string "I built Devon, bought influence, and\n"
-	.string "turned my fortune into an empire. Soon\n"
+	.string "Pokémon battles are meaningless. That\l"
+	.string "is why I never trained Pokémon.\p"
+	.string "I built DEVON, bought influence, and\n"
+	.string "turned my fortune into an empire. Soon\l"
 	.string "every region will answer to me.\p"
 	.string "The RED ORB and BLUE ORB will give me\n"
-	.string "the power of both Primal Pokémon. Then\n"
+	.string "the power of both Primal Pokémon. Then\l"
 	.string "the whole world will belong to me!$"
 
 SootopolisCity_Text_MrStonePrimalCommand:
