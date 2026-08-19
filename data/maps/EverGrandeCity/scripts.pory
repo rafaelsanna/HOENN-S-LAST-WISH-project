@@ -1,11 +1,181 @@
 raw `
 EverGrandeCity_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, EverGrandeCity_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, EverGrandeCity_OnTransition
 	.byte 0
 
+EverGrandeCity_OnLoad:
+	call_if_unset FLAG_DEFEATED_EVERGRANDE_RIVAL, EverGrandeCity_EventScript_HideRival
+	end
+
 EverGrandeCity_OnTransition:
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
+	call Common_EventScript_SetupRivalGfxId
+	setvar VAR_TEMP_2, 0
 	end
+
+EverGrandeCity_EventScript_HideRival::
+	setflag FLAG_HIDE_EVERGRANDE_RIVAL
+	return
+
+EverGrandeCity_EventScript_Rival::
+	goto EverGrandeCity_EventScript_RivalBeforeE4
+	end
+
+EverGrandeCity_EventScript_RivalBeforeE4::
+	goto_if_set FLAG_DEFEATED_EVERGRANDE_RIVAL, Common_EventScript_NopReturn
+	lockall
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	clearflag FLAG_HIDE_EVERGRANDE_RIVAL
+	addobject LOCALID_EVER_GRANDE_RIVAL
+	setvar VAR_TEMP_2, 1
+	applymovement LOCALID_EVER_GRANDE_RIVAL, EverGrandeCity_Movement_RivalApproach
+	waitmovement 0
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, EverGrandeCity_EventScript_ZinniaPreBattle
+	goto_if_eq VAR_RESULT, FEMALE, EverGrandeCity_EventScript_ZennoPreBattle
+	releaseall
+	end
+
+EverGrandeCity_EventScript_ZinniaPreBattle::
+	msgbox EverGrandeCity_Text_ZinniaPreBattle, MSGBOX_DEFAULT
+	goto EverGrandeCity_EventScript_MayBattle
+	end
+
+EverGrandeCity_EventScript_ZennoPreBattle::
+	msgbox EverGrandeCity_Text_ZennoPreBattle, MSGBOX_DEFAULT
+	goto EverGrandeCity_EventScript_BrendanBattle
+	end
+
+EverGrandeCity_Movement_RivalApproach:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+EverGrandeCity_EventScript_MayBattle::
+	switch VAR_EVER_GRANDE_CITY_STATE
+	case 1, EverGrandeCity_EventScript_MayBattleHard
+	switch VAR_STARTER_MON
+	case 0, EverGrandeCity_EventScript_MayBattleTreecko
+	case 1, EverGrandeCity_EventScript_MayBattleTorchic
+	case 2, EverGrandeCity_EventScript_MayBattleMudkip
+	releaseall
+	end
+
+EverGrandeCity_EventScript_MayBattleHard::
+	switch VAR_STARTER_MON
+	case 0, EverGrandeCity_EventScript_MayBattleTreeckoHard
+	case 1, EverGrandeCity_EventScript_MayBattleTorchicHard
+	case 2, EverGrandeCity_EventScript_MayBattleMudkipHard
+	releaseall
+	end
+
+EverGrandeCity_EventScript_BrendanBattle::
+	switch VAR_EVER_GRANDE_CITY_STATE
+	case 1, EverGrandeCity_EventScript_BrendanBattleHard
+	switch VAR_STARTER_MON
+	case 0, EverGrandeCity_EventScript_BrendanBattleTreecko
+	case 1, EverGrandeCity_EventScript_BrendanBattleTorchic
+	case 2, EverGrandeCity_EventScript_BrendanBattleMudkip
+	releaseall
+	end
+
+EverGrandeCity_EventScript_BrendanBattleHard::
+	switch VAR_STARTER_MON
+	case 0, EverGrandeCity_EventScript_BrendanBattleTreeckoHard
+	case 1, EverGrandeCity_EventScript_BrendanBattleTorchicHard
+	case 2, EverGrandeCity_EventScript_BrendanBattleMudkipHard
+	releaseall
+	end
+
+EverGrandeCity_EventScript_MayBattleTreecko::
+	trainerbattle_no_intro TRAINER_MAY_EVERGRANDE_TREECKO, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_MayBattleTorchic::
+	trainerbattle_no_intro TRAINER_MAY_EVERGRANDE_TORCHIC, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_MayBattleMudkip::
+	trainerbattle_no_intro TRAINER_MAY_EVERGRANDE_MUDKIP, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_MayBattleTreeckoHard::
+	trainerbattle_no_intro TRAINER_MAY_EVERGRANDE_TREECKO_HARD, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_MayBattleTorchicHard::
+	trainerbattle_no_intro TRAINER_MAY_EVERGRANDE_TORCHIC_HARD, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_MayBattleMudkipHard::
+	trainerbattle_no_intro TRAINER_MAY_EVERGRANDE_MUDKIP_HARD, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_BrendanBattleTreecko::
+	trainerbattle_no_intro TRAINER_BRENDAN_EVERGRANDE_TREECKO, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_BrendanBattleTorchic::
+	trainerbattle_no_intro TRAINER_BRENDAN_EVERGRANDE_TORCHIC, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_BrendanBattleMudkip::
+	trainerbattle_no_intro TRAINER_BRENDAN_EVERGRANDE_MUDKIP, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_BrendanBattleTreeckoHard::
+	trainerbattle_no_intro TRAINER_BRENDAN_EVERGRANDE_TREECKO_HARD, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_BrendanBattleTorchicHard::
+	trainerbattle_no_intro TRAINER_BRENDAN_EVERGRANDE_TORCHIC_HARD, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_BrendanBattleMudkipHard::
+	trainerbattle_no_intro TRAINER_BRENDAN_EVERGRANDE_MUDKIP_HARD, EverGrandeCity_Text_RivalDefeated
+	goto EverGrandeCity_EventScript_RivalAfterBattle
+
+EverGrandeCity_EventScript_RivalAfterBattle::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, EverGrandeCity_EventScript_ZinniaFarewell
+	goto_if_eq VAR_RESULT, FEMALE, EverGrandeCity_EventScript_ZennoFarewell
+	releaseall
+	end
+
+EverGrandeCity_EventScript_ZinniaFarewell::
+	msgbox EverGrandeCity_Text_ZinniaFarewell, MSGBOX_DEFAULT
+	goto EverGrandeCity_EventScript_RivalLeave
+	end
+
+EverGrandeCity_EventScript_ZennoFarewell::
+	msgbox EverGrandeCity_Text_ZennoFarewell, MSGBOX_DEFAULT
+	goto EverGrandeCity_EventScript_RivalLeave
+	end
+
+EverGrandeCity_EventScript_RivalLeave::
+	closemessage
+	applymovement LOCALID_EVER_GRANDE_RIVAL, EverGrandeCity_Movement_RivalLeave
+	waitmovement 0
+	setflag FLAG_HIDE_EVERGRANDE_RIVAL
+	setflag FLAG_DEFEATED_EVERGRANDE_RIVAL
+	removeobject LOCALID_EVER_GRANDE_RIVAL
+	releaseall
+	end
+
+EverGrandeCity_Movement_RivalLeave:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
 
 EverGrandeCity_EventScript_VictoryRoadSign::
 	msgbox EverGrandeCity_Text_EnteringVictoryRoad, MSGBOX_SIGN
@@ -35,5 +205,66 @@ EverGrandeCity_Text_CitySign:
 	.string "EVER GRANDE CITY\p"
 	.string "“The paradise of flowers, the sea,\n"
 	.string "and POKéMON.”$"
+
+EverGrandeCity_Text_RivalDefeated:
+	.string "I knew you would make it this far,\n"
+	.string "but I still wanted to test you.$"
+
+EverGrandeCity_Text_ZinniaPreBattle:
+	.string "ZINNIA: {PLAYER}{KUN}!\p"
+	.string "I honestly didn't think I'd catch up\n"
+	.string "to you all the way out here…\p"
+	.string "EVER GRANDE CITY. The edge of the\n"
+	.string "region, and the POKéMON LEAGUE's\l"
+	.string "front door.\p"
+	.string "Every ROUTE, every GYM, every mess\n"
+	.string "this region threw at us… and you\l"
+	.string "just kept going.\p"
+	.string "There's one more thing I need to\n"
+	.string "know before you walk in there.\p"
+	.string "How strong you really are.\n"
+	.string "Right here. Right now.$"
+
+EverGrandeCity_Text_ZennoPreBattle:
+	.string "ZENNO: {PLAYER}.\p"
+	.string "You actually made it. All the way\n"
+	.string "to EVER GRANDE CITY.\p"
+	.string "I've been chasing your trail since\n"
+	.string "LITTLEROOT, and every time I catch\l"
+	.string "up, you're already gone again.\p"
+	.string "Every GYM, every crisis this region\n"
+	.string "threw at us… you kept moving forward.\p"
+	.string "So before you walk into that\n"
+	.string "POKéMON LEAGUE, I need one last\l"
+	.string "look at how far you've come.\p"
+	.string "Battle me, {PLAYER}.\n"
+	.string "One more time.$"
+
+EverGrandeCity_Text_ZinniaFarewell:
+	.string "ZINNIA: … … …\p"
+	.string "Yeah. That settles it.\p"
+	.string "I'm not ready for the ELITE FOUR yet.\n"
+	.string "Not like this.\p"
+	.string "But I'm not giving up either.\n"
+	.string "I'm going to keep training, keep\l"
+	.string "studying POKéMON, and figure out\l"
+	.string "exactly what I'm still missing.\p"
+	.string "Go on, {PLAYER}{KUN}.\n"
+	.string "This is your moment.\p"
+	.string "I'll be right behind you.\n"
+	.string "Someday.$"
+
+EverGrandeCity_Text_ZennoFarewell:
+	.string "ZENNO: …\p"
+	.string "Yeah, I figured.\p"
+	.string "I'm not at ELITE FOUR level yet.\n"
+	.string "I can admit that much.\p"
+	.string "But this isn't me quitting. I'm\n"
+	.string "going back to training, back to\l"
+	.string "studying POKéMON, until I actually\l"
+	.string "deserve to stand up there.\p"
+	.string "Go get 'em, {PLAYER}.\p"
+	.string "I'll catch up eventually.\n"
+	.string "Count on it.$"
 
 `

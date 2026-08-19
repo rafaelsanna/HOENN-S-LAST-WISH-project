@@ -681,16 +681,16 @@
 #define FLAG_RECEIVED_ELECTIRIZER               0x276 
 #define FLAG_DEFEATED_GRANITE_CAVE_AURORA       0x277
 #define FLAG_GOT_BERRY_GIRL_ROUTE106            0x278 
-#define FLAG_RECEIVED_DEWFORD_HALL_SUN_STONE    0x279 // Unused Flag
-#define FLAG_HIDE_GRANITE_CAVE_AURORA           0x27A // Unused Flag
+#define FLAG_RECEIVED_DEWFORD_HALL_SUN_STONE    0x279 
+#define FLAG_HIDE_GRANITE_CAVE_AURORA           0x27A 
 #define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POKEMON_SCHOOL_2F_GUMMY_WURMPLES  0x27B
 #define FLAG_LOST_NIGHTMARE_BATTLE              0x27C 
-#define FLAG_LOST_TO_LUKA_AFTER_5GYM  0x27D 
-#define FLAG_UNUSED_0x27E  0x27E // Unused Flag
-#define FLAG_RANDOMIZER_WILD  0x27F // RANDOMIZER 1 
-#define FLAG_RANDOMIZER_TRAINER  0x280 // RANDOMIZER 2
-#define FLAG_AUTO_FISHING   0x281 // Enables auto-fishing.
-#define FLAG_UNUSED_0x282  0x282 // Unused Flag
+#define FLAG_LOST_TO_LUKA_AFTER_5GYM            0x27D 
+#define FLAG_HIDE_EVERGRANDE_RIVAL              0x27E 
+#define FLAG_RANDOMIZER_WILD                    0x27F // RANDOMIZER 1 
+#define FLAG_RANDOMIZER_TRAINER                 0x280 // RANDOMIZER 2
+#define FLAG_AUTO_FISHING                       0x281 // Enables auto-fishing.
+#define FLAG_DEFEATED_EVERGRANDE_RIVAL          0x282
 #define FLAG_UNUSED_0x283  0x283 // Unused Flag
 #define FLAG_UNUSED_0x284  0x284 // Unused Flag
 #define FLAG_UNUSED_0x285  0x285 // Unused Flag

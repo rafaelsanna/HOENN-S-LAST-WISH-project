@@ -926,7 +926,18 @@
 #define TRAINER_MAXIE_MT_CHIMNEY_HARD       920
 #define TRAINER_ARCHIE_SHIP_CASUAL          921
 #define TRAINER_ARCHIE_SHIP_HARD            922
-
+#define TRAINER_MAY_EVERGRANDE_TREECKO             923
+#define TRAINER_MAY_EVERGRANDE_TORCHIC             924
+#define TRAINER_MAY_EVERGRANDE_MUDKIP              925
+#define TRAINER_MAY_EVERGRANDE_TREECKO_HARD        926
+#define TRAINER_MAY_EVERGRANDE_TORCHIC_HARD        927
+#define TRAINER_MAY_EVERGRANDE_MUDKIP_HARD         928
+#define TRAINER_BRENDAN_EVERGRANDE_TREECKO             929
+#define TRAINER_BRENDAN_EVERGRANDE_TORCHIC             930
+#define TRAINER_BRENDAN_EVERGRANDE_MUDKIP              931
+#define TRAINER_BRENDAN_EVERGRANDE_TREECKO_HARD        932
+#define TRAINER_BRENDAN_EVERGRANDE_TORCHIC_HARD        933
+#define TRAINER_BRENDAN_EVERGRANDE_MUDKIP_HARD         934
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
