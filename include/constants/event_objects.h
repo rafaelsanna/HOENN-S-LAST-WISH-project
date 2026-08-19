@@ -262,6 +262,7 @@
 #define OBJ_EVENT_GFX_LASS_2                     255
 #define OBJ_EVENT_GFX_POKEFAN_2                  256
 #define OBJ_EVENT_GFX_ROB                        257
+#define OBJ_EVENT_GFX_MR_STONE                   258
 
 // NOTE: The maximum amount of object events has been expanded from 255 to 65535.
 // Since dynamic graphics ids still require at least 16 free values, the actual limit
