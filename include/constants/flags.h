@@ -691,7 +691,7 @@
 #define FLAG_RANDOMIZER_TRAINER                 0x280 // RANDOMIZER 2
 #define FLAG_AUTO_FISHING                       0x281 // Enables auto-fishing.
 #define FLAG_DEFEATED_EVERGRANDE_RIVAL          0x282
-#define FLAG_UNUSED_0x283  0x283 // Unused Flag
+#define FLAG_MR_STONE_LEFT                      0x283 
 #define FLAG_UNUSED_0x284  0x284 // Unused Flag
 #define FLAG_UNUSED_0x285  0x285 // Unused Flag
 #define FLAG_UNUSED_0x286  0x286 // Unused Flag

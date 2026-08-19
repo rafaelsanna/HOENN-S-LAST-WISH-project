@@ -130,6 +130,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "JaggedPass_EventScript_MinerNPC",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MR_STONE",
+      "local_id": "LOCALID_MR_STONE",
+      "x": 10,
+      "y": 24,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MagmaHideout_1F_EventScript_MrStone2",
+      "flag": "FLAG_MR_STONE_LEFT"
     }
   ],
   "warp_events": [
@@ -162,6 +176,34 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 33,
+      "elevation": 3,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_MrStoneExitUp"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 34,
+      "elevation": 3,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_MrStoneExitLeft"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 34,
+      "elevation": 3,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_MrStoneExitRight"
+    }
+  ],
   "bg_events": []
 }

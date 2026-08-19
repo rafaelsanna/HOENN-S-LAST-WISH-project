@@ -52,4 +52,181 @@ MagmaHideout_1F_Text_Grunt2PostBattle:
 	.string "It'd be better if you saved surprises\n"
 	.string "to the end, don't you think?$"
 
+MagmaHideout_1F_EventScript_MrStone2::
+	lock
+	goto_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_MrStoneAlreadyLeft
+	goto MagmaHideout_1F_EventScript_MrStoneTalk
+	end
+
+MagmaHideout_1F_EventScript_MrStoneAlreadyLeft::
+	release
+	end
+
+MagmaHideout_1F_EventScript_MrStoneExitUp::
+	goto_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_MrStoneNoOp
+	lockall
+	playse SE_PIN
+	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement LOCALID_PLAYER
+	addobject LOCALID_MR_STONE
+	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneApproachUp
+	waitmovement LOCALID_MR_STONE
+	goto MagmaHideout_1F_EventScript_MrStoneTalkUp
+	end
+
+MagmaHideout_1F_EventScript_MrStoneExitLeft::
+	goto_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_MrStoneNoOp
+	lockall
+	playse SE_PIN
+	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement LOCALID_PLAYER
+	addobject LOCALID_MR_STONE
+	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneApproachLeft
+	waitmovement LOCALID_MR_STONE
+	applymovement LOCALID_MR_STONE, Common_Movement_FaceLeft
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	goto MagmaHideout_1F_EventScript_MrStoneTalkLeft
+	end
+
+MagmaHideout_1F_EventScript_MrStoneExitRight::
+	goto_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_MrStoneNoOp
+	lockall
+	playse SE_PIN
+	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement LOCALID_PLAYER
+	addobject LOCALID_MR_STONE
+	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneApproachRight
+	waitmovement LOCALID_MR_STONE
+	applymovement LOCALID_MR_STONE, Common_Movement_FaceRight
+	applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
+	waitmovement 0
+	goto MagmaHideout_1F_EventScript_MrStoneTalkRight
+	end
+
+MagmaHideout_1F_EventScript_MrStoneNoOp::
+	end
+
+MagmaHideout_1F_EventScript_MrStoneTalk::
+	faceplayer
+	msgbox MagmaHideout_1F_Text_MrStoneSuspicious, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneLeave
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_MR_STONE
+	setflag FLAG_MR_STONE_LEFT
+	release
+	end
+
+MagmaHideout_1F_EventScript_MrStoneTalkUp::
+	faceplayer
+	msgbox MagmaHideout_1F_Text_MrStoneSuspicious, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneLeaveUp
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_MR_STONE
+	setflag FLAG_MR_STONE_LEFT
+	releaseall
+	end
+
+MagmaHideout_1F_EventScript_MrStoneTalkLeft::
+	faceplayer
+	msgbox MagmaHideout_1F_Text_MrStoneSuspicious, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneLeaveLeft
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_MR_STONE
+	setflag FLAG_MR_STONE_LEFT
+	releaseall
+	end
+
+MagmaHideout_1F_EventScript_MrStoneTalkRight::
+	faceplayer
+	msgbox MagmaHideout_1F_Text_MrStoneSuspicious, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneLeaveRight
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_MR_STONE
+	setflag FLAG_MR_STONE_LEFT
+	releaseall
+	end
+
+MagmaHideout_1F_Movement_MrStoneApproachUp:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+MagmaHideout_1F_Movement_MrStoneApproachLeft:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+MagmaHideout_1F_Movement_MrStoneApproachRight:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+MagmaHideout_1F_Movement_MrStoneLeave:
+	walk_down
+	walk_down
+	step_end
+
+MagmaHideout_1F_Movement_MrStoneLeaveUp:
+	walk_right
+	walk_down
+	walk_down
+	walk_left
+	walk_down
+	step_end
+
+MagmaHideout_1F_Movement_MrStoneLeaveLeft:
+	walk_down
+	walk_down
+	step_end
+
+MagmaHideout_1F_Movement_MrStoneLeaveRight:
+	walk_down
+	walk_down
+	step_end
+
+MagmaHideout_1F_Text_MrStoneSuspicious:
+	.string "{PLAYER}! What are you doing around\n"
+	.string "here?\p"
+	.string "It's not dangerous, don't worry…\n"
+	.string "I only came to check on this mine.\p"
+	.string "It used to belong to DEVON CORP.,\n"
+	.string "and some of my workers operated it.\l"
+	.string "But it seems it's been taken over…\p"
+	.string "What a situation, huh?\p"
+	.string "Anyway, be careful getting involved\n"
+	.string "with those guys.\l"
+	.string "TEAM MAGMA, was it?\p"
+	.string "They seem dangerous, I think…\n"
+	.string "Be careful.$"
 `
