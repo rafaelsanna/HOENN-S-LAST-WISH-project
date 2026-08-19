@@ -8,6 +8,7 @@
 //Jaizu:                https://jaizu.moe/
 //AND OTHER RHH POKEEMERALD-EXPANSION CONTRIBUTORS
 #include "global.h"
+#include "achievements.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "berry.h"
@@ -258,6 +259,8 @@ static void DebugAction_Util_Weather(u8 taskId);
 static void DebugAction_Util_Weather_SelectId(u8 taskId);
 static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
+static void DebugAction_Util_OpenAchievements(u8 taskId);
+static void DebugAction_Util_UnlockNextAchievement(u8 taskId);
 
 static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId);
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId);
@@ -543,6 +546,8 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Time Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
     { COMPOUND_STRING("Watch credits…"),    DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),       DebugAction_Util_CheatStart },
+    { COMPOUND_STRING("Achievements…"),     DebugAction_Util_OpenAchievements },
+    { COMPOUND_STRING("Test Ach Popup"),    DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),  DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
     { COMPOUND_STRING("EWRAM Counters…"),   DebugAction_ExecuteScript, Debug_EventScript_EWRAMCounters },
     { COMPOUND_STRING("Follower NPC…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_FollowerNPCMenu },
@@ -1565,6 +1570,19 @@ static void DebugAction_Util_CheatStart(u8 taskId)
 
     InitTimeBasedEvents();
     Debug_DestroyMenu_Full_Script(taskId, Debug_CheatStart);
+}
+
+static void DebugAction_Util_OpenAchievements(u8 taskId)
+{
+    Debug_DestroyMenu_Full(taskId);
+    CB2_InitAchievementsMenu();
+}
+
+static void DebugAction_Util_UnlockNextAchievement(u8 taskId)
+{
+    Debug_DestroyMenu_Full(taskId);
+    Debug_UnlockNextAchievement();
+    ScriptContext_Enable();
 }
 
 void BufferExpansionVersion(struct ScriptContext *ctx)

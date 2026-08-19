@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "pokemon.h"
 #include "battle.h"
 #include "daycare.h"
@@ -1224,6 +1225,7 @@ static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *
 void GiveEggFromDaycare(void)
 {
     _GiveEggFromDaycare(&gSaveBlock1Ptr->daycare);
+    Achievement_IncrementCounter(ACH_COUNTER_DAYCARE_EGGS, 1);
 }
 
 static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)

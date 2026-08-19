@@ -1254,3 +1254,9 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/PetalburgCave_2/scripts.inc"
 
 	.include "data/maps/NIGHTMARE_REALM_1/scripts.inc"
+
+	.include "data/maps/Ice_cave_Entrance/scripts.inc"
+
+	.include "data/maps/Ice_cave_entrance2/scripts.inc"
+
+	.include "data/maps/Ic_cave_main/scripts.inc"

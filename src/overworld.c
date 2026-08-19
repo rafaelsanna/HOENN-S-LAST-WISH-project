@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -1714,6 +1715,7 @@ static void OverworldBasic(void)
 {
     ScriptContext_RunScript();
     RunTasks();
+    Achievement_TryShowQueuedPopup();
     AnimateSprites();
     CameraUpdate();
     UpdateCameraPanning();

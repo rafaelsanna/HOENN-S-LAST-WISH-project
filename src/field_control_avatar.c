@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "battle_setup.h"
 #include "bike.h"
 #include "coord_event_weather.h"
@@ -759,6 +760,7 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
         if (ShouldEggHatch())
         {
             IncrementGameStat(GAME_STAT_HATCHED_EGGS);
+            Achievement_IncrementCounter(ACH_COUNTER_HATCHED_EGGS, 1);
             ScriptContext_SetupScript(EventScript_EggHatch);
             return TRUE;
         }

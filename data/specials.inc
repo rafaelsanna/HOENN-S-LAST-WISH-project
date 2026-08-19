@@ -567,6 +567,10 @@ gSpecials::
 	def_special GetCodeFeedback
 	def_special SetHiddenNature
 	def_special Special_CheckPartyHasWaterMon
+	def_special Achievement_CheckAll
+	def_special GetCompletedAchievementsCount
+	def_special Script_OpenAchievementsMenu
+	def_special Debug_UnlockNextAchievement
     def_special StartMining
     def_special TryDailyMiningWall
     def_special StartGacha

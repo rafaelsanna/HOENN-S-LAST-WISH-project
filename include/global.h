@@ -19,6 +19,7 @@
 #include "constants/easy_chat.h"
 #include "constants/trainer_hill.h"
 #include "constants/items.h"
+#include "constants/achievements.h"
 #include "config/save.h"
 #include "randomizer.h"
 
@@ -243,6 +244,15 @@ struct MiningWallSave
     u16 day;
     u16 count;
     u32 attempts[MINING_WALL_ATTEMPT_COUNT];
+};
+
+struct AchievementSave
+{
+    u16 magic;
+    u8 unlocked[ACHIEVEMENT_UNLOCKED_BYTES];
+    u8 popupQueue[ACHIEVEMENT_POPUP_QUEUE_SIZE];
+    u32 counters[ACH_COUNTER_COUNT];
+    u8 padding[ACHIEVEMENT_SAVE_DATA_SIZE - (sizeof(u16) + ACHIEVEMENT_UNLOCKED_BYTES + ACHIEVEMENT_POPUP_QUEUE_SIZE + sizeof(u32) * ACH_COUNTER_COUNT)];
 };
 
 struct SaveBlock3
@@ -1189,6 +1199,7 @@ struct SaveBlock1
     /*0x3???*/ struct WaldaPhrase waldaPhrase;
     /*0x3???*/ u8 nuzlockeReleasedSpeciesFlags[ROUND_BITS_TO_BYTES(NUM_SPECIES)]; // Tracks species released under Nuzlocke.
     struct MiningWallSave miningWalls;
+    struct AchievementSave achievements;
     // sizeof: 0x3???
 };
 

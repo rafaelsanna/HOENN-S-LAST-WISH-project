@@ -494,3 +494,20 @@ Route116_Text_JojiPostBattle_Local:
     .string "really strong… but I'll keep trying!$"
 
 `
+
+script Fisherman1 {
+	lockall
+	faceplayer
+	msgbox(format("It's freezing out here, but the fish are biting like crazy.\p"
+	              "Those swimmers next to us, though? They're even crazier than the fish!"))
+	releaseall
+	end
+}
+
+script Fisherman2 {
+	lockall
+	faceplayer
+	msgbox(format("Cold water keeps most people away, so the fish here never learned to fear a fishing rod. Pretty convenient, right?"))
+	releaseall
+	end
+}

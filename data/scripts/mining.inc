@@ -1,5 +1,6 @@
 EventScript_TryDailyMining::
 	lockall
+	goto_if_unset FLAG_LEARNED_MINING, EventScript_DailyMiningCancel
 	special TryDailyMiningWall
 	goto_if_eq VAR_RESULT, MINING_WALL_RESULT_LOCKED, EventScript_DailyMiningLocked
 	goto_if_eq VAR_RESULT, MINING_WALL_RESULT_ALREADY_TRIED, EventScript_DailyMiningAlreadyTried
