@@ -75,441 +75,441 @@ SootopolisCity_OnTransition:
 # 38 "data/maps/SootopolisCity/scripts.pory"
 	call_if_eq VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_HideMapNamePopup
 # 39 "data/maps/SootopolisCity/scripts.pory"
-	call SootopolisCity_EventScript_SetWeather
+	call_if_unset FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_HidePrimalLegendaries
 # 40 "data/maps/SootopolisCity/scripts.pory"
-	call SootopolisCity_EventScript_SetLayout
+	call SootopolisCity_EventScript_SetWeather
 # 41 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetBattleSpectators
+	call SootopolisCity_EventScript_SetLayout
 # 42 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetBattleSpectators
 # 43 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_SetBattleSpectators
 # 44 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_SetBattleSpectators
 # 45 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_SetBattleSpectators
 # 46 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_SetBattleSpectators
 # 47 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos
 # 48 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_SetExitCaveOfOriginObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos
 # 49 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_SetOutsideGymObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_SetExitCaveOfOriginObjPos
 # 50 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetExpertBlockCaveEntrance
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_SetOutsideGymObjPos
 # 51 "data/maps/SootopolisCity/scripts.pory"
-	end
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetExpertBlockCaveEntrance
 # 52 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 53 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_HideMapNamePopup::
+
 # 54 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_MAP_NAME_POPUP
+SootopolisCity_EventScript_HideMapNamePopup::
 # 55 "data/maps/SootopolisCity/scripts.pory"
-	return
+	setflag FLAG_HIDE_MAP_NAME_POPUP
 # 56 "data/maps/SootopolisCity/scripts.pory"
-
+	return
 # 57 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetBattleSpectators::
+
 # 58 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_KIRI, 13, 48
+SootopolisCity_EventScript_HidePrimalLegendaries::
 # 59 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_BOY_1, 46, 32
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
 # 60 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_NINJA_BOY, 48, 41
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
 # 61 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_WOMAN_1, 45, 43
+	return
 # 62 "data/maps/SootopolisCity/scripts.pory"
-	setobjectmovementtype LOCALID_KIRI, MOVEMENT_TYPE_FACE_UP
+
 # 63 "data/maps/SootopolisCity/scripts.pory"
-	setobjectmovementtype LOCALID_SOOTOPOLIS_BOY_1, MOVEMENT_TYPE_FACE_LEFT
+SootopolisCity_EventScript_SetBattleSpectators::
 # 64 "data/maps/SootopolisCity/scripts.pory"
-	setobjectmovementtype LOCALID_SOOTOPOLIS_NINJA_BOY, MOVEMENT_TYPE_FACE_LEFT
+	setobjectxyperm LOCALID_KIRI, 13, 48
 # 65 "data/maps/SootopolisCity/scripts.pory"
-	setobjectmovementtype LOCALID_SOOTOPOLIS_WOMAN_1, MOVEMENT_TYPE_FACE_LEFT
+	setobjectxyperm LOCALID_SOOTOPOLIS_BOY_1, 46, 32
 # 66 "data/maps/SootopolisCity/scripts.pory"
-	return
+	setobjectxyperm LOCALID_SOOTOPOLIS_NINJA_BOY, 48, 41
 # 67 "data/maps/SootopolisCity/scripts.pory"
-
+	setobjectxyperm LOCALID_SOOTOPOLIS_WOMAN_1, 45, 43
 # 68 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetLayout::
+	setobjectmovementtype LOCALID_KIRI, MOVEMENT_TYPE_FACE_UP
 # 69 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0, SootopolisCity_EventScript_SetNormalLayout
+	setobjectmovementtype LOCALID_SOOTOPOLIS_BOY_1, MOVEMENT_TYPE_FACE_LEFT
 # 70 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetNormalLayout
+	setobjectmovementtype LOCALID_SOOTOPOLIS_NINJA_BOY, MOVEMENT_TYPE_FACE_LEFT
 # 71 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetLegendariesLayout
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WOMAN_1, MOVEMENT_TYPE_FACE_LEFT
 # 72 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_SetLegendariesLayout
+	return
 # 73 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_SetLegendariesLayout
+
 # 74 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_SetLegendariesLayout
+SootopolisCity_EventScript_SetLayout::
 # 75 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_le VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_SetLegendariesLayout
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0, SootopolisCity_EventScript_SetNormalLayout
 # 76 "data/maps/SootopolisCity/scripts.pory"
-	return
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetNormalLayout
 # 77 "data/maps/SootopolisCity/scripts.pory"
-
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetLegendariesLayout
 # 78 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetNormalLayout::
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_SetLegendariesLayout
 # 79 "data/maps/SootopolisCity/scripts.pory"
-	return
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_SetLegendariesLayout
 # 80 "data/maps/SootopolisCity/scripts.pory"
-
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_SetLegendariesLayout
 # 81 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetLegendariesLayout::
+	goto_if_le VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_SetLegendariesLayout
 # 82 "data/maps/SootopolisCity/scripts.pory"
-	setmaplayoutindex LAYOUT_SOOTOPOLIS_CITY_LEGENDS_BATTLE
+	return
 # 83 "data/maps/SootopolisCity/scripts.pory"
-	return
+
 # 84 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_EventScript_SetNormalLayout::
 # 85 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetWeather::
+	return
 # 86 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0, SootopolisCity_EventScript_SetNormalWeather
+
 # 87 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetNormalWeather
+SootopolisCity_EventScript_SetLegendariesLayout::
 # 88 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetDownpour
+	setmaplayoutindex LAYOUT_SOOTOPOLIS_CITY_LEGENDS_BATTLE
 # 89 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_SetDownpour
+	return
 # 90 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_le VAR_SKY_PILLAR_STATE, 1, Common_EventScript_SetAbnormalWeather
+
 # 91 "data/maps/SootopolisCity/scripts.pory"
-	return
+SootopolisCity_EventScript_SetWeather::
 # 92 "data/maps/SootopolisCity/scripts.pory"
-
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0, SootopolisCity_EventScript_SetNormalWeather
 # 93 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetNormalWeather::
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetNormalWeather
 # 94 "data/maps/SootopolisCity/scripts.pory"
-	return
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetDownpour
 # 95 "data/maps/SootopolisCity/scripts.pory"
-
+	goto_if_eq VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_SetDownpour
 # 96 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetDownpour::
+	goto_if_le VAR_SKY_PILLAR_STATE, 1, Common_EventScript_SetAbnormalWeather
 # 97 "data/maps/SootopolisCity/scripts.pory"
-	setweather WEATHER_DOWNPOUR
+	return
 # 98 "data/maps/SootopolisCity/scripts.pory"
-	return
+
 # 99 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_EventScript_SetNormalWeather::
 # 100 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos::
+	return
 # 101 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN, SootopolisCity_EventScript_SetEnterCaveOfOriginObjPos
+
 # 102 "data/maps/SootopolisCity/scripts.pory"
-	return
+SootopolisCity_EventScript_SetDownpour::
 # 103 "data/maps/SootopolisCity/scripts.pory"
-
+	setweather WEATHER_DOWNPOUR
 # 104 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetEnterCaveOfOriginObjPos::
-# 105 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 30, 18
-# 106 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 32, 18
-# 107 "data/maps/SootopolisCity/scripts.pory"
 	return
-# 108 "data/maps/SootopolisCity/scripts.pory"
+# 105 "data/maps/SootopolisCity/scripts.pory"
 
+# 106 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos::
+# 107 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_set FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN, SootopolisCity_EventScript_SetEnterCaveOfOriginObjPos
+# 108 "data/maps/SootopolisCity/scripts.pory"
+	return
 # 109 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetExitCaveOfOriginObjPos::
+
 # 110 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 30, 18
+SootopolisCity_EventScript_SetEnterCaveOfOriginObjPos::
 # 111 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 31, 18
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 30, 18
 # 112 "data/maps/SootopolisCity/scripts.pory"
 	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 32, 18
 # 113 "data/maps/SootopolisCity/scripts.pory"
-	end
+	return
 # 114 "data/maps/SootopolisCity/scripts.pory"
 
 # 115 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetOutsideGymObjPos::
+SootopolisCity_EventScript_SetExitCaveOfOriginObjPos::
 # 116 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 31, 18
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 30, 18
 # 117 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 29, 33
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 31, 18
 # 118 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_MAXIE, 33, 35
+	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 32, 18
 # 119 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_ARCHIE, 34, 35
+	end
 # 120 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 0, SootopolisCity_EventScript_SetWallaceMiddle
+
 # 121 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 1, SootopolisCity_EventScript_SetWallaceRight
+SootopolisCity_EventScript_SetOutsideGymObjPos::
 # 122 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 2, SootopolisCity_EventScript_SetWallaceLeft
-# 123 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 124 "data/maps/SootopolisCity/scripts.pory"
-
-# 125 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetWallaceMiddle::
-# 126 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 31, 33
-# 127 "data/maps/SootopolisCity/scripts.pory"
-	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
-# 128 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 129 "data/maps/SootopolisCity/scripts.pory"
-
-# 130 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetWallaceRight::
-# 131 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 32, 33
-# 132 "data/maps/SootopolisCity/scripts.pory"
-	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
-# 133 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 134 "data/maps/SootopolisCity/scripts.pory"
-
-# 135 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetWallaceLeft::
-# 136 "data/maps/SootopolisCity/scripts.pory"
-	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 30, 33
-# 137 "data/maps/SootopolisCity/scripts.pory"
-	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
-# 138 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 139 "data/maps/SootopolisCity/scripts.pory"
-
-# 140 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetExpertBlockCaveEntrance::
-# 141 "data/maps/SootopolisCity/scripts.pory"
 	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 31, 18
+# 123 "data/maps/SootopolisCity/scripts.pory"
+	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 29, 33
+# 124 "data/maps/SootopolisCity/scripts.pory"
+	setobjectxyperm LOCALID_SOOTOPOLIS_MAXIE, 33, 35
+# 125 "data/maps/SootopolisCity/scripts.pory"
+	setobjectxyperm LOCALID_SOOTOPOLIS_ARCHIE, 34, 35
+# 126 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 0, SootopolisCity_EventScript_SetWallaceMiddle
+# 127 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 1, SootopolisCity_EventScript_SetWallaceRight
+# 128 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 2, SootopolisCity_EventScript_SetWallaceLeft
+# 129 "data/maps/SootopolisCity/scripts.pory"
+	return
+# 130 "data/maps/SootopolisCity/scripts.pory"
+
+# 131 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_SetWallaceMiddle::
+# 132 "data/maps/SootopolisCity/scripts.pory"
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 31, 33
+# 133 "data/maps/SootopolisCity/scripts.pory"
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
+# 134 "data/maps/SootopolisCity/scripts.pory"
+	return
+# 135 "data/maps/SootopolisCity/scripts.pory"
+
+# 136 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_SetWallaceRight::
+# 137 "data/maps/SootopolisCity/scripts.pory"
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 32, 33
+# 138 "data/maps/SootopolisCity/scripts.pory"
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
+# 139 "data/maps/SootopolisCity/scripts.pory"
+	return
+# 140 "data/maps/SootopolisCity/scripts.pory"
+
+# 141 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_SetWallaceLeft::
 # 142 "data/maps/SootopolisCity/scripts.pory"
-	return
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 30, 33
 # 143 "data/maps/SootopolisCity/scripts.pory"
-
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
 # 144 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_OnWarp:
+	return
 # 145 "data/maps/SootopolisCity/scripts.pory"
-	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_PlayerFaceLegendaries
+
 # 146 "data/maps/SootopolisCity/scripts.pory"
-	.2byte 0
+SootopolisCity_EventScript_SetExpertBlockCaveEntrance::
 # 147 "data/maps/SootopolisCity/scripts.pory"
-
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 31, 18
 # 148 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_PlayerFaceLegendaries::
+	return
 # 149 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_PlayerFaceLegendaries1
+
 # 150 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_SKY_PILLAR_STATE, 2, SootopolisCity_EventScript_PlayerFaceLegendaries2
+SootopolisCity_OnWarp:
 # 151 "data/maps/SootopolisCity/scripts.pory"
-	end
+	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_PlayerFaceLegendaries
 # 152 "data/maps/SootopolisCity/scripts.pory"
-
-# 153 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_PlayerFaceLegendaries1::
-# 154 "data/maps/SootopolisCity/scripts.pory"
-	turnobject LOCALID_PLAYER, DIR_NORTH
-# 155 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 156 "data/maps/SootopolisCity/scripts.pory"
-
-# 157 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_PlayerFaceLegendaries2::
-# 158 "data/maps/SootopolisCity/scripts.pory"
-	turnobject LOCALID_PLAYER, DIR_NORTH
-# 159 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_SKY_PILLAR_STATE, 3
-# 160 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 161 "data/maps/SootopolisCity/scripts.pory"
-
-# 162 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_OnResume:
-# 163 "data/maps/SootopolisCity/scripts.pory"
-	setdivewarp MAP_UNDERWATER_SOOTOPOLIS_CITY, 9, 6
-# 164 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 165 "data/maps/SootopolisCity/scripts.pory"
-
-# 166 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_OnFrame:
-# 167 "data/maps/SootopolisCity/scripts.pory"
-	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_StartLegendariesScene
-# 168 "data/maps/SootopolisCity/scripts.pory"
-	map_script_2 VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_StartRayquazaScene
-# 169 "data/maps/SootopolisCity/scripts.pory"
 	.2byte 0
-# 170 "data/maps/SootopolisCity/scripts.pory"
+# 153 "data/maps/SootopolisCity/scripts.pory"
 
-# 171 "data/maps/SootopolisCity/scripts.pory"
-@ If not at PokeCenter, assumed to have arrived via Dive
-# 172 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StartLegendariesScene::
-# 173 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 174 "data/maps/SootopolisCity/scripts.pory"
-	special StorePlayerCoordsInVars
-# 175 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ne VAR_0x8004, 43, SootopolisCity_EventScript_LegendariesSceneFromDive
-# 176 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ne VAR_0x8005, 32, SootopolisCity_EventScript_LegendariesSceneFromDive
-# 177 "data/maps/SootopolisCity/scripts.pory"
-	goto SootopolisCity_EventScript_LegendariesSceneFromPokeCenter
-# 178 "data/maps/SootopolisCity/scripts.pory"
+# 154 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_PlayerFaceLegendaries::
+# 155 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_PlayerFaceLegendaries1
+# 156 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_SKY_PILLAR_STATE, 2, SootopolisCity_EventScript_PlayerFaceLegendaries2
+# 157 "data/maps/SootopolisCity/scripts.pory"
 	end
-# 179 "data/maps/SootopolisCity/scripts.pory"
+# 158 "data/maps/SootopolisCity/scripts.pory"
 
+# 159 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_PlayerFaceLegendaries1::
+# 160 "data/maps/SootopolisCity/scripts.pory"
+	turnobject LOCALID_PLAYER, DIR_NORTH
+# 161 "data/maps/SootopolisCity/scripts.pory"
+	return
+# 162 "data/maps/SootopolisCity/scripts.pory"
+
+# 163 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_PlayerFaceLegendaries2::
+# 164 "data/maps/SootopolisCity/scripts.pory"
+	turnobject LOCALID_PLAYER, DIR_NORTH
+# 165 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_SKY_PILLAR_STATE, 3
+# 166 "data/maps/SootopolisCity/scripts.pory"
+	return
+# 167 "data/maps/SootopolisCity/scripts.pory"
+
+# 168 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_OnResume:
+# 169 "data/maps/SootopolisCity/scripts.pory"
+	setdivewarp MAP_UNDERWATER_SOOTOPOLIS_CITY, 9, 6
+# 170 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 171 "data/maps/SootopolisCity/scripts.pory"
+
+# 172 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_OnFrame:
+# 173 "data/maps/SootopolisCity/scripts.pory"
+	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_StartLegendariesScene
+# 174 "data/maps/SootopolisCity/scripts.pory"
+	map_script_2 VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_StartRayquazaScene
+# 175 "data/maps/SootopolisCity/scripts.pory"
+	.2byte 0
+# 176 "data/maps/SootopolisCity/scripts.pory"
+
+# 177 "data/maps/SootopolisCity/scripts.pory"
+@ If not at PokeCenter, assumed to have arrived via Dive
+# 178 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_StartLegendariesScene::
+# 179 "data/maps/SootopolisCity/scripts.pory"
+	lockall
 # 180 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
+	special StorePlayerCoordsInVars
 # 181 "data/maps/SootopolisCity/scripts.pory"
-	delay 60
+	goto_if_ne VAR_0x8004, 43, SootopolisCity_EventScript_LegendariesSceneFromDive
 # 182 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
+	goto_if_ne VAR_0x8005, 32, SootopolisCity_EventScript_LegendariesSceneFromDive
 # 183 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromPokeCenter
+	goto SootopolisCity_EventScript_LegendariesSceneFromPokeCenter
 # 184 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	end
 # 185 "data/maps/SootopolisCity/scripts.pory"
-	special RemoveCameraObject
+
 # 186 "data/maps/SootopolisCity/scripts.pory"
-	delay 60
+SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
 # 187 "data/maps/SootopolisCity/scripts.pory"
-	fadescreenspeed FADE_TO_BLACK, 8
-# 188 "data/maps/SootopolisCity/scripts.pory"
-	setweather WEATHER_ABNORMAL
-# 189 "data/maps/SootopolisCity/scripts.pory"
-	doweather
-# 190 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
-# 191 "data/maps/SootopolisCity/scripts.pory"
-	special Script_DoRayquazaScene
-# 192 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 193 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
-# 194 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
-# 195 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 196 "data/maps/SootopolisCity/scripts.pory"
 	delay 60
+# 188 "data/maps/SootopolisCity/scripts.pory"
+	special SpawnCameraObject
+# 189 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromPokeCenter
+# 190 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 191 "data/maps/SootopolisCity/scripts.pory"
+	special RemoveCameraObject
+# 192 "data/maps/SootopolisCity/scripts.pory"
+	delay 60
+# 193 "data/maps/SootopolisCity/scripts.pory"
+	fadescreenspeed FADE_TO_BLACK, 8
+# 194 "data/maps/SootopolisCity/scripts.pory"
+	setweather WEATHER_ABNORMAL
+# 195 "data/maps/SootopolisCity/scripts.pory"
+	doweather
+# 196 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
 # 197 "data/maps/SootopolisCity/scripts.pory"
-	waitse
+	special Script_DoRayquazaScene
 # 198 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	waitstate
 # 199 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
 # 200 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
 # 201 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
 # 202 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1  @ vertical pan
+	delay 60
 # 203 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 1  @ horizontal pan
+	waitse
 # 204 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8  @ num shakes
-# 205 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 5  @ shake delay
-# 206 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
-# 207 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 208 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
-# 209 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
-# 210 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 211 "data/maps/SootopolisCity/scripts.pory"
-	waitse
-# 212 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
-# 213 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
-# 214 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
-# 215 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 216 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1  @ vertical pan
-# 217 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 1  @ horizontal pan
-# 218 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8  @ num shakes
-# 219 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 5  @ shake delay
-# 220 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
-# 221 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 222 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
-# 223 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
-# 224 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 225 "data/maps/SootopolisCity/scripts.pory"
-	waitse
-# 226 "data/maps/SootopolisCity/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
-# 227 "data/maps/SootopolisCity/scripts.pory"
+# 205 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
-# 228 "data/maps/SootopolisCity/scripts.pory"
+# 206 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
-# 229 "data/maps/SootopolisCity/scripts.pory"
+# 207 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
-# 230 "data/maps/SootopolisCity/scripts.pory"
+# 208 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8004, 1  @ vertical pan
-# 231 "data/maps/SootopolisCity/scripts.pory"
+# 209 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8005, 1  @ horizontal pan
-# 232 "data/maps/SootopolisCity/scripts.pory"
+# 210 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8006, 8  @ num shakes
-# 233 "data/maps/SootopolisCity/scripts.pory"
+# 211 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8007, 5  @ shake delay
-# 234 "data/maps/SootopolisCity/scripts.pory"
+# 212 "data/maps/SootopolisCity/scripts.pory"
 	special ShakeCamera
-# 235 "data/maps/SootopolisCity/scripts.pory"
+# 213 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 236 "data/maps/SootopolisCity/scripts.pory"
+# 214 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
-# 237 "data/maps/SootopolisCity/scripts.pory"
+# 215 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+# 216 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 217 "data/maps/SootopolisCity/scripts.pory"
+	waitse
+# 218 "data/maps/SootopolisCity/scripts.pory"
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+# 219 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
+# 220 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
+# 221 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 222 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, 1  @ vertical pan
+# 223 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8005, 1  @ horizontal pan
+# 224 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8006, 8  @ num shakes
+# 225 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8007, 5  @ shake delay
+# 226 "data/maps/SootopolisCity/scripts.pory"
+	special ShakeCamera
+# 227 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
+# 228 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+# 229 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+# 230 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 231 "data/maps/SootopolisCity/scripts.pory"
+	waitse
+# 232 "data/maps/SootopolisCity/scripts.pory"
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+# 233 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+# 234 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+# 235 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 236 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, 1  @ vertical pan
+# 237 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8005, 1  @ horizontal pan
 # 238 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	setvar VAR_0x8006, 8  @ num shakes
 # 239 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
+	setvar VAR_0x8007, 5  @ shake delay
 # 240 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreIdle
+	special ShakeCamera
 # 241 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonIdle
+	waitstate
 # 242 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanBackToPokeCenter
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
 # 243 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
 # 244 "data/maps/SootopolisCity/scripts.pory"
-	special RemoveCameraObject
+	waitmovement 0
 # 245 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_SOOTOPOLIS_CITY_STATE, 2
+	special SpawnCameraObject
 # 246 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreIdle
 # 247 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonIdle
 # 248 "data/maps/SootopolisCity/scripts.pory"
-	end
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanBackToPokeCenter
 # 249 "data/maps/SootopolisCity/scripts.pory"
-
+	waitmovement 0
 # 250 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PanToActionFromPokeCenter:
+	special RemoveCameraObject
 # 251 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	setvar VAR_SOOTOPOLIS_CITY_STATE, 2
 # 252 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 # 253 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	releaseall
 # 254 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	end
 # 255 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+
 # 256 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+SootopolisCity_Movement_PanToActionFromPokeCenter:
 # 257 "data/maps/SootopolisCity/scripts.pory"
 	walk_slow_diag_southwest
 # 258 "data/maps/SootopolisCity/scripts.pory"
@@ -523,23 +523,23 @@ SootopolisCity_Movement_PanToActionFromPokeCenter:
 # 262 "data/maps/SootopolisCity/scripts.pory"
 	walk_slow_diag_southwest
 # 263 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_slow_diag_southwest
 # 264 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_slow_diag_southwest
 # 265 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PanBackToPokeCenter:
+	walk_slow_diag_southwest
 # 266 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	walk_slow_diag_southwest
 # 267 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	walk_slow_diag_southwest
 # 268 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	walk_slow_diag_southwest
 # 269 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	step_end
 # 270 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+
 # 271 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+SootopolisCity_Movement_PanBackToPokeCenter:
 # 272 "data/maps/SootopolisCity/scripts.pory"
 	walk_slow_diag_northeast
 # 273 "data/maps/SootopolisCity/scripts.pory"
@@ -553,235 +553,235 @@ SootopolisCity_Movement_PanBackToPokeCenter:
 # 277 "data/maps/SootopolisCity/scripts.pory"
 	walk_slow_diag_northeast
 # 278 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_slow_diag_northeast
 # 279 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_slow_diag_northeast
 # 280 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_LegendariesSceneFromDive::
+	walk_slow_diag_northeast
 # 281 "data/maps/SootopolisCity/scripts.pory"
-	delay 60
+	walk_slow_diag_northeast
 # 282 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
+	walk_slow_diag_northeast
 # 283 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromDive
+	walk_slow_diag_northeast
 # 284 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	step_end
 # 285 "data/maps/SootopolisCity/scripts.pory"
-	special RemoveCameraObject
+
 # 286 "data/maps/SootopolisCity/scripts.pory"
-	delay 60
+SootopolisCity_EventScript_LegendariesSceneFromDive::
 # 287 "data/maps/SootopolisCity/scripts.pory"
-	fadescreenspeed FADE_TO_BLACK, 8
-# 288 "data/maps/SootopolisCity/scripts.pory"
-	setweather WEATHER_ABNORMAL
-# 289 "data/maps/SootopolisCity/scripts.pory"
-	doweather
-# 290 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
-# 291 "data/maps/SootopolisCity/scripts.pory"
-	special Script_DoRayquazaScene
-# 292 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 293 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
-# 294 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
-# 295 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 296 "data/maps/SootopolisCity/scripts.pory"
 	delay 60
+# 288 "data/maps/SootopolisCity/scripts.pory"
+	special SpawnCameraObject
+# 289 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromDive
+# 290 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 291 "data/maps/SootopolisCity/scripts.pory"
+	special RemoveCameraObject
+# 292 "data/maps/SootopolisCity/scripts.pory"
+	delay 60
+# 293 "data/maps/SootopolisCity/scripts.pory"
+	fadescreenspeed FADE_TO_BLACK, 8
+# 294 "data/maps/SootopolisCity/scripts.pory"
+	setweather WEATHER_ABNORMAL
+# 295 "data/maps/SootopolisCity/scripts.pory"
+	doweather
+# 296 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
 # 297 "data/maps/SootopolisCity/scripts.pory"
-	waitse
+	special Script_DoRayquazaScene
 # 298 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	waitstate
 # 299 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
 # 300 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
 # 301 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
 # 302 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1  @ vertical pan
+	delay 60
 # 303 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 1  @ horizontal pan
+	waitse
 # 304 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8  @ num shakes
-# 305 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 5  @ shake delay
-# 306 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
-# 307 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 308 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
-# 309 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
-# 310 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 311 "data/maps/SootopolisCity/scripts.pory"
-	waitse
-# 312 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
-# 313 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
-# 314 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
-# 315 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 316 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1  @ vertical pan
-# 317 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 1  @ horizontal pan
-# 318 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8  @ num shakes
-# 319 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 5  @ shake delay
-# 320 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
-# 321 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 322 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
-# 323 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
-# 324 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 325 "data/maps/SootopolisCity/scripts.pory"
-	waitse
-# 326 "data/maps/SootopolisCity/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
-# 327 "data/maps/SootopolisCity/scripts.pory"
+# 305 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
-# 328 "data/maps/SootopolisCity/scripts.pory"
+# 306 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
-# 329 "data/maps/SootopolisCity/scripts.pory"
+# 307 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
-# 330 "data/maps/SootopolisCity/scripts.pory"
+# 308 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8004, 1  @ vertical pan
-# 331 "data/maps/SootopolisCity/scripts.pory"
+# 309 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8005, 1  @ horizontal pan
-# 332 "data/maps/SootopolisCity/scripts.pory"
+# 310 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8006, 8  @ num shakes
-# 333 "data/maps/SootopolisCity/scripts.pory"
+# 311 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8007, 5  @ shake delay
-# 334 "data/maps/SootopolisCity/scripts.pory"
+# 312 "data/maps/SootopolisCity/scripts.pory"
 	special ShakeCamera
-# 335 "data/maps/SootopolisCity/scripts.pory"
+# 313 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 336 "data/maps/SootopolisCity/scripts.pory"
+# 314 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
-# 337 "data/maps/SootopolisCity/scripts.pory"
+# 315 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+# 316 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 317 "data/maps/SootopolisCity/scripts.pory"
+	waitse
+# 318 "data/maps/SootopolisCity/scripts.pory"
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+# 319 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
+# 320 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
+# 321 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 322 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, 1  @ vertical pan
+# 323 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8005, 1  @ horizontal pan
+# 324 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8006, 8  @ num shakes
+# 325 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8007, 5  @ shake delay
+# 326 "data/maps/SootopolisCity/scripts.pory"
+	special ShakeCamera
+# 327 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
+# 328 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+# 329 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+# 330 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 331 "data/maps/SootopolisCity/scripts.pory"
+	waitse
+# 332 "data/maps/SootopolisCity/scripts.pory"
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+# 333 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+# 334 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+# 335 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 336 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, 1  @ vertical pan
+# 337 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8005, 1  @ horizontal pan
 # 338 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	setvar VAR_0x8006, 8  @ num shakes
 # 339 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
+	setvar VAR_0x8007, 5  @ shake delay
 # 340 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreIdle
+	special ShakeCamera
 # 341 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonIdle
+	waitstate
 # 342 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanBackToDive
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
 # 343 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
 # 344 "data/maps/SootopolisCity/scripts.pory"
-	special RemoveCameraObject
+	waitmovement 0
 # 345 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_SOOTOPOLIS_CITY_STATE, 2
+	special SpawnCameraObject
 # 346 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreIdle
 # 347 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonIdle
 # 348 "data/maps/SootopolisCity/scripts.pory"
-	end
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanBackToDive
 # 349 "data/maps/SootopolisCity/scripts.pory"
-
+	waitmovement 0
 # 350 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PanToActionFromDive:
+	special RemoveCameraObject
 # 351 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	setvar VAR_SOOTOPOLIS_CITY_STATE, 2
 # 352 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 # 353 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	releaseall
 # 354 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	end
 # 355 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+
 # 356 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+SootopolisCity_Movement_PanToActionFromDive:
 # 357 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_slow_diag_northeast
 # 358 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_slow_diag_northeast
 # 359 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 360 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_up
 # 361 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_up
 # 362 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PanBackToDive:
+	walk_up
 # 363 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 364 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 365 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 366 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	step_end
 # 367 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+
 # 368 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+SootopolisCity_Movement_PanBackToDive:
 # 369 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 370 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	walk_down
 # 371 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	walk_down
 # 372 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_down
 # 373 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_down
 # 374 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_KyogreAttack:
+	walk_down
 # 375 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+	walk_down
 # 376 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+	walk_slow_diag_southwest
 # 377 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+	walk_slow_diag_southwest
 # 378 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 379 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 380 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 381 "data/maps/SootopolisCity/scripts.pory"
-	init_affine_anim
-# 382 "data/maps/SootopolisCity/scripts.pory"
-	walk_left_affine
-# 383 "data/maps/SootopolisCity/scripts.pory"
-	clear_affine_anim
-# 384 "data/maps/SootopolisCity/scripts.pory"
 	step_end
-# 385 "data/maps/SootopolisCity/scripts.pory"
+# 379 "data/maps/SootopolisCity/scripts.pory"
 
+# 380 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_KyogreAttack:
+# 381 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_slow_left
+# 382 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_slow_left
+# 383 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_slow_left
+# 384 "data/maps/SootopolisCity/scripts.pory"
+	delay_16
+# 385 "data/maps/SootopolisCity/scripts.pory"
+	delay_16
 # 386 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_KyogreDefend:
+	delay_16
 # 387 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	init_affine_anim
 # 388 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	walk_left_affine
 # 389 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	clear_affine_anim
 # 390 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	step_end
 # 391 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+
 # 392 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+SootopolisCity_Movement_KyogreDefend:
 # 393 "data/maps/SootopolisCity/scripts.pory"
 	delay_16
 # 394 "data/maps/SootopolisCity/scripts.pory"
@@ -789,85 +789,85 @@ SootopolisCity_Movement_KyogreDefend:
 # 395 "data/maps/SootopolisCity/scripts.pory"
 	delay_16
 # 396 "data/maps/SootopolisCity/scripts.pory"
-	init_affine_anim
+	delay_16
 # 397 "data/maps/SootopolisCity/scripts.pory"
-	walk_left_affine
+	delay_16
 # 398 "data/maps/SootopolisCity/scripts.pory"
-	clear_affine_anim
+	delay_16
 # 399 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	delay_16
 # 400 "data/maps/SootopolisCity/scripts.pory"
-
+	delay_16
 # 401 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_KyogreMoveBack:
+	delay_16
 # 402 "data/maps/SootopolisCity/scripts.pory"
-	lock_facing_direction
+	init_affine_anim
 # 403 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_left_affine
 # 404 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	clear_affine_anim
 # 405 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	step_end
 # 406 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+
 # 407 "data/maps/SootopolisCity/scripts.pory"
-	unlock_facing_direction
+SootopolisCity_Movement_KyogreMoveBack:
 # 408 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	lock_facing_direction
 # 409 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_right
 # 410 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_KyogreIdle:
+	delay_16
 # 411 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+	delay_16
 # 412 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+	delay_16
 # 413 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+	unlock_facing_direction
 # 414 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+	step_end
 # 415 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+
 # 416 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_left
+SootopolisCity_Movement_KyogreIdle:
 # 417 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_in_place_slow_left
 # 418 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_in_place_slow_left
 # 419 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_GroudonAttack:
+	walk_in_place_slow_left
 # 420 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+	walk_in_place_slow_left
 # 421 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+	walk_in_place_slow_left
 # 422 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+	walk_in_place_slow_left
 # 423 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 424 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 425 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 426 "data/maps/SootopolisCity/scripts.pory"
-	walk_fast_right
-# 427 "data/maps/SootopolisCity/scripts.pory"
 	step_end
-# 428 "data/maps/SootopolisCity/scripts.pory"
+# 424 "data/maps/SootopolisCity/scripts.pory"
 
+# 425 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_GroudonAttack:
+# 426 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_slow_right
+# 427 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_slow_right
+# 428 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_slow_right
 # 429 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_GroudonDefend:
+	delay_16
 # 430 "data/maps/SootopolisCity/scripts.pory"
 	delay_16
 # 431 "data/maps/SootopolisCity/scripts.pory"
 	delay_16
 # 432 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	walk_fast_right
 # 433 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	step_end
 # 434 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+
 # 435 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+SootopolisCity_Movement_GroudonDefend:
 # 436 "data/maps/SootopolisCity/scripts.pory"
 	delay_16
 # 437 "data/maps/SootopolisCity/scripts.pory"
@@ -875,369 +875,369 @@ SootopolisCity_Movement_GroudonDefend:
 # 438 "data/maps/SootopolisCity/scripts.pory"
 	delay_16
 # 439 "data/maps/SootopolisCity/scripts.pory"
-	walk_fast_right
+	delay_16
 # 440 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	delay_16
 # 441 "data/maps/SootopolisCity/scripts.pory"
-
+	delay_16
 # 442 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_GroudonMoveBack:
+	delay_16
 # 443 "data/maps/SootopolisCity/scripts.pory"
-	lock_facing_direction
+	delay_16
 # 444 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	delay_16
 # 445 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	walk_fast_right
 # 446 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	step_end
 # 447 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+
 # 448 "data/maps/SootopolisCity/scripts.pory"
-	unlock_facing_direction
+SootopolisCity_Movement_GroudonMoveBack:
 # 449 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	lock_facing_direction
 # 450 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_left
 # 451 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_GroudonIdle:
+	delay_16
 # 452 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+	delay_16
 # 453 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+	delay_16
 # 454 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+	unlock_facing_direction
 # 455 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+	step_end
 # 456 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+
 # 457 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_slow_right
+SootopolisCity_Movement_GroudonIdle:
 # 458 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_in_place_slow_right
 # 459 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_in_place_slow_right
 # 460 "data/maps/SootopolisCity/scripts.pory"
-@ If not at PokeCenter, assumed to have arrived via Dive
+	walk_in_place_slow_right
 # 461 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StartRayquazaScene::
+	walk_in_place_slow_right
 # 462 "data/maps/SootopolisCity/scripts.pory"
-	lockall
+	walk_in_place_slow_right
 # 463 "data/maps/SootopolisCity/scripts.pory"
-	special StorePlayerCoordsInVars
+	walk_in_place_slow_right
 # 464 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ne VAR_0x8004, 43, SootopolisCity_EventScript_RayquazaSceneFromDive
+	step_end
 # 465 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ne VAR_0x8005, 32, SootopolisCity_EventScript_RayquazaSceneFromDive
+
 # 466 "data/maps/SootopolisCity/scripts.pory"
-	goto SootopolisCity_EventScript_RayquazaSceneFromPokeCenter
+@ If not at PokeCenter, assumed to have arrived via Dive
 # 467 "data/maps/SootopolisCity/scripts.pory"
-	end
+SootopolisCity_EventScript_StartRayquazaScene::
 # 468 "data/maps/SootopolisCity/scripts.pory"
-
+	lockall
 # 469 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
+	special StorePlayerCoordsInVars
 # 470 "data/maps/SootopolisCity/scripts.pory"
-	delay 60
+	goto_if_ne VAR_0x8004, 43, SootopolisCity_EventScript_RayquazaSceneFromDive
 # 471 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
+	goto_if_ne VAR_0x8005, 32, SootopolisCity_EventScript_RayquazaSceneFromDive
 # 472 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromPokeCenter
+	goto SootopolisCity_EventScript_RayquazaSceneFromPokeCenter
 # 473 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	end
 # 474 "data/maps/SootopolisCity/scripts.pory"
-	special RemoveCameraObject
+
 # 475 "data/maps/SootopolisCity/scripts.pory"
-	delay 60
+SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
 # 476 "data/maps/SootopolisCity/scripts.pory"
-	fadescreenspeed FADE_TO_BLACK, 8
+	delay 60
 # 477 "data/maps/SootopolisCity/scripts.pory"
-	call SootopolisCity_EventScript_SetRoughWater
+	special SpawnCameraObject
 # 478 "data/maps/SootopolisCity/scripts.pory"
-	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromPokeCenter
 # 479 "data/maps/SootopolisCity/scripts.pory"
-	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+	waitmovement 0
 # 480 "data/maps/SootopolisCity/scripts.pory"
-	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
-# 481 "data/maps/SootopolisCity/scripts.pory"
-	hideobjectat LOCALID_SOOTOPOLIS_RAYQUAZA, MAP_SOOTOPOLIS_CITY
-# 482 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, TRUE
-# 483 "data/maps/SootopolisCity/scripts.pory"
-	special Script_DoRayquazaScene
-# 484 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 485 "data/maps/SootopolisCity/scripts.pory"
-	playse SE_THUNDER
-# 486 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
-# 487 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
-# 488 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 489 "data/maps/SootopolisCity/scripts.pory"
-	waitse
-# 490 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
-# 491 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1  @ vertical pan
-# 492 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 1  @ horizontal pan
-# 493 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8  @ num shakes
-# 494 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 3  @ shake delay
-# 495 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
-# 496 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 497 "data/maps/SootopolisCity/scripts.pory"
-	waitse
-# 498 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
-# 499 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1  @ vertical pan
-# 500 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 2  @ horizontal pan
-# 501 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8  @ num shakes
-# 502 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 5  @ shake delay
-# 503 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
-# 504 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 505 "data/maps/SootopolisCity/scripts.pory"
-	waitmoncry
-# 506 "data/maps/SootopolisCity/scripts.pory"
-	setweather WEATHER_NONE
-# 507 "data/maps/SootopolisCity/scripts.pory"
-	doweather
-# 508 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
-# 509 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 510 "data/maps/SootopolisCity/scripts.pory"
-	removeobject LOCALID_SOOTOPOLIS_RAYQUAZA
-# 511 "data/maps/SootopolisCity/scripts.pory"
-	special WaitWeather
-# 512 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 513 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_SYS_WEATHER_CTRL
-# 514 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_SKY_PILLAR_STATE, 3
-# 515 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_LEGENDARIES_IN_SOOTOPOLIS
-# 516 "data/maps/SootopolisCity/scripts.pory"
-	fadenewbgm MUS_SOOTOPOLIS
-# 517 "data/maps/SootopolisCity/scripts.pory"
-	delay 120
-# 518 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
-# 519 "data/maps/SootopolisCity/scripts.pory"
-	warpwhitefade MAP_SOOTOPOLIS_CITY, 43, 32
-# 520 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 521 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 522 "data/maps/SootopolisCity/scripts.pory"
-
-# 523 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_RayquazaSceneFromDive::
-# 524 "data/maps/SootopolisCity/scripts.pory"
-	delay 60
-# 525 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
-# 526 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromDive
-# 527 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 528 "data/maps/SootopolisCity/scripts.pory"
 	special RemoveCameraObject
-# 529 "data/maps/SootopolisCity/scripts.pory"
+# 481 "data/maps/SootopolisCity/scripts.pory"
 	delay 60
-# 530 "data/maps/SootopolisCity/scripts.pory"
+# 482 "data/maps/SootopolisCity/scripts.pory"
 	fadescreenspeed FADE_TO_BLACK, 8
-# 531 "data/maps/SootopolisCity/scripts.pory"
+# 483 "data/maps/SootopolisCity/scripts.pory"
 	call SootopolisCity_EventScript_SetRoughWater
-# 532 "data/maps/SootopolisCity/scripts.pory"
+# 484 "data/maps/SootopolisCity/scripts.pory"
 	removeobject LOCALID_SOOTOPOLIS_GROUDON
-# 533 "data/maps/SootopolisCity/scripts.pory"
+# 485 "data/maps/SootopolisCity/scripts.pory"
 	removeobject LOCALID_SOOTOPOLIS_KYOGRE
-# 534 "data/maps/SootopolisCity/scripts.pory"
+# 486 "data/maps/SootopolisCity/scripts.pory"
 	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
-# 535 "data/maps/SootopolisCity/scripts.pory"
+# 487 "data/maps/SootopolisCity/scripts.pory"
+	hideobjectat LOCALID_SOOTOPOLIS_RAYQUAZA, MAP_SOOTOPOLIS_CITY
+# 488 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8004, TRUE
-# 536 "data/maps/SootopolisCity/scripts.pory"
+# 489 "data/maps/SootopolisCity/scripts.pory"
 	special Script_DoRayquazaScene
-# 537 "data/maps/SootopolisCity/scripts.pory"
+# 490 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 538 "data/maps/SootopolisCity/scripts.pory"
+# 491 "data/maps/SootopolisCity/scripts.pory"
+	playse SE_THUNDER
+# 492 "data/maps/SootopolisCity/scripts.pory"
 	special SpawnCameraObject
-# 539 "data/maps/SootopolisCity/scripts.pory"
+# 493 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
-# 540 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerApproachLegendaries
-# 541 "data/maps/SootopolisCity/scripts.pory"
+# 494 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
-# 542 "data/maps/SootopolisCity/scripts.pory"
+# 495 "data/maps/SootopolisCity/scripts.pory"
 	waitse
-# 543 "data/maps/SootopolisCity/scripts.pory"
+# 496 "data/maps/SootopolisCity/scripts.pory"
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
-# 544 "data/maps/SootopolisCity/scripts.pory"
+# 497 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8004, 1  @ vertical pan
-# 545 "data/maps/SootopolisCity/scripts.pory"
+# 498 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8005, 1  @ horizontal pan
-# 546 "data/maps/SootopolisCity/scripts.pory"
+# 499 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8006, 8  @ num shakes
-# 547 "data/maps/SootopolisCity/scripts.pory"
+# 500 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8007, 3  @ shake delay
-# 548 "data/maps/SootopolisCity/scripts.pory"
+# 501 "data/maps/SootopolisCity/scripts.pory"
 	special ShakeCamera
-# 549 "data/maps/SootopolisCity/scripts.pory"
+# 502 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 550 "data/maps/SootopolisCity/scripts.pory"
+# 503 "data/maps/SootopolisCity/scripts.pory"
 	waitse
-# 551 "data/maps/SootopolisCity/scripts.pory"
+# 504 "data/maps/SootopolisCity/scripts.pory"
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
-# 552 "data/maps/SootopolisCity/scripts.pory"
+# 505 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8004, 1  @ vertical pan
-# 553 "data/maps/SootopolisCity/scripts.pory"
+# 506 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8005, 2  @ horizontal pan
-# 554 "data/maps/SootopolisCity/scripts.pory"
+# 507 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8006, 8  @ num shakes
-# 555 "data/maps/SootopolisCity/scripts.pory"
+# 508 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_0x8007, 5  @ shake delay
-# 556 "data/maps/SootopolisCity/scripts.pory"
+# 509 "data/maps/SootopolisCity/scripts.pory"
 	special ShakeCamera
-# 557 "data/maps/SootopolisCity/scripts.pory"
+# 510 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 558 "data/maps/SootopolisCity/scripts.pory"
+# 511 "data/maps/SootopolisCity/scripts.pory"
 	waitmoncry
-# 559 "data/maps/SootopolisCity/scripts.pory"
+# 512 "data/maps/SootopolisCity/scripts.pory"
 	setweather WEATHER_NONE
-# 560 "data/maps/SootopolisCity/scripts.pory"
+# 513 "data/maps/SootopolisCity/scripts.pory"
 	doweather
-# 561 "data/maps/SootopolisCity/scripts.pory"
+# 514 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
-# 562 "data/maps/SootopolisCity/scripts.pory"
+# 515 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
-# 563 "data/maps/SootopolisCity/scripts.pory"
+# 516 "data/maps/SootopolisCity/scripts.pory"
 	removeobject LOCALID_SOOTOPOLIS_RAYQUAZA
-# 564 "data/maps/SootopolisCity/scripts.pory"
+# 517 "data/maps/SootopolisCity/scripts.pory"
 	special WaitWeather
-# 565 "data/maps/SootopolisCity/scripts.pory"
+# 518 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 566 "data/maps/SootopolisCity/scripts.pory"
+# 519 "data/maps/SootopolisCity/scripts.pory"
 	clearflag FLAG_SYS_WEATHER_CTRL
-# 567 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_SKY_PILLAR_STATE, 2
-# 568 "data/maps/SootopolisCity/scripts.pory"
+# 520 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_SKY_PILLAR_STATE, 3
+# 521 "data/maps/SootopolisCity/scripts.pory"
 	clearflag FLAG_LEGENDARIES_IN_SOOTOPOLIS
-# 569 "data/maps/SootopolisCity/scripts.pory"
-	fadenewbgm MUS_SURF
-# 570 "data/maps/SootopolisCity/scripts.pory"
+# 522 "data/maps/SootopolisCity/scripts.pory"
+	fadenewbgm MUS_SOOTOPOLIS
+# 523 "data/maps/SootopolisCity/scripts.pory"
 	delay 120
-# 571 "data/maps/SootopolisCity/scripts.pory"
+# 524 "data/maps/SootopolisCity/scripts.pory"
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
-# 572 "data/maps/SootopolisCity/scripts.pory"
-	warpwhitefade MAP_SOOTOPOLIS_CITY, 29, 53
-# 573 "data/maps/SootopolisCity/scripts.pory"
+# 525 "data/maps/SootopolisCity/scripts.pory"
+	warpwhitefade MAP_SOOTOPOLIS_CITY, 43, 32
+# 526 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 574 "data/maps/SootopolisCity/scripts.pory"
+# 527 "data/maps/SootopolisCity/scripts.pory"
 	end
+# 528 "data/maps/SootopolisCity/scripts.pory"
+
+# 529 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_RayquazaSceneFromDive::
+# 530 "data/maps/SootopolisCity/scripts.pory"
+	delay 60
+# 531 "data/maps/SootopolisCity/scripts.pory"
+	special SpawnCameraObject
+# 532 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromDive
+# 533 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 534 "data/maps/SootopolisCity/scripts.pory"
+	special RemoveCameraObject
+# 535 "data/maps/SootopolisCity/scripts.pory"
+	delay 60
+# 536 "data/maps/SootopolisCity/scripts.pory"
+	fadescreenspeed FADE_TO_BLACK, 8
+# 537 "data/maps/SootopolisCity/scripts.pory"
+	call SootopolisCity_EventScript_SetRoughWater
+# 538 "data/maps/SootopolisCity/scripts.pory"
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+# 539 "data/maps/SootopolisCity/scripts.pory"
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+# 540 "data/maps/SootopolisCity/scripts.pory"
+	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
+# 541 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, TRUE
+# 542 "data/maps/SootopolisCity/scripts.pory"
+	special Script_DoRayquazaScene
+# 543 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
+# 544 "data/maps/SootopolisCity/scripts.pory"
+	special SpawnCameraObject
+# 545 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
+# 546 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerApproachLegendaries
+# 547 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 548 "data/maps/SootopolisCity/scripts.pory"
+	waitse
+# 549 "data/maps/SootopolisCity/scripts.pory"
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+# 550 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, 1  @ vertical pan
+# 551 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8005, 1  @ horizontal pan
+# 552 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8006, 8  @ num shakes
+# 553 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8007, 3  @ shake delay
+# 554 "data/maps/SootopolisCity/scripts.pory"
+	special ShakeCamera
+# 555 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
+# 556 "data/maps/SootopolisCity/scripts.pory"
+	waitse
+# 557 "data/maps/SootopolisCity/scripts.pory"
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+# 558 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8004, 1  @ vertical pan
+# 559 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8005, 2  @ horizontal pan
+# 560 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8006, 8  @ num shakes
+# 561 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_0x8007, 5  @ shake delay
+# 562 "data/maps/SootopolisCity/scripts.pory"
+	special ShakeCamera
+# 563 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
+# 564 "data/maps/SootopolisCity/scripts.pory"
+	waitmoncry
+# 565 "data/maps/SootopolisCity/scripts.pory"
+	setweather WEATHER_NONE
+# 566 "data/maps/SootopolisCity/scripts.pory"
+	doweather
+# 567 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
+# 568 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 569 "data/maps/SootopolisCity/scripts.pory"
+	removeobject LOCALID_SOOTOPOLIS_RAYQUAZA
+# 570 "data/maps/SootopolisCity/scripts.pory"
+	special WaitWeather
+# 571 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
+# 572 "data/maps/SootopolisCity/scripts.pory"
+	clearflag FLAG_SYS_WEATHER_CTRL
+# 573 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_SKY_PILLAR_STATE, 2
+# 574 "data/maps/SootopolisCity/scripts.pory"
+	clearflag FLAG_LEGENDARIES_IN_SOOTOPOLIS
 # 575 "data/maps/SootopolisCity/scripts.pory"
-
+	fadenewbgm MUS_SURF
 # 576 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_SetRoughWater::
+	delay 120
 # 577 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 27, 43, METATILE_Sootopolis_RoughWater, FALSE
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 # 578 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 28, 43, METATILE_Sootopolis_RoughWater, FALSE
+	warpwhitefade MAP_SOOTOPOLIS_CITY, 29, 53
 # 579 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 29, 43, METATILE_Sootopolis_RoughWater, FALSE
+	waitstate
 # 580 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 30, 43, METATILE_Sootopolis_RoughWater, FALSE
+	end
 # 581 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 27, 44, METATILE_Sootopolis_RoughWater, FALSE
+
 # 582 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 28, 44, METATILE_Sootopolis_RoughWater, FALSE
+SootopolisCity_EventScript_SetRoughWater::
 # 583 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 29, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 27, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 584 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 30, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 28, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 585 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 27, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 29, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 586 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 28, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 30, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 587 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 29, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 27, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 588 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 30, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 28, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 589 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 32, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 29, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 590 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 33, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 30, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 591 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 34, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 27, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 592 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 35, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 28, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 593 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 32, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 29, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 594 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 33, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 30, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 595 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 34, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 32, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 596 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 35, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 33, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 597 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 32, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 34, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 598 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 33, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 35, 43, METATILE_Sootopolis_RoughWater, FALSE
 # 599 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 34, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 32, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 600 "data/maps/SootopolisCity/scripts.pory"
-	setmetatile 35, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 33, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 601 "data/maps/SootopolisCity/scripts.pory"
-	return
+	setmetatile 34, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 602 "data/maps/SootopolisCity/scripts.pory"
-
+	setmetatile 35, 44, METATILE_Sootopolis_RoughWater, FALSE
 # 603 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_RayquazaFlyOff:
+	setmetatile 32, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 604 "data/maps/SootopolisCity/scripts.pory"
-	walk_fast_up
+	setmetatile 33, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 605 "data/maps/SootopolisCity/scripts.pory"
-	walk_faster_up
+	setmetatile 34, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 606 "data/maps/SootopolisCity/scripts.pory"
-	walk_faster_up
+	setmetatile 35, 45, METATILE_Sootopolis_RoughWater, FALSE
 # 607 "data/maps/SootopolisCity/scripts.pory"
-	walk_faster_up
+	return
 # 608 "data/maps/SootopolisCity/scripts.pory"
-	walk_faster_up
+
 # 609 "data/maps/SootopolisCity/scripts.pory"
-	walk_faster_up
+SootopolisCity_Movement_RayquazaFlyOff:
 # 610 "data/maps/SootopolisCity/scripts.pory"
-	walk_faster_up
+	walk_fast_up
 # 611 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_faster_up
 # 612 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_faster_up
 # 613 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PanUp:
+	walk_faster_up
 # 614 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_faster_up
 # 615 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_faster_up
 # 616 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_faster_up
 # 617 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
-# 618 "data/maps/SootopolisCity/scripts.pory"
 	step_end
-# 619 "data/maps/SootopolisCity/scripts.pory"
+# 618 "data/maps/SootopolisCity/scripts.pory"
 
+# 619 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_PanUp:
 # 620 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerApproachLegendaries:
+	walk_up
 # 621 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 622 "data/maps/SootopolisCity/scripts.pory"
@@ -1245,75 +1245,75 @@ SootopolisCity_Movement_PlayerApproachLegendaries:
 # 623 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 624 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	step_end
 # 625 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+
 # 626 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Movement_PlayerApproachLegendaries:
 # 627 "data/maps/SootopolisCity/scripts.pory"
-@ Unused
+	walk_up
 # 628 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerApproachLegendariesDown:
+	walk_up
 # 629 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 630 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 631 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 632 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 633 "data/maps/SootopolisCity/scripts.pory"
 	step_end
-# 634 "data/maps/SootopolisCity/scripts.pory"
+# 632 "data/maps/SootopolisCity/scripts.pory"
 
-# 635 "data/maps/SootopolisCity/scripts.pory"
+# 633 "data/maps/SootopolisCity/scripts.pory"
 @ Unused
+# 634 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_PlayerApproachLegendariesDown:
+# 635 "data/maps/SootopolisCity/scripts.pory"
+	walk_down
 # 636 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_UnusedPanUp:
+	walk_down
 # 637 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	walk_down
 # 638 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	walk_down
 # 639 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+	step_end
 # 640 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+
 # 641 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+@ Unused
 # 642 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_northeast
+SootopolisCity_Movement_UnusedPanUp:
 # 643 "data/maps/SootopolisCity/scripts.pory"
 	walk_slow_diag_northeast
 # 644 "data/maps/SootopolisCity/scripts.pory"
 	walk_slow_diag_northeast
 # 645 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_slow_diag_northeast
 # 646 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_slow_diag_northeast
 # 647 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_slow_diag_northeast
 # 648 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_slow_diag_northeast
 # 649 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_slow_diag_northeast
 # 650 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_slow_diag_northeast
 # 651 "data/maps/SootopolisCity/scripts.pory"
-@ Unused
+	walk_right
 # 652 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_UnusedPanBack:
+	walk_right
 # 653 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 654 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 655 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	step_end
 # 656 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+
 # 657 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+@ Unused
 # 658 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+SootopolisCity_Movement_UnusedPanBack:
 # 659 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 660 "data/maps/SootopolisCity/scripts.pory"
@@ -1325,95 +1325,95 @@ SootopolisCity_Movement_UnusedPanBack:
 # 663 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 664 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	walk_down
 # 665 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_diag_southwest
+	walk_down
 # 666 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_down
 # 667 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_down
 # 668 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_CaveOfOriginExpert::
+	walk_down
 # 669 "data/maps/SootopolisCity/scripts.pory"
-	lock
+	walk_down
 # 670 "data/maps/SootopolisCity/scripts.pory"
-	faceplayer
+	walk_slow_diag_southwest
 # 671 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_ExpertPostLegendaries
+	walk_slow_diag_southwest
 # 672 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ExpertLegendaries
+	step_end
 # 673 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_ExpertLeadToCave
+
 # 674 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_CaveOfOriginPleaseLeave, MSGBOX_DEFAULT
+SootopolisCity_EventScript_CaveOfOriginExpert::
 # 675 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 676 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 677 "data/maps/SootopolisCity/scripts.pory"
-
-# 678 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_ExpertLeadToCave::
-# 679 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_LeadSuperiorTrainerToCave, MSGBOX_DEFAULT
-# 680 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 681 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 682 "data/maps/SootopolisCity/scripts.pory"
-
-# 683 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_ExpertPostLegendaries::
-# 684 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_CaveOfOriginSleepsToo, MSGBOX_DEFAULT
-# 685 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 686 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 687 "data/maps/SootopolisCity/scripts.pory"
-
-# 688 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_ExpertLegendaries::
-# 689 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_AwakenedPokemonClash, MSGBOX_DEFAULT
-# 690 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 691 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 692 "data/maps/SootopolisCity/scripts.pory"
-
-# 693 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Kiri::
-# 694 "data/maps/SootopolisCity/scripts.pory"
 	lock
-# 695 "data/maps/SootopolisCity/scripts.pory"
+# 676 "data/maps/SootopolisCity/scripts.pory"
 	faceplayer
-# 696 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_KiriGiveBerry
-# 697 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_KiriGiveBerry
-# 698 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_KiriRayquaza
-# 699 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_BigPokemonFighting, MSGBOX_DEFAULT
-# 700 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 701 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_KIRI, Common_Movement_FaceOriginalDirection
-# 702 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 703 "data/maps/SootopolisCity/scripts.pory"
+# 677 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_ExpertPostLegendaries
+# 678 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ExpertLegendaries
+# 679 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_ExpertLeadToCave
+# 680 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_CaveOfOriginPleaseLeave, MSGBOX_DEFAULT
+# 681 "data/maps/SootopolisCity/scripts.pory"
 	release
-# 704 "data/maps/SootopolisCity/scripts.pory"
+# 682 "data/maps/SootopolisCity/scripts.pory"
 	end
-# 705 "data/maps/SootopolisCity/scripts.pory"
+# 683 "data/maps/SootopolisCity/scripts.pory"
 
+# 684 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_ExpertLeadToCave::
+# 685 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_LeadSuperiorTrainerToCave, MSGBOX_DEFAULT
+# 686 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 687 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 688 "data/maps/SootopolisCity/scripts.pory"
+
+# 689 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_ExpertPostLegendaries::
+# 690 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_CaveOfOriginSleepsToo, MSGBOX_DEFAULT
+# 691 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 692 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 693 "data/maps/SootopolisCity/scripts.pory"
+
+# 694 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_ExpertLegendaries::
+# 695 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_AwakenedPokemonClash, MSGBOX_DEFAULT
+# 696 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 697 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 698 "data/maps/SootopolisCity/scripts.pory"
+
+# 699 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Kiri::
+# 700 "data/maps/SootopolisCity/scripts.pory"
+	lock
+# 701 "data/maps/SootopolisCity/scripts.pory"
+	faceplayer
+# 702 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_KiriGiveBerry
+# 703 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_KiriGiveBerry
+# 704 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_KiriRayquaza
+# 705 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_BigPokemonFighting, MSGBOX_DEFAULT
 # 706 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_KiriRayquaza::
-# 707 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_PrettyMonCameFromSky, MSGBOX_DEFAULT
-# 708 "data/maps/SootopolisCity/scripts.pory"
 	closemessage
+# 707 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_KIRI, Common_Movement_FaceOriginalDirection
+# 708 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 709 "data/maps/SootopolisCity/scripts.pory"
 	release
 # 710 "data/maps/SootopolisCity/scripts.pory"
@@ -1421,465 +1421,465 @@ SootopolisCity_EventScript_KiriRayquaza::
 # 711 "data/maps/SootopolisCity/scripts.pory"
 
 # 712 "data/maps/SootopolisCity/scripts.pory"
-@ Gives 2 berries daily. First ranges from FIRST_KIRI_BERRY to LAST_KIRI_BERRY, second is always Figy or Iapapa
+SootopolisCity_EventScript_KiriRayquaza::
 # 713 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_KiriGiveBerry::
+	msgbox SootopolisCity_Text_PrettyMonCameFromSky, MSGBOX_DEFAULT
 # 714 "data/maps/SootopolisCity/scripts.pory"
-	dotimebasedevents
+	closemessage
 # 715 "data/maps/SootopolisCity/scripts.pory"
-	special GetPlayerBigGuyGirlString
+	release
 # 716 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY, SootopolisCity_EventScript_KiriReceivedBerry
+	end
 # 717 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_NameIsKiriHaveOneOfThese, MSGBOX_DEFAULT
+
 # 718 "data/maps/SootopolisCity/scripts.pory"
-	random NUM_KIRI_BERRIES
+@ Gives 2 berries daily. First ranges from FIRST_KIRI_BERRY to LAST_KIRI_BERRY, second is always Figy or Iapapa
 # 719 "data/maps/SootopolisCity/scripts.pory"
-	addvar VAR_RESULT, NUM_KIRI_BERRIES_SKIPPED
+SootopolisCity_EventScript_KiriGiveBerry::
 # 720 "data/maps/SootopolisCity/scripts.pory"
-	addvar VAR_RESULT, FIRST_BERRY_INDEX
+	dotimebasedevents
 # 721 "data/maps/SootopolisCity/scripts.pory"
-	giveitem VAR_RESULT
+	special GetPlayerBigGuyGirlString
 # 722 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	goto_if_set FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY, SootopolisCity_EventScript_KiriReceivedBerry
 # 723 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY
+	msgbox SootopolisCity_Text_NameIsKiriHaveOneOfThese, MSGBOX_DEFAULT
 # 724 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_GiveYouThisBerryToo, MSGBOX_DEFAULT
+	random NUM_KIRI_BERRIES
 # 725 "data/maps/SootopolisCity/scripts.pory"
-	random 2
+	addvar VAR_RESULT, NUM_KIRI_BERRIES_SKIPPED
 # 726 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_RESULT, 0, SootopolisCity_EventScript_GiveFigyBerry
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
 # 727 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_RESULT, 1, SootopolisCity_EventScript_GiveIapapaBerry
+	giveitem VAR_RESULT
 # 728 "data/maps/SootopolisCity/scripts.pory"
-	end
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 # 729 "data/maps/SootopolisCity/scripts.pory"
-
+	setflag FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY
 # 730 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_GiveFigyBerry::
+	msgbox SootopolisCity_Text_GiveYouThisBerryToo, MSGBOX_DEFAULT
 # 731 "data/maps/SootopolisCity/scripts.pory"
-	giveitem ITEM_FIGY_BERRY
+	random 2
 # 732 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, 0, SootopolisCity_EventScript_GiveFigyBerry
 # 733 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
+	goto_if_eq VAR_RESULT, 1, SootopolisCity_EventScript_GiveIapapaBerry
 # 734 "data/maps/SootopolisCity/scripts.pory"
-	release
+	end
 # 735 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 736 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_EventScript_GiveFigyBerry::
 # 737 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_GiveIapapaBerry::
+	giveitem ITEM_FIGY_BERRY
 # 738 "data/maps/SootopolisCity/scripts.pory"
-	giveitem ITEM_IAPAPA_BERRY
-# 739 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
-# 740 "data/maps/SootopolisCity/scripts.pory"
+# 739 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
+# 740 "data/maps/SootopolisCity/scripts.pory"
+	release
 # 741 "data/maps/SootopolisCity/scripts.pory"
-	release
+	end
 # 742 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 743 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_EventScript_GiveIapapaBerry::
 # 744 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_KiriReceivedBerry::
+	giveitem ITEM_IAPAPA_BERRY
 # 745 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_LikeSeasonBornIn, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 # 746 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_RESULT, YES, SootopolisCity_EventScript_KiriLikeSeasonBornIn
+	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
 # 747 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_OhDoesntMatter, MSGBOX_DEFAULT
+	release
 # 748 "data/maps/SootopolisCity/scripts.pory"
-	release
+	end
 # 749 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 750 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_EventScript_KiriReceivedBerry::
 # 751 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_KiriLikeSeasonBornIn::
+	msgbox SootopolisCity_Text_LikeSeasonBornIn, MSGBOX_YESNO
 # 752 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_ThenILoveAutumn, MSGBOX_DEFAULT
+	goto_if_eq VAR_RESULT, YES, SootopolisCity_EventScript_KiriLikeSeasonBornIn
 # 753 "data/maps/SootopolisCity/scripts.pory"
-	release
+	msgbox SootopolisCity_Text_OhDoesntMatter, MSGBOX_DEFAULT
 # 754 "data/maps/SootopolisCity/scripts.pory"
-	end
+	release
 # 755 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 756 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Woman2::
+
 # 757 "data/maps/SootopolisCity/scripts.pory"
-	lockall
+SootopolisCity_EventScript_KiriLikeSeasonBornIn::
 # 758 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_WOMAN_2, Common_Movement_FacePlayer
+	msgbox SootopolisCity_Text_ThenILoveAutumn, MSGBOX_DEFAULT
 # 759 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	release
 # 760 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Woman2Rayquaza
+	end
 # 761 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_WeatherWentWild, MSGBOX_DEFAULT
+
 # 762 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+SootopolisCity_EventScript_Woman2::
 # 763 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_WOMAN_2, Common_Movement_FaceOriginalDirection
+	lockall
 # 764 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	applymovement LOCALID_SOOTOPOLIS_WOMAN_2, Common_Movement_FacePlayer
 # 765 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	waitmovement 0
 # 766 "data/maps/SootopolisCity/scripts.pory"
-	end
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Woman2Rayquaza
 # 767 "data/maps/SootopolisCity/scripts.pory"
-
+	msgbox SootopolisCity_Text_WeatherWentWild, MSGBOX_DEFAULT
 # 768 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Woman2Rayquaza::
+	closemessage
 # 769 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_YouBroughtFlyingMon, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_WOMAN_2, Common_Movement_FaceOriginalDirection
 # 770 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	waitmovement 0
 # 771 "data/maps/SootopolisCity/scripts.pory"
-	end
+	releaseall
 # 772 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 773 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Man::
+
 # 774 "data/maps/SootopolisCity/scripts.pory"
-	lock
+SootopolisCity_EventScript_Woman2Rayquaza::
 # 775 "data/maps/SootopolisCity/scripts.pory"
-	faceplayer
+	msgbox SootopolisCity_Text_YouBroughtFlyingMon, MSGBOX_DEFAULT
 # 776 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_ManPostLegendaries
+	releaseall
 # 777 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_NoOrdinaryTourist, MSGBOX_DEFAULT
+	end
 # 778 "data/maps/SootopolisCity/scripts.pory"
-	release
+
 # 779 "data/maps/SootopolisCity/scripts.pory"
-	end
+SootopolisCity_EventScript_Man::
 # 780 "data/maps/SootopolisCity/scripts.pory"
-
-# 781 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_ManPostLegendaries::
-# 782 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_CityRegainedCalm, MSGBOX_DEFAULT
-# 783 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 784 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 785 "data/maps/SootopolisCity/scripts.pory"
-
-# 786 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Woman1::
-# 787 "data/maps/SootopolisCity/scripts.pory"
 	lock
-# 788 "data/maps/SootopolisCity/scripts.pory"
+# 781 "data/maps/SootopolisCity/scripts.pory"
 	faceplayer
+# 782 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_ManPostLegendaries
+# 783 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_NoOrdinaryTourist, MSGBOX_DEFAULT
+# 784 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 785 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 786 "data/maps/SootopolisCity/scripts.pory"
+
+# 787 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_ManPostLegendaries::
+# 788 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_CityRegainedCalm, MSGBOX_DEFAULT
 # 789 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_Woman1PostLegendaries
+	release
 # 790 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Woman1Rayquaza
+	end
 # 791 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_Woman1Legendaries
+
 # 792 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_SootopolisSkyBeautiful, MSGBOX_DEFAULT
+SootopolisCity_EventScript_Woman1::
 # 793 "data/maps/SootopolisCity/scripts.pory"
-	release
+	lock
 # 794 "data/maps/SootopolisCity/scripts.pory"
-	end
+	faceplayer
 # 795 "data/maps/SootopolisCity/scripts.pory"
-
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_Woman1PostLegendaries
 # 796 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Woman1Legendaries::
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Woman1Rayquaza
 # 797 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_GiganticPokemonFight, MSGBOX_DEFAULT
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_Woman1Legendaries
 # 798 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	msgbox SootopolisCity_Text_SootopolisSkyBeautiful, MSGBOX_DEFAULT
 # 799 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_WOMAN_1, Common_Movement_FaceOriginalDirection
+	release
 # 800 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	end
 # 801 "data/maps/SootopolisCity/scripts.pory"
-	release
+
 # 802 "data/maps/SootopolisCity/scripts.pory"
-	end
+SootopolisCity_EventScript_Woman1Legendaries::
 # 803 "data/maps/SootopolisCity/scripts.pory"
-
+	msgbox SootopolisCity_Text_GiganticPokemonFight, MSGBOX_DEFAULT
 # 804 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Woman1PostLegendaries::
+	closemessage
 # 805 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_NightSkyFavoriteScenery, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_WOMAN_1, Common_Movement_FaceOriginalDirection
 # 806 "data/maps/SootopolisCity/scripts.pory"
-	release
+	waitmovement 0
 # 807 "data/maps/SootopolisCity/scripts.pory"
-	end
+	release
 # 808 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 809 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Woman1Rayquaza::
+
 # 810 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_FearedWorstWhenPokemonFlewDown, MSGBOX_DEFAULT
+SootopolisCity_EventScript_Woman1PostLegendaries::
 # 811 "data/maps/SootopolisCity/scripts.pory"
-	release
+	msgbox SootopolisCity_Text_NightSkyFavoriteScenery, MSGBOX_DEFAULT
 # 812 "data/maps/SootopolisCity/scripts.pory"
-	end
+	release
 # 813 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 814 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_NinjaBoy::
+
 # 815 "data/maps/SootopolisCity/scripts.pory"
-	lockall
+SootopolisCity_EventScript_Woman1Rayquaza::
 # 816 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_NINJA_BOY, Common_Movement_FacePlayer
+	msgbox SootopolisCity_Text_FearedWorstWhenPokemonFlewDown, MSGBOX_DEFAULT
 # 817 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	release
 # 818 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_NinjaBoyRayquaza
+	end
 # 819 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_NinjaBoyNormal
+
 # 820 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_NinjaBoyNormal
+SootopolisCity_EventScript_NinjaBoy::
 # 821 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_ThisIsWicked, MSGBOX_DEFAULT
+	lockall
 # 822 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	applymovement LOCALID_SOOTOPOLIS_NINJA_BOY, Common_Movement_FacePlayer
 # 823 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_NINJA_BOY, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 # 824 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_NinjaBoyRayquaza
 # 825 "data/maps/SootopolisCity/scripts.pory"
-	release
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_NinjaBoyNormal
 # 826 "data/maps/SootopolisCity/scripts.pory"
-	end
+	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_NinjaBoyNormal
 # 827 "data/maps/SootopolisCity/scripts.pory"
-
+	msgbox SootopolisCity_Text_ThisIsWicked, MSGBOX_DEFAULT
 # 828 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_NinjaBoyNormal::
+	closemessage
 # 829 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_WonderWhatWorldIsLike, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_NINJA_BOY, Common_Movement_FaceOriginalDirection
 # 830 "data/maps/SootopolisCity/scripts.pory"
-	release
+	waitmovement 0
 # 831 "data/maps/SootopolisCity/scripts.pory"
-	end
+	release
 # 832 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 833 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_NinjaBoyRayquaza::
+
 # 834 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_ThatWasWicked, MSGBOX_DEFAULT
+SootopolisCity_EventScript_NinjaBoyNormal::
 # 835 "data/maps/SootopolisCity/scripts.pory"
-	release
+	msgbox SootopolisCity_Text_WonderWhatWorldIsLike, MSGBOX_DEFAULT
 # 836 "data/maps/SootopolisCity/scripts.pory"
-	end
+	release
 # 837 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 838 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Boy1::
+
 # 839 "data/maps/SootopolisCity/scripts.pory"
-	lockall
+SootopolisCity_EventScript_NinjaBoyRayquaza::
 # 840 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BOY_1, Common_Movement_FacePlayer
+	msgbox SootopolisCity_Text_ThatWasWicked, MSGBOX_DEFAULT
 # 841 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	release
 # 842 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Boy1Rayquaza
+	end
 # 843 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_SYS_GAME_CLEAR, SootopolisCity_EventScript_Boy1GameClear
+
 # 844 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_Boy1Normal
+SootopolisCity_EventScript_Boy1::
 # 845 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_Boy1Normal
-# 846 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_GiantPokemonSuddenlyAppeared, MSGBOX_DEFAULT
-# 847 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 848 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BOY_1, Common_Movement_FaceOriginalDirection
-# 849 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 850 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 851 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 852 "data/maps/SootopolisCity/scripts.pory"
-
-# 853 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Boy1Rayquaza::
-# 854 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_WhatIsThatGreenPokemon, MSGBOX_DEFAULT
-# 855 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 856 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 857 "data/maps/SootopolisCity/scripts.pory"
-
-# 858 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Boy1GameClear::
-# 859 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_WhereDidLegendariesGo, MSGBOX_DEFAULT
-# 860 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 861 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 862 "data/maps/SootopolisCity/scripts.pory"
-
-# 863 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Boy1Normal::
-# 864 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_PhysicallyFitLivingHere, MSGBOX_DEFAULT
-# 865 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 866 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 867 "data/maps/SootopolisCity/scripts.pory"
-
-# 868 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_GymSign::
-# 869 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_GymSign, MSGBOX_SIGN
-# 870 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 871 "data/maps/SootopolisCity/scripts.pory"
-
-# 872 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_CitySign::
-# 873 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_CitySign, MSGBOX_SIGN
-# 874 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 875 "data/maps/SootopolisCity/scripts.pory"
-
-# 876 "data/maps/SootopolisCity/scripts.pory"
-EventScript_ClosedSootopolisDoor::
-# 877 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_DoorIsClosed, MSGBOX_SIGN
-# 878 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 879 "data/maps/SootopolisCity/scripts.pory"
-
-# 880 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Steven::
-# 881 "data/maps/SootopolisCity/scripts.pory"
 	lockall
+# 846 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_BOY_1, Common_Movement_FacePlayer
+# 847 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 848 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Boy1Rayquaza
+# 849 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_set FLAG_SYS_GAME_CLEAR, SootopolisCity_EventScript_Boy1GameClear
+# 850 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_Boy1Normal
+# 851 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_Boy1Normal
+# 852 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_GiantPokemonSuddenlyAppeared, MSGBOX_DEFAULT
+# 853 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 854 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_BOY_1, Common_Movement_FaceOriginalDirection
+# 855 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 856 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 857 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 858 "data/maps/SootopolisCity/scripts.pory"
+
+# 859 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Boy1Rayquaza::
+# 860 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_WhatIsThatGreenPokemon, MSGBOX_DEFAULT
+# 861 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 862 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 863 "data/maps/SootopolisCity/scripts.pory"
+
+# 864 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Boy1GameClear::
+# 865 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_WhereDidLegendariesGo, MSGBOX_DEFAULT
+# 866 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 867 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 868 "data/maps/SootopolisCity/scripts.pory"
+
+# 869 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Boy1Normal::
+# 870 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_PhysicallyFitLivingHere, MSGBOX_DEFAULT
+# 871 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 872 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 873 "data/maps/SootopolisCity/scripts.pory"
+
+# 874 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_GymSign::
+# 875 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_GymSign, MSGBOX_SIGN
+# 876 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 877 "data/maps/SootopolisCity/scripts.pory"
+
+# 878 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_CitySign::
+# 879 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_CitySign, MSGBOX_SIGN
+# 880 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 881 "data/maps/SootopolisCity/scripts.pory"
+
 # 882 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_FacePlayer
+EventScript_ClosedSootopolisDoor::
 # 883 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	msgbox SootopolisCity_Text_DoorIsClosed, MSGBOX_SIGN
 # 884 "data/maps/SootopolisCity/scripts.pory"
-	call_if_unset FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN, SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin
+	end
 # 885 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_StevenHelpWallace
+
 # 886 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_StevenHelpedWallace
+SootopolisCity_EventScript_Steven::
 # 887 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_StevenHelpedWallace
+	lockall
 # 888 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_StevenMaxieArchieLeft
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_FacePlayer
 # 889 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_SoThatsRayquaza, MSGBOX_DEFAULT
+	waitmovement 0
 # 890 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	call_if_unset FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN, SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin
 # 891 "data/maps/SootopolisCity/scripts.pory"
-	end
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 2, SootopolisCity_EventScript_StevenHelpWallace
 # 892 "data/maps/SootopolisCity/scripts.pory"
-
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_StevenHelpedWallace
 # 893 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StevenHelpWallace::
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_StevenHelpedWallace
 # 894 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_KnowWhatsNeededToHelpHim, MSGBOX_DEFAULT
+	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_StevenMaxieArchieLeft
 # 895 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	msgbox SootopolisCity_Text_SoThatsRayquaza, MSGBOX_DEFAULT
 # 896 "data/maps/SootopolisCity/scripts.pory"
-	end
+	releaseall
 # 897 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 898 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StevenMaxieArchieLeft::
+
 # 899 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MaxieArchieLeft, MSGBOX_DEFAULT
+SootopolisCity_EventScript_StevenHelpWallace::
 # 900 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	msgbox SootopolisCity_Text_KnowWhatsNeededToHelpHim, MSGBOX_DEFAULT
 # 901 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 902 "data/maps/SootopolisCity/scripts.pory"
-
-# 903 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StevenHelpedWallace::
-# 904 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_NeverBeenToSkyPillar, MSGBOX_DEFAULT
-# 905 "data/maps/SootopolisCity/scripts.pory"
 	releaseall
-# 906 "data/maps/SootopolisCity/scripts.pory"
+# 902 "data/maps/SootopolisCity/scripts.pory"
 	end
-# 907 "data/maps/SootopolisCity/scripts.pory"
+# 903 "data/maps/SootopolisCity/scripts.pory"
 
+# 904 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_StevenMaxieArchieLeft::
+# 905 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_MaxieArchieLeft, MSGBOX_DEFAULT
+# 906 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
+# 907 "data/maps/SootopolisCity/scripts.pory"
+	end
 # 908 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin::
+
 # 909 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_InvolvedWithCrisisComeWithMe, MSGBOX_DEFAULT
+SootopolisCity_EventScript_StevenHelpedWallace::
 # 910 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	msgbox SootopolisCity_Text_NeverBeenToSkyPillar, MSGBOX_DEFAULT
 # 911 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_StartWalkToCaveOfOriginWest
+	releaseall
 # 912 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth
+	end
 # 913 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_DoesThisMakeYourFearPokemon, MSGBOX_DEFAULT
+
 # 914 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin::
 # 915 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenWalkToCaveOfOrigin
+	msgbox SootopolisCity_Text_InvolvedWithCrisisComeWithMe, MSGBOX_DEFAULT
 # 916 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerWalkToCaveOfOrigin
+	closemessage
 # 917 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_StartWalkToCaveOfOriginWest
 # 918 "data/maps/SootopolisCity/scripts.pory"
-	delay 120
+	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth
 # 919 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_EXPERT, SootopolisCity_Movement_ExpertMoveAside
+	msgbox SootopolisCity_Text_DoesThisMakeYourFearPokemon, MSGBOX_DEFAULT
 # 920 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	closemessage
 # 921 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenArriveCaveEntrance
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenWalkToCaveOfOrigin
 # 922 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerArriveCaveEntrance
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerWalkToCaveOfOrigin
 # 923 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
 # 924 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_HereWereAreHelpWallace, MSGBOX_DEFAULT
+	delay 120
 # 925 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	applymovement LOCALID_SOOTOPOLIS_EXPERT, SootopolisCity_Movement_ExpertMoveAside
 # 926 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN
+	waitmovement 0
 # 927 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerEnterCaveOfOrigin
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenArriveCaveEntrance
 # 928 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerArriveCaveEntrance
 # 929 "data/maps/SootopolisCity/scripts.pory"
-	warp MAP_CAVE_OF_ORIGIN_ENTRANCE, 9, 20
-# 930 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 931 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 932 "data/maps/SootopolisCity/scripts.pory"
-
-# 933 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StartWalkToCaveOfOriginWest::
-# 934 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin
-# 935 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest
-# 936 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
+# 930 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_HereWereAreHelpWallace, MSGBOX_DEFAULT
+# 931 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 932 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN
+# 933 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerEnterCaveOfOrigin
+# 934 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 935 "data/maps/SootopolisCity/scripts.pory"
+	warp MAP_CAVE_OF_ORIGIN_ENTRANCE, 9, 20
+# 936 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
 # 937 "data/maps/SootopolisCity/scripts.pory"
-	return
+	end
 # 938 "data/maps/SootopolisCity/scripts.pory"
 
 # 939 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth::
+SootopolisCity_EventScript_StartWalkToCaveOfOriginWest::
 # 940 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin
 # 941 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest
 # 942 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
 # 943 "data/maps/SootopolisCity/scripts.pory"
@@ -1887,19 +1887,19 @@ SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth::
 # 944 "data/maps/SootopolisCity/scripts.pory"
 
 # 945 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin:
+SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth::
 # 946 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin
 # 947 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth
 # 948 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	waitmovement 0
 # 949 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	return
 # 950 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+
 # 951 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin:
 # 952 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 953 "data/maps/SootopolisCity/scripts.pory"
@@ -1907,7 +1907,7 @@ SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin:
 # 954 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 955 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_right
 # 956 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 957 "data/maps/SootopolisCity/scripts.pory"
@@ -1919,7 +1919,7 @@ SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin:
 # 960 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 961 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 962 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 963 "data/maps/SootopolisCity/scripts.pory"
@@ -1929,25 +1929,25 @@ SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin:
 # 965 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 966 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 967 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
 # 968 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 969 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 970 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 971 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 972 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 973 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 974 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 975 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 976 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 977 "data/maps/SootopolisCity/scripts.pory"
@@ -1959,27 +1959,27 @@ SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin:
 # 980 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 981 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_faster_down
+	walk_up
 # 982 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_up
 # 983 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_up
 # 984 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest:
+	walk_up
 # 985 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 986 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 987 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_in_place_faster_down
 # 988 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	step_end
 # 989 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+
 # 990 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest:
 # 991 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 992 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 993 "data/maps/SootopolisCity/scripts.pory"
@@ -1987,7 +1987,7 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest:
 # 994 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 995 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_right
 # 996 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 997 "data/maps/SootopolisCity/scripts.pory"
@@ -1999,7 +1999,7 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest:
 # 1000 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1001 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1002 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1003 "data/maps/SootopolisCity/scripts.pory"
@@ -2009,25 +2009,25 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest:
 # 1005 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1006 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1007 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
 # 1008 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1009 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1010 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1011 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1012 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1013 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1014 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1015 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1016 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1017 "data/maps/SootopolisCity/scripts.pory"
@@ -2037,11 +2037,11 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest:
 # 1019 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1020 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_up
 # 1021 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_up
 # 1022 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
+	walk_up
 # 1023 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1024 "data/maps/SootopolisCity/scripts.pory"
@@ -2049,11 +2049,11 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
 # 1025 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1026 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	step_end
 # 1027 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+
 # 1028 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
 # 1029 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1030 "data/maps/SootopolisCity/scripts.pory"
@@ -2063,7 +2063,7 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
 # 1032 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1033 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_right
 # 1034 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1035 "data/maps/SootopolisCity/scripts.pory"
@@ -2075,7 +2075,7 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
 # 1038 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1039 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1040 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1041 "data/maps/SootopolisCity/scripts.pory"
@@ -2085,25 +2085,25 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
 # 1043 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1044 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1045 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
 # 1046 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1047 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_up
 # 1048 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1049 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1050 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1051 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1052 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1053 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_left
 # 1054 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1055 "data/maps/SootopolisCity/scripts.pory"
@@ -2113,27 +2113,27 @@ SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
 # 1057 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1058 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_up
 # 1059 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_up
 # 1060 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_StevenWalkToCaveOfOrigin:
+	walk_up
 # 1061 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1062 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1063 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_up
 # 1064 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	step_end
 # 1065 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+
 # 1066 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+SootopolisCity_Movement_StevenWalkToCaveOfOrigin:
 # 1067 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 1068 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 1069 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1070 "data/maps/SootopolisCity/scripts.pory"
@@ -2143,9 +2143,9 @@ SootopolisCity_Movement_StevenWalkToCaveOfOrigin:
 # 1072 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1073 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1074 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_down
 # 1075 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1076 "data/maps/SootopolisCity/scripts.pory"
@@ -2155,11 +2155,11 @@ SootopolisCity_Movement_StevenWalkToCaveOfOrigin:
 # 1078 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1079 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1080 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 1081 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1082 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1083 "data/maps/SootopolisCity/scripts.pory"
@@ -2167,95 +2167,95 @@ SootopolisCity_Movement_StevenWalkToCaveOfOrigin:
 # 1084 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1085 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1086 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1087 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1088 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1089 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1090 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1091 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_right
 # 1092 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_right
 # 1093 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1094 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1095 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1096 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1097 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
 # 1098 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
 # 1099 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1100 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1101 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1102 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1103 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1104 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1105 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1106 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1107 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1108 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1109 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1110 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1111 "data/maps/SootopolisCity/scripts.pory"
-	delay_4
+	walk_down
 # 1112 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_faster_left
+	walk_down
 # 1113 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	walk_right
 # 1114 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
+	walk_right
 # 1115 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1116 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_right
 # 1117 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	delay_4
 # 1118 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_in_place_faster_left
 # 1119 "data/maps/SootopolisCity/scripts.pory"
-
+	delay_16
 # 1120 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerWalkToCaveOfOrigin:
+	delay_16
 # 1121 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_right
 # 1122 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1123 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1124 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	step_end
 # 1125 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+
 # 1126 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+SootopolisCity_Movement_PlayerWalkToCaveOfOrigin:
 # 1127 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_up
 # 1128 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 1129 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 1130 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1131 "data/maps/SootopolisCity/scripts.pory"
@@ -2265,9 +2265,9 @@ SootopolisCity_Movement_PlayerWalkToCaveOfOrigin:
 # 1133 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1134 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1135 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
+	walk_down
 # 1136 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1137 "data/maps/SootopolisCity/scripts.pory"
@@ -2277,11 +2277,11 @@ SootopolisCity_Movement_PlayerWalkToCaveOfOrigin:
 # 1139 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1140 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1141 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_up
 # 1142 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1143 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1144 "data/maps/SootopolisCity/scripts.pory"
@@ -2289,161 +2289,161 @@ SootopolisCity_Movement_PlayerWalkToCaveOfOrigin:
 # 1145 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
 # 1146 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1147 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1148 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1149 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1150 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1151 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_right
 # 1152 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_right
 # 1153 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_right
 # 1154 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1155 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1156 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1157 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	walk_down
 # 1158 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
 # 1159 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
 # 1160 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1161 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1162 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1163 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1164 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1165 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_left
 # 1166 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1167 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1168 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1169 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1170 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
+	walk_down
 # 1171 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_down
 # 1172 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_down
 # 1173 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_ExpertMoveAside:
+	walk_down
 # 1174 "data/maps/SootopolisCity/scripts.pory"
-	walk_slow_left
+	walk_right
 # 1175 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_faster_right
+	walk_right
 # 1176 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_right
 # 1177 "data/maps/SootopolisCity/scripts.pory"
-
+	step_end
 # 1178 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_StevenArriveCaveEntrance:
+
 # 1179 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+SootopolisCity_Movement_ExpertMoveAside:
 # 1180 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	walk_slow_left
 # 1181 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
-# 1182 "data/maps/SootopolisCity/scripts.pory"
-	delay_8
-# 1183 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
-# 1184 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
-# 1185 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
-# 1186 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
-# 1187 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
-# 1188 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_faster_left
-# 1189 "data/maps/SootopolisCity/scripts.pory"
-	step_end
-# 1190 "data/maps/SootopolisCity/scripts.pory"
-
-# 1191 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerArriveCaveEntrance:
-# 1192 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 1193 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 1194 "data/maps/SootopolisCity/scripts.pory"
-	delay_16
-# 1195 "data/maps/SootopolisCity/scripts.pory"
-	delay_8
-# 1196 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
-# 1197 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
-# 1198 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
-# 1199 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
-# 1200 "data/maps/SootopolisCity/scripts.pory"
-	walk_up
-# 1201 "data/maps/SootopolisCity/scripts.pory"
 	walk_in_place_faster_right
-# 1202 "data/maps/SootopolisCity/scripts.pory"
+# 1182 "data/maps/SootopolisCity/scripts.pory"
 	step_end
-# 1203 "data/maps/SootopolisCity/scripts.pory"
+# 1183 "data/maps/SootopolisCity/scripts.pory"
 
+# 1184 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_StevenArriveCaveEntrance:
+# 1185 "data/maps/SootopolisCity/scripts.pory"
+	walk_down
+# 1186 "data/maps/SootopolisCity/scripts.pory"
+	walk_down
+# 1187 "data/maps/SootopolisCity/scripts.pory"
+	walk_left
+# 1188 "data/maps/SootopolisCity/scripts.pory"
+	delay_8
+# 1189 "data/maps/SootopolisCity/scripts.pory"
+	walk_right
+# 1190 "data/maps/SootopolisCity/scripts.pory"
+	walk_up
+# 1191 "data/maps/SootopolisCity/scripts.pory"
+	walk_up
+# 1192 "data/maps/SootopolisCity/scripts.pory"
+	walk_up
+# 1193 "data/maps/SootopolisCity/scripts.pory"
+	walk_right
+# 1194 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_faster_left
+# 1195 "data/maps/SootopolisCity/scripts.pory"
+	step_end
+# 1196 "data/maps/SootopolisCity/scripts.pory"
+
+# 1197 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_PlayerArriveCaveEntrance:
+# 1198 "data/maps/SootopolisCity/scripts.pory"
+	delay_16
+# 1199 "data/maps/SootopolisCity/scripts.pory"
+	delay_16
+# 1200 "data/maps/SootopolisCity/scripts.pory"
+	delay_16
+# 1201 "data/maps/SootopolisCity/scripts.pory"
+	delay_8
+# 1202 "data/maps/SootopolisCity/scripts.pory"
+	walk_right
+# 1203 "data/maps/SootopolisCity/scripts.pory"
+	walk_right
 # 1204 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerEnterCaveOfOrigin:
+	walk_up
 # 1205 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1206 "data/maps/SootopolisCity/scripts.pory"
 	walk_up
 # 1207 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_in_place_faster_right
 # 1208 "data/maps/SootopolisCity/scripts.pory"
-
+	step_end
 # 1209 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Boy2::
-# 1210 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1211 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FacePlayer
-# 1212 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1213 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Boy2Rayquaza
-# 1214 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_TwoPokemonArentAngry, MSGBOX_DEFAULT
-# 1215 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1216 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FaceOriginalDirection
-# 1217 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1218 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
-# 1219 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1220 "data/maps/SootopolisCity/scripts.pory"
 
+# 1210 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_PlayerEnterCaveOfOrigin:
+# 1211 "data/maps/SootopolisCity/scripts.pory"
+	walk_up
+# 1212 "data/maps/SootopolisCity/scripts.pory"
+	walk_up
+# 1213 "data/maps/SootopolisCity/scripts.pory"
+	step_end
+# 1214 "data/maps/SootopolisCity/scripts.pory"
+
+# 1215 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Boy2::
+# 1216 "data/maps/SootopolisCity/scripts.pory"
+	lockall
+# 1217 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FacePlayer
+# 1218 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1219 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Boy2Rayquaza
+# 1220 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_TwoPokemonArentAngry, MSGBOX_DEFAULT
 # 1221 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Boy2Rayquaza::
-# 1222 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_FlyingMonStoppedRampage, MSGBOX_DEFAULT
-# 1223 "data/maps/SootopolisCity/scripts.pory"
 	closemessage
+# 1222 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FaceOriginalDirection
+# 1223 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1224 "data/maps/SootopolisCity/scripts.pory"
 	releaseall
 # 1225 "data/maps/SootopolisCity/scripts.pory"
@@ -2451,77 +2451,77 @@ SootopolisCity_EventScript_Boy2Rayquaza::
 # 1226 "data/maps/SootopolisCity/scripts.pory"
 
 # 1227 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_BlackBelt::
+SootopolisCity_EventScript_Boy2Rayquaza::
 # 1228 "data/maps/SootopolisCity/scripts.pory"
-	lockall
+	msgbox SootopolisCity_Text_FlyingMonStoppedRampage, MSGBOX_DEFAULT
 # 1229 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_BlackBeltRayquaza
+	closemessage
 # 1230 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_GoRedAndBlueMon, MSGBOX_DEFAULT
-# 1231 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1232 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
-# 1233 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1234 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_DoYouKnowMonNames, MSGBOX_DEFAULT
-# 1235 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1236 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FaceOriginalDirection
-# 1237 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1238 "data/maps/SootopolisCity/scripts.pory"
 	releaseall
-# 1239 "data/maps/SootopolisCity/scripts.pory"
+# 1231 "data/maps/SootopolisCity/scripts.pory"
 	end
-# 1240 "data/maps/SootopolisCity/scripts.pory"
+# 1232 "data/maps/SootopolisCity/scripts.pory"
 
-# 1241 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_BlackBeltRayquaza::
-# 1242 "data/maps/SootopolisCity/scripts.pory"
+# 1233 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_BlackBelt::
+# 1234 "data/maps/SootopolisCity/scripts.pory"
+	lockall
+# 1235 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_BlackBeltRayquaza
+# 1236 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_GoRedAndBlueMon, MSGBOX_DEFAULT
+# 1237 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 1238 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
+# 1239 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1240 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_DoYouKnowMonNames, MSGBOX_DEFAULT
+# 1241 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 1242 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FaceOriginalDirection
 # 1243 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
 # 1244 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_GreenOneSettlesThings, MSGBOX_DEFAULT
+	releaseall
 # 1245 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1246 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1247 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_EventScript_BlackBeltRayquaza::
 # 1248 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Girl::
+	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
 # 1249 "data/maps/SootopolisCity/scripts.pory"
-	lockall
+	waitmovement 0
 # 1250 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FacePlayer
+	msgbox SootopolisCity_Text_GreenOneSettlesThings, MSGBOX_DEFAULT
 # 1251 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1252 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_GirlRayquaza
-# 1253 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_SootopolisWillBeWrecked, MSGBOX_DEFAULT
-# 1254 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1255 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FaceOriginalDirection
-# 1256 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1257 "data/maps/SootopolisCity/scripts.pory"
 	releaseall
-# 1258 "data/maps/SootopolisCity/scripts.pory"
+# 1252 "data/maps/SootopolisCity/scripts.pory"
 	end
-# 1259 "data/maps/SootopolisCity/scripts.pory"
+# 1253 "data/maps/SootopolisCity/scripts.pory"
 
+# 1254 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Girl::
+# 1255 "data/maps/SootopolisCity/scripts.pory"
+	lockall
+# 1256 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FacePlayer
+# 1257 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1258 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_GirlRayquaza
+# 1259 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_SootopolisWillBeWrecked, MSGBOX_DEFAULT
 # 1260 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_GirlRayquaza::
-# 1261 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_SootopolisDidntGetWrecked, MSGBOX_DEFAULT
-# 1262 "data/maps/SootopolisCity/scripts.pory"
 	closemessage
+# 1261 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FaceOriginalDirection
+# 1262 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1263 "data/maps/SootopolisCity/scripts.pory"
 	releaseall
 # 1264 "data/maps/SootopolisCity/scripts.pory"
@@ -2529,409 +2529,409 @@ SootopolisCity_EventScript_GirlRayquaza::
 # 1265 "data/maps/SootopolisCity/scripts.pory"
 
 # 1266 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Maniac::
+SootopolisCity_EventScript_GirlRayquaza::
 # 1267 "data/maps/SootopolisCity/scripts.pory"
-	lockall
+	msgbox SootopolisCity_Text_SootopolisDidntGetWrecked, MSGBOX_DEFAULT
 # 1268 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FacePlayer
+	closemessage
 # 1269 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	releaseall
 # 1270 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ManiacRayquaza
+	end
 # 1271 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_SeeingLegendWithOwnEyes, MSGBOX_DEFAULT
+
 # 1272 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+SootopolisCity_EventScript_Maniac::
 # 1273 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FaceOriginalDirection
+	lockall
 # 1274 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FacePlayer
 # 1275 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	waitmovement 0
 # 1276 "data/maps/SootopolisCity/scripts.pory"
-	end
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ManiacRayquaza
 # 1277 "data/maps/SootopolisCity/scripts.pory"
-
+	msgbox SootopolisCity_Text_SeeingLegendWithOwnEyes, MSGBOX_DEFAULT
 # 1278 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_ManiacRayquaza::
+	closemessage
 # 1279 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_SawLegendWithOwnEyes, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FaceOriginalDirection
 # 1280 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	waitmovement 0
 # 1281 "data/maps/SootopolisCity/scripts.pory"
-	end
+	releaseall
 # 1282 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 1283 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Wallace::
+
 # 1284 "data/maps/SootopolisCity/scripts.pory"
-	lock
+SootopolisCity_EventScript_ManiacRayquaza::
 # 1285 "data/maps/SootopolisCity/scripts.pory"
-	faceplayer
+	msgbox SootopolisCity_Text_SawLegendWithOwnEyes, MSGBOX_DEFAULT
 # 1286 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_GoToSkyPillar
+	releaseall
 # 1287 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_RECEIVED_HM_WATERFALL, SootopolisCity_EventScript_GoToGym
+	end
 # 1288 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_GiveWaterfall
+
 # 1289 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_AquaMagmaDidntMeanHarm, MSGBOX_DEFAULT
+SootopolisCity_EventScript_Wallace::
 # 1290 "data/maps/SootopolisCity/scripts.pory"
-	release
+	lock
 # 1291 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1292 "data/maps/SootopolisCity/scripts.pory"
-
-# 1293 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_GiveWaterfall::
-# 1294 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_ThankYouForHelpAcceptThis, MSGBOX_DEFAULT
-# 1295 "data/maps/SootopolisCity/scripts.pory"
-	giveitem ITEM_HM_WATERFALL
-# 1296 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_RECEIVED_HM_WATERFALL
-# 1297 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_ExplainWaterfallGoToGym, MSGBOX_DEFAULT
-# 1298 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1299 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_WallaceMoveFromGym
-# 1300 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_FACING, DIR_EAST, SootopolisCity_EventScript_WallaceMoveFromGym
-# 1301 "data/maps/SootopolisCity/scripts.pory"
-	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_WallaceMoveFromGymWest
-# 1302 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 1303 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1304 "data/maps/SootopolisCity/scripts.pory"
-
-# 1305 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_WallaceMoveFromGym::
-# 1306 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGym
-# 1307 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1308 "data/maps/SootopolisCity/scripts.pory"
-	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
-# 1309 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 1
-# 1310 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 1311 "data/maps/SootopolisCity/scripts.pory"
-
-# 1312 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_WallaceMoveFromGymWest::
-# 1313 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGymWest
-# 1314 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1315 "data/maps/SootopolisCity/scripts.pory"
-	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
-# 1316 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 2
-# 1317 "data/maps/SootopolisCity/scripts.pory"
-	return
-# 1318 "data/maps/SootopolisCity/scripts.pory"
-
-# 1319 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_GoToSkyPillar::
-# 1320 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_HaventYouScaledSkyPillar, MSGBOX_DEFAULT
-# 1321 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 1322 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1323 "data/maps/SootopolisCity/scripts.pory"
-
-# 1324 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_GoToGym::
-# 1325 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_DazzledByMentor, MSGBOX_DEFAULT
-# 1326 "data/maps/SootopolisCity/scripts.pory"
-	release
-# 1327 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1328 "data/maps/SootopolisCity/scripts.pory"
-
-# 1329 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_WallaceMoveFromGym:
-# 1330 "data/maps/SootopolisCity/scripts.pory"
-	walk_right
-# 1331 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_faster_down
-# 1332 "data/maps/SootopolisCity/scripts.pory"
-	step_end
-# 1333 "data/maps/SootopolisCity/scripts.pory"
-
-# 1334 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_WallaceMoveFromGymWest:
-# 1335 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
-# 1336 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_faster_down
-# 1337 "data/maps/SootopolisCity/scripts.pory"
-	step_end
-# 1338 "data/maps/SootopolisCity/scripts.pory"
-
-# 1339 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Maxie::
-# 1340 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1341 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_MaxieRayquaza
-# 1342 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_GroudonPleaseStop, MSGBOX_DEFAULT
-# 1343 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1344 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
-# 1345 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1346 "data/maps/SootopolisCity/scripts.pory"
-
-# 1347 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_MaxieRayquaza::
-# 1348 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_AfterAllOurScheming, MSGBOX_DEFAULT
-# 1349 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_MET_MAXIE_SOOTOPOLIS
-# 1350 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_MET_ARCHIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
-# 1351 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
-# 1352 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1353 "data/maps/SootopolisCity/scripts.pory"
-
-# 1354 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_Archie::
-# 1355 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1356 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ArchieRayquaza
-# 1357 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_KyogreCalmDown, MSGBOX_DEFAULT
-# 1358 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1359 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
-# 1360 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1361 "data/maps/SootopolisCity/scripts.pory"
-
-# 1362 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_ArchieRayquaza::
-# 1363 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_TryingMeaninglessToPokemon, MSGBOX_DEFAULT
-# 1364 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_MET_ARCHIE_SOOTOPOLIS
-# 1365 "data/maps/SootopolisCity/scripts.pory"
-	goto_if_set FLAG_MET_MAXIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
-# 1366 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
-# 1367 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1368 "data/maps/SootopolisCity/scripts.pory"
-
-# 1369 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_MaxieArchieLeave::
-# 1370 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MAXIE
-# 1371 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_ARCHIE
-# 1372 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
-# 1373 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_MAXIE
-# 1374 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE
-# 1375 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_MT_PYRE_STATE, 2
-# 1376 "data/maps/SootopolisCity/scripts.pory"
-	warpsilent MAP_SOOTOPOLIS_CITY, 31, 34
-# 1377 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
-# 1378 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
-# 1379 "data/maps/SootopolisCity/scripts.pory"
-	end
-# 1380 "data/maps/SootopolisCity/scripts.pory"
-
-# 1381 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_MrStoneEvil::
-# 1382 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1383 "data/maps/SootopolisCity/scripts.pory"
 	faceplayer
+# 1292 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_GoToSkyPillar
+# 1293 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_set FLAG_RECEIVED_HM_WATERFALL, SootopolisCity_EventScript_GoToGym
+# 1294 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_GiveWaterfall
+# 1295 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_AquaMagmaDidntMeanHarm, MSGBOX_DEFAULT
+# 1296 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 1297 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1298 "data/maps/SootopolisCity/scripts.pory"
+
+# 1299 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_GiveWaterfall::
+# 1300 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_ThankYouForHelpAcceptThis, MSGBOX_DEFAULT
+# 1301 "data/maps/SootopolisCity/scripts.pory"
+	giveitem ITEM_HM_WATERFALL
+# 1302 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_RECEIVED_HM_WATERFALL
+# 1303 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_ExplainWaterfallGoToGym, MSGBOX_DEFAULT
+# 1304 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 1305 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_WallaceMoveFromGym
+# 1306 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_FACING, DIR_EAST, SootopolisCity_EventScript_WallaceMoveFromGym
+# 1307 "data/maps/SootopolisCity/scripts.pory"
+	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_WallaceMoveFromGymWest
+# 1308 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 1309 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1310 "data/maps/SootopolisCity/scripts.pory"
+
+# 1311 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_WallaceMoveFromGym::
+# 1312 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGym
+# 1313 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1314 "data/maps/SootopolisCity/scripts.pory"
+	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
+# 1315 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 1
+# 1316 "data/maps/SootopolisCity/scripts.pory"
+	return
+# 1317 "data/maps/SootopolisCity/scripts.pory"
+
+# 1318 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_WallaceMoveFromGymWest::
+# 1319 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGymWest
+# 1320 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1321 "data/maps/SootopolisCity/scripts.pory"
+	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
+# 1322 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 2
+# 1323 "data/maps/SootopolisCity/scripts.pory"
+	return
+# 1324 "data/maps/SootopolisCity/scripts.pory"
+
+# 1325 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_GoToSkyPillar::
+# 1326 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_HaventYouScaledSkyPillar, MSGBOX_DEFAULT
+# 1327 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 1328 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1329 "data/maps/SootopolisCity/scripts.pory"
+
+# 1330 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_GoToGym::
+# 1331 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_DazzledByMentor, MSGBOX_DEFAULT
+# 1332 "data/maps/SootopolisCity/scripts.pory"
+	release
+# 1333 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1334 "data/maps/SootopolisCity/scripts.pory"
+
+# 1335 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_WallaceMoveFromGym:
+# 1336 "data/maps/SootopolisCity/scripts.pory"
+	walk_right
+# 1337 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_faster_down
+# 1338 "data/maps/SootopolisCity/scripts.pory"
+	step_end
+# 1339 "data/maps/SootopolisCity/scripts.pory"
+
+# 1340 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_WallaceMoveFromGymWest:
+# 1341 "data/maps/SootopolisCity/scripts.pory"
+	walk_left
+# 1342 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_faster_down
+# 1343 "data/maps/SootopolisCity/scripts.pory"
+	step_end
+# 1344 "data/maps/SootopolisCity/scripts.pory"
+
+# 1345 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Maxie::
+# 1346 "data/maps/SootopolisCity/scripts.pory"
+	lockall
+# 1347 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_MaxieRayquaza
+# 1348 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_GroudonPleaseStop, MSGBOX_DEFAULT
+# 1349 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 1350 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
+# 1351 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1352 "data/maps/SootopolisCity/scripts.pory"
+
+# 1353 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_MaxieRayquaza::
+# 1354 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_AfterAllOurScheming, MSGBOX_DEFAULT
+# 1355 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_MET_MAXIE_SOOTOPOLIS
+# 1356 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_set FLAG_MET_ARCHIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
+# 1357 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
+# 1358 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1359 "data/maps/SootopolisCity/scripts.pory"
+
+# 1360 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_Archie::
+# 1361 "data/maps/SootopolisCity/scripts.pory"
+	lockall
+# 1362 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ArchieRayquaza
+# 1363 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_KyogreCalmDown, MSGBOX_DEFAULT
+# 1364 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 1365 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
+# 1366 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1367 "data/maps/SootopolisCity/scripts.pory"
+
+# 1368 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_ArchieRayquaza::
+# 1369 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_TryingMeaninglessToPokemon, MSGBOX_DEFAULT
+# 1370 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_MET_ARCHIE_SOOTOPOLIS
+# 1371 "data/maps/SootopolisCity/scripts.pory"
+	goto_if_set FLAG_MET_MAXIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
+# 1372 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
+# 1373 "data/maps/SootopolisCity/scripts.pory"
+	end
+# 1374 "data/maps/SootopolisCity/scripts.pory"
+
+# 1375 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_EventScript_MaxieArchieLeave::
+# 1376 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MAXIE
+# 1377 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_ARCHIE
+# 1378 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
+# 1379 "data/maps/SootopolisCity/scripts.pory"
+	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_MAXIE
+# 1380 "data/maps/SootopolisCity/scripts.pory"
+	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE
+# 1381 "data/maps/SootopolisCity/scripts.pory"
+	setvar VAR_MT_PYRE_STATE, 2
+# 1382 "data/maps/SootopolisCity/scripts.pory"
+	warpsilent MAP_SOOTOPOLIS_CITY, 31, 34
+# 1383 "data/maps/SootopolisCity/scripts.pory"
+	waitstate
 # 1384 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
+	releaseall
 # 1385 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	end
 # 1386 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
+
 # 1387 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
+SootopolisCity_EventScript_MrStoneEvil::
 # 1388 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	lockall
 # 1389 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
+	faceplayer
 # 1390 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
+	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
 # 1391 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	closemessage
 # 1392 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
 # 1393 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
 # 1394 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_ArchieShockedAtStone, MSGBOX_DEFAULT
+	waitmovement 0
 # 1395 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
 # 1396 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MrStoneMoneyRulesWorld, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
 # 1397 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	waitmovement 0
 # 1398 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
+	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
 # 1399 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	closemessage
 # 1400 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneBoardBoat
+	msgbox SootopolisCity_Text_ArchieShockedAtStone, MSGBOX_DEFAULT
 # 1401 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	closemessage
 # 1402 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE
+	msgbox SootopolisCity_Text_MrStoneMoneyRulesWorld, MSGBOX_DEFAULT
 # 1403 "data/maps/SootopolisCity/scripts.pory"
-	removeobject LOCALID_SOOTOPOLIS_MRSTONE
+	closemessage
 # 1404 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
 # 1405 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BOAT, SootopolisCity_Movement_DevonBoatSail
+	waitmovement 0
 # 1406 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraFollowDevonBoat
+	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneBoardBoat
 # 1407 "data/maps/SootopolisCity/scripts.pory"
 	waitmovement 0
 # 1408 "data/maps/SootopolisCity/scripts.pory"
-	special RemoveCameraObject
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE
 # 1409 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
+	removeobject LOCALID_SOOTOPOLIS_MRSTONE
 # 1410 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	special SpawnCameraObject
 # 1411 "data/maps/SootopolisCity/scripts.pory"
-	fadescreenspeed FADE_TO_WHITE, 4
+	applymovement LOCALID_SOOTOPOLIS_BOAT, SootopolisCity_Movement_DevonBoatSail
 # 1412 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1 @ vertical pan
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraFollowDevonBoat
 # 1413 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 1 @ horizontal pan
+	waitmovement 0
 # 1414 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8 @ num shakes
+	special RemoveCameraObject
 # 1415 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 3 @ shake delay
+	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
 # 1416 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
+	closemessage
 # 1417 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
+	fadescreenspeed FADE_TO_WHITE, 4
 # 1418 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
+	setvar VAR_0x8004, 1 @ vertical pan
 # 1419 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
+	setvar VAR_0x8005, 1 @ horizontal pan
 # 1420 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
+	setvar VAR_0x8006, 8 @ num shakes
 # 1421 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
+	setvar VAR_0x8007, 3 @ shake delay
 # 1422 "data/maps/SootopolisCity/scripts.pory"
-	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
+	special ShakeCamera
 # 1423 "data/maps/SootopolisCity/scripts.pory"
-	addobject LOCALID_SOOTOPOLIS_PRIMALKYOGRE
-# 1424 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_BOAT
-# 1425 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
-# 1426 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
-# 1427 "data/maps/SootopolisCity/scripts.pory"
-	warpwhitefade MAP_SOOTOPOLIS_CITY, 31, 34
-# 1428 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
+# 1424 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
+# 1425 "data/maps/SootopolisCity/scripts.pory"
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
+# 1426 "data/maps/SootopolisCity/scripts.pory"
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+# 1427 "data/maps/SootopolisCity/scripts.pory"
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+# 1428 "data/maps/SootopolisCity/scripts.pory"
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
 # 1429 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
 # 1430 "data/maps/SootopolisCity/scripts.pory"
-	end
+	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
 # 1431 "data/maps/SootopolisCity/scripts.pory"
-
+	addobject LOCALID_SOOTOPOLIS_PRIMALKYOGRE
 # 1432 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_DevonBoat::
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_BOAT
 # 1433 "data/maps/SootopolisCity/scripts.pory"
-	lock
+	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
 # 1434 "data/maps/SootopolisCity/scripts.pory"
-	faceplayer
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 # 1435 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_DevonBoatEmpty, MSGBOX_DEFAULT
+	warpwhitefade MAP_SOOTOPOLIS_CITY, 31, 34
 # 1436 "data/maps/SootopolisCity/scripts.pory"
-	release
+	waitstate
 # 1437 "data/maps/SootopolisCity/scripts.pory"
-	end
+	releaseall
 # 1438 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 1439 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_ExclamationMark:
+
 # 1440 "data/maps/SootopolisCity/scripts.pory"
-	emote_exclamation_mark
+SootopolisCity_EventScript_DevonBoat::
 # 1441 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	lock
 # 1442 "data/maps/SootopolisCity/scripts.pory"
-
+	faceplayer
 # 1443 "data/maps/SootopolisCity/scripts.pory"
-@ Maxie is positioned to Mr. Stone's left, so he turns right to face him.
+	msgbox SootopolisCity_Text_DevonBoatEmpty, MSGBOX_DEFAULT
 # 1444 "data/maps/SootopolisCity/scripts.pory"
-@ Adjust turn_right/turn_left/turn_up/turn_down to match wherever you land the NPCs in porymap.
+	release
 # 1445 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_MaxieFaceStone:
+	end
 # 1446 "data/maps/SootopolisCity/scripts.pory"
-	face_right
+
 # 1447 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+SootopolisCity_Movement_ExclamationMark:
 # 1448 "data/maps/SootopolisCity/scripts.pory"
-
+	emote_exclamation_mark
 # 1449 "data/maps/SootopolisCity/scripts.pory"
-@ Archie is positioned to Mr. Stone's right, so she turns left to face him.
+	step_end
 # 1450 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_ArchieFaceStone:
+
 # 1451 "data/maps/SootopolisCity/scripts.pory"
-	face_left
+@ Maxie is positioned to Mr. Stone's left, so he turns right to face him.
 # 1452 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+@ Adjust turn_right/turn_left/turn_up/turn_down to match wherever you land the NPCs in porymap.
 # 1453 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Movement_MaxieFaceStone:
 # 1454 "data/maps/SootopolisCity/scripts.pory"
-@ Mr. Stone shoulders past the player on his way to the boat.
+	face_right
 # 1455 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerPushedAside:
+	step_end
 # 1456 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+
 # 1457 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+@ Archie is positioned to Mr. Stone's right, so she turns left to face him.
 # 1458 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Movement_ArchieFaceStone:
 # 1459 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_MrStoneBoardBoat:
+	face_left
 # 1460 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 1461 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 1462 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 1463 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 1464 "data/maps/SootopolisCity/scripts.pory"
 	step_end
-# 1465 "data/maps/SootopolisCity/scripts.pory"
+# 1461 "data/maps/SootopolisCity/scripts.pory"
 
+# 1462 "data/maps/SootopolisCity/scripts.pory"
+@ Mr. Stone shoulders past the player on his way to the boat.
+# 1463 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_PlayerPushedAside:
+# 1464 "data/maps/SootopolisCity/scripts.pory"
+	walk_left
+# 1465 "data/maps/SootopolisCity/scripts.pory"
+	step_end
 # 1466 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_DevonBoatSail:
+
 # 1467 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+SootopolisCity_Movement_MrStoneBoardBoat:
 # 1468 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1469 "data/maps/SootopolisCity/scripts.pory"
@@ -2941,15 +2941,15 @@ SootopolisCity_Movement_DevonBoatSail:
 # 1471 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1472 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 1473 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
-# 1474 "data/maps/SootopolisCity/scripts.pory"
 	step_end
-# 1475 "data/maps/SootopolisCity/scripts.pory"
+# 1473 "data/maps/SootopolisCity/scripts.pory"
 
+# 1474 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_DevonBoatSail:
+# 1475 "data/maps/SootopolisCity/scripts.pory"
+	walk_down
 # 1476 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_CameraFollowDevonBoat:
+	walk_down
 # 1477 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1478 "data/maps/SootopolisCity/scripts.pory"
@@ -2961,764 +2961,780 @@ SootopolisCity_Movement_CameraFollowDevonBoat:
 # 1481 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1482 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	step_end
 # 1483 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+
 # 1484 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+SootopolisCity_Movement_CameraFollowDevonBoat:
 # 1485 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1486 "data/maps/SootopolisCity/scripts.pory"
 	walk_down
 # 1487 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_down
 # 1488 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_down
 # 1489 "data/maps/SootopolisCity/scripts.pory"
-@ Unused
+	walk_down
 # 1490 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_Levitate::
+	walk_down
 # 1491 "data/maps/SootopolisCity/scripts.pory"
-	levitate
+	walk_down
 # 1492 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	walk_down
 # 1493 "data/maps/SootopolisCity/scripts.pory"
-
+	walk_down
 # 1494 "data/maps/SootopolisCity/scripts.pory"
-@ Unused
+	walk_down
 # 1495 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_DestroyTask::
-# 1496 "data/maps/SootopolisCity/scripts.pory"
-	destroy_extra_task
-# 1497 "data/maps/SootopolisCity/scripts.pory"
 	step_end
+# 1496 "data/maps/SootopolisCity/scripts.pory"
+
+# 1497 "data/maps/SootopolisCity/scripts.pory"
+@ Unused
 # 1498 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Movement_Levitate::
 # 1499 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GymSign:
+	levitate
 # 1500 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY POKéMON GYM\n"
+	step_end
 # 1501 "data/maps/SootopolisCity/scripts.pory"
-	.string "LEADER: JUAN\p"
+
 # 1502 "data/maps/SootopolisCity/scripts.pory"
-	.string "“The GYM LEADER with the beauty\n"
+@ Unused
 # 1503 "data/maps/SootopolisCity/scripts.pory"
-	.string "of pure water!”$"
+SootopolisCity_Movement_DestroyTask::
 # 1504 "data/maps/SootopolisCity/scripts.pory"
-
+	destroy_extra_task
 # 1505 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CitySign:
+	step_end
 # 1506 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY\p"
+
 # 1507 "data/maps/SootopolisCity/scripts.pory"
-	.string "“The mystical city where history\n"
+SootopolisCity_Text_GymSign:
 # 1508 "data/maps/SootopolisCity/scripts.pory"
-	.string "slumbers.”$"
+	.string "SOOTOPOLIS CITY POKéMON GYM\n"
 # 1509 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "LEADER: JUAN\p"
 # 1510 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MrStoneMastermind:
+	.string "“The GYM LEADER with the beauty\n"
 # 1511 "data/maps/SootopolisCity/scripts.pory"
-	.string "MR. STONE: …Hahahaha…\p"
+	.string "of pure water!”$"
 # 1512 "data/maps/SootopolisCity/scripts.pory"
-	.string "Look at how things really are.\p"
+
 # 1513 "data/maps/SootopolisCity/scripts.pory"
-	.string "This whole time, you believed you were\n"
+SootopolisCity_Text_CitySign:
 # 1514 "data/maps/SootopolisCity/scripts.pory"
-	.string "helping me, MAGNUS. You believed you\l"
+	.string "SOOTOPOLIS CITY\p"
 # 1515 "data/maps/SootopolisCity/scripts.pory"
-	.string "were fighting evil, INAE.\p"
+	.string "“The mystical city where history\n"
 # 1516 "data/maps/SootopolisCity/scripts.pory"
-	.string "Things are far more complicated than\n"
+	.string "slumbers.”$"
 # 1517 "data/maps/SootopolisCity/scripts.pory"
-	.string "either of you ever imagined.\p"
+
 # 1518 "data/maps/SootopolisCity/scripts.pory"
-	.string "TEAM MAGMA, TEAM AQUA… it made no\n"
+SootopolisCity_Text_MrStoneMastermind:
 # 1519 "data/maps/SootopolisCity/scripts.pory"
-	.string "difference to me which of you won.\p"
+	.string "MR. STONE: …Hahahaha…\p"
 # 1520 "data/maps/SootopolisCity/scripts.pory"
-	.string "I was behind everything, from the\n"
+	.string "Look at how things really are.\p"
 # 1521 "data/maps/SootopolisCity/scripts.pory"
-	.string "very start.$"
+	.string "This whole time, you believed you were\n"
 # 1522 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "helping me, MAGNUS. You believed you\l"
 # 1523 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MaxieShockedAtStone:
+	.string "were fighting evil, INAE.\p"
 # 1524 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAGNUS: …!\n"
+	.string "Things are far more complicated than\n"
 # 1525 "data/maps/SootopolisCity/scripts.pory"
-	.string "You?! It was you, all along?!$"
+	.string "either of you ever imagined.\p"
 # 1526 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "TEAM MAGMA, TEAM AQUA… it made no\n"
 # 1527 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ArchieShockedAtStone:
+	.string "difference to me which of you won.\p"
 # 1528 "data/maps/SootopolisCity/scripts.pory"
-	.string "INAE: …!\p"
+	.string "I was behind everything, from the\n"
 # 1529 "data/maps/SootopolisCity/scripts.pory"
-	.string "Impossible… Everything we did, it was\n"
+	.string "very start.$"
 # 1530 "data/maps/SootopolisCity/scripts.pory"
-	.string "all just part of your design?!$"
+
 # 1531 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_MaxieShockedAtStone:
 # 1532 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MrStoneMoneyRulesWorld:
+	.string "MAGNUS: …!\n"
 # 1533 "data/maps/SootopolisCity/scripts.pory"
-	.string "MR. STONE: The two of you have no room\n"
+	.string "You?! It was you, all along?!$"
 # 1534 "data/maps/SootopolisCity/scripts.pory"
-	.string "to complain. I bankrolled you both.\p"
+
 # 1535 "data/maps/SootopolisCity/scripts.pory"
-	.string "Money is what rules this world.\n"
+SootopolisCity_Text_ArchieShockedAtStone:
 # 1536 "data/maps/SootopolisCity/scripts.pory"
-	.string "Pokémon battles are meaningless. That\l"
+	.string "INAE: …!\p"
 # 1537 "data/maps/SootopolisCity/scripts.pory"
-	.string "is why I never trained Pokémon.\p"
+	.string "Impossible… Everything we did, it was\n"
 # 1538 "data/maps/SootopolisCity/scripts.pory"
-	.string "I built DEVON, bought influence, and\n"
+	.string "all just part of your design?!$"
 # 1539 "data/maps/SootopolisCity/scripts.pory"
-	.string "turned my fortune into an empire. Soon\l"
+
 # 1540 "data/maps/SootopolisCity/scripts.pory"
-	.string "every region will answer to me.\p"
+SootopolisCity_Text_MrStoneMoneyRulesWorld:
 # 1541 "data/maps/SootopolisCity/scripts.pory"
-	.string "The RED ORB and BLUE ORB will give me\n"
+	.string "MR. STONE: The two of you have no room\n"
 # 1542 "data/maps/SootopolisCity/scripts.pory"
-	.string "the power of both Primal Pokémon. Then\l"
+	.string "to complain. I bankrolled you both.\p"
 # 1543 "data/maps/SootopolisCity/scripts.pory"
-	.string "the whole world will belong to me!$"
+	.string "Money is what rules this world.\n"
 # 1544 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Pokémon battles are meaningless. That\l"
 # 1545 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MrStonePrimalCommand:
+	.string "is why I never trained Pokémon.\p"
 # 1546 "data/maps/SootopolisCity/scripts.pory"
-	.string "MR. STONE: GROUDON! KYOGRE!\n"
+	.string "I built DEVON, bought influence, and\n"
 # 1547 "data/maps/SootopolisCity/scripts.pory"
-	.string "Accept these orbs and awaken your\n"
+	.string "turned my fortune into an empire. Soon\l"
 # 1548 "data/maps/SootopolisCity/scripts.pory"
-	.string "Primal power!\p"
+	.string "every region will answer to me.\p"
 # 1549 "data/maps/SootopolisCity/scripts.pory"
-	.string "Why won't you obey me?!$"
+	.string "The RED ORB and BLUE ORB will give me\n"
 # 1550 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "the power of both Primal Pokémon. Then\l"
 # 1551 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DevonBoatEmpty:
+	.string "the whole world will belong to me!$"
 # 1552 "data/maps/SootopolisCity/scripts.pory"
-	.string "The boat is empty.$"
+
 # 1553 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_MrStonePrimalCommand:
 # 1554 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DoorIsClosed:
+	.string "MR. STONE: GROUDON! KYOGRE!\n"
 # 1555 "data/maps/SootopolisCity/scripts.pory"
-	.string "The door is closed.$"
+	.string "Accept these orbs and awaken your\n"
 # 1556 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Primal power!\p"
 # 1557 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_PhysicallyFitLivingHere:
+	.string "Why won't you obey me?!$"
 # 1558 "data/maps/SootopolisCity/scripts.pory"
-	.string "Diving in the sea. Climbing up and\n"
+
 # 1559 "data/maps/SootopolisCity/scripts.pory"
-	.string "down stairs all the time…\p"
+SootopolisCity_Text_DevonBoatEmpty:
 # 1560 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you live in this town, you end up\n"
+	.string "The boat is empty.$"
 # 1561 "data/maps/SootopolisCity/scripts.pory"
-	.string "getting physically fit.$"
+
 # 1562 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_DoorIsClosed:
 # 1563 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GiantPokemonSuddenlyAppeared:
+	.string "The door is closed.$"
 # 1564 "data/maps/SootopolisCity/scripts.pory"
-	.string "These giant POKéMON suddenly appeared\n"
+
 # 1565 "data/maps/SootopolisCity/scripts.pory"
-	.string "in the middle of the city!\p"
+SootopolisCity_Text_PhysicallyFitLivingHere:
 # 1566 "data/maps/SootopolisCity/scripts.pory"
-	.string "And, I've never seen them before!\p"
+	.string "Diving in the sea. Climbing up and\n"
 # 1567 "data/maps/SootopolisCity/scripts.pory"
-	.string "Why are they smashing into each\n"
+	.string "down stairs all the time…\p"
 # 1568 "data/maps/SootopolisCity/scripts.pory"
-	.string "other like that?\p"
+	.string "If you live in this town, you end up\n"
 # 1569 "data/maps/SootopolisCity/scripts.pory"
-	.string "Why can't they be friends, those\n"
+	.string "getting physically fit.$"
 # 1570 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON?$"
+
 # 1571 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_GiantPokemonSuddenlyAppeared:
 # 1572 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WhatIsThatGreenPokemon:
+	.string "These giant POKéMON suddenly appeared\n"
 # 1573 "data/maps/SootopolisCity/scripts.pory"
-	.string "What? What? What?\n"
+	.string "in the middle of the city!\p"
 # 1574 "data/maps/SootopolisCity/scripts.pory"
-	.string "What is that green POKéMON?!$"
+	.string "And, I've never seen them before!\p"
 # 1575 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Why are they smashing into each\n"
 # 1576 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WhereDidLegendariesGo:
+	.string "other like that?\p"
 # 1577 "data/maps/SootopolisCity/scripts.pory"
-	.string "GROUDON and KYOGRE…\n"
+	.string "Why can't they be friends, those\n"
 # 1578 "data/maps/SootopolisCity/scripts.pory"
-	.string "Where did they go?\p"
+	.string "POKéMON?$"
 # 1579 "data/maps/SootopolisCity/scripts.pory"
-	.string "Will they cause droughts or downpours\n"
+
 # 1580 "data/maps/SootopolisCity/scripts.pory"
-	.string "somewhere else?$"
+SootopolisCity_Text_WhatIsThatGreenPokemon:
 # 1581 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "What? What? What?\n"
 # 1582 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_TwoPokemonArentAngry:
+	.string "What is that green POKéMON?!$"
 # 1583 "data/maps/SootopolisCity/scripts.pory"
-	.string "I just get this sense somehow that\n"
+
 # 1584 "data/maps/SootopolisCity/scripts.pory"
-	.string "the two POKéMON aren't angry.\p"
+SootopolisCity_Text_WhereDidLegendariesGo:
 # 1585 "data/maps/SootopolisCity/scripts.pory"
-	.string "I think… They probably can't control\n"
+	.string "GROUDON and KYOGRE…\n"
 # 1586 "data/maps/SootopolisCity/scripts.pory"
-	.string "their own power…$"
+	.string "Where did they go?\p"
 # 1587 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Will they cause droughts or downpours\n"
 # 1588 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_FlyingMonStoppedRampage:
+	.string "somewhere else?$"
 # 1589 "data/maps/SootopolisCity/scripts.pory"
-	.string "That flying POKéMON came down from\n"
+
 # 1590 "data/maps/SootopolisCity/scripts.pory"
-	.string "the sky and stopped the rampaging\l"
+SootopolisCity_Text_TwoPokemonArentAngry:
 # 1591 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON…$"
+	.string "I just get this sense somehow that\n"
 # 1592 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "the two POKéMON aren't angry.\p"
 # 1593 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WonderWhatWorldIsLike:
+	.string "I think… They probably can't control\n"
 # 1594 "data/maps/SootopolisCity/scripts.pory"
-	.string "I… I've never been out of this city.\p"
+	.string "their own power…$"
 # 1595 "data/maps/SootopolisCity/scripts.pory"
-	.string "I wonder what the world is like on\n"
+
 # 1596 "data/maps/SootopolisCity/scripts.pory"
-	.string "the other side of this round sky?$"
+SootopolisCity_Text_FlyingMonStoppedRampage:
 # 1597 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "That flying POKéMON came down from\n"
 # 1598 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ThisIsWicked:
+	.string "the sky and stopped the rampaging\l"
 # 1599 "data/maps/SootopolisCity/scripts.pory"
-	.string "Wow!\n"
+	.string "POKéMON…$"
 # 1600 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is wicked!$"
-# 1601 "data/maps/SootopolisCity/scripts.pory"
 
+# 1601 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_WonderWhatWorldIsLike:
 # 1602 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ThatWasWicked:
+	.string "I… I've never been out of this city.\p"
 # 1603 "data/maps/SootopolisCity/scripts.pory"
-	.string "Wow!\n"
+	.string "I wonder what the world is like on\n"
 # 1604 "data/maps/SootopolisCity/scripts.pory"
-	.string "That was wicked!$"
+	.string "the other side of this round sky?$"
 # 1605 "data/maps/SootopolisCity/scripts.pory"
 
 # 1606 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GoRedAndBlueMon:
+SootopolisCity_Text_ThisIsWicked:
 # 1607 "data/maps/SootopolisCity/scripts.pory"
-	.string "Go for it, red POKéMON!\n"
+	.string "Wow!\n"
 # 1608 "data/maps/SootopolisCity/scripts.pory"
-	.string "Don't back off, blue POKéMON!$"
+	.string "This is wicked!$"
 # 1609 "data/maps/SootopolisCity/scripts.pory"
 
 # 1610 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DoYouKnowMonNames:
+SootopolisCity_Text_ThatWasWicked:
 # 1611 "data/maps/SootopolisCity/scripts.pory"
-	.string "… … … … … …\p"
+	.string "Wow!\n"
 # 1612 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hi, do you know the names of those\n"
+	.string "That was wicked!$"
 # 1613 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON fighting over there?$"
+
 # 1614 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_GoRedAndBlueMon:
 # 1615 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GreenOneSettlesThings:
+	.string "Go for it, red POKéMON!\n"
 # 1616 "data/maps/SootopolisCity/scripts.pory"
-	.string "I was wondering which one would win,\n"
+	.string "Don't back off, blue POKéMON!$"
 # 1617 "data/maps/SootopolisCity/scripts.pory"
-	.string "the red one or the blue one, but, oh no,\l"
+
 # 1618 "data/maps/SootopolisCity/scripts.pory"
-	.string "it's the green one that settles things!\p"
+SootopolisCity_Text_DoYouKnowMonNames:
 # 1619 "data/maps/SootopolisCity/scripts.pory"
-	.string "Talk about a huge turn of events!$"
+	.string "… … … … … …\p"
 # 1620 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Hi, do you know the names of those\n"
 # 1621 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SeeingLegendWithOwnEyes:
+	.string "POKéMON fighting over there?$"
 # 1622 "data/maps/SootopolisCity/scripts.pory"
-	.string "There's an ancient legend that claims\n"
+
 # 1623 "data/maps/SootopolisCity/scripts.pory"
-	.string "the land and sea were shaped by\l"
+SootopolisCity_Text_GreenOneSettlesThings:
 # 1624 "data/maps/SootopolisCity/scripts.pory"
-	.string "a colossal battle between POKéMON.\p"
+	.string "I was wondering which one would win,\n"
 # 1625 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, I'm seeing that happen with\n"
+	.string "the red one or the blue one, but, oh no,\l"
 # 1626 "data/maps/SootopolisCity/scripts.pory"
-	.string "my very own eyes!\p"
+	.string "it's the green one that settles things!\p"
 # 1627 "data/maps/SootopolisCity/scripts.pory"
-	.string "Whoa! I never expected to be\n"
+	.string "Talk about a huge turn of events!$"
 # 1628 "data/maps/SootopolisCity/scripts.pory"
-	.string "witness to something this huge!$"
+
 # 1629 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_SeeingLegendWithOwnEyes:
 # 1630 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SawLegendWithOwnEyes:
-# 1631 "data/maps/SootopolisCity/scripts.pory"
 	.string "There's an ancient legend that claims\n"
-# 1632 "data/maps/SootopolisCity/scripts.pory"
+# 1631 "data/maps/SootopolisCity/scripts.pory"
 	.string "the land and sea were shaped by\l"
-# 1633 "data/maps/SootopolisCity/scripts.pory"
+# 1632 "data/maps/SootopolisCity/scripts.pory"
 	.string "a colossal battle between POKéMON.\p"
+# 1633 "data/maps/SootopolisCity/scripts.pory"
+	.string "Well, I'm seeing that happen with\n"
 # 1634 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, I saw that happen with\n"
-# 1635 "data/maps/SootopolisCity/scripts.pory"
 	.string "my very own eyes!\p"
-# 1636 "data/maps/SootopolisCity/scripts.pory"
+# 1635 "data/maps/SootopolisCity/scripts.pory"
 	.string "Whoa! I never expected to be\n"
-# 1637 "data/maps/SootopolisCity/scripts.pory"
+# 1636 "data/maps/SootopolisCity/scripts.pory"
 	.string "witness to something this huge!$"
+# 1637 "data/maps/SootopolisCity/scripts.pory"
+
 # 1638 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_SawLegendWithOwnEyes:
 # 1639 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_BigPokemonFighting:
+	.string "There's an ancient legend that claims\n"
 # 1640 "data/maps/SootopolisCity/scripts.pory"
-	.string "A big POKéMON is fighting with\n"
+	.string "the land and sea were shaped by\l"
 # 1641 "data/maps/SootopolisCity/scripts.pory"
-	.string "another big POKéMON!\p"
+	.string "a colossal battle between POKéMON.\p"
 # 1642 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please, someone make them stop!$"
+	.string "Well, I saw that happen with\n"
 # 1643 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "my very own eyes!\p"
 # 1644 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_PrettyMonCameFromSky:
+	.string "Whoa! I never expected to be\n"
 # 1645 "data/maps/SootopolisCity/scripts.pory"
-	.string "A pretty POKéMON came down from\n"
+	.string "witness to something this huge!$"
 # 1646 "data/maps/SootopolisCity/scripts.pory"
-	.string "the sky…$"
-# 1647 "data/maps/SootopolisCity/scripts.pory"
 
+# 1647 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_BigPokemonFighting:
 # 1648 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SootopolisWillBeWrecked:
+	.string "A big POKéMON is fighting with\n"
 # 1649 "data/maps/SootopolisCity/scripts.pory"
-	.string "Oh, no!\n"
+	.string "another big POKéMON!\p"
 # 1650 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY will get wrecked!$"
+	.string "Please, someone make them stop!$"
 # 1651 "data/maps/SootopolisCity/scripts.pory"
 
 # 1652 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SootopolisDidntGetWrecked:
+SootopolisCity_Text_PrettyMonCameFromSky:
 # 1653 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY didn't get wrecked!$"
+	.string "A pretty POKéMON came down from\n"
 # 1654 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "the sky…$"
 # 1655 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_NoOrdinaryTourist:
+
 # 1656 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hm!\n"
+SootopolisCity_Text_SootopolisWillBeWrecked:
 # 1657 "data/maps/SootopolisCity/scripts.pory"
-	.string "You've come all the way to SOOTOPOLIS?\l"
+	.string "Oh, no!\n"
 # 1658 "data/maps/SootopolisCity/scripts.pory"
-	.string "You're no ordinary tourist.\p"
+	.string "SOOTOPOLIS CITY will get wrecked!$"
 # 1659 "data/maps/SootopolisCity/scripts.pory"
-	.string "But I suppose that doesn't make you\n"
+
 # 1660 "data/maps/SootopolisCity/scripts.pory"
-	.string "an extraordinary tourist, either.$"
+SootopolisCity_Text_SootopolisDidntGetWrecked:
 # 1661 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "SOOTOPOLIS CITY didn't get wrecked!$"
 # 1662 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CityRegainedCalm:
+
 # 1663 "data/maps/SootopolisCity/scripts.pory"
-	.string "The city has regained its calm…$"
+SootopolisCity_Text_NoOrdinaryTourist:
 # 1664 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Hm!\n"
 # 1665 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CaveOfOriginPleaseLeave:
+	.string "You've come all the way to SOOTOPOLIS?\l"
 # 1666 "data/maps/SootopolisCity/scripts.pory"
-	.string "Who might you be?\p"
+	.string "You're no ordinary tourist.\p"
 # 1667 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is the CAVE OF ORIGIN.\p"
+	.string "But I suppose that doesn't make you\n"
 # 1668 "data/maps/SootopolisCity/scripts.pory"
-	.string "The spirits of POKéMON, becalmed at\n"
+	.string "an extraordinary tourist, either.$"
 # 1669 "data/maps/SootopolisCity/scripts.pory"
-	.string "MT. PYRE, are said to be revived here.\p"
+
 # 1670 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please leave.$"
+SootopolisCity_Text_CityRegainedCalm:
 # 1671 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "The city has regained its calm…$"
 # 1672 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_LeadSuperiorTrainerToCave:
+
 # 1673 "data/maps/SootopolisCity/scripts.pory"
-	.string "A person with a strong will and\n"
+SootopolisCity_Text_CaveOfOriginPleaseLeave:
 # 1674 "data/maps/SootopolisCity/scripts.pory"
-	.string "superior talent…\p"
+	.string "Who might you be?\p"
 # 1675 "data/maps/SootopolisCity/scripts.pory"
-	.string "A TRAINER who has knowledge and\n"
+	.string "This is the CAVE OF ORIGIN.\p"
 # 1676 "data/maps/SootopolisCity/scripts.pory"
-	.string "experience of many kinds of POKéMON…\p"
+	.string "The spirits of POKéMON, becalmed at\n"
 # 1677 "data/maps/SootopolisCity/scripts.pory"
-	.string "If such a person were to appear, I was\n"
+	.string "MT. PYRE, are said to be revived here.\p"
 # 1678 "data/maps/SootopolisCity/scripts.pory"
-	.string "instructed by WALLACE to lead that\l"
+	.string "Please leave.$"
 # 1679 "data/maps/SootopolisCity/scripts.pory"
-	.string "TRAINER to this CAVE.$"
+
 # 1680 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_LeadSuperiorTrainerToCave:
 # 1681 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_AwakenedPokemonClash:
+	.string "A person with a strong will and\n"
 # 1682 "data/maps/SootopolisCity/scripts.pory"
-	.string "Oh, my…\p"
+	.string "superior talent…\p"
 # 1683 "data/maps/SootopolisCity/scripts.pory"
-	.string "The clash between the two awakened\n"
+	.string "A TRAINER who has knowledge and\n"
 # 1684 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON was quelled by the awakening\l"
+	.string "experience of many kinds of POKéMON…\p"
 # 1685 "data/maps/SootopolisCity/scripts.pory"
-	.string "of a third POKéMON…$"
+	.string "If such a person were to appear, I was\n"
 # 1686 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "instructed by WALLACE to lead that\l"
 # 1687 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CaveOfOriginSleepsToo:
+	.string "TRAINER to this CAVE.$"
 # 1688 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is the CAVE OF ORIGIN…\p"
+
 # 1689 "data/maps/SootopolisCity/scripts.pory"
-	.string "With the passing of the crisis,\n"
+SootopolisCity_Text_AwakenedPokemonClash:
 # 1690 "data/maps/SootopolisCity/scripts.pory"
-	.string "the cave, too, shall sleep…$"
+	.string "Oh, my…\p"
 # 1691 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "The clash between the two awakened\n"
 # 1692 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SootopolisSkyBeautiful:
+	.string "POKéMON was quelled by the awakening\l"
 # 1693 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS sprang up as a town in\n"
+	.string "of a third POKéMON…$"
 # 1694 "data/maps/SootopolisCity/scripts.pory"
-	.string "the crater of a volcano.\p"
+
 # 1695 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you look up at the sky, the lip of\n"
+SootopolisCity_Text_CaveOfOriginSleepsToo:
 # 1696 "data/maps/SootopolisCity/scripts.pory"
-	.string "the crater is also visible.\l"
+	.string "This is the CAVE OF ORIGIN…\p"
 # 1697 "data/maps/SootopolisCity/scripts.pory"
-	.string "So, all you see is the sky in a circle.\p"
+	.string "With the passing of the crisis,\n"
 # 1698 "data/maps/SootopolisCity/scripts.pory"
-	.string "But that's what makes the sky above\n"
+	.string "the cave, too, shall sleep…$"
 # 1699 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS the most beautiful.$"
+
 # 1700 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_SootopolisSkyBeautiful:
 # 1701 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GiganticPokemonFight:
+	.string "SOOTOPOLIS sprang up as a town in\n"
 # 1702 "data/maps/SootopolisCity/scripts.pory"
-	.string "When two POKéMON that gigantic\n"
+	.string "the crater of a volcano.\p"
 # 1703 "data/maps/SootopolisCity/scripts.pory"
-	.string "are fighting that savagely, there's\l"
+	.string "If you look up at the sky, the lip of\n"
 # 1704 "data/maps/SootopolisCity/scripts.pory"
-	.string "not much that we can do.$"
+	.string "the crater is also visible.\l"
 # 1705 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "So, all you see is the sky in a circle.\p"
 # 1706 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_FearedWorstWhenPokemonFlewDown:
+	.string "But that's what makes the sky above\n"
 # 1707 "data/maps/SootopolisCity/scripts.pory"
-	.string "When that third POKéMON flew down,\n"
+	.string "SOOTOPOLIS the most beautiful.$"
 # 1708 "data/maps/SootopolisCity/scripts.pory"
-	.string "I feared the worst.$"
+
 # 1709 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_GiganticPokemonFight:
 # 1710 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_NightSkyFavoriteScenery:
+	.string "When two POKéMON that gigantic\n"
 # 1711 "data/maps/SootopolisCity/scripts.pory"
-	.string "A circle of a night sky framed by\n"
+	.string "are fighting that savagely, there's\l"
 # 1712 "data/maps/SootopolisCity/scripts.pory"
-	.string "the crater of a volcano…\p"
+	.string "not much that we can do.$"
 # 1713 "data/maps/SootopolisCity/scripts.pory"
-	.string "And in that ring, stars flicker and\n"
+
 # 1714 "data/maps/SootopolisCity/scripts.pory"
-	.string "blink as if they were alive…\l"
+SootopolisCity_Text_FearedWorstWhenPokemonFlewDown:
 # 1715 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's my favorite scenery.$"
+	.string "When that third POKéMON flew down,\n"
 # 1716 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "I feared the worst.$"
 # 1717 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WeatherWentWild:
+
 # 1718 "data/maps/SootopolisCity/scripts.pory"
-	.string "The weather was clear this morning,\n"
+SootopolisCity_Text_NightSkyFavoriteScenery:
 # 1719 "data/maps/SootopolisCity/scripts.pory"
-	.string "but…\p"
+	.string "A circle of a night sky framed by\n"
 # 1720 "data/maps/SootopolisCity/scripts.pory"
-	.string "All of a sudden, dark clouds brewed up,\n"
+	.string "the crater of a volcano…\p"
 # 1721 "data/maps/SootopolisCity/scripts.pory"
-	.string "rain started falling in sheets, and\l"
+	.string "And in that ring, stars flicker and\n"
 # 1722 "data/maps/SootopolisCity/scripts.pory"
-	.string "there was thunder and lightning, too.\p"
+	.string "blink as if they were alive…\l"
 # 1723 "data/maps/SootopolisCity/scripts.pory"
-	.string "The weather just went completely\n"
+	.string "It's my favorite scenery.$"
 # 1724 "data/maps/SootopolisCity/scripts.pory"
-	.string "wild!\p"
+
 # 1725 "data/maps/SootopolisCity/scripts.pory"
-	.string "Is all of this because of those\n"
+SootopolisCity_Text_WeatherWentWild:
 # 1726 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON?$"
+	.string "The weather was clear this morning,\n"
 # 1727 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "but…\p"
 # 1728 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_YouBroughtFlyingMon:
+	.string "All of a sudden, dark clouds brewed up,\n"
 # 1729 "data/maps/SootopolisCity/scripts.pory"
-	.string "Oh?\p"
+	.string "rain started falling in sheets, and\l"
 # 1730 "data/maps/SootopolisCity/scripts.pory"
-	.string "It was you who brought that flying\n"
+	.string "there was thunder and lightning, too.\p"
 # 1731 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON here?\p"
+	.string "The weather just went completely\n"
 # 1732 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, aren't you amazing!$"
+	.string "wild!\p"
 # 1733 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Is all of this because of those\n"
 # 1734 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GroudonPleaseStop:
+	.string "POKéMON?$"
 # 1735 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAXIE: G… GROUDON…\n"
+
 # 1736 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please! Stop what you're doing!\p"
+SootopolisCity_Text_YouBroughtFlyingMon:
 # 1737 "data/maps/SootopolisCity/scripts.pory"
-	.string "I know the extent of your power now!\p"
+	.string "Oh?\p"
 # 1738 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you keep going, all HOENN, not just\n"
+	.string "It was you who brought that flying\n"
 # 1739 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS, will be utterly ruined!$"
+	.string "POKéMON here?\p"
 # 1740 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Well, aren't you amazing!$"
 # 1741 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_AfterAllOurScheming:
+
 # 1742 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAXIE: So the super-ancient POKéMON\n"
+SootopolisCity_Text_GroudonPleaseStop:
 # 1743 "data/maps/SootopolisCity/scripts.pory"
-	.string "weren't only GROUDON and KYOGRE…\p"
+	.string "MAXIE: G… GROUDON…\n"
 # 1744 "data/maps/SootopolisCity/scripts.pory"
-	.string "After all our fruitless scheming and\n"
+	.string "Please! Stop what you're doing!\p"
 # 1745 "data/maps/SootopolisCity/scripts.pory"
-	.string "frantic efforts, that one POKéMON's\l"
+	.string "I know the extent of your power now!\p"
 # 1746 "data/maps/SootopolisCity/scripts.pory"
-	.string "simple action puts everything right\l"
+	.string "If you keep going, all HOENN, not just\n"
 # 1747 "data/maps/SootopolisCity/scripts.pory"
-	.string "again as if nothing had happened…\p"
+	.string "SOOTOPOLIS, will be utterly ruined!$"
 # 1748 "data/maps/SootopolisCity/scripts.pory"
-	.string "Fu…\n"
+
 # 1749 "data/maps/SootopolisCity/scripts.pory"
-	.string "Fuhahaha…$"
+SootopolisCity_Text_AfterAllOurScheming:
 # 1750 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "MAXIE: So the super-ancient POKéMON\n"
 # 1751 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_KyogreCalmDown:
+	.string "weren't only GROUDON and KYOGRE…\p"
 # 1752 "data/maps/SootopolisCity/scripts.pory"
-	.string "ARCHIE: KYOGRE! What's wrong?!\n"
+	.string "After all our fruitless scheming and\n"
 # 1753 "data/maps/SootopolisCity/scripts.pory"
-	.string "Look over here! It's the RED ORB!\l"
+	.string "frantic efforts, that one POKéMON's\l"
 # 1754 "data/maps/SootopolisCity/scripts.pory"
-	.string "Calm down! KYOGRE!\p"
+	.string "simple action puts everything right\l"
 # 1755 "data/maps/SootopolisCity/scripts.pory"
-	.string "… … … … … …\n"
+	.string "again as if nothing had happened…\p"
 # 1756 "data/maps/SootopolisCity/scripts.pory"
-	.string "… … … … … …\p"
+	.string "Fu…\n"
 # 1757 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's no good!\n"
+	.string "Fuhahaha…$"
 # 1758 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's not responding at all!$"
+
 # 1759 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_KyogreCalmDown:
 # 1760 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_TryingMeaninglessToPokemon:
+	.string "ARCHIE: KYOGRE! What's wrong?!\n"
 # 1761 "data/maps/SootopolisCity/scripts.pory"
-	.string "ARCHIE: KYOGRE and GROUDON both\n"
+	.string "Look over here! It's the RED ORB!\l"
 # 1762 "data/maps/SootopolisCity/scripts.pory"
-	.string "flew off to who knows where.\p"
+	.string "Calm down! KYOGRE!\p"
 # 1763 "data/maps/SootopolisCity/scripts.pory"
-	.string "The weather in HOENN has returned\n"
+	.string "… … … … … …\n"
 # 1764 "data/maps/SootopolisCity/scripts.pory"
-	.string "to its normal state…\p"
+	.string "… … … … … …\p"
 # 1765 "data/maps/SootopolisCity/scripts.pory"
-	.string "Haha…\n"
+	.string "It's no good!\n"
 # 1766 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hahaha…\p"
+	.string "It's not responding at all!$"
 # 1767 "data/maps/SootopolisCity/scripts.pory"
-	.string "Maybe what we were trying to do was\n"
+
 # 1768 "data/maps/SootopolisCity/scripts.pory"
-	.string "something small, even meaningless,\l"
+SootopolisCity_Text_TryingMeaninglessToPokemon:
 # 1769 "data/maps/SootopolisCity/scripts.pory"
-	.string "to POKéMON…$"
+	.string "ARCHIE: KYOGRE and GROUDON both\n"
 # 1770 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "flew off to who knows where.\p"
 # 1771 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_InvolvedWithCrisisComeWithMe:
+	.string "The weather in HOENN has returned\n"
 # 1772 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: Those POKéMON fighting…\n"
+	.string "to its normal state…\p"
 # 1773 "data/maps/SootopolisCity/scripts.pory"
-	.string "GROUDON… And KYOGRE…\p"
+	.string "Haha…\n"
 # 1774 "data/maps/SootopolisCity/scripts.pory"
-	.string "The two super-ancient POKéMON\n"
+	.string "Hahaha…\p"
 # 1775 "data/maps/SootopolisCity/scripts.pory"
-	.string "were awakened from a long sleep…\p"
+	.string "Maybe what we were trying to do was\n"
 # 1776 "data/maps/SootopolisCity/scripts.pory"
-	.string "And now they are smashing each other\n"
+	.string "something small, even meaningless,\l"
 # 1777 "data/maps/SootopolisCity/scripts.pory"
-	.string "with their uncontrollable energy…\p"
+	.string "to POKéMON…$"
 # 1778 "data/maps/SootopolisCity/scripts.pory"
-	.string "…{PLAYER}{KUN}.\p"
+
 # 1779 "data/maps/SootopolisCity/scripts.pory"
-	.string "You being here now I'll take to mean\n"
+SootopolisCity_Text_InvolvedWithCrisisComeWithMe:
 # 1780 "data/maps/SootopolisCity/scripts.pory"
-	.string "that you're prepared to become\l"
+	.string "STEVEN: Those POKéMON fighting…\n"
 # 1781 "data/maps/SootopolisCity/scripts.pory"
-	.string "involved in this crisis.\p"
+	.string "GROUDON… And KYOGRE…\p"
 # 1782 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, then, there's someone that\n"
+	.string "The two super-ancient POKéMON\n"
 # 1783 "data/maps/SootopolisCity/scripts.pory"
-	.string "I'd like you to meet.\p"
+	.string "were awakened from a long sleep…\p"
 # 1784 "data/maps/SootopolisCity/scripts.pory"
-	.string "Come with me, please.$"
+	.string "And now they are smashing each other\n"
 # 1785 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "with their uncontrollable energy…\p"
 # 1786 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DoesThisMakeYourFearPokemon:
+	.string "…{PLAYER}{KUN}.\p"
 # 1787 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: Listen, {PLAYER}{KUN}.\p"
+	.string "You being here now I'll take to mean\n"
 # 1788 "data/maps/SootopolisCity/scripts.pory"
-	.string "Does seeing GROUDON and KYOGRE make\n"
+	.string "that you're prepared to become\l"
 # 1789 "data/maps/SootopolisCity/scripts.pory"
-	.string "you think POKéMON are to be feared?\p"
+	.string "involved in this crisis.\p"
 # 1790 "data/maps/SootopolisCity/scripts.pory"
-	.string "But that's not true.\n"
+	.string "Well, then, there's someone that\n"
 # 1791 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON are really more…\p"
+	.string "I'd like you to meet.\p"
 # 1792 "data/maps/SootopolisCity/scripts.pory"
-	.string "…Why am I asking you this?\n"
+	.string "Come with me, please.$"
 # 1793 "data/maps/SootopolisCity/scripts.pory"
-	.string "You already know.$"
+
 # 1794 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_DoesThisMakeYourFearPokemon:
 # 1795 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_HereWereAreHelpWallace:
+	.string "STEVEN: Listen, {PLAYER}{KUN}.\p"
 # 1796 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: Okay, here we are!\p"
+	.string "Does seeing GROUDON and KYOGRE make\n"
 # 1797 "data/maps/SootopolisCity/scripts.pory"
-	.string "Inside here you'll find someone named\n"
+	.string "you think POKéMON are to be feared?\p"
 # 1798 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE.\p"
+	.string "But that's not true.\n"
 # 1799 "data/maps/SootopolisCity/scripts.pory"
-	.string "I think you have what's needed to\n"
+	.string "POKéMON are really more…\p"
 # 1800 "data/maps/SootopolisCity/scripts.pory"
-	.string "help him…$"
+	.string "…Why am I asking you this?\n"
 # 1801 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "You already know.$"
 # 1802 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_KnowWhatsNeededToHelpHim:
+
 # 1803 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: I think you have what's\n"
+SootopolisCity_Text_HereWereAreHelpWallace:
 # 1804 "data/maps/SootopolisCity/scripts.pory"
-	.string "needed to help him…$"
+	.string "STEVEN: Okay, here we are!\p"
 # 1805 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Inside here you'll find someone named\n"
 # 1806 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_NeverBeenToSkyPillar:
+	.string "WALLACE.\p"
 # 1807 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: The SKY PILLAR…\p"
+	.string "I think you have what's needed to\n"
 # 1808 "data/maps/SootopolisCity/scripts.pory"
-	.string "I've never been there.\n"
+	.string "help him…$"
 # 1809 "data/maps/SootopolisCity/scripts.pory"
-	.string "I wonder where it could be?$"
+
 # 1810 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_KnowWhatsNeededToHelpHim:
 # 1811 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SoThatsRayquaza:
+	.string "STEVEN: I think you have what's\n"
 # 1812 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: So that's RAYQUAZA…\p"
+	.string "needed to help him…$"
 # 1813 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's incredible how the two rampaging\n"
+
 # 1814 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON would flee from it in fear…$"
+SootopolisCity_Text_NeverBeenToSkyPillar:
 # 1815 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "STEVEN: The SKY PILLAR…\p"
 # 1816 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MaxieArchieLeft:
+	.string "I've never been there.\n"
 # 1817 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: It looks like both MAGNUS and\n"
+	.string "I wonder where it could be?$"
 # 1818 "data/maps/SootopolisCity/scripts.pory"
-	.string "INAE have gone away somewhere.\p"
-# 1819 "data/maps/SootopolisCity/scripts.pory"
-	.string "Perhaps they've gone to MT. PYRE to\n"
-# 1820 "data/maps/SootopolisCity/scripts.pory"
-	.string "return those ORBS…$"
-# 1821 "data/maps/SootopolisCity/scripts.pory"
 
+# 1819 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_SoThatsRayquaza:
+# 1820 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: So that's RAYQUAZA…\p"
+# 1821 "data/maps/SootopolisCity/scripts.pory"
+	.string "It's incredible how the two rampaging\n"
 # 1822 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_HaventYouScaledSkyPillar:
+	.string "POKéMON would flee from it in fear…$"
 # 1823 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: Oh?\n"
+
 # 1824 "data/maps/SootopolisCity/scripts.pory"
-	.string "{PLAYER}{KUN}?\p"
+SootopolisCity_Text_MaxieArchieLeft:
 # 1825 "data/maps/SootopolisCity/scripts.pory"
-	.string "Haven't you scaled the SKY PILLAR\n"
+	.string "STEVEN: It looks like both MAGNUS and\n"
 # 1826 "data/maps/SootopolisCity/scripts.pory"
-	.string "yet?\p"
+	.string "INAE have gone away somewhere.\p"
 # 1827 "data/maps/SootopolisCity/scripts.pory"
-	.string "I'm sure that you can make it to\n"
+	.string "Perhaps they've gone to MT. PYRE to\n"
 # 1828 "data/maps/SootopolisCity/scripts.pory"
-	.string "the top of the SKY PILLAR…$"
+	.string "return those ORBS…$"
 # 1829 "data/maps/SootopolisCity/scripts.pory"
 
 # 1830 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_AquaMagmaDidntMeanHarm:
+SootopolisCity_Text_HaventYouScaledSkyPillar:
 # 1831 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: {PLAYER}{KUN}…\p"
+	.string "WALLACE: Oh?\n"
 # 1832 "data/maps/SootopolisCity/scripts.pory"
-	.string "The leaders of TEAM MAGMA and AQUA,\n"
+	.string "{PLAYER}{KUN}?\p"
 # 1833 "data/maps/SootopolisCity/scripts.pory"
-	.string "I don't think they meant harm.\p"
+	.string "Haven't you scaled the SKY PILLAR\n"
 # 1834 "data/maps/SootopolisCity/scripts.pory"
-	.string "It wouldn't hurt to hear what they\n"
+	.string "yet?\p"
 # 1835 "data/maps/SootopolisCity/scripts.pory"
-	.string "have to say for themselves.$"
+	.string "I'm sure that you can make it to\n"
 # 1836 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "the top of the SKY PILLAR…$"
 # 1837 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ThankYouForHelpAcceptThis:
+
 # 1838 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: {PLAYER}{KUN}…\n"
+SootopolisCity_Text_AquaMagmaDidntMeanHarm:
 # 1839 "data/maps/SootopolisCity/scripts.pory"
-	.string "My eyes didn't deceive me.\p"
+	.string "WALLACE: {PLAYER}{KUN}…\p"
 # 1840 "data/maps/SootopolisCity/scripts.pory"
-	.string "Thanks to your help, SOOTOPOLIS…\n"
+	.string "The leaders of TEAM MAGMA and AQUA,\n"
 # 1841 "data/maps/SootopolisCity/scripts.pory"
-	.string "No, all of HOENN was saved.\p"
+	.string "I don't think they meant harm.\p"
 # 1842 "data/maps/SootopolisCity/scripts.pory"
-	.string "On behalf of the people, I thank you.\p"
+	.string "It wouldn't hurt to hear what they\n"
 # 1843 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is a gift from me.\n"
+	.string "have to say for themselves.$"
 # 1844 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please accept it.$"
+
 # 1845 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_ThankYouForHelpAcceptThis:
 # 1846 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ExplainWaterfallGoToGym:
+	.string "WALLACE: {PLAYER}{KUN}…\n"
 # 1847 "data/maps/SootopolisCity/scripts.pory"
-	.string "That HIDDEN MACHINE contains\n"
+	.string "My eyes didn't deceive me.\p"
 # 1848 "data/maps/SootopolisCity/scripts.pory"
-	.string "WATERFALL.\p"
+	.string "Thanks to your help, SOOTOPOLIS…\n"
 # 1849 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you have the RAIN BADGE, a POKéMON\n"
+	.string "No, all of HOENN was saved.\p"
 # 1850 "data/maps/SootopolisCity/scripts.pory"
-	.string "that has learned that HM move can\l"
+	.string "On behalf of the people, I thank you.\p"
 # 1851 "data/maps/SootopolisCity/scripts.pory"
-	.string "force its way up waterfalls.\p"
+	.string "This is a gift from me.\n"
 # 1852 "data/maps/SootopolisCity/scripts.pory"
-	.string "And where does one get the RAIN BADGE?\n"
+	.string "Please accept it.$"
 # 1853 "data/maps/SootopolisCity/scripts.pory"
-	.string "You know, don't you?\p"
-# 1854 "data/maps/SootopolisCity/scripts.pory"
-	.string "That's right! You have to beat\n"
-# 1855 "data/maps/SootopolisCity/scripts.pory"
-	.string "the SOOTOPOLIS GYM LEADER.\p"
-# 1856 "data/maps/SootopolisCity/scripts.pory"
-	.string "When you're all set to go, step through\n"
-# 1857 "data/maps/SootopolisCity/scripts.pory"
-	.string "that door.$"
-# 1858 "data/maps/SootopolisCity/scripts.pory"
 
+# 1854 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_ExplainWaterfallGoToGym:
+# 1855 "data/maps/SootopolisCity/scripts.pory"
+	.string "That HIDDEN MACHINE contains\n"
+# 1856 "data/maps/SootopolisCity/scripts.pory"
+	.string "WATERFALL.\p"
+# 1857 "data/maps/SootopolisCity/scripts.pory"
+	.string "If you have the RAIN BADGE, a POKéMON\n"
+# 1858 "data/maps/SootopolisCity/scripts.pory"
+	.string "that has learned that HM move can\l"
 # 1859 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DazzledByMentor:
+	.string "force its way up waterfalls.\p"
 # 1860 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: I'm sure that you will be\n"
+	.string "And where does one get the RAIN BADGE?\n"
 # 1861 "data/maps/SootopolisCity/scripts.pory"
-	.string "dazzled by my mentor's breathtakingly\l"
+	.string "You know, don't you?\p"
 # 1862 "data/maps/SootopolisCity/scripts.pory"
+	.string "That's right! You have to beat\n"
+# 1863 "data/maps/SootopolisCity/scripts.pory"
+	.string "the SOOTOPOLIS GYM LEADER.\p"
+# 1864 "data/maps/SootopolisCity/scripts.pory"
+	.string "When you're all set to go, step through\n"
+# 1865 "data/maps/SootopolisCity/scripts.pory"
+	.string "that door.$"
+# 1866 "data/maps/SootopolisCity/scripts.pory"
+
+# 1867 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_DazzledByMentor:
+# 1868 "data/maps/SootopolisCity/scripts.pory"
+	.string "WALLACE: I'm sure that you will be\n"
+# 1869 "data/maps/SootopolisCity/scripts.pory"
+	.string "dazzled by my mentor's breathtakingly\l"
+# 1870 "data/maps/SootopolisCity/scripts.pory"
 	.string "elegant battle style.$"

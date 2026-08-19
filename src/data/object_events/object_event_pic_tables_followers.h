@@ -3020,7 +3020,7 @@ static const struct SpriteFrameImage sPicTable_Kyogre[] = {
 #if OW_BATTLE_ONLY_FORMS
 #if P_PRIMAL_REVERSIONS
 static const struct SpriteFrameImage sPicTable_KyogrePrimal[] = {
-    overworld_ascending_frames(gObjectEventPic_KyogrePrimal, 4, 4),
+    overworld_ascending_frames(gObjectEventPic_KyogrePrimal, 8, 8),
 };
 #endif // P_PRIMAL_REVERSIONS
 #endif // OW_BATTLE_ONLY_FORMS
@@ -3033,7 +3033,7 @@ static const struct SpriteFrameImage sPicTable_Groudon[] = {
 #if OW_BATTLE_ONLY_FORMS
 #if P_PRIMAL_REVERSIONS
 static const struct SpriteFrameImage sPicTable_GroudonPrimal[] = {
-    overworld_ascending_frames(gObjectEventPic_GroudonPrimal, 4, 4),
+    overworld_ascending_frames(gObjectEventPic_GroudonPrimal, 8, 8),
 };
 #endif // P_PRIMAL_REVERSIONS
 #endif // OW_BATTLE_ONLY_FORMS

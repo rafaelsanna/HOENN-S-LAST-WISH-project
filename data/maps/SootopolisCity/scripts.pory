@@ -36,6 +36,7 @@ SootopolisCity_OnTransition:
 	setflag FLAG_VISITED_SOOTOPOLIS_CITY
 	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_HideMapNamePopup
 	call_if_eq VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_HideMapNamePopup
+	call_if_unset FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_HidePrimalLegendaries
 	call SootopolisCity_EventScript_SetWeather
 	call SootopolisCity_EventScript_SetLayout
 	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetBattleSpectators
@@ -52,6 +53,11 @@ SootopolisCity_OnTransition:
 
 SootopolisCity_EventScript_HideMapNamePopup::
 	setflag FLAG_HIDE_MAP_NAME_POPUP
+	return
+
+SootopolisCity_EventScript_HidePrimalLegendaries::
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
 	return
 
 SootopolisCity_EventScript_SetBattleSpectators::
@@ -1417,6 +1423,8 @@ SootopolisCity_EventScript_MrStoneEvil::
 	waitstate
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
 	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
 	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
 	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
