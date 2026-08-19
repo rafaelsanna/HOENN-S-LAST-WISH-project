@@ -1378,6 +1378,80 @@ SootopolisCity_EventScript_MaxieArchieLeave::
 	releaseall
 	end
 
+SootopolisCity_EventScript_MrStoneEvil::
+	lockall
+	faceplayer
+	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneBoardBoat
+	waitmovement 0
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE
+	removeobject LOCALID_SOOTOPOLIS_MRSTONE
+	special SpawnCameraObject
+	applymovement LOCALID_SOOTOPOLIS_BOAT, SootopolisCity_Movement_DevonBoatSail
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraFollowDevonBoat
+	waitmovement 0
+	special RemoveCameraObject
+	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
+	closemessage
+	fadescreenspeed FADE_TO_WHITE, 4
+	setvar VAR_0x8004, 1 @ vertical pan
+	setvar VAR_0x8005, 1 @ horizontal pan
+	setvar VAR_0x8006, 8 @ num shakes
+	setvar VAR_0x8007, 3 @ shake delay
+	special ShakeCamera
+	waitstate
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
+	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
+	addobject LOCALID_SOOTOPOLIS_PRIMALKYOGRE
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_BOAT
+	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	warpwhitefade MAP_SOOTOPOLIS_CITY, 31, 34
+	waitstate
+	releaseall
+	end
+
+SootopolisCity_EventScript_DevonBoat::
+	lock
+	faceplayer
+	msgbox SootopolisCity_Text_DevonBoatEmpty, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_Movement_MrStoneBoardBoat:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SootopolisCity_Movement_DevonBoatSail:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SootopolisCity_Movement_CameraFollowDevonBoat:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
 @ Unused
 SootopolisCity_Movement_Levitate::
 	levitate
@@ -1398,6 +1472,32 @@ SootopolisCity_Text_CitySign:
 	.string "SOOTOPOLIS CITY\p"
 	.string "“The mystical city where history\n"
 	.string "slumbers.”$"
+
+SootopolisCity_Text_MrStoneMastermind:
+	.string "MR. STONE: You believed I was\n"
+	.string "your benefactor, MAGNUS. You believed\n"
+	.string "I was your ally, INAE.\p"
+	.string "The truth is that I funded both of you.\n"
+	.string "You were never more than pawns in my\n"
+	.string "design.\p"
+	.string "Money is what rules this world.\n"
+	.string "Pokémon battles are meaningless. That is\n"
+	.string "why I never trained Pokémon.\p"
+	.string "I built Devon, bought influence, and\n"
+	.string "turned my fortune into an empire. Soon\n"
+	.string "every region will answer to me.\p"
+	.string "The RED ORB and BLUE ORB will give me\n"
+	.string "the power of both Primal Pokémon. Then\n"
+	.string "the whole world will belong to me!$"
+
+SootopolisCity_Text_MrStonePrimalCommand:
+	.string "MR. STONE: GROUDON! KYOGRE!\n"
+	.string "Accept these orbs and awaken your\n"
+	.string "Primal power!\p"
+	.string "Why won't you obey me?!$"
+
+SootopolisCity_Text_DevonBoatEmpty:
+	.string "The boat is empty.$"
 
 SootopolisCity_Text_DoorIsClosed:
 	.string "The door is closed.$"
@@ -1662,8 +1762,8 @@ SootopolisCity_Text_SoThatsRayquaza:
 	.string "POKéMON would flee from it in fear…$"
 
 SootopolisCity_Text_MaxieArchieLeft:
-	.string "STEVEN: It looks like both MAXIE and\n"
-	.string "ARCHIE have gone away somewhere.\p"
+	.string "STEVEN: It looks like both MAGNUS and\n"
+	.string "INAE have gone away somewhere.\p"
 	.string "Perhaps they've gone to MT. PYRE to\n"
 	.string "return those ORBS…$"
 

@@ -692,10 +692,10 @@
 #define FLAG_AUTO_FISHING                       0x281 // Enables auto-fishing.
 #define FLAG_DEFEATED_EVERGRANDE_RIVAL          0x282
 #define FLAG_MR_STONE_LEFT                      0x283 
-#define FLAG_UNUSED_0x284  0x284 // Unused Flag
-#define FLAG_UNUSED_0x285  0x285 // Unused Flag
-#define FLAG_UNUSED_0x286  0x286 // Unused Flag
-#define FLAG_UNUSED_0x287  0x287 // Unused Flag
+#define FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE       0x284
+#define FLAG_HIDE_SOOTOPOLIS_CITY_BOAT          0x285 
+#define FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON 0x286 
+#define FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE  0x287 // Unused Flag
 #define FLAG_UNUSED_0x288  0x288 // Unused Flag
 #define FLAG_UNUSED_0x289  0x289 // Unused Flag
 #define FLAG_UNUSED_0x28A  0x28A // Unused Flag

@@ -194,7 +194,6 @@ MagmaHideout_1F_Movement_MrStoneApproachRight:
 
 MagmaHideout_1F_Movement_MrStoneLeave:
 	walk_down
-	walk_down
 	step_end
 
 MagmaHideout_1F_Movement_MrStoneLeaveUp:

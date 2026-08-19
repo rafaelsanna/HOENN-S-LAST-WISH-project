@@ -391,72 +391,70 @@ MagmaHideout_1F_Movement_MrStoneLeave:
 # 196 "data/maps/MagmaHideout_1F/scripts.pory"
 	walk_down
 # 197 "data/maps/MagmaHideout_1F/scripts.pory"
-	walk_down
-# 198 "data/maps/MagmaHideout_1F/scripts.pory"
 	step_end
-# 199 "data/maps/MagmaHideout_1F/scripts.pory"
+# 198 "data/maps/MagmaHideout_1F/scripts.pory"
 
-# 200 "data/maps/MagmaHideout_1F/scripts.pory"
+# 199 "data/maps/MagmaHideout_1F/scripts.pory"
 MagmaHideout_1F_Movement_MrStoneLeaveUp:
-# 201 "data/maps/MagmaHideout_1F/scripts.pory"
+# 200 "data/maps/MagmaHideout_1F/scripts.pory"
 	walk_right
+# 201 "data/maps/MagmaHideout_1F/scripts.pory"
+	walk_down
 # 202 "data/maps/MagmaHideout_1F/scripts.pory"
 	walk_down
 # 203 "data/maps/MagmaHideout_1F/scripts.pory"
-	walk_down
-# 204 "data/maps/MagmaHideout_1F/scripts.pory"
 	walk_left
-# 205 "data/maps/MagmaHideout_1F/scripts.pory"
+# 204 "data/maps/MagmaHideout_1F/scripts.pory"
 	walk_down
-# 206 "data/maps/MagmaHideout_1F/scripts.pory"
+# 205 "data/maps/MagmaHideout_1F/scripts.pory"
 	step_end
-# 207 "data/maps/MagmaHideout_1F/scripts.pory"
+# 206 "data/maps/MagmaHideout_1F/scripts.pory"
 
-# 208 "data/maps/MagmaHideout_1F/scripts.pory"
+# 207 "data/maps/MagmaHideout_1F/scripts.pory"
 MagmaHideout_1F_Movement_MrStoneLeaveLeft:
+# 208 "data/maps/MagmaHideout_1F/scripts.pory"
+	walk_down
 # 209 "data/maps/MagmaHideout_1F/scripts.pory"
 	walk_down
 # 210 "data/maps/MagmaHideout_1F/scripts.pory"
-	walk_down
-# 211 "data/maps/MagmaHideout_1F/scripts.pory"
 	step_end
-# 212 "data/maps/MagmaHideout_1F/scripts.pory"
+# 211 "data/maps/MagmaHideout_1F/scripts.pory"
 
-# 213 "data/maps/MagmaHideout_1F/scripts.pory"
+# 212 "data/maps/MagmaHideout_1F/scripts.pory"
 MagmaHideout_1F_Movement_MrStoneLeaveRight:
+# 213 "data/maps/MagmaHideout_1F/scripts.pory"
+	walk_down
 # 214 "data/maps/MagmaHideout_1F/scripts.pory"
 	walk_down
 # 215 "data/maps/MagmaHideout_1F/scripts.pory"
-	walk_down
-# 216 "data/maps/MagmaHideout_1F/scripts.pory"
 	step_end
-# 217 "data/maps/MagmaHideout_1F/scripts.pory"
+# 216 "data/maps/MagmaHideout_1F/scripts.pory"
 
-# 218 "data/maps/MagmaHideout_1F/scripts.pory"
+# 217 "data/maps/MagmaHideout_1F/scripts.pory"
 MagmaHideout_1F_Text_MrStoneSuspicious:
-# 219 "data/maps/MagmaHideout_1F/scripts.pory"
+# 218 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "{PLAYER}! What are you doing around\n"
-# 220 "data/maps/MagmaHideout_1F/scripts.pory"
+# 219 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "here?\p"
-# 221 "data/maps/MagmaHideout_1F/scripts.pory"
+# 220 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "It's not dangerous, don't worry…\n"
-# 222 "data/maps/MagmaHideout_1F/scripts.pory"
+# 221 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "I only came to check on this mine.\p"
-# 223 "data/maps/MagmaHideout_1F/scripts.pory"
+# 222 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "It used to belong to DEVON CORP.,\n"
-# 224 "data/maps/MagmaHideout_1F/scripts.pory"
+# 223 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "and some of my workers operated it.\l"
-# 225 "data/maps/MagmaHideout_1F/scripts.pory"
+# 224 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "But it seems it's been taken over…\p"
-# 226 "data/maps/MagmaHideout_1F/scripts.pory"
+# 225 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "What a situation, huh?\p"
-# 227 "data/maps/MagmaHideout_1F/scripts.pory"
+# 226 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "Anyway, be careful getting involved\n"
-# 228 "data/maps/MagmaHideout_1F/scripts.pory"
+# 227 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "with those guys.\l"
-# 229 "data/maps/MagmaHideout_1F/scripts.pory"
+# 228 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "TEAM MAGMA, was it?\p"
-# 230 "data/maps/MagmaHideout_1F/scripts.pory"
+# 229 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "They seem dangerous, I think…\n"
-# 231 "data/maps/MagmaHideout_1F/scripts.pory"
+# 230 "data/maps/MagmaHideout_1F/scripts.pory"
 	.string "Be careful.$"

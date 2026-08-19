@@ -116,6 +116,8 @@ SkyPillar_Top_EventScript_AwakenRayquaza::
 	waitmoncry
 	applymovement LOCALID_RAYQUAZA_SLEEPING, SkyPillar_Top_Movement_RayquazaFlyOff
 	waitmovement 0
+	special StartMegaRayVisionScene
+	waitstate
 	removeobject LOCALID_RAYQUAZA_SLEEPING
 	msgbox SkyPillar_Top_Text_RayquazaFlewOff, MSGBOX_DEFAULT
 	closemessage

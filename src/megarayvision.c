@@ -635,6 +635,7 @@ static void Task_MegaRayVisionScene(u8 taskId)
         FreeAllSpritePalettes();
         ResetPaletteFade();
         DestroyTask(taskId);
+        ScriptContext_Enable();
         SetMainCallback2(CB2_ReturnToField);
         break;
     }
