@@ -986,3 +986,40 @@ Route116_Text_JojiPostBattle_Local:
     .string "She has the advantage, and she's\n"
 # 494 "data/maps/Route116/scripts.pory"
     .string "really strong… but I'll keep trying!$"
+
+Fisherman1::
+# 499 "data/maps/Route116/scripts.pory"
+	lockall
+# 500 "data/maps/Route116/scripts.pory"
+	faceplayer
+# 501 "data/maps/Route116/scripts.pory"
+	msgbox Fisherman1_Text_0
+# 503 "data/maps/Route116/scripts.pory"
+	releaseall
+	end
+
+
+Fisherman2::
+# 508 "data/maps/Route116/scripts.pory"
+	lockall
+# 509 "data/maps/Route116/scripts.pory"
+	faceplayer
+# 510 "data/maps/Route116/scripts.pory"
+	msgbox Fisherman2_Text_0
+# 511 "data/maps/Route116/scripts.pory"
+	releaseall
+	end
+
+
+Fisherman1_Text_0:
+# 501 "data/maps/Route116/scripts.pory"
+	.string "It's freezing out here, but the fish are\n"
+	.string "biting like crazy.\p"
+	.string "Those swimmers next to us, though?\n"
+	.string "They're even crazier than the fish!$"
+
+Fisherman2_Text_0:
+# 510 "data/maps/Route116/scripts.pory"
+	.string "Cold water keeps most people away, so\n"
+	.string "the fish here never learned to fear a\l"
+	.string "fishing rod. Pretty convenient, right?$"

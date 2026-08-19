@@ -471,7 +471,10 @@
     "PetalburgCave",
     "AbandonedShip_TeamAqua",
     "AbandonedShip_Rooms_Aqua",
-    "PetalburgCave_2"
+    "PetalburgCave_2",
+    "Ice_cave_Entrance",
+    "Ice_cave_entrance2",
+    "Ic_cave_main"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

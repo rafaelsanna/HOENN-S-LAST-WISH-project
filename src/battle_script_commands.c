@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "battle.h"
 #include "battle_message.h"
 #include "battle_anim.h"
@@ -1774,7 +1775,10 @@ static void Cmd_critcalc(void)
         // Counter for IF_CRITICAL_HITS_GE evolution condition.
         if (gSpecialStatuses[battlerDef].criticalHit && IsOnPlayerSide(gBattlerAttacker)
          && !(gBattleTypeFlags & BATTLE_TYPE_MULTI && GetBattlerPosition(gBattlerAttacker) == B_POSITION_PLAYER_LEFT))
+        {
             gPartyCriticalHits[partySlot]++;
+            Achievement_IncrementCounter(ACH_COUNTER_CRITICAL_HITS, 1);
+        }
     }
 
     gBattlescriptCurrInstr = cmd->nextInstr;
@@ -14246,6 +14250,9 @@ static void Cmd_trysetcaughtmondexflags(void)
     else
     {
         HandleSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_CAUGHT, personality);
+        Achievement_IncrementCounter(ACH_COUNTER_CAPTURED_MONS, 1);
+        if (gBattleResults.shinyWildMon)
+            Achievement_IncrementCounter(ACH_COUNTER_SHINY_CAPTURES, 1);
         gBattlescriptCurrInstr = cmd->nextInstr;
     }
 }

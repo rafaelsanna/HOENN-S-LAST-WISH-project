@@ -4880,6 +4880,36 @@
       "secondary_tileset": "gTileset_DistortionWorld",
       "border_filepath": "data/layouts/NIGHTMARE_REALM_1/border.bin",
       "blockdata_filepath": "data/layouts/NIGHTMARE_REALM_1/map.bin"
+    },
+    {
+      "id": "LAYOUT_ICE_CAVE_ENTRANCE",
+      "name": "Ice_cave_Entrance_Layout",
+      "width": 16,
+      "height": 16,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/Ice_cave_Entrance/border.bin",
+      "blockdata_filepath": "data/layouts/Ice_cave_Entrance/map.bin"
+    },
+    {
+      "id": "LAYOUT_ICE_CAVE_ENTRANCE2",
+      "name": "Ice_cave_entrance2_Layout",
+      "width": 16,
+      "height": 16,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/Ice_cave_entrance2/border.bin",
+      "blockdata_filepath": "data/layouts/Ice_cave_entrance2/map.bin"
+    },
+    {
+      "id": "LAYOUT_IC_CAVE_MAIN",
+      "name": "Ic_cave_main_Layout",
+      "width": 28,
+      "height": 23,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/Ic_cave_main/border.bin",
+      "blockdata_filepath": "data/layouts/Ic_cave_main/map.bin"
     }
   ]
 }
