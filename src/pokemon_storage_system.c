@@ -4668,22 +4668,35 @@ static void CreateMovingMonIcon(void)
     sStorage->movingMonSprite->callback = SpriteCB_HeldMon;
 }
 
-// helper that also returns the species
-static const u32 *_GetMonFrontSpritePal(struct Pokemon *mon, u16 *species)
+static const u32 *GetBoxMonIconPalette(u8 boxId, u8 position, u16 *species)
 {
-    bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY, 0);
-    u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
-    *species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0);
+    struct BoxPokemon *boxMon = &gPokemonStoragePtr->boxes[boxId][position];
+    bool32 isShiny = GetBoxMonData(boxMon, MON_DATA_IS_SHINY);
+    u32 personality = GetBoxMonData(boxMon, MON_DATA_PERSONALITY);
+
+    *species = GetBoxMonData(boxMon, MON_DATA_SPECIES_OR_EGG);
     return GetIconPalette(*species, isShiny, IsPersonalityFemale(*species, personality));
 }
 
 static void SetBoxMonDynamicPalette(u8 boxId, u8 position) {
   u16 species;
-  const u32 *palette = _GetMonFrontSpritePal((struct Pokemon *)&gPokemonStoragePtr->boxes[boxId][position], &species);
-  u16 ALIGNED(4) buffer[16];
+  const u32 *palette = GetBoxMonIconPalette(boxId, position, &species);
+  u32 paletteSize = GetDecompressedDataSize(palette);
 
-  LZ77UnCompWram(palette, buffer);
-  CpuFastCopy(buffer, &sPaletteSwapBuffer[(position)*16], PLTT_SIZE_4BPP);
+  if (paletteSize > PLTT_SIZE_4BPP)
+  {
+      palette = GetIconPalette(SPECIES_NONE, FALSE, FALSE);
+      paletteSize = GetDecompressedDataSize(palette);
+      if (paletteSize > PLTT_SIZE_4BPP)
+      {
+          CpuFill16(0, &sPaletteSwapBuffer[(position) * 16], PLTT_SIZE_4BPP);
+          return;
+      }
+  }
+
+  // Decompress species palette into swap buffer
+  CpuFill16(0, &sPaletteSwapBuffer[(position) * 16], PLTT_SIZE_4BPP);
+  DecompressDataWithHeaderWram(palette, &sPaletteSwapBuffer[(position)*16]);
   sStorage->boxMonsSprites[position]->oam.paletteNum = ((position / 6) & 1 ? 6 : 0) + (position % 6) + 1;
 }
 
@@ -5388,20 +5401,25 @@ static void SpriteCB_HeldMon(struct Sprite *sprite)
     sprite->y = sStorage->cursorSprite->y + sStorage->cursorSprite->y2 + 4;
 }
 
-static u16 TryLoadMonIconTiles(u16 species, u32 personality)
+static u16 GetMonIconTileKey(u16 species, u32 personality)
+{
+#if P_GENDER_DIFFERENCES
+    // Treat female mons as a separate species as they may have a different icon than males.
+    if (gSpeciesInfo[species].iconSpriteFemale != NULL && IsPersonalityFemale(species, personality))
+        return species | (1 << 15);
+#endif
+
+    return species;
+}
+
+static u16 TryLoadMonIconTiles(u16 speciesKey, u32 personality)
 {
     u16 i, offset;
-
-#if P_GENDER_DIFFERENCES
-    // Treat female mons as a seperate species as they may have a different icon than males
-    if (gSpeciesInfo[species].iconSpriteFemale != NULL && IsPersonalityFemale(species, personality))
-        species |= (1 << 15);
-#endif
 
     // Search icon list for this species
     for (i = 0; i < MAX_MON_ICONS; i++)
     {
-        if (sStorage->iconSpeciesList[i] == species)
+        if (sStorage->iconSpeciesList[i] == speciesKey)
             break;
     }
 
@@ -5421,32 +5439,21 @@ static u16 TryLoadMonIconTiles(u16 species, u32 personality)
     }
 
     // Add species to icon list and load tiles
-    sStorage->iconSpeciesList[i] = species;
+    sStorage->iconSpeciesList[i] = speciesKey;
     sStorage->numIconsPerSpecies[i]++;
     offset = 16 * i;
-    species &= GENDER_MASK;
-    CpuFastCopy(GetMonIconTiles(species, personality), (void *)(OBJ_VRAM0) + offset * TILE_SIZE_4BPP, 0x200);
+    CpuFastCopy(GetMonIconTiles(speciesKey & GENDER_MASK, personality), (void *)(OBJ_VRAM0) + offset * TILE_SIZE_4BPP, 0x200);
 
     return offset;
 }
 
-static void RemoveSpeciesFromIconList(u16 species)
+static void RemoveSpeciesFromIconList(u16 speciesKey)
 {
     u16 i;
-    bool8 hasFemale = FALSE;
 
     for (i = 0; i < MAX_MON_ICONS; i++)
     {
-        if (sStorage->iconSpeciesList[i] == (species | 0x8000))
-        {
-            hasFemale = TRUE;
-            break;
-        }
-    }
-
-    for (i = 0; i < MAX_MON_ICONS; i++)
-    {
-        if (sStorage->iconSpeciesList[i] == species && !hasFemale)
+        if (sStorage->iconSpeciesList[i] == speciesKey)
         {
             if (--sStorage->numIconsPerSpecies[i] == 0)
                 sStorage->iconSpeciesList[i] = SPECIES_NONE;
@@ -5457,26 +5464,27 @@ static void RemoveSpeciesFromIconList(u16 species)
 
 static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
 {
-    u16 tileNum;
+    u16 speciesKey, tileNum;
     u8 spriteId;
     struct SpriteTemplate template = sSpriteTemplate_MonIcon;
 
     species = GetIconSpecies(species, personality);
+    speciesKey = GetMonIconTileKey(species, personality);
     template.paletteTag = PALTAG_MON_ICON_0;
-    tileNum = TryLoadMonIconTiles(species, personality);
+    tileNum = TryLoadMonIconTiles(speciesKey, personality);
     if (tileNum == 0xFFFF)
         return NULL;
 
     spriteId = CreateSprite(&template, x, y, subpriority);
     if (spriteId == MAX_SPRITES)
     {
-        RemoveSpeciesFromIconList(species);
+        RemoveSpeciesFromIconList(speciesKey);
         return NULL;
     }
 
     gSprites[spriteId].oam.tileNum = tileNum;
     gSprites[spriteId].oam.priority = oamPriority;
-    gSprites[spriteId].data[0] = species;
+    gSprites[spriteId].data[0] = speciesKey;
     return &gSprites[spriteId];
 }
 
