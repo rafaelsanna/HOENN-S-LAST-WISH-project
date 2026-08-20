@@ -2649,7 +2649,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Poliwag[] = INCBIN_U8("graphics/pokemon/poliwag/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
-    const u32 gMonIconPalette_Poliwag[] = INCBIN_U32("graphics/pokemon/poliwag/icon.gbapal.lz");
+    const u32 gMonIconPalette_Poliwag[] = INCBIN_U32("graphics/pokemon/poliwag/icon_normal.gbapal.lz");
     const u32 gMonShinyIconPalette_Poliwag[] = INCBIN_U32("graphics/pokemon/poliwag/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Poliwag[] = INCBIN_U8("graphics/pokemon/poliwag/footprint.1bpp");
@@ -7178,7 +7178,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Totodile[] = INCBIN_U8("graphics/pokemon/totodile/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
-    const u32 gMonIconPalette_Totodile[] = INCBIN_U32("graphics/pokemon/totodile/icon.gbapal.lz");
+    const u32 gMonIconPalette_Totodile[] = INCBIN_U32("graphics/pokemon/totodile/icon_normal.gbapal.lz");
     const u32 gMonShinyIconPalette_Totodile[] = INCBIN_U32("graphics/pokemon/totodile/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Totodile[] = INCBIN_U8("graphics/pokemon/totodile/footprint.1bpp");
@@ -8857,13 +8857,13 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonFrontPic_DudunsparceTwoSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/front.4bpp.smol");
     const u32 gMonBackPic_DudunsparceTwoSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/back.4bpp.smol");
     const u8 gMonIcon_DudunsparceTwoSegment[] = INCBIN_U8("graphics/pokemon/dudunsparce/icon.4bpp");
-    const u32 gMonIconPalette_DudunsparceTwoSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/icon.gbapal.lz");
+    const u32 gMonIconPalette_DudunsparceTwoSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/icon_normal.gbapal.lz");
     const u32 gMonShinyIconPalette_DudunsparceTwoSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/icon_shiny.gbapal.lz");
 
     const u32 gMonFrontPic_DudunsparceThreeSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/three_segment/front.4bpp.smol");
     const u32 gMonBackPic_DudunsparceThreeSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/three_segment/back.4bpp.smol");
     const u8 gMonIcon_DudunsparceThreeSegment[] = INCBIN_U8("graphics/pokemon/dudunsparce/three_segment/icon.4bpp");
-    const u32 gMonIconPalette_DudunsparceThreeSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/three_segment/icon.gbapal.lz");
+    const u32 gMonIconPalette_DudunsparceThreeSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/three_segment/icon_normal.gbapal.lz");
     const u32 gMonShinyIconPalette_DudunsparceThreeSegment[] = INCBIN_U32("graphics/pokemon/dudunsparce/three_segment/icon_shiny.gbapal.lz");
 #endif //P_GEN_9_CROSS_EVOS
 #endif //P_FAMILY_DUNSPARCE
@@ -12870,7 +12870,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #else
     const u8 gMonIcon_Camerupt[] = INCBIN_U8("graphics/pokemon/camerupt/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
-    const u32 gMonIconPalette_Camerupt[] = INCBIN_U32("graphics/pokemon/camerupt/icon.gbapal.lz");
+    const u32 gMonIconPalette_Camerupt[] = INCBIN_U32("graphics/pokemon/camerupt/icon_normal.gbapal.lz");
     const u32 gMonShinyIconPalette_Camerupt[] = INCBIN_U32("graphics/pokemon/camerupt/icon_shiny.gbapal.lz");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Camerupt[] = INCBIN_U8("graphics/pokemon/camerupt/footprint.1bpp");

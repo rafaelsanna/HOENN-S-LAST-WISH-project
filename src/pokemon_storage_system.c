@@ -4677,14 +4677,21 @@ static const u32 *_GetMonFrontSpritePal(struct Pokemon *mon, u16 *species)
     return GetIconPalette(*species, isShiny, IsPersonalityFemale(*species, personality));
 }
 
-static void SetBoxMonDynamicPalette(u8 boxId, u8 position) {
-  u16 species;
-  const u32 *palette = _GetMonFrontSpritePal((struct Pokemon *)&gPokemonStoragePtr->boxes[boxId][position], &species);
-  u16 ALIGNED(4) buffer[16];
+static void SetBoxMonDynamicPalette(u8 boxId, u8 position)
+{
+    u16 species;
+    const u32 *palette;
+    u16 ALIGNED(4) buffer[16] = {0};
 
-  LZ77UnCompWram(palette, buffer);
-  CpuFastCopy(buffer, &sPaletteSwapBuffer[(position)*16], PLTT_SIZE_4BPP);
-  sStorage->boxMonsSprites[position]->oam.paletteNum = ((position / 6) & 1 ? 6 : 0) + (position % 6) + 1;
+    if (sStorage->boxMonsSprites[position] == NULL)
+        return;
+
+    palette = _GetMonFrontSpritePal((struct Pokemon *)&gPokemonStoragePtr->boxes[boxId][position], &species);
+    if (IsLZ77Data(palette, PLTT_SIZE_4BPP, PLTT_SIZE_4BPP))
+        LZ77UnCompWram(palette, buffer);
+
+    CpuFastCopy(buffer, &sPaletteSwapBuffer[position * 16], PLTT_SIZE_4BPP);
+    sStorage->boxMonsSprites[position]->oam.paletteNum = ((position / 6) & 1 ? 6 : 0) + (position % 6) + 1;
 }
 
 static void InitBoxMonSprites(u8 boxId)
@@ -5388,15 +5395,22 @@ static void SpriteCB_HeldMon(struct Sprite *sprite)
     sprite->y = sStorage->cursorSprite->y + sStorage->cursorSprite->y2 + 4;
 }
 
+static u16 GetMonIconCacheSpecies(u16 species, u32 personality)
+{
+#if P_GENDER_DIFFERENCES
+    // Treat female mons as a separate species as they may have a different icon than males.
+    if (gSpeciesInfo[species].iconSpriteFemale != NULL && IsPersonalityFemale(species, personality))
+        species |= (1 << 15);
+#endif
+
+    return species;
+}
+
 static u16 TryLoadMonIconTiles(u16 species, u32 personality)
 {
     u16 i, offset;
 
-#if P_GENDER_DIFFERENCES
-    // Treat female mons as a seperate species as they may have a different icon than males
-    if (gSpeciesInfo[species].iconSpriteFemale != NULL && IsPersonalityFemale(species, personality))
-        species |= (1 << 15);
-#endif
+    species = GetMonIconCacheSpecies(species, personality);
 
     // Search icon list for this species
     for (i = 0; i < MAX_MON_ICONS; i++)
@@ -5433,22 +5447,12 @@ static u16 TryLoadMonIconTiles(u16 species, u32 personality)
 static void RemoveSpeciesFromIconList(u16 species)
 {
     u16 i;
-    bool8 hasFemale = FALSE;
 
     for (i = 0; i < MAX_MON_ICONS; i++)
     {
-        if (sStorage->iconSpeciesList[i] == (species | 0x8000))
+        if (sStorage->iconSpeciesList[i] == species)
         {
-            hasFemale = TRUE;
-            break;
-        }
-    }
-
-    for (i = 0; i < MAX_MON_ICONS; i++)
-    {
-        if (sStorage->iconSpeciesList[i] == species && !hasFemale)
-        {
-            if (--sStorage->numIconsPerSpecies[i] == 0)
+            if (sStorage->numIconsPerSpecies[i] != 0 && --sStorage->numIconsPerSpecies[i] == 0)
                 sStorage->iconSpeciesList[i] = SPECIES_NONE;
             break;
         }
@@ -5457,11 +5461,12 @@ static void RemoveSpeciesFromIconList(u16 species)
 
 static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
 {
-    u16 tileNum;
+    u16 cacheSpecies, tileNum;
     u8 spriteId;
     struct SpriteTemplate template = sSpriteTemplate_MonIcon;
 
     species = GetIconSpecies(species, personality);
+    cacheSpecies = GetMonIconCacheSpecies(species, personality);
     template.paletteTag = PALTAG_MON_ICON_0;
     tileNum = TryLoadMonIconTiles(species, personality);
     if (tileNum == 0xFFFF)
@@ -5470,19 +5475,19 @@ static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s
     spriteId = CreateSprite(&template, x, y, subpriority);
     if (spriteId == MAX_SPRITES)
     {
-        RemoveSpeciesFromIconList(species);
+        RemoveSpeciesFromIconList(cacheSpecies);
         return NULL;
     }
 
     gSprites[spriteId].oam.tileNum = tileNum;
     gSprites[spriteId].oam.priority = oamPriority;
-    gSprites[spriteId].data[0] = species;
+    gSprites[spriteId].data[0] = (s16)cacheSpecies;
     return &gSprites[spriteId];
 }
 
 static void DestroyBoxMonIcon(struct Sprite *sprite)
 {
-    RemoveSpeciesFromIconList(sprite->data[0]);
+    RemoveSpeciesFromIconList((u16)sprite->data[0]);
     DestroySprite(sprite);
 }
 
