@@ -13,6 +13,22 @@ const u32 gRaySceneDuoFight_Clouds1_Tilemap[]       = INCBIN_U32("graphics/rayqu
 const u32 gRaySceneDuoFight_Clouds2_Tilemap[]       = INCBIN_U32("graphics/rayquaza_scene/scene_1/clouds2.bin.smolTM");
 const u32 gRaySceneDuoFight_Clouds3_Tilemap[]       = INCBIN_U32("graphics/rayquaza_scene/scene_1/clouds3.bin.smolTM");
 
+// Scene 1, after Rayquaza has been awakened (RAY_ANIM_DUO_FIGHT).
+// The abbreviated pre-awakening scene continues to use the assets above.
+const u32 gRaySceneDuoFightPrimal_Groudon_Gfx[]           = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/groudon.4bpp.smol");
+const u32 gRaySceneDuoFightPrimal_GroudonShoulder_Gfx[]   = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/groudon_shoulder.4bpp.smol");
+const u32 gRaySceneDuoFightPrimal_GroudonClaw_Gfx[]       = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/groudon_claw.4bpp.smol");
+const u32 gRaySceneDuoFightPrimal_Kyogre_Gfx[]            = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/kyogre.4bpp.smol");
+const u32 gRaySceneDuoFightPrimal_KyogrePectoralFin_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/kyogre_pectoral_fin.4bpp.smol");
+const u32 gRaySceneDuoFightPrimal_KyogreDorsalFin_Gfx[]   = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/kyogre_dorsal_fin.4bpp.smol");
+const u16 gRaySceneDuoFightPrimal_Groudon_Pal[]           = INCBIN_U16("graphics/rayquaza_scene/scene_1_primalversion/groudon.gbapal");
+const u16 gRaySceneDuoFightPrimal_Kyogre_Pal[]            = INCBIN_U16("graphics/rayquaza_scene/scene_1_primalversion/kyogre.gbapal");
+const u32 gRaySceneDuoFightPrimal_Clouds_Gfx[]            = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/clouds.4bpp.smol");
+const u16 gRaySceneDuoFightPrimal_Clouds_Pal[]            = INCBIN_U16("graphics/rayquaza_scene/scene_1_primalversion/clouds.gbapal");
+const u32 gRaySceneDuoFightPrimal_Clouds1_Tilemap[]       = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/clouds1.bin.smolTM");
+const u32 gRaySceneDuoFightPrimal_Clouds2_Tilemap[]       = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/clouds2.bin.smolTM");
+const u32 gRaySceneDuoFightPrimal_Clouds3_Tilemap[]       = INCBIN_U32("graphics/rayquaza_scene/scene_1_primalversion/clouds3.bin.smolTM");
+
 // Scene 2 (RAY_ANIM_TAKES_FLIGHT)
 const u32 gRaySceneTakesFlight_Smoke_Gfx[]        = INCBIN_U32("graphics/rayquaza_scene/scene_2/smoke.4bpp.smol");
 const u16 gRaySceneTakesFlight_Smoke_Pal[]        = INCBIN_U16("graphics/rayquaza_scene/scene_2/smoke.gbapal");
@@ -58,3 +74,9 @@ const u32 gRaySceneChasesAway_Light_Tilemap[]    = INCBIN_U32("graphics/rayquaza
 const u32 gRaySceneChasesAway_Bg_Tilemap[]       = INCBIN_U32("graphics/rayquaza_scene/scene_5/bg.bin.smolTM");
 const u32 gRaySceneChasesAway_Ring_Tilemap[]     = INCBIN_U32("graphics/rayquaza_scene/scene_5/ring.bin.smolTM");
 const u16 gRaySceneChasesAway_Bg_Pal[]           = INCBIN_U16("graphics/rayquaza_scene/scene_5/bg.gbapal");
+const u32 gRaySceneChasesAway_MegaRay01_Gfx[]    = INCBIN_U32("graphics/rayquaza_scene/scene_5/megaray01.4bpp.smol");
+const u16 gRaySceneChasesAway_MegaRay01_Pal[]    = INCBIN_U16("graphics/rayquaza_scene/scene_5/megaray01.gbapal");
+const u32 gRaySceneChasesAway_MegaRay01_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/megaray01.bin.smolTM");
+const u32 gRaySceneChasesAway_MegaRay02_Gfx[]    = INCBIN_U32("graphics/rayquaza_scene/scene_5/megaray02.4bpp.smol");
+const u16 gRaySceneChasesAway_MegaRay02_Pal[]    = INCBIN_U16("graphics/rayquaza_scene/scene_5/megaray02.gbapal");
+const u32 gRaySceneChasesAway_MegaRay02_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/megaray02.bin.smolTM");

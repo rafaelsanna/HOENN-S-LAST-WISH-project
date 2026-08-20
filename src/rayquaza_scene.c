@@ -60,8 +60,28 @@ enum
 #define TAG_CHASE_RAYQUAZA               30569
 #define TAG_CHASE_RAYQUAZA_TAIL          30570
 #define TAG_CHASE_SPLASH                 30571
+#define TAG_CHASE_MEGARAYQUAZA           30572 // unused now that Mega Ray is BG3, kept in case something else references it
 
 #define MAX_SMOKE 10
+
+/* ------------------------------------------------------------------------
+ * Mega Rayquaza (Chases Away, scene 5) -- rendered on BG3, not as OBJ.
+ * See LoadChasesAway_MegaRay(). BG3 is unused by the rest of this scene
+ * (only BG0/BG1/BG2 are declared in sBgTemplates_ChasesAway).
+ *
+ * megaray01.bin / megaray02.bin are already full 32x32 raw screenblocks
+ * (2048 bytes = 1024 entries) with the art pre-positioned and every
+ * "empty" cell pointing at tile 0. Tile 0 in both megaray01.4bpp and
+ * megaray02.4bpp is solid background-color (palette index 0), which is
+ * always transparent for a BG tile regardless of which palette bank is
+ * applied to it -- so we can force the palette slot onto every single
+ * entry uniformly, no cropping/positioning math and no scratch buffer
+ * needed at all. Confirmed by reconstructing both frames pixel-for-pixel
+ * from the raw assets before writing this.
+ * ------------------------------------------------------------------------ */
+#define MEGARAY_CHARBASE   3
+#define MEGARAY_MAPBASE   28
+#define MEGARAY_PAL_SLOT   3   /* slots 0-2 are taken by gRaySceneChasesAway_Bg_Pal */
 
 typedef u8 ALIGNED(4) TilemapBuffer[BG_SCREEN_SIZE];
 
@@ -77,7 +97,28 @@ struct RayquazaScene
     u8 unused[12];
 };
 
+/* Replaces the old sMegaRayquazaSourceGfx[0x3A00] + sMegaRayquazaObjGfx[0x4000]
+ * (~31KB) that overflowed EWRAM. Mega Ray now needs ZERO permanent EWRAM:
+ * gfx copies straight ROM->VRAM, and the tilemap is written straight from
+ * the ROM const arrays below into sRayScene->tilemapBuffers[3] (which
+ * already existed in the struct and cost nothing extra). */
 static EWRAM_DATA struct RayquazaScene *sRayScene = NULL;
+
+/* --------------------------------------------------------------------------
+ * Mega Rayquaza graphics -- self-contained here (same pattern as
+ * megarayvision.c), so nothing needs to be added to graphics.h.
+ * Drop these 6 files into graphics/rayquaza_scene/chases_away/:
+ *   megaray01.4bpp  megaray01.gbapal  megaray01.bin
+ *   megaray02.4bpp  megaray02.gbapal  megaray02.bin
+ * All raw/uncompressed -- no .lz, no gbagfx conversion step needed.
+ * -------------------------------------------------------------------------- */
+static const u16 sMegaRay01_Pal[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray01.gbapal");
+static const u32 sMegaRay01_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/chases_away/megaray01.4bpp");
+static const u16 sMegaRay01_Map[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray01.bin");
+
+static const u16 sMegaRay02_Pal[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray02.gbapal");
+static const u32 sMegaRay02_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/chases_away/megaray02.4bpp");
+static const u16 sMegaRay02_Map[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray02.bin");
 
 static void CB2_InitRayquazaScene(void);
 static void CB2_RayquazaScene(void);
@@ -136,6 +177,7 @@ static void ChasesAway_KyogreStartLeave(u8);
 static void ChasesAway_GroudonStartLeave(u8);
 static void ChasesAway_CreateTrioSprites(u8);
 static void Task_ChasesAway_AnimateRing(u8);
+static void LoadChasesAway_MegaRay(u8 phase);
 static void SpriteCB_ChasesAway_GroudonLeave(struct Sprite *);
 static void SpriteCB_ChasesAway_KyogreLeave(struct Sprite *);
 static void SpriteCB_ChasesAway_RayquazaFloat(struct Sprite *);
@@ -560,6 +602,16 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_Groudon =
     gRaySceneDuoFight_Groudon_Gfx, 0x3000, TAG_DUOFIGHT_GROUDON
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_Groudon =
+{
+    gRaySceneDuoFightPrimal_Groudon_Gfx, 0x3000, TAG_DUOFIGHT_GROUDON
+};
+
+static const struct SpritePalette sSpritePal_DuoFightPrimal_Groudon =
+{
+    gRaySceneDuoFightPrimal_Groudon_Pal, TAG_DUOFIGHT_GROUDON
+};
+
 static const struct SpritePalette sSpritePal_DuoFight_Groudon =
 {
     gRaySceneDuoFight_Groudon_Pal, TAG_DUOFIGHT_GROUDON
@@ -592,6 +644,11 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_GroudonShoulder 
     gRaySceneDuoFight_GroudonShoulder_Gfx, 0x200, TAG_DUOFIGHT_GROUDON_SHOULDER
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_GroudonShoulder =
+{
+    gRaySceneDuoFightPrimal_GroudonShoulder_Gfx, 0x200, TAG_DUOFIGHT_GROUDON_SHOULDER
+};
+
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_GroudonShoulder =
 {
     .tileTag = TAG_DUOFIGHT_GROUDON_SHOULDER,
@@ -617,6 +674,11 @@ static const union AnimCmd *const sAnims_DuoFight_GroudonClaw[] =
 static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_GroudonClaw =
 {
     gRaySceneDuoFight_GroudonClaw_Gfx, 0x400, TAG_DUOFIGHT_GROUDON_CLAW
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_GroudonClaw =
+{
+    gRaySceneDuoFightPrimal_GroudonClaw_Gfx, 0x400, TAG_DUOFIGHT_GROUDON_CLAW
 };
 
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_GroudonClaw =
@@ -711,6 +773,16 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_Kyogre =
     gRaySceneDuoFight_Kyogre_Gfx, 0xF00, TAG_DUOFIGHT_KYOGRE
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_Kyogre =
+{
+    gRaySceneDuoFightPrimal_Kyogre_Gfx, 0xF00, TAG_DUOFIGHT_KYOGRE
+};
+
+static const struct SpritePalette sSpritePal_DuoFightPrimal_Kyogre =
+{
+    gRaySceneDuoFightPrimal_Kyogre_Pal, TAG_DUOFIGHT_KYOGRE
+};
+
 static const struct SpritePalette sSpritePal_DuoFight_Kyogre =
 {
     gRaySceneDuoFight_Kyogre_Pal, TAG_DUOFIGHT_KYOGRE
@@ -746,6 +818,11 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_KyogrePectoralFi
     gRaySceneDuoFight_KyogrePectoralFin_Gfx, 0xC0, TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_KyogrePectoralFin =
+{
+    gRaySceneDuoFightPrimal_KyogrePectoralFin_Gfx, 0xC0, TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN
+};
+
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_KyogrePectoralFin =
 {
     .tileTag = TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN,
@@ -760,6 +837,11 @@ static const struct SpriteTemplate sSpriteTemplate_DuoFight_KyogrePectoralFin =
 static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_KyogreDorsalFin =
 {
     gRaySceneDuoFight_KyogreDorsalFin_Gfx, 0x200, TAG_DUOFIGHT_KYOGRE_DORSAL_FIN
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_KyogreDorsalFin =
+{
+    gRaySceneDuoFightPrimal_KyogreDorsalFin_Gfx, 0x200, TAG_DUOFIGHT_KYOGRE_DORSAL_FIN
 };
 
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_KyogreDorsalFin =
@@ -1285,6 +1367,15 @@ static const struct BgTemplate sBgTemplates_ChasesAway[] =
         .paletteMode = 0,
         .priority = 0,
         .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = MEGARAY_CHARBASE,
+        .mapBaseIndex = MEGARAY_MAPBASE,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1, /* same level as the Rayquaza sprite it replaces */
+        .baseTile = 0
     }
 };
 
@@ -1597,22 +1688,41 @@ static void InitDuoFightSceneBgs(void)
 
 static void LoadDuoFightSceneGfx(void)
 {
+    // The short first visit remains unchanged.  Only the complete cutscene,
+    // which follows Rayquaza's awakening, uses the Primal version of scene 1.
+    bool8 usePrimalAssets = !sRayScene->endEarly;
+
     ResetTempTileDataBuffers();
-    DecompressAndCopyTileDataToVram(0, gRaySceneDuoFight_Clouds_Gfx, 0, 0, 0);
+    DecompressAndCopyTileDataToVram(0, usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds_Gfx : gRaySceneDuoFight_Clouds_Gfx, 0, 0, 0);
     while (FreeTempTileDataBuffersIfPossible())
         ;
-    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds2_Tilemap, sRayScene->tilemapBuffers[0]);
-    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds1_Tilemap, sRayScene->tilemapBuffers[1]);
-    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds3_Tilemap, sRayScene->tilemapBuffers[2]);
-    LoadPalette(gRaySceneDuoFight_Clouds_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Groudon);
-    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonShoulder);
-    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonClaw);
-    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Kyogre);
-    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogrePectoralFin);
-    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogreDorsalFin);
-    LoadSpritePalette(&sSpritePal_DuoFight_Groudon);
-    LoadSpritePalette(&sSpritePal_DuoFight_Kyogre);
+    DecompressDataWithHeaderWram(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds2_Tilemap : gRaySceneDuoFight_Clouds2_Tilemap, sRayScene->tilemapBuffers[0]);
+    DecompressDataWithHeaderWram(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds1_Tilemap : gRaySceneDuoFight_Clouds1_Tilemap, sRayScene->tilemapBuffers[1]);
+    DecompressDataWithHeaderWram(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds3_Tilemap : gRaySceneDuoFight_Clouds3_Tilemap, sRayScene->tilemapBuffers[2]);
+    LoadPalette(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds_Pal : gRaySceneDuoFight_Clouds_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+
+    if (usePrimalAssets)
+    {
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_Groudon);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_GroudonShoulder);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_GroudonClaw);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_Kyogre);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_KyogrePectoralFin);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_KyogreDorsalFin);
+        LoadSpritePalette(&sSpritePal_DuoFightPrimal_Groudon);
+        LoadSpritePalette(&sSpritePal_DuoFightPrimal_Kyogre);
+    }
+    else
+    {
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Groudon);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonShoulder);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonClaw);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Kyogre);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogrePectoralFin);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogreDorsalFin);
+        LoadSpritePalette(&sSpritePal_DuoFight_Groudon);
+        LoadSpritePalette(&sSpritePal_DuoFight_Kyogre);
+    }
 }
 
 static void Task_DuoFightAnim(u8 taskId)
@@ -2662,14 +2772,17 @@ static void InitChasesAwaySceneBgs(void)
     SetBgTilemapBuffer(0, sRayScene->tilemapBuffers[0]);
     SetBgTilemapBuffer(1, sRayScene->tilemapBuffers[1]);
     SetBgTilemapBuffer(2, sRayScene->tilemapBuffers[2]);
+    SetBgTilemapBuffer(3, sRayScene->tilemapBuffers[3]); /* Mega Ray; blank/zeroed until LoadChasesAway_MegaRay() runs */
     ResetAllBgsCoordinates();
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
     ScheduleBgCopyTilemapToVram(2);
+    ScheduleBgCopyTilemapToVram(3);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP | DISPCNT_WIN0_ON);
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
+    ShowBg(3);
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
 }
 
@@ -2725,6 +2838,8 @@ static void Task_RayChasesAwayAnim(u8 taskId)
 static void Task_HandleRayChasesAway(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
+    u8 rayquazaSpriteId;
+    u8 rayquazaTailSpriteId;
     switch (tState)
     {
     case 0:
@@ -2745,11 +2860,10 @@ static void Task_HandleRayChasesAway(u8 taskId)
         // Wait for Rayquaza to enter and finish shout anim
         if (gSprites[data[5]].callback == SpriteCB_ChasesAway_RayquazaFloat)
         {
-            // Delay, then start Groudon/Kyogre leaving
+            // Let the normal Rayquaza settle after its shout, then transform.
             if (tTimer == 64)
             {
-                ChasesAway_KyogreStartLeave(taskId);
-                ChasesAway_GroudonStartLeave(taskId);
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_WHITE);
                 tTimer = 0;
                 tState++;
             }
@@ -2760,6 +2874,40 @@ static void Task_HandleRayChasesAway(u8 taskId)
         }
         break;
     case 2:
+        // While the scene is white, replace the normal Rayquaza sprites with
+        // the first Mega Rayquaza tileset.  BG2 previously held the shout ring.
+        if (!gPaletteFade.active)
+        {
+            rayquazaSpriteId = data[5];
+            rayquazaTailSpriteId = gSprites[rayquazaSpriteId].data[0];
+            DestroySprite(&gSprites[rayquazaSpriteId]);
+            DestroySprite(&gSprites[rayquazaTailSpriteId]);
+            FreeSpriteTilesByTag(TAG_CHASE_RAYQUAZA);
+            FreeSpriteTilesByTag(TAG_CHASE_RAYQUAZA_TAIL);
+            FreeSpritePaletteByTag(TAG_CHASE_RAYQUAZA);
+            LoadChasesAway_MegaRay(1);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_WHITE);
+            tTimer = 0;
+            tState++;
+        }
+        break;
+    case 3:
+        // Show the first transformation frame briefly, then complete it with
+        // megaray02.  It remains on screen before Groudon and Kyogre retreat.
+        if (tTimer == 32)
+        {
+            LoadChasesAway_MegaRay(2);
+        }
+        else if (tTimer == 96)
+        {
+            ChasesAway_KyogreStartLeave(taskId);
+            ChasesAway_GroudonStartLeave(taskId);
+            tTimer = 0;
+            tState++;
+        }
+        tTimer++;
+        break;
+    case 4:
         // Wait for Groudon/Kyogre to leave
         if (tTimer == 448)
         {
@@ -2777,12 +2925,53 @@ static void Task_HandleRayChasesAway(u8 taskId)
             }
         }
         break;
-    case 3:
+    case 5:
         // Fade out
         BeginNormalPaletteFade(PALETTES_ALL, 4, 0, 0x10, RGB_BLACK);
         gTasks[taskId].func = Task_RayChasesAwayEnd;
         break;
     }
+}
+
+// Renders Mega Rayquaza on BG3 instead of as OBJ sprites. No decompression,
+// no tile repacking, no EWRAM scratch: the gfx is copied ROM->VRAM as-is
+// (BG hardware reads tiles in their natural raster order, unlike OBJ 1D
+// mapping, so nothing needs to be reshuffled), and the tilemap is written
+// straight from its ROM const array into sRayScene->tilemapBuffers[3] while
+// forcing the palette slot into bits 12-15 of every entry. See the big
+// comment above sMegaRay01_Pal/etc for why it's safe to force the palette
+// on every cell uniformly, including the "empty" ones.
+static void LoadChasesAway_MegaRay(u8 phase)
+{
+    const u32 *gfx;
+    const u16 *pal;
+    const u16 *map;
+    u16 *screen = (u16 *)sRayScene->tilemapBuffers[3];
+    u32 numTiles;
+    u32 i;
+
+    if (phase == 1)
+    {
+        gfx = sMegaRay01_Gfx;
+        pal = sMegaRay01_Pal;
+        map = sMegaRay01_Map;
+        numTiles = 288; // 128x144
+    }
+    else
+    {
+        gfx = sMegaRay02_Gfx;
+        pal = sMegaRay02_Pal;
+        map = sMegaRay02_Map;
+        numTiles = 464; // 128x232
+    }
+
+    CpuFastCopy(gfx, (void *)(BG_CHAR_ADDR(MEGARAY_CHARBASE)), numTiles * TILE_SIZE_4BPP);
+
+    for (i = 0; i < BG_SCREEN_SIZE / sizeof(u16); i++)
+        screen[i] = (map[i] & 0x0FFF) | (MEGARAY_PAL_SLOT << 12);
+
+    LoadPalette(pal, BG_PLTT_ID(MEGARAY_PAL_SLOT), PLTT_SIZE_4BPP);
+    ScheduleBgCopyTilemapToVram(3);
 }
 
 #undef tState
