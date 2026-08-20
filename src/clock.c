@@ -27,6 +27,11 @@ void InitTimeBasedEvents(void)
 
 void DoTimeBasedEvents(void)
 {
+#if OW_USE_FAKE_RTC
+    if (FlagGet(FLAG_SYS_CLOCK_SET) == FALSE)
+        InitTimeBasedEvents();
+#endif
+
     if (FlagGet(FLAG_SYS_CLOCK_SET) && !InPokemonCenter())
     {
         RtcCalcLocalTime();

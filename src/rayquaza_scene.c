@@ -79,9 +79,16 @@ enum
  * needed at all. Confirmed by reconstructing both frames pixel-for-pixel
  * from the raw assets before writing this.
  * ------------------------------------------------------------------------ */
-#define MEGARAY_CHARBASE   3
+#define MEGARAY_CHARBASE   2
 #define MEGARAY_MAPBASE   28
 #define MEGARAY_PAL_SLOT   3   /* slots 0-2 are taken by gRaySceneChasesAway_Bg_Pal */
+#define MEGARAY_TILEMAP_WIDTH 32
+#define MEGARAY_FRAME_WIDTH 16
+#define MEGARAY_FRAME1_HEIGHT 16
+#define MEGARAY_FRAME2_HEIGHT 16
+#define MEGARAY_FRAME_X 8
+#define MEGARAY_FRAME1_Y 2
+#define MEGARAY_FRAME2_Y 2
 
 typedef u8 ALIGNED(4) TilemapBuffer[BG_SCREEN_SIZE];
 
@@ -107,19 +114,15 @@ static EWRAM_DATA struct RayquazaScene *sRayScene = NULL;
 /* --------------------------------------------------------------------------
  * Mega Rayquaza graphics -- self-contained here (same pattern as
  * megarayvision.c), so nothing needs to be added to graphics.h.
- * Drop these 6 files into graphics/rayquaza_scene/chases_away/:
- *   megaray01.4bpp  megaray01.gbapal  megaray01.bin
- *   megaray02.4bpp  megaray02.gbapal  megaray02.bin
+ * Drop these 4 files into graphics/rayquaza_scene/chases_away/:
+ *   megaray01_small.4bpp  megaray01.gbapal
+ *   megaray02_small.4bpp  megaray02.gbapal
  * All raw/uncompressed -- no .lz, no gbagfx conversion step needed.
  * -------------------------------------------------------------------------- */
 static const u16 sMegaRay01_Pal[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray01.gbapal");
-static const u32 sMegaRay01_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/chases_away/megaray01.4bpp");
-static const u16 sMegaRay01_Map[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray01.bin");
-
+static const u32 sMegaRay01_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/chases_away/megaray01_small.4bpp");
 static const u16 sMegaRay02_Pal[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray02.gbapal");
-static const u32 sMegaRay02_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/chases_away/megaray02.4bpp");
-static const u16 sMegaRay02_Map[] = INCBIN_U16("graphics/rayquaza_scene/chases_away/megaray02.bin");
-
+static const u32 sMegaRay02_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/chases_away/megaray02_small.4bpp");
 static void CB2_InitRayquazaScene(void);
 static void CB2_RayquazaScene(void);
 static void Task_EndAfterFadeScreen(u8);
@@ -1374,7 +1377,7 @@ static const struct BgTemplate sBgTemplates_ChasesAway[] =
         .mapBaseIndex = MEGARAY_MAPBASE,
         .screenSize = 0,
         .paletteMode = 0,
-        .priority = 1, /* same level as the Rayquaza sprite it replaces */
+        .priority = 0, /* above the light BG, still below OBJ sprites */
         .baseTile = 0
     }
 };
@@ -2933,45 +2936,72 @@ static void Task_HandleRayChasesAway(u8 taskId)
     }
 }
 
+static void DrawChasesAwayMegaRayTilemap(u16 *screen, u16 width, u16 height, s16 dstX, s16 dstY)
+{
+    u16 row;
+    u16 col;
+
+    CpuFill16(MEGARAY_PAL_SLOT << 12, screen, BG_SCREEN_SIZE);
+
+    for (row = 0; row < height; row++)
+    {
+        s16 y = dstY + row;
+
+        if (y < 0 || y >= MEGARAY_TILEMAP_WIDTH)
+            continue;
+
+        for (col = 0; col < width; col++)
+        {
+            s16 x = dstX + col;
+
+            if (x < 0 || x >= MEGARAY_TILEMAP_WIDTH)
+                continue;
+
+            screen[y * MEGARAY_TILEMAP_WIDTH + x] = (row * width + col) | (MEGARAY_PAL_SLOT << 12);
+        }
+    }
+}
+
 // Renders Mega Rayquaza on BG3 instead of as OBJ sprites. No decompression,
-// no tile repacking, no EWRAM scratch: the gfx is copied ROM->VRAM as-is
-// (BG hardware reads tiles in their natural raster order, unlike OBJ 1D
-// mapping, so nothing needs to be reshuffled), and the tilemap is written
-// straight from its ROM const array into sRayScene->tilemapBuffers[3] while
-// forcing the palette slot into bits 12-15 of every entry. See the big
-// comment above sMegaRay01_Pal/etc for why it's safe to force the palette
-// on every cell uniformly, including the "empty" ones.
+// no tile repacking, no EWRAM scratch: the gfx is copied ROM->VRAM as-is.
+// The small assets are pre-rendered from the optimized source tilemaps, then
+// stored row-major so this scene can build a simple centered screen map here.
 static void LoadChasesAway_MegaRay(u8 phase)
 {
     const u32 *gfx;
     const u16 *pal;
-    const u16 *map;
     u16 *screen = (u16 *)sRayScene->tilemapBuffers[3];
     u32 numTiles;
-    u32 i;
+    u16 height;
+    s16 y;
 
     if (phase == 1)
     {
         gfx = sMegaRay01_Gfx;
         pal = sMegaRay01_Pal;
-        map = sMegaRay01_Map;
-        numTiles = 288; // 128x144
+        numTiles = MEGARAY_FRAME_WIDTH * MEGARAY_FRAME1_HEIGHT;
+        height = MEGARAY_FRAME1_HEIGHT;
+        y = MEGARAY_FRAME1_Y;
     }
     else
     {
         gfx = sMegaRay02_Gfx;
         pal = sMegaRay02_Pal;
-        map = sMegaRay02_Map;
-        numTiles = 464; // 128x232
+        numTiles = MEGARAY_FRAME_WIDTH * MEGARAY_FRAME2_HEIGHT;
+        height = MEGARAY_FRAME2_HEIGHT;
+        y = MEGARAY_FRAME2_Y;
     }
 
+    // BG3 is only available in mode 0. The earlier shout ring uses BG2 affine
+    // in mode 1, so switch modes during the white flash before showing Mega Ray.
+    SetBgMode(0);
+    HideBg(2);
+    ShowBg(3);
+
     CpuFastCopy(gfx, (void *)(BG_CHAR_ADDR(MEGARAY_CHARBASE)), numTiles * TILE_SIZE_4BPP);
-
-    for (i = 0; i < BG_SCREEN_SIZE / sizeof(u16); i++)
-        screen[i] = (map[i] & 0x0FFF) | (MEGARAY_PAL_SLOT << 12);
-
+    DrawChasesAwayMegaRayTilemap(screen, MEGARAY_FRAME_WIDTH, height, MEGARAY_FRAME_X, y);
     LoadPalette(pal, BG_PLTT_ID(MEGARAY_PAL_SLOT), PLTT_SIZE_4BPP);
-    ScheduleBgCopyTilemapToVram(3);
+    CopyBgTilemapBufferToVram(3);
 }
 
 #undef tState

@@ -8,6 +8,7 @@
 #include "berry_powder.h"
 #include "bike.h"
 #include "coins.h"
+#include "clock.h"
 #include "data.h"
 #include "event_data.h"
 #include "event_object_lock.h"
@@ -1694,7 +1695,11 @@ static void ItemUseCB_ChangePokeball(u8 taskId, void (*unused)(u8))
 
 void ItemUseOutOfBattle_TimeGear(u8 taskId)
 {
-    enum TimeOfDay current = GetTimeOfDay();
+    enum TimeOfDay current;
+
+    DoTimeBasedEvents();
+
+    current = GetTimeOfDay();
 
     switch (current)
     {
@@ -1713,6 +1718,7 @@ void ItemUseOutOfBattle_TimeGear(u8 taskId)
             break;
     }
 
+    DoTimeBasedEvents();
     PlaySE(SE_M_TELEPORT);
     DestroyTask(taskId);
     SetMainCallback2(CB2_LoadMap);
