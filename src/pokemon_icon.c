@@ -156,6 +156,9 @@ const u32 gMonIconPalettesCompressed[][16] =
 
 const u32 * GetIconPalette(u32 species, bool32 isShiny, bool32 female)
 {
+    if (species > NUM_SPECIES)
+        species = SPECIES_NONE;
+
 #if P_GENDER_DIFFERENCES
     if (gSpeciesInfo[species].iconSpriteFemale != NULL && gSpeciesInfo[species].iconPaletteFemale != NULL && female)
         return (isShiny) ? gSpeciesInfo[species].shinyIconPaletteFemale : gSpeciesInfo[species].iconPaletteFemale;
