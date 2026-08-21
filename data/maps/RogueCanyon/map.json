@@ -17,6 +17,11 @@
       "map": "MAP_ROUTE111",
       "offset": 30,
       "direction": "left"
+    },
+    {
+      "map": "MAP_PHOENIX_TOWN",
+      "offset": 0,
+      "direction": "up"
     }
   ],
   "object_events": [

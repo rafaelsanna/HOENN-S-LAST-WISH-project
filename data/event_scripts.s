@@ -1262,3 +1262,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Ic_cave_main/scripts.inc"
 
 	.include "data/maps/FallarborTown_Farm/scripts.inc"
+
+	.include "data/maps/PhoenixTown/scripts.inc"

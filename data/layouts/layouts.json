@@ -4920,6 +4920,16 @@
       "secondary_tileset": "gTileset_Fallarbor",
       "border_filepath": "data/layouts/FallarborTown_Farm/border.bin",
       "blockdata_filepath": "data/layouts/FallarborTown_Farm/map.bin"
+    },
+    {
+      "id": "LAYOUT_PHOENIX_TOWN",
+      "name": "PhoenixTown_Layout",
+      "width": 40,
+      "height": 25,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Desert",
+      "border_filepath": "data/layouts/PhoenixTown/border.bin",
+      "blockdata_filepath": "data/layouts/PhoenixTown/map.bin"
     }
   ]
 }
