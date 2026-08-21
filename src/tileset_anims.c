@@ -44,6 +44,7 @@ static void TilesetAnim_BikeShop(u16);
 static void TilesetAnim_BattlePyramid(u16);
 static void TilesetAnim_BattleDome(u16);
 static void TilesetAnim_DreamRealm(u16);
+static void TilesetAnim_Desert(u16);
 static void QueueAnimTiles_General_Flower(u16);
 static void QueueAnimTiles_General_Flower_2(u16);
 static void QueueAnimTiles_General_Water(u16);
@@ -76,6 +77,7 @@ static void QueueAnimTiles_SootopolisGym_Waterfalls(u16);
 static void QueueAnimTiles_EliteFour_GroundLights(u16);
 static void QueueAnimTiles_EliteFour_WallLights(u16);
 static void QueueAnimTiles_DreamRealm_FallingStar(u16);
+static void QueueAnimTiles_Desert_WaterSparkle(u16, u16, u16, u16);
 
 const u16 gTilesetAnims_General_Flower_Frame1[] = INCBIN_U16("data/tilesets/primary/general/anim/flower/1.4bpp");
 const u16 gTilesetAnims_General_Flower_Frame0[] = INCBIN_U16("data/tilesets/primary/general/anim/flower/0.4bpp");
@@ -100,6 +102,16 @@ const u16 *const gTilesetAnims_General_Flower_2[] = {
     gTilesetAnims_General_Flower_2_Frame2
 };
 
+const u16 gTilesetAnims_Desert_WaterSparkle_Frame0[] = INCBIN_U16("data/tilesets/secondary/desert/anim/watersparkle/desertwatersparkle1.4bpp");
+const u16 gTilesetAnims_Desert_WaterSparkle_Frame1[] = INCBIN_U16("data/tilesets/secondary/desert/anim/watersparkle/desertwatersparkle2.4bpp");
+const u16 gTilesetAnims_Desert_WaterSparkle_Frame2[] = INCBIN_U16("data/tilesets/secondary/desert/anim/watersparkle/desertwatersparkle3.4bpp");
+const u16 gTilesetAnims_Desert_WaterSparkle_Frame3[] = INCBIN_U16("data/tilesets/secondary/desert/anim/watersparkle/desertwatersparkle4.4bpp");
+const u16 *const gTilesetAnims_Desert_WaterSparkle[] = {
+    gTilesetAnims_Desert_WaterSparkle_Frame0,
+    gTilesetAnims_Desert_WaterSparkle_Frame1,
+    gTilesetAnims_Desert_WaterSparkle_Frame2,
+    gTilesetAnims_Desert_WaterSparkle_Frame3
+};
 
 const u16 gTilesetAnims_DreamRealm_FallingStar_Frame0[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/0.4bpp");
 const u16 gTilesetAnims_DreamRealm_FallingStar_Frame1[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/fallingstar/1.4bpp");
@@ -1304,4 +1316,36 @@ void InitTilesetAnim_hlwcustom1(void)
     sSecondaryTilesetAnimCounter = 0;
     sSecondaryTilesetAnimCounterMax = 256;
     sSecondaryTilesetAnimCallback = TilesetAnim_hlwcustom1;
+}
+
+#define DESERT_WATER_SPARKLE_TOP_TILE_1 0x262
+#define DESERT_WATER_SPARKLE_BOTTOM_TILE_1 0x272
+#define DESERT_WATER_SPARKLE_TOP_TILE_2 0x287
+#define DESERT_WATER_SPARKLE_BOTTOM_TILE_2 0x297
+#define DESERT_WATER_SPARKLE_ROW_TILES 2
+#define DESERT_WATER_SPARKLE_ALT_FRAME_OFFSET 2
+
+static void QueueAnimTiles_Desert_WaterSparkle(u16 timer, u16 topTile, u16 bottomTile, u16 frameOffset)
+{
+    const u16 *src = gTilesetAnims_Desert_WaterSparkle[(timer + frameOffset) % ARRAY_COUNT(gTilesetAnims_Desert_WaterSparkle)];
+
+    AppendTilesetAnimToBuffer(src, (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(topTile)), DESERT_WATER_SPARKLE_ROW_TILES * TILE_SIZE_4BPP);
+    AppendTilesetAnimToBuffer(src + (DESERT_WATER_SPARKLE_ROW_TILES * TILE_SIZE_4BPP / sizeof(*src)), (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(bottomTile)), DESERT_WATER_SPARKLE_ROW_TILES * TILE_SIZE_4BPP);
+}
+
+static void TilesetAnim_Desert(u16 timer)
+{
+    if (timer % 40 == 0)
+    {
+        timer /= 40;
+        QueueAnimTiles_Desert_WaterSparkle(timer, DESERT_WATER_SPARKLE_TOP_TILE_1, DESERT_WATER_SPARKLE_BOTTOM_TILE_1, 0);
+        QueueAnimTiles_Desert_WaterSparkle(timer, DESERT_WATER_SPARKLE_TOP_TILE_2, DESERT_WATER_SPARKLE_BOTTOM_TILE_2, DESERT_WATER_SPARKLE_ALT_FRAME_OFFSET);
+    }
+}
+
+void InitTilesetAnim_Desert(void)
+{
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 256;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Desert;
 }

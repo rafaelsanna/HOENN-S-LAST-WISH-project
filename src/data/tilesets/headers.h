@@ -883,7 +883,7 @@ const struct Tileset gTileset_Desert =
     .palettes = gTilesetPalettes_Desert,
     .metatiles = gMetatiles_Desert,
     .metatileAttributes = gMetatileAttributes_Desert,
-    .callback = NULL,
+    .callback = InitTilesetAnim_Desert,
 };
 
 const struct Tileset gTileset_Facility_2 = {
