@@ -1,0 +1,6 @@
+FallarborTown_Farm_MapScripts::
+	.byte 0
+
+FallarborTown_Farm_EventScript_FarmingLady::
+	msgbox FallarborTown_Text_Farminglady_1, MSGBOX_NPC
+	end

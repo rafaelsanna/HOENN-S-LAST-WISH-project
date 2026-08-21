@@ -1418,6 +1418,10 @@ SootopolisCity_EventScript_MrStoneEvil::
 	fadescreenspeed FADE_TO_WHITE, 4
 	special DoMrStoneEvilScene
 	waitstate
+	delay 120
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	waitmoncry
 	setvar VAR_0x8004, 1 @ vertical pan
 	setvar VAR_0x8005, 1 @ horizontal pan
 	setvar VAR_0x8006, 8 @ num shakes
@@ -1554,9 +1558,9 @@ SootopolisCity_Text_MrStoneMoneyRulesWorld:
 	.string "the whole world will belong to me!$"
 
 SootopolisCity_Text_MrStonePrimalCommand:
-	.string "MR. STONE: GROUDON! KYOGRE!\n"
-	.string "Accept these orbs and awaken your\n"
-	.string "Primal power!\p"
+	.string "MR. STONE: GROUDON! KYOGRE!\p"
+	.string "Accept these orbs and awaken\n"
+	.string "your Primal power!\p"
 	.string "Why won't you obey me?!$"
 
 SootopolisCity_Text_DevonBoatEmpty:

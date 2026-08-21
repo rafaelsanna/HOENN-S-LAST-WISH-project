@@ -76,15 +76,15 @@ enum
 #define MAX_SMOKE 10
 
 // How long (in frames) each pose of the Mr. Stone Evil scene is held before moving on
-#define MRSTONE_EVIL_POSE1_HOLD 48  // mrstone01, empty-handed
+#define MRSTONE_EVIL_POSE1_HOLD 120 // mrstone01, empty-handed
 #define MRSTONE_EVIL_POSE2_HOLD 90  // mrstone02, holding the orbs
 
 // Orb hand positions on top of the mrstone02 art. These are placeholders -- tune them to line
 // up with wherever the hands actually land in the finished mrstone02 tilemap.
-#define MRSTONE_EVIL_REDORB_X  86
-#define MRSTONE_EVIL_REDORB_Y  96
+#define MRSTONE_EVIL_REDORB_X  96
+#define MRSTONE_EVIL_REDORB_Y  132
 #define MRSTONE_EVIL_BLUEORB_X 154
-#define MRSTONE_EVIL_BLUEORB_Y 96
+#define MRSTONE_EVIL_BLUEORB_Y 132
 
 /* ------------------------------------------------------------------------
  * Mega Rayquaza (Chases Away, scene 5) -- rendered on BG3, not as OBJ.
@@ -3530,12 +3530,12 @@ static const struct BgTemplate sBgTemplates_MrStoneEvil[] =
 
 static const struct CompressedSpriteSheet sSpriteSheet_MrStoneEvil_RedOrb =
 {
-    gRaySceneMrStoneEvil_RedOrb_Gfx, 0x800, TAG_MRSTONE_EVIL_REDORB
+    gRaySceneMrStoneEvil_RedOrb_Gfx, 0x200, TAG_MRSTONE_EVIL_REDORB
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_MrStoneEvil_BlueOrb =
 {
-    gRaySceneMrStoneEvil_BlueOrb_Gfx, 0x800, TAG_MRSTONE_EVIL_BLUEORB
+    gRaySceneMrStoneEvil_BlueOrb_Gfx, 0x200, TAG_MRSTONE_EVIL_BLUEORB
 };
 
 static const struct SpritePalette sSpritePal_MrStoneEvil_RedOrb =
@@ -3563,7 +3563,7 @@ static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_RedOrb =
 {
     .tileTag = TAG_MRSTONE_EVIL_REDORB,
     .paletteTag = TAG_MRSTONE_EVIL_REDORB,
-    .oam = &sOam_64x64,
+    .oam = &sOam_32x32,
     .anims = sAnims_MrStoneEvil_Orb,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -3574,7 +3574,7 @@ static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_BlueOrb =
 {
     .tileTag = TAG_MRSTONE_EVIL_BLUEORB,
     .paletteTag = TAG_MRSTONE_EVIL_BLUEORB,
-    .oam = &sOam_64x64,
+    .oam = &sOam_32x32,
     .anims = sAnims_MrStoneEvil_Orb,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -3603,6 +3603,30 @@ static void InitMrStoneEvilSceneBgs(void)
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
 }
 
+static void OffsetMrStoneEvilCloudPaletteBanks(u16 *tilemap)
+{
+    u16 i;
+
+    for (i = 0; i < BG_SCREEN_SIZE / sizeof(u16); i++)
+    {
+        u16 entry = tilemap[i];
+        u16 tile = entry & 0x03FF;
+        u16 pal = (entry >> 12) & 0xF;
+
+        if (tile == 0)
+            continue;
+
+        // Clouds normally use BG palette banks 0-1 in the Duo Fight scene.
+        // Here Mr. Stone owns bank 0, so move cloud entries to banks 2-3.
+        if (pal == 15)
+            pal = 3;
+        else
+            pal += 2;
+
+        tilemap[i] = (entry & 0x0FFF) | (pal << 12);
+    }
+}
+
 static void LoadMrStoneEvilSceneGfx(void)
 {
     ResetTempTileDataBuffers();
@@ -3616,10 +3640,10 @@ static void LoadMrStoneEvilSceneGfx(void)
     DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds1_Tilemap, sRayScene->tilemapBuffers[1]);
     DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds3_Tilemap, sRayScene->tilemapBuffers[2]);
     DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds2_Tilemap, sRayScene->tilemapBuffers[3]);
+    OffsetMrStoneEvilCloudPaletteBanks((u16 *)sRayScene->tilemapBuffers[1]);
+    OffsetMrStoneEvilCloudPaletteBanks((u16 *)sRayScene->tilemapBuffers[2]);
+    OffsetMrStoneEvilCloudPaletteBanks((u16 *)sRayScene->tilemapBuffers[3]);
 
-    // NOTE: bank offsets below assume Mr. Stone's art was exported into BG palette banks
-    // 0-1 and the clouds into banks 2-3. If porytiles assigned them differently when the
-    // tilesets were built, adjust the BG_PLTT_ID() arguments here to match.
     LoadPalette(gRaySceneMrStoneEvil_MrStone01_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     LoadPalette(gRaySceneDuoFight_Clouds_Pal, BG_PLTT_ID(2), 2 * PLTT_SIZE_4BPP);
 
@@ -3659,7 +3683,8 @@ static void Task_HandleMrStoneEvil(u8 taskId)
     // Keep the scene-1 clouds looping continuously behind Mr. Stone the whole time.
     // Tilemaps wrap on their own, so a simple constant per-bg scroll is enough.
     ChangeBgX(1, 0x80, BG_COORD_ADD);
-    ChangeBgX(2, 0x40, BG_COORD_ADD);
+    ChangeBgX(2, 0x400, BG_COORD_ADD);
+    ChangeBgY(2, 0x800, BG_COORD_SUB);
     ChangeBgX(3, 0x20, BG_COORD_ADD);
 
     switch (tState)
