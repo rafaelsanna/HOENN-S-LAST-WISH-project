@@ -72,7 +72,9 @@ EverGrandeCity_ChampionsRoom_EventScript_PlayBrendanMusic::
 	return
 
 EverGrandeCity_ChampionsRoom_EventScript_MayAdvice::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox EverGrandeCity_ChampionsRoom_Text_MayAdvice, MSGBOX_DEFAULT
+	removefieldmugshot
 	delay 40
 	playse SE_PIN
 	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_ExclamationMark
@@ -80,7 +82,9 @@ EverGrandeCity_ChampionsRoom_EventScript_MayAdvice::
 	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	call EverGrandeCity_ChampionsRoom_EventScript_RivalLookBackAndForth
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox EverGrandeCity_ChampionsRoom_Text_MayItsAlreadyOver, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF
 	end
 
@@ -138,7 +142,9 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF::
 	end
 
 EverGrandeCity_ChampionsRoom_EventScript_MayCongratulations::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox EverGrandeCity_ChampionsRoom_Text_MayCongratulations, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations::

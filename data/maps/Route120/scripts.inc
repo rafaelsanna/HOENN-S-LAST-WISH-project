@@ -315,109 +315,109 @@ Route120_EventScript_Steven::
 # 158 "data/maps/Route120/scripts.pory"
 	goto_if_set FLAG_NOT_READY_FOR_BATTLE_ROUTE_120, Route120_EventScript_StevenAskReadyForBattle
 # 159 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_StevenGreeting, MSGBOX_YESNO
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 160 "data/maps/Route120/scripts.pory"
-	goto_if_eq VAR_RESULT, NO, Route120_EventScript_StevenNotReady
+	msgbox Route120_Text_StevenGreeting, MSGBOX_YESNO
 # 161 "data/maps/Route120/scripts.pory"
-	goto Route120_EventScript_StevenBattleKecleon
+	removefieldmugshot
 # 162 "data/maps/Route120/scripts.pory"
-	end
-# 163 "data/maps/Route120/scripts.pory"
-
-# 164 "data/maps/Route120/scripts.pory"
-Route120_EventScript_StevenNotReady::
-# 165 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_StevenIllWaitHere, MSGBOX_DEFAULT
-# 166 "data/maps/Route120/scripts.pory"
-	setflag FLAG_NOT_READY_FOR_BATTLE_ROUTE_120
-# 167 "data/maps/Route120/scripts.pory"
-	release
-# 168 "data/maps/Route120/scripts.pory"
-	end
-# 169 "data/maps/Route120/scripts.pory"
-
-# 170 "data/maps/Route120/scripts.pory"
-Route120_EventScript_StevenAskReadyForBattle::
-# 171 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_StevenReadyForBattle, MSGBOX_YESNO
-# 172 "data/maps/Route120/scripts.pory"
 	goto_if_eq VAR_RESULT, NO, Route120_EventScript_StevenNotReady
-# 173 "data/maps/Route120/scripts.pory"
+# 163 "data/maps/Route120/scripts.pory"
 	goto Route120_EventScript_StevenBattleKecleon
+# 164 "data/maps/Route120/scripts.pory"
+	end
+# 165 "data/maps/Route120/scripts.pory"
+
+# 166 "data/maps/Route120/scripts.pory"
+Route120_EventScript_StevenNotReady::
+# 167 "data/maps/Route120/scripts.pory"
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
+# 168 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_StevenIllWaitHere, MSGBOX_DEFAULT
+# 169 "data/maps/Route120/scripts.pory"
+	removefieldmugshot
+# 170 "data/maps/Route120/scripts.pory"
+	setflag FLAG_NOT_READY_FOR_BATTLE_ROUTE_120
+# 171 "data/maps/Route120/scripts.pory"
+	release
+# 172 "data/maps/Route120/scripts.pory"
+	end
+# 173 "data/maps/Route120/scripts.pory"
+
 # 174 "data/maps/Route120/scripts.pory"
-	end
+Route120_EventScript_StevenAskReadyForBattle::
 # 175 "data/maps/Route120/scripts.pory"
-
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 176 "data/maps/Route120/scripts.pory"
-Route120_EventScript_StevenBattleKecleon::
+	msgbox Route120_Text_StevenReadyForBattle, MSGBOX_YESNO
 # 177 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_StevenShowMeYourPower, MSGBOX_DEFAULT
+	removefieldmugshot
 # 178 "data/maps/Route120/scripts.pory"
-	closemessage
+	goto_if_eq VAR_RESULT, NO, Route120_EventScript_StevenNotReady
 # 179 "data/maps/Route120/scripts.pory"
-	call_if_eq VAR_FACING, DIR_NORTH, Route120_EventScript_PlayerApproachKecleonNorth
+	goto Route120_EventScript_StevenBattleKecleon
 # 180 "data/maps/Route120/scripts.pory"
-	call_if_eq VAR_FACING, DIR_WEST, Route120_EventScript_PlayerApproachKecleonWest
-# 181 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterLeft
-# 182 "data/maps/Route120/scripts.pory"
-	waitmovement 0
-# 183 "data/maps/Route120/scripts.pory"
-	delay 20
-# 184 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_StevenUsedDevonScope, MSGBOX_DEFAULT
-# 185 "data/maps/Route120/scripts.pory"
-	closemessage
-# 186 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_BRIDGE_KECLEON, Common_Movement_WalkInPlaceFasterRight
-# 187 "data/maps/Route120/scripts.pory"
-	waitmovement 0
-# 188 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_BRIDGE_KECLEON, Movement_KecleonAppears
-# 189 "data/maps/Route120/scripts.pory"
-	waitmovement 0
-# 190 "data/maps/Route120/scripts.pory"
-	waitse
-# 191 "data/maps/Route120/scripts.pory"
-	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
-# 192 "data/maps/Route120/scripts.pory"
-	delay 40
-# 193 "data/maps/Route120/scripts.pory"
-	waitmoncry
-# 194 "data/maps/Route120/scripts.pory"
-	setwildbattle SPECIES_KECLEON, 30
-# 195 "data/maps/Route120/scripts.pory"
-	setvar VAR_0x8009, 0
-# 196 "data/maps/Route120/scripts.pory"
-	setflag FLAG_SYS_CTRL_OBJ_DELETE
-# 197 "data/maps/Route120/scripts.pory"
-	dowildbattle
-# 198 "data/maps/Route120/scripts.pory"
-	clearflag FLAG_SYS_CTRL_OBJ_DELETE
-# 199 "data/maps/Route120/scripts.pory"
-	specialvar VAR_RESULT, GetBattleOutcome
-# 200 "data/maps/Route120/scripts.pory"
-	goto_if_eq VAR_RESULT, B_OUTCOME_WON, Route120_EventScript_RemoveBridgeKecleonPostBattle
-# 201 "data/maps/Route120/scripts.pory"
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Route120_EventScript_RemoveBridgeKecleonPostBattle
-# 202 "data/maps/Route120/scripts.pory"
-	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, Route120_EventScript_RemoveBridgeKecleonPostBattle
-# 203 "data/maps/Route120/scripts.pory"
-	goto Route120_EventScript_StevenGiveDeconScope
-# 204 "data/maps/Route120/scripts.pory"
 	end
-# 205 "data/maps/Route120/scripts.pory"
+# 181 "data/maps/Route120/scripts.pory"
 
+# 182 "data/maps/Route120/scripts.pory"
+Route120_EventScript_StevenBattleKecleon::
+# 183 "data/maps/Route120/scripts.pory"
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
+# 184 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_StevenShowMeYourPower, MSGBOX_DEFAULT
+# 185 "data/maps/Route120/scripts.pory"
+	removefieldmugshot
+# 186 "data/maps/Route120/scripts.pory"
+	closemessage
+# 187 "data/maps/Route120/scripts.pory"
+	call_if_eq VAR_FACING, DIR_NORTH, Route120_EventScript_PlayerApproachKecleonNorth
+# 188 "data/maps/Route120/scripts.pory"
+	call_if_eq VAR_FACING, DIR_WEST, Route120_EventScript_PlayerApproachKecleonWest
+# 189 "data/maps/Route120/scripts.pory"
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterLeft
+# 190 "data/maps/Route120/scripts.pory"
+	waitmovement 0
+# 191 "data/maps/Route120/scripts.pory"
+	delay 20
+# 192 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_StevenUsedDevonScope, MSGBOX_DEFAULT
+# 193 "data/maps/Route120/scripts.pory"
+	closemessage
+# 194 "data/maps/Route120/scripts.pory"
+	applymovement LOCALID_BRIDGE_KECLEON, Common_Movement_WalkInPlaceFasterRight
+# 195 "data/maps/Route120/scripts.pory"
+	waitmovement 0
+# 196 "data/maps/Route120/scripts.pory"
+	applymovement LOCALID_BRIDGE_KECLEON, Movement_KecleonAppears
+# 197 "data/maps/Route120/scripts.pory"
+	waitmovement 0
+# 198 "data/maps/Route120/scripts.pory"
+	waitse
+# 199 "data/maps/Route120/scripts.pory"
+	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
+# 200 "data/maps/Route120/scripts.pory"
+	delay 40
+# 201 "data/maps/Route120/scripts.pory"
+	waitmoncry
+# 202 "data/maps/Route120/scripts.pory"
+	setwildbattle SPECIES_KECLEON, 30
+# 203 "data/maps/Route120/scripts.pory"
+	setvar VAR_0x8009, 0
+# 204 "data/maps/Route120/scripts.pory"
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+# 205 "data/maps/Route120/scripts.pory"
+	dowildbattle
 # 206 "data/maps/Route120/scripts.pory"
-Route120_EventScript_RemoveBridgeKecleonPostBattle::
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 # 207 "data/maps/Route120/scripts.pory"
-	fadescreenswapbuffers FADE_TO_BLACK
+	specialvar VAR_RESULT, GetBattleOutcome
 # 208 "data/maps/Route120/scripts.pory"
-	removeobject LOCALID_BRIDGE_KECLEON
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, Route120_EventScript_RemoveBridgeKecleonPostBattle
 # 209 "data/maps/Route120/scripts.pory"
-	removeobject LOCALID_BRIDGE_KECLEON_SHADOW
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Route120_EventScript_RemoveBridgeKecleonPostBattle
 # 210 "data/maps/Route120/scripts.pory"
-	fadescreenswapbuffers FADE_FROM_BLACK
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, Route120_EventScript_RemoveBridgeKecleonPostBattle
 # 211 "data/maps/Route120/scripts.pory"
 	goto Route120_EventScript_StevenGiveDeconScope
 # 212 "data/maps/Route120/scripts.pory"
@@ -425,436 +425,460 @@ Route120_EventScript_RemoveBridgeKecleonPostBattle::
 # 213 "data/maps/Route120/scripts.pory"
 
 # 214 "data/maps/Route120/scripts.pory"
-Route120_EventScript_StevenGiveDeconScope::
+Route120_EventScript_RemoveBridgeKecleonPostBattle::
 # 215 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterDown
+	fadescreenswapbuffers FADE_TO_BLACK
 # 216 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	removeobject LOCALID_BRIDGE_KECLEON
 # 217 "data/maps/Route120/scripts.pory"
-	waitmovement 0
+	removeobject LOCALID_BRIDGE_KECLEON_SHADOW
 # 218 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_StevenGiveDevonScope, MSGBOX_DEFAULT
+	fadescreenswapbuffers FADE_FROM_BLACK
 # 219 "data/maps/Route120/scripts.pory"
-	giveitem ITEM_DEVON_SCOPE
+	goto Route120_EventScript_StevenGiveDeconScope
 # 220 "data/maps/Route120/scripts.pory"
-	setflag FLAG_RECEIVED_DEVON_SCOPE
+	end
 # 221 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_StevenGoodbye, MSGBOX_DEFAULT
+
 # 222 "data/maps/Route120/scripts.pory"
-	closemessage
+Route120_EventScript_StevenGiveDeconScope::
 # 223 "data/maps/Route120/scripts.pory"
 	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterDown
 # 224 "data/maps/Route120/scripts.pory"
-	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 # 225 "data/maps/Route120/scripts.pory"
-	delay 50
+	waitmovement 0
 # 226 "data/maps/Route120/scripts.pory"
-	setfieldeffectargument 0, 1
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 227 "data/maps/Route120/scripts.pory"
-	dofieldeffect FLDEFF_NPCFLY_OUT
+	msgbox Route120_Text_StevenGiveDevonScope, MSGBOX_DEFAULT
 # 228 "data/maps/Route120/scripts.pory"
-	delay 15
+	removefieldmugshot
 # 229 "data/maps/Route120/scripts.pory"
-	removeobject LOCALID_ROUTE120_STEVEN
+	giveitem ITEM_DEVON_SCOPE
 # 230 "data/maps/Route120/scripts.pory"
-	waitfieldeffect FLDEFF_NPCFLY_OUT
+	setflag FLAG_RECEIVED_DEVON_SCOPE
 # 231 "data/maps/Route120/scripts.pory"
-	setmetatile 13, 15, METATILE_Fortree_WoodBridge1_Top, FALSE
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 232 "data/maps/Route120/scripts.pory"
-	setmetatile 12, 16, METATILE_Fortree_WoodBridge1_Bottom, FALSE
+	msgbox Route120_Text_StevenGoodbye, MSGBOX_DEFAULT
 # 233 "data/maps/Route120/scripts.pory"
-	setmetatile 12, 17, METATILE_General_ReflectiveWater, FALSE
+	removefieldmugshot
 # 234 "data/maps/Route120/scripts.pory"
-	setmetatile 13, 17, METATILE_General_ReflectiveWater, FALSE
+	closemessage
 # 235 "data/maps/Route120/scripts.pory"
-	special DrawWholeMapView
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterDown
 # 236 "data/maps/Route120/scripts.pory"
-	release
+	waitmovement 0
 # 237 "data/maps/Route120/scripts.pory"
-	end
+	delay 50
 # 238 "data/maps/Route120/scripts.pory"
-
+	setfieldeffectargument 0, 1
 # 239 "data/maps/Route120/scripts.pory"
-Route120_EventScript_PlayerApproachKecleonNorth::
+	dofieldeffect FLDEFF_NPCFLY_OUT
 # 240 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	delay 15
 # 241 "data/maps/Route120/scripts.pory"
-	waitmovement 0
+	removeobject LOCALID_ROUTE120_STEVEN
 # 242 "data/maps/Route120/scripts.pory"
-	return
+	waitfieldeffect FLDEFF_NPCFLY_OUT
 # 243 "data/maps/Route120/scripts.pory"
-
+	setmetatile 13, 15, METATILE_Fortree_WoodBridge1_Top, FALSE
 # 244 "data/maps/Route120/scripts.pory"
-Route120_EventScript_PlayerApproachKecleonWest::
+	setmetatile 12, 16, METATILE_Fortree_WoodBridge1_Bottom, FALSE
 # 245 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_PLAYER, Route120_Movement_ApproachKecleonWest
+	setmetatile 12, 17, METATILE_General_ReflectiveWater, FALSE
 # 246 "data/maps/Route120/scripts.pory"
-	waitmovement 0
+	setmetatile 13, 17, METATILE_General_ReflectiveWater, FALSE
 # 247 "data/maps/Route120/scripts.pory"
-	return
+	special DrawWholeMapView
 # 248 "data/maps/Route120/scripts.pory"
-
+	release
 # 249 "data/maps/Route120/scripts.pory"
-Route120_Movement_ApproachKecleonWest:
+	end
 # 250 "data/maps/Route120/scripts.pory"
-	walk_down
+
 # 251 "data/maps/Route120/scripts.pory"
-	walk_left
+Route120_EventScript_PlayerApproachKecleonNorth::
 # 252 "data/maps/Route120/scripts.pory"
-	step_end
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 # 253 "data/maps/Route120/scripts.pory"
-
+	waitmovement 0
 # 254 "data/maps/Route120/scripts.pory"
-Route120_EventScript_BridgeKecleon::
+	return
 # 255 "data/maps/Route120/scripts.pory"
-	msgbox Kecleon_Text_SomethingUnseeable, MSGBOX_NPC
+
 # 256 "data/maps/Route120/scripts.pory"
-	end
+Route120_EventScript_PlayerApproachKecleonWest::
 # 257 "data/maps/Route120/scripts.pory"
-
+	applymovement LOCALID_PLAYER, Route120_Movement_ApproachKecleonWest
 # 258 "data/maps/Route120/scripts.pory"
-Route120_EventScript_RouteSignFortree::
+	waitmovement 0
 # 259 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_RouteSignFortree, MSGBOX_SIGN
+	return
 # 260 "data/maps/Route120/scripts.pory"
-	end
-# 261 "data/maps/Route120/scripts.pory"
 
+# 261 "data/maps/Route120/scripts.pory"
+Route120_Movement_ApproachKecleonWest:
 # 262 "data/maps/Route120/scripts.pory"
-Route120_EventScript_RouteSign121::
+	walk_down
 # 263 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_RouteSign121, MSGBOX_SIGN
+	walk_left
 # 264 "data/maps/Route120/scripts.pory"
-	end
+	step_end
 # 265 "data/maps/Route120/scripts.pory"
 
 # 266 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Colin::
+Route120_EventScript_BridgeKecleon::
 # 267 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_COLIN, Route120_Text_ColinIntro, Route120_Text_ColinDefeat
+	msgbox Kecleon_Text_SomethingUnseeable, MSGBOX_NPC
 # 268 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_ColinPostBattle, MSGBOX_AUTOCLOSE
+	end
 # 269 "data/maps/Route120/scripts.pory"
-	end
+
 # 270 "data/maps/Route120/scripts.pory"
-
+Route120_EventScript_RouteSignFortree::
 # 271 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Robert::
+	msgbox Route120_Text_RouteSignFortree, MSGBOX_SIGN
 # 272 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_ROBERT_1, Route120_Text_RobertIntro, Route120_Text_RobertDefeat, Route120_EventScript_RegisterRobert
+	end
 # 273 "data/maps/Route120/scripts.pory"
-	specialvar VAR_RESULT, ShouldTryRematchBattle
+
 # 274 "data/maps/Route120/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, Route120_EventScript_RematchRobert
+Route120_EventScript_RouteSign121::
 # 275 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_RobertPostBattle, MSGBOX_DEFAULT
+	msgbox Route120_Text_RouteSign121, MSGBOX_SIGN
 # 276 "data/maps/Route120/scripts.pory"
-	release
+	end
 # 277 "data/maps/Route120/scripts.pory"
-	end
+
 # 278 "data/maps/Route120/scripts.pory"
-
+Route120_EventScript_Colin::
 # 279 "data/maps/Route120/scripts.pory"
-Route120_EventScript_RegisterRobert::
+	trainerbattle_single TRAINER_COLIN, Route120_Text_ColinIntro, Route120_Text_ColinDefeat
 # 280 "data/maps/Route120/scripts.pory"
-	special PlayerFaceTrainerAfterBattle
+	msgbox Route120_Text_ColinPostBattle, MSGBOX_AUTOCLOSE
 # 281 "data/maps/Route120/scripts.pory"
-	waitmovement 0
+	end
 # 282 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_RobertRegister, MSGBOX_DEFAULT
+
 # 283 "data/maps/Route120/scripts.pory"
-	register_matchcall TRAINER_ROBERT_1
+Route120_EventScript_Robert::
 # 284 "data/maps/Route120/scripts.pory"
-	release
+	trainerbattle_single TRAINER_ROBERT_1, Route120_Text_RobertIntro, Route120_Text_RobertDefeat, Route120_EventScript_RegisterRobert
 # 285 "data/maps/Route120/scripts.pory"
-	end
-# 286 "data/maps/Route120/scripts.pory"
-
-# 287 "data/maps/Route120/scripts.pory"
-Route120_EventScript_RematchRobert::
-# 288 "data/maps/Route120/scripts.pory"
-	trainerbattle_rematch TRAINER_ROBERT_1, Route120_Text_RobertRematchIntro, Route120_Text_RobertRematchDefeat
-# 289 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_RobertPostRematch, MSGBOX_AUTOCLOSE
-# 290 "data/maps/Route120/scripts.pory"
-	end
-# 291 "data/maps/Route120/scripts.pory"
-
-# 292 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Lorenzo::
-# 293 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_LORENZO, Route120_Text_LorenzoIntro, Route120_Text_LorenzoDefeat
-# 294 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_LorenzoPostBattle, MSGBOX_AUTOCLOSE
-# 295 "data/maps/Route120/scripts.pory"
-	end
-# 296 "data/maps/Route120/scripts.pory"
-
-# 297 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Jenna::
-# 298 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_JENNA, Route120_Text_JennaIntro, Route120_Text_JennaDefeat
-# 299 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_JennaPostBattle, MSGBOX_AUTOCLOSE
-# 300 "data/maps/Route120/scripts.pory"
-	end
-# 301 "data/maps/Route120/scripts.pory"
-
-# 302 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Jeffrey::
-# 303 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_JEFFREY_1, Route120_Text_JeffreyIntro, Route120_Text_JeffreyDefeat, Route120_EventScript_RegisterJeffrey
-# 304 "data/maps/Route120/scripts.pory"
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-# 305 "data/maps/Route120/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, Route120_EventScript_RematchJeffrey
-# 306 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_JeffreyPostBattle, MSGBOX_DEFAULT
-# 307 "data/maps/Route120/scripts.pory"
+# 286 "data/maps/Route120/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, Route120_EventScript_RematchRobert
+# 287 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_RobertPostBattle, MSGBOX_DEFAULT
+# 288 "data/maps/Route120/scripts.pory"
 	release
-# 308 "data/maps/Route120/scripts.pory"
+# 289 "data/maps/Route120/scripts.pory"
 	end
-# 309 "data/maps/Route120/scripts.pory"
+# 290 "data/maps/Route120/scripts.pory"
 
-# 310 "data/maps/Route120/scripts.pory"
-Route120_EventScript_RegisterJeffrey::
-# 311 "data/maps/Route120/scripts.pory"
+# 291 "data/maps/Route120/scripts.pory"
+Route120_EventScript_RegisterRobert::
+# 292 "data/maps/Route120/scripts.pory"
 	special PlayerFaceTrainerAfterBattle
-# 312 "data/maps/Route120/scripts.pory"
+# 293 "data/maps/Route120/scripts.pory"
 	waitmovement 0
-# 313 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_JeffreyRegister, MSGBOX_DEFAULT
-# 314 "data/maps/Route120/scripts.pory"
-	register_matchcall TRAINER_JEFFREY_1
-# 315 "data/maps/Route120/scripts.pory"
+# 294 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_RobertRegister, MSGBOX_DEFAULT
+# 295 "data/maps/Route120/scripts.pory"
+	register_matchcall TRAINER_ROBERT_1
+# 296 "data/maps/Route120/scripts.pory"
 	release
+# 297 "data/maps/Route120/scripts.pory"
+	end
+# 298 "data/maps/Route120/scripts.pory"
+
+# 299 "data/maps/Route120/scripts.pory"
+Route120_EventScript_RematchRobert::
+# 300 "data/maps/Route120/scripts.pory"
+	trainerbattle_rematch TRAINER_ROBERT_1, Route120_Text_RobertRematchIntro, Route120_Text_RobertRematchDefeat
+# 301 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_RobertPostRematch, MSGBOX_AUTOCLOSE
+# 302 "data/maps/Route120/scripts.pory"
+	end
+# 303 "data/maps/Route120/scripts.pory"
+
+# 304 "data/maps/Route120/scripts.pory"
+Route120_EventScript_Lorenzo::
+# 305 "data/maps/Route120/scripts.pory"
+	trainerbattle_single TRAINER_LORENZO, Route120_Text_LorenzoIntro, Route120_Text_LorenzoDefeat
+# 306 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_LorenzoPostBattle, MSGBOX_AUTOCLOSE
+# 307 "data/maps/Route120/scripts.pory"
+	end
+# 308 "data/maps/Route120/scripts.pory"
+
+# 309 "data/maps/Route120/scripts.pory"
+Route120_EventScript_Jenna::
+# 310 "data/maps/Route120/scripts.pory"
+	trainerbattle_single TRAINER_JENNA, Route120_Text_JennaIntro, Route120_Text_JennaDefeat
+# 311 "data/maps/Route120/scripts.pory"
+	msgbox Route120_Text_JennaPostBattle, MSGBOX_AUTOCLOSE
+# 312 "data/maps/Route120/scripts.pory"
+	end
+# 313 "data/maps/Route120/scripts.pory"
+
+# 314 "data/maps/Route120/scripts.pory"
+Route120_EventScript_Jeffrey::
+# 315 "data/maps/Route120/scripts.pory"
+	trainerbattle_single TRAINER_JEFFREY_1, Route120_Text_JeffreyIntro, Route120_Text_JeffreyDefeat, Route120_EventScript_RegisterJeffrey
 # 316 "data/maps/Route120/scripts.pory"
-	end
+	specialvar VAR_RESULT, ShouldTryRematchBattle
 # 317 "data/maps/Route120/scripts.pory"
-
+	goto_if_eq VAR_RESULT, TRUE, Route120_EventScript_RematchJeffrey
 # 318 "data/maps/Route120/scripts.pory"
-Route120_EventScript_RematchJeffrey::
+	msgbox Route120_Text_JeffreyPostBattle, MSGBOX_DEFAULT
 # 319 "data/maps/Route120/scripts.pory"
-	trainerbattle_rematch TRAINER_JEFFREY_1, Route120_Text_JeffreyRematchIntro, Route120_Text_JeffreyRematchDefeat
+	release
 # 320 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_JeffreyPostRematch, MSGBOX_AUTOCLOSE
+	end
 # 321 "data/maps/Route120/scripts.pory"
-	end
+
 # 322 "data/maps/Route120/scripts.pory"
-
+Route120_EventScript_RegisterJeffrey::
 # 323 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Jennifer::
+	special PlayerFaceTrainerAfterBattle
 # 324 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_JENNIFER, Route120_Text_JenniferIntro, Route120_Text_JenniferDefeat
+	waitmovement 0
 # 325 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_JenniferPostBattle, MSGBOX_AUTOCLOSE
+	msgbox Route120_Text_JeffreyRegister, MSGBOX_DEFAULT
 # 326 "data/maps/Route120/scripts.pory"
-	end
+	register_matchcall TRAINER_JEFFREY_1
 # 327 "data/maps/Route120/scripts.pory"
-
+	release
 # 328 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Chip::
+	end
 # 329 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_CHIP, Route120_Text_ChipIntro, Route120_Text_ChipDefeat
+
 # 330 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_ChipPostBattle, MSGBOX_AUTOCLOSE
+Route120_EventScript_RematchJeffrey::
 # 331 "data/maps/Route120/scripts.pory"
-	end
+	trainerbattle_rematch TRAINER_JEFFREY_1, Route120_Text_JeffreyRematchIntro, Route120_Text_JeffreyRematchDefeat
 # 332 "data/maps/Route120/scripts.pory"
-
+	msgbox Route120_Text_JeffreyPostRematch, MSGBOX_AUTOCLOSE
 # 333 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Clarissa::
+	end
 # 334 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_CLARISSA, Route120_Text_ClarissaIntro, Route120_Text_ClarissaDefeat
+
 # 335 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_ClarissaPostBattle, MSGBOX_AUTOCLOSE
+Route120_EventScript_Jennifer::
 # 336 "data/maps/Route120/scripts.pory"
-	end
+	trainerbattle_single TRAINER_JENNIFER, Route120_Text_JenniferIntro, Route120_Text_JenniferDefeat
 # 337 "data/maps/Route120/scripts.pory"
-
+	msgbox Route120_Text_JenniferPostBattle, MSGBOX_AUTOCLOSE
 # 338 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Angelica::
+	end
 # 339 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_ANGELICA, Route120_Text_AngelicaIntro, Route120_Text_AngelicaDefeat
+
 # 340 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_AngelicaPostBattle, MSGBOX_AUTOCLOSE
+Route120_EventScript_Chip::
 # 341 "data/maps/Route120/scripts.pory"
-	end
+	trainerbattle_single TRAINER_CHIP, Route120_Text_ChipIntro, Route120_Text_ChipDefeat
 # 342 "data/maps/Route120/scripts.pory"
-
+	msgbox Route120_Text_ChipPostBattle, MSGBOX_AUTOCLOSE
 # 343 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Keigo::
+	end
 # 344 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_KEIGO, Route120_Text_KeigoIntro, Route120_Text_KeigoDefeat
+
 # 345 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_KeigoPostBattle, MSGBOX_AUTOCLOSE
+Route120_EventScript_Clarissa::
 # 346 "data/maps/Route120/scripts.pory"
-	end
+	trainerbattle_single TRAINER_CLARISSA, Route120_Text_ClarissaIntro, Route120_Text_ClarissaDefeat
 # 347 "data/maps/Route120/scripts.pory"
-
+	msgbox Route120_Text_ClarissaPostBattle, MSGBOX_AUTOCLOSE
 # 348 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Riley::
+	end
 # 349 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_RILEY, Route120_Text_RileyIntro, Route120_Text_RileyDefeat
+
 # 350 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_RileyPostBattle, MSGBOX_AUTOCLOSE
+Route120_EventScript_Angelica::
 # 351 "data/maps/Route120/scripts.pory"
-	end
+	trainerbattle_single TRAINER_ANGELICA, Route120_Text_AngelicaIntro, Route120_Text_AngelicaDefeat
 # 352 "data/maps/Route120/scripts.pory"
-
+	msgbox Route120_Text_AngelicaPostBattle, MSGBOX_AUTOCLOSE
 # 353 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Leonel::
+	end
 # 354 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_LEONEL, Route120_Text_LeonelIntro, Route120_Text_LeonelDefeat
+
 # 355 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_LeonelPostBattle, MSGBOX_AUTOCLOSE
+Route120_EventScript_Keigo::
 # 356 "data/maps/Route120/scripts.pory"
-	end
+	trainerbattle_single TRAINER_KEIGO, Route120_Text_KeigoIntro, Route120_Text_KeigoDefeat
 # 357 "data/maps/Route120/scripts.pory"
-
+	msgbox Route120_Text_KeigoPostBattle, MSGBOX_AUTOCLOSE
 # 358 "data/maps/Route120/scripts.pory"
-Route120_EventScript_Callie::
-# 359 "data/maps/Route120/scripts.pory"
-	trainerbattle_single TRAINER_CALLIE, Route120_Text_CallieIntro, Route120_Text_CallieDefeat
-# 360 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_CalliePostBattle, MSGBOX_AUTOCLOSE
-# 361 "data/maps/Route120/scripts.pory"
 	end
+# 359 "data/maps/Route120/scripts.pory"
+
+# 360 "data/maps/Route120/scripts.pory"
+Route120_EventScript_Riley::
+# 361 "data/maps/Route120/scripts.pory"
+	trainerbattle_single TRAINER_RILEY, Route120_Text_RileyIntro, Route120_Text_RileyDefeat
 # 362 "data/maps/Route120/scripts.pory"
-
+	msgbox Route120_Text_RileyPostBattle, MSGBOX_AUTOCLOSE
 # 363 "data/maps/Route120/scripts.pory"
-Route120_Text_StevenGreeting:
+	end
 # 364 "data/maps/Route120/scripts.pory"
-	.string "STELLA: Hm? {PLAYER}{KUN}, hi.\n"
+
 # 365 "data/maps/Route120/scripts.pory"
-	.string "It's been a while.\p"
+Route120_EventScript_Leonel::
 # 366 "data/maps/Route120/scripts.pory"
-	.string "There's something here that you can't\n"
+	trainerbattle_single TRAINER_LEONEL, Route120_Text_LeonelIntro, Route120_Text_LeonelDefeat
 # 367 "data/maps/Route120/scripts.pory"
-	.string "see, right?\p"
+	msgbox Route120_Text_LeonelPostBattle, MSGBOX_AUTOCLOSE
 # 368 "data/maps/Route120/scripts.pory"
-	.string "Now, if I were to use this device on\n"
+	end
 # 369 "data/maps/Route120/scripts.pory"
-	.string "the invisible obstacle…\p"
+
 # 370 "data/maps/Route120/scripts.pory"
-	.string "No, no. Rather than describing it,\n"
+Route120_EventScript_Callie::
 # 371 "data/maps/Route120/scripts.pory"
-	.string "I should just show you.\l"
+	trainerbattle_single TRAINER_CALLIE, Route120_Text_CallieIntro, Route120_Text_CallieDefeat
 # 372 "data/maps/Route120/scripts.pory"
-	.string "That would be more fun.\p"
+	msgbox Route120_Text_CalliePostBattle, MSGBOX_AUTOCLOSE
 # 373 "data/maps/Route120/scripts.pory"
-	.string "{PLAYER}{KUN}, are your POKéMON ready for\n"
+	end
 # 374 "data/maps/Route120/scripts.pory"
-	.string "battle?$"
+
 # 375 "data/maps/Route120/scripts.pory"
-
+Route120_Text_StevenGreeting:
 # 376 "data/maps/Route120/scripts.pory"
-Route120_Text_StevenIllWaitHere:
+	.string "STELLA: Hm? {PLAYER}{KUN}, hi.\n"
 # 377 "data/maps/Route120/scripts.pory"
-	.string "STELLA: No?\p"
+	.string "It's been a while.\p"
 # 378 "data/maps/Route120/scripts.pory"
-	.string "I'll wait here, so you can get ready.$"
+	.string "There's something here that you can't\n"
 # 379 "data/maps/Route120/scripts.pory"
-
+	.string "see, right?\p"
 # 380 "data/maps/Route120/scripts.pory"
-Route120_Text_StevenReadyForBattle:
+	.string "Now, if I were to use this device on\n"
 # 381 "data/maps/Route120/scripts.pory"
-	.string "STELLA: {PLAYER}{KUN}, are your POKéMON\n"
+	.string "the invisible obstacle…\p"
 # 382 "data/maps/Route120/scripts.pory"
-	.string "ready for battle?$"
+	.string "No, no. Rather than describing it,\n"
 # 383 "data/maps/Route120/scripts.pory"
-
+	.string "I should just show you.\l"
 # 384 "data/maps/Route120/scripts.pory"
-Route120_Text_StevenShowMeYourPower:
+	.string "That would be more fun.\p"
 # 385 "data/maps/Route120/scripts.pory"
-	.string "STELLA: {PLAYER}{KUN}, show me your true\n"
+	.string "{PLAYER}{KUN}, are your POKéMON ready for\n"
 # 386 "data/maps/Route120/scripts.pory"
-	.string "power as a TRAINER!$"
+	.string "battle?$"
 # 387 "data/maps/Route120/scripts.pory"
 
 # 388 "data/maps/Route120/scripts.pory"
-Route120_Text_StevenUsedDevonScope:
+Route120_Text_StevenIllWaitHere:
 # 389 "data/maps/Route120/scripts.pory"
-	.string "STEVEN used the DEVON SCOPE.\p"
+	.string "STELLA: No?\p"
 # 390 "data/maps/Route120/scripts.pory"
-	.string "An invisible POKéMON became completely\n"
+	.string "I'll wait here, so you can get ready.$"
 # 391 "data/maps/Route120/scripts.pory"
-	.string "visible!\p"
+
 # 392 "data/maps/Route120/scripts.pory"
-	.string "The startled POKéMON attacked!$"
+Route120_Text_StevenReadyForBattle:
 # 393 "data/maps/Route120/scripts.pory"
-
+	.string "STELLA: {PLAYER}{KUN}, are your POKéMON\n"
 # 394 "data/maps/Route120/scripts.pory"
-Route120_Text_StevenGiveDevonScope:
+	.string "ready for battle?$"
 # 395 "data/maps/Route120/scripts.pory"
-	.string "STELLA: I see…\n"
+
 # 396 "data/maps/Route120/scripts.pory"
-	.string "Your battle style is intriguing.\p"
+Route120_Text_StevenShowMeYourPower:
 # 397 "data/maps/Route120/scripts.pory"
-	.string "Your POKéMON have obviously grown\n"
+	.string "STELLA: {PLAYER}{KUN}, show me your true\n"
 # 398 "data/maps/Route120/scripts.pory"
-	.string "since I first met you in DEWFORD.\p"
+	.string "power as a TRAINER!$"
 # 399 "data/maps/Route120/scripts.pory"
-	.string "I'd like you to have this\n"
+
 # 400 "data/maps/Route120/scripts.pory"
-	.string "DEVON SCOPE.\p"
+Route120_Text_StevenUsedDevonScope:
 # 401 "data/maps/Route120/scripts.pory"
-	.string "Who knows, there may be other\n"
+	.string "STEVEN used the DEVON SCOPE.\p"
 # 402 "data/maps/Route120/scripts.pory"
-	.string "concealed POKéMON.$"
-# 403 "data/maps/Route120/scripts.pory"
-
-# 404 "data/maps/Route120/scripts.pory"
-Route120_Text_StevenGoodbye:
-# 405 "data/maps/Route120/scripts.pory"
-	.string "STELLA: {PLAYER}{KUN}.\p"
-# 406 "data/maps/Route120/scripts.pory"
-	.string "I enjoy seeing POKéMON and TRAINERS\n"
-# 407 "data/maps/Route120/scripts.pory"
-	.string "who strive together.\p"
-# 408 "data/maps/Route120/scripts.pory"
-	.string "I think you're doing great.\p"
-# 409 "data/maps/Route120/scripts.pory"
-	.string "Well, let's meet again somewhere.$"
-# 410 "data/maps/Route120/scripts.pory"
-
-# 411 "data/maps/Route120/scripts.pory"
-Kecleon_Text_SomethingUnseeable:
-# 412 "data/maps/Route120/scripts.pory"
-	.string "Something unseeable is in the way.$"
-# 413 "data/maps/Route120/scripts.pory"
-
-# 414 "data/maps/Route120/scripts.pory"
-Kecleon_Text_WantToUseDevonScope:
-# 415 "data/maps/Route120/scripts.pory"
-	.string "Something unseeable is in the way.\p"
-# 416 "data/maps/Route120/scripts.pory"
-	.string "Want to use the DEVON SCOPE?$"
-# 417 "data/maps/Route120/scripts.pory"
-
-# 418 "data/maps/Route120/scripts.pory"
-Kecleon_Text_UseDevonScopeMonAttacked:
-# 419 "data/maps/Route120/scripts.pory"
-	.string "{PLAYER} used the DEVON SCOPE.\p"
-# 420 "data/maps/Route120/scripts.pory"
 	.string "An invisible POKéMON became completely\n"
-# 421 "data/maps/Route120/scripts.pory"
+# 403 "data/maps/Route120/scripts.pory"
 	.string "visible!\p"
-# 422 "data/maps/Route120/scripts.pory"
+# 404 "data/maps/Route120/scripts.pory"
 	.string "The startled POKéMON attacked!$"
+# 405 "data/maps/Route120/scripts.pory"
+
+# 406 "data/maps/Route120/scripts.pory"
+Route120_Text_StevenGiveDevonScope:
+# 407 "data/maps/Route120/scripts.pory"
+	.string "STELLA: I see…\n"
+# 408 "data/maps/Route120/scripts.pory"
+	.string "Your battle style is intriguing.\p"
+# 409 "data/maps/Route120/scripts.pory"
+	.string "Your POKéMON have obviously grown\n"
+# 410 "data/maps/Route120/scripts.pory"
+	.string "since I first met you in DEWFORD.\p"
+# 411 "data/maps/Route120/scripts.pory"
+	.string "I'd like you to have this\n"
+# 412 "data/maps/Route120/scripts.pory"
+	.string "DEVON SCOPE.\p"
+# 413 "data/maps/Route120/scripts.pory"
+	.string "Who knows, there may be other\n"
+# 414 "data/maps/Route120/scripts.pory"
+	.string "concealed POKéMON.$"
+# 415 "data/maps/Route120/scripts.pory"
+
+# 416 "data/maps/Route120/scripts.pory"
+Route120_Text_StevenGoodbye:
+# 417 "data/maps/Route120/scripts.pory"
+	.string "STELLA: {PLAYER}{KUN}.\p"
+# 418 "data/maps/Route120/scripts.pory"
+	.string "I enjoy seeing POKéMON and TRAINERS\n"
+# 419 "data/maps/Route120/scripts.pory"
+	.string "who strive together.\p"
+# 420 "data/maps/Route120/scripts.pory"
+	.string "I think you're doing great.\p"
+# 421 "data/maps/Route120/scripts.pory"
+	.string "Well, let's meet again somewhere.$"
+# 422 "data/maps/Route120/scripts.pory"
+
 # 423 "data/maps/Route120/scripts.pory"
-
+Kecleon_Text_SomethingUnseeable:
 # 424 "data/maps/Route120/scripts.pory"
-Route120_Text_RouteSignFortree:
+	.string "Something unseeable is in the way.$"
 # 425 "data/maps/Route120/scripts.pory"
-	.string "ROUTE 120\n"
-# 426 "data/maps/Route120/scripts.pory"
-	.string "{LEFT_ARROW} FORTREE CITY$"
-# 427 "data/maps/Route120/scripts.pory"
 
+# 426 "data/maps/Route120/scripts.pory"
+Kecleon_Text_WantToUseDevonScope:
+# 427 "data/maps/Route120/scripts.pory"
+	.string "Something unseeable is in the way.\p"
 # 428 "data/maps/Route120/scripts.pory"
-Route120_Text_RouteSign121:
+	.string "Want to use the DEVON SCOPE?$"
 # 429 "data/maps/Route120/scripts.pory"
-	.string "{RIGHT_ARROW} ROUTE 121\n"
+
 # 430 "data/maps/Route120/scripts.pory"
+Kecleon_Text_UseDevonScopeMonAttacked:
+# 431 "data/maps/Route120/scripts.pory"
+	.string "{PLAYER} used the DEVON SCOPE.\p"
+# 432 "data/maps/Route120/scripts.pory"
+	.string "An invisible POKéMON became completely\n"
+# 433 "data/maps/Route120/scripts.pory"
+	.string "visible!\p"
+# 434 "data/maps/Route120/scripts.pory"
+	.string "The startled POKéMON attacked!$"
+# 435 "data/maps/Route120/scripts.pory"
+
+# 436 "data/maps/Route120/scripts.pory"
+Route120_Text_RouteSignFortree:
+# 437 "data/maps/Route120/scripts.pory"
+	.string "ROUTE 120\n"
+# 438 "data/maps/Route120/scripts.pory"
+	.string "{LEFT_ARROW} FORTREE CITY$"
+# 439 "data/maps/Route120/scripts.pory"
+
+# 440 "data/maps/Route120/scripts.pory"
+Route120_Text_RouteSign121:
+# 441 "data/maps/Route120/scripts.pory"
+	.string "{RIGHT_ARROW} ROUTE 121\n"
+# 442 "data/maps/Route120/scripts.pory"
 	.string "{LEFT_ARROW} ROUTE 120$"

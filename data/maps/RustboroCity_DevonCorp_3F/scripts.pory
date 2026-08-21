@@ -49,16 +49,22 @@ RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
 	waitmovement 0
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneIHaveFavor, MSGBOX_DEFAULT
 	giveitem ITEM_LETTER
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis, MSGBOX_DEFAULT
+	removefieldmugshot
 	playfanfare MUS_OBTAIN_ITEM
 	message RustboroCity_DevonCorp_3F_Text_ReceivedDexnav
 	waitfanfare
 	setflag DN_FLAG_DEXNAV_GET
 	setflag FLAG_HIDE_RUSTBORO_CITY_POKEMON_SCHOOL_SCOTT
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainDexnavRestUp, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	call Common_EventScript_OutOfCenterPartyHeal
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneGoWithCautionAndCare, MSGBOX_DEFAULT
+	removefieldmugshot
 	setflag FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND
 	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND
 	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDA
@@ -153,7 +159,9 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	faceplayer
 	goto_if_set FLAG_RECEIVED_EXP_SHARE, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor
 	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveShinyStone
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox RustboroCity_DevonCorp_3F_Text_CountingOnYou, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -161,11 +169,15 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	end
 
 RustboroCity_DevonCorp_3F_EventScript_GiveShinyStone::
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter, MSGBOX_DEFAULT
+	removefieldmugshot
 	giveitem ITEM_SHINY_STONE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_EXP_SHARE
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox RustboroCity_DevonCorp_3F_Text_ExplainShinyStone, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -173,7 +185,9 @@ RustboroCity_DevonCorp_3F_EventScript_GiveShinyStone::
 	end
 
 RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor::
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0

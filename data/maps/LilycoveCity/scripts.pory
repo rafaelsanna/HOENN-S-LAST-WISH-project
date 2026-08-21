@@ -240,7 +240,9 @@ LilycoveCity_EventScript_May::
 	call_if_set FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_MayAskToBattleAgain
 	call_if_unset FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_MayAskToBattle
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineMayBattle
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_MayWontBeBeaten, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, LilycoveCity_EventScript_BattleMayTreecko
 	case 1, LilycoveCity_EventScript_BattleMayTorchic
@@ -248,17 +250,25 @@ LilycoveCity_EventScript_May::
 	end
 
 LilycoveCity_EventScript_MayAskToBattleAgain::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_MayBattleMe, MSGBOX_YESNO
+	removefieldmugshot
 	return
 
 LilycoveCity_EventScript_MayAskToBattle::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_MayShoppingLetsBattle, MSGBOX_YESNO
+	removefieldmugshot
 	return
 
 LilycoveCity_EventScript_DeclineMayBattle::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_MayNotRaisingPokemon, MSGBOX_YESNO
+	removefieldmugshot
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineMayBattle
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_MayWontBeBeaten, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, LilycoveCity_EventScript_BattleMayTreecko
 	case 1, LilycoveCity_EventScript_BattleMayTorchic
@@ -270,7 +280,9 @@ LilycoveCity_EventScript_Brendan::
 	call_if_set FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_BrendanAskToBattleAgain
 	call_if_unset FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_BrendanAskToBattle
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineBrendanBattle
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_BrendanWontBeBeaten, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, LilycoveCity_EventScript_BattleBrendanTreecko
 	case 1, LilycoveCity_EventScript_BattleBrendanTorchic
@@ -278,17 +290,25 @@ LilycoveCity_EventScript_Brendan::
 	end
 
 LilycoveCity_EventScript_BrendanAskToBattleAgain::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_BrendanBattleMe, MSGBOX_YESNO
+	removefieldmugshot
 	return
 
 LilycoveCity_EventScript_BrendanAskToBattle::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_BrendanShoppingLetsBattle, MSGBOX_YESNO
+	removefieldmugshot
 	return
 
 LilycoveCity_EventScript_DeclineBrendanBattle::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_BrendanNoConfidence, MSGBOX_YESNO
+	removefieldmugshot
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineBrendanBattle
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_BrendanWontBeBeaten, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, LilycoveCity_EventScript_BattleBrendanTreecko
 	case 1, LilycoveCity_EventScript_BattleBrendanTorchic
@@ -326,7 +346,9 @@ LilycoveCity_EventScript_BattleBrendanMudkip::
 	end
 
 LilycoveCity_EventScript_DefeatedMay::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_MayGoingBackToLittleroot, MSGBOX_DEFAULT
+	removefieldmugshot
 	setvar VAR_RESULT, FALSE
 	call_if_set FLAG_BADGE06_GET, LilycoveCity_EventScript_CheckFinalBadge
 	call_if_eq VAR_RESULT, FALSE, LilycoveCity_EventScript_MayCollectBadges
@@ -358,7 +380,9 @@ LilycoveCity_EventScript_MayBattleFrontier::
 	return
 
 LilycoveCity_EventScript_DefeatedBrendan::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_BrendanGoingBackToLittleroot, MSGBOX_DEFAULT
+	removefieldmugshot
 	setvar VAR_RESULT, FALSE
 	call_if_set FLAG_BADGE06_GET, LilycoveCity_EventScript_CheckFinalBadge
 	call_if_eq VAR_RESULT, FALSE, LilycoveCity_EventScript_BrendanCollectBadges

@@ -7,7 +7,9 @@ GraniteCave_1F_EventScript_Aurora::
 	faceplayer
 	goto_if_set FLAG_RECEIVED_HM_FLASH, GraniteCave_1F_EventScript_ReceivedFlash
 	goto_if_set FLAG_DEFEATED_GRANITE_CAVE_AURORA, GraniteCave_1F_EventScript_GiveFlash
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
 	msgbox GraniteCave_1F_Text_WantToBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	trainerbattle_single TRAINER_AURORA, GraniteCave_1F_Text_Intro, GraniteCave_1F_Text_Defeat, GraniteCave_1F_EventScript_BattleEnd
 	end
 

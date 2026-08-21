@@ -1388,7 +1388,9 @@ SootopolisCity_EventScript_MaxieArchieLeave::
 SootopolisCity_EventScript_MrStoneEvil::
 	lockall
 	faceplayer
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
 	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
@@ -1396,11 +1398,15 @@ SootopolisCity_EventScript_MrStoneEvil::
 	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
 	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
 	waitmovement 0
+	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	msgbox SootopolisCity_Text_ArchieShockedAtStone, MSGBOX_DEFAULT
 	closemessage
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MrStoneMoneyRulesWorld, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
 	waitmovement 0
@@ -1413,7 +1419,9 @@ SootopolisCity_EventScript_MrStoneEvil::
 	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraFollowDevonBoat
 	waitmovement 0
 	special RemoveCameraObject
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	fadescreenspeed FADE_TO_WHITE, 4
 	special DoMrStoneEvilScene

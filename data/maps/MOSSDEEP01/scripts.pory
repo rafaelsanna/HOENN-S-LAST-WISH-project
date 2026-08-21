@@ -269,7 +269,9 @@ MOSSDEEP01_EventScript_Celebi::
 	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
 
 	call_if_unset FLAG_TALKED_TO_CELEBI, MOSSDEEP01_EventScript_CelebiIntroduction
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	playse SE_M_HYPER_BEAM
 	
@@ -298,7 +300,9 @@ MOSSDEEP01_EventScript_Celebi::
 
 MOSSDEEP01_EventScript_CelebiNeedGears::
 	showmonpic SPECIES_ARAQUANID, 10, 3
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	removefieldmugshot
 	hidemonpic
 	setflag FLAG_TALKED_TO_CELEBI
 	release
@@ -306,13 +310,17 @@ MOSSDEEP01_EventScript_CelebiNeedGears::
 
 MOSSDEEP01_EventScript_CelebiIntroduction::
 	showmonpic SPECIES_ARAQUANID, 10, 3
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+	removefieldmugshot
 	waitmessage
 	hidemonpic
 	return
 
 MOSSDEEP01_EventScript_CelebiAlreadyRescued::
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_CelebiThanks, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
@@ -462,7 +470,9 @@ MOSSDEEP01_EventScript_Wally::
 	goto_if_unset FLAG_WALLY_ATTACKED_BY_MIGHTYENA, MOSSDEEP01_EventScript_WallyNotReady
 	
 	// First conversation (after attack)
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_WallyIntro, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	setflag FLAG_WALLY_INTRO_DONE
 	
@@ -478,7 +488,9 @@ MOSSDEEP01_EventScript_Wally::
 	warp MAP_MOSSDEEP01, 47, 45
 	waitstate
 
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_WallyWarped, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
@@ -486,17 +498,23 @@ MOSSDEEP01_EventScript_WallyNotReady::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_WallyNotReady, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MOSSDEEP01_EventScript_WallyAfterIntro::
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MOSSDEEP01_EventScript_WallyAfterCelebi::
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
@@ -848,7 +866,9 @@ MOSSDEEP01_EventScript_WailordJumpOverAfter2::
 	clearflag DN_FLAG_DETECTOR_MODE
 	lock
     faceplayer
+    createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
     msgbox MOSSDEEP01_Text_AfterTimeGears, MSGBOX_DEFAULT
+    removefieldmugshot
     release
 	end
 
@@ -905,17 +925,23 @@ MOSSDEEP01_EventScript_Jirachi::
 	goto MOSSDEEP01_EventScript_QuestComplete
 
 MOSSDEEP01_JirachiNeedCelebi::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_JirachiNeedCelebi, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MOSSDEEP01_JirachiNeedItems::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_JirachiNeedItems, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MOSSDEEP01_JirachiAlreadyCompleted::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_JirachiCompleted, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
@@ -929,7 +955,9 @@ MOSSDEEP01_JirachiSleeping::
 // ====================================================================
 
 MOSSDEEP01_EventScript_QuestComplete::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_ThankYou, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	setflag FLAG_MOSSDEEP_QUEST_COMPLETED
 	msgbox MOSSDEEP01_Text_CometAppears, MSGBOX_DEFAULT
@@ -968,7 +996,9 @@ MOSSDEEP01_EventScript_QuestComplete::
 	delay 20
 	removeobject LOCALID_MILLENNIUM_COMET
 	setflag FLAG_HIDE_MOSSDEEP_COMET
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_TimeToWakeUp, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	delay 30
 	playse SE_M_TELEPORT

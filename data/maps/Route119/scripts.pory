@@ -99,7 +99,9 @@ Route119_EventScript_DefeatedMay::
 	end
 
 Route119_EventScript_BattleBrendan::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route119_Text_BrendanIntro, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, Route119_EventScript_BattleBrendanTreecko
 	case 1, Route119_EventScript_BattleBrendanTorchic
@@ -122,9 +124,13 @@ Route119_EventScript_BattleBrendanMudkip::
 	end
 
 Route119_EventScript_DefeatedBrendan::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route119_Text_BrendanIllGiveYouThis, MSGBOX_DEFAULT
+	removefieldmugshot
 	call Route119_EventScript_GiveFlyHM
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route119_Text_BrendanExplainFly, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto Route119_EventScript_RivalExitScottArrive
 	end
 

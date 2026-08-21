@@ -141,9 +141,13 @@ MauvilleCity_EventScript_Wally::
 	goto_if_set FLAG_DECLINED_WALLY_BATTLE_MAUVILLE, MauvilleCity_EventScript_WallyRequestBattleAgain
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WallyWantToChallengeGym, MSGBOX_DEFAULT
+	removefieldmugshot
 	msgbox MauvilleCity_Text_UncleYourePushingIt, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WallyWeCanBeatAnyone, MSGBOX_DEFAULT
+	removefieldmugshot
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_FacePlayer
 	waitmovement 0
 	playse SE_PIN
@@ -151,7 +155,9 @@ MauvilleCity_EventScript_Wally::
 	waitmovement 0
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_Delay48
 	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WallyWillYouBattleMe, MSGBOX_YESNO
+	removefieldmugshot
 	goto MauvilleCity_EventScript_BattleWallyPrompt
 	end
 
@@ -250,14 +256,20 @@ MauvilleCity_EventScript_ScottExitEast::
 	return
 
 MauvilleCity_EventScript_BattleWally::
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WallyHereICome, MSGBOX_DEFAULT
+	removefieldmugshot
 	trainerbattle_no_intro TRAINER_WALLY_MAUVILLE, MauvilleCity_Text_WallyDefeat
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WallyIllGoBackToVerdanturf, MSGBOX_DEFAULT
+	removefieldmugshot
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_FacePlayer
 	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_ThankYouNotEnoughToBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox MauvilleCity_Text_UncleNoNeedToBeDown, MSGBOX_DEFAULT
@@ -265,14 +277,18 @@ MauvilleCity_EventScript_BattleWally::
 
 MauvilleCity_EventScript_DeclineWallyBattle::
 	setflag FLAG_DECLINED_WALLY_BATTLE_MAUVILLE
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WallyMyUncleWontKnowImStrong, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MauvilleCity_EventScript_WallyRequestBattleAgain::
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_FacePlayer
 	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WallyPleaseBattleMe, MSGBOX_YESNO
+	removefieldmugshot
 	goto MauvilleCity_EventScript_BattleWallyPrompt
 	end
 
@@ -485,30 +501,42 @@ MauvilleCity_EventScript_Wattson::
 	goto_if_set FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON, MauvilleCity_EventScript_ReceivedThunderbolt
 	goto_if_eq VAR_NEW_MAUVILLE_STATE, 2, MauvilleCity_EventScript_CompletedNewMauville
 	goto_if_set FLAG_GOT_BASEMENT_KEY_FROM_WATTSON, MauvilleCity_EventScript_BegunNewMauville
+	createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WattsonNeedFavorTakeKey, MSGBOX_DEFAULT
+	removefieldmugshot
 	giveitem ITEM_BASEMENT_KEY
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_GOT_BASEMENT_KEY_FROM_WATTSON
+	createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WattsonWontBeChallenge, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MauvilleCity_EventScript_BegunNewMauville::
+	createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WattsonWontBeChallenge, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MauvilleCity_EventScript_CompletedNewMauville::
+	createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WattsonThanksTakeTM, MSGBOX_DEFAULT
+	removefieldmugshot
 	giveitem ITEM_TM_THUNDERBOLT
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON
+	createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WattsonYoungTakeCharge, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MauvilleCity_EventScript_ReceivedThunderbolt::
+	createfieldmugshot MUGSHOT_DEN, EMOTE_NORMAL
 	msgbox MauvilleCity_Text_WattsonYoungTakeCharge, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 

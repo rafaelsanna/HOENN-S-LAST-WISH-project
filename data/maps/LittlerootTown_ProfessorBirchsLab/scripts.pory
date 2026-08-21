@@ -209,12 +209,16 @@ LittlerootTown_ProfessorBirchsLab_EventScript_UpgradeToNationalDex::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_MayUpgradeComment::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayUpgradeSoCool, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanUpgradeComment::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanYouCanThankMe, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	return
 
@@ -579,18 +583,26 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AfterGivePokedex::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese, MSGBOX_DEFAULT
+	removefieldmugshot
 	giveitem ITEM_POKE_BALL, 25
 	call_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_MayNoRoomForPokeBalls
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CatchCutePokemonWithPokeBalls, MSGBOX_DEFAULT
+	removefieldmugshot
 	setvar VAR_RESULT, 0
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanGotPokedexTooTakeThese, MSGBOX_DEFAULT
+	removefieldmugshot
 	giveitem ITEM_POKE_BALL, 25
 	call_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanNoRoomForPokeBalls
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CatchCoolPokemonWithPokeBalls, MSGBOX_DEFAULT
+	removefieldmugshot
 	setvar VAR_RESULT, 1
 	return
 
@@ -639,11 +651,15 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Rival::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_MayWhereShouldIGoNext::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayWhereShouldIGoNext, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanWhereShouldIGoNext::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanWhereShouldIGoNext, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_RivalFuturePlans::
@@ -654,11 +670,15 @@ LittlerootTown_ProfessorBirchsLab_EventScript_RivalFuturePlans::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_MayWhatNextImStayingHere::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayWhatNextImStayingHere, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanPreferCollectingSlowly:
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanPreferCollectingSlowly, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_RivalHaveYouGoneToBattleFrontier::
@@ -669,11 +689,15 @@ LittlerootTown_ProfessorBirchsLab_EventScript_RivalHaveYouGoneToBattleFrontier::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_MayHaveYouGoneToBattleFrontier::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayHaveYouGoneToBattleFrontier, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanHaveYouGoneToBattleFrontier::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanHaveYouGoneToBattleFrontier, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_RivalTakeBreakFromFieldwork::
@@ -684,11 +708,15 @@ LittlerootTown_ProfessorBirchsLab_EventScript_RivalTakeBreakFromFieldwork::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_MayTakeBreakFromFieldwork::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayTakeBreakFromFieldwork, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanTakeBreakFromFieldwork::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanTakeBreakFromFieldwork, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_PC::
