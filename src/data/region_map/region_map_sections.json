@@ -881,7 +881,7 @@
     },
     {
       "id": "MAPSEC_POKEMON_MANSION",
-      "name": "POKéMON MANSION"
+      "name": "POK\u00e9MON MANSION"
     },
     {
       "id": "MAPSEC_KANTO_SAFARI_ZONE",
@@ -889,7 +889,7 @@
     },
     {
       "id": "MAPSEC_POKEMON_LEAGUE",
-      "name": "POKéMON LEAGUE"
+      "name": "POK\u00e9MON LEAGUE"
     },
     {
       "id": "MAPSEC_ROCK_TUNNEL",
@@ -901,7 +901,7 @@
     },
     {
       "id": "MAPSEC_POKEMON_TOWER",
-      "name": "POKéMON TOWER"
+      "name": "POK\u00e9MON TOWER"
     },
     {
       "id": "MAPSEC_CERULEAN_CAVE",
@@ -1301,7 +1301,11 @@
     },
     {
       "id": "MAPSEC_PHOENIX_TOWN",
-      "name": "PHOENIX TOWN"
+      "name": "PHOENIX TOWN",
+      "x": 10,
+      "y": 2,
+      "width": 1,
+      "height": 1
     }
   ]
 }

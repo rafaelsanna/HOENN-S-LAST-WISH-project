@@ -1264,3 +1264,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/FallarborTown_Farm/scripts.inc"
 
 	.include "data/maps/PhoenixTown/scripts.inc"
+
+	.include "data/maps/PHOENIXPOKEMART/scripts.inc"
+
+	.include "data/maps/PHOENIXPOKECENTER/scripts.inc"
