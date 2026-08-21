@@ -10,12 +10,29 @@
 #define MUGSHOT_TERRA     6
 #define MUGSHOT_ZENNO     7
 #define MUGSHOT_ZINNIA    8
-#define MUGSHOT_CALENDULA 9    
+#define MUGSHOT_CALENDULA 9
 #define MUGSHOT_LUKA      10
+#define MUGSHOT_DEN       11
+#define MUGSHOT_ALEJANDRO 12
+#define MUGSHOT_AMATERASU 13
+#define MUGSHOT_AURORA    14
+#define MUGSHOT_DAEMON    15
+#define MUGSHOT_IARA      16
+#define MUGSHOT_INAE      17
+#define MUGSHOT_LUNA      18
+#define MUGSHOT_MAGNUS    19
+#define MUGSHOT_MAR       20
+#define MUGSHOT_MRSTONE   21
+#define MUGSHOT_NETSU     22
+#define MUGSHOT_RIO       23
+#define MUGSHOT_ROB       24
+#define MUGSHOT_SOUL      25
+#define MUGSHOT_STARK     26
+#define MUGSHOT_STELLA    27
+#define MUGSHOT_TAKA      28
+#define MUGSHOT_TSUBAKI   29
 
-#define MUGSHOT_DEN      11
-
-#define MUGSHOT_COUNT 12
+#define MUGSHOT_COUNT 30
 
 #define EMOTE_NORMAL 0
 #define EMOTE_ALT    1

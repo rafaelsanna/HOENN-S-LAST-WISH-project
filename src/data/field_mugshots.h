@@ -47,6 +47,77 @@ static const u16 sFieldMugshotPal_LukaNormal[] = INCBIN_U16("graphics/field_mugs
 static const u32 sFieldMugshotGfx_DenNormal[] = INCBIN_U32("graphics/field_mugshots/den/normal.4bpp.lz");
 static const u16 sFieldMugshotPal_DenNormal[] = INCBIN_U16("graphics/field_mugshots/den/normal.gbapal");
 
+// Alejandro
+static const u32 sFieldMugshotGfx_AlejandroNormal[] = INCBIN_U32("graphics/field_mugshots/alejandro/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_AlejandroNormal[] = INCBIN_U16("graphics/field_mugshots/alejandro/normal.gbapal");
+
+// Amaterasu
+static const u32 sFieldMugshotGfx_AmaterasuNormal[] = INCBIN_U32("graphics/field_mugshots/amaterasu/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_AmaterasuNormal[] = INCBIN_U16("graphics/field_mugshots/amaterasu/normal.gbapal");
+
+// Aurora
+static const u32 sFieldMugshotGfx_AuroraNormal[] = INCBIN_U32("graphics/field_mugshots/aurora/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_AuroraNormal[] = INCBIN_U16("graphics/field_mugshots/aurora/normal.gbapal");
+
+// Daemon
+static const u32 sFieldMugshotGfx_DaemonNormal[] = INCBIN_U32("graphics/field_mugshots/daemon/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_DaemonNormal[] = INCBIN_U16("graphics/field_mugshots/daemon/normal.gbapal");
+
+// Iara
+static const u32 sFieldMugshotGfx_IaraNormal[] = INCBIN_U32("graphics/field_mugshots/iara/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_IaraNormal[] = INCBIN_U16("graphics/field_mugshots/iara/normal.gbapal");
+
+// Inae
+static const u32 sFieldMugshotGfx_InaeNormal[] = INCBIN_U32("graphics/field_mugshots/inae/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_InaeNormal[] = INCBIN_U16("graphics/field_mugshots/inae/normal.gbapal");
+
+// Luna
+static const u32 sFieldMugshotGfx_LunaNormal[] = INCBIN_U32("graphics/field_mugshots/luna/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_LunaNormal[] = INCBIN_U16("graphics/field_mugshots/luna/normal.gbapal");
+
+// Magnus
+static const u32 sFieldMugshotGfx_MagnusNormal[] = INCBIN_U32("graphics/field_mugshots/magnus/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_MagnusNormal[] = INCBIN_U16("graphics/field_mugshots/magnus/normal.gbapal");
+
+// Mar
+static const u32 sFieldMugshotGfx_MarNormal[] = INCBIN_U32("graphics/field_mugshots/mar/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_MarNormal[] = INCBIN_U16("graphics/field_mugshots/mar/normal.gbapal");
+
+// MrStone
+static const u32 sFieldMugshotGfx_MrStoneNormal[] = INCBIN_U32("graphics/field_mugshots/mrstone/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_MrStoneNormal[] = INCBIN_U16("graphics/field_mugshots/mrstone/normal.gbapal");
+
+// Netsu
+static const u32 sFieldMugshotGfx_NetsuNormal[] = INCBIN_U32("graphics/field_mugshots/netsu/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_NetsuNormal[] = INCBIN_U16("graphics/field_mugshots/netsu/normal.gbapal");
+
+// Rio
+static const u32 sFieldMugshotGfx_RioNormal[] = INCBIN_U32("graphics/field_mugshots/rio/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_RioNormal[] = INCBIN_U16("graphics/field_mugshots/rio/normal.gbapal");
+
+// Rob
+static const u32 sFieldMugshotGfx_RobNormal[] = INCBIN_U32("graphics/field_mugshots/rob/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_RobNormal[] = INCBIN_U16("graphics/field_mugshots/rob/normal.gbapal");
+
+// Soul
+static const u32 sFieldMugshotGfx_SoulNormal[] = INCBIN_U32("graphics/field_mugshots/soul/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_SoulNormal[] = INCBIN_U16("graphics/field_mugshots/soul/normal.gbapal");
+
+// Stark
+static const u32 sFieldMugshotGfx_StarkNormal[] = INCBIN_U32("graphics/field_mugshots/stark/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_StarkNormal[] = INCBIN_U16("graphics/field_mugshots/stark/normal.gbapal");
+
+// Stella
+static const u32 sFieldMugshotGfx_StellaNormal[] = INCBIN_U32("graphics/field_mugshots/stella/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_StellaNormal[] = INCBIN_U16("graphics/field_mugshots/stella/normal.gbapal");
+
+// Taka
+static const u32 sFieldMugshotGfx_TakaNormal[] = INCBIN_U32("graphics/field_mugshots/taka/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_TakaNormal[] = INCBIN_U16("graphics/field_mugshots/taka/normal.gbapal");
+
+// Tsubaki
+static const u32 sFieldMugshotGfx_TsubakiNormal[] = INCBIN_U32("graphics/field_mugshots/tsubaki/normal.4bpp.lz");
+static const u16 sFieldMugshotPal_TsubakiNormal[] = INCBIN_U16("graphics/field_mugshots/tsubaki/normal.gbapal");
 
 struct MugshotGfx
 {
@@ -89,7 +160,7 @@ static const struct MugshotGfx sFieldMugshots[MUGSHOT_COUNT][EMOTE_COUNT] =
     {
         [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_ZinniaNormal, .pal = sFieldMugshotPal_ZinniaNormal },
     },
-        [MUGSHOT_CALENDULA] =
+    [MUGSHOT_CALENDULA] =
     {
         [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_CalendulaNormal, .pal = sFieldMugshotPal_CalendulaNormal },
     },
@@ -100,6 +171,78 @@ static const struct MugshotGfx sFieldMugshots[MUGSHOT_COUNT][EMOTE_COUNT] =
     [MUGSHOT_DEN] =
     {
         [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_DenNormal, .pal = sFieldMugshotPal_DenNormal },
+    },
+    [MUGSHOT_ALEJANDRO] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_AlejandroNormal, .pal = sFieldMugshotPal_AlejandroNormal },
+    },
+    [MUGSHOT_AMATERASU] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_AmaterasuNormal, .pal = sFieldMugshotPal_AmaterasuNormal },
+    },
+    [MUGSHOT_AURORA] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_AuroraNormal, .pal = sFieldMugshotPal_AuroraNormal },
+    },
+    [MUGSHOT_DAEMON] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_DaemonNormal, .pal = sFieldMugshotPal_DaemonNormal },
+    },
+    [MUGSHOT_IARA] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_IaraNormal, .pal = sFieldMugshotPal_IaraNormal },
+    },
+    [MUGSHOT_INAE] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_InaeNormal, .pal = sFieldMugshotPal_InaeNormal },
+    },
+    [MUGSHOT_LUNA] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_LunaNormal, .pal = sFieldMugshotPal_LunaNormal },
+    },
+    [MUGSHOT_MAGNUS] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_MagnusNormal, .pal = sFieldMugshotPal_MagnusNormal },
+    },
+    [MUGSHOT_MAR] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_MarNormal, .pal = sFieldMugshotPal_MarNormal },
+    },
+    [MUGSHOT_MRSTONE] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_MrStoneNormal, .pal = sFieldMugshotPal_MrStoneNormal },
+    },
+    [MUGSHOT_NETSU] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_NetsuNormal, .pal = sFieldMugshotPal_NetsuNormal },
+    },
+    [MUGSHOT_RIO] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_RioNormal, .pal = sFieldMugshotPal_RioNormal },
+    },
+    [MUGSHOT_ROB] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_RobNormal, .pal = sFieldMugshotPal_RobNormal },
+    },
+    [MUGSHOT_SOUL] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_SoulNormal, .pal = sFieldMugshotPal_SoulNormal },
+    },
+    [MUGSHOT_STARK] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_StarkNormal, .pal = sFieldMugshotPal_StarkNormal },
+    },
+    [MUGSHOT_STELLA] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_StellaNormal, .pal = sFieldMugshotPal_StellaNormal },
+    },
+    [MUGSHOT_TAKA] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_TakaNormal, .pal = sFieldMugshotPal_TakaNormal },
+    },
+    [MUGSHOT_TSUBAKI] =
+    {
+        [EMOTE_NORMAL] = { .gfx = sFieldMugshotGfx_TsubakiNormal, .pal = sFieldMugshotPal_TsubakiNormal },
     },
 };
 
