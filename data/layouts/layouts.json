@@ -135,7 +135,7 @@
       "id": "LAYOUT_FALLARBOR_TOWN",
       "name": "FallarborTown_Layout",
       "width": 20,
-      "height": 36,
+      "height": 28,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fallarbor",
       "border_filepath": "data/layouts/FallarborTown/border.bin",
@@ -4910,6 +4910,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/Ic_cave_main/border.bin",
       "blockdata_filepath": "data/layouts/Ic_cave_main/map.bin"
+    },
+    {
+      "id": "LAYOUT_FALLARBOR_TOWN_FARM",
+      "name": "FallarborTown_Farm_Layout",
+      "width": 20,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/FallarborTown_Farm/border.bin",
+      "blockdata_filepath": "data/layouts/FallarborTown_Farm/map.bin"
     }
   ]
 }
