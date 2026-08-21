@@ -199,12 +199,6 @@
       "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
       "x": 0,
       "y": 12
-    },
-    {
-      "id": "HEAL_LOCATION_ROGUE_CANYON",
-      "map": "MAP_ROGUE_CANYON",
-      "x": 18,
-      "y": 20
     }
   ]
 }
