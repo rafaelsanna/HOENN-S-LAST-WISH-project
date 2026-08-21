@@ -19,6 +19,7 @@
 #include "constants/rgb.h"
 #include "constants/event_objects.h"
 #include "random.h"
+#include "overworld.h" // for CB2_ReturnToFieldContinueScriptPlayMapMusic, used by DoMrStoneEvilScene
 
 /*
     This file handles the cutscene showing Rayquaza arriving to settle the Groudon/Kyogre fight
@@ -42,7 +43,15 @@ enum
     RAY_ANIM_DESCENDS,
     RAY_ANIM_CHARGES,
     RAY_ANIM_CHASES_AWAY,
-    RAY_ANIM_END
+    RAY_ANIM_END,
+    // Standalone scene: Mr. Stone revealing himself as the one controlling Groudon/Kyogre,
+    // shown in Sootopolis right after his "Why won't you obey me?!" line.
+    // NOT part of the Groudon/Kyogre/Rayquaza chain above -- it's always entered directly via
+    // DoMrStoneEvilScene(), so it must stay AFTER RAY_ANIM_END. Task_SetNextAnim() advances
+    // through the chain by incrementing animId, and RAY_ANIM_CHASES_AWAY's end hands off to
+    // whatever sits right after it in this enum -- if this were placed before RAY_ANIM_END,
+    // the main Rayquaza cutscene would incorrectly fall into this scene instead of ending.
+    RAY_ANIM_MR_STONE_EVIL
 };
 
 #define TAG_DUOFIGHT_GROUDON             30505
@@ -61,8 +70,21 @@ enum
 #define TAG_CHASE_RAYQUAZA_TAIL          30570
 #define TAG_CHASE_SPLASH                 30571
 #define TAG_CHASE_MEGARAYQUAZA           30572 // unused now that Mega Ray is BG3, kept in case something else references it
+#define TAG_MRSTONE_EVIL_REDORB          30580
+#define TAG_MRSTONE_EVIL_BLUEORB         30581
 
 #define MAX_SMOKE 10
+
+// How long (in frames) each pose of the Mr. Stone Evil scene is held before moving on
+#define MRSTONE_EVIL_POSE1_HOLD 48  // mrstone01, empty-handed
+#define MRSTONE_EVIL_POSE2_HOLD 90  // mrstone02, holding the orbs
+
+// Orb hand positions on top of the mrstone02 art. These are placeholders -- tune them to line
+// up with wherever the hands actually land in the finished mrstone02 tilemap.
+#define MRSTONE_EVIL_REDORB_X  86
+#define MRSTONE_EVIL_REDORB_Y  96
+#define MRSTONE_EVIL_BLUEORB_X 154
+#define MRSTONE_EVIL_BLUEORB_Y 96
 
 /* ------------------------------------------------------------------------
  * Mega Rayquaza (Chases Away, scene 5) -- rendered on BG3, not as OBJ.
@@ -86,8 +108,8 @@ enum
 #define MEGARAY_FRAME_WIDTH 16
 #define MEGARAY_FRAME1_HEIGHT 16
 #define MEGARAY_FRAME2_HEIGHT 16
-#define MEGARAY_FRAME_X 8
-#define MEGARAY_FRAME1_Y 2
+#define MEGARAY_FRAME_X 7
+#define MEGARAY_FRAME1_Y 0
 #define MEGARAY_FRAME2_Y 2
 
 typedef u8 ALIGNED(4) TilemapBuffer[BG_SCREEN_SIZE];
@@ -188,15 +210,23 @@ static void SpriteCB_ChasesAway_Rayquaza(struct Sprite *);
 static void SpriteCB_ChasesAway_DuoRingPush(struct Sprite *);
 static void ChasesAway_SetRayquazaAnim(struct Sprite *, u8, s16, s16);
 
+// RAY_ANIM_MR_STONE_EVIL
+static void Task_MrStoneEvilAnim(u8);
+static void Task_HandleMrStoneEvil(u8);
+static void Task_MrStoneEvilEnd(u8);
+static void InitMrStoneEvilSceneBgs(void);
+static void LoadMrStoneEvilSceneGfx(void);
+
 static const TaskFunc sTasksForAnimations[] =
 {
-    [RAY_ANIM_DUO_FIGHT_PRE] = Task_DuoFightAnim,
-    [RAY_ANIM_DUO_FIGHT]     = Task_DuoFightAnim,
-    [RAY_ANIM_TAKES_FLIGHT]  = Task_RayTakesFlightAnim,
-    [RAY_ANIM_DESCENDS]      = Task_RayDescendsAnim,
-    [RAY_ANIM_CHARGES]       = Task_RayChargesAnim,
-    [RAY_ANIM_CHASES_AWAY]   = Task_RayChasesAwayAnim,
-    [RAY_ANIM_END]           = Task_EndAfterFadeScreen,
+    [RAY_ANIM_DUO_FIGHT_PRE]  = Task_DuoFightAnim,
+    [RAY_ANIM_DUO_FIGHT]      = Task_DuoFightAnim,
+    [RAY_ANIM_TAKES_FLIGHT]   = Task_RayTakesFlightAnim,
+    [RAY_ANIM_DESCENDS]       = Task_RayDescendsAnim,
+    [RAY_ANIM_CHARGES]        = Task_RayChargesAnim,
+    [RAY_ANIM_CHASES_AWAY]    = Task_RayChasesAwayAnim,
+    [RAY_ANIM_END]            = Task_EndAfterFadeScreen,
+    [RAY_ANIM_MR_STONE_EVIL]  = Task_MrStoneEvilAnim,
 };
 
 static const struct OamData sOam_64x64 =
@@ -1389,6 +1419,14 @@ void DoRayquazaScene(u8 animId, bool8 endEarly, void (*exitCallback)(void))
     sRayScene->exitCallback = exitCallback;
     sRayScene->endEarly = endEarly;
     SetMainCallback2(CB2_InitRayquazaScene);
+}
+
+// Called from the field as `special DoMrStoneEvilScene`. Standalone -- always runs as a single
+// scene (endEarly = TRUE), so it just fades back out and hands control straight back to the
+// field script instead of chaining into the Groudon/Kyogre/Rayquaza sequence.
+void DoMrStoneEvilScene(void)
+{
+    DoRayquazaScene(RAY_ANIM_MR_STONE_EVIL, TRUE, CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
 static void CB2_InitRayquazaScene(void)
@@ -2888,6 +2926,7 @@ static void Task_HandleRayChasesAway(u8 taskId)
             FreeSpriteTilesByTag(TAG_CHASE_RAYQUAZA);
             FreeSpriteTilesByTag(TAG_CHASE_RAYQUAZA_TAIL);
             FreeSpritePaletteByTag(TAG_CHASE_RAYQUAZA);
+            PlayCry_Normal(SPECIES_RAYQUAZA_MEGA, 0);
             LoadChasesAway_MegaRay(1);
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_WHITE);
             tTimer = 0;
@@ -2919,8 +2958,16 @@ static void Task_HandleRayChasesAway(u8 taskId)
         }
         else
         {
-            // Flash bg white and trio black a few times
+            // Incrementa o timer primeiro
             tTimer++;
+
+            // *** AQUI: Volta para a frame 01 (megaray01) 8 frames antes do fim ***
+            if (tTimer == 440)
+            {
+                LoadChasesAway_MegaRay(1);
+            }
+
+            // Flash bg white and trio black a few times
             if (tTimer % 144 == 0)
             {
                 BlendPalettesGradually(PALETTES_BG & ~1, 0, 16, 0, RGB_WHITEALPHA, 0, 0);
@@ -3418,3 +3465,261 @@ static void Task_ChasesAway_AnimateRing(u8 taskId)
         break;
     }
 }
+
+/* ============================================================================
+ * RAY_ANIM_MR_STONE_EVIL
+ *
+ * Mr. Stone reveals he's the one behind Groudon/Kyogre's rampage. Reuses the
+ * same looping cloud background as scene 1 (RAY_ANIM_DUO_FIGHT's non-Primal
+ * clouds) on BG1/BG2/BG3, with Mr. Stone himself drawn on BG0 in front of it.
+ *
+ * mrstone01 and mrstone02 are full-screen tilemaps (not OBJs) because each
+ * needs its own 16-color BG palette bank -- too many colors between the suit,
+ * skin tones, and background to share one palette, which is why the two
+ * poses were exported as two separate frames instead of one animated sheet.
+ * blueorb/redorb ARE small enough to be normal 64x64 OBJs, so they're spawned
+ * separately and placed over Mr. Stone's hands only once he's in the
+ * mrstone02 (orb-holding) pose.
+ *
+ * The screen arrives here already faded to white (the field script does
+ * `fadescreenspeed FADE_TO_WHITE` right before calling this), so this scene
+ * fades in from white and fades back out to white at the end, handing back a
+ * still-white screen to the script for the camera shake / warp that follows.
+ * ========================================================================== */
+
+static const struct BgTemplate sBgTemplates_MrStoneEvil[] =
+{
+    { // Mr. Stone (mrstone01 / mrstone02) -- drawn in front of everything else
+        .bg = 0,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    { // Clouds1 -- same hw bg index DuoFight uses for this tilemap
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    { // Clouds3
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    { // Clouds2 -- was DuoFight's frontmost cloud layer (priority 0); pushed
+      // to the back here since Mr. Stone now occupies priority 0 instead
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    },
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_MrStoneEvil_RedOrb =
+{
+    gRaySceneMrStoneEvil_RedOrb_Gfx, 0x800, TAG_MRSTONE_EVIL_REDORB
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_MrStoneEvil_BlueOrb =
+{
+    gRaySceneMrStoneEvil_BlueOrb_Gfx, 0x800, TAG_MRSTONE_EVIL_BLUEORB
+};
+
+static const struct SpritePalette sSpritePal_MrStoneEvil_RedOrb =
+{
+    gRaySceneMrStoneEvil_RedOrb_Pal, TAG_MRSTONE_EVIL_REDORB
+};
+
+static const struct SpritePalette sSpritePal_MrStoneEvil_BlueOrb =
+{
+    gRaySceneMrStoneEvil_BlueOrb_Pal, TAG_MRSTONE_EVIL_BLUEORB
+};
+
+static const union AnimCmd sAnim_MrStoneEvil_Orb[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_MrStoneEvil_Orb[] =
+{
+    sAnim_MrStoneEvil_Orb
+};
+
+static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_RedOrb =
+{
+    .tileTag = TAG_MRSTONE_EVIL_REDORB,
+    .paletteTag = TAG_MRSTONE_EVIL_REDORB,
+    .oam = &sOam_64x64,
+    .anims = sAnims_MrStoneEvil_Orb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_BlueOrb =
+{
+    .tileTag = TAG_MRSTONE_EVIL_BLUEORB,
+    .paletteTag = TAG_MRSTONE_EVIL_BLUEORB,
+    .oam = &sOam_64x64,
+    .anims = sAnims_MrStoneEvil_Orb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static void InitMrStoneEvilSceneBgs(void)
+{
+    ResetVramOamAndBgCntRegs();
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sBgTemplates_MrStoneEvil, ARRAY_COUNT(sBgTemplates_MrStoneEvil));
+    SetBgTilemapBuffer(0, sRayScene->tilemapBuffers[0]);
+    SetBgTilemapBuffer(1, sRayScene->tilemapBuffers[1]);
+    SetBgTilemapBuffer(2, sRayScene->tilemapBuffers[2]);
+    SetBgTilemapBuffer(3, sRayScene->tilemapBuffers[3]);
+    ResetAllBgsCoordinates();
+    ScheduleBgCopyTilemapToVram(0);
+    ScheduleBgCopyTilemapToVram(1);
+    ScheduleBgCopyTilemapToVram(2);
+    ScheduleBgCopyTilemapToVram(3);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    ShowBg(0);
+    ShowBg(1);
+    ShowBg(2);
+    ShowBg(3);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+}
+
+static void LoadMrStoneEvilSceneGfx(void)
+{
+    ResetTempTileDataBuffers();
+    // Clouds gfx is shared by all 3 cloud tilemaps (same as in LoadDuoFightSceneGfx) --
+    // only needs decompressing once, into whichever bg uses charBaseIndex 0 (bg1 here).
+    DecompressAndCopyTileDataToVram(1, gRaySceneDuoFight_Clouds_Gfx, 0, 0, 0);
+    DecompressAndCopyTileDataToVram(0, gRaySceneMrStoneEvil_MrStone01_Gfx, 0, 0, 0);
+    while (FreeTempTileDataBuffersIfPossible())
+        ;
+    DecompressDataWithHeaderWram(gRaySceneMrStoneEvil_MrStone01_Tilemap, sRayScene->tilemapBuffers[0]);
+    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds1_Tilemap, sRayScene->tilemapBuffers[1]);
+    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds3_Tilemap, sRayScene->tilemapBuffers[2]);
+    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds2_Tilemap, sRayScene->tilemapBuffers[3]);
+
+    // NOTE: bank offsets below assume Mr. Stone's art was exported into BG palette banks
+    // 0-1 and the clouds into banks 2-3. If porytiles assigned them differently when the
+    // tilesets were built, adjust the BG_PLTT_ID() arguments here to match.
+    LoadPalette(gRaySceneMrStoneEvil_MrStone01_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    LoadPalette(gRaySceneDuoFight_Clouds_Pal, BG_PLTT_ID(2), 2 * PLTT_SIZE_4BPP);
+
+    LoadCompressedSpriteSheet(&sSpriteSheet_MrStoneEvil_RedOrb);
+    LoadCompressedSpriteSheet(&sSpriteSheet_MrStoneEvil_BlueOrb);
+    LoadSpritePalette(&sSpritePal_MrStoneEvil_RedOrb);
+    LoadSpritePalette(&sSpritePal_MrStoneEvil_BlueOrb);
+}
+
+#define tState         data[0]
+#define tTimer         data[1]
+#define tRedOrbSpriteId  data[2]
+#define tBlueOrbSpriteId data[3]
+
+static void Task_MrStoneEvilAnim(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    InitMrStoneEvilSceneBgs();
+    LoadMrStoneEvilSceneGfx();
+
+    // Screen is already white from the field script's fadescreenspeed FADE_TO_WHITE --
+    // fade in from white rather than the usual black.
+    BlendPalettes(PALETTES_ALL, 0x10, RGB_WHITE);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_WHITE);
+    SetVBlankCallback(VBlankCB_RayquazaScene);
+
+    tState = 0;
+    tTimer = 0;
+    gTasks[taskId].func = Task_HandleMrStoneEvil;
+}
+
+static void Task_HandleMrStoneEvil(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    // Keep the scene-1 clouds looping continuously behind Mr. Stone the whole time.
+    // Tilemaps wrap on their own, so a simple constant per-bg scroll is enough.
+    ChangeBgX(1, 0x80, BG_COORD_ADD);
+    ChangeBgX(2, 0x40, BG_COORD_ADD);
+    ChangeBgX(3, 0x20, BG_COORD_ADD);
+
+    switch (tState)
+    {
+    case 0:
+        // Holding on mrstone01 (empty-handed)
+        if (tTimer >= MRSTONE_EVIL_POSE1_HOLD)
+        {
+            ResetTempTileDataBuffers();
+            DecompressAndCopyTileDataToVram(0, gRaySceneMrStoneEvil_MrStone02_Gfx, 0, 0, 0);
+            while (FreeTempTileDataBuffersIfPossible())
+                ;
+            DecompressDataWithHeaderWram(gRaySceneMrStoneEvil_MrStone02_Tilemap, sRayScene->tilemapBuffers[0]);
+            ScheduleBgCopyTilemapToVram(0);
+            LoadPalette(gRaySceneMrStoneEvil_MrStone02_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+
+            tRedOrbSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_RedOrb, MRSTONE_EVIL_REDORB_X, MRSTONE_EVIL_REDORB_Y, 0);
+            gSprites[tRedOrbSpriteId].oam.priority = 0;
+            tBlueOrbSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_BlueOrb, MRSTONE_EVIL_BLUEORB_X, MRSTONE_EVIL_BLUEORB_Y, 0);
+            gSprites[tBlueOrbSpriteId].oam.priority = 0;
+
+            tTimer = 0;
+            tState++;
+        }
+        else
+        {
+            tTimer++;
+        }
+        break;
+    case 1:
+        // Holding on mrstone02, orbs in hand
+        if (tTimer >= MRSTONE_EVIL_POSE2_HOLD)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_WHITE);
+            tState++;
+        }
+        else
+        {
+            tTimer++;
+        }
+        break;
+    case 2:
+        // Wait for the fade to white to finish, then hand control back to the field script
+        if (!gPaletteFade.active)
+            gTasks[taskId].func = Task_MrStoneEvilEnd;
+        break;
+    }
+}
+
+static void Task_MrStoneEvilEnd(u8 taskId)
+{
+    // endEarly is always TRUE for this scene (set in DoMrStoneEvilScene), so
+    // Task_SetNextAnim() goes straight to Task_EndAfterFadeScreen and resumes the field script.
+    SetVBlankCallback(NULL);
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    Task_SetNextAnim(taskId);
+}
+
+#undef tState
+#undef tTimer
+#undef tRedOrbSpriteId
+#undef tBlueOrbSpriteId

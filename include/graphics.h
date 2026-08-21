@@ -384,6 +384,16 @@ extern const u32 gRaySceneChasesAway_MegaRay01_Tilemap[];
 extern const u32 gRaySceneChasesAway_MegaRay02_Gfx[];
 extern const u16 gRaySceneChasesAway_MegaRay02_Pal[];
 extern const u32 gRaySceneChasesAway_MegaRay02_Tilemap[];
+extern const u32 gRaySceneMrStoneEvil_MrStone01_Gfx[];
+extern const u32 gRaySceneMrStoneEvil_MrStone01_Tilemap[];
+extern const u16 gRaySceneMrStoneEvil_MrStone01_Pal[];
+extern const u32 gRaySceneMrStoneEvil_MrStone02_Gfx[];
+extern const u32 gRaySceneMrStoneEvil_MrStone02_Tilemap[];
+extern const u16 gRaySceneMrStoneEvil_MrStone02_Pal[];
+extern const u32 gRaySceneMrStoneEvil_RedOrb_Gfx[];
+extern const u16 gRaySceneMrStoneEvil_RedOrb_Pal[];
+extern const u32 gRaySceneMrStoneEvil_BlueOrb_Gfx[];
+extern const u16 gRaySceneMrStoneEvil_BlueOrb_Pal[];
 
 // Poké Balls
 extern const u32 gItemIcon_StrangeBall[];

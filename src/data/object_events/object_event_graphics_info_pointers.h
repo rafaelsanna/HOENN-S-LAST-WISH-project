@@ -267,6 +267,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Netsu;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RichBoy2;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lass2;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Pokefan2;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MegaRayquaza;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -528,6 +529,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_LASS_2] =                   &gObjectEventGraphicsInfo_Lass2,
     [OBJ_EVENT_GFX_POKEFAN_2] =                &gObjectEventGraphicsInfo_Pokefan2,
     [OBJ_EVENT_GFX_ROB] =                      &gObjectEventGraphicsInfo_Rob,
+    [OBJ_EVENT_GFX_MEGARAYQUAZA_CUTSCENE] = &gObjectEventGraphicsInfo_MegaRayquaza,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {

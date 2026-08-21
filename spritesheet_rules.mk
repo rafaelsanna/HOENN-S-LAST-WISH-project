@@ -506,6 +506,9 @@ $(OBJEVENTGFXDIR)/pokemon_old/poochyena.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/pokemon_old/rayquaza_cutscene.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 8 -mheight 8
 
+$(OBJEVENTGFXDIR)/pokemon_old/megarayquaza_cutscene.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 8 -mheight 8	
+
 $(OBJEVENTGFXDIR)/pokemon_old/skitty.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 2
 

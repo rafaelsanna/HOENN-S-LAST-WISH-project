@@ -1215,6 +1215,7 @@ SootopolisCity_Movement_PlayerEnterCaveOfOrigin:
 SootopolisCity_EventScript_Boy2::
 	lockall
 	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FacePlayer
+	special DoMrStoneEvilScene
 	waitmovement 0
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Boy2Rayquaza
 	msgbox SootopolisCity_Text_TwoPokemonArentAngry, MSGBOX_DEFAULT
@@ -1415,6 +1416,8 @@ SootopolisCity_EventScript_MrStoneEvil::
 	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
 	closemessage
 	fadescreenspeed FADE_TO_WHITE, 4
+	special DoMrStoneEvilScene
+	waitstate
 	setvar VAR_0x8004, 1 @ vertical pan
 	setvar VAR_0x8005, 1 @ horizontal pan
 	setvar VAR_0x8006, 8 @ num shakes

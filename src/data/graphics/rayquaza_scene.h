@@ -80,3 +80,20 @@ const u32 gRaySceneChasesAway_MegaRay01_Tilemap[] = INCBIN_U32("graphics/rayquaz
 const u32 gRaySceneChasesAway_MegaRay02_Gfx[]    = INCBIN_U32("graphics/rayquaza_scene/scene_5/megaray02.4bpp.smol");
 const u16 gRaySceneChasesAway_MegaRay02_Pal[]    = INCBIN_U16("graphics/rayquaza_scene/scene_5/megaray02.gbapal");
 const u32 gRaySceneChasesAway_MegaRay02_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/megaray02.bin.smolTM");
+
+// Mr. Stone Evil scene (RAY_ANIM_MR_STONE_EVIL)
+// Mr. Stone (bg tilemaps, not OBJ -- see comment in rayquaza_scene.c)
+const u32 gRaySceneMrStoneEvil_MrStone01_Gfx[]     = INCBIN_U32("graphics/rayquaza_scene/mr_stone_evil/mrstone01.4bpp.smol");
+const u32 gRaySceneMrStoneEvil_MrStone01_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/mr_stone_evil/mrstone01.bin.smolTM");
+const u16 gRaySceneMrStoneEvil_MrStone01_Pal[]     = INCBIN_U16("graphics/rayquaza_scene/mr_stone_evil/mrstone01.gbapal");
+
+const u32 gRaySceneMrStoneEvil_MrStone02_Gfx[]     = INCBIN_U32("graphics/rayquaza_scene/mr_stone_evil/mrstone02.4bpp.smol");
+const u32 gRaySceneMrStoneEvil_MrStone02_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/mr_stone_evil/mrstone02.bin.smolTM");
+const u16 gRaySceneMrStoneEvil_MrStone02_Pal[]     = INCBIN_U16("graphics/rayquaza_scene/mr_stone_evil/mrstone02.gbapal");
+
+// blueorb / redorb (normal 64x64 OBJs)
+const u32 gRaySceneMrStoneEvil_RedOrb_Gfx[]  = INCBIN_U32("graphics/rayquaza_scene/mr_stone_evil/redorb.4bpp.smol");
+const u16 gRaySceneMrStoneEvil_RedOrb_Pal[]  = INCBIN_U16("graphics/rayquaza_scene/mr_stone_evil/redorb.gbapal");
+
+const u32 gRaySceneMrStoneEvil_BlueOrb_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/mr_stone_evil/blueorb.4bpp.smol");
+const u16 gRaySceneMrStoneEvil_BlueOrb_Pal[] = INCBIN_U16("graphics/rayquaza_scene/mr_stone_evil/blueorb.gbapal");
