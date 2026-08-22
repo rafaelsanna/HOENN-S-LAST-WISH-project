@@ -400,7 +400,9 @@ Route104_EventScript_BrendanEncounter::
 # 210 "data/maps/Route104/scripts.pory"
 	applymovement LOCALID_ROUTE104_RIVAL, Route104_Movement_RivalWalkSlowLeft
 # 211 "data/maps/Route104/scripts.pory"
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route104_Text_BrendanHowsYourPokedex, MSGBOX_DEFAULT
+	removefieldmugshot
 # 212 "data/maps/Route104/scripts.pory"
 	closemessage
 # 213 "data/maps/Route104/scripts.pory"
@@ -416,7 +418,9 @@ Route104_EventScript_BrendanEncounter::
 # 218 "data/maps/Route104/scripts.pory"
 	goto_if_eq VAR_RESULT, YES, Route104_EventScript_BattleBrendan
 # 219 "data/maps/Route104/scripts.pory"
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route104_Text_BrendanNoConfidence, MSGBOX_DEFAULT
+	removefieldmugshot
 # 220 "data/maps/Route104/scripts.pory"
 	call Route104_EventScript_RestoreMusic
 # 221 "data/maps/Route104/scripts.pory"
@@ -428,11 +432,15 @@ Route104_EventScript_BrendanEncounter::
 # 224 "data/maps/Route104/scripts.pory"
 Route104_EventScript_BrendanAskToBattle::
 # 225 "data/maps/Route104/scripts.pory"
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route104_Text_BrendanLetsBattle, MSGBOX_YESNO
+	removefieldmugshot
 # 226 "data/maps/Route104/scripts.pory"
 	goto_if_eq VAR_RESULT, YES, Route104_EventScript_BattleBrendan
 # 227 "data/maps/Route104/scripts.pory"
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route104_Text_BrendanNoConfidence, MSGBOX_DEFAULT
+	removefieldmugshot
 # 228 "data/maps/Route104/scripts.pory"
 	releaseall
 # 229 "data/maps/Route104/scripts.pory"
@@ -442,7 +450,9 @@ Route104_EventScript_BrendanAskToBattle::
 # 231 "data/maps/Route104/scripts.pory"
 Route104_EventScript_BattleBrendan::
 # 232 "data/maps/Route104/scripts.pory"
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route104_Text_BrendanIntro, MSGBOX_DEFAULT
+	removefieldmugshot
 # 233 "data/maps/Route104/scripts.pory"
 	switch VAR_STARTER_MON
 # 234 "data/maps/Route104/scripts.pory"
@@ -458,7 +468,9 @@ Route104_EventScript_BattleBrendan::
 # 239 "data/maps/Route104/scripts.pory"
 Route104_EventScript_BrendanDefeated::
 # 240 "data/maps/Route104/scripts.pory"
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route104_Text_BrendanPostBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 # 241 "data/maps/Route104/scripts.pory"
 	call_if_eq VAR_0x8008, 0, Route104_EventScript_RestoreMusic
 # 242 "data/maps/Route104/scripts.pory"

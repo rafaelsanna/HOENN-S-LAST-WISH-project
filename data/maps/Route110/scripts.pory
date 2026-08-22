@@ -391,7 +391,9 @@ Route110_EventScript_PlayBrendanMusic::
 	return
 
 Route110_EventScript_MayBattle::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox Route110_Text_MayLetsBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, Route110_EventScript_MayBattleTreecko
 	case 1, Route110_EventScript_MayBattleTorchic
@@ -414,14 +416,20 @@ Route110_EventScript_MayBattleMudkip::
 	end
 
 Route110_EventScript_MayDefeated::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox Route110_Text_MayTakeThis, MSGBOX_DEFAULT
+	removefieldmugshot
 	call Route110_EventScript_GiveItemfinder
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox Route110_Text_MayExplainItemfinder, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto Route110_EventScript_RivalExit
 	end
 
 Route110_EventScript_BrendanBattle::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route110_Text_BrendanLetsBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, Route110_EventScript_BrendanBattleTreecko
 	case 1, Route110_EventScript_BrendanBattleTorchic
@@ -444,9 +452,13 @@ Route110_EventScript_BrendanBattleMudkip::
 	end
 
 Route110_EventScript_BrendanDefeated::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route110_Text_BrendanTakeThis, MSGBOX_DEFAULT
+	removefieldmugshot
 	call Route110_EventScript_GiveItemfinder
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route110_Text_BrendanExplainItemfinder, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto Route110_EventScript_RivalExit
 	end
 

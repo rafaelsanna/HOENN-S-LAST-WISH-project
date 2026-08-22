@@ -43,7 +43,9 @@ MtChimney_EventScript_Maxie::
 	waitmovement 0
 	applymovement LOCALID_MT_CHIMNEY_MAXIE, Common_Movement_Delay48
 	waitmovement 0
+	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
 	msgbox MtChimney_Text_MaxieIntro, MSGBOX_DEFAULT
+	removefieldmugshot
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, MtChimney_EventScript_MaxieHard
 
@@ -56,7 +58,9 @@ MtChimney_EventScript_MaxieHard::
 	trainerbattle_no_intro TRAINER_MAXIE_MT_CHIMNEY_HARD, MtChimney_Text_MaxieDefeat
 
 MtChimney_EventScript_MaxieAfterBattle::
+	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
 	msgbox MtChimney_Text_MaxieYouHaventSeenLastOfMagma, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	delay 30
 	fadescreenswapbuffers FADE_TO_BLACK

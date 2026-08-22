@@ -323,12 +323,16 @@ OldaleTown_EventScript_ShowRivalMessage::
 	end
 
 OldaleTown_EventScript_ShowMayMessage::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox OldaleTown_Text_MayLetsGoBack, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto OldaleTown_EventScript_RivalFinish
 	end
 
 OldaleTown_EventScript_ShowBrendanMessage::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox OldaleTown_Text_BrendanLetsGoBack, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto OldaleTown_EventScript_RivalFinish
 	end
 

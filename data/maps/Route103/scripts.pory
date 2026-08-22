@@ -115,12 +115,16 @@ Route103_EventScript_StartBrendanBattleMudkip::
 	end
 
 Route103_EventScript_AfterMayBattle::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox Route103_Text_MayTimeToHeadBack, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto Route103_EventScript_RivalExit
 	end
 
 Route103_EventScript_AfterBrendanBattle::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox Route103_Text_BrendanTimeToHeadBack, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto Route103_EventScript_RivalExit
 	end
 

@@ -322,7 +322,9 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	goto LittlerootTown_01_Stay
 
 LittlerootTown_01_JirachiWarp::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox LittlerootTown_01_Text_JirachiTimeWarp, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	
 	// === JIRACHI EPIC CUTSCENE ===
@@ -518,17 +520,23 @@ LittlerootTown_JirachiScript::
 	end
 
 LittlerootTown_Jirachi_Case0::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox LittlerootTown_01_Text_JirachiWish, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 LittlerootTown_Jirachi_Case1::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox LittlerootTown_01_Text_JirachiSleep, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 LittlerootTown_Jirachi_Case2::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 	msgbox LittlerootTown_01_Text_JirachiGrant, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 

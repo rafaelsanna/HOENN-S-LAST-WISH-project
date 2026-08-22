@@ -127,12 +127,16 @@ NightmareRealm1_OnVictory::
     delay 15
 
     @ Jirachi speaks first.
+    createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
     msgbox NightmareRealm1_Text_VictoryJirachi, MSGBOX_DEFAULT
+    removefieldmugshot
     closemessage
     delay 10
 
     @ Celebi speaks second.
+    createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
     msgbox NightmareRealm1_Text_VictoryCelebi, MSGBOX_DEFAULT
+    removefieldmugshot
     closemessage
     delay 20
 
@@ -151,7 +155,9 @@ NightmareRealm1_OnVictory::
 NightmareRealm1_EventScript_Jirachi::
     lock
     faceplayer
+    createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
     msgbox NightmareRealm1_Text_JirachiPostVictory, MSGBOX_DEFAULT
+    removefieldmugshot
     closemessage
     goto NightmareRealm1_EventScript_EndingSequence
     end
@@ -159,7 +165,9 @@ NightmareRealm1_EventScript_Jirachi::
 NightmareRealm1_EventScript_Celebi::
     lock
     faceplayer
+    createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
     msgbox NightmareRealm1_Text_CelebiPostVictory, MSGBOX_DEFAULT
+    removefieldmugshot
     closemessage
     goto NightmareRealm1_EventScript_EndingSequence
     end
@@ -174,11 +182,15 @@ NightmareRealm1_EventScript_Celebi::
 NightmareRealm1_EventScript_EndingSequence::
     delay 15
 
+    createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
     msgbox NightmareRealm1_Text_HoennFateJirachi, MSGBOX_DEFAULT
+    removefieldmugshot
     closemessage
     delay 10
 
+    createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
     msgbox NightmareRealm1_Text_HoennFateCelebi, MSGBOX_DEFAULT
+    removefieldmugshot
     closemessage
     delay 20
 

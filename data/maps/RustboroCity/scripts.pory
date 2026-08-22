@@ -753,7 +753,9 @@ RustboroCity_EventScript_MayEncounter::
 	goto_if_set FLAG_DEFEATED_RIVAL_RUSTBORO, RustboroCity_EventScript_MayBrineyHint
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_MayAskToBattle
 	setflag FLAG_MET_RIVAL_RUSTBORO
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RustboroCity_Text_MayHiLetsRegister, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	delay 30
 	playfanfare MUS_REGISTER_MATCH_CALL
@@ -765,23 +767,33 @@ RustboroCity_EventScript_MayEncounter::
 	setvar VAR_RUSTBORO_CITY_STATE, 8
 	setvar VAR_ROUTE104_STATE, 2
 	setvar VAR_0x8008, 0
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RustboroCity_Text_MayPassedBrineyWantToBattle, MSGBOX_YESNO
+	removefieldmugshot
 	goto_if_eq VAR_RESULT, YES, RustboroCity_EventScript_BattleMay
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RustboroCity_Text_MayOhHaventRaisedPokemonEnough, MSGBOX_DEFAULT
+	removefieldmugshot
 	call RustboroCity_EventScript_RestoreBgm
 	releaseall
 	end
 
 RustboroCity_EventScript_MayAskToBattle::
 	setvar VAR_0x8008, 1
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RustboroCity_Text_MayWantToBattle, MSGBOX_YESNO
+	removefieldmugshot
 	goto_if_eq VAR_RESULT, YES, RustboroCity_EventScript_BattleMay
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RustboroCity_Text_MayOhHaventRaisedPokemonEnough, MSGBOX_DEFAULT
+	removefieldmugshot
 	releaseall
 	end
 
 RustboroCity_EventScript_BattleMay::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RustboroCity_Text_MayImNotGoingToLose, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, RustboroCity_EventScript_BattleMayTreecko
 	case 1, RustboroCity_EventScript_BattleMayTorchic
@@ -791,7 +803,9 @@ RustboroCity_EventScript_BattleMay::
 RustboroCity_EventScript_MayBrineyHint::
     lock
     faceplayer
+    createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
     msgbox RustboroCity_Text_MayMrBrineyHint, MSGBOX_DEFAULT
+    removefieldmugshot
     call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
     release
     end
@@ -826,7 +840,9 @@ RustboroCity_EventScript_BrendanEncounter::
 	goto_if_set FLAG_DEFEATED_RIVAL_RUSTBORO, RustboroCity_EventScript_BrendanBrineyHint
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_BrendanAskToBattle
 	setflag FLAG_MET_RIVAL_RUSTBORO
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RustboroCity_Text_BrendanHiLetsRegister, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	delay 30
 	playfanfare MUS_REGISTER_MATCH_CALL
@@ -837,22 +853,32 @@ RustboroCity_EventScript_BrendanEncounter::
 	setflag FLAG_ENABLE_RIVAL_MATCH_CALL
 	setvar VAR_RUSTBORO_CITY_STATE, 8
 	setvar VAR_ROUTE104_STATE, 2
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RustboroCity_Text_BrendanPassedBrineyWantToBattle, MSGBOX_YESNO
+	removefieldmugshot
 	goto_if_eq VAR_RESULT, YES, RustboroCity_EventScript_BattleBrendan
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RustboroCity_Text_BrendanNoConfidenceInPokemon, MSGBOX_DEFAULT
+	removefieldmugshot
 	call RustboroCity_EventScript_RestoreBgm
 	releaseall
 	end
 
 RustboroCity_EventScript_BrendanAskToBattle::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RustboroCity_Text_BrendanWantToBattle, MSGBOX_YESNO
+	removefieldmugshot
 	goto_if_eq VAR_RESULT, YES, RustboroCity_EventScript_BattleBrendan
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RustboroCity_Text_BrendanNoConfidenceInPokemon, MSGBOX_DEFAULT
+	removefieldmugshot
 	releaseall
 	end
 
 RustboroCity_EventScript_BattleBrendan::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RustboroCity_Text_BrendanIWontGoEasy, MSGBOX_DEFAULT
+	removefieldmugshot
 	switch VAR_STARTER_MON
 	case 0, RustboroCity_EventScript_BattleBrendanTreecko
 	case 1, RustboroCity_EventScript_BattleBrendanTorchic
@@ -862,7 +888,9 @@ RustboroCity_EventScript_BattleBrendan::
 RustboroCity_EventScript_BrendanBrineyHint::
     lock
     faceplayer
+    createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
     msgbox RustboroCity_Text_BrendanMrBrineyHint, MSGBOX_DEFAULT
+    removefieldmugshot
     call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
     release
     end

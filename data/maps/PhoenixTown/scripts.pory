@@ -1,0 +1,9 @@
+raw `
+PhoenixTown_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, PhoenixTown_OnTransition
+	.byte 0
+
+PhoenixTown_OnTransition:
+	setflag FLAG_VISITED_PHOENIX_TOWN
+	end
+`
