@@ -678,6 +678,9 @@
   ],
   "gMapGroup_IndoorPhoenix": [
     "PHOENIXPOKECENTER",
-    "PHOENIXPOKEMART"
+    "PHOENIXPOKEMART",
+    "PHOENIXHOUSE1",
+    "PHOENIXHOUSE2",
+    "PHOENIXHOUSE3"
   ]
 }

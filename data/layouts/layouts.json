@@ -4950,6 +4950,36 @@
       "secondary_tileset": "gTileset_Shop",
       "border_filepath": "data/layouts/PHOENIXPOKEMART/border.bin",
       "blockdata_filepath": "data/layouts/PHOENIXPOKEMART/map.bin"
+    },
+    {
+      "id": "LAYOUT_PHOENIXHOUSE3",
+      "name": "PHOENIXHOUSE3_Layout",
+      "width": 12,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/PHOENIXHOUSE3/border.bin",
+      "blockdata_filepath": "data/layouts/PHOENIXHOUSE3/map.bin"
+    },
+    {
+      "id": "LAYOUT_PHOENIXHOUSE2",
+      "name": "PHOENIXHOUSE2_Layout",
+      "width": 18,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/PHOENIXHOUSE2/border.bin",
+      "blockdata_filepath": "data/layouts/PHOENIXHOUSE2/map.bin"
+    },
+    {
+      "id": "LAYOUT_PHOENIXHOUSE1",
+      "name": "PHOENIXHOUSE1_Layout",
+      "width": 11,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/PHOENIXHOUSE1/border.bin",
+      "blockdata_filepath": "data/layouts/PHOENIXHOUSE1/map.bin"
     }
   ]
 }

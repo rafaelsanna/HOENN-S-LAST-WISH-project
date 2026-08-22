@@ -2758,7 +2758,11 @@ bool8 ScrCmd_opendoor(struct ScriptContext *ctx)
 
     x += MAP_OFFSET;
     y += MAP_OFFSET;
-    PlaySE(GetDoorSoundEffect(x, y));
+    {
+        u32 doorSound = GetDoorSoundEffect(x, y);
+        if (doorSound != 0)
+            PlaySE(doorSound);
+    }
     FieldAnimateDoorOpen(x, y);
     return FALSE;
 }

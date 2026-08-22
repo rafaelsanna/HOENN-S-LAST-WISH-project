@@ -1268,3 +1268,9 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/PHOENIXPOKEMART/scripts.inc"
 
 	.include "data/maps/PHOENIXPOKECENTER/scripts.inc"
+
+	.include "data/maps/PHOENIXHOUSE1/scripts.inc"
+
+	.include "data/maps/PHOENIXHOUSE2/scripts.inc"
+
+	.include "data/maps/PHOENIXHOUSE3/scripts.inc"
