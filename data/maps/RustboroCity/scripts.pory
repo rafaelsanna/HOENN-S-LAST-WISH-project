@@ -7,6 +7,10 @@ RustboroCity_MapScripts::
 RustboroCity_OnTransition:
 	setflag FLAG_VISITED_RUSTBORO_CITY
 	call Common_EventScript_SetupRivalGfxId
+	@ MAR's object is tied to FLAG_HIDE_MAR_RUST_VISIBILITY in map.json.
+	@ Force it set on every map load so he's hidden by default; the
+	@ trigger clears it only for the duration of his cutscene.
+	setflag FLAG_HIDE_MAR_RUST_VISIBILITY
 	end
 
 RustboroCity_OnFrame:
@@ -980,6 +984,152 @@ RustboroCity_EventScript_Devonearthquake::
 	msgbox RustboroCity_Text_Devonearthquake, MSGBOX_NPC
 	end
 
+@ ============================================================
+@ MAR - father of TERRA and RIO, appears once near the Gym door
+@
+@ Visibility: MAR's object (local id 20) is tied to FLAG_HIDE_MAR_RUST_VISIBILITY
+@ in map.json ("flag": "FLAG_HIDE_MAR_RUST_VISIBILITY"). That flag is only
+@ checked when the object is (re)spawned - i.e. on map load - NOT live every
+@ frame. So clearflag/setflag alone do nothing to an object that's already
+@ on screen; showing/hiding him mid-scene needs an explicit addobject/
+@ removeobject, same as LOCALID_RUSTBORO_GRUNT/DEVON_EMPLOYEE do above in
+@ RustboroCity_EventScript_StolenGoodsScene. The flag is still kept in sync
+@ so a normal map (re)load always starts with him hidden.
+@
+@ The trigger uses VAR_UNUSED_0x40BB == 0 (always true, never touched by
+@ anything else) instead of VAR_RUSTBORO_CITY_STATE - that var is only set
+@ to 1 by RustboroCity_Gym_EventScript_Victory (scripts_gym.pory), i.e.
+@ AFTER beating TERRA, which made this scene fire in the wrong order.
+@
+@ Guaranteed order (runs once, ever):
+@   1) Player steps on the trigger (26,20)
+@   2) FLAG_HIDE_MAR_RUST_VISIBILITY cleared + addobject -> MAR appears
+@   3) MAR walks up to the player and talks (mugshot)
+@   4) MAR gives the Charti Berry
+@   5) Player is pushed up, towards the Gym
+@   6) MAR walks away, removeobject + FLAG_HIDE_MAR_RUST_VISIBILITY set again
+@      -> he's actually gone, not just invisible-flagged
+@   7) FLAG_HIDE_MAR_RUST is set -> this scene never runs again
+@ ============================================================
+RustboroCity_EventScript_ChallangeTerra::
+	lockall
+	goto_if_set FLAG_HIDE_MAR_RUST, RustboroCity_EventScript_ChallangeTerra_Done
+
+	@ He was hidden - now he shows up at the Gym door
+	clearflag FLAG_HIDE_MAR_RUST_VISIBILITY
+	addobject 20
+	applymovement 20, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	playse SE_PIN
+	applymovement 20, Common_Movement_ExclamationMark
+	waitmovement 0
+
+	@ Walks up to the player
+	applymovement 20, RustboroCity_Movement_MarApproachPlayer
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+
+	call RustboroCity_EventScript_Mar_Scene
+	releaseall
+	end
+
+RustboroCity_EventScript_ChallangeTerra_Done::
+	releaseall
+	end
+
+@ MAR's own object script. In practice this is only reachable
+@ while FLAG_HIDE_MAR_RUST_VISIBILITY is cleared (i.e. during the cutscene above),
+@ since outside of it he's hidden by his map.json flag (kept set
+@ by default in RustboroCity_OnTransition).
+RustboroCity_EventScript_Mar::
+	lockall
+	goto_if_set FLAG_HIDE_MAR_RUST, RustboroCity_EventScript_Mar_Done
+	faceplayer
+	call RustboroCity_EventScript_Mar_Scene
+RustboroCity_EventScript_Mar_Done::
+	releaseall
+	end
+
+RustboroCity_EventScript_Mar_Scene::
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+	msgbox RustboroCity_Text_MarIntro, MSGBOX_DEFAULT
+	removefieldmugshot
+	giveitem ITEM_CHARTI_BERRY
+	goto_if_eq VAR_RESULT, FALSE, RustboroCity_EventScript_Mar_BagFull
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+	msgbox RustboroCity_Text_MarGiveCharti, MSGBOX_DEFAULT
+	removefieldmugshot
+	goto RustboroCity_EventScript_Mar_Leave
+
+@ Bag full: he still has to leave and the flag still has to be
+@ set, otherwise the trigger would be stuck forever (softlock).
+RustboroCity_EventScript_Mar_BagFull::
+	msgbox gText_BagIsFull, MSGBOX_DEFAULT
+
+RustboroCity_EventScript_Mar_Leave::
+	applymovement LOCALID_PLAYER, RustboroCity_Movement_PlayerContinueToGym
+	waitmovement 0
+	applymovement 20, RustboroCity_Movement_MarReturnToGym
+	waitmovement 0
+	removeobject 20
+	setflag FLAG_HIDE_MAR_RUST_VISIBILITY
+	setflag FLAG_HIDE_MAR_RUST
+	return
+
+@ ---- Movements (adjust the step count if the real distance differs) ----
+
+RustboroCity_Movement_MarApproachPlayer:
+	walk_down
+	step_end
+
+RustboroCity_Movement_PlayerContinueToGym:
+	walk_down
+	step_end
+
+RustboroCity_Movement_MarReturnToGym:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
+
+@ ---- Text ----
+
+RustboroCity_Text_MarIntro:
+	.string "Whoa there! You're on your way to\n"
+	.string "challenge the GYM LEADER, TERRA,\l"
+	.string "aren't you?\p"
+	.string "I'm MAR, her dad!\n"
+	.string "I'm also RIO's dad, the GYM LEADER\l"
+	.string "over in Sootopolis... her sibling.\p"
+	.string "Everybody in my family trains like\n"
+	.string "an athlete... and trains POKéMON,\l"
+	.string "too.\p"
+	.string "I'm a TRAINER myself, but I've been\n"
+	.string "busy with more important stuff\l"
+	.string "lately...\p"
+	.string "HAHAHA, I've said too much already!\n"
+	.string "Anyway, TERRA's plenty tough.\p"
+	.string "The last challenger I saw take her\n"
+	.string "on walked out crying...$"
+
+RustboroCity_Text_MarGiveCharti:
+	.string "Here, take this.\n"
+	.string "Maybe it'll help you take fewer\l"
+	.string "hits from my daughter!$"
+
 RustboroCity_Text_WeShortenItToDevon:
 	.string "The DEVON CORPORATION…\n"
 	.string "We all just shorten it to DEVON.\p"
@@ -1296,7 +1446,5 @@ RustboroCity_Text_Devonearthquake:
 	.string "the land cracks open more and more.\p"
 	.string "The DEVON building may even end\n"
 	.string "up falling into the sea soon!$"
-
-
 
 `

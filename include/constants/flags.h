@@ -696,8 +696,8 @@
 #define FLAG_HIDE_SOOTOPOLIS_CITY_BOAT          0x285 
 #define FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON 0x286 
 #define FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE  0x287 
-#define FLAG_UNUSED_0x288  0x288 // Unused Flag
-#define FLAG_UNUSED_0x289  0x289 // Unused Flag
+#define FLAG_HIDE_MAR_RUST                      0x288 
+#define FLAG_HIDE_MAR_RUST_VISIBILITY           0x289
 #define FLAG_UNUSED_0x28A  0x28A // Unused Flag
 #define FLAG_UNUSED_0x28B  0x28B // Unused Flag
 #define FLAG_UNUSED_0x28C  0x28C // Unused Flag
