@@ -1015,8 +1015,10 @@ RustboroCity_EventScript_ChallangeTerra::
 	lockall
 	goto_if_set FLAG_HIDE_MAR_RUST, RustboroCity_EventScript_ChallangeTerra_Done
 
-	@ He was hidden - now he shows up at the Gym door
+	@ He was hidden - now the door opens and he steps out of the Gym
 	clearflag FLAG_HIDE_MAR_RUST_VISIBILITY
+	opendoor 27, 19
+	waitdooranim
 	addobject 20
 	applymovement 20, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -1024,10 +1026,11 @@ RustboroCity_EventScript_ChallangeTerra::
 	applymovement 20, Common_Movement_ExclamationMark
 	waitmovement 0
 
-	@ Walks up to the player
+	@ Walks up to the player - MAR ends up facing left, player facing right,
+	@ so they're actually looking at each other (he's on the player's right)
 	applymovement 20, RustboroCity_Movement_MarApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 
 	call RustboroCity_EventScript_Mar_Scene
@@ -1060,6 +1063,7 @@ RustboroCity_EventScript_Mar_Scene::
 	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
 	msgbox RustboroCity_Text_MarGiveCharti, MSGBOX_DEFAULT
 	removefieldmugshot
+	delay 30
 	goto RustboroCity_EventScript_Mar_Leave
 
 @ Bag full: he still has to leave and the flag still has to be
@@ -1073,6 +1077,8 @@ RustboroCity_EventScript_Mar_Leave::
 	applymovement 20, RustboroCity_Movement_MarReturnToGym
 	waitmovement 0
 	removeobject 20
+	closedoor 27, 19
+	waitdooranim
 	setflag FLAG_HIDE_MAR_RUST_VISIBILITY
 	setflag FLAG_HIDE_MAR_RUST
 	return
@@ -1081,6 +1087,7 @@ RustboroCity_EventScript_Mar_Leave::
 
 RustboroCity_Movement_MarApproachPlayer:
 	walk_down
+	face_left
 	step_end
 
 RustboroCity_Movement_PlayerContinueToGym:

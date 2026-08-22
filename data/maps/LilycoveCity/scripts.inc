@@ -1556,3 +1556,229 @@ LilycoveCity_Text_HoneymoonVowToSeeRarePokemon:
 	.string "POKéMON as soon as we arrived.\p"
 # 779 "data/maps/LilycoveCity/scripts.pory"
 	.string "I mean, we are totally happy!$"
+# 780 "data/maps/LilycoveCity/scripts.pory"
+
+# 781 "data/maps/LilycoveCity/scripts.pory"
+@ ============================================================
+# 782 "data/maps/LilycoveCity/scripts.pory"
+@ MAR & RIO — father and son, passing through Lilycove while
+# 783 "data/maps/LilycoveCity/scripts.pory"
+@ investigating Team Aqua. Simple flag-gated conversation, no
+# 784 "data/maps/LilycoveCity/scripts.pory"
+@ approach/hide choreography needed like the Rustboro scene.
+# 785 "data/maps/LilycoveCity/scripts.pory"
+@ ============================================================
+# 786 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_EventScript_LookingForClues::
+# 787 "data/maps/LilycoveCity/scripts.pory"
+	lockall
+# 788 "data/maps/LilycoveCity/scripts.pory"
+	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_LookingForClues_Done
+# 789 "data/maps/LilycoveCity/scripts.pory"
+	call LilycoveCity_EventScript_MarRio_Scene
+# 790 "data/maps/LilycoveCity/scripts.pory"
+	releaseall
+# 791 "data/maps/LilycoveCity/scripts.pory"
+	end
+# 792 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_EventScript_LookingForClues_Done::
+# 793 "data/maps/LilycoveCity/scripts.pory"
+	releaseall
+# 794 "data/maps/LilycoveCity/scripts.pory"
+	end
+# 795 "data/maps/LilycoveCity/scripts.pory"
+
+# 796 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_EventScript_Mar::
+# 797 "data/maps/LilycoveCity/scripts.pory"
+	lockall
+# 798 "data/maps/LilycoveCity/scripts.pory"
+	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_Mar_Done
+# 799 "data/maps/LilycoveCity/scripts.pory"
+	faceplayer
+# 800 "data/maps/LilycoveCity/scripts.pory"
+	call LilycoveCity_EventScript_MarRio_Scene
+# 801 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_EventScript_Mar_Done::
+# 802 "data/maps/LilycoveCity/scripts.pory"
+	releaseall
+# 803 "data/maps/LilycoveCity/scripts.pory"
+	end
+# 804 "data/maps/LilycoveCity/scripts.pory"
+
+# 805 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_EventScript_Rio::
+# 806 "data/maps/LilycoveCity/scripts.pory"
+	lockall
+# 807 "data/maps/LilycoveCity/scripts.pory"
+	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_Rio_Done
+# 808 "data/maps/LilycoveCity/scripts.pory"
+	faceplayer
+# 809 "data/maps/LilycoveCity/scripts.pory"
+	call LilycoveCity_EventScript_MarRio_Scene
+# 810 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_EventScript_Rio_Done::
+# 811 "data/maps/LilycoveCity/scripts.pory"
+	releaseall
+# 812 "data/maps/LilycoveCity/scripts.pory"
+	end
+# 813 "data/maps/LilycoveCity/scripts.pory"
+
+# 814 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_EventScript_MarRio_Scene::
+# 815 "data/maps/LilycoveCity/scripts.pory"
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+# 816 "data/maps/LilycoveCity/scripts.pory"
+	msgbox LilycoveCity_Text_MarRecognizesPlayer, MSGBOX_DEFAULT
+# 817 "data/maps/LilycoveCity/scripts.pory"
+	removefieldmugshot
+# 818 "data/maps/LilycoveCity/scripts.pory"
+	createfieldmugshot MUGSHOT_RIO, EMOTE_NORMAL
+# 819 "data/maps/LilycoveCity/scripts.pory"
+	msgbox LilycoveCity_Text_RioIntroduces, MSGBOX_DEFAULT
+# 820 "data/maps/LilycoveCity/scripts.pory"
+	removefieldmugshot
+# 821 "data/maps/LilycoveCity/scripts.pory"
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+# 822 "data/maps/LilycoveCity/scripts.pory"
+	msgbox LilycoveCity_Text_MarOldLeader, MSGBOX_DEFAULT
+# 823 "data/maps/LilycoveCity/scripts.pory"
+	removefieldmugshot
+# 824 "data/maps/LilycoveCity/scripts.pory"
+	createfieldmugshot MUGSHOT_RIO, EMOTE_NORMAL
+# 825 "data/maps/LilycoveCity/scripts.pory"
+	msgbox LilycoveCity_Text_RioTougherThanDad, MSGBOX_DEFAULT
+# 826 "data/maps/LilycoveCity/scripts.pory"
+	removefieldmugshot
+# 827 "data/maps/LilycoveCity/scripts.pory"
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+# 828 "data/maps/LilycoveCity/scripts.pory"
+	msgbox LilycoveCity_Text_MarBusyWithImportantThings, MSGBOX_DEFAULT
+# 829 "data/maps/LilycoveCity/scripts.pory"
+	removefieldmugshot
+# 830 "data/maps/LilycoveCity/scripts.pory"
+	createfieldmugshot MUGSHOT_RIO, EMOTE_NORMAL
+# 831 "data/maps/LilycoveCity/scripts.pory"
+	msgbox LilycoveCity_Text_RioTeamAquaClues, MSGBOX_DEFAULT
+# 832 "data/maps/LilycoveCity/scripts.pory"
+	removefieldmugshot
+# 833 "data/maps/LilycoveCity/scripts.pory"
+	delay 30
+# 834 "data/maps/LilycoveCity/scripts.pory"
+	applymovement LOCALID_LILYCOVE_MAR, LilycoveCity_Movement_MarRioWalkAway
+# 835 "data/maps/LilycoveCity/scripts.pory"
+	applymovement LOCALID_LILYCOVE_RIO, LilycoveCity_Movement_MarRioWalkAway
+# 836 "data/maps/LilycoveCity/scripts.pory"
+	waitmovement 0
+# 837 "data/maps/LilycoveCity/scripts.pory"
+	removeobject LOCALID_LILYCOVE_MAR
+# 838 "data/maps/LilycoveCity/scripts.pory"
+	removeobject LOCALID_LILYCOVE_RIO
+# 839 "data/maps/LilycoveCity/scripts.pory"
+	setflag FLAG_HIDE_MAR_LILI_VISIBILITY
+# 840 "data/maps/LilycoveCity/scripts.pory"
+	return
+# 841 "data/maps/LilycoveCity/scripts.pory"
+
+# 842 "data/maps/LilycoveCity/scripts.pory"
+@ ---- Movement (adjust step count if the path north isn't clear) ----
+# 843 "data/maps/LilycoveCity/scripts.pory"
+
+# 844 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_Movement_MarRioWalkAway:
+# 845 "data/maps/LilycoveCity/scripts.pory"
+	walk_up
+# 846 "data/maps/LilycoveCity/scripts.pory"
+	walk_up
+# 847 "data/maps/LilycoveCity/scripts.pory"
+	walk_up
+# 848 "data/maps/LilycoveCity/scripts.pory"
+	walk_up
+# 849 "data/maps/LilycoveCity/scripts.pory"
+	walk_up
+# 850 "data/maps/LilycoveCity/scripts.pory"
+	walk_up
+# 851 "data/maps/LilycoveCity/scripts.pory"
+	walk_up
+# 852 "data/maps/LilycoveCity/scripts.pory"
+	step_end
+# 853 "data/maps/LilycoveCity/scripts.pory"
+
+# 854 "data/maps/LilycoveCity/scripts.pory"
+@ ---- Text ----
+# 855 "data/maps/LilycoveCity/scripts.pory"
+
+# 856 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_Text_MarRecognizesPlayer:
+# 857 "data/maps/LilycoveCity/scripts.pory"
+	.string "MAR: Hey, I know that face!\p"
+# 858 "data/maps/LilycoveCity/scripts.pory"
+	.string "We crossed paths back in RUSTBORO,\n"
+# 859 "data/maps/LilycoveCity/scripts.pory"
+	.string "didn't we?\p"
+# 860 "data/maps/LilycoveCity/scripts.pory"
+	.string "Word travels fast around here.\n"
+# 861 "data/maps/LilycoveCity/scripts.pory"
+	.string "I heard you beat my daughter TERRA\l"
+# 862 "data/maps/LilycoveCity/scripts.pory"
+	.string "in a GYM battle.\p"
+# 863 "data/maps/LilycoveCity/scripts.pory"
+	.string "Not bad at all.$"
+# 864 "data/maps/LilycoveCity/scripts.pory"
+
+# 865 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_Text_RioIntroduces:
+# 866 "data/maps/LilycoveCity/scripts.pory"
+	.string "RIO: Nice to meet you, {PLAYER}.\p"
+# 867 "data/maps/LilycoveCity/scripts.pory"
+	.string "I'm RIO, the GYM LEADER over in\n"
+# 868 "data/maps/LilycoveCity/scripts.pory"
+	.string "SOOTOPOLIS. TERRA's my sibling.$"
+# 869 "data/maps/LilycoveCity/scripts.pory"
+
+# 870 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_Text_MarOldLeader:
+# 871 "data/maps/LilycoveCity/scripts.pory"
+	.string "MAR: That's right. I used to hold\n"
+# 872 "data/maps/LilycoveCity/scripts.pory"
+	.string "that GYM myself, way back when.\p"
+# 873 "data/maps/LilycoveCity/scripts.pory"
+	.string "Passed the torch to RIO a while ago.$"
+# 874 "data/maps/LilycoveCity/scripts.pory"
+
+# 875 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_Text_RioTougherThanDad:
+# 876 "data/maps/LilycoveCity/scripts.pory"
+	.string "RIO: Don't let him fool you, though.\n"
+# 877 "data/maps/LilycoveCity/scripts.pory"
+	.string "I'm way tougher than he ever was.\p"
+# 878 "data/maps/LilycoveCity/scripts.pory"
+	.string "HAHAHA, just kidding... mostly.$"
+# 879 "data/maps/LilycoveCity/scripts.pory"
+
+# 880 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_Text_MarBusyWithImportantThings:
+# 881 "data/maps/LilycoveCity/scripts.pory"
+	.string "MAR: Truth is, neither of us has had\n"
+# 882 "data/maps/LilycoveCity/scripts.pory"
+	.string "much time for GYM business lately.\p"
+# 883 "data/maps/LilycoveCity/scripts.pory"
+	.string "We've got something bigger on\n"
+# 884 "data/maps/LilycoveCity/scripts.pory"
+	.string "our hands these days.$"
+# 885 "data/maps/LilycoveCity/scripts.pory"
+
+# 886 "data/maps/LilycoveCity/scripts.pory"
+LilycoveCity_Text_RioTeamAquaClues:
+# 887 "data/maps/LilycoveCity/scripts.pory"
+	.string "RIO: We left SOOTOPOLIS to look into\n"
+# 888 "data/maps/LilycoveCity/scripts.pory"
+	.string "TEAM AQUA's movements.\p"
+# 889 "data/maps/LilycoveCity/scripts.pory"
+	.string "There's still more to dig up, so\n"
+# 890 "data/maps/LilycoveCity/scripts.pory"
+	.string "we're not sticking around here\l"
+# 891 "data/maps/LilycoveCity/scripts.pory"
+	.string "either.\p"
+# 892 "data/maps/LilycoveCity/scripts.pory"
+	.string "See you around, {PLAYER}.$"

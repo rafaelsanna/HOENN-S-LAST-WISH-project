@@ -778,4 +778,117 @@ LilycoveCity_Text_HoneymoonVowToSeeRarePokemon:
 	.string "POKéMON as soon as we arrived.\p"
 	.string "I mean, we are totally happy!$"
 
+@ ============================================================
+@ MAR & RIO — father and son, passing through Lilycove while
+@ investigating Team Aqua. Simple flag-gated conversation, no
+@ approach/hide choreography needed like the Rustboro scene.
+@ ============================================================
+LilycoveCity_EventScript_LookingForClues::
+	lockall
+	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_LookingForClues_Done
+	call LilycoveCity_EventScript_MarRio_Scene
+	releaseall
+	end
+LilycoveCity_EventScript_LookingForClues_Done::
+	releaseall
+	end
+
+LilycoveCity_EventScript_Mar::
+	lockall
+	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_Mar_Done
+	faceplayer
+	call LilycoveCity_EventScript_MarRio_Scene
+LilycoveCity_EventScript_Mar_Done::
+	releaseall
+	end
+
+LilycoveCity_EventScript_Rio::
+	lockall
+	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_Rio_Done
+	faceplayer
+	call LilycoveCity_EventScript_MarRio_Scene
+LilycoveCity_EventScript_Rio_Done::
+	releaseall
+	end
+
+LilycoveCity_EventScript_MarRio_Scene::
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+	msgbox LilycoveCity_Text_MarRecognizesPlayer, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_RIO, EMOTE_NORMAL
+	msgbox LilycoveCity_Text_RioIntroduces, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+	msgbox LilycoveCity_Text_MarOldLeader, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_RIO, EMOTE_NORMAL
+	msgbox LilycoveCity_Text_RioTougherThanDad, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
+	msgbox LilycoveCity_Text_MarBusyWithImportantThings, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_RIO, EMOTE_NORMAL
+	msgbox LilycoveCity_Text_RioTeamAquaClues, MSGBOX_DEFAULT
+	removefieldmugshot
+	delay 30
+	applymovement LOCALID_LILYCOVE_MAR, LilycoveCity_Movement_MarRioWalkAway
+	applymovement LOCALID_LILYCOVE_RIO, LilycoveCity_Movement_MarRioWalkAway
+	waitmovement 0
+	removeobject LOCALID_LILYCOVE_MAR
+	removeobject LOCALID_LILYCOVE_RIO
+	setflag FLAG_HIDE_MAR_LILI_VISIBILITY
+	return
+
+@ ---- Movement (adjust step count if the path north isn't clear) ----
+
+LilycoveCity_Movement_MarRioWalkAway:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+@ ---- Text ----
+
+LilycoveCity_Text_MarRecognizesPlayer:
+	.string "MAR: Hey, I know that face!\p"
+	.string "We crossed paths back in RUSTBORO,\n"
+	.string "didn't we?\p"
+	.string "Word travels fast around here.\n"
+	.string "I heard you beat my daughter TERRA\l"
+	.string "in a GYM battle.\p"
+	.string "Not bad at all.$"
+
+LilycoveCity_Text_RioIntroduces:
+	.string "RIO: Nice to meet you, {PLAYER}.\p"
+	.string "I'm RIO, the GYM LEADER over in\n"
+	.string "SOOTOPOLIS. TERRA's my sibling.$"
+
+LilycoveCity_Text_MarOldLeader:
+	.string "MAR: That's right. I used to hold\n"
+	.string "that GYM myself, way back when.\p"
+	.string "Passed the torch to RIO a while ago.$"
+
+LilycoveCity_Text_RioTougherThanDad:
+	.string "RIO: Don't let him fool you, though.\n"
+	.string "I'm way tougher than he ever was.\p"
+	.string "HAHAHA, just kidding... mostly.$"
+
+LilycoveCity_Text_MarBusyWithImportantThings:
+	.string "MAR: Truth is, neither of us has had\n"
+	.string "much time for GYM business lately.\p"
+	.string "We've got something bigger on\n"
+	.string "our hands these days.$"
+
+LilycoveCity_Text_RioTeamAquaClues:
+	.string "RIO: We left SOOTOPOLIS to look into\n"
+	.string "TEAM AQUA's movements.\p"
+	.string "There's still more to dig up, so\n"
+	.string "we're not sticking around here\l"
+	.string "either.\p"
+	.string "See you around, {PLAYER}.$"
+
 `

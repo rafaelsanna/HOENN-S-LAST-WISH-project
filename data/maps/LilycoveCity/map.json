@@ -312,6 +312,34 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_EventScript_FatMan",
       "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_LILYCOVE_MAR",
+      "graphics_id": "OBJ_EVENT_GFX_WALLACE",
+      "x": 55,
+      "y": 22,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "LilycoveCity_EventScript_Mar",
+      "flag": "FLAG_HIDE_MAR_LILI_VISIBILITY"
+    },
+    {
+      "local_id": "LOCALID_LILYCOVE_RIO",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ALOMOMOLA)",
+      "x": 55,
+      "y": 23,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "LilycoveCity_EventScript_Rio",
+      "flag": "FLAG_HIDE_MAR_LILI_VISIBILITY"
     }
   ],
   "warp_events": [
@@ -414,7 +442,17 @@
       "dest_warp_id": "1"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 56,
+      "y": 22,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40BB",
+      "var_value": "0",
+      "script": "LilycoveCity_EventScript_LookingForClues"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",
