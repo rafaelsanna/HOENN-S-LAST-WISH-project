@@ -638,7 +638,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Croconaw,
         .frontPicSize = MON_COORDS_SIZE(48, 56),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 5,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 0,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 10),
             ANIMCMD_FRAME(0, 10),
@@ -659,7 +659,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconPalette = gMonIconPalette_Croconaw,
         .shinyIconPalette = gMonShinyIconPalette_Croconaw,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-7, 13, SHADOW_SIZE_L)
+        SHADOW(-10, 13, SHADOW_SIZE_L)
         FOOTPRINT(Croconaw)
         OVERWORLD(
             sPicTable_Croconaw,
@@ -718,7 +718,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .trainerOffset = 7,
         .frontPic = gMonFrontPic_Feraligatr,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 0 : 1,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 0 : 0,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 10),
             ANIMCMD_FRAME(0, 10),
@@ -793,7 +793,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Sentret,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(32, 56) : MON_COORDS_SIZE(40, 64),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 2,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 0,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 50),
             ANIMCMD_FRAME(1, 60),
@@ -2452,7 +2452,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconPalette = gMonIconPalette_Azumarill,
         .shinyIconPalette = gMonShinyIconPalette_Azumarill,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-4, 8, SHADOW_SIZE_S)
+        SHADOW(-5, 11, SHADOW_SIZE_M)
         FOOTPRINT(Azumarill)
         OVERWORLD(
             sPicTable_Azumarill,
@@ -2748,7 +2748,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Skiploom,
         .frontPicSize = MON_COORDS_SIZE(40, 40),
-        .frontPicYOffset = 15,
+        .frontPicYOffset = 21,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 12),
             ANIMCMD_FRAME(0, 12),
@@ -2858,7 +2858,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         .iconPalette = gMonIconPalette_Jumpluff,
         .shinyIconPalette = gMonShinyIconPalette_Jumpluff,
-        SHADOW(-2, 11, SHADOW_SIZE_S)
+        SHADOW(-2, 11, SHADOW_SIZE_M)
         FOOTPRINT(Jumpluff)
         OVERWORLD(
             sPicTable_Jumpluff,
@@ -5083,7 +5083,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Granbull,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(40, 56) : MON_COORDS_SIZE(56, 56),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 4,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 0,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 35),
             ANIMCMD_FRAME(0, 20),
@@ -5091,7 +5091,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .frontAnimId = ANIM_V_SHAKE,
         .backPic = gMonBackPic_Granbull,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(56, 48),
-        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 5 : 8,
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 5 : 4,
         .backAnimId = BACK_ANIM_V_SHAKE,
         .palette = gMonPalette_Granbull,
         .shinyPalette = gMonShinyPalette_Granbull,
@@ -5100,7 +5100,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconPalette = gMonIconPalette_Granbull,
         .shinyIconPalette = gMonShinyIconPalette_Granbull,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(3, 10, SHADOW_SIZE_L)
+        SHADOW(2, 14, SHADOW_SIZE_L)
         FOOTPRINT(Granbull)
         OVERWORLD(
             sPicTable_Granbull,
@@ -5481,7 +5481,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .backPicSizeFemale = MON_COORDS_SIZE(48, 64),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-1, 10, SHADOW_SIZE_M)
+        SHADOW(-1, 11, SHADOW_SIZE_L)
         FOOTPRINT(Heracross)
         OVERWORLD(
             sPicTable_Heracross,
