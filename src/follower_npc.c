@@ -534,7 +534,11 @@ static void Task_FollowerNPCOutOfDoor(u8 taskId)
         task->tDoorTask = FieldAnimateDoorOpen(follower->currentCoords.x, follower->currentCoords.y);
         // Only play SE for animated doors.
         if (task->tDoorTask != -1)
-            PlaySE(GetDoorSoundEffect(*x, *y));
+        {
+            u32 doorSound = GetDoorSoundEffect(*x, *y);
+            if (doorSound != 0)
+                PlaySE(doorSound);
+        }
         task->tState = NPC_WALK_OUT;
         break;
     case NPC_WALK_OUT:

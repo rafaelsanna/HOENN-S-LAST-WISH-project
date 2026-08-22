@@ -737,7 +737,11 @@ void Task_DoDoorWarp(u8 taskId)
         SetFollowerNPCData(FNPC_DATA_COME_OUT_DOOR, FNPC_DOOR_NONE);
         FreezeObjectEvents();
         PlayerGetDestCoords(x, y);
-        PlaySE(GetDoorSoundEffect(*x, *y - 1));
+        {
+            u32 doorSound = GetDoorSoundEffect(*x, *y - 1);
+            if (doorSound != 0)
+                PlaySE(doorSound);
+        }
         if (followerObject)
         {
             // Put follower into pokeball

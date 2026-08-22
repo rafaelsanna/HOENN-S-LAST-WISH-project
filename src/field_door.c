@@ -11,6 +11,7 @@
 #define DOOR_SOUND_NORMAL  0
 #define DOOR_SOUND_SLIDING 1
 #define DOOR_SOUND_ARENA   2
+#define DOOR_SOUND_NONE    3
 
 struct DoorGraphics
 {
@@ -134,6 +135,8 @@ static const u8 sDoorAnimTiles_TrainerHillRoofElevator[] = INCBIN_U8("graphics/d
 static const u16 sDoorNullPalette49[16] = {};
 static const u8 sDoorAnimTiles_CafeDoor[] = INCBIN_U8("graphics/door_anims/cafedoor.4bpp");
 static const u16 sDoorNullPalette50[16] = {};
+static const u8 sDoorAnimTiles_DesertWoodDoor[] = INCBIN_U8("graphics/door_anims/desertwooddoor.4bpp");
+static const u8 sDoorAnimTiles_DesertCurtain[] = INCBIN_U8("graphics/door_anims/desertcurtain.4bpp");
 
 static const struct DoorAnimFrame sDoorOpenAnimFrames[] =
 {
@@ -224,6 +227,8 @@ static const u8 sDoorAnimPalettes_BattleTentInterior[] = {9, 9, 9, 9, 9, 9, 9, 9
 static const u8 sDoorAnimPalettes_TrainerHillLobbyElevator[] = {7, 7, 7, 7, 7, 7, 7, 7};
 static const u8 sDoorAnimPalettes_TrainerHillRoofElevator[] = {9, 9, 7, 7, 7, 7, 7, 7};
 static const u8 sDoorAnimPalettes_CafeDoor[] = {7, 7, 7, 7, 7, 7, 7, 7};
+static const u8 sDoorAnimPalettes_DesertWoodDoor[] = {10, 10, 10, 10, 10, 10, 10, 10};
+static const u8 sDoorAnimPalettes_DesertCurtain[] = {10, 10, 10, 10, 10, 10, 10, 10};
 
 
 static const struct DoorGraphics sDoorAnimGraphicsTable[] =
@@ -285,6 +290,8 @@ static const struct DoorGraphics sDoorAnimGraphicsTable[] =
     {METATILE_TrainerHill_Door_Elevator_Lobby,              DOOR_SOUND_SLIDING, 1, sDoorAnimTiles_TrainerHillLobbyElevator, sDoorAnimPalettes_TrainerHillLobbyElevator},
     {METATILE_TrainerHill_Door_Elevator_Roof,               DOOR_SOUND_SLIDING, 1, sDoorAnimTiles_TrainerHillRoofElevator, sDoorAnimPalettes_TrainerHillRoofElevator},
     {METATILE_hlwcustom1_Cafe_Door,                         DOOR_SOUND_NORMAL,  1, sDoorAnimTiles_CafeDoor, sDoorAnimPalettes_CafeDoor},
+    {METATILE_Desert_wooddoor,                              DOOR_SOUND_NORMAL,  1, sDoorAnimTiles_DesertWoodDoor, sDoorAnimPalettes_DesertWoodDoor},
+    {METATILE_Desert_curtain,                               DOOR_SOUND_NONE,    1, sDoorAnimTiles_DesertCurtain, sDoorAnimPalettes_DesertCurtain},
     {},
 };
 
@@ -561,6 +568,8 @@ u32 GetDoorSoundEffect(u32 x, u32 y)
         return SE_SLIDING_DOOR;
     else if (sound == DOOR_SOUND_ARENA)
         return SE_REPEL;
+    else if (sound == DOOR_SOUND_NONE)
+        return 0;
     else
         return SE_DOOR;
 }
