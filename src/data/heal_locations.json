@@ -205,6 +205,14 @@
       "map": "MAP_ROGUE_CANYON",
       "x": 18,
       "y": 20
+    },
+    {
+      "id": "HEAL_LOCATION_PHOENIX_TOWN",
+      "map": "MAP_PHOENIX_TOWN",
+      "x": 24,
+      "y": 10,
+      "respawn_map": "MAP_PHOENIXPOKECENTER",
+      "respawn_npc": "LOCALID_PHOENIX_NURSE"
     }
   ]
 }

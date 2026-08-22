@@ -49,20 +49,26 @@ EverGrandeCity_SidneysRoom_EventScript_Sidney::
 	clearflag FLAG_PARTY_MENU_PC_ACCESS 
 	goto_if_set FLAG_DEFEATED_ELITE_4_SIDNEY, EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	removefieldmugshot
 	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
 	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
 	end
 
 EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech::
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 	msgbox EverGrandeCity_SidneysRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 EverGrandeCity_SidneysRoom_EventScript_Defeated::
 	setflag FLAG_DEFEATED_ELITE_4_SIDNEY
 	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 	msgbox EverGrandeCity_SidneysRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 

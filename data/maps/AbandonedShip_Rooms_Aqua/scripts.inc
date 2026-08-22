@@ -317,372 +317,384 @@ AbandonedShip_TeamAqua_AfterBattle::
 # 159 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	@ Stella speaks right away -- no awkward silence
 # 160 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	msgbox AbandonedShip_Text_Stella_Arrives, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 161 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	closemessage
+	msgbox AbandonedShip_Text_Stella_Arrives, MSGBOX_DEFAULT
 # 162 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Both look forward together
+	removefieldmugshot
 # 163 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, AbandonedShip_Movement_FaceUp
+	closemessage
 # 164 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	applymovement LOCALID_STELLA, AbandonedShip_Movement_FaceUp
+	@ Both look forward together
 # 165 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, AbandonedShip_Movement_FaceUp
 # 166 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Alejandro decides to back down
+	applymovement LOCALID_STELLA, AbandonedShip_Movement_FaceUp
 # 167 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	msgbox AbandonedShip_Text_Alejandro_Retreats, MSGBOX_DEFAULT
+	waitmovement 0
 # 168 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	closemessage
+	@ Alejandro decides to back down
 # 169 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Alejandro walks toward the exit
+	msgbox AbandonedShip_Text_Alejandro_Retreats, MSGBOX_DEFAULT
 # 170 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	applymovement LOCALID_ALEJANDRO, AbandonedShip_Movement_AlejandroExit
-# 171 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	waitmovement 0
-# 172 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	playse SE_EXIT
-# 173 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Player and Stella look at each other one last time
-# 174 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, AbandonedShip_Movement_PlayerFaceRight
-# 175 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaFaceLeft
-# 176 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	waitmovement 0
-# 177 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Stella gives her final warning
-# 178 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	msgbox AbandonedShip_Text_Stella_Warning, MSGBOX_DEFAULT
-# 179 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	closemessage
-# 180 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Stella walks back out through the door
-# 181 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaExit
-# 182 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+# 171 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	@ Alejandro walks toward the exit
+# 172 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	applymovement LOCALID_ALEJANDRO, AbandonedShip_Movement_AlejandroExit
+# 173 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	waitmovement 0
-# 183 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+# 174 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	playse SE_EXIT
+# 175 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	@ Player and Stella look at each other one last time
+# 176 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	applymovement OBJ_EVENT_ID_PLAYER, AbandonedShip_Movement_PlayerFaceRight
+# 177 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaFaceLeft
+# 178 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	waitmovement 0
+# 179 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	@ Stella gives her final warning
+# 180 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
+# 181 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	msgbox AbandonedShip_Text_Stella_Warning, MSGBOX_DEFAULT
+# 182 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	removefieldmugshot
+# 183 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	closemessage
 # 184 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Hide Stella permanently with her dedicated flag
+	@ Stella walks back out through the door
 # 185 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	removeobject LOCALID_STELLA
+	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaExit
 # 186 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	setflag FLAG_HIDE_ABANDONED_SHIP_ROOMS_STELLA
+	waitmovement 0
 # 187 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	@ Hide Alejandro, grunt, Solgaleo, Petalburg and Route103 blockers
+	playse SE_EXIT
 # 188 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	setflag FLAG_AQUA_GRUNTS_PETALBURG_DONE
+	@ Hide Stella permanently with her dedicated flag
 # 189 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	releaseall
+	removeobject LOCALID_STELLA
 # 190 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	end
+	setflag FLAG_HIDE_ABANDONED_SHIP_ROOMS_STELLA
 # 191 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	@ Hide Alejandro, grunt, Solgaleo, Petalburg and Route103 blockers
 # 192 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_TeamAqua_EventDone::
+	setflag FLAG_AQUA_GRUNTS_PETALBURG_DONE
 # 193 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	end
+	releaseall
 # 194 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	end
 # 195 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+
 # 196 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ PLAYER ENTRY MOVEMENTS -- each ends at x14,y15
+AbandonedShip_TeamAqua_EventDone::
 # 197 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+	end
 # 198 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 
 # 199 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ From x13,y16: right + up → x14,y15
+@ -------------------------------------------------------
 # 200 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_PlayerLeft:
+@ PLAYER ENTRY MOVEMENTS -- each ends at x14,y15
 # 201 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_up
+@ -------------------------------------------------------
 # 202 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_right
+
 # 203 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_up
+@ From x13,y16: right + up → x14,y15
 # 204 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
+AbandonedShip_Movement_PlayerLeft:
 # 205 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	walk_up
 # 206 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ From x14,y16: up only → x14,y15
+	walk_right
 # 207 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_PlayerMid:
+	walk_up
 # 208 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_up
+	step_end
 # 209 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
+
 # 210 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+@ From x14,y16: up only → x14,y15
 # 211 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ From x15,y16: left + up → x14,y15
+AbandonedShip_Movement_PlayerMid:
 # 212 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_PlayerRight:
-# 213 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
- 	walk_up
-# 214 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_left
-# 215 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	walk_up
-# 216 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+# 213 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	step_end
-# 217 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+# 214 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 
+# 215 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+@ From x15,y16: left + up → x14,y15
+# 216 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+AbandonedShip_Movement_PlayerRight:
+# 217 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+ 	walk_up
 # 218 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+	walk_left
 # 219 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ NPC MOVEMENTS
+	walk_up
 # 220 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+	step_end
 # 221 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 
 # 222 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ Alejandro faces DOWN -- player is at x14,y15, Alejandro at x14,y13 (directly above)
+@ -------------------------------------------------------
 # 223 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_AlejandroFacePlayer:
+@ NPC MOVEMENTS
 # 224 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	face_down
+@ -------------------------------------------------------
 # 225 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
-# 226 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 
+# 226 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+@ Alejandro faces DOWN -- player is at x14,y15, Alejandro at x14,y13 (directly above)
 # 227 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ Stella enters: from x14,y18 → ends at x15,y14 (to player's right)
+AbandonedShip_Movement_AlejandroFacePlayer:
 # 228 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_StellaEnter:
+	face_down
 # 229 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_up
+	step_end
 # 230 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_up
+
 # 231 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_right
+@ Stella enters: from x14,y18 → ends at x15,y14 (to player's right)
 # 232 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_up
+AbandonedShip_Movement_StellaEnter:
 # 233 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	walk_up
 # 234 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
-# 235 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
-# 236 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ Shared face_right for player
-# 237 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_PlayerFaceRight:
-# 238 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	face_right
-# 239 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
-# 240 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
-# 241 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ Stella faces left toward player
-# 242 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_StellaFaceLeft:
-# 243 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	face_left
-# 244 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
-# 245 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
-# 246 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ Shared face_up (used for both player and Stella)
-# 247 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_FaceUp:
-# 248 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	face_up
-# 249 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
-# 250 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
-# 251 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ Alejandro exits toward warp at x13,y1
-# 252 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_AlejandroExit:
-# 253 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	walk_up
+# 235 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	walk_right
+# 236 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	walk_up
+# 237 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	walk_up
+# 238 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	step_end
+# 239 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+
+# 240 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+@ Shared face_right for player
+# 241 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+AbandonedShip_Movement_PlayerFaceRight:
+# 242 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	face_right
+# 243 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	step_end
+# 244 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+
+# 245 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+@ Stella faces left toward player
+# 246 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+AbandonedShip_Movement_StellaFaceLeft:
+# 247 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	face_left
+# 248 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	step_end
+# 249 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+
+# 250 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+@ Shared face_up (used for both player and Stella)
+# 251 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+AbandonedShip_Movement_FaceUp:
+# 252 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	face_up
+# 253 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	step_end
 # 254 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_left
+
 # 255 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_left
+@ Alejandro exits toward warp at x13,y1
 # 256 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_left
+AbandonedShip_Movement_AlejandroExit:
 # 257 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_down
+	walk_up
 # 258 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_down
+	walk_left
 # 259 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_down
+	walk_left
 # 260 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_down
+	walk_left
 # 261 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_right
+	walk_down
 # 262 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_right
+	walk_down
 # 263 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	walk_down
 # 264 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	walk_down
 # 265 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
+	walk_right
 # 266 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	walk_right
 # 267 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ Stella exits: from x15,y14 back to x14,y18
+	walk_down
 # 268 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Movement_StellaExit:
+	walk_down
 # 269 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_down
+	step_end
 # 270 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_down
+
 # 271 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_left
+@ Stella exits: from x15,y14 back to x14,y18
 # 272 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	walk_down
+AbandonedShip_Movement_StellaExit:
 # 273 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	walk_down
 # 274 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	step_end
+	walk_down
 # 275 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	walk_left
 # 276 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+	walk_down
 # 277 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ STELLA idle -- if player interacts before cinematic fires
+	walk_down
 # 278 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+	step_end
 # 279 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_TeamAqua_ShipStella::
+
 # 280 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	lock
+@ -------------------------------------------------------
 # 281 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	faceplayer
+@ STELLA idle -- if player interacts before cinematic fires
 # 282 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	msgbox AbandonedShip_Text_Stella_Idle, MSGBOX_DEFAULT
+@ -------------------------------------------------------
 # 283 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	release
+AbandonedShip_TeamAqua_ShipStella::
 # 284 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	end
+	lock
 # 285 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	faceplayer
 # 286 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 287 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ DIALOGUE TEXTS
+	msgbox AbandonedShip_Text_Stella_Idle, MSGBOX_DEFAULT
 # 288 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-@ -------------------------------------------------------
+	removefieldmugshot
 # 289 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Text_Alejandro_Intro:
+	release
 # 290 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "So you made it this far.\p"
+	end
 # 291 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Past our men. Past our locks.\p"
+
 # 292 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "I'll give you that much.\p"
+@ -------------------------------------------------------
 # 293 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Team Aqua doesn't hold grudges\n"
+@ DIALOGUE TEXTS
 # 294 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "against talented people.\l"
+@ -------------------------------------------------------
 # 295 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "We hold leverage.\p"
+AbandonedShip_Text_Alejandro_Intro:
 # 296 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Every port in Hoenn runs on\n"
+	.string "So you made it this far.\p"
 # 297 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "our schedule now.\p"
+	.string "Past our men. Past our locks.\p"
 # 298 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Walk away while you still can.\n"
+	.string "I'll give you that much.\p"
 # 299 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "There won't be a second warning.$"
+	.string "Team Aqua doesn't hold grudges\n"
 # 300 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	.string "against talented people.\l"
 # 301 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Text_Alejandro_Defeat:
+	.string "We hold leverage.\p"
 # 302 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Tch... You've got more bite\n"
+	.string "Every port in Hoenn runs on\n"
 # 303 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "than I expected.\p"
+	.string "our schedule now.\p"
 # 304 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "But this ship is only a piece\n"
+	.string "Walk away while you still can.\n"
 # 305 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "of the bigger picture.\p"
+	.string "There won't be a second warning.$"
 # 306 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "You'll see soon enough.$"
+
 # 307 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+AbandonedShip_Text_Alejandro_Defeat:
 # 308 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Text_Stella_Arrives:
+	.string "Tch... You've got more bite\n"
 # 309 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "STELLA: Are you alright?\p"
+	.string "than I expected.\p"
 # 310 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "I can't believe you made it\n"
+	.string "But this ship is only a piece\n"
 # 311 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "here before me...\p"
+	.string "of the bigger picture.\p"
 # 312 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "I've been tracking this ship\n"
+	.string "You'll see soon enough.$"
 # 313 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "for three days straight.\p"
+
 # 314 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "You shouldn't have come alone.$"
+AbandonedShip_Text_Stella_Arrives:
 # 315 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	.string "STELLA: Are you alright?\p"
 # 316 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Text_Alejandro_Retreats:
+	.string "I can't believe you made it\n"
 # 317 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "INEA: ...\p"
+	.string "here before me...\p"
 # 318 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Stella.\p"
+	.string "I've been tracking this ship\n"
 # 319 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Of all the people to show up.\p"
+	.string "for three days straight.\p"
 # 320 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Two against one, on my own\n"
+	.string "You shouldn't have come alone.$"
 # 321 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "ground. Even I know those odds.\p"
+
 # 322 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "I'm not the kind of fool who\n"
+AbandonedShip_Text_Alejandro_Retreats:
 # 323 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "throws everything away on pride.\p"
+	.string "INEA: ...\p"
 # 324 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Unlike certain Magma admins\n"
+	.string "Stella.\p"
 # 325 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "I could name.\p"
+	.string "Of all the people to show up.\p"
 # 326 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "This ends here. For now.$"
+	.string "Two against one, on my own\n"
 # 327 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-
+	.string "ground. Even I know those odds.\p"
 # 328 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Text_Stella_Warning:
+	.string "I'm not the kind of fool who\n"
 # 329 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "STELLA: Listen carefully.\p"
+	.string "throws everything away on pride.\p"
 # 330 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "What Team Aqua is doing here\n"
+	.string "Unlike certain Magma admins\n"
 # 331 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "isn't just about this ship.\p"
+	.string "I could name.\p"
 # 332 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "They're seizing control of\n"
+	.string "This ends here. For now.$"
 # 333 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "every major shipping lane\l"
-# 334 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "in Hoenn.\p"
-# 335 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Cut the ports, cut the supply\n"
-# 336 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "lines -- the whole region\l"
-# 337 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "goes quiet.\p"
-# 338 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "That's the plan.\n"
-# 339 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "And it's already in motion.\p"
-# 340 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "We can't let them finish it.$"
-# 341 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 
+# 334 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+AbandonedShip_Text_Stella_Warning:
+# 335 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "STELLA: Listen carefully.\p"
+# 336 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "What Team Aqua is doing here\n"
+# 337 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "isn't just about this ship.\p"
+# 338 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "They're seizing control of\n"
+# 339 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "every major shipping lane\l"
+# 340 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "in Hoenn.\p"
+# 341 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "Cut the ports, cut the supply\n"
 # 342 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-AbandonedShip_Text_Stella_Idle:
+	.string "lines -- the whole region\l"
 # 343 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "STELLA: Stay close.\n"
+	.string "goes quiet.\p"
 # 344 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "That's the plan.\n"
+# 345 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "And it's already in motion.\p"
+# 346 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "We can't let them finish it.$"
+# 347 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+
+# 348 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+AbandonedShip_Text_Stella_Idle:
+# 349 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
+	.string "STELLA: Stay close.\n"
+# 350 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "This place isn't safe.$"

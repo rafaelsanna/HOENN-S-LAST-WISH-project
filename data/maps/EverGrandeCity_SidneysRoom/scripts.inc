@@ -101,82 +101,94 @@ EverGrandeCity_SidneysRoom_EventScript_Sidney::
 # 51 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
 # 52 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 # 53 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
+	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 # 54 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
+	removefieldmugshot
 # 55 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	end
+	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
 # 56 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-
+	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
 # 57 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech::
+	end
 # 58 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	msgbox EverGrandeCity_SidneysRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+
 # 59 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	release
+EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech::
 # 60 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	end
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 # 61 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-
-# 62 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-EverGrandeCity_SidneysRoom_EventScript_Defeated::
-# 63 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	setflag FLAG_DEFEATED_ELITE_4_SIDNEY
-# 64 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
-# 65 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	msgbox EverGrandeCity_SidneysRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
-# 66 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+# 62 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+	removefieldmugshot
+# 63 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	release
-# 67 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+# 64 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	end
+# 65 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+
+# 66 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+EverGrandeCity_SidneysRoom_EventScript_Defeated::
+# 67 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+	setflag FLAG_DEFEATED_ELITE_4_SIDNEY
 # 68 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-
+	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
 # 69 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-EverGrandeCity_SidneysRoom_Text_IntroSpeech:
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 # 70 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "TSUBAKI: ...So the one who sensed me\n"
+	msgbox EverGrandeCity_SidneysRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 # 71 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "in the grove has reached this peak.\p"
+	removefieldmugshot
 # 72 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "I am TSUBAKI, no master, no pupil.\n"
+	release
 # 73 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "Simply a blade that moves in shadow.\p"
+	end
 # 74 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "Across Hoenn, I've watched from dark\n"
+
 # 75 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "corners, unseen, unheard...\p"
+EverGrandeCity_SidneysRoom_Text_IntroSpeech:
 # 76 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "Now, before the LEAGUE, I step into\n"
+	.string "TSUBAKI: ...So the one who sensed me\n"
 # 77 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "the light-just this once.\p"
+	.string "in the grove has reached this peak.\p"
 # 78 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "Can you strike one who lives in\n"
+	.string "I am TSUBAKI, no master, no pupil.\n"
 # 79 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "shadows? Come, let's find out.$"
+	.string "Simply a blade that moves in shadow.\p"
 # 80 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-
+	.string "Across Hoenn, I've watched from dark\n"
 # 81 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-EverGrandeCity_SidneysRoom_Text_Defeat:
+	.string "corners, unseen, unheard...\p"
 # 82 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "TSUBAKI: Heh... My shadow...\n"
+	.string "Now, before the LEAGUE, I step into\n"
 # 83 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "couldn't hide from your light...$"
+	.string "the light-just this once.\p"
 # 84 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-
+	.string "Can you strike one who lives in\n"
 # 85 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-EverGrandeCity_SidneysRoom_Text_PostBattleSpeech:
+	.string "shadows? Come, let's find out.$"
 # 86 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "TSUBAKI: You saw through every feint.\n"
+
 # 87 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "Every flicker. Every silence.\p"
+EverGrandeCity_SidneysRoom_Text_Defeat:
 # 88 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "Perhaps you too walk between worlds\n"
+	.string "TSUBAKI: Heh... My shadow...\n"
 # 89 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "light and shadow, seen and unseen.\p"
+	.string "couldn't hide from your light...$"
 # 90 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "Go now. The next room waits.\n"
+
 # 91 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+EverGrandeCity_SidneysRoom_Text_PostBattleSpeech:
+# 92 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+	.string "TSUBAKI: You saw through every feint.\n"
+# 93 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+	.string "Every flicker. Every silence.\p"
+# 94 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+	.string "Perhaps you too walk between worlds\n"
+# 95 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+	.string "light and shadow, seen and unseen.\p"
+# 96 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
+	.string "Go now. The next room waits.\n"
+# 97 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	.string "And I... return to where I belong.$"

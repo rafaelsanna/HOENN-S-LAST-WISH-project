@@ -157,7 +157,9 @@ AbandonedShip_TeamAqua_AfterBattle::
 	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaFaceLeft
 	waitmovement 0
 	@ Stella speaks right away -- no awkward silence
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox AbandonedShip_Text_Stella_Arrives, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	@ Both look forward together
 	applymovement OBJ_EVENT_ID_PLAYER, AbandonedShip_Movement_FaceUp
@@ -175,7 +177,9 @@ AbandonedShip_TeamAqua_AfterBattle::
 	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaFaceLeft
 	waitmovement 0
 	@ Stella gives her final warning
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox AbandonedShip_Text_Stella_Warning, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	@ Stella walks back out through the door
 	applymovement LOCALID_STELLA, AbandonedShip_Movement_StellaExit
@@ -279,7 +283,9 @@ AbandonedShip_Movement_StellaExit:
 AbandonedShip_TeamAqua_ShipStella::
 	lock
 	faceplayer
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox AbandonedShip_Text_Stella_Idle, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 

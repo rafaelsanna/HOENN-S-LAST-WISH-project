@@ -647,756 +647,772 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 324 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_JirachiWarp::
 # 325 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	msgbox LittlerootTown_01_Text_JirachiTimeWarp, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 326 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	closemessage
+	msgbox LittlerootTown_01_Text_JirachiTimeWarp, MSGBOX_DEFAULT
 # 327 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 328 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// === JIRACHI EPIC CUTSCENE ===
-# 329 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	applymovement LOCALID_JIRACHI, LittlerootTown_Movement_JirachiCircleStart
-# 330 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	waitmovement LOCALID_JIRACHI
-# 331 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 332 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	playse SE_M_PSYBEAM
-# 333 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	fadescreenspeed FADE_FROM_WHITE, 12
-# 334 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	delay 20
-# 335 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 336 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	applymovement LOCALID_JIRACHI, LittlerootTown_Movement_JirachiCircleComplete
-# 337 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	waitmovement LOCALID_JIRACHI
-# 338 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 339 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	playse SE_M_MOONLIGHT
-# 340 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	delay 15
-# 341 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	playse SE_M_MORNING_SUN
-# 342 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	fadescreen FADE_TO_BLACK
-# 343 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	delay 60
-# 344 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 345 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// === GAME PROGRESS SETUP ===
-# 346 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_VISITED_LITTLEROOT_TOWN
-# 347 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
-# 348 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
-# 349 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_SET_WALL_CLOCK
-# 350 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_RESCUED_BIRCH
-# 351 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
-# 352 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_SYS_B_DASH
-# 353 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_RECEIVED_RUNNING_SHOES
-# 354 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag 0x44   
-# 355 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_PARTY_MENU_PC_ACCESS         
-# 356 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 357 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setvar VAR_LITTLEROOT_INTRO_STATE, 6
-# 358 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setvar VAR_LITTLEROOT_TOWN_STATE, 4
-# 359 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 360 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	checkplayergender
-# 361 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	compare VAR_RESULT, MALE
-# 362 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	goto_if_eq LittlerootTown_01_WarpMale
-# 363 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	goto LittlerootTown_01_WarpFemale
-# 364 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 365 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_WarpMale::
-# 366 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// MALE Player (Brendan)
-# 367 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Show ONLY player's mom in player's house
-# 368 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
-# 369 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Hide rival mom in player's house
-# 370 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
-# 371 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Hide rival's mom in rival's house
-# 372 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
-# 373 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 374 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Hide the Pokeball in player's house
-# 375 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
-# 376 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 377 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Set rival house state to trigger mom dialogue
-# 378 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1
-# 379 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 380 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Set respawn in player's house
-# 381 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
-# 382 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 383 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Warp to player's house 2F
-# 384 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
-# 385 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	waitstate
-# 386 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	release
-# 387 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	end
-# 388 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 389 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_WarpFemale::
-# 390 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// FEMALE Player (May)
-# 391 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Show ONLY player's mom in player's house
-# 392 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
-# 393 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Hide rival mom in player's house
-# 394 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
-# 395 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Hide rival's mom in rival's house
-# 396 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
-# 397 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 398 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Hide the Pokeball in player's house
-# 399 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
-# 400 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 401 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Set rival house state to trigger mom dialogue
-# 402 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 1
-# 403 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 404 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Set respawn in player's house
-# 405 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
-# 406 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 407 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Warp to player's house 2F
-# 408 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
-# 409 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	waitstate
-# 410 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	release
-# 411 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	end
-# 412 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 413 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Stay::
-# 414 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
-# 415 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	closemessage
-# 416 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 417 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// === RUNNING SHOES ===
-# 418 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_SYS_B_DASH
-# 419 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_RECEIVED_RUNNING_SHOES
-# 420 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 421 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// === CRITICAL SETUP ===
-# 422 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setrespawn HEAL_LOCATION_MOSSDEEP_01
-# 423 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 424 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Let the InsideOfTruck script handle the mom flags
-# 425 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Don't set any mom flags here to avoid conflicts
-# 426 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 427 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_VISITED_LITTLEROOT_TOWN
-# 428 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
-# 429 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
-# 430 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_SET_WALL_CLOCK
-# 431 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setflag FLAG_RESCUED_BIRCH
-# 432 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 433 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setvar VAR_LITTLEROOT_INTRO_STATE, 7
-# 434 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	setvar VAR_LITTLEROOT_TOWN_STATE, 0
-# 435 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 436 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// === FADE TO BLACK (SLEEPING) ===
-# 437 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	fadescreen FADE_TO_BLACK
-# 438 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	delay 60
-# 439 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 440 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// === WARP TO MOSSDEEP01 (INSIDE TENT) ===
-# 441 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	warp MAP_MOSSDEEP01, 14, 64
-# 442 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	waitstate
-# 443 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 444 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	// Continue black (still sleeping)
-# 445 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	delay 80
-# 446 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	
-# 447 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	release
-# 448 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	end
-# 449 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 450 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// Movements
-# 451 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Movement_JirachiCircleStart:
-# 452 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_left
-# 453 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_left
-# 454 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_down
-# 455 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_down
-# 456 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	step_end
-# 457 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 458 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Movement_JirachiCircleComplete:
-# 459 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_right
-# 460 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_right
-# 461 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_up
-# 462 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	walk_up
-# 463 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	step_end
-# 464 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 465 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// Celebi Scripts
-# 466 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_CelebiScript::  
-# 467 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    lockall
-# 468 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    faceplayer
-# 469 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
-# 470 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
-# 471 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	removefieldmugshot
+# 328 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	closemessage
+# 329 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 330 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// === JIRACHI EPIC CUTSCENE ===
+# 331 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	applymovement LOCALID_JIRACHI, LittlerootTown_Movement_JirachiCircleStart
+# 332 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	waitmovement LOCALID_JIRACHI
+# 333 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 334 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	playse SE_M_PSYBEAM
+# 335 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	fadescreenspeed FADE_FROM_WHITE, 12
+# 336 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	delay 20
+# 337 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 338 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	applymovement LOCALID_JIRACHI, LittlerootTown_Movement_JirachiCircleComplete
+# 339 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	waitmovement LOCALID_JIRACHI
+# 340 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 341 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	playse SE_M_MOONLIGHT
+# 342 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	delay 15
+# 343 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	playse SE_M_MORNING_SUN
+# 344 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	fadescreen FADE_TO_BLACK
+# 345 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	delay 60
+# 346 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 347 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// === GAME PROGRESS SETUP ===
+# 348 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_VISITED_LITTLEROOT_TOWN
+# 349 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
+# 350 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
+# 351 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_SET_WALL_CLOCK
+# 352 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_RESCUED_BIRCH
+# 353 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
+# 354 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_SYS_B_DASH
+# 355 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_RECEIVED_RUNNING_SHOES
+# 356 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag 0x44   
+# 357 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_PARTY_MENU_PC_ACCESS         
+# 358 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 359 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setvar VAR_LITTLEROOT_INTRO_STATE, 6
+# 360 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setvar VAR_LITTLEROOT_TOWN_STATE, 4
+# 361 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 362 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	checkplayergender
+# 363 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	compare VAR_RESULT, MALE
+# 364 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	goto_if_eq LittlerootTown_01_WarpMale
+# 365 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	goto LittlerootTown_01_WarpFemale
+# 366 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 367 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_01_WarpMale::
+# 368 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// MALE Player (Brendan)
+# 369 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Show ONLY player's mom in player's house
+# 370 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
+# 371 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Hide rival mom in player's house
+# 372 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+# 373 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Hide rival's mom in rival's house
+# 374 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
+# 375 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 376 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Hide the Pokeball in player's house
+# 377 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
+# 378 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 379 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Set rival house state to trigger mom dialogue
+# 380 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1
+# 381 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 382 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Set respawn in player's house
+# 383 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
+# 384 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 385 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Warp to player's house 2F
+# 386 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
+# 387 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	waitstate
+# 388 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	release
+# 389 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	end
+# 390 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 391 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_01_WarpFemale::
+# 392 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// FEMALE Player (May)
+# 393 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Show ONLY player's mom in player's house
+# 394 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
+# 395 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Hide rival mom in player's house
+# 396 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+# 397 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Hide rival's mom in rival's house
+# 398 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
+# 399 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 400 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Hide the Pokeball in player's house
+# 401 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+# 402 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 403 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Set rival house state to trigger mom dialogue
+# 404 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 1
+# 405 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 406 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Set respawn in player's house
+# 407 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
+# 408 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 409 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Warp to player's house 2F
+# 410 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
+# 411 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	waitstate
+# 412 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	release
+# 413 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	end
+# 414 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 415 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_01_Stay::
+# 416 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	msgbox LittlerootTown_01_Text_No, MSGBOX_DEFAULT
+# 417 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	closemessage
+# 418 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 419 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// === RUNNING SHOES ===
+# 420 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_SYS_B_DASH
+# 421 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_RECEIVED_RUNNING_SHOES
+# 422 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 423 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// === CRITICAL SETUP ===
+# 424 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
+# 425 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 426 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Let the InsideOfTruck script handle the mom flags
+# 427 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Don't set any mom flags here to avoid conflicts
+# 428 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 429 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_VISITED_LITTLEROOT_TOWN
+# 430 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
+# 431 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
+# 432 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_SET_WALL_CLOCK
+# 433 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setflag FLAG_RESCUED_BIRCH
+# 434 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 435 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setvar VAR_LITTLEROOT_INTRO_STATE, 7
+# 436 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	setvar VAR_LITTLEROOT_TOWN_STATE, 0
+# 437 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 438 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// === FADE TO BLACK (SLEEPING) ===
+# 439 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	fadescreen FADE_TO_BLACK
+# 440 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	delay 60
+# 441 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 442 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// === WARP TO MOSSDEEP01 (INSIDE TENT) ===
+# 443 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	warp MAP_MOSSDEEP01, 14, 64
+# 444 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	waitstate
+# 445 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 446 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	// Continue black (still sleeping)
+# 447 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	delay 80
+# 448 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	
+# 449 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	release
+# 450 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	end
+# 451 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 452 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+// Movements
+# 453 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_Movement_JirachiCircleStart:
+# 454 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_left
+# 455 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_left
+# 456 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_down
+# 457 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_down
+# 458 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	step_end
+# 459 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 460 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_Movement_JirachiCircleComplete:
+# 461 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_right
+# 462 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_right
+# 463 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_up
+# 464 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	walk_up
+# 465 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	step_end
+# 466 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 467 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+// Celebi Scripts
+# 468 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_CelebiScript::  
+# 469 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+    lockall
+# 470 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+    faceplayer
+# 471 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
 # 472 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    random 3
+    msgbox LittlerootTown_01_Text_CelebiWarning, MSGBOX_DEFAULT
 # 473 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    switch VAR_RESULT
+	removefieldmugshot
 # 474 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    case 0, LittlerootTown_Celebi_Case0
+    random 3
 # 475 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    case 1, LittlerootTown_Celebi_Case1
+    switch VAR_RESULT
 # 476 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    case 2, LittlerootTown_Celebi_Case2
+    case 0, LittlerootTown_Celebi_Case0
 # 477 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    releaseall
+    case 1, LittlerootTown_Celebi_Case1
 # 478 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    end
+    case 2, LittlerootTown_Celebi_Case2
 # 479 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+    releaseall
 # 480 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Celebi_Case0::
+    end
 # 481 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    lockall
+
 # 482 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    faceplayer
+LittlerootTown_Celebi_Case0::
 # 483 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
+    lockall
 # 484 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
+    faceplayer
 # 485 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	removefieldmugshot 
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
 # 486 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    releaseall
+    msgbox LittlerootTown_01_Text_CelebiLost, MSGBOX_DEFAULT
 # 487 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    end
+	removefieldmugshot 
 # 488 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+    releaseall
 # 489 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Celebi_Case1::
+    end
 # 490 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    lockall
+
 # 491 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    faceplayer
+LittlerootTown_Celebi_Case1::
 # 492 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
-# 493 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    msgbox LittlerootTown_01_Text_CelebiHelp, MSGBOX_DEFAULT
-# 494 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	removefieldmugshot 
-# 495 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    releaseall
-# 496 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    end
-# 497 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
-# 498 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Celebi_Case2::
-# 499 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
     lockall
-# 500 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 493 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
     faceplayer
-# 501 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 494 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
-# 502 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-    msgbox LittlerootTown_01_Text_CelebiForest, MSGBOX_DEFAULT
-# 503 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 495 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+    msgbox LittlerootTown_01_Text_CelebiHelp, MSGBOX_DEFAULT
+# 496 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	removefieldmugshot 
-# 504 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 497 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
     releaseall
-# 505 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+# 498 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
     end
+# 499 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 500 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_Celebi_Case2::
+# 501 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+    lockall
+# 502 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+    faceplayer
+# 503 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL 
+# 504 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+    msgbox LittlerootTown_01_Text_CelebiForest, MSGBOX_DEFAULT
+# 505 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	removefieldmugshot 
 # 506 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+    releaseall
 # 507 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+    end
 # 508 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// Jirachi Scripts
+
 # 509 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_JirachiScript::
+
 # 510 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	lock
+// Jirachi Scripts
 # 511 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	faceplayer
+LittlerootTown_JirachiScript::
 # 512 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	random 3
+	lock
 # 513 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	switch VAR_RESULT
+	faceplayer
 # 514 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	case 0, LittlerootTown_Jirachi_Case0
+	random 3
 # 515 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	case 1, LittlerootTown_Jirachi_Case1
+	switch VAR_RESULT
 # 516 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	case 2, LittlerootTown_Jirachi_Case2
+	case 0, LittlerootTown_Jirachi_Case0
 # 517 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	release
+	case 1, LittlerootTown_Jirachi_Case1
 # 518 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	end
+	case 2, LittlerootTown_Jirachi_Case2
 # 519 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	release
 # 520 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Jirachi_Case0::
+	end
 # 521 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	msgbox LittlerootTown_01_Text_JirachiWish, MSGBOX_DEFAULT
+
 # 522 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	release
+LittlerootTown_Jirachi_Case0::
 # 523 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	end
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 524 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	msgbox LittlerootTown_01_Text_JirachiWish, MSGBOX_DEFAULT
 # 525 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Jirachi_Case1::
+	removefieldmugshot
 # 526 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	msgbox LittlerootTown_01_Text_JirachiSleep, MSGBOX_DEFAULT
+	release
 # 527 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	release
+	end
 # 528 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	end
+
 # 529 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+LittlerootTown_Jirachi_Case1::
 # 530 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Jirachi_Case2::
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 531 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	msgbox LittlerootTown_01_Text_JirachiGrant, MSGBOX_DEFAULT
+	msgbox LittlerootTown_01_Text_JirachiSleep, MSGBOX_DEFAULT
 # 532 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	release
+	removefieldmugshot
 # 533 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	end
+	release
 # 534 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	end
 # 535 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// ====================================================================
+
 # 536 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// TEXTS
+LittlerootTown_Jirachi_Case2::
 # 537 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// ====================================================================
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 538 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	msgbox LittlerootTown_01_Text_JirachiGrant, MSGBOX_DEFAULT
 # 539 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GentleIntroduction:
+	removefieldmugshot
 # 540 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: Do not be alarmed…\n"
+	release
 # 541 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "You are in the DREAM REALM.\p"
+	end
 # 542 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "I will tell you the story of HOENN…\n"
+
 # 543 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The story that shaped our world.$"
+// ====================================================================
 # 544 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+// TEXTS
 # 545 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_JirachiIntro:
+// ====================================================================
 # 546 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: I am the wish POKéMON!\n"
+
 # 547 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "I can warp time and space!\p"
+LittlerootTown_Text_GentleIntroduction:
 # 548 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Before we begin…$"
+	.string "JIRACHI: Do not be alarmed…\n"
 # 549 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "You are in the DREAM REALM.\p"
 # 550 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_JirachiCloseEyes:
+	.string "I will tell you the story of HOENN…\n"
 # 551 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Close your eyes and remember…\n"
+	.string "The story that shaped our world.$"
 # 552 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Remember how it all happened…$"
+
 # 553 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+LittlerootTown_01_Text_JirachiIntro:
 # 554 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_Question:
+	.string "JIRACHI: I am the wish POKéMON!\n"
 # 555 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Skip prologue?$"
+	.string "I can warp time and space!\p"
 # 556 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "Before we begin…$"
 # 557 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_JirachiTimeWarp:
+
 # 558 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: Your wish is my command!\n"
+LittlerootTown_01_Text_JirachiCloseEyes:
 # 559 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "TIME WARP - ACTIVATE!$"
+	.string "Close your eyes and remember…\n"
 # 560 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "Remember how it all happened…$"
 # 561 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_No:
+
 # 562 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Then, start the journey.$"
+LittlerootTown_01_Text_Question:
 # 563 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "Skip prologue?$"
 # 564 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_CelebiWarning:
-# 565 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "CELEBI: {PLAYER}{KUN}…\p"
-# 566 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Do not fear this place.\n"
-# 567 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "What you see is only a dream…\p"
-# 568 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "A fragment of a future that must\n"
-# 569 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "never be allowed to happen.\p"
-# 570 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Walk carefully, traveler.\n"
-# 571 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "HOENN's fate is already shifting.$"
-# 572 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
+# 565 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_01_Text_JirachiTimeWarp:
+# 566 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "JIRACHI: Your wish is my command!\n"
+# 567 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "TIME WARP - ACTIVATE!$"
+# 568 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 569 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_01_Text_No:
+# 570 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "Then, start the journey.$"
+# 571 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 572 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_01_Text_CelebiWarning:
 # 573 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_CelebiLost:
+	.string "CELEBI: {PLAYER}{KUN}…\p"
 # 574 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The forests whisper tales\n"
+	.string "Do not fear this place.\n"
 # 575 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The winds of time are trembling…\p"
+	.string "What you see is only a dream…\p"
 # 576 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "I have seen a HOENN drowned in fire\n"
+	.string "A fragment of a future that must\n"
 # 577 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "and swallowed by ancient storms.\p"
+	.string "never be allowed to happen.\p"
 # 578 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "But that future is not final.\n"
+	.string "Walk carefully, traveler.\n"
 # 579 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Your choices can rewrite it.$"
+	.string "HOENN's fate is already shifting.$"
 # 580 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 581 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+LittlerootTown_01_Text_CelebiLost:
 # 582 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_CelebiHelp:
+	.string "The forests whisper tales\n"
 # 583 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Dreams with the voices of those\n"
+	.string "The winds of time are trembling…\p"
 # 584 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "who still believe in hope…\p"
+	.string "I have seen a HOENN drowned in fire\n"
 # 585 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "You were called because the world\n"
+	.string "and swallowed by ancient storms.\p"
 # 586 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "cannot heal itself alone.\p"
+	.string "But that future is not final.\n"
 # 587 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Walk forward.\n"
+	.string "Your choices can rewrite it.$"
 # 588 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "HOENN is waiting for you.$"
+
 # 589 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 590 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_CelebiForest:
+LittlerootTown_01_Text_CelebiHelp:
 # 591 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "CELEBI: Time flows like a river,\n"
+	.string "Dreams with the voices of those\n"
 # 592 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "but it flows strangely here…\l"
+	.string "who still believe in hope…\p"
 # 593 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "As if past and future overlap.\p"
+	.string "You were called because the world\n"
 # 594 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Follow the path you feel within.\p"
+	.string "cannot heal itself alone.\p"
 # 595 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Your soul remembers the truth,\n"
+	.string "Walk forward.\n"
 # 596 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "even if your mind does not.$"
+	.string "HOENN is waiting for you.$"
 # 597 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 598 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_JirachiWish:
+LittlerootTown_01_Text_CelebiForest:
 # 599 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: I am the Wish POKéMON!\nMake a wish and I might grant it!$"
+	.string "CELEBI: Time flows like a river,\n"
 # 600 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "but it flows strangely here…\l"
 # 601 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_JirachiSleep:
+	.string "As if past and future overlap.\p"
 # 602 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
+	.string "Follow the path you feel within.\p"
 # 603 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "Your soul remembers the truth,\n"
 # 604 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_01_Text_JirachiGrant:
+	.string "even if your mind does not.$"
 # 605 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: They say I can grant any wish!\nWhat would you wish for?$"
+
 # 606 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+LittlerootTown_01_Text_JirachiWish:
 # 607 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "JIRACHI: I am the Wish POKéMON!\nMake a wish and I might grant it!$"
 # 608 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// ====================================================================
+
 # 609 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// OPTIMIZED STORY TEXTS (English - Coherent with All Images)
+LittlerootTown_01_Text_JirachiSleep:
 # 610 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-// ====================================================================
+	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
 # 611 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 612 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory1:
+LittlerootTown_01_Text_JirachiGrant:
 # 613 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "In a forgotten age,\n"
+	.string "JIRACHI: They say I can grant any wish!\nWhat would you wish for?$"
 # 614 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "before the great calamity…$"
+
 # 615 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 616 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory2:
+// ====================================================================
 # 617 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "HOENN was a paradise divided\n"
+// OPTIMIZED STORY TEXTS (English - Coherent with All Images)
 # 618 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "between sea and land…$"
+// ====================================================================
 # 619 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 620 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory3:
+LittlerootTown_Text_GrandmaStory1:
 # 621 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "People and POKéMON lived as one,\n"
+	.string "In a forgotten age,\n"
 # 622 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "their hearts beating in harmony…$"
+	.string "before the great calamity…$"
 # 623 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 624 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory4:
+LittlerootTown_Text_GrandmaStory2:
 # 625 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "A delicate balance maintained\n"
+	.string "HOENN was a paradise divided\n"
 # 626 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "by ancient forces…$"
+	.string "between sea and land…$"
 # 627 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 628 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory5:
+LittlerootTown_Text_GrandmaStory3:
 # 629 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "KYOGRE, deity of the ocean depths,\n"
+	.string "People and POKéMON lived as one,\n"
 # 630 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "keeper of the seas…$"
+	.string "their hearts beating in harmony…$"
 # 631 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 632 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory6:
+LittlerootTown_Text_GrandmaStory4:
 # 633 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "GROUDON, titan of the land,\n"
+	.string "A delicate balance maintained\n"
 # 634 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "master of the continents…$"
+	.string "by ancient forces…$"
 # 635 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 636 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory7:
+LittlerootTown_Text_GrandmaStory5:
 # 637 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Their eternal conflict erupted\n"
+	.string "KYOGRE, deity of the ocean depths,\n"
 # 638 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "into a world-shattering battle…$"
+	.string "keeper of the seas…$"
 # 639 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 640 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory8:
+LittlerootTown_Text_GrandmaStory6:
 # 641 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The seas rose with terrifying floods,\n"
+	.string "GROUDON, titan of the land,\n"
 # 642 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "swallowing coastal cities…$"
+	.string "master of the continents…$"
 # 643 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 644 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory9:
+LittlerootTown_Text_GrandmaStory7:
 # 645 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Colossal tsunamis swept across\n"
+	.string "Their eternal conflict erupted\n"
 # 646 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "what remained of the land…$"
+	.string "into a world-shattering battle…$"
 # 647 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 648 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory10:
+LittlerootTown_Text_GrandmaStory8:
 # 649 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Volcanoes erupted in response,\n"
+	.string "The seas rose with terrifying floods,\n"
 # 650 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "scorching the earth with fire…$"
+	.string "swallowing coastal cities…$"
 # 651 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 652 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory11:
+LittlerootTown_Text_GrandmaStory9:
 # 653 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Cities crumbled to dust and ruins\n"
+	.string "Colossal tsunamis swept across\n"
 # 654 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "under nature's wrath…$"
+	.string "what remained of the land…$"
 # 655 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 656 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory12:
+LittlerootTown_Text_GrandmaStory10:
 # 657 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The land became submerged,\n"
+	.string "Volcanoes erupted in response,\n"
 # 658 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "an archipelago of memories…$"
+	.string "scorching the earth with fire…$"
 # 659 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 660 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory13:
+LittlerootTown_Text_GrandmaStory11:
 # 661 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Rivers of lava flowed where\n"
+	.string "Cities crumbled to dust and ruins\n"
 # 662 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "forests once stood…$"
+	.string "under nature's wrath…$"
 # 663 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 664 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory14:
+LittlerootTown_Text_GrandmaStory12:
 # 665 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "In despair, they turned to legends\n"
+	.string "The land became submerged,\n"
 # 666 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "of time-travel and wish-granting…$"
+	.string "an archipelago of memories…$"
 # 667 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 668 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory15:
+LittlerootTown_Text_GrandmaStory13:
 # 669 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Ancient shrines were built\n"
+	.string "Rivers of lava flowed where\n"
 # 670 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "to mythical guardians…$"
+	.string "forests once stood…$"
 # 671 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 672 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory16:
+LittlerootTown_Text_GrandmaStory14:
 # 673 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI awakened to grant\n"
+	.string "In despair, they turned to legends\n"
 # 674 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "a desperate wish for salvation…$"
+	.string "of time-travel and wish-granting…$"
 # 675 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 676 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaStory17:
+LittlerootTown_Text_GrandmaStory15:
 # 677 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "The MILLENNIUM COMET appeared,\n"
+	.string "Ancient shrines were built\n"
 # 678 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "a celestial beacon of hope…$"
+	.string "to mythical guardians…$"
 # 679 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 680 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_GrandmaEncouragement:
+LittlerootTown_Text_GrandmaStory16:
 # 681 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "This is the world we inherited.\n"
+	.string "JIRACHI awakened to grant\n"
 # 682 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Your journey begins where hope remains…$"
+	.string "a desperate wish for salvation…$"
 # 683 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 684 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+LittlerootTown_Text_GrandmaStory17:
 # 685 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-//////////////////////////////// TALE END ////////////////////////
+	.string "The MILLENNIUM COMET appeared,\n"
 # 686 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+	.string "a celestial beacon of hope…$"
 # 687 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_StoryConclusion:
+
 # 688 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "This is the story of all that happened\n"
+LittlerootTown_Text_GrandmaEncouragement:
 # 689 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "in HOENN…\p"
+	.string "This is the world we inherited.\n"
 # 690 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "And now, only the chosen one can help\n"
+	.string "Your journey begins where hope remains…$"
 # 691 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "change destiny and alter the past,\l"
+
 # 692 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "so the future may be prosperous again…$"
+
 # 693 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-
+//////////////////////////////// TALE END ////////////////////////
 # 694 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_WelcomeToNewWorld:
-# 695 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "Welcome to your new world,\n"
-# 696 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "{PLAYER}!\p"
-# 697 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "A new adventure awaits you!$"
-# 698 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
+# 695 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_Text_StoryConclusion:
+# 696 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "This is the story of all that happened\n"
+# 697 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "in HOENN…\p"
+# 698 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "And now, only the chosen one can help\n"
 # 699 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-LittlerootTown_Text_JirachiContinue:
+	.string "change destiny and alter the past,\l"
 # 700 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: Then let us continue…\n"
+	.string "so the future may be prosperous again…$"
 # 701 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 702 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_Text_WelcomeToNewWorld:
+# 703 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "Welcome to your new world,\n"
+# 704 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "{PLAYER}!\p"
+# 705 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "A new adventure awaits you!$"
+# 706 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+
+# 707 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+LittlerootTown_Text_JirachiContinue:
+# 708 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
+	.string "JIRACHI: Then let us continue…\n"
+# 709 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "Your adventure awaits!$"

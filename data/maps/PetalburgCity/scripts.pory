@@ -56,7 +56,9 @@ PetalburgCity_EventScript_WallyTutorial::
     applymovement LOCALID_PLAYER, PetalburgCity_Movement_WallyTutorialPlayer
     waitmovement 0
     msgbox Route102_Text_WatchMeCatchPokemon, MSGBOX_DEFAULT
+    createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
     msgbox PetalburgCity_Text_WallyIntro, MSGBOX_DEFAULT
+    removefieldmugshot
     closemessage
     setflag B_FLAG_NO_WHITEOUT
     setflag B_FLAG_NO_RUNNING
@@ -67,17 +69,23 @@ PetalburgCity_EventScript_WallyTutorial::
     goto PetalburgCity_EventScript_WallyTutorial_Defeat
 
 PetalburgCity_EventScript_WallyTutorial_Victory::
+    createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
     msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
+    removefieldmugshot
     applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
     waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
     msgbox Route102_Text_LetsGoBack, MSGBOX_DEFAULT
     goto PetalburgCity_EventScript_WallyTutorial_Shared
 
 PetalburgCity_EventScript_WallyTutorial_Defeat::
+    createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
     msgbox PetalburgCity_Text_WallyTutorial_LukaWon, MSGBOX_DEFAULT
+    removefieldmugshot
     applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
     waitmovement LOCALID_PETALBURG_WALLY, MAP_PETALBURG_CITY
+    createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
     msgbox PetalburgCity_Text_WallyTutorial_LukaGoBack, MSGBOX_DEFAULT
+    removefieldmugshot
     setvar VAR_WALLY_TUTORIAL_RESULT, 1
     goto PetalburgCity_EventScript_WallyTutorial_Shared
 
@@ -409,7 +417,9 @@ PetalburgCity_EventScript_LukaAfterGym_Right_Battle::
 
 PetalburgCity_EventScript_LukaAfterGym_StartBattle::
 	setrespawn HEAL_LOCATION_PETALBURG_CITY
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox PetalburgCity_Text_LukaAfterGym_Intro, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	setflag FLAG_LOST_TO_LUKA_AFTER_5GYM
 	trainerbattle_single TRAINER_LUKA_PETALBURG_GYM, PetalburgCity_Text_LukaAfterGym_BattleStart, PetalburgCity_Text_LukaAfterGym_Defeat, PetalburgCity_EventScript_LukaAfterGym_AfterBattle
@@ -417,9 +427,13 @@ PetalburgCity_EventScript_LukaAfterGym_StartBattle::
 
 PetalburgCity_EventScript_LukaAfterGym_AfterBattle::
 	clearflag FLAG_LOST_TO_LUKA_AFTER_5GYM
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox PetalburgCity_Text_LukaAfterGym_PostBattle1, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox PetalburgCity_Text_LukaAfterGym_PostBattle2, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_Exit
 	waitmovement 0

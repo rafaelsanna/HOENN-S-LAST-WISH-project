@@ -649,83 +649,83 @@ OldaleTown_EventScript_ShowRivalMessage::
 # 325 "data/maps/OldaleTown/scripts.pory"
 OldaleTown_EventScript_ShowMayMessage::
 # 326 "data/maps/OldaleTown/scripts.pory"
-	msgbox OldaleTown_Text_MayLetsGoBack, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 327 "data/maps/OldaleTown/scripts.pory"
-	goto OldaleTown_EventScript_RivalFinish
+	msgbox OldaleTown_Text_MayLetsGoBack, MSGBOX_DEFAULT
 # 328 "data/maps/OldaleTown/scripts.pory"
-	end
+	removefieldmugshot
 # 329 "data/maps/OldaleTown/scripts.pory"
-
-# 330 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_EventScript_ShowBrendanMessage::
-# 331 "data/maps/OldaleTown/scripts.pory"
-	msgbox OldaleTown_Text_BrendanLetsGoBack, MSGBOX_DEFAULT
-# 332 "data/maps/OldaleTown/scripts.pory"
 	goto OldaleTown_EventScript_RivalFinish
+# 330 "data/maps/OldaleTown/scripts.pory"
+	end
+# 331 "data/maps/OldaleTown/scripts.pory"
+
+# 332 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_EventScript_ShowBrendanMessage::
 # 333 "data/maps/OldaleTown/scripts.pory"
-	end
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 334 "data/maps/OldaleTown/scripts.pory"
-
+	msgbox OldaleTown_Text_BrendanLetsGoBack, MSGBOX_DEFAULT
 # 335 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_EventScript_RivalFinish::
+	removefieldmugshot
 # 336 "data/maps/OldaleTown/scripts.pory"
-	closemessage
+	goto OldaleTown_EventScript_RivalFinish
 # 337 "data/maps/OldaleTown/scripts.pory"
-	call_if_eq VAR_0x8009, 0, OldaleTown_EventScript_DoExitMovement1
-# 338 "data/maps/OldaleTown/scripts.pory"
-	call_if_eq VAR_0x8009, 1, OldaleTown_EventScript_DoExitMovement2
-# 339 "data/maps/OldaleTown/scripts.pory"
-	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
-# 340 "data/maps/OldaleTown/scripts.pory"
-	waitmovement 0
-# 341 "data/maps/OldaleTown/scripts.pory"
-	removeobject LOCALID_OLDALE_RIVAL
-# 342 "data/maps/OldaleTown/scripts.pory"
-	setvar VAR_OLDALE_RIVAL_STATE, 2
-# 343 "data/maps/OldaleTown/scripts.pory"
-	setflag FLAG_HIDE_OLDALE_TOWN_RIVAL
-# 344 "data/maps/OldaleTown/scripts.pory"
-	releaseall
-# 345 "data/maps/OldaleTown/scripts.pory"
 	end
+# 338 "data/maps/OldaleTown/scripts.pory"
+
+# 339 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_EventScript_RivalFinish::
+# 340 "data/maps/OldaleTown/scripts.pory"
+	closemessage
+# 341 "data/maps/OldaleTown/scripts.pory"
+	call_if_eq VAR_0x8009, 0, OldaleTown_EventScript_DoExitMovement1
+# 342 "data/maps/OldaleTown/scripts.pory"
+	call_if_eq VAR_0x8009, 1, OldaleTown_EventScript_DoExitMovement2
+# 343 "data/maps/OldaleTown/scripts.pory"
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
+# 344 "data/maps/OldaleTown/scripts.pory"
+	waitmovement 0
+# 345 "data/maps/OldaleTown/scripts.pory"
+	removeobject LOCALID_OLDALE_RIVAL
 # 346 "data/maps/OldaleTown/scripts.pory"
-
+	setvar VAR_OLDALE_RIVAL_STATE, 2
 # 347 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_EventScript_DoExitMovement1::
+	setflag FLAG_HIDE_OLDALE_TOWN_RIVAL
 # 348 "data/maps/OldaleTown/scripts.pory"
-	goto_if_ne VAR_FACING, DIR_SOUTH, OldaleTown_EventScript_DoExitMovement2
+	releaseall
 # 349 "data/maps/OldaleTown/scripts.pory"
-	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
+	end
 # 350 "data/maps/OldaleTown/scripts.pory"
-	waitmovement 0
+
 # 351 "data/maps/OldaleTown/scripts.pory"
-	return
+OldaleTown_EventScript_DoExitMovement1::
 # 352 "data/maps/OldaleTown/scripts.pory"
-
+	goto_if_ne VAR_FACING, DIR_SOUTH, OldaleTown_EventScript_DoExitMovement2
 # 353 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_EventScript_DoExitMovement2::
-# 354 "data/maps/OldaleTown/scripts.pory"
-	applymovement LOCALID_PLAYER, OldaleTown_Movement_WatchRivalExit
-# 355 "data/maps/OldaleTown/scripts.pory"
 	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
-# 356 "data/maps/OldaleTown/scripts.pory"
+# 354 "data/maps/OldaleTown/scripts.pory"
 	waitmovement 0
-# 357 "data/maps/OldaleTown/scripts.pory"
+# 355 "data/maps/OldaleTown/scripts.pory"
 	return
+# 356 "data/maps/OldaleTown/scripts.pory"
+
+# 357 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_EventScript_DoExitMovement2::
 # 358 "data/maps/OldaleTown/scripts.pory"
-
+	applymovement LOCALID_PLAYER, OldaleTown_Movement_WatchRivalExit
 # 359 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_RivalApproachPlayer1:
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
 # 360 "data/maps/OldaleTown/scripts.pory"
-	walk_left
+	waitmovement 0
 # 361 "data/maps/OldaleTown/scripts.pory"
-	walk_left
+	return
 # 362 "data/maps/OldaleTown/scripts.pory"
-	step_end
-# 363 "data/maps/OldaleTown/scripts.pory"
 
+# 363 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Movement_RivalApproachPlayer1:
 # 364 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_RivalApproachPlayer2:
+	walk_left
 # 365 "data/maps/OldaleTown/scripts.pory"
 	walk_left
 # 366 "data/maps/OldaleTown/scripts.pory"
@@ -733,356 +733,364 @@ OldaleTown_Movement_RivalApproachPlayer2:
 # 367 "data/maps/OldaleTown/scripts.pory"
 
 # 368 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_RivalApproachPlayer3:
+OldaleTown_Movement_RivalApproachPlayer2:
 # 369 "data/maps/OldaleTown/scripts.pory"
-	face_left
+	walk_left
 # 370 "data/maps/OldaleTown/scripts.pory"
 	step_end
 # 371 "data/maps/OldaleTown/scripts.pory"
 
 # 372 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_RivalExit:
+OldaleTown_Movement_RivalApproachPlayer3:
 # 373 "data/maps/OldaleTown/scripts.pory"
-	walk_down
+	face_left
 # 374 "data/maps/OldaleTown/scripts.pory"
-	walk_down
+	step_end
 # 375 "data/maps/OldaleTown/scripts.pory"
-	walk_down
+
 # 376 "data/maps/OldaleTown/scripts.pory"
-	walk_down
+OldaleTown_Movement_RivalExit:
 # 377 "data/maps/OldaleTown/scripts.pory"
 	walk_down
 # 378 "data/maps/OldaleTown/scripts.pory"
 	walk_down
 # 379 "data/maps/OldaleTown/scripts.pory"
-	step_end
-# 380 "data/maps/OldaleTown/scripts.pory"
-
-# 381 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_WatchRivalExit:
-# 382 "data/maps/OldaleTown/scripts.pory"
-	delay_8
-# 383 "data/maps/OldaleTown/scripts.pory"
-	delay_4
-# 384 "data/maps/OldaleTown/scripts.pory"
-	walk_in_place_faster_down
-# 385 "data/maps/OldaleTown/scripts.pory"
-	step_end
-# 386 "data/maps/OldaleTown/scripts.pory"
-
-# 387 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_PlayerStepBack:
-# 388 "data/maps/OldaleTown/scripts.pory"
-	delay_8
-# 389 "data/maps/OldaleTown/scripts.pory"
-	walk_right
-# 390 "data/maps/OldaleTown/scripts.pory"
-	step_end
-# 391 "data/maps/OldaleTown/scripts.pory"
-
-# 392 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_BackUp:
-# 393 "data/maps/OldaleTown/scripts.pory"
-	walk_fast_up
-# 394 "data/maps/OldaleTown/scripts.pory"
-	walk_in_place_faster_left
-# 395 "data/maps/OldaleTown/scripts.pory"
-	lock_facing_direction
-# 396 "data/maps/OldaleTown/scripts.pory"
-	walk_right
-# 397 "data/maps/OldaleTown/scripts.pory"
-	unlock_facing_direction
-# 398 "data/maps/OldaleTown/scripts.pory"
-	step_end
-# 399 "data/maps/OldaleTown/scripts.pory"
-
-# 400 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Movement_ReturnToOriginalPosition:
-# 401 "data/maps/OldaleTown/scripts.pory"
 	walk_down
-# 402 "data/maps/OldaleTown/scripts.pory"
-	walk_left
-# 403 "data/maps/OldaleTown/scripts.pory"
+# 380 "data/maps/OldaleTown/scripts.pory"
+	walk_down
+# 381 "data/maps/OldaleTown/scripts.pory"
+	walk_down
+# 382 "data/maps/OldaleTown/scripts.pory"
+	walk_down
+# 383 "data/maps/OldaleTown/scripts.pory"
 	step_end
-# 404 "data/maps/OldaleTown/scripts.pory"
+# 384 "data/maps/OldaleTown/scripts.pory"
 
+# 385 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Movement_WatchRivalExit:
+# 386 "data/maps/OldaleTown/scripts.pory"
+	delay_8
+# 387 "data/maps/OldaleTown/scripts.pory"
+	delay_4
+# 388 "data/maps/OldaleTown/scripts.pory"
+	walk_in_place_faster_down
+# 389 "data/maps/OldaleTown/scripts.pory"
+	step_end
+# 390 "data/maps/OldaleTown/scripts.pory"
+
+# 391 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Movement_PlayerStepBack:
+# 392 "data/maps/OldaleTown/scripts.pory"
+	delay_8
+# 393 "data/maps/OldaleTown/scripts.pory"
+	walk_right
+# 394 "data/maps/OldaleTown/scripts.pory"
+	step_end
+# 395 "data/maps/OldaleTown/scripts.pory"
+
+# 396 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Movement_BackUp:
+# 397 "data/maps/OldaleTown/scripts.pory"
+	walk_fast_up
+# 398 "data/maps/OldaleTown/scripts.pory"
+	walk_in_place_faster_left
+# 399 "data/maps/OldaleTown/scripts.pory"
+	lock_facing_direction
+# 400 "data/maps/OldaleTown/scripts.pory"
+	walk_right
+# 401 "data/maps/OldaleTown/scripts.pory"
+	unlock_facing_direction
+# 402 "data/maps/OldaleTown/scripts.pory"
+	step_end
+# 403 "data/maps/OldaleTown/scripts.pory"
+
+# 404 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Movement_ReturnToOriginalPosition:
 # 405 "data/maps/OldaleTown/scripts.pory"
-// ====================================================================
+	walk_down
 # 406 "data/maps/OldaleTown/scripts.pory"
-// SENTRET WITH GIRL - After quest complete
+	walk_left
 # 407 "data/maps/OldaleTown/scripts.pory"
-// ====================================================================
+	step_end
 # 408 "data/maps/OldaleTown/scripts.pory"
 
 # 409 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_EventScript_SentretWithGirl::
+// ====================================================================
 # 410 "data/maps/OldaleTown/scripts.pory"
-    lock
+// SENTRET WITH GIRL - After quest complete
 # 411 "data/maps/OldaleTown/scripts.pory"
-    faceplayer
+// ====================================================================
 # 412 "data/maps/OldaleTown/scripts.pory"
-    msgbox OldaleTown_Text_SentretWithGirlHappy, MSGBOX_DEFAULT
+
 # 413 "data/maps/OldaleTown/scripts.pory"
-    playmoncry SPECIES_SENTRET, CRY_MODE_NORMAL
+OldaleTown_EventScript_SentretWithGirl::
 # 414 "data/maps/OldaleTown/scripts.pory"
-    waitmoncry
+    lock
 # 415 "data/maps/OldaleTown/scripts.pory"
-    release
+    faceplayer
 # 416 "data/maps/OldaleTown/scripts.pory"
-    end
+    msgbox OldaleTown_Text_SentretWithGirlHappy, MSGBOX_DEFAULT
 # 417 "data/maps/OldaleTown/scripts.pory"
-
+    playmoncry SPECIES_SENTRET, CRY_MODE_NORMAL
 # 418 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_SentretWithGirlHappy:
+    waitmoncry
 # 419 "data/maps/OldaleTown/scripts.pory"
-    .string "SENTRET: Sent! Sentret!\n"
+    release
 # 420 "data/maps/OldaleTown/scripts.pory"
-    .string "He plays happily at the girl's feet.\p"
+    end
 # 421 "data/maps/OldaleTown/scripts.pory"
-    .string "They look so content together!$"	
+
 # 422 "data/maps/OldaleTown/scripts.pory"
-
+OldaleTown_Text_SentretWithGirlHappy:
 # 423 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_SavingMyProgress:
+    .string "SENTRET: Sent! Sentret!\n"
 # 424 "data/maps/OldaleTown/scripts.pory"
-	.string "You look familiar, but also kind of\n"
+    .string "He plays happily at the girl's feet.\p"
 # 425 "data/maps/OldaleTown/scripts.pory"
-	.string "strange…\p"
+    .string "They look so content together!$"	
 # 426 "data/maps/OldaleTown/scripts.pory"
-	.string "Oh, sorry, that was a rude thing to say,\n"
+
 # 427 "data/maps/OldaleTown/scripts.pory"
-	.string "wasn't it?\p"
+OldaleTown_Text_SavingMyProgress:
 # 428 "data/maps/OldaleTown/scripts.pory"
-	.string "I've just been getting this strange\n"
+	.string "You look familiar, but also kind of\n"
 # 429 "data/maps/OldaleTown/scripts.pory"
-	.string "feeling since I saw the meteor…\p"
+	.string "strange…\p"
 # 430 "data/maps/OldaleTown/scripts.pory"
-	.string "Even this town feels different.$"
+	.string "Oh, sorry, that was a rude thing to say,\n"
 # 431 "data/maps/OldaleTown/scripts.pory"
-
+	.string "wasn't it?\p"
 # 432 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_PieceofMind:
+	.string "I've just been getting this strange\n"
 # 433 "data/maps/OldaleTown/scripts.pory"
-	.string "I just want some peace of mind.\n"
+	.string "feeling since I saw the meteor…\p"
 # 434 "data/maps/OldaleTown/scripts.pory"
-	.string "Calm, quiet days without any rush.\p"
+	.string "Even this town feels different.$"
 # 435 "data/maps/OldaleTown/scripts.pory"
-	.string "I don't like spending all day on\n"
+
 # 436 "data/maps/OldaleTown/scripts.pory"
-	.string "computers or watching TV.\p"
+OldaleTown_Text_PieceofMind:
 # 437 "data/maps/OldaleTown/scripts.pory"
-	.string "Here in OLDALE, time moves slowly.\n"
+	.string "I just want some peace of mind.\n"
 # 438 "data/maps/OldaleTown/scripts.pory"
-	.string "I feel truly at ease.\p"
+	.string "Calm, quiet days without any rush.\p"
 # 439 "data/maps/OldaleTown/scripts.pory"
-	.string "I would never trade this for\n"
+	.string "I don't like spending all day on\n"
 # 440 "data/maps/OldaleTown/scripts.pory"
-	.string "a hectic life in the big city.$"
+	.string "computers or watching TV.\p"
 # 441 "data/maps/OldaleTown/scripts.pory"
-
+	.string "Here in OLDALE, time moves slowly.\n"
 # 442 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_IWorkAtPokemonMart:
+	.string "I feel truly at ease.\p"
 # 443 "data/maps/OldaleTown/scripts.pory"
-	.string "Hi!\n"
+	.string "I would never trade this for\n"
 # 444 "data/maps/OldaleTown/scripts.pory"
-	.string "I work at a POKéMON MART.\p"
+	.string "a hectic life in the big city.$"
 # 445 "data/maps/OldaleTown/scripts.pory"
-	.string "Can I get you to come with me?$"
+
 # 446 "data/maps/OldaleTown/scripts.pory"
-
+OldaleTown_Text_IWorkAtPokemonMart:
 # 447 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_ThisIsAPokemonMart:
+	.string "Hi!\n"
 # 448 "data/maps/OldaleTown/scripts.pory"
-	.string "This is a POKéMON MART.\n"
+	.string "I work at a POKéMON MART.\p"
 # 449 "data/maps/OldaleTown/scripts.pory"
-	.string "Just look for our blue roof.\p"
+	.string "Can I get you to come with me?$"
 # 450 "data/maps/OldaleTown/scripts.pory"
-	.string "We sell a variety of goods including\n"
+
 # 451 "data/maps/OldaleTown/scripts.pory"
-	.string "POKé BALLS for catching POKéMON.\p"
+OldaleTown_Text_ThisIsAPokemonMart:
 # 452 "data/maps/OldaleTown/scripts.pory"
-	.string "Here, I'd like you to have this as\n"
+	.string "This is a POKéMON MART.\n"
 # 453 "data/maps/OldaleTown/scripts.pory"
-	.string "a promotional item.$"
+	.string "Just look for our blue roof.\p"
 # 454 "data/maps/OldaleTown/scripts.pory"
-
+	.string "We sell a variety of goods including\n"
 # 455 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_PotionExplanation:
+	.string "POKé BALLS for catching POKéMON.\p"
 # 456 "data/maps/OldaleTown/scripts.pory"
-	.string "A POTION can be used anytime, so it's\n"
+	.string "Here, I'd like you to have this as\n"
 # 457 "data/maps/OldaleTown/scripts.pory"
-	.string "even more useful than a POKéMON CENTER\l"
+	.string "a promotional item.$"
 # 458 "data/maps/OldaleTown/scripts.pory"
-	.string "in certain situations.$"
+
 # 459 "data/maps/OldaleTown/scripts.pory"
-
+OldaleTown_Text_PotionExplanation:
 # 460 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_WaitDontComeInHere:
+	.string "A POTION can be used anytime, so it's\n"
 # 461 "data/maps/OldaleTown/scripts.pory"
-	.string "Waaaaaait! Stop right there!\p"
+	.string "even more useful than a POKéMON CENTER\l"
 # 462 "data/maps/OldaleTown/scripts.pory"
-	.string "PROFESSOR ACACIA asked me to check\n"
+	.string "in certain situations.$"
 # 463 "data/maps/OldaleTown/scripts.pory"
-	.string "this area.\p"
+
 # 464 "data/maps/OldaleTown/scripts.pory"
-	.string "A piece of the meteor might have broken\n"
+OldaleTown_Text_WaitDontComeInHere:
 # 465 "data/maps/OldaleTown/scripts.pory"
-	.string "off and landed here!\p"
+	.string "Waaaaaait! Stop right there!\p"
 # 466 "data/maps/OldaleTown/scripts.pory"
-	.string "This opportunity only comes once in a\n"
-# 467 "data/maps/OldaleTown/scripts.pory"
-	.string "millennium, so please let us work!$"
-# 468 "data/maps/OldaleTown/scripts.pory"
-
-# 469 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_DiscoveredFootprints:
-# 470 "data/maps/OldaleTown/scripts.pory"
-	.string "Hey, you there!\n"
-# 471 "data/maps/OldaleTown/scripts.pory"
-	.string "Stop right now!\p"
-# 472 "data/maps/OldaleTown/scripts.pory"
 	.string "PROFESSOR ACACIA asked me to check\n"
-# 473 "data/maps/OldaleTown/scripts.pory"
+# 467 "data/maps/OldaleTown/scripts.pory"
 	.string "this area.\p"
-# 474 "data/maps/OldaleTown/scripts.pory"
+# 468 "data/maps/OldaleTown/scripts.pory"
 	.string "A piece of the meteor might have broken\n"
-# 475 "data/maps/OldaleTown/scripts.pory"
+# 469 "data/maps/OldaleTown/scripts.pory"
 	.string "off and landed here!\p"
-# 476 "data/maps/OldaleTown/scripts.pory"
+# 470 "data/maps/OldaleTown/scripts.pory"
 	.string "This opportunity only comes once in a\n"
+# 471 "data/maps/OldaleTown/scripts.pory"
+	.string "millennium, so please let us work!$"
+# 472 "data/maps/OldaleTown/scripts.pory"
+
+# 473 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Text_DiscoveredFootprints:
+# 474 "data/maps/OldaleTown/scripts.pory"
+	.string "Hey, you there!\n"
+# 475 "data/maps/OldaleTown/scripts.pory"
+	.string "Stop right now!\p"
+# 476 "data/maps/OldaleTown/scripts.pory"
+	.string "PROFESSOR ACACIA asked me to check\n"
 # 477 "data/maps/OldaleTown/scripts.pory"
-	.string "millennium!\p"
+	.string "this area.\p"
 # 478 "data/maps/OldaleTown/scripts.pory"
-	.string "And you, with that… strange outfit.\n"
+	.string "A piece of the meteor might have broken\n"
 # 479 "data/maps/OldaleTown/scripts.pory"
-	.string "Are you even from around here?\p"
+	.string "off and landed here!\p"
 # 480 "data/maps/OldaleTown/scripts.pory"
-	.string "I can't let you pass until I'm sure\n"
+	.string "This opportunity only comes once in a\n"
 # 481 "data/maps/OldaleTown/scripts.pory"
-	.string "you're not a threat to the research.$"
+	.string "millennium!\p"
 # 482 "data/maps/OldaleTown/scripts.pory"
-
+	.string "And you, with that… strange outfit.\n"
 # 483 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_FinishedSketchingFootprints:
+	.string "Are you even from around here?\p"
 # 484 "data/maps/OldaleTown/scripts.pory"
-	.string "Not a single clue…\p"
+	.string "I can't let you pass until I'm sure\n"
 # 485 "data/maps/OldaleTown/scripts.pory"
-	.string "We found nothing here.\n"
+	.string "you're not a threat to the research.$"
 # 486 "data/maps/OldaleTown/scripts.pory"
-	.string "No pieces of the MILLENNIUM COMET.\p"
+
 # 487 "data/maps/OldaleTown/scripts.pory"
-	.string "I guess I can let you through, now.\p"
+OldaleTown_Text_FinishedSketchingFootprints:
 # 488 "data/maps/OldaleTown/scripts.pory"
-	.string "MILLENNIUM COMET anywhere.\p"
+	.string "Not a single clue…\p"
 # 489 "data/maps/OldaleTown/scripts.pory"
-	.string "It's a long shot, but if you learn\n"
+	.string "We found nothing here.\n"
 # 490 "data/maps/OldaleTown/scripts.pory"
-	.string "anything about the comet, please\l"
+	.string "No pieces of the MILLENNIUM COMET.\p"
 # 491 "data/maps/OldaleTown/scripts.pory"
-	.string "tell me.\p"
+	.string "I guess I can let you through, now.\p"
 # 492 "data/maps/OldaleTown/scripts.pory"
-	.string "I've studied for years, but this…\p"
+	.string "MILLENNIUM COMET anywhere.\p"
 # 493 "data/maps/OldaleTown/scripts.pory"
-	.string "This could be the discovery of a\n"
+	.string "It's a long shot, but if you learn\n"
 # 494 "data/maps/OldaleTown/scripts.pory"
-	.string "lifetime.$"
+	.string "anything about the comet, please\l"
 # 495 "data/maps/OldaleTown/scripts.pory"
-
+	.string "tell me.\p"
 # 496 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_MayLetsGoBack:
+	.string "I've studied for years, but this…\p"
 # 497 "data/maps/OldaleTown/scripts.pory"
-	.string "ZINNIA: {PLAYER}{KUN}!\n"
+	.string "This could be the discovery of a\n"
 # 498 "data/maps/OldaleTown/scripts.pory"
-	.string "Over here!\l"
+	.string "lifetime.$"
 # 499 "data/maps/OldaleTown/scripts.pory"
-	.string "Let's hurry!$"
+
 # 500 "data/maps/OldaleTown/scripts.pory"
-
+OldaleTown_Text_MayLetsGoBack:
 # 501 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_BrendanLetsGoBack:
+	.string "ZINNIA: {PLAYER}{KUN}!\n"
 # 502 "data/maps/OldaleTown/scripts.pory"
-	.string "ZENNO: {PLAYER}{KUN}!\n"
-# 503 "data/maps/OldaleTown/scripts.pory"
 	.string "Over here!\l"
-# 504 "data/maps/OldaleTown/scripts.pory"
+# 503 "data/maps/OldaleTown/scripts.pory"
 	.string "Let's hurry!$"
-# 505 "data/maps/OldaleTown/scripts.pory"
+# 504 "data/maps/OldaleTown/scripts.pory"
 
+# 505 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Text_BrendanLetsGoBack:
 # 506 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_TownSign:
+	.string "ZENNO: {PLAYER}{KUN}!\n"
 # 507 "data/maps/OldaleTown/scripts.pory"
-	.string "OLDALE TOWN\n"
+	.string "Over here!\l"
 # 508 "data/maps/OldaleTown/scripts.pory"
-	.string "“Where things start off scarce.”$"
+	.string "Let's hurry!$"
 # 509 "data/maps/OldaleTown/scripts.pory"
 
 # 510 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_ShopSign:
+OldaleTown_Text_TownSign:
 # 511 "data/maps/OldaleTown/scripts.pory"
-	.string "OLDALE SHOP\n"
+	.string "OLDALE TOWN\n"
 # 512 "data/maps/OldaleTown/scripts.pory"
-	.string "“We got cool stuff!”$"
+	.string "“Where things start off scarce.”$"
 # 513 "data/maps/OldaleTown/scripts.pory"
 
 # 514 "data/maps/OldaleTown/scripts.pory"
-// ====================================================================
+OldaleTown_Text_ShopSign:
 # 515 "data/maps/OldaleTown/scripts.pory"
-// Sentret Quest Text
+	.string "OLDALE SHOP\n"
 # 516 "data/maps/OldaleTown/scripts.pory"
-// ====================================================================
+	.string "“We got cool stuff!”$"
 # 517 "data/maps/OldaleTown/scripts.pory"
 
 # 518 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_LostMySentret:
+// ====================================================================
 # 519 "data/maps/OldaleTown/scripts.pory"
-	.string "Oh no, oh no, oh no!\n"
+// Sentret Quest Text
 # 520 "data/maps/OldaleTown/scripts.pory"
-	.string "My SENTRET ran away!\p"
+// ====================================================================
 # 521 "data/maps/OldaleTown/scripts.pory"
-	.string "He's not like the others…\n"
+
 # 522 "data/maps/OldaleTown/scripts.pory"
-	.string "He's SHINY! His fur sparkles!\p"
+OldaleTown_Text_LostMySentret:
 # 523 "data/maps/OldaleTown/scripts.pory"
-	.string "Please, if you see him anywhere,\n"
+	.string "Oh no, oh no, oh no!\n"
 # 524 "data/maps/OldaleTown/scripts.pory"
-	.string "bring him back to me!$"
+	.string "My SENTRET ran away!\p"
 # 525 "data/maps/OldaleTown/scripts.pory"
-
+	.string "He's not like the others…\n"
 # 526 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_YouFoundHim:
+	.string "He's SHINY! His fur sparkles!\p"
 # 527 "data/maps/OldaleTown/scripts.pory"
-	.string "Oh! You found my SENTRET!\n"
+	.string "Please, if you see him anywhere,\n"
 # 528 "data/maps/OldaleTown/scripts.pory"
-	.string "Is he okay? Is he hurt?\p"
+	.string "bring him back to me!$"
 # 529 "data/maps/OldaleTown/scripts.pory"
-	.string "Thank you so much for bringing\n"
-# 530 "data/maps/OldaleTown/scripts.pory"
-	.string "him back to me!$"
-# 531 "data/maps/OldaleTown/scripts.pory"
 
+# 530 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Text_YouFoundHim:
+# 531 "data/maps/OldaleTown/scripts.pory"
+	.string "Oh! You found my SENTRET!\n"
 # 532 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_HereIsYourReward:
+	.string "Is he okay? Is he hurt?\p"
 # 533 "data/maps/OldaleTown/scripts.pory"
-	.string "Here, please take this as a reward\n"
+	.string "Thank you so much for bringing\n"
 # 534 "data/maps/OldaleTown/scripts.pory"
-	.string "for helping us reunite!$"
+	.string "him back to me!$"
 # 535 "data/maps/OldaleTown/scripts.pory"
 
 # 536 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_SentretIsHappy:
+OldaleTown_Text_HereIsYourReward:
 # 537 "data/maps/OldaleTown/scripts.pory"
-	.string "SENTRET: Sent! Sentret!\n"
+	.string "Here, please take this as a reward\n"
 # 538 "data/maps/OldaleTown/scripts.pory"
-	.string "He happily nuzzles against the girl!\p"
+	.string "for helping us reunite!$"
 # 539 "data/maps/OldaleTown/scripts.pory"
-	.string "They look so happy together!$"
-# 540 "data/maps/OldaleTown/scripts.pory"
 
+# 540 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Text_SentretIsHappy:
 # 541 "data/maps/OldaleTown/scripts.pory"
-OldaleTown_Text_ThankYouForReturning:
+	.string "SENTRET: Sent! Sentret!\n"
 # 542 "data/maps/OldaleTown/scripts.pory"
-	.string "My SENTRET and I will never be\n"
+	.string "He happily nuzzles against the girl!\p"
 # 543 "data/maps/OldaleTown/scripts.pory"
-	.string "separated again!\p"
+	.string "They look so happy together!$"
 # 544 "data/maps/OldaleTown/scripts.pory"
+
+# 545 "data/maps/OldaleTown/scripts.pory"
+OldaleTown_Text_ThankYouForReturning:
+# 546 "data/maps/OldaleTown/scripts.pory"
+	.string "My SENTRET and I will never be\n"
+# 547 "data/maps/OldaleTown/scripts.pory"
+	.string "separated again!\p"
+# 548 "data/maps/OldaleTown/scripts.pory"
 	.string "Thank you so much for everything!$"

@@ -276,20 +276,28 @@ RivalsHouse_2F_EventScript_RivalPostLilycove::
 
 RivalsHouse_2F_EventScript_MayPostLilycove::
 	goto_if_set FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, RivalsHouse_2F_EventScript_MayWhereShouldIGoNext
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RivalsHouse_2F_Text_MayJustCheckingMyPokedex, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 RivalsHouse_2F_EventScript_BrendanPostLilycove::
 	goto_if_set FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 RivalsHouse_2F_EventScript_MayWhereShouldIGoNext::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox RivalsHouse_2F_Text_MayWhereShouldIGoNext, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox RivalsHouse_2F_Text_BrendanWhereShouldIGoNext, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 LittlerootTown_MaysHouse_2F_EventScript_PC::

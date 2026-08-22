@@ -4930,6 +4930,26 @@
       "secondary_tileset": "gTileset_Desert",
       "border_filepath": "data/layouts/PhoenixTown/border.bin",
       "blockdata_filepath": "data/layouts/PhoenixTown/map.bin"
+    },
+    {
+      "id": "LAYOUT_PHOENIXPOKECENTER",
+      "name": "PHOENIXPOKECENTER_Layout",
+      "width": 14,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonCenter",
+      "border_filepath": "data/layouts/PHOENIXPOKECENTER/border.bin",
+      "blockdata_filepath": "data/layouts/PHOENIXPOKECENTER/map.bin"
+    },
+    {
+      "id": "LAYOUT_PHOENIXPOKEMART",
+      "name": "PHOENIXPOKEMART_Layout",
+      "width": 14,
+      "height": 11,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/PHOENIXPOKEMART/border.bin",
+      "blockdata_filepath": "data/layouts/PHOENIXPOKEMART/map.bin"
     }
   ]
 }

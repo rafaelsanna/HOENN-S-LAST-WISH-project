@@ -38,12 +38,16 @@ EverGrandeCity_EventScript_RivalBeforeE4::
 	end
 
 EverGrandeCity_EventScript_ZinniaPreBattle::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox EverGrandeCity_Text_ZinniaPreBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto EverGrandeCity_EventScript_MayBattle
 	end
 
 EverGrandeCity_EventScript_ZennoPreBattle::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox EverGrandeCity_Text_ZennoPreBattle, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto EverGrandeCity_EventScript_BrendanBattle
 	end
 
@@ -148,12 +152,16 @@ EverGrandeCity_EventScript_RivalAfterBattle::
 	end
 
 EverGrandeCity_EventScript_ZinniaFarewell::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 	msgbox EverGrandeCity_Text_ZinniaFarewell, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto EverGrandeCity_EventScript_RivalLeave
 	end
 
 EverGrandeCity_EventScript_ZennoFarewell::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 	msgbox EverGrandeCity_Text_ZennoFarewell, MSGBOX_DEFAULT
+	removefieldmugshot
 	goto EverGrandeCity_EventScript_RivalLeave
 	end
 

@@ -34,7 +34,8 @@
     "gMapGroup_IndoorRoute123",
     "gMapGroup_IndoorRoute119",
     "gMapGroup_IndoorRoute124",
-    "gMapGroup_HiddenGrottos"
+    "gMapGroup_HiddenGrottos",
+    "gMapGroup_IndoorPhoenix"
   ],
   "gMapGroup_TownsAndRoutes": [
     "FortreeCity",
@@ -674,5 +675,9 @@
     "Beach",
     "CaveGrotto",
     "PetalburgWoodsEastGrotto"
+  ],
+  "gMapGroup_IndoorPhoenix": [
+    "PHOENIXPOKECENTER",
+    "PHOENIXPOKEMART"
   ]
 }

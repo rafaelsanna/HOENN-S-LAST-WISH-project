@@ -555,250 +555,266 @@ RivalsHouse_2F_EventScript_MayPostLilycove::
 # 278 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	goto_if_set FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, RivalsHouse_2F_EventScript_MayWhereShouldIGoNext
 # 279 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	msgbox RivalsHouse_2F_Text_MayJustCheckingMyPokedex, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 280 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	return
+	msgbox RivalsHouse_2F_Text_MayJustCheckingMyPokedex, MSGBOX_DEFAULT
 # 281 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	removefieldmugshot
 # 282 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_EventScript_BrendanPostLilycove::
-# 283 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	goto_if_set FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext
-# 284 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	msgbox RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex, MSGBOX_DEFAULT
-# 285 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	return
-# 286 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 283 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 
+# 284 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+RivalsHouse_2F_EventScript_BrendanPostLilycove::
+# 285 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	goto_if_set FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext
+# 286 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 287 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_EventScript_MayWhereShouldIGoNext::
+	msgbox RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex, MSGBOX_DEFAULT
 # 288 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	msgbox RivalsHouse_2F_Text_MayWhereShouldIGoNext, MSGBOX_DEFAULT
+	removefieldmugshot
 # 289 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	return
 # 290 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 
 # 291 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext::
+RivalsHouse_2F_EventScript_MayWhereShouldIGoNext::
 # 292 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	msgbox RivalsHouse_2F_Text_BrendanWhereShouldIGoNext, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 293 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	return
+	msgbox RivalsHouse_2F_Text_MayWhereShouldIGoNext, MSGBOX_DEFAULT
 # 294 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	removefieldmugshot
 # 295 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-LittlerootTown_MaysHouse_2F_EventScript_PC::
+	return
 # 296 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	lockall
+
 # 297 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	checkplayergender
+RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext::
 # 298 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 299 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC
+	msgbox RivalsHouse_2F_Text_BrendanWhereShouldIGoNext, MSGBOX_DEFAULT
 # 300 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	end
+	removefieldmugshot
 # 301 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	return
 # 302 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC::
+
 # 303 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	msgbox gText_PokemonTrainerSchoolEmail, MSGBOX_DEFAULT
+LittlerootTown_MaysHouse_2F_EventScript_PC::
 # 304 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	releaseall
+	lockall
 # 305 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	end
+	checkplayergender
 # 306 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC
 # 307 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC::
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC
 # 308 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	setvar VAR_0x8004, PC_LOCATION_MAYS_HOUSE
+	end
 # 309 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	special DoPCTurnOnEffect
+
 # 310 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	playse SE_PC_ON
+LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC::
 # 311 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	msgbox gText_PlayerHouseBootPC, MSGBOX_DEFAULT
+	msgbox gText_PokemonTrainerSchoolEmail, MSGBOX_DEFAULT
 # 312 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	special BedroomPC
+	releaseall
 # 313 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	waitstate
+	end
 # 314 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	releaseall
+
 # 315 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	end
+LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC::
 # 316 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
-# 317 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC::
-# 318 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	setvar VAR_0x8004, PC_LOCATION_MAYS_HOUSE
+# 317 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	special DoPCTurnOnEffect
+# 318 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	playse SE_PC_ON
 # 319 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	playse SE_PC_OFF
+	msgbox gText_PlayerHouseBootPC, MSGBOX_DEFAULT
 # 320 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	special DoPCTurnOffEffect
+	special BedroomPC
 # 321 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	releaseall
+	waitstate
 # 322 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	end
+	releaseall
 # 323 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	end
 # 324 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_MayWhoAreYou:
+
 # 325 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Oh, hey {PLAYER}!\n"
+LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC::
 # 326 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "What are you doing here?\p"
+	setvar VAR_0x8004, PC_LOCATION_MAYS_HOUSE
 # 327 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Oh, but nevermind that.\n"
+	playse SE_PC_OFF
 # 328 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Did you see the comet last night?\p"
+	special DoPCTurnOffEffect
 # 329 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "It lit up the entire sky!\n"
+	releaseall
 # 330 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "It was so beautiful…\p"
+	end
 # 331 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I made a wish when I saw it.\n"
+
 # 332 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Got goosebumps all over!\p"
+RivalsHouse_2F_Text_MayWhoAreYou:
 # 333 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Anyway… I gotta go!\n"
-# 334 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I'm going to train on ROUTE 103.\p"
-# 335 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "PROFESSOR ACACIA says we both have\n"
-# 336 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "a lot of potential as TRAINERS.\p"
-# 337 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Wouldn't want to let her down!\n"
-# 338 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "See you later, {PLAYER}!$"
-# 339 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
-# 340 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_MayGettingReady:
-# 341 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Studying about the millennium comet…\n"
-# 342 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "It only passes once every 1000 years!\p"
-# 343 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "The ancient texts say it has some\n"
-# 344 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "connection to legendary POKéMON…$"
-# 345 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
-# 346 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_BrendanWhoAreYou:
-# 347 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "Oh, hey {PLAYER}!\n"
-# 348 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 334 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "What are you doing here?\p"
-# 349 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 335 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "Oh, but nevermind that.\n"
-# 350 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 336 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "Did you see the comet last night?\p"
-# 351 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "The whole sky was glowing with this\n"
-# 352 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "weird purple light!\p"
-# 353 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "PROFESSOR ACACIA said it might be\n"
-# 354 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "connected to POKeMON somehow.\p"
-# 355 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Me? Of course I made a wish.\n"
-# 356 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I'm not telling you though, or it won't\n"
-# 357 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "come true.$"
-# 358 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Anyway, I should get going.\n"
-# 359 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Got some training on ROUTE 103 to do.\p"
-# 360 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Catch you later, neighbor!$"
-# 361 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 337 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "It lit up the entire sky!\n"
+# 338 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "It was so beautiful…\p"
+# 339 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "I made a wish when I saw it.\n"
+# 340 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Got goosebumps all over!\p"
+# 341 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Anyway… I gotta go!\n"
+# 342 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "I'm going to train on ROUTE 103.\p"
+# 343 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "PROFESSOR ACACIA says we both have\n"
+# 344 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "a lot of potential as TRAINERS.\p"
+# 345 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Wouldn't want to let her down!\n"
+# 346 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "See you later, {PLAYER}!$"
+# 347 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 
-# 362 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_BrendanGettingReady:
-# 363 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 348 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+RivalsHouse_2F_Text_MayGettingReady:
+# 349 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "Studying about the millennium comet…\n"
-# 364 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 350 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "It only passes once every 1000 years!\p"
-# 365 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 351 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "The ancient texts say it has some\n"
-# 366 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+# 352 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "connection to legendary POKéMON…$"
+# 353 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+
+# 354 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+RivalsHouse_2F_Text_BrendanWhoAreYou:
+# 355 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Oh, hey {PLAYER}!\n"
+# 356 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "What are you doing here?\p"
+# 357 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Oh, but nevermind that.\n"
+# 358 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Did you see the comet last night?\p"
+# 359 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "The whole sky was glowing with this\n"
+# 360 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "weird purple light!\p"
+# 361 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "PROFESSOR ACACIA said it might be\n"
+# 362 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "connected to POKeMON somehow.\p"
+# 363 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Me? Of course I made a wish.\n"
+# 364 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "I'm not telling you though, or it won't\n"
+# 365 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "come true.$"
+# 366 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Anyway, I should get going.\n"
 # 367 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	.string "Got some training on ROUTE 103 to do.\p"
 # 368 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_ItsRivalsPokeBall:
+	.string "Catch you later, neighbor!$"
 # 369 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "It's {RIVAL}'s POKé BALL!\p"
+
 # 370 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Better leave it right where it is.$"
+RivalsHouse_2F_Text_BrendanGettingReady:
 # 371 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	.string "Studying about the millennium comet…\n"
 # 372 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_MayJustCheckingMyPokedex:
+	.string "It only passes once every 1000 years!\p"
 # 373 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "ZINNIA: {PLAYER}{KUN}!\p"
+	.string "The ancient texts say it has some\n"
 # 374 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I was just checking my POKéDEX.\p"
+	.string "connection to legendary POKéMON…$"
 # 375 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "There's still a lot of POKéMON that\n"
+
 # 376 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I've seen but haven't caught.\p"
+RivalsHouse_2F_Text_ItsRivalsPokeBall:
 # 377 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "And there are many others that\n"
+	.string "It's {RIVAL}'s POKé BALL!\p"
 # 378 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I think will evolve.\p"
+	.string "Better leave it right where it is.$"
 # 379 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I wonder where I should go catch\n"
+
 # 380 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "some POKéMON next?$"
+RivalsHouse_2F_Text_MayJustCheckingMyPokedex:
 # 381 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	.string "ZINNIA: {PLAYER}{KUN}!\p"
 # 382 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_MayWhereShouldIGoNext:
+	.string "I was just checking my POKéDEX.\p"
 # 383 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "ZINNIA: I wonder where I should go catch\n"
+	.string "There's still a lot of POKéMON that\n"
 # 384 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "some POKéMON next?\p"
+	.string "I've seen but haven't caught.\p"
 # 385 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Wouldn't it be funny if we ran into each\n"
+	.string "And there are many others that\n"
 # 386 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "other, {PLAYER}{KUN}?$"
+	.string "I think will evolve.\p"
 # 387 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-
+	.string "I wonder where I should go catch\n"
 # 388 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex:
+	.string "some POKéMON next?$"
 # 389 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "ZENNO: Hey, it's {PLAYER}.\p"
-# 390 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I was just checking out my POKéDEX.\p"
-# 391 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "There are still many POKéMON that\n"
-# 392 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "I need to catch, I know, but this\l"
-# 393 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "is looking pretty good.\p"
-# 394 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Checking this POKéDEX out gives me\n"
-# 395 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "the urge to hit the road again.$"
-# 396 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 
+# 390 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+RivalsHouse_2F_Text_MayWhereShouldIGoNext:
+# 391 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "ZINNIA: I wonder where I should go catch\n"
+# 392 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "some POKéMON next?\p"
+# 393 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Wouldn't it be funny if we ran into each\n"
+# 394 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "other, {PLAYER}{KUN}?$"
+# 395 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+
+# 396 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex:
 # 397 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-RivalsHouse_2F_Text_BrendanWhereShouldIGoNext:
+	.string "ZENNO: Hey, it's {PLAYER}.\p"
 # 398 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "ZENNO: I'm having a hard time deciding\n"
+	.string "I was just checking out my POKéDEX.\p"
 # 399 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "where I should catch POKéMON next.\p"
+	.string "There are still many POKéMON that\n"
 # 400 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "Hey, {PLAYER}, if I see you while I'm out\n"
+	.string "I need to catch, I know, but this\l"
 # 401 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "catching POKéMON, I can pitch you a\l"
+	.string "is looking pretty good.\p"
 # 402 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Checking this POKéDEX out gives me\n"
+# 403 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "the urge to hit the road again.$"
+# 404 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+
+# 405 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+RivalsHouse_2F_Text_BrendanWhereShouldIGoNext:
+# 406 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "ZENNO: I'm having a hard time deciding\n"
+# 407 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "where I should catch POKéMON next.\p"
+# 408 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "Hey, {PLAYER}, if I see you while I'm out\n"
+# 409 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
+	.string "catching POKéMON, I can pitch you a\l"
+# 410 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "battle if you'd like.$"
