@@ -938,13 +938,21 @@
 #define TRAINER_BRENDAN_EVERGRANDE_TREECKO_HARD        932
 #define TRAINER_BRENDAN_EVERGRANDE_TORCHIC_HARD        933
 #define TRAINER_BRENDAN_EVERGRANDE_MUDKIP_HARD         934
+#define TRAINER_SARK_HARD_SINGLES                      935
+#define TRAINER_SARK_HARD_DOUBLES                      936
+#define TRAINER_DAEMON_HARD_DOUBLES                    937
+#define TRAINER_DAEMON_HARD_SINGLES                    938
+#define TRAINER_PHOEBE_HARD_SINGLES                    939
+#define TRAINER_PHOEBE_HARD_DOUBLES                    940
+#define TRAINER_TSUBAKI_HARD_SINGLES                   941
+#define TRAINER_TSUBAKI_HARD_DOUBLES                   942
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      950
-#define MAX_TRAINERS_COUNT                  951
+#define TRAINERS_COUNT                      1000
+#define MAX_TRAINERS_COUNT                  1001
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

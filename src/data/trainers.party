@@ -5292,7 +5292,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Purple
 
-Forretress @ Leftovers
+Shedinja @ Leftovers
 Level: 63  
 Ability: Sturdy  
 Bold Nature  
@@ -5346,6 +5346,115 @@ Jolly Nature
 - Ice Punch  
 - Substitute  
 
+=== TRAINER_TSUBAKI_HARD_DOUBLES ===
+Name: TSUBAKI
+Class: Elite Four
+Pic: Elite Four Sidney
+Gender:Female
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Purple
+
+Shedinja @ Focus Sash  
+Ability: Wonder Guard  
+Tera Type: Bug  
+- Swords Dance  
+- Protect  
+- Shadow Sneak  
+- X-Scissor  
+
+Ninjask @ Focus Sash  
+Ability: Speed Boost  
+IVs: 0 Atk  
+- Protect  
+- Baton Pass  
+- Swords Dance  
+- Substitute  
+
+Delcatty @ Focus Sash  
+Ability: Cute Charm  
+- Swords Dance  
+- Slash  
+- Sacred Sword  
+- Ceaseless Edge  
+
+Kleavor @ Life Orb  
+Ability: Sharpness  
+- Swords Dance  
+- X-Scissor  
+- Stone Axe  
+- Close Combat  
+
+Weavile @ Heavy-Duty Boots  
+Ability: Pressure  
+- Knock Off  
+- Ice Shard  
+- Swords Dance  
+- Icicle Crash  
+
+Gallade (M) @ Life Orb  
+Ability: Sharpness  
+- Swords Dance  
+- X-Scissor  
+- Triple Axel  
+- Close Combat  
+
+=== TRAINER_TSUBAKI_HARD_SINGLES ===
+Name: TSUBAKI
+Class: Elite Four
+Pic: Elite Four Sidney
+Gender:Female
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Purple
+
+Shedinja @ Focus Sash  
+Ability: Wonder Guard  
+Tera Type: Bug  
+- Swords Dance  
+- Will-o-wisp
+- Shadow Sneak  
+- X-Scissor  
+
+Ninjask @ Focus Sash  
+Ability: Speed Boost  
+IVs: 0 Atk  
+- Protect   
+- Baton Pass  
+- Swords Dance  
+- Substitute  
+
+Delcatty @ Focus Sash  
+Ability: Cute Charm  
+- Swords Dance  
+- Slash  
+- Sacred Sword  
+- Ceaseless Edge  
+
+Kleavor @ Life Orb  
+Ability: Sharpness  
+- Swords Dance  
+- X-Scissor  
+- Stone Axe  
+- Close Combat  
+
+Weavile @ Heavy-Duty Boots  
+Ability: Pressure  
+- Knock Off  
+- Ice Shard  
+- Swords Dance  
+- Icicle Crash  
+
+Gallade (M) @ Life Orb  
+Ability: Sharpness  
+- Swords Dance  
+- X-Scissor  
+- Triple Axel  
+- Close Combat  
 
 === TRAINER_PHOEBE ===
 Name: PHOEBE
@@ -5358,57 +5467,169 @@ Double Battle: Yes
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Green
 
-Chimecho
-Level: 64
-Ability: Pressure 
-Modest Nature
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Will-O-Wisp
-- Protect
-- Destiny Bond
-- Lava Plume
+Chimecho @ Focus Sash  
+Ability: Levitate  
+IVs: 0 Atk  
+- Hex  
+- Fire Blast  
+- Memento   
+- Will-O-Wisp  
 
-Dusclops @ Eviolite
-Level: 64
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Trick Room
-- Haze
-- Memento
-- Taunt
-
-Shedinja @ Heavy-Duty Boots  
-Level: 64
-Ability: Wonder Guard 
-Jolly Nature  
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
-- Swords Dance  
+Persian @ Focus Sash  
+Ability: Limber  
+- Shadow Claw
+- Will-O-Wisp  
 - Shadow Sneak  
-- X-Scissor  
-- Baton Pass
+- Knock Off  
 
-Relicanth
-Level: 65
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Scald
+Gorebyss @ Life Orb  
+Ability: Cursed Body  
+Quiet Nature  
+IVs: 0 Atk  
+- Shadow Ball  
+- Dazzling Gleam  
+- Hex  
+- Will-O-Wisp  
+
+Annihilape @ Assault Vest  
+Ability: Defiant  
+- Rage Fist  
+- Fire Punch  
+- U-turn  
+- Drain Punch  
+
+Relicanth @ Leftovers  
+Ability: Swift Swim  
+Brave Nature  
+- Will-O-Wisp  
 - Hex
-- Will-O-Wisp
-- Power Gem
+- Power Gem  
+- Shadow Ball
 
-Annihilape @ Sitrus Berry
-Level: 68
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Drain Punch
-- Rage Fist
-- Bulk Up
+Ursaluna @ Flame Orb  
+Ability: Guts  
+Brave Nature  
+- Crunch
+- Return  
+- Poltergeist  
+- Earthquake
+
+=== TRAINER_PHOEBE_HARD_DOUBLES ===
+Name: PHOEBE
+Class: Elite Four
+Pic: Elite Four Phoebe
+Gender: Female
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Green
+
+Chimecho @ Focus Sash  
+Ability: Levitate  
+IVs: 0 Atk  
+- Trick Room  
+- Protect  
+- Destiny Bond  
+- Will-O-Wisp  
+
+Persian @ Focus Sash  
+Ability: Limber  
+- Protect  
+- Will-O-Wisp  
+- Fake Out  
+- Knock Off  
+
+Gorebyss @ Life Orb  
+Ability: Cursed Body  
+Quiet Nature  
+IVs: 0 Atk  
+- Shadow Ball  
+- Dazzling Gleam  
+- Hex  
+- Will-O-Wisp  
+
+Annihilape @ Assault Vest  
+Ability: Defiant  
+- Rage Fist  
+- Fire Punch  
+- U-turn  
+- Drain Punch  
+
+Relicanth @ Life Orb  
+Ability: Storm Drain  
+IVs: 0 Atk  
+- Will-O-Wisp  
+- Power Gem  
+- Hex  
 - Protect
 
-Persian @ Sitrus Berry
-Level: 68
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Drain Punch
-- Rage Fist
-- Bulk Up
-- Protect
+Ursaluna @ Flame Orb  
+Ability: Guts  
+Brave Nature  
+- Protect  
+- Facade  
+- Poltergeist  
+- Close Combat  
+
+=== TRAINER_PHOEBE_HARD_SINGLES ===
+Name: PHOEBE
+Class: Elite Four
+Pic: Elite Four Phoebe
+Gender: Female
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Green
+
+Chimecho @ Focus Sash  
+Ability: Levitate  
+IVs: 0 Atk  
+- Flamethrower  
+- Shadow Ball  
+- Destiny Bond  
+- Will-O-Wisp  
+
+Persian @ Focus Sash  
+Ability: Limber  
+- Taunt  
+- Will-O-Wisp  
+- Poltergeist  
+- Knock Off  
+
+Gorebyss @ White Herb  
+Ability: Cursed Body  
+Quiet Nature  
+IVs: 0 Atk  
+- Shadow Ball  
+- Moonblast  
+- Shell Smash  
+- Hex  
+
+Annihilape @ Leftovers  
+Ability: Defiant  
+- Rage Fist  
+- Bulk Up  
+- Drain Punch  
+- Substitute  
+
+Relicanth @ Life Orb  
+Ability: Storm Drain  
+Brave Nature  
+IVs: 0 Atk  
+- Will-O-Wisp  
+- Power Gem  
+- Hex  
+- Destiny Bond  
+
+Ursaluna @ Flame Orb  
+Ability: Guts  
+Brave Nature  
+- Protect  
+- Facade  
+- Poltergeist  
+- Close Combat  
 
 === TRAINER_GLACIA ===
 Name: STARK
@@ -5471,6 +5692,148 @@ Shiny: Yes
 - Surf  
 - Earthquake  
 
+=== TRAINER_SARK_HARD_SINGLES ===
+Name: STARK
+Class: Elite Four
+Pic: Elite Four Glacia
+Gender: Male
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Pink
+
+Torkoal @ Icy Rock
+Level: 70  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Snow Warning  
+Bold Nature  
+- Rapid Spin  
+- Icy Wind  
+- Haze  
+- Aurora Veil  
+
+Jumpluff @ Sitrus Berry  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Huge Power  
+Adamant Nature  
+- Belly Drum  
+- Ice Shard  
+- Play Rough  
+- Close Combat  
+
+Cloyster @ White Herb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Skill Link  
+Adamant Nature  
+- Shell Smash  
+- Icicle Spear  
+- Liquidation  
+- Rock Blast  
+
+Lapras @ Heavy-Duty Boots  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Water Absorb  
+Adamant Nature  
+- Dragon Dance  
+- Liquidation  
+- Earthquake  
+- Icicle Crash  
+
+Froslass (F) @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Snow Cloak  
+Timid Nature 
+- Spikes  
+- Will-O-Wisp  
+- Destiny Bond  
+- Freeze-Dry  
+
+Mamoswine @ Assault Vest  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Snow Cloak  
+Jolly Nature  
+- Ice Shard  
+- Earthquake  
+- Icicle Crash  
+- Knock Off  
+
+=== TRAINER_SARK_HARD_DOUBLES ===
+Name: STARK
+Class: Elite Four
+Pic: Elite Four Glacia
+Gender: Male
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Pink
+
+Torkoal @ Icy Rock
+Level: 70  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Snow Warning  
+Bold Nature  
+- Snowscape  
+- Icy Wind  
+- Haze  
+- Aurora Veil  
+
+Jumpluff @ Sitrus Berry  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Huge Power  
+Adamant Nature  
+- Belly Drum  
+- Ice Shard  
+- Play Rough  
+- Close Combat  
+
+Cloyster @ White Herb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Skill Link  
+Adamant Nature  
+- Shell Smash  
+- Icicle Spear  
+- Liquidation  
+- Rock Blast  
+
+Lapras @ Safety Goggles  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Water Absorb  
+Adamant Nature  
+- Perish Song  
+- Protect  
+- Blizzard  
+- Freeze-Dry  
+
+Froslass (F) @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Snow Cloak  
+Timid Nature  
+- Protect  
+- Will-O-Wisp  
+- Perish Song  
+- Blizzard   
+
+Mamoswine @ Life Orb   
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Ability: Snow Cloak  
+Jolly Nature  
+- Ice Shard  
+- High Horsepower  
+- Icicle Crash  
+- Rock Slide  
+
 === TRAINER_DRAKE ===
 Name: DRAKE
 Class: Elite Four
@@ -5527,6 +5890,130 @@ IVs: 0 Atk
 - Dragon Pulse  
 - Hydro Pump  
 - Ice Beam  
+
+=== TRAINER_DAEMON_HARD_DOUBLES ===
+Name: DAEMON
+Class: Elite Four
+Pic: Elite Four Drake
+Gender: Male
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Blue
+
+Altaria @ Sitrus Berry  
+Ability: Pixilate  
+Bold Nature  
+IVs: 0 Atk  
+- Tailwind  
+- Will-O-Wisp  
+- Protect  
+- Hyper Voice  
+
+Kingdra @ Leftovers  
+Ability: Damp  
+Modest Nature  
+IVs: 0 Atk  
+- Icy Wind  
+- Protect  
+- Muddy Water  
+- Clear Smog  
+
+Dragonite @ Weakness Policy  
+Ability: Multiscale  
+Adamant Nature  
+- Dragon Dance  
+- Extreme Speed  
+- Iron Head  
+- Rock Slide  
+
+Druddigon @ Leftovers  
+Ability: Multiscale  
+Adamant Nature  
+- Dragon Dance  
+- Aqua Jet  
+- Rock Slide  
+- Liquidation  
+
+Flygon @ Life Orb  
+Ability: Levitate  
+Timid Nature  
+- Ice Beam  
+- Icy Wind  
+- Draco Meteor  
+- U-turn  
+
+Sceptile @ Life Orb  
+Ability: Toxic Debris  
+Timid Nature  
+IVs: 0 Atk  
+- Sludge Wave  
+- Draco Meteor  
+- Focus Blast  
+- Protect
+
+=== TRAINER_DAEMON_HARD_SINGLES ===
+Name: DAEMON
+Class: Elite Four
+Pic: Elite Four Drake
+Gender: Male
+Music: Elite Four
+Items: Full Restore / Full Restore
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Blue
+
+Kingdra @ Scope Lens  
+Ability: Sniper  
+Modest Nature  
+IVs: 0 Atk  
+- Agility  
+- Focus Energy  
+- Flash Cannon  
+- Surf  
+
+Altaria @ Leftovers  
+Ability: Pixilate  
+Jolly Nature  
+- Dragon Dance  
+- Earthquake  
+- Roost  
+- Return  
+
+Dragonite @ Heavy-Duty Boots  
+Ability: Multiscale  
+Adamant Nature  
+- Dragon Dance  
+- Extreme Speed  
+- Iron Head  
+- Dragon Claw  
+
+Druddigon @ Heavy-Duty Boots  
+Ability: Multiscale  
+Modest Nature  
+IVs: 0 Atk  
+- Draco Meteor  
+- Hydro Pump  
+- Fire Blast  
+- Flash Cannon  
+
+Flygon @ Choice Scarf  
+Ability: Levitate  
+Adamant Nature  
+- Earthquake  
+- Icicle Crash  
+- Outrage  
+- U-turn  
+
+Sceptile @ Choice Specs  
+Ability: Toxic Debris  
+Timid Nature  
+IVs: 0 Atk  
+- Sludge Wave  
+- Draco Meteor  
+- Focus Blast  
+- Dragon Pulse  
 
 === TRAINER_TERRA_CASUAL ===
 Name: TERRA
