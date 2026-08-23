@@ -1,18 +1,39 @@
 raw `
 PHOENIXCAVE_MapScripts::
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PHOENIXCAVE_OnWarp
 	.byte 0
+
+PHOENIXCAVE_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, PHOENIXCAVE_EventScript_FaceDownAtPortal
+	.2byte 0
+
+PHOENIXCAVE_EventScript_FaceDownAtPortal::
+	setvar VAR_TEMP_1, 1
+	getplayerxy VAR_TEMP_2, VAR_TEMP_3
+	goto_if_ne VAR_TEMP_2, 5, PHOENIXCAVE_EventScript_EndFaceDownAtPortal
+	goto_if_ne VAR_TEMP_3, 4, PHOENIXCAVE_EventScript_EndFaceDownAtPortal
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	end
+
+PHOENIXCAVE_EventScript_EndFaceDownAtPortal::
+	end
 
 PHOENIXCAVE_MapScripts_MagicCrystal::
 	lock
 	faceplayer
-	msgbox PHOENIXCAVE_Text_MagicCrystal, MSGBOX_DEFAULT
+	msgbox PHOENIXCAVE_Text_MagicCrystal, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PHOENIXCAVE_EventScript_LeavePortal
 	release
 	warpteleport MAP_AURORAGROVE, 0
 	waitstate
 	end
 
+PHOENIXCAVE_EventScript_LeavePortal::
+	release
+	end
+
 PHOENIXCAVE_Text_MagicCrystal:
-	.string "You feel a strange connection to the\n"
-	.string "crystal…\p"
-	.string "A surge of energy pulls you in!$"
+	.string "The portal pulses with a mysterious\n"
+	.string "energy.\p"
+	.string "Reach your hand in?$"
 `

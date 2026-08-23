@@ -81,6 +81,7 @@
 #define FLDEFF_ROCK_CLIMB_DUST           76
 #define FLDEFF_DRY_GRASS                 77
 #define FLDEFF_JUMP_DRY_GRASS            78
+#define FLDEFF_FAIRY_GRASS               79
 
 #define FLDEFFOBJ_SHADOW_S              0
 #define FLDEFFOBJ_SHADOW_M              1
@@ -127,6 +128,7 @@
 #define FLDEFFOBJ_ROCK_CLIMB_DUST       42
 #define FLDEFFOBJ_DRY_GRASS             43
 #define FLDEFFOBJ_JUMP_DRY_GRASS        44
+#define FLDEFFOBJ_FAIRY_GRASS           45
 
 #define FLDEFF_PAL_TAG_CUT_GRASS          0x1000
 #define FLDEFF_PAL_TAG_SECRET_POWER_TREE  0x1003
@@ -143,6 +145,7 @@
 #define FLDEFF_PAL_TAG_CAVE_DUST          0x1012
 #define FLDEFF_PAL_TAG_DUST_CLOUD         0x1013
 #define FLDEFF_PAL_TAG_DRY_GRASS          0x1014
+#define FLDEFF_PAL_TAG_FAIRY_GRASS        0x1015
 #define FLDEFF_PAL_TAG_FIELD_MOVE_MON     0x8400
 
 // tile tags, for field effects that may have many copies on screen at once

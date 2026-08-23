@@ -1,6 +1,7 @@
 const struct SpritePalette gSpritePalette_GeneralFieldEffect0 = {gFieldEffectObjectPalette0, FLDEFF_PAL_TAG_GENERAL_0};
 const struct SpritePalette gSpritePalette_GeneralFieldEffect1 = {gFieldEffectObjectPalette1, FLDEFF_PAL_TAG_GENERAL_1};
 const struct SpritePalette gSpritePalette_DryGrass = {gFieldEffectObjectPalette_DryGrass, FLDEFF_PAL_TAG_DRY_GRASS};
+const struct SpritePalette gSpritePalette_FairyGrass = {gFieldEffectObjectPalette_FairyGrass, FLDEFF_PAL_TAG_FAIRY_GRASS};
 
 static const union AnimCmd sAnim_Shadow[] =
 {
@@ -181,6 +182,39 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_DryGrass = {
     .images = sPicTable_DryGrass,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = UpdateDryGrassFieldEffect,
+};
+
+static const struct SpriteFrameImage sPicTable_FairyGrass[] = {
+    overworld_frame(gFieldEffectObjectPic_FairyGrass, 2, 2, 0),
+    overworld_frame(gFieldEffectObjectPic_FairyGrass, 2, 2, 1),
+    overworld_frame(gFieldEffectObjectPic_FairyGrass, 2, 2, 2),
+    overworld_frame(gFieldEffectObjectPic_FairyGrass, 2, 2, 3),
+    overworld_frame(gFieldEffectObjectPic_FairyGrass, 2, 2, 4),
+};
+
+static const union AnimCmd sAnim_FairyGrass[] =
+{
+    ANIMCMD_FRAME(1, 10),
+    ANIMCMD_FRAME(2, 10),
+    ANIMCMD_FRAME(3, 10),
+    ANIMCMD_FRAME(4, 10),
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_FairyGrass[] =
+{
+    sAnim_FairyGrass,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_FairyGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_FAIRY_GRASS,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_FairyGrass,
+    .images = sPicTable_FairyGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateFairyGrassFieldEffect,
 };
 
 static const struct SpriteFrameImage sPicTable_Ripple[] = {

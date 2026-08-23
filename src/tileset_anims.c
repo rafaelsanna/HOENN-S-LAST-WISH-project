@@ -76,7 +76,8 @@ static void QueueAnimTiles_MauvilleGym_ElectricGates(u16);
 static void QueueAnimTiles_SootopolisGym_Waterfalls(u16);
 static void QueueAnimTiles_EliteFour_GroundLights(u16);
 static void QueueAnimTiles_EliteFour_WallLights(u16);
-static void QueueAnimTiles_DreamRealm_FallingStar(u16);
+static void QueueAnimTiles_DreamRealm_Lamps(u16);
+static void QueueAnimTiles_DreamRealm_Flowers(u16);
 static void QueueAnimTiles_Desert_WaterSparkle(u16, u16, u16, u16);
 
 const u16 gTilesetAnims_General_Flower_Frame1[] = INCBIN_U16("data/tilesets/primary/general/anim/flower/1.4bpp");
@@ -139,6 +140,32 @@ const u16 *const gTilesetAnims_DreamRealm_FallingStar[] = {
     gTilesetAnims_DreamRealm_FallingStar_Frame9,
     gTilesetAnims_DreamRealm_FallingStar_Frame10,
     gTilesetAnims_DreamRealm_FallingStar_Frame11
+};
+
+const u16 gTilesetAnims_DreamRealm_Lamps_Frame0[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/lamps/lamps1.4bpp");
+const u16 gTilesetAnims_DreamRealm_Lamps_Frame1[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/lamps/lamps2.4bpp");
+const u16 gTilesetAnims_DreamRealm_Lamps_Frame2[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/lamps/lamps3.4bpp");
+const u16 gTilesetAnims_DreamRealm_Lamps_Frame3[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/lamps/lamps4.4bpp");
+
+const u16 *const gTilesetAnims_DreamRealm_Lamps[] = {
+    gTilesetAnims_DreamRealm_Lamps_Frame0,
+    gTilesetAnims_DreamRealm_Lamps_Frame1,
+    gTilesetAnims_DreamRealm_Lamps_Frame2,
+    gTilesetAnims_DreamRealm_Lamps_Frame3,
+    gTilesetAnims_DreamRealm_Lamps_Frame2,
+    gTilesetAnims_DreamRealm_Lamps_Frame1
+};
+
+const u16 gTilesetAnims_DreamRealm_Flowers_Frame0[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/flowers/floweranims1.4bpp");
+const u16 gTilesetAnims_DreamRealm_Flowers_Frame1[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/flowers/floweranims2.4bpp");
+const u16 gTilesetAnims_DreamRealm_Flowers_Frame2[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/flowers/floweranims3.4bpp");
+const u16 gTilesetAnims_DreamRealm_Flowers_Frame3[] = INCBIN_U16("data/tilesets/secondary/dream_realm/anim/flowers/floweranims4.4bpp");
+
+const u16 *const gTilesetAnims_DreamRealm_Flowers[] = {
+    gTilesetAnims_DreamRealm_Flowers_Frame0,
+    gTilesetAnims_DreamRealm_Flowers_Frame1,
+    gTilesetAnims_DreamRealm_Flowers_Frame2,
+    gTilesetAnims_DreamRealm_Flowers_Frame3
 };
 
 const u16 gTilesetAnims_General_Water_Frame0[] = INCBIN_U16("data/tilesets/primary/general/anim/water/0.4bpp");
@@ -679,9 +706,9 @@ void InitTilesetAnim_General(void)
 
 void InitTilesetAnim_DreamRealm(void)
 {
-    sPrimaryTilesetAnimCounter = 0;
-    sPrimaryTilesetAnimCounterMax = 256;
-    sPrimaryTilesetAnimCallback = TilesetAnim_DreamRealm;
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 192;
+    sSecondaryTilesetAnimCallback = TilesetAnim_DreamRealm;
 }
 
 void InitTilesetAnim_Building(void)
@@ -709,7 +736,11 @@ static void TilesetAnim_General(u16 timer)
 static void TilesetAnim_DreamRealm(u16 timer)
 {
     if (timer % 16 == 0)
-        QueueAnimTiles_DreamRealm_FallingStar(timer / 16);
+    {
+        timer /= 16;
+        QueueAnimTiles_DreamRealm_Lamps(timer);
+        QueueAnimTiles_DreamRealm_Flowers(timer);
+    }
 }
 
 static void TilesetAnim_Building(u16 timer)
@@ -724,10 +755,28 @@ static void QueueAnimTiles_General_Flower(u16 timer)
     AppendTilesetAnimToBuffer(gTilesetAnims_General_Flower[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(508)), 4 * TILE_SIZE_4BPP);
 }
 
-static void QueueAnimTiles_DreamRealm_FallingStar(u16 timer)
+#define DREAM_REALM_LAMPS_TOP_TILE 0x3CA
+#define DREAM_REALM_LAMPS_BOTTOM_TILE 0x3DA
+#define DREAM_REALM_LAMPS_ROW_TILES 2
+
+static void QueueAnimTiles_DreamRealm_Lamps(u16 timer)
 {
-    u16 i = timer % ARRAY_COUNT(gTilesetAnims_DreamRealm_FallingStar);
-    AppendTilesetAnimToBuffer(gTilesetAnims_DreamRealm_FallingStar[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(194)), 4 * TILE_SIZE_4BPP);
+    const u16 *src = gTilesetAnims_DreamRealm_Lamps[timer % ARRAY_COUNT(gTilesetAnims_DreamRealm_Lamps)];
+
+    AppendTilesetAnimToBuffer(src, (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(DREAM_REALM_LAMPS_TOP_TILE)), DREAM_REALM_LAMPS_ROW_TILES * TILE_SIZE_4BPP);
+    AppendTilesetAnimToBuffer(src + (DREAM_REALM_LAMPS_ROW_TILES * TILE_SIZE_4BPP / sizeof(*src)), (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(DREAM_REALM_LAMPS_BOTTOM_TILE)), DREAM_REALM_LAMPS_ROW_TILES * TILE_SIZE_4BPP);
+}
+
+#define DREAM_REALM_FLOWERS_TOP_TILE 0x31C
+#define DREAM_REALM_FLOWERS_BOTTOM_TILE 0x32C
+#define DREAM_REALM_FLOWERS_ROW_TILES 2
+
+static void QueueAnimTiles_DreamRealm_Flowers(u16 timer)
+{
+    const u16 *src = gTilesetAnims_DreamRealm_Flowers[timer % ARRAY_COUNT(gTilesetAnims_DreamRealm_Flowers)];
+
+    AppendTilesetAnimToBuffer(src, (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(DREAM_REALM_FLOWERS_TOP_TILE)), DREAM_REALM_FLOWERS_ROW_TILES * TILE_SIZE_4BPP);
+    AppendTilesetAnimToBuffer(src + (DREAM_REALM_FLOWERS_ROW_TILES * TILE_SIZE_4BPP / sizeof(*src)), (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(DREAM_REALM_FLOWERS_BOTTOM_TILE)), DREAM_REALM_FLOWERS_ROW_TILES * TILE_SIZE_4BPP);
 }
 
 static void QueueAnimTiles_General_Flower_2(u16 timer)

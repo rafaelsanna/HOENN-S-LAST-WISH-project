@@ -4995,7 +4995,7 @@
       "id": "LAYOUT_AURORAGROVE",
       "name": "AURORAGROVE_Layout",
       "width": 28,
-      "height": 28,
+      "height": 30,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_DreamRealm",
       "border_filepath": "data/layouts/AURORAGROVE/border.bin",
