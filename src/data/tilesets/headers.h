@@ -839,7 +839,7 @@ const struct Tileset gTileset_DreamRealm =
     .palettes = gTilesetPalettes_DreamRealm,
     .metatiles = gMetatiles_DreamRealm,
     .metatileAttributes = gMetatileAttributes_DreamRealm,
-    .callback = NULL,
+    .callback = InitTilesetAnim_DreamRealm,
 };
 
 const struct Tileset gTileset_Forest =
