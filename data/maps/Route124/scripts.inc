@@ -67,9 +67,9 @@ Route124_EventScript_RegisterJenny::
 # 34 "data/maps/Route124/scripts.pory"
 	waitmovement 0
 # 35 "data/maps/Route124/scripts.pory"
-	msgbox Route124_Text_JennyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route124_Text_JennyRegister, MSGBOX_DEFAULT
 # 36 "data/maps/Route124/scripts.pory"
-	register_matchcall TRAINER_JENNY_1
+	@ PokéNav removed register_matchcall TRAINER_JENNY_1
 # 37 "data/maps/Route124/scripts.pory"
 	release
 # 38 "data/maps/Route124/scripts.pory"
@@ -125,9 +125,9 @@ Route124_EventScript_Lila::
 # 63 "data/maps/Route124/scripts.pory"
 Route124_EventScript_RegisterLila::
 # 64 "data/maps/Route124/scripts.pory"
-	msgbox Route124_Text_LilaRoyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route124_Text_LilaRoyRegister, MSGBOX_DEFAULT
 # 65 "data/maps/Route124/scripts.pory"
-	register_matchcall TRAINER_LILA_AND_ROY_1
+	@ PokéNav removed register_matchcall TRAINER_LILA_AND_ROY_1
 # 66 "data/maps/Route124/scripts.pory"
 	release
 # 67 "data/maps/Route124/scripts.pory"
@@ -163,9 +163,9 @@ Route124_EventScript_Roy::
 # 82 "data/maps/Route124/scripts.pory"
 Route124_EventScript_RegisterRoy::
 # 83 "data/maps/Route124/scripts.pory"
-	msgbox Route124_Text_LilaRoyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route124_Text_LilaRoyRegister, MSGBOX_DEFAULT
 # 84 "data/maps/Route124/scripts.pory"
-	register_matchcall TRAINER_LILA_AND_ROY_1
+	@ PokéNav removed register_matchcall TRAINER_LILA_AND_ROY_1
 # 85 "data/maps/Route124/scripts.pory"
 	release
 # 86 "data/maps/Route124/scripts.pory"

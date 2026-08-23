@@ -315,7 +315,7 @@ PlayersHouse_1F_EventScript_Mom::
 	goto_if_eq VAR_LITTLEROOT_HOUSES_STATE_MAY, 4, PlayersHouse_1F_EventScript_DontPushYourselfTooHard
 	goto_if_eq VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4, PlayersHouse_1F_EventScript_DontPushYourselfTooHard
 	goto_if_unset FLAG_SYS_POKEMON_GET, PlayersHouse_1F_EventScript_DontPushYourselfTooHard
-	goto_if_set FLAG_HAS_MATCH_CALL, PlayersHouse_1F_EventScript_TryRegisterMom
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, PlayersHouse_1F_EventScript_TryRegisterMom
 	goto_if_set FLAG_RESCUED_BIRCH, PlayersHouse_1F_EventScript_MomHealsParty
 	goto_if_eq VAR_TEMP_1, 1, PlayersHouse_1F_EventScript_SeeYouHoney
 	goto_if_eq VAR_LITTLEROOT_INTRO_STATE, 7, PlayersHouse_1F_EventScript_DidYouMeetProfBirch
@@ -331,14 +331,14 @@ PlayersHouse_1F_EventScript_DontPushYourselfTooHard::
 PlayersHouse_1F_EventScript_TryRegisterMom::
 	goto_if_set FLAG_ENABLE_MOM_MATCH_CALL, PlayersHouse_1F_EventScript_CheckGiveAmuletCoin
 	msgbox PlayersHouse_1F_Text_IsThatAPokenav, MSGBOX_DEFAULT
-	closemessage
-	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox PlayersHouse_1F_Text_RegisteredMom, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_ENABLE_MOM_MATCH_CALL
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed msgbox PlayersHouse_1F_Text_RegisteredMom, MSGBOX_DEFAULT
+	@ PokéNav removed waitfanfare
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed setflag FLAG_ENABLE_MOM_MATCH_CALL
 	release
 	end
 

@@ -1087,25 +1087,25 @@ MauvilleCity_EventScript_RegisterWallyCall::
 # 544 "data/maps/MauvilleCity/scripts.pory"
 	lockall
 # 545 "data/maps/MauvilleCity/scripts.pory"
-	pokenavcall MauvilleCity_Text_WallyPokenavCall
+	@ PokéNav removed pokenavcall MauvilleCity_Text_WallyPokenavCall
 # 546 "data/maps/MauvilleCity/scripts.pory"
-	waitmessage
+	@ PokéNav removed waitmessage
 # 547 "data/maps/MauvilleCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 548 "data/maps/MauvilleCity/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 549 "data/maps/MauvilleCity/scripts.pory"
-	msgbox MauvilleCity_Text_RegisteredWally, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox MauvilleCity_Text_RegisteredWally, MSGBOX_DEFAULT
 # 550 "data/maps/MauvilleCity/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 551 "data/maps/MauvilleCity/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 552 "data/maps/MauvilleCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 553 "data/maps/MauvilleCity/scripts.pory"
-	setflag FLAG_ENABLE_WALLY_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_WALLY_MATCH_CALL
 # 554 "data/maps/MauvilleCity/scripts.pory"
-	clearflag FLAG_ENABLE_FIRST_WALLY_POKENAV_CALL
+	@ PokéNav removed clearflag FLAG_ENABLE_FIRST_WALLY_POKENAV_CALL
 # 555 "data/maps/MauvilleCity/scripts.pory"
 	releaseall
 # 556 "data/maps/MauvilleCity/scripts.pory"

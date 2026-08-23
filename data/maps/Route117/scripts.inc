@@ -173,9 +173,9 @@ Route117_EventScript_RegisterIsaac::
 # 87 "data/maps/Route117/scripts.pory"
 	waitmovement 0
 # 88 "data/maps/Route117/scripts.pory"
-	msgbox Route117_Text_IsaacRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route117_Text_IsaacRegister, MSGBOX_DEFAULT
 # 89 "data/maps/Route117/scripts.pory"
-	register_matchcall TRAINER_ISAAC_1
+	@ PokéNav removed register_matchcall TRAINER_ISAAC_1
 # 90 "data/maps/Route117/scripts.pory"
 	release
 # 91 "data/maps/Route117/scripts.pory"
@@ -215,9 +215,9 @@ Route117_EventScript_RegisterLydia::
 # 108 "data/maps/Route117/scripts.pory"
 	waitmovement 0
 # 109 "data/maps/Route117/scripts.pory"
-	msgbox Route117_Text_LydiaRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route117_Text_LydiaRegister, MSGBOX_DEFAULT
 # 110 "data/maps/Route117/scripts.pory"
-	register_matchcall TRAINER_LYDIA_1
+	@ PokéNav removed register_matchcall TRAINER_LYDIA_1
 # 111 "data/maps/Route117/scripts.pory"
 	release
 # 112 "data/maps/Route117/scripts.pory"
@@ -257,9 +257,9 @@ Route117_EventScript_RegisterDylan::
 # 129 "data/maps/Route117/scripts.pory"
 	waitmovement 0
 # 130 "data/maps/Route117/scripts.pory"
-	msgbox Route117_Text_DylanRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route117_Text_DylanRegister, MSGBOX_DEFAULT
 # 131 "data/maps/Route117/scripts.pory"
-	register_matchcall TRAINER_DYLAN_1
+	@ PokéNav removed register_matchcall TRAINER_DYLAN_1
 # 132 "data/maps/Route117/scripts.pory"
 	release
 # 133 "data/maps/Route117/scripts.pory"
@@ -299,9 +299,9 @@ Route117_EventScript_RegisterMaria::
 # 150 "data/maps/Route117/scripts.pory"
 	waitmovement 0
 # 151 "data/maps/Route117/scripts.pory"
-	msgbox Route117_Text_MariaRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route117_Text_MariaRegister, MSGBOX_DEFAULT
 # 152 "data/maps/Route117/scripts.pory"
-	register_matchcall TRAINER_MARIA_1
+	@ PokéNav removed register_matchcall TRAINER_MARIA_1
 # 153 "data/maps/Route117/scripts.pory"
 	release
 # 154 "data/maps/Route117/scripts.pory"
@@ -347,9 +347,9 @@ Route117_EventScript_Anna::
 # 174 "data/maps/Route117/scripts.pory"
 Route117_EventScript_RegisterAnna::
 # 175 "data/maps/Route117/scripts.pory"
-	msgbox Route117_Text_AnnaAndMegRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route117_Text_AnnaAndMegRegister, MSGBOX_DEFAULT
 # 176 "data/maps/Route117/scripts.pory"
-	register_matchcall TRAINER_ANNA_AND_MEG_1
+	@ PokéNav removed register_matchcall TRAINER_ANNA_AND_MEG_1
 # 177 "data/maps/Route117/scripts.pory"
 	release
 # 178 "data/maps/Route117/scripts.pory"
@@ -385,9 +385,9 @@ Route117_EventScript_Meg::
 # 193 "data/maps/Route117/scripts.pory"
 Route117_EventScript_RegisterMeg::
 # 194 "data/maps/Route117/scripts.pory"
-	msgbox Route117_Text_AnnaAndMegRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route117_Text_AnnaAndMegRegister, MSGBOX_DEFAULT
 # 195 "data/maps/Route117/scripts.pory"
-	register_matchcall TRAINER_ANNA_AND_MEG_1
+	@ PokéNav removed register_matchcall TRAINER_ANNA_AND_MEG_1
 # 196 "data/maps/Route117/scripts.pory"
 	release
 # 197 "data/maps/Route117/scripts.pory"

@@ -669,9 +669,9 @@ MossdeepCity_SpaceCenter_2F_EventScript_RivalRayquazaCall::
 # 335 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 MossdeepCity_SpaceCenter_2F_EventScript_MayRayquazaCall::
 # 336 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	pokenavcall MatchCall_Text_MayRayquazaCall
+	@ PokéNav removed pokenavcall MatchCall_Text_MayRayquazaCall
 # 337 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	waitmessage
+	@ PokéNav removed waitmessage
 # 338 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 	return
 # 339 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
@@ -679,9 +679,9 @@ MossdeepCity_SpaceCenter_2F_EventScript_MayRayquazaCall::
 # 340 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 MossdeepCity_SpaceCenter_2F_EventScript_BrendanRayquazaCall::
 # 341 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	pokenavcall MatchCall_Text_BrendanRayquazaCall
+	@ PokéNav removed pokenavcall MatchCall_Text_BrendanRayquazaCall
 # 342 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	waitmessage
+	@ PokéNav removed waitmessage
 # 343 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 	return
 # 344 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"

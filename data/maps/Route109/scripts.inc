@@ -831,9 +831,9 @@ Route109_EventScript_RickyRegisterMatchCallAfterBattle::
 # 416 "data/maps/Route109/scripts.pory"
 	waitmovement 0
 # 417 "data/maps/Route109/scripts.pory"
-	msgbox Route109_Text_RickyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route109_Text_RickyRegister, MSGBOX_DEFAULT
 # 418 "data/maps/Route109/scripts.pory"
-	register_matchcall TRAINER_RICKY_1
+	@ PokéNav removed register_matchcall TRAINER_RICKY_1
 # 419 "data/maps/Route109/scripts.pory"
 	release
 # 420 "data/maps/Route109/scripts.pory"
@@ -873,9 +873,9 @@ Route109_EventScript_LolaRegisterMatchCallAfterBattle::
 # 437 "data/maps/Route109/scripts.pory"
 	waitmovement 0
 # 438 "data/maps/Route109/scripts.pory"
-	msgbox Route109_Text_LolaRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route109_Text_LolaRegister, MSGBOX_DEFAULT
 # 439 "data/maps/Route109/scripts.pory"
-	register_matchcall TRAINER_LOLA_1
+	@ PokéNav removed register_matchcall TRAINER_LOLA_1
 # 440 "data/maps/Route109/scripts.pory"
 	release
 # 441 "data/maps/Route109/scripts.pory"

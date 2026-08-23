@@ -33,25 +33,25 @@ GraniteCave_StevensRoom_EventScript_Steven::
 # 17 "data/maps/GraniteCave_StevensRoom/scripts.pory"
 	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 18 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
 # 19 "data/maps/GraniteCave_StevensRoom/scripts.pory"
 	removefieldmugshot
 # 20 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 21 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 22 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 23 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	msgbox GraniteCave_StevensRoom_Text_RegisteredSteven, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox GraniteCave_StevensRoom_Text_RegisteredSteven, MSGBOX_DEFAULT
 # 24 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 25 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 26 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 27 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	setflag FLAG_REGISTERED_STEVEN_POKENAV
+	@ PokéNav removed setflag FLAG_REGISTERED_STEVEN_POKENAV
 # 28 "data/maps/GraniteCave_StevensRoom/scripts.pory"
 	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 29 "data/maps/GraniteCave_StevensRoom/scripts.pory"

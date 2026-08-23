@@ -758,16 +758,16 @@ RustboroCity_EventScript_MayEncounter::
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_MayAskToBattle
 	setflag FLAG_MET_RIVAL_RUSTBORO
 	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
-	msgbox RustboroCity_Text_MayHiLetsRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox RustboroCity_Text_MayHiLetsRegister, MSGBOX_DEFAULT
 	removefieldmugshot
-	closemessage
-	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox RustboroCity_Text_RegisteredMay, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_ENABLE_RIVAL_MATCH_CALL
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed msgbox RustboroCity_Text_RegisteredMay, MSGBOX_DEFAULT
+	@ PokéNav removed waitfanfare
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed setflag FLAG_ENABLE_RIVAL_MATCH_CALL
 	setvar VAR_RUSTBORO_CITY_STATE, 8
 	setvar VAR_ROUTE104_STATE, 2
 	setvar VAR_0x8008, 0
@@ -845,16 +845,16 @@ RustboroCity_EventScript_BrendanEncounter::
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_BrendanAskToBattle
 	setflag FLAG_MET_RIVAL_RUSTBORO
 	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
-	msgbox RustboroCity_Text_BrendanHiLetsRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox RustboroCity_Text_BrendanHiLetsRegister, MSGBOX_DEFAULT
 	removefieldmugshot
-	closemessage
-	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox RustboroCity_Text_RegisteredBrendan, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_ENABLE_RIVAL_MATCH_CALL
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed msgbox RustboroCity_Text_RegisteredBrendan, MSGBOX_DEFAULT
+	@ PokéNav removed waitfanfare
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed setflag FLAG_ENABLE_RIVAL_MATCH_CALL
 	setvar VAR_RUSTBORO_CITY_STATE, 8
 	setvar VAR_ROUTE104_STATE, 2
 	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL

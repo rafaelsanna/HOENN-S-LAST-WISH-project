@@ -97,9 +97,9 @@ MeteorFalls_1F_2R_EventScript_Jay::
 # 49 "data/maps/MeteorFalls_1F_2R/scripts.pory"
 MeteorFalls_1F_2R_EventScript_RegisterJay::
 # 50 "data/maps/MeteorFalls_1F_2R/scripts.pory"
-	msgbox MeteorFalls_1F_2R_Text_JohnRegister, MSGBOX_DEFAULT  @ John speaks for both during register
+	@ PokéNav removed msgbox MeteorFalls_1F_2R_Text_JohnRegister, MSGBOX_DEFAULT  @ John speaks for both during register
 # 51 "data/maps/MeteorFalls_1F_2R/scripts.pory"
-	register_matchcall TRAINER_JOHN_AND_JAY_1
+	@ PokéNav removed register_matchcall TRAINER_JOHN_AND_JAY_1
 # 52 "data/maps/MeteorFalls_1F_2R/scripts.pory"
 	release
 # 53 "data/maps/MeteorFalls_1F_2R/scripts.pory"

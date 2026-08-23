@@ -1241,25 +1241,25 @@ Route110_EventScript_BirchScene::
 # 621 "data/maps/Route110/scripts.pory"
 	waitmovement 0
 # 622 "data/maps/Route110/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 623 "data/maps/Route110/scripts.pory"
-	msgbox Route110_Text_HeardYouInstallMatchCall, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route110_Text_HeardYouInstallMatchCall, MSGBOX_DEFAULT
 # 624 "data/maps/Route110/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 625 "data/maps/Route110/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 626 "data/maps/Route110/scripts.pory"
 	/////playfanfare MUS_REGISTER_MATCH_CALL
 # 627 "data/maps/Route110/scripts.pory"
 	/////msgbox Route110_Text_RegisteredBirchInPokenav, MSGBOX_DEFAULT
 # 628 "data/maps/Route110/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 629 "data/maps/Route110/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 630 "data/maps/Route110/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 631 "data/maps/Route110/scripts.pory"
-	setflag FLAG_ENABLE_PROF_BIRCH_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_PROF_BIRCH_MATCH_CALL
 # 632 "data/maps/Route110/scripts.pory"
 	msgbox Route110_Text_KeepAnEyeOutForRival, MSGBOX_DEFAULT
 # 633 "data/maps/Route110/scripts.pory"

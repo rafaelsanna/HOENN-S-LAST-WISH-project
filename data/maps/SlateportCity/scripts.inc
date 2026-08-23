@@ -133,23 +133,23 @@ SlateportCity_EventScript_ScottScene::
 # 67 "data/maps/SlateportCity/scripts.pory"
 	waitmovement 0
 # 68 "data/maps/SlateportCity/scripts.pory"
-	msgbox SlateportCity_Text_LetsRegisterEachOther, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox SlateportCity_Text_LetsRegisterEachOther, MSGBOX_DEFAULT
 # 69 "data/maps/SlateportCity/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 70 "data/maps/SlateportCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 71 "data/maps/SlateportCity/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 72 "data/maps/SlateportCity/scripts.pory"
-	msgbox SlateportCity_Text_RegisteredScott, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox SlateportCity_Text_RegisteredScott, MSGBOX_DEFAULT
 # 73 "data/maps/SlateportCity/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 74 "data/maps/SlateportCity/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 75 "data/maps/SlateportCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 76 "data/maps/SlateportCity/scripts.pory"
-	setflag FLAG_ENABLE_SCOTT_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_SCOTT_MATCH_CALL
 # 77 "data/maps/SlateportCity/scripts.pory"
 	msgbox SlateportCity_Text_KeepEyeOnTrainersBeSeeingYou, MSGBOX_DEFAULT
 # 78 "data/maps/SlateportCity/scripts.pory"

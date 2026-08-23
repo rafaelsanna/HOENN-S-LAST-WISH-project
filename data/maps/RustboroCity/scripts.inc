@@ -1519,25 +1519,25 @@ RustboroCity_EventScript_MayEncounter::
 # 760 "data/maps/RustboroCity/scripts.pory"
 	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 761 "data/maps/RustboroCity/scripts.pory"
-	msgbox RustboroCity_Text_MayHiLetsRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox RustboroCity_Text_MayHiLetsRegister, MSGBOX_DEFAULT
 # 762 "data/maps/RustboroCity/scripts.pory"
 	removefieldmugshot
 # 763 "data/maps/RustboroCity/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 764 "data/maps/RustboroCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 765 "data/maps/RustboroCity/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 766 "data/maps/RustboroCity/scripts.pory"
-	msgbox RustboroCity_Text_RegisteredMay, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox RustboroCity_Text_RegisteredMay, MSGBOX_DEFAULT
 # 767 "data/maps/RustboroCity/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 768 "data/maps/RustboroCity/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 769 "data/maps/RustboroCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 770 "data/maps/RustboroCity/scripts.pory"
-	setflag FLAG_ENABLE_RIVAL_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_RIVAL_MATCH_CALL
 # 771 "data/maps/RustboroCity/scripts.pory"
 	setvar VAR_RUSTBORO_CITY_STATE, 8
 # 772 "data/maps/RustboroCity/scripts.pory"
@@ -1693,25 +1693,25 @@ RustboroCity_EventScript_BrendanEncounter::
 # 847 "data/maps/RustboroCity/scripts.pory"
 	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 848 "data/maps/RustboroCity/scripts.pory"
-	msgbox RustboroCity_Text_BrendanHiLetsRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox RustboroCity_Text_BrendanHiLetsRegister, MSGBOX_DEFAULT
 # 849 "data/maps/RustboroCity/scripts.pory"
 	removefieldmugshot
 # 850 "data/maps/RustboroCity/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 851 "data/maps/RustboroCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 852 "data/maps/RustboroCity/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 853 "data/maps/RustboroCity/scripts.pory"
-	msgbox RustboroCity_Text_RegisteredBrendan, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox RustboroCity_Text_RegisteredBrendan, MSGBOX_DEFAULT
 # 854 "data/maps/RustboroCity/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 855 "data/maps/RustboroCity/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 856 "data/maps/RustboroCity/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 857 "data/maps/RustboroCity/scripts.pory"
-	setflag FLAG_ENABLE_RIVAL_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_RIVAL_MATCH_CALL
 # 858 "data/maps/RustboroCity/scripts.pory"
 	setvar VAR_RUSTBORO_CITY_STATE, 8
 # 859 "data/maps/RustboroCity/scripts.pory"

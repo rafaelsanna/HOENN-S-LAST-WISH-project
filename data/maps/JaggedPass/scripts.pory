@@ -122,8 +122,8 @@ script JaggedPass_EventScript_Diana {
 
 script JaggedPass_EventScript_RegisterDiana {
 	special(PlayerFaceTrainerAfterBattle)
-	msgbox(JaggedPass_Text_DianaRegister)
-	register_matchcall(TRAINER_DIANA_1)
+	// PokéNav removed msgbox(JaggedPass_Text_DianaRegister)
+	// PokéNav removed register_matchcall(TRAINER_DIANA_1)
 	release
 }
 
@@ -144,8 +144,8 @@ script JaggedPass_EventScript_Ethan {
 
 script JaggedPass_EventScript_RegisterEthan {
 	special(PlayerFaceTrainerAfterBattle)
-	msgbox(JaggedPass_Text_EthanRegister)
-	register_matchcall(TRAINER_ETHAN_1)
+	// PokéNav removed msgbox(JaggedPass_Text_EthanRegister)
+	// PokéNav removed register_matchcall(TRAINER_ETHAN_1)
 	release
 }
 

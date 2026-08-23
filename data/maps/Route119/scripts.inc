@@ -711,9 +711,9 @@ Route119_EventScript_RegisterJackson::
 # 356 "data/maps/Route119/scripts.pory"
 	waitmovement 0
 # 357 "data/maps/Route119/scripts.pory"
-	msgbox Route119_Text_JacksonRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route119_Text_JacksonRegister, MSGBOX_DEFAULT
 # 358 "data/maps/Route119/scripts.pory"
-	register_matchcall TRAINER_JACKSON_1
+	@ PokéNav removed register_matchcall TRAINER_JACKSON_1
 # 359 "data/maps/Route119/scripts.pory"
 	release
 # 360 "data/maps/Route119/scripts.pory"
@@ -753,9 +753,9 @@ Route119_EventScript_RegisterCatherine::
 # 377 "data/maps/Route119/scripts.pory"
 	waitmovement 0
 # 378 "data/maps/Route119/scripts.pory"
-	msgbox Route119_Text_CatherineRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route119_Text_CatherineRegister, MSGBOX_DEFAULT
 # 379 "data/maps/Route119/scripts.pory"
-	register_matchcall TRAINER_CATHERINE_1
+	@ PokéNav removed register_matchcall TRAINER_CATHERINE_1
 # 380 "data/maps/Route119/scripts.pory"
 	release
 # 381 "data/maps/Route119/scripts.pory"
@@ -931,9 +931,9 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 # 466 "data/maps/Route119/scripts.pory"
 	lockall
 # 467 "data/maps/Route119/scripts.pory"
-	pokenavcall Route119_Text_ScottYouWonAtFortreeGym
+	@ PokéNav removed pokenavcall Route119_Text_ScottYouWonAtFortreeGym
 # 468 "data/maps/Route119/scripts.pory"
-	waitmessage
+	@ PokéNav removed waitmessage
 # 469 "data/maps/Route119/scripts.pory"
 	clearflag FLAG_SCOTT_CALL_FORTREE_GYM
 # 470 "data/maps/Route119/scripts.pory"

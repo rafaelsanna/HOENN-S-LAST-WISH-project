@@ -919,9 +919,9 @@ Route111_EventScript_RegisterDusty::
 # 460 "data/maps/Route111/scripts.pory"
 	waitmovement 0
 # 461 "data/maps/Route111/scripts.pory"
-	msgbox Route111_Text_DustyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route111_Text_DustyRegister, MSGBOX_DEFAULT
 # 462 "data/maps/Route111/scripts.pory"
-	register_matchcall TRAINER_DUSTY_1
+	@ PokéNav removed register_matchcall TRAINER_DUSTY_1
 # 463 "data/maps/Route111/scripts.pory"
 	release
 # 464 "data/maps/Route111/scripts.pory"
@@ -991,9 +991,9 @@ Route111_EventScript_RegisterWilton::
 # 496 "data/maps/Route111/scripts.pory"
 	waitmovement 0
 # 497 "data/maps/Route111/scripts.pory"
-	msgbox Route111_Text_WiltonRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route111_Text_WiltonRegister, MSGBOX_DEFAULT
 # 498 "data/maps/Route111/scripts.pory"
-	register_matchcall TRAINER_WILTON_1
+	@ PokéNav removed register_matchcall TRAINER_WILTON_1
 # 499 "data/maps/Route111/scripts.pory"
 	release
 # 500 "data/maps/Route111/scripts.pory"
@@ -1033,9 +1033,9 @@ Route111_EventScript_RegisterBrooke::
 # 517 "data/maps/Route111/scripts.pory"
 	waitmovement 0
 # 518 "data/maps/Route111/scripts.pory"
-	msgbox Route111_Text_BrookeRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route111_Text_BrookeRegister, MSGBOX_DEFAULT
 # 519 "data/maps/Route111/scripts.pory"
-	register_matchcall TRAINER_BROOKE_1
+	@ PokéNav removed register_matchcall TRAINER_BROOKE_1
 # 520 "data/maps/Route111/scripts.pory"
 	release
 # 521 "data/maps/Route111/scripts.pory"

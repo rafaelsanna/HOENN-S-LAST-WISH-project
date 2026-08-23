@@ -375,9 +375,9 @@ Route128_EventScript_RegisterIsaiah::
 # 188 "data/maps/Route128/scripts.pory"
 	waitmovement 0
 # 189 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_IsaiahRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route128_Text_IsaiahRegister, MSGBOX_DEFAULT
 # 190 "data/maps/Route128/scripts.pory"
-	register_matchcall TRAINER_ISAIAH_1
+	@ PokéNav removed register_matchcall TRAINER_ISAIAH_1
 # 191 "data/maps/Route128/scripts.pory"
 	release
 # 192 "data/maps/Route128/scripts.pory"
@@ -417,9 +417,9 @@ Route128_EventScript_RegisterKatelyn::
 # 209 "data/maps/Route128/scripts.pory"
 	waitmovement 0
 # 210 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_KatelynRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route128_Text_KatelynRegister, MSGBOX_DEFAULT
 # 211 "data/maps/Route128/scripts.pory"
-	register_matchcall TRAINER_KATELYN_1
+	@ PokéNav removed register_matchcall TRAINER_KATELYN_1
 # 212 "data/maps/Route128/scripts.pory"
 	release
 # 213 "data/maps/Route128/scripts.pory"

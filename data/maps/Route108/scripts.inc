@@ -79,9 +79,9 @@ Route108_EventScript_CoryRegisterMatchCallAfterBattle::
 # 40 "data/maps/Route108/scripts.pory"
 	waitmovement 0
 # 41 "data/maps/Route108/scripts.pory"
-	msgbox Route108_Text_CoryRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route108_Text_CoryRegister, MSGBOX_DEFAULT
 # 42 "data/maps/Route108/scripts.pory"
-	register_matchcall TRAINER_CORY_1
+	@ PokéNav removed register_matchcall TRAINER_CORY_1
 # 43 "data/maps/Route108/scripts.pory"
 	release
 # 44 "data/maps/Route108/scripts.pory"

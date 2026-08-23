@@ -47,9 +47,9 @@ AbandonedShip_Rooms_1F_EventScript_RegisterThalia::
 # 24 "data/maps/AbandonedShip_Rooms_1F/scripts.pory"
 	waitmovement 0
 # 25 "data/maps/AbandonedShip_Rooms_1F/scripts.pory"
-	msgbox AbandonedShip_Rooms_1F_Text_ThaliaRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox AbandonedShip_Rooms_1F_Text_ThaliaRegister, MSGBOX_DEFAULT
 # 26 "data/maps/AbandonedShip_Rooms_1F/scripts.pory"
-	register_matchcall TRAINER_THALIA_1
+	@ PokéNav removed register_matchcall TRAINER_THALIA_1
 # 27 "data/maps/AbandonedShip_Rooms_1F/scripts.pory"
 	release
 # 28 "data/maps/AbandonedShip_Rooms_1F/scripts.pory"

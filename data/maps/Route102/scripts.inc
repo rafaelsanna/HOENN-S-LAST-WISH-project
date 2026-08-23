@@ -67,7 +67,7 @@ Route102_EventScript_CalvinRegisterMatchCallAfterBattle::
 # 34 "data/maps/Route102/scripts.pory"
 	waitmovement 0
 # 35 "data/maps/Route102/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route102_EventScript_CalvinRegisterMatchCall
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route102_EventScript_CalvinRegisterMatchCall
 # 36 "data/maps/Route102/scripts.pory"
 	release
 # 37 "data/maps/Route102/scripts.pory"
@@ -77,9 +77,9 @@ Route102_EventScript_CalvinRegisterMatchCallAfterBattle::
 # 39 "data/maps/Route102/scripts.pory"
 Route102_EventScript_CalvinRegisterMatchCall::
 # 40 "data/maps/Route102/scripts.pory"
-	msgbox Route102_Text_CalvinRegisterShort, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route102_Text_CalvinRegisterShort, MSGBOX_DEFAULT
 # 41 "data/maps/Route102/scripts.pory"
-	register_matchcall TRAINER_CALVIN_1
+	@ PokéNav removed register_matchcall TRAINER_CALVIN_1
 # 42 "data/maps/Route102/scripts.pory"
 	release
 # 43 "data/maps/Route102/scripts.pory"
@@ -89,7 +89,7 @@ Route102_EventScript_CalvinRegisterMatchCall::
 # 45 "data/maps/Route102/scripts.pory"
 Route102_EventScript_CalvinTryRegister::
 # 46 "data/maps/Route102/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route102_EventScript_CalvinRegister
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route102_EventScript_CalvinRegister
 # 47 "data/maps/Route102/scripts.pory"
 	msgbox Route102_Text_CalvinPostBattle, MSGBOX_DEFAULT
 # 48 "data/maps/Route102/scripts.pory"
@@ -101,9 +101,9 @@ Route102_EventScript_CalvinTryRegister::
 # 51 "data/maps/Route102/scripts.pory"
 Route102_EventScript_CalvinRegister::
 # 52 "data/maps/Route102/scripts.pory"
-	msgbox Route102_Text_CalvinRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route102_Text_CalvinRegister, MSGBOX_DEFAULT
 # 53 "data/maps/Route102/scripts.pory"
-	register_matchcall TRAINER_CALVIN_1
+	@ PokéNav removed register_matchcall TRAINER_CALVIN_1
 # 54 "data/maps/Route102/scripts.pory"
 	release
 # 55 "data/maps/Route102/scripts.pory"

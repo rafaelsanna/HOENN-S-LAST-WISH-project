@@ -15,16 +15,16 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	giveitem ITEM_TM_STEEL_WING
 	call_if_eq VAR_RESULT, FALSE, GraniteCave_StevensRoom_EventScript_BagFull
 	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
-	msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
 	removefieldmugshot
-	closemessage
-	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox GraniteCave_StevensRoom_Text_RegisteredSteven, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_REGISTERED_STEVEN_POKENAV
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed msgbox GraniteCave_StevensRoom_Text_RegisteredSteven, MSGBOX_DEFAULT
+	@ PokéNav removed waitfanfare
+	@ PokéNav removed closemessage
+	@ PokéNav removed delay 30
+	@ PokéNav removed setflag FLAG_REGISTERED_STEVEN_POKENAV
 	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox GraniteCave_StevensRoom_Text_LookAnciantPainting, MSGBOX_DEFAULT
 	removefieldmugshot

@@ -487,9 +487,9 @@ Route103_EventScript_Amy::
 # 244 "data/maps/Route103/scripts.pory"
 Route102_EventScript_AmyRegisterMatchCallAfterBattle::
 # 245 "data/maps/Route103/scripts.pory"
-	msgbox Route103_Text_AmyLivRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route103_Text_AmyLivRegister, MSGBOX_DEFAULT
 # 246 "data/maps/Route103/scripts.pory"
-	register_matchcall TRAINER_AMY_AND_LIV_1
+	@ PokéNav removed register_matchcall TRAINER_AMY_AND_LIV_1
 # 247 "data/maps/Route103/scripts.pory"
 	release
 # 248 "data/maps/Route103/scripts.pory"
@@ -523,9 +523,9 @@ Route103_EventScript_Liv::
 # 262 "data/maps/Route103/scripts.pory"
 Route102_EventScript_LivRegisterMatchCallAfterBattle::
 # 263 "data/maps/Route103/scripts.pory"
-	msgbox Route103_Text_AmyLivRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route103_Text_AmyLivRegister, MSGBOX_DEFAULT
 # 264 "data/maps/Route103/scripts.pory"
-	register_matchcall TRAINER_AMY_AND_LIV_1
+	@ PokéNav removed register_matchcall TRAINER_AMY_AND_LIV_1
 # 265 "data/maps/Route103/scripts.pory"
 	release
 # 266 "data/maps/Route103/scripts.pory"
@@ -575,9 +575,9 @@ Route102_EventScript_MiguelRegisterMatchCallAfterBattle::
 # 288 "data/maps/Route103/scripts.pory"
 	waitmovement 0
 # 289 "data/maps/Route103/scripts.pory"
-	msgbox Route103_Text_MiguelRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route103_Text_MiguelRegister, MSGBOX_DEFAULT
 # 290 "data/maps/Route103/scripts.pory"
-	register_matchcall TRAINER_MIGUEL_1
+	@ PokéNav removed register_matchcall TRAINER_MIGUEL_1
 # 291 "data/maps/Route103/scripts.pory"
 	release
 # 292 "data/maps/Route103/scripts.pory"

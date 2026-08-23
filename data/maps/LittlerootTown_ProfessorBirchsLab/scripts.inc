@@ -1031,9 +1031,9 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Birch::
 # 516 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_GrassyPatchWaiting
 # 517 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	goto_if_unset FLAG_HAS_MATCH_CALL, LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister
+	@ PokéNav removed goto_if_unset FLAG_HAS_MATCH_CALL, LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister
 # 518 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	goto_if_unset FLAG_ENABLE_PROF_BIRCH_MATCH_CALL, EventScript_RegisterProfBirch
+	@ PokéNav removed goto_if_unset FLAG_ENABLE_PROF_BIRCH_MATCH_CALL, EventScript_RegisterProfBirch
 # 519 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister
 # 520 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
@@ -1081,23 +1081,23 @@ LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister::
 # 541 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 EventScript_RegisterProfBirch::
 # 542 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	msgbox MatchCall_Text_BirchRegisterCall, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox MatchCall_Text_BirchRegisterCall, MSGBOX_DEFAULT
 # 543 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 544 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 545 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 546 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	msgbox MatchCall_Text_RegisteredBirch, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox MatchCall_Text_RegisteredBirch, MSGBOX_DEFAULT
 # 547 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 548 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 549 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 550 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	setflag FLAG_ENABLE_PROF_BIRCH_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_PROF_BIRCH_MATCH_CALL
 # 551 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	setvar VAR_REGISTER_BIRCH_STATE, 2
 # 552 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
@@ -1469,9 +1469,9 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall::
 # 735 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	lockall
 # 736 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	pokenavcall LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall
+	@ PokéNav removed pokenavcall LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall
 # 737 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	waitmessage
+	@ PokéNav removed waitmessage
 # 738 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	clearflag FLAG_SCOTT_CALL_BATTLE_FRONTIER
 # 739 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"

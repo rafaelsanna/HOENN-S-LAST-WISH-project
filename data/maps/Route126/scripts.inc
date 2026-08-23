@@ -109,9 +109,9 @@ Route126_EventScript_RegisterPablo::
 # 55 "data/maps/Route126/scripts.pory"
 	waitmovement 0
 # 56 "data/maps/Route126/scripts.pory"
-	msgbox Route126_Text_PabloRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route126_Text_PabloRegister, MSGBOX_DEFAULT
 # 57 "data/maps/Route126/scripts.pory"
-	register_matchcall TRAINER_PABLO_1
+	@ PokéNav removed register_matchcall TRAINER_PABLO_1
 # 58 "data/maps/Route126/scripts.pory"
 	release
 # 59 "data/maps/Route126/scripts.pory"
