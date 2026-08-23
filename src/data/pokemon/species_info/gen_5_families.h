@@ -13235,11 +13235,11 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         SHADOW(0, 8, SHADOW_SIZE_L)
         FOOTPRINT(Kyurem)
         OVERWORLD(
-            sPicTable_Kyurem,
+            sPicTable_Kyurem, 
             SIZE_64x64,
             SHADOW_SIZE_M,
             TRACKS_FOOT,
-            sAnimTable_Following,
+            sAnimTable_KyuremCrystal,
             gOverworldPalette_Kyurem,
             gShinyOverworldPalette_Kyurem
         )
