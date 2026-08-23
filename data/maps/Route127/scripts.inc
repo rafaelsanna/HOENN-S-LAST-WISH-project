@@ -137,9 +137,9 @@ Route127_EventScript_RegisterKoji::
 # 69 "data/maps/Route127/scripts.pory"
 	waitmovement 0
 # 70 "data/maps/Route127/scripts.pory"
-	msgbox Route127_Text_KojiRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route127_Text_KojiRegister, MSGBOX_DEFAULT
 # 71 "data/maps/Route127/scripts.pory"
-	register_matchcall TRAINER_KOJI_1
+	@ PokéNav removed register_matchcall TRAINER_KOJI_1
 # 72 "data/maps/Route127/scripts.pory"
 	release
 # 73 "data/maps/Route127/scripts.pory"

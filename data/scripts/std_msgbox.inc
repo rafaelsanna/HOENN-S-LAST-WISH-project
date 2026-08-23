@@ -38,8 +38,8 @@ Std_MsgboxGetPoints:
 
 @ Never used, pokenavcall is always used directly instead
 Std_MsgboxPokenav:
-	pokenavcall NULL
-	waitmessage
+	@ PokéNav removed pokenavcall NULL
+	@ PokéNav removed waitmessage
 	return
 
 EventScript_UnusedReturn:

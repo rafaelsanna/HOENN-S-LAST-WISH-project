@@ -39,9 +39,9 @@ Route107_EventScript_TonyRegisterMatchCallAfterBattle::
 # 20 "data/maps/Route107/scripts.pory"
 	waitmovement 0
 # 21 "data/maps/Route107/scripts.pory"
-	msgbox Route107_Text_TonyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route107_Text_TonyRegister, MSGBOX_DEFAULT
 # 22 "data/maps/Route107/scripts.pory"
-	register_matchcall TRAINER_TONY_1
+	@ PokéNav removed register_matchcall TRAINER_TONY_1
 # 23 "data/maps/Route107/scripts.pory"
 	release
 # 24 "data/maps/Route107/scripts.pory"

@@ -507,8 +507,8 @@ MtChimney_EventScript_Shelby::
 MtChimney_EventScript_DefeatedShelby::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
-	msgbox MtChimney_Text_ShelbyRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_SHELBY_1
+	@ PokéNav removed msgbox MtChimney_Text_ShelbyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed register_matchcall TRAINER_SHELBY_1
 	release
 	end
 

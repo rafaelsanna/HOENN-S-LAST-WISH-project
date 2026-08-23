@@ -163,7 +163,7 @@ Route104_EventScript_TrySetRivalPos::
 # 82 "data/maps/Route104/scripts.pory"
 # 51 "data/maps/Route104/scripts.pory"
 # 83 "data/maps/Route104/scripts.pory"
-	goto_if_unset FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_DontSetRivalPos
+	@ PokéNav removed goto_if_unset FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_DontSetRivalPos
 # 84 "data/maps/Route104/scripts.pory"
 # 52 "data/maps/Route104/scripts.pory"
 # 85 "data/maps/Route104/scripts.pory"
@@ -407,35 +407,35 @@ Route104_EventScript_MayEncounter::
 # 204 "data/maps/Route104/scripts.pory"
 # 112 "data/maps/Route104/scripts.pory"
 # 205 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_MayAskToBattle
+	@ PokéNav removed goto_if_set FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_MayAskToBattle
 # 206 "data/maps/Route104/scripts.pory"
 # 113 "data/maps/Route104/scripts.pory"
 # 207 "data/maps/Route104/scripts.pory"
-	setflag FLAG_REGISTER_RIVAL_POKENAV
+	@ PokéNav removed setflag FLAG_REGISTER_RIVAL_POKENAV
 # 208 "data/maps/Route104/scripts.pory"
 # 114 "data/maps/Route104/scripts.pory"
 # 209 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_MayWeShouldRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_MayWeShouldRegister, MSGBOX_DEFAULT
 # 210 "data/maps/Route104/scripts.pory"
 # 115 "data/maps/Route104/scripts.pory"
 # 211 "data/maps/Route104/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 212 "data/maps/Route104/scripts.pory"
 # 116 "data/maps/Route104/scripts.pory"
 # 213 "data/maps/Route104/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 214 "data/maps/Route104/scripts.pory"
 # 117 "data/maps/Route104/scripts.pory"
 # 215 "data/maps/Route104/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 216 "data/maps/Route104/scripts.pory"
 # 118 "data/maps/Route104/scripts.pory"
 # 217 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_RegisteredMay, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_RegisteredMay, MSGBOX_DEFAULT
 # 218 "data/maps/Route104/scripts.pory"
 # 119 "data/maps/Route104/scripts.pory"
 # 219 "data/maps/Route104/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 220 "data/maps/Route104/scripts.pory"
 # 120 "data/maps/Route104/scripts.pory"
 # 221 "data/maps/Route104/scripts.pory"
@@ -447,7 +447,7 @@ Route104_EventScript_MayEncounter::
 # 224 "data/maps/Route104/scripts.pory"
 # 122 "data/maps/Route104/scripts.pory"
 # 225 "data/maps/Route104/scripts.pory"
-	setflag FLAG_ENABLE_RIVAL_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_RIVAL_MATCH_CALL
 # 226 "data/maps/Route104/scripts.pory"
 # 123 "data/maps/Route104/scripts.pory"
 # 227 "data/maps/Route104/scripts.pory"
@@ -751,35 +751,35 @@ Route104_EventScript_BrendanEncounter::
 # 376 "data/maps/Route104/scripts.pory"
 # 198 "data/maps/Route104/scripts.pory"
 # 377 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_BrendanAskToBattle
+	@ PokéNav removed goto_if_set FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_BrendanAskToBattle
 # 378 "data/maps/Route104/scripts.pory"
 # 199 "data/maps/Route104/scripts.pory"
 # 379 "data/maps/Route104/scripts.pory"
-	setflag FLAG_REGISTER_RIVAL_POKENAV
+	@ PokéNav removed setflag FLAG_REGISTER_RIVAL_POKENAV
 # 380 "data/maps/Route104/scripts.pory"
 # 200 "data/maps/Route104/scripts.pory"
 # 381 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_BrendanWeShouldRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_BrendanWeShouldRegister, MSGBOX_DEFAULT
 # 382 "data/maps/Route104/scripts.pory"
 # 201 "data/maps/Route104/scripts.pory"
 # 383 "data/maps/Route104/scripts.pory"
-	closemessage
+	@ PokéNav removed closemessage
 # 384 "data/maps/Route104/scripts.pory"
 # 202 "data/maps/Route104/scripts.pory"
 # 385 "data/maps/Route104/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 386 "data/maps/Route104/scripts.pory"
 # 203 "data/maps/Route104/scripts.pory"
 # 387 "data/maps/Route104/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 388 "data/maps/Route104/scripts.pory"
 # 204 "data/maps/Route104/scripts.pory"
 # 389 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_RegisteredBrendan, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_RegisteredBrendan, MSGBOX_DEFAULT
 # 390 "data/maps/Route104/scripts.pory"
 # 205 "data/maps/Route104/scripts.pory"
 # 391 "data/maps/Route104/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 392 "data/maps/Route104/scripts.pory"
 # 206 "data/maps/Route104/scripts.pory"
 # 393 "data/maps/Route104/scripts.pory"
@@ -791,7 +791,7 @@ Route104_EventScript_BrendanEncounter::
 # 396 "data/maps/Route104/scripts.pory"
 # 208 "data/maps/Route104/scripts.pory"
 # 397 "data/maps/Route104/scripts.pory"
-	setflag FLAG_ENABLE_RIVAL_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_RIVAL_MATCH_CALL
 # 398 "data/maps/Route104/scripts.pory"
 # 209 "data/maps/Route104/scripts.pory"
 # 399 "data/maps/Route104/scripts.pory"
@@ -1525,27 +1525,27 @@ Route104_EventScript_SailToDewfordDadCalls::
 # 763 "data/maps/Route104/scripts.pory"
 # 386 "data/maps/Route104/scripts.pory"
 # 764 "data/maps/Route104/scripts.pory"
-	pokenavcall Route104_Text_DadPokenavCall
+	@ PokéNav removed pokenavcall Route104_Text_DadPokenavCall
 # 765 "data/maps/Route104/scripts.pory"
 # 387 "data/maps/Route104/scripts.pory"
 # 766 "data/maps/Route104/scripts.pory"
-	waitmessage
+	@ PokéNav removed waitmessage
 # 767 "data/maps/Route104/scripts.pory"
 # 388 "data/maps/Route104/scripts.pory"
 # 768 "data/maps/Route104/scripts.pory"
-	delay 30
+	@ PokéNav removed delay 30
 # 769 "data/maps/Route104/scripts.pory"
 # 389 "data/maps/Route104/scripts.pory"
 # 770 "data/maps/Route104/scripts.pory"
-	playfanfare MUS_REGISTER_MATCH_CALL
+	@ PokéNav removed playfanfare MUS_REGISTER_MATCH_CALL
 # 771 "data/maps/Route104/scripts.pory"
 # 390 "data/maps/Route104/scripts.pory"
 # 772 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_RegisteredDadInPokenav, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_RegisteredDadInPokenav, MSGBOX_DEFAULT
 # 773 "data/maps/Route104/scripts.pory"
 # 391 "data/maps/Route104/scripts.pory"
 # 774 "data/maps/Route104/scripts.pory"
-	waitfanfare
+	@ PokéNav removed waitfanfare
 # 775 "data/maps/Route104/scripts.pory"
 # 392 "data/maps/Route104/scripts.pory"
 # 776 "data/maps/Route104/scripts.pory"
@@ -1557,7 +1557,7 @@ Route104_EventScript_SailToDewfordDadCalls::
 # 779 "data/maps/Route104/scripts.pory"
 # 394 "data/maps/Route104/scripts.pory"
 # 780 "data/maps/Route104/scripts.pory"
-	setflag FLAG_ENABLE_NORMAN_MATCH_CALL
+	@ PokéNav removed setflag FLAG_ENABLE_NORMAN_MATCH_CALL
 # 781 "data/maps/Route104/scripts.pory"
 # 395 "data/maps/Route104/scripts.pory"
 # 782 "data/maps/Route104/scripts.pory"
@@ -3525,7 +3525,7 @@ Route104_EventScript_TryRegisterHaleyAfterBattle::
 # 1763 "data/maps/Route104/scripts.pory"
 # 886 "data/maps/Route104/scripts.pory"
 # 1764 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterHaleyAfterBattle
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterHaleyAfterBattle
 # 1765 "data/maps/Route104/scripts.pory"
 # 887 "data/maps/Route104/scripts.pory"
 # 1766 "data/maps/Route104/scripts.pory"
@@ -3545,11 +3545,11 @@ Route104_EventScript_RegisterHaleyAfterBattle::
 # 1773 "data/maps/Route104/scripts.pory"
 # 891 "data/maps/Route104/scripts.pory"
 # 1774 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_HaleyRegister2, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_HaleyRegister2, MSGBOX_DEFAULT
 # 1775 "data/maps/Route104/scripts.pory"
 # 892 "data/maps/Route104/scripts.pory"
 # 1776 "data/maps/Route104/scripts.pory"
-	register_matchcall TRAINER_HALEY_1
+	@ PokéNav removed register_matchcall TRAINER_HALEY_1
 # 1777 "data/maps/Route104/scripts.pory"
 # 893 "data/maps/Route104/scripts.pory"
 # 1778 "data/maps/Route104/scripts.pory"
@@ -3569,7 +3569,7 @@ Route104_EventScript_TryRegisterHaley::
 # 1785 "data/maps/Route104/scripts.pory"
 # 897 "data/maps/Route104/scripts.pory"
 # 1786 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterHaley
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterHaley
 # 1787 "data/maps/Route104/scripts.pory"
 # 898 "data/maps/Route104/scripts.pory"
 # 1788 "data/maps/Route104/scripts.pory"
@@ -3593,11 +3593,11 @@ Route104_EventScript_RegisterHaley::
 # 1797 "data/maps/Route104/scripts.pory"
 # 903 "data/maps/Route104/scripts.pory"
 # 1798 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_HaleyRegister1, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_HaleyRegister1, MSGBOX_DEFAULT
 # 1799 "data/maps/Route104/scripts.pory"
 # 904 "data/maps/Route104/scripts.pory"
 # 1800 "data/maps/Route104/scripts.pory"
-	register_matchcall TRAINER_HALEY_1
+	@ PokéNav removed register_matchcall TRAINER_HALEY_1
 # 1801 "data/maps/Route104/scripts.pory"
 # 905 "data/maps/Route104/scripts.pory"
 # 1802 "data/maps/Route104/scripts.pory"
@@ -3689,7 +3689,7 @@ Route104_EventScript_TryRegisterWinstonAfterBattle::
 # 1845 "data/maps/Route104/scripts.pory"
 # 927 "data/maps/Route104/scripts.pory"
 # 1846 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterWinstonAfterBattle
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterWinstonAfterBattle
 # 1847 "data/maps/Route104/scripts.pory"
 # 928 "data/maps/Route104/scripts.pory"
 # 1848 "data/maps/Route104/scripts.pory"
@@ -3709,11 +3709,11 @@ Route104_EventScript_RegisterWinstonAfterBattle::
 # 1855 "data/maps/Route104/scripts.pory"
 # 932 "data/maps/Route104/scripts.pory"
 # 1856 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_WinstonRegister2, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_WinstonRegister2, MSGBOX_DEFAULT
 # 1857 "data/maps/Route104/scripts.pory"
 # 933 "data/maps/Route104/scripts.pory"
 # 1858 "data/maps/Route104/scripts.pory"
-	register_matchcall TRAINER_WINSTON_1
+	@ PokéNav removed register_matchcall TRAINER_WINSTON_1
 # 1859 "data/maps/Route104/scripts.pory"
 # 934 "data/maps/Route104/scripts.pory"
 # 1860 "data/maps/Route104/scripts.pory"
@@ -3733,7 +3733,7 @@ Route104_EventScript_TryRegisterWinston::
 # 1867 "data/maps/Route104/scripts.pory"
 # 938 "data/maps/Route104/scripts.pory"
 # 1868 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterWinston
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterWinston
 # 1869 "data/maps/Route104/scripts.pory"
 # 939 "data/maps/Route104/scripts.pory"
 # 1870 "data/maps/Route104/scripts.pory"
@@ -3757,11 +3757,11 @@ Route104_EventScript_RegisterWinston::
 # 1879 "data/maps/Route104/scripts.pory"
 # 944 "data/maps/Route104/scripts.pory"
 # 1880 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_WinstonRegister1, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_WinstonRegister1, MSGBOX_DEFAULT
 # 1881 "data/maps/Route104/scripts.pory"
 # 945 "data/maps/Route104/scripts.pory"
 # 1882 "data/maps/Route104/scripts.pory"
-	register_matchcall TRAINER_WINSTON_1
+	@ PokéNav removed register_matchcall TRAINER_WINSTON_1
 # 1883 "data/maps/Route104/scripts.pory"
 # 946 "data/maps/Route104/scripts.pory"
 # 1884 "data/maps/Route104/scripts.pory"
@@ -3853,7 +3853,7 @@ Route104_EventScript_TryRegisterCindyAfterBattle::
 # 1927 "data/maps/Route104/scripts.pory"
 # 968 "data/maps/Route104/scripts.pory"
 # 1928 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterCindyAfterBattle
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterCindyAfterBattle
 # 1929 "data/maps/Route104/scripts.pory"
 # 969 "data/maps/Route104/scripts.pory"
 # 1930 "data/maps/Route104/scripts.pory"
@@ -3873,11 +3873,11 @@ Route104_EventScript_RegisterCindyAfterBattle::
 # 1937 "data/maps/Route104/scripts.pory"
 # 973 "data/maps/Route104/scripts.pory"
 # 1938 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_CindyRegister2, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_CindyRegister2, MSGBOX_DEFAULT
 # 1939 "data/maps/Route104/scripts.pory"
 # 974 "data/maps/Route104/scripts.pory"
 # 1940 "data/maps/Route104/scripts.pory"
-	register_matchcall TRAINER_CINDY_1
+	@ PokéNav removed register_matchcall TRAINER_CINDY_1
 # 1941 "data/maps/Route104/scripts.pory"
 # 975 "data/maps/Route104/scripts.pory"
 # 1942 "data/maps/Route104/scripts.pory"
@@ -3897,7 +3897,7 @@ Route104_EventScript_TryRegisterCindy::
 # 1949 "data/maps/Route104/scripts.pory"
 # 979 "data/maps/Route104/scripts.pory"
 # 1950 "data/maps/Route104/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterCindy
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route104_EventScript_RegisterCindy
 # 1951 "data/maps/Route104/scripts.pory"
 # 980 "data/maps/Route104/scripts.pory"
 # 1952 "data/maps/Route104/scripts.pory"
@@ -3921,11 +3921,11 @@ Route104_EventScript_RegisterCindy::
 # 1961 "data/maps/Route104/scripts.pory"
 # 985 "data/maps/Route104/scripts.pory"
 # 1962 "data/maps/Route104/scripts.pory"
-	msgbox Route104_Text_CindyRegister1, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route104_Text_CindyRegister1, MSGBOX_DEFAULT
 # 1963 "data/maps/Route104/scripts.pory"
 # 986 "data/maps/Route104/scripts.pory"
 # 1964 "data/maps/Route104/scripts.pory"
-	register_matchcall TRAINER_CINDY_1
+	@ PokéNav removed register_matchcall TRAINER_CINDY_1
 # 1965 "data/maps/Route104/scripts.pory"
 # 987 "data/maps/Route104/scripts.pory"
 # 1966 "data/maps/Route104/scripts.pory"

@@ -227,10 +227,6 @@ JaggedPass_EventScript_Diana_2:
 JaggedPass_EventScript_RegisterDiana::
 # 124 "data/maps/JaggedPass/scripts.pory"
 	special PlayerFaceTrainerAfterBattle
-# 125 "data/maps/JaggedPass/scripts.pory"
-	msgbox JaggedPass_Text_DianaRegister
-# 126 "data/maps/JaggedPass/scripts.pory"
-	register_matchcall TRAINER_DIANA_1
 # 127 "data/maps/JaggedPass/scripts.pory"
 	release
 	return
@@ -268,10 +264,6 @@ JaggedPass_EventScript_Ethan_2:
 JaggedPass_EventScript_RegisterEthan::
 # 146 "data/maps/JaggedPass/scripts.pory"
 	special PlayerFaceTrainerAfterBattle
-# 147 "data/maps/JaggedPass/scripts.pory"
-	msgbox JaggedPass_Text_EthanRegister
-# 148 "data/maps/JaggedPass/scripts.pory"
-	register_matchcall TRAINER_ETHAN_1
 # 149 "data/maps/JaggedPass/scripts.pory"
 	release
 	return

@@ -585,9 +585,9 @@ Route120_EventScript_RegisterRobert::
 # 293 "data/maps/Route120/scripts.pory"
 	waitmovement 0
 # 294 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_RobertRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route120_Text_RobertRegister, MSGBOX_DEFAULT
 # 295 "data/maps/Route120/scripts.pory"
-	register_matchcall TRAINER_ROBERT_1
+	@ PokéNav removed register_matchcall TRAINER_ROBERT_1
 # 296 "data/maps/Route120/scripts.pory"
 	release
 # 297 "data/maps/Route120/scripts.pory"
@@ -647,9 +647,9 @@ Route120_EventScript_RegisterJeffrey::
 # 324 "data/maps/Route120/scripts.pory"
 	waitmovement 0
 # 325 "data/maps/Route120/scripts.pory"
-	msgbox Route120_Text_JeffreyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route120_Text_JeffreyRegister, MSGBOX_DEFAULT
 # 326 "data/maps/Route120/scripts.pory"
-	register_matchcall TRAINER_JEFFREY_1
+	@ PokéNav removed register_matchcall TRAINER_JEFFREY_1
 # 327 "data/maps/Route120/scripts.pory"
 	release
 # 328 "data/maps/Route120/scripts.pory"

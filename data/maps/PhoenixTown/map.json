@@ -55,6 +55,13 @@
       "elevation": 0,
       "dest_map": "MAP_PHOENIXHOUSE3",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_PHOENIXCAVE",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

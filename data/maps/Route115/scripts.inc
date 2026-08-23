@@ -89,9 +89,9 @@ Route115_EventScript_RegisterTimothy::
 # 45 "data/maps/Route115/scripts.pory"
 	waitmovement 0
 # 46 "data/maps/Route115/scripts.pory"
-	msgbox Route115_Text_TimothyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route115_Text_TimothyRegister, MSGBOX_DEFAULT
 # 47 "data/maps/Route115/scripts.pory"
-	register_matchcall TRAINER_TIMOTHY_1
+	@ PokéNav removed register_matchcall TRAINER_TIMOTHY_1
 # 48 "data/maps/Route115/scripts.pory"
 	release
 # 49 "data/maps/Route115/scripts.pory"
@@ -141,9 +141,9 @@ Route115_EventScript_RegisterNob::
 # 71 "data/maps/Route115/scripts.pory"
 	waitmovement 0
 # 72 "data/maps/Route115/scripts.pory"
-	msgbox Route115_Text_NobRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route115_Text_NobRegister, MSGBOX_DEFAULT
 # 73 "data/maps/Route115/scripts.pory"
-	register_matchcall TRAINER_NOB_1
+	@ PokéNav removed register_matchcall TRAINER_NOB_1
 # 74 "data/maps/Route115/scripts.pory"
 	release
 # 75 "data/maps/Route115/scripts.pory"
@@ -183,9 +183,9 @@ Route115_EventScript_RegisterCyndy::
 # 92 "data/maps/Route115/scripts.pory"
 	waitmovement 0
 # 93 "data/maps/Route115/scripts.pory"
-	msgbox Route115_Text_CyndyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route115_Text_CyndyRegister, MSGBOX_DEFAULT
 # 94 "data/maps/Route115/scripts.pory"
-	register_matchcall TRAINER_CYNDY_1
+	@ PokéNav removed register_matchcall TRAINER_CYNDY_1
 # 95 "data/maps/Route115/scripts.pory"
 	release
 # 96 "data/maps/Route115/scripts.pory"

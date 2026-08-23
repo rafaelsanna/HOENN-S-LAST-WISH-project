@@ -25,9 +25,9 @@ AbandonedShip_Rooms2_1F_EventScript_Dan::
 # 13 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
 AbandonedShip_Rooms2_1F_EventScript_RegisterDan::
 # 14 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
-	msgbox AbandonedShip_Rooms2_1F_Text_KiraRegister, MSGBOX_DEFAULT  @ Kira speaks for both when registering KiraAndDan
+	@ PokéNav removed msgbox AbandonedShip_Rooms2_1F_Text_KiraRegister, MSGBOX_DEFAULT  @ Kira speaks for both when registering KiraAndDan
 # 15 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
-	register_matchcall TRAINER_KIRA_AND_DAN_1
+	@ PokéNav removed register_matchcall TRAINER_KIRA_AND_DAN_1
 # 16 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
 	release
 # 17 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
@@ -63,9 +63,9 @@ AbandonedShip_Rooms2_1F_EventScript_Kira::
 # 32 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
 AbandonedShip_Rooms2_1F_EventScript_RegisterKira::
 # 33 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
-	msgbox AbandonedShip_Rooms2_1F_Text_KiraRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox AbandonedShip_Rooms2_1F_Text_KiraRegister, MSGBOX_DEFAULT
 # 34 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
-	register_matchcall TRAINER_KIRA_AND_DAN_1
+	@ PokéNav removed register_matchcall TRAINER_KIRA_AND_DAN_1
 # 35 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"
 	release
 # 36 "data/maps/AbandonedShip_Rooms2_1F/scripts.pory"

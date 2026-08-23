@@ -141,9 +141,9 @@ Route123_EventScript_RegisterCameron::
 # 71 "data/maps/Route123/scripts.pory"
 	waitmovement 0
 # 72 "data/maps/Route123/scripts.pory"
-	msgbox Route123_Text_CameronRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route123_Text_CameronRegister, MSGBOX_DEFAULT
 # 73 "data/maps/Route123/scripts.pory"
-	register_matchcall TRAINER_CAMERON_1
+	@ PokéNav removed register_matchcall TRAINER_CAMERON_1
 # 74 "data/maps/Route123/scripts.pory"
 	release
 # 75 "data/maps/Route123/scripts.pory"
@@ -183,9 +183,9 @@ Route123_EventScript_RegisterJacki::
 # 92 "data/maps/Route123/scripts.pory"
 	waitmovement 0
 # 93 "data/maps/Route123/scripts.pory"
-	msgbox Route123_Text_JackiRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route123_Text_JackiRegister, MSGBOX_DEFAULT
 # 94 "data/maps/Route123/scripts.pory"
-	register_matchcall TRAINER_JACKI_1
+	@ PokéNav removed register_matchcall TRAINER_JACKI_1
 # 95 "data/maps/Route123/scripts.pory"
 	release
 # 96 "data/maps/Route123/scripts.pory"
@@ -325,9 +325,9 @@ Route123_EventScript_RegisterFernando::
 # 163 "data/maps/Route123/scripts.pory"
 	waitmovement 0
 # 164 "data/maps/Route123/scripts.pory"
-	msgbox Route123_Text_FernandoRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route123_Text_FernandoRegister, MSGBOX_DEFAULT
 # 165 "data/maps/Route123/scripts.pory"
-	register_matchcall TRAINER_FERNANDO_1
+	@ PokéNav removed register_matchcall TRAINER_FERNANDO_1
 # 166 "data/maps/Route123/scripts.pory"
 	release
 # 167 "data/maps/Route123/scripts.pory"

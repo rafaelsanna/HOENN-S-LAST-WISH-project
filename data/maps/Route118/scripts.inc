@@ -379,9 +379,9 @@ Route118_EventScript_RegisterRose::
 # 190 "data/maps/Route118/scripts.pory"
 	waitmovement 0
 # 191 "data/maps/Route118/scripts.pory"
-	msgbox Route118_Text_RoseRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route118_Text_RoseRegister, MSGBOX_DEFAULT
 # 192 "data/maps/Route118/scripts.pory"
-	register_matchcall TRAINER_ROSE_1
+	@ PokéNav removed register_matchcall TRAINER_ROSE_1
 # 193 "data/maps/Route118/scripts.pory"
 	release
 # 194 "data/maps/Route118/scripts.pory"
@@ -441,9 +441,9 @@ Route118_EventScript_RegisterDalton::
 # 221 "data/maps/Route118/scripts.pory"
 	waitmovement 0
 # 222 "data/maps/Route118/scripts.pory"
-	msgbox Route118_Text_DaltonRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route118_Text_DaltonRegister, MSGBOX_DEFAULT
 # 223 "data/maps/Route118/scripts.pory"
-	register_matchcall TRAINER_DALTON_1
+	@ PokéNav removed register_matchcall TRAINER_DALTON_1
 # 224 "data/maps/Route118/scripts.pory"
 	release
 # 225 "data/maps/Route118/scripts.pory"

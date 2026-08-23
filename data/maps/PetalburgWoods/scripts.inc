@@ -869,7 +869,7 @@ PetalburgWoods_EventScript_TryRegisterJames::
 # 435 "data/maps/PetalburgWoods/scripts.pory"
 	waitmovement 0
 # 436 "data/maps/PetalburgWoods/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, PetalburgWoods_EventScript_RegisterJames
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, PetalburgWoods_EventScript_RegisterJames
 # 437 "data/maps/PetalburgWoods/scripts.pory"
 	lock
 # 438 "data/maps/PetalburgWoods/scripts.pory"
@@ -885,7 +885,7 @@ PetalburgWoods_EventScript_RegisterJames::
 # 443 "data/maps/PetalburgWoods/scripts.pory"
 	msgbox PetalburgWoods_Text_IWantRematch1, MSGBOX_DEFAULT
 # 444 "data/maps/PetalburgWoods/scripts.pory"
-	register_matchcall TRAINER_JAMES_1
+	@ PokéNav removed register_matchcall TRAINER_JAMES_1
 # 445 "data/maps/PetalburgWoods/scripts.pory"
 	release
 # 446 "data/maps/PetalburgWoods/scripts.pory"
@@ -895,7 +895,7 @@ PetalburgWoods_EventScript_RegisterJames::
 # 448 "data/maps/PetalburgWoods/scripts.pory"
 PetalburgWoods_EventScript_TryRegisterJames2::
 # 449 "data/maps/PetalburgWoods/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, PetalburgWoods_EventScript_RegisterJames2
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, PetalburgWoods_EventScript_RegisterJames2
 # 450 "data/maps/PetalburgWoods/scripts.pory"
 	msgbox PetalburgWoods_Text_PeopleRespectYou, MSGBOX_DEFAULT
 # 451 "data/maps/PetalburgWoods/scripts.pory"
@@ -909,7 +909,7 @@ PetalburgWoods_EventScript_RegisterJames2::
 # 455 "data/maps/PetalburgWoods/scripts.pory"
 	msgbox PetalburgWoods_Text_IWantRematch2, MSGBOX_DEFAULT
 # 456 "data/maps/PetalburgWoods/scripts.pory"
-	register_matchcall TRAINER_JAMES_1
+	@ PokéNav removed register_matchcall TRAINER_JAMES_1
 # 457 "data/maps/PetalburgWoods/scripts.pory"
 	release
 # 458 "data/maps/PetalburgWoods/scripts.pory"

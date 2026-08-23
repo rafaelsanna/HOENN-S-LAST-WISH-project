@@ -1017,9 +1017,9 @@ MtChimney_EventScript_DefeatedShelby::
 # 509 "data/maps/MtChimney/scripts.pory"
 	waitmovement 0
 # 510 "data/maps/MtChimney/scripts.pory"
-	msgbox MtChimney_Text_ShelbyRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox MtChimney_Text_ShelbyRegister, MSGBOX_DEFAULT
 # 511 "data/maps/MtChimney/scripts.pory"
-	register_matchcall TRAINER_SHELBY_1
+	@ PokéNav removed register_matchcall TRAINER_SHELBY_1
 # 512 "data/maps/MtChimney/scripts.pory"
 	release
 # 513 "data/maps/MtChimney/scripts.pory"

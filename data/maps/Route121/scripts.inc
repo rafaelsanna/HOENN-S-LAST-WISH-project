@@ -167,9 +167,9 @@ Route121_EventScript_RegisterWalter::
 # 84 "data/maps/Route121/scripts.pory"
 	waitmovement 0
 # 85 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_WalterRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route121_Text_WalterRegister, MSGBOX_DEFAULT
 # 86 "data/maps/Route121/scripts.pory"
-	register_matchcall TRAINER_WALTER_1
+	@ PokéNav removed register_matchcall TRAINER_WALTER_1
 # 87 "data/maps/Route121/scripts.pory"
 	release
 # 88 "data/maps/Route121/scripts.pory"
@@ -239,9 +239,9 @@ Route121_EventScript_RegisterJessica::
 # 120 "data/maps/Route121/scripts.pory"
 	waitmovement 0
 # 121 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_JessicaRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route121_Text_JessicaRegister, MSGBOX_DEFAULT
 # 122 "data/maps/Route121/scripts.pory"
-	register_matchcall TRAINER_JESSICA_1
+	@ PokéNav removed register_matchcall TRAINER_JESSICA_1
 # 123 "data/maps/Route121/scripts.pory"
 	release
 # 124 "data/maps/Route121/scripts.pory"
@@ -321,9 +321,9 @@ Route121_EventScript_RegisterCristin::
 # 161 "data/maps/Route121/scripts.pory"
 	waitmovement 0
 # 162 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_CristinRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route121_Text_CristinRegister, MSGBOX_DEFAULT
 # 163 "data/maps/Route121/scripts.pory"
-	register_matchcall TRAINER_CRISTIN_1
+	@ PokéNav removed register_matchcall TRAINER_CRISTIN_1
 # 164 "data/maps/Route121/scripts.pory"
 	release
 # 165 "data/maps/Route121/scripts.pory"

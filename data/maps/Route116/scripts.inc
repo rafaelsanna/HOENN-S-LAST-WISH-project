@@ -519,7 +519,7 @@ Route116_EventScript_Jerry::
 # 260 "data/maps/Route116/scripts.pory"
 Route116_EventScript_TryRegisterJerryAfterBattle::
 # 261 "data/maps/Route116/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterJerryAfterBattle
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterJerryAfterBattle
 # 262 "data/maps/Route116/scripts.pory"
 	release
 # 263 "data/maps/Route116/scripts.pory"
@@ -533,9 +533,9 @@ Route116_EventScript_RegisterJerryAfterBattle::
 # 267 "data/maps/Route116/scripts.pory"
 	waitmovement 0
 # 268 "data/maps/Route116/scripts.pory"
-	msgbox Route116_Text_JerryRegister2, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route116_Text_JerryRegister2, MSGBOX_DEFAULT
 # 269 "data/maps/Route116/scripts.pory"
-	register_matchcall TRAINER_JERRY_1
+	@ PokéNav removed register_matchcall TRAINER_JERRY_1
 # 270 "data/maps/Route116/scripts.pory"
 	release
 # 271 "data/maps/Route116/scripts.pory"
@@ -545,7 +545,7 @@ Route116_EventScript_RegisterJerryAfterBattle::
 # 273 "data/maps/Route116/scripts.pory"
 Route116_EventScript_TryRegisterJerry::
 # 274 "data/maps/Route116/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterJerry
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterJerry
 # 275 "data/maps/Route116/scripts.pory"
 	msgbox Route116_Text_JerryPostBattle, MSGBOX_DEFAULT
 # 276 "data/maps/Route116/scripts.pory"
@@ -557,9 +557,9 @@ Route116_EventScript_TryRegisterJerry::
 # 279 "data/maps/Route116/scripts.pory"
 Route116_EventScript_RegisterJerry::
 # 280 "data/maps/Route116/scripts.pory"
-	msgbox Route116_Text_JerryRegister1, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route116_Text_JerryRegister1, MSGBOX_DEFAULT
 # 281 "data/maps/Route116/scripts.pory"
-	register_matchcall TRAINER_JERRY_1
+	@ PokéNav removed register_matchcall TRAINER_JERRY_1
 # 282 "data/maps/Route116/scripts.pory"
 	release
 # 283 "data/maps/Route116/scripts.pory"
@@ -621,7 +621,7 @@ Route116_EventScript_Karen::
 # 311 "data/maps/Route116/scripts.pory"
 Route116_EventScript_TryRegisterKarenAfterBattle::
 # 312 "data/maps/Route116/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterKarenAfterBattle
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterKarenAfterBattle
 # 313 "data/maps/Route116/scripts.pory"
 	release
 # 314 "data/maps/Route116/scripts.pory"
@@ -635,9 +635,9 @@ Route116_EventScript_RegisterKarenAfterBattle::
 # 318 "data/maps/Route116/scripts.pory"
 	waitmovement 0
 # 319 "data/maps/Route116/scripts.pory"
-	msgbox Route116_Text_KarenRegister2, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route116_Text_KarenRegister2, MSGBOX_DEFAULT
 # 320 "data/maps/Route116/scripts.pory"
-	register_matchcall TRAINER_KAREN_1
+	@ PokéNav removed register_matchcall TRAINER_KAREN_1
 # 321 "data/maps/Route116/scripts.pory"
 	release
 # 322 "data/maps/Route116/scripts.pory"
@@ -647,7 +647,7 @@ Route116_EventScript_RegisterKarenAfterBattle::
 # 324 "data/maps/Route116/scripts.pory"
 Route116_EventScript_TryRegisterKaren::
 # 325 "data/maps/Route116/scripts.pory"
-	goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterKaren
+	@ PokéNav removed goto_if_set FLAG_HAS_MATCH_CALL, Route116_EventScript_RegisterKaren
 # 326 "data/maps/Route116/scripts.pory"
 	msgbox Route116_Text_KarenPostBattle, MSGBOX_DEFAULT
 # 327 "data/maps/Route116/scripts.pory"
@@ -659,9 +659,9 @@ Route116_EventScript_TryRegisterKaren::
 # 330 "data/maps/Route116/scripts.pory"
 Route116_EventScript_RegisterKaren::
 # 331 "data/maps/Route116/scripts.pory"
-	msgbox Route116_Text_KarenRegister1, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route116_Text_KarenRegister1, MSGBOX_DEFAULT
 # 332 "data/maps/Route116/scripts.pory"
-	register_matchcall TRAINER_KAREN_1
+	@ PokéNav removed register_matchcall TRAINER_KAREN_1
 # 333 "data/maps/Route116/scripts.pory"
 	release
 # 334 "data/maps/Route116/scripts.pory"

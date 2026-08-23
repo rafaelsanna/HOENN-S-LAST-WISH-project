@@ -157,9 +157,9 @@ Route112_EventScript_RegisterTrent::
 # 79 "data/maps/Route112/scripts.pory"
 	waitmovement 0
 # 80 "data/maps/Route112/scripts.pory"
-	msgbox Route112_Text_TrentRegister, MSGBOX_DEFAULT
+	@ PokéNav removed msgbox Route112_Text_TrentRegister, MSGBOX_DEFAULT
 # 81 "data/maps/Route112/scripts.pory"
-	register_matchcall TRAINER_TRENT_1
+	@ PokéNav removed register_matchcall TRAINER_TRENT_1
 # 82 "data/maps/Route112/scripts.pory"
 	release
 # 83 "data/maps/Route112/scripts.pory"
