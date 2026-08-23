@@ -1,0 +1,18 @@
+raw `
+PHOENIXCAVE_MapScripts::
+	.byte 0
+
+PHOENIXCAVE_MapScripts_MagicCrystal::
+	lock
+	faceplayer
+	msgbox PHOENIXCAVE_Text_MagicCrystal, MSGBOX_DEFAULT
+	release
+	warpteleport MAP_AURORAGROVE, 0
+	waitstate
+	end
+
+PHOENIXCAVE_Text_MagicCrystal:
+	.string "You feel a strange connection to the\n"
+	.string "crystal…\p"
+	.string "A surge of energy pulls you in!$"
+`

@@ -1505,6 +1505,15 @@ static void DrawCardFrontOrBack(u16 *ptr)
     CopyBgTilemapBufferToVram(0);
 }
 
+// Tunable placement for the badge row. The badge icon is 2x2 tiles (16x16 px).
+// BADGE_X_START/BADGE_X_STEP control the horizontal position of badge 1 and the
+// spacing between badges; BADGE_Y_TOP is the tile row the icon's top half is
+// drawn on (the bottom half is drawn one row below, at BADGE_Y_TOP + 1).
+// Nudge these if the icons don't line up with the numbered boxes on your card background.
+#define BADGE_X_START 4
+#define BADGE_X_STEP  3
+#define BADGE_Y_TOP   17
+
 static void DrawStarsAndBadgesOnCard(void)
 {
     static const u8 yOffsets[] = {7, 7};
@@ -1516,15 +1525,15 @@ static void DrawStarsAndBadgesOnCard(void)
     FillBgTilemapBufferRect(3, 143, 15, yOffsets[sData->isHoenn], sData->trainerCard.stars, 1, 4);
     if (!sData->isLink)
     {
-        x = 4;
-        for (i = 0; i < NUM_BADGES; i++, tileNum += 2, x += 3)
+        x = BADGE_X_START;
+        for (i = 0; i < NUM_BADGES; i++, tileNum += 2, x += BADGE_X_STEP)
         {
             if (sData->badgeCount[i])
             {
-                FillBgTilemapBufferRect(3, tileNum, x, 15, 1, 1, palNum);
-                FillBgTilemapBufferRect(3, tileNum + 1, x + 1, 15, 1, 1, palNum);
-                FillBgTilemapBufferRect(3, tileNum + 16, x, 16, 1, 1, palNum);
-                FillBgTilemapBufferRect(3, tileNum + 17, x + 1, 16, 1, 1, palNum);
+                FillBgTilemapBufferRect(3, tileNum, x, BADGE_Y_TOP, 1, 1, palNum);
+                FillBgTilemapBufferRect(3, tileNum + 1, x + 1, BADGE_Y_TOP, 1, 1, palNum);
+                FillBgTilemapBufferRect(3, tileNum + 16, x, BADGE_Y_TOP + 1, 1, 1, palNum);
+                FillBgTilemapBufferRect(3, tileNum + 17, x + 1, BADGE_Y_TOP + 1, 1, 1, palNum);
             }
         }
     }
