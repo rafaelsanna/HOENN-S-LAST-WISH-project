@@ -4980,6 +4980,26 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/PHOENIXHOUSE1/border.bin",
       "blockdata_filepath": "data/layouts/PHOENIXHOUSE1/map.bin"
+    },
+    {
+      "id": "LAYOUT_PHOENIXCAVE",
+      "name": "PHOENIXCAVE_Layout",
+      "width": 11,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/PHOENIXCAVE/border.bin",
+      "blockdata_filepath": "data/layouts/PHOENIXCAVE/map.bin"
+    },
+    {
+      "id": "LAYOUT_AURORAGROVE",
+      "name": "AURORAGROVE_Layout",
+      "width": 28,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DreamRealm",
+      "border_filepath": "data/layouts/AURORAGROVE/border.bin",
+      "blockdata_filepath": "data/layouts/AURORAGROVE/map.bin"
     }
   ]
 }
