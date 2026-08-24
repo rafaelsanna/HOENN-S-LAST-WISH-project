@@ -721,8 +721,10 @@ void InitTilesetAnim_Building(void)
 static void TilesetAnim_General(u16 timer)
 {
     if (timer % 16 == 0)
+    {
         QueueAnimTiles_General_Flower(timer / 16);
         QueueAnimTiles_General_Flower_2(timer / 16);
+    }
     if (timer % 16 == 1)
         QueueAnimTiles_General_Water(timer / 16);
     if (timer % 16 == 2)
