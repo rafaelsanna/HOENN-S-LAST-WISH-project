@@ -743,8 +743,7 @@ bool8 MetatileBehavior_IsPuddle(u8 metatileBehavior)
 bool8 MetatileBehavior_IsTallGrass(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_TALL_GRASS
-     || metatileBehavior == MB_DRY_GRASS
-     || metatileBehavior == MB_FAIRY_GRASS)
+     || metatileBehavior == MB_DRY_GRASS)
         return TRUE;
     else
         return FALSE;
