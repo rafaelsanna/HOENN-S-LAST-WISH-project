@@ -735,6 +735,10 @@ void Debug_ShowMainMenu(void)
     if (!Debug_CanOpen())
         return;
 
+    // Permanently mark that this save has opened the Debug/Wish Menu at least once.
+    // This is intentionally never cleared, even if the option is later turned off.
+    FlagSet(FLAG_USED_DEBUG_MENU);
+
     sDebugMenuListData = AllocZeroed(sizeof(*sDebugMenuListData));
     sDebugMenuListData->listId = 0;
     Debug_ShowMenu(DebugTask_HandleMenuInput_General, sDebugMenu_Actions_Main);

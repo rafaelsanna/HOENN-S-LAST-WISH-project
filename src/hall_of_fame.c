@@ -33,11 +33,13 @@
 #include "fldeff_misc.h"
 #include "trainer_pokemon_sprites.h"
 #include "data.h"
+#include "difficulty.h"
 #include "confetti_util.h"
 #include "constants/rgb.h"
 
 #define HALL_OF_FAME_MAX_TEAMS 30
 #define TAG_CONFETTI 1001
+#define HOF_MON_FILTER_COLOR RGB(16, 25, 31)
 
 STATIC_ASSERT(sizeof(struct HallofFameTeam) * HALL_OF_FAME_MAX_TEAMS <= SECTOR_DATA_SIZE * NUM_HOF_SECTORS, HallOfFameFreeSpace);
 
@@ -87,7 +89,9 @@ static void Task_HofPC_ExitOnButtonPress(u8 taskId);
 static void SpriteCB_GetOnScreenAndAnimate(struct Sprite *sprite);
 static void HallOfFame_PrintMonInfo(struct HallofFameMon *currMon, u8 unused1, u8 unused2);
 static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2);
+static void HallOfFame_PrintChampionText(void);
 static void HallOfFame_PrintPlayerInfo(u8 unused1, u8 unused2);
+static const u8 *GetHallOfFameNuzlockeText(void);
 static void Task_DoDomeConfetti(u8 taskId);
 static void SpriteCB_HofConfetti(struct Sprite *sprite);
 
@@ -132,9 +136,24 @@ static const struct WindowTemplate sHof_WindowTemplate = {
     .baseBlock = 1
 };
 
-static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
+static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sUnusedTextColors[4] = {TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_TRANSPARENT};
+static const u8 sText_DifficultyCasual[] = _("Difficulty: Casual - ");
+static const u8 sText_DifficultyHard[] = _("Difficulty: Hard - ");
+static const u8 sText_NuzlockeOff[] = _("Nuzlocke: Off");
+static const u8 sText_NuzlockeNormal[] = _("Nuzlocke: Normal");
+static const u8 sText_NuzlockeHard[] = _("Nuzlocke: Hard");
+static const u8 sText_InfiniteCandyYes[] = _("Infinity Candy: Yes - ");
+static const u8 sText_InfiniteCandyNo[] = _("Infinity Candy: No - ");
+static const u8 sText_WishMenuUsed[] = _("Wish Menu: Used");
+static const u8 sText_WishMenuNo[] = _("Wish Menu: No");
+static const u8 sText_RandomWildsOn[] = _("Random Wilds: On - ");
+static const u8 sText_RandomWildsOff[] = _("Random Wilds: Off - ");
+static const u8 sText_RandomTrainersOn[] = _("Random Trainers: On");
+static const u8 sText_RandomTrainersOff[] = _("Random Trainers: Off");
+static const u8 sText_HoennChampion[] = _("HOENN CHAMPION!");
+static const u8 sText_Congratulations[] = _("CONGRATULATIONS!");
 
 static const struct CompressedSpriteSheet sSpriteSheet_Confetti[] =
 {
@@ -369,7 +388,7 @@ static bool8 InitHallOfFameScreen(void)
         break;
     case 2:
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
-        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 7));
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
         SetGpuReg(REG_OFFSET_BLDY, 0);
         InitHofBgs();
         sHofGfxPtr->state = 0;
@@ -627,7 +646,7 @@ static void Task_Hof_TryDisplayAnotherMon(u8 taskId)
         if (gTasks[taskId].tDisplayedMonId < PARTY_SIZE - 1 && currMon[1].species != SPECIES_NONE) // there is another Pokémon to display
         {
             gTasks[taskId].tDisplayedMonId++;
-            BeginNormalPaletteFade(sHofFadePalettes, 0, 12, 12, RGB(16, 29, 24));
+            BeginNormalPaletteFade(sHofFadePalettes, 0, 12, 12, HOF_MON_FILTER_COLOR);
             gSprites[gTasks[taskId].tMonSpriteId(currPokeID)].oam.priority = 1;
             gTasks[taskId].func = Task_Hof_DisplayMon;
         }
@@ -674,7 +693,7 @@ static void Task_Hof_DoConfetti(u8 taskId)
             if (gTasks[taskId].tMonSpriteId(i) != SPRITE_NONE)
                 gSprites[gTasks[taskId].tMonSpriteId(i)].oam.priority = 1;
         }
-        BeginNormalPaletteFade(sHofFadePalettes, 0, 12, 12, RGB(16, 29, 24));
+        BeginNormalPaletteFade(sHofFadePalettes, 0, 12, 12, HOF_MON_FILTER_COLOR);
         FillWindowPixelBuffer(0, PIXEL_FILL(0));
         CopyWindowToVram(0, COPYWIN_FULL);
         gTasks[taskId].tFrameCount = 7;
@@ -704,7 +723,7 @@ static void Task_Hof_DisplayPlayer(u8 taskId)
     gTasks[taskId].tPlayerSpriteID = CreateTrainerPicSprite(PlayerGenderToFrontTrainerPicId_Debug(gSaveBlock2Ptr->playerGender, TRUE), TRUE, 120, 72, 6, TAG_NONE);
     AddWindow(&sHof_WindowTemplate);
     LoadWindowGfx(1, gSaveBlock2Ptr->optionsWindowFrameType, 0x21D, BG_PLTT_ID(13));
-    LoadPalette(GetTextWindowPalette(1), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
+    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
     gTasks[taskId].tFrameCount = 120;
     gTasks[taskId].func = Task_Hof_WaitAndPrintPlayerInfo;
 }
@@ -723,9 +742,7 @@ static void Task_Hof_WaitAndPrintPlayerInfo(u8 taskId)
     {
         FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
         HallOfFame_PrintPlayerInfo(1, 2);
-        DrawDialogueFrame(0, FALSE);
-        AddTextPrinterParameterized2(0, FONT_NORMAL, gText_LeagueChamp, 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
-        CopyWindowToVram(0, COPYWIN_FULL);
+        HallOfFame_PrintChampionText();
         gTasks[taskId].func = Task_Hof_ExitOnKeyPressed;
     }
 }
@@ -840,7 +857,7 @@ void CB2_DoHallOfFamePC(void)
             u8 taskId, i;
 
             SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 7));
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
             SetGpuReg(REG_OFFSET_BLDY, 0);
             taskId = CreateTask(Task_HofPC_CopySaveData, 0);
 
@@ -938,7 +955,7 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
         }
     }
 
-    BlendPalettes(PALETTES_OBJECTS, 0xC, RGB(16, 29, 24));
+    BlendPalettes(PALETTES_OBJECTS, 0xC, HOF_MON_FILTER_COLOR);
 
     ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].tCurrPageNo, STR_CONV_MODE_RIGHT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar4, gText_HOFNumber);
@@ -971,7 +988,7 @@ static void Task_HofPC_PrintMonInfo(u8 taskId)
     currMonID = gTasks[taskId].tMonSpriteId(gTasks[taskId].tCurrMonId);
     gSprites[currMonID].oam.priority = 0;
     sHofFadePalettes = (0x10000 << gSprites[currMonID].oam.paletteNum) ^ PALETTES_OBJECTS;
-    BlendPalettesUnfaded(sHofFadePalettes, 0xC, RGB(16, 29, 24));
+    BlendPalettesUnfaded(sHofFadePalettes, 0xC, HOF_MON_FILTER_COLOR);
 
     currMon = &savedTeams->mon[gTasks[taskId].tCurrMonId];
     if (currMon->species != SPECIES_EGG)
@@ -1103,10 +1120,54 @@ static void Task_HofPC_ExitOnButtonPress(u8 taskId)
 
 static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
 {
+    u8 line1[64];
+    u8 line2[64];
+    u8 line3[64];
+    u8 *stringPtr;
+
+    stringPtr = StringCopy(line1, GetCurrentDifficultyLevel() == DIFFICULTY_HARD ? sText_DifficultyHard : sText_DifficultyCasual);
+    StringCopy(stringPtr, GetHallOfFameNuzlockeText());
+
+    stringPtr = StringCopy(line2, gSaveBlock2Ptr->optionsInfiniteCandy == OPTIONS_INFINITECANDY_ON ? sText_InfiniteCandyYes : sText_InfiniteCandyNo);
+    StringCopy(stringPtr, FlagGet(FLAG_USED_DEBUG_MENU) ? sText_WishMenuUsed : sText_WishMenuNo);
+
+    stringPtr = StringCopy(line3, FlagGet(RANDOMIZER_FLAG_WILD_MON) ? sText_RandomWildsOn : sText_RandomWildsOff);
+    StringCopy(stringPtr, FlagGet(RANDOMIZER_FLAG_TRAINER_MON) ? sText_RandomTrainersOn : sText_RandomTrainersOff);
+
     FillWindowPixelBuffer(0, PIXEL_FILL(0));
     PutWindowTilemap(0);
-    AddTextPrinterParameterized3(0, FONT_NORMAL, GetStringCenterAlignXOffset(FONT_NORMAL, gText_WelcomeToHOF, 0xD0), 1, sMonInfoTextColors, 0, gText_WelcomeToHOF);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, line1, 0xD0), 0, sMonInfoTextColors, 0, line1);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, line2, 0xD0), 10, sMonInfoTextColors, 0, line2);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, line3, 0xD0), 20, sMonInfoTextColors, 0, line3);
     CopyWindowToVram(0, COPYWIN_FULL);
+}
+
+static void HallOfFame_PrintChampionText(void)
+{
+    u8 difficultyAndNuzlocke[64];
+    u8 *stringPtr;
+
+    stringPtr = StringCopy(difficultyAndNuzlocke, GetCurrentDifficultyLevel() == DIFFICULTY_HARD ? sText_DifficultyHard : sText_DifficultyCasual);
+    StringCopy(stringPtr, GetHallOfFameNuzlockeText());
+
+    DrawDialogueFrame(0, FALSE);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, sText_HoennChampion, 0xD0), 0, sMonInfoTextColors, 0, sText_HoennChampion);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, sText_Congratulations, 0xD0), 10, sMonInfoTextColors, 0, sText_Congratulations);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, difficultyAndNuzlocke, 0xD0), 20, sMonInfoTextColors, 0, difficultyAndNuzlocke);
+    CopyWindowToVram(0, COPYWIN_FULL);
+}
+
+static const u8 *GetHallOfFameNuzlockeText(void)
+{
+    switch (gSaveBlock2Ptr->optionsNuzlocke)
+    {
+    case OPTIONS_NUZLOCKE_HARD:
+        return sText_NuzlockeHard;
+    case OPTIONS_NUZLOCKE_NORMAL:
+        return sText_NuzlockeNormal;
+    default:
+        return sText_NuzlockeOff;
+    }
 }
 
 static void HallOfFame_PrintMonInfo(struct HallofFameMon *currMon, u8 unused1, u8 unused2)

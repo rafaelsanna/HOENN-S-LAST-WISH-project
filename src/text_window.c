@@ -197,9 +197,8 @@ const u16 *GetTextWindowPalette(u8 id)
 
 const u16 *GetOverworldTextboxPalettePtr(void)
 {
-    // Dark palette: colors swapped so near-black background (index 1)
-    // has white text (index 2) and dark shadow (index 3).
-    // All other entries mirror the default message_box.gbapal exactly.
+    // Dark palette: the message body and its formerly white outer ring use
+    // near-black, while indices 2 and 3 keep the text white with gray shadow.
     static const u16 sMessageBox_DarkPal[16] = {
         RGB(14, 25, 20), // [0] transparent (unchanged)
         RGB( 4,  4,  5), // [1] window background — near-black
@@ -212,8 +211,8 @@ const u16 *GetOverworldTextboxPalettePtr(void)
         RGB( 6, 10, 25),
         RGB(20, 24, 30),
         RGB(31, 31, 31),
-        RGB(28, 29, 28),
-        RGB(31, 31, 31),
+        RGB( 4,  4,  5), // [11] message-box outer ring
+        RGB( 4,  4,  5), // [12] message-box outer highlight
         RGB(30, 16, 24),
         RGB(25, 12, 25),
         RGB( 9, 14, 20),

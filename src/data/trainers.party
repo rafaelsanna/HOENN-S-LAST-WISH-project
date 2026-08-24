@@ -5468,6 +5468,7 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Green
 
 Chimecho @ Focus Sash  
+Level: 65
 Ability: Levitate  
 IVs: 0 Atk  
 - Hex  
@@ -5476,6 +5477,7 @@ IVs: 0 Atk
 - Will-O-Wisp  
 
 Persian @ Focus Sash  
+Level: 65
 Ability: Limber  
 - Shadow Claw
 - Will-O-Wisp  
@@ -5483,6 +5485,7 @@ Ability: Limber
 - Knock Off  
 
 Gorebyss @ Life Orb  
+Level: 65
 Ability: Cursed Body  
 Quiet Nature  
 IVs: 0 Atk  
@@ -5492,6 +5495,7 @@ IVs: 0 Atk
 - Will-O-Wisp  
 
 Annihilape @ Assault Vest  
+Level: 65
 Ability: Defiant  
 - Rage Fist  
 - Fire Punch  
@@ -5499,6 +5503,7 @@ Ability: Defiant
 - Drain Punch  
 
 Relicanth @ Leftovers  
+Level: 65
 Ability: Swift Swim  
 Brave Nature  
 - Will-O-Wisp  
@@ -5507,6 +5512,7 @@ Brave Nature
 - Shadow Ball
 
 Ursaluna @ Flame Orb  
+Level: 65
 Ability: Guts  
 Brave Nature  
 - Crunch
@@ -8214,48 +8220,68 @@ Gender: Female
 Music: Female
 Items: Full Restore / Full Restore / Full Restore / Full Restore
 Double Battle: No
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Smart Trainer 
 Mugshot: Yellow
 
-Skarmory @ Leftovers
+Probopass @ Sitrus Berry 
+Level: 70  
+Ability: Sturdy
+Modest Nature  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Stealth Rock
+- Volt Switch  
+- Psyshock
+- Flash Cannon 
+
+Skarmory @ Rocky Helmet
 Level: 70 
-Ability: Weak Armor  
-- Swords Dance  
+Ability: Weak Armor 
+Adamant Nature
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
+- Brave Bird  
 - Iron Head  
 - Close Combat  
-- Agility  
+- Spikes
 
 Shiftry @ Air Balloon  
 Level: 70 
-Ability: Mega Launcher  
+Ability: Mega Launcher
+Modest Nature  
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Flash Cannon  
 - Aura Sphere  
 - Mind Blown  
-- Dark Pulse  
+- Dark Pulse   
 
-Mawile @ Sitrus Berry 
-Level: 70  
-Ability: Huge Power  
-- Swords Dance  
-- Sucker Punch  
-- Iron Head  
-- Play Rough  
-
-Scizor @ Leftovers  
+Crobat @ Assault Vest
 Level: 70 
-Ability: Technician  
-- Bullet Punch  
-- Swords Dance  
-- Roost  
-- Bug Bite  
+Ability: Levitate 
+Adamant Nature
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Cross Poison  
+- Knock Off 
+- Iron Head
+- U-turn 
 
-Metagross @ Weakness Policy
+Metagross @ Expert Belt   
 Level: 70 
 Ability: Clear Body  
+Adamant Nature
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Agility  
 - Earthquake  
 - Meteor Mash  
 - Zen Headbutt  
+
+Salamence @ White Herb   
+Level: 70 
+Ability: Intimidate  
+Mild Nature   
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Draco Meteor
+- Fire Blast
+- Iron Head  
+- Earthquake  
 
 === TRAINER_STELLA_HARD_HO_TAILWIND ===
 Name: STELLA

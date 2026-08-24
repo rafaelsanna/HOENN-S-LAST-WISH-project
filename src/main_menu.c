@@ -202,6 +202,7 @@ static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8, u8);
 static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8);
 static void NewGameBirchSpeech_ShowDialogueWindow(u8, u8);
 static void NewGameBirchSpeech_ClearWindow(u8);
+static void NewGameBirchSpeech_PrintMessage(void);
 static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8);
 static void Task_NewGameBirchSpeech_MainSpeech(u8);
 static void Task_NewGameBirchSpeech_AndYouAre(u8);
@@ -1860,7 +1861,7 @@ if (!gTasks[taskId].tIsDoneFadingSprites)
     CopyWindowToVram(0, COPYWIN_GFX);
     NewGameBirchSpeech_ClearWindow(0);
     StringExpandPlaceholders(gStringVar4, gText_Birch_Welcome);
-    AddTextPrinterForMessage(TRUE);
+    NewGameBirchSpeech_PrintMessage();
     gTasks[taskId].func = Task_NewGameBirchSpeech_ThisIsAPokemon;
 }
 
@@ -1874,7 +1875,7 @@ static void Task_NewGameBirchSpeech_AndYouAre(u8 taskId)
     {
         sStartedPokeBallTask = FALSE;
         StringExpandPlaceholders(gStringVar4, gText_Birch_AndYouAre);
-        AddTextPrinterForMessage(TRUE);
+        NewGameBirchSpeech_PrintMessage();
         gTasks[taskId].func = Task_NewGameBirchSpeech_StartBirchLotadPlatformFade;
     }
 }
@@ -1938,7 +1939,7 @@ static void Task_NewGameBirchSpeech_BoyOrGirl(u8 taskId)
 {
     NewGameBirchSpeech_ClearWindow(0);
     StringExpandPlaceholders(gStringVar4, gText_Birch_BoyOrGirl);
-    AddTextPrinterForMessage(TRUE);
+    NewGameBirchSpeech_PrintMessage();
     gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowGenderMenu;
 }
 
@@ -2166,7 +2167,7 @@ static void Task_NewGameBirchSpeech_WhatsYourName(u8 taskId)
 {
     NewGameBirchSpeech_ClearWindow(0);
     StringExpandPlaceholders(gStringVar4, gText_Birch_WhatsYourName);
-    AddTextPrinterForMessage(TRUE);
+    NewGameBirchSpeech_PrintMessage();
     gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint;
 }
 
@@ -2201,7 +2202,7 @@ static void Task_NewGameBirchSpeech_SoItsPlayerName(u8 taskId)
 {
     NewGameBirchSpeech_ClearWindow(0);
     StringExpandPlaceholders(gStringVar4, gText_Birch_SoItsPlayer);
-    AddTextPrinterForMessage(TRUE);
+    NewGameBirchSpeech_PrintMessage();
     gTasks[taskId].func = Task_NewGameBirchSpeech_CreateNameYesNo;
 }
 
@@ -2261,7 +2262,7 @@ static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
         
         NewGameBirchSpeech_ClearWindow(0);
         StringExpandPlaceholders(gStringVar4, gText_Birch_YourePlayer);
-        AddTextPrinterForMessage(TRUE);
+        NewGameBirchSpeech_PrintMessage();
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter;
     }
 }
@@ -2307,7 +2308,7 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
         gTasks[taskId].tPlayerSpriteId = spriteId;
         NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
         StringExpandPlaceholders(gStringVar4, gText_Birch_AreYouReady);
-        AddTextPrinterForMessage(TRUE);
+        NewGameBirchSpeech_PrintMessage();
         gTasks[taskId].func = Task_NewGameBirchSpeech_ShrinkPlayer;
     }
 }
@@ -2954,17 +2955,23 @@ static void NewGameBirchSpeech_ShowDialogueWindow(u8 windowId, u8 copyToVram)
         CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
+// The intro can resume after its window was created, so every line restores
+// the palette it uses instead of relying on one load at scene setup.
+static void NewGameBirchSpeech_PrintMessage(void)
+{
+    LoadBirchSpeechTextboxPalette();
+    AddTextPrinterForMessage(TRUE);
+}
+
 static void LoadBirchSpeechTextboxPalette(void)
 {
     u16 palette[16];
 
     memcpy(palette, GetOverworldTextboxPalettePtr(), sizeof(palette));
-    // RGB_WHITE
-    // RGB( 4,  4,  5)
     palette[0] = RGB( 4,  4,  5);
-    palette[1] = RGB_WHITE;
-    palette[2] = RGB(12, 12, 12); // text — dark gray
-    palette[3] = RGB(20, 20, 20); // shadow — mid gray
+    palette[1] = RGB( 4,  4,  5); // window background
+    palette[2] = RGB_WHITE;        // text foreground
+    palette[3] = RGB(10, 10, 10); // text shadow
     palette[5] = RGB( 4,  4,  5);
 
     LoadPalette(palette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
@@ -3011,7 +3018,7 @@ static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId)
     if (!RunTextPrintersAndIsPrinter0Active())
     {
         StringExpandPlaceholders(gStringVar4, gText_Birch_MainSpeech);
-        AddTextPrinterForMessage(TRUE);
+        NewGameBirchSpeech_PrintMessage();
         gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
     }
 }
