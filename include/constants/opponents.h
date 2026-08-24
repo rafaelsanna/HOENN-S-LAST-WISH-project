@@ -946,6 +946,10 @@
 #define TRAINER_PHOEBE_HARD_DOUBLES                    940
 #define TRAINER_TSUBAKI_HARD_SINGLES                   941
 #define TRAINER_TSUBAKI_HARD_DOUBLES                   942
+#define TRAINER_STELLA_HARD_HO_TAILWIND                943
+#define TRAINER_STELLA_HARD_BALANCE_HAZZARDS           944
+#define TRAINER_STELLA_HARD_DOUBLES_TROOM              945
+
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled

@@ -8257,6 +8257,212 @@ Ability: Clear Body
 - Meteor Mash  
 - Zen Headbutt  
 
+=== TRAINER_STELLA_HARD_HO_TAILWIND ===
+Name: STELLA
+Class: Champion
+Pic: Champion Wallace
+Gender: Female
+Music: Female
+Items: Full Restore / Full Restore / Full Restore / Full Restore
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Yellow
+
+Crobat @ Leftovers
+Level: 70  
+Ability: Levitate  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Tailwind  
+- U-turn  
+- Iron Head  
+- Cross Poison  
+
+Scizor @ Occa Berry  
+Level: 70
+Ability: Technician  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Bullet Punch  
+- Swords Dance  
+- Bug Bite  
+- Knock Off  
+
+Skarmory @ Life Orb  
+Level: 70
+Ability: Weak Armor  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brave Bird  
+- High Jump Kick  
+- Iron Head  
+- Swords Dance  
+
+Mawile @ Air Balloon  
+Level: 70
+Ability: Huge Power  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Swords Dance  
+- Sucker Punch  
+- Iron Head  
+- Play Rough  
+
+Metagross @ Weakness Policy  
+Level: 70
+Ability: Clear Body  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Zen Headbutt  
+- Meteor Mash  
+- Earthquake  
+- Ice Punch  
+
+Salamence @ Leftovers  
+Level: 70
+Ability: Levitate  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dragon Dance  
+- Iron Head  
+- Fire Fang  
+- Earthquake   
+
+=== TRAINER_STELLA_HARD_BALANCE_HAZZARDS ===
+Name: STELLA
+Class: Champion
+Pic: Champion Wallace
+Gender: Female
+Music: Female
+Items: Full Restore / Full Restore / Full Restore / Full Restore
+Double Battle: No
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Yellow
+
+Forretress @ Leftovers 
+Level: 70 
+Ability: Sturdy  
+Bold Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Rapid Spin  
+- Gyro Ball  
+- Toxic Spikes  
+- Spikes  
+
+Magnezone @ Air Balloon  
+Level: 70
+Ability: Magnet Pull  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Flash Cannon  
+- Volt Switch  
+- Thunderbolt  
+- Body Press  
+
+Shiftry @ Air Balloon  
+Level: 70
+Ability: Mega Launcher  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fire Blast  
+- Flash Cannon  
+- Aura Sphere  
+- Dark Pulse  
+
+Steelix @ Leftovers  
+Level: 70
+Ability: Sturdy  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Body Press  
+- Curse  
+- Earthquake  
+- Heavy Slam  
+
+Metagross @ Rocky Helmet  
+Level: 70
+Ability: Clear Body  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stealth Rock  
+- Meteor Mash  
+- Knock Off  
+- Zen Headbutt  
+
+Salamence @ Leftovers  
+Level: 70
+Ability: Levitate  
+Adamant Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dragon Dance  
+- Iron Head  
+- Fire Fang  
+- Earthquake 
+
+=== TRAINER_STELLA_HARD_DOUBLES_TROOM ===
+Name: STELLA
+Class: Champion
+Pic: Champion Wallace
+Gender: Female
+Music: Female
+Items: Full Restore / Full Restore / Full Restore / Full Restore
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+Mugshot: Yellow
+
+Probopass @ Leftovers  
+Ability: Levitate   
+Relaxed Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+- Body Press  
+- Volt Switch  
+- Trick Room  
+- Wide Guard  
+
+Mawile @ Life Orb  
+Ability: Huge Power   
+Brave Nature 
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe 
+- Swords Dance  
+- Sucker Punch  
+- Iron Head  
+- Play Rough  
+
+Aggron @ Assault Vest  
+Ability: Sturdy   
+Brave Nature 
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe 
+- Rock Slide  
+- High Horsepower  
+- Body Press  
+- Heavy Slam  
+
+Steelix @ Leftovers  
+Ability: Sheer Force  
+Brave Nature 
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe  
+- Body Press  
+- Curse  
+- Earthquake  
+- Heavy Slam  
+
+Metagross @ Life Orb  
+Ability: Clear Body  
+Brave Nature   
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe 
+- Hone Claws  
+- Meteor Mash  
+- Hammer Arm  
+- Zen Headbutt  
+
+Salamence @ Life Orb  
+Ability: Levitate  
+Modest Nature  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Draco Meteor  
+- Flash Cannon  
+- Heat Wave  
+- Hydro Pump  
+
+
+
 === TRAINER_ANDREW ===
 Name: ANDREW
 Class: Fisherman

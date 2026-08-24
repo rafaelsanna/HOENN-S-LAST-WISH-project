@@ -11427,7 +11427,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
             "A slash that may poison a\n"
             "foe and do critical damage."),
         .effect = EFFECT_HIT,
-        .power = 70,
+        .power = 80,
         .type = TYPE_POISON,
         .accuracy = 100,
         .criticalHitStage = 1,
