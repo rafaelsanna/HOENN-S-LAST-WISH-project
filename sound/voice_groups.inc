@@ -204,3 +204,6 @@
 .include "sound/voicegroups/rg_sevii_45.inc"
 .include "sound/voicegroups/rg_sevii_67.inc"
 .include "sound/voicegroups/drumsets/rg_credits.inc"
+.include "sound/voicegroups/mus_hlw_distortion_world.inc"
+.include "sound/voicegroups/mus_hlw_vs_evil.inc"
+.include "sound/voicegroups/mus_hlw_phoenix_town.inc"

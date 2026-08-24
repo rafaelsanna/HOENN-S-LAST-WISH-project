@@ -79,8 +79,8 @@ voice_group petalburg
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
-	voice_square_2 60, 0, 0, 2, 0, 15, 0
-	voice_square_1_alt 60, 0, 0, 2, 0, 4, 4, 1
+	voice_square_2_alt 60, 0, 0, 2, 0, 15, 0
+	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_5, 0, 4, 12, 1
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
