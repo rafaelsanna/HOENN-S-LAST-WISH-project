@@ -66,6 +66,7 @@ enum
     MENU_ACTION_PLAYER,
     MENU_ACTION_SAVE,
     MENU_ACTION_OPTION,
+    MENU_ACTION_CONFIG,
     MENU_ACTION_ACHIEVEMENTS,
     MENU_ACTION_RETIRE_SAFARI,
     MENU_ACTION_PLAYER_LINK,
@@ -110,6 +111,7 @@ static bool8 StartMenuPokeNavCallback(void);
 static bool8 StartMenuPlayerNameCallback(void);
 static bool8 StartMenuSaveCallback(void);
 static bool8 StartMenuOptionCallback(void);
+static bool8 StartMenuConfigCallback(void);
 static bool8 StartMenuAchievementsCallback(void);
 static bool8 StartMenuSafariZoneRetireCallback(void);
 static bool8 StartMenuLinkModePlayerNameCallback(void);
@@ -210,6 +212,7 @@ static const struct WindowTemplate sWindowTemplate_PyramidPeak = {
 };
 
 static const u8 sText_MenuDebug[] = _("WISHMENU");
+static const u8 sText_MenuConfig[] = _("CONFIG");
 static const u8 sText_MenuAchievements[] = _("TROPHIES");
 
 static const struct MenuAction sStartMenuItems[] =
@@ -221,6 +224,7 @@ static const struct MenuAction sStartMenuItems[] =
     [MENU_ACTION_PLAYER]          = {gText_MenuPlayer,  {.u8_void = StartMenuPlayerNameCallback}},
     [MENU_ACTION_SAVE]            = {gText_MenuSave,    {.u8_void = StartMenuSaveCallback}},
     [MENU_ACTION_OPTION]          = {gText_MenuOption,  {.u8_void = StartMenuOptionCallback}},
+    [MENU_ACTION_CONFIG]          = {sText_MenuConfig,  {.u8_void = StartMenuConfigCallback}},
     [MENU_ACTION_ACHIEVEMENTS]   = {sText_MenuAchievements, {.u8_void = StartMenuAchievementsCallback}},
     [MENU_ACTION_RETIRE_SAFARI]   = {gText_MenuRetire,  {.u8_void = StartMenuSafariZoneRetireCallback}},
     [MENU_ACTION_PLAYER_LINK]     = {gText_MenuPlayer,  {.u8_void = StartMenuLinkModePlayerNameCallback}},
@@ -387,7 +391,9 @@ static void BuildNormalStartMenu(void)
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_SAVE);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
+    AddStartMenuAction(MENU_ACTION_CONFIG);
+    // Temporarily disabled to reserve a start-menu slot for CONFIG.
+    // AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
 }
 static void BuildDebugStartMenu(void)
 {
@@ -403,7 +409,9 @@ static void BuildSafariZoneStartMenu(void)
     AddStartMenuAction(MENU_ACTION_BAG);
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
+    AddStartMenuAction(MENU_ACTION_CONFIG);
+    // Temporarily disabled to reserve a start-menu slot for CONFIG.
+    // AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
 }
 
 static void BuildLinkModeStartMenu(void)
@@ -418,7 +426,9 @@ static void BuildLinkModeStartMenu(void)
 
     AddStartMenuAction(MENU_ACTION_PLAYER_LINK);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
+    AddStartMenuAction(MENU_ACTION_CONFIG);
+    // Temporarily disabled to reserve a start-menu slot for CONFIG.
+    // AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
 }
 
 static void BuildUnionRoomStartMenu(void)
@@ -433,7 +443,9 @@ static void BuildUnionRoomStartMenu(void)
 
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
+    AddStartMenuAction(MENU_ACTION_CONFIG);
+    // Temporarily disabled to reserve a start-menu slot for CONFIG.
+    // AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
 }
 
 static void BuildBattlePikeStartMenu(void)
@@ -442,7 +454,9 @@ static void BuildBattlePikeStartMenu(void)
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
+    AddStartMenuAction(MENU_ACTION_CONFIG);
+    // Temporarily disabled to reserve a start-menu slot for CONFIG.
+    // AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
 }
 
 static void BuildBattlePyramidStartMenu(void)
@@ -453,7 +467,9 @@ static void BuildBattlePyramidStartMenu(void)
     AddStartMenuAction(MENU_ACTION_REST_FRONTIER);
     AddStartMenuAction(MENU_ACTION_RETIRE_FRONTIER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
+    AddStartMenuAction(MENU_ACTION_CONFIG);
+    // Temporarily disabled to reserve a start-menu slot for CONFIG.
+    // AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
 }
 
 static void BuildMultiPartnerRoomStartMenu(void)
@@ -461,7 +477,9 @@ static void BuildMultiPartnerRoomStartMenu(void)
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
+    AddStartMenuAction(MENU_ACTION_CONFIG);
+    // Temporarily disabled to reserve a start-menu slot for CONFIG.
+    // AddStartMenuAction(MENU_ACTION_ACHIEVEMENTS);
 }
 
 static void ShowSafariBallsWindow(void)
@@ -796,6 +814,14 @@ static bool8 HandleStartMenuInput(void)
 
     if (JOY_NEW(A_BUTTON))
     {
+        if ((sCurrentStartMenuActions[sStartMenuCursorPos] == MENU_ACTION_DEBUG
+          || sCurrentStartMenuActions[sStartMenuCursorPos] == MENU_ACTION_CONFIG)
+         && Debug_IsWishMenuBlockedByEliteFour())
+        {
+            PlaySE(SE_FAILURE);
+            return FALSE;
+        }
+
         PlaySE(SE_SELECT);
         if (sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void == StartMenuPokedexCallback)
         {
@@ -938,6 +964,22 @@ static bool8 StartMenuOptionCallback(void)
         RemoveExtraStartMenuWindows();
         CleanupOverworldWindowsAndTilemaps();
         SetMainCallback2(CB2_InitOptionMenu); // Display option menu
+        gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
+
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static bool8 StartMenuConfigCallback(void)
+{
+    if (!gPaletteFade.active)
+    {
+        PlayRainStoppingSoundEffect();
+        RemoveExtraStartMenuWindows();
+        CleanupOverworldWindowsAndTilemaps();
+        SetMainCallback2(CB2_InitOptionMenu_DifficultyTab);
         gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
 
         return TRUE;

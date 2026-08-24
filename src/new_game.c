@@ -107,7 +107,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
     gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
-    gSaveBlock2Ptr->optionsBattleItems = OPTIONS_BATTLEITEMS_ON;
+    gSaveBlock2Ptr->optionsBattleItems = OPTIONS_BATTLEITEMS_OFF;
     gSaveBlock2Ptr->optionsInfiniteCandy = OPTIONS_INFINITECANDY_OFF;
     gSaveBlock2Ptr->optionsLevelCaps = OPTIONS_LEVELCAPS_ON;
     gSaveBlock2Ptr->optionsColorPalette = OPTIONS_COLOR_PALETTE_BLACK;
@@ -293,4 +293,3 @@ static void ResetDexNav(void)
 #endif
     gSaveBlock3Ptr->dexNavChain = 0;
 }
-

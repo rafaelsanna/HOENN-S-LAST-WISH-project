@@ -290,6 +290,13 @@ if (input->pressedRButton)
 
     if(input->input_field_1_2 && DEBUG_OVERWORLD_MENU && !DEBUG_OVERWORLD_IN_MENU)
     {
+        // Keep the shortcut locked for the complete Elite Four challenge as well.
+        if (Debug_IsWishMenuBlockedByEliteFour())
+        {
+            PlaySE(SE_FAILURE);
+            return TRUE;
+        }
+
         PlaySE(SE_WIN_OPEN);
         FreezeObjectEvents();
         Debug_ShowMainMenu();

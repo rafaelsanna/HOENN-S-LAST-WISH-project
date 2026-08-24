@@ -179,6 +179,7 @@ static u8 *AddTextPrinterAndCreateWindowOnHealthboxToFit(const u8 *, u32, u32, u
 static void RemoveWindowOnHealthbox(u32 windowId);
 static void UpdateHpTextInHealthboxInDoubles(u32 healthboxSpriteId, u32 maxOrCurrent, s16 currHp, s16 maxHp);
 static void UpdateStatusIconInHealthbox(u8);
+static void CopyStatusIconGfx(const u8 *src, void *dest, u8 paletteIndex);
 
 static void TextIntoHealthboxObject(void *, u8 *, s32);
 static void SafariTextIntoHealthboxObject(void *, u8 *, u32);
@@ -1799,6 +1800,32 @@ static void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
         CpuFill32(0, (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 32);
 }
 
+static void CopyStatusIconGfx(const u8 *src, void *dest, u8 paletteIndex)
+{
+    u32 statusGfx[3 * TILE_SIZE_4BPP / sizeof(u32)];
+    u8 *tileData = (u8 *)statusGfx;
+    u32 i;
+
+    CpuCopy32(src, statusGfx, sizeof(statusGfx));
+
+    // The healthbox palette stores the status color at entries 12 through 15,
+    // one entry for each battler. Keep the status glyph on its battler's entry.
+    for (i = 0; i < sizeof(statusGfx); i++)
+    {
+        u8 lowNibble = tileData[i] & 0xF;
+        u8 highNibble = tileData[i] >> 4;
+
+        if (lowNibble == 0xF)
+            lowNibble = paletteIndex;
+        if (highNibble == 0xF)
+            highNibble = paletteIndex;
+
+        tileData[i] = (highNibble << 4) | lowNibble;
+    }
+
+    CpuCopy32(statusGfx, dest, sizeof(statusGfx));
+}
+
 static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
 {
     s32 i;
@@ -1877,7 +1904,9 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
 
     FillPalette(sStatusIconColors[statusPalId], OBJ_PLTT_OFFSET + pltAdder, PLTT_SIZEOF(1));
     CpuCopy16(&gPlttBufferUnfaded[OBJ_PLTT_OFFSET + pltAdder], (u16 *)OBJ_PLTT + pltAdder, PLTT_SIZEOF(1));
-    CpuCopy32(statusGfxPtr, (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder) * TILE_SIZE_4BPP), 96);
+    CopyStatusIconGfx(statusGfxPtr,
+                      (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder) * TILE_SIZE_4BPP),
+                      battler + 12);
     if (GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES || !IsOnPlayerSide(battler))
     {
         if (!gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)

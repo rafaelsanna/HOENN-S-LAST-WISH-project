@@ -732,7 +732,7 @@ static bool32 Debug_SaveCallbackMenu(struct DebugMenuOption *callbackItems);
 // Functions universal
 void Debug_ShowMainMenu(void)
 {
-    if (!Debug_CanOpen())
+    if (!Debug_CanOpen() || Debug_IsWishMenuBlockedByEliteFour())
         return;
 
     // Permanently mark that this save has opened the Debug/Wish Menu at least once.
@@ -742,6 +742,15 @@ void Debug_ShowMainMenu(void)
     sDebugMenuListData = AllocZeroed(sizeof(*sDebugMenuListData));
     sDebugMenuListData->listId = 0;
     Debug_ShowMenu(DebugTask_HandleMenuInput_General, sDebugMenu_Actions_Main);
+}
+
+bool8 Debug_IsWishMenuBlockedByEliteFour(void)
+{
+    // Elite Four maps are contiguous: Sidney through Hall 5. The Pokémon League
+    // lobby and Hall of Fame are immediately after this range and remain allowed.
+    return gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM)
+        && gSaveBlock1Ptr->location.mapNum >= MAP_NUM(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM)
+        && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(MAP_EVER_GRANDE_CITY_HALL5);
 }
 
 static bool8 Debug_CanOpen(void)

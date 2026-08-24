@@ -1,5 +1,6 @@
 #include "global.h"
 #include "comfy_anim.h"
+#include "debug.h"
 #include "event_data.h"
 #include "option_menu.h"
 #include "bg.h"
@@ -11,12 +12,14 @@
 #include "scanline_effect.h"
 #include "sprite.h"
 #include "strings.h"
+#include "sound.h"
 #include "task.h"
 #include "text.h"
 #include "text_window.h"
 #include "window.h"
 #include "gba/m4a_internal.h"
 #include "constants/rgb.h"
+#include "constants/songs.h"
 #include "malloc.h"
 
 #define tMenuSelection data[0]
@@ -160,6 +163,8 @@ static int ProcessInput_Sound(int selection);
 static int ProcessInput_FrameType(int selection);
 static const u8 *const OptionTextDescription(void);
 static const u8 *const OptionTextRight(u8 menuItem);
+static bool8 IsHardNpcTeamsSelected(void);
+static void EnforceHardNpcTeamsRules(void);
 static u8 MenuItemCount(void);
 static u8 MenuItemCancel(void);
 static void DrawDescriptionText(void);
@@ -291,6 +296,22 @@ static const u8 *const OptionTextRight(u8 menuItem)
     return sOptionMenuItemsNamesDifficulty[menuItem];
 }
 
+static bool8 IsHardNpcTeamsSelected(void)
+{
+    return sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS] == OPTIONS_NPCTEAMS_HARD;
+}
+
+static void EnforceHardNpcTeamsRules(void)
+{
+    if (!IsHardNpcTeamsSelected())
+        return;
+
+    sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]  = OPTIONS_BATTLEITEMS_OFF;
+    sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]  = OPTIONS_BATTLE_STYLE_SET;
+    sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = OPTIONS_LEVELCAPS_ON;
+    sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T] = FALSE;
+}
+
 // Menu left side text conditions
 static bool8 CheckConditions(int selection)
 {
@@ -311,13 +332,13 @@ static bool8 CheckConditions(int selection)
         switch(selection)
         {
         case MENUITEM_DIF_NPCTEAMS:         return TRUE;
-        case MENUITEM_DIF_BATTLEITEMS:      return TRUE;
-        case MENUITEM_DIF_BATTLESTYLE:      return TRUE;
+        case MENUITEM_DIF_BATTLEITEMS:      return !IsHardNpcTeamsSelected();
+        case MENUITEM_DIF_BATTLESTYLE:      return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_INFCANDY:         return TRUE;
-        case MENUITEM_DIF_LEVELCAPS:        return TRUE;
+        case MENUITEM_DIF_LEVELCAPS:        return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
         case MENUITEM_DIF_RANDOMIZER_E:     return TRUE;
-        case MENUITEM_DIF_RANDOMIZER_T:     return TRUE;
+        case MENUITEM_DIF_RANDOMIZER_T:     return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_AUTOFISHING:      return TRUE;
         case MENUITEM_DIF_FASTSLIDE:        return TRUE;
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
@@ -358,6 +379,7 @@ static const u8 sText_Desc_RandomizerTOff[]     = _("Trainer teams appear normal
 static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.");
 static const u8 sText_Desc_AutoFishingOff[]     = _("Fishing uses the normal wait timer\nand A-button check.");
 static const u8 sText_Desc_AutoFishingOn[]      = _("Fishing advances automatically.");
+static const u8 sText_Desc_HardLocked[]         = _("Locked by HARD NPC\nTEAMS.");
 
 // Option strings
 static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
@@ -420,13 +442,13 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_C
 static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_COUNT] =
 {
     [MENUITEM_DIF_NPCTEAMS]     = sText_Empty,
-    [MENUITEM_DIF_BATTLEITEMS]  = sText_Empty,
-    [MENUITEM_DIF_BATTLESTYLE]  = sText_Empty,
+    [MENUITEM_DIF_BATTLEITEMS]  = sText_Desc_HardLocked,
+    [MENUITEM_DIF_BATTLESTYLE]  = sText_Desc_HardLocked,
     [MENUITEM_DIF_INFCANDY]     = sText_Empty,
-    [MENUITEM_DIF_LEVELCAPS]    = sText_Empty,
+    [MENUITEM_DIF_LEVELCAPS]    = sText_Desc_HardLocked,
     [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
     [MENUITEM_DIF_RANDOMIZER_E] = sText_Empty,
-    [MENUITEM_DIF_RANDOMIZER_T] = sText_Empty,
+    [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_HardLocked,
     [MENUITEM_DIF_AUTOFISHING]  = sText_Empty,
     [MENUITEM_DIF_FASTSLIDE]    = sText_Empty,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
@@ -748,6 +770,7 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]    = FlagGet(FLAG_AUTO_FISHING);
     sOptions->sel_difficulty[MENUITEM_DIF_FASTSLIDE] = FlagGet(FLAG_FAST_INTRO_NO_SLIDE);
     sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
+    EnforceHardNpcTeamsRules();
 
     // NOVO: Usar a página inicial configurada
     sOptions->submenu = sOptionMenuStartPage;
@@ -840,6 +863,7 @@ static void Task_OptionMenuProcessInput(u8 taskId)
         }
         HighlightOptionMenuItem();
         DrawDescriptionText();
+        PlaySE(SE_SELECT);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
@@ -866,6 +890,7 @@ static void Task_OptionMenuProcessInput(u8 taskId)
         }
         HighlightOptionMenuItem();
         DrawDescriptionText();
+        PlaySE(SE_SELECT);
     }
     else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
     {
@@ -883,7 +908,14 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 }
 
                 if (previousOption != sOptions->sel[cursor])
+                {
+                    PlaySE(SE_SELECT);
                     DrawChoices(cursor, sOptions->visibleCursor[sOptions->submenu] * Y_DIFF);
+                }
+            }
+            else
+            {
+                PlaySE(SE_FAILURE);
             }
         }
         else if (sOptions->submenu == PAGE_DIFFICULTY)
@@ -895,19 +927,36 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 if (sItemFunctionsDifficulty[cursor].processInput != NULL)
                 {
                     sOptions->sel_difficulty[cursor] = sItemFunctionsDifficulty[cursor].processInput(previousOption);
+                    EnforceHardNpcTeamsRules();
                     ReDrawAll();
                     DrawDescriptionText();
                 }
 
                 if (previousOption != sOptions->sel_difficulty[cursor])
+                {
+                    PlaySE(SE_SELECT);
                     DrawChoices(cursor, sOptions->visibleCursor[sOptions->submenu] * Y_DIFF);
+                }
+            }
+            else
+            {
+                PlaySE(SE_FAILURE);
             }
         }
     }
     else if (JOY_NEW(R_BUTTON))
     {
+        if (sOptions->submenu == PAGE_GENERAL && Debug_IsWishMenuBlockedByEliteFour())
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
+
         if (sOptions->submenu != PAGE_DIFFICULTY)
+        {
             sOptions->submenu++;
+            PlaySE(SE_SELECT);
+        }
 
         DrawTopBarText();
         ReDrawAll();
@@ -916,8 +965,11 @@ static void Task_OptionMenuProcessInput(u8 taskId)
     }
     else if (JOY_NEW(L_BUTTON))
     {
-        if (sOptions->submenu != 0)
+        if (sOptions->submenu != PAGE_GENERAL)
+        {
             sOptions->submenu--;
+            PlaySE(SE_SELECT);
+        }
         
         DrawTopBarText();
         ReDrawAll();
@@ -928,6 +980,8 @@ static void Task_OptionMenuProcessInput(u8 taskId)
 
 static void Task_OptionMenuSave(u8 taskId)
 {
+    EnforceHardNpcTeamsRules();
+
     gSaveBlock2Ptr->optionsTextSpeed        = sOptions->sel[MENUITEM_GEN_TEXTSPEED];
     gSaveBlock2Ptr->optionsBattleSceneOff   = sOptions->sel[MENUITEM_GEN_BATTLESCENE];
     gSaveBlock2Ptr->optionsSound            = sOptions->sel[MENUITEM_GEN_SOUND];

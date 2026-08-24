@@ -33,6 +33,8 @@
 #include "fldeff_misc.h"
 #include "trainer_pokemon_sprites.h"
 #include "data.h"
+#include "achievements.h"
+#include "caps.h"
 #include "difficulty.h"
 #include "confetti_util.h"
 #include "constants/rgb.h"
@@ -154,6 +156,9 @@ static const u8 sText_RandomTrainersOn[] = _("Random Trainers: On");
 static const u8 sText_RandomTrainersOff[] = _("Random Trainers: Off");
 static const u8 sText_HoennChampion[] = _("HOENN CHAMPION!");
 static const u8 sText_Congratulations[] = _("CONGRATULATIONS!");
+static const u8 sText_ChampionHeaderSeparator[] = _("  ");
+static const u8 sText_LevelCap[] = _("Level Cap: ");
+static const u8 sText_Trophies[] = _(" - Trophies: ");
 
 static const struct CompressedSpriteSheet sSpriteSheet_Confetti[] =
 {
@@ -1144,16 +1149,29 @@ static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
 
 static void HallOfFame_PrintChampionText(void)
 {
+    u8 championHeader[64];
     u8 difficultyAndNuzlocke[64];
+    u8 levelCapAndTrophies[64];
     u8 *stringPtr;
+
+    stringPtr = StringCopy(championHeader, sText_HoennChampion);
+    stringPtr = StringCopy(stringPtr, sText_ChampionHeaderSeparator);
+    StringCopy(stringPtr, sText_Congratulations);
 
     stringPtr = StringCopy(difficultyAndNuzlocke, GetCurrentDifficultyLevel() == DIFFICULTY_HARD ? sText_DifficultyHard : sText_DifficultyCasual);
     StringCopy(stringPtr, GetHallOfFameNuzlockeText());
 
+    stringPtr = StringCopy(levelCapAndTrophies, sText_LevelCap);
+    stringPtr = ConvertIntToDecimalStringN(stringPtr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
+    stringPtr = StringCopy(stringPtr, sText_Trophies);
+    stringPtr = ConvertIntToDecimalStringN(stringPtr, Achievement_CountUnlocked(), STR_CONV_MODE_LEFT_ALIGN, 3);
+    *stringPtr++ = CHAR_SLASH;
+    ConvertIntToDecimalStringN(stringPtr, Achievement_GetCount(), STR_CONV_MODE_LEFT_ALIGN, 3);
+
     DrawDialogueFrame(0, FALSE);
-    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, sText_HoennChampion, 0xD0), 0, sMonInfoTextColors, 0, sText_HoennChampion);
-    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, sText_Congratulations, 0xD0), 10, sMonInfoTextColors, 0, sText_Congratulations);
-    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, difficultyAndNuzlocke, 0xD0), 20, sMonInfoTextColors, 0, difficultyAndNuzlocke);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, championHeader, 0xD0), 0, sMonInfoTextColors, 0, championHeader);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, difficultyAndNuzlocke, 0xD0), 10, sMonInfoTextColors, 0, difficultyAndNuzlocke);
+    AddTextPrinterParameterized3(0, FONT_SMALL_NARROW, GetStringCenterAlignXOffset(FONT_SMALL_NARROW, levelCapAndTrophies, 0xD0), 20, sMonInfoTextColors, 0, levelCapAndTrophies);
     CopyWindowToVram(0, COPYWIN_FULL);
 }
 
