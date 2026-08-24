@@ -81,9 +81,9 @@ voice_group dummy
 	voice_directsound 60, 0, DirectSoundWaveData_sd90_classical_shakuhachi, 255, 0, 255, 204
 	voice_square_2_alt 60, 0, 2, 1, 1, 5, 1
 	voice_square_2_alt 60, 0, 2, 1, 1, 7, 1
-	voice_square_2_alt 60, 0, 2, 0, 0, 7, 1
+	voice_square_1_alt 60, 0, 0, 2, 0, 0, 7, 1
 	voice_square_2 60, 0, 3, 0, 1, 6, 0
-	voice_square_2_alt 60, 0, 2, 0, 0, 8, 1
+	voice_square_1_alt 60, 0, 0, 2, 0, 0, 8, 1
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 0, 0, 1, 6, 0

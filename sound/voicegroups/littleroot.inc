@@ -6,7 +6,7 @@ voice_group littleroot
 	voice_square_2_alt 60, 0, 2, 1, 4, 4, 2
 	voice_square_1_alt 60, 0, 0, 2, 0, 3, 4, 1
 	voice_square_2_alt 60, 0, 2, 1, 3, 4, 2
-	voice_square_1_alt 60, 0, 0, 2, 0, 3, 4, 1
+	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_2, 0, 1, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
