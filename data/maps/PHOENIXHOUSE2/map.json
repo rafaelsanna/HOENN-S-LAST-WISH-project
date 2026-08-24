@@ -2,7 +2,7 @@
   "id": "MAP_PHOENIXHOUSE2",
   "name": "PHOENIXHOUSE2",
   "layout": "LAYOUT_PHOENIXHOUSE2",
-  "music": "MUS_DUMMY",
+  "music": "MUS_HLW_PHOENIX_TOWN",
   "region_map_section": "MAPSEC_PHOENIX_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
