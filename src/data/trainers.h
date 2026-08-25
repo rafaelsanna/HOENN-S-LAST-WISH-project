@@ -13869,7 +13869,7 @@ F_TRAINER_FEMALE |
 #line 5291
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 5292
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
 #line 5293
         .mugshotColor = MUGSHOT_COLOR_PURPLE,
 #line 0
@@ -13951,7 +13951,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_KLEAVOR,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5325
-            .heldItem = ITEM_LIFE_ORB,
+            .heldItem = ITEM_LUM_BERRY,
 #line 5327
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5328
@@ -14373,7 +14373,7 @@ F_TRAINER_FEMALE |
 #line 5504
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 5505
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
 #line 5506
         .mugshotColor = MUGSHOT_COLOR_GREEN,
 #line 0
@@ -14872,7 +14872,7 @@ F_TRAINER_FEMALE |
 #line 5717
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 5718
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
 #line 5719
         .mugshotColor = MUGSHOT_COLOR_PINK,
 #line 0
@@ -14931,7 +14931,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_MAMOSWINE,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5741
-            .heldItem = ITEM_LIFE_ORB,
+            .heldItem = ITEM_LUM_BERRY,
 #line 5743
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5744
@@ -15372,7 +15372,7 @@ F_TRAINER_FEMALE |
 #line 5931
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 5932
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
 #line 5933
         .mugshotColor = MUGSHOT_COLOR_BLUE,
 #line 0
@@ -21516,7 +21516,7 @@ F_TRAINER_FEMALE |
 #line 8334
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 8335
-        .aiFlags = AI_FLAG_SMART_TRAINER,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
 #line 8336
         .mugshotColor = MUGSHOT_COLOR_YELLOW,
 #line 0

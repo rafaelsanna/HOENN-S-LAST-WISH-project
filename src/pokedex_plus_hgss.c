@@ -3991,6 +3991,19 @@ static void Task_HandleInfoScreenInput(u8 taskId)
         return;
     }
 
+    if (JOY_NEW(A_BUTTON))
+    {
+        u16 species = NationalPokedexNumToSpeciesHGSS(sPokedexListItem->dexNum);
+        struct Sprite *sprite = &gSprites[gTasks[taskId].tMonSpriteId];
+
+        // Replay the selected Pokémon's native front-frame animation and cry.
+        StopCryAndClearCrySongs();
+        PlayCry_NormalNoDucking(species, 0, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL);
+        sprite->anims = gSpeciesInfo[species].frontAnimFrames;
+        StartSpriteAnim(sprite, 1);
+        return;
+    }
+
     if ((JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
     {
         sPokedexView->selectedScreen = AREA_SCREEN;
@@ -8910,4 +8923,3 @@ static void ClearSearchParameterBoxText(void)
 {
     ClearSearchMenuRect(144, 8, 96, 96);
 }
-

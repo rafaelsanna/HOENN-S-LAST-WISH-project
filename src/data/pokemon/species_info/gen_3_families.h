@@ -474,10 +474,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
 
     [SPECIES_BLAZIKEN] =
     {
-        .baseHP        = 80,
-        .baseAttack    = 120,
+        .baseHP        = 70,
+        .baseAttack    = 100,
         .baseDefense   = 70,
-        .baseSpeed     = 80,
+        .baseSpeed     = 110,
         .baseSpAttack  = 110,
         .baseSpDefense = 70,
         .types = MON_TYPES(TYPE_GRASS, TYPE_FLYING),
@@ -7144,11 +7144,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     {
         .baseHP        = 70,
         .baseAttack    = 85,
-        .baseDefense   = 140,
+        .baseDefense   = 70,
         .baseSpeed     = 20,
         .baseSpAttack  = 85,
-        .baseSpDefense = 70,
-        .types = MON_TYPES(TYPE_FIRE),
+        .baseSpDefense = 140,
+        .types = MON_TYPES(TYPE_ICE),
         .catchRate = 90,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 165 : 161,
         .evYield_Defense = 2,

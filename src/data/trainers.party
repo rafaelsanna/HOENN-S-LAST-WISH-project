@@ -5289,7 +5289,7 @@ Gender:Female
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / HP Aware
 Mugshot: Purple
 
 Shedinja @ Focus Sash
@@ -5322,7 +5322,7 @@ Jolly Nature
 - Sacred Sword  
 - Substitute  
 
-Kleavor @ Life Orb
+Kleavor @ Lum Berry
 Level: 65
 IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Sharpness  
@@ -5502,7 +5502,7 @@ Gender: Female
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: Yes
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / HP Aware
 Mugshot: Green
 
 Chimecho @ Focus Sash  
@@ -5715,7 +5715,7 @@ Gender: Male
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / HP Aware
 Mugshot: Pink
 
 Torkoal @ Icy Rock  
@@ -5738,7 +5738,7 @@ Adamant Nature
 - Play Rough  
 - Strength  
 
-Mamoswine @ Life Orb  
+Mamoswine @ Lum Berry
 Level: 66
 IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Snow Cloak  
@@ -5929,7 +5929,7 @@ Gender: Male
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / HP Aware
 Mugshot: Blue
 
 Kingdra @ Mental Herb  
@@ -8332,7 +8332,7 @@ Gender: Female
 Music: Female
 Items: Full Restore / Full Restore / Full Restore / Full Restore
 Double Battle: No
-AI: Smart Trainer 
+AI: Basic Trainer / HP Aware
 Mugshot: Yellow
 
 Probopass @ Sitrus Berry 
