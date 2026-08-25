@@ -278,17 +278,18 @@ static EWRAM_DATA u16 sGenderBg3Tilemap[0x400];
 // sGenderBg3SourceTilemap removido: tilemaps agora lidos diretamente de sGenderCombinedTilemaps.
 // .rodata
 
-static const u16 sBirchSpeechBgPals[][16] = {
+const u16 gBirchSpeechShadowPals[][16] = {
     INCBIN_U16("graphics/birch_speech/shadow.gbapal"),
     INCBIN_U16("graphics/birch_speech/shadow.gbapal")
 };
 
-static const u32 sBirchSpeechBgTiles[] = INCBIN_U32("graphics/birch_speech/birchspeech.4bpp.lz");
-static const u32 sBirchSpeechBgTilemap[] = INCBIN_U32("graphics/birch_speech/birchspeech.bin.lz");
-static const u16 sBirchSpeechBgPalette[] = INCBIN_U16("graphics/birch_speech/birchspeech.gbapal");
+// Shared with the player naming screen to preserve the Birch Speech backdrop.
+const u32 gBirchSpeechBackgroundTiles[] = INCBIN_U32("graphics/birch_speech/birchspeech.4bpp.lz");
+const u32 gBirchSpeechBackgroundTilemap[] = INCBIN_U32("graphics/birch_speech/birchspeech.bin.lz");
+const u16 gBirchSpeechBackgroundPalette[] = INCBIN_U16("graphics/birch_speech/birchspeech.gbapal");
 
-static const u32 sBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/shadow.4bpp.smol");
-static const u32 sBirchSpeechBgMap[] = INCBIN_U32("graphics/birch_speech/map.bin.smolTM");
+const u32 gBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/shadow.4bpp.smol");
+const u32 gBirchSpeechShadowTilemap[] = INCBIN_U32("graphics/birch_speech/map.bin.smolTM");
 static const u16 sBirchSpeechBgGradientPal[] = INCBIN_U16("graphics/birch_speech/bg2.gbapal");
 
 // Tileset combinado: boy (tiles 0–240) + girl (tiles 241–451) em um único sheet.
@@ -1594,9 +1595,9 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
 
     // BG2 - fundo estático
     InitBgFromTemplate(&sBirchSpeechBgTemplate);
-    DecompressAndCopyTileDataToVram(2, sBirchSpeechBgTiles, 0, 0, 0);
-    DecompressDataWithHeaderVram(sBirchSpeechBgTilemap, (void *)BG_SCREEN_ADDR(28));
-    LoadPalette(sBirchSpeechBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    DecompressAndCopyTileDataToVram(2, gBirchSpeechBackgroundTiles, 0, 0, 0);
+    DecompressDataWithHeaderVram(gBirchSpeechBackgroundTilemap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(gBirchSpeechBackgroundPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
 
     // Configuração de display e resets
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
@@ -1628,9 +1629,9 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     ResetPaletteFade();
 
     // Carregamento de gráficos originais
-    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
-    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
-    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(gBirchSpeechShadowGfx, (u8 *)VRAM);
+    DecompressDataWithHeaderVram(gBirchSpeechShadowTilemap, (u8 *)(BG_SCREEN_ADDR(7)));
+    LoadPalette(gBirchSpeechShadowPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(&black, BG_PLTT_ID(0), sizeof(black));
 
     // Inicialização de sprites
@@ -2383,9 +2384,9 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     
     // ========== INICIALIZAÇÃO DO BG2 (FUNDO ESTÁTICO) ==========
     InitBgFromTemplate(&sBirchSpeechBgTemplate);
-    DecompressAndCopyTileDataToVram(2, sBirchSpeechBgTiles, 0, 0, 0);
-    DecompressDataWithHeaderVram(sBirchSpeechBgTilemap, (void *)BG_SCREEN_ADDR(28));
-    LoadPalette(sBirchSpeechBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    DecompressAndCopyTileDataToVram(2, gBirchSpeechBackgroundTiles, 0, 0, 0);
+    DecompressDataWithHeaderVram(gBirchSpeechBackgroundTilemap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(gBirchSpeechBackgroundPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
     // ==========================================================
     
     // Inicializa os BGs originais (BG0 e BG1)
@@ -2406,9 +2407,9 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     DmaFill32(3, 0, OAM, OAM_SIZE);
     DmaFill16(3, 0, PLTT, PLTT_SIZE);
     ResetPaletteFade();
-    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
-    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
-    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(gBirchSpeechShadowGfx, (u8 *)VRAM);
+    DecompressDataWithHeaderVram(gBirchSpeechShadowTilemap, (u8 *)(BG_SCREEN_ADDR(7)));
+    LoadPalette(gBirchSpeechShadowPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
 
     /* Corrige a transparencia do fundo: define a cor de indice 0 como preto */
     u16 black = RGB_BLACK;
@@ -2674,9 +2675,9 @@ static void NewGameBirchSpeech_LoadGenderBgTilemap(u8 gender)
 
 static void NewGameBirchSpeech_LoadGenderUnderlay(void)
 {
-    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(1));
-    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (void *)BG_SCREEN_ADDR(28));
-    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(gBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(1));
+    DecompressDataWithHeaderVram(gBirchSpeechShadowTilemap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(gBirchSpeechShadowPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     ShowBg(2);
 }
 
@@ -2751,12 +2752,12 @@ static void NewGameBirchSpeech_HideGenderBg(u8 taskId)
     // na segunda entrada (após ReturnFromNamingScreen) esse sistema pode estar com
     // estado stale, causando falha no carregamento dos tiles — inclusive das fontes
     // da tela de nome seguinte.
-    DecompressDataWithHeaderVram(sBirchSpeechBgTiles, (void *)BG_CHAR_ADDR(1));
-    DecompressDataWithHeaderVram(sBirchSpeechBgTilemap, (void *)BG_SCREEN_ADDR(28));
-    LoadPalette(sBirchSpeechBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
-    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(0));
-    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
-    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(gBirchSpeechBackgroundTiles, (void *)BG_CHAR_ADDR(1));
+    DecompressDataWithHeaderVram(gBirchSpeechBackgroundTilemap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(gBirchSpeechBackgroundPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(gBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(0));
+    DecompressDataWithHeaderVram(gBirchSpeechShadowTilemap, (u8 *)(BG_SCREEN_ADDR(7)));
+    LoadPalette(gBirchSpeechShadowPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(&black, BG_PLTT_ID(0), sizeof(black));
 
     // Restaura tiles do frame das janelas de texto (charbase 2) que podem ter

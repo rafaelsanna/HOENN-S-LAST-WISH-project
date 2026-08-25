@@ -61,7 +61,7 @@ LittlerootTown_EventScript_Poochyena::
 LittlerootTown_EventScript_SnowballGame::
 	lock
 	faceplayer
-	special StartMegaRayVisionScene
+	special StartSnowballGame
 	waitstate
 	release
 	end

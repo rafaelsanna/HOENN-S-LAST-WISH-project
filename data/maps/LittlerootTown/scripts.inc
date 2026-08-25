@@ -125,7 +125,7 @@ LittlerootTown_EventScript_SnowballGame::
 # 63 "data/maps/LittlerootTown/scripts.pory"
 	faceplayer
 # 64 "data/maps/LittlerootTown/scripts.pory"
-	special StartMegaRayVisionScene
+	special StartSnowballGame
 # 65 "data/maps/LittlerootTown/scripts.pory"
 	waitstate
 # 66 "data/maps/LittlerootTown/scripts.pory"

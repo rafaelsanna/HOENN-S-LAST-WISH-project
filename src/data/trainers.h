@@ -14386,7 +14386,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_CHIMECHO,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5508
-            .heldItem = ITEM_FOCUS_SASH,
+            .heldItem = ITEM_MENTAL_HERB,
 #line 5512
             .iv = TRAINER_PARTY_IVS(29, 29, 29, 29, 29, 29),
 #line 5510
@@ -14432,7 +14432,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_GOREBYSS,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5528
-            .heldItem = ITEM_LIFE_ORB,
+            .heldItem = ITEM_FAIRY_FEATHER,
 #line 5532
             .iv = TRAINER_PARTY_IVS(29, 29, 29, 29, 29, 29),
 #line 5530
@@ -14455,7 +14455,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_ANNIHILAPE,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5538
-            .heldItem = ITEM_ASSAULT_VEST,
+            .heldItem = ITEM_SITRUS_BERRY,
 #line 5540
             .iv = TRAINER_PARTY_IVS(29, 29, 29, 29, 29, 29),
 #line 5541
@@ -14899,7 +14899,7 @@ F_TRAINER_FEMALE |
 #line 5726
                 MOVE_RAPID_SPIN,
                 MOVE_STEALTH_ROCK,
-                MOVE_TOXIC,
+                MOVE_HAZE,
                 MOVE_ICY_WIND,
             },
             },
@@ -14955,7 +14955,7 @@ F_TRAINER_FEMALE |
 #line 5751
             .gender = TRAINER_MON_FEMALE,
 #line 5751
-            .heldItem = ITEM_FOCUS_SASH,
+            .heldItem = ITEM_SPELL_TAG,
 #line 5755
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5753
@@ -14967,10 +14967,10 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 5756
-                MOVE_DESTINY_BOND,
+                MOVE_THUNDERBOLT,
                 MOVE_WEATHER_BALL,
                 MOVE_SHADOW_BALL,
-                MOVE_TAUNT,
+                MOVE_DRAINING_KISS,
             },
             },
             {
@@ -21516,7 +21516,7 @@ F_TRAINER_FEMALE |
 #line 8334
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 8335
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
+        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_HP_AWARE,
 #line 8336
         .mugshotColor = MUGSHOT_COLOR_YELLOW,
 #line 0

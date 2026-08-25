@@ -2064,6 +2064,14 @@ extern const u32 gNamingScreenCursorFilled_Gfx[];
 extern const u32 gNamingScreenInputArrow_Gfx[];
 extern const u32 gNamingScreenUnderscore_Gfx[];
 
+// Birch Speech background layers, also used by the player naming screen.
+extern const u32 gBirchSpeechBackgroundTiles[];
+extern const u32 gBirchSpeechBackgroundTilemap[];
+extern const u16 gBirchSpeechBackgroundPalette[];
+extern const u32 gBirchSpeechShadowGfx[];
+extern const u32 gBirchSpeechShadowTilemap[];
+extern const u16 gBirchSpeechShadowPals[][16];
+
 extern const u32 gPokeblockFeedBg_Tilemap[];
 
 extern const u32 gConfetti_Gfx[];

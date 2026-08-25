@@ -786,18 +786,34 @@ LilycoveCity_Text_HoneymoonVowToSeeRarePokemon:
 LilycoveCity_EventScript_LookingForClues::
 	lockall
 	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_LookingForClues_Done
+	call LilycoveCity_EventScript_MarRio_NoticesPlayer
+	turnobject LOCALID_PLAYER, DIR_WEST
+	call LilycoveCity_EventScript_MarRio_FacePlayer
 	call LilycoveCity_EventScript_MarRio_Scene
+	call LilycoveCity_EventScript_MarRio_LeaveNorth
 	releaseall
 	end
 LilycoveCity_EventScript_LookingForClues_Done::
 	releaseall
 	end
 
+LilycoveCity_EventScript_LookingForCluesAbove::
+	lockall
+	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_LookingForClues_Done
+	call LilycoveCity_EventScript_MarRio_NoticesPlayer
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	call LilycoveCity_EventScript_MarRio_FacePlayer
+	call LilycoveCity_EventScript_MarRio_Scene
+	call LilycoveCity_EventScript_MarRio_LeaveRightUp
+	releaseall
+	end
+
 LilycoveCity_EventScript_Mar::
 	lockall
 	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_Mar_Done
-	faceplayer
+	call LilycoveCity_EventScript_MarRio_FacePlayer
 	call LilycoveCity_EventScript_MarRio_Scene
+	call LilycoveCity_EventScript_MarRio_LeaveNorth
 LilycoveCity_EventScript_Mar_Done::
 	releaseall
 	end
@@ -805,11 +821,25 @@ LilycoveCity_EventScript_Mar_Done::
 LilycoveCity_EventScript_Rio::
 	lockall
 	goto_if_set FLAG_HIDE_MAR_LILI_VISIBILITY, LilycoveCity_EventScript_Rio_Done
-	faceplayer
+	call LilycoveCity_EventScript_MarRio_FacePlayer
 	call LilycoveCity_EventScript_MarRio_Scene
+	call LilycoveCity_EventScript_MarRio_LeaveNorth
 LilycoveCity_EventScript_Rio_Done::
 	releaseall
 	end
+
+LilycoveCity_EventScript_MarRio_FacePlayer::
+	applymovement LOCALID_LILYCOVE_MAR, Common_Movement_FacePlayer
+	applymovement LOCALID_LILYCOVE_RIO, Common_Movement_FacePlayer
+	waitmovement 0
+	return
+
+LilycoveCity_EventScript_MarRio_NoticesPlayer::
+	playse SE_PIN
+	applymovement LOCALID_LILYCOVE_MAR, Common_Movement_ExclamationMark
+	applymovement LOCALID_LILYCOVE_RIO, Common_Movement_ExclamationMark
+	waitmovement 0
+	return
 
 LilycoveCity_EventScript_MarRio_Scene::
 	createfieldmugshot MUGSHOT_MAR, EMOTE_NORMAL
@@ -830,6 +860,10 @@ LilycoveCity_EventScript_MarRio_Scene::
 	createfieldmugshot MUGSHOT_RIO, EMOTE_NORMAL
 	msgbox LilycoveCity_Text_RioTeamAquaClues, MSGBOX_DEFAULT
 	removefieldmugshot
+	closemessage
+	return
+
+LilycoveCity_EventScript_MarRio_LeaveNorth::
 	delay 30
 	applymovement LOCALID_LILYCOVE_MAR, LilycoveCity_Movement_MarRioWalkAway
 	applymovement LOCALID_LILYCOVE_RIO, LilycoveCity_Movement_MarRioWalkAway
@@ -839,9 +873,33 @@ LilycoveCity_EventScript_MarRio_Scene::
 	setflag FLAG_HIDE_MAR_LILI_VISIBILITY
 	return
 
-@ ---- Movement (adjust step count if the path north isn't clear) ----
+LilycoveCity_EventScript_MarRio_LeaveRightUp::
+	delay 30
+	applymovement LOCALID_LILYCOVE_MAR, LilycoveCity_Movement_MarRioWalkRightUp
+	applymovement LOCALID_LILYCOVE_RIO, LilycoveCity_Movement_MarRioWalkRightUp
+	waitmovement 0
+	removeobject LOCALID_LILYCOVE_MAR
+	removeobject LOCALID_LILYCOVE_RIO
+	setflag FLAG_HIDE_MAR_LILI_VISIBILITY
+	return
+
+@ The right-side trigger uses this original northbound exit.
 
 LilycoveCity_Movement_MarRioWalkAway:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+@ The upper trigger is occupied by the player, so step right before heading north.
+
+LilycoveCity_Movement_MarRioWalkRightUp:
+	walk_right
+	walk_up
 	walk_up
 	walk_up
 	walk_up

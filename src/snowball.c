@@ -74,6 +74,7 @@ enum {
 #define SPAWN_INTERVAL_MAX     90
 #define HIT_SHOW_DELAY         80       // frames to show impact sprite
 #define GAMEOVER_SHOW_DELAY    150      // frames to show game-over banner
+#define SNOWFIELD_SCROLL_SPEED_MAX 0x200 // 2 pixels per frame in 8.8 fixed point
 
 // Speed scaling (256 = 1.00×, increases by SPEED_SCALE_PER_BALL each throw)
 #define SPEED_SCALE_BASE       256
@@ -105,6 +106,7 @@ struct SnowballGame {
     u16  delayTimer;
     u16  ballsThrown;
     u16  speedScale;
+    u16  bgScrollX;       // 8.8 pixel offset in the snowfield's 240 px loop
     u8   scoreWindowId;
     bool8 isNewHiScore;    // TRUE once player beats stored hi-score → red text
     s16  lastPlayerY;      // used for stale-player detection
@@ -172,7 +174,8 @@ extern const u32 gObjectEventPic_Spheal[];
 extern const u16 gOverworldPalette_Spheal[];
 
 #define SPHEAL_FRAME_SIZE   0x200   // 16 tiles × 32 bytes (32×32 px frame)
-#define SPHEAL_ROLL_FRAMES  8
+#define SPHEAL_WALK_FRAMES  8
+#define SPHEAL_WEST_WALK_FIRST_FRAME 19
 
 
 // ============================================================
@@ -200,6 +203,12 @@ extern const u16 gOverworldPalette_Spheal[];
 // ============================================================
 
 #define SNOWBALL_BG 1
+#define SNOWBALL_BG_SCREENBASE 28
+#define SNOWFIELD_TILEMAP_WIDTH 32
+#define SNOWFIELD_VISIBLE_WIDTH 30
+#define SNOWFIELD_TILEMAP_HEIGHT 20
+#define SNOWFIELD_LOOP_WIDTH (SNOWFIELD_VISIBLE_WIDTH * 8)
+#define SNOWFIELD_LOOP_WIDTH_FIXED (SNOWFIELD_LOOP_WIDTH << 8)
 
 static const struct BgTemplate sSnowballBGTemplates[] = {
     {   // BG 0 – score text window (charBase 0 @ 0x06000000, map @ 0x0600B800)
@@ -214,8 +223,8 @@ static const struct BgTemplate sSnowballBGTemplates[] = {
     {   // BG 1 – game background (charBase 1 @ 0x06004000, map @ 0x06007000)
         .bg            = SNOWBALL_BG,
         .charBaseIndex = 1,
-        .mapBaseIndex  = 28,
-        .screenSize    = 0,
+        .mapBaseIndex  = SNOWBALL_BG_SCREENBASE,
+        .screenSize    = 1,
         .paletteMode   = 0,
         .priority      = 3,
         .baseTile      = 0,
@@ -316,19 +325,19 @@ static const union AnimCmd sAnim_Hit16[] = {
 };
 static const union AnimCmd *const sAnims_Hit16[] = { sAnim_Hit16 };
 
-// Spheal west-roll: 8 frames, each 16 tiles (32×32) in VRAM
-static const union AnimCmd sAnim_SpealRoll[] = {
-    ANIMCMD_FRAME(0,   2),
-    ANIMCMD_FRAME(16,  2),
-    ANIMCMD_FRAME(32,  2),
-    ANIMCMD_FRAME(48,  2),
-    ANIMCMD_FRAME(64,  2),
-    ANIMCMD_FRAME(80,  2),
-    ANIMCMD_FRAME(96,  2),
-    ANIMCMD_FRAME(112, 2),
+// Spheal east walk: source frames face west, so the sprite is mirrored.
+static const union AnimCmd sAnim_SphealWalkEast[] = {
+    ANIMCMD_FRAME(0,   2, .hFlip = TRUE),
+    ANIMCMD_FRAME(16,  2, .hFlip = TRUE),
+    ANIMCMD_FRAME(32,  2, .hFlip = TRUE),
+    ANIMCMD_FRAME(48,  2, .hFlip = TRUE),
+    ANIMCMD_FRAME(64,  2, .hFlip = TRUE),
+    ANIMCMD_FRAME(80,  2, .hFlip = TRUE),
+    ANIMCMD_FRAME(96,  2, .hFlip = TRUE),
+    ANIMCMD_FRAME(112, 2, .hFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
-static const union AnimCmd *const sAnims_SpealRoll[] = { sAnim_SpealRoll };
+static const union AnimCmd *const sAnims_SphealWalkEast[] = { sAnim_SphealWalkEast };
 
 // 2-frame blink/pulse loop for text banners (same as flappybird's sTitleAnimCmd_0)
 static const union AnimCmd sAnim_TextBlink[] = {
@@ -386,7 +395,7 @@ static const struct SpriteTemplate sSpriteTemplate_Spheal = {
     .tileTag     = SPHEAL_GFXTAG,
     .paletteTag  = SPHEAL_PALTAG,
     .oam         = &sOam_Spheal,
-    .anims       = sAnims_SpealRoll,
+    .anims       = sAnims_SphealWalkEast,
     .images      = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback    = SpriteCallbackDummy,
@@ -554,8 +563,45 @@ static void ExitSnowballGame(void)
 static void LoadBg1Direct(const u32 *gfx, const u32 *tilemapLZ, const u16 *pal, u32 palBytes)
 {
     LZ77UnCompVram(gfx,      (void *)BG_CHAR_ADDR(1));     // tiles → charBase 1
-    LZ77UnCompVram(tilemapLZ,(void *)BG_SCREEN_ADDR(28));  // map   → screen block 28
+    LZ77UnCompVram(tilemapLZ,(void *)BG_SCREEN_ADDR(SNOWBALL_BG_SCREENBASE));
     LoadPalette(pal, BG_PLTT_ID(0), palBytes);             // palette(s) → BG slot 0+
+}
+
+// The source tilemap is 30 tiles wide and reserves its final two columns as
+// transparent placeholders. Build a second 30-tile copy in the adjacent screen
+// block so the hardware never wraps through the pink placeholders mid-scroll.
+static void MakeSnowfieldTilemapLoop(void)
+{
+    u16 *leftTilemap = (u16 *)BG_SCREEN_ADDR(SNOWBALL_BG_SCREENBASE);
+    u16 *rightTilemap = (u16 *)BG_SCREEN_ADDR(SNOWBALL_BG_SCREENBASE + 1);
+    u8 row;
+    u8 column;
+
+    for (row = 0; row < SNOWFIELD_TILEMAP_HEIGHT; row++)
+    {
+        u16 *leftRow = &leftTilemap[row * SNOWFIELD_TILEMAP_WIDTH];
+        u16 *rightRow = &rightTilemap[row * SNOWFIELD_TILEMAP_WIDTH];
+
+        leftRow[SNOWFIELD_VISIBLE_WIDTH] = leftRow[0];
+        leftRow[SNOWFIELD_VISIBLE_WIDTH + 1] = leftRow[1];
+        for (column = 0; column < SNOWFIELD_TILEMAP_WIDTH; column++)
+            rightRow[column] = leftRow[(column + 2) % SNOWFIELD_VISIBLE_WIDTH];
+    }
+}
+
+static void UpdateSnowfieldScroll(void)
+{
+    u16 scrollSpeed = sSnow->speedScale;
+
+    // Match the snowballs' gradual acceleration without exceeding 2 px/frame.
+    if (scrollSpeed > SNOWFIELD_SCROLL_SPEED_MAX)
+        scrollSpeed = SNOWFIELD_SCROLL_SPEED_MAX;
+
+    sSnow->bgScrollX += scrollSpeed;
+    if (sSnow->bgScrollX >= SNOWFIELD_LOOP_WIDTH_FIXED)
+        sSnow->bgScrollX -= SNOWFIELD_LOOP_WIDTH_FIXED;
+
+    ChangeBgX(SNOWBALL_BG, sSnow->bgScrollX, BG_COORD_SET);
 }
 
 // Load the start-screen tileset/tilemap into BG1
@@ -570,6 +616,9 @@ static void SwapBgToSnowfield(void)
 {
     LoadBg1Direct(Snowfield_BG_Img, Snowfield_BG_Tilemap,
                   Snowfield_BG_Pal, sizeof(Snowfield_BG_Pal));
+    MakeSnowfieldTilemapLoop();
+    sSnow->bgScrollX = 0;
+    ChangeBgX(SNOWBALL_BG, 0, BG_COORD_SET);
     // Snowfield may have 16 palettes (256 colors) and overwrite ALL BG slots
     // including slot 15 where our font lives. Reload it now to be safe.
     LoadPalette(sScoreFontPal, BG_PLTT_ID(15), sizeof(sScoreFontPal));
@@ -659,9 +708,9 @@ static void InitSnowballScreen(void)
                                 | BGCNT_TXT256x256);
     SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(3)
                                 | BGCNT_CHARBASE(1)
-                                | BGCNT_SCREENBASE(28)
+                                | BGCNT_SCREENBASE(SNOWBALL_BG_SCREENBASE)
                                 | BGCNT_16COLOR
-                                | BGCNT_TXT256x256);
+                                | BGCNT_TXT512x256);
 
     ResetPaletteFade();
 
@@ -758,12 +807,13 @@ static void LoadAllSnowSheets(void)
     s.tag  = SMALL_SNOW_HIT_GFXTAG;
     LoadSpriteSheet(&s);
 
-    // Spheal: copy 8 south/down frames (frames 3-10) from ROM → EWRAM
+    // Spheal: copy the eight west-facing walk frames, then mirror them east.
     {
-        const u32 *src = gObjectEventPic_Spheal + (3 * SPHEAL_FRAME_SIZE / 4);
-        CpuCopy32(src, (void *)sSnow->bufSpheal, SPHEAL_FRAME_SIZE * SPHEAL_ROLL_FRAMES);
+        const u32 *src = gObjectEventPic_Spheal
+            + (SPHEAL_WEST_WALK_FIRST_FRAME * SPHEAL_FRAME_SIZE / sizeof(u32));
+        CpuCopy32(src, (void *)sSnow->bufSpheal, SPHEAL_FRAME_SIZE * SPHEAL_WALK_FRAMES);
         s.data = sSnow->bufSpheal;
-        s.size = SPHEAL_FRAME_SIZE * SPHEAL_ROLL_FRAMES;
+        s.size = SPHEAL_FRAME_SIZE * SPHEAL_WALK_FRAMES;
         s.tag  = SPHEAL_GFXTAG;
         LoadSpriteSheet(&s);
     }
@@ -935,6 +985,10 @@ static void SnowballMain(u8 taskId)
 {
     u8  i;
     u16 moved;
+
+    // Keep the snowfield moving after the game starts, including its end screens.
+    if (sSnow->state >= SNOWBALL_PLAYING && sSnow->state < SNOWBALL_EXIT)
+        UpdateSnowfieldScroll();
 
     switch (sSnow->state)
     {

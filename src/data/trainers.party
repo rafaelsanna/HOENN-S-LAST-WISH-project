@@ -5505,7 +5505,7 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware
 Mugshot: Green
 
-Chimecho @ Focus Sash  
+Chimecho @ Mental Herb  
 Level: 67
 Ability: Levitate  
 Timid Nature
@@ -5525,7 +5525,7 @@ Jolly Nature
 - Shadow Sneak  
 - Knock Off  
 
-Gorebyss @ Life Orb  
+Gorebyss @ Fairy Feather
 Level: 67
 Ability: Cursed Body  
 Quiet Nature  
@@ -5535,7 +5535,7 @@ IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 - Hex  
 - Will-O-Wisp  
 
-Annihilape @ Assault Vest  
+Annihilape @ Sitrus Berry 
 Level: 67
 IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Defiant  
@@ -5725,7 +5725,7 @@ Ability: Snow Warning
 Bold Nature
 - Rapid Spin  
 - Stealth Rock  
-- Toxic  
+- Haze  
 - Icy Wind  
 
 Jumpluff @ Babiri Berry  
@@ -5748,15 +5748,15 @@ Jolly Nature
 - Knock Off  
 - Icicle Crash  
 
-Froslass (F) @ Focus Sash  
+Froslass (F) @ Spell Tag  
 Level: 66
 Ability: Snow Cloak  
 Timid Nature
 IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
-- Destiny Bond  
+- Thunderbolt  
 - Weather Ball  
 - Shadow Ball  
-- Taunt  
+- Draining Kiss 
 
 Cacturne @ Chople Berry  
 Level: 66
@@ -8332,7 +8332,7 @@ Gender: Female
 Music: Female
 Items: Full Restore / Full Restore / Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer / HP Aware
+AI: Smart Trainer / HP Aware
 Mugshot: Yellow
 
 Probopass @ Sitrus Berry 

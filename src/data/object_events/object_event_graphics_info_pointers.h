@@ -134,6 +134,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Winona;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Liza;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Tate;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Wallace;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Rio;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Steven;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Wally;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RubySapphireLittleBoy;
@@ -530,6 +531,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_POKEFAN_2] =                &gObjectEventGraphicsInfo_Pokefan2,
     [OBJ_EVENT_GFX_ROB] =                      &gObjectEventGraphicsInfo_Rob,
     [OBJ_EVENT_GFX_MEGARAYQUAZA_CUTSCENE] = &gObjectEventGraphicsInfo_MegaRayquaza,
+    [OBJ_EVENT_GFX_RIO] =                      &gObjectEventGraphicsInfo_Rio,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {

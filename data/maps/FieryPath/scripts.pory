@@ -63,7 +63,12 @@ FieryPath_EventScript_MagmaTriggerLeft::
     playbgm MUS_ENCOUNTER_MAGMA, FALSE
     applymovement LOCALID_MAGMA_GRUNT_M, FieryPath_Movement_MagmaM_2Left
     waitmovement 0
-    goto FieryPath_EventScript_MagmaCore
+    call FieryPath_EventScript_MagmaNoticesPlayer
+    turnobject LOCALID_PLAYER, DIR_WEST
+    call FieryPath_EventScript_MagmaFacePlayer
+    call FieryPath_EventScript_MagmaScene
+    call FieryPath_EventScript_MagmaLeaveLeft
+    goto FieryPath_EventScript_MagmaEnd
 
 FieryPath_EventScript_MagmaTriggerMid::
     lockall
@@ -72,7 +77,12 @@ FieryPath_EventScript_MagmaTriggerMid::
     applymovement LOCALID_MAGMA_GRUNT_F, FieryPath_Movement_MagmaF_1Right
     applymovement LOCALID_MAGMA_GRUNT_M, FieryPath_Movement_MagmaM_1Left
     waitmovement 0
-    goto FieryPath_EventScript_MagmaCore
+    call FieryPath_EventScript_MagmaNoticesPlayer
+    turnobject LOCALID_PLAYER, DIR_WEST
+    call FieryPath_EventScript_MagmaFacePlayer
+    call FieryPath_EventScript_MagmaScene
+    call FieryPath_EventScript_MagmaLeaveMid
+    goto FieryPath_EventScript_MagmaEnd
 
 FieryPath_EventScript_MagmaTriggerRight::
     lockall
@@ -80,12 +90,27 @@ FieryPath_EventScript_MagmaTriggerRight::
     playbgm MUS_ENCOUNTER_MAGMA, FALSE
     applymovement LOCALID_MAGMA_GRUNT_F, FieryPath_Movement_MagmaF_2Right
     waitmovement 0
-    goto FieryPath_EventScript_MagmaCore
+    call FieryPath_EventScript_MagmaNoticesPlayer
+    turnobject LOCALID_PLAYER, DIR_EAST
+    call FieryPath_EventScript_MagmaFacePlayer
+    call FieryPath_EventScript_MagmaScene
+    call FieryPath_EventScript_MagmaLeaveRight
+    goto FieryPath_EventScript_MagmaEnd
 
-FieryPath_EventScript_MagmaCore:
+FieryPath_EventScript_MagmaNoticesPlayer::
+    playse SE_PIN
+    applymovement LOCALID_MAGMA_GRUNT_F, Common_Movement_ExclamationMark
+    applymovement LOCALID_MAGMA_GRUNT_M, Common_Movement_ExclamationMark
+    waitmovement 0
+    return
+
+FieryPath_EventScript_MagmaFacePlayer::
     applymovement LOCALID_MAGMA_GRUNT_F, Common_Movement_FacePlayer
     applymovement LOCALID_MAGMA_GRUNT_M, Common_Movement_FacePlayer
     waitmovement 0
+    return
+
+FieryPath_EventScript_MagmaScene::
     msgbox FieryPath_Text_MagmaIntro_F, MSGBOX_DEFAULT
     closemessage
     msgbox FieryPath_Text_MagmaIntro_M, MSGBOX_DEFAULT
@@ -93,13 +118,48 @@ FieryPath_EventScript_MagmaCore:
     msgbox FieryPath_Text_MagmaChallenge, MSGBOX_DEFAULT
     closemessage
     trainerbattle_no_intro TRAINER_GRUNT_FIERY_PATH, FieryPath_Text_MagmaAfterLoss
-    fadescreen FADE_TO_BLACK
+    closemessage
+    return
+
+@ The player steps aside only on the outer triggers, where the nearby grunt
+@ would otherwise be blocked in by the cave wall.
+FieryPath_EventScript_MagmaLeaveLeft::
     delay 30
-    removeobject LOCALID_MAGMA_GRUNT_F
+    applymovement LOCALID_PLAYER, FieryPath_Movement_PlayerStepDown
+    waitmovement 0
+    applymovement LOCALID_MAGMA_GRUNT_M, FieryPath_Movement_MagmaExitNorth
+    waitmovement 0
     removeobject LOCALID_MAGMA_GRUNT_M
+    applymovement LOCALID_MAGMA_GRUNT_F, FieryPath_Movement_MagmaFExitLeft
+    waitmovement 0
+    removeobject LOCALID_MAGMA_GRUNT_F
+    goto FieryPath_EventScript_MagmaLeaveDone
+
+FieryPath_EventScript_MagmaLeaveMid::
+    delay 30
+    applymovement LOCALID_MAGMA_GRUNT_F, FieryPath_Movement_MagmaExitNorth
+    waitmovement 0
+    removeobject LOCALID_MAGMA_GRUNT_F
+    applymovement LOCALID_MAGMA_GRUNT_M, FieryPath_Movement_MagmaMExitMid
+    waitmovement 0
+    removeobject LOCALID_MAGMA_GRUNT_M
+    goto FieryPath_EventScript_MagmaLeaveDone
+
+FieryPath_EventScript_MagmaLeaveRight::
+    delay 30
+    applymovement LOCALID_PLAYER, FieryPath_Movement_PlayerStepDown
+    waitmovement 0
+    applymovement LOCALID_MAGMA_GRUNT_F, FieryPath_Movement_MagmaExitNorth
+    waitmovement 0
+    removeobject LOCALID_MAGMA_GRUNT_F
+    applymovement LOCALID_MAGMA_GRUNT_M, FieryPath_Movement_MagmaMExitRight
+    waitmovement 0
+    removeobject LOCALID_MAGMA_GRUNT_M
+
+FieryPath_EventScript_MagmaLeaveDone::
     setflag FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE
     fadedefaultbgm
-    fadescreen FADE_FROM_BLACK
+    return
 
 FieryPath_EventScript_MagmaEnd:
     releaseall
@@ -123,11 +183,72 @@ FieryPath_Movement_MagmaM_2Left:
     walk_left
     step_end
 
+FieryPath_Movement_PlayerStepDown:
+    walk_down
+    step_end
+
+FieryPath_Movement_MagmaExitNorth:
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    step_end
+
+FieryPath_Movement_MagmaFExitLeft:
+    walk_right
+    walk_right
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    step_end
+
+FieryPath_Movement_MagmaMExitMid:
+    walk_up
+    walk_left
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    step_end
+
+FieryPath_Movement_MagmaMExitRight:
+    walk_left
+    walk_up
+    walk_left
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    walk_up
+    step_end
+
 ///// TEXT STRINGS /////
 
 FieryPath_Text_FisherGotBurned:
 	.string "My fishing buddies warned me:\n"
-	.string "Don't go fishing in the lava...\n" 
+	.string "Don't go fishing in the lava...\n"
 	.string "But I heard SHARPEDO swim in these\n"
 	.string "magma rivers! LAVA SHARKS!\p"
 	.string "I just wanted to catch one...\n"

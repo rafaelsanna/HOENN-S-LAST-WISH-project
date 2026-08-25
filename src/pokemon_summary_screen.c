@@ -106,9 +106,6 @@
 #define PSS_DATA_WINDOW_MOVE_PP 1
 #define PSS_DATA_WINDOW_MOVE_DESCRIPTION 2
 
-// Color 0 is transparent on text backgrounds, so data fields use an opaque fill.
-#define PSS_DATA_WINDOW_FILL PIXEL_FILL(15)
-
 #define MOVE_SELECTOR_SPRITES_COUNT 10
 #define TYPE_ICON_SPRITE_COUNT (MAX_MON_MOVES + 1)
 // for the spriteIds field in PokemonSummaryScreenData
@@ -207,7 +204,6 @@ EWRAM_DATA MainCallback gInitialSummaryScreenCallback = NULL; // stores callback
 static bool8 LoadGraphics(void);
 static void CB2_InitSummaryScreen(void);
 static void InitBGs(void);
-static void RemovePortraitBackdropStripe(void);
 static bool8 DecompressGraphics(void);
 static void CopyMonToSummaryStruct(struct Pokemon *);
 static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *);
@@ -1430,42 +1426,55 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
-static void RemovePortraitBackdropStripe(void)
-{
-    // Tile 16 is repeated only behind the Info and Egg portrait areas.
-    CpuFill16(0x3333, (void *)(BG_CHAR_ADDR(2) + 16 * TILE_SIZE_4BPP), TILE_SIZE_4BPP);
-}
-
-// Applies the shared dark palette without touching Pokémon sprites or type icons.
+// Applies a vanilla-inspired dark palette without touching Pokémon sprites or type icons.
 static void ApplySummaryScreenDarkTheme(void)
 {
     u8  i;
     u16 base;
-    static const u16 sDarkPagePalette[16] =
+    static const u16 sDarkPagePalettes[][16] =
     {
-        RGB(4, 4, 5),    // #212129 - page background
-        RGB(2, 2, 3),    // Near-black outline
-        RGB(23, 19, 28), // Lavender highlight
-        RGB(13, 12, 17), // Panel highlight
-        RGB(8, 8, 12),   // Panel midtone
-        RGB(11, 10, 15), // Panel light
-        RGB(5, 5, 7),    // #2E2E3C - dark frame
-        RGB(21, 13, 27), // Purple accent
-        RGB(16, 10, 21),
-        RGB(12, 9, 17),
-        RGB(9, 7, 13),
-        RGB(7, 6, 10),
-        RGB(26, 22, 31), // Soft lavender shine
-        RGB(18, 14, 24),
-        RGB(11, 9, 16),
-        RGB(4, 4, 5),
+        // Palette 0: shared background and portrait grid.
+        {
+            RGB(4, 4, 5), RGB(2, 2, 3), RGB(18, 18, 20), RGB(10, 10, 13),
+            RGB(6, 6, 8), RGB(5, 5, 7), RGB(3, 3, 4), RGB(12, 12, 15),
+            RGB(8, 8, 11), RGB(6, 6, 8), RGB(4, 4, 6), RGB(3, 3, 4),
+            RGB(9, 9, 12), RGB(3, 3, 5), RGB(6, 6, 9), RGB(2, 2, 3),
+        },
+        // Palette 1: Contest page.
+        {
+            RGB(4, 4, 5), RGB(2, 2, 3), RGB(27, 27, 29), RGB(6, 6, 8),
+            RGB(8, 8, 10), RGB(9, 9, 12), RGB(5, 5, 7), RGB(13, 7, 16),
+            RGB(10, 6, 13), RGB(8, 6, 10), RGB(6, 6, 8), RGB(12, 8, 15),
+            RGB(7, 7, 10), RGB(6, 5, 9), RGB(5, 5, 7), RGB(4, 4, 5),
+        },
+        // Palette 2: Skills page.
+        {
+            RGB(4, 4, 5), RGB(2, 2, 3), RGB(27, 27, 29), RGB(6, 6, 8),
+            RGB(7, 7, 9), RGB(9, 9, 12), RGB(5, 5, 7), RGB(13, 7, 16),
+            RGB(10, 6, 13), RGB(8, 6, 10), RGB(6, 6, 8), RGB(15, 9, 18),
+            RGB(7, 7, 10), RGB(9, 9, 12), RGB(12, 9, 15), RGB(9, 6, 13),
+        },
+        // Palette 3: Battle Moves page.
+        {
+            RGB(4, 4, 5), RGB(2, 2, 3), RGB(27, 27, 29), RGB(4, 4, 5),
+            RGB(6, 6, 8), RGB(9, 9, 12), RGB(5, 5, 7), RGB(13, 7, 16),
+            RGB(10, 6, 13), RGB(8, 6, 10), RGB(6, 6, 8), RGB(5, 5, 7),
+            RGB(7, 7, 10), RGB(9, 9, 12), RGB(12, 9, 15), RGB(8, 6, 11),
+        },
+        // Palette 4: top header only. Lavender stays confined to this area.
+        {
+            RGB(4, 4, 5), RGB(2, 2, 3), RGB(14, 4, 16), RGB(8, 7, 12),
+            RGB(14, 12, 18), RGB(25, 25, 27), RGB(18, 8, 18), RGB(12, 7, 14),
+            RGB(7, 7, 10), RGB(14, 8, 16), RGB(3, 3, 4), RGB(2, 2, 3),
+            RGB(16, 14, 20), RGB(10, 9, 14), RGB(6, 6, 9), RGB(4, 4, 5),
+        },
     };
 
-    // Slots 0-5 contain the shared static art used by every summary page.
-    for (i = 0; i < 6; i++)
+    // Each page uses a distinct source palette, so keep its vanilla contrast.
+    for (i = 0; i < ARRAY_COUNT(sDarkPagePalettes); i++)
     {
         base = BG_PLTT_ID(i);
-        CpuCopy16(sDarkPagePalette, gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
+        CpuCopy16(sDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
     // Palette 6 supplies the fill and text for Info, Skills, and Move windows.
@@ -1482,7 +1491,7 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - window fill
     gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White prompt text
     gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // Black shadow
-    gPlttBufferUnfaded[base + 3] = RGB(23, 19, 28);  // Lavender highlight
+    gPlttBufferUnfaded[base + 3] = RGB(13, 10, 18);  // Muted lavender highlight
     gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // #3A3A52
 
     // Palette 8 is used by the PP window and its inline color codes.
@@ -1503,7 +1512,7 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - window fill
     gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White prompt text
     gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // Black shadow
-    gPlttBufferUnfaded[base + 3] = RGB(23, 19, 28);  // Lavender highlight
+    gPlttBufferUnfaded[base + 3] = RGB(13, 10, 18);  // Muted lavender highlight
     gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // Soft gray shadow
 
     // Synchronize both palette buffers to prevent a light flash during fade-in.
@@ -1560,7 +1569,6 @@ static bool8 DecompressGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != 1)
         {
-            RemovePortraitBackdropStripe();
             DecompressDataWithHeaderWram(gSummaryPage_Info_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0]);
             sMonSummaryScreen->switchCounter++;
         }
@@ -1962,8 +1970,9 @@ static void ShowMonSkillsInfo(u8 taskId, s16 mode)
     struct PokeSummary *sum = &sMonSummaryScreen->summary;
     struct Pokemon *mon = &sMonSummaryScreen->currentMon;
 
-    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_LEFT], PSS_DATA_WINDOW_FILL);
-    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_RIGHT], PSS_DATA_WINDOW_FILL);
+    // The Skills tilemap supplies the panel and divider artwork behind these fields.
+    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_LEFT], PIXEL_FILL(0));
+    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_RIGHT], PIXEL_FILL(0));
 
     if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
     {
@@ -3522,7 +3531,8 @@ static u8 AddWindowFromTemplateList(const struct WindowTemplate *template, u8 te
     if (*windowIdPtr == WINDOW_NONE)
     {
         *windowIdPtr = AddWindow(&template[templateId]);
-        FillWindowPixelBuffer(*windowIdPtr, PSS_DATA_WINDOW_FILL);
+        // Every page provides its panel artwork through the background tilemap.
+        FillWindowPixelBuffer(*windowIdPtr, PIXEL_FILL(0));
     }
     return *windowIdPtr;
 }
@@ -3541,10 +3551,11 @@ static void RemoveWindowByIndex(u8 windowIndex)
 static void PrintPageSpecificText(u8 pageIndex)
 {
     u16 i;
+
     for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->windowIds); i++)
     {
         if (sMonSummaryScreen->windowIds[i] != WINDOW_NONE)
-            FillWindowPixelBuffer(sMonSummaryScreen->windowIds[i], PSS_DATA_WINDOW_FILL);
+            FillWindowPixelBuffer(sMonSummaryScreen->windowIds[i], PIXEL_FILL(0));
     }
     sTextPrinterFunctions[pageIndex]();
 }
@@ -4287,7 +4298,7 @@ static void PrintContestMoveDescription(u8 moveSlot)
 static void PrintMoveDetails(u16 move)
 {
     u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_DESCRIPTION);
-    FillWindowPixelBuffer(windowId, PSS_DATA_WINDOW_FILL);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(0));
     if (move != MOVE_NONE)
     {
         if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
@@ -4344,7 +4355,7 @@ static void PrintNewMoveDetailsOrCancelText(void)
 static void AddAndFillMoveNamesWindow(void)
 {
     u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_NAMES);
-    FillWindowPixelRect(windowId, PSS_DATA_WINDOW_FILL, 0, 66, 72, 16);
+    FillWindowPixelRect(windowId, PIXEL_FILL(0), 0, 66, 72, 16);
     CopyWindowToVram(windowId, COPYWIN_GFX);
 }
 
@@ -4353,11 +4364,11 @@ static void SwapMovesNamesPP(u8 moveIndex1, u8 moveIndex2)
     u8 windowId1 = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_NAMES);
     u8 windowId2 = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_PP);
 
-    FillWindowPixelRect(windowId1, PSS_DATA_WINDOW_FILL, 0, moveIndex1 * 16, 72, 16);
-    FillWindowPixelRect(windowId1, PSS_DATA_WINDOW_FILL, 0, moveIndex2 * 16, 72, 16);
+    FillWindowPixelRect(windowId1, PIXEL_FILL(0), 0, moveIndex1 * 16, 72, 16);
+    FillWindowPixelRect(windowId1, PIXEL_FILL(0), 0, moveIndex2 * 16, 72, 16);
 
-    FillWindowPixelRect(windowId2, PSS_DATA_WINDOW_FILL, 0, moveIndex1 * 16, 48, 16);
-    FillWindowPixelRect(windowId2, PSS_DATA_WINDOW_FILL, 0, moveIndex2 * 16, 48, 16);
+    FillWindowPixelRect(windowId2, PIXEL_FILL(0), 0, moveIndex1 * 16, 48, 16);
+    FillWindowPixelRect(windowId2, PIXEL_FILL(0), 0, moveIndex2 * 16, 48, 16);
 
     PrintMoveNameAndPP(moveIndex1);
     PrintMoveNameAndPP(moveIndex2);
@@ -4366,7 +4377,7 @@ static void SwapMovesNamesPP(u8 moveIndex1, u8 moveIndex2)
 static void PrintHMMovesCantBeForgotten(void)
 {
     u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_DESCRIPTION);
-    FillWindowPixelBuffer(windowId, PSS_DATA_WINDOW_FILL);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(0));
     PrintTextOnWindow(windowId, gText_HMMovesCantBeForgotten2, 6, 1, 0, 0);
 }
 

@@ -329,7 +329,7 @@
     },
     {
       "local_id": "LOCALID_LILYCOVE_RIO",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ALOMOMOLA)",
+      "graphics_id": "OBJ_EVENT_GFX_RIO",
       "x": 55,
       "y": 23,
       "elevation": 3,
@@ -451,6 +451,15 @@
       "var": "VAR_UNUSED_0x40BB",
       "var_value": "0",
       "script": "LilycoveCity_EventScript_LookingForClues"
+    },
+    {
+      "type": "trigger",
+      "x": 55,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40BB",
+      "var_value": "0",
+      "script": "LilycoveCity_EventScript_LookingForCluesAbove"
     }
   ],
   "bg_events": [

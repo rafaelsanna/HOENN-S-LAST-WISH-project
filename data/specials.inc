@@ -582,4 +582,5 @@ gSpecials::
     def_special Special_ViewVoltorbFlip
 	def_special StartTimeWarpScene
 	def_special StartMegaRayVisionScene
+	def_special StartSnowballGame
 	def_special DoMrStoneEvilScene

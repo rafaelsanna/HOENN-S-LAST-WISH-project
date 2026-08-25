@@ -49,6 +49,20 @@ enum {
 #define KBROW_COUNT 4
 #define KBCOL_COUNT 8
 
+#define BIRCH_NAME_BG_PALETTE             6
+#define BIRCH_NAME_SHADOW_PALETTE         7
+#define BIRCH_NAME_TILEMAP_WIDTH          32
+#define BIRCH_NAME_TILEMAP_HEIGHT         20
+#define BIRCH_NAME_TILEMAP_ENTRY_COUNT    (BIRCH_NAME_TILEMAP_WIDTH * BIRCH_NAME_TILEMAP_HEIGHT)
+#define BIRCH_NAME_TEXT_ENTRY_TILE_OFFSET 0xE0
+#define BIRCH_NAME_TITLE_TILE_OFFSET      (BIRCH_NAME_TEXT_ENTRY_TILE_OFFSET + 0x22)
+#define BIRCH_NAME_BANNER_TILE_OFFSET     (BIRCH_NAME_TITLE_TILE_OFFSET + 0x22)
+#define BIRCH_NAME_PANEL_TILE_OFFSET      0x180
+#define BIRCH_NAME_PANEL_LEFT             4
+#define BIRCH_NAME_PANEL_TOP              3
+#define BIRCH_NAME_PANEL_WIDTH            22
+#define BIRCH_NAME_PANEL_HEIGHT           6
+
 enum {
     GFXTAG_BACK_BUTTON,
     GFXTAG_OK_BUTTON,
@@ -156,6 +170,7 @@ struct NamingScreenTemplate
 
 struct NamingScreenData
 {
+    u8 tilemapBuffer0[0x800];
     u8 tilemapBuffer1[0x800];
     u8 tilemapBuffer2[0x800];
     u8 tilemapBuffer3[0x800];
@@ -228,6 +243,35 @@ static const struct BgTemplate sBgTemplates[] =
     }
 };
 
+// The player-name screen keeps the two-layer Birch Speech scene behind the naming UI.
+static const struct BgTemplate sPlayerNamingBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 27,
+        .priority = 3
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 29,
+        .priority = 1
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .priority = 2
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .priority = 2
+    }
+};
+
 static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
 {
     [WIN_KB_PAGE_1] = {
@@ -274,6 +318,56 @@ static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
         .height = 2,
         .paletteNum = 11,
         .baseBlock = 0x074
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const struct WindowTemplate sPlayerNamingWindowTemplates[WIN_COUNT + 1] =
+{
+    [WIN_KB_PAGE_1] = {
+        .bg = 1,
+        .tilemapLeft = 3,
+        .tilemapTop = 10,
+        .width = 19,
+        .height = 8,
+        .paletteNum = 10,
+        .baseBlock = 0x030
+    },
+    [WIN_KB_PAGE_2] = {
+        .bg = 2,
+        .tilemapLeft = 3,
+        .tilemapTop = 10,
+        .width = 19,
+        .height = 8,
+        .paletteNum = 10,
+        .baseBlock = 0x0C8
+    },
+    [WIN_TEXT_ENTRY] = {
+        .bg = 3,
+        .tilemapLeft = 8,
+        .tilemapTop = 6,
+        .width = 17,
+        .height = 2,
+        .paletteNum = 10,
+        .baseBlock = BIRCH_NAME_TEXT_ENTRY_TILE_OFFSET
+    },
+    [WIN_TEXT_ENTRY_BOX] = {
+        .bg = 3,
+        .tilemapLeft = 8,
+        .tilemapTop = 4,
+        .width = 17,
+        .height = 2,
+        .paletteNum = 10,
+        .baseBlock = BIRCH_NAME_TITLE_TILE_OFFSET
+    },
+    [WIN_BANNER] = {
+        .bg = 3,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = DISPLAY_TILE_WIDTH,
+        .height = 2,
+        .paletteNum = 11,
+        .baseBlock = BIRCH_NAME_BANNER_TILE_OFFSET
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -333,6 +427,7 @@ static const struct SpritePalette sSpritePalettes[];
 static void CB2_LoadNamingScreen(void);
 static void NamingScreen_Init(void);
 static void NamingScreen_InitBGs(void);
+static bool8 IsPlayerNamingScreen(void);
 static void CreateNamingScreenTask(void);
 static void Task_NamingScreen(u8 taskId);
 static bool8 MainState_FadeIn(void);
@@ -383,6 +478,10 @@ static void LoadGfx(void);
 static void CreateHelperTasks(void);
 static void LoadPalettes(void);
 static void DrawBgTilemap(u8, const void *);
+static void DrawPlayerNamingScreenBackground(void);
+static void DrawPlayerNamingScreenPanel(void);
+static void SanitizePlayerNamingPanelGfx(void);
+static void SetTilemapPalette(u16 *, u16, u8);
 static void NamingScreen_Dummy(u8, u8);
 static void DrawTextEntry(void);
 static void PrintKeyboardKeys(u8, u8);
@@ -487,6 +586,11 @@ static void NamingScreen_Init(void)
     gKeyRepeatStartDelay = 16;
 }
 
+static bool8 IsPlayerNamingScreen(void)
+{
+    return sNamingScreen->templateNum == NAMING_SCREEN_PLAYER;
+}
+
 static void SetSpritesVisible(void)
 {
     u8 i;
@@ -501,6 +605,7 @@ static void SetSpritesVisible(void)
 static void NamingScreen_InitBGs(void)
 {
     u8 i;
+    const struct WindowTemplate *windowTemplates;
 
     DmaClearLarge16(3, (void *)VRAM, VRAM_SIZE, 0x1000);
     DmaClear32(3, (void *)OAM, OAM_SIZE);
@@ -508,7 +613,16 @@ static void NamingScreen_InitBGs(void)
 
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0);
     ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+    if (IsPlayerNamingScreen())
+    {
+        InitBgsFromTemplates(0, sPlayerNamingBgTemplates, ARRAY_COUNT(sPlayerNamingBgTemplates));
+        windowTemplates = sPlayerNamingWindowTemplates;
+    }
+    else
+    {
+        InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+        windowTemplates = sWindowTemplates;
+    }
 
     ChangeBgX(0, 0, BG_COORD_SET);
     ChangeBgY(0, 0, BG_COORD_SET);
@@ -523,16 +637,20 @@ static void NamingScreen_InitBGs(void)
     InitTextBoxGfxAndPrinters();
 
     for (i = 0; i < WIN_COUNT; i++)
-        sNamingScreen->windows[i] = AddWindow(&sWindowTemplates[i]);
+        sNamingScreen->windows[i] = AddWindow(&windowTemplates[i]);
 
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
     SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 8));
 
+    if (IsPlayerNamingScreen())
+        SetBgTilemapBuffer(0, sNamingScreen->tilemapBuffer0);
     SetBgTilemapBuffer(1, sNamingScreen->tilemapBuffer1);
     SetBgTilemapBuffer(2, sNamingScreen->tilemapBuffer2);
     SetBgTilemapBuffer(3, sNamingScreen->tilemapBuffer3);
 
+    if (IsPlayerNamingScreen())
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
     FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 0x20, 0x20);
     FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 0x20, 0x20);
     FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 0x20, 0x20);
@@ -623,7 +741,10 @@ static u8 CurrentPageToKeyboardId(void)
 
 static bool8 MainState_FadeIn(void)
 {
-    DrawBgTilemap(3, gNamingScreenBackground_Tilemap);
+    if (IsPlayerNamingScreen())
+        DrawPlayerNamingScreenBackground();
+    else
+        DrawBgTilemap(3, gNamingScreenBackground_Tilemap);
     sNamingScreen->currentPage = KBPAGE_LETTERS_UPPER;
     DrawBgTilemap(2, gNamingScreenKeyboardLower_Tilemap);
     DrawBgTilemap(1, gNamingScreenKeyboardUpper_Tilemap);
@@ -634,6 +755,8 @@ static bool8 MainState_FadeIn(void)
     DrawTextEntry();
     DrawTextEntryBox();
     PrintControls();
+    if (IsPlayerNamingScreen())
+        CopyBgTilemapBufferToVram(0);
     CopyBgTilemapBufferToVram(1);
     CopyBgTilemapBufferToVram(2);
     CopyBgTilemapBufferToVram(3);
@@ -1359,13 +1482,13 @@ static void CreateTextEntrySprites(void)
 
     xPos = sNamingScreen->inputCharBaseXPos - 5;
     spriteId = CreateSprite(&sSpriteTemplate_InputArrow, xPos, 56, 0);
-    gSprites[spriteId].oam.priority = 3;
+    gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 1 : 3;
     gSprites[spriteId].invisible = TRUE;
     xPos = sNamingScreen->inputCharBaseXPos;
     for (i = 0; i < sNamingScreen->template->maxChars; i++, xPos += 8)
     {
         spriteId = CreateSprite(&sSpriteTemplate_Underscore, xPos + 3, 60, 0);
-        gSprites[spriteId].oam.priority = 3;
+        gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 1 : 3;
         gSprites[spriteId].data[0] = i;
         gSprites[spriteId].invisible = TRUE;
     }
@@ -1409,7 +1532,9 @@ static void NamingScreen_CreatePlayerIcon(void)
 
     rivalGfxId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, sNamingScreen->monSpecies);
     spriteId = CreateObjectGraphicsSprite(rivalGfxId, SpriteCallbackDummy, 56, 37, 0);
-    gSprites[spriteId].oam.priority = 3;
+    // BG3 carries the Birch shadow/UI overlay at priority 2 on the player-name screen.
+    // Keep the player icon in front of it.
+    gSprites[spriteId].oam.priority = 1;
     StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_SOUTH);
 }
 
@@ -1901,9 +2026,28 @@ static void SaveInputText(void)
 static void LoadGfx(void)
 {
     DecompressDataWithHeaderWram(gNamingScreenMenu_Gfx, sNamingScreen->tileBuffer);
+    if (IsPlayerNamingScreen())
+    {
+        DecompressDataWithHeaderVram(gBirchSpeechBackgroundTiles, (void *)BG_CHAR_ADDR(1));
+        DecompressDataWithHeaderVram(gBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(0));
+    }
     LoadBgTiles(1, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
     LoadBgTiles(2, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
-    LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
+    if (IsPlayerNamingScreen())
+    {
+        // The rounded panel tiles were authored against the original striped naming
+        // background, so a few pixels outside the border are baked into the tiles.
+        // Make only those outside pixels transparent before loading the player-only
+        // copy into BG3. BG1/BG2 already received the untouched menu graphics above.
+        SanitizePlayerNamingPanelGfx();
+
+        // Keep the Birch shadow tiles at the start of charblock 0, and place a second
+        // copy of the naming-screen menu tiles high enough to rebuild the original
+        // player/name panel without overwriting either asset.
+        LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), BIRCH_NAME_PANEL_TILE_OFFSET);
+    }
+    else
+        LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
     LoadSpriteSheets(sSpriteSheets);
     LoadSpritePalettes(sSpritePalettes);
 }
@@ -1919,11 +2063,118 @@ static void LoadPalettes(void)
     LoadPalette(gNamingScreenMenu_Pal, BG_PLTT_ID(0), sizeof(gNamingScreenMenu_Pal));
     LoadPalette(sKeyboard_Pal, BG_PLTT_ID(10), sizeof(sKeyboard_Pal));
     LoadPalette(GetTextWindowPalette(2), BG_PLTT_ID(11), PLTT_SIZE_4BPP);
+    if (IsPlayerNamingScreen())
+    {
+        u16 black = RGB_BLACK;
+
+        LoadPalette(gBirchSpeechBackgroundPalette, BG_PLTT_ID(BIRCH_NAME_BG_PALETTE), PLTT_SIZE_4BPP);
+        LoadPalette(gBirchSpeechShadowPals, BG_PLTT_ID(BIRCH_NAME_SHADOW_PALETTE), 2 * PLTT_SIZE_4BPP);
+        LoadPalette(&black, BG_PLTT_ID(BIRCH_NAME_SHADOW_PALETTE), sizeof(black));
+    }
 }
 
 static void DrawBgTilemap(u8 bg, const void *src)
 {
     CopyToBgTilemapBuffer(bg, src, 0, 0);
+}
+
+static void SetTilemapPalette(u16 *tilemap, u16 entryCount, u8 palette)
+{
+    u16 i;
+
+    for (i = 0; i < entryCount; i++)
+        tilemap[i] = (tilemap[i] & 0x0FFF) | (palette << 12);
+}
+
+// Sets one pixel in the decompressed 4bpp menu tiles to palette index 0.
+// On a text BG that index is transparent over lower-priority BGs.
+static void ClearMenuTilePixel(u8 tile, u8 x, u8 y)
+{
+    u8 *pixelByte = &sNamingScreen->tileBuffer[tile * 32 + y * 4 + x / 2];
+
+    if (x & 1)
+        *pixelByte &= 0x0F;
+    else
+        *pixelByte &= 0xF0;
+}
+
+static void CopyMenuTilePixel(u8 tile, u8 dstX, u8 dstY, u8 srcX, u8 srcY)
+{
+    u8 *dstByte = &sNamingScreen->tileBuffer[tile * 32 + dstY * 4 + dstX / 2];
+    const u8 *srcByte = &sNamingScreen->tileBuffer[tile * 32 + srcY * 4 + srcX / 2];
+    u8 color = (srcX & 1) ? (*srcByte >> 4) : (*srcByte & 0x0F);
+
+    if (dstX & 1)
+        *dstByte = (*dstByte & 0x0F) | (color << 4);
+    else
+        *dstByte = (*dstByte & 0xF0) | color;
+}
+
+static void SanitizePlayerNamingPanelGfx(void)
+{
+    static const u8 sTopLeftOutsideWidth[8] = {8, 5, 4, 3, 2, 1, 1, 1};
+    static const u8 sBottomLeftOutsideWidth[8] = {1, 1, 1, 2, 3, 4, 5, 8};
+    u8 x, y;
+
+    // The straight edge tiles contain one row/column of the old striped naming
+    // background outside the actual frame. Making that strip transparent leaves
+    // a visible 1-pixel Birch-colored seam around the panel. Instead, extend the
+    // outermost frame color by one pixel. H/V flips automatically fix the right
+    // and bottom edges too.
+    for (y = 0; y < 8; y++)
+        CopyMenuTilePixel(0x09, 0, y, 1, y);
+
+    for (x = 0; x < 8; x++)
+        CopyMenuTilePixel(0x0B, x, 0, x, 1);
+
+    // Corners still need true transparency outside the rounded curve; otherwise
+    // extending their edge would turn the rounded panel into a rectangle.
+    for (y = 0; y < 8; y++)
+        for (x = 0; x < sTopLeftOutsideWidth[y]; x++)
+            ClearMenuTilePixel(0x0A, x, y);
+
+    for (y = 0; y < 8; y++)
+        for (x = 0; x < sBottomLeftOutsideWidth[y]; x++)
+            ClearMenuTilePixel(0x0C, x, y);
+}
+
+static void DrawPlayerNamingScreenPanel(void)
+{
+    // gNamingScreenBackground_Tilemap is LZ-compressed. At this point BG1 has not
+    // been drawn yet, so its 0x800-byte tilemap buffer is safe scratch space. The
+    // normal keyboard draw immediately replaces it afterwards.
+    u16 *src = (u16 *)sNamingScreen->tilemapBuffer1;
+    u16 *dst = (u16 *)sNamingScreen->tilemapBuffer3;
+    u16 x, y;
+
+    DecompressDataWithHeaderWram(gNamingScreenBackground_Tilemap, src);
+
+    // Copy only the original rounded player/name panel over the Birch scene.
+    // Its menu tiles live in a separate range in BG3 charblock 0 so they cannot
+    // overwrite the Birch shadow graphics or the text-window tiles.
+    for (y = BIRCH_NAME_PANEL_TOP; y < BIRCH_NAME_PANEL_TOP + BIRCH_NAME_PANEL_HEIGHT; y++)
+    {
+        for (x = BIRCH_NAME_PANEL_LEFT; x < BIRCH_NAME_PANEL_LEFT + BIRCH_NAME_PANEL_WIDTH; x++)
+        {
+            u16 entry = src[y * BIRCH_NAME_TILEMAP_WIDTH + x];
+            u16 tile = entry & 0x03FF;
+
+            dst[y * BIRCH_NAME_TILEMAP_WIDTH + x] =
+                (entry & 0xFC00) | ((tile + BIRCH_NAME_PANEL_TILE_OFFSET) & 0x03FF);
+        }
+    }
+}
+
+static void DrawPlayerNamingScreenBackground(void)
+{
+    u16 *backgroundTilemap = (u16 *)sNamingScreen->tilemapBuffer0;
+    u16 *shadowTilemap = (u16 *)sNamingScreen->tilemapBuffer3;
+
+    DecompressDataWithHeaderWram(gBirchSpeechBackgroundTilemap, backgroundTilemap);
+    SetTilemapPalette(backgroundTilemap, BIRCH_NAME_TILEMAP_ENTRY_COUNT, BIRCH_NAME_BG_PALETTE);
+    DecompressDataWithHeaderWram(gBirchSpeechShadowTilemap, shadowTilemap);
+    SetTilemapPalette(shadowTilemap, BIRCH_NAME_TILEMAP_ENTRY_COUNT, BIRCH_NAME_SHADOW_PALETTE);
+    DrawPlayerNamingScreenPanel();
 }
 
 static void NamingScreen_Dummy(u8 bg, u8 page)
