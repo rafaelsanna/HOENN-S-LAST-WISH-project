@@ -748,7 +748,7 @@ static void (*const sTextPrinterTasks[])(u8 taskId) =
     [PSS_PAGE_CONTEST_MOVES] = Task_PrintContestMoves
 };
 
-static const u8 sMemoNatureTextColor[] = _("{COLOR LIGHT_RED}{SHADOW GREEN}");
+static const u8 sMemoNatureTextColor[] = _("{COLOR LIGHT_RED}{SHADOW DARK_GRAY}");
 static const u8 sMemoMiscTextColor[] = _("{COLOR WHITE}{SHADOW DARK_GRAY}"); // This is also affected by palettes, apparently
 static const u8 sStatsLeftColumnLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}\n{DYNAMIC 2}\n{DYNAMIC 3}");
 static const u8 sStatsLeftIVEVColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
@@ -1426,91 +1426,81 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
-// ============================================================
-// Tema escuro — sobrescreve os tons verdes da paleta original
-// Slots BG 0-7 são carregados de gSummaryScreen_Pal; aqui
-// remapeamos os índices de fundo/UI sem tocar nas cores de
-// texto (branco/preto) nem nas cores de tipo Pokémon.
-// ============================================================
+// Applies the shared dark palette without touching Pokémon sprites or type icons.
 static void ApplySummaryScreenDarkTheme(void)
 {
     u8  i;
     u16 base;
+    static const u16 sDarkPagePalette[16] =
+    {
+        RGB(4, 4, 5),    // #212129 - page background
+        RGB(2, 2, 3),    // Near-black outline
+        RGB(23, 19, 28), // Lavender highlight
+        RGB(13, 12, 17), // Panel highlight
+        RGB(8, 8, 12),   // Panel midtone
+        RGB(11, 10, 15), // Panel light
+        RGB(5, 5, 7),    // #2E2E3C - dark frame
+        RGB(21, 13, 27), // Purple accent
+        RGB(16, 10, 21),
+        RGB(12, 9, 17),
+        RGB(9, 7, 13),
+        RGB(7, 6, 10),
+        RGB(26, 22, 31), // Soft lavender shine
+        RGB(18, 14, 24),
+        RGB(11, 9, 16),
+        RGB(4, 4, 5),
+    };
 
-    // ─── 1. BACKDROP ──────────────────────────────────────────────────────────
-    gPlttBufferUnfaded[BG_PLTT_ID(0) + 0] = RGB(4, 4, 5);    // #212129
-
-    // ─── 2. SLOTS 0-5 — UI + fundos de seção ────────────────────────────────
-    // Índices de texto (colorId):
-    //   [1],[2] = fg/shadow colorId0 (DESCRIPTION, texto geral) → não tocar, já branco/preto
-    //   [3]     = fg colorId1 (nomes dos moves)  → preto
-    //   [4]     = shadow colorId1                → #4A4A6B
-    //   [7-15]  = fundos coloridos das seções    → gradiente escuro
+    // Slots 0-5 contain the shared static art used by every summary page.
     for (i = 0; i < 6; i++)
     {
         base = BG_PLTT_ID(i);
-        gPlttBufferUnfaded[base +  3] = RGB(0,  0,  0);   // preto  - fg nomes moves
-        gPlttBufferUnfaded[base +  4] = RGB(9,  9, 13);   // #4A4A6B - shadow moves
-        gPlttBufferUnfaded[base +  6] = RGB(5,  5,  7);   // #2E2E3C - sombra frame
-        gPlttBufferUnfaded[base +  7] = RGB(9,  9, 13);   // #4A4A6B
-        gPlttBufferUnfaded[base +  8] = RGB(8,  8, 12);
-        gPlttBufferUnfaded[base +  9] = RGB(7,  7, 10);   // #3A3A52
-        gPlttBufferUnfaded[base + 10] = RGB(6,  6,  9);
-        gPlttBufferUnfaded[base + 11] = RGB(5,  5,  7);   // #2E2E3C
-        gPlttBufferUnfaded[base + 12] = RGB(9,  9, 13);
-        gPlttBufferUnfaded[base + 13] = RGB(7,  7, 10);
-        gPlttBufferUnfaded[base + 14] = RGB(5,  5,  7);
-        gPlttBufferUnfaded[base + 15] = RGB(4,  4,  5);   // #212129
+        CpuCopy16(sDarkPagePalette, gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
-    // ─── 3. SLOT 6 — fundo de todas as janelas de texto (paletteNum=6) ───────
-    // [0] = PIXEL_FILL = fundo da caixa de texto → escuro
-    // [1] = fg (texto description/geral)         → branco (não tocar)
-    // [2] = shadow                               → preto  (não tocar)
+    // Palette 6 supplies the fill and text for Info, Skills, and Move windows.
     base = BG_PLTT_ID(6);
-    gPlttBufferUnfaded[base + 0] = RGB(4, 4, 5);    // #212129 - fundo escuro
+    gPlttBufferUnfaded[base + 0] = RGB(4, 4, 5);    // #212129 - window fill
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White body text
+    gPlttBufferUnfaded[base + 2] = RGB(2, 2, 3);     // Near-black shadow
+    gPlttBufferUnfaded[base + 3] = RGB(31, 31, 31);  // White labels and values
+    gPlttBufferUnfaded[base + 4] = RGB(7, 7, 10);    // Soft gray shadow
 
-    // ─── 4. SLOT 7 — janela RENAME/INFO/START (paletteNum=7) ─────────────────
-    // [0] = fundo → escuro
-    // [1] = fg texto → BRANCO (precisa ser explícito, original pode ser preto)
-    // [2] = shadow  → preto
-    // [5-14] = CORES DE TIPO → não tocar
+    // Palette 7 covers the top prompt and preserves its type-color entries.
     base = BG_PLTT_ID(7);
-    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - fundo escuro
-    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // branco  - texto RENAME/INFO
-    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // preto   - sombra
+    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - window fill
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White prompt text
+    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // Black shadow
+    gPlttBufferUnfaded[base + 3] = RGB(23, 19, 28);  // Lavender highlight
     gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // #3A3A52
 
-    // ─── 5. SLOT 6 (continuação) — PP values agora em slot 6 índices 9-14 ─────
-    // paletteNum do PP window mudado de 8 para 6.
-    // Inline color codes: {COLOR}{01}=branco, {COLOR}{05}=vermelho, {COLOR}{09}=amarelo, {COLOR}{0B}=laranja
-    // PP window usa paletteNum=8, cores nos indices 1,3,5,7 do slot 8
+    // Palette 8 is used by the PP window and its inline color codes.
     base = BG_PLTT_ID(8);
-    gPlttBufferUnfaded[base + 1] = RGB(16, 16, 19); // cinza escuro — PP cheio
-    gPlttBufferUnfaded[base + 2] = RGB( 4,  4,  5); // #212129      — sombra PP cheio
-    gPlttBufferUnfaded[base + 3] = RGB(31,  0,  0); // VERMELHO     — PP zerado
-    gPlttBufferUnfaded[base + 4] = RGB(15,  0,  0); // sombra
-    gPlttBufferUnfaded[base + 5] = RGB(26, 22,  0); // AMARELO      — PP medio
-    gPlttBufferUnfaded[base + 6] = RGB(13, 11,  0); // sombra
-    gPlttBufferUnfaded[base + 7] = RGB(29, 12,  0); // LARANJA      — PP acabando
-    gPlttBufferUnfaded[base + 8] = RGB(14,  6,  0); // sombra
+    gPlttBufferUnfaded[base + 0] = RGB(4, 4, 5);    // Window fill
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31); // Full PP
+    gPlttBufferUnfaded[base + 2] = RGB(2, 2, 3);    // Full PP shadow
+    gPlttBufferUnfaded[base + 3] = RGB(31, 26, 0);  // Medium PP
+    gPlttBufferUnfaded[base + 4] = RGB(15, 12, 0);  // Medium PP shadow
+    gPlttBufferUnfaded[base + 5] = RGB(31, 16, 0);  // Low PP
+    gPlttBufferUnfaded[base + 6] = RGB(16, 7, 0);   // Low PP shadow
+    gPlttBufferUnfaded[base + 7] = RGB(31, 4, 4);   // Empty PP
+    gPlttBufferUnfaded[base + 8] = RGB(15, 1, 1);   // Empty PP shadow
 
-    // ─── 6. SLOT 15 — janela RELEARN/START (paletteNum=15) ───────────────────
-    // [0] = fundo → escuro
-    // [1] = fg → BRANCO
-    // [2] = shadow → preto
+    // Palette 15 covers the Relearn and Start prompts.
     base = BG_PLTT_ID(15);
-    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - fundo escuro
-    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // branco  - texto START/Relearn
-    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // preto   - sombra
+    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - window fill
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White prompt text
+    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // Black shadow
+    gPlttBufferUnfaded[base + 3] = RGB(23, 19, 28);  // Lavender highlight
+    gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // Soft gray shadow
 
-    // ─── 7. Sincroniza faded para evitar flash no fade-in ────────────────────
+    // Synchronize both palette buffers to prevent a light flash during fade-in.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(0),
         gPlttBufferFaded   + BG_PLTT_ID(0),
         8 * PLTT_SIZE_4BPP
     );
-    // Slot 8 (PP) e slot 15 (Relearn) estão fora dos primeiros 8
+    // Slots 8 and 15 are outside the initial shared palette range.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(8),
         gPlttBufferFaded   + BG_PLTT_ID(8),
@@ -1525,27 +1515,19 @@ static void ApplySummaryScreenDarkTheme(void)
 
 static void ApplyMoveSelectorDarkTheme(void)
 {
-    // ─── OBJ: paleta das bolinhas indicadoras e linhas divisórias ────────────
-    // gSummaryMoveSelect_Pal carrega no slot OBJ determinado por IndexOfSpritePaletteTag.
-    // As cores roxas/coloridas precisam virar tons neutros do tema escuro:
-    //   [0] = transparente         → mantido (0x0000)
-    //   [1] = cor principal bolinha → #4A4A6B (detalhe)
-    //   [2] = highlight bolinha     → #736B84 (realce)
-    //   [3] = sombra/contorno       → #212129 (fundo)
-    //   [4] = cor linha divisória   → #4A4A6B (detalhe)
-    //   demais índices              → #3A3A52 (intermediário)
+    // The move selector has its own sprite palette for indicators and dividers.
     u8  slot = IndexOfSpritePaletteTag(TAG_MOVE_SELECTOR);
     if (slot == 0xFF)
-        return; // paleta ainda não carregada
+        return; // Palette has not been loaded yet.
     u16 base = OBJ_PLTT_ID(slot);
     u8  j;
 
-    gPlttBufferUnfaded[base + 1]  = RGB(9,  9, 13);   // #4A4A6B - bolinha principal
-    gPlttBufferUnfaded[base + 2]  = RGB(14, 13, 16);  // #736B84 - bolinha highlight
-    gPlttBufferUnfaded[base + 3]  = RGB(4,  4,  5);   // #212129 - contorno/sombra
-    gPlttBufferUnfaded[base + 4]  = RGB(9,  9, 13);   // #4A4A6B - linha divisória
+    gPlttBufferUnfaded[base + 1]  = RGB(9,  9, 13);   // Indicator
+    gPlttBufferUnfaded[base + 2]  = RGB(14, 13, 16);  // Highlight
+    gPlttBufferUnfaded[base + 3]  = RGB(4,  4,  5);   // Outline and shadow
+    gPlttBufferUnfaded[base + 4]  = RGB(9,  9, 13);   // Divider
     for (j = 5; j < 16; j++)
-        gPlttBufferUnfaded[base + j] = RGB(7, 7, 10); // #3A3A52 - demais
+        gPlttBufferUnfaded[base + j] = RGB(7, 7, 10); // Dark intermediate tone
 
     CpuCopy16(
         gPlttBufferUnfaded + base,
