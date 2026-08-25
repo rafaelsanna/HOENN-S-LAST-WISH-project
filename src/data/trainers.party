@@ -5292,26 +5292,29 @@ Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Purple
 
-Shedinja @ Leftovers
-Level: 63  
-Ability: Sturdy  
-Bold Nature  
-- Spikes  
-- Toxic  
-- Stealth Rock  
-- Rapid Spin  
+Shedinja @ Focus Sash
+Level: 65
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+Ability: Wonder Guard
+Jolly Nature  
+- Will-O-Wisp  
+- Shadow Sneak  
+- X-Scissor  
+- Thief
 
 Ninjask @ Mental Herb  
-Level: 63  
+Level: 65
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Speed Boost  
 Jolly Nature  
-- Baton Pass  
+- X-Scissor  
 - Swords Dance  
 - Aerial Ace  
 - Substitute  
 
-Delcatty @ Focus Sash  
-Level: 67  
+Delcatty @ Expert Belt 
+Level: 65
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Sharpness  
 Jolly Nature  
 - Swords Dance  
@@ -5319,17 +5322,19 @@ Jolly Nature
 - Sacred Sword  
 - Substitute  
 
-Kleavor @ Expert Belt  
-Level: 68
+Kleavor @ Life Orb
+Level: 65
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Sharpness  
 Jolly Nature  
 - Stone Axe  
 - X-Scissor  
 - U-turn  
-- Submission  
+- Substitute  
 
 Weavile @ Heavy-Duty Boots  
-Level: 66  
+Level: 65
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Pressure  
 Jolly Nature  
 - Substitute  
@@ -5338,10 +5343,11 @@ Jolly Nature
 - Knock Off  
 
 Gallade (M) @ Sitrus Berry  
-Level: 66
+Level: 65
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Sharpness  
 Jolly Nature  
-- Psycho Cut  
+- X-Scissor 
 - Drain Punch  
 - Ice Punch  
 - Substitute  
@@ -5358,44 +5364,60 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Purple
 
 Shedinja @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Wonder Guard  
-Tera Type: Bug  
+Jolly Nature
 - Swords Dance  
 - Protect  
 - Shadow Sneak  
 - X-Scissor  
 
 Ninjask @ Focus Sash  
+Level: 70
 Ability: Speed Boost  
-IVs: 0 Atk  
+Jolly Nature
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Protect  
 - Baton Pass  
 - Swords Dance  
 - Substitute  
 
 Delcatty @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Cute Charm  
+Jolly Nature
 - Swords Dance  
 - Slash  
 - Sacred Sword  
 - Ceaseless Edge  
 
 Kleavor @ Life Orb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Sharpness  
+Jolly Nature
 - Swords Dance  
 - X-Scissor  
 - Stone Axe  
 - Close Combat  
 
 Weavile @ Heavy-Duty Boots  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Pressure  
+Jolly Nature
 - Knock Off  
 - Ice Shard  
 - Swords Dance  
 - Icicle Crash  
 
 Gallade (M) @ Life Orb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Sharpness  
+Jolly Nature
 - Swords Dance  
 - X-Scissor  
 - Triple Axel  
@@ -5413,44 +5435,60 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Purple
 
 Shedinja @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Wonder Guard  
-Tera Type: Bug  
+Jolly Nature
 - Swords Dance  
 - Will-o-wisp
 - Shadow Sneak  
 - X-Scissor  
 
 Ninjask @ Focus Sash  
+Level: 70
 Ability: Speed Boost  
-IVs: 0 Atk  
+Jolly Nature
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Protect   
 - Baton Pass  
 - Swords Dance  
 - Substitute  
 
 Delcatty @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Cute Charm  
+Jolly Nature
 - Swords Dance  
 - Slash  
 - Sacred Sword  
 - Ceaseless Edge  
 
 Kleavor @ Life Orb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Sharpness  
+Jolly Nature
 - Swords Dance  
 - X-Scissor  
 - Stone Axe  
 - Close Combat  
 
 Weavile @ Heavy-Duty Boots  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Pressure  
+Jolly Nature
 - Knock Off  
 - Ice Shard  
 - Swords Dance  
 - Icicle Crash  
 
 Gallade (M) @ Life Orb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Sharpness  
+Jolly Nature
 - Swords Dance  
 - X-Scissor  
 - Triple Axel  
@@ -5468,42 +5506,48 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Green
 
 Chimecho @ Focus Sash  
-Level: 65
+Level: 67
 Ability: Levitate  
-IVs: 0 Atk  
+Timid Nature
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 - Hex  
 - Fire Blast  
 - Memento   
 - Will-O-Wisp  
 
-Persian @ Focus Sash  
-Level: 65
+Persian @ Spell Tag 
+Level: 67
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Limber  
+Jolly Nature
 - Shadow Claw
 - Will-O-Wisp  
 - Shadow Sneak  
 - Knock Off  
 
 Gorebyss @ Life Orb  
-Level: 65
+Level: 67
 Ability: Cursed Body  
 Quiet Nature  
-IVs: 0 Atk  
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 - Shadow Ball  
 - Dazzling Gleam  
 - Hex  
 - Will-O-Wisp  
 
 Annihilape @ Assault Vest  
-Level: 65
+Level: 67
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Defiant  
+Adamant Nature
 - Rage Fist  
 - Fire Punch  
 - U-turn  
 - Drain Punch  
 
 Relicanth @ Leftovers  
-Level: 65
+Level: 67
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Swift Swim  
 Brave Nature  
 - Will-O-Wisp  
@@ -5512,7 +5556,8 @@ Brave Nature
 - Shadow Ball
 
 Ursaluna @ Flame Orb  
-Level: 65
+Level: 67
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Guts  
 Brave Nature  
 - Crunch
@@ -5532,45 +5577,58 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Green
 
 Chimecho @ Focus Sash  
+Level: 70
 Ability: Levitate  
-IVs: 0 Atk  
+Sassy Nature
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Trick Room  
 - Protect  
 - Destiny Bond  
 - Will-O-Wisp  
 
 Persian @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Limber  
+Jolly Nature
 - Protect  
 - Will-O-Wisp  
 - Fake Out  
 - Knock Off  
 
 Gorebyss @ Life Orb  
+Level: 70
 Ability: Cursed Body  
 Quiet Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball  
 - Dazzling Gleam  
 - Hex  
 - Will-O-Wisp  
 
 Annihilape @ Assault Vest  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Defiant  
+Adamant Nature
 - Rage Fist  
 - Fire Punch  
 - U-turn  
 - Drain Punch  
 
 Relicanth @ Life Orb  
+Level: 70
 Ability: Storm Drain  
-IVs: 0 Atk  
+Modest Nature
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Will-O-Wisp  
 - Power Gem  
 - Hex  
 - Protect
 
 Ursaluna @ Flame Orb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Guts  
 Brave Nature  
 - Protect  
@@ -5590,46 +5648,58 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Green
 
 Chimecho @ Focus Sash  
+Level: 70
 Ability: Levitate  
-IVs: 0 Atk  
+Timid Nature
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower  
 - Shadow Ball  
 - Destiny Bond  
 - Will-O-Wisp  
 
 Persian @ Focus Sash  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Limber  
+Jolly Nature
 - Taunt  
 - Will-O-Wisp  
 - Poltergeist  
 - Knock Off  
 
 Gorebyss @ White Herb  
+Level: 70
 Ability: Cursed Body  
 Quiet Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball  
 - Moonblast  
 - Shell Smash  
 - Hex  
 
 Annihilape @ Leftovers  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Defiant  
+Adamant Nature
 - Rage Fist  
 - Bulk Up  
 - Drain Punch  
 - Substitute  
 
 Relicanth @ Life Orb  
+Level: 70
 Ability: Storm Drain  
 Brave Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Will-O-Wisp  
 - Power Gem  
 - Hex  
 - Destiny Bond  
 
 Ursaluna @ Flame Orb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Guts  
 Brave Nature  
 - Protect  
@@ -5649,49 +5719,60 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Pink
 
 Torkoal @ Icy Rock  
-Level: 70
+Level: 66
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Snow Warning   
+Bold Nature
 - Rapid Spin  
 - Stealth Rock  
 - Toxic  
 - Icy Wind  
 
 Jumpluff @ Babiri Berry  
-Level: 70
+Level: 66
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Huge Power  
-- Belly Drum  
+Adamant Nature
+- Ice Punch
 - Ice Shard  
 - Play Rough  
 - Strength  
 
 Mamoswine @ Life Orb  
-Level: 70
+Level: 66
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Snow Cloak  
+Jolly Nature
 - Ice Shard  
 - Earthquake  
 - Knock Off  
 - Icicle Crash  
 
 Froslass (F) @ Focus Sash  
-Level: 70
+Level: 66
 Ability: Snow Cloak  
-IVs: 0 Atk  
+Timid Nature
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 - Destiny Bond  
 - Weather Ball  
 - Shadow Ball  
 - Taunt  
 
 Cacturne @ Chople Berry  
-Level: 70
+Level: 66
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Snow Cloak  
+Adamant Nature
 - Curse  
 - Drain Punch  
 - Sucker Punch  
 - Avalanche  
 
 Lapras @ Assault Vest  
-Level: 70
+Level: 66
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Water Absorb  
+Modest Nature
 Shiny: Yes  
 - Freeze-Dry  
 - Ice Beam  
@@ -5841,7 +5922,7 @@ Jolly Nature
 - Rock Slide  
 
 === TRAINER_DRAKE ===
-Name: DRAKE
+Name: DAEMON
 Class: Elite Four
 Pic: Elite Four Drake
 Gender: Male
@@ -5852,46 +5933,60 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Blue
 
 Kingdra @ Mental Herb  
-Level: 70
+Level: 68
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Damp  
-Tera Type: Water  
-- Dragon Dance  
+Jolly Nature
+- Aqua Jet
 - Liquidation  
-- Iron Head  
-- Substitute  
+- Flash Cannon 
+- Draco Meteor 
 
 Flygon @ Life Orb  
-Level: 70
-Ability: Levitate  
-Tera Type: Ground  
+Level: 68
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
+Ability: Levitate   
+Modest Nature
 - U-turn  
-- First Impression  
-- Dragon Claw  
-- Fire Punch  
+- Ice Beam  
+- Draco Meteor 
+- Bug Buzz
 
 Altaria @ Sitrus Berry  
-Level: 70
-Ability: Natural Cure  
-Tera Type: Dragon  
-- Dragon Dance  
-- Refresh  
+Level: 68
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
+Ability: Pixilate 
+Jolly Nature
+- Defog 
+- Haze  
 - Body Slam  
-- Earthquake  
+- Draco Meteor
 
-Dragonite @ Weakness Policy  
-Level: 70
+Dragonite @ Expert Belt
+Level: 68
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Multiscale  
-Tera Type: Dragon  
+Adamant Nature
 - Dragon Dance  
 - Extreme Speed  
-- Roost  
+- Ice Beam
 - Dragon Claw  
 
+Sceptile @ Weakness Policy  
+Level: 68
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
+Ability: Poison Touch  
+Timid Nature
+- Sludge Wave  
+- Dragon Pulse  
+- U-turn  
+- Low Kick  
+
 Druddigon @ Assault Vest 
-Level: 70 
+Level: 68
 Ability: Multiscale  
-Tera Type: Dragon  
-IVs: 0 Atk  
+Modest Nature
+IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 - Draco Meteor  
 - Dragon Pulse  
 - Hydro Pump  
@@ -5909,24 +6004,28 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Blue
 
 Altaria @ Sitrus Berry  
+Level: 70
 Ability: Pixilate  
 Bold Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Tailwind  
 - Will-O-Wisp  
 - Protect  
 - Hyper Voice  
 
 Kingdra @ Leftovers  
+Level: 70
 Ability: Damp  
 Modest Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Icy Wind  
 - Protect  
 - Muddy Water  
 - Clear Smog  
 
 Dragonite @ Weakness Policy  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Multiscale  
 Adamant Nature  
 - Dragon Dance  
@@ -5935,6 +6034,8 @@ Adamant Nature
 - Rock Slide  
 
 Druddigon @ Leftovers  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Multiscale  
 Adamant Nature  
 - Dragon Dance  
@@ -5943,6 +6044,8 @@ Adamant Nature
 - Liquidation  
 
 Flygon @ Life Orb  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Levitate  
 Timid Nature  
 - Ice Beam  
@@ -5951,9 +6054,10 @@ Timid Nature
 - U-turn  
 
 Sceptile @ Life Orb  
+Level: 70
 Ability: Toxic Debris  
 Timid Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Sludge Wave  
 - Draco Meteor  
 - Focus Blast  
@@ -5971,15 +6075,18 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Blue
 
 Kingdra @ Scope Lens  
+Level: 70
 Ability: Sniper  
 Modest Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Agility  
 - Focus Energy  
 - Flash Cannon  
 - Surf  
 
 Altaria @ Leftovers  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Pixilate  
 Jolly Nature  
 - Dragon Dance  
@@ -5988,6 +6095,8 @@ Jolly Nature
 - Return  
 
 Dragonite @ Heavy-Duty Boots  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Multiscale  
 Adamant Nature  
 - Dragon Dance  
@@ -5996,15 +6105,18 @@ Adamant Nature
 - Dragon Claw  
 
 Druddigon @ Heavy-Duty Boots  
+Level: 70
 Ability: Multiscale  
 Modest Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Draco Meteor  
 - Hydro Pump  
 - Fire Blast  
 - Flash Cannon  
 
 Flygon @ Choice Scarf  
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Levitate  
 Adamant Nature  
 - Earthquake  
@@ -6013,9 +6125,10 @@ Adamant Nature
 - U-turn  
 
 Sceptile @ Choice Specs  
+Level: 70
 Ability: Toxic Debris  
 Timid Nature  
-IVs: 0 Atk  
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Sludge Wave  
 - Draco Meteor  
 - Focus Blast  
@@ -6664,8 +6777,7 @@ Ability: Serene Grace
 Honchkrow @ Heavy-Duty Boots 
 Level: 55
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
-Ability: Moxie  
-Tera Type: Dark  
+Ability: Moxie   
 - Tailwind  
 - Brave Bird  
 - Sucker Punch  
@@ -8224,7 +8336,7 @@ AI: Smart Trainer
 Mugshot: Yellow
 
 Probopass @ Sitrus Berry 
-Level: 70  
+Level: 69
 Ability: Sturdy
 Modest Nature  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
@@ -8234,7 +8346,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Flash Cannon 
 
 Skarmory @ Rocky Helmet
-Level: 70 
+Level: 69
 Ability: Weak Armor 
 Adamant Nature
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
@@ -8244,7 +8356,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Spikes
 
 Shiftry @ Air Balloon  
-Level: 70 
+Level: 69
 Ability: Mega Launcher
 Modest Nature  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
@@ -8254,7 +8366,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Dark Pulse   
 
 Crobat @ Assault Vest
-Level: 70 
+Level: 69
 Ability: Levitate 
 Adamant Nature
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
@@ -8264,7 +8376,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - U-turn 
 
 Metagross @ Expert Belt   
-Level: 70 
+Level: 69
 Ability: Clear Body  
 Adamant Nature
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
@@ -8378,6 +8490,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Magnezone @ Air Balloon  
 Level: 70
 Ability: Magnet Pull  
+Modest Nature
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flash Cannon  
 - Volt Switch  
@@ -8387,6 +8500,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Shiftry @ Air Balloon  
 Level: 70
 Ability: Mega Launcher  
+Modest Nature
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Fire Blast  
 - Flash Cannon  
@@ -8396,6 +8510,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Steelix @ Leftovers  
 Level: 70
 Ability: Sturdy  
+Impish Nature
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Body Press  
 - Curse  
@@ -8434,6 +8549,7 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Mugshot: Yellow
 
 Probopass @ Leftovers  
+Level: 70
 Ability: Levitate   
 Relaxed Nature  
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
@@ -8443,6 +8559,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
 - Wide Guard  
 
 Mawile @ Life Orb  
+Level: 70
 Ability: Huge Power   
 Brave Nature 
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe 
@@ -8452,6 +8569,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
 - Play Rough  
 
 Aggron @ Assault Vest  
+Level: 70
 Ability: Sturdy   
 Brave Nature 
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe 
@@ -8461,6 +8579,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
 - Heavy Slam  
 
 Steelix @ Leftovers  
+Level: 70
 Ability: Sheer Force  
 Brave Nature 
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe  
@@ -8470,6 +8589,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
 - Heavy Slam  
 
 Metagross @ Life Orb  
+Level: 70
 Ability: Clear Body  
 Brave Nature   
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe 
@@ -8479,6 +8599,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
 - Zen Headbutt  
 
 Salamence @ Life Orb  
+Level: 70
 Ability: Levitate  
 Modest Nature  
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe

@@ -403,11 +403,12 @@ static const struct ScrollArrowsTemplate sBagScrollArrowsTemplate = {
     .palNum = 0,
 };
 
-// Adicionar antes da função, perto de sRegisteredSelect_Gfx:
 static const u8 sText_RButton[] = _("R");
 static const u8 sText_LButton[] = _("L");
 
 static const u8 sRegisteredSelect_Gfx[] = INCBIN_U8("graphics/bag/select_button.4bpp");
+
+#define BAG_MENU_GRAPHICS_BLACK 7
 
 enum {
     COLORID_NORMAL,
@@ -421,12 +422,57 @@ enum {
 static const u8 sFontColorTable[][3] = {
                             // bgColor, textColor, shadowColor
     [COLORID_NORMAL]      = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_LIGHT_GRAY},
-    [COLORID_POCKET_NAME] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_RED},
-    [COLORID_GRAY_CURSOR] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_GREEN},
+    [COLORID_POCKET_NAME] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_LIGHT_GRAY},
+    [COLORID_GRAY_CURSOR] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_DARK_GRAY},
     [COLORID_UNUSED]      = {TEXT_COLOR_DARK_GRAY,   TEXT_COLOR_WHITE,      TEXT_COLOR_LIGHT_GRAY},
-    [COLORID_RED_TEXT] = {TEXT_COLOR_TRANSPARENT, 5, TEXT_COLOR_DARK_GRAY},
-    [COLORID_TMHM_INFO]   = {TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_5,  TEXT_DYNAMIC_COLOR_1}
+    [COLORID_RED_TEXT]    = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_RED,  TEXT_COLOR_DARK_GRAY},
+    [COLORID_TMHM_INFO]   = {TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_6,  TEXT_DYNAMIC_COLOR_5}
 };
+
+// These colors affect only the Bag screen's BG interface tiles. The bag and
+// item artwork use separate OBJ palettes, so their original colors stay intact.
+static const u16 sBagMenuDarkPanelColors[] =
+{
+    RGB(4, 4, 5),   // Description background.
+    RGB(21, 13, 27), // Frame highlight.
+    RGB(9, 9, 13),  // Frame midtone.
+    RGB(7, 7, 10),  // Frame shadow.
+    RGB(4, 4, 5),
+    RGB(4, 4, 5),
+    RGB(7, 7, 10),
+    RGB(9, 9, 13),
+    RGB(7, 7, 10), // Item list background.
+    RGB(9, 9, 13), // Pocket tab and list bevel.
+};
+
+static const u16 sBagMenuDarkStripeColors[] =
+{
+    RGB(7, 7, 10),
+    RGB(9, 9, 13),
+};
+
+static const u16 sBagMenuStaticBallRedColor = RGB(31, 4, 4);
+
+static const u16 sBagMenuDarkTextColors[] =
+{
+    RGB_WHITE,       // Main text.
+    RGB(4, 4, 5),    // Dark text shadow.
+    RGB(15, 15, 17), // Soft text shadow.
+    RGB(15, 15, 17), // Pocket-name shadow.
+};
+
+static void ApplyBagMenuDarkTheme(void)
+{
+    // BG palette 0 contains the screen panels and BG palette 1 contains their text.
+    LoadPalette(sBagMenuDarkPanelColors, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(10));
+    LoadPalette(sBagMenuDarkStripeColors, BG_PLTT_ID(0) + 12, PLTT_SIZEOF(2));
+    LoadPalette(&sBagMenuStaticBallRedColor, BG_PLTT_ID(0) + 14, PLTT_SIZEOF(1));
+    LoadPalette(sBagMenuDarkTextColors, BG_PLTT_ID(1) + 1, PLTT_SIZEOF(4));
+    LoadPalette(sBagMenuDarkStripeColors, BG_PLTT_ID(1) + 12, PLTT_SIZEOF(2));
+
+    // SELECT and HM graphics use this opaque color for their list background.
+    LoadPalette(&sBagMenuDarkPanelColors[8], BG_PLTT_ID(1) + TEXT_DYNAMIC_COLOR_1, PLTT_SIZEOF(1));
+}
 
 static const struct WindowTemplate sDefaultBagWindows[] =
 {
@@ -862,17 +908,15 @@ static bool8 LoadBagMenu_Graphics(void)
             gBagMenu->graphicsLoadState++;
         }
         break;
-case 2:
-    if (!IsWallysBag() && gSaveBlock2Ptr->playerGender != MALE)
-        LoadPalette(gBagScreenFemale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
-    else
-        LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    case 2:
+        if (!IsWallysBag() && gSaveBlock2Ptr->playerGender != MALE)
+            LoadPalette(gBagScreenFemale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+        else
+            LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
 
-    // Força o slot TEXT_COLOR_RED da paleta da bag para vermelho real
-    ((u16 *)BG_PLTT)[TEXT_COLOR_RED] = RGB(31, 0, 0);
-
-    gBagMenu->graphicsLoadState++;
-    break;
+        ApplyBagMenuDarkTheme();
+        gBagMenu->graphicsLoadState++;
+        break;
     case 3:
         if (IsWallysBag() == TRUE || gSaveBlock2Ptr->playerGender == MALE)
             LoadCompressedSpriteSheet(&gBagMaleSpriteSheet);
@@ -1079,6 +1123,27 @@ cfg.clampAfter = 0;
     }
 }
 
+static void BlitBagMenuOverlayGfx(u8 windowId, const u8 *gfx, u16 x, u16 y, u16 width, u16 height)
+{
+    u8 remappedGfx[24 * 16 / 2];
+    u32 i;
+    u32 size = width * height / 2;
+
+    // The original icons use color 1 for opaque black. Color 1 is white in
+    // the dark Bag theme, so remap only these icon pixels to the preserved
+    // black entry in the same palette bank.
+    for (i = 0; i < size; i++)
+    {
+        remappedGfx[i] = gfx[i];
+        if ((remappedGfx[i] & 0x0F) == TEXT_COLOR_WHITE)
+            remappedGfx[i] = (remappedGfx[i] & 0xF0) | BAG_MENU_GRAPHICS_BLACK;
+        if ((remappedGfx[i] >> 4) == TEXT_COLOR_WHITE)
+            remappedGfx[i] = (remappedGfx[i] & 0x0F) | (BAG_MENU_GRAPHICS_BLACK << 4);
+    }
+
+    BlitBitmapToWindow(windowId, remappedGfx, x, y, width, height);
+}
+
 static void BagMenu_ItemPrintCallback(u8 windowId, u32 itemIndex, u8 y)
 {
     if (itemIndex != LIST_CANCEL)
@@ -1098,7 +1163,7 @@ static void BagMenu_ItemPrintCallback(u8 windowId, u32 itemIndex, u8 y)
 
         // Draw HM icon
         if (gBagPosition.pocket == POCKET_TM_HM && GetItemTMHMIndex(itemSlot.itemId) > NUM_TECHNICAL_MACHINES)
-            BlitBitmapToWindow(windowId, gBagMenuHMIcon_Gfx, 8, y - 1, 16, 16);
+            BlitBagMenuOverlayGfx(windowId, gBagMenuHMIcon_Gfx, 8, y - 1, 16, 16);
 
         if (gBagPosition.pocket != POCKET_KEY_ITEMS && GetItemImportance(itemSlot.itemId) == FALSE)
         {
@@ -1110,20 +1175,15 @@ static void BagMenu_ItemPrintCallback(u8 windowId, u32 itemIndex, u8 y)
         }
         else
         {
-            // Print registered icon
-// Dentro do else{}, substituir as linhas de R e L:
+            // Print registered-item indicators.
+            if (gSaveBlock1Ptr->registeredItem != ITEM_NONE && gSaveBlock1Ptr->registeredItem == itemSlot.itemId)
+                BlitBagMenuOverlayGfx(windowId, sRegisteredSelect_Gfx, 96, y - 1, 24, 16);
 
-// SELECT mantém igual
-if (gSaveBlock1Ptr->registeredItem != ITEM_NONE && gSaveBlock1Ptr->registeredItem == itemSlot.itemId)
-    BlitBitmapToWindow(windowId, sRegisteredSelect_Gfx, 96, y - 1, 24, 16);
+            if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE && gSaveBlock1Ptr->registeredItemR == itemSlot.itemId)
+                BagMenu_Print(windowId, FONT_SMALL, sText_RButton, 109, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
 
-// R: x=97 (dentro da janela, cobre x=97..102)
-if (gSaveBlock1Ptr->registeredItemR != ITEM_NONE && gSaveBlock1Ptr->registeredItemR == itemSlot.itemId)
-    BagMenu_Print(windowId, FONT_SMALL, sText_RButton, 109, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
-
-// L: x=109 (dentro da janela, cobre x=109..114)
-if (gSaveBlock1Ptr->registeredItemL != ITEM_NONE && gSaveBlock1Ptr->registeredItemL == itemSlot.itemId)
-    BagMenu_Print(windowId, FONT_SMALL, sText_LButton, 97, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
+            if (gSaveBlock1Ptr->registeredItemL != ITEM_NONE && gSaveBlock1Ptr->registeredItemL == itemSlot.itemId)
+                BagMenu_Print(windowId, FONT_SMALL, sText_LButton, 97, y, 0, 0, TEXT_SKIP_DRAW, COLORID_RED_TEXT);
         }
     }
 }

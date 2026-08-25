@@ -25,7 +25,9 @@ Cutter::
 	delay 15
 	faceplayer
 	lock
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 	msgbox CutterDialogueBefore, MSGBOX_NPC
+	removefieldmugshot
 	getdifficulty VAR_RESULT
 	goto_if_eq VAR_RESULT, 1, Cutter_Hard
 	trainerbattle_single TRAINER_TSUBAKI_CASUAL, CutterIntro, CutterLose, CutterPostBattle
@@ -43,7 +45,9 @@ CutterPostBattle::
 # 45 "data/maps/RusturfGrove/scripts.pory"
 	giveitem ITEM_HM01, 1
 # 46 "data/maps/RusturfGrove/scripts.pory"
+	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 	msgbox CutterDialogueAfter2, MSGBOX_DEFAULT
+	removefieldmugshot
 # 47 "data/maps/RusturfGrove/scripts.pory"
 	fadescreen FADE_TO_BLACK
 # 48 "data/maps/RusturfGrove/scripts.pory"

@@ -31,7 +31,7 @@ EverGrandeCity_PhoebesRoom_EventScript_PlayerTurnNorth::
 # 16 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 EverGrandeCity_PhoebesRoom_OnFrame:
 # 17 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	map_script_2 VAR_ELITE_4_STATE, 1, EverGrandeCity_PhoebesRoom_EventScript_WalkInCloseDoor
+	map_script_2 VAR_ELITE_4_STATE, 2, EverGrandeCity_PhoebesRoom_EventScript_WalkInCloseDoor
 # 18 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 	.2byte 0
 # 19 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
@@ -43,7 +43,7 @@ EverGrandeCity_PhoebesRoom_EventScript_WalkInCloseDoor::
 # 22 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 	call PokemonLeague_EliteFour_EventScript_WalkInCloseDoor
 # 23 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	setvar VAR_ELITE_4_STATE, 2
+	setvar VAR_ELITE_4_STATE, 3
 # 24 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 	releaseall
 # 25 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
@@ -55,7 +55,7 @@ EverGrandeCity_PhoebesRoom_OnLoad:
 # 28 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 	call_if_set FLAG_DEFEATED_ELITE_4_PHOEBE, EverGrandeCity_PhoebesRoom_EventScript_ResetAdvanceToNextRoom
 # 29 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	call_if_eq VAR_ELITE_4_STATE, 2, EverGrandeCity_PhoebesRoom_EventScript_CloseDoor
+	call_if_eq VAR_ELITE_4_STATE, 3, EverGrandeCity_PhoebesRoom_EventScript_CloseDoor
 # 30 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 	end
 # 31 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
@@ -87,82 +87,118 @@ EverGrandeCity_PhoebesRoom_EventScript_Phoebe::
 # 44 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
 # 45 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	msgbox EverGrandeCity_PhoebesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_IARA, EMOTE_NORMAL
 # 46 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	trainerbattle_no_intro TRAINER_PHOEBE, EverGrandeCity_PhoebesRoom_Text_Defeat
+	msgbox EverGrandeCity_PhoebesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 # 47 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	goto EverGrandeCity_PhoebesRoom_EventScript_Defeated
+	removefieldmugshot
 # 48 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	end
+	getdifficulty VAR_RESULT
 # 49 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_PhoebesRoom_EventScript_PhoebeHard
 # 50 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-EverGrandeCity_PhoebesRoom_EventScript_PostBattleSpeech::
+	trainerbattle_no_intro TRAINER_PHOEBE, EverGrandeCity_PhoebesRoom_Text_Defeat
 # 51 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	msgbox EverGrandeCity_PhoebesRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	goto EverGrandeCity_PhoebesRoom_EventScript_Defeated
 # 52 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	release
+	end
 # 53 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	end
+
 # 54 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-
+EverGrandeCity_PhoebesRoom_EventScript_PhoebeHard::
 # 55 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-EverGrandeCity_PhoebesRoom_EventScript_Defeated::
+	random 2
 # 56 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	setflag FLAG_DEFEATED_ELITE_4_PHOEBE
+	goto_if_eq VAR_RESULT, 0, EverGrandeCity_PhoebesRoom_EventScript_PhoebeHardSingles
 # 57 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
+	trainerbattle_no_intro TRAINER_PHOEBE_HARD_DOUBLES, EverGrandeCity_PhoebesRoom_Text_Defeat
 # 58 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	msgbox EverGrandeCity_PhoebesRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	goto EverGrandeCity_PhoebesRoom_EventScript_Defeated
 # 59 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	release
+
 # 60 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	end
+EverGrandeCity_PhoebesRoom_EventScript_PhoebeHardSingles::
 # 61 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-
+	trainerbattle_no_intro TRAINER_PHOEBE_HARD_SINGLES, EverGrandeCity_PhoebesRoom_Text_Defeat
 # 62 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-EverGrandeCity_PhoebesRoom_Text_IntroSpeech:
+	goto EverGrandeCity_PhoebesRoom_EventScript_Defeated
 # 63 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "Ahahaha!\p"
+
 # 64 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "I'm PHOEBE of the ELITE FOUR.\n"
+EverGrandeCity_PhoebesRoom_EventScript_PostBattleSpeech::
 # 65 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "I did my training on MT. PYRE.\p"
+	createfieldmugshot MUGSHOT_IARA, EMOTE_NORMAL
 # 66 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "While I trained, I gained the ability\n"
+	msgbox EverGrandeCity_PhoebesRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 # 67 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "to commune with GHOST-type POKéMON.\p"
+	removefieldmugshot
 # 68 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "Yes, the bond I developed with POKéMON\n"
+	release
 # 69 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "is extremely tight.\p"
+	end
 # 70 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "So, come on, just try and see if you can\n"
+
 # 71 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "even inflict damage on my POKéMON!$"
+EverGrandeCity_PhoebesRoom_EventScript_Defeated::
 # 72 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-
+	setflag FLAG_DEFEATED_ELITE_4_PHOEBE
 # 73 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-EverGrandeCity_PhoebesRoom_Text_Defeat:
+	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
 # 74 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "Oh, darn.\n"
+	createfieldmugshot MUGSHOT_IARA, EMOTE_NORMAL
 # 75 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "I've gone and lost.$"
+	msgbox EverGrandeCity_PhoebesRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 # 76 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-
+	removefieldmugshot
 # 77 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-EverGrandeCity_PhoebesRoom_Text_PostBattleSpeech:
+	release
 # 78 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "There's a definite bond between you\n"
+	end
 # 79 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "and your POKéMON, too.\p"
+
 # 80 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "I didn't recognize it, so it's only\n"
+EverGrandeCity_PhoebesRoom_Text_IntroSpeech:
 # 81 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "natural that I lost.\p"
+	.string "Ahahaha!\p"
 # 82 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "Yup, I'd like to see how far your bond\n"
+	.string "I'm PHOEBE of the ELITE FOUR.\n"
 # 83 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
-	.string "will carry you.\p"
+	.string "I did my training on MT. PYRE.\p"
 # 84 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "While I trained, I gained the ability\n"
+# 85 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "to commune with GHOST-type POKéMON.\p"
+# 86 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "Yes, the bond I developed with POKéMON\n"
+# 87 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "is extremely tight.\p"
+# 88 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "So, come on, just try and see if you can\n"
+# 89 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "even inflict damage on my POKéMON!$"
+# 90 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+
+# 91 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+EverGrandeCity_PhoebesRoom_Text_Defeat:
+# 92 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "Oh, darn.\n"
+# 93 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "I've gone and lost.$"
+# 94 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+
+# 95 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+EverGrandeCity_PhoebesRoom_Text_PostBattleSpeech:
+# 96 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "There's a definite bond between you\n"
+# 97 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "and your POKéMON, too.\p"
+# 98 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "I didn't recognize it, so it's only\n"
+# 99 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "natural that I lost.\p"
+# 100 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "Yup, I'd like to see how far your bond\n"
+# 101 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
+	.string "will carry you.\p"
+# 102 "data/maps/EverGrandeCity_PhoebesRoom/scripts.pory"
 	.string "Go ahead, move on to the next room.$"

@@ -40,17 +40,38 @@ EverGrandeCity_ChampionsRoom_Movement_PlayerApproachWallace:
 
 EverGrandeCity_ChampionsRoom_EventScript_Wallace::
 	playbgm MUS_ENCOUNTER_CHAMPION, FALSE
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox EverGrandeCity_ChampionsRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	removefieldmugshot
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_ChampionsRoom_EventScript_StellaHard
 	trainerbattle_no_intro TRAINER_WALLACE, EverGrandeCity_ChampionsRoom_Text_Defeat
 	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
 	end
+
+EverGrandeCity_ChampionsRoom_EventScript_StellaHard::
+	random 3
+	goto_if_eq VAR_RESULT, 0, EverGrandeCity_ChampionsRoom_EventScript_StellaHardTailwind
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_ChampionsRoom_EventScript_StellaHardBalanceHazards
+	trainerbattle_no_intro TRAINER_STELLA_HARD_DOUBLES_TROOM, EverGrandeCity_ChampionsRoom_Text_Defeat
+	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
+
+EverGrandeCity_ChampionsRoom_EventScript_StellaHardTailwind::
+	trainerbattle_no_intro TRAINER_STELLA_HARD_HO_TAILWIND, EverGrandeCity_ChampionsRoom_Text_Defeat
+	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
+
+EverGrandeCity_ChampionsRoom_EventScript_StellaHardBalanceHazards::
+	trainerbattle_no_intro TRAINER_STELLA_HARD_BALANCE_HAZZARDS, EverGrandeCity_ChampionsRoom_Text_Defeat
+	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
 
 EverGrandeCity_ChampionsRoom_EventScript_Defeated::
 	playse SE_DOOR
 	setmetatile 6, 1, METATILE_EliteFour_OpenDoorChampion_Frame, FALSE
 	setmetatile 6, 2, METATILE_EliteFour_OpenDoorChampion_Opening, FALSE
 	special DrawWholeMapView
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	playse SE_DOOR
 	checkplayergender
@@ -116,7 +137,9 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF::
 	delay 20
 	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox EverGrandeCity_ChampionsRoom_Text_WallaceComeWithMe, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	delay 30
 	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart
@@ -127,7 +150,9 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF::
 	delay 20
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox EverGrandeCity_ChampionsRoom_Text_WallaceWaitOutside, MSGBOX_DEFAULT
+	removefieldmugshot
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, EverGrandeCity_ChampionsRoom_EventScript_MayCongratulations
 	call_if_eq VAR_RESULT, FEMALE, EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations

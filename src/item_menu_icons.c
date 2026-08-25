@@ -9,10 +9,12 @@
 #include "malloc.h"
 #include "menu_helpers.h"
 #include "menu.h"
+#include "palette.h"
 #include "sprite.h"
 #include "window.h"
 #include "util.h"
 #include "constants/items.h"
+#include "constants/rgb.h"
 
 enum {
     TAG_BAG_GFX = 100,
@@ -34,10 +36,16 @@ static void SpriteCB_BagVisualSwitchingPockets(struct Sprite *sprite);
 static void SpriteCB_ShakeBagSprite(struct Sprite *sprite);
 static void SpriteCB_SwitchPocketRotatingBallInit(struct Sprite *sprite);
 static void SpriteCB_SwitchPocketRotatingBallContinue(struct Sprite *sprite);
+static void ApplyRotatingBallRedPalette(void);
 
 // static const rom data
 static const u16 sRotatingBall_Pal[] = INCBIN_U16("graphics/bag/rotating_ball.gbapal");
 static const u8 sRotatingBall_Gfx[] = INCBIN_U8("graphics/bag/rotating_ball.4bpp");
+static const u16 sRotatingBallRedColors[] =
+{
+    RGB(31, 16, 16), // Highlight.
+    RGB(31, 4, 4),   // Main red.
+};
 static const u8 sCherryUnused[] = INCBIN_U8("graphics/unused/cherry.4bpp");
 static const u16 sCherryUnused_Pal[] = INCBIN_U16("graphics/unused/cherry.gbapal");
 
@@ -522,8 +530,20 @@ void AddSwitchPocketRotatingBallSprite(s16 rotationDirection)
     u8 *spriteId = &gBagMenu->spriteIds[ITEMMENUSPRITE_BALL];
     LoadSpriteSheet(&sRotatingBallTable);
     LoadSpritePalette(&sRotatingBallPaletteTable);
+    ApplyRotatingBallRedPalette();
     *spriteId = CreateSprite(&sRotatingBallSpriteTemplate, 16, 16, 0);
     gSprites[*spriteId].data[0] = rotationDirection;
+}
+
+static void ApplyRotatingBallRedPalette(void)
+{
+    u32 paletteNum = IndexOfSpritePaletteTag(TAG_ROTATING_BALL_GFX);
+
+    if (paletteNum < 16)
+    {
+        LoadPalette(&sRotatingBallRedColors[0], OBJ_PLTT_ID(paletteNum) + 10, PLTT_SIZEOF(1));
+        LoadPalette(&sRotatingBallRedColors[1], OBJ_PLTT_ID(paletteNum) + 14, PLTT_SIZEOF(1));
+    }
 }
 
 static void UpdateSwitchPocketRotatingBallCoords(struct Sprite *sprite)

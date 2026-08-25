@@ -267,9 +267,14 @@ void SafeFreeMonIconPalette(u16 species)
 // optionally overwrite `sprite`'s paletteNum
 void SetMonIconPalette(struct Pokemon *mon, struct Sprite *sprite, u8 paletteNum) 
 {
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
+    u32 personality = GetMonData(mon, MON_DATA_PERSONALITY);
+
     if (paletteNum >= 16)
         return;
-    LoadPalette(GetMonFrontSpritePal(mon), paletteNum*16 + 0x100, 32);
+    LoadCompressedPaletteFast(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)),
+                              paletteNum * 16 + 0x100, 32);
     if (sprite)
         sprite->oam.paletteNum = paletteNum;
 }

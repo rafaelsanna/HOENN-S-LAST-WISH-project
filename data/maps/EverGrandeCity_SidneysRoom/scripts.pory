@@ -52,9 +52,21 @@ EverGrandeCity_SidneysRoom_EventScript_Sidney::
 	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL
 	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 	removefieldmugshot
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_SidneysRoom_EventScript_TsubakiHard
 	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
 	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
 	end
+
+EverGrandeCity_SidneysRoom_EventScript_TsubakiHard::
+	random 2
+	goto_if_eq VAR_RESULT, 0, EverGrandeCity_SidneysRoom_EventScript_TsubakiHardSingles
+	trainerbattle_no_intro TRAINER_TSUBAKI_HARD_DOUBLES, EverGrandeCity_SidneysRoom_Text_Defeat
+	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
+
+EverGrandeCity_SidneysRoom_EventScript_TsubakiHardSingles::
+	trainerbattle_no_intro TRAINER_TSUBAKI_HARD_SINGLES, EverGrandeCity_SidneysRoom_Text_Defeat
+	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
 
 EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech::
 	createfieldmugshot MUGSHOT_TSUBAKI, EMOTE_NORMAL

@@ -342,6 +342,14 @@ static const u8 sShopBuyMenuTextColors[][3] =
     [COLORID_GRAY_CURSOR] = {0, 3, 2},
 };
 
+static const u16 sShopMenuDarkPanelColors[] =
+{
+    RGB(4, 4, 5),  // Description panel background: #212129.
+    RGB(21, 13, 27), // Item-list border: lavender.
+    RGB(7, 7, 10), // First item-list stripe.
+    RGB(9, 9, 13), // Second item-list stripe.
+};
+
 static u8 CreateShopMenu(u8 martType)
 {
     int numMenuItems;
@@ -751,6 +759,11 @@ static void BuyMenuDecompressBgGraphics(void)
     DecompressAndCopyTileDataToVram(1, gShopMenu_Gfx, 0x3A0, 0x3E3, 0);
     DecompressDataWithHeaderWram(gShopMenu_Tilemap, sShopData->tilemapBuffers[0]);
     LoadPalette(gShopMenu_Pal, BG_PLTT_ID(SHOP_MENU_PALETTE_ID), PLTT_SIZE_4BPP);
+
+    // The item list is transparent and shows this BG palette underneath it.
+    LoadPalette(&sShopMenuDarkPanelColors[0], BG_PLTT_ID(SHOP_MENU_PALETTE_ID) + 1, PLTT_SIZEOF(1));
+    LoadPalette(&sShopMenuDarkPanelColors[1], BG_PLTT_ID(SHOP_MENU_PALETTE_ID) + 8, PLTT_SIZEOF(1));
+    LoadPalette(&sShopMenuDarkPanelColors[2], BG_PLTT_ID(SHOP_MENU_PALETTE_ID) + 9, PLTT_SIZEOF(2));
 }
 
 static void BuyMenuInitWindows(void)
