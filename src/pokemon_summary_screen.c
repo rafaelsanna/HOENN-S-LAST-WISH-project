@@ -106,6 +106,9 @@
 #define PSS_DATA_WINDOW_MOVE_PP 1
 #define PSS_DATA_WINDOW_MOVE_DESCRIPTION 2
 
+// Color 0 is transparent on text backgrounds, so data fields use an opaque fill.
+#define PSS_DATA_WINDOW_FILL PIXEL_FILL(15)
+
 #define MOVE_SELECTOR_SPRITES_COUNT 10
 #define TYPE_ICON_SPRITE_COUNT (MAX_MON_MOVES + 1)
 // for the spriteIds field in PokemonSummaryScreenData
@@ -204,6 +207,7 @@ EWRAM_DATA MainCallback gInitialSummaryScreenCallback = NULL; // stores callback
 static bool8 LoadGraphics(void);
 static void CB2_InitSummaryScreen(void);
 static void InitBGs(void);
+static void RemovePortraitBackdropStripe(void);
 static bool8 DecompressGraphics(void);
 static void CopyMonToSummaryStruct(struct Pokemon *);
 static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *);
@@ -1426,6 +1430,12 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
+static void RemovePortraitBackdropStripe(void)
+{
+    // Tile 16 is repeated only behind the Info and Egg portrait areas.
+    CpuFill16(0x3333, (void *)(BG_CHAR_ADDR(2) + 16 * TILE_SIZE_4BPP), TILE_SIZE_4BPP);
+}
+
 // Applies the shared dark palette without touching Pokémon sprites or type icons.
 static void ApplySummaryScreenDarkTheme(void)
 {
@@ -1465,6 +1475,7 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 2] = RGB(2, 2, 3);     // Near-black shadow
     gPlttBufferUnfaded[base + 3] = RGB(31, 31, 31);  // White labels and values
     gPlttBufferUnfaded[base + 4] = RGB(7, 7, 10);    // Soft gray shadow
+    gPlttBufferUnfaded[base + 15] = RGB(4, 4, 5);    // Opaque data-window fill
 
     // Palette 7 covers the top prompt and preserves its type-color entries.
     base = BG_PLTT_ID(7);
@@ -1485,6 +1496,7 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 6] = RGB(16, 7, 0);   // Low PP shadow
     gPlttBufferUnfaded[base + 7] = RGB(31, 4, 4);   // Empty PP
     gPlttBufferUnfaded[base + 8] = RGB(15, 1, 1);   // Empty PP shadow
+    gPlttBufferUnfaded[base + 15] = RGB(4, 4, 5);   // Opaque PP-window fill
 
     // Palette 15 covers the Relearn and Start prompts.
     base = BG_PLTT_ID(15);
@@ -1548,6 +1560,7 @@ static bool8 DecompressGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != 1)
         {
+            RemovePortraitBackdropStripe();
             DecompressDataWithHeaderWram(gSummaryPage_Info_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0]);
             sMonSummaryScreen->switchCounter++;
         }
@@ -1840,7 +1853,11 @@ static void Task_HandleInput(u8 taskId)
         {
             if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
             {
-                if (ShouldShowSummaryPokedexPrompt())
+                if (gMain.inBattle || !FlagGet(FLAG_SYS_POKEDEX_GET))
+                {
+                    PlaySE(SE_FAILURE);
+                }
+                else if (ShouldShowSummaryPokedexPrompt())
                 {
                     StopPokemonAnimations();
                     PlaySE(SE_SELECT);
@@ -1945,8 +1962,8 @@ static void ShowMonSkillsInfo(u8 taskId, s16 mode)
     struct PokeSummary *sum = &sMonSummaryScreen->summary;
     struct Pokemon *mon = &sMonSummaryScreen->currentMon;
 
-    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_LEFT], 0);
-    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_RIGHT], 0);
+    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_LEFT], PSS_DATA_WINDOW_FILL);
+    FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_RIGHT], PSS_DATA_WINDOW_FILL);
 
     if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
     {
@@ -3505,7 +3522,7 @@ static u8 AddWindowFromTemplateList(const struct WindowTemplate *template, u8 te
     if (*windowIdPtr == WINDOW_NONE)
     {
         *windowIdPtr = AddWindow(&template[templateId]);
-        FillWindowPixelBuffer(*windowIdPtr, PIXEL_FILL(0));
+        FillWindowPixelBuffer(*windowIdPtr, PSS_DATA_WINDOW_FILL);
     }
     return *windowIdPtr;
 }
@@ -3527,7 +3544,7 @@ static void PrintPageSpecificText(u8 pageIndex)
     for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->windowIds); i++)
     {
         if (sMonSummaryScreen->windowIds[i] != WINDOW_NONE)
-            FillWindowPixelBuffer(sMonSummaryScreen->windowIds[i], PIXEL_FILL(0));
+            FillWindowPixelBuffer(sMonSummaryScreen->windowIds[i], PSS_DATA_WINDOW_FILL);
     }
     sTextPrinterFunctions[pageIndex]();
 }
@@ -4270,7 +4287,7 @@ static void PrintContestMoveDescription(u8 moveSlot)
 static void PrintMoveDetails(u16 move)
 {
     u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_DESCRIPTION);
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(0));
+    FillWindowPixelBuffer(windowId, PSS_DATA_WINDOW_FILL);
     if (move != MOVE_NONE)
     {
         if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
@@ -4327,7 +4344,7 @@ static void PrintNewMoveDetailsOrCancelText(void)
 static void AddAndFillMoveNamesWindow(void)
 {
     u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_NAMES);
-    FillWindowPixelRect(windowId, PIXEL_FILL(0), 0, 66, 72, 16);
+    FillWindowPixelRect(windowId, PSS_DATA_WINDOW_FILL, 0, 66, 72, 16);
     CopyWindowToVram(windowId, COPYWIN_GFX);
 }
 
@@ -4336,11 +4353,11 @@ static void SwapMovesNamesPP(u8 moveIndex1, u8 moveIndex2)
     u8 windowId1 = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_NAMES);
     u8 windowId2 = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_PP);
 
-    FillWindowPixelRect(windowId1, PIXEL_FILL(0), 0, moveIndex1 * 16, 72, 16);
-    FillWindowPixelRect(windowId1, PIXEL_FILL(0), 0, moveIndex2 * 16, 72, 16);
+    FillWindowPixelRect(windowId1, PSS_DATA_WINDOW_FILL, 0, moveIndex1 * 16, 72, 16);
+    FillWindowPixelRect(windowId1, PSS_DATA_WINDOW_FILL, 0, moveIndex2 * 16, 72, 16);
 
-    FillWindowPixelRect(windowId2, PIXEL_FILL(0), 0, moveIndex1 * 16, 48, 16);
-    FillWindowPixelRect(windowId2, PIXEL_FILL(0), 0, moveIndex2 * 16, 48, 16);
+    FillWindowPixelRect(windowId2, PSS_DATA_WINDOW_FILL, 0, moveIndex1 * 16, 48, 16);
+    FillWindowPixelRect(windowId2, PSS_DATA_WINDOW_FILL, 0, moveIndex2 * 16, 48, 16);
 
     PrintMoveNameAndPP(moveIndex1);
     PrintMoveNameAndPP(moveIndex2);
@@ -4349,7 +4366,7 @@ static void SwapMovesNamesPP(u8 moveIndex1, u8 moveIndex2)
 static void PrintHMMovesCantBeForgotten(void)
 {
     u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_DESCRIPTION);
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(0));
+    FillWindowPixelBuffer(windowId, PSS_DATA_WINDOW_FILL);
     PrintTextOnWindow(windowId, gText_HMMovesCantBeForgotten2, 6, 1, 0, 0);
 }
 
@@ -4872,17 +4889,14 @@ static inline bool32 ShouldShowIvEvPrompt(void)
 
 static inline bool32 ShouldShowSummaryPokedexPrompt(void)
 {
-    return (!sMonSummaryScreen->summary.isEgg && FlagGet(FLAG_SYS_POKEDEX_GET));
+    // The Skills page is the Summary Screen entry point for the selected Pokémon.
+    return !sMonSummaryScreen->summary.isEgg;
 }
 
 static inline void ShowUtilityPrompt(s16 mode)
 {
     const u8 *promptText = NULL;
     const u8 *secondaryText = NULL;
-    const u8 *skillModeText = NULL;
-    const u8 *gText_SkillPageIvs = COMPOUND_STRING("IVs");
-    const u8 *gText_SkillPageEvs = COMPOUND_STRING("EVs");
-    const u8 *gText_SkillPageStats = COMPOUND_STRING("STATS");
 
     if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
     {
@@ -4896,9 +4910,6 @@ static inline void ShowUtilityPrompt(s16 mode)
         if (ShouldShowSummaryPokedexPrompt())
         {
             promptText = gText_Pokedex;
-            // Remove o texto secundário do SELECT, mas a funcionalidade continua ativa
-            // O jogador ainda pode apertar SELECT para ver IVs, mas não verá o texto
-            secondaryText = NULL;
         }
     }
     else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES
