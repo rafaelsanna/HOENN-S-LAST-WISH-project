@@ -345,7 +345,7 @@
       "id": "LAYOUT_ROUTE118",
       "name": "Route118_Layout",
       "width": 80,
-      "height": 20,
+      "height": 24,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",
       "border_filepath": "data/layouts/Route118/border.bin",
