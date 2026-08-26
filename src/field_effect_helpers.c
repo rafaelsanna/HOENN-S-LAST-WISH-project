@@ -746,15 +746,16 @@ u32 FldEff_LongGrass(void)
     {
         struct Sprite *sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
-        sprite->oam.priority = ElevationToPriority(gFieldEffectArguments[2]);
+        sprite->oam.priority = gFieldEffectArguments[3];
         sprite->sElevation = gFieldEffectArguments[2];
         sprite->sX = gFieldEffectArguments[0];
         sprite->sY = gFieldEffectArguments[1];
         sprite->sMapNum = gFieldEffectArguments[4]; // Also sLocalId
         sprite->sMapGroup = gFieldEffectArguments[5];
         sprite->sCurrentMap = gFieldEffectArguments[6];
+        UpdateGrassFieldEffectSubpriority(sprite, sprite->sElevation, 4);
 
-        if (gFieldEffectArguments[7])
+        if (gFieldEffectArguments[7] == 1)
             SeekSpriteAnim(sprite, 6); // Skip to end of anim
     }
     return 0;
@@ -792,8 +793,13 @@ void UpdateLongGrassFieldEffect(struct Sprite *sprite)
          && (objectEvent->previousCoords.x != sprite->sX || objectEvent->previousCoords.y != sprite->sY))
             sprite->sObjectMoved = TRUE;
 
+        // Metatile behavior var re-used as subpriority
+        metatileBehavior = 0;
+        if (sprite->animCmdIndex == 0)
+            metatileBehavior = 4;
+
         UpdateObjectEventSpriteInvisibility(sprite, FALSE);
-        UpdateGrassFieldEffectSubpriority(sprite, sprite->sElevation, 0);
+        UpdateGrassFieldEffectSubpriority(sprite, sprite->sElevation, metatileBehavior);
     }
 }
 
