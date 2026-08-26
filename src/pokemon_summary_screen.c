@@ -86,7 +86,15 @@
 #define PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER 17
 #define PSS_LABEL_WINDOW_PORTRAIT_NICKNAME 18 // The upper name
 #define PSS_LABEL_WINDOW_PORTRAIT_SPECIES 19 // The lower name
-#define PSS_LABEL_WINDOW_END 20
+#define PSS_LABEL_WINDOW_PROMPT_CHECK_IV 20
+#define PSS_LABEL_WINDOW_EXP_BAR 21
+#define PSS_LABEL_WINDOW_END 22
+
+#define SUMMARY_SKILLS_LABEL_PAL 9
+#define SUMMARY_EXP_LABEL_PAL    10
+#define SUMMARY_EXP_HEADER_PAL   11
+#define SUMMARY_EXP_DRAW_PAL     12
+#define SUMMARY_EXP_ERASE_PAL    13
 
 // Dynamic fields for the Pokémon Info page
 #define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
@@ -205,6 +213,8 @@ static bool8 LoadGraphics(void);
 static void CB2_InitSummaryScreen(void);
 static void InitBGs(void);
 static bool8 DecompressGraphics(void);
+static void ApplySkillsGuideTilePalettes(void);
+static void InitSkillsGuidePalettes(void);
 static void CopyMonToSummaryStruct(struct Pokemon *);
 static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *);
 static void SetDefaultTilemaps(void);
@@ -328,6 +338,8 @@ static void BufferLeftColumnIvEvStats(void);
 static void CB2_ReturnToSummaryScreenFromNamingScreen(void);
 static void CB2_PssChangePokemonNickname(void);
 static void ShowUtilityPrompt(s16 mode);
+static void PrintCheckIvPrompt(void);
+static void PutCheckIvPromptTilemap(void);
 static void ShowMonSkillsInfo(u8 taskId, s16 mode);
 static void WriteToStatsTilemapBuffer(u32 length, u32 block, u32 statsCoordX, u32 statsCoordY);
 void ExtractMonSkillStatsData(struct Pokemon *mon, struct PokeSummary *sum);
@@ -591,6 +603,28 @@ static const struct WindowTemplate sSummaryTemplate[] =
         .paletteNum = 6,
         .baseBlock = 431,
     },
+    // Skills-only secondary prompt. This sits in the narrow STATS strip from
+    // the visual guide, between Held Item/Ribbons and the numeric stats.
+    [PSS_LABEL_WINDOW_PROMPT_CHECK_IV] = {
+        .bg = 0,
+        .tilemapLeft = 19, // 152 px
+        .tilemapTop = 6,   // starts below Held Item/Ribbons: no tilemap overlap
+        .width = 11,
+        .height = 2,       // enough room for the START glyph + FONT_SMALL
+        .paletteNum = 15,
+        .baseBlock = 697,
+    },
+    // Isolated EXP bar overlay. Transparent pixels leave the original Skills
+    // artwork visible; only the 68x5 px progress bar is redrawn.
+    [PSS_LABEL_WINDOW_EXP_BAR] = {
+        .bg = 0,
+        .tilemapLeft = 20, // 160 px
+        .tilemapTop = 18,  // 144 px
+        .width = 10,
+        .height = 1,
+        .paletteNum = SUMMARY_EXP_DRAW_PAL,
+        .baseBlock = 719,
+    },
     [PSS_LABEL_WINDOW_END] = DUMMY_WIN_TEMPLATE
 };
 static const struct WindowTemplate sPageInfoTemplate[] =
@@ -754,6 +788,8 @@ static const u8 sStatsLeftColumnLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}\n{DYNAMIC 
 static const u8 sStatsLeftIVEVColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
 static const u8 sStatsRightColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
 static const u8 sMovesPPLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}");
+static const u8 sText_CheckIV[] = _("{START_BUTTON}CHECK IV");
+static const u8 sText_CheckStats[] = _("{START_BUTTON}CHECK STATS");
 // PP window usa paletteNum=8 — indices referenciam slot 8 (nao conflita com move names).
 // {COLOR}{01} = slot8[1], {COLOR}{03} = slot8[3], etc.
 static const u8 sPPColorFull[]  = _("{COLOR}{01}{SHADOW}{02}"); // cinza escuro — PP cheio
@@ -1426,102 +1462,125 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
-// Applies a vanilla-inspired dark palette without touching Pokémon sprites or type icons.
+// Pink / charcoal dark theme based on the lighter lavender reference.
+// This only remaps Summary Screen palettes; tilemaps, layout, sprites and type
+// icons are left untouched.
 static void ApplySummaryScreenDarkTheme(void)
 {
-    u8  i;
+    u8 i;
     u16 base;
-    static const u16 sDarkPagePalettes[][16] =
+
+    // Core colors sampled/approximated from the desired reference:
+    // charcoal      RGB(4, 4, 5)   -> ~#212129
+    // dark gray     RGB(5, 5, 7)   -> ~#292939
+    // purple gray   RGB(11,10,15)  -> ~#5A527B
+    // deep purple   RGB(11, 9,16)  -> ~#5A4A84
+    // lavender      RGB(18,14,24)  -> ~#9473C6
+    // pink-purple   RGB(21,13,27)  -> ~#AD6BDE
+    // pale lavender RGB(26,22,31)  -> ~#D6B5FF
+    static const u16 sPinkDarkPagePalettes[][16] =
     {
-        // Palette 0: shared background and portrait grid.
+        // Palette 0: INFO page / shared framing.
+        // Tuned against the Venusaur reference:
+        // - static panel/frame: deeper muted purple #5A4A84
+        // - labels: white with dark gray shadow
+        // - gradient edge: purple-gray, never pure black
+        // - outer lavender border remains unchanged
         {
-            RGB(4, 4, 5), RGB(2, 2, 3), RGB(18, 18, 20), RGB(10, 10, 13),
-            RGB(6, 6, 8), RGB(5, 5, 7), RGB(3, 3, 4), RGB(12, 12, 15),
-            RGB(8, 8, 11), RGB(6, 6, 8), RGB(4, 4, 6), RGB(3, 3, 4),
-            RGB(9, 9, 12), RGB(3, 3, 5), RGB(6, 6, 9), RGB(2, 2, 3),
+            // Static INFO framing tuned to the Venusaur reference.
+            // 0/5/14: panel base = deeper muted purple (#5A4A84)
+            // 2: PROFILE / ABILITY / TRAINER MEMO main pixels = white
+            // 10/11: finish the gradient in purple-gray instead of black
+            // 13: dark label shadow for clean white lettering
+            // 15: upper portrait-frame bevel now matches the dark pink target tone
+            RGB(11, 9,16), RGB(2, 2, 3), RGB(31,31,31), RGB(13,12,17),
+            RGB(12, 9,17), RGB(11, 9,16), RGB(18,14,24), RGB(21,13,27),
+            RGB(16,10,21), RGB(12, 9,17), RGB(9, 7,13), RGB(7, 6,10),
+            RGB(26,22,31), RGB(5, 5, 7), RGB(11, 9,16), RGB(12, 9,17),
         },
-        // Palette 1: Contest page.
+        // Palette 1: Contest page — same pink/charcoal family.
         {
-            RGB(4, 4, 5), RGB(2, 2, 3), RGB(27, 27, 29), RGB(6, 6, 8),
-            RGB(8, 8, 10), RGB(9, 9, 12), RGB(5, 5, 7), RGB(13, 7, 16),
-            RGB(10, 6, 13), RGB(8, 6, 10), RGB(6, 6, 8), RGB(12, 8, 15),
-            RGB(7, 7, 10), RGB(6, 5, 9), RGB(5, 5, 7), RGB(4, 4, 5),
+            RGB(11,10,15), RGB(2, 2, 3), RGB(26,22,31), RGB(12, 9,17),
+            RGB(13,12,17), RGB(23,19,28), RGB(18,14,24), RGB(21,13,27),
+            RGB(16,10,21), RGB(13,12,17), RGB(12, 9,17), RGB(18,14,24),
+            RGB(7, 7,10), RGB(11,10,15), RGB(18,14,24), RGB(4, 4, 5),
         },
         // Palette 2: Skills page.
         {
-            RGB(4, 4, 5), RGB(2, 2, 3), RGB(27, 27, 29), RGB(6, 6, 8),
-            RGB(7, 7, 9), RGB(9, 9, 12), RGB(5, 5, 7), RGB(13, 7, 16),
-            RGB(10, 6, 13), RGB(8, 6, 10), RGB(6, 6, 8), RGB(15, 9, 18),
-            RGB(7, 7, 10), RGB(9, 9, 12), RGB(12, 9, 15), RGB(9, 6, 13),
+            RGB(11,10,15), RGB(2, 2, 3), RGB(23,19,28), RGB(12, 9,17),
+            RGB(18,14,24), RGB(26,22,31), RGB(11,10,15), RGB(21,13,27),
+            RGB(16,10,21), RGB(13,12,17), RGB(12, 9,17), RGB(18,14,24),
+            RGB(7, 7,10), RGB(23,19,28), RGB(18,14,24), RGB(11,10,15),
         },
         // Palette 3: Battle Moves page.
         {
-            RGB(4, 4, 5), RGB(2, 2, 3), RGB(27, 27, 29), RGB(4, 4, 5),
-            RGB(6, 6, 8), RGB(9, 9, 12), RGB(5, 5, 7), RGB(13, 7, 16),
-            RGB(10, 6, 13), RGB(8, 6, 10), RGB(6, 6, 8), RGB(5, 5, 7),
-            RGB(7, 7, 10), RGB(9, 9, 12), RGB(12, 9, 15), RGB(8, 6, 11),
+            RGB(11,10,15), RGB(2, 2, 3), RGB(23,19,28), RGB(18,14,24),
+            RGB(12, 9,17), RGB(26,22,31), RGB(11,10,15), RGB(21,13,27),
+            RGB(16,10,21), RGB(13,12,17), RGB(12, 9,17), RGB(18,14,24),
+            RGB(7, 7,10), RGB(23,19,28), RGB(18,14,24), RGB(11,10,15),
         },
-        // Palette 4: top header only. Lavender stays confined to this area.
+        // Palette 4: top header.
+        // The target has three very distinct blocks:
+        // gray-purple (#6B638C), charcoal (#292939), purple (#8452AD).
         {
-            RGB(4, 4, 5), RGB(2, 2, 3), RGB(14, 4, 16), RGB(8, 7, 12),
-            RGB(14, 12, 18), RGB(25, 25, 27), RGB(18, 8, 18), RGB(12, 7, 14),
-            RGB(7, 7, 10), RGB(14, 8, 16), RGB(3, 3, 4), RGB(2, 2, 3),
-            RGB(16, 14, 20), RGB(10, 9, 14), RGB(6, 6, 9), RGB(4, 4, 5),
+            RGB(5, 5, 7), RGB(2, 2, 3), RGB(21,13,27), RGB(13,12,17),
+            RGB(11,10,15), RGB(31,31,31), RGB(5, 5, 7), RGB(21,13,27),
+            RGB(16,10,21), RGB(21,13,27), RGB(4, 4, 5), RGB(2, 2, 3),
+            RGB(26,22,31), RGB(21,13,27), RGB(8, 8,12), RGB(5, 5, 7),
         },
     };
 
-    // Each page uses a distinct source palette, so keep its vanilla contrast.
-    for (i = 0; i < ARRAY_COUNT(sDarkPagePalettes); i++)
+    for (i = 0; i < ARRAY_COUNT(sPinkDarkPagePalettes); i++)
     {
         base = BG_PLTT_ID(i);
-        CpuCopy16(sDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
+        CpuCopy16(sPinkDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
-    // Palette 6 supplies the fill and text for Info, Skills, and Move windows.
+    // Palette 6: body/data windows and most Summary Screen text.
     base = BG_PLTT_ID(6);
-    gPlttBufferUnfaded[base + 0] = RGB(4, 4, 5);    // #212129 - window fill
-    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White body text
-    gPlttBufferUnfaded[base + 2] = RGB(2, 2, 3);     // Near-black shadow
-    gPlttBufferUnfaded[base + 3] = RGB(31, 31, 31);  // White labels and values
-    gPlttBufferUnfaded[base + 4] = RGB(7, 7, 10);    // Soft gray shadow
-    gPlttBufferUnfaded[base + 15] = RGB(4, 4, 5);    // Opaque data-window fill
+    gPlttBufferUnfaded[base + 0]  = RGB(11,10,15);   // purple-gray fill
+    gPlttBufferUnfaded[base + 1]  = RGB(31,31,31);   // white text
+    gPlttBufferUnfaded[base + 2]  = RGB(2, 2, 3);    // near-black shadow
+    gPlttBufferUnfaded[base + 3]  = RGB(31,31,31);   // labels / values
+    gPlttBufferUnfaded[base + 4]  = RGB(7, 7,10);    // dark gray shadow
+    gPlttBufferUnfaded[base + 15] = RGB(11,10,15);   // opaque window fill
 
-    // Palette 7 covers the top prompt and preserves its type-color entries.
+    // Palette 7: top-right prompt and small header fields.
     base = BG_PLTT_ID(7);
-    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - window fill
-    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White prompt text
-    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // Black shadow
-    gPlttBufferUnfaded[base + 3] = RGB(13, 10, 18);  // Muted lavender highlight
-    gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // #3A3A52
+    gPlttBufferUnfaded[base + 0] = RGB(5, 5, 7);
+    gPlttBufferUnfaded[base + 1] = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 2] = RGB(0, 0, 0);
+    gPlttBufferUnfaded[base + 3] = RGB(21,13,27);    // pink-purple accent
+    gPlttBufferUnfaded[base + 4] = RGB(11, 9,16);    // deep purple
 
-    // Palette 8 is used by the PP window and its inline color codes.
+    // Palette 8: PP text window. Keep the dark fill while preserving warning
+    // colors for medium/low/empty PP.
     base = BG_PLTT_ID(8);
-    gPlttBufferUnfaded[base + 0] = RGB(4, 4, 5);    // Window fill
-    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31); // Full PP
-    gPlttBufferUnfaded[base + 2] = RGB(2, 2, 3);    // Full PP shadow
-    gPlttBufferUnfaded[base + 3] = RGB(31, 26, 0);  // Medium PP
-    gPlttBufferUnfaded[base + 4] = RGB(15, 12, 0);  // Medium PP shadow
-    gPlttBufferUnfaded[base + 5] = RGB(31, 16, 0);  // Low PP
-    gPlttBufferUnfaded[base + 6] = RGB(16, 7, 0);   // Low PP shadow
-    gPlttBufferUnfaded[base + 7] = RGB(31, 4, 4);   // Empty PP
-    gPlttBufferUnfaded[base + 8] = RGB(15, 1, 1);   // Empty PP shadow
-    gPlttBufferUnfaded[base + 15] = RGB(4, 4, 5);   // Opaque PP-window fill
+    gPlttBufferUnfaded[base + 0]  = RGB(11,10,15);
+    gPlttBufferUnfaded[base + 1]  = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 2]  = RGB(2, 2, 3);
+    gPlttBufferUnfaded[base + 3]  = RGB(31,26, 0);
+    gPlttBufferUnfaded[base + 4]  = RGB(15,12, 0);
+    gPlttBufferUnfaded[base + 5]  = RGB(31,16, 0);
+    gPlttBufferUnfaded[base + 6]  = RGB(16, 7, 0);
+    gPlttBufferUnfaded[base + 7]  = RGB(31, 4, 4);
+    gPlttBufferUnfaded[base + 8]  = RGB(15, 1, 1);
+    gPlttBufferUnfaded[base + 15] = RGB(11,10,15);
 
-    // Palette 15 covers the Relearn and Start prompts.
+    // Palette 15: relearn/start prompts.
     base = BG_PLTT_ID(15);
-    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - window fill
-    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // White prompt text
-    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // Black shadow
-    gPlttBufferUnfaded[base + 3] = RGB(13, 10, 18);  // Muted lavender highlight
-    gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);   // Soft gray shadow
+    gPlttBufferUnfaded[base + 0] = RGB(5, 5, 7);
+    gPlttBufferUnfaded[base + 1] = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 2] = RGB(0, 0, 0);
+    gPlttBufferUnfaded[base + 3] = RGB(21,13,27);
+    gPlttBufferUnfaded[base + 4] = RGB(11, 9,16);
 
-    // Synchronize both palette buffers to prevent a light flash during fade-in.
+    // Keep fade-in from briefly showing the vanilla green palette.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(0),
         gPlttBufferFaded   + BG_PLTT_ID(0),
         8 * PLTT_SIZE_4BPP
     );
-    // Slots 8 and 15 are outside the initial shared palette range.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(8),
         gPlttBufferFaded   + BG_PLTT_ID(8),
@@ -1532,23 +1591,168 @@ static void ApplySummaryScreenDarkTheme(void)
         gPlttBufferFaded   + BG_PLTT_ID(15),
         PLTT_SIZE_4BPP
     );
+
+    InitSkillsGuidePalettes();
+}
+
+static void InitSkillsGuidePalettes(void)
+{
+    u16 labelBase = BG_PLTT_ID(SUMMARY_SKILLS_LABEL_PAL);
+    u16 expLabelBase = BG_PLTT_ID(SUMMARY_EXP_LABEL_PAL);
+    u16 expHeaderBase = BG_PLTT_ID(SUMMARY_EXP_HEADER_PAL);
+    u16 expDrawBase = BG_PLTT_ID(SUMMARY_EXP_DRAW_PAL);
+    u16 expEraseBase = BG_PLTT_ID(SUMMARY_EXP_ERASE_PAL);
+
+    // ITEM / RIBBON / STATS / EXP are baked into the Skills BG tiles.
+    // Duplicate palette 2 and change ONLY index 2, which is the foreground
+    // color used by those letters. Every other color remains bit-for-bit the
+    // same, so the lilac bars/gradients do not change.
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(2),
+        gPlttBufferUnfaded + labelBase,
+        PLTT_SIZE_4BPP
+    );
+    gPlttBufferUnfaded[labelBase + 2] = RGB(31,31,31);
+
+    // EXP header: same art as Skills, white text, but remove the gray endpoint
+    // from the gradient by replacing palette index 12 with deep purple.
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(2),
+        gPlttBufferUnfaded + expHeaderBase,
+        PLTT_SIZE_4BPP
+    );
+    gPlttBufferUnfaded[expHeaderBase + 2]  = RGB(31,31,31); // EXP. text white
+    gPlttBufferUnfaded[expHeaderBase + 12] = RGB(11, 9,16); // no gray tip
+
+    // Bottom-left EXP letters keep their original artwork/background and only
+    // swap the two letter colors to the guide's blue pair.
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(2),
+        gPlttBufferUnfaded + expLabelBase,
+        PLTT_SIZE_4BPP
+    );
+    gPlttBufferUnfaded[expLabelBase + 7] = RGB(5,14,26); // #2973D6
+    gPlttBufferUnfaded[expLabelBase + 8] = RGB(2, 6,13); // #10316B
+
+    // Dedicated draw palette for the overlay window.
+    // 0 must remain transparent.
+    gPlttBufferUnfaded[expDrawBase + 0] = RGB(0, 0, 0);
+    gPlttBufferUnfaded[expDrawBase + 1] = RGB(31,31,31); // white outline
+    gPlttBufferUnfaded[expDrawBase + 2] = RGB(5,14,26);  // light blue  #2973D6
+    gPlttBufferUnfaded[expDrawBase + 3] = RGB(2, 6,13);  // dark blue   #10316B
+    gPlttBufferUnfaded[expDrawBase + 4] = RGB(10,10,11); // light gray  #52525A
+    gPlttBufferUnfaded[expDrawBase + 5] = RGB(7, 7,10);  // dark gray   #393952
+
+    CpuCopy16(
+        gPlttBufferUnfaded + labelBase,
+        gPlttBufferFaded   + labelBase,
+        PLTT_SIZE_4BPP
+    );
+    CpuCopy16(
+        gPlttBufferUnfaded + expLabelBase,
+        gPlttBufferFaded   + expLabelBase,
+        PLTT_SIZE_4BPP
+    );
+    CpuCopy16(
+        gPlttBufferUnfaded + expHeaderBase,
+        gPlttBufferFaded   + expHeaderBase,
+        PLTT_SIZE_4BPP
+    );
+    CpuCopy16(
+        gPlttBufferUnfaded + expDrawBase,
+        gPlttBufferFaded   + expDrawBase,
+        PLTT_SIZE_4BPP
+    );
+
+    // Every color index resolves to the Skills panel background #5A527B.
+    // Assigning this palette to the old EXP tiles erases their artwork without
+    // requiring a new blank tile.
+    {
+        u8 i;
+        for (i = 0; i < 16; i++)
+            gPlttBufferUnfaded[expEraseBase + i] = RGB(11,10,15);
+    }
+    CpuCopy16(
+        gPlttBufferUnfaded + expEraseBase,
+        gPlttBufferFaded   + expEraseBase,
+        PLTT_SIZE_4BPP
+    );
+}
+
+static void ApplySkillsGuideTilePalettes(void)
+{
+    u16 *map = sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1];
+    u16 i;
+    u16 entry;
+
+    // ITEM header (tile row 3, x 10..19).
+    for (i = 10; i < 20; i++)
+    {
+        entry = map[3 * 32 + i];
+        map[3 * 32 + i] = (entry & 0x0FFF) | (SUMMARY_SKILLS_LABEL_PAL << 12);
+    }
+
+    // RIBBON text area. Leave x=29 on the original palette so the page's
+    // outer/right border does not become visually detached.
+    for (i = 20; i < 29; i++)
+    {
+        entry = map[3 * 32 + i];
+        map[3 * 32 + i] = (entry & 0x0FFF) | (SUMMARY_SKILLS_LABEL_PAL << 12);
+    }
+
+    // STATS header. Stop at x=18 so the CHECK IV window beginning at x=19
+    // remains completely independent.
+    for (i = 10; i < 19; i++)
+    {
+        entry = map[6 * 32 + i];
+        map[6 * 32 + i] = (entry & 0x0FFF) | (SUMMARY_SKILLS_LABEL_PAL << 12);
+    }
+
+    // EXP header strip gets a separate palette: white letters, but no gray
+    // residue at the end of the purple gradient.
+    for (i = 10; i < 21; i++)
+    {
+        entry = map[13 * 32 + i];
+        map[13 * 32 + i] = (entry & 0x0FFF) | (SUMMARY_EXP_HEADER_PAL << 12);
+    }
+
+    // Keep the baked EXP letters blue.
+    for (i = 19; i < 21; i++)
+    {
+        entry = map[18 * 32 + i];
+        map[18 * 32 + i] = (entry & 0x0FFF) | (SUMMARY_EXP_LABEL_PAL << 12);
+    }
+
+    // Erase ONLY the old progress-bar row behind our BG0 overlay.
+    //
+    // IMPORTANT: row 17 is also part of the pink/lavender separator behind
+    // the EXP / NEXT LV numeric area. Erasing it is what cut the pink strip
+    // above the numbers in V4. Leave row 17 completely original.
+    for (i = 21; i < 30; i++)
+    {
+        entry = map[18 * 32 + i];
+        map[18 * 32 + i] = (entry & 0x0FFF) | (SUMMARY_EXP_ERASE_PAL << 12);
+    }
 }
 
 static void ApplyMoveSelectorDarkTheme(void)
 {
-    // The move selector has its own sprite palette for indicators and dividers.
-    u8  slot = IndexOfSpritePaletteTag(TAG_MOVE_SELECTOR);
-    if (slot == 0xFF)
-        return; // Palette has not been loaded yet.
-    u16 base = OBJ_PLTT_ID(slot);
-    u8  j;
+    u8 slot = IndexOfSpritePaletteTag(TAG_MOVE_SELECTOR);
+    u16 base;
+    u8 j;
 
-    gPlttBufferUnfaded[base + 1]  = RGB(9,  9, 13);   // Indicator
-    gPlttBufferUnfaded[base + 2]  = RGB(14, 13, 16);  // Highlight
-    gPlttBufferUnfaded[base + 3]  = RGB(4,  4,  5);   // Outline and shadow
-    gPlttBufferUnfaded[base + 4]  = RGB(9,  9, 13);   // Divider
+    if (slot == 0xFF)
+        return;
+
+    base = OBJ_PLTT_ID(slot);
+
+    // Keep the selector in the same pink/charcoal family instead of neutral gray.
+    gPlttBufferUnfaded[base + 1] = RGB(16,10,21);   // deep purple
+    gPlttBufferUnfaded[base + 2] = RGB(21,13,27);   // pink highlight
+    gPlttBufferUnfaded[base + 3] = RGB(4, 4, 5);    // charcoal outline
+    gPlttBufferUnfaded[base + 4] = RGB(13,12,17);   // gray-purple divider
     for (j = 5; j < 16; j++)
-        gPlttBufferUnfaded[base + j] = RGB(7, 7, 10); // Dark intermediate tone
+        gPlttBufferUnfaded[base + j] = RGB(11,10,15);
 
     CpuCopy16(
         gPlttBufferUnfaded + base,
@@ -1579,6 +1783,7 @@ static bool8 DecompressGraphics(void)
         break;
     case 3:
         DecompressDataWithHeaderWram(gSummaryPage_Skills_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1]);
+        ApplySkillsGuideTilePalettes();
         sMonSummaryScreen->switchCounter++;
         break;
     case 4:
@@ -1613,7 +1818,7 @@ static bool8 DecompressGraphics(void)
         break;
     case 11:
         LoadSpritePalette(&sMoveSelectorSpritePal);
-        ApplyMoveSelectorDarkTheme();  // sobrescreve roxo → tons neutros escuros
+        ApplyMoveSelectorDarkTheme();  // pink/charcoal selector theme
         sMonSummaryScreen->switchCounter++;
         break;
     case 12:
@@ -1896,29 +2101,33 @@ static void Task_HandleInput(u8 taskId)
                 }
             }
         }
-        else if (JOY_NEW(SELECT_BUTTON)
-                && sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS
-                && ShouldShowIvEvPrompt())
-        {
-            ShowMonSkillsInfo(taskId, IncrementSkillsStatsMode(sMonSummaryScreen->skillsPageMode));
-            PlaySE(SE_SELECT);
-        }
         else if (JOY_NEW(B_BUTTON))
         {
             StopPokemonAnimations();
             PlaySE(SE_SELECT);
             BeginCloseSummaryScreen(taskId);
         }
-        else if (JOY_NEW(START_BUTTON)
-                && ShouldShowMoveRelearner()
-                && (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES))
+        else if (JOY_NEW(START_BUTTON))
         {
-            sMonSummaryScreen->callback = CB2_InitLearnMove;
-            gSpecialVar_0x8004 = sMonSummaryScreen->curMonIndex;
-            gOriginSummaryScreenPage = sMonSummaryScreen->currPageIndex;
-            StopPokemonAnimations();
-            PlaySE(SE_SELECT);
-            BeginCloseSummaryScreen(taskId);
+            if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS
+                && ShouldShowIvEvPrompt())
+            {
+                sMonSummaryScreen->skillsPageMode =
+                    IncrementSkillsStatsMode(sMonSummaryScreen->skillsPageMode);
+                ShowMonSkillsInfo(taskId, sMonSummaryScreen->skillsPageMode);
+                PlaySE(SE_SELECT);
+            }
+            else if (ShouldShowMoveRelearner()
+                     && (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES
+                         || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES))
+            {
+                sMonSummaryScreen->callback = CB2_InitLearnMove;
+                gSpecialVar_0x8004 = sMonSummaryScreen->curMonIndex;
+                gOriginSummaryScreenPage = sMonSummaryScreen->currPageIndex;
+                StopPokemonAnimations();
+                PlaySE(SE_SELECT);
+                BeginCloseSummaryScreen(taskId);
+            }
         }
         else if (DEBUG_POKEMON_SPRITE_VISUALIZER && JOY_NEW(SELECT_BUTTON) && !gMain.inBattle)
         {
@@ -1932,43 +2141,21 @@ static void Task_HandleInput(u8 taskId)
 
 static u8 IncrementSkillsStatsMode(u8 mode)
 {
-    switch (mode)
-    {
-    case SUMMARY_SKILLS_MODE_STATS:
-        if (P_SUMMARY_SCREEN_EV_ONLY)
-        {
-            sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_EVS;
-            return SUMMARY_SKILLS_MODE_EVS;
-        }
-        else
-        {
-            sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_IVS;
-            return SUMMARY_SKILLS_MODE_IVS;
-        }
+    // START is intentionally a two-state toggle on this screen:
+    // STATS -> IVS -> STATS.
+    if (mode == SUMMARY_SKILLS_MODE_STATS)
+        return SUMMARY_SKILLS_MODE_IVS;
 
-    case SUMMARY_SKILLS_MODE_IVS:
-        if (P_SUMMARY_SCREEN_IV_ONLY)
-        {
-            sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_STATS;
-            return SUMMARY_SKILLS_MODE_STATS;
-        }
-        else
-        {
-            sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_EVS;
-            return SUMMARY_SKILLS_MODE_EVS;
-        }
-    case SUMMARY_SKILLS_MODE_EVS:
-    default:
-        sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_STATS;
-        return SUMMARY_SKILLS_MODE_STATS;
-    }
-
+    return SUMMARY_SKILLS_MODE_STATS;
 }
 
 static void ShowMonSkillsInfo(u8 taskId, s16 mode)
 {
     struct PokeSummary *sum = &sMonSummaryScreen->summary;
     struct Pokemon *mon = &sMonSummaryScreen->currentMon;
+
+    // Keep the visible data, IV color rules and prompt on the same mode.
+    sMonSummaryScreen->skillsPageMode = mode;
 
     // The Skills tilemap supplies the panel and divider artwork behind these fields.
     FillWindowPixelBuffer(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_LEFT], PIXEL_FILL(0));
@@ -1978,6 +2165,7 @@ static void ShowMonSkillsInfo(u8 taskId, s16 mode)
     {
         ChangeStatLabel(mode);
         ShowUtilityPrompt(mode);
+        PutCheckIvPromptTilemap();
     }
 
     if (mode == SUMMARY_SKILLS_MODE_STATS)
@@ -3167,17 +3355,31 @@ static void DrawExperienceProgressBar(struct Pokemon *unused)
 {
     s64 numExpProgressBarTicks;
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
-    u16 *dst;
+    u16 palBase = BG_PLTT_ID(SUMMARY_EXP_DRAW_PAL);
     u8 i;
+
+    // Reassert the exact guide colors at draw time. This prevents any later
+    // palette user from changing the bar's empty stripes or outline.
+    gPlttBufferUnfaded[palBase + 1] = RGB(31,31,31); // white
+    gPlttBufferUnfaded[palBase + 2] = RGB(5,14,26);  // light blue  #2973D6
+    gPlttBufferUnfaded[palBase + 3] = RGB(2, 6,13);  // dark blue   #10316B
+    gPlttBufferUnfaded[palBase + 4] = RGB(10,10,11); // light gray  #52525A
+    gPlttBufferUnfaded[palBase + 5] = RGB(7, 7,10);  // dark gray   #393952
+    CpuCopy16(
+        gPlttBufferUnfaded + palBase,
+        gPlttBufferFaded   + palBase,
+        PLTT_SIZE_4BPP
+    );
 
     if (summary->level < MAX_LEVEL)
     {
-        u32 expBetweenLevels = gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level + 1] - gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level];
-        u32 expSinceLastLevel = summary->exp - gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level];
+        u32 expBetweenLevels =
+            gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level + 1]
+            - gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level];
+        u32 expSinceLastLevel =
+            summary->exp
+            - gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level];
 
-        // Calculate the number of 1-pixel "ticks" to illuminate in the experience progress bar.
-        // There are 8 tiles that make up the bar, and each tile has 8 "ticks". Hence, the numerator
-        // is multiplied by 64.
         numExpProgressBarTicks = expSinceLastLevel * 64 / expBetweenLevels;
         if (numExpProgressBarTicks == 0 && expSinceLastLevel != 0)
             numExpProgressBarTicks = 1;
@@ -3187,22 +3389,47 @@ static void DrawExperienceProgressBar(struct Pokemon *unused)
         numExpProgressBarTicks = 0;
     }
 
-    dst = &sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1][0x255];
-    for (i = 0; i < 8; i++)
+    // Draw exactly the visual-guide bar on BG0.
+    //
+    // Window origin: screen (160,144)
+    // Outer bar:     screen x=166..233, y=145..149
+    // Interior:      64 px, x=168..231
+    //
+    // Palette:
+    // 1 white
+    // 2 light blue / 3 dark blue
+    // 4 light gray / 5 dark gray
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_EXP_BAR, PIXEL_FILL(0));
+
+    // Stylized 1 px white top/bottom + 2 px vertical sides, matching the
+    // supplied reference instead of drawing a chunky rectangular box.
+    FillWindowPixelRect(PSS_LABEL_WINDOW_EXP_BAR, PIXEL_FILL(1), 7, 1, 66, 1);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_EXP_BAR, PIXEL_FILL(1), 7, 5, 66, 1);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_EXP_BAR, PIXEL_FILL(1), 6, 2, 2, 3);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_EXP_BAR, PIXEL_FILL(1), 72, 2, 2, 3);
+
+    // 64 one-pixel vertical stripes. Filled side alternates blue/blue-dark;
+    // empty side alternates gray-dark/gray-light.
+    for (i = 0; i < 64; i++)
     {
-        if (numExpProgressBarTicks > 7)
-            dst[i] = 0x206A;
+        u8 color;
+
+        if (i < numExpProgressBarTicks)
+            color = (i & 1) ? 3 : 2;
         else
-            dst[i] = 0x2062 + (numExpProgressBarTicks % 8);
-        numExpProgressBarTicks -= 8;
-        if (numExpProgressBarTicks < 0)
-            numExpProgressBarTicks = 0;
+            color = (i & 1) ? 4 : 5;
+
+        FillWindowPixelRect(
+            PSS_LABEL_WINDOW_EXP_BAR,
+            PIXEL_FILL(color),
+            8 + i, 2,
+            1, 3
+        );
     }
 
-    if (GetBgTilemapBuffer(1) == sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][0])
-        ScheduleBgCopyTilemapToVram(1);
-    else
-        ScheduleBgCopyTilemapToVram(2);
+    CopyWindowToVram(PSS_LABEL_WINDOW_EXP_BAR, COPYWIN_GFX);
+    PutWindowTilemap(PSS_LABEL_WINDOW_EXP_BAR);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
 static void DrawContestMoveHearts(u16 move)
@@ -3406,7 +3633,53 @@ static void PrintPageNamesAndStats(void)
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_POWER_ACC, gText_Accuracy2, 0, 17, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM, gText_Appeal, 0, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM, gText_Jam, 0, 17, 0, 1);
+
+    // Keep the original START RELEARN exactly where it was.
     PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_PROMPT_RELEARN, gText_Relearn, 0, 4, 0, 0, FONT_SMALL);
+
+    // Skills gets its own prompt in the STATS strip.
+    PrintCheckIvPrompt();
+}
+
+static void PrintCheckIvPrompt(void)
+{
+    const u8 *text;
+
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_PROMPT_CHECK_IV, PIXEL_FILL(0));
+
+    if (ShouldShowIvEvPrompt())
+    {
+        if (sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_STATS)
+            text = sText_CheckIV;
+        else
+            text = sText_CheckStats;
+
+        PrintTextOnWindowWithFont(
+            PSS_LABEL_WINDOW_PROMPT_CHECK_IV,
+            text,
+            4, 0, 0, 0,
+            FONT_SMALL
+        );
+
+        // KEEP THIS POSITION: the visual guide confirmed this height is right.
+        // Move only the rendered pixels up by 4 px; never move the window.
+        ScrollWindow(PSS_LABEL_WINDOW_PROMPT_CHECK_IV, 0, 4, PIXEL_FILL(0));
+        CopyWindowToVram(PSS_LABEL_WINDOW_PROMPT_CHECK_IV, COPYWIN_GFX);
+    }
+}
+
+static void PutCheckIvPromptTilemap(void)
+{
+    // Re-render first so CHECK IV / CHECK STATS changes immediately.
+    PrintCheckIvPrompt();
+    PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_CHECK_IV);
+
+    // Restore row 7 exactly as before; the prompt's vertical position remains
+    // the already-approved one and never cuts the actual stats.
+    PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT);
+    PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
+    PutWindowTilemap(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_LEFT]);
+    PutWindowTilemap(sMonSummaryScreen->windowIds[PSS_DATA_WINDOW_SKILLS_STATS_RIGHT]);
 }
 
 static void PutPageWindowTilemaps(u8 page)
@@ -3432,8 +3705,14 @@ static void PutPageWindowTilemaps(u8 page)
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT);
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
+        PutWindowTilemap(PSS_LABEL_WINDOW_EXP_BAR);
         if (ShouldShowIvEvPrompt())
+        {
+            // A POKEDEX stays in the upper-right utility prompt.
             PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_UTILITY);
+            // START-button icon + CHECK IV sits in the STATS strip.
+            PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_CHECK_IV);
+        }
         break;
     case PSS_PAGE_BATTLE_MOVES:
         PutWindowTilemap(PSS_LABEL_WINDOW_BATTLE_MOVES_TITLE);
@@ -3468,6 +3747,11 @@ static void PutPageWindowTilemaps(u8 page)
     for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->windowIds); i++)
         PutWindowTilemap(sMonSummaryScreen->windowIds[i]);
 
+    // CHECK IV visually occupies row 6. Its 2-tile backing window also touches
+    // row 7, so restore the STATS windows immediately after mapping it.
+    if (page == PSS_PAGE_SKILLS && ShouldShowIvEvPrompt())
+        PutCheckIvPromptTilemap();
+
     ScheduleBgCopyTilemapToVram(0);
 }
 
@@ -3487,8 +3771,12 @@ static void ClearPageWindowTilemaps(u8 page)
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT);
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
+        ClearWindowTilemap(PSS_LABEL_WINDOW_EXP_BAR);
         if (ShouldShowIvEvPrompt())
-            ClearPageWindowTilemaps(PSS_LABEL_WINDOW_PROMPT_UTILITY);
+        {
+            ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_UTILITY);
+            ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_CHECK_IV);
+        }
         break;
     case PSS_PAGE_BATTLE_MOVES:
         if (sMonSummaryScreen->mode == SUMMARY_MODE_SELECT_MOVE)
@@ -3946,14 +4234,35 @@ static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
     static const u8 sTextNatureNeutral[] = _("{COLOR}{01}");
     u8 *txtPtr;
 
-    if (statIndex == 0 || !P_SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+    if (sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_IVS)
+    {
+        // IV mode uses IV quality, never Nature:
+        // 31 = perfect (blue), 0 = worst (red), 1-30 = neutral white.
+        if (stat == MAX_PER_STAT_IVS)
+            txtPtr = StringCopy(dst, sTextNatureUp);
+        else if (stat == 0)
+            txtPtr = StringCopy(dst, sTextNatureDown);
+        else
+            txtPtr = StringCopy(dst, sTextNatureNeutral);
+    }
+    else if (statIndex == 0
+             || !P_SUMMARY_SCREEN_NATURE_COLORS
+             || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+    {
         txtPtr = StringCopy(dst, sTextNatureNeutral);
+    }
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
+    {
         txtPtr = StringCopy(dst, sTextNatureUp);
+    }
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+    {
         txtPtr = StringCopy(dst, sTextNatureDown);
+    }
     else
+    {
         txtPtr = StringCopy(dst, sTextNatureNeutral);
+    }
 
     if (!P_SUMMARY_SCREEN_IV_EV_VALUES
         && sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_IVS)
