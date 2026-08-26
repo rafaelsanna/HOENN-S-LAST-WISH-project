@@ -10054,6 +10054,36 @@ u8 GetLedgeJumpDirection(s16 x, s16 y, u8 z)
 
 static void SetObjectEventSpriteOamTableForLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
+    const struct ObjectEventGraphicsInfo *info = GetObjectEventGraphicsInfo(objEvent->graphicsId);
+
+    if (objEvent->disableCoveringGroundEffects)
+        return;
+
+    if (!((info->width == 16 && info->height == 32)
+       || (info->width == 32 && info->height == 32)))
+        return;
+
+    if (!MetatileBehavior_IsLongGrass(objEvent->currentMetatileBehavior))
+        return;
+
+    if (!MetatileBehavior_IsLongGrass(objEvent->previousMetatileBehavior))
+        return;
+
+    if (MetatileBehavior_IsLongGrassSouthEdge(objEvent->currentMetatileBehavior)
+     || MetatileBehavior_IsLongGrassSouthEdge(objEvent->previousMetatileBehavior))
+        return;
+
+    if (objEvent->previousCoords.x == objEvent->currentCoords.x
+     && objEvent->previousCoords.y == objEvent->currentCoords.y)
+        return;
+
+    if (objEvent->previousCoords.x != objEvent->currentCoords.x)
+        return;
+
+    sprite->subspriteTableNum = 4;
+
+    if (ElevationToPriority(objEvent->previousElevation) == 1)
+        sprite->subspriteTableNum = 5;
 }
 
 bool8 IsElevationMismatchAt(u8 elevation, s16 x, s16 y)
@@ -10511,11 +10541,7 @@ void GroundEffect_JumpOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *s
 
 void GroundEffect_JumpOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    gFieldEffectArguments[0] = objEvent->currentCoords.x;
-    gFieldEffectArguments[1] = objEvent->currentCoords.y;
-    gFieldEffectArguments[2] = objEvent->previousElevation;
-    gFieldEffectArguments[3] = 2;
-    FieldEffectStart(FLDEFF_JUMP_LONG_GRASS);
+    GroundEffect_StepOnLongGrass(objEvent, sprite);
 }
 
 void GroundEffect_JumpOnShallowWater(struct ObjectEvent *objEvent, struct Sprite *sprite)
