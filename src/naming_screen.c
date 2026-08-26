@@ -248,7 +248,7 @@ static const struct BgTemplate sPlayerNamingBgTemplates[] =
 {
     {
         .bg = 0,
-        .charBaseIndex = 1,
+        .charBaseIndex = 0,
         .mapBaseIndex = 27,
         .priority = 3
     },
@@ -268,7 +268,7 @@ static const struct BgTemplate sPlayerNamingBgTemplates[] =
         .bg = 3,
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
-        .priority = 2
+        .priority = 0
     }
 };
 
@@ -645,10 +645,12 @@ static void NamingScreen_InitBGs(void)
     SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 8));
 
-    // WIN0 becomes the permanent YOUR NAME foreground mask once BGs are shown.
-    // Initialize it disabled here.
+    // WIN0/WIN1 become player-name-screen masks once BGs are shown.
+    // Initialize them disabled here.
     SetGpuReg(REG_OFFSET_WIN0H, 0);
     SetGpuReg(REG_OFFSET_WIN0V, 0);
+    SetGpuReg(REG_OFFSET_WIN1H, 0);
+    SetGpuReg(REG_OFFSET_WIN1V, 0);
     SetGpuReg(REG_OFFSET_WININ, 0);
     SetGpuReg(REG_OFFSET_WINOUT, 0);
 
@@ -1503,13 +1505,13 @@ static void CreateTextEntrySprites(void)
 
     xPos = sNamingScreen->inputCharBaseXPos - 5;
     spriteId = CreateSprite(&sSpriteTemplate_InputArrow, xPos, 56, 0);
-    gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 1 : 3;
+    gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 0 : 3;
     gSprites[spriteId].invisible = TRUE;
     xPos = sNamingScreen->inputCharBaseXPos;
     for (i = 0; i < sNamingScreen->template->maxChars; i++, xPos += 8)
     {
         spriteId = CreateSprite(&sSpriteTemplate_Underscore, xPos + 3, 60, 0);
-        gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 1 : 3;
+        gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 0 : 3;
         gSprites[spriteId].data[0] = i;
         gSprites[spriteId].invisible = TRUE;
     }
@@ -1553,9 +1555,8 @@ static void NamingScreen_CreatePlayerIcon(void)
 
     rivalGfxId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, sNamingScreen->monSpecies);
     spriteId = CreateObjectGraphicsSprite(rivalGfxId, SpriteCallbackDummy, 56, 37, 0);
-    // BG3 carries the Birch shadow/UI overlay at priority 2 on the player-name screen.
-    // Keep the player icon in front of it.
-    gSprites[spriteId].oam.priority = 1;
+    // BG3 is front-masked on the player-name screen; keep the player icon above it.
+    gSprites[spriteId].oam.priority = 0;
     StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_SOUTH);
 }
 
@@ -2119,6 +2120,26 @@ static void ClearMenuTilePixel(u8 tile, u8 x, u8 y)
         *pixelByte &= 0xF0;
 }
 
+static u8 GetMenuTilePixel(u8 tile, u8 x, u8 y)
+{
+    u8 pixelByte = sNamingScreen->tileBuffer[tile * 32 + y * 4 + x / 2];
+
+    if (x & 1)
+        return pixelByte >> 4;
+    else
+        return pixelByte & 0x0F;
+}
+
+static void ClearMenuTileColor(u8 tile, u8 color)
+{
+    u8 x, y;
+
+    for (y = 0; y < 8; y++)
+        for (x = 0; x < 8; x++)
+            if (GetMenuTilePixel(tile, x, y) == color)
+                ClearMenuTilePixel(tile, x, y);
+}
+
 static void CopyMenuTilePixel(u8 tile, u8 dstX, u8 dstY, u8 srcX, u8 srcY)
 {
     u8 *dstByte = &sNamingScreen->tileBuffer[tile * 32 + dstY * 4 + dstX / 2];
@@ -2157,6 +2178,17 @@ static void SanitizePlayerNamingPanelGfx(void)
     for (y = 0; y < 8; y++)
         for (x = 0; x < sBottomLeftOutsideWidth[y]; x++)
             ClearMenuTilePixel(0x0C, x, y);
+
+    // Remove old naming-screen background colors from the rounded corner
+    // tiles so their transparent pixels cleanly reveal the card beneath.
+    ClearMenuTileColor(0x0A, 0x0F);
+    ClearMenuTileColor(0x0C, 0x0F);
+    ClearMenuTileColor(0x0A, 0x07);
+    ClearMenuTileColor(0x0C, 0x07);
+    ClearMenuTileColor(0x0A, 0x08);
+    ClearMenuTileColor(0x0C, 0x08);
+    ClearMenuTileColor(0x0A, 0x09);
+    ClearMenuTileColor(0x0C, 0x09);
 }
 
 static void DrawPlayerNamingScreenPanel(void)
@@ -2191,8 +2223,8 @@ static void DrawPlayerNamingScreenBackground(void)
     u16 *backgroundTilemap = (u16 *)sNamingScreen->tilemapBuffer0;
     u16 *shadowTilemap = (u16 *)sNamingScreen->tilemapBuffer3;
 
-    DecompressDataWithHeaderWram(gBirchSpeechBackgroundTilemap, backgroundTilemap);
-    SetTilemapPalette(backgroundTilemap, BIRCH_NAME_TILEMAP_ENTRY_COUNT, BIRCH_NAME_BG_PALETTE);
+    DecompressDataWithHeaderWram(gBirchSpeechShadowTilemap, backgroundTilemap);
+    SetTilemapPalette(backgroundTilemap, BIRCH_NAME_TILEMAP_ENTRY_COUNT, BIRCH_NAME_SHADOW_PALETTE);
     DecompressDataWithHeaderWram(gBirchSpeechShadowTilemap, shadowTilemap);
     SetTilemapPalette(shadowTilemap, BIRCH_NAME_TILEMAP_ENTRY_COUNT, BIRCH_NAME_SHADOW_PALETTE);
     DrawPlayerNamingScreenPanel();
@@ -2363,17 +2395,9 @@ static void EnablePlayerNamingPanelFront(void)
     if (!IsPlayerNamingScreen())
         return;
 
-    // Protect ONLY the rounded name panel itself for the entire screen.
-    //
-    // Panel tile bounds:
-    //   left   = 4 tiles  = 32 px
-    //   right  = 26 tiles = 208 px (exclusive)
-    //   top    = 3 tiles  = 24 px
-    //   bottom = 9 tiles  = 72 px (exclusive)
-    //
-    // Outside this rectangle the keyboard behaves normally. Inside it BG1/BG2
-    // are never allowed to draw, so YOUR NAME behaves as a true foreground layer
-    // both while idle and while keyboard pages are swapping.
+    // WIN0 covers the rounded name panel. BG3 is the front layer here, but
+    // BG1/BG2 remain enabled underneath so transparent corner pixels reveal
+    // the keyboard cards during page swaps instead of the Birch background.
     SetGpuReg(
         REG_OFFSET_WIN0H,
         WIN_RANGE(
@@ -2385,24 +2409,27 @@ static void EnablePlayerNamingPanelFront(void)
         REG_OFFSET_WIN0V,
         WIN_RANGE(
             BIRCH_NAME_PANEL_TOP * 8,
-            (BIRCH_NAME_PANEL_TOP + BIRCH_NAME_PANEL_HEIGHT) * 8 + 3
+            (BIRCH_NAME_PANEL_TOP + BIRCH_NAME_PANEL_HEIGHT) * 8
         )
     );
 
-    // WININ low six bits = BG0, BG1, BG2, BG3, OBJ, color effects.
-    // 0x39 = BG0 + BG3 + OBJ + color effects.
-    // Keep BG0 for the transparent rounded-corner pixels, keep BG3 for the
-    // actual panel/text, keep OBJ for player/arrow/underscores, and exclude
-    // ONLY the two moving keyboard BGs.
-    SetGpuReg(REG_OFFSET_WININ, 0x0039);
+    // WIN1 keeps the top command banner visible. Outside WIN0/WIN1, BG3 is
+    // disabled so its front priority cannot cover the keyboard area.
+    SetGpuReg(REG_OFFSET_WIN1H, WIN_RANGE(0, DISPLAY_WIDTH));
+    SetGpuReg(REG_OFFSET_WIN1V, WIN_RANGE(0, 2 * 8));
 
-    // Outside WIN0 everything renders normally.
-    // 0x3F = BG0 + BG1 + BG2 + BG3 + OBJ + color effects.
-    SetGpuReg(REG_OFFSET_WINOUT, 0x003F);
+    // WIN0: all layers. BG3 priority keeps the solid name panel in front;
+    // transparent BG3 pixels still reveal BG1/BG2 keyboard cards.
+    // WIN1: BG0 + BG3 + OBJ + effects for the top banner.
+    SetGpuReg(REG_OFFSET_WININ, 0x393F);
+
+    // Outside the windows, hide only BG3. The keyboard and lower background
+    // layers continue to render normally.
+    SetGpuReg(REG_OFFSET_WINOUT, 0x0037);
 
     SetGpuReg(
         REG_OFFSET_DISPCNT,
-        GetGpuReg(REG_OFFSET_DISPCNT) | DISPCNT_WIN0_ON
+        GetGpuReg(REG_OFFSET_DISPCNT) | DISPCNT_WIN0_ON | DISPCNT_WIN1_ON
     );
 }
 
@@ -2413,12 +2440,14 @@ static void DisablePlayerNamingPanelFront(void)
 
     SetGpuReg(
         REG_OFFSET_DISPCNT,
-        GetGpuReg(REG_OFFSET_DISPCNT) & ~DISPCNT_WIN0_ON
+        GetGpuReg(REG_OFFSET_DISPCNT) & ~(DISPCNT_WIN0_ON | DISPCNT_WIN1_ON)
     );
 
     // Leave no window state behind for the next input/action.
     SetGpuReg(REG_OFFSET_WIN0H, 0);
     SetGpuReg(REG_OFFSET_WIN0V, 0);
+    SetGpuReg(REG_OFFSET_WIN1H, 0);
+    SetGpuReg(REG_OFFSET_WIN1V, 0);
     SetGpuReg(REG_OFFSET_WININ, 0);
     SetGpuReg(REG_OFFSET_WINOUT, 0);
 }
