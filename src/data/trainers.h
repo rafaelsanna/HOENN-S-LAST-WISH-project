@@ -14157,7 +14157,7 @@ F_TRAINER_FEMALE |
                 MOVE_KNOCK_OFF,
                 MOVE_ICE_SHARD,
                 MOVE_SWORDS_DANCE,
-                MOVE_ICICLE_CRASH,
+                MOVE_ICE_PUNCH,
             },
             },
             {
@@ -14944,9 +14944,9 @@ F_TRAINER_FEMALE |
             .moves = {
 #line 5746
                 MOVE_ICE_SHARD,
-                MOVE_EARTHQUAKE,
+                MOVE_HIGH_HORSEPOWER,
                 MOVE_KNOCK_OFF,
-                MOVE_ICICLE_CRASH,
+                MOVE_ICICLE_SPEAR,
             },
             },
             {
@@ -15001,7 +15001,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_LAPRAS,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5771
-            .heldItem = ITEM_ASSAULT_VEST,
+            .heldItem = ITEM_HEAVY_DUTY_BOOTS,
 #line 5773
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5774
@@ -15462,11 +15462,11 @@ F_TRAINER_FEMALE |
 #line 5966
             .lvl = 68,
 #line 5969
-            .nature = NATURE_ADAMANT,
+            .nature = NATURE_LONELY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 5970
-                MOVE_DRAGON_DANCE,
+                MOVE_FLY,
                 MOVE_EXTREME_SPEED,
                 MOVE_ICE_BEAM,
                 MOVE_DRAGON_CLAW,
@@ -15477,7 +15477,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_SCEPTILE,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5975
-            .heldItem = ITEM_WEAKNESS_POLICY,
+            .heldItem = ITEM_SAFETY_GOGGLES,
 #line 5977
             .iv = TRAINER_PARTY_IVS(29, 29, 29, 29, 29, 29),
 #line 5978
@@ -21598,7 +21598,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_CROBAT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 8368
-            .heldItem = ITEM_ASSAULT_VEST,
+            .heldItem = ITEM_METAL_COAT,
 #line 8372
             .iv = TRAINER_PARTY_IVS(30, 30, 30, 30, 30, 30),
 #line 8370
@@ -21644,9 +21644,9 @@ F_TRAINER_FEMALE |
             .species = SPECIES_SALAMENCE,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 8388
-            .heldItem = ITEM_WHITE_HERB,
+            .heldItem = ITEM_KINGS_ROCK,
 #line 8392
-            .iv = TRAINER_PARTY_IVS(30, 30, 30, 30, 30, 30),
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
 #line 8390
             .ability = ABILITY_INTIMIDATE,
 #line 8389

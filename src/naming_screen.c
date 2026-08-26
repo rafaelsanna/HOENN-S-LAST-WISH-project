@@ -492,6 +492,8 @@ static void ResetVHBlank(void);
 static void SetVBlank(void);
 static void VBlankCB_NamingScreen(void);
 static void NamingScreen_ShowBgs(void);
+static void EnablePlayerNamingPanelFront(void);
+static void DisablePlayerNamingPanelFront(void);
 static bool8 IsWideLetter(u8);
 
 void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
@@ -642,6 +644,13 @@ static void NamingScreen_InitBGs(void)
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
     SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 8));
+
+    // WIN0 becomes the permanent YOUR NAME foreground mask once BGs are shown.
+    // Initialize it disabled here.
+    SetGpuReg(REG_OFFSET_WIN0H, 0);
+    SetGpuReg(REG_OFFSET_WIN0V, 0);
+    SetGpuReg(REG_OFFSET_WININ, 0);
+    SetGpuReg(REG_OFFSET_WINOUT, 0);
 
     if (IsPlayerNamingScreen())
         SetBgTilemapBuffer(0, sNamingScreen->tilemapBuffer0);
@@ -823,6 +832,10 @@ static bool8 MainState_Exit(void)
 {
     if (!gPaletteFade.active)
     {
+        // WIN0 intentionally stays active for the entire player naming screen.
+        // Clear it only now so it cannot leak into the callback screen.
+        DisablePlayerNamingPanelFront();
+
         if (sNamingScreen->templateNum == NAMING_SCREEN_PLAYER)
             SeedRngAndSetTrainerId();
         if (sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON
@@ -876,6 +889,13 @@ static bool8 MainState_WaitSentToPCMessage(void)
 static bool8 MainState_StartPageSwap(void)
 {
     SetInputState(INPUT_STATE_DISABLED);
+
+    // The YOUR NAME foreground mask is already active permanently.
+    // Reassert the panel/text tilemap immediately before the keyboard begins
+    // moving. This is not a priority change; it simply guarantees the current
+    // name box is the one present in VRAM for the whole swap.
+    CopyBgTilemapBufferToVram(3);
+
     StartPageSwapButtonAnim();
     StartPageSwapAnim();
     SetCursorInvisibility(TRUE);
@@ -893,7 +913,8 @@ static bool8 MainState_WaitPageSwap(void)
 
     if (IsPageSwapAnimNotInProgress())
     {
-
+        // Keep the YOUR NAME foreground mask active after the animation.
+        // Disabling it here exposed the old BG1/BG2 naming-screen residue again.
         GetCursorPos(&cursorX, &cursorY);
         onLastColumn = (cursorX == GetCurrentPageColumnCount());
 
@@ -2330,6 +2351,76 @@ static void NamingScreen_ShowBgs(void)
     ShowBg(1);
     ShowBg(2);
     ShowBg(3);
+
+    // BG1/BG2 contain the keyboard-page tilemaps, including leftover pieces
+    // of the original naming UI above the keyboard. Keep YOUR NAME permanently
+    // in front of those two BGs for the whole player naming screen.
+    EnablePlayerNamingPanelFront();
+}
+
+static void EnablePlayerNamingPanelFront(void)
+{
+    if (!IsPlayerNamingScreen())
+        return;
+
+    // Protect ONLY the rounded name panel itself for the entire screen.
+    //
+    // Panel tile bounds:
+    //   left   = 4 tiles  = 32 px
+    //   right  = 26 tiles = 208 px (exclusive)
+    //   top    = 3 tiles  = 24 px
+    //   bottom = 9 tiles  = 72 px (exclusive)
+    //
+    // Outside this rectangle the keyboard behaves normally. Inside it BG1/BG2
+    // are never allowed to draw, so YOUR NAME behaves as a true foreground layer
+    // both while idle and while keyboard pages are swapping.
+    SetGpuReg(
+        REG_OFFSET_WIN0H,
+        WIN_RANGE(
+            BIRCH_NAME_PANEL_LEFT * 8,
+            (BIRCH_NAME_PANEL_LEFT + BIRCH_NAME_PANEL_WIDTH) * 8
+        )
+    );
+    SetGpuReg(
+        REG_OFFSET_WIN0V,
+        WIN_RANGE(
+            BIRCH_NAME_PANEL_TOP * 8,
+            (BIRCH_NAME_PANEL_TOP + BIRCH_NAME_PANEL_HEIGHT) * 8 + 3
+        )
+    );
+
+    // WININ low six bits = BG0, BG1, BG2, BG3, OBJ, color effects.
+    // 0x39 = BG0 + BG3 + OBJ + color effects.
+    // Keep BG0 for the transparent rounded-corner pixels, keep BG3 for the
+    // actual panel/text, keep OBJ for player/arrow/underscores, and exclude
+    // ONLY the two moving keyboard BGs.
+    SetGpuReg(REG_OFFSET_WININ, 0x0039);
+
+    // Outside WIN0 everything renders normally.
+    // 0x3F = BG0 + BG1 + BG2 + BG3 + OBJ + color effects.
+    SetGpuReg(REG_OFFSET_WINOUT, 0x003F);
+
+    SetGpuReg(
+        REG_OFFSET_DISPCNT,
+        GetGpuReg(REG_OFFSET_DISPCNT) | DISPCNT_WIN0_ON
+    );
+}
+
+static void DisablePlayerNamingPanelFront(void)
+{
+    if (!IsPlayerNamingScreen())
+        return;
+
+    SetGpuReg(
+        REG_OFFSET_DISPCNT,
+        GetGpuReg(REG_OFFSET_DISPCNT) & ~DISPCNT_WIN0_ON
+    );
+
+    // Leave no window state behind for the next input/action.
+    SetGpuReg(REG_OFFSET_WIN0H, 0);
+    SetGpuReg(REG_OFFSET_WIN0V, 0);
+    SetGpuReg(REG_OFFSET_WININ, 0);
+    SetGpuReg(REG_OFFSET_WINOUT, 0);
 }
 
 // Always false (presumably for non-latin languages)

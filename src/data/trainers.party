@@ -5411,7 +5411,7 @@ Jolly Nature
 - Knock Off  
 - Ice Shard  
 - Swords Dance  
-- Icicle Crash  
+- Ice Punch  
 
 Gallade (M) @ Life Orb  
 Level: 70
@@ -5744,9 +5744,9 @@ IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Snow Cloak  
 Jolly Nature
 - Ice Shard  
-- Earthquake  
+- High Horsepower 
 - Knock Off  
-- Icicle Crash  
+- Icicle Spear
 
 Froslass (F) @ Spell Tag  
 Level: 66
@@ -5768,7 +5768,7 @@ Adamant Nature
 - Sucker Punch  
 - Avalanche  
 
-Lapras @ Assault Vest  
+Lapras @ Heavy-Duty Boots 
 Level: 66
 IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 Ability: Water Absorb  
@@ -5966,13 +5966,13 @@ Dragonite @ Expert Belt
 Level: 68
 IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Multiscale  
-Adamant Nature
-- Dragon Dance  
+Lonely Nature
+- Fly  
 - Extreme Speed  
 - Ice Beam
 - Dragon Claw  
 
-Sceptile @ Weakness Policy  
+Sceptile @ Safety Goggles 
 Level: 68
 IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 Ability: Poison Touch  
@@ -8365,7 +8365,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Mind Blown  
 - Dark Pulse   
 
-Crobat @ Assault Vest
+Crobat @ Metal Coat
 Level: 69
 Ability: Levitate 
 Adamant Nature
@@ -8385,11 +8385,11 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Meteor Mash  
 - Zen Headbutt  
 
-Salamence @ White Herb   
+Salamence @ King's Rock   
 Level: 70 
 Ability: Intimidate  
 Mild Nature   
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Draco Meteor
 - Fire Blast
 - Iron Head  
