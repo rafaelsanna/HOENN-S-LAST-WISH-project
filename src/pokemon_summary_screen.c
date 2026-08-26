@@ -95,6 +95,15 @@
 #define SUMMARY_EXP_HEADER_PAL   11
 #define SUMMARY_EXP_DRAW_PAL     12
 #define SUMMARY_EXP_ERASE_PAL    13
+#define SUMMARY_INFO_MEMO_PAL    14
+
+// Canonical Summary UI accents.
+// Red: positive/Nature-buffed accent and warnings.
+// Blue: negative/Nature-nerfed accent and EXP/progress accent.
+#define SUMMARY_UI_RED           RGB(31,12,12)
+#define SUMMARY_UI_RED_SHADOW    RGB(17, 4, 5)
+#define SUMMARY_UI_BLUE          RGB(12,22,31)
+#define SUMMARY_UI_BLUE_SHADOW   RGB(7,14,24)
 
 // Dynamic fields for the Pokémon Info page
 #define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
@@ -544,10 +553,10 @@ static const struct WindowTemplate sSummaryTemplate[] =
         .bg = 0,
         .tilemapLeft = 0,
         .tilemapTop = 18,
-        .width = 6,
+        .width = 10,       // full 80 px STATUS strip
         .height = 2,
-        .paletteNum = 6,
-        .baseBlock = 319,
+        .paletteNum = 5,   // dedicated solid-gray STATUS palette
+        .baseBlock = 729,  // safe block after the EXP overlay (719..728)
     },
     [PSS_LABEL_WINDOW_MOVES_POWER_ACC] = {
         .bg = 0,
@@ -662,7 +671,7 @@ static const struct WindowTemplate sPageInfoTemplate[] =
         .tilemapTop = 14,
         .width = 18,
         .height = 6,
-        .paletteNum = 6,
+        .paletteNum = SUMMARY_INFO_MEMO_PAL,
         .baseBlock = 575,
     },
 };
@@ -782,7 +791,7 @@ static void (*const sTextPrinterTasks[])(u8 taskId) =
     [PSS_PAGE_CONTEST_MOVES] = Task_PrintContestMoves
 };
 
-static const u8 sMemoNatureTextColor[] = _("{COLOR LIGHT_RED}{SHADOW DARK_GRAY}");
+static const u8 sMemoNatureTextColor[] = _("{COLOR}{07}{SHADOW}{08}"); // private memo red
 static const u8 sMemoMiscTextColor[] = _("{COLOR WHITE}{SHADOW DARK_GRAY}"); // This is also affected by palettes, apparently
 static const u8 sStatsLeftColumnLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}\n{DYNAMIC 2}\n{DYNAMIC 3}");
 static const u8 sStatsLeftIVEVColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
@@ -1135,7 +1144,7 @@ static const struct OamData sOamData_StatusCondition =
     .matrixNum = 0,
     .size = SPRITE_SIZE(32x8),
     .tileNum = 0,
-    .priority = 3,
+    .priority = 0, // keep PSN/PAR/BRN visible above the now-opaque BG0 STATUS bar
     .paletteNum = 0,
     .affineParam = 0,
 };
@@ -1493,31 +1502,34 @@ static void ApplySummaryScreenDarkTheme(void)
             // 10/11: finish the gradient in purple-gray instead of black
             // 13: dark label shadow for clean white lettering
             // 15: upper portrait-frame bevel now matches the dark pink target tone
-            RGB(11, 9,16), RGB(2, 2, 3), RGB(31,31,31), RGB(13,12,17),
+            // Yellow-guide contour fix:
+            // index 1  was #101018 -> dark/mid lilac
+            // index 13 was #292939 -> brighter mid lilac
+            RGB(11, 9,16), RGB(12, 9,17), RGB(31,31,31), RGB(13,12,17),
             RGB(12, 9,17), RGB(11, 9,16), RGB(18,14,24), RGB(21,13,27),
             RGB(16,10,21), RGB(12, 9,17), RGB(9, 7,13), RGB(7, 6,10),
-            RGB(26,22,31), RGB(5, 5, 7), RGB(11, 9,16), RGB(12, 9,17),
+            RGB(26,22,31), RGB(16,10,21), RGB(11, 9,16), RGB(12, 9,17),
         },
-        // Palette 1: Contest page — same pink/charcoal family.
+        // Palette 1: Contest page — same cleaned lilac contour as INFO.
         {
-            RGB(11,10,15), RGB(2, 2, 3), RGB(26,22,31), RGB(12, 9,17),
-            RGB(13,12,17), RGB(23,19,28), RGB(18,14,24), RGB(21,13,27),
-            RGB(16,10,21), RGB(13,12,17), RGB(12, 9,17), RGB(18,14,24),
-            RGB(7, 7,10), RGB(11,10,15), RGB(18,14,24), RGB(4, 4, 5),
+            RGB(11,10,15), RGB(12, 9,17), RGB(26,22,31), RGB(12, 9,17),
+            RGB(12, 9,17), RGB(23,19,28), RGB(18,14,24), RGB(21,13,27),
+            RGB(16,10,21), RGB(12, 9,17), RGB(12, 9,17), RGB(18,14,24),
+            RGB(7, 7,10), RGB(16,10,21), RGB(18,14,24), RGB(12, 9,17),
         },
-        // Palette 2: Skills page.
+        // Palette 2: Skills page — keeps STATUS/lower-left framing lilac.
         {
-            RGB(11,10,15), RGB(2, 2, 3), RGB(23,19,28), RGB(12, 9,17),
+            RGB(11,10,15), RGB(12, 9,17), RGB(23,19,28), RGB(12, 9,17),
             RGB(18,14,24), RGB(26,22,31), RGB(11,10,15), RGB(21,13,27),
-            RGB(16,10,21), RGB(13,12,17), RGB(12, 9,17), RGB(18,14,24),
-            RGB(7, 7,10), RGB(23,19,28), RGB(18,14,24), RGB(11,10,15),
+            RGB(16,10,21), RGB(12, 9,17), RGB(12, 9,17), RGB(18,14,24),
+            RGB(7, 7,10), RGB(16,10,21), RGB(18,14,24), RGB(12, 9,17),
         },
-        // Palette 3: Battle Moves page.
+        // Palette 3: Battle Moves page — same cleaned lilac contour.
         {
-            RGB(11,10,15), RGB(2, 2, 3), RGB(23,19,28), RGB(18,14,24),
+            RGB(11,10,15), RGB(12, 9,17), RGB(23,19,28), RGB(18,14,24),
             RGB(12, 9,17), RGB(26,22,31), RGB(11,10,15), RGB(21,13,27),
-            RGB(16,10,21), RGB(13,12,17), RGB(12, 9,17), RGB(18,14,24),
-            RGB(7, 7,10), RGB(23,19,28), RGB(18,14,24), RGB(11,10,15),
+            RGB(16,10,21), RGB(12, 9,17), RGB(12, 9,17), RGB(18,14,24),
+            RGB(7, 7,10), RGB(16,10,21), RGB(18,14,24), RGB(12, 9,17),
         },
         // Palette 4: top header.
         // The target has three very distinct blocks:
@@ -1536,6 +1548,18 @@ static void ApplySummaryScreenDarkTheme(void)
         CpuCopy16(sPinkDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
+    // Palette 5: dedicated STATUS strip.
+    // IMPORTANT: BG color index 0 is transparent on GBA, so the actual bar
+    // uses non-zero indices 1/2.
+    base = BG_PLTT_ID(5);
+    for (i = 0; i < 16; i++)
+        gPlttBufferUnfaded[base + i] = RGB(7, 7,10);
+
+    gPlttBufferUnfaded[base + 1] = RGB(7, 7,10);    // solid interior #393952-ish
+    gPlttBufferUnfaded[base + 2] = RGB(13,12,17);   // lighter gray/lilac border
+    gPlttBufferUnfaded[base + 3] = RGB(31,31,31);   // STATUS text
+    gPlttBufferUnfaded[base + 4] = RGB(3, 3, 5);    // text shadow
+
     // Palette 6: body/data windows and most Summary Screen text.
     base = BG_PLTT_ID(6);
     gPlttBufferUnfaded[base + 0]  = RGB(11,10,15);   // purple-gray fill
@@ -1543,7 +1567,20 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 2]  = RGB(2, 2, 3);    // near-black shadow
     gPlttBufferUnfaded[base + 3]  = RGB(31,31,31);   // labels / values
     gPlttBufferUnfaded[base + 4]  = RGB(7, 7,10);    // dark gray shadow
+    gPlttBufferUnfaded[base + 5]  = SUMMARY_UI_RED;  // Nature buff
+    gPlttBufferUnfaded[base + 8]  = SUMMARY_UI_BLUE; // Nature nerf
     gPlttBufferUnfaded[base + 15] = RGB(11,10,15);   // opaque window fill
+
+    // Palette 14: private Trainer Memo palette.
+    // Clone palette 6 first so white/gray/background stay identical.
+    // Only 7/8 become the brighter memo-red pair.
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(6),
+        gPlttBufferUnfaded + BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL),
+        PLTT_SIZE_4BPP
+    );
+    gPlttBufferUnfaded[BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL) + 7] = SUMMARY_UI_RED;
+    gPlttBufferUnfaded[BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL) + 8] = SUMMARY_UI_RED_SHADOW;
 
     // Palette 7: top-right prompt and small header fields.
     base = BG_PLTT_ID(7);
@@ -1563,8 +1600,8 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 4]  = RGB(15,12, 0);
     gPlttBufferUnfaded[base + 5]  = RGB(31,16, 0);
     gPlttBufferUnfaded[base + 6]  = RGB(16, 7, 0);
-    gPlttBufferUnfaded[base + 7]  = RGB(31, 4, 4);
-    gPlttBufferUnfaded[base + 8]  = RGB(15, 1, 1);
+    gPlttBufferUnfaded[base + 7]  = SUMMARY_UI_RED;
+    gPlttBufferUnfaded[base + 8]  = SUMMARY_UI_RED_SHADOW;
     gPlttBufferUnfaded[base + 15] = RGB(11,10,15);
 
     // Palette 15: relearn/start prompts.
@@ -1589,6 +1626,11 @@ static void ApplySummaryScreenDarkTheme(void)
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(15),
         gPlttBufferFaded   + BG_PLTT_ID(15),
+        PLTT_SIZE_4BPP
+    );
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL),
+        gPlttBufferFaded   + BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL),
         PLTT_SIZE_4BPP
     );
 
@@ -1631,15 +1673,15 @@ static void InitSkillsGuidePalettes(void)
         gPlttBufferUnfaded + expLabelBase,
         PLTT_SIZE_4BPP
     );
-    gPlttBufferUnfaded[expLabelBase + 7] = RGB(5,14,26); // #2973D6
-    gPlttBufferUnfaded[expLabelBase + 8] = RGB(2, 6,13); // #10316B
+    gPlttBufferUnfaded[expLabelBase + 7] = SUMMARY_UI_BLUE; // canonical light blue
+    gPlttBufferUnfaded[expLabelBase + 8] = SUMMARY_UI_BLUE_SHADOW; // canonical blue shadow
 
     // Dedicated draw palette for the overlay window.
     // 0 must remain transparent.
     gPlttBufferUnfaded[expDrawBase + 0] = RGB(0, 0, 0);
     gPlttBufferUnfaded[expDrawBase + 1] = RGB(31,31,31); // white outline
-    gPlttBufferUnfaded[expDrawBase + 2] = RGB(5,14,26);  // light blue  #2973D6
-    gPlttBufferUnfaded[expDrawBase + 3] = RGB(2, 6,13);  // dark blue   #10316B
+    gPlttBufferUnfaded[expDrawBase + 2] = SUMMARY_UI_BLUE; // canonical light blue
+    gPlttBufferUnfaded[expDrawBase + 3] = SUMMARY_UI_BLUE_SHADOW; // canonical blue shadow
     gPlttBufferUnfaded[expDrawBase + 4] = RGB(10,10,11); // light gray  #52525A
     gPlttBufferUnfaded[expDrawBase + 5] = RGB(7, 7,10);  // dark gray   #393952
 
@@ -2054,11 +2096,11 @@ static void Task_HandleInput(u8 taskId)
         {
             ChangeSummaryPokemon(taskId, 1);
         }
-        else if ((JOY_NEW(DPAD_LEFT)) || GetLRKeysPressed() == MENU_L_PRESSED)
+        else if (JOY_NEW(DPAD_LEFT))
         {
             ChangePage(taskId, -1);
         }
-        else if ((JOY_NEW(DPAD_RIGHT)) || GetLRKeysPressed() == MENU_R_PRESSED)
+        else if (JOY_NEW(DPAD_RIGHT))
         {
             ChangePage(taskId, 1);
         }
@@ -2932,11 +2974,11 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
                 data[0] = 4;
                 ChangeSelectedMove(data, 1, &sMonSummaryScreen->firstMoveIndex);
             }
-            else if (JOY_NEW(DPAD_LEFT) || GetLRKeysPressed() == MENU_L_PRESSED)
+            else if (JOY_NEW(DPAD_LEFT))
             {
                 ChangePage(taskId, -1);
             }
-            else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == MENU_R_PRESSED)
+            else if (JOY_NEW(DPAD_RIGHT))
             {
                 ChangePage(taskId, 1);
             }
@@ -3013,7 +3055,7 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
             data[1] = 0;
             gTasks[taskId].func = Task_HandleReplaceMoveInput;
         }
-        else if (JOY_NEW(DPAD_LEFT) || GetLRKeysPressed() == MENU_L_PRESSED)
+        else if (JOY_NEW(DPAD_LEFT))
         {
             if (sMonSummaryScreen->currPageIndex != PSS_PAGE_BATTLE_MOVES)
             {
@@ -3027,7 +3069,7 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
                 HandleAppealJamTilemap(9, -2, move);
             }
         }
-        else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == MENU_R_PRESSED)
+        else if (JOY_NEW(DPAD_RIGHT))
         {
             if (sMonSummaryScreen->currPageIndex != PSS_PAGE_CONTEST_MOVES)
             {
@@ -3361,8 +3403,8 @@ static void DrawExperienceProgressBar(struct Pokemon *unused)
     // Reassert the exact guide colors at draw time. This prevents any later
     // palette user from changing the bar's empty stripes or outline.
     gPlttBufferUnfaded[palBase + 1] = RGB(31,31,31); // white
-    gPlttBufferUnfaded[palBase + 2] = RGB(5,14,26);  // light blue  #2973D6
-    gPlttBufferUnfaded[palBase + 3] = RGB(2, 6,13);  // dark blue   #10316B
+    gPlttBufferUnfaded[palBase + 2] = SUMMARY_UI_BLUE; // canonical light blue
+    gPlttBufferUnfaded[palBase + 3] = SUMMARY_UI_BLUE_SHADOW; // canonical blue shadow
     gPlttBufferUnfaded[palBase + 4] = RGB(10,10,11); // light gray  #52525A
     gPlttBufferUnfaded[palBase + 5] = RGB(7, 7,10);  // dark gray   #393952
     CpuCopy16(
@@ -3628,7 +3670,19 @@ static void PrintPageNamesAndStats(void)
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT, gText_Speed2, statsXPos, 33, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP, gText_ExpPoints, 6, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP, gText_NextLv, 6, 17, 0, 1);
+    // STATUS: exactly one interior color + a lighter 1px border.
+    // Never use PIXEL_FILL(0) here: BG palette index 0 is transparent and
+    // would reveal the old two-tone status artwork underneath.
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(1));
+
+    // 80x16 outer border, 1 pixel thick.
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 0, 80, 1);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 15, 80, 1);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 0, 1, 16);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 79, 0, 1, 16);
+
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, gText_Status, 2, 1, 0, 1);
+    CopyWindowToVram(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, COPYWIN_GFX);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_POWER_ACC, gText_Power, 0, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_POWER_ACC, gText_Accuracy2, 0, 17, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM, gText_Appeal, 0, 1, 0, 1);
@@ -4238,10 +4292,12 @@ static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
     {
         // IV mode uses IV quality, never Nature:
         // 31 = perfect (blue), 0 = worst (red), 1-30 = neutral white.
+        // NatureUp is the canonical RED accent and NatureDown the BLUE accent,
+        // so IV quality intentionally uses them in the opposite direction.
         if (stat == MAX_PER_STAT_IVS)
-            txtPtr = StringCopy(dst, sTextNatureUp);
+            txtPtr = StringCopy(dst, sTextNatureDown); // blue
         else if (stat == 0)
-            txtPtr = StringCopy(dst, sTextNatureDown);
+            txtPtr = StringCopy(dst, sTextNatureUp);   // red
         else
             txtPtr = StringCopy(dst, sTextNatureNeutral);
     }
