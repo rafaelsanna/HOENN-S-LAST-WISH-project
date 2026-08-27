@@ -29,6 +29,7 @@
 #include "overworld.h"
 #include "walda_phrase.h"
 #include "main.h"
+#include "random.h"
 #include "decompress.h"
 #include "constants/event_objects.h"
 #include "constants/rgb.h"
@@ -75,7 +76,21 @@ enum {
 
 // Constant horizontal slide for the Pokémon-naming background.
 // 8.8 fixed-point: 0x100 = 1 pixel per frame, matching Snowball's base speed.
-#define MON_NAME_BG_SCROLL_SPEED          0x100
+#define MON_NAME_BG_SCROLL_SPEED          0x040
+
+// Vertical star layer for Pokémon naming screens.
+// Ported from the custom main-menu starfield, but kept behind the naming UI.
+#define MON_NAME_STAR_COUNT               30
+#define MON_NAME_STAR_GFX_TAG             0x5A00
+#define MON_NAME_STAR_PAL_TAG_BASE        0x5A10
+#define MON_NAME_STAR_PRIORITY            3
+
+enum
+{
+    MON_NAME_STAR_MEDIUM,
+    MON_NAME_STAR_LARGE,
+    MON_NAME_STAR_SIZE_COUNT
+};
 
 enum {
     GFXTAG_BACK_BUTTON,
@@ -224,6 +239,99 @@ static const u8 sPCIconOn_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_on.4
 static const u8 sMonNamingBackground_Gfx[] = INCBIN_U8("graphics/naming_screen/bg.4bpp");
 static const u16 sMonNamingBackground_Pal[] = INCBIN_U16("graphics/naming_screen/bg.gbapal");
 static const u16 sMonNamingBackground_Tilemap[] = INCBIN_U16("graphics/naming_screen/bg.bin");
+
+// ---------------------------------------------------------------------------
+// Pokémon naming stars
+// ---------------------------------------------------------------------------
+// Two 8x8 4bpp tiles: medium and large cross-shaped stars.
+static const u32 sMonNamingStarTiles[][8] =
+{
+    // Medium
+    {
+        0x00000000,
+        0x00010000,
+        0x00111000,
+        0x00010000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+    },
+    // Large
+    {
+        0x00010000,
+        0x00010000,
+        0x00111000,
+        0x01111100,
+        0x00111000,
+        0x00010000,
+        0x00010000,
+        0x00000000,
+    },
+};
+
+// Four glow levels. Palette index 0 stays transparent; the star uses index 1.
+static const u16 sMonNamingStarPal0[16] = { [1] = RGB( 7, 9,14) };
+static const u16 sMonNamingStarPal1[16] = { [1] = RGB(14,16,22) };
+static const u16 sMonNamingStarPal2[16] = { [1] = RGB(22,24,29) };
+static const u16 sMonNamingStarPal3[16] = { [1] = RGB(31,31,31) };
+
+static const struct SpriteSheet sMonNamingStarSheet =
+{
+    .data = sMonNamingStarTiles,
+    .size = sizeof(sMonNamingStarTiles),
+    .tag = MON_NAME_STAR_GFX_TAG,
+};
+
+static const struct SpritePalette sMonNamingStarPalettes[] =
+{
+    {sMonNamingStarPal0, MON_NAME_STAR_PAL_TAG_BASE + 0},
+    {sMonNamingStarPal1, MON_NAME_STAR_PAL_TAG_BASE + 1},
+    {sMonNamingStarPal2, MON_NAME_STAR_PAL_TAG_BASE + 2},
+    {sMonNamingStarPal3, MON_NAME_STAR_PAL_TAG_BASE + 3},
+    {}
+};
+
+static const struct OamData sOamData_MonNamingStar =
+{
+    .shape = SPRITE_SHAPE(8x8),
+    .size = SPRITE_SIZE(8x8),
+    // BG0 custom art is priority 3. OBJ priority 3 places the stars directly
+    // over that background while the priority 0/1/2 naming UI remains above.
+    .priority = MON_NAME_STAR_PRIORITY,
+};
+
+static const union AnimCmd sMonNamingStarAnimMedium[] =
+{
+    ANIMCMD_FRAME(MON_NAME_STAR_MEDIUM, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sMonNamingStarAnimLarge[] =
+{
+    ANIMCMD_FRAME(MON_NAME_STAR_LARGE, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sMonNamingStarAnimTable[] =
+{
+    sMonNamingStarAnimMedium,
+    sMonNamingStarAnimLarge
+};
+
+static const struct SpriteTemplate sMonNamingStarTemplate =
+{
+    .tileTag = MON_NAME_STAR_GFX_TAG,
+    .paletteTag = MON_NAME_STAR_PAL_TAG_BASE + 1,
+    .oam = &sOamData_MonNamingStar,
+    .anims = sMonNamingStarAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static u8 sMonNamingStarSpriteIds[MON_NAME_STAR_COUNT];
+static u8 sMonNamingStarPaletteNums[4];
 
 static const u16 sKeyboard_Pal[] = INCBIN_U16("graphics/naming_screen/keyboard.gbapal");
 static const u16 sRival_Pal[] = INCBIN_U16("graphics/naming_screen/rival.gbapal"); // Unused, leftover from FRLG rival
@@ -589,6 +697,10 @@ static void DrawPlayerNamingScreenPanel(void);
 static void DrawMonNamingScreenBackground(void);
 static void DrawMonNamingScreenPanel(void);
 static void UpdateMonNamingBackgroundScroll(void);
+static void LoadMonNamingStarGfx(void);
+static void CreateMonNamingStars(void);
+static void DestroyMonNamingStars(void);
+static void Task_MonNamingStars(u8 taskId);
 static void SanitizePlayerNamingPanelGfx(void);
 static void SetTilemapPalette(u16 *, u16, u8);
 static void NamingScreen_Dummy(u8, u8);
@@ -960,6 +1072,9 @@ static bool8 MainState_Exit(void)
         // WIN0 intentionally stays active for the entire player naming screen.
         // Clear it only now so it cannot leak into the callback screen.
         DisablePlayerNamingPanelFront();
+
+        if (IsMonNamingScreen())
+            DestroyMonNamingStars();
 
         if (sNamingScreen->templateNum == NAMING_SCREEN_PLAYER)
             SeedRngAndSetTrainerId();
@@ -1390,6 +1505,9 @@ static void CreateSprites(void)
     CreateBackOkSprites();
     CreateTextEntrySprites();
     CreateInputTargetIcon();
+
+    if (IsMonNamingScreen())
+        CreateMonNamingStars();
 }
 
 static void CreateCursorSprite(void)
@@ -2217,6 +2335,9 @@ static void LoadGfx(void)
     }
     LoadSpriteSheets(sSpriteSheets);
     LoadSpritePalettes(sSpritePalettes);
+
+    if (IsMonNamingScreen())
+        LoadMonNamingStarGfx();
 }
 
 static void CreateHelperTasks(void)
@@ -2393,6 +2514,159 @@ static void DrawMonNamingScreenPanel(void)
             dst[y * MON_NAME_TILEMAP_WIDTH + x]
                 = src[y * MON_NAME_TILEMAP_WIDTH + x];
         }
+    }
+}
+
+static void LoadMonNamingStarGfx(void)
+{
+    u8 i;
+
+    LoadSpriteSheet(&sMonNamingStarSheet);
+    LoadSpritePalettes(sMonNamingStarPalettes);
+
+    // Resolve the four palette tags once. The naming screen already owns
+    // several OBJ palettes, so don't assume fixed slots like 8..11.
+    for (i = 0; i < 4; i++)
+        sMonNamingStarPaletteNums[i] =
+            IndexOfSpritePaletteTag(MON_NAME_STAR_PAL_TAG_BASE + i);
+}
+
+static void CreateMonNamingStars(void)
+{
+    u8 i;
+
+    for (i = 0; i < MON_NAME_STAR_COUNT; i++)
+    {
+        u8 id;
+        u8 sizeType;
+
+        sMonNamingStarSpriteIds[i] = SPRITE_NONE;
+
+        id = CreateSprite(
+            &sMonNamingStarTemplate,
+            Random2() % DISPLAY_WIDTH,
+            Random2() % DISPLAY_HEIGHT,
+            0
+        );
+
+        if (id == MAX_SPRITES)
+            continue;
+
+        sMonNamingStarSpriteIds[i] = id;
+
+        // ~60% medium, ~40% large, matching the main-menu effect.
+        sizeType = (Random2() % 10 < 6)
+                 ? MON_NAME_STAR_MEDIUM
+                 : MON_NAME_STAR_LARGE;
+        StartSpriteAnim(&gSprites[id], sizeType);
+
+        // data[0] = random glow phase
+        // data[1] = glow counter
+        // data[2] = vertical speed class
+        // data[3] = movement delay
+        // data[4] = depth/size, also selects glow palette range
+        gSprites[id].data[0] = Random2() & 0xFF;
+        gSprites[id].data[1] = 0;
+        gSprites[id].data[2] = (sizeType == MON_NAME_STAR_MEDIUM) ? 1 : 2;
+        gSprites[id].data[3] = 0;
+        gSprites[id].data[4] = sizeType;
+
+        // Start each star at a different visible glow level.
+        {
+            u8 phase = (u8)gSprites[id].data[0];
+            u8 triangle = (phase < 128) ? phase : (u8)(255 - phase);
+            u8 glowLevel = triangle >> 5; // 0..3
+
+            if (glowLevel > 3)
+                glowLevel = 3;
+
+            if (sMonNamingStarPaletteNums[glowLevel] != 0xFF)
+                gSprites[id].oam.paletteNum = sMonNamingStarPaletteNums[glowLevel];
+        }
+    }
+
+    CreateTask(Task_MonNamingStars, 3);
+}
+
+static void DestroyMonNamingStars(void)
+{
+    u8 i;
+    u8 taskId = FindTaskIdByFunc(Task_MonNamingStars);
+
+    if (taskId != TASK_NONE)
+        DestroyTask(taskId);
+
+    for (i = 0; i < MON_NAME_STAR_COUNT; i++)
+    {
+        u8 id = sMonNamingStarSpriteIds[i];
+
+        if (id != SPRITE_NONE && id < MAX_SPRITES && gSprites[id].inUse)
+            DestroySprite(&gSprites[id]);
+
+        sMonNamingStarSpriteIds[i] = SPRITE_NONE;
+    }
+}
+
+static void Task_MonNamingStars(u8 taskId)
+{
+    u8 i;
+
+    // Safety if another callback ever reaches this task during teardown.
+    if (sNamingScreen == NULL || !IsMonNamingScreen())
+    {
+        DestroyTask(taskId);
+        return;
+    }
+
+    for (i = 0; i < MON_NAME_STAR_COUNT; i++)
+    {
+        u8 id = sMonNamingStarSpriteIds[i];
+        struct Sprite *spr;
+        u8 phase;
+        u8 triangle;
+        u8 glowLevel;
+        u8 paletteNum;
+
+        if (id == SPRITE_NONE || id >= MAX_SPRITES)
+            continue;
+
+        spr = &gSprites[id];
+        if (!spr->inUse)
+            continue;
+
+        // Gentle vertical fall:
+        // medium = 1 px every 4 frames
+        // large  = 1 px every 8 frames
+        spr->data[3]++;
+        if (spr->data[3] >= spr->data[2] * 4)
+        {
+            spr->y++;
+            spr->data[3] = 0;
+        }
+
+        // Infinite vertical loop.
+        if (spr->y > DISPLAY_HEIGHT + 16)
+        {
+            spr->y = -8;
+            spr->x = Random2() % DISPLAY_WIDTH;
+        }
+
+        // Four-level triangular glow:
+        // dim -> medium -> bright -> white -> bright -> medium -> dim.
+        //
+        // The random phase stored in data[0] keeps the stars asynchronous.
+        // 256 frames per full pulse keeps the twinkle soft rather than frantic.
+        spr->data[1] = (spr->data[1] + 1) & 0xFF;
+        phase = (u8)((spr->data[1] + spr->data[0]) & 0xFF);
+        triangle = (phase < 128) ? phase : (u8)(255 - phase);
+
+        glowLevel = triangle >> 5; // 0..3 across the triangle
+        if (glowLevel > 3)
+            glowLevel = 3;
+
+        paletteNum = sMonNamingStarPaletteNums[glowLevel];
+        if (paletteNum != 0xFF)
+            spr->oam.paletteNum = paletteNum;
     }
 }
 

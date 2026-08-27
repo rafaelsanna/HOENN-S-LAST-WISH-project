@@ -58,6 +58,10 @@ struct MainMenuResources
     u16 iconBoxSpriteIds[6];
     u16 iconMonSpriteIds[6];
     u16 mugshotSpriteId;
+    u16 celebiSpriteId;
+    u16 jirachiSpriteId;
+    u16 bgScrollX;       // sub-tile 8.8 offset, always 0..7.99 px
+    u8 bgVirtualTileX;   // 0..59 in original+mirrored virtual background
     u8 sSelectedOption;
 };
 
@@ -100,6 +104,41 @@ enum
 #define NUM_STARS       30
 #define STAR_TAG        5000
 #define STAR_PRIORITY   2
+#define STAR_PALETTE_SLOT_FIRST          12
+
+// Slow decorative flyers behind the menu UI.
+#define MAIN_MENU_CELEBI_TAG                5100
+#define MAIN_MENU_JIRACHI_TAG               5101
+#define MAIN_MENU_FLYER_PRIORITY            2
+#define MAIN_MENU_FLYER_RESPAWN_BASE_DELAY  120
+#define MAIN_MENU_FLYER_RESPAWN_DELAY_VAR   60
+
+// Broad random cruising band shared by both flyers.
+// Each spawn picks a fresh horizontal flight height anywhere in this range.
+// The safety gap prevents Celebi/Jirachi from spawning on nearly the same line.
+#define MAIN_MENU_FLYER_MIN_Y             40
+#define MAIN_MENU_FLYER_MAX_Y            142
+#define MAIN_MENU_FLYER_Y_SAFETY_GAP      24
+#define MAIN_MENU_FLYER_Y_RANDOM_TRIES    12
+
+// Authored first pass: keep the first appearance low and easy to notice.
+// Once that pass finishes, all later spawns use the random-Y system.
+#define MAIN_MENU_CELEBI_FIRST_Y          136
+#define MAIN_MENU_JIRACHI_FIRST_Y         104
+
+// Lowercase custom background:
+// graphics/ui_main_menu/bg.png + graphics/ui_main_menu/bg.bin
+//
+// Horizontal scroll uses the same 8.8 fixed-point speed as the Pokémon
+// naming screen: 0x080 = 0.5 pixel per frame.
+#define MAIN_MENU_BG_SCROLL_SPEED        0x020
+#define MAIN_MENU_BG_TILEMAP_WIDTH       32
+#define MAIN_MENU_BG_TILEMAP_HEIGHT      20
+#define MAIN_MENU_BG_VISIBLE_COLS        30
+#define MAIN_MENU_BG_VIRTUAL_COLS        (MAIN_MENU_BG_VISIBLE_COLS * 2)
+#define MAIN_MENU_BG_TILE_WIDTH_FIXED    (8 << 8)
+#define MAIN_MENU_BG_PALETTE_OFFSET      1
+#define MAIN_MENU_BG_TILEMAP_BUFFER_SIZE 0x800
 
 // Apenas dois tamanhos: MEDIUM e LARGE
 enum {
@@ -127,6 +166,8 @@ static void Task_MainMenuWaitFadeIn(u8 taskId);
 static void Task_MainMenuMain(u8 taskId);
 static void MainMenu_InitializeGPUWindows(void);
 static void MoveHWindowsWithInput(void);
+static void UpdateMainMenuBackgroundScroll(void);
+static void BuildMainMenuBackgroundTilemap(void);
 
 static void CreateMugshot(void);
 static void DestroyMugshot(void);
@@ -140,6 +181,18 @@ static u8 sStarSpriteIds[NUM_STARS];
 static void Task_FloatingStars(u8 taskId);
 static void CreateStars(void);
 static void LoadStarGfx(void);
+
+static void LoadMainMenuFlyerGfx(void);
+static void CreateMainMenuFlyers(void);
+static void DestroyMainMenuFlyers(void);
+static void SpriteCB_MainMenuCelebi(struct Sprite *sprite);
+static void SpriteCB_MainMenuJirachi(struct Sprite *sprite);
+static void UpdateMainMenuFlyerBob(struct Sprite *sprite);
+static u16 GetMainMenuFlyerRespawnDelay(void);
+static s16 GetMainMenuFlyerRandomY(bool8 isCelebi);
+static void SpawnMainMenuFlyerAtY(struct Sprite *sprite, bool8 isCelebi, s16 y);
+static void SpawnMainMenuFlyer(struct Sprite *sprite, bool8 isCelebi);
+static void QueueMainMenuFlyerRespawn(struct Sprite *sprite, bool8 isCelebi, u16 delay);
 
 static void Task_ReturnToMainMenu(u8 taskId);
 
@@ -158,10 +211,13 @@ static const struct BgTemplate sMainMenuBgTemplates[] =
         .mapBaseIndex = 30,
         .priority = 1
     },
-    {   // BG2: Fundo estático (BG.png)
+    {   // BG2: fundo custom animado (bg.png)
         .bg = 2,
+        // Keep the custom background in the original BG2 VRAM region.
+        // charblock 1 can be overwritten by BG0/window graphics.
         .charBaseIndex = 2,
         .mapBaseIndex = 28,
+        .screenSize = 0,    // 256x256; streamed ring-buffer tilemap
         .priority = 3
     }
 };
@@ -208,9 +264,12 @@ static const u16 sMainBgPalette[]  = INCBIN_U16("graphics/ui_main_menu/main_tile
 static const u32 sMainBgTilesFem[]   = INCBIN_U32("graphics/ui_main_menu/main_tiles.4bpp.lz");
 static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.bin.lz");
 static const u16 sMainBgPaletteFem[] = INCBIN_U16("graphics/ui_main_menu/main_tiles.gbapal");
-static const u32 sStaticBgTiles[]   = INCBIN_U32("graphics/ui_main_menu/BG5.4bpp.lz");
-static const u32 sStaticBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/BG5.bin.lz");
-static const u16 sStaticBgPalette[] = INCBIN_U16("graphics/ui_main_menu/BG5.gbapal");
+// New lowercase background.
+// Linux is case-sensitive: lowercase bg.* is distinct from the old uppercase BG/BG5 assets.
+// bg.png -> bg.4bpp + bg.gbapal; bg.bin is the raw 32x20 text-BG tilemap.
+static const u8 sStaticBgTiles[]    = INCBIN_U8("graphics/ui_main_menu/bg.4bpp");
+static const u16 sStaticBgTilemap[] = INCBIN_U16("graphics/ui_main_menu/bg.bin");
+static const u16 sStaticBgPalette[] = INCBIN_U16("graphics/ui_main_menu/bg.gbapal");
 static const u16 sIconBox_Pal[]    = INCBIN_U16("graphics/ui_main_menu/icon_shadow.gbapal");
 static const u32 sIconBox_Gfx[]    = INCBIN_U32("graphics/ui_main_menu/icon_shadow.4bpp.lz");
 static const u16 sIconBox_PalFem[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_fem.gbapal");
@@ -219,6 +278,84 @@ static const u16 sBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brend
 static const u32 sBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.lz");
 static const u16 sMayMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/may_mugshot.gbapal");
 static const u32 sMayMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/may_mugshot.4bpp.lz");
+
+// Decorative flyers: 4 frames stacked vertically, 64x64 each.
+// The build pipeline generates .4bpp/.gbapal from celebi.png / jirachi.png.
+static const u32 sMainMenuCelebi_Gfx[]  = INCBIN_U32("graphics/ui_main_menu/celebi.4bpp");
+static const u16 sMainMenuCelebi_Pal[]  = INCBIN_U16("graphics/ui_main_menu/celebi.gbapal");
+static const u32 sMainMenuJirachi_Gfx[] = INCBIN_U32("graphics/ui_main_menu/jirachi.4bpp");
+static const u16 sMainMenuJirachi_Pal[] = INCBIN_U16("graphics/ui_main_menu/jirachi.gbapal");
+
+static const struct SpriteSheet sMainMenuCelebiSheet =
+{
+    .data = sMainMenuCelebi_Gfx,
+    .size = 0x2000, // 4 x 64x64, 4bpp
+    .tag = MAIN_MENU_CELEBI_TAG,
+};
+
+static const struct SpriteSheet sMainMenuJirachiSheet =
+{
+    .data = sMainMenuJirachi_Gfx,
+    .size = 0x2000,
+    .tag = MAIN_MENU_JIRACHI_TAG,
+};
+
+static const struct SpritePalette sMainMenuCelebiPalette =
+{
+    .data = sMainMenuCelebi_Pal,
+    .tag = MAIN_MENU_CELEBI_TAG,
+};
+
+static const struct SpritePalette sMainMenuJirachiPalette =
+{
+    .data = sMainMenuJirachi_Pal,
+    .tag = MAIN_MENU_JIRACHI_TAG,
+};
+
+static const struct OamData sOamData_MainMenuFlyer =
+{
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+    // BG0 text/UI = priority 0, BG1 menu art = priority 1.
+    // OBJ priority 2 therefore stays behind the menu, but above BG2.
+    .priority = MAIN_MENU_FLYER_PRIORITY,
+};
+
+static const union AnimCmd sAnim_MainMenuFlyer[] =
+{
+    ANIMCMD_FRAME(0,   12),
+    ANIMCMD_FRAME(64,  12),
+    ANIMCMD_FRAME(128, 12),
+    ANIMCMD_FRAME(192, 12),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_MainMenuFlyer[] =
+{
+    sAnim_MainMenuFlyer,
+};
+
+static const struct SpriteTemplate sMainMenuCelebiTemplate =
+{
+    .tileTag = MAIN_MENU_CELEBI_TAG,
+    .paletteTag = MAIN_MENU_CELEBI_TAG,
+    .oam = &sOamData_MainMenuFlyer,
+    .anims = sAnims_MainMenuFlyer,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_MainMenuCelebi,
+};
+
+static const struct SpriteTemplate sMainMenuJirachiTemplate =
+{
+    .tileTag = MAIN_MENU_JIRACHI_TAG,
+    .paletteTag = MAIN_MENU_JIRACHI_TAG,
+    .oam = &sOamData_MainMenuFlyer,
+    .anims = sAnims_MainMenuFlyer,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_MainMenuJirachi,
+};
 
 //==========SPRITE TEMPLATES (UI)==========//
 #define TAG_MUGSHOT  30012
@@ -297,6 +434,10 @@ void MainMenu_Init(MainCallback callback)
     }
     sMainMenuDataPtr->gfxLoadState = 0;
     sMainMenuDataPtr->savedCallback = callback;
+    sMainMenuDataPtr->celebiSpriteId = SPRITE_NONE;
+    sMainMenuDataPtr->jirachiSpriteId = SPRITE_NONE;
+    sMainMenuDataPtr->bgScrollX = 0;
+    sMainMenuDataPtr->bgVirtualTileX = 0;
     for (i = 0; i < 6; i++)
     {
         sMainMenuDataPtr->iconBoxSpriteIds[i] = SPRITE_NONE;
@@ -310,6 +451,7 @@ static void MainMenu_RunSetup(void) { while (MainMenu_DoGfxSetup() != TRUE); }
 static void MainMenu_MainCB(void)
 {
     RunTasks();
+    UpdateMainMenuBackgroundScroll();
     AnimateSprites();
     BuildOamBuffer();
     DoScheduledBgTilemapCopiesToVram();
@@ -329,6 +471,9 @@ static void MainMenu_FreeResources(void)
     for (int i = 0; i < NUM_STARS; i++)
         if (sStarSpriteIds[i] != SPRITE_NONE)
             DestroySprite(&gSprites[sStarSpriteIds[i]]);
+
+    DestroyMainMenuFlyers();
+
     try_free(sMainMenuDataPtr);
     try_free(sBg1TilemapBuffer);
     try_free(sBg2TilemapBuffer);
@@ -419,6 +564,8 @@ static bool8 MainMenu_DoGfxSetup(void)
         CreateIconShadow();
         CreatePartyMonIcons();
         CreateMugshot();
+        LoadMainMenuFlyerGfx();
+        CreateMainMenuFlyers();
         CreateStars();
         CreateTask(Task_MainMenuWaitFadeIn, 0);
         BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
@@ -465,20 +612,14 @@ case 1:
     } 
     break;
     case 2:
-        ResetTempTileDataBuffers();
-        DecompressAndCopyTileDataToVram(2, sStaticBgTiles, 0, 0, 0);
-        sMainMenuDataPtr->gfxLoadState++; 
+        // Raw 4bpp generated from graphics/ui_main_menu/bg.png.
+        LoadBgTiles(2, sStaticBgTiles, sizeof(sStaticBgTiles), 0);
+        sMainMenuDataPtr->gfxLoadState++;
         break;
     case 3:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            u16 *bgTilemap = (u16 *)sBg2TilemapBuffer;
-            DecompressDataWithHeaderWram(sStaticBgTilemap, sBg2TilemapBuffer);
-            for (int i = 0; i < 1024; i++) 
-                bgTilemap[i] = (bgTilemap[i] & 0x0FFF) | (1 << 12);
-            ScheduleBgCopyTilemapToVram(2);
-            sMainMenuDataPtr->gfxLoadState++;
-        } 
+        BuildMainMenuBackgroundTilemap();
+        ScheduleBgCopyTilemapToVram(2);
+        sMainMenuDataPtr->gfxLoadState++;
         break;
     case 4:
         if (gSaveBlock2Ptr->playerGender == MALE)
@@ -497,7 +638,13 @@ case 1:
             LoadSpritePalette(&sSpritePal_MayMugshot);
             LoadPalette(sMainBgPaletteFem, 0, 32);
         }
-        LoadPalette(sStaticBgPalette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        // The custom bg uses one 16-color palette only.
+        // Keep palette 0 reserved for the main UI and load the bg into slot 1.
+        LoadPalette(
+            sStaticBgPalette,
+            BG_PLTT_ID(MAIN_MENU_BG_PALETTE_OFFSET),
+            PLTT_SIZE_4BPP
+        );
         sMainMenuDataPtr->gfxLoadState++; 
         break;
     default:
@@ -507,15 +654,88 @@ case 1:
     return FALSE;
 }
 
+static void BuildMainMenuBackgroundTilemap(void)
+{
+    u16 *dst = (u16 *)sBg2TilemapBuffer;
+    u16 y;
+    u16 x;
+
+    memset(sBg2TilemapBuffer, 0, MAIN_MENU_BG_TILEMAP_BUFFER_SIZE);
+
+    for (y = 0; y < MAIN_MENU_BG_TILEMAP_HEIGHT; y++)
+    {
+        const u16 *srcRow =
+            &sStaticBgTilemap[y * MAIN_MENU_BG_TILEMAP_WIDTH];
+        u16 *dstRow = &dst[y * MAIN_MENU_BG_TILEMAP_WIDTH];
+
+        // Fill all 32 hardware columns from the 60-column virtual strip.
+        // The source's columns 30/31 are padding and are never used.
+        for (x = 0; x < MAIN_MENU_BG_TILEMAP_WIDTH; x++)
+        {
+            u16 virtualCol =
+                (sMainMenuDataPtr->bgVirtualTileX + x)
+                % MAIN_MENU_BG_VIRTUAL_COLS;
+            u16 sourceCol;
+            u16 entry;
+
+            if (virtualCol < MAIN_MENU_BG_VISIBLE_COLS)
+            {
+                // First half: original image, columns 0..29.
+                sourceCol = virtualCol;
+                entry = srcRow[sourceCol];
+            }
+            else
+            {
+                // Second half: true horizontal mirror.
+                // virtual 30 -> source 29
+                // virtual 59 -> source 0
+                sourceCol = (MAIN_MENU_BG_VIRTUAL_COLS - 1) - virtualCol;
+                entry = srcRow[sourceCol] ^ 0x0400; // toggle HFLIP
+            }
+
+            dstRow[x] = (entry & 0x0FFF)
+                      | (MAIN_MENU_BG_PALETTE_OFFSET << 12);
+        }
+    }
+}
+
+static void UpdateMainMenuBackgroundScroll(void)
+{
+    if (sMainMenuDataPtr == NULL)
+        return;
+
+    // 0x040 = 0.25 px/frame in 8.8 fixed point.
+    sMainMenuDataPtr->bgScrollX += MAIN_MENU_BG_SCROLL_SPEED;
+
+    // Keep hardware scrolling inside one tile. Each time we cross 8 px,
+    // advance the virtual texture by one column and rebuild the 32-column
+    // viewport. This allows an arbitrary seamless virtual loop while BG2
+    // itself remains a simple 256x256 text background.
+    if (sMainMenuDataPtr->bgScrollX >= MAIN_MENU_BG_TILE_WIDTH_FIXED)
+    {
+        sMainMenuDataPtr->bgScrollX -= MAIN_MENU_BG_TILE_WIDTH_FIXED;
+
+        sMainMenuDataPtr->bgVirtualTileX++;
+        if (sMainMenuDataPtr->bgVirtualTileX >= MAIN_MENU_BG_VIRTUAL_COLS)
+            sMainMenuDataPtr->bgVirtualTileX = 0;
+
+        BuildMainMenuBackgroundTilemap();
+        ScheduleBgCopyTilemapToVram(2);
+    }
+
+    ChangeBgX(2, sMainMenuDataPtr->bgScrollX, BG_COORD_SET);
+}
+
 static bool8 MainMenu_InitBgs(void)
 {
     ResetAllBgsCoordinates();
     ResetBgsAndClearDma3BusyFlags(0);
+    ChangeBgX(2, 0, BG_COORD_SET);
     InitBgsFromTemplates(0, sMainMenuBgTemplates, NELEMS(sMainMenuBgTemplates));
     sBg1TilemapBuffer = Alloc(0x800); if (!sBg1TilemapBuffer) return FALSE;
     memset(sBg1TilemapBuffer, 0, 0x800); SetBgTilemapBuffer(1, sBg1TilemapBuffer); ScheduleBgCopyTilemapToVram(1);
-    sBg2TilemapBuffer = Alloc(0x800); if (!sBg2TilemapBuffer) return FALSE;
-    memset(sBg2TilemapBuffer, 0, 0x800); SetBgTilemapBuffer(2, sBg2TilemapBuffer); ScheduleBgCopyTilemapToVram(2);
+    sBg2TilemapBuffer = Alloc(MAIN_MENU_BG_TILEMAP_BUFFER_SIZE); if (!sBg2TilemapBuffer) return FALSE;
+    memset(sBg2TilemapBuffer, 0, MAIN_MENU_BG_TILEMAP_BUFFER_SIZE); SetBgTilemapBuffer(2, sBg2TilemapBuffer); ScheduleBgCopyTilemapToVram(2);
     return TRUE;
 }
 
@@ -706,7 +926,8 @@ static const u32 sStarTiles[][8] = {
     },
 };
 
-// Quatro níveis de brilho (OBJ palette slots 8-11)
+// Quatro níveis de brilho. Usamos slots OBJ 12-15 para isolar
+// as estrelas das paletas dos flyers e evitar o "preto estranho".
 static const u16 sStarPal0[4] = { RGB(0,0,0), RGB( 7, 9,14), RGB(0,0,0), RGB(0,0,0) }; // muito escuro
 static const u16 sStarPal1[4] = { RGB(0,0,0), RGB(14,16,22), RGB(0,0,0), RGB(0,0,0) }; // escuro-médio
 static const u16 sStarPal2[4] = { RGB(0,0,0), RGB(22,24,29), RGB(0,0,0), RGB(0,0,0) }; // médio-claro
@@ -747,11 +968,11 @@ static const struct SpriteTemplate sStarTemplate = {
 static void LoadStarGfx(void)
 {
     LoadSpriteSheet(&sStarSheet);
-    LoadSpritePalette(&sStarPaletteDummy);               // registra a tag
-    LoadPalette(sStarPal0, OBJ_PLTT_ID(8),  sizeof(sStarPal0)); // dim
-    LoadPalette(sStarPal1, OBJ_PLTT_ID(9),  sizeof(sStarPal1)); // escuro-médio
-    LoadPalette(sStarPal2, OBJ_PLTT_ID(10), sizeof(sStarPal2)); // médio-claro
-    LoadPalette(sStarPal3, OBJ_PLTT_ID(11), sizeof(sStarPal3)); // brilhante
+    LoadSpritePalette(&sStarPaletteDummy); // registra a tag
+    LoadPalette(sStarPal0, OBJ_PLTT_ID(STAR_PALETTE_SLOT_FIRST + 0), sizeof(sStarPal0));
+    LoadPalette(sStarPal1, OBJ_PLTT_ID(STAR_PALETTE_SLOT_FIRST + 1), sizeof(sStarPal1));
+    LoadPalette(sStarPal2, OBJ_PLTT_ID(STAR_PALETTE_SLOT_FIRST + 2), sizeof(sStarPal2));
+    LoadPalette(sStarPal3, OBJ_PLTT_ID(STAR_PALETTE_SLOT_FIRST + 3), sizeof(sStarPal3));
 }
 
 static void CreateStars(void)
@@ -821,8 +1042,267 @@ static void Task_FloatingStars(u8 taskId)
 
         // depth: 0 = medium (usa slots 9-10), 1 = large (usa slots 10-11)
         u8 depth = (u8)spr->data[4];
-        spr->oam.paletteNum = 9 + depth + hiPhase;
+        spr->oam.paletteNum = STAR_PALETTE_SLOT_FIRST + depth + hiPhase;
     }
+}
+
+//==========DECORATIVE FLYERS==========//
+static void LoadMainMenuFlyerGfx(void)
+{
+    LoadSpriteSheet(&sMainMenuCelebiSheet);
+    LoadSpritePalette(&sMainMenuCelebiPalette);
+    LoadSpriteSheet(&sMainMenuJirachiSheet);
+    LoadSpritePalette(&sMainMenuJirachiPalette);
+}
+
+static u16 GetMainMenuFlyerRespawnDelay(void)
+{
+    return MAIN_MENU_FLYER_RESPAWN_BASE_DELAY
+        + (Random2() % (MAIN_MENU_FLYER_RESPAWN_DELAY_VAR + 1));
+}
+
+static s16 GetMainMenuFlyerRandomY(bool8 isCelebi)
+{
+    u16 otherSpriteId;
+    s16 otherY = -1000;
+    s16 candidate;
+    u8 i;
+
+    // Compare against the other flyer, if it exists.
+    otherSpriteId = isCelebi
+        ? sMainMenuDataPtr->jirachiSpriteId
+        : sMainMenuDataPtr->celebiSpriteId;
+
+    if (otherSpriteId != SPRITE_NONE
+     && otherSpriteId < MAX_SPRITES
+     && gSprites[otherSpriteId].inUse)
+    {
+        // data[4] stores the other flyer's chosen base flight height.
+        otherY = gSprites[otherSpriteId].data[4];
+    }
+
+    // Try several random heights until one is safely separated.
+    for (i = 0; i < MAIN_MENU_FLYER_Y_RANDOM_TRIES; i++)
+    {
+        candidate = MAIN_MENU_FLYER_MIN_Y
+                  + (Random2() % (MAIN_MENU_FLYER_MAX_Y - MAIN_MENU_FLYER_MIN_Y + 1));
+
+        if (otherY == -1000
+         || abs(candidate - otherY) >= MAIN_MENU_FLYER_Y_SAFETY_GAP)
+        {
+            return candidate;
+        }
+    }
+
+    // Deterministic fallback in the unlikely event all random tries were too close.
+    // Choose the opposite side of the vertical range from the other flyer.
+    if (otherY != -1000)
+    {
+        s16 midpoint = (MAIN_MENU_FLYER_MIN_Y + MAIN_MENU_FLYER_MAX_Y) / 2;
+
+        if (otherY <= midpoint)
+            candidate = otherY + MAIN_MENU_FLYER_Y_SAFETY_GAP;
+        else
+            candidate = otherY - MAIN_MENU_FLYER_Y_SAFETY_GAP;
+
+        if (candidate < MAIN_MENU_FLYER_MIN_Y)
+            candidate = MAIN_MENU_FLYER_MIN_Y;
+        if (candidate > MAIN_MENU_FLYER_MAX_Y)
+            candidate = MAIN_MENU_FLYER_MAX_Y;
+
+        return candidate;
+    }
+
+    return MAIN_MENU_FLYER_MIN_Y
+         + (Random2() % (MAIN_MENU_FLYER_MAX_Y - MAIN_MENU_FLYER_MIN_Y + 1));
+}
+
+static void SpawnMainMenuFlyerAtY(struct Sprite *sprite, bool8 isCelebi, s16 y)
+{
+    sprite->data[0] = 0;                    // subpixel timer for 0.5 px/frame
+    sprite->data[1] = 0;                    // respawn counter
+    sprite->data[2] = Random2() & 0xFF;     // bob phase
+    sprite->data[3] = FALSE;                // active
+    sprite->data[4] = y;                    // base Y
+    sprite->data[5] = 2 + (Random2() % 3);  // amplitude 2..4
+    sprite->data[6] = 2 + (Random2() % 2);  // phase step 2..3
+    sprite->data[7] = GetMainMenuFlyerRespawnDelay();
+
+    sprite->x = isCelebi ? -40 : (DISPLAY_WIDTH + 40);
+    sprite->y = sprite->data[4];
+    sprite->x2 = 0;
+    sprite->y2 = 0;
+    sprite->invisible = FALSE;
+    sprite->oam.priority = MAIN_MENU_FLYER_PRIORITY;
+}
+
+static void SpawnMainMenuFlyer(struct Sprite *sprite, bool8 isCelebi)
+{
+    // Normal respawns are procedural/random.
+    SpawnMainMenuFlyerAtY(sprite, isCelebi, GetMainMenuFlyerRandomY(isCelebi));
+}
+
+static void QueueMainMenuFlyerRespawn(struct Sprite *sprite, bool8 isCelebi, u16 delay)
+{
+    sprite->data[0] = 0;
+    sprite->data[1] = 0;
+    sprite->data[3] = TRUE;  // waiting
+    sprite->data[7] = delay;
+    sprite->x = isCelebi ? -40 : (DISPLAY_WIDTH + 40);
+    sprite->y2 = 0;
+    sprite->invisible = TRUE;
+}
+
+static void UpdateMainMenuFlyerBob(struct Sprite *sprite)
+{
+    u8 primaryPhase;
+    u8 secondaryPhase;
+    s16 primaryWave;
+    s16 secondaryWave;
+
+    sprite->data[2] = (sprite->data[2] + sprite->data[6]) & 0xFF;
+    primaryPhase = (u8)sprite->data[2];
+    secondaryPhase = (u8)((sprite->data[2] * 3) & 0xFF);
+
+    // Two tiny sine waves make the flight less straight / more gliding.
+    primaryWave = Sin(primaryPhase, sprite->data[5]);
+    secondaryWave = Sin(secondaryPhase, 1);
+
+    sprite->y = sprite->data[4];
+    sprite->y2 = primaryWave + secondaryWave;
+}
+
+static void SpriteCB_MainMenuCelebi(struct Sprite *sprite)
+{
+    if (sprite->data[3])
+    {
+        if (++sprite->data[1] >= sprite->data[7])
+            SpawnMainMenuFlyer(sprite, TRUE);
+        return;
+    }
+
+    UpdateMainMenuFlyerBob(sprite);
+
+    // 0.5 px/frame horizontal cruise.
+    if (++sprite->data[0] >= 2)
+    {
+        sprite->data[0] = 0;
+        sprite->x++;
+    }
+
+    if (sprite->x > DISPLAY_WIDTH + 40)
+        QueueMainMenuFlyerRespawn(sprite, TRUE, GetMainMenuFlyerRespawnDelay());
+}
+
+static void SpriteCB_MainMenuJirachi(struct Sprite *sprite)
+{
+    if (sprite->data[3])
+    {
+        s16 delay = sprite->data[7];
+
+        if (delay < 0)
+        {
+            // One-time first appearance: keep the original authored height.
+            if (++sprite->data[1] >= -delay)
+                SpawnMainMenuFlyerAtY(sprite, FALSE, MAIN_MENU_JIRACHI_FIRST_Y);
+        }
+        else if (++sprite->data[1] >= delay)
+        {
+            // Every later pass uses the random-height system.
+            SpawnMainMenuFlyer(sprite, FALSE);
+        }
+        return;
+    }
+
+    UpdateMainMenuFlyerBob(sprite);
+
+    // 0.5 px/frame horizontal cruise.
+    if (++sprite->data[0] >= 2)
+    {
+        sprite->data[0] = 0;
+        sprite->x--;
+    }
+
+    if (sprite->x < -40)
+        QueueMainMenuFlyerRespawn(sprite, FALSE, GetMainMenuFlyerRespawnDelay());
+}
+
+static void CreateMainMenuFlyers(void)
+{
+    u8 id;
+
+    // FIRST PASS: Celebi always takes the original lower route.
+    // After it leaves the screen, its callback switches to random Y forever.
+    id = CreateSprite(
+        &sMainMenuCelebiTemplate,
+        -40,
+        MAIN_MENU_CELEBI_FIRST_Y,
+        MAIN_MENU_FLYER_PRIORITY
+    );
+    if (id != MAX_SPRITES)
+    {
+        sMainMenuDataPtr->celebiSpriteId = id;
+        SpawnMainMenuFlyerAtY(&gSprites[id], TRUE, MAIN_MENU_CELEBI_FIRST_Y);
+        gSprites[id].data[2] = 32;
+    }
+
+    // FIRST PASS: Jirachi also uses its original visible route.
+    // Keep the initial stagger, then enable random Y from the second pass on.
+    id = CreateSprite(
+        &sMainMenuJirachiTemplate,
+        DISPLAY_WIDTH + 40,
+        MAIN_MENU_JIRACHI_FIRST_Y,
+        MAIN_MENU_FLYER_PRIORITY
+    );
+    if (id != MAX_SPRITES)
+    {
+        sMainMenuDataPtr->jirachiSpriteId = id;
+
+        SpawnMainMenuFlyerAtY(
+            &gSprites[id],
+            FALSE,
+            MAIN_MENU_JIRACHI_FIRST_Y
+        );
+
+        gSprites[id].data[2] = 160;
+        gSprites[id].data[0] = 0;
+        gSprites[id].data[1] = 0;
+        gSprites[id].data[3] = TRUE;
+
+        // Negative delay is a one-time marker used by Jirachi's callback:
+        // after this wait, launch the fixed first pass instead of a random one.
+        gSprites[id].data[7] =
+            -(MAIN_MENU_FLYER_RESPAWN_BASE_DELAY / 2);
+        gSprites[id].invisible = TRUE;
+    }
+}
+
+static void DestroyMainMenuFlyers(void)
+{
+    if (sMainMenuDataPtr == NULL)
+        return;
+
+    if (sMainMenuDataPtr->celebiSpriteId != SPRITE_NONE
+     && sMainMenuDataPtr->celebiSpriteId < MAX_SPRITES
+     && gSprites[sMainMenuDataPtr->celebiSpriteId].inUse)
+    {
+        DestroySprite(&gSprites[sMainMenuDataPtr->celebiSpriteId]);
+    }
+
+    if (sMainMenuDataPtr->jirachiSpriteId != SPRITE_NONE
+     && sMainMenuDataPtr->jirachiSpriteId < MAX_SPRITES
+     && gSprites[sMainMenuDataPtr->jirachiSpriteId].inUse)
+    {
+        DestroySprite(&gSprites[sMainMenuDataPtr->jirachiSpriteId]);
+    }
+
+    sMainMenuDataPtr->celebiSpriteId = SPRITE_NONE;
+    sMainMenuDataPtr->jirachiSpriteId = SPRITE_NONE;
+
+    FreeSpriteTilesByTag(MAIN_MENU_CELEBI_TAG);
+    FreeSpritePaletteByTag(MAIN_MENU_CELEBI_TAG);
+    FreeSpriteTilesByTag(MAIN_MENU_JIRACHI_TAG);
+    FreeSpritePaletteByTag(MAIN_MENU_JIRACHI_TAG);
 }
 
 //==========INPUT CONTROL==========//
