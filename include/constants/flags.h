@@ -669,6 +669,7 @@
 #define FLAG_HIDDEN_ITEM_FIERY_PATH_REVIVE                   (FLAG_HIDDEN_ITEMS_START + 0x7C)
 #define FLAG_HIDDEN_ITEM_PETALBURG_CAVE_STAR_PIECE           (FLAG_HIDDEN_ITEMS_START + 0x7D)
 #define FLAG_HIDDEN_ITEM_ROUTE_115_PP_UP_2                 (FLAG_HIDDEN_ITEMS_START + 0x7E)
+#define FLAG_HIDDEN_ITEM_ROUTE_114_STARDUST                (FLAG_HIDDEN_ITEMS_START + 0x7F)
 
 
 #define DN_FLAG_SEARCHING                       0x271
@@ -1249,7 +1250,7 @@
 #define FLAG_ITEM_FORTREE_CITY_TIMID_MINT                          0x4A5
 #define FLAG_ITEM_ROUTE_117_CARBOS                                  0x4A6
 #define FLAG_ITEM_ROUTE_115_PROTEIN                                 0x4A7
-#define FLAG_UNUSED_0x4A8                                           0x4A8 // Unused Flag
+#define FLAG_ITEM_ROUTE_114_RAZOR_FANG                             0x4A8
 #define FLAG_UNUSED_0x4A9                                           0x4A9 // Unused Flag
 #define FLAG_UNUSED_0x4AA                                           0x4AA // Unused Flag
 #define FLAG_UNUSED_0x4AB                                           0x4AB // Unused Flag
