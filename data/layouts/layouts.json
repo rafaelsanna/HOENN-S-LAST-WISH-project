@@ -5010,6 +5010,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/Route120_FrogsHouse/border.bin",
       "blockdata_filepath": "data/layouts/Route120_FrogsHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROGUECANYONHOUSE",
+      "name": "ROGUECANYONHOUSE_Layout",
+      "width": 18,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/ROGUECANYONHOUSE/border.bin",
+      "blockdata_filepath": "data/layouts/ROGUECANYONHOUSE/map.bin"
     }
   ]
 }
