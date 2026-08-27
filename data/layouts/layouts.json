@@ -45,7 +45,7 @@
       "id": "LAYOUT_FORTREE_CITY",
       "name": "FortreeCity_Layout",
       "width": 40,
-      "height": 20,
+      "height": 30,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/FortreeCity/border.bin",
