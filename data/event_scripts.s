@@ -1280,3 +1280,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/AURORAGROVE/scripts.inc"
 
 	.include "data/maps/Route120_FrogsHouse/scripts.inc"
+
+	.include "data/maps/ROGUECANYONHOUSE/scripts.inc"
