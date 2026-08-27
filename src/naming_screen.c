@@ -63,6 +63,20 @@ enum {
 #define BIRCH_NAME_PANEL_WIDTH            22
 #define BIRCH_NAME_PANEL_HEIGHT           6
 
+// Pokémon nickname background (graphics/naming_screen/bg.png + bg.bin).
+// bg.bin is a raw 32x20 text-BG tilemap; bg.png is a 16-color tileset.
+#define MON_NAME_BG_PALETTE               6
+#define MON_NAME_TILEMAP_WIDTH            32
+#define MON_NAME_TILEMAP_HEIGHT           20
+#define MON_NAME_TILEMAP_ENTRY_COUNT      (MON_NAME_TILEMAP_WIDTH * MON_NAME_TILEMAP_HEIGHT)
+#define MON_NAME_VISIBLE_COLS              30
+#define MON_NAME_WRAP_COLS                 (MON_NAME_TILEMAP_WIDTH - MON_NAME_VISIBLE_COLS)
+#define MON_NAME_BG_MAP_ROWS               32
+
+// Constant horizontal slide for the Pokémon-naming background.
+// 8.8 fixed-point: 0x100 = 1 pixel per frame, matching Snowball's base speed.
+#define MON_NAME_BG_SCROLL_SPEED          0x100
+
 enum {
     GFXTAG_BACK_BUTTON,
     GFXTAG_OK_BUTTON,
@@ -181,6 +195,7 @@ struct NamingScreenData
     u16 inputCharBaseXPos;
     u16 bg1vOffset;
     u16 bg2vOffset;
+    u16 monBgScrollX; // 8.8 fixed-point; natural u16 wrap = 256 px loop
     u16 bg1Priority;
     u16 bg2Priority;
     u8 bgToReveal;
@@ -202,6 +217,14 @@ EWRAM_DATA static struct NamingScreenData *sNamingScreen = NULL;
 
 static const u8 sPCIconOff_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_off.4bpp");
 static const u8 sPCIconOn_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_on.4bpp");
+
+// Dedicated background for Pokémon naming screens.
+// bg.png -> bg.4bpp + bg.gbapal through the graphics build rules.
+// bg.bin is the user-authored 32x20 raw tilemap.
+static const u8 sMonNamingBackground_Gfx[] = INCBIN_U8("graphics/naming_screen/bg.4bpp");
+static const u16 sMonNamingBackground_Pal[] = INCBIN_U16("graphics/naming_screen/bg.gbapal");
+static const u16 sMonNamingBackground_Tilemap[] = INCBIN_U16("graphics/naming_screen/bg.bin");
+
 static const u16 sKeyboard_Pal[] = INCBIN_U16("graphics/naming_screen/keyboard.gbapal");
 static const u16 sRival_Pal[] = INCBIN_U16("graphics/naming_screen/rival.gbapal"); // Unused, leftover from FRLG rival
 
@@ -272,6 +295,38 @@ static const struct BgTemplate sPlayerNamingBgTemplates[] =
     }
 };
 
+// Pokémon nickname screen:
+// BG0 = dedicated pink background
+// BG1/BG2 = animated keyboard pages
+// BG3 = name card/banner foreground
+static const struct BgTemplate sMonNamingBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 27,
+        .priority = 3
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 29,
+        .priority = 1
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .priority = 2
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 30,
+        .priority = 0
+    }
+};
+
 static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
 {
     [WIN_KB_PAGE_1] = {
@@ -312,6 +367,56 @@ static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
     },
     [WIN_BANNER] = {
         .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = DISPLAY_TILE_WIDTH,
+        .height = 2,
+        .paletteNum = 11,
+        .baseBlock = 0x074
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const struct WindowTemplate sMonNamingWindowTemplates[WIN_COUNT + 1] =
+{
+    [WIN_KB_PAGE_1] = {
+        .bg = 1,
+        .tilemapLeft = 3,
+        .tilemapTop = 10,
+        .width = 19,
+        .height = 8,
+        .paletteNum = 10,
+        .baseBlock = 0x030
+    },
+    [WIN_KB_PAGE_2] = {
+        .bg = 2,
+        .tilemapLeft = 3,
+        .tilemapTop = 10,
+        .width = 19,
+        .height = 8,
+        .paletteNum = 10,
+        .baseBlock = 0x0C8
+    },
+    [WIN_TEXT_ENTRY] = {
+        .bg = 3,
+        .tilemapLeft = 8,
+        .tilemapTop = 6,
+        .width = 17,
+        .height = 2,
+        .paletteNum = 10,
+        .baseBlock = 0x030
+    },
+    [WIN_TEXT_ENTRY_BOX] = {
+        .bg = 3,
+        .tilemapLeft = 8,
+        .tilemapTop = 4,
+        .width = 17,
+        .height = 2,
+        .paletteNum = 10,
+        .baseBlock = 0x052
+    },
+    [WIN_BANNER] = {
+        .bg = 3,
         .tilemapLeft = 0,
         .tilemapTop = 0,
         .width = DISPLAY_TILE_WIDTH,
@@ -428,6 +533,7 @@ static void CB2_LoadNamingScreen(void);
 static void NamingScreen_Init(void);
 static void NamingScreen_InitBGs(void);
 static bool8 IsPlayerNamingScreen(void);
+static bool8 IsMonNamingScreen(void);
 static void CreateNamingScreenTask(void);
 static void Task_NamingScreen(u8 taskId);
 static bool8 MainState_FadeIn(void);
@@ -480,6 +586,9 @@ static void LoadPalettes(void);
 static void DrawBgTilemap(u8, const void *);
 static void DrawPlayerNamingScreenBackground(void);
 static void DrawPlayerNamingScreenPanel(void);
+static void DrawMonNamingScreenBackground(void);
+static void DrawMonNamingScreenPanel(void);
+static void UpdateMonNamingBackgroundScroll(void);
 static void SanitizePlayerNamingPanelGfx(void);
 static void SetTilemapPalette(u16 *, u16, u8);
 static void NamingScreen_Dummy(u8, u8);
@@ -572,6 +681,7 @@ static void NamingScreen_Init(void)
     sNamingScreen->state = STATE_FADE_IN;
     sNamingScreen->bg1vOffset = 0;
     sNamingScreen->bg2vOffset = 0;
+    sNamingScreen->monBgScrollX = 0;
     sNamingScreen->bg1Priority = BGCNT_PRIORITY(1);
     sNamingScreen->bg2Priority = BGCNT_PRIORITY(2);
     sNamingScreen->bgToReveal = 0;
@@ -591,6 +701,12 @@ static void NamingScreen_Init(void)
 static bool8 IsPlayerNamingScreen(void)
 {
     return sNamingScreen->templateNum == NAMING_SCREEN_PLAYER;
+}
+
+static bool8 IsMonNamingScreen(void)
+{
+    return sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON
+        || sNamingScreen->templateNum == NAMING_SCREEN_NICKNAME;
 }
 
 static void SetSpritesVisible(void)
@@ -619,6 +735,11 @@ static void NamingScreen_InitBGs(void)
     {
         InitBgsFromTemplates(0, sPlayerNamingBgTemplates, ARRAY_COUNT(sPlayerNamingBgTemplates));
         windowTemplates = sPlayerNamingWindowTemplates;
+    }
+    else if (IsMonNamingScreen())
+    {
+        InitBgsFromTemplates(0, sMonNamingBgTemplates, ARRAY_COUNT(sMonNamingBgTemplates));
+        windowTemplates = sMonNamingWindowTemplates;
     }
     else
     {
@@ -654,13 +775,13 @@ static void NamingScreen_InitBGs(void)
     SetGpuReg(REG_OFFSET_WININ, 0);
     SetGpuReg(REG_OFFSET_WINOUT, 0);
 
-    if (IsPlayerNamingScreen())
+    if (IsPlayerNamingScreen() || IsMonNamingScreen())
         SetBgTilemapBuffer(0, sNamingScreen->tilemapBuffer0);
     SetBgTilemapBuffer(1, sNamingScreen->tilemapBuffer1);
     SetBgTilemapBuffer(2, sNamingScreen->tilemapBuffer2);
     SetBgTilemapBuffer(3, sNamingScreen->tilemapBuffer3);
 
-    if (IsPlayerNamingScreen())
+    if (IsPlayerNamingScreen() || IsMonNamingScreen())
         FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
     FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 0x20, 0x20);
     FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 0x20, 0x20);
@@ -754,6 +875,8 @@ static bool8 MainState_FadeIn(void)
 {
     if (IsPlayerNamingScreen())
         DrawPlayerNamingScreenBackground();
+    else if (IsMonNamingScreen())
+        DrawMonNamingScreenBackground();
     else
         DrawBgTilemap(3, gNamingScreenBackground_Tilemap);
     sNamingScreen->currentPage = KBPAGE_LETTERS_UPPER;
@@ -766,7 +889,7 @@ static bool8 MainState_FadeIn(void)
     DrawTextEntry();
     DrawTextEntryBox();
     PrintControls();
-    if (IsPlayerNamingScreen())
+    if (IsPlayerNamingScreen() || IsMonNamingScreen())
         CopyBgTilemapBufferToVram(0);
     CopyBgTilemapBufferToVram(1);
     CopyBgTilemapBufferToVram(2);
@@ -1505,13 +1628,13 @@ static void CreateTextEntrySprites(void)
 
     xPos = sNamingScreen->inputCharBaseXPos - 5;
     spriteId = CreateSprite(&sSpriteTemplate_InputArrow, xPos, 56, 0);
-    gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 0 : 3;
+    gSprites[spriteId].oam.priority = (IsPlayerNamingScreen() || IsMonNamingScreen()) ? 0 : 3;
     gSprites[spriteId].invisible = TRUE;
     xPos = sNamingScreen->inputCharBaseXPos;
     for (i = 0; i < sNamingScreen->template->maxChars; i++, xPos += 8)
     {
         spriteId = CreateSprite(&sSpriteTemplate_Underscore, xPos + 3, 60, 0);
-        gSprites[spriteId].oam.priority = IsPlayerNamingScreen() ? 0 : 3;
+        gSprites[spriteId].oam.priority = (IsPlayerNamingScreen() || IsMonNamingScreen()) ? 0 : 3;
         gSprites[spriteId].data[0] = i;
         gSprites[spriteId].invisible = TRUE;
     }
@@ -1576,7 +1699,8 @@ static void NamingScreen_CreateMonIcon(void)
     LoadMonIconPalettes();
     // todo: add isShiny
     spriteId = CreateMonIcon2(sNamingScreen->monSpecies, SpriteCallbackDummy, 56, 40, 0, FALSE, sNamingScreen->monPersonality);
-    gSprites[spriteId].oam.priority = 3;
+    // BG3 is the foreground nickname card on Pokémon naming screens.
+    gSprites[spriteId].oam.priority = 0;
 }
 
 static void NamingScreen_CreateWaldaDadIcon(void)
@@ -2048,10 +2172,22 @@ static void SaveInputText(void)
 static void LoadGfx(void)
 {
     DecompressDataWithHeaderWram(gNamingScreenMenu_Gfx, sNamingScreen->tileBuffer);
+
     if (IsPlayerNamingScreen())
     {
         DecompressDataWithHeaderVram(gBirchSpeechBackgroundTiles, (void *)BG_CHAR_ADDR(1));
         DecompressDataWithHeaderVram(gBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(0));
+    }
+    else if (IsMonNamingScreen())
+    {
+        // 526 unique tiles (16832 bytes). BG0 starts at charblock 0 and this
+        // intentionally extends slightly into unused charblock 1.
+        LoadBgTiles(
+            0,
+            sMonNamingBackground_Gfx,
+            sizeof(sMonNamingBackground_Gfx),
+            0
+        );
     }
     LoadBgTiles(1, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
     LoadBgTiles(2, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
@@ -2068,8 +2204,17 @@ static void LoadGfx(void)
         // player/name panel without overwriting either asset.
         LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), BIRCH_NAME_PANEL_TILE_OFFSET);
     }
-    else
+    else if (IsMonNamingScreen())
+    {
+        // Same cleaned rounded card, but normal tile IDs because Pokémon BG3
+        // has its own charblock 3.
+        SanitizePlayerNamingPanelGfx();
         LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
+    }
+    else
+    {
+        LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
+    }
     LoadSpriteSheets(sSpriteSheets);
     LoadSpritePalettes(sSpritePalettes);
 }
@@ -2092,6 +2237,14 @@ static void LoadPalettes(void)
         LoadPalette(gBirchSpeechBackgroundPalette, BG_PLTT_ID(BIRCH_NAME_BG_PALETTE), PLTT_SIZE_4BPP);
         LoadPalette(gBirchSpeechShadowPals, BG_PLTT_ID(BIRCH_NAME_SHADOW_PALETTE), 2 * PLTT_SIZE_4BPP);
         LoadPalette(&black, BG_PLTT_ID(BIRCH_NAME_SHADOW_PALETTE), sizeof(black));
+    }
+    else if (IsMonNamingScreen())
+    {
+        LoadPalette(
+            sMonNamingBackground_Pal,
+            BG_PLTT_ID(MON_NAME_BG_PALETTE),
+            PLTT_SIZE_4BPP
+        );
     }
 }
 
@@ -2216,6 +2369,88 @@ static void DrawPlayerNamingScreenPanel(void)
                 (entry & 0xFC00) | ((tile + BIRCH_NAME_PANEL_TILE_OFFSET) & 0x03FF);
         }
     }
+}
+
+static void DrawMonNamingScreenPanel(void)
+{
+    // Use BG1 as temporary scratch before the keyboard page is drawn.
+    u16 *src = (u16 *)sNamingScreen->tilemapBuffer1;
+    u16 *dst = (u16 *)sNamingScreen->tilemapBuffer3;
+    u16 x, y;
+
+    DecompressDataWithHeaderWram(gNamingScreenBackground_Tilemap, src);
+
+    // Copy only the original rounded nickname card. The surrounding striped
+    // naming-screen BG is deliberately NOT copied.
+    for (y = BIRCH_NAME_PANEL_TOP;
+         y < BIRCH_NAME_PANEL_TOP + BIRCH_NAME_PANEL_HEIGHT;
+         y++)
+    {
+        for (x = BIRCH_NAME_PANEL_LEFT;
+             x < BIRCH_NAME_PANEL_LEFT + BIRCH_NAME_PANEL_WIDTH;
+             x++)
+        {
+            dst[y * MON_NAME_TILEMAP_WIDTH + x]
+                = src[y * MON_NAME_TILEMAP_WIDTH + x];
+        }
+    }
+}
+
+static void UpdateMonNamingBackgroundScroll(void)
+{
+    if (!IsMonNamingScreen())
+        return;
+
+    // Same basic pattern as Snowball's scrolling BG, but deliberately constant:
+    // no acceleration, no state-dependent speed.
+    //
+    // BG0 is 256 px wide. Because monBgScrollX is u16 8.8 fixed-point,
+    // overflowing from 0xFF00 + 0x100 back to 0 creates a seamless 256 px loop.
+    sNamingScreen->monBgScrollX += MON_NAME_BG_SCROLL_SPEED;
+    ChangeBgX(0, sNamingScreen->monBgScrollX, BG_COORD_SET);
+}
+
+static void DrawMonNamingScreenBackground(void)
+{
+    u16 *dst = (u16 *)sNamingScreen->tilemapBuffer0;
+    u16 y;
+    u16 x;
+
+    // The source map is authored for the visible 30-tile (240 px) viewport.
+    // When BG0 scrolls, columns 30-31 become visible for wraparound. If we
+    // copy the raw map 1:1 those off-screen columns produce a moving seam.
+    // Rebuild each row so the hidden wrap columns mirror the first visible
+    // columns, creating a seamless horizontal loop.
+    for (y = 0; y < MON_NAME_TILEMAP_HEIGHT; y++)
+    {
+        const u16 *srcRow = &sMonNamingBackground_Tilemap[y * MON_NAME_TILEMAP_WIDTH];
+        u16 *dstRow = &dst[y * MON_NAME_TILEMAP_WIDTH];
+
+        // Copy the 30 visible columns exactly as authored.
+        for (x = 0; x < MON_NAME_VISIBLE_COLS; x++)
+            dstRow[x] = (srcRow[x] & 0x0FFF) | (MON_NAME_BG_PALETTE << 12);
+
+        // Fill the two wrap columns with the first visible columns so the
+        // scroll loops cleanly instead of exposing the map's padding area.
+        for (x = 0; x < MON_NAME_WRAP_COLS; x++)
+            dstRow[MON_NAME_VISIBLE_COLS + x] = (srcRow[x] & 0x0FFF) | (MON_NAME_BG_PALETTE << 12);
+    }
+
+    // Fill the unused bottom rows too so BG0 never shows stray data if a
+    // future offset or effect exposes them.
+    for (y = MON_NAME_TILEMAP_HEIGHT; y < MON_NAME_BG_MAP_ROWS; y++)
+    {
+        const u16 *srcRow = &sMonNamingBackground_Tilemap[(y % MON_NAME_TILEMAP_HEIGHT) * MON_NAME_TILEMAP_WIDTH];
+        u16 *dstRow = &dst[y * MON_NAME_TILEMAP_WIDTH];
+
+        for (x = 0; x < MON_NAME_VISIBLE_COLS; x++)
+            dstRow[x] = (srcRow[x] & 0x0FFF) | (MON_NAME_BG_PALETTE << 12);
+
+        for (x = 0; x < MON_NAME_WRAP_COLS; x++)
+            dstRow[MON_NAME_VISIBLE_COLS + x] = (srcRow[x] & 0x0FFF) | (MON_NAME_BG_PALETTE << 12);
+    }
+
+    DrawMonNamingScreenPanel();
 }
 
 static void DrawPlayerNamingScreenBackground(void)
@@ -2348,6 +2583,7 @@ static void PrintControls(void)
 static void CB2_NamingScreen(void)
 {
     RunTasks();
+    UpdateMonNamingBackgroundScroll();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
