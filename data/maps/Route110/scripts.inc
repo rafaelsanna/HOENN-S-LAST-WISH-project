@@ -1037,7 +1037,7 @@ Route110_EventScript_RivalExit3::
 # 519 "data/maps/Route110/scripts.pory"
 Route110_EventScript_MoveRival1::
 # 520 "data/maps/Route110/scripts.pory"
-	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 33, 55
+	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 33, 58
 # 521 "data/maps/Route110/scripts.pory"
 	return
 # 522 "data/maps/Route110/scripts.pory"
@@ -1045,7 +1045,7 @@ Route110_EventScript_MoveRival1::
 # 523 "data/maps/Route110/scripts.pory"
 Route110_EventScript_MoveRival2::
 # 524 "data/maps/Route110/scripts.pory"
-	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 34, 55
+	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 34, 58
 # 525 "data/maps/Route110/scripts.pory"
 	return
 # 526 "data/maps/Route110/scripts.pory"
@@ -1053,7 +1053,7 @@ Route110_EventScript_MoveRival2::
 # 527 "data/maps/Route110/scripts.pory"
 Route110_EventScript_MoveRival3::
 # 528 "data/maps/Route110/scripts.pory"
-	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 35, 55
+	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 35, 58
 # 529 "data/maps/Route110/scripts.pory"
 	return
 # 530 "data/maps/Route110/scripts.pory"

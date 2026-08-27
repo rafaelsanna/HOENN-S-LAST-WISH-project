@@ -5020,6 +5020,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/ROGUECANYONHOUSE/border.bin",
       "blockdata_filepath": "data/layouts/ROGUECANYONHOUSE/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE110HOUSE",
+      "name": "Route110House_Layout",
+      "width": 10,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/Route110House/border.bin",
+      "blockdata_filepath": "data/layouts/Route110House/map.bin"
     }
   ]
 }

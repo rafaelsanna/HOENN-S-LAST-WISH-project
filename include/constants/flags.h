@@ -1251,7 +1251,7 @@
 #define FLAG_ITEM_ROUTE_117_CARBOS                                  0x4A6
 #define FLAG_ITEM_ROUTE_115_PROTEIN                                 0x4A7
 #define FLAG_ITEM_ROUTE_114_RAZOR_FANG                             0x4A8
-#define FLAG_UNUSED_0x4A9                                           0x4A9 // Unused Flag
+#define FLAG_ITEM_ROUTE_110_MAX_REVIVE                             0x4A9
 #define FLAG_UNUSED_0x4AA                                           0x4AA // Unused Flag
 #define FLAG_UNUSED_0x4AB                                           0x4AB // Unused Flag
 #define FLAG_UNUSED_0x4AC                                           0x4AC // Unused Flag
