@@ -7294,7 +7294,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .iconPalette = gMonIconPalette_Skarmory,
         .shinyIconPalette = gMonShinyIconPalette_Skarmory,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 9, SHADOW_SIZE_M)
+        SHADOW(-5, 14, SHADOW_SIZE_L)
         FOOTPRINT(Skarmory)
         OVERWORLD(
             sPicTable_Skarmory,

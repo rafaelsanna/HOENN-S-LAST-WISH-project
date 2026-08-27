@@ -5000,6 +5000,16 @@
       "secondary_tileset": "gTileset_DreamRealm",
       "border_filepath": "data/layouts/AURORAGROVE/border.bin",
       "blockdata_filepath": "data/layouts/AURORAGROVE/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE120_FROGS_HOUSE",
+      "name": "Route120_FrogsHouse_Layout",
+      "width": 10,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/Route120_FrogsHouse/border.bin",
+      "blockdata_filepath": "data/layouts/Route120_FrogsHouse/map.bin"
     }
   ]
 }

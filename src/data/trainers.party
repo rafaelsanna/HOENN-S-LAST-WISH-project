@@ -4574,11 +4574,27 @@ Pic: Bug Maniac
 Gender: Male
 Music: Suspicious
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer / HP Aware
 
-Surskit
-Level: 26
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Gligar
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Noctowl
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Furret
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Magcargo
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Golbat
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_DONALD ===
 Name: DONALD
@@ -4586,41 +4602,49 @@ Class: Bug Maniac
 Pic: Bug Maniac
 Gender: Male
 Music: Suspicious
-Double Battle: No
-AI: Check Bad Move
+Double Battle: Yes
+AI: Basic Trainer / HP Aware
 
-Wurmple
-Level: 24
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Ariados
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Silcoon
-Level: 24
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Forretress
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Masquerain
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Beautifly
-Level: 24
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_TAYLOR ===
 Name: TAYLOR
-Class: Bug Maniac
-Pic: Bug Maniac
-Gender: Male
+Class: Picnicker
+Pic: Picnicker
+Gender: Female
 Music: Suspicious
-Double Battle: No
-AI: Check Bad Move
+Double Battle: Yes
+AI: Basic Trainer / HP Aware
 
-Wurmple
-Level: 27
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Wigglytuff
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Cascoon
-Level: 27
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Stantler
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Dustox
-Level: 27
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Donphan
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Raticate
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_JEFFREY_1 ===
 Name: JEFFREY
@@ -9711,11 +9735,20 @@ Pic: Bird Keeper
 Gender: Male
 Music: Cool
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
+
+Skarmory
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Xatu
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Swellow
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
 
 === TRAINER_JARED ===
 Name: JARED
@@ -9849,13 +9882,17 @@ Music: Cool
 Double Battle: No
 AI: Check Bad Move
 
-Taillow
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Noctowl
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Pidgeotto
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Swellow
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_ROBERT_2 ===
 Name: ROBERT
@@ -12714,9 +12751,17 @@ Items: Full Restore
 Double Battle: No
 AI: Basic Trainer
 
-Breloom
-Level: 27
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+Virizion
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Pelipper
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Volbeat
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_LORENZO ===
 Name: LORENZO
@@ -12826,15 +12871,19 @@ Gender: Female
 Music: Cool
 Items: Full Restore
 Double Battle: No
-AI: Check Bad Move / Try To Faint / Force Setup First Turn
+AI: Basic Trainer / HP Aware
 
-Gloom
-Level: 26
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+Vileplume
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Roselia
-Level: 26
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+Azumarill
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Ambipom
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_JENNA ===
 Name: JENNA
@@ -13979,16 +14028,16 @@ Class: Bug Catcher
 Pic: Bug Catcher
 Gender: Male
 Music: Male
-Double Battle: No
-AI: Check Bad Move
+Double Battle: Yes
+AI: Basic Trainer / HP Aware
 
-Volbeat
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Dustox
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Illumise
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Beautifly
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_KENT ===
 Name: KENT
@@ -13997,11 +14046,19 @@ Pic: Bug Catcher
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer / HP Aware
 
-Ninjask
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Dustox
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Volbeat
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Illumise
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_JAMES_1 ===
 Name: JAMES
@@ -16840,15 +16897,19 @@ Pic: Kindler
 Gender: Male
 Music: Hiker
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Slugma
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Granbull
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Snubbull
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Magmar
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Weezing
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_RACHEL ===
 Name: RACHEL
@@ -16857,11 +16918,19 @@ Pic: Parasol Lady
 Gender: Female
 Music: Female
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Goldeen
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Golduck
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Lombre
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Bibarel
+Level: 40
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_LEONEL ===
 Name: LEONEL
