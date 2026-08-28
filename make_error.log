@@ -1,0 +1,173 @@
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/flappybird.o src/flappybird.c
+src/flappybird.c: In function 'StartFlappyBird':
+src/flappybird.c:751:12: warning: variable 'taskId' set but not used [-Wunused-but-set-variable]
+  751 |         u8 taskId = 0;
+      |            ^~~~~~
+src/flappybird.c: In function 'SpriteCB_FlappyDamage':
+src/flappybird.c:1146:9: warning: variable 'cosine' set but not used [-Wunused-but-set-variable]
+ 1146 |     s16 cosine;
+      |         ^~~~~~
+src/flappybird.c:1145:9: warning: variable 'sine' set but not used [-Wunused-but-set-variable]
+ 1145 |     s16 sine;
+      |         ^~~~
+src/flappybird.c: At top level:
+src/flappybird.c:142:45: warning: 'sTextWindowId' defined but not used [-Wunused-variable]
+  142 | static EWRAM_DATA u8 sTextWindowId = 0;
+      |                                             ^            
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/fldeff_flash.o src/fldeff_flash.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/frontier_pass.o src/frontier_pass.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/game_corner_blackjack.o src/game_corner_blackjack.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/game_corner_gacha.o src/game_corner_gacha.c
+tools/compresSmol/compresSmol -w graphics/battle_anims/sprites/flower.4bpp graphics/battle_anims/sprites/flower.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/battle_anims/sprites/ice_crystals.4bpp graphics/battle_anims/sprites/ice_crystals.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/battle_anims/sprites/ice_cube.4bpp graphics/battle_anims/sprites/ice_cube.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/battle_anims/sprites/mud_sand.4bpp graphics/battle_anims/sprites/mud_sand.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/battle_anims/sprites/spark.4bpp graphics/battle_anims/sprites/spark.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/battle_interface/battle_bar.4bpp graphics/battle_interface/battle_bar.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/contest/japanese/composite_1.4bpp graphics/contest/japanese/composite_1.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/contest/japanese/composite_2.4bpp graphics/contest/japanese/composite_2.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/horizontal/tiles.4bpp graphics/pokemon_storage/wallpapers/horizontal/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokenav/options/options.4bpp graphics/pokenav/options/options.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/types/move_types.4bpp graphics/types/move_types.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/unused/obi1.4bpp graphics/unused/obi1.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/unused/obi2.4bpp graphics/unused/obi2.4bpp.smol
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/graphics.o src/graphics.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/hall_of_fame.o src/hall_of_fame.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/hwl_intro.o src/hwl_intro.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/intro.o src/intro.c
+src/intro.c:3745:13: warning: 'SpriteCB_PlayerOnBicycle' defined but not used [-Wunused-function]
+ 3745 | static void SpriteCB_PlayerOnBicycle(struct Sprite *sprite)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/intro_credits_graphics.o src/intro_credits_graphics.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/link.o src/link.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/link_rfu_3.o src/link_rfu_3.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/list_menu.o src/list_menu.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/main_menu.o src/main_menu.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/match_call.o src/match_call.c
+src/match_call.c:1099:15: warning: 'SelectMatchCallTrainer' defined but not used [-Wunused-function]
+ 1099 | static bool32 SelectMatchCallTrainer(void)
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+src/match_call.c:1086:15: warning: 'UpdateMatchCallStepCounter' defined but not used [-Wunused-function]
+ 1086 | static bool32 UpdateMatchCallStepCounter(void)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~
+src/match_call.c:1068:15: warning: 'MapAllowsMatchCall' defined but not used [-Wunused-function]
+ 1068 | static bool32 MapAllowsMatchCall(void)
+      |               ^~~~~~~~~~~~~~~~~~
+src/match_call.c:1056:15: warning: 'CheckMatchCallChance' defined but not used [-Wunused-function]
+ 1056 | static bool32 CheckMatchCallChance(void)
+      |               ^~~~~~~~~~~~~~~~~~~~
+src/match_call.c:1042:15: warning: 'UpdateMatchCallMinutesCounter' defined but not used [-Wunused-function]
+ 1042 | static bool32 UpdateMatchCallMinutesCounter(void)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/megarayvision.o src/megarayvision.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/minigame_countdown.o src/minigame_countdown.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/mining_minigame.o src/mining_minigame.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/mystery_gift_menu.o src/mystery_gift_menu.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/mystery_gift_view.o src/mystery_gift_view.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pachinko.o src/pachinko.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/painting.o src/painting.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pinball.o src/pinball.c
+src/pinball.c: In function 'PlayPinballGame':
+src/pinball.c:2234:8: warning: variable 'taskId' set but not used [-Wunused-but-set-variable]
+ 2234 |     u8 taskId;
+      |        ^~~~~~
+src/pinball.c: In function 'HandleBallPhysics':
+src/pinball.c:2904:20: warning: statement with no effect [-Wunused-value]
+ 2904 |         ball->yPos == 170 << 8;
+      |         ~~~~~~~~~~~^~~~~~~~~~~
+src/pinball.c: In function 'HandleFlippers':
+src/pinball.c:3083:21: warning: unused variable 'flipper' [-Wunused-variable]
+ 3083 |     struct Flipper *flipper;
+      |                     ^~~~~~~
+src/pinball.c: In function 'UpdateCamera':
+src/pinball.c:3573:18: warning: unused variable 'ball' [-Wunused-variable]
+ 3573 |     struct Ball *ball = &sPinballGame->ball;
+      |                  ^~~~
+src/pinball.c:3572:9: warning: unused variable 'stagePixelHeight' [-Wunused-variable]
+ 3572 |     int stagePixelHeight = sPinballGame->stageTileHeight * 8;
+      |         ^~~~~~~~~~~~~~~~
+src/pinball.c:3571:9: warning: unused variable 'stagePixelWidth' [-Wunused-variable]
+ 3571 |     int stagePixelWidth = sPinballGame->stageTileWidth * 8;
+      |         ^~~~~~~~~~~~~~~
+src/pinball.c: In function 'TryCreateNewJewel':
+src/pinball.c:3927:12: warning: unused variable 'count' [-Wunused-variable]
+ 3927 |     int i, count;
+      |            ^~~~~
+src/pinball.c: At top level:
+src/pinball.c:3914:12: warning: 'GetNumActiveJewels' defined but not used [-Wunused-function]
+ 3914 | static int GetNumActiveJewels(struct Meowth *meowth)
+      |            ^~~~~~~~~~~~~~~~~~
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokedex_area_region_map.o src/pokedex_area_region_map.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokedex_area_screen.o src/pokedex_area_screen.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokedex_cry_screen.o src/pokedex_cry_screen.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokedex_plus_hgss.o src/pokedex_plus_hgss.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokemon.o src/pokemon.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokemon_jump.o src/pokemon_jump.c
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/azumarill/tiles.4bpp graphics/pokemon_storage/wallpapers/azumarill/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/beach/tiles.4bpp graphics/pokemon_storage/wallpapers/beach/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/blank/tiles.4bpp graphics/pokemon_storage/wallpapers/blank/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/block/tiles.4bpp graphics/pokemon_storage/wallpapers/block/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/cave/tiles.4bpp graphics/pokemon_storage/wallpapers/cave/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/circles/tiles.4bpp graphics/pokemon_storage/wallpapers/circles/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/city/tiles.4bpp graphics/pokemon_storage/wallpapers/city/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/crag/tiles.4bpp graphics/pokemon_storage/wallpapers/crag/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/desert/tiles.4bpp graphics/pokemon_storage/wallpapers/desert/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/diagonal/tiles.4bpp graphics/pokemon_storage/wallpapers/diagonal/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/dusclops/tiles.4bpp graphics/pokemon_storage/wallpapers/dusclops/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/forest/tiles.4bpp graphics/pokemon_storage/wallpapers/forest/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/frame/tiles.4bpp graphics/pokemon_storage/wallpapers/frame/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/legendary/tiles.4bpp graphics/pokemon_storage/wallpapers/legendary/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/ludicolo/tiles.4bpp graphics/pokemon_storage/wallpapers/ludicolo/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/machine/tiles.4bpp graphics/pokemon_storage/wallpapers/machine/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/pikachu/tiles.4bpp graphics/pokemon_storage/wallpapers/pikachu/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/plain/tiles.4bpp graphics/pokemon_storage/wallpapers/plain/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/pokecenter/tiles.4bpp graphics/pokemon_storage/wallpapers/pokecenter/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/pokecenter2/tiles.4bpp graphics/pokemon_storage/wallpapers/pokecenter2/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/polkadot/tiles.4bpp graphics/pokemon_storage/wallpapers/polkadot/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/river/tiles.4bpp graphics/pokemon_storage/wallpapers/river/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/savanna/tiles.4bpp graphics/pokemon_storage/wallpapers/savanna/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/screen/tiles.4bpp graphics/pokemon_storage/wallpapers/screen/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/seafloor/tiles.4bpp graphics/pokemon_storage/wallpapers/seafloor/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/sky/tiles.4bpp graphics/pokemon_storage/wallpapers/sky/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/snow/tiles.4bpp graphics/pokemon_storage/wallpapers/snow/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/volcano/tiles.4bpp graphics/pokemon_storage/wallpapers/volcano/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/whiscash/tiles.4bpp graphics/pokemon_storage/wallpapers/whiscash/tiles.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/pokemon_storage/wallpapers/zigzagoon/tiles.4bpp graphics/pokemon_storage/wallpapers/zigzagoon/tiles.4bpp.smol
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokemon_storage_system.o src/pokemon_storage_system.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_conditions_gfx.o src/pokenav_conditions_gfx.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_conditions_search_results.o src/pokenav_conditions_search_results.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_list.o src/pokenav_list.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_main_menu.o src/pokenav_main_menu.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_match_call_gfx.o src/pokenav_match_call_gfx.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_menu_handler_gfx.o src/pokenav_menu_handler_gfx.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_region_map.o src/pokenav_region_map.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_ribbons_list.o src/pokenav_ribbons_list.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/pokenav_ribbons_summary.o src/pokenav_ribbons_summary.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/radio.o src/radio.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/region_map.o src/region_map.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/rogue_voltorbflip.o src/rogue_voltorbflip.c
+tools/compresSmol/compresSmol -w graphics/roulette/roulette_tilt.4bpp graphics/roulette/roulette_tilt.4bpp.smol
+tools/compresSmol/compresSmol -w graphics/roulette/wheel_icons.4bpp graphics/roulette/wheel_icons.4bpp.smol
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/roulette.o src/roulette.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/save_failed_screen.o src/save_failed_screen.c
+tools/compresSmol/compresSmol -w graphics/slot_machine/reel_time_gfx.4bpp graphics/slot_machine/reel_time_gfx.4bpp.smol
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/slot_machine.o src/slot_machine.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/snake.o src/snake.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/snowball.o src/snowball.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/starter_choose.o src/starter_choose.c
+/usr/lib/gcc/arm-none-eabi/14.2.1/cc1 -quiet <flags> -o build/modern/src/start_menu.o src/start_menu.c
+src/start_menu.c: In function 'HandleStartMenuInput':
+src/start_menu.c:819:13: error: implicit declaration of function 'Debug_IsWishMenuBlockedByEliteFour' [-Wimplicit-function-declaration]
+  819 |          && Debug_IsWishMenuBlockedByEliteFour())
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/start_menu.c: In function 'StartMenuDebugCallback':
+src/start_menu.c:1009:9: error: implicit declaration of function 'Debug_ShowMainMenu' [-Wimplicit-function-declaration]
+ 1009 |         Debug_ShowMainMenu();
+      |         ^~~~~~~~~~~~~~~~~~
+src/start_menu.c: At top level:
+src/start_menu.c:157:25: warning: 'sCursorAnim' defined but not used [-Wunused-variable]
+  157 | static struct ComfyAnim sCursorAnim;
+      |                         ^~~~~~~~~~~
+make: *** [Makefile:410: build/modern/src/start_menu.o] Error 1
+make: *** Deleting file 'build/modern/src/start_menu.o'

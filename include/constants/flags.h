@@ -669,7 +669,6 @@
 #define FLAG_HIDDEN_ITEM_FIERY_PATH_REVIVE                   (FLAG_HIDDEN_ITEMS_START + 0x7C)
 #define FLAG_HIDDEN_ITEM_PETALBURG_CAVE_STAR_PIECE           (FLAG_HIDDEN_ITEMS_START + 0x7D)
 #define FLAG_HIDDEN_ITEM_ROUTE_115_PP_UP_2                 (FLAG_HIDDEN_ITEMS_START + 0x7E)
-#define FLAG_HIDDEN_ITEM_ROUTE_114_STARDUST                (FLAG_HIDDEN_ITEMS_START + 0x7F)
 
 
 #define DN_FLAG_SEARCHING                       0x271
@@ -702,13 +701,13 @@
 #define FLAG_HIDE_MAR_RUST_VISIBILITY           0x289
 #define FLAG_HIDE_MAR_LILI_VISIBILITY           0x28A
 #define FLAG_USED_DEBUG_MENU                    0x28B
-#define FLAG_ENCOUNTER_MEGA_RAY              0x28C // Unused Flag
-#define FLAG_RECEIVED_FROGS_HOUSE_KINGS_ROCK      0x28D
-#define FLAG_RESCUED_CALENDULA_METEOR_FALLS        0x28E
-#define FLAG_UNUSED_0x28F  0x28F // Unused Flag
-#define FLAG_UNUSED_0x290  0x290 // Unused Flag
-#define FLAG_UNUSED_0x291  0x291 // Unused Flag
-#define FLAG_UNUSED_0x292  0x292 // Unused Flag
+#define FLAG_ENCOUNTER_MEGA_RAY                 0x28C 
+#define OW_FLAG_NO_TRAINER_SEE                  0x28D 
+#define OW_FLAG_NO_ENCOUNTER                    0x28E 
+#define FLAG_WISH_WARNING                       0x28F 
+#define FLAG_RECEIVED_FROGS_HOUSE_KINGS_ROCK         0x290 
+#define FLAG_RESCUED_CALENDULA_METEOR_FALLS     0x291 
+#define FLAG_HIDE_METEOR_FALLS_1F_1R_CALENDULA  0x292 // Unused Flag
 #define FLAG_UNUSED_0x293  0x293 // Unused Flag
 #define FLAG_UNUSED_0x294  0x294 // Unused Flag
 #define FLAG_UNUSED_0x295  0x295 // Unused Flag
@@ -996,7 +995,7 @@
 #define FLAG_HIDE_METEOR_FALLS_TEAM_MAGMA                           0x3AB
 #define FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN                      0x3AC
 #define FLAG_HIDE_SEAFLOOR_CAVERN_ENTRANCE_AQUA_GRUNT               0x3AD
-#define FLAG_HIDE_METEOR_FALLS_1F_1R_CALENDULA                      0x3AE
+#define FLAG_HIDE_METEOR_FALLS_1F_1R_COZMO                          0x3AE
 #define FLAG_HIDE_AQUA_HIDEOUT_B2F_SUBMARINE_SHADOW                 0x3AF
 #define FLAG_HIDE_ROUTE_128_ARCHIE                                  0x3B0
 #define FLAG_HIDE_ROUTE_128_MAXIE                                   0x3B1
@@ -1246,13 +1245,13 @@
 #define FLAG_ITEM_PETALBURG_CAVE2_RARE_CANDY                        0x4A1 
 #define FLAG_ITEM_ROUTE_105_PEARL                                   0x4A2 
 #define FLAG_LEARNED_MINING                                         0x4A3 
-#define FLAG_ITEM_ROUTE_118_HEART_SCALE                            0x4A4
-#define FLAG_ITEM_FORTREE_CITY_TIMID_MINT                          0x4A5
+#define FLAG_ITEM_ROUTE_118_HEART_SCALE                             0x4A4
+#define FLAG_ITEM_FORTREE_CITY_TIMID_MINT                           0x4A5
 #define FLAG_ITEM_ROUTE_117_CARBOS                                  0x4A6
 #define FLAG_ITEM_ROUTE_115_PROTEIN                                 0x4A7
-#define FLAG_ITEM_ROUTE_114_RAZOR_FANG                             0x4A8
-#define FLAG_ITEM_ROUTE_110_MAX_REVIVE                             0x4A9
-#define FLAG_UNUSED_0x4AA                                           0x4AA // Unused Flag
+#define FLAG_ITEM_ROUTE_110_MAX_REVIVE                              0x4A8
+#define FLAG_ITEM_ROUTE_114_RAZOR_FANG                              0x4A9 
+#define FLAG_HIDDEN_ITEM_ROUTE_114_STARDUST                         0x4AA 
 #define FLAG_UNUSED_0x4AB                                           0x4AB // Unused Flag
 #define FLAG_UNUSED_0x4AC                                           0x4AC // Unused Flag
 #define FLAG_UNUSED_0x4AD                                           0x4AD // Unused Flag

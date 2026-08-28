@@ -188,6 +188,7 @@ static void DrawChoices_RandomizerE(int selection, int y);
 static void DrawChoices_RandomizerT(int selection, int y);
 static void DrawBgWindowFrames(void);
 static EWRAM_DATA u8 sOptionMenuStartPage = PAGE_GENERAL;
+bool8 Debug_IsWishMenuBlockedByEliteFour(void);
 
 // EWRAM vars
 EWRAM_DATA static struct OptionMenu *sOptions = NULL;

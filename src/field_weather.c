@@ -55,10 +55,38 @@ static void None_Init(void);
 static void None_Main(void);
 static u8 None_Finish(void);
 
+// Hoenn's Last Wish - Concert Lights weather.
+static void ConcertLights_InitVars(void);
+static void ConcertLights_Main(void);
+static void ConcertLights_InitAll(void);
+static bool8 ConcertLights_Finish(void);
+static void ConcertLights_ApplyLighting(void);
+static void ConcertLights_RestoreBasePalettes(void);
+
 EWRAM_DATA struct Weather gWeather = {0};
 EWRAM_DATA static u8 ALIGNED(2) sFieldEffectPaletteColorMapTypes[32] = {0};
 
 static const u8 *sPaletteColorMapTypes;
+
+// -----------------------------------------------------------------------------
+// Hoenn's Last Wish - Concert Lights
+//
+// This first version intentionally uses palette lighting instead of new sprite
+// graphics. It is lightweight, works on indoor maps, and gives the stadium a
+// rhythmic concert-light wash without touching map tiles or object positions.
+// -----------------------------------------------------------------------------
+static u16 sConcertLightsTimer;
+
+static const u16 sConcertLightColors[] =
+{
+    RGB(8, 18, 31),  // Blue
+    RGB(8, 31, 27),  // Cyan
+    RGB(31, 8, 27),  // Magenta
+    RGB(31, 17, 8),  // Warm red / orange
+};
+
+#define CONCERT_LIGHT_COLOR_COUNT ARRAY_COUNT(sConcertLightColors)
+#define CONCERT_LIGHT_PHASE_FRAMES 64
 
 static const u8 sDarkenedContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32] =
 {
@@ -138,6 +166,7 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     [WEATHER_SMOKE]              = {Smoke_InitVars,        Smoke_Main,         Smoke_InitAll,         Smoke_Finish},
     [WEATHER_FOREST_LIGHT]       = {ForestLight_InitVars,  ForestLight_Main,   ForestLight_InitAll,   ForestLight_Finish},
     [WEATHER_FALLING_LEAVES]     = {PinkLeaves_InitVars,   PinkLeaves_Main,    PinkLeaves_InitAll,    PinkLeaves_Finish},
+    [WEATHER_CONCERT_LIGHTS]     = {ConcertLights_InitVars, ConcertLights_Main, ConcertLights_InitAll, ConcertLights_Finish},
 };
 
 void (*const gWeatherPalStateFuncs[])(void) =
@@ -298,6 +327,97 @@ static void None_Main(void)
 static u8 None_Finish(void)
 {
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Hoenn's Last Wish - Concert Lights weather
+// -----------------------------------------------------------------------------
+
+static void ConcertLights_InitVars(void)
+{
+    sConcertLightsTimer = 0;
+
+    // Keep the normal map palette as the weather base. The concert tint is
+    // applied every frame from the unfaded palette, so colors never accumulate.
+    gWeatherPtr->targetColorMapIndex = 0;
+    gWeatherPtr->colorMapStepDelay = 0;
+    gWeatherPtr->noShadows = FALSE;
+
+    Weather_SetBlendCoeffs(16, 0);
+}
+
+static void ConcertLights_InitAll(void)
+{
+    ConcertLights_InitVars();
+    ConcertLights_ApplyLighting();
+}
+
+static void ConcertLights_RestoreBasePalettes(void)
+{
+    // Rebuild the normal field palette before applying the next concert pulse.
+    // This prevents the colored tint from being blended repeatedly into itself.
+    CpuFastCopy(gPlttBufferUnfaded, gPlttBufferFaded, PLTT_BUFFER_SIZE * 2);
+
+    if (MapHasNaturalLight(gMapHeader.mapType))
+    {
+        UpdateAltBgPalettes(PALETTES_BG);
+        UpdatePalettesWithTime(PALETTES_ALL);
+    }
+}
+
+static void ConcertLights_ApplyLighting(void)
+{
+    u16 wave;
+    u8 blendCoeff;
+    u8 colorIndex;
+    u16 blendColor;
+
+    // Change color only when the current pulse is at its weakest point.
+    // This makes the transition feel like moving stage lights instead of
+    // abruptly replacing one solid screen tint with another.
+    colorIndex = (sConcertLightsTimer / CONCERT_LIGHT_PHASE_FRAMES)
+               % CONCERT_LIGHT_COLOR_COUNT;
+    blendColor = sConcertLightColors[colorIndex];
+
+    // Four small light pulses per color cycle.
+    // abs(sine) creates a smooth 0 -> bright -> 0 pulse.
+    wave = abs(gSineTable[(sConcertLightsTimer & 0x3F) * 4]);
+
+    // GBA palette blend coefficients range from 0 to 16.
+    // 1..5 keeps the effect colorful but leaves the map easy to read.
+    blendCoeff = 1 + (wave >> 6);
+
+    ConcertLights_RestoreBasePalettes();
+
+    // Tint both the map and characters so the lighting feels like it belongs
+    // to the room rather than being an overlay pasted on top of it.
+    BlendPalettesFine(
+        PALETTES_ALL,
+        gPlttBufferFaded,
+        gPlttBufferFaded,
+        blendCoeff,
+        blendColor
+    );
+}
+
+static void ConcertLights_Main(void)
+{
+    // Do not fight normal screen fades or weather transitions.
+    if (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_IDLE
+     || gPaletteFade.active)
+        return;
+
+    sConcertLightsTimer++;
+    ConcertLights_ApplyLighting();
+}
+
+static bool8 ConcertLights_Finish(void)
+{
+    // Restore the unmodified field palette immediately before another weather
+    // takes control.
+    ConcertLights_RestoreBasePalettes();
+    sConcertLightsTimer = 0;
+    return FALSE;
 }
 
 // When the weather is changing, it gradually updates the palettes
@@ -1049,6 +1169,9 @@ static void UNUSED SetFieldWeather(u8 weather)
     case WEATHER_FALLING_LEAVES:
         SetWeather(WEATHER_FALLING_LEAVES);
         break;
+    case WEATHER_CONCERT_LIGHTS:
+        SetWeather(WEATHER_CONCERT_LIGHTS);
+        break;
     case COORD_EVENT_WEATHER_RAIN_THUNDERSTORM:
         SetWeather(WEATHER_RAIN_THUNDERSTORM);
         break;
@@ -1193,8 +1316,9 @@ static const u8 sWeatherNames[WEATHER_COUNT][24] = {
     [WEATHER_FOG]                = _("FOG"),
     [WEATHER_STARS]          = _("FALLING STARS"),
     [WEATHER_SMOKE]          = _("CAVE SMOKE"),
-    [WEATHER_FOREST_LIGHT]   = _("FOREST LIGHT"),
+    [WEATHER_FOREST_LIGHT]    = _("FOREST LIGHT"),
     [WEATHER_FALLING_LEAVES]  = _("FALLING LEAVES"),
+    [WEATHER_CONCERT_LIGHTS]  = _("CONCERT LIGHTS"),
 };
 
 static const u8 sDebugText_WeatherNotDefined[] = _("NOT DEFINED!!!");
