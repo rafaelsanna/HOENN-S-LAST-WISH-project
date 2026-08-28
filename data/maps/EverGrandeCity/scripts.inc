@@ -125,9 +125,9 @@ EverGrandeCity_Movement_RivalApproach:
 # 63 "data/maps/EverGrandeCity/scripts.pory"
 EverGrandeCity_EventScript_MayBattle::
 # 64 "data/maps/EverGrandeCity/scripts.pory"
-	switch VAR_EVER_GRANDE_CITY_STATE
+	getdifficulty VAR_RESULT
 # 65 "data/maps/EverGrandeCity/scripts.pory"
-	case 1, EverGrandeCity_EventScript_MayBattleHard
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_EventScript_MayBattleHard
 # 66 "data/maps/EverGrandeCity/scripts.pory"
 	switch VAR_STARTER_MON
 # 67 "data/maps/EverGrandeCity/scripts.pory"
@@ -161,9 +161,9 @@ EverGrandeCity_EventScript_MayBattleHard::
 # 81 "data/maps/EverGrandeCity/scripts.pory"
 EverGrandeCity_EventScript_BrendanBattle::
 # 82 "data/maps/EverGrandeCity/scripts.pory"
-	switch VAR_EVER_GRANDE_CITY_STATE
+	getdifficulty VAR_RESULT
 # 83 "data/maps/EverGrandeCity/scripts.pory"
-	case 1, EverGrandeCity_EventScript_BrendanBattleHard
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_EventScript_BrendanBattleHard
 # 84 "data/maps/EverGrandeCity/scripts.pory"
 	switch VAR_STARTER_MON
 # 85 "data/maps/EverGrandeCity/scripts.pory"

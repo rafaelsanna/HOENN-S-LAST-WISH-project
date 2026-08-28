@@ -61,8 +61,8 @@ EverGrandeCity_Movement_RivalApproach:
 	step_end
 
 EverGrandeCity_EventScript_MayBattle::
-	switch VAR_EVER_GRANDE_CITY_STATE
-	case 1, EverGrandeCity_EventScript_MayBattleHard
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_EventScript_MayBattleHard
 	switch VAR_STARTER_MON
 	case 0, EverGrandeCity_EventScript_MayBattleTreecko
 	case 1, EverGrandeCity_EventScript_MayBattleTorchic
@@ -79,8 +79,8 @@ EverGrandeCity_EventScript_MayBattleHard::
 	end
 
 EverGrandeCity_EventScript_BrendanBattle::
-	switch VAR_EVER_GRANDE_CITY_STATE
-	case 1, EverGrandeCity_EventScript_BrendanBattleHard
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, EverGrandeCity_EventScript_BrendanBattleHard
 	switch VAR_STARTER_MON
 	case 0, EverGrandeCity_EventScript_BrendanBattleTreecko
 	case 1, EverGrandeCity_EventScript_BrendanBattleTorchic

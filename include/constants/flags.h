@@ -703,8 +703,8 @@
 #define FLAG_HIDE_MAR_LILI_VISIBILITY           0x28A
 #define FLAG_USED_DEBUG_MENU                    0x28B
 #define FLAG_ENCOUNTER_MEGA_RAY              0x28C // Unused Flag
-#define FLAG_UNUSED_0x28D  0x28D // Unused Flag
-#define FLAG_UNUSED_0x28E  0x28E // Unused Flag
+#define FLAG_RECEIVED_FROGS_HOUSE_KINGS_ROCK      0x28D
+#define FLAG_RESCUED_CALENDULA_METEOR_FALLS        0x28E
 #define FLAG_UNUSED_0x28F  0x28F // Unused Flag
 #define FLAG_UNUSED_0x290  0x290 // Unused Flag
 #define FLAG_UNUSED_0x291  0x291 // Unused Flag
@@ -996,7 +996,7 @@
 #define FLAG_HIDE_METEOR_FALLS_TEAM_MAGMA                           0x3AB
 #define FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN                      0x3AC
 #define FLAG_HIDE_SEAFLOOR_CAVERN_ENTRANCE_AQUA_GRUNT               0x3AD
-#define FLAG_HIDE_METEOR_FALLS_1F_1R_COZMO                          0x3AE
+#define FLAG_HIDE_METEOR_FALLS_1F_1R_CALENDULA                      0x3AE
 #define FLAG_HIDE_AQUA_HIDEOUT_B2F_SUBMARINE_SHADOW                 0x3AF
 #define FLAG_HIDE_ROUTE_128_ARCHIE                                  0x3B0
 #define FLAG_HIDE_ROUTE_128_MAXIE                                   0x3B1

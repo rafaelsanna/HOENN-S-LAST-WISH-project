@@ -171,7 +171,7 @@ MtChimney_EventScript_MaxieAfterBattle::
 # 86 "data/maps/MtChimney/scripts.pory"
 	clearflag FLAG_HIDE_FALLARBOR_HOUSE_PROF_COZMO
 # 87 "data/maps/MtChimney/scripts.pory"
-	setflag FLAG_HIDE_METEOR_FALLS_1F_1R_COZMO
+	setflag FLAG_HIDE_METEOR_FALLS_1F_1R_CALENDULA
 # 88 "data/maps/MtChimney/scripts.pory"
 	clearflag FLAG_HIDE_MT_CHIMNEY_LAVA_COOKIE_LADY
 # 89 "data/maps/MtChimney/scripts.pory"

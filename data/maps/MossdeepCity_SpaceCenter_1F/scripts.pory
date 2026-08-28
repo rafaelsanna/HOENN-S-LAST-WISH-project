@@ -91,7 +91,13 @@ MossdeepCity_SpaceCenter_1F_EventScript_Scientist::
 	lock
 	faceplayer
 	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_1F_EventScript_ScientistMagma
+	goto_if_set FLAG_RESCUED_CALENDULA_METEOR_FALLS, MossdeepCity_SpaceCenter_1F_EventScript_ScientistCalendulaResearch
 	msgbox MossdeepCity_SpaceCenter_1F_Text_RocketLaunchDemandsPerfection, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_1F_EventScript_ScientistCalendulaResearch::
+	msgbox MossdeepCity_SpaceCenter_1F_Text_CalendulaMeteorResearch, MSGBOX_DEFAULT
 	release
 	end
 
@@ -301,6 +307,16 @@ MossdeepCity_SpaceCenter_1F_Text_RocketLaunchDemandsPerfection:
 	.string "is useless if 1% happens to be no good.\p"
 	.string "Despite that, we never stop trying.\n"
 	.string "Why? It's a dream that never ends.$"
+
+MossdeepCity_SpaceCenter_1F_Text_CalendulaMeteorResearch:
+	.string "PROF. CALENDULA sent us samples from\n"
+	.string "METEOR FALLS.\p"
+	.string "Their residual energy matches a small\n"
+	.string "irregularity we recorded after the\l"
+	.string "MILLENNIUM COMET passed.\p"
+	.string "We have no conclusions yet, but we\n"
+	.string "will compare her notes with the\l"
+	.string "comet's flight data.$"
 
 MossdeepCity_SpaceCenter_1F_Text_MagmaHaveSightsOnSpaceCenter:
 	.string "Those MAGMA thugs have their sights\n"

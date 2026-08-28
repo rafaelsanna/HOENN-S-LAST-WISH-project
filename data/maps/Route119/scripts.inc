@@ -947,7 +947,7 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 # 474 "data/maps/Route119/scripts.pory"
 Route119_Text_MayIntro:
 # 475 "data/maps/Route119/scripts.pory"
-	.string "MAY: {PLAYER}{KUN}!\n"
+	.string "ZINNIA: {PLAYER}{KUN}!\n"
 # 476 "data/maps/Route119/scripts.pory"
 	.string "Where were you? I was looking for you!\p"
 # 477 "data/maps/Route119/scripts.pory"
@@ -975,7 +975,7 @@ Route119_Text_MayDefeat:
 # 488 "data/maps/Route119/scripts.pory"
 Route119_Text_MayPresentForYou:
 # 489 "data/maps/Route119/scripts.pory"
-	.string "MAY: But I had absolutely nothing to\n"
+	.string "ZINNIA: But I had absolutely nothing to\n"
 # 490 "data/maps/Route119/scripts.pory"
 	.string "worry about! Keep it up!\p"
 # 491 "data/maps/Route119/scripts.pory"
@@ -985,7 +985,7 @@ Route119_Text_MayPresentForYou:
 # 493 "data/maps/Route119/scripts.pory"
 Route119_Text_MayExplainFly:
 # 494 "data/maps/Route119/scripts.pory"
-	.string "MAY: Use FLY, and your POKéMON will\n"
+	.string "ZINNIA: Use FLY, and your POKéMON will\n"
 # 495 "data/maps/Route119/scripts.pory"
 	.string "instantly carry you to any town you've\l"
 # 496 "data/maps/Route119/scripts.pory"

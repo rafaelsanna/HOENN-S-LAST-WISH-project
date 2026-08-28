@@ -84,6 +84,7 @@ MeteorFalls_1F_1R_EventScript_MagmaStealsMeteoriteScene::
 	removeobject LOCALID_METEOR_FALLS_ARCHIE
 	removeobject LOCALID_METEOR_FALLS_AQUA_GRUNT_1
 	removeobject LOCALID_METEOR_FALLS_AQUA_GRUNT_2
+	setflag FLAG_HIDE_METEOR_FALLS_TEAM_MAGMA
 	setflag FLAG_HIDE_ROUTE_112_TEAM_MAGMA
 	setflag FLAG_MET_ARCHIE_METEOR_FALLS
 	setflag FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT
@@ -218,17 +219,21 @@ MeteorFalls_1F_1R_Movement_PushPlayerOutOfWay:
 	face_right
 	step_end
 
-MeteorFalls_1F_1R_EventScript_ProfCozmo::
+MeteorFalls_1F_1R_EventScript_Calendula::
 	lock
 	faceplayer
-	goto_if_set FLAG_MET_PROF_COZMO, MeteorFalls_1F_1R_EventScript_MetCozmo
-	setflag FLAG_MET_PROF_COZMO
-	msgbox MeteorFalls_1F_1R_Text_MeetProfCozmo, MSGBOX_DEFAULT
-	release
-	end
-
-MeteorFalls_1F_1R_EventScript_MetCozmo::
-	msgbox MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox MeteorFalls_1F_1R_Text_CalendulaRescue, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_CalendulaMeteorResearch, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_CalendulaFarewell, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_METEOR_FALLS_CALENDULA, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	playse SE_EXIT
+	setflag FLAG_RESCUED_CALENDULA_METEOR_FALLS
+	setflag FLAG_HIDE_METEOR_FALLS_1F_1R_CALENDULA
+	removeobject LOCALID_METEOR_FALLS_CALENDULA
 	release
 	end
 
@@ -242,7 +247,7 @@ MeteorFalls_1F_1R_Text_WithThisMeteorite:
 	.string "Not just light.\p"
 	.string "It hums... as if it remembers\n"
 	.string "what this world has forgotten.\p"
-	.string "Our boss awaits at MT. CHIMNEY.\n"
+	.string "MAGNUS awaits at MT. CHIMNEY.\n"
 	.string "Everything will change there.\p"
 	.string "When Hoenn is remade,\n"
 	.string "the impure will not be spared.\p"
@@ -250,7 +255,7 @@ MeteorFalls_1F_1R_Text_WithThisMeteorite:
 	.string "will be left behind.\p"
 	.string "There is only one possible future.\n"
 	.string "And we will bring it forth.$"
-	
+
 MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma:
 	.string "Heh? What?\p"
 	.string "I don't know who you are, but if you get\n"
@@ -280,7 +285,7 @@ MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua:
 	.string "I cannot waste time here.$"
 
 MeteorFalls_1F_1R_Text_ArchieSeenYouBefore:
-	.string "ARCHIE: Hm...\n"
+	.string "INAE: Hm...\n"
 	.string "Kid with the strange outfit and cape...\p"
 	.string "You're the one who faced\n"
 	.string "our Captain Alejandro, aren't you?\p"
@@ -307,13 +312,13 @@ MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma:
 	.string "TEAM MAGMA…$"
 
 MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo:
-	.string "ARCHIE: Yes, yes, we must!\n"
+	.string "INAE: Yes, yes, we must!\n"
 	.string "We've got to hurry.\p"
 	.string "There's no telling what TEAM MAGMA\n"
 	.string "will do at MT. CHIMNEY!$"
 
 MeteorFalls_1F_1R_Text_ArchieFarewell:
-	.string "ARCHIE: {PLAYER}...\p"
+	.string "INAE: {PLAYER}...\p"
 	.string "No matter how talented you are\n"
 	.string "in life, some matters are beyond you.\p"
 	.string "These are not League challenges\n"
@@ -326,46 +331,41 @@ MeteorFalls_1F_1R_Text_ArchieFarewell:
 	.string "That would be... better for you.\p"
 	.string "Farewell.$"
 
-MeteorFalls_1F_1R_Text_MeetProfCozmo:
-	.string "I... I'm COZMO...\n"
-	.string "A PROFESSOR...\p"
-	.string "Ever since the Millennium Comet\n"
-	.string "passed over Hoenn, I have been\l"
-	.string "deeply intrigued.\p"
-	.string "I was studying the METEORITE\n"
-	.string "in secret.\p"
-	.string "I never intended to help them.\n"
-	.string "But they coerced me...\l"
-	.string "Threatened me...\p"
-	.string "And then they took the METEORITE.\p"
-	.string "I do not know what will happen\n"
-	.string "at MT. CHIMNEY.\p"
-	.string "What they seek is beyond\n"
-	.string "ordinary science.\p"
-	.string "It is a fusion of research\n"
-	.string "and something... ancient.\p"
-	.string "I can only speculate so much.\n"
-	.string "There are mysteries here that feel\l"
-	.string "almost esoteric.\p"
-	.string "Please... be careful.\n"
-	.string "This is far more dangerous\l"
-	.string "than it seems!$"
+MeteorFalls_1F_1R_Text_CalendulaRescue:
+	.string "CALENDULA: Hm... {PLAYER}?\n"
+	.string "I had hoped it was you.\p"
+	.string "Thank you. Those grunts wanted my\n"
+	.string "research, and they were not willing\l"
+	.string "to take no for an answer.\p"
+	.string "You came to help without hesitation.\n"
+	.string "That was very brave.$"
 
-MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney:
-	.string "PROF. COZMO: But that TEAM MAGMA...\p"
-	.string "What could they possibly intend\n"
-	.string "to do with that METEORITE\l"
-	.string "at MT. CHIMNEY?\p"
-	.string "And to be honest...\n"
-	.string "I am not certain we can trust\l"
-	.string "TEAM AQUA either.\p"
-	.string "Whenever power and money are\n"
-	.string "involved, men are easily corrupted.\p"
-	.string "My research was driven only by\n"
-	.string "a love of science.\p"
-	.string "Please... be cautious.\n"
-	.string "There is more at stake here\l"
-	.string "than anyone admits!$"
+MeteorFalls_1F_1R_Text_CalendulaMeteorResearch:
+	.string "CALENDULA: I came to METEOR FALLS\n"
+	.string "to study the strange changes across\l"
+	.string "HOENN.\p"
+	.string "The METEORITE is gone, but these\n"
+	.string "cavern walls still hold faint traces\l"
+	.string "of its energy.\p"
+	.string "Ever since the MILLENNIUM COMET\n"
+	.string "passed, those traces have reacted in\l"
+	.string "ways I cannot explain.\p"
+	.string "The SPACE CENTER in MOSSDEEP has\n"
+	.string "the instruments to compare them with\l"
+	.string "the comet's path.\p"
+	.string "I need to speak with its researchers.\n"
+	.string "There may be a pattern... or a warning.$"
+
+MeteorFalls_1F_1R_Text_CalendulaFarewell:
+	.string "CALENDULA: Thank you again, {PLAYER}.\p"
+	.string "You have come so far since PETALBURG.\n"
+	.string "Not only as a TRAINER.\p"
+	.string "You saw someone in trouble and chose\n"
+	.string "to help. I am very proud of you.\p"
+	.string "I will take my notes to MOSSDEEP\n"
+	.string "and continue the research there.\p"
+	.string "Please, be careful. Something in\n"
+	.string "HOENN still feels... out of place.$"
 
 
 `
