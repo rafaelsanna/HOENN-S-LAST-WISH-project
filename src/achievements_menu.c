@@ -102,12 +102,37 @@ EWRAM_DATA static MainCallback sExitCallback = NULL;
 
 static const u32 sBlankBgTile[8] = {};
 static const u16 sAchievementsBgTilemap[BG_SCREEN_SIZE / 2] = {};
-static const u16 sAchievementsBgPal[16] = { RGB_BLACK };
+static const u16 sAchievementsBgPal[16] =
+{
+    RGB(2, 2, 3),
+    RGB(4, 4, 5),
+};
 static const u32 sAchievementsMenuTiles[] = INCBIN_U32("graphics/achievements/menu.4bpp");
 static const u16 sAchievementsMenuTilemap[] = INCBIN_U16("graphics/achievements/menu.bin");
 static const u16 sAchievementsMenuPal[] = INCBIN_U16("graphics/achievements/menu.gbapal");
 
-static const u8 sColor_DarkGray[3] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY };
+// Dark-mode palette shared with the project's charcoal / purple UI language.
+// The original tile indices are kept; only their colors are remapped.
+static const u16 sAchievementsMenuDarkPal[16] =
+{
+    RGB( 0,  0,  0), // 0  black
+    RGB( 4,  4,  5), // 1  charcoal
+    RGB( 2,  2,  3), // 2  near black
+    RGB( 7,  7, 10), // 3  dark gray
+    RGB(11, 10, 15), // 4  purple gray
+    RGB(11,  9, 16), // 5  deep purple
+    RGB(13, 12, 17), // 6  divider gray
+    RGB(16, 10, 21), // 7  deep pink-purple
+    RGB(18, 14, 24), // 8  lavender
+    RGB(21, 13, 27), // 9  pink-purple accent
+    RGB(23, 19, 28), // 10 light charcoal
+    RGB(26, 22, 31), // 11 pale lavender
+    RGB(31, 31, 31), // 12 white highlight
+    RGB(18, 14, 24), // 13 lavender
+    RGB(11, 10, 15), // 14 purple gray
+    RGB( 4,  4,  5), // 15 charcoal
+};
+
 static const u8 sColor_Blue[3] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_BLUE };
 static const u8 sColor_Green[3] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_GREEN, TEXT_COLOR_LIGHT_GREEN };
 static const u8 sColor_White[3] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY };
@@ -304,7 +329,7 @@ void CB2_InitAchievementsMenuWithCallback(MainCallback callback)
     LoadBgTiles(BG_MENU, sAchievementsMenuTiles, sizeof(sAchievementsMenuTiles), 0);
     LoadBgTiles(BG_BACKGROUND, sBlankBgTile, sizeof(sBlankBgTile), 0);
     LoadPalette(sAchievementsBgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
-    LoadPalette(sAchievementsMenuPal, BG_PLTT_ID(ACHIEVEMENTS_MENU_PAL_SLOT), PLTT_SIZE_4BPP);
+    LoadPalette(sAchievementsMenuDarkPal, BG_PLTT_ID(ACHIEVEMENTS_MENU_PAL_SLOT), PLTT_SIZE_4BPP);
     FillBgTilemapBufferRect_Palette0(BG_DETAIL, ACHIEVEMENTS_BLANK_TILE, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     FillBgTilemapBufferRect_Palette0(BG_TEXT, ACHIEVEMENTS_BLANK_TILE, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     LoadMenuTilemap();
@@ -358,12 +383,12 @@ static void DrawHeader(void)
 {
     PutWindowTilemap(WIN_HEADER);
     FillWindowPixelBuffer(WIN_HEADER, PIXEL_FILL(0));
-    AddTextPrinterParameterized3(WIN_HEADER, FONT_SMALL, 10, 2, sColor_DarkGray, TEXT_SKIP_DRAW, COMPOUND_STRING("Trophies"));
+    AddTextPrinterParameterized3(WIN_HEADER, FONT_SMALL, 10, 2, sColor_White, TEXT_SKIP_DRAW, COMPOUND_STRING("Trophies"));
 
     ConvertIntToDecimalStringN(gStringVar1, Achievement_CountUnlocked(), STR_CONV_MODE_LEFT_ALIGN, 3);
     ConvertIntToDecimalStringN(gStringVar2, Achievement_GetCount(), STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar4, COMPOUND_STRING("{STR_VAR_1}/{STR_VAR_2}"));
-    AddTextPrinterParameterized3(WIN_HEADER, FONT_SMALL, 203, 2, sColor_DarkGray, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(WIN_HEADER, FONT_SMALL, 203, 2, sColor_White, TEXT_SKIP_DRAW, gStringVar4);
         
     CopyWindowToVram(WIN_HEADER, COPYWIN_FULL);
 }
@@ -404,7 +429,7 @@ static void PrintAchievementProgress(const struct Achievement *achievement, u8 y
     }
     else
     {
-        PrintListStatusText(COMPOUND_STRING("Locked"), y, sColor_DarkGray);
+        PrintListStatusText(COMPOUND_STRING("0/1"), y, sColor_Blue);
     }
 }
 
@@ -500,7 +525,7 @@ static void DrawListCursor(u8 row)
 
 static void DrawListCursorAtY(s16 y)
 {
-    AddTextPrinterParameterized3(WIN_LIST, FONT_SMALL, ACHIEVEMENTS_CURSOR_X, y, sColor_DarkGray, TEXT_SKIP_DRAW, gText_SelectorArrow2);
+    AddTextPrinterParameterized3(WIN_LIST, FONT_SMALL, ACHIEVEMENTS_CURSOR_X, y, sColor_White, TEXT_SKIP_DRAW, gText_SelectorArrow2);
 }
 
 static void CopyListCursorColumnToVram(void)
@@ -618,7 +643,7 @@ static void DrawList(void)
         if (sAchievementCursor == sAchievementTop + i)
             DrawListCursor(i);
         CreateListBallIcon(i, achievement);
-        AddTextPrinterParameterized3(WIN_LIST, FONT_SMALL, ACHIEVEMENTS_NAME_X, textY, sColor_DarkGray, TEXT_SKIP_DRAW, achievement->name);
+        AddTextPrinterParameterized3(WIN_LIST, FONT_SMALL, ACHIEVEMENTS_NAME_X, textY, sColor_White, TEXT_SKIP_DRAW, achievement->name);
         PrintAchievementProgress(achievement, textY);
     }
     CopyWindowToVram(WIN_LIST, COPYWIN_FULL);

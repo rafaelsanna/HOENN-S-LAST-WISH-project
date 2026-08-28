@@ -877,6 +877,7 @@ Common_EventScript_PlayerHandedOverTheItem::
 
 	.include "data/scripts/elite_four.inc"
 	.include "data/scripts/movement.inc"
+	.include "data/scripts/overworld_pokemon.inc"
 	.include "data/scripts/check_furniture.inc"
 	.include "data/text/record_mix.inc"
 	.include "data/text/pc.inc"
