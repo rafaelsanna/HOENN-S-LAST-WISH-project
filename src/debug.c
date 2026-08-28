@@ -78,6 +78,12 @@
 #include "fake_rtc.h"
 #include "save.h"
 
+// Hoenn's Last Wish persistent Wish Menu warning flag.
+// 0x28F is reserved for this purpose in the project.
+#ifndef FLAG_WISH_WARNING
+#define FLAG_WISH_WARNING 0x28F
+#endif
+
 enum FollowerNPCCreateDebugMenu
 {
     DEBUG_FNPC_BRENDAN,
@@ -98,8 +104,8 @@ enum FlagsVarsDebugMenu
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV,
-    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKENAV,
-    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_MATCH_CALL,
+    // PokéNav was removed from HLW.
+    // Match Call is intentionally hidden from the Wish Menu.
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL,
@@ -108,7 +114,7 @@ enum FlagsVarsDebugMenu
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE,
-    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE,
+    // Bag Use is already controlled by the HLW Options Menu.
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING,
 };
 
@@ -240,6 +246,10 @@ static void DebugAction_Cancel(u8 taskId);
 static void DebugAction_DestroyExtraWindow(u8 taskId);
 static void Debug_RefreshListMenu(u8 taskId);
 static bool8 Debug_CanOpen(void);
+static void Debug_ShowWishWarningTextBlock(void);
+static void DebugTask_HandleWishWarningTextBlock(u8 taskId);
+static void DebugAction_ROMInfo_PatchNumber(u8 taskId);
+static void DebugTask_HandlePatchInfoTextBlock(u8 taskId);
 
 static void DebugAction_OpenSubMenu(u8 taskId, const struct DebugMenuOption *items);
 static void DebugAction_OpenSubMenuFlagsVars(u8 taskId, const struct DebugMenuOption *items);
@@ -294,8 +304,6 @@ static void DebugAction_FlagsVars_PokedexFlags_Reset(u8 taskId);
 static void DebugAction_FlagsVars_SwitchDex(u8 taskId);
 static void DebugAction_FlagsVars_SwitchNatDex(u8 taskId);
 static void DebugAction_FlagsVars_SwitchDexNav(u8 taskId);
-static void DebugAction_FlagsVars_SwitchPokeNav(u8 taskId);
-static void DebugAction_FlagsVars_SwitchMatchCall(u8 taskId);
 static void DebugAction_FlagsVars_ToggleFlyFlags(u8 taskId);
 static void DebugAction_FlagsVars_ToggleBadgeFlags(u8 taskId);
 static void DebugAction_FlagsVars_ToggleGameClear(u8 taskId);
@@ -303,7 +311,6 @@ static void DebugAction_FlagsVars_ToggleFrontierPass(u8 taskId);
 static void DebugAction_FlagsVars_CollisionOnOff(u8 taskId);
 static void DebugAction_FlagsVars_EncounterOnOff(u8 taskId);
 static void DebugAction_FlagsVars_TrainerSeeOnOff(u8 taskId);
-static void DebugAction_FlagsVars_BagUseOnOff(u8 taskId);
 static void DebugAction_FlagsVars_CatchingOnOff(u8 taskId);
 static void DebugAction_FlagsVars_RunningShoes(u8 taskId);
 
@@ -312,18 +319,19 @@ static void DebugAction_Give_Item_SelectId(u8 taskId);
 static void DebugAction_Give_Item_SelectQuantity(u8 taskId);
 static void DebugAction_Give_PokemonSimple(u8 taskId);
 static void DebugAction_Give_PokemonComplex(u8 taskId);
+static void DebugAction_Give_PokemonPartyFull(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectId(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId);
-static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectNature(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectAbility(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectTeraType(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectDynamaxLevel(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectGigantamaxFactor(u8 taskId);
 static void DebugAction_Give_Pokemon_SelectIVs(u8 taskId);
-static void DebugAction_Give_Pokemon_SelectEVs(u8 taskId);
 static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId);
 static void DebugAction_Give_Pokemon_Move(u8 taskId);
+static void Debug_Display_Nature(u32 natureId, u32 digit, u8 windowId);
+static void Debug_Display_MoveInfo(u32 moveId, u32 iteration, u32 digit, u8 windowId);
 static void DebugAction_Give_Decoration(u8 taskId);
 static void DebugAction_Give_Decoration_SelectId(u8 taskId);
 static void DebugAction_Give_MaxMoney(u8 taskId);
@@ -344,7 +352,6 @@ static void DebugAction_BerryFunctions_Weeds(u8 taskId);
 
 static void DebugAction_Player_Name(u8 taskId);
 static void DebugAction_Player_Gender(u8 taskId);
-static void DebugAction_Player_Id(u8 taskId);
 
 extern const u8 Debug_FlagsNotSetOverworldConfigMessage[];
 extern const u8 Debug_FlagsNotSetBattleConfigMessage[];
@@ -400,6 +407,24 @@ static const u8 sDebugText_Colored_False[] = _("{COLOR RED}FALSE");
 static const u8 sDebugText_Dashes[] =        _("---");
 static const u8 sDebugText_Empty[] =         _("");
 static const u8 sDebugText_Continue[] =      _("Continue…");
+
+static const u8 sDebugText_WishWarningBlock[] =
+    _("Remember: the Wish Menu may cause\n"
+      "glitches or permanent bugs.\n"
+      "It is a tool made for fun, but we\n"
+      "recommend playing without it.\n"
+      "If you still want to use it, feel\n"
+      "free. The important thing is to\n"
+      "have fun!\n\n"
+      "Hide this warning next time?");
+
+static const u8 sDebugText_WishWarningYes[] = _("{RIGHT_ARROW} YES     NO");
+static const u8 sDebugText_WishWarningNo[]  = _("  YES   {RIGHT_ARROW} NO");
+
+static const u8 sDebugText_PatchInfoBlock[] =
+    _("Hoenn's Last Wish\n"
+      "Patch Number: 0.5.1\n"
+      "Release Date: 08/28/2026");
 // Util Menu
 static const u8 sDebugText_Util_WarpToMap_SelectMapGroup[] = _("Group: {STR_VAR_1}{CLEAR_TO 90}\n{CLEAR_TO 90}\n\n{STR_VAR_3}{CLEAR_TO 90}");
 static const u8 sDebugText_Util_WarpToMap_SelectMap[] =      _("Map: {STR_VAR_1}{CLEAR_TO 90}\nMapSec:{CLEAR_TO 90}\n{STR_VAR_2}{CLEAR_TO 90}\n{STR_VAR_3}{CLEAR_TO 90}");
@@ -477,6 +502,7 @@ static const s32 sPowersOfTen[] =
 
 // *******************************
 // Menu Actions. Make sure that submenus are defined before the menus that call them.
+
 static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_TimesOfDay[] =
 {
     [TIME_MORNING] = { gTimeOfDayStringsTable[TIME_MORNING], DebugAction_TimeMenu_ChangeTimeOfDay },
@@ -607,9 +633,12 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
 {
-    { COMPOUND_STRING("Player name"),    DebugAction_Player_Name },
-    { COMPOUND_STRING("Toggle gender"),  DebugAction_Player_Gender },
-    { COMPOUND_STRING("New Trainer ID"), DebugAction_Player_Id },
+    { COMPOUND_STRING("Player name"),   DebugAction_Player_Name },
+    { COMPOUND_STRING("Toggle gender"), DebugAction_Player_Gender },
+
+    // Trainer ID editing is intentionally hidden in HLW.
+    // { COMPOUND_STRING("New Trainer ID"), DebugAction_Player_Id },
+
     { NULL }
 };
 
@@ -635,9 +664,10 @@ static const struct DebugMenuOption sDebugMenu_Actions_Sound[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_ROMInfo2[] =
 {
-    { COMPOUND_STRING("Save Block space"),  DebugAction_ExecuteScript, Debug_CheckSaveBlock },
-    { COMPOUND_STRING("ROM space"),         DebugAction_ExecuteScript, Debug_CheckROMSpace },
-    { COMPOUND_STRING("Expansion Version"), DebugAction_ExecuteScript, Debug_ShowExpansionVersion },
+    { COMPOUND_STRING("Patch Number 0.5.1"), DebugAction_ROMInfo_PatchNumber },
+    { COMPOUND_STRING("Save Block space"),   DebugAction_ExecuteScript, Debug_CheckSaveBlock },
+    { COMPOUND_STRING("ROM space"),          DebugAction_ExecuteScript, Debug_CheckROMSpace },
+    { COMPOUND_STRING("Expansion Version"),  DebugAction_ExecuteScript, Debug_ShowExpansionVersion },
     { NULL }
 };
 
@@ -650,8 +680,10 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX]       = { COMPOUND_STRING("Toggle {STR_VAR_1}Pokédex"),         DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchDex },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX]        = { COMPOUND_STRING("Toggle {STR_VAR_1}National Dex"),    DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchNatDex },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV]        = { COMPOUND_STRING("Toggle {STR_VAR_1}DexNav"),          DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchDexNav },
-    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKENAV]       = { COMPOUND_STRING("Toggle {STR_VAR_1}PokéNav"),         DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchPokeNav },
-    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_MATCH_CALL]    = { COMPOUND_STRING("Toggle {STR_VAR_1}Match Call"),      DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchMatchCall },
+
+    // PokéNav no longer exists in HLW.
+    // Match Call remains in the source for reference but is hidden here.
+
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Running Shoes"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_RunningShoes },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Fly Flags"),       DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleFlyFlags },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL]    = { COMPOUND_STRING("Toggle {STR_VAR_1}All badges"),      DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleBadgeFlags },
@@ -660,7 +692,9 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Collision OFF"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_CollisionOnOff },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Encounter OFF"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_EncounterOnOff },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE]   = { COMPOUND_STRING("Toggle {STR_VAR_1}Trainer See OFF"), DebugAction_ToggleFlag, DebugAction_FlagsVars_TrainerSeeOnOff },
-    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE]       = { COMPOUND_STRING("Toggle {STR_VAR_1}Bag Use OFF"),     DebugAction_ToggleFlag, DebugAction_FlagsVars_BagUseOnOff },
+
+    // Bag Use is intentionally hidden; the HLW Options Menu already controls it.
+
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING]      = { COMPOUND_STRING("Toggle {STR_VAR_1}Catching OFF"),    DebugAction_ToggleFlag, DebugAction_FlagsVars_CatchingOnOff },
     { NULL }
 };
@@ -726,6 +760,33 @@ static const struct WindowTemplate sDebugMenuWindowTemplateSound =
     .baseBlock = 1,
 };
 
+
+static const struct WindowTemplate sDebugMenuWindowTemplateWishText =
+{
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 1,
+    .width = 28,
+    .height = 18,
+    .paletteNum = 15,
+
+    // Use the same BG0 tile region as the stock debug windows.
+    .baseBlock = 1,
+};
+
+static const struct WindowTemplate sDebugMenuWindowTemplatePatchText =
+{
+    .bg = 0,
+    .tilemapLeft = 2,
+    .tilemapTop = 3,
+    .width = 26,
+    .height = 14,
+    .paletteNum = 15,
+
+    // The ROM Info list is removed before this window is opened.
+    .baseBlock = 1,
+};
+
 static bool32 Debug_SaveCallbackMenu(struct DebugMenuOption *callbackItems);
 
 // *******************************
@@ -741,7 +802,91 @@ void Debug_ShowMainMenu(void)
 
     sDebugMenuListData = AllocZeroed(sizeof(*sDebugMenuListData));
     sDebugMenuListData->listId = 0;
-    Debug_ShowMenu(DebugTask_HandleMenuInput_General, sDebugMenu_Actions_Main);
+
+    // FLAG_WISH_WARNING is 0x28F in HLW. The body of the warning is printed
+    // as ordinary text; only the YES / NO choice is interactive.
+    if (!FlagGet(FLAG_WISH_WARNING))
+        Debug_ShowWishWarningTextBlock();
+    else
+        Debug_ShowMenu(DebugTask_HandleMenuInput_General, sDebugMenu_Actions_Main);
+}
+
+static void Debug_ShowWishWarningTextBlock(void)
+{
+    u8 windowId;
+    u8 taskId;
+
+    HideMapNamePopUpWindow();
+    LoadMessageBoxAndBorderGfx();
+
+    windowId = AddWindow(&sDebugMenuWindowTemplateWishText);
+    DrawStdWindowFrame(windowId, FALSE);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+
+    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_WishWarningBlock, 8, 8, 0, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, sDebugText_WishWarningYes, 56, 120, 0, NULL);
+
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+
+    taskId = CreateTask(DebugTask_HandleWishWarningTextBlock, 3);
+    gTasks[taskId].data[1] = windowId;
+    gTasks[taskId].data[3] = 0; // 0 = YES, 1 = NO
+}
+
+static void DebugTask_HandleWishWarningTextBlock(u8 taskId)
+{
+    u8 windowId = gTasks[taskId].data[1];
+
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        PlaySE(SE_SELECT);
+        gTasks[taskId].data[3] ^= 1;
+
+        FillWindowPixelRect(windowId, PIXEL_FILL(1), 48, 116, 152, 16);
+        AddTextPrinterParameterized(
+            windowId,
+            FONT_NORMAL,
+            gTasks[taskId].data[3] == 0 ? sDebugText_WishWarningYes : sDebugText_WishWarningNo,
+            56,
+            120,
+            0,
+            NULL
+        );
+        CopyWindowToVram(windowId, COPYWIN_GFX);
+        return;
+    }
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+
+        if (gTasks[taskId].data[3] == 0)
+            FlagSet(FLAG_WISH_WARNING);
+
+        ClearStdWindowAndFrame(windowId, TRUE);
+        ClearWindowTilemap(windowId);
+        CopyBgTilemapBufferToVram(0);
+        RemoveWindow(windowId);
+        DestroyTask(taskId);
+
+        sDebugMenuListData->listId = 0;
+        Debug_ShowMenu(DebugTask_HandleMenuInput_General, sDebugMenu_Actions_Main);
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        // B behaves like NO: keep the warning enabled for the next opening.
+        PlaySE(SE_SELECT);
+
+        ClearStdWindowAndFrame(windowId, TRUE);
+        ClearWindowTilemap(windowId);
+        CopyBgTilemapBufferToVram(0);
+        RemoveWindow(windowId);
+        DestroyTask(taskId);
+
+        sDebugMenuListData->listId = 0;
+        Debug_ShowMenu(DebugTask_HandleMenuInput_General, sDebugMenu_Actions_Main);
+    }
 }
 
 bool8 Debug_IsWishMenuBlockedByEliteFour(void)
@@ -1004,12 +1149,7 @@ static u8 Debug_CheckToggleFlags(u8 id)
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV:
             result = FlagGet(DN_FLAG_DEXNAV_GET);
             break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKENAV:
-            result = FlagGet(FLAG_SYS_POKENAV_GET);
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_MATCH_CALL:
-            result = FlagGet(FLAG_ADDED_MATCH_CALL_TO_POKENAV) && FlagGet(FLAG_HAS_MATCH_CALL);
-            break;
+        // PokéNav and Match Call are intentionally not exposed by HLW.
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES:
             result = FlagGet(FLAG_SYS_B_DASH);
             break;
@@ -1056,11 +1196,7 @@ static u8 Debug_CheckToggleFlags(u8 id)
             result = FlagGet(OW_FLAG_NO_TRAINER_SEE);
             break;
     #endif
-    #if B_FLAG_NO_BAG_USE != 0
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE:
-            result = FlagGet(B_FLAG_NO_BAG_USE);
-            break;
-    #endif
+    // Bag Use is controlled from the HLW Options Menu.
     #if B_FLAG_NO_CATCHING != 0
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING:
             result = FlagGet(B_FLAG_NO_CATCHING);
@@ -1568,6 +1704,9 @@ static void DebugAction_Player_Gender(u8 taskId)
     ScriptContext_Enable();
 }
 
+#if 0
+// Legacy Trainer ID editor implementation kept for reference only.
+// This code is intentionally disabled in Hoenn's Last Wish.
 static void DebugAction_Player_Id(u8 taskId)
 {
     u32 trainerId = Random32();
@@ -1575,6 +1714,7 @@ static void DebugAction_Player_Id(u8 taskId)
     Debug_DestroyMenu_Full(taskId);
     ScriptContext_Enable();
 }
+#endif
 
 static void DebugAction_Util_CheatStart(u8 taskId)
 {
@@ -1596,6 +1736,52 @@ static void DebugAction_Util_UnlockNextAchievement(u8 taskId)
     Debug_DestroyMenu_Full(taskId);
     Debug_UnlockNextAchievement();
     ScriptContext_Enable();
+}
+
+static void DebugAction_ROMInfo_PatchNumber(u8 taskId)
+{
+    u8 windowId;
+    u8 textTaskId;
+
+    PlaySE(SE_SELECT);
+
+    // Remove the ROM Info list before opening the text block.
+    Debug_DestroyMenu(taskId);
+
+    HideMapNamePopUpWindow();
+    LoadMessageBoxAndBorderGfx();
+
+    windowId = AddWindow(&sDebugMenuWindowTemplatePatchText);
+    DrawStdWindowFrame(windowId, FALSE);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_PatchInfoBlock, 8, 8, 0, NULL);
+
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+
+    textTaskId = CreateTask(DebugTask_HandlePatchInfoTextBlock, 3);
+    gTasks[textTaskId].data[1] = windowId;
+}
+
+static void DebugTask_HandlePatchInfoTextBlock(u8 taskId)
+{
+    u8 windowId = gTasks[taskId].data[1];
+
+    // Patch information is informational only. B returns to ROM Info.
+    if (!JOY_NEW(B_BUTTON))
+        return;
+
+    PlaySE(SE_SELECT);
+
+    ClearStdWindowAndFrame(windowId, TRUE);
+    ClearWindowTilemap(windowId);
+    CopyBgTilemapBufferToVram(0);
+    RemoveWindow(windowId);
+    DestroyTask(taskId);
+
+    // Reopen the already-saved ROM Info callback without adding a new level.
+    sDebugMenuListData->listId = 0;
+    Debug_ShowMenu(DebugTask_HandleMenuInput_General, NULL);
 }
 
 void BufferExpansionVersion(struct ScriptContext *ctx)
@@ -1930,6 +2116,9 @@ static void DebugAction_FlagsVars_SwitchNatDex(u8 taskId)
     }
 }
 
+#if 0
+// Legacy PokéNav implementation kept for reference only.
+// This code is intentionally disabled in Hoenn's Last Wish.
 static void DebugAction_FlagsVars_SwitchPokeNav(u8 taskId)
 {
     if (FlagGet(FLAG_SYS_POKENAV_GET))
@@ -1938,6 +2127,7 @@ static void DebugAction_FlagsVars_SwitchPokeNav(u8 taskId)
         PlaySE(SE_PC_LOGIN);
     FlagToggle(FLAG_SYS_POKENAV_GET);
 }
+#endif
 
 static void DebugAction_FlagsVars_SwitchDexNav(u8 taskId)
 {
@@ -1948,6 +2138,9 @@ static void DebugAction_FlagsVars_SwitchDexNav(u8 taskId)
     FlagToggle(DN_FLAG_DEXNAV_GET);
 }
 
+#if 0
+// Legacy Match Call implementation kept for reference only.
+// This code is intentionally disabled in Hoenn's Last Wish.
 static void DebugAction_FlagsVars_SwitchMatchCall(u8 taskId)
 {
     if (FlagGet(FLAG_ADDED_MATCH_CALL_TO_POKENAV))
@@ -1963,6 +2156,7 @@ static void DebugAction_FlagsVars_SwitchMatchCall(u8 taskId)
         FlagSet(FLAG_HAS_MATCH_CALL);
     }
 }
+#endif
 
 static void DebugAction_FlagsVars_RunningShoes(u8 taskId)
 {
@@ -2040,6 +2234,7 @@ static void DebugAction_FlagsVars_CollisionOnOff(u8 taskId)
 
 static void DebugAction_FlagsVars_EncounterOnOff(u8 taskId)
 {
+    // HLW reserves OW_FLAG_NO_ENCOUNTER as persistent flag 0x28E.
 #if OW_FLAG_NO_ENCOUNTER == 0
     Debug_DestroyMenu_Full_Script(taskId, Debug_FlagsNotSetOverworldConfigMessage);
 #else
@@ -2053,6 +2248,7 @@ static void DebugAction_FlagsVars_EncounterOnOff(u8 taskId)
 
 static void DebugAction_FlagsVars_TrainerSeeOnOff(u8 taskId)
 {
+    // HLW reserves OW_FLAG_NO_TRAINER_SEE as persistent flag 0x28D.
 #if OW_FLAG_NO_TRAINER_SEE == 0
     Debug_DestroyMenu_Full_Script(taskId, Debug_FlagsNotSetOverworldConfigMessage);
 #else
@@ -2064,6 +2260,9 @@ static void DebugAction_FlagsVars_TrainerSeeOnOff(u8 taskId)
 #endif
 }
 
+#if 0
+// Legacy Bag Use implementation kept for reference only.
+// This code is intentionally disabled in Hoenn's Last Wish.
 static void DebugAction_FlagsVars_BagUseOnOff(u8 taskId)
 {
 if (gSaveBlock2Ptr->optionsBattleItems == OPTIONS_BATTLEITEMS_OFF)
@@ -2071,6 +2270,7 @@ if (gSaveBlock2Ptr->optionsBattleItems == OPTIONS_BATTLEITEMS_OFF)
 else
     PlaySE(SE_PC_LOGIN);
 }
+#endif
 
 static void DebugAction_FlagsVars_CatchingOnOff(u8 taskId)
 {
@@ -2312,6 +2512,34 @@ static void DebugAction_Give_PokemonComplex(u8 taskId)
     gTasks[taskId].tIterator = 0;
 }
 
+static void DebugAction_Give_PokemonPartyFull(u8 taskId)
+{
+    // Play the normal error sound before closing the Wish Menu.
+    PlaySE(SE_FAILURE);
+
+    // Use the standard field message system after returning to the overworld.
+    StringCopy(
+        gStringVar4,
+        COMPOUND_STRING("You have a full party.\nPlease deposit some POKéMON.")
+    );
+
+    Free(sDebugMonData);
+    sDebugMonData = NULL;
+
+    // The Pokémon icon has already been destroyed before this helper is called.
+    DebugAction_DestroyExtraWindow(taskId);
+
+    // DebugAction_DestroyExtraWindow closes the UI task but intentionally keeps
+    // the shared menu allocation for normal debug flows. We are leaving the
+    // Wish Menu entirely here, so release it now.
+    Free(sDebugMenuListData);
+    sDebugMenuListData = NULL;
+
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    ScriptContext_SetupScript(Debug_ShowFieldMessageStringVar4);
+}
+
 static void Debug_Display_Level(u32 level, u32 digit, u8 windowId)
 {
     StringCopy(gStringVar2, gText_DigitIndicator[digit]);
@@ -2385,17 +2613,11 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
         if (gTasks[taskId].tIsComplex == FALSE)
         {
 
-if (gPlayerPartyCount >= PARTY_SIZE)
-{
-    PlaySE(SE_FAILURE);
-
-    Free(sDebugMonData);
-    FreeMonIconPalettes();
-    FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
-    DebugAction_DestroyExtraWindow(taskId);
-
-    return;
-}
+            if (gPlayerPartyCount >= PARTY_SIZE)
+            {
+                DebugAction_Give_PokemonPartyFull(taskId);
+                return;
+            }
 
             PlaySE(MUS_LEVEL_UP);
             ScriptGiveMon(sDebugMonData->species, gTasks[taskId].tInput, ITEM_NONE);
@@ -2418,8 +2640,11 @@ if (gPlayerPartyCount >= PARTY_SIZE)
             sDebugMonData->level = gTasks[taskId].tInput;
             gTasks[taskId].tInput = 0;
             gTasks[taskId].tDigit = 0;
-            Debug_Display_TrueFalse(gTasks[taskId].tInput, gTasks[taskId].tSubWindowId, sDebugText_PokemonShiny);
-            gTasks[taskId].func = DebugAction_Give_Pokemon_SelectShiny;
+
+            // HLW intentionally skips shiny selection in the Wish Menu.
+            // Complex-created Pokémon always continue as non-shiny.
+            Debug_Display_Nature(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
+            gTasks[taskId].func = DebugAction_Give_Pokemon_SelectNature;
         }
     }
     else if (JOY_NEW(B_BUTTON))
@@ -2442,6 +2667,9 @@ static void Debug_Display_Nature(u32 natureId, u32 digit, u8 windowId)
     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
 }
 
+#if 0
+// Legacy shiny selector implementation kept for reference only.
+// This code is intentionally disabled in Hoenn's Last Wish.
 static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) //// you can't gain shinys now
 {
     if (JOY_NEW(DPAD_ANY))
@@ -2470,6 +2698,7 @@ static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) //// you can't gain 
         DebugAction_DestroyExtraWindow(taskId);
     }
 }
+#endif
 
 static void Debug_Display_Ability(u32 abilityId, u32 digit, u8 windowId)//(u32 natureId, u32 digit, u8 windowId)
 {
@@ -2728,8 +2957,9 @@ static void DebugAction_Give_Pokemon_SelectIVs(u8 taskId)
             gTasks[taskId].tDigit = 0;
             gTasks[taskId].tIterator = 0;
 
-            Debug_Display_StatInfo(sDebugText_EVs, gTasks[taskId].tIterator, gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId, MAX_PER_STAT_EVS);
-            gTasks[taskId].func = DebugAction_Give_Pokemon_SelectEVs;
+            // EVs are not used in HLW. Continue directly from IVs to moves.
+            Debug_Display_MoveInfo(gTasks[taskId].tInput, gTasks[taskId].tIterator, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
+            gTasks[taskId].func = DebugAction_Give_Pokemon_Move;
         }
     }
     else if (JOY_NEW(B_BUTTON))
@@ -2740,6 +2970,9 @@ static void DebugAction_Give_Pokemon_SelectIVs(u8 taskId)
     }
 }
 
+#if 0
+// Legacy EV helper kept for reference only.
+// EV selection is disabled in Hoenn's Last Wish.
 static u32 GetDebugPokemonTotalEV(void)
 {
     u32 totalEVs = 0;
@@ -2747,6 +2980,7 @@ static u32 GetDebugPokemonTotalEV(void)
         totalEVs += sDebugMonData->monEVs[i];
     return totalEVs;
 }
+#endif
 
 static void Debug_Display_MoveInfo(u32 moveId, u32 iteration, u32 digit, u8 windowId)
 {
@@ -2768,6 +3002,9 @@ static void Debug_Display_MoveInfo(u32 moveId, u32 iteration, u32 digit, u8 wind
     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
 }
 
+#if 0
+// Legacy EV selector implementation kept for reference only.
+// This code is intentionally disabled in Hoenn's Last Wish.
 static void DebugAction_Give_Pokemon_SelectEVs(u8 taskId)
 {
     u16 totalEV = GetDebugPokemonTotalEV();
@@ -2825,6 +3062,7 @@ static void DebugAction_Give_Pokemon_SelectEVs(u8 taskId)
         DebugAction_DestroyExtraWindow(taskId);
     }
 }
+#endif
 
 static void DebugAction_Give_Pokemon_Move(u8 taskId)
 {
@@ -2874,19 +3112,12 @@ static void DebugAction_Give_Pokemon_Move(u8 taskId)
 
 static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://github.com/ghoulslash/pokeemerald/tree/custom-givemon
     {
-    // +++ BLOQUEIO PARTY CHEIA +++
+    // A full party closes the Wish Menu and shows a standard field message.
     if (gPlayerPartyCount >= PARTY_SIZE)
     {
-        PlaySE(SE_FAILURE);
-
-        Free(sDebugMonData);
-        FreeMonIconPalettes();
-        FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
-        DebugAction_DestroyExtraWindow(taskId);
-
+        DebugAction_Give_PokemonPartyFull(taskId);
         return;
     }
-    // +++ FIM +++
     enum NationalDexOrder nationalDexNum;
     int sentToPc;
     struct Pokemon mon;
@@ -2894,11 +3125,9 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     u16 moves[MAX_MON_MOVES];
     u8 IVs[NUM_STATS];
     u8 iv_val;
-    u8 EVs[NUM_STATS];
-    u8 ev_val;
     u16 species     = sDebugMonData->species;
     u8 level        = sDebugMonData->level;
-    bool8 isShiny   = FALSE; // Desabilitado - não permitir shiny pelo debug menu
+    bool8 isShiny   = FALSE; // HLW Wish Menu never generates shiny Pokémon.
     u8 nature       = sDebugMonData->nature;
     u8 abilityNum   = sDebugMonData->abilityNum;
     u32 teraType    = sDebugMonData->teraType;
@@ -2909,17 +3138,14 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
         moves[i] = sDebugMonData->monMoves[i];
     }
     for (u32 i = 0; i < NUM_STATS; i++)
-    {
-        EVs[i] = sDebugMonData->monEVs[i];
         IVs[i] = sDebugMonData->monIVs[i];
-    }
 
     //Nature
     if (nature == NUM_NATURES || nature == 0xFF)
         nature = Random() % NUM_NATURES;
     CreateMonWithNature(&mon, species, level, USE_RANDOM_IVS, nature);
 
-    //Shininess
+    // Shininess is intentionally forced off for Wish Menu-created Pokémon.
     SetMonData(&mon, MON_DATA_IS_SHINY, &isShiny);
 
     // Gigantamax factor
@@ -2941,13 +3167,9 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
             SetMonData(&mon, MON_DATA_HP_IV + i, &iv_val);
     }
 
-    //EVs
-    for (i = 0; i < NUM_STATS; i++)
-    {
-        ev_val = EVs[i];
-        if (ev_val)
-            SetMonData(&mon, MON_DATA_HP_EV + i, &ev_val);
-    }
+    // EVs are intentionally not applied in HLW.
+    // The legacy EV data remains in this debug structure only for compatibility
+    // with the upstream debug implementation.
 
     //Moves
     for (i = 0; i < MAX_MON_MOVES; i++)
