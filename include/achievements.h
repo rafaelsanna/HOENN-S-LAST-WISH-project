@@ -25,6 +25,16 @@ void Achievement_CheckCounter(enum AchievementCounter counter);
 void Achievement_UnlockHallOfFameDebut(void);
 void Achievement_OnPokemonObtained(u16 species);
 void Achievement_OnTrainerDefeated(u16 trainerId);
+
+// Custom Hoenn's Last Wish tracking hooks.
+// These are intentionally tiny so custom scripts/minigames can call them
+// without knowing anything about the achievement save format.
+void Achievement_RecordTimeGearUse(void);
+void Achievement_RecordFishingCatch(void);
+void Achievement_RecordGameCornerPlay(enum AchievementGameCornerGame game);
+void Achievement_RecordLeagueWin(void);
+void Achievement_RecordMagmaGruntDefeat(void);
+void Achievement_RecordAquaGruntDefeat(void);
 void Achievement_TryShowQueuedPopup(void);
 void Achievement_HidePopup(void);
 u16 Achievement_CountUnlocked(void);

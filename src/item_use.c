@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "item_use.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -1719,6 +1720,7 @@ void ItemUseOutOfBattle_TimeGear(u8 taskId)
     }
 
     DoTimeBasedEvents();
+    Achievement_RecordTimeGearUse();
     PlaySE(SE_M_TELEPORT);
     DestroyTask(taskId);
     SetMainCallback2(CB2_LoadMap);

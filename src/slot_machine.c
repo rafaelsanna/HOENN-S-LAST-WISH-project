@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "comfy_anim.h"
 #include "overworld.h"
 #include "field_effect.h"
@@ -1442,6 +1443,7 @@ static bool8 SlotTask_StartSpin(struct Task *task)
     SpinSlotReel(RIGHT_REEL);
 
     IncrementDailySlotsUses();
+    Achievement_RecordGameCornerPlay(ACH_GAME_CORNER_SLOTS);
 
     task->tTimer = 0;
     if (sSlotMachine->machineBias & BIAS_REELTIME)

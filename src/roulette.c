@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "comfy_anim.h"
 #include "malloc.h"
 #include "bg.h"
@@ -1476,6 +1477,7 @@ static void ProcessBetGridInput(u8 taskId)
 static void Task_StartSpin(u8 taskId)
 {
     IncrementDailyRouletteUses();
+    Achievement_RecordGameCornerPlay(ACH_GAME_CORNER_ROULETTE);
     sRoulette->selectionRectDrawState = SELECT_STATE_ERASE;
     if (sRoulette->tableId == 0)
         sRoulette->wheelDelay = 1;
