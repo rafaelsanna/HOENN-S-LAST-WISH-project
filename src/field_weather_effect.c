@@ -41,6 +41,11 @@ const u8 gWeatherAshTiles[] = INCBIN_U8("graphics/weather/ash.4bpp");
 const u8 gWeatherRainTiles[] = INCBIN_U8("graphics/weather/rain.4bpp");
 const u8 gWeatherSandstormTiles[] = INCBIN_U8("graphics/weather/sandstorm.4bpp");
 
+// Hoenn's Last Wish - Concert Lights diagnostic beam.
+// Source file: graphics/weather/concert_beam_v11.png
+const u8 gWeatherConcertBeamTiles[] = INCBIN_U8("graphics/weather/concert_beam_v11.4bpp");
+const u16 gWeatherConcertBeamPalette[] = INCBIN_U16("graphics/weather/concert_beam_v11.gbapal");
+
 //------------------------------------------------------------------------------
 // WEATHER_SUNNY_CLOUDS
 //------------------------------------------------------------------------------
@@ -3108,6 +3113,245 @@ static void UpdateSmokeSprite(struct Sprite *sprite)
 #undef tSmokeWaveInc
 #undef tSmokeId
 
+
+//------------------------------------------------------------------------------
+// WEATHER_CONCERT_LIGHTS - V11 DUAL SHOW BEAMS
+//
+// Safe architecture:
+// - two fixed screen-space sprites
+// - no camera/player/coord-offset manipulation
+// - no affine movement
+// - both sprites share one 3-frame sheet
+// - LEFT/CENTER/RIGHT poses create the illusion of moving spotlights
+// - OBJ alpha blend makes the cones look like light instead of solid objects
+//------------------------------------------------------------------------------
+
+#define GFXTAG_CONCERT_BEAM 0x1214
+#define NUM_CONCERT_BEAMS 2
+#define CONCERT_BEAM_POSE_FRAMES 36
+
+EWRAM_DATA static u8 sConcertBeamSpriteIds[NUM_CONCERT_BEAMS] = {0};
+EWRAM_DATA static bool8 sConcertBeamCreated = FALSE;
+EWRAM_DATA static u16 sConcertBeamTimer = 0;
+EWRAM_DATA static u8 sConcertBeamLastPose[NUM_CONCERT_BEAMS] = {0};
+
+static const struct SpriteSheet sConcertBeamSpriteSheet =
+{
+    .data = gWeatherConcertBeamTiles,
+    .size = sizeof(gWeatherConcertBeamTiles),
+    .tag = GFXTAG_CONCERT_BEAM,
+};
+
+static const struct OamData sConcertBeamOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sConcertBeamAnimLeft[] =
+{
+    ANIMCMD_FRAME(0, 60),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sConcertBeamAnimCenter[] =
+{
+    ANIMCMD_FRAME(64, 60),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sConcertBeamAnimRight[] =
+{
+    ANIMCMD_FRAME(128, 60),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sConcertBeamAnimCmds[] =
+{
+    sConcertBeamAnimLeft,
+    sConcertBeamAnimCenter,
+    sConcertBeamAnimRight,
+};
+
+static const struct SpriteTemplate sConcertBeamSpriteTemplate =
+{
+    .tileTag = GFXTAG_CONCERT_BEAM,
+    .paletteTag = PALTAG_WEATHER,
+    .oam = &sConcertBeamOamData,
+    .anims = sConcertBeamAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static u8 GetConcertBeamPose(u16 timer, u8 beamId)
+{
+    // Four-step sweep:
+    // beam 0: LEFT -> CENTER -> RIGHT -> CENTER
+    // beam 1: RIGHT -> CENTER -> LEFT -> CENTER
+    //
+    // They are opposite in phase, so the beams repeatedly cross like stage lights.
+    static const u8 sBeam0Poses[] = {0, 1, 2, 1};
+    static const u8 sBeam1Poses[] = {2, 1, 0, 1};
+    u8 step = (timer / CONCERT_BEAM_POSE_FRAMES) & 3;
+
+    return (beamId == 0) ? sBeam0Poses[step] : sBeam1Poses[step];
+}
+
+void ConcertBeam_Reset(void)
+{
+    u8 i;
+
+    for (i = 0; i < NUM_CONCERT_BEAMS; i++)
+    {
+        sConcertBeamSpriteIds[i] = MAX_SPRITES;
+        sConcertBeamLastPose[i] = 0xFF;
+    }
+
+    sConcertBeamCreated = FALSE;
+    sConcertBeamTimer = 0;
+}
+
+void ConcertBeam_Update(void)
+{
+    u8 i;
+
+    if (!sConcertBeamCreated)
+    {
+        // StartWeather already reserves PALTAG_WEATHER. Reuse that palette
+        // instead of allocating another OBJ palette slot.
+        if (gWeatherPtr->contrastColorMapSpritePalIndex >= 16)
+            return;
+
+        LoadSpriteSheet(&sConcertBeamSpriteSheet);
+
+        LoadPalette(
+            gWeatherConcertBeamPalette,
+            OBJ_PLTT_ID(gWeatherPtr->contrastColorMapSpritePalIndex),
+            PLTT_SIZE_4BPP
+        );
+
+        // Two fixed screen-space light sources.
+        // Their X/Y never move; only the graphic pose changes.
+        sConcertBeamSpriteIds[0] = CreateSpriteAtEnd(
+            &sConcertBeamSpriteTemplate,
+            88,
+            52,
+            0
+        );
+
+        sConcertBeamSpriteIds[1] = CreateSpriteAtEnd(
+            &sConcertBeamSpriteTemplate,
+            152,
+            52,
+            0
+        );
+
+        if (sConcertBeamSpriteIds[0] == MAX_SPRITES
+         || sConcertBeamSpriteIds[1] == MAX_SPRITES)
+        {
+            for (i = 0; i < NUM_CONCERT_BEAMS; i++)
+            {
+                if (sConcertBeamSpriteIds[i] < MAX_SPRITES)
+                    DestroySprite(&gSprites[sConcertBeamSpriteIds[i]]);
+                sConcertBeamSpriteIds[i] = MAX_SPRITES;
+            }
+
+            FreeSpriteTilesByTag(GFXTAG_CONCERT_BEAM);
+            return;
+        }
+
+        for (i = 0; i < NUM_CONCERT_BEAMS; i++)
+        {
+            struct Sprite *sprite = &gSprites[sConcertBeamSpriteIds[i]];
+
+            sprite->coordOffsetEnabled = FALSE;
+            sprite->invisible = FALSE;
+            sprite->x2 = 0;
+            sprite->y2 = 0;
+            sConcertBeamLastPose[i] = 0xFF;
+        }
+
+        // Semi-transparent OBJ over map BGs.
+        // This is deliberately mild: the beam remains visible without becoming
+        // an opaque white triangle.
+        SetGpuReg(
+            REG_OFFSET_BLDCNT,
+            BLDCNT_TGT1_OBJ
+          | BLDCNT_TGT2_BG0
+          | BLDCNT_TGT2_BG1
+          | BLDCNT_TGT2_BG2
+          | BLDCNT_TGT2_BG3
+          | BLDCNT_EFFECT_BLEND
+        );
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(7, 9));
+
+        sConcertBeamCreated = TRUE;
+        sConcertBeamTimer = 0;
+    }
+
+    for (i = 0; i < NUM_CONCERT_BEAMS; i++)
+    {
+        u8 pose;
+        struct Sprite *sprite;
+
+        if (sConcertBeamSpriteIds[i] >= MAX_SPRITES)
+            continue;
+
+        sprite = &gSprites[sConcertBeamSpriteIds[i]];
+        pose = GetConcertBeamPose(sConcertBeamTimer, i);
+
+        if (pose != sConcertBeamLastPose[i])
+        {
+            StartSpriteAnim(sprite, pose);
+            sConcertBeamLastPose[i] = pose;
+        }
+
+        // Keep them fixed and screen-relative.
+        sprite->coordOffsetEnabled = FALSE;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->invisible = FALSE;
+    }
+
+    sConcertBeamTimer++;
+}
+
+void ConcertBeam_Destroy(void)
+{
+    u8 i;
+
+    for (i = 0; i < NUM_CONCERT_BEAMS; i++)
+    {
+        if (sConcertBeamSpriteIds[i] < MAX_SPRITES)
+            DestroySprite(&gSprites[sConcertBeamSpriteIds[i]]);
+
+        sConcertBeamSpriteIds[i] = MAX_SPRITES;
+        sConcertBeamLastPose[i] = 0xFF;
+    }
+
+    if (sConcertBeamCreated)
+        FreeSpriteTilesByTag(GFXTAG_CONCERT_BEAM);
+
+    sConcertBeamCreated = FALSE;
+    sConcertBeamTimer = 0;
+
+    // Leave no hardware blend state behind when changing weather.
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
+}
+
 /////////////////////// 
 
 #define tState         data[0]
@@ -3284,6 +3528,7 @@ static u8 TranslateWeatherNum(u8 weather)
     case WEATHER_SMOKE:              return WEATHER_SMOKE;
     case WEATHER_FOREST_LIGHT:       return WEATHER_FOREST_LIGHT;
     case WEATHER_FALLING_LEAVES:     return WEATHER_FALLING_LEAVES;
+    case WEATHER_CONCERT_LIGHTS:     return WEATHER_CONCERT_LIGHTS;
     case WEATHER_ROUTE119_CYCLE:     return sWeatherCycleRoute119[gSaveBlock1Ptr->weatherCycleStage];
     case WEATHER_ROUTE123_CYCLE:     return sWeatherCycleRoute123[gSaveBlock1Ptr->weatherCycleStage];
     default:                         return WEATHER_NONE;

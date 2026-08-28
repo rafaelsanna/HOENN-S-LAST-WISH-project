@@ -63,6 +63,11 @@ static bool8 ConcertLights_Finish(void);
 static void ConcertLights_ApplyLighting(void);
 static void ConcertLights_RestoreBasePalettes(void);
 
+// Beam rendering lives in field_weather_effect.c, alongside the other weather sprites.
+void ConcertBeam_Reset(void);
+void ConcertBeam_Update(void);
+void ConcertBeam_Destroy(void);
+
 EWRAM_DATA struct Weather gWeather = {0};
 EWRAM_DATA static u8 ALIGNED(2) sFieldEffectPaletteColorMapTypes[32] = {0};
 
@@ -71,22 +76,22 @@ static const u8 *sPaletteColorMapTypes;
 // -----------------------------------------------------------------------------
 // Hoenn's Last Wish - Concert Lights
 //
-// This first version intentionally uses palette lighting instead of new sprite
-// graphics. It is lightweight, works on indoor maps, and gives the stadium a
-// rhythmic concert-light wash without touching map tiles or object positions.
+// Strong, slow stage-light pulses. The effect intentionally uses palette
+// lighting only, so it needs no extra graphics and remains lightweight.
 // -----------------------------------------------------------------------------
 static u16 sConcertLightsTimer;
 
 static const u16 sConcertLightColors[] =
 {
-    RGB(8, 18, 31),  // Blue
-    RGB(8, 31, 27),  // Cyan
-    RGB(31, 8, 27),  // Magenta
-    RGB(31, 17, 8),  // Warm red / orange
+    RGB(4, 8, 31),   // Blue
+    RGB(31, 4, 25),  // Magenta / pink
+    RGB(4, 31, 27),  // Cyan
+    RGB(31, 6, 4),   // Red
+    RGB(20, 4, 31),  // Purple
 };
 
 #define CONCERT_LIGHT_COLOR_COUNT ARRAY_COUNT(sConcertLightColors)
-#define CONCERT_LIGHT_PHASE_FRAMES 64
+#define CONCERT_LIGHT_PHASE_FRAMES 80
 
 static const u8 sDarkenedContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32] =
 {
@@ -336,6 +341,7 @@ static u8 None_Finish(void)
 static void ConcertLights_InitVars(void)
 {
     sConcertLightsTimer = 0;
+    ConcertBeam_Reset();
 
     // Keep the normal map palette as the weather base. The concert tint is
     // applied every frame from the unfaded palette, so colors never accumulate.
@@ -367,37 +373,44 @@ static void ConcertLights_RestoreBasePalettes(void)
 
 static void ConcertLights_ApplyLighting(void)
 {
-    u16 wave;
+    u16 phase;
     u8 blendCoeff;
     u8 colorIndex;
     u16 blendColor;
+    u8 i;
 
-    // Change color only when the current pulse is at its weakest point.
-    // This makes the transition feel like moving stage lights instead of
-    // abruptly replacing one solid screen tint with another.
+    // One color per slow pulse. The color changes when the previous pulse has
+    // faded back down, avoiding harsh strobe-like transitions.
     colorIndex = (sConcertLightsTimer / CONCERT_LIGHT_PHASE_FRAMES)
                % CONCERT_LIGHT_COLOR_COUNT;
     blendColor = sConcertLightColors[colorIndex];
 
-    // Four small light pulses per color cycle.
-    // abs(sine) creates a smooth 0 -> bright -> 0 pulse.
-    wave = abs(gSineTable[(sConcertLightsTimer & 0x3F) * 4]);
+    // Triangle wave: 0 -> 40 -> 0 over 80 frames (~1.3 s at 60 FPS).
+    phase = sConcertLightsTimer % CONCERT_LIGHT_PHASE_FRAMES;
+    if (phase < CONCERT_LIGHT_PHASE_FRAMES / 2)
+        blendCoeff = phase;
+    else
+        blendCoeff = CONCERT_LIGHT_PHASE_FRAMES - phase;
 
-    // GBA palette blend coefficients range from 0 to 16.
-    // 1..5 keeps the effect colorful but leaves the map easy to read.
-    blendCoeff = 1 + (wave >> 6);
+    // Convert 0..40 into 1..9. This is intentionally much stronger than V1,
+    // but still slow enough to read as stage lighting rather than rapid flash.
+    blendCoeff = 1 + (blendCoeff / 5);
 
     ConcertLights_RestoreBasePalettes();
 
-    // Tint both the map and characters so the lighting feels like it belongs
-    // to the room rather than being an overlay pasted on top of it.
-    BlendPalettesFine(
-        PALETTES_ALL,
-        gPlttBufferFaded,
-        gPlttBufferFaded,
-        blendCoeff,
-        blendColor
-    );
+    // Apply the tint to the room/characters, but preserve the OBJ palette
+    // reserved for the concert beams. This keeps the beams warm white/yellow
+    // while the stadium itself cycles through blue/magenta/cyan/red/purple.
+    for (i = 0; i < 32; i++)
+    {
+        u8 beamPal = 16 + gWeatherPtr->contrastColorMapSpritePalIndex;
+
+        if (gWeatherPtr->contrastColorMapSpritePalIndex < 16
+         && i == beamPal)
+            continue;
+
+        BlendPalette(i * 16, 16, blendCoeff, blendColor);
+    }
 }
 
 static void ConcertLights_Main(void)
@@ -407,12 +420,19 @@ static void ConcertLights_Main(void)
      || gPaletteFade.active)
         return;
 
+    // Create the fixed test beam from the weather-effects module.
+    // ConcertBeam_Update() is idempotent: after creation it does nothing.
+    ConcertBeam_Update();
+
     sConcertLightsTimer++;
     ConcertLights_ApplyLighting();
 }
 
 static bool8 ConcertLights_Finish(void)
 {
+    // Remove the fixed beam before another weather takes control.
+    ConcertBeam_Destroy();
+
     // Restore the unmodified field palette immediately before another weather
     // takes control.
     ConcertLights_RestoreBasePalettes();
