@@ -87,6 +87,9 @@ static void SetMsgSignPostAndVarFacing(u32 playerDirection);
 static void SetUpWalkIntoSignScript(const u8 *script, u32 playerDirection);
 static u32 GetFacingSignpostType(u16 metatileBehvaior, u32 direction);
 static const u8 *GetSignpostScriptAtMapPosition(struct MapPosition * position);
+// Hoenn's Last Wish - Wish Menu
+void Debug_ShowMainMenu(void);
+bool8 Debug_IsWishMenuBlockedByEliteFour(void);
 
 void FieldClearPlayerInput(struct FieldInput *input)
 {
