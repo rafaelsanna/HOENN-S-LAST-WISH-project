@@ -701,7 +701,7 @@
 #define FLAG_HIDE_MAR_RUST_VISIBILITY           0x289
 #define FLAG_HIDE_MAR_LILI_VISIBILITY           0x28A
 #define FLAG_USED_DEBUG_MENU                    0x28B
-#define FLAG_UNUSED_0x28C  0x28C // Unused Flag
+#define FLAG_ENCOUNTER_MEGA_RAY              0x28C // Unused Flag
 #define FLAG_UNUSED_0x28D  0x28D // Unused Flag
 #define FLAG_UNUSED_0x28E  0x28E // Unused Flag
 #define FLAG_UNUSED_0x28F  0x28F // Unused Flag
