@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "main.h"
 #include "credits.h"
 #include "event_data.h"
@@ -81,6 +82,7 @@ int GameClear(void)
         }
     }
 
+    Achievement_RecordLeagueWin();
     SetMainCallback2(CB2_DoHallOfFameScreen);
     return 0;
 }

@@ -14217,6 +14217,9 @@ static void Cmd_givecaughtmon(void)
         }
 
         gBattleResults.caughtMonSpecies = GetMonData(caughtMon, MON_DATA_SPECIES, NULL);
+        if (gIsFishingEncounter)
+            Achievement_RecordFishingCatch();
+        Achievement_CheckAll();
         GetMonData(caughtMon, MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
         gBattleResults.caughtMonBall = GetMonData(caughtMon, MON_DATA_POKEBALL, NULL);
 
