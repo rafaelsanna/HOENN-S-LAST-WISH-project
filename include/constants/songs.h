@@ -493,7 +493,10 @@
 #define MUS_HLW_DISTORTION_WORLD    559
 #define MUS_HLW_VS_EVIL             560
 #define MUS_HLW_PHOENIX_TOWN        561
-#define END_MUS                     MUS_HLW_PHOENIX_TOWN
+#define MUS_GET_LUCKY               562
+#define MUS_FLY_ME_TO_THE_MOON      563
+
+#define END_MUS                     MUS_FLY_ME_TO_THE_MOON
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

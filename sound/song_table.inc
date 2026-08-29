@@ -563,6 +563,8 @@ gSongTable::
 	song mus_hlw_distortion_world, 0, 0
 	song mus_hlw_vs_evil, 0, 0
 	song mus_hlw_phoenix_town, 0, 0
+	song mus_get_lucky, 0, 0
+	song mus_fly_me_to_the_moon, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

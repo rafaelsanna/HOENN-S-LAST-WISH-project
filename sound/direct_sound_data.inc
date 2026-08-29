@@ -6467,3 +6467,8 @@ DirectSoundWaveData_muted_trumpet::
 	.align 2
 DirectSoundWaveData_muted_trumpet2::
 	.incbin "sound/direct_sound_samples/muted_trumpet2.bin"
+
+.align 2
+DirectSoundWaveData_dp_altosax_c3_16::
+    .incbin "sound/direct_sound_samples/dp_altosax_c3_16.bin"
+	

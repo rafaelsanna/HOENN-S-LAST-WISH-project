@@ -207,3 +207,7 @@
 .include "sound/voicegroups/mus_hlw_distortion_world.inc"
 .include "sound/voicegroups/mus_hlw_vs_evil.inc"
 .include "sound/voicegroups/mus_hlw_phoenix_town.inc"
+.include "sound/voicegroups/drumsets/get_lucky.inc"
+.include "sound/voicegroups/get_lucky.inc"
+.include "sound/voicegroups/drumsets/fly_me_to_the_moon.inc"
+.include "sound/voicegroups/fly_me_to_the_moon.inc"
