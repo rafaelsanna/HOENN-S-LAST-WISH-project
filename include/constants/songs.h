@@ -497,8 +497,9 @@
 #define MUS_FLY_ME_TO_THE_MOON      563
 #define MUS_FLASHING_LIGHTS            564
 #define MUS_PINK_AND_WHITE             565
+#define MUS_RAP_SNITCH_KNISHES           566
 
-#define END_MUS                     MUS_PINK_AND_WHITE
+#define END_MUS                     MUS_RAP_SNITCH_KNISHES
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

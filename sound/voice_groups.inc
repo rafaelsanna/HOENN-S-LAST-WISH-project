@@ -215,3 +215,5 @@
 .include "sound/voicegroups/flashing_lights.inc"
 .include "sound/voicegroups/drumsets/pink_and_white.inc"
 .include "sound/voicegroups/pink_and_white.inc"
+.include "sound/voicegroups/drumsets/rap_snitch_knishes.inc"
+.include "sound/voicegroups/rap_snitch_knishes.inc"
