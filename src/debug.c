@@ -3952,7 +3952,8 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_HLW_VS_EVIL)              \
     X(MUS_HLW_PHOENIX_TOWN)         \
     X(MUS_GET_LUCKY)                \
-    X(MUS_FLY_ME_TO_THE_MOON)
+    X(MUS_FLY_ME_TO_THE_MOON)       \
+    X(MUS_FLASHING_LIGHTS)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \

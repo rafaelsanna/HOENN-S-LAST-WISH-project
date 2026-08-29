@@ -41,3 +41,8 @@ keysplit muted_trumpet, 36
 keysplit french_horn_2, 36
 	split 0, 66
 	split 1, 108
+
+keysplit flashing_lights_strings, 25
+    split 0, 69
+    split 1, 81
+    split 2, 108

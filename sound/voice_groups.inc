@@ -211,3 +211,5 @@
 .include "sound/voicegroups/get_lucky.inc"
 .include "sound/voicegroups/drumsets/fly_me_to_the_moon.inc"
 .include "sound/voicegroups/fly_me_to_the_moon.inc"
+.include "sound/voicegroups/drumsets/flashing_lights.inc"
+.include "sound/voicegroups/flashing_lights.inc"
