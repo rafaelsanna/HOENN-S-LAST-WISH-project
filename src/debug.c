@@ -3955,7 +3955,9 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_FLY_ME_TO_THE_MOON)       \
     X(MUS_FLASHING_LIGHTS)          \
     X(MUS_PINK_AND_WHITE)           \
-    X(MUS_RAP_SNITCH_KNISHES)
+    X(MUS_RAP_SNITCH_KNISHES)        \
+    X(MUS_SCARS_OF_TIME) \
+    X(MUS_APPLAUSE)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \

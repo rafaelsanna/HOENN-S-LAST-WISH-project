@@ -6472,3 +6472,7 @@ DirectSoundWaveData_muted_trumpet2::
 DirectSoundWaveData_dp_altosax_c3_16::
     .incbin "sound/direct_sound_samples/dp_altosax_c3_16.bin"
 	
+
+.align 2
+DirectSoundWaveData_hg_024clarie4::
+    .incbin "sound/direct_sound_samples/hg_024clarie4.bin"

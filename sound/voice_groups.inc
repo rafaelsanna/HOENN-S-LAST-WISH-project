@@ -217,3 +217,6 @@
 .include "sound/voicegroups/pink_and_white.inc"
 .include "sound/voicegroups/drumsets/rap_snitch_knishes.inc"
 .include "sound/voicegroups/rap_snitch_knishes.inc"
+.include "sound/voicegroups/drumsets/scars_of_time.inc"
+.include "sound/voicegroups/scars_of_time.inc"
+.include "sound/voicegroups/applause.inc"
