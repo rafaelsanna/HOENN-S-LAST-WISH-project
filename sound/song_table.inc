@@ -570,6 +570,7 @@ gSongTable::
 	song mus_rap_snitch_knishes, 0, 0
 	song mus_scars_of_time, 0, 0
 	song mus_applause, 0, 0
+	song mus_abracadabra, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

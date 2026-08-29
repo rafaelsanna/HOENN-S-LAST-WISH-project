@@ -3957,7 +3957,8 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_PINK_AND_WHITE)           \
     X(MUS_RAP_SNITCH_KNISHES)        \
     X(MUS_SCARS_OF_TIME) \
-    X(MUS_APPLAUSE)
+    X(MUS_APPLAUSE)  \
+    X(MUS_ABRACADABRA)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \

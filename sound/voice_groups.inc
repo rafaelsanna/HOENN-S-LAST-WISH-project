@@ -220,3 +220,4 @@
 .include "sound/voicegroups/drumsets/scars_of_time.inc"
 .include "sound/voicegroups/scars_of_time.inc"
 .include "sound/voicegroups/applause.inc"
+.include "sound/voicegroups/abracadabra.inc"
