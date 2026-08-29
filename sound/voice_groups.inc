@@ -213,3 +213,5 @@
 .include "sound/voicegroups/fly_me_to_the_moon.inc"
 .include "sound/voicegroups/drumsets/flashing_lights.inc"
 .include "sound/voicegroups/flashing_lights.inc"
+.include "sound/voicegroups/drumsets/pink_and_white.inc"
+.include "sound/voicegroups/pink_and_white.inc"
