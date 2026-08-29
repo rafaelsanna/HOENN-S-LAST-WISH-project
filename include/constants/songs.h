@@ -501,8 +501,9 @@
 #define MUS_SCARS_OF_TIME                  567
 #define MUS_APPLAUSE                       568
 #define MUS_ABRACADABRA                       569
+#define MUS_PAINS_THEME                          570
 
-#define END_MUS                     MUS_ABRACADABRA
+#define END_MUS                     MUS_PAINS_THEME
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

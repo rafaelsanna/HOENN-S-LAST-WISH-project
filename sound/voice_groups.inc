@@ -221,3 +221,4 @@
 .include "sound/voicegroups/scars_of_time.inc"
 .include "sound/voicegroups/applause.inc"
 .include "sound/voicegroups/abracadabra.inc"
+.include "sound/voicegroups/pains_theme.inc"
