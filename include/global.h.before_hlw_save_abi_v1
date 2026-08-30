@@ -1087,52 +1087,6 @@ struct Bag
     struct ItemSlot berries[BAG_BERRIES_COUNT];
 };
 
-
-// ==========================================================================
-// HLW SAVE ABI - FREEZE TARGET FOR RELEASE 1.0
-//
-// AFTER 1.0:
-//   * do not move hlwSave
-//   * do not change sizeof(struct HLWSaveExtension)
-//   * consume bytes from future[]
-//   * migrate by version when bytes gain meaning
-// ==========================================================================
-#define HLW_SAVE_EXTENSION_SIZE 512
-
-struct RadioSaveData
-{
-    u32 magic;
-    u32 shuffleState;
-    u16 currentSong;
-    u16 version;
-
-    u8 station;
-    u8 favoritesCount;
-    u8 playlistCount;
-    u8 flags;
-
-    u16 favorites[32];
-    u16 playlist[32];
-
-    u8 reserved[8];
-};
-
-STATIC_ASSERT(sizeof(struct RadioSaveData) == 152, RadioSaveDataSize);
-
-struct HLWSaveExtension
-{
-    u32 magic;
-    u16 version;
-    u16 size;
-
-    struct RadioSaveData radio;
-
-    // Reserved BEFORE 1.0 for future persistent HLW features.
-    u8 future[352];
-};
-
-STATIC_ASSERT(sizeof(struct HLWSaveExtension) == HLW_SAVE_EXTENSION_SIZE, HLWSaveExtensionSize);
-
 struct SaveBlock1
 {
     /*0x00*/ struct Coords16 pos;
@@ -1247,10 +1201,6 @@ struct SaveBlock1
     struct MiningWallSave miningWalls;
     struct AchievementSave achievements;
     // sizeof: 0x3???
-
-    // HLW persistent extension.
-    // APPENDED at the end so older SaveBlock1 fields keep their offsets.
-    struct HLWSaveExtension hlwSave;
 };
 
 extern struct SaveBlock1 *gSaveBlock1Ptr;

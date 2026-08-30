@@ -7,24 +7,24 @@
 //   OTHER-WORLD      -> real-world artists / bands
 //   AMATERASU RADIO  -> pop / dance-pop
 //   INDIE ROCK RADIO -> indie / alternative rock
+//   FAVORITES        -> saved favorite songs
+//   PLAYLIST         -> currently active Playlist 1/2/3
 //
-// Controls:
+// Main controls:
 //   A           -> Play / Pause
 //   START       -> Open Radio Menu (large left-side MENU button)
 //   SELECT      -> Cycle station (large left-side CHANGE STATION button)
-//   L / LEFT    -> Previous track
-//   R / RIGHT   -> Next track
+//   UP / DOWN   -> Select Song row or Radio Station row
+//   LEFT/RIGHT  -> Change the selected row
+//   L / R       -> Previous / Next song
 //   B           -> Close (music keeps playing)
 //
-// Radio Menu includes:
-//   SEARCH A-Z / FAVORITES / MY PLAYLIST / FAVORITE CURRENT /
-//   ADD TO PLAYLIST / RADIO PRIORITY / REPEAT / SHUFFLE / RETURN
+// Radio Menu order:
+//   RADIO PRIORITY / REPEAT / SHUFFLE / SEARCH A-Z / FAVORITES /
+//   ADD FAVORITE or REMOVE FAVORITE / MY PLAYLISTS / ADD TO PLAYLIST / RETURN
 //
-// Radio Menu:
-//   SEARCH A-Z, FAVORITES, MY PLAYLIST, FAVORITE CURRENT,
-//   ADD TO PLAYLIST, SHUFFLE and RETURN.
-// Favorites / playlist are session-persistent in EWRAM for now.
-// Save-file persistence can be added later.
+// Favorites, three playlists, playback state and radio settings persist in
+// SaveBlock1 through the fixed 512-byte HLW save extension.
 
 #include "global.h"
 #include "bg.h"
@@ -95,13 +95,15 @@ static EWRAM_DATA u16 sRadioPopupPendingSong;
 
 // ---------------------------------------------------------------------------
 // Radio library / menu state.
-// V1 is intentionally EWRAM-only: favorites and playlist survive closing the
-// radio during the current play session, but reset after a hard reset/power-off.
+// Favorites keep 32 slots. MY PLAYLISTS exposes three fixed playlists with
+// 20 songs each. The playlist chooser is a single shared window.
 // ---------------------------------------------------------------------------
-#define RADIO_LIBRARY_CAPACITY     32
-#define RADIO_SEARCH_CAPACITY      64
-#define RADIO_MENU_ITEM_COUNT       9
-#define RADIO_SEARCH_LETTER_COUNT  26
+#define RADIO_LIBRARY_CAPACITY        32
+#define RADIO_PLAYLIST_COUNT           3
+#define RADIO_PLAYLIST_CAPACITY       20
+#define RADIO_SEARCH_CAPACITY         64
+#define RADIO_MENU_ITEM_COUNT          9
+#define RADIO_SEARCH_LETTER_COUNT     26
 
 enum RadioUiMode
 {
@@ -110,23 +112,37 @@ enum RadioUiMode
     RADIO_UI_SEARCH_LETTER,
     RADIO_UI_SEARCH_RESULTS,
     RADIO_UI_FAVORITES,
+    RADIO_UI_PLAYLIST_CHOOSER,
     RADIO_UI_PLAYLIST,
+};
+
+enum RadioPlaylistChooserAction
+{
+    RADIO_PLAYLIST_CHOOSE_OPEN = 0,
+    RADIO_PLAYLIST_CHOOSE_ADD,
 };
 
 enum RadioMenuItem
 {
-    RADIO_MENU_SEARCH = 0,
-    RADIO_MENU_FAVORITES,
-    RADIO_MENU_PLAYLIST,
-    RADIO_MENU_TOGGLE_FAVORITE,
-    RADIO_MENU_ADD_PLAYLIST,
-    RADIO_MENU_PRIORITY,
+    RADIO_MENU_PRIORITY = 0,
     RADIO_MENU_REPEAT,
     RADIO_MENU_SHUFFLE,
+    RADIO_MENU_SEARCH,
+    RADIO_MENU_FAVORITES,
+    RADIO_MENU_TOGGLE_FAVORITE,
+    RADIO_MENU_PLAYLIST,
+    RADIO_MENU_ADD_PLAYLIST,
     RADIO_MENU_RETURN,
 };
 
+enum RadioMainSelection
+{
+    RADIO_MAIN_SELECT_SONG = 0,
+    RADIO_MAIN_SELECT_STATION,
+};
+
 static EWRAM_DATA u8    sRadioUiMode;
+static EWRAM_DATA u8    sRadioMainSelection;
 static EWRAM_DATA u8    sRadioMenuCursor;
 static EWRAM_DATA u8    sRadioListCursor;
 static EWRAM_DATA u8    sRadioSearchLetter;
@@ -136,8 +152,14 @@ static EWRAM_DATA u16   sRadioSearchResults[RADIO_SEARCH_CAPACITY];
 static EWRAM_DATA u8    sRadioFavoritesCount;
 static EWRAM_DATA u16   sRadioFavorites[RADIO_LIBRARY_CAPACITY];
 
-static EWRAM_DATA u8    sRadioPlaylistCount;
-static EWRAM_DATA u16   sRadioPlaylist[RADIO_LIBRARY_CAPACITY];
+static EWRAM_DATA u8    sRadioPlaylistCounts[RADIO_PLAYLIST_COUNT];
+static EWRAM_DATA u16   sRadioPlaylists[RADIO_PLAYLIST_COUNT][RADIO_PLAYLIST_CAPACITY];
+static EWRAM_DATA u8    sRadioActivePlaylist;
+static EWRAM_DATA u8    sRadioBrowsePlaylist;
+static EWRAM_DATA u8    sRadioPlaylistChooserCursor;
+static EWRAM_DATA u8    sRadioPlaylistChooserAction;
+static EWRAM_DATA u8    sRadioPlaylistChooserReturnMode;
+static EWRAM_DATA u16   sRadioPlaylistAddSong;
 
 static EWRAM_DATA bool8 sRadioShuffleEnabled;
 static EWRAM_DATA u32   sRadioShuffleState;
@@ -1074,7 +1096,9 @@ static const u8 sStationName_OtherWorld[]  = _("OTHER-WORLD");
 static const u8 sStationName_Amaterasu[]   = _("AMATERASU");
 static const u8 sStationName_IndieRock[]   = _("INDIE ROCK");
 static const u8 sStationName_Favorites[]   = _("FAVORITES");
-static const u8 sStationName_Playlist[]    = _("MY PLAYLIST");
+static const u8 sStationName_Playlist1[]   = _("PLAYLIST 1");
+static const u8 sStationName_Playlist2[]   = _("PLAYLIST 2");
+static const u8 sStationName_Playlist3[]   = _("PLAYLIST 3");
 
 static const u8 *const sStationNames[STATION_COUNT] = {
     [STATION_ALL]         = sStationName_All,
@@ -1083,7 +1107,7 @@ static const u8 *const sStationNames[STATION_COUNT] = {
     [STATION_AMATERASU]   = sStationName_Amaterasu,
     [STATION_INDIE_ROCK]  = sStationName_IndieRock,
     [STATION_FAVORITES]   = sStationName_Favorites,
-    [STATION_PLAYLIST]    = sStationName_Playlist,
+    [STATION_PLAYLIST]    = sStationName_Playlist1,
 };
 
 // Full labels used only by the animated NOW PLAYING status.
@@ -1093,7 +1117,9 @@ static const u8 sStationNowPlaying_OtherWorld[]  = _("NOW PLAYING OTHER-WORLD MU
 static const u8 sStationNowPlaying_Amaterasu[]   = _("NOW PLAYING AMATERASU RADIO");
 static const u8 sStationNowPlaying_IndieRock[]   = _("NOW PLAYING INDIE ROCK RADIO");
 static const u8 sStationNowPlaying_Favorites[]   = _("NOW PLAYING FAVORITES");
-static const u8 sStationNowPlaying_Playlist[]    = _("NOW PLAYING MY PLAYLIST");
+static const u8 sStationNowPlaying_Playlist1[]   = _("NOW PLAYING PLAYLIST 1");
+static const u8 sStationNowPlaying_Playlist2[]   = _("NOW PLAYING PLAYLIST 2");
+static const u8 sStationNowPlaying_Playlist3[]   = _("NOW PLAYING PLAYLIST 3");
 
 static const u8 *const sStationNowPlayingNames[STATION_COUNT] =
 {
@@ -1103,8 +1129,40 @@ static const u8 *const sStationNowPlayingNames[STATION_COUNT] =
     [STATION_AMATERASU]   = sStationNowPlaying_Amaterasu,
     [STATION_INDIE_ROCK]  = sStationNowPlaying_IndieRock,
     [STATION_FAVORITES]   = sStationNowPlaying_Favorites,
-    [STATION_PLAYLIST]    = sStationNowPlaying_Playlist,
+    [STATION_PLAYLIST]    = sStationNowPlaying_Playlist1,
 };
+
+static const u8 *Radio_GetStationDisplayName(u8 station)
+{
+    if (station != STATION_PLAYLIST)
+        return sStationNames[station];
+
+    switch (sRadioActivePlaylist)
+    {
+    case 1:
+        return sStationName_Playlist2;
+    case 2:
+        return sStationName_Playlist3;
+    default:
+        return sStationName_Playlist1;
+    }
+}
+
+static const u8 *Radio_GetStationNowPlayingName(u8 station)
+{
+    if (station != STATION_PLAYLIST)
+        return sStationNowPlayingNames[station];
+
+    switch (sRadioActivePlaylist)
+    {
+    case 1:
+        return sStationNowPlaying_Playlist2;
+    case 2:
+        return sStationNowPlaying_Playlist3;
+    default:
+        return sStationNowPlaying_Playlist1;
+    }
+}
 
 // ===========================================================================
 // Station helpers
@@ -1120,7 +1178,7 @@ static u16 Station_Count(u8 station)
         return sRadioFavoritesCount;
 
     if (station == STATION_PLAYLIST)
-        return sRadioPlaylistCount;
+        return sRadioPlaylistCounts[sRadioActivePlaylist];
 
     list = sStationTracks[station];
 
@@ -1142,8 +1200,8 @@ static u16 Station_GetTrack(u8 station, u16 index)
 
     if (station == STATION_PLAYLIST)
     {
-        if (index < sRadioPlaylistCount)
-            return sRadioPlaylist[index];
+        if (index < sRadioPlaylistCounts[sRadioActivePlaylist])
+            return sRadioPlaylists[sRadioActivePlaylist][index];
         return sRadioCurrentSong;
     }
 
@@ -1182,6 +1240,8 @@ static void Task_RadioFadeAndExit(u8 taskId);
 static void Task_RadioWaitFadeExit(u8 taskId);
 static void Radio_DrawMusicInfo(u16 songId, bool8 playing);
 static void Radio_CopyEncodedText(u8 *dest, const u8 *src, u32 destSize);
+static void Radio_LoadPersistentState(void);
+static void Radio_SavePersistentState(void);
 static void Radio_QueueNowPlayingPopup(u16 songId);
 static void Radio_ClearNowPlayingPopupQueue(void);
 static void Radio_DrawNowPlayingPopup(u8 taskId);
@@ -1241,17 +1301,18 @@ static void Radio_SyncSong(void)
 static const u8 sRadioText_TrackFmt[]      = _("Track:{STR_VAR_1}/{STR_VAR_2}");
 static const u8 sRadioText_Paused[]        = _("PAUSED");
 static const u8 sRadioText_Unknown[]       = _("---");
-static const u8 sRadioText_SongFmt[]       = _("Song: {STR_VAR_1}");
-static const u8 sRadioText_StationFmt[]    = _("Radio Station: {STR_VAR_1}");
+static const u8 sRadioText_SongFmt[]            = _(" Song: {STR_VAR_1}");
+static const u8 sRadioText_SongFmtSelected[]    = _(">Song: {STR_VAR_1}");
+static const u8 sRadioText_StationFmt[]         = _(" Radio Station: {STR_VAR_1}");
+static const u8 sRadioText_StationFmtSelected[] = _(">Radio Station: {STR_VAR_1}");
 
 static const u8 sRadioText_MenuTitle[]       = _("RADIO MENU");
 static const u8 sRadioText_MenuSearch[]      = _("SEARCH A-Z");
 static const u8 sRadioText_MenuFavorites[]   = _("FAVORITES");
-static const u8 sRadioText_MenuPlaylist[]    = _("MY PLAYLIST");
-static const u8 sRadioText_MenuFavorite[]    = _("FAVORITE CURRENT");
-static const u8 sRadioText_MenuUnfavorite[]  = _("UNFAVORITE CURRENT");
+static const u8 sRadioText_MenuPlaylist[]    = _("MY PLAYLISTS");
+static const u8 sRadioText_MenuFavorite[]    = _("ADD FAVORITE");
+static const u8 sRadioText_MenuUnfavorite[]  = _("REMOVE FAVORITE");
 static const u8 sRadioText_MenuAddPlaylist[] = _("ADD TO PLAYLIST");
-static const u8 sRadioText_MenuInPlaylist[]  = _("ALREADY IN PLAYLIST");
 static const u8 sRadioText_MenuPriorityOn[]  = _("RADIO PRIORITY: ON");
 static const u8 sRadioText_MenuPriorityOff[] = _("RADIO PRIORITY: OFF");
 static const u8 sRadioText_MenuRepeatOn[]    = _("REPEAT: ON");
@@ -1265,10 +1326,22 @@ static const u8 sRadioText_SearchTitle[]      = _("SEARCH A-Z");
 static const u8 sRadioText_SearchLetterFmt[]  = _("LETTER: {STR_VAR_1}");
 static const u8 sRadioText_SearchHelp[]       = _("A SEARCH  B BACK");
 static const u8 sRadioText_SearchResults[]    = _("SEARCH RESULTS");
-static const u8 sRadioText_FavoritesHead[]    = _("FAVORITES");
-static const u8 sRadioText_PlaylistHead[]     = _("MY PLAYLIST");
-static const u8 sRadioText_EmptyList[]        = _("EMPTY - B BACK");
-static const u8 sRadioSearchLetters[]         = _("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+static const u8 sRadioText_FavoritesHead[]       = _("FAVORITES");
+static const u8 sRadioText_PlaylistsHead[]       = _("MY PLAYLISTS");
+static const u8 sRadioText_AddToPlaylistHead[]   = _("ADD TO PLAYLIST");
+static const u8 sRadioText_Playlist1Head[]       = _("PLAYLIST 1");
+static const u8 sRadioText_Playlist2Head[]       = _("PLAYLIST 2");
+static const u8 sRadioText_Playlist3Head[]       = _("PLAYLIST 3");
+static const u8 sRadioText_PlaylistSlotFmt[]     = _("PLAYLIST {STR_VAR_1} {STR_VAR_2}/20");
+static const u8 sRadioText_EmptyList[]           = _("EMPTY - B BACK");
+static const u8 sRadioSearchLetters[]            = _("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+static const u8 *const sRadioText_PlaylistHeads[RADIO_PLAYLIST_COUNT] =
+{
+    sRadioText_Playlist1Head,
+    sRadioText_Playlist2Head,
+    sRadioText_Playlist3Head,
+};
 
 // ---------------------------------------------------------------------------
 // Indie Rock Radio display names — show artist/band next to the song.
@@ -2029,6 +2102,7 @@ static bool8 Radio_AdvanceToNextStationTrack(void)
 
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
+    Radio_SavePersistentState();
     Radio_QueueNowPlayingPopup(sRadioCurrentSong);
     return TRUE;
 }
@@ -2071,6 +2145,7 @@ bool8 RadioPriority_NextTrack(void)
     m4aSongNumStart(sRadioCurrentSong);
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
+    Radio_SavePersistentState();
     Radio_QueueNowPlayingPopup(sRadioCurrentSong);
     return TRUE;
 }
@@ -2106,6 +2181,7 @@ bool8 RadioPriority_PreviousTrack(void)
     m4aSongNumStart(sRadioCurrentSong);
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
+    Radio_SavePersistentState();
     Radio_QueueNowPlayingPopup(sRadioCurrentSong);
     return TRUE;
 }
@@ -2178,6 +2254,357 @@ void RadioPriority_MaintainBgm(void)
 }
 
 // ---------------------------------------------------------------------------
+// Persistent radio save.
+//
+// ABI rule: HLWSaveExtension remains exactly 512 bytes. RadioSaveData remains
+// exactly 152 bytes for V8.1 compatibility. Playlist 1 reuses the old
+// save->playlist[32] field. Playlist 1 uses slots 0..19, while Playlist 2
+// reuses the 12 legacy spare slots 20..31 before spilling its last 8 slots
+// into future[]. Playlist 3 also lives in future[]. Only 56 bytes of
+// hlwSave.future[] are consumed, leaving 296 bytes reserved.
+// Metadata for the 3-playlist format lives in RadioSaveData.reserved[].
+// ---------------------------------------------------------------------------
+
+#define HLW_SAVE_EXTENSION_MAGIC   0x484C5753
+#define HLW_SAVE_EXTENSION_VERSION 1
+
+#define RADIO_SAVE_MAGIC           0x484C5752
+#define RADIO_SAVE_VERSION         1
+
+#define RADIO_SAVE_FLAG_PRIORITY      (1 << 0)
+#define RADIO_SAVE_FLAG_REPEAT        (1 << 1)
+#define RADIO_SAVE_FLAG_SHUFFLE       (1 << 2)
+#define RADIO_SAVE_FLAG_PLAYING       (1 << 3)
+#define RADIO_SAVE_FLAG_SELECT_RADIO  (1 << 4)
+
+#define RADIO_PLAYLIST_SAVE_TAG0              0x50 // 'P'
+#define RADIO_PLAYLIST_SAVE_TAG1              0x33 // '3'
+#define RADIO_PLAYLIST_SAVE_VERSION           1
+
+#define RADIO_PLAYLIST2_LEGACY_SLOTS          (RADIO_LIBRARY_CAPACITY - RADIO_PLAYLIST_CAPACITY)
+#define RADIO_PLAYLIST2_FUTURE_SLOTS          (RADIO_PLAYLIST_CAPACITY - RADIO_PLAYLIST2_LEGACY_SLOTS)
+#define RADIO_PLAYLIST_FUTURE_OFFSET_2_TAIL   0
+#define RADIO_PLAYLIST_FUTURE_OFFSET_3        (RADIO_PLAYLIST2_FUTURE_SLOTS * sizeof(u16))
+#define RADIO_PLAYLIST_FUTURE_BYTES           ((RADIO_PLAYLIST2_FUTURE_SLOTS + RADIO_PLAYLIST_CAPACITY) * sizeof(u16))
+
+#define RADIO_SAVE_RSVD_TAG0              0
+#define RADIO_SAVE_RSVD_TAG1              1
+#define RADIO_SAVE_RSVD_PLAYLIST_VERSION  2
+#define RADIO_SAVE_RSVD_ACTIVE_PLAYLIST   3
+#define RADIO_SAVE_RSVD_PLAYLIST2_COUNT   4
+#define RADIO_SAVE_RSVD_PLAYLIST3_COUNT   5
+
+static bool8 Radio_SaveHasThreePlaylists(const struct RadioSaveData *save)
+{
+    return save->reserved[RADIO_SAVE_RSVD_TAG0] == RADIO_PLAYLIST_SAVE_TAG0
+        && save->reserved[RADIO_SAVE_RSVD_TAG1] == RADIO_PLAYLIST_SAVE_TAG1
+        && save->reserved[RADIO_SAVE_RSVD_PLAYLIST_VERSION] == RADIO_PLAYLIST_SAVE_VERSION;
+}
+
+static void Radio_InitSaveExtensionIfNeeded(void)
+{
+    struct HLWSaveExtension *ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->magic != HLW_SAVE_EXTENSION_MAGIC
+     || ext->version != HLW_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext))
+    {
+        memset(ext, 0, sizeof(*ext));
+        ext->magic = HLW_SAVE_EXTENSION_MAGIC;
+        ext->version = HLW_SAVE_EXTENSION_VERSION;
+        ext->size = sizeof(*ext);
+    }
+}
+
+static void Radio_ResetPersistentState(void)
+{
+    struct HLWSaveExtension *ext;
+    struct RadioSaveData *save;
+
+    Radio_InitSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+    save = &ext->radio;
+
+    memset(save, 0, sizeof(*save));
+    memset(ext->future, 0, RADIO_PLAYLIST_FUTURE_BYTES);
+
+    save->magic = RADIO_SAVE_MAGIC;
+    save->version = RADIO_SAVE_VERSION;
+    save->shuffleState = 0xA5C31F27;
+    save->station = STATION_ALL;
+    save->currentSong = Station_GetTrack(STATION_ALL, 0);
+
+    save->reserved[RADIO_SAVE_RSVD_TAG0] = RADIO_PLAYLIST_SAVE_TAG0;
+    save->reserved[RADIO_SAVE_RSVD_TAG1] = RADIO_PLAYLIST_SAVE_TAG1;
+    save->reserved[RADIO_SAVE_RSVD_PLAYLIST_VERSION] = RADIO_PLAYLIST_SAVE_VERSION;
+    save->reserved[RADIO_SAVE_RSVD_ACTIVE_PLAYLIST] = 0;
+}
+
+static bool8 Radio_SaveSongIdIsValid(u16 songId)
+{
+    return songId >= (u16)START_MUS && songId <= (u16)END_MUS;
+}
+
+static u8 Radio_LoadSavedSongList(const u16 *src, u8 srcCount, u16 *dst, u8 capacity)
+{
+    u8 i;
+    u8 outCount = 0;
+
+    if (srcCount > capacity)
+        srcCount = capacity;
+
+    for (i = 0; i < srcCount; i++)
+    {
+        u8 j;
+        bool8 duplicate = FALSE;
+
+        if (!Radio_SaveSongIdIsValid(src[i]))
+            continue;
+
+        for (j = 0; j < outCount; j++)
+        {
+            if (dst[j] == src[i])
+            {
+                duplicate = TRUE;
+                break;
+            }
+        }
+
+        if (!duplicate)
+            dst[outCount++] = src[i];
+    }
+
+    return outCount;
+}
+
+static void Radio_MigrateLegacySinglePlaylist(const struct RadioSaveData *save)
+{
+    u16 oldPlaylist[RADIO_LIBRARY_CAPACITY];
+    u8 oldCount;
+    u8 i;
+
+    memset(oldPlaylist, 0, sizeof(oldPlaylist));
+    memset(sRadioPlaylists, 0, sizeof(sRadioPlaylists));
+    memset(sRadioPlaylistCounts, 0, sizeof(sRadioPlaylistCounts));
+
+    oldCount = Radio_LoadSavedSongList(
+        save->playlist,
+        save->playlistCount,
+        oldPlaylist,
+        RADIO_LIBRARY_CAPACITY
+    );
+
+    for (i = 0; i < oldCount && i < RADIO_PLAYLIST_CAPACITY; i++)
+        sRadioPlaylists[0][sRadioPlaylistCounts[0]++] = oldPlaylist[i];
+
+    // V8.1 allowed 32 songs. Preserve overflow instead of dropping it:
+    // songs 21..32 migrate into Playlist 2.
+    for (; i < oldCount && sRadioPlaylistCounts[1] < RADIO_PLAYLIST_CAPACITY; i++)
+        sRadioPlaylists[1][sRadioPlaylistCounts[1]++] = oldPlaylist[i];
+
+    sRadioActivePlaylist = 0;
+
+    // If V8.1 was actively playing one of the overflow songs, keep that
+    // playlist context too so the current song can still be found after load.
+    if (save->station == STATION_PLAYLIST)
+    {
+        for (i = 0; i < sRadioPlaylistCounts[1]; i++)
+        {
+            if (sRadioPlaylists[1][i] == save->currentSong)
+            {
+                sRadioActivePlaylist = 1;
+                break;
+            }
+        }
+    }
+}
+
+static void Radio_LoadPersistentState(void)
+{
+    struct HLWSaveExtension *ext;
+    struct RadioSaveData *save;
+    u16 savedPlaylist2[RADIO_PLAYLIST_CAPACITY];
+    u16 savedPlaylist3[RADIO_PLAYLIST_CAPACITY];
+
+    Radio_InitSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+    save = &ext->radio;
+
+    if (save->magic != RADIO_SAVE_MAGIC
+     || save->version != RADIO_SAVE_VERSION)
+    {
+        Radio_ResetPersistentState();
+        ext = &gSaveBlock1Ptr->hlwSave;
+        save = &ext->radio;
+    }
+
+    memset(sRadioFavorites, 0, sizeof(sRadioFavorites));
+    memset(sRadioPlaylists, 0, sizeof(sRadioPlaylists));
+    memset(sRadioPlaylistCounts, 0, sizeof(sRadioPlaylistCounts));
+
+    sRadioFavoritesCount = Radio_LoadSavedSongList(
+        save->favorites,
+        save->favoritesCount,
+        sRadioFavorites,
+        RADIO_LIBRARY_CAPACITY
+    );
+
+    if (Radio_SaveHasThreePlaylists(save))
+    {
+        sRadioPlaylistCounts[0] = Radio_LoadSavedSongList(
+            save->playlist,
+            save->playlistCount,
+            sRadioPlaylists[0],
+            RADIO_PLAYLIST_CAPACITY
+        );
+
+        memset(savedPlaylist2, 0, sizeof(savedPlaylist2));
+        memcpy(
+            savedPlaylist2,
+            &save->playlist[RADIO_PLAYLIST_CAPACITY],
+            RADIO_PLAYLIST2_LEGACY_SLOTS * sizeof(u16)
+        );
+        memcpy(
+            &savedPlaylist2[RADIO_PLAYLIST2_LEGACY_SLOTS],
+            &ext->future[RADIO_PLAYLIST_FUTURE_OFFSET_2_TAIL],
+            RADIO_PLAYLIST2_FUTURE_SLOTS * sizeof(u16)
+        );
+        memcpy(
+            savedPlaylist3,
+            &ext->future[RADIO_PLAYLIST_FUTURE_OFFSET_3],
+            sizeof(savedPlaylist3)
+        );
+
+        sRadioPlaylistCounts[1] = Radio_LoadSavedSongList(
+            savedPlaylist2,
+            save->reserved[RADIO_SAVE_RSVD_PLAYLIST2_COUNT],
+            sRadioPlaylists[1],
+            RADIO_PLAYLIST_CAPACITY
+        );
+        sRadioPlaylistCounts[2] = Radio_LoadSavedSongList(
+            savedPlaylist3,
+            save->reserved[RADIO_SAVE_RSVD_PLAYLIST3_COUNT],
+            sRadioPlaylists[2],
+            RADIO_PLAYLIST_CAPACITY
+        );
+
+        sRadioActivePlaylist = save->reserved[RADIO_SAVE_RSVD_ACTIVE_PLAYLIST];
+        if (sRadioActivePlaylist >= RADIO_PLAYLIST_COUNT)
+            sRadioActivePlaylist = 0;
+    }
+    else
+    {
+        // Transparent V8.1 migration: old single playlist -> Playlist 1,
+        // with any songs beyond slot 20 carried into Playlist 2.
+        Radio_MigrateLegacySinglePlaylist(save);
+    }
+
+    sRadioStation = save->station;
+    if (sRadioStation >= STATION_COUNT
+     || Station_Count(sRadioStation) == 0)
+    {
+        sRadioStation = STATION_ALL;
+    }
+
+    sRadioCurrentSong = save->currentSong;
+    if (!Radio_SaveSongIdIsValid(sRadioCurrentSong))
+        sRadioCurrentSong = Station_GetTrack(sRadioStation, 0);
+
+    sRadioStationIndex = Station_FindTrack(sRadioStation, sRadioCurrentSong);
+    if (Station_GetTrack(sRadioStation, sRadioStationIndex) != sRadioCurrentSong)
+    {
+        sRadioStationIndex = 0;
+        sRadioCurrentSong = Station_GetTrack(sRadioStation, 0);
+    }
+
+    sRadioPriorityEnabled = (save->flags & RADIO_SAVE_FLAG_PRIORITY) != 0;
+    sRadioRepeatEnabled = (save->flags & RADIO_SAVE_FLAG_REPEAT) != 0;
+    sRadioShuffleEnabled = (save->flags & RADIO_SAVE_FLAG_SHUFFLE) != 0;
+    sRadioIsPlaying = (save->flags & RADIO_SAVE_FLAG_PLAYING) != 0;
+
+    sRadioMainSelection =
+        (save->flags & RADIO_SAVE_FLAG_SELECT_RADIO)
+            ? RADIO_MAIN_SELECT_STATION
+            : RADIO_MAIN_SELECT_SONG;
+
+    sRadioShuffleState = save->shuffleState;
+    if (sRadioShuffleState == 0)
+        sRadioShuffleState = 0xA5C31F27;
+
+    Radio_SavePersistentState();
+}
+
+static void Radio_SavePersistentState(void)
+{
+    struct HLWSaveExtension *ext;
+    struct RadioSaveData *save;
+    u8 flags = 0;
+
+    Radio_InitSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+    save = &ext->radio;
+
+    save->magic = RADIO_SAVE_MAGIC;
+    save->version = RADIO_SAVE_VERSION;
+    save->shuffleState = sRadioShuffleState;
+    save->currentSong = sRadioCurrentSong;
+    save->station = sRadioStation;
+    save->favoritesCount = sRadioFavoritesCount;
+    save->playlistCount = sRadioPlaylistCounts[0];
+
+    if (sRadioPriorityEnabled)
+        flags |= RADIO_SAVE_FLAG_PRIORITY;
+    if (sRadioRepeatEnabled)
+        flags |= RADIO_SAVE_FLAG_REPEAT;
+    if (sRadioShuffleEnabled)
+        flags |= RADIO_SAVE_FLAG_SHUFFLE;
+    if (sRadioIsPlaying)
+        flags |= RADIO_SAVE_FLAG_PLAYING;
+    if (sRadioMainSelection == RADIO_MAIN_SELECT_STATION)
+        flags |= RADIO_SAVE_FLAG_SELECT_RADIO;
+
+    save->flags = flags;
+
+    save->reserved[RADIO_SAVE_RSVD_TAG0] = RADIO_PLAYLIST_SAVE_TAG0;
+    save->reserved[RADIO_SAVE_RSVD_TAG1] = RADIO_PLAYLIST_SAVE_TAG1;
+    save->reserved[RADIO_SAVE_RSVD_PLAYLIST_VERSION] = RADIO_PLAYLIST_SAVE_VERSION;
+    save->reserved[RADIO_SAVE_RSVD_ACTIVE_PLAYLIST] = sRadioActivePlaylist;
+    save->reserved[RADIO_SAVE_RSVD_PLAYLIST2_COUNT] = sRadioPlaylistCounts[1];
+    save->reserved[RADIO_SAVE_RSVD_PLAYLIST3_COUNT] = sRadioPlaylistCounts[2];
+    save->reserved[6] = 0;
+    save->reserved[7] = 0;
+
+    memset(save->favorites, 0, sizeof(save->favorites));
+    memcpy(save->favorites, sRadioFavorites, sizeof(sRadioFavorites));
+
+    // Playlist 1 stays in save->playlist[0..19].
+    // Playlist 2 reuses save->playlist[20..31] for its first 12 songs.
+    memset(save->playlist, 0, sizeof(save->playlist));
+    memcpy(save->playlist, sRadioPlaylists[0], sizeof(sRadioPlaylists[0]));
+    memcpy(
+        &save->playlist[RADIO_PLAYLIST_CAPACITY],
+        sRadioPlaylists[1],
+        RADIO_PLAYLIST2_LEGACY_SLOTS * sizeof(u16)
+    );
+
+    // Only the last 8 slots of Playlist 2 plus all 20 slots of Playlist 3
+    // consume future[]: 16 + 40 = 56 bytes. The remaining 296 bytes stay
+    // untouched and reserved for future HLW features.
+    memset(ext->future, 0, RADIO_PLAYLIST_FUTURE_BYTES);
+    memcpy(
+        &ext->future[RADIO_PLAYLIST_FUTURE_OFFSET_2_TAIL],
+        &sRadioPlaylists[1][RADIO_PLAYLIST2_LEGACY_SLOTS],
+        RADIO_PLAYLIST2_FUTURE_SLOTS * sizeof(u16)
+    );
+    memcpy(
+        &ext->future[RADIO_PLAYLIST_FUTURE_OFFSET_3],
+        sRadioPlaylists[2],
+        sizeof(sRadioPlaylists[2])
+    );
+}
+
+
+// ---------------------------------------------------------------------------
 // Library / Favorites / Playlist helpers
 // ---------------------------------------------------------------------------
 static bool8 Radio_ListContains(const u16 *list, u8 count, u16 songId)
@@ -2193,12 +2620,12 @@ static bool8 Radio_ListContains(const u16 *list, u8 count, u16 songId)
     return FALSE;
 }
 
-static bool8 Radio_AddUnique(u16 *list, u8 *count, u16 songId)
+static bool8 Radio_AddUnique(u16 *list, u8 *count, u8 capacity, u16 songId)
 {
     if (Radio_ListContains(list, *count, songId))
         return FALSE;
 
-    if (*count >= RADIO_LIBRARY_CAPACITY)
+    if (*count >= capacity)
         return FALSE;
 
     list[*count] = songId;
@@ -2323,9 +2750,7 @@ static const u8 *Radio_GetMenuItemText(u8 item, u16 songId)
              ? sRadioText_MenuUnfavorite
              : sRadioText_MenuFavorite;
     case RADIO_MENU_ADD_PLAYLIST:
-        return Radio_ListContains(sRadioPlaylist, sRadioPlaylistCount, songId)
-             ? sRadioText_MenuInPlaylist
-             : sRadioText_MenuAddPlaylist;
+        return sRadioText_MenuAddPlaylist;
     case RADIO_MENU_PRIORITY:
         return sRadioPriorityEnabled
              ? sRadioText_MenuPriorityOn
@@ -2560,6 +2985,109 @@ static void Radio_DrawTrackList(const u8 *header, const u16 *list, u8 count)
     CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
 }
 
+static void Radio_DrawPlaylistChooser(void)
+{
+    const u8 *header;
+    u8 playlist;
+
+    sRadioMarqueeEnabled = FALSE;
+    FillWindowPixelBuffer(WIN_MUSIC_INFO, PIXEL_FILL(1));
+
+    header = (sRadioPlaylistChooserAction == RADIO_PLAYLIST_CHOOSE_ADD)
+           ? sRadioText_AddToPlaylistHead
+           : sRadioText_PlaylistsHead;
+
+    // FONT_SMALL lets all three fixed playlists fit in this single 6-tile
+    // window at once:
+    //
+    // MY PLAYLISTS
+    // > PLAYLIST 1  12/20
+    //   PLAYLIST 2  18/20
+    //   PLAYLIST 3   7/20
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO,
+        FONT_SMALL,
+        header,
+        2,
+        1,
+        TEXT_SKIP_DRAW,
+        NULL
+    );
+
+    for (playlist = 0; playlist < RADIO_PLAYLIST_COUNT; playlist++)
+    {
+        u8 y = 13 + playlist * 11;
+
+        if (playlist == sRadioPlaylistChooserCursor)
+        {
+            AddTextPrinterParameterized(
+                WIN_MUSIC_INFO,
+                FONT_SMALL,
+                sRadioText_Cursor,
+                2,
+                y,
+                TEXT_SKIP_DRAW,
+                NULL
+            );
+        }
+
+        ConvertIntToDecimalStringN(
+            gStringVar1,
+            playlist + 1,
+            STR_CONV_MODE_LEFT_ALIGN,
+            1
+        );
+        ConvertIntToDecimalStringN(
+            gStringVar2,
+            sRadioPlaylistCounts[playlist],
+            STR_CONV_MODE_LEFT_ALIGN,
+            2
+        );
+        StringExpandPlaceholders(gStringVar4, sRadioText_PlaylistSlotFmt);
+
+        AddTextPrinterParameterized(
+            WIN_MUSIC_INFO,
+            FONT_SMALL,
+            gStringVar4,
+            10,
+            y,
+            TEXT_SKIP_DRAW,
+            NULL
+        );
+    }
+
+    CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
+}
+
+static void Radio_OpenPlaylistChooser(u8 action, u8 returnMode, u16 songId)
+{
+    sRadioPlaylistChooserAction = action;
+    sRadioPlaylistChooserReturnMode = returnMode;
+    sRadioPlaylistAddSong = songId;
+    sRadioPlaylistChooserCursor = sRadioActivePlaylist;
+    sRadioUiMode = RADIO_UI_PLAYLIST_CHOOSER;
+    Radio_DrawPlaylistChooser();
+}
+
+static void Radio_ReturnFromPlaylistChooser(u16 songId)
+{
+    sRadioUiMode = sRadioPlaylistChooserReturnMode;
+
+    if (sRadioUiMode == RADIO_UI_SEARCH_RESULTS)
+    {
+        Radio_DrawTrackList(
+            sRadioText_SearchResults,
+            sRadioSearchResults,
+            sRadioSearchResultCount
+        );
+    }
+    else
+    {
+        sRadioUiMode = RADIO_UI_MENU;
+        Radio_DrawMenu(songId);
+    }
+}
+
 static void Radio_ReturnToMain(u8 taskId)
 {
     sRadioUiMode = RADIO_UI_MAIN;
@@ -2586,6 +3114,7 @@ static void Radio_PlayListSelection(u8 taskId, u8 station, u16 index)
     sRadioCurrentSong = songId;
     gTasks[taskId].data[0] = (s16)songId;
 
+    Radio_SavePersistentState();
     Radio_ReturnToMain(taskId);
 }
 
@@ -2616,7 +3145,10 @@ static void Radio_FixDynamicStationAfterRemoval(u16 currentSong)
     }
     else if (sRadioStation == STATION_PLAYLIST)
     {
-        if (Radio_ListContains(sRadioPlaylist, sRadioPlaylistCount, currentSong))
+        u16 *playlist = sRadioPlaylists[sRadioActivePlaylist];
+        u8 count = sRadioPlaylistCounts[sRadioActivePlaylist];
+
+        if (Radio_ListContains(playlist, count, currentSong))
             sRadioStationIndex = Station_FindTrack(STATION_PLAYLIST, currentSong);
         else
         {
@@ -2683,12 +3215,10 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 break;
 
             case RADIO_MENU_PLAYLIST:
-                sRadioUiMode = RADIO_UI_PLAYLIST;
-                sRadioListCursor = 0;
-                Radio_DrawTrackList(
-                    sRadioText_PlaylistHead,
-                    sRadioPlaylist,
-                    sRadioPlaylistCount
+                Radio_OpenPlaylistChooser(
+                    RADIO_PLAYLIST_CHOOSE_OPEN,
+                    RADIO_UI_MENU,
+                    songId
                 );
                 break;
 
@@ -2696,15 +3226,24 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 if (Radio_ListContains(sRadioFavorites, sRadioFavoritesCount, songId))
                     Radio_RemoveFromList(sRadioFavorites, &sRadioFavoritesCount, songId);
                 else
-                    Radio_AddUnique(sRadioFavorites, &sRadioFavoritesCount, songId);
+                    Radio_AddUnique(
+                        sRadioFavorites,
+                        &sRadioFavoritesCount,
+                        RADIO_LIBRARY_CAPACITY,
+                        songId
+                    );
 
                 Radio_FixDynamicStationAfterRemoval(songId);
+                Radio_SavePersistentState();
                 Radio_DrawMenu(songId);
                 break;
 
             case RADIO_MENU_ADD_PLAYLIST:
-                Radio_AddUnique(sRadioPlaylist, &sRadioPlaylistCount, songId);
-                Radio_DrawMenu(songId);
+                Radio_OpenPlaylistChooser(
+                    RADIO_PLAYLIST_CHOOSE_ADD,
+                    RADIO_UI_MENU,
+                    songId
+                );
                 break;
 
             case RADIO_MENU_PRIORITY:
@@ -2715,16 +3254,19 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 else if (!sRadioPriorityEnabled)
                     Radio_ClearNowPlayingPopupQueue();
 
+                Radio_SavePersistentState();
                 Radio_DrawMenu(songId);
                 break;
 
             case RADIO_MENU_REPEAT:
                 sRadioRepeatEnabled = !sRadioRepeatEnabled;
+                Radio_SavePersistentState();
                 Radio_DrawMenu(songId);
                 break;
 
             case RADIO_MENU_SHUFFLE:
                 sRadioShuffleEnabled = !sRadioShuffleEnabled;
+                Radio_SavePersistentState();
                 Radio_DrawMenu(songId);
                 break;
 
@@ -2851,9 +3393,9 @@ static void Radio_HandleOverlayInput(u8 taskId)
         if (JOY_NEW(SELECT_BUTTON))
         {
             PlaySE(SE_SELECT);
-            Radio_AddUnique(
-                sRadioPlaylist,
-                &sRadioPlaylistCount,
+            Radio_OpenPlaylistChooser(
+                RADIO_PLAYLIST_CHOOSE_ADD,
+                RADIO_UI_SEARCH_RESULTS,
                 sRadioSearchResults[sRadioListCursor]
             );
             return;
@@ -2862,26 +3404,104 @@ static void Radio_HandleOverlayInput(u8 taskId)
         return;
     }
 
+    if (sRadioUiMode == RADIO_UI_PLAYLIST_CHOOSER)
+    {
+        if (JOY_NEW(DPAD_UP))
+        {
+            sRadioPlaylistChooserCursor =
+                (sRadioPlaylistChooserCursor > 0)
+                    ? sRadioPlaylistChooserCursor - 1
+                    : RADIO_PLAYLIST_COUNT - 1;
+            PlaySE(SE_SELECT);
+            Radio_DrawPlaylistChooser();
+            return;
+        }
+
+        if (JOY_NEW(DPAD_DOWN))
+        {
+            sRadioPlaylistChooserCursor =
+                (sRadioPlaylistChooserCursor + 1) % RADIO_PLAYLIST_COUNT;
+            PlaySE(SE_SELECT);
+            Radio_DrawPlaylistChooser();
+            return;
+        }
+
+        if (JOY_NEW(B_BUTTON) || JOY_NEW(START_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            Radio_ReturnFromPlaylistChooser(songId);
+            return;
+        }
+
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+
+            if (sRadioPlaylistChooserAction == RADIO_PLAYLIST_CHOOSE_ADD)
+            {
+                u8 playlist = sRadioPlaylistChooserCursor;
+
+                Radio_AddUnique(
+                    sRadioPlaylists[playlist],
+                    &sRadioPlaylistCounts[playlist],
+                    RADIO_PLAYLIST_CAPACITY,
+                    sRadioPlaylistAddSong
+                );
+                Radio_SavePersistentState();
+                Radio_ReturnFromPlaylistChooser(songId);
+            }
+            else
+            {
+                sRadioBrowsePlaylist = sRadioPlaylistChooserCursor;
+                sRadioListCursor = 0;
+                sRadioUiMode = RADIO_UI_PLAYLIST;
+                Radio_DrawTrackList(
+                    sRadioText_PlaylistHeads[sRadioBrowsePlaylist],
+                    sRadioPlaylists[sRadioBrowsePlaylist],
+                    sRadioPlaylistCounts[sRadioBrowsePlaylist]
+                );
+            }
+
+            return;
+        }
+
+        return;
+    }
+
     if (sRadioUiMode == RADIO_UI_FAVORITES || sRadioUiMode == RADIO_UI_PLAYLIST)
     {
-        u16 *list = (sRadioUiMode == RADIO_UI_FAVORITES)
+        bool8 isFavorites = (sRadioUiMode == RADIO_UI_FAVORITES);
+        u16 *list = isFavorites
                   ? sRadioFavorites
-                  : sRadioPlaylist;
-        u8 *count = (sRadioUiMode == RADIO_UI_FAVORITES)
+                  : sRadioPlaylists[sRadioBrowsePlaylist];
+        u8 *count = isFavorites
                   ? &sRadioFavoritesCount
-                  : &sRadioPlaylistCount;
-        const u8 *header = (sRadioUiMode == RADIO_UI_FAVORITES)
+                  : &sRadioPlaylistCounts[sRadioBrowsePlaylist];
+        const u8 *header = isFavorites
                          ? sRadioText_FavoritesHead
-                         : sRadioText_PlaylistHead;
-        u8 station = (sRadioUiMode == RADIO_UI_FAVORITES)
+                         : sRadioText_PlaylistHeads[sRadioBrowsePlaylist];
+        u8 station = isFavorites
                    ? STATION_FAVORITES
                    : STATION_PLAYLIST;
 
         if (JOY_NEW(B_BUTTON) || JOY_NEW(START_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sRadioUiMode = RADIO_UI_MENU;
-            Radio_DrawMenu(songId);
+
+            if (isFavorites)
+            {
+                sRadioUiMode = RADIO_UI_MENU;
+                Radio_DrawMenu(songId);
+            }
+            else
+            {
+                sRadioPlaylistChooserAction = RADIO_PLAYLIST_CHOOSE_OPEN;
+                sRadioPlaylistChooserReturnMode = RADIO_UI_MENU;
+                sRadioPlaylistChooserCursor = sRadioBrowsePlaylist;
+                sRadioUiMode = RADIO_UI_PLAYLIST_CHOOSER;
+                Radio_DrawPlaylistChooser();
+            }
+
             return;
         }
 
@@ -2909,6 +3529,10 @@ static void Radio_HandleOverlayInput(u8 taskId)
         if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
+
+            if (!isFavorites)
+                sRadioActivePlaylist = sRadioBrowsePlaylist;
+
             Radio_PlayListSelection(taskId, station, sRadioListCursor);
             return;
         }
@@ -2924,6 +3548,7 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 sRadioListCursor--;
 
             Radio_FixDynamicStationAfterRemoval(songId);
+            Radio_SavePersistentState();
             Radio_DrawTrackList(header, list, *count);
             return;
         }
@@ -3114,7 +3739,12 @@ static void Radio_PrintSongMarquee(void)
 
     Radio_BuildMarqueeSlice(visibleText, sizeof(visibleText));
     StringCopy(gStringVar1, visibleText);
-    StringExpandPlaceholders(gStringVar4, sRadioText_SongFmt);
+    StringExpandPlaceholders(
+        gStringVar4,
+        sRadioMainSelection == RADIO_MAIN_SELECT_SONG
+            ? sRadioText_SongFmtSelected
+            : sRadioText_SongFmt
+    );
     AddTextPrinterParameterized(
         WIN_MUSIC_INFO,
         RADIO_FONT,
@@ -3191,7 +3821,7 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
 
     if (playing)
     {
-        Radio_SetStatusMarqueeText(sStationNowPlayingNames[sRadioStation]);
+        Radio_SetStatusMarqueeText(Radio_GetStationNowPlayingName(sRadioStation));
         Radio_PrintStatusMarquee();
     }
     else
@@ -3238,8 +3868,13 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
     // Line 3: clean station label.
     // START / SELECT are now represented by their physical button sprites
     // on the redesigned radio face, so the text window no longer repeats them.
-    StringCopy(gStringVar1, sStationNames[sRadioStation]);
-    StringExpandPlaceholders(gStringVar4, sRadioText_StationFmt);
+    StringCopy(gStringVar1, Radio_GetStationDisplayName(sRadioStation));
+    StringExpandPlaceholders(
+        gStringVar4,
+        sRadioMainSelection == RADIO_MAIN_SELECT_STATION
+            ? sRadioText_StationFmtSelected
+            : sRadioText_StationFmt
+    );
     AddTextPrinterParameterized(
         WIN_MUSIC_INFO,
         RADIO_FONT,
@@ -3332,6 +3967,7 @@ static void Task_RadioHandleInput(u8 taskId)
         gTasks[taskId].tCurrSong = (s16)songId;
         sRadioCurrentSong = songId;
         sRadioIsPlaying = playing;
+        Radio_SavePersistentState();
 
         if (sRadioPriorityEnabled && playing)
             Radio_QueueNowPlayingPopup(songId);
@@ -3340,24 +3976,87 @@ static void Task_RadioHandleInput(u8 taskId)
         return;
     }
 
-    // --- Track navigation (L / R / DPAD) ---
-    if (JOY_NEW(DPAD_RIGHT) || JOY_NEW(DPAD_UP) || JOY_NEW(R_BUTTON))
+    // ------------------------------------------------------------------
+    // Main display navigation
+    //
+    // UP / DOWN = choose Song or Radio Station.
+    // DPAD LEFT / RIGHT = change the selected row.
+    // Shoulder L / R = previous / next song.
+    // ------------------------------------------------------------------
+    if (JOY_NEW(DPAD_UP) || JOY_NEW(DPAD_DOWN))
+    {
+        sRadioMainSelection =
+            (sRadioMainSelection == RADIO_MAIN_SELECT_SONG)
+                ? RADIO_MAIN_SELECT_STATION
+                : RADIO_MAIN_SELECT_SONG;
+
+        PlaySE(SE_SELECT);
+        Radio_SavePersistentState();
+        Radio_DrawMusicInfo(songId, playing);
+        return;
+    }
+
+    if (sRadioMainSelection == RADIO_MAIN_SELECT_STATION
+     && (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_RIGHT)))
+    {
+        u8 attempts = 0;
+
+        PlaySE(SE_SELECT);
+
+        do
+        {
+            if (JOY_NEW(DPAD_RIGHT))
+                sRadioStation = (sRadioStation + 1) % STATION_COUNT;
+            else
+                sRadioStation = (sRadioStation > 0)
+                              ? sRadioStation - 1
+                              : STATION_COUNT - 1;
+
+            attempts++;
+        }
+        while (Station_Count(sRadioStation) == 0
+            && attempts < STATION_COUNT);
+
+        sRadioStationIndex = Station_FindTrack(sRadioStation, songId);
+        Radio_SyncSong();
+        songId = sRadioCurrentSong;
+
+        if (playing)
+        {
+            m4aSongNumStop((u16)gTasks[taskId].tCurrSong);
+            m4aSongNumStart(songId);
+            Radio_ResetPlaybackMonitor();
+        }
+
+        gTasks[taskId].tCurrSong = (s16)songId;
+        sRadioCurrentSong = songId;
+        sRadioIsPlaying = playing;
+
+        Radio_SavePersistentState();
+
+        if (sRadioPriorityEnabled && playing)
+            Radio_QueueNowPlayingPopup(songId);
+
+        Radio_DrawMusicInfo(songId, playing);
+        return;
+    }
+
+    if ((sRadioMainSelection == RADIO_MAIN_SELECT_SONG && JOY_NEW(DPAD_RIGHT))
+     || JOY_NEW(R_BUTTON))
     {
         u16 count = Station_Count(sRadioStation);
 
-        if (sRadioShuffleEnabled && count > 1)
-            sRadioStationIndex = Radio_RandomIndex(count, sRadioStationIndex);
-        else
-            sRadioStationIndex = (sRadioStationIndex + 1 < count)
-                               ? sRadioStationIndex + 1
-                               : 0;
+        sRadioStationIndex = (sRadioStationIndex + 1 < count)
+                           ? sRadioStationIndex + 1
+                           : 0;
 
         Radio_SyncSong();
         songId = sRadioCurrentSong;
         changed = TRUE;
         Radio_PressButton(sRadioBtnNextId);
     }
-    else if (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_DOWN) || JOY_NEW(L_BUTTON))
+    else if ((sRadioMainSelection == RADIO_MAIN_SELECT_SONG && JOY_NEW(DPAD_LEFT))
+          || JOY_NEW(L_BUTTON))
     {
         u16 count = Station_Count(sRadioStation);
 
@@ -3371,11 +4070,19 @@ static void Task_RadioHandleInput(u8 taskId)
         Radio_PressButton(sRadioBtnBackId);
     }
 
-    if (JOY_RELEASED(R_BUTTON) || JOY_RELEASED(DPAD_RIGHT) || JOY_RELEASED(DPAD_UP))
+    if (JOY_RELEASED(R_BUTTON)
+     || (sRadioMainSelection == RADIO_MAIN_SELECT_SONG
+         && JOY_RELEASED(DPAD_RIGHT)))
+    {
         Radio_ReleaseButton(sRadioBtnNextId);
+    }
 
-    if (JOY_RELEASED(L_BUTTON) || JOY_RELEASED(DPAD_LEFT) || JOY_RELEASED(DPAD_DOWN))
+    if (JOY_RELEASED(L_BUTTON)
+     || (sRadioMainSelection == RADIO_MAIN_SELECT_SONG
+         && JOY_RELEASED(DPAD_LEFT)))
+    {
         Radio_ReleaseButton(sRadioBtnBackId);
+    }
 
     if (changed)
     {
@@ -3383,13 +4090,16 @@ static void Task_RadioHandleInput(u8 taskId)
 
         if (playing)
         {
-            m4aSongNumStop(gTasks[taskId].tCurrSong);
+            m4aSongNumStop((u16)gTasks[taskId].tCurrSong);
             m4aSongNumStart(songId);
+            Radio_ResetPlaybackMonitor();
         }
 
         gTasks[taskId].tCurrSong = (s16)songId;
         sRadioCurrentSong = songId;
         sRadioIsPlaying = playing;
+
+        Radio_SavePersistentState();
 
         if (sRadioPriorityEnabled && playing)
             Radio_QueueNowPlayingPopup(songId);
@@ -3423,6 +4133,7 @@ static void Task_RadioHandleInput(u8 taskId)
         else if (sRadioPriorityEnabled)
             Radio_QueueNowPlayingPopup(songId);
 
+        Radio_SavePersistentState();
         Radio_UpdatePlayPauseButtons(playing);
         Radio_DrawMusicInfo(songId, playing);
 
@@ -3443,6 +4154,7 @@ static void Task_RadioHandleInput(u8 taskId)
         Radio_PressButton(sRadioBtnOffId);
         sRadioCurrentSong = songId;
         sRadioIsPlaying = playing;
+        Radio_SavePersistentState();
         gTasks[taskId].func = Task_RadioFadeAndExit;
     }
 }
@@ -3731,13 +4443,14 @@ void Radio_Open(MainCallback returnCallback)
 {
     sRadioReturnCallback = returnCallback;
 
+    Radio_LoadPersistentState();
+
     if (sRadioMonitorSong != sRadioCurrentSong)
         Radio_ResetPlaybackMonitor();
 
-    // UI always starts on the main screen.
-    // Favorites / playlist remain intact for the current play session.
+    // Menu always starts at the most important option: Radio Priority.
     sRadioUiMode = RADIO_UI_MAIN;
-    sRadioMenuCursor = 0;
+    sRadioMenuCursor = RADIO_MENU_PRIORITY;
     sRadioListCursor = 0;
     sRadioSearchLetter = 0;
     sRadioSearchResultCount = 0;
