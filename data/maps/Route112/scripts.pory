@@ -61,6 +61,10 @@ Route112_EventScript_Hiker::
 	msgbox Route112_Text_NotEasyToGetBackToLavaridge, MSGBOX_NPC
 	end
 
+Route112_EventScript_OldManBlocker::
+	msgbox Route112_Text_OldManBlocker, MSGBOX_NPC
+	end
+
 Route112_EventScript_Brice::
 	trainerbattle_single TRAINER_BRICE, Route112_Text_BriceIntro, Route112_Text_BriceDefeat
 	msgbox Route112_Text_BricePostBattle, MSGBOX_AUTOCLOSE
@@ -127,6 +131,11 @@ Route112_Text_NotEasyToGetBackToLavaridge:
 	.string "Eh, I'd like to get to MAUVILLE, but if\n"
 	.string "I went down these ledges, it'd be no\l"
 	.string "easy matter to get back to LAVARIDGE.$"
+
+Route112_Text_OldManBlocker:
+	.string "Best stay back for now. Things up by\n"
+	.string "MT. CHIMNEY have been awfully uneasy,\l"
+	.string "and I would hate to see anyone hurt.$"
 
 Route112_Text_MtChimneyCableCarSign:
 	.string "MT. CHIMNEY CABLE CAR\n"

@@ -6,18 +6,16 @@ Route110House_EventScript_OldWoman::
     end
 
 Route110House_Text_BridgeIsRoundabout:
-    .string "That bridge outside is ever so roundabout.\p"
-    .string "They say it helps more people enjoy\n"
-    .string "CYCLING ROAD, but old knees like mine\n"
-    .string "prefer a straighter path.$"
+    .string "Why did we ever move to such a place?\n"
+    .string "What an inconvenient place to live.$"
 
 Route110House_EventScript_OldMan::
     msgbox Route110House_Text_BikersCutDownTrees, MSGBOX_NPC
     end
 
 Route110House_Text_BikersCutDownTrees:
-    .string "All those BIKERS rushing by... Hmph.\p"
-    .string "I planted trees by the route to give\n"
-    .string "this old bridge a little peace.\p"
-    .string "But would you believe it? Folks keep\n"
-    .string "coming along and cutting them down.$"
+    .string "If cycling road is as great\n"
+    .string "as they say, why do so many noisy\l"
+    .string "trainers still come by this way?\p"
+    .string "I planted trees to keep them out,\n"
+    .string "but they just cut them down!$"
