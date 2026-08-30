@@ -625,11 +625,6 @@ gSongTable::
 	song mus_umineko_worldend, 0, 0
 	song mus_umineko_far, 0, 0
 	song mus_umineko_worldend_dominator, 0, 0
-	song mus_360, 0, 0
-	song mus_meet_me_halfway, 0, 0
-	song mus_one_more_time, 0, 0
-	song mus_around_the_world, 0, 0
-	song mus_where_is_the_love, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

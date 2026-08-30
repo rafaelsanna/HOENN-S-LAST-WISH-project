@@ -670,251 +670,251 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
 // BGM name list (X-macro -- must be defined before any station list uses it)
 // ===========================================================================
 #define RADIO_SOUND_LIST_BGM            \
-    X(MUS_LITTLEROOT_TEST) \
-    X(MUS_GSC_ROUTE38) \
-    X(MUS_CAUGHT) \
-    X(MUS_VICTORY_WILD) \
-    X(MUS_VICTORY_GYM_LEADER) \
-    X(MUS_VICTORY_LEAGUE) \
-    X(MUS_C_COMM_CENTER) \
-    X(MUS_GSC_PEWTER) \
-    X(MUS_C_VS_LEGEND_BEAST) \
-    X(MUS_ROUTE101) \
-    X(MUS_ROUTE110) \
-    X(MUS_ROUTE120) \
-    X(MUS_PETALBURG) \
-    X(MUS_OLDALE) \
-    X(MUS_GYM) \
-    X(MUS_SURF) \
-    X(MUS_PETALBURG_WOODS) \
-    X(MUS_LEVEL_UP) \
-    X(MUS_HEAL) \
-    X(MUS_OBTAIN_BADGE) \
-    X(MUS_OBTAIN_ITEM) \
-    X(MUS_EVOLVED) \
-    X(MUS_OBTAIN_TMHM) \
-    X(MUS_LILYCOVE_MUSEUM) \
-    X(MUS_ROUTE122) \
-    X(MUS_OCEANIC_MUSEUM) \
-    X(MUS_EVOLUTION_INTRO) \
-    X(MUS_EVOLUTION) \
-    X(MUS_MOVE_DELETED) \
-    X(MUS_ENCOUNTER_GIRL) \
-    X(MUS_ENCOUNTER_MALE) \
-    X(MUS_ABANDONED_SHIP) \
-    X(MUS_FORTREE) \
-    X(MUS_BIRCH_LAB) \
-    X(MUS_B_TOWER_RS) \
-    X(MUS_ENCOUNTER_SWIMMER) \
-    X(MUS_CAVE_OF_ORIGIN) \
-    X(MUS_OBTAIN_BERRY) \
-    X(MUS_AWAKEN_LEGEND) \
-    X(MUS_SLOTS_JACKPOT) \
-    X(MUS_SLOTS_WIN) \
-    X(MUS_TOO_BAD) \
-    X(MUS_ROULETTE) \
-    X(MUS_LINK_CONTEST_P1) \
-    X(MUS_LINK_CONTEST_P2) \
-    X(MUS_LINK_CONTEST_P3) \
-    X(MUS_LINK_CONTEST_P4) \
-    X(MUS_ENCOUNTER_RICH) \
-    X(MUS_VERDANTURF) \
-    X(MUS_RUSTBORO) \
-    X(MUS_POKE_CENTER) \
-    X(MUS_ROUTE104) \
-    X(MUS_ROUTE119) \
-    X(MUS_CYCLING) \
-    X(MUS_POKE_MART) \
-    X(MUS_LITTLEROOT) \
-    X(MUS_MT_CHIMNEY) \
-    X(MUS_ENCOUNTER_FEMALE) \
-    X(MUS_LILYCOVE) \
-    X(MUS_DESERT) \
-    X(MUS_HELP) \
-    X(MUS_UNDERWATER) \
-    X(MUS_VICTORY_TRAINER) \
-    X(MUS_TITLE) \
-    X(MUS_INTRO) \
-    X(MUS_ENCOUNTER_MAY) \
-    X(MUS_ENCOUNTER_INTENSE) \
-    X(MUS_ENCOUNTER_COOL) \
-    X(MUS_ROUTE113) \
-    X(MUS_ENCOUNTER_AQUA) \
-    X(MUS_FOLLOW_ME) \
-    X(MUS_ENCOUNTER_BRENDAN) \
-    X(MUS_EVER_GRANDE) \
-    X(MUS_ENCOUNTER_SUSPICIOUS) \
-    X(MUS_VICTORY_AQUA_MAGMA) \
-    X(MUS_CABLE_CAR) \
-    X(MUS_GAME_CORNER) \
-    X(MUS_DEWFORD) \
-    X(MUS_SAFARI_ZONE) \
-    X(MUS_VICTORY_ROAD) \
-    X(MUS_AQUA_MAGMA_HIDEOUT) \
-    X(MUS_SAILING) \
-    X(MUS_MT_PYRE) \
-    X(MUS_SLATEPORT) \
-    X(MUS_MT_PYRE_EXTERIOR) \
-    X(MUS_SCHOOL) \
-    X(MUS_HALL_OF_FAME) \
-    X(MUS_FALLARBOR) \
-    X(MUS_SEALED_CHAMBER) \
-    X(MUS_CONTEST_WINNER) \
-    X(MUS_CONTEST) \
-    X(MUS_ENCOUNTER_MAGMA) \
-    X(MUS_INTRO_BATTLE) \
-    X(MUS_ABNORMAL_WEATHER) \
-    X(MUS_WEATHER_GROUDON) \
-    X(MUS_SOOTOPOLIS) \
-    X(MUS_CONTEST_RESULTS) \
-    X(MUS_HALL_OF_FAME_ROOM) \
-    X(MUS_TRICK_HOUSE) \
-    X(MUS_ENCOUNTER_TWINS) \
-    X(MUS_ENCOUNTER_ELITE_FOUR) \
-    X(MUS_ENCOUNTER_HIKER) \
-    X(MUS_CONTEST_LOBBY) \
-    X(MUS_ENCOUNTER_INTERVIEWER) \
-    X(MUS_ENCOUNTER_CHAMPION) \
-    X(MUS_CREDITS) \
-    X(MUS_END) \
-    X(MUS_B_FRONTIER) \
-    X(MUS_B_ARENA) \
-    X(MUS_OBTAIN_B_POINTS) \
-    X(MUS_REGISTER_MATCH_CALL) \
-    X(MUS_B_PYRAMID) \
-    X(MUS_B_PYRAMID_TOP) \
-    X(MUS_B_PALACE) \
-    X(MUS_RAYQUAZA_APPEARS) \
-    X(MUS_B_TOWER) \
-    X(MUS_OBTAIN_SYMBOL) \
-    X(MUS_B_DOME) \
-    X(MUS_B_PIKE) \
-    X(MUS_B_FACTORY) \
-    X(MUS_VS_RAYQUAZA) \
-    X(MUS_VS_FRONTIER_BRAIN) \
-    X(MUS_VS_MEW) \
-    X(MUS_B_DOME_LOBBY) \
-    X(MUS_VS_WILD) \
-    X(MUS_VS_AQUA_MAGMA) \
-    X(MUS_VS_TRAINER) \
-    X(MUS_VS_GYM_LEADER) \
-    X(MUS_VS_CHAMPION) \
-    X(MUS_VS_REGI) \
-    X(MUS_VS_KYOGRE_GROUDON) \
-    X(MUS_VS_RIVAL) \
-    X(MUS_VS_ELITE_FOUR) \
-    X(MUS_VS_AQUA_MAGMA_LEADER) \
-    X(MUS_RG_FOLLOW_ME) \
-    X(MUS_RG_GAME_CORNER) \
-    X(MUS_RG_ROCKET_HIDEOUT) \
-    X(MUS_RG_GYM) \
-    X(MUS_RG_JIGGLYPUFF) \
-    X(MUS_RG_INTRO_FIGHT) \
-    X(MUS_RG_TITLE) \
-    X(MUS_RG_CINNABAR) \
-    X(MUS_RG_LAVENDER) \
-    X(MUS_RG_HEAL) \
-    X(MUS_RG_CYCLING) \
-    X(MUS_RG_ENCOUNTER_ROCKET) \
-    X(MUS_RG_ENCOUNTER_GIRL) \
-    X(MUS_RG_ENCOUNTER_BOY) \
-    X(MUS_RG_HALL_OF_FAME) \
-    X(MUS_RG_VIRIDIAN_FOREST) \
-    X(MUS_RG_MT_MOON) \
-    X(MUS_RG_POKE_MANSION) \
-    X(MUS_RG_CREDITS) \
-    X(MUS_RG_ROUTE1) \
-    X(MUS_RG_ROUTE24) \
-    X(MUS_RG_ROUTE3) \
-    X(MUS_RG_ROUTE11) \
-    X(MUS_RG_VICTORY_ROAD) \
-    X(MUS_RG_VS_GYM_LEADER) \
-    X(MUS_RG_VS_TRAINER) \
-    X(MUS_RG_VS_WILD) \
-    X(MUS_RG_VS_CHAMPION) \
-    X(MUS_RG_PALLET) \
-    X(MUS_RG_OAK_LAB) \
-    X(MUS_RG_OAK) \
-    X(MUS_RG_POKE_CENTER) \
-    X(MUS_RG_SS_ANNE) \
-    X(MUS_RG_SURF) \
-    X(MUS_RG_POKE_TOWER) \
-    X(MUS_RG_SILPH) \
-    X(MUS_RG_FUCHSIA) \
-    X(MUS_RG_CELADON) \
-    X(MUS_RG_VICTORY_TRAINER) \
-    X(MUS_RG_VICTORY_WILD) \
-    X(MUS_RG_VICTORY_GYM_LEADER) \
-    X(MUS_RG_VERMILLION) \
-    X(MUS_RG_PEWTER) \
-    X(MUS_RG_ENCOUNTER_RIVAL) \
-    X(MUS_RG_RIVAL_EXIT) \
-    X(MUS_RG_DEX_RATING) \
-    X(MUS_RG_OBTAIN_KEY_ITEM) \
-    X(MUS_RG_CAUGHT_INTRO) \
-    X(MUS_RG_PHOTO) \
-    X(MUS_RG_GAME_FREAK) \
-    X(MUS_RG_CAUGHT) \
-    X(MUS_RG_NEW_GAME_INSTRUCT) \
-    X(MUS_RG_NEW_GAME_INTRO) \
-    X(MUS_RG_NEW_GAME_EXIT) \
-    X(MUS_RG_POKE_JUMP) \
-    X(MUS_RG_UNION_ROOM) \
-    X(MUS_RG_NET_CENTER) \
-    X(MUS_RG_MYSTERY_GIFT) \
-    X(MUS_RG_BERRY_PICK) \
-    X(MUS_RG_SEVII_CAVE) \
-    X(MUS_RG_TEACHY_TV_SHOW) \
-    X(MUS_RG_SEVII_ROUTE) \
-    X(MUS_RG_SEVII_DUNGEON) \
-    X(MUS_RG_SEVII_123) \
-    X(MUS_RG_SEVII_45) \
-    X(MUS_RG_SEVII_67) \
-    X(MUS_RG_POKE_FLUTE) \
-    X(MUS_RG_VS_DEOXYS) \
-    X(MUS_RG_VS_MEWTWO) \
-    X(MUS_RG_VS_LEGEND) \
-    X(MUS_RG_ENCOUNTER_GYM_LEADER) \
-    X(MUS_RG_ENCOUNTER_DEOXYS) \
-    X(MUS_RG_TRAINER_TOWER) \
-    X(MUS_RG_SLOW_PALLET) \
-    X(MUS_RG_TEACHY_TV_MENU) \
-    X(MUS_HLW_DISTORTION_WORLD) \
-    X(MUS_HLW_VS_EVIL) \
-    X(MUS_HLW_PHOENIX_TOWN) \
-    X(MUS_GET_LUCKY) \
-    X(MUS_FLY_ME_TO_THE_MOON) \
-    X(MUS_FLASHING_LIGHTS) \
-    X(MUS_PINK_AND_WHITE) \
-    X(MUS_RAP_SNITCH_KNISHES) \
-    X(MUS_SCARS_OF_TIME) \
-    X(MUS_APPLAUSE) \
-    X(MUS_ABRACADABRA) \
-    X(MUS_PAINS_THEME) \
-    X(MUS_BLUE_BIRD) \
-    X(MUS_THE_WORLD) \
-    X(MUS_CRUEL_ANGELS_THESIS) \
-    X(MUS_PEGASUS_FANTASY) \
-    X(MUS_LUGIAS_SONG) \
-    X(MUS_MIDNAS_LAMENT) \
-    X(MUS_SHOUSHIN_NO_KIKI) \
-    X(MUS_OMOKAGE) \
-    X(MUS_BROTHERS) \
-    X(MUS_DISTANCE) \
-    X(MUS_KANASHIMI_WO_YASASHISA_NI) \
-    X(MUS_KOKUTEN) \
-    X(MUS_RESONANCE) \
-    X(MUS_PAPER_MOON) \
-    X(MUS_TETRIS_MAIN_THEME) \
-    X(MUS_I_WILL) \
-    X(MUS_YOU_AND_WHOSE_ARMY) \
-    X(MUS_MOTION_PICTURE_SOUNDTRACK) \
+    X(MUS_LITTLEROOT_TEST)              \
+    X(MUS_GSC_ROUTE38)                  \
+    X(MUS_CAUGHT)                       \
+    X(MUS_VICTORY_WILD)                 \
+    X(MUS_VICTORY_GYM_LEADER)           \
+    X(MUS_VICTORY_LEAGUE)               \
+    X(MUS_C_COMM_CENTER)                \
+    X(MUS_GSC_PEWTER)                   \
+    X(MUS_C_VS_LEGEND_BEAST)            \
+    X(MUS_ROUTE101)                     \
+    X(MUS_ROUTE110)                     \
+    X(MUS_ROUTE120)                     \
+    X(MUS_PETALBURG)                    \
+    X(MUS_OLDALE)                       \
+    X(MUS_GYM)                          \
+    X(MUS_SURF)                         \
+    X(MUS_PETALBURG_WOODS)              \
+    X(MUS_LEVEL_UP)                     \
+    X(MUS_HEAL)                         \
+    X(MUS_OBTAIN_BADGE)                 \
+    X(MUS_OBTAIN_ITEM)                  \
+    X(MUS_EVOLVED)                      \
+    X(MUS_OBTAIN_TMHM)                  \
+    X(MUS_LILYCOVE_MUSEUM)              \
+    X(MUS_ROUTE122)                     \
+    X(MUS_OCEANIC_MUSEUM)               \
+    X(MUS_EVOLUTION_INTRO)              \
+    X(MUS_EVOLUTION)                    \
+    X(MUS_MOVE_DELETED)                 \
+    X(MUS_ENCOUNTER_GIRL)               \
+    X(MUS_ENCOUNTER_MALE)               \
+    X(MUS_ABANDONED_SHIP)               \
+    X(MUS_FORTREE)                      \
+    X(MUS_BIRCH_LAB)                    \
+    X(MUS_B_TOWER_RS)                   \
+    X(MUS_ENCOUNTER_SWIMMER)            \
+    X(MUS_CAVE_OF_ORIGIN)               \
+    X(MUS_OBTAIN_BERRY)                 \
+    X(MUS_AWAKEN_LEGEND)                \
+    X(MUS_SLOTS_JACKPOT)                \
+    X(MUS_SLOTS_WIN)                    \
+    X(MUS_TOO_BAD)                      \
+    X(MUS_ROULETTE)                     \
+    X(MUS_LINK_CONTEST_P1)              \
+    X(MUS_LINK_CONTEST_P2)              \
+    X(MUS_LINK_CONTEST_P3)              \
+    X(MUS_LINK_CONTEST_P4)              \
+    X(MUS_ENCOUNTER_RICH)               \
+    X(MUS_VERDANTURF)                   \
+    X(MUS_RUSTBORO)                     \
+    X(MUS_POKE_CENTER)                  \
+    X(MUS_ROUTE104)                     \
+    X(MUS_ROUTE119)                     \
+    X(MUS_CYCLING)                      \
+    X(MUS_POKE_MART)                    \
+    X(MUS_LITTLEROOT)                   \
+    X(MUS_MT_CHIMNEY)                   \
+    X(MUS_ENCOUNTER_FEMALE)             \
+    X(MUS_LILYCOVE)                     \
+    X(MUS_DESERT)                       \
+    X(MUS_HELP)                         \
+    X(MUS_UNDERWATER)                   \
+    X(MUS_VICTORY_TRAINER)              \
+    X(MUS_TITLE)                        \
+    X(MUS_INTRO)                        \
+    X(MUS_ENCOUNTER_MAY)                \
+    X(MUS_ENCOUNTER_INTENSE)            \
+    X(MUS_ENCOUNTER_COOL)               \
+    X(MUS_ROUTE113)                     \
+    X(MUS_ENCOUNTER_AQUA)               \
+    X(MUS_FOLLOW_ME)                    \
+    X(MUS_ENCOUNTER_BRENDAN)            \
+    X(MUS_EVER_GRANDE)                  \
+    X(MUS_ENCOUNTER_SUSPICIOUS)         \
+    X(MUS_VICTORY_AQUA_MAGMA)           \
+    X(MUS_CABLE_CAR)                    \
+    X(MUS_GAME_CORNER)                  \
+    X(MUS_DEWFORD)                      \
+    X(MUS_SAFARI_ZONE)                  \
+    X(MUS_VICTORY_ROAD)                 \
+    X(MUS_AQUA_MAGMA_HIDEOUT)           \
+    X(MUS_SAILING)                      \
+    X(MUS_MT_PYRE)                      \
+    X(MUS_SLATEPORT)                    \
+    X(MUS_MT_PYRE_EXTERIOR)             \
+    X(MUS_SCHOOL)                       \
+    X(MUS_HALL_OF_FAME)                 \
+    X(MUS_FALLARBOR)                    \
+    X(MUS_SEALED_CHAMBER)               \
+    X(MUS_CONTEST_WINNER)               \
+    X(MUS_CONTEST)                      \
+    X(MUS_ENCOUNTER_MAGMA)              \
+    X(MUS_INTRO_BATTLE)                 \
+    X(MUS_ABNORMAL_WEATHER)             \
+    X(MUS_WEATHER_GROUDON)              \
+    X(MUS_SOOTOPOLIS)                   \
+    X(MUS_CONTEST_RESULTS)              \
+    X(MUS_HALL_OF_FAME_ROOM)            \
+    X(MUS_TRICK_HOUSE)                  \
+    X(MUS_ENCOUNTER_TWINS)              \
+    X(MUS_ENCOUNTER_ELITE_FOUR)         \
+    X(MUS_ENCOUNTER_HIKER)              \
+    X(MUS_CONTEST_LOBBY)                \
+    X(MUS_ENCOUNTER_INTERVIEWER)        \
+    X(MUS_ENCOUNTER_CHAMPION)           \
+    X(MUS_CREDITS)                      \
+    X(MUS_END)                          \
+    X(MUS_B_FRONTIER)                   \
+    X(MUS_B_ARENA)                      \
+    X(MUS_OBTAIN_B_POINTS)              \
+    X(MUS_REGISTER_MATCH_CALL)          \
+    X(MUS_B_PYRAMID)                    \
+    X(MUS_B_PYRAMID_TOP)                \
+    X(MUS_B_PALACE)                     \
+    X(MUS_RAYQUAZA_APPEARS)             \
+    X(MUS_B_TOWER)                      \
+    X(MUS_OBTAIN_SYMBOL)                \
+    X(MUS_B_DOME)                       \
+    X(MUS_B_PIKE)                       \
+    X(MUS_B_FACTORY)                    \
+    X(MUS_VS_RAYQUAZA)                  \
+    X(MUS_VS_FRONTIER_BRAIN)            \
+    X(MUS_VS_MEW)                       \
+    X(MUS_B_DOME_LOBBY)                 \
+    X(MUS_VS_WILD)                      \
+    X(MUS_VS_AQUA_MAGMA)                \
+    X(MUS_VS_TRAINER)                   \
+    X(MUS_VS_GYM_LEADER)                \
+    X(MUS_VS_CHAMPION)                  \
+    X(MUS_VS_REGI)                      \
+    X(MUS_VS_KYOGRE_GROUDON)            \
+    X(MUS_VS_RIVAL)                     \
+    X(MUS_VS_ELITE_FOUR)                \
+    X(MUS_VS_AQUA_MAGMA_LEADER)         \
+    X(MUS_RG_FOLLOW_ME)                 \
+    X(MUS_RG_GAME_CORNER)               \
+    X(MUS_RG_ROCKET_HIDEOUT)            \
+    X(MUS_RG_GYM)                       \
+    X(MUS_RG_JIGGLYPUFF)                \
+    X(MUS_RG_INTRO_FIGHT)               \
+    X(MUS_RG_TITLE)                     \
+    X(MUS_RG_CINNABAR)                  \
+    X(MUS_RG_LAVENDER)                  \
+    X(MUS_RG_HEAL)                      \
+    X(MUS_RG_CYCLING)                   \
+    X(MUS_RG_ENCOUNTER_ROCKET)          \
+    X(MUS_RG_ENCOUNTER_GIRL)            \
+    X(MUS_RG_ENCOUNTER_BOY)             \
+    X(MUS_RG_HALL_OF_FAME)              \
+    X(MUS_RG_VIRIDIAN_FOREST)           \
+    X(MUS_RG_MT_MOON)                   \
+    X(MUS_RG_POKE_MANSION)              \
+    X(MUS_RG_CREDITS)                   \
+    X(MUS_RG_ROUTE1)                    \
+    X(MUS_RG_ROUTE24)                   \
+    X(MUS_RG_ROUTE3)                    \
+    X(MUS_RG_ROUTE11)                   \
+    X(MUS_RG_VICTORY_ROAD)              \
+    X(MUS_RG_VS_GYM_LEADER)             \
+    X(MUS_RG_VS_TRAINER)                \
+    X(MUS_RG_VS_WILD)                   \
+    X(MUS_RG_VS_CHAMPION)               \
+    X(MUS_RG_PALLET)                    \
+    X(MUS_RG_OAK_LAB)                   \
+    X(MUS_RG_OAK)                       \
+    X(MUS_RG_POKE_CENTER)               \
+    X(MUS_RG_SS_ANNE)                   \
+    X(MUS_RG_SURF)                      \
+    X(MUS_RG_POKE_TOWER)                \
+    X(MUS_RG_SILPH)                     \
+    X(MUS_RG_FUCHSIA)                   \
+    X(MUS_RG_CELADON)                   \
+    X(MUS_RG_VICTORY_TRAINER)           \
+    X(MUS_RG_VICTORY_WILD)              \
+    X(MUS_RG_VICTORY_GYM_LEADER)        \
+    X(MUS_RG_VERMILLION)                \
+    X(MUS_RG_PEWTER)                    \
+    X(MUS_RG_ENCOUNTER_RIVAL)           \
+    X(MUS_RG_RIVAL_EXIT)                \
+    X(MUS_RG_DEX_RATING)                \
+    X(MUS_RG_OBTAIN_KEY_ITEM)           \
+    X(MUS_RG_CAUGHT_INTRO)              \
+    X(MUS_RG_PHOTO)                     \
+    X(MUS_RG_GAME_FREAK)                \
+    X(MUS_RG_CAUGHT)                    \
+    X(MUS_RG_NEW_GAME_INSTRUCT)         \
+    X(MUS_RG_NEW_GAME_INTRO)            \
+    X(MUS_RG_NEW_GAME_EXIT)             \
+    X(MUS_RG_POKE_JUMP)                 \
+    X(MUS_RG_UNION_ROOM)                \
+    X(MUS_RG_NET_CENTER)                \
+    X(MUS_RG_MYSTERY_GIFT)              \
+    X(MUS_RG_BERRY_PICK)                \
+    X(MUS_RG_SEVII_CAVE)                \
+    X(MUS_RG_TEACHY_TV_SHOW)            \
+    X(MUS_RG_SEVII_ROUTE)               \
+    X(MUS_RG_SEVII_DUNGEON)             \
+    X(MUS_RG_SEVII_123)                 \
+    X(MUS_RG_SEVII_45)                  \
+    X(MUS_RG_SEVII_67)                  \
+    X(MUS_RG_POKE_FLUTE)                \
+    X(MUS_RG_VS_DEOXYS)                 \
+    X(MUS_RG_VS_MEWTWO)                 \
+    X(MUS_RG_VS_LEGEND)                 \
+    X(MUS_RG_ENCOUNTER_GYM_LEADER)      \
+    X(MUS_RG_ENCOUNTER_DEOXYS)          \
+    X(MUS_RG_TRAINER_TOWER)             \
+    X(MUS_RG_SLOW_PALLET)               \
+    X(MUS_RG_TEACHY_TV_MENU)              \
+    X(MUS_HLW_DISTORTION_WORLD)          \
+    X(MUS_HLW_VS_EVIL)                   \
+    X(MUS_HLW_PHOENIX_TOWN)              \
+    X(MUS_GET_LUCKY)                     \
+    X(MUS_FLY_ME_TO_THE_MOON)            \
+    X(MUS_FLASHING_LIGHTS)               \
+    X(MUS_PINK_AND_WHITE)                \
+    X(MUS_RAP_SNITCH_KNISHES)            \
+    X(MUS_SCARS_OF_TIME)                 \
+    X(MUS_APPLAUSE)                      \
+    X(MUS_ABRACADABRA)                   \
+    X(MUS_PAINS_THEME)                   \
+    X(MUS_BLUE_BIRD)                     \
+    X(MUS_THE_WORLD)                     \
+    X(MUS_CRUEL_ANGELS_THESIS)           \
+    X(MUS_PEGASUS_FANTASY)               \
+    X(MUS_LUGIAS_SONG)                   \
+    X(MUS_MIDNAS_LAMENT)                 \
+    X(MUS_SHOUSHIN_NO_KIKI)              \
+    X(MUS_OMOKAGE)                       \
+    X(MUS_BROTHERS)                      \
+    X(MUS_DISTANCE)                      \
+    X(MUS_KANASHIMI_WO_YASASHISA_NI)    \
+    X(MUS_KOKUTEN)                       \
+    X(MUS_RESONANCE)                     \
+    X(MUS_PAPER_MOON)                    \
+    X(MUS_TETRIS_MAIN_THEME)                \
+    X(MUS_I_WILL)                        \
+    X(MUS_YOU_AND_WHOSE_ARMY)            \
+    X(MUS_MOTION_PICTURE_SOUNDTRACK)     \
     X(MUS_EVERYTHING_IN_ITS_RIGHT_PLACE) \
-    X(MUS_NO_SURPRISES) \
-    X(MUS_LUCKY) \
-    X(MUS_HIGH_AND_DRY) \
-    X(MUS_STREET_SPIRIT) \
-    X(MUS_GAZE_AT_THE_SKIES) \
+    X(MUS_NO_SURPRISES)                  \
+    X(MUS_LUCKY)                         \
+    X(MUS_HIGH_AND_DRY)                  \
+    X(MUS_STREET_SPIRIT)                 \
+    X(MUS_GAZE_AT_THE_SKIES)             \
     X(MUS_GUTS_THEME) \
     X(MUS_THE_YOUNG_PHOTOGRAPHER) \
     X(MUS_HOPE_GRAND_CHASE) \
@@ -938,11 +938,6 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_FADE_INTO_YOU) \
     X(MUS_WHEN_THE_SUN_HITS) \
     X(MUS_AINT_NO_REST_FOR_THE_WICKED) \
-    X(MUS_360) \
-    X(MUS_MEET_ME_HALFWAY) \
-    X(MUS_ONE_MORE_TIME) \
-    X(MUS_AROUND_THE_WORLD) \
-    X(MUS_WHERE_IS_THE_LOVE) \
     X(MUS_UMINEKO_HOPE) \
     X(MUS_UMINEKO_600_MILLION) \
     X(MUS_UMINEKO_WINGLESS) \
@@ -1029,14 +1024,6 @@ static const u16 sStation_OtherWorld[] = {
     MUS_PINK_AND_WHITE,
     MUS_RAP_SNITCH_KNISHES,
 
-
-    // New pop / electronic batch
-    MUS_360,
-    MUS_MEET_ME_HALFWAY,
-    MUS_ONE_MORE_TIME,
-    MUS_AROUND_THE_WORLD,
-    MUS_WHERE_IS_THE_LOVE,
-
     // Radiohead
     MUS_I_WILL,
     MUS_YOU_AND_WHOSE_ARMY,
@@ -1059,13 +1046,6 @@ static const u16 sStation_Amaterasu[] = {
     MUS_GET_LUCKY,
     MUS_APPLAUSE,
     MUS_ABRACADABRA,
-
-    // Pop / dance additions
-    MUS_360,
-    MUS_MEET_ME_HALFWAY,
-    MUS_ONE_MORE_TIME,
-    MUS_AROUND_THE_WORLD,
-    MUS_WHERE_IS_THE_LOVE,
     STATION_END
 };
 
@@ -1414,35 +1394,6 @@ static const u8 *const sRadioText_PlaylistHeads[RADIO_PLAYLIST_COUNT] =
 };
 
 // ---------------------------------------------------------------------------
-// Pop / electronic display names - song followed by the artist.
-// These labels also appear in Search, Favorites and Playlists.
-// ---------------------------------------------------------------------------
-static const u8 sPopName_360[] = _("360 (CHARLI XCX)");
-static const u8 sPopName_MeetMeHalfway[] = _("MEET ME HALFWAY (BLACK EYED PEAS)");
-static const u8 sPopName_OneMoreTime[] = _("ONE MORE TIME (DAFT PUNK)");
-static const u8 sPopName_AroundTheWorld[] = _("AROUND THE WORLD (DAFT PUNK)");
-static const u8 sPopName_WhereIsTheLove[] = _("WHERE IS THE LOVE (BLACK EYED PEAS)");
-
-static const u8 *Radio_GetPopDisplayName(u16 songId)
-{
-    switch (songId)
-    {
-    case MUS_360:
-        return sPopName_360;
-    case MUS_MEET_ME_HALFWAY:
-        return sPopName_MeetMeHalfway;
-    case MUS_ONE_MORE_TIME:
-        return sPopName_OneMoreTime;
-    case MUS_AROUND_THE_WORLD:
-        return sPopName_AroundTheWorld;
-    case MUS_WHERE_IS_THE_LOVE:
-        return sPopName_WhereIsTheLove;
-    default:
-        return NULL;
-    }
-}
-
-// ---------------------------------------------------------------------------
 // Indie Rock Radio display names — show artist/band next to the song.
 // These custom labels are used ONLY while STATION_INDIE_ROCK is selected.
 // ---------------------------------------------------------------------------
@@ -1674,10 +1625,6 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
 static const u8 *Radio_GetSpecialDisplayName(u16 songId)
 {
     const u8 *name;
-
-    name = Radio_GetPopDisplayName(songId);
-    if (name != NULL)
-        return name;
 
     name = Radio_GetGamesDisplayName(songId);
     if (name != NULL)
@@ -4033,11 +3980,9 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
     }
 
     // Line 2: song name.
-    // Anime / Pop / Indie / Games tracks get their friendly radio labels. Favorites and
+    // Anime / Indie / Games tracks get their friendly radio labels. Favorites and
     // Playlist keep those labels when they contain one of these songs.
     if (sRadioStation == STATION_ANIME
-        || sRadioStation == STATION_OTHER_WORLD
-        || sRadioStation == STATION_AMATERASU
         || sRadioStation == STATION_INDIE_ROCK
         || sRadioStation == STATION_GAMES
         || sRadioStation == STATION_FAVORITES
