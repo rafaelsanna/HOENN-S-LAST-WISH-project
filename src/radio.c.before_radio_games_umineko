@@ -1091,30 +1091,6 @@ static const u16 sStation_IndieRock[] = {
 // Video-game / visual-novel soundtracks. Friendly names include the game.
 // ---------------------------------------------------------------------------
 static const u16 sStation_Games[] = {
-    // HLW original / in-game custom tracks
-    MUS_HLW_DISTORTION_WORLD,
-    MUS_HLW_VS_EVIL,
-    MUS_HLW_PHOENIX_TOWN,
-
-    // Chrono Cross / Zelda / Tetris / Pokemon Snap / Grand Chase
-    MUS_SCARS_OF_TIME,
-    MUS_MIDNAS_LAMENT,
-    MUS_TETRIS_MAIN_THEME,
-    MUS_THE_YOUNG_PHOTOGRAPHER,
-    MUS_HOPE_GRAND_CHASE,
-
-    // Ragnarok Online
-    MUS_GLAST_HEIM_THEME,
-    MUS_ANCIENT_GROOVER,
-    MUS_DIVINE_GRACE,
-    MUS_THEME_OF_MORROC,
-    MUS_EVERLASTING_WANDERERS,
-    MUS_THEME_OF_GEFFEN,
-    MUS_THEME_OF_ALDEBARAN,
-    MUS_THEME_OF_ALBERTA,
-    MUS_THEME_OF_PRONTERA,
-
-    // Umineko no Naku Koro ni
     MUS_UMINEKO_HOPE,
     MUS_UMINEKO_600_MILLION,
     MUS_UMINEKO_WINGLESS,
@@ -1536,32 +1512,12 @@ static const u8 *Radio_GetAnimeDisplayName(u16 songId)
 }
 
 // ---------------------------------------------------------------------------
-// Games Radio display names - OST title followed by the game/source.
+// Games Radio display names — OST title followed by the game/source.
 // These labels also survive when a song is opened through Favorites,
 // Search or one of the three playlists.
 // ---------------------------------------------------------------------------
-static const u8 sGamesName_HlwDistortionWorld[] = _("DISTORTION WORLD (HLW)");
-static const u8 sGamesName_HlwVsEvil[] = _("VS EVIL (HLW)");
-static const u8 sGamesName_HlwPhoenixTown[] = _("PHOENIX TOWN (HLW)");
-
-static const u8 sGamesName_ScarsOfTime[] = _("SCARS OF TIME (CHRONO CROSS)");
-static const u8 sGamesName_MidnasLament[] = _("MIDNAS LAMENT (ZELDA)");
-static const u8 sGamesName_TetrisMainTheme[] = _("TETRIS MAIN THEME (TETRIS)");
-static const u8 sGamesName_YoungPhotographer[] = _("THE YOUNG PHOTOGRAPHER (POKEMON SNAP)");
-static const u8 sGamesName_HopeGrandChase[] = _("HOPE (GRAND CHASE)");
-
-static const u8 sGamesName_GlastHeim[] = _("GLAST HEIM THEME (RAGNAROK)");
-static const u8 sGamesName_AncientGroover[] = _("ANCIENT GROOVER (RAGNAROK)");
-static const u8 sGamesName_DivineGrace[] = _("DIVINE GRACE (RAGNAROK)");
-static const u8 sGamesName_ThemeOfMorroc[] = _("THEME OF MORROC (RAGNAROK)");
-static const u8 sGamesName_EverlastingWanderers[] = _("EVERLASTING WANDERERS (RAGNAROK)");
-static const u8 sGamesName_ThemeOfGeffen[] = _("THEME OF GEFFEN (RAGNAROK)");
-static const u8 sGamesName_ThemeOfAldebaran[] = _("THEME OF ALDEBARAN (RAGNAROK)");
-static const u8 sGamesName_ThemeOfAlberta[] = _("THEME OF ALBERTA (RAGNAROK)");
-static const u8 sGamesName_ThemeOfProntera[] = _("THEME OF PRONTERA (RAGNAROK)");
-
 static const u8 sGamesName_UminekoHope[] = _("HOPE (UMINEKO)");
-static const u8 sGamesName_Umineko600Million[] = _("600 MILLION IN C SHARP MINOR (UMINEKO)");
+static const u8 sGamesName_Umineko600Million[] = _("600 MILLION IN C# MINOR (UMINEKO)");
 static const u8 sGamesName_UminekoWingless[] = _("WINGLESS (UMINEKO)");
 static const u8 sGamesName_UminekoWorldend[] = _("WORLDEND (UMINEKO)");
 static const u8 sGamesName_UminekoFar[] = _("FAR (UMINEKO)");
@@ -1571,40 +1527,6 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
 {
     switch (songId)
     {
-    case MUS_HLW_DISTORTION_WORLD:
-        return sGamesName_HlwDistortionWorld;
-    case MUS_HLW_VS_EVIL:
-        return sGamesName_HlwVsEvil;
-    case MUS_HLW_PHOENIX_TOWN:
-        return sGamesName_HlwPhoenixTown;
-    case MUS_SCARS_OF_TIME:
-        return sGamesName_ScarsOfTime;
-    case MUS_MIDNAS_LAMENT:
-        return sGamesName_MidnasLament;
-    case MUS_TETRIS_MAIN_THEME:
-        return sGamesName_TetrisMainTheme;
-    case MUS_THE_YOUNG_PHOTOGRAPHER:
-        return sGamesName_YoungPhotographer;
-    case MUS_HOPE_GRAND_CHASE:
-        return sGamesName_HopeGrandChase;
-    case MUS_GLAST_HEIM_THEME:
-        return sGamesName_GlastHeim;
-    case MUS_ANCIENT_GROOVER:
-        return sGamesName_AncientGroover;
-    case MUS_DIVINE_GRACE:
-        return sGamesName_DivineGrace;
-    case MUS_THEME_OF_MORROC:
-        return sGamesName_ThemeOfMorroc;
-    case MUS_EVERLASTING_WANDERERS:
-        return sGamesName_EverlastingWanderers;
-    case MUS_THEME_OF_GEFFEN:
-        return sGamesName_ThemeOfGeffen;
-    case MUS_THEME_OF_ALDEBARAN:
-        return sGamesName_ThemeOfAldebaran;
-    case MUS_THEME_OF_ALBERTA:
-        return sGamesName_ThemeOfAlberta;
-    case MUS_THEME_OF_PRONTERA:
-        return sGamesName_ThemeOfProntera;
     case MUS_UMINEKO_HOPE:
         return sGamesName_UminekoHope;
     case MUS_UMINEKO_600_MILLION:

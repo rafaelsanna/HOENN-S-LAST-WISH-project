@@ -619,12 +619,6 @@ gSongTable::
 	song mus_fade_into_you, 0, 0
 	song mus_when_the_sun_hits, 0, 0
 	song mus_aint_no_rest_for_the_wicked, 0, 0
-	song mus_umineko_hope, 0, 0
-	song mus_umineko_600_million, 0, 0
-	song mus_umineko_wingless, 0, 0
-	song mus_umineko_worldend, 0, 0
-	song mus_umineko_far, 0, 0
-	song mus_umineko_worldend_dominator, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

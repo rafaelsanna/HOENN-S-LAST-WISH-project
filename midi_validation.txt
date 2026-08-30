@@ -1,0 +1,79 @@
+RADIO GAMES - UMINEKO MIDI VALIDATION
+==============================================================================
+
+Voicegroup alvo: _littleroot_test
+Programas usados: 1=Piano, 35=Fretless Bass, 48=Strings, 73=Flute
+Loop: CC111 no tick 0 de cada track (loop da musica inteira)
+Resolucao: 48 ticks por semínima
+
+1. HOPE (UMINEKO)
+   Arquivo: mus_umineko_hope.mid
+   Fonte: Umineko No Naku Koro Ni - dai - (Ichigo Arrange) - hope (ver 1.00).mid
+   Duracao fonte: 183.8 s
+   Tracks musicais: 8
+   Polifonia maxima: 8
+   Note-ons / note-offs: 1651 / 1651
+   Notas penduradas: 0
+   CC111 de loop: 8
+   Bass support novo: SIM
+   Tamanho: 15446 bytes
+
+2. 600 MILLION IN C# MINOR (UMINEKO)
+   Arquivo: mus_umineko_600_million.mid
+   Fonte: Umineko No Naku Koro Ni - Luck Ganriki - (Ichigo Arrange) - Organ short 600 million in C# minor.mid
+   Duracao fonte: 90.02 s
+   Tracks musicais: 3
+   Polifonia maxima: 3
+   Note-ons / note-offs: 470 / 470
+   Notas penduradas: 0
+   CC111 de loop: 3
+   Bass support novo: NAO
+   Tamanho: 4026 bytes
+
+3. WINGLESS (UMINEKO)
+   Arquivo: mus_umineko_wingless.mid
+   Fonte: Umineko No Naku Koro Ni - zts - (Amexks Arrange) - Wingless.mid
+   Duracao fonte: 217.54 s
+   Tracks musicais: 5
+   Polifonia maxima: 5
+   Note-ons / note-offs: 1405 / 1405
+   Notas penduradas: 0
+   CC111 de loop: 5
+   Bass support novo: SIM
+   Tamanho: 11618 bytes
+
+4. WORLDEND (UMINEKO)
+   Arquivo: mus_umineko_worldend.mid
+   Fonte: Umineko no Naku Koro Ni - zts - (Amexks Arrange) - Worldend.mid
+   Duracao fonte: 166.75 s
+   Tracks musicais: 5
+   Polifonia maxima: 5
+   Note-ons / note-offs: 614 / 614
+   Notas penduradas: 0
+   CC111 de loop: 5
+   Bass support novo: SIM
+   Tamanho: 5326 bytes
+
+5. FAR (UMINEKO)
+   Arquivo: mus_umineko_far.mid
+   Fonte: Umineko No Naku Koro Ni - zts - (Ichigo Arrange) - far.mid
+   Duracao fonte: 183.87 s
+   Tracks musicais: 10
+   Polifonia maxima: 10
+   Note-ons / note-offs: 1132 / 1132
+   Notas penduradas: 0
+   CC111 de loop: 10
+   Bass support novo: NAO
+   Tamanho: 10680 bytes
+
+6. WORLDEND DOMINATOR (UMINEKO)
+   Arquivo: mus_umineko_worldend_dominator.mid
+   Fonte: Umineko No Naku Koro Ni - zts - (Ineo Arrange) - WorldEndDominator.mid
+   Duracao fonte: 452.04 s
+   Tracks musicais: 8
+   Polifonia maxima: 8
+   Note-ons / note-offs: 5249 / 5249
+   Notas penduradas: 0
+   CC111 de loop: 8
+   Bass support novo: NAO
+   Tamanho: 46104 bytes
