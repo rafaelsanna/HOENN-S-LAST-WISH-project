@@ -222,3 +222,7 @@
 .include "sound/voicegroups/applause.inc"
 .include "sound/voicegroups/abracadabra.inc"
 .include "sound/voicegroups/pains_theme.inc"
+.include "sound/voicegroups/blue_bird.inc"
+.include "sound/voicegroups/cruel_angels_thesis.inc"
+.include "sound/voicegroups/the_world.inc"
+.include "sound/voicegroups/pegasus_fantasy.inc"

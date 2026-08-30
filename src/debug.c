@@ -3959,7 +3959,11 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_SCARS_OF_TIME) \
     X(MUS_APPLAUSE)  \
     X(MUS_ABRACADABRA)        \
-    X(MUS_PAINS_THEME)
+    X(MUS_PAINS_THEME)        \
+    X(MUS_BLUE_BIRD)        \
+    X(MUS_THE_WORLD)    \
+    X(MUS_CRUEL_ANGELS_THESIS) \
+    X(MUS_PEGASUS_FANTASY)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \

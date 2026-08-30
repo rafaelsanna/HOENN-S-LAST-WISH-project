@@ -572,6 +572,10 @@ gSongTable::
 	song mus_applause, 0, 0
 	song mus_abracadabra, 0, 0
 	song mus_pains_theme, 0, 0
+	song mus_blue_bird, 0, 0
+	song mus_the_world, 0, 0
+	song mus_cruel_angels_thesis, 0, 0
+	song mus_pegasus_fantasy, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2
