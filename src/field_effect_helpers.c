@@ -7,6 +7,7 @@
 #include "fieldmap.h"
 #include "gpu_regs.h"
 #include "metatile_behavior.h"
+#include "constants/metatile_labels.h"
 #include "palette.h"
 #include "sound.h"
 #include "sprite.h"
@@ -29,6 +30,7 @@ static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *, struct S
 static void LoadObjectRegularReflectionPalette(struct ObjectEvent *, struct Sprite *);
 
 static void UpdateGrassFieldEffectSubpriority(struct Sprite *, u8, u8);
+static bool8 IsSeaGrassMetatile(s16 x, s16 y);
 static void FadeFootprintsTireTracks_Step0(struct Sprite *);
 static void FadeFootprintsTireTracks_Step1(struct Sprite *);
 static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *);
@@ -425,6 +427,11 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
 #define sCurrentMap  data[5]
 #define sObjectMoved data[7]
 
+static bool8 IsSeaGrassMetatile(s16 x, s16 y)
+{
+    return MapGridGetMetatileIdAt(x, y) == METATILE_Cave_sea_grass;
+}
+
 u32 FldEff_TallGrass(void)
 {
     u8 spriteId;
@@ -556,6 +563,25 @@ u8 FindFairyGrassFieldEffectSpriteId(u8 localId, u8 mapNum, u8 mapGroup, s16 x, 
         {
             struct Sprite *sprite = &gSprites[i];
             if (sprite->callback == UpdateFairyGrassFieldEffect
+                && (x == sprite->sX && y == sprite->sY)
+                && localId == (u8)(sprite->sLocalId)
+                && mapNum == (sprite->sMapNum & 0xFF)
+                && mapGroup == sprite->sMapGroup)
+                return i;
+        }
+    }
+    return MAX_SPRITES;
+}
+
+u8 FindSeaGrassFieldEffectSpriteId(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y)
+{
+    u8 i;
+    for (i = 0; i < MAX_SPRITES; i ++)
+    {
+        if (gSprites[i].inUse)
+        {
+            struct Sprite *sprite = &gSprites[i];
+            if (sprite->callback == UpdateSeaGrassFieldEffect
                 && (x == sprite->sX && y == sprite->sY)
                 && localId == (u8)(sprite->sLocalId)
                 && mapNum == (sprite->sMapNum & 0xFF)
@@ -705,6 +731,76 @@ void UpdateFairyGrassFieldEffect(struct Sprite *sprite)
 
         UpdateObjectEventSpriteInvisibility(sprite, FALSE);
         UpdateGrassFieldEffectSubpriority(sprite, sprite->sElevation, metatileBehavior);
+    }
+}
+
+u32 FldEff_SeaGrass(void)
+{
+    u8 spriteId;
+    s16 x = gFieldEffectArguments[0];
+    s16 y = gFieldEffectArguments[1];
+
+    SetSpritePosToOffsetMapCoords(&x, &y, 8, 8);
+
+    spriteId = CreateSpriteAtEnd(
+        gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SEA_GRASS],
+        x, y, 0);
+
+    if (spriteId != MAX_SPRITES)
+    {
+        struct Sprite *sprite = &gSprites[spriteId];
+        sprite->coordOffsetEnabled = TRUE;
+        sprite->oam.priority = gFieldEffectArguments[3];
+        sprite->sElevation = gFieldEffectArguments[2];
+        sprite->sX = gFieldEffectArguments[0];
+        sprite->sY = gFieldEffectArguments[1];
+        sprite->sMapNum = gFieldEffectArguments[4];
+        sprite->sMapGroup = gFieldEffectArguments[5];
+        sprite->sCurrentMap = gFieldEffectArguments[6];
+
+        if (gFieldEffectArguments[7])
+            SeekSpriteAnim(sprite, 4);
+    }
+    return 0;
+}
+
+void UpdateSeaGrassFieldEffect(struct Sprite *sprite)
+{
+    u8 localId;
+    u8 objectEventId;
+    u8 mapNum = sprite->sCurrentMap >> 8;
+    u8 mapGroup = sprite->sCurrentMap;
+    u8 subpriority;
+
+    if (gCamera.active && (gSaveBlock1Ptr->location.mapNum != mapNum || gSaveBlock1Ptr->location.mapGroup != mapGroup))
+    {
+        sprite->sX -= gCamera.x;
+        sprite->sY -= gCamera.y;
+        sprite->sCurrentMap = ((u8)gSaveBlock1Ptr->location.mapNum << 8) | (u8)gSaveBlock1Ptr->location.mapGroup;
+    }
+    localId = sprite->sLocalId;
+    mapNum = sprite->sMapNum;
+    mapGroup = sprite->sMapGroup;
+
+    if (TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId)
+     || !IsSeaGrassMetatile(sprite->sX, sprite->sY)
+     || (sprite->sObjectMoved && sprite->animEnded))
+    {
+        FieldEffectStop(sprite, FLDEFF_SEA_GRASS);
+    }
+    else
+    {
+        struct ObjectEvent *objectEvent = &gObjectEvents[objectEventId];
+        if ((objectEvent->currentCoords.x != sprite->sX || objectEvent->currentCoords.y != sprite->sY)
+         && (objectEvent->previousCoords.x != sprite->sX || objectEvent->previousCoords.y != sprite->sY))
+            sprite->sObjectMoved = TRUE;
+
+        subpriority = 0;
+        if (sprite->animCmdIndex == 0)
+            subpriority = 4;
+
+        UpdateObjectEventSpriteInvisibility(sprite, FALSE);
+        UpdateGrassFieldEffectSubpriority(sprite, sprite->sElevation, subpriority);
     }
 }
 

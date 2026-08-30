@@ -1285,3 +1285,9 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/ROGUECANYONHOUSE/scripts.inc"
 
 	.include "data/maps/Route110House/scripts.inc"
+
+	.include "data/maps/Underwater_Route106/scripts.inc"
+
+	.include "data/maps/Fossiltrenchentrance/scripts.inc"
+
+	.include "data/maps/FossilTrench/scripts.inc"

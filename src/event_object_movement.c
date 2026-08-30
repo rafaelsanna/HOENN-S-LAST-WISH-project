@@ -41,6 +41,7 @@
 #include "util.h"
 #include "wild_encounter.h"
 #include "constants/event_object_movement.h"
+#include "constants/metatile_labels.h"
 #include "constants/abilities.h"
 #include "constants/battle.h"
 #include "constants/event_objects.h"
@@ -163,6 +164,7 @@ static u8 ObjectEventGetNearbyReflectionType(struct ObjectEvent *);
 static u8 GetReflectionTypeByMetatileBehavior(u32);
 static void InitObjectPriorityByElevation(struct Sprite *, u8);
 static void ObjectEventUpdateSubpriority(struct ObjectEvent *, struct Sprite *);
+static bool8 ObjectEventIsOnSeaGrass(struct ObjectEvent *objEvent);
 static void DoTracksGroundEffect_None(struct ObjectEvent *, struct Sprite *, u8);
 static void DoTracksGroundEffect_Footprints(struct ObjectEvent *, struct Sprite *, u8);
 static void DoTracksGroundEffect_FootprintsB(struct ObjectEvent*, struct Sprite*, u8);
@@ -9706,6 +9708,11 @@ static void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct S
         objectEvent->offScreen = TRUE;
 }
 
+static bool8 ObjectEventIsOnSeaGrass(struct ObjectEvent *objEvent)
+{
+    return MapGridGetMetatileIdAt(objEvent->currentCoords.x, objEvent->currentCoords.y) == METATILE_Cave_sea_grass;
+}
+
 static void UpdateObjectEventSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
@@ -10212,7 +10219,7 @@ void GroundEffect_SpawnOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *
     gFieldEffectArguments[5] = objEvent->mapGroup;
     gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
     gFieldEffectArguments[7] = TRUE; // skip to end of anim
-    FieldEffectStart(FLDEFF_TALL_GRASS);
+    FieldEffectStart(ObjectEventIsOnSeaGrass(objEvent) ? FLDEFF_SEA_GRASS : FLDEFF_TALL_GRASS);
 }
 
 void GroundEffect_StepOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -10225,7 +10232,7 @@ void GroundEffect_StepOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *s
     gFieldEffectArguments[5] = objEvent->mapGroup;
     gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
     gFieldEffectArguments[7] = FALSE; // don't skip to end of anim
-    FieldEffectStart(FLDEFF_TALL_GRASS);
+    FieldEffectStart(ObjectEventIsOnSeaGrass(objEvent) ? FLDEFF_SEA_GRASS : FLDEFF_TALL_GRASS);
 }
 
 void GroundEffect_SpawnOnDryGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -10521,6 +10528,20 @@ void GroundEffect_SandHeap(struct ObjectEvent *objEvent, struct Sprite *sprite)
 void GroundEffect_JumpOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
     u8 spriteId;
+
+    if (ObjectEventIsOnSeaGrass(objEvent))
+    {
+        spriteId = FindSeaGrassFieldEffectSpriteId(
+            objEvent->localId,
+            objEvent->mapNum,
+            objEvent->mapGroup,
+            objEvent->currentCoords.x,
+            objEvent->currentCoords.y);
+
+        if (spriteId == MAX_SPRITES)
+            GroundEffect_SpawnOnTallGrass(objEvent, sprite);
+        return;
+    }
 
     gFieldEffectArguments[0] = objEvent->currentCoords.x;
     gFieldEffectArguments[1] = objEvent->currentCoords.y;

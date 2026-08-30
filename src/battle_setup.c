@@ -46,6 +46,7 @@
 #include "vs_seeker.h"
 #include "item.h"
 #include "constants/battle_frontier.h"
+#include "constants/metatile_labels.h"
 #include "constants/battle_setup.h"
 #include "constants/event_objects.h"
 #include "constants/game_stat.h"
@@ -649,6 +650,8 @@ enum BattleEnvironments BattleSetup_GetEnvironmentId(void)
 
     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 
+    if (MapGridGetMetatileIdAt(x, y) == METATILE_Cave_sea_grass)
+        return BATTLE_ENVIRONMENT_UNDERWATER;
     if (MetatileBehavior_IsTallGrass(tileBehavior))
         return BATTLE_ENVIRONMENT_GRASS;
     if (MetatileBehavior_IsLongGrass(tileBehavior))

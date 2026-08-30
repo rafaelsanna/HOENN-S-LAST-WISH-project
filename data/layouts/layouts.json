@@ -375,7 +375,7 @@
       "id": "LAYOUT_ROUTE121",
       "name": "Route121_Layout",
       "width": 80,
-      "height": 20,
+      "height": 24,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lilycove",
       "border_filepath": "data/layouts/Route121/border.bin",
@@ -5030,6 +5030,36 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/Route110House/border.bin",
       "blockdata_filepath": "data/layouts/Route110House/map.bin"
+    },
+    {
+      "id": "LAYOUT_UNDERWATER_ROUTE106",
+      "name": "Underwater_Route106_Layout",
+      "width": 97,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/Underwater_Route106/border.bin",
+      "blockdata_filepath": "data/layouts/Underwater_Route106/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOSSILTRENCHENTRANCE",
+      "name": "Fossiltrenchentrance_Layout",
+      "width": 30,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/Fossiltrenchentrance/border.bin",
+      "blockdata_filepath": "data/layouts/Fossiltrenchentrance/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOSSIL_TRENCH",
+      "name": "FossilTrench_Layout",
+      "width": 26,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/FossilTrench/border.bin",
+      "blockdata_filepath": "data/layouts/FossilTrench/map.bin"
     }
   ]
 }

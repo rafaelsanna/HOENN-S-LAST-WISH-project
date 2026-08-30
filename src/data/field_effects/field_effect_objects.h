@@ -2,6 +2,7 @@ const struct SpritePalette gSpritePalette_GeneralFieldEffect0 = {gFieldEffectObj
 const struct SpritePalette gSpritePalette_GeneralFieldEffect1 = {gFieldEffectObjectPalette1, FLDEFF_PAL_TAG_GENERAL_1};
 const struct SpritePalette gSpritePalette_DryGrass = {gFieldEffectObjectPalette_DryGrass, FLDEFF_PAL_TAG_DRY_GRASS};
 const struct SpritePalette gSpritePalette_FairyGrass = {gFieldEffectObjectPalette_FairyGrass, FLDEFF_PAL_TAG_FAIRY_GRASS};
+const struct SpritePalette gSpritePalette_SeaGrass = {gFieldEffectObjectPalette_SeaGrass, FLDEFF_PAL_TAG_SEA_GRASS};
 
 static const union AnimCmd sAnim_Shadow[] =
 {
@@ -215,6 +216,39 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_FairyGrass = {
     .images = sPicTable_FairyGrass,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = UpdateFairyGrassFieldEffect,
+};
+
+static const struct SpriteFrameImage sPicTable_SeaGrass[] = {
+    overworld_frame(gFieldEffectObjectPic_SeaGrass, 2, 2, 0),
+    overworld_frame(gFieldEffectObjectPic_SeaGrass, 2, 2, 1),
+    overworld_frame(gFieldEffectObjectPic_SeaGrass, 2, 2, 2),
+    overworld_frame(gFieldEffectObjectPic_SeaGrass, 2, 2, 3),
+    overworld_frame(gFieldEffectObjectPic_SeaGrass, 2, 2, 4),
+};
+
+static const union AnimCmd sAnim_SeaGrass[] =
+{
+    ANIMCMD_FRAME(1, 10),
+    ANIMCMD_FRAME(2, 10),
+    ANIMCMD_FRAME(3, 10),
+    ANIMCMD_FRAME(4, 10),
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_SeaGrass[] =
+{
+    sAnim_SeaGrass,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_SeaGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SEA_GRASS,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_SeaGrass,
+    .images = sPicTable_SeaGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateSeaGrassFieldEffect,
 };
 
 static const struct SpriteFrameImage sPicTable_Ripple[] = {

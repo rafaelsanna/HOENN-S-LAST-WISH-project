@@ -667,10 +667,6 @@
 #define FLAG_HIDDEN_ITEM_FIERY_PATH_ULTRA_BALL               (FLAG_HIDDEN_ITEMS_START + 0x7A)
 #define FLAG_HIDDEN_ITEM_FIERY_PATH_STAR_PIECE               (FLAG_HIDDEN_ITEMS_START + 0x7B)
 #define FLAG_HIDDEN_ITEM_FIERY_PATH_REVIVE                   (FLAG_HIDDEN_ITEMS_START + 0x7C)
-#define FLAG_HIDDEN_ITEM_PETALBURG_CAVE_STAR_PIECE           (FLAG_HIDDEN_ITEMS_START + 0x7D)
-#define FLAG_HIDDEN_ITEM_ROUTE_115_PP_UP_2                 (FLAG_HIDDEN_ITEMS_START + 0x7E)
-
-
 #define DN_FLAG_SEARCHING                       0x271
 #define DN_FLAG_DEXNAV_GET                      0x272
 #define DN_FLAG_DETECTOR_MODE                   0x273
@@ -1252,11 +1248,11 @@
 #define FLAG_ITEM_ROUTE_110_MAX_REVIVE                              0x4A8
 #define FLAG_ITEM_ROUTE_114_RAZOR_FANG                              0x4A9 
 #define FLAG_HIDDEN_ITEM_ROUTE_114_STARDUST                         0x4AA 
-#define FLAG_UNUSED_0x4AB                                           0x4AB // Unused Flag
-#define FLAG_UNUSED_0x4AC                                           0x4AC // Unused Flag
-#define FLAG_UNUSED_0x4AD                                           0x4AD // Unused Flag
-#define FLAG_UNUSED_0x4AE                                           0x4AE // Unused Flag
-#define FLAG_UNUSED_0x4AF                                           0x4AF // Unused Flag
+#define FLAG_HIDDEN_ITEM_PETALBURG_CAVE_STAR_PIECE                   0x4AB
+#define FLAG_HIDDEN_ITEM_ROUTE_115_PP_UP_2                            0x4AC
+#define FLAG_HIDDEN_ITEM_ROUTE_121_BIG_MUSHROOM                       0x4AD
+#define FLAG_ITEM_FOSSIL_TRENCH_DEEP_SEA_TOOTH                    0x4AE
+#define FLAG_ITEM_FOSSIL_TRENCH_DEEP_SEA_SCALE                    0x4AF
 #define FLAG_UNUSED_0x4B0                                           0x4B0 // Unused Flag
 #define FLAG_UNUSED_0x4B1                                           0x4B1 // Unused Flag
 #define FLAG_UNUSED_0x4B2                                           0x4B2 // Unused Flag
