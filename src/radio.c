@@ -10,8 +10,8 @@
 //
 // Controls:
 //   A           -> Play / Pause
-//   START       -> Open Radio Menu
-//   SELECT      -> Cycle station
+//   START       -> Open Radio Menu (large left-side MENU button)
+//   SELECT      -> Cycle station (large left-side CHANGE STATION button)
 //   L / LEFT    -> Previous track
 //   R / RIGHT   -> Next track
 //   B           -> Close (music keeps playing)
@@ -183,6 +183,8 @@ static EWRAM_DATA u8 sRadioBtnPauseId;
 static EWRAM_DATA u8 sRadioBtnNextId;
 static EWRAM_DATA u8 sRadioBtnBackId;
 static EWRAM_DATA u8 sRadioBtnOffId;
+static EWRAM_DATA u8 sRadioBtnStartId;
+static EWRAM_DATA u8 sRadioBtnSelectId;
 
 // ===========================================================================
 // Graphics
@@ -335,11 +337,25 @@ static const u32 sRadioBtn_Back_Gfx[]  = INCBIN_U32("graphics/radio/back.4bpp.sm
 static const u16 sRadioBtn_Off_Pal[]   = INCBIN_U16("graphics/radio/off.gbapal");
 static const u32 sRadioBtn_Off_Gfx[]   = INCBIN_U32("graphics/radio/off.4bpp.smol");
 
-#define TAG_RADIO_BTN_PLAY  0xD102
-#define TAG_RADIO_BTN_PAUSE 0xD103
-#define TAG_RADIO_BTN_NEXT  0xD104
-#define TAG_RADIO_BTN_BACK  0xD105
-#define TAG_RADIO_BTN_OFF   0xD106
+// New large buttons supplied by the UI layout.
+// start.png:  32x64 = two 32x32 frames stacked vertically.
+// select.png: 64x128 = two 64x64 frames stacked vertically.
+static const u16 sRadioBtn_Start_Pal[]  = INCBIN_U16("graphics/radio/start.gbapal");
+static const u32 sRadioBtn_Start_Gfx[]  = INCBIN_U32("graphics/radio/start.4bpp.smol");
+static const u16 sRadioBtn_Select_Pal[] = INCBIN_U16("graphics/radio/select.gbapal");
+
+// select.png is 64x128:
+//   top 64x64    = normal frame
+//   bottom 64x64 = pressed frame
+static const u32 sRadioBtn_Select_Gfx[] = INCBIN_U32("graphics/radio/select.4bpp.smol");
+
+#define TAG_RADIO_BTN_PLAY   0xD102
+#define TAG_RADIO_BTN_PAUSE  0xD103
+#define TAG_RADIO_BTN_NEXT   0xD104
+#define TAG_RADIO_BTN_BACK   0xD105
+#define TAG_RADIO_BTN_OFF    0xD106
+#define TAG_RADIO_BTN_START  0xD107
+#define TAG_RADIO_BTN_SELECT 0xD108
 
 // Button top-left positions in GBA screen pixels (240x160).
 // Measured pixel-perfect from the reference layout image, shifted +7px right and +7px down.
@@ -359,6 +375,12 @@ static const u32 sRadioBtn_Off_Gfx[]   = INCBIN_U32("graphics/radio/off.4bpp.smo
 #define RADIO_BTN_NEXT_Y    86   //  79 + 7
 #define RADIO_BTN_OFF_X    225   // 218 + 7
 #define RADIO_BTN_OFF_Y     18   //  11 + 7
+
+// New left-side controls from the redesigned radio face.
+#define RADIO_BTN_START_X   26
+#define RADIO_BTN_START_Y   38
+#define RADIO_BTN_SELECT_X  26
+#define RADIO_BTN_SELECT_Y  70
 
 #define JOY_RELEASED(b)   ((~(gMain.newKeys) & gMain.heldKeys & (b)) != 0)
 
@@ -389,6 +411,80 @@ static const union AnimCmd *const sAnims_RadioBtn[] =
     sAnim_RadioBtn_Normal,   // anim 0
     sAnim_RadioBtn_Pressed,  // anim 1
 };
+
+// ---------------------------------------------------------------------------
+// Large START button
+// start.png = 32x64, two 32x32 frames stacked vertically.
+// One 32x32 4bpp frame = 16 tiles, so pressed frame starts at tile 16.
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_RadioBtnStart =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(32x32),
+    .size       = SPRITE_SIZE(32x32),
+    .priority   = 0,
+};
+
+static const union AnimCmd sAnim_RadioBtnStart_Normal[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_RadioBtnStart_Pressed[] =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_RadioBtnStart[] =
+{
+    sAnim_RadioBtnStart_Normal,
+    sAnim_RadioBtnStart_Pressed,
+};
+
+// ---------------------------------------------------------------------------
+// Large CHANGE STATION / SELECT button.
+//
+// CONFIRMED ASSET:
+//   select.png = 64x128
+//   frame 0    = top 64x64
+//   frame 1    = bottom 64x64
+//
+// A 64x64 4bpp frame uses 64 tiles, so frame 1 starts at tile 64.
+// ---------------------------------------------------------------------------
+static const struct OamData sOamData_RadioBtnSelect =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(64x64),
+    .size       = SPRITE_SIZE(64x64),
+    .priority   = 0,
+};
+
+static const union AnimCmd sAnim_RadioBtnSelect_Normal[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_RadioBtnSelect_Pressed[] =
+{
+    ANIMCMD_FRAME(64, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_RadioBtnSelect[] =
+{
+    sAnim_RadioBtnSelect_Normal,
+    sAnim_RadioBtnSelect_Pressed,
+};
+
 
 // Each button has its own tag (different graphics)
 // Sheet size = 0x200: 32x16 PNG = 2 frames of 16x16 side-by-side = 512 decompressed bytes
@@ -427,6 +523,54 @@ DEFINE_BTN_TEMPLATE(Pause, TAG_RADIO_BTN_PAUSE)
 DEFINE_BTN_TEMPLATE(Next,  TAG_RADIO_BTN_NEXT)
 DEFINE_BTN_TEMPLATE(Back,  TAG_RADIO_BTN_BACK)
 DEFINE_BTN_TEMPLATE(Off,   TAG_RADIO_BTN_OFF)
+
+// START: 32x64 total 4bpp image = 0x400 decompressed bytes.
+static const struct CompressedSpriteSheet sSpriteSheet_Start[] =
+{
+    {sRadioBtn_Start_Gfx, 0x400, TAG_RADIO_BTN_START},
+    {},
+};
+
+static const struct SpritePalette sSpritePalette_Start[] =
+{
+    {sRadioBtn_Start_Pal, TAG_RADIO_BTN_START},
+    {},
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RadioBtn_Start =
+{
+    .tileTag     = TAG_RADIO_BTN_START,
+    .paletteTag  = TAG_RADIO_BTN_START,
+    .oam         = &sOamData_RadioBtnStart,
+    .anims       = sAnims_RadioBtnStart,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCallbackDummy,
+};
+
+// SELECT: 64x128 total 4bpp image = 0x1000 decompressed bytes.
+static const struct CompressedSpriteSheet sSpriteSheet_Select[] =
+{
+    {sRadioBtn_Select_Gfx, 0x1000, TAG_RADIO_BTN_SELECT},
+    {},
+};
+
+static const struct SpritePalette sSpritePalette_Select[] =
+{
+    {sRadioBtn_Select_Pal, TAG_RADIO_BTN_SELECT},
+    {},
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RadioBtn_Select =
+{
+    .tileTag     = TAG_RADIO_BTN_SELECT,
+    .paletteTag  = TAG_RADIO_BTN_SELECT,
+    .oam         = &sOamData_RadioBtnSelect,
+    .anims       = sAnims_RadioBtnSelect,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCallbackDummy,
+};
 
 // ---------------------------------------------------------------------------
 // Button helpers
@@ -1098,7 +1242,7 @@ static const u8 sRadioText_TrackFmt[]      = _("Track:{STR_VAR_1}/{STR_VAR_2}");
 static const u8 sRadioText_Paused[]        = _("PAUSED");
 static const u8 sRadioText_Unknown[]       = _("---");
 static const u8 sRadioText_SongFmt[]       = _("Song: {STR_VAR_1}");
-static const u8 sRadioText_BottomFmt[]     = _("SEL>{STR_VAR_1} START>MENU");
+static const u8 sRadioText_StationFmt[]    = _("Radio Station: {STR_VAR_1}");
 
 static const u8 sRadioText_MenuTitle[]       = _("RADIO MENU");
 static const u8 sRadioText_MenuSearch[]      = _("SEARCH A-Z");
@@ -2510,6 +2654,8 @@ static void Radio_HandleOverlayInput(u8 taskId)
         if (JOY_NEW(B_BUTTON) || JOY_NEW(START_BUTTON))
         {
             PlaySE(SE_SELECT);
+            if (JOY_NEW(START_BUTTON))
+                Radio_PressButton(sRadioBtnStartId);
             Radio_ReturnToMain(taskId);
             return;
         }
@@ -3089,9 +3235,11 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
     Radio_SetMarqueeText(formattedName);
     Radio_PrintSongMarquee();
 
-    // Line 3: SELECT + START are always on the SAME line.
+    // Line 3: clean station label.
+    // START / SELECT are now represented by their physical button sprites
+    // on the redesigned radio face, so the text window no longer repeats them.
     StringCopy(gStringVar1, sStationNames[sRadioStation]);
-    StringExpandPlaceholders(gStringVar4, sRadioText_BottomFmt);
+    StringExpandPlaceholders(gStringVar4, sRadioText_StationFmt);
     AddTextPrinterParameterized(
         WIN_MUSIC_INFO,
         RADIO_FONT,
@@ -3117,6 +3265,13 @@ static void Task_RadioHandleInput(u8 taskId)
     bool8 playing = (bool8)gTasks[taskId].tIsPlaying;
     bool8 changed = FALSE;
 
+    // New physical START / SELECT buttons use the same two-frame feedback
+    // convention as A / L / R / B.
+    if (JOY_RELEASED(START_BUTTON))
+        Radio_ReleaseButton(sRadioBtnStartId);
+    if (JOY_RELEASED(SELECT_BUTTON))
+        Radio_ReleaseButton(sRadioBtnSelectId);
+
     // Priority/Repeat keeps running while the radio screen itself is open.
     if (RadioPriority_Update())
     {
@@ -3141,6 +3296,7 @@ static void Task_RadioHandleInput(u8 taskId)
     if (JOY_NEW(START_BUTTON))
     {
         PlaySE(SE_SELECT);
+        Radio_PressButton(sRadioBtnStartId);
         sRadioUiMode = RADIO_UI_MENU;
         sRadioMenuCursor = 0;
         Radio_DrawMenu(songId);
@@ -3154,6 +3310,7 @@ static void Task_RadioHandleInput(u8 taskId)
         u8 attempts = 0;
 
         PlaySE(SE_SELECT);
+        Radio_PressButton(sRadioBtnSelectId);
 
         do
         {
@@ -3370,7 +3527,7 @@ static void SpriteCB_RadioStereo(struct Sprite *sprite)
 //   Stereo LEFT:  círculo esquerdo  → centro x=179, y=29
 //   Stereo RIGHT: círculo direito   → centro x=216, y=66
 // ---------------------------------------------------------------------------
-#define RADIO_JIG_X       77
+#define RADIO_JIG_X      106
 #define RADIO_JIG_Y       56
 #define RADIO_STEREO1_X  179
 #define RADIO_STEREO1_Y   29
@@ -3420,12 +3577,26 @@ static void Radio_CreateSprites(void)
     LoadSpritePalettes(sSpritePalette_Back);
     LoadCompressedSpriteSheet(sSpriteSheet_Off);
     LoadSpritePalettes(sSpritePalette_Off);
+    LoadCompressedSpriteSheet(sSpriteSheet_Start);
+    LoadSpritePalettes(sSpritePalette_Start);
+    LoadCompressedSpriteSheet(sSpriteSheet_Select);
+    LoadSpritePalettes(sSpritePalette_Select);
 
     sRadioBtnPlayId  = CreateSprite(&sSpriteTemplate_RadioBtn_Play,  RADIO_BTN_PLAY_X,  RADIO_BTN_PLAY_Y,  1);
     sRadioBtnPauseId = CreateSprite(&sSpriteTemplate_RadioBtn_Pause, RADIO_BTN_PAUSE_X, RADIO_BTN_PAUSE_Y, 1);
     sRadioBtnNextId  = CreateSprite(&sSpriteTemplate_RadioBtn_Next,  RADIO_BTN_NEXT_X,  RADIO_BTN_NEXT_Y,  1);
-    sRadioBtnBackId  = CreateSprite(&sSpriteTemplate_RadioBtn_Back,  RADIO_BTN_BACK_X,  RADIO_BTN_BACK_Y,  1);
-    sRadioBtnOffId   = CreateSprite(&sSpriteTemplate_RadioBtn_Off,   RADIO_BTN_OFF_X,   RADIO_BTN_OFF_Y,   1);
+    sRadioBtnBackId   = CreateSprite(&sSpriteTemplate_RadioBtn_Back,   RADIO_BTN_BACK_X,   RADIO_BTN_BACK_Y,   1);
+    sRadioBtnOffId    = CreateSprite(&sSpriteTemplate_RadioBtn_Off,   RADIO_BTN_OFF_X,   RADIO_BTN_OFF_Y,   1);
+    sRadioBtnStartId  = CreateSprite(&sSpriteTemplate_RadioBtn_Start, RADIO_BTN_START_X, RADIO_BTN_START_Y, 1);
+
+    // SELECT is one 64x64 sprite. The visible button artwork sits inside
+    // the 64x64 frame exactly as supplied in select.png.
+    sRadioBtnSelectId = CreateSprite(
+        &sSpriteTemplate_RadioBtn_Select,
+        RADIO_BTN_SELECT_X,
+        RADIO_BTN_SELECT_Y,
+        1
+    );
 
     // Set initial play/pause frame based on current state
     Radio_UpdatePlayPauseButtons(sRadioIsPlaying);
@@ -3605,6 +3776,8 @@ void Radio_Open(MainCallback returnCallback)
     sRadioBtnNextId   = 0xFF;
     sRadioBtnBackId   = 0xFF;
     sRadioBtnOffId    = 0xFF;
+    sRadioBtnStartId  = 0xFF;
+    sRadioBtnSelectId = 0xFF;
 
     SetMainCallback2(CB2_LoadRadio);
 }
