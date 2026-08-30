@@ -506,8 +506,49 @@
 #define MUS_THE_WORLD                            572
 #define MUS_CRUEL_ANGELS_THESIS                  573
 #define MUS_PEGASUS_FANTASY                      574
-
-#define END_MUS MUS_PEGASUS_FANTASY
+#define MUS_LUGIAS_SONG                          575
+#define MUS_MIDNAS_LAMENT                        576
+#define MUS_SHOUSHIN_NO_KIKI                     577
+#define MUS_OMOKAGE                              578
+#define MUS_BROTHERS                             579
+#define MUS_DISTANCE                             580
+#define MUS_KANASHIMI_WO_YASASHISA_NI            581
+#define MUS_KOKUTEN                              582
+#define MUS_RESONANCE                            583
+#define MUS_PAPER_MOON                           584
+#define MUS_TETRIS_MAIN_THEME                    585
+#define MUS_I_WILL                               586
+#define MUS_YOU_AND_WHOSE_ARMY                   587
+#define MUS_MOTION_PICTURE_SOUNDTRACK            588
+#define MUS_EVERYTHING_IN_ITS_RIGHT_PLACE        589
+#define MUS_NO_SURPRISES                         590
+#define MUS_LUCKY                                591
+#define MUS_HIGH_AND_DRY                         592
+#define MUS_STREET_SPIRIT                        593
+#define MUS_GAZE_AT_THE_SKIES                    594
+#define MUS_GUTS_THEME                           595
+#define MUS_THE_YOUNG_PHOTOGRAPHER               596
+#define MUS_HOPE_GRAND_CHASE                     597
+#define MUS_GLAST_HEIM_THEME                     598
+#define MUS_ANCIENT_GROOVER                      599
+#define MUS_DIVINE_GRACE                         600
+#define MUS_THEME_OF_MORROC                      601
+#define MUS_EVERLASTING_WANDERERS                602
+#define MUS_THEME_OF_GEFFEN                      603
+#define MUS_THEME_OF_ALDEBARAN                   604
+#define MUS_THEME_OF_ALBERTA                     605
+#define MUS_THEME_OF_PRONTERA                    606
+#define MUS_BIGMOUTH_STRIKES_AGAIN               607
+#define MUS_BOY_WITH_THE_THORN                   608
+#define MUS_SOMEDAY                              609
+#define MUS_REPTILIA                             610
+#define MUS_HARD_TO_EXPLAIN                      611
+#define MUS_ARABELLA                             612
+#define MUS_DO_I_WANNA_KNOW                      613
+#define MUS_NO_1_PARTY_ANTHEM                    614
+#define MUS_FADE_INTO_YOU                        615
+#define MUS_WHEN_THE_SUN_HITS                    616
+#define END_MUS MUS_WHEN_THE_SUN_HITS
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

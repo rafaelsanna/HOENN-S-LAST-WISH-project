@@ -576,6 +576,48 @@ gSongTable::
 	song mus_the_world, 0, 0
 	song mus_cruel_angels_thesis, 0, 0
 	song mus_pegasus_fantasy, 0, 0
+	song mus_lugias_song, 0, 0
+	song mus_midnas_lament, 0, 0
+	song mus_shoushin_no_kiki, 0, 0
+	song mus_omokage, 0, 0
+	song mus_brothers, 0, 0
+	song mus_distance, 0, 0
+	song mus_kanashimi_wo_yasashisa_ni, 0, 0
+	song mus_kokuten, 0, 0
+	song mus_resonance, 0, 0
+	song mus_paper_moon, 0, 0
+	song mus_tetris_main_theme, 0, 0
+	song mus_i_will, 0, 0
+	song mus_you_and_whose_army, 0, 0
+	song mus_motion_picture_soundtrack, 0, 0
+	song mus_everything_in_its_right_place, 0, 0
+	song mus_no_surprises, 0, 0
+	song mus_lucky, 0, 0
+	song mus_high_and_dry, 0, 0
+	song mus_street_spirit, 0, 0
+	song mus_gaze_at_the_skies, 0, 0
+	song mus_guts_theme, 0, 0
+	song mus_the_young_photographer, 0, 0
+	song mus_hope_grand_chase, 0, 0
+	song mus_glast_heim_theme, 0, 0
+	song mus_ancient_groover, 0, 0
+	song mus_divine_grace, 0, 0
+	song mus_theme_of_morroc, 0, 0
+	song mus_everlasting_wanderers, 0, 0
+	song mus_theme_of_geffen, 0, 0
+	song mus_theme_of_aldebaran, 0, 0
+	song mus_theme_of_alberta, 0, 0
+	song mus_theme_of_prontera, 0, 0
+	song mus_bigmouth_strikes_again, 0, 0
+	song mus_boy_with_the_thorn, 0, 0
+	song mus_someday, 0, 0
+	song mus_reptilia, 0, 0
+	song mus_hard_to_explain, 0, 0
+	song mus_arabella, 0, 0
+	song mus_do_i_wanna_know, 0, 0
+	song mus_no_1_party_anthem, 0, 0
+	song mus_fade_into_you, 0, 0
+	song mus_when_the_sun_hits, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

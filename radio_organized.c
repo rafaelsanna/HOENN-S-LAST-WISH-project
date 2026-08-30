@@ -6,7 +6,6 @@
 //   ANIME RADIO      -> anime / anime-film music
 //   OTHER-WORLD      -> real-world artists / bands
 //   AMATERASU RADIO  -> pop / dance-pop
-//   INDIE ROCK RADIO -> indie / alternative rock
 //
 // Controls:
 //   A / START   -> Play / Pause toggle
@@ -612,7 +611,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_KOKUTEN)                       \
     X(MUS_RESONANCE)                     \
     X(MUS_PAPER_MOON)                    \
-    X(MUS_TETRIS_MAIN_THEME)                \
+    X(MUS_VOGEL_IM_KAFIG)                \
     X(MUS_I_WILL)                        \
     X(MUS_YOU_AND_WHOSE_ARMY)            \
     X(MUS_MOTION_PICTURE_SOUNDTRACK)     \
@@ -622,28 +621,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_HIGH_AND_DRY)                  \
     X(MUS_STREET_SPIRIT)                 \
     X(MUS_GAZE_AT_THE_SKIES)             \
-    X(MUS_GUTS_THEME) \
-    X(MUS_THE_YOUNG_PHOTOGRAPHER) \
-    X(MUS_HOPE_GRAND_CHASE) \
-    X(MUS_GLAST_HEIM_THEME) \
-    X(MUS_ANCIENT_GROOVER) \
-    X(MUS_DIVINE_GRACE) \
-    X(MUS_THEME_OF_MORROC) \
-    X(MUS_EVERLASTING_WANDERERS) \
-    X(MUS_THEME_OF_GEFFEN) \
-    X(MUS_THEME_OF_ALDEBARAN) \
-    X(MUS_THEME_OF_ALBERTA) \
-    X(MUS_THEME_OF_PRONTERA) \
-    X(MUS_BIGMOUTH_STRIKES_AGAIN) \
-    X(MUS_BOY_WITH_THE_THORN) \
-    X(MUS_SOMEDAY) \
-    X(MUS_REPTILIA) \
-    X(MUS_HARD_TO_EXPLAIN) \
-    X(MUS_ARABELLA) \
-    X(MUS_DO_I_WANNA_KNOW) \
-    X(MUS_NO_1_PARTY_ANTHEM) \
-    X(MUS_FADE_INTO_YOU) \
-    X(MUS_WHEN_THE_SUN_HITS)
+    X(MUS_GUTS_THEME)
 
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
@@ -665,7 +643,6 @@ enum RadioStation
     STATION_ANIME,
     STATION_OTHER_WORLD,
     STATION_AMATERASU,
-    STATION_INDIE_ROCK,
     STATION_COUNT,
 };
 
@@ -699,6 +676,7 @@ static const u16 sStation_Anime[] = {
     MUS_KOKUTEN,
     MUS_RESONANCE,
     MUS_PAPER_MOON,
+    MUS_VOGEL_IM_KAFIG,
     MUS_GAZE_AT_THE_SKIES,
     MUS_GUTS_THEME,
     STATION_END
@@ -741,48 +719,11 @@ static const u16 sStation_Amaterasu[] = {
     STATION_END
 };
 
-// ---------------------------------------------------------------------------
-// INDIE ROCK RADIO
-// Radiohead + The Smiths + The Strokes + Arctic Monkeys + Mazzy Star + Slowdive
-// ---------------------------------------------------------------------------
-static const u16 sStation_IndieRock[] = {
-    // Radiohead
-    MUS_I_WILL,
-    MUS_YOU_AND_WHOSE_ARMY,
-    MUS_MOTION_PICTURE_SOUNDTRACK,
-    MUS_EVERYTHING_IN_ITS_RIGHT_PLACE,
-    MUS_NO_SURPRISES,
-    MUS_LUCKY,
-    MUS_HIGH_AND_DRY,
-    MUS_STREET_SPIRIT,
-
-    // The Smiths
-    MUS_BIGMOUTH_STRIKES_AGAIN,
-    MUS_BOY_WITH_THE_THORN,
-
-    // The Strokes
-    MUS_SOMEDAY,
-    MUS_REPTILIA,
-    MUS_HARD_TO_EXPLAIN,
-
-    // Arctic Monkeys
-    MUS_ARABELLA,
-    MUS_DO_I_WANNA_KNOW,
-    MUS_NO_1_PARTY_ANTHEM,
-
-    // Mazzy Star / Slowdive
-    MUS_FADE_INTO_YOU,
-    MUS_WHEN_THE_SUN_HITS,
-
-    STATION_END
-};
-
 static const u16 *const sStationTracks[STATION_COUNT] = {
     [STATION_ALL]         = sStation_All,
     [STATION_ANIME]       = sStation_Anime,
     [STATION_OTHER_WORLD] = sStation_OtherWorld,
     [STATION_AMATERASU]   = sStation_Amaterasu,
-    [STATION_INDIE_ROCK]  = sStation_IndieRock,
 };
 
 // Station display names
@@ -790,14 +731,12 @@ static const u8 sStationName_All[]         = _("ALL TRACKS");
 static const u8 sStationName_Anime[]       = _("ANIME RADIO");
 static const u8 sStationName_OtherWorld[]  = _("OTHER-WORLD MUSIC");
 static const u8 sStationName_Amaterasu[]   = _("AMATERASU RADIO");
-static const u8 sStationName_IndieRock[]   = _("INDIE ROCK RADIO");
 
 static const u8 *const sStationNames[STATION_COUNT] = {
     [STATION_ALL]         = sStationName_All,
     [STATION_ANIME]       = sStationName_Anime,
     [STATION_OTHER_WORLD] = sStationName_OtherWorld,
     [STATION_AMATERASU]   = sStationName_Amaterasu,
-    [STATION_INDIE_ROCK]  = sStationName_IndieRock,
 };
 
 // ===========================================================================
