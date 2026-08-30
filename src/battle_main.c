@@ -80,6 +80,8 @@
 #include "cable_club.h"
 #include "randomizer.h"
 
+extern void RadioPriority_MaintainBgm(void);
+
 extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct WindowTemplate *const gBattleWindowTemplates[];
 
@@ -610,6 +612,10 @@ static void CB2_InitBattleInternal(void)
     }
 
     gBattleCommunication[MULTIUSE_STATE] = 0;
+
+    // Safety net: some battle startup paths can touch the BGM player
+    // directly instead of going through sound.c.
+    RadioPriority_MaintainBgm();
 }
 
 #define BUFFER_PARTY_VS_SCREEN_STATUS(party, flags, i)                      \
@@ -863,6 +869,7 @@ static void CB2_HandleStartBattle(void)
     u8 enemyMultiplayerId;
 
     RunTasks();
+    RadioPriority_MaintainBgm();
     AnimateSprites();
     BuildOamBuffer();
 
@@ -1775,6 +1782,7 @@ void BattleMainCB2(void)
     RunTextPrinters();
     UpdatePaletteFade();
     RunTasks();
+    RadioPriority_MaintainBgm();
     AdvanceComfyAnimations();
 
     if (JOY_HELD(B_BUTTON) && gBattleTypeFlags & BATTLE_TYPE_RECORDED && RecordedBattle_CanStopPlayback())

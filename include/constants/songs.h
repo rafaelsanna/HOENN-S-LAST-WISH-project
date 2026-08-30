@@ -548,7 +548,8 @@
 #define MUS_NO_1_PARTY_ANTHEM                    614
 #define MUS_FADE_INTO_YOU                        615
 #define MUS_WHEN_THE_SUN_HITS                    616
-#define END_MUS MUS_WHEN_THE_SUN_HITS
+#define MUS_AINT_NO_REST_FOR_THE_WICKED          617
+#define END_MUS MUS_AINT_NO_REST_FOR_THE_WICKED
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

@@ -10,6 +10,9 @@
 #include "task.h"
 #include "test_runner.h"
 
+extern bool8 RadioPriority_ShouldBlockBgmChange(void);
+extern void RadioPriority_MaintainBgm(void);
+
 struct Fanfare
 {
     u16 songNum;
@@ -63,6 +66,14 @@ void InitMapMusic(void)
 
 void MapMusicMain(void)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+    {
+        // Keeps the same radio playback position across normal overworld
+        // activity and also drives Repeat/auto-next.
+        RadioPriority_MaintainBgm();
+        return;
+    }
+
     switch (sMapMusicState)
     {
     case 0:
@@ -119,6 +130,9 @@ u16 GetCurrentMapMusic(void)
 
 void PlayNewMapMusic(u16 songNum)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     sCurrentMapMusic = songNum;
     sNextMapMusic = 0;
     sMapMusicState = 1;
@@ -126,6 +140,9 @@ void PlayNewMapMusic(u16 songNum)
 
 void StopMapMusic(void)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     sCurrentMapMusic = 0;
     sNextMapMusic = 0;
     sMapMusicState = 1;
@@ -133,6 +150,9 @@ void StopMapMusic(void)
 
 void FadeOutMapMusic(u8 speed)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     if (IsNotWaitingForBGMStop())
         FadeOutBGM(speed);
     sCurrentMapMusic = 0;
@@ -142,6 +162,9 @@ void FadeOutMapMusic(u8 speed)
 
 void FadeOutAndPlayNewMapMusic(u16 songNum, u8 speed)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     FadeOutMapMusic(speed);
     sCurrentMapMusic = 0;
     sNextMapMusic = songNum;
@@ -150,6 +173,9 @@ void FadeOutAndPlayNewMapMusic(u16 songNum, u8 speed)
 
 void FadeOutAndFadeInNewMapMusic(u16 songNum, u8 fadeOutSpeed, u8 fadeInSpeed)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     FadeOutMapMusic(fadeOutSpeed);
     sCurrentMapMusic = 0;
     sNextMapMusic = songNum;
@@ -159,6 +185,9 @@ void FadeOutAndFadeInNewMapMusic(u16 songNum, u8 fadeOutSpeed, u8 fadeInSpeed)
 
 static void UNUSED FadeInNewMapMusic(u16 songNum, u8 speed)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     FadeInNewBGM(songNum, speed);
     sCurrentMapMusic = songNum;
     sNextMapMusic = 0;
@@ -180,6 +209,13 @@ bool8 IsNotWaitingForBGMStop(void)
 void PlayFanfareByFanfareNum(u8 fanfareNum)
 {
     u16 songNum;
+
+    if (RadioPriority_ShouldBlockBgmChange())
+    {
+        sFanfareCounter = 0;
+        return;
+    }
+
     m4aMPlayStop(&gMPlayInfo_BGM);
     songNum = sFanfares[fanfareNum].songNum;
     sFanfareCounter = sFanfares[fanfareNum].duration;
@@ -188,6 +224,9 @@ void PlayFanfareByFanfareNum(u8 fanfareNum)
 
 bool8 WaitFanfare(bool8 stop)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return TRUE;
+
     if (sFanfareCounter)
     {
         sFanfareCounter--;
@@ -238,6 +277,13 @@ bool8 IsFanfareTaskInactive(void)
 
 static void Task_Fanfare(u8 taskId)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+    {
+        sFanfareCounter = 0;
+        DestroyTask(taskId);
+        return;
+    }
+
     if (gTestRunnerHeadless)
     {
         DestroyTask(taskId);
@@ -264,6 +310,9 @@ static void CreateFanfareTask(void)
 
 void FadeInNewBGM(u16 songNum, u8 speed)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     if (gDisableMusic)
         songNum = 0;
     if (songNum == MUS_NONE)
@@ -277,6 +326,9 @@ void FadeInNewBGM(u16 songNum, u8 speed)
 
 void FadeOutBGMTemporarily(u8 speed)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     m4aMPlayFadeOutTemporarily(&gMPlayInfo_BGM, speed);
 }
 
@@ -296,6 +348,9 @@ void FadeInBGM(u8 speed)
 
 void FadeOutBGM(u8 speed)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     m4aMPlayFadeOut(&gMPlayInfo_BGM, speed);
 }
 
@@ -549,6 +604,9 @@ static void RestoreBGMVolumeAfterPokemonCry(void)
 
 void PlayBGM(u16 songNum)
 {
+    if (RadioPriority_ShouldBlockBgmChange())
+        return;
+
     if (gDisableMusic)
         songNum = 0;
     if (songNum == MUS_NONE)

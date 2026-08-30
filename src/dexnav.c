@@ -62,6 +62,9 @@
 #include "constants/region_map_sections.h"
 #include "gba/m4a_internal.h"
 
+// Radio Priority owns L/R while the player is in the overworld.
+extern bool8 RadioPriority_ShouldBlockBgmChange(void);
+
 #if DEXNAV_ENABLED
 STATIC_ASSERT(DN_FLAG_SEARCHING != 0, DNFlagSearching_Must_Not_Be_Zero);
 STATIC_ASSERT(DN_FLAG_DETECTOR_MODE != 0, DNFlagDetectorMode_Must_Not_Be_Zero);
@@ -1144,7 +1147,8 @@ static void Task_DexNavSearch(u8 taskId)
     }
 
     if (sDexNavSearchDataPtr->hiddenSearch && !task->tRevealed &&
-        (JOY_NEW(R_BUTTON) || (sDexNavSearchDataPtr->proximity < CREEPING_PROXIMITY)))
+        ((!RadioPriority_ShouldBlockBgmChange() && JOY_NEW(R_BUTTON))
+         || (sDexNavSearchDataPtr->proximity < CREEPING_PROXIMITY)))
     {
         PlaySE(SE_DEX_SEARCH);
         ClearStdWindowAndFrameToTransparent(sDexNavSearchDataPtr->windowId, FALSE);

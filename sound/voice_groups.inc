@@ -268,3 +268,4 @@
 .include "sound/voicegroups/no_1_party_anthem.inc"
 .include "sound/voicegroups/fade_into_you.inc"
 .include "sound/voicegroups/when_the_sun_hits.inc"
+.include "sound/voicegroups/aint_no_rest_for_the_wicked.inc"

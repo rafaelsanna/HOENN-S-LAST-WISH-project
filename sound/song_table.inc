@@ -618,6 +618,7 @@ gSongTable::
 	song mus_no_1_party_anthem, 0, 0
 	song mus_fade_into_you, 0, 0
 	song mus_when_the_sun_hits, 0, 0
+	song mus_aint_no_rest_for_the_wicked, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

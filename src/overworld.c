@@ -80,6 +80,11 @@
 #include "constants/weather.h"
 #include "comfy_anim.h"
 
+// Pokemon Radio overworld media controls.
+extern bool8 RadioPriority_ShouldBlockBgmChange(void);
+extern bool8 RadioPriority_NextTrack(void);
+extern bool8 RadioPriority_PreviousTrack(void);
+
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
 struct CableClubPlayer
@@ -1538,6 +1543,20 @@ bool32 IsOverworldLinkActive(void)
 static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
 {
     struct FieldInput inputStruct;
+
+    // RADIO PRIORITY owns L/R in the overworld.
+    // Consume them BEFORE FieldGetPlayerInput(), so DexNav, registered-item
+    // shortcuts and other field systems cannot steal the same press.
+    if (RadioPriority_ShouldBlockBgmChange())
+    {
+        if (newKeys & R_BUTTON)
+            RadioPriority_NextTrack();
+        else if (newKeys & L_BUTTON)
+            RadioPriority_PreviousTrack();
+
+        newKeys &= ~(R_BUTTON | L_BUTTON);
+        heldKeys &= ~(R_BUTTON | L_BUTTON);
+    }
 
     UpdatePlayerAvatarTransitionState();
     FieldClearPlayerInput(&inputStruct);

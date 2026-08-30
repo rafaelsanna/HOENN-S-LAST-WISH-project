@@ -4005,7 +4005,8 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_DO_I_WANNA_KNOW) \
     X(MUS_NO_1_PARTY_ANTHEM) \
     X(MUS_FADE_INTO_YOU) \
-    X(MUS_WHEN_THE_SUN_HITS)
+    X(MUS_WHEN_THE_SUN_HITS) \
+    X(MUS_AINT_NO_REST_FOR_THE_WICKED)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \
