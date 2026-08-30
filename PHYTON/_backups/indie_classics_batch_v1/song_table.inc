@@ -630,16 +630,6 @@ gSongTable::
 	song mus_one_more_time, 0, 0
 	song mus_around_the_world, 0, 0
 	song mus_where_is_the_love, 0, 0
-	song mus_freaking_out_the_neighborhood, 0, 0
-	song mus_dracula_tame_impala, 0, 0
-	song mus_lovesong_the_cure, 0, 0
-	song mus_friday_im_in_love, 0, 0
-	song mus_boys_dont_cry, 0, 0
-	song mus_rose_parade, 0, 0
-	song mus_shadowplay, 0, 0
-	song mus_new_dawn_fades, 0, 0
-	song mus_disorder, 0, 0
-	song mus_love_will_tear_us_apart, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

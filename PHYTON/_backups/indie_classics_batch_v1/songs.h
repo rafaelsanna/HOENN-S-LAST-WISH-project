@@ -560,17 +560,7 @@
 #define MUS_ONE_MORE_TIME                      626
 #define MUS_AROUND_THE_WORLD                   627
 #define MUS_WHERE_IS_THE_LOVE                  628
-#define MUS_FREAKING_OUT_THE_NEIGHBORHOOD      629
-#define MUS_DRACULA_TAME_IMPALA                630
-#define MUS_LOVESONG_THE_CURE                  631
-#define MUS_FRIDAY_IM_IN_LOVE                  632
-#define MUS_BOYS_DONT_CRY                      633
-#define MUS_ROSE_PARADE                        634
-#define MUS_SHADOWPLAY                         635
-#define MUS_NEW_DAWN_FADES                     636
-#define MUS_DISORDER                           637
-#define MUS_LOVE_WILL_TEAR_US_APART            638
-#define END_MUS MUS_LOVE_WILL_TEAR_US_APART
+#define END_MUS MUS_WHERE_IS_THE_LOVE
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

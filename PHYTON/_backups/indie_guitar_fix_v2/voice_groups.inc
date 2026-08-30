@@ -269,4 +269,3 @@
 .include "sound/voicegroups/fade_into_you.inc"
 .include "sound/voicegroups/when_the_sun_hits.inc"
 .include "sound/voicegroups/aint_no_rest_for_the_wicked.inc"
-.include "sound/voicegroups/hlw_indie_guitar.inc"

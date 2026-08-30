@@ -948,17 +948,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_UMINEKO_WINGLESS) \
     X(MUS_UMINEKO_WORLDEND) \
     X(MUS_UMINEKO_FAR) \
-    X(MUS_UMINEKO_WORLDEND_DOMINATOR) \
-    X(MUS_FREAKING_OUT_THE_NEIGHBORHOOD) \
-    X(MUS_DRACULA_TAME_IMPALA) \
-    X(MUS_LOVESONG_THE_CURE) \
-    X(MUS_FRIDAY_IM_IN_LOVE) \
-    X(MUS_BOYS_DONT_CRY) \
-    X(MUS_ROSE_PARADE) \
-    X(MUS_SHADOWPLAY) \
-    X(MUS_NEW_DAWN_FADES) \
-    X(MUS_DISORDER) \
-    X(MUS_LOVE_WILL_TEAR_US_APART)
+    X(MUS_UMINEKO_WORLDEND_DOMINATOR)
 
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
@@ -1113,18 +1103,6 @@ static const u16 sStation_IndieRock[] = {
     MUS_WHEN_THE_SUN_HITS,
     MUS_AINT_NO_REST_FOR_THE_WICKED,
 
-
-    // Indie classics batch - Mac DeMarco / Tame Impala / Cure / Elliott Smith / Joy Division
-    MUS_FREAKING_OUT_THE_NEIGHBORHOOD,
-    MUS_DRACULA_TAME_IMPALA,
-    MUS_LOVESONG_THE_CURE,
-    MUS_FRIDAY_IM_IN_LOVE,
-    MUS_BOYS_DONT_CRY,
-    MUS_ROSE_PARADE,
-    MUS_SHADOWPLAY,
-    MUS_NEW_DAWN_FADES,
-    MUS_DISORDER,
-    MUS_LOVE_WILL_TEAR_US_APART,
     STATION_END
 };
 
@@ -1492,17 +1470,6 @@ static const u8 sIndieName_FadeIntoYou[]             = _("FADE INTO YOU (MAZZY S
 static const u8 sIndieName_WhenTheSunHits[]          = _("WHEN THE SUN HITS (SLOWDIVE)");
 static const u8 sIndieName_AintNoRest[]              = _("AIN'T NO REST FOR THE WICKED (CAGE THE ELEPHANT)");
 
-static const u8 sIndieName_FreakingOutNeighborhood[] = _("FREAKING OUT THE NEIGHBORHOOD (MAC DEMARCO)");
-static const u8 sIndieName_DraculaTameImpala[]       = _("DRACULA (TAME IMPALA)");
-static const u8 sIndieName_LovesongCure[]             = _("LOVESONG (THE CURE)");
-static const u8 sIndieName_FridayImInLove[]           = _("FRIDAY I'M IN LOVE (THE CURE)");
-static const u8 sIndieName_BoysDontCry[]              = _("BOYS DON'T CRY (THE CURE)");
-static const u8 sIndieName_RoseParade[]               = _("ROSE PARADE (ELLIOTT SMITH)");
-static const u8 sIndieName_Shadowplay[]               = _("SHADOWPLAY (JOY DIVISION)");
-static const u8 sIndieName_NewDawnFades[]             = _("NEW DAWN FADES (JOY DIVISION)");
-static const u8 sIndieName_Disorder[]                 = _("DISORDER (JOY DIVISION)");
-static const u8 sIndieName_LoveWillTearUsApart[]      = _("LOVE WILL TEAR US APART (JOY DIVISION)");
-
 static const u8 *Radio_GetIndieDisplayName(u16 songId)
 {
     switch (songId)
@@ -1549,24 +1516,6 @@ static const u8 *Radio_GetIndieDisplayName(u16 songId)
         return sIndieName_WhenTheSunHits;
     case MUS_AINT_NO_REST_FOR_THE_WICKED:
         return sIndieName_AintNoRest;
-    case MUS_FREAKING_OUT_THE_NEIGHBORHOOD:
-        return sIndieName_FreakingOutNeighborhood;
-    case MUS_DRACULA_TAME_IMPALA:
-        return sIndieName_DraculaTameImpala;
-    case MUS_LOVESONG_THE_CURE:
-        return sIndieName_LovesongCure;
-    case MUS_FRIDAY_IM_IN_LOVE:
-        return sIndieName_FridayImInLove;
-    case MUS_BOYS_DONT_CRY:
-        return sIndieName_BoysDontCry;
-    case MUS_ROSE_PARADE:
-        return sIndieName_RoseParade;
-    case MUS_SHADOWPLAY:
-        return sIndieName_Shadowplay;
-    case MUS_NEW_DAWN_FADES:
-        return sIndieName_NewDawnFades;
-    case MUS_DISORDER:
-        return sIndieName_Disorder;
     default:
         return NULL;
     }
