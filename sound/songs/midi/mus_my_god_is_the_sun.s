@@ -4391,6 +4391,7 @@ mus_my_god_is_the_sun_5_166:
 mus_my_god_is_the_sun_6:
 	.byte	KEYSH , mus_my_god_is_the_sun_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_my_god_is_the_sun_mvl/mxv
 	.byte	W72
 @ 001   ----------------------------------------

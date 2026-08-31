@@ -21,7 +21,8 @@
 //
 // Radio Menu order:
 //   RADIO PRIORITY / REPEAT / SHUFFLE / SEARCH A-Z / FAVORITES /
-//   ADD FAVORITE or REMOVE FAVORITE / MY PLAYLISTS / ADD TO PLAYLIST / RETURN
+//   ADD FAVORITE or REMOVE FAVORITE / MY PLAYLISTS / ADD TO PLAYLIST /
+//   CONFIG / RETURN
 //
 // Favorites, three playlists, playback state and radio settings persist in
 // SaveBlock1 through the fixed 512-byte HLW save extension.
@@ -102,7 +103,9 @@ static EWRAM_DATA u16 sRadioPopupPendingSong;
 #define RADIO_PLAYLIST_COUNT           3
 #define RADIO_PLAYLIST_CAPACITY       20
 #define RADIO_SEARCH_CAPACITY         64
-#define RADIO_MENU_ITEM_COUNT          9
+#define RADIO_MENU_ITEM_COUNT         10
+#define RADIO_CONFIG_ITEM_COUNT        4
+#define RADIO_VOLUME_MAX              10
 #define RADIO_SEARCH_LETTER_COUNT     26
 
 enum RadioUiMode
@@ -114,6 +117,7 @@ enum RadioUiMode
     RADIO_UI_FAVORITES,
     RADIO_UI_PLAYLIST_CHOOSER,
     RADIO_UI_PLAYLIST,
+    RADIO_UI_SOUND_CONFIG,
 };
 
 enum RadioPlaylistChooserAction
@@ -132,7 +136,16 @@ enum RadioMenuItem
     RADIO_MENU_TOGGLE_FAVORITE,
     RADIO_MENU_PLAYLIST,
     RADIO_MENU_ADD_PLAYLIST,
+    RADIO_MENU_CONFIG,
     RADIO_MENU_RETURN,
+};
+
+enum RadioConfigItem
+{
+    RADIO_CONFIG_OUTPUT = 0,
+    RADIO_CONFIG_VOLUME,
+    RADIO_CONFIG_TRANSITION,
+    RADIO_CONFIG_RETURN,
 };
 
 enum RadioMainSelection
@@ -144,6 +157,7 @@ enum RadioMainSelection
 static EWRAM_DATA u8    sRadioUiMode;
 static EWRAM_DATA u8    sRadioMainSelection;
 static EWRAM_DATA u8    sRadioMenuCursor;
+static EWRAM_DATA u8    sRadioConfigCursor;
 static EWRAM_DATA u8    sRadioListCursor;
 static EWRAM_DATA u8    sRadioSearchLetter;
 static EWRAM_DATA u8    sRadioSearchResultCount;
@@ -165,6 +179,8 @@ static EWRAM_DATA bool8 sRadioShuffleEnabled;
 static EWRAM_DATA u32   sRadioShuffleState;
 static EWRAM_DATA bool8 sRadioPriorityEnabled;
 static EWRAM_DATA bool8 sRadioRepeatEnabled; // default OFF (EWRAM/BSS)
+static EWRAM_DATA u8    sRadioVolume;
+static EWRAM_DATA bool8 sRadioTransitionFxEnabled;
 
 // Playback-pass monitor.
 //
@@ -211,6 +227,20 @@ static EWRAM_DATA u8 sRadioBtnSelectId;
 // Static 64x64 album artwork replaces Jigglypuff only for mapped songs.
 static EWRAM_DATA u8 sRadioCoverSpriteId;
 static EWRAM_DATA u8 sRadioCurrentCoverId;
+
+#define RADIO_ART_GLOW_FRAMES 6
+#define RADIO_ART_GLOW_MAX    12
+
+enum RadioArtTransitionState
+{
+    RADIO_ART_TRANS_IDLE = 0,
+    RADIO_ART_TRANS_GLOW_OUT,
+    RADIO_ART_TRANS_GLOW_IN,
+};
+
+static EWRAM_DATA u8 sRadioArtTransitionState;
+static EWRAM_DATA u8 sRadioArtTransitionTimer;
+static EWRAM_DATA u8 sRadioNextCoverId;
 
 
 // ===========================================================================
@@ -354,6 +384,25 @@ enum RadioAlbumCoverId
     RADIO_COVER_ONE_X,
     RADIO_COVER_SONGS_FOR_THE_DEAF,
     RADIO_COVER_WHITE_PONY,
+    RADIO_COVER_HAIL_TO_THE_THIEF,
+    RADIO_COVER_AMNESIAC,
+    RADIO_COVER_KID_A,
+    RADIO_COVER_OK_COMPUTER,
+    RADIO_COVER_THE_BENDS,
+    RADIO_COVER_THE_QUEEN_IS_DEAD,
+    RADIO_COVER_IS_THIS_IT,
+    RADIO_COVER_ROOM_ON_FIRE,
+    RADIO_COVER_AM,
+    RADIO_COVER_TONIGHT_THAT_I_MIGHT_SEE,
+    RADIO_COVER_SOUVLAKI,
+    RADIO_COVER_AINT_NO_REST_FOR_THE_WICKED,
+    RADIO_COVER_FREAKING_OUT_THE_NEIGHBORHOOD,
+    RADIO_COVER_DRACULA,
+    RADIO_COVER_DISINTEGRATION,
+    RADIO_COVER_WISH,
+    RADIO_COVER_THREE_IMAGINARY_BOYS,
+    RADIO_COVER_EITHER_OR,
+    RADIO_COVER_UNKNOWN_PLEASURES,
     RADIO_COVER_COUNT,
 };
 
@@ -380,6 +429,44 @@ static const u16 sRadioCoverSongsForTheDeaf_Pal[] = INCBIN_U16("graphics/radio/c
 static const u32 sRadioCoverSongsForTheDeaf_Gfx[] = INCBIN_U32("graphics/radio/covers/songsforthedeaf.4bpp.smol");
 static const u16 sRadioCoverWhitePony_Pal[] = INCBIN_U16("graphics/radio/covers/whitepony.gbapal");
 static const u32 sRadioCoverWhitePony_Gfx[] = INCBIN_U32("graphics/radio/covers/whitepony.4bpp.smol");
+static const u16 sRadioCoverHailToTheThief_Pal[] = INCBIN_U16("graphics/radio/covers/hailtothethief.gbapal");
+static const u32 sRadioCoverHailToTheThief_Gfx[] = INCBIN_U32("graphics/radio/covers/hailtothethief.4bpp.smol");
+static const u16 sRadioCoverAmnesiac_Pal[] = INCBIN_U16("graphics/radio/covers/amnesiac.gbapal");
+static const u32 sRadioCoverAmnesiac_Gfx[] = INCBIN_U32("graphics/radio/covers/amnesiac.4bpp.smol");
+static const u16 sRadioCoverKidA_Pal[] = INCBIN_U16("graphics/radio/covers/KIDA.gbapal");
+static const u32 sRadioCoverKidA_Gfx[] = INCBIN_U32("graphics/radio/covers/KIDA.4bpp.smol");
+static const u16 sRadioCoverOkComputer_Pal[] = INCBIN_U16("graphics/radio/covers/okcomputer.gbapal");
+static const u32 sRadioCoverOkComputer_Gfx[] = INCBIN_U32("graphics/radio/covers/okcomputer.4bpp.smol");
+static const u16 sRadioCoverTheBends_Pal[] = INCBIN_U16("graphics/radio/covers/thebends.gbapal");
+static const u32 sRadioCoverTheBends_Gfx[] = INCBIN_U32("graphics/radio/covers/thebends.4bpp.smol");
+static const u16 sRadioCoverTheQueenIsDead_Pal[] = INCBIN_U16("graphics/radio/covers/thequeenisdead.gbapal");
+static const u32 sRadioCoverTheQueenIsDead_Gfx[] = INCBIN_U32("graphics/radio/covers/thequeenisdead.4bpp.smol");
+static const u16 sRadioCoverIsThisIt_Pal[] = INCBIN_U16("graphics/radio/covers/isthisit.gbapal");
+static const u32 sRadioCoverIsThisIt_Gfx[] = INCBIN_U32("graphics/radio/covers/isthisit.4bpp.smol");
+static const u16 sRadioCoverRoomOnFire_Pal[] = INCBIN_U16("graphics/radio/covers/roomonfire.gbapal");
+static const u32 sRadioCoverRoomOnFire_Gfx[] = INCBIN_U32("graphics/radio/covers/roomonfire.4bpp.smol");
+static const u16 sRadioCoverAm_Pal[] = INCBIN_U16("graphics/radio/covers/AM.gbapal");
+static const u32 sRadioCoverAm_Gfx[] = INCBIN_U32("graphics/radio/covers/AM.4bpp.smol");
+static const u16 sRadioCoverTonightThatIMightSee_Pal[] = INCBIN_U16("graphics/radio/covers/tonightthatimightsee.gbapal");
+static const u32 sRadioCoverTonightThatIMightSee_Gfx[] = INCBIN_U32("graphics/radio/covers/tonightthatimightsee.4bpp.smol");
+static const u16 sRadioCoverSouvlaki_Pal[] = INCBIN_U16("graphics/radio/covers/slouvaki.gbapal");
+static const u32 sRadioCoverSouvlaki_Gfx[] = INCBIN_U32("graphics/radio/covers/slouvaki.4bpp.smol");
+static const u16 sRadioCoverAintNoRestForTheWicked_Pal[] = INCBIN_U16("graphics/radio/covers/aintnorestforthewicked.gbapal");
+static const u32 sRadioCoverAintNoRestForTheWicked_Gfx[] = INCBIN_U32("graphics/radio/covers/aintnorestforthewicked.4bpp.smol");
+static const u16 sRadioCoverFreakingOutTheNeighborhood_Pal[] = INCBIN_U16("graphics/radio/covers/freakingouttheneibhorhood.gbapal");
+static const u32 sRadioCoverFreakingOutTheNeighborhood_Gfx[] = INCBIN_U32("graphics/radio/covers/freakingouttheneibhorhood.4bpp.smol");
+static const u16 sRadioCoverDracula_Pal[] = INCBIN_U16("graphics/radio/covers/dracula.gbapal");
+static const u32 sRadioCoverDracula_Gfx[] = INCBIN_U32("graphics/radio/covers/dracula.4bpp.smol");
+static const u16 sRadioCoverDisintegration_Pal[] = INCBIN_U16("graphics/radio/covers/desintegration.gbapal");
+static const u32 sRadioCoverDisintegration_Gfx[] = INCBIN_U32("graphics/radio/covers/desintegration.4bpp.smol");
+static const u16 sRadioCoverWish_Pal[] = INCBIN_U16("graphics/radio/covers/wish.gbapal");
+static const u32 sRadioCoverWish_Gfx[] = INCBIN_U32("graphics/radio/covers/wish.4bpp.smol");
+static const u16 sRadioCoverThreeImaginaryBoys_Pal[] = INCBIN_U16("graphics/radio/covers/ThreeImaginaryBoys.gbapal");
+static const u32 sRadioCoverThreeImaginaryBoys_Gfx[] = INCBIN_U32("graphics/radio/covers/ThreeImaginaryBoys.4bpp.smol");
+static const u16 sRadioCoverEitherOr_Pal[] = INCBIN_U16("graphics/radio/covers/eitheror.gbapal");
+static const u32 sRadioCoverEitherOr_Gfx[] = INCBIN_U32("graphics/radio/covers/eitheror.4bpp.smol");
+static const u16 sRadioCoverUnknownPleasures_Pal[] = INCBIN_U16("graphics/radio/covers/unknowpleasures.gbapal");
+static const u32 sRadioCoverUnknownPleasures_Gfx[] = INCBIN_U32("graphics/radio/covers/unknowpleasures.4bpp.smol");
 
 static const struct OamData sOamData_RadioCover =
 {
@@ -426,6 +513,25 @@ static const struct CompressedSpriteSheet sRadioCoverSheets[RADIO_COVER_COUNT] =
     [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_HAIL_TO_THE_THIEF] = {sRadioCoverHailToTheThief_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_AMNESIAC] = {sRadioCoverAmnesiac_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_KID_A] = {sRadioCoverKidA_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_OK_COMPUTER] = {sRadioCoverOkComputer_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_THE_BENDS] = {sRadioCoverTheBends_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_THE_QUEEN_IS_DEAD] = {sRadioCoverTheQueenIsDead_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_IS_THIS_IT] = {sRadioCoverIsThisIt_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_ROOM_ON_FIRE] = {sRadioCoverRoomOnFire_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_AM] = {sRadioCoverAm_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_TONIGHT_THAT_I_MIGHT_SEE] = {sRadioCoverTonightThatIMightSee_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_SOUVLAKI] = {sRadioCoverSouvlaki_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_AINT_NO_REST_FOR_THE_WICKED] = {sRadioCoverAintNoRestForTheWicked_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_FREAKING_OUT_THE_NEIGHBORHOOD] = {sRadioCoverFreakingOutTheNeighborhood_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_DRACULA] = {sRadioCoverDracula_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_DISINTEGRATION] = {sRadioCoverDisintegration_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_WISH] = {sRadioCoverWish_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_THREE_IMAGINARY_BOYS] = {sRadioCoverThreeImaginaryBoys_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_EITHER_OR] = {sRadioCoverEitherOr_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_UNKNOWN_PLEASURES] = {sRadioCoverUnknownPleasures_Gfx, 0x800, TAG_RADIO_COVER},
 };
 
 static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
@@ -440,6 +546,25 @@ static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
     [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_HAIL_TO_THE_THIEF] = {sRadioCoverHailToTheThief_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_AMNESIAC] = {sRadioCoverAmnesiac_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_KID_A] = {sRadioCoverKidA_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_OK_COMPUTER] = {sRadioCoverOkComputer_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_THE_BENDS] = {sRadioCoverTheBends_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_THE_QUEEN_IS_DEAD] = {sRadioCoverTheQueenIsDead_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_IS_THIS_IT] = {sRadioCoverIsThisIt_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_ROOM_ON_FIRE] = {sRadioCoverRoomOnFire_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_AM] = {sRadioCoverAm_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_TONIGHT_THAT_I_MIGHT_SEE] = {sRadioCoverTonightThatIMightSee_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_SOUVLAKI] = {sRadioCoverSouvlaki_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_AINT_NO_REST_FOR_THE_WICKED] = {sRadioCoverAintNoRestForTheWicked_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_FREAKING_OUT_THE_NEIGHBORHOOD] = {sRadioCoverFreakingOutTheNeighborhood_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_DRACULA] = {sRadioCoverDracula_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_DISINTEGRATION] = {sRadioCoverDisintegration_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_WISH] = {sRadioCoverWish_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_THREE_IMAGINARY_BOYS] = {sRadioCoverThreeImaginaryBoys_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_EITHER_OR] = {sRadioCoverEitherOr_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_UNKNOWN_PLEASURES] = {sRadioCoverUnknownPleasures_Pal, TAG_RADIO_COVER},
 };
 
 
@@ -1080,7 +1205,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_AROUND_THE_FUR) \
     X(MUS_FAINT) \
     X(MUS_EASIER_TO_RUN) \
-    X(MUS_CRAWLING) \
+    X(MUS_IN_THE_END) \
     X(MUS_BREAKING_THE_HABIT) \
     X(MUS_KRYPTONITE) \
     X(MUS_ANIMAL_I_HAVE_BECOME)
@@ -1307,7 +1432,7 @@ static const u16 sStation_RockMetal[] = {
     MUS_AROUND_THE_FUR,
     MUS_FAINT,
     MUS_EASIER_TO_RUN,
-    MUS_CRAWLING,
+    MUS_IN_THE_END,
     MUS_BREAKING_THE_HABIT,
         MUS_KRYPTONITE,
     MUS_ANIMAL_I_HAVE_BECOME,
@@ -1486,12 +1611,76 @@ static void Task_RadioHandleInput(u8 taskId);
 static void Task_RadioFadeAndExit(u8 taskId);
 static void Task_RadioWaitFadeExit(u8 taskId);
 static void Radio_DrawMusicInfo(u16 songId, bool8 playing);
+static void Radio_DrawSoundConfig(void);
 static void Radio_CopyEncodedText(u8 *dest, const u8 *src, u32 destSize);
 static void Radio_LoadPersistentState(void);
 static void Radio_SavePersistentState(void);
+static void Radio_ResetPlaybackMonitor(void);
+static void Radio_ApplyAudioSettings(void);
+static void Radio_StartSongWithSettings(u16 songId);
+static void Radio_SetStereoOutput(bool8 stereo);
 static void Radio_QueueNowPlayingPopup(u16 songId);
 static void Radio_ClearNowPlayingPopupQueue(void);
 static void Radio_DrawNowPlayingPopup(u8 taskId);
+
+// ===========================================================================
+// Radio audio configuration
+// ===========================================================================
+
+static u16 Radio_GetM4AVolume(void)
+{
+    if (sRadioVolume >= RADIO_VOLUME_MAX)
+        return 256;
+
+    return (u16)((sRadioVolume * 256) / RADIO_VOLUME_MAX);
+}
+
+static void Radio_ApplyRadioVolume(void)
+{
+    if (sRadioIsPlaying)
+        m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, Radio_GetM4AVolume());
+}
+
+static void Radio_ApplyMonoPanIfNeeded(void)
+{
+    // Pokemon Emerald's normal SOUND option only updates cry stereo.
+    // For the Radio itself, MONO additionally centers every BGM track.
+    if (sRadioIsPlaying && gSaveBlock2Ptr->optionsSound == 0)
+        m4aMPlayPanpotControl(&gMPlayInfo_BGM, 0xFFFF, 0);
+}
+
+static void Radio_ApplyAudioSettings(void)
+{
+    Radio_ApplyRadioVolume();
+    Radio_ApplyMonoPanIfNeeded();
+}
+
+static void Radio_StartSongWithSettings(u16 songId)
+{
+    m4aSongNumStart(songId);
+    Radio_ApplyAudioSettings();
+}
+
+static void Radio_SetStereoOutput(bool8 stereo)
+{
+    u8 newMode = stereo ? 1 : 0;
+
+    if (gSaveBlock2Ptr->optionsSound == newMode)
+        return;
+
+    gSaveBlock2Ptr->optionsSound = newMode;
+    SetPokemonCryStereo(newMode);
+
+    // Re-starting here is intentional: a global mono pan override destroys
+    // the song's original per-track panning. Restarting reconstructs the
+    // authentic stereo mix when switching modes, then reapplies Radio volume.
+    if (sRadioIsPlaying)
+    {
+        m4aSongNumStop(sRadioCurrentSong);
+        Radio_StartSongWithSettings(sRadioCurrentSong);
+        Radio_ResetPlaybackMonitor();
+    }
+}
 
 // ===========================================================================
 // Helpers
@@ -1560,6 +1749,7 @@ static const u8 sRadioText_MenuPlaylist[]    = _("MY PLAYLISTS");
 static const u8 sRadioText_MenuFavorite[]    = _("ADD FAVORITE");
 static const u8 sRadioText_MenuUnfavorite[]  = _("REMOVE FAVORITE");
 static const u8 sRadioText_MenuAddPlaylist[] = _("ADD TO PLAYLIST");
+static const u8 sRadioText_MenuConfig[]      = _("CONFIG");
 static const u8 sRadioText_MenuPriorityOn[]  = _("RADIO PRIORITY: ON");
 static const u8 sRadioText_MenuPriorityOff[] = _("RADIO PRIORITY: OFF");
 static const u8 sRadioText_MenuRepeatOn[]    = _("REPEAT: ON");
@@ -1568,6 +1758,13 @@ static const u8 sRadioText_MenuShuffleOn[]   = _("SHUFFLE: ON");
 static const u8 sRadioText_MenuShuffleOff[]  = _("SHUFFLE: OFF");
 static const u8 sRadioText_MenuReturn[]       = _("RETURN");
 static const u8 sRadioText_Cursor[]           = _(">");
+
+static const u8 sRadioText_ConfigTitle[]        = _("SOUND CONFIG");
+static const u8 sRadioText_ConfigStereo[]       = _("OUTPUT: STEREO");
+static const u8 sRadioText_ConfigMono[]         = _("OUTPUT: MONO");
+static const u8 sRadioText_ConfigVolumeFmt[]    = _("RADIO VOL: {STR_VAR_1}");
+static const u8 sRadioText_ConfigTransitionOn[] = _("TRANSITION FX: ON");
+static const u8 sRadioText_ConfigTransitionOff[]= _("TRANSITION FX: OFF");
 
 static const u8 sRadioText_SearchTitle[]      = _("SEARCH A-Z");
 static const u8 sRadioText_SearchLetterFmt[]  = _("LETTER: {STR_VAR_1}");
@@ -1722,6 +1919,8 @@ static const u8 *Radio_GetIndieDisplayName(u16 songId)
         return sIndieName_NewDawnFades;
     case MUS_DISORDER:
         return sIndieName_Disorder;
+    case MUS_LOVE_WILL_TEAR_US_APART:
+        return sIndieName_LoveWillTearUsApart;
     default:
         return NULL;
     }
@@ -1890,7 +2089,7 @@ static const u8 sRockMetalName_BeQuietAndDrive[] = _("BE QUIET AND DRIVE (DEFTON
 static const u8 sRockMetalName_AroundTheFur[] = _("AROUND THE FUR (DEFTONES)");
 static const u8 sRockMetalName_Faint[] = _("FAINT (LINKIN PARK)");
 static const u8 sRockMetalName_EasierToRun[] = _("EASIER TO RUN (LINKIN PARK)");
-static const u8 sRockMetalName_Crawling[] = _("CRAWLING (LINKIN PARK)");
+static const u8 sRockMetalName_InTheEnd[] = _("IN THE END (LINKIN PARK)");
 static const u8 sRockMetalName_BreakingTheHabit[] = _("BREAKING THE HABIT (LINKIN PARK)");
 
 static const u8 sRockMetalName_Kryptonite[] = _("KRYPTONITE (3 DOORS DOWN)");
@@ -1920,8 +2119,8 @@ static const u8 *Radio_GetRockMetalDisplayName(u16 songId)
         return sRockMetalName_Faint;
     case MUS_EASIER_TO_RUN:
         return sRockMetalName_EasierToRun;
-    case MUS_CRAWLING:
-        return sRockMetalName_Crawling;
+    case MUS_IN_THE_END:
+        return sRockMetalName_InTheEnd;
     case MUS_BREAKING_THE_HABIT:
         return sRockMetalName_BreakingTheHabit;
     case MUS_KRYPTONITE:
@@ -2558,7 +2757,7 @@ static bool8 Radio_AdvanceToNextStationTrack(void)
 
     // Stop only the old radio song, then start the next station entry.
     m4aSongNumStop(oldSong);
-    m4aSongNumStart(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong);
 
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
@@ -2602,7 +2801,7 @@ bool8 RadioPriority_NextTrack(void)
     sRadioCurrentSong = Station_GetTrack(sRadioStation, sRadioStationIndex);
 
     m4aSongNumStop(oldSong);
-    m4aSongNumStart(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong);
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
     Radio_SavePersistentState();
@@ -2638,7 +2837,7 @@ bool8 RadioPriority_PreviousTrack(void)
     sRadioCurrentSong = Station_GetTrack(sRadioStation, sRadioStationIndex);
 
     m4aSongNumStop(oldSong);
-    m4aSongNumStart(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong);
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
     Radio_SavePersistentState();
@@ -2654,7 +2853,7 @@ bool8 RadioPriority_PreviousTrack(void)
 //
 // V4 behavior:
 //   * If battle code temporarily PAUSES the BGM player, CONTINUE it from the
-//     exact current position instead of calling m4aSongNumStart() and restarting.
+//     exact current position instead of calling Radio_StartSongWithSettings() and restarting.
 //   * Priority ON + Repeat OFF: one full song pass -> next station track.
 //   * Priority ON + Repeat ON: keep the current song looping.
 // Returns TRUE only when the radio automatically changed to another song.
@@ -2662,6 +2861,9 @@ bool8 RadioPriority_Update(void)
 {
     if (sRadioOverworldSkipCooldown != 0)
         sRadioOverworldSkipCooldown--;
+
+    if (sRadioIsPlaying)
+        Radio_ApplyMonoPanIfNeeded();
 
     if (!RadioPriority_ShouldBlockBgmChange())
         return FALSE;
@@ -2681,7 +2883,7 @@ bool8 RadioPriority_Update(void)
 
             // A destructive fade/clear removed the live tracks. There is no
             // position left to resume, so restart is the unavoidable fallback.
-            m4aSongNumStart(sRadioCurrentSong);
+            Radio_StartSongWithSettings(sRadioCurrentSong);
             Radio_ResetPlaybackMonitor();
             return FALSE;
         }
@@ -2693,7 +2895,7 @@ bool8 RadioPriority_Update(void)
         if (sRadioRepeatEnabled
          && !(gMPlayInfo_BGM.status & MUSICPLAYER_STATUS_TRACK))
         {
-            m4aSongNumStart(sRadioCurrentSong);
+            Radio_StartSongWithSettings(sRadioCurrentSong);
             Radio_ResetPlaybackMonitor();
         }
 
@@ -2702,7 +2904,7 @@ bool8 RadioPriority_Update(void)
 
     // Something bypassed the guarded sound.c API and replaced the BGM.
     // Restore the radio as a safety net.
-    m4aSongNumStart(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong);
     Radio_ResetPlaybackMonitor();
     return FALSE;
 }
@@ -2753,6 +2955,12 @@ void RadioPriority_MaintainBgm(void)
 #define RADIO_SAVE_RSVD_ACTIVE_PLAYLIST   3
 #define RADIO_SAVE_RSVD_PLAYLIST2_COUNT   4
 #define RADIO_SAVE_RSVD_PLAYLIST3_COUNT   5
+#define RADIO_SAVE_RSVD_VOLUME            6
+#define RADIO_SAVE_RSVD_CONFIG            7
+
+#define RADIO_SAVE_CONFIG_TAG             0xA0
+#define RADIO_SAVE_CONFIG_TAG_MASK        0xF0
+#define RADIO_SAVE_CONFIG_TRANSITION      (1 << 0)
 
 static bool8 Radio_SaveHasThreePlaylists(const struct RadioSaveData *save)
 {
@@ -2798,6 +3006,12 @@ static void Radio_ResetPersistentState(void)
     save->reserved[RADIO_SAVE_RSVD_TAG1] = RADIO_PLAYLIST_SAVE_TAG1;
     save->reserved[RADIO_SAVE_RSVD_PLAYLIST_VERSION] = RADIO_PLAYLIST_SAVE_VERSION;
     save->reserved[RADIO_SAVE_RSVD_ACTIVE_PLAYLIST] = 0;
+
+    // Audio-config bytes are encoded so old V8 saves (reserved[6/7] == 0)
+    // migrate to sane defaults instead of becoming muted.
+    save->reserved[RADIO_SAVE_RSVD_VOLUME] = RADIO_VOLUME_MAX + 1;
+    save->reserved[RADIO_SAVE_RSVD_CONFIG] =
+        RADIO_SAVE_CONFIG_TAG | RADIO_SAVE_CONFIG_TRANSITION;
 }
 
 static bool8 Radio_SaveSongIdIsValid(u16 songId)
@@ -2991,6 +3205,27 @@ static void Radio_LoadPersistentState(void)
     if (sRadioShuffleState == 0)
         sRadioShuffleState = 0xA5C31F27;
 
+    if ((save->reserved[RADIO_SAVE_RSVD_CONFIG] & RADIO_SAVE_CONFIG_TAG_MASK)
+        == RADIO_SAVE_CONFIG_TAG)
+    {
+        u8 encodedVolume = save->reserved[RADIO_SAVE_RSVD_VOLUME];
+
+        if (encodedVolume >= 1 && encodedVolume <= RADIO_VOLUME_MAX + 1)
+            sRadioVolume = encodedVolume - 1;
+        else
+            sRadioVolume = RADIO_VOLUME_MAX;
+
+        sRadioTransitionFxEnabled =
+            (save->reserved[RADIO_SAVE_RSVD_CONFIG]
+             & RADIO_SAVE_CONFIG_TRANSITION) != 0;
+    }
+    else
+    {
+        // Existing saves used these two bytes as zero-filled reserved space.
+        sRadioVolume = RADIO_VOLUME_MAX;
+        sRadioTransitionFxEnabled = TRUE;
+    }
+
     Radio_SavePersistentState();
 }
 
@@ -3031,8 +3266,10 @@ static void Radio_SavePersistentState(void)
     save->reserved[RADIO_SAVE_RSVD_ACTIVE_PLAYLIST] = sRadioActivePlaylist;
     save->reserved[RADIO_SAVE_RSVD_PLAYLIST2_COUNT] = sRadioPlaylistCounts[1];
     save->reserved[RADIO_SAVE_RSVD_PLAYLIST3_COUNT] = sRadioPlaylistCounts[2];
-    save->reserved[6] = 0;
-    save->reserved[7] = 0;
+    save->reserved[RADIO_SAVE_RSVD_VOLUME] = sRadioVolume + 1;
+    save->reserved[RADIO_SAVE_RSVD_CONFIG] =
+        RADIO_SAVE_CONFIG_TAG
+        | (sRadioTransitionFxEnabled ? RADIO_SAVE_CONFIG_TRANSITION : 0);
 
     memset(save->favorites, 0, sizeof(save->favorites));
     memcpy(save->favorites, sRadioFavorites, sizeof(sRadioFavorites));
@@ -3223,6 +3460,8 @@ static const u8 *Radio_GetMenuItemText(u8 item, u16 songId)
         return sRadioShuffleEnabled
              ? sRadioText_MenuShuffleOn
              : sRadioText_MenuShuffleOff;
+    case RADIO_MENU_CONFIG:
+        return sRadioText_MenuConfig;
     default:
         return sRadioText_MenuReturn;
     }
@@ -3278,6 +3517,95 @@ static void Radio_DrawMenu(u16 songId)
             WIN_MUSIC_INFO,
             RADIO_FONT,
             Radio_GetMenuItemText(item, songId),
+            12,
+            y,
+            TEXT_SKIP_DRAW,
+            NULL
+        );
+    }
+
+    CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
+}
+
+static const u8 *Radio_GetConfigItemText(u8 item)
+{
+    switch (item)
+    {
+    case RADIO_CONFIG_OUTPUT:
+        return gSaveBlock2Ptr->optionsSound
+             ? sRadioText_ConfigStereo
+             : sRadioText_ConfigMono;
+
+    case RADIO_CONFIG_VOLUME:
+        ConvertIntToDecimalStringN(
+            gStringVar1,
+            sRadioVolume,
+            STR_CONV_MODE_LEFT_ALIGN,
+            2
+        );
+        StringExpandPlaceholders(gStringVar4, sRadioText_ConfigVolumeFmt);
+        return gStringVar4;
+
+    case RADIO_CONFIG_TRANSITION:
+        return sRadioTransitionFxEnabled
+             ? sRadioText_ConfigTransitionOn
+             : sRadioText_ConfigTransitionOff;
+
+    default:
+        return sRadioText_MenuReturn;
+    }
+}
+
+static void Radio_DrawSoundConfig(void)
+{
+    u8 top;
+    u8 row;
+
+    sRadioMarqueeEnabled = FALSE;
+    FillWindowPixelBuffer(WIN_MUSIC_INFO, PIXEL_FILL(1));
+
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO,
+        RADIO_FONT,
+        sRadioText_ConfigTitle,
+        2,
+        2,
+        TEXT_SKIP_DRAW,
+        NULL
+    );
+
+    if (sRadioConfigCursor == 0)
+        top = 0;
+    else if (sRadioConfigCursor >= RADIO_CONFIG_ITEM_COUNT - 1)
+        top = RADIO_CONFIG_ITEM_COUNT - 2;
+    else
+        top = sRadioConfigCursor - 1;
+
+    for (row = 0; row < 2; row++)
+    {
+        u8 item = top + row;
+        u8 y = 18 + row * 16;
+
+        if (item >= RADIO_CONFIG_ITEM_COUNT)
+            break;
+
+        if (item == sRadioConfigCursor)
+        {
+            AddTextPrinterParameterized(
+                WIN_MUSIC_INFO,
+                RADIO_FONT,
+                sRadioText_Cursor,
+                2,
+                y,
+                TEXT_SKIP_DRAW,
+                NULL
+            );
+        }
+
+        AddTextPrinterParameterized(
+            WIN_MUSIC_INFO,
+            RADIO_FONT,
+            Radio_GetConfigItemText(item),
             12,
             y,
             TEXT_SKIP_DRAW,
@@ -3566,7 +3894,7 @@ static void Radio_PlayListSelection(u8 taskId, u8 station, u16 index)
     if (playing)
     {
         m4aSongNumStop(oldSong);
-        m4aSongNumStart(songId);
+        Radio_StartSongWithSettings(songId);
     }
 
     sRadioStation = station;
@@ -3730,11 +4058,92 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 Radio_DrawMenu(songId);
                 break;
 
+            case RADIO_MENU_CONFIG:
+                sRadioUiMode = RADIO_UI_SOUND_CONFIG;
+                sRadioConfigCursor = 0;
+                Radio_DrawSoundConfig();
+                break;
+
             default:
                 Radio_ReturnToMain(taskId);
                 break;
             }
 
+            return;
+        }
+
+        return;
+    }
+
+    if (sRadioUiMode == RADIO_UI_SOUND_CONFIG)
+    {
+        if (JOY_NEW(DPAD_UP))
+        {
+            sRadioConfigCursor = (sRadioConfigCursor > 0)
+                               ? sRadioConfigCursor - 1
+                               : RADIO_CONFIG_ITEM_COUNT - 1;
+            PlaySE(SE_SELECT);
+            Radio_DrawSoundConfig();
+            return;
+        }
+
+        if (JOY_NEW(DPAD_DOWN))
+        {
+            sRadioConfigCursor =
+                (sRadioConfigCursor + 1) % RADIO_CONFIG_ITEM_COUNT;
+            PlaySE(SE_SELECT);
+            Radio_DrawSoundConfig();
+            return;
+        }
+
+        if (JOY_NEW(B_BUTTON) || JOY_NEW(START_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            sRadioUiMode = RADIO_UI_MENU;
+            Radio_DrawMenu(songId);
+            return;
+        }
+
+        if (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_RIGHT) || JOY_NEW(A_BUTTON))
+        {
+            s8 direction = JOY_NEW(DPAD_LEFT) ? -1 : 1;
+
+            PlaySE(SE_SELECT);
+
+            switch (sRadioConfigCursor)
+            {
+            case RADIO_CONFIG_OUTPUT:
+                Radio_SetStereoOutput(!gSaveBlock2Ptr->optionsSound);
+                break;
+
+            case RADIO_CONFIG_VOLUME:
+                if (direction < 0)
+                {
+                    if (sRadioVolume > 0)
+                        sRadioVolume--;
+                }
+                else
+                {
+                    if (sRadioVolume < RADIO_VOLUME_MAX)
+                        sRadioVolume++;
+                }
+
+                Radio_ApplyRadioVolume();
+                Radio_SavePersistentState();
+                break;
+
+            case RADIO_CONFIG_TRANSITION:
+                sRadioTransitionFxEnabled = !sRadioTransitionFxEnabled;
+                Radio_SavePersistentState();
+                break;
+
+            default:
+                sRadioUiMode = RADIO_UI_MENU;
+                Radio_DrawMenu(songId);
+                return;
+            }
+
+            Radio_DrawSoundConfig();
             return;
         }
 
@@ -4425,7 +4834,7 @@ static void Task_RadioHandleInput(u8 taskId)
         if (playing)
         {
             m4aSongNumStop(gTasks[taskId].tCurrSong);
-            m4aSongNumStart(songId);
+            Radio_StartSongWithSettings(songId);
         }
 
         gTasks[taskId].tCurrSong = (s16)songId;
@@ -4488,7 +4897,7 @@ static void Task_RadioHandleInput(u8 taskId)
         if (playing)
         {
             m4aSongNumStop((u16)gTasks[taskId].tCurrSong);
-            m4aSongNumStart(songId);
+            Radio_StartSongWithSettings(songId);
             Radio_ResetPlaybackMonitor();
         }
 
@@ -4555,7 +4964,7 @@ static void Task_RadioHandleInput(u8 taskId)
         if (playing)
         {
             m4aSongNumStop((u16)gTasks[taskId].tCurrSong);
-            m4aSongNumStart(songId);
+            Radio_StartSongWithSettings(songId);
             Radio_ResetPlaybackMonitor();
         }
 
@@ -4583,7 +4992,7 @@ static void Task_RadioHandleInput(u8 taskId)
         }
         else
         {
-            m4aSongNumStart(songId);
+            Radio_StartSongWithSettings(songId);
             playing = TRUE;
             Radio_ResetPlaybackMonitor();
         }
@@ -4703,7 +5112,7 @@ static void SpriteCB_RadioStereo(struct Sprite *sprite)
 //   Stereo LEFT:  círculo esquerdo  → centro x=179, y=29
 //   Stereo RIGHT: círculo direito   → centro x=216, y=66
 // ---------------------------------------------------------------------------
-#define RADIO_JIG_X      106
+#define RADIO_JIG_X      102
 #define RADIO_JIG_Y       56
 #define RADIO_STEREO1_X  179
 #define RADIO_STEREO1_Y   29
@@ -4723,7 +5132,7 @@ static u8 Radio_GetAlbumCoverForSong(u16 songId)
         return RADIO_COVER_AROUND_THE_FUR;
     case MUS_3S_AND_7S:
         return RADIO_COVER_ERA_VULGARIS;
-    case MUS_CRAWLING:
+    case MUS_IN_THE_END:
         return RADIO_COVER_HYBRID_THEORY;
     case MUS_ROSEMARY_DEFTONES:
         return RADIO_COVER_KOI_NO_YOKAN;
@@ -4739,6 +5148,54 @@ static u8 Radio_GetAlbumCoverForSong(u16 songId)
         return RADIO_COVER_SONGS_FOR_THE_DEAF;
     case MUS_CHANGE_IN_THE_HOUSE_OF_FLIES:
         return RADIO_COVER_WHITE_PONY;
+    case MUS_I_WILL:
+        return RADIO_COVER_HAIL_TO_THE_THIEF;
+    case MUS_YOU_AND_WHOSE_ARMY:
+        return RADIO_COVER_AMNESIAC;
+    case MUS_MOTION_PICTURE_SOUNDTRACK:
+    case MUS_EVERYTHING_IN_ITS_RIGHT_PLACE:
+        return RADIO_COVER_KID_A;
+    case MUS_NO_SURPRISES:
+    case MUS_LUCKY:
+        return RADIO_COVER_OK_COMPUTER;
+    case MUS_HIGH_AND_DRY:
+    case MUS_STREET_SPIRIT:
+        return RADIO_COVER_THE_BENDS;
+    case MUS_BIGMOUTH_STRIKES_AGAIN:
+    case MUS_BOY_WITH_THE_THORN:
+        return RADIO_COVER_THE_QUEEN_IS_DEAD;
+    case MUS_SOMEDAY:
+    case MUS_HARD_TO_EXPLAIN:
+        return RADIO_COVER_IS_THIS_IT;
+    case MUS_REPTILIA:
+        return RADIO_COVER_ROOM_ON_FIRE;
+    case MUS_ARABELLA:
+    case MUS_DO_I_WANNA_KNOW:
+    case MUS_NO_1_PARTY_ANTHEM:
+        return RADIO_COVER_AM;
+    case MUS_FADE_INTO_YOU:
+        return RADIO_COVER_TONIGHT_THAT_I_MIGHT_SEE;
+    case MUS_WHEN_THE_SUN_HITS:
+        return RADIO_COVER_SOUVLAKI;
+    case MUS_AINT_NO_REST_FOR_THE_WICKED:
+        return RADIO_COVER_AINT_NO_REST_FOR_THE_WICKED;
+    case MUS_FREAKING_OUT_THE_NEIGHBORHOOD:
+        return RADIO_COVER_FREAKING_OUT_THE_NEIGHBORHOOD;
+    case MUS_DRACULA_TAME_IMPALA:
+        return RADIO_COVER_DRACULA;
+    case MUS_LOVESONG_THE_CURE:
+        return RADIO_COVER_DISINTEGRATION;
+    case MUS_FRIDAY_IM_IN_LOVE:
+        return RADIO_COVER_WISH;
+    case MUS_BOYS_DONT_CRY:
+        return RADIO_COVER_THREE_IMAGINARY_BOYS;
+    case MUS_ROSE_PARADE:
+        return RADIO_COVER_EITHER_OR;
+    case MUS_SHADOWPLAY:
+    case MUS_NEW_DAWN_FADES:
+    case MUS_DISORDER:
+    case MUS_LOVE_WILL_TEAR_US_APART: // Temporary placeholder: no dedicated cover yet.
+        return RADIO_COVER_UNKNOWN_PLEASURES;
     default:
         return RADIO_COVER_NONE;
     }
@@ -4756,18 +5213,41 @@ static void Radio_DestroyAlbumCoverSprite(void)
     FreeSpritePaletteByTag(TAG_RADIO_COVER);
 }
 
-static void Radio_UpdateAlbumCover(void)
+static u8 Radio_GetVisibleArtSpriteId(void)
 {
-    u8 coverId;
+    if (sRadioCurrentCoverId != RADIO_COVER_NONE
+     && sRadioCoverSpriteId < MAX_SPRITES)
+    {
+        return sRadioCoverSpriteId;
+    }
 
-    if (sRadioJigSpriteId >= MAX_SPRITES)
-        return;
+    if (sRadioJigSpriteId < MAX_SPRITES)
+        return sRadioJigSpriteId;
 
-    coverId = Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+    return 0xFF;
+}
 
-    if (coverId == sRadioCurrentCoverId)
-        return;
+static void Radio_BlendVisibleArt(u8 coeff)
+{
+    u8 spriteId = Radio_GetVisibleArtSpriteId();
 
+    if (spriteId < MAX_SPRITES)
+    {
+        u8 objPalette = gSprites[spriteId].oam.paletteNum;
+        u32 selectedPalettes;
+
+        if (coeff > 16)
+            coeff = 16;
+
+        // BlendPalettes(selectedPalettes, coeff, color)
+        // OBJ palette 0..15 corresponds to bits 16..31.
+        selectedPalettes = 1u << (16 + objPalette);
+        BlendPalettes(selectedPalettes, coeff, RGB_WHITE);
+    }
+}
+
+static void Radio_SetAlbumCoverImmediate(u8 coverId)
+{
     if (sRadioCoverSpriteId < MAX_SPRITES)
         Radio_DestroyAlbumCoverSprite();
 
@@ -4775,15 +5255,18 @@ static void Radio_UpdateAlbumCover(void)
 
     if (coverId == RADIO_COVER_NONE)
     {
-        gSprites[sRadioJigSpriteId].invisible = FALSE;
+        if (sRadioJigSpriteId < MAX_SPRITES)
+            gSprites[sRadioJigSpriteId].invisible = FALSE;
         return;
     }
 
-    gSprites[sRadioJigSpriteId].invisible = TRUE;
+    if (sRadioJigSpriteId < MAX_SPRITES)
+        gSprites[sRadioJigSpriteId].invisible = TRUE;
 
     LoadCompressedSpriteSheet(&sRadioCoverSheets[coverId]);
     LoadSpritePalette(&sRadioCoverPalettes[coverId]);
 
+    // The cover and Jigglypuff intentionally share the exact same center.
     sRadioCoverSpriteId = CreateSprite(
         &sSpriteTemplate_RadioCover,
         RADIO_JIG_X,
@@ -4794,9 +5277,98 @@ static void Radio_UpdateAlbumCover(void)
     if (sRadioCoverSpriteId >= MAX_SPRITES)
     {
         sRadioCoverSpriteId = 0xFF;
+        sRadioCurrentCoverId = RADIO_COVER_NONE;
         FreeSpriteTilesByTag(TAG_RADIO_COVER);
         FreeSpritePaletteByTag(TAG_RADIO_COVER);
-        gSprites[sRadioJigSpriteId].invisible = FALSE;
+
+        if (sRadioJigSpriteId < MAX_SPRITES)
+            gSprites[sRadioJigSpriteId].invisible = FALSE;
+    }
+}
+
+static void Radio_UpdateAlbumCover(void)
+{
+    u8 coverId;
+
+    if (sRadioJigSpriteId >= MAX_SPRITES)
+        return;
+
+    coverId = Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+
+    // During a transition, remember the latest request. Fast song skipping
+    // therefore converges to the newest album instead of flashing old covers.
+    if (sRadioArtTransitionState != RADIO_ART_TRANS_IDLE)
+    {
+        sRadioNextCoverId = coverId;
+        return;
+    }
+
+    if (coverId == sRadioCurrentCoverId)
+        return;
+
+    if (!sRadioTransitionFxEnabled)
+    {
+        Radio_SetAlbumCoverImmediate(coverId);
+        Radio_BlendVisibleArt(0);
+        return;
+    }
+
+    // Do not fight the screen's global fade-in/fade-out.
+    if (gPaletteFade.active)
+        return;
+
+    sRadioNextCoverId = coverId;
+    sRadioArtTransitionTimer = 0;
+    sRadioArtTransitionState = RADIO_ART_TRANS_GLOW_OUT;
+}
+
+static void Radio_UpdateAlbumCoverTransition(void)
+{
+    u8 coeff;
+
+    if (sRadioArtTransitionState == RADIO_ART_TRANS_IDLE)
+        return;
+
+    if (gPaletteFade.active)
+        return;
+
+    switch (sRadioArtTransitionState)
+    {
+    case RADIO_ART_TRANS_GLOW_OUT:
+        if (sRadioArtTransitionTimer < RADIO_ART_GLOW_FRAMES)
+            sRadioArtTransitionTimer++;
+
+        coeff = (u8)(
+            (sRadioArtTransitionTimer * RADIO_ART_GLOW_MAX)
+            / RADIO_ART_GLOW_FRAMES
+        );
+        Radio_BlendVisibleArt(coeff);
+
+        if (sRadioArtTransitionTimer >= RADIO_ART_GLOW_FRAMES)
+        {
+            Radio_SetAlbumCoverImmediate(sRadioNextCoverId);
+            Radio_BlendVisibleArt(RADIO_ART_GLOW_MAX);
+            sRadioArtTransitionTimer = RADIO_ART_GLOW_FRAMES;
+            sRadioArtTransitionState = RADIO_ART_TRANS_GLOW_IN;
+        }
+        break;
+
+    case RADIO_ART_TRANS_GLOW_IN:
+        if (sRadioArtTransitionTimer > 0)
+            sRadioArtTransitionTimer--;
+
+        coeff = (u8)(
+            (sRadioArtTransitionTimer * RADIO_ART_GLOW_MAX)
+            / RADIO_ART_GLOW_FRAMES
+        );
+        Radio_BlendVisibleArt(coeff);
+
+        if (sRadioArtTransitionTimer == 0)
+        {
+            Radio_BlendVisibleArt(0);
+            sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
+        }
+        break;
     }
 }
 
@@ -4882,6 +5454,8 @@ static void CB2_Radio(void)
 {
     RunTasks();
     Radio_UpdateAlbumCover();
+    Radio_UpdateAlbumCoverTransition();
+    Radio_ApplyMonoPanIfNeeded();
     Radio_UpdateMarquee();
     AnimateSprites();
     BuildOamBuffer();
@@ -4972,13 +5546,15 @@ static void CB2_LoadRadio(void)
             // Radio UI was opened.
             if (gMPlayInfo_BGM.songHeader != gSongTable[sRadioCurrentSong].header)
             {
-                m4aSongNumStart(sRadioCurrentSong);
+                Radio_StartSongWithSettings(sRadioCurrentSong);
                 Radio_ResetPlaybackMonitor();
             }
             else if (gMPlayInfo_BGM.status & MUSICPLAYER_STATUS_PAUSE)
             {
                 m4aMPlayContinue(&gMPlayInfo_BGM);
             }
+
+            Radio_ApplyAudioSettings();
         }
 
         taskId = CreateTask(Task_RadioHandleInput, 0);
@@ -5006,6 +5582,7 @@ void Radio_Open(MainCallback returnCallback)
     // Menu always starts at the most important option: Radio Priority.
     sRadioUiMode = RADIO_UI_MAIN;
     sRadioMenuCursor = RADIO_MENU_PRIORITY;
+    sRadioConfigCursor = 0;
     sRadioListCursor = 0;
     sRadioSearchLetter = 0;
     sRadioSearchResultCount = 0;
@@ -5048,7 +5625,9 @@ void Radio_Open(MainCallback returnCallback)
     sRadioBtnSelectId = 0xFF;
     sRadioCoverSpriteId = 0xFF;
     sRadioCurrentCoverId = RADIO_COVER_NONE;
-
+    sRadioNextCoverId = RADIO_COVER_NONE;
+    sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
+    sRadioArtTransitionTimer = 0;
 
     SetMainCallback2(CB2_LoadRadio);
 }

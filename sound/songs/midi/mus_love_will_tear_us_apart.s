@@ -2013,6 +2013,7 @@ mus_love_will_tear_us_apart_5:
 	.byte		VOL   , 127*mus_love_will_tear_us_apart_mvl/mxv
 	.byte	KEYSH , mus_love_will_tear_us_apart_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96

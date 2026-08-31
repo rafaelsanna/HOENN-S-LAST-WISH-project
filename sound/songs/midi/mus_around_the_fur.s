@@ -1306,6 +1306,7 @@ mus_around_the_fur_2_107:
 mus_around_the_fur_3:
 	.byte	KEYSH , mus_around_the_fur_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_around_the_fur_mvl/mxv
 	.byte		N12   , Cn1 , v096
 	.byte		N12   , Fs1 , v068

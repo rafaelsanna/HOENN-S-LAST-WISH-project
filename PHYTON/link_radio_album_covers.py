@@ -19,7 +19,7 @@ COVERS = {
         "MUS_3S_AND_7S",
     ],
     "hybridtheory": [
-        "MUS_CRAWLING",
+        "MUS_IN_THE_END",
     ],
     "koinoyokan": [
         "MUS_ROSEMARY_DEFTONES",
@@ -41,6 +41,74 @@ COVERS = {
     "whitepony": [
         "MUS_CHANGE_IN_THE_HOUSE_OF_FLIES",
     ],
+    "hailtothethief": [
+        "MUS_I_WILL",
+    ],
+    "amnesiac": [
+        "MUS_YOU_AND_WHOSE_ARMY",
+    ],
+    "KIDA": [
+        "MUS_MOTION_PICTURE_SOUNDTRACK",
+        "MUS_EVERYTHING_IN_ITS_RIGHT_PLACE",
+    ],
+    "okcomputer": [
+        "MUS_NO_SURPRISES",
+        "MUS_LUCKY",
+    ],
+    "thebends": [
+        "MUS_HIGH_AND_DRY",
+        "MUS_STREET_SPIRIT",
+    ],
+    "thequeenisdead": [
+        "MUS_BIGMOUTH_STRIKES_AGAIN",
+        "MUS_BOY_WITH_THE_THORN",
+    ],
+    "isthisit": [
+        "MUS_SOMEDAY",
+        "MUS_HARD_TO_EXPLAIN",
+    ],
+    "roomonfire": [
+        "MUS_REPTILIA",
+    ],
+    "AM": [
+        "MUS_ARABELLA",
+        "MUS_DO_I_WANNA_KNOW",
+        "MUS_NO_1_PARTY_ANTHEM",
+    ],
+    "tonightthatimightsee": [
+        "MUS_FADE_INTO_YOU",
+    ],
+    "slouvaki": [
+        "MUS_WHEN_THE_SUN_HITS",
+    ],
+    "aintnorestforthewicked": [
+        "MUS_AINT_NO_REST_FOR_THE_WICKED",
+    ],
+    "freakingouttheneibhorhood": [
+        "MUS_FREAKING_OUT_THE_NEIGHBORHOOD",
+    ],
+    "dracula": [
+        "MUS_DRACULA_TAME_IMPALA",
+    ],
+    "desintegration": [
+        "MUS_LOVESONG_THE_CURE",
+    ],
+    "wish": [
+        "MUS_FRIDAY_IM_IN_LOVE",
+    ],
+    "ThreeImaginaryBoys": [
+        "MUS_BOYS_DONT_CRY",
+    ],
+    "eitheror": [
+        "MUS_ROSE_PARADE",
+    ],
+    "unknowpleasures": [
+        "MUS_SHADOWPLAY",
+        "MUS_NEW_DAWN_FADES",
+        "MUS_DISORDER",
+        # Temporary album-art placeholder; this song is a single.
+        "MUS_LOVE_WILL_TEAR_US_APART",
+    ],
 }
 
 COVER_ENUMS = {
@@ -54,6 +122,25 @@ COVER_ENUMS = {
     "onex": "RADIO_COVER_ONE_X",
     "songsforthedeaf": "RADIO_COVER_SONGS_FOR_THE_DEAF",
     "whitepony": "RADIO_COVER_WHITE_PONY",
+    "hailtothethief": "RADIO_COVER_HAIL_TO_THE_THIEF",
+    "amnesiac": "RADIO_COVER_AMNESIAC",
+    "KIDA": "RADIO_COVER_KID_A",
+    "okcomputer": "RADIO_COVER_OK_COMPUTER",
+    "thebends": "RADIO_COVER_THE_BENDS",
+    "thequeenisdead": "RADIO_COVER_THE_QUEEN_IS_DEAD",
+    "isthisit": "RADIO_COVER_IS_THIS_IT",
+    "roomonfire": "RADIO_COVER_ROOM_ON_FIRE",
+    "AM": "RADIO_COVER_AM",
+    "tonightthatimightsee": "RADIO_COVER_TONIGHT_THAT_I_MIGHT_SEE",
+    "slouvaki": "RADIO_COVER_SOUVLAKI",
+    "aintnorestforthewicked": "RADIO_COVER_AINT_NO_REST_FOR_THE_WICKED",
+    "freakingouttheneibhorhood": "RADIO_COVER_FREAKING_OUT_THE_NEIGHBORHOOD",
+    "dracula": "RADIO_COVER_DRACULA",
+    "desintegration": "RADIO_COVER_DISINTEGRATION",
+    "wish": "RADIO_COVER_WISH",
+    "ThreeImaginaryBoys": "RADIO_COVER_THREE_IMAGINARY_BOYS",
+    "eitheror": "RADIO_COVER_EITHER_OR",
+    "unknowpleasures": "RADIO_COVER_UNKNOWN_PLEASURES",
 }
 
 C_IDENT = {
@@ -67,6 +154,25 @@ C_IDENT = {
     "onex": "OneX",
     "songsforthedeaf": "SongsForTheDeaf",
     "whitepony": "WhitePony",
+    "hailtothethief": "HailToTheThief",
+    "amnesiac": "Amnesiac",
+    "KIDA": "KidA",
+    "okcomputer": "OkComputer",
+    "thebends": "TheBends",
+    "thequeenisdead": "TheQueenIsDead",
+    "isthisit": "IsThisIt",
+    "roomonfire": "RoomOnFire",
+    "AM": "Am",
+    "tonightthatimightsee": "TonightThatIMightSee",
+    "slouvaki": "Souvlaki",
+    "aintnorestforthewicked": "AintNoRestForTheWicked",
+    "freakingouttheneibhorhood": "FreakingOutTheNeighborhood",
+    "dracula": "Dracula",
+    "desintegration": "Disintegration",
+    "wish": "Wish",
+    "ThreeImaginaryBoys": "ThreeImaginaryBoys",
+    "eitheror": "EitherOr",
+    "unknowpleasures": "UnknownPleasures",
 }
 
 def die(msg):
@@ -453,7 +559,7 @@ required = [
     "sRadioCoverPalettes",
     "RADIO_COVER_METEORA",
     "MUS_EASIER_TO_RUN",
-    "MUS_CRAWLING",
+    "MUS_IN_THE_END",
     "MUS_ANIMAL_I_HAVE_BECOME",
 ]
 for item in required:

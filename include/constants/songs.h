@@ -580,7 +580,7 @@
 #define MUS_AROUND_THE_FUR                         646
 #define MUS_FAINT                                  647
 #define MUS_EASIER_TO_RUN                          648
-#define MUS_CRAWLING                               649
+#define MUS_IN_THE_END                             649
 #define MUS_BREAKING_THE_HABIT         650
 #define MUS_KRYPTONITE                 651
 #define MUS_ANIMAL_I_HAVE_BECOME       652

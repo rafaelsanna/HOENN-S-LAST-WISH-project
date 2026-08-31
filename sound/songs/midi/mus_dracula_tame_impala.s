@@ -2458,6 +2458,7 @@ mus_dracula_tame_impala_9:
 	.byte		VOL   , 127*mus_dracula_tame_impala_mvl/mxv
 	.byte	KEYSH , mus_dracula_tame_impala_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96

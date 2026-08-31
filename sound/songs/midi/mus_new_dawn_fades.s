@@ -1301,6 +1301,7 @@ mus_new_dawn_fades_4:
 	.byte		VOL   , 127*mus_new_dawn_fades_mvl/mxv
 	.byte	KEYSH , mus_new_dawn_fades_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		N06   , Cn1 , v064
 	.byte	W18
 	.byte		N06   

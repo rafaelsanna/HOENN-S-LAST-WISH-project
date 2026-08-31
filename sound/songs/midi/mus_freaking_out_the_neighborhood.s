@@ -1780,6 +1780,7 @@ mus_freaking_out_the_neighborhood_5:
 	.byte		VOL   , 127*mus_freaking_out_the_neighborhood_mvl/mxv
 	.byte	KEYSH , mus_freaking_out_the_neighborhood_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		N24   , Cn1 , v080
 	.byte		N24   , Fs1 , v052
 	.byte	W24

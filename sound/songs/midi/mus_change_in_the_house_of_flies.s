@@ -2350,6 +2350,7 @@ mus_change_in_the_house_of_flies_3_067:
 mus_change_in_the_house_of_flies_4:
 	.byte	KEYSH , mus_change_in_the_house_of_flies_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_change_in_the_house_of_flies_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------

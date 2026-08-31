@@ -1278,6 +1278,7 @@ mus_boys_dont_cry_4:
 	.byte		VOL   , 127*mus_boys_dont_cry_mvl/mxv
 	.byte	KEYSH , mus_boys_dont_cry_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96

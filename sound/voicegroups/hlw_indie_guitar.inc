@@ -1,5 +1,5 @@
 voice_group hlw_indie_guitar
-	voice_keysplit_all voicegroup_rs_drumset
+	voice_keysplit_all voicegroup_hlw_rock_metal_drumset
 	voice_keysplit voicegroup_piano_keysplit, keysplit_piano
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0

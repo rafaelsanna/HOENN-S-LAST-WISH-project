@@ -1959,6 +1959,7 @@ mus_easier_to_run_6_062:
 mus_easier_to_run_7:
 	.byte	KEYSH , mus_easier_to_run_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_easier_to_run_mvl/mxv
 	.byte	W48
 @ 001   ----------------------------------------
@@ -2139,6 +2140,7 @@ mus_easier_to_run_7:
 mus_easier_to_run_8:
 	.byte	KEYSH , mus_easier_to_run_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_easier_to_run_mvl/mxv
 	.byte	W48
 @ 001   ----------------------------------------
@@ -2319,6 +2321,7 @@ mus_easier_to_run_8:
 mus_easier_to_run_9:
 	.byte	KEYSH , mus_easier_to_run_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_easier_to_run_mvl/mxv
 	.byte	W48
 @ 001   ----------------------------------------

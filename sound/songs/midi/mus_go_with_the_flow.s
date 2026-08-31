@@ -1972,6 +1972,7 @@ mus_go_with_the_flow_4_001:
 mus_go_with_the_flow_5:
 	.byte	KEYSH , mus_go_with_the_flow_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_go_with_the_flow_mvl/mxv
 	.byte		N12   , Cn1 , v096
 	.byte		N12   , Cs2 , v072

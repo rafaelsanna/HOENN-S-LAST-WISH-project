@@ -1824,6 +1824,7 @@ mus_disorder_4:
 	.byte		VOL   , 127*mus_disorder_mvl/mxv
 	.byte	KEYSH , mus_disorder_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		N12   , Dn1 , v080
 	.byte		N12   , Fs1 , v052
 	.byte	W12

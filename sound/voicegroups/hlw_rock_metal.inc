@@ -1,5 +1,5 @@
 voice_group hlw_rock_metal
-	voice_keysplit_all voicegroup_rs_drumset
+	voice_keysplit_all voicegroup_hlw_rock_metal_drumset
 	voice_keysplit voicegroup_piano_keysplit, keysplit_piano
 	voice_keysplit voicegroup_strings_keysplit, keysplit_strings
 	voice_keysplit voicegroup_strings_keysplit, keysplit_strings

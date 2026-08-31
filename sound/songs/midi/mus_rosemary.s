@@ -2434,6 +2434,7 @@ mus_rosemary_4_157:
 mus_rosemary_5:
 	.byte	KEYSH , mus_rosemary_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_rosemary_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------

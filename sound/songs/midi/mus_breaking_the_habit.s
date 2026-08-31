@@ -2039,6 +2039,7 @@ mus_breaking_the_habit_6_062:
 mus_breaking_the_habit_7:
 	.byte	KEYSH , mus_breaking_the_habit_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_breaking_the_habit_mvl/mxv
 	.byte		N12   , Fs1 , v068
 	.byte	W12

@@ -1586,6 +1586,7 @@ mus_shadowplay_4:
 	.byte		VOL   , 127*mus_shadowplay_mvl/mxv
 	.byte	KEYSH , mus_shadowplay_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		N12   , Fs1 , v052
 	.byte	W12
 	.byte		N06   

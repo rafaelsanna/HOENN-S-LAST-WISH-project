@@ -728,6 +728,7 @@ mus_my_own_summer_2_042:
 mus_my_own_summer_3:
 	.byte	KEYSH , mus_my_own_summer_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_my_own_summer_mvl/mxv
 	.byte		N12   , Cn1 , v096
 	.byte		N60   , Dn1 , v092

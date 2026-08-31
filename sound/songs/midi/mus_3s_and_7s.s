@@ -21,7 +21,7 @@ mus_3s_and_7s_1:
 @ 001   ----------------------------------------
 	.byte	TEMPO , 134*mus_3s_and_7s_tbs/2
 	.byte		VOICE , 29
-	.byte		VOL   , 124*mus_3s_and_7s_mvl/mxv
+	.byte		VOL   , 55*mus_3s_and_7s_mvl/mxv
 	.byte		N06   , En1 , v096
 	.byte		N06   , Dn2 
 	.byte		N06   , An2 
@@ -1038,7 +1038,7 @@ mus_3s_and_7s_2:
 	.byte	KEYSH , mus_3s_and_7s_key+0
 @ 000   ----------------------------------------
 	.byte		VOICE , 28
-	.byte		VOL   , 74*mus_3s_and_7s_mvl/mxv
+	.byte		VOL   , 127*mus_3s_and_7s_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -2716,6 +2716,7 @@ mus_3s_and_7s_3_097:
 mus_3s_and_7s_4:
 	.byte	KEYSH , mus_3s_and_7s_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_3s_and_7s_mvl/mxv
 	.byte	W36
 	.byte		N12   , Dn1 , v092

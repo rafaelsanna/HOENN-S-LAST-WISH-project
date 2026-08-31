@@ -650,7 +650,7 @@ gSongTable::
 	song mus_around_the_fur, 0, 0
 	song mus_faint, 0, 0
 	song mus_easier_to_run, 0, 0
-	song mus_crawling, 0, 0
+	song mus_in_the_end, 0, 0
 	song mus_breaking_the_habit, 0, 0
 	song mus_kryptonite, 0, 0
 	song mus_animal_i_have_become, 0, 0

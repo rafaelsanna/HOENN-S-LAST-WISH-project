@@ -1740,6 +1740,7 @@ mus_be_quiet_and_drive_3_070:
 mus_be_quiet_and_drive_4:
 	.byte	KEYSH , mus_be_quiet_and_drive_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_be_quiet_and_drive_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------

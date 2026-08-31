@@ -1412,6 +1412,7 @@ mus_faint_4_061:
 mus_faint_5:
 	.byte	KEYSH , mus_faint_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_faint_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------
@@ -1592,6 +1593,7 @@ mus_faint_5_004:
 mus_faint_6:
 	.byte	KEYSH , mus_faint_key+0
 @ 000   ----------------------------------------
+	.byte		VOICE , 0
 	.byte		VOL   , 120*mus_faint_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------
