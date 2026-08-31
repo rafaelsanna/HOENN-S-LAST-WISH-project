@@ -269,11 +269,11 @@ Route112_Text_NotEasyToGetBackToLavaridge:
 # 135 "data/maps/Route112/scripts.pory"
 Route112_Text_OldManBlocker:
 # 136 "data/maps/Route112/scripts.pory"
-	.string "Huff... Huff...\l"
+	.string "Best stay back for now. Things up by\n"
 # 137 "data/maps/Route112/scripts.pory"
-	.string "Old legs, don't fail me now!\n"
+	.string "MT. CHIMNEY have been awfully uneasy,\l"
 # 138 "data/maps/Route112/scripts.pory"
-	.string "Just a few more steps.$"
+	.string "and I would hate to see anyone hurt.$"
 # 139 "data/maps/Route112/scripts.pory"
 
 # 140 "data/maps/Route112/scripts.pory"
