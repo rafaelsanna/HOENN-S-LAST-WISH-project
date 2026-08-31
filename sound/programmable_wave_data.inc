@@ -1,3 +1,4 @@
+    .align 2
 ProgrammableWaveData_1::
 	.incbin "sound/programmable_wave_samples/01.pcm"
 
