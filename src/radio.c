@@ -109,6 +109,7 @@ static EWRAM_DATA u16 sRadioPopupPendingSong;
 #define RADIO_CONFIG_ITEM_COUNT        7
 #define RADIO_STICKER_COUNT             5
 #define RADIO_STICKER_SLOT_COUNT        7
+#define RADIO_STICKER_VISIBLE_MAX       3
 #define RADIO_VOLUME_MAX              10
 #define RADIO_SEARCH_LETTER_COUNT     26
 
@@ -199,6 +200,11 @@ static EWRAM_DATA u8    sRadioStickerPositions[RADIO_STICKER_COUNT];
 static EWRAM_DATA u8    sRadioStickerVisibleMask;
 static EWRAM_DATA u8    sRadioStickerSelected;
 
+// Runtime-only FIFO order for the three visible stickers.
+// Enabling a fourth sticker automatically hides the oldest visible one.
+static EWRAM_DATA u8    sRadioStickerActiveOrder[RADIO_STICKER_VISIBLE_MAX];
+static EWRAM_DATA u8    sRadioStickerActiveCount;
+
 enum RadioColorTheme
 {
     RADIO_COLOR_THEME_NORMAL = 0,
@@ -253,6 +259,12 @@ static EWRAM_DATA u8 sRadioBtnSelectId;
 // Static 64x64 album artwork replaces Jigglypuff only for mapped songs.
 static EWRAM_DATA u8 sRadioCoverSpriteId;
 static EWRAM_DATA u8 sRadioCurrentCoverId;
+
+// Album covers dynamically swap artwork, but must NOT dynamically allocate/
+// free their OBJ palette anymore. Five independent sticker palettes pushed the
+// screen close to the 16 OBJ-palette limit. Reserve one stable cover slot for
+// the whole lifetime of the Radio screen and overwrite only that slot's colors.
+static EWRAM_DATA u8 sRadioCoverPaletteNum;
 
 #define RADIO_ART_GLOW_FRAMES 6
 #define RADIO_ART_GLOW_MAX    12
@@ -449,7 +461,9 @@ static const struct OamData sOamData_RadioJig =
     .bpp        = ST_OAM_4BPP,
     .shape      = SPRITE_SHAPE(64x64),
     .size       = SPRITE_SIZE(64x64),
-    .priority   = 0,  // drawn in front of everything
+    // Stickers use OBJ priority 0. Jigglypuff is screen artwork and stays
+    // one layer behind them so a placed sticker can visibly overlap it.
+    .priority   = 1,
 };
 
 // Stereo uses affine DOUBLE so it can scale beyond its original size without clipping
@@ -675,7 +689,9 @@ static const struct OamData sOamData_RadioCover =
     .bpp        = ST_OAM_4BPP,
     .shape      = SPRITE_SHAPE(64x64),
     .size       = SPRITE_SIZE(64x64),
-    .priority   = 0,
+
+    // Stickers use OBJ priority 0, so they always draw over album artwork.
+    .priority   = 1,
 };
 
 static const union AnimCmd sAnim_RadioCover[] =
@@ -2466,6 +2482,7 @@ static const u8 sRadioText_StickerOn[]          = _("STATE: ON");
 static const u8 sRadioText_StickerOff[]         = _("STATE: OFF");
 static const u8 sRadioText_StickerPosFmt[]      = _("POSITION: {STR_VAR_1}/7");
 static const u8 sRadioText_StickerHelp[]        = _("DPAD MOVE  L/R PICK  A ON/OFF");
+static const u8 sRadioText_StickerLimit[]       = _("MAX 3 ACTIVE");
 
 static const u8 sRadioText_SearchTitle[]      = _("SEARCH A-Z");
 static const u8 sRadioText_SearchLetterFmt[]  = _("LETTER: {STR_VAR_1}");
@@ -3749,12 +3766,87 @@ static void Radio_InitSaveExtensionIfNeeded(void)
     }
 }
 
+static void Radio_RebuildStickerActiveOrder(void)
+{
+    u8 i;
+
+    sRadioStickerActiveCount = 0;
+
+    // Save data only stores the visible mask. Rebuild a stable order on load.
+    // During this Radio session, new activations are tracked exactly as FIFO.
+    for (i = 0; i < RADIO_STICKER_COUNT; i++)
+    {
+        if (sRadioStickerVisibleMask & (1 << i))
+        {
+            if (sRadioStickerActiveCount < RADIO_STICKER_VISIBLE_MAX)
+            {
+                sRadioStickerActiveOrder[sRadioStickerActiveCount++] = i;
+            }
+            else
+            {
+                // Old save with 4/5 active stickers: keep only three.
+                sRadioStickerVisibleMask &= ~(1 << i);
+            }
+        }
+    }
+}
+
+static void Radio_RemoveStickerFromActiveOrder(u8 sticker)
+{
+    u8 i;
+
+    for (i = 0; i < sRadioStickerActiveCount; i++)
+    {
+        if (sRadioStickerActiveOrder[i] == sticker)
+        {
+            for (; i + 1 < sRadioStickerActiveCount; i++)
+                sRadioStickerActiveOrder[i] = sRadioStickerActiveOrder[i + 1];
+
+            sRadioStickerActiveCount--;
+            return;
+        }
+    }
+}
+
+static void Radio_ShowStickerWithLimit(u8 sticker)
+{
+    if (sticker >= RADIO_STICKER_COUNT)
+        return;
+
+    if (sRadioStickerVisibleMask & (1 << sticker))
+        return;
+
+    // Fourth sticker: remove the oldest visible one first.
+    if (sRadioStickerActiveCount >= RADIO_STICKER_VISIBLE_MAX)
+    {
+        u8 oldest = sRadioStickerActiveOrder[0];
+
+        sRadioStickerVisibleMask &= ~(1 << oldest);
+        Radio_RemoveStickerFromActiveOrder(oldest);
+    }
+
+    sRadioStickerVisibleMask |= (1 << sticker);
+
+    if (sRadioStickerActiveCount < RADIO_STICKER_VISIBLE_MAX)
+        sRadioStickerActiveOrder[sRadioStickerActiveCount++] = sticker;
+}
+
+static void Radio_HideSticker(u8 sticker)
+{
+    if (sticker >= RADIO_STICKER_COUNT)
+        return;
+
+    sRadioStickerVisibleMask &= ~(1 << sticker);
+    Radio_RemoveStickerFromActiveOrder(sticker);
+}
+
 static void Radio_ResetStickerState(void)
 {
     u8 i;
 
     sRadioStickerVisibleMask = 0;
     sRadioStickerSelected = 0;
+    sRadioStickerActiveCount = 0;
 
     // Give each sticker a useful distinct starting cell. They remain hidden
     // until the player turns them on in the sticker editor.
@@ -3785,6 +3877,7 @@ static void Radio_LoadStickerState(const struct HLWSaveExtension *ext)
     }
 
     sRadioStickerSelected = 0;
+    Radio_RebuildStickerActiveOrder();
 }
 
 static void Radio_SaveStickerState(struct HLWSaveExtension *ext)
@@ -4574,7 +4667,8 @@ static void Radio_MoveSelectedSticker(s8 dx, s8 dy)
     sRadioStickerPositions[sticker] = next;
 
     // Moving a sticker is also an explicit placement action, so reveal it.
-    sRadioStickerVisibleMask |= (1 << sticker);
+    // The 3-sticker FIFO limit is enforced here too.
+    Radio_ShowStickerWithLimit(sticker);
 
     Radio_RefreshStickerSprites();
     Radio_SavePersistentState();
@@ -4626,6 +4720,11 @@ static void Radio_DrawStickerEditor(void)
     AddTextPrinterParameterized(
         WIN_MUSIC_INFO, FONT_SMALL, sRadioText_StickerHelp,
         2, 35, TEXT_SKIP_DRAW, NULL
+    );
+
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO, FONT_SMALL, sRadioText_StickerLimit,
+        150, 23, TEXT_SKIP_DRAW, NULL
     );
 
     CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
@@ -5221,7 +5320,11 @@ static void Radio_HandleOverlayInput(u8 taskId)
 
         if (JOY_NEW(A_BUTTON))
         {
-            sRadioStickerVisibleMask ^= (1 << sRadioStickerSelected);
+            if (sRadioStickerVisibleMask & (1 << sRadioStickerSelected))
+                Radio_HideSticker(sRadioStickerSelected);
+            else
+                Radio_ShowStickerWithLimit(sRadioStickerSelected);
+
             Radio_RefreshStickerSprites();
             Radio_SavePersistentState();
             PlaySE(SE_SELECT);
@@ -6369,8 +6472,33 @@ static void Radio_DestroyAlbumCoverSprite(void)
         sRadioCoverSpriteId = 0xFF;
     }
 
+    // Tiles are dynamic per cover. The palette is deliberately NOT freed:
+    // TAG_RADIO_COVER owns one reserved OBJ palette slot for this whole screen.
     FreeSpriteTilesByTag(TAG_RADIO_COVER);
-    FreeSpritePaletteByTag(TAG_RADIO_COVER);
+}
+
+static bool8 Radio_LoadAlbumCoverPalette(u8 coverId)
+{
+    if (coverId >= RADIO_COVER_COUNT)
+        return FALSE;
+
+    // Normally this was reserved before any other radio sprites were loaded.
+    // Keep a fallback here so the cover system also survives unusual re-entry.
+    if (sRadioCoverPaletteNum == 0xFF)
+        sRadioCoverPaletteNum = LoadSpritePalette(&sRadioCoverPalettes[coverId]);
+
+    if (sRadioCoverPaletteNum == 0xFF)
+        return FALSE;
+
+    // LoadPalette offsets are measured in colors. OBJ palettes start at 0x100
+    // and each 4bpp OBJ palette occupies 16 colors.
+    LoadPalette(
+        sRadioCoverPalettes[coverId].data,
+        0x100 + (sRadioCoverPaletteNum * 16),
+        PLTT_SIZE_4BPP
+    );
+
+    return TRUE;
 }
 
 static u8 Radio_GetVisibleArtSpriteId(void)
@@ -6424,7 +6552,18 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
         gSprites[sRadioJigSpriteId].invisible = TRUE;
 
     LoadCompressedSpriteSheet(&sRadioCoverSheets[coverId]);
-    LoadSpritePalette(&sRadioCoverPalettes[coverId]);
+
+    if (!Radio_LoadAlbumCoverPalette(coverId))
+    {
+        // Extremely defensive fallback. With the reserved slot this should
+        // never happen, but showing Jigglypuff is safer than corrupt artwork.
+        sRadioCurrentCoverId = RADIO_COVER_NONE;
+        FreeSpriteTilesByTag(TAG_RADIO_COVER);
+
+        if (sRadioJigSpriteId < MAX_SPRITES)
+            gSprites[sRadioJigSpriteId].invisible = FALSE;
+        return;
+    }
 
     // The cover and Jigglypuff intentionally share the exact same center.
     sRadioCoverSpriteId = CreateSprite(
@@ -6439,8 +6578,8 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
         sRadioCoverSpriteId = 0xFF;
         sRadioCurrentCoverId = RADIO_COVER_NONE;
         FreeSpriteTilesByTag(TAG_RADIO_COVER);
-        FreeSpritePaletteByTag(TAG_RADIO_COVER);
 
+        // Keep the reserved cover palette alive even if sprite creation failed.
         if (sRadioJigSpriteId < MAX_SPRITES)
             gSprites[sRadioJigSpriteId].invisible = FALSE;
     }
@@ -6551,6 +6690,11 @@ static void Radio_UpdateAlbumCoverTransition(void)
 
 static void Radio_CreateSprites(void)
 {
+    // Reserve one OBJ palette specifically for album covers before the five
+    // sticker palettes and all button palettes are allocated. Every cover then
+    // reuses this exact slot instead of asking the allocator for another one.
+    sRadioCoverPaletteNum = LoadSpritePalette(&sRadioCoverPalettes[0]);
+
     LoadCompressedSpriteSheet(sSpriteSheet_RadioJig);
     LoadSpritePalettes(sSpritePalette_RadioJig);
     LoadCompressedSpriteSheet(sSpriteSheet_RadioStereo);
@@ -6696,6 +6840,12 @@ static void CB2_LoadRadio(void)
     case 2:
         ResetPaletteFade();
         ResetSpriteData();
+
+        // Radio is a self-contained full-screen UI and reloads every OBJ
+        // palette it uses. Clear stale palette-tag allocations left by the
+        // previous screen before reserving the album-cover slot.
+        FreeAllSpritePalettes();
+
         ResetTasks();
         break;
 
@@ -6832,6 +6982,7 @@ void Radio_Open(MainCallback returnCallback)
     }
     sRadioCoverSpriteId = 0xFF;
     sRadioCurrentCoverId = RADIO_COVER_NONE;
+    sRadioCoverPaletteNum = 0xFF;
     sRadioNextCoverId = RADIO_COVER_NONE;
     sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
     sRadioArtTransitionTimer = 0;
