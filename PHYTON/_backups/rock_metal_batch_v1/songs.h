@@ -570,22 +570,7 @@
 #define MUS_NEW_DAWN_FADES                     636
 #define MUS_DISORDER                           637
 #define MUS_LOVE_WILL_TEAR_US_APART            638
-#define MUS_3S_AND_7S                              639
-#define MUS_GO_WITH_THE_FLOW                       640
-#define MUS_MY_GOD_IS_THE_SUN                      641
-#define MUS_ROSEMARY_DEFTONES                      642
-#define MUS_MY_OWN_SUMMER                          643
-#define MUS_CHANGE_IN_THE_HOUSE_OF_FLIES           644
-#define MUS_BE_QUIET_AND_DRIVE                     645
-#define MUS_AROUND_THE_FUR                         646
-#define MUS_FAINT                                  647
-#define MUS_EASIER_TO_RUN                          648
-#define MUS_CRAWLING                               649
-#define MUS_BREAKING_THE_HABIT         650
-#define MUS_KRYPTONITE                 651
-#define MUS_ANIMAL_I_HAVE_BECOME       652
-
-#define END_MUS MUS_ANIMAL_I_HAVE_BECOME
+#define END_MUS MUS_LOVE_WILL_TEAR_US_APART
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

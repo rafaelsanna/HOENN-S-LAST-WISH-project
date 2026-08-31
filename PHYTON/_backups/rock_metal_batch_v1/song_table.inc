@@ -640,20 +640,6 @@ gSongTable::
 	song mus_new_dawn_fades, 0, 0
 	song mus_disorder, 0, 0
 	song mus_love_will_tear_us_apart, 0, 0
-	song mus_3s_and_7s, 0, 0
-	song mus_go_with_the_flow, 0, 0
-	song mus_my_god_is_the_sun, 0, 0
-	song mus_rosemary, 0, 0
-	song mus_my_own_summer, 0, 0
-	song mus_change_in_the_house_of_flies, 0, 0
-	song mus_be_quiet_and_drive, 0, 0
-	song mus_around_the_fur, 0, 0
-	song mus_faint, 0, 0
-	song mus_easier_to_run, 0, 0
-	song mus_crawling, 0, 0
-	song mus_breaking_the_habit, 0, 0
-	song mus_kryptonite, 0, 0
-	song mus_animal_i_have_become, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

@@ -652,8 +652,6 @@ gSongTable::
 	song mus_easier_to_run, 0, 0
 	song mus_crawling, 0, 0
 	song mus_breaking_the_habit, 0, 0
-	song mus_kryptonite, 0, 0
-	song mus_animal_i_have_become, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

@@ -207,11 +207,6 @@ static EWRAM_DATA u8 sRadioBtnBackId;
 static EWRAM_DATA u8 sRadioBtnOffId;
 static EWRAM_DATA u8 sRadioBtnStartId;
 static EWRAM_DATA u8 sRadioBtnSelectId;
-// RADIO_ALBUM_COVERS_LINK_V1
-// Static 64x64 album artwork replaces Jigglypuff only for mapped songs.
-static EWRAM_DATA u8 sRadioCoverSpriteId;
-static EWRAM_DATA u8 sRadioCurrentCoverId;
-
 
 // ===========================================================================
 // Graphics
@@ -336,112 +331,6 @@ static const struct SpriteTemplate sSpriteTemplate_RadioJig =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback    = SpriteCB_RadioJig,
 };
-
-// ===========================================================================
-// RADIO ALBUM COVERS - static 64x64 OBJ artwork
-// Palette index 0 is transparent in GBA OBJ mode.
-// ===========================================================================
-
-enum RadioAlbumCoverId
-{
-    RADIO_COVER_3DOORSDOWN,
-    RADIO_COVER_AROUND_THE_FUR,
-    RADIO_COVER_ERA_VULGARIS,
-    RADIO_COVER_HYBRID_THEORY,
-    RADIO_COVER_KOI_NO_YOKAN,
-    RADIO_COVER_LIKE_CLOCKWORK,
-    RADIO_COVER_METEORA,
-    RADIO_COVER_ONE_X,
-    RADIO_COVER_SONGS_FOR_THE_DEAF,
-    RADIO_COVER_WHITE_PONY,
-    RADIO_COVER_COUNT,
-};
-
-#define RADIO_COVER_NONE 0xFF
-#define TAG_RADIO_COVER  0xD10F
-
-static const u16 sRadioCoverThreeDoorsDown_Pal[] = INCBIN_U16("graphics/radio/covers/3doorsdown.gbapal");
-static const u32 sRadioCoverThreeDoorsDown_Gfx[] = INCBIN_U32("graphics/radio/covers/3doorsdown.4bpp.smol");
-static const u16 sRadioCoverAroundTheFur_Pal[] = INCBIN_U16("graphics/radio/covers/aroundthefur.gbapal");
-static const u32 sRadioCoverAroundTheFur_Gfx[] = INCBIN_U32("graphics/radio/covers/aroundthefur.4bpp.smol");
-static const u16 sRadioCoverEraVulgaris_Pal[] = INCBIN_U16("graphics/radio/covers/eravulgaris.gbapal");
-static const u32 sRadioCoverEraVulgaris_Gfx[] = INCBIN_U32("graphics/radio/covers/eravulgaris.4bpp.smol");
-static const u16 sRadioCoverHybridTheory_Pal[] = INCBIN_U16("graphics/radio/covers/hybridtheory.gbapal");
-static const u32 sRadioCoverHybridTheory_Gfx[] = INCBIN_U32("graphics/radio/covers/hybridtheory.4bpp.smol");
-static const u16 sRadioCoverKoiNoYokan_Pal[] = INCBIN_U16("graphics/radio/covers/koinoyokan.gbapal");
-static const u32 sRadioCoverKoiNoYokan_Gfx[] = INCBIN_U32("graphics/radio/covers/koinoyokan.4bpp.smol");
-static const u16 sRadioCoverLikeClockwork_Pal[] = INCBIN_U16("graphics/radio/covers/likeclockwork.gbapal");
-static const u32 sRadioCoverLikeClockwork_Gfx[] = INCBIN_U32("graphics/radio/covers/likeclockwork.4bpp.smol");
-static const u16 sRadioCoverMeteora_Pal[] = INCBIN_U16("graphics/radio/covers/meteora.gbapal");
-static const u32 sRadioCoverMeteora_Gfx[] = INCBIN_U32("graphics/radio/covers/meteora.4bpp.smol");
-static const u16 sRadioCoverOneX_Pal[] = INCBIN_U16("graphics/radio/covers/onex.gbapal");
-static const u32 sRadioCoverOneX_Gfx[] = INCBIN_U32("graphics/radio/covers/onex.4bpp.smol");
-static const u16 sRadioCoverSongsForTheDeaf_Pal[] = INCBIN_U16("graphics/radio/covers/songsforthedeaf.gbapal");
-static const u32 sRadioCoverSongsForTheDeaf_Gfx[] = INCBIN_U32("graphics/radio/covers/songsforthedeaf.4bpp.smol");
-static const u16 sRadioCoverWhitePony_Pal[] = INCBIN_U16("graphics/radio/covers/whitepony.gbapal");
-static const u32 sRadioCoverWhitePony_Gfx[] = INCBIN_U32("graphics/radio/covers/whitepony.4bpp.smol");
-
-static const struct OamData sOamData_RadioCover =
-{
-    .y          = DISPLAY_HEIGHT,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode    = ST_OAM_OBJ_NORMAL,
-    .bpp        = ST_OAM_4BPP,
-    .shape      = SPRITE_SHAPE(64x64),
-    .size       = SPRITE_SIZE(64x64),
-    .priority   = 0,
-};
-
-static const union AnimCmd sAnim_RadioCover[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_JUMP(0),
-};
-
-static const union AnimCmd *const sAnims_RadioCover[] =
-{
-    sAnim_RadioCover,
-};
-
-static const struct SpriteTemplate sSpriteTemplate_RadioCover =
-{
-    .tileTag     = TAG_RADIO_COVER,
-    .paletteTag  = TAG_RADIO_COVER,
-    .oam         = &sOamData_RadioCover,
-    .anims       = sAnims_RadioCover,
-    .images      = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback    = SpriteCallbackDummy,
-};
-
-static const struct CompressedSpriteSheet sRadioCoverSheets[RADIO_COVER_COUNT] =
-{
-    [RADIO_COVER_3DOORSDOWN] = {sRadioCoverThreeDoorsDown_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_AROUND_THE_FUR] = {sRadioCoverAroundTheFur_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_ERA_VULGARIS] = {sRadioCoverEraVulgaris_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_HYBRID_THEORY] = {sRadioCoverHybridTheory_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_KOI_NO_YOKAN] = {sRadioCoverKoiNoYokan_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_LIKE_CLOCKWORK] = {sRadioCoverLikeClockwork_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_METEORA] = {sRadioCoverMeteora_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Gfx, 0x800, TAG_RADIO_COVER},
-};
-
-static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
-{
-    [RADIO_COVER_3DOORSDOWN] = {sRadioCoverThreeDoorsDown_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_AROUND_THE_FUR] = {sRadioCoverAroundTheFur_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_ERA_VULGARIS] = {sRadioCoverEraVulgaris_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_HYBRID_THEORY] = {sRadioCoverHybridTheory_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_KOI_NO_YOKAN] = {sRadioCoverKoiNoYokan_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_LIKE_CLOCKWORK] = {sRadioCoverLikeClockwork_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_METEORA] = {sRadioCoverMeteora_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Pal, TAG_RADIO_COVER},
-};
-
 
 static const struct SpriteTemplate sSpriteTemplate_RadioStereo =
 {
@@ -4710,96 +4599,6 @@ static void SpriteCB_RadioStereo(struct Sprite *sprite)
 #define RADIO_STEREO2_X  216
 #define RADIO_STEREO2_Y   66
 
-
-static u8 Radio_GetAlbumCoverForSong(u16 songId)
-{
-    switch (songId)
-    {
-    case MUS_KRYPTONITE:
-        return RADIO_COVER_3DOORSDOWN;
-    case MUS_MY_OWN_SUMMER:
-    case MUS_BE_QUIET_AND_DRIVE:
-    case MUS_AROUND_THE_FUR:
-        return RADIO_COVER_AROUND_THE_FUR;
-    case MUS_3S_AND_7S:
-        return RADIO_COVER_ERA_VULGARIS;
-    case MUS_CRAWLING:
-        return RADIO_COVER_HYBRID_THEORY;
-    case MUS_ROSEMARY_DEFTONES:
-        return RADIO_COVER_KOI_NO_YOKAN;
-    case MUS_MY_GOD_IS_THE_SUN:
-        return RADIO_COVER_LIKE_CLOCKWORK;
-    case MUS_FAINT:
-    case MUS_EASIER_TO_RUN:
-    case MUS_BREAKING_THE_HABIT:
-        return RADIO_COVER_METEORA;
-    case MUS_ANIMAL_I_HAVE_BECOME:
-        return RADIO_COVER_ONE_X;
-    case MUS_GO_WITH_THE_FLOW:
-        return RADIO_COVER_SONGS_FOR_THE_DEAF;
-    case MUS_CHANGE_IN_THE_HOUSE_OF_FLIES:
-        return RADIO_COVER_WHITE_PONY;
-    default:
-        return RADIO_COVER_NONE;
-    }
-}
-
-static void Radio_DestroyAlbumCoverSprite(void)
-{
-    if (sRadioCoverSpriteId < MAX_SPRITES)
-    {
-        DestroySprite(&gSprites[sRadioCoverSpriteId]);
-        sRadioCoverSpriteId = 0xFF;
-    }
-
-    FreeSpriteTilesByTag(TAG_RADIO_COVER);
-    FreeSpritePaletteByTag(TAG_RADIO_COVER);
-}
-
-static void Radio_UpdateAlbumCover(void)
-{
-    u8 coverId;
-
-    if (sRadioJigSpriteId >= MAX_SPRITES)
-        return;
-
-    coverId = Radio_GetAlbumCoverForSong(sRadioCurrentSong);
-
-    if (coverId == sRadioCurrentCoverId)
-        return;
-
-    if (sRadioCoverSpriteId < MAX_SPRITES)
-        Radio_DestroyAlbumCoverSprite();
-
-    sRadioCurrentCoverId = coverId;
-
-    if (coverId == RADIO_COVER_NONE)
-    {
-        gSprites[sRadioJigSpriteId].invisible = FALSE;
-        return;
-    }
-
-    gSprites[sRadioJigSpriteId].invisible = TRUE;
-
-    LoadCompressedSpriteSheet(&sRadioCoverSheets[coverId]);
-    LoadSpritePalette(&sRadioCoverPalettes[coverId]);
-
-    sRadioCoverSpriteId = CreateSprite(
-        &sSpriteTemplate_RadioCover,
-        RADIO_JIG_X,
-        RADIO_JIG_Y,
-        0
-    );
-
-    if (sRadioCoverSpriteId >= MAX_SPRITES)
-    {
-        sRadioCoverSpriteId = 0xFF;
-        FreeSpriteTilesByTag(TAG_RADIO_COVER);
-        FreeSpritePaletteByTag(TAG_RADIO_COVER);
-        gSprites[sRadioJigSpriteId].invisible = FALSE;
-    }
-}
-
 static void Radio_CreateSprites(void)
 {
     LoadCompressedSpriteSheet(sSpriteSheet_RadioJig);
@@ -4881,7 +4680,6 @@ static void VBlankCB_Radio(void)
 static void CB2_Radio(void)
 {
     RunTasks();
-    Radio_UpdateAlbumCover();
     Radio_UpdateMarquee();
     AnimateSprites();
     BuildOamBuffer();
@@ -5046,9 +4844,6 @@ void Radio_Open(MainCallback returnCallback)
     sRadioBtnOffId    = 0xFF;
     sRadioBtnStartId  = 0xFF;
     sRadioBtnSelectId = 0xFF;
-    sRadioCoverSpriteId = 0xFF;
-    sRadioCurrentCoverId = RADIO_COVER_NONE;
-
 
     SetMainCallback2(CB2_LoadRadio);
 }

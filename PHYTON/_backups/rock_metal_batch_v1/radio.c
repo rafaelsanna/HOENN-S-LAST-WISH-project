@@ -207,11 +207,6 @@ static EWRAM_DATA u8 sRadioBtnBackId;
 static EWRAM_DATA u8 sRadioBtnOffId;
 static EWRAM_DATA u8 sRadioBtnStartId;
 static EWRAM_DATA u8 sRadioBtnSelectId;
-// RADIO_ALBUM_COVERS_LINK_V1
-// Static 64x64 album artwork replaces Jigglypuff only for mapped songs.
-static EWRAM_DATA u8 sRadioCoverSpriteId;
-static EWRAM_DATA u8 sRadioCurrentCoverId;
-
 
 // ===========================================================================
 // Graphics
@@ -336,112 +331,6 @@ static const struct SpriteTemplate sSpriteTemplate_RadioJig =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback    = SpriteCB_RadioJig,
 };
-
-// ===========================================================================
-// RADIO ALBUM COVERS - static 64x64 OBJ artwork
-// Palette index 0 is transparent in GBA OBJ mode.
-// ===========================================================================
-
-enum RadioAlbumCoverId
-{
-    RADIO_COVER_3DOORSDOWN,
-    RADIO_COVER_AROUND_THE_FUR,
-    RADIO_COVER_ERA_VULGARIS,
-    RADIO_COVER_HYBRID_THEORY,
-    RADIO_COVER_KOI_NO_YOKAN,
-    RADIO_COVER_LIKE_CLOCKWORK,
-    RADIO_COVER_METEORA,
-    RADIO_COVER_ONE_X,
-    RADIO_COVER_SONGS_FOR_THE_DEAF,
-    RADIO_COVER_WHITE_PONY,
-    RADIO_COVER_COUNT,
-};
-
-#define RADIO_COVER_NONE 0xFF
-#define TAG_RADIO_COVER  0xD10F
-
-static const u16 sRadioCoverThreeDoorsDown_Pal[] = INCBIN_U16("graphics/radio/covers/3doorsdown.gbapal");
-static const u32 sRadioCoverThreeDoorsDown_Gfx[] = INCBIN_U32("graphics/radio/covers/3doorsdown.4bpp.smol");
-static const u16 sRadioCoverAroundTheFur_Pal[] = INCBIN_U16("graphics/radio/covers/aroundthefur.gbapal");
-static const u32 sRadioCoverAroundTheFur_Gfx[] = INCBIN_U32("graphics/radio/covers/aroundthefur.4bpp.smol");
-static const u16 sRadioCoverEraVulgaris_Pal[] = INCBIN_U16("graphics/radio/covers/eravulgaris.gbapal");
-static const u32 sRadioCoverEraVulgaris_Gfx[] = INCBIN_U32("graphics/radio/covers/eravulgaris.4bpp.smol");
-static const u16 sRadioCoverHybridTheory_Pal[] = INCBIN_U16("graphics/radio/covers/hybridtheory.gbapal");
-static const u32 sRadioCoverHybridTheory_Gfx[] = INCBIN_U32("graphics/radio/covers/hybridtheory.4bpp.smol");
-static const u16 sRadioCoverKoiNoYokan_Pal[] = INCBIN_U16("graphics/radio/covers/koinoyokan.gbapal");
-static const u32 sRadioCoverKoiNoYokan_Gfx[] = INCBIN_U32("graphics/radio/covers/koinoyokan.4bpp.smol");
-static const u16 sRadioCoverLikeClockwork_Pal[] = INCBIN_U16("graphics/radio/covers/likeclockwork.gbapal");
-static const u32 sRadioCoverLikeClockwork_Gfx[] = INCBIN_U32("graphics/radio/covers/likeclockwork.4bpp.smol");
-static const u16 sRadioCoverMeteora_Pal[] = INCBIN_U16("graphics/radio/covers/meteora.gbapal");
-static const u32 sRadioCoverMeteora_Gfx[] = INCBIN_U32("graphics/radio/covers/meteora.4bpp.smol");
-static const u16 sRadioCoverOneX_Pal[] = INCBIN_U16("graphics/radio/covers/onex.gbapal");
-static const u32 sRadioCoverOneX_Gfx[] = INCBIN_U32("graphics/radio/covers/onex.4bpp.smol");
-static const u16 sRadioCoverSongsForTheDeaf_Pal[] = INCBIN_U16("graphics/radio/covers/songsforthedeaf.gbapal");
-static const u32 sRadioCoverSongsForTheDeaf_Gfx[] = INCBIN_U32("graphics/radio/covers/songsforthedeaf.4bpp.smol");
-static const u16 sRadioCoverWhitePony_Pal[] = INCBIN_U16("graphics/radio/covers/whitepony.gbapal");
-static const u32 sRadioCoverWhitePony_Gfx[] = INCBIN_U32("graphics/radio/covers/whitepony.4bpp.smol");
-
-static const struct OamData sOamData_RadioCover =
-{
-    .y          = DISPLAY_HEIGHT,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode    = ST_OAM_OBJ_NORMAL,
-    .bpp        = ST_OAM_4BPP,
-    .shape      = SPRITE_SHAPE(64x64),
-    .size       = SPRITE_SIZE(64x64),
-    .priority   = 0,
-};
-
-static const union AnimCmd sAnim_RadioCover[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_JUMP(0),
-};
-
-static const union AnimCmd *const sAnims_RadioCover[] =
-{
-    sAnim_RadioCover,
-};
-
-static const struct SpriteTemplate sSpriteTemplate_RadioCover =
-{
-    .tileTag     = TAG_RADIO_COVER,
-    .paletteTag  = TAG_RADIO_COVER,
-    .oam         = &sOamData_RadioCover,
-    .anims       = sAnims_RadioCover,
-    .images      = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback    = SpriteCallbackDummy,
-};
-
-static const struct CompressedSpriteSheet sRadioCoverSheets[RADIO_COVER_COUNT] =
-{
-    [RADIO_COVER_3DOORSDOWN] = {sRadioCoverThreeDoorsDown_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_AROUND_THE_FUR] = {sRadioCoverAroundTheFur_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_ERA_VULGARIS] = {sRadioCoverEraVulgaris_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_HYBRID_THEORY] = {sRadioCoverHybridTheory_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_KOI_NO_YOKAN] = {sRadioCoverKoiNoYokan_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_LIKE_CLOCKWORK] = {sRadioCoverLikeClockwork_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_METEORA] = {sRadioCoverMeteora_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Gfx, 0x800, TAG_RADIO_COVER},
-};
-
-static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
-{
-    [RADIO_COVER_3DOORSDOWN] = {sRadioCoverThreeDoorsDown_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_AROUND_THE_FUR] = {sRadioCoverAroundTheFur_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_ERA_VULGARIS] = {sRadioCoverEraVulgaris_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_HYBRID_THEORY] = {sRadioCoverHybridTheory_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_KOI_NO_YOKAN] = {sRadioCoverKoiNoYokan_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_LIKE_CLOCKWORK] = {sRadioCoverLikeClockwork_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_METEORA] = {sRadioCoverMeteora_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Pal, TAG_RADIO_COVER},
-};
-
 
 static const struct SpriteTemplate sSpriteTemplate_RadioStereo =
 {
@@ -1069,21 +958,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_SHADOWPLAY) \
     X(MUS_NEW_DAWN_FADES) \
     X(MUS_DISORDER) \
-    X(MUS_LOVE_WILL_TEAR_US_APART) \
-    X(MUS_3S_AND_7S) \
-    X(MUS_GO_WITH_THE_FLOW) \
-    X(MUS_MY_GOD_IS_THE_SUN) \
-    X(MUS_ROSEMARY_DEFTONES) \
-    X(MUS_MY_OWN_SUMMER) \
-    X(MUS_CHANGE_IN_THE_HOUSE_OF_FLIES) \
-    X(MUS_BE_QUIET_AND_DRIVE) \
-    X(MUS_AROUND_THE_FUR) \
-    X(MUS_FAINT) \
-    X(MUS_EASIER_TO_RUN) \
-    X(MUS_CRAWLING) \
-    X(MUS_BREAKING_THE_HABIT) \
-    X(MUS_KRYPTONITE) \
-    X(MUS_ANIMAL_I_HAVE_BECOME)
+    X(MUS_LOVE_WILL_TEAR_US_APART)
 
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
@@ -1109,7 +984,6 @@ enum RadioStation
     STATION_FAVORITES,
     STATION_PLAYLIST,
     STATION_GAMES,
-    STATION_ROCK_METAL,
     STATION_COUNT,
 };
 
@@ -1292,28 +1166,6 @@ static const u16 sStation_Games[] = {
     STATION_END
 };
 
-// ---------------------------------------------------------------------------
-// ROCK / METAL RADIO
-// Heavy electric guitar, bass and full rock drums.
-// ---------------------------------------------------------------------------
-static const u16 sStation_RockMetal[] = {
-    MUS_3S_AND_7S,
-    MUS_GO_WITH_THE_FLOW,
-    MUS_MY_GOD_IS_THE_SUN,
-    MUS_ROSEMARY_DEFTONES,
-    MUS_MY_OWN_SUMMER,
-    MUS_CHANGE_IN_THE_HOUSE_OF_FLIES,
-    MUS_BE_QUIET_AND_DRIVE,
-    MUS_AROUND_THE_FUR,
-    MUS_FAINT,
-    MUS_EASIER_TO_RUN,
-    MUS_CRAWLING,
-    MUS_BREAKING_THE_HABIT,
-        MUS_KRYPTONITE,
-    MUS_ANIMAL_I_HAVE_BECOME,
-STATION_END
-};
-
 static const u16 *const sStationTracks[STATION_COUNT] = {
     [STATION_ALL]         = sStation_All,
     [STATION_ANIME]       = sStation_Anime,
@@ -1323,7 +1175,6 @@ static const u16 *const sStationTracks[STATION_COUNT] = {
     [STATION_FAVORITES]   = NULL, // dynamic EWRAM list
     [STATION_PLAYLIST]    = NULL, // dynamic EWRAM list
     [STATION_GAMES]       = sStation_Games,
-    [STATION_ROCK_METAL]  = sStation_RockMetal,
 };
 
 // Station display names
@@ -1338,8 +1189,6 @@ static const u8 sStationName_Playlist2[]   = _("PLAYLIST 2");
 static const u8 sStationName_Playlist3[]   = _("PLAYLIST 3");
 static const u8 sStationName_Games[]       = _("GAMES");
 
-static const u8 sStationName_RockMetal[]    = _("ROCK/METAL");
-
 static const u8 *const sStationNames[STATION_COUNT] = {
     [STATION_ALL]         = sStationName_All,
     [STATION_ANIME]       = sStationName_Anime,
@@ -1349,7 +1198,6 @@ static const u8 *const sStationNames[STATION_COUNT] = {
     [STATION_FAVORITES]   = sStationName_Favorites,
     [STATION_PLAYLIST]    = sStationName_Playlist1,
     [STATION_GAMES]       = sStationName_Games,
-    [STATION_ROCK_METAL]  = sStationName_RockMetal,
 };
 
 // Full labels used only by the animated NOW PLAYING status.
@@ -1364,8 +1212,6 @@ static const u8 sStationNowPlaying_Playlist2[]   = _("NOW PLAYING PLAYLIST 2");
 static const u8 sStationNowPlaying_Playlist3[]   = _("NOW PLAYING PLAYLIST 3");
 static const u8 sStationNowPlaying_Games[]       = _("NOW PLAYING GAMES RADIO");
 
-static const u8 sStationNowPlaying_RockMetal[] = _("NOW PLAYING ROCK/METAL RADIO");
-
 static const u8 *const sStationNowPlayingNames[STATION_COUNT] =
 {
     [STATION_ALL]         = sStationNowPlaying_All,
@@ -1376,7 +1222,6 @@ static const u8 *const sStationNowPlayingNames[STATION_COUNT] =
     [STATION_FAVORITES]   = sStationNowPlaying_Favorites,
     [STATION_PLAYLIST]    = sStationNowPlaying_Playlist1,
     [STATION_GAMES]       = sStationNowPlaying_Games,
-    [STATION_ROCK_METAL]  = sStationNowPlaying_RockMetal,
 };
 
 static const u8 *Radio_GetStationDisplayName(u8 station)
@@ -1877,69 +1722,9 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
     }
 }
 
-// ---------------------------------------------------------------------------
-// Rock / Metal Radio display names.
-// ---------------------------------------------------------------------------
-static const u8 sRockMetalName_3SAnd7S[] = _("3S AND 7S (QUEENS OF THE STONE AGE)");
-static const u8 sRockMetalName_GoWithTheFlow[] = _("GO WITH THE FLOW (QUEENS OF THE STONE AGE)");
-static const u8 sRockMetalName_MyGodIsTheSun[] = _("MY GOD IS THE SUN (QUEENS OF THE STONE AGE)");
-static const u8 sRockMetalName_Rosemary[] = _("ROSEMARY (DEFTONES)");
-static const u8 sRockMetalName_MyOwnSummer[] = _("MY OWN SUMMER (DEFTONES)");
-static const u8 sRockMetalName_ChangeInTheHouseOfFlies[] = _("CHANGE IN THE HOUSE OF FLIES (DEFTONES)");
-static const u8 sRockMetalName_BeQuietAndDrive[] = _("BE QUIET AND DRIVE (DEFTONES)");
-static const u8 sRockMetalName_AroundTheFur[] = _("AROUND THE FUR (DEFTONES)");
-static const u8 sRockMetalName_Faint[] = _("FAINT (LINKIN PARK)");
-static const u8 sRockMetalName_EasierToRun[] = _("EASIER TO RUN (LINKIN PARK)");
-static const u8 sRockMetalName_Crawling[] = _("CRAWLING (LINKIN PARK)");
-static const u8 sRockMetalName_BreakingTheHabit[] = _("BREAKING THE HABIT (LINKIN PARK)");
-
-static const u8 sRockMetalName_Kryptonite[] = _("KRYPTONITE (3 DOORS DOWN)");
-static const u8 sRockMetalName_AnimalIHaveBecome[] = _("ANIMAL I HAVE BECOME (THREE DAYS GRACE)");
-
-static const u8 *Radio_GetRockMetalDisplayName(u16 songId)
-{
-    switch (songId)
-    {
-    case MUS_3S_AND_7S:
-        return sRockMetalName_3SAnd7S;
-    case MUS_GO_WITH_THE_FLOW:
-        return sRockMetalName_GoWithTheFlow;
-    case MUS_MY_GOD_IS_THE_SUN:
-        return sRockMetalName_MyGodIsTheSun;
-    case MUS_ROSEMARY_DEFTONES:
-        return sRockMetalName_Rosemary;
-    case MUS_MY_OWN_SUMMER:
-        return sRockMetalName_MyOwnSummer;
-    case MUS_CHANGE_IN_THE_HOUSE_OF_FLIES:
-        return sRockMetalName_ChangeInTheHouseOfFlies;
-    case MUS_BE_QUIET_AND_DRIVE:
-        return sRockMetalName_BeQuietAndDrive;
-    case MUS_AROUND_THE_FUR:
-        return sRockMetalName_AroundTheFur;
-    case MUS_FAINT:
-        return sRockMetalName_Faint;
-    case MUS_EASIER_TO_RUN:
-        return sRockMetalName_EasierToRun;
-    case MUS_CRAWLING:
-        return sRockMetalName_Crawling;
-    case MUS_BREAKING_THE_HABIT:
-        return sRockMetalName_BreakingTheHabit;
-    case MUS_KRYPTONITE:
-        return sRockMetalName_Kryptonite;
-    case MUS_ANIMAL_I_HAVE_BECOME:
-        return sRockMetalName_AnimalIHaveBecome;
-    default:
-        return NULL;
-    }
-}
-
 static const u8 *Radio_GetSpecialDisplayName(u16 songId)
 {
     const u8 *name;
-
-    name = Radio_GetRockMetalDisplayName(songId);
-    if (name != NULL)
-        return name;
 
     name = Radio_GetPopDisplayName(songId);
     if (name != NULL)
@@ -4306,7 +4091,6 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
         || sRadioStation == STATION_AMATERASU
         || sRadioStation == STATION_INDIE_ROCK
         || sRadioStation == STATION_GAMES
-        || sRadioStation == STATION_ROCK_METAL
         || sRadioStation == STATION_FAVORITES
         || sRadioStation == STATION_PLAYLIST)
     {
@@ -4710,96 +4494,6 @@ static void SpriteCB_RadioStereo(struct Sprite *sprite)
 #define RADIO_STEREO2_X  216
 #define RADIO_STEREO2_Y   66
 
-
-static u8 Radio_GetAlbumCoverForSong(u16 songId)
-{
-    switch (songId)
-    {
-    case MUS_KRYPTONITE:
-        return RADIO_COVER_3DOORSDOWN;
-    case MUS_MY_OWN_SUMMER:
-    case MUS_BE_QUIET_AND_DRIVE:
-    case MUS_AROUND_THE_FUR:
-        return RADIO_COVER_AROUND_THE_FUR;
-    case MUS_3S_AND_7S:
-        return RADIO_COVER_ERA_VULGARIS;
-    case MUS_CRAWLING:
-        return RADIO_COVER_HYBRID_THEORY;
-    case MUS_ROSEMARY_DEFTONES:
-        return RADIO_COVER_KOI_NO_YOKAN;
-    case MUS_MY_GOD_IS_THE_SUN:
-        return RADIO_COVER_LIKE_CLOCKWORK;
-    case MUS_FAINT:
-    case MUS_EASIER_TO_RUN:
-    case MUS_BREAKING_THE_HABIT:
-        return RADIO_COVER_METEORA;
-    case MUS_ANIMAL_I_HAVE_BECOME:
-        return RADIO_COVER_ONE_X;
-    case MUS_GO_WITH_THE_FLOW:
-        return RADIO_COVER_SONGS_FOR_THE_DEAF;
-    case MUS_CHANGE_IN_THE_HOUSE_OF_FLIES:
-        return RADIO_COVER_WHITE_PONY;
-    default:
-        return RADIO_COVER_NONE;
-    }
-}
-
-static void Radio_DestroyAlbumCoverSprite(void)
-{
-    if (sRadioCoverSpriteId < MAX_SPRITES)
-    {
-        DestroySprite(&gSprites[sRadioCoverSpriteId]);
-        sRadioCoverSpriteId = 0xFF;
-    }
-
-    FreeSpriteTilesByTag(TAG_RADIO_COVER);
-    FreeSpritePaletteByTag(TAG_RADIO_COVER);
-}
-
-static void Radio_UpdateAlbumCover(void)
-{
-    u8 coverId;
-
-    if (sRadioJigSpriteId >= MAX_SPRITES)
-        return;
-
-    coverId = Radio_GetAlbumCoverForSong(sRadioCurrentSong);
-
-    if (coverId == sRadioCurrentCoverId)
-        return;
-
-    if (sRadioCoverSpriteId < MAX_SPRITES)
-        Radio_DestroyAlbumCoverSprite();
-
-    sRadioCurrentCoverId = coverId;
-
-    if (coverId == RADIO_COVER_NONE)
-    {
-        gSprites[sRadioJigSpriteId].invisible = FALSE;
-        return;
-    }
-
-    gSprites[sRadioJigSpriteId].invisible = TRUE;
-
-    LoadCompressedSpriteSheet(&sRadioCoverSheets[coverId]);
-    LoadSpritePalette(&sRadioCoverPalettes[coverId]);
-
-    sRadioCoverSpriteId = CreateSprite(
-        &sSpriteTemplate_RadioCover,
-        RADIO_JIG_X,
-        RADIO_JIG_Y,
-        0
-    );
-
-    if (sRadioCoverSpriteId >= MAX_SPRITES)
-    {
-        sRadioCoverSpriteId = 0xFF;
-        FreeSpriteTilesByTag(TAG_RADIO_COVER);
-        FreeSpritePaletteByTag(TAG_RADIO_COVER);
-        gSprites[sRadioJigSpriteId].invisible = FALSE;
-    }
-}
-
 static void Radio_CreateSprites(void)
 {
     LoadCompressedSpriteSheet(sSpriteSheet_RadioJig);
@@ -4881,7 +4575,6 @@ static void VBlankCB_Radio(void)
 static void CB2_Radio(void)
 {
     RunTasks();
-    Radio_UpdateAlbumCover();
     Radio_UpdateMarquee();
     AnimateSprites();
     BuildOamBuffer();
@@ -5046,9 +4739,6 @@ void Radio_Open(MainCallback returnCallback)
     sRadioBtnOffId    = 0xFF;
     sRadioBtnStartId  = 0xFF;
     sRadioBtnSelectId = 0xFF;
-    sRadioCoverSpriteId = 0xFF;
-    sRadioCurrentCoverId = RADIO_COVER_NONE;
-
 
     SetMainCallback2(CB2_LoadRadio);
 }

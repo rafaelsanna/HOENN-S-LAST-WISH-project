@@ -581,11 +581,8 @@
 #define MUS_FAINT                                  647
 #define MUS_EASIER_TO_RUN                          648
 #define MUS_CRAWLING                               649
-#define MUS_BREAKING_THE_HABIT         650
-#define MUS_KRYPTONITE                 651
-#define MUS_ANIMAL_I_HAVE_BECOME       652
-
-#define END_MUS MUS_ANIMAL_I_HAVE_BECOME
+#define MUS_BREAKING_THE_HABIT                     650
+#define END_MUS MUS_BREAKING_THE_HABIT
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
