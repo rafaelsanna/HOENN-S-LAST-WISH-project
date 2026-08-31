@@ -106,7 +106,9 @@ static EWRAM_DATA u16 sRadioPopupPendingSong;
 #define RADIO_PLAYLIST_CAPACITY       20
 #define RADIO_SEARCH_CAPACITY         64
 #define RADIO_MENU_ITEM_COUNT         10
-#define RADIO_CONFIG_ITEM_COUNT        5
+#define RADIO_CONFIG_ITEM_COUNT        7
+#define RADIO_STICKER_COUNT             5
+#define RADIO_STICKER_SLOT_COUNT        7
 #define RADIO_VOLUME_MAX              10
 #define RADIO_SEARCH_LETTER_COUNT     26
 
@@ -120,6 +122,7 @@ enum RadioUiMode
     RADIO_UI_PLAYLIST_CHOOSER,
     RADIO_UI_PLAYLIST,
     RADIO_UI_SOUND_CONFIG,
+    RADIO_UI_STICKER_EDITOR,
 };
 
 enum RadioPlaylistChooserAction
@@ -148,6 +151,8 @@ enum RadioConfigItem
     RADIO_CONFIG_VOLUME,
     RADIO_CONFIG_TRANSITION,
     RADIO_CONFIG_HIDE_COVERS,
+    RADIO_CONFIG_COLOR_THEME,
+    RADIO_CONFIG_STICKERS,
     RADIO_CONFIG_RETURN,
 };
 
@@ -185,6 +190,23 @@ static EWRAM_DATA bool8 sRadioRepeatEnabled; // default OFF (EWRAM/BSS)
 static EWRAM_DATA u8    sRadioVolume;
 static EWRAM_DATA bool8 sRadioTransitionFxEnabled;
 static EWRAM_DATA bool8 sRadioHideCovers;
+static EWRAM_DATA u8    sRadioColorTheme;
+
+// Sticker customization. Five independent 32x32 OBJ stickers can be placed
+// on seven fixed decorative slots marked in the layout reference.
+static EWRAM_DATA u8    sRadioStickerSpriteIds[RADIO_STICKER_COUNT];
+static EWRAM_DATA u8    sRadioStickerPositions[RADIO_STICKER_COUNT];
+static EWRAM_DATA u8    sRadioStickerVisibleMask;
+static EWRAM_DATA u8    sRadioStickerSelected;
+
+enum RadioColorTheme
+{
+    RADIO_COLOR_THEME_NORMAL = 0,
+    RADIO_COLOR_THEME_DARK,
+    RADIO_COLOR_THEME_PURPLE,
+    RADIO_COLOR_THEME_PINK,
+    RADIO_COLOR_THEME_COUNT,
+};
 
 // Playback-pass monitor.
 //
@@ -251,6 +273,57 @@ static EWRAM_DATA u8 sRadioNextCoverId;
 // Graphics
 // ===========================================================================
 static const u16 sRadioBg_Pal[]     = INCBIN_U16("graphics/radio/radiobg.gbapal");
+
+// COLOR THEME changes only the BG palette used by radiobg.
+// OBJ palettes (Jigglypuff, covers, buttons, stereo) and text stay untouched.
+static const u16 sRadioBgPal_Dark[16] =
+{
+    RGB(10, 14, 9),  RGB(27, 27, 28), RGB(13, 14, 16), RGB(13, 8, 8),
+    RGB(10, 6, 7),   RGB(8, 9, 11),   RGB(8, 5, 6),    RGB(6, 4, 5),
+    RGB(5, 4, 5),    RGB(4, 4, 5),    RGB(3, 3, 4),    RGB(0, 0, 0),
+    RGB(0, 0, 0),    RGB(0, 0, 0),    RGB(0, 0, 0),    RGB(0, 0, 0),
+};
+
+// Strong late-GBA violet while preserving the original metal/display contrast.
+static const u16 sRadioBgPal_Purple[16] =
+{
+    RGB(18, 25, 13), RGB(31, 31, 31), RGB(17, 17, 21), RGB(24, 11, 31),
+    RGB(19, 7, 28),  RGB(10, 10, 15), RGB(15, 5, 24),  RGB(10, 3, 18),
+    RGB(7, 3, 12),   RGB(4, 4, 6),    RGB(3, 3, 5),    RGB(0, 0, 0),
+    RGB(0, 0, 0),    RGB(0, 0, 0),    RGB(0, 0, 0),    RGB(0, 0, 0),
+};
+
+// Warm Jigglypuff-friendly pink: salmon highlights + raspberry/mauve shadows.
+static const u16 sRadioBgPal_Pink[16] =
+{
+    RGB(22, 27, 16), RGB(31, 31, 31), RGB(18, 18, 20), RGB(31, 17, 22),
+    RGB(29, 12, 19), RGB(11, 11, 15), RGB(25, 8, 16),  RGB(18, 5, 12),
+    RGB(12, 5, 9),   RGB(5, 4, 6),    RGB(4, 3, 5),    RGB(0, 0, 0),
+    RGB(0, 0, 0),    RGB(0, 0, 0),    RGB(0, 0, 0),    RGB(0, 0, 0),
+};
+
+static void Radio_ApplyBgColorTheme(void)
+{
+    const u16 *palette = sRadioBg_Pal;
+
+    switch (sRadioColorTheme)
+    {
+    case RADIO_COLOR_THEME_DARK:
+        palette = sRadioBgPal_Dark;
+        break;
+    case RADIO_COLOR_THEME_PURPLE:
+        palette = sRadioBgPal_Purple;
+        break;
+    case RADIO_COLOR_THEME_PINK:
+        palette = sRadioBgPal_Pink;
+        break;
+    default:
+        break;
+    }
+
+    LoadPalette(palette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+}
+
 static const u32 sRadioBg_Gfx[]     = INCBIN_U32("graphics/radio/radiobg.4bpp.smol");
 static const u16 sRadioBg_Tilemap[] = INCBIN_U16("graphics/radio/radiobg.bin");
 
@@ -263,6 +336,101 @@ static const u32 sRadioJig_Gfx[] = INCBIN_U32("graphics/radio/jig.4bpp.smol");
 // Sheet: 1 × 2048 = 0x800 bytes
 static const u16 sRadioStereo_Pal[] = INCBIN_U16("graphics/radio/stereo.gbapal");
 static const u32 sRadioStereo_Gfx[] = INCBIN_U32("graphics/radio/stereo.4bpp.smol");
+
+
+// ===========================================================================
+// RADIO STICKERS - five user-supplied static 32x32 OBJ images.
+//
+// Required source PNGs:
+//   graphics/radio/sticker1.png ... graphics/radio/sticker5.png
+//
+// Each sticker owns its own 16-color OBJ palette so the artwork can be freely
+// authored without sharing colors with Jigglypuff/buttons/covers.
+// ===========================================================================
+static const u16 sRadioSticker1_Pal[] = INCBIN_U16("graphics/radio/sticker1.gbapal");
+static const u32 sRadioSticker1_Gfx[] = INCBIN_U32("graphics/radio/sticker1.4bpp.smol");
+static const u16 sRadioSticker2_Pal[] = INCBIN_U16("graphics/radio/sticker2.gbapal");
+static const u32 sRadioSticker2_Gfx[] = INCBIN_U32("graphics/radio/sticker2.4bpp.smol");
+static const u16 sRadioSticker3_Pal[] = INCBIN_U16("graphics/radio/sticker3.gbapal");
+static const u32 sRadioSticker3_Gfx[] = INCBIN_U32("graphics/radio/sticker3.4bpp.smol");
+static const u16 sRadioSticker4_Pal[] = INCBIN_U16("graphics/radio/sticker4.gbapal");
+static const u32 sRadioSticker4_Gfx[] = INCBIN_U32("graphics/radio/sticker4.4bpp.smol");
+static const u16 sRadioSticker5_Pal[] = INCBIN_U16("graphics/radio/sticker5.gbapal");
+static const u32 sRadioSticker5_Gfx[] = INCBIN_U32("graphics/radio/sticker5.4bpp.smol");
+
+#define TAG_RADIO_STICKER1 0xD109
+#define TAG_RADIO_STICKER2 0xD10A
+#define TAG_RADIO_STICKER3 0xD10B
+#define TAG_RADIO_STICKER4 0xD10C
+#define TAG_RADIO_STICKER5 0xD10D
+
+static const struct OamData sOamData_RadioSticker =
+{
+    .y          = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode    = ST_OAM_OBJ_NORMAL,
+    .bpp        = ST_OAM_4BPP,
+    .shape      = SPRITE_SHAPE(32x32),
+    .size       = SPRITE_SIZE(32x32),
+    .priority   = 0,
+};
+
+static const union AnimCmd sAnim_RadioSticker[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_RadioSticker[] =
+{
+    sAnim_RadioSticker,
+};
+
+#define DEFINE_RADIO_STICKER(index, tag) \
+static const struct CompressedSpriteSheet sSpriteSheet_RadioSticker##index[] = \
+{ \
+    {sRadioSticker##index##_Gfx, 0x200, tag}, \
+    {}, \
+}; \
+static const struct SpritePalette sSpritePalette_RadioSticker##index[] = \
+{ \
+    {sRadioSticker##index##_Pal, tag}, \
+    {}, \
+}; \
+static const struct SpriteTemplate sSpriteTemplate_RadioSticker##index = \
+{ \
+    .tileTag     = tag, \
+    .paletteTag  = tag, \
+    .oam         = &sOamData_RadioSticker, \
+    .anims       = sAnims_RadioSticker, \
+    .images      = NULL, \
+    .affineAnims = gDummySpriteAffineAnimTable, \
+    .callback    = SpriteCallbackDummy, \
+};
+
+DEFINE_RADIO_STICKER(1, TAG_RADIO_STICKER1)
+DEFINE_RADIO_STICKER(2, TAG_RADIO_STICKER2)
+DEFINE_RADIO_STICKER(3, TAG_RADIO_STICKER3)
+DEFINE_RADIO_STICKER(4, TAG_RADIO_STICKER4)
+DEFINE_RADIO_STICKER(5, TAG_RADIO_STICKER5)
+
+// The green regions from the reference image form seven exact 32x32 cells:
+//   0,1 = top-left 64x32 block
+//   2,3 = top-middle 32x64 block
+//   4   = middle 32x32 block
+//   5,6 = right-bottom 32x64 block
+//
+// Coordinates below are sprite CENTERS, matching CreateSprite().
+static const s16 sRadioStickerSlotX[RADIO_STICKER_SLOT_COUNT] =
+{
+    16, 48, 144, 144, 97, 224, 224
+};
+
+static const s16 sRadioStickerSlotY[RADIO_STICKER_SLOT_COUNT] =
+{
+    16, 16, 16, 48, 106, 112, 144
+};
+
 
 // ---------------------------------------------------------------------------
 // Tags de sprite — valores arbitrários únicos no projeto
@@ -2129,6 +2297,8 @@ static void Task_RadioFadeAndExit(u8 taskId);
 static void Task_RadioWaitFadeExit(u8 taskId);
 static void Radio_DrawMusicInfo(u16 songId, bool8 playing);
 static void Radio_DrawSoundConfig(void);
+static void Radio_DrawStickerEditor(void);
+static void Radio_RefreshStickerSprites(void);
 static void Radio_CopyEncodedText(u8 *dest, const u8 *src, u32 destSize);
 static void Radio_LoadPersistentState(void);
 static void Radio_SavePersistentState(void);
@@ -2277,7 +2447,7 @@ static const u8 sRadioText_MenuShuffleOff[]  = _("SHUFFLE: OFF");
 static const u8 sRadioText_MenuReturn[]       = _("RETURN");
 static const u8 sRadioText_Cursor[]           = _(">");
 
-static const u8 sRadioText_ConfigTitle[]        = _("SOUND CONFIG");
+static const u8 sRadioText_ConfigTitle[]        = _("RADIO CONFIG");
 static const u8 sRadioText_ConfigStereo[]       = _("OUTPUT: STEREO");
 static const u8 sRadioText_ConfigMono[]         = _("OUTPUT: MONO");
 static const u8 sRadioText_ConfigVolumeFmt[]    = _("RADIO VOL: {STR_VAR_1}");
@@ -2285,6 +2455,17 @@ static const u8 sRadioText_ConfigTransitionOn[] = _("TRANSITION FX: ON");
 static const u8 sRadioText_ConfigTransitionOff[]= _("TRANSITION FX: OFF");
 static const u8 sRadioText_ConfigHideCoversOn[] = _("HIDE COVERS: ON");
 static const u8 sRadioText_ConfigHideCoversOff[]= _("HIDE COVERS: OFF");
+static const u8 sRadioText_ConfigThemeNormal[]  = _("COLOR THEME: NORMAL");
+static const u8 sRadioText_ConfigThemeDark[]    = _("COLOR THEME: DARK");
+static const u8 sRadioText_ConfigThemePurple[]  = _("COLOR THEME: PURPLE");
+static const u8 sRadioText_ConfigThemePink[]    = _("COLOR THEME: PINK");
+static const u8 sRadioText_ConfigStickers[]     = _("STICKERS");
+static const u8 sRadioText_StickerTitle[]       = _("STICKERS");
+static const u8 sRadioText_StickerNumFmt[]      = _("STICKER {STR_VAR_1}/5");
+static const u8 sRadioText_StickerOn[]          = _("STATE: ON");
+static const u8 sRadioText_StickerOff[]         = _("STATE: OFF");
+static const u8 sRadioText_StickerPosFmt[]      = _("POSITION: {STR_VAR_1}/7");
+static const u8 sRadioText_StickerHelp[]        = _("DPAD MOVE  L/R PICK  A ON/OFF");
 
 static const u8 sRadioText_SearchTitle[]      = _("SEARCH A-Z");
 static const u8 sRadioText_SearchLetterFmt[]  = _("LETTER: {STR_VAR_1}");
@@ -3516,6 +3697,18 @@ void RadioPriority_MaintainBgm(void)
 #define RADIO_PLAYLIST_FUTURE_OFFSET_3        (RADIO_PLAYLIST2_FUTURE_SLOTS * sizeof(u16))
 #define RADIO_PLAYLIST_FUTURE_BYTES           ((RADIO_PLAYLIST2_FUTURE_SLOTS + RADIO_PLAYLIST_CAPACITY) * sizeof(u16))
 
+// Sticker save data starts immediately after the 56 playlist bytes already
+// used in hlwSave.future[]. This consumes only 8 more bytes and does not
+// change HLWSaveExtension or RadioSaveData sizes.
+#define RADIO_STICKER_SAVE_OFFSET             RADIO_PLAYLIST_FUTURE_BYTES
+#define RADIO_STICKER_SAVE_TAG                0x53 // S
+#define RADIO_STICKER_SAVE_VERSION            1
+#define RADIO_STICKER_SAVE_TAG_OFFSET         (RADIO_STICKER_SAVE_OFFSET + 0)
+#define RADIO_STICKER_SAVE_VERSION_OFFSET     (RADIO_STICKER_SAVE_OFFSET + 1)
+#define RADIO_STICKER_SAVE_VISIBLE_OFFSET     (RADIO_STICKER_SAVE_OFFSET + 2)
+#define RADIO_STICKER_SAVE_POSITIONS_OFFSET   (RADIO_STICKER_SAVE_OFFSET + 3)
+#define RADIO_STICKER_SAVE_BYTES              (3 + RADIO_STICKER_COUNT)
+
 #define RADIO_SAVE_RSVD_TAG0              0
 #define RADIO_SAVE_RSVD_TAG1              1
 #define RADIO_SAVE_RSVD_PLAYLIST_VERSION  2
@@ -3529,6 +3722,8 @@ void RadioPriority_MaintainBgm(void)
 #define RADIO_SAVE_CONFIG_TAG_MASK        0xF0
 #define RADIO_SAVE_CONFIG_TRANSITION      (1 << 0)
 #define RADIO_SAVE_CONFIG_HIDE_COVERS     (1 << 1)
+#define RADIO_SAVE_CONFIG_THEME_SHIFT     2
+#define RADIO_SAVE_CONFIG_THEME_MASK      (3 << RADIO_SAVE_CONFIG_THEME_SHIFT)
 #define RADIO_RETIRED_SONG_SLOT_1         598
 #define RADIO_RETIRED_SONG_SLOT_2         604
 
@@ -3554,6 +3749,58 @@ static void Radio_InitSaveExtensionIfNeeded(void)
     }
 }
 
+static void Radio_ResetStickerState(void)
+{
+    u8 i;
+
+    sRadioStickerVisibleMask = 0;
+    sRadioStickerSelected = 0;
+
+    // Give each sticker a useful distinct starting cell. They remain hidden
+    // until the player turns them on in the sticker editor.
+    for (i = 0; i < RADIO_STICKER_COUNT; i++)
+        sRadioStickerPositions[i] = i % RADIO_STICKER_SLOT_COUNT;
+}
+
+static void Radio_LoadStickerState(const struct HLWSaveExtension *ext)
+{
+    u8 i;
+
+    if (ext->future[RADIO_STICKER_SAVE_TAG_OFFSET] != RADIO_STICKER_SAVE_TAG
+     || ext->future[RADIO_STICKER_SAVE_VERSION_OFFSET] != RADIO_STICKER_SAVE_VERSION)
+    {
+        Radio_ResetStickerState();
+        return;
+    }
+
+    sRadioStickerVisibleMask =
+        ext->future[RADIO_STICKER_SAVE_VISIBLE_OFFSET]
+        & ((1 << RADIO_STICKER_COUNT) - 1);
+
+    for (i = 0; i < RADIO_STICKER_COUNT; i++)
+    {
+        u8 pos = ext->future[RADIO_STICKER_SAVE_POSITIONS_OFFSET + i];
+        sRadioStickerPositions[i] =
+            (pos < RADIO_STICKER_SLOT_COUNT) ? pos : (i % RADIO_STICKER_SLOT_COUNT);
+    }
+
+    sRadioStickerSelected = 0;
+}
+
+static void Radio_SaveStickerState(struct HLWSaveExtension *ext)
+{
+    u8 i;
+
+    ext->future[RADIO_STICKER_SAVE_TAG_OFFSET] = RADIO_STICKER_SAVE_TAG;
+    ext->future[RADIO_STICKER_SAVE_VERSION_OFFSET] = RADIO_STICKER_SAVE_VERSION;
+    ext->future[RADIO_STICKER_SAVE_VISIBLE_OFFSET] =
+        sRadioStickerVisibleMask & ((1 << RADIO_STICKER_COUNT) - 1);
+
+    for (i = 0; i < RADIO_STICKER_COUNT; i++)
+        ext->future[RADIO_STICKER_SAVE_POSITIONS_OFFSET + i] =
+            sRadioStickerPositions[i];
+}
+
 static void Radio_ResetPersistentState(void)
 {
     struct HLWSaveExtension *ext;
@@ -3564,7 +3811,8 @@ static void Radio_ResetPersistentState(void)
     save = &ext->radio;
 
     memset(save, 0, sizeof(*save));
-    memset(ext->future, 0, RADIO_PLAYLIST_FUTURE_BYTES);
+    memset(ext->future, 0, RADIO_PLAYLIST_FUTURE_BYTES + RADIO_STICKER_SAVE_BYTES);
+    Radio_ResetStickerState();
 
     save->magic = RADIO_SAVE_MAGIC;
     save->version = RADIO_SAVE_VERSION;
@@ -3582,6 +3830,7 @@ static void Radio_ResetPersistentState(void)
     save->reserved[RADIO_SAVE_RSVD_VOLUME] = RADIO_VOLUME_MAX + 1;
     save->reserved[RADIO_SAVE_RSVD_CONFIG] =
         RADIO_SAVE_CONFIG_TAG | RADIO_SAVE_CONFIG_TRANSITION;
+    Radio_SaveStickerState(ext);
 }
 
 static bool8 Radio_SaveSongIdIsValid(u16 songId)
@@ -3799,6 +4048,11 @@ static void Radio_LoadPersistentState(void)
         sRadioHideCovers =
             (save->reserved[RADIO_SAVE_RSVD_CONFIG]
              & RADIO_SAVE_CONFIG_HIDE_COVERS) != 0;
+        sRadioColorTheme =
+            (save->reserved[RADIO_SAVE_RSVD_CONFIG] & RADIO_SAVE_CONFIG_THEME_MASK)
+            >> RADIO_SAVE_CONFIG_THEME_SHIFT;
+        if (sRadioColorTheme >= RADIO_COLOR_THEME_COUNT)
+            sRadioColorTheme = RADIO_COLOR_THEME_NORMAL;
     }
     else
     {
@@ -3806,7 +4060,10 @@ static void Radio_LoadPersistentState(void)
         sRadioVolume = RADIO_VOLUME_MAX;
         sRadioTransitionFxEnabled = TRUE;
         sRadioHideCovers = FALSE;
+        sRadioColorTheme = RADIO_COLOR_THEME_NORMAL;
     }
+
+    Radio_LoadStickerState(ext);
 
     Radio_SavePersistentState();
 }
@@ -3852,7 +4109,10 @@ static void Radio_SavePersistentState(void)
     save->reserved[RADIO_SAVE_RSVD_CONFIG] =
         RADIO_SAVE_CONFIG_TAG
         | (sRadioTransitionFxEnabled ? RADIO_SAVE_CONFIG_TRANSITION : 0)
-        | (sRadioHideCovers ? RADIO_SAVE_CONFIG_HIDE_COVERS : 0);
+        | (sRadioHideCovers ? RADIO_SAVE_CONFIG_HIDE_COVERS : 0)
+        | ((sRadioColorTheme << RADIO_SAVE_CONFIG_THEME_SHIFT) & RADIO_SAVE_CONFIG_THEME_MASK);
+
+    Radio_SaveStickerState(ext);
 
     memset(save->favorites, 0, sizeof(save->favorites));
     memcpy(save->favorites, sRadioFavorites, sizeof(sRadioFavorites));
@@ -4139,6 +4399,22 @@ static const u8 *Radio_GetConfigItemText(u8 item)
              ? sRadioText_ConfigHideCoversOn
              : sRadioText_ConfigHideCoversOff;
 
+    case RADIO_CONFIG_STICKERS:
+        return sRadioText_ConfigStickers;
+
+    case RADIO_CONFIG_COLOR_THEME:
+        switch (sRadioColorTheme)
+        {
+        case RADIO_COLOR_THEME_DARK:
+            return sRadioText_ConfigThemeDark;
+        case RADIO_COLOR_THEME_PURPLE:
+            return sRadioText_ConfigThemePurple;
+        case RADIO_COLOR_THEME_PINK:
+            return sRadioText_ConfigThemePink;
+        default:
+            return sRadioText_ConfigThemeNormal;
+        }
+
     default:
         return sRadioText_MenuReturn;
     }
@@ -4200,6 +4476,157 @@ static void Radio_DrawSoundConfig(void)
             NULL
         );
     }
+
+    CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
+}
+
+static void Radio_RefreshStickerSprites(void)
+{
+    u8 i;
+
+    for (i = 0; i < RADIO_STICKER_COUNT; i++)
+    {
+        u8 spriteId = sRadioStickerSpriteIds[i];
+        u8 pos = sRadioStickerPositions[i];
+
+        if (spriteId == 0xFF)
+            continue;
+
+        if (pos >= RADIO_STICKER_SLOT_COUNT)
+            pos = 0;
+
+        gSprites[spriteId].x = sRadioStickerSlotX[pos];
+        gSprites[spriteId].y = sRadioStickerSlotY[pos];
+        gSprites[spriteId].invisible =
+            (sRadioStickerVisibleMask & (1 << i)) == 0;
+    }
+}
+
+static u8 Radio_FindStickerSlotInDirection(u8 current, s8 dx, s8 dy)
+{
+    s32 bestScore = 0x7FFFFFFF;
+    u8 best = current;
+    u8 i;
+    s16 x = sRadioStickerSlotX[current];
+    s16 y = sRadioStickerSlotY[current];
+
+    for (i = 0; i < RADIO_STICKER_SLOT_COUNT; i++)
+    {
+        s16 vx;
+        s16 vy;
+        s32 primary;
+        s32 cross;
+        s32 score;
+
+        if (i == current)
+            continue;
+
+        vx = sRadioStickerSlotX[i] - x;
+        vy = sRadioStickerSlotY[i] - y;
+
+        if (dx < 0 && vx >= 0)
+            continue;
+        if (dx > 0 && vx <= 0)
+            continue;
+        if (dy < 0 && vy >= 0)
+            continue;
+        if (dy > 0 && vy <= 0)
+            continue;
+
+        // Prefer the requested axis strongly, while still allowing diagonal
+        // jumps between the irregular seven-slot layout.
+        if (dx != 0)
+        {
+            primary = (vx < 0) ? -vx : vx;
+            cross = (vy < 0) ? -vy : vy;
+        }
+        else
+        {
+            primary = (vy < 0) ? -vy : vy;
+            cross = (vx < 0) ? -vx : vx;
+        }
+
+        score = primary * 4 + cross;
+        if (score < bestScore)
+        {
+            bestScore = score;
+            best = i;
+        }
+    }
+
+    return best;
+}
+
+static void Radio_MoveSelectedSticker(s8 dx, s8 dy)
+{
+    u8 sticker = sRadioStickerSelected;
+    u8 current;
+    u8 next;
+
+    if (sticker >= RADIO_STICKER_COUNT)
+        sticker = 0;
+
+    current = sRadioStickerPositions[sticker];
+    if (current >= RADIO_STICKER_SLOT_COUNT)
+        current = 0;
+
+    next = Radio_FindStickerSlotInDirection(current, dx, dy);
+    sRadioStickerPositions[sticker] = next;
+
+    // Moving a sticker is also an explicit placement action, so reveal it.
+    sRadioStickerVisibleMask |= (1 << sticker);
+
+    Radio_RefreshStickerSprites();
+    Radio_SavePersistentState();
+}
+
+static void Radio_DrawStickerEditor(void)
+{
+    sRadioMarqueeEnabled = FALSE;
+    FillWindowPixelBuffer(WIN_MUSIC_INFO, PIXEL_FILL(1));
+
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO, FONT_SMALL, sRadioText_StickerTitle,
+        2, 1, TEXT_SKIP_DRAW, NULL
+    );
+
+    ConvertIntToDecimalStringN(
+        gStringVar1, sRadioStickerSelected + 1, STR_CONV_MODE_LEFT_ALIGN, 1
+    );
+    StringExpandPlaceholders(gStringVar4, sRadioText_StickerNumFmt);
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO, FONT_SMALL, gStringVar4,
+        2, 12, TEXT_SKIP_DRAW, NULL
+    );
+
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO,
+        FONT_SMALL,
+        (sRadioStickerVisibleMask & (1 << sRadioStickerSelected))
+            ? sRadioText_StickerOn
+            : sRadioText_StickerOff,
+        86,
+        12,
+        TEXT_SKIP_DRAW,
+        NULL
+    );
+
+    ConvertIntToDecimalStringN(
+        gStringVar1,
+        sRadioStickerPositions[sRadioStickerSelected] + 1,
+        STR_CONV_MODE_LEFT_ALIGN,
+        1
+    );
+    StringExpandPlaceholders(gStringVar4, sRadioText_StickerPosFmt);
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO, FONT_SMALL, gStringVar4,
+        2, 23, TEXT_SKIP_DRAW, NULL
+    );
+
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO, FONT_SMALL, sRadioText_StickerHelp,
+        2, 35, TEXT_SKIP_DRAW, NULL
+    );
 
     CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
 }
@@ -4731,6 +5158,24 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 Radio_SavePersistentState();
                 break;
 
+            case RADIO_CONFIG_STICKERS:
+                sRadioUiMode = RADIO_UI_STICKER_EDITOR;
+                sRadioStickerSelected = 0;
+                Radio_DrawStickerEditor();
+                return;
+
+            case RADIO_CONFIG_COLOR_THEME:
+                if (direction < 0)
+                    sRadioColorTheme = (sRadioColorTheme > 0)
+                                     ? sRadioColorTheme - 1
+                                     : RADIO_COLOR_THEME_COUNT - 1;
+                else
+                    sRadioColorTheme = (sRadioColorTheme + 1) % RADIO_COLOR_THEME_COUNT;
+
+                Radio_ApplyBgColorTheme();
+                Radio_SavePersistentState();
+                break;
+
             default:
                 sRadioUiMode = RADIO_UI_MENU;
                 Radio_DrawMenu(songId);
@@ -4738,6 +5183,81 @@ static void Radio_HandleOverlayInput(u8 taskId)
             }
 
             Radio_DrawSoundConfig();
+            return;
+        }
+
+        return;
+    }
+
+    if (sRadioUiMode == RADIO_UI_STICKER_EDITOR)
+    {
+        if (JOY_NEW(B_BUTTON) || JOY_NEW(START_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            sRadioUiMode = RADIO_UI_SOUND_CONFIG;
+            Radio_DrawSoundConfig();
+            return;
+        }
+
+        if (JOY_NEW(L_BUTTON))
+        {
+            sRadioStickerSelected =
+                (sRadioStickerSelected > 0)
+                    ? sRadioStickerSelected - 1
+                    : RADIO_STICKER_COUNT - 1;
+            PlaySE(SE_SELECT);
+            Radio_DrawStickerEditor();
+            return;
+        }
+
+        if (JOY_NEW(R_BUTTON))
+        {
+            sRadioStickerSelected =
+                (sRadioStickerSelected + 1) % RADIO_STICKER_COUNT;
+            PlaySE(SE_SELECT);
+            Radio_DrawStickerEditor();
+            return;
+        }
+
+        if (JOY_NEW(A_BUTTON))
+        {
+            sRadioStickerVisibleMask ^= (1 << sRadioStickerSelected);
+            Radio_RefreshStickerSprites();
+            Radio_SavePersistentState();
+            PlaySE(SE_SELECT);
+            Radio_DrawStickerEditor();
+            return;
+        }
+
+        if (JOY_NEW(DPAD_LEFT))
+        {
+            Radio_MoveSelectedSticker(-1, 0);
+            PlaySE(SE_SELECT);
+            Radio_DrawStickerEditor();
+            return;
+        }
+
+        if (JOY_NEW(DPAD_RIGHT))
+        {
+            Radio_MoveSelectedSticker(1, 0);
+            PlaySE(SE_SELECT);
+            Radio_DrawStickerEditor();
+            return;
+        }
+
+        if (JOY_NEW(DPAD_UP))
+        {
+            Radio_MoveSelectedSticker(0, -1);
+            PlaySE(SE_SELECT);
+            Radio_DrawStickerEditor();
+            return;
+        }
+
+        if (JOY_NEW(DPAD_DOWN))
+        {
+            Radio_MoveSelectedSticker(0, 1);
+            PlaySE(SE_SELECT);
+            Radio_DrawStickerEditor();
             return;
         }
 
@@ -6093,6 +6613,31 @@ static void Radio_CreateSprites(void)
         1
     );
 
+    // --- User stickers (five independent 32x32 sprites) ---
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioSticker1);
+    LoadSpritePalettes(sSpritePalette_RadioSticker1);
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioSticker2);
+    LoadSpritePalettes(sSpritePalette_RadioSticker2);
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioSticker3);
+    LoadSpritePalettes(sSpritePalette_RadioSticker3);
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioSticker4);
+    LoadSpritePalettes(sSpritePalette_RadioSticker4);
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioSticker5);
+    LoadSpritePalettes(sSpritePalette_RadioSticker5);
+
+    sRadioStickerSpriteIds[0] = CreateSprite(
+        &sSpriteTemplate_RadioSticker1, sRadioStickerSlotX[0], sRadioStickerSlotY[0], 2);
+    sRadioStickerSpriteIds[1] = CreateSprite(
+        &sSpriteTemplate_RadioSticker2, sRadioStickerSlotX[1], sRadioStickerSlotY[1], 2);
+    sRadioStickerSpriteIds[2] = CreateSprite(
+        &sSpriteTemplate_RadioSticker3, sRadioStickerSlotX[2], sRadioStickerSlotY[2], 2);
+    sRadioStickerSpriteIds[3] = CreateSprite(
+        &sSpriteTemplate_RadioSticker4, sRadioStickerSlotX[3], sRadioStickerSlotY[3], 2);
+    sRadioStickerSpriteIds[4] = CreateSprite(
+        &sSpriteTemplate_RadioSticker5, sRadioStickerSlotX[4], sRadioStickerSlotY[4], 2);
+
+    Radio_RefreshStickerSprites();
+
     // Set initial play/pause frame based on current state
     Radio_UpdatePlayPauseButtons(sRadioIsPlaying);
 }
@@ -6158,7 +6703,7 @@ static void CB2_LoadRadio(void)
         // PLTT_SIZE_4BPP = 32 bytes = 1 slot (16 colors).
         // Using sizeof() is dangerous: if .gbapal has >32 bytes it overwrites
         // slots beyond 0, including slot 15 used by the font.
-        LoadPalette(sRadioBg_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+        Radio_ApplyBgColorTheme();
         LoadMessageBoxAndBorderGfx();
         // Load tiles directly into charbase 2 -- synchronous, no intermediate buffer.
         DecompressDataWithHeaderVram(sRadioBg_Gfx, (void *)(BG_CHAR_ADDR(2)));
@@ -6280,6 +6825,11 @@ void Radio_Open(MainCallback returnCallback)
     sRadioBtnOffId    = 0xFF;
     sRadioBtnStartId  = 0xFF;
     sRadioBtnSelectId = 0xFF;
+    {
+        u8 i;
+        for (i = 0; i < RADIO_STICKER_COUNT; i++)
+            sRadioStickerSpriteIds[i] = 0xFF;
+    }
     sRadioCoverSpriteId = 0xFF;
     sRadioCurrentCoverId = RADIO_COVER_NONE;
     sRadioNextCoverId = RADIO_COVER_NONE;
