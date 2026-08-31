@@ -109,6 +109,36 @@ COVERS = {
         # Temporary album-art placeholder; this song is a single.
         "MUS_LOVE_WILL_TEAR_US_APART",
     ],
+    "freewheelin": [
+        "MUS_A_HARD_RAINS_A_GONNA_FALL",
+        "MUS_BLOWIN_IN_THE_WIND",
+    ],
+    "highway61revisited": [
+        "MUS_LIKE_A_ROLLING_STONE",
+    ],
+    "bringingitallbackhome": [
+        "MUS_MR_TAMBOURINE_MAN",
+    ],
+    "patgarrett": [
+        "MUS_KNOCKIN_ON_HEAVENS_DOOR",
+    ],
+    "areyouexperienced": [
+        "MUS_FOXY_LADY",
+    ],
+    "thewall": [
+        "MUS_ANOTHER_BRICK_IN_THE_WALL",
+        "MUS_COMFORTABLY_NUMB",
+    ],
+    "wishyouwerehere": [
+        "MUS_SHINE_ON_YOU_CRAZY_DIAMOND",
+    ],
+    "darksideofthemoon": [
+        "MUS_THE_GREAT_GIG_IN_THE_SKY",
+        "MUS_TIME",
+    ],
+    "divisionbell": [
+        "MUS_HIGH_HOPES",
+    ],
 }
 
 COVER_ENUMS = {
@@ -141,6 +171,15 @@ COVER_ENUMS = {
     "ThreeImaginaryBoys": "RADIO_COVER_THREE_IMAGINARY_BOYS",
     "eitheror": "RADIO_COVER_EITHER_OR",
     "unknowpleasures": "RADIO_COVER_UNKNOWN_PLEASURES",
+    "freewheelin": "RADIO_COVER_FREEWHEELIN",
+    "highway61revisited": "RADIO_COVER_HIGHWAY_61_REVISITED",
+    "bringingitallbackhome": "RADIO_COVER_BRINGING_IT_ALL_BACK_HOME",
+    "patgarrett": "RADIO_COVER_PAT_GARRETT_AND_BILLY_THE_KID",
+    "areyouexperienced": "RADIO_COVER_ARE_YOU_EXPERIENCED",
+    "thewall": "RADIO_COVER_THE_WALL",
+    "wishyouwerehere": "RADIO_COVER_WISH_YOU_WERE_HERE",
+    "darksideofthemoon": "RADIO_COVER_DARK_SIDE_OF_THE_MOON",
+    "divisionbell": "RADIO_COVER_DIVISION_BELL",
 }
 
 C_IDENT = {
@@ -173,6 +212,15 @@ C_IDENT = {
     "ThreeImaginaryBoys": "ThreeImaginaryBoys",
     "eitheror": "EitherOr",
     "unknowpleasures": "UnknownPleasures",
+    "freewheelin": "Freewheelin",
+    "highway61revisited": "Highway61Revisited",
+    "bringingitallbackhome": "BringingItAllBackHome",
+    "patgarrett": "PatGarrettAndBillyTheKid",
+    "areyouexperienced": "AreYouExperienced",
+    "thewall": "TheWall",
+    "wishyouwerehere": "WishYouWereHere",
+    "darksideofthemoon": "DarkSideOfTheMoon",
+    "divisionbell": "DivisionBell",
 }
 
 def die(msg):

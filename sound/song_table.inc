@@ -599,13 +599,15 @@ gSongTable::
 	song mus_guts_theme, 0, 0
 	song mus_the_young_photographer, 0, 0
 	song mus_hope_grand_chase, 0, 0
-	song mus_glast_heim_theme, 0, 0
+	@ Retired BGM slot; retained so existing song IDs in saves remain stable.
+	song dummy_song_header, 0, 0
 	song mus_ancient_groover, 0, 0
 	song mus_divine_grace, 0, 0
 	song mus_theme_of_morroc, 0, 0
 	song mus_everlasting_wanderers, 0, 0
 	song mus_theme_of_geffen, 0, 0
-	song mus_theme_of_aldebaran, 0, 0
+	@ Retired BGM slot; retained so existing song IDs in saves remain stable.
+	song dummy_song_header, 0, 0
 	song mus_theme_of_alberta, 0, 0
 	song mus_theme_of_prontera, 0, 0
 	song mus_bigmouth_strikes_again, 0, 0
@@ -654,6 +656,18 @@ gSongTable::
 	song mus_breaking_the_habit, 0, 0
 	song mus_kryptonite, 0, 0
 	song mus_animal_i_have_become, 0, 0
+	song mus_a_hard_rains_a_gonna_fall, 0, 0
+	song mus_another_brick_in_the_wall, 0, 0
+	song mus_blowin_in_the_wind, 0, 0
+	song mus_like_a_rolling_stone, 0, 0
+	song mus_comfortably_numb, 0, 0
+	song mus_foxy_lady, 0, 0
+	song mus_high_hopes, 0, 0
+	song mus_knockin_on_heavens_door, 0, 0
+	song mus_mr_tambourine_man, 0, 0
+	song mus_shine_on_you_crazy_diamond, 0, 0
+	song mus_the_great_gig_in_the_sky, 0, 0
+	song mus_time, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

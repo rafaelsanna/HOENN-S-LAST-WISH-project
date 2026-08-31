@@ -7,6 +7,7 @@
 .include "sound/voicegroups/drumsets/emerald_2.inc"
 .include "sound/voicegroups/drumsets/custom_drum.inc"
 .include "sound/voicegroups/drumsets/hlw_rock_metal.inc"
+.include "sound/voicegroups/drumsets/hlw_classic_rock.inc"
 
 @ key splits
 .include "sound/voicegroups/keysplits/piano.inc"
@@ -250,13 +251,11 @@
 .include "sound/voicegroups/tetris_main_theme.inc"
 .include "sound/voicegroups/the_young_photographer.inc"
 .include "sound/voicegroups/hope_grand_chase.inc"
-.include "sound/voicegroups/glast_heim_theme.inc"
 .include "sound/voicegroups/ancient_groover.inc"
 .include "sound/voicegroups/divine_grace.inc"
 .include "sound/voicegroups/theme_of_morroc.inc"
 .include "sound/voicegroups/everlasting_wanderers.inc"
 .include "sound/voicegroups/theme_of_geffen.inc"
-.include "sound/voicegroups/theme_of_aldebaran.inc"
 .include "sound/voicegroups/theme_of_alberta.inc"
 .include "sound/voicegroups/theme_of_prontera.inc"
 .include "sound/voicegroups/bigmouth_strikes_again.inc"
@@ -272,3 +271,4 @@
 .include "sound/voicegroups/aint_no_rest_for_the_wicked.inc"
 .include "sound/voicegroups/hlw_indie_guitar.inc"
 .include "sound/voicegroups/hlw_rock_metal.inc"
+.include "sound/voicegroups/hlw_classic_rock.inc"

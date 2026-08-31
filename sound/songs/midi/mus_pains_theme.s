@@ -206,7 +206,7 @@ mus_pains_theme_1_B2:
 mus_pains_theme_2:
 	.byte	KEYSH , mus_pains_theme_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 1
+	.byte		VOICE , 3
 	.byte		VOL   , 50*mus_pains_theme_mvl/mxv
 	.byte		PAN   , c_v-10
 	.byte	W96

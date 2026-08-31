@@ -2,13 +2,12 @@
 // Pokemon Radio - Key Item Screen
 //
 // Stations (SELECT cycles):
-//   ALL              -> every BGM track
-//   ANIME RADIO      -> anime / anime-film music
-//   OTHER-WORLD      -> real-world artists / bands
-//   AMATERASU RADIO  -> pop / dance-pop
-//   INDIE ROCK RADIO -> indie / alternative rock
-//   FAVORITES        -> saved favorite songs
-//   PLAYLIST         -> currently active Playlist 1/2/3
+//   ALL TRACKS -> FAVORITES -> POKEMON GBA -> GAMES -> ANIME -> POP ->
+//   CLASSIC ROCK -> ROCK METAL -> INDIE ROCK -> PLAYLIST 1 -> PLAYLIST 2 ->
+//   PLAYLIST 3 -> ALL TRACKS
+//
+// ALL TRACKS contains radio-worthy music only. Short jingles/fanfares/test cues
+// remain available to the game itself, but are intentionally omitted from radio.
 //
 // Main controls:
 //   A           -> Play / Pause
@@ -68,6 +67,9 @@ static EWRAM_DATA u16          sRadioStationIndex    = 0;
 #define RADIO_MARQUEE_VISIBLE_CHARS  28
 #define RADIO_MARQUEE_GAP_CHARS       6
 #define RADIO_MARQUEE_DELAY_FRAMES    8
+#define RADIO_MARQUEE_TEXT_X         44
+#define RADIO_MARQUEE_TEXT_WIDTH     (28 * 8 - RADIO_MARQUEE_TEXT_X)
+#define RADIO_MARQUEE_TEXT_Y         18
 
 static EWRAM_DATA u8   sRadioMarqueeText[RADIO_MARQUEE_TEXT_SIZE];
 static EWRAM_DATA u16  sRadioMarqueeLength;
@@ -104,7 +106,7 @@ static EWRAM_DATA u16 sRadioPopupPendingSong;
 #define RADIO_PLAYLIST_CAPACITY       20
 #define RADIO_SEARCH_CAPACITY         64
 #define RADIO_MENU_ITEM_COUNT         10
-#define RADIO_CONFIG_ITEM_COUNT        4
+#define RADIO_CONFIG_ITEM_COUNT        5
 #define RADIO_VOLUME_MAX              10
 #define RADIO_SEARCH_LETTER_COUNT     26
 
@@ -145,6 +147,7 @@ enum RadioConfigItem
     RADIO_CONFIG_OUTPUT = 0,
     RADIO_CONFIG_VOLUME,
     RADIO_CONFIG_TRANSITION,
+    RADIO_CONFIG_HIDE_COVERS,
     RADIO_CONFIG_RETURN,
 };
 
@@ -181,6 +184,7 @@ static EWRAM_DATA bool8 sRadioPriorityEnabled;
 static EWRAM_DATA bool8 sRadioRepeatEnabled; // default OFF (EWRAM/BSS)
 static EWRAM_DATA u8    sRadioVolume;
 static EWRAM_DATA bool8 sRadioTransitionFxEnabled;
+static EWRAM_DATA bool8 sRadioHideCovers;
 
 // Playback-pass monitor.
 //
@@ -403,6 +407,15 @@ enum RadioAlbumCoverId
     RADIO_COVER_THREE_IMAGINARY_BOYS,
     RADIO_COVER_EITHER_OR,
     RADIO_COVER_UNKNOWN_PLEASURES,
+    RADIO_COVER_FREEWHEELIN,
+    RADIO_COVER_HIGHWAY_61_REVISITED,
+    RADIO_COVER_BRINGING_IT_ALL_BACK_HOME,
+    RADIO_COVER_PAT_GARRETT_AND_BILLY_THE_KID,
+    RADIO_COVER_ARE_YOU_EXPERIENCED,
+    RADIO_COVER_THE_WALL,
+    RADIO_COVER_WISH_YOU_WERE_HERE,
+    RADIO_COVER_DARK_SIDE_OF_THE_MOON,
+    RADIO_COVER_DIVISION_BELL,
     RADIO_COVER_COUNT,
 };
 
@@ -467,6 +480,24 @@ static const u16 sRadioCoverEitherOr_Pal[] = INCBIN_U16("graphics/radio/covers/e
 static const u32 sRadioCoverEitherOr_Gfx[] = INCBIN_U32("graphics/radio/covers/eitheror.4bpp.smol");
 static const u16 sRadioCoverUnknownPleasures_Pal[] = INCBIN_U16("graphics/radio/covers/unknowpleasures.gbapal");
 static const u32 sRadioCoverUnknownPleasures_Gfx[] = INCBIN_U32("graphics/radio/covers/unknowpleasures.4bpp.smol");
+static const u16 sRadioCoverFreewheelin_Pal[] = INCBIN_U16("graphics/radio/covers/freewheelin.gbapal");
+static const u32 sRadioCoverFreewheelin_Gfx[] = INCBIN_U32("graphics/radio/covers/freewheelin.4bpp.smol");
+static const u16 sRadioCoverHighway61Revisited_Pal[] = INCBIN_U16("graphics/radio/covers/highway61revisited.gbapal");
+static const u32 sRadioCoverHighway61Revisited_Gfx[] = INCBIN_U32("graphics/radio/covers/highway61revisited.4bpp.smol");
+static const u16 sRadioCoverBringingItAllBackHome_Pal[] = INCBIN_U16("graphics/radio/covers/bringingitallbackhome.gbapal");
+static const u32 sRadioCoverBringingItAllBackHome_Gfx[] = INCBIN_U32("graphics/radio/covers/bringingitallbackhome.4bpp.smol");
+static const u16 sRadioCoverPatGarrettAndBillyTheKid_Pal[] = INCBIN_U16("graphics/radio/covers/patgarrett.gbapal");
+static const u32 sRadioCoverPatGarrettAndBillyTheKid_Gfx[] = INCBIN_U32("graphics/radio/covers/patgarrett.4bpp.smol");
+static const u16 sRadioCoverAreYouExperienced_Pal[] = INCBIN_U16("graphics/radio/covers/areyouexperienced.gbapal");
+static const u32 sRadioCoverAreYouExperienced_Gfx[] = INCBIN_U32("graphics/radio/covers/areyouexperienced.4bpp.smol");
+static const u16 sRadioCoverTheWall_Pal[] = INCBIN_U16("graphics/radio/covers/thewall.gbapal");
+static const u32 sRadioCoverTheWall_Gfx[] = INCBIN_U32("graphics/radio/covers/thewall.4bpp.smol");
+static const u16 sRadioCoverWishYouWereHere_Pal[] = INCBIN_U16("graphics/radio/covers/wishyouwerehere.gbapal");
+static const u32 sRadioCoverWishYouWereHere_Gfx[] = INCBIN_U32("graphics/radio/covers/wishyouwerehere.4bpp.smol");
+static const u16 sRadioCoverDarkSideOfTheMoon_Pal[] = INCBIN_U16("graphics/radio/covers/darksideofthemoon.gbapal");
+static const u32 sRadioCoverDarkSideOfTheMoon_Gfx[] = INCBIN_U32("graphics/radio/covers/darksideofthemoon.4bpp.smol");
+static const u16 sRadioCoverDivisionBell_Pal[] = INCBIN_U16("graphics/radio/covers/divisionbell.gbapal");
+static const u32 sRadioCoverDivisionBell_Gfx[] = INCBIN_U32("graphics/radio/covers/divisionbell.4bpp.smol");
 
 static const struct OamData sOamData_RadioCover =
 {
@@ -532,6 +563,15 @@ static const struct CompressedSpriteSheet sRadioCoverSheets[RADIO_COVER_COUNT] =
     [RADIO_COVER_THREE_IMAGINARY_BOYS] = {sRadioCoverThreeImaginaryBoys_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_EITHER_OR] = {sRadioCoverEitherOr_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_UNKNOWN_PLEASURES] = {sRadioCoverUnknownPleasures_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_FREEWHEELIN] = {sRadioCoverFreewheelin_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_HIGHWAY_61_REVISITED] = {sRadioCoverHighway61Revisited_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_BRINGING_IT_ALL_BACK_HOME] = {sRadioCoverBringingItAllBackHome_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_PAT_GARRETT_AND_BILLY_THE_KID] = {sRadioCoverPatGarrettAndBillyTheKid_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_ARE_YOU_EXPERIENCED] = {sRadioCoverAreYouExperienced_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_THE_WALL] = {sRadioCoverTheWall_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_WISH_YOU_WERE_HERE] = {sRadioCoverWishYouWereHere_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_DARK_SIDE_OF_THE_MOON] = {sRadioCoverDarkSideOfTheMoon_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_DIVISION_BELL] = {sRadioCoverDivisionBell_Gfx, 0x800, TAG_RADIO_COVER},
 };
 
 static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
@@ -565,6 +605,15 @@ static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
     [RADIO_COVER_THREE_IMAGINARY_BOYS] = {sRadioCoverThreeImaginaryBoys_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_EITHER_OR] = {sRadioCoverEitherOr_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_UNKNOWN_PLEASURES] = {sRadioCoverUnknownPleasures_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_FREEWHEELIN] = {sRadioCoverFreewheelin_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_HIGHWAY_61_REVISITED] = {sRadioCoverHighway61Revisited_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_BRINGING_IT_ALL_BACK_HOME] = {sRadioCoverBringingItAllBackHome_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_PAT_GARRETT_AND_BILLY_THE_KID] = {sRadioCoverPatGarrettAndBillyTheKid_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_ARE_YOU_EXPERIENCED] = {sRadioCoverAreYouExperienced_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_THE_WALL] = {sRadioCoverTheWall_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_WISH_YOU_WERE_HERE] = {sRadioCoverWishYouWereHere_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_DARK_SIDE_OF_THE_MOON] = {sRadioCoverDarkSideOfTheMoon_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_DIVISION_BELL] = {sRadioCoverDivisionBell_Pal, TAG_RADIO_COVER},
 };
 
 
@@ -1154,13 +1203,11 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_GUTS_THEME) \
     X(MUS_THE_YOUNG_PHOTOGRAPHER) \
     X(MUS_HOPE_GRAND_CHASE) \
-    X(MUS_GLAST_HEIM_THEME) \
     X(MUS_ANCIENT_GROOVER) \
     X(MUS_DIVINE_GRACE) \
     X(MUS_THEME_OF_MORROC) \
     X(MUS_EVERLASTING_WANDERERS) \
     X(MUS_THEME_OF_GEFFEN) \
-    X(MUS_THEME_OF_ALDEBARAN) \
     X(MUS_THEME_OF_ALBERTA) \
     X(MUS_THEME_OF_PRONTERA) \
     X(MUS_BIGMOUTH_STRIKES_AGAIN) \
@@ -1208,7 +1255,19 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_IN_THE_END) \
     X(MUS_BREAKING_THE_HABIT) \
     X(MUS_KRYPTONITE) \
-    X(MUS_ANIMAL_I_HAVE_BECOME)
+    X(MUS_ANIMAL_I_HAVE_BECOME) \
+    X(MUS_A_HARD_RAINS_A_GONNA_FALL) \
+    X(MUS_ANOTHER_BRICK_IN_THE_WALL) \
+    X(MUS_BLOWIN_IN_THE_WIND) \
+    X(MUS_LIKE_A_ROLLING_STONE) \
+    X(MUS_COMFORTABLY_NUMB) \
+    X(MUS_FOXY_LADY) \
+    X(MUS_HIGH_HOPES) \
+    X(MUS_KNOCKIN_ON_HEAVENS_DOOR) \
+    X(MUS_MR_TAMBOURINE_MAN) \
+    X(MUS_SHINE_ON_YOU_CRAZY_DIAMOND) \
+    X(MUS_THE_GREAT_GIG_IN_THE_SKY) \
+    X(MUS_TIME)
 
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
@@ -1226,116 +1285,226 @@ static const u8 *const sRadioBGMNames[END_MUS - START_MUS + 1] =
 // ===========================================================================
 enum RadioStation
 {
+    // Numeric values 0..9 intentionally preserve the old save ABI.
     STATION_ALL = 0,
     STATION_ANIME,
-    STATION_OTHER_WORLD,
-    STATION_AMATERASU,
+    STATION_POP,          // keeps legacy numeric save slot 2
+    STATION_POKEMON_GBA,  // keeps legacy numeric save slot 3
     STATION_INDIE_ROCK,
     STATION_FAVORITES,
     STATION_PLAYLIST,
     STATION_GAMES,
     STATION_ROCK_METAL,
+    STATION_CLASSIC_ROCK,
     STATION_COUNT,
 };
 
 // Each station is a flat array of song IDs terminated by 0xFFFF.
 #define STATION_END 0xFFFF
 
-// ALL keeps the complete soundtrack: vanilla + every HLW custom track.
+// ALL TRACKS is intentionally NOT the raw game sound table.
+// Short fanfares / jingles / test cues stay in the game, but are excluded here.
 static const u16 sStation_All[] = {
-#define X(s) s,
-    RADIO_SOUND_LIST_BGM
-#undef X
-    STATION_END
-};
-
-// ---------------------------------------------------------------------------
-// ANIME RADIO
-// Anime / anime-film songs.
-// ---------------------------------------------------------------------------
-static const u16 sStation_Anime[] = {
-    // Openings / vocal themes first
-    MUS_BLUE_BIRD,
-    MUS_DISTANCE,
-    MUS_KANASHIMI_WO_YASASHISA_NI,
-    MUS_THE_WORLD,
-    MUS_CRUEL_ANGELS_THESIS,
-    MUS_PEGASUS_FANTASY,
-    MUS_RESONANCE,
-    MUS_PAPER_MOON,
-    MUS_OMOKAGE,
-
-    // Movie / OST / character themes after the openings
-    MUS_LUGIAS_SONG,
-    MUS_SHOUSHIN_NO_KIKI,
-    MUS_BROTHERS,
-    MUS_GAZE_AT_THE_SKIES,
-    MUS_KOKUTEN,
-    MUS_GUTS_THEME,
-
-    // Pain theme closes the station
-    MUS_PAINS_THEME,
-    STATION_END
-};
-
-// ---------------------------------------------------------------------------
-// OTHER-WORLD MUSIC
-// Songs that exist in the "real world": artists, bands, standards, etc.
-// The Radiohead block lives here.
-// ---------------------------------------------------------------------------
-static const u16 sStation_OtherWorld[] = {
+    MUS_GSC_ROUTE38,
+    MUS_C_COMM_CENTER,
+    MUS_GSC_PEWTER,
+    MUS_C_VS_LEGEND_BEAST,
+    MUS_ROUTE101,
+    MUS_ROUTE110,
+    MUS_ROUTE120,
+    MUS_PETALBURG,
+    MUS_OLDALE,
+    MUS_GYM,
+    MUS_SURF,
+    MUS_PETALBURG_WOODS,
+    MUS_LILYCOVE_MUSEUM,
+    MUS_ROUTE122,
+    MUS_OCEANIC_MUSEUM,
+    MUS_EVOLUTION,
+    MUS_ENCOUNTER_GIRL,
+    MUS_ENCOUNTER_MALE,
+    MUS_ABANDONED_SHIP,
+    MUS_FORTREE,
+    MUS_BIRCH_LAB,
+    MUS_B_TOWER_RS,
+    MUS_ENCOUNTER_SWIMMER,
+    MUS_CAVE_OF_ORIGIN,
+    MUS_AWAKEN_LEGEND,
+    MUS_ROULETTE,
+    MUS_LINK_CONTEST_P1,
+    MUS_LINK_CONTEST_P2,
+    MUS_LINK_CONTEST_P3,
+    MUS_LINK_CONTEST_P4,
+    MUS_ENCOUNTER_RICH,
+    MUS_VERDANTURF,
+    MUS_RUSTBORO,
+    MUS_POKE_CENTER,
+    MUS_ROUTE104,
+    MUS_ROUTE119,
+    MUS_CYCLING,
+    MUS_POKE_MART,
+    MUS_LITTLEROOT,
+    MUS_MT_CHIMNEY,
+    MUS_ENCOUNTER_FEMALE,
+    MUS_LILYCOVE,
+    MUS_DESERT,
+    MUS_HELP,
+    MUS_UNDERWATER,
+    MUS_TITLE,
+    MUS_INTRO,
+    MUS_ENCOUNTER_MAY,
+    MUS_ENCOUNTER_INTENSE,
+    MUS_ENCOUNTER_COOL,
+    MUS_ROUTE113,
+    MUS_ENCOUNTER_AQUA,
+    MUS_FOLLOW_ME,
+    MUS_ENCOUNTER_BRENDAN,
+    MUS_EVER_GRANDE,
+    MUS_ENCOUNTER_SUSPICIOUS,
+    MUS_CABLE_CAR,
+    MUS_GAME_CORNER,
+    MUS_DEWFORD,
+    MUS_SAFARI_ZONE,
+    MUS_VICTORY_ROAD,
+    MUS_AQUA_MAGMA_HIDEOUT,
+    MUS_SAILING,
+    MUS_MT_PYRE,
+    MUS_SLATEPORT,
+    MUS_MT_PYRE_EXTERIOR,
+    MUS_SCHOOL,
+    MUS_HALL_OF_FAME,
+    MUS_FALLARBOR,
+    MUS_SEALED_CHAMBER,
+    MUS_CONTEST,
+    MUS_ENCOUNTER_MAGMA,
+    MUS_INTRO_BATTLE,
+    MUS_ABNORMAL_WEATHER,
+    MUS_WEATHER_GROUDON,
+    MUS_SOOTOPOLIS,
+    MUS_HALL_OF_FAME_ROOM,
+    MUS_TRICK_HOUSE,
+    MUS_ENCOUNTER_TWINS,
+    MUS_ENCOUNTER_ELITE_FOUR,
+    MUS_ENCOUNTER_HIKER,
+    MUS_CONTEST_LOBBY,
+    MUS_ENCOUNTER_INTERVIEWER,
+    MUS_ENCOUNTER_CHAMPION,
+    MUS_CREDITS,
+    MUS_END,
+    MUS_B_FRONTIER,
+    MUS_B_ARENA,
+    MUS_B_PYRAMID,
+    MUS_B_PYRAMID_TOP,
+    MUS_B_PALACE,
+    MUS_RAYQUAZA_APPEARS,
+    MUS_B_TOWER,
+    MUS_B_DOME,
+    MUS_B_PIKE,
+    MUS_B_FACTORY,
+    MUS_VS_RAYQUAZA,
+    MUS_VS_FRONTIER_BRAIN,
+    MUS_VS_MEW,
+    MUS_B_DOME_LOBBY,
+    MUS_VS_WILD,
+    MUS_VS_AQUA_MAGMA,
+    MUS_VS_TRAINER,
+    MUS_VS_GYM_LEADER,
+    MUS_VS_CHAMPION,
+    MUS_VS_REGI,
+    MUS_VS_KYOGRE_GROUDON,
+    MUS_VS_RIVAL,
+    MUS_VS_ELITE_FOUR,
+    MUS_VS_AQUA_MAGMA_LEADER,
+    MUS_RG_FOLLOW_ME,
+    MUS_RG_GAME_CORNER,
+    MUS_RG_ROCKET_HIDEOUT,
+    MUS_RG_GYM,
+    MUS_RG_JIGGLYPUFF,
+    MUS_RG_INTRO_FIGHT,
+    MUS_RG_TITLE,
+    MUS_RG_CINNABAR,
+    MUS_RG_LAVENDER,
+    MUS_RG_CYCLING,
+    MUS_RG_ENCOUNTER_ROCKET,
+    MUS_RG_ENCOUNTER_GIRL,
+    MUS_RG_ENCOUNTER_BOY,
+    MUS_RG_HALL_OF_FAME,
+    MUS_RG_VIRIDIAN_FOREST,
+    MUS_RG_MT_MOON,
+    MUS_RG_POKE_MANSION,
+    MUS_RG_CREDITS,
+    MUS_RG_ROUTE1,
+    MUS_RG_ROUTE24,
+    MUS_RG_ROUTE3,
+    MUS_RG_ROUTE11,
+    MUS_RG_VICTORY_ROAD,
+    MUS_RG_VS_GYM_LEADER,
+    MUS_RG_VS_TRAINER,
+    MUS_RG_VS_WILD,
+    MUS_RG_VS_CHAMPION,
+    MUS_RG_PALLET,
+    MUS_RG_OAK_LAB,
+    MUS_RG_OAK,
+    MUS_RG_POKE_CENTER,
+    MUS_RG_SS_ANNE,
+    MUS_RG_SURF,
+    MUS_RG_POKE_TOWER,
+    MUS_RG_SILPH,
+    MUS_RG_FUCHSIA,
+    MUS_RG_CELADON,
+    MUS_RG_VERMILLION,
+    MUS_RG_PEWTER,
+    MUS_RG_ENCOUNTER_RIVAL,
+    MUS_RG_RIVAL_EXIT,
+    MUS_RG_GAME_FREAK,
+    MUS_RG_POKE_JUMP,
+    MUS_RG_UNION_ROOM,
+    MUS_RG_NET_CENTER,
+    MUS_RG_MYSTERY_GIFT,
+    MUS_RG_BERRY_PICK,
+    MUS_RG_SEVII_CAVE,
+    MUS_RG_TEACHY_TV_SHOW,
+    MUS_RG_SEVII_ROUTE,
+    MUS_RG_SEVII_DUNGEON,
+    MUS_RG_SEVII_123,
+    MUS_RG_SEVII_45,
+    MUS_RG_SEVII_67,
+    MUS_RG_POKE_FLUTE,
+    MUS_RG_VS_DEOXYS,
+    MUS_RG_VS_MEWTWO,
+    MUS_RG_VS_LEGEND,
+    MUS_RG_ENCOUNTER_GYM_LEADER,
+    MUS_RG_ENCOUNTER_DEOXYS,
+    MUS_RG_TRAINER_TOWER,
+    MUS_RG_SLOW_PALLET,
+    MUS_RG_TEACHY_TV_MENU,
+    MUS_HLW_DISTORTION_WORLD,
+    MUS_HLW_VS_EVIL,
+    MUS_HLW_PHOENIX_TOWN,
     MUS_GET_LUCKY,
     MUS_FLY_ME_TO_THE_MOON,
     MUS_FLASHING_LIGHTS,
     MUS_PINK_AND_WHITE,
     MUS_RAP_SNITCH_KNISHES,
-
-
-    // New pop / electronic batch
-    MUS_360,
-    MUS_MEET_ME_HALFWAY,
-    MUS_ONE_MORE_TIME,
-    MUS_AROUND_THE_WORLD,
-    MUS_WHERE_IS_THE_LOVE,
-
-    // Radiohead
-    MUS_I_WILL,
-    MUS_YOU_AND_WHOSE_ARMY,
-    MUS_MOTION_PICTURE_SOUNDTRACK,
-    MUS_EVERYTHING_IN_ITS_RIGHT_PLACE,
-    MUS_NO_SURPRISES,
-    MUS_LUCKY,
-    MUS_HIGH_AND_DRY,
-    MUS_STREET_SPIRIT,
-
-    STATION_END
-};
-
-// ---------------------------------------------------------------------------
-// AMATERASU RADIO
-// Pop / dance-pop station.
-// Songs may intentionally overlap another station when the genre fits.
-// ---------------------------------------------------------------------------
-static const u16 sStation_Amaterasu[] = {
-    MUS_GET_LUCKY,
+    MUS_SCARS_OF_TIME,
     MUS_APPLAUSE,
     MUS_ABRACADABRA,
-
-    // Pop / dance additions
-    MUS_360,
-    MUS_MEET_ME_HALFWAY,
-    MUS_ONE_MORE_TIME,
-    MUS_AROUND_THE_WORLD,
-    MUS_WHERE_IS_THE_LOVE,
-    STATION_END
-};
-
-// ---------------------------------------------------------------------------
-// INDIE ROCK RADIO
-// Radiohead + The Smiths + The Strokes + Arctic Monkeys + Mazzy Star + Slowdive
-// ---------------------------------------------------------------------------
-static const u16 sStation_IndieRock[] = {
-    // Radiohead
+    MUS_PAINS_THEME,
+    MUS_BLUE_BIRD,
+    MUS_THE_WORLD,
+    MUS_CRUEL_ANGELS_THESIS,
+    MUS_PEGASUS_FANTASY,
+    MUS_LUGIAS_SONG,
+    MUS_MIDNAS_LAMENT,
+    MUS_SHOUSHIN_NO_KIKI,
+    MUS_OMOKAGE,
+    MUS_BROTHERS,
+    MUS_DISTANCE,
+    MUS_KANASHIMI_WO_YASASHISA_NI,
+    MUS_KOKUTEN,
+    MUS_RESONANCE,
+    MUS_PAPER_MOON,
+    MUS_TETRIS_MAIN_THEME,
     MUS_I_WILL,
     MUS_YOU_AND_WHOSE_ARMY,
     MUS_MOTION_PICTURE_SOUNDTRACK,
@@ -1344,28 +1513,39 @@ static const u16 sStation_IndieRock[] = {
     MUS_LUCKY,
     MUS_HIGH_AND_DRY,
     MUS_STREET_SPIRIT,
-
-    // The Smiths
+    MUS_GAZE_AT_THE_SKIES,
+    MUS_GUTS_THEME,
+    MUS_THE_YOUNG_PHOTOGRAPHER,
+    MUS_HOPE_GRAND_CHASE,
+    MUS_ANCIENT_GROOVER,
+    MUS_DIVINE_GRACE,
+    MUS_THEME_OF_MORROC,
+    MUS_EVERLASTING_WANDERERS,
+    MUS_THEME_OF_GEFFEN,
+    MUS_THEME_OF_ALBERTA,
+    MUS_THEME_OF_PRONTERA,
     MUS_BIGMOUTH_STRIKES_AGAIN,
     MUS_BOY_WITH_THE_THORN,
-
-    // The Strokes
     MUS_SOMEDAY,
     MUS_REPTILIA,
     MUS_HARD_TO_EXPLAIN,
-
-    // Arctic Monkeys
     MUS_ARABELLA,
     MUS_DO_I_WANNA_KNOW,
     MUS_NO_1_PARTY_ANTHEM,
-
-    // Mazzy Star / Slowdive
     MUS_FADE_INTO_YOU,
     MUS_WHEN_THE_SUN_HITS,
     MUS_AINT_NO_REST_FOR_THE_WICKED,
-
-
-    // Indie classics batch - Mac DeMarco / Tame Impala / Cure / Elliott Smith / Joy Division
+    MUS_360,
+    MUS_MEET_ME_HALFWAY,
+    MUS_ONE_MORE_TIME,
+    MUS_AROUND_THE_WORLD,
+    MUS_WHERE_IS_THE_LOVE,
+    MUS_UMINEKO_HOPE,
+    MUS_UMINEKO_600_MILLION,
+    MUS_UMINEKO_WINGLESS,
+    MUS_UMINEKO_WORLDEND,
+    MUS_UMINEKO_FAR,
+    MUS_UMINEKO_WORLDEND_DOMINATOR,
     MUS_FREAKING_OUT_THE_NEIGHBORHOOD,
     MUS_DRACULA_TAME_IMPALA,
     MUS_LOVESONG_THE_CURE,
@@ -1376,38 +1556,231 @@ static const u16 sStation_IndieRock[] = {
     MUS_NEW_DAWN_FADES,
     MUS_DISORDER,
     MUS_LOVE_WILL_TEAR_US_APART,
+    MUS_3S_AND_7S,
+    MUS_GO_WITH_THE_FLOW,
+    MUS_MY_GOD_IS_THE_SUN,
+    MUS_ROSEMARY_DEFTONES,
+    MUS_MY_OWN_SUMMER,
+    MUS_CHANGE_IN_THE_HOUSE_OF_FLIES,
+    MUS_BE_QUIET_AND_DRIVE,
+    MUS_AROUND_THE_FUR,
+    MUS_FAINT,
+    MUS_EASIER_TO_RUN,
+    MUS_IN_THE_END,
+    MUS_BREAKING_THE_HABIT,
+    MUS_KRYPTONITE,
+    MUS_ANIMAL_I_HAVE_BECOME,
+    MUS_A_HARD_RAINS_A_GONNA_FALL,
+    MUS_ANOTHER_BRICK_IN_THE_WALL,
+    MUS_BLOWIN_IN_THE_WIND,
+    MUS_LIKE_A_ROLLING_STONE,
+    MUS_COMFORTABLY_NUMB,
+    MUS_FOXY_LADY,
+    MUS_HIGH_HOPES,
+    MUS_KNOCKIN_ON_HEAVENS_DOOR,
+    MUS_MR_TAMBOURINE_MAN,
+    MUS_SHINE_ON_YOU_CRAZY_DIAMOND,
+    MUS_THE_GREAT_GIG_IN_THE_SKY,
+    MUS_TIME,
     STATION_END
 };
 
-// ---------------------------------------------------------------------------
-// GAMES RADIO
-// Video-game / visual-novel soundtracks. Friendly names include the game.
-// ---------------------------------------------------------------------------
-static const u16 sStation_Games[] = {
-    // HLW original / in-game custom tracks
+// POKEMON GBA: proper GBA Pokemon music plus the original HLW soundtrack.
+// Jingles/fanfares removed from ALL TRACKS are also excluded here.
+static const u16 sStation_PokemonGba[] = {
+    MUS_GSC_ROUTE38,
+    MUS_C_COMM_CENTER,
+    MUS_GSC_PEWTER,
+    MUS_C_VS_LEGEND_BEAST,
+    MUS_ROUTE101,
+    MUS_ROUTE110,
+    MUS_ROUTE120,
+    MUS_PETALBURG,
+    MUS_OLDALE,
+    MUS_GYM,
+    MUS_SURF,
+    MUS_PETALBURG_WOODS,
+    MUS_LILYCOVE_MUSEUM,
+    MUS_ROUTE122,
+    MUS_OCEANIC_MUSEUM,
+    MUS_EVOLUTION,
+    MUS_ENCOUNTER_GIRL,
+    MUS_ENCOUNTER_MALE,
+    MUS_ABANDONED_SHIP,
+    MUS_FORTREE,
+    MUS_BIRCH_LAB,
+    MUS_B_TOWER_RS,
+    MUS_ENCOUNTER_SWIMMER,
+    MUS_CAVE_OF_ORIGIN,
+    MUS_AWAKEN_LEGEND,
+    MUS_ROULETTE,
+    MUS_LINK_CONTEST_P1,
+    MUS_LINK_CONTEST_P2,
+    MUS_LINK_CONTEST_P3,
+    MUS_LINK_CONTEST_P4,
+    MUS_ENCOUNTER_RICH,
+    MUS_VERDANTURF,
+    MUS_RUSTBORO,
+    MUS_POKE_CENTER,
+    MUS_ROUTE104,
+    MUS_ROUTE119,
+    MUS_CYCLING,
+    MUS_POKE_MART,
+    MUS_LITTLEROOT,
+    MUS_MT_CHIMNEY,
+    MUS_ENCOUNTER_FEMALE,
+    MUS_LILYCOVE,
+    MUS_DESERT,
+    MUS_HELP,
+    MUS_UNDERWATER,
+    MUS_TITLE,
+    MUS_INTRO,
+    MUS_ENCOUNTER_MAY,
+    MUS_ENCOUNTER_INTENSE,
+    MUS_ENCOUNTER_COOL,
+    MUS_ROUTE113,
+    MUS_ENCOUNTER_AQUA,
+    MUS_FOLLOW_ME,
+    MUS_ENCOUNTER_BRENDAN,
+    MUS_EVER_GRANDE,
+    MUS_ENCOUNTER_SUSPICIOUS,
+    MUS_CABLE_CAR,
+    MUS_GAME_CORNER,
+    MUS_DEWFORD,
+    MUS_SAFARI_ZONE,
+    MUS_VICTORY_ROAD,
+    MUS_AQUA_MAGMA_HIDEOUT,
+    MUS_SAILING,
+    MUS_MT_PYRE,
+    MUS_SLATEPORT,
+    MUS_MT_PYRE_EXTERIOR,
+    MUS_SCHOOL,
+    MUS_HALL_OF_FAME,
+    MUS_FALLARBOR,
+    MUS_SEALED_CHAMBER,
+    MUS_CONTEST,
+    MUS_ENCOUNTER_MAGMA,
+    MUS_INTRO_BATTLE,
+    MUS_ABNORMAL_WEATHER,
+    MUS_WEATHER_GROUDON,
+    MUS_SOOTOPOLIS,
+    MUS_HALL_OF_FAME_ROOM,
+    MUS_TRICK_HOUSE,
+    MUS_ENCOUNTER_TWINS,
+    MUS_ENCOUNTER_ELITE_FOUR,
+    MUS_ENCOUNTER_HIKER,
+    MUS_CONTEST_LOBBY,
+    MUS_ENCOUNTER_INTERVIEWER,
+    MUS_ENCOUNTER_CHAMPION,
+    MUS_CREDITS,
+    MUS_END,
+    MUS_B_FRONTIER,
+    MUS_B_ARENA,
+    MUS_B_PYRAMID,
+    MUS_B_PYRAMID_TOP,
+    MUS_B_PALACE,
+    MUS_RAYQUAZA_APPEARS,
+    MUS_B_TOWER,
+    MUS_B_DOME,
+    MUS_B_PIKE,
+    MUS_B_FACTORY,
+    MUS_VS_RAYQUAZA,
+    MUS_VS_FRONTIER_BRAIN,
+    MUS_VS_MEW,
+    MUS_B_DOME_LOBBY,
+    MUS_VS_WILD,
+    MUS_VS_AQUA_MAGMA,
+    MUS_VS_TRAINER,
+    MUS_VS_GYM_LEADER,
+    MUS_VS_CHAMPION,
+    MUS_VS_REGI,
+    MUS_VS_KYOGRE_GROUDON,
+    MUS_VS_RIVAL,
+    MUS_VS_ELITE_FOUR,
+    MUS_VS_AQUA_MAGMA_LEADER,
+    MUS_RG_FOLLOW_ME,
+    MUS_RG_GAME_CORNER,
+    MUS_RG_ROCKET_HIDEOUT,
+    MUS_RG_GYM,
+    MUS_RG_JIGGLYPUFF,
+    MUS_RG_INTRO_FIGHT,
+    MUS_RG_TITLE,
+    MUS_RG_CINNABAR,
+    MUS_RG_LAVENDER,
+    MUS_RG_CYCLING,
+    MUS_RG_ENCOUNTER_ROCKET,
+    MUS_RG_ENCOUNTER_GIRL,
+    MUS_RG_ENCOUNTER_BOY,
+    MUS_RG_HALL_OF_FAME,
+    MUS_RG_VIRIDIAN_FOREST,
+    MUS_RG_MT_MOON,
+    MUS_RG_POKE_MANSION,
+    MUS_RG_CREDITS,
+    MUS_RG_ROUTE1,
+    MUS_RG_ROUTE24,
+    MUS_RG_ROUTE3,
+    MUS_RG_ROUTE11,
+    MUS_RG_VICTORY_ROAD,
+    MUS_RG_VS_GYM_LEADER,
+    MUS_RG_VS_TRAINER,
+    MUS_RG_VS_WILD,
+    MUS_RG_VS_CHAMPION,
+    MUS_RG_PALLET,
+    MUS_RG_OAK_LAB,
+    MUS_RG_OAK,
+    MUS_RG_POKE_CENTER,
+    MUS_RG_SS_ANNE,
+    MUS_RG_SURF,
+    MUS_RG_POKE_TOWER,
+    MUS_RG_SILPH,
+    MUS_RG_FUCHSIA,
+    MUS_RG_CELADON,
+    MUS_RG_VERMILLION,
+    MUS_RG_PEWTER,
+    MUS_RG_ENCOUNTER_RIVAL,
+    MUS_RG_RIVAL_EXIT,
+    MUS_RG_GAME_FREAK,
+    MUS_RG_POKE_JUMP,
+    MUS_RG_UNION_ROOM,
+    MUS_RG_NET_CENTER,
+    MUS_RG_MYSTERY_GIFT,
+    MUS_RG_BERRY_PICK,
+    MUS_RG_SEVII_CAVE,
+    MUS_RG_TEACHY_TV_SHOW,
+    MUS_RG_SEVII_ROUTE,
+    MUS_RG_SEVII_DUNGEON,
+    MUS_RG_SEVII_123,
+    MUS_RG_SEVII_45,
+    MUS_RG_SEVII_67,
+    MUS_RG_POKE_FLUTE,
+    MUS_RG_VS_DEOXYS,
+    MUS_RG_VS_MEWTWO,
+    MUS_RG_VS_LEGEND,
+    MUS_RG_ENCOUNTER_GYM_LEADER,
+    MUS_RG_ENCOUNTER_DEOXYS,
+    MUS_RG_TRAINER_TOWER,
+    MUS_RG_SLOW_PALLET,
+    MUS_RG_TEACHY_TV_MENU,
     MUS_HLW_DISTORTION_WORLD,
     MUS_HLW_VS_EVIL,
     MUS_HLW_PHOENIX_TOWN,
+    STATION_END
+};
 
-    // Chrono Cross / Zelda / Tetris / Pokemon Snap / Grand Chase
+// GAMES: non-Pokemon videogame / visual-novel music.
+static const u16 sStation_Games[] = {
     MUS_SCARS_OF_TIME,
     MUS_MIDNAS_LAMENT,
     MUS_TETRIS_MAIN_THEME,
     MUS_THE_YOUNG_PHOTOGRAPHER,
     MUS_HOPE_GRAND_CHASE,
-
-    // Ragnarok Online
-    MUS_GLAST_HEIM_THEME,
     MUS_ANCIENT_GROOVER,
     MUS_DIVINE_GRACE,
     MUS_THEME_OF_MORROC,
     MUS_EVERLASTING_WANDERERS,
     MUS_THEME_OF_GEFFEN,
-    MUS_THEME_OF_ALDEBARAN,
     MUS_THEME_OF_ALBERTA,
     MUS_THEME_OF_PRONTERA,
-
-    // Umineko no Naku Koro ni
     MUS_UMINEKO_HOPE,
     MUS_UMINEKO_600_MILLION,
     MUS_UMINEKO_WINGLESS,
@@ -1417,10 +1790,62 @@ static const u16 sStation_Games[] = {
     STATION_END
 };
 
-// ---------------------------------------------------------------------------
-// ROCK / METAL RADIO
-// Heavy electric guitar, bass and full rock drums.
-// ---------------------------------------------------------------------------
+// ANIME: anime themes / OST tracks only.
+static const u16 sStation_Anime[] = {
+    MUS_BLUE_BIRD,
+    MUS_DISTANCE,
+    MUS_KANASHIMI_WO_YASASHISA_NI,
+    MUS_THE_WORLD,
+    MUS_CRUEL_ANGELS_THESIS,
+    MUS_PEGASUS_FANTASY,
+    MUS_RESONANCE,
+    MUS_PAPER_MOON,
+    MUS_OMOKAGE,
+    MUS_LUGIAS_SONG,
+    MUS_SHOUSHIN_NO_KIKI,
+    MUS_BROTHERS,
+    MUS_GAZE_AT_THE_SKIES,
+    MUS_KOKUTEN,
+    MUS_GUTS_THEME,
+    MUS_PAINS_THEME,
+    STATION_END
+};
+
+// POP: pop, hip-hop, electronic, standards and otherwise uncategorized real-world tracks.
+static const u16 sStation_Pop[] = {
+    MUS_GET_LUCKY,
+    MUS_FLY_ME_TO_THE_MOON,
+    MUS_FLASHING_LIGHTS,
+    MUS_PINK_AND_WHITE,
+    MUS_RAP_SNITCH_KNISHES,
+    MUS_APPLAUSE,
+    MUS_ABRACADABRA,
+    MUS_360,
+    MUS_MEET_ME_HALFWAY,
+    MUS_ONE_MORE_TIME,
+    MUS_AROUND_THE_WORLD,
+    MUS_WHERE_IS_THE_LOVE,
+    STATION_END
+};
+
+// CLASSIC ROCK
+static const u16 sStation_ClassicRock[] = {
+    MUS_A_HARD_RAINS_A_GONNA_FALL,
+    MUS_BLOWIN_IN_THE_WIND,
+    MUS_LIKE_A_ROLLING_STONE,
+    MUS_MR_TAMBOURINE_MAN,
+    MUS_KNOCKIN_ON_HEAVENS_DOOR,
+    MUS_FOXY_LADY,
+    MUS_ANOTHER_BRICK_IN_THE_WALL,
+    MUS_COMFORTABLY_NUMB,
+    MUS_SHINE_ON_YOU_CRAZY_DIAMOND,
+    MUS_THE_GREAT_GIG_IN_THE_SKY,
+    MUS_TIME,
+    MUS_HIGH_HOPES,
+    STATION_END
+};
+
+// ROCK METAL
 static const u16 sStation_RockMetal[] = {
     MUS_3S_AND_7S,
     MUS_GO_WITH_THE_FLOW,
@@ -1434,74 +1859,111 @@ static const u16 sStation_RockMetal[] = {
     MUS_EASIER_TO_RUN,
     MUS_IN_THE_END,
     MUS_BREAKING_THE_HABIT,
-        MUS_KRYPTONITE,
+    MUS_KRYPTONITE,
     MUS_ANIMAL_I_HAVE_BECOME,
-STATION_END
+    STATION_END
+};
+
+// INDIE ROCK
+static const u16 sStation_IndieRock[] = {
+    MUS_I_WILL,
+    MUS_YOU_AND_WHOSE_ARMY,
+    MUS_MOTION_PICTURE_SOUNDTRACK,
+    MUS_EVERYTHING_IN_ITS_RIGHT_PLACE,
+    MUS_NO_SURPRISES,
+    MUS_LUCKY,
+    MUS_HIGH_AND_DRY,
+    MUS_STREET_SPIRIT,
+    MUS_BIGMOUTH_STRIKES_AGAIN,
+    MUS_BOY_WITH_THE_THORN,
+    MUS_SOMEDAY,
+    MUS_REPTILIA,
+    MUS_HARD_TO_EXPLAIN,
+    MUS_ARABELLA,
+    MUS_DO_I_WANNA_KNOW,
+    MUS_NO_1_PARTY_ANTHEM,
+    MUS_FADE_INTO_YOU,
+    MUS_WHEN_THE_SUN_HITS,
+    MUS_AINT_NO_REST_FOR_THE_WICKED,
+    MUS_FREAKING_OUT_THE_NEIGHBORHOOD,
+    MUS_DRACULA_TAME_IMPALA,
+    MUS_LOVESONG_THE_CURE,
+    MUS_FRIDAY_IM_IN_LOVE,
+    MUS_BOYS_DONT_CRY,
+    MUS_ROSE_PARADE,
+    MUS_SHADOWPLAY,
+    MUS_NEW_DAWN_FADES,
+    MUS_DISORDER,
+    MUS_LOVE_WILL_TEAR_US_APART,
+    STATION_END
 };
 
 static const u16 *const sStationTracks[STATION_COUNT] = {
-    [STATION_ALL]         = sStation_All,
-    [STATION_ANIME]       = sStation_Anime,
-    [STATION_OTHER_WORLD] = sStation_OtherWorld,
-    [STATION_AMATERASU]   = sStation_Amaterasu,
-    [STATION_INDIE_ROCK]  = sStation_IndieRock,
-    [STATION_FAVORITES]   = NULL, // dynamic EWRAM list
-    [STATION_PLAYLIST]    = NULL, // dynamic EWRAM list
-    [STATION_GAMES]       = sStation_Games,
-    [STATION_ROCK_METAL]  = sStation_RockMetal,
+    [STATION_ALL]          = sStation_All,
+    [STATION_ANIME]        = sStation_Anime,
+    [STATION_POP]          = sStation_Pop,
+    [STATION_POKEMON_GBA]  = sStation_PokemonGba,
+    [STATION_INDIE_ROCK]   = sStation_IndieRock,
+    [STATION_FAVORITES]    = NULL,
+    [STATION_PLAYLIST]     = NULL,
+    [STATION_GAMES]        = sStation_Games,
+    [STATION_ROCK_METAL]   = sStation_RockMetal,
+    [STATION_CLASSIC_ROCK] = sStation_ClassicRock,
 };
 
-// Station display names
-static const u8 sStationName_All[]         = _("ALL TRACKS");
-static const u8 sStationName_Anime[]       = _("ANIME");
-static const u8 sStationName_OtherWorld[]  = _("OTHER-WORLD");
-static const u8 sStationName_Amaterasu[]   = _("AMATERASU");
-static const u8 sStationName_IndieRock[]   = _("INDIE ROCK");
-static const u8 sStationName_Favorites[]   = _("FAVORITES");
-static const u8 sStationName_Playlist1[]   = _("PLAYLIST 1");
-static const u8 sStationName_Playlist2[]   = _("PLAYLIST 2");
-static const u8 sStationName_Playlist3[]   = _("PLAYLIST 3");
-static const u8 sStationName_Games[]       = _("GAMES");
-
-static const u8 sStationName_RockMetal[]    = _("ROCK/METAL");
+// Station display names: everything shown to the player stays uppercase.
+static const u8 sStationName_All[]          = _("ALL TRACKS");
+static const u8 sStationName_Anime[]        = _("ANIME");
+static const u8 sStationName_Pop[]          = _("POP");
+static const u8 sStationName_PokemonGba[]   = _("POKEMON GBA");
+static const u8 sStationName_IndieRock[]    = _("INDIE ROCK");
+static const u8 sStationName_Favorites[]    = _("FAVORITES");
+static const u8 sStationName_Playlist1[]    = _("PLAYLIST 1");
+static const u8 sStationName_Playlist2[]    = _("PLAYLIST 2");
+static const u8 sStationName_Playlist3[]    = _("PLAYLIST 3");
+static const u8 sStationName_Games[]        = _("GAMES");
+static const u8 sStationName_RockMetal[]    = _("ROCK METAL");
+static const u8 sStationName_ClassicRock[]  = _("CLASSIC ROCK");
 
 static const u8 *const sStationNames[STATION_COUNT] = {
-    [STATION_ALL]         = sStationName_All,
-    [STATION_ANIME]       = sStationName_Anime,
-    [STATION_OTHER_WORLD] = sStationName_OtherWorld,
-    [STATION_AMATERASU]   = sStationName_Amaterasu,
-    [STATION_INDIE_ROCK]  = sStationName_IndieRock,
-    [STATION_FAVORITES]   = sStationName_Favorites,
-    [STATION_PLAYLIST]    = sStationName_Playlist1,
-    [STATION_GAMES]       = sStationName_Games,
-    [STATION_ROCK_METAL]  = sStationName_RockMetal,
+    [STATION_ALL]          = sStationName_All,
+    [STATION_ANIME]        = sStationName_Anime,
+    [STATION_POP]          = sStationName_Pop,
+    [STATION_POKEMON_GBA]  = sStationName_PokemonGba,
+    [STATION_INDIE_ROCK]   = sStationName_IndieRock,
+    [STATION_FAVORITES]    = sStationName_Favorites,
+    [STATION_PLAYLIST]     = sStationName_Playlist1,
+    [STATION_GAMES]        = sStationName_Games,
+    [STATION_ROCK_METAL]   = sStationName_RockMetal,
+    [STATION_CLASSIC_ROCK] = sStationName_ClassicRock,
 };
 
 // Full labels used only by the animated NOW PLAYING status.
-static const u8 sStationNowPlaying_All[]         = _("NOW PLAYING ALL TRACKS");
-static const u8 sStationNowPlaying_Anime[]       = _("NOW PLAYING ANIME RADIO");
-static const u8 sStationNowPlaying_OtherWorld[]  = _("NOW PLAYING OTHER-WORLD MUSIC");
-static const u8 sStationNowPlaying_Amaterasu[]   = _("NOW PLAYING AMATERASU RADIO");
-static const u8 sStationNowPlaying_IndieRock[]   = _("NOW PLAYING INDIE ROCK RADIO");
-static const u8 sStationNowPlaying_Favorites[]   = _("NOW PLAYING FAVORITES");
-static const u8 sStationNowPlaying_Playlist1[]   = _("NOW PLAYING PLAYLIST 1");
-static const u8 sStationNowPlaying_Playlist2[]   = _("NOW PLAYING PLAYLIST 2");
-static const u8 sStationNowPlaying_Playlist3[]   = _("NOW PLAYING PLAYLIST 3");
-static const u8 sStationNowPlaying_Games[]       = _("NOW PLAYING GAMES RADIO");
-
-static const u8 sStationNowPlaying_RockMetal[] = _("NOW PLAYING ROCK/METAL RADIO");
+static const u8 sStationNowPlaying_All[]          = _("NOW PLAYING ALL TRACKS");
+static const u8 sStationNowPlaying_Anime[]        = _("NOW PLAYING ANIME");
+static const u8 sStationNowPlaying_Pop[]          = _("NOW PLAYING POP");
+static const u8 sStationNowPlaying_PokemonGba[]   = _("NOW PLAYING POKEMON GBA");
+static const u8 sStationNowPlaying_IndieRock[]    = _("NOW PLAYING INDIE ROCK");
+static const u8 sStationNowPlaying_Favorites[]    = _("NOW PLAYING FAVORITES");
+static const u8 sStationNowPlaying_Playlist1[]    = _("NOW PLAYING PLAYLIST 1");
+static const u8 sStationNowPlaying_Playlist2[]    = _("NOW PLAYING PLAYLIST 2");
+static const u8 sStationNowPlaying_Playlist3[]    = _("NOW PLAYING PLAYLIST 3");
+static const u8 sStationNowPlaying_Games[]        = _("NOW PLAYING GAMES");
+static const u8 sStationNowPlaying_RockMetal[]    = _("NOW PLAYING ROCK METAL");
+static const u8 sStationNowPlaying_ClassicRock[]  = _("NOW PLAYING CLASSIC ROCK");
 
 static const u8 *const sStationNowPlayingNames[STATION_COUNT] =
 {
-    [STATION_ALL]         = sStationNowPlaying_All,
-    [STATION_ANIME]       = sStationNowPlaying_Anime,
-    [STATION_OTHER_WORLD] = sStationNowPlaying_OtherWorld,
-    [STATION_AMATERASU]   = sStationNowPlaying_Amaterasu,
-    [STATION_INDIE_ROCK]  = sStationNowPlaying_IndieRock,
-    [STATION_FAVORITES]   = sStationNowPlaying_Favorites,
-    [STATION_PLAYLIST]    = sStationNowPlaying_Playlist1,
-    [STATION_GAMES]       = sStationNowPlaying_Games,
-    [STATION_ROCK_METAL]  = sStationNowPlaying_RockMetal,
+    [STATION_ALL]          = sStationNowPlaying_All,
+    [STATION_ANIME]        = sStationNowPlaying_Anime,
+    [STATION_POP]          = sStationNowPlaying_Pop,
+    [STATION_POKEMON_GBA]  = sStationNowPlaying_PokemonGba,
+    [STATION_INDIE_ROCK]   = sStationNowPlaying_IndieRock,
+    [STATION_FAVORITES]    = sStationNowPlaying_Favorites,
+    [STATION_PLAYLIST]     = sStationNowPlaying_Playlist1,
+    [STATION_GAMES]        = sStationNowPlaying_Games,
+    [STATION_ROCK_METAL]   = sStationNowPlaying_RockMetal,
+    [STATION_CLASSIC_ROCK] = sStationNowPlaying_ClassicRock,
 };
 
 static const u8 *Radio_GetStationDisplayName(u8 station)
@@ -1534,6 +1996,61 @@ static const u8 *Radio_GetStationNowPlayingName(u8 station)
     default:
         return sStationNowPlaying_Playlist1;
     }
+}
+
+
+// Exact player-facing station order. PLAYLIST appears three times, once for
+// each active playlist, without changing the persisted station enum ABI.
+#define RADIO_STATION_CYCLE_COUNT 12
+
+static const u8 sRadioStationCycle[RADIO_STATION_CYCLE_COUNT] =
+{
+    STATION_ALL,
+    STATION_FAVORITES,
+    STATION_POKEMON_GBA,
+    STATION_GAMES,
+    STATION_ANIME,
+    STATION_POP,
+    STATION_CLASSIC_ROCK,
+    STATION_ROCK_METAL,
+    STATION_INDIE_ROCK,
+    STATION_PLAYLIST,
+    STATION_PLAYLIST,
+    STATION_PLAYLIST,
+};
+
+static const u8 sRadioStationCyclePlaylist[RADIO_STATION_CYCLE_COUNT] =
+{
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 2,
+};
+
+static u8 Radio_GetStationCycleSlot(void)
+{
+    u8 i;
+
+    for (i = 0; i < RADIO_STATION_CYCLE_COUNT; i++)
+    {
+        if (sRadioStationCycle[i] != sRadioStation)
+            continue;
+
+        if (sRadioStation != STATION_PLAYLIST
+         || sRadioStationCyclePlaylist[i] == sRadioActivePlaylist)
+            return i;
+    }
+
+    return 0;
+}
+
+static void Radio_SetStationCycleSlot(u8 slot)
+{
+    if (slot >= RADIO_STATION_CYCLE_COUNT)
+        slot = 0;
+
+    sRadioStation = sRadioStationCycle[slot];
+
+    if (sRadioStation == STATION_PLAYLIST)
+        sRadioActivePlaylist = sRadioStationCyclePlaylist[slot];
 }
 
 // ===========================================================================
@@ -1619,6 +2136,7 @@ static void Radio_ResetPlaybackMonitor(void);
 static void Radio_ApplyAudioSettings(void);
 static void Radio_StartSongWithSettings(u16 songId);
 static void Radio_SetStereoOutput(bool8 stereo);
+static void Radio_RefreshAlbumCover(void);
 static void Radio_QueueNowPlayingPopup(u16 songId);
 static void Radio_ClearNowPlayingPopupQueue(void);
 static void Radio_DrawNowPlayingPopup(u8 taskId);
@@ -1737,8 +2255,8 @@ static void Radio_SyncSong(void)
 static const u8 sRadioText_TrackFmt[]      = _("Track:{STR_VAR_1}/{STR_VAR_2}");
 static const u8 sRadioText_Paused[]        = _("PAUSED");
 static const u8 sRadioText_Unknown[]       = _("---");
-static const u8 sRadioText_SongFmt[]            = _(" Song: {STR_VAR_1}");
-static const u8 sRadioText_SongFmtSelected[]    = _(">Song: {STR_VAR_1}");
+static const u8 sRadioText_SongPrefix[]         = _(" Song: ");
+static const u8 sRadioText_SongPrefixSelected[] = _(">Song: ");
 static const u8 sRadioText_StationFmt[]         = _(" Radio Station: {STR_VAR_1}");
 static const u8 sRadioText_StationFmtSelected[] = _(">Radio Station: {STR_VAR_1}");
 
@@ -1765,6 +2283,8 @@ static const u8 sRadioText_ConfigMono[]         = _("OUTPUT: MONO");
 static const u8 sRadioText_ConfigVolumeFmt[]    = _("RADIO VOL: {STR_VAR_1}");
 static const u8 sRadioText_ConfigTransitionOn[] = _("TRANSITION FX: ON");
 static const u8 sRadioText_ConfigTransitionOff[]= _("TRANSITION FX: OFF");
+static const u8 sRadioText_ConfigHideCoversOn[] = _("HIDE COVERS: ON");
+static const u8 sRadioText_ConfigHideCoversOff[]= _("HIDE COVERS: OFF");
 
 static const u8 sRadioText_SearchTitle[]      = _("SEARCH A-Z");
 static const u8 sRadioText_SearchLetterFmt[]  = _("LETTER: {STR_VAR_1}");
@@ -2004,13 +2524,11 @@ static const u8 sGamesName_TetrisMainTheme[] = _("TETRIS MAIN THEME (TETRIS)");
 static const u8 sGamesName_YoungPhotographer[] = _("THE YOUNG PHOTOGRAPHER (POKEMON SNAP)");
 static const u8 sGamesName_HopeGrandChase[] = _("HOPE (GRAND CHASE)");
 
-static const u8 sGamesName_GlastHeim[] = _("GLAST HEIM THEME (RAGNAROK)");
 static const u8 sGamesName_AncientGroover[] = _("ANCIENT GROOVER (RAGNAROK)");
 static const u8 sGamesName_DivineGrace[] = _("DIVINE GRACE (RAGNAROK)");
 static const u8 sGamesName_ThemeOfMorroc[] = _("THEME OF MORROC (RAGNAROK)");
 static const u8 sGamesName_EverlastingWanderers[] = _("EVERLASTING WANDERERS (RAGNAROK)");
 static const u8 sGamesName_ThemeOfGeffen[] = _("THEME OF GEFFEN (RAGNAROK)");
-static const u8 sGamesName_ThemeOfAldebaran[] = _("THEME OF ALDEBARAN (RAGNAROK)");
 static const u8 sGamesName_ThemeOfAlberta[] = _("THEME OF ALBERTA (RAGNAROK)");
 static const u8 sGamesName_ThemeOfProntera[] = _("THEME OF PRONTERA (RAGNAROK)");
 
@@ -2041,8 +2559,6 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
         return sGamesName_YoungPhotographer;
     case MUS_HOPE_GRAND_CHASE:
         return sGamesName_HopeGrandChase;
-    case MUS_GLAST_HEIM_THEME:
-        return sGamesName_GlastHeim;
     case MUS_ANCIENT_GROOVER:
         return sGamesName_AncientGroover;
     case MUS_DIVINE_GRACE:
@@ -2053,8 +2569,6 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
         return sGamesName_EverlastingWanderers;
     case MUS_THEME_OF_GEFFEN:
         return sGamesName_ThemeOfGeffen;
-    case MUS_THEME_OF_ALDEBARAN:
-        return sGamesName_ThemeOfAldebaran;
     case MUS_THEME_OF_ALBERTA:
         return sGamesName_ThemeOfAlberta;
     case MUS_THEME_OF_PRONTERA:
@@ -2132,9 +2646,62 @@ static const u8 *Radio_GetRockMetalDisplayName(u16 songId)
     }
 }
 
+// ---------------------------------------------------------------------------
+// Classic Rock Radio display names.
+// ---------------------------------------------------------------------------
+static const u8 sClassicRockName_AHardRainsAGonnaFall[] = _("A HARD RAIN'S A-GONNA FALL (BOB DYLAN)");
+static const u8 sClassicRockName_AnotherBrickInTheWall[] = _("ANOTHER BRICK IN THE WALL (PINK FLOYD)");
+static const u8 sClassicRockName_BlowinInTheWind[] = _("BLOWIN' IN THE WIND (BOB DYLAN)");
+static const u8 sClassicRockName_LikeARollingStone[] = _("LIKE A ROLLING STONE (BOB DYLAN)");
+static const u8 sClassicRockName_ComfortablyNumb[] = _("COMFORTABLY NUMB (PINK FLOYD)");
+static const u8 sClassicRockName_FoxyLady[] = _("FOXY LADY (JIMI HENDRIX)");
+static const u8 sClassicRockName_HighHopes[] = _("HIGH HOPES (PINK FLOYD)");
+static const u8 sClassicRockName_KnockinOnHeavensDoor[] = _("KNOCKIN' ON HEAVEN'S DOOR (BOB DYLAN)");
+static const u8 sClassicRockName_MrTambourineMan[] = _("MR. TAMBOURINE MAN (BOB DYLAN)");
+static const u8 sClassicRockName_ShineOnYouCrazyDiamond[] = _("SHINE ON YOU CRAZY DIAMOND (PINK FLOYD)");
+static const u8 sClassicRockName_TheGreatGigInTheSky[] = _("THE GREAT GIG IN THE SKY (PINK FLOYD)");
+static const u8 sClassicRockName_Time[] = _("TIME (PINK FLOYD)");
+
+static const u8 *Radio_GetClassicRockDisplayName(u16 songId)
+{
+    switch (songId)
+    {
+    case MUS_A_HARD_RAINS_A_GONNA_FALL:
+        return sClassicRockName_AHardRainsAGonnaFall;
+    case MUS_ANOTHER_BRICK_IN_THE_WALL:
+        return sClassicRockName_AnotherBrickInTheWall;
+    case MUS_BLOWIN_IN_THE_WIND:
+        return sClassicRockName_BlowinInTheWind;
+    case MUS_LIKE_A_ROLLING_STONE:
+        return sClassicRockName_LikeARollingStone;
+    case MUS_COMFORTABLY_NUMB:
+        return sClassicRockName_ComfortablyNumb;
+    case MUS_FOXY_LADY:
+        return sClassicRockName_FoxyLady;
+    case MUS_HIGH_HOPES:
+        return sClassicRockName_HighHopes;
+    case MUS_KNOCKIN_ON_HEAVENS_DOOR:
+        return sClassicRockName_KnockinOnHeavensDoor;
+    case MUS_MR_TAMBOURINE_MAN:
+        return sClassicRockName_MrTambourineMan;
+    case MUS_SHINE_ON_YOU_CRAZY_DIAMOND:
+        return sClassicRockName_ShineOnYouCrazyDiamond;
+    case MUS_THE_GREAT_GIG_IN_THE_SKY:
+        return sClassicRockName_TheGreatGigInTheSky;
+    case MUS_TIME:
+        return sClassicRockName_Time;
+    default:
+        return NULL;
+    }
+}
+
 static const u8 *Radio_GetSpecialDisplayName(u16 songId)
 {
     const u8 *name;
+
+    name = Radio_GetClassicRockDisplayName(songId);
+    if (name != NULL)
+        return name;
 
     name = Radio_GetRockMetalDisplayName(songId);
     if (name != NULL)
@@ -2961,6 +3528,9 @@ void RadioPriority_MaintainBgm(void)
 #define RADIO_SAVE_CONFIG_TAG             0xA0
 #define RADIO_SAVE_CONFIG_TAG_MASK        0xF0
 #define RADIO_SAVE_CONFIG_TRANSITION      (1 << 0)
+#define RADIO_SAVE_CONFIG_HIDE_COVERS     (1 << 1)
+#define RADIO_RETIRED_SONG_SLOT_1         598
+#define RADIO_RETIRED_SONG_SLOT_2         604
 
 static bool8 Radio_SaveHasThreePlaylists(const struct RadioSaveData *save)
 {
@@ -3016,7 +3586,10 @@ static void Radio_ResetPersistentState(void)
 
 static bool8 Radio_SaveSongIdIsValid(u16 songId)
 {
-    return songId >= (u16)START_MUS && songId <= (u16)END_MUS;
+    return songId >= (u16)START_MUS
+        && songId <= (u16)END_MUS
+        && songId != RADIO_RETIRED_SONG_SLOT_1
+        && songId != RADIO_RETIRED_SONG_SLOT_2;
 }
 
 static u8 Radio_LoadSavedSongList(const u16 *src, u8 srcCount, u16 *dst, u8 capacity)
@@ -3033,6 +3606,11 @@ static u8 Radio_LoadSavedSongList(const u16 *src, u8 srcCount, u16 *dst, u8 capa
         bool8 duplicate = FALSE;
 
         if (!Radio_SaveSongIdIsValid(src[i]))
+            continue;
+
+        // Favorites/playlists must not resurrect tracks intentionally removed
+        // from the radio catalog (the underlying game song still exists).
+        if (Station_GetTrack(STATION_ALL, Station_FindTrack(STATION_ALL, src[i])) != src[i])
             continue;
 
         for (j = 0; j < outCount; j++)
@@ -3218,12 +3796,16 @@ static void Radio_LoadPersistentState(void)
         sRadioTransitionFxEnabled =
             (save->reserved[RADIO_SAVE_RSVD_CONFIG]
              & RADIO_SAVE_CONFIG_TRANSITION) != 0;
+        sRadioHideCovers =
+            (save->reserved[RADIO_SAVE_RSVD_CONFIG]
+             & RADIO_SAVE_CONFIG_HIDE_COVERS) != 0;
     }
     else
     {
         // Existing saves used these two bytes as zero-filled reserved space.
         sRadioVolume = RADIO_VOLUME_MAX;
         sRadioTransitionFxEnabled = TRUE;
+        sRadioHideCovers = FALSE;
     }
 
     Radio_SavePersistentState();
@@ -3269,7 +3851,8 @@ static void Radio_SavePersistentState(void)
     save->reserved[RADIO_SAVE_RSVD_VOLUME] = sRadioVolume + 1;
     save->reserved[RADIO_SAVE_RSVD_CONFIG] =
         RADIO_SAVE_CONFIG_TAG
-        | (sRadioTransitionFxEnabled ? RADIO_SAVE_CONFIG_TRANSITION : 0);
+        | (sRadioTransitionFxEnabled ? RADIO_SAVE_CONFIG_TRANSITION : 0)
+        | (sRadioHideCovers ? RADIO_SAVE_CONFIG_HIDE_COVERS : 0);
 
     memset(save->favorites, 0, sizeof(save->favorites));
     memcpy(save->favorites, sRadioFavorites, sizeof(sRadioFavorites));
@@ -3550,6 +4133,11 @@ static const u8 *Radio_GetConfigItemText(u8 item)
         return sRadioTransitionFxEnabled
              ? sRadioText_ConfigTransitionOn
              : sRadioText_ConfigTransitionOff;
+
+    case RADIO_CONFIG_HIDE_COVERS:
+        return sRadioHideCovers
+             ? sRadioText_ConfigHideCoversOn
+             : sRadioText_ConfigHideCoversOff;
 
     default:
         return sRadioText_MenuReturn;
@@ -4137,6 +4725,12 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 Radio_SavePersistentState();
                 break;
 
+            case RADIO_CONFIG_HIDE_COVERS:
+                sRadioHideCovers = !sRadioHideCovers;
+                Radio_RefreshAlbumCover();
+                Radio_SavePersistentState();
+                break;
+
             default:
                 sRadioUiMode = RADIO_UI_MENU;
                 Radio_DrawMenu(songId);
@@ -4507,16 +5101,16 @@ static void Radio_PrintStatusMarquee(void)
     );
 }
 
-static void Radio_UpdateStatusMarquee(void)
+static bool8 Radio_UpdateStatusMarquee(void)
 {
     u16 cycleLength;
 
     if (!sRadioStatusMarqueeEnabled || sRadioStatusMarqueeLength == 0)
-        return;
+        return FALSE;
 
     sRadioStatusMarqueeTimer++;
     if (sRadioStatusMarqueeTimer < RADIO_STATUS_MARQUEE_DELAY_FRAMES)
-        return;
+        return FALSE;
 
     sRadioStatusMarqueeTimer = 0;
     cycleLength = sRadioStatusMarqueeLength + RADIO_STATUS_MARQUEE_GAP_CHARS;
@@ -4525,7 +5119,10 @@ static void Radio_UpdateStatusMarquee(void)
     if (sRadioStatusMarqueeOffset >= cycleLength)
         sRadioStatusMarqueeOffset = 0;
 
-    // Clear only the right half of the top row. Track counter stays untouched.
+    // Update only the RAM window buffer here.  Do NOT queue a VRAM copy yet.
+    // The song ticker shares WIN_MUSIC_INFO and normally advances on the same
+    // frame.  Queuing two COPYWIN_FULL transfers for the same window in one
+    // frame can expose an intermediate/partial title for a frame.
     FillWindowPixelRect(
         WIN_MUSIC_INFO,
         PIXEL_FILL(1),
@@ -4536,7 +5133,7 @@ static void Radio_UpdateStatusMarquee(void)
     );
 
     Radio_PrintStatusMarquee();
-    CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
+    return TRUE;
 }
 
 static void Radio_SetMarqueeText(const u8 *text)
@@ -4602,66 +5199,82 @@ static void Radio_BuildMarqueeSlice(u8 *dest, u32 destSize)
     dest[i] = EOS;
 }
 
-static void Radio_PrintSongMarquee(void)
+static void Radio_PrintSongMarqueeText(void)
 {
     u8 visibleText[RADIO_MARQUEE_VISIBLE_CHARS + 1];
 
     Radio_BuildMarqueeSlice(visibleText, sizeof(visibleText));
-    StringCopy(gStringVar1, visibleText);
-    StringExpandPlaceholders(
-        gStringVar4,
-        sRadioMainSelection == RADIO_MAIN_SELECT_SONG
-            ? sRadioText_SongFmtSelected
-            : sRadioText_SongFmt
-    );
     AddTextPrinterParameterized(
         WIN_MUSIC_INFO,
         RADIO_FONT,
-        gStringVar4,
-        2,
-        18,
+        visibleText,
+        RADIO_MARQUEE_TEXT_X,
+        RADIO_MARQUEE_TEXT_Y,
         TEXT_SKIP_DRAW,
         NULL
     );
 }
 
+static void Radio_PrintSongMarquee(void)
+{
+    AddTextPrinterParameterized(
+        WIN_MUSIC_INFO,
+        RADIO_FONT,
+        sRadioMainSelection == RADIO_MAIN_SELECT_SONG
+            ? sRadioText_SongPrefixSelected
+            : sRadioText_SongPrefix,
+        2,
+        RADIO_MARQUEE_TEXT_Y,
+        TEXT_SKIP_DRAW,
+        NULL
+    );
+    Radio_PrintSongMarqueeText();
+}
+
 static void Radio_UpdateMarquee(void)
 {
     u16 cycleLength;
+    bool8 windowChanged;
 
     if (sRadioUiMode != RADIO_UI_MAIN)
         return;
 
-    Radio_UpdateStatusMarquee();
+    // Both tickers live in WIN_MUSIC_INFO.  Build every change in the RAM
+    // window first, then perform exactly ONE VRAM transfer at the end.
+    windowChanged = Radio_UpdateStatusMarquee();
 
-    if (!sRadioMarqueeEnabled || sRadioMarqueeLength == 0)
-        return;
+    if (sRadioMarqueeEnabled && sRadioMarqueeLength != 0)
+    {
+        sRadioMarqueeTimer++;
 
-    sRadioMarqueeTimer++;
+        if (sRadioMarqueeTimer >= RADIO_MARQUEE_DELAY_FRAMES)
+        {
+            sRadioMarqueeTimer = 0;
 
-    if (sRadioMarqueeTimer < RADIO_MARQUEE_DELAY_FRAMES)
-        return;
+            cycleLength = sRadioMarqueeLength + RADIO_MARQUEE_GAP_CHARS;
+            sRadioMarqueeOffset++;
 
-    sRadioMarqueeTimer = 0;
+            if (sRadioMarqueeOffset >= cycleLength)
+                sRadioMarqueeOffset = 0;
 
-    cycleLength = sRadioMarqueeLength + RADIO_MARQUEE_GAP_CHARS;
-    sRadioMarqueeOffset++;
+            // The label stays drawn. Only replace the title pixels in the RAM
+            // buffer; the single copy below makes the new frame visible whole.
+            FillWindowPixelRect(
+                WIN_MUSIC_INFO,
+                PIXEL_FILL(1),
+                RADIO_MARQUEE_TEXT_X,
+                16,
+                RADIO_MARQUEE_TEXT_WIDTH,
+                16
+            );
 
-    if (sRadioMarqueeOffset >= cycleLength)
-        sRadioMarqueeOffset = 0;
+            Radio_PrintSongMarqueeText();
+            windowChanged = TRUE;
+        }
+    }
 
-    // Only erase/redraw the song-name row.
-    FillWindowPixelRect(
-        WIN_MUSIC_INFO,
-        PIXEL_FILL(1),
-        0,
-        16,
-        28 * 8,
-        16
-    );
-
-    Radio_PrintSongMarquee();
-    CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
+    if (windowChanged)
+        CopyWindowToVram(WIN_MUSIC_INFO, COPYWIN_FULL);
 }
 
 static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
@@ -4711,11 +5324,12 @@ static void Radio_DrawMusicInfo(u16 songId, bool8 playing)
     // Anime / Pop / Indie / Games tracks get their friendly radio labels. Favorites and
     // Playlist keep those labels when they contain one of these songs.
     if (sRadioStation == STATION_ANIME
-        || sRadioStation == STATION_OTHER_WORLD
-        || sRadioStation == STATION_AMATERASU
+        || sRadioStation == STATION_POP
+        || sRadioStation == STATION_POKEMON_GBA
         || sRadioStation == STATION_INDIE_ROCK
         || sRadioStation == STATION_GAMES
         || sRadioStation == STATION_ROCK_METAL
+        || sRadioStation == STATION_CLASSIC_ROCK
         || sRadioStation == STATION_FAVORITES
         || sRadioStation == STATION_PLAYLIST)
     {
@@ -4816,16 +5430,19 @@ static void Task_RadioHandleInput(u8 taskId)
     if (JOY_NEW(SELECT_BUTTON))
     {
         u8 attempts = 0;
+        u8 cycleSlot = Radio_GetStationCycleSlot();
 
         PlaySE(SE_SELECT);
         Radio_PressButton(sRadioBtnSelectId);
 
         do
         {
-            sRadioStation = (sRadioStation + 1) % STATION_COUNT;
+            cycleSlot = (cycleSlot + 1) % RADIO_STATION_CYCLE_COUNT;
+            Radio_SetStationCycleSlot(cycleSlot);
             attempts++;
         }
-        while (Station_Count(sRadioStation) == 0 && attempts < STATION_COUNT);
+        while (Station_Count(sRadioStation) == 0
+            && attempts < RADIO_STATION_CYCLE_COUNT);
 
         sRadioStationIndex = Station_FindTrack(sRadioStation, songId);
         Radio_SyncSong();
@@ -4873,22 +5490,24 @@ static void Task_RadioHandleInput(u8 taskId)
      && (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_RIGHT)))
     {
         u8 attempts = 0;
+        u8 cycleSlot = Radio_GetStationCycleSlot();
 
         PlaySE(SE_SELECT);
 
         do
         {
             if (JOY_NEW(DPAD_RIGHT))
-                sRadioStation = (sRadioStation + 1) % STATION_COUNT;
+                cycleSlot = (cycleSlot + 1) % RADIO_STATION_CYCLE_COUNT;
             else
-                sRadioStation = (sRadioStation > 0)
-                              ? sRadioStation - 1
-                              : STATION_COUNT - 1;
+                cycleSlot = (cycleSlot > 0)
+                          ? cycleSlot - 1
+                          : RADIO_STATION_CYCLE_COUNT - 1;
 
+            Radio_SetStationCycleSlot(cycleSlot);
             attempts++;
         }
         while (Station_Count(sRadioStation) == 0
-            && attempts < STATION_COUNT);
+            && attempts < RADIO_STATION_CYCLE_COUNT);
 
         sRadioStationIndex = Station_FindTrack(sRadioStation, songId);
         Radio_SyncSong();
@@ -5196,6 +5815,27 @@ static u8 Radio_GetAlbumCoverForSong(u16 songId)
     case MUS_DISORDER:
     case MUS_LOVE_WILL_TEAR_US_APART: // Temporary placeholder: no dedicated cover yet.
         return RADIO_COVER_UNKNOWN_PLEASURES;
+    case MUS_A_HARD_RAINS_A_GONNA_FALL:
+    case MUS_BLOWIN_IN_THE_WIND:
+        return RADIO_COVER_FREEWHEELIN;
+    case MUS_LIKE_A_ROLLING_STONE:
+        return RADIO_COVER_HIGHWAY_61_REVISITED;
+    case MUS_MR_TAMBOURINE_MAN:
+        return RADIO_COVER_BRINGING_IT_ALL_BACK_HOME;
+    case MUS_KNOCKIN_ON_HEAVENS_DOOR:
+        return RADIO_COVER_PAT_GARRETT_AND_BILLY_THE_KID;
+    case MUS_FOXY_LADY:
+        return RADIO_COVER_ARE_YOU_EXPERIENCED;
+    case MUS_ANOTHER_BRICK_IN_THE_WALL:
+    case MUS_COMFORTABLY_NUMB:
+        return RADIO_COVER_THE_WALL;
+    case MUS_SHINE_ON_YOU_CRAZY_DIAMOND:
+        return RADIO_COVER_WISH_YOU_WERE_HERE;
+    case MUS_THE_GREAT_GIG_IN_THE_SKY:
+    case MUS_TIME:
+        return RADIO_COVER_DARK_SIDE_OF_THE_MOON;
+    case MUS_HIGH_HOPES:
+        return RADIO_COVER_DIVISION_BELL;
     default:
         return RADIO_COVER_NONE;
     }
@@ -5286,6 +5926,21 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
     }
 }
 
+// Apply the art preference immediately. This is used by the config toggle so
+// Jigglypuff never has to wait for a cover transition already in progress.
+static void Radio_RefreshAlbumCover(void)
+{
+    u8 coverId = sRadioHideCovers
+               ? RADIO_COVER_NONE
+               : Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+
+    sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
+    sRadioArtTransitionTimer = 0;
+    sRadioNextCoverId = coverId;
+    Radio_SetAlbumCoverImmediate(coverId);
+    Radio_BlendVisibleArt(0);
+}
+
 static void Radio_UpdateAlbumCover(void)
 {
     u8 coverId;
@@ -5293,7 +5948,9 @@ static void Radio_UpdateAlbumCover(void)
     if (sRadioJigSpriteId >= MAX_SPRITES)
         return;
 
-    coverId = Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+    coverId = sRadioHideCovers
+            ? RADIO_COVER_NONE
+            : Radio_GetAlbumCoverForSong(sRadioCurrentSong);
 
     // During a transition, remember the latest request. Fast song skipping
     // therefore converges to the newest album instead of flashing old covers.

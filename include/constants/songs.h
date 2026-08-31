@@ -529,13 +529,11 @@
 #define MUS_GUTS_THEME                           595
 #define MUS_THE_YOUNG_PHOTOGRAPHER               596
 #define MUS_HOPE_GRAND_CHASE                     597
-#define MUS_GLAST_HEIM_THEME                     598
 #define MUS_ANCIENT_GROOVER                      599
 #define MUS_DIVINE_GRACE                         600
 #define MUS_THEME_OF_MORROC                      601
 #define MUS_EVERLASTING_WANDERERS                602
 #define MUS_THEME_OF_GEFFEN                      603
-#define MUS_THEME_OF_ALDEBARAN                   604
 #define MUS_THEME_OF_ALBERTA                     605
 #define MUS_THEME_OF_PRONTERA                    606
 #define MUS_BIGMOUTH_STRIKES_AGAIN               607
@@ -584,8 +582,20 @@
 #define MUS_BREAKING_THE_HABIT         650
 #define MUS_KRYPTONITE                 651
 #define MUS_ANIMAL_I_HAVE_BECOME       652
+#define MUS_A_HARD_RAINS_A_GONNA_FALL  653
+#define MUS_ANOTHER_BRICK_IN_THE_WALL  654
+#define MUS_BLOWIN_IN_THE_WIND         655
+#define MUS_LIKE_A_ROLLING_STONE       656
+#define MUS_COMFORTABLY_NUMB           657
+#define MUS_FOXY_LADY                  658
+#define MUS_HIGH_HOPES                 659
+#define MUS_KNOCKIN_ON_HEAVENS_DOOR    660
+#define MUS_MR_TAMBOURINE_MAN          661
+#define MUS_SHINE_ON_YOU_CRAZY_DIAMOND 662
+#define MUS_THE_GREAT_GIG_IN_THE_SKY   663
+#define MUS_TIME                       664
 
-#define END_MUS MUS_ANIMAL_I_HAVE_BECOME
+#define END_MUS MUS_TIME
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
