@@ -1291,3 +1291,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Fossiltrenchentrance/scripts.inc"
 
 	.include "data/maps/FossilTrench/scripts.inc"
+
+	.include "data/maps/RustboroCity_Devon_B1F/scripts.inc"

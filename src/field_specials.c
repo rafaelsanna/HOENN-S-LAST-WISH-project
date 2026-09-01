@@ -1550,6 +1550,20 @@ u16 ScriptGetPartyMonSpecies(void)
     return GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES_OR_EGG, NULL);
 }
 
+u16 Script_CanChangeSelectedMonGender(void)
+{
+    if (gSpecialVar_0x8004 >= PARTY_SIZE)
+        return FALSE;
+
+    return CanMonGenderBeChanged(&gPlayerParty[gSpecialVar_0x8004]);
+}
+
+void Script_ChangeSelectedMonGender(void)
+{
+    if (gSpecialVar_0x8004 < PARTY_SIZE)
+        ChangeMonGender(&gPlayerParty[gSpecialVar_0x8004]);
+}
+
 // Removed for Emerald
 void TryInitBattleTowerAwardManObjectEvent(void)
 {

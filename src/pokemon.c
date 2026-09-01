@@ -2250,6 +2250,63 @@ u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality)
         return MON_MALE;
 }
 
+bool32 CanMonGenderBeChanged(struct Pokemon *mon)
+{
+    u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL);
+
+    if (species == SPECIES_NONE || species == SPECIES_EGG)
+        return FALSE;
+
+    switch (gSpeciesInfo[species].genderRatio)
+    {
+    case MON_MALE:
+    case MON_FEMALE:
+    case MON_GENDERLESS:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+bool32 ChangeMonGender(struct Pokemon *mon)
+{
+    struct BoxPokemon *boxMon = &mon->box;
+    u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL);
+    u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, NULL);
+    bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY, NULL);
+    u8 hiddenNature = GetMonData(mon, MON_DATA_HIDDEN_NATURE, NULL);
+    u8 targetGender;
+    u32 candidate = personality;
+    u16 checksum;
+
+    if (!CanMonGenderBeChanged(mon))
+        return FALSE;
+
+    targetGender = (GetGenderFromSpeciesAndPersonality(species, personality) == MON_MALE) ? MON_FEMALE : MON_MALE;
+
+    for (u32 i = 0; i < 32; i++)
+    {
+        candidate = (personality % 600) + (600 * i);
+        if (candidate == personality)
+            continue;
+        if (GetGenderFromSpeciesAndPersonality(species, candidate) == targetGender)
+            break;
+    }
+
+    if (GetGenderFromSpeciesAndPersonality(species, candidate) != targetGender)
+        return FALSE;
+
+    DecryptBoxMon(boxMon);
+    boxMon->personality = candidate;
+    checksum = CalculateBoxMonChecksum(boxMon);
+    boxMon->checksum = checksum;
+    EncryptBoxMon(boxMon);
+    SetMonData(mon, MON_DATA_IS_SHINY, &isShiny);
+    SetMonData(mon, MON_DATA_HIDDEN_NATURE, &hiddenNature);
+    CalculateMonStats(mon);
+    return TRUE;
+}
+
 bool32 IsPersonalityFemale(u16 species, u32 personality)
 {
     return GetGenderFromSpeciesAndPersonality(species, personality) == MON_FEMALE;

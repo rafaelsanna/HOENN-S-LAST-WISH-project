@@ -144,6 +144,8 @@ gSpecials::
 	def_special TryPutNameRaterShowOnTheAir
 	def_special BufferMonNickname
 	def_special IsMonOTIDNotPlayers
+	def_special Script_CanChangeSelectedMonGender
+	def_special Script_ChangeSelectedMonGender
 	def_special BufferTrendyPhraseString
 	def_special IsTrendyPhraseBoring
 	def_special BufferDeepLinkPhrase

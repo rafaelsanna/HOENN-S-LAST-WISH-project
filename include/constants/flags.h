@@ -1253,7 +1253,7 @@
 #define FLAG_HIDDEN_ITEM_ROUTE_121_BIG_MUSHROOM                       0x4AD
 #define FLAG_ITEM_FOSSIL_TRENCH_DEEP_SEA_TOOTH                    0x4AE
 #define FLAG_ITEM_FOSSIL_TRENCH_DEEP_SEA_SCALE                    0x4AF
-#define FLAG_UNUSED_0x4B0                                           0x4B0 // Unused Flag
+#define FLAG_ITEM_RUSTBORO_CITY_TM_FOUL_PLAY                       0x4B0
 #define FLAG_UNUSED_0x4B1                                           0x4B1 // Unused Flag
 #define FLAG_UNUSED_0x4B2                                           0x4B2 // Unused Flag
 #define FLAG_UNUSED_0x4B3                                           0x4B3 // Unused Flag

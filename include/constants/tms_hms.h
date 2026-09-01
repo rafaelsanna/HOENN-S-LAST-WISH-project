@@ -81,7 +81,8 @@
     F(WOOD_HAMMER) \
     F(DRAGON_TAIL) \
     F(PSYCHO_CUT) \
-    F(PLAY_ROUGH) 
+    F(PLAY_ROUGH) \
+    F(FOUL_PLAY)
 
 
 #define FOREACH_HM(F) \

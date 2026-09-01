@@ -1,0 +1,94 @@
+raw `
+RustboroCity_Devon_B1F_MapScripts::
+	.byte 0
+
+RustboroCity_Devon_B1F_EventScript_GenderSpecialist::
+	lock
+	faceplayer
+	msgbox RustboroCity_Devon_B1F_Text_ChangeGenderIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, RustboroCity_Devon_B1F_EventScript_ChooseMon
+	goto RustboroCity_Devon_B1F_EventScript_Decline
+
+RustboroCity_Devon_B1F_EventScript_ChooseMon::
+	msgbox RustboroCity_Devon_B1F_Text_ChooseMon, MSGBOX_DEFAULT
+	special ChoosePartyMon
+	waitstate
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, RustboroCity_Devon_B1F_EventScript_Decline
+	special BufferMonNickname
+	specialvar VAR_RESULT, Script_CanChangeSelectedMonGender
+	goto_if_eq VAR_RESULT, FALSE, RustboroCity_Devon_B1F_EventScript_CantChange
+	msgbox RustboroCity_Devon_B1F_Text_ConfirmChange, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, RustboroCity_Devon_B1F_EventScript_CheckMoney
+	goto RustboroCity_Devon_B1F_EventScript_Decline
+
+RustboroCity_Devon_B1F_EventScript_CheckMoney::
+	checkmoney 10000
+	goto_if_eq VAR_RESULT, FALSE, RustboroCity_Devon_B1F_EventScript_NotEnoughMoney
+	msgbox RustboroCity_Devon_B1F_Text_BeginProcedure, MSGBOX_DEFAULT
+	showmoneybox 0, 0
+	delay 20
+	playse SE_SHOP
+	removemoney 10000
+	updatemoneybox
+	delay 40
+	hidemoneybox
+	fadescreenswapbuffers FADE_TO_BLACK
+	playse SE_USE_ITEM
+	special Script_ChangeSelectedMonGender
+	delay 40
+	fadescreenswapbuffers FADE_FROM_BLACK
+	special BufferMonNickname
+	msgbox RustboroCity_Devon_B1F_Text_Success, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_Devon_B1F_EventScript_NotEnoughMoney::
+	msgbox RustboroCity_Devon_B1F_Text_NotEnoughMoney, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_Devon_B1F_EventScript_CantChange::
+	msgbox RustboroCity_Devon_B1F_Text_CantChange, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_Devon_B1F_EventScript_Decline::
+	msgbox RustboroCity_Devon_B1F_Text_Decline, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_Devon_B1F_Text_ChangeGenderIntro:
+	.string "Hello. My research allows me to\n"
+	.string "adjust a POKéMON's gender safely.\p"
+	.string "The procedure costs ¥10,000.\n"
+	.string "Would you like to change one of\l"
+	.string "your POKéMON's gender?$"
+
+RustboroCity_Devon_B1F_Text_ChooseMon:
+	.string "Which POKéMON should I examine?$"
+
+RustboroCity_Devon_B1F_Text_ConfirmChange:
+	.string "You want to change {STR_VAR_1}\n"
+	.string "to the other gender. Is that correct?$"
+
+RustboroCity_Devon_B1F_Text_BeginProcedure:
+	.string "Very well.\n"
+	.string "Please hold still for a moment.$"
+
+RustboroCity_Devon_B1F_Text_Success:
+	.string "The procedure was a success.\p"
+	.string "{STR_VAR_1} is perfectly healthy.$"
+
+RustboroCity_Devon_B1F_Text_NotEnoughMoney:
+	.string "I am sorry, but the procedure costs\n"
+	.string "¥10,000.$"
+
+RustboroCity_Devon_B1F_Text_CantChange:
+	.string "I am sorry, but I cannot change\n"
+	.string "{STR_VAR_1}'s gender.$"
+
+RustboroCity_Devon_B1F_Text_Decline:
+	.string "All right. Come see me if you ever\n"
+	.string "want to change your POKéMON's\l"
+	.string "gender.$"
+`
