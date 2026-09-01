@@ -2744,13 +2744,13 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
 
     [SPECIES_RALTS] =
     {
-        .baseHP        = 29,
-        .baseAttack    = 25,
-        .baseDefense   = 31,
+        .baseHP        = 28,
+        .baseAttack    = 40,
+        .baseDefense   = 25,
         .baseSpeed     = 30,
-        .baseSpAttack  = 31,
-        .baseSpDefense = 42,
-        .types = MON_TYPES(TYPE_BUG, RALTS_FAMILY_TYPE2),
+        .baseSpAttack  = 39,
+        .baseSpDefense = 35,
+        .types = MON_TYPES(TYPE_BUG),
         .catchRate = 235,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 40 : 70,
         .evYield_SpAttack = 1,
@@ -2759,7 +2759,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = 35,
         .growthRate = GROWTH_SLOW,
         .eggGroups = RALTS_FAMILY_EGG_GROUPS,
-        .abilities = { ABILITY_SHIELD_DUST, ABILITY_GLUTTONY, ABILITY_COMPOUND_EYES },
+        .abilities = { ABILITY_SHIELD_DUST, ABILITY_GLUTTONY, ABILITY_RUN_AWAY },
         .bodyColor = BODY_COLOR_WHITE,
         .speciesName = _("Ralts"),
         .cryId = CRY_RALTS,
@@ -2767,11 +2767,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .categoryName = _("Feeling"),
         .height = 4,
         .weight = 66,
-        .description = COMPOUND_STRING(
-            "A Ralts has the power to sense the\n"
-            "emotions of people and Pokémon with the\n"
-            "horns on its head. It takes cover if it\n"
-            "senses any hostility."),
+.description = COMPOUND_STRING(
+            "It voraciously feeds on any foliage it\n"
+            "can find, it can eat several times its\n"
+            "body weight in a few hours."),
         .pokemonScale = 457,
         .pokemonOffset = -3,
         .trainerScale = 256,
@@ -2815,13 +2814,13 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
 
     [SPECIES_KIRLIA] =
     {
-        .baseHP        = 38,
+        .baseHP        = 88,
         .baseAttack    = 35,
-        .baseDefense   = 35,
-        .baseSpeed     = 50,
-        .baseSpAttack  = 65,
+        .baseDefense   = 55,
+        .baseSpeed     = 10,
+        .baseSpAttack  = 35,
         .baseSpDefense = 55,
-        .types = MON_TYPES(TYPE_BUG, RALTS_FAMILY_TYPE2),
+        .types = MON_TYPES(TYPE_BUG, TYPE_GROUND),
         .catchRate = 120,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 97 : 140,
         .evYield_SpAttack = 2,
@@ -2830,7 +2829,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = 35,
         .growthRate = GROWTH_SLOW,
         .eggGroups = RALTS_FAMILY_EGG_GROUPS,
-        .abilities = { ABILITY_SYNCHRONIZE, ABILITY_TRACE, ABILITY_TELEPATHY },
+        .abilities = { ABILITY_SHED_SKIN },
         .bodyColor = BODY_COLOR_WHITE,
         .speciesName = _("Kirlia"),
         .cryId = CRY_KIRLIA,
@@ -2838,11 +2837,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .categoryName = _("Emotion"),
         .height = 8,
         .weight = 202,
-        .description = COMPOUND_STRING(
-            "A Kirlia has the psychic power to create \n"
-            "a rip in the dimensions and see into the\n"
-            "future. It is said to dance with pleasure\n"
-            "on sunny mornings."),
+.description = COMPOUND_STRING(
+            "Extremely in tune with the weather,\n"
+            "at the first sign of danger it\n"
+            "immediately burrows into the ground\n"
+            "to protect itself."),
         .pokemonScale = 354,
         .pokemonOffset = 0,
         .trainerScale = 256,
@@ -2890,11 +2889,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_GARDEVOIR] =
     {
         .baseHP        = 68,
-        .baseAttack    = 65,
+        .baseAttack    = 85,
         .baseDefense   = 65,
-        .baseSpeed     = 80,
+        .baseSpeed     = 90,
         .baseSpAttack  = 125,
-        .baseSpDefense = 115,
+        .baseSpDefense = 85,
         .types = MON_TYPES(TYPE_BUG, RALTS_FAMILY_TYPE2),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
@@ -2910,7 +2909,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .friendship = 35,
         .growthRate = GROWTH_SLOW,
         .eggGroups = RALTS_FAMILY_EGG_GROUPS,
-        .abilities = { ABILITY_SYNCHRONIZE, ABILITY_TRACE, ABILITY_TELEPATHY },
+        .abilities = { ABILITY_SHIELD_DUST, ABILITY_COMPOUND_EYES, ABILITY_TINTED_LENS },
         .bodyColor = BODY_COLOR_WHITE,
         .speciesName = _("Gardevoir"),
         .cryId = CRY_GARDEVOIR,
@@ -2918,11 +2917,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .categoryName = _("Embrace"),
         .height = 16,
         .weight = 484,
-        .description = COMPOUND_STRING(
-            "It apparently does not feel the pull of\n"
-            "gravity because it supports itself with\n"
-            "psychic power. It will give its life to\n"
-            "protect its Trainer."),
+.description = COMPOUND_STRING(
+            "They benevolently use antenna signals\n"
+            "to coordinate evacuations of other\n"
+            "creatures, becoming angelic saviours\n"
+            "for both Pokémon and People."),
         .pokemonScale = 256,
         .pokemonOffset = 0,
         .trainerScale = 256,
