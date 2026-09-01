@@ -1,0 +1,7 @@
+HLW RADIO GAMES - TOUHOU SECOND 5
+Backup: /home/rafaelsanna/pokeemerald-expansion/PHYTON/backups/radio_games_touhou_second5_20260901-094233
+Audio base: mus_touhou5_stage1_boss
+Voicegroup: sound/voicegroups/ancient_groover.inc
+Options: -E -R50 -G_ancient_groover -V100
+IDs: [670, 671, 672, 673, 674]
+Instant-start assets: SIM

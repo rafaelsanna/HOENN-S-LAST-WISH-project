@@ -1,0 +1,13 @@
+HLW RADIO GAMES - TOUHOU 5
+Backup: /home/rafaelsanna/pokeemerald-expansion/PHYTON/backups/radio_games_touhou5_20260901-090621
+Template audio: mus_ancient_groover
+Voicegroup: sound/voicegroups/ancient_groover.inc
+Options: -E -R50 -G_ancient_groover -V100
+IDs: [665, 666, 667, 668, 669]
+drums=3
+piano=2
+organ=1
+bass=0
+strings=2
+brass=2
+lead=2

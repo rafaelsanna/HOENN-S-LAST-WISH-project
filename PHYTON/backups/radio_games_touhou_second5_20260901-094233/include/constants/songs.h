@@ -600,12 +600,7 @@
 #define MUS_TOUHOU5_STAGE3_BOSS                  667
 #define MUS_TOUHOU5_STAGE5_BOSS                  668
 #define MUS_TOUHOU5_TITLE                        669
-#define MUS_TOUHOU6_STAGE2_BOSS                  670
-#define MUS_TOUHOU7_STAGE6_BOSS                  671
-#define MUS_TOUHOU8_STAGE1_BOSS                  672
-#define MUS_TOUHOU10_STAGE2                      673
-#define MUS_TOUHOU10_STAGE5_BOSS                 674
-#define END_MUS MUS_TOUHOU10_STAGE5_BOSS
+#define END_MUS MUS_TOUHOU5_TITLE
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

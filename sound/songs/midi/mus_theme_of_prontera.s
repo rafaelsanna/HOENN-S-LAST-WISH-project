@@ -25,12 +25,12 @@ mus_theme_of_prontera_1_B1:
 	.byte		PAN   , c_v+0
 	.byte		N44   , Cn1 , v120, gtp2
 	.byte	W84
-	.byte		N11
+	.byte		N11   
 	.byte	W12
 @ 001   ----------------------------------------
 	.byte		N22   , Gn0 
 	.byte	W24
-	.byte		N11
+	.byte		N11   
 	.byte	W60
 	.byte		N11   
 	.byte	W12
@@ -146,7 +146,7 @@ mus_theme_of_prontera_1_B1:
 mus_theme_of_prontera_1_030:
 	.byte		N44   , Cn1 , v120, gtp2
 	.byte	W84
-	.byte		N11
+	.byte		N11   
 	.byte	W12
 	.byte	PEND
 @ 031   ----------------------------------------
@@ -371,7 +371,7 @@ mus_theme_of_prontera_1_058:
 mus_theme_of_prontera_1_059:
 	.byte		N11   , Fs1 , v120
 	.byte	W12
-	.byte		        Cs1
+	.byte		        Cs1 
 	.byte	W12
 	.byte		        Fs1 
 	.byte	W36
@@ -698,9 +698,9 @@ mus_theme_of_prontera_1_078:
 	.byte	W24
 	.byte		N44   , Fn1 , v120, gtp2
 	.byte	W48
-	.byte		N11
+	.byte		N11   
 	.byte	W12
-	.byte		        Cs1
+	.byte		        Cs1 
 	.byte	W12
 @ 124   ----------------------------------------
 	.byte	PATT

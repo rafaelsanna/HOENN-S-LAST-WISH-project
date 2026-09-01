@@ -668,16 +668,11 @@ gSongTable::
 	song mus_shine_on_you_crazy_diamond, 0, 0
 	song mus_the_great_gig_in_the_sky, 0, 0
 	song mus_time, 0, 0
-	song mus_touhou5_stage1_boss, 0, 0
-	song mus_touhou5_stage2, 0, 0
-	song mus_touhou5_stage3_boss, 0, 0
-	song mus_touhou5_stage5_boss, 0, 0
-	song mus_touhou5_title, 0, 0
-	song mus_touhou6_stage2_boss, 0, 0
-	song mus_touhou7_stage6_boss, 0, 0
-	song mus_touhou8_stage1_boss, 0, 0
-	song mus_touhou10_stage2, 0, 0
-	song mus_touhou10_stage5_boss, 0, 0
+	song mus_touhou5_stage1_boss, MUSIC_PLAYER_BGM, 0
+	song mus_touhou5_stage2, MUSIC_PLAYER_BGM, 0
+	song mus_touhou5_stage3_boss, MUSIC_PLAYER_BGM, 0
+	song mus_touhou5_stage5_boss, MUSIC_PLAYER_BGM, 0
+	song mus_touhou5_title, MUSIC_PLAYER_BGM, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2
