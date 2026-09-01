@@ -5,6 +5,7 @@
 #include "event_data.h"
 #include "field_specials.h"
 #include "field_weather.h"
+#include "hidden_grotto.h"
 #include "main.h"
 #include "lottery_corner.h"
 #include "overworld.h"
@@ -49,6 +50,7 @@ static void UpdatePerDay(struct Time *localTime)
     {
         daysSince = localTime->days - *days;
         ClearDailyFlags();
+        UpdateHiddenGrottoesPerDay(daysSince);
         UpdateDewfordTrendPerDay(daysSince);
         UpdateTVShowsPerDay(daysSince);
         UpdateWeatherPerDay(daysSince);

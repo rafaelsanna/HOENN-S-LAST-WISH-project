@@ -33,6 +33,7 @@
 #include "link_rfu.h"
 #include "main.h"
 #include "contest.h"
+#include "hidden_grotto.h"
 #include "item_menu.h"
 #include "pokemon_storage_system.h"
 #include "pokemon_jump.h"
@@ -252,6 +253,7 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
+    ResetHiddenGrottoes();
     
     // Mini-games
     ResetMiniGamesRecords();

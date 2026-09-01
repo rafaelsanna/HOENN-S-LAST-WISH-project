@@ -586,3 +586,10 @@ gSpecials::
 	def_special StartMegaRayVisionScene
 	def_special StartSnowballGame
 	def_special DoMrStoneEvilScene
+	def_special HiddenGrotto_InitializeCurrent
+	def_special HiddenGrotto_EmptyCurrent
+	def_special HiddenGrotto_GetCurrentContentType
+	def_special HiddenGrotto_GetCurrentContentId
+	def_special HiddenGrotto_CreateCurrentMon
+	def_special HiddenGrotto_TestCurrentMonBounds
+	def_special HiddenGrotto_IsCurrentMap

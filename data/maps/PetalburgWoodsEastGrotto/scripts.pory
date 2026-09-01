@@ -1,4 +1,75 @@
 raw `
 PetalburgWoodsEastGrotto_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgWoodsEastGrotto_OnTransition
 	.byte 0
+
+PetalburgWoodsEastGrotto_OnTransition:
+	setflag FLAG_TEMP_5
+	setflag FLAG_TEMP_6
+	special HiddenGrotto_InitializeCurrent
+	special HiddenGrotto_GetCurrentContentType
+	call_if_eq VAR_RESULT, 2, PetalburgWoodsEastGrotto_EventScript_ShowPokemon
+	call_if_eq VAR_RESULT, 3, PetalburgWoodsEastGrotto_EventScript_ShowVisibleItem
+	end
+
+PetalburgWoodsEastGrotto_EventScript_ShowPokemon::
+	clearflag FLAG_TEMP_5
+	return
+
+PetalburgWoodsEastGrotto_EventScript_ShowVisibleItem::
+	clearflag FLAG_TEMP_6
+	return
+
+PetalburgWoodsEastGrotto_EventScript_Pokemon::
+	lock
+	faceplayer
+	special HiddenGrotto_CreateCurrentMon
+	goto_if_eq VAR_RESULT, FALSE, PetalburgWoodsEastGrotto_EventScript_NoPokemon
+	dowildbattle
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, PetalburgWoodsEastGrotto_EventScript_ClearPokemon
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, PetalburgWoodsEastGrotto_EventScript_ClearPokemon
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, PetalburgWoodsEastGrotto_EventScript_ClearPokemon
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, PetalburgWoodsEastGrotto_EventScript_ClearPokemon
+	release
+	end
+
+PetalburgWoodsEastGrotto_EventScript_ClearPokemon::
+	special HiddenGrotto_EmptyCurrent
+	removeobject VAR_LAST_TALKED
+	release
+	end
+
+PetalburgWoodsEastGrotto_EventScript_NoPokemon::
+	release
+	end
+
+PetalburgWoodsEastGrotto_EventScript_VisibleItem::
+	lock
+	special HiddenGrotto_GetCurrentContentId
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	special HiddenGrotto_EmptyCurrent
+	removeobject VAR_LAST_TALKED
+	release
+	end
+
+PetalburgWoodsEastGrotto_EventScript_HiddenItem::
+	special HiddenGrotto_GetCurrentContentType
+	goto_if_ne VAR_RESULT, 4, PetalburgWoodsEastGrotto_EventScript_NoHiddenItem
+	lockall
+	special HiddenGrotto_GetCurrentContentId
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, PetalburgWoodsEastGrotto_EventScript_HiddenBagFull
+	special HiddenGrotto_EmptyCurrent
+	releaseall
+	end
+
+PetalburgWoodsEastGrotto_EventScript_HiddenBagFull::
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
+	releaseall
+	end
+
+PetalburgWoodsEastGrotto_EventScript_NoHiddenItem::
+	end
 `

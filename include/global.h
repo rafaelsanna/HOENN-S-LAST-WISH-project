@@ -20,6 +20,7 @@
 #include "constants/trainer_hill.h"
 #include "constants/items.h"
 #include "constants/achievements.h"
+#include "constants/hidden_grotto.h"
 #include "config/save.h"
 #include "randomizer.h"
 
@@ -253,6 +254,12 @@ struct AchievementSave
     u8 popupQueue[ACHIEVEMENT_POPUP_QUEUE_SIZE];
     u32 counters[ACH_COUNTER_COUNT];
     u8 padding[ACHIEVEMENT_SAVE_DATA_SIZE - (sizeof(u16) + ACHIEVEMENT_UNLOCKED_BYTES + ACHIEVEMENT_POPUP_QUEUE_SIZE + sizeof(u32) * ACH_COUNTER_COUNT)];
+};
+
+struct HiddenGrottoContent
+{
+    u8 type;
+    u16 id;
 };
 
 struct SaveBlock3
