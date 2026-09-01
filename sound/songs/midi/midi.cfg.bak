@@ -532,9 +532,3 @@ mus_touhou7_stage6_boss.mid: -E -R50 -G_ancient_groover -V100
 mus_touhou8_stage1_boss.mid: -E -R50 -G_ancient_groover -V100
 mus_touhou10_stage2.mid: -E -R50 -G_ancient_groover -V100
 mus_touhou10_stage5_boss.mid: -E -R50 -G_ancient_groover -V100
-
-mus_time_gear.mid: -E -R50 -G_fly_me_to_the_moon -V100
-mus_dont_ever_forget.mid: -E -R50 -G_fly_me_to_the_moon -V100
-mus_temporal_tower.mid: -E -R50 -G_fly_me_to_the_moon -V100
-mus_temporal_spire.mid: -E -R50 -G_fly_me_to_the_moon -V100
-mus_through_the_sea_of_time.mid: -E -R50 -G_fly_me_to_the_moon -V100

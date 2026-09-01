@@ -678,11 +678,6 @@ gSongTable::
 	song mus_touhou8_stage1_boss, 0, 0
 	song mus_touhou10_stage2, 0, 0
 	song mus_touhou10_stage5_boss, 0, 0
-	song mus_time_gear, 0, 0
-	song mus_dont_ever_forget, 0, 0
-	song mus_temporal_tower, 0, 0
-	song mus_temporal_spire, 0, 0
-	song mus_through_the_sea_of_time, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

@@ -1578,8 +1578,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_DONT_EVER_FORGET) \
     X(MUS_TEMPORAL_TOWER) \
     X(MUS_TEMPORAL_SPIRE) \
-    X(MUS_THROUGH_THE_SEA_OF_TIME)
-#define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
+    X(MUS_THROUGH_THE_SEA_OF_TIME)#define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
 
