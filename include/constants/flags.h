@@ -1254,8 +1254,8 @@
 #define FLAG_ITEM_FOSSIL_TRENCH_DEEP_SEA_TOOTH                    0x4AE
 #define FLAG_ITEM_FOSSIL_TRENCH_DEEP_SEA_SCALE                    0x4AF
 #define FLAG_ITEM_RUSTBORO_CITY_TM_FOUL_PLAY                       0x4B0
-#define FLAG_UNUSED_0x4B1                                           0x4B1 // Unused Flag
-#define FLAG_UNUSED_0x4B2                                           0x4B2 // Unused Flag
+#define FLAG_ITEM_ROUTENEW101_POKE_BALL                            0x4B1
+#define FLAG_HIDDEN_ITEM_ROUTENEW101_CALCIUM                       0x4B2
 #define FLAG_UNUSED_0x4B3                                           0x4B3 // Unused Flag
 #define FLAG_UNUSED_0x4B4                                           0x4B4 // Unused Flag
 #define FLAG_UNUSED_0x4B5                                           0x4B5 // Unused Flag

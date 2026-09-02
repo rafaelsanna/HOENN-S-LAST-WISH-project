@@ -1301,3 +1301,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/FieryPathGrotto/scripts.inc"
 
 	.include "data/maps/Route114Grotto/scripts.inc"
+
+	.include "data/maps/Route115Grotto/scripts.inc"

@@ -15,12 +15,12 @@
   "connections": [
     {
       "map": "MAP_ROUTE103",
-      "offset": -12,
+      "offset": -10,
       "direction": "up"
     },
     {
       "map": "MAP_ROUTE101",
-      "offset": 2,
+      "offset": 4,
       "direction": "down"
     },
     {
@@ -37,7 +37,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_3",
-      "x": 14,
+      "x": 16,
       "y": 14,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -51,7 +51,7 @@
     {
       "local_id": "LOCALID_OLDALE_MART_EMPLOYEE",
       "graphics_id": "OBJ_EVENT_GFX_MART_EMPLOYEE",
-      "x": -21,
+      "x": -19,
       "y": 12,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -65,7 +65,7 @@
     {
       "local_id": "LOCALID_FOOTPRINTS_MAN",
       "graphics_id": "OBJ_EVENT_GFX_SCIENTIST_2",
-      "x": 5,
+      "x": 7,
       "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -79,7 +79,7 @@
     {
       "local_id": "LOCALID_OLDALE_RIVAL",
       "graphics_id": "OBJ_EVENT_GFX_VAR_0",
-      "x": 13,
+      "x": 15,
       "y": 21,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -92,7 +92,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_1",
-      "x": 10,
+      "x": 12,
       "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -105,7 +105,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
-      "x": 5,
+      "x": 7,
       "y": 19,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -118,7 +118,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES_SHINY(SENTRET)",
-      "x": 6,
+      "x": 8,
       "y": 19,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -132,28 +132,28 @@
   ],
   "warp_events": [
     {
-      "x": 8,
+      "x": 10,
       "y": 5,
       "elevation": 0,
       "dest_map": "MAP_OLDALE_TOWN_HOUSE1",
       "dest_warp_id": "0"
     },
     {
-      "x": 17,
+      "x": 19,
       "y": 17,
       "elevation": 0,
       "dest_map": "MAP_OLDALE_TOWN_HOUSE2",
       "dest_warp_id": "0"
     },
     {
-      "x": 6,
+      "x": 8,
       "y": 17,
       "elevation": 0,
       "dest_map": "MAP_OLDALE_TOWN_POKEMON_CENTER_1F",
       "dest_warp_id": "0"
     },
     {
-      "x": 17,
+      "x": 19,
       "y": 6,
       "elevation": 0,
       "dest_map": "MAP_OLDALE_TOWN_MART",
@@ -163,7 +163,7 @@
   "coord_events": [
     {
       "type": "trigger",
-      "x": 0,
+      "x": 2,
       "y": 10,
       "elevation": 3,
       "var": "VAR_OLDALE_TOWN_STATE",
@@ -172,7 +172,7 @@
     },
     {
       "type": "trigger",
-      "x": 10,
+      "x": 12,
       "y": 21,
       "elevation": 3,
       "var": "VAR_OLDALE_RIVAL_STATE",
@@ -181,7 +181,7 @@
     },
     {
       "type": "trigger",
-      "x": 11,
+      "x": 13,
       "y": 21,
       "elevation": 3,
       "var": "VAR_OLDALE_RIVAL_STATE",
@@ -190,7 +190,7 @@
     },
     {
       "type": "trigger",
-      "x": 12,
+      "x": 14,
       "y": 21,
       "elevation": 3,
       "var": "VAR_OLDALE_RIVAL_STATE",
@@ -201,7 +201,7 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 10,
+      "x": 12,
       "y": 16,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -209,7 +209,7 @@
     },
     {
       "type": "sign",
-      "x": 7,
+      "x": 9,
       "y": 17,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
@@ -217,7 +217,7 @@
     },
     {
       "type": "sign",
-      "x": 8,
+      "x": 10,
       "y": 17,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
@@ -225,7 +225,7 @@
     },
     {
       "type": "sign",
-      "x": 14,
+      "x": 16,
       "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",

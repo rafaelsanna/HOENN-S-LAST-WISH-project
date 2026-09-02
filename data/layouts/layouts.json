@@ -104,7 +104,7 @@
     {
       "id": "LAYOUT_OLDALE_TOWN",
       "name": "OldaleTown_Layout",
-      "width": 24,
+      "width": 26,
       "height": 24,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
@@ -164,7 +164,7 @@
     {
       "id": "LAYOUT_ROUTE101",
       "name": "Route101_Layout",
-      "width": 22,
+      "width": 26,
       "height": 22,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
@@ -174,7 +174,7 @@
     {
       "id": "LAYOUT_ROUTE102",
       "name": "Route102_Layout",
-      "width": 50,
+      "width": 52,
       "height": 22,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
@@ -4474,7 +4474,7 @@
     {
       "id": "LAYOUT_ROUTENEW101",
       "name": "Routenew101_Layout",
-      "width": 24,
+      "width": 28,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
@@ -5110,6 +5110,16 @@
       "secondary_tileset": "gTileset_Fallarbor",
       "border_filepath": "data/layouts/Route114Grotto/border.bin",
       "blockdata_filepath": "data/layouts/Route114Grotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE115GROTTO",
+      "name": "Route115Grotto_Layout",
+      "width": 20,
+      "height": 21,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/Route115Grotto/border.bin",
+      "blockdata_filepath": "data/layouts/Route115Grotto/map.bin"
     }
   ]
 }

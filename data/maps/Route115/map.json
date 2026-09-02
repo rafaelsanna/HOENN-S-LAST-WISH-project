@@ -175,8 +175,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 23,
-      "y": 28,
+      "x": 24,
+      "y": 27,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -389,6 +389,13 @@
       "y": 10,
       "elevation": 0,
       "dest_map": "MAP_TERRA_CAVE_ENTRANCE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 25,
+      "y": 32,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE115GROTTO",
       "dest_warp_id": "0"
     }
   ],

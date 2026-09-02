@@ -184,6 +184,7 @@ Route103_Movement_RivalExitFacingNorth1:
 	step_end
 
 Route103_Movement_RivalExitFacingNorth2:
+	walk_down
 	jump_2_down
 	delay_16
 	walk_down
@@ -205,6 +206,7 @@ Route103_Movement_RivalExit1:
 	step_end
 
 Route103_Movement_RivalExit2:
+	walk_down
 	jump_2_down
 	delay_16
 	walk_down

@@ -74,8 +74,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
-      "x": 44,
-      "y": 24,
+      "x": 40,
+      "y": 18,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -116,8 +116,8 @@
     {
       "local_id": "LOCALID_SLATEPORT_OLD_WOMAN",
       "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN",
-      "x": 41,
-      "y": 29,
+      "x": 40,
+      "y": 30,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -278,8 +278,8 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_3",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 47,
-      "y": 22,
+      "x": 41,
+      "y": 21,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -371,8 +371,8 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_4",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 40,
-      "y": 22,
+      "x": 44,
+      "y": 21,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 1,
@@ -385,7 +385,7 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_5",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 41,
+      "x": 47,
       "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -399,7 +399,7 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_6",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 42,
+      "x": 45,
       "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -413,7 +413,7 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_7",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 39,
+      "x": 42,
       "y": 21,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -427,7 +427,7 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_8",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 38,
+      "x": 40,
       "y": 21,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -441,8 +441,8 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_9",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 44,
-      "y": 22,
+      "x": 43,
+      "y": 21,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 1,
@@ -468,7 +468,7 @@
     {
       "local_id": "LOCALID_SLATEPORT_GRUNT_11",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 43,
+      "x": 44,
       "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -547,8 +547,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PALKIA)",
-      "x": 56,
-      "y": 26,
+      "x": 55,
+      "y": 42,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN",
       "movement_range_x": 0,
@@ -573,7 +573,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
-      "x": 47,
+      "x": 49,
       "y": 15,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
