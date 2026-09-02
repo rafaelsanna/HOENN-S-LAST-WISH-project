@@ -4363,7 +4363,7 @@ static void Scene0_DestroyStars(void)
 void Task_Scene0_Load(u8 taskId)
 {
     SetVBlankCallback(NULL);
-    m4aSongNumStart(MUS_RG_TITLE);
+    m4aSongNumStart(MUS_TIME_GEAR);
     IntroResetGpuRegs();
 
     // Blend hardware — TGT1=OBJ, EFFECT=LIGHTEN (BLDY).
