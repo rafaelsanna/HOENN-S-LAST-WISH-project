@@ -97,13 +97,20 @@
 #define SUMMARY_EXP_ERASE_PAL    13
 #define SUMMARY_INFO_MEMO_PAL    14
 
-// Canonical Summary UI accents.
-// Red: positive/Nature-buffed accent and warnings.
-// Blue: negative/Nature-nerfed accent and EXP/progress accent.
-#define SUMMARY_UI_RED           RGB(31,12,12)
-#define SUMMARY_UI_RED_SHADOW    RGB(17, 4, 5)
-#define SUMMARY_UI_BLUE          RGB(12,22,31)
-#define SUMMARY_UI_BLUE_SHADOW   RGB(7,14,24)
+// Canonical Summary UI colors for the dark theme.
+// Main surfaces stay neutral (black/charcoal); blue/red are accents and
+// purple is intentionally limited to small separators/details.
+#define SUMMARY_UI_CHARCOAL      RGB(4, 4, 5)
+#define SUMMARY_UI_DARK_GRAY     RGB(6, 6, 8)
+#define SUMMARY_UI_MID_GRAY      RGB(9,10,12)
+#define SUMMARY_UI_LIGHT_GRAY    RGB(13,14,17)
+#define SUMMARY_UI_DEEP_GRAY     RGB(2, 3, 4)
+#define SUMMARY_UI_PURPLE        RGB(18,15,23)
+#define SUMMARY_UI_PURPLE_SHADOW RGB(9, 7,12)
+#define SUMMARY_UI_RED           RGB(31,22,23)
+#define SUMMARY_UI_RED_SHADOW    RGB(18,10,11)
+#define SUMMARY_UI_BLUE          RGB(20,26,31)
+#define SUMMARY_UI_BLUE_SHADOW   RGB(8,13,18)
 
 // Dynamic fields for the Pokémon Info page
 #define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
@@ -239,6 +246,7 @@ static void PssScrollRight(u8);
 static void PssScrollRightEnd(u8);
 static void PssScrollLeft(u8);
 static void PssScrollLeftEnd(u8);
+static void PssPageWrapInstant(u8);
 static void TryDrawExperienceProgressBar(void);
 static void SwitchToMoveSelection(u8);
 static void Task_HandleInput_MoveSelect(u8);
@@ -596,7 +604,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PORTRAIT_NICKNAME] = {
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 0,
         .tilemapTop = 12,
         .width = 9,
         .height = 2,
@@ -605,7 +613,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PORTRAIT_SPECIES] = {
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 0,
         .tilemapTop = 14,
         .width = 9,
         .height = 4,
@@ -1471,148 +1479,146 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
-// Pink / charcoal dark theme based on the lighter lavender reference.
-// This only remaps Summary Screen palettes; tilemaps, layout, sprites and type
-// icons are left untouched.
+// Dark charcoal summary theme. The original tile art/layout is preserved; only
+// palette entries are remapped. Large surfaces are black/dark gray, text is
+// white, blue/red are the main accents, and purple is reserved for small details.
 static void ApplySummaryScreenDarkTheme(void)
 {
     u8 i;
     u16 base;
 
-    // Core colors sampled/approximated from the desired reference:
-    // charcoal      RGB(4, 4, 5)   -> ~#212129
-    // dark gray     RGB(5, 5, 7)   -> ~#292939
-    // purple gray   RGB(11,10,15)  -> ~#5A527B
-    // deep purple   RGB(11, 9,16)  -> ~#5A4A84
-    // lavender      RGB(18,14,24)  -> ~#9473C6
-    // pink-purple   RGB(21,13,27)  -> ~#AD6BDE
-    // pale lavender RGB(26,22,31)  -> ~#D6B5FF
-    static const u16 sPinkDarkPagePalettes[][16] =
+    static const u16 sDarkPagePalettes[][16] =
     {
         // Palette 0: INFO page / shared framing.
-        // Tuned against the Venusaur reference:
-        // - static panel/frame: deeper muted purple #5A4A84
-        // - labels: white with dark gray shadow
-        // - gradient edge: purple-gray, never pure black
-        // - outer lavender border remains unchanged
+        // The old cyan bars are now the lightest neutral gray; the large
+        // lavender surfaces are a separate near-black gray.
         {
-            // Static INFO framing tuned to the Venusaur reference.
-            // 0/5/14: panel base = deeper muted purple (#5A4A84)
-            // 2: PROFILE / ABILITY / TRAINER MEMO main pixels = white
-            // 10/11: finish the gradient in purple-gray instead of black
-            // 13: dark label shadow for clean white lettering
-            // 15: upper portrait-frame bevel now matches the dark pink target tone
-            // Yellow-guide contour fix:
-            // index 1  was #101018 -> dark/mid lilac
-            // index 13 was #292939 -> brighter mid lilac
-            RGB(11, 9,16), RGB(12, 9,17), RGB(31,31,31), RGB(13,12,17),
-            RGB(12, 9,17), RGB(11, 9,16), RGB(18,14,24), RGB(21,13,27),
-            RGB(16,10,21), RGB(12, 9,17), RGB(9, 7,13), RGB(7, 6,10),
-            RGB(26,22,31), RGB(16,10,21), RGB(11, 9,16), RGB(12, 9,17),
+            SUMMARY_UI_CHARCOAL,      RGB(3, 3, 4),          RGB(31,31,31),
+            SUMMARY_UI_MID_GRAY,      SUMMARY_UI_DARK_GRAY,  SUMMARY_UI_CHARCOAL,
+            SUMMARY_UI_LIGHT_GRAY,    SUMMARY_UI_LIGHT_GRAY, SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_DARK_GRAY,     RGB(3, 3, 4),          RGB(2, 2, 3),
+            SUMMARY_UI_DEEP_GRAY,     RGB(1, 1, 2),          SUMMARY_UI_CHARCOAL,
+            SUMMARY_UI_DARK_GRAY,
         },
-        // Palette 1: Contest page — same cleaned lilac contour as INFO.
+        // Palette 1: Contest Moves page. MOVES / DESCRIPTION use index 2,
+        // so keep those labels pure white against the new neutral bars.
         {
-            RGB(11,10,15), RGB(12, 9,17), RGB(26,22,31), RGB(12, 9,17),
-            RGB(12, 9,17), RGB(23,19,28), RGB(18,14,24), RGB(21,13,27),
-            RGB(16,10,21), RGB(12, 9,17), RGB(12, 9,17), RGB(18,14,24),
-            RGB(7, 7,10), RGB(16,10,21), RGB(18,14,24), RGB(12, 9,17),
+            SUMMARY_UI_CHARCOAL,      RGB(3, 3, 4),          RGB(31,31,31),
+            SUMMARY_UI_DARK_GRAY,     SUMMARY_UI_MID_GRAY,   SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_CHARCOAL,      SUMMARY_UI_LIGHT_GRAY, SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_DARK_GRAY,     RGB(3, 3, 4),          SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_DEEP_GRAY,     RGB(1, 1, 2),          SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_DARK_GRAY,
         },
-        // Palette 2: Skills page — keeps STATUS/lower-left framing lilac.
+        // Palette 2: Skills page. UI bars are neutral; blue/red are reserved
+        // for semantic stat/IV coloring in the text palette below.
         {
-            RGB(11,10,15), RGB(12, 9,17), RGB(23,19,28), RGB(12, 9,17),
-            RGB(18,14,24), RGB(26,22,31), RGB(11,10,15), RGB(21,13,27),
-            RGB(16,10,21), RGB(12, 9,17), RGB(12, 9,17), RGB(18,14,24),
-            RGB(7, 7,10), RGB(16,10,21), RGB(18,14,24), RGB(12, 9,17),
+            SUMMARY_UI_CHARCOAL,      RGB(3, 3, 4),          SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_DARK_GRAY,     SUMMARY_UI_MID_GRAY,   SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_CHARCOAL,      SUMMARY_UI_LIGHT_GRAY, SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_DARK_GRAY,     RGB(3, 3, 4),          SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_DEEP_GRAY,     RGB(1, 1, 2),          SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_DARK_GRAY,
         },
-        // Palette 3: Battle Moves page — same cleaned lilac contour.
+        // Palette 3: Battle Moves page. MOVES / DESCRIPTION are white.
         {
-            RGB(11,10,15), RGB(12, 9,17), RGB(23,19,28), RGB(18,14,24),
-            RGB(12, 9,17), RGB(26,22,31), RGB(11,10,15), RGB(21,13,27),
-            RGB(16,10,21), RGB(12, 9,17), RGB(12, 9,17), RGB(18,14,24),
-            RGB(7, 7,10), RGB(16,10,21), RGB(18,14,24), RGB(12, 9,17),
+            SUMMARY_UI_CHARCOAL,      RGB(3, 3, 4),          RGB(31,31,31),
+            SUMMARY_UI_MID_GRAY,      SUMMARY_UI_DARK_GRAY,  SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_CHARCOAL,      SUMMARY_UI_LIGHT_GRAY, SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_DARK_GRAY,     RGB(3, 3, 4),          SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_DEEP_GRAY,     RGB(1, 1, 2),          SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_DARK_GRAY,
         },
-        // Palette 4: top header.
-        // The target has three very distinct blocks:
-        // gray-purple (#6B638C), charcoal (#292939), purple (#8452AD).
+        // Palette 4: top header / pagination framing. Keep this neutral too;
+        // the A-button/warning red remains functional, not a page accent.
         {
-            RGB(5, 5, 7), RGB(2, 2, 3), RGB(21,13,27), RGB(13,12,17),
-            RGB(11,10,15), RGB(31,31,31), RGB(5, 5, 7), RGB(21,13,27),
-            RGB(16,10,21), RGB(21,13,27), RGB(4, 4, 5), RGB(2, 2, 3),
-            RGB(26,22,31), RGB(21,13,27), RGB(8, 8,12), RGB(5, 5, 7),
+            SUMMARY_UI_DARK_GRAY,     RGB(2, 2, 3),          SUMMARY_UI_LIGHT_GRAY,
+            SUMMARY_UI_MID_GRAY,      SUMMARY_UI_CHARCOAL,   RGB(31,31,31),
+            SUMMARY_UI_DARK_GRAY,     SUMMARY_UI_DEEP_GRAY,  RGB(1, 1, 2),
+            SUMMARY_UI_LIGHT_GRAY,    RGB(3, 3, 4),          RGB(1, 1, 2),
+            SUMMARY_UI_RED,           SUMMARY_UI_RED_SHADOW, SUMMARY_UI_MID_GRAY,
+            SUMMARY_UI_CHARCOAL,
         },
     };
 
-    for (i = 0; i < ARRAY_COUNT(sPinkDarkPagePalettes); i++)
+    for (i = 0; i < ARRAY_COUNT(sDarkPagePalettes); i++)
     {
         base = BG_PLTT_ID(i);
-        CpuCopy16(sPinkDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
+        CpuCopy16(sDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
-    // Palette 5: dedicated STATUS strip.
-    // IMPORTANT: BG color index 0 is transparent on GBA, so the actual bar
-    // uses non-zero indices 1/2.
+    // Palette 5: STATUS strip / shiny portrait secondary palette.
     base = BG_PLTT_ID(5);
     for (i = 0; i < 16; i++)
-        gPlttBufferUnfaded[base + i] = RGB(7, 7,10);
+        gPlttBufferUnfaded[base + i] = SUMMARY_UI_DARK_GRAY;
+    gPlttBufferUnfaded[base + 1] = SUMMARY_UI_DARK_GRAY;
+    gPlttBufferUnfaded[base + 2] = SUMMARY_UI_MID_GRAY;
+    gPlttBufferUnfaded[base + 3] = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 4] = RGB(1, 1, 2);
 
-    gPlttBufferUnfaded[base + 1] = RGB(7, 7,10);    // solid interior #393952-ish
-    gPlttBufferUnfaded[base + 2] = RGB(13,12,17);   // lighter gray/lilac border
-    gPlttBufferUnfaded[base + 3] = RGB(31,31,31);   // STATUS text
-    gPlttBufferUnfaded[base + 4] = RGB(3, 3, 5);    // text shadow
-
-    // Palette 6: body/data windows and most Summary Screen text.
+    // Palette 6: body/data windows and almost all dynamic text.
+    // Blue is reserved for a positive/buffed stat (Nature up / perfect IV).
+    // Red is reserved for a negative/nerfed stat (Nature down / zero IV).
+    // Other text stays white/neutral so the semantic colors are unambiguous.
     base = BG_PLTT_ID(6);
-    gPlttBufferUnfaded[base + 0]  = RGB(11,10,15);   // purple-gray fill
-    gPlttBufferUnfaded[base + 1]  = RGB(31,31,31);   // white text
-    gPlttBufferUnfaded[base + 2]  = RGB(2, 2, 3);    // near-black shadow
-    gPlttBufferUnfaded[base + 3]  = RGB(31,31,31);   // labels / values
-    gPlttBufferUnfaded[base + 4]  = RGB(7, 7,10);    // dark gray shadow
-    gPlttBufferUnfaded[base + 5]  = SUMMARY_UI_RED;  // Nature buff
-    gPlttBufferUnfaded[base + 8]  = SUMMARY_UI_BLUE; // Nature nerf
-    gPlttBufferUnfaded[base + 15] = RGB(11,10,15);   // opaque window fill
+    gPlttBufferUnfaded[base + 0]  = SUMMARY_UI_DARK_GRAY;
+    gPlttBufferUnfaded[base + 1]  = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 2]  = RGB(1, 1, 2);
+    gPlttBufferUnfaded[base + 3]  = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 4]  = RGB(3, 3, 4);
+    gPlttBufferUnfaded[base + 5]  = SUMMARY_UI_BLUE;         // Nature up / perfect IV
+    gPlttBufferUnfaded[base + 6]  = SUMMARY_UI_BLUE_SHADOW;
+    gPlttBufferUnfaded[base + 7]  = SUMMARY_UI_RED;          // Nature down / zero IV
+    gPlttBufferUnfaded[base + 8]  = SUMMARY_UI_RED_SHADOW;
+    gPlttBufferUnfaded[base + 9]  = RGB(31,31,31);           // gender/secondary text: neutral
+    gPlttBufferUnfaded[base + 10] = RGB(3, 3, 4);
+    gPlttBufferUnfaded[base + 11] = RGB(31,31,31);           // OT/secondary text: neutral
+    gPlttBufferUnfaded[base + 12] = RGB(3, 3, 4);
+    gPlttBufferUnfaded[base + 13] = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 14] = RGB(3, 3, 4);
+    gPlttBufferUnfaded[base + 15] = SUMMARY_UI_DARK_GRAY;
 
-    // Palette 14: private Trainer Memo palette.
-    // Clone palette 6 first so white/gray/background stay identical.
-    // Only 7/8 become the brighter memo-red pair.
+    // Palette 14: Trainer Memo stays neutral. Semantic blue/red is reserved
+    // for the Skills stat/IV values.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(6),
         gPlttBufferUnfaded + BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL),
         PLTT_SIZE_4BPP
     );
-    gPlttBufferUnfaded[BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL) + 7] = SUMMARY_UI_RED;
-    gPlttBufferUnfaded[BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL) + 8] = SUMMARY_UI_RED_SHADOW;
+    gPlttBufferUnfaded[BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL) + 7] = RGB(31,31,31);
+    gPlttBufferUnfaded[BG_PLTT_ID(SUMMARY_INFO_MEMO_PAL) + 8] = RGB(3, 3, 4);
 
-    // Palette 7: top-right prompt and small header fields.
+    // Palette 7: top-right utility prompt and small header values.
     base = BG_PLTT_ID(7);
-    gPlttBufferUnfaded[base + 0] = RGB(5, 5, 7);
+    gPlttBufferUnfaded[base + 0] = SUMMARY_UI_CHARCOAL;
     gPlttBufferUnfaded[base + 1] = RGB(31,31,31);
-    gPlttBufferUnfaded[base + 2] = RGB(0, 0, 0);
-    gPlttBufferUnfaded[base + 3] = RGB(21,13,27);    // pink-purple accent
-    gPlttBufferUnfaded[base + 4] = RGB(11, 9,16);    // deep purple
+    gPlttBufferUnfaded[base + 2] = RGB(1, 1, 2);
+    gPlttBufferUnfaded[base + 3] = SUMMARY_UI_LIGHT_GRAY;
+    gPlttBufferUnfaded[base + 4] = SUMMARY_UI_MID_GRAY;
 
-    // Palette 8: PP text window. Keep the dark fill while preserving warning
-    // colors for medium/low/empty PP.
+    // Palette 8: PP text window. The UI remains dark; yellow/orange/red are
+    // kept only as functional low-PP warnings.
     base = BG_PLTT_ID(8);
-    gPlttBufferUnfaded[base + 0]  = RGB(11,10,15);
+    gPlttBufferUnfaded[base + 0]  = SUMMARY_UI_DARK_GRAY;
     gPlttBufferUnfaded[base + 1]  = RGB(31,31,31);
-    gPlttBufferUnfaded[base + 2]  = RGB(2, 2, 3);
-    gPlttBufferUnfaded[base + 3]  = RGB(31,26, 0);
-    gPlttBufferUnfaded[base + 4]  = RGB(15,12, 0);
-    gPlttBufferUnfaded[base + 5]  = RGB(31,16, 0);
-    gPlttBufferUnfaded[base + 6]  = RGB(16, 7, 0);
+    gPlttBufferUnfaded[base + 2]  = RGB(1, 1, 2);
+    gPlttBufferUnfaded[base + 3]  = RGB(31,27,12);
+    gPlttBufferUnfaded[base + 4]  = RGB(13,11, 4);
+    gPlttBufferUnfaded[base + 5]  = RGB(31,20,10);
+    gPlttBufferUnfaded[base + 6]  = RGB(15, 8, 3);
     gPlttBufferUnfaded[base + 7]  = SUMMARY_UI_RED;
     gPlttBufferUnfaded[base + 8]  = SUMMARY_UI_RED_SHADOW;
-    gPlttBufferUnfaded[base + 15] = RGB(11,10,15);
+    gPlttBufferUnfaded[base + 15] = SUMMARY_UI_DARK_GRAY;
 
-    // Palette 15: relearn/start prompts.
+    // Palette 15: relearn / START prompts.
     base = BG_PLTT_ID(15);
-    gPlttBufferUnfaded[base + 0] = RGB(5, 5, 7);
+    gPlttBufferUnfaded[base + 0] = SUMMARY_UI_CHARCOAL;
     gPlttBufferUnfaded[base + 1] = RGB(31,31,31);
-    gPlttBufferUnfaded[base + 2] = RGB(0, 0, 0);
-    gPlttBufferUnfaded[base + 3] = RGB(21,13,27);
-    gPlttBufferUnfaded[base + 4] = RGB(11, 9,16);
+    gPlttBufferUnfaded[base + 2] = RGB(1, 1, 2);
+    gPlttBufferUnfaded[base + 3] = SUMMARY_UI_LIGHT_GRAY;
+    gPlttBufferUnfaded[base + 4] = SUMMARY_UI_MID_GRAY;
 
-    // Keep fade-in from briefly showing the vanilla green palette.
+    // Keep fade-in from briefly showing the vanilla palette.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(0),
         gPlttBufferFaded   + BG_PLTT_ID(0),
@@ -1648,7 +1654,7 @@ static void InitSkillsGuidePalettes(void)
     // ITEM / RIBBON / STATS / EXP are baked into the Skills BG tiles.
     // Duplicate palette 2 and change ONLY index 2, which is the foreground
     // color used by those letters. Every other color remains bit-for-bit the
-    // same, so the lilac bars/gradients do not change.
+    // same, so the dark bars/gradients do not change.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(2),
         gPlttBufferUnfaded + labelBase,
@@ -1664,26 +1670,26 @@ static void InitSkillsGuidePalettes(void)
         PLTT_SIZE_4BPP
     );
     gPlttBufferUnfaded[expHeaderBase + 2]  = RGB(31,31,31); // EXP. text white
-    gPlttBufferUnfaded[expHeaderBase + 12] = RGB(11, 9,16); // no gray tip
+    gPlttBufferUnfaded[expHeaderBase + 12] = SUMMARY_UI_PURPLE_SHADOW; // tiny purple detail
 
-    // Bottom-left EXP letters keep their original artwork/background and only
-    // swap the two letter colors to the guide's blue pair.
+    // Bottom-left EXP letters are neutral gray/white; blue is reserved for
+    // positive stat/IV semantics.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(2),
         gPlttBufferUnfaded + expLabelBase,
         PLTT_SIZE_4BPP
     );
-    gPlttBufferUnfaded[expLabelBase + 7] = SUMMARY_UI_BLUE; // canonical light blue
-    gPlttBufferUnfaded[expLabelBase + 8] = SUMMARY_UI_BLUE_SHADOW; // canonical blue shadow
+    gPlttBufferUnfaded[expLabelBase + 7] = SUMMARY_UI_LIGHT_GRAY;
+    gPlttBufferUnfaded[expLabelBase + 8] = SUMMARY_UI_MID_GRAY;
 
     // Dedicated draw palette for the overlay window.
     // 0 must remain transparent.
     gPlttBufferUnfaded[expDrawBase + 0] = RGB(0, 0, 0);
     gPlttBufferUnfaded[expDrawBase + 1] = RGB(31,31,31); // white outline
-    gPlttBufferUnfaded[expDrawBase + 2] = SUMMARY_UI_BLUE; // canonical light blue
-    gPlttBufferUnfaded[expDrawBase + 3] = SUMMARY_UI_BLUE_SHADOW; // canonical blue shadow
-    gPlttBufferUnfaded[expDrawBase + 4] = RGB(10,10,11); // light gray  #52525A
-    gPlttBufferUnfaded[expDrawBase + 5] = RGB(7, 7,10);  // dark gray   #393952
+    gPlttBufferUnfaded[expDrawBase + 2] = SUMMARY_UI_LIGHT_GRAY;
+    gPlttBufferUnfaded[expDrawBase + 3] = SUMMARY_UI_MID_GRAY;
+    gPlttBufferUnfaded[expDrawBase + 4] = SUMMARY_UI_MID_GRAY;
+    gPlttBufferUnfaded[expDrawBase + 5] = SUMMARY_UI_DARK_GRAY;
 
     CpuCopy16(
         gPlttBufferUnfaded + labelBase,
@@ -1712,7 +1718,7 @@ static void InitSkillsGuidePalettes(void)
     {
         u8 i;
         for (i = 0; i < 16; i++)
-            gPlttBufferUnfaded[expEraseBase + i] = RGB(11,10,15);
+            gPlttBufferUnfaded[expEraseBase + i] = SUMMARY_UI_DARK_GRAY;
     }
     CpuCopy16(
         gPlttBufferUnfaded + expEraseBase,
@@ -1751,7 +1757,7 @@ static void ApplySkillsGuideTilePalettes(void)
     }
 
     // EXP header strip gets a separate palette: white letters, but no gray
-    // residue at the end of the purple gradient.
+    // residue at the end of the dark gradient.
     for (i = 10; i < 21; i++)
     {
         entry = map[13 * 32 + i];
@@ -1767,8 +1773,8 @@ static void ApplySkillsGuideTilePalettes(void)
 
     // Erase ONLY the old progress-bar row behind our BG0 overlay.
     //
-    // IMPORTANT: row 17 is also part of the pink/lavender separator behind
-    // the EXP / NEXT LV numeric area. Erasing it is what cut the pink strip
+    // IMPORTANT: row 17 is also part of the separator behind
+    // the EXP / NEXT LV numeric area. Erasing it is what cut that strip
     // above the numbers in V4. Leave row 17 completely original.
     for (i = 21; i < 30; i++)
     {
@@ -1788,13 +1794,13 @@ static void ApplyMoveSelectorDarkTheme(void)
 
     base = OBJ_PLTT_ID(slot);
 
-    // Keep the selector in the same pink/charcoal family instead of neutral gray.
-    gPlttBufferUnfaded[base + 1] = RGB(16,10,21);   // deep purple
-    gPlttBufferUnfaded[base + 2] = RGB(21,13,27);   // pink highlight
-    gPlttBufferUnfaded[base + 3] = RGB(4, 4, 5);    // charcoal outline
-    gPlttBufferUnfaded[base + 4] = RGB(13,12,17);   // gray-purple divider
+    // Neutral selector. Blue/red are reserved for stat/IV semantics.
+    gPlttBufferUnfaded[base + 1] = SUMMARY_UI_MID_GRAY;
+    gPlttBufferUnfaded[base + 2] = SUMMARY_UI_LIGHT_GRAY;
+    gPlttBufferUnfaded[base + 3] = RGB(2, 2, 3);
+    gPlttBufferUnfaded[base + 4] = SUMMARY_UI_DEEP_GRAY;
     for (j = 5; j < 16; j++)
-        gPlttBufferUnfaded[base + j] = RGB(11,10,15);
+        gPlttBufferUnfaded[base + j] = SUMMARY_UI_DARK_GRAY;
 
     CpuCopy16(
         gPlttBufferUnfaded + base,
@@ -1860,7 +1866,7 @@ static bool8 DecompressGraphics(void)
         break;
     case 11:
         LoadSpritePalette(&sMoveSelectorSpritePal);
-        ApplyMoveSelectorDarkTheme();  // pink/charcoal selector theme
+        ApplyMoveSelectorDarkTheme();  // pastel-blue / charcoal selector theme
         sMonSummaryScreen->switchCounter++;
         break;
     case 12:
@@ -2494,27 +2500,66 @@ static void ChangePage(u8 taskId, s8 delta)
 {
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
     s16 *data = gTasks[taskId].data;
+    u8 oldPage = sMonSummaryScreen->currPageIndex;
+    u8 newPage;
+    bool8 wrapped = FALSE;
 
     if (summary->isEgg)
         return;
-    else if (delta == -1 && sMonSummaryScreen->currPageIndex == sMonSummaryScreen->minPageIndex)
-        return;
-    else if (delta == 1 && sMonSummaryScreen->currPageIndex == sMonSummaryScreen->maxPageIndex)
+
+    if (delta < 0)
+    {
+        if (oldPage == sMonSummaryScreen->minPageIndex)
+        {
+            newPage = sMonSummaryScreen->maxPageIndex;
+            wrapped = TRUE;
+        }
+        else
+        {
+            newPage = oldPage - 1;
+        }
+    }
+    else
+    {
+        if (oldPage == sMonSummaryScreen->maxPageIndex)
+        {
+            newPage = sMonSummaryScreen->minPageIndex;
+            wrapped = TRUE;
+        }
+        else
+        {
+            newPage = oldPage + 1;
+        }
+    }
+
+    // Nothing to rotate through (for example a mode restricted to one page).
+    if (newPage == oldPage)
         return;
 
     PlaySE(SE_SELECT);
-    ClearPageWindowTilemaps(sMonSummaryScreen->currPageIndex);
-    sMonSummaryScreen->currPageIndex += delta;
+    ClearPageWindowTilemaps(oldPage);
+    sMonSummaryScreen->currPageIndex = newPage;
     data[0] = 0;
-    if (delta == 1)
+
+    if (wrapped)
+    {
+        // The stock Summary slide assumes adjacent pages. Crossing the circular
+        // boundary violates that assumption and causes a one-frame tilemap tear.
+        // Wraps therefore switch instantly; ordinary page changes still slide.
+        SetTaskFuncWithFollowupFunc(taskId, PssPageWrapInstant, gTasks[taskId].func);
+    }
+    else if (delta > 0)
+    {
         SetTaskFuncWithFollowupFunc(taskId, PssScrollRight, gTasks[taskId].func);
+    }
     else
+    {
         SetTaskFuncWithFollowupFunc(taskId, PssScrollLeft, gTasks[taskId].func);
-    CreateTextPrinterTask(sMonSummaryScreen->currPageIndex);
+    }
+
     HidePageSpecificSprites();
 
-    if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS
-        || (sMonSummaryScreen->currPageIndex + delta) == PSS_PAGE_SKILLS)
+    if (newPage == PSS_PAGE_SKILLS)
     {
         struct Pokemon *mon = &sMonSummaryScreen->currentMon;
 
@@ -2530,6 +2575,16 @@ static void ChangePage(u8 taskId, s8 delta)
     {
         ShowUtilityPrompt(SUMMARY_MODE_NORMAL);
     }
+
+    // Normal slides last long enough for the page's incremental text task to
+    // create/map its dynamic windows before the transition ends. A circular
+    // wrap is intentionally instant, so render that destination synchronously;
+    // otherwise INFO/Skills/Move data windows are still WINDOW_NONE when
+    // PssPageWrapInstant maps BG0 and the page appears empty.
+    if (wrapped)
+        PrintPageSpecificText(newPage);
+    else
+        CreateTextPrinterTask(newPage);
 }
 
 static void PssScrollRight(u8 taskId) // Scroll right
@@ -2620,6 +2675,88 @@ static void PssScrollLeftEnd(u8 taskId) // display left
     sMonSummaryScreen->bgDisplayOrder ^= 1;
     data[1] = 0;
     data[0] = 0;
+    DrawPagination();
+    PutPageWindowTilemaps(sMonSummaryScreen->currPageIndex);
+    SetTypeIcons();
+    TryDrawExperienceProgressBar();
+    SwitchTaskToFollowupFunc(taskId);
+}
+
+// Circular boundary transition. Do not animate this case: the original Summary
+// renderer is built around adjacent pages sharing two 512px scrolling BGs, and
+// forcing MAX -> MIN (or MIN -> MAX) through that slide can expose stale halves
+// of those tilemaps. Rebuild the canonical destination state in one frame.
+static void PssPageWrapInstant(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (sMonSummaryScreen->minPageIndex == PSS_PAGE_INFO)
+    {
+        if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
+        {
+            // Canonical INFO state: both scrolling BGs show their transparent
+            // left halves, revealing the fixed INFO page on BG3.
+            ChangeBgX(1, 0, BG_COORD_SET);
+            ChangeBgX(2, 0, BG_COORD_SET);
+            SetBgAttribute(1, BG_ATTR_PRIORITY, 1);
+            SetBgAttribute(2, BG_ATTR_PRIORITY, 2);
+            SetBgAttribute(3, BG_ATTR_PRIORITY, 3);
+            sMonSummaryScreen->bgDisplayOrder = 0;
+        }
+        else
+        {
+            // The only opposite boundary in the full Summary is INFO -> the
+            // final page (Contest Moves). Match the state reached by normal
+            // INFO -> Skills -> Battle -> Contest navigation.
+            SetBgTilemapBuffer(1, sMonSummaryScreen->bgTilemapBuffers[sMonSummaryScreen->maxPageIndex][0]);
+            SetBgTilemapBuffer(2, sMonSummaryScreen->bgTilemapBuffers[sMonSummaryScreen->maxPageIndex - 1][0]);
+            ChangeBgX(1, 0x10000, BG_COORD_SET);
+            ChangeBgX(2, 0x10000, BG_COORD_SET);
+            SetBgAttribute(1, BG_ATTR_PRIORITY, 1);
+            SetBgAttribute(2, BG_ATTR_PRIORITY, 2);
+            SetBgAttribute(3, BG_ATTR_PRIORITY, 3);
+            ScheduleBgCopyTilemapToVram(1);
+            ScheduleBgCopyTilemapToVram(2);
+            sMonSummaryScreen->bgDisplayOrder = 1;
+        }
+    }
+    else
+    {
+        // SUMMARY_MODE_SELECT_MOVE only spans Battle Moves <-> Contest Moves.
+        if (sMonSummaryScreen->currPageIndex == sMonSummaryScreen->minPageIndex)
+        {
+            // Canonical Battle Moves state.
+            SetBgTilemapBuffer(1, sMonSummaryScreen->bgTilemapBuffers[sMonSummaryScreen->maxPageIndex][0]);
+            SetBgTilemapBuffer(2, sMonSummaryScreen->bgTilemapBuffers[sMonSummaryScreen->minPageIndex][0]);
+            ChangeBgX(1, 0, BG_COORD_SET);
+            ChangeBgX(2, 0x10000, BG_COORD_SET);
+            SetBgAttribute(1, BG_ATTR_PRIORITY, 2);
+            SetBgAttribute(2, BG_ATTR_PRIORITY, 1);
+            SetBgAttribute(3, BG_ATTR_PRIORITY, 3);
+            sMonSummaryScreen->bgDisplayOrder = 0;
+        }
+        else
+        {
+            // Canonical Contest Moves state.
+            SetBgTilemapBuffer(1, sMonSummaryScreen->bgTilemapBuffers[sMonSummaryScreen->maxPageIndex][0]);
+            SetBgTilemapBuffer(2, sMonSummaryScreen->bgTilemapBuffers[sMonSummaryScreen->minPageIndex][0]);
+            ChangeBgX(1, 0x10000, BG_COORD_SET);
+            ChangeBgX(2, 0x10000, BG_COORD_SET);
+            SetBgAttribute(1, BG_ATTR_PRIORITY, 1);
+            SetBgAttribute(2, BG_ATTR_PRIORITY, 2);
+            SetBgAttribute(3, BG_ATTR_PRIORITY, 3);
+            sMonSummaryScreen->bgDisplayOrder = 1;
+        }
+        ScheduleBgCopyTilemapToVram(1);
+        ScheduleBgCopyTilemapToVram(2);
+    }
+
+    ShowBg(1);
+    ShowBg(2);
+    ShowBg(3);
+
+    data[0] = 0;
+    data[1] = 0;
     DrawPagination();
     PutPageWindowTilemaps(sMonSummaryScreen->currPageIndex);
     SetTypeIcons();
@@ -3403,10 +3540,10 @@ static void DrawExperienceProgressBar(struct Pokemon *unused)
     // Reassert the exact guide colors at draw time. This prevents any later
     // palette user from changing the bar's empty stripes or outline.
     gPlttBufferUnfaded[palBase + 1] = RGB(31,31,31); // white
-    gPlttBufferUnfaded[palBase + 2] = SUMMARY_UI_BLUE; // canonical light blue
-    gPlttBufferUnfaded[palBase + 3] = SUMMARY_UI_BLUE_SHADOW; // canonical blue shadow
-    gPlttBufferUnfaded[palBase + 4] = RGB(10,10,11); // light gray  #52525A
-    gPlttBufferUnfaded[palBase + 5] = RGB(7, 7,10);  // dark gray   #393952
+    gPlttBufferUnfaded[palBase + 2] = SUMMARY_UI_LIGHT_GRAY;
+    gPlttBufferUnfaded[palBase + 3] = SUMMARY_UI_MID_GRAY;
+    gPlttBufferUnfaded[palBase + 4] = SUMMARY_UI_MID_GRAY;
+    gPlttBufferUnfaded[palBase + 5] = SUMMARY_UI_DARK_GRAY;
     CpuCopy16(
         gPlttBufferUnfaded + palBase,
         gPlttBufferFaded   + palBase,
@@ -3566,7 +3703,9 @@ static void PrintNotEggInfo(void)
 {
     struct Pokemon *mon = &sMonSummaryScreen->currentMon;
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
+    const u8 *speciesName = GetSpeciesName(summary->species2);
     u16 dexNum = SpeciesToPokedexNum(summary->species);
+    bool8 hasNickname;
 
     if (dexNum != 0xFFFF)
     {
@@ -3574,39 +3713,45 @@ static void PrintNotEggInfo(void)
         StringCopy(gStringVar1, &gText_NumberClear01[0]);
         ConvertIntToDecimalStringN(gStringVar2, dexNum, STR_CONV_MODE_LEADING_ZEROS, digitCount);
         StringAppend(gStringVar1, gStringVar2);
-        if (!IsMonShiny(mon))
-        {
-            PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER, gStringVar1, 0, 1, 0, 1);
-            SetMonPicBackgroundPalette(FALSE);
-        }
-        else
-        {
-            PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER, gStringVar1, 0, 1, 0, 7);
-            SetMonPicBackgroundPalette(TRUE);
-        }
+
+        // Dex number is always white. Shiny still changes the portrait BG palette,
+        // but must not recolor No.00X.
+        PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER, gStringVar1, 0, 1, 0, 0);
+        SetMonPicBackgroundPalette(IsMonShiny(mon));
         PutWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER);
     }
     else
     {
         ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER);
-        if (!IsMonShiny(mon))
-            SetMonPicBackgroundPalette(FALSE);
-        else
-            SetMonPicBackgroundPalette(TRUE);
+        SetMonPicBackgroundPalette(IsMonShiny(mon));
     }
+
+    // Bottom row follows the nickname's new x=6 left edge: ball starts at x=6
+    // and Lv moves from absolute x=32 to x=30.
     StringCopy(gStringVar1, gText_LevelSymbol);
     ConvertIntToDecimalStringN(gStringVar2, summary->level, STR_CONV_MODE_LEFT_ALIGN, 3);
     StringAppend(gStringVar1, gStringVar2);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, gStringVar1, 24, 17, 0, 1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, gStringVar1, 30, 17, 0, 1);
+
     GetMonNickname(mon, gStringVar1);
-    PrintTextOnWindowToFitPx(PSS_LABEL_WINDOW_PORTRAIT_NICKNAME, gStringVar1, 0, 1, 0, 1, WindowWidthPx(PSS_LABEL_WINDOW_PORTRAIT_NICKNAME) - 9);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, gText_Slash, 0, 1, 0, 1);
-    PrintTextOnWindowToFitPx(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, GetSpeciesName(summary->species2), 6, 1, 0, 1, WindowWidthPx(PSS_LABEL_WINDOW_PORTRAIT_SPECIES) - 9);
+    hasNickname = StringCompare(gStringVar1, speciesName) != 0;
+
+    // Window begins at x=0 now; drawing at x=6 is a net 2px shift left from
+    // the old absolute x=8. Reserve the far-right pixels for the gender glyph.
+    PrintTextOnWindowToFitPx(PSS_LABEL_WINDOW_PORTRAIT_NICKNAME, gStringVar1, 6, 1, 0, 1, 56);
+
+    // Do not repeat "Species / Species" when the mon still has its default name.
+    // The second line is only useful when the top line is an actual nickname.
+    if (hasNickname)
+    {
+        PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, gText_Slash, 6, 1, 0, 1);
+        PrintTextOnWindowToFitPx(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, speciesName, 12, 1, 0, 1, WindowWidthPx(PSS_LABEL_WINDOW_PORTRAIT_SPECIES) - 12);
+    }
+
     PrintGenderSymbol(mon, summary->species2);
     PutWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_NICKNAME);
     PutWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
 }
-
 static void PrintEggInfo(void)
 {
     GetMonNickname(&sMonSummaryScreen->currentMon, gStringVar1);
@@ -3620,18 +3765,19 @@ static void PrintGenderSymbol(struct Pokemon *mon, u16 species)
 {
     if (species != SPECIES_NIDORAN_M && species != SPECIES_NIDORAN_F)
     {
+        // Gender now occupies the old held-item area on the nickname row.
+        // Male = pastel blue; female = pastel red.
         switch (GetMonGender(mon))
         {
         case MON_MALE:
-            PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, gText_MaleSymbol, 57, 17, 0, 3);
+            PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_NICKNAME, gText_MaleSymbol, 64, 1, 0, 2);
             break;
         case MON_FEMALE:
-            PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_SPECIES, gText_FemaleSymbol, 57, 17, 0, 4);
+            PrintTextOnWindow(PSS_LABEL_WINDOW_PORTRAIT_NICKNAME, gText_FemaleSymbol, 64, 1, 0, 3);
             break;
         }
     }
 }
-
 static void PrintAOrBButtonIcon(u8 windowId, bool8 bButton, u32 x)
 {
     const u8 *button;
@@ -4283,21 +4429,19 @@ static void PrintRibbonCount(void)
 
 static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
 {
-    static const u8 sTextNatureDown[] = _("{COLOR}{08}");
-    static const u8 sTextNatureUp[] = _("{COLOR}{05}");
-    static const u8 sTextNatureNeutral[] = _("{COLOR}{01}");
+    static const u8 sTextNatureDown[] = _("{COLOR}{07}{SHADOW}{08}");
+    static const u8 sTextNatureUp[] = _("{COLOR}{05}{SHADOW}{06}");
+    static const u8 sTextNatureNeutral[] = _("{COLOR}{01}{SHADOW}{02}");
     u8 *txtPtr;
 
     if (sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_IVS)
     {
         // IV mode uses IV quality, never Nature:
         // 31 = perfect (blue), 0 = worst (red), 1-30 = neutral white.
-        // NatureUp is the canonical RED accent and NatureDown the BLUE accent,
-        // so IV quality intentionally uses them in the opposite direction.
         if (stat == MAX_PER_STAT_IVS)
-            txtPtr = StringCopy(dst, sTextNatureDown); // blue
+            txtPtr = StringCopy(dst, sTextNatureUp);   // blue
         else if (stat == 0)
-            txtPtr = StringCopy(dst, sTextNatureUp);   // red
+            txtPtr = StringCopy(dst, sTextNatureDown); // red
         else
             txtPtr = StringCopy(dst, sTextNatureNeutral);
     }
@@ -5094,13 +5238,12 @@ static void CreateCaughtBallSprite(struct Pokemon *mon)
 
     // Pokébola — posição original
     LoadBallGfx(ball);
-    sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gBallSpriteTemplates[ball], 16, 136, 0);
+    sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gBallSpriteTemplates[ball], 14, 136, 0);
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].callback = SpriteCallbackDummy;
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].oam.priority = 3;
 
-    // Ícone do item segurado — ao lado do apelido/gênero (altura do nickname)
-    // Nickname window: tilemapLeft=1 (x=8), tilemapTop=12 (y=96), width=9 tiles (72px)
-    // Ícone posicionado no final da janela, na altura central do nickname
+    // Ícone do item segurado — agora ocupa a antiga área do gênero, na linha de nível.
+    // Isso libera completamente a linha do nickname; o gênero passa para o antigo slot do item.
     if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
     {
         DestroySprite(&gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]]);
@@ -5111,8 +5254,8 @@ static void CreateCaughtBallSprite(struct Pokemon *mon)
         sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] = AddItemIconSprite(TAG_ITEM_ICON, TAG_ITEM_ICON, item);
         if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
         {
-            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].x = 72;  // final da janela de apelido
-            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].y = 104; // altura central do nickname
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].x = 72;  // antiga área horizontal do gênero
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].y = 136; // linha do nível / antiga área do gênero
             gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].oam.priority = 3;
         }
     }
