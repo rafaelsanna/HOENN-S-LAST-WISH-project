@@ -1170,6 +1170,7 @@ static void InitRouletteTableData(void)
 #define tConsecutiveWins data[11]
 #define tWinningSquare   data[12]
 #define tCoins           data[13]
+#define tPayoutAButtonPresses data[14]
 
 static void CB2_LoadRoulette(void)
 {
@@ -1844,6 +1845,18 @@ static void Task_PrintSpinResult(u8 taskId)
 
 static void Task_GivePayout(u8 taskId)
 {
+    if (gTasks[taskId].tPayout != 0 && JOY_NEW(A_BUTTON) && ++gTasks[taskId].tPayoutAButtonPresses >= 2)
+    {
+        gTasks[taskId].tCoins += gTasks[taskId].tPayout;
+        if (gTasks[taskId].tCoins > MAX_COINS)
+            gTasks[taskId].tCoins = MAX_COINS;
+        gTasks[taskId].tPayout = 0;
+        SetCreditDigits(gTasks[taskId].tCoins);
+        m4aSongNumStop(SE_PIN);
+        StartTaskAfterDelayOrInput(taskId, Task_EndTurn, NO_DELAY, A_BUTTON | B_BUTTON);
+        return;
+    }
+
     switch (gTasks[taskId].data[7])
     {
     case 0:
@@ -1881,11 +1894,13 @@ static void Task_PrintPayout(u8 taskId)
     AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, gStringVar4, 0, 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(sTextWindowId, COPYWIN_FULL);
     gTasks[taskId].tPayout = (sRoulette->minBet * gTasks[taskId].tMultiplier);
+    gTasks[taskId].tPayoutAButtonPresses = 0;
     gTasks[taskId].data[7] = 0;
     gTasks[taskId].func = Task_GivePayout;
 }
 
 #undef tPayout
+#undef tPayoutAButtonPresses
 
 static void Task_EndTurn(u8 taskId)
 {

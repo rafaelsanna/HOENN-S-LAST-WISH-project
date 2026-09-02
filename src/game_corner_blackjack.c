@@ -264,10 +264,12 @@ struct BlackJack {
     u8 AceAdjustDealer:1;
     u8 optionMode:3;
     u8 exitToggle:1;
-    u8 unused:7;
+    u8 betBlackJackPaid:1;
+    u8 unused:6;
     u8 dealerScore;
     u8 playerScore;
     u16 betBlackJack;
+    u16 lastBetBlackJack;
     u16 optionTileNum1;
     u16 optionTileNum2;
     u16 optionTileNum3;
@@ -293,6 +295,8 @@ static void HandleInput(void);
 static void BJMain(u8 taskId);
 static void HandleInput_BJComplete(void);
 static void PrintInitMessage(void);
+static void PlaceRememberedBet(void);
+static bool32 TryPayBlackJackBet(void);
 static void AButton(void);
 
 //BlackJack
@@ -302,7 +306,7 @@ static const u8 sText_YouWin[] = _("You win!");
 static const u8 sText_Push[] = _("PUSH!");
 static const u8 sText_BlackJack[] = _("BLACKJACK!");
 static const u8 sText_Betting[] = _("Your current\nbet is ¥{STR_VAR_1}.");
-static const u8 sText_NoBetting[] = _("Your current\nbet is ¥0.");
+static const u8 sText_NoBetting[] = _("Please place a bet.");
 static const u8 sText_NoCoins[] = _("You do not have\nenough Coins.");
 static const u8 sHelpBarHitStandText[] = _("{DPAD_UPDOWN}PICK  {A_BUTTON}SELECT  {B_BUTTON}EXIT");
 
@@ -2351,6 +2355,7 @@ static void InitBJScreen(void)
 
     sBlackJack->insuranceBet = FALSE;
     sBlackJack->betBlackJack = 0;
+    PlaceRememberedBet();
     sBlackJack->playerScore = 0;
     sBlackJack->dealerScore = 0;
     
@@ -2456,18 +2461,49 @@ static void ShowMessage(const u8 *str)
 
 static void PrintInitMessage(void)
 {
-    u8 bet;
-    bet = sBlackJack->betBlackJack;
-    
-    if (GetCoins() > 9)
-    { // You can play
-        ConvertUIntToDecimalStringN(gStringVar1, bet, STR_CONV_MODE_LEFT_ALIGN, 3);
+    u32 bet = sBlackJack->betBlackJack;
+
+    if (bet != 0)
+    {
+        ConvertUIntToDecimalStringN(gStringVar1, bet, STR_CONV_MODE_LEFT_ALIGN, CountDigits(bet));
+        gStringVar4[0] = 0;
+        StringExpandPlaceholders(gStringVar4, sText_Betting);
+        ShowMessage(gStringVar4);
+    }
+    else if (GetCoins() > 9)
+    {
         ShowMessage(sText_NoBetting);
     }
     else
     {
         ShowMessage(sText_NoCoins);
     }
+}
+
+static void PlaceRememberedBet(void)
+{
+    u16 bet = sBlackJack->lastBetBlackJack;
+
+    if (bet > GetCoins())
+        bet = (GetCoins() / 10) * 10;
+
+    sBlackJack->lastBetBlackJack = bet;
+    sBlackJack->betBlackJack = bet;
+    sBlackJack->betBlackJackPaid = FALSE;
+}
+
+static bool32 TryPayBlackJackBet(void)
+{
+    if (sBlackJack->betBlackJackPaid)
+        return TRUE;
+
+    if (sBlackJack->betBlackJack > GetCoins())
+        return FALSE;
+
+    RemoveCoins(sBlackJack->betBlackJack);
+    SetCreditDigits(GetCoins());
+    sBlackJack->betBlackJackPaid = TRUE;
+    return TRUE;
 }
 
 static void HandleInput_BJComplete(void)
@@ -2570,6 +2606,7 @@ static void ResetBlackJack(void)
     RefreshBlackJackBG();
     sBlackJack->hasBlackJack = FALSE;
     sBlackJack->betBlackJack = 0;
+    PlaceRememberedBet();
     sBlackJack->dealerScore = 0;
     sBlackJack->playerScore = 0;
     sBlackJack->numDealerCards = 0;
@@ -3119,12 +3156,13 @@ static void AButton(void)
         {
             if (sBlackJack->optionMode == OPTION_BET) // +100
             {
-                if ((GetCoins()) > 9) // enough
+                if (GetCoins() > sBlackJack->betBlackJack + 9) // enough
                 {
                     RefreshBlackJackBG();
                     PlaySE(SE_VEND);
-                    RemoveCoins(10);
                     sBlackJack->betBlackJack += 10;
+                    sBlackJack->betBlackJackPaid = FALSE;
+                    sBlackJack->lastBetBlackJack = sBlackJack->betBlackJack;
                     bet = sBlackJack->betBlackJack;
                     num = CountDigits(sBlackJack->betBlackJack);
                     SetCreditDigits(GetCoins());
@@ -3170,8 +3208,9 @@ static void AButton(void)
                 {
                     RefreshBlackJackBG();
                     PlaySE(SE_VEND);
-                    AddCoins(10);
                     sBlackJack->betBlackJack -= 10;
+                    sBlackJack->betBlackJackPaid = FALSE;
+                    sBlackJack->lastBetBlackJack = sBlackJack->betBlackJack;
                     bet = sBlackJack->betBlackJack;
                     num = CountDigits(sBlackJack->betBlackJack);
                     SetCreditDigits(GetCoins());
@@ -3202,7 +3241,7 @@ static void AButton(void)
         {
             if (sBlackJack->optionMode == OPTION_BET) // Bet
             {
-                if (sBlackJack->betBlackJack > 9) // Enough
+                if (sBlackJack->betBlackJack > 9 && TryPayBlackJackBet()) // Enough
                     {
                         sBlackJack->exitToggle = TRUE;
                         PlaySE(SE_SHOP);
@@ -3503,7 +3542,7 @@ static void ShowHelpBar(const u8 *str)
 
 static void StartExitBJ(void)
 {
-    if (sBlackJack->betBlackJack)
+    if (sBlackJack->betBlackJack && sBlackJack->betBlackJackPaid)
     {
         AddCoins(sBlackJack->betBlackJack);
         sBlackJack->betBlackJack = 0;

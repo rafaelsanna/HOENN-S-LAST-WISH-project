@@ -2165,12 +2165,14 @@ static void Task_Payout(u8 taskId)
 
 #define tState data[0]
 #define tTimer data[1]
+#define tAButtonPresses data[2]
 
 static bool8 PayoutTask_Init(struct Task *task)
 {
     if (IsMatchLineDoneFlashingBeforePayout())
     {
         task->tState++; // PAYOUT_TASK_GIVE_PAYOUT
+        task->tAButtonPresses = 0;
         if (sSlotMachine->payout == 0)
         {
             task->tState = PAYOUT_TASK_FREE;
@@ -2192,7 +2194,7 @@ static bool8 PayoutTask_GivePayout(struct Task *task)
         if (JOY_HELD(A_BUTTON))
             task->tTimer = 4;
     }
-    if (IsFanfareTaskInactive() && JOY_NEW(START_BUTTON))
+    if (IsFanfareTaskInactive() && (JOY_NEW(START_BUTTON) || (JOY_NEW(A_BUTTON) && ++task->tAButtonPresses >= 2)))
     {
         PlaySE(SE_PIN);
         sSlotMachine->coins += sSlotMachine->payout;
@@ -2214,6 +2216,7 @@ static bool8 PayoutTask_Free(struct Task *task)
 
 #undef tState
 #undef tTimer
+#undef tAButtonPresses
 
 // Get the symbol at position `offset` below the top of the reel's tape. Note
 // that if `offset` is negative, it wraps around to the bottom of the tape.
