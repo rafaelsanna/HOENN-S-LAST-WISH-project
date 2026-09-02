@@ -112,24 +112,94 @@
 #define SUMMARY_UI_BLUE          RGB(20,26,31)
 #define SUMMARY_UI_BLUE_SHADOW   RGB(8,13,18)
 
-// Shoulder-button color themes. V5 diagnostic: L plays SE_FAILURE and R plays
-// SE_SELECT directly from the input handler before the palette is touched.
-// Only the panel tone that is #101821 in the
-// default theme changes; black/gray framing, white text, blue buffs and red
-// nerfs stay untouched. The alternate tones are intentionally muted so white
-// text remains readable on GBA hardware.
-#define SUMMARY_THEME_DEFAULT_BG  RGB(2, 3, 4)   // #101821
-#define SUMMARY_THEME_LILAC_BG    RGB(18,16,22)  // muted pastel lilac
-#define SUMMARY_THEME_BURGUNDY_BG RGB(12, 5, 8)  // wine / burgundy
-#define SUMMARY_THEME_SKY_BG      RGB(10,17,22)  // muted sky blue
+// Shoulder-button color themes.
+// Theme 0 is the exact original dark UI from V5. The nine alternate themes
+// only remap neutral/background colors. Protected semantic colors are NEVER
+// remapped here: white text stays white, male/female colors stay blue/red,
+// and the Nature/IV semantic red/blue colors stay fixed across every theme.
+//
+// The neutral roles below correspond to the exact colors used by Theme 0.
+// Alternate themes tint those same luminance steps while remaining dark-mode.
+struct SummaryThemeColors
+{
+    u16 nearBlack;
+    u16 black2;
+    u16 deep;
+    u16 dark1;
+    u16 charcoal;
+    u16 dark;
+    u16 mid;
+    u16 light;
+    u16 detail;
+};
 
 enum SummaryColorTheme
 {
-    SUMMARY_COLOR_THEME_DEFAULT = 0,
-    SUMMARY_COLOR_THEME_LILAC,
+    SUMMARY_COLOR_THEME_DEFAULT = 0, // untouched #101821 dark UI
+    SUMMARY_COLOR_THEME_AMETHYST,
     SUMMARY_COLOR_THEME_BURGUNDY,
-    SUMMARY_COLOR_THEME_SKY,
+    SUMMARY_COLOR_THEME_MIDNIGHT_SKY,
+    SUMMARY_COLOR_THEME_EMERALD,
+    SUMMARY_COLOR_THEME_DEEP_OCEAN,
+    SUMMARY_COLOR_THEME_COPPER,
+    SUMMARY_COLOR_THEME_ROSEWOOD,
+    SUMMARY_COLOR_THEME_INDIGO,
+    SUMMARY_COLOR_THEME_STEEL,
     SUMMARY_COLOR_THEME_COUNT,
+};
+
+static const struct SummaryThemeColors sSummaryThemeColors[SUMMARY_COLOR_THEME_COUNT] =
+{
+    // 0 - DEFAULT / OBSIDIAN. Bit-for-bit the V5 neutral palette.
+    [SUMMARY_COLOR_THEME_DEFAULT] = {
+        RGB(1, 1, 2), RGB(2, 2, 3), RGB(2, 3, 4), RGB(3, 3, 4),
+        RGB(4, 4, 5), RGB(6, 6, 8), RGB(9,10,12), RGB(13,14,17), RGB(9, 7,12),
+    },
+    // 1 - AMETHYST. Soft violet/lilac metal over black-violet shadows.
+    [SUMMARY_COLOR_THEME_AMETHYST] = {
+        RGB(2, 1, 3), RGB(3, 2, 5), RGB(4, 3, 7), RGB(5, 4, 8),
+        RGB(6, 5, 9), RGB(8, 7,12), RGB(11, 9,15), RGB(16,13,19), RGB(20,16,25),
+    },
+    // 2 - BURGUNDY. Wine / oxblood with muted rose-metal highlights.
+    [SUMMARY_COLOR_THEME_BURGUNDY] = {
+        RGB(3, 1, 2), RGB(5, 2, 3), RGB(7, 3, 4), RGB(8, 4, 5),
+        RGB(9, 5, 6), RGB(12,6, 8), RGB(15,8,10), RGB(18,10,12), RGB(23,12,15),
+    },
+    // 3 - MIDNIGHT SKY. Cool navy with a restrained pastel-sky edge.
+    [SUMMARY_COLOR_THEME_MIDNIGHT_SKY] = {
+        RGB(1, 2, 3), RGB(2, 3, 5), RGB(2, 4, 7), RGB(3, 5, 8),
+        RGB(4, 6,10), RGB(5, 8,13), RGB(8,11,17), RGB(11,16,21), RGB(12,22,29),
+    },
+    // 4 - EMERALD. Deep forest green / terminal-glass look.
+    [SUMMARY_COLOR_THEME_EMERALD] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(2, 6, 4), RGB(3, 7, 5),
+        RGB(4, 8, 6), RGB(5,11, 8), RGB(8,14,10), RGB(11,17,13), RGB(15,23,17),
+    },
+    // 5 - DEEP OCEAN. Dark teal / cyan without touching semantic blue.
+    [SUMMARY_COLOR_THEME_DEEP_OCEAN] = {
+        RGB(1, 3, 3), RGB(2, 4, 5), RGB(2, 6, 7), RGB(3, 7, 8),
+        RGB(4, 8,10), RGB(5,11,13), RGB(8,14,16), RGB(11,17,19), RGB(13,23,25),
+    },
+    // 6 - COPPER. Smoked amber / bronze, still dark enough for white text.
+    [SUMMARY_COLOR_THEME_COPPER] = {
+        RGB(3, 2, 1), RGB(5, 3, 2), RGB(7, 4, 2), RGB(8, 5, 3),
+        RGB(9, 6, 4), RGB(12,8, 5), RGB(15,10,7), RGB(18,13, 9), RGB(24,17,10),
+    },
+    // 7 - ROSEWOOD. Dark berry / dusty rose rather than bright pink.
+    [SUMMARY_COLOR_THEME_ROSEWOOD] = {
+        RGB(3, 1, 3), RGB(5, 2, 4), RGB(7, 3, 6), RGB(8, 4, 7),
+        RGB(9, 5, 8), RGB(12,7,10), RGB(15, 9,13), RGB(18,11,15), RGB(24,16,20),
+    },
+    // 8 - INDIGO. Blue-violet glass with a slightly electric top edge.
+    [SUMMARY_COLOR_THEME_INDIGO] = {
+        RGB(1, 1, 3), RGB(2, 2, 5), RGB(3, 3, 7), RGB(4, 4, 8),
+        RGB(5, 5,10), RGB(7, 7,13), RGB(10,10,17), RGB(13,13,20), RGB(18,18,27),
+    },
+    // 9 - STEEL. Neutral cool graphite / gunmetal.
+    [SUMMARY_COLOR_THEME_STEEL] = {
+        RGB(2, 2, 3), RGB(3, 4, 5), RGB(4, 5, 6), RGB(5, 6, 7),
+        RGB(6, 7, 8), RGB(8, 9,11), RGB(11,13,15), RGB(15,16,19), RGB(18,20,23),
+    },
 };
 
 // Dynamic fields for the Pokémon Info page
@@ -252,7 +322,8 @@ static void InitBGs(void);
 static bool8 DecompressGraphics(void);
 static void ApplySkillsGuideTilePalettes(void);
 static void InitSkillsGuidePalettes(void);
-static u16 GetSummaryThemePanelColor(void);
+static u16 RemapSummaryThemeNeutralColor(u16 color);
+static void ApplySummaryThemeNeutralPalette(void);
 static void ChangeSummaryColorTheme(s8 direction);
 static void DrawSummaryStatusStripContents(void);
 static void PutSummaryThemeLegendIfAvailable(void);
@@ -1504,19 +1575,57 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
-static u16 GetSummaryThemePanelColor(void)
+static u16 RemapSummaryThemeNeutralColor(u16 color)
 {
-    switch (sSummaryColorTheme)
+    const struct SummaryThemeColors *theme = &sSummaryThemeColors[sSummaryColorTheme];
+
+    // Theme 0 must remain visually identical to V5.
+    if (sSummaryColorTheme == SUMMARY_COLOR_THEME_DEFAULT)
+        return color;
+
+    // Remap ONLY the neutral/detail colors from the default dark UI.
+    // White, semantic red/blue, gender colors and PP warning colors are absent
+    // from this table and therefore remain identical in all ten themes.
+    if (color == RGB(1, 1, 2))
+        return theme->nearBlack;
+    if (color == RGB(2, 2, 3))
+        return theme->black2;
+    if (color == RGB(2, 3, 4))
+        return theme->deep;
+    if (color == RGB(3, 3, 4))
+        return theme->dark1;
+    if (color == RGB(4, 4, 5))
+        return theme->charcoal;
+    if (color == RGB(6, 6, 8))
+        return theme->dark;
+    if (color == RGB(9,10,12))
+        return theme->mid;
+    if (color == RGB(13,14,17))
+        return theme->light;
+    if (color == RGB(9, 7,12))
+        return theme->detail;
+
+    return color;
+}
+
+static void ApplySummaryThemeNeutralPalette(void)
+{
+    u8 pal;
+    u8 color;
+    u16 base;
+
+    if (sSummaryColorTheme == SUMMARY_COLOR_THEME_DEFAULT)
+        return;
+
+    // All sixteen BG palettes belong to the Summary Screen while it is open.
+    // Recoloring every matching neutral makes panels, bars, windows and the
+    // Skills helper palettes feel like one coherent theme. Protected colors do
+    // not match RemapSummaryThemeNeutralColor() and are therefore untouched.
+    for (pal = 0; pal < 16; pal++)
     {
-    case SUMMARY_COLOR_THEME_LILAC:
-        return SUMMARY_THEME_LILAC_BG;
-    case SUMMARY_COLOR_THEME_BURGUNDY:
-        return SUMMARY_THEME_BURGUNDY_BG;
-    case SUMMARY_COLOR_THEME_SKY:
-        return SUMMARY_THEME_SKY_BG;
-    case SUMMARY_COLOR_THEME_DEFAULT:
-    default:
-        return SUMMARY_THEME_DEFAULT_BG;
+        base = BG_PLTT_ID(pal);
+        for (color = 0; color < 16; color++)
+            gPlttBufferUnfaded[base + color] = RemapSummaryThemeNeutralColor(gPlttBufferUnfaded[base + color]);
     }
 }
 
@@ -1588,31 +1697,6 @@ static void ApplySummaryScreenDarkTheme(void)
         CpuCopy16(sDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
-    // Theme ONLY the exact #101821 / RGB(2,3,4) tone inside the five
-    // background-art palettes (INFO / Contest / Skills / Battle / header).
-    // Do not assume a fixed palette index: the same shade is used by several
-    // tiles, and scanning for the exact source color makes the theme resilient
-    // to tile/palette rearrangements. Window/text palettes 5+ are intentionally
-    // left alone so white text, blue buffs and red nerfs never get recolored.
-    {
-        u16 themePanelColor = GetSummaryThemePanelColor();
-        u8 pal;
-        u8 color;
-
-        if (themePanelColor != SUMMARY_THEME_DEFAULT_BG)
-        {
-            for (pal = 0; pal <= 4; pal++)
-            {
-                base = BG_PLTT_ID(pal);
-                for (color = 0; color < 16; color++)
-                {
-                    if (gPlttBufferUnfaded[base + color] == SUMMARY_THEME_DEFAULT_BG)
-                        gPlttBufferUnfaded[base + color] = themePanelColor;
-                }
-            }
-        }
-    }
-
     // Palette 5: STATUS strip / shiny portrait secondary palette.
     base = BG_PLTT_ID(5);
     for (i = 0; i < 16; i++)
@@ -1625,8 +1709,8 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 8] = SUMMARY_UI_RED_SHADOW;
 
     // Palette 6: body/data windows and almost all dynamic text.
-    // Blue is reserved for a positive/buffed stat (Nature up / perfect IV).
-    // Red is reserved for a negative/nerfed stat (Nature down / zero IV).
+    // Palette slots stay fixed because gender uses the same slots:
+    // 5/6 = blue (male + NERFED stat / IV 0), 7/8 = red (female + BUFFED stat / IV 31).
     // Other text stays white/neutral so the semantic colors are unambiguous.
     base = BG_PLTT_ID(6);
     gPlttBufferUnfaded[base + 0]  = SUMMARY_UI_DARK_GRAY;
@@ -1634,9 +1718,9 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 2]  = RGB(1, 1, 2);
     gPlttBufferUnfaded[base + 3]  = RGB(31,31,31);
     gPlttBufferUnfaded[base + 4]  = RGB(3, 3, 4);
-    gPlttBufferUnfaded[base + 5]  = SUMMARY_UI_BLUE;         // Nature up / perfect IV
+    gPlttBufferUnfaded[base + 5]  = SUMMARY_UI_BLUE;         // male + Nature down / IV 0
     gPlttBufferUnfaded[base + 6]  = SUMMARY_UI_BLUE_SHADOW;
-    gPlttBufferUnfaded[base + 7]  = SUMMARY_UI_RED;          // Nature down / zero IV
+    gPlttBufferUnfaded[base + 7]  = SUMMARY_UI_RED;          // female + Nature up / IV 31
     gPlttBufferUnfaded[base + 8]  = SUMMARY_UI_RED_SHADOW;
     gPlttBufferUnfaded[base + 9]  = RGB(31,31,31);           // gender/secondary text: neutral
     gPlttBufferUnfaded[base + 10] = RGB(3, 3, 4);
@@ -1709,6 +1793,21 @@ static void ApplySummaryScreenDarkTheme(void)
     );
 
     InitSkillsGuidePalettes();
+
+    // Derived Skills/EXP palettes now exist, so tint all neutral BG colors in
+    // one pass. Theme 0 is a no-op and therefore remains exactly unchanged.
+    ApplySummaryThemeNeutralPalette();
+
+    // Keep runtime L/R theme changes immediately visible even while the engine
+    // is using the faded buffer. OBJ palettes are intentionally not touched.
+    for (i = 0; i < 16; i++)
+    {
+        CpuCopy16(
+            gPlttBufferUnfaded + BG_PLTT_ID(i),
+            gPlttBufferFaded   + BG_PLTT_ID(i),
+            PLTT_SIZE_4BPP
+        );
+    }
 }
 
 static void ChangeSummaryColorTheme(s8 direction)
@@ -1757,8 +1856,8 @@ static void InitSkillsGuidePalettes(void)
     gPlttBufferUnfaded[expHeaderBase + 2]  = RGB(31,31,31); // EXP. text white
     gPlttBufferUnfaded[expHeaderBase + 12] = SUMMARY_UI_PURPLE_SHADOW; // tiny purple detail
 
-    // Bottom-left EXP letters are neutral gray/white; blue is reserved for
-    // positive stat/IV semantics.
+    // Bottom-left EXP letters are neutral gray/white; semantic red/blue is
+    // reserved for stat/IV meaning.
     CpuCopy16(
         gPlttBufferUnfaded + BG_PLTT_ID(2),
         gPlttBufferUnfaded + expLabelBase,
@@ -2181,14 +2280,11 @@ static void Task_HandleInput(u8 taskId)
     {
         if (JOY_NEW(L_BUTTON))
         {
-            // Diagnostic: this sound fires at the raw input branch,
-            // before any palette/window code. L = failure tone.
-            PlaySE(SE_FAILURE);
+            PlaySE(SE_SELECT);
             ChangeSummaryColorTheme(-1);
         }
         else if (JOY_NEW(R_BUTTON))
         {
-            // R uses a different tone so direction is unambiguous.
             PlaySE(SE_SELECT);
             ChangeSummaryColorTheme(1);
         }
@@ -2914,14 +3010,11 @@ static void Task_HandleInput_MoveSelect(u8 taskId)
     {
         if (JOY_NEW(L_BUTTON))
         {
-            // Diagnostic: this sound fires at the raw input branch,
-            // before any palette/window code. L = failure tone.
-            PlaySE(SE_FAILURE);
+            PlaySE(SE_SELECT);
             ChangeSummaryColorTheme(-1);
         }
         else if (JOY_NEW(R_BUTTON))
         {
-            // R uses a different tone so direction is unambiguous.
             PlaySE(SE_SELECT);
             ChangeSummaryColorTheme(1);
         }
@@ -3073,14 +3166,11 @@ static void Task_HandleInput_MovePositionSwitch(u8 taskId)
     {
         if (JOY_NEW(L_BUTTON))
         {
-            // Diagnostic: this sound fires at the raw input branch,
-            // before any palette/window code. L = failure tone.
-            PlaySE(SE_FAILURE);
+            PlaySE(SE_SELECT);
             ChangeSummaryColorTheme(-1);
         }
         else if (JOY_NEW(R_BUTTON))
         {
-            // R uses a different tone so direction is unambiguous.
             PlaySE(SE_SELECT);
             ChangeSummaryColorTheme(1);
         }
@@ -3229,14 +3319,11 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
         {
             if (JOY_NEW(L_BUTTON))
             {
-                // Diagnostic: this sound fires at the raw input branch,
-                // before any palette/window code. L = failure tone.
-                PlaySE(SE_FAILURE);
+                PlaySE(SE_SELECT);
                 ChangeSummaryColorTheme(-1);
             }
             else if (JOY_NEW(R_BUTTON))
             {
-                // R uses a different tone so direction is unambiguous.
                 PlaySE(SE_SELECT);
                 ChangeSummaryColorTheme(1);
             }
@@ -4613,19 +4700,23 @@ static void PrintRibbonCount(void)
 
 static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
 {
-    static const u8 sTextNatureDown[] = _("{COLOR}{07}{SHADOW}{08}");
-    static const u8 sTextNatureUp[] = _("{COLOR}{05}{SHADOW}{06}");
+    // Standard Pokémon convention restored:
+    // RED = buffed / positive, BLUE = nerfed / negative.
+    // These use the same fixed palette slots as female/male respectively,
+    // which keeps gender colors unchanged across every UI theme.
+    static const u8 sTextNatureDown[] = _("{COLOR}{05}{SHADOW}{06}"); // blue
+    static const u8 sTextNatureUp[] = _("{COLOR}{07}{SHADOW}{08}");   // red
     static const u8 sTextNatureNeutral[] = _("{COLOR}{01}{SHADOW}{02}");
     u8 *txtPtr;
 
     if (sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_IVS)
     {
         // IV mode uses IV quality, never Nature:
-        // 31 = perfect (blue), 0 = worst (red), 1-30 = neutral white.
+        // 31 = perfect (red), 0 = worst (blue), 1-30 = neutral white.
         if (stat == MAX_PER_STAT_IVS)
-            txtPtr = StringCopy(dst, sTextNatureUp);   // blue
+            txtPtr = StringCopy(dst, sTextNatureUp);    // red
         else if (stat == 0)
-            txtPtr = StringCopy(dst, sTextNatureDown); // red
+            txtPtr = StringCopy(dst, sTextNatureDown);  // blue
         else
             txtPtr = StringCopy(dst, sTextNatureNeutral);
     }
