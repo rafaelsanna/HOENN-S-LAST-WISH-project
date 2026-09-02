@@ -63,7 +63,7 @@
 
 // Button control text (upper right)
 #define PSS_LABEL_WINDOW_PROMPT_UTILITY 4 // Handles "Switch", "Info", and "Cancel" prompts. Also handles the "Rename" and "IVs"/"EVs"/"STATS" prompts if P_SUMMARY_SCREEN_RENAME and P_SUMMARY_SCREEN_IV_EV_INFO are true, respectively
-#define PSS_LABEL_WINDOW_PROMPT_INFO 5 // unused
+#define PSS_LABEL_WINDOW_PROMPT_INFO 5 // Compact current theme name (upper center)
 #define PSS_LABEL_WINDOW_PROMPT_SWITCH 6 // unused
 #define PSS_LABEL_WINDOW_UNUSED1 7
 
@@ -113,7 +113,7 @@
 #define SUMMARY_UI_BLUE_SHADOW   RGB(8,13,18)
 
 // Shoulder-button color themes.
-// Theme 0 is the exact original dark UI from V5. The nine alternate themes
+// Theme 0 is the exact original dark UI from V5. The fifteen alternate themes
 // only remap neutral/background colors. Protected semantic colors are NEVER
 // remapped here: white text stays white, male/female colors stay blue/red,
 // and the Nature/IV semantic red/blue colors stay fixed across every theme.
@@ -144,8 +144,76 @@ enum SummaryColorTheme
     SUMMARY_COLOR_THEME_COPPER,
     SUMMARY_COLOR_THEME_ROSEWOOD,
     SUMMARY_COLOR_THEME_INDIGO,
-    SUMMARY_COLOR_THEME_STEEL,
+    SUMMARY_COLOR_THEME_SILVER,
+    SUMMARY_COLOR_THEME_PASTEL_PINK,
+    SUMMARY_COLOR_THEME_LAVENDER_MIST,
+    SUMMARY_COLOR_THEME_BABY_BLUE,
+    SUMMARY_COLOR_THEME_MINT,
+    SUMMARY_COLOR_THEME_PEACH,
+    SUMMARY_COLOR_THEME_GOLD,
     SUMMARY_COLOR_THEME_COUNT,
+};
+
+// Compact 3-5 character labels for the small header slot between the page
+// pagination dots and the upper-right utility prompt. The bottom strip carries
+// the exact numeric position (THEME x/16), so these can stay short and readable.
+static const u8 sSummaryThemeName_Default[]     = _("BASE");
+static const u8 sSummaryThemeName_Amethyst[]    = _("AMETH");
+static const u8 sSummaryThemeName_Burgundy[]    = _("BURG");
+static const u8 sSummaryThemeName_Midnight[]    = _("SKY");
+static const u8 sSummaryThemeName_Emerald[]     = _("EMRLD");
+static const u8 sSummaryThemeName_DeepOcean[]   = _("OCEAN");
+static const u8 sSummaryThemeName_Copper[]      = _("COPPR");
+static const u8 sSummaryThemeName_Rosewood[]    = _("ROSE");
+static const u8 sSummaryThemeName_Indigo[]      = _("INDGO");
+static const u8 sSummaryThemeName_Silver[]      = _("SILVR");
+static const u8 sSummaryThemeName_PastelPink[]  = _("PINK");
+static const u8 sSummaryThemeName_Lavender[]    = _("LAVDR");
+static const u8 sSummaryThemeName_BabyBlue[]    = _("BABY");
+static const u8 sSummaryThemeName_Mint[]        = _("MINT");
+static const u8 sSummaryThemeName_Peach[]       = _("PEACH");
+static const u8 sSummaryThemeName_Gold[]        = _("GOLD");
+
+static const u8 *const sSummaryThemeNames[SUMMARY_COLOR_THEME_COUNT] =
+{
+    [SUMMARY_COLOR_THEME_DEFAULT]       = sSummaryThemeName_Default,
+    [SUMMARY_COLOR_THEME_AMETHYST]      = sSummaryThemeName_Amethyst,
+    [SUMMARY_COLOR_THEME_BURGUNDY]      = sSummaryThemeName_Burgundy,
+    [SUMMARY_COLOR_THEME_MIDNIGHT_SKY]  = sSummaryThemeName_Midnight,
+    [SUMMARY_COLOR_THEME_EMERALD]       = sSummaryThemeName_Emerald,
+    [SUMMARY_COLOR_THEME_DEEP_OCEAN]    = sSummaryThemeName_DeepOcean,
+    [SUMMARY_COLOR_THEME_COPPER]        = sSummaryThemeName_Copper,
+    [SUMMARY_COLOR_THEME_ROSEWOOD]      = sSummaryThemeName_Rosewood,
+    [SUMMARY_COLOR_THEME_INDIGO]        = sSummaryThemeName_Indigo,
+    [SUMMARY_COLOR_THEME_SILVER]        = sSummaryThemeName_Silver,
+    [SUMMARY_COLOR_THEME_PASTEL_PINK]   = sSummaryThemeName_PastelPink,
+    [SUMMARY_COLOR_THEME_LAVENDER_MIST] = sSummaryThemeName_Lavender,
+    [SUMMARY_COLOR_THEME_BABY_BLUE]     = sSummaryThemeName_BabyBlue,
+    [SUMMARY_COLOR_THEME_MINT]          = sSummaryThemeName_Mint,
+    [SUMMARY_COLOR_THEME_PEACH]         = sSummaryThemeName_Peach,
+    [SUMMARY_COLOR_THEME_GOLD]          = sSummaryThemeName_Gold,
+};
+
+// L/R traversal order. Theme IDs stored in the save remain stable; only the
+// browsing order changes so SILVER and GOLD sit next to each other.
+static const u8 sSummaryThemeCycleOrder[SUMMARY_COLOR_THEME_COUNT] =
+{
+    SUMMARY_COLOR_THEME_DEFAULT,
+    SUMMARY_COLOR_THEME_AMETHYST,
+    SUMMARY_COLOR_THEME_BURGUNDY,
+    SUMMARY_COLOR_THEME_MIDNIGHT_SKY,
+    SUMMARY_COLOR_THEME_EMERALD,
+    SUMMARY_COLOR_THEME_DEEP_OCEAN,
+    SUMMARY_COLOR_THEME_COPPER,
+    SUMMARY_COLOR_THEME_ROSEWOOD,
+    SUMMARY_COLOR_THEME_INDIGO,
+    SUMMARY_COLOR_THEME_SILVER,
+    SUMMARY_COLOR_THEME_GOLD,
+    SUMMARY_COLOR_THEME_PASTEL_PINK,
+    SUMMARY_COLOR_THEME_LAVENDER_MIST,
+    SUMMARY_COLOR_THEME_BABY_BLUE,
+    SUMMARY_COLOR_THEME_MINT,
+    SUMMARY_COLOR_THEME_PEACH,
 };
 
 static const struct SummaryThemeColors sSummaryThemeColors[SUMMARY_COLOR_THEME_COUNT] =
@@ -195,12 +263,56 @@ static const struct SummaryThemeColors sSummaryThemeColors[SUMMARY_COLOR_THEME_C
         RGB(1, 1, 3), RGB(2, 2, 5), RGB(3, 3, 7), RGB(4, 4, 8),
         RGB(5, 5,10), RGB(7, 7,13), RGB(10,10,17), RGB(13,13,20), RGB(18,18,27),
     },
-    // 9 - STEEL. Neutral cool graphite / gunmetal.
-    [SUMMARY_COLOR_THEME_STEEL] = {
+    // 9 - SILVER. Neutral cool graphite / gunmetal (same proven Steel palette).
+    [SUMMARY_COLOR_THEME_SILVER] = {
         RGB(2, 2, 3), RGB(3, 4, 5), RGB(4, 5, 6), RGB(5, 6, 7),
         RGB(6, 7, 8), RGB(8, 9,11), RGB(11,13,15), RGB(15,16,19), RGB(18,20,23),
     },
+    // 10 - PASTEL PINK. Clearly light pink while the shadows stay dark-mode safe.
+    [SUMMARY_COLOR_THEME_PASTEL_PINK] = {
+        RGB(3, 1, 2), RGB(5, 2, 4), RGB(8, 3, 6), RGB(10,4, 8),
+        RGB(12,5,10), RGB(15,7,12), RGB(19,10,15), RGB(24,14,19), RGB(31,18,24),
+    },
+    // 11 - LAVENDER MIST. Desaturated pastel lavender, softer than Amethyst.
+    [SUMMARY_COLOR_THEME_LAVENDER_MIST] = {
+        RGB(2, 2, 3), RGB(3, 3, 5), RGB(5, 5, 7), RGB(6, 6, 8),
+        RGB(8, 8,10), RGB(10,10,13), RGB(13,13,16), RGB(17,17,21), RGB(22,20,27),
+    },
+    // 12 - BABY BLUE. Powder-blue glass over deep blue-gray shadows.
+    [SUMMARY_COLOR_THEME_BABY_BLUE] = {
+        RGB(1, 2, 3), RGB(2, 3, 4), RGB(3, 5, 6), RGB(4, 6, 7),
+        RGB(5, 7, 9), RGB(7,10,12), RGB(10,13,16), RGB(14,18,21), RGB(18,24,28),
+    },
+    // 13 - MINT. Soft pastel mint / seafoam while keeping the screen dark.
+    [SUMMARY_COLOR_THEME_MINT] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(3, 6, 5), RGB(4, 7, 6),
+        RGB(5, 8, 7), RGB(7,11, 9), RGB(10,14,12), RGB(14,18,16), RGB(18,25,21),
+    },
+    // 14 - PEACH. Warm pastel peach / salmon, distinct from the darker Copper.
+    [SUMMARY_COLOR_THEME_PEACH] = {
+        RGB(3, 2, 2), RGB(5, 3, 2), RGB(7, 5, 4), RGB(8, 6, 5),
+        RGB(10,7, 6), RGB(12,9, 8), RGB(15,12,10), RGB(19,15,13), RGB(25,20,17),
+    },
+    // 15 - GOLD. Dark-mode black-gold with stronger warm metallic highlights.
+    [SUMMARY_COLOR_THEME_GOLD] = {
+        RGB(3, 2, 0), RGB(5, 3, 1), RGB(7, 5, 1), RGB(9, 6, 1),
+        RGB(11,8, 2), RGB(14,10,3), RGB(18,13,4), RGB(23,17,6), RGB(29,22,8),
+    },
 };
+
+// Persistent Summary theme slot inside HLWSaveExtension.future[].
+// Radio currently owns future[0..63], so Summary starts at 64 and does not
+// change the frozen 512-byte HLW save ABI.
+#define SUMMARY_THEME_SAVE_TAG0_OFFSET      64
+#define SUMMARY_THEME_SAVE_TAG1_OFFSET      65
+#define SUMMARY_THEME_SAVE_VERSION_OFFSET   66
+#define SUMMARY_THEME_SAVE_VALUE_OFFSET     67
+#define SUMMARY_THEME_SAVE_TAG0             0x53 // 'S'
+#define SUMMARY_THEME_SAVE_TAG1             0x54 // 'T'
+#define SUMMARY_THEME_SAVE_VERSION          1
+#define SUMMARY_HLW_SAVE_EXTENSION_MAGIC    0x484C5753
+#define SUMMARY_HLW_SAVE_EXTENSION_VERSION  1
+
 
 // Dynamic fields for the Pokémon Info page
 #define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
@@ -311,7 +423,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
 
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
 static EWRAM_DATA u8 sMoveSlotToReplace = 0;
-static EWRAM_DATA u8 sSummaryColorTheme; // runtime-only; zero/default after boot, retained across Summary opens
+static EWRAM_DATA u8 sSummaryColorTheme; // loaded from HLWSaveExtension; updated in RAM by L/R
 ALIGNED(4) static EWRAM_DATA u8 sAnimDelayTaskId = 0;
 EWRAM_DATA MainCallback gInitialSummaryScreenCallback = NULL; // stores callback from the first time the screen is opened from the party or PC menu
 
@@ -322,9 +434,13 @@ static void InitBGs(void);
 static bool8 DecompressGraphics(void);
 static void ApplySkillsGuideTilePalettes(void);
 static void InitSkillsGuidePalettes(void);
+static void InitSummaryThemeSaveExtensionIfNeeded(void);
+static void LoadSummaryColorThemeFromSave(void);
+static void SaveSummaryColorThemeToSave(void);
 static u16 RemapSummaryThemeNeutralColor(u16 color);
 static void ApplySummaryThemeNeutralPalette(void);
 static void ChangeSummaryColorTheme(s8 direction);
+static void DrawSummaryThemeName(void);
 static void DrawSummaryStatusStripContents(void);
 static void PutSummaryThemeLegendIfAvailable(void);
 static void CopyMonToSummaryStruct(struct Pokemon *);
@@ -583,9 +699,9 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PROMPT_INFO] = {
         .bg = 0,
-        .tilemapLeft = 22,
+        .tilemapLeft = 18, // 144 px: gap between pagination dots and utility prompt
         .tilemapTop = 0,
-        .width = 8,
+        .width = 4,        // 32 px; ends exactly where utility prompt begins
         .height = 2,
         .paletteNum = 7,
         .baseBlock = 105,
@@ -1345,6 +1461,7 @@ u32 GetAdjustedIvData(struct Pokemon *mon, u32 stat)
 void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {
     sMonSummaryScreen = AllocZeroed(sizeof(*sMonSummaryScreen));
+    LoadSummaryColorThemeFromSave();
     sMonSummaryScreen->mode = mode;
     sMonSummaryScreen->monList.mons = mons;
     sMonSummaryScreen->curMonIndex = monIndex;
@@ -1575,6 +1692,77 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
+static void InitSummaryThemeSaveExtensionIfNeeded(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    // Same ABI guard used by the Radio. Only initialize the extension when its
+    // header is invalid; a valid Radio save is left completely untouched.
+    if (ext->magic != SUMMARY_HLW_SAVE_EXTENSION_MAGIC
+     || ext->version != SUMMARY_HLW_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext))
+    {
+        memset(ext, 0, sizeof(*ext));
+        ext->magic = SUMMARY_HLW_SAVE_EXTENSION_MAGIC;
+        ext->version = SUMMARY_HLW_SAVE_EXTENSION_VERSION;
+        ext->size = sizeof(*ext);
+    }
+}
+
+static void LoadSummaryColorThemeFromSave(void)
+{
+    struct HLWSaveExtension *ext;
+
+    sSummaryColorTheme = SUMMARY_COLOR_THEME_DEFAULT;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    InitSummaryThemeSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->future[SUMMARY_THEME_SAVE_TAG0_OFFSET] == SUMMARY_THEME_SAVE_TAG0
+     && ext->future[SUMMARY_THEME_SAVE_TAG1_OFFSET] == SUMMARY_THEME_SAVE_TAG1
+     && ext->future[SUMMARY_THEME_SAVE_VERSION_OFFSET] == SUMMARY_THEME_SAVE_VERSION
+     && ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET] < SUMMARY_COLOR_THEME_COUNT)
+    {
+        sSummaryColorTheme = ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET];
+    }
+    else
+    {
+        // Old saves/default state: Theme 0. Register the new field in RAM;
+        // the game's normal save flow will write it to flash later.
+        ext->future[SUMMARY_THEME_SAVE_TAG0_OFFSET] = SUMMARY_THEME_SAVE_TAG0;
+        ext->future[SUMMARY_THEME_SAVE_TAG1_OFFSET] = SUMMARY_THEME_SAVE_TAG1;
+        ext->future[SUMMARY_THEME_SAVE_VERSION_OFFSET] = SUMMARY_THEME_SAVE_VERSION;
+        ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET] = SUMMARY_COLOR_THEME_DEFAULT;
+    }
+}
+
+static void SaveSummaryColorThemeToSave(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    InitSummaryThemeSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    ext->future[SUMMARY_THEME_SAVE_TAG0_OFFSET] = SUMMARY_THEME_SAVE_TAG0;
+    ext->future[SUMMARY_THEME_SAVE_TAG1_OFFSET] = SUMMARY_THEME_SAVE_TAG1;
+    ext->future[SUMMARY_THEME_SAVE_VERSION_OFFSET] = SUMMARY_THEME_SAVE_VERSION;
+    ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET] =
+        (sSummaryColorTheme < SUMMARY_COLOR_THEME_COUNT)
+            ? sSummaryColorTheme
+            : SUMMARY_COLOR_THEME_DEFAULT;
+}
+
 static u16 RemapSummaryThemeNeutralColor(u16 color)
 {
     const struct SummaryThemeColors *theme = &sSummaryThemeColors[sSummaryColorTheme];
@@ -1585,7 +1773,7 @@ static u16 RemapSummaryThemeNeutralColor(u16 color)
 
     // Remap ONLY the neutral/detail colors from the default dark UI.
     // White, semantic red/blue, gender colors and PP warning colors are absent
-    // from this table and therefore remain identical in all ten themes.
+    // from this table and therefore remain identical in all sixteen themes.
     if (color == RGB(1, 1, 2))
         return theme->nearBlack;
     if (color == RGB(2, 2, 3))
@@ -1810,20 +1998,61 @@ static void ApplySummaryScreenDarkTheme(void)
     }
 }
 
-static void ChangeSummaryColorTheme(s8 direction)
+static u8 GetSummaryThemeCyclePosition(void)
 {
-    if (direction > 0)
+    u8 i;
+
+    for (i = 0; i < SUMMARY_COLOR_THEME_COUNT; i++)
     {
-        sSummaryColorTheme = (sSummaryColorTheme + 1) % SUMMARY_COLOR_THEME_COUNT;
-    }
-    else
-    {
-        sSummaryColorTheme = (sSummaryColorTheme > 0)
-            ? sSummaryColorTheme - 1
-            : SUMMARY_COLOR_THEME_COUNT - 1;
+        if (sSummaryThemeCycleOrder[i] == sSummaryColorTheme)
+            return i;
     }
 
+    return 0;
+}
+
+static void DrawSummaryThemeName(void)
+{
+    const u8 *name;
+    u8 x;
+    u8 colorId;
+
+    if (sSummaryColorTheme >= SUMMARY_COLOR_THEME_COUNT)
+        sSummaryColorTheme = SUMMARY_COLOR_THEME_DEFAULT;
+
+    name = sSummaryThemeNames[sSummaryColorTheme];
+
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_PROMPT_INFO, PIXEL_FILL(0));
+    // Shift the compact theme label 3 px farther right than V9 (5 px total).
+    x = GetStringCenterAlignXOffset(FONT_SMALL, name, 32) + 5;
+    // BASE uses the same theme/accent text color as before V9; do not force white.
+    colorId = 1;
+    PrintTextOnWindowWithFont(
+        PSS_LABEL_WINDOW_PROMPT_INFO,
+        name,
+        x,
+        3,
+        0,
+        colorId,
+        FONT_SMALL
+    );
+    CopyWindowToVram(PSS_LABEL_WINDOW_PROMPT_INFO, COPYWIN_GFX);
+}
+
+static void ChangeSummaryColorTheme(s8 direction)
+{
+    u8 position = GetSummaryThemeCyclePosition();
+
+    if (direction > 0)
+        position = (position + 1) % SUMMARY_COLOR_THEME_COUNT;
+    else
+        position = (position > 0) ? position - 1 : SUMMARY_COLOR_THEME_COUNT - 1;
+
+    sSummaryColorTheme = sSummaryThemeCycleOrder[position];
+
+    SaveSummaryColorThemeToSave();
     ApplySummaryScreenDarkTheme();
+    DrawSummaryThemeName();
     PutSummaryThemeLegendIfAvailable();
 }
 
@@ -4019,11 +4248,13 @@ static void DrawSummaryStatusStripContents(void)
 {
     static const u8 sText_ThemeL[] = _("L");
     static const u8 sText_ThemeR[] = _("R");
-    static const u8 sText_Themes[] = _("THEMES");
+    static const u8 sText_Theme[] = _("THEME");
+    static const u8 sText_ThemeCountSuffix[] = _("/16");
+    u8 themeCountText[8];
 
     // Reuse the existing 80x16 STATUS strip. When the Pokémon has no ailment,
-    // the otherwise-empty strip becomes the compact L/R theme legend shown in
-    // the user's layout mockup. A real status always wins and restores STATUS.
+    // show the shoulder-button hint plus the current theme position.
+    // A real status always wins and restores STATUS.
     FillWindowPixelBuffer(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(1));
     FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 0, 80, 1);
     FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 15, 80, 1);
@@ -4036,10 +4267,19 @@ static void DrawSummaryStatusStripContents(void)
     }
     else
     {
-        // Red shoulder labels + white caption, matching the supplied mockup.
-        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeL, 4, 3, 0, 3, FONT_SMALL);
-        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeR, 15, 3, 0, 3, FONT_SMALL);
-        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_Themes, 27, 3, 0, 1, FONT_SMALL);
+        ConvertIntToDecimalStringN(
+            themeCountText,
+            GetSummaryThemeCyclePosition() + 1,
+            STR_CONV_MODE_LEFT_ALIGN,
+            2
+        );
+        StringAppend(themeCountText, sText_ThemeCountSuffix);
+
+        // Red L/R shoulder labels; white THEME + x/16 readout.
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeL, 3, 2, 0, 3, FONT_SMALL);
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeR, 12, 2, 0, 3, FONT_SMALL);
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_Theme, 21, 2, 0, 1, FONT_SMALL);
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, themeCountText, 51, 2, 0, 1, FONT_SMALL);
     }
 
     CopyWindowToVram(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, COPYWIN_GFX);
@@ -4071,6 +4311,7 @@ static void PrintPageNamesAndStats(void)
     PrintTextOnWindow(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE, gText_ContestMoves, 2, 1, 0, 1);
 
     ShowUtilityPrompt(SUMMARY_MODE_NORMAL);
+    DrawSummaryThemeName();
 
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_INFO_RENTAL, gText_RentalPkmn, 0, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_INFO_TYPE, gText_TypeSlash, 0, 1, 0, 0);
@@ -4150,6 +4391,10 @@ static void PutPageWindowTilemaps(u8 page)
     ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE);
     ClearWindowTilemap(PSS_LABEL_WINDOW_BATTLE_MOVES_TITLE);
     ClearWindowTilemap(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE);
+
+    // The compact theme name lives in the static header and remains visible on
+    // every page. Its 32px window ends exactly before the utility prompt.
+    PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_INFO);
 
     switch (page)
     {
