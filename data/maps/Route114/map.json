@@ -425,6 +425,13 @@
       "elevation": 0,
       "dest_map": "MAP_TERRA_CAVE_ENTRANCE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 32,
+      "y": 71,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE114GROTTO",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

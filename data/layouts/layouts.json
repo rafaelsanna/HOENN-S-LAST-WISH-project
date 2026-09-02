@@ -5070,6 +5070,46 @@
       "secondary_tileset": "gTileset_Facility",
       "border_filepath": "data/layouts/RustboroCity_Devon_B1F/border.bin",
       "blockdata_filepath": "data/layouts/RustboroCity_Devon_B1F/map.bin"
+    },
+    {
+      "id": "LAYOUT_GRANITE_HILL_GROTTO",
+      "name": "GraniteHillGrotto_Layout",
+      "width": 22,
+      "height": 25,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Dewford",
+      "border_filepath": "data/layouts/GraniteHillGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/GraniteHillGrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE111GROTTO_",
+      "name": "Route111Grotto__Layout",
+      "width": 8,
+      "height": 18,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/Route111Grotto_/border.bin",
+      "blockdata_filepath": "data/layouts/Route111Grotto_/map.bin"
+    },
+    {
+      "id": "LAYOUT_FIERY_PATH_GROTTO",
+      "name": "FieryPathGrotto_Layout",
+      "width": 18,
+      "height": 21,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/FieryPathGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/FieryPathGrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE114GROTTO",
+      "name": "Route114Grotto_Layout",
+      "width": 20,
+      "height": 21,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/Route114Grotto/border.bin",
+      "blockdata_filepath": "data/layouts/Route114Grotto/map.bin"
     }
   ]
 }

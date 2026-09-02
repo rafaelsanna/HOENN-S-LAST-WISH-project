@@ -1,0 +1,75 @@
+raw `
+Route111Grotto__MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route111Grotto__OnTransition
+	.byte 0
+
+Route111Grotto__OnTransition:
+	setflag FLAG_TEMP_5
+	setflag FLAG_TEMP_6
+	special HiddenGrotto_InitializeCurrent
+	special HiddenGrotto_GetCurrentContentType
+	call_if_eq VAR_RESULT, 2, Route111Grotto__EventScript_ShowPokemon
+	call_if_eq VAR_RESULT, 3, Route111Grotto__EventScript_ShowVisibleItem
+	end
+
+Route111Grotto__EventScript_ShowPokemon::
+	clearflag FLAG_TEMP_5
+	return
+
+Route111Grotto__EventScript_ShowVisibleItem::
+	clearflag FLAG_TEMP_6
+	return
+
+Route111Grotto__EventScript_Pokemon::
+	lock
+	faceplayer
+	special HiddenGrotto_CreateCurrentMon
+	goto_if_eq VAR_RESULT, FALSE, Route111Grotto__EventScript_NoPokemon
+	dowildbattle
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, Route111Grotto__EventScript_ClearPokemon
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, Route111Grotto__EventScript_ClearPokemon
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, Route111Grotto__EventScript_ClearPokemon
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, Route111Grotto__EventScript_ClearPokemon
+	release
+	end
+
+Route111Grotto__EventScript_ClearPokemon::
+	special HiddenGrotto_EmptyCurrent
+	removeobject VAR_LAST_TALKED
+	release
+	end
+
+Route111Grotto__EventScript_NoPokemon::
+	release
+	end
+
+Route111Grotto__EventScript_VisibleItem::
+	lock
+	special HiddenGrotto_GetCurrentContentId
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	special HiddenGrotto_EmptyCurrent
+	removeobject VAR_LAST_TALKED
+	release
+	end
+
+Route111Grotto__EventScript_HiddenItem::
+	special HiddenGrotto_GetCurrentContentType
+	goto_if_ne VAR_RESULT, 4, Route111Grotto__EventScript_NoHiddenItem
+	lockall
+	special HiddenGrotto_GetCurrentContentId
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Route111Grotto__EventScript_HiddenBagFull
+	special HiddenGrotto_EmptyCurrent
+	releaseall
+	end
+
+Route111Grotto__EventScript_HiddenBagFull::
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route111Grotto__EventScript_NoHiddenItem::
+	end
+`

@@ -694,6 +694,20 @@
       "elevation": 0,
       "dest_map": "MAP_TRAINER_HILL_ENTRANCE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 5,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE111GROTTO_",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 4,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE111GROTTO_",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

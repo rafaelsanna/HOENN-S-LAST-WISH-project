@@ -1293,3 +1293,11 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/FossilTrench/scripts.inc"
 
 	.include "data/maps/RustboroCity_Devon_B1F/scripts.inc"
+
+	.include "data/maps/GraniteHillGrotto/scripts.inc"
+
+	.include "data/maps/Route111Grotto_/scripts.inc"
+
+	.include "data/maps/FieryPathGrotto/scripts.inc"
+
+	.include "data/maps/Route114Grotto/scripts.inc"

@@ -1,12 +1,12 @@
 {
-  "id": "MAP_PETALBURG_WOODS_EAST_GROTTO",
-  "name": "PetalburgWoodsEastGrotto",
-  "layout": "LAYOUT_PETALBURG_WOODS_EAST_GROTTO",
-  "music": "MUS_PETALBURG_WOODS",
-  "region_map_section": "MAPSEC_GROTTO",
+  "id": "MAP_FIERY_PATH_GROTTO",
+  "name": "FieryPathGrotto",
+  "layout": "LAYOUT_FIERY_PATH_GROTTO",
+  "music": "MUS_RG_CINNABAR",
+  "region_map_section": "MAPSEC_FIERY_PATH",
   "requires_flash": false,
-  "weather": "WEATHER_SHADE",
-  "map_type": "MAP_TYPE_ROUTE",
+  "weather": "WEATHER_SMOKE",
+  "map_type": "MAP_TYPE_UNDERGROUND",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": true,
@@ -15,59 +15,52 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_PETALBURG_WOODS_EAST_GROTTO_POKEMON",
+      "local_id": "LOCALID_FIERY_PATH_GROTTO_POKEMON",
       "graphics_id": "OBJ_EVENT_GFX_VAR_0",
-      "x": 3,
-      "y": 6,
+      "x": 9,
+      "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoodsEastGrotto_EventScript_Pokemon",
+      "script": "FieryPathGrotto_EventScript_Pokemon",
       "flag": "FLAG_TEMP_5"
     },
     {
-      "local_id": "LOCALID_PETALBURG_WOODS_EAST_GROTTO_ITEM",
+      "local_id": "LOCALID_FIERY_PATH_GROTTO_ITEM",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 3,
-      "y": 6,
+      "x": 9,
+      "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoodsEastGrotto_EventScript_VisibleItem",
+      "script": "FieryPathGrotto_EventScript_VisibleItem",
       "flag": "FLAG_TEMP_6"
     }
   ],
   "warp_events": [
     {
-      "x": 3,
-      "y": 16,
+      "x": 9,
+      "y": 15,
       "elevation": 0,
-      "dest_map": "MAP_PETALBURG_WOODS_EAST",
-      "dest_warp_id": "4"
-    },
-    {
-      "x": 4,
-      "y": 16,
-      "elevation": 0,
-      "dest_map": "MAP_PETALBURG_WOODS_EAST",
-      "dest_warp_id": "4"
+      "dest_map": "MAP_FIERY_PATH",
+      "dest_warp_id": "3"
     }
   ],
   "coord_events": [],
   "bg_events": [
     {
       "type": "sign",
-      "x": 5,
-      "y": 2,
+      "x": 12,
+      "y": 4,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgWoodsEastGrotto_EventScript_HiddenItem"
+      "script": "FieryPathGrotto_EventScript_HiddenItem"
     }
   ]
 }
