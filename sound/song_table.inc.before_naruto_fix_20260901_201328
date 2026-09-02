@@ -683,8 +683,6 @@ gSongTable::
 	song mus_temporal_tower, 0, 0
 	song mus_temporal_spire, 0, 0
 	song mus_through_the_sea_of_time, 0, 0
-	song haruka_kanata_rock_metal_gba, 0, 0
-	song the_raising_fighting_spirit, 0, 0
 	song ph_trap_blend, 2, 2
 	song ph_trap_held, 2, 2
 	song ph_trap_solo, 2, 2

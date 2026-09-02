@@ -2937,7 +2937,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_BOUNCE_ROTATE_TO_SIDES : ANIM_BOUNCE_ROTATE_TO_SIDES,
         .backPic = gMonBackPic_Gardevoir,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 56) : MON_COORDS_SIZE(48, 56),
-        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 6,
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 2,
         .backAnimId = BACK_ANIM_SHRINK_GROW_VIBRATE,
         .palette = gMonPalette_Gardevoir,
         .shinyPalette = gMonShinyPalette_Gardevoir,
@@ -11781,7 +11781,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Salamence,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 3,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 4 : 0,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 10),
             ANIMCMD_FRAME(1, 30),
@@ -11791,7 +11791,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontAnimDelay = 70,
         .backPic = gMonBackPic_Salamence,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 56) : MON_COORDS_SIZE(56, 64),
-        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 4,
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 0,
         .backAnimId = BACK_ANIM_H_SHAKE,
         .palette = gMonPalette_Salamence,
         .shinyPalette = gMonShinyPalette_Salamence,
@@ -11800,7 +11800,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconPalette = gMonIconPalette_Salamence,
         .shinyIconPalette = gMonShinyIconPalette_Salamence,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(3, 10, SHADOW_SIZE_L)
+        SHADOW(-1, 14, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Salamence)
         OVERWORLD(
             sPicTable_Salamence,

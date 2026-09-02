@@ -45,6 +45,7 @@
 #include "party_menu.h"
 #include "pokedex.h"
 #include "pokemon.h"
+#include "pokemon_sprite_visualizer.h"
 #include "pokemon_icon.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
@@ -267,6 +268,7 @@ static void DebugAction_Util_Warp_SelectMap(u8 taskId);
 static void DebugAction_Util_Warp_SelectWarp(u8 taskId);
 static void DebugAction_Util_Weather(u8 taskId);
 static void DebugAction_Util_Weather_SelectId(u8 taskId);
+static void DebugAction_Util_SpriteVisualizer(u8 taskId);
 static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
 static void DebugAction_Util_OpenAchievements(u8 taskId);
@@ -569,6 +571,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Warp to map warp…"), DebugAction_Util_Warp_Warp },
     { COMPOUND_STRING("Set weather…"),      DebugAction_Util_Weather },
     { COMPOUND_STRING("Font Test…"),        DebugAction_ExecuteScript, Debug_EventScript_FontTest },
+    { COMPOUND_STRING("Sprite Visualizer"),  DebugAction_Util_SpriteVisualizer },
     { COMPOUND_STRING("Time Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
     { COMPOUND_STRING("Watch credits…"),    DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),       DebugAction_Util_CheatStart },
@@ -1681,6 +1684,18 @@ static void DebugAction_Util_Weather_SelectId(u8 taskId)
         PlaySE(SE_SELECT);
         DebugAction_DestroyExtraWindow(taskId);
     }
+}
+
+static void DebugAction_Util_SpriteVisualizer(u8 taskId)
+{
+    // Close/free the Wish/Debug menu before handing VRAM, tasks and palettes
+    // over to the standalone Sprite Visualizer screen.
+    Debug_DestroyMenu_Full(taskId);
+
+    // CB2_Pokemon_Sprite_Visualizer is a multi-state initializer and expects
+    // to begin at state 0 when entered from another screen.
+    gMain.state = 0;
+    SetMainCallback2(CB2_Pokemon_Sprite_Visualizer);
 }
 
 static void DebugAction_Util_WatchCredits(u8 taskId)

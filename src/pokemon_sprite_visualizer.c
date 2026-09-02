@@ -52,6 +52,39 @@ extern const struct SpritePalette sSpritePalettes_HealthBoxHealthBar[2];
 extern const struct UCoords8 sBattlerCoords[][MAX_BATTLERS_COUNT] ;
 static const u16 sBgColor[] = {RGB_WHITE};
 
+// Sprite Visualizer text UI: white glyphs on an opaque black window.
+// Use palette slot 15 for the windows, but reserve color index 15 itself
+// as the solid black fill. Text is rendered explicitly instead of relying
+// on FONT_NORMAL's default dark-text/light-background colors.
+#define SPRITE_VISUALIZER_WINDOW_BG_COLOR 15
+
+static const u8 sSpriteVisualizerTextColors[] =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_WHITE,
+    SPRITE_VISUALIZER_WINDOW_BG_COLOR, // black shadow; invisible on black bg
+};
+
+static void LoadSpriteVisualizerTextPalette(void)
+{
+    u16 black = RGB_BLACK;
+
+    // Keep the engine's normal text palette (index 1 is white), then make
+    // palette-15 color 15 a dedicated opaque black window color.
+    LoadPalette(GetTextWindowPalette(0), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    LoadPalette(&black, BG_PLTT_ID(15) + SPRITE_VISUALIZER_WINDOW_BG_COLOR, sizeof(black));
+}
+
+static void AddSpriteVisualizerText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 speed, const void *callback)
+{
+    // Every call in this visualizer passes NULL here. Keep the parameter only
+    // so the replacement remains drop-in compatible with the original call
+    // sites. In this pokeemerald-expansion revision,
+    // AddTextPrinterParameterized3 returns void.
+    (void)callback;
+    AddTextPrinterParameterized3(windowId, fontId, x, y, sSpriteVisualizerTextColors, speed, str);
+}
+
 static struct PokemonSpriteVisualizer *GetStructPtr(u8 taskId)
 {
     u8 *taskDataPtr = (u8 *)(&gTasks[taskId].data[0]);
@@ -467,52 +500,52 @@ static void PrintInstructionsOnWindow(struct PokemonSpriteVisualizer *data)
     u8 textR[] = _("{R_BUTTON}");
 
     //Instruction window
-    FillWindowPixelBuffer(WIN_INSTRUCTIONS, 0x11);
+    FillWindowPixelBuffer(WIN_INSTRUCTIONS, PIXEL_FILL(SPRITE_VISUALIZER_WINDOW_BG_COLOR));
     if (data->currentSubmenu == 0)
     {
         if (SpeciesHasGenderDifferences(species))
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructionsGender, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructionsGender, x, 0, 0, NULL);
         else
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructions, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructions, x, 0, 0, NULL);
     }
     else if (data->currentSubmenu == 1)
     {
         if (SpeciesHasGenderDifferences(species))
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuOneGender, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuOneGender, x, 0, 0, NULL);
         else
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuOne, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuOne, x, 0, 0, NULL);
     }
     else if (data->currentSubmenu == 2)
     {
         if (SpeciesHasGenderDifferences(species))
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuTwoGender, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuTwoGender, x, 0, 0, NULL);
         else
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuTwo, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuTwo, x, 0, 0, NULL);
     }
     else if (data->currentSubmenu == 3)
     {
         if (SpeciesHasGenderDifferences(species))
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuThreeGender, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuThreeGender, x, 0, 0, NULL);
         else
-            AddTextPrinterParameterized(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuThree, x, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_INSTRUCTIONS, fontId, textInstructionsSubmenuThree, x, 0, 0, NULL);
     }
     CopyWindowToVram(WIN_INSTRUCTIONS, COPYWIN_FULL);
 
     //Bottom left text
-    FillWindowPixelBuffer(WIN_BOTTOM_LEFT, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_BOTTOM_LEFT, PIXEL_FILL(SPRITE_VISUALIZER_WINDOW_BG_COLOR));
     if (data->currentSubmenu < 2)
     {
-        AddTextPrinterParameterized(WIN_BOTTOM_LEFT, fontId, textL, 30, 0, 0, NULL);
-        AddTextPrinterParameterized(WIN_BOTTOM_LEFT, fontId, textR, 30, 12, 0, NULL);
+        AddSpriteVisualizerText(WIN_BOTTOM_LEFT, fontId, textL, 30, 0, 0, NULL);
+        AddSpriteVisualizerText(WIN_BOTTOM_LEFT, fontId, textR, 30, 12, 0, NULL);
         if (GetSpeciesFormTable(data->currentmonId) != NULL)
-            AddTextPrinterParameterized(WIN_BOTTOM_LEFT, fontId, textBottomForms, 0, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_BOTTOM_LEFT, fontId, textBottomForms, 0, 0, 0, NULL);
         else
-            AddTextPrinterParameterized(WIN_BOTTOM_LEFT, fontId, textBottom, 0, 0, 0, NULL);
+            AddSpriteVisualizerText(WIN_BOTTOM_LEFT, fontId, textBottom, 0, 0, 0, NULL);
     }
     else if (data->currentSubmenu == 2)
-        AddTextPrinterParameterized(WIN_BOTTOM_LEFT, fontId, textBottomSubmenuTwo, 0, 0, 0, NULL);
+        AddSpriteVisualizerText(WIN_BOTTOM_LEFT, fontId, textBottomSubmenuTwo, 0, 0, 0, NULL);
     else if (data->currentSubmenu == 3)
-        AddTextPrinterParameterized(WIN_BOTTOM_LEFT, fontId, textBottomSubmenuThree, 0, 0, 0, NULL);
+        AddSpriteVisualizerText(WIN_BOTTOM_LEFT, fontId, textBottomSubmenuThree, 0, 0, 0, NULL);
 }
 
 static void VBlankCB(void)
@@ -559,8 +592,8 @@ static void PrintDigitChars(struct PokemonSpriteVisualizer *data)
     text[i++] = CHAR_SPACE;
     StringCopy(&text[i], GetSpeciesName(species));
 
-    FillWindowPixelBuffer(WIN_NAME_NUMBERS, 0x11);
-    AddTextPrinterParameterized(WIN_NAME_NUMBERS, FONT_NORMAL, text, 6, 0, 0, NULL);
+    FillWindowPixelBuffer(WIN_NAME_NUMBERS, PIXEL_FILL(SPRITE_VISUALIZER_WINDOW_BG_COLOR));
+    AddSpriteVisualizerText(WIN_NAME_NUMBERS, FONT_NORMAL, text, 6, 0, 0, NULL);
 }
 
 static u32 CharDigitsToValue(u8 *charDigits, u8 maxDigits)
@@ -1002,6 +1035,10 @@ static void LoadBattleBg(u8 battleBgType, enum BattleEnvironments battleEnvironm
         LoadPalette(gBattleEnvironmentPalette_Rayquaza, 0x20, 0x60);
         break;
     }
+
+    // Battle backgrounds may refresh BG palettes. Keep the Sprite Visualizer
+    // windows deterministic: white text, black fill.
+    LoadSpriteVisualizerTextPalette();
 }
 
 static void PrintBattleBgName(u8 taskId)
@@ -1014,7 +1051,7 @@ static void PrintBattleBgName(u8 taskId)
         StringCopy(text, gBattleBackgroundTerrainNames[data->battleEnvironment]);
     else
         StringCopy(text, gBattleBackgroundNames[data->battleBgType]);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, 0, 24, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, 0, 24, 0, NULL);
 }
 
 static void UpdateBattleBg(u8 taskId, bool8 increment)
@@ -1082,18 +1119,18 @@ static void UpdateMonAnimNames(u8 taskId)
     u8 fontId = 0;
     u8 textNum[4];
 
-    FillWindowPixelBuffer(WIN_BOTTOM_RIGHT, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_BOTTOM_RIGHT, PIXEL_FILL(SPRITE_VISUALIZER_WINDOW_BG_COLOR));
 
     //Back
     StringCopy(text, gBackAnimNames[backAnim]);
     ConvertIntToDecimalStringN(textNum, backAnim, STR_CONV_MODE_LEADING_ZEROS, 3);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNum, 0, 0, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, 18, 0, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNum, 0, 0, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, 18, 0, 0, NULL);
     //Front
     StringCopy(text, gFrontAnimNames[frontAnim]);
     ConvertIntToDecimalStringN(textNum, frontAnim, STR_CONV_MODE_LEADING_ZEROS, 3);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNum, 0, 12, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, 18, 12, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNum, 0, 12, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, 18, 12, 0, NULL);
 
     PrintBattleBgName(taskId);
 }
@@ -1121,32 +1158,32 @@ static void UpdateYPosOffsetText(struct PokemonSpriteVisualizer *data)
     u8 newFrontPicCoords   = frontPicCoords  +  offset_front_picCoords;
     u8 newFrontElevation   = frontElevation  +  offset_front_elevation;
 
-    FillWindowPixelBuffer(WIN_BOTTOM_RIGHT, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_BOTTOM_RIGHT, PIXEL_FILL(SPRITE_VISUALIZER_WINDOW_BG_COLOR));
 
     //Back
     y = 0;
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
     ConvertIntToDecimalStringN(text, backPicCoords , STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
     ConvertIntToDecimalStringN(text, newBackPicCoords , STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
     //Front picCoords
     y = 12;
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
     ConvertIntToDecimalStringN(text, frontPicCoords , STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
     ConvertIntToDecimalStringN(text, newFrontPicCoords , STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
     //Front elevation
     y = 24;
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
     ConvertIntToDecimalStringN(text, frontElevation , STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
     ConvertIntToDecimalStringN(text, newFrontElevation , STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
 }
 
 #define ABS(val)    (val < 0 ? val * -1 : val)
@@ -1170,32 +1207,32 @@ static void UpdateShadowSettingsText(struct PokemonSpriteVisualizer *data)
     u8 x_new_val = 110;
     u8 y = 0;
 
-    FillWindowPixelBuffer(WIN_BOTTOM_RIGHT, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_BOTTOM_RIGHT, PIXEL_FILL(SPRITE_VISUALIZER_WINDOW_BG_COLOR));
 
     // X offset
     y = 0;
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
     ITOA_SIGNED(text, data->shadowSettings.definedX);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
     ITOA_SIGNED(text, data->shadowSettings.overrideX);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
 
     // Y offset
     y = 12;
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
     ITOA_SIGNED(text, data->shadowSettings.definedY);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_const_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
     ITOA_SIGNED(text, data->shadowSettings.overrideY);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, text, x_new_val, y, 0, NULL);
 
     // Shadow Size
     y = 24;
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, sShadowSizeLabels[data->shadowSettings.definedSize], x_const_val, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
-    AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, sShadowSizeLabels[data->shadowSettings.overrideSize], x_new_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textConst, 0, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, sShadowSizeLabels[data->shadowSettings.definedSize], x_const_val, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, textNew, x_new_text, y, 0, NULL);
+    AddSpriteVisualizerText(WIN_BOTTOM_RIGHT, fontId, sShadowSizeLabels[data->shadowSettings.overrideSize], x_new_val, y, 0, NULL);
 }
 
 static void ResetPokemonSpriteVisualizerWindows(void)
@@ -1207,7 +1244,7 @@ static void ResetPokemonSpriteVisualizerWindows(void)
 
     for (i = 0; i < WIN_END + 1; i++)
     {
-        FillWindowPixelBuffer(i, PIXEL_FILL(0));
+        FillWindowPixelBuffer(i, PIXEL_FILL(SPRITE_VISUALIZER_WINDOW_BG_COLOR));
         PutWindowTilemap(i);
         CopyWindowToVram(i, COPYWIN_FULL);
     }
@@ -1248,7 +1285,7 @@ void CB2_Pokemon_Sprite_Visualizer(void)
             gReservedSpritePaletteCount = 8;
             ResetAllPicSprites();
             BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
-            LoadPalette(GetTextWindowPalette(0), 15*16, 0x40);
+            LoadSpriteVisualizerTextPalette();
 
             FillBgTilemapBufferRect(0, 0, 0, 0, 32, 20, 15);
             InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
@@ -1277,7 +1314,8 @@ void CB2_Pokemon_Sprite_Visualizer(void)
             data = AllocZeroed(sizeof(struct PokemonSpriteVisualizer));
             SetStructPtr(taskId, data);
 
-            data->currentmonId = SPECIES_VENUSAUR_GMAX;
+            // Always open the visualizer at National Dex #0001.
+            data->currentmonId = SPECIES_BULBASAUR;
             species = data->currentmonId;
 
             //Print instructions

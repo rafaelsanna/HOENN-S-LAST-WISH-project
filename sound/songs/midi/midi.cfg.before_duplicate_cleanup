@@ -538,5 +538,7 @@ mus_dont_ever_forget.mid: -E -R50 -G_fly_me_to_the_moon -V100
 mus_temporal_tower.mid: -E -R50 -G_fly_me_to_the_moon -V100
 mus_temporal_spire.mid: -E -R50 -G_fly_me_to_the_moon -V100
 mus_through_the_sea_of_time.mid: -E -R50 -G_fly_me_to_the_moon -V100
+haruka_kanata_rock_metal_gba: -E -R50 -G_fly_me_to_the_moon -V100
+the_raising_fighting_spirit: -E -R50 -G_fly_me_to_the_moon -V100
 haruka_kanata_rock_metal_gba.mid: -E -R50 -G_littleroot_test -V096
 the_raising_fighting_spirit.mid: -E -R50 -G_littleroot_test -V096

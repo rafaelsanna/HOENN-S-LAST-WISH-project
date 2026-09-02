@@ -1578,9 +1578,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_DONT_EVER_FORGET) \
     X(MUS_TEMPORAL_TOWER) \
     X(MUS_TEMPORAL_SPIRE) \
-    X(MUS_THROUGH_THE_SEA_OF_TIME) \
-    X(MUS_HARUKA_KANATA) \
-    X(MUS_THE_RAISING_FIGHTING_SPIRIT)
+    X(MUS_THROUGH_THE_SEA_OF_TIME)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -1909,8 +1907,6 @@ static const u16 sStation_All[] = {
     MUS_TEMPORAL_TOWER,
     MUS_TEMPORAL_SPIRE,
     MUS_THROUGH_THE_SEA_OF_TIME,
-    MUS_HARUKA_KANATA,
-    MUS_THE_RAISING_FIGHTING_SPIRIT,
     STATION_END
 };
 
@@ -2152,14 +2148,7 @@ static const u16 sStation_Anime[] = {
     MUS_KOKUTEN,
     MUS_GUTS_THEME,
     MUS_PAINS_THEME,
-
-    /* ANIME RADIO MUSIC PACK: BEGIN */
-
-    /* ANIME RADIO MUSIC PACK: END */
-
-    MUS_HARUKA_KANATA,
-    MUS_THE_RAISING_FIGHTING_SPIRIT,
-    STATION_END,
+    STATION_END
 };
 
 // POP: pop, hip-hop, electronic, standards and otherwise uncategorized real-world tracks.
@@ -2914,8 +2903,6 @@ static const u8 sAnimeName_GazeAtTheSkies[]        = _("GAZE AT THE SKIES - (BER
 static const u8 sAnimeName_Kokuten[]               = _("KOKUTEN - (NARUTO)");
 static const u8 sAnimeName_GutsTheme[]             = _("GUTS THEME - (BERSERK)");
 static const u8 sAnimeName_GireiPain[]             = _("GIREI - PAIN THEME (NARUTO)");
-static const u8 sAnimeName_HarukaKanata[]          = _("HARUKA KANATA - (NARUTO)");
-static const u8 sAnimeName_RaisingFightingSpirit[] = _("THE RAISING FIGHTING SPIRIT - (NARUTO)");
 
 static const u8 *Radio_GetAnimeDisplayName(u16 songId)
 {
@@ -2953,10 +2940,6 @@ static const u8 *Radio_GetAnimeDisplayName(u16 songId)
         return sAnimeName_GutsTheme;
     case MUS_PAINS_THEME:
         return sAnimeName_GireiPain;
-    case MUS_HARUKA_KANATA:
-        return sAnimeName_HarukaKanata;
-    case MUS_THE_RAISING_FIGHTING_SPIRIT:
-        return sAnimeName_RaisingFightingSpirit;
     default:
         return NULL;
     }

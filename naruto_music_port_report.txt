@@ -1,0 +1,16 @@
+NARUTO MUSIC STANDALONE CLEAN PORT
+==================================
+
+HARUKA
+------
+reference: mus_360.mid
+voicegroup: littleroot_test
+score: 108
+programs: {'DRUMS': 0, 'BASS': 33, 'GUITAR_HEAVY': 80, 'GUITAR_RHYTHM': 48, 'GUITAR_MUTED': 48, 'MELODY_LEAD': 80, 'LEAD': 80, 'FLUTE': 48, 'TRADITIONAL': 48, 'PAD': 80, '_track_count': 4, '_distinct_programs': 4, '_has_explicit_guitar': False, '_has_explicit_bass': True, '_has_explicit_lead': True}
+
+RAISING
+-------
+reference: mus_360.mid
+voicegroup: littleroot_test
+score: 108
+programs: {'DRUMS': 0, 'BASS': 33, 'GUITAR_HEAVY': 80, 'GUITAR_RHYTHM': 48, 'GUITAR_MUTED': 48, 'MELODY_LEAD': 80, 'LEAD': 80, 'FLUTE': 48, 'TRADITIONAL': 48, 'PAD': 80, '_track_count': 4, '_distinct_programs': 4, '_has_explicit_guitar': False, '_has_explicit_bass': True, '_has_explicit_lead': True}
