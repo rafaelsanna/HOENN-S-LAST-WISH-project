@@ -112,6 +112,26 @@
 #define SUMMARY_UI_BLUE          RGB(20,26,31)
 #define SUMMARY_UI_BLUE_SHADOW   RGB(8,13,18)
 
+// Shoulder-button color themes. V5 diagnostic: L plays SE_FAILURE and R plays
+// SE_SELECT directly from the input handler before the palette is touched.
+// Only the panel tone that is #101821 in the
+// default theme changes; black/gray framing, white text, blue buffs and red
+// nerfs stay untouched. The alternate tones are intentionally muted so white
+// text remains readable on GBA hardware.
+#define SUMMARY_THEME_DEFAULT_BG  RGB(2, 3, 4)   // #101821
+#define SUMMARY_THEME_LILAC_BG    RGB(18,16,22)  // muted pastel lilac
+#define SUMMARY_THEME_BURGUNDY_BG RGB(12, 5, 8)  // wine / burgundy
+#define SUMMARY_THEME_SKY_BG      RGB(10,17,22)  // muted sky blue
+
+enum SummaryColorTheme
+{
+    SUMMARY_COLOR_THEME_DEFAULT = 0,
+    SUMMARY_COLOR_THEME_LILAC,
+    SUMMARY_COLOR_THEME_BURGUNDY,
+    SUMMARY_COLOR_THEME_SKY,
+    SUMMARY_COLOR_THEME_COUNT,
+};
+
 // Dynamic fields for the Pokémon Info page
 #define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
 #define PSS_DATA_WINDOW_INFO_ID 1
@@ -221,6 +241,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
 
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
 static EWRAM_DATA u8 sMoveSlotToReplace = 0;
+static EWRAM_DATA u8 sSummaryColorTheme; // runtime-only; zero/default after boot, retained across Summary opens
 ALIGNED(4) static EWRAM_DATA u8 sAnimDelayTaskId = 0;
 EWRAM_DATA MainCallback gInitialSummaryScreenCallback = NULL; // stores callback from the first time the screen is opened from the party or PC menu
 
@@ -231,6 +252,10 @@ static void InitBGs(void);
 static bool8 DecompressGraphics(void);
 static void ApplySkillsGuideTilePalettes(void);
 static void InitSkillsGuidePalettes(void);
+static u16 GetSummaryThemePanelColor(void);
+static void ChangeSummaryColorTheme(s8 direction);
+static void DrawSummaryStatusStripContents(void);
+static void PutSummaryThemeLegendIfAvailable(void);
 static void CopyMonToSummaryStruct(struct Pokemon *);
 static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *);
 static void SetDefaultTilemaps(void);
@@ -1479,6 +1504,22 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
+static u16 GetSummaryThemePanelColor(void)
+{
+    switch (sSummaryColorTheme)
+    {
+    case SUMMARY_COLOR_THEME_LILAC:
+        return SUMMARY_THEME_LILAC_BG;
+    case SUMMARY_COLOR_THEME_BURGUNDY:
+        return SUMMARY_THEME_BURGUNDY_BG;
+    case SUMMARY_COLOR_THEME_SKY:
+        return SUMMARY_THEME_SKY_BG;
+    case SUMMARY_COLOR_THEME_DEFAULT:
+    default:
+        return SUMMARY_THEME_DEFAULT_BG;
+    }
+}
+
 // Dark charcoal summary theme. The original tile art/layout is preserved; only
 // palette entries are remapped. Large surfaces are black/dark gray, text is
 // white, blue/red are the main accents, and purple is reserved for small details.
@@ -1547,6 +1588,31 @@ static void ApplySummaryScreenDarkTheme(void)
         CpuCopy16(sDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
+    // Theme ONLY the exact #101821 / RGB(2,3,4) tone inside the five
+    // background-art palettes (INFO / Contest / Skills / Battle / header).
+    // Do not assume a fixed palette index: the same shade is used by several
+    // tiles, and scanning for the exact source color makes the theme resilient
+    // to tile/palette rearrangements. Window/text palettes 5+ are intentionally
+    // left alone so white text, blue buffs and red nerfs never get recolored.
+    {
+        u16 themePanelColor = GetSummaryThemePanelColor();
+        u8 pal;
+        u8 color;
+
+        if (themePanelColor != SUMMARY_THEME_DEFAULT_BG)
+        {
+            for (pal = 0; pal <= 4; pal++)
+            {
+                base = BG_PLTT_ID(pal);
+                for (color = 0; color < 16; color++)
+                {
+                    if (gPlttBufferUnfaded[base + color] == SUMMARY_THEME_DEFAULT_BG)
+                        gPlttBufferUnfaded[base + color] = themePanelColor;
+                }
+            }
+        }
+    }
+
     // Palette 5: STATUS strip / shiny portrait secondary palette.
     base = BG_PLTT_ID(5);
     for (i = 0; i < 16; i++)
@@ -1555,6 +1621,8 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 2] = SUMMARY_UI_MID_GRAY;
     gPlttBufferUnfaded[base + 3] = RGB(31,31,31);
     gPlttBufferUnfaded[base + 4] = RGB(1, 1, 2);
+    gPlttBufferUnfaded[base + 7] = SUMMARY_UI_RED;
+    gPlttBufferUnfaded[base + 8] = SUMMARY_UI_RED_SHADOW;
 
     // Palette 6: body/data windows and almost all dynamic text.
     // Blue is reserved for a positive/buffed stat (Nature up / perfect IV).
@@ -1641,6 +1709,23 @@ static void ApplySummaryScreenDarkTheme(void)
     );
 
     InitSkillsGuidePalettes();
+}
+
+static void ChangeSummaryColorTheme(s8 direction)
+{
+    if (direction > 0)
+    {
+        sSummaryColorTheme = (sSummaryColorTheme + 1) % SUMMARY_COLOR_THEME_COUNT;
+    }
+    else
+    {
+        sSummaryColorTheme = (sSummaryColorTheme > 0)
+            ? sSummaryColorTheme - 1
+            : SUMMARY_COLOR_THEME_COUNT - 1;
+    }
+
+    ApplySummaryScreenDarkTheme();
+    PutSummaryThemeLegendIfAvailable();
 }
 
 static void InitSkillsGuidePalettes(void)
@@ -2094,7 +2179,20 @@ static void Task_HandleInput(u8 taskId)
 {
     if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE && !gPaletteFade.active)
     {
-        if (JOY_NEW(DPAD_UP))
+        if (JOY_NEW(L_BUTTON))
+        {
+            // Diagnostic: this sound fires at the raw input branch,
+            // before any palette/window code. L = failure tone.
+            PlaySE(SE_FAILURE);
+            ChangeSummaryColorTheme(-1);
+        }
+        else if (JOY_NEW(R_BUTTON))
+        {
+            // R uses a different tone so direction is unambiguous.
+            PlaySE(SE_SELECT);
+            ChangeSummaryColorTheme(1);
+        }
+        else if (JOY_NEW(DPAD_UP))
         {
             ChangeSummaryPokemon(taskId, -1);
         }
@@ -2394,6 +2492,7 @@ static void Task_ChangeSummaryMon(u8 taskId)
         CreateCaughtBallSprite(&sMonSummaryScreen->currentMon);
         break;
     case 7:
+        DrawSummaryStatusStripContents();
         if (sMonSummaryScreen->summary.ailment != AILMENT_NONE)
             HandleStatusTilemap(10, -2);
         DrawPokerusCuredSymbol(&sMonSummaryScreen->currentMon);
@@ -2423,6 +2522,7 @@ static void Task_ChangeSummaryMon(u8 taskId)
     default:
         if (!MenuHelpers_ShouldWaitForLinkRecv() && !FuncIsActiveTask(Task_ShowStatusWindow))
         {
+            PutSummaryThemeLegendIfAvailable();
             data[0] = 0;
             gTasks[taskId].func = Task_HandleInput;
         }
@@ -2812,7 +2912,20 @@ static void Task_HandleInput_MoveSelect(u8 taskId)
 
     if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
     {
-        if (JOY_NEW(DPAD_UP))
+        if (JOY_NEW(L_BUTTON))
+        {
+            // Diagnostic: this sound fires at the raw input branch,
+            // before any palette/window code. L = failure tone.
+            PlaySE(SE_FAILURE);
+            ChangeSummaryColorTheme(-1);
+        }
+        else if (JOY_NEW(R_BUTTON))
+        {
+            // R uses a different tone so direction is unambiguous.
+            PlaySE(SE_SELECT);
+            ChangeSummaryColorTheme(1);
+        }
+        else if (JOY_NEW(DPAD_UP))
         {
             data[0] = 4;
             ChangeSelectedMove(data, -1, &sMonSummaryScreen->firstMoveIndex);
@@ -2958,7 +3071,20 @@ static void Task_HandleInput_MovePositionSwitch(u8 taskId)
 
     if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
     {
-        if (JOY_NEW(DPAD_UP))
+        if (JOY_NEW(L_BUTTON))
+        {
+            // Diagnostic: this sound fires at the raw input branch,
+            // before any palette/window code. L = failure tone.
+            PlaySE(SE_FAILURE);
+            ChangeSummaryColorTheme(-1);
+        }
+        else if (JOY_NEW(R_BUTTON))
+        {
+            // R uses a different tone so direction is unambiguous.
+            PlaySE(SE_SELECT);
+            ChangeSummaryColorTheme(1);
+        }
+        else if (JOY_NEW(DPAD_UP))
         {
             data[0] = 3;
             ChangeSelectedMove(&data[0], -1, &sMonSummaryScreen->secondMoveIndex);
@@ -3101,7 +3227,20 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
     {
         if (gPaletteFade.active != TRUE)
         {
-            if (JOY_NEW(DPAD_UP))
+            if (JOY_NEW(L_BUTTON))
+            {
+                // Diagnostic: this sound fires at the raw input branch,
+                // before any palette/window code. L = failure tone.
+                PlaySE(SE_FAILURE);
+                ChangeSummaryColorTheme(-1);
+            }
+            else if (JOY_NEW(R_BUTTON))
+            {
+                // R uses a different tone so direction is unambiguous.
+                PlaySE(SE_SELECT);
+                ChangeSummaryColorTheme(1);
+            }
+            else if (JOY_NEW(DPAD_UP))
             {
                 data[0] = 4;
                 ChangeSelectedMove(data, -1, &sMonSummaryScreen->firstMoveIndex);
@@ -3789,6 +3928,52 @@ static void PrintAOrBButtonIcon(u8 windowId, bool8 bButton, u32 x)
     BlitBitmapToWindow(windowId, button, x, 0, 16, 16);
 }
 
+static void DrawSummaryStatusStripContents(void)
+{
+    static const u8 sText_ThemeL[] = _("L");
+    static const u8 sText_ThemeR[] = _("R");
+    static const u8 sText_Themes[] = _("THEMES");
+
+    // Reuse the existing 80x16 STATUS strip. When the Pokémon has no ailment,
+    // the otherwise-empty strip becomes the compact L/R theme legend shown in
+    // the user's layout mockup. A real status always wins and restores STATUS.
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(1));
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 0, 80, 1);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 15, 80, 1);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 0, 1, 16);
+    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 79, 0, 1, 16);
+
+    if (sMonSummaryScreen->summary.ailment != AILMENT_NONE)
+    {
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, gText_Status, 2, 1, 0, 1);
+    }
+    else
+    {
+        // Red shoulder labels + white caption, matching the supplied mockup.
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeL, 4, 3, 0, 3, FONT_SMALL);
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeR, 15, 3, 0, 3, FONT_SMALL);
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_Themes, 27, 3, 0, 1, FONT_SMALL);
+    }
+
+    CopyWindowToVram(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, COPYWIN_GFX);
+}
+
+static void PutSummaryThemeLegendIfAvailable(void)
+{
+    if (sMonSummaryScreen == NULL)
+        return;
+
+    DrawSummaryStatusStripContents();
+
+    if (sMonSummaryScreen->summary.ailment == AILMENT_NONE
+        && (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO
+            || sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS))
+    {
+        PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
+        ScheduleBgCopyTilemapToVram(0);
+    }
+}
+
 static void PrintPageNamesAndStats(void)
 {
     int statsXPos;
@@ -3816,19 +4001,7 @@ static void PrintPageNamesAndStats(void)
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT, gText_Speed2, statsXPos, 33, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP, gText_ExpPoints, 6, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP, gText_NextLv, 6, 17, 0, 1);
-    // STATUS: exactly one interior color + a lighter 1px border.
-    // Never use PIXEL_FILL(0) here: BG palette index 0 is transparent and
-    // would reveal the old two-tone status artwork underneath.
-    FillWindowPixelBuffer(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(1));
-
-    // 80x16 outer border, 1 pixel thick.
-    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 0, 80, 1);
-    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 15, 80, 1);
-    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 0, 0, 1, 16);
-    FillWindowPixelRect(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, PIXEL_FILL(2), 79, 0, 1, 16);
-
-    PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, gText_Status, 2, 1, 0, 1);
-    CopyWindowToVram(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, COPYWIN_GFX);
+    DrawSummaryStatusStripContents();
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_POWER_ACC, gText_Power, 0, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_POWER_ACC, gText_Accuracy2, 0, 17, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM, gText_Appeal, 0, 1, 0, 1);
@@ -3952,12 +4125,23 @@ static void PutPageWindowTilemaps(u8 page)
     if (page == PSS_PAGE_SKILLS && ShouldShowIvEvPrompt())
         PutCheckIvPromptTilemap();
 
+    if (sMonSummaryScreen->summary.ailment == AILMENT_NONE
+        && (page == PSS_PAGE_INFO || page == PSS_PAGE_SKILLS))
+    {
+        DrawSummaryStatusStripContents();
+        PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
+    }
+
     ScheduleBgCopyTilemapToVram(0);
 }
 
 static void ClearPageWindowTilemaps(u8 page)
 {
     u8 i;
+
+    if (sMonSummaryScreen->summary.ailment == AILMENT_NONE
+        && (page == PSS_PAGE_INFO || page == PSS_PAGE_SKILLS))
+        ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
 
     switch (page)
     {
