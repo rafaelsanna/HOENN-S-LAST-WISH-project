@@ -58,6 +58,7 @@
 #include "constants/union_room.h"
 #include "constants/weather.h"
 #include "constants/layouts.h"
+#include "constants/map_groups.h"
 
 #define SPECIAL_LOCALIDS_START (min(LOCALID_CAMERA, \
                                 min(LOCALID_PLAYER, \
@@ -10024,11 +10025,21 @@ static u8 ObjectEventGetNearbyReflectionType(struct ObjectEvent *objEvent)
 static u8 GetReflectionTypeByMetatileBehavior(u32 behavior)
 {
     if (MetatileBehavior_IsIce(behavior))
+    {
+        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MAUVILLE_CITY_GYM)
+         && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MAUVILLE_CITY_GYM))
+            return REFL_TYPE_NONE;
+
         return REFL_TYPE_ICE;
+    }
     else if (MetatileBehavior_IsReflective(behavior))
+    {
         return REFL_TYPE_WATER;
+    }
     else
+    {
         return REFL_TYPE_NONE;
+    }
 }
 
 u8 GetLedgeJumpDirection(s16 x, s16 y, u8 z)

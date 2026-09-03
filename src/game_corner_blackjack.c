@@ -284,6 +284,7 @@ static void BJVBlankCallback(void);
 static void CreateCursorSprite(void);
 static void CreateOptions(void);
 static void AdjustCards(void);
+static u8 GetBlackJackHandScore(const u8 *cardNumbers, u8 numCards);
 static void CreateFacedown(void);
 static void ShuffleCards(void);
 static void UpdateCards(void);
@@ -2028,6 +2029,36 @@ const struct PlayingCard sPlayingCards[CARD_COUNT] =
     },
 };
 
+static u8 GetBlackJackHandScore(const u8 *cardNumbers, u8 numCards)
+{
+    u8 i;
+    u8 softAces = 0;
+    u8 score = 0;
+
+    for (i = 0; i < numCards; i++)
+    {
+        u8 cardPoints = sPlayingCards[cardNumbers[i]].points;
+
+        if (cardPoints == CARD_SCORE_ACE)
+        {
+            score += CARD_SCORE_ACE_EXPANDED;
+            softAces++;
+        }
+        else
+        {
+            score += cardPoints;
+        }
+    }
+
+    while (score > CARD_SCORE_BLACK_JACK && softAces != 0)
+    {
+        score -= (CARD_SCORE_ACE_EXPANDED - CARD_SCORE_ACE_SHURNK);
+        softAces--;
+    }
+
+    return score;
+}
+
 void StartBlackJack(void)
 {
     sBlackJack = AllocZeroed(sizeof(struct BlackJack));
@@ -2815,8 +2846,6 @@ static void ProcessWin(void)
 
 static void Stand(void)
 {
-    u8 DCardPoints;
-    
     switch (sBlackJack->standState)
     {
         case STAND_0:
@@ -2826,15 +2855,7 @@ static void Stand(void)
             gSprites[sBlackJack->DealerFaceDownId].invisible = TRUE;
             UpdateCardVisibility();
             AdjustCards();
-            DCardPoints = sPlayingCards[sBlackJack->dealerCardNumbers[1]].points;
-            if (DCardPoints == CARD_SCORE_ACE)
-            {
-                if (sBlackJack->dealerScore == CARD_SCORE_ACE_EXPANDED)
-                    DCardPoints = CARD_SCORE_ACE_SHURNK;
-                else
-                    DCardPoints = CARD_SCORE_ACE_EXPANDED;
-            }
-            sBlackJack->dealerScore += DCardPoints;
+            sBlackJack->dealerScore = GetBlackJackHandScore(sBlackJack->dealerCardNumbers, sBlackJack->numDealerCards);
             SetDealerDigits(sBlackJack->dealerScore);
             sBlackJack->waitTimer = 100000;
             sBlackJack->standState = STAND_1;
@@ -2873,34 +2894,7 @@ static void Stand(void)
                 sBlackJack->numDealerCards++;
                 UpdateCardVisibility();
                 AdjustCards();
-                DCardPoints = sPlayingCards[sBlackJack->dealerCardNumbers[(sBlackJack->numDealerCards - 1)]].points;
-                if (DCardPoints == CARD_SCORE_ACE)
-                {
-                    if ((sBlackJack->dealerScore + CARD_SCORE_ACE_EXPANDED) > CARD_SCORE_BLACK_JACK)
-                        DCardPoints = CARD_SCORE_ACE_SHURNK;
-                    else
-                        DCardPoints = CARD_SCORE_ACE_EXPANDED;
-                }
-                sBlackJack->dealerScore += DCardPoints;
-                if (sBlackJack->dealerScore > CARD_SCORE_BLACK_JACK)
-                {
-                    if (sPlayingCards[sBlackJack->dealerCardNumbers[0]].points == CARD_SCORE_ACE)
-                    {
-                        if (sBlackJack->AceAdjustDealer == FALSE)
-                        {
-                            sBlackJack->dealerScore -= (CARD_SCORE_ACE_EXPANDED - CARD_SCORE_ACE_SHURNK);
-                            sBlackJack->AceAdjustDealer = TRUE;
-                        }
-                    }
-                    else if (sPlayingCards[sBlackJack->dealerCardNumbers[1]].points == CARD_SCORE_ACE)
-                    {
-                        if (sBlackJack->AceAdjustDealer == FALSE)
-                        {
-                            sBlackJack->dealerScore -= (CARD_SCORE_ACE_EXPANDED - CARD_SCORE_ACE_SHURNK);
-                            sBlackJack->AceAdjustDealer = TRUE;
-                        }
-                    }
-                }
+                sBlackJack->dealerScore = GetBlackJackHandScore(sBlackJack->dealerCardNumbers, sBlackJack->numDealerCards);
                 SetDealerDigits(sBlackJack->dealerScore);
                 sBlackJack->waitTimer = 100000;
                 sBlackJack->standState = STAND_4;
@@ -2998,8 +2992,6 @@ static void ProcessHitBJ(void)
 
 static void Double(void)
 {
-    u8 playerCardPoints;
-    
     switch (sBlackJack->doubleState)
     {
         case DOUBLE_0:
@@ -3022,15 +3014,7 @@ static void Double(void)
             sBlackJack->numPlayerCards = (sBlackJack->numPlayerCards + 1);
             UpdateCardVisibility();
             AdjustCards();
-            playerCardPoints = sPlayingCards[sBlackJack->playerCardNumbers[(sBlackJack->numPlayerCards - 1)]].points;
-            if (playerCardPoints == CARD_SCORE_ACE)
-            {
-                if ((sBlackJack->playerScore + CARD_SCORE_ACE_EXPANDED) > CARD_SCORE_BLACK_JACK)
-                    playerCardPoints = CARD_SCORE_ACE_SHURNK;
-                else
-                    playerCardPoints = CARD_SCORE_ACE_EXPANDED;
-            }
-            sBlackJack->playerScore += playerCardPoints;
+            sBlackJack->playerScore = GetBlackJackHandScore(sBlackJack->playerCardNumbers, sBlackJack->numPlayerCards);
             SetPlayerDigits(sBlackJack->playerScore);
             sBlackJack->waitTimer = 100000;
             sBlackJack->doubleState = DOUBLE_3;
@@ -3071,9 +3055,6 @@ static void ProcessDouble(void)
 
 static void Hit(void)
 {
-    u8 playerCardPoints;
-    int i;
-
     switch (sBlackJack->hitState)
     {
     case HIT_PLAY_CARD:
@@ -3082,29 +3063,7 @@ static void Hit(void)
         sBlackJack->numPlayerCards = (sBlackJack->numPlayerCards + 1);
         AdjustCards();
         UpdateCardVisibility();
-        playerCardPoints = sPlayingCards[sBlackJack->playerCardNumbers[(sBlackJack->numPlayerCards - 1)]].points;
-        if (playerCardPoints == CARD_SCORE_ACE)
-        {
-            if ((sBlackJack->playerScore + CARD_SCORE_ACE_EXPANDED) > CARD_SCORE_BLACK_JACK)
-                playerCardPoints = CARD_SCORE_ACE_SHURNK;
-            else
-                playerCardPoints = CARD_SCORE_ACE_EXPANDED;
-        }
-        sBlackJack->playerScore += playerCardPoints;
-        if (sBlackJack->playerScore > CARD_SCORE_BLACK_JACK)
-        {
-            for (i = 0; i < sBlackJack->numPlayerCards; i++) 
-            {
-                if (sPlayingCards[sBlackJack->playerCardNumbers[i]].points == CARD_SCORE_ACE) 
-                {
-                    if (sBlackJack->AceAdjustPlayer == FALSE) 
-                    {
-                        sBlackJack->playerScore -= 10;
-                        sBlackJack->AceAdjustPlayer = TRUE;
-                    }
-                }
-            }
-        }
+        sBlackJack->playerScore = GetBlackJackHandScore(sBlackJack->playerCardNumbers, sBlackJack->numPlayerCards);
         SetPlayerDigits(sBlackJack->playerScore);
         sBlackJack->waitTimer = 100000;
         sBlackJack->hitState = HIT_1;
@@ -3146,9 +3105,6 @@ static void AButton(void)
 {
     u32 bet;
     u8 num;
-    u8 playerCard1Points;
-    u8 playerCard2Points;
-    u8 dealerCard1Points;
 
     if (sBlackJack->optionMode != OPTION_NONE)
     {
@@ -3258,24 +3214,8 @@ static void AButton(void)
                         PlaySE(SE_REPEL);                        
                         // delay?
                         
-                        playerCard1Points = sPlayingCards[sBlackJack->playerCardNumbers[0]].points;
-                        playerCard2Points = sPlayingCards[sBlackJack->playerCardNumbers[1]].points;
-                        
-                         if (playerCard1Points != CARD_SCORE_ACE && playerCard2Points != CARD_SCORE_ACE)
-                            sBlackJack->playerScore = playerCard1Points + playerCard2Points;
-                        else if (playerCard1Points == CARD_SCORE_ACE && playerCard2Points == CARD_SCORE_ACE)
-                            sBlackJack->playerScore = 12;
-                        else if (playerCard1Points == CARD_SCORE_ACE && playerCard2Points != CARD_SCORE_ACE)
-                            sBlackJack->playerScore = CARD_SCORE_ACE_EXPANDED + playerCard2Points;
-                        else if (playerCard1Points != CARD_SCORE_ACE && playerCard2Points == CARD_SCORE_ACE)
-                            sBlackJack->playerScore = playerCard1Points + CARD_SCORE_ACE_EXPANDED;
-
-                        dealerCard1Points = sPlayingCards[sBlackJack->dealerCardNumbers[0]].points;
-                        
-                        if (dealerCard1Points == CARD_SCORE_ACE)
-                            sBlackJack->dealerScore = CARD_SCORE_ACE_EXPANDED;
-                        else
-                            sBlackJack->dealerScore = dealerCard1Points;
+                        sBlackJack->playerScore = GetBlackJackHandScore(sBlackJack->playerCardNumbers, sBlackJack->numPlayerCards);
+                        sBlackJack->dealerScore = GetBlackJackHandScore(sBlackJack->dealerCardNumbers, sBlackJack->numDealerCards);
                         SetPlayerDigits(sBlackJack->playerScore);
                         SetDealerDigits(sBlackJack->dealerScore);
                         if (sBlackJack->playerScore == CARD_SCORE_BLACK_JACK)

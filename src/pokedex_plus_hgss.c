@@ -2370,10 +2370,11 @@ static void Task_ClosePokedex(u8 taskId)
 
 static u16 GetPokedexDarkBackgroundColor(void)
 {
+    // This project keeps its custom dark list palette in the normal HGSS path.
     if (!IsNationalPokedexEnabled())
-        return sPokedexPlusHGSS_Default_dark_Pal[1];
+        return sPokedexPlusHGSS_Default_Pal[1];
     else
-        return sPokedexPlusHGSS_National_dark_Pal[1];
+        return sPokedexPlusHGSS_National_Pal[1];
 }
 
 static void ApplyPokedexDedicatedDarkBackground(u8 colorIndex)
@@ -2396,6 +2397,7 @@ static void ApplyPokedexSearchDarkBackground(void)
 
 static void ApplyPokedexSearchResultsDarkBackground(void)
 {
+    ApplyPokedexDedicatedDarkBackground(1);
     ApplyPokedexDedicatedDarkBackground(DEX_SEARCH_RESULTS_DARK_BG_INDEX);
 }
 
@@ -2404,7 +2406,7 @@ static void LoadPokedexBgPalette(bool8 isSearchResults)
     if (!HGSS_DARK_MODE)
     {
         if (isSearchResults == TRUE)
-            LoadPalette(sPokedexPlusHGSS_SearchResults_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
+            LoadPalette(sPokedexPlusHGSS_SearchResults_dark_Pal, BG_PLTT_ID(0), PLTT_SIZEOF(6 * 16));
         else if (!IsNationalPokedexEnabled())
             LoadPalette(sPokedexPlusHGSS_Default_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
         else
@@ -2450,12 +2452,11 @@ static bool8 LoadPokedexListPage(u8 page)
         SetBgTilemapBuffer(2, AllocZeroed(BG_SCREEN_SIZE));
         SetBgTilemapBuffer(1, AllocZeroed(BG_SCREEN_SIZE));
         SetBgTilemapBuffer(0, AllocZeroed(BG_SCREEN_SIZE));
-        if (HGSS_DARK_MODE && page == PAGE_SEARCH_RESULTS)
+        if (page == PAGE_SEARCH_RESULTS)
         {
-            // Search-results tilemaps use different palette-bank bits than PAGE_MAIN.
-            // Use a dedicated dark-safe gfx variant whose neutral surfaces sit on a
-            // reserved color index; the palette helper below darkens that index in
-            // every BG bank, so results cannot fall back to white.
+            // This project uses the custom dark HGSS list as its default style.
+            // Keep search results on the matching dark-safe gfx even when the
+            // upstream HGSS_DARK_MODE option is disabled.
             if (!HGSS_DECAPPED)
                 DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuList_SearchResultsDark_Gfx, 0x2000, 0, 0);
             else
@@ -2481,7 +2482,7 @@ static bool8 LoadPokedexListPage(u8 page)
         else
             sPokedexView->isSearchResults = TRUE;
         LoadPokedexBgPalette(sPokedexView->isSearchResults);
-        if (HGSS_DARK_MODE && page == PAGE_SEARCH_RESULTS)
+        if (page == PAGE_SEARCH_RESULTS)
             ApplyPokedexSearchResultsDarkBackground();
         InitWindows(sPokemonList_WindowTemplate);
         DeactivateAllTextPrinters();
@@ -8140,16 +8141,8 @@ static void PrintSearchText(const u8 *str, u32 x, u32 y)
     u8 color[3];
 
     color[0] = TEXT_COLOR_TRANSPARENT;
-    if (HGSS_DARK_MODE)
-    {
-        color[1] = TEXT_COLOR_WHITE;
-        color[2] = TEXT_COLOR_DARK_GRAY;
-    }
-    else
-    {
-        color[1] = TEXT_DYNAMIC_COLOR_6;
-        color[2] = TEXT_COLOR_DARK_GRAY;
-    }
+    color[1] = TEXT_COLOR_WHITE;
+    color[2] = TEXT_COLOR_DARK_GRAY;
     AddTextPrinterParameterized4(0, FONT_NORMAL, x, y, 0, 0, color, TEXT_SKIP_DRAW, str);
 }
 
@@ -8197,35 +8190,16 @@ static void Task_LoadSearchMenu(u8 taskId)
             InitWindows(sSearchMenu_WindowTemplate);
             DeactivateAllTextPrinters();
             PutWindowTilemap(0);
-            if (HGSS_DARK_MODE)
-            {
-                // Dark mode needs its own index-separated tileset in BOTH font
-                // modes. Previously HGSS_DECAPPED bypassed the dark gfx entirely.
-                if (!HGSS_DECAPPED)
-                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Dark_Gfx, 0x2000, 0, 0);
-                else
-                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Dark_DECA_Gfx, 0x2000, 0, 0);
-            }
+            if (!HGSS_DECAPPED)
+                DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Dark_Gfx, 0x2000, 0, 0);
             else
-            {
-                if (!HGSS_DECAPPED)
-                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Gfx, 0x2000, 0, 0);
-                else
-                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_DECA_Gfx, 0x2000, 0, 0);
-            }
+                DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Dark_DECA_Gfx, 0x2000, 0, 0);
             if (!IsNationalPokedexEnabled())
                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchHoenn_Tilemap, 0, 0);
             else
                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchNational_Tilemap, 0, 0);
-            if (!HGSS_DARK_MODE)
-            {
-                LoadPalette(sPokedexPlusHGSS_MenuSearch_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(4 * 16 - 1));
-            }
-            else
-            {
-                LoadPalette(sPokedexPlusHGSS_MenuSearch_dark_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(4 * 16 - 1));
-                ApplyPokedexSearchDarkBackground();
-            }
+            LoadPalette(sPokedexPlusHGSS_MenuSearch_dark_Pal, BG_PLTT_ID(0), PLTT_SIZEOF(4 * 16));
+            ApplyPokedexSearchDarkBackground();
             gMain.state = 1;
         }
         break;
