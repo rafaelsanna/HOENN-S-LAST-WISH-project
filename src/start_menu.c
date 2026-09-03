@@ -97,6 +97,29 @@ EWRAM_DATA static u8 sStartMenuCursorPos = 0;
 EWRAM_DATA static u8 sNumStartMenuActions = 0;
 EWRAM_DATA static u8 sCurrentStartMenuActions[9] = {0};
 EWRAM_DATA static s8 sInitStartMenuData[2] = {0};
+EWRAM_DATA static bool8 sWishMenuReorderActive = FALSE;
+EWRAM_DATA static u8 sWishMenuOrderBackup[9] = {0};
+EWRAM_DATA static u8 sWishMenuReorderStartPos = 0;
+
+// WISHMENU order persistence. Summary/Party themes currently own future[64..67],
+// so this feature starts at 68 and keeps the frozen HLW save extension size intact.
+#define WISH_MENU_ORDER_SAVE_TAG0_OFFSET      68
+#define WISH_MENU_ORDER_SAVE_TAG1_OFFSET      69
+#define WISH_MENU_ORDER_SAVE_VERSION_OFFSET   70
+#define WISH_MENU_ORDER_SAVE_COUNT_OFFSET     71
+#define WISH_MENU_ORDER_SAVE_DATA_OFFSET      72
+#define WISH_MENU_ORDER_SAVE_TAG0             0x57 // 'W'
+#define WISH_MENU_ORDER_SAVE_TAG1             0x4D // 'M'
+#define WISH_MENU_ORDER_SAVE_VERSION          1
+
+// WISHMENU adds a ninth entry to the normal Start Menu. The stock Start Menu
+// window assumes 16 px per entry plus two extra interior tile rows; with nine
+// entries that makes the frame extend two tiles past the bottom of the GBA
+// screen. Only the WISHMENU layout uses this compact spacing.
+#define WISH_START_MENU_WINDOW_ACTIONS 8
+#define WISH_START_MENU_TEXT_Y         5
+#define WISH_START_MENU_ROW_HEIGHT     15
+
 
 EWRAM_DATA static u8 (*sSaveDialogCallback)(void) = NULL;
 EWRAM_DATA static u8 sSaveDialogTimer = 0;
@@ -153,11 +176,19 @@ static void Task_SaveAfterLinkBattle(u8 taskId);
 static void Task_WaitForBattleTowerLinkSave(u8 taskId);
 static bool8 FieldCB_ReturnToFieldStartMenu(void);
 
-// Animação persistente do cursor (uma mola)
-static struct ComfyAnim sCursorAnim;
-
 static u16 sOriginalColor5 = 0;
 static u16 sOriginalColor6 = 0;
+static u16 sOriginalColor5Unfaded = 0;
+static u16 sOriginalColor6Unfaded = 0;
+
+// Reorder feedback: the grabbed WISHMENU entry and its selector arrow use a
+// muted gray foreground with a darker shadow until the new position is confirmed.
+static const u8 sWishMenuReorderTextColors[] =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_LIGHT_GRAY,
+    TEXT_COLOR_DARK_GRAY,
+};
 
 static const struct WindowTemplate sWindowTemplate_SafariBalls = {
     .bg = 0,
@@ -175,6 +206,18 @@ static const struct WindowTemplate sWindowTemplate_StartClock = {
     .tilemapTop = 1, 
     .width = 16,
     .height = 8,
+    .paletteNum = 15,
+    .baseBlock = 0x30
+};
+
+// Compact lower-left profile panel used only by the full 9-entry WISHMENU.
+// Three lines keep the player sprite and most of the map visible.
+static const struct WindowTemplate sWindowTemplate_StartClockWish = {
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 14,
+    .width = 18,
+    .height = 5,
     .paletteNum = 15,
     .baseBlock = 0x30
 };
@@ -273,6 +316,15 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {
 };
 
 // Local functions
+static bool8 IsWishMenuStartLayout(void);
+static bool8 IsWishMenuSavedOrderValid(const u8 *order);
+static void LoadWishMenuOrderFromSave(void);
+static void SaveWishMenuOrderToSave(void);
+static void RedrawWishMenuActions(void);
+static void DrawWishMenuReorderHighlight(void);
+static void BeginWishMenuReorder(void);
+static void MoveWishMenuReorder(s8 direction);
+static void FinishWishMenuReorder(bool8 saveChanges);
 static void BuildStartMenuActions(void);
 static void AddStartMenuAction(u8 action);
 static void BuildNormalStartMenu(void);
@@ -313,6 +365,207 @@ void SetDexPokemonPokenavFlags(void) // unused
     FlagSet(FLAG_SYS_POKEDEX_GET);
     FlagSet(FLAG_SYS_POKEMON_GET);
     FlagSet(FLAG_SYS_POKENAV_GET);
+}
+
+static bool8 IsWishMenuStartLayout(void)
+{
+    u8 i;
+
+    // The custom order can move WISHMENU away from slot 0, so detecting the
+    // layout by "first action == DEBUG" would stop working after the first
+    // reorder. The full 9-entry menu is unique; require nine entries and the
+    // WISHMENU action anywhere in the list.
+    if (sNumStartMenuActions != ARRAY_COUNT(sCurrentStartMenuActions))
+        return FALSE;
+
+    for (i = 0; i < sNumStartMenuActions; i++)
+    {
+        if (sCurrentStartMenuActions[i] == MENU_ACTION_DEBUG)
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static bool8 IsWishMenuSavedOrderValid(const u8 *order)
+{
+    u8 i;
+    u8 j;
+
+    if (!IsWishMenuStartLayout())
+        return FALSE;
+
+    // The saved list must be an exact permutation of the nine actions that are
+    // currently available. This also makes old/incompatible saves fall back to
+    // the normal order automatically if the menu contents ever change.
+    for (i = 0; i < sNumStartMenuActions; i++)
+    {
+        bool8 found = FALSE;
+
+        for (j = 0; j < sNumStartMenuActions; j++)
+        {
+            if (order[i] == sCurrentStartMenuActions[j])
+            {
+                found = TRUE;
+                break;
+            }
+        }
+        if (!found)
+            return FALSE;
+
+        for (j = i + 1; j < sNumStartMenuActions; j++)
+        {
+            if (order[i] == order[j])
+                return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static void LoadWishMenuOrderFromSave(void)
+{
+    struct HLWSaveExtension *ext;
+    u8 savedOrder[ARRAY_COUNT(sCurrentStartMenuActions)];
+
+    if (!IsWishMenuStartLayout() || gSaveBlock1Ptr == NULL)
+        return;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+    if (ext->future[WISH_MENU_ORDER_SAVE_TAG0_OFFSET] != WISH_MENU_ORDER_SAVE_TAG0
+     || ext->future[WISH_MENU_ORDER_SAVE_TAG1_OFFSET] != WISH_MENU_ORDER_SAVE_TAG1
+     || ext->future[WISH_MENU_ORDER_SAVE_VERSION_OFFSET] != WISH_MENU_ORDER_SAVE_VERSION
+     || ext->future[WISH_MENU_ORDER_SAVE_COUNT_OFFSET] != sNumStartMenuActions)
+        return;
+
+    memcpy(savedOrder,
+           &ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
+           sizeof(savedOrder));
+
+    if (IsWishMenuSavedOrderValid(savedOrder))
+        memcpy(sCurrentStartMenuActions, savedOrder, sizeof(savedOrder));
+}
+
+static void SaveWishMenuOrderToSave(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (!IsWishMenuStartLayout() || gSaveBlock1Ptr == NULL)
+        return;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+    ext->future[WISH_MENU_ORDER_SAVE_TAG0_OFFSET] = WISH_MENU_ORDER_SAVE_TAG0;
+    ext->future[WISH_MENU_ORDER_SAVE_TAG1_OFFSET] = WISH_MENU_ORDER_SAVE_TAG1;
+    ext->future[WISH_MENU_ORDER_SAVE_VERSION_OFFSET] = WISH_MENU_ORDER_SAVE_VERSION;
+    ext->future[WISH_MENU_ORDER_SAVE_COUNT_OFFSET] = sNumStartMenuActions;
+    memcpy(&ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
+           sCurrentStartMenuActions,
+           ARRAY_COUNT(sCurrentStartMenuActions));
+}
+
+static void RedrawWishMenuActions(void)
+{
+    s8 index = 0;
+
+    if (!IsWishMenuStartLayout())
+        return;
+
+    FillWindowPixelBuffer(GetStartMenuWindowId(), PIXEL_FILL(1));
+    PrintStartMenuActions(&index, sNumStartMenuActions);
+    sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0,
+                                         WISH_START_MENU_TEXT_Y, WISH_START_MENU_ROW_HEIGHT,
+                                         sNumStartMenuActions, sStartMenuCursorPos);
+
+    if (sWishMenuReorderActive)
+        DrawWishMenuReorderHighlight();
+
+    CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_GFX);
+}
+
+static void DrawWishMenuReorderHighlight(void)
+{
+    u8 y;
+    u16 rowWidth;
+
+    if (!sWishMenuReorderActive || !IsWishMenuStartLayout())
+        return;
+
+    y = WISH_START_MENU_TEXT_Y + sStartMenuCursorPos * WISH_START_MENU_ROW_HEIGHT;
+    rowWidth = GetWindowAttribute(GetStartMenuWindowId(), WINDOW_WIDTH) * 8;
+
+    // Clear the normal white cursor + current row, then redraw only the grabbed
+    // entry in gray. This makes it obvious that SELECT has entered "move" mode.
+    FillWindowPixelRect(GetStartMenuWindowId(), PIXEL_FILL(1), 0, y,
+                        rowWidth, WISH_START_MENU_ROW_HEIGHT);
+
+    AddTextPrinterParameterized3(GetStartMenuWindowId(), FONT_NORMAL,
+                                 0, y, sWishMenuReorderTextColors, 0,
+                                 gText_SelectorArrow3);
+
+    StringExpandPlaceholders(gStringVar4,
+                             sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].text);
+    AddTextPrinterParameterized3(GetStartMenuWindowId(), FONT_NORMAL,
+                                 8, y, sWishMenuReorderTextColors, 0,
+                                 gStringVar4);
+}
+
+static void BeginWishMenuReorder(void)
+{
+    if (!IsWishMenuStartLayout() || sWishMenuReorderActive)
+        return;
+
+    memcpy(sWishMenuOrderBackup,
+           sCurrentStartMenuActions,
+           ARRAY_COUNT(sCurrentStartMenuActions));
+    sWishMenuReorderStartPos = sStartMenuCursorPos;
+    sWishMenuReorderActive = TRUE;
+    PlaySE(SE_SELECT);
+    RedrawWishMenuActions();
+}
+
+static void MoveWishMenuReorder(s8 direction)
+{
+    s8 oldPos;
+    s8 newPos;
+    u8 action;
+
+    if (!sWishMenuReorderActive)
+        return;
+
+    oldPos = sStartMenuCursorPos;
+    newPos = oldPos + direction;
+    if (newPos < 0)
+        newPos = sNumStartMenuActions - 1;
+    else if (newPos >= sNumStartMenuActions)
+        newPos = 0;
+
+    action = sCurrentStartMenuActions[oldPos];
+    sCurrentStartMenuActions[oldPos] = sCurrentStartMenuActions[newPos];
+    sCurrentStartMenuActions[newPos] = action;
+    sStartMenuCursorPos = newPos;
+    PlaySE(SE_SELECT);
+    RedrawWishMenuActions();
+}
+
+static void FinishWishMenuReorder(bool8 saveChanges)
+{
+    if (!sWishMenuReorderActive)
+        return;
+
+    if (saveChanges)
+    {
+        SaveWishMenuOrderToSave();
+        PlaySE(SE_SELECT);
+    }
+    else
+    {
+        memcpy(sCurrentStartMenuActions,
+               sWishMenuOrderBackup,
+               ARRAY_COUNT(sCurrentStartMenuActions));
+        sStartMenuCursorPos = sWishMenuReorderStartPos;
+        PlaySE(SE_SELECT);
+    }
+
+    sWishMenuReorderActive = FALSE;
+    RedrawWishMenuActions();
 }
 
 static void BuildStartMenuActions(void)
@@ -363,6 +616,8 @@ static void BuildStartMenuActions(void)
             BuildNormalStartMenu();
         }
     }
+
+    LoadWishMenuOrderFromSave();
 }
 
 static void AddStartMenuAction(u8 action)
@@ -591,11 +846,51 @@ static void Build12HourTimeString(u8 *dest)
 
 static void ShowTimeWindow(void)
 {
-    u8 y = 2;
+    u8 y;
     u8 *ptr;
     bool8 showLevelCap = (B_EXP_CAP_TYPE != EXP_CAP_NONE && gSaveBlock2Ptr->optionsLevelCaps == OPTIONS_LEVELCAPS_ON);
 
-    // print window
+    if (IsWishMenuStartLayout())
+    {
+        // Compact three-line profile panel at the bottom-left:
+        //   ZENNO Sunday, 10:10 PM
+        //   MONEY: ¥ 999999
+        //   LEVEL CAP: 100
+        // Keeping the day/time after the name frees the center of the map and
+        // stops the Start Menu from covering the player sprite.
+        sStartClockWindowId = AddWindow(&sWindowTemplate_StartClockWish);
+        PutWindowTilemap(sStartClockWindowId);
+        DrawStdWindowFrame(sStartClockWindowId, FALSE);
+
+        y = 1;
+        StringCopy(gStringVar4, gSaveBlock2Ptr->playerName);
+        StringAppend(gStringVar4, gText_Space);
+        StringAppend(gStringVar4, GetLocalizedDayName(gLocalTime.days));
+        StringAppend(gStringVar4, gText_Space);
+        Build12HourTimeString(gStringVar1);
+        StringAppend(gStringVar4, gStringVar1);
+        AddTextPrinterParameterized(sStartClockWindowId, FONT_SMALL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
+
+        y += 12;
+        StringCopy(gStringVar4, sText_MoneyPrefix);
+        ptr = StringAppend(gStringVar4, gText_EmptyString2);
+        ConvertIntToDecimalStringN(ptr, GetMoney(&gSaveBlock1Ptr->money), STR_CONV_MODE_LEFT_ALIGN, 6);
+        AddTextPrinterParameterized(sStartClockWindowId, FONT_SMALL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
+
+        y += 12;
+        if (showLevelCap)
+        {
+            StringCopy(gStringVar4, sText_LevelCapPrefix);
+            ptr = StringAppend(gStringVar4, gText_EmptyString2);
+            ConvertIntToDecimalStringN(ptr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
+            AddTextPrinterParameterized(sStartClockWindowId, FONT_SMALL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
+        }
+
+        CopyWindowToVram(sStartClockWindowId, COPYWIN_GFX);
+        return;
+    }
+
+    y = 2;
     sStartClockWindowId = AddWindow(&sWindowTemplate_StartClock);
     PutWindowTilemap(sStartClockWindowId);
     DrawStdWindowFrame(sStartClockWindowId, FALSE);
@@ -632,21 +927,25 @@ static void ShowTimeWindow(void)
 
 static void RemoveExtraStartMenuWindows(void)
 {
-    if (GetSafariZoneFlag())
+    if (GetSafariZoneFlag() && sSafariBallsWindowId != WINDOW_NONE)
     {
         ClearStdWindowAndFrameToTransparent(sSafariBallsWindowId, FALSE);
-        //CopyWindowToVram(sSafariBallsWindowId, COPYWIN_GFX);
         RemoveWindow(sSafariBallsWindowId);
+        sSafariBallsWindowId = WINDOW_NONE;
     }
-    else if (InBattlePyramid_())
+    else if (InBattlePyramid_() && sBattlePyramidFloorWindowId != WINDOW_NONE)
     {
         ClearStdWindowAndFrameToTransparent(sBattlePyramidFloorWindowId, FALSE);
         RemoveWindow(sBattlePyramidFloorWindowId);
+        sBattlePyramidFloorWindowId = WINDOW_NONE;
     }
-    
-    ClearStdWindowAndFrameToTransparent(sStartClockWindowId, FALSE);
-    // CopyWindowToVram(sStartClockWindowId, COPYWIN_GFX);
-    RemoveWindow(sStartClockWindowId);
+
+    if (sStartClockWindowId != WINDOW_NONE)
+    {
+        ClearStdWindowAndFrameToTransparent(sStartClockWindowId, FALSE);
+        RemoveWindow(sStartClockWindowId);
+        sStartClockWindowId = WINDOW_NONE;
+    }
 }
 
 static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
@@ -655,14 +954,18 @@ static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
 
     do
     {
+        u8 y = IsWishMenuStartLayout()
+            ? (index * WISH_START_MENU_ROW_HEIGHT) + WISH_START_MENU_TEXT_Y
+            : (index << 4) + 9;
+
         if (sStartMenuItems[sCurrentStartMenuActions[index]].func.u8_void == StartMenuPlayerNameCallback)
         {
-            PrintPlayerNameOnWindow(GetStartMenuWindowId(), sStartMenuItems[sCurrentStartMenuActions[index]].text, 8, (index << 4) + 9);
+            PrintPlayerNameOnWindow(GetStartMenuWindowId(), sStartMenuItems[sCurrentStartMenuActions[index]].text, 8, y);
         }
         else
         {
             StringExpandPlaceholders(gStringVar4, sStartMenuItems[sCurrentStartMenuActions[index]].text);
-            AddTextPrinterParameterized(GetStartMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
+            AddTextPrinterParameterized(GetStartMenuWindowId(), FONT_NORMAL, gStringVar4, 8, y, TEXT_SKIP_DRAW, NULL);
         }
 
         index++;
@@ -687,15 +990,28 @@ static bool32 InitStartMenuStep(void)
     switch (state)
     {
     case 0:
+        // EWRAM/.sbss variables must use zero initializers. WINDOW_NONE is
+        // assigned at runtime before any Start Menu windows are created.
+        sSafariBallsWindowId = WINDOW_NONE;
+        sStartClockWindowId = WINDOW_NONE;
+        sBattlePyramidFloorWindowId = WINDOW_NONE;
         sInitStartMenuData[0]++;
         break;
     case 1:
+        sWishMenuReorderActive = FALSE;
         BuildStartMenuActions();
         sInitStartMenuData[0]++;
         break;
     case 2:
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(AddStartMenuWindow(sNumStartMenuActions), FALSE);
+        // Nine WISHMENU entries would make AddStartMenuWindow(9) create a
+        // 20-tile-tall interior and push the bottom frame off-screen. Reuse the
+        // stock 8-action window height (18 tiles), then print the nine entries
+        // with the compact 15 px row spacing below. This keeps both the top and
+        // bottom frame fully visible inside 160 px.
+        DrawStdWindowFrame(AddStartMenuWindow(IsWishMenuStartLayout()
+                            ? WISH_START_MENU_WINDOW_ACTIONS
+                            : sNumStartMenuActions), FALSE);
         FillWindowPixelBuffer(GetStartMenuWindowId(), PIXEL_FILL(1));
         sInitStartMenuData[1] = 0;
         sInitStartMenuData[0]++;
@@ -716,7 +1032,13 @@ static bool32 InitStartMenuStep(void)
             sInitStartMenuData[0]++;
         break;
     case 6:
-        sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumStartMenuActions, sStartMenuCursorPos);
+        if (IsWishMenuStartLayout())
+            sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0,
+                                                 WISH_START_MENU_TEXT_Y, WISH_START_MENU_ROW_HEIGHT,
+                                                 sNumStartMenuActions, sStartMenuCursorPos);
+        else
+            sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0, 9, 16,
+                                                 sNumStartMenuActions, sStartMenuCursorPos);
         CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
         return TRUE;
     }
@@ -800,6 +1122,22 @@ void ShowStartMenu(void)
 
 static bool8 HandleStartMenuInput(void)
 {
+    if (sWishMenuReorderActive)
+    {
+        if (JOY_NEW(DPAD_UP))
+            MoveWishMenuReorder(-1);
+        else if (JOY_NEW(DPAD_DOWN))
+            MoveWishMenuReorder(1);
+        else if (JOY_NEW(SELECT_BUTTON | A_BUTTON))
+            FinishWishMenuReorder(TRUE);
+        else if (JOY_NEW(B_BUTTON))
+            FinishWishMenuReorder(FALSE);
+
+        RemoveExtraStartMenuWindows();
+        ShowTimeWindow();
+        return FALSE;
+    }
+
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
@@ -810,6 +1148,14 @@ static bool8 HandleStartMenuInput(void)
     {
         PlaySE(SE_SELECT);
         sStartMenuCursorPos = Menu_MoveCursor(1);
+    }
+
+    if (JOY_NEW(SELECT_BUTTON) && IsWishMenuStartLayout())
+    {
+        BeginWishMenuReorder();
+        RemoveExtraStartMenuWindows();
+        ShowTimeWindow();
+        return FALSE;
     }
 
     if (JOY_NEW(A_BUTTON))
@@ -948,8 +1294,10 @@ static bool8 StartMenuPlayerNameCallback(void)
 
 static bool8 StartMenuSaveCallback(void)
 {
-    if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
-        RemoveExtraStartMenuWindows();
+    // The custom WISHMENU clock/info panel uses its own window tiles. Remove it
+    // before the save dialog starts so the save-info / Yes-No windows cannot
+    // reuse overlapping blocks for a frame and leave visual garbage behind.
+    RemoveExtraStartMenuWindows();
 
     gMenuCallback = SaveStartCallback; // Display save menu
 
@@ -1098,6 +1446,11 @@ static bool8 SaveCallback(void)
         return FALSE;
     case SAVE_SUCCESS:
     case SAVE_ERROR:    // Close start menu
+        // The right Start Menu window is removed when the save dialog opens,
+        // but the custom clock/info window is still alive. Remove it before
+        // returning to the field or its stale tilemap/palette can survive for a
+        // frame (or longer) and visually corrupt the overworld after saving.
+        RemoveExtraStartMenuWindows();
         ClearDialogWindowAndFrameToTransparent(0, TRUE);
         ScriptUnfreezeObjectEvents();
         UnlockPlayerFieldControls();
@@ -1633,6 +1986,8 @@ static void ShowSaveInfoWindow(void)
     // TEXT_DYNAMIC_COLOR_6 = 0xF (usado para nome/badges/etc, antes era vermelho)
     sOriginalColor5 = gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5];
     sOriginalColor6 = gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6];
+    sOriginalColor5Unfaded = gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5];
+    sOriginalColor6Unfaded = gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6];
 
     // Definir novas cores (use os valores RGB que preferir)
     // lilás claro: R=200, G=160, B=255 -> valores GBA: 200/8=25, 160/8=20, 255/8=31
@@ -1690,8 +2045,8 @@ static void RemoveSaveInfoWindow(void)
     // Restaurar as cores originais dos índices dinâmicos
     gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5] = sOriginalColor5;
     gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6] = sOriginalColor6;
-    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5] = sOriginalColor5;
-    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6] = sOriginalColor6;
+    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5] = sOriginalColor5Unfaded;
+    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6] = sOriginalColor6Unfaded;
     UpdatePaletteFade();
 
     ClearStdWindowAndFrame(sSaveInfoWindowId, FALSE);
