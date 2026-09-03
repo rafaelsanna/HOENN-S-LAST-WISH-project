@@ -185,6 +185,201 @@ static const u8 sEqualItemIconPos[PARTY_SIZE][2] =
     {217, 99},  // slot 5 — direita
 };
 
+
+// ---------------------------------------------------------------------------
+// Linked Party / Summary color themes.
+//
+// Theme IDs, browsing order, colors and save slot intentionally mirror the
+// custom Summary Screen. Both screens read/write the same byte in
+// HLWSaveExtension.future[], so changing the theme in either screen changes the
+// other one the next time it is opened.
+//
+// Only BG/UI colors are themed. Party HP colors, gender colors and text colors
+// are protected and never remapped.
+// ---------------------------------------------------------------------------
+struct PartyThemeColors
+{
+    u16 nearBlack;
+    u16 black2;
+    u16 deep;
+    u16 dark1;
+    u16 charcoal;
+    u16 dark;
+    u16 mid;
+    u16 light;
+    u16 detail;
+};
+
+enum PartyColorTheme
+{
+    PARTY_COLOR_THEME_DEFAULT = 0,
+    PARTY_COLOR_THEME_AMETHYST,
+    PARTY_COLOR_THEME_BURGUNDY,
+    PARTY_COLOR_THEME_MIDNIGHT_SKY,
+    PARTY_COLOR_THEME_EMERALD,
+    PARTY_COLOR_THEME_DEEP_OCEAN,
+    PARTY_COLOR_THEME_COPPER,
+    PARTY_COLOR_THEME_ROSEWOOD,
+    PARTY_COLOR_THEME_INDIGO,
+    PARTY_COLOR_THEME_SILVER,
+    PARTY_COLOR_THEME_PASTEL_PINK,
+    PARTY_COLOR_THEME_LAVENDER_MIST,
+    PARTY_COLOR_THEME_BABY_BLUE,
+    PARTY_COLOR_THEME_MINT,
+    PARTY_COLOR_THEME_PEACH,
+    PARTY_COLOR_THEME_GOLD,
+    PARTY_COLOR_THEME_COUNT,
+};
+
+static const u8 sPartyThemeName_Default[]     = _("BASE");
+static const u8 sPartyThemeName_Amethyst[]    = _("AMETH");
+static const u8 sPartyThemeName_Burgundy[]    = _("BURG");
+static const u8 sPartyThemeName_Midnight[]    = _("SKY");
+static const u8 sPartyThemeName_Emerald[]     = _("EMRLD");
+static const u8 sPartyThemeName_DeepOcean[]   = _("OCEAN");
+static const u8 sPartyThemeName_Copper[]      = _("COPPR");
+static const u8 sPartyThemeName_Rosewood[]    = _("ROSE");
+static const u8 sPartyThemeName_Indigo[]      = _("INDGO");
+static const u8 sPartyThemeName_Silver[]      = _("SILVR");
+static const u8 sPartyThemeName_PastelPink[]  = _("PINK");
+static const u8 sPartyThemeName_Lavender[]    = _("LAVDR");
+static const u8 sPartyThemeName_BabyBlue[]    = _("BABY");
+static const u8 sPartyThemeName_Mint[]        = _("MINT");
+static const u8 sPartyThemeName_Peach[]       = _("PEACH");
+static const u8 sPartyThemeName_Gold[]        = _("GOLD");
+
+static const u8 *const sPartyThemeNames[PARTY_COLOR_THEME_COUNT] =
+{
+    [PARTY_COLOR_THEME_DEFAULT]       = sPartyThemeName_Default,
+    [PARTY_COLOR_THEME_AMETHYST]      = sPartyThemeName_Amethyst,
+    [PARTY_COLOR_THEME_BURGUNDY]      = sPartyThemeName_Burgundy,
+    [PARTY_COLOR_THEME_MIDNIGHT_SKY]  = sPartyThemeName_Midnight,
+    [PARTY_COLOR_THEME_EMERALD]       = sPartyThemeName_Emerald,
+    [PARTY_COLOR_THEME_DEEP_OCEAN]    = sPartyThemeName_DeepOcean,
+    [PARTY_COLOR_THEME_COPPER]        = sPartyThemeName_Copper,
+    [PARTY_COLOR_THEME_ROSEWOOD]      = sPartyThemeName_Rosewood,
+    [PARTY_COLOR_THEME_INDIGO]        = sPartyThemeName_Indigo,
+    [PARTY_COLOR_THEME_SILVER]        = sPartyThemeName_Silver,
+    [PARTY_COLOR_THEME_PASTEL_PINK]   = sPartyThemeName_PastelPink,
+    [PARTY_COLOR_THEME_LAVENDER_MIST] = sPartyThemeName_Lavender,
+    [PARTY_COLOR_THEME_BABY_BLUE]     = sPartyThemeName_BabyBlue,
+    [PARTY_COLOR_THEME_MINT]          = sPartyThemeName_Mint,
+    [PARTY_COLOR_THEME_PEACH]         = sPartyThemeName_Peach,
+    [PARTY_COLOR_THEME_GOLD]          = sPartyThemeName_Gold,
+};
+
+// Same visible L/R order used by the Summary Screen.
+static const u8 sPartyThemeCycleOrder[PARTY_COLOR_THEME_COUNT] =
+{
+    PARTY_COLOR_THEME_DEFAULT,
+    PARTY_COLOR_THEME_AMETHYST,
+    PARTY_COLOR_THEME_BURGUNDY,
+    PARTY_COLOR_THEME_MIDNIGHT_SKY,
+    PARTY_COLOR_THEME_EMERALD,
+    PARTY_COLOR_THEME_DEEP_OCEAN,
+    PARTY_COLOR_THEME_COPPER,
+    PARTY_COLOR_THEME_ROSEWOOD,
+    PARTY_COLOR_THEME_INDIGO,
+    PARTY_COLOR_THEME_SILVER,
+    PARTY_COLOR_THEME_GOLD,
+    PARTY_COLOR_THEME_PASTEL_PINK,
+    PARTY_COLOR_THEME_LAVENDER_MIST,
+    PARTY_COLOR_THEME_BABY_BLUE,
+    PARTY_COLOR_THEME_MINT,
+    PARTY_COLOR_THEME_PEACH,
+};
+
+// Exact same sixteen theme ramps as the Summary Screen.
+static const struct PartyThemeColors sPartyThemeColors[PARTY_COLOR_THEME_COUNT] =
+{
+    [PARTY_COLOR_THEME_DEFAULT] = {
+        RGB(1, 1, 2), RGB(2, 2, 3), RGB(2, 3, 4), RGB(3, 3, 4),
+        RGB(4, 4, 5), RGB(6, 6, 8), RGB(9,10,12), RGB(13,14,17), RGB(9, 7,12),
+    },
+    [PARTY_COLOR_THEME_AMETHYST] = {
+        RGB(2, 1, 3), RGB(3, 2, 5), RGB(4, 3, 7), RGB(5, 4, 8),
+        RGB(6, 5, 9), RGB(8, 7,12), RGB(11, 9,15), RGB(16,13,19), RGB(20,16,25),
+    },
+    [PARTY_COLOR_THEME_BURGUNDY] = {
+        RGB(3, 1, 2), RGB(5, 2, 3), RGB(7, 3, 4), RGB(8, 4, 5),
+        RGB(9, 5, 6), RGB(12,6, 8), RGB(15,8,10), RGB(18,10,12), RGB(23,12,15),
+    },
+    [PARTY_COLOR_THEME_MIDNIGHT_SKY] = {
+        RGB(1, 2, 3), RGB(2, 3, 5), RGB(2, 4, 7), RGB(3, 5, 8),
+        RGB(4, 6,10), RGB(5, 8,13), RGB(8,11,17), RGB(11,16,21), RGB(12,22,29),
+    },
+    [PARTY_COLOR_THEME_EMERALD] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(2, 6, 4), RGB(3, 7, 5),
+        RGB(4, 8, 6), RGB(5,11, 8), RGB(8,14,10), RGB(11,17,13), RGB(15,23,17),
+    },
+    [PARTY_COLOR_THEME_DEEP_OCEAN] = {
+        RGB(1, 3, 3), RGB(2, 4, 5), RGB(2, 6, 7), RGB(3, 7, 8),
+        RGB(4, 8,10), RGB(5,11,13), RGB(8,14,16), RGB(11,17,19), RGB(13,23,25),
+    },
+    [PARTY_COLOR_THEME_COPPER] = {
+        RGB(3, 2, 1), RGB(5, 3, 2), RGB(7, 4, 2), RGB(8, 5, 3),
+        RGB(9, 6, 4), RGB(12,8, 5), RGB(15,10,7), RGB(18,13, 9), RGB(24,17,10),
+    },
+    [PARTY_COLOR_THEME_ROSEWOOD] = {
+        RGB(3, 1, 3), RGB(5, 2, 4), RGB(7, 3, 6), RGB(8, 4, 7),
+        RGB(9, 5, 8), RGB(12,7,10), RGB(15, 9,13), RGB(18,11,15), RGB(24,16,20),
+    },
+    [PARTY_COLOR_THEME_INDIGO] = {
+        RGB(1, 1, 3), RGB(2, 2, 5), RGB(3, 3, 7), RGB(4, 4, 8),
+        RGB(5, 5,10), RGB(7, 7,13), RGB(10,10,17), RGB(13,13,20), RGB(18,18,27),
+    },
+    [PARTY_COLOR_THEME_SILVER] = {
+        RGB(2, 2, 3), RGB(3, 4, 5), RGB(4, 5, 6), RGB(5, 6, 7),
+        RGB(6, 7, 8), RGB(8, 9,11), RGB(11,13,15), RGB(15,16,19), RGB(18,20,23),
+    },
+    [PARTY_COLOR_THEME_PASTEL_PINK] = {
+        RGB(3, 1, 2), RGB(5, 2, 4), RGB(8, 3, 6), RGB(10,4, 8),
+        RGB(12,5,10), RGB(15,7,12), RGB(19,10,15), RGB(24,14,19), RGB(31,18,24),
+    },
+    [PARTY_COLOR_THEME_LAVENDER_MIST] = {
+        RGB(2, 2, 3), RGB(3, 3, 5), RGB(5, 5, 7), RGB(6, 6, 8),
+        RGB(8, 8,10), RGB(10,10,13), RGB(13,13,16), RGB(17,17,21), RGB(22,20,27),
+    },
+    [PARTY_COLOR_THEME_BABY_BLUE] = {
+        RGB(1, 2, 3), RGB(2, 3, 4), RGB(3, 5, 6), RGB(4, 6, 7),
+        RGB(5, 7, 9), RGB(7,10,12), RGB(10,13,16), RGB(14,18,21), RGB(18,24,28),
+    },
+    [PARTY_COLOR_THEME_MINT] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(3, 6, 5), RGB(4, 7, 6),
+        RGB(5, 8, 7), RGB(7,11, 9), RGB(10,14,12), RGB(14,18,16), RGB(18,25,21),
+    },
+    [PARTY_COLOR_THEME_PEACH] = {
+        RGB(3, 2, 2), RGB(5, 3, 2), RGB(7, 5, 4), RGB(8, 6, 5),
+        RGB(10,7, 6), RGB(12,9, 8), RGB(15,12,10), RGB(19,15,13), RGB(25,20,17),
+    },
+    [PARTY_COLOR_THEME_GOLD] = {
+        RGB(3, 2, 0), RGB(5, 3, 1), RGB(7, 5, 1), RGB(9, 6, 1),
+        RGB(11,8, 2), RGB(14,10,3), RGB(18,13,4), RGB(23,17,6), RGB(29,22,8),
+    },
+};
+
+// Same four bytes already owned by the Summary Screen. No extra save space is
+// consumed by the Party Menu; the value is deliberately shared.
+#define PARTY_THEME_SAVE_TAG0_OFFSET      64
+#define PARTY_THEME_SAVE_TAG1_OFFSET      65
+#define PARTY_THEME_SAVE_VERSION_OFFSET   66
+#define PARTY_THEME_SAVE_VALUE_OFFSET     67
+#define PARTY_THEME_SAVE_TAG0             0x53 // 'S'
+#define PARTY_THEME_SAVE_TAG1             0x54 // 'T'
+#define PARTY_THEME_SAVE_VERSION          1
+#define PARTY_HLW_SAVE_EXTENSION_MAGIC    0x484C5753
+#define PARTY_HLW_SAVE_EXTENSION_VERSION  1
+
+#define PARTY_THEME_BAR_PAL               12
+
+static const u8 sText_PartyMenuHeader[]      = _("PARTY MENU");
+static const u8 sText_PartyChoosePokemon[]   = _("CHOOSE A POKéMON");
+static const u8 sText_PartyThemesPrefix[]    = _("{L_BUTTON} {R_BUTTON} THEMES ");
+static const u8 sText_PartyThemeTotal[]      = _("/16");
+static const u8 sText_PartyAccessPc[]        = _("{START_BUTTON}ACCESS PC");
+static const u8 sText_PartyClose[]           = _("{B_BUTTON} CLOSE");
+static const u8 sPartyThemeBarTextColors[]   = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
+
 enum {
     CAN_LEARN_MOVE,
     CANNOT_LEARN_MOVE,
@@ -251,6 +446,13 @@ static EWRAM_DATA u16 *sSlot1TilemapBuffer = 0; // for switching party slots
 static EWRAM_DATA u16 *sSlot2TilemapBuffer = 0; //
 EWRAM_DATA u8 gSelectedOrderFromParty[MAX_FRONTIER_PARTY_SIZE] = {0};
 static EWRAM_DATA u16 sPartyMenuItemId = 0;
+static EWRAM_DATA u8 sPartyColorTheme;
+static EWRAM_DATA u8 sPartyThemeTopWindowId;
+static EWRAM_DATA u8 sPartyThemeBottomWindowId;
+// Single-layout item targeting keeps the stock windows/message behavior, but
+// aligns the right column upward with the left so the bottom row no longer
+// crowds item-use / give-item text windows.
+static EWRAM_DATA u8 sRaisedItemTargetSpriteCoords[PARTY_SIZE][4 * 2];
 EWRAM_DATA u8 gBattlePartyCurrentOrder[PARTY_SIZE / 2] = {0}; // bits 0-3 are the current pos of Slot 1, 4-7 are Slot 2, and so on
 static EWRAM_DATA u8 sInitialLevel = 0;
 static EWRAM_DATA u8 sFinalLevel = 0;
@@ -267,6 +469,28 @@ static EWRAM_DATA MainCallback sSavedPartyExitCallback = NULL;
 COMMON_DATA void (*gItemUseCB)(u8, TaskFunc) = NULL;
 
 static void ResetPartyMenu(void);
+static bool8 IsBasicFieldPartyMenu(void);
+static bool8 IsRaisedItemTargetPartyMenu(void);
+static bool8 IsBattleSinglePartyMenu(void);
+static bool8 IsBattleSummaryShoulderPartyMenu(void);
+static bool8 UsesQuadrantLoopNavigation(void);
+static bool8 CanUseBattleSummaryShoulderShortcut(s8 slot);
+static void BuildRaisedItemTargetSpriteCoords(void);
+static void InitRaisedItemTargetWindows(void);
+static void ExtendBasicPartyBackgroundFooter(void);
+static void InitPartyThemeSaveExtensionIfNeeded(void);
+static void LoadPartyColorThemeFromSave(void);
+static void SavePartyColorThemeToSave(void);
+static u8 GetPartyThemeCyclePosition(void);
+static bool8 IsPartyThemeProtectedSourceColor(u16 index);
+static u16 RemapPartyThemeBackgroundColor(u16 color);
+static void BuildPartyThemePaletteBuffer(void);
+static void ApplyPartyThemeBarPalette(void);
+static void RefreshPartyThemePalettes(void);
+static void ChangePartyColorTheme(s8 direction);
+static void HideBasicPartyThemeChrome(void);
+static void ClearBasicPartyMessageFooterRemainder(u8 windowId);
+static void DrawBasicPartyThemeChrome(void);
 static void CB2_InitPartyMenu(void);
 static void CB2_ReloadPartyMenu(void);
 static bool8 ShowPartyMenu(void);
@@ -376,7 +600,12 @@ static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *);
 static u8 GetPartySlotEntryStatus(s8);
 static void Task_UpdateHeldItemSprite(u8);
 static void Task_HandleSelectionMenuInput(u8);
+static void Task_OpenBasicSelectionAfterChromeHide(u8);
+static void Task_ReturnToBasicChooseMonAfterActionClose(u8);
 static void CB2_ShowPokemonSummaryScreen(void);
+static void OpenBattlePartySummaryFromShoulder(u8 taskId);
+static void CB2_ShowPokemonSummaryScreenFromBattleShoulder(void);
+static void CB2_ReturnToBattlePartyMenuFromSummaryShoulder(void);
 static void UpdatePartyToBattleOrder(void);
 static void CB2_ReturnToPartyMenuFromSummaryScreen(void);
 static void SlidePartyMenuBoxOneStep(u8);
@@ -553,12 +782,62 @@ static void ScaleItemIconSprite(u8 spriteId, u16 scaleFactor8_8);
 static void BlitBitmapToPartyWindow_Equal(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 isEgg);
 #include "data/party_menu.h"
 
+// Basic overworld Party Menu layout used only by START -> POKéMON.
+// The six 14x5 boxes are shifted down exactly two tiles to make room for a
+// dedicated 16px top bar. Battle/facility/double/multi layouts keep their
+// original geometry and only receive the active color theme.
+static const struct WindowTemplate sBasicFieldPartyMenuWindowTemplate[] =
+{
+    { .bg = 0, .tilemapLeft = 1,  .tilemapTop = 2,  .width = 14, .height = 5, .paletteNum = 3, .baseBlock = 0x63  },
+    { .bg = 0, .tilemapLeft = 15, .tilemapTop = 2,  .width = 14, .height = 5, .paletteNum = 4, .baseBlock = 0xA9  },
+    { .bg = 0, .tilemapLeft = 1,  .tilemapTop = 7,  .width = 14, .height = 5, .paletteNum = 5, .baseBlock = 0xEF  },
+    { .bg = 0, .tilemapLeft = 15, .tilemapTop = 7,  .width = 14, .height = 5, .paletteNum = 6, .baseBlock = 0x135 },
+    { .bg = 0, .tilemapLeft = 1,  .tilemapTop = 12, .width = 14, .height = 5, .paletteNum = 7, .baseBlock = 0x17B },
+    { .bg = 0, .tilemapLeft = 15, .tilemapTop = 12, .width = 14, .height = 5, .paletteNum = 8, .baseBlock = 0x1C1 },
+    [WIN_MSG] = { .bg = 2, .tilemapLeft = 1, .tilemapTop = 15, .width = 28, .height = 4, .paletteNum = 14, .baseBlock = 0x21F },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const u8 sBasicFieldPartySpriteCoords[PARTY_SIZE][4 * 2] =
+{
+    { 24,  30,  38,  49, 105,  49,  24,  34},
+    {136,  30, 150,  49, 217,  49, 136,  34},
+    { 24,  70,  38,  89, 105,  89,  24,  74},
+    {136,  70, 150,  89, 217,  89, 136,  74},
+    { 24, 110,  38, 129, 105, 129,  24, 114},
+    {136, 110, 150, 129, 217, 129, 136, 114},
+};
+
+static const u8 sBasicFieldEqualItemIconPos[PARTY_SIZE][2] =
+{
+    {105, 11}, {217, 11},
+    {105, 51}, {217, 51},
+    {105, 91}, {217, 91},
+};
+
+// These bars exist only while the basic Party Menu is in its normal
+// "choose a Pokémon" state. Their tile blocks intentionally reuse the region
+// normally occupied by the old bottom prompt, so no graphics/data file changes
+// are needed. They are removed before action/message windows are created.
+static const struct WindowTemplate sBasicPartyTopBarWindowTemplate =
+{
+    .bg = 2, .tilemapLeft = 0, .tilemapTop = 0, .width = 30, .height = 2,
+    .paletteNum = PARTY_THEME_BAR_PAL, .baseBlock = 0x28B,
+};
+
+static const struct WindowTemplate sBasicPartyBottomBarWindowTemplate =
+{
+    .bg = 2, .tilemapLeft = 0, .tilemapTop = 18, .width = 30, .height = 2,
+    .paletteNum = PARTY_THEME_BAR_PAL, .baseBlock = 0x24F,
+};
+
 // code
 static void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId, TaskFunc task, MainCallback callback)
 {
     u16 i;
 
     ResetPartyMenu();
+    LoadPartyColorThemeFromSave();
     sPartyMenuInternal = Alloc(sizeof(struct PartyMenuInternal));
     if (sPartyMenuInternal == NULL)
     {
@@ -896,6 +1175,460 @@ static void ResetPartyMenu(void)
     sPartyBgTilemapBuffer = NULL;
     sPartyMenuBoxes = NULL;
     sPartyBgGfxTilemap = NULL;
+    sPartyThemeTopWindowId = WINDOW_NONE;
+    sPartyThemeBottomWindowId = WINDOW_NONE;
+}
+
+static bool8 IsBasicFieldPartyMenu(void)
+{
+    return sPartyMenuInternal != NULL
+        && gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD
+        && gPartyMenu.layout == PARTY_LAYOUT_SINGLE
+        && !sPartyMenuInternal->chooseHalf
+        && gPlayerPartyCount != 0
+        && (gPartyMenu.action == PARTY_ACTION_CHOOSE_MON
+         || gPartyMenu.action == PARTY_ACTION_SWITCH);
+}
+
+static bool8 IsRaisedItemTargetPartyMenu(void)
+{
+    // This intentionally takes precedence over the basic START-menu shell:
+    // USE/GIVE item screens need the stock message/cancel behavior plus the
+    // raised/aligned Pokémon grid, not the themed top/bottom chrome layout.
+    if (sPartyMenuInternal == NULL || gPartyMenu.layout != PARTY_LAYOUT_SINGLE)
+        return FALSE;
+
+    switch (gPartyMenu.action)
+    {
+    case PARTY_ACTION_USE_ITEM:
+    case PARTY_ACTION_GIVE_ITEM:
+    case PARTY_ACTION_GIVE_PC_ITEM:
+    case PARTY_ACTION_GIVE_MAILBOX_MAIL:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static bool8 IsBattleSinglePartyMenu(void)
+{
+    return sPartyMenuInternal != NULL
+        && gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE
+        && gPartyMenu.layout == PARTY_LAYOUT_SINGLE
+        && !sPartyMenuInternal->chooseHalf
+        && gPlayerPartyCount != 0;
+}
+
+// Keep battle controls consistent without touching the double-battle layout:
+// in normal single OR double battle Party Menus, either shoulder opens the
+// selected Pokémon's Summary Screen. D-pad wrapping remains single-only.
+static bool8 IsBattleSummaryShoulderPartyMenu(void)
+{
+    return sPartyMenuInternal != NULL
+        && gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE
+        && (gPartyMenu.layout == PARTY_LAYOUT_SINGLE
+            || gPartyMenu.layout == PARTY_LAYOUT_DOUBLE)
+        && !sPartyMenuInternal->chooseHalf
+        && gPlayerPartyCount != 0;
+}
+
+static bool8 UsesQuadrantLoopNavigation(void)
+{
+    return IsBasicFieldPartyMenu() || IsBattleSinglePartyMenu();
+}
+
+static bool8 CanUseBattleSummaryShoulderShortcut(s8 slot)
+{
+    if (!IsBattleSummaryShoulderPartyMenu()
+     || gPartyMenu.action == PARTY_ACTION_USE_ITEM
+     || slot < 0 || slot >= PARTY_SIZE)
+        return FALSE;
+
+    return GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) != SPECIES_NONE;
+}
+
+static void BuildRaisedItemTargetSpriteCoords(void)
+{
+    u8 slot;
+    u8 coord;
+
+    memcpy(sRaisedItemTargetSpriteCoords,
+           sPartyMenuSpriteCoords[PARTY_LAYOUT_SINGLE],
+           sizeof(sRaisedItemTargetSpriteCoords));
+
+    // The stock Equal layout staggers the right column down by one tile.
+    // For item targeting, copy each paired left-slot Y coordinate to the right
+    // slot so all three rows sit as high as the layout permits.
+    for (slot = 1; slot < PARTY_SIZE; slot += 2)
+    {
+        for (coord = 1; coord < 4 * 2; coord += 2)
+            sRaisedItemTargetSpriteCoords[slot][coord] =
+                sRaisedItemTargetSpriteCoords[slot - 1][coord];
+    }
+}
+
+static void InitRaisedItemTargetWindows(void)
+{
+    struct WindowTemplate windows[ARRAY_COUNT(sSinglePartyMenuWindowTemplate_Equal)];
+    u8 slot;
+
+    memcpy(windows, sSinglePartyMenuWindowTemplate_Equal, sizeof(windows));
+
+    // Preserve every stock window property (including the message window),
+    // changing only the Pokémon box Y positions. This keeps item-use, give,
+    // Cancel and battle-specific text behavior untouched.
+    for (slot = 1; slot < PARTY_SIZE; slot += 2)
+        windows[slot].tilemapTop = windows[slot - 1].tilemapTop;
+
+    InitWindows(windows);
+}
+
+static void ExtendBasicPartyBackgroundFooter(void)
+{
+    u16 *tilemap;
+
+    if (!IsBasicFieldPartyMenu() || sPartyBgTilemapBuffer == NULL)
+        return;
+
+    // When the themed bottom bar is hidden for action/message states,
+    // reveal regular striped background all the way to the bottom instead of
+    // the abrupt dark footer baked into the stock tilemap.
+    tilemap = (u16 *)sPartyBgTilemapBuffer;
+    CpuCopy16(&tilemap[17 * 32], &tilemap[18 * 32], 32 * sizeof(u16));
+    CpuCopy16(&tilemap[17 * 32], &tilemap[19 * 32], 32 * sizeof(u16));
+}
+
+static void InitPartyThemeSaveExtensionIfNeeded(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+    if (ext->magic != PARTY_HLW_SAVE_EXTENSION_MAGIC
+     || ext->version != PARTY_HLW_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext))
+    {
+        memset(ext, 0, sizeof(*ext));
+        ext->magic = PARTY_HLW_SAVE_EXTENSION_MAGIC;
+        ext->version = PARTY_HLW_SAVE_EXTENSION_VERSION;
+        ext->size = sizeof(*ext);
+    }
+}
+
+static void LoadPartyColorThemeFromSave(void)
+{
+    struct HLWSaveExtension *ext;
+
+    sPartyColorTheme = PARTY_COLOR_THEME_DEFAULT;
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    InitPartyThemeSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->future[PARTY_THEME_SAVE_TAG0_OFFSET] == PARTY_THEME_SAVE_TAG0
+     && ext->future[PARTY_THEME_SAVE_TAG1_OFFSET] == PARTY_THEME_SAVE_TAG1
+     && ext->future[PARTY_THEME_SAVE_VERSION_OFFSET] == PARTY_THEME_SAVE_VERSION
+     && ext->future[PARTY_THEME_SAVE_VALUE_OFFSET] < PARTY_COLOR_THEME_COUNT)
+    {
+        sPartyColorTheme = ext->future[PARTY_THEME_SAVE_VALUE_OFFSET];
+    }
+    else
+    {
+        ext->future[PARTY_THEME_SAVE_TAG0_OFFSET] = PARTY_THEME_SAVE_TAG0;
+        ext->future[PARTY_THEME_SAVE_TAG1_OFFSET] = PARTY_THEME_SAVE_TAG1;
+        ext->future[PARTY_THEME_SAVE_VERSION_OFFSET] = PARTY_THEME_SAVE_VERSION;
+        ext->future[PARTY_THEME_SAVE_VALUE_OFFSET] = PARTY_COLOR_THEME_DEFAULT;
+    }
+}
+
+static void SavePartyColorThemeToSave(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    InitPartyThemeSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+    ext->future[PARTY_THEME_SAVE_TAG0_OFFSET] = PARTY_THEME_SAVE_TAG0;
+    ext->future[PARTY_THEME_SAVE_TAG1_OFFSET] = PARTY_THEME_SAVE_TAG1;
+    ext->future[PARTY_THEME_SAVE_VERSION_OFFSET] = PARTY_THEME_SAVE_VERSION;
+    ext->future[PARTY_THEME_SAVE_VALUE_OFFSET] =
+        (sPartyColorTheme < PARTY_COLOR_THEME_COUNT)
+            ? sPartyColorTheme
+            : PARTY_COLOR_THEME_DEFAULT;
+}
+
+static u8 GetPartyThemeCyclePosition(void)
+{
+    u8 i;
+
+    for (i = 0; i < PARTY_COLOR_THEME_COUNT; i++)
+    {
+        if (sPartyThemeCycleOrder[i] == sPartyColorTheme)
+            return i;
+    }
+    return 0;
+}
+
+static bool8 IsPartyThemeProtectedSourceColor(u16 index)
+{
+    u8 local = index & 0xF;
+
+    // The normal party-slot font uses palette indices 2/3. Never tint those.
+    if (local == TEXT_COLOR_DARK_GRAY || local == TEXT_COLOR_LIGHT_GRAY)
+        return TRUE;
+
+    // These source entries feed the runtime HP and gender colors. Keeping the
+    // source untouched also keeps later potion/status/refresh updates correct.
+    if (index == sGenderMalePalIds[0] || index == sGenderMalePalIds[1]
+     || index == sGenderFemalePalIds[0] || index == sGenderFemalePalIds[1]
+     || index == sHPBarGreenPalIds[0] || index == sHPBarGreenPalIds[1]
+     || index == sHPBarYellowPalIds[0] || index == sHPBarYellowPalIds[1]
+     || index == sHPBarRedPalIds[0] || index == sHPBarRedPalIds[1])
+        return TRUE;
+
+    return FALSE;
+}
+
+static u16 RemapPartyThemeBackgroundColor(u16 color)
+{
+    const struct PartyThemeColors *theme = &sPartyThemeColors[sPartyColorTheme];
+
+    if (sPartyColorTheme == PARTY_COLOR_THEME_DEFAULT)
+        return color;
+
+    // The custom Party Menu already uses the same #101821 family as the
+    // Summary Screen. Map only UI/background shades seen in that artwork.
+    // Saturated HP/gender colors and white text do not match this table.
+    if (color == RGB(2, 3, 4))   return theme->deep;
+    if (color == RGB(4, 4, 4))   return theme->dark1;
+    if (color == RGB(4, 4, 5))   return theme->charcoal;
+    if (color == RGB(4, 5, 8))   return theme->dark;
+    if (color == RGB(4, 2, 3))   return theme->dark1;
+    if (color == RGB(6, 6, 6))   return theme->dark;
+    if (color == RGB(8, 8, 8))   return theme->dark;
+    if (color == RGB(9, 9,13))   return theme->detail;
+    if (color == RGB(10,10,10))  return theme->mid;
+    if (color == RGB(10,12,12))  return theme->mid;
+    if (color == RGB(12,12,11))  return theme->mid;
+    if (color == RGB(14,14,14))  return theme->light;
+    if (color == RGB(14,13,16))  return theme->detail;
+
+    // Current-selection / decorative cool-purple surfaces are still UI
+    // backgrounds, so they follow the active theme as well.
+    if (color == RGB(12,18,20))  return theme->light;
+    if (color == RGB(15,26,29))  return theme->detail;
+    if (color == RGB(20,31,31))  return theme->detail;
+    if (color == RGB(17,17,25))  return theme->light;
+    if (color == RGB(17,15,31))  return theme->detail;
+    if (color == RGB(25,18,28))  return theme->detail;
+
+    return color;
+}
+
+static void BuildPartyThemePaletteBuffer(void)
+{
+    u16 i;
+    const u16 colorCount = 11 * 16;
+
+    if (sPartyMenuInternal == NULL)
+        return;
+
+    // Always rebuild from the ROM palette. This makes repeated L/R changes
+    // lossless instead of trying to tint an already-tinted palette.
+    CpuCopy16(gPartyMenuBg_Pal, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
+
+    if (sPartyColorTheme == PARTY_COLOR_THEME_DEFAULT)
+        return;
+
+    for (i = 0; i < colorCount; i++)
+    {
+        if (!IsPartyThemeProtectedSourceColor(i))
+            sPartyMenuInternal->palBuffer[i] = RemapPartyThemeBackgroundColor(sPartyMenuInternal->palBuffer[i]);
+    }
+}
+
+static void ApplyPartyThemeBarPalette(void)
+{
+    u16 pal[16] = {0};
+    const struct PartyThemeColors *theme = &sPartyThemeColors[sPartyColorTheme];
+
+    pal[TEXT_COLOR_WHITE] = RGB(31,31,31);
+    pal[TEXT_COLOR_DARK_GRAY] = theme->nearBlack;
+    pal[TEXT_COLOR_LIGHT_GRAY] = RGB(23,23,23);
+    pal[4] = theme->deep;
+
+    LoadPalette(pal, BG_PLTT_ID(PARTY_THEME_BAR_PAL), PLTT_SIZE_4BPP);
+}
+
+static void RefreshPartyThemePalettes(void)
+{
+    u8 pal;
+    u8 slot;
+    s8 *slotPtr;
+
+    if (sPartyMenuInternal == NULL || sPartyMenuBoxes == NULL)
+        return;
+
+    BuildPartyThemePaletteBuffer();
+
+    // Static background palettes can be replaced wholesale. Party-slot
+    // palettes are rebuilt below so HP/gender/text entries stay untouched.
+    for (pal = 0; pal <= 2; pal++)
+        LoadPalette(&sPartyMenuInternal->palBuffer[PLTT_ID(pal)], BG_PLTT_ID(pal), PLTT_SIZE_4BPP);
+    for (pal = 9; pal <= 10; pal++)
+        LoadPalette(&sPartyMenuInternal->palBuffer[PLTT_ID(pal)], BG_PLTT_ID(pal), PLTT_SIZE_4BPP);
+
+    slotPtr = GetCurrentPartySlotPtr();
+    for (slot = 0; slot < PARTY_SIZE; slot++)
+    {
+        u8 palFlags;
+        bool8 selected = (*slotPtr == slot);
+
+        if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) == SPECIES_NONE)
+            palFlags = PARTY_PAL_NO_MON;
+        else
+            palFlags = GetPartyBoxPaletteFlags(slot, selected ? 1 : 0);
+
+        LoadPartyBoxPalette(&sPartyMenuBoxes[slot], palFlags);
+    }
+
+    ApplyPartyThemeBarPalette();
+
+    // Input is disabled while fades are active, so copying the updated BG
+    // palettes into both buffers is safe and makes the change immediate.
+    for (pal = 0; pal <= PARTY_THEME_BAR_PAL; pal++)
+    {
+        CpuCopy16(gPlttBufferUnfaded + BG_PLTT_ID(pal),
+                  gPlttBufferFaded   + BG_PLTT_ID(pal),
+                  PLTT_SIZE_4BPP);
+    }
+}
+
+static void ChangePartyColorTheme(s8 direction)
+{
+    u8 position = GetPartyThemeCyclePosition();
+
+    if (direction > 0)
+        position = (position + 1) % PARTY_COLOR_THEME_COUNT;
+    else
+        position = (position > 0) ? position - 1 : PARTY_COLOR_THEME_COUNT - 1;
+
+    sPartyColorTheme = sPartyThemeCycleOrder[position];
+    SavePartyColorThemeToSave();
+    RefreshPartyThemePalettes();
+    DrawBasicPartyThemeChrome();
+}
+
+static void HideBasicPartyThemeChrome(void)
+{
+    if (sPartyThemeTopWindowId != WINDOW_NONE)
+    {
+        ClearWindowTilemap(sPartyThemeTopWindowId);
+        RemoveWindow(sPartyThemeTopWindowId);
+        sPartyThemeTopWindowId = WINDOW_NONE;
+    }
+
+    if (sPartyThemeBottomWindowId != WINDOW_NONE)
+    {
+        ClearWindowTilemap(sPartyThemeBottomWindowId);
+        RemoveWindow(sPartyThemeBottomWindowId);
+        sPartyThemeBottomWindowId = WINDOW_NONE;
+    }
+    ScheduleBgCopyTilemapToVram(2);
+}
+
+// Remove only the leftover part of the basic themed footer that sits to the
+// RIGHT of a stock message window. The message/frame itself stays untouched;
+// the cleared BG2 cells reveal the striped Party background underneath.
+// Doing this after the message is drawn avoids the V6 window/baseBlock overlap
+// that produced white garbage at the bottom-right of the screen.
+static void ClearBasicPartyMessageFooterRemainder(u8 windowId)
+{
+    u8 left;
+    u8 width;
+    u8 clearX;
+
+    if (!IsBasicFieldPartyMenu() || windowId == WINDOW_NONE)
+        return;
+
+    left = GetWindowAttribute(windowId, WINDOW_TILEMAP_LEFT);
+    width = GetWindowAttribute(windowId, WINDOW_WIDTH);
+
+    // DrawStdFrameWithCustomTileAndPalette adds a one-tile frame around the
+    // window. The first tile after its right frame is left + width + 1.
+    clearX = left + width + 1;
+    if (clearX < 30)
+        FillBgTilemapBufferRect(2, 0, clearX, 18, 30 - clearX, 2, 0);
+}
+
+static void DrawBasicPartyThemeChrome(void)
+{
+    u8 themePos;
+    u8 number[4];
+    u8 bottomText[40];
+    u32 rightWidth;
+    u32 centerWidth;
+    u32 centerX;
+
+    if (!IsBasicFieldPartyMenu() || gPartyMenu.action != PARTY_ACTION_CHOOSE_MON)
+        return;
+
+    HideBasicPartyThemeChrome();
+    ApplyPartyThemeBarPalette();
+
+    sPartyThemeTopWindowId = AddWindow(&sBasicPartyTopBarWindowTemplate);
+    sPartyThemeBottomWindowId = AddWindow(&sBasicPartyBottomBarWindowTemplate);
+
+    FillWindowPixelBuffer(sPartyThemeTopWindowId, PIXEL_FILL(4));
+    FillWindowPixelBuffer(sPartyThemeBottomWindowId, PIXEL_FILL(4));
+
+    // Visually lift the entire header by 2px: the window still occupies the
+    // same safe 2-tile region, but its bottom 2px are transparent so the
+    // striped BG shows through as a small gap above the Pokémon boxes.
+    FillWindowPixelRect(sPartyThemeTopWindowId, PIXEL_FILL(0), 0, 14, DISPLAY_WIDTH, 2);
+
+    AddTextPrinterParameterized3(sPartyThemeTopWindowId, FONT_SMALL, 2, 1,
+                                 sPartyThemeBarTextColors, 0, sText_PartyMenuHeader);
+
+    centerWidth = GetStringWidth(FONT_SMALL, sText_PartyAccessPc, 0);
+    centerX = (DISPLAY_WIDTH - centerWidth) / 2;
+    AddTextPrinterParameterized3(sPartyThemeTopWindowId, FONT_SMALL, centerX, 1,
+                                 sPartyThemeBarTextColors, 0, sText_PartyAccessPc);
+
+    rightWidth = GetStringWidth(FONT_SMALL, sText_PartyChoosePokemon, 0);
+    AddTextPrinterParameterized3(sPartyThemeTopWindowId, FONT_SMALL,
+                                 DISPLAY_WIDTH - rightWidth - 2, 1,
+                                 sPartyThemeBarTextColors, 0, sText_PartyChoosePokemon);
+
+    themePos = GetPartyThemeCyclePosition() + 1;
+    StringCopy(bottomText, sText_PartyThemesPrefix);
+    ConvertIntToDecimalStringN(number, themePos, STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringAppend(bottomText, number);
+    StringAppend(bottomText, sText_PartyThemeTotal);
+    AddTextPrinterParameterized3(sPartyThemeBottomWindowId, FONT_SMALL, 2, 3,
+                                 sPartyThemeBarTextColors, 0, bottomText);
+
+    {
+        u32 themeX = GetStringWidth(FONT_SMALL, bottomText, 0) + 8;
+        AddTextPrinterParameterized3(sPartyThemeBottomWindowId, FONT_SMALL, themeX, 3,
+                                     sPartyThemeBarTextColors, 0, sPartyThemeNames[sPartyColorTheme]);
+    }
+
+    rightWidth = GetStringWidth(FONT_SMALL, sText_PartyClose, 0);
+    AddTextPrinterParameterized3(sPartyThemeBottomWindowId, FONT_SMALL,
+                                 DISPLAY_WIDTH - rightWidth - 2, 3,
+                                 sPartyThemeBarTextColors, 0, sText_PartyClose);
+
+    PutWindowTilemap(sPartyThemeTopWindowId);
+    PutWindowTilemap(sPartyThemeBottomWindowId);
+    CopyWindowToVram(sPartyThemeTopWindowId, COPYWIN_GFX);
+    CopyWindowToVram(sPartyThemeBottomWindowId, COPYWIN_GFX);
+    ScheduleBgCopyTilemapToVram(2);
 }
 
 static bool8 AllocPartyMenuBg(void)
@@ -933,12 +1666,14 @@ static bool8 AllocPartyMenuBgGfx(void)
         if (!IsDma3ManagerBusyWithBgCopy())
         {
             DecompressDataWithHeaderWram(gPartyMenuBg_Tilemap, sPartyBgTilemapBuffer);
+            ExtendBasicPartyBackgroundFooter();
             sPartyMenuInternal->data[0]++;
         }
         break;
     case 2:
-        LoadPalette(gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
-        CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
+        BuildPartyThemePaletteBuffer();
+        LoadPalette(sPartyMenuInternal->palBuffer, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+        ApplyPartyThemeBarPalette();
         sPartyMenuInternal->data[0]++;
         break;
     case 3:
@@ -1002,7 +1737,16 @@ static void LoadPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[i].infoRects = &sPartyBoxInfoRects[PARTY_BOX_RIGHT_COLUMN];
         if (layout == PARTY_LAYOUT_SINGLE)
             sPartyMenuBoxes[i].infoRects = &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN];
-        sPartyMenuBoxes[i].spriteCoords = sPartyMenuSpriteCoords[layout][i];
+        if (IsRaisedItemTargetPartyMenu())
+        {
+            if (i == 0)
+                BuildRaisedItemTargetSpriteCoords();
+            sPartyMenuBoxes[i].spriteCoords = sRaisedItemTargetSpriteCoords[i];
+        }
+        else if (IsBasicFieldPartyMenu())
+            sPartyMenuBoxes[i].spriteCoords = sBasicFieldPartySpriteCoords[i];
+        else
+            sPartyMenuBoxes[i].spriteCoords = sPartyMenuSpriteCoords[layout][i];
         sPartyMenuBoxes[i].windowId = i;
         sPartyMenuBoxes[i].monSpriteId = SPRITE_NONE;
         sPartyMenuBoxes[i].itemSpriteId = SPRITE_NONE;
@@ -1296,6 +2040,16 @@ static bool8 CreatePartyMonSpritesLoop(void)
 
 static void CreateCancelConfirmPokeballSprites(void)
 {
+    if (IsBasicFieldPartyMenu())
+    {
+        // Basic START-menu Party screen: B is the only Cancel control.
+        // Do not create the physical bottom-right Cancel button/sprite.
+        FillBgTilemapBufferRect(1, 14, 23, 17, 7, 3, 1);
+        ScheduleBgCopyTilemapToVram(1);
+        AnimatePartySlot(gPartyMenu.slotId, 1);
+        return;
+    }
+
     if (gPartyMenu.menuType == PARTY_MENU_TYPE_MULTI_SHOWCASE)
     {
         // The showcase has no Cancel/Confirm buttons
@@ -1524,19 +2278,42 @@ void Task_HandleChooseMonInput(u8 taskId)
             HandleChooseMonCancel(taskId, slotPtr);
             break;
         case START_BUTTON:
-            if (sPartyMenuInternal->chooseHalf)
+            if (IsBasicFieldPartyMenu()
+                && PARTY_MENU_PC_ACCESS
+                && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON)
+            {
+                PlaySE(SE_SELECT);
+                HideBasicPartyThemeChrome();
+                SavePartyMenuStateForPC();
+                PokemonPC_SetReturnToPartyCallback(CB2_ReopenPartyMenuFromPC);
+                sPartyMenuInternal->exitCallback = CB2_ShowPokemonPCFromParty;
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+                Task_ClosePartyMenu(taskId);
+            }
+            else if (sPartyMenuInternal->chooseHalf)
             {
                 PlaySE(SE_SELECT);
                 MoveCursorToConfirm();
             }
             break;
         case R_BUTTON:
-            if (PARTY_MENU_PC_ACCESS
+            if (CanUseBattleSummaryShoulderShortcut(*slotPtr))
+            {
+                gPartyMenu.slotId = *slotPtr;
+                OpenBattlePartySummaryFromShoulder(taskId);
+            }
+            else if (IsBasicFieldPartyMenu() && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON)
+            {
+                PlaySE(SE_SELECT);
+                ChangePartyColorTheme(1);
+            }
+            else if (PARTY_MENU_PC_ACCESS
                 && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON
                 && gPartyMenu.layout == PARTY_LAYOUT_SINGLE
                 && (gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD
                     || gPartyMenu.menuType == PARTY_MENU_TYPE_DAYCARE))
             {
+                // Preserve the old R->PC shortcut outside the basic field shell.
                 PlaySE(SE_SELECT);
                 SavePartyMenuStateForPC();
                 PokemonPC_SetReturnToPartyCallback(CB2_ReopenPartyMenuFromPC);
@@ -1545,14 +2322,26 @@ void Task_HandleChooseMonInput(u8 taskId)
                 Task_ClosePartyMenu(taskId);
             }
             break;
-        case L_BUTTON:  // ← NOVO: Abre o SUMMARY com o botão L
-            if (gPartyMenu.action == PARTY_ACTION_CHOOSE_MON && *slotPtr != PARTY_SIZE)
+        case L_BUTTON:
+            if (CanUseBattleSummaryShoulderShortcut(*slotPtr))
             {
+                gPartyMenu.slotId = *slotPtr;
+                OpenBattlePartySummaryFromShoulder(taskId);
+            }
+            else if (IsBasicFieldPartyMenu() && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON)
+            {
+                PlaySE(SE_SELECT);
+                ChangePartyColorTheme(-1);
+            }
+            else if (gPartyMenu.action == PARTY_ACTION_CHOOSE_MON && *slotPtr != PARTY_SIZE)
+            {
+                // Preserve the pre-existing L->Summary shortcut outside the
+                // redesigned basic field Party Menu.
                 PlaySE(SE_SELECT);
                 gPartyMenu.slotId = *slotPtr;
                 CursorCb_Summary(taskId);
             }
-            break;    
+            break;
         case SELECT_BUTTON:
             if (gPartyMenu.action == PARTY_ACTION_CHOOSE_MON && *slotPtr != PARTY_SIZE)
             {
@@ -1693,7 +2482,19 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
         case PARTY_ACTION_ABILITY_PREVENTS:
         case PARTY_ACTION_SWITCHING:
             PlaySE(SE_SELECT);
-            Task_TryCreateSelectionWindow(taskId);
+            if (IsBasicFieldPartyMenu() && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON)
+            {
+                // Do not reuse the themed chrome window tiles in the same
+                // frame that their tilemaps are being removed. Waiting one
+                // VBlank prevents the brief red/colored stale-tile flash.
+                HideBasicPartyThemeChrome();
+                gTasks[taskId].data[0] = 0;
+                gTasks[taskId].func = Task_OpenBasicSelectionAfterChromeHide;
+            }
+            else
+            {
+                Task_TryCreateSelectionWindow(taskId);
+            }
             break;
         }
     }
@@ -1824,7 +2625,7 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
         movementDir = MENU_DIR_RIGHT;
         break;
     default:
-        if (PARTY_MENU_PC_ACCESS)
+        if (IsBasicFieldPartyMenu() || PARTY_MENU_PC_ACCESS)
         {
             movementDir = 0;
         }
@@ -1846,13 +2647,24 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
         break;
     }
 
-    // Botão R - abre o PC (já existente)
-    if (PARTY_MENU_PC_ACCESS && JOY_NEW(R_BUTTON))
-        return R_BUTTON;
-    
-    // Botão L - abre o SUMMARY (NOVO)
-    if (!PARTY_MENU_PC_ACCESS && JOY_NEW(L_BUTTON))
-        return L_BUTTON;
+    // In the redesigned basic field menu L/R are theme controls. In normal
+    // single AND double battle Party Menus both shoulders are exposed so
+    // either one opens the selected Pokémon's Summary Screen.
+    if (IsBasicFieldPartyMenu() || IsBattleSummaryShoulderPartyMenu())
+    {
+        if (JOY_NEW(L_BUTTON))
+            return L_BUTTON;
+        if (JOY_NEW(R_BUTTON))
+            return R_BUTTON;
+    }
+    else
+    {
+        // Preserve the project's existing shortcuts in every other context.
+        if (PARTY_MENU_PC_ACCESS && JOY_NEW(R_BUTTON))
+            return R_BUTTON;
+        if (!PARTY_MENU_PC_ACCESS && JOY_NEW(L_BUTTON))
+            return L_BUTTON;
+    }
     
     if (JOY_NEW(START_BUTTON))
         return START_BUTTON;
@@ -1892,6 +2704,62 @@ static void UpdateCurrentPartySelection(s8 *slotPtr, s8 movementDir)
 
 static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir)
 {
+    if (UsesQuadrantLoopNavigation())
+    {
+        // The six Pokémon boxes are treated as a 2 x 3 toroidal grid.
+        // Every direction wraps: e.g. slot 0 UP -> slot 4 with a full party,
+        // and LEFT/RIGHT wrap across the two columns. Empty trailing party
+        // quadrants are skipped so smaller parties still navigate naturally.
+        s8 start;
+        s8 row;
+        s8 col;
+        u8 attempts;
+
+        // B is the cancel control in these looping shells. If an old cursor
+        // state ever hands us Confirm/Cancel, normalize back to a real mon.
+        if (*slotPtr < 0 || *slotPtr >= PARTY_SIZE)
+            *slotPtr = 0;
+
+        start = *slotPtr;
+        row = start / 2;
+        col = start & 1;
+
+        switch (movementDir)
+        {
+        case MENU_DIR_UP:
+        case MENU_DIR_DOWN:
+            for (attempts = 0; attempts < 3; attempts++)
+            {
+                s8 candidate;
+
+                if (movementDir == MENU_DIR_UP)
+                    row = (row + 2) % 3;
+                else
+                    row = (row + 1) % 3;
+
+                candidate = row * 2 + col;
+                if (candidate < gPlayerPartyCount
+                 && GetMonData(&gPlayerParty[candidate], MON_DATA_SPECIES) != SPECIES_NONE)
+                {
+                    *slotPtr = candidate;
+                    break;
+                }
+            }
+            break;
+        case MENU_DIR_LEFT:
+        case MENU_DIR_RIGHT:
+        {
+            s8 candidate = row * 2 + (col ^ 1);
+
+            if (candidate < gPlayerPartyCount
+             && GetMonData(&gPlayerParty[candidate], MON_DATA_SPECIES) != SPECIES_NONE)
+                *slotPtr = candidate;
+            break;
+        }
+        }
+        return;
+    }
+
     if (gPartyMenu.layout != PARTY_LAYOUT_SINGLE)
     {
         // Use original selection logic for non-single layouts.
@@ -2469,7 +3337,12 @@ static void InitPartyMenuWindows(u8 layout)
     switch (layout)
     {
     case PARTY_LAYOUT_SINGLE:
-        InitWindows(sSinglePartyMenuWindowTemplate_Equal);
+        if (IsRaisedItemTargetPartyMenu())
+            InitRaisedItemTargetWindows();
+        else if (IsBasicFieldPartyMenu())
+            InitWindows(sBasicFieldPartyMenuWindowTemplate);
+        else
+            InitWindows(sSinglePartyMenuWindowTemplate_Equal);
         break;
     case PARTY_LAYOUT_DOUBLE:
         InitWindows(sDoublePartyMenuWindowTemplate);
@@ -2501,6 +3374,13 @@ static void CreateCancelConfirmWindows(bool8 chooseHalf)
     u8 cancelWindowId;
     u8 offset;
     u8 mainOffset;
+
+    if (IsBasicFieldPartyMenu())
+    {
+        FillBgTilemapBufferRect(1, 14, 23, 17, 7, 3, 1);
+        ScheduleBgCopyTilemapToVram(1);
+        return;
+    }
 
     if (gPartyMenu.menuType != PARTY_MENU_TYPE_MULTI_SHOWCASE)
     {
@@ -2893,6 +3773,17 @@ void DisplayPartyMenuStdMessage(u32 stringId)
     if (*windowPtr != WINDOW_NONE)
         PartyMenuRemoveWindow(windowPtr);
 
+    if (IsBasicFieldPartyMenu()
+     && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON
+     && stringId == PARTY_MSG_CHOOSE_MON)
+    {
+        DrawBasicPartyThemeChrome();
+        return;
+    }
+
+    if (IsBasicFieldPartyMenu())
+        HideBasicPartyThemeChrome();
+
     if (stringId != PARTY_MSG_NONE)
     {
         switch (stringId)
@@ -2935,6 +3826,7 @@ void DisplayPartyMenuStdMessage(u32 stringId)
         DrawStdFrameWithCustomTileAndPalette(*windowPtr, FALSE, 0x4F, 13);
         StringExpandPlaceholders(gStringVar4, sActionStringTable[stringId]);
         AddTextPrinterParameterized(*windowPtr, FONT_NORMAL, gStringVar4, 0, 1, 0, 0);
+        ClearBasicPartyMessageFooterRemainder(*windowPtr);
         ScheduleBgCopyTilemapToVram(2);
     }
 }
@@ -2968,8 +3860,24 @@ static u8 DisplaySelectionWindow(u8 windowType)
     switch (windowType)
     {
     case SELECTWINDOW_ACTIONS:
-        SetWindowTemplateFields(&window, 2, 19, 19 - (sPartyMenuInternal->numActions * 2), 10, sPartyMenuInternal->numActions * 2, 14, 0x2E9);
+    {
+        s16 height = sPartyMenuInternal->numActions * 2;
+        s16 top = 19 - height;
+
+        // The redesigned basic Party Menu keeps its message window at the
+        // bottom. The action window has a 1-tile frame on both sides, so its
+        // interior must end two tiles before WIN_MSG begins. Computing this
+        // from the actual message-window position keeps every action visible,
+        // including the final CANCEL entry.
+        if (IsBasicFieldPartyMenu())
+            top = sBasicFieldPartyMenuWindowTemplate[WIN_MSG].tilemapTop - height - 2;
+        if (top < 0)
+            top = 0;
+
+        SetWindowTemplateFields(&window, 2, 19, top, 10,
+                                height, 14, 0x2E9);
         break;
+    }
     case SELECTWINDOW_ITEM:
         window = sItemGiveTakeWindowTemplate;
         break;
@@ -3197,6 +4105,27 @@ static void Task_TryCreateSelectionWindow(u8 taskId)
     }
 }
 
+static void Task_OpenBasicSelectionAfterChromeHide(u8 taskId)
+{
+    // One full frame is enough for the chrome tilemap clear to reach VRAM
+    // before the selection/message windows are allocated and copy their gfx.
+    if (gTasks[taskId].data[0]++ == 0)
+        return;
+
+    Task_TryCreateSelectionWindow(taskId);
+}
+
+static void Task_ReturnToBasicChooseMonAfterActionClose(u8 taskId)
+{
+    // Same protection in reverse: let the action/message window tilemaps clear
+    // before the top/bottom themed chrome reuses window character blocks.
+    if (gTasks[taskId].data[0]++ == 0)
+        return;
+
+    DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+    gTasks[taskId].func = Task_HandleChooseMonInput;
+}
+
 static void Task_HandleSelectionMenuInput(u8 taskId)
 {
     if (!gPaletteFade.active && MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
@@ -3251,6 +4180,40 @@ static void CB2_ShowPokemonSummaryScreen(void)
     {
         ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL, gPlayerParty, gPartyMenu.slotId, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen);
     }
+}
+
+static void OpenBattlePartySummaryFromShoulder(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    sPartyMenuInternal->exitCallback = CB2_ShowPokemonSummaryScreenFromBattleShoulder;
+    Task_ClosePartyMenu(taskId);
+}
+
+static void CB2_ShowPokemonSummaryScreenFromBattleShoulder(void)
+{
+    UpdatePartyToBattleOrder();
+    ShowPokemonSummaryScreen(SUMMARY_MODE_LOCK_MOVES,
+                             gPlayerParty,
+                             gPartyMenu.slotId,
+                             gPlayerPartyCount - 1,
+                             CB2_ReturnToBattlePartyMenuFromSummaryShoulder);
+}
+
+static void CB2_ReturnToBattlePartyMenuFromSummaryShoulder(void)
+{
+    u8 messageId = (gPartyMenu.action == PARTY_ACTION_SEND_MON_TO_BOX)
+                 ? PARTY_MSG_CHOOSE_MON_FOR_BOX
+                 : PARTY_MSG_CHOOSE_MON;
+
+    gPaletteFade.bufferTransferDisabled = TRUE;
+    gPartyMenu.slotId = gLastViewedMonIndex;
+    InitPartyMenu(gPartyMenu.menuType,
+                  KEEP_PARTY_LAYOUT,
+                  gPartyMenu.action,
+                  TRUE,
+                  messageId,
+                  Task_HandleChooseMonInput,
+                  gPartyMenu.exitCallback);
 }
 
 static void CB2_ReturnToPartyMenuFromSummaryScreen(void)
@@ -3692,6 +4655,17 @@ static void CursorCb_Cancel1(u8 taskId)
     PlaySE(SE_SELECT);
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+
+    if (IsBasicFieldPartyMenu() && gPartyMenu.action == PARTY_ACTION_CHOOSE_MON)
+    {
+        // Defer rebuilding the themed chrome for one VBlank. Without this,
+        // newly allocated chrome gfx can briefly be displayed through the old
+        // message-window tilemap, producing the one-frame red flash.
+        gTasks[taskId].data[0] = 0;
+        gTasks[taskId].func = Task_ReturnToBasicChooseMonAfterActionClose;
+        return;
+    }
+
     if (gPartyMenu.menuType == PARTY_MENU_TYPE_DAYCARE)
         DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON_2);
     else
@@ -4755,8 +5729,22 @@ static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBo
         {
             if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
             {
-                gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
-                gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
+                if (IsRaisedItemTargetPartyMenu())
+                {
+                    u8 pairedLeftSlot = slot & ~1;
+                    gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
+                    gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[pairedLeftSlot][1];
+                }
+                else if (IsBasicFieldPartyMenu())
+                {
+                    gSprites[menuBox->itemSpriteId].x = sBasicFieldEqualItemIconPos[slot][0];
+                    gSprites[menuBox->itemSpriteId].y = sBasicFieldEqualItemIconPos[slot][1] + 16;
+                }
+                else
+                {
+                    gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
+                    gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
+                }
             }
             else
             {
@@ -4805,8 +5793,22 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
         {
             if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
             {
-                gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
-                gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
+                if (IsRaisedItemTargetPartyMenu())
+                {
+                    u8 pairedLeftSlot = slot & ~1;
+                    gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
+                    gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[pairedLeftSlot][1];
+                }
+                else if (IsBasicFieldPartyMenu())
+                {
+                    gSprites[menuBox->itemSpriteId].x = sBasicFieldEqualItemIconPos[slot][0];
+                    gSprites[menuBox->itemSpriteId].y = sBasicFieldEqualItemIconPos[slot][1] + 16;
+                }
+                else
+                {
+                    gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
+                    gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
+                }
             }
             else
             {
