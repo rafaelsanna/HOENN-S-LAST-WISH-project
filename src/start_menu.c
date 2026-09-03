@@ -146,6 +146,7 @@ static bool8 StartMenuDexNavCallback(void);
 // Menu callbacks
 static bool8 SaveStartCallback(void);
 static bool8 SaveCallback(void);
+static bool8 SaveCancelReturnCallback(void);
 static bool8 BattlePyramidRetireStartCallback(void);
 static bool8 BattlePyramidRetireReturnCallback(void);
 static bool8 BattlePyramidRetireCallback(void);
@@ -314,6 +315,9 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {
     .paletteNum = 15,
     .baseBlock = 8
 };
+
+#define SAVE_INFO_TEXT_PALETTE 15
+
 
 // Local functions
 static bool8 IsWishMenuStartLayout(void);
@@ -1440,9 +1444,11 @@ static bool8 SaveCallback(void)
     case SAVE_IN_PROGRESS:
         return FALSE;
     case SAVE_CANCELED: // Back to start menu
-        ClearDialogWindowAndFrameToTransparent(0, FALSE);
-        InitStartMenu();
-        gMenuCallback = HandleStartMenuInput;
+        // Clear the save dialog first, then rebuild the Start Menu on the next
+        // frame. Recreating all windows in this same frame can briefly expose
+        // stale tiles/palettes from the Yes/No dialog when B is pressed.
+        ClearDialogWindowAndFrameToTransparent(0, TRUE);
+        gMenuCallback = SaveCancelReturnCallback;
         return FALSE;
     case SAVE_SUCCESS:
     case SAVE_ERROR:    // Close start menu
@@ -1458,6 +1464,13 @@ static bool8 SaveCallback(void)
         return TRUE;
     }
 
+    return FALSE;
+}
+
+static bool8 SaveCancelReturnCallback(void)
+{
+    InitStartMenu();
+    gMenuCallback = HandleStartMenuInput;
     return FALSE;
 }
 
@@ -1963,6 +1976,7 @@ static void ShowSaveInfoWindow(void)
     u32 textRightEdge;
     u32 xOffset;
     u32 yOffset;
+    u16 textPalBase = BG_PLTT_ID(SAVE_INFO_TEXT_PALETTE);
 
     if (!FlagGet(FLAG_SYS_POKEDEX_GET))
     {
@@ -1981,13 +1995,12 @@ static void ShowSaveInfoWindow(void)
         color = TEXT_COLOR_LIGHT_BLUE; // mantém azul claro
     }
 
-    // ----- SALVAR CORES ORIGINAIS DOS ÍNDICES QUE VAMOS MODIFICAR -----
-    // TEXT_DYNAMIC_COLOR_5 = 0xE (usado para o local, antes era verde)
-    // TEXT_DYNAMIC_COLOR_6 = 0xF (usado para nome/badges/etc, antes era vermelho)
-    sOriginalColor5 = gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5];
-    sOriginalColor6 = gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6];
-    sOriginalColor5Unfaded = gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5];
-    sOriginalColor6Unfaded = gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6];
+    // Save the original colors from the Save Info window palette only.
+    // TEXT_DYNAMIC_COLOR_5/6 are local indices inside palette 15.
+    sOriginalColor5 = gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_5];
+    sOriginalColor6 = gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_6];
+    sOriginalColor5Unfaded = gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_5];
+    sOriginalColor6Unfaded = gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_6];
 
     // Definir novas cores (use os valores RGB que preferir)
     // lilás claro: R=200, G=160, B=255 -> valores GBA: 200/8=25, 160/8=20, 255/8=31
@@ -1995,10 +2008,10 @@ static void ShowSaveInfoWindow(void)
     #define RGB_LILAS   ( (25) | (20 << 5) | (31 << 10) )
     #define RGB_PURPLE2 ( (20) | (10 << 5) | (25 << 10) )  // nome diferente para não conflitar
 
-    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
-    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
-    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
-    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
+    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
+    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
+    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
+    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
     UpdatePaletteFade();
 
     // Print region name (antes usava TEXT_COLOR_GREEN, agora usa TEXT_DYNAMIC_COLOR_5 = lilás)
@@ -2042,11 +2055,15 @@ static void ShowSaveInfoWindow(void)
 
 static void RemoveSaveInfoWindow(void)
 {
-    // Restaurar as cores originais dos índices dinâmicos
-    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_5] = sOriginalColor5;
-    gPlttBufferFaded[TEXT_DYNAMIC_COLOR_6] = sOriginalColor6;
-    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_5] = sOriginalColor5Unfaded;
-    gPlttBufferUnfaded[TEXT_DYNAMIC_COLOR_6] = sOriginalColor6Unfaded;
+    u16 textPalBase = BG_PLTT_ID(SAVE_INFO_TEXT_PALETTE);
+
+    // Restore only the Save Info window's own palette. The previous code wrote
+    // TEXT_DYNAMIC_COLOR_5/6 into BG palette 0, which is also used by the live
+    // overworld and temporarily recolored map objects (the pink sign glitch).
+    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = sOriginalColor5;
+    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = sOriginalColor6;
+    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = sOriginalColor5Unfaded;
+    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = sOriginalColor6Unfaded;
     UpdatePaletteFade();
 
     ClearStdWindowAndFrame(sSaveInfoWindowId, FALSE);
