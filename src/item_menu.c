@@ -36,6 +36,7 @@
 #include "player_pc.h"
 #include "pokemon.h"
 #include "pokemon_summary_screen.h"
+#include "random.h"
 #include "scanline_effect.h"
 #include "script.h"
 #include "shop.h"
@@ -267,7 +268,7 @@ static const struct BgTemplate sBgTemplates_ItemMenu[] =
         .baseTile = 0,
     },
     {
-        // Animated starfield behind the Bag interface.
+        // Scrolling blue/lilac sky behind the Bag interface.
         .bg = 3,
         .charBaseIndex = 3,
         .mapBaseIndex = 28,
@@ -419,34 +420,269 @@ static const u8 sText_LButton[] = _("L");
 
 static const u8 sRegisteredSelect_Gfx[] = INCBIN_U8("graphics/bag/select_button.4bpp");
 
-// HLW Bag rework: keep the existing Bag layout, but make its striped areas
-// transparent and reveal Ratak's animated starfield on BG3 underneath.
+// HLW Bag rework V2:
+// - the old striped fill in the Bag interface stays transparent;
+// - BG3 is a seamless dark-blue -> lilac sky gradient that scrolls upward;
+// - stars are OBJ sprites, independent from BG3, and fall downward with a
+//   gentle asynchronous twinkle (ported from the custom naming-screen effect).
 #define BAG_SCROLL_BG_PALETTE 2
 static const u32 sBagMenuScrolling_Gfx[] = INCBIN_U32("graphics/bag/menu_scrolling.4bpp.smol");
 static const u16 sBagMenuScrolling_Tilemap[] = INCBIN_U16("graphics/bag/scrolling_bg.bin");
 
-// Dedicated BG palette for the scrolling layer. Keeping this on palette 2
-// prevents the Bag's dark-theme palette edits (palettes 0/1) from recoloring
-// the starfield or any other Bag windows.
+// Dedicated BG3 palette. Index 0 is intentionally unused by the sky tiles;
+// the 15 visible colors form the blue/lilac gradient. Keeping BG3 on palette 2
+// prevents Bag window/theme palette edits (palettes 0/1) from recoloring it.
 static const u16 sBagMenuScrolling_Pal[PLTT_SIZE_4BPP / sizeof(u16)] =
 {
-    RGB(0, 31, 0),   // Transparent index for BG3 tiles.
-    RGB(31, 31, 31),
-    RGB(31, 25, 25),
-    RGB(27, 16, 19),
-    RGB(27, 15, 19),
-    RGB(23, 13, 15),
-    RGB(20, 11, 14),
-    RGB(28, 17, 18),
-    RGB(5, 5, 11),
-    RGB(5, 5, 5),
-    RGB(3, 3, 8),    // Starfield background.
-    RGB(14, 18, 31),
-    RGB(0, 0, 26),
-    RGB(31, 14, 14),
-    RGB(24, 0, 0),
-    RGB(3, 24, 2),
+    RGB(3, 4, 9),   // unused by sky tiles / safe dark fallback
+    RGB(3, 5, 11),
+    RGB(4, 6, 13),
+    RGB(5, 7, 15),
+    RGB(6, 8, 17),
+    RGB(7, 9, 19),
+    RGB(8, 10, 21),
+    RGB(9, 11, 23),
+    RGB(10, 12, 24),
+    RGB(11, 13, 25),
+    RGB(12, 14, 26),
+    RGB(13, 14, 27),
+    RGB(14, 15, 28),
+    RGB(15, 15, 29),
+    RGB(17, 15, 30),
+    RGB(19, 16, 30),
 };
+
+// ---------------------------------------------------------------------------
+// Bag falling stars
+// ---------------------------------------------------------------------------
+#define BAG_STAR_COUNT        18
+#define BAG_STAR_GFX_TAG      0x5B00
+#define BAG_STAR_PAL_TAG_BASE 0x5B10
+#define BAG_STAR_PRIORITY     3
+
+enum
+{
+    BAG_STAR_MEDIUM,
+    BAG_STAR_LARGE,
+};
+
+// Two tiny 8x8 4bpp stars. Palette index 0 is transparent, index 1 is the glow.
+static const u32 sBagStarTiles[][8] =
+{
+    // Medium
+    {
+        0x00000000,
+        0x00010000,
+        0x00111000,
+        0x00010000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+    },
+    // Large
+    {
+        0x00010000,
+        0x00010000,
+        0x00111000,
+        0x01111100,
+        0x00111000,
+        0x00010000,
+        0x00010000,
+        0x00000000,
+    },
+};
+
+// Four glow steps. These are intentionally cool/neutral so they read as
+// starlight over both the navy and lilac portions of the gradient.
+static const u16 sBagStarPal0[16] = { [1] = RGB( 7,  9, 14) };
+static const u16 sBagStarPal1[16] = { [1] = RGB(14, 16, 22) };
+static const u16 sBagStarPal2[16] = { [1] = RGB(22, 23, 29) };
+static const u16 sBagStarPal3[16] = { [1] = RGB(31, 31, 31) };
+
+static const struct SpriteSheet sBagStarSheet =
+{
+    .data = sBagStarTiles,
+    .size = sizeof(sBagStarTiles),
+    .tag = BAG_STAR_GFX_TAG,
+};
+
+static const struct SpritePalette sBagStarPalettes[] =
+{
+    {sBagStarPal0, BAG_STAR_PAL_TAG_BASE + 0},
+    {sBagStarPal1, BAG_STAR_PAL_TAG_BASE + 1},
+    {sBagStarPal2, BAG_STAR_PAL_TAG_BASE + 2},
+    {sBagStarPal3, BAG_STAR_PAL_TAG_BASE + 3},
+    {}
+};
+
+static const struct OamData sOamData_BagStar =
+{
+    .shape = SPRITE_SHAPE(8x8),
+    .size = SPRITE_SIZE(8x8),
+    // BG3 also has priority 3. As in the naming-screen implementation, OBJ
+    // priority 3 puts the stars directly over that background while the Bag
+    // interface and item sprites remain visually in front.
+    .priority = BAG_STAR_PRIORITY,
+};
+
+static const union AnimCmd sBagStarAnimMedium[] =
+{
+    ANIMCMD_FRAME(BAG_STAR_MEDIUM, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sBagStarAnimLarge[] =
+{
+    ANIMCMD_FRAME(BAG_STAR_LARGE, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sBagStarAnimTable[] =
+{
+    sBagStarAnimMedium,
+    sBagStarAnimLarge,
+};
+
+static const struct SpriteTemplate sBagStarTemplate =
+{
+    .tileTag = BAG_STAR_GFX_TAG,
+    .paletteTag = BAG_STAR_PAL_TAG_BASE + 1,
+    .oam = &sOamData_BagStar,
+    .anims = sBagStarAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static u8 sBagStarSpriteIds[BAG_STAR_COUNT];
+static u8 sBagStarPaletteNums[4];
+
+static void Task_BagStars(u8 taskId);
+
+static void LoadBagStarGfx(void)
+{
+    u8 i;
+
+    LoadSpriteSheet(&sBagStarSheet);
+    LoadSpritePalettes(sBagStarPalettes);
+
+    for (i = 0; i < ARRAY_COUNT(sBagStarPaletteNums); i++)
+        sBagStarPaletteNums[i] = IndexOfSpritePaletteTag(BAG_STAR_PAL_TAG_BASE + i);
+}
+
+static void CreateBagStars(void)
+{
+    u8 i;
+
+    for (i = 0; i < BAG_STAR_COUNT; i++)
+    {
+        u8 id;
+        u8 sizeType;
+        u8 phase;
+        u8 triangle;
+        u8 glowLevel;
+
+        sBagStarSpriteIds[i] = SPRITE_NONE;
+
+        id = CreateSprite(&sBagStarTemplate,
+                          Random2() % DISPLAY_WIDTH,
+                          Random2() % DISPLAY_HEIGHT,
+                          0);
+        if (id == MAX_SPRITES)
+            continue;
+
+        sBagStarSpriteIds[i] = id;
+        sizeType = (Random2() % 10 < 7) ? BAG_STAR_MEDIUM : BAG_STAR_LARGE;
+        StartSpriteAnim(&gSprites[id], sizeType);
+
+        // data[0] = random glow phase
+        // data[1] = glow counter
+        // data[2] = vertical speed class
+        // data[3] = movement delay
+        gSprites[id].data[0] = Random2() & 0xFF;
+        gSprites[id].data[1] = 0;
+        gSprites[id].data[2] = (sizeType == BAG_STAR_MEDIUM) ? 1 : 2;
+        gSprites[id].data[3] = 0;
+
+        phase = (u8)gSprites[id].data[0];
+        triangle = (phase < 128) ? phase : (u8)(255 - phase);
+        glowLevel = triangle >> 5;
+        if (glowLevel > 3)
+            glowLevel = 3;
+        if (sBagStarPaletteNums[glowLevel] != 0xFF)
+            gSprites[id].oam.paletteNum = sBagStarPaletteNums[glowLevel];
+    }
+
+    CreateTask(Task_BagStars, 3);
+}
+
+static void DestroyBagStars(void)
+{
+    u8 i;
+    u8 taskId = FindTaskIdByFunc(Task_BagStars);
+
+    if (taskId != TASK_NONE)
+        DestroyTask(taskId);
+
+    for (i = 0; i < BAG_STAR_COUNT; i++)
+    {
+        u8 id = sBagStarSpriteIds[i];
+
+        if (id != SPRITE_NONE && id < MAX_SPRITES && gSprites[id].inUse)
+            DestroySprite(&gSprites[id]);
+        sBagStarSpriteIds[i] = SPRITE_NONE;
+    }
+}
+
+static void Task_BagStars(u8 taskId)
+{
+    u8 i;
+
+    for (i = 0; i < BAG_STAR_COUNT; i++)
+    {
+        u8 id = sBagStarSpriteIds[i];
+        struct Sprite *spr;
+        u8 phase;
+        u8 triangle;
+        u8 glowLevel;
+        u8 paletteNum;
+
+        if (id == SPRITE_NONE || id >= MAX_SPRITES)
+            continue;
+
+        spr = &gSprites[id];
+        if (!spr->inUse)
+            continue;
+
+        // Stars fall while BG3 moves upward. Medium stars are a little faster
+        // than large ones, keeping the motion soft rather than snow-like.
+        spr->data[3]++;
+        if (spr->data[3] >= spr->data[2] * 4)
+        {
+            spr->y++;
+            spr->data[3] = 0;
+        }
+
+        if (spr->y > DISPLAY_HEIGHT + 16)
+        {
+            spr->y = -8;
+            spr->x = Random2() % DISPLAY_WIDTH;
+        }
+
+        // Slow triangular glow: dim -> bright -> white -> bright -> dim.
+        spr->data[1] = (spr->data[1] + 1) & 0xFF;
+        phase = (u8)((spr->data[1] + spr->data[0]) & 0xFF);
+        triangle = (phase < 128) ? phase : (u8)(255 - phase);
+        glowLevel = triangle >> 5;
+        if (glowLevel > 3)
+            glowLevel = 3;
+
+        paletteNum = sBagStarPaletteNums[glowLevel];
+        if (paletteNum != 0xFF)
+            spr->oam.paletteNum = paletteNum;
+    }
+}
 
 #define BAG_MENU_GRAPHICS_BLACK 7
 
@@ -491,7 +727,7 @@ static const u16 sBagMenuDarkStripeColors[] =
     RGB(9, 9, 13),
 };
 
-static const u16 sBagMenuStaticBallRedColor = RGB(31, 4, 4);
+static const u16 sBagMenuStaticBallRedColor = RGB(23, 7, 9); // pastel red, approx. #C13B47
 
 static const u16 sBagMenuDarkTextColors[] =
 {
@@ -773,10 +1009,10 @@ void GoToBagMenu(u8 location, u8 pocket, void ( *exitCallback)())
 
 void CB2_BagMenuRun(void)
 {
-    // Match Ratak's scrolling background speed. Doing this in the Bag's main
-    // callback keeps the animation running during item context menus, swapping,
-    // pocket transitions and confirmation windows too.
-    ChangeBgY(3, 128, BG_COORD_ADD);
+    // HLW Bag sky: the gradient drifts upward while the independent star
+    // sprites fall downward. The opposing motion gives the background depth
+    // without tying either effect to Bag input state.
+    ChangeBgY(3, 64, BG_COORD_SUB);
 
     RunTasks();
     AdvanceComfyAnimations();
@@ -905,6 +1141,10 @@ static bool8 SetupBagMenu(void)
         gMain.state++;
         break;
     case 19:
+        // Load the independent falling-star layer only after the Bag's normal
+        // sprites/palettes are established, so palette slots are resolved safely.
+        LoadBagStarGfx();
+        CreateBagStars();
         BlendPalettes(PALETTES_ALL, 16, 0);
         gMain.state++;
         break;
@@ -943,9 +1183,9 @@ static void LoadBagScrollingBackground(void)
     u32 i;
     vu16 *dst = (vu16 *)BG_SCREEN_ADDR(28);
 
-    // The supplied scrolling_bg.bin uses the extra star tiles appended to
+    // scrolling_bg.bin uses the 16 sky-gradient tiles appended to
     // menu_scrolling.png. Force only this BG to palette 2 while preserving
-    // tile number and H/V flip bits from Ratak's original tilemap.
+    // tile number and H/V flip bits used to make the gradient loop seamlessly.
     for (i = 0; i < ARRAY_COUNT(sBagMenuScrolling_Tilemap); i++)
         dst[i] = (sBagMenuScrolling_Tilemap[i] & 0x0FFF) | (BAG_SCROLL_BG_PALETTE << 12);
 }
@@ -957,7 +1197,7 @@ static bool8 LoadBagMenu_Graphics(void)
     case 0:
         ResetTempTileDataBuffers();
         // Same Bag interface tiles, with the old striped fill made transparent
-        // plus Ratak's star tiles appended as tiles 64-79.
+        // plus the blue/lilac sky-gradient tiles appended as tiles 64-79.
         DecompressAndCopyTileDataToVram(2, sBagMenuScrolling_Gfx, 0, 0, 0);
         gBagMenu->graphicsLoadState++;
         break;
@@ -1370,6 +1610,7 @@ static void Task_CloseBagMenu(u8 taskId)
             SetMainCallback2(gBagPosition.exitCallback);
 
         BagDestroyPocketScrollArrowPair();
+        DestroyBagStars();
         ResetSpriteData();
         FreeAllSpritePalettes();
         FreeBagMenu();
