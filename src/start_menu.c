@@ -217,7 +217,7 @@ static const struct WindowTemplate sWindowTemplate_StartClockWish = {
     .bg = 0,
     .tilemapLeft = 1,
     .tilemapTop = 14,
-    .width = 18,
+    .width = 19,
     .height = 5,
     .paletteNum = 15,
     .baseBlock = 0x30
@@ -321,6 +321,7 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {
 
 // Local functions
 static bool8 IsWishMenuStartLayout(void);
+static u8 AddStartMenuWindowForCurrentLayout(void);
 static bool8 IsWishMenuSavedOrderValid(const u8 *order);
 static void LoadWishMenuOrderFromSave(void);
 static void SaveWishMenuOrderToSave(void);
@@ -375,19 +376,52 @@ static bool8 IsWishMenuStartLayout(void)
 {
     u8 i;
 
-    // The custom order can move WISHMENU away from slot 0, so detecting the
-    // layout by "first action == DEBUG" would stop working after the first
-    // reorder. The full 9-entry menu is unique; require nine entries and the
-    // WISHMENU action anywhere in the list.
-    if (sNumStartMenuActions != ARRAY_COUNT(sCurrentStartMenuActions))
-        return FALSE;
-
+    // WISHMENU must use the redesigned layout even on a fresh save, before
+    // Pokédex / DexNav (and therefore all nine Start Menu actions) are unlocked.
+    // The custom reorder can also move WISHMENU away from slot 0, so detect it
+    // by the DEBUG/WISHMENU action anywhere in the current list, not by count.
     for (i = 0; i < sNumStartMenuActions; i++)
     {
         if (sCurrentStartMenuActions[i] == MENU_ACTION_DEBUG)
             return TRUE;
     }
     return FALSE;
+}
+
+static u8 AddStartMenuWindowForCurrentLayout(void)
+{
+    u8 windowRows = sNumStartMenuActions;
+    u8 windowId;
+
+    if (IsWishMenuStartLayout())
+    {
+        // The WISHMENU uses 15 px rows instead of the stock 16 px spacing.
+        // For 7 or fewer actions, one fewer stock "row" removes the empty
+        // strip below the final item while still leaving enough pixel height
+        // for every label. Eight actions already looked correct, and nine must
+        // keep using the proven 8-action height so the frame stays on-screen.
+        if (sNumStartMenuActions >= WISH_START_MENU_WINDOW_ACTIONS)
+            windowRows = WISH_START_MENU_WINDOW_ACTIONS;
+        else if (sNumStartMenuActions >= 4)
+            windowRows = sNumStartMenuActions - 1;
+    }
+
+    windowId = AddStartMenuWindow(windowRows);
+
+    if (IsWishMenuStartLayout() && windowId != WINDOW_NONE)
+    {
+        u8 interiorHeight = (windowRows * 2) + 2;
+        u8 outerHeight = interiorHeight + 2;
+        u8 outerTop = (20 - outerHeight) / 2;
+
+        // AddStartMenuWindow normally pins its interior to tile row 1. For a
+        // shorter WISHMENU, move the whole framed window down so the blank
+        // space above and below it is equal. This changes only the right menu;
+        // the lower-left player info panel remains locked to the bottom.
+        SetWindowAttribute(windowId, WINDOW_TILEMAP_TOP, outerTop + 1);
+    }
+
+    return windowId;
 }
 
 static bool8 IsWishMenuSavedOrderValid(const u8 *order)
@@ -440,12 +474,13 @@ static void LoadWishMenuOrderFromSave(void)
      || ext->future[WISH_MENU_ORDER_SAVE_COUNT_OFFSET] != sNumStartMenuActions)
         return;
 
+    memset(savedOrder, 0xFF, sizeof(savedOrder));
     memcpy(savedOrder,
            &ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
-           sizeof(savedOrder));
+           sNumStartMenuActions);
 
     if (IsWishMenuSavedOrderValid(savedOrder))
-        memcpy(sCurrentStartMenuActions, savedOrder, sizeof(savedOrder));
+        memcpy(sCurrentStartMenuActions, savedOrder, sNumStartMenuActions);
 }
 
 static void SaveWishMenuOrderToSave(void)
@@ -460,9 +495,12 @@ static void SaveWishMenuOrderToSave(void)
     ext->future[WISH_MENU_ORDER_SAVE_TAG1_OFFSET] = WISH_MENU_ORDER_SAVE_TAG1;
     ext->future[WISH_MENU_ORDER_SAVE_VERSION_OFFSET] = WISH_MENU_ORDER_SAVE_VERSION;
     ext->future[WISH_MENU_ORDER_SAVE_COUNT_OFFSET] = sNumStartMenuActions;
+    memset(&ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
+           0xFF,
+           ARRAY_COUNT(sCurrentStartMenuActions));
     memcpy(&ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
            sCurrentStartMenuActions,
-           ARRAY_COUNT(sCurrentStartMenuActions));
+           sNumStartMenuActions);
 }
 
 static void RedrawWishMenuActions(void)
@@ -771,6 +809,18 @@ static const u8 sText_Name[] = _("NAME:  ");
 static const u8 sText_LevelCapPrefix[] = _("LEVEL CAP:  ");
 static const u8 sText_MoneyPrefix[] = _("MONEY:  ¥ ");
 
+// Compact WISHMENU profile labels. These are kept separate from the stock
+// Start Menu strings so the classic/non-WISH layouts remain untouched.
+static const u8 sText_WishNameDaySeparator[] = _(" - ");
+static const u8 sText_WishMoneyPrefix[] = _("MONEY: ¥");
+static const u8 sText_WishBadgePrefix[] = _(" BADGE ");
+static const u8 sText_WishBadgeTotal[] = _("/8");
+static const u8 sText_WishLevelCapPrefix[] = _("LEVEL CAP: ");
+static const u8 sText_WishLevelCapOff[] = _("OFF");
+static const u8 sText_WishModePrefix[] = _(" MODE: ");
+static const u8 sText_WishModeCasual[] = _("CASUAL");
+static const u8 sText_WishModeHard[] = _("HARD");
+
 static const u8 sText_Saturday[] = _("Saturday,");
 static const u8 sText_Sunday[] = _("Sunday,");
 static const u8 sText_Monday[] = _("Monday,");
@@ -848,6 +898,22 @@ static void Build12HourTimeString(u8 *dest)
     *ptr = EOS;
 }
 
+static u8 GetWishMenuBadgeCount(void)
+{
+    u8 count = 0;
+
+    count += FlagGet(FLAG_BADGE01_GET) ? 1 : 0;
+    count += FlagGet(FLAG_BADGE02_GET) ? 1 : 0;
+    count += FlagGet(FLAG_BADGE03_GET) ? 1 : 0;
+    count += FlagGet(FLAG_BADGE04_GET) ? 1 : 0;
+    count += FlagGet(FLAG_BADGE05_GET) ? 1 : 0;
+    count += FlagGet(FLAG_BADGE06_GET) ? 1 : 0;
+    count += FlagGet(FLAG_BADGE07_GET) ? 1 : 0;
+    count += FlagGet(FLAG_BADGE08_GET) ? 1 : 0;
+
+    return count;
+}
+
 static void ShowTimeWindow(void)
 {
     u8 y;
@@ -856,39 +922,46 @@ static void ShowTimeWindow(void)
 
     if (IsWishMenuStartLayout())
     {
-        // Compact three-line profile panel at the bottom-left:
-        //   ZENNO Sunday, 10:10 PM
-        //   MONEY: ¥ 999999
-        //   LEVEL CAP: 100
-        // Keeping the day/time after the name frees the center of the map and
-        // stops the Start Menu from covering the player sprite.
+        u8 badgeCount = GetWishMenuBadgeCount();
+        const u8 *modeText = gSaveBlock2Ptr->optionsNpcTeams ? sText_WishModeHard : sText_WishModeCasual;
+
+        // Keep this panel permanently anchored to the bottom-left. Its job is
+        // to stay out of the player's way; only the right-side WISHMENU moves
+        // vertically when fewer actions are available on a fresh save.
         sStartClockWindowId = AddWindow(&sWindowTemplate_StartClockWish);
         PutWindowTilemap(sStartClockWindowId);
         DrawStdWindowFrame(sStartClockWindowId, FALSE);
 
+        // Line 1: NAME - Monday, 10:01 AM
         y = 1;
         StringCopy(gStringVar4, gSaveBlock2Ptr->playerName);
-        StringAppend(gStringVar4, gText_Space);
+        StringAppend(gStringVar4, sText_WishNameDaySeparator);
         StringAppend(gStringVar4, GetLocalizedDayName(gLocalTime.days));
         StringAppend(gStringVar4, gText_Space);
         Build12HourTimeString(gStringVar1);
         StringAppend(gStringVar4, gStringVar1);
         AddTextPrinterParameterized(sStartClockWindowId, FONT_SMALL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
 
+        // Line 2: MONEY: ¥3000 BADGE 0/8
         y += 12;
-        StringCopy(gStringVar4, sText_MoneyPrefix);
-        ptr = StringAppend(gStringVar4, gText_EmptyString2);
-        ConvertIntToDecimalStringN(ptr, GetMoney(&gSaveBlock1Ptr->money), STR_CONV_MODE_LEFT_ALIGN, 6);
+        ptr = StringCopy(gStringVar4, sText_WishMoneyPrefix);
+        ptr = ConvertIntToDecimalStringN(ptr, GetMoney(&gSaveBlock1Ptr->money), STR_CONV_MODE_LEFT_ALIGN, 6);
+        ptr = StringAppend(ptr, sText_WishBadgePrefix);
+        ptr = ConvertIntToDecimalStringN(ptr, badgeCount, STR_CONV_MODE_LEFT_ALIGN, 1);
+        StringAppend(ptr, sText_WishBadgeTotal);
         AddTextPrinterParameterized(sStartClockWindowId, FONT_SMALL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
 
+        // Line 3 always shows the level-cap state, even when disabled:
+        // LEVEL CAP: 100 MODE: CASUAL  /  LEVEL CAP: OFF MODE: HARD
         y += 12;
+        ptr = StringCopy(gStringVar4, sText_WishLevelCapPrefix);
         if (showLevelCap)
-        {
-            StringCopy(gStringVar4, sText_LevelCapPrefix);
-            ptr = StringAppend(gStringVar4, gText_EmptyString2);
-            ConvertIntToDecimalStringN(ptr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
-            AddTextPrinterParameterized(sStartClockWindowId, FONT_SMALL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
-        }
+            ptr = ConvertIntToDecimalStringN(ptr, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
+        else
+            ptr = StringAppend(ptr, sText_WishLevelCapOff);
+        ptr = StringAppend(ptr, sText_WishModePrefix);
+        StringAppend(ptr, modeText);
+        AddTextPrinterParameterized(sStartClockWindowId, FONT_SMALL, gStringVar4, 0, y, TEXT_SKIP_DRAW, NULL);
 
         CopyWindowToVram(sStartClockWindowId, COPYWIN_GFX);
         return;
@@ -1008,14 +1081,10 @@ static bool32 InitStartMenuStep(void)
         break;
     case 2:
         LoadMessageBoxAndBorderGfx();
-        // Nine WISHMENU entries would make AddStartMenuWindow(9) create a
-        // 20-tile-tall interior and push the bottom frame off-screen. Reuse the
-        // stock 8-action window height (18 tiles), then print the nine entries
-        // with the compact 15 px row spacing below. This keeps both the top and
-        // bottom frame fully visible inside 160 px.
-        DrawStdWindowFrame(AddStartMenuWindow(IsWishMenuStartLayout()
-                            ? WISH_START_MENU_WINDOW_ACTIONS
-                            : sNumStartMenuActions), FALSE);
+        // Build a WISHMENU-height window that matches the compact 15 px rows.
+        // Short early-game menus are vertically centered; the full 9-entry
+        // menu still uses the proven 8-action height so its frame fits on GBA.
+        DrawStdWindowFrame(AddStartMenuWindowForCurrentLayout(), FALSE);
         FillWindowPixelBuffer(GetStartMenuWindowId(), PIXEL_FILL(1));
         sInitStartMenuData[1] = 0;
         sInitStartMenuData[0]++;
