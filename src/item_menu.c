@@ -143,6 +143,7 @@ static void PrepareTMHMMoveWindow(void);
 static bool8 IsWallysBag(void);
 static void Task_WallyTutorialBagMenu(u8);
 static void Task_BagMenu_HandleInput(u8);
+static void LoadBagScrollingBackground(void);
 static void GetItemNameFromPocket(u8 *, u16);
 static void PrintItemDescription(int);
 static void BagMenu_PrintCursorAtPos(u8, u8);
@@ -263,6 +264,16 @@ static const struct BgTemplate sBgTemplates_ItemMenu[] =
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
+        .baseTile = 0,
+    },
+    {
+        // Animated starfield behind the Bag interface.
+        .bg = 3,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
         .baseTile = 0,
     },
 };
@@ -407,6 +418,35 @@ static const u8 sText_RButton[] = _("R");
 static const u8 sText_LButton[] = _("L");
 
 static const u8 sRegisteredSelect_Gfx[] = INCBIN_U8("graphics/bag/select_button.4bpp");
+
+// HLW Bag rework: keep the existing Bag layout, but make its striped areas
+// transparent and reveal Ratak's animated starfield on BG3 underneath.
+#define BAG_SCROLL_BG_PALETTE 2
+static const u32 sBagMenuScrolling_Gfx[] = INCBIN_U32("graphics/bag/menu_scrolling.4bpp.smol");
+static const u16 sBagMenuScrolling_Tilemap[] = INCBIN_U16("graphics/bag/scrolling_bg.bin");
+
+// Dedicated BG palette for the scrolling layer. Keeping this on palette 2
+// prevents the Bag's dark-theme palette edits (palettes 0/1) from recoloring
+// the starfield or any other Bag windows.
+static const u16 sBagMenuScrolling_Pal[PLTT_SIZE_4BPP / sizeof(u16)] =
+{
+    RGB(0, 31, 0),   // Transparent index for BG3 tiles.
+    RGB(31, 31, 31),
+    RGB(31, 25, 25),
+    RGB(27, 16, 19),
+    RGB(27, 15, 19),
+    RGB(23, 13, 15),
+    RGB(20, 11, 14),
+    RGB(28, 17, 18),
+    RGB(5, 5, 11),
+    RGB(5, 5, 5),
+    RGB(3, 3, 8),    // Starfield background.
+    RGB(14, 18, 31),
+    RGB(0, 0, 26),
+    RGB(31, 14, 14),
+    RGB(24, 0, 0),
+    RGB(3, 24, 2),
+};
 
 #define BAG_MENU_GRAPHICS_BLACK 7
 
@@ -733,6 +773,11 @@ void GoToBagMenu(u8 location, u8 pocket, void ( *exitCallback)())
 
 void CB2_BagMenuRun(void)
 {
+    // Match Ratak's scrolling background speed. Doing this in the Bag's main
+    // callback keeps the animation running during item context menus, swapping,
+    // pocket transitions and confirmation windows too.
+    ChangeBgY(3, 128, BG_COORD_ADD);
+
     RunTasks();
     AdvanceComfyAnimations();
     AnimateSprites();
@@ -889,7 +934,20 @@ static void BagMenu_InitBGs(void)
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
+    ShowBg(3);
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
+}
+
+static void LoadBagScrollingBackground(void)
+{
+    u32 i;
+    vu16 *dst = (vu16 *)BG_SCREEN_ADDR(28);
+
+    // The supplied scrolling_bg.bin uses the extra star tiles appended to
+    // menu_scrolling.png. Force only this BG to palette 2 while preserving
+    // tile number and H/V flip bits from Ratak's original tilemap.
+    for (i = 0; i < ARRAY_COUNT(sBagMenuScrolling_Tilemap); i++)
+        dst[i] = (sBagMenuScrolling_Tilemap[i] & 0x0FFF) | (BAG_SCROLL_BG_PALETTE << 12);
 }
 
 static bool8 LoadBagMenu_Graphics(void)
@@ -898,7 +956,9 @@ static bool8 LoadBagMenu_Graphics(void)
     {
     case 0:
         ResetTempTileDataBuffers();
-        DecompressAndCopyTileDataToVram(2, gBagScreen_Gfx, 0, 0, 0);
+        // Same Bag interface tiles, with the old striped fill made transparent
+        // plus Ratak's star tiles appended as tiles 64-79.
+        DecompressAndCopyTileDataToVram(2, sBagMenuScrolling_Gfx, 0, 0, 0);
         gBagMenu->graphicsLoadState++;
         break;
     case 1:
@@ -909,22 +969,27 @@ static bool8 LoadBagMenu_Graphics(void)
         }
         break;
     case 2:
+        LoadBagScrollingBackground();
+        gBagMenu->graphicsLoadState++;
+        break;
+    case 3:
         if (!IsWallysBag() && gSaveBlock2Ptr->playerGender != MALE)
             LoadPalette(gBagScreenFemale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         else
             LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
 
         ApplyBagMenuDarkTheme();
+        LoadPalette(sBagMenuScrolling_Pal, BG_PLTT_ID(BAG_SCROLL_BG_PALETTE), PLTT_SIZE_4BPP);
         gBagMenu->graphicsLoadState++;
         break;
-    case 3:
+    case 4:
         if (IsWallysBag() == TRUE || gSaveBlock2Ptr->playerGender == MALE)
             LoadCompressedSpriteSheet(&gBagMaleSpriteSheet);
         else
             LoadCompressedSpriteSheet(&gBagFemaleSpriteSheet);
         gBagMenu->graphicsLoadState++;
         break;
-    case 4:
+    case 5:
         LoadSpritePalette(&gBagPaletteTable);
         gBagMenu->graphicsLoadState++;
         break;
