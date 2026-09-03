@@ -11702,7 +11702,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Shelgon,
         .frontPicSize = MON_COORDS_SIZE(48, 48),
-        .frontPicYOffset = 9,
+        .frontPicYOffset = 2,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 15),
@@ -11722,7 +11722,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconPalette = gMonIconPalette_Shelgon,
         .shinyIconPalette = gMonShinyIconPalette_Shelgon,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(1, 5, SHADOW_SIZE_M)
+        SHADOW(4, 9, SHADOW_SIZE_M)
         FOOTPRINT(Shelgon)
         OVERWORLD(
             sPicTable_Shelgon,
