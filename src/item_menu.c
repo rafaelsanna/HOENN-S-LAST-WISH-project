@@ -1992,11 +1992,12 @@ static void DrawItemListBgRow(u8 y)
 
 static void DrawPocketIndicatorSquare(u8 x, bool8 isCurrentPocket)
 {
-    if (!isCurrentPocket)
-        FillBgTilemapBufferRect_Palette0(2, 0x1017, x + 5, 3, 1, 1);
-    else
-        FillBgTilemapBufferRect_Palette0(2, 0x102B, x + 5, 3, 1, 1);
-    ScheduleBgCopyTilemapToVram(2);
+    // HLW Bag clean-border layout:
+    // The old five pocket-indicator squares sat in the legacy striped-BG
+    // decoration row. The new layout intentionally leaves that row empty.
+    // Keep this function as a no-op so pocket switching cannot redraw them.
+    (void)x;
+    (void)isCurrentPocket;
 }
 
 static bool8 CanSwapItems(void)
