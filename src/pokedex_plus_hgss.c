@@ -241,14 +241,19 @@ static const u16 sPokedexPlusHGSS_National_dark_Pal[] = INCBIN_U16("graphics/pok
 static const u16 sPokedexPlusHGSS_MenuSearch_dark_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_search_menu_dark.gbapal");
 static const u16 sPokedexPlusHGSS_SearchResults_dark_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_search_results_dark.gbapal");
 static const u32 sPokedexPlusHGSS_MenuList_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_list.4bpp.smol");
+static const u32 sPokedexPlusHGSS_MenuList_Clean_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_list_clean.4bpp.smol");
+static const u32 sPokedexPlusHGSS_MenuList_SearchResultsDark_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_list_search_results_dark.4bpp.smol");
 static const u32 sPokedexPlusHGSS_MenuList_DECA_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_list_DECA.4bpp.smol");
+static const u32 sPokedexPlusHGSS_MenuList_SearchResultsDark_DECA_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_list_search_results_dark_DECA.4bpp.smol");
 static const u32 sPokedexPlusHGSS_Interface_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_interface.4bpp.smol");
 static const u32 sPokedexPlusHGSS_Interface_DECA_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_interface_DECA.4bpp.smol");
 static const u32 sPokedexPlusHGSS_Menu_1_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu1.4bpp.smol");
 static const u32 sPokedexPlusHGSS_Menu_2_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu2.4bpp.smol");
 static const u32 sPokedexPlusHGSS_Menu_3_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu3.4bpp.smol");
 static const u32 sPokedexPlusHGSS_MenuSearch_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_search.4bpp.smol");
+static const u32 sPokedexPlusHGSS_MenuSearch_Dark_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_search_dark.4bpp.smol");
 static const u32 sPokedexPlusHGSS_MenuSearch_DECA_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_search_DECA.4bpp.smol");
+static const u32 sPokedexPlusHGSS_MenuSearch_Dark_DECA_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_search_DECA_dark.4bpp.smol");
 static const u32 sPokedexPlusHGSS_StartMenuMain_Tilemap[] = INCBIN_U32("graphics/pokedex/hgss/tilemap_start_menu.bin.smolTM");
 static const u32 sPokedexPlusHGSS_StartMenuSearchResults_Tilemap[] = INCBIN_U32("graphics/pokedex/hgss/tilemap_start_menu_search_results.bin.smolTM");
 static const u32 sPokedexPlusHGSS_ScreenSelectBarSubmenu_Tilemap[] = INCBIN_U32("graphics/pokedex/hgss/SelectBar.bin.smolTM");
@@ -2356,6 +2361,44 @@ static void Task_ClosePokedex(u8 taskId)
     }
 }
 
+// Dedicated neutral-background indices used only by the custom dark assets.
+// The tilemaps can select different BG palette banks for normal/highlighted rows,
+// so write the dedicated background color into every BG bank instead of assuming
+// the screen only uses banks 0..3. The text/accents keep their original indices.
+#define DEX_SEARCH_DARK_BG_INDEX          4
+#define DEX_SEARCH_RESULTS_DARK_BG_INDEX 10
+
+static u16 GetPokedexDarkBackgroundColor(void)
+{
+    if (!IsNationalPokedexEnabled())
+        return sPokedexPlusHGSS_Default_dark_Pal[1];
+    else
+        return sPokedexPlusHGSS_National_dark_Pal[1];
+}
+
+static void ApplyPokedexDedicatedDarkBackground(u8 colorIndex)
+{
+    u16 bgColor = GetPokedexDarkBackgroundColor();
+    u32 bank;
+
+    // Also darken the backdrop color. Any transparent pixels in the HGSS BG
+    // graphics will reveal this instead of flashing/showing plain white.
+    LoadPalette(&bgColor, BG_PLTT_ID(0), sizeof(bgColor));
+
+    for (bank = 0; bank < 16; bank++)
+        LoadPalette(&bgColor, BG_PLTT_ID(bank) + colorIndex, sizeof(bgColor));
+}
+
+static void ApplyPokedexSearchDarkBackground(void)
+{
+    ApplyPokedexDedicatedDarkBackground(DEX_SEARCH_DARK_BG_INDEX);
+}
+
+static void ApplyPokedexSearchResultsDarkBackground(void)
+{
+    ApplyPokedexDedicatedDarkBackground(DEX_SEARCH_RESULTS_DARK_BG_INDEX);
+}
+
 static void LoadPokedexBgPalette(bool8 isSearchResults)
 {
     if (!HGSS_DARK_MODE)
@@ -2370,9 +2413,9 @@ static void LoadPokedexBgPalette(bool8 isSearchResults)
     }
     else
     {
-        if (isSearchResults == TRUE)
-            LoadPalette(sPokedexPlusHGSS_SearchResults_dark_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
-        else if (!IsNationalPokedexEnabled())
+        // Search results use the same list graphics as PAGE_MAIN, so use the
+        // exact same proven dark palette instead of a separate results palette.
+        if (!IsNationalPokedexEnabled())
             LoadPalette(sPokedexPlusHGSS_Default_dark_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
         else
             LoadPalette(sPokedexPlusHGSS_National_dark_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
@@ -2407,10 +2450,25 @@ static bool8 LoadPokedexListPage(u8 page)
         SetBgTilemapBuffer(2, AllocZeroed(BG_SCREEN_SIZE));
         SetBgTilemapBuffer(1, AllocZeroed(BG_SCREEN_SIZE));
         SetBgTilemapBuffer(0, AllocZeroed(BG_SCREEN_SIZE));
-        if (!HGSS_DECAPPED)
-            DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuList_Gfx, 0x2000, 0, 0);
+        if (HGSS_DARK_MODE && page == PAGE_SEARCH_RESULTS)
+        {
+            // Search-results tilemaps use different palette-bank bits than PAGE_MAIN.
+            // Use a dedicated dark-safe gfx variant whose neutral surfaces sit on a
+            // reserved color index; the palette helper below darkens that index in
+            // every BG bank, so results cannot fall back to white.
+            if (!HGSS_DECAPPED)
+                DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuList_SearchResultsDark_Gfx, 0x2000, 0, 0);
+            else
+                DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuList_SearchResultsDark_DECA_Gfx, 0x2000, 0, 0);
+        }
+        else if (!HGSS_DECAPPED)
+        {
+            DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuList_Clean_Gfx, 0x2000, 0, 0);
+        }
         else
+        {
             DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuList_DECA_Gfx, 0x2000, 0, 0);
+        }
         CopyToBgTilemapBuffer(1, sPokedexPlusHGSS_ScreenList_Tilemap, 0, 0);
         CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenListUnderlay_Tilemap, 0, 0);
         if (page == PAGE_MAIN)
@@ -2423,6 +2481,8 @@ static bool8 LoadPokedexListPage(u8 page)
         else
             sPokedexView->isSearchResults = TRUE;
         LoadPokedexBgPalette(sPokedexView->isSearchResults);
+        if (HGSS_DARK_MODE && page == PAGE_SEARCH_RESULTS)
+            ApplyPokedexSearchResultsDarkBackground();
         InitWindows(sPokemonList_WindowTemplate);
         DeactivateAllTextPrinters();
         PutWindowTilemap(0);
@@ -3117,7 +3177,7 @@ static u32 CreatePokedexMonSprite(u16 num, s16 x, s16 y)
 }
 
 #define sIsDownArrow data[1]
-#define LIST_RIGHT_SIDE_TEXT_X 204
+#define LIST_RIGHT_SIDE_TEXT_X 202
 #define LIST_RIGHT_SIDE_TEXT_X_OFFSET 13
 #define LIST_RIGHT_SIDE_TEXT_Y_OFFSET 13
 static void CreateInterfaceSprites(u8 page)
@@ -3548,18 +3608,26 @@ static inline void WritePixel(u8 *dst, u32 x, u32 y, u32 value)
 }
 
 #define STAT_BAR_X_OFFSET 10
+// Pixels x=40..50 are reserved for the spaced 3-digit numeric stat value.
+// The colored bar stays at x=10..38, leaving a 1 px gutter before the number.
+#define STAT_BAR_MAX_WIDTH 29
+#define STAT_BAR_NORMAL_SCALE_MAX 100
+#define STAT_BAR_EXTENDED_SCALE_MIN 150
 
-static void CreateStatBar(u8 *dst, u32 y, u32 width)
+static void CreateStatBar(u8 *dst, u32 y, u32 width, u32 statValue)
 {
     u32 i, color;
 
-    switch (width)
+    // Color should describe the actual base stat, not the scaled pixel width.
+    // These cutoffs reproduce the old bar-width bands at roughly the same
+    // base-stat values while allowing the visual scale to change for 100+ mons.
+    switch (statValue)
     {
-    case 0 ... 5: color = COLOR_WORST; break;
-    case 6 ... 15: color = COLOR_BAD; break;
-    case 16 ... 25: color = COLOR_AVERAGE; break;
-    case 26 ... 31: color = COLOR_GOOD; break;
-    case 32 ... 37: color = COLOR_VERY_GOOD; break;
+    case 0 ... 17: color = COLOR_WORST; break;
+    case 18 ... 47: color = COLOR_BAD; break;
+    case 48 ... 77: color = COLOR_AVERAGE; break;
+    case 78 ... 95: color = COLOR_GOOD; break;
+    case 96 ... 113: color = COLOR_VERY_GOOD; break;
     default: color = COLOR_BEST; break;
     }
 
@@ -3657,32 +3725,32 @@ static void DrawStatValueOnSprite(u8 *gfx, u32 x, u32 y, u32 value)
     u8 tens     = (value % 100) / 10;
     u8 ones     = value % 10;
 
-    // Dígitos de 3px largura, sem espaço entre eles = 9px total para 3 dígitos.
-    // Posição x=0..8 do sprite (antes da barra que começa em x=10).
-    // Alinhado à direita para ficar encostado na barra.
+    // Cada dígito tem 3 px e agora sempre existe 1 px de respiro entre
+    // dígitos.  Três dígitos ocupam 11 px (3 + 1 + 3 + 1 + 3), evitando
+    // que 100/130/150 pareçam um único bloco ilegível.
     if (hundreds > 0)
     {
-        // 3 dígitos: x=0, x=3, x=6
+        // 3 dígitos: x=0, x=4, x=8
         DrawDigitOnSprite(gfx, x + 0, y, hundreds);
-        DrawDigitOnSprite(gfx, x + 3, y, tens);
-        DrawDigitOnSprite(gfx, x + 6, y, ones);
+        DrawDigitOnSprite(gfx, x + 4, y, tens);
+        DrawDigitOnSprite(gfx, x + 8, y, ones);
     }
     else if (tens > 0)
     {
-        // 2 dígitos: centralizado em x=1, x=4 (margem de 1px dos lados no espaço de 7px)
-        DrawDigitOnSprite(gfx, x + 1, y, tens);
-        DrawDigitOnSprite(gfx, x + 5, y, ones);
+        // 2 dígitos centralizados dentro do mesmo campo de 11 px.
+        DrawDigitOnSprite(gfx, x + 2, y, tens);
+        DrawDigitOnSprite(gfx, x + 6, y, ones);
     }
     else
     {
-        // 1 dígito: centralizado em x=3
-        DrawDigitOnSprite(gfx, x + 3, y, ones);
+        // 1 dígito centralizado.
+        DrawDigitOnSprite(gfx, x + 4, y, ones);
     }
 }
 
 static void CreateStatBars(struct PokedexListItem *dexMon)
 {
-    u8 offset_x = 184;
+    u8 offset_x = 182;
     u8 offset_y = 16;
     TryDestroyStatBars();
 
@@ -3692,6 +3760,8 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
     {
         u8 i;
         u32 width, statValue;
+        u32 maxStat = 0;
+        u32 scaleMax;
         u8 *gfx = Alloc(64 * 64);
         static const u8 sBarsYOffset[] = {3, 13, 23, 33, 43, 53};
         struct SpriteSheet sheet = {gfx, 64 * 64, TAG_STAT_BAR};
@@ -3705,33 +3775,47 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
         statValues[4] = gSpeciesInfo[species].baseSpDefense;
         statValues[5] = gSpeciesInfo[species].baseSpeed;
 
+        // Normal species keep the familiar 0..100 scale. If any base stat is
+        // above 100, switch the whole six-bar graph to an extended scale so
+        // 100 and 130/150 no longer look practically identical. The extended
+        // axis is at least 150, and grows in 10-point steps for extreme stats.
+        for (i = 0; i < NUM_STATS; i++)
+        {
+            if (statValues[i] > maxStat)
+                maxStat = statValues[i];
+        }
+
+        if (maxStat <= STAT_BAR_NORMAL_SCALE_MAX)
+        {
+            scaleMax = STAT_BAR_NORMAL_SCALE_MAX;
+        }
+        else
+        {
+            scaleMax = maxStat;
+            if (scaleMax < STAT_BAR_EXTENDED_SCALE_MIN)
+                scaleMax = STAT_BAR_EXTENDED_SCALE_MIN;
+            else
+                scaleMax = ((scaleMax + 9) / 10) * 10;
+        }
+
         memcpy(gfx, sStatBarsGfx, sizeof(sStatBarsGfx));
         
         for (i = 0; i < NUM_STATS; i++)
         {
             statValue = statValues[i];
-            
-            if (statValue <= 100)
-            {
-                width = statValue / 3;
-                if (width >= 33)
-                    width -= 1;
-            }
-            else
-            {
-                width = (100 / 3) + ((statValue - 100) / 14);
-            }
 
-            if (width > 39)
-                width = 39;
+            // x=40..50 belongs to the numeric value, so the colored bar is
+            // constrained to x=10..38. This leaves a clean gutter even at 100+.
+            width = (statValue * STAT_BAR_MAX_WIDTH + scaleMax / 2) / scaleMax;
+            if (width > STAT_BAR_MAX_WIDTH)
+                width = STAT_BAR_MAX_WIDTH;
             if (width < 3)
                 width = 3;
 
-            CreateStatBar(gfx, sBarsYOffset[i], width);
+            CreateStatBar(gfx, sBarsYOffset[i], width, statValue);
 
-            // Desenha o valor numérico DIRETO no sprite, ANTES da barra.
-            // X=0: início do sprite (pixels 0..8), barra começa em x=10.
-            // Y=sBarsYOffset[i]: mesma linha da barra — alinhamento garantido!
+            // Keep the exact value at the right edge of the graph. The bar stops
+            // before this 11-pixel number field, even for three digits.
             DrawStatValueOnSprite(gfx, 40, sBarsYOffset[i], statValues[i]);
         }
 
@@ -3754,7 +3838,7 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
 static void CreateStatBarsBg(void)
 {
     static const struct SpriteSheet sheetStatBarsBg = {sStatBarsGfx, 64 * 64, TAG_STAT_BAR_BG};
-    u8 offset_x = 184;
+    u8 offset_x = 182;
     u8 offset_y = 16;
 
     TryDestroyStatBarsBg();
@@ -8056,8 +8140,16 @@ static void PrintSearchText(const u8 *str, u32 x, u32 y)
     u8 color[3];
 
     color[0] = TEXT_COLOR_TRANSPARENT;
-    color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = TEXT_COLOR_DARK_GRAY;
+    if (HGSS_DARK_MODE)
+    {
+        color[1] = TEXT_COLOR_WHITE;
+        color[2] = TEXT_COLOR_DARK_GRAY;
+    }
+    else
+    {
+        color[1] = TEXT_DYNAMIC_COLOR_6;
+        color[2] = TEXT_COLOR_DARK_GRAY;
+    }
     AddTextPrinterParameterized4(0, FONT_NORMAL, x, y, 0, 0, color, TEXT_SKIP_DRAW, str);
 }
 
@@ -8105,18 +8197,35 @@ static void Task_LoadSearchMenu(u8 taskId)
             InitWindows(sSearchMenu_WindowTemplate);
             DeactivateAllTextPrinters();
             PutWindowTilemap(0);
-            if (!HGSS_DECAPPED)
-                DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Gfx, 0x2000, 0, 0);
+            if (HGSS_DARK_MODE)
+            {
+                // Dark mode needs its own index-separated tileset in BOTH font
+                // modes. Previously HGSS_DECAPPED bypassed the dark gfx entirely.
+                if (!HGSS_DECAPPED)
+                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Dark_Gfx, 0x2000, 0, 0);
+                else
+                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Dark_DECA_Gfx, 0x2000, 0, 0);
+            }
             else
-                DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_DECA_Gfx, 0x2000, 0, 0);
+            {
+                if (!HGSS_DECAPPED)
+                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_Gfx, 0x2000, 0, 0);
+                else
+                    DecompressAndLoadBgGfxUsingHeap(3, sPokedexPlusHGSS_MenuSearch_DECA_Gfx, 0x2000, 0, 0);
+            }
             if (!IsNationalPokedexEnabled())
                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchHoenn_Tilemap, 0, 0);
             else
                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchNational_Tilemap, 0, 0);
             if (!HGSS_DARK_MODE)
+            {
                 LoadPalette(sPokedexPlusHGSS_MenuSearch_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(4 * 16 - 1));
+            }
             else
+            {
                 LoadPalette(sPokedexPlusHGSS_MenuSearch_dark_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(4 * 16 - 1));
+                ApplyPokedexSearchDarkBackground();
+            }
             gMain.state = 1;
         }
         break;
