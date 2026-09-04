@@ -1745,63 +1745,63 @@
             "encounter_rate": 20,
             "mons": [
               {
-                "min_level": 18,
-                "max_level": 22,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_POLIWAG"
               },
               {
-                "min_level": 18,
-                "max_level": 22,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_ELECTRIKE"
               },
               {
-                "min_level": 18,
-                "max_level": 22,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_PIKACHU"
               },
               {
-                "min_level": 19,
-                "max_level": 23,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_ELECTRIKE"
               },
               {
-                "min_level": 19,
-                "max_level": 23,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_MINUN"
               },
               {
-                "min_level": 19,
-                "max_level": 23,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_ODDISH"
               },
               {
-                "min_level": 19,
-                "max_level": 23,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_MINUN"
               },
               {
-                "min_level": 19,
-                "max_level": 23,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_PLUSLE"
               },
               {
-                "min_level": 18,
-                "max_level": 22,
-                "species": "SPECIES_ELECTABUZZ"
+                "min_level": 20,
+                "max_level": 25,
+                "species": "SPECIES_ODDISH"
               },
               {
-                "min_level": 18,
-                "max_level": 22,
-                "species": "SPECIES_ELECTABUZZ"
+                "min_level": 20,
+                "max_level": 25,
+                "species": "SPECIES_PIKACHU"
               },
               {
-                "min_level": 18,
-                "max_level": 22,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_PLUSLE"
               },
               {
-                "min_level": 19,
-                "max_level": 23,
+                "min_level": 20,
+                "max_level": 25,
                 "species": "SPECIES_PLUSLE"
               }
             ]
@@ -19710,6 +19710,75 @@
                 "min_level": 5,
                 "max_level": 5,
                 "species": "SPECIES_BUTTERFREE"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_MAUVILLE_CITY",
+          "base_label": "gMauvilleCity",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_PIKACHU"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_ELECTRIKE"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_PLUSLE"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_MINUN"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_VOLBEAT"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_ILLUMISE"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_POLIWAG"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_POLIWAG"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_ELECTABUZZ"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_SANDSHREW"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_SANDSHREW"
+              },
+              {
+                "min_level": 20,
+                "max_level": 28,
+                "species": "SPECIES_ELEKID"
               }
             ]
           }
