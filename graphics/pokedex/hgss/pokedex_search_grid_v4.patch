@@ -1,0 +1,90 @@
+--- a/src/pokedex_plus_hgss.c
++++ b/src/pokedex_plus_hgss.c
+@@ -8160,6 +8160,55 @@
+     FillWindowPixelRect(0, PIXEL_FILL(0), x, y, width, height);
+ }
+ 
++// The stock Search tilemap intentionally leaves the parameter-list area on the
++// right blank when that list is closed.  The dark mockup uses the same 24x24
++// grid as the rest of the Search screen, so capture one untouched 3x3 grid
++// period before highlights modify palette-bank bits and reuse it on the right.
++static u16 sSearchMenuGridPattern[3][3];
++static u16 sSearchMenuGridBottomPattern[3];
++
++static void CaptureSearchMenuGridPattern(void)
++{
++    u16 *tilemap = GetBgTilemapBuffer(3);
++    u32 x, y;
++
++    if (tilemap == NULL)
++        return;
++
++    // Rows 9..11 and columns 14..16 contain one complete 3x3 period of the
++    // background grid in the original Search tilemap before runtime highlights.
++    for (y = 0; y < 3; y++)
++    {
++        for (x = 0; x < 3; x++)
++            sSearchMenuGridPattern[y][x] = tilemap[(9 + y) * 32 + (14 + x)];
++    }
++
++    // Row 14 also contains the top edge of the lower description window, so
++    // preserve its exact three-tile horizontal pattern separately.
++    for (x = 0; x < 3; x++)
++        sSearchMenuGridBottomPattern[x] = tilemap[14 * 32 + (14 + x)];
++}
++
++static void RestoreSearchMenuGridRightSide(void)
++{
++    u16 *tilemap = GetBgTilemapBuffer(3);
++    u32 x, y;
++
++    if (tilemap == NULL)
++        return;
++
++    // Parameter box occupies columns 17..29. Restore the repeating grid when
++    // the box is closed instead of filling that area with the blank tile 0x4F.
++    for (y = 0; y < 14; y++)
++    {
++        for (x = 17; x < 30; x++)
++            tilemap[y * 32 + x] = sSearchMenuGridPattern[y % 3][(x - 17) % 3];
++    }
++
++    for (x = 17; x < 30; x++)
++        tilemap[14 * 32 + x] = sSearchMenuGridBottomPattern[(x - 17) % 3];
++}
++
+ // Search task data
+ #define tTopBarItem             data[0]
+ #define tMenuItem               data[1]
+@@ -8207,6 +8256,11 @@
+                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchHoenn_Tilemap, 0, 0);
+             else
+                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchNational_Tilemap, 0, 0);
++            if (HGSS_DARK_MODE)
++            {
++                CaptureSearchMenuGridPattern();
++                RestoreSearchMenuGridRightSide();
++            }
+             LoadPalette(sPokedexPlusHGSS_MenuSearch_dark_Pal, BG_PLTT_ID(0), PLTT_SIZEOF(4 * 16));
+             ApplyPokedexSearchDarkBackground();
+             gMain.state = 1;
+@@ -8816,11 +8870,16 @@
+     }
+     else
+     {
+-        for (j = 0; j < 14; j++)
++        if (HGSS_DARK_MODE)
++        {
++            RestoreSearchMenuGridRightSide();
++        }
++        else
+         {
+-            for (i = 0x11; i < 0x1E; i++)
++            for (j = 0; j < 14; j++)
+             {
+-                *(ptr + j * 32 + i) = 0x4F;
++                for (i = 0x11; i < 0x1E; i++)
++                    *(ptr + j * 32 + i) = 0x4F;
+             }
+         }
+     }
