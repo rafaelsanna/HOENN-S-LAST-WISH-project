@@ -252,6 +252,8 @@ static const u32 sPokedexPlusHGSS_Menu_2_Gfx[] = INCBIN_U32("graphics/pokedex/hg
 static const u32 sPokedexPlusHGSS_Menu_3_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu3.4bpp.smol");
 static const u32 sPokedexPlusHGSS_MenuSearch_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_search.4bpp.smol");
 static const u32 sPokedexPlusHGSS_MenuSearch_DECA_Gfx[] = INCBIN_U32("graphics/pokedex/hgss/tileset_menu_search_DECA.4bpp.smol");
+static const u32 sSearchPikachuGfx[] = INCBIN_U32("graphics/pokedex/hgss/searchpikachu.4bpp.smol");
+static const u16 sSearchPikachuPal[] = INCBIN_U16("graphics/pokedex/hgss/searchpikachu.gbapal");
 static const u32 sPokedexPlusHGSS_StartMenuMain_Tilemap[] = INCBIN_U32("graphics/pokedex/hgss/tilemap_start_menu.bin.smolTM");
 static const u32 sPokedexPlusHGSS_StartMenuSearchResults_Tilemap[] = INCBIN_U32("graphics/pokedex/hgss/tilemap_start_menu_search_results.bin.smolTM");
 static const u32 sPokedexPlusHGSS_ScreenSelectBarSubmenu_Tilemap[] = INCBIN_U32("graphics/pokedex/hgss/SelectBar.bin.smolTM");
@@ -407,10 +409,13 @@ struct PokedexView
     u16 ownCount;
     u16 monSpriteIds[MAX_MONS_ON_SCREEN];
     u8 typeIconSpriteIds[2];
+    u8 listTypeIconSpriteIds[2];
+    u8 searchPikachuSpriteId;
     u16 moveSelected;
     u16 movesTotal;
     u8 statBarsSpriteId;
     u8 statBarsBgSpriteId;
+    u8 statBarsRefreshDelay;
     bool8 justScrolled;
     u8 categoryIconSpriteId; //Physical/Special/Status category
     u8 numEggMoves;
@@ -546,6 +551,7 @@ static void PrintSearchParameterText(u8);
 static u8 GetSearchModeSelection(u8 taskId, u8 option);
 static void SetDefaultSearchModeAndOrder(u8);
 static void CreateSearchParameterScrollArrows(u8);
+static void SetSearchPikachuVisible(bool8 visible);
 static void EraseAndPrintSearchTextBox(const u8 *);
 static void EraseSelectorArrow(u32);
 static void PrintSelectorArrow(u32);
@@ -553,6 +559,10 @@ static void PrintSearchParameterTitle(u32, const u8 *);
 static void ClearSearchParameterBoxText(void);
 static void SetSpriteInvisibility(u8 spriteArrayId, bool8 invisible);
 static void CreateTypeIconSprites(void);
+static void ApplyPokedexPastelRedAccent(void);
+static void ApplyPokedexPastelRedInterfaceAccent(void);
+static void CreatePokedexListTypeIconSprites(void);
+static void UpdatePokedexListTypeIcons(void);
 static void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width);
 static void LoadSearchDarkSemanticPalette(void);
 static void MaskSearchDarkButtonArtifacts(void);
@@ -585,6 +595,7 @@ static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, u16 species, u8 dept
 static u8 PrintPreEvolutions(u8 taskId, u16 species);
 //Stat bars on scrolling screens
 static void TryDestroyStatBars(void);
+static void HideStatBars(void);
 static void TryDestroyStatBarsBg(void);
 static void CreateStatBars(struct PokedexListItem *dexMon);
 static void CreateStatBarsBg(void);
@@ -1067,6 +1078,8 @@ static const union AnimCmd *const sSpriteAnimTable_DexListStartMenuCursor[] =
 };
 
 #define TAG_DEX_INTERFACE 4096 // Tile and pal tag used for all interface sprites.
+#define TAG_POKEDEX_LIST_TYPES 4100
+#define TAG_SEARCH_PIKACHU     4101
 
 #define TAG_DEX_SEARCH_ARROW 4099
 
@@ -1195,6 +1208,47 @@ static const struct SpriteTemplate sDexListStartMenuCursorSpriteTemplate =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_DexListStartMenuCursor,
+};
+
+static const struct OamData sOamData_SearchPikachu =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+static const struct CompressedSpriteSheet sSearchPikachuSpriteSheet =
+{
+    sSearchPikachuGfx,
+    64 * 64 / 2,
+    TAG_SEARCH_PIKACHU
+};
+
+static const struct SpritePalette sSearchPikachuSpritePalette =
+{
+    sSearchPikachuPal,
+    TAG_SEARCH_PIKACHU
+};
+
+static const struct SpriteTemplate sSearchPikachuSpriteTemplate =
+{
+    .tileTag = TAG_SEARCH_PIKACHU,
+    .paletteTag = TAG_SEARCH_PIKACHU,
+    .oam = &sOamData_SearchPikachu,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
 };
 
 static const struct CompressedSpriteSheet sInterfaceSpriteSheet[] =
@@ -2270,19 +2324,35 @@ static void Task_HandlePokedexInput(u8 taskId)
         {
             //Handle D-pad
             sPokedexView->selectedPokemon = TryDoPokedexScroll(sPokedexView->selectedPokemon, 0xE);
+            UpdatePokedexListTypeIcons();
             if (sPokedexView->scrollTimer)
+            {
+                // Do not destroy/reload a dynamic OBJ sheet on adjacent frames.
+                // Give queued OBJ copy requests several VBlanks to settle.
+                HideStatBars();
+                sPokedexView->statBarsRefreshDelay = 3;
                 gTasks[taskId].func = Task_WaitForScroll;
-            else if (!sPokedexView->scrollTimer && !sPokedexView->scrollSpeed &&sPokedexView->justScrolled)
-                CreateStatBars(&sPokedexView->pokedexList[sPokedexView->selectedPokemon]);
+            }
+            else if (!sPokedexView->scrollSpeed && sPokedexView->justScrolled)
+            {
+                if (sPokedexView->statBarsRefreshDelay != 0)
+                    sPokedexView->statBarsRefreshDelay--;
+                else
+                    CreateStatBars(&sPokedexView->pokedexList[sPokedexView->selectedPokemon]);
+            }
         }
     }
 }
 
 static void Task_WaitForScroll(u8 taskId)
 {
-    TryDestroyStatBars();
+    HideStatBars();
+
     if (UpdateDexListScroll(sPokedexView->scrollDirection, sPokedexView->scrollMonIncrement, sPokedexView->maxScrollTimer))
+    {
+        sPokedexView->statBarsRefreshDelay = 3;
         gTasks[taskId].func = Task_HandlePokedexInput;
+    }
 }
 
 static void Task_HandlePokedexStartMenuInput(u8 taskId)
@@ -2309,6 +2379,7 @@ static void Task_HandlePokedexStartMenuInput(u8 taskId)
                 sPokedexView->pokeBallRotation = POKEBALL_ROTATION_TOP;
                 ClearMonSprites();
                 CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                UpdatePokedexListTypeIcons();
                 gMain.newKeys |= START_BUTTON;  //Exit menu
                 break;
             case 2: //LIST BOTTOM
@@ -2316,6 +2387,7 @@ static void Task_HandlePokedexStartMenuInput(u8 taskId)
                 sPokedexView->pokeBallRotation = sPokedexView->pokemonListCount * 16 + POKEBALL_ROTATION_BOTTOM;
                 ClearMonSprites();
                 CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                UpdatePokedexListTypeIcons();
                 gMain.newKeys |= START_BUTTON;  //Exit menu
                 break;
             case 3: //CLOSE POKEDEX
@@ -2427,6 +2499,50 @@ static void ApplyPokedexSearchResultsDarkBackground(void)
     ApplyPokedexDedicatedDarkBackground(DEX_SEARCH_RESULTS_DARK_BG_INDEX);
 }
 
+#define POKEDEX_OLD_LILAC         RGB(15, 13, 23)
+#define POKEDEX_OLD_LILAC_SHADOW  RGB(11, 10, 14)
+#define POKEDEX_PASTEL_RED         RGB(26, 7, 9)  // #D53C4A-ish on GBA
+#define POKEDEX_PASTEL_RED_SHADOW  RGB(15, 5, 6)
+
+static void ReplacePokedexAccentRange(u16 start, u16 count)
+{
+    u16 i;
+    u16 index;
+    u16 color;
+
+    for (i = 0; i < count; i++)
+    {
+        index = start + i;
+        color = gPlttBufferUnfaded[index];
+
+        if (color == POKEDEX_OLD_LILAC)
+        {
+            static const u16 sAccentRed = POKEDEX_PASTEL_RED;
+            LoadPalette(&sAccentRed, index, PLTT_SIZEOF(1));
+        }
+        else if (color == POKEDEX_OLD_LILAC_SHADOW)
+        {
+            static const u16 sAccentRedShadow = POKEDEX_PASTEL_RED_SHADOW;
+            LoadPalette(&sAccentRedShadow, index, PLTT_SIZEOF(1));
+        }
+    }
+}
+
+static void ApplyPokedexPastelRedAccent(void)
+{
+    // HGSS backgrounds use banks 0..5 on the list/info/stats/evo/area/cry/size pages.
+    // Replace only the exact old lilac colors, so HP/type/category colors are untouched.
+    ReplacePokedexAccentRange(BG_PLTT_ID(0), 6 * 16);
+}
+
+static void ApplyPokedexPastelRedInterfaceAccent(void)
+{
+    u8 paletteNum = IndexOfSpritePaletteTag(TAG_DEX_INTERFACE);
+
+    if (paletteNum != 0xFF)
+        ReplacePokedexAccentRange(OBJ_PLTT_ID(paletteNum), 16);
+}
+
 static void LoadPokedexBgPalette(bool8 isSearchResults)
 {
     if (!HGSS_DARK_MODE)
@@ -2450,6 +2566,7 @@ static void LoadPokedexBgPalette(bool8 isSearchResults)
         LoadPalette(GetOverworldTextboxPalettePtr(), 0xF0, 32);
     }
 
+    ApplyPokedexPastelRedAccent();
 }
 
 
@@ -2522,8 +2639,13 @@ static bool8 LoadPokedexListPage(u8 page)
         gReservedSpritePaletteCount = 8;
         LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[HGSS_DECAPPED]);
         LoadSpritePalette(&sInterfaceSpritePalette[HGSS_DARK_MODE]);
+        ApplyPokedexPastelRedInterfaceAccent();
         LoadSpritePalettes(sStatBarSpritePal);
         CreateInterfaceSprites(page);
+        sPokedexView->listTypeIconSpriteIds[0] = 0xFF;
+        sPokedexView->listTypeIconSpriteIds[1] = 0xFF;
+        if (!IsNationalPokedexEnabled())
+            CreatePokedexListTypeIconSprites();
         gMain.state++;
         break;
     case 2:
@@ -2542,7 +2664,9 @@ static bool8 LoadPokedexListPage(u8 page)
             sPokedexView->originalSearchSelectionNum = 0;
         }
         CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+        UpdatePokedexListTypeIcons();
         sPokedexView->statBarsSpriteId = 0xFF;  //stat bars
+        sPokedexView->statBarsRefreshDelay = 0;
         CreateStatBars(&sPokedexView->pokedexList[sPokedexView->selectedPokemon]); //stat bars
         sPokedexView->statBarsBgSpriteId = 0xFF;  //stat bars background
         CreateStatBarsBg(); //stat bars background
@@ -3693,6 +3817,12 @@ static const u8 sBaseStatOffsets[] =
     offsetof(struct SpeciesInfo, baseSpeed),
 };
 
+static void HideStatBars(void)
+{
+    if (sPokedexView->statBarsSpriteId != 0xFF)
+        gSprites[sPokedexView->statBarsSpriteId].invisible = TRUE;
+}
+
 static void TryDestroyStatBars(void)
 {
     if (sPokedexView->statBarsSpriteId != 0xFF)
@@ -3775,12 +3905,39 @@ static void DrawStatValueOnSprite(u8 *gfx, u32 x, u32 y, u32 value)
     }
 }
 
+static void UploadStatBarsGfx(const u8 *gfx)
+{
+    struct Sprite *sprite;
+
+    if (sPokedexView->statBarsSpriteId == 0xFF)
+    {
+        struct SpriteSheet sheet = {gfx, 64 * 64 / 2, TAG_STAT_BAR};
+
+        // Reserve TAG_STAT_BAR once. While the user stays on the list/results
+        // screen this allocation is never freed, so other OBJ sheets cannot
+        // temporarily reuse/overwrite the stat-bar tile region.
+        LoadSpriteSheet(&sheet);
+        sPokedexView->statBarsSpriteId = CreateSprite(&sStatBarSpriteTemplate, 218, 123, 10);
+    }
+    else
+    {
+        sprite = &gSprites[sPokedexView->statBarsSpriteId];
+
+        // The sprite's tileNum is the fixed allocation owned by TAG_STAT_BAR.
+        // Update those tiles in-place only after scrolling has settled.
+        CpuCopy16(
+            gfx,
+            (u8 *)VRAM + 0x10000 + sprite->oam.tileNum * 32,
+            64 * 64 / 2
+        );
+    }
+
+    if (sPokedexView->statBarsSpriteId != 0xFF)
+        gSprites[sPokedexView->statBarsSpriteId].invisible = FALSE;
+}
+
 static void CreateStatBars(struct PokedexListItem *dexMon)
 {
-    u8 offset_x = 182;
-    u8 offset_y = 16;
-    TryDestroyStatBars();
-
     sPokedexView->justScrolled = FALSE;
 
     if (dexMon->owned)
@@ -3789,12 +3946,14 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
         u32 width, statValue;
         u32 maxStat = 0;
         u32 scaleMax;
-        u8 *gfx = Alloc(64 * 64);
+        u8 *gfx = Alloc(64 * 64 / 2);
         static const u8 sBarsYOffset[] = {3, 13, 23, 33, 43, 53};
-        struct SpriteSheet sheet = {gfx, 64 * 64, TAG_STAT_BAR};
         u32 species = NationalPokedexNumToSpecies(dexMon->dexNum);
         u8 statValues[NUM_STATS];
-        
+
+        if (gfx == NULL)
+            return;
+
         statValues[0] = gSpeciesInfo[species].baseHP;
         statValues[1] = gSpeciesInfo[species].baseAttack;
         statValues[2] = gSpeciesInfo[species].baseDefense;
@@ -3802,10 +3961,6 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
         statValues[4] = gSpeciesInfo[species].baseSpDefense;
         statValues[5] = gSpeciesInfo[species].baseSpeed;
 
-        // Normal species keep the familiar 0..100 scale. If any base stat is
-        // above 100, switch the whole six-bar graph to an extended scale so
-        // 100 and 130/150 no longer look practically identical. The extended
-        // axis is at least 150, and grows in 10-point steps for extreme stats.
         for (i = 0; i < NUM_STATS; i++)
         {
             if (statValues[i] > maxStat)
@@ -3825,14 +3980,12 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
                 scaleMax = ((scaleMax + 9) / 10) * 10;
         }
 
-        memcpy(gfx, sStatBarsGfx, sizeof(sStatBarsGfx));
-        
+        memcpy(gfx, sStatBarsGfx, 64 * 64 / 2);
+
         for (i = 0; i < NUM_STATS; i++)
         {
             statValue = statValues[i];
 
-            // x=40..50 belongs to the numeric value, so the colored bar is
-            // constrained to x=10..38. This leaves a clean gutter even at 100+.
             width = (statValue * STAT_BAR_MAX_WIDTH + scaleMax / 2) / scaleMax;
             if (width > STAT_BAR_MAX_WIDTH)
                 width = STAT_BAR_MAX_WIDTH;
@@ -3840,26 +3993,22 @@ static void CreateStatBars(struct PokedexListItem *dexMon)
                 width = 3;
 
             CreateStatBar(gfx, sBarsYOffset[i], width, statValue);
-
-            // Keep the exact value at the right edge of the graph. The bar stops
-            // before this 11-pixel number field, even for three digits.
             DrawStatValueOnSprite(gfx, 40, sBarsYOffset[i], statValues[i]);
         }
 
-        LoadSpriteSheet(&sheet);
+        UploadStatBarsGfx(gfx);
         Free(gfx);
     }
     else if (dexMon->seen)
     {
-        static const struct SpriteSheet sheet = {sStatBarsGfx, 64 * 64, TAG_STAT_BAR};
-        LoadSpriteSheet(&sheet);
+        // Seen but not owned: keep the same fixed allocation and restore the
+        // neutral stat graphic without reallocating OBJ tiles.
+        UploadStatBarsGfx(sStatBarsGfx);
     }
     else
     {
-        return;
+        HideStatBars();
     }
-    
-    sPokedexView->statBarsSpriteId = CreateSprite(&sStatBarSpriteTemplate, 36+offset_x, 107+offset_y, 10);
 }
 
 static void CreateStatBarsBg(void)
@@ -4570,6 +4719,117 @@ static void PrintStatsScreenTextSmallWhite(u8 windowId, const u8* str, u8 left, 
     color[2] = TEXT_DYNAMIC_COLOR_6;
 
     AddTextPrinterParameterized4(windowId, 0, left, top, 0, 0, color, 0, str);
+}
+
+// Main list / Search Results type icons.
+// These occupy the lower-right area that would otherwise be used by National
+// Dex information. They are created ONLY when National Dex is unavailable.
+static void SpriteCB_PokedexListTypeIcon(struct Sprite *sprite)
+{
+    u8 slot = sprite->data[0];
+
+    if (sPokedexView->currentPage != PAGE_MAIN
+     && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
+    {
+        if (slot < 2)
+            sPokedexView->listTypeIconSpriteIds[slot] = 0xFF;
+        DestroySprite(sprite);
+    }
+}
+
+static void SetPokedexListTypeIcon(u8 typeId, u8 slot, s16 x, s16 y)
+{
+    struct Sprite *sprite;
+
+    if (slot >= 2 || sPokedexView->listTypeIconSpriteIds[slot] == 0xFF)
+        return;
+
+    sprite = &gSprites[sPokedexView->listTypeIconSpriteIds[slot]];
+    StartSpriteAnim(sprite, typeId);
+    sprite->oam.paletteNum = gTypesInfo[typeId].palette;
+    sprite->x = x;
+    sprite->y = y;
+    sprite->invisible = FALSE;
+}
+
+static void UpdatePokedexListTypeIcons(void)
+{
+    struct PokedexListItem *item;
+    u16 species;
+    u8 type1;
+    u8 type2;
+
+    if (IsNationalPokedexEnabled())
+        return;
+
+    if (sPokedexView->listTypeIconSpriteIds[0] == 0xFF
+     || sPokedexView->listTypeIconSpriteIds[1] == 0xFF)
+        return;
+
+    item = &sPokedexView->pokedexList[sPokedexView->selectedPokemon];
+
+    if (!item->seen || item->dexNum == 0 || item->dexNum == 0xFFFF)
+    {
+        gSprites[sPokedexView->listTypeIconSpriteIds[0]].invisible = TRUE;
+        gSprites[sPokedexView->listTypeIconSpriteIds[1]].invisible = TRUE;
+        return;
+    }
+
+    species = NationalPokedexNumToSpeciesHGSS(item->dexNum);
+
+#ifdef TX_RANDOMIZER_AND_CHALLENGES
+    type1 = GetTypeBySpecies(species, 1);
+    type2 = GetTypeBySpecies(species, 2);
+#else
+    type1 = GetSpeciesType(species, 0);
+    type2 = GetSpeciesType(species, 1);
+#endif
+
+    // Lower-right list panel, matching the supplied reference.
+    // Type badges are stacked vertically so both fit inside the Hoenn-only UI.
+    SetPokedexListTypeIcon(type1, 0, 211, 56);
+
+    if (type1 == type2)
+    {
+        gSprites[sPokedexView->listTypeIconSpriteIds[1]].invisible = TRUE;
+    }
+    else
+    {
+        SetPokedexListTypeIcon(type2, 1, 211, 72);
+    }
+}
+
+static void CreatePokedexListTypeIconSprites(void)
+{
+    u8 i;
+    struct CompressedSpriteSheet typeSheet;
+    struct SpriteTemplate typeTemplate;
+
+    if (IsNationalPokedexEnabled())
+        return;
+
+    // Keep list type badges in their own OBJ tile allocation.
+    // Reusing gSpriteSheet_MoveTypes' original tag could let another system
+    // free/reuse those tiles while the Pokédex is rapidly rebuilding stat bars.
+    typeSheet = gSpriteSheet_MoveTypes;
+    typeSheet.tag = TAG_POKEDEX_LIST_TYPES;
+    LoadCompressedSpriteSheet(&typeSheet);
+
+    typeTemplate = gSpriteTemplate_MoveTypes;
+    typeTemplate.tileTag = TAG_POKEDEX_LIST_TYPES;
+
+    LoadPalette(gMoveTypes_Pal, 0x1D0, 0x60);
+
+    for (i = 0; i < 2; i++)
+    {
+        // Reference position: 4 px left and 8 px above the V23 placement.
+        sPokedexView->listTypeIconSpriteIds[i] = CreateSprite(&typeTemplate, 211, 56 + i * 16, 2);
+        gSprites[sPokedexView->listTypeIconSpriteIds[i]].data[0] = i;
+        gSprites[sPokedexView->listTypeIconSpriteIds[i]].callback = SpriteCB_PokedexListTypeIcon;
+        gSprites[sPokedexView->listTypeIconSpriteIds[i]].invisible = TRUE;
+    }
+
+    UpdatePokedexListTypeIcons();
 }
 
 //Type Icon
@@ -7899,19 +8159,33 @@ static void Task_HandleSearchResultsInput(u8 taskId)
         {
             //Handle D-pad
             sPokedexView->selectedPokemon = TryDoPokedexScroll(sPokedexView->selectedPokemon, 0xE);
+            UpdatePokedexListTypeIcons();
             if (sPokedexView->scrollTimer)
+            {
+                HideStatBars();
+                sPokedexView->statBarsRefreshDelay = 3;
                 gTasks[taskId].func = Task_WaitForSearchResultsScroll;
-            else if (!sPokedexView->scrollTimer && !sPokedexView->scrollSpeed && sPokedexView->justScrolled)
-                CreateStatBars(&sPokedexView->pokedexList[sPokedexView->selectedPokemon]);
+            }
+            else if (!sPokedexView->scrollSpeed && sPokedexView->justScrolled)
+            {
+                if (sPokedexView->statBarsRefreshDelay != 0)
+                    sPokedexView->statBarsRefreshDelay--;
+                else
+                    CreateStatBars(&sPokedexView->pokedexList[sPokedexView->selectedPokemon]);
+            }
         }
     }
 }
 
 static void Task_WaitForSearchResultsScroll(u8 taskId)
 {
-    TryDestroyStatBars();
+    HideStatBars();
+
     if (UpdateDexListScroll(sPokedexView->scrollDirection, sPokedexView->scrollMonIncrement, sPokedexView->maxScrollTimer))
+    {
+        sPokedexView->statBarsRefreshDelay = 3;
         gTasks[taskId].func = Task_HandleSearchResultsInput;
+    }
 }
 
 static void Task_HandleSearchResultsStartMenuInput(u8 taskId)
@@ -7937,6 +8211,7 @@ static void Task_HandleSearchResultsStartMenuInput(u8 taskId)
                 sPokedexView->pokeBallRotation = POKEBALL_ROTATION_TOP;
                 ClearMonSprites();
                 CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                UpdatePokedexListTypeIcons();
                 gMain.newKeys |= START_BUTTON;
                 break;
             case 2: //LIST BOTTOM
@@ -7944,6 +8219,7 @@ static void Task_HandleSearchResultsStartMenuInput(u8 taskId)
                 sPokedexView->pokeBallRotation = sPokedexView->pokemonListCount * 16 + POKEBALL_ROTATION_BOTTOM;
                 ClearMonSprites();
                 CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                UpdatePokedexListTypeIcons();
                 gMain.newKeys |= START_BUTTON;
                 break;
             case 3: //BACK TO POKEDEX
@@ -8440,10 +8716,16 @@ static void Task_LoadSearchMenu(u8 taskId)
         }
         break;
     case 1:
+        sPokedexView->searchPikachuSpriteId = 0xFF;
         LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[HGSS_DECAPPED]);
         LoadSpritePalette(&sInterfaceSpritePalette[POKEDEX_SEARCH_FORCE_DARK ? 1 : HGSS_DARK_MODE]);
         LoadSpritePalette(&sSearchArrowSpritePalette);
-        LoadSpritePalettes(sStatBarSpritePal);
+
+        // Decorative Search Pikachu supplied by the project.
+        LoadCompressedSpriteSheet(&sSearchPikachuSpriteSheet);
+        LoadSpritePalette(&sSearchPikachuSpritePalette);
+        sPokedexView->searchPikachuSpriteId = CreateSprite(&sSearchPikachuSpriteTemplate, 190, 64, 0);
+
         CreateSearchParameterScrollArrows(taskId);
         for (i = 0; i < NUM_TASK_DATA; i++)
             gTasks[taskId].data[i] = 0;
@@ -8459,8 +8741,9 @@ static void Task_LoadSearchMenu(u8 taskId)
         break;
     case 2:
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        // Search has no stat panel. Do not allocate/free the stat-bar OBJ sheet
+        // here; keeping Search sprite VRAM stable also protects the decoration.
         sPokedexView->statBarsSpriteId = 0xFF;
-        CreateStatBars(&sPokedexView->pokedexList[sPokedexView->selectedPokemon]);
         gMain.state++;
         break;
     case 3:
@@ -9043,11 +9326,24 @@ static void PrintSelectedSearchParameters(u8 taskId)
     }
 }
 
+static void SetSearchPikachuVisible(bool8 visible)
+{
+    u8 spriteId = sPokedexView->searchPikachuSpriteId;
+
+    if (spriteId < MAX_SPRITES && gSprites[spriteId].inUse)
+        gSprites[spriteId].invisible = !visible;
+}
+
 static void DrawOrEraseSearchParameterBox(bool8 erase)
 {
     u16 i;
     u16 j;
     u16 *ptr = GetBgTilemapBuffer(3);
+
+    // The decorative Pikachu occupies the same right-side area used by the
+    // parameter list. Hide it while the list is open and restore it as soon
+    // as the list closes.
+    SetSearchPikachuVisible(erase);
 
     if (!erase)
     {
