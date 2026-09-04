@@ -93,26 +93,22 @@ enum FollowerNPCCreateDebugMenu
     DEBUG_FNPC_ZINNIA,
     DEBUG_FNPC_STELLA,
     DEBUG_FNPC_LUKA,
-    DEBUG_FNPC_RED,
-    DEBUG_FNPC_LEAF,
     DEBUG_FNPC_COUNT,
 };
 
 enum FlagsVarsDebugMenu
 {
-    DEBUG_FLAGVAR_MENU_ITEM_FLAGS,
-    DEBUG_FLAGVAR_MENU_ITEM_VARS,
+    // Player-facing Cheats menu.
+    // Raw Flag/Var editing, Pokédex Reset, National Dex and Game Clear
+    // are intentionally hidden.
     DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_ALL,
-    DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_RESET,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX,
-    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV,
     // PokéNav was removed from HLW.
     // Match Call is intentionally hidden from the Wish Menu.
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL,
-    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER,
@@ -311,6 +307,7 @@ static void DebugTask_HandleDestructiveConfirmation(u8 taskId);
 static void DebugAction_Party_HealParty(u8 taskId);
 static void DebugAction_Party_MaxFriendship(u8 taskId);
 static void DebugAction_Party_ResetFriendship(u8 taskId);
+static void DebugAction_Party_SetLevelCap(u8 taskId);
 static void DebugAction_Party_ClearParty(u8 taskId);
 static void DebugAction_Party_SetParty(u8 taskId);
 static void DebugAction_Party_BattleSingle(u8 taskId);
@@ -709,8 +706,6 @@ static const u8 *const gFollowerNPCStringsTable[DEBUG_FNPC_COUNT] = {
     COMPOUND_STRING("Zinnia"),
     COMPOUND_STRING("Stella"),
     COMPOUND_STRING("Luka"),
-    COMPOUND_STRING("Red"),
-    COMPOUND_STRING("Leaf"),
 };
 
 // Flags/Vars Menu
@@ -781,8 +776,6 @@ static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu_Create[] 
     [DEBUG_FNPC_ZINNIA] = { gFollowerNPCStringsTable[DEBUG_FNPC_ZINNIA], DebugAction_CreateFollowerNPC },
     [DEBUG_FNPC_STELLA] = { gFollowerNPCStringsTable[DEBUG_FNPC_STELLA], DebugAction_CreateFollowerNPC },
     [DEBUG_FNPC_LUKA]   = { gFollowerNPCStringsTable[DEBUG_FNPC_LUKA],   DebugAction_CreateFollowerNPC },
-    [DEBUG_FNPC_RED]    = { gFollowerNPCStringsTable[DEBUG_FNPC_RED],    DebugAction_CreateFollowerNPC },
-    [DEBUG_FNPC_LEAF]   = { gFollowerNPCStringsTable[DEBUG_FNPC_LEAF],   DebugAction_CreateFollowerNPC },
     { NULL }
 };
 
@@ -799,11 +792,9 @@ static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_BerryFunctions[] =
 {
-    { COMPOUND_STRING("Clear map trees"),      DebugAction_BerryFunctions_ClearAll },
-    { COMPOUND_STRING("Ready map trees"),      DebugAction_BerryFunctions_Ready },
-    { COMPOUND_STRING("Grow map trees"),       DebugAction_BerryFunctions_NextStage },
-    { COMPOUND_STRING("Give map trees pests"), DebugAction_BerryFunctions_Pests },
-    { COMPOUND_STRING("Give map trees weeds"), DebugAction_BerryFunctions_Weeds },
+    { COMPOUND_STRING("Clear map trees"), DebugAction_BerryFunctions_ClearAll },
+    { COMPOUND_STRING("Ready map trees"), DebugAction_BerryFunctions_Ready },
+    { COMPOUND_STRING("Grow map trees"),  DebugAction_BerryFunctions_NextStage },
     { NULL }
 };
 
@@ -817,36 +808,26 @@ static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu[] =
 static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
 {
     { COMPOUND_STRING("Fly to map…"),        DebugAction_Util_Fly },
-    { COMPOUND_STRING("Warp to map warp…"),  DebugAction_Util_Warp_Warp },
     { COMPOUND_STRING("Encounter Info"),     DebugAction_Util_EncounterInfo },
     { COMPOUND_STRING("Info Items"),         DebugAction_Util_InfoItems },
     { COMPOUND_STRING("Set Mon to Lv Cap"),  DebugAction_Util_SetMonLevelCap },
     { COMPOUND_STRING("Last Heal Point"),    DebugAction_Util_LastHealPoint },
     { COMPOUND_STRING("Set weather…"),       DebugAction_Util_Weather },
-    { COMPOUND_STRING("Font Test…"),         DebugAction_ExecuteScript, Debug_EventScript_FontTest },
     { COMPOUND_STRING("Sprite Visualizer"),  DebugAction_Util_SpriteVisualizer },
     { COMPOUND_STRING("Time Functions…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
-    { COMPOUND_STRING("Watch credits…"),     DebugAction_Util_WatchCredits },
-    { COMPOUND_STRING("Cheat start"),        DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Achievements…"),      DebugAction_Util_OpenAchievements },
-    { COMPOUND_STRING("Test Ach Popup"),     DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
-    { COMPOUND_STRING("EWRAM Counters…"),    DebugAction_ExecuteScript, Debug_EventScript_EWRAMCounters },
     { COMPOUND_STRING("Follower NPC…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_FollowerNPCMenu },
-    { COMPOUND_STRING("Steven Multi"),       DebugAction_ExecuteScript, Debug_EventScript_Steven_Multi },
     { NULL }
 };
 
 static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
 {
-    { COMPOUND_STRING("Fill PC Boxes Fast"),        DebugAction_PCBag_Fill_PCBoxes_Fast },
-    { COMPOUND_STRING("Fill PC Boxes Slow (LAG!)"), DebugAction_PCBag_Fill_PCBoxes_Slow },
-    { COMPOUND_STRING("Fill PC Items") ,            DebugAction_PCBag_Fill_PCItemStorage },
-    { COMPOUND_STRING("Fill Pocket Items"),         DebugAction_PCBag_Fill_PocketItems },
-    { COMPOUND_STRING("Fill Pocket Poké Balls"),    DebugAction_PCBag_Fill_PocketPokeBalls },
-    { COMPOUND_STRING("Fill Pocket TMHM"),          DebugAction_PCBag_Fill_PocketTMHM },
-    { COMPOUND_STRING("Fill Pocket Berries"),       DebugAction_PCBag_Fill_PocketBerries },
-    { COMPOUND_STRING("Fill Pocket Key Items"),     DebugAction_PCBag_Fill_PocketKeyItems },
+    { COMPOUND_STRING("Fill Pocket Items"),       DebugAction_PCBag_Fill_PocketItems },
+    { COMPOUND_STRING("Fill Pocket Poké Balls"),  DebugAction_PCBag_Fill_PocketPokeBalls },
+    { COMPOUND_STRING("Fill Pocket TMHM"),        DebugAction_PCBag_Fill_PocketTMHM },
+    { COMPOUND_STRING("Fill Pocket Berries"),     DebugAction_PCBag_Fill_PocketBerries },
+    { COMPOUND_STRING("Fill Pocket Key Items"),   DebugAction_PCBag_Fill_PocketKeyItems },
     { NULL }
 };
 
@@ -868,11 +849,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Party[] =
     { COMPOUND_STRING("Reset Friendship"),   DebugAction_Party_ResetFriendship },
     { COMPOUND_STRING("Inflict Status"),     DebugAction_ExecuteScript, Debug_EventScript_InflictStatus1 },
     { COMPOUND_STRING("Set Hidden Nature"),  DebugAction_ExecuteScript, Debug_EventScript_SetHiddenNature },
-    { COMPOUND_STRING("Check EVs"),          DebugAction_ExecuteScript, Debug_EventScript_CheckEVs },
     { COMPOUND_STRING("Check IVs"),          DebugAction_ExecuteScript, Debug_EventScript_CheckIVs },
-    { COMPOUND_STRING("Clear Party"),        DebugAction_Party_ClearParty },
-    { COMPOUND_STRING("Set Party"),          DebugAction_Party_SetParty },
-    { COMPOUND_STRING("Start Debug Battle"), DebugAction_Party_BattleSingle },
     { NULL }
 };
 
@@ -885,7 +862,6 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
     { COMPOUND_STRING("Max Money"),         DebugAction_Give_MaxMoney },
     { COMPOUND_STRING("Max Coins"),         DebugAction_Give_MaxCoins },
     { COMPOUND_STRING("Max Battle Points"), DebugAction_Give_MaxBattlePoints },
-    { COMPOUND_STRING("Daycare Egg"),       DebugAction_Give_DayCareEgg },
     { NULL }
 };
 
@@ -923,20 +899,14 @@ static const struct DebugMenuOption sDebugMenu_Actions_Sound[] =
 static const struct DebugMenuOption sDebugMenu_Actions_ROMInfo2[] =
 {
     { COMPOUND_STRING("Patch Number 0.5.1"), DebugAction_ROMInfo_PatchNumber },
-    { COMPOUND_STRING("Save Block space"),   DebugAction_ExecuteScript, Debug_CheckSaveBlock },
-    { COMPOUND_STRING("ROM space"),          DebugAction_ExecuteScript, Debug_CheckROMSpace },
     { COMPOUND_STRING("Expansion Version"),  DebugAction_ExecuteScript, Debug_ShowExpansionVersion },
     { NULL }
 };
 
 static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
 {
-    [DEBUG_FLAGVAR_MENU_ITEM_FLAGS]                = { COMPOUND_STRING("Set Flag XYZ…"),                     DebugAction_FlagsVars_Flags },
-    [DEBUG_FLAGVAR_MENU_ITEM_VARS]                 = { COMPOUND_STRING("Set Var XYZ…"),                      DebugAction_FlagsVars_Vars },
-    [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_ALL]         = { COMPOUND_STRING("Complete Pokédex"),                 DebugAction_FlagsVars_PokedexFlags_All },
-    [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_RESET]       = { COMPOUND_STRING("Pokédex Flags Reset"),               DebugAction_FlagsVars_PokedexFlags_Reset },
+    [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_ALL]         = { COMPOUND_STRING("Complete Pokédex"),                  DebugAction_FlagsVars_PokedexFlags_All },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX]       = { COMPOUND_STRING("Toggle {STR_VAR_1}Pokédex"),         DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchDex },
-    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX]        = { COMPOUND_STRING("Toggle {STR_VAR_1}National Dex"),    DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchNatDex },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV]        = { COMPOUND_STRING("Toggle {STR_VAR_1}DexNav"),          DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchDexNav },
 
     // PokéNav no longer exists in HLW.
@@ -945,7 +915,6 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Running Shoes"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_RunningShoes },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Fly Flags"),       DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleFlyFlags },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL]    = { COMPOUND_STRING("Toggle {STR_VAR_1}All badges"),      DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleBadgeFlags },
-    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR]    = { COMPOUND_STRING("Toggle {STR_VAR_1}Game clear"),      DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleGameClear },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS] = { COMPOUND_STRING("Toggle {STR_VAR_1}Frontier Pass"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleFrontierPass },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Collision OFF"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_CollisionOnOff },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Encounter OFF"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_EncounterOnOff },
@@ -959,18 +928,52 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
 {
-    { COMPOUND_STRING("Utilities…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
-    { COMPOUND_STRING("PC/Bag…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag, },
-    { COMPOUND_STRING("Party…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Party, },
-    { COMPOUND_STRING("Give X…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Give, },
-    { COMPOUND_STRING("Player…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Player, },
-    { COMPOUND_STRING("Scripts…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_Scripts, },
-    { COMPOUND_STRING("Flags & Vars…"), DebugAction_OpenSubMenuFlagsVars, sDebugMenu_Actions_Flags, },
-    { COMPOUND_STRING("Sound…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Sound, },
-    { COMPOUND_STRING("ROM Info…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_ROMInfo2, },
-    { COMPOUND_STRING("Cancel"),        DebugAction_Cancel, },
+    { COMPOUND_STRING("Utilities…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
+    { COMPOUND_STRING("PC/Bag…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag, },
+    { COMPOUND_STRING("Party…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_Party, },
+    { COMPOUND_STRING("Give X…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Give, },
+    { COMPOUND_STRING("Player…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Player, },
+    { COMPOUND_STRING("Cheats…"),    DebugAction_OpenSubMenuFlagsVars, sDebugMenu_Actions_Flags, },
+    { COMPOUND_STRING("Sound…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_Sound, },
+    { COMPOUND_STRING("ROM Info…"),  DebugAction_OpenSubMenu, sDebugMenu_Actions_ROMInfo2, },
+    { COMPOUND_STRING("Cancel"),     DebugAction_Cancel, },
     { NULL }
 };
+
+// Player build keeps the developer implementations in this source variant for
+// easy maintenance, but they are deliberately unreachable from the menu tree.
+// Referencing them here prevents -Wunused-* from becoming -Werror failures.
+static const DebugFunc sDebugPlayerHiddenFunctions[] __attribute__((unused)) =
+{
+    DebugAction_Util_Warp_Warp,
+    DebugAction_Util_WatchCredits,
+    DebugAction_Util_CheatStart,
+    DebugAction_Util_UnlockNextAchievement,
+    DebugAction_PCBag_Fill_PCBoxes_Slow,
+
+    // Additional player-build removals.
+    DebugAction_PCBag_Fill_PCBoxes_Fast,
+    DebugAction_PCBag_Fill_PCItemStorage,
+    DebugAction_Give_DayCareEgg,
+    DebugAction_Party_ClearParty,
+    DebugAction_Party_SetParty,
+    DebugAction_Party_BattleSingle,
+    DebugAction_Party_SetLevelCap,
+    DebugAction_FlagsVars_SwitchNatDex,
+    DebugAction_FlagsVars_ToggleGameClear,
+    DebugAction_BerryFunctions_Pests,
+    DebugAction_BerryFunctions_Weeds,
+
+    DebugAction_FlagsVars_Flags,
+    DebugAction_FlagsVars_Vars,
+    DebugAction_FlagsVars_PokedexFlags_Reset,
+};
+
+static const struct DebugMenuOption *const sDebugPlayerHiddenMenus[] __attribute__((unused)) =
+{
+    sDebugMenu_Actions_Scripts,
+};
+
 
 // *******************************
 // Windows
@@ -1428,9 +1431,6 @@ static u8 Debug_CheckToggleFlags(u8 id)
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX:
             result = FlagGet(FLAG_SYS_POKEDEX_GET);
             break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX:
-            result = IsNationalPokedexEnabled();
-            break;
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV:
             result = FlagGet(DN_FLAG_DEXNAV_GET);
             break;
@@ -1459,9 +1459,6 @@ static u8 Debug_CheckToggleFlags(u8 id)
                     break;
                 }
             }
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR:
-            result = FlagGet(FLAG_SYS_GAME_CLEAR);
             break;
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS:
             result = FlagGet(FLAG_SYS_FRONTIER_PASS);
@@ -3059,7 +3056,7 @@ static void DebugAction_FlagsVars_SetValue(u8 taskId)
 
 static void DebugAction_FlagsVars_PokedexFlags_All(u8 taskId)
 {
-    // Completing the Pokédex is irreversible, so always confirm first.
+    // Completing the Pokédex is irreversible in this player-facing menu.
     // Always ask first, with NO selected by default.
     DebugAction_ShowDestructiveConfirmation(taskId, 2);
 }
@@ -3630,7 +3627,7 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
             PlaySE(MUS_LEVEL_UP);
             ScriptGiveMon(sDebugMonData->species, gTasks[taskId].tInput, ITEM_NONE);
 
-            // HLW Wish/Debug Menu: Basic Give Mon must never
+            // Player-facing Wish/Debug Menu: Basic Give Mon must never
             // generate a shiny either. ScriptGiveMon can create a naturally
             // shiny personality, so force shininess off immediately after the
             // new party member is created.
@@ -4415,47 +4412,32 @@ static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId)
 // *******************************
 // Actions PCBag
 
-static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) //Credit: Sierraffinity
+static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) // Player build: Gen I-III only
 {
     int boxId, boxPosition;
-    u32 personality;
     struct BoxPokemon boxMon;
-    u16 species = SPECIES_GROOKEY;
-    u8 speciesName[POKEMON_NAME_LENGTH + 1];
+    u16 species = SPECIES_BULBASAUR;
     bool32 isShiny = TRUE;
 
-    personality = Random32();
-
-    CreateBoxMon(&boxMon, species, 100, USE_RANDOM_IVS, FALSE, personality, OT_ID_PLAYER_ID, 0);
-
-    for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
+    for (boxId = 0; boxId < TOTAL_BOXES_COUNT && species <= SPECIES_DEOXYS; boxId++)
     {
-        for (boxPosition = 0; boxPosition < IN_BOX_COUNT; boxPosition++, species++)
+        for (boxPosition = 0;
+             boxPosition < IN_BOX_COUNT && species <= SPECIES_DEOXYS;
+             boxPosition++)
         {
             if (!GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES))
             {
-                StringCopy(speciesName, GetSpeciesName(species));
-                SetBoxMonData(&boxMon, MON_DATA_NICKNAME, &speciesName);
-                SetBoxMonData(&boxMon, MON_DATA_SPECIES, &species);
+                u32 personality = Random32();
+
+                CreateBoxMon(&boxMon, species, 100, USE_RANDOM_IVS, FALSE, personality, OT_ID_PLAYER_ID, 0);
                 SetBoxMonData(&boxMon, MON_DATA_IS_SHINY, &isShiny);
                 GiveBoxMonInitialMoveset(&boxMon);
                 gPokemonStoragePtr->boxes[boxId][boxPosition] = boxMon;
+                species++;
             }
-
-            if (species == SPECIES_ENAMORUS_INCARNATE)
-                species = SPECIES_MEOWTH_GALAR - 1;
-            if (species == SPECIES_DECIDUEYE_HISUI)
-                species = SPECIES_CRAMORANT_GULPING - 1;
-            if (species == SPECIES_POLTEAGEIST_ANTIQUE)
-                species = SPECIES_EISCUE_NOICE - 1;
-            if (species == SPECIES_BASCULEGION_F)
-                species = SPECIES_VENUSAUR_GMAX - 1;
-            if (species == SPECIES_URSHIFU_RAPID_STRIKE_GMAX)
-                return;
         }
     }
 
-    // Set flag for user convenience
     FlagSet(FLAG_SYS_POKEMON_GET);
     Debug_DestroyMenu_Full(taskId);
     ScriptContext_Enable();
@@ -4841,8 +4823,6 @@ static const u32 gDebugFollowerNPCGraphics[DEBUG_FNPC_COUNT] =
     [DEBUG_FNPC_ZINNIA] = OBJ_EVENT_GFX_RIVAL_MAY_NORMAL,
     [DEBUG_FNPC_STELLA] = OBJ_EVENT_GFX_STEVEN,
     [DEBUG_FNPC_LUKA]   = OBJ_EVENT_GFX_WALLY,
-    [DEBUG_FNPC_RED]    = OBJ_EVENT_GFX_RED,
-    [DEBUG_FNPC_LEAF]   = OBJ_EVENT_GFX_LEAF,
 };
 
 static void DebugAction_CreateFollowerNPC(u8 taskId)
@@ -5605,6 +5585,34 @@ static void DebugAction_Party_ResetFriendship(u8 taskId)
     Debug_DestroyMenu_Full(taskId);
 }
 
+static void DebugAction_Party_SetLevelCap(u8 taskId)
+{
+    u32 i;
+    u32 levelCap = GetCurrentLevelCap();
+
+    // LEVEL_CAP_NONE projects can report 0. Treat that as the natural maximum
+    // rather than ever trying to create a level-0 Pokémon.
+    if (levelCap == 0 || levelCap > MAX_LEVEL)
+        levelCap = MAX_LEVEL;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        struct Pokemon *mon = &gPlayerParty[i];
+        u16 species = GetMonData(mon, MON_DATA_SPECIES);
+
+        if (species != SPECIES_NONE && !GetMonData(mon, MON_DATA_IS_EGG))
+        {
+            u32 exp = gExperienceTables[gSpeciesInfo[species].growthRate][levelCap];
+
+            SetMonData(mon, MON_DATA_EXP, &exp);
+            CalculateMonStats(mon);
+        }
+    }
+
+    PlaySE(SE_EXP);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
 
 static void DebugAction_Party_ClearParty(u8 taskId)
 {

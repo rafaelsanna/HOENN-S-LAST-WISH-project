@@ -281,56 +281,12 @@ Debug_Enable_To_Use_Follower_NPCs:
 Debug_Follower_NPC_Event_Script::
 	lock
 	facefollowernpc
-	random 5
-	compare VAR_RESULT, 0
-	goto_if_eq Debug_Follower_NPC_Player_Line_0
-	compare VAR_RESULT, 1
-	goto_if_eq Debug_Follower_NPC_Player_Line_1
-	compare VAR_RESULT, 2
-	goto_if_eq Debug_Follower_NPC_Player_Line_2
-	compare VAR_RESULT, 3
-	goto_if_eq Debug_Follower_NPC_Player_Line_3
-	goto Debug_Follower_NPC_Player_Line_4
-
-Debug_Follower_NPC_Player_Line_0:
-	msgbox Debug_Follower_NPC_Player_Text_0, MSGBOX_DEFAULT
+	msgbox Debug_Follower_NPC_Test_Message, MSGBOX_DEFAULT
 	releaseall
 	end
 
-Debug_Follower_NPC_Player_Line_1:
-	msgbox Debug_Follower_NPC_Player_Text_1, MSGBOX_DEFAULT
-	releaseall
-	end
-
-Debug_Follower_NPC_Player_Line_2:
-	msgbox Debug_Follower_NPC_Player_Text_2, MSGBOX_DEFAULT
-	releaseall
-	end
-
-Debug_Follower_NPC_Player_Line_3:
-	msgbox Debug_Follower_NPC_Player_Text_3, MSGBOX_DEFAULT
-	releaseall
-	end
-
-Debug_Follower_NPC_Player_Line_4:
-	msgbox Debug_Follower_NPC_Player_Text_4, MSGBOX_DEFAULT
-	releaseall
-	end
-
-Debug_Follower_NPC_Player_Text_0:
-	.string "I guess we are dating now...$"
-
-Debug_Follower_NPC_Player_Text_1:
-	.string "Don't you feel shame of using cheats?$"
-
-Debug_Follower_NPC_Player_Text_2:
-	.string "I will follow you until the end!$"
-
-Debug_Follower_NPC_Player_Text_3:
-	.string "I'm hungry! Let's go eat!$"
-
-Debug_Follower_NPC_Player_Text_4:
-	.string "You should take a shower!$"
+Debug_Follower_NPC_Test_Message:
+	.string "This is a Follower NPC test.$"
 
 Debug_EventScript_Steven_Multi::
 	call MossdeepCity_SpaceCenter_2F_EventScript_ChoosePartyForMultiBattle
