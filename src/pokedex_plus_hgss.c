@@ -297,6 +297,197 @@ static EWRAM_DATA struct PokedexView *sPokedexView = NULL;
 static EWRAM_DATA u16 sLastSelectedPokemon = 0;
 static EWRAM_DATA u8 sPokeBallRotation = 0;
 static EWRAM_DATA struct PokedexListItem *sPokedexListItem = NULL;
+
+static EWRAM_DATA u8 sPokedexColorTheme;
+
+struct PokedexThemeColors
+{
+    u16 accent;
+    u16 shadow;
+};
+
+enum PokedexColorTheme
+{
+    POKEDEX_COLOR_THEME_DEFAULT = 0,
+    POKEDEX_COLOR_THEME_AMETHYST,
+    POKEDEX_COLOR_THEME_BURGUNDY,
+    POKEDEX_COLOR_THEME_MIDNIGHT_SKY,
+    POKEDEX_COLOR_THEME_EMERALD,
+    POKEDEX_COLOR_THEME_DEEP_OCEAN,
+    POKEDEX_COLOR_THEME_COPPER,
+    POKEDEX_COLOR_THEME_ROSEWOOD,
+    POKEDEX_COLOR_THEME_INDIGO,
+    POKEDEX_COLOR_THEME_SILVER,
+    POKEDEX_COLOR_THEME_PASTEL_PINK,
+    POKEDEX_COLOR_THEME_LAVENDER_MIST,
+    POKEDEX_COLOR_THEME_BABY_BLUE,
+    POKEDEX_COLOR_THEME_MINT,
+    POKEDEX_COLOR_THEME_PEACH,
+    POKEDEX_COLOR_THEME_GOLD,
+    POKEDEX_COLOR_THEME_COUNT,
+};
+
+static const u8 sPokedexThemeName_Default[]   = _("BASE");
+static const u8 sPokedexThemeName_Amethyst[]  = _("AMETH");
+static const u8 sPokedexThemeName_Burgundy[]  = _("BURG");
+static const u8 sPokedexThemeName_Midnight[]  = _("SKY");
+static const u8 sPokedexThemeName_Emerald[]   = _("EMRLD");
+static const u8 sPokedexThemeName_DeepOcean[] = _("OCEAN");
+static const u8 sPokedexThemeName_Copper[]    = _("COPPR");
+static const u8 sPokedexThemeName_Rosewood[]  = _("ROSE");
+static const u8 sPokedexThemeName_Indigo[]    = _("INDGO");
+static const u8 sPokedexThemeName_Silver[]    = _("SILVR");
+static const u8 sPokedexThemeName_PastelPink[]= _("PINK");
+static const u8 sPokedexThemeName_Lavender[]  = _("LAVDR");
+static const u8 sPokedexThemeName_BabyBlue[]  = _("BABY");
+static const u8 sPokedexThemeName_Mint[]      = _("MINT");
+static const u8 sPokedexThemeName_Peach[]     = _("PEACH");
+static const u8 sPokedexThemeName_Gold[]      = _("GOLD");
+
+static const u8 *const sPokedexThemeNames[POKEDEX_COLOR_THEME_COUNT] =
+{
+    [POKEDEX_COLOR_THEME_DEFAULT]       = sPokedexThemeName_Default,
+    [POKEDEX_COLOR_THEME_AMETHYST]      = sPokedexThemeName_Amethyst,
+    [POKEDEX_COLOR_THEME_BURGUNDY]      = sPokedexThemeName_Burgundy,
+    [POKEDEX_COLOR_THEME_MIDNIGHT_SKY]  = sPokedexThemeName_Midnight,
+    [POKEDEX_COLOR_THEME_EMERALD]       = sPokedexThemeName_Emerald,
+    [POKEDEX_COLOR_THEME_DEEP_OCEAN]    = sPokedexThemeName_DeepOcean,
+    [POKEDEX_COLOR_THEME_COPPER]        = sPokedexThemeName_Copper,
+    [POKEDEX_COLOR_THEME_ROSEWOOD]      = sPokedexThemeName_Rosewood,
+    [POKEDEX_COLOR_THEME_INDIGO]        = sPokedexThemeName_Indigo,
+    [POKEDEX_COLOR_THEME_SILVER]        = sPokedexThemeName_Silver,
+    [POKEDEX_COLOR_THEME_PASTEL_PINK]   = sPokedexThemeName_PastelPink,
+    [POKEDEX_COLOR_THEME_LAVENDER_MIST] = sPokedexThemeName_Lavender,
+    [POKEDEX_COLOR_THEME_BABY_BLUE]     = sPokedexThemeName_BabyBlue,
+    [POKEDEX_COLOR_THEME_MINT]          = sPokedexThemeName_Mint,
+    [POKEDEX_COLOR_THEME_PEACH]         = sPokedexThemeName_Peach,
+    [POKEDEX_COLOR_THEME_GOLD]          = sPokedexThemeName_Gold,
+};
+
+// Same visible traversal order used by Party / Summary.
+static const u8 sPokedexThemeCycleOrder[POKEDEX_COLOR_THEME_COUNT] =
+{
+    POKEDEX_COLOR_THEME_DEFAULT,
+    POKEDEX_COLOR_THEME_AMETHYST,
+    POKEDEX_COLOR_THEME_BURGUNDY,
+    POKEDEX_COLOR_THEME_MIDNIGHT_SKY,
+    POKEDEX_COLOR_THEME_EMERALD,
+    POKEDEX_COLOR_THEME_DEEP_OCEAN,
+    POKEDEX_COLOR_THEME_COPPER,
+    POKEDEX_COLOR_THEME_ROSEWOOD,
+    POKEDEX_COLOR_THEME_INDIGO,
+    POKEDEX_COLOR_THEME_SILVER,
+    POKEDEX_COLOR_THEME_GOLD,
+    POKEDEX_COLOR_THEME_PASTEL_PINK,
+    POKEDEX_COLOR_THEME_LAVENDER_MIST,
+    POKEDEX_COLOR_THEME_BABY_BLUE,
+    POKEDEX_COLOR_THEME_MINT,
+    POKEDEX_COLOR_THEME_PEACH,
+};
+
+// Pokédex-specific accent pair.
+// Theme 0 is intentionally the requested #101821 family instead of the
+// previous fixed #D53C4A red. The other fifteen use the same visual families
+// as Party / Summary, with a strong but still dark-mode-safe accent.
+static const struct PokedexThemeColors sPokedexThemeColors[POKEDEX_COLOR_THEME_COUNT] =
+{
+    [POKEDEX_COLOR_THEME_DEFAULT]       = { RGB(2, 3, 4),   RGB(1, 1, 2)  }, // #101821-ish
+    [POKEDEX_COLOR_THEME_AMETHYST]      = { RGB(20,16,25),  RGB(8, 7,12)  },
+    [POKEDEX_COLOR_THEME_BURGUNDY]      = { RGB(23,12,15),  RGB(12,6, 8)  },
+    [POKEDEX_COLOR_THEME_MIDNIGHT_SKY]  = { RGB(12,22,29),  RGB(5, 8,13)  },
+    [POKEDEX_COLOR_THEME_EMERALD]       = { RGB(15,23,17),  RGB(5,11, 8)  },
+    [POKEDEX_COLOR_THEME_DEEP_OCEAN]    = { RGB(13,23,25),  RGB(5,11,13)  },
+    [POKEDEX_COLOR_THEME_COPPER]        = { RGB(24,17,10),  RGB(12,8, 5)  },
+    [POKEDEX_COLOR_THEME_ROSEWOOD]      = { RGB(24,16,20),  RGB(12,7,10)  },
+    [POKEDEX_COLOR_THEME_INDIGO]        = { RGB(18,18,27),  RGB(7, 7,13)  },
+    [POKEDEX_COLOR_THEME_SILVER]        = { RGB(18,20,23),  RGB(8, 9,11)  },
+    [POKEDEX_COLOR_THEME_PASTEL_PINK]   = { RGB(31,18,24),  RGB(15,7,12)  },
+    [POKEDEX_COLOR_THEME_LAVENDER_MIST] = { RGB(22,20,27),  RGB(10,10,13) },
+    [POKEDEX_COLOR_THEME_BABY_BLUE]     = { RGB(18,24,28),  RGB(7,10,12)  },
+    [POKEDEX_COLOR_THEME_MINT]          = { RGB(18,25,21),  RGB(7,11, 9)  },
+    [POKEDEX_COLOR_THEME_PEACH]         = { RGB(25,20,17),  RGB(12,9, 8)  },
+    [POKEDEX_COLOR_THEME_GOLD]          = { RGB(29,22, 8),  RGB(14,10,3)  },
+};
+
+static const u16 sPokedexThemeNavColors[POKEDEX_COLOR_THEME_COUNT] =
+{
+    [POKEDEX_COLOR_THEME_DEFAULT]       = RGB(13,14,17),
+    [POKEDEX_COLOR_THEME_AMETHYST]      = RGB(16,13,19),
+    [POKEDEX_COLOR_THEME_BURGUNDY]      = RGB(18,10,12),
+    [POKEDEX_COLOR_THEME_MIDNIGHT_SKY]  = RGB(11,16,21),
+    [POKEDEX_COLOR_THEME_EMERALD]       = RGB(11,17,13),
+    [POKEDEX_COLOR_THEME_DEEP_OCEAN]    = RGB(11,17,19),
+    [POKEDEX_COLOR_THEME_COPPER]        = RGB(18,13, 9),
+    [POKEDEX_COLOR_THEME_ROSEWOOD]      = RGB(18,11,15),
+    [POKEDEX_COLOR_THEME_INDIGO]        = RGB(13,13,20),
+    [POKEDEX_COLOR_THEME_SILVER]        = RGB(15,16,19),
+    [POKEDEX_COLOR_THEME_PASTEL_PINK]   = RGB(24,14,19),
+    [POKEDEX_COLOR_THEME_LAVENDER_MIST] = RGB(17,17,21),
+    [POKEDEX_COLOR_THEME_BABY_BLUE]     = RGB(14,18,21),
+    [POKEDEX_COLOR_THEME_MINT]          = RGB(14,18,16),
+    [POKEDEX_COLOR_THEME_PEACH]         = RGB(19,15,13),
+    [POKEDEX_COLOR_THEME_GOLD]          = RGB(23,17, 6),
+};
+
+#define TAG_POKEDEX_THEME_NAV  4102
+
+static EWRAM_DATA u16 sPokedexThemeNavPalette[16];
+
+static const struct SpritePalette sPokedexThemeNavSpritePalette =
+{
+    sPokedexThemeNavPalette,
+    TAG_POKEDEX_THEME_NAV
+};
+
+#define TAG_POKEDEX_THEME_NAV_OUTLINE 4103
+
+static const u16 sPokedexThemeNavOutlinePalette[16] =
+{
+    RGB_BLACK,
+    RGB_WHITE, RGB_WHITE, RGB_WHITE, RGB_WHITE,
+    RGB_WHITE, RGB_WHITE, RGB_WHITE, RGB_WHITE,
+    RGB_WHITE, RGB_WHITE, RGB_WHITE, RGB_WHITE,
+    RGB_WHITE, RGB_WHITE, RGB_WHITE,
+};
+
+static const struct SpritePalette sPokedexThemeNavOutlineSpritePalette =
+{
+    sPokedexThemeNavOutlinePalette,
+    TAG_POKEDEX_THEME_NAV_OUTLINE
+};
+
+#define POKEDEX_THEME_SAVE_TAG0_OFFSET      68
+#define POKEDEX_THEME_SAVE_TAG1_OFFSET      69
+#define POKEDEX_THEME_SAVE_VERSION_OFFSET   70
+#define POKEDEX_THEME_SAVE_VALUE_OFFSET     71
+#define POKEDEX_THEME_SAVE_TAG0             0x44 // 'D'
+#define POKEDEX_THEME_SAVE_TAG1             0x54 // 'T'
+#define POKEDEX_THEME_SAVE_VERSION          1
+#define POKEDEX_HLW_SAVE_EXTENSION_MAGIC    0x484C5753
+#define POKEDEX_HLW_SAVE_EXTENSION_VERSION  1
+
+static const u8 sText_PokedexThemesPrefix[] = _("{L_BUTTON} {R_BUTTON} THEMES ");
+static const u8 sText_PokedexThemeTotal[]   = _("/16");
+static const u8 sText_PokedexThemeSpace[]   = _(" ");
+#define POKEDEX_THEME_CHROME_PAL 14
+
+static const u8 sPokedexThemeTextColors[] =
+{
+    0, // transparent
+    1, // dedicated white
+    2, // dedicated black shadow
+};
+
+static const u16 sPokedexThemeChromePalette[16] =
+{
+    RGB_BLACK,
+    RGB_WHITE,
+    RGB_BLACK,
+    RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK,
+    RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK,
+    RGB_BLACK, RGB_BLACK, RGB_BLACK,
+};
+
 //Pokedex Plus HGSS_Ui
 #define MOVES_COUNT_TOTAL (EGG_MOVES_ARRAY_COUNT + MAX_LEVEL_UP_MOVES + NUM_ALL_MACHINES)
 EWRAM_DATA static u16 sStatsMoves[MOVES_COUNT_TOTAL] = {0};
@@ -475,6 +666,15 @@ static void Task_ReturnToPokedexFromSearchResults(u8);
 static void Task_ClosePokedexFromSearchResultsStartMenu(u8);
 static bool8 LoadPokedexListPage(u8);
 static void LoadPokedexBgPalette(bool8);
+static void InitPokedexThemeSaveExtensionIfNeeded(void);
+static void LoadPokedexColorThemeFromSave(void);
+static void SavePokedexColorThemeToSave(void);
+static u8 GetPokedexThemeCyclePosition(void);
+static void ChangePokedexColorTheme(s8 direction);
+static void DrawPokedexThemeChrome(void);
+static void ApplyPokedexThemeAccent(void);
+static void ApplyPokedexThemeInterfaceAccent(void);
+static void RefreshPokedexThemeNavPalette(void);
 static void FreeWindowAndBgBuffers(void);
 static void CreatePokedexList(u8, u8);
 static void TryApplyPokedexTargetSelection(void);
@@ -494,6 +694,8 @@ static void CreateInterfaceSprites(u8);
 static void SpriteCB_MoveMonForInfoScreen(struct Sprite *sprite);
 static void SpriteCB_Scrollbar(struct Sprite *sprite);
 static void SpriteCB_ScrollArrow(struct Sprite *sprite);
+static void SpriteCB_PokedexThemeNavOutline(struct Sprite *sprite);
+static void CreatePokedexThemeNavOutline(u8 ownerSpriteId, const struct SpriteTemplate *template);
 static void SpriteCB_DexListInterfaceText(struct Sprite *sprite);
 static void SpriteCB_RotatingPokeBall(struct Sprite *sprite);
 static void SpriteCB_SeenOwnInfo(struct Sprite *sprite);
@@ -559,8 +761,6 @@ static void PrintSearchParameterTitle(u32, const u8 *);
 static void ClearSearchParameterBoxText(void);
 static void SetSpriteInvisibility(u8 spriteArrayId, bool8 invisible);
 static void CreateTypeIconSprites(void);
-static void ApplyPokedexPastelRedAccent(void);
-static void ApplyPokedexPastelRedInterfaceAccent(void);
 static void CreatePokedexListTypeIconSprites(void);
 static void UpdatePokedexListTypeIcons(void);
 static void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width);
@@ -1103,7 +1303,7 @@ static const struct SpritePalette sSearchArrowSpritePalette =
 static const struct SpriteTemplate sScrollBarSpriteTemplate =
 {
     .tileTag = TAG_DEX_INTERFACE,
-    .paletteTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_POKEDEX_THEME_NAV,
     .oam = &sOamData_ScrollBar,
     .anims = sSpriteAnimTable_ScrollBar,
     .images = NULL,
@@ -1114,12 +1314,34 @@ static const struct SpriteTemplate sScrollBarSpriteTemplate =
 static const struct SpriteTemplate sScrollArrowSpriteTemplate =
 {
     .tileTag = TAG_DEX_INTERFACE,
-    .paletteTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_POKEDEX_THEME_NAV,
     .oam = &sOamData_ScrollArrow,
     .anims = sSpriteAnimTable_ScrollArrow,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_ScrollArrow,
+};
+
+static const struct SpriteTemplate sScrollBarOutlineSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_POKEDEX_THEME_NAV_OUTLINE,
+    .oam = &sOamData_ScrollBar,
+    .anims = sSpriteAnimTable_ScrollBar,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PokedexThemeNavOutline,
+};
+
+static const struct SpriteTemplate sScrollArrowOutlineSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_POKEDEX_THEME_NAV_OUTLINE,
+    .oam = &sOamData_ScrollArrow,
+    .anims = sSpriteAnimTable_ScrollArrow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PokedexThemeNavOutline,
 };
 
 static const struct SpriteTemplate sSearchScrollArrowSpriteTemplate =
@@ -1309,8 +1531,12 @@ static const struct BgTemplate sPokedex_BgTemplate[] =
     }
 };
 
+#define WIN_POKEDEX_LIST         0
+#define WIN_POKEDEX_THEME_CHROME 1
+
 static const struct WindowTemplate sPokemonList_WindowTemplate[] =
 {
+    [WIN_POKEDEX_LIST] =
     {
         .bg = 2,
         .tilemapLeft = 0,
@@ -1319,6 +1545,18 @@ static const struct WindowTemplate sPokemonList_WindowTemplate[] =
         .height = 32,
         .paletteNum = 0,
         .baseBlock = 1,
+    },
+    [WIN_POKEDEX_THEME_CHROME] =
+    {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 30,
+        .height = 2,
+        .paletteNum = POKEDEX_THEME_CHROME_PAL,
+        // Menu-list gfx occupy 0x000..0x0FF in charbase 0.
+        // 0x100..0x13B is a safe 60-tile block for this 30x2 text window.
+        .baseBlock = 0x100,
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -2132,6 +2370,7 @@ void CB2_OpenPokedexPlusHGSS(void)
     case 2:
         sPokedexView = AllocZeroed(sizeof(struct PokedexView));
         ResetPokedexView(sPokedexView);
+        LoadPokedexColorThemeFromSave();
         CreateTask(Task_OpenPokedexMainPage, 0);
         sPokedexView->dexMode = gSaveBlock2Ptr->pokedex.mode;
         if (!IsNationalPokedexEnabled())
@@ -2279,7 +2518,17 @@ static void Task_HandlePokedexInput(u8 taskId)
     }
     else
     {
-        if (JOY_NEW(A_BUTTON) && sPokedexView->pokedexList[sPokedexView->selectedPokemon].seen)
+        if (JOY_NEW(L_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            ChangePokedexColorTheme(-1);
+        }
+        else if (JOY_NEW(R_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            ChangePokedexColorTheme(1);
+        }
+        else if (JOY_NEW(A_BUTTON) && sPokedexView->pokedexList[sPokedexView->selectedPokemon].seen)
         {
             TryDestroyStatBars();
             UpdateSelectedMonSpriteId();
@@ -2501,14 +2750,98 @@ static void ApplyPokedexSearchResultsDarkBackground(void)
 
 #define POKEDEX_OLD_LILAC         RGB(15, 13, 23)
 #define POKEDEX_OLD_LILAC_SHADOW  RGB(11, 10, 14)
-#define POKEDEX_PASTEL_RED         RGB(26, 7, 9)  // #D53C4A-ish on GBA
-#define POKEDEX_PASTEL_RED_SHADOW  RGB(15, 5, 6)
+
+static void InitPokedexThemeSaveExtensionIfNeeded(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->magic != POKEDEX_HLW_SAVE_EXTENSION_MAGIC
+     || ext->version != POKEDEX_HLW_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext))
+    {
+        memset(ext, 0, sizeof(*ext));
+        ext->magic = POKEDEX_HLW_SAVE_EXTENSION_MAGIC;
+        ext->version = POKEDEX_HLW_SAVE_EXTENSION_VERSION;
+        ext->size = sizeof(*ext);
+    }
+}
+
+static void LoadPokedexColorThemeFromSave(void)
+{
+    struct HLWSaveExtension *ext;
+
+    sPokedexColorTheme = POKEDEX_COLOR_THEME_DEFAULT;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    InitPokedexThemeSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->future[POKEDEX_THEME_SAVE_TAG0_OFFSET] == POKEDEX_THEME_SAVE_TAG0
+     && ext->future[POKEDEX_THEME_SAVE_TAG1_OFFSET] == POKEDEX_THEME_SAVE_TAG1
+     && ext->future[POKEDEX_THEME_SAVE_VERSION_OFFSET] == POKEDEX_THEME_SAVE_VERSION
+     && ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET] < POKEDEX_COLOR_THEME_COUNT)
+    {
+        sPokedexColorTheme = ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET];
+    }
+    else
+    {
+        ext->future[POKEDEX_THEME_SAVE_TAG0_OFFSET] = POKEDEX_THEME_SAVE_TAG0;
+        ext->future[POKEDEX_THEME_SAVE_TAG1_OFFSET] = POKEDEX_THEME_SAVE_TAG1;
+        ext->future[POKEDEX_THEME_SAVE_VERSION_OFFSET] = POKEDEX_THEME_SAVE_VERSION;
+        ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET] = POKEDEX_COLOR_THEME_DEFAULT;
+    }
+}
+
+static void SavePokedexColorThemeToSave(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    InitPokedexThemeSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    ext->future[POKEDEX_THEME_SAVE_TAG0_OFFSET] = POKEDEX_THEME_SAVE_TAG0;
+    ext->future[POKEDEX_THEME_SAVE_TAG1_OFFSET] = POKEDEX_THEME_SAVE_TAG1;
+    ext->future[POKEDEX_THEME_SAVE_VERSION_OFFSET] = POKEDEX_THEME_SAVE_VERSION;
+    ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET] =
+        (sPokedexColorTheme < POKEDEX_COLOR_THEME_COUNT)
+            ? sPokedexColorTheme
+            : POKEDEX_COLOR_THEME_DEFAULT;
+}
+
+static u8 GetPokedexThemeCyclePosition(void)
+{
+    u8 i;
+
+    for (i = 0; i < POKEDEX_COLOR_THEME_COUNT; i++)
+    {
+        if (sPokedexThemeCycleOrder[i] == sPokedexColorTheme)
+            return i;
+    }
+
+    return 0;
+}
 
 static void ReplacePokedexAccentRange(u16 start, u16 count)
 {
     u16 i;
     u16 index;
     u16 color;
+    const struct PokedexThemeColors *theme;
+
+    if (sPokedexColorTheme >= POKEDEX_COLOR_THEME_COUNT)
+        sPokedexColorTheme = POKEDEX_COLOR_THEME_DEFAULT;
+
+    theme = &sPokedexThemeColors[sPokedexColorTheme];
 
     for (i = 0; i < count; i++)
     {
@@ -2516,31 +2849,159 @@ static void ReplacePokedexAccentRange(u16 start, u16 count)
         color = gPlttBufferUnfaded[index];
 
         if (color == POKEDEX_OLD_LILAC)
-        {
-            static const u16 sAccentRed = POKEDEX_PASTEL_RED;
-            LoadPalette(&sAccentRed, index, PLTT_SIZEOF(1));
-        }
+            LoadPalette(&theme->accent, index, PLTT_SIZEOF(1));
         else if (color == POKEDEX_OLD_LILAC_SHADOW)
-        {
-            static const u16 sAccentRedShadow = POKEDEX_PASTEL_RED_SHADOW;
-            LoadPalette(&sAccentRedShadow, index, PLTT_SIZEOF(1));
-        }
+            LoadPalette(&theme->shadow, index, PLTT_SIZEOF(1));
     }
 }
 
-static void ApplyPokedexPastelRedAccent(void)
+static void ApplyPokedexThemeAccent(void)
 {
-    // HGSS backgrounds use banks 0..5 on the list/info/stats/evo/area/cry/size pages.
-    // Replace only the exact old lilac colors, so HP/type/category colors are untouched.
+    // Every HGSS data page goes through LoadPokedexBgPalette(), so the saved
+    // theme automatically follows MAIN -> INFO/STATS/EVO/AREA/CRY/SIZE and
+    // SEARCH RESULTS without adding L/R handling to those screens.
     ReplacePokedexAccentRange(BG_PLTT_ID(0), 6 * 16);
 }
 
-static void ApplyPokedexPastelRedInterfaceAccent(void)
+static void ApplyPokedexThemeInterfaceAccent(void)
 {
     u8 paletteNum = IndexOfSpritePaletteTag(TAG_DEX_INTERFACE);
 
     if (paletteNum != 0xFF)
         ReplacePokedexAccentRange(OBJ_PLTT_ID(paletteNum), 16);
+}
+
+static void RefreshPokedexThemeNavPalette(void)
+{
+    u8 i;
+    u8 paletteNum;
+    u16 navColor;
+    u16 shadowColor;
+    u16 sourceColor;
+    u16 brightness;
+
+    if (sPokedexColorTheme >= POKEDEX_COLOR_THEME_COUNT)
+        sPokedexColorTheme = POKEDEX_COLOR_THEME_DEFAULT;
+
+    navColor = sPokedexThemeNavColors[sPokedexColorTheme];
+    shadowColor = sPokedexThemeColors[sPokedexColorTheme].shadow;
+
+    // Preserve transparency at index 0. For the remaining source palette
+    // entries, keep a simple two-tone hierarchy: darker source entries become
+    // the theme shadow; brighter source entries become the theme's visible
+    // "light" color. This keeps the arrows/scroll thumb readable and themed.
+    sPokedexThemeNavPalette[0] = sPokedexPlusHGSS_Default_dark_Pal[0];
+
+    for (i = 1; i < 16; i++)
+    {
+        sourceColor = sPokedexPlusHGSS_Default_dark_Pal[i];
+        brightness = (sourceColor & 31)
+                   + ((sourceColor >> 5) & 31)
+                   + ((sourceColor >> 10) & 31);
+
+        if (brightness >= 24)
+            sPokedexThemeNavPalette[i] = navColor;
+        else
+            sPokedexThemeNavPalette[i] = shadowColor;
+    }
+
+    paletteNum = IndexOfSpritePaletteTag(TAG_POKEDEX_THEME_NAV);
+
+    if (paletteNum == 0xFF)
+        LoadSpritePalette(&sPokedexThemeNavSpritePalette);
+    else
+        LoadPalette(
+            sPokedexThemeNavPalette,
+            OBJ_PLTT_ID(paletteNum),
+            PLTT_SIZEOF(16)
+        );
+}
+
+static void DrawPokedexThemeChrome(void)
+{
+    u8 number[4];
+    u8 rightText[24];
+    u8 themePos;
+    u32 rightWidth;
+
+    // Per request: indicator exists ONLY on the normal PAGE_MAIN.
+    if (sPokedexView == NULL
+     || sPokedexView->currentPage != PAGE_MAIN
+     || sPokedexView->isSearchResults)
+        return;
+
+    if (sPokedexColorTheme >= POKEDEX_COLOR_THEME_COUNT)
+        sPokedexColorTheme = POKEDEX_COLOR_THEME_DEFAULT;
+
+    // Dedicated text bank: white glyph + black shadow regardless of the
+    // currently selected Pokédex theme.
+    LoadPalette(
+        sPokedexThemeChromePalette,
+        BG_PLTT_ID(POKEDEX_THEME_CHROME_PAL),
+        PLTT_SIZEOF(16)
+    );
+
+    FillWindowPixelBuffer(WIN_POKEDEX_THEME_CHROME, PIXEL_FILL(0));
+
+    // Move the legend right so it starts AFTER the upper scroll-arrow sprite.
+    // Keep only the control label on the left, matching the supplied guide:
+    //
+    // [arrow]  L/R THEMES          POKEDEX          1/16 BASE
+    AddTextPrinterParameterized3(
+        WIN_POKEDEX_THEME_CHROME,
+        FONT_SMALL,
+        20,
+        1,
+        sPokedexThemeTextColors,
+        0,
+        sText_PokedexThemesPrefix
+    );
+
+    themePos = GetPokedexThemeCyclePosition() + 1;
+    ConvertIntToDecimalStringN(number, themePos, STR_CONV_MODE_LEFT_ALIGN, 2);
+
+    StringCopy(rightText, number);
+    StringAppend(rightText, sText_PokedexThemeTotal);
+    StringAppend(rightText, sText_PokedexThemeSpace);
+    StringAppend(rightText, sPokedexThemeNames[sPokedexColorTheme]);
+
+    rightWidth = GetStringWidth(FONT_SMALL, rightText, 0);
+
+    AddTextPrinterParameterized3(
+        WIN_POKEDEX_THEME_CHROME,
+        FONT_SMALL,
+        DISPLAY_WIDTH - rightWidth - 2,
+        1,
+        sPokedexThemeTextColors,
+        0,
+        rightText
+    );
+
+    PutWindowTilemap(WIN_POKEDEX_THEME_CHROME);
+    CopyWindowToVram(WIN_POKEDEX_THEME_CHROME, COPYWIN_FULL);
+    ScheduleBgCopyTilemapToVram(0);
+}
+
+static void ChangePokedexColorTheme(s8 direction)
+{
+    u8 position = GetPokedexThemeCyclePosition();
+
+    if (direction > 0)
+        position = (position + 1) % POKEDEX_COLOR_THEME_COUNT;
+    else
+        position = (position > 0) ? position - 1 : POKEDEX_COLOR_THEME_COUNT - 1;
+
+    sPokedexColorTheme = sPokedexThemeCycleOrder[position];
+    SavePokedexColorThemeToSave();
+
+    // L/R can only reach this function from PAGE_MAIN. Reload the ROM-source
+    // palettes first, then apply the newly selected theme. This makes repeated
+    // theme cycling lossless instead of recoloring an already recolored palette.
+    LoadPokedexBgPalette(FALSE);
+    LoadSpritePalette(&sInterfaceSpritePalette[HGSS_DARK_MODE]);
+    ApplyPokedexThemeInterfaceAccent();
+    RefreshPokedexThemeNavPalette();
+    DrawPokedexThemeChrome();
 }
 
 static void LoadPokedexBgPalette(bool8 isSearchResults)
@@ -2566,7 +3027,7 @@ static void LoadPokedexBgPalette(bool8 isSearchResults)
         LoadPalette(GetOverworldTextboxPalettePtr(), 0xF0, 32);
     }
 
-    ApplyPokedexPastelRedAccent();
+    ApplyPokedexThemeAccent();
 }
 
 
@@ -2629,8 +3090,12 @@ static bool8 LoadPokedexListPage(u8 page)
             ApplyPokedexSearchResultsDarkBackground();
         InitWindows(sPokemonList_WindowTemplate);
         DeactivateAllTextPrinters();
-        PutWindowTilemap(0);
-        CopyWindowToVram(0, COPYWIN_FULL);
+        PutWindowTilemap(WIN_POKEDEX_LIST);
+        CopyWindowToVram(WIN_POKEDEX_LIST, COPYWIN_FULL);
+
+        if (page == PAGE_MAIN)
+            DrawPokedexThemeChrome();
+
         gMain.state = 1;
         break;
     case 1:
@@ -2639,7 +3104,10 @@ static bool8 LoadPokedexListPage(u8 page)
         gReservedSpritePaletteCount = 8;
         LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[HGSS_DECAPPED]);
         LoadSpritePalette(&sInterfaceSpritePalette[HGSS_DARK_MODE]);
-        ApplyPokedexPastelRedInterfaceAccent();
+        ApplyPokedexThemeInterfaceAccent();
+        RefreshPokedexThemeNavPalette();
+        if (IndexOfSpritePaletteTag(TAG_POKEDEX_THEME_NAV_OUTLINE) == 0xFF)
+            LoadSpritePalette(&sPokedexThemeNavOutlineSpritePalette);
         LoadSpritePalettes(sStatBarSpritePal);
         CreateInterfaceSprites(page);
         sPokedexView->listTypeIconSpriteIds[0] = 0xFF;
@@ -3337,14 +3805,18 @@ static void CreateInterfaceSprites(u8 page)
     u16 digitNum;
     bool32 drawNextDigit;
 
-    // Scroll arrows
+    // Scroll arrows + 1px fixed black outline.
     spriteId = CreateSprite(&sScrollArrowSpriteTemplate, 10, 4, 0);
     gSprites[spriteId].sIsDownArrow = FALSE;
+    CreatePokedexThemeNavOutline(spriteId, &sScrollArrowOutlineSpriteTemplate);
+
     spriteId = CreateSprite(&sScrollArrowSpriteTemplate, 10, 156, 0);
     gSprites[spriteId].sIsDownArrow = TRUE;
     gSprites[spriteId].vFlip = TRUE;
+    CreatePokedexThemeNavOutline(spriteId, &sScrollArrowOutlineSpriteTemplate);
 
-    CreateSprite(&sScrollBarSpriteTemplate, 6, 20, 0);
+    spriteId = CreateSprite(&sScrollBarSpriteTemplate, 6, 20, 0);
+    CreatePokedexThemeNavOutline(spriteId, &sScrollBarOutlineSpriteTemplate);
 
     if (!IsNationalPokedexEnabled() && page == PAGE_MAIN)
     {
@@ -3627,6 +4099,74 @@ static void SpriteCB_PokedexListMonSprite(struct Sprite *sprite)
         {
             FreeAndDestroyMonPicSprite(sPokedexView->monSpriteIds[monId]);
             sPokedexView->monSpriteIds[monId] = 0xFFFF;
+        }
+    }
+}
+
+#define sNavOutlineOwnerId data[0]
+#define sNavOutlineXOffset data[1]
+#define sNavOutlineYOffset data[2]
+
+static void SpriteCB_PokedexThemeNavOutline(struct Sprite *sprite)
+{
+    u8 ownerId = sprite->sNavOutlineOwnerId;
+    struct Sprite *owner;
+
+    if (sPokedexView->currentPage != PAGE_MAIN
+     && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
+    {
+        DestroySprite(sprite);
+        return;
+    }
+
+    if (ownerId >= MAX_SPRITES || !gSprites[ownerId].inUse)
+    {
+        DestroySprite(sprite);
+        return;
+    }
+
+    owner = &gSprites[ownerId];
+
+    sprite->x = owner->x + sprite->sNavOutlineXOffset;
+    sprite->y = owner->y + sprite->sNavOutlineYOffset;
+    sprite->x2 = owner->x2;
+    sprite->y2 = owner->y2;
+    sprite->vFlip = owner->vFlip;
+    sprite->hFlip = owner->hFlip;
+    sprite->invisible = owner->invisible;
+}
+
+static void CreatePokedexThemeNavOutline(u8 ownerSpriteId, const struct SpriteTemplate *template)
+{
+    static const s8 sOutlineOffsets[4][2] =
+    {
+        {-1,  0},
+        { 1,  0},
+        { 0, -1},
+        { 0,  1},
+    };
+    u8 i;
+    u8 spriteId;
+
+    if (ownerSpriteId >= MAX_SPRITES)
+        return;
+
+    for (i = 0; i < ARRAY_COUNT(sOutlineOffsets); i++)
+    {
+        spriteId = CreateSprite(
+            template,
+            gSprites[ownerSpriteId].x,
+            gSprites[ownerSpriteId].y,
+            1
+        );
+
+        if (spriteId < MAX_SPRITES)
+        {
+            gSprites[spriteId].sNavOutlineOwnerId = ownerSpriteId;
+            gSprites[spriteId].sNavOutlineXOffset = sOutlineOffsets[i][0];
+            gSprites[spriteId].sNavOutlineYOffset = sOutlineOffsets[i][1];
+            gSprites[spriteId].vFlip = gSprites[ownerSpriteId].vFlip;
+            gSprites[spriteId].hFlip = gSprites[ownerSpriteId].hFlip;
         }
     }
 }
@@ -8724,7 +9264,7 @@ static void Task_LoadSearchMenu(u8 taskId)
         // Decorative Search Pikachu supplied by the project.
         LoadCompressedSpriteSheet(&sSearchPikachuSpriteSheet);
         LoadSpritePalette(&sSearchPikachuSpritePalette);
-        sPokedexView->searchPikachuSpriteId = CreateSprite(&sSearchPikachuSpriteTemplate, 190, 64, 0);
+        sPokedexView->searchPikachuSpriteId = CreateSprite(&sSearchPikachuSpriteTemplate, 208, 64, 0);
 
         CreateSearchParameterScrollArrows(taskId);
         for (i = 0; i < NUM_TASK_DATA; i++)
