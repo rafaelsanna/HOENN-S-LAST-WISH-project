@@ -412,7 +412,9 @@ struct PartyMenuInternal
     u32 spriteIdCancelPokeball:7;
     u32 messageId:14;
     u8 windowId[3];
-    u8 actions[8];
+    // Field menu can contain SUMMARY + 4 field moves + SWITCH + FOLLOWER + ITEM + CANCEL.
+    // Keep enough room for the true worst case (9 entries); 8 silently overflowed into numActions.
+    u8 actions[MAX_MON_MOVES + 5];
     u8 numActions;
     // In vanilla Emerald, only the first 0xB0 hwords (0x160 bytes) are actually used.
     // However, a full 0x100 hwords (0x200 bytes) are allocated.
@@ -453,6 +455,10 @@ static EWRAM_DATA u8 sPartyThemeBottomWindowId;
 // aligns the right column upward with the left so the bottom row no longer
 // crowds item-use / give-item text windows.
 static EWRAM_DATA u8 sRaisedItemTargetSpriteCoords[PARTY_SIZE][4 * 2];
+// Remembers which geometry was actually initialized. This must survive temporary
+// action changes such as PARTY_ACTION_SWITCHING, when IsBasicFieldPartyMenu()
+// intentionally returns FALSE even though the six boxes are still in the custom layout.
+static EWRAM_DATA bool8 sUsingBasicFieldPartyGeometry;
 EWRAM_DATA u8 gBattlePartyCurrentOrder[PARTY_SIZE / 2] = {0}; // bits 0-3 are the current pos of Slot 1, 4-7 are Slot 2, and so on
 static EWRAM_DATA u8 sInitialLevel = 0;
 static EWRAM_DATA u8 sFinalLevel = 0;
@@ -1177,6 +1183,7 @@ static void ResetPartyMenu(void)
     sPartyBgGfxTilemap = NULL;
     sPartyThemeTopWindowId = WINDOW_NONE;
     sPartyThemeBottomWindowId = WINDOW_NONE;
+    sUsingBasicFieldPartyGeometry = FALSE;
 }
 
 static bool8 IsBasicFieldPartyMenu(void)
@@ -1743,7 +1750,7 @@ static void LoadPartyMenuBoxes(u8 layout)
                 BuildRaisedItemTargetSpriteCoords();
             sPartyMenuBoxes[i].spriteCoords = sRaisedItemTargetSpriteCoords[i];
         }
-        else if (IsBasicFieldPartyMenu())
+        else if (sUsingBasicFieldPartyGeometry)
             sPartyMenuBoxes[i].spriteCoords = sBasicFieldPartySpriteCoords[i];
         else
             sPartyMenuBoxes[i].spriteCoords = sPartyMenuSpriteCoords[layout][i];
@@ -3334,13 +3341,18 @@ static u8 CanTeachMove(struct Pokemon *mon, u16 move)
 
 static void InitPartyMenuWindows(u8 layout)
 {
+    sUsingBasicFieldPartyGeometry = FALSE;
+
     switch (layout)
     {
     case PARTY_LAYOUT_SINGLE:
         if (IsRaisedItemTargetPartyMenu())
             InitRaisedItemTargetWindows();
         else if (IsBasicFieldPartyMenu())
+        {
+            sUsingBasicFieldPartyGeometry = TRUE;
             InitWindows(sBasicFieldPartyMenuWindowTemplate);
+        }
         else
             InitWindows(sSinglePartyMenuWindowTemplate_Equal);
         break;
@@ -3855,24 +3867,46 @@ static u8 DisplaySelectionWindow(u8 windowType)
     struct WindowTemplate window;
     u8 cursorDimension;
     u8 letterSpacing;
+    u8 rowHeight = 16;
+    bool8 compactActions = FALSE;
     u8 i;
 
     switch (windowType)
     {
     case SELECTWINDOW_ACTIONS:
     {
-        s16 height = sPartyMenuInternal->numActions * 2;
-        s16 top = 19 - height;
+        s16 height;
+        s16 top;
 
-        // The redesigned basic Party Menu keeps its message window at the
-        // bottom. The action window has a 1-tile frame on both sides, so its
-        // interior must end two tiles before WIN_MSG begins. Computing this
-        // from the actual message-window position keeps every action visible,
-        // including the final CANCEL entry.
-        if (IsBasicFieldPartyMenu())
-            top = sBasicFieldPartyMenuWindowTemplate[WIN_MSG].tilemapTop - height - 2;
-        if (top < 0)
+        // The field action list can reach 8-9 entries when a Pokémon knows
+        // several overworld/field moves. 16px rows cannot coexist with the
+        // bottom "Do what with..." message in that worst case, so compact only
+        // those unusually long lists to 12px rows.
+        if (sUsingBasicFieldPartyGeometry && sPartyMenuInternal->numActions >= 8)
+        {
+            rowHeight = 12;
+            compactActions = TRUE;
+        }
+
+        height = (sPartyMenuInternal->numActions * rowHeight + 7) / 8;
+        top = 19 - height;
+
+        if (sUsingBasicFieldPartyGeometry)
+        {
+            // Anchor against the REAL "Do what with this PkMn?" window.
+            // The previous code used WIN_MSG (tilemapTop 15), even though this
+            // prompt actually starts at tilemapTop 17. That pushed the action
+            // list roughly 16px too high and still failed for long HM lists.
+            top = sDoWhatWithMonMsgWindowTemplate.tilemapTop - height - 2;
+
+            // Keep the top frame on-screen even for the 9-entry worst case.
+            if (top < 1)
+                top = 1;
+        }
+        else if (top < 0)
+        {
             top = 0;
+        }
 
         SetWindowTemplateFields(&window, 2, 19, top, 10,
                                 height, 14, 0x2E9);
@@ -3883,7 +3917,7 @@ static u8 DisplaySelectionWindow(u8 windowType)
         break;
     case SELECTWINDOW_FOLLOWER:
         window = sFollowerSetWindowTemplate;
-        break;    
+        break;
     case SELECTWINDOW_MAIL:
         window = sMailReadTakeWindowTemplate;
         break;
@@ -3898,10 +3932,50 @@ static u8 DisplaySelectionWindow(u8 windowType)
         break;
     }
 
+    // ITEM / FOLLOWER: anchor these exactly the same way as the main
+    // "Do what with this PkMn?" action list.
+    //
+    // The real issue is not just the 160px screen edge: immediately after this
+    // submenu is created, PARTY_MSG_DO_WHAT_WITH_ITEM/FOLLOWER creates the
+    // bottom message window. If this submenu is anchored to the screen bottom,
+    // the message window can overwrite its closing frame row, which produces
+    // the exact symptom seen in-game: both side borders continue downward but
+    // the bottom border never appears.
+    //
+    // Therefore size from the real action count, then place the submenu ABOVE
+    // sDoWhatWithItemMsgWindowTemplate with the same 2-tile safety gap already
+    // used by SELECTWINDOW_ACTIONS.
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD
+     && gPartyMenu.layout == PARTY_LAYOUT_SINGLE
+     && (windowType == SELECTWINDOW_ITEM || windowType == SELECTWINDOW_FOLLOWER))
+    {
+        s16 submenuTop;
+
+        window.height = sPartyMenuInternal->numActions * 2;
+        submenuTop = sDoWhatWithItemMsgWindowTemplate.tilemapTop
+                   - window.height
+                   - 2;
+
+        if (submenuTop < 1)
+            submenuTop = 1;
+
+        window.tilemapTop = submenuTop;
+    }
+    // Retain the previous safety net for any other basic-field submenu whose
+    // content area itself would extend into the final screen row.
+    else if (sUsingBasicFieldPartyGeometry
+          && windowType != SELECTWINDOW_ACTIONS
+          && window.tilemapTop + window.height >= 19
+          && window.height < 18)
+    {
+        window.tilemapTop = 18 - window.height;
+    }
+
     sPartyMenuInternal->windowId[0] = AddWindow(&window);
     DrawStdFrameWithCustomTileAndPalette(sPartyMenuInternal->windowId[0], FALSE, 0x4F, 13);
     if (windowType == SELECTWINDOW_MOVES)
         return sPartyMenuInternal->windowId[0];
+
     cursorDimension = GetMenuCursorDimensionByFont(FONT_NORMAL, 0);
     letterSpacing = GetFontAttribute(FONT_NORMAL, FONTATTR_LETTER_SPACING);
 
@@ -3909,17 +3983,37 @@ static u8 DisplaySelectionWindow(u8 windowType)
     {
         const u8 *text;
         u8 fontColorsId = (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES) ? 4 : 3;
+
         if (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES)
             text = GetMoveName(FieldMove_GetMoveId(sPartyMenuInternal->actions[i] - MENU_FIELD_MOVES));
         else
             text = sCursorOptions[sPartyMenuInternal->actions[i]].text;
 
-        AddTextPrinterParameterized4(sPartyMenuInternal->windowId[0], FONT_NORMAL, cursorDimension, (i * 16) + 1, letterSpacing, 0, sFontColorTable[fontColorsId], 0, text);
+        AddTextPrinterParameterized4(
+            sPartyMenuInternal->windowId[0],
+            FONT_NORMAL,
+            cursorDimension,
+            (i * rowHeight) + 1,
+            letterSpacing,
+            0,
+            sFontColorTable[fontColorsId],
+            0,
+            text);
     }
 
-    InitMenuInUpperLeftCorner(sPartyMenuInternal->windowId[0], sPartyMenuInternal->numActions, 0, TRUE);
-    ScheduleBgCopyTilemapToVram(2);
+    if (compactActions)
+    {
+        // Match cursor hitboxes to the 12px text rows.
+        InitMenuNormal(sPartyMenuInternal->windowId[0], FONT_NORMAL,
+                       0, 1, rowHeight, sPartyMenuInternal->numActions, 0);
+    }
+    else
+    {
+        InitMenuInUpperLeftCorner(sPartyMenuInternal->windowId[0],
+                                  sPartyMenuInternal->numActions, 0, TRUE);
+    }
 
+    ScheduleBgCopyTilemapToVram(2);
     return sPartyMenuInternal->windowId[0];
 }
 
@@ -4465,7 +4559,13 @@ static void MoveAndBufferPartySlot(const void *rectSrc, s16 x, s16 y, s16 width,
 static void MovePartyMenuBoxSprites(struct PartyMenuBox *menuBox, s16 offset)
 {
     gSprites[menuBox->pokeballSpriteId].x2 += offset * 8;
-    gSprites[menuBox->itemSpriteId].x2 += offset * 8;
+
+    // Held-item sprites are optional. When one of the two Pokémon has no item,
+    // itemSpriteId is SPRITE_NONE; indexing gSprites[SPRITE_NONE] corrupts
+    // unrelated sprite state during the slide.
+    if (menuBox->itemSpriteId != SPRITE_NONE)
+        gSprites[menuBox->itemSpriteId].x2 += offset * 8;
+
     gSprites[menuBox->monSpriteId].x2 += offset * 8;
     gSprites[menuBox->statusSpriteId].x2 += offset * 8;
 }
@@ -5735,7 +5835,7 @@ static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBo
                     gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
                     gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[pairedLeftSlot][1];
                 }
-                else if (IsBasicFieldPartyMenu())
+                else if (sUsingBasicFieldPartyGeometry)
                 {
                     gSprites[menuBox->itemSpriteId].x = sBasicFieldEqualItemIconPos[slot][0];
                     gSprites[menuBox->itemSpriteId].y = sBasicFieldEqualItemIconPos[slot][1] + 16;
@@ -5799,7 +5899,7 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
                     gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
                     gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[pairedLeftSlot][1];
                 }
-                else if (IsBasicFieldPartyMenu())
+                else if (sUsingBasicFieldPartyGeometry)
                 {
                     gSprites[menuBox->itemSpriteId].x = sBasicFieldEqualItemIconPos[slot][0];
                     gSprites[menuBox->itemSpriteId].y = sBasicFieldEqualItemIconPos[slot][1] + 16;
