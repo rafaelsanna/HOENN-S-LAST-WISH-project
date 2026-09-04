@@ -56,6 +56,7 @@
 #include "constants/maps.h"
 #include "constants/field_effects.h"
 #include "constants/items.h"
+#include "constants/metatile_labels.h"
 #include "constants/songs.h"
 #include "constants/abilities.h"
 #include "constants/rgb.h"
@@ -737,6 +738,7 @@ static bool8 TryStartHiddenMonFieldEffect(enum EncounterType environment, u8 xSi
     if (DexNavPickTile(environment, xSize, ySize, smallScan))
     {
         u8 metatileBehaviour = MapGridGetMetatileBehaviorAt(sDexNavSearchDataPtr->tileX, sDexNavSearchDataPtr->tileY);
+        u16 metatileId = MapGridGetMetatileIdAt(sDexNavSearchDataPtr->tileX, sDexNavSearchDataPtr->tileY);
 
         switch (environment)
         {
@@ -747,10 +749,16 @@ static bool8 TryStartHiddenMonFieldEffect(enum EncounterType environment, u8 xSi
             }
             else if (IsMapTypeIndoors(currMapType))
             {
-                if (MetatileBehavior_IsTallGrass(metatileBehaviour)) //Grass in cave
+                if (MetatileBehavior_IsDryGrass(metatileBehaviour))
+                    fldEffId = FLDEFF_SHAKING_DRY_GRASS;
+                else if (MetatileBehavior_IsFairyGrass(metatileBehaviour))
+                    fldEffId = FLDEFF_SHAKING_FAIRY_GRASS;
+                else if (metatileId == METATILE_Cave_sea_grass)
+                    fldEffId = FLDEFF_SHAKING_SEA_GRASS;
+                else if (MetatileBehavior_IsTallGrass(metatileBehaviour)) //Grass in cave
                     fldEffId = FLDEFF_SHAKING_GRASS;
                 else if (MetatileBehavior_IsLongGrass(metatileBehaviour)) //Really tall grass
-                    fldEffId = FLDEFF_SHAKING_LONG_GRASS;
+                    fldEffId = FLDEFF_SHAKING_CUSTOM_LONG_GRASS;
                 else if (MetatileBehavior_IsSandOrDeepSand(metatileBehaviour))
                     fldEffId = FLDEFF_SAND_HOLE;
                 else
@@ -758,10 +766,16 @@ static bool8 TryStartHiddenMonFieldEffect(enum EncounterType environment, u8 xSi
             }
             else //outdoor, underwater
             {
-                if (MetatileBehavior_IsTallGrass(metatileBehaviour)) //Regular grass
+                if (MetatileBehavior_IsDryGrass(metatileBehaviour))
+                    fldEffId = FLDEFF_SHAKING_DRY_GRASS;
+                else if (MetatileBehavior_IsFairyGrass(metatileBehaviour))
+                    fldEffId = FLDEFF_SHAKING_FAIRY_GRASS;
+                else if (metatileId == METATILE_Cave_sea_grass)
+                    fldEffId = FLDEFF_SHAKING_SEA_GRASS;
+                else if (MetatileBehavior_IsTallGrass(metatileBehaviour)) //Regular grass
                     fldEffId = FLDEFF_SHAKING_GRASS;
                 else if (MetatileBehavior_IsLongGrass(metatileBehaviour)) //Really tall grass
-                    fldEffId = FLDEFF_SHAKING_LONG_GRASS;
+                    fldEffId = FLDEFF_SHAKING_CUSTOM_LONG_GRASS;
                 else if (MetatileBehavior_IsSandOrDeepSand(metatileBehaviour)) //Desert Sand
                     fldEffId = FLDEFF_SAND_HOLE;
                 else if (MetatileBehavior_IsMountain(metatileBehaviour)) //Rough Terrain
@@ -1030,6 +1044,10 @@ void EndDexNavSearch(u8 taskId)
     FlagClear(DN_FLAG_SEARCHING);
     DestroyTask(taskId);
     RemoveDexNavWindowAndGfx();
+    if (sDexNavSearchDataPtr->fldEffId == FLDEFF_SHAKING_DRY_GRASS
+     || sDexNavSearchDataPtr->fldEffId == FLDEFF_SHAKING_FAIRY_GRASS
+     || sDexNavSearchDataPtr->fldEffId == FLDEFF_SHAKING_SEA_GRASS)
+        DestroyShakingCustomGrassBackingSprite(&gSprites[sDexNavSearchDataPtr->fldEffSpriteId]);
     FieldEffectStop(&gSprites[sDexNavSearchDataPtr->fldEffSpriteId], sDexNavSearchDataPtr->fldEffId);
     Free(sDexNavSearchDataPtr);
 

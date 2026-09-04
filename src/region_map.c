@@ -422,6 +422,28 @@ static const struct SpritePalette sFlyTargetIconsSpritePalette =
     .tag = TAG_FLY_ICON
 };
 
+static const u16 sFlyDestinations[][2] =
+{
+    {FLAG_VISITED_LITTLEROOT_TOWN,  MAPSEC_LITTLEROOT_TOWN},
+    {FLAG_VISITED_OLDALE_TOWN,      MAPSEC_OLDALE_TOWN},
+    {FLAG_VISITED_DEWFORD_TOWN,     MAPSEC_DEWFORD_TOWN},
+    {FLAG_VISITED_LAVARIDGE_TOWN,   MAPSEC_LAVARIDGE_TOWN},
+    {FLAG_VISITED_FALLARBOR_TOWN,   MAPSEC_FALLARBOR_TOWN},
+    {FLAG_VISITED_VERDANTURF_TOWN,  MAPSEC_VERDANTURF_TOWN},
+    {FLAG_VISITED_PACIFIDLOG_TOWN,  MAPSEC_PACIFIDLOG_TOWN},
+    {FLAG_VISITED_PETALBURG_CITY,   MAPSEC_PETALBURG_CITY},
+    {FLAG_VISITED_SLATEPORT_CITY,   MAPSEC_SLATEPORT_CITY},
+    {FLAG_VISITED_MAUVILLE_CITY,    MAPSEC_MAUVILLE_CITY},
+    {FLAG_VISITED_RUSTBORO_CITY,    MAPSEC_RUSTBORO_CITY},
+    {FLAG_VISITED_FORTREE_CITY,     MAPSEC_FORTREE_CITY},
+    {FLAG_VISITED_LILYCOVE_CITY,    MAPSEC_LILYCOVE_CITY},
+    {FLAG_VISITED_MOSSDEEP_CITY,    MAPSEC_MOSSDEEP_CITY},
+    {FLAG_VISITED_SOOTOPOLIS_CITY,  MAPSEC_SOOTOPOLIS_CITY},
+    {FLAG_VISITED_EVER_GRANDE_CITY, MAPSEC_EVER_GRANDE_CITY},
+    {FLAG_VISITED_PHOENIX_TOWN,     MAPSEC_PHOENIX_TOWN},
+    {0,                             MAPSEC_NONE},
+};
+
 static const u16 sRedOutlineFlyDestinations[][2] =
 {
     {
@@ -1868,6 +1890,7 @@ static void LoadFlyDestIcons(void)
 
 static void CreateFlyDestIcons(void)
 {
+    u16 i;
     u16 canFlyFlag;
     u16 mapSecId;
     u16 x;
@@ -1877,9 +1900,11 @@ static void CreateFlyDestIcons(void)
     u16 shape;
     u8 spriteId;
 
-    canFlyFlag = FLAG_VISITED_LITTLEROOT_TOWN;
-    for (mapSecId = MAPSEC_LITTLEROOT_TOWN; mapSecId <= MAPSEC_EVER_GRANDE_CITY; mapSecId++)
+    for (i = 0; sFlyDestinations[i][1] != MAPSEC_NONE; i++)
     {
+        canFlyFlag = sFlyDestinations[i][0];
+        mapSecId = sFlyDestinations[i][1];
+
         GetMapSecDimensions(mapSecId, &x, &y, &width, &height);
         x = (x + MAPCURSOR_X_MIN) * 8 + 4;
         y = (y + MAPCURSOR_Y_MIN) * 8 + 4;
@@ -1904,7 +1929,6 @@ static void CreateFlyDestIcons(void)
             StartSpriteAnim(&gSprites[spriteId], shape);
             gSprites[spriteId].sIconMapSec = mapSecId;
         }
-        canFlyFlag++;
     }
 }
 

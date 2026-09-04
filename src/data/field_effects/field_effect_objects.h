@@ -251,6 +251,60 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_SeaGrass = {
     .callback = UpdateSeaGrassFieldEffect,
 };
 
+static const union AnimCmd sAnim_ShakingCustomGrass[] =
+{
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(2, 4),
+    ANIMCMD_FRAME(3, 4),
+    ANIMCMD_FRAME(4, 4),
+    ANIMCMD_FRAME(3, 4),
+    ANIMCMD_FRAME(2, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ShakingCustomGrassIdle[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_ShakingCustomGrass[] =
+{
+    sAnim_ShakingCustomGrass,
+    sAnim_ShakingCustomGrassIdle,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_ShakingDryGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_DRY_GRASS,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_ShakingCustomGrass,
+    .images = sPicTable_DryGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateShakingCustomGrassFieldEffect,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_ShakingFairyGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_FAIRY_GRASS,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_ShakingCustomGrass,
+    .images = sPicTable_FairyGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateShakingCustomGrassFieldEffect,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_ShakingSeaGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SEA_GRASS,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_ShakingCustomGrass,
+    .images = sPicTable_SeaGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateShakingCustomGrassFieldEffect,
+};
+
 static const struct SpriteFrameImage sPicTable_Ripple[] = {
     overworld_frame(gFieldEffectObjectPic_Ripple, 2, 2, 0),
     overworld_frame(gFieldEffectObjectPic_Ripple, 2, 2, 1),
@@ -872,6 +926,33 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_LongGrass = {
     .images = sPicTable_LongGrass,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = UpdateLongGrassFieldEffect,
+};
+
+static const union AnimCmd sAnim_ShakingLongGrass[] =
+{
+    ANIMCMD_FRAME(1, 3),
+    ANIMCMD_FRAME(2, 3),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(3, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(3, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_ShakingLongGrass[] =
+{
+    sAnim_ShakingLongGrass,
+};
+
+const struct SpriteTemplate gFieldEffectObjectTemplate_ShakingLongGrass = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_GENERAL_1,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_ShakingLongGrass,
+    .images = sPicTable_LongGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = WaitFieldEffectSpriteAnim,
 };
 
 static const struct SpriteFrameImage sPicTable_JumpLongGrass[] = {

@@ -87,6 +87,10 @@ gFieldEffectScriptPointers::
 	.4byte gFieldEffectScript_JumpDryGrass              @ FLDEFF_JUMP_DRY_GRASS
 	.4byte gFieldEffectScript_FairyGrass                @ FLDEFF_FAIRY_GRASS
 	.4byte gFieldEffectScript_SeaGrass                  @ FLDEFF_SEA_GRASS
+	.4byte gFieldEffectScript_ShakingDryGrass           @ FLDEFF_SHAKING_DRY_GRASS
+	.4byte gFieldEffectScript_ShakingFairyGrass         @ FLDEFF_SHAKING_FAIRY_GRASS
+	.4byte gFieldEffectScript_ShakingSeaGrass           @ FLDEFF_SHAKING_SEA_GRASS
+	.4byte gFieldEffectScript_ShakingCustomLongGrass    @ FLDEFF_SHAKING_CUSTOM_LONG_GRASS
 
 gFieldEffectScript_ExclamationMarkIcon1::
 	field_eff_callnative FldEff_ExclamationMarkIcon
@@ -122,6 +126,22 @@ gFieldEffectScript_FairyGrass::
 
 gFieldEffectScript_SeaGrass::
 	field_eff_loadfadedpal_callnative gSpritePalette_SeaGrass, FldEff_SeaGrass
+	field_eff_end
+
+gFieldEffectScript_ShakingDryGrass::
+	field_eff_loadfadedpal_callnative gSpritePalette_DryGrass, FldEff_ShakingDryGrass
+	field_eff_end
+
+gFieldEffectScript_ShakingFairyGrass::
+	field_eff_loadfadedpal_callnative gSpritePalette_FairyGrass, FldEff_ShakingFairyGrass
+	field_eff_end
+
+gFieldEffectScript_ShakingSeaGrass::
+	field_eff_loadfadedpal_callnative gSpritePalette_SeaGrass, FldEff_ShakingSeaGrass
+	field_eff_end
+
+gFieldEffectScript_ShakingCustomLongGrass::
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_ShakingCustomLongGrass
 	field_eff_end
 
 gFieldEffectScript_Ripple::

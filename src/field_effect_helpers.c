@@ -31,6 +31,8 @@ static void LoadObjectRegularReflectionPalette(struct ObjectEvent *, struct Spri
 
 static void UpdateGrassFieldEffectSubpriority(struct Sprite *, u8, u8);
 static bool8 IsSeaGrassMetatile(s16 x, s16 y);
+static u32 StartShakingGrassFieldEffect(u8 fieldEffectObjectId, u8 fieldEffectId);
+static bool8 IsShakingCustomGrassEffectObject(u8 fieldEffectObjectId);
 static void FadeFootprintsTireTracks_Step0(struct Sprite *);
 static void FadeFootprintsTireTracks_Step1(struct Sprite *);
 static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *);
@@ -1374,6 +1376,69 @@ u32 FldEff_ShakingGrass2(void)
     return spriteId;
 }
 
+static u32 StartShakingGrassFieldEffect(u8 fieldEffectObjectId, u8 fieldEffectId)
+{
+    u8 spriteId;
+    u8 backingSpriteId;
+
+    SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[fieldEffectObjectId], gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
+    if (spriteId != MAX_SPRITES)
+    {
+        struct Sprite *sprite = &gSprites[spriteId];
+        sprite->coordOffsetEnabled = TRUE;
+        sprite->oam.priority = gFieldEffectArguments[3];
+        sprite->sWaitFldEff = fieldEffectId;
+        sprite->data[3] = MAX_SPRITES;
+
+        if (IsShakingCustomGrassEffectObject(fieldEffectObjectId))
+        {
+            backingSpriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[fieldEffectObjectId], gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
+            if (backingSpriteId != MAX_SPRITES)
+            {
+                struct Sprite *backingSprite = &gSprites[backingSpriteId];
+                backingSprite->coordOffsetEnabled = TRUE;
+                backingSprite->oam.priority = gFieldEffectArguments[3];
+                backingSprite->sWaitFldEff = fieldEffectId;
+                backingSprite->data[1] = 1;
+                backingSprite->data[3] = MAX_SPRITES;
+                backingSprite->data[4] = 1;
+                StartSpriteAnim(backingSprite, 1);
+                sprite->data[3] = backingSpriteId;
+            }
+        }
+    }
+
+    return spriteId;
+}
+
+static bool8 IsShakingCustomGrassEffectObject(u8 fieldEffectObjectId)
+{
+    return fieldEffectObjectId == FLDEFFOBJ_SHAKING_DRY_GRASS
+        || fieldEffectObjectId == FLDEFFOBJ_SHAKING_FAIRY_GRASS
+        || fieldEffectObjectId == FLDEFFOBJ_SHAKING_SEA_GRASS;
+}
+
+u32 FldEff_ShakingDryGrass(void)
+{
+    return StartShakingGrassFieldEffect(FLDEFFOBJ_SHAKING_DRY_GRASS, FLDEFF_SHAKING_DRY_GRASS);
+}
+
+u32 FldEff_ShakingFairyGrass(void)
+{
+    return StartShakingGrassFieldEffect(FLDEFFOBJ_SHAKING_FAIRY_GRASS, FLDEFF_SHAKING_FAIRY_GRASS);
+}
+
+u32 FldEff_ShakingSeaGrass(void)
+{
+    return StartShakingGrassFieldEffect(FLDEFFOBJ_SHAKING_SEA_GRASS, FLDEFF_SHAKING_SEA_GRASS);
+}
+
+u32 FldEff_ShakingCustomLongGrass(void)
+{
+    return StartShakingGrassFieldEffect(FLDEFFOBJ_SHAKING_LONG_GRASS, FLDEFF_SHAKING_CUSTOM_LONG_GRASS);
+}
+
 u32 FldEff_UnusedSand(void)
 {
     u8 spriteId;
@@ -2170,6 +2235,36 @@ void UpdateJumpImpactEffect(struct Sprite *sprite)
         UpdateObjectEventSpriteInvisibility(sprite, FALSE);
         SetObjectSubpriorityByElevation(sprite->sJumpElevation, sprite, 0);
     }
+}
+
+void UpdateShakingCustomGrassFieldEffect(struct Sprite *sprite)
+{
+    static const s8 sWiggleOffsets[] = {0, -1, 0, 1};
+    s8 wiggle;
+
+    if (sprite->animEnded && sprite->data[1] == 0)
+    {
+        sprite->data[1] = 1;
+        sprite->data[2] = 0;
+        StartSpriteAnim(sprite, 1);
+    }
+
+    if (sprite->data[1] != 0)
+    {
+        wiggle = sWiggleOffsets[(sprite->data[2] / 6) & 3];
+        sprite->x2 = sprite->data[4] == 1 ? -wiggle : wiggle;
+        sprite->data[2]++;
+    }
+
+    UpdateObjectEventSpriteInvisibility(sprite, FALSE);
+}
+
+void DestroyShakingCustomGrassBackingSprite(struct Sprite *sprite)
+{
+    u8 backingSpriteId = sprite->data[3];
+
+    if (backingSpriteId < MAX_SPRITES && gSprites[backingSpriteId].inUse && gSprites[backingSpriteId].data[4] == 1)
+        FieldEffectFreeGraphicsResources(&gSprites[backingSpriteId]);
 }
 
 void WaitFieldEffectSpriteAnim(struct Sprite *sprite)
