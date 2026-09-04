@@ -555,9 +555,7 @@ static void SetSpriteInvisibility(u8 spriteArrayId, bool8 invisible);
 static void CreateTypeIconSprites(void);
 static void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width);
 static void LoadSearchDarkSemanticPalette(void);
-static u16 PatchSearchDarkButtonOutside(u16 *tilemap, u16 left, u16 top, u16 nextTileId);
-static u16 PatchSearchDarkNameOutside(u16 *tilemap, u16 left, u16 top, u16 nextTileId);
-static void PatchSearchDarkLeftButtons(void);
+static void MaskSearchDarkButtonArtifacts(void);
 static void PrintInfoSubMenuText(u8 windowId, const u8 *str, u8 left, u8 top);
 
 //Stats screen HGSS_Ui
@@ -1070,6 +1068,25 @@ static const union AnimCmd *const sSpriteAnimTable_DexListStartMenuCursor[] =
 
 #define TAG_DEX_INTERFACE 4096 // Tile and pal tag used for all interface sprites.
 
+#define TAG_DEX_SEARCH_ARROW 4099
+
+static const u16 sSearchArrowPalette[16] =
+{
+    RGB_BLACK,
+    RGB(25, 25, 25), RGB(25, 25, 25), RGB(25, 25, 25),
+    RGB(25, 25, 25), RGB(25, 25, 25), RGB(25, 25, 25),
+    RGB(25, 25, 25), RGB(25, 25, 25), RGB(25, 25, 25),
+    RGB(25, 25, 25), RGB(25, 25, 25), RGB(25, 25, 25),
+    RGB(25, 25, 25), RGB(25, 25, 25), RGB(25, 25, 25),
+};
+
+static const struct SpritePalette sSearchArrowSpritePalette =
+{
+    sSearchArrowPalette,
+    TAG_DEX_SEARCH_ARROW
+};
+
+
 static const struct SpriteTemplate sScrollBarSpriteTemplate =
 {
     .tileTag = TAG_DEX_INTERFACE,
@@ -1085,6 +1102,17 @@ static const struct SpriteTemplate sScrollArrowSpriteTemplate =
 {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_ScrollArrow,
+    .anims = sSpriteAnimTable_ScrollArrow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_ScrollArrow,
+};
+
+static const struct SpriteTemplate sSearchScrollArrowSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_SEARCH_ARROW,
     .oam = &sOamData_ScrollArrow,
     .anims = sSpriteAnimTable_ScrollArrow,
     .images = NULL,
@@ -8198,241 +8226,53 @@ static void ClearSearchMenuRect(u32 x, u32 y, u32 width, u32 height)
 // CANCEL shares 8/9 with SEARCH/SHIFT; remap CANCEL only to unused 12/13 so it
 // can have an independent pastel-red palette without editing the PNG.
 
-static u8 GetSearchTilePixel(u16 *tilemap, u16 left, u16 top, u16 pixelX, u16 pixelY)
+static void MaskSearchDarkButtonRow(u32 y, bool8 maskRightEdge)
 {
-    u16 entry;
-    u16 tileId;
-    u16 tileX = left + pixelX / 8;
-    u16 tileY = top + pixelY / 8;
-    u8 x = pixelX & 7;
-    u8 y = pixelY & 7;
-    u8 value;
-    u8 *tile;
-
-    entry = tilemap[tileY * 32 + tileX];
-    tileId = entry & 0x03FF;
-
-    if (entry & 0x0400)
-        x = 7 - x;
-    if (entry & 0x0800)
-        y = 7 - y;
-
-    tile = (u8 *)VRAM + tileId * 32;
-    value = tile[y * 4 + x / 2];
-
-    if (x & 1)
-        return value >> 4;
-    else
-        return value & 0x0F;
-}
-
-static void SetSearchTilePixel(u16 *tilemap, u16 left, u16 top, u16 pixelX, u16 pixelY, u8 color)
-{
-    u16 entry;
-    u16 tileId;
-    u16 tileX = left + pixelX / 8;
-    u16 tileY = top + pixelY / 8;
-    u8 x = pixelX & 7;
-    u8 y = pixelY & 7;
-    u8 *pixel;
-    u8 value;
-
-    entry = tilemap[tileY * 32 + tileX];
-    tileId = entry & 0x03FF;
-
-    if (entry & 0x0400)
-        x = 7 - x;
-    if (entry & 0x0800)
-        y = 7 - y;
-
-    pixel = (u8 *)VRAM + tileId * 32 + y * 4 + x / 2;
-    value = *pixel;
-
-    if (x & 1)
-        value = (value & 0x0F) | (color << 4);
-    else
-        value = (value & 0xF0) | color;
-
-    *pixel = value;
-}
-
-static void CloneSearchTile(u16 srcTileId, u16 dstTileId)
-{
-    u16 i;
-    u16 *src = (u16 *)VRAM + srcTileId * 16;
-    u16 *dst = (u16 *)VRAM + dstTileId * 16;
-
-    for (i = 0; i < 16; i++)
-        dst[i] = src[i];
-}
-
-// The original stable Search tiles use palette index 3 both for:
-//   - the white button letters, and
-//   - the white light-mode pixels OUTSIDE the rounded left-side buttons.
-//
-// V17 deliberately keeps index 3 white in the semantic button banks, which is
-// why only those little white strips remain around NAME/COLOR/TYPE/ORDER/OK.
-//
-// Fix it without touching the PNG:
-// 1) clone the exact 5x2 button rectangle into unused BG tile slots 0x100+;
-// 2) find only index-3 pixels connected to the OUTER boundary of the 40x16
-//    rectangle;
-// 3) change those boundary/background pixels to index 6 (dark);
-// 4) keep the interior index-3 letter pixels untouched and therefore white.
-//
-// Index 7 is unused by the original stable Search tileset, so it is safe as a
-// temporary flood-fill marker.
-static u16 PatchSearchDarkButtonOutside(u16 *tilemap, u16 left, u16 top, u16 nextTileId)
-{
-    u16 x;
-    u16 y;
-    u16 srcTileId;
-    u16 *entry;
-    bool8 changed;
-
-    // Give every tile position its own clone so this patch can never alter a
-    // shared tile used by another button.
-    for (y = 0; y < 2; y++)
-    {
-        for (x = 0; x < 5; x++)
-        {
-            entry = &tilemap[(top + y) * 32 + left + x];
-            srcTileId = *entry & 0x03FF;
-
-            CloneSearchTile(srcTileId, nextTileId);
-            *entry = (*entry & 0xFC00) | nextTileId;
-            nextTileId++;
-        }
-    }
-
-    // Seed the flood fill from all four edges.
-    for (x = 0; x < 40; x++)
-    {
-        if (GetSearchTilePixel(tilemap, left, top, x, 0) == 3)
-            SetSearchTilePixel(tilemap, left, top, x, 0, 7);
-        if (GetSearchTilePixel(tilemap, left, top, x, 15) == 3)
-            SetSearchTilePixel(tilemap, left, top, x, 15, 7);
-    }
-
-    for (y = 0; y < 16; y++)
-    {
-        if (GetSearchTilePixel(tilemap, left, top, 0, y) == 3)
-            SetSearchTilePixel(tilemap, left, top, 0, y, 7);
-        if (GetSearchTilePixel(tilemap, left, top, 39, y) == 3)
-            SetSearchTilePixel(tilemap, left, top, 39, y, 7);
-    }
-
-    // Propagate only through contiguous index-3 pixels.
-    do
-    {
-        changed = FALSE;
-
-        for (y = 0; y < 16; y++)
-        {
-            for (x = 0; x < 40; x++)
-            {
-                if (GetSearchTilePixel(tilemap, left, top, x, y) != 3)
-                    continue;
-
-                if ((x > 0  && GetSearchTilePixel(tilemap, left, top, x - 1, y) == 7)
-                 || (x < 39 && GetSearchTilePixel(tilemap, left, top, x + 1, y) == 7)
-                 || (y > 0  && GetSearchTilePixel(tilemap, left, top, x, y - 1) == 7)
-                 || (y < 15 && GetSearchTilePixel(tilemap, left, top, x, y + 1) == 7))
-                {
-                    SetSearchTilePixel(tilemap, left, top, x, y, 7);
-                    changed = TRUE;
-                }
-            }
-        }
-    } while (changed);
-
-    // Boundary-connected white becomes the normal dark outside color.
-    // Interior white glyphs remain index 3 and therefore stay white.
-    for (y = 0; y < 16; y++)
-    {
-        for (x = 0; x < 40; x++)
-        {
-            if (GetSearchTilePixel(tilemap, left, top, x, y) == 7)
-                SetSearchTilePixel(tilemap, left, top, x, y, 6);
-        }
-    }
-
-    return nextTileId;
-}
-
-static u16 PatchSearchDarkNameOutside(u16 *tilemap, u16 left, u16 top, u16 nextTileId)
-{
-    u16 x;
-    u16 y;
-    u16 srcTileId;
-    u16 *entry;
-    u16 leftOutside;
-
-    // Clone NAME's ten tiles so this fix cannot touch shared graphics.
-    for (y = 0; y < 2; y++)
-    {
-        for (x = 0; x < 5; x++)
-        {
-            entry = &tilemap[(top + y) * 32 + left + x];
-            srcTileId = *entry & 0x03FF;
-
-            CloneSearchTile(srcTileId, nextTileId);
-            *entry = (*entry & 0xFC00) | nextTileId;
-            nextTileId++;
-        }
-    }
-
-    // NAME is the only label whose index-3 glyph is reached by V18's generic
-    // boundary flood-fill. So use the known rounded-button geometry instead.
+    // Window 0 lives on BG2, above the BG3 Search tileset.
+    // Pixel value 3 is charcoal in dark Search bank 0.
     //
-    // These are only the light-mode outside pixels on the LEFT edge.
-    for (y = 0; y < 15; y++)
+    // These coordinates cover ONLY the light-mode outside wedges/separators
+    // visible around the 40x16 left-side button rectangles. The button
+    // graphics themselves remain completely untouched.
+    FillWindowPixelRect(0, PIXEL_FILL(3), 0, y + 0, 5, 1);
+    FillWindowPixelRect(0, PIXEL_FILL(3), 0, y + 1, 4, 1);
+    FillWindowPixelRect(0, PIXEL_FILL(3), 0, y + 2, 3, 11);
+    FillWindowPixelRect(0, PIXEL_FILL(3), 0, y + 13, 4, 1);
+    FillWindowPixelRect(0, PIXEL_FILL(3), 0, y + 14, 5, 1);
+
+    // One-pixel light-mode separator below the button.
+    FillWindowPixelRect(0, PIXEL_FILL(3), 0, y + 15, 40, 1);
+
+    // The original OK graphic has an additional light-mode outside wedge on
+    // its far right. Cover only that outside area, never the green body.
+    if (maskRightEdge)
     {
-        if (y == 0 || y == 14)
-            leftOutside = 5;
-        else if (y == 1 || y == 13)
-            leftOutside = 4;
-        else
-            leftOutside = 3;
-
-        for (x = 0; x < leftOutside; x++)
-        {
-            if (GetSearchTilePixel(tilemap, left, top, x, y) == 3)
-                SetSearchTilePixel(tilemap, left, top, x, y, 6);
-        }
+        FillWindowPixelRect(0, PIXEL_FILL(3), 36, y + 1, 3, 1);
+        FillWindowPixelRect(0, PIXEL_FILL(3), 37, y + 2, 2, 11);
+        FillWindowPixelRect(0, PIXEL_FILL(3), 36, y + 13, 3, 1);
+        FillWindowPixelRect(0, PIXEL_FILL(3), 35, y + 14, 4, 1);
     }
-
-    // The final scanline is outside the rounded button across the full width.
-    for (x = 0; x < 40; x++)
-    {
-        if (GetSearchTilePixel(tilemap, left, top, x, 15) == 3)
-            SetSearchTilePixel(tilemap, left, top, x, 15, 6);
-    }
-
-    return nextTileId;
 }
 
-static void PatchSearchDarkLeftButtons(void)
+static void MaskSearchDarkButtonArtifacts(void)
 {
-    u16 *tilemap = GetBgTilemapBuffer(3);
-    u16 nextTileId = 0x100; // Original Search gfx load only 0x100 tiles (0x2000 bytes).
-
-    if (tilemap == NULL || !POKEDEX_SEARCH_FORCE_DARK || HGSS_DECAPPED)
+    if (!POKEDEX_SEARCH_FORCE_DARK)
         return;
 
-    nextTileId = PatchSearchDarkNameOutside(tilemap, 0, 2, nextTileId);   // NAME (precise geometry)
-    nextTileId = PatchSearchDarkButtonOutside(tilemap, 0, 4, nextTileId); // COLOR
-    nextTileId = PatchSearchDarkButtonOutside(tilemap, 0, 6, nextTileId); // TYPE
-    nextTileId = PatchSearchDarkButtonOutside(tilemap, 0, 8, nextTileId); // ORDER
+    // Fixed button rows in the original Search tilemap.
+    MaskSearchDarkButtonRow(16, FALSE); // NAME
+    MaskSearchDarkButtonRow(32, FALSE); // COLOR
+    MaskSearchDarkButtonRow(48, FALSE); // TYPE
+    MaskSearchDarkButtonRow(64, FALSE); // ORDER
 
     if (IsNationalPokedexEnabled())
     {
-        nextTileId = PatchSearchDarkButtonOutside(tilemap, 0, 10, nextTileId); // MODE
-        PatchSearchDarkButtonOutside(tilemap, 0, 12, nextTileId);             // OK
+        MaskSearchDarkButtonRow(80, FALSE); // MODE
+        MaskSearchDarkButtonRow(96, TRUE);  // OK
     }
     else
     {
-        PatchSearchDarkButtonOutside(tilemap, 0, 10, nextTileId);             // OK
+        MaskSearchDarkButtonRow(80, TRUE);  // OK
     }
 }
 
@@ -8587,7 +8427,6 @@ static void Task_LoadSearchMenu(u8 taskId)
                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchHoenn_Tilemap, 0, 0);
             else
                 CopyToBgTilemapBuffer(3, sPokedexPlusHGSS_ScreenSearchNational_Tilemap, 0, 0);
-            PatchSearchDarkLeftButtons();
             if (!POKEDEX_SEARCH_FORCE_DARK)
             {
                 LoadPalette(sPokedexPlusHGSS_MenuSearch_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(4 * 16 - 1));
@@ -8603,6 +8442,7 @@ static void Task_LoadSearchMenu(u8 taskId)
     case 1:
         LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[HGSS_DECAPPED]);
         LoadSpritePalette(&sInterfaceSpritePalette[POKEDEX_SEARCH_FORCE_DARK ? 1 : HGSS_DARK_MODE]);
+        LoadSpritePalette(&sSearchArrowSpritePalette);
         LoadSpritePalettes(sStatBarSpritePal);
         CreateSearchParameterScrollArrows(taskId);
         for (i = 0; i < NUM_TASK_DATA; i++)
@@ -8610,6 +8450,7 @@ static void Task_LoadSearchMenu(u8 taskId)
         SetDefaultSearchModeAndOrder(taskId);
         HighlightSelectedSearchTopBarItem(SEARCH_TOPBAR_SEARCH);
         PrintSelectedSearchParameters(taskId);
+        MaskSearchDarkButtonArtifacts();
         CopyWindowToVram(0, COPYWIN_FULL);
         CopyBgTilemapBufferToVram(1);
         CopyBgTilemapBufferToVram(2);
@@ -9384,12 +9225,12 @@ static void CreateSearchParameterScrollArrows(u8 taskId)
 {
     u8 spriteId;
 
-    spriteId = CreateSprite(&sScrollArrowSpriteTemplate, 184, 4, 0);
+    spriteId = CreateSprite(&sSearchScrollArrowSpriteTemplate, 184, 4, 0);
     gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].sIsDownArrow = FALSE;
     gSprites[spriteId].callback = SpriteCB_SearchParameterScrollArrow;
 
-    spriteId = CreateSprite(&sScrollArrowSpriteTemplate, 184, 108, 0);
+    spriteId = CreateSprite(&sSearchScrollArrowSpriteTemplate, 184, 108, 0);
     gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].sIsDownArrow = TRUE;
     gSprites[spriteId].vFlip = TRUE;
