@@ -8514,7 +8514,11 @@ static void LoadSearchDarkSemanticPalette(void)
         LoadPalette(&sGreen[state][1], BG_PLTT_ID(greenBank) + 11, PLTT_SIZEOF(1));
         LoadPalette(&sGreen[state][0], BG_PLTT_ID(greenBank) + 12, PLTT_SIZEOF(1));
         LoadPalette(&sGreen[state][1], BG_PLTT_ID(greenBank) + 13, PLTT_SIZEOF(1));
-        LoadPalette(&sGreen[state][1], BG_PLTT_ID(greenBank) + 14, PLTT_SIZEOF(1));
+        // Index 14 is not part of the OK fill: in the original stable tiles
+        // it is the tiny outer/top-right edge color. Making it green causes
+        // the 1-pixel sliver that appears only when OK is highlighted.
+        // Keep that semantic edge dark in every green state.
+        LoadPalette(&sOutside, BG_PLTT_ID(greenBank) + 14, PLTT_SIZEOF(1));
 
         // RED family: CANCEL.
         LoadPalette(&sRed[state][0], BG_PLTT_ID(redBank) + 8, PLTT_SIZEOF(1));
