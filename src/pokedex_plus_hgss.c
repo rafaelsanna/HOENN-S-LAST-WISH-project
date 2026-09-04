@@ -302,8 +302,15 @@ static EWRAM_DATA u8 sPokedexColorTheme;
 
 struct PokedexThemeColors
 {
-    u16 accent;
-    u16 shadow;
+    u16 nearBlack;
+    u16 black2;
+    u16 deep;
+    u16 dark1;
+    u16 charcoal;
+    u16 dark;
+    u16 mid;
+    u16 light;
+    u16 detail;
 };
 
 enum PokedexColorTheme
@@ -391,42 +398,71 @@ static const u8 sPokedexThemeCycleOrder[POKEDEX_COLOR_THEME_COUNT] =
 // as Party / Summary, with a strong but still dark-mode-safe accent.
 static const struct PokedexThemeColors sPokedexThemeColors[POKEDEX_COLOR_THEME_COUNT] =
 {
-    [POKEDEX_COLOR_THEME_DEFAULT]       = { RGB(2, 3, 4),   RGB(1, 1, 2)  }, // #101821-ish
-    [POKEDEX_COLOR_THEME_AMETHYST]      = { RGB(20,16,25),  RGB(8, 7,12)  },
-    [POKEDEX_COLOR_THEME_BURGUNDY]      = { RGB(23,12,15),  RGB(12,6, 8)  },
-    [POKEDEX_COLOR_THEME_MIDNIGHT_SKY]  = { RGB(12,22,29),  RGB(5, 8,13)  },
-    [POKEDEX_COLOR_THEME_EMERALD]       = { RGB(15,23,17),  RGB(5,11, 8)  },
-    [POKEDEX_COLOR_THEME_DEEP_OCEAN]    = { RGB(13,23,25),  RGB(5,11,13)  },
-    [POKEDEX_COLOR_THEME_COPPER]        = { RGB(24,17,10),  RGB(12,8, 5)  },
-    [POKEDEX_COLOR_THEME_ROSEWOOD]      = { RGB(24,16,20),  RGB(12,7,10)  },
-    [POKEDEX_COLOR_THEME_INDIGO]        = { RGB(18,18,27),  RGB(7, 7,13)  },
-    [POKEDEX_COLOR_THEME_SILVER]        = { RGB(18,20,23),  RGB(8, 9,11)  },
-    [POKEDEX_COLOR_THEME_PASTEL_PINK]   = { RGB(31,18,24),  RGB(15,7,12)  },
-    [POKEDEX_COLOR_THEME_LAVENDER_MIST] = { RGB(22,20,27),  RGB(10,10,13) },
-    [POKEDEX_COLOR_THEME_BABY_BLUE]     = { RGB(18,24,28),  RGB(7,10,12)  },
-    [POKEDEX_COLOR_THEME_MINT]          = { RGB(18,25,21),  RGB(7,11, 9)  },
-    [POKEDEX_COLOR_THEME_PEACH]         = { RGB(25,20,17),  RGB(12,9, 8)  },
-    [POKEDEX_COLOR_THEME_GOLD]          = { RGB(29,22, 8),  RGB(14,10,3)  },
-};
-
-static const u16 sPokedexThemeNavColors[POKEDEX_COLOR_THEME_COUNT] =
-{
-    [POKEDEX_COLOR_THEME_DEFAULT]       = RGB(13,14,17),
-    [POKEDEX_COLOR_THEME_AMETHYST]      = RGB(16,13,19),
-    [POKEDEX_COLOR_THEME_BURGUNDY]      = RGB(18,10,12),
-    [POKEDEX_COLOR_THEME_MIDNIGHT_SKY]  = RGB(11,16,21),
-    [POKEDEX_COLOR_THEME_EMERALD]       = RGB(11,17,13),
-    [POKEDEX_COLOR_THEME_DEEP_OCEAN]    = RGB(11,17,19),
-    [POKEDEX_COLOR_THEME_COPPER]        = RGB(18,13, 9),
-    [POKEDEX_COLOR_THEME_ROSEWOOD]      = RGB(18,11,15),
-    [POKEDEX_COLOR_THEME_INDIGO]        = RGB(13,13,20),
-    [POKEDEX_COLOR_THEME_SILVER]        = RGB(15,16,19),
-    [POKEDEX_COLOR_THEME_PASTEL_PINK]   = RGB(24,14,19),
-    [POKEDEX_COLOR_THEME_LAVENDER_MIST] = RGB(17,17,21),
-    [POKEDEX_COLOR_THEME_BABY_BLUE]     = RGB(14,18,21),
-    [POKEDEX_COLOR_THEME_MINT]          = RGB(14,18,16),
-    [POKEDEX_COLOR_THEME_PEACH]         = RGB(19,15,13),
-    [POKEDEX_COLOR_THEME_GOLD]          = RGB(23,17, 6),
+    // Same 16 neutral ramps used by Party / Summary.
+    [POKEDEX_COLOR_THEME_DEFAULT] = {
+        RGB(1, 1, 2), RGB(2, 2, 3), RGB(2, 3, 4), RGB(3, 3, 4),
+        RGB(4, 4, 5), RGB(6, 6, 8), RGB(9,10,12), RGB(13,14,17), RGB(9, 7,12),
+    },
+    [POKEDEX_COLOR_THEME_AMETHYST] = {
+        RGB(2, 1, 3), RGB(3, 2, 5), RGB(4, 3, 7), RGB(5, 4, 8),
+        RGB(6, 5, 9), RGB(8, 7,12), RGB(11, 9,15), RGB(16,13,19), RGB(20,16,25),
+    },
+    [POKEDEX_COLOR_THEME_BURGUNDY] = {
+        RGB(3, 1, 2), RGB(5, 2, 3), RGB(7, 3, 4), RGB(8, 4, 5),
+        RGB(9, 5, 6), RGB(12,6, 8), RGB(15,8,10), RGB(18,10,12), RGB(23,12,15),
+    },
+    [POKEDEX_COLOR_THEME_MIDNIGHT_SKY] = {
+        RGB(1, 2, 3), RGB(2, 3, 5), RGB(2, 4, 7), RGB(3, 5, 8),
+        RGB(4, 6,10), RGB(5, 8,13), RGB(8,11,17), RGB(11,16,21), RGB(12,22,29),
+    },
+    [POKEDEX_COLOR_THEME_EMERALD] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(2, 6, 4), RGB(3, 7, 5),
+        RGB(4, 8, 6), RGB(5,11, 8), RGB(8,14,10), RGB(11,17,13), RGB(15,23,17),
+    },
+    [POKEDEX_COLOR_THEME_DEEP_OCEAN] = {
+        RGB(1, 3, 3), RGB(2, 4, 5), RGB(2, 6, 7), RGB(3, 7, 8),
+        RGB(4, 8,10), RGB(5,11,13), RGB(8,14,16), RGB(11,17,19), RGB(13,23,25),
+    },
+    [POKEDEX_COLOR_THEME_COPPER] = {
+        RGB(3, 2, 1), RGB(5, 3, 2), RGB(7, 4, 2), RGB(8, 5, 3),
+        RGB(9, 6, 4), RGB(12,8, 5), RGB(15,10,7), RGB(18,13, 9), RGB(24,17,10),
+    },
+    [POKEDEX_COLOR_THEME_ROSEWOOD] = {
+        RGB(3, 1, 3), RGB(5, 2, 4), RGB(7, 3, 6), RGB(8, 4, 7),
+        RGB(9, 5, 8), RGB(12,7,10), RGB(15, 9,13), RGB(18,11,15), RGB(24,16,20),
+    },
+    [POKEDEX_COLOR_THEME_INDIGO] = {
+        RGB(1, 1, 3), RGB(2, 2, 5), RGB(3, 3, 7), RGB(4, 4, 8),
+        RGB(5, 5,10), RGB(7, 7,13), RGB(10,10,17), RGB(13,13,20), RGB(18,18,27),
+    },
+    [POKEDEX_COLOR_THEME_SILVER] = {
+        RGB(2, 2, 3), RGB(3, 4, 5), RGB(4, 5, 6), RGB(5, 6, 7),
+        RGB(6, 7, 8), RGB(8, 9,11), RGB(11,13,15), RGB(15,16,19), RGB(18,20,23),
+    },
+    [POKEDEX_COLOR_THEME_PASTEL_PINK] = {
+        RGB(3, 1, 2), RGB(5, 2, 4), RGB(8, 3, 6), RGB(10,4, 8),
+        RGB(12,5,10), RGB(15,7,12), RGB(19,10,15), RGB(24,14,19), RGB(31,18,24),
+    },
+    [POKEDEX_COLOR_THEME_LAVENDER_MIST] = {
+        RGB(2, 2, 3), RGB(3, 3, 5), RGB(5, 5, 7), RGB(6, 6, 8),
+        RGB(8, 8,10), RGB(10,10,13), RGB(13,13,16), RGB(17,17,21), RGB(22,20,27),
+    },
+    [POKEDEX_COLOR_THEME_BABY_BLUE] = {
+        RGB(1, 2, 3), RGB(2, 3, 4), RGB(3, 5, 6), RGB(4, 6, 7),
+        RGB(5, 7, 9), RGB(7,10,12), RGB(10,13,16), RGB(14,18,21), RGB(18,24,28),
+    },
+    [POKEDEX_COLOR_THEME_MINT] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(3, 6, 5), RGB(4, 7, 6),
+        RGB(5, 8, 7), RGB(7,11, 9), RGB(10,14,12), RGB(14,18,16), RGB(18,25,21),
+    },
+    [POKEDEX_COLOR_THEME_PEACH] = {
+        RGB(3, 2, 2), RGB(5, 3, 2), RGB(7, 5, 4), RGB(8, 6, 5),
+        RGB(10,7, 6), RGB(12,9, 8), RGB(15,12,10), RGB(19,15,13), RGB(25,20,17),
+    },
+    [POKEDEX_COLOR_THEME_GOLD] = {
+        RGB(3, 2, 0), RGB(5, 3, 1), RGB(7, 5, 1), RGB(9, 6, 1),
+        RGB(11,8, 2), RGB(14,10,3), RGB(18,13,4), RGB(23,17,6), RGB(29,22,8),
+    },
 };
 
 #define TAG_POKEDEX_THEME_NAV  4102
@@ -672,7 +708,8 @@ static void SavePokedexColorThemeToSave(void);
 static u8 GetPokedexThemeCyclePosition(void);
 static void ChangePokedexColorTheme(s8 direction);
 static void DrawPokedexThemeChrome(void);
-static void ApplyPokedexThemeAccent(void);
+static u16 RemapPokedexThemeBackgroundColor(u16 color);
+static void ApplyPokedexThemeBackgroundPalette(void);
 static void ApplyPokedexThemeInterfaceAccent(void);
 static void RefreshPokedexThemeNavPalette(void);
 static void FreeWindowAndBgBuffers(void);
@@ -2721,11 +2758,20 @@ static void Task_ClosePokedex(u8 taskId)
 
 static u16 GetPokedexDarkBackgroundColor(void)
 {
-    // This project keeps its custom dark list palette in the normal HGSS path.
-    if (!IsNationalPokedexEnabled())
-        return sPokedexPlusHGSS_Default_Pal[1];
-    else
-        return sPokedexPlusHGSS_National_Pal[1];
+    // BASE stays exactly on the already-proven Pokédex dark background.
+    if (sPokedexColorTheme == POKEDEX_COLOR_THEME_DEFAULT)
+    {
+        if (!IsNationalPokedexEnabled())
+            return sPokedexPlusHGSS_Default_Pal[1];
+        else
+            return sPokedexPlusHGSS_National_Pal[1];
+    }
+
+    if (sPokedexColorTheme >= POKEDEX_COLOR_THEME_COUNT)
+        sPokedexColorTheme = POKEDEX_COLOR_THEME_DEFAULT;
+
+    // Alternate themes use the same "deep" surface role as Party / Summary.
+    return sPokedexThemeColors[sPokedexColorTheme].deep;
 }
 
 static void ApplyPokedexDedicatedDarkBackground(u8 colorIndex)
@@ -2831,11 +2877,8 @@ static u8 GetPokedexThemeCyclePosition(void)
     return 0;
 }
 
-static void ReplacePokedexAccentRange(u16 start, u16 count)
+static u16 RemapPokedexThemeBackgroundColor(u16 color)
 {
-    u16 i;
-    u16 index;
-    u16 color;
     const struct PokedexThemeColors *theme;
 
     if (sPokedexColorTheme >= POKEDEX_COLOR_THEME_COUNT)
@@ -2843,53 +2886,139 @@ static void ReplacePokedexAccentRange(u16 start, u16 count)
 
     theme = &sPokedexThemeColors[sPokedexColorTheme];
 
-    for (i = 0; i < count; i++)
+    // The old fixed Pokédex lilac/red accent is part of the UI surface language.
+    // BASE specifically requested #101821 here.
+    if (color == POKEDEX_OLD_LILAC)
     {
-        index = start + i;
-        color = gPlttBufferUnfaded[index];
-
-        if (color == POKEDEX_OLD_LILAC)
-            LoadPalette(&theme->accent, index, PLTT_SIZEOF(1));
-        else if (color == POKEDEX_OLD_LILAC_SHADOW)
-            LoadPalette(&theme->shadow, index, PLTT_SIZEOF(1));
+        if (sPokedexColorTheme == POKEDEX_COLOR_THEME_DEFAULT)
+            return theme->deep;
+        return theme->detail;
     }
+
+    if (color == POKEDEX_OLD_LILAC_SHADOW)
+    {
+        if (sPokedexColorTheme == POKEDEX_COLOR_THEME_DEFAULT)
+            return theme->nearBlack;
+        return theme->dark;
+    }
+
+    // BASE must otherwise remain visually identical to the already-approved V35.
+    if (sPokedexColorTheme == POKEDEX_COLOR_THEME_DEFAULT)
+        return color;
+
+    // Canonical neutral roles used by Summary.
+    if (color == RGB(1, 1, 2))   return theme->nearBlack;
+    if (color == RGB(2, 2, 3))   return theme->black2;
+    if (color == RGB(2, 3, 4))   return theme->deep;
+    if (color == RGB(3, 3, 4))   return theme->dark1;
+    if (color == RGB(4, 4, 5))   return theme->charcoal;
+    if (color == RGB(6, 6, 8))   return theme->dark;
+    if (color == RGB(9,10,12))   return theme->mid;
+    if (color == RGB(13,14,17))  return theme->light;
+    if (color == RGB(9, 7,12))   return theme->detail;
+
+    // HGSS Pokédex-specific dark neutrals.
+    //
+    // These are the IMPORTANT V37 additions. The supplied V36 screenshots
+    // show that most of the visible page is RGB888 ~41,41,49, which is GBA
+    // RGB(5,5,6). V36 never matched that exact source color, so the large
+    // background stayed black while only the old lilac accent changed.
+    if (color == RGB(1, 1, 1))   return theme->nearBlack;
+    if (color == RGB(2, 2, 2))   return theme->black2;
+    if (color == RGB(3, 3, 3))   return theme->dark1;
+    if (color == RGB(4, 4, 4))   return theme->dark1;
+    if (color == RGB(5, 5, 5))   return theme->charcoal;
+    if (color == RGB(5, 5, 6))   return theme->charcoal;
+    if (color == RGB(6, 6, 6))   return theme->dark;
+    if (color == RGB(7, 7, 7))   return theme->dark;
+    if (color == RGB(7, 7, 8))   return theme->dark;
+    if (color == RGB(8, 8, 8))   return theme->mid;
+
+    // Extra neutral shades already proven in the Party theme remapper.
+    if (color == RGB(4, 5, 8))   return theme->dark;
+    if (color == RGB(4, 2, 3))   return theme->dark1;
+    if (color == RGB(8, 8, 8))   return theme->dark;
+    if (color == RGB(9, 9,13))   return theme->detail;
+    if (color == RGB(10,10,10))  return theme->mid;
+    if (color == RGB(10,12,12))  return theme->mid;
+    if (color == RGB(12,12,11))  return theme->mid;
+    if (color == RGB(14,14,14))  return theme->light;
+    if (color == RGB(14,13,16))  return theme->detail;
+
+    // Decorative neutral/cool surfaces used by the custom UI.
+    if (color == RGB(12,18,20))  return theme->light;
+    if (color == RGB(15,26,29))  return theme->detail;
+    if (color == RGB(20,31,31))  return theme->detail;
+    if (color == RGB(17,17,25))  return theme->light;
+    if (color == RGB(17,15,31))  return theme->detail;
+    if (color == RGB(25,18,28))  return theme->detail;
+
+    // White text, type colors, caught/seen semantics, HP/stat colors and other
+    // saturated colors are not in this table and therefore remain untouched.
+    return color;
 }
 
-static void ApplyPokedexThemeAccent(void)
+static void ApplyPokedexThemeBackgroundPalette(void)
 {
-    // Every HGSS data page goes through LoadPokedexBgPalette(), so the saved
-    // theme automatically follows MAIN -> INFO/STATS/EVO/AREA/CRY/SIZE and
-    // SEARCH RESULTS without adding L/R handling to those screens.
-    ReplacePokedexAccentRange(BG_PLTT_ID(0), 6 * 16);
+    u8 pal;
+    u8 color;
+    u16 base;
+
+    // The core HGSS Pokédex page palettes occupy banks 0..5.
+    // Remap only exact neutral UI shades; bank 15 remains the normal textbox
+    // palette so standard text stays white with its normal dark shadow.
+    for (pal = 0; pal < 6; pal++)
+    {
+        base = BG_PLTT_ID(pal);
+
+        for (color = 0; color < 16; color++)
+            gPlttBufferUnfaded[base + color] =
+                RemapPokedexThemeBackgroundColor(gPlttBufferUnfaded[base + color]);
+
+        // L/R changes happen with the screen already visible; keep the faded
+        // buffer synchronized just like Party / Summary.
+        CpuCopy16(
+            gPlttBufferUnfaded + base,
+            gPlttBufferFaded + base,
+            PLTT_SIZE_4BPP
+        );
+    }
 }
 
 static void ApplyPokedexThemeInterfaceAccent(void)
 {
-    u8 paletteNum = IndexOfSpritePaletteTag(TAG_DEX_INTERFACE);
+    u8 paletteNum;
+    u8 color;
+    u16 base;
 
-    if (paletteNum != 0xFF)
-        ReplacePokedexAccentRange(OBJ_PLTT_ID(paletteNum), 16);
+    paletteNum = IndexOfSpritePaletteTag(TAG_DEX_INTERFACE);
+
+    if (paletteNum == 0xFF)
+        return;
+
+    base = OBJ_PLTT_ID(paletteNum);
+
+    for (color = 0; color < 16; color++)
+        gPlttBufferUnfaded[base + color] =
+            RemapPokedexThemeBackgroundColor(gPlttBufferUnfaded[base + color]);
+
+    CpuCopy16(
+        gPlttBufferUnfaded + base,
+        gPlttBufferFaded + base,
+        PLTT_SIZE_4BPP
+    );
 }
 
 static void RefreshPokedexThemeNavPalette(void)
 {
     u8 i;
     u8 paletteNum;
-    u16 navColor;
-    u16 shadowColor;
     u16 sourceColor;
     u16 brightness;
 
-    if (sPokedexColorTheme >= POKEDEX_COLOR_THEME_COUNT)
-        sPokedexColorTheme = POKEDEX_COLOR_THEME_DEFAULT;
-
-    navColor = sPokedexThemeNavColors[sPokedexColorTheme];
-    shadowColor = sPokedexThemeColors[sPokedexColorTheme].shadow;
-
-    // Preserve transparency at index 0. For the remaining source palette
-    // entries, keep a simple two-tone hierarchy: darker source entries become
-    // the theme shadow; brighter source entries become the theme's visible
-    // "light" color. This keeps the arrows/scroll thumb readable and themed.
+    // Navigation is intentionally NOT themed in V36.
+    // Text stays white, and the top/bottom cursors + vertical progress bar
+    // also stay white across all 16 themes. Only the screen surfaces change.
     sPokedexThemeNavPalette[0] = sPokedexPlusHGSS_Default_dark_Pal[0];
 
     for (i = 1; i < 16; i++)
@@ -2900,9 +3029,9 @@ static void RefreshPokedexThemeNavPalette(void)
                    + ((sourceColor >> 10) & 31);
 
         if (brightness >= 24)
-            sPokedexThemeNavPalette[i] = navColor;
+            sPokedexThemeNavPalette[i] = RGB_WHITE;
         else
-            sPokedexThemeNavPalette[i] = shadowColor;
+            sPokedexThemeNavPalette[i] = RGB(8, 8, 8);
     }
 
     paletteNum = IndexOfSpritePaletteTag(TAG_POKEDEX_THEME_NAV);
@@ -3027,7 +3156,7 @@ static void LoadPokedexBgPalette(bool8 isSearchResults)
         LoadPalette(GetOverworldTextboxPalettePtr(), 0xF0, 32);
     }
 
-    ApplyPokedexThemeAccent();
+    ApplyPokedexThemeBackgroundPalette();
 }
 
 
