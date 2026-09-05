@@ -675,7 +675,7 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 26,
+      "x": 30,
       "y": 18,
       "elevation": 0,
       "dest_map": "MAP_ROUTE111_OLD_LADYS_REST_STOP",
@@ -696,15 +696,15 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 5,
-      "y": 25,
+      "x": 24,
+      "y": 20,
       "elevation": 0,
       "dest_map": "MAP_ROUTE111GROTTO_",
       "dest_warp_id": "0"
     },
     {
-      "x": 4,
-      "y": 25,
+      "x": 23,
+      "y": 20,
       "elevation": 0,
       "dest_map": "MAP_ROUTE111GROTTO_",
       "dest_warp_id": "1"
