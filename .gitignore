@@ -59,3 +59,9 @@ temp_mining/
 .porydaw/
 /team-aqua-assets/
 /music_to_import/
+/apply_dev_player_speed5x_v*.py
+/apply_dev_player_speed_modes_v*.py
+/apply_dev_speed_follower_fix_v*.py
+*.bak_*
+/src/*.bak_*
+/debug_dev_supreme_*.patch
