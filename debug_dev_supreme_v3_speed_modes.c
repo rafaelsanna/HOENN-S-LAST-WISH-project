@@ -82,14 +82,9 @@
 #include "save.h"
 
 // DEV-only QoL core hook implemented in src/field_player_avatar.c.
-// 0 = normal player speed, 5 = x5, 10 = x10.
+// 0 = normal trainer speed, 5 = x5, 10 = x10.
 u8 DebugGetPlayerSpeedMode(void);
 void DebugSetPlayerSpeedMode(u8 mode);
-
-// DEV follower suppression implemented in src/follower_npc.c.
-// Handles BOTH NPC followers and party Pokémon followers.
-void DebugDisableFollowersForPlayerSpeed(void);
-void DebugRestoreFollowersAfterPlayerSpeed(void);
 
 // Hoenn's Last Wish persistent Wish Menu warning flag.
 // 0x28F is reserved for this purpose in the project.
@@ -671,7 +666,7 @@ static const u8 sDebugText_DeleteAllNo[] =      _("    YES   {RIGHT_ARROW} NO");
 
 static const u8 sDebugText_PlayerSpeedFollowerWarning[] =
     _("It will destroy your follower\n"
-      "until you disable Player Speed.");
+      "until u disable it?");
 
 static const u8 sDebugText_CompletePokedexConfirm[] =
     _("It will complete the Pokédex\n"
@@ -912,7 +907,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
 {
     { COMPOUND_STRING("Player name"),           DebugAction_Player_Name },
     { COMPOUND_STRING("Toggle gender"),         DebugAction_Player_Gender },
-    { COMPOUND_STRING("Player Speed Normal"),  DebugAction_Player_NormalSpeed },
+    { COMPOUND_STRING("Normal Trainer Speed"),  DebugAction_Player_NormalSpeed },
     { COMPOUND_STRING("Player Speed x5"),       DebugAction_Player_Speed5x },
     { COMPOUND_STRING("Player Speed x10"),      DebugAction_Player_Speed10x },
 
@@ -2026,7 +2021,6 @@ static void DebugAction_Player_Gender(u8 taskId)
 static void DebugAction_Player_NormalSpeed(u8 taskId)
 {
     DebugSetPlayerSpeedMode(0);
-    DebugRestoreFollowersAfterPlayerSpeed();
     PlaySE(SE_PC_OFF);
     Debug_DestroyMenu_Full(taskId);
     ScriptContext_Enable();
@@ -2112,9 +2106,12 @@ static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId)
 
         if (gTasks[taskId].tPlayerSpeedChoice == 0)
         {
-            LockPlayerFieldControls();
-            DebugDisableFollowersForPlayerSpeed();
-            UnlockPlayerFieldControls();
+            if (PlayerHasFollowerNPC())
+            {
+                LockPlayerFieldControls();
+                DestroyFollowerNPC();
+                UnlockPlayerFieldControls();
+            }
 
             DebugSetPlayerSpeedMode(gTasks[taskId].tPlayerSpeedTarget);
 

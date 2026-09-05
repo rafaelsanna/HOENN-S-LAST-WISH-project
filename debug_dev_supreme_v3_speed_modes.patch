@@ -1,0 +1,202 @@
+--- a/src/debug.c
++++ b/src/debug.c
+@@ -82,9 +82,9 @@
+ #include "save.h"
+ 
+ // DEV-only QoL core hook implemented in src/field_player_avatar.c.
+-// The core hook is harmless in player builds; only DEV exposes the toggle.
+-bool32 DebugPlayerSpeed5xIsEnabled(void);
+-void DebugTogglePlayerSpeed5x(void);
++// 0 = normal trainer speed, 5 = x5, 10 = x10.
++u8 DebugGetPlayerSpeedMode(void);
++void DebugSetPlayerSpeedMode(u8 mode);
+ 
+ // Hoenn's Last Wish persistent Wish Menu warning flag.
+ // 0x28F is reserved for this purpose in the project.
+@@ -378,7 +378,11 @@
+ 
+ static void DebugAction_Player_Name(u8 taskId);
+ static void DebugAction_Player_Gender(u8 taskId);
++static void DebugAction_Player_NormalSpeed(u8 taskId);
+ static void DebugAction_Player_Speed5x(u8 taskId);
++static void DebugAction_Player_Speed10x(u8 taskId);
++static void DebugAction_ShowPlayerSpeedConfirmation(u8 taskId, u8 speedMode);
++static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId);
+ 
+ extern const u8 Debug_FlagsNotSetOverworldConfigMessage[];
+ extern const u8 Debug_FlagsNotSetBattleConfigMessage[];
+@@ -660,6 +664,10 @@
+ static const u8 sDebugText_DeleteAllYes[] =     _("  {RIGHT_ARROW} YES     NO");
+ static const u8 sDebugText_DeleteAllNo[] =      _("    YES   {RIGHT_ARROW} NO");
+ 
++static const u8 sDebugText_PlayerSpeedFollowerWarning[] =
++    _("It will destroy your follower\n"
++      "until u disable it?");
++
+ static const u8 sDebugText_CompletePokedexConfirm[] =
+     _("It will complete the Pokédex\n"
+       "for you. Are you sure?\n"
+@@ -897,9 +905,11 @@
+ 
+ static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
+ {
+-    { COMPOUND_STRING("Player name"),            DebugAction_Player_Name },
+-    { COMPOUND_STRING("Toggle gender"),          DebugAction_Player_Gender },
+-    { COMPOUND_STRING("Toggle Player Speed x5"), DebugAction_Player_Speed5x },
++    { COMPOUND_STRING("Player name"),           DebugAction_Player_Name },
++    { COMPOUND_STRING("Toggle gender"),         DebugAction_Player_Gender },
++    { COMPOUND_STRING("Normal Trainer Speed"),  DebugAction_Player_NormalSpeed },
++    { COMPOUND_STRING("Player Speed x5"),       DebugAction_Player_Speed5x },
++    { COMPOUND_STRING("Player Speed x10"),      DebugAction_Player_Speed10x },
+ 
+     // Trainer ID editing is intentionally hidden in HLW.
+     // { COMPOUND_STRING("New Trainer ID"), DebugAction_Player_Id },
+@@ -2008,18 +2018,139 @@
+     ScriptContext_Enable();
+ }
+ 
+-static void DebugAction_Player_Speed5x(u8 taskId)
+-{
+-    DebugTogglePlayerSpeed5x();
+-
+-    if (DebugPlayerSpeed5xIsEnabled())
+-        PlaySE(SE_PC_LOGIN);
+-    else
+-        PlaySE(SE_PC_OFF);
+-
++static void DebugAction_Player_NormalSpeed(u8 taskId)
++{
++    DebugSetPlayerSpeedMode(0);
++    PlaySE(SE_PC_OFF);
+     Debug_DestroyMenu_Full(taskId);
+     ScriptContext_Enable();
+ }
++
++static void DebugAction_Player_Speed5x(u8 taskId)
++{
++    DebugAction_ShowPlayerSpeedConfirmation(taskId, 5);
++}
++
++static void DebugAction_Player_Speed10x(u8 taskId)
++{
++    DebugAction_ShowPlayerSpeedConfirmation(taskId, 10);
++}
++
++#define tPlayerSpeedTarget data[5]
++#define tPlayerSpeedChoice data[6]
++
++static void DebugAction_ShowPlayerSpeedConfirmation(u8 taskId, u8 speedMode)
++{
++    u8 windowId = AddWindow(&sDebugMenuWindowTemplateConfirm);
++
++    DrawStdWindowFrame(windowId, FALSE);
++    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
++
++    AddTextPrinterParameterized(
++        windowId,
++        FONT_SMALL,
++        sDebugText_PlayerSpeedFollowerWarning,
++        8,
++        6,
++        0,
++        NULL
++    );
++
++    AddTextPrinterParameterized(
++        windowId,
++        FONT_NORMAL,
++        sDebugText_DeleteAllNo,
++        128,
++        34,
++        0,
++        NULL
++    );
++
++    PutWindowTilemap(windowId);
++    CopyWindowToVram(windowId, COPYWIN_FULL);
++
++    gTasks[taskId].tSubWindowId = windowId;
++    gTasks[taskId].tPlayerSpeedTarget = speedMode;
++    gTasks[taskId].tPlayerSpeedChoice = 1;
++    gTasks[taskId].func = DebugTask_HandlePlayerSpeedConfirmation;
++}
++
++static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId)
++{
++    u8 windowId = gTasks[taskId].tSubWindowId;
++
++    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
++    {
++        PlaySE(SE_SELECT);
++        gTasks[taskId].tPlayerSpeedChoice ^= 1;
++
++        FillWindowPixelRect(windowId, PIXEL_FILL(1), 120, 30, 96, 16);
++        AddTextPrinterParameterized(
++            windowId,
++            FONT_NORMAL,
++            gTasks[taskId].tPlayerSpeedChoice == 0
++                ? sDebugText_DeleteAllYes
++                : sDebugText_DeleteAllNo,
++            128,
++            34,
++            0,
++            NULL
++        );
++        CopyWindowToVram(windowId, COPYWIN_GFX);
++        return;
++    }
++
++    if (JOY_NEW(A_BUTTON))
++    {
++        PlaySE(SE_SELECT);
++
++        if (gTasks[taskId].tPlayerSpeedChoice == 0)
++        {
++            if (PlayerHasFollowerNPC())
++            {
++                LockPlayerFieldControls();
++                DestroyFollowerNPC();
++                UnlockPlayerFieldControls();
++            }
++
++            DebugSetPlayerSpeedMode(gTasks[taskId].tPlayerSpeedTarget);
++
++            ClearStdWindowAndFrame(windowId, TRUE);
++            ClearWindowTilemap(windowId);
++            RemoveWindow(windowId);
++            gTasks[taskId].tSubWindowId = 0;
++
++            PlaySE(SE_PC_LOGIN);
++            Debug_DestroyMenu_Full(taskId);
++            ScriptContext_Enable();
++            return;
++        }
++    }
++    else if (JOY_NEW(B_BUTTON))
++    {
++        PlaySE(SE_SELECT);
++    }
++    else
++    {
++        return;
++    }
++
++    ClearStdWindowAndFrame(windowId, TRUE);
++    ClearWindowTilemap(windowId);
++    RemoveWindow(windowId);
++    gTasks[taskId].tSubWindowId = 0;
++
++    DrawStdWindowFrame(gTasks[taskId].tWindowId, FALSE);
++    PutWindowTilemap(gTasks[taskId].tWindowId);
++    RedrawListMenu(gTasks[taskId].tMenuTaskId);
++    CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
++    CopyBgTilemapBufferToVram(0);
++
++    gTasks[taskId].func = DebugTask_HandleMenuInput_General;
++}
++
++#undef tPlayerSpeedTarget
++#undef tPlayerSpeedChoice
+ 
+ #if 0
+ // Legacy Trainer ID editor implementation kept for reference only.

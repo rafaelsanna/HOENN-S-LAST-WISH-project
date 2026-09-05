@@ -64,27 +64,6 @@ struct SpinData
 static EWRAM_DATA u8 sSpinStartFacingDir = 0;
 EWRAM_DATA struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT] = {};
 EWRAM_DATA struct PlayerAvatar gPlayerAvatar = {};
-// DEV QoL: session-only on-foot speed toggle.
-// It is deliberately not part of the save file.
-static EWRAM_DATA u8 sDebugPlayerSpeedMode = 0;
-static EWRAM_DATA u8 sDebugPlayerSpeedPhase = 0;
-
-void DebugEnsureFollowersDisabledForPlayerSpeed(void);
-
-u8 DebugGetPlayerSpeedMode(void)
-{
-    return sDebugPlayerSpeedMode;
-}
-
-void DebugSetPlayerSpeedMode(u8 mode)
-{
-    if (mode != 5 && mode != 10)
-        mode = 0;
-
-    sDebugPlayerSpeedMode = mode;
-    sDebugPlayerSpeedPhase = 0;
-}
-
 EWRAM_DATA struct SpinData gPlayerSpinData = {};
 
 // static declarations
@@ -1261,50 +1240,9 @@ static void PlayerRunSlow(u8 direction)
 }
 
 // normal speed (1 speed)
-// DEV x5 movement.
-// MOVE_SPEED_FASTER advances 4 pixels/frame -> 4 frames per tile.
-// MOVE_SPEED_FASTEST advances 8 pixels/frame -> 2 frames per tile.
-// Cycling 4,4,4,2,2 frames = 16 frames for 5 tiles.
-// Normal walking is 80 frames for the same 5 tiles, so the average is x5.
-static u8 GetDebugPlayerSpeedMovementAction(u8 direction)
-{
-    u8 movementAction;
-
-    if (sDebugPlayerSpeedMode == 10)
-    {
-        // 4 + 1 + 1 + 1 + 1 frames over five tiles = exact x10 average.
-        if (sDebugPlayerSpeedPhase == 0)
-            movementAction = GetWalkFasterMovementAction(direction);
-        else
-            movementAction = GetSlideMovementAction(direction);
-    }
-    else
-    {
-        // 4 + 4 + 4 + 2 + 2 frames over five tiles = exact x5 average.
-        if (sDebugPlayerSpeedPhase < 3)
-            movementAction = GetWalkFasterMovementAction(direction);
-        else
-            movementAction = GetSlideMovementAction(direction);
-    }
-
-    sDebugPlayerSpeedPhase++;
-    if (sDebugPlayerSpeedPhase >= 5)
-        sDebugPlayerSpeedPhase = 0;
-
-    return movementAction;
-}
-
 void PlayerWalkNormal(u8 direction)
 {
-    if (sDebugPlayerSpeedMode != 0)
-    {
-        DebugEnsureFollowersDisabledForPlayerSpeed();
-        PlayerSetAnimId(GetDebugPlayerSpeedMovementAction(direction), COPY_MOVE_WALK);
-    }
-    else
-    {
-        PlayerSetAnimId(GetWalkNormalMovementAction(direction), COPY_MOVE_WALK);
-    }
+    PlayerSetAnimId(GetWalkNormalMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerWalkFast(u8 direction)
@@ -1324,15 +1262,7 @@ void PlayerWalkFaster(u8 direction)
 
 static void PlayerRun(u8 direction)
 {
-    if (sDebugPlayerSpeedMode != 0)
-    {
-        DebugEnsureFollowersDisabledForPlayerSpeed();
-        PlayerSetAnimId(GetDebugPlayerSpeedMovementAction(direction), COPY_MOVE_WALK);
-    }
-    else
-    {
-        PlayerSetAnimId(GetPlayerRunMovementAction(direction), COPY_MOVE_WALK);
-    }
+    PlayerSetAnimId(GetPlayerRunMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerOnBikeCollide(u8 direction)

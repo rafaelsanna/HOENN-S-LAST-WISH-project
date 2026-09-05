@@ -34,6 +34,7 @@
 #include "constants/map_types.h"
 #include "constants/metatile_behaviors.h"
 #include "constants/songs.h"
+#include "constants/flags.h"
 
 /*
  * Known Issues:
@@ -741,6 +742,11 @@ void CreateFollowerNPC(u32 gfx, u32 followerFlags, const u8 *scriptPtr)
 
     HideNPCFollower();
     SetFollowerNPCData(FNPC_DATA_WARP_END, FNPC_WARP_REAPPEAR);
+
+    // Keep the two follower systems mutually exclusive immediately.
+    // Previously the party Pokémon follower was only refreshed on a map load,
+    // so both followers could remain visible together until changing maps.
+    UpdateFollowingPokemon();
 }
 
 void DestroyFollowerNPC(void)
@@ -751,6 +757,35 @@ void DestroyFollowerNPC(void)
     RemoveObjectEvent(&gObjectEvents[GetFollowerNPCData(FNPC_DATA_OBJ_ID)]);
     ClearFollowerNPCData();
     UpdateFollowingPokemon();
+}
+
+// DEV Player Speed helpers.
+// HLW reserves FLAG_TEMP_E to prevent the party Pokémon follower from spawning.
+void DebugDisableFollowersForPlayerSpeed(void)
+{
+    FlagSet(FLAG_TEMP_E);
+
+    // NPC follower system.
+    if (PlayerHasFollowerNPC())
+        DestroyFollowerNPC();
+    else
+        // Party Pokémon follower system.
+        UpdateFollowingPokemon();
+}
+
+void DebugRestoreFollowersAfterPlayerSpeed(void)
+{
+    FlagClear(FLAG_TEMP_E);
+    UpdateFollowingPokemon();
+}
+
+void DebugEnsureFollowersDisabledForPlayerSpeed(void)
+{
+    // FLAG_TEMP_E is temporary and is cleared on map loads.
+    // Reassert it before fast movement. Also destroy any NPC follower
+    // that was recreated while Player Speed was active.
+    if (!FlagGet(FLAG_TEMP_E) || PlayerHasFollowerNPC())
+        DebugDisableFollowersForPlayerSpeed();
 }
 
 #define RETURN_STATE(state, dir) return newState == MOVEMENT_INVALID ? state + (dir - 1) : ReturnFollowerNPCDelayedState(dir - 1);

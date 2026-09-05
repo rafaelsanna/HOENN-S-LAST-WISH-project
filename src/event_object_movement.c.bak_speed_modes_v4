@@ -60,8 +60,6 @@
 #include "constants/layouts.h"
 #include "constants/map_groups.h"
 
-u8 DebugGetPlayerSpeedMode(void);
-
 #define SPECIAL_LOCALIDS_START (min(LOCALID_CAMERA, \
                                 min(LOCALID_PLAYER, \
                                     LOCALID_BERRY_BLENDER_PLAYER_END - MAX_RFU_PLAYERS + 1)))
@@ -81,7 +79,6 @@ enum {
     MOVE_SPEED_FAST_2, // water current / acro bike
     MOVE_SPEED_FASTER, // mach bike's max speed
     MOVE_SPEED_FASTEST,
-    MOVE_SPEED_DEBUG_16, // DEV x10 one-frame tile
 };
 
 enum {
@@ -8237,27 +8234,9 @@ bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *objectEvent, stru
     return FALSE;
 }
 
-static bool8 IsDebugPlayerSpeed10x(const struct ObjectEvent *objectEvent)
-{
-    return objectEvent->isPlayer && DebugGetPlayerSpeedMode() == 10;
-}
-
-static void InitDebugMovement16(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
-{
-    InitNpcForMovement(objectEvent, sprite, direction, MOVE_SPEED_DEBUG_16);
-    SetStepAnimHandleAlternation(
-        objectEvent,
-        sprite,
-        GetMoveDirectionFastestAnimNum(objectEvent->facingDirection)
-    );
-}
-
 bool8 MovementAction_SlideDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (IsDebugPlayerSpeed10x(objectEvent))
-        InitDebugMovement16(objectEvent, sprite, DIR_SOUTH);
-    else
-        InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_FASTEST);
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_FASTEST);
     return MovementAction_SlideDown_Step1(objectEvent, sprite);
 }
 
@@ -8273,10 +8252,7 @@ bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *objectEvent, struct Spr
 
 bool8 MovementAction_SlideUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (IsDebugPlayerSpeed10x(objectEvent))
-        InitDebugMovement16(objectEvent, sprite, DIR_NORTH);
-    else
-        InitMovementNormal(objectEvent, sprite, DIR_NORTH, MOVE_SPEED_FASTEST);
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, MOVE_SPEED_FASTEST);
     return MovementAction_SlideUp_Step1(objectEvent, sprite);
 }
 
@@ -8293,13 +8269,7 @@ bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *objectEvent, struct Sprit
 bool8 MovementAction_SlideLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (objectEvent->directionOverwrite)
-        if (IsDebugPlayerSpeed10x(objectEvent))
-        InitDebugMovement16(objectEvent, sprite, objectEvent->directionOverwrite);
-    else
         InitMovementNormal(objectEvent, sprite, objectEvent->directionOverwrite, MOVE_SPEED_FASTEST);
-    else
-        if (IsDebugPlayerSpeed10x(objectEvent))
-        InitDebugMovement16(objectEvent, sprite, DIR_WEST);
     else
         InitMovementNormal(objectEvent, sprite, DIR_WEST, MOVE_SPEED_FASTEST);
     return MovementAction_SlideLeft_Step1(objectEvent, sprite);
@@ -8318,13 +8288,7 @@ bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *objectEvent, struct Spr
 bool8 MovementAction_SlideRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (objectEvent->directionOverwrite)
-        if (IsDebugPlayerSpeed10x(objectEvent))
-        InitDebugMovement16(objectEvent, sprite, objectEvent->directionOverwrite);
-    else
         InitMovementNormal(objectEvent, sprite, objectEvent->directionOverwrite, MOVE_SPEED_FASTEST);
-    else
-        if (IsDebugPlayerSpeed10x(objectEvent))
-        InitDebugMovement16(objectEvent, sprite, DIR_EAST);
     else
         InitMovementNormal(objectEvent, sprite, DIR_EAST, MOVE_SPEED_FASTEST);
     return MovementAction_SlideRight_Step1(objectEvent, sprite);
@@ -10870,12 +10834,6 @@ static void Step8(struct Sprite *sprite, u8 dir)
     sprite->y += 8 * (u16) sDirectionToVectors[dir].y;
 }
 
-static void Step16(struct Sprite *sprite, u8 dir)
-{
-    sprite->x += 16 * (u16) sDirectionToVectors[dir].x;
-    sprite->y += 16 * (u16) sDirectionToVectors[dir].y;
-}
-
 #define sSpeed data[4]
 #define sTimer data[5]
 
@@ -10939,17 +10897,12 @@ static const SpriteStepFunc sStep8Funcs[] = {
     Step8,
 };
 
-static const SpriteStepFunc sStep16Funcs[] = {
-    Step16,
-};
-
 static const SpriteStepFunc *const sNpcStepFuncTables[] = {
     [MOVE_SPEED_NORMAL] = sStep1Funcs,
     [MOVE_SPEED_FAST_1] = sStep2Funcs,
     [MOVE_SPEED_FAST_2] = sStep3Funcs,
     [MOVE_SPEED_FASTER] = sStep4Funcs,
     [MOVE_SPEED_FASTEST] = sStep8Funcs,
-    [MOVE_SPEED_DEBUG_16] = sStep16Funcs,
 };
 
 static const s16 sStepTimes[] = {
@@ -10958,7 +10911,6 @@ static const s16 sStepTimes[] = {
     [MOVE_SPEED_FAST_2] = ARRAY_COUNT(sStep3Funcs),
     [MOVE_SPEED_FASTER] = ARRAY_COUNT(sStep4Funcs),
     [MOVE_SPEED_FASTEST] = ARRAY_COUNT(sStep8Funcs),
-    [MOVE_SPEED_DEBUG_16] = ARRAY_COUNT(sStep16Funcs),
 };
 
 static bool8 NpcTakeStep(struct Sprite *sprite)
