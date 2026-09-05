@@ -26,6 +26,11 @@
 #include "constants/songs.h"
 #include "paintings.h"
 
+#ifndef OPTIONS_TEXT_SPEED_INSTANT
+#define OPTIONS_TEXT_SPEED_INSTANT 3
+#endif
+
+
 struct MenuInfoIcon
 {
     u8 width;
@@ -78,9 +83,10 @@ const u16 gStandardMenuPalette[] = INCBIN_U16("graphics/interface/std_menu.gbapa
 
 static const u8 sTextSpeedFrameDelays[] =
 {
-    [OPTIONS_TEXT_SPEED_SLOW] = 8,
-    [OPTIONS_TEXT_SPEED_MID]  = 4,
-    [OPTIONS_TEXT_SPEED_FAST] = 1,
+    [OPTIONS_TEXT_SPEED_SLOW]    = 8,
+    [OPTIONS_TEXT_SPEED_MID]     = 4,
+    [OPTIONS_TEXT_SPEED_FAST]    = 1,
+    [OPTIONS_TEXT_SPEED_INSTANT] = 1,
 };
 
 static const struct WindowTemplate sStandardTextBox_WindowTemplates[] =
@@ -601,8 +607,12 @@ u32 GetPlayerTextSpeed(void)
 u8 GetPlayerTextSpeedDelay(void)
 {
     u32 speed;
-    if (gSaveBlock2Ptr->optionsTextSpeed > OPTIONS_TEXT_SPEED_FAST)
+
+    // MID / FAST / INSTANT are the valid HLW text-speed choices.
+    // Only values above INSTANT are invalid and normalized back to MID.
+    if (gSaveBlock2Ptr->optionsTextSpeed > OPTIONS_TEXT_SPEED_INSTANT)
         gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
+
     speed = GetPlayerTextSpeed();
     return sTextSpeedFrameDelays[speed];
 }

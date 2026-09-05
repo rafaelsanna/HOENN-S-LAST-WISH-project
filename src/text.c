@@ -13,6 +13,10 @@
 #include "dynamic_placeholder_text_util.h"
 #include "fonts.h"
 
+#ifndef OPTIONS_TEXT_SPEED_INSTANT
+#define OPTIONS_TEXT_SPEED_INSTANT 3
+#endif
+
 static u16 RenderText(struct TextPrinter *);
 static u32 RenderFont(struct TextPrinter *);
 static u16 FontFunc_Small(struct TextPrinter *);
@@ -89,6 +93,7 @@ static const u8 sWindowVerticalScrollSpeeds[] = {
     [OPTIONS_TEXT_SPEED_SLOW] = 1,
     [OPTIONS_TEXT_SPEED_MID] = 2,
     [OPTIONS_TEXT_SPEED_FAST] = 4,
+    [OPTIONS_TEXT_SPEED_INSTANT] = 6,
 };
 
 static const struct GlyphWidthFunc sGlyphWidthFuncs[] =
@@ -386,19 +391,42 @@ void RunTextPrinters(void)
         {
             if (sTextPrinters[i].active)
             {
-                u16 renderCmd = RenderFont(&sTextPrinters[i]);
-                switch (renderCmd)
+                bool8 instantText = (gSaveBlock2Ptr->optionsTextSpeed == OPTIONS_TEXT_SPEED_INSTANT);
+                u16 instantGuard = 0;
+
+                // SoulGold-style instant text:
+                // keep rendering characters during the same frame until the
+                // printer reaches a real wait/scroll state or finishes.
+                do
                 {
-                case RENDER_PRINT:
-                    CopyWindowToVram(sTextPrinters[i].printerTemplate.windowId, COPYWIN_GFX);
-                case RENDER_UPDATE:
-                    if (sTextPrinters[i].callback != NULL)
-                        sTextPrinters[i].callback(&sTextPrinters[i].printerTemplate, renderCmd);
-                    break;
-                case RENDER_FINISH:
-                    sTextPrinters[i].active = FALSE;
-                    break;
-                }
+                    u16 renderCmd;
+
+                    if (instantText && sTextPrinters[i].state == RENDER_STATE_HANDLE_CHAR)
+                        sTextPrinters[i].delayCounter = 0;
+
+                    renderCmd = RenderFont(&sTextPrinters[i]);
+
+                    switch (renderCmd)
+                    {
+                    case RENDER_PRINT:
+                        CopyWindowToVram(sTextPrinters[i].printerTemplate.windowId, COPYWIN_GFX);
+                        break;
+                    case RENDER_UPDATE:
+                        if (sTextPrinters[i].callback != NULL)
+                            sTextPrinters[i].callback(&sTextPrinters[i].printerTemplate, renderCmd);
+                        break;
+                    case RENDER_FINISH:
+                        sTextPrinters[i].active = FALSE;
+                        break;
+                    }
+
+                    if (!instantText
+                     || !sTextPrinters[i].active
+                     || sTextPrinters[i].state != RENDER_STATE_HANDLE_CHAR)
+                        break;
+
+                    instantGuard++;
+                } while (instantGuard < 0x400);
             }
         }
     }

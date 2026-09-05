@@ -22,6 +22,10 @@
 #include "constants/songs.h"
 #include "malloc.h"
 
+#ifndef OPTIONS_TEXT_SPEED_INSTANT
+#define OPTIONS_TEXT_SPEED_INSTANT 3
+#endif
+
 #define tMenuSelection data[0]
 #define tTextSpeed data[1]
 #define tBattleSceneOff data[2]
@@ -89,7 +93,7 @@ static const struct WindowTemplate sOptionMenuWinTemplates[] =
         .tilemapTop = 3,
         .width = 26,
         .height = 10,
-        .paletteNum = 1,
+        .paletteNum = 2,
         .baseBlock = 62
     },
     {//WIN_DESCRIPTION
@@ -159,6 +163,7 @@ static int GetMiddleX(const u8 *txt1, const u8 *txt2, const u8 *txt3);
 static int XOptions_ProcessInput(int x, int selection);
 static int ProcessInput_Options_Two(int selection);
 static int ProcessInput_Options_Three(int selection);
+static int ProcessInput_TextSpeed(int selection);
 static int ProcessInput_Sound(int selection);
 static int ProcessInput_FrameType(int selection);
 static const u8 *const OptionTextDescription(void);
@@ -195,6 +200,8 @@ EWRAM_DATA static struct OptionMenu *sOptions = NULL;
 
 static const u16 sOptionMenuText_Pal[] = INCBIN_U16("graphics/interface/option_menu_text.gbapal");
 static const u16 sOptionMenuBg_Pal[] = {RGB(17, 18, 31)};
+static const u16 sOptionMenuPanelBg_Pal[] = {RGB(4, 4, 5)};      // normal panel: #212129
+static const u16 sOptionMenuHighlightBg_Pal[] = {RGB(6, 6, 7)};  // selected row: ~#313139
 // note: this is only used in the Japanese release
 static const u8 sEqualSignGfx[] = INCBIN_U8("graphics/interface/option_menu_equals_sign.4bpp");
 
@@ -219,7 +226,7 @@ struct // PAGE_GENERAL
     int (*processInput)(int selection);
 } static const sItemFunctionsGeneral[MENUITEM_GEN_COUNT] =
 {
-    [MENUITEM_GEN_TEXTSPEED]     = {DrawChoices_TextSpeed,   ProcessInput_Options_Three},
+    [MENUITEM_GEN_TEXTSPEED]     = {DrawChoices_TextSpeed,   ProcessInput_TextSpeed},
     [MENUITEM_GEN_BATTLESCENE]   = {DrawChoices_BattleScene, ProcessInput_Options_Two},
     [MENUITEM_GEN_SOUND]         = {DrawChoices_Sound,       ProcessInput_Sound},
     [MENUITEM_GEN_BUTTONMODE]    = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
@@ -583,8 +590,8 @@ static void VBlankCB(void)
 }
 
 static const u8 sText_TopBar_General[]         = _("GENERAL");
-static const u8 sText_TopBar_General_Right[]   = _("{R_BUTTON}DIFFICULTY");
-static const u8 sText_TopBar_Difficulty[]       = _("DIFFICULTY");
+static const u8 sText_TopBar_General_Right[]   = _("{R_BUTTON}CONFIGURATION");
+static const u8 sText_TopBar_Difficulty[]       = _("CONFIGURATION");
 static const u8 sText_TopBar_Difficulty_Left[]  = _("{L_BUTTON}GENERAL");
 static void DrawTopBarText(void)
 {
@@ -595,7 +602,7 @@ static void DrawTopBarText(void)
     {
         case PAGE_GENERAL:
             AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_General);
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 175, 1, color, 0, sText_TopBar_General_Right);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 158, 1, color, 0, sText_TopBar_General_Right);
             break;
         case PAGE_DIFFICULTY:
             AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Difficulty);
@@ -723,6 +730,11 @@ void CB2_InitOptionMenu(void)
         SetGpuReg(REG_OFFSET_WIN0V, 0);
         SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0 | WININ_WIN1_BG0 | WININ_WIN0_OBJ);
         SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        // WIN0 is the selected row and has color effects disabled.
+        // Everything outside WIN0 on BG0 is darkened.
+        // With the dedicated options palette below this makes:
+        //   selected row  = RGB(6,6,7)
+        //   normal rows   ≈ RGB(4,4,5) = HLW #212129
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0);
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 4);
@@ -749,12 +761,25 @@ void CB2_InitOptionMenu(void)
         gMain.state++;
         break;
     case 5:
+        // Palette 1: top bar + description panel.
         LoadPalette(sOptionMenuText_Pal, 16, sizeof(sOptionMenuText_Pal));
+        LoadPalette(sOptionMenuPanelBg_Pal, 18, sizeof(sOptionMenuPanelBg_Pal));
+
+        // Palette 2: options list. Its base background is intentionally lighter;
+        // BG0 darkening outside WIN0 brings unselected rows back to #212129,
+        // while the selected WIN0 row keeps the lighter highlight.
+        LoadPalette(sOptionMenuText_Pal, 32, sizeof(sOptionMenuText_Pal));
+        LoadPalette(sOptionMenuHighlightBg_Pal, 34, sizeof(sOptionMenuHighlightBg_Pal));
+
         gMain.state++;
         break;
     case 6:
     sOptions = AllocZeroed(sizeof(*sOptions));
     sOptions->sel[MENUITEM_GEN_TEXTSPEED]   = gSaveBlock2Ptr->optionsTextSpeed;
+    // SLOW is no longer exposed in HLW. Old saves using it become MID.
+    if (sOptions->sel[MENUITEM_GEN_TEXTSPEED] == OPTIONS_TEXT_SPEED_SLOW
+     || sOptions->sel[MENUITEM_GEN_TEXTSPEED] > OPTIONS_TEXT_SPEED_INSTANT)
+        sOptions->sel[MENUITEM_GEN_TEXTSPEED] = OPTIONS_TEXT_SPEED_MID;
     sOptions->sel[MENUITEM_GEN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
     sOptions->sel[MENUITEM_GEN_SOUND]       = gSaveBlock2Ptr->optionsSound;
     sOptions->sel[MENUITEM_GEN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
@@ -1145,6 +1170,48 @@ static int ProcessInput_Options_Three(int selection)
     return XOptions_ProcessInput(3, selection);
 }
 
+static int ProcessInput_TextSpeed(int selection)
+{
+    if (selection != OPTIONS_TEXT_SPEED_MID
+     && selection != OPTIONS_TEXT_SPEED_FAST
+     && selection != OPTIONS_TEXT_SPEED_INSTANT)
+        selection = OPTIONS_TEXT_SPEED_MID;
+
+    if (JOY_NEW(DPAD_RIGHT))
+    {
+        switch (selection)
+        {
+        case OPTIONS_TEXT_SPEED_MID:
+            selection = OPTIONS_TEXT_SPEED_FAST;
+            break;
+        case OPTIONS_TEXT_SPEED_FAST:
+            selection = OPTIONS_TEXT_SPEED_INSTANT;
+            break;
+        default:
+            selection = OPTIONS_TEXT_SPEED_MID;
+            break;
+        }
+    }
+
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        switch (selection)
+        {
+        case OPTIONS_TEXT_SPEED_MID:
+            selection = OPTIONS_TEXT_SPEED_INSTANT;
+            break;
+        case OPTIONS_TEXT_SPEED_FAST:
+            selection = OPTIONS_TEXT_SPEED_MID;
+            break;
+        default:
+            selection = OPTIONS_TEXT_SPEED_FAST;
+            break;
+        }
+    }
+
+    return selection;
+}
+
 // Process Input functions ****SPECIFIC****
 static int ProcessInput_Sound(int selection)
 {
@@ -1236,11 +1303,39 @@ static void ReDrawAll(void)
 }
 
 // Process Input functions ****SPECIFIC****
-static const u8 *const sTextSpeedStrings[] = {gText_TextSpeedSlow, gText_TextSpeedMid, gText_TextSpeedFast};
+static const u8 sText_TextSpeedMid[]     = _("MID");
+static const u8 sText_TextSpeedFast[]    = _("FAST");
+static const u8 sText_TextSpeedInstant[] = _("INST");
+
 static void DrawChoices_TextSpeed(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_GEN_TEXTSPEED);
-    DrawChoices_Options_Three(sTextSpeedStrings, selection, y, active);
+    u8 styles[3] = {0};
+    int xMid;
+
+    if (selection != OPTIONS_TEXT_SPEED_MID
+     && selection != OPTIONS_TEXT_SPEED_FAST
+     && selection != OPTIONS_TEXT_SPEED_INSTANT)
+        selection = OPTIONS_TEXT_SPEED_MID;
+
+    if (selection == OPTIONS_TEXT_SPEED_MID)
+        styles[0] = 1;
+    else if (selection == OPTIONS_TEXT_SPEED_FAST)
+        styles[1] = 1;
+    else
+        styles[2] = 1;
+
+    xMid = GetMiddleX(sText_TextSpeedMid, sText_TextSpeedFast, sText_TextSpeedInstant);
+
+    DrawOptionMenuChoice(sText_TextSpeedMid, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_TextSpeedFast, xMid, y, styles[1], active);
+    DrawOptionMenuChoice(
+        sText_TextSpeedInstant,
+        GetStringRightAlignXOffset(FONT_NORMAL, sText_TextSpeedInstant, 198),
+        y,
+        styles[2],
+        active
+    );
 }
 
 static void DrawChoices_BattleScene(int selection, int y)
