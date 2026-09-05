@@ -23,7 +23,7 @@
   "warp_events": [
     {
       "x": 14,
-      "y": 20,
+      "y": 24,
       "elevation": 0,
       "dest_map": "MAP_UNDERWATER_ROUTE106",
       "dest_warp_id": "0"

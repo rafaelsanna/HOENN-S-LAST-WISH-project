@@ -133,9 +133,10 @@ Route112_Text_NotEasyToGetBackToLavaridge:
 	.string "easy matter to get back to LAVARIDGE.$"
 
 Route112_Text_OldManBlocker:
-	.string "Best stay back for now. Things up by\n"
-	.string "MT. CHIMNEY have been awfully uneasy,\l"
-	.string "and I would hate to see anyone hurt.$"
+	.string "These old legs aren't what they used\n"
+	.string "to be, but they can still get me\l"
+	.string "up these stairs! Maybe just after\l"
+	.string "a short break on this step...$"
 
 Route112_Text_MtChimneyCableCarSign:
 	.string "MT. CHIMNEY CABLE CAR\n"

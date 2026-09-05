@@ -34,6 +34,7 @@ void UpdateDryGrassFieldEffect(struct Sprite *sprite);
 void UpdateFairyGrassFieldEffect(struct Sprite *sprite);
 void UpdateSeaGrassFieldEffect(struct Sprite *sprite);
 void UpdateShakingCustomGrassFieldEffect(struct Sprite *sprite);
+void UpdateShakingDryGrassDexNavFieldEffect(struct Sprite *sprite);
 void DestroyShakingCustomGrassBackingSprite(struct Sprite *sprite);
 void WaitFieldEffectSpriteAnim(struct Sprite *sprite);
 void UpdateAshFieldEffect(struct Sprite *sprite);

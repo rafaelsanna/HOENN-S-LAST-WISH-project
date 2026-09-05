@@ -269,34 +269,36 @@ Route112_Text_NotEasyToGetBackToLavaridge:
 # 135 "data/maps/Route112/scripts.pory"
 Route112_Text_OldManBlocker:
 # 136 "data/maps/Route112/scripts.pory"
-	.string "Best stay back for now. Things up by\n"
+	.string "These old legs aren't what they used\n"
 # 137 "data/maps/Route112/scripts.pory"
-	.string "MT. CHIMNEY have been awfully uneasy,\l"
+	.string "to be, but they can still get me\l"
 # 138 "data/maps/Route112/scripts.pory"
-	.string "and I would hate to see anyone hurt.$"
+	.string "up these stairs! Maybe just after\l"
 # 139 "data/maps/Route112/scripts.pory"
-
+	.string "a short break on this step...$"
 # 140 "data/maps/Route112/scripts.pory"
-Route112_Text_MtChimneyCableCarSign:
+
 # 141 "data/maps/Route112/scripts.pory"
-	.string "MT. CHIMNEY CABLE CAR\n"
+Route112_Text_MtChimneyCableCarSign:
 # 142 "data/maps/Route112/scripts.pory"
-	.string "“A short walk {UP_ARROW} way!”$"
+	.string "MT. CHIMNEY CABLE CAR\n"
 # 143 "data/maps/Route112/scripts.pory"
-
+	.string "“A short walk {UP_ARROW} way!”$"
 # 144 "data/maps/Route112/scripts.pory"
-Route112_Text_MtChimneySign:
-# 145 "data/maps/Route112/scripts.pory"
-	.string "MT. CHIMNEY\p"
-# 146 "data/maps/Route112/scripts.pory"
-	.string "“For LAVARIDGE TOWN or the summit,\n"
-# 147 "data/maps/Route112/scripts.pory"
-	.string "please take the CABLE CAR.”$"
-# 148 "data/maps/Route112/scripts.pory"
 
+# 145 "data/maps/Route112/scripts.pory"
+Route112_Text_MtChimneySign:
+# 146 "data/maps/Route112/scripts.pory"
+	.string "MT. CHIMNEY\p"
+# 147 "data/maps/Route112/scripts.pory"
+	.string "“For LAVARIDGE TOWN or the summit,\n"
+# 148 "data/maps/Route112/scripts.pory"
+	.string "please take the CABLE CAR.”$"
 # 149 "data/maps/Route112/scripts.pory"
-Route112_Text_RouteSignLavaridge:
+
 # 150 "data/maps/Route112/scripts.pory"
-	.string "ROUTE 112\n"
+Route112_Text_RouteSignLavaridge:
 # 151 "data/maps/Route112/scripts.pory"
+	.string "ROUTE 112\n"
+# 152 "data/maps/Route112/scripts.pory"
 	.string "{LEFT_ARROW} LAVARIDGE TOWN$"

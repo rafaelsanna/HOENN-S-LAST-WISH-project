@@ -19,6 +19,8 @@
 #include "constants/event_objects.h"
 #include "constants/event_object_movement.h"
 #include "constants/field_effects.h"
+#include "constants/map_groups.h"
+#include "constants/map_event_ids.h"
 #include "constants/trainer_types.h"
 
 // this file's functions
@@ -372,6 +374,10 @@ bool8 CheckForTrainersWantingBattle(void)
         u8 numTrainers;
 
         if (!gObjectEvents[i].active)
+            continue;
+        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LAVARIDGE_TOWN_GYM_1F)
+         && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVARIDGE_TOWN_GYM_1F)
+         && gObjectEvents[i].localId == LOCALID_AXLE)
             continue;
         if (gObjectEvents[i].trainerType != TRAINER_TYPE_NORMAL && gObjectEvents[i].trainerType != TRAINER_TYPE_SEE_ALL_DIRECTIONS && gObjectEvents[i].trainerType != TRAINER_TYPE_BURIED)
             continue;

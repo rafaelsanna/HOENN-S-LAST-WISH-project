@@ -2,14 +2,14 @@
   "id": "MAP_LAVARIDGE_TOWN_GYM_1F",
   "name": "LavaridgeTown_Gym_1F",
   "layout": "LAYOUT_LAVARIDGE_TOWN_GYM_1F",
-  "music": "MUS_GYM",
+  "music": "MUS_ABRACADABRA",
   "region_map_section": "MAPSEC_LAVARIDGE_TOWN",
   "requires_flash": false,
-  "weather": "WEATHER_FOG_HORIZONTAL",
+  "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
   "allow_cycling": false,
   "allow_escaping": false,
-  "allow_running": false,
+  "allow_running": true,
   "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_GYM",
   "connections": null,
@@ -44,7 +44,7 @@
     {
       "local_id": "LOCALID_GERALD",
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
-      "x": 13,
+      "x": 15,
       "y": 25,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -64,8 +64,8 @@
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "1",
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
       "script": "LavaridgeTown_Gym_1F_EventScript_Axle",
       "flag": "0"
     },
@@ -110,6 +110,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_LAVARIDGE_GYM_STAGE_BOUNCER_RIGHT",
       "graphics_id": "OBJ_EVENT_GFX_MYSTERY_GIFT_MAN",
       "x": 14,
       "y": 11,
@@ -119,10 +120,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_Gym_1F_EventScript_StageBouncer",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_LAVARIDGE_GYM_STAGE_BOUNCER_LEFT",
       "graphics_id": "OBJ_EVENT_GFX_MYSTERY_GIFT_MAN",
       "x": 5,
       "y": 11,
@@ -132,7 +134,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_Gym_1F_EventScript_StageBouncer",
       "flag": "0"
     },
     {
@@ -145,7 +147,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_Gym_1F_EventScript_Tickets1",
       "flag": "0"
     },
     {
@@ -158,20 +160,34 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_Gym_1F_EventScript_Tickets2",
       "flag": "0"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MYSTERY_GIFT_MAN",
       "x": 1,
-      "y": 25,
+      "y": 26,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_Gym_1F_EventScript_FrontBouncer1",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_LAVARIDGE_GYM_FRONT_BOUNCER_2",
+      "graphics_id": "OBJ_EVENT_GFX_MYSTERY_GIFT_MAN",
+      "x": 14,
+      "y": 23,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "LavaridgeTown_Gym_1F_EventScript_FrontBouncer2",
       "flag": "0"
     }
   ],
@@ -191,7 +207,35 @@
       "dest_warp_id": "1"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 23,
+      "elevation": 3,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Trigger"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 11,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "LavaridgeTown_Gym_1F_EventScript_StageBouncerLeftTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 11,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "LavaridgeTown_Gym_1F_EventScript_StageBouncerRightTrigger"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

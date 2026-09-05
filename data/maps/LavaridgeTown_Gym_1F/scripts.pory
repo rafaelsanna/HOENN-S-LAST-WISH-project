@@ -5,7 +5,6 @@ LavaridgeTown_Gym_1F_MapScripts::
 
 LavaridgeTown_Gym_1F_OnTransition:
 	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
-	call LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers
 	end
 
 @ Unclear where/if these temp vars are getting checked
@@ -124,8 +123,27 @@ LavaridgeTown_Gym_EventScript_CheckTrainerScript::
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Axle::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, LOCALID_AXLE, TRAINER_AXLE, LavaridgeTown_Gym_1F_Text_AxleIntro, LavaridgeTown_Gym_1F_Text_AxleDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
-	msgbox LavaridgeTown_Gym_1F_Text_AxlePostBattle, MSGBOX_AUTOCLOSE
+	goto_if_set FLAG_LAVARIDGE_GYM_STAGE_PASS, LavaridgeTown_Gym_1F_EventScript_AxleHasGivenPass
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, LOCALID_AXLE, TRAINER_AXLE, LavaridgeTown_Gym_1F_Text_AxleIntro, LavaridgeTown_Gym_1F_Text_AxleDefeat, LavaridgeTown_Gym_1F_EventScript_AxleGiveStagePass, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	end
+
+LavaridgeTown_Gym_1F_EventScript_AxleGiveStagePass::
+	special PlayerFaceTrainerAfterBattle
+	waitmovement 0
+	settrainerflag TRAINER_AXLE
+	setflag FLAG_LAVARIDGE_GYM_STAGE_PASS
+	playfanfare MUS_OBTAIN_ITEM
+	waitfanfare
+	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
+	msgbox LavaridgeTown_Gym_1F_Text_AxlePostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_AxleHasGivenPass::
+	lock
+	faceplayer
+	msgbox LavaridgeTown_Gym_1F_Text_AxleHasGivenPass, MSGBOX_DEFAULT
+	release
 	end
 
 LavaridgeTown_Gym_B1F_EventScript_Keegan::
@@ -193,6 +211,214 @@ LavaridgeTown_Gym_1F_EventScript_GymStatue::
 	releaseall
 	end
 
+
+LavaridgeTown_Gym_1F_EventScript_FrontBouncer1::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, LavaridgeTown_Gym_1F_EventScript_FrontStaffCongrats
+	msgbox LavaridgeTown_Gym_1F_Text_FrontBouncer1, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_FrontBouncer2::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, LavaridgeTown_Gym_1F_EventScript_FrontStaffCongrats
+	goto_if_set FLAG_LAVARIDGE_GYM_BOUGHT_TICKET, LavaridgeTown_Gym_1F_EventScript_FrontBouncer2HasTicket
+	msgbox LavaridgeTown_Gym_1F_Text_FrontBouncer2NeedTicket, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_FrontBouncer2HasTicket::
+	msgbox LavaridgeTown_Gym_1F_Text_FrontBouncer2HasTicket, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Trigger::
+	goto_if_unset FLAG_LAVARIDGE_GYM_BOUGHT_TICKET, LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Block
+	specialvar VAR_RESULT, GetPlayerFacingDirection
+	goto_if_eq VAR_RESULT, DIR_SOUTH, LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Exit
+	goto_if_eq VAR_RESULT, DIR_NORTH, LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Enter
+	end
+
+LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Block::
+	lockall
+	applymovement LOCALID_LAVARIDGE_GYM_FRONT_BOUNCER_2, Common_Movement_FaceLeft
+	waitmovement 0
+	msgbox LavaridgeTown_Gym_1F_Text_FrontBouncer2NeedTicket, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
+	waitmovement 0
+	applymovement LOCALID_LAVARIDGE_GYM_FRONT_BOUNCER_2, Common_Movement_FaceDown
+	waitmovement 0
+	releaseall
+	end
+
+LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Enter::
+	lockall
+	applymovement LOCALID_LAVARIDGE_GYM_FRONT_BOUNCER_2, Common_Movement_FaceLeft
+	waitmovement 0
+	msgbox LavaridgeTown_Gym_1F_Text_FrontBouncer2HasTicket, MSGBOX_DEFAULT
+	applymovement LOCALID_LAVARIDGE_GYM_FRONT_BOUNCER_2, Common_Movement_FaceDown
+	waitmovement 0
+	releaseall
+	end
+
+LavaridgeTown_Gym_1F_EventScript_FrontBouncer2Exit::
+	end
+
+LavaridgeTown_Gym_1F_EventScript_Tickets1::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, LavaridgeTown_Gym_1F_EventScript_FrontStaffCongrats
+	msgbox LavaridgeTown_Gym_1F_Text_Tickets1, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_Tickets2::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, LavaridgeTown_Gym_1F_EventScript_FrontStaffCongrats
+	goto_if_set FLAG_LAVARIDGE_GYM_BOUGHT_TICKET, LavaridgeTown_Gym_1F_EventScript_Tickets2AlreadyBought
+	showmoneybox 0, 0
+	msgbox LavaridgeTown_Gym_1F_Text_Tickets2BuyTicket, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LavaridgeTown_Gym_1F_EventScript_Tickets2Decline
+	checkmoney 100
+	goto_if_eq VAR_RESULT, FALSE, LavaridgeTown_Gym_1F_EventScript_Tickets2NoMoney
+	msgbox LavaridgeTown_Gym_1F_Text_Tickets2SoldTicket, MSGBOX_DEFAULT
+	removemoney 100
+	updatemoneybox
+	setflag FLAG_LAVARIDGE_GYM_BOUGHT_TICKET
+	playfanfare MUS_OBTAIN_ITEM
+	waitfanfare
+	hidemoneybox
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_Tickets2AlreadyBought::
+	msgbox LavaridgeTown_Gym_1F_Text_Tickets2AlreadyBought, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_Tickets2Decline::
+	msgbox LavaridgeTown_Gym_1F_Text_Tickets2Decline, MSGBOX_DEFAULT
+	hidemoneybox
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_Tickets2NoMoney::
+	msgbox LavaridgeTown_Gym_1F_Text_Tickets2NoMoney, MSGBOX_DEFAULT
+	hidemoneybox
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_StageBouncer::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, LavaridgeTown_Gym_1F_EventScript_StageStaffCongrats
+	goto_if_set FLAG_LAVARIDGE_GYM_STAGE_PASS, LavaridgeTown_Gym_1F_EventScript_StageBouncerHasPass
+	msgbox LavaridgeTown_Gym_1F_Text_StageBouncerNeedPass, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_StageBouncerHasPass::
+	msgbox LavaridgeTown_Gym_1F_Text_StageBouncerHasPass, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_FrontStaffCongrats::
+	msgbox LavaridgeTown_Gym_1F_Text_FrontStaffCongrats, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_StageStaffCongrats::
+	msgbox LavaridgeTown_Gym_1F_Text_StageStaffCongrats, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_EventScript_StageBouncerLeftTrigger::
+	goto_if_set FLAG_LAVARIDGE_GYM_STAGE_PASS, LavaridgeTown_Gym_1F_EventScript_BouncerTriggerPass
+	lockall
+	applymovement LOCALID_LAVARIDGE_GYM_STAGE_BOUNCER_LEFT, Common_Movement_FaceRight
+	waitmovement 0
+	msgbox LavaridgeTown_Gym_1F_Text_StageBouncerNeedPass, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
+	waitmovement 0
+	applymovement LOCALID_LAVARIDGE_GYM_STAGE_BOUNCER_LEFT, Common_Movement_FaceRight
+	waitmovement 0
+	releaseall
+	end
+
+LavaridgeTown_Gym_1F_EventScript_StageBouncerRightTrigger::
+	goto_if_set FLAG_LAVARIDGE_GYM_STAGE_PASS, LavaridgeTown_Gym_1F_EventScript_BouncerTriggerPass
+	lockall
+	applymovement LOCALID_LAVARIDGE_GYM_STAGE_BOUNCER_RIGHT, Common_Movement_FaceLeft
+	waitmovement 0
+	msgbox LavaridgeTown_Gym_1F_Text_StageBouncerNeedPass, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
+	waitmovement 0
+	applymovement LOCALID_LAVARIDGE_GYM_STAGE_BOUNCER_RIGHT, Common_Movement_FaceLeft
+	waitmovement 0
+	releaseall
+	end
+
+LavaridgeTown_Gym_1F_EventScript_BouncerTriggerPass::
+	end
+
+
+LavaridgeTown_Gym_1F_Text_FrontBouncer1:
+	.string "Line starts over there, friend.\p"
+	.string "Get yourself a ticket first, then\n"
+	.string "we can let you into the show.$"
+
+LavaridgeTown_Gym_1F_Text_FrontBouncer2NeedTicket:
+	.string "Hold up. I need to see a ticket\n"
+	.string "before you head inside.\p"
+	.string "The ticket booth is right over there.$"
+
+LavaridgeTown_Gym_1F_Text_FrontBouncer2HasTicket:
+	.string "Ticket checks out.\p"
+	.string "Enjoy the show!$"
+
+LavaridgeTown_Gym_1F_Text_Tickets1:
+	.string "Welcome to tonight's show!\n"
+	.string "We hope you have a great time!$"
+
+LavaridgeTown_Gym_1F_Text_Tickets2BuyTicket:
+	.string "One ticket to see AMATERASU is\n"
+	.string "¥100.\p"
+	.string "Would you like one?$"
+
+LavaridgeTown_Gym_1F_Text_Tickets2SoldTicket:
+	.string "Thank you!\p"
+	.string "You're all set. Show your ticket\n"
+	.string "to the bouncer at the entrance.$"
+
+LavaridgeTown_Gym_1F_Text_Tickets2AlreadyBought:
+	.string "Enjoy the show!$"
+
+LavaridgeTown_Gym_1F_Text_Tickets2Decline:
+	.string "No problem.\p"
+	.string "Come back if you decide you want\n"
+	.string "to see the show.$"
+
+LavaridgeTown_Gym_1F_Text_Tickets2NoMoney:
+	.string "I'm sorry, but you don't have\n"
+	.string "enough money for a ticket.$"
+
+LavaridgeTown_Gym_1F_Text_StageBouncerNeedPass:
+	.string "Stage access is for stage-pass\n"
+	.string "holders only.\p"
+	.string "No pass, no getting near\n"
+	.string "AMATERASU during the show.$"
+
+LavaridgeTown_Gym_1F_Text_StageBouncerHasPass:
+	.string "Stage pass confirmed.\p"
+	.string "Go on through, but mind the heat\n"
+	.string "from the stage effects.$"
+
 LavaridgeTown_Gym_1F_Text_GymGuideAdvice:
 	.string "Hey! How's it going,\n"
 	.string "CHAMPION-bound {PLAYER}?\p"
@@ -227,22 +453,24 @@ LavaridgeTown_Gym_1F_Text_ColePostBattle:
 	.string "But in battle, her flames\n"
 	.string "burn fierce and wild.$"
 
-LavaridgeTown_Gym_1F_Text_AxleIntro:
-	.string "Hey! I'm not here because\n"
-	.string "of AMATERASU, okay?\p"
-	.string "I just like intense battles\n"
-	.string "and blazing heat!$"
+LavaridgeTown_Gym_1F_Text_AxlePostBattle:
+	.string "I love AMATERASU so much that\n"
+	.string "I bought an extra stage pass.\p"
+	.string "Since you beat me, you must really\n"
+	.string "love her too!\p"
+	.string "Here, take my spare.\n"
+	.string "Make sure to get her autograph!$"
 
 LavaridgeTown_Gym_1F_Text_AxleDefeat:
-	.string "I hope AMATERASU flames you good!$"
+	.string "Woah! Ouch! I singed my hat!$"
 
-LavaridgeTown_Gym_1F_Text_AxlePostBattle:
+LavaridgeTown_Gym_1F_Text_AxleIntro:
 	.string "Okay… maybe I'm a little\n"
 	.string "bit of an AMATERASU simp…\p"
 	.string "But I've got my own fire\n"
 	.string "burning inside!\p"
 	.string "Get too close to us,\n"
-	.string "and that strange cape of yours\n"
+	.string "and that strange cape of yours\l"
 	.string "might catch flame!$"
 
 LavaridgeTown_Gym_B1F_Text_KeeganIntro:
@@ -263,30 +491,33 @@ LavaridgeTown_Gym_B1F_Text_KeeganPostBattle:
 	.string "burned seriously.$"
 
 LavaridgeTown_Gym_1F_Text_GeraldIntro:
-	.string "Can your POKéMON withstand\n"
-	.string "392-degree heat?$"
+	.string "Hey! Are you trying to cut in?!\n"
+	.string "We all want to see the show, pal.\p"
+	.string "Get to the back of the line!$"
 
 LavaridgeTown_Gym_1F_Text_GeraldDefeat:
-	.string "It didn't burn hotly enough…$"
+	.string "Well, fine.. I guess you can cut me.\p"
+	.string "Jerk$"
 
 LavaridgeTown_Gym_1F_Text_GeraldPostBattle:
-	.string "The temperature of magma is\n"
-	.string "392 degrees.\p"
-	.string "Your POKéMON beat me, so they should\n"
-	.string "easily survive in magma.$"
+	.string "I've been waiting in this line\n"
+	.string "for over an hour.\p"
+	.string "But sure, just go on through.\n"
+	.string "It's not like you'll beat Amaterasu.$"
 
 LavaridgeTown_Gym_1F_Text_DanielleIntro:
-	.string "Um… hi wierdo…\n"
-	.string "I'll battle you now!$"
+	.string "Um… hi, weirdo…\p"
+	.string "Did I take too much, or are you\n"
+	.string "really dressed like that?$"
 
 LavaridgeTown_Gym_1F_Text_DanielleDefeat:
-	.string "Oh, but you're too strong.$"
+	.string "I think I did take too much.$"
 
 LavaridgeTown_Gym_1F_Text_DaniellePostBattle:
 	.string "AMATERASU shines on stage\n"
 	.string "with flames and fireworks.\p"
-	.string "I want to be strong and radiant\n"
-	.string "just like her someday!$"
+	.string "But shady people under the stage\n"
+	.string "sell some really strange stuff.$"
 
 LavaridgeTown_Gym_B1F_Text_JaceIntro:
 	.string "Have you ever seen her show?\n"
@@ -371,8 +602,8 @@ LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
 	.string "love the stage so much.\p"
 	.string "When flames clash and spirits\n"
 	.string "ignite… that's true passion!\p"
-	.string "You pushed me to burn brighter.\n"
-	.string "And I respect that.\p"
+	.string "You pushed me to burn brighter,\n"
+	.string "and I respect that.\p"
 	.string "Take this BADGE.\n"
 	.string "You earned it fair and square.$"
 
@@ -385,8 +616,8 @@ LavaridgeTown_Gym_1F_Text_ExplainHeatBadgeTakeThis:
 	.string "up to Level 50, even those you get in\l"
 	.string "trades from other people, will obey\l"
 	.string "you completely.\p"
-	.string "And, it lets POKéMON use the HM move\n"
-	.string "STRENGTH outside of battle.\p"
+	.string "And, it lets POKéMON use HEADBUTT\n"
+	.string "and STRENGTH outside of battle.\p"
 	.string "This is a token of my appreciation.\n"
 	.string "Don't be shy about taking it!$"
 
@@ -455,4 +686,21 @@ LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons:
 	.string "that can battle?\p"
 	.string "I hate to say this, but when you come\n"
 	.string "see me, bring at least two POKéMON.$"
+
+LavaridgeTown_Gym_1F_Text_AxleHasGivenPass:
+	.string "Hey, I'm trying to watch the show\n"
+	.string "now.\p"
+	.string "You've got my spare pass, so go\n"
+	.string "bug someone else.$"
+
+LavaridgeTown_Gym_1F_Text_FrontStaffCongrats:
+	.string "Congratulations on your win!\p"
+	.string "That was one seriously hot\n"
+	.string "performance.$"
+
+LavaridgeTown_Gym_1F_Text_StageStaffCongrats:
+	.string "Congratulations, challenger.\p"
+	.string "You handled the stage like a\n"
+	.string "real headliner.$"
+
 `

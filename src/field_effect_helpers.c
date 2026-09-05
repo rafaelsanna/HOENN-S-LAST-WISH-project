@@ -1414,9 +1414,7 @@ static u32 StartShakingGrassFieldEffect(u8 fieldEffectObjectId, u8 fieldEffectId
 
 static bool8 IsShakingCustomGrassEffectObject(u8 fieldEffectObjectId)
 {
-    return fieldEffectObjectId == FLDEFFOBJ_SHAKING_DRY_GRASS
-        || fieldEffectObjectId == FLDEFFOBJ_SHAKING_FAIRY_GRASS
-        || fieldEffectObjectId == FLDEFFOBJ_SHAKING_SEA_GRASS;
+    return FALSE;
 }
 
 u32 FldEff_ShakingDryGrass(void)
@@ -2235,6 +2233,11 @@ void UpdateJumpImpactEffect(struct Sprite *sprite)
         UpdateObjectEventSpriteInvisibility(sprite, FALSE);
         SetObjectSubpriorityByElevation(sprite->sJumpElevation, sprite, 0);
     }
+}
+
+void UpdateShakingDryGrassDexNavFieldEffect(struct Sprite *sprite)
+{
+    UpdateObjectEventSpriteInvisibility(sprite, FALSE);
 }
 
 void UpdateShakingCustomGrassFieldEffect(struct Sprite *sprite)
