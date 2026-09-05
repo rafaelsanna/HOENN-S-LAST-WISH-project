@@ -22,6 +22,49 @@
 #include "constants/songs.h"
 #include "malloc.h"
 
+// HLW Battle Speed values stored by the Options Menu.
+enum
+{
+    HLW_BATTLE_SPEED_NORMAL,
+    HLW_BATTLE_SPEED_2X,
+    HLW_BATTLE_SPEED_4X,
+    HLW_BATTLE_SPEED_COUNT,
+};
+
+// Persistent Battle Speed slot inside HLWSaveExtension.future[].
+// future[64..67] is already used by the shared Party/Summary theme,
+// future[68..71] is used by the Pokédex theme, so Battle Speed starts at 72.
+#define HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET      72
+#define HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET      73
+#define HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET   74
+#define HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET     75
+#define HLW_BATTLE_SPEED_SAVE_TAG0             0x42 // 'B'
+#define HLW_BATTLE_SPEED_SAVE_TAG1             0x53 // 'S'
+#define HLW_BATTLE_SPEED_SAVE_VERSION          1
+#define HLW_BATTLE_SPEED_SAVE_MAGIC            0x484C5753
+#define HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION 1
+
+// HLW HP bar animation values stored by the Options Menu.
+enum
+{
+    HLW_HP_BAR_NORMAL,
+    HLW_HP_BAR_INSTANT,
+    HLW_HP_BAR_COUNT,
+};
+
+// Persistent HP Bar slot inside HLWSaveExtension.future[].
+// Battle Speed uses future[72..75], so HP Bar starts at 76.
+#define HLW_HP_BAR_SAVE_TAG0_OFFSET       76
+#define HLW_HP_BAR_SAVE_TAG1_OFFSET       77
+#define HLW_HP_BAR_SAVE_VERSION_OFFSET    78
+#define HLW_HP_BAR_SAVE_VALUE_OFFSET      79
+#define HLW_HP_BAR_SAVE_TAG0              0x48 // 'H'
+#define HLW_HP_BAR_SAVE_TAG1              0x50 // 'P'
+#define HLW_HP_BAR_SAVE_VERSION           1
+#define HLW_HP_BAR_SAVE_MAGIC             0x484C5753
+#define HLW_HP_BAR_SAVE_EXTENSION_VERSION 1
+
+
 #ifndef OPTIONS_TEXT_SPEED_INSTANT
 #define OPTIONS_TEXT_SPEED_INSTANT 3
 #endif
@@ -45,6 +88,11 @@ enum //General's Menu Items
 {
     MENUITEM_GEN_TEXTSPEED,
     MENUITEM_GEN_BATTLESCENE,
+    MENUITEM_GEN_BATTLESPEED,
+    MENUITEM_GEN_FASTSLIDE,
+    MENUITEM_GEN_HPBAR,
+    MENUITEM_GEN_AUTORUN,
+    MENUITEM_GEN_AUTOFISHING,
     MENUITEM_GEN_SOUND,
     MENUITEM_GEN_BUTTONMODE,
     MENUITEM_GEN_FRAMETYPE,
@@ -62,8 +110,6 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_NUZLOCKE,
     MENUITEM_DIF_RANDOMIZER_E,
     MENUITEM_DIF_RANDOMIZER_T,
-    MENUITEM_DIF_AUTOFISHING,
-    MENUITEM_DIF_FASTSLIDE, 
     MENUITEM_DIF_DEBUGMENU,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
@@ -128,6 +174,18 @@ static const struct BgTemplate sOptionMenuBgTemplates[] =
        .priority = 0,
        .baseTile = 0
     },
+    {
+       // HLW animated options background. A 32x64 tilemap gives enough
+       // vertical room to repeat the 32x24 bgscroll map seamlessly while
+       // the visible 240x160 area drifts down and to the right.
+       .bg = 2,
+       .charBaseIndex = 0,
+       .mapBaseIndex = 28,
+       .screenSize = 2, // 256x512
+       .paletteMode = 0,
+       .priority = 2,
+       .baseTile = 0
+    },
 };
 
 struct OptionMenu
@@ -147,6 +205,8 @@ struct OptionMenu
 //Local Functions
 static void MainCB2(void);
 static void VBlankCB(void);
+static void LoadOptionMenuScrollingBackground(void);
+static void UpdateOptionMenuScrollingBackground(void);
 static void DrawTopBarText(void); //top Option text
 static void DrawLeftSideOptionText(int selection, int y);
 static void DrawRightSideChoiceText(const u8 *str, int x, int y, bool8 choosen, bool8 active);
@@ -165,6 +225,13 @@ static int ProcessInput_Options_Two(int selection);
 static int ProcessInput_Options_Three(int selection);
 static int ProcessInput_TextSpeed(int selection);
 static int ProcessInput_Sound(int selection);
+static void InitBattleSpeedSaveExtensionIfNeeded(void);
+static u8 LoadBattleSpeedOption(void);
+static void SaveBattleSpeedOption(u8 selection);
+static void InitHpBarSaveExtensionIfNeeded(void);
+static u8 LoadHpBarOption(void);
+static void SaveHpBarOption(u8 selection);
+bool32 IsHpBarInstant(void);
 static int ProcessInput_FrameType(int selection);
 static const u8 *const OptionTextDescription(void);
 static const u8 *const OptionTextRight(u8 menuItem);
@@ -178,6 +245,10 @@ static void DrawChoices_Options_Three(const u8 *const *const strings, int select
 static void ReDrawAll(void);
 static void DrawChoices_TextSpeed(int selection, int y);
 static void DrawChoices_BattleScene(int selection, int y);
+static void DrawChoices_BattleSpeed(int selection, int y);
+static void DrawChoices_FastSlide(int selection, int y);
+static void DrawChoices_AutoRun(int selection, int y);
+static void DrawChoices_HpBar(int selection, int y);
 static void DrawChoices_Sound(int selection, int y);
 static void DrawChoices_ButtonMode(int selection, int y);
 static void DrawChoices_OnOff(int selection, int y);
@@ -197,9 +268,30 @@ bool8 Debug_IsWishMenuBlockedByEliteFour(void);
 
 // EWRAM vars
 EWRAM_DATA static struct OptionMenu *sOptions = NULL;
+static u32 sOptionMenuBgScrollX;
+static u32 sOptionMenuBgScrollY;
 
 static const u16 sOptionMenuText_Pal[] = INCBIN_U16("graphics/interface/option_menu_text.gbapal");
-static const u16 sOptionMenuBg_Pal[] = {RGB(17, 18, 31)};
+
+// HLW options-screen background. bgscroll.png is the tileset source and
+// bgscroll.bin is its 32x24 tilemap. The build system generates bgscroll.4bpp
+// and bgscroll.gbapal from the PNG, while the tilemap is kept exactly as authored.
+#define OPTION_SCROLL_BG_PALETTE          3
+#define OPTION_SCROLL_SOURCE_WIDTH_TILES  32
+#define OPTION_SCROLL_SOURCE_HEIGHT_TILES 24
+#define OPTION_SCROLL_BG_HEIGHT_TILES     64
+#define OPTION_SCROLL_X_PERIOD_PIXELS     (OPTION_SCROLL_SOURCE_WIDTH_TILES * 8)
+#define OPTION_SCROLL_Y_PERIOD_PIXELS     (OPTION_SCROLL_SOURCE_HEIGHT_TILES * 8)
+#define OPTION_SCROLL_SPEED_X             32 // 1/8 px per frame: gentle drift to the right.
+#define OPTION_SCROLL_SPEED_Y             48 // 3/16 px per frame: smooth drift from top to bottom.
+static const u32 sOptionMenuScrolling_Gfx[] = INCBIN_U32("graphics/options/bgscroll.4bpp");
+static const u16 sOptionMenuScrolling_Tilemap[] = INCBIN_U16("graphics/options/bgscroll.bin");
+static const u16 sOptionMenuScrolling_Pal[] = INCBIN_U16("graphics/options/bgscroll.gbapal");
+
+// GBA palettes are 5-bit per channel, so RGB(18,22,29) is the closest
+// hardware representation of the requested #95B4EC top-bar blue.
+static const u16 sOptionMenuBg_Pal[] = {RGB(18, 22, 29)};
+static const u16 sOptionMenuTopBarBg_Pal[] = {RGB(18, 22, 29)};
 static const u16 sOptionMenuPanelBg_Pal[] = {RGB(4, 4, 5)};      // normal panel: #212129
 static const u16 sOptionMenuHighlightBg_Pal[] = {RGB(6, 6, 7)};  // selected row: ~#313139
 // note: this is only used in the Japanese release
@@ -228,6 +320,11 @@ struct // PAGE_GENERAL
 {
     [MENUITEM_GEN_TEXTSPEED]     = {DrawChoices_TextSpeed,   ProcessInput_TextSpeed},
     [MENUITEM_GEN_BATTLESCENE]   = {DrawChoices_BattleScene, ProcessInput_Options_Two},
+    [MENUITEM_GEN_BATTLESPEED]   = {DrawChoices_BattleSpeed, ProcessInput_Options_Three},
+    [MENUITEM_GEN_FASTSLIDE]     = {DrawChoices_FastSlide,   ProcessInput_Options_Two},
+    [MENUITEM_GEN_HPBAR]         = {DrawChoices_HpBar,       ProcessInput_Options_Two},
+    [MENUITEM_GEN_AUTORUN]       = {DrawChoices_AutoRun,     ProcessInput_Options_Two},
+    [MENUITEM_GEN_AUTOFISHING]   = {DrawChoices_AutoFishing, ProcessInput_Options_Two},
     [MENUITEM_GEN_SOUND]         = {DrawChoices_Sound,       ProcessInput_Sound},
     [MENUITEM_GEN_BUTTONMODE]    = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
     [MENUITEM_GEN_FRAMETYPE]      = {DrawChoices_FrameType,       ProcessInput_FrameType},
@@ -248,8 +345,6 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_NUZLOCKE]       = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
     [MENUITEM_DIF_RANDOMIZER_E]   = {DrawChoices_RandomizerE, ProcessInput_Options_Two},
     [MENUITEM_DIF_RANDOMIZER_T]   = {DrawChoices_RandomizerT, ProcessInput_Options_Two},
-    [MENUITEM_DIF_AUTOFISHING]    = {DrawChoices_AutoFishing,  ProcessInput_Options_Two},
-    [MENUITEM_DIF_FASTSLIDE]      = {DrawChoices_OnOff,         ProcessInput_Options_Two}, 
     [MENUITEM_DIF_DEBUGMENU]      = {DrawChoices_OnOff,        ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]         = {NULL, NULL},
 };
@@ -264,6 +359,9 @@ static const u8 sText_RandomizerE[]     = _("RANDOM POKéMON");
 static const u8 sText_RandomizerT[]     = _("RANDOM TRAINERS");
 static const u8 sText_AutoFishing[]     = _("AUTO FISH");
 static const u8 sText_FastSlide[]       = _("FAST SLIDE");
+static const u8 sText_AutoRun[]         = _("AUTO RUN");
+static const u8 sText_BattleSpeed[]     = _("BATTLE SPEED");
+static const u8 sText_HpBar[]           = _("HP BAR");
 
 static const u8 sText_Desc_FastSlideOff[] = _("Display the slide animation at the\nbeginning of battles.");
 static const u8 sText_Desc_FastSlideOn[]  = _("Skip the slide animation at the\nbeginning of battles.");
@@ -272,6 +370,11 @@ static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
 {
     [MENUITEM_GEN_TEXTSPEED]     = gText_TextSpeed,
     [MENUITEM_GEN_BATTLESCENE]   = gText_BattleScene,
+    [MENUITEM_GEN_BATTLESPEED]   = sText_BattleSpeed,
+    [MENUITEM_GEN_FASTSLIDE]     = sText_FastSlide,
+    [MENUITEM_GEN_HPBAR]         = sText_HpBar,
+    [MENUITEM_GEN_AUTORUN]       = sText_AutoRun,
+    [MENUITEM_GEN_AUTOFISHING]   = sText_AutoFishing,
     [MENUITEM_GEN_SOUND]         = gText_Sound,
     [MENUITEM_GEN_BUTTONMODE]    = gText_ButtonMode,
     [MENUITEM_GEN_FRAMETYPE]      = gText_Frame,
@@ -288,8 +391,6 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
     [MENUITEM_DIF_RANDOMIZER_E]   = sText_RandomizerE,
     [MENUITEM_DIF_RANDOMIZER_T]   = sText_RandomizerT,
-    [MENUITEM_DIF_AUTOFISHING]    = sText_AutoFishing,
-    [MENUITEM_DIF_FASTSLIDE]      = sText_FastSlide,
     [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("WISH MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
 };
@@ -330,6 +431,11 @@ static bool8 CheckConditions(int selection)
         {
         case MENUITEM_GEN_TEXTSPEED:        return TRUE;
         case MENUITEM_GEN_BATTLESCENE:      return TRUE;
+        case MENUITEM_GEN_BATTLESPEED:      return TRUE;
+        case MENUITEM_GEN_FASTSLIDE:        return TRUE;
+        case MENUITEM_GEN_HPBAR:            return TRUE;
+        case MENUITEM_GEN_AUTORUN:          return TRUE;
+        case MENUITEM_GEN_AUTOFISHING:      return TRUE;
         case MENUITEM_GEN_SOUND:            return TRUE;
         case MENUITEM_GEN_BUTTONMODE:       return TRUE;
         case MENUITEM_GEN_FRAMETYPE:        return TRUE;
@@ -347,8 +453,6 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
         case MENUITEM_DIF_RANDOMIZER_E:     return TRUE;
         case MENUITEM_DIF_RANDOMIZER_T:     return !IsHardNpcTeamsSelected();
-        case MENUITEM_DIF_AUTOFISHING:      return TRUE;
-        case MENUITEM_DIF_FASTSLIDE:        return TRUE;
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
         case MENUITEM_DIF_COUNT:            return TRUE;
@@ -363,6 +467,13 @@ static const u8 sText_Desc_Save[]               = _("Save your settings.");
 static const u8 sText_Desc_TextSpeed[]          = _("Choose one of the three text-display\nspeeds.");
 static const u8 sText_Desc_BattleScene_On[]     = _("Show the POKéMON battle animations.");
 static const u8 sText_Desc_BattleScene_Off[]    = _("Skip the POKéMON battle animations.");
+static const u8 sText_Desc_BattleSpeedNormal[]  = _("Use standard battle timing.\n10x is only in the Wish Menu.");
+static const u8 sText_Desc_BattleSpeed2x[]      = _("Run battle animations and delays at\n2x speed. Menus stay at normal speed.");
+static const u8 sText_Desc_BattleSpeed4x[]      = _("Run battle animations and delays at\n4x speed. Menus stay at normal speed.");
+static const u8 sText_Desc_AutoRunOff[]         = _("Hold B to run normally.\nAuto Run can also be toggled with L+B.");
+static const u8 sText_Desc_AutoRunOn[]          = _("Run without holding B.\nAuto Run can also be toggled with L+B.");
+static const u8 sText_Desc_HpBarNormal[]        = _("Animate HP changes with the standard\nhealth-bar drain and recovery.");
+static const u8 sText_Desc_HpBarInstant[]       = _("Apply HP bar changes immediately.\nDamage and healing skip bar animation.");
 static const u8 sText_Desc_SoundMono[]          = _("Sound is the same in all speakers.\nRecommended for original hardware.");
 static const u8 sText_Desc_SoundStereo[]        = _("Play the left and right audio channel\nseperatly. Great with headphones.");
 static const u8 sText_Desc_ButtonMode[]         = _("All buttons work as normal.");
@@ -408,6 +519,11 @@ static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3]
 {
     [MENUITEM_GEN_TEXTSPEED]    = {sText_Desc_TextSpeed,            sText_Empty,                sText_Empty},
     [MENUITEM_GEN_BATTLESCENE]  = {sText_Desc_BattleScene_On,       sText_Desc_BattleScene_Off, sText_Empty},
+    [MENUITEM_GEN_BATTLESPEED]  = {sText_Desc_BattleSpeedNormal,    sText_Desc_BattleSpeed2x,   sText_Desc_BattleSpeed4x},
+    [MENUITEM_GEN_FASTSLIDE]    = {sText_Desc_FastSlideOff,         sText_Desc_FastSlideOn,     sText_Empty},
+    [MENUITEM_GEN_HPBAR]        = {sText_Desc_HpBarNormal,          sText_Desc_HpBarInstant,    sText_Empty},
+    [MENUITEM_GEN_AUTORUN]      = {sText_Desc_AutoRunOff,           sText_Desc_AutoRunOn,       sText_Empty},
+    [MENUITEM_GEN_AUTOFISHING]  = {sText_Desc_AutoFishingOff,       sText_Desc_AutoFishingOn,   sText_Empty},
     [MENUITEM_GEN_SOUND]        = {sText_Desc_SoundMono,            sText_Desc_SoundStereo,     sText_Empty},
     [MENUITEM_GEN_BUTTONMODE]   = {sText_Desc_ButtonMode,           sText_Desc_ButtonMode_LR,   sText_Desc_ButtonMode_LA},
     [MENUITEM_GEN_FRAMETYPE]      = {sText_Desc_FrameType,             sText_Empty,                    sText_Empty},
@@ -424,8 +540,6 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,         sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
     [MENUITEM_DIF_RANDOMIZER_E] = {sText_Desc_RandomizerEOff,      sText_Desc_RandomizerEOn,  sText_Empty},
     [MENUITEM_DIF_RANDOMIZER_T] = {sText_Desc_RandomizerTOff,      sText_Desc_RandomizerTOn,  sText_Empty},
-    [MENUITEM_DIF_AUTOFISHING]  = {sText_Desc_AutoFishingOff,      sText_Desc_AutoFishingOn,  sText_Empty},
-    [MENUITEM_DIF_FASTSLIDE]    = {sText_Desc_FastSlideOff,        sText_Desc_FastSlideOn,    sText_Empty},
     [MENUITEM_DIF_DEBUGMENU]    = {
         COMPOUND_STRING("Disables the debug menu completely."),
         COMPOUND_STRING("Enables the wish menu (debug menu)."),
@@ -440,6 +554,11 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_C
 {
     [MENUITEM_GEN_TEXTSPEED]    = sText_Desc_Disabled_Textspeed,
     [MENUITEM_GEN_BATTLESCENE]  = sText_Empty,
+    [MENUITEM_GEN_BATTLESPEED]  = sText_Empty,
+    [MENUITEM_GEN_FASTSLIDE]    = sText_Empty,
+    [MENUITEM_GEN_HPBAR]        = sText_Empty,
+    [MENUITEM_GEN_AUTORUN]      = sText_Empty,
+    [MENUITEM_GEN_AUTOFISHING]  = sText_Empty,
     [MENUITEM_GEN_SOUND]        = sText_Empty,
     [MENUITEM_GEN_BUTTONMODE]   = sText_Empty,
     [MENUITEM_GEN_FRAMETYPE]     = sText_Empty,
@@ -457,8 +576,6 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
     [MENUITEM_DIF_RANDOMIZER_E] = sText_Empty,
     [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_HardLocked,
-    [MENUITEM_DIF_AUTOFISHING]  = sText_Empty,
-    [MENUITEM_DIF_FASTSLIDE]    = sText_Empty,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
 };
@@ -478,6 +595,26 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_GEN_BATTLESCENE))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_BATTLESCENE];
             return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_BATTLESCENE][sOptions->sel[MENUITEM_GEN_BATTLESCENE]];
+        case MENUITEM_GEN_BATTLESPEED:
+            if (!CheckConditions(MENUITEM_GEN_BATTLESPEED))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_BATTLESPEED];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_BATTLESPEED][sOptions->sel[MENUITEM_GEN_BATTLESPEED]];
+        case MENUITEM_GEN_FASTSLIDE:
+            if (!CheckConditions(MENUITEM_GEN_FASTSLIDE))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_FASTSLIDE];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_FASTSLIDE][sOptions->sel[MENUITEM_GEN_FASTSLIDE]];
+        case MENUITEM_GEN_HPBAR:
+            if (!CheckConditions(MENUITEM_GEN_HPBAR))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_HPBAR];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_HPBAR][sOptions->sel[MENUITEM_GEN_HPBAR]];
+        case MENUITEM_GEN_AUTORUN:
+            if (!CheckConditions(MENUITEM_GEN_AUTORUN))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_AUTORUN];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_AUTORUN][sOptions->sel[MENUITEM_GEN_AUTORUN]];
+        case MENUITEM_GEN_AUTOFISHING:
+            if (!CheckConditions(MENUITEM_GEN_AUTOFISHING))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_AUTOFISHING];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_AUTOFISHING][sOptions->sel[MENUITEM_GEN_AUTOFISHING]];
         case MENUITEM_GEN_SOUND:
             if (!CheckConditions(MENUITEM_GEN_SOUND))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_SOUND];
@@ -531,14 +668,6 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_RANDOMIZER_T))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER_T];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER_T][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]];
-        case MENUITEM_DIF_AUTOFISHING:
-            if (!CheckConditions(MENUITEM_DIF_AUTOFISHING))
-                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_AUTOFISHING];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_AUTOFISHING][sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]];
-        case MENUITEM_DIF_FASTSLIDE:
-            if (!CheckConditions(MENUITEM_DIF_FASTSLIDE))
-                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_FASTSLIDE];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_FASTSLIDE][sOptions->sel_difficulty[MENUITEM_DIF_FASTSLIDE]];
         case MENUITEM_DIF_DEBUGMENU:
             if (!CheckConditions(MENUITEM_DIF_DEBUGMENU))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_DEBUGMENU];
@@ -573,13 +702,208 @@ static u8 MenuItemCancel(void)
     return MENUITEM_DIF_CANCEL;
 }
 
+// Persistent battle-speed option.
+// This uses HLWSaveExtension.future[] instead of changing SaveBlock2's frozen ABI.
+static void InitBattleSpeedSaveExtensionIfNeeded(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->magic != HLW_BATTLE_SPEED_SAVE_MAGIC
+     || ext->version != HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext))
+    {
+        memset(ext, 0, sizeof(*ext));
+        ext->magic = HLW_BATTLE_SPEED_SAVE_MAGIC;
+        ext->version = HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION;
+        ext->size = sizeof(*ext);
+    }
+}
+
+static u8 LoadBattleSpeedOption(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return HLW_BATTLE_SPEED_NORMAL;
+
+    InitBattleSpeedSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG0
+     || ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG1
+     || ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] != HLW_BATTLE_SPEED_SAVE_VERSION
+     || ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] >= HLW_BATTLE_SPEED_COUNT)
+    {
+        ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG0;
+        ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG1;
+        ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] = HLW_BATTLE_SPEED_SAVE_VERSION;
+        ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] = HLW_BATTLE_SPEED_NORMAL;
+    }
+
+    return ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET];
+}
+
+static void SaveBattleSpeedOption(u8 selection)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    if (selection >= HLW_BATTLE_SPEED_COUNT)
+        selection = HLW_BATTLE_SPEED_NORMAL;
+
+    InitBattleSpeedSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG0;
+    ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG1;
+    ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] = HLW_BATTLE_SPEED_SAVE_VERSION;
+    ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] = selection;
+}
+
+// Persistent HP-bar animation option.
+// Kept in HLWSaveExtension.future[] so SaveBlock2's frozen ABI is untouched.
+static void InitHpBarSaveExtensionIfNeeded(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->magic != HLW_HP_BAR_SAVE_MAGIC
+     || ext->version != HLW_HP_BAR_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext))
+    {
+        memset(ext, 0, sizeof(*ext));
+        ext->magic = HLW_HP_BAR_SAVE_MAGIC;
+        ext->version = HLW_HP_BAR_SAVE_EXTENSION_VERSION;
+        ext->size = sizeof(*ext);
+    }
+}
+
+static u8 LoadHpBarOption(void)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return HLW_HP_BAR_NORMAL;
+
+    InitHpBarSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] != HLW_HP_BAR_SAVE_TAG0
+     || ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] != HLW_HP_BAR_SAVE_TAG1
+     || ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] != HLW_HP_BAR_SAVE_VERSION
+     || ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] >= HLW_HP_BAR_COUNT)
+    {
+        ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] = HLW_HP_BAR_SAVE_TAG0;
+        ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] = HLW_HP_BAR_SAVE_TAG1;
+        ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] = HLW_HP_BAR_SAVE_VERSION;
+        ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] = HLW_HP_BAR_NORMAL;
+    }
+
+    return ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET];
+}
+
+static void SaveHpBarOption(u8 selection)
+{
+    struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    if (selection >= HLW_HP_BAR_COUNT)
+        selection = HLW_HP_BAR_NORMAL;
+
+    InitHpBarSaveExtensionIfNeeded();
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] = HLW_HP_BAR_SAVE_TAG0;
+    ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] = HLW_HP_BAR_SAVE_TAG1;
+    ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] = HLW_HP_BAR_SAVE_VERSION;
+    ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] = selection;
+}
+
+// Battle code can query this without mutating save data.
+// NORMAL is the safe fallback for old/invalid saves.
+bool32 IsHpBarInstant(void)
+{
+    const struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return FALSE;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->magic != HLW_HP_BAR_SAVE_MAGIC
+     || ext->version != HLW_HP_BAR_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext)
+     || ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] != HLW_HP_BAR_SAVE_TAG0
+     || ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] != HLW_HP_BAR_SAVE_TAG1
+     || ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] != HLW_HP_BAR_SAVE_VERSION)
+        return FALSE;
+
+    return ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] == HLW_HP_BAR_INSTANT;
+}
+
 // Main code
 static void MainCB2(void)
 {
+    UpdateOptionMenuScrollingBackground();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
+}
+
+static void LoadOptionMenuScrollingBackground(void)
+{
+    u32 x, y;
+    vu16 *dst = (vu16 *)BG_SCREEN_ADDR(28);
+
+    // BG2 is 32x64 tiles. Repeat the authored 32x24 map far enough that a
+    // complete 240x160 viewport is always available while we scroll through
+    // one 192px source period. The scroll itself resets at exactly 192px, so
+    // the player never sees the 512px hardware-map wrap.
+    for (y = 0; y < OPTION_SCROLL_BG_HEIGHT_TILES; y++)
+    {
+        const u32 srcY = y % OPTION_SCROLL_SOURCE_HEIGHT_TILES;
+
+        for (x = 0; x < OPTION_SCROLL_SOURCE_WIDTH_TILES; x++)
+        {
+            const u16 entry = sOptionMenuScrolling_Tilemap[srcY * OPTION_SCROLL_SOURCE_WIDTH_TILES + x];
+            dst[y * OPTION_SCROLL_SOURCE_WIDTH_TILES + x] =
+                (entry & 0x0FFF) | (OPTION_SCROLL_BG_PALETTE << 12);
+        }
+    }
+}
+
+static void UpdateOptionMenuScrollingBackground(void)
+{
+    // Decreasing the BG camera offsets makes the artwork itself drift down and
+    // to the right. Y keeps the existing vertical loop, while X wraps across
+    // the 256px-wide BG. The slower X speed gives the motion a soft diagonal
+    // angle instead of making it look like a 45-degree slide.
+    if (sOptionMenuBgScrollX <= OPTION_SCROLL_SPEED_X)
+        sOptionMenuBgScrollX = OPTION_SCROLL_X_PERIOD_PIXELS << 8;
+    else
+        sOptionMenuBgScrollX -= OPTION_SCROLL_SPEED_X;
+
+    if (sOptionMenuBgScrollY <= OPTION_SCROLL_SPEED_Y)
+        sOptionMenuBgScrollY = OPTION_SCROLL_Y_PERIOD_PIXELS << 8;
+    else
+        sOptionMenuBgScrollY -= OPTION_SCROLL_SPEED_Y;
+
+    ChangeBgX(2, sOptionMenuBgScrollX, BG_COORD_SET);
+    ChangeBgY(2, sOptionMenuBgScrollY, BG_COORD_SET);
 }
 
 static void VBlankCB(void)
@@ -729,7 +1053,7 @@ void CB2_InitOptionMenu(void)
         SetGpuReg(REG_OFFSET_WIN0H, 0);
         SetGpuReg(REG_OFFSET_WIN0V, 0);
         SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0 | WININ_WIN1_BG0 | WININ_WIN0_OBJ);
-        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
         // WIN0 is the selected row and has color effects disabled.
         // Everything outside WIN0 on BG0 is darkened.
         // With the dedicated options palette below this makes:
@@ -741,6 +1065,9 @@ void CB2_InitOptionMenu(void)
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
         ShowBg(0);
         ShowBg(1);
+        ShowBg(2);
+        sOptionMenuBgScrollX = OPTION_SCROLL_X_PERIOD_PIXELS << 8;
+        sOptionMenuBgScrollY = OPTION_SCROLL_Y_PERIOD_PIXELS << 8;
         gMain.state++;
         break;
     case 2:
@@ -753,10 +1080,13 @@ void CB2_InitOptionMenu(void)
         break;
     case 3:
         LoadBgTiles(1, GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->tiles, 0x120, 0x1A2);
+        LoadBgTiles(2, sOptionMenuScrolling_Gfx, sizeof(sOptionMenuScrolling_Gfx), 0);
+        LoadOptionMenuScrollingBackground();
         gMain.state++;
         break;
     case 4:
         LoadPalette(sOptionMenuBg_Pal, 0, sizeof(sOptionMenuBg_Pal));
+        LoadPalette(sOptionMenuScrolling_Pal, BG_PLTT_ID(OPTION_SCROLL_BG_PALETTE), PLTT_SIZE_4BPP);
         LoadPalette(GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->pal, 0x70, 0x20);
         gMain.state++;
         break;
@@ -764,6 +1094,10 @@ void CB2_InitOptionMenu(void)
         // Palette 1: top bar + description panel.
         LoadPalette(sOptionMenuText_Pal, 16, sizeof(sOptionMenuText_Pal));
         LoadPalette(sOptionMenuPanelBg_Pal, 18, sizeof(sOptionMenuPanelBg_Pal));
+        // WIN_TOPBAR is filled with palette index 15. Override just that slot
+        // so the header becomes the requested #95B4EC family without recoloring
+        // the description panel or any option text.
+        LoadPalette(sOptionMenuTopBarBg_Pal, BG_PLTT_ID(1) + 15, sizeof(sOptionMenuTopBarBg_Pal));
 
         // Palette 2: options list. Its base background is intentionally lighter;
         // BG0 darkening outside WIN0 brings unselected rows back to #212129,
@@ -781,6 +1115,11 @@ void CB2_InitOptionMenu(void)
      || sOptions->sel[MENUITEM_GEN_TEXTSPEED] > OPTIONS_TEXT_SPEED_INSTANT)
         sOptions->sel[MENUITEM_GEN_TEXTSPEED] = OPTIONS_TEXT_SPEED_MID;
     sOptions->sel[MENUITEM_GEN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
+    sOptions->sel[MENUITEM_GEN_BATTLESPEED] = LoadBattleSpeedOption();
+    sOptions->sel[MENUITEM_GEN_FASTSLIDE]   = FlagGet(FLAG_FAST_INTRO_NO_SLIDE);
+    sOptions->sel[MENUITEM_GEN_HPBAR]       = LoadHpBarOption();
+    sOptions->sel[MENUITEM_GEN_AUTORUN]     = FlagGet(FLAG_SYS_AUTO_RUN);
+    sOptions->sel[MENUITEM_GEN_AUTOFISHING] = FlagGet(FLAG_AUTO_FISHING);
     sOptions->sel[MENUITEM_GEN_SOUND]       = gSaveBlock2Ptr->optionsSound;
     sOptions->sel[MENUITEM_GEN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
     sOptions->sel[MENUITEM_GEN_FRAMETYPE]   = gSaveBlock2Ptr->optionsWindowFrameType;
@@ -793,8 +1132,6 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
-    sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING]    = FlagGet(FLAG_AUTO_FISHING);
-    sOptions->sel_difficulty[MENUITEM_DIF_FASTSLIDE] = FlagGet(FLAG_FAST_INTRO_NO_SLIDE);
     sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
     EnforceHardNpcTeamsRules();
 
@@ -1010,6 +1347,25 @@ static void Task_OptionMenuSave(u8 taskId)
 
     gSaveBlock2Ptr->optionsTextSpeed        = sOptions->sel[MENUITEM_GEN_TEXTSPEED];
     gSaveBlock2Ptr->optionsBattleSceneOff   = sOptions->sel[MENUITEM_GEN_BATTLESCENE];
+    SaveBattleSpeedOption(sOptions->sel[MENUITEM_GEN_BATTLESPEED]);
+
+    if (sOptions->sel[MENUITEM_GEN_FASTSLIDE])
+        FlagSet(FLAG_FAST_INTRO_NO_SLIDE);
+    else
+        FlagClear(FLAG_FAST_INTRO_NO_SLIDE);
+
+    SaveHpBarOption(sOptions->sel[MENUITEM_GEN_HPBAR]);
+
+    if (sOptions->sel[MENUITEM_GEN_AUTORUN])
+        FlagSet(FLAG_SYS_AUTO_RUN);
+    else
+        FlagClear(FLAG_SYS_AUTO_RUN);
+
+    if (sOptions->sel[MENUITEM_GEN_AUTOFISHING])
+        FlagSet(FLAG_AUTO_FISHING);
+    else
+        FlagClear(FLAG_AUTO_FISHING);
+
     gSaveBlock2Ptr->optionsSound            = sOptions->sel[MENUITEM_GEN_SOUND];
     gSaveBlock2Ptr->optionsButtonMode       = sOptions->sel[MENUITEM_GEN_BUTTONMODE];
     gSaveBlock2Ptr->optionsWindowFrameType  = sOptions->sel[MENUITEM_GEN_FRAMETYPE];
@@ -1031,16 +1387,7 @@ static void Task_OptionMenuSave(u8 taskId)
     else
         FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
 
-    if (sOptions->sel_difficulty[MENUITEM_DIF_AUTOFISHING])
-        FlagSet(FLAG_AUTO_FISHING);
-    else
-        FlagClear(FLAG_AUTO_FISHING);
-
     gSaveBlock2Ptr->optionsDebugMenu        = sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU];
-    if (sOptions->sel_difficulty[MENUITEM_DIF_FASTSLIDE])
-        FlagSet(FLAG_FAST_INTRO_NO_SLIDE);
-    else
-        FlagClear(FLAG_FAST_INTRO_NO_SLIDE);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
 }
@@ -1338,6 +1685,26 @@ static void DrawChoices_TextSpeed(int selection, int y)
     );
 }
 
+static const u8 sText_BattleSpeedNormal[] = _("NORMAL");
+static const u8 sText_BattleSpeed2x[]     = _("2X");
+static const u8 sText_BattleSpeed4x[]     = _("4X");
+static const u8 *const sBattleSpeedStrings[] =
+{
+    sText_BattleSpeedNormal,
+    sText_BattleSpeed2x,
+    sText_BattleSpeed4x,
+};
+
+static void DrawChoices_BattleSpeed(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_GEN_BATTLESPEED);
+
+    if (selection >= HLW_BATTLE_SPEED_COUNT)
+        selection = HLW_BATTLE_SPEED_NORMAL;
+
+    DrawChoices_Options_Three(sBattleSpeedStrings, selection, y, active);
+}
+
 static void DrawChoices_BattleScene(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_GEN_BATTLESCENE);
@@ -1467,6 +1834,55 @@ static void DrawChoices_Nuzlocke(int selection, int y)
     DrawChoices_Options_Three(sTextNuzlockeChoices, selection, y, active);
 }
 
+static void DrawChoices_FastSlide(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_GEN_FASTSLIDE);
+    u8 styles[2] = {0};
+
+    if (selection > TRUE)
+        selection = FALSE;
+
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
+}
+
+static void DrawChoices_AutoRun(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_GEN_AUTORUN);
+    u8 styles[2] = {0};
+
+    if (selection > TRUE)
+        selection = FALSE;
+
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
+}
+
+static const u8 sText_HpBarNormal[]  = _("NORMAL");
+static const u8 sText_HpBarInstant[] = _("INSTANT");
+
+static void DrawChoices_HpBar(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_GEN_HPBAR);
+    u8 styles[2] = {0};
+
+    if (selection >= HLW_HP_BAR_COUNT)
+        selection = HLW_HP_BAR_NORMAL;
+
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_HpBarNormal, 104, y, styles[HLW_HP_BAR_NORMAL], active);
+    DrawOptionMenuChoice(sText_HpBarInstant,
+                         GetStringRightAlignXOffset(FONT_NORMAL, sText_HpBarInstant, 198),
+                         y,
+                         styles[HLW_HP_BAR_INSTANT],
+                         active);
+}
+
 static void DrawChoices_OnOff(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_DIF_DEBUGMENU);
@@ -1499,7 +1915,7 @@ static void DrawChoices_RandomizerT(int selection, int y)
 
 static void DrawChoices_AutoFishing(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_DIF_AUTOFISHING);
+    bool8 active = CheckConditions(MENUITEM_GEN_AUTOFISHING);
     u8 styles[2] = {0};
     styles[selection] = 1;
 

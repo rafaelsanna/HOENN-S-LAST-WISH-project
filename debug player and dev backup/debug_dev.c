@@ -81,6 +81,22 @@
 #include "fake_rtc.h"
 #include "save.h"
 
+// DEV-only QoL core hook implemented in src/field_player_avatar.c.
+// 0 = normal player speed, 5 = x5, 10 = x10.
+u8 DebugGetPlayerSpeedMode(void);
+void DebugSetPlayerSpeedMode(u8 mode);
+
+// DEV follower suppression implemented in src/follower_npc.c.
+// Handles BOTH NPC followers and party Pokémon followers.
+void DebugDisableFollowersForPlayerSpeed(void);
+void DebugRestoreFollowersAfterPlayerSpeed(void);
+
+// Shared native battle-speed core implemented in src/battle_main.c.
+// The Options Menu provides Normal / 2x / 4x. This Wish/Debug-only override
+// temporarily forces 10x and returns to the saved Options speed when disabled.
+bool32 DebugBattleSpeed10xIsEnabled(void);
+void DebugToggleBattleSpeed10x(void);
+
 // Hoenn's Last Wish persistent Wish Menu warning flag.
 // 0x28F is reserved for this purpose in the project.
 #ifndef FLAG_WISH_WARNING
@@ -276,6 +292,7 @@ static void DebugAction_Util_CheatStart(u8 taskId);
 static void DebugAction_Util_OpenAchievements(u8 taskId);
 static void DebugAction_Util_UnlockNextAchievement(u8 taskId);
 static void DebugAction_Util_EncounterInfo(u8 taskId);
+static void DebugAction_Util_BattleSpeed10x(u8 taskId);
 static void DebugAction_Util_InfoItems(u8 taskId);
 static void DebugTask_HandleInfoItems(u8 taskId);
 static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset);
@@ -373,6 +390,11 @@ static void DebugAction_BerryFunctions_Weeds(u8 taskId);
 
 static void DebugAction_Player_Name(u8 taskId);
 static void DebugAction_Player_Gender(u8 taskId);
+static void DebugAction_Player_NormalSpeed(u8 taskId);
+static void DebugAction_Player_Speed5x(u8 taskId);
+static void DebugAction_Player_Speed10x(u8 taskId);
+static void DebugAction_ShowPlayerSpeedConfirmation(u8 taskId, u8 speedMode);
+static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId);
 
 extern const u8 Debug_FlagsNotSetOverworldConfigMessage[];
 extern const u8 Debug_FlagsNotSetBattleConfigMessage[];
@@ -654,6 +676,10 @@ static const u8 sDebugText_DeleteAllConfirm[] = _("Are you sure you want to\ndel
 static const u8 sDebugText_DeleteAllYes[] =     _("  {RIGHT_ARROW} YES     NO");
 static const u8 sDebugText_DeleteAllNo[] =      _("    YES   {RIGHT_ARROW} NO");
 
+static const u8 sDebugText_PlayerSpeedFollowerWarning[] =
+    _("It will destroy your follower\n"
+      "until you disable Player Speed.");
+
 static const u8 sDebugText_CompletePokedexConfirm[] =
     _("It will complete the Pokédex\n"
       "for you. Are you sure?\n"
@@ -822,6 +848,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Info Items"),         DebugAction_Util_InfoItems },
     { COMPOUND_STRING("Set Mon to Lv Cap"),  DebugAction_Util_SetMonLevelCap },
     { COMPOUND_STRING("Last Heal Point"),    DebugAction_Util_LastHealPoint },
+    { COMPOUND_STRING("10x Battle Speed"),   DebugAction_Util_BattleSpeed10x },
     { COMPOUND_STRING("Set weather…"),       DebugAction_Util_Weather },
     { COMPOUND_STRING("Font Test…"),         DebugAction_ExecuteScript, Debug_EventScript_FontTest },
     { COMPOUND_STRING("Sprite Visualizer"),  DebugAction_Util_SpriteVisualizer },
@@ -891,8 +918,11 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
 {
-    { COMPOUND_STRING("Player name"),   DebugAction_Player_Name },
-    { COMPOUND_STRING("Toggle gender"), DebugAction_Player_Gender },
+    { COMPOUND_STRING("Player name"),           DebugAction_Player_Name },
+    { COMPOUND_STRING("Toggle gender"),         DebugAction_Player_Gender },
+    { COMPOUND_STRING("Player Speed Normal"),  DebugAction_Player_NormalSpeed },
+    { COMPOUND_STRING("Player Speed x5"),       DebugAction_Player_Speed5x },
+    { COMPOUND_STRING("Player Speed x10"),      DebugAction_Player_Speed10x },
 
     // Trainer ID editing is intentionally hidden in HLW.
     // { COMPOUND_STRING("New Trainer ID"), DebugAction_Player_Id },
@@ -2001,6 +2031,138 @@ static void DebugAction_Player_Gender(u8 taskId)
     ScriptContext_Enable();
 }
 
+static void DebugAction_Player_NormalSpeed(u8 taskId)
+{
+    DebugSetPlayerSpeedMode(0);
+    DebugRestoreFollowersAfterPlayerSpeed();
+    PlaySE(SE_PC_OFF);
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
+}
+
+static void DebugAction_Player_Speed5x(u8 taskId)
+{
+    DebugAction_ShowPlayerSpeedConfirmation(taskId, 5);
+}
+
+static void DebugAction_Player_Speed10x(u8 taskId)
+{
+    DebugAction_ShowPlayerSpeedConfirmation(taskId, 10);
+}
+
+#define tPlayerSpeedTarget data[5]
+#define tPlayerSpeedChoice data[6]
+
+static void DebugAction_ShowPlayerSpeedConfirmation(u8 taskId, u8 speedMode)
+{
+    u8 windowId = AddWindow(&sDebugMenuWindowTemplateConfirm);
+
+    DrawStdWindowFrame(windowId, FALSE);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+
+    AddTextPrinterParameterized(
+        windowId,
+        FONT_SMALL,
+        sDebugText_PlayerSpeedFollowerWarning,
+        8,
+        6,
+        0,
+        NULL
+    );
+
+    AddTextPrinterParameterized(
+        windowId,
+        FONT_NORMAL,
+        sDebugText_DeleteAllNo,
+        128,
+        34,
+        0,
+        NULL
+    );
+
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+
+    gTasks[taskId].tSubWindowId = windowId;
+    gTasks[taskId].tPlayerSpeedTarget = speedMode;
+    gTasks[taskId].tPlayerSpeedChoice = 1;
+    gTasks[taskId].func = DebugTask_HandlePlayerSpeedConfirmation;
+}
+
+static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId)
+{
+    u8 windowId = gTasks[taskId].tSubWindowId;
+
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        PlaySE(SE_SELECT);
+        gTasks[taskId].tPlayerSpeedChoice ^= 1;
+
+        FillWindowPixelRect(windowId, PIXEL_FILL(1), 120, 30, 96, 16);
+        AddTextPrinterParameterized(
+            windowId,
+            FONT_NORMAL,
+            gTasks[taskId].tPlayerSpeedChoice == 0
+                ? sDebugText_DeleteAllYes
+                : sDebugText_DeleteAllNo,
+            128,
+            34,
+            0,
+            NULL
+        );
+        CopyWindowToVram(windowId, COPYWIN_GFX);
+        return;
+    }
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+
+        if (gTasks[taskId].tPlayerSpeedChoice == 0)
+        {
+            LockPlayerFieldControls();
+            DebugDisableFollowersForPlayerSpeed();
+            UnlockPlayerFieldControls();
+
+            DebugSetPlayerSpeedMode(gTasks[taskId].tPlayerSpeedTarget);
+
+            ClearStdWindowAndFrame(windowId, TRUE);
+            ClearWindowTilemap(windowId);
+            RemoveWindow(windowId);
+            gTasks[taskId].tSubWindowId = 0;
+
+            PlaySE(SE_PC_LOGIN);
+            Debug_DestroyMenu_Full(taskId);
+            ScriptContext_Enable();
+            return;
+        }
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+    }
+    else
+    {
+        return;
+    }
+
+    ClearStdWindowAndFrame(windowId, TRUE);
+    ClearWindowTilemap(windowId);
+    RemoveWindow(windowId);
+    gTasks[taskId].tSubWindowId = 0;
+
+    DrawStdWindowFrame(gTasks[taskId].tWindowId, FALSE);
+    PutWindowTilemap(gTasks[taskId].tWindowId);
+    RedrawListMenu(gTasks[taskId].tMenuTaskId);
+    CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
+    CopyBgTilemapBufferToVram(0);
+
+    gTasks[taskId].func = DebugTask_HandleMenuInput_General;
+}
+
+#undef tPlayerSpeedTarget
+#undef tPlayerSpeedChoice
+
 #if 0
 // Legacy Trainer ID editor implementation kept for reference only.
 // This code is intentionally disabled in Hoenn's Last Wish.
@@ -2594,6 +2756,21 @@ static void DebugAction_Util_LastHealPoint(u8 taskId)
     SetWarpDestinationToLastHealLocation();
     DoWarp();
     ResetInitialPlayerAvatarState();
+
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
+}
+
+static void DebugAction_Util_BattleSpeed10x(u8 taskId)
+{
+    DebugToggleBattleSpeed10x();
+
+    // 10x is intentionally a session-only Wish/Debug override.
+    // Disabling it immediately returns battles to the speed saved in Options.
+    if (DebugBattleSpeed10xIsEnabled())
+        PlaySE(SE_PC_LOGIN);
+    else
+        PlaySE(SE_PC_OFF);
 
     Debug_DestroyMenu_Full(taskId);
     ScriptContext_Enable();

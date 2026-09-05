@@ -91,6 +91,12 @@ void DebugSetPlayerSpeedMode(u8 mode);
 void DebugDisableFollowersForPlayerSpeed(void);
 void DebugRestoreFollowersAfterPlayerSpeed(void);
 
+// Shared native battle-speed core implemented in src/battle_main.c.
+// The Options Menu provides Normal / 2x / 4x. This Wish/Debug-only override
+// temporarily forces 10x and returns to the saved Options speed when disabled.
+bool32 DebugBattleSpeed10xIsEnabled(void);
+void DebugToggleBattleSpeed10x(void);
+
 // Hoenn's Last Wish persistent Wish Menu warning flag.
 // 0x28F is reserved for this purpose in the project.
 #ifndef FLAG_WISH_WARNING
@@ -286,6 +292,7 @@ static void DebugAction_Util_CheatStart(u8 taskId);
 static void DebugAction_Util_OpenAchievements(u8 taskId);
 static void DebugAction_Util_UnlockNextAchievement(u8 taskId);
 static void DebugAction_Util_EncounterInfo(u8 taskId);
+static void DebugAction_Util_BattleSpeed10x(u8 taskId);
 static void DebugAction_Util_InfoItems(u8 taskId);
 static void DebugTask_HandleInfoItems(u8 taskId);
 static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset);
@@ -841,6 +848,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Info Items"),         DebugAction_Util_InfoItems },
     { COMPOUND_STRING("Set Mon to Lv Cap"),  DebugAction_Util_SetMonLevelCap },
     { COMPOUND_STRING("Last Heal Point"),    DebugAction_Util_LastHealPoint },
+    { COMPOUND_STRING("10x Battle Speed"),   DebugAction_Util_BattleSpeed10x },
     { COMPOUND_STRING("Set weather…"),       DebugAction_Util_Weather },
     { COMPOUND_STRING("Font Test…"),         DebugAction_ExecuteScript, Debug_EventScript_FontTest },
     { COMPOUND_STRING("Sprite Visualizer"),  DebugAction_Util_SpriteVisualizer },
@@ -2748,6 +2756,21 @@ static void DebugAction_Util_LastHealPoint(u8 taskId)
     SetWarpDestinationToLastHealLocation();
     DoWarp();
     ResetInitialPlayerAvatarState();
+
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
+}
+
+static void DebugAction_Util_BattleSpeed10x(u8 taskId)
+{
+    DebugToggleBattleSpeed10x();
+
+    // 10x is intentionally a session-only Wish/Debug override.
+    // Disabling it immediately returns battles to the speed saved in Options.
+    if (DebugBattleSpeed10xIsEnabled())
+        PlaySE(SE_PC_LOGIN);
+    else
+        PlaySE(SE_PC_OFF);
 
     Debug_DestroyMenu_Full(taskId);
     ScriptContext_Enable();

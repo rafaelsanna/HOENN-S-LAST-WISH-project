@@ -94,6 +94,9 @@ static void CB2_HandleStartBattle(void);
 static void TryCorrectShedinjaLanguage(struct Pokemon *mon);
 static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer);
 static void BattleMainCB1(void);
+static void RunBattleSoftwareTick(void);
+static void AdvanceExtraBattleFrameRng(void);
+static bool32 CanRunExtraBattleTick(void);
 static void CB2_EndLinkBattle(void);
 static void EndLinkBattleInSteps(void);
 static void CB2_InitAskRecordBattle(void);
@@ -248,6 +251,76 @@ EWRAM_DATA bool8 gLastUsedBallMenuPresent = FALSE;
 EWRAM_DATA u8 gPartyCriticalHits[PARTY_SIZE] = {0};
 EWRAM_DATA static u8 sTriedEvolving = 0;
 EWRAM_DATA u8 gCategoryIconSpriteId = 0;
+
+// Battle Speed uses the HLW persistent extension instead of changing SaveBlock2.
+// The Options Menu exposes NORMAL / 2X / 4X. The Wish/Debug Menu can apply a
+// session-only 10X override without changing the saved base speed.
+enum
+{
+    HLW_BATTLE_SPEED_NORMAL,
+    HLW_BATTLE_SPEED_2X,
+    HLW_BATTLE_SPEED_4X,
+    HLW_BATTLE_SPEED_COUNT,
+};
+
+#define HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET      72
+#define HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET      73
+#define HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET   74
+#define HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET     75
+#define HLW_BATTLE_SPEED_SAVE_TAG0             0x42 // 'B'
+#define HLW_BATTLE_SPEED_SAVE_TAG1             0x53 // 'S'
+#define HLW_BATTLE_SPEED_SAVE_VERSION          1
+#define HLW_BATTLE_SPEED_SAVE_MAGIC            0x484C5753
+#define HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION 1
+
+static EWRAM_DATA bool8 sDebugBattleSpeed10xEnabled = FALSE;
+
+static u8 GetSavedBattleSpeedSetting(void)
+{
+    const struct HLWSaveExtension *ext;
+
+    if (gSaveBlock1Ptr == NULL)
+        return HLW_BATTLE_SPEED_NORMAL;
+
+    ext = &gSaveBlock1Ptr->hlwSave;
+
+    if (ext->magic != HLW_BATTLE_SPEED_SAVE_MAGIC
+     || ext->version != HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION
+     || ext->size != sizeof(*ext)
+     || ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG0
+     || ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG1
+     || ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] != HLW_BATTLE_SPEED_SAVE_VERSION
+     || ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] >= HLW_BATTLE_SPEED_COUNT)
+        return HLW_BATTLE_SPEED_NORMAL;
+
+    return ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET];
+}
+
+static u32 GetBattleSpeedScale(void)
+{
+    if (sDebugBattleSpeed10xEnabled)
+        return 10;
+
+    switch (GetSavedBattleSpeedSetting())
+    {
+    case HLW_BATTLE_SPEED_2X:
+        return 2;
+    case HLW_BATTLE_SPEED_4X:
+        return 4;
+    default:
+        return 1;
+    }
+}
+
+bool32 DebugBattleSpeed10xIsEnabled(void)
+{
+    return sDebugBattleSpeed10xEnabled;
+}
+
+void DebugToggleBattleSpeed10x(void)
+{
+    sDebugBattleSpeed10xEnabled ^= TRUE;
+}
 
 COMMON_DATA void (*gPreBattleCallback1)(void) = NULL;
 COMMON_DATA void (*gBattleMainFunc)(void) = NULL;
@@ -1777,13 +1850,74 @@ static void CB2_HandleStartMultiBattle(void)
 
 void BattleMainCB2(void)
 {
-    AnimateSprites();
-    BuildOamBuffer();
-    RunTextPrinters();
-    UpdatePaletteFade();
-    RunTasks();
-    RadioPriority_MaintainBgm();
-    AdvanceComfyAnimations();
+    u32 speedScale = GetBattleSpeedScale();
+    u32 tick;
+    bool32 battleCallbackChanged = FALSE;
+    u16 savedNewKeys = gMain.newKeys;
+    u16 savedNewAndRepeatedKeys = gMain.newAndRepeatedKeys;
+    u16 savedNewKeysRaw = gMain.newKeysRaw;
+
+    if (!CanRunExtraBattleTick())
+        speedScale = 1;
+
+    // Native battle speed-up:
+    // callback1 has already run once in main.c before BattleMainCB2. Each pass
+    // below completes one logical battle frame entirely in software. Only the
+    // final software state is transferred to hardware at the real VBlank, so
+    // music/audio timing stays at normal speed while battle logic/animation can
+    // advance at the configured 1x/2x/4x speed, or 10x from the Wish/Debug Menu.
+    for (tick = 0; tick < speedScale; tick++)
+    {
+        RunBattleSoftwareTick();
+
+        // A task can leave battle or replace a callback. Never keep touching
+        // battle-owned state after that transition.
+        if (!gMain.inBattle
+         || gMain.callback1 != BattleMainCB1
+         || gMain.callback2 != BattleMainCB2)
+        {
+            battleCallbackChanged = TRUE;
+            break;
+        }
+
+        if (tick + 1 >= speedScale || !CanRunExtraBattleTick())
+            break;
+
+        // HLW currently advances the primary RNG twice per physical battle
+        // frame: once in VBlankCB_Battle and once in main.c's VBlankIntr.
+        // Burn those two values between virtual frames. The final logical frame
+        // uses the normal physical VBlank advances, preserving the original RNG
+        // cadence at every supported speed without modifying main.c.
+        AdvanceExtraBattleFrameRng();
+
+        // A single button press must never be consumed by multiple software ticks. Keep HELD
+        // input available for normal hold behavior, but suppress one-shot input
+        // during the extra logical ticks.
+        gMain.newKeys = 0;
+        gMain.newAndRepeatedKeys = 0;
+        gMain.newKeysRaw = 0;
+
+        // Start the next logical frame explicitly. Do not call an arbitrary
+        // callback pointer from inside BattleMainCB2.
+        BattleMainCB1();
+
+        if (!gMain.inBattle
+         || gMain.callback1 != BattleMainCB1
+         || gMain.callback2 != BattleMainCB2)
+        {
+            battleCallbackChanged = TRUE;
+            break;
+        }
+    }
+
+    // Restore the physical-frame input state for code that runs after this
+    // callback. ReadKeys will naturally replace it on the next frame.
+    gMain.newKeys = savedNewKeys;
+    gMain.newAndRepeatedKeys = savedNewAndRepeatedKeys;
+    gMain.newKeysRaw = savedNewKeysRaw;
+
+    if (battleCallbackChanged)
+        return;
 
     if (JOY_HELD(B_BUTTON) && gBattleTypeFlags & BATTLE_TYPE_RECORDED && RecordedBattle_CanStopPlayback())
     {
@@ -1793,6 +1927,54 @@ void BattleMainCB2(void)
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         SetMainCallback2(CB2_QuitRecordedBattle);
     }
+}
+
+static void RunBattleSoftwareTick(void)
+{
+    // Preserve HLW's original BattleMainCB2 update order for every logical tick.
+    AnimateSprites();
+    BuildOamBuffer();
+    RunTextPrinters();
+    UpdatePaletteFade();
+    RunTasks();
+    RadioPriority_MaintainBgm();
+    AdvanceComfyAnimations();
+}
+
+static void AdvanceExtraBattleFrameRng(void)
+{
+    // Link/frontier/recorded battles already intentionally avoid the normal
+    // physical-frame RNG burns, so extra logical frames must do the same.
+    if (!gTestRunnerEnabled
+     && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
+    {
+        AdvanceRandom();
+        AdvanceRandom();
+    }
+}
+
+static bool32 CanRunExtraBattleTick(void)
+{
+    // Link services advance on physical frames and must remain at 1x.
+    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
+        return FALSE;
+
+    if (gTestRunnerEnabled
+     || !gMain.inBattle
+     || gMain.callback1 != BattleMainCB1
+     || gMain.callback2 != BattleMainCB2)
+        return FALSE;
+
+    // Keep command/move selection at normal speed so menu input remains stable.
+    if (gBattleMainFunc == HandleTurnActionSelectionState)
+        return FALSE;
+
+    // Palette fades require a real transfer between updates. If a fade begins
+    // during callback1 or RunTasks, the next extra tick is blocked.
+    if (gPaletteFade.active)
+        return FALSE;
+
+    return TRUE;
 }
 
 static void FreeRestoreBattleData(void)

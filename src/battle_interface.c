@@ -204,6 +204,9 @@ static u8 GetScaledExpFraction(s32, s32, s32, u8);
 static void MoveBattleBarGraphically(u8, u8);
 static u8 CalcBarFilledPixels(s32, s32, s32, s32 *, u8 *, u8);
 
+// HLW Options Menu hook. Kept as a local extern so this change only requires battle_interface.c.
+extern bool32 IsHpBarInstant(void);
+
 static void SpriteCb_AbilityPopUp(struct Sprite *);
 static void Task_FreeAbilityPopUpGfx(u8);
 
@@ -2099,9 +2102,32 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
 #define B_EXPBAR_PIXELS 64
 #define B_HEALTHBAR_PIXELS 48
 
+// HLW HP BAR = INSTANT.
+// Based on Elite Redux's instant-bar approach: collapse the pending HP delta into
+// the final clamped value before the normal bar renderer runs. EXP is untouched.
+static s32 SetInstantHpBarMove(struct BattleBarInfo *bar)
+{
+    bar->oldValue -= bar->receivedValue;
+
+    if (bar->oldValue > bar->maxValue)
+        bar->oldValue = bar->maxValue;
+    else if (bar->oldValue < 0)
+        bar->oldValue = 0;
+
+    bar->receivedValue = 0;
+    return bar->oldValue;
+}
+
 s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused)
 {
     s32 currentBarValue;
+    s32 instantHpValue = 0;
+    bool32 instantHp = (whichBar == HEALTH_BAR && IsHpBarInstant());
+
+    // INSTANT only affects HP. NORMAL intentionally keeps the existing expansion
+    // drain/recovery path unchanged, including B_FAST_HP_DRAIN behavior.
+    if (instantHp)
+        instantHpValue = SetInstantHpBarMove(&gBattleSpritesDataPtr->battleBars[battler]);
 
     if (whichBar == HEALTH_BAR) // health bar
     {
@@ -2132,7 +2158,17 @@ s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused)
         MoveBattleBarGraphically(battler, whichBar);
 
     if (currentBarValue == -1)
+    {
         gBattleSpritesDataPtr->battleBars[battler].currValue = 0;
+
+        // The controller normally updates HP text from intermediate return values.
+        // INSTANT finishes on this same call, so write the final HP text here too.
+        if (instantHp)
+        {
+            s16 maxHp = gBattleSpritesDataPtr->battleBars[battler].maxValue;
+            UpdateHpTextInHealthbox(healthboxSpriteId, HP_CURRENT, instantHpValue, maxHp);
+        }
+    }
 
     return currentBarValue;
 }

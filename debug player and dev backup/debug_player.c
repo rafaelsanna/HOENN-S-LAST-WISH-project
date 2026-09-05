@@ -7,6 +7,30 @@
 //Ghoulslash:           https://github.com/ghoulslash/pokeemerald
 //Jaizu:                https://jaizu.moe/
 //AND OTHER RHH POKEEMERALD-EXPANSION CONTRIBUTORS
+
+/*
+ * HOENN'S LAST WISH - PLAYER / WISH MENU DEBUG VARIANT
+ *
+ * This is the curated debug source that is shipped to players as the Wish Menu.
+ * It is intentionally NOT the full developer debug menu.
+ *
+ * Purpose:
+ * - provide safe player-facing utilities and quality-of-life actions;
+ * - expose controlled cheats that are useful during normal play;
+ * - provide read-only diagnostics such as encounter, item, IV and ROM info;
+ * - keep destructive actions behind explicit confirmation prompts;
+ * - keep developer-only test tools, raw flag/var editors and dangerous shortcuts
+ *   out of the visible menu tree.
+ *
+ * Maintenance notes:
+ * - Some developer implementations remain in this source but are deliberately
+ *   unreachable. Hidden reference arrays keep those static functions referenced
+ *   so this project can still build with -Werror without exposing them to players.
+ * - Shared engine fixes (for example follower behavior) live in their normal
+ *   engine source files and are automatically used by this player menu.
+ * - Do not copy DEV-only menu entries here unless they are explicitly approved
+ *   for the player-facing Wish Menu.
+ */
 #include "global.h"
 #include "achievements.h"
 #include "battle.h"
@@ -80,6 +104,23 @@
 #include "rtc.h"
 #include "fake_rtc.h"
 #include "save.h"
+
+// Shared Wish Menu player-speed core implemented in src/field_player_avatar.c.
+// 0 = normal speed, 5 = x5, 10 = x10.
+u8 DebugGetPlayerSpeedMode(void);
+void DebugSetPlayerSpeedMode(u8 mode);
+
+// Shared follower suppression implemented in src/follower_npc.c.
+// Both NPC followers and party Pokémon followers are removed while fast
+// player movement is active.
+void DebugDisableFollowersForPlayerSpeed(void);
+void DebugRestoreFollowersAfterPlayerSpeed(void);
+
+// Shared native battle-speed core implemented in src/battle_main.c.
+// The Options Menu provides Normal / 2x / 4x. This Wish/Debug-only override
+// temporarily forces 10x and returns to the saved Options speed when disabled.
+bool32 DebugBattleSpeed10xIsEnabled(void);
+void DebugToggleBattleSpeed10x(void);
 
 // Hoenn's Last Wish persistent Wish Menu warning flag.
 // 0x28F is reserved for this purpose in the project.
@@ -272,6 +313,7 @@ static void DebugAction_Util_CheatStart(u8 taskId);
 static void DebugAction_Util_OpenAchievements(u8 taskId);
 static void DebugAction_Util_UnlockNextAchievement(u8 taskId);
 static void DebugAction_Util_EncounterInfo(u8 taskId);
+static void DebugAction_Util_BattleSpeed10x(u8 taskId);
 static void DebugAction_Util_InfoItems(u8 taskId);
 static void DebugTask_HandleInfoItems(u8 taskId);
 static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset);
@@ -307,7 +349,6 @@ static void DebugTask_HandleDestructiveConfirmation(u8 taskId);
 static void DebugAction_Party_HealParty(u8 taskId);
 static void DebugAction_Party_MaxFriendship(u8 taskId);
 static void DebugAction_Party_ResetFriendship(u8 taskId);
-static void DebugAction_Party_SetLevelCap(u8 taskId);
 static void DebugAction_Party_ClearParty(u8 taskId);
 static void DebugAction_Party_SetParty(u8 taskId);
 static void DebugAction_Party_BattleSingle(u8 taskId);
@@ -370,6 +411,11 @@ static void DebugAction_BerryFunctions_Weeds(u8 taskId);
 
 static void DebugAction_Player_Name(u8 taskId);
 static void DebugAction_Player_Gender(u8 taskId);
+static void DebugAction_Player_NormalSpeed(u8 taskId);
+static void DebugAction_Player_Speed5x(u8 taskId);
+static void DebugAction_Player_Speed10x(u8 taskId);
+static void DebugAction_ShowPlayerSpeedConfirmation(u8 taskId, u8 speedMode);
+static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId);
 
 extern const u8 Debug_FlagsNotSetOverworldConfigMessage[];
 extern const u8 Debug_FlagsNotSetBattleConfigMessage[];
@@ -651,6 +697,10 @@ static const u8 sDebugText_DeleteAllConfirm[] = _("Are you sure you want to\ndel
 static const u8 sDebugText_DeleteAllYes[] =     _("  {RIGHT_ARROW} YES     NO");
 static const u8 sDebugText_DeleteAllNo[] =      _("    YES   {RIGHT_ARROW} NO");
 
+static const u8 sDebugText_PlayerSpeedFollowerWarning[] =
+    _("It will destroy your follower\n"
+      "until you disable Player Speed.");
+
 static const u8 sDebugText_CompletePokedexConfirm[] =
     _("It will complete the Pokédex\n"
       "for you. Are you sure?\n"
@@ -812,6 +862,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Info Items"),         DebugAction_Util_InfoItems },
     { COMPOUND_STRING("Set Mon to Lv Cap"),  DebugAction_Util_SetMonLevelCap },
     { COMPOUND_STRING("Last Heal Point"),    DebugAction_Util_LastHealPoint },
+    { COMPOUND_STRING("10x Battle Speed"),   DebugAction_Util_BattleSpeed10x },
     { COMPOUND_STRING("Set weather…"),       DebugAction_Util_Weather },
     { COMPOUND_STRING("Sprite Visualizer"),  DebugAction_Util_SpriteVisualizer },
     { COMPOUND_STRING("Time Functions…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
@@ -867,8 +918,11 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
 {
-    { COMPOUND_STRING("Player name"),   DebugAction_Player_Name },
-    { COMPOUND_STRING("Toggle gender"), DebugAction_Player_Gender },
+    { COMPOUND_STRING("Player name"),          DebugAction_Player_Name },
+    { COMPOUND_STRING("Toggle gender"),        DebugAction_Player_Gender },
+    { COMPOUND_STRING("Player Speed Normal"),  DebugAction_Player_NormalSpeed },
+    { COMPOUND_STRING("Player Speed x5"),      DebugAction_Player_Speed5x },
+    { COMPOUND_STRING("Player Speed x10"),     DebugAction_Player_Speed10x },
 
     // Trainer ID editing is intentionally hidden in HLW.
     // { COMPOUND_STRING("New Trainer ID"), DebugAction_Player_Id },
@@ -926,6 +980,8 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
     { NULL }
 };
 
+// Visible root of the PLAYER/WISH MENU.
+// Keep this list curated: every entry here is intentionally available to players.
 static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
 {
     { COMPOUND_STRING("Utilities…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
@@ -940,9 +996,16 @@ static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
     { NULL }
 };
 
-// Player build keeps the developer implementations in this source variant for
-// easy maintenance, but they are deliberately unreachable from the menu tree.
-// Referencing them here prevents -Wunused-* from becoming -Werror failures.
+// PLAYER/WISH MENU SAFETY BOUNDARY
+//
+// The functions referenced below are intentionally NOT reachable from the
+// player-facing menu tree. They remain only as shared maintenance code.
+// Keeping a reference here prevents unused-static warnings from becoming
+// build failures under -Werror.
+//
+// IMPORTANT: adding a function to this list does not expose it to players.
+// To expose an action, it must be explicitly added to one of the visible
+// sDebugMenu_Actions_* arrays above after being approved for the Wish Menu.
 static const DebugFunc sDebugPlayerHiddenFunctions[] __attribute__((unused)) =
 {
     DebugAction_Util_Warp_Warp,
@@ -958,7 +1021,6 @@ static const DebugFunc sDebugPlayerHiddenFunctions[] __attribute__((unused)) =
     DebugAction_Party_ClearParty,
     DebugAction_Party_SetParty,
     DebugAction_Party_BattleSingle,
-    DebugAction_Party_SetLevelCap,
     DebugAction_FlagsVars_SwitchNatDex,
     DebugAction_FlagsVars_ToggleGameClear,
     DebugAction_BerryFunctions_Pests,
@@ -1998,6 +2060,141 @@ static void DebugAction_Player_Gender(u8 taskId)
     ScriptContext_Enable();
 }
 
+// Player-facing Wish Menu speed controls.
+// x5/x10 intentionally disable followers first so follower objects cannot lag
+// behind the player or become visually desynchronized.
+static void DebugAction_Player_NormalSpeed(u8 taskId)
+{
+    DebugSetPlayerSpeedMode(0);
+    DebugRestoreFollowersAfterPlayerSpeed();
+    PlaySE(SE_PC_OFF);
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
+}
+
+static void DebugAction_Player_Speed5x(u8 taskId)
+{
+    DebugAction_ShowPlayerSpeedConfirmation(taskId, 5);
+}
+
+static void DebugAction_Player_Speed10x(u8 taskId)
+{
+    DebugAction_ShowPlayerSpeedConfirmation(taskId, 10);
+}
+
+#define tPlayerSpeedTarget data[5]
+#define tPlayerSpeedChoice data[6]
+
+static void DebugAction_ShowPlayerSpeedConfirmation(u8 taskId, u8 speedMode)
+{
+    u8 windowId = AddWindow(&sDebugMenuWindowTemplateConfirm);
+
+    DrawStdWindowFrame(windowId, FALSE);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+
+    AddTextPrinterParameterized(
+        windowId,
+        FONT_SMALL,
+        sDebugText_PlayerSpeedFollowerWarning,
+        8,
+        6,
+        0,
+        NULL
+    );
+
+    AddTextPrinterParameterized(
+        windowId,
+        FONT_NORMAL,
+        sDebugText_DeleteAllNo,
+        128,
+        34,
+        0,
+        NULL
+    );
+
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+
+    gTasks[taskId].tSubWindowId = windowId;
+    gTasks[taskId].tPlayerSpeedTarget = speedMode;
+    gTasks[taskId].tPlayerSpeedChoice = 1;
+    gTasks[taskId].func = DebugTask_HandlePlayerSpeedConfirmation;
+}
+
+static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId)
+{
+    u8 windowId = gTasks[taskId].tSubWindowId;
+
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        PlaySE(SE_SELECT);
+        gTasks[taskId].tPlayerSpeedChoice ^= 1;
+
+        FillWindowPixelRect(windowId, PIXEL_FILL(1), 120, 30, 96, 16);
+        AddTextPrinterParameterized(
+            windowId,
+            FONT_NORMAL,
+            gTasks[taskId].tPlayerSpeedChoice == 0
+                ? sDebugText_DeleteAllYes
+                : sDebugText_DeleteAllNo,
+            128,
+            34,
+            0,
+            NULL
+        );
+        CopyWindowToVram(windowId, COPYWIN_GFX);
+        return;
+    }
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+
+        if (gTasks[taskId].tPlayerSpeedChoice == 0)
+        {
+            LockPlayerFieldControls();
+            DebugDisableFollowersForPlayerSpeed();
+            UnlockPlayerFieldControls();
+
+            DebugSetPlayerSpeedMode(gTasks[taskId].tPlayerSpeedTarget);
+
+            ClearStdWindowAndFrame(windowId, TRUE);
+            ClearWindowTilemap(windowId);
+            RemoveWindow(windowId);
+            gTasks[taskId].tSubWindowId = 0;
+
+            PlaySE(SE_PC_LOGIN);
+            Debug_DestroyMenu_Full(taskId);
+            ScriptContext_Enable();
+            return;
+        }
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+    }
+    else
+    {
+        return;
+    }
+
+    ClearStdWindowAndFrame(windowId, TRUE);
+    ClearWindowTilemap(windowId);
+    RemoveWindow(windowId);
+    gTasks[taskId].tSubWindowId = 0;
+
+    DrawStdWindowFrame(gTasks[taskId].tWindowId, FALSE);
+    PutWindowTilemap(gTasks[taskId].tWindowId);
+    RedrawListMenu(gTasks[taskId].tMenuTaskId);
+    CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
+    CopyBgTilemapBufferToVram(0);
+
+    gTasks[taskId].func = DebugTask_HandleMenuInput_General;
+}
+
+#undef tPlayerSpeedTarget
+#undef tPlayerSpeedChoice
+
 #if 0
 // Legacy Trainer ID editor implementation kept for reference only.
 // This code is intentionally disabled in Hoenn's Last Wish.
@@ -2596,6 +2793,21 @@ static void DebugAction_Util_LastHealPoint(u8 taskId)
     ScriptContext_Enable();
 }
 
+static void DebugAction_Util_BattleSpeed10x(u8 taskId)
+{
+    DebugToggleBattleSpeed10x();
+
+    // 10x is intentionally a session-only Wish/Debug override.
+    // Disabling it immediately returns battles to the speed saved in Options.
+    if (DebugBattleSpeed10xIsEnabled())
+        PlaySE(SE_PC_LOGIN);
+    else
+        PlaySE(SE_PC_OFF);
+
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
+}
+
 static s8 Debug_FindNextUsablePartyMon(s8 current, s8 direction)
 {
     u32 i;
@@ -3056,7 +3268,7 @@ static void DebugAction_FlagsVars_SetValue(u8 taskId)
 
 static void DebugAction_FlagsVars_PokedexFlags_All(u8 taskId)
 {
-    // Completing the Pokédex is irreversible in this player-facing menu.
+    // Completing the Pokédex is irreversible, so always confirm first.
     // Always ask first, with NO selected by default.
     DebugAction_ShowDestructiveConfirmation(taskId, 2);
 }
@@ -3066,11 +3278,11 @@ static void DebugAction_FlagsVars_PokedexFlags_Reset(u8 taskId)
     int boxId, boxPosition, partyId;
     u16 species;
 
-    // Reset Pokedex to emtpy
+    // Reset the Pokédex to empty.
     memset(&gSaveBlock1Ptr->dexCaught, 0, sizeof(gSaveBlock1Ptr->dexCaught));
     memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
 
-    // Add party Pokemon to Pokedex
+    // Add party Pokémon back to the Pokédex.
     for (partyId = 0; partyId < PARTY_SIZE; partyId++)
     {
         if (GetMonData(&gPlayerParty[partyId], MON_DATA_SANITY_HAS_SPECIES))
@@ -3081,7 +3293,7 @@ static void DebugAction_FlagsVars_PokedexFlags_Reset(u8 taskId)
         }
     }
 
-    // Add box Pokemon to Pokedex
+    // Add boxed Pokémon back to the Pokédex.
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
     {
         for (boxPosition = 0; boxPosition < IN_BOX_COUNT; boxPosition++)
@@ -3627,8 +3839,8 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
             PlaySE(MUS_LEVEL_UP);
             ScriptGiveMon(sDebugMonData->species, gTasks[taskId].tInput, ITEM_NONE);
 
-            // Player-facing Wish/Debug Menu: Basic Give Mon must never
-            // generate a shiny either. ScriptGiveMon can create a naturally
+            // HLW player-facing Wish Menu: Basic Give Mon must never
+            // generate a shiny. ScriptGiveMon can create a naturally
             // shiny personality, so force shininess off immediately after the
             // new party member is created.
             {
@@ -3684,14 +3896,14 @@ static void Debug_Display_Nature(u32 natureId, u32 digit, u8 windowId)
 #if 0
 // Legacy shiny selector implementation kept for reference only.
 // This code is intentionally disabled in Hoenn's Last Wish.
-static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) //// you can't gain shinys now
+static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) // Legacy selector; shiny creation is disabled.
 {
     if (JOY_NEW(DPAD_ANY))
     {
         PlaySE(SE_SELECT);
         gTasks[taskId].tInput ^= JOY_NEW(DPAD_UP | DPAD_DOWN) > 0;
         // Debug_Display_TrueFalse(gTasks[taskId].tInput, gTasks[taskId].tSubWindowId, sDebugText_PokemonShiny);
-        // Forçar sempre FALSE (não shiny)
+        // Always force FALSE (non-shiny).
         gTasks[taskId].tInput = 0;
         Debug_Display_TrueFalse(gTasks[taskId].tInput, gTasks[taskId].tSubWindowId, sDebugText_PokemonShiny);
     }
@@ -3699,7 +3911,7 @@ static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) //// you can't gain 
     if (JOY_NEW(A_BUTTON))
     {
         // sDebugMonData->isShiny = gTasks[taskId].tInput;
-        sDebugMonData->isShiny = FALSE; // Forçar sempre não shiny
+        sDebugMonData->isShiny = FALSE; // Always keep Wish Menu-created Pokémon non-shiny.
         gTasks[taskId].tInput = 0;
         gTasks[taskId].tDigit = 0;
         Debug_Display_Nature(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
@@ -4198,7 +4410,7 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
         SetMonMoveSlot(&mon, moves[i], i);
     }
 
-    //Ability
+    // Ability
     if (abilityNum == 0xFF || GetAbilityBySpecies(species, abilityNum) == ABILITY_NONE)
     {
         do {
@@ -4209,7 +4421,7 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     SetMonData(&mon, MON_DATA_ABILITY_NUM, &abilityNum);
 
     
-// +++ MARCA DEBUG (TRIÂNGULO) +++
+// +++ DEBUG MARKING (TRIANGLE) +++
 
 {
     u8 currentMarkings = (u8)GetMonData(&mon, MON_DATA_MARKINGS, NULL);
@@ -4217,12 +4429,12 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     SetMonData(&mon, MON_DATA_MARKINGS, &debugMarking);
 }
 
-// +++ FIM +++
+// +++ END DEBUG MARKING +++
 
-    //Update mon stats before giving it to the player
+    // Update stats before giving the Pokémon to the player.
     CalculateMonStats(&mon);
 
-    // give player the mon
+    // Give the Pokémon to the player.
     SetMonData(&mon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
     SetMonData(&mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
     for (i = 0; i < PARTY_SIZE; i++)
@@ -4832,9 +5044,14 @@ static void DebugAction_CreateFollowerNPC(u8 taskId)
 
     Debug_DestroyMenu_Full(taskId);
     LockPlayerFieldControls();
+
+    // The shared follower core keeps NPC followers and party Pokémon followers
+    // mutually exclusive. Replacing the current NPC follower is immediate, and
+    // CreateFollowerNPC() refreshes/hides the party Pokémon follower immediately.
     DestroyFollowerNPC();
     SetFollowerNPCData(FNPC_DATA_BATTLE_PARTNER, PARTNER_STEVEN);
     CreateFollowerNPC(gfx, FNPC_ALL, Debug_Follower_NPC_Event_Script);
+
     UnlockPlayerFieldControls();
 }
 
@@ -5585,34 +5802,6 @@ static void DebugAction_Party_ResetFriendship(u8 taskId)
     Debug_DestroyMenu_Full(taskId);
 }
 
-static void DebugAction_Party_SetLevelCap(u8 taskId)
-{
-    u32 i;
-    u32 levelCap = GetCurrentLevelCap();
-
-    // LEVEL_CAP_NONE projects can report 0. Treat that as the natural maximum
-    // rather than ever trying to create a level-0 Pokémon.
-    if (levelCap == 0 || levelCap > MAX_LEVEL)
-        levelCap = MAX_LEVEL;
-
-    for (i = 0; i < PARTY_SIZE; i++)
-    {
-        struct Pokemon *mon = &gPlayerParty[i];
-        u16 species = GetMonData(mon, MON_DATA_SPECIES);
-
-        if (species != SPECIES_NONE && !GetMonData(mon, MON_DATA_IS_EGG))
-        {
-            u32 exp = gExperienceTables[gSpeciesInfo[species].growthRate][levelCap];
-
-            SetMonData(mon, MON_DATA_EXP, &exp);
-            CalculateMonStats(mon);
-        }
-    }
-
-    PlaySE(SE_EXP);
-    ScriptContext_Enable();
-    Debug_DestroyMenu_Full(taskId);
-}
 
 static void DebugAction_Party_ClearParty(u8 taskId)
 {
