@@ -141,6 +141,8 @@ struct DexNavGUI
 EWRAM_DATA static struct DexNavSearch *sDexNavSearchDataPtr = NULL;
 EWRAM_DATA static struct DexNavGUI *sDexNavUiDataPtr = NULL;
 EWRAM_DATA static u8 *sBg1TilemapBuffer = NULL;
+EWRAM_DATA static u32 sDexNavBgScrollX = 0;
+EWRAM_DATA static u32 sDexNavBgScrollY = 0;
 EWRAM_DATA u16 gDexNavSpecies = SPECIES_NONE;
 
 //// Function Declarations
@@ -169,16 +171,71 @@ static void DexNavDrawHiddenIcons(void);
 static void DrawHiddenSearchWindow(u8 width);
 
 //// Const Data
-// gui image data
+// HLW DexNav GUI / background split.
+//
+// BG1 contains ONLY the interface drawn in gui_tiles.png. Palette index 0 is
+// transparent, so every untouched area reveals BG2 directly underneath.
+// gui_tiles.bin is the user-authored 30x20 (240x160) raw tilemap.
 static const u32 sDexNavGuiTiles[] = INCBIN_U32("graphics/dexnav/gui_tiles.4bpp.smol");
-static const u32 sDexNavGuiTilemap[] = INCBIN_U32("graphics/dexnav/gui_tilemap.bin.smolTM");
-static const u32 sDexNavGuiPal[] = INCBIN_U32("graphics/dexnav/gui.gbapal");
+static const u16 sDexNavGuiTilemap[] = INCBIN_U16("graphics/dexnav/gui_tiles.bin");
+static const u16 sDexNavGuiPal[] = INCBIN_U16("graphics/dexnav/gui_tiles.gbapal");
+
+// Dedicated text palette for the transparent DexNav windows.
+// Index 0 stays unused/transparent, 1 = white body, 2 = light gray shadow.
+static const u16 sDexNavWindowTextPal[] =
+{
+    RGB(0, 0, 0),
+    RGB(31, 31, 31),
+    RGB(20, 20, 20),
+    RGB(10, 10, 10),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+    RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+};
+
+// BG2 is the complete external DexNav background. It is never baked into the
+// GUI tileset. The 32x24 source map is repeated vertically inside a 32x64 BG
+// and the scroll position wraps every 192 pixels for a seamless loop.
+#define DEXNAV_GUI_MAP_WIDTH          30
+#define DEXNAV_GUI_MAP_HEIGHT         20
+#define DEXNAV_SCROLL_MAP_WIDTH       32
+#define DEXNAV_SCROLL_MAP_HEIGHT      24
+#define DEXNAV_SCROLL_BG_ROWS         64
+#define DEXNAV_SCROLL_BG_PALETTE      2
+#define DEXNAV_SCROLL_SPEED_X         32 // gentle rightward drift, same style as Options
+#define DEXNAV_SCROLL_SPEED_Y         48 // main downward movement
+#define DEXNAV_SCROLL_PERIOD_X        ((DEXNAV_SCROLL_MAP_WIDTH * 8) << 8)
+#define DEXNAV_SCROLL_PERIOD_Y        ((DEXNAV_SCROLL_MAP_HEIGHT * 8) << 8)
+static const u32 sDexNavScrollBgTiles[] = INCBIN_U32("graphics/dexnav/bgscroll.4bpp.smol");
+static const u16 sDexNavScrollBgTilemap[] = INCBIN_U16("graphics/dexnav/bgscroll.bin");
+static const u16 sDexNavScrollBgPal[] = INCBIN_U16("graphics/dexnav/bgscroll.gbapal");
+
+STATIC_ASSERT(sizeof(sDexNavGuiTilemap) == DEXNAV_GUI_MAP_WIDTH * DEXNAV_GUI_MAP_HEIGHT * sizeof(u16), DexNavGuiTilemap_MustBe30x20);
+STATIC_ASSERT(sizeof(sDexNavScrollBgTilemap) == DEXNAV_SCROLL_MAP_WIDTH * DEXNAV_SCROLL_MAP_HEIGHT * sizeof(u16), DexNavScrollTilemap_MustBe32x24);
 
 static const u32 sSelectionCursorGfx[] = INCBIN_U32("graphics/dexnav/cursor.4bpp.smol");
 static const u16 sSelectionCursorPal[] = INCBIN_U16("graphics/dexnav/cursor.gbapal");
 static const u32 sCapturedAllMonsTiles[] = INCBIN_U32("graphics/dexnav/captured_all.4bpp.smol");  //uses selection cursor pal
 
 static const u32 sNoDataGfx[] = INCBIN_U32("graphics/dexnav/no_data.4bpp.smol");
+
+// Dedicated palette for the empty-slot X icons.  They used to inherit the
+// shared mon-icon palette, which could tint them purple depending on which
+// species palettes were currently loaded.
+#define DEXNAV_NO_DATA_PAL_TAG 0xD610
+static const u16 sNoDataIconPal[16] =
+{
+    RGB(0, 0, 0),       // transparent
+    RGB(14, 14, 14), RGB(14, 14, 14), RGB(14, 14, 14),
+    RGB(14, 14, 14), RGB(14, 14, 14), RGB(14, 14, 14), RGB(14, 14, 14),
+    RGB(14, 14, 14), RGB(14, 14, 14), RGB(14, 14, 14), RGB(14, 14, 14),
+    RGB(14, 14, 14), RGB(14, 14, 14), RGB(14, 14, 14), RGB(14, 14, 14),
+};
+static const struct SpritePalette sNoDataIconSpritePalette =
+{
+    .data = sNoDataIconPal,
+    .tag = DEXNAV_NO_DATA_PAL_TAG,
+};
 
 // searching image data
 static const u32 sPotentialStarGfx[] = INCBIN_U32("graphics/dexnav/star.4bpp.smol");
@@ -221,9 +278,9 @@ static const struct WindowTemplate sDexNavGuiWindowTemplates[] =
     [WINDOW_REGISTERED] =
     {
         .bg = 0,
-        .tilemapLeft = 4,
+        .tilemapLeft = 3,
         .tilemapTop = 0,
-        .width = 26,
+        .width = 27,
         .height = 2,
         .paletteNum = 15,
         .baseBlock = 200,
@@ -232,10 +289,10 @@ static const struct WindowTemplate sDexNavGuiWindowTemplates[] =
 };
 
 //gui font
-static const u8 sFontColor_Black[3] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
-static const u8 sFontColor_White[3] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
-//search window font
-static const u8 sSearchFontColor[3] = {0, 15, 13};
+static const u8 sFontColor_Black[3] = {0, 1, 2};
+static const u8 sFontColor_White[3] = {0, 1, 2};
+// Search window / DexNav data text: white text with gray shadow for dark backgrounds.
+static const u8 sSearchFontColor[3] = {0, 1, 2};
 
 static const struct OamData sNoDataIconOam =
 {
@@ -341,7 +398,7 @@ static const union AnimCmd *const sAnimCmdTable_Sight[] =
 static const struct SpriteTemplate sNoDataIconTemplate =
 {
     .tileTag = ICON_GFX_TAG,
-    .paletteTag = ICON_PAL_TAG,
+    .paletteTag = DEXNAV_NO_DATA_PAL_TAG,
     .oam = &sNoDataIconOam,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
@@ -1622,19 +1679,32 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
 ///////////
 /// GUI ///
 ///////////
-static const struct BgTemplate sDexNavMenuBgTemplates[2] =
+static const struct BgTemplate sDexNavMenuBgTemplates[3] =
 {
     {
+        // Dynamic text/windows.
         .bg = 0,
         .charBaseIndex = 0,
         .mapBaseIndex = 31,
+        .screenSize = 0,
         .priority = 0
     },
     {
+        // Transparent interface authored in gui_tiles.png / gui_tiles.bin.
         .bg = 1,
         .charBaseIndex = 3,
         .mapBaseIndex = 30,
+        .screenSize = 0,
         .priority = 1
+    },
+    {
+        // Full external background. 32x64 map gives enough vertical space to
+        // repeat a 32x24 source while the 240x160 viewport scrolls across it.
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .screenSize = 2,
+        .priority = 2
     }
 };
 
@@ -1647,6 +1717,19 @@ static void DexNav_VBlankCB(void)
 
 static void DexNav_MainCB(void)
 {
+    // Match the Options menu style: the DexNav background moves downward with
+    // a gentle rightward drift, while the GUI layer stays fixed.
+    sDexNavBgScrollX += DEXNAV_SCROLL_SPEED_X;
+    if (sDexNavBgScrollX >= DEXNAV_SCROLL_PERIOD_X)
+        sDexNavBgScrollX -= DEXNAV_SCROLL_PERIOD_X;
+
+    sDexNavBgScrollY += DEXNAV_SCROLL_SPEED_Y;
+    if (sDexNavBgScrollY >= DEXNAV_SCROLL_PERIOD_Y)
+        sDexNavBgScrollY -= DEXNAV_SCROLL_PERIOD_Y;
+
+    ChangeBgX(2, sDexNavBgScrollX, BG_COORD_SET);
+    ChangeBgY(2, sDexNavBgScrollY, BG_COORD_SET);
+
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -1669,9 +1752,50 @@ static bool8 DexNav_InitBgs(void)
     ScheduleBgCopyTilemapToVram(1);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
     SetGpuReg(REG_OFFSET_BLDCNT , 0);
+    sDexNavBgScrollX = 0;
+    sDexNavBgScrollY = 0;
+    ChangeBgX(2, 0, BG_COORD_SET);
+    ChangeBgY(2, 0, BG_COORD_SET);
     ShowBg(0);
     ShowBg(1);
+    ShowBg(2);
     return TRUE;
+}
+
+static void LoadDexNavGuiTilemap(void)
+{
+    u16 *dst = (u16 *)sBg1TilemapBuffer;
+    u32 row, col;
+
+    // BG1 hardware map is 32x32, while the authored screen is exactly 30x20.
+    // Clear the hardware map, then place the authored UI in the visible area.
+    memset(dst, 0, 0x800);
+    for (row = 0; row < DEXNAV_GUI_MAP_HEIGHT; row++)
+    {
+        for (col = 0; col < DEXNAV_GUI_MAP_WIDTH; col++)
+            dst[row * 32 + col] = sDexNavGuiTilemap[row * DEXNAV_GUI_MAP_WIDTH + col];
+    }
+
+    ScheduleBgCopyTilemapToVram(1);
+}
+
+static void LoadDexNavScrollingBackground(void)
+{
+    vu16 *dst = (vu16 *)BG_SCREEN_ADDR(28);
+    u32 row, col;
+
+    // BG2 is 32x64 (screenSize 2), therefore screen blocks 28 and 29 are
+    // contiguous. Repeat the exact 32x24 user map through all 64 rows.
+    for (row = 0; row < DEXNAV_SCROLL_BG_ROWS; row++)
+    {
+        u32 srcRow = row % DEXNAV_SCROLL_MAP_HEIGHT;
+        for (col = 0; col < DEXNAV_SCROLL_MAP_WIDTH; col++)
+        {
+            u16 tile = sDexNavScrollBgTilemap[srcRow * DEXNAV_SCROLL_MAP_WIDTH + col];
+            dst[row * DEXNAV_SCROLL_MAP_WIDTH + col] =
+                (tile & 0x0FFF) | (DEXNAV_SCROLL_BG_PALETTE << 12);
+        }
+    }
 }
 
 static bool8 DexNav_LoadGraphics(void)
@@ -1679,20 +1803,33 @@ static bool8 DexNav_LoadGraphics(void)
     switch (sDexNavUiDataPtr->state)
     {
     case 0:
+        // BG2 first: it is the complete visual background.
         ResetTempTileDataBuffers();
-        DecompressAndCopyTileDataToVram(1, sDexNavGuiTiles, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(2, sDexNavScrollBgTiles, 0, 0, 0);
         sDexNavUiDataPtr->state++;
         break;
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            DecompressDataWithHeaderWram(sDexNavGuiTilemap, sBg1TilemapBuffer);
+            LoadDexNavScrollingBackground();
+            LoadPalette(sDexNavScrollBgPal, BG_PLTT_ID(DEXNAV_SCROLL_BG_PALETTE), PLTT_SIZE_4BPP);
             sDexNavUiDataPtr->state++;
         }
         break;
     case 2:
-        LoadPalette(sDexNavGuiPal, 0, 32);
+        // BG1 second: only the transparent UI artwork.
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(1, sDexNavGuiTiles, 0, 0, 0);
         sDexNavUiDataPtr->state++;
+        break;
+    case 3:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            LoadDexNavGuiTilemap();
+            LoadPalette(sDexNavGuiPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+            LoadPalette(sDexNavWindowTextPal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+            sDexNavUiDataPtr->state++;
+        }
         break;
     default:
         sDexNavUiDataPtr->state = 0;
@@ -1888,6 +2025,7 @@ static void DexNav_InitWindows(void)
 
 static void DexNavGuiFreeResources(void)
 {
+    FreeSpritePaletteByTag(DEXNAV_NO_DATA_PAL_TAG);
     Free(sDexNavUiDataPtr);
     Free(sBg1TilemapBuffer);
     FreeAllWindowBuffers();
@@ -1913,10 +2051,17 @@ static void CB1_DexNavSearchCallback(void)
 
 static void Task_DexNavExitAndSearch(u8 taskId)
 {
-    DexNavGuiFreeResources();
-    DestroyTask(taskId);
-    SetMainCallback1(CB1_DexNavSearchCallback);
-    SetMainCallback2(CB2_ReturnToField);
+    // A-button search starts a fade to black.  Keep the DexNav BGs/palettes
+    // alive until that fade has fully completed; tearing them down one frame
+    // early exposes uninitialized/overwritten palette data as a bright green
+    // full-screen flash during the transition back to the field.
+    if (!gPaletteFade.active)
+    {
+        DexNavGuiFreeResources();
+        DestroyTask(taskId);
+        SetMainCallback1(CB1_DexNavSearchCallback);
+        SetMainCallback2(CB2_ReturnToField);
+    }
 }
 
 static void Task_DexNavFadeAndExit(u8 taskId)
@@ -2046,6 +2191,7 @@ static void DrawSpeciesIcons(void)
     u16 species;
 
     LoadCompressedSpriteSheetUsingHeap(&sNoDataIconSpriteSheet);
+    LoadSpritePalette(&sNoDataIconSpritePalette);
     for (i = 0; i < LAND_WILD_COUNT; i++)
     {
         species = sDexNavUiDataPtr->landSpecies[i];
@@ -2236,6 +2382,7 @@ static void PrintSearchableSpecies(u16 species)
     PutWindowTilemap(WINDOW_REGISTERED);
     if (species == SPECIES_NONE)
     {
+        // Keep the register hint hard-left aligned on the top strip.
         AddTextPrinterParameterized3(WINDOW_REGISTERED, FONT_NORMAL, 0, 0, sFontColor_White, TEXT_SKIP_DRAW, sText_DexNav_PressRToRegister);
     }
     else
