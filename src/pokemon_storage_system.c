@@ -1006,7 +1006,7 @@ static const union AffineAnimCmd *const sAffineAnims_ChooseBoxMenu[] =
     sAffineAnim_ChooseBoxMenu
 };
 
-static const u8 sChooseBoxMenu_TextColors[] = {TEXT_COLOR_RED, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5};
+static const u8 sChooseBoxMenu_TextColors[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
 static const u8 sText_OutOf30[] = _("/30");
 
 // ---------------------------------------------------------------------------
@@ -2038,7 +2038,12 @@ static void LoadChooseBoxMenuGfx(struct ChooseBoxMenu *menu, u16 tileTag, u16 pa
     if (loadPal) // Always false
         LoadSpritePalette(&palette);
 
-    CpuFastCopy(sHandCursor_Pal, sStorage->chooseBoxSwapPal, 32);
+    // HLW dark Jump/Deposit Box popup.
+    // This menu is rendered through the dynamic OBJ palette swap performed by
+    // the HBlank callback. The stock code copied sHandCursor_Pal here, which
+    // means editing box_selection_popup.gbapal had no visible effect.
+    // Feed the dedicated popup palette into the dynamic swap buffer instead.
+    CpuCopy16(sChooseBoxMenu_Pal, sStorage->chooseBoxSwapPal, PLTT_SIZE_4BPP);
 
     LoadSpriteSheets(sheets);
     sChooseBoxMenu = menu;

@@ -78,6 +78,15 @@ enum {
 // 8.8 fixed-point: 0x100 = 1 pixel per frame, matching Snowball's base speed.
 #define MON_NAME_BG_SCROLL_SPEED          0x040
 
+// PC Box naming background.
+// This screen reuses graphics/pokemon_storage/bgscroll and intentionally keeps
+// the same vertical-only scroll pattern as the PC storage screen.
+// Other naming-screen variants are left untouched.
+#define BOX_NAME_BG_PALETTE               6
+#define BOX_NAME_TILEMAP_WIDTH            32
+#define BOX_NAME_TILEMAP_HEIGHT           24
+#define BOX_NAME_BG_MAP_ROWS              32
+
 // Vertical star layer for Pokémon naming screens.
 // Ported from the custom main-menu starfield, but kept behind the naming UI.
 #define MON_NAME_STAR_COUNT               30
@@ -239,6 +248,12 @@ static const u8 sPCIconOn_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_on.4
 static const u8 sMonNamingBackground_Gfx[] = INCBIN_U8("graphics/naming_screen/bg.4bpp");
 static const u16 sMonNamingBackground_Pal[] = INCBIN_U16("graphics/naming_screen/bg.gbapal");
 static const u16 sMonNamingBackground_Tilemap[] = INCBIN_U16("graphics/naming_screen/bg.bin");
+
+// PC Box naming screen background. Reuse the exact PC storage bgscroll assets
+// instead of introducing a second copy under graphics/naming_screen.
+static const u32 sBoxNamingBackground_Gfx[] = INCBIN_U32("graphics/pokemon_storage/bgscroll.4bpp.smol");
+static const u16 sBoxNamingBackground_Pal[] = INCBIN_U16("graphics/pokemon_storage/bgscroll.gbapal");
+static const u16 sBoxNamingBackground_Tilemap[] = INCBIN_U16("graphics/pokemon_storage/bgscroll.bin");
 
 // ---------------------------------------------------------------------------
 // Pokémon naming stars
@@ -624,6 +639,7 @@ static const struct SubspriteTable sSubspriteTable_PageSwapFrame[];
 static const struct SubspriteTable sSubspriteTable_PageSwapText[];
 static const struct SubspriteTable sSubspriteTable_Button[];
 static const struct SubspriteTable sSubspriteTable_PCIcon[];
+static const struct SubspriteTable sSubspriteTable_PCIcon_Box[];
 static const struct SpriteTemplate sSpriteTemplate_PageSwapFrame;
 static const struct SpriteTemplate sSpriteTemplate_PageSwapButton;
 static const struct SpriteTemplate sSpriteTemplate_PageSwapText;
@@ -641,6 +657,7 @@ static void CB2_LoadNamingScreen(void);
 static void NamingScreen_Init(void);
 static void NamingScreen_InitBGs(void);
 static bool8 IsPlayerNamingScreen(void);
+static bool8 IsBoxNamingScreen(void);
 static bool8 IsMonNamingScreen(void);
 static void CreateNamingScreenTask(void);
 static void Task_NamingScreen(u8 taskId);
@@ -696,6 +713,8 @@ static void DrawPlayerNamingScreenBackground(void);
 static void DrawPlayerNamingScreenPanel(void);
 static void DrawMonNamingScreenBackground(void);
 static void DrawMonNamingScreenPanel(void);
+static void DrawBoxNamingScreenBackground(void);
+static void UpdateBoxNamingBackgroundScroll(void);
 static void UpdateMonNamingBackgroundScroll(void);
 static void LoadMonNamingStarGfx(void);
 static void CreateMonNamingStars(void);
@@ -815,6 +834,11 @@ static bool8 IsPlayerNamingScreen(void)
     return sNamingScreen->templateNum == NAMING_SCREEN_PLAYER;
 }
 
+static bool8 IsBoxNamingScreen(void)
+{
+    return sNamingScreen->templateNum == NAMING_SCREEN_BOX;
+}
+
 static bool8 IsMonNamingScreen(void)
 {
     return sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON
@@ -847,6 +871,13 @@ static void NamingScreen_InitBGs(void)
     {
         InitBgsFromTemplates(0, sPlayerNamingBgTemplates, ARRAY_COUNT(sPlayerNamingBgTemplates));
         windowTemplates = sPlayerNamingWindowTemplates;
+    }
+    else if (IsBoxNamingScreen())
+    {
+        // The Box naming screen needs a dedicated BG0 behind the normal naming
+        // UI. Reuse the mon-screen layer layout without changing mon behavior.
+        InitBgsFromTemplates(0, sMonNamingBgTemplates, ARRAY_COUNT(sMonNamingBgTemplates));
+        windowTemplates = sMonNamingWindowTemplates;
     }
     else if (IsMonNamingScreen())
     {
@@ -887,13 +918,13 @@ static void NamingScreen_InitBGs(void)
     SetGpuReg(REG_OFFSET_WININ, 0);
     SetGpuReg(REG_OFFSET_WINOUT, 0);
 
-    if (IsPlayerNamingScreen() || IsMonNamingScreen())
+    if (IsPlayerNamingScreen() || IsBoxNamingScreen() || IsMonNamingScreen())
         SetBgTilemapBuffer(0, sNamingScreen->tilemapBuffer0);
     SetBgTilemapBuffer(1, sNamingScreen->tilemapBuffer1);
     SetBgTilemapBuffer(2, sNamingScreen->tilemapBuffer2);
     SetBgTilemapBuffer(3, sNamingScreen->tilemapBuffer3);
 
-    if (IsPlayerNamingScreen() || IsMonNamingScreen())
+    if (IsPlayerNamingScreen() || IsBoxNamingScreen() || IsMonNamingScreen())
         FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
     FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 0x20, 0x20);
     FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 0x20, 0x20);
@@ -987,6 +1018,8 @@ static bool8 MainState_FadeIn(void)
 {
     if (IsPlayerNamingScreen())
         DrawPlayerNamingScreenBackground();
+    else if (IsBoxNamingScreen())
+        DrawBoxNamingScreenBackground();
     else if (IsMonNamingScreen())
         DrawMonNamingScreenBackground();
     else
@@ -1001,7 +1034,7 @@ static bool8 MainState_FadeIn(void)
     DrawTextEntry();
     DrawTextEntryBox();
     PrintControls();
-    if (IsPlayerNamingScreen() || IsMonNamingScreen())
+    if (IsPlayerNamingScreen() || IsBoxNamingScreen() || IsMonNamingScreen())
         CopyBgTilemapBufferToVram(0);
     CopyBgTilemapBufferToVram(1);
     CopyBgTilemapBufferToVram(2);
@@ -1746,13 +1779,15 @@ static void CreateTextEntrySprites(void)
 
     xPos = sNamingScreen->inputCharBaseXPos - 5;
     spriteId = CreateSprite(&sSpriteTemplate_InputArrow, xPos, 56, 0);
-    gSprites[spriteId].oam.priority = (IsPlayerNamingScreen() || IsMonNamingScreen()) ? 0 : 3;
+    gSprites[spriteId].oam.priority =
+        (IsPlayerNamingScreen() || IsBoxNamingScreen() || IsMonNamingScreen()) ? 0 : 3;
     gSprites[spriteId].invisible = TRUE;
     xPos = sNamingScreen->inputCharBaseXPos;
     for (i = 0; i < sNamingScreen->template->maxChars; i++, xPos += 8)
     {
         spriteId = CreateSprite(&sSpriteTemplate_Underscore, xPos + 3, 60, 0);
-        gSprites[spriteId].oam.priority = (IsPlayerNamingScreen() || IsMonNamingScreen()) ? 0 : 3;
+        gSprites[spriteId].oam.priority =
+            (IsPlayerNamingScreen() || IsBoxNamingScreen() || IsMonNamingScreen()) ? 0 : 3;
         gSprites[spriteId].data[0] = i;
         gSprites[spriteId].invisible = TRUE;
     }
@@ -1806,8 +1841,19 @@ static void NamingScreen_CreatePCIcon(void)
     u8 spriteId;
 
     spriteId = CreateSprite(&sSpriteTemplate_PCIcon, 56, 41, 0);
-    SetSubspriteTables(&gSprites[spriteId], sSubspriteTable_PCIcon);
-    gSprites[spriteId].oam.priority = 3;
+
+    if (IsBoxNamingScreen())
+    {
+        // The icon itself is animated exactly as before; only its three
+        // subsprite priorities are lifted above the new scrolling BG.
+        SetSubspriteTables(&gSprites[spriteId], sSubspriteTable_PCIcon_Box);
+        gSprites[spriteId].oam.priority = 0;
+    }
+    else
+    {
+        SetSubspriteTables(&gSprites[spriteId], sSubspriteTable_PCIcon);
+        gSprites[spriteId].oam.priority = 3;
+    }
 }
 
 static void NamingScreen_CreateMonIcon(void)
@@ -2296,6 +2342,11 @@ static void LoadGfx(void)
         DecompressDataWithHeaderVram(gBirchSpeechBackgroundTiles, (void *)BG_CHAR_ADDR(1));
         DecompressDataWithHeaderVram(gBirchSpeechShadowGfx, (void *)BG_CHAR_ADDR(0));
     }
+    else if (IsBoxNamingScreen())
+    {
+        // Same source asset and decompression path used by the PC storage screen.
+        DecompressAndLoadBgGfxUsingHeap(0, sBoxNamingBackground_Gfx, 0, 0, 0);
+    }
     else if (IsMonNamingScreen())
     {
         // 526 unique tiles (16832 bytes). BG0 starts at charblock 0 and this
@@ -2322,10 +2373,10 @@ static void LoadGfx(void)
         // player/name panel without overwriting either asset.
         LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), BIRCH_NAME_PANEL_TILE_OFFSET);
     }
-    else if (IsMonNamingScreen())
+    else if (IsBoxNamingScreen() || IsMonNamingScreen())
     {
-        // Same cleaned rounded card, but normal tile IDs because Pokémon BG3
-        // has its own charblock 3.
+        // Box naming and Pokémon naming both put only the rounded naming card
+        // on BG3, leaving BG0 visible around it.
         SanitizePlayerNamingPanelGfx();
         LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
     }
@@ -2358,6 +2409,15 @@ static void LoadPalettes(void)
         LoadPalette(gBirchSpeechBackgroundPalette, BG_PLTT_ID(BIRCH_NAME_BG_PALETTE), PLTT_SIZE_4BPP);
         LoadPalette(gBirchSpeechShadowPals, BG_PLTT_ID(BIRCH_NAME_SHADOW_PALETTE), 2 * PLTT_SIZE_4BPP);
         LoadPalette(&black, BG_PLTT_ID(BIRCH_NAME_SHADOW_PALETTE), sizeof(black));
+    }
+    else if (IsBoxNamingScreen())
+    {
+        // One 4bpp palette, exactly as authored in graphics/pokemon_storage/bgscroll.png.
+        LoadPalette(
+            sBoxNamingBackground_Pal,
+            BG_PLTT_ID(BOX_NAME_BG_PALETTE),
+            PLTT_SIZE_4BPP
+        );
     }
     else if (IsMonNamingScreen())
     {
@@ -2670,6 +2730,44 @@ static void Task_MonNamingStars(u8 taskId)
     }
 }
 
+static void DrawBoxNamingScreenBackground(void)
+{
+    u16 *dst = (u16 *)sNamingScreen->tilemapBuffer0;
+    u16 y;
+    u16 x;
+
+    // bgscroll.bin is a raw 32x24 map. The hardware text BG is 32x32, so use
+    // the exact same row-repeat strategy as the PC storage screen. This keeps
+    // the Box naming screen visually tied to the PC while leaving every other
+    // naming-screen type untouched.
+    for (y = 0; y < BOX_NAME_BG_MAP_ROWS; y++)
+    {
+        u16 srcRow = y % BOX_NAME_TILEMAP_HEIGHT;
+
+        for (x = 0; x < BOX_NAME_TILEMAP_WIDTH; x++)
+        {
+            u16 tile = sBoxNamingBackground_Tilemap[srcRow * BOX_NAME_TILEMAP_WIDTH + x];
+            dst[y * BOX_NAME_TILEMAP_WIDTH + x] =
+                (tile & 0x0FFF) | (BOX_NAME_BG_PALETTE << 12);
+        }
+    }
+
+    // Keep only the normal rounded naming card on BG3. Do not copy the stock
+    // full-screen naming background, otherwise it would hide bgscroll.
+    DrawMonNamingScreenPanel();
+}
+
+static void UpdateBoxNamingBackgroundScroll(void)
+{
+    if (!IsBoxNamingScreen())
+        return;
+
+    // Match the PC storage Theme 1/2 motion exactly: vertical-only, 0.5 px per
+    // frame upward. No horizontal drift is introduced on this screen.
+    ChangeBgX(0, 0, BG_COORD_SET);
+    ChangeBgY(0, 128, BG_COORD_SUB);
+}
+
 static void UpdateMonNamingBackgroundScroll(void)
 {
     if (!IsMonNamingScreen())
@@ -2857,6 +2955,7 @@ static void PrintControls(void)
 static void CB2_NamingScreen(void)
 {
     RunTasks();
+    UpdateBoxNamingBackgroundScroll();
     UpdateMonNamingBackgroundScroll();
     AnimateSprites();
     BuildOamBuffer();
@@ -3317,6 +3416,43 @@ static const struct SubspriteTable sSubspriteTable_Button[] =
 static const struct SubspriteTable sSubspriteTable_PCIcon[] =
 {
     {ARRAY_COUNT(sSubsprites_PCIcon), sSubsprites_PCIcon}
+};
+
+// HLW Box naming screen: BG0 now owns the scrolling PC background at priority 3.
+// The stock PC icon is made from three subsprites whose priorities are hardcoded
+// to 3, so changing only the parent sprite priority is not enough. Keep a
+// Box-only copy of the exact same 16x24 icon layout at OBJ priority 0.
+static const struct Subsprite sSubsprites_PCIcon_Box[] =
+{
+    {
+        .x = -8,
+        .y = -12,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 0,
+        .priority = 0
+    },
+    {
+        .x = -8,
+        .y = -4,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 2,
+        .priority = 0
+    },
+    {
+        .x = -8,
+        .y = 4,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 4,
+        .priority = 0
+    }
+};
+
+static const struct SubspriteTable sSubspriteTable_PCIcon_Box[] =
+{
+    {ARRAY_COUNT(sSubsprites_PCIcon_Box), sSubsprites_PCIcon_Box}
 };
 
 static const struct SpriteFrameImage sImageTable_PCIcon[] =
