@@ -581,6 +581,13 @@ EWRAM_DATA static bool8 sJustOpenedBag = 0;
 EWRAM_DATA static u8 sFollowerIndex = 0;
 EWRAM_DATA static bool8 sRefreshDisplayMonGfx = FALSE;
 
+// HLW PC background selector. Kept in EWRAM for this first pass so the
+// selected background survives PC reopenings during the current play session.
+// 0 = HLW bgscroll, 1 = classic scrolling_bg, 2 = horizontal water bg.
+EWRAM_DATA static u8 sStorageBackgroundTheme = 0;
+EWRAM_DATA static u32 sStorageBg3ScrollX = 0;
+// Prevent rapid L/R theme spam from repeatedly reloading BG graphics/palettes.
+
 EWRAM_DATA static u16 *sPaletteSwapBuffer = NULL; // dynamically-allocated buffer to hold box palettes
 EWRAM_DATA static u8 allocCount = 0; // Track number of alloc's vs frees
 
@@ -622,6 +629,7 @@ static u8 InBoxInput_Normal(void);
 static u8 InBoxInput_MovingMultiple(void);
 static u8 InBoxInput_SelectingMultiple(void);
 static u8 HandleInput(void);
+static u8 HandleSelectQuickPick(void);
 static void AddBoxOptionsMenu(void);
 static u8 SetSelectionMenuTexts(void);
 static bool8 SetMenuTexts_Mon(void);
@@ -758,7 +766,6 @@ static void SpriteCB_ItemIcon_SwapToMon(struct Sprite *);
 
 // Cursor
 static void CreateCursorSprites(void);
-static void ToggleCursorAutoAction(void);
 static u8 GetCursorPosition(void);
 static void StartCursorAnim(u8);
 static void TryHideItemAtCursor(void);
@@ -835,6 +842,11 @@ static void LoadPokeStorageMenuGfx(void);
 static void LoadWaveformSpritePalette(void);
 static void InitPokeStorageBg0(void);
 static void SetScrollingBackground(void);
+static void LoadHlwStorageBackgroundTilemap(void);
+static void LoadStorageBg3Graphics(void);
+static void LoadStorageBg3Tilemap(void);
+static void ApplyStorageBackgroundPalette(void);
+static void CycleStorageBackground(s8 direction);
 static void UpdateBoxToSendMons(void);
 static void InitCursorItemIcon(void);
 static void InitPalettesAndSprites(void);
@@ -844,6 +856,10 @@ static void CreateMarkingComboSprite(void);
 static void CreateWaveformSprites(void);
 static void ClearBottomWindow(void);
 static void InitSupplementalTilemaps(void);
+static void ApplyHlwPartyButtonPalette(void);
+static void ApplyHlwStorageInfoPanelBottom(void);
+static void ApplyHlwCloseBoxPalette(void);
+static void PrintDisplayMonGenderLevel(u8 y);
 static void PrintDisplayMonInfo(void);
 static void UpdateWaveformAnimation(void);
 static void SetPartySlotTilemaps(void);
@@ -953,6 +969,170 @@ static const union AffineAnimCmd *const sAffineAnims_ChooseBoxMenu[] =
 static const u8 sChooseBoxMenu_TextColors[] = {TEXT_COLOR_RED, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5};
 static const u8 sText_OutOf30[] = _("/30");
 
+// ---------------------------------------------------------------------------
+// HLW PC dark UI + selectable scrolling background
+// ---------------------------------------------------------------------------
+enum StorageBackgroundTheme
+{
+    STORAGE_BG_HLW = 0,
+    STORAGE_BG_CLASSIC,
+    STORAGE_BG_WATER,
+    STORAGE_BG_COUNT,
+};
+
+#define STORAGE_BG_PALETTE            3
+#define STORAGE_HLW_MAP_WIDTH         32
+#define STORAGE_HLW_MAP_HEIGHT        24
+#define STORAGE_BG_HW_MAP_HEIGHT      32
+
+// Theme 3 is authored as a 30x20 tilemap (240x160). For a seamless horizontal
+// loop the runtime map is expanded to a 64x32 text BG by repeating the source.
+// BG3 uses screen blocks 24-25 only while Theme 3 is active.
+#define STORAGE_BG3_MAP_WIDTH         30
+#define STORAGE_BG3_MAP_HEIGHT        20
+#define STORAGE_BG3_HW_MAP_WIDTH      64
+#define STORAGE_BG3_HW_MAP_HEIGHT     32
+#define STORAGE_BG3_SCREENBASE        24
+#define STORAGE_BG3_SCROLL_SPEED      32 // 8.8 units/frame: slow horizontal drift
+#define STORAGE_BG3_SCROLL_PERIOD     ((STORAGE_BG3_MAP_WIDTH * 8) << 8)
+
+// BG1's PC menu artwork starts at tile 0x100 and occupies 144 tiles (0x100-0x18F).
+// Theme 3 has 272 source tiles, so keep its first 256 tiles in the free lower
+// half of charblock 1 and place the final 16 tiles after the menu at 0x190.
+// This preserves the user's full bgscroll3 artwork without overwriting the UI.
+#define STORAGE_BG3_TILE_SPLIT        256
+#define STORAGE_BG3_HIGH_TILE_BASE    0x190
+
+// Palette bank 0 copied from the user-edited graphics/pokemon_storage/menu.png.
+// The graphics already use these indices; the stock game was simply loading a
+// different palette over them. Keeping the index layout intact makes the dark
+// artwork appear exactly as authored without touching the tile data.
+static const u16 sHlwStorageInterfacePal[16] =
+{
+    RGB( 0,  0,  0), // transparent / black
+    RGB( 8,  8,  9), // #434346
+    RGB( 4,  4,  5), // #212129
+    RGB( 3,  3,  3), // #171717
+    RGB( 6,  6,  6), // #323232
+    RGB(30, 21, 10), // warm accent
+    RGB( 5,  5,  6),
+    RGB( 0,  0,  0),
+    RGB(20, 25, 30),
+    RGB(15, 22, 26),
+    RGB(31, 27, 18),
+    RGB(26, 28, 31),
+    RGB(22, 26, 30),
+    RGB(19, 25, 29),
+    RGB(31, 31, 31),
+    RGB(11, 31, 29),
+};
+
+// Party overlay palette is authored as an external asset. Keeping the color
+// definition in graphics/pokemon_storage/party_menu.pal avoids runtime color
+// hacks and keeps the Pokémon icon palette system completely independent.
+static const u16 sHlwStoragePartyPal[] = INCBIN_U16("graphics/pokemon_storage/party_menu.gbapal");
+
+// The collapsed PARTY POKéMON tab shares tile graphics with the full Party
+// overlay, but it must not share the same palette. Keep the full overlay dark
+// in palette bank 1 and remap only the collapsed tab (source rows 20..21) to
+// this dedicated pastel-red palette bank.
+#define STORAGE_PARTY_BUTTON_PALETTE 10
+static const u16 sHlwStoragePartyButtonPal[] = INCBIN_U16("graphics/pokemon_storage/party_button.gbapal");
+
+// CLOSE BOX uses its own palette bank so its border does not inherit the dark
+// #212129 / #171717 outline colors used elsewhere by the main interface.
+// Palette bank 2 was previously used only by the alternate gray PKMN DATA
+// state; V4 intentionally keeps PKMN DATA at one constant color, freeing it.
+#define STORAGE_CLOSE_BOX_PALETTE 2
+static const u16 sHlwStorageCloseBoxPal[16] =
+{
+    RGB( 0,  0,  0),
+    RGB( 9, 18, 23),  // blue-gray outer edge
+    RGB(15, 22, 27),  // blue-gray inner edge
+    RGB( 6, 12, 16),  // soft blue shadow
+    RGB( 6,  6,  6),
+    RGB(30, 21, 10),
+    RGB( 5,  5,  6),
+    RGB( 0,  0,  0),
+    RGB(20, 25, 30),  // light blue body
+    RGB(15, 22, 26),
+    RGB(31, 27, 18),
+    RGB(26, 28, 31),
+    RGB(22, 26, 30),
+    RGB(19, 25, 29),
+    RGB(31, 31, 31),
+    RGB(11, 31, 29),
+};
+
+// Dedicated palette for the lower-left information panel. Keeping this panel
+// out of BG3's palette is important: the selectable scrolling backgrounds can
+// now change freely without changing the panel color or its text colors.
+#define STORAGE_INFO_PANEL_PALETTE 12
+#define STORAGE_INFO_PANEL_FILL    8
+static const u16 sHlwStorageInfoPanelPal[16] =
+{
+    RGB( 0,  0,  0),  // 0 transparent
+    RGB(31, 31, 31),  // 1 white
+    RGB( 8,  8,  8),  // 2 dark gray
+    RGB(18, 18, 18),  // 3 light gray / text shadow
+    RGB(18, 10, 12),  // 4 female shadow - muted red
+    RGB(31, 18, 20),  // 5 female - pastel red
+    RGB( 8, 31,  8),  // 6 reserved green
+    RGB(18, 31, 18),  // 7 reserved light green
+    RGB( 4,  4,  5),  // 8 HLW #212129 - single panel background color
+    RGB(10, 16, 22),  // 9 male shadow - muted blue
+    RGB(18, 24, 31),  // 10 male - pastel blue
+    RGB( 0,  0,  0),
+    RGB( 0,  0,  0),
+    RGB( 0,  0,  0),
+    RGB( 0,  0,  0),
+    RGB( 0,  0,  0),
+};
+
+// Dedicated palette for the two original bottom-edge rows below WIN_DISPLAY_INFO.
+// Index 0 remains transparent so the rounded/2px silhouette is preserved; every
+// visible pixel index maps to the same #212129 panel color. This prevents the
+// stock edge tiles from inheriting the red/blue gender colors in palette 12.
+#define STORAGE_INFO_EDGE_PALETTE 11
+static const u16 sHlwStorageInfoEdgePal[16] =
+{
+    RGB(0, 0, 0),
+    RGB(4, 4, 5), RGB(4, 4, 5), RGB(4, 4, 5), RGB(4, 4, 5),
+    RGB(4, 4, 5), RGB(4, 4, 5), RGB(4, 4, 5), RGB(4, 4, 5),
+    RGB(4, 4, 5), RGB(4, 4, 5), RGB(4, 4, 5), RGB(4, 4, 5),
+    RGB(4, 4, 5), RGB(4, 4, 5), RGB(4, 4, 5),
+};
+
+static const u8 sHlwStorageInfoTextColors[3] =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_WHITE,
+    TEXT_COLOR_LIGHT_GRAY,
+};
+
+static const u8 sText_HlwBoxInfo[]   = _("BOX {STR_VAR_1} INFO");
+static const u8 sText_HlwBoxCount[]  = _("{STR_VAR_1}/{STR_VAR_2} PKM");
+static const u8 sText_HlwHeldItems[] = _("{STR_VAR_1} HELD ITEM");
+static const u8 sText_HlwChangeBg[]  = _("L/R CHANGE BG");
+static const u8 sText_HlwTheme[]     = _("THEME {STR_VAR_1}/{STR_VAR_2}");
+
+// Keep the original wallpaper and box-title frame palettes intact.
+// The previous global brown->black remap also changed artwork details, so V7
+// deliberately leaves those colors exactly as authored by each wallpaper.
+
+// HLW selectable background. The PNG supplies both tiles and its authored
+// palette; bgscroll.bin is the raw 32x24 tilemap. V8 loads that palette directly.
+static const u32 sHlwScrollingBg_Gfx[]     = INCBIN_U32("graphics/pokemon_storage/bgscroll.4bpp.smol");
+static const u16 sHlwScrollingBg_Tilemap[] = INCBIN_U16("graphics/pokemon_storage/bgscroll.bin");
+static const u16 sHlwScrollingBg_Pal[]     = INCBIN_U16("graphics/pokemon_storage/bgscroll.gbapal");
+
+// Theme 3: user-authored water background. Keep the raw 4bpp data because it is
+// split into two safe VRAM ranges at runtime; the PNG still generates this file
+// and its palette through the normal graphics rules.
+static const u32 sStorageBg3_Gfx[]     = INCBIN_U32("graphics/pokemon_storage/bgscroll3.4bpp");
+static const u16 sStorageBg3_Tilemap[] = INCBIN_U16("graphics/pokemon_storage/bgscroll3.bin");
+static const u16 sStorageBg3_Pal[]     = INCBIN_U16("graphics/pokemon_storage/bgscroll3.gbapal");
+
 static const u16 sChooseBoxMenu_Pal[]        = INCBIN_U16("graphics/pokemon_storage/box_selection_popup.gbapal");
 static const u8 sChooseBoxMenuCenter_Gfx[]   = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.4bpp");
 static const u8 sChooseBoxMenuSides_Gfx[]    = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.4bpp");
@@ -961,11 +1141,8 @@ static const u32 sScrollingBg_Tilemap[]      = INCBIN_U32("graphics/pokemon_stor
 static const u16 sDisplayMenu_Pal[]          = INCBIN_U16("graphics/pokemon_storage/display_menu.gbapal"); // Unused
 static const u32 sDisplayMenu_Tilemap[]      = INCBIN_U32("graphics/pokemon_storage/display_menu.bin.smolTM");
 static const u16 sPkmnData_Tilemap[]         = INCBIN_U16("graphics/pokemon_storage/pkmn_data.bin");
-// sInterface_Pal - parts of the display frame, "PkmnData"'s normal color, Close Box
-static const u16 sInterface_Pal[]            = INCBIN_U16("graphics/pokemon_storage/interface.gbapal");
-static const u16 sPkmnDataGray_Pal[]         = INCBIN_U16("graphics/pokemon_storage/pkmn_data_gray.gbapal");
+// Stock interface.gbapal intentionally replaced at runtime by sHlwStorageInterfacePal.
 static const u16 sScrollingBg_Pal[]          = INCBIN_U16("graphics/pokemon_storage/scrolling_bg.gbapal");
-static const u16 sScrollingBgMoveItems_Pal[] = INCBIN_U16("graphics/pokemon_storage/scrolling_bg_move_items.gbapal");
 static const u16 sCloseBoxButton_Tilemap[]   = INCBIN_U16("graphics/pokemon_storage/close_box_button.bin");
 static const u16 sPartySlotFilled_Tilemap[]  = INCBIN_U16("graphics/pokemon_storage/party_slot_filled.bin");
 static const u16 sPartySlotEmpty_Tilemap[]   = INCBIN_U16("graphics/pokemon_storage/party_slot_empty.bin");
@@ -983,7 +1160,7 @@ static const struct WindowTemplate sWindowTemplates[] =
         .tilemapTop = 11,
         .width = 9,
         .height = 7,
-        .paletteNum = 3,
+        .paletteNum = STORAGE_INFO_PANEL_PALETTE,
         .baseBlock = 0xC0,
     },
     [WIN_MESSAGE] = {
@@ -1086,7 +1263,7 @@ static const struct StorageMessage sMessages[] =
     [MSG_WAS_RELEASED]         = {COMPOUND_STRING("{DYNAMIC 0} was released."),  MSG_VAR_RELEASE_MON_1},
     [MSG_BYE_BYE]              = {COMPOUND_STRING("Bye-bye, {DYNAMIC 0}!"),      MSG_VAR_RELEASE_MON_3},
     [MSG_MARK_POKE]            = {COMPOUND_STRING("Mark your POKéMON."),         MSG_VAR_NONE},
-    [MSG_DEBUG_MON]  = {COMPOUND_STRING("This Pokémon was generated\nby debug menu."), MSG_VAR_NONE},
+    [MSG_DEBUG_MON]  = {COMPOUND_STRING("This Pokémon was generated."), MSG_VAR_NONE},
     [MSG_NORMAL_MON] = {COMPOUND_STRING("This is a normal Pokémon."), MSG_VAR_NONE},
     [MSG_LAST_POKE]            = {COMPOUND_STRING("That's your last POKéMON!"),  MSG_VAR_NONE},
     [MSG_PARTY_FULL]           = {gText_YourPartysFull,                          MSG_VAR_NONE},
@@ -2060,6 +2237,7 @@ static s8 SwapInPalNextVBlank(void *palette, void *dst) {
 
 static void CB2_PokeStorage(void)
 {
+
     RunTasks();
     DoScheduledBgTilemapCopiesToVram();
     ScrollBackground();
@@ -2407,6 +2585,23 @@ static void Task_PokeStorageMain(u8 taskId)
     switch (sStorage->state)
     {
     case MSTATE_HANDLE_INPUT:
+        // HLW PC background browser. L/R is reserved for the background theme
+        // while the normal storage screen is active. Box changing still works
+        // with the D-pad on the box title / horizontal edge as before.
+        if (sStorage->inBoxMovingMode == MOVE_MODE_NORMAL)
+        {
+            if (JOY_NEW(L_BUTTON))
+            {
+                CycleStorageBackground(-1);
+                break;
+            }
+            if (JOY_NEW(R_BUTTON))
+            {
+                CycleStorageBackground(1);
+                break;
+            }
+        }
+
         switch (HandleInput())
         {
         case INPUT_MOVE_CURSOR:
@@ -3198,7 +3393,7 @@ static void Task_ShowMarkMenu(u8 taskId)
 {
     u8 markings = sStorage->displayMonMarkings;
 
-    if (markings & 0x04) // triângulo = debug
+    if (markings & 0x04) // triangle mark = WISHED / Wish-generated Pokémon
     {
         PrintMessage(MSG_DEBUG_MON);
     }
@@ -3990,17 +4185,169 @@ static void FreePokeStorageData(void)
 //------------------------------------------------------------------------------
 
 
+static void LoadHlwStorageBackgroundTilemap(void)
+{
+    vu16 *dst = (vu16 *)BG_SCREEN_ADDR(31);
+    u32 row, col;
+
+    // BG3 is a regular 32x32 text background. The test asset is a raw 32x24
+    // map, so fill the remaining hardware rows by repeating the source. This
+    // keeps the whole screen covered while we iterate on future PC backgrounds.
+    for (row = 0; row < STORAGE_BG_HW_MAP_HEIGHT; row++)
+    {
+        u32 srcRow = row % STORAGE_HLW_MAP_HEIGHT;
+        for (col = 0; col < STORAGE_HLW_MAP_WIDTH; col++)
+        {
+            u16 tile = sHlwScrollingBg_Tilemap[srcRow * STORAGE_HLW_MAP_WIDTH + col];
+            dst[row * STORAGE_HLW_MAP_WIDTH + col] =
+                (tile & 0x0FFF) | (STORAGE_BG_PALETTE << 12);
+        }
+    }
+}
+
+static void LoadStorageBg3Graphics(void)
+{
+    const u32 lowSize = STORAGE_BG3_TILE_SPLIT * TILE_SIZE_4BPP;
+    const u32 highSize = sizeof(sStorageBg3_Gfx) - lowSize;
+
+    // BG1 uses charblock 1 and its menu begins at tile 0x100. Load Theme 3
+    // around that occupied range: 0x000-0x0FF and 0x190 onward.
+    LoadBgVram(1, sStorageBg3_Gfx, lowSize, 0, 1);
+    LoadBgVram(1, (const u8 *)sStorageBg3_Gfx + lowSize, highSize,
+               STORAGE_BG3_HIGH_TILE_BASE * TILE_SIZE_4BPP, 1);
+}
+
+static u16 RemapStorageBg3Tile(u16 entry)
+{
+    u16 tile = entry & 0x03FF;
+
+    if (tile >= STORAGE_BG3_TILE_SPLIT)
+        tile = STORAGE_BG3_HIGH_TILE_BASE + (tile - STORAGE_BG3_TILE_SPLIT);
+
+    // Preserve source H/V flip bits and force only BG3's dedicated palette.
+    return tile | (entry & 0x0C00) | (STORAGE_BG_PALETTE << 12);
+}
+
+static void LoadStorageBg3Tilemap(void)
+{
+    u32 row, col;
+
+    // 512x256 text BG layout = two 32x32 screen blocks side by side. Repeat
+    // the authored 30x20 map in both axes; X is what actually scrolls.
+    for (row = 0; row < STORAGE_BG3_HW_MAP_HEIGHT; row++)
+    {
+        u32 srcRow = row % STORAGE_BG3_MAP_HEIGHT;
+
+        for (col = 0; col < STORAGE_BG3_HW_MAP_WIDTH; col++)
+        {
+            u32 srcCol = col % STORAGE_BG3_MAP_WIDTH;
+            u16 entry = sStorageBg3_Tilemap[srcRow * STORAGE_BG3_MAP_WIDTH + srcCol];
+            u32 screenBlock = STORAGE_BG3_SCREENBASE + (col / 32);
+            vu16 *dst = (vu16 *)BG_SCREEN_ADDR(screenBlock);
+
+            dst[row * 32 + (col % 32)] = RemapStorageBg3Tile(entry);
+        }
+    }
+}
+
+static void ApplyStorageBackgroundPalette(void)
+{
+    // Every selectable background owns palette bank 3 while active.
+    switch (sStorageBackgroundTheme)
+    {
+    case STORAGE_BG_HLW:
+        LoadPalette(sHlwScrollingBg_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), sizeof(sHlwScrollingBg_Pal));
+        break;
+    case STORAGE_BG_CLASSIC:
+        LoadPalette(sScrollingBg_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), sizeof(sScrollingBg_Pal));
+        break;
+    case STORAGE_BG_WATER:
+        LoadPalette(sStorageBg3_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), sizeof(sStorageBg3_Pal));
+        break;
+    }
+}
+
 static void SetScrollingBackground(void)
 {
-    SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
-    DecompressAndLoadBgGfxUsingHeap(3, sScrollingBg_Gfx, 0, 0, 0);
-    DecompressDataWithHeaderVram(sScrollingBg_Tilemap, (void *)BG_SCREEN_ADDR(31));
+    sStorageBg3ScrollX = 0;
+    ChangeBgX(3, 0, BG_COORD_SET);
+    ChangeBgY(3, 0, BG_COORD_SET);
+
+    if (sStorageBackgroundTheme == STORAGE_BG_WATER)
+    {
+        // Theme 3 needs a 64x32 runtime map for a true 240px horizontal period.
+        // Its graphics share charblock 1 without touching the PC menu tiles.
+        SetGpuReg(REG_OFFSET_BG3CNT,
+                  BGCNT_PRIORITY(3) | BGCNT_CHARBASE(1) | BGCNT_16COLOR
+                | BGCNT_SCREENBASE(STORAGE_BG3_SCREENBASE) | BGCNT_TXT512x256);
+        LoadStorageBg3Graphics();
+        LoadStorageBg3Tilemap();
+    }
+    else
+    {
+        SetGpuReg(REG_OFFSET_BG3CNT,
+                  BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
+
+        if (sStorageBackgroundTheme == STORAGE_BG_CLASSIC)
+        {
+            DecompressAndLoadBgGfxUsingHeap(3, sScrollingBg_Gfx, 0, 0, 0);
+            DecompressDataWithHeaderVram(sScrollingBg_Tilemap, (void *)BG_SCREEN_ADDR(31));
+        }
+        else
+        {
+            DecompressAndLoadBgGfxUsingHeap(3, sHlwScrollingBg_Gfx, 0, 0, 0);
+            LoadHlwStorageBackgroundTilemap();
+        }
+    }
+
+    ApplyStorageBackgroundPalette();
+}
+
+static void CycleStorageBackground(s8 direction)
+{
+    s16 next;
+
+    // Background changes decompress/copy graphics and palettes into VRAM.
+    // Consume rapid L/R presses during a short cooldown so another upload
+    // cannot begin immediately after the previous one.
+
+    next = sStorageBackgroundTheme + direction;
+
+    if (next < 0)
+        next = STORAGE_BG_COUNT - 1;
+    else if (next >= STORAGE_BG_COUNT)
+        next = 0;
+
+    sStorageBackgroundTheme = next;
+    SetScrollingBackground();
+
+    // When no Pokémon is selected, refresh THEME X/3 immediately.
+    if (sStorage != NULL && sStorage->displayMonSpecies == SPECIES_NONE)
+        PrintDisplayMonInfo();
+
+    PlaySE(SE_SELECT);
 }
 
 static void ScrollBackground(void)
 {
-    ChangeBgX(3, 128, BG_COORD_ADD);
-    ChangeBgY(3, 128, BG_COORD_SUB);
+    if (sStorageBackgroundTheme == STORAGE_BG_WATER)
+    {
+        // Theme 3: slow infinite horizontal loop, visually left -> right.
+        // Reset at the authored 240px period, not the hardware 512px width,
+        // so the repeated map has no visible jump.
+        sStorageBg3ScrollX += STORAGE_BG3_SCROLL_SPEED;
+        if (sStorageBg3ScrollX >= STORAGE_BG3_SCROLL_PERIOD)
+            sStorageBg3ScrollX -= STORAGE_BG3_SCROLL_PERIOD;
+
+        ChangeBgX(3, -(s32)sStorageBg3ScrollX, BG_COORD_SET);
+        ChangeBgY(3, 0, BG_COORD_SET);
+    }
+    else
+    {
+        // Themes 1 and 2 keep the current vertical-only behavior from this file.
+        ChangeBgX(3, 0, BG_COORD_SET);
+        ChangeBgY(3, 128, BG_COORD_SUB);
+    }
 }
 
 static void LoadPokeStorageMenuGfx(void)
@@ -4033,13 +4380,14 @@ static void LoadWaveformSpritePalette(void)
 
 static void InitPalettesAndSprites(void)
 {
-    LoadPalette(sInterface_Pal, BG_PLTT_ID(0), sizeof(sInterface_Pal));
-    LoadPalette(sPkmnDataGray_Pal, BG_PLTT_ID(2), sizeof(sPkmnDataGray_Pal));
+    // The menu tiles are already authored for this index layout. Load the dark
+    // palette explicitly instead of the stock interface.gbapal.
+    LoadPalette(sHlwStorageInterfacePal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    LoadPalette(sHlwStorageInfoPanelPal, BG_PLTT_ID(STORAGE_INFO_PANEL_PALETTE), PLTT_SIZE_4BPP);
+    LoadPalette(sHlwStorageInfoEdgePal, BG_PLTT_ID(STORAGE_INFO_EDGE_PALETTE), PLTT_SIZE_4BPP);
+    LoadPalette(sHlwStorageCloseBoxPal, BG_PLTT_ID(STORAGE_CLOSE_BOX_PALETTE), PLTT_SIZE_4BPP);
     LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
-    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
-        LoadPalette(sScrollingBg_Pal, BG_PLTT_ID(3), sizeof(sScrollingBg_Pal));
-    else
-        LoadPalette(sScrollingBgMoveItems_Pal, BG_PLTT_ID(3), sizeof(sScrollingBgMoveItems_Pal));
+    ApplyStorageBackgroundPalette();
 
     SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(30));
     CreateDisplayMonSprite();
@@ -4053,6 +4401,14 @@ static void CreateMarkingComboSprite(void)
     sStorage->markingComboSprite = CreateMonMarkingComboSprite(GFXTAG_MARKING_COMBO, PALTAG_MARKING_COMBO, NULL);
     // Free up 1 palette of space by swapping in the marking palette at the last second
     CpuFastCopy(&gPlttBufferUnfaded[sStorage->markingComboSprite->oam.paletteNum*16+0x100], &sStorage->markingsSwapPal[0], 32);
+
+    // HLW: the custom marking graphic is the WISHED indicator. Keep palette
+    // index 0 transparent and make every visible pixel the same pastel red so
+    // the label no longer inherits mixed stock marking colors.
+    sStorage->markingsSwapPal[0] = RGB(0, 0, 0);
+    for (u32 i = 1; i < 16; i++)
+        sStorage->markingsSwapPal[i] = RGB(31, 18, 20);
+
     FreeSpritePaletteByTag(PALTAG_MARKING_COMBO);
     sStorage->markingComboSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_MISC_2);
     sStorage->markingComboSprite->oam.priority = 1;
@@ -4173,25 +4529,176 @@ static void LoadDisplayMonGfx(u16 species, u32 pid)
     }
 }
 
+static u8 CountHeldItemsInCurrentBox(void)
+{
+    u8 i;
+    u8 count = 0;
+    u8 boxId = StorageGetCurrentBox();
+
+    for (i = 0; i < IN_BOX_COUNT; i++)
+    {
+        if (GetBoxMonDataAt(boxId, i, MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
+         && GetBoxMonDataAt(boxId, i, MON_DATA_HELD_ITEM) != ITEM_NONE)
+            count++;
+    }
+
+    return count;
+}
+
+static void ApplyHlwStorageInfoPanelBottom(void)
+{
+    u16 *tilemap;
+    u32 x, y;
+
+    if (sStorage == NULL)
+        return;
+
+    tilemap = (u16 *)sStorage->displayMenuTilemapBuffer;
+
+    // Keep the original bottom-edge tile IDs and flip bits. Those two rows
+    // already contain the small 2-pixel overhang / rounded finish used by the
+    // stock PC. Only move them to the dedicated HLW panel palette so the fill
+    // matches #212129. This avoids creating a square 9x2 extension.
+    for (y = 18; y < 20; y++)
+    {
+        for (x = 0; x < 9; x++)
+            tilemap[y * 32 + x] = (tilemap[y * 32 + x] & 0x0FFF) | (STORAGE_INFO_EDGE_PALETTE << 12);
+    }
+
+    ScheduleBgCopyTilemapToVram(1);
+}
+
+static void ApplyHlwCloseBoxPalette(void)
+{
+    u16 *tilemap;
+    u32 x, y;
+
+    if (sStorage == NULL)
+        return;
+
+    tilemap = (u16 *)sStorage->displayMenuTilemapBuffer;
+
+    // Preserve tile/flip bits but isolate CLOSE BOX in its dedicated palette
+    // bank. This prevents the dark main-interface border colors from turning
+    // the button outline black.
+    for (y = 0; y < 2; y++)
+    {
+        for (x = 21; x < 30; x++)
+            tilemap[y * 32 + x] = (tilemap[y * 32 + x] & 0x0FFF) | (STORAGE_CLOSE_BOX_PALETTE << 12);
+    }
+}
+
+static void PrintDisplayMonGenderLevel(u8 y)
+{
+    u8 genderText[2] = {EOS, EOS};
+    u8 levelText[8];
+    u8 gender;
+    // Window palette 12: male = pastel blue, female = pastel red.
+    const u8 maleColors[3] = {TEXT_COLOR_TRANSPARENT, 10, 9};
+    const u8 femaleColors[3] = {TEXT_COLOR_TRANSPARENT, 5, 4};
+
+    gender = GetGenderFromSpeciesAndPersonality(sStorage->displayMonSpecies, sStorage->displayMonPersonality);
+    if (sStorage->displayMonSpecies == SPECIES_NIDORAN_F || sStorage->displayMonSpecies == SPECIES_NIDORAN_M)
+        gender = MON_GENDERLESS;
+
+    if (gender == MON_MALE)
+    {
+        genderText[0] = CHAR_MALE;
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO, FONT_SHORT, 12, y,
+                                     maleColors, TEXT_SKIP_DRAW, genderText);
+    }
+    else if (gender == MON_FEMALE)
+    {
+        genderText[0] = CHAR_FEMALE;
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO, FONT_SHORT, 12, y,
+                                     femaleColors, TEXT_SKIP_DRAW, genderText);
+    }
+
+    // Build the level label without the legacy COLOR_HIGHLIGHT_SHADOW control
+    // codes. Those controls were the source of the opaque green/gray blocks.
+    levelText[0] = CHAR_EXTRA_SYMBOL;
+    levelText[1] = CHAR_LV_2;
+    ConvertIntToDecimalStringN(&levelText[2], sStorage->displayMonLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+    AddTextPrinterParameterized3(WIN_DISPLAY_INFO, FONT_SHORT, 22, y,
+                                 sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, levelText);
+}
+
+static void PrintEmptyBoxInfo(void)
+{
+    u8 line[32];
+    const u8 fontId = FONT_SMALL;
+
+    // Use the smaller font with deliberate vertical breathing room. Five lines
+    // still fit inside the 56px panel, but no longer read as one solid block.
+
+    // BOX X INFO
+    ConvertIntToDecimalStringN(gStringVar1, StorageGetCurrentBox() + 1, STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringExpandPlaceholders(line, sText_HlwBoxInfo);
+    AddTextPrinterParameterized3(WIN_DISPLAY_INFO, fontId, 4, 0,
+                                 sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, line);
+
+    // X/30 PKM
+    ConvertIntToDecimalStringN(gStringVar1, CountMonsInBox(StorageGetCurrentBox()), STR_CONV_MODE_LEFT_ALIGN, 2);
+    ConvertIntToDecimalStringN(gStringVar2, IN_BOX_COUNT, STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringExpandPlaceholders(line, sText_HlwBoxCount);
+    AddTextPrinterParameterized3(WIN_DISPLAY_INFO, fontId, 4, 11,
+                                 sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, line);
+
+    // X HELD ITEM
+    ConvertIntToDecimalStringN(gStringVar1, CountHeldItemsInCurrentBox(), STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringExpandPlaceholders(line, sText_HlwHeldItems);
+    AddTextPrinterParameterized3(WIN_DISPLAY_INFO, fontId, 4, 22,
+                                 sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, line);
+
+    // L/R CHANGE BG
+    AddTextPrinterParameterized3(WIN_DISPLAY_INFO, fontId, 4, 32,
+                                 sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, sText_HlwChangeBg);
+
+    // THEME X/2
+    ConvertIntToDecimalStringN(gStringVar1, sStorageBackgroundTheme + 1, STR_CONV_MODE_LEFT_ALIGN, 1);
+    ConvertIntToDecimalStringN(gStringVar2, STORAGE_BG_COUNT, STR_CONV_MODE_LEFT_ALIGN, 1);
+    StringExpandPlaceholders(line, sText_HlwTheme);
+    AddTextPrinterParameterized3(WIN_DISPLAY_INFO, fontId, 4, 42,
+                                 sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, line);
+}
+
 static void PrintDisplayMonInfo(void)
 {
-    FillWindowPixelBuffer(WIN_DISPLAY_INFO, PIXEL_FILL(1));
-    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+    FillWindowPixelBuffer(WIN_DISPLAY_INFO, PIXEL_FILL(STORAGE_INFO_PANEL_FILL));
+
+    if (sStorage->displayMonSpecies == SPECIES_NONE)
     {
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, GetFontIdToFit(sStorage->displayMonNameText, FONT_NORMAL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6), sStorage->displayMonNameText, 6, 0, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, GetFontIdToFit(sStorage->displayMonNameText, FONT_SHORT, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 12), sStorage->displayMonSpeciesName, 6, 15, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, FONT_SHORT, sStorage->displayMonGenderLvlText, 10, 29, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, GetFontIdToFit(sStorage->displayMonItemName, FONT_SMALL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6), sStorage->displayMonItemName, 6, 43, TEXT_SKIP_DRAW, NULL);
+        PrintEmptyBoxInfo();
+    }
+    else if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+    {
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO,
+                                     GetFontIdToFit(sStorage->displayMonNameText, FONT_NORMAL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6),
+                                     8, 0, sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, sStorage->displayMonNameText);
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO,
+                                     GetFontIdToFit(sStorage->displayMonSpeciesName, FONT_SHORT, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 12),
+                                     8, 15, sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, sStorage->displayMonSpeciesName);
+        PrintDisplayMonGenderLevel(29);
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO,
+                                     GetFontIdToFit(sStorage->displayMonItemName, FONT_SMALL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6),
+                                     8, 43, sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, sStorage->displayMonItemName);
     }
     else
     {
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, GetFontIdToFit(sStorage->displayMonItemName, FONT_SMALL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6), sStorage->displayMonItemName, 6, 0, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, GetFontIdToFit(sStorage->displayMonNameText, FONT_NORMAL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6), sStorage->displayMonNameText, 6, 13, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, GetFontIdToFit(sStorage->displayMonSpeciesName, FONT_SHORT, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 12), sStorage->displayMonSpeciesName, 6, 28, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(WIN_DISPLAY_INFO, FONT_SHORT, sStorage->displayMonGenderLvlText, 10, 42, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO,
+                                     GetFontIdToFit(sStorage->displayMonItemName, FONT_SMALL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6),
+                                     8, 0, sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, sStorage->displayMonItemName);
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO,
+                                     GetFontIdToFit(sStorage->displayMonNameText, FONT_NORMAL, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 6),
+                                     8, 13, sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, sStorage->displayMonNameText);
+        AddTextPrinterParameterized3(WIN_DISPLAY_INFO,
+                                     GetFontIdToFit(sStorage->displayMonSpeciesName, FONT_SHORT, 0, WindowWidthPx(WIN_DISPLAY_INFO) - 12),
+                                     8, 28, sHlwStorageInfoTextColors, TEXT_SKIP_DRAW, sStorage->displayMonSpeciesName);
+        PrintDisplayMonGenderLevel(42);
     }
 
     CopyWindowToVram(WIN_DISPLAY_INFO, COPYWIN_GFX);
+    ApplyHlwStorageInfoPanelBottom();
     if (sStorage->displayMonSpecies != SPECIES_NONE)
     {
         UpdateMonMarkingTiles(sStorage->displayMonMarkings, sStorage->markingComboTilesPtr);
@@ -4208,17 +4715,17 @@ static void UpdateWaveformAnimation(void)
 {
     u16 i;
 
+    // Keep PKMN DATA on the exact same tiles/palette at all times. Only the
+    // waveform animation changes when a Pokémon is selected; the header itself
+    // no longer switches to the old gray/alternate color state.
+    TilemapUtil_SetRect(TILEMAPID_PKMN_DATA, 0, 0, 8, 2);
     if (sStorage->displayMonSpecies != SPECIES_NONE)
     {
-        // Start waveform animation and color "Pkmn Data"
-        TilemapUtil_SetRect(TILEMAPID_PKMN_DATA, 0, 0, 8, 2);
         for (i = 0; i < ARRAY_COUNT(sStorage->waveformSprites); i++)
             StartSpriteAnimIfDifferent(sStorage->waveformSprites[i], i * 2 + 1);
     }
     else
     {
-        // Stop waveform animation and gray out "Pkmn Data"
-        TilemapUtil_SetRect(TILEMAPID_PKMN_DATA, 0, 2, 8, 2);
         for (i = 0; i < ARRAY_COUNT(sStorage->waveformSprites); i++)
             StartSpriteAnim(sStorage->waveformSprites[i], i * 2);
     }
@@ -4227,10 +4734,32 @@ static void UpdateWaveformAnimation(void)
     ScheduleBgCopyTilemapToVram(1);
 }
 
+static void ApplyHlwPartyButtonPalette(void)
+{
+    u32 x;
+
+    // The hidden/collapsed PARTY POKéMON tab is the final two source rows of
+    // the 12x22 supplemental tilemap. Only those entries use the red palette;
+    // the full Party overlay keeps palette bank 1 and therefore stays dark.
+    for (x = 0; x < 12; x++)
+    {
+        u32 row20 = 20 * 12 + x;
+        u32 row21 = 21 * 12 + x;
+
+        sStorage->partyMenuTilemapBuffer[row20] = (sStorage->partyMenuTilemapBuffer[row20] & 0x0FFF)
+                                                 | (STORAGE_PARTY_BUTTON_PALETTE << 12);
+        sStorage->partyMenuTilemapBuffer[row21] = (sStorage->partyMenuTilemapBuffer[row21] & 0x0FFF)
+                                                 | (STORAGE_PARTY_BUTTON_PALETTE << 12);
+    }
+}
+
 static void InitSupplementalTilemaps(void)
 {
     DecompressDataWithHeaderWram(gStorageSystemPartyMenu_Tilemap, sStorage->partyMenuTilemapBuffer);
-    LoadPalette(gStorageSystemPartyMenu_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    LoadPalette(sHlwStoragePartyPal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    LoadPalette(sHlwStoragePartyButtonPal, BG_PLTT_ID(STORAGE_PARTY_BUTTON_PALETTE), PLTT_SIZE_4BPP);
+    ApplyHlwPartyButtonPalette();
+    ApplyHlwStorageInfoPanelBottom();
     TilemapUtil_SetMap(TILEMAPID_PARTY_MENU, 1, sStorage->partyMenuTilemapBuffer, 12, 22);
     TilemapUtil_SetMap(TILEMAPID_CLOSE_BUTTON, 1, sCloseBoxButton_Tilemap, 9, 4);
     TilemapUtil_SetPos(TILEMAPID_PARTY_MENU, 10, 0);
@@ -4241,6 +4770,7 @@ static void InitSupplementalTilemaps(void)
         UpdateCloseBoxButtonTilemap(TRUE);
         CreatePartyMonsSprites(TRUE);
         TilemapUtil_Update(TILEMAPID_CLOSE_BUTTON);
+        ApplyHlwCloseBoxPalette();
         TilemapUtil_Update(TILEMAPID_PARTY_MENU);
     }
     else
@@ -4249,6 +4779,7 @@ static void InitSupplementalTilemaps(void)
         UpdateCloseBoxButtonTilemap(TRUE);
         TilemapUtil_Update(TILEMAPID_PARTY_MENU);
         TilemapUtil_Update(TILEMAPID_CLOSE_BUTTON);
+        ApplyHlwCloseBoxPalette();
     }
 
     ScheduleBgCopyTilemapToVram(1);
@@ -4346,6 +4877,7 @@ static bool8 HidePartyMenu(void)
             // the party menu, restore it
             TilemapUtil_SetRect(TILEMAPID_CLOSE_BUTTON, 0, 0, 9, 2);
             TilemapUtil_Update(TILEMAPID_CLOSE_BUTTON);
+            ApplyHlwCloseBoxPalette();
             ScheduleBgCopyTilemapToVram(1);
             sStorage->transferWholePlttFrames = 0; // transfer only non-dynamic palettes
             return FALSE;
@@ -4363,6 +4895,7 @@ static void UpdateCloseBoxButtonTilemap(bool8 normal)
         TilemapUtil_SetRect(TILEMAPID_CLOSE_BUTTON, 0, 2, 9, 2);
 
     TilemapUtil_Update(TILEMAPID_CLOSE_BUTTON);
+    ApplyHlwCloseBoxPalette();
     ScheduleBgCopyTilemapToVram(1);
 }
 
@@ -4654,6 +5187,54 @@ static u8 GetMonIconPriorityByCursorPos(void)
     return (IsCursorInBox() ? 2 : 1);
 }
 
+// The PC swaps OBJ palettes during HBlank so box icons can use per-species
+// colors. A held Pokémon must never remain on one of those scanline-dependent
+// slots. Keep the held icon on PALTAG_MOVING_MON until it is placed again.
+static u8 LoadMovingMonIconPalette(struct Pokemon *mon)
+{
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
+    u32 personality = GetMonData(mon, MON_DATA_PERSONALITY);
+    const u32 *palette = GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality));
+    u8 paletteNum = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
+
+    if (paletteNum >= 16)
+    {
+        LoadCompressedSpritePaletteWithTag(palette, PALTAG_MOVING_MON);
+        paletteNum = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
+    }
+    else
+    {
+        // The tag is already allocated (for example after a SHIFT). Refresh the
+        // contents in place instead of allocating another OBJ palette.
+        LoadCompressedPaletteFast(palette, OBJ_PLTT_ID(paletteNum), PLTT_SIZE_4BPP);
+    }
+
+    if (paletteNum < 16)
+        sStorage->movingMonPalOffset = OBJ_PLTT_ID(paletteNum);
+
+    return paletteNum;
+}
+
+static void LoadPartyMonIconPalette(u8 partyId, u8 paletteNum)
+{
+    u16 species;
+    bool32 isShiny;
+    u32 personality;
+
+    if (partyId >= PARTY_SIZE || paletteNum >= 16)
+        return;
+
+    species = GetMonData(&gPlayerParty[partyId], MON_DATA_SPECIES);
+    isShiny = GetMonData(&gPlayerParty[partyId], MON_DATA_IS_SHINY);
+    personality = GetMonData(&gPlayerParty[partyId], MON_DATA_PERSONALITY);
+
+    LoadCompressedPaletteFast(
+        GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)),
+        OBJ_PLTT_ID(paletteNum),
+        PLTT_SIZE_4BPP);
+}
+
 // Only called when returning from naming, etc while holding a pokemon
 // Its palette is therefore always the same as the displayed pokemon's
 static void CreateMovingMonIcon(void)
@@ -4663,9 +5244,13 @@ static void CreateMovingMonIcon(void)
     u8 priority = GetMonIconPriorityByCursorPos();
 
     sStorage->movingMonSprite = CreateMonIconSprite(species, personality, 0, 0, priority, 7);
-    // This shouldn't be hardcoded, but the palette tag isn't loaded when this is called :/
-    sStorage->movingMonSprite->oam.paletteNum = 13; // IndexOfSpritePaletteTag(PALTAG_DISPLAY_MON);
-    sStorage->movingMonSprite->callback = SpriteCB_HeldMon;
+    if (sStorage->movingMonSprite != NULL)
+    {
+        u8 paletteNum = LoadMovingMonIconPalette(&sStorage->movingMon);
+        if (paletteNum < 16)
+            sStorage->movingMonSprite->oam.paletteNum = paletteNum;
+        sStorage->movingMonSprite->callback = SpriteCB_HeldMon;
+    }
 }
 
 static const u32 *GetBoxMonIconPalette(u8 boxId, u8 position, u16 *species)
@@ -5241,8 +5826,14 @@ u8 FindFreePartyPaletteSlot(void) {
         inUse = FALSE;
         paletteNum = (i >= 3 ? i + 3 : i) + 1;
         for (j = 0; j < PARTY_SIZE; j++)
-            if (sStorage->partySprites[j]->oam.paletteNum == paletteNum)
+        {
+            if (sStorage->partySprites[j] != NULL
+             && sStorage->partySprites[j]->oam.paletteNum == paletteNum)
+            {
                 inUse = TRUE;
+                break;
+            }
+        }
         if (!inUse)
             return paletteNum;
     }
@@ -5258,10 +5849,13 @@ static void SetPlacedMonSprite(u8 boxId, u8 position)
         sStorage->partySprites[position]->oam.priority = 1;
         sStorage->partySprites[position]->subpriority = 12;
 
-        // If currently using displayed mon palette, load party sprite palette into free party palette slot
-        if (sStorage->partySprites[position]->oam.paletteNum == IndexOfSpritePaletteTag(PALTAG_DISPLAY_MON)) {
-            paletteNum = FindFreePartyPaletteSlot();
-            LoadPalette(GetMonFrontSpritePal(&gPlayerParty[position]), paletteNum*16 + 0x100, 32);
+        // Party icons use six fixed safe OBJ palette slots (1-3, 7-9).
+        // Always re-home a placed icon before PALTAG_MOVING_MON is freed.
+        // IMPORTANT: use the ICON palette, never the full front-sprite palette.
+        paletteNum = FindFreePartyPaletteSlot();
+        if (paletteNum < 16)
+        {
+            LoadPartyMonIconPalette(position, paletteNum);
             sStorage->partySprites[position]->oam.paletteNum = paletteNum;
         }
     }
@@ -6610,28 +7204,32 @@ static void MoveMon(void)
     switch (sCursorArea)
     {
     case CURSOR_AREA_IN_PARTY:
+    {
+        u8 paletteNum;
+
         SetMovingMonData(TOTAL_BOXES_COUNT, sCursorPosition);
         SetMovingMonSprite(MODE_PARTY, sCursorPosition);
-        // party pokemon will have their palette updated elsewhere when leaving the party menu
+
+        // Promote the held Party icon immediately to a stable palette. Without
+        // this, SHIFT later reads PALTAG_MOVING_MON even though it was never
+        // allocated, producing black / wrongly-colored icons.
+        paletteNum = LoadMovingMonIconPalette(&sStorage->movingMon);
+        if (sStorage->movingMonSprite != NULL && paletteNum < 16)
+            sStorage->movingMonSprite->oam.paletteNum = paletteNum;
         break;
+    }
     case CURSOR_AREA_IN_BOX:
         if (sStorage->inBoxMovingMode == MOVE_MODE_NORMAL)
         {
             u16 palette[16] = {0};
-            u16 species;
-            bool8 isShiny;
-            u32 personality;
             SetMovingMonData(StorageGetCurrentBox(), sCursorPosition);
             SetMovingMonSprite(MODE_BOX, sCursorPosition);
 
-            species = GetMonData(&sStorage->movingMon, MON_DATA_SPECIES);
-            isShiny = GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY);
-            personality = GetMonData(&sStorage->movingMon, MON_DATA_PERSONALITY);
-
-            LoadCompressedSpritePaletteWithTag(GetIconPalette(species, isShiny, IsPersonalityFemale(species, personality)), PALTAG_MOVING_MON);
-            sStorage->movingMonPalOffset = OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_MOVING_MON));
-
-            sStorage->movingMonSprite->oam.paletteNum = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
+            {
+                u8 paletteNum = LoadMovingMonIconPalette(&sStorage->movingMon);
+                if (sStorage->movingMonSprite != NULL && paletteNum < 16)
+                    sStorage->movingMonSprite->oam.paletteNum = paletteNum;
+            }
             palette[0] = 0x8000;
             SwapInPalNextVBlank(&palette[0], &sPaletteSwapBuffer[(sCursorPosition)*16]);
         }
@@ -6753,28 +7351,39 @@ static void SetShiftedMonData(u8 boxId, u8 position)
     sStorage->movingMon = sStorage->tempMon;
 }
 
-static void SetShiftedMonSprites(u8 boxId, u8 position) {
-    u8 displayIndex = IndexOfSpritePaletteTag(PALTAG_MOVING_MON);
-    if (boxId == TOTAL_BOXES_COUNT) { // party
-        u32 paletteNum = FindFreePartyPaletteSlot();
-        // Copy display palette into party palette slot
-        CpuFastCopy(&gPlttBufferUnfaded[displayIndex*16+0x100], &gPlttBufferUnfaded[paletteNum*16+0x100], 32);
-        CpuFastCopy(&gPlttBufferFaded[displayIndex*16+0x100], &gPlttBufferFaded[paletteNum*16+0x100], 32);
-        sStorage->partySprites[position]->oam.paletteNum = paletteNum;
-    } else {
-        u8 i = position / 6;
-        u8 j = position % 6;
-        // Copy display palette into swap buffer (at next vblank)
-        // This is necessary because copying it while the screen is being drawn will cause flickering
-        SwapInPalNextVBlank(&gPlttBufferFaded[displayIndex*16+0x100], &sPaletteSwapBuffer[(position)*16]);
-        sStorage->boxMonsSprites[position]->oam.paletteNum = (i & 1 ? 6 : 0) + j + 1;
+static void SetShiftedMonSprites(u8 boxId, u8 position)
+{
+    u8 paletteNum;
+
+    // MoveShiftingMons has already swapped the sprite pointers here:
+    // - the sprite now stored at the destination is the Pokémon just placed;
+    // - movingMonSprite is the Pokémon displaced into the hand.
+    if (boxId == TOTAL_BOXES_COUNT)
+    {
+        paletteNum = FindFreePartyPaletteSlot();
+        if (paletteNum < 16)
+        {
+            LoadPartyMonIconPalette(position, paletteNum);
+            sStorage->partySprites[position]->oam.paletteNum = paletteNum;
+        }
+    }
+    else
+    {
+        // Rebuild the destination palette from the Pokémon that is actually in
+        // the box now. This is safer than copying whatever happened to be in
+        // PALTAG_MOVING_MON.
+        SetBoxMonDynamicPalette(boxId, position);
     }
 
     SetDisplayMonData(&sStorage->movingMon, MODE_PARTY);
-    // Set moving sprite palette to currently displayed pokemon's palette
     sStorage->displayMonSprite->invisible = TRUE;
-    LoadCompressedPaletteFast(GetIconPalette(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_IS_SHINY), IsPersonalityFemale(GetMonData(&sStorage->movingMon, MON_DATA_SPECIES), GetMonData(&sStorage->movingMon, MON_DATA_PERSONALITY))), sStorage->movingMonPalOffset, 0x20);
-    sStorage->movingMonSprite->oam.paletteNum = displayIndex;
+
+    // The displaced Pokémon becomes the new held Pokémon, so refresh the same
+    // stable moving palette with *its* icon colors.
+    paletteNum = LoadMovingMonIconPalette(&sStorage->movingMon);
+    if (sStorage->movingMonSprite != NULL && paletteNum < 16)
+        sStorage->movingMonSprite->oam.paletteNum = paletteNum;
+
     sMovingMonOrigBoxId = boxId;
     sMovingMonOrigBoxPos = position;
 }
@@ -7393,9 +8002,9 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
 
         *(txtPtr++) = EXT_CTRL_CODE_BEGIN;
         *(txtPtr++) = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
-        *(txtPtr++) = TEXT_COLOR_DARK_GRAY;
         *(txtPtr++) = TEXT_COLOR_WHITE;
         *(txtPtr++) = TEXT_COLOR_LIGHT_GRAY;
+        *(txtPtr++) = TEXT_COLOR_DARK_GRAY;
         *(txtPtr++) = CHAR_SPACE;
         *(txtPtr++) = CHAR_EXTRA_SYMBOL;
         *(txtPtr++) = CHAR_LV_2;
@@ -7431,6 +8040,38 @@ static u8 HandleInput_InBox(void)
     case MOVE_MODE_MULTIPLE_MOVING:
         return InBoxInput_MovingMultiple();
     }
+}
+
+static u8 HandleSelectQuickPick(void)
+{
+    u16 species = GetSpeciesAtCursorPosition();
+
+    // SELECT is intentionally simple in HLW: it never changes cursor mode,
+    // never enters multi-select, and never swaps cursor/UI palettes.
+    if (species == SPECIES_NONE || sIsMonBeingMoved)
+    {
+        PlaySE(SE_FAILURE);
+        return INPUT_NONE;
+    }
+
+    switch (sStorage->boxOption)
+    {
+    case OPTION_MOVE_MONS:
+        return INPUT_MOVE_MON;
+    case OPTION_WITHDRAW:
+        if (sCursorArea == CURSOR_AREA_IN_BOX)
+            return INPUT_WITHDRAW;
+        break;
+    case OPTION_DEPOSIT:
+        if (sCursorArea == CURSOR_AREA_IN_PARTY)
+            return INPUT_DEPOSIT;
+        break;
+    default:
+        break;
+    }
+
+    PlaySE(SE_FAILURE);
+    return INPUT_NONE;
 }
 
 static u8 InBoxInput_Normal(void)
@@ -7557,10 +8198,7 @@ static u8 InBoxInput_Normal(void)
         }
 
         if (JOY_NEW(SELECT_BUTTON))
-        {
-            ToggleCursorAutoAction();
-            return INPUT_NONE;
-        }
+            return HandleSelectQuickPick();
 
         retVal = INPUT_NONE;
 
@@ -7836,10 +8474,7 @@ static u8 HandleInput_InParty(void)
             cursorPosition = 0;
         }
         else if (JOY_NEW(SELECT_BUTTON))
-        {
-            ToggleCursorAutoAction();
-            return INPUT_NONE;
-        }
+            return HandleSelectQuickPick();
 
     } while (0);
 
@@ -7904,10 +8539,7 @@ static u8 HandleInput_OnBox(void)
             return INPUT_PRESSED_B;
 
         if (JOY_NEW(SELECT_BUTTON))
-        {
-            ToggleCursorAutoAction();
-            return INPUT_NONE;
-        }
+            return HandleSelectQuickPick();
 
         retVal = INPUT_NONE;
 
@@ -7982,10 +8614,7 @@ static u8 HandleInput_OnButtons(void)
             return INPUT_PRESSED_B;
 
         if (JOY_NEW(SELECT_BUTTON))
-        {
-            ToggleCursorAutoAction();
-            return INPUT_NONE;
-        }
+            return HandleSelectQuickPick();
 
         retVal = INPUT_NONE;
     } while (0);
@@ -8283,16 +8912,6 @@ static void CreateCursorSprites(void)
     }
 }
 
-static void ToggleCursorAutoAction(void)
-{
-    u8 index = IndexOfSpritePaletteTag(PALTAG_MISC_1);
-    if (index == 0xFF)
-      return;
-    sAutoActionOn = !sAutoActionOn;
-    // sStorage->cursorSprite->oam.paletteNum = sStorage->cursorPalNums[sAutoActionOn];
-    LoadPalette(sAutoActionOn ? sHandCursor_Pal : sWaveform_Pal, 0x100 + 16*index, 32);
-}
-
 static u8 GetCursorPosition(void)
 {
     return sCursorPosition;
@@ -8369,7 +8988,7 @@ static const u8 *const sMenuTexts[] =
     [MENU_PLACE]      = COMPOUND_STRING("PLACE"),
     [MENU_SUMMARY]    = COMPOUND_STRING("SUMMARY"),
     [MENU_RELEASE]    = COMPOUND_STRING("RELEASE"),
-    [MENU_MARK]       = COMPOUND_STRING("MARK"),
+    [MENU_MARK]       = COMPOUND_STRING("CHECK"),
     [MENU_JUMP]       = COMPOUND_STRING("JUMP"),
     [MENU_WALLPAPER]  = COMPOUND_STRING("WALLPAPER"),
     [MENU_NAME]       = COMPOUND_STRING("NAME"),

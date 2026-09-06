@@ -264,6 +264,8 @@ static void Debug_DestroyMenu(u8 taskId);
 static void DebugAction_Cancel(u8 taskId);
 static void DebugAction_DestroyExtraWindow(u8 taskId);
 static void Debug_RefreshListMenu(u8 taskId);
+static u8 Debug_GetCurrentMenuItemCount(void);
+static bool8 Debug_TryWrapListMenu(u8 taskId);
 static bool8 Debug_CanOpen(void);
 static void Debug_ShowWishWarningTextBlock(void);
 static void DebugTask_HandleWishWarningTextBlock(u8 taskId);
@@ -1592,10 +1594,101 @@ static void Debug_RefreshListMenu(u8 taskId)
     gMultiuseListMenuTemplate.cursorKind = 0;
 }
 
+// HLW Debug/Wish Menu: allow the cursor to wrap at the ends of every
+// standard debug list. UP on the first entry jumps to the last entry, and
+// DOWN on the last entry jumps back to the first.
+static u8 Debug_GetCurrentMenuItemCount(void)
+{
+    const struct DebugMenuOption *items;
+    u8 count = 0;
+
+    if (sDebugMenuListData->listId == 1)
+        return min(ARRAY_COUNT(sDebugMenu_Actions_Flags) - 1, DEBUG_MAX_MENU_ITEMS);
+
+    items = Debug_GetCurrentCallbackMenu();
+    if (items == NULL)
+        return 0;
+
+    while (items[count].text != NULL && count < DEBUG_MAX_MENU_ITEMS)
+        count++;
+
+    return count;
+}
+
+static bool8 Debug_TryWrapListMenu(u8 taskId)
+{
+    struct ListMenuTemplate menuTemplate = {0};
+    u16 scrollOffset;
+    u16 selectedRow;
+    u8 totalItems = Debug_GetCurrentMenuItemCount();
+    u8 targetScroll;
+    u8 targetRow;
+
+    if (totalItems == 0)
+        return FALSE;
+
+    ListMenuGetScrollAndRow(gTasks[taskId].tMenuTaskId, &scrollOffset, &selectedRow);
+
+    if (JOY_NEW(DPAD_UP) && scrollOffset == 0 && selectedRow == 0)
+    {
+        if (totalItems <= DEBUG_MENU_HEIGHT_MAIN)
+        {
+            targetScroll = 0;
+            targetRow = totalItems - 1;
+        }
+        else
+        {
+            targetScroll = totalItems - DEBUG_MENU_HEIGHT_MAIN;
+            targetRow = DEBUG_MENU_HEIGHT_MAIN - 1;
+        }
+    }
+    else if (JOY_NEW(DPAD_DOWN) && scrollOffset + selectedRow == totalItems - 1)
+    {
+        targetScroll = 0;
+        targetRow = 0;
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    // Recreate only the ListMenu task at the opposite edge. The window,
+    // callbacks, submenu stack and generated item strings remain untouched.
+    DestroyListMenuTask(gTasks[taskId].tMenuTaskId, NULL, NULL);
+    FillWindowPixelBuffer(gTasks[taskId].tWindowId, PIXEL_FILL(1));
+
+    menuTemplate.items = sDebugMenuListData->listItems;
+    menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
+    menuTemplate.totalItems = totalItems;
+    menuTemplate.maxShowed = DEBUG_MENU_HEIGHT_MAIN;
+    menuTemplate.windowId = gTasks[taskId].tWindowId;
+    menuTemplate.header_X = 0;
+    menuTemplate.item_X = 8;
+    menuTemplate.cursor_X = 0;
+    menuTemplate.upText_Y = 1;
+    menuTemplate.cursorPal = 2;
+    menuTemplate.fillValue = 1;
+    menuTemplate.cursorShadowPal = 3;
+    menuTemplate.lettersSpacing = 1;
+    menuTemplate.itemVerticalPadding = 0;
+    menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
+    menuTemplate.fontId = DEBUG_MENU_FONT;
+    menuTemplate.cursorKind = 0;
+
+    gTasks[taskId].tMenuTaskId = ListMenuInit(&menuTemplate, targetScroll, targetRow);
+    CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
+    return TRUE;
+}
+
 static void DebugTask_HandleMenuInput_General(u8 taskId)
 {
     const struct DebugMenuOption *options = Debug_GetCurrentCallbackMenu();
-    u32 input = ListMenu_ProcessInput(gTasks[taskId].tMenuTaskId);
+    u32 input;
+
+    if (Debug_TryWrapListMenu(taskId))
+        return;
+
+    input = ListMenu_ProcessInput(gTasks[taskId].tMenuTaskId);
     struct DebugMenuOption option = options[input];
 
     if (JOY_NEW(A_BUTTON))
