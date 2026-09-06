@@ -144,8 +144,10 @@ enum {
     MENU_INFO,
     MENU_SCENERY_1,
     MENU_SCENERY_2,
-    MENU_SCENERY_3,
-    MENU_ETCETERA,
+    MENU_ETCETERA_1,
+    MENU_ETCETERA_2,
+    MENU_ETCETERA_3,
+    MENU_ETCETERA_4,
     MENU_FRIENDS,
     MENU_FOREST,
     MENU_CITY,
@@ -163,6 +165,30 @@ enum {
     MENU_POKECENTER,
     MENU_MACHINE,
     MENU_SIMPLE,
+    MENU_SPACE,
+    MENU_BACKYARD,
+    MENU_NOSTALGIC1,
+    MENU_TORCHIC,
+    MENU_TRIO1,
+    MENU_PIKAPIKA1,
+    MENU_TIMEANDSPACE,
+    MENU_GALACTIC1,
+    MENU_DISTORTION,
+    MENU_CONTEST,
+    MENU_NOSTALGIC2,
+    MENU_CROAGUNK,
+    MENU_TRIO2,
+    MENU_PIKAPIKA2,
+    MENU_RENEGADE,
+    MENU_GALACTIC2,
+    MENU_HEART,
+    MENU_SOUL,
+    MENU_BIGBROTHER,
+    MENU_POKEATHLON,
+    MENU_TRIO3,
+    MENU_SPIKYPIKA,
+    MENU_KIMONOGIRL,
+    MENU_REVIVAL,
 };
 #define MENU_WALLPAPER_SETS_START MENU_SCENERY_1
 #define MENU_WALLPAPERS_START MENU_FOREST
@@ -442,7 +468,16 @@ struct PokemonStorageSystemData
     struct Sprite *nextBoxTitleSprites[2];
     struct Sprite *arrowSprites[2];
     u32 wallpaperPalBits;
-    u8 filler2[27]; // Unused, was 80
+    // HLW V27 dynamic wallpaper packing metadata. These fields reuse bytes
+    // from the old unused filler, so EWRAM usage/struct size stays unchanged.
+    u16 activeWallpaperTileBase;
+    u16 activeWallpaperTileCount;
+    u16 incomingWallpaperTileBase;
+    u16 incomingWallpaperTileCount;
+    u8 activeWallpaperPaletteBank;
+    u8 incomingWallpaperPaletteBank;
+    bool8 wallpaperSlidePacked;
+    u8 filler2[16]; // Remaining unused bytes (27 - 11).
     u16 ALIGNED(4) chooseBoxSwapPal[16]; // Holds dynamic palette to swap into choose box gfx
     u16 markingsSwapPal[16]; // Used to store dynamic palette to swap into markings combo
     u16 swapInPal[16];
@@ -815,10 +850,14 @@ static void SetWallpaperForCurrentBox(u8);
 static bool8 DoWallpaperGfxChange(void);
 static void LoadWallpaperGfx(u8, s8);
 static bool32 WaitForWallpaperGfxLoad(void);
-static void DrawWallpaper(const void *, s8, u8);
+static void DrawWallpaper(void *, s8, u16, u8);
+static u16 GetWallpaperRequiredTileCount(const u16 *);
+static bool32 TryPlaceIncomingWallpaper(u16, u16 *);
+static void DrawLegacyWallpaper(const void *, s8, u8);
 static void TrimOldWallpaper(void *);
 static void AddWallpaperSetsMenu(void);
 static void AddWallpapersMenu(u8);
+static u8 WallpaperMenuIdToWallpaperId(s16 menuId);
 static u8 GetBoxWallpaper(u8);
 static void SetBoxWallpaper(u8, u8);
 
@@ -3783,8 +3822,10 @@ static void Task_HandleWallpapers(u8 taskId)
             break;
         case MENU_SCENERY_1:
         case MENU_SCENERY_2:
-        case MENU_SCENERY_3:
-        case MENU_ETCETERA:
+        case MENU_ETCETERA_1:
+        case MENU_ETCETERA_2:
+        case MENU_ETCETERA_3:
+        case MENU_ETCETERA_4:
             PlaySE(SE_SELECT);
             RemoveMenu();
             sStorage->wallpaperSetId -= MENU_WALLPAPER_SETS_START;
@@ -3821,7 +3862,7 @@ static void Task_HandleWallpapers(u8 taskId)
         default:
             PlaySE(SE_SELECT);
             ClearBottomWindow();
-            sStorage->wallpaperId -= MENU_WALLPAPERS_START;
+            sStorage->wallpaperId = WallpaperMenuIdToWallpaperId(sStorage->wallpaperId);
             SetWallpaperForCurrentBox(sStorage->wallpaperId);
             sStorage->state++;
             break;
@@ -4252,18 +4293,42 @@ static void LoadStorageBg3Tilemap(void)
 
 static void ApplyStorageBackgroundPalette(void)
 {
-    // Every selectable background owns palette bank 3 while active.
+    // HLW V24: BG3 owns exactly ONE 4bpp palette bank (bank 3).
+    // Do not use sizeof() here. A source PNG may cause gbagfx to emit more
+    // than one 16-color bank; loading that whole file at bank 3 would spill
+    // into bank 4, which is the active wallpaper palette for buffer A.
     switch (sStorageBackgroundTheme)
     {
     case STORAGE_BG_HLW:
-        LoadPalette(sHlwScrollingBg_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), sizeof(sHlwScrollingBg_Pal));
+        LoadPalette(sHlwScrollingBg_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), PLTT_SIZE_4BPP);
         break;
     case STORAGE_BG_CLASSIC:
-        LoadPalette(sScrollingBg_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), sizeof(sScrollingBg_Pal));
+        LoadPalette(sScrollingBg_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), PLTT_SIZE_4BPP);
         break;
     case STORAGE_BG_WATER:
-        LoadPalette(sStorageBg3_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), sizeof(sStorageBg3_Pal));
+        LoadPalette(sStorageBg3_Pal, BG_PLTT_ID(STORAGE_BG_PALETTE), PLTT_SIZE_4BPP);
         break;
+    }
+}
+
+static void RestoreActiveWallpaperPalette(void)
+{
+    u8 wallpaperId;
+
+    if (sStorage == NULL)
+        return;
+
+    wallpaperId = GetBoxWallpaper(StorageGetCurrentBox());
+
+    // Player-facing HLW wallpapers use one fixed 16-color palette per
+    // double-buffer. Re-assert the active bank after a Theme change so no
+    // unrelated palette upload can leave the visible box recolored.
+    if (wallpaperId != WALLPAPER_FRIENDS)
+    {
+        const struct Wallpaper *wallpaper = &sWallpapers[wallpaperId];
+        LoadPalette(wallpaper->palettes,
+                    BG_PLTT_ID(sStorage->activeWallpaperPaletteBank),
+                    PLTT_SIZE_4BPP);
     }
 }
 
@@ -4320,6 +4385,7 @@ static void CycleStorageBackground(s8 direction)
 
     sStorageBackgroundTheme = next;
     SetScrollingBackground();
+    RestoreActiveWallpaperPalette();
 
     // When no Pokémon is selected, refresh THEME X/3 immediately.
     if (sStorage != NULL && sStorage->displayMonSpecies == SPECIES_NONE)
@@ -5078,10 +5144,13 @@ static void ClearBottomWindow(void)
 static void AddWallpaperSetsMenu(void)
 {
     InitMenu();
+    // HLW V20: only the standardized HGSS-format wallpapers are player-facing.
+    // Legacy Emerald wallpapers remain in the data table only so old saves stay
+    // structurally valid; GetBoxWallpaper remaps them to the first HGSS theme.
     SetMenuText(MENU_SCENERY_1);
     SetMenuText(MENU_SCENERY_2);
-    SetMenuText(MENU_SCENERY_3);
-    SetMenuText(MENU_ETCETERA);
+    SetMenuText(MENU_ETCETERA_1);
+    SetMenuText(MENU_ETCETERA_2);
     if (IsWaldaWallpaperUnlocked())
         SetMenuText(MENU_FRIENDS);
     AddMenu();
@@ -5092,32 +5161,62 @@ static void AddWallpapersMenu(u8 wallpaperSet)
     InitMenu();
     switch (wallpaperSet)
     {
+    // HLW 1: the five user-authored sky wallpapers.
+    // These menu IDs are only storage slots now; their visible names are HLW names.
     case MENU_SCENERY_1 - MENU_WALLPAPER_SETS_START:
-        SetMenuText(MENU_FOREST);
-        SetMenuText(MENU_CITY);
-        SetMenuText(MENU_DESERT);
-        SetMenuText(MENU_SAVANNA);
+        SetMenuText(MENU_NOSTALGIC1);   // BLUE SKY
+        SetMenuText(MENU_TRIO1);        // NIGHT SKY
+        SetMenuText(MENU_PIKAPIKA1);    // SOFT SKY
+        SetMenuText(MENU_TIMEANDSPACE); // PINK SKY
+        SetMenuText(MENU_GALACTIC1);    // DREAM SKY
         break;
+
+    // HLW 2: keep these recognizable source slots together while they are
+    // progressively replaced by final HLW artwork.
     case MENU_SCENERY_2 - MENU_WALLPAPER_SETS_START:
-        SetMenuText(MENU_CRAG);
-        SetMenuText(MENU_VOLCANO);
-        SetMenuText(MENU_SNOW);
-        SetMenuText(MENU_CAVE);
+        SetMenuText(MENU_TORCHIC);
+        SetMenuText(MENU_CONTEST);
+        SetMenuText(MENU_SPACE);
+        SetMenuText(MENU_BACKYARD);
+        SetMenuText(MENU_DISTORTION);
+        SetMenuText(MENU_NOSTALGIC2);
         break;
-    case MENU_SCENERY_3 - MENU_WALLPAPER_SETS_START:
-        SetMenuText(MENU_BEACH);
-        SetMenuText(MENU_SEAFLOOR);
-        SetMenuText(MENU_RIVER);
-        SetMenuText(MENU_SKY);
+
+    // HLW 3: untouched source names for now.
+    case MENU_ETCETERA_1 - MENU_WALLPAPER_SETS_START:
+        SetMenuText(MENU_CROAGUNK);
+        SetMenuText(MENU_TRIO2);
+        SetMenuText(MENU_PIKAPIKA2);
+        SetMenuText(MENU_RENEGADE);
+        SetMenuText(MENU_GALACTIC2);
+        SetMenuText(MENU_HEART);
         break;
-    case MENU_ETCETERA - MENU_WALLPAPER_SETS_START:
-        SetMenuText(MENU_POLKADOT);
-        SetMenuText(MENU_POKECENTER);
-        SetMenuText(MENU_MACHINE);
-        SetMenuText(MENU_SIMPLE);
+
+    // HLW 4: untouched source names for now.
+    case MENU_ETCETERA_2 - MENU_WALLPAPER_SETS_START:
+        SetMenuText(MENU_SOUL);
+        SetMenuText(MENU_BIGBROTHER);
+        SetMenuText(MENU_POKEATHLON);
+        SetMenuText(MENU_TRIO3);
+        SetMenuText(MENU_SPIKYPIKA);
+        SetMenuText(MENU_KIMONOGIRL);
+        SetMenuText(MENU_REVIVAL);
         break;
     }
     AddMenu();
+}
+
+// WALLPAPER_FRIENDS keeps its original numeric id for save compatibility.
+// The expanded HGSS wallpapers are stored after it, while the menu entries
+// remain contiguous. Skip the FRIENDS slot when converting a menu id.
+static u8 WallpaperMenuIdToWallpaperId(s16 menuId)
+{
+    u8 wallpaperId = menuId - MENU_WALLPAPERS_START;
+
+    if (wallpaperId >= WALLPAPER_FRIENDS)
+        wallpaperId++;
+
+    return wallpaperId;
 }
 
 static u8 GetCurrentBoxOption(void)
@@ -6120,6 +6219,13 @@ static void Task_InitBox(u8 taskId)
     {
     case 0:
         sStorage->wallpaperOffset = 0;
+        sStorage->activeWallpaperTileBase = 0;
+        sStorage->activeWallpaperTileCount = 0;
+        sStorage->incomingWallpaperTileBase = 0;
+        sStorage->incomingWallpaperTileCount = 0;
+        sStorage->activeWallpaperPaletteBank = 4;
+        sStorage->incomingWallpaperPaletteBank = 6;
+        sStorage->wallpaperSlidePacked = FALSE;
         sStorage->bg2_X = 0;
         task->tDmaIdx = RequestDma3Fill(0, sStorage->wallpaperBgTilemapBuffer, sizeof(sStorage->wallpaperBgTilemapBuffer), 1);
         break;
@@ -6173,11 +6279,27 @@ static bool8 ScrollToBox(void)
 {
     bool8 iconsScrolling;
 
+    // HLW V28 keeps the original smooth horizontal box transition whenever
+    // the CURRENT and INCOMING wallpaper tile sets can coexist inside BG2's
+    // 512-tile charblock. Unlike the old fixed 256/256 split, the two sets are
+    // packed dynamically according to the number of tiles actually referenced
+    // by each 20x18 tilemap.
+    //
+    // Examples:
+    //   Torchic 133 + Celebi 339 = 472 -> normal smooth slide.
+    //   Celebi 339 + another 339 = 678 -> cannot coexist in 512 tiles, so only
+    //   the Pokemon/title chrome slides and the wallpaper swaps at the end.
+    //
+    // This is a hardware capacity limit, not a per-wallpaper special case.
+    // V30b additionally re-normalizes the destination wallpaper after every
+    // packed slide so sequential box changes never fragment the charblock.
     switch (sStorage->scrollState)
     {
     case 0:
         LoadWallpaperGfx(sStorage->scrollToBoxId, sStorage->scrollDirection);
         sStorage->scrollState++;
+        return TRUE;
+
     case 1:
         if (!WaitForWallpaperGfxLoad())
             return TRUE;
@@ -6185,22 +6307,70 @@ static bool8 ScrollToBox(void)
         InitBoxMonIconScroll(sStorage->scrollToBoxId, sStorage->scrollDirection);
         CreateIncomingBoxTitle(sStorage->scrollToBoxId, sStorage->scrollDirection);
         StartBoxScrollArrowsSlide(sStorage->scrollDirection);
-        break;
+        sStorage->scrollState++;
+        return TRUE;
+
     case 2:
         iconsScrolling = UpdateBoxMonIconScroll();
+
         if (sStorage->scrollTimer != 0)
         {
-            sStorage->bg2_X += sStorage->scrollSpeed;
+            // Only move BG2 when both wallpaper tile sets were successfully
+            // packed side by side. For an oversized pair, keep the current
+            // wallpaper stable while the normal box sprites slide.
+            if (sStorage->wallpaperSlidePacked)
+                sStorage->bg2_X += sStorage->scrollSpeed;
+
             if (--sStorage->scrollTimer != 0)
                 return TRUE;
+
             CycleBoxTitleSprites();
             StopBoxScrollArrowsSlide();
         }
-        return iconsScrolling;
+
+        if (iconsScrolling)
+            return TRUE;
+
+        if (sStorage->wallpaperSlidePacked)
+        {
+            // The incoming packed wallpaper is now the visible/current one.
+            //
+            // HLW V30b: always compact the new current wallpaper back to the
+            // canonical tileBase 0 / palette 4 after a packed slide whenever
+            // it landed elsewhere. Without this, successive transitions can
+            // leave the active tiles stranded in the middle of the 512-tile
+            // charblock. A later pair may fit in total but fail to find one
+            // contiguous free region, producing the intermittent stuck/fallback
+            // slide after several box changes.
+            sStorage->activeWallpaperTileBase = sStorage->incomingWallpaperTileBase;
+            sStorage->activeWallpaperTileCount = sStorage->incomingWallpaperTileCount;
+            sStorage->activeWallpaperPaletteBank = sStorage->incomingWallpaperPaletteBank;
+
+            if (sStorage->activeWallpaperTileBase != 0
+             || sStorage->activeWallpaperPaletteBank != 4)
+            {
+                LoadWallpaperGfx(sStorage->scrollToBoxId, 0);
+                sStorage->scrollState++;
+                return TRUE;
+            }
+
+            return FALSE;
+        }
+
+        // The pair could not coexist in 512 BG tiles. Replace the wallpaper
+        // in-place now that the sprite/title slide is complete. No black fade,
+        // no mirrored wallpaper, and no temporary corruption.
+        LoadWallpaperGfx(sStorage->scrollToBoxId, 0);
+        sStorage->scrollState++;
+        return TRUE;
+
+    case 3:
+        if (!WaitForWallpaperGfxLoad())
+            return TRUE;
+        return FALSE;
     }
 
-    sStorage->scrollState++;
-    return TRUE;
+    return FALSE;
 }
 
 static s8 DetermineBoxScrollDirection(u8 boxId)
@@ -6265,56 +6435,179 @@ static bool8 DoWallpaperGfxChange(void)
     return TRUE;
 }
 
+static u16 GetWallpaperRequiredTileCount(const u16 *tilemap)
+{
+    u16 i;
+    u16 maxTile = 0;
+
+    for (i = 0; i < 20 * 18; i++)
+    {
+        u16 tile = tilemap[i] & 0x03FF;
+        if (tile > maxTile)
+            maxTile = tile;
+    }
+
+    return maxTile + 1;
+}
+
+static bool32 TryPlaceIncomingWallpaper(u16 tileCount, u16 *tileBase)
+{
+    u16 activeStart = sStorage->activeWallpaperTileBase;
+    u16 activeEnd = activeStart + sStorage->activeWallpaperTileCount;
+
+    // Try the free region before the current wallpaper first.
+    if (tileCount <= activeStart)
+    {
+        *tileBase = 0;
+        return TRUE;
+    }
+
+    // Otherwise try the free region after it.
+    if (activeEnd + tileCount <= 512)
+    {
+        *tileBase = activeEnd;
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 static void LoadWallpaperGfx(u8 boxId, s8 direction)
 {
     u8 wallpaperId;
     const struct Wallpaper *wallpaper;
     void *iconGfx;
     u32 tilesSize, iconSize;
+    u32 uploadSize;
+    u16 tileCount;
+    u16 tileBase = 0;
+    u8 paletteBank = 4;
 
     sStorage->wallpaperLoadBoxId = boxId;
     sStorage->wallpaperLoadDir = direction;
-    if (sStorage->wallpaperLoadDir != 0)
-    {
-        sStorage->wallpaperOffset = (sStorage->wallpaperOffset == 0);
-        TrimOldWallpaper(sStorage->wallpaperBgTilemapBuffer);
-    }
 
     wallpaperId = GetBoxWallpaper(sStorage->wallpaperLoadBoxId);
+
+    // Walda/Friends keeps the legacy two-palette format. Do not try to pack it
+    // beside an HLW one-palette wallpaper during a horizontal transition.
+    if (direction != 0
+     && (wallpaperId == WALLPAPER_FRIENDS
+      || GetBoxWallpaper(StorageGetCurrentBox()) == WALLPAPER_FRIENDS))
+    {
+        sStorage->wallpaperSlidePacked = FALSE;
+        return;
+    }
+
     if (wallpaperId != WALLPAPER_FRIENDS)
     {
         wallpaper = &sWallpapers[wallpaperId];
         DecompressDataWithHeaderWram(wallpaper->tilemap, sStorage->wallpaperTilemap);
-        DrawWallpaper(sStorage->wallpaperTilemap, sStorage->wallpaperLoadDir, sStorage->wallpaperOffset);
+        tileCount = GetWallpaperRequiredTileCount(sStorage->wallpaperTilemap);
 
-        if (sStorage->wallpaperLoadDir != 0)
-            LoadPalette(wallpaper->palettes, BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2), 2 * PLTT_SIZE_4BPP);
-        else
-            CpuCopy16(wallpaper->palettes, &gPlttBufferUnfaded[BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2)], 2 * PLTT_SIZE_4BPP);
+        // HLW V28: if the adjacent box uses the exact same wallpaper, reuse the
+        // already-loaded tiles and palette instead of trying to allocate a
+        // second copy in BG2. This is especially important for large custom
+        // wallpapers (e.g. 339 tiles): 339 + 339 cannot fit in the 512-tile
+        // charblock, but one shared 339-tile set can be referenced by both
+        // visible pages during the horizontal transition.
+        if (direction != 0
+         && wallpaperId == GetBoxWallpaper(StorageGetCurrentBox())
+         && sStorage->activeWallpaperTileCount != 0)
+        {
+            sStorage->incomingWallpaperTileBase = sStorage->activeWallpaperTileBase;
+            sStorage->incomingWallpaperTileCount = sStorage->activeWallpaperTileCount;
+            sStorage->incomingWallpaperPaletteBank = sStorage->activeWallpaperPaletteBank;
+            sStorage->wallpaperSlidePacked = TRUE;
+
+            TrimOldWallpaper(sStorage->wallpaperBgTilemapBuffer);
+            DrawWallpaper(sStorage->wallpaperTilemap,
+                          direction,
+                          sStorage->activeWallpaperTileBase,
+                          sStorage->activeWallpaperPaletteBank);
+
+            // Refresh the shared palette defensively. No tile upload is needed:
+            // both pages reference the same already-resident tile graphics.
+            LoadPalette(wallpaper->palettes,
+                        BG_PLTT_ID(sStorage->activeWallpaperPaletteBank),
+                        PLTT_SIZE_4BPP);
+            CopyBgTilemapBufferToVram(2);
+            return;
+        }
+
+        // A 20x18 tilemap can reference at most 360 useful authored tiles in
+        // the normal HLW workflow. 512 is the absolute BG2 charblock limit.
+        if (tileCount > 512)
+            tileCount = 512;
 
         sStorage->wallpaperTiles = malloc_and_decompress(wallpaper->tiles, &tilesSize);
-        LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, sStorage->wallpaperOffset << 8);
+        uploadSize = tileCount * TILE_SIZE_4BPP;
+        if (uploadSize > tilesSize)
+            uploadSize = tilesSize;
+
+        if (direction == 0)
+        {
+            // Initial load, wallpaper-menu change, or oversized-pair fallback:
+            // normalize the visible wallpaper to the start of BG2's tile area.
+            tileBase = 0;
+            paletteBank = 4;
+            sStorage->activeWallpaperTileBase = tileBase;
+            sStorage->activeWallpaperTileCount = tileCount;
+            sStorage->activeWallpaperPaletteBank = paletteBank;
+            sStorage->wallpaperSlidePacked = FALSE;
+
+            DrawWallpaper(sStorage->wallpaperTilemap, 0, tileBase, paletteBank);
+            LoadPalette(wallpaper->palettes, BG_PLTT_ID(paletteBank), PLTT_SIZE_4BPP);
+            LoadBgTiles(2, sStorage->wallpaperTiles, uploadSize, tileBase);
+        }
+        else if (TryPlaceIncomingWallpaper(tileCount, &tileBase))
+        {
+            // Dynamic double-buffer: pack the incoming set into whichever free
+            // contiguous region fits, instead of forcing every wallpaper into
+            // an artificial 256-tile half.
+            paletteBank = (sStorage->activeWallpaperPaletteBank == 4) ? 6 : 4;
+            sStorage->incomingWallpaperTileBase = tileBase;
+            sStorage->incomingWallpaperTileCount = tileCount;
+            sStorage->incomingWallpaperPaletteBank = paletteBank;
+            sStorage->wallpaperSlidePacked = TRUE;
+
+            TrimOldWallpaper(sStorage->wallpaperBgTilemapBuffer);
+            DrawWallpaper(sStorage->wallpaperTilemap, direction, tileBase, paletteBank);
+            LoadPalette(wallpaper->palettes, BG_PLTT_ID(paletteBank), PLTT_SIZE_4BPP);
+            LoadBgTiles(2, sStorage->wallpaperTiles, uploadSize, tileBase);
+        }
+        else
+        {
+            // Two unusually tile-heavy neighboring wallpapers do not fit in
+            // the 512-tile BG2 charblock at the same time. Leave the current
+            // wallpaper untouched; ScrollToBox will swap the destination in
+            // place after the sprite/title transition finishes.
+            sStorage->wallpaperSlidePacked = FALSE;
+        }
     }
     else
     {
         wallpaper = &sWaldaWallpapers[GetWaldaWallpaperPatternId()];
         DecompressDataWithHeaderWram(wallpaper->tilemap, sStorage->wallpaperTilemap);
-        DrawWallpaper(sStorage->wallpaperTilemap, sStorage->wallpaperLoadDir, sStorage->wallpaperOffset);
+        DrawLegacyWallpaper(sStorage->wallpaperTilemap, 0, 0);
 
         CpuCopy16(wallpaper->palettes, sStorage->wallpaperTilemap, 0x40);
         CpuCopy16(GetWaldaWallpaperColorsPtr(), &sStorage->wallpaperTilemap[1], 4);
         CpuCopy16(GetWaldaWallpaperColorsPtr(), &sStorage->wallpaperTilemap[17], 4);
-
-        if (sStorage->wallpaperLoadDir != 0)
-            LoadPalette(sStorage->wallpaperTilemap, BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2), 2 * PLTT_SIZE_4BPP);
-        else
-            CpuCopy16(sStorage->wallpaperTilemap, &gPlttBufferUnfaded[BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2)], 2 * PLTT_SIZE_4BPP);
+        LoadPalette(sStorage->wallpaperTilemap, BG_PLTT_ID(4), 2 * PLTT_SIZE_4BPP);
 
         sStorage->wallpaperTiles = malloc_and_decompress(wallpaper->tiles, &tilesSize);
         iconGfx = malloc_and_decompress(sWaldaWallpaperIcons[GetWaldaWallpaperIconId()], &iconSize);
         CpuCopy32(iconGfx, sStorage->wallpaperTiles + 0x800, iconSize);
         Free(iconGfx);
-        LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, sStorage->wallpaperOffset << 8);
+
+        if (tilesSize > 512 * TILE_SIZE_4BPP)
+            tilesSize = 512 * TILE_SIZE_4BPP;
+
+        LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, 0);
+        sStorage->activeWallpaperTileBase = 0;
+        sStorage->activeWallpaperTileCount = (tilesSize + TILE_SIZE_4BPP - 1) / TILE_SIZE_4BPP;
+        sStorage->activeWallpaperPaletteBank = 4;
+        sStorage->wallpaperSlidePacked = FALSE;
     }
 
     CopyBgTilemapBufferToVram(2);
@@ -6330,13 +6623,43 @@ static bool32 WaitForWallpaperGfxLoad(void)
     return TRUE;
 }
 
-static void DrawWallpaper(const void *tilemap, s8 direction, u8 offset)
+static void DrawWallpaper(void *tilemap, s8 direction, u16 tileBase, u8 paletteBank)
+{
+    u16 *map = tilemap;
+    u16 i;
+    s16 x = ((sStorage->bg2_X / 8 + 10) + (direction * 24)) & 0x3F;
+
+    // HLW V27: source palette bits are deliberately ignored. Every editable
+    // wallpaper is a single 16-color tileset, while the runtime decides which
+    // safe palette bank (4 or 6) and tile base it occupies during transitions.
+    for (i = 0; i < 20 * 18; i++)
+        map[i] &= 0x0FFF;
+
+    CopyRectToBgTilemapBufferRect(2, tilemap, 0, 0, 20, 18,
+                                  x, 2, 20, 18, 17, tileBase, paletteBank);
+
+    if (direction == 0)
+        return;
+
+    if (direction > 0)
+        x += 20;
+    else
+        x -= 4;
+
+    FillBgTilemapBufferRect(2, 0, x, 2, 4, 0x12, 17);
+}
+
+// Walda/Friends still uses the original two-palette wallpaper format. Keep its
+// original +3 mapping isolated here instead of forcing legacy palette semantics
+// onto the editable HLW wallpaper slots.
+static void DrawLegacyWallpaper(const void *tilemap, s8 direction, u8 offset)
 {
     s16 tileOffset = offset * 256;
     s16 paletteNum = (offset * 2) + 3;
     s16 x = ((sStorage->bg2_X / 8 + 10) + (direction * 24)) & 0x3F;
 
-    CopyRectToBgTilemapBufferRect(2, tilemap, 0, 0, 20, 18, x, 2, 20, 18, 17, tileOffset, paletteNum);
+    CopyRectToBgTilemapBufferRect(2, tilemap, 0, 0, 20, 18,
+                                  x, 2, 20, 18, 17, tileOffset, paletteNum);
 
     if (direction == 0)
         return;
@@ -8998,10 +9321,12 @@ static const u8 *const sMenuTexts[] =
     [MENU_SWITCH]     = COMPOUND_STRING("SWITCH"),
     [MENU_BAG]        = COMPOUND_STRING("BAG"),
     [MENU_INFO]       = COMPOUND_STRING("INFO"),
-    [MENU_SCENERY_1]  = COMPOUND_STRING("SCENERY 1"),
-    [MENU_SCENERY_2]  = COMPOUND_STRING("SCENERY 2"),
-    [MENU_SCENERY_3]  = COMPOUND_STRING("SCENERY 3"),
-    [MENU_ETCETERA]   = COMPOUND_STRING("ETCETERA"),
+    [MENU_SCENERY_1]  = COMPOUND_STRING("HLW 1"),
+    [MENU_SCENERY_2]  = COMPOUND_STRING("HLW 2"),
+    [MENU_ETCETERA_1] = COMPOUND_STRING("HLW 3"),
+    [MENU_ETCETERA_2] = COMPOUND_STRING("HLW 4"),
+    [MENU_ETCETERA_3] = COMPOUND_STRING("ETCETERA 3"),
+    [MENU_ETCETERA_4] = COMPOUND_STRING("ETCETERA 4"),
     [MENU_FRIENDS]    = COMPOUND_STRING("FRIENDS"),
     [MENU_FOREST]     = COMPOUND_STRING("FOREST"),
     [MENU_CITY]       = COMPOUND_STRING("CITY"),
@@ -9019,6 +9344,30 @@ static const u8 *const sMenuTexts[] =
     [MENU_POKECENTER] = COMPOUND_STRING("POKéCENTER"),
     [MENU_MACHINE]    = COMPOUND_STRING("MACHINE"),
     [MENU_SIMPLE]     = COMPOUND_STRING("SIMPLE"),
+    [MENU_SPACE]      = COMPOUND_STRING("SPACE"),
+    [MENU_BACKYARD]   = COMPOUND_STRING("BACKYARD"),
+    [MENU_NOSTALGIC1] = COMPOUND_STRING("BLUE SKY"),
+    [MENU_TORCHIC]    = COMPOUND_STRING("TORCHIC"),
+    [MENU_TRIO1]      = COMPOUND_STRING("NIGHT SKY"),
+    [MENU_PIKAPIKA1]  = COMPOUND_STRING("SOFT SKY"),
+    [MENU_TIMEANDSPACE] = COMPOUND_STRING("PINK SKY"),
+    [MENU_GALACTIC1]  = COMPOUND_STRING("DREAM SKY"),
+    [MENU_DISTORTION] = COMPOUND_STRING("DISTORTION"),
+    [MENU_CONTEST]    = COMPOUND_STRING("CONTEST"),
+    [MENU_NOSTALGIC2] = COMPOUND_STRING("NOSTALGIC 2"),
+    [MENU_CROAGUNK]   = COMPOUND_STRING("CROAGUNK"),
+    [MENU_TRIO2]      = COMPOUND_STRING("TRIO 2"),
+    [MENU_PIKAPIKA2]  = COMPOUND_STRING("PIKA PIKA 2"),
+    [MENU_RENEGADE]   = COMPOUND_STRING("RENEGADE"),
+    [MENU_GALACTIC2]  = COMPOUND_STRING("GALACTIC 2"),
+    [MENU_HEART]      = COMPOUND_STRING("HEART"),
+    [MENU_SOUL]       = COMPOUND_STRING("SOUL"),
+    [MENU_BIGBROTHER] = COMPOUND_STRING("BIG BROTHER"),
+    [MENU_POKEATHLON] = COMPOUND_STRING("POKéATHLON"),
+    [MENU_TRIO3]      = COMPOUND_STRING("TRIO 3"),
+    [MENU_SPIKYPIKA]  = COMPOUND_STRING("SPIKY PIKA"),
+    [MENU_KIMONOGIRL] = COMPOUND_STRING("KIMONO GIRL"),
+    [MENU_REVIVAL]    = COMPOUND_STRING("REVIVAL"),
 };
 
 static void SetMenuText(u8 textId)
@@ -10603,10 +10952,21 @@ u8 *GetBoxNamePtr(u8 boxId)
 
 static u8 GetBoxWallpaper(u8 boxId)
 {
-    if (boxId < TOTAL_BOXES_COUNT)
-        return gPokemonStoragePtr->boxWallpapers[boxId];
-    else
-        return 0;
+    u8 wallpaperId;
+
+    if (boxId >= TOTAL_BOXES_COUNT)
+        return WALLPAPER_FRIENDS + 1;
+
+    wallpaperId = gPokemonStoragePtr->boxWallpapers[boxId];
+
+    // HLW V20: legacy Emerald wallpapers are no longer player-facing. Old
+    // saves can still contain their numeric IDs, so map those IDs to the first
+    // standardized HGSS wallpaper instead of ever loading mixed-format art.
+    // FRIENDS remains untouched because it has its own Walda loader.
+    if (wallpaperId < WALLPAPER_FRIENDS)
+        return WALLPAPER_FRIENDS + 1;
+
+    return wallpaperId;
 }
 
 static void SetBoxWallpaper(u8 boxId, u8 wallpaperId)
