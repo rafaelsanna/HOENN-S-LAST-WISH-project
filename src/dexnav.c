@@ -291,8 +291,13 @@ static const struct WindowTemplate sDexNavGuiWindowTemplates[] =
 //gui font
 static const u8 sFontColor_Black[3] = {0, 1, 2};
 static const u8 sFontColor_White[3] = {0, 1, 2};
-// Search window / DexNav data text: white text with gray shadow for dark backgrounds.
-static const u8 sSearchFontColor[3] = {0, 1, 2};
+// Search window / DexNav data text.
+//
+// The dynamic overworld search window uses BG palette 14 loaded by
+// LoadDexNavWindowGfx(). In that palette, color 15 is the bright text color and
+// color 13 is the shadow. Using palette entries 1/2 makes the text blend into
+// the dark window fill, which looks like the DexNav is showing only the icon.
+static const u8 sSearchFontColor[3] = {0, 15, 13};
 
 static const struct OamData sNoDataIconOam =
 {

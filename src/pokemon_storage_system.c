@@ -855,6 +855,7 @@ static u16 GetWallpaperRequiredTileCount(const u16 *);
 static bool32 TryPlaceIncomingWallpaper(u16, u16 *);
 static void DrawLegacyWallpaper(const void *, s8, u8);
 static void TrimOldWallpaper(void *);
+static void ClearWallpaperViewportGutter(void);
 static void AddWallpaperSetsMenu(void);
 static void AddWallpapersMenu(u8);
 static u8 WallpaperMenuIdToWallpaperId(s16 menuId);
@@ -6346,6 +6347,15 @@ static bool8 ScrollToBox(void)
             sStorage->activeWallpaperTileCount = sStorage->incomingWallpaperTileCount;
             sStorage->activeWallpaperPaletteBank = sStorage->incomingWallpaperPaletteBank;
 
+            // HLW V31: after the 24-tile horizontal scroll, the outgoing
+            // wallpaper can still occupy the first 6 visible BG2 columns.
+            // BG1 normally hides that area, but a few pixels at the lower-left
+            // edge are intentionally transparent for the rounded panel shape,
+            // so stale wallpaper colors can occasionally peek through there.
+            // Clear the entire 10-tile non-wallpaper gutter of the new viewport
+            // before normalizing/finishing the transition.
+            ClearWallpaperViewportGutter();
+
             if (sStorage->activeWallpaperTileBase != 0
              || sStorage->activeWallpaperPaletteBank != 4)
             {
@@ -6354,6 +6364,7 @@ static bool8 ScrollToBox(void)
                 return TRUE;
             }
 
+            CopyBgTilemapBufferToVram(2);
             return FALSE;
         }
 
@@ -6669,6 +6680,34 @@ static void DrawLegacyWallpaper(const void *tilemap, s8 direction, u8 offset)
         x -= 4;
 
     FillBgTilemapBufferRect(2, 0, x, 2, 4, 0x12, 17);
+}
+
+// Clear the screen-relative BG2 gutter to the left of the 20x18 wallpaper.
+// BG2 is a 64x32 text map stored as two 32x32 screen blocks, so address it
+// explicitly to handle wraparound cleanly. This removes the last few columns
+// of the outgoing wallpaper that can otherwise remain visible through the
+// rounded/transparent lower-left UI edge after a packed slide.
+static void ClearWallpaperViewportGutter(void)
+{
+    u16 *map = (u16 *)sStorage->wallpaperBgTilemapBuffer;
+    u16 viewportX = (sStorage->bg2_X / 8) & 0x3F;
+    u16 x, y;
+
+    for (y = 2; y < 20; y++)
+    {
+        for (x = 0; x < 10; x++)
+        {
+            u16 mapX = (viewportX + x) & 0x3F;
+            u16 index;
+
+            if (mapX < 32)
+                index = y * 32 + mapX;
+            else
+                index = 0x400 + y * 32 + (mapX - 32);
+
+            map[index] = 0;
+        }
+    }
 }
 
 static void TrimOldWallpaper(void *tilemap)
