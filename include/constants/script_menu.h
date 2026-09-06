@@ -29,7 +29,7 @@
 #define MULTI_BATTLE_MODE                  18
 #define MULTI_UNUSED_19                    19
 #define MULTI_YESNOINFO_2                  20
-#define MULTI_UNUSED_21                    21
+#define MULTI_PETALBURG_GYM_TYPES_QUESTION 21
 #define MULTI_UNUSED_22                    22
 #define MULTI_CHALLENGEINFO                23
 #define MULTI_LEVEL_MODE                   24
@@ -134,6 +134,7 @@
 #define MULTI_GAME_CORNER_EVOLUTION_PAGE_2 123
 #define MULTI_GAME_CORNER_EVOLUTION_PAGE_3 124
 #define MULTI_GAME_CORNER_VENDING_MACHINE  125
+#define MULTI_TRUE_FALSE_LATER             126
 
 // Lilycove SS Tidal Multichoice Selections
 #define SSTIDAL_SELECTION_SLATEPORT        0

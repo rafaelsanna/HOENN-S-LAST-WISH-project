@@ -913,6 +913,22 @@ static const struct MenuAction MultichoiceList_BerryPlot[] =
     {gText_Exit},
 };
 
+static const struct MenuAction MultichoiceList_TrueFalseLater[] =
+{
+    {COMPOUND_STRING("TRUE")},
+    {COMPOUND_STRING("FALSE")},
+    {COMPOUND_STRING("LATER")},
+};
+
+static const struct MenuAction MultichoiceList_PetalburgGymTypesQuestion[] =
+{
+    {COMPOUND_STRING("16")},
+    {COMPOUND_STRING("17")},
+    {COMPOUND_STRING("18")},
+    {COMPOUND_STRING("19")},
+    {COMPOUND_STRING("LATER")},
+};
+
 static const struct MenuAction MultichoiceList_Exit[] =
 {
     {gText_Exit},
@@ -947,7 +963,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_BATTLE_MODE]                = MULTICHOICE(MultichoiceList_BattleMode),
     [MULTI_UNUSED_19]                  = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_YESNOINFO_2]                = MULTICHOICE(MultichoiceList_YesNoInfo2),
-    [MULTI_UNUSED_21]                  = MULTICHOICE(MultichoiceList_Exit),
+    [MULTI_PETALBURG_GYM_TYPES_QUESTION] = MULTICHOICE(MultichoiceList_PetalburgGymTypesQuestion),
     [MULTI_UNUSED_22]                  = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_CHALLENGEINFO]              = MULTICHOICE(MultichoiceList_ChallengeInfo),
     [MULTI_LEVEL_MODE]                 = MULTICHOICE(MultichoiceList_LevelMode),
@@ -1022,6 +1038,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_UNUSED_SSTIDAL_4]           = MULTICHOICE(MultichoiceList_UnusedSSTidal4),
     [MULTI_FOSSIL]                     = MULTICHOICE(MultichoiceList_Fossil),
     [MULTI_YESNO]                      = MULTICHOICE(MultichoiceList_YesNo),
+    [MULTI_TRUE_FALSE_LATER]           = MULTICHOICE(MultichoiceList_TrueFalseLater),
     [MULTI_FRONTIER_RULES]             = MULTICHOICE(MultichoiceList_FrontierRules),
     [MULTI_BATTLE_ARENA_RULES]         = MULTICHOICE(MultichoiceList_BattleArenaRules),
     [MULTI_BATTLE_TOWER_RULES]         = MULTICHOICE(MultichoiceList_BattleTowerRules),
