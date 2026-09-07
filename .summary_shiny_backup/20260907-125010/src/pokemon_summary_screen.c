@@ -1981,13 +1981,14 @@ static void ApplySummaryScreenDarkTheme(void)
         CpuCopy16(sDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
-    // Palette 5: STATUS strip palette.
+    // Palette 5: STATUS strip / shiny portrait secondary palette.
     base = BG_PLTT_ID(5);
     for (i = 0; i < 16; i++)
         gPlttBufferUnfaded[base + i] = SUMMARY_UI_DARK_GRAY;
     gPlttBufferUnfaded[base + 1] = SUMMARY_UI_DARK_GRAY;
     gPlttBufferUnfaded[base + 2] = SUMMARY_UI_MID_GRAY;
-    // Kept for the STATUS/THEME strip only.
+    // Portrait palette 5 is selected only for Shiny Pokémon. Index 3 is the
+    // bright stripe color, so make those stripes a very soft cream-yellow.
     gPlttBufferUnfaded[base + 3] = RGB(31,31,23);
     gPlttBufferUnfaded[base + 4] = RGB(1, 1, 2);
     // STATUS/THEME text also uses palette 5; keep a separate true-white pair
@@ -4088,11 +4089,10 @@ static void DrawPokerusCuredSymbol(struct Pokemon *mon) // This checks if the mo
 
 static void SetMonPicBackgroundPalette(bool8 isMonShiny)
 {
-    // The portrait background always follows the currently selected theme.
-    // Shiny highlight now comes only from the yellow name + sparkle effects,
-    // not from recoloring the portrait stripes.
-    (void)isMonShiny;
-    SetBgTilemapPalette(3, 1, 4, 8, 8, 0);
+    if (!isMonShiny)
+        SetBgTilemapPalette(3, 1, 4, 8, 8, 0);
+    else
+        SetBgTilemapPalette(3, 1, 4, 8, 8, 5);
     ScheduleBgCopyTilemapToVram(3);
 }
 

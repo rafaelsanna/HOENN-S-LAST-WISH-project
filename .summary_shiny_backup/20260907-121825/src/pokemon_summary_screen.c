@@ -43,7 +43,6 @@
 #include "strings.h"
 #include "task.h"
 #include "text.h"
-#include "trig.h"
 #include "tv.h"
 #include "window.h"
 #include "constants/battle_move_effects.h"
@@ -420,9 +419,6 @@ static EWRAM_DATA struct PokemonSummaryScreenData
     s16 switchCounter; // Used for various switch statement cases that decompress/load graphics or Pokémon data
     u8 unk_filler4[6];
     u8 categoryIconSpriteId;
-    u8 shinySparkleSpriteId; // 16x16 looping sparkle shown only for Shiny Pokémon
-    u8 shinyBattleSparkleTaskId; // one-shot battle-style star burst on shiny transitions
-    u8 shinyBattleSparkleSpriteIds[10];
 } *sMonSummaryScreen = NULL;
 
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
@@ -556,16 +552,6 @@ static void StopPokemonAnimations(void);
 static void CreateMonMarkingsSprite(struct Pokemon *);
 static void RemoveAndCreateMonMarkingsSprite(struct Pokemon *);
 static void CreateCaughtBallSprite(struct Pokemon *);
-static void CreateShinySparkleSprite(void);
-static void UpdateShinySparkleSprite(bool8 playSound);
-static void StartSummaryShinyBattleSparkles(void);
-static void DestroySummaryShinyBattleSparkles(void);
-static void Task_SummaryShinyBattleSparkles(u8 taskId);
-static void CreateSummaryShinyBattleSparklePair(u8 starIdx);
-static u8 CreateSummaryShinyBattleSparkleStar(u8 starIdx, bool8 diagonal, u8 slot);
-static void SpriteCB_SummaryShinyStarEncircle(struct Sprite *sprite);
-static void SpriteCB_SummaryShinyStarDiagonal(struct Sprite *sprite);
-static void DestroySummaryShinyBattleSparkleStar(struct Sprite *sprite);
 static void CreateSetStatusSprite(void);
 static void CreateMoveSelectorSprites(u8);
 static void SpriteCB_MoveSelector(struct Sprite *);
@@ -1046,81 +1032,6 @@ static const u8 sPPColorEmpty[] = _("{COLOR}{07}{SHADOW}{08}"); // VERMELHO     
 #define TAG_MON_MARKINGS 30003
 #define TAG_CATEGORY_ICONS 30004
 #define TAG_ITEM_ICON 30005
-#define TAG_SHINY_SPARKLE 30006
-
-#define SUMMARY_SHINY_FEATURE_VERSION 2
-#define SUMMARY_SHINY_BATTLE_STAR_PAIR_COUNT 5
-#define SUMMARY_SHINY_BATTLE_STAR_COUNT (SUMMARY_SHINY_BATTLE_STAR_PAIR_COUNT * 2)
-#define SUMMARY_SHINY_BATTLE_CENTER_X 40
-#define SUMMARY_SHINY_BATTLE_CENTER_Y 64
-
-// These are the same Gold Stars templates used by TryShinyAnimation() in battle.
-extern const struct SpriteTemplate gWishStarSpriteTemplate;
-extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
-
-// sTextColors[6] uses palette 6 entries 13/14. Those entries are reserved
-// below for the Shiny nickname's pale-yellow foreground/shadow.
-#define SUMMARY_TEXT_COLOR_SHINY 6
-
-// Four 16x16 frames stacked vertically in graphics/summary_screen/shiny.png.
-// The normal graphics rules generate shiny.4bpp(.lz) and shiny.gbapal from it.
-static const u32 sShinySparkle_Gfx[] = INCBIN_U32("graphics/summary_screen/shiny.4bpp.lz");
-static const u16 sShinySparkle_Pal[] = INCBIN_U16("graphics/summary_screen/shiny.gbapal");
-
-static const struct CompressedSpriteSheet sShinySparkleSpriteSheet =
-{
-    .data = sShinySparkle_Gfx,
-    .size = 16 * 64 / 2,
-    .tag = TAG_SHINY_SPARKLE,
-};
-
-static const struct SpritePalette sShinySparkleSpritePalette =
-{
-    .data = sShinySparkle_Pal,
-    .tag = TAG_SHINY_SPARKLE,
-};
-
-static const struct OamData sOamData_ShinySparkle =
-{
-    .y = 0,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = FALSE,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(16x16),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(16x16),
-    .tileNum = 0,
-    .priority = 0,
-    .paletteNum = 0,
-    .affineParam = 0,
-};
-
-static const union AnimCmd sSpriteAnim_ShinySparkle[] =
-{
-    ANIMCMD_FRAME(0, 6),
-    ANIMCMD_FRAME(4, 6),
-    ANIMCMD_FRAME(8, 6),
-    ANIMCMD_FRAME(12, 6),
-    ANIMCMD_JUMP(0),
-};
-
-static const union AnimCmd *const sSpriteAnimTable_ShinySparkle[] =
-{
-    sSpriteAnim_ShinySparkle,
-};
-
-static const struct SpriteTemplate sSpriteTemplate_ShinySparkle =
-{
-    .tileTag = TAG_SHINY_SPARKLE,
-    .paletteTag = TAG_SHINY_SPARKLE,
-    .oam = &sOamData_ShinySparkle,
-    .anims = sSpriteAnimTable_ShinySparkle,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
-};
 
 static const struct OamData sOamData_CategoryIcons =
 {
@@ -1549,8 +1460,6 @@ u32 GetAdjustedIvData(struct Pokemon *mon, u32 stat)
 
 void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {
-    u8 i;
-
     sMonSummaryScreen = AllocZeroed(sizeof(*sMonSummaryScreen));
     LoadSummaryColorThemeFromSave();
     sMonSummaryScreen->mode = mode;
@@ -1596,10 +1505,6 @@ void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, 
         sMonSummaryScreen->currPageIndex = sMonSummaryScreen->minPageIndex;
 
     sMonSummaryScreen->categoryIconSpriteId = 0xFF;
-    sMonSummaryScreen->shinySparkleSpriteId = SPRITE_NONE;
-    sMonSummaryScreen->shinyBattleSparkleTaskId = TASK_NONE;
-    for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->shinyBattleSparkleSpriteIds); i++)
-        sMonSummaryScreen->shinyBattleSparkleSpriteIds[i] = SPRITE_NONE;
     SummaryScreen_SetAnimDelayTaskId(TASK_NONE);
 
     if (gMonSpritesGfxPtr == NULL)
@@ -1717,7 +1622,6 @@ static bool8 LoadGraphics(void)
     case 16:
         ResetSpriteIds();
         CreateMoveTypeIcons();
-        CreateShinySparkleSprite();
         sMonSummaryScreen->switchCounter = 0;
         gMain.state++;
         break;
@@ -1981,19 +1885,14 @@ static void ApplySummaryScreenDarkTheme(void)
         CpuCopy16(sDarkPagePalettes[i], gPlttBufferUnfaded + base, PLTT_SIZE_4BPP);
     }
 
-    // Palette 5: STATUS strip palette.
+    // Palette 5: STATUS strip / shiny portrait secondary palette.
     base = BG_PLTT_ID(5);
     for (i = 0; i < 16; i++)
         gPlttBufferUnfaded[base + i] = SUMMARY_UI_DARK_GRAY;
     gPlttBufferUnfaded[base + 1] = SUMMARY_UI_DARK_GRAY;
     gPlttBufferUnfaded[base + 2] = SUMMARY_UI_MID_GRAY;
-    // Kept for the STATUS/THEME strip only.
-    gPlttBufferUnfaded[base + 3] = RGB(31,31,23);
+    gPlttBufferUnfaded[base + 3] = RGB(31,31,31);
     gPlttBufferUnfaded[base + 4] = RGB(1, 1, 2);
-    // STATUS/THEME text also uses palette 5; keep a separate true-white pair
-    // so the shiny portrait tint never leaks into the Skills status strip.
-    gPlttBufferUnfaded[base + 5] = RGB(31,31,31);
-    gPlttBufferUnfaded[base + 6] = RGB(1, 1, 2);
     gPlttBufferUnfaded[base + 7] = SUMMARY_UI_RED;
     gPlttBufferUnfaded[base + 8] = SUMMARY_UI_RED_SHADOW;
 
@@ -2015,8 +1914,8 @@ static void ApplySummaryScreenDarkTheme(void)
     gPlttBufferUnfaded[base + 10] = RGB(3, 3, 4);
     gPlttBufferUnfaded[base + 11] = RGB(31,31,31);           // OT/secondary text: neutral
     gPlttBufferUnfaded[base + 12] = RGB(3, 3, 4);
-    gPlttBufferUnfaded[base + 13] = RGB(31,30,16);           // Shiny nickname: pale yellow
-    gPlttBufferUnfaded[base + 14] = RGB(15,12, 4);           // Shiny nickname shadow
+    gPlttBufferUnfaded[base + 13] = RGB(31,31,31);
+    gPlttBufferUnfaded[base + 14] = RGB(3, 3, 4);
     gPlttBufferUnfaded[base + 15] = SUMMARY_UI_DARK_GRAY;
 
     // Palette 14: Trainer Memo stays neutral. Semantic blue/red is reserved
@@ -2387,8 +2286,6 @@ static bool8 DecompressGraphics(void)
         LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(&gSpriteSheet_CategoryIcons);
         LoadSpritePalette(&gSpritePal_CategoryIcons);
-        LoadCompressedSpriteSheet(&sShinySparkleSpriteSheet);
-        LoadSpritePalette(&sShinySparkleSpritePalette);
         sMonSummaryScreen->switchCounter = 0;
         return TRUE;
     }
@@ -2543,7 +2440,6 @@ static void CloseSummaryScreen(u8 taskId)
         SetMainCallback2(sMonSummaryScreen->callback);
         gLastViewedMonIndex = sMonSummaryScreen->curMonIndex;
         SummaryScreen_DestroyAnimDelayTask();
-        DestroySummaryShinyBattleSparkles();
         ResetSpriteData();
         FreeAllSpritePalettes();
         StopCryAndClearCrySongs();
@@ -2870,11 +2766,6 @@ static void Task_ChangeSummaryMon(u8 taskId)
     switch (data[0])
     {
     case 0:
-        // Hide the previous Pokémon's sparkle immediately during the switch.
-        if (sMonSummaryScreen->shinySparkleSpriteId != SPRITE_NONE
-         && sMonSummaryScreen->shinySparkleSpriteId < MAX_SPRITES)
-            gSprites[sMonSummaryScreen->shinySparkleSpriteId].invisible = TRUE;
-        DestroySummaryShinyBattleSparkles();
         StopCryAndClearCrySongs();
         break;
     case 1:
@@ -2945,7 +2836,6 @@ static void Task_ChangeSummaryMon(u8 taskId)
         break;
     case 10:
         PrintMonInfo();
-        UpdateShinySparkleSprite(TRUE);
         break;
     case 11:
         PrintPageSpecificText(sMonSummaryScreen->currPageIndex);
@@ -4088,11 +3978,10 @@ static void DrawPokerusCuredSymbol(struct Pokemon *mon) // This checks if the mo
 
 static void SetMonPicBackgroundPalette(bool8 isMonShiny)
 {
-    // The portrait background always follows the currently selected theme.
-    // Shiny highlight now comes only from the yellow name + sparkle effects,
-    // not from recoloring the portrait stripes.
-    (void)isMonShiny;
-    SetBgTilemapPalette(3, 1, 4, 8, 8, 0);
+    if (!isMonShiny)
+        SetBgTilemapPalette(3, 1, 4, 8, 8, 0);
+    else
+        SetBgTilemapPalette(3, 1, 4, 8, 8, 5);
     ScheduleBgCopyTilemapToVram(3);
 }
 
@@ -4304,14 +4193,7 @@ static void PrintNotEggInfo(void)
 
     // Window begins at x=0 now; drawing at x=6 is a net 2px shift left from
     // the old absolute x=8. Reserve the far-right pixels for the gender glyph.
-    PrintTextOnWindowToFitPx(
-        PSS_LABEL_WINDOW_PORTRAIT_NICKNAME,
-        gStringVar1,
-        6,
-        1,
-        0,
-        summary->isShiny ? SUMMARY_TEXT_COLOR_SHINY : 1,
-        56);
+    PrintTextOnWindowToFitPx(PSS_LABEL_WINDOW_PORTRAIT_NICKNAME, gStringVar1, 6, 1, 0, 1, 56);
 
     // Do not repeat "Species / Species" when the mon still has its default name.
     // The second line is only useful when the top line is an actual nickname.
@@ -4381,7 +4263,7 @@ static void DrawSummaryStatusStripContents(void)
 
     if (sMonSummaryScreen->summary.ailment != AILMENT_NONE)
     {
-        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, gText_Status, 2, 1, 0, 2);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, gText_Status, 2, 1, 0, 1);
     }
     else
     {
@@ -4396,8 +4278,8 @@ static void DrawSummaryStatusStripContents(void)
         // Red L/R shoulder labels; white THEME + x/16 readout.
         PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeL, 3, 2, 0, 3, FONT_SMALL);
         PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_ThemeR, 12, 2, 0, 3, FONT_SMALL);
-        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_Theme, 21, 2, 0, 2, FONT_SMALL);
-        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, themeCountText, 51, 2, 0, 2, FONT_SMALL);
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, sText_Theme, 21, 2, 0, 1, FONT_SMALL);
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, themeCountText, 51, 2, 0, 1, FONT_SMALL);
     }
 
     CopyWindowToVram(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS, COPYWIN_GFX);
@@ -4748,7 +4630,7 @@ static void PrintMonOTName(void)
         if (sMonSummaryScreen->summary.OTGender == 0)
             PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 5);
         else
-            PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 5);
+            PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 6);
     }
 }
 
@@ -5483,7 +5365,7 @@ static void PrintNewMoveDetailsOrCancelText(void)
         u16 move = sMonSummaryScreen->newMove;
 
         if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
-            PrintTextOnWindowToFit(windowId1, GetMoveName(move), 0, 65, 0, 5);
+            PrintTextOnWindowToFit(windowId1, GetMoveName(move), 0, 65, 0, 6);
         else
             PrintTextOnWindowToFit(windowId1, GetMoveName(move), 0, 65, 0, 5);
 
@@ -5560,224 +5442,6 @@ static void HidePageSpecificSprites(void)
         if (sMonSummaryScreen->spriteIds[i] != SPRITE_NONE)
             SetSpriteInvisibility(i, TRUE);
     }
-}
-
-static void CreateShinySparkleSprite(void)
-{
-    // Right side of the Pokédex-number row (No.xxx), matching the reference.
-    // The 16x16 sprite is centered here, so its visible pixels sit around y 18..33.
-    sMonSummaryScreen->shinySparkleSpriteId = CreateSprite(&sSpriteTemplate_ShinySparkle, 68, 26, 1);
-
-    if (sMonSummaryScreen->shinySparkleSpriteId < MAX_SPRITES)
-        UpdateShinySparkleSprite(FALSE);
-    else
-        sMonSummaryScreen->shinySparkleSpriteId = SPRITE_NONE;
-}
-
-static void UpdateShinySparkleSprite(bool8 playSound)
-{
-    struct Sprite *sprite;
-    bool8 showSparkle = sMonSummaryScreen->summary.isShiny && !sMonSummaryScreen->summary.isEgg;
-
-    // One transition event: existing shiny SE + the native battle-style
-    // Gold Stars burst. The small 16x16 sparkle below continues looping.
-    if (showSparkle && playSound)
-    {
-        PlaySE(SE_SHINY);
-        StartSummaryShinyBattleSparkles();
-    }
-
-    if (sMonSummaryScreen->shinySparkleSpriteId == SPRITE_NONE
-     || sMonSummaryScreen->shinySparkleSpriteId >= MAX_SPRITES)
-        return;
-
-    sprite = &gSprites[sMonSummaryScreen->shinySparkleSpriteId];
-    sprite->invisible = !showSparkle;
-
-    if (showSparkle)
-    {
-        // Restart from frame 0 whenever the player lands on a Shiny Pokémon.
-        StartSpriteAnim(sprite, 0);
-    }
-}
-
-
-static void DestroySummaryShinyBattleSparkleStar(struct Sprite *sprite)
-{
-    u8 slot = sprite->data[2];
-
-    if (sMonSummaryScreen != NULL
-     && slot < ARRAY_COUNT(sMonSummaryScreen->shinyBattleSparkleSpriteIds))
-        sMonSummaryScreen->shinyBattleSparkleSpriteIds[slot] = SPRITE_NONE;
-
-    FreeSpriteOamMatrix(sprite);
-    DestroySprite(sprite);
-}
-
-static void SpriteCB_SummaryShinyStarEncircle(struct Sprite *sprite)
-{
-    // Same orbit used by battle's SpriteCB_ShinyStars_Encircle.
-    sprite->x2 = Sin(sprite->data[1], 24);
-    sprite->y2 = Cos(sprite->data[1], 24);
-    sprite->data[1] += 12;
-
-    if (sprite->data[1] > 255)
-        DestroySummaryShinyBattleSparkleStar(sprite);
-}
-
-static void SpriteCB_SummaryShinyStarDiagonal(struct Sprite *sprite)
-{
-    // Same four-frame de-sync and diagonal travel used by the battle effect.
-    if (sprite->data[1] < 4)
-    {
-        sprite->data[1]++;
-    }
-    else
-    {
-        sprite->invisible = FALSE;
-        sprite->x2 += 5;
-        sprite->y2 -= 5;
-
-        if (sprite->x2 > 32)
-            DestroySummaryShinyBattleSparkleStar(sprite);
-    }
-}
-
-static u8 CreateSummaryShinyBattleSparkleStar(u8 starIdx, bool8 diagonal, u8 slot)
-{
-    const struct SpriteTemplate *template;
-    struct Sprite *sprite;
-    u8 spriteId;
-
-    if (starIdx == 0)
-        template = &gWishStarSpriteTemplate;
-    else
-        template = &gMiniTwinklingStarSpriteTemplate;
-
-    spriteId = CreateSprite(
-        template,
-        SUMMARY_SHINY_BATTLE_CENTER_X,
-        SUMMARY_SHINY_BATTLE_CENTER_Y,
-        5
-    );
-
-    if (spriteId >= MAX_SPRITES)
-        return SPRITE_NONE;
-
-    sprite = &gSprites[spriteId];
-
-    // Battle uses one big star, three medium stars and one small star.
-    if (starIdx > 0 && starIdx < 4)
-        sprite->oam.tileNum += 4;
-    else if (starIdx >= 4)
-        sprite->oam.tileNum += 5;
-
-    sprite->data[1] = 0;
-    sprite->data[2] = slot;
-
-    if (diagonal)
-    {
-        sprite->callback = SpriteCB_SummaryShinyStarDiagonal;
-        sprite->x2 = -32;
-        sprite->y2 = 32;
-        sprite->invisible = TRUE;
-    }
-    else
-    {
-        sprite->callback = SpriteCB_SummaryShinyStarEncircle;
-    }
-
-    sMonSummaryScreen->shinyBattleSparkleSpriteIds[slot] = spriteId;
-    return spriteId;
-}
-
-static void CreateSummaryShinyBattleSparklePair(u8 starIdx)
-{
-    if (starIdx >= SUMMARY_SHINY_BATTLE_STAR_PAIR_COUNT)
-        return;
-
-    CreateSummaryShinyBattleSparkleStar(starIdx, FALSE, starIdx);
-    CreateSummaryShinyBattleSparkleStar(
-        starIdx,
-        TRUE,
-        starIdx + SUMMARY_SHINY_BATTLE_STAR_PAIR_COUNT
-    );
-}
-
-static void Task_SummaryShinyBattleSparkles(u8 taskId)
-{
-    // Battle creates a star every four frames. Spawn a matching encircle +
-    // diagonal pair at that cadence; diagonal stars carry their own 4f de-sync.
-    if (++gTasks[taskId].data[0] >= 4)
-    {
-        gTasks[taskId].data[0] = 0;
-        CreateSummaryShinyBattleSparklePair(gTasks[taskId].data[1]);
-        gTasks[taskId].data[1]++;
-
-        if (gTasks[taskId].data[1] >= SUMMARY_SHINY_BATTLE_STAR_PAIR_COUNT)
-        {
-            sMonSummaryScreen->shinyBattleSparkleTaskId = TASK_NONE;
-            DestroyTask(taskId);
-        }
-    }
-}
-
-static void DestroySummaryShinyBattleSparkles(void)
-{
-    u8 i;
-
-    if (sMonSummaryScreen == NULL)
-        return;
-
-    if (sMonSummaryScreen->shinyBattleSparkleTaskId != TASK_NONE)
-    {
-        DestroyTask(sMonSummaryScreen->shinyBattleSparkleTaskId);
-        sMonSummaryScreen->shinyBattleSparkleTaskId = TASK_NONE;
-    }
-
-    for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->shinyBattleSparkleSpriteIds); i++)
-    {
-        u8 spriteId = sMonSummaryScreen->shinyBattleSparkleSpriteIds[i];
-
-        if (spriteId != SPRITE_NONE && spriteId < MAX_SPRITES)
-        {
-            FreeSpriteOamMatrix(&gSprites[spriteId]);
-            DestroySprite(&gSprites[spriteId]);
-        }
-
-        sMonSummaryScreen->shinyBattleSparkleSpriteIds[i] = SPRITE_NONE;
-    }
-}
-
-static void StartSummaryShinyBattleSparkles(void)
-{
-    u8 taskId;
-
-    DestroySummaryShinyBattleSparkles();
-
-    // Reuse the exact Gold Stars graphics/palette used by TryShinyAnimation().
-    // We reproduce its star movement locally instead of calling the battle
-    // routine itself, because Summary Screen has no battle battler state.
-    if (GetSpriteTileStartByTag(ANIM_TAG_GOLD_STARS) == 0xFFFF)
-    {
-        LoadCompressedSpriteSheetUsingHeap(
-            &gBattleAnimPicTable[ANIM_TAG_GOLD_STARS - ANIM_SPRITES_START]
-        );
-        LoadSpritePalette(
-            &gBattleAnimPaletteTable[ANIM_TAG_GOLD_STARS - ANIM_SPRITES_START]
-        );
-    }
-
-    // Pair 0 starts with SE_SHINY; remaining pairs follow every four frames.
-    CreateSummaryShinyBattleSparklePair(0);
-
-    taskId = CreateTask(Task_SummaryShinyBattleSparkles, 10);
-    if (taskId == TASK_NONE)
-        return;
-
-    sMonSummaryScreen->shinyBattleSparkleTaskId = taskId;
-    gTasks[taskId].data[0] = 0;
-    gTasks[taskId].data[1] = 1;
 }
 
 static void SetTypeIcons(void)

@@ -1,0 +1,13 @@
+{
+  "created": "20260907-121825",
+  "files": {
+    "src/pokemon_summary_screen.c": {
+      "existed": true,
+      "sha256": "31f5b28efef7d3cb5e36c703ddc905207c3586c6cf245fe87a3ef3dd498fa283"
+    },
+    "graphics/summary_screen/shiny.png": {
+      "existed": false,
+      "sha256": null
+    }
+  }
+}
