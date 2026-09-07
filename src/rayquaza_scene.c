@@ -60,6 +60,8 @@ enum
 #define TAG_DUOFIGHT_KYOGRE              30508
 #define TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN 30509
 #define TAG_DUOFIGHT_KYOGRE_DORSAL_FIN   30510
+#define TAG_DUOFIGHT_PRIMAL_RED_PULSE    30511
+#define TAG_DUOFIGHT_PRIMAL_BLUE_PULSE   30512
 #define TAG_FLIGHT_SMOKE                 30555
 #define TAG_DESCENDS_RAYQUAZA            30556
 #define TAG_DESCENDS_RAYQUAZA_TAIL       30557
@@ -78,6 +80,7 @@ enum
 // How long (in frames) each pose of the Mr. Stone Evil scene is held before moving on
 #define MRSTONE_EVIL_POSE1_HOLD 120 // mrstone01, empty-handed
 #define MRSTONE_EVIL_POSE2_HOLD 90  // mrstone02, holding the orbs
+#define MRSTONE_EVIL_ORB_FLASH_LEVEL 6
 
 // Orb hand positions on top of the mrstone02 art. These are placeholders -- tune them to line
 // up with wherever the hands actually land in the finished mrstone02 tilemap.
@@ -85,6 +88,8 @@ enum
 #define MRSTONE_EVIL_REDORB_Y  132
 #define MRSTONE_EVIL_BLUEORB_X 154
 #define MRSTONE_EVIL_BLUEORB_Y 132
+
+#define DUOFIGHT_PRIMAL_PULSE_HOLD 20
 
 /* ------------------------------------------------------------------------
  * Mega Rayquaza (Chases Away, scene 5) -- rendered on BG3, not as OBJ.
@@ -160,6 +165,10 @@ static void DuoFight_AnimateRain(void);
 static void DuoFight_Lightning1(void);
 static void DuoFight_Lightning2(void);
 static void DuoFight_LightningLong(void);
+static void DuoFight_HandlePrimalTransformation(u8);
+static void DuoFight_StartPrimalTransformation(u8);
+static void DuoFight_LoadPrimalAssets(void);
+static void DuoFight_DestroyPrimalPulseSprites(u8);
 static u8 DuoFightPre_CreateGroudonSprites(void);
 static u8 DuoFightPre_CreateKyogreSprites(void);
 static u8 DuoFight_CreateGroudonSprites(void);
@@ -168,6 +177,7 @@ static void SpriteCB_DuoFightPre_Groudon(struct Sprite *);
 static void SpriteCB_DuoFightPre_Kyogre(struct Sprite *);
 static void SpriteCB_DuoFight_Groudon(struct Sprite *);
 static void SpriteCB_DuoFight_Kyogre(struct Sprite *);
+static void SpriteCB_DuoFightPrimalPulse(struct Sprite *);
 static void DuoFight_SlideGroudonDown(struct Sprite *);
 static void DuoFight_SlideKyogreDown(struct Sprite *);
 
@@ -246,6 +256,24 @@ static const struct OamData sOam_64x64 =
     .affineParam = 0
 };
 
+// Used by the Alpha/Omega orb pulses while Groudon and Kyogre transform.
+static const struct OamData sOam_64x64AffineBlend =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
 static const struct OamData sOam_32x32 =
 {
     .y = 0,
@@ -259,6 +287,25 @@ static const struct OamData sOam_32x32 =
     .size = SPRITE_SIZE(32x32),
     .tileNum = 0,
     .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+// The two orbs in Mr. Stone's hands grow into a translucent glow. Double-size
+// affine bounds allow each 32x32 source image to expand without being clipped.
+static const struct OamData sOam_32x32AffineBlend =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
     .paletteNum = 0,
     .affineParam = 0
 };
@@ -635,16 +682,6 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_Groudon =
     gRaySceneDuoFight_Groudon_Gfx, 0x3000, TAG_DUOFIGHT_GROUDON
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_Groudon =
-{
-    gRaySceneDuoFightPrimal_Groudon_Gfx, 0x3000, TAG_DUOFIGHT_GROUDON
-};
-
-static const struct SpritePalette sSpritePal_DuoFightPrimal_Groudon =
-{
-    gRaySceneDuoFightPrimal_Groudon_Pal, TAG_DUOFIGHT_GROUDON
-};
-
 static const struct SpritePalette sSpritePal_DuoFight_Groudon =
 {
     gRaySceneDuoFight_Groudon_Pal, TAG_DUOFIGHT_GROUDON
@@ -677,11 +714,6 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_GroudonShoulder 
     gRaySceneDuoFight_GroudonShoulder_Gfx, 0x200, TAG_DUOFIGHT_GROUDON_SHOULDER
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_GroudonShoulder =
-{
-    gRaySceneDuoFightPrimal_GroudonShoulder_Gfx, 0x200, TAG_DUOFIGHT_GROUDON_SHOULDER
-};
-
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_GroudonShoulder =
 {
     .tileTag = TAG_DUOFIGHT_GROUDON_SHOULDER,
@@ -707,11 +739,6 @@ static const union AnimCmd *const sAnims_DuoFight_GroudonClaw[] =
 static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_GroudonClaw =
 {
     gRaySceneDuoFight_GroudonClaw_Gfx, 0x400, TAG_DUOFIGHT_GROUDON_CLAW
-};
-
-static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_GroudonClaw =
-{
-    gRaySceneDuoFightPrimal_GroudonClaw_Gfx, 0x400, TAG_DUOFIGHT_GROUDON_CLAW
 };
 
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_GroudonClaw =
@@ -806,16 +833,6 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_Kyogre =
     gRaySceneDuoFight_Kyogre_Gfx, 0xF00, TAG_DUOFIGHT_KYOGRE
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_Kyogre =
-{
-    gRaySceneDuoFightPrimal_Kyogre_Gfx, 0xF00, TAG_DUOFIGHT_KYOGRE
-};
-
-static const struct SpritePalette sSpritePal_DuoFightPrimal_Kyogre =
-{
-    gRaySceneDuoFightPrimal_Kyogre_Pal, TAG_DUOFIGHT_KYOGRE
-};
-
 static const struct SpritePalette sSpritePal_DuoFight_Kyogre =
 {
     gRaySceneDuoFight_Kyogre_Pal, TAG_DUOFIGHT_KYOGRE
@@ -851,11 +868,6 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_KyogrePectoralFi
     gRaySceneDuoFight_KyogrePectoralFin_Gfx, 0xC0, TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_KyogrePectoralFin =
-{
-    gRaySceneDuoFightPrimal_KyogrePectoralFin_Gfx, 0xC0, TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN
-};
-
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_KyogrePectoralFin =
 {
     .tileTag = TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN,
@@ -872,11 +884,6 @@ static const struct CompressedSpriteSheet sSpriteSheet_DuoFight_KyogreDorsalFin 
     gRaySceneDuoFight_KyogreDorsalFin_Gfx, 0x200, TAG_DUOFIGHT_KYOGRE_DORSAL_FIN
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_KyogreDorsalFin =
-{
-    gRaySceneDuoFightPrimal_KyogreDorsalFin_Gfx, 0x200, TAG_DUOFIGHT_KYOGRE_DORSAL_FIN
-};
-
 static const struct SpriteTemplate sSpriteTemplate_DuoFight_KyogreDorsalFin =
 {
     .tileTag = TAG_DUOFIGHT_KYOGRE_DORSAL_FIN,
@@ -885,6 +892,79 @@ static const struct SpriteTemplate sSpriteTemplate_DuoFight_KyogreDorsalFin =
     .anims = sAnims_DuoFight_GroudonShoulderKyogreDorsalFin,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// These are the Alpha/Omega orb graphics used by the native Primal Reversion
+// battle animation. They are loaded as local cutscene sprites so the two
+// colour pulses can appear together without taking over the scanline DMA that
+// drives the Duo Fight clouds.
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_RedPulse =
+{
+    gBattleAnimSpriteGfx_OmegaStone, 0x800, TAG_DUOFIGHT_PRIMAL_RED_PULSE
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_DuoFightPrimal_BluePulse =
+{
+    gBattleAnimSpriteGfx_AlphaStone, 0x800, TAG_DUOFIGHT_PRIMAL_BLUE_PULSE
+};
+
+static const struct SpritePalette sSpritePal_DuoFightPrimal_RedPulse =
+{
+    gBattleAnimSpritePal_OmegaStone, TAG_DUOFIGHT_PRIMAL_RED_PULSE
+};
+
+static const struct SpritePalette sSpritePal_DuoFightPrimal_BluePulse =
+{
+    gBattleAnimSpritePal_AlphaStone, TAG_DUOFIGHT_PRIMAL_BLUE_PULSE
+};
+
+static const union AnimCmd sAnim_DuoFightPrimalPulse[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_DuoFightPrimalPulse[] =
+{
+    sAnim_DuoFightPrimalPulse
+};
+
+static const union AffineAnimCmd sAffineAnim_DuoFightPrimalPulse[] =
+{
+    // Affine scale parameters are the inverse of the visual scale: 0x40
+    // renders this 64px Orb at one quarter size, then 16 x 0x0C reaches
+    // the normal 1x size (0x100) without ever passing through zero.
+    AFFINEANIMCMD_FRAME(0x40, 0x40, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0C, 0x0C, 0, 16),
+    AFFINEANIMCMD_FRAME(0, 0, 0, 4),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd *const sAffineAnims_DuoFightPrimalPulse[] =
+{
+    sAffineAnim_DuoFightPrimalPulse
+};
+
+static const struct SpriteTemplate sSpriteTemplate_DuoFightPrimal_RedPulse =
+{
+    .tileTag = TAG_DUOFIGHT_PRIMAL_RED_PULSE,
+    .paletteTag = TAG_DUOFIGHT_PRIMAL_RED_PULSE,
+    .oam = &sOam_64x64AffineBlend,
+    .anims = sAnims_DuoFightPrimalPulse,
+    .images = NULL,
+    .affineAnims = sAffineAnims_DuoFightPrimalPulse,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_DuoFightPrimal_BluePulse =
+{
+    .tileTag = TAG_DUOFIGHT_PRIMAL_BLUE_PULSE,
+    .paletteTag = TAG_DUOFIGHT_PRIMAL_BLUE_PULSE,
+    .oam = &sOam_64x64AffineBlend,
+    .anims = sAnims_DuoFightPrimalPulse,
+    .images = NULL,
+    .affineAnims = sAffineAnims_DuoFightPrimalPulse,
     .callback = SpriteCallbackDummy,
 };
 
@@ -1520,6 +1600,19 @@ static void ResetWindowDimensions(void)
 #define tHelperTaskId    data[1]
 #define tGroudonSpriteId data[2]
 #define tKyogreSpriteId  data[3]
+#define tPrimalTransformState        data[4]
+#define tPrimalTransformTimer        data[5]
+#define tPrimalRedPulseSpriteId      data[6]
+#define tPrimalBluePulseSpriteId     data[7]
+
+enum
+{
+    DUOFIGHT_PRIMAL_TRANSFORM_WAIT_FOR_FADE,
+    DUOFIGHT_PRIMAL_TRANSFORM_PULSE,
+    DUOFIGHT_PRIMAL_TRANSFORM_FADE_TO_WHITE,
+    DUOFIGHT_PRIMAL_TRANSFORM_FADE_FROM_WHITE,
+    DUOFIGHT_PRIMAL_TRANSFORM_DONE,
+};
 
 #define sGroudonBodySpriteId     data[0]
 #define sGroudonShoulderSpriteId data[1]
@@ -1729,40 +1822,33 @@ static void InitDuoFightSceneBgs(void)
 
 static void LoadDuoFightSceneGfx(void)
 {
-    // The short first visit remains unchanged.  Only the complete cutscene,
-    // which follows Rayquaza's awakening, uses the Primal version of scene 1.
-    bool8 usePrimalAssets = !sRayScene->endEarly;
-
+    // Both visits begin with the original Duo Fight art. In the complete
+    // version, the Primal art is installed only after the two Orb pulses and
+    // the white flash, so the change is visible to the player.
     ResetTempTileDataBuffers();
-    DecompressAndCopyTileDataToVram(0, usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds_Gfx : gRaySceneDuoFight_Clouds_Gfx, 0, 0, 0);
+    DecompressAndCopyTileDataToVram(0, gRaySceneDuoFight_Clouds_Gfx, 0, 0, 0);
     while (FreeTempTileDataBuffersIfPossible())
         ;
-    DecompressDataWithHeaderWram(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds2_Tilemap : gRaySceneDuoFight_Clouds2_Tilemap, sRayScene->tilemapBuffers[0]);
-    DecompressDataWithHeaderWram(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds1_Tilemap : gRaySceneDuoFight_Clouds1_Tilemap, sRayScene->tilemapBuffers[1]);
-    DecompressDataWithHeaderWram(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds3_Tilemap : gRaySceneDuoFight_Clouds3_Tilemap, sRayScene->tilemapBuffers[2]);
-    LoadPalette(usePrimalAssets ? gRaySceneDuoFightPrimal_Clouds_Pal : gRaySceneDuoFight_Clouds_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds2_Tilemap, sRayScene->tilemapBuffers[0]);
+    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds1_Tilemap, sRayScene->tilemapBuffers[1]);
+    DecompressDataWithHeaderWram(gRaySceneDuoFight_Clouds3_Tilemap, sRayScene->tilemapBuffers[2]);
+    LoadPalette(gRaySceneDuoFight_Clouds_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
 
-    if (usePrimalAssets)
+    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Groudon);
+    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonShoulder);
+    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonClaw);
+    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Kyogre);
+    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogrePectoralFin);
+    LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogreDorsalFin);
+    LoadSpritePalette(&sSpritePal_DuoFight_Groudon);
+    LoadSpritePalette(&sSpritePal_DuoFight_Kyogre);
+
+    if (!sRayScene->endEarly)
     {
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_Groudon);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_GroudonShoulder);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_GroudonClaw);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_Kyogre);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_KyogrePectoralFin);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_KyogreDorsalFin);
-        LoadSpritePalette(&sSpritePal_DuoFightPrimal_Groudon);
-        LoadSpritePalette(&sSpritePal_DuoFightPrimal_Kyogre);
-    }
-    else
-    {
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Groudon);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonShoulder);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_GroudonClaw);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_Kyogre);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogrePectoralFin);
-        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFight_KyogreDorsalFin);
-        LoadSpritePalette(&sSpritePal_DuoFight_Groudon);
-        LoadSpritePalette(&sSpritePal_DuoFight_Kyogre);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_RedPulse);
+        LoadCompressedSpriteSheet(&sSpriteSheet_DuoFightPrimal_BluePulse);
+        LoadSpritePalette(&sSpritePal_DuoFightPrimal_RedPulse);
+        LoadSpritePalette(&sSpritePal_DuoFightPrimal_BluePulse);
     }
 }
 
@@ -1775,6 +1861,10 @@ static void Task_DuoFightAnim(u8 taskId)
     CpuFastFill16(0, gScanlineEffectRegBuffers, sizeof(gScanlineEffectRegBuffers));
     ScanlineEffect_SetParams(sScanlineParams_DuoFight_Clouds);
     tTimer = 0;
+    tPrimalTransformState = sRayScene->endEarly ? DUOFIGHT_PRIMAL_TRANSFORM_DONE : DUOFIGHT_PRIMAL_TRANSFORM_WAIT_FOR_FADE;
+    tPrimalTransformTimer = 0;
+    tPrimalRedPulseSpriteId = MAX_SPRITES;
+    tPrimalBluePulseSpriteId = MAX_SPRITES;
     tHelperTaskId = CreateTask(Task_DuoFight_AnimateClouds, 0);
     if (sRayScene->animId == RAY_ANIM_DUO_FIGHT_PRE)
     {
@@ -1859,6 +1949,13 @@ static void Task_HandleDuoFight(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     DuoFight_AnimateRain();
+
+    if (tPrimalTransformState != DUOFIGHT_PRIMAL_TRANSFORM_DONE)
+    {
+        DuoFight_HandlePrimalTransformation(taskId);
+        return;
+    }
+
     if (!gPaletteFade.active)
     {
         s16 frame = tTimer;
@@ -1894,6 +1991,163 @@ static void Task_HandleDuoFight(u8 taskId)
 
         tTimer++;
     }
+}
+
+static void DuoFight_HandlePrimalTransformation(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    switch (tPrimalTransformState)
+    {
+    case DUOFIGHT_PRIMAL_TRANSFORM_WAIT_FOR_FADE:
+        if (!gPaletteFade.active)
+        {
+            DuoFight_StartPrimalTransformation(taskId);
+            tPrimalTransformTimer = 0;
+            tPrimalTransformState = DUOFIGHT_PRIMAL_TRANSFORM_PULSE;
+        }
+        break;
+    case DUOFIGHT_PRIMAL_TRANSFORM_PULSE:
+        if (++tPrimalTransformTimer >= DUOFIGHT_PRIMAL_PULSE_HOLD)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_WHITE);
+            tPrimalTransformState = DUOFIGHT_PRIMAL_TRANSFORM_FADE_TO_WHITE;
+        }
+        break;
+    case DUOFIGHT_PRIMAL_TRANSFORM_FADE_TO_WHITE:
+        if (!gPaletteFade.active)
+        {
+            DuoFight_LoadPrimalAssets();
+            DuoFight_DestroyPrimalPulseSprites(taskId);
+            BlendPalettes(PALETTES_ALL, 0x10, RGB_WHITE);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_WHITE);
+            tPrimalTransformState = DUOFIGHT_PRIMAL_TRANSFORM_FADE_FROM_WHITE;
+        }
+        break;
+    case DUOFIGHT_PRIMAL_TRANSFORM_FADE_FROM_WHITE:
+        if (!gPaletteFade.active)
+        {
+            tTimer = 0;
+            tPrimalTransformState = DUOFIGHT_PRIMAL_TRANSFORM_DONE;
+        }
+        break;
+    }
+}
+
+static void DuoFight_StartPrimalTransformation(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u8 spriteId;
+
+    spriteId = CreateSprite(&sSpriteTemplate_DuoFightPrimal_RedPulse,
+                            gSprites[tGroudonSpriteId].x - 4,
+                            gSprites[tGroudonSpriteId].y + 24,
+                            0);
+    tPrimalRedPulseSpriteId = spriteId;
+    if (spriteId != MAX_SPRITES)
+    {
+        struct Sprite *sprite = &gSprites[spriteId];
+
+        sprite->data[0] = tGroudonSpriteId;
+        sprite->data[1] = -4;
+        sprite->data[2] = 24;
+        sprite->callback = SpriteCB_DuoFightPrimalPulse;
+    }
+
+    spriteId = CreateSprite(&sSpriteTemplate_DuoFightPrimal_BluePulse,
+                            gSprites[tKyogreSpriteId].x + 20,
+                            gSprites[tKyogreSpriteId].y + 20,
+                            0);
+    tPrimalBluePulseSpriteId = spriteId;
+    if (spriteId != MAX_SPRITES)
+    {
+        struct Sprite *sprite = &gSprites[spriteId];
+
+        sprite->data[0] = tKyogreSpriteId;
+        sprite->data[1] = 20;
+        sprite->data[2] = 20;
+        sprite->callback = SpriteCB_DuoFightPrimalPulse;
+    }
+
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD | BLDCNT_EFFECT_BLEND);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(8, 8));
+    PlaySE(SE_ORB);
+}
+
+static void DuoFight_LoadPrimalAssets(void)
+{
+    u16 tileStart;
+    u8 paletteNum;
+
+    // The Primal sprite sheets are deliberately the same sizes as the
+    // regular ones. Reusing their existing tile slots keeps every limb and
+    // its animation intact and avoids allocating any EWRAM buffer.
+    tileStart = GetSpriteTileStartByTag(TAG_DUOFIGHT_GROUDON);
+    if (tileStart != 0xFFFF)
+        DecompressDataWithHeaderVram(gRaySceneDuoFightPrimal_Groudon_Gfx, (void *)(OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP));
+    tileStart = GetSpriteTileStartByTag(TAG_DUOFIGHT_GROUDON_SHOULDER);
+    if (tileStart != 0xFFFF)
+        DecompressDataWithHeaderVram(gRaySceneDuoFightPrimal_GroudonShoulder_Gfx, (void *)(OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP));
+    tileStart = GetSpriteTileStartByTag(TAG_DUOFIGHT_GROUDON_CLAW);
+    if (tileStart != 0xFFFF)
+        DecompressDataWithHeaderVram(gRaySceneDuoFightPrimal_GroudonClaw_Gfx, (void *)(OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP));
+    tileStart = GetSpriteTileStartByTag(TAG_DUOFIGHT_KYOGRE);
+    if (tileStart != 0xFFFF)
+        DecompressDataWithHeaderVram(gRaySceneDuoFightPrimal_Kyogre_Gfx, (void *)(OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP));
+    tileStart = GetSpriteTileStartByTag(TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN);
+    if (tileStart != 0xFFFF)
+        DecompressDataWithHeaderVram(gRaySceneDuoFightPrimal_KyogrePectoralFin_Gfx, (void *)(OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP));
+    tileStart = GetSpriteTileStartByTag(TAG_DUOFIGHT_KYOGRE_DORSAL_FIN);
+    if (tileStart != 0xFFFF)
+        DecompressDataWithHeaderVram(gRaySceneDuoFightPrimal_KyogreDorsalFin_Gfx, (void *)(OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP));
+
+    paletteNum = IndexOfSpritePaletteTag(TAG_DUOFIGHT_GROUDON);
+    if (paletteNum < 16)
+        CpuCopy16(gRaySceneDuoFightPrimal_Groudon_Pal, &gPlttBufferUnfaded[OBJ_PLTT_ID(paletteNum)], PLTT_SIZE_4BPP);
+    paletteNum = IndexOfSpritePaletteTag(TAG_DUOFIGHT_KYOGRE);
+    if (paletteNum < 16)
+        CpuCopy16(gRaySceneDuoFightPrimal_Kyogre_Pal, &gPlttBufferUnfaded[OBJ_PLTT_ID(paletteNum)], PLTT_SIZE_4BPP);
+
+    DecompressDataWithHeaderVram(gRaySceneDuoFightPrimal_Clouds_Gfx, (void *)BG_CHAR_ADDR(0));
+    DecompressDataWithHeaderWram(gRaySceneDuoFightPrimal_Clouds2_Tilemap, sRayScene->tilemapBuffers[0]);
+    DecompressDataWithHeaderWram(gRaySceneDuoFightPrimal_Clouds1_Tilemap, sRayScene->tilemapBuffers[1]);
+    DecompressDataWithHeaderWram(gRaySceneDuoFightPrimal_Clouds3_Tilemap, sRayScene->tilemapBuffers[2]);
+    ScheduleBgCopyTilemapToVram(0);
+    ScheduleBgCopyTilemapToVram(1);
+    ScheduleBgCopyTilemapToVram(2);
+    // Keep the visible palette fully white until the fade-in begins. A VBlank
+    // can happen while the graphics are being decompressed, so only prepare
+    // the unfaded copy here.
+    CpuCopy16(gRaySceneDuoFightPrimal_Clouds_Pal, &gPlttBufferUnfaded[BG_PLTT_ID(0)], 2 * PLTT_SIZE_4BPP);
+}
+
+static void DuoFight_DestroyPrimalPulseSprites(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (tPrimalRedPulseSpriteId < MAX_SPRITES && gSprites[tPrimalRedPulseSpriteId].inUse)
+    {
+        FreeSpriteOamMatrix(&gSprites[tPrimalRedPulseSpriteId]);
+        DestroySprite(&gSprites[tPrimalRedPulseSpriteId]);
+    }
+    if (tPrimalBluePulseSpriteId < MAX_SPRITES && gSprites[tPrimalBluePulseSpriteId].inUse)
+    {
+        FreeSpriteOamMatrix(&gSprites[tPrimalBluePulseSpriteId]);
+        DestroySprite(&gSprites[tPrimalBluePulseSpriteId]);
+    }
+
+    FreeSpriteTilesByTag(TAG_DUOFIGHT_PRIMAL_RED_PULSE);
+    FreeSpriteTilesByTag(TAG_DUOFIGHT_PRIMAL_BLUE_PULSE);
+    FreeSpritePaletteByTag(TAG_DUOFIGHT_PRIMAL_RED_PULSE);
+    FreeSpritePaletteByTag(TAG_DUOFIGHT_PRIMAL_BLUE_PULSE);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+}
+
+static void SpriteCB_DuoFightPrimalPulse(struct Sprite *sprite)
+{
+    sprite->x = gSprites[sprite->data[0]].x + sprite->data[1];
+    sprite->y = gSprites[sprite->data[0]].y + sprite->data[2];
 }
 
 // In the below functions, BlendPalettesGradually flashes the bg white and the duo black
@@ -2148,6 +2402,10 @@ static void DuoFight_SlideKyogreDown(struct Sprite *sprite)
 #undef tHelperTaskId
 #undef tGroudonSpriteId
 #undef tKyogreSpriteId
+#undef tPrimalTransformState
+#undef tPrimalTransformTimer
+#undef tPrimalRedPulseSpriteId
+#undef tPrimalBluePulseSpriteId
 
 #undef sGroudonBodySpriteId
 #undef sGroudonShoulderSpriteId
@@ -3559,14 +3817,29 @@ static const union AnimCmd *const sAnims_MrStoneEvil_Orb[] =
     sAnim_MrStoneEvil_Orb
 };
 
+static const union AffineAnimCmd sAffineAnim_MrStoneEvil_OrbPulse[] =
+{
+    // Scale parameters are inverse visual scale. Each orb grows from 1x to
+    // about 1.6x, pauses briefly, then restarts as a new wave of energy.
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(-0x08, -0x08, 0, 12),
+    AFFINEANIMCMD_FRAME(0, 0, 0, 4),
+    AFFINEANIMCMD_JUMP(0)
+};
+
+static const union AffineAnimCmd *const sAffineAnims_MrStoneEvil_OrbPulse[] =
+{
+    sAffineAnim_MrStoneEvil_OrbPulse
+};
+
 static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_RedOrb =
 {
     .tileTag = TAG_MRSTONE_EVIL_REDORB,
     .paletteTag = TAG_MRSTONE_EVIL_REDORB,
-    .oam = &sOam_32x32,
+    .oam = &sOam_32x32AffineBlend,
     .anims = sAnims_MrStoneEvil_Orb,
     .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
+    .affineAnims = sAffineAnims_MrStoneEvil_OrbPulse,
     .callback = SpriteCallbackDummy,
 };
 
@@ -3574,10 +3847,10 @@ static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_BlueOrb =
 {
     .tileTag = TAG_MRSTONE_EVIL_BLUEORB,
     .paletteTag = TAG_MRSTONE_EVIL_BLUEORB,
-    .oam = &sOam_32x32,
+    .oam = &sOam_32x32AffineBlend,
     .anims = sAnims_MrStoneEvil_Orb,
     .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
+    .affineAnims = sAffineAnims_MrStoneEvil_OrbPulse,
     .callback = SpriteCallbackDummy,
 };
 
@@ -3702,10 +3975,19 @@ static void Task_HandleMrStoneEvil(u8 taskId)
             LoadPalette(gRaySceneMrStoneEvil_MrStone02_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
 
             tRedOrbSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_RedOrb, MRSTONE_EVIL_REDORB_X, MRSTONE_EVIL_REDORB_Y, 0);
-            gSprites[tRedOrbSpriteId].oam.priority = 0;
+            if (tRedOrbSpriteId != MAX_SPRITES)
+                gSprites[tRedOrbSpriteId].oam.priority = 0;
             tBlueOrbSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_BlueOrb, MRSTONE_EVIL_BLUEORB_X, MRSTONE_EVIL_BLUEORB_Y, 0);
-            gSprites[tBlueOrbSpriteId].oam.priority = 0;
+            if (tBlueOrbSpriteId != MAX_SPRITES)
+                gSprites[tBlueOrbSpriteId].oam.priority = 0;
 
+            // This scene used to leave the two hand-orbs static. Give their
+            // activation a visible white flash, then keep them alpha-blended
+            // and pulsing until the final fade to white.
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD | BLDCNT_EFFECT_BLEND);
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 4));
+            PlaySE(SE_ORB);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, MRSTONE_EVIL_ORB_FLASH_LEVEL, RGB_WHITE);
             tTimer = 0;
             tState++;
         }
@@ -3715,7 +3997,23 @@ static void Task_HandleMrStoneEvil(u8 taskId)
         }
         break;
     case 1:
-        // Holding on mrstone02, orbs in hand
+        // Hold briefly at the peak of the white activation flash.
+        if (!gPaletteFade.active)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, MRSTONE_EVIL_ORB_FLASH_LEVEL, 0, RGB_WHITE);
+            tState++;
+        }
+        break;
+    case 2:
+        // Return from the flash before showing the pulsing red/blue light.
+        if (!gPaletteFade.active)
+        {
+            tTimer = 0;
+            tState++;
+        }
+        break;
+    case 3:
+        // Holding on mrstone02 while each hand-orb repeatedly expands.
         if (tTimer >= MRSTONE_EVIL_POSE2_HOLD)
         {
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_WHITE);
@@ -3726,7 +4024,7 @@ static void Task_HandleMrStoneEvil(u8 taskId)
             tTimer++;
         }
         break;
-    case 2:
+    case 4:
         // Wait for the fade to white to finish, then hand control back to the field script
         if (!gPaletteFade.active)
             gTasks[taskId].func = Task_MrStoneEvilEnd;
@@ -3739,6 +4037,8 @@ static void Task_MrStoneEvilEnd(u8 taskId)
     // endEarly is always TRUE for this scene (set in DoMrStoneEvilScene), so
     // Task_SetNextAnim() goes straight to Task_EndAfterFadeScreen and resumes the field script.
     SetVBlankCallback(NULL);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     ResetSpriteData();
     FreeAllSpritePalettes();
     Task_SetNextAnim(taskId);

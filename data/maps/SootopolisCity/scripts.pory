@@ -1215,7 +1215,6 @@ SootopolisCity_Movement_PlayerEnterCaveOfOrigin:
 SootopolisCity_EventScript_Boy2::
 	lockall
 	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FacePlayer
-	special DoMrStoneEvilScene
 	waitmovement 0
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Boy2Rayquaza
 	msgbox SootopolisCity_Text_TwoPokemonArentAngry, MSGBOX_DEFAULT
@@ -1387,63 +1386,127 @@ SootopolisCity_EventScript_MaxieArchieLeave::
 
 SootopolisCity_EventScript_MrStoneEvil::
 	lockall
+	@ The party Pokémon must be fully inside its Poké Ball before this blocking
+	@ cutscene begins, so it cannot appear in or affect any scripted movement.
+	hidefollower 1
 	faceplayer
 	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
 	removefieldmugshot
 	closemessage
-	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
-	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
-	waitmovement 0
+	@ "Do you understand now?" ends. Magnus is on Stone's left and Inae is on
+	@ his right, so they first turn toward him together.
 	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
 	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
 	waitmovement 0
+	@ Only after they have looked at him does the shared realization land.
+	playse SE_PIN
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
+	waitmovement 0
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
+	msgbox SootopolisCity_Text_MrStoneNeverMeantToWin, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
 	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
 	removefieldmugshot
 	closemessage
+	@ Move the player clear before Inae realizes that both teams were used.
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
+	waitmovement 0
+	createfieldmugshot MUGSHOT_INAE, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_ArchieShockedAtStone, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	@ Stone walks three tiles toward the boat, then stops before boarding it.
+	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneApproachBoat
+	waitmovement 0
+	@ Magnus and Inae follow him at the same time, each in their own column.
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MagnusFollowStone
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_InaeFollowStone
+	waitmovement 0
+	@ Stone looks back. The leaders then turn in toward him for the remaining
+	@ confession while he is still stopped in the middle, before the boat.
+	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneLookBack
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
+	waitmovement 0
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
+	msgbox SootopolisCity_Text_MrStoneFinalReveal, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MrStoneMoneyRulesWorld, MSGBOX_DEFAULT
 	removefieldmugshot
 	closemessage
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
-	waitmovement 0
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
+	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	@ Stone now takes the one remaining step onto the boat and disappears.
 	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneBoardBoat
 	waitmovement 0
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE
 	removeobject LOCALID_SOOTOPOLIS_MRSTONE
+	@ Everyone else steps to the river's edge first, then watches the boat depart.
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MagnusRiverEdge
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_InaeRiverEdge
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerRiverEdge
+	waitmovement 0
 	special SpawnCameraObject
 	applymovement LOCALID_SOOTOPOLIS_BOAT, SootopolisCity_Movement_DevonBoatSail
 	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraFollowDevonBoat
 	waitmovement 0
 	special RemoveCameraObject
-	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
-	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
-	removefieldmugshot
-	closemessage
 	fadescreenspeed FADE_TO_WHITE, 4
 	special DoMrStoneEvilScene
 	waitstate
-	delay 120
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
-	waitmoncry
+	@ Return from Mr. Stone's white flash to the field for the original
+	@ Ruby/Sapphire Orb flash: one native flash per Primal Reversion.
+	fadescreenspeed FADE_FROM_WHITE, 4
+	special SpawnCameraObject
+	@ The river-edge framing is already correct vertically. Center both
+	@ legendaries horizontally once, then keep that same frame for both flashes.
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraCenterPrimalTitans
+	waitmovement 0
+	delay 20
+	@ VAR_RESULT 0 is the original red Orb flash, centred on the left target.
+	setvar VAR_RESULT, 0
+	playfanfare MUS_AWAKEN_LEGEND
+	playse SE_ORB
+	special DoOrbEffect
+	delay 150
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
+	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
+	waitstate
+	delay 60
+	special FadeOutOrbEffect
+	waitstate
+	@ Keep the centered camera still for the right target. VAR_RESULT 1 is the
+	@ original blue flash.
+	setvar VAR_RESULT, 1
+	playse SE_ORB
+	special DoOrbEffect
+	delay 150
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
+	addobject LOCALID_SOOTOPOLIS_PRIMALKYOGRE
+	waitstate
+	delay 60
+	special FadeOutOrbEffect
+	waitstate
 	setvar VAR_0x8004, 1 @ vertical pan
 	setvar VAR_0x8005, 1 @ horizontal pan
 	setvar VAR_0x8006, 8 @ num shakes
 	setvar VAR_0x8007, 3 @ shake delay
 	special ShakeCamera
 	waitstate
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
-	removeobject LOCALID_SOOTOPOLIS_GROUDON
-	removeobject LOCALID_SOOTOPOLIS_KYOGRE
-	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
-	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
-	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
-	addobject LOCALID_SOOTOPOLIS_PRIMALKYOGRE
+	fadescreenspeed FADE_TO_WHITE, 4
+	special RemoveCameraObject
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_BOAT
 	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
@@ -1463,27 +1526,60 @@ SootopolisCity_Movement_ExclamationMark:
 	emote_exclamation_mark
 	step_end
 
-@ Maxie is positioned to Mr. Stone's left, so he turns right to face him.
-@ Adjust turn_right/turn_left/turn_up/turn_down to match wherever you land the NPCs in porymap.
+@ Magnus is to Mr. Stone's left, so he must turn right to face him.
 SootopolisCity_Movement_MaxieFaceStone:
 	face_right
 	step_end
 
-@ Archie is positioned to Mr. Stone's right, so she turns left to face him.
+@ Inae is to Mr. Stone's right, so she must turn left to face him.
 SootopolisCity_Movement_ArchieFaceStone:
 	face_left
 	step_end
 
-@ Mr. Stone shoulders past the player on his way to the boat.
+@ Mr. Stone needs the center path; the player clears two tiles to the left.
 SootopolisCity_Movement_PlayerPushedAside:
 	walk_left
+	walk_left
+	step_end
+
+SootopolisCity_Movement_MrStoneApproachBoat:
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SootopolisCity_Movement_MagnusFollowStone:
+	walk_down
+	walk_down
+	step_end
+
+SootopolisCity_Movement_InaeFollowStone:
+	walk_down
+	walk_down
+	step_end
+
+SootopolisCity_Movement_MrStoneLookBack:
+	face_up
 	step_end
 
 SootopolisCity_Movement_MrStoneBoardBoat:
 	walk_down
+	step_end
+
+SootopolisCity_Movement_MagnusRiverEdge:
+	walk_down
+	face_down
+	step_end
+
+SootopolisCity_Movement_InaeRiverEdge:
+	walk_down
+	face_down
+	step_end
+
+SootopolisCity_Movement_PlayerRiverEdge:
 	walk_down
 	walk_down
-	walk_down
+	face_down
 	step_end
 
 SootopolisCity_Movement_DevonBoatSail:
@@ -1509,6 +1605,14 @@ SootopolisCity_Movement_CameraFollowDevonBoat:
 	walk_down
 	step_end
 
+@ Native DoOrbEffect uses fixed centres: red at x104 and blue at x136.
+@ Do not pan downward here: that moves the legendaries out through the top of
+@ the screen. Two rightward tiles center the pair without changing its height.
+SootopolisCity_Movement_CameraCenterPrimalTitans:
+	walk_right
+	walk_right
+	step_end
+
 @ Unused
 SootopolisCity_Movement_Levitate::
 	levitate
@@ -1532,14 +1636,20 @@ SootopolisCity_Text_CitySign:
 
 SootopolisCity_Text_MrStoneMastermind:
 	.string "MR. STONE: …Hahahaha…\p"
-	.string "Now you understand, don't you?\p"
-	.string "This petty struggle between TEAM MAGMA\n"
-	.string "and TEAM AQUA was meaningless from the\l"
-	.string "very beginning.\p"
-	.string "Did you really believe DEVON would choose\n"
-	.string "one side, let you destroy the other,\l"
-	.string "and then simply hand you control of\l"
-	.string "everything?\p"
+	.string "Do you understand now?$"
+
+SootopolisCity_Text_MrStoneNeverMeantToWin:
+	.string "MR. STONE: This petty struggle between\n"
+	.string "TEAM MAGMA and TEAM AQUA was\l"
+	.string "meaningless from the very beginning.\p"
+	.string "TEAM AQUA and TEAM MAGMA were never\n"
+	.string "meant to win.$"
+
+SootopolisCity_Text_MrStoneFinalReveal:
+	.string "MR. STONE: Did you really believe DEVON\n"
+	.string "would choose one side, let you destroy\l"
+	.string "the other, and then simply hand you\l"
+	.string "control of everything?\p"
 	.string "Hahahaha! Of course not!\p"
 	.string "I funded both of you.\n"
 	.string "I gave both sides the means to continue.\p"
@@ -1573,6 +1683,7 @@ SootopolisCity_Text_MaxieShockedAtStone:
 	.string "were both being used by DEVON?!$"
 
 SootopolisCity_Text_ArchieShockedAtStone:
+	.string "INEA: You used both of us…\p"
 	.string "So that's what this was…\n"
 	.string "Your madness and greed are on a whole\l"
 	.string "different level.\p"
@@ -1638,6 +1749,14 @@ SootopolisCity_Text_MrStoneMoneyRulesWorld:
 	.string "No government I cannot pressure.\p"
 	.string "Not Hoenn.\n"
 	.string "The entire world.$"
+
+SootopolisCity_Text_MagnusBoatReaction:
+	.string "MAGNUS: He's leaving us?\p"
+	.string "After using us this long?!$"
+
+SootopolisCity_Text_InaeBoatReaction:
+	.string "INEA: He's going to awaken\n"
+	.string "them. We have to stop him.$"
 
 SootopolisCity_Text_MrStonePrimalCommand:
 	.string "MR. STONE: GROUDON! KYOGRE!\p"

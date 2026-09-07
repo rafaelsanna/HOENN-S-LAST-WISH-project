@@ -2433,1496 +2433,1734 @@ SootopolisCity_EventScript_Boy2::
 # 1217 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FacePlayer
 # 1218 "data/maps/SootopolisCity/scripts.pory"
-	special DoMrStoneEvilScene
+	waitmovement 0
 # 1219 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1220 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_Boy2Rayquaza
-# 1221 "data/maps/SootopolisCity/scripts.pory"
+# 1220 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_TwoPokemonArentAngry, MSGBOX_DEFAULT
+# 1221 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1222 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1223 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FaceOriginalDirection
+# 1223 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1224 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	releaseall
 # 1225 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1226 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1227 "data/maps/SootopolisCity/scripts.pory"
-
-# 1228 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_Boy2Rayquaza::
-# 1229 "data/maps/SootopolisCity/scripts.pory"
+# 1228 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_FlyingMonStoppedRampage, MSGBOX_DEFAULT
+# 1229 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1230 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	releaseall
 # 1231 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1232 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1233 "data/maps/SootopolisCity/scripts.pory"
-
-# 1234 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_BlackBelt::
+# 1234 "data/maps/SootopolisCity/scripts.pory"
+	lockall
 # 1235 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1236 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_BlackBeltRayquaza
-# 1237 "data/maps/SootopolisCity/scripts.pory"
+# 1236 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_GoRedAndBlueMon, MSGBOX_DEFAULT
+# 1237 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1238 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
 # 1239 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
+	waitmovement 0
 # 1240 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1241 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_DoYouKnowMonNames, MSGBOX_DEFAULT
+# 1241 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1242 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1243 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FaceOriginalDirection
+# 1243 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1244 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	releaseall
 # 1245 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1246 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1247 "data/maps/SootopolisCity/scripts.pory"
-
-# 1248 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_BlackBeltRayquaza::
-# 1249 "data/maps/SootopolisCity/scripts.pory"
+# 1248 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
+# 1249 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1250 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1251 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_GreenOneSettlesThings, MSGBOX_DEFAULT
+# 1251 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
 # 1252 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1253 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1254 "data/maps/SootopolisCity/scripts.pory"
-
-# 1255 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_Girl::
+# 1255 "data/maps/SootopolisCity/scripts.pory"
+	lockall
 # 1256 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1257 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FacePlayer
+# 1257 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1258 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1259 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_GirlRayquaza
-# 1260 "data/maps/SootopolisCity/scripts.pory"
+# 1259 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_SootopolisWillBeWrecked, MSGBOX_DEFAULT
+# 1260 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1261 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1262 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FaceOriginalDirection
+# 1262 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1263 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	releaseall
 # 1264 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1265 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1266 "data/maps/SootopolisCity/scripts.pory"
-
-# 1267 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_GirlRayquaza::
-# 1268 "data/maps/SootopolisCity/scripts.pory"
+# 1267 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_SootopolisDidntGetWrecked, MSGBOX_DEFAULT
+# 1268 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1269 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	releaseall
 # 1270 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1271 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1272 "data/maps/SootopolisCity/scripts.pory"
-
-# 1273 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_Maniac::
+# 1273 "data/maps/SootopolisCity/scripts.pory"
+	lockall
 # 1274 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1275 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FacePlayer
+# 1275 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1276 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1277 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ManiacRayquaza
-# 1278 "data/maps/SootopolisCity/scripts.pory"
+# 1277 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_SeeingLegendWithOwnEyes, MSGBOX_DEFAULT
+# 1278 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1279 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1280 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FaceOriginalDirection
+# 1280 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1281 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	releaseall
 # 1282 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1283 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1284 "data/maps/SootopolisCity/scripts.pory"
-
-# 1285 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_ManiacRayquaza::
-# 1286 "data/maps/SootopolisCity/scripts.pory"
+# 1285 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_SawLegendWithOwnEyes, MSGBOX_DEFAULT
+# 1286 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
 # 1287 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1288 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1289 "data/maps/SootopolisCity/scripts.pory"
-
-# 1290 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_Wallace::
-# 1291 "data/maps/SootopolisCity/scripts.pory"
+# 1290 "data/maps/SootopolisCity/scripts.pory"
 	lock
+# 1291 "data/maps/SootopolisCity/scripts.pory"
+	faceplayer
 # 1292 "data/maps/SootopolisCity/scripts.pory"
-	faceplayer
-# 1293 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_GoToSkyPillar
-# 1294 "data/maps/SootopolisCity/scripts.pory"
+# 1293 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_set FLAG_RECEIVED_HM_WATERFALL, SootopolisCity_EventScript_GoToGym
-# 1295 "data/maps/SootopolisCity/scripts.pory"
+# 1294 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_GiveWaterfall
-# 1296 "data/maps/SootopolisCity/scripts.pory"
+# 1295 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_AquaMagmaDidntMeanHarm, MSGBOX_DEFAULT
+# 1296 "data/maps/SootopolisCity/scripts.pory"
+	release
 # 1297 "data/maps/SootopolisCity/scripts.pory"
-	release
+	end
 # 1298 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1299 "data/maps/SootopolisCity/scripts.pory"
-
-# 1300 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_GiveWaterfall::
-# 1301 "data/maps/SootopolisCity/scripts.pory"
+# 1300 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_ThankYouForHelpAcceptThis, MSGBOX_DEFAULT
-# 1302 "data/maps/SootopolisCity/scripts.pory"
+# 1301 "data/maps/SootopolisCity/scripts.pory"
 	giveitem ITEM_HM_WATERFALL
-# 1303 "data/maps/SootopolisCity/scripts.pory"
+# 1302 "data/maps/SootopolisCity/scripts.pory"
 	setflag FLAG_RECEIVED_HM_WATERFALL
-# 1304 "data/maps/SootopolisCity/scripts.pory"
+# 1303 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_ExplainWaterfallGoToGym, MSGBOX_DEFAULT
+# 1304 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1305 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
-# 1306 "data/maps/SootopolisCity/scripts.pory"
 	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_WallaceMoveFromGym
-# 1307 "data/maps/SootopolisCity/scripts.pory"
+# 1306 "data/maps/SootopolisCity/scripts.pory"
 	call_if_eq VAR_FACING, DIR_EAST, SootopolisCity_EventScript_WallaceMoveFromGym
-# 1308 "data/maps/SootopolisCity/scripts.pory"
+# 1307 "data/maps/SootopolisCity/scripts.pory"
 	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_WallaceMoveFromGymWest
+# 1308 "data/maps/SootopolisCity/scripts.pory"
+	release
 # 1309 "data/maps/SootopolisCity/scripts.pory"
-	release
+	end
 # 1310 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1311 "data/maps/SootopolisCity/scripts.pory"
-
-# 1312 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_WallaceMoveFromGym::
-# 1313 "data/maps/SootopolisCity/scripts.pory"
+# 1312 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGym
+# 1313 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1314 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
 # 1315 "data/maps/SootopolisCity/scripts.pory"
-	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
-# 1316 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 1
+# 1316 "data/maps/SootopolisCity/scripts.pory"
+	return
 # 1317 "data/maps/SootopolisCity/scripts.pory"
-	return
+
 # 1318 "data/maps/SootopolisCity/scripts.pory"
-
-# 1319 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_WallaceMoveFromGymWest::
-# 1320 "data/maps/SootopolisCity/scripts.pory"
+# 1319 "data/maps/SootopolisCity/scripts.pory"
 	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGymWest
+# 1320 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
 # 1321 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1322 "data/maps/SootopolisCity/scripts.pory"
 	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
-# 1323 "data/maps/SootopolisCity/scripts.pory"
+# 1322 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 2
-# 1324 "data/maps/SootopolisCity/scripts.pory"
+# 1323 "data/maps/SootopolisCity/scripts.pory"
 	return
+# 1324 "data/maps/SootopolisCity/scripts.pory"
+
 # 1325 "data/maps/SootopolisCity/scripts.pory"
-
-# 1326 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_GoToSkyPillar::
-# 1327 "data/maps/SootopolisCity/scripts.pory"
+# 1326 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_HaventYouScaledSkyPillar, MSGBOX_DEFAULT
+# 1327 "data/maps/SootopolisCity/scripts.pory"
+	release
 # 1328 "data/maps/SootopolisCity/scripts.pory"
-	release
+	end
 # 1329 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1330 "data/maps/SootopolisCity/scripts.pory"
-
-# 1331 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_GoToGym::
-# 1332 "data/maps/SootopolisCity/scripts.pory"
+# 1331 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_DazzledByMentor, MSGBOX_DEFAULT
-# 1333 "data/maps/SootopolisCity/scripts.pory"
+# 1332 "data/maps/SootopolisCity/scripts.pory"
 	release
+# 1333 "data/maps/SootopolisCity/scripts.pory"
+	end
 # 1334 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1335 "data/maps/SootopolisCity/scripts.pory"
-
-# 1336 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Movement_WallaceMoveFromGym:
-# 1337 "data/maps/SootopolisCity/scripts.pory"
+# 1336 "data/maps/SootopolisCity/scripts.pory"
 	walk_right
+# 1337 "data/maps/SootopolisCity/scripts.pory"
+	walk_in_place_faster_down
 # 1338 "data/maps/SootopolisCity/scripts.pory"
-	walk_in_place_faster_down
+	step_end
 # 1339 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+
 # 1340 "data/maps/SootopolisCity/scripts.pory"
-
-# 1341 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Movement_WallaceMoveFromGymWest:
-# 1342 "data/maps/SootopolisCity/scripts.pory"
+# 1341 "data/maps/SootopolisCity/scripts.pory"
 	walk_left
-# 1343 "data/maps/SootopolisCity/scripts.pory"
+# 1342 "data/maps/SootopolisCity/scripts.pory"
 	walk_in_place_faster_down
-# 1344 "data/maps/SootopolisCity/scripts.pory"
+# 1343 "data/maps/SootopolisCity/scripts.pory"
 	step_end
+# 1344 "data/maps/SootopolisCity/scripts.pory"
+
 # 1345 "data/maps/SootopolisCity/scripts.pory"
-
-# 1346 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_Maxie::
+# 1346 "data/maps/SootopolisCity/scripts.pory"
+	lockall
 # 1347 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1348 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_MaxieRayquaza
-# 1349 "data/maps/SootopolisCity/scripts.pory"
+# 1348 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_GroudonPleaseStop, MSGBOX_DEFAULT
+# 1349 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1350 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	releaseall
 # 1351 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1352 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1353 "data/maps/SootopolisCity/scripts.pory"
-
-# 1354 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_MaxieRayquaza::
-# 1355 "data/maps/SootopolisCity/scripts.pory"
+# 1354 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_AfterAllOurScheming, MSGBOX_DEFAULT
-# 1356 "data/maps/SootopolisCity/scripts.pory"
+# 1355 "data/maps/SootopolisCity/scripts.pory"
 	setflag FLAG_MET_MAXIE_SOOTOPOLIS
-# 1357 "data/maps/SootopolisCity/scripts.pory"
+# 1356 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_set FLAG_MET_ARCHIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
+# 1357 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
 # 1358 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1359 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1360 "data/maps/SootopolisCity/scripts.pory"
-
-# 1361 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_Archie::
+# 1361 "data/maps/SootopolisCity/scripts.pory"
+	lockall
 # 1362 "data/maps/SootopolisCity/scripts.pory"
-	lockall
-# 1363 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_ArchieRayquaza
-# 1364 "data/maps/SootopolisCity/scripts.pory"
+# 1363 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_KyogreCalmDown, MSGBOX_DEFAULT
+# 1364 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
 # 1365 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	releaseall
 # 1366 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1367 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1368 "data/maps/SootopolisCity/scripts.pory"
-
-# 1369 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_ArchieRayquaza::
-# 1370 "data/maps/SootopolisCity/scripts.pory"
+# 1369 "data/maps/SootopolisCity/scripts.pory"
 	msgbox SootopolisCity_Text_TryingMeaninglessToPokemon, MSGBOX_DEFAULT
-# 1371 "data/maps/SootopolisCity/scripts.pory"
+# 1370 "data/maps/SootopolisCity/scripts.pory"
 	setflag FLAG_MET_ARCHIE_SOOTOPOLIS
-# 1372 "data/maps/SootopolisCity/scripts.pory"
+# 1371 "data/maps/SootopolisCity/scripts.pory"
 	goto_if_set FLAG_MET_MAXIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
+# 1372 "data/maps/SootopolisCity/scripts.pory"
+	releaseall
 # 1373 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	end
 # 1374 "data/maps/SootopolisCity/scripts.pory"
-	end
+
 # 1375 "data/maps/SootopolisCity/scripts.pory"
-
-# 1376 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_MaxieArchieLeave::
-# 1377 "data/maps/SootopolisCity/scripts.pory"
+# 1376 "data/maps/SootopolisCity/scripts.pory"
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MAXIE
-# 1378 "data/maps/SootopolisCity/scripts.pory"
+# 1377 "data/maps/SootopolisCity/scripts.pory"
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_ARCHIE
-# 1379 "data/maps/SootopolisCity/scripts.pory"
+# 1378 "data/maps/SootopolisCity/scripts.pory"
 	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
-# 1380 "data/maps/SootopolisCity/scripts.pory"
+# 1379 "data/maps/SootopolisCity/scripts.pory"
 	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_MAXIE
-# 1381 "data/maps/SootopolisCity/scripts.pory"
+# 1380 "data/maps/SootopolisCity/scripts.pory"
 	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE
-# 1382 "data/maps/SootopolisCity/scripts.pory"
+# 1381 "data/maps/SootopolisCity/scripts.pory"
 	setvar VAR_MT_PYRE_STATE, 2
-# 1383 "data/maps/SootopolisCity/scripts.pory"
+# 1382 "data/maps/SootopolisCity/scripts.pory"
 	warpsilent MAP_SOOTOPOLIS_CITY, 31, 34
-# 1384 "data/maps/SootopolisCity/scripts.pory"
+# 1383 "data/maps/SootopolisCity/scripts.pory"
 	waitstate
-# 1385 "data/maps/SootopolisCity/scripts.pory"
+# 1384 "data/maps/SootopolisCity/scripts.pory"
 	releaseall
-# 1386 "data/maps/SootopolisCity/scripts.pory"
+# 1385 "data/maps/SootopolisCity/scripts.pory"
 	end
-# 1387 "data/maps/SootopolisCity/scripts.pory"
+# 1386 "data/maps/SootopolisCity/scripts.pory"
 
-# 1388 "data/maps/SootopolisCity/scripts.pory"
+# 1387 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_EventScript_MrStoneEvil::
-# 1389 "data/maps/SootopolisCity/scripts.pory"
+# 1388 "data/maps/SootopolisCity/scripts.pory"
 	lockall
+# 1389 "data/maps/SootopolisCity/scripts.pory"
+	@ The party Pokémon must be fully inside its Poké Ball before this blocking
 # 1390 "data/maps/SootopolisCity/scripts.pory"
-	faceplayer
+	@ cutscene begins, so it cannot appear in or affect any scripted movement.
 # 1391 "data/maps/SootopolisCity/scripts.pory"
-	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
+	hidefollower 1
 # 1392 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
+	faceplayer
 # 1393 "data/maps/SootopolisCity/scripts.pory"
-	removefieldmugshot
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 # 1394 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
 # 1395 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
-# 1396 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
-# 1397 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1398 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
-# 1399 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
-# 1400 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1401 "data/maps/SootopolisCity/scripts.pory"
-	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
-# 1402 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
-# 1403 "data/maps/SootopolisCity/scripts.pory"
 	removefieldmugshot
+# 1396 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 1397 "data/maps/SootopolisCity/scripts.pory"
+	@ "Do you understand now?" ends. Magnus is on Stone's left and Inae is on
+# 1398 "data/maps/SootopolisCity/scripts.pory"
+	@ his right, so they first turn toward him together.
+# 1399 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
+# 1400 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
+# 1401 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1402 "data/maps/SootopolisCity/scripts.pory"
+	@ Only after they have looked at him does the shared realization land.
+# 1403 "data/maps/SootopolisCity/scripts.pory"
+	playse SE_PIN
 # 1404 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_ExclamationMark
 # 1405 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_ArchieShockedAtStone, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ExclamationMark
 # 1406 "data/maps/SootopolisCity/scripts.pory"
-	closemessage
+	waitmovement 0
 # 1407 "data/maps/SootopolisCity/scripts.pory"
 	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 # 1408 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MrStoneMoneyRulesWorld, MSGBOX_DEFAULT
+	msgbox SootopolisCity_Text_MrStoneNeverMeantToWin, MSGBOX_DEFAULT
 # 1409 "data/maps/SootopolisCity/scripts.pory"
 	removefieldmugshot
 # 1410 "data/maps/SootopolisCity/scripts.pory"
 	closemessage
 # 1411 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
+	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
 # 1412 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
+	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
 # 1413 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneBoardBoat
-# 1414 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1415 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE
-# 1416 "data/maps/SootopolisCity/scripts.pory"
-	removeobject LOCALID_SOOTOPOLIS_MRSTONE
-# 1417 "data/maps/SootopolisCity/scripts.pory"
-	special SpawnCameraObject
-# 1418 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_SOOTOPOLIS_BOAT, SootopolisCity_Movement_DevonBoatSail
-# 1419 "data/maps/SootopolisCity/scripts.pory"
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraFollowDevonBoat
-# 1420 "data/maps/SootopolisCity/scripts.pory"
-	waitmovement 0
-# 1421 "data/maps/SootopolisCity/scripts.pory"
-	special RemoveCameraObject
-# 1422 "data/maps/SootopolisCity/scripts.pory"
-	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
-# 1423 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
-# 1424 "data/maps/SootopolisCity/scripts.pory"
 	removefieldmugshot
-# 1425 "data/maps/SootopolisCity/scripts.pory"
+# 1414 "data/maps/SootopolisCity/scripts.pory"
 	closemessage
+# 1415 "data/maps/SootopolisCity/scripts.pory"
+	@ Move the player clear before Inae realizes that both teams were used.
+# 1416 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
+# 1417 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1418 "data/maps/SootopolisCity/scripts.pory"
+	createfieldmugshot MUGSHOT_INAE, EMOTE_NORMAL
+# 1419 "data/maps/SootopolisCity/scripts.pory"
+	msgbox SootopolisCity_Text_ArchieShockedAtStone, MSGBOX_DEFAULT
+# 1420 "data/maps/SootopolisCity/scripts.pory"
+	removefieldmugshot
+# 1421 "data/maps/SootopolisCity/scripts.pory"
+	closemessage
+# 1422 "data/maps/SootopolisCity/scripts.pory"
+	@ Stone walks three tiles toward the boat, then stops before boarding it.
+# 1423 "data/maps/SootopolisCity/scripts.pory"
+	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneApproachBoat
+# 1424 "data/maps/SootopolisCity/scripts.pory"
+	waitmovement 0
+# 1425 "data/maps/SootopolisCity/scripts.pory"
+	@ Magnus and Inae follow him at the same time, each in their own column.
 # 1426 "data/maps/SootopolisCity/scripts.pory"
-	fadescreenspeed FADE_TO_WHITE, 4
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MagnusFollowStone
 # 1427 "data/maps/SootopolisCity/scripts.pory"
-	special DoMrStoneEvilScene
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_InaeFollowStone
 # 1428 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
+	waitmovement 0
 # 1429 "data/maps/SootopolisCity/scripts.pory"
-	delay 120
+	@ Stone looks back. The leaders then turn in toward him for the remaining
 # 1430 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	@ confession while he is still stopped in the middle, before the boat.
 # 1431 "data/maps/SootopolisCity/scripts.pory"
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneLookBack
 # 1432 "data/maps/SootopolisCity/scripts.pory"
-	waitmoncry
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MaxieFaceStone
 # 1433 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8004, 1 @ vertical pan
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_ArchieFaceStone
 # 1434 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8005, 1 @ horizontal pan
+	waitmovement 0
 # 1435 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8006, 8 @ num shakes
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 # 1436 "data/maps/SootopolisCity/scripts.pory"
-	setvar VAR_0x8007, 3 @ shake delay
+	msgbox SootopolisCity_Text_MrStoneFinalReveal, MSGBOX_DEFAULT
 # 1437 "data/maps/SootopolisCity/scripts.pory"
-	special ShakeCamera
+	removefieldmugshot
 # 1438 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
+	closemessage
 # 1439 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 # 1440 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
+	msgbox SootopolisCity_Text_MrStoneMoneyRulesWorld, MSGBOX_DEFAULT
 # 1441 "data/maps/SootopolisCity/scripts.pory"
-	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	removefieldmugshot
 # 1442 "data/maps/SootopolisCity/scripts.pory"
-	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+	closemessage
 # 1443 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 # 1444 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
+	msgbox SootopolisCity_Text_MrStonePrimalCommand, MSGBOX_DEFAULT
 # 1445 "data/maps/SootopolisCity/scripts.pory"
-	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
+	removefieldmugshot
 # 1446 "data/maps/SootopolisCity/scripts.pory"
-	addobject LOCALID_SOOTOPOLIS_PRIMALKYOGRE
+	closemessage
 # 1447 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_HIDE_SOOTOPOLIS_CITY_BOAT
+	@ Stone now takes the one remaining step onto the boat and disappears.
 # 1448 "data/maps/SootopolisCity/scripts.pory"
-	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
+	applymovement LOCALID_SOOTOPOLIS_MRSTONE, SootopolisCity_Movement_MrStoneBoardBoat
 # 1449 "data/maps/SootopolisCity/scripts.pory"
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	waitmovement 0
 # 1450 "data/maps/SootopolisCity/scripts.pory"
-	warpwhitefade MAP_SOOTOPOLIS_CITY, 31, 34
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MRSTONE
 # 1451 "data/maps/SootopolisCity/scripts.pory"
-	waitstate
+	removeobject LOCALID_SOOTOPOLIS_MRSTONE
 # 1452 "data/maps/SootopolisCity/scripts.pory"
-	releaseall
+	@ Everyone else steps to the river's edge first, then watches the boat depart.
 # 1453 "data/maps/SootopolisCity/scripts.pory"
-	end
+	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MagnusRiverEdge
 # 1454 "data/maps/SootopolisCity/scripts.pory"
-
+	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_InaeRiverEdge
 # 1455 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_EventScript_DevonBoat::
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerRiverEdge
 # 1456 "data/maps/SootopolisCity/scripts.pory"
-	lock
+	waitmovement 0
 # 1457 "data/maps/SootopolisCity/scripts.pory"
-	faceplayer
+	special SpawnCameraObject
 # 1458 "data/maps/SootopolisCity/scripts.pory"
-	msgbox SootopolisCity_Text_DevonBoatEmpty, MSGBOX_DEFAULT
+	applymovement LOCALID_SOOTOPOLIS_BOAT, SootopolisCity_Movement_DevonBoatSail
 # 1459 "data/maps/SootopolisCity/scripts.pory"
-	release
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraFollowDevonBoat
 # 1460 "data/maps/SootopolisCity/scripts.pory"
-	end
+	waitmovement 0
 # 1461 "data/maps/SootopolisCity/scripts.pory"
-
+	special RemoveCameraObject
 # 1462 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_ExclamationMark:
+	fadescreenspeed FADE_TO_WHITE, 4
 # 1463 "data/maps/SootopolisCity/scripts.pory"
-	emote_exclamation_mark
+	special DoMrStoneEvilScene
 # 1464 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	waitstate
 # 1465 "data/maps/SootopolisCity/scripts.pory"
-
+	@ Return from Mr. Stone's white flash to the field for the original
 # 1466 "data/maps/SootopolisCity/scripts.pory"
-@ Maxie is positioned to Mr. Stone's left, so he turns right to face him.
+	@ Ruby/Sapphire Orb flash: one native flash per Primal Reversion.
 # 1467 "data/maps/SootopolisCity/scripts.pory"
-@ Adjust turn_right/turn_left/turn_up/turn_down to match wherever you land the NPCs in porymap.
+	fadescreenspeed FADE_FROM_WHITE, 4
 # 1468 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_MaxieFaceStone:
+	special SpawnCameraObject
 # 1469 "data/maps/SootopolisCity/scripts.pory"
-	face_right
+	@ The river-edge framing is already correct vertically. Center both
 # 1470 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	@ legendaries horizontally once, then keep that same frame for both flashes.
 # 1471 "data/maps/SootopolisCity/scripts.pory"
-
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraCenterPrimalTitans
 # 1472 "data/maps/SootopolisCity/scripts.pory"
-@ Archie is positioned to Mr. Stone's right, so she turns left to face him.
+	waitmovement 0
 # 1473 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_ArchieFaceStone:
+	delay 20
 # 1474 "data/maps/SootopolisCity/scripts.pory"
-	face_left
+	@ VAR_RESULT 0 is the original red Orb flash, centred on the left target.
 # 1475 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	setvar VAR_RESULT, 0
 # 1476 "data/maps/SootopolisCity/scripts.pory"
-
+	playfanfare MUS_AWAKEN_LEGEND
 # 1477 "data/maps/SootopolisCity/scripts.pory"
-@ Mr. Stone shoulders past the player on his way to the boat.
+	playse SE_ORB
 # 1478 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_PlayerPushedAside:
+	special DoOrbEffect
 # 1479 "data/maps/SootopolisCity/scripts.pory"
-	walk_left
+	delay 150
 # 1480 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON
 # 1481 "data/maps/SootopolisCity/scripts.pory"
-
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
 # 1482 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_MrStoneBoardBoat:
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALGROUDON
 # 1483 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	addobject LOCALID_SOOTOPOLIS_PRIMALGROUDON
 # 1484 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	waitstate
 # 1485 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	delay 60
 # 1486 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	special FadeOutOrbEffect
 # 1487 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	waitstate
 # 1488 "data/maps/SootopolisCity/scripts.pory"
-
+	@ Keep the centered camera still for the right target. VAR_RESULT 1 is the
 # 1489 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_DevonBoatSail:
+	@ original blue flash.
 # 1490 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	setvar VAR_RESULT, 1
 # 1491 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	playse SE_ORB
 # 1492 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	special DoOrbEffect
 # 1493 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	delay 150
 # 1494 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE
 # 1495 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
 # 1496 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_PRIMALKYOGRE
 # 1497 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	addobject LOCALID_SOOTOPOLIS_PRIMALKYOGRE
 # 1498 "data/maps/SootopolisCity/scripts.pory"
-
+	waitstate
 # 1499 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_CameraFollowDevonBoat:
+	delay 60
 # 1500 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	special FadeOutOrbEffect
 # 1501 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	waitstate
 # 1502 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	setvar VAR_0x8004, 1 @ vertical pan
 # 1503 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	setvar VAR_0x8005, 1 @ horizontal pan
 # 1504 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	setvar VAR_0x8006, 8 @ num shakes
 # 1505 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	setvar VAR_0x8007, 3 @ shake delay
 # 1506 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	special ShakeCamera
 # 1507 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	waitstate
 # 1508 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	fadescreenspeed FADE_TO_WHITE, 4
 # 1509 "data/maps/SootopolisCity/scripts.pory"
-	walk_down
+	special RemoveCameraObject
 # 1510 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_BOAT
 # 1511 "data/maps/SootopolisCity/scripts.pory"
-
+	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
 # 1512 "data/maps/SootopolisCity/scripts.pory"
-@ Unused
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 # 1513 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_Levitate::
+	warpwhitefade MAP_SOOTOPOLIS_CITY, 31, 34
 # 1514 "data/maps/SootopolisCity/scripts.pory"
-	levitate
+	waitstate
 # 1515 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	releaseall
 # 1516 "data/maps/SootopolisCity/scripts.pory"
-
+	end
 # 1517 "data/maps/SootopolisCity/scripts.pory"
-@ Unused
+
 # 1518 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Movement_DestroyTask::
+SootopolisCity_EventScript_DevonBoat::
 # 1519 "data/maps/SootopolisCity/scripts.pory"
-	destroy_extra_task
+	lock
 # 1520 "data/maps/SootopolisCity/scripts.pory"
-	step_end
+	faceplayer
 # 1521 "data/maps/SootopolisCity/scripts.pory"
-
+	msgbox SootopolisCity_Text_DevonBoatEmpty, MSGBOX_DEFAULT
 # 1522 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GymSign:
+	release
 # 1523 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY POKéMON GYM\n"
+	end
 # 1524 "data/maps/SootopolisCity/scripts.pory"
-	.string "LEADER: RIO\p"
+
 # 1525 "data/maps/SootopolisCity/scripts.pory"
-	.string "“The GYM LEADER with the beauty\n"
+SootopolisCity_Movement_ExclamationMark:
 # 1526 "data/maps/SootopolisCity/scripts.pory"
-	.string "of pure water!”$"
+	emote_exclamation_mark
 # 1527 "data/maps/SootopolisCity/scripts.pory"
-
+	step_end
 # 1528 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CitySign:
-# 1529 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY\p"
-# 1530 "data/maps/SootopolisCity/scripts.pory"
-	.string "“The mystical city where history\n"
-# 1531 "data/maps/SootopolisCity/scripts.pory"
-	.string "slumbers.”$"
-# 1532 "data/maps/SootopolisCity/scripts.pory"
 
+# 1529 "data/maps/SootopolisCity/scripts.pory"
+@ Magnus is to Mr. Stone's left, so he must turn right to face him.
+# 1530 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Movement_MaxieFaceStone:
+# 1531 "data/maps/SootopolisCity/scripts.pory"
+	face_right
+# 1532 "data/maps/SootopolisCity/scripts.pory"
+	step_end
 # 1533 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MrStoneMastermind:
+
 # 1534 "data/maps/SootopolisCity/scripts.pory"
-	.string "MR. STONE: …Hahahaha…\p"
+@ Inae is to Mr. Stone's right, so she must turn left to face him.
 # 1535 "data/maps/SootopolisCity/scripts.pory"
-	.string "Now you understand, don't you?\p"
+SootopolisCity_Movement_ArchieFaceStone:
 # 1536 "data/maps/SootopolisCity/scripts.pory"
-	.string "This petty struggle between TEAM MAGMA\n"
+	face_left
 # 1537 "data/maps/SootopolisCity/scripts.pory"
-	.string "and TEAM AQUA was meaningless from the\l"
+	step_end
 # 1538 "data/maps/SootopolisCity/scripts.pory"
-	.string "very beginning.\p"
+
 # 1539 "data/maps/SootopolisCity/scripts.pory"
-	.string "Did you really believe DEVON would choose\n"
+@ Mr. Stone needs the center path; the player clears two tiles to the left.
 # 1540 "data/maps/SootopolisCity/scripts.pory"
-	.string "one side, let you destroy the other,\l"
+SootopolisCity_Movement_PlayerPushedAside:
 # 1541 "data/maps/SootopolisCity/scripts.pory"
-	.string "and then simply hand you control of\l"
+	walk_left
 # 1542 "data/maps/SootopolisCity/scripts.pory"
-	.string "everything?\p"
+	walk_left
 # 1543 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hahahaha! Of course not!\p"
+	step_end
 # 1544 "data/maps/SootopolisCity/scripts.pory"
-	.string "I funded both of you.\n"
+
 # 1545 "data/maps/SootopolisCity/scripts.pory"
-	.string "I gave both sides the means to continue.\p"
+SootopolisCity_Movement_MrStoneApproachBoat:
 # 1546 "data/maps/SootopolisCity/scripts.pory"
-	.string "Every battle you fought,\n"
+	walk_down
 # 1547 "data/maps/SootopolisCity/scripts.pory"
-	.string "every operation you carried out,\p"
+	walk_down
 # 1548 "data/maps/SootopolisCity/scripts.pory"
-	.string "every resource DEVON placed in your\n"
+	walk_down
 # 1549 "data/maps/SootopolisCity/scripts.pory"
-	.string "hands… all of it served my interests.\p"
+	step_end
 # 1550 "data/maps/SootopolisCity/scripts.pory"
-	.string "While MAGMA and AQUA fought over\n"
+
 # 1551 "data/maps/SootopolisCity/scripts.pory"
-	.string "GROUDON and KYOGRE,\p"
+SootopolisCity_Movement_MagnusFollowStone:
 # 1552 "data/maps/SootopolisCity/scripts.pory"
-	.string "I was building something far greater:\n"
+	walk_down
 # 1553 "data/maps/SootopolisCity/scripts.pory"
-	.string "control on a global scale.\p"
+	walk_down
 # 1554 "data/maps/SootopolisCity/scripts.pory"
-	.string "You were never my partners.\n"
+	step_end
 # 1555 "data/maps/SootopolisCity/scripts.pory"
-	.string "You were never my equals.\p"
+
 # 1556 "data/maps/SootopolisCity/scripts.pory"
-	.string "You were mercenaries working for DEVON,\n"
+SootopolisCity_Movement_InaeFollowStone:
 # 1557 "data/maps/SootopolisCity/scripts.pory"
-	.string "whether you realized it or not.\p"
+	walk_down
 # 1558 "data/maps/SootopolisCity/scripts.pory"
-	.string "And you did it all believing the victory\n"
+	walk_down
 # 1559 "data/maps/SootopolisCity/scripts.pory"
-	.string "would belong to you...\p"
+	step_end
 # 1560 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hahahaha… How convenient.\p"
+
 # 1561 "data/maps/SootopolisCity/scripts.pory"
-	.string "But now your usefulness has come to an\n"
+SootopolisCity_Movement_MrStoneLookBack:
 # 1562 "data/maps/SootopolisCity/scripts.pory"
-	.string "end now!\p"
+	face_up
 # 1563 "data/maps/SootopolisCity/scripts.pory"
-	.string "Thank you for your service, MAGNUS.\n"
+	step_end
 # 1564 "data/maps/SootopolisCity/scripts.pory"
-	.string "Thank you for yours, INAE.\p"
+
 # 1565 "data/maps/SootopolisCity/scripts.pory"
-	.string "The fighting is over.\n"
+SootopolisCity_Movement_MrStoneBoardBoat:
 # 1566 "data/maps/SootopolisCity/scripts.pory"
-	.string "The world you fought over is mine to\l"
+	walk_down
 # 1567 "data/maps/SootopolisCity/scripts.pory"
-	.string "take.$"
+	step_end
 # 1568 "data/maps/SootopolisCity/scripts.pory"
 
 # 1569 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MaxieShockedAtStone:
+SootopolisCity_Movement_MagnusRiverEdge:
 # 1570 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAGNUS: …!\n"
+	walk_down
 # 1571 "data/maps/SootopolisCity/scripts.pory"
-	.string "What the hell is that…?\p"
+	face_down
 # 1572 "data/maps/SootopolisCity/scripts.pory"
-	.string "All this time, TEAM MAGMA and TEAM AQUA\n"
+	step_end
 # 1573 "data/maps/SootopolisCity/scripts.pory"
-	.string "were both being used by DEVON?!$"
+
 # 1574 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Movement_InaeRiverEdge:
 # 1575 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ArchieShockedAtStone:
+	walk_down
 # 1576 "data/maps/SootopolisCity/scripts.pory"
-	.string "So that's what this was…\n"
+	face_down
 # 1577 "data/maps/SootopolisCity/scripts.pory"
-	.string "Your madness and greed are on a whole\l"
+	step_end
 # 1578 "data/maps/SootopolisCity/scripts.pory"
-	.string "different level.\p"
+
 # 1579 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hahahaha…\n"
+SootopolisCity_Movement_PlayerRiverEdge:
 # 1580 "data/maps/SootopolisCity/scripts.pory"
-	.string "To be honest, I expected nothing less\l"
+	walk_down
 # 1581 "data/maps/SootopolisCity/scripts.pory"
-	.string "from a petty old man like you.$"
+	walk_down
 # 1582 "data/maps/SootopolisCity/scripts.pory"
-
+	face_down
 # 1583 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MrStoneMoneyRulesWorld:
+	step_end
 # 1584 "data/maps/SootopolisCity/scripts.pory"
-	.string "MR. STONE: For generations, the STONE\n"
+
 # 1585 "data/maps/SootopolisCity/scripts.pory"
-	.string "family has studied the minerals of this\l"
+SootopolisCity_Movement_DevonBoatSail:
 # 1586 "data/maps/SootopolisCity/scripts.pory"
-	.string "world...\p"
+	walk_down
 # 1587 "data/maps/SootopolisCity/scripts.pory"
-	.string "My grandfather discovered things buried\n"
+	walk_down
 # 1588 "data/maps/SootopolisCity/scripts.pory"
-	.string "beneath the earth that most people could\l"
+	walk_down
 # 1589 "data/maps/SootopolisCity/scripts.pory"
-	.string "never even imagine.\p"
+	walk_down
 # 1590 "data/maps/SootopolisCity/scripts.pory"
-	.string "Ancient beings.\n"
+	walk_down
 # 1591 "data/maps/SootopolisCity/scripts.pory"
-	.string "Ancient powers that shaped this world\n"
+	walk_down
 # 1592 "data/maps/SootopolisCity/scripts.pory"
-	.string "long before mankind ever existed.\p"
+	walk_down
 # 1593 "data/maps/SootopolisCity/scripts.pory"
-	.string "I simply took that family obsession\n"
+	step_end
 # 1594 "data/maps/SootopolisCity/scripts.pory"
-	.string "further than any of them ever dared.\p"
+
 # 1595 "data/maps/SootopolisCity/scripts.pory"
-	.string "Years of research led DEVON to the RED\n"
+SootopolisCity_Movement_CameraFollowDevonBoat:
 # 1596 "data/maps/SootopolisCity/scripts.pory"
-	.string "ORB and the BLUE ORB!\p"
+	walk_down
 # 1597 "data/maps/SootopolisCity/scripts.pory"
-	.string "And you two played your parts perfectly.\n"
+	walk_down
 # 1598 "data/maps/SootopolisCity/scripts.pory"
-	.string "My scientists told you exactly what I\l"
+	walk_down
 # 1599 "data/maps/SootopolisCity/scripts.pory"
-	.string "wanted you to believe.\p"
+	walk_down
 # 1600 "data/maps/SootopolisCity/scripts.pory"
-	.string "You were led to use the wrong Orbs…\n"
+	walk_down
 # 1601 "data/maps/SootopolisCity/scripts.pory"
-	.string "and when the Primal Titans failed to\l"
+	walk_down
 # 1602 "data/maps/SootopolisCity/scripts.pory"
-	.string "awaken their true power, you blamed\l"
+	walk_down
 # 1603 "data/maps/SootopolisCity/scripts.pory"
-	.string "yourselves.\p"
+	walk_down
 # 1604 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hahahaha…\n"
+	walk_down
 # 1605 "data/maps/SootopolisCity/scripts.pory"
-	.string "You never even realized you had been\n"
+	walk_down
 # 1606 "data/maps/SootopolisCity/scripts.pory"
-	.string "following my design from the start.\p"
+	step_end
 # 1607 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON?\n"
+
 # 1608 "data/maps/SootopolisCity/scripts.pory"
-	.string "Poké Balls? Trainers?\p"
+@ Native DoOrbEffect uses fixed centres: red at x104 and blue at x136.
 # 1609 "data/maps/SootopolisCity/scripts.pory"
-	.string "Tell me, what are any of those things\n"
+@ Do not pan downward here: that moves the legendaries out through the top of
 # 1610 "data/maps/SootopolisCity/scripts.pory"
-	.string "compared to the power to reshape an\l"
+@ the screen. Two rightward tiles center the pair without changing its height.
 # 1611 "data/maps/SootopolisCity/scripts.pory"
-	.string "entire continent?\p"
+SootopolisCity_Movement_CameraCenterPrimalTitans:
 # 1612 "data/maps/SootopolisCity/scripts.pory"
-	.string "Do you finally understand?\n"
+	walk_right
 # 1613 "data/maps/SootopolisCity/scripts.pory"
-	.string "Why would I waste my life training\l"
+	walk_right
 # 1614 "data/maps/SootopolisCity/scripts.pory"
-	.string "ordinary Pokémon?\p"
+	step_end
 # 1615 "data/maps/SootopolisCity/scripts.pory"
-	.string "Look at my granddaughter, STELLA.\n"
+
 # 1616 "data/maps/SootopolisCity/scripts.pory"
-	.string "Years of training. Years of battles.\p"
+@ Unused
 # 1617 "data/maps/SootopolisCity/scripts.pory"
-	.string "And what did it make her?\n"
+SootopolisCity_Movement_Levitate::
 # 1618 "data/maps/SootopolisCity/scripts.pory"
-	.string "A Champion of Hoenn.\p"
+	levitate
 # 1619 "data/maps/SootopolisCity/scripts.pory"
-	.string "Impressive, perhaps…\n"
+	step_end
 # 1620 "data/maps/SootopolisCity/scripts.pory"
-	.string "but what could a Champion possibly do\l"
+
 # 1621 "data/maps/SootopolisCity/scripts.pory"
-	.string "against the power of a DEITY?\p"
+@ Unused
 # 1622 "data/maps/SootopolisCity/scripts.pory"
-	.string "Nothing.\p"
+SootopolisCity_Movement_DestroyTask::
 # 1623 "data/maps/SootopolisCity/scripts.pory"
-	.string "While she was perfecting her Pokémon,\n"
+	destroy_extra_task
 # 1624 "data/maps/SootopolisCity/scripts.pory"
-	.string "I was building an empire.\p"
+	step_end
 # 1625 "data/maps/SootopolisCity/scripts.pory"
-	.string "GROUDON can raise continents.\n"
+
 # 1626 "data/maps/SootopolisCity/scripts.pory"
-	.string "KYOGRE can command the oceans.\p"
+SootopolisCity_Text_GymSign:
 # 1627 "data/maps/SootopolisCity/scripts.pory"
-	.string "With both under my control, I can reshape\n"
+	.string "SOOTOPOLIS CITY POKéMON GYM\n"
 # 1628 "data/maps/SootopolisCity/scripts.pory"
-	.string "land, redirect trade routes, command the\l"
+	.string "LEADER: RIO\p"
 # 1629 "data/maps/SootopolisCity/scripts.pory"
-	.string "seas, and control the world's most\l"
+	.string "“The GYM LEADER with the beauty\n"
 # 1630 "data/maps/SootopolisCity/scripts.pory"
-	.string "valuable resources.\p"
+	.string "of pure water!”$"
 # 1631 "data/maps/SootopolisCity/scripts.pory"
-	.string "And that is only the beginning.\p"
+
 # 1632 "data/maps/SootopolisCity/scripts.pory"
-	.string "Infinite mineral wealth.\n"
+SootopolisCity_Text_CitySign:
 # 1633 "data/maps/SootopolisCity/scripts.pory"
-	.string "Uncontested control of maritime routes.\p"
+	.string "SOOTOPOLIS CITY\p"
 # 1634 "data/maps/SootopolisCity/scripts.pory"
-	.string "Water. Land. Energy. Resources.\n"
+	.string "“The mystical city where history\n"
 # 1635 "data/maps/SootopolisCity/scripts.pory"
-	.string "Everything the nations of this world\l"
+	.string "slumbers.”$"
 # 1636 "data/maps/SootopolisCity/scripts.pory"
-	.string "depend upon will pass through my hands.\p"
+
 # 1637 "data/maps/SootopolisCity/scripts.pory"
-	.string "There will be no war I cannot win.\n"
+SootopolisCity_Text_MrStoneMastermind:
 # 1638 "data/maps/SootopolisCity/scripts.pory"
-	.string "No government I cannot pressure.\p"
+	.string "MR. STONE: …Hahahaha…\p"
 # 1639 "data/maps/SootopolisCity/scripts.pory"
-	.string "Not Hoenn.\n"
+	.string "Do you understand now?$"
 # 1640 "data/maps/SootopolisCity/scripts.pory"
-	.string "The entire world.$"
+
 # 1641 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_MrStoneNeverMeantToWin:
 # 1642 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MrStonePrimalCommand:
+	.string "MR. STONE: This petty struggle between\n"
 # 1643 "data/maps/SootopolisCity/scripts.pory"
-	.string "MR. STONE: GROUDON! KYOGRE!\p"
+	.string "TEAM MAGMA and TEAM AQUA was\l"
 # 1644 "data/maps/SootopolisCity/scripts.pory"
-	.string "At last… I have everything I need.\n"
+	.string "meaningless from the very beginning.\p"
 # 1645 "data/maps/SootopolisCity/scripts.pory"
-	.string "The RED ORB. The BLUE ORB.\p"
+	.string "TEAM AQUA and TEAM MAGMA were never\n"
 # 1646 "data/maps/SootopolisCity/scripts.pory"
-	.string "The ancient power of both titans is\n"
+	.string "meant to win.$"
 # 1647 "data/maps/SootopolisCity/scripts.pory"
-	.string "finally within my grasp.\p"
+
 # 1648 "data/maps/SootopolisCity/scripts.pory"
-	.string "Return to your Primal forms and show\n"
+SootopolisCity_Text_MrStoneFinalReveal:
 # 1649 "data/maps/SootopolisCity/scripts.pory"
-	.string "this world the power that shaped it.\p"
+	.string "MR. STONE: Did you really believe DEVON\n"
 # 1650 "data/maps/SootopolisCity/scripts.pory"
-	.string "From this moment on, the world will be\n"
+	.string "would choose one side, let you destroy\l"
 # 1651 "data/maps/SootopolisCity/scripts.pory"
-	.string "reshaped according to my will.$"
+	.string "the other, and then simply hand you\l"
 # 1652 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "control of everything?\p"
 # 1653 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DevonBoatEmpty:
+	.string "Hahahaha! Of course not!\p"
 # 1654 "data/maps/SootopolisCity/scripts.pory"
-	.string "The boat is empty.$"
+	.string "I funded both of you.\n"
 # 1655 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "I gave both sides the means to continue.\p"
 # 1656 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DoorIsClosed:
+	.string "Every battle you fought,\n"
 # 1657 "data/maps/SootopolisCity/scripts.pory"
-	.string "The door is closed.$"
+	.string "every operation you carried out,\p"
 # 1658 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "every resource DEVON placed in your\n"
 # 1659 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_PhysicallyFitLivingHere:
+	.string "hands… all of it served my interests.\p"
 # 1660 "data/maps/SootopolisCity/scripts.pory"
-	.string "Diving in the sea. Climbing up and\n"
+	.string "While MAGMA and AQUA fought over\n"
 # 1661 "data/maps/SootopolisCity/scripts.pory"
-	.string "down stairs all the time…\p"
+	.string "GROUDON and KYOGRE,\p"
 # 1662 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you live in this town, you end up\n"
+	.string "I was building something far greater:\n"
 # 1663 "data/maps/SootopolisCity/scripts.pory"
-	.string "getting physically fit.$"
+	.string "control on a global scale.\p"
 # 1664 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "You were never my partners.\n"
 # 1665 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GiantPokemonSuddenlyAppeared:
+	.string "You were never my equals.\p"
 # 1666 "data/maps/SootopolisCity/scripts.pory"
-	.string "These giant POKéMON suddenly appeared\n"
+	.string "You were mercenaries working for DEVON,\n"
 # 1667 "data/maps/SootopolisCity/scripts.pory"
-	.string "in the middle of the city!\p"
+	.string "whether you realized it or not.\p"
 # 1668 "data/maps/SootopolisCity/scripts.pory"
-	.string "And, I've never seen them before!\p"
+	.string "And you did it all believing the victory\n"
 # 1669 "data/maps/SootopolisCity/scripts.pory"
-	.string "Why are they smashing into each\n"
+	.string "would belong to you...\p"
 # 1670 "data/maps/SootopolisCity/scripts.pory"
-	.string "other like that?\p"
+	.string "Hahahaha… How convenient.\p"
 # 1671 "data/maps/SootopolisCity/scripts.pory"
-	.string "Why can't they be friends, those\n"
+	.string "But now your usefulness has come to an\n"
 # 1672 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON?$"
+	.string "end now!\p"
 # 1673 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Thank you for your service, MAGNUS.\n"
 # 1674 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WhatIsThatGreenPokemon:
+	.string "Thank you for yours, INAE.\p"
 # 1675 "data/maps/SootopolisCity/scripts.pory"
-	.string "What? What? What?\n"
+	.string "The fighting is over.\n"
 # 1676 "data/maps/SootopolisCity/scripts.pory"
-	.string "What is that green POKéMON?!$"
+	.string "The world you fought over is mine to\l"
 # 1677 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "take.$"
 # 1678 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WhereDidLegendariesGo:
+
 # 1679 "data/maps/SootopolisCity/scripts.pory"
-	.string "GROUDON and KYOGRE…\n"
+SootopolisCity_Text_MaxieShockedAtStone:
 # 1680 "data/maps/SootopolisCity/scripts.pory"
-	.string "Where did they go?\p"
+	.string "MAGNUS: …!\n"
 # 1681 "data/maps/SootopolisCity/scripts.pory"
-	.string "Will they cause droughts or downpours\n"
+	.string "What the hell is that…?\p"
 # 1682 "data/maps/SootopolisCity/scripts.pory"
-	.string "somewhere else?$"
+	.string "All this time, TEAM MAGMA and TEAM AQUA\n"
 # 1683 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "were both being used by DEVON?!$"
 # 1684 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_TwoPokemonArentAngry:
+
 # 1685 "data/maps/SootopolisCity/scripts.pory"
-	.string "I just get this sense somehow that\n"
+SootopolisCity_Text_ArchieShockedAtStone:
 # 1686 "data/maps/SootopolisCity/scripts.pory"
-	.string "the two POKéMON aren't angry.\p"
+	.string "INEA: You used both of us…\p"
 # 1687 "data/maps/SootopolisCity/scripts.pory"
-	.string "I think… They probably can't control\n"
+	.string "So that's what this was…\n"
 # 1688 "data/maps/SootopolisCity/scripts.pory"
-	.string "their own power…$"
+	.string "Your madness and greed are on a whole\l"
 # 1689 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "different level.\p"
 # 1690 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_FlyingMonStoppedRampage:
+	.string "Hahahaha…\n"
 # 1691 "data/maps/SootopolisCity/scripts.pory"
-	.string "That flying POKéMON came down from\n"
+	.string "To be honest, I expected nothing less\l"
 # 1692 "data/maps/SootopolisCity/scripts.pory"
-	.string "the sky and stopped the rampaging\l"
+	.string "from a petty old man like you.$"
 # 1693 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON…$"
+
 # 1694 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_MrStoneMoneyRulesWorld:
 # 1695 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WonderWhatWorldIsLike:
+	.string "MR. STONE: For generations, the STONE\n"
 # 1696 "data/maps/SootopolisCity/scripts.pory"
-	.string "I… I've never been out of this city.\p"
+	.string "family has studied the minerals of this\l"
 # 1697 "data/maps/SootopolisCity/scripts.pory"
-	.string "I wonder what the world is like on\n"
+	.string "world...\p"
 # 1698 "data/maps/SootopolisCity/scripts.pory"
-	.string "the other side of this round sky?$"
+	.string "My grandfather discovered things buried\n"
 # 1699 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "beneath the earth that most people could\l"
 # 1700 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ThisIsWicked:
+	.string "never even imagine.\p"
 # 1701 "data/maps/SootopolisCity/scripts.pory"
-	.string "Wow!\n"
+	.string "Ancient beings.\n"
 # 1702 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is wicked!$"
+	.string "Ancient powers that shaped this world\n"
 # 1703 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "long before mankind ever existed.\p"
 # 1704 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ThatWasWicked:
+	.string "I simply took that family obsession\n"
 # 1705 "data/maps/SootopolisCity/scripts.pory"
-	.string "Wow!\n"
+	.string "further than any of them ever dared.\p"
 # 1706 "data/maps/SootopolisCity/scripts.pory"
-	.string "That was wicked!$"
+	.string "Years of research led DEVON to the RED\n"
 # 1707 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "ORB and the BLUE ORB!\p"
 # 1708 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GoRedAndBlueMon:
+	.string "And you two played your parts perfectly.\n"
 # 1709 "data/maps/SootopolisCity/scripts.pory"
-	.string "Go for it, red POKéMON!\n"
+	.string "My scientists told you exactly what I\l"
 # 1710 "data/maps/SootopolisCity/scripts.pory"
-	.string "Don't back off, blue POKéMON!$"
+	.string "wanted you to believe.\p"
 # 1711 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "You were led to use the wrong Orbs…\n"
 # 1712 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DoYouKnowMonNames:
+	.string "and when the Primal Titans failed to\l"
 # 1713 "data/maps/SootopolisCity/scripts.pory"
-	.string "… … … … … …\p"
+	.string "awaken their true power, you blamed\l"
 # 1714 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hi, do you know the names of those\n"
+	.string "yourselves.\p"
 # 1715 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON fighting over there?$"
+	.string "Hahahaha…\n"
 # 1716 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "You never even realized you had been\n"
 # 1717 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GreenOneSettlesThings:
+	.string "following my design from the start.\p"
 # 1718 "data/maps/SootopolisCity/scripts.pory"
-	.string "I was wondering which one would win,\n"
+	.string "POKéMON?\n"
 # 1719 "data/maps/SootopolisCity/scripts.pory"
-	.string "the red one or the blue one, but, oh no,\l"
+	.string "Poké Balls? Trainers?\p"
 # 1720 "data/maps/SootopolisCity/scripts.pory"
-	.string "it's the green one that settles things!\p"
+	.string "Tell me, what are any of those things\n"
 # 1721 "data/maps/SootopolisCity/scripts.pory"
-	.string "Talk about a huge turn of events!$"
+	.string "compared to the power to reshape an\l"
 # 1722 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "entire continent?\p"
 # 1723 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SeeingLegendWithOwnEyes:
+	.string "Do you finally understand?\n"
 # 1724 "data/maps/SootopolisCity/scripts.pory"
-	.string "There's an ancient legend that claims\n"
+	.string "Why would I waste my life training\l"
 # 1725 "data/maps/SootopolisCity/scripts.pory"
-	.string "the land and sea were shaped by\l"
+	.string "ordinary Pokémon?\p"
 # 1726 "data/maps/SootopolisCity/scripts.pory"
-	.string "a colossal battle between POKéMON.\p"
+	.string "Look at my granddaughter, STELLA.\n"
 # 1727 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, I'm seeing that happen with\n"
+	.string "Years of training. Years of battles.\p"
 # 1728 "data/maps/SootopolisCity/scripts.pory"
-	.string "my very own eyes!\p"
+	.string "And what did it make her?\n"
 # 1729 "data/maps/SootopolisCity/scripts.pory"
-	.string "Whoa! I never expected to be\n"
+	.string "A Champion of Hoenn.\p"
 # 1730 "data/maps/SootopolisCity/scripts.pory"
-	.string "witness to something this huge!$"
+	.string "Impressive, perhaps…\n"
 # 1731 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "but what could a Champion possibly do\l"
 # 1732 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SawLegendWithOwnEyes:
+	.string "against the power of a DEITY?\p"
 # 1733 "data/maps/SootopolisCity/scripts.pory"
-	.string "There's an ancient legend that claims\n"
+	.string "Nothing.\p"
 # 1734 "data/maps/SootopolisCity/scripts.pory"
-	.string "the land and sea were shaped by\l"
+	.string "While she was perfecting her Pokémon,\n"
 # 1735 "data/maps/SootopolisCity/scripts.pory"
-	.string "a colossal battle between POKéMON.\p"
+	.string "I was building an empire.\p"
 # 1736 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, I saw that happen with\n"
+	.string "GROUDON can raise continents.\n"
 # 1737 "data/maps/SootopolisCity/scripts.pory"
-	.string "my very own eyes!\p"
+	.string "KYOGRE can command the oceans.\p"
 # 1738 "data/maps/SootopolisCity/scripts.pory"
-	.string "Whoa! I never expected to be\n"
+	.string "With both under my control, I can reshape\n"
 # 1739 "data/maps/SootopolisCity/scripts.pory"
-	.string "witness to something this huge!$"
+	.string "land, redirect trade routes, command the\l"
 # 1740 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "seas, and control the world's most\l"
 # 1741 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_BigPokemonFighting:
+	.string "valuable resources.\p"
 # 1742 "data/maps/SootopolisCity/scripts.pory"
-	.string "A big POKéMON is fighting with\n"
+	.string "And that is only the beginning.\p"
 # 1743 "data/maps/SootopolisCity/scripts.pory"
-	.string "another big POKéMON!\p"
+	.string "Infinite mineral wealth.\n"
 # 1744 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please, someone make them stop!$"
+	.string "Uncontested control of maritime routes.\p"
 # 1745 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Water. Land. Energy. Resources.\n"
 # 1746 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_PrettyMonCameFromSky:
+	.string "Everything the nations of this world\l"
 # 1747 "data/maps/SootopolisCity/scripts.pory"
-	.string "A pretty POKéMON came down from\n"
+	.string "depend upon will pass through my hands.\p"
 # 1748 "data/maps/SootopolisCity/scripts.pory"
-	.string "the sky…$"
+	.string "There will be no war I cannot win.\n"
 # 1749 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "No government I cannot pressure.\p"
 # 1750 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SootopolisWillBeWrecked:
+	.string "Not Hoenn.\n"
 # 1751 "data/maps/SootopolisCity/scripts.pory"
-	.string "Oh, no!\n"
+	.string "The entire world.$"
 # 1752 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY will get wrecked!$"
-# 1753 "data/maps/SootopolisCity/scripts.pory"
 
+# 1753 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_MagnusBoatReaction:
 # 1754 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SootopolisDidntGetWrecked:
+	.string "MAGNUS: He's leaving us?\p"
 # 1755 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS CITY didn't get wrecked!$"
+	.string "After using us this long?!$"
 # 1756 "data/maps/SootopolisCity/scripts.pory"
 
 # 1757 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_NoOrdinaryTourist:
+SootopolisCity_Text_InaeBoatReaction:
 # 1758 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hm!\n"
+	.string "INEA: He's going to awaken\n"
 # 1759 "data/maps/SootopolisCity/scripts.pory"
-	.string "You've come all the way to SOOTOPOLIS?\l"
+	.string "them. We have to stop him.$"
 # 1760 "data/maps/SootopolisCity/scripts.pory"
-	.string "You're no ordinary tourist.\p"
+
 # 1761 "data/maps/SootopolisCity/scripts.pory"
-	.string "But I suppose that doesn't make you\n"
+SootopolisCity_Text_MrStonePrimalCommand:
 # 1762 "data/maps/SootopolisCity/scripts.pory"
-	.string "an extraordinary tourist, either.$"
+	.string "MR. STONE: GROUDON! KYOGRE!\p"
 # 1763 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "At last… I have everything I need.\n"
 # 1764 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CityRegainedCalm:
+	.string "The RED ORB. The BLUE ORB.\p"
 # 1765 "data/maps/SootopolisCity/scripts.pory"
-	.string "The city has regained its calm…$"
+	.string "The ancient power of both titans is\n"
 # 1766 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "finally within my grasp.\p"
 # 1767 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CaveOfOriginPleaseLeave:
+	.string "Return to your Primal forms and show\n"
 # 1768 "data/maps/SootopolisCity/scripts.pory"
-	.string "Who might you be?\p"
+	.string "this world the power that shaped it.\p"
 # 1769 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is the CAVE OF ORIGIN.\p"
+	.string "From this moment on, the world will be\n"
 # 1770 "data/maps/SootopolisCity/scripts.pory"
-	.string "The spirits of POKéMON, becalmed at\n"
+	.string "reshaped according to my will.$"
 # 1771 "data/maps/SootopolisCity/scripts.pory"
-	.string "MT. PYRE, are said to be revived here.\p"
+
 # 1772 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please leave.$"
+SootopolisCity_Text_DevonBoatEmpty:
 # 1773 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "The boat is empty.$"
 # 1774 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_LeadSuperiorTrainerToCave:
+
 # 1775 "data/maps/SootopolisCity/scripts.pory"
-	.string "A person with a strong will and\n"
+SootopolisCity_Text_DoorIsClosed:
 # 1776 "data/maps/SootopolisCity/scripts.pory"
-	.string "superior talent…\p"
+	.string "The door is closed.$"
 # 1777 "data/maps/SootopolisCity/scripts.pory"
-	.string "A TRAINER who has knowledge and\n"
+
 # 1778 "data/maps/SootopolisCity/scripts.pory"
-	.string "experience of many kinds of POKéMON…\p"
+SootopolisCity_Text_PhysicallyFitLivingHere:
 # 1779 "data/maps/SootopolisCity/scripts.pory"
-	.string "If such a person were to appear, I was\n"
+	.string "Diving in the sea. Climbing up and\n"
 # 1780 "data/maps/SootopolisCity/scripts.pory"
-	.string "instructed by WALLACE to lead that\l"
+	.string "down stairs all the time…\p"
 # 1781 "data/maps/SootopolisCity/scripts.pory"
-	.string "TRAINER to this CAVE.$"
+	.string "If you live in this town, you end up\n"
 # 1782 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "getting physically fit.$"
 # 1783 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_AwakenedPokemonClash:
+
 # 1784 "data/maps/SootopolisCity/scripts.pory"
-	.string "Oh, my…\p"
+SootopolisCity_Text_GiantPokemonSuddenlyAppeared:
 # 1785 "data/maps/SootopolisCity/scripts.pory"
-	.string "The clash between the two awakened\n"
+	.string "These giant POKéMON suddenly appeared\n"
 # 1786 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON was quelled by the awakening\l"
+	.string "in the middle of the city!\p"
 # 1787 "data/maps/SootopolisCity/scripts.pory"
-	.string "of a third POKéMON…$"
+	.string "And, I've never seen them before!\p"
 # 1788 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Why are they smashing into each\n"
 # 1789 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_CaveOfOriginSleepsToo:
+	.string "other like that?\p"
 # 1790 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is the CAVE OF ORIGIN…\p"
+	.string "Why can't they be friends, those\n"
 # 1791 "data/maps/SootopolisCity/scripts.pory"
-	.string "With the passing of the crisis,\n"
+	.string "POKéMON?$"
 # 1792 "data/maps/SootopolisCity/scripts.pory"
-	.string "the cave, too, shall sleep…$"
-# 1793 "data/maps/SootopolisCity/scripts.pory"
 
+# 1793 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_WhatIsThatGreenPokemon:
 # 1794 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SootopolisSkyBeautiful:
+	.string "What? What? What?\n"
 # 1795 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS sprang up as a town in\n"
+	.string "What is that green POKéMON?!$"
 # 1796 "data/maps/SootopolisCity/scripts.pory"
-	.string "the crater of a volcano.\p"
+
 # 1797 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you look up at the sky, the lip of\n"
+SootopolisCity_Text_WhereDidLegendariesGo:
 # 1798 "data/maps/SootopolisCity/scripts.pory"
-	.string "the crater is also visible.\l"
+	.string "GROUDON and KYOGRE…\n"
 # 1799 "data/maps/SootopolisCity/scripts.pory"
-	.string "So, all you see is the sky in a circle.\p"
+	.string "Where did they go?\p"
 # 1800 "data/maps/SootopolisCity/scripts.pory"
-	.string "But that's what makes the sky above\n"
+	.string "Will they cause droughts or downpours\n"
 # 1801 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS the most beautiful.$"
+	.string "somewhere else?$"
 # 1802 "data/maps/SootopolisCity/scripts.pory"
 
 # 1803 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GiganticPokemonFight:
+SootopolisCity_Text_TwoPokemonArentAngry:
 # 1804 "data/maps/SootopolisCity/scripts.pory"
-	.string "When two POKéMON that gigantic\n"
+	.string "I just get this sense somehow that\n"
 # 1805 "data/maps/SootopolisCity/scripts.pory"
-	.string "are fighting that savagely, there's\l"
+	.string "the two POKéMON aren't angry.\p"
 # 1806 "data/maps/SootopolisCity/scripts.pory"
-	.string "not much that we can do.$"
+	.string "I think… They probably can't control\n"
 # 1807 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "their own power…$"
 # 1808 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_FearedWorstWhenPokemonFlewDown:
-# 1809 "data/maps/SootopolisCity/scripts.pory"
-	.string "When that third POKéMON flew down,\n"
-# 1810 "data/maps/SootopolisCity/scripts.pory"
-	.string "I feared the worst.$"
-# 1811 "data/maps/SootopolisCity/scripts.pory"
 
+# 1809 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_FlyingMonStoppedRampage:
+# 1810 "data/maps/SootopolisCity/scripts.pory"
+	.string "That flying POKéMON came down from\n"
+# 1811 "data/maps/SootopolisCity/scripts.pory"
+	.string "the sky and stopped the rampaging\l"
 # 1812 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_NightSkyFavoriteScenery:
+	.string "POKéMON…$"
 # 1813 "data/maps/SootopolisCity/scripts.pory"
-	.string "A circle of a night sky framed by\n"
+
 # 1814 "data/maps/SootopolisCity/scripts.pory"
-	.string "the crater of a volcano…\p"
+SootopolisCity_Text_WonderWhatWorldIsLike:
 # 1815 "data/maps/SootopolisCity/scripts.pory"
-	.string "And in that ring, stars flicker and\n"
+	.string "I… I've never been out of this city.\p"
 # 1816 "data/maps/SootopolisCity/scripts.pory"
-	.string "blink as if they were alive…\l"
+	.string "I wonder what the world is like on\n"
 # 1817 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's my favorite scenery.$"
+	.string "the other side of this round sky?$"
 # 1818 "data/maps/SootopolisCity/scripts.pory"
 
 # 1819 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_WeatherWentWild:
+SootopolisCity_Text_ThisIsWicked:
 # 1820 "data/maps/SootopolisCity/scripts.pory"
-	.string "The weather was clear this morning,\n"
+	.string "Wow!\n"
 # 1821 "data/maps/SootopolisCity/scripts.pory"
-	.string "but…\p"
+	.string "This is wicked!$"
 # 1822 "data/maps/SootopolisCity/scripts.pory"
-	.string "All of a sudden, dark clouds brewed up,\n"
-# 1823 "data/maps/SootopolisCity/scripts.pory"
-	.string "rain started falling in sheets, and\l"
-# 1824 "data/maps/SootopolisCity/scripts.pory"
-	.string "there was thunder and lightning, too.\p"
-# 1825 "data/maps/SootopolisCity/scripts.pory"
-	.string "The weather just went completely\n"
-# 1826 "data/maps/SootopolisCity/scripts.pory"
-	.string "wild!\p"
-# 1827 "data/maps/SootopolisCity/scripts.pory"
-	.string "Is all of this because of those\n"
-# 1828 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON?$"
-# 1829 "data/maps/SootopolisCity/scripts.pory"
 
+# 1823 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_ThatWasWicked:
+# 1824 "data/maps/SootopolisCity/scripts.pory"
+	.string "Wow!\n"
+# 1825 "data/maps/SootopolisCity/scripts.pory"
+	.string "That was wicked!$"
+# 1826 "data/maps/SootopolisCity/scripts.pory"
+
+# 1827 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_GoRedAndBlueMon:
+# 1828 "data/maps/SootopolisCity/scripts.pory"
+	.string "Go for it, red POKéMON!\n"
+# 1829 "data/maps/SootopolisCity/scripts.pory"
+	.string "Don't back off, blue POKéMON!$"
 # 1830 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_YouBroughtFlyingMon:
+
 # 1831 "data/maps/SootopolisCity/scripts.pory"
-	.string "Oh?\p"
+SootopolisCity_Text_DoYouKnowMonNames:
 # 1832 "data/maps/SootopolisCity/scripts.pory"
-	.string "It was you who brought that flying\n"
+	.string "… … … … … …\p"
 # 1833 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON here?\p"
+	.string "Hi, do you know the names of those\n"
 # 1834 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, aren't you amazing!$"
+	.string "POKéMON fighting over there?$"
 # 1835 "data/maps/SootopolisCity/scripts.pory"
 
 # 1836 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_GroudonPleaseStop:
+SootopolisCity_Text_GreenOneSettlesThings:
 # 1837 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAXIE: G… GROUDON…\n"
+	.string "I was wondering which one would win,\n"
 # 1838 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please! Stop what you're doing!\p"
+	.string "the red one or the blue one, but, oh no,\l"
 # 1839 "data/maps/SootopolisCity/scripts.pory"
-	.string "I know the extent of your power now!\p"
+	.string "it's the green one that settles things!\p"
 # 1840 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you keep going, all HOENN, not just\n"
+	.string "Talk about a huge turn of events!$"
 # 1841 "data/maps/SootopolisCity/scripts.pory"
-	.string "SOOTOPOLIS, will be utterly ruined!$"
+
 # 1842 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_SeeingLegendWithOwnEyes:
 # 1843 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_AfterAllOurScheming:
+	.string "There's an ancient legend that claims\n"
 # 1844 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAXIE: So the super-ancient POKéMON\n"
+	.string "the land and sea were shaped by\l"
 # 1845 "data/maps/SootopolisCity/scripts.pory"
-	.string "weren't only GROUDON and KYOGRE…\p"
+	.string "a colossal battle between POKéMON.\p"
 # 1846 "data/maps/SootopolisCity/scripts.pory"
-	.string "After all our fruitless scheming and\n"
+	.string "Well, I'm seeing that happen with\n"
 # 1847 "data/maps/SootopolisCity/scripts.pory"
-	.string "frantic efforts, that one POKéMON's\l"
+	.string "my very own eyes!\p"
 # 1848 "data/maps/SootopolisCity/scripts.pory"
-	.string "simple action puts everything right\l"
+	.string "Whoa! I never expected to be\n"
 # 1849 "data/maps/SootopolisCity/scripts.pory"
-	.string "again as if nothing had happened…\p"
+	.string "witness to something this huge!$"
 # 1850 "data/maps/SootopolisCity/scripts.pory"
-	.string "Fu…\n"
+
 # 1851 "data/maps/SootopolisCity/scripts.pory"
-	.string "Fuhahaha…$"
+SootopolisCity_Text_SawLegendWithOwnEyes:
 # 1852 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "There's an ancient legend that claims\n"
 # 1853 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_KyogreCalmDown:
+	.string "the land and sea were shaped by\l"
 # 1854 "data/maps/SootopolisCity/scripts.pory"
-	.string "ARCHIE: KYOGRE! What's wrong?!\n"
+	.string "a colossal battle between POKéMON.\p"
 # 1855 "data/maps/SootopolisCity/scripts.pory"
-	.string "Look over here! It's the RED ORB!\l"
+	.string "Well, I saw that happen with\n"
 # 1856 "data/maps/SootopolisCity/scripts.pory"
-	.string "Calm down! KYOGRE!\p"
+	.string "my very own eyes!\p"
 # 1857 "data/maps/SootopolisCity/scripts.pory"
-	.string "… … … … … …\n"
+	.string "Whoa! I never expected to be\n"
 # 1858 "data/maps/SootopolisCity/scripts.pory"
-	.string "… … … … … …\p"
+	.string "witness to something this huge!$"
 # 1859 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's no good!\n"
-# 1860 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's not responding at all!$"
-# 1861 "data/maps/SootopolisCity/scripts.pory"
 
+# 1860 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_BigPokemonFighting:
+# 1861 "data/maps/SootopolisCity/scripts.pory"
+	.string "A big POKéMON is fighting with\n"
 # 1862 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_TryingMeaninglessToPokemon:
+	.string "another big POKéMON!\p"
 # 1863 "data/maps/SootopolisCity/scripts.pory"
-	.string "ARCHIE: KYOGRE and GROUDON both\n"
+	.string "Please, someone make them stop!$"
 # 1864 "data/maps/SootopolisCity/scripts.pory"
-	.string "flew off to who knows where.\p"
+
 # 1865 "data/maps/SootopolisCity/scripts.pory"
-	.string "The weather in HOENN has returned\n"
+SootopolisCity_Text_PrettyMonCameFromSky:
 # 1866 "data/maps/SootopolisCity/scripts.pory"
-	.string "to its normal state…\p"
+	.string "A pretty POKéMON came down from\n"
 # 1867 "data/maps/SootopolisCity/scripts.pory"
-	.string "Haha…\n"
+	.string "the sky…$"
 # 1868 "data/maps/SootopolisCity/scripts.pory"
-	.string "Hahaha…\p"
+
 # 1869 "data/maps/SootopolisCity/scripts.pory"
-	.string "Maybe what we were trying to do was\n"
+SootopolisCity_Text_SootopolisWillBeWrecked:
 # 1870 "data/maps/SootopolisCity/scripts.pory"
-	.string "something small, even meaningless,\l"
+	.string "Oh, no!\n"
 # 1871 "data/maps/SootopolisCity/scripts.pory"
-	.string "to POKéMON…$"
+	.string "SOOTOPOLIS CITY will get wrecked!$"
 # 1872 "data/maps/SootopolisCity/scripts.pory"
 
 # 1873 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_InvolvedWithCrisisComeWithMe:
+SootopolisCity_Text_SootopolisDidntGetWrecked:
 # 1874 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: Those POKéMON fighting…\n"
+	.string "SOOTOPOLIS CITY didn't get wrecked!$"
 # 1875 "data/maps/SootopolisCity/scripts.pory"
-	.string "GROUDON… And KYOGRE…\p"
+
 # 1876 "data/maps/SootopolisCity/scripts.pory"
-	.string "The two super-ancient POKéMON\n"
+SootopolisCity_Text_NoOrdinaryTourist:
 # 1877 "data/maps/SootopolisCity/scripts.pory"
-	.string "were awakened from a long sleep…\p"
+	.string "Hm!\n"
 # 1878 "data/maps/SootopolisCity/scripts.pory"
-	.string "And now they are smashing each other\n"
+	.string "You've come all the way to SOOTOPOLIS?\l"
 # 1879 "data/maps/SootopolisCity/scripts.pory"
-	.string "with their uncontrollable energy…\p"
+	.string "You're no ordinary tourist.\p"
 # 1880 "data/maps/SootopolisCity/scripts.pory"
-	.string "…{PLAYER}{KUN}.\p"
+	.string "But I suppose that doesn't make you\n"
 # 1881 "data/maps/SootopolisCity/scripts.pory"
-	.string "You being here now I'll take to mean\n"
+	.string "an extraordinary tourist, either.$"
 # 1882 "data/maps/SootopolisCity/scripts.pory"
-	.string "that you're prepared to become\l"
+
 # 1883 "data/maps/SootopolisCity/scripts.pory"
-	.string "involved in this crisis.\p"
+SootopolisCity_Text_CityRegainedCalm:
 # 1884 "data/maps/SootopolisCity/scripts.pory"
-	.string "Well, then, there's someone that\n"
+	.string "The city has regained its calm…$"
 # 1885 "data/maps/SootopolisCity/scripts.pory"
-	.string "I'd like you to meet.\p"
+
 # 1886 "data/maps/SootopolisCity/scripts.pory"
-	.string "Come with me, please.$"
+SootopolisCity_Text_CaveOfOriginPleaseLeave:
 # 1887 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "Who might you be?\p"
 # 1888 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DoesThisMakeYourFearPokemon:
+	.string "This is the CAVE OF ORIGIN.\p"
 # 1889 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: Listen, {PLAYER}{KUN}.\p"
+	.string "The spirits of POKéMON, becalmed at\n"
 # 1890 "data/maps/SootopolisCity/scripts.pory"
-	.string "Does seeing GROUDON and KYOGRE make\n"
+	.string "MT. PYRE, are said to be revived here.\p"
 # 1891 "data/maps/SootopolisCity/scripts.pory"
-	.string "you think POKéMON are to be feared?\p"
+	.string "Please leave.$"
 # 1892 "data/maps/SootopolisCity/scripts.pory"
-	.string "But that's not true.\n"
+
 # 1893 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON are really more…\p"
+SootopolisCity_Text_LeadSuperiorTrainerToCave:
 # 1894 "data/maps/SootopolisCity/scripts.pory"
-	.string "…Why am I asking you this?\n"
+	.string "A person with a strong will and\n"
 # 1895 "data/maps/SootopolisCity/scripts.pory"
-	.string "You already know.$"
+	.string "superior talent…\p"
 # 1896 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "A TRAINER who has knowledge and\n"
 # 1897 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_HereWereAreHelpWallace:
+	.string "experience of many kinds of POKéMON…\p"
 # 1898 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: Okay, here we are!\p"
+	.string "If such a person were to appear, I was\n"
 # 1899 "data/maps/SootopolisCity/scripts.pory"
-	.string "Inside here you'll find someone named\n"
+	.string "instructed by WALLACE to lead that\l"
 # 1900 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE.\p"
+	.string "TRAINER to this CAVE.$"
 # 1901 "data/maps/SootopolisCity/scripts.pory"
-	.string "I think you have what's needed to\n"
-# 1902 "data/maps/SootopolisCity/scripts.pory"
-	.string "help him…$"
-# 1903 "data/maps/SootopolisCity/scripts.pory"
 
+# 1902 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_AwakenedPokemonClash:
+# 1903 "data/maps/SootopolisCity/scripts.pory"
+	.string "Oh, my…\p"
 # 1904 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_KnowWhatsNeededToHelpHim:
+	.string "The clash between the two awakened\n"
 # 1905 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: I think you have what's\n"
+	.string "POKéMON was quelled by the awakening\l"
 # 1906 "data/maps/SootopolisCity/scripts.pory"
-	.string "needed to help him…$"
+	.string "of a third POKéMON…$"
 # 1907 "data/maps/SootopolisCity/scripts.pory"
 
 # 1908 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_NeverBeenToSkyPillar:
+SootopolisCity_Text_CaveOfOriginSleepsToo:
 # 1909 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: The SKY PILLAR…\p"
+	.string "This is the CAVE OF ORIGIN…\p"
 # 1910 "data/maps/SootopolisCity/scripts.pory"
-	.string "I've never been there.\n"
+	.string "With the passing of the crisis,\n"
 # 1911 "data/maps/SootopolisCity/scripts.pory"
-	.string "I wonder where it could be?$"
+	.string "the cave, too, shall sleep…$"
 # 1912 "data/maps/SootopolisCity/scripts.pory"
 
 # 1913 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_SoThatsRayquaza:
+SootopolisCity_Text_SootopolisSkyBeautiful:
 # 1914 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: So that's RAYQUAZA…\p"
+	.string "SOOTOPOLIS sprang up as a town in\n"
 # 1915 "data/maps/SootopolisCity/scripts.pory"
-	.string "It's incredible how the two rampaging\n"
+	.string "the crater of a volcano.\p"
 # 1916 "data/maps/SootopolisCity/scripts.pory"
-	.string "POKéMON would flee from it in fear…$"
+	.string "If you look up at the sky, the lip of\n"
 # 1917 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "the crater is also visible.\l"
 # 1918 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_MaxieArchieLeft:
+	.string "So, all you see is the sky in a circle.\p"
 # 1919 "data/maps/SootopolisCity/scripts.pory"
-	.string "STEVEN: It looks like both MAGNUS and\n"
+	.string "But that's what makes the sky above\n"
 # 1920 "data/maps/SootopolisCity/scripts.pory"
-	.string "INAE have gone away somewhere.\p"
+	.string "SOOTOPOLIS the most beautiful.$"
 # 1921 "data/maps/SootopolisCity/scripts.pory"
-	.string "Perhaps they've gone to MT. PYRE to\n"
+
 # 1922 "data/maps/SootopolisCity/scripts.pory"
-	.string "return those ORBS…$"
+SootopolisCity_Text_GiganticPokemonFight:
 # 1923 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "When two POKéMON that gigantic\n"
 # 1924 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_HaventYouScaledSkyPillar:
+	.string "are fighting that savagely, there's\l"
 # 1925 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: Oh?\n"
+	.string "not much that we can do.$"
 # 1926 "data/maps/SootopolisCity/scripts.pory"
-	.string "{PLAYER}{KUN}?\p"
+
 # 1927 "data/maps/SootopolisCity/scripts.pory"
-	.string "Haven't you scaled the SKY PILLAR\n"
+SootopolisCity_Text_FearedWorstWhenPokemonFlewDown:
 # 1928 "data/maps/SootopolisCity/scripts.pory"
-	.string "yet?\p"
+	.string "When that third POKéMON flew down,\n"
 # 1929 "data/maps/SootopolisCity/scripts.pory"
-	.string "I'm sure that you can make it to\n"
+	.string "I feared the worst.$"
 # 1930 "data/maps/SootopolisCity/scripts.pory"
-	.string "the top of the SKY PILLAR…$"
+
 # 1931 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_NightSkyFavoriteScenery:
 # 1932 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_AquaMagmaDidntMeanHarm:
+	.string "A circle of a night sky framed by\n"
 # 1933 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: {PLAYER}{KUN}…\p"
+	.string "the crater of a volcano…\p"
 # 1934 "data/maps/SootopolisCity/scripts.pory"
-	.string "The leaders of TEAM MAGMA and AQUA,\n"
+	.string "And in that ring, stars flicker and\n"
 # 1935 "data/maps/SootopolisCity/scripts.pory"
-	.string "I don't think they meant harm.\p"
+	.string "blink as if they were alive…\l"
 # 1936 "data/maps/SootopolisCity/scripts.pory"
-	.string "It wouldn't hurt to hear what they\n"
+	.string "It's my favorite scenery.$"
 # 1937 "data/maps/SootopolisCity/scripts.pory"
-	.string "have to say for themselves.$"
+
 # 1938 "data/maps/SootopolisCity/scripts.pory"
-
+SootopolisCity_Text_WeatherWentWild:
 # 1939 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ThankYouForHelpAcceptThis:
+	.string "The weather was clear this morning,\n"
 # 1940 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: {PLAYER}{KUN}…\n"
+	.string "but…\p"
 # 1941 "data/maps/SootopolisCity/scripts.pory"
-	.string "My eyes didn't deceive me.\p"
+	.string "All of a sudden, dark clouds brewed up,\n"
 # 1942 "data/maps/SootopolisCity/scripts.pory"
-	.string "Thanks to your help, SOOTOPOLIS…\n"
+	.string "rain started falling in sheets, and\l"
 # 1943 "data/maps/SootopolisCity/scripts.pory"
-	.string "No, all of HOENN was saved.\p"
+	.string "there was thunder and lightning, too.\p"
 # 1944 "data/maps/SootopolisCity/scripts.pory"
-	.string "On behalf of the people, I thank you.\p"
+	.string "The weather just went completely\n"
 # 1945 "data/maps/SootopolisCity/scripts.pory"
-	.string "This is a gift from me.\n"
+	.string "wild!\p"
 # 1946 "data/maps/SootopolisCity/scripts.pory"
-	.string "Please accept it.$"
+	.string "Is all of this because of those\n"
 # 1947 "data/maps/SootopolisCity/scripts.pory"
-
+	.string "POKéMON?$"
 # 1948 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_ExplainWaterfallGoToGym:
-# 1949 "data/maps/SootopolisCity/scripts.pory"
-	.string "That HIDDEN MACHINE contains\n"
-# 1950 "data/maps/SootopolisCity/scripts.pory"
-	.string "WATERFALL.\p"
-# 1951 "data/maps/SootopolisCity/scripts.pory"
-	.string "If you have the RAIN BADGE, a POKéMON\n"
-# 1952 "data/maps/SootopolisCity/scripts.pory"
-	.string "that has learned that HM move can\l"
-# 1953 "data/maps/SootopolisCity/scripts.pory"
-	.string "force its way up waterfalls.\p"
-# 1954 "data/maps/SootopolisCity/scripts.pory"
-	.string "And where does one get the RAIN BADGE?\n"
-# 1955 "data/maps/SootopolisCity/scripts.pory"
-	.string "You know, don't you?\p"
-# 1956 "data/maps/SootopolisCity/scripts.pory"
-	.string "That's right! You have to beat\n"
-# 1957 "data/maps/SootopolisCity/scripts.pory"
-	.string "the SOOTOPOLIS GYM LEADER.\p"
-# 1958 "data/maps/SootopolisCity/scripts.pory"
-	.string "When you're all set to go, step through\n"
-# 1959 "data/maps/SootopolisCity/scripts.pory"
-	.string "that door.$"
-# 1960 "data/maps/SootopolisCity/scripts.pory"
 
+# 1949 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_YouBroughtFlyingMon:
+# 1950 "data/maps/SootopolisCity/scripts.pory"
+	.string "Oh?\p"
+# 1951 "data/maps/SootopolisCity/scripts.pory"
+	.string "It was you who brought that flying\n"
+# 1952 "data/maps/SootopolisCity/scripts.pory"
+	.string "POKéMON here?\p"
+# 1953 "data/maps/SootopolisCity/scripts.pory"
+	.string "Well, aren't you amazing!$"
+# 1954 "data/maps/SootopolisCity/scripts.pory"
+
+# 1955 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_GroudonPleaseStop:
+# 1956 "data/maps/SootopolisCity/scripts.pory"
+	.string "MAXIE: G… GROUDON…\n"
+# 1957 "data/maps/SootopolisCity/scripts.pory"
+	.string "Please! Stop what you're doing!\p"
+# 1958 "data/maps/SootopolisCity/scripts.pory"
+	.string "I know the extent of your power now!\p"
+# 1959 "data/maps/SootopolisCity/scripts.pory"
+	.string "If you keep going, all HOENN, not just\n"
+# 1960 "data/maps/SootopolisCity/scripts.pory"
+	.string "SOOTOPOLIS, will be utterly ruined!$"
 # 1961 "data/maps/SootopolisCity/scripts.pory"
-SootopolisCity_Text_DazzledByMentor:
+
 # 1962 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: I'm sure that you will be\n"
+SootopolisCity_Text_AfterAllOurScheming:
 # 1963 "data/maps/SootopolisCity/scripts.pory"
-	.string "dazzled by my mentor's breathtakingly\l"
+	.string "MAXIE: So the super-ancient POKéMON\n"
 # 1964 "data/maps/SootopolisCity/scripts.pory"
+	.string "weren't only GROUDON and KYOGRE…\p"
+# 1965 "data/maps/SootopolisCity/scripts.pory"
+	.string "After all our fruitless scheming and\n"
+# 1966 "data/maps/SootopolisCity/scripts.pory"
+	.string "frantic efforts, that one POKéMON's\l"
+# 1967 "data/maps/SootopolisCity/scripts.pory"
+	.string "simple action puts everything right\l"
+# 1968 "data/maps/SootopolisCity/scripts.pory"
+	.string "again as if nothing had happened…\p"
+# 1969 "data/maps/SootopolisCity/scripts.pory"
+	.string "Fu…\n"
+# 1970 "data/maps/SootopolisCity/scripts.pory"
+	.string "Fuhahaha…$"
+# 1971 "data/maps/SootopolisCity/scripts.pory"
+
+# 1972 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_KyogreCalmDown:
+# 1973 "data/maps/SootopolisCity/scripts.pory"
+	.string "ARCHIE: KYOGRE! What's wrong?!\n"
+# 1974 "data/maps/SootopolisCity/scripts.pory"
+	.string "Look over here! It's the RED ORB!\l"
+# 1975 "data/maps/SootopolisCity/scripts.pory"
+	.string "Calm down! KYOGRE!\p"
+# 1976 "data/maps/SootopolisCity/scripts.pory"
+	.string "… … … … … …\n"
+# 1977 "data/maps/SootopolisCity/scripts.pory"
+	.string "… … … … … …\p"
+# 1978 "data/maps/SootopolisCity/scripts.pory"
+	.string "It's no good!\n"
+# 1979 "data/maps/SootopolisCity/scripts.pory"
+	.string "It's not responding at all!$"
+# 1980 "data/maps/SootopolisCity/scripts.pory"
+
+# 1981 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_TryingMeaninglessToPokemon:
+# 1982 "data/maps/SootopolisCity/scripts.pory"
+	.string "ARCHIE: KYOGRE and GROUDON both\n"
+# 1983 "data/maps/SootopolisCity/scripts.pory"
+	.string "flew off to who knows where.\p"
+# 1984 "data/maps/SootopolisCity/scripts.pory"
+	.string "The weather in HOENN has returned\n"
+# 1985 "data/maps/SootopolisCity/scripts.pory"
+	.string "to its normal state…\p"
+# 1986 "data/maps/SootopolisCity/scripts.pory"
+	.string "Haha…\n"
+# 1987 "data/maps/SootopolisCity/scripts.pory"
+	.string "Hahaha…\p"
+# 1988 "data/maps/SootopolisCity/scripts.pory"
+	.string "Maybe what we were trying to do was\n"
+# 1989 "data/maps/SootopolisCity/scripts.pory"
+	.string "something small, even meaningless,\l"
+# 1990 "data/maps/SootopolisCity/scripts.pory"
+	.string "to POKéMON…$"
+# 1991 "data/maps/SootopolisCity/scripts.pory"
+
+# 1992 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_InvolvedWithCrisisComeWithMe:
+# 1993 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: Those POKéMON fighting…\n"
+# 1994 "data/maps/SootopolisCity/scripts.pory"
+	.string "GROUDON… And KYOGRE…\p"
+# 1995 "data/maps/SootopolisCity/scripts.pory"
+	.string "The two super-ancient POKéMON\n"
+# 1996 "data/maps/SootopolisCity/scripts.pory"
+	.string "were awakened from a long sleep…\p"
+# 1997 "data/maps/SootopolisCity/scripts.pory"
+	.string "And now they are smashing each other\n"
+# 1998 "data/maps/SootopolisCity/scripts.pory"
+	.string "with their uncontrollable energy…\p"
+# 1999 "data/maps/SootopolisCity/scripts.pory"
+	.string "…{PLAYER}{KUN}.\p"
+# 2000 "data/maps/SootopolisCity/scripts.pory"
+	.string "You being here now I'll take to mean\n"
+# 2001 "data/maps/SootopolisCity/scripts.pory"
+	.string "that you're prepared to become\l"
+# 2002 "data/maps/SootopolisCity/scripts.pory"
+	.string "involved in this crisis.\p"
+# 2003 "data/maps/SootopolisCity/scripts.pory"
+	.string "Well, then, there's someone that\n"
+# 2004 "data/maps/SootopolisCity/scripts.pory"
+	.string "I'd like you to meet.\p"
+# 2005 "data/maps/SootopolisCity/scripts.pory"
+	.string "Come with me, please.$"
+# 2006 "data/maps/SootopolisCity/scripts.pory"
+
+# 2007 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_DoesThisMakeYourFearPokemon:
+# 2008 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: Listen, {PLAYER}{KUN}.\p"
+# 2009 "data/maps/SootopolisCity/scripts.pory"
+	.string "Does seeing GROUDON and KYOGRE make\n"
+# 2010 "data/maps/SootopolisCity/scripts.pory"
+	.string "you think POKéMON are to be feared?\p"
+# 2011 "data/maps/SootopolisCity/scripts.pory"
+	.string "But that's not true.\n"
+# 2012 "data/maps/SootopolisCity/scripts.pory"
+	.string "POKéMON are really more…\p"
+# 2013 "data/maps/SootopolisCity/scripts.pory"
+	.string "…Why am I asking you this?\n"
+# 2014 "data/maps/SootopolisCity/scripts.pory"
+	.string "You already know.$"
+# 2015 "data/maps/SootopolisCity/scripts.pory"
+
+# 2016 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_HereWereAreHelpWallace:
+# 2017 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: Okay, here we are!\p"
+# 2018 "data/maps/SootopolisCity/scripts.pory"
+	.string "Inside here you'll find someone named\n"
+# 2019 "data/maps/SootopolisCity/scripts.pory"
+	.string "WALLACE.\p"
+# 2020 "data/maps/SootopolisCity/scripts.pory"
+	.string "I think you have what's needed to\n"
+# 2021 "data/maps/SootopolisCity/scripts.pory"
+	.string "help him…$"
+# 2022 "data/maps/SootopolisCity/scripts.pory"
+
+# 2023 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_KnowWhatsNeededToHelpHim:
+# 2024 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: I think you have what's\n"
+# 2025 "data/maps/SootopolisCity/scripts.pory"
+	.string "needed to help him…$"
+# 2026 "data/maps/SootopolisCity/scripts.pory"
+
+# 2027 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_NeverBeenToSkyPillar:
+# 2028 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: The SKY PILLAR…\p"
+# 2029 "data/maps/SootopolisCity/scripts.pory"
+	.string "I've never been there.\n"
+# 2030 "data/maps/SootopolisCity/scripts.pory"
+	.string "I wonder where it could be?$"
+# 2031 "data/maps/SootopolisCity/scripts.pory"
+
+# 2032 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_SoThatsRayquaza:
+# 2033 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: So that's RAYQUAZA…\p"
+# 2034 "data/maps/SootopolisCity/scripts.pory"
+	.string "It's incredible how the two rampaging\n"
+# 2035 "data/maps/SootopolisCity/scripts.pory"
+	.string "POKéMON would flee from it in fear…$"
+# 2036 "data/maps/SootopolisCity/scripts.pory"
+
+# 2037 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_MaxieArchieLeft:
+# 2038 "data/maps/SootopolisCity/scripts.pory"
+	.string "STEVEN: It looks like both MAGNUS and\n"
+# 2039 "data/maps/SootopolisCity/scripts.pory"
+	.string "INAE have gone away somewhere.\p"
+# 2040 "data/maps/SootopolisCity/scripts.pory"
+	.string "Perhaps they've gone to MT. PYRE to\n"
+# 2041 "data/maps/SootopolisCity/scripts.pory"
+	.string "return those ORBS…$"
+# 2042 "data/maps/SootopolisCity/scripts.pory"
+
+# 2043 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_HaventYouScaledSkyPillar:
+# 2044 "data/maps/SootopolisCity/scripts.pory"
+	.string "WALLACE: Oh?\n"
+# 2045 "data/maps/SootopolisCity/scripts.pory"
+	.string "{PLAYER}{KUN}?\p"
+# 2046 "data/maps/SootopolisCity/scripts.pory"
+	.string "Haven't you scaled the SKY PILLAR\n"
+# 2047 "data/maps/SootopolisCity/scripts.pory"
+	.string "yet?\p"
+# 2048 "data/maps/SootopolisCity/scripts.pory"
+	.string "I'm sure that you can make it to\n"
+# 2049 "data/maps/SootopolisCity/scripts.pory"
+	.string "the top of the SKY PILLAR…$"
+# 2050 "data/maps/SootopolisCity/scripts.pory"
+
+# 2051 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_AquaMagmaDidntMeanHarm:
+# 2052 "data/maps/SootopolisCity/scripts.pory"
+	.string "WALLACE: {PLAYER}{KUN}…\p"
+# 2053 "data/maps/SootopolisCity/scripts.pory"
+	.string "The leaders of TEAM MAGMA and AQUA,\n"
+# 2054 "data/maps/SootopolisCity/scripts.pory"
+	.string "I don't think they meant harm.\p"
+# 2055 "data/maps/SootopolisCity/scripts.pory"
+	.string "It wouldn't hurt to hear what they\n"
+# 2056 "data/maps/SootopolisCity/scripts.pory"
+	.string "have to say for themselves.$"
+# 2057 "data/maps/SootopolisCity/scripts.pory"
+
+# 2058 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_ThankYouForHelpAcceptThis:
+# 2059 "data/maps/SootopolisCity/scripts.pory"
+	.string "WALLACE: {PLAYER}{KUN}…\n"
+# 2060 "data/maps/SootopolisCity/scripts.pory"
+	.string "My eyes didn't deceive me.\p"
+# 2061 "data/maps/SootopolisCity/scripts.pory"
+	.string "Thanks to your help, SOOTOPOLIS…\n"
+# 2062 "data/maps/SootopolisCity/scripts.pory"
+	.string "No, all of HOENN was saved.\p"
+# 2063 "data/maps/SootopolisCity/scripts.pory"
+	.string "On behalf of the people, I thank you.\p"
+# 2064 "data/maps/SootopolisCity/scripts.pory"
+	.string "This is a gift from me.\n"
+# 2065 "data/maps/SootopolisCity/scripts.pory"
+	.string "Please accept it.$"
+# 2066 "data/maps/SootopolisCity/scripts.pory"
+
+# 2067 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_ExplainWaterfallGoToGym:
+# 2068 "data/maps/SootopolisCity/scripts.pory"
+	.string "That HIDDEN MACHINE contains\n"
+# 2069 "data/maps/SootopolisCity/scripts.pory"
+	.string "WATERFALL.\p"
+# 2070 "data/maps/SootopolisCity/scripts.pory"
+	.string "If you have the RAIN BADGE, a POKéMON\n"
+# 2071 "data/maps/SootopolisCity/scripts.pory"
+	.string "that has learned that HM move can\l"
+# 2072 "data/maps/SootopolisCity/scripts.pory"
+	.string "force its way up waterfalls.\p"
+# 2073 "data/maps/SootopolisCity/scripts.pory"
+	.string "And where does one get the RAIN BADGE?\n"
+# 2074 "data/maps/SootopolisCity/scripts.pory"
+	.string "You know, don't you?\p"
+# 2075 "data/maps/SootopolisCity/scripts.pory"
+	.string "That's right! You have to beat\n"
+# 2076 "data/maps/SootopolisCity/scripts.pory"
+	.string "the SOOTOPOLIS GYM LEADER.\p"
+# 2077 "data/maps/SootopolisCity/scripts.pory"
+	.string "When you're all set to go, step through\n"
+# 2078 "data/maps/SootopolisCity/scripts.pory"
+	.string "that door.$"
+# 2079 "data/maps/SootopolisCity/scripts.pory"
+
+# 2080 "data/maps/SootopolisCity/scripts.pory"
+SootopolisCity_Text_DazzledByMentor:
+# 2081 "data/maps/SootopolisCity/scripts.pory"
+	.string "WALLACE: I'm sure that you will be\n"
+# 2082 "data/maps/SootopolisCity/scripts.pory"
+	.string "dazzled by my mentor's breathtakingly\l"
+# 2083 "data/maps/SootopolisCity/scripts.pory"
 	.string "elegant battle style.$"
