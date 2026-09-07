@@ -1303,3 +1303,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Route114Grotto/scripts.inc"
 
 	.include "data/maps/Route115Grotto/scripts.inc"
+
+	.include "data/maps/NightmarePetalburg/scripts.inc"

@@ -19,7 +19,64 @@
       "direction": "down"
     }
   ],
-  "object_events": [],
+  "object_events": [
+    {
+      "local_id": "LOCALID_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT",
+      "graphics_id": "OBJ_EVENT_GFX_NORMAN",
+      "x": 20,
+      "y": 17,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PhoenixTown_EventScript_CalendulaPetalburgEvent",
+      "flag": "FLAG_HIDE_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT"
+    },
+    {
+      "local_id": "LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT",
+      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "x": 19,
+      "y": 17,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PhoenixTown_EventScript_LukaPetalburgEvent",
+      "flag": "FLAG_HIDE_PHOENIX_TOWN_LUKA_PETALBURG_EVENT"
+    },
+    {
+      "local_id": "LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT",
+      "graphics_id": "OBJ_EVENT_GFX_VAR_0",
+      "x": 21,
+      "y": 17,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PhoenixTown_EventScript_RivalPetalburgEvent",
+      "flag": "FLAG_HIDE_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT"
+    },
+    {
+      "local_id": "LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(THIEVUL)",
+      "x": 17,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PhoenixTown_EventScript_AuroraPetalburgEvent",
+      "flag": "FLAG_HIDE_PHOENIX_TOWN_AURORA_PETALBURG_EVENT"
+    }
+  ],
   "warp_events": [
     {
       "x": 24,
@@ -64,6 +121,70 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "PhoenixTown_EventScript_PetalburgEventApproachFromSouth17"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "PhoenixTown_EventScript_PetalburgEventApproachFromSouth18"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "PhoenixTown_EventScript_PetalburgEventApproachFromSouth19"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "PhoenixTown_EventScript_PetalburgEventApproachFromSouth20"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "PhoenixTown_EventScript_PetalburgEventApproachFromSouth21"
+    },
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "PhoenixTown_EventScript_PetalburgEventApproachFromSouth22"
+    },
+    {
+      "type": "trigger",
+      "x": 23,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "PhoenixTown_EventScript_PetalburgEventApproachFromSouth23"
+    }
+  ],
   "bg_events": []
 }

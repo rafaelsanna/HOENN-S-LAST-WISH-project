@@ -5120,6 +5120,16 @@
       "secondary_tileset": "gTileset_Fallarbor",
       "border_filepath": "data/layouts/Route115Grotto/border.bin",
       "blockdata_filepath": "data/layouts/Route115Grotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_NIGHTMARE_PETALBURG",
+      "name": "NightmarePetalburg_Layout",
+      "width": 38,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/NightmarePetalburg/border.bin",
+      "blockdata_filepath": "data/layouts/NightmarePetalburg/map.bin"
     }
   ]
 }

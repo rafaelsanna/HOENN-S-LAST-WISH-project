@@ -6,6 +6,9 @@ PetalburgCity_MapScripts::
 
 PetalburgCity_OnTransition:
 	setflag FLAG_VISITED_PETALBURG_CITY
+	setvar VAR_TEMP_0, 0
+	call Common_EventScript_SetupRivalGfxId
+	call PetalburgCity_EventScript_HandleQuakeRainEvent
 	call_if_eq VAR_LUKA_PETALBURG_ENCOUNTER, 0, PetalburgCity_EventScript_HideLukaAfterGym
 	call_if_eq VAR_PETALBURG_CITY_STATE, 0, PetalburgCity_EventScript_MoveGymBoyToWestEntrance
 	call_if_eq VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_DisableMapNameAndMusic
@@ -16,6 +19,47 @@ PetalburgCity_OnTransition:
 
 PetalburgCity_EventScript_HideLukaAfterGym::
 	setflag FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM
+	return
+
+PetalburgCity_EventScript_HandleQuakeRainEvent::
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_HideQuakeEventNpcs
+	goto_if_set FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_HideQuakeEventNpcs
+	setweather WEATHER_RAIN
+	doweather
+	goto_if_set FLAG_PETALBURG_QUAKE_PART1_CLEARED, PetalburgCity_EventScript_HandleQuakeReturnGroup
+	clearflag FLAG_HIDE_PETALBURG_CITY_QUAKE_SCIENTIST
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_CALENDULA
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_LUKA
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_RIVAL
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL
+	goto_if_set FLAG_PETALBURG_QUAKE_EVENT_STARTED, PetalburgCity_EventScript_QuakeRainEventAlreadyStarted
+	setvar VAR_TEMP_0, 1
+	return
+
+PetalburgCity_EventScript_HandleQuakeReturnGroup::
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_SCIENTIST
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL
+	clearflag FLAG_HIDE_PETALBURG_CITY_QUAKE_CALENDULA
+	clearflag FLAG_HIDE_PETALBURG_CITY_QUAKE_LUKA
+	clearflag FLAG_HIDE_PETALBURG_CITY_QUAKE_RIVAL
+	return
+
+PetalburgCity_EventScript_HideQuakeReturnGroup::
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_CALENDULA
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_LUKA
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_RIVAL
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL
+	return
+
+PetalburgCity_EventScript_QuakeRainEventAlreadyStarted::
+	return
+
+PetalburgCity_EventScript_HideQuakeEventNpcs::
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_SCIENTIST
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_CALENDULA
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_LUKA
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_RIVAL
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL
 	return
 
 PetalburgCity_EventScript_HandleAquaGrunts::
@@ -45,9 +89,24 @@ PetalburgCity_EventScript_SetGymDoorsUnlocked::
 	return
 
 PetalburgCity_OnFrame:
+	map_script_2 VAR_TEMP_0, 1, PetalburgCity_EventScript_FirstQuakeAfterHeatBadge
 	map_script_2 VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_WallyTutorial
 	map_script_2 VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_EventScript_WalkToWallyHouse
 	.2byte 0
+
+PetalburgCity_EventScript_FirstQuakeAfterHeatBadge::
+	lockall
+	setvar VAR_TEMP_0, 0
+	setflag FLAG_PETALBURG_QUAKE_EVENT_STARTED
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 5
+	playse SE_M_STRENGTH
+	special ShakeCamera
+	waitstate
+	releaseall
+	end
 
 PetalburgCity_EventScript_WallyTutorial::
     lockall
@@ -127,9 +186,120 @@ PetalburgCity_EventScript_WalkToWallyHouse::
 	releaseall
 	end
 
+eventscientist::
+	lock
+	faceplayer
+	goto_if_set FLAG_PETALBURG_QUAKE_SCIENTIST_SPOKE, PetalburgCity_EventScript_QuakeScientistRepeat
+	setflag FLAG_PETALBURG_QUAKE_SCIENTIST_SPOKE
+	msgbox PetalburgCity_Text_QuakeScientistFirst, MSGBOX_DEFAULT
+	msgbox PetalburgCity_Text_QuakeScientistRepeat, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgCity_EventScript_QuakeScientistRepeat::
+	msgbox PetalburgCity_Text_QuakeScientistRepeat, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgCity_EventScript_QuakeCalendula::
+	lock
+	faceplayer
+	goto_if_set FLAG_PETALBURG_QUAKE_PART15_CLEARED, PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortal
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeCalendulaPart15, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
+PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortal::
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeCalendulaOpenNightmarePortal, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	getplayerxy VAR_TEMP_1, VAR_TEMP_2
+	goto_if_eq VAR_TEMP_1, 19, PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromWest
+	goto_if_eq VAR_TEMP_1, 21, PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromEast
+	goto PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromSouth
+
+PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromSouth::
+	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerFromSouth
+	waitmovement 0
+	goto PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal
+
+PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromWest::
+	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerFromWest
+	waitmovement 0
+	goto PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal
+
+PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromEast::
+	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerFromEast
+	waitmovement 0
+	goto PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal
+
+PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal::
+	fadescreenspeed FADE_TO_WHITE, 4
+	delay 20
+	clearflag FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL
+	addobject LOCALID_PETALBURG_QUAKE_PORTAL
+	playse SE_WARP_IN
+	delay 20
+	fadescreenspeed FADE_FROM_WHITE, 4
+	delay 20
+	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerEnter
+	waitmovement 0
+	playse SE_WARP_OUT
+	fadescreenspeed FADE_TO_WHITE, 4
+	delay 20
+	warp MAP_NIGHTMARE_PETALBURG, 23, 11
+	waitstate
+	release
+	end
+
+PetalburgCity_EventScript_QuakeLuka::
+	lock
+	faceplayer
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeLukaPart15, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
+PetalburgCity_EventScript_QuakeRival::
+	lock
+	faceplayer
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PetalburgCity_EventScript_QuakeZinniaPart15
+	goto_if_eq VAR_RESULT, FEMALE, PetalburgCity_EventScript_QuakeZennoPart15
+	release
+	end
+
+PetalburgCity_EventScript_QuakeZinniaPart15::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeZinniaPart15, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
+PetalburgCity_EventScript_QuakeZennoPart15::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeZennoPart15, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
 PetalburgCity_EventScript_Boy::
 	lock
 	faceplayer
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_Boy_Normal
+	goto_if_set FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_Boy_Normal
+	msgbox PetalburgCity_Text_QuakeBoy, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PETALBURG_BOY, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+PetalburgCity_EventScript_Boy_Normal::
 	msgbox PetalburgCity_Text_WaterReflection, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PETALBURG_BOY, Common_Movement_FaceOriginalDirection
@@ -138,6 +308,12 @@ PetalburgCity_EventScript_Boy::
 	end
 
 PetalburgCity_EventScript_WallysMom::
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_WallysMom_Normal
+	goto_if_set FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_WallysMom_Normal
+	msgbox PetalburgCity_Text_QuakeWallysMom, MSGBOX_NPC
+	end
+
+PetalburgCity_EventScript_WallysMom_Normal::
 	msgbox PetalburgCity_Text_WhereIsWally, MSGBOX_NPC
 	end
 
@@ -294,6 +470,36 @@ PetalburgCity_Movement_WallyTutorialPlayer:
 	walk_in_place_faster_right
 	step_end
 
+
+PetalburgCity_Movement_QuakePortalPlayerFromSouth:
+	walk_down
+	walk_down
+	face_down
+	step_end
+
+PetalburgCity_Movement_QuakePortalPlayerFromWest:
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	face_down
+	step_end
+
+PetalburgCity_Movement_QuakePortalPlayerFromEast:
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	face_down
+	step_end
+
+PetalburgCity_Movement_QuakePortalPlayerEnter:
+	walk_down
+	walk_down
+	step_end
+
 PetalburgCity_Movement_WallyTutorialWally:
 	delay_8
 	walk_down
@@ -343,6 +549,12 @@ PetalburgCity_EventScript_CitySign::
 	end
 
 PetalburgCity_EventScript_Gentleman::
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_Gentleman_Normal
+	goto_if_set FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_Gentleman_Normal
+	msgbox PetalburgCity_Text_QuakeGentleman, MSGBOX_NPC
+	end
+
+PetalburgCity_EventScript_Gentleman_Normal::
 	msgbox PetalburgCity_Text_FullPartyExplanation, MSGBOX_NPC
 	end
 
@@ -351,20 +563,40 @@ PetalburgCity_EventScript_WallyHouseSign::
 	end
 
 PetalburgCity_EventScript_GymBoy::
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_GymBoy_Normal
+	goto_if_set FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_GymBoy_Normal
+	msgbox PetalburgCity_Text_QuakeGymBoy, MSGBOX_NPC
+	end
+
+PetalburgCity_EventScript_GymBoy_Normal::
 	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_NPC
 	end
 
 PetalburgCity_EventScript_AquaGruntBlock::
 	lock
 	faceplayer
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_AquaGruntBlock_Normal
+	goto_if_set FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_AquaGruntBlock_Normal
+	msgbox PetalburgCity_Text_QuakeAquaGruntBlock, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+PetalburgCity_EventScript_AquaGruntBlock_Normal::
 	msgbox PetalburgCity_Text_AquaGruntBlock, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
 
 PetalburgCity_EventScript_AdventureBoy::
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_AdventureBoy_Normal
+	goto_if_set FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_AdventureBoy_Normal
+	msgbox PetalburgCity_Text_QuakeAdventureBoy, MSGBOX_NPC
+	end
+
+PetalburgCity_EventScript_AdventureBoy_Normal::
 	msgbox PetalburgCity_Text_AdventureBoy, MSGBOX_NPC
-	end	
+	end
 
 @ ============================================================
 @ ENCONTRO COM O LUKA APÓS O GINÁSIO
@@ -567,6 +799,86 @@ PetalburgCity_Text_ThisIsPetalburgGym:
 PetalburgCity_Text_ThisIsGymSign:
 	.string "This is the GYM's sign. Look for it\n"
 	.string "whenever you're looking for a GYM.$"
+
+
+PetalburgCity_Text_QuakeBoy:
+	.string "The water's gone all choppy from\n"
+	.string "the quakes.\p"
+	.string "Even my reflection looks like it\n"
+	.string "wants to run for cover.$"
+
+PetalburgCity_Text_QuakeWallysMom:
+	.string "This rain came on so suddenly...\p"
+	.string "I hope everyone outside is keeping\n"
+	.string "safe.$"
+
+PetalburgCity_Text_QuakeGentleman:
+	.string "PETALBURG WOODS has always made\n"
+	.string "strange sounds at night.\p"
+	.string "But now even the ground beneath the\n"
+	.string "city seems restless.$"
+
+PetalburgCity_Text_QuakeGymBoy:
+	.string "The GYM's closed while CALENDULA\n"
+	.string "looks into this storm.\p"
+	.string "Whatever is happening, it feels\n"
+	.string "bigger than a normal battle.$"
+
+PetalburgCity_Text_QuakeAquaGruntBlock:
+	.string "With the ground shaking like this,\n"
+	.string "nobody's getting through here.\p"
+	.string "Find another route until things\n"
+	.string "settle down.$"
+
+PetalburgCity_Text_QuakeAdventureBoy:
+	.string "I wanted an adventure, but I didn't\n"
+	.string "mean earthquakes and endless rain!\p"
+	.string "This is a little too exciting for\n"
+	.string "me.$"
+
+PetalburgCity_Text_QuakeCalendulaPart15:
+	.string "CALENDULA: {PLAYER}, have you met\n"
+	.string "with AURORA yet?\p"
+	.string "Things are getting worse here.\n"
+	.string "Please go see her in PHOENIX TOWN\l"
+	.string "and return as soon as possible.$"
+
+
+PetalburgCity_Text_QuakeCalendulaOpenNightmarePortal:
+	.string "CALENDULA: {PLAYER}! Welcome back!\n"
+	.string "You have learned how to resolve\l"
+	.string "this disaster?\p"
+	.string "Wonderful! Please proceed right\n"
+	.string "away.$"
+
+PetalburgCity_Text_QuakeLukaPart15:
+	.string "LUKA: {PLAYER}! I'm glad to see\n"
+	.string "you, but we really need some help\l"
+	.string "here.\p"
+	.string "Please tell me you have something.$"
+
+PetalburgCity_Text_QuakeZinniaPart15:
+	.string "ZINNIA: This rain just won't stop,\n"
+	.string "and the earthquakes are getting\l"
+	.string "worse...$"
+
+PetalburgCity_Text_QuakeZennoPart15:
+	.string "ZENNO: This rain just won't stop,\n"
+	.string "and the earthquakes are getting\l"
+	.string "worse...$"
+
+PetalburgCity_Text_QuakeScientistFirst:
+	.string "Careful, TRAINER! Did you feel\n"
+	.string "that earthquake?\p"
+	.string "They started suddenly along with\n"
+	.string "this rain.$"
+
+PetalburgCity_Text_QuakeScientistRepeat:
+	.string "The GYM is closed right now.\p"
+	.string "CALENDULA took off to the desert.\p"
+	.string "She received a letter from someone\n"
+	.string "in PHOENIX TOWN who says they can\l"
+	.string "help.$"
 
 PetalburgCity_Text_WaterReflection:
     .string "Funny thing about reflections…\n"

@@ -5,5 +5,753 @@ PhoenixTown_MapScripts::
 
 PhoenixTown_OnTransition:
 	setflag FLAG_VISITED_PHOENIX_TOWN
+	setvar VAR_TEMP_1, 1
+	call Common_EventScript_SetupRivalGfxId
+	call PhoenixTown_EventScript_HandlePetalburgQuakeEvent
 	end
+
+PhoenixTown_EventScript_HandlePetalburgQuakeEvent::
+	goto_if_unset FLAG_BADGE04_GET, PhoenixTown_EventScript_HidePetalburgEventGroup
+	goto_if_set FLAG_PETALBURG_QUAKE_PART1_CLEARED, PhoenixTown_EventScript_HidePetalburgEventGroup
+	clearflag FLAG_HIDE_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT
+	clearflag FLAG_HIDE_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
+	clearflag FLAG_HIDE_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT
+	setflag FLAG_HIDE_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	setvar VAR_TEMP_1, 0
+	return
+
+PhoenixTown_EventScript_HidePetalburgEventGroup::
+	setflag FLAG_HIDE_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT
+	setflag FLAG_HIDE_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
+	setflag FLAG_HIDE_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT
+	setflag FLAG_HIDE_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	setvar VAR_TEMP_1, 1
+	return
+
+PhoenixTown_EventScript_CalendulaPetalburgEvent::
+	lock
+	faceplayer
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaWaitForPlayer, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
+PhoenixTown_EventScript_LukaPetalburgEvent::
+	lock
+	faceplayer
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_LukaPetalburgEvent, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
+PhoenixTown_EventScript_RivalPetalburgEvent::
+	lock
+	faceplayer
+	call PhoenixTown_EventScript_RivalLineWait
+	release
+	end
+
+PhoenixTown_EventScript_AuroraPetalburgEvent::
+	lock
+	faceplayer
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_AuroraSilent, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
+PhoenixTown_EventScript_ClearPetalburgPart1::
+	setflag FLAG_PETALBURG_QUAKE_PART1_CLEARED
+	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_SCIENTIST
+	setflag FLAG_HIDE_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT
+	setflag FLAG_HIDE_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
+	setflag FLAG_HIDE_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT
+	setflag FLAG_HIDE_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	setvar VAR_TEMP_1, 1
+	removeobject LOCALID_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT
+	removeobject LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
+	removeobject LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT
+	removeobject LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	return
+
+PhoenixTown_EventScript_PetalburgEventApproachFromSouth17::
+	lockall
+	setvar VAR_TEMP_1, 1
+	call PhoenixTown_EventScript_PetalburgEventNoticePlayer
+	applymovement LOCALID_PLAYER, PhoenixTown_Movement_PlayerToCalendulaFromSouth17
+	waitmovement 0
+	goto PhoenixTown_EventScript_PetalburgEventFullScene
+	end
+
+PhoenixTown_EventScript_PetalburgEventApproachFromSouth18::
+	lockall
+	setvar VAR_TEMP_1, 1
+	call PhoenixTown_EventScript_PetalburgEventNoticePlayer
+	applymovement LOCALID_PLAYER, PhoenixTown_Movement_PlayerToCalendulaFromSouth18
+	waitmovement 0
+	goto PhoenixTown_EventScript_PetalburgEventFullScene
+	end
+
+PhoenixTown_EventScript_PetalburgEventApproachFromSouth19::
+	lockall
+	setvar VAR_TEMP_1, 1
+	call PhoenixTown_EventScript_PetalburgEventNoticePlayer
+	applymovement LOCALID_PLAYER, PhoenixTown_Movement_PlayerToCalendulaFromSouth19
+	waitmovement 0
+	goto PhoenixTown_EventScript_PetalburgEventFullScene
+	end
+
+PhoenixTown_EventScript_PetalburgEventApproachFromSouth20::
+	lockall
+	setvar VAR_TEMP_1, 1
+	call PhoenixTown_EventScript_PetalburgEventNoticePlayer
+	applymovement LOCALID_PLAYER, PhoenixTown_Movement_PlayerToCalendulaFromSouth20
+	waitmovement 0
+	goto PhoenixTown_EventScript_PetalburgEventFullScene
+	end
+
+PhoenixTown_EventScript_PetalburgEventApproachFromSouth21::
+	lockall
+	setvar VAR_TEMP_1, 1
+	call PhoenixTown_EventScript_PetalburgEventNoticePlayer
+	applymovement LOCALID_PLAYER, PhoenixTown_Movement_PlayerToCalendulaFromSouth21
+	waitmovement 0
+	goto PhoenixTown_EventScript_PetalburgEventFullScene
+	end
+
+PhoenixTown_EventScript_PetalburgEventApproachFromSouth22::
+	lockall
+	setvar VAR_TEMP_1, 1
+	call PhoenixTown_EventScript_PetalburgEventNoticePlayer
+	applymovement LOCALID_PLAYER, PhoenixTown_Movement_PlayerToCalendulaFromSouth22
+	waitmovement 0
+	goto PhoenixTown_EventScript_PetalburgEventFullScene
+	end
+
+PhoenixTown_EventScript_PetalburgEventApproachFromSouth23::
+	lockall
+	setvar VAR_TEMP_1, 1
+	call PhoenixTown_EventScript_PetalburgEventNoticePlayer
+	applymovement LOCALID_PLAYER, PhoenixTown_Movement_PlayerToCalendulaFromSouth23
+	waitmovement 0
+	goto PhoenixTown_EventScript_PetalburgEventFullScene
+	end
+
+PhoenixTown_EventScript_PetalburgEventNoticePlayer::
+	applymovement LOCALID_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT, Common_Movement_ExclamationMark
+	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, Common_Movement_ExclamationMark
+	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 20
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaCallPlayerOver, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	return
+
+PhoenixTown_EventScript_PetalburgEventFullScene::
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaGladYoureHere, MSGBOX_DEFAULT
+	removefieldmugshot
+	call PhoenixTown_EventScript_RivalLineUnnaturalEvents
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_LukaCometLead, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaLetterAndTrip, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_LukaNoAnswers, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	clearflag FLAG_HIDE_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	addobject LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	applymovement LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT, PhoenixTown_Movement_AuroraEnter
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
+	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, Common_Movement_FaceLeft
+	waitmovement 0
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_AuroraSoYouCame, MSGBOX_DEFAULT
+	removefieldmugshot
+	call PhoenixTown_EventScript_RivalLineStopDisasters
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaTellUs, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_LukaCometQuestion, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_AuroraSilent, MSGBOX_DEFAULT
+	msgbox PhoenixTown_Text_AuroraCometSavior, MSGBOX_DEFAULT
+	removefieldmugshot
+	call PhoenixTown_EventScript_RivalLineWhatDoesThatMean
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_AuroraGiftOnly, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_LukaWhatGift, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT, Common_Movement_FaceUp
+	waitmovement 0
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_AuroraNotYou, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT, PhoenixTown_Movement_AuroraToRival
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, Common_Movement_FaceRight
+	waitmovement 0
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_AuroraNorYou, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT, PhoenixTown_Movement_AuroraToPlayer
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceDown
+	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, Common_Movement_FaceDown
+	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, Common_Movement_FaceDown
+	waitmovement 0
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_AuroraSilent, MSGBOX_DEFAULT
+	msgbox PhoenixTown_Text_AuroraPlayerHasGift, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT, PhoenixTown_Movement_AuroraExit
+	waitmovement 0
+	removeobject LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_LukaWhatWasThat, MSGBOX_DEFAULT
+	removefieldmugshot
+	call PhoenixTown_EventScript_RivalLineCanWeTrust
+	call PhoenixTown_EventScript_CalendulaLineNoChoice
+	call PhoenixTown_EventScript_RivalLineIUnderstand
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, PhoenixTown_Movement_RivalStepToPlayer
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	call PhoenixTown_EventScript_RivalLineGoodLuck
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, PhoenixTown_Movement_RivalExit
+	waitmovement 0
+	removeobject LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT
+	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, PhoenixTown_Movement_LukaStepToPlayer
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
+	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_LukaTrustYou, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, PhoenixTown_Movement_LukaExit
+	waitmovement 0
+	removeobject LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaBeSafe, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT, PhoenixTown_Movement_CalendulaExit
+	waitmovement 0
+	call PhoenixTown_EventScript_ClearPetalburgPart1
+	releaseall
+	end
+
+PhoenixTown_EventScript_CalendulaLineNoChoice::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_CalendulaLineNoChoiceZinnia
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_CalendulaLineNoChoiceZenno
+	return
+
+PhoenixTown_EventScript_CalendulaLineNoChoiceZinnia::
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaNoChoiceZinnia, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_CalendulaLineNoChoiceZenno::
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaNoChoiceZenno, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_RivalLineWait::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaWait
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoWait
+	return
+
+PhoenixTown_EventScript_ZinniaWait::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZinniaWait, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_ZennoWait::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZennoWait, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_RivalLineUnnaturalEvents::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaUnnaturalEvents
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoUnnaturalEvents
+	return
+
+PhoenixTown_EventScript_ZinniaUnnaturalEvents::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZinniaUnnaturalEvents, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_ZennoUnnaturalEvents::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZennoUnnaturalEvents, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_RivalLineStopDisasters::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaStopDisasters
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoStopDisasters
+	return
+
+PhoenixTown_EventScript_ZinniaStopDisasters::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZinniaStopDisasters, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_ZennoStopDisasters::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZennoStopDisasters, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_RivalLineWhatDoesThatMean::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaWhatDoesThatMean
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoWhatDoesThatMean
+	return
+
+PhoenixTown_EventScript_ZinniaWhatDoesThatMean::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZinniaWhatDoesThatMean, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_ZennoWhatDoesThatMean::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZennoWhatDoesThatMean, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_RivalLineCanWeTrust::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaCanWeTrust
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoCanWeTrust
+	return
+
+PhoenixTown_EventScript_ZinniaCanWeTrust::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZinniaCanWeTrust, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_ZennoCanWeTrust::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZennoCanWeTrust, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_RivalLineIUnderstand::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaIUnderstand
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoIUnderstand
+	return
+
+PhoenixTown_EventScript_ZinniaIUnderstand::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZinniaIUnderstand, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_ZennoIUnderstand::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZennoIUnderstand, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_RivalLineGoodLuck::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaGoodLuck
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoGoodLuck
+	return
+
+PhoenixTown_EventScript_ZinniaGoodLuck::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZinniaGoodLuck, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_EventScript_ZennoGoodLuck::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_ZennoGoodLuck, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+PhoenixTown_Movement_PlayerToCalendulaFromSouth17:
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_PlayerToCalendulaFromSouth18:
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_PlayerToCalendulaFromSouth19:
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_PlayerToCalendulaFromSouth20:
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_PlayerToCalendulaFromSouth21:
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_PlayerToCalendulaFromSouth22:
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_PlayerToCalendulaFromSouth23:
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_AuroraEnter:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	face_right
+	step_end
+
+PhoenixTown_Movement_AuroraToRival:
+	walk_down
+	walk_right
+	walk_right
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_AuroraToPlayer:
+	walk_down
+	walk_left
+	face_up
+	step_end
+
+PhoenixTown_Movement_AuroraExit:
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+PhoenixTown_Movement_RivalStepToPlayer:
+	walk_down
+	face_left
+	step_end
+
+PhoenixTown_Movement_RivalExit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+PhoenixTown_Movement_LukaStepToPlayer:
+	walk_down
+	face_right
+	step_end
+
+PhoenixTown_Movement_LukaExit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+PhoenixTown_Movement_CalendulaExit:
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+PhoenixTown_Text_CalendulaCallPlayerOver:
+	.string "CALENDULA: {PLAYER}! Over here!$"
+
+PhoenixTown_Text_CalendulaWaitForPlayer:
+	.string "CALENDULA: We should speak near the\n"
+	.string "others, {PLAYER}.$"
+
+PhoenixTown_Text_LukaPetalburgEvent:
+	.string "LUKA: CALENDULA is waiting for you.$"
+
+PhoenixTown_Text_ZinniaWait:
+	.string "ZINNIA: CALENDULA is waiting for you.$"
+
+PhoenixTown_Text_ZennoWait:
+	.string "ZENNO: CALENDULA is waiting for you.$"
+
+PhoenixTown_Text_AuroraSilent:
+	.string "AURORA: ...$"
+
+PhoenixTown_Text_CalendulaGladYoureHere:
+	.string "CALENDULA: {PLAYER}! I'm glad\n"
+	.string "you're here.\p"
+	.string "Did you come from PETALBURG?$"
+
+PhoenixTown_Text_ZinniaUnnaturalEvents:
+	.string "ZINNIA: I've been hearing of\n"
+	.string "unnatural events occurring lately,\l"
+	.string "but I didn't expect it to happen\l"
+	.string "so close to home.$"
+
+PhoenixTown_Text_ZennoUnnaturalEvents:
+	.string "ZENNO: I've been hearing of\n"
+	.string "unnatural events occurring lately,\l"
+	.string "but I didn't expect it to happen\l"
+	.string "so close to home.$"
+
+PhoenixTown_Text_LukaCometLead:
+	.string "LUKA: It was only a matter of\n"
+	.string "time.\p"
+	.string "I've been chasing every lead I\n"
+	.string "could find about that comet, and\l"
+	.string "it seems to be connected to all\l"
+	.string "of these events.$"
+
+PhoenixTown_Text_CalendulaLetterAndTrip:
+	.string "CALENDULA: I received a letter\n"
+	.string "recently from someone who claimed\l"
+	.string "there would be answers in\l"
+	.string "PHOENIX TOWN.\p"
+	.string "When the earthquakes and rain\n"
+	.string "started in PETALBURG, I knew we\l"
+	.string "had to do something.\p"
+	.string "Even if it seemed like a long\n"
+	.string "shot, we made the trip.$"
+
+PhoenixTown_Text_LukaNoAnswers:
+	.string "LUKA: But so far we haven't\n"
+	.string "found anyone here who knows\l"
+	.string "anything!$"
+
+PhoenixTown_Text_AuroraSoYouCame:
+	.string "AURORA: So you came.\p"
+	.string "It happened again, then.$"
+
+PhoenixTown_Text_ZinniaStopDisasters:
+	.string "ZINNIA: You sent that letter?\p"
+	.string "Do you know how to stop the\n"
+	.string "disasters in our city?$"
+
+PhoenixTown_Text_ZennoStopDisasters:
+	.string "ZENNO: You sent that letter?\p"
+	.string "Do you know how to stop the\n"
+	.string "disasters in our city?$"
+
+PhoenixTown_Text_CalendulaTellUs:
+	.string "CALENDULA: Please, tell us what\n"
+	.string "you know.$"
+
+PhoenixTown_Text_LukaCometQuestion:
+	.string "LUKA: It has to do with the\n"
+	.string "comet, right?$"
+
+PhoenixTown_Text_AuroraCometSavior:
+	.string "AURORA: You are correct.\p"
+	.string "The comet is our savior, but\n"
+	.string "there are forces trying to return\l"
+	.string "us to the path of ruin.$"
+
+PhoenixTown_Text_ZinniaWhatDoesThatMean:
+	.string "ZINNIA: What...?\p"
+	.string "What is that supposed to mean?$"
+
+PhoenixTown_Text_ZennoWhatDoesThatMean:
+	.string "ZENNO: What...?\p"
+	.string "What is that supposed to mean?$"
+
+PhoenixTown_Text_AuroraGiftOnly:
+	.string "AURORA: It is possible to save\n"
+	.string "your home, but I can only teach\l"
+	.string "those who have the gift.$"
+
+PhoenixTown_Text_LukaWhatGift:
+	.string "LUKA: What is this gift?$"
+
+PhoenixTown_Text_AuroraNotYou:
+	.string "AURORA: Not you.$"
+
+PhoenixTown_Text_AuroraNorYou:
+	.string "AURORA: Nor you.$"
+
+PhoenixTown_Text_AuroraPlayerHasGift:
+	.string "AURORA: You.\p"
+	.string "You have it. I will teach you.\p"
+	.string "Come through the cave to learn.$"
+
+PhoenixTown_Text_LukaWhatWasThat:
+	.string "LUKA: What... was that?$"
+
+PhoenixTown_Text_ZinniaCanWeTrust:
+	.string "ZINNIA: Can we really trust\n"
+	.string "someone we know so little about?$"
+
+PhoenixTown_Text_ZennoCanWeTrust:
+	.string "ZENNO: Can we really trust\n"
+	.string "someone we know so little about?$"
+
+PhoenixTown_Text_CalendulaNoChoiceZinnia:
+	.string "CALENDULA: Right now, we have no\n"
+	.string "choice.\p"
+	.string "{PLAYER} is the only one who she\n"
+	.string "will teach, so they should stay\l"
+	.string "here and see what they can learn.\p"
+	.string "LUKA, ZINNIA, we will go back to\n"
+	.string "PETALBURG.\p"
+	.string "We must do whatever we can to\n"
+	.string "protect the city and its people\l"
+	.string "until {PLAYER} returns.$"
+
+PhoenixTown_Text_CalendulaNoChoiceZenno:
+	.string "CALENDULA: Right now, we have no\n"
+	.string "choice.\p"
+	.string "{PLAYER} is the only one who she\n"
+	.string "will teach, so they should stay\l"
+	.string "here and see what they can learn.\p"
+	.string "LUKA, ZENNO, we will go back to\n"
+	.string "PETALBURG.\p"
+	.string "We must do whatever we can to\n"
+	.string "protect the city and its people\l"
+	.string "until {PLAYER} returns.$"
+
+PhoenixTown_Text_ZinniaIUnderstand:
+	.string "ZINNIA: I understand.$"
+
+PhoenixTown_Text_ZennoIUnderstand:
+	.string "ZENNO: I understand.$"
+
+PhoenixTown_Text_ZinniaGoodLuck:
+	.string "ZINNIA: Good luck, {PLAYER}.\p"
+	.string "I'll see you soon in PETALBURG,\n"
+	.string "hopefully.$"
+
+PhoenixTown_Text_ZennoGoodLuck:
+	.string "ZENNO: Good luck, {PLAYER}.\p"
+	.string "I'll see you soon in PETALBURG,\n"
+	.string "hopefully.$"
+
+PhoenixTown_Text_LukaTrustYou:
+	.string "LUKA: I trust you, {PLAYER}.\p"
+	.string "Once you get back, make sure you\n"
+	.string "tell me everything!$"
+
+PhoenixTown_Text_CalendulaBeSafe:
+	.string "CALENDULA: I know you won't let\n"
+	.string "us down, {PLAYER}.\p"
+	.string "Be safe, and return as soon as\n"
+	.string "you can.$"
 `

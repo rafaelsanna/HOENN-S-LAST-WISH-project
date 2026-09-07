@@ -1,10 +1,25 @@
 raw `
 AURORAGROVE_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, AURORAGROVE_OnTransition
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, AURORAGROVE_OnWarp
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, AURORAGROVE_OnFrame
 	.byte 0
+
+AURORAGROVE_OnTransition:
+	goto_if_unset FLAG_PETALBURG_QUAKE_PART1_CLEARED, AURORAGROVE_EventScript_HidePortal
+	clearflag FLAG_HIDE_AURORA_GROVE_PORTAL
+	return
+
+AURORAGROVE_EventScript_HidePortal::
+	setflag FLAG_HIDE_AURORA_GROVE_PORTAL
+	return
 
 AURORAGROVE_OnWarp:
 	map_script_2 VAR_TEMP_1, 0, AURORAGROVE_EventScript_FaceUpAtPortal
+	.2byte 0
+
+AURORAGROVE_OnFrame:
+	map_script_2 VAR_TEMP_0, 1, AURORAGROVE_EventScript_PetalburgPart15Intro
 	.2byte 0
 
 AURORAGROVE_EventScript_FaceUpAtPortal::
@@ -13,12 +28,16 @@ AURORAGROVE_EventScript_FaceUpAtPortal::
 	goto_if_ne VAR_TEMP_2, 14, AURORAGROVE_EventScript_EndFaceUpAtPortal
 	goto_if_ne VAR_TEMP_3, 24, AURORAGROVE_EventScript_EndFaceUpAtPortal
 	turnobject LOCALID_PLAYER, DIR_NORTH
+	goto_if_unset FLAG_PETALBURG_QUAKE_PART1_CLEARED, AURORAGROVE_EventScript_EndFaceUpAtPortal
+	goto_if_set FLAG_PETALBURG_QUAKE_PART15_CLEARED, AURORAGROVE_EventScript_EndFaceUpAtPortal
+	setvar VAR_TEMP_0, 1
 	end
 
 AURORAGROVE_EventScript_EndFaceUpAtPortal::
 	end
 
 AURORAGROVE_MapScripts_MagicCrystal::
+	goto_if_unset FLAG_PETALBURG_QUAKE_PART1_CLEARED, AURORAGROVE_EventScript_InactivePortal
 	lock
 	faceplayer
 	msgbox AURORAGROVE_Text_MagicCrystal, MSGBOX_YESNO
@@ -32,8 +51,181 @@ AURORAGROVE_EventScript_LeavePortal::
 	release
 	end
 
+AURORAGROVE_EventScript_InactivePortal::
+	end
+
+
+AURORAGROVE_EventScript_Aurora::
+	lock
+	faceplayer
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox AURORAGROVE_Text_AuroraAfterLesson, MSGBOX_DEFAULT
+	removefieldmugshot
+	release
+	end
+
+AURORAGROVE_EventScript_PetalburgPart15Intro::
+	lockall
+	setvar VAR_TEMP_0, 0
+	applymovement LOCALID_PLAYER, AURORAGROVE_Movement_PlayerToAuroraHouse
+	waitmovement 0
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox AURORAGROVE_Text_AuroraWelcome, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_AURORA_GROVE_AURORA, AURORAGROVE_Movement_AuroraLeadFirstSteps
+	waitmovement 0
+	applymovement LOCALID_AURORA_GROVE_AURORA, AURORAGROVE_Movement_AuroraLeadToRift
+	applymovement LOCALID_PLAYER, AURORAGROVE_Movement_PlayerFollowAuroraToRift
+	waitmovement 0
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox AURORAGROVE_Text_AuroraBrokenWorld, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_AURORA_GROVE_AURORA, Common_Movement_FaceLeft
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox AURORAGROVE_Text_AuroraImbueKnowledge, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	fadescreenspeed FADE_TO_WHITE, 4
+	delay 20
+	delay 40
+	fadescreenspeed FADE_FROM_WHITE, 4
+	delay 20
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
+	msgbox AURORAGROVE_Text_AuroraMemoryWarning, MSGBOX_DEFAULT
+	msgbox AURORAGROVE_Text_AuroraGoNow, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_AURORA_GROVE_AURORA, AURORAGROVE_Movement_AuroraExitSouth
+	waitmovement 0
+	setobjectxy LOCALID_AURORA_GROVE_AURORA, 14, 18
+	turnobject LOCALID_AURORA_GROVE_AURORA, DIR_SOUTH
+	setflag FLAG_PETALBURG_QUAKE_PART15_CLEARED
+	releaseall
+	end
+
+AURORAGROVE_Movement_PlayerToAuroraHouse:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+AURORAGROVE_Movement_AuroraLeadFirstSteps:
+	walk_right
+	walk_down
+	walk_right
+	step_end
+
+AURORAGROVE_Movement_AuroraLeadToRift:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+AURORAGROVE_Movement_PlayerFollowAuroraToRift:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_up
+	step_end
+
+AURORAGROVE_Movement_AuroraExitSouth:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
 AURORAGROVE_Text_MagicCrystal:
 	.string "The portal pulses with a mysterious\n"
 	.string "energy.\p"
 	.string "Reach your hand in?$"
+
+
+AURORAGROVE_Text_AuroraAfterLesson:
+	.string "AURORA: Use what I have shown you\n"
+	.string "to heal the rift.$"
+
+AURORAGROVE_Text_AuroraWelcome:
+	.string "AURORA: Welcome. This is a space\n"
+	.string "that exists between dreams and\l"
+	.string "reality.\p"
+	.string "The fact that you were able to\n"
+	.string "enter proves that you have the\l"
+	.string "ability to heal the timeline.\p"
+	.string "Come with me.$"
+
+AURORAGROVE_Text_AuroraBrokenWorld:
+	.string "AURORA: This world has been broken\n"
+	.string "before.\p"
+	.string "These two POKEMON combined their\n"
+	.string "power to restore it, but they are\l"
+	.string "not all-powerful.\p"
+	.string "This fragile timeline is hanging\n"
+	.string "on by a thread and ripping open\l"
+	.string "at the seams.$"
+
+AURORAGROVE_Text_AuroraImbueKnowledge:
+	.string "AURORA: I will imbue you with the\n"
+	.string "knowledge to borrow these two\l"
+	.string "POKEMON's power and use it to\l"
+	.string "open a portal to the nightmare\l"
+	.string "leaking through.\p"
+	.string "There, you can find a way to\n"
+	.string "purify it and sever the\l"
+	.string "connection.$"
+
+AURORAGROVE_Text_AuroraMemoryWarning:
+	.string "AURORA: Be warned, once you heal\n"
+	.string "the timeline, it will be as if\l"
+	.string "nothing ever happened.\p"
+	.string "Those without the gift will\n"
+	.string "remember nothing.$"
+
+AURORAGROVE_Text_AuroraGoNow:
+	.string "AURORA: Go now. Use this power to\n"
+	.string "heal the rift, but know that\l"
+	.string "there will be more.\p"
+	.string "Good luck.$"
 `

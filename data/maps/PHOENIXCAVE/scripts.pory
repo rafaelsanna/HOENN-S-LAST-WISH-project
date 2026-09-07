@@ -1,7 +1,17 @@
 raw `
 PHOENIXCAVE_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, PHOENIXCAVE_OnTransition
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PHOENIXCAVE_OnWarp
 	.byte 0
+
+PHOENIXCAVE_OnTransition:
+	goto_if_unset FLAG_PETALBURG_QUAKE_PART1_CLEARED, PHOENIXCAVE_EventScript_HidePortal
+	clearflag FLAG_HIDE_PHOENIX_CAVE_PORTAL
+	return
+
+PHOENIXCAVE_EventScript_HidePortal::
+	setflag FLAG_HIDE_PHOENIX_CAVE_PORTAL
+	return
 
 PHOENIXCAVE_OnWarp:
 	map_script_2 VAR_TEMP_1, 0, PHOENIXCAVE_EventScript_FaceDownAtPortal
@@ -19,6 +29,7 @@ PHOENIXCAVE_EventScript_EndFaceDownAtPortal::
 	end
 
 PHOENIXCAVE_MapScripts_MagicCrystal::
+	goto_if_unset FLAG_PETALBURG_QUAKE_PART1_CLEARED, PHOENIXCAVE_EventScript_InactivePortal
 	lock
 	faceplayer
 	msgbox PHOENIXCAVE_Text_MagicCrystal, MSGBOX_YESNO
@@ -30,6 +41,9 @@ PHOENIXCAVE_MapScripts_MagicCrystal::
 
 PHOENIXCAVE_EventScript_LeavePortal::
 	release
+	end
+
+PHOENIXCAVE_EventScript_InactivePortal::
 	end
 
 PHOENIXCAVE_Text_MagicCrystal:
