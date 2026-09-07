@@ -1520,7 +1520,9 @@ SootopolisCity_EventScript_MrStoneEvil::
 	waitstate
 	@ The second burst lands at the instant the scene is consumed by white.
 	playse SE_M_HYPER_BEAM
-	fadescreenspeed FADE_TO_WHITE, 4
+	@ This is a same-map fade during rain. Use the hardware fade so the rain
+	@ color map is not copied into its own base palette and applied twice.
+	fadescreenswapbuffers FADE_TO_WHITE
 	@ The boat camera travelled eight tiles down to frame the Primals. Return
 	@ those exact eight tiles while the screen is white, before handing camera
 	@ tracking back to the player for the river-edge epilogue.
@@ -1540,7 +1542,7 @@ SootopolisCity_EventScript_MrStoneEvil::
 	turnobject LOCALID_PLAYER, DIR_SOUTH
 	turnobject LOCALID_SOOTOPOLIS_MAXIE, DIR_SOUTH
 	turnobject LOCALID_SOOTOPOLIS_ARCHIE, DIR_SOUTH
-	fadescreenspeed FADE_FROM_WHITE, 4
+	fadescreenswapbuffers FADE_FROM_WHITE
 	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MagnusAfterPrimalAwakening, MSGBOX_DEFAULT
 	removefieldmugshot
