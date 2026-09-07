@@ -167,6 +167,15 @@ void FieldCB_ContinueScript(void)
     CreateTask(Task_WaitForFadeAndEnableScriptCtx, 10);
 }
 
+// Used by field scenes that already ended on a full white screen. The script
+// owns the following fade, so returning through FadeInFromBlack would insert
+// a black flash between the two scenes.
+void FieldCB_ContinueScriptFromWhite(void)
+{
+    LockPlayerFieldControls();
+    ScriptContext_Enable();
+}
+
 static void Task_ReturnToFieldCableLink(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];

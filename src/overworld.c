@@ -75,6 +75,7 @@
 #include "constants/event_objects.h"
 #include "constants/layouts.h"
 #include "constants/region_map_sections.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
@@ -1980,6 +1981,13 @@ void CB2_ReturnToFieldContinueScript(void)
     CB2_ReturnToField();
 }
 
+void CB2_ReturnToFieldContinueScriptFromWhite(void)
+{
+    FieldClearVBlankHBlankCallbacks();
+    gFieldCallback = FieldCB_ContinueScriptFromWhite;
+    CB2_ReturnToField();
+}
+
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
 {
     FieldClearVBlankHBlankCallbacks();
@@ -2266,6 +2274,11 @@ static bool32 ReturnToFieldLocal(u8 *state)
     case 0:
         ResetMirageTowerAndSaveBlockPtrs();
         ResetScreenForMapLoad();
+        // This is a same-map return from a scene that has already faded to
+        // white. Keep the disabled display's backdrop white while the map is
+        // rebuilt, rather than exposing cleared palette memory as black.
+        if (gFieldCallback == FieldCB_ContinueScriptFromWhite)
+            CpuFastFill16(RGB_WHITE, (void *)PLTT, PLTT_SIZE);
         ResumeMap(FALSE);
         InitObjectEventsReturnToField();
         if (gFieldCallback == FieldCallback_UseFly)
@@ -2278,6 +2291,13 @@ static bool32 ReturnToFieldLocal(u8 *state)
     case 1:
         InitViewGraphics();
         TryLoadTrainerHillEReaderPalette();
+        // InitViewGraphics loads the real map palettes. Hold them at white
+        // until the resumed script explicitly fades them back in.
+        if (gFieldCallback == FieldCB_ContinueScriptFromWhite)
+        {
+            BlendPalettes(PALETTES_ALL, 16, RGB_WHITE);
+            CpuCopy32(gPlttBufferFaded, (void *)PLTT, PLTT_SIZE);
+        }
         FollowerNPC_BindToSurfBlobOnReloadScreen();
         (*state)++;
         break;

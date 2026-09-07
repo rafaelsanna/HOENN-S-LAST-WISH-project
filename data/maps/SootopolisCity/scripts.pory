@@ -1389,6 +1389,10 @@ SootopolisCity_EventScript_MrStoneEvil::
 	@ The party Pokémon must be fully inside its Poké Ball before this blocking
 	@ cutscene begins, so it cannot appear in or affect any scripted movement.
 	hidefollower 1
+	@ Mr. Stone's betrayal and the Primal Reversions share one tense music cue.
+	@ DoMrStoneEvilScene returns without restoring the map BGM, so this remains
+	@ playing through the fullscreen reveal and both native Orb flashes.
+	playbgm MUS_VS_RAYQUAZA, FALSE
 	faceplayer
 	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MrStoneMastermind, MSGBOX_DEFAULT
@@ -1412,6 +1416,11 @@ SootopolisCity_EventScript_MrStoneEvil::
 	msgbox SootopolisCity_Text_MaxieShockedAtStone, MSGBOX_DEFAULT
 	removefieldmugshot
 	closemessage
+	@ Stone dismisses the player before forcing them out of his path.
+	createfieldmugshot MUGSHOT_MRSTONE, EMOTE_NORMAL
+	msgbox SootopolisCity_Text_MrStoneDismissPlayer, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
 	@ Move the player clear before Inae realizes that both teams were used.
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerPushedAside
 	waitmovement 0
@@ -1425,6 +1434,10 @@ SootopolisCity_EventScript_MrStoneEvil::
 	@ Magnus and Inae follow him at the same time, each in their own column.
 	applymovement LOCALID_SOOTOPOLIS_MAXIE, SootopolisCity_Movement_MagnusFollowStone
 	applymovement LOCALID_SOOTOPOLIS_ARCHIE, SootopolisCity_Movement_InaeFollowStone
+	waitmovement 0
+	@ Complete the formation shown in the storyboard before Stone's next reveal:
+	@ the player returns to the centre tile above him and looks down at him.
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerJoinTriangle
 	waitmovement 0
 	@ Stone looks back. The leaders then turn in toward him for the remaining
 	@ confession while he is still stopped in the middle, before the boat.
@@ -1462,14 +1475,12 @@ SootopolisCity_EventScript_MrStoneEvil::
 	fadescreenspeed FADE_TO_WHITE, 4
 	special DoMrStoneEvilScene
 	waitstate
+	@ The boat's pan already frames the Primal Titans. Keep a camera object for
+	@ the effects and quake, but deliberately do not add a second camera pan.
+	special SpawnCameraObject
 	@ Return from Mr. Stone's white flash to the field for the original
 	@ Ruby/Sapphire Orb flash: one native flash per Primal Reversion.
 	fadescreenspeed FADE_FROM_WHITE, 4
-	special SpawnCameraObject
-	@ The river-edge framing is already correct vertically. Center both
-	@ legendaries horizontally once, then keep that same frame for both flashes.
-	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraCenterPrimalTitans
-	waitmovement 0
 	delay 20
 	@ VAR_RESULT 0 is the original red Orb flash, centred on the left target.
 	setvar VAR_RESULT, 0
@@ -1499,19 +1510,45 @@ SootopolisCity_EventScript_MrStoneEvil::
 	delay 60
 	special FadeOutOrbEffect
 	waitstate
-	setvar VAR_0x8004, 1 @ vertical pan
-	setvar VAR_0x8005, 1 @ horizontal pan
-	setvar VAR_0x8006, 8 @ num shakes
-	setvar VAR_0x8007, 3 @ shake delay
+	@ The two Primal forms have awakened: make the final quake much stronger.
+	setvar VAR_0x8004, 4 @ vertical pan
+	setvar VAR_0x8005, 4 @ horizontal pan
+	setvar VAR_0x8006, 20 @ num shakes
+	setvar VAR_0x8007, 2 @ shake delay
+	playse SE_M_HYPER_BEAM
 	special ShakeCamera
 	waitstate
+	@ The second burst lands at the instant the scene is consumed by white.
+	playse SE_M_HYPER_BEAM
 	fadescreenspeed FADE_TO_WHITE, 4
+	@ The boat camera travelled eight tiles down to frame the Primals. Return
+	@ those exact eight tiles while the screen is white, before handing camera
+	@ tracking back to the player for the river-edge epilogue.
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_CameraReturnToRiverEdge
+	waitmovement 0
 	special RemoveCameraObject
+	@ End the one-off Rayquaza cue only as the scene itself finishes.
+	fadedefaultbgm
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_BOAT
 	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
-	warpwhitefade MAP_SOOTOPOLIS_CITY, 31, 34
-	waitstate
+	@ Do not warp the map here: Sootopolis's transition script would move this
+	@ group back beside the Gym. Restore the river-edge tableau while white.
+	setobjectxy LOCALID_PLAYER, 31, 36
+	setobjectxy LOCALID_SOOTOPOLIS_MAXIE, 30, 36
+	setobjectxy LOCALID_SOOTOPOLIS_ARCHIE, 32, 36
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	turnobject LOCALID_SOOTOPOLIS_MAXIE, DIR_SOUTH
+	turnobject LOCALID_SOOTOPOLIS_ARCHIE, DIR_SOUTH
+	fadescreenspeed FADE_FROM_WHITE, 4
+	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
+	msgbox SootopolisCity_Text_MagnusAfterPrimalAwakening, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	createfieldmugshot MUGSHOT_INAE, EMOTE_NORMAL
+	msgbox SootopolisCity_Text_InaeAfterPrimalAwakening, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
 	releaseall
 	end
 
@@ -1540,6 +1577,15 @@ SootopolisCity_Movement_ArchieFaceStone:
 SootopolisCity_Movement_PlayerPushedAside:
 	walk_left
 	walk_left
+	face_right
+	step_end
+
+@ From the left side of the confrontation, the player returns to the middle
+@ of the four-character formation and watches Mr. Stone below.
+SootopolisCity_Movement_PlayerJoinTriangle:
+	walk_right
+	walk_right
+	face_down
 	step_end
 
 SootopolisCity_Movement_MrStoneApproachBoat:
@@ -1601,16 +1647,20 @@ SootopolisCity_Movement_CameraFollowDevonBoat:
 	walk_down
 	walk_down
 	walk_down
-	walk_down
-	walk_down
 	step_end
 
-@ Native DoOrbEffect uses fixed centres: red at x104 and blue at x136.
-@ Do not pan downward here: that moves the legendaries out through the top of
-@ the screen. Two rightward tiles center the pair without changing its height.
-SootopolisCity_Movement_CameraCenterPrimalTitans:
-	walk_right
-	walk_right
+@ Exact inverse of CameraFollowDevonBoat. This is intentionally hidden by the
+@ final white fade; it restores the original river-edge camera frame without
+@ reintroducing the removed visible post-scene pan.
+SootopolisCity_Movement_CameraReturnToRiverEdge:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
 	step_end
 
 @ Unused
@@ -1637,6 +1687,10 @@ SootopolisCity_Text_CitySign:
 SootopolisCity_Text_MrStoneMastermind:
 	.string "MR. STONE: …Hahahaha…\p"
 	.string "Do you understand now?$"
+
+SootopolisCity_Text_MrStoneDismissPlayer:
+	.string "MR. STONE: Out of the way, {PLAYER}.\p"
+	.string "You have nothing to do with this.$"
 
 SootopolisCity_Text_MrStoneNeverMeantToWin:
 	.string "MR. STONE: This petty struggle between\n"
@@ -1690,6 +1744,18 @@ SootopolisCity_Text_ArchieShockedAtStone:
 	.string "Hahahaha…\n"
 	.string "To be honest, I expected nothing less\l"
 	.string "from a petty old man like you.$"
+
+SootopolisCity_Text_MagnusAfterPrimalAwakening:
+	.string "MAGNUS: MR. STONE's greed has brought\n"
+	.string "this world to ruin.\p"
+	.string "We thought this was power we could\l"
+	.string "control…$"
+
+SootopolisCity_Text_InaeAfterPrimalAwakening:
+	.string "INEA: But Titans wield power far beyond\n"
+	.string "human understanding.\p"
+	.string "No one can control them. Our greed has\l"
+	.string "let this region fall into ruin.$"
 
 SootopolisCity_Text_MrStoneMoneyRulesWorld:
 	.string "MR. STONE: For generations, the STONE\n"

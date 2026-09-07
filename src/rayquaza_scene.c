@@ -19,7 +19,9 @@
 #include "constants/rgb.h"
 #include "constants/event_objects.h"
 #include "random.h"
-#include "overworld.h" // for CB2_ReturnToFieldContinueScriptPlayMapMusic, used by DoMrStoneEvilScene
+#include "trig.h"
+#include "util.h"
+#include "overworld.h" // for the field-return callback used by DoMrStoneEvilScene
 
 /*
     This file handles the cutscene showing Rayquaza arriving to settle the Groudon/Kyogre fight
@@ -79,8 +81,8 @@ enum
 
 // How long (in frames) each pose of the Mr. Stone Evil scene is held before moving on
 #define MRSTONE_EVIL_POSE1_HOLD 120 // mrstone01, empty-handed
-#define MRSTONE_EVIL_POSE2_HOLD 90  // mrstone02, holding the orbs
-#define MRSTONE_EVIL_ORB_FLASH_LEVEL 6
+#define MRSTONE_EVIL_POSE2_HOLD 180 // mrstone02, holding the pulsing orbs
+#define MRSTONE_EVIL_ORB_REVEAL_HOLD 45 // mrstone02 before the hand-orbs activate
 
 // Orb hand positions on top of the mrstone02 art. These are placeholders -- tune them to line
 // up with wherever the hands actually land in the finished mrstone02 tilemap.
@@ -226,6 +228,8 @@ static void Task_HandleMrStoneEvil(u8);
 static void Task_MrStoneEvilEnd(u8);
 static void InitMrStoneEvilSceneBgs(void);
 static void LoadMrStoneEvilSceneGfx(void);
+static void SpriteCB_MrStoneEvilOrbPulse(struct Sprite *);
+static void StopMrStoneEvilOrbGlow(u8, u8);
 
 static const TaskFunc sTasksForAnimations[] =
 {
@@ -1506,7 +1510,12 @@ void DoRayquazaScene(u8 animId, bool8 endEarly, void (*exitCallback)(void))
 // field script instead of chaining into the Groudon/Kyogre/Rayquaza sequence.
 void DoMrStoneEvilScene(void)
 {
-    DoRayquazaScene(RAY_ANIM_MR_STONE_EVIL, TRUE, CB2_ReturnToFieldContinueScriptPlayMapMusic);
+    // Keep the scripted MUS_VS_RAYQUAZA playing through the field's two
+    // Primal Reversions. The field script restores its default map music at
+    // the actual end of the sequence.
+    // The custom scene ends fully white. Its dedicated return preserves that
+    // white screen until the field script performs the next fade.
+    DoRayquazaScene(RAY_ANIM_MR_STONE_EVIL, TRUE, CB2_ReturnToFieldContinueScriptFromWhite);
 }
 
 static void CB2_InitRayquazaScene(void)
@@ -3832,6 +3841,32 @@ static const union AffineAnimCmd *const sAffineAnims_MrStoneEvil_OrbPulse[] =
     sAffineAnim_MrStoneEvil_OrbPulse
 };
 
+// The first beat after Mr. Stone changes to mrstone02 is deliberately still:
+// he displays both stones before their energy begins to surge.
+static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_RedOrbStatic =
+{
+    .tileTag = TAG_MRSTONE_EVIL_REDORB,
+    .paletteTag = TAG_MRSTONE_EVIL_REDORB,
+    .oam = &sOam_32x32,
+    .anims = sAnims_MrStoneEvil_Orb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_BlueOrbStatic =
+{
+    .tileTag = TAG_MRSTONE_EVIL_BLUEORB,
+    .paletteTag = TAG_MRSTONE_EVIL_BLUEORB,
+    .oam = &sOam_32x32,
+    .anims = sAnims_MrStoneEvil_Orb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// These translucent duplicates are spawned after the still beat. Their
+// affine growth forms the visible energy wave over the static stone.
 static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_RedOrb =
 {
     .tileTag = TAG_MRSTONE_EVIL_REDORB,
@@ -3840,7 +3875,7 @@ static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_RedOrb =
     .anims = sAnims_MrStoneEvil_Orb,
     .images = NULL,
     .affineAnims = sAffineAnims_MrStoneEvil_OrbPulse,
-    .callback = SpriteCallbackDummy,
+    .callback = SpriteCB_MrStoneEvilOrbPulse,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_BlueOrb =
@@ -3851,7 +3886,7 @@ static const struct SpriteTemplate sSpriteTemplate_MrStoneEvil_BlueOrb =
     .anims = sAnims_MrStoneEvil_Orb,
     .images = NULL,
     .affineAnims = sAffineAnims_MrStoneEvil_OrbPulse,
-    .callback = SpriteCallbackDummy,
+    .callback = SpriteCB_MrStoneEvilOrbPulse,
 };
 
 static void InitMrStoneEvilSceneBgs(void)
@@ -3916,6 +3951,10 @@ static void LoadMrStoneEvilSceneGfx(void)
     OffsetMrStoneEvilCloudPaletteBanks((u16 *)sRayScene->tilemapBuffers[1]);
     OffsetMrStoneEvilCloudPaletteBanks((u16 *)sRayScene->tilemapBuffers[2]);
     OffsetMrStoneEvilCloudPaletteBanks((u16 *)sRayScene->tilemapBuffers[3]);
+    // Clouds1's original lower rows are a gray end-cap. Mr. Stone's BG has
+    // transparent space there, so replace only that exposed end-cap with the
+    // orange horizon tile already used on the row immediately above it.
+    FillBgTilemapBufferRect(1, 0x33, 0, 17, 32, 15, 2);
 
     LoadPalette(gRaySceneMrStoneEvil_MrStone01_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     LoadPalette(gRaySceneDuoFight_Clouds_Pal, BG_PLTT_ID(2), 2 * PLTT_SIZE_4BPP);
@@ -3926,10 +3965,37 @@ static void LoadMrStoneEvilSceneGfx(void)
     LoadSpritePalette(&sSpritePal_MrStoneEvil_BlueOrb);
 }
 
-#define tState         data[0]
-#define tTimer         data[1]
-#define tRedOrbSpriteId  data[2]
-#define tBlueOrbSpriteId data[3]
+#define tState                 data[0]
+#define tTimer                 data[1]
+#define tRedOrbStaticSpriteId  data[2]
+#define tBlueOrbStaticSpriteId data[3]
+#define tRedOrbPulseSpriteId   data[4]
+#define tBlueOrbPulseSpriteId  data[5]
+
+// Each pulse sprite shares its palette with the still stone beneath it. This
+// lets the red and blue stones brighten independently without tinting Mr.
+// Stone or the cloud layers.
+static void SpriteCB_MrStoneEvilOrbPulse(struct Sprite *sprite)
+{
+    u8 blendCoeff = Sin(sprite->data[0], 5) + 5;
+    u16 glowColor = sprite->data[1] == 0 ? RGB_RED : RGB_BLUE;
+
+    BlendPalette(OBJ_PLTT_ID(sprite->oam.paletteNum), 16, blendCoeff, glowColor);
+    sprite->data[0] = (sprite->data[0] + 8) & 0xFF;
+}
+
+static void StopMrStoneEvilOrbGlow(u8 staticSpriteId, u8 pulseSpriteId)
+{
+    if (pulseSpriteId != MAX_SPRITES)
+    {
+        gSprites[pulseSpriteId].callback = SpriteCallbackDummy;
+        BlendPalette(OBJ_PLTT_ID(gSprites[pulseSpriteId].oam.paletteNum), 16, 0, RGB_BLACK);
+    }
+    else if (staticSpriteId != MAX_SPRITES)
+    {
+        BlendPalette(OBJ_PLTT_ID(gSprites[staticSpriteId].oam.paletteNum), 16, 0, RGB_BLACK);
+    }
+}
 
 static void Task_MrStoneEvilAnim(u8 taskId)
 {
@@ -3974,20 +4040,14 @@ static void Task_HandleMrStoneEvil(u8 taskId)
             ScheduleBgCopyTilemapToVram(0);
             LoadPalette(gRaySceneMrStoneEvil_MrStone02_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
 
-            tRedOrbSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_RedOrb, MRSTONE_EVIL_REDORB_X, MRSTONE_EVIL_REDORB_Y, 0);
-            if (tRedOrbSpriteId != MAX_SPRITES)
-                gSprites[tRedOrbSpriteId].oam.priority = 0;
-            tBlueOrbSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_BlueOrb, MRSTONE_EVIL_BLUEORB_X, MRSTONE_EVIL_BLUEORB_Y, 0);
-            if (tBlueOrbSpriteId != MAX_SPRITES)
-                gSprites[tBlueOrbSpriteId].oam.priority = 0;
-
-            // This scene used to leave the two hand-orbs static. Give their
-            // activation a visible white flash, then keep them alpha-blended
-            // and pulsing until the final fade to white.
-            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD | BLDCNT_EFFECT_BLEND);
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 4));
-            PlaySE(SE_ORB);
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, MRSTONE_EVIL_ORB_FLASH_LEVEL, RGB_WHITE);
+            // First reveal the two stones in Mr. Stone's hands with no
+            // animation. The user gets a clear beat to see his smiling pose.
+            tRedOrbStaticSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_RedOrbStatic, MRSTONE_EVIL_REDORB_X, MRSTONE_EVIL_REDORB_Y, 0);
+            if (tRedOrbStaticSpriteId != MAX_SPRITES)
+                gSprites[tRedOrbStaticSpriteId].oam.priority = 0;
+            tBlueOrbStaticSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_BlueOrbStatic, MRSTONE_EVIL_BLUEORB_X, MRSTONE_EVIL_BLUEORB_Y, 0);
+            if (tBlueOrbStaticSpriteId != MAX_SPRITES)
+                gSprites[tBlueOrbStaticSpriteId].oam.priority = 0;
             tTimer = 0;
             tState++;
         }
@@ -3997,25 +4057,44 @@ static void Task_HandleMrStoneEvil(u8 taskId)
         }
         break;
     case 1:
-        // Hold briefly at the peak of the white activation flash.
-        if (!gPaletteFade.active)
+        // Let the player see the static stones before their separate energies
+        // wake up. No global white flash is used here.
+        if (tTimer >= MRSTONE_EVIL_ORB_REVEAL_HOLD)
         {
-            BeginNormalPaletteFade(PALETTES_ALL, 0, MRSTONE_EVIL_ORB_FLASH_LEVEL, 0, RGB_WHITE);
-            tState++;
-        }
-        break;
-    case 2:
-        // Return from the flash before showing the pulsing red/blue light.
-        if (!gPaletteFade.active)
-        {
+            tRedOrbPulseSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_RedOrb, MRSTONE_EVIL_REDORB_X, MRSTONE_EVIL_REDORB_Y, 1);
+            if (tRedOrbPulseSpriteId != MAX_SPRITES)
+            {
+                gSprites[tRedOrbPulseSpriteId].oam.priority = 0;
+                gSprites[tRedOrbPulseSpriteId].data[0] = 0;
+                gSprites[tRedOrbPulseSpriteId].data[1] = 0; // red
+            }
+            tBlueOrbPulseSpriteId = CreateSprite(&sSpriteTemplate_MrStoneEvil_BlueOrb, MRSTONE_EVIL_BLUEORB_X, MRSTONE_EVIL_BLUEORB_Y, 1);
+            if (tBlueOrbPulseSpriteId != MAX_SPRITES)
+            {
+                gSprites[tBlueOrbPulseSpriteId].oam.priority = 0;
+                gSprites[tBlueOrbPulseSpriteId].data[0] = 0;
+                gSprites[tBlueOrbPulseSpriteId].data[1] = 1; // blue
+            }
+
+            // Only the expanding overlay uses hardware alpha blending. The
+            // static core stays sharp while each palette glows in its own hue.
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD | BLDCNT_EFFECT_BLEND);
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 4));
+            PlaySE(SE_ORB);
             tTimer = 0;
             tState++;
         }
+        else
+        {
+            tTimer++;
+        }
         break;
-    case 3:
-        // Holding on mrstone02 while each hand-orb repeatedly expands.
+    case 2:
+        // Hold on the now-active, independently colored red/blue stones.
         if (tTimer >= MRSTONE_EVIL_POSE2_HOLD)
         {
+            StopMrStoneEvilOrbGlow(tRedOrbStaticSpriteId, tRedOrbPulseSpriteId);
+            StopMrStoneEvilOrbGlow(tBlueOrbStaticSpriteId, tBlueOrbPulseSpriteId);
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_WHITE);
             tState++;
         }
@@ -4024,7 +4103,7 @@ static void Task_HandleMrStoneEvil(u8 taskId)
             tTimer++;
         }
         break;
-    case 4:
+    case 3:
         // Wait for the fade to white to finish, then hand control back to the field script
         if (!gPaletteFade.active)
             gTasks[taskId].func = Task_MrStoneEvilEnd;
@@ -4046,5 +4125,7 @@ static void Task_MrStoneEvilEnd(u8 taskId)
 
 #undef tState
 #undef tTimer
-#undef tRedOrbSpriteId
-#undef tBlueOrbSpriteId
+#undef tRedOrbStaticSpriteId
+#undef tBlueOrbStaticSpriteId
+#undef tRedOrbPulseSpriteId
+#undef tBlueOrbPulseSpriteId
