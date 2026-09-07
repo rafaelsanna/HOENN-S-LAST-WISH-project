@@ -2977,7 +2977,7 @@ bool32 CanThrowLastUsedBall(void)
 {
     if (B_LAST_USED_BALL == FALSE)
         return FALSE;
-    if (!CanThrowBall())
+    if (!CanThrowBall() && !(gBattleTypeFlags & BATTLE_TYPE_DARK_AURA))
         return FALSE;
     if (gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_FRONTIER))
         return FALSE;

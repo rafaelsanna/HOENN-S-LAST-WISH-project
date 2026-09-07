@@ -4296,7 +4296,7 @@ u8 IsRunningFromBattleImpossible(u32 battler)
     enum ItemHoldEffect holdEffect;
     u32 i;
 
-    if (FlagGet(B_FLAG_NO_RUNNING))
+    if (FlagGet(B_FLAG_NO_RUNNING) || gBattleTypeFlags & BATTLE_TYPE_DARK_AURA)
     {
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CANT_ESCAPE;
         return BATTLE_RUN_FORBIDDEN;
@@ -4666,6 +4666,15 @@ static void HandleTurnActionSelectionState(void)
                          || (FlagGet(B_FLAG_NO_RUNNING) == TRUE && gBattleResources->bufferB[battler][1] == B_ACTION_RUN))
                 {
                     gSelectionBattleScripts[battler] = BattleScript_PrintCantEscapeFromBattle;
+                    gBattleCommunication[battler] = STATE_SELECTION_SCRIPT;
+                    gBattleStruct->selectionScriptFinished[battler] = FALSE;
+                    gBattleStruct->stateIdAfterSelScript[battler] = STATE_BEFORE_ACTION_CHOSEN;
+                    return;
+                }
+                else if (gBattleTypeFlags & BATTLE_TYPE_DARK_AURA
+                      && gBattleResources->bufferB[battler][1] == B_ACTION_THROW_BALL)
+                {
+                    gSelectionBattleScripts[battler] = BattleScript_CantCaptureEntity;
                     gBattleCommunication[battler] = STATE_SELECTION_SCRIPT;
                     gBattleStruct->selectionScriptFinished[battler] = FALSE;
                     gBattleStruct->stateIdAfterSelScript[battler] = STATE_BEFORE_ACTION_CHOSEN;

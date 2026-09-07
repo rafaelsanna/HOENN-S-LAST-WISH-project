@@ -5421,6 +5421,10 @@ BattleScript_PrintCantEscapeFromBattle::
 	printselectionstringfromtable gNoEscapeStringIds
 	endselectionscript
 
+BattleScript_CantCaptureEntity::
+	printselectionstring STRINGID_CANTCAPTUREENTITY
+	endselectionscript
+
 BattleScript_PrintFullBox::
 	printselectionstring STRINGID_BOXISFULL
 	endselectionscript

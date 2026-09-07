@@ -334,6 +334,8 @@ gSpecials::
 	def_special ShakeCamera
 	def_special StartGroudonKyogreBattle
 	def_special BattleSetup_StartLegendaryBattle
+	def_special SetScriptedWildMonPerfectIVs
+	def_special BattleSetup_StartDarkAuraBattle
 	def_special StartRegiBattle
 	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect_Short

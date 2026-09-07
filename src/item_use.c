@@ -1165,6 +1165,8 @@ static u32 GetBallThrowableState(void)
         return BALL_THROW_UNABLE_NO_ROOM;
     else if (B_SEMI_INVULNERABLE_CATCH >= GEN_4 &&  IsSemiInvulnerable(GetCatchingBattler(), CHECK_ALL))
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;
+    else if (gBattleTypeFlags & BATTLE_TYPE_DARK_AURA)
+        return BALL_THROW_UNABLE_DARK_AURA;
     else if (FlagGet(B_FLAG_NO_CATCHING))
         return BALL_THROW_UNABLE_DISABLED_FLAG;
 
@@ -1179,6 +1181,8 @@ bool32 CanThrowBall(void)
 static const u8 sText_CantThrowPokeBall_TwoMons[] = _("Cannot throw a ball!\nThere are two Pokémon out there!\p");
 static const u8 sText_CantThrowPokeBall_SemiInvulnerable[] = _("Cannot throw a ball!\nThere's no Pokémon in sight!\p");
 static const u8 sText_CantThrowPokeBall_Disabled[] = _("POKé BALLS cannot be used\nright now!\p");
+static const u8 sText_CantThrowPokeBall_DarkAura[] = _("You can't capture this entity.\p");
+static const u8 sText_CantEscapeDarkAura[] = _("You can't escape this entity.\p");
 static const u8 sText_CantThrowPokeBall_Nuzlocke[] = _("Nuzlocke rule: this route\ncannot give another capture.\p");
 static const u8 sText_CantUseRevive_Nuzlocke[] = _("Nuzlocke rule: Revives are\ndisabled. Fainted means dead.\p");
 void ItemUseInBattle_PokeBall(u8 taskId)
@@ -1219,6 +1223,12 @@ void ItemUseInBattle_PokeBall(u8 taskId)
             DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_SemiInvulnerable, CloseItemMessage);
         else
             DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_SemiInvulnerable, Task_CloseBattlePyramidBagMessage);
+        break;
+    case BALL_THROW_UNABLE_DARK_AURA:
+        if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+            DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_DarkAura, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_DarkAura, Task_CloseBattlePyramidBagMessage);
         break;
     case BALL_THROW_UNABLE_DISABLED_FLAG:
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
@@ -1309,7 +1319,12 @@ bool32 CannotUseItemsInBattle(u16 itemId, struct Pokemon *mon)
             cannotUse = TRUE;
         break;
     case EFFECT_ITEM_ESCAPE:
-        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        if (gBattleTypeFlags & BATTLE_TYPE_DARK_AURA)
+        {
+            failStr = sText_CantEscapeDarkAura;
+            cannotUse = TRUE;
+        }
+        else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
             cannotUse = TRUE;
         break;
     case EFFECT_ITEM_THROW_BALL:
@@ -1325,6 +1340,10 @@ bool32 CannotUseItemsInBattle(u16 itemId, struct Pokemon *mon)
             break;
         case BALL_THROW_UNABLE_SEMI_INVULNERABLE:
             failStr = sText_CantThrowPokeBall_SemiInvulnerable;
+            cannotUse = TRUE;
+            break;
+        case BALL_THROW_UNABLE_DARK_AURA:
+            failStr = sText_CantThrowPokeBall_DarkAura;
             cannotUse = TRUE;
             break;
         case BALL_THROW_UNABLE_DISABLED_FLAG:

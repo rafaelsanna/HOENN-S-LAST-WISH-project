@@ -127,6 +127,16 @@ void CreateScriptedWildMon(u16 species, u8 level, u16 item)
         SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, heldItem);
     }
 }
+void SetScriptedWildMonPerfectIVs(void)
+{
+    u32 i;
+    u8 iv = MAX_PER_STAT_IVS;
+
+    for (i = 0; i < NUM_STATS; i++)
+        SetMonData(&gEnemyParty[0], MON_DATA_HP_IV + i, &iv);
+    CalculateMonStats(&gEnemyParty[0]);
+}
+
 void CreateScriptedDoubleWildMon(u16 species1, u8 level1, u16 item1, u16 species2, u8 level2, u16 item2)
 {
     u8 heldItem1[2];

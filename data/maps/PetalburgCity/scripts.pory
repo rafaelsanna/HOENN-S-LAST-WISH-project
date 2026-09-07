@@ -213,13 +213,18 @@ PetalburgCity_EventScript_QuakeCalendula::
 
 PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortal::
 	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
-	msgbox PetalburgCity_Text_QuakeCalendulaOpenNightmarePortal, MSGBOX_DEFAULT
+	msgbox PetalburgCity_Text_QuakeCalendulaOpenNightmarePortal, MSGBOX_YESNO
 	removefieldmugshot
+	goto_if_eq VAR_RESULT, NO, PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortalCancel
 	closemessage
 	getplayerxy VAR_TEMP_1, VAR_TEMP_2
 	goto_if_eq VAR_TEMP_1, 19, PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromWest
 	goto_if_eq VAR_TEMP_1, 21, PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromEast
 	goto PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromSouth
+
+PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortalCancel::
+	release
+	end
 
 PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromSouth::
 	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerFromSouth
@@ -848,8 +853,9 @@ PetalburgCity_Text_QuakeCalendulaOpenNightmarePortal:
 	.string "CALENDULA: {PLAYER}! Welcome back!\n"
 	.string "You have learned how to resolve\l"
 	.string "this disaster?\p"
-	.string "Wonderful! Please proceed right\n"
-	.string "away.$"
+	.string "Wonderful! However, please make\n"
+	.string "sure you are prepared for what\l"
+	.string "is to come. Are you ready?$"
 
 PetalburgCity_Text_QuakeLukaPart15:
 	.string "LUKA: {PLAYER}! I'm glad to see\n"

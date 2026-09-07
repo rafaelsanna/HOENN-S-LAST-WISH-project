@@ -265,6 +265,7 @@
 #define OBJ_EVENT_GFX_MR_STONE                   258
 #define OBJ_EVENT_GFX_MEGARAYQUAZA_CUTSCENE      259
 #define OBJ_EVENT_GFX_RIO                        260
+#define OBJ_EVENT_GFX_DARK_AURA                  261
 
 // NOTE: The maximum amount of object events has been expanded from 255 to 65535.
 // Since dynamic graphics ids still require at least 16 free values, the actual limit
@@ -443,6 +444,7 @@
 #define OBJ_EVENT_PAL_TAG_LIGHT_2                 0x8002
 #define OBJ_EVENT_PAL_TAG_EMOTES                  0x8003
 #define OBJ_EVENT_PAL_TAG_NEON_LIGHT              0x8004
+#define OBJ_EVENT_PAL_TAG_DARK_AURA              0x8005
 // Not a real OW palette tag; used for the white flash applied to followers
 #define OBJ_EVENT_PAL_TAG_WHITE                   (OBJ_EVENT_PAL_TAG_NONE - 1)
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF

@@ -477,6 +477,18 @@ void BattleSetup_StartLatiBattle(void)
     TryUpdateGymLeaderRematchFromWild();
 }
 
+void BattleSetup_StartDarkAuraBattle(void)
+{
+    LockPlayerFieldControls();
+    gMain.savedCallback = CB2_EndScriptedWildBattle;
+    gBattleTypeFlags = BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_DARK_AURA;
+    CreateBattleStartTask(B_TRANSITION_BLUR, MUS_HLW_VS_EVIL);
+    IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
+    IncrementGameStat(GAME_STAT_WILD_BATTLES);
+    IncrementDailyWildBattles();
+    TryUpdateGymLeaderRematchFromWild();
+}
+
 void BattleSetup_StartLegendaryBattle(void)
 {
     LockPlayerFieldControls();
