@@ -26,4 +26,14 @@ PHOENIXPOKEMART_Pokemart:
 	.2byte ITEM_DIRE_HIT
 	.2byte ITEM_GUARD_SPEC
 	pokemartlistend
+
+PHOENIXPOKEMART_EventScript_Lass::
+	msgbox PHOENIXPOKEMART_Text_Supplies, MSGBOX_NPC
+	end
+
+PHOENIXPOKEMART_Text_Supplies:
+	.string "Supplies arrive rarely,\n"
+	.string "so we waste nothing.\p"
+	.string "Even a POTION is precious\n"
+	.string "in the deep desert.$"
 `

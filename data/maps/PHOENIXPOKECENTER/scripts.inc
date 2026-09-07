@@ -32,3 +32,41 @@ PHOENIXPOKECENTER_EventScript_Nurse::
 	release
 # 17 "data/maps/PHOENIXPOKECENTER/scripts.pory"
 	end
+# 18 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+
+# 19 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+PHOENIXPOKECENTER_EventScript_Woman::
+# 20 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	msgbox PHOENIXPOKECENTER_Text_DryAir, MSGBOX_NPC
+# 21 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	end
+# 22 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+
+# 23 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+PHOENIXPOKECENTER_EventScript_Youngster::
+# 24 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	msgbox PHOENIXPOKECENTER_Text_CalmPokemon, MSGBOX_NPC
+# 25 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	end
+# 26 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+
+# 27 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+PHOENIXPOKECENTER_Text_DryAir:
+# 28 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	.string "The dry air tires POKéMON\n"
+# 29 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	.string "more quickly than people expect.\p"
+# 30 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	.string "Resting here is a miracle\n"
+# 31 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	.string "after a canyon crossing.$"
+# 32 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+
+# 33 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+PHOENIXPOKECENTER_Text_CalmPokemon:
+# 34 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	.string "POKéMON seem calmer here.\p"
+# 35 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	.string "Maybe they hear the earth\n"
+# 36 "data/maps/PHOENIXPOKECENTER/scripts.pory"
+	.string "better than we do.$"

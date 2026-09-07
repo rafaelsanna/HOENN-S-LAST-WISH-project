@@ -1,0 +1,13 @@
+raw `
+PHOENIXHOUSE3_MapScripts::
+	.byte 0
+
+PHOENIXHOUSE3_EventScript_ExpertM::
+	msgbox PHOENIXHOUSE3_Text_WarmStones, MSGBOX_NPC
+	end
+
+PHOENIXHOUSE3_Text_WarmStones:
+	.string "Some stones from the first\n"
+	.string "quake stay warm in winter.\p"
+	.string "Nobody knows why.$"
+`

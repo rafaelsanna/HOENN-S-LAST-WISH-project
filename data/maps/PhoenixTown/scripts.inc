@@ -443,605 +443,605 @@ PhoenixTown_EventScript_PetalburgEventFullScene::
 # 222 "data/maps/PhoenixTown/scripts.pory"
 	msgbox PhoenixTown_Text_AuroraSilent, MSGBOX_DEFAULT
 # 223 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_AuroraPlayerHasGift, MSGBOX_DEFAULT
+	msgbox PhoenixTown_Text_AuroraFinalBattle, MSGBOX_DEFAULT
 # 224 "data/maps/PhoenixTown/scripts.pory"
 	removefieldmugshot
 # 225 "data/maps/PhoenixTown/scripts.pory"
 	closemessage
 # 226 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT, PhoenixTown_Movement_AuroraExit
+	@ The event has no progress flag yet. A loss triggers White Out, and
 # 227 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
+	@ PhoenixTown_OnTransition re-arms this entire scene on the next visit.
 # 228 "data/maps/PhoenixTown/scripts.pory"
-	removeobject LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	setvar VAR_LAST_TALKED, LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
 # 229 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	getdifficulty VAR_RESULT
 # 230 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
+	goto_if_eq VAR_RESULT, 1, PhoenixTown_EventScript_AuroraFinalBattleHard
 # 231 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	trainerbattle_no_intro TRAINER_AURORA_PHOENIX, PhoenixTown_Text_AuroraFinalBattleDefeat
 # 232 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_LukaWhatWasThat, MSGBOX_DEFAULT
+	goto PhoenixTown_EventScript_AuroraConfirmed
 # 233 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 234 "data/maps/PhoenixTown/scripts.pory"
-	call PhoenixTown_EventScript_RivalLineCanWeTrust
+PhoenixTown_EventScript_AuroraFinalBattleHard::
 # 235 "data/maps/PhoenixTown/scripts.pory"
-	call PhoenixTown_EventScript_CalendulaLineNoChoice
+	trainerbattle_no_intro TRAINER_AURORA_PHOENIX_HARD, PhoenixTown_Text_AuroraFinalBattleDefeat
 # 236 "data/maps/PhoenixTown/scripts.pory"
-	call PhoenixTown_EventScript_RivalLineIUnderstand
+
 # 237 "data/maps/PhoenixTown/scripts.pory"
-	closemessage
+PhoenixTown_EventScript_AuroraConfirmed::
 # 238 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, PhoenixTown_Movement_RivalStepToPlayer
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
 # 239 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
+	msgbox PhoenixTown_Text_AuroraPlayerHasGift, MSGBOX_DEFAULT
 # 240 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	removefieldmugshot
 # 241 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
+	closemessage
 # 242 "data/maps/PhoenixTown/scripts.pory"
-	call PhoenixTown_EventScript_RivalLineGoodLuck
+	applymovement LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT, PhoenixTown_Movement_AuroraExit
 # 243 "data/maps/PhoenixTown/scripts.pory"
-	closemessage
+	waitmovement 0
 # 244 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, PhoenixTown_Movement_RivalExit
+	removeobject LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
 # 245 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
-# 246 "data/maps/PhoenixTown/scripts.pory"
-	removeobject LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT
-# 247 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, PhoenixTown_Movement_LukaStepToPlayer
-# 248 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
-# 249 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
-# 250 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
-# 251 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
-# 252 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_LukaTrustYou, MSGBOX_DEFAULT
-# 253 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
-# 254 "data/maps/PhoenixTown/scripts.pory"
-	closemessage
-# 255 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, PhoenixTown_Movement_LukaExit
-# 256 "data/maps/PhoenixTown/scripts.pory"
-	waitmovement 0
-# 257 "data/maps/PhoenixTown/scripts.pory"
-	removeobject LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
-# 258 "data/maps/PhoenixTown/scripts.pory"
 	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
-# 259 "data/maps/PhoenixTown/scripts.pory"
+# 246 "data/maps/PhoenixTown/scripts.pory"
 	waitmovement 0
-# 260 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
-# 261 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_CalendulaBeSafe, MSGBOX_DEFAULT
-# 262 "data/maps/PhoenixTown/scripts.pory"
+# 247 "data/maps/PhoenixTown/scripts.pory"
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+# 248 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_LukaWhatWasThat, MSGBOX_DEFAULT
+# 249 "data/maps/PhoenixTown/scripts.pory"
 	removefieldmugshot
-# 263 "data/maps/PhoenixTown/scripts.pory"
+# 250 "data/maps/PhoenixTown/scripts.pory"
+	call PhoenixTown_EventScript_RivalLineCanWeTrust
+# 251 "data/maps/PhoenixTown/scripts.pory"
+	call PhoenixTown_EventScript_CalendulaLineNoChoice
+# 252 "data/maps/PhoenixTown/scripts.pory"
+	call PhoenixTown_EventScript_RivalLineIUnderstand
+# 253 "data/maps/PhoenixTown/scripts.pory"
 	closemessage
-# 264 "data/maps/PhoenixTown/scripts.pory"
-	applymovement LOCALID_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT, PhoenixTown_Movement_CalendulaExit
-# 265 "data/maps/PhoenixTown/scripts.pory"
+# 254 "data/maps/PhoenixTown/scripts.pory"
+	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, PhoenixTown_Movement_RivalStepToPlayer
+# 255 "data/maps/PhoenixTown/scripts.pory"
 	waitmovement 0
+# 256 "data/maps/PhoenixTown/scripts.pory"
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+# 257 "data/maps/PhoenixTown/scripts.pory"
+	waitmovement 0
+# 258 "data/maps/PhoenixTown/scripts.pory"
+	call PhoenixTown_EventScript_RivalLineGoodLuck
+# 259 "data/maps/PhoenixTown/scripts.pory"
+	closemessage
+# 260 "data/maps/PhoenixTown/scripts.pory"
+	applymovement LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT, PhoenixTown_Movement_RivalExit
+# 261 "data/maps/PhoenixTown/scripts.pory"
+	waitmovement 0
+# 262 "data/maps/PhoenixTown/scripts.pory"
+	removeobject LOCALID_PHOENIX_TOWN_RIVAL_PETALBURG_EVENT
+# 263 "data/maps/PhoenixTown/scripts.pory"
+	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, PhoenixTown_Movement_LukaStepToPlayer
+# 264 "data/maps/PhoenixTown/scripts.pory"
+	waitmovement 0
+# 265 "data/maps/PhoenixTown/scripts.pory"
+	applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
 # 266 "data/maps/PhoenixTown/scripts.pory"
-	call PhoenixTown_EventScript_ClearPetalburgPart1
+	waitmovement 0
 # 267 "data/maps/PhoenixTown/scripts.pory"
-	releaseall
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 # 268 "data/maps/PhoenixTown/scripts.pory"
-	end
+	msgbox PhoenixTown_Text_LukaTrustYou, MSGBOX_DEFAULT
 # 269 "data/maps/PhoenixTown/scripts.pory"
-
+	removefieldmugshot
 # 270 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_CalendulaLineNoChoice::
+	closemessage
 # 271 "data/maps/PhoenixTown/scripts.pory"
-	checkplayergender
+	applymovement LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT, PhoenixTown_Movement_LukaExit
 # 272 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_CalendulaLineNoChoiceZinnia
+	waitmovement 0
 # 273 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_CalendulaLineNoChoiceZenno
+	removeobject LOCALID_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
 # 274 "data/maps/PhoenixTown/scripts.pory"
-	return
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
 # 275 "data/maps/PhoenixTown/scripts.pory"
-
+	waitmovement 0
 # 276 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_CalendulaLineNoChoiceZinnia::
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
 # 277 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PhoenixTown_Text_CalendulaBeSafe, MSGBOX_DEFAULT
 # 278 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_CalendulaNoChoiceZinnia, MSGBOX_DEFAULT
+	removefieldmugshot
 # 279 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+	closemessage
 # 280 "data/maps/PhoenixTown/scripts.pory"
-	return
+	applymovement LOCALID_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT, PhoenixTown_Movement_CalendulaExit
 # 281 "data/maps/PhoenixTown/scripts.pory"
-
+	waitmovement 0
 # 282 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_CalendulaLineNoChoiceZenno::
+	call PhoenixTown_EventScript_ClearPetalburgPart1
 # 283 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	releaseall
 # 284 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_CalendulaNoChoiceZenno, MSGBOX_DEFAULT
+	end
 # 285 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 286 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_CalendulaLineNoChoice::
 # 287 "data/maps/PhoenixTown/scripts.pory"
-
+	checkplayergender
 # 288 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_RivalLineWait::
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_CalendulaLineNoChoiceZinnia
 # 289 "data/maps/PhoenixTown/scripts.pory"
-	checkplayergender
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_CalendulaLineNoChoiceZenno
 # 290 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaWait
+	return
 # 291 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoWait
+
 # 292 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_CalendulaLineNoChoiceZinnia::
 # 293 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
 # 294 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZinniaWait::
+	msgbox PhoenixTown_Text_CalendulaNoChoiceZinnia, MSGBOX_DEFAULT
 # 295 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	removefieldmugshot
 # 296 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZinniaWait, MSGBOX_DEFAULT
+	return
 # 297 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 298 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_CalendulaLineNoChoiceZenno::
 # 299 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
 # 300 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZennoWait::
+	msgbox PhoenixTown_Text_CalendulaNoChoiceZenno, MSGBOX_DEFAULT
 # 301 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	removefieldmugshot
 # 302 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZennoWait, MSGBOX_DEFAULT
+	return
 # 303 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 304 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_RivalLineWait::
 # 305 "data/maps/PhoenixTown/scripts.pory"
-
+	checkplayergender
 # 306 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_RivalLineUnnaturalEvents::
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaWait
 # 307 "data/maps/PhoenixTown/scripts.pory"
-	checkplayergender
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoWait
 # 308 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaUnnaturalEvents
+	return
 # 309 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoUnnaturalEvents
+
 # 310 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZinniaWait::
 # 311 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 312 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZinniaUnnaturalEvents::
+	msgbox PhoenixTown_Text_ZinniaWait, MSGBOX_DEFAULT
 # 313 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	removefieldmugshot
 # 314 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZinniaUnnaturalEvents, MSGBOX_DEFAULT
+	return
 # 315 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 316 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZennoWait::
 # 317 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 318 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZennoUnnaturalEvents::
+	msgbox PhoenixTown_Text_ZennoWait, MSGBOX_DEFAULT
 # 319 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	removefieldmugshot
 # 320 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZennoUnnaturalEvents, MSGBOX_DEFAULT
+	return
 # 321 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 322 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_RivalLineUnnaturalEvents::
 # 323 "data/maps/PhoenixTown/scripts.pory"
-
+	checkplayergender
 # 324 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_RivalLineStopDisasters::
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaUnnaturalEvents
 # 325 "data/maps/PhoenixTown/scripts.pory"
-	checkplayergender
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoUnnaturalEvents
 # 326 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaStopDisasters
+	return
 # 327 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoStopDisasters
+
 # 328 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZinniaUnnaturalEvents::
 # 329 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 330 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZinniaStopDisasters::
+	msgbox PhoenixTown_Text_ZinniaUnnaturalEvents, MSGBOX_DEFAULT
 # 331 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	removefieldmugshot
 # 332 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZinniaStopDisasters, MSGBOX_DEFAULT
+	return
 # 333 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 334 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZennoUnnaturalEvents::
 # 335 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 336 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZennoStopDisasters::
+	msgbox PhoenixTown_Text_ZennoUnnaturalEvents, MSGBOX_DEFAULT
 # 337 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	removefieldmugshot
 # 338 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZennoStopDisasters, MSGBOX_DEFAULT
+	return
 # 339 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 340 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_RivalLineStopDisasters::
 # 341 "data/maps/PhoenixTown/scripts.pory"
-
+	checkplayergender
 # 342 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_RivalLineWhatDoesThatMean::
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaStopDisasters
 # 343 "data/maps/PhoenixTown/scripts.pory"
-	checkplayergender
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoStopDisasters
 # 344 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaWhatDoesThatMean
+	return
 # 345 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoWhatDoesThatMean
+
 # 346 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZinniaStopDisasters::
 # 347 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 348 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZinniaWhatDoesThatMean::
+	msgbox PhoenixTown_Text_ZinniaStopDisasters, MSGBOX_DEFAULT
 # 349 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	removefieldmugshot
 # 350 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZinniaWhatDoesThatMean, MSGBOX_DEFAULT
+	return
 # 351 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 352 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZennoStopDisasters::
 # 353 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 354 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZennoWhatDoesThatMean::
+	msgbox PhoenixTown_Text_ZennoStopDisasters, MSGBOX_DEFAULT
 # 355 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	removefieldmugshot
 # 356 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZennoWhatDoesThatMean, MSGBOX_DEFAULT
+	return
 # 357 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 358 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_RivalLineWhatDoesThatMean::
 # 359 "data/maps/PhoenixTown/scripts.pory"
-
+	checkplayergender
 # 360 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_RivalLineCanWeTrust::
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaWhatDoesThatMean
 # 361 "data/maps/PhoenixTown/scripts.pory"
-	checkplayergender
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoWhatDoesThatMean
 # 362 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaCanWeTrust
+	return
 # 363 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoCanWeTrust
+
 # 364 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZinniaWhatDoesThatMean::
 # 365 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 366 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZinniaCanWeTrust::
+	msgbox PhoenixTown_Text_ZinniaWhatDoesThatMean, MSGBOX_DEFAULT
 # 367 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	removefieldmugshot
 # 368 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZinniaCanWeTrust, MSGBOX_DEFAULT
+	return
 # 369 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 370 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZennoWhatDoesThatMean::
 # 371 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 372 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZennoCanWeTrust::
+	msgbox PhoenixTown_Text_ZennoWhatDoesThatMean, MSGBOX_DEFAULT
 # 373 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	removefieldmugshot
 # 374 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZennoCanWeTrust, MSGBOX_DEFAULT
+	return
 # 375 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 376 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_RivalLineCanWeTrust::
 # 377 "data/maps/PhoenixTown/scripts.pory"
-
+	checkplayergender
 # 378 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_RivalLineIUnderstand::
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaCanWeTrust
 # 379 "data/maps/PhoenixTown/scripts.pory"
-	checkplayergender
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoCanWeTrust
 # 380 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaIUnderstand
+	return
 # 381 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoIUnderstand
+
 # 382 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZinniaCanWeTrust::
 # 383 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 384 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZinniaIUnderstand::
+	msgbox PhoenixTown_Text_ZinniaCanWeTrust, MSGBOX_DEFAULT
 # 385 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	removefieldmugshot
 # 386 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZinniaIUnderstand, MSGBOX_DEFAULT
+	return
 # 387 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 388 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZennoCanWeTrust::
 # 389 "data/maps/PhoenixTown/scripts.pory"
-
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 390 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZennoIUnderstand::
+	msgbox PhoenixTown_Text_ZennoCanWeTrust, MSGBOX_DEFAULT
 # 391 "data/maps/PhoenixTown/scripts.pory"
-	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	removefieldmugshot
 # 392 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZennoIUnderstand, MSGBOX_DEFAULT
+	return
 # 393 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 394 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_RivalLineIUnderstand::
 # 395 "data/maps/PhoenixTown/scripts.pory"
-
-# 396 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_RivalLineGoodLuck::
-# 397 "data/maps/PhoenixTown/scripts.pory"
 	checkplayergender
+# 396 "data/maps/PhoenixTown/scripts.pory"
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaIUnderstand
+# 397 "data/maps/PhoenixTown/scripts.pory"
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoIUnderstand
 # 398 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaGoodLuck
+	return
 # 399 "data/maps/PhoenixTown/scripts.pory"
-	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoGoodLuck
+
 # 400 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZinniaIUnderstand::
 # 401 "data/maps/PhoenixTown/scripts.pory"
-
-# 402 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZinniaGoodLuck::
-# 403 "data/maps/PhoenixTown/scripts.pory"
 	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+# 402 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_ZinniaIUnderstand, MSGBOX_DEFAULT
+# 403 "data/maps/PhoenixTown/scripts.pory"
+	removefieldmugshot
 # 404 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZinniaGoodLuck, MSGBOX_DEFAULT
+	return
 # 405 "data/maps/PhoenixTown/scripts.pory"
-	removefieldmugshot
+
 # 406 "data/maps/PhoenixTown/scripts.pory"
-	return
+PhoenixTown_EventScript_ZennoIUnderstand::
 # 407 "data/maps/PhoenixTown/scripts.pory"
-
-# 408 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_ZennoGoodLuck::
-# 409 "data/maps/PhoenixTown/scripts.pory"
 	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
-# 410 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_ZennoGoodLuck, MSGBOX_DEFAULT
-# 411 "data/maps/PhoenixTown/scripts.pory"
+# 408 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_ZennoIUnderstand, MSGBOX_DEFAULT
+# 409 "data/maps/PhoenixTown/scripts.pory"
 	removefieldmugshot
-# 412 "data/maps/PhoenixTown/scripts.pory"
+# 410 "data/maps/PhoenixTown/scripts.pory"
 	return
-# 413 "data/maps/PhoenixTown/scripts.pory"
+# 411 "data/maps/PhoenixTown/scripts.pory"
 
+# 412 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_RivalLineGoodLuck::
+# 413 "data/maps/PhoenixTown/scripts.pory"
+	checkplayergender
 # 414 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_PlayerToCalendulaFromSouth17:
+	goto_if_eq VAR_RESULT, MALE, PhoenixTown_EventScript_ZinniaGoodLuck
 # 415 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
+	goto_if_eq VAR_RESULT, FEMALE, PhoenixTown_EventScript_ZennoGoodLuck
 # 416 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
+	return
 # 417 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
+
 # 418 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+PhoenixTown_EventScript_ZinniaGoodLuck::
 # 419 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
 # 420 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	msgbox PhoenixTown_Text_ZinniaGoodLuck, MSGBOX_DEFAULT
 # 421 "data/maps/PhoenixTown/scripts.pory"
-	face_up
+	removefieldmugshot
 # 422 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+	return
 # 423 "data/maps/PhoenixTown/scripts.pory"
 
 # 424 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_PlayerToCalendulaFromSouth18:
+PhoenixTown_EventScript_ZennoGoodLuck::
 # 425 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
 # 426 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
+	msgbox PhoenixTown_Text_ZennoGoodLuck, MSGBOX_DEFAULT
 # 427 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	removefieldmugshot
 # 428 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	return
 # 429 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
-# 430 "data/maps/PhoenixTown/scripts.pory"
-	face_up
-# 431 "data/maps/PhoenixTown/scripts.pory"
-	step_end
-# 432 "data/maps/PhoenixTown/scripts.pory"
 
-# 433 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_PlayerToCalendulaFromSouth19:
-# 434 "data/maps/PhoenixTown/scripts.pory"
+# 430 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Movement_PlayerToCalendulaFromSouth17:
+# 431 "data/maps/PhoenixTown/scripts.pory"
 	walk_right
+# 432 "data/maps/PhoenixTown/scripts.pory"
+	walk_right
+# 433 "data/maps/PhoenixTown/scripts.pory"
+	walk_right
+# 434 "data/maps/PhoenixTown/scripts.pory"
+	walk_up
 # 435 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 436 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 437 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
-# 438 "data/maps/PhoenixTown/scripts.pory"
 	face_up
-# 439 "data/maps/PhoenixTown/scripts.pory"
+# 438 "data/maps/PhoenixTown/scripts.pory"
 	step_end
-# 440 "data/maps/PhoenixTown/scripts.pory"
+# 439 "data/maps/PhoenixTown/scripts.pory"
 
+# 440 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Movement_PlayerToCalendulaFromSouth18:
 # 441 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_PlayerToCalendulaFromSouth20:
+	walk_right
 # 442 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_right
 # 443 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 444 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 445 "data/maps/PhoenixTown/scripts.pory"
-	face_up
-# 446 "data/maps/PhoenixTown/scripts.pory"
-	step_end
-# 447 "data/maps/PhoenixTown/scripts.pory"
-
-# 448 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_PlayerToCalendulaFromSouth21:
-# 449 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
-# 450 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
+# 446 "data/maps/PhoenixTown/scripts.pory"
+	face_up
+# 447 "data/maps/PhoenixTown/scripts.pory"
+	step_end
+# 448 "data/maps/PhoenixTown/scripts.pory"
+
+# 449 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Movement_PlayerToCalendulaFromSouth19:
+# 450 "data/maps/PhoenixTown/scripts.pory"
+	walk_right
 # 451 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 452 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 453 "data/maps/PhoenixTown/scripts.pory"
-	face_up
+	walk_up
 # 454 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+	face_up
 # 455 "data/maps/PhoenixTown/scripts.pory"
-
+	step_end
 # 456 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_PlayerToCalendulaFromSouth22:
+
 # 457 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+PhoenixTown_Movement_PlayerToCalendulaFromSouth20:
 # 458 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+	walk_up
 # 459 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 460 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 461 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	face_up
 # 462 "data/maps/PhoenixTown/scripts.pory"
-	face_up
+	step_end
 # 463 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+
 # 464 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Movement_PlayerToCalendulaFromSouth21:
 # 465 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_PlayerToCalendulaFromSouth23:
+	walk_left
 # 466 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+	walk_up
 # 467 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+	walk_up
 # 468 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+	walk_up
 # 469 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	face_up
 # 470 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	step_end
 # 471 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+
 # 472 "data/maps/PhoenixTown/scripts.pory"
-	face_up
+PhoenixTown_Movement_PlayerToCalendulaFromSouth22:
 # 473 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+	walk_left
 # 474 "data/maps/PhoenixTown/scripts.pory"
-
+	walk_left
 # 475 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_AuroraEnter:
-# 476 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 477 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 478 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 479 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 480 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 481 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 482 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 483 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 484 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
-# 485 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
-# 486 "data/maps/PhoenixTown/scripts.pory"
-	face_right
-# 487 "data/maps/PhoenixTown/scripts.pory"
-	step_end
-# 488 "data/maps/PhoenixTown/scripts.pory"
-
-# 489 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_AuroraToRival:
-# 490 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 491 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
-# 492 "data/maps/PhoenixTown/scripts.pory"
-	walk_right
-# 493 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
-# 494 "data/maps/PhoenixTown/scripts.pory"
+# 476 "data/maps/PhoenixTown/scripts.pory"
+	walk_up
+# 477 "data/maps/PhoenixTown/scripts.pory"
+	walk_up
+# 478 "data/maps/PhoenixTown/scripts.pory"
 	face_up
-# 495 "data/maps/PhoenixTown/scripts.pory"
+# 479 "data/maps/PhoenixTown/scripts.pory"
 	step_end
-# 496 "data/maps/PhoenixTown/scripts.pory"
+# 480 "data/maps/PhoenixTown/scripts.pory"
 
+# 481 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Movement_PlayerToCalendulaFromSouth23:
+# 482 "data/maps/PhoenixTown/scripts.pory"
+	walk_left
+# 483 "data/maps/PhoenixTown/scripts.pory"
+	walk_left
+# 484 "data/maps/PhoenixTown/scripts.pory"
+	walk_left
+# 485 "data/maps/PhoenixTown/scripts.pory"
+	walk_up
+# 486 "data/maps/PhoenixTown/scripts.pory"
+	walk_up
+# 487 "data/maps/PhoenixTown/scripts.pory"
+	walk_up
+# 488 "data/maps/PhoenixTown/scripts.pory"
+	face_up
+# 489 "data/maps/PhoenixTown/scripts.pory"
+	step_end
+# 490 "data/maps/PhoenixTown/scripts.pory"
+
+# 491 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Movement_AuroraEnter:
+# 492 "data/maps/PhoenixTown/scripts.pory"
+	walk_down
+# 493 "data/maps/PhoenixTown/scripts.pory"
+	walk_down
+# 494 "data/maps/PhoenixTown/scripts.pory"
+	walk_down
+# 495 "data/maps/PhoenixTown/scripts.pory"
+	walk_down
+# 496 "data/maps/PhoenixTown/scripts.pory"
+	walk_down
 # 497 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_AuroraToPlayer:
+	walk_down
 # 498 "data/maps/PhoenixTown/scripts.pory"
 	walk_down
 # 499 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+	walk_down
 # 500 "data/maps/PhoenixTown/scripts.pory"
-	face_up
+	walk_right
 # 501 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+	walk_right
 # 502 "data/maps/PhoenixTown/scripts.pory"
-
+	face_right
 # 503 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_AuroraExit:
+	step_end
 # 504 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+
 # 505 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+PhoenixTown_Movement_AuroraToRival:
 # 506 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+	walk_down
 # 507 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_right
 # 508 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_right
 # 509 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 510 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	face_up
 # 511 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	step_end
 # 512 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+
 # 513 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+PhoenixTown_Movement_AuroraToPlayer:
 # 514 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_down
 # 515 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_left
 # 516 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	face_up
 # 517 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	step_end
 # 518 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+
 # 519 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+PhoenixTown_Movement_AuroraExit:
 # 520 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_left
 # 521 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_left
 # 522 "data/maps/PhoenixTown/scripts.pory"
-	walk_up
+	walk_left
 # 523 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 524 "data/maps/PhoenixTown/scripts.pory"
@@ -1053,59 +1053,59 @@ PhoenixTown_Movement_AuroraExit:
 # 527 "data/maps/PhoenixTown/scripts.pory"
 	walk_up
 # 528 "data/maps/PhoenixTown/scripts.pory"
-	face_up
+	walk_up
 # 529 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+	walk_up
 # 530 "data/maps/PhoenixTown/scripts.pory"
-
+	walk_up
 # 531 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_RivalStepToPlayer:
+	walk_up
 # 532 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 533 "data/maps/PhoenixTown/scripts.pory"
-	face_left
+	walk_up
 # 534 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+	walk_up
 # 535 "data/maps/PhoenixTown/scripts.pory"
-
+	walk_up
 # 536 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_RivalExit:
+	walk_up
 # 537 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 538 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 539 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 540 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 541 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 542 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 543 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	walk_up
 # 544 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	face_up
 # 545 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+	step_end
 # 546 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+
 # 547 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+PhoenixTown_Movement_RivalStepToPlayer:
 # 548 "data/maps/PhoenixTown/scripts.pory"
-
-# 549 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_LukaStepToPlayer:
-# 550 "data/maps/PhoenixTown/scripts.pory"
 	walk_down
-# 551 "data/maps/PhoenixTown/scripts.pory"
-	face_right
-# 552 "data/maps/PhoenixTown/scripts.pory"
+# 549 "data/maps/PhoenixTown/scripts.pory"
+	face_left
+# 550 "data/maps/PhoenixTown/scripts.pory"
 	step_end
-# 553 "data/maps/PhoenixTown/scripts.pory"
+# 551 "data/maps/PhoenixTown/scripts.pory"
 
+# 552 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Movement_RivalExit:
+# 553 "data/maps/PhoenixTown/scripts.pory"
+	walk_down
 # 554 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_LukaExit:
+	walk_down
 # 555 "data/maps/PhoenixTown/scripts.pory"
 	walk_down
 # 556 "data/maps/PhoenixTown/scripts.pory"
@@ -1123,21 +1123,21 @@ PhoenixTown_Movement_LukaExit:
 # 562 "data/maps/PhoenixTown/scripts.pory"
 	walk_down
 # 563 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 564 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
-# 565 "data/maps/PhoenixTown/scripts.pory"
 	step_end
-# 566 "data/maps/PhoenixTown/scripts.pory"
+# 564 "data/maps/PhoenixTown/scripts.pory"
 
+# 565 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Movement_LukaStepToPlayer:
+# 566 "data/maps/PhoenixTown/scripts.pory"
+	walk_down
 # 567 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Movement_CalendulaExit:
+	face_right
 # 568 "data/maps/PhoenixTown/scripts.pory"
-	walk_left
+	step_end
 # 569 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+
 # 570 "data/maps/PhoenixTown/scripts.pory"
-	walk_down
+PhoenixTown_Movement_LukaExit:
 # 571 "data/maps/PhoenixTown/scripts.pory"
 	walk_down
 # 572 "data/maps/PhoenixTown/scripts.pory"
@@ -1155,358 +1155,522 @@ PhoenixTown_Movement_CalendulaExit:
 # 578 "data/maps/PhoenixTown/scripts.pory"
 	walk_down
 # 579 "data/maps/PhoenixTown/scripts.pory"
-	step_end
+	walk_down
 # 580 "data/maps/PhoenixTown/scripts.pory"
-
+	walk_down
 # 581 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaCallPlayerOver:
+	step_end
 # 582 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: {PLAYER}! Over here!$"
+
 # 583 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Movement_CalendulaExit:
 # 584 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaWaitForPlayer:
+	walk_left
 # 585 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: We should speak near the\n"
+	walk_down
 # 586 "data/maps/PhoenixTown/scripts.pory"
-	.string "others, {PLAYER}.$"
+	walk_down
 # 587 "data/maps/PhoenixTown/scripts.pory"
-
+	walk_down
 # 588 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaPetalburgEvent:
+	walk_down
 # 589 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: CALENDULA is waiting for you.$"
+	walk_down
 # 590 "data/maps/PhoenixTown/scripts.pory"
-
+	walk_down
 # 591 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaWait:
+	walk_down
 # 592 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: CALENDULA is waiting for you.$"
+	walk_down
 # 593 "data/maps/PhoenixTown/scripts.pory"
-
+	walk_down
 # 594 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoWait:
+	walk_down
 # 595 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: CALENDULA is waiting for you.$"
+	step_end
 # 596 "data/maps/PhoenixTown/scripts.pory"
 
 # 597 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraSilent:
+PhoenixTown_Text_CalendulaCallPlayerOver:
 # 598 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: ...$"
+	.string "CALENDULA: {PLAYER}! Over here!$"
 # 599 "data/maps/PhoenixTown/scripts.pory"
 
 # 600 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaGladYoureHere:
+PhoenixTown_Text_CalendulaWaitForPlayer:
 # 601 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: {PLAYER}! I'm glad\n"
+	.string "CALENDULA: We should speak near the\n"
 # 602 "data/maps/PhoenixTown/scripts.pory"
-	.string "you're here.\p"
+	.string "others, {PLAYER}.$"
 # 603 "data/maps/PhoenixTown/scripts.pory"
-	.string "Did you come from PETALBURG?$"
+
 # 604 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Text_LukaPetalburgEvent:
 # 605 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaUnnaturalEvents:
+	.string "LUKA: CALENDULA is waiting for you.$"
 # 606 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: I've been hearing of\n"
+
 # 607 "data/maps/PhoenixTown/scripts.pory"
-	.string "unnatural events occurring lately,\l"
+PhoenixTown_Text_ZinniaWait:
 # 608 "data/maps/PhoenixTown/scripts.pory"
-	.string "but I didn't expect it to happen\l"
+	.string "ZINNIA: CALENDULA is waiting for you.$"
 # 609 "data/maps/PhoenixTown/scripts.pory"
-	.string "so close to home.$"
+
 # 610 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Text_ZennoWait:
 # 611 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoUnnaturalEvents:
+	.string "ZENNO: CALENDULA is waiting for you.$"
 # 612 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: I've been hearing of\n"
+
 # 613 "data/maps/PhoenixTown/scripts.pory"
-	.string "unnatural events occurring lately,\l"
+PhoenixTown_Text_AuroraSilent:
 # 614 "data/maps/PhoenixTown/scripts.pory"
-	.string "but I didn't expect it to happen\l"
+	.string "AURORA: ...$"
 # 615 "data/maps/PhoenixTown/scripts.pory"
-	.string "so close to home.$"
+
 # 616 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Text_CalendulaGladYoureHere:
 # 617 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaCometLead:
+	.string "CALENDULA: {PLAYER}! I'm glad\n"
 # 618 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: It was only a matter of\n"
+	.string "you're here.\p"
 # 619 "data/maps/PhoenixTown/scripts.pory"
-	.string "time.\p"
+	.string "Did you come from PETALBURG?$"
 # 620 "data/maps/PhoenixTown/scripts.pory"
-	.string "I've been chasing every lead I\n"
+
 # 621 "data/maps/PhoenixTown/scripts.pory"
-	.string "could find about that comet, and\l"
+PhoenixTown_Text_ZinniaUnnaturalEvents:
 # 622 "data/maps/PhoenixTown/scripts.pory"
-	.string "it seems to be connected to all\l"
+	.string "ZINNIA: I've been hearing of\n"
 # 623 "data/maps/PhoenixTown/scripts.pory"
-	.string "of these events.$"
+	.string "unnatural events occurring lately,\l"
 # 624 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "but I didn't expect it to happen\l"
 # 625 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaLetterAndTrip:
+	.string "so close to home.$"
 # 626 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: I received a letter\n"
-# 627 "data/maps/PhoenixTown/scripts.pory"
-	.string "recently from someone who claimed\l"
-# 628 "data/maps/PhoenixTown/scripts.pory"
-	.string "there would be answers in\l"
-# 629 "data/maps/PhoenixTown/scripts.pory"
-	.string "PHOENIX TOWN.\p"
-# 630 "data/maps/PhoenixTown/scripts.pory"
-	.string "When the earthquakes and rain\n"
-# 631 "data/maps/PhoenixTown/scripts.pory"
-	.string "started in PETALBURG, I knew we\l"
-# 632 "data/maps/PhoenixTown/scripts.pory"
-	.string "had to do something.\p"
-# 633 "data/maps/PhoenixTown/scripts.pory"
-	.string "Even if it seemed like a long\n"
-# 634 "data/maps/PhoenixTown/scripts.pory"
-	.string "shot, we made the trip.$"
-# 635 "data/maps/PhoenixTown/scripts.pory"
 
+# 627 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_ZennoUnnaturalEvents:
+# 628 "data/maps/PhoenixTown/scripts.pory"
+	.string "ZENNO: I've been hearing of\n"
+# 629 "data/maps/PhoenixTown/scripts.pory"
+	.string "unnatural events occurring lately,\l"
+# 630 "data/maps/PhoenixTown/scripts.pory"
+	.string "but I didn't expect it to happen\l"
+# 631 "data/maps/PhoenixTown/scripts.pory"
+	.string "so close to home.$"
+# 632 "data/maps/PhoenixTown/scripts.pory"
+
+# 633 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_LukaCometLead:
+# 634 "data/maps/PhoenixTown/scripts.pory"
+	.string "LUKA: It was only a matter of\n"
+# 635 "data/maps/PhoenixTown/scripts.pory"
+	.string "time.\p"
 # 636 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaNoAnswers:
+	.string "I've been chasing every lead I\n"
 # 637 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: But so far we haven't\n"
+	.string "could find about that comet, and\l"
 # 638 "data/maps/PhoenixTown/scripts.pory"
-	.string "found anyone here who knows\l"
+	.string "it seems to be connected to all\l"
 # 639 "data/maps/PhoenixTown/scripts.pory"
-	.string "anything!$"
+	.string "of these events.$"
 # 640 "data/maps/PhoenixTown/scripts.pory"
 
 # 641 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraSoYouCame:
+PhoenixTown_Text_CalendulaLetterAndTrip:
 # 642 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: So you came.\p"
+	.string "CALENDULA: I received a letter\n"
 # 643 "data/maps/PhoenixTown/scripts.pory"
-	.string "It happened again, then.$"
+	.string "recently from someone who claimed\l"
 # 644 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "there would be answers in\l"
 # 645 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaStopDisasters:
+	.string "PHOENIX TOWN.\p"
 # 646 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: You sent that letter?\p"
+	.string "When the earthquakes and rain\n"
 # 647 "data/maps/PhoenixTown/scripts.pory"
-	.string "Do you know how to stop the\n"
+	.string "started in PETALBURG, I knew we\l"
 # 648 "data/maps/PhoenixTown/scripts.pory"
-	.string "disasters in our city?$"
+	.string "had to do something.\p"
 # 649 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "Even if it seemed like a long\n"
 # 650 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoStopDisasters:
+	.string "shot, we made the trip.$"
 # 651 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: You sent that letter?\p"
+
 # 652 "data/maps/PhoenixTown/scripts.pory"
-	.string "Do you know how to stop the\n"
+PhoenixTown_Text_LukaNoAnswers:
 # 653 "data/maps/PhoenixTown/scripts.pory"
-	.string "disasters in our city?$"
+	.string "LUKA: But so far we haven't\n"
 # 654 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "found anyone here who knows\l"
 # 655 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaTellUs:
+	.string "anything!$"
 # 656 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: Please, tell us what\n"
+
 # 657 "data/maps/PhoenixTown/scripts.pory"
-	.string "you know.$"
+PhoenixTown_Text_AuroraSoYouCame:
 # 658 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "AURORA: So you came.\p"
 # 659 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaCometQuestion:
+	.string "It happened again, then.$"
 # 660 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: It has to do with the\n"
+
 # 661 "data/maps/PhoenixTown/scripts.pory"
-	.string "comet, right?$"
+PhoenixTown_Text_ZinniaStopDisasters:
 # 662 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "ZINNIA: You sent that letter?\p"
 # 663 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraCometSavior:
+	.string "Do you know how to stop the\n"
 # 664 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: You are correct.\p"
+	.string "disasters in our city?$"
 # 665 "data/maps/PhoenixTown/scripts.pory"
-	.string "The comet is our savior, but\n"
+
 # 666 "data/maps/PhoenixTown/scripts.pory"
-	.string "there are forces trying to return\l"
+PhoenixTown_Text_ZennoStopDisasters:
 # 667 "data/maps/PhoenixTown/scripts.pory"
-	.string "us to the path of ruin.$"
+	.string "ZENNO: You sent that letter?\p"
 # 668 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "Do you know how to stop the\n"
 # 669 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaWhatDoesThatMean:
+	.string "disasters in our city?$"
 # 670 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: What...?\p"
+
 # 671 "data/maps/PhoenixTown/scripts.pory"
-	.string "What is that supposed to mean?$"
+PhoenixTown_Text_CalendulaTellUs:
 # 672 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "CALENDULA: Please, tell us what\n"
 # 673 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoWhatDoesThatMean:
+	.string "you know.$"
 # 674 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: What...?\p"
+
 # 675 "data/maps/PhoenixTown/scripts.pory"
-	.string "What is that supposed to mean?$"
+PhoenixTown_Text_LukaCometQuestion:
 # 676 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "LUKA: It has to do with the\n"
 # 677 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraGiftOnly:
+	.string "comet, right?$"
 # 678 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: It is possible to save\n"
-# 679 "data/maps/PhoenixTown/scripts.pory"
-	.string "your home, but I can only teach\l"
-# 680 "data/maps/PhoenixTown/scripts.pory"
-	.string "those who have the gift.$"
-# 681 "data/maps/PhoenixTown/scripts.pory"
 
+# 679 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_AuroraCometSavior:
+# 680 "data/maps/PhoenixTown/scripts.pory"
+	.string "AURORA: You are correct.\p"
+# 681 "data/maps/PhoenixTown/scripts.pory"
+	.string "The comet is our savior, but\n"
 # 682 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaWhatGift:
+	.string "there are forces trying to return\l"
 # 683 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: What is this gift?$"
+	.string "us to the path of ruin.$"
 # 684 "data/maps/PhoenixTown/scripts.pory"
 
 # 685 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraNotYou:
+PhoenixTown_Text_ZinniaWhatDoesThatMean:
 # 686 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: Not you.$"
+	.string "ZINNIA: What...?\p"
 # 687 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "What is that supposed to mean?$"
 # 688 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraNorYou:
+
 # 689 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: Nor you.$"
+PhoenixTown_Text_ZennoWhatDoesThatMean:
 # 690 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "ZENNO: What...?\p"
 # 691 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraPlayerHasGift:
+	.string "What is that supposed to mean?$"
 # 692 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: You.\p"
+
 # 693 "data/maps/PhoenixTown/scripts.pory"
-	.string "You have it. I will teach you.\p"
+PhoenixTown_Text_AuroraGiftOnly:
 # 694 "data/maps/PhoenixTown/scripts.pory"
-	.string "Come through the cave to learn.$"
+	.string "AURORA: It is possible to save\n"
 # 695 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "your home, but I can only teach\l"
 # 696 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaWhatWasThat:
+	.string "those who have the gift.$"
 # 697 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: What... was that?$"
+
 # 698 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Text_LukaWhatGift:
 # 699 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaCanWeTrust:
+	.string "LUKA: What is this gift?$"
 # 700 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: Can we really trust\n"
-# 701 "data/maps/PhoenixTown/scripts.pory"
-	.string "someone we know so little about?$"
-# 702 "data/maps/PhoenixTown/scripts.pory"
 
+# 701 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_AuroraNotYou:
+# 702 "data/maps/PhoenixTown/scripts.pory"
+	.string "AURORA: Not you.$"
 # 703 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoCanWeTrust:
+
 # 704 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: Can we really trust\n"
+PhoenixTown_Text_AuroraNorYou:
 # 705 "data/maps/PhoenixTown/scripts.pory"
-	.string "someone we know so little about?$"
+	.string "AURORA: Nor you.$"
 # 706 "data/maps/PhoenixTown/scripts.pory"
 
 # 707 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaNoChoiceZinnia:
+PhoenixTown_Text_AuroraFinalBattle:
 # 708 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: Right now, we have no\n"
+	.string "AURORA: But to be certain you\n"
 # 709 "data/maps/PhoenixTown/scripts.pory"
-	.string "choice.\p"
+	.string "are truly the chosen one,\p"
 # 710 "data/maps/PhoenixTown/scripts.pory"
-	.string "{PLAYER} is the only one who she\n"
+	.string "we must have one final battle.$"
 # 711 "data/maps/PhoenixTown/scripts.pory"
-	.string "will teach, so they should stay\l"
-# 712 "data/maps/PhoenixTown/scripts.pory"
-	.string "here and see what they can learn.\p"
-# 713 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA, ZINNIA, we will go back to\n"
-# 714 "data/maps/PhoenixTown/scripts.pory"
-	.string "PETALBURG.\p"
-# 715 "data/maps/PhoenixTown/scripts.pory"
-	.string "We must do whatever we can to\n"
-# 716 "data/maps/PhoenixTown/scripts.pory"
-	.string "protect the city and its people\l"
-# 717 "data/maps/PhoenixTown/scripts.pory"
-	.string "until {PLAYER} returns.$"
-# 718 "data/maps/PhoenixTown/scripts.pory"
 
+# 712 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_AuroraFinalBattleDefeat:
+# 713 "data/maps/PhoenixTown/scripts.pory"
+	.string "AURORA: I see it now...$"
+# 714 "data/maps/PhoenixTown/scripts.pory"
+
+# 715 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_AuroraPlayerHasGift:
+# 716 "data/maps/PhoenixTown/scripts.pory"
+	.string "AURORA: You.\p"
+# 717 "data/maps/PhoenixTown/scripts.pory"
+	.string "You have it. I will teach you.\p"
+# 718 "data/maps/PhoenixTown/scripts.pory"
+	.string "Come through the cave to learn.$"
 # 719 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaNoChoiceZenno:
+
 # 720 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: Right now, we have no\n"
+PhoenixTown_Text_LukaWhatWasThat:
 # 721 "data/maps/PhoenixTown/scripts.pory"
-	.string "choice.\p"
+	.string "LUKA: What... was that?$"
 # 722 "data/maps/PhoenixTown/scripts.pory"
-	.string "{PLAYER} is the only one who she\n"
+
 # 723 "data/maps/PhoenixTown/scripts.pory"
-	.string "will teach, so they should stay\l"
+PhoenixTown_Text_ZinniaCanWeTrust:
 # 724 "data/maps/PhoenixTown/scripts.pory"
-	.string "here and see what they can learn.\p"
+	.string "ZINNIA: Can we really trust\n"
 # 725 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA, ZENNO, we will go back to\n"
+	.string "someone we know so little about?$"
 # 726 "data/maps/PhoenixTown/scripts.pory"
-	.string "PETALBURG.\p"
+
 # 727 "data/maps/PhoenixTown/scripts.pory"
-	.string "We must do whatever we can to\n"
+PhoenixTown_Text_ZennoCanWeTrust:
 # 728 "data/maps/PhoenixTown/scripts.pory"
-	.string "protect the city and its people\l"
+	.string "ZENNO: Can we really trust\n"
 # 729 "data/maps/PhoenixTown/scripts.pory"
-	.string "until {PLAYER} returns.$"
+	.string "someone we know so little about?$"
 # 730 "data/maps/PhoenixTown/scripts.pory"
 
 # 731 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaIUnderstand:
+PhoenixTown_Text_CalendulaNoChoiceZinnia:
 # 732 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: I understand.$"
+	.string "CALENDULA: Right now, we have no\n"
 # 733 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "choice.\p"
 # 734 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoIUnderstand:
+	.string "{PLAYER} is the only one who she\n"
 # 735 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: I understand.$"
+	.string "will teach, so they should stay\l"
 # 736 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "here and see what they can learn.\p"
 # 737 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaGoodLuck:
+	.string "LUKA, ZINNIA, we will go back to\n"
 # 738 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: Good luck, {PLAYER}.\p"
+	.string "PETALBURG.\p"
 # 739 "data/maps/PhoenixTown/scripts.pory"
-	.string "I'll see you soon in PETALBURG,\n"
+	.string "We must do whatever we can to\n"
 # 740 "data/maps/PhoenixTown/scripts.pory"
-	.string "hopefully.$"
+	.string "protect the city and its people\l"
 # 741 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "until {PLAYER} returns.$"
 # 742 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoGoodLuck:
+
 # 743 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: Good luck, {PLAYER}.\p"
+PhoenixTown_Text_CalendulaNoChoiceZenno:
 # 744 "data/maps/PhoenixTown/scripts.pory"
-	.string "I'll see you soon in PETALBURG,\n"
+	.string "CALENDULA: Right now, we have no\n"
 # 745 "data/maps/PhoenixTown/scripts.pory"
-	.string "hopefully.$"
+	.string "choice.\p"
 # 746 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "{PLAYER} is the only one who she\n"
 # 747 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaTrustYou:
+	.string "will teach, so they should stay\l"
 # 748 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: I trust you, {PLAYER}.\p"
+	.string "here and see what they can learn.\p"
 # 749 "data/maps/PhoenixTown/scripts.pory"
-	.string "Once you get back, make sure you\n"
+	.string "LUKA, ZENNO, we will go back to\n"
 # 750 "data/maps/PhoenixTown/scripts.pory"
-	.string "tell me everything!$"
+	.string "PETALBURG.\p"
 # 751 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "We must do whatever we can to\n"
 # 752 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaBeSafe:
+	.string "protect the city and its people\l"
 # 753 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: I know you won't let\n"
+	.string "until {PLAYER} returns.$"
 # 754 "data/maps/PhoenixTown/scripts.pory"
-	.string "us down, {PLAYER}.\p"
+
 # 755 "data/maps/PhoenixTown/scripts.pory"
-	.string "Be safe, and return as soon as\n"
+PhoenixTown_Text_ZinniaIUnderstand:
 # 756 "data/maps/PhoenixTown/scripts.pory"
+	.string "ZINNIA: I understand.$"
+# 757 "data/maps/PhoenixTown/scripts.pory"
+
+# 758 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_ZennoIUnderstand:
+# 759 "data/maps/PhoenixTown/scripts.pory"
+	.string "ZENNO: I understand.$"
+# 760 "data/maps/PhoenixTown/scripts.pory"
+
+# 761 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_ZinniaGoodLuck:
+# 762 "data/maps/PhoenixTown/scripts.pory"
+	.string "ZINNIA: Good luck, {PLAYER}.\p"
+# 763 "data/maps/PhoenixTown/scripts.pory"
+	.string "I'll see you soon in PETALBURG,\n"
+# 764 "data/maps/PhoenixTown/scripts.pory"
+	.string "hopefully.$"
+# 765 "data/maps/PhoenixTown/scripts.pory"
+
+# 766 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_ZennoGoodLuck:
+# 767 "data/maps/PhoenixTown/scripts.pory"
+	.string "ZENNO: Good luck, {PLAYER}.\p"
+# 768 "data/maps/PhoenixTown/scripts.pory"
+	.string "I'll see you soon in PETALBURG,\n"
+# 769 "data/maps/PhoenixTown/scripts.pory"
+	.string "hopefully.$"
+# 770 "data/maps/PhoenixTown/scripts.pory"
+
+# 771 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_LukaTrustYou:
+# 772 "data/maps/PhoenixTown/scripts.pory"
+	.string "LUKA: I trust you, {PLAYER}.\p"
+# 773 "data/maps/PhoenixTown/scripts.pory"
+	.string "Once you get back, make sure you\n"
+# 774 "data/maps/PhoenixTown/scripts.pory"
+	.string "tell me everything!$"
+# 775 "data/maps/PhoenixTown/scripts.pory"
+
+# 776 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_CalendulaBeSafe:
+# 777 "data/maps/PhoenixTown/scripts.pory"
+	.string "CALENDULA: I know you won't let\n"
+# 778 "data/maps/PhoenixTown/scripts.pory"
+	.string "us down, {PLAYER}.\p"
+# 779 "data/maps/PhoenixTown/scripts.pory"
+	.string "Be safe, and return as soon as\n"
+# 780 "data/maps/PhoenixTown/scripts.pory"
 	.string "you can.$"
+# 781 "data/maps/PhoenixTown/scripts.pory"
+
+# 782 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_Hiker::
+# 783 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_Hiker, MSGBOX_NPC
+# 784 "data/maps/PhoenixTown/scripts.pory"
+	end
+# 785 "data/maps/PhoenixTown/scripts.pory"
+
+# 786 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_Woman::
+# 787 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_Woman, MSGBOX_NPC
+# 788 "data/maps/PhoenixTown/scripts.pory"
+	end
+# 789 "data/maps/PhoenixTown/scripts.pory"
+
+# 790 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_Youngster::
+# 791 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_Youngster, MSGBOX_NPC
+# 792 "data/maps/PhoenixTown/scripts.pory"
+	end
+# 793 "data/maps/PhoenixTown/scripts.pory"
+
+# 794 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_Man::
+# 795 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_Man, MSGBOX_NPC
+# 796 "data/maps/PhoenixTown/scripts.pory"
+	end
+# 797 "data/maps/PhoenixTown/scripts.pory"
+
+# 798 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_LittleGirl::
+# 799 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_LittleGirl, MSGBOX_NPC
+# 800 "data/maps/PhoenixTown/scripts.pory"
+	end
+# 801 "data/maps/PhoenixTown/scripts.pory"
+
+# 802 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_Gentleman::
+# 803 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_Gentleman, MSGBOX_NPC
+# 804 "data/maps/PhoenixTown/scripts.pory"
+	end
+# 805 "data/maps/PhoenixTown/scripts.pory"
+
+# 806 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Hiker:
+# 807 "data/maps/PhoenixTown/scripts.pory"
+	.string "PHOENIX TOWN rose when the\n"
+# 808 "data/maps/PhoenixTown/scripts.pory"
+	.string "canyon split in a great quake.\p"
+# 809 "data/maps/PhoenixTown/scripts.pory"
+	.string "The first settlers followed\n"
+# 810 "data/maps/PhoenixTown/scripts.pory"
+	.string "the new springs to safety.$"
+# 811 "data/maps/PhoenixTown/scripts.pory"
+
+# 812 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Woman:
+# 813 "data/maps/PhoenixTown/scripts.pory"
+	.string "At night, the earth hums\n"
+# 814 "data/maps/PhoenixTown/scripts.pory"
+	.string "beneath these streets.\p"
+# 815 "data/maps/PhoenixTown/scripts.pory"
+	.string "We say the canyon is\n"
+# 816 "data/maps/PhoenixTown/scripts.pory"
+	.string "dreaming.$"
+# 817 "data/maps/PhoenixTown/scripts.pory"
+
+# 818 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Youngster:
+# 819 "data/maps/PhoenixTown/scripts.pory"
+	.string "It is quiet here, far from\n"
+# 820 "data/maps/PhoenixTown/scripts.pory"
+	.string "every busy road.\p"
+# 821 "data/maps/PhoenixTown/scripts.pory"
+	.string "That is why I love this\n"
+# 822 "data/maps/PhoenixTown/scripts.pory"
+	.string "isolated desert town.$"
+# 823 "data/maps/PhoenixTown/scripts.pory"
+
+# 824 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Man:
+# 825 "data/maps/PhoenixTown/scripts.pory"
+	.string "A tremor can reveal a path\n"
+# 826 "data/maps/PhoenixTown/scripts.pory"
+	.string "the desert hid for years.\p"
+# 827 "data/maps/PhoenixTown/scripts.pory"
+	.string "Never cross the canyon\n"
+# 828 "data/maps/PhoenixTown/scripts.pory"
+	.string "without water.$"
+# 829 "data/maps/PhoenixTown/scripts.pory"
+
+# 830 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_LittleGirl:
+# 831 "data/maps/PhoenixTown/scripts.pory"
+	.string "At sunset, the canyon walls\n"
+# 832 "data/maps/PhoenixTown/scripts.pory"
+	.string "glow like a sleeping\n"
+# 833 "data/maps/PhoenixTown/scripts.pory"
+	.string "PHOENIX.$"
+# 834 "data/maps/PhoenixTown/scripts.pory"
+
+# 835 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Gentleman:
+# 836 "data/maps/PhoenixTown/scripts.pory"
+	.string "No city lights reach us here.\p"
+# 837 "data/maps/PhoenixTown/scripts.pory"
+	.string "The stars make the desert\n"
+# 838 "data/maps/PhoenixTown/scripts.pory"
+	.string "feel less lonely.$"

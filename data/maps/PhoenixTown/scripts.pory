@@ -220,6 +220,22 @@ PhoenixTown_EventScript_PetalburgEventFullScene::
 	waitmovement 0
 	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
 	msgbox PhoenixTown_Text_AuroraSilent, MSGBOX_DEFAULT
+	msgbox PhoenixTown_Text_AuroraFinalBattle, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	@ The event has no progress flag yet. A loss triggers White Out, and
+	@ PhoenixTown_OnTransition re-arms this entire scene on the next visit.
+	setvar VAR_LAST_TALKED, LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT
+	getdifficulty VAR_RESULT
+	goto_if_eq VAR_RESULT, 1, PhoenixTown_EventScript_AuroraFinalBattleHard
+	trainerbattle_no_intro TRAINER_AURORA_PHOENIX, PhoenixTown_Text_AuroraFinalBattleDefeat
+	goto PhoenixTown_EventScript_AuroraConfirmed
+
+PhoenixTown_EventScript_AuroraFinalBattleHard::
+	trainerbattle_no_intro TRAINER_AURORA_PHOENIX_HARD, PhoenixTown_Text_AuroraFinalBattleDefeat
+
+PhoenixTown_EventScript_AuroraConfirmed::
+	createfieldmugshot MUGSHOT_AURORA, EMOTE_NORMAL
 	msgbox PhoenixTown_Text_AuroraPlayerHasGift, MSGBOX_DEFAULT
 	removefieldmugshot
 	closemessage
@@ -688,6 +704,14 @@ PhoenixTown_Text_AuroraNotYou:
 PhoenixTown_Text_AuroraNorYou:
 	.string "AURORA: Nor you.$"
 
+PhoenixTown_Text_AuroraFinalBattle:
+	.string "AURORA: But to be certain you\n"
+	.string "are truly the chosen one,\p"
+	.string "we must have one final battle.$"
+
+PhoenixTown_Text_AuroraFinalBattleDefeat:
+	.string "AURORA: I see it now...$"
+
 PhoenixTown_Text_AuroraPlayerHasGift:
 	.string "AURORA: You.\p"
 	.string "You have it. I will teach you.\p"
@@ -754,4 +778,62 @@ PhoenixTown_Text_CalendulaBeSafe:
 	.string "us down, {PLAYER}.\p"
 	.string "Be safe, and return as soon as\n"
 	.string "you can.$"
+
+PhoenixTown_EventScript_Hiker::
+	msgbox PhoenixTown_Text_Hiker, MSGBOX_NPC
+	end
+
+PhoenixTown_EventScript_Woman::
+	msgbox PhoenixTown_Text_Woman, MSGBOX_NPC
+	end
+
+PhoenixTown_EventScript_Youngster::
+	msgbox PhoenixTown_Text_Youngster, MSGBOX_NPC
+	end
+
+PhoenixTown_EventScript_Man::
+	msgbox PhoenixTown_Text_Man, MSGBOX_NPC
+	end
+
+PhoenixTown_EventScript_LittleGirl::
+	msgbox PhoenixTown_Text_LittleGirl, MSGBOX_NPC
+	end
+
+PhoenixTown_EventScript_Gentleman::
+	msgbox PhoenixTown_Text_Gentleman, MSGBOX_NPC
+	end
+
+PhoenixTown_Text_Hiker:
+	.string "PHOENIX TOWN rose when the\n"
+	.string "canyon split in a great quake.\p"
+	.string "The first settlers followed\n"
+	.string "the new springs to safety.$"
+
+PhoenixTown_Text_Woman:
+	.string "At night, the earth hums\n"
+	.string "beneath these streets.\p"
+	.string "We say the canyon is\n"
+	.string "dreaming.$"
+
+PhoenixTown_Text_Youngster:
+	.string "It is quiet here, far from\n"
+	.string "every busy road.\p"
+	.string "That is why I love this\n"
+	.string "isolated desert town.$"
+
+PhoenixTown_Text_Man:
+	.string "A tremor can reveal a path\n"
+	.string "the desert hid for years.\p"
+	.string "Never cross the canyon\n"
+	.string "without water.$"
+
+PhoenixTown_Text_LittleGirl:
+	.string "At sunset, the canyon walls\n"
+	.string "glow like a sleeping\n"
+	.string "PHOENIX.$"
+
+PhoenixTown_Text_Gentleman:
+	.string "No city lights reach us here.\p"
+	.string "The stars make the desert\n"
+	.string "feel less lonely.$"
 `

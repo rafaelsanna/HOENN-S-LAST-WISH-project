@@ -8792,6 +8792,126 @@ IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 - Magnet Bomb
 - Flame Wheel
 
+=== TRAINER_AURORA_PHOENIX ===
+Name: AURORA
+Class: Cultist
+Pic: Aurora
+Gender: Female
+Music: Hiker
+Double Battle: No
+AI: Basic Trainer / HP Aware / Try to 2HKO
+
+Weezing
+Level: 45
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flash
+- Self-Destruct  
+- Heat Wave
+- Sludge Bomb
+
+Alakazam
+Level: 45
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flash
+- Psyshock
+- Shadow Ball
+- Swift
+
+Clefable
+Level: 45
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flash
+- Moonblast  
+- Mystical Fire
+- Wish
+
+Sableye
+Level: 45
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flash
+- Knock Off
+- Will-O-Wisp
+- Shadow Sneak
+
+Lanturn
+Level: 45
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flash
+- Thunder Wave  
+- Thunderbolt
+- Surf
+
+Shiftry
+Level: 45
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flash
+- Mind Blown  
+- Flash Cannon
+- Dark Pulse
+
+=== TRAINER_AURORA_PHOENIX_HARD ===
+Name: AURORA
+Class: Cultist
+Pic: Aurora
+Gender: Female
+Music: Hiker
+Double Battle: Yes
+AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Weezing @ Black Sludge
+Level: 45
+Ability: Levitate
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Flash
+- Explosion 
+- Toxic
+- Sludge Bomb
+
+Sableye @ Mental Herb
+Level: 45
+Ability: Prankster
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Flash
+- Knock Off
+- Will-O-Wisp
+- Taunt
+
+Alakazam @ Focus Sash
+Ability: Magic Guard
+Level: 45
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Flash
+- Psyshock
+- Shadow Ball
+- Swift
+
+Clefable @ Leftovers
+Ability: Magic Guard
+Level: 45
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Flash
+- Moonblast  
+- Heat Wave
+- Wish
+
+Lanturn @ Air Balloon
+Ability: Volt Absorb
+Level: 45
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Flash
+- Thunder Wave  
+- Discharge
+- Surf
+
+Shiftry @ Charcoal 
+Ability: Mega Launcher
+Level: 45
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Flash
+- Mind Blown  
+- Flash Cannon
+- Dark Pulse
+
 === TRAINER_NED ===
 Name: NED
 Class: Fisherman

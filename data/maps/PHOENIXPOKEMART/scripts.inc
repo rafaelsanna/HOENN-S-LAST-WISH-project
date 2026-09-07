@@ -54,3 +54,23 @@ PHOENIXPOKEMART_Pokemart:
 	.2byte ITEM_GUARD_SPEC
 # 28 "data/maps/PHOENIXPOKEMART/scripts.pory"
 	pokemartlistend
+# 29 "data/maps/PHOENIXPOKEMART/scripts.pory"
+
+# 30 "data/maps/PHOENIXPOKEMART/scripts.pory"
+PHOENIXPOKEMART_EventScript_Lass::
+# 31 "data/maps/PHOENIXPOKEMART/scripts.pory"
+	msgbox PHOENIXPOKEMART_Text_Supplies, MSGBOX_NPC
+# 32 "data/maps/PHOENIXPOKEMART/scripts.pory"
+	end
+# 33 "data/maps/PHOENIXPOKEMART/scripts.pory"
+
+# 34 "data/maps/PHOENIXPOKEMART/scripts.pory"
+PHOENIXPOKEMART_Text_Supplies:
+# 35 "data/maps/PHOENIXPOKEMART/scripts.pory"
+	.string "Supplies arrive rarely,\n"
+# 36 "data/maps/PHOENIXPOKEMART/scripts.pory"
+	.string "so we waste nothing.\p"
+# 37 "data/maps/PHOENIXPOKEMART/scripts.pory"
+	.string "Even a POTION is precious\n"
+# 38 "data/maps/PHOENIXPOKEMART/scripts.pory"
+	.string "in the deep desert.$"

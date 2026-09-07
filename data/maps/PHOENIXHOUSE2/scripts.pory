@@ -1,0 +1,13 @@
+raw `
+PHOENIXHOUSE2_MapScripts::
+	.byte 0
+
+PHOENIXHOUSE2_EventScript_Woman::
+	msgbox PHOENIXHOUSE2_Text_SlowLife, MSGBOX_NPC
+	end
+
+PHOENIXHOUSE2_Text_SlowLife:
+	.string "Life is slow here.\p"
+	.string "We learn to listen before\n"
+	.string "the ground moves.$"
+`

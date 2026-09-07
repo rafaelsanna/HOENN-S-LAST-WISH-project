@@ -15,4 +15,23 @@ PHOENIXPOKECENTER_EventScript_Nurse::
 	waitbuttonpress
 	release
 	end
+
+PHOENIXPOKECENTER_EventScript_Woman::
+	msgbox PHOENIXPOKECENTER_Text_DryAir, MSGBOX_NPC
+	end
+
+PHOENIXPOKECENTER_EventScript_Youngster::
+	msgbox PHOENIXPOKECENTER_Text_CalmPokemon, MSGBOX_NPC
+	end
+
+PHOENIXPOKECENTER_Text_DryAir:
+	.string "The dry air tires POKéMON\n"
+	.string "more quickly than people expect.\p"
+	.string "Resting here is a miracle\n"
+	.string "after a canyon crossing.$"
+
+PHOENIXPOKECENTER_Text_CalmPokemon:
+	.string "POKéMON seem calmer here.\p"
+	.string "Maybe they hear the earth\n"
+	.string "better than we do.$"
 `

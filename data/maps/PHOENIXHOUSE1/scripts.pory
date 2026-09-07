@@ -1,0 +1,14 @@
+raw `
+PHOENIXHOUSE1_MapScripts::
+	.byte 0
+
+PHOENIXHOUSE1_EventScript_Man::
+	msgbox PHOENIXHOUSE1_Text_QuakeHome, MSGBOX_NPC
+	end
+
+PHOENIXHOUSE1_Text_QuakeHome:
+	.string "Every crack in these walls\n"
+	.string "has a story.\p"
+	.string "The great quake gave us\n"
+	.string "a home.$"
+`

@@ -189,6 +189,7 @@ enum DebugBattleEnvironment
 
 #define DEBUG_MENU_WIDTH_MAIN 17
 #define DEBUG_MENU_HEIGHT_MAIN 9
+#define DEBUG_MENU_HORIZONTAL_JUMP 5
 
 #define DEBUG_MENU_WIDTH_EXTRA 10
 #define DEBUG_MENU_HEIGHT_EXTRA 4
@@ -1447,6 +1448,7 @@ static const u16 sLocationFlags[] =
     FLAG_VISITED_MOSSDEEP_CITY,
     FLAG_VISITED_SOOTOPOLIS_CITY,
     FLAG_VISITED_EVER_GRANDE_CITY,
+    FLAG_VISITED_PHOENIX_TOWN,
     FLAG_LANDMARK_POKEMON_LEAGUE,
     FLAG_LANDMARK_BATTLE_FRONTIER,
 };
@@ -1596,7 +1598,8 @@ static void Debug_RefreshListMenu(u8 taskId)
 
 // HLW Debug/Wish Menu: allow the cursor to wrap at the ends of every
 // standard debug list. UP on the first entry jumps to the last entry, and
-// DOWN on the last entry jumps back to the first.
+// DOWN on the last entry jumps back to the first. LEFT and RIGHT jump five
+// entries, clamping to the first or last entry.
 static u8 Debug_GetCurrentMenuItemCount(void)
 {
     const struct DebugMenuOption *items;
@@ -1623,11 +1626,15 @@ static bool8 Debug_TryWrapListMenu(u8 taskId)
     u8 totalItems = Debug_GetCurrentMenuItemCount();
     u8 targetScroll;
     u8 targetRow;
+    u8 targetItem;
+    u16 currentItem;
+    bool8 playJumpSe = FALSE;
 
     if (totalItems == 0)
         return FALSE;
 
     ListMenuGetScrollAndRow(gTasks[taskId].tMenuTaskId, &scrollOffset, &selectedRow);
+    currentItem = scrollOffset + selectedRow;
 
     if (JOY_NEW(DPAD_UP) && scrollOffset == 0 && selectedRow == 0)
     {
@@ -1642,10 +1649,64 @@ static bool8 Debug_TryWrapListMenu(u8 taskId)
             targetRow = DEBUG_MENU_HEIGHT_MAIN - 1;
         }
     }
-    else if (JOY_NEW(DPAD_DOWN) && scrollOffset + selectedRow == totalItems - 1)
+    else if (JOY_NEW(DPAD_DOWN) && currentItem == totalItems - 1)
     {
         targetScroll = 0;
         targetRow = 0;
+    }
+    else if (JOY_REPEAT(DPAD_LEFT))
+    {
+        if (currentItem > DEBUG_MENU_HORIZONTAL_JUMP)
+            targetItem = currentItem - DEBUG_MENU_HORIZONTAL_JUMP;
+        else
+            targetItem = 0;
+
+        if (targetItem == currentItem)
+            return TRUE;
+
+        if (totalItems <= DEBUG_MENU_HEIGHT_MAIN)
+        {
+            targetScroll = 0;
+            targetRow = targetItem;
+        }
+        else
+        {
+            targetRow = min(selectedRow, targetItem);
+            targetScroll = targetItem - targetRow;
+            if (targetScroll > totalItems - DEBUG_MENU_HEIGHT_MAIN)
+            {
+                targetScroll = totalItems - DEBUG_MENU_HEIGHT_MAIN;
+                targetRow = targetItem - targetScroll;
+            }
+        }
+        playJumpSe = TRUE;
+    }
+    else if (JOY_REPEAT(DPAD_RIGHT))
+    {
+        if (currentItem + DEBUG_MENU_HORIZONTAL_JUMP < totalItems)
+            targetItem = currentItem + DEBUG_MENU_HORIZONTAL_JUMP;
+        else
+            targetItem = totalItems - 1;
+
+        if (targetItem == currentItem)
+            return TRUE;
+
+        if (totalItems <= DEBUG_MENU_HEIGHT_MAIN)
+        {
+            targetScroll = 0;
+            targetRow = targetItem;
+        }
+        else
+        {
+            targetRow = min(selectedRow, targetItem);
+            targetScroll = targetItem - targetRow;
+            if (targetScroll > totalItems - DEBUG_MENU_HEIGHT_MAIN)
+            {
+                targetScroll = totalItems - DEBUG_MENU_HEIGHT_MAIN;
+                targetRow = targetItem - targetScroll;
+            }
+        }
+        playJumpSe = TRUE;
     }
     else
     {
@@ -1677,6 +1738,8 @@ static bool8 Debug_TryWrapListMenu(u8 taskId)
 
     gTasks[taskId].tMenuTaskId = ListMenuInit(&menuTemplate, targetScroll, targetRow);
     CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
+    if (playJumpSe)
+        PlaySE(SE_SELECT);
     return TRUE;
 }
 
