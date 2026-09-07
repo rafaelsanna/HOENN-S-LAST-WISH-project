@@ -12,6 +12,7 @@ PhoenixTown_OnTransition:
 
 PhoenixTown_EventScript_HandlePetalburgQuakeEvent::
 	goto_if_unset FLAG_BADGE04_GET, PhoenixTown_EventScript_HidePetalburgEventGroup
+	goto_if_unset FLAG_PETALBURG_QUAKE_EVENT_STARTED, PhoenixTown_EventScript_HidePetalburgEventGroup
 	goto_if_set FLAG_PETALBURG_QUAKE_PART1_CLEARED, PhoenixTown_EventScript_HidePetalburgEventGroup
 	clearflag FLAG_HIDE_PHOENIX_TOWN_CALENDULA_PETALBURG_EVENT
 	clearflag FLAG_HIDE_PHOENIX_TOWN_LUKA_PETALBURG_EVENT
@@ -705,9 +706,14 @@ PhoenixTown_Text_AuroraNorYou:
 	.string "AURORA: Nor you.$"
 
 PhoenixTown_Text_AuroraFinalBattle:
-	.string "AURORA: But to be certain you\n"
-	.string "are truly the chosen one,\p"
-	.string "we must have one final battle.$"
+	.string "AURORA: Hm...\p"
+	.string "I sense it in you. You have\n"
+	.string "the gift.\p"
+	.string "But that alone is not enough.\n"
+	.string "You must have the strength\l"
+	.string "to weather the challenges\l"
+	.string "before you.\p"
+	.string "Prove it to me in battle.$"
 
 PhoenixTown_Text_AuroraFinalBattleDefeat:
 	.string "AURORA: I see it now...$"
