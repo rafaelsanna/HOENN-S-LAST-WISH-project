@@ -1191,6 +1191,34 @@ void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex, bool8 allowFog)
     // WEATHER_PAL_STATE_CHANGING_WEATHER
     // WEATHER_PAL_STATE_CHANGING_IDLE
     default:
+        if (gWeatherPtr->currWeather == WEATHER_DARKNESS
+         || gWeatherPtr->currWeather == WEATHER_DARKNESS_RAIN)
+        {
+            // Newly loaded sprite palettes need their faded buffer refreshed
+            // immediately. Darkness maps do not use the normal time-of-day
+            // palette path, so UpdateSpritePaletteWithTime would otherwise
+            // leave the faded palette at the map's black darkness buffer.
+            paletteIndex = PLTT_ID(paletteIndex);
+            if (IS_BLEND_IMMUNE_TAG(GetSpritePaletteTagByPaletteNum(spritePaletteIndex)))
+            {
+                CpuFastCopy(gPlttBufferUnfaded + paletteIndex,
+                            gPlttBufferFaded + paletteIndex,
+                            PLTT_SIZE_4BPP);
+            }
+            else
+            {
+                u8 blendCoeff = gWeatherPtr->currWeather == WEATHER_DARKNESS
+                    ? DARKNESS_BLEND_COEFF
+                    : DARKNESS_RAIN_BLEND_COEFF;
+                BlendPalettesFine(1,
+                                  gPlttBufferUnfaded + paletteIndex,
+                                  gPlttBufferFaded + paletteIndex,
+                                  blendCoeff,
+                                  DARKNESS_BLEND_COLOR);
+            }
+            break;
+        }
+
         if (gWeatherPtr->currWeather != WEATHER_FOG_HORIZONTAL)
         {
             if (gWeatherPtr->colorMapIndex)
