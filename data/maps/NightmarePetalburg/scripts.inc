@@ -21,6 +21,8 @@ norman::
 NightmarePetalburg_EventScript_DarkAuraBattle::
 	lock
 	faceplayer
+	special StartDarkSuicuneScene
+	waitstate
 	waitse
 	playmoncry SPECIES_SWANNA, CRY_MODE_ENCOUNTER
 	delay 40

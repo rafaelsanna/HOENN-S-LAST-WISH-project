@@ -586,6 +586,7 @@ gSpecials::
     def_special Special_ViewVoltorbFlip
 	def_special StartTimeWarpScene
 	def_special StartMegaRayVisionScene
+	def_special StartDarkSuicuneScene
 	def_special StartSnowballGame
 	def_special DoMrStoneEvilScene
 	def_special HiddenGrotto_InitializeCurrent

@@ -175,32 +175,20 @@ enum {
 // Party-menu Shiny accent. The 16x16 effect intentionally reuses the same
 // four-frame artwork as the custom Summary Screen, but has no sound or
 // battle-style burst here.
-#define TAG_PARTY_SHINY_SPARKLE 55130
-// Six independent tile tags; the nickname shares only the sparkle's OBJ palette.
-#define TAG_PARTY_SHINY_NICKNAME 55131
+//
+// IMPORTANT: the Shiny nickname is rendered as an OBJ sprite with its own
+// palette. The Party slot BG palette is intentionally left completely alone,
+// because several seemingly "free" 4bpp indices are reused by the HP bar.
+#define TAG_PARTY_SHINY_SPARKLE   55130
+#define TAG_PARTY_SHINY_NAME_BASE 55131
+#define TAG_PARTY_SHINY_NAME_PAL  55137
+#define PARTY_SHINY_NAME_GFX_SIZE (64 * 32 / 2)
 
-// shiny.4bpp uses only indices 0 and 1 across all four frames. Indices 2/3
-// belong to this OBJ asset, never to the BG palettes used by the slot/HP bar.
-static const u8 sPartyShinyTextColors[] = {0, 2, 3};
-static const u16 sPartyShinyNicknameColors[] =
+static const u8 sPartyShinyNameTextColors[] =
 {
-    RGB(31, 30, 16), // Same foreground/shadow as the Summary nickname.
-    RGB(15, 12, 4),
-};
-static const struct OamData sPartyShinyNicknameOam =
-{
-    .shape = SPRITE_SHAPE(64x32),
-    .size = SPRITE_SIZE(64x32),
-    .priority = 1, // BG2 action/message windows have priority 0.
-};
-static const struct SpriteTemplate sPartyShinyNicknameTemplate =
-{
-    .tileTag = TAG_PARTY_SHINY_NICKNAME,
-    .paletteTag = TAG_PARTY_SHINY_SPARKLE,
-    .oam = &sPartyShinyNicknameOam,
-    .anims = gDummySpriteAnimTable,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
+    TEXT_COLOR_TRANSPARENT,
+    1,
+    2,
 };
 
 // Posição do item icon no canto superior direito de cada slot do layout Equal.
@@ -463,8 +451,7 @@ struct PartyMenuBox
     u8 monSpriteId;
     u8 itemSpriteId;
     u8 shinySpriteId;
-    u8 shinyNicknameSpriteId;
-    struct SpriteTemplate shinyNicknameTemplate;
+    u8 shinyNameSpriteId;
     u8 pokeballSpriteId;
     u8 statusSpriteId;
 };
@@ -485,6 +472,8 @@ static EWRAM_DATA u16 sPartyMenuItemId = 0;
 static EWRAM_DATA u8 sPartyColorTheme;
 static EWRAM_DATA u8 sPartyThemeTopWindowId;
 static EWRAM_DATA u8 sPartyThemeBottomWindowId;
+static EWRAM_DATA u8 sPartyShinyNameScratchWindowId;
+static EWRAM_DATA u8 sPartyShinyNameGfx[PARTY_SIZE][PARTY_SHINY_NAME_GFX_SIZE];
 // Single-layout item targeting keeps the stock windows/message behavior, but
 // aligns the right column upward with the left so the bottom row no longer
 // crowds item-use / give-item text windows.
@@ -591,7 +580,8 @@ static void CreatePartyMonStatusSprite(struct Pokemon *, struct PartyMenuBox *);
 static void LoadPartyShinySparkleGfx(void);
 static void CreatePartyMonShinySparkleSprite(struct Pokemon *, struct PartyMenuBox *);
 static void UpdatePartyMonShinySparkleSprite(struct Pokemon *, struct PartyMenuBox *);
-static void DestroyPartyShinyNickname(struct PartyMenuBox *);
+static void CreatePartyMonShinyNameSprite(struct Pokemon *, struct PartyMenuBox *);
+static void UpdatePartyMonShinyNameSprite(struct Pokemon *, struct PartyMenuBox *);
 static u8 CreateSmallPokeballButtonSprite(u8, u8);
 static void DrawCancelConfirmButtons(void);
 static void SavePartyMenuStateForPC(void);
@@ -853,7 +843,7 @@ static const struct OamData sOamData_PartyShinySparkle =
     .matrixNum = 0,
     .size = SPRITE_SIZE(16x16),
     .tileNum = 0,
-    .priority = 1,
+    .priority = 1, // same BG priority behavior as held-item icons
     .paletteNum = 0,
     .affineParam = 0,
 };
@@ -881,6 +871,107 @@ static const struct SpriteTemplate sSpriteTemplate_PartyShinySparkle =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
+};
+
+static const u8 sPartyShinyNameBlankGfx[PARTY_SHINY_NAME_GFX_SIZE] = {0};
+
+static const u16 sPartyShinyNamePalette[16] =
+{
+    [0] = RGB(0, 0, 0),       // OBJ transparent
+    [1] = RGB(31, 30, 16),    // soft Shiny yellow
+    [2] = RGB(15, 12, 4),     // warm dark shadow
+};
+
+static const struct SpritePalette sPartyShinyNameSpritePalette =
+{
+    .data = sPartyShinyNamePalette,
+    .tag = TAG_PARTY_SHINY_NAME_PAL,
+};
+
+static const struct OamData sOamData_PartyShinyName =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1, // same as item icons: popup/menu BGs stay above it
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_PartyShinyName[PARTY_SIZE] =
+{
+    {
+        .tileTag = TAG_PARTY_SHINY_NAME_BASE + 0,
+        .paletteTag = TAG_PARTY_SHINY_NAME_PAL,
+        .oam = &sOamData_PartyShinyName,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_PARTY_SHINY_NAME_BASE + 1,
+        .paletteTag = TAG_PARTY_SHINY_NAME_PAL,
+        .oam = &sOamData_PartyShinyName,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_PARTY_SHINY_NAME_BASE + 2,
+        .paletteTag = TAG_PARTY_SHINY_NAME_PAL,
+        .oam = &sOamData_PartyShinyName,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_PARTY_SHINY_NAME_BASE + 3,
+        .paletteTag = TAG_PARTY_SHINY_NAME_PAL,
+        .oam = &sOamData_PartyShinyName,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_PARTY_SHINY_NAME_BASE + 4,
+        .paletteTag = TAG_PARTY_SHINY_NAME_PAL,
+        .oam = &sOamData_PartyShinyName,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_PARTY_SHINY_NAME_BASE + 5,
+        .paletteTag = TAG_PARTY_SHINY_NAME_PAL,
+        .oam = &sOamData_PartyShinyName,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+static const struct WindowTemplate sPartyShinyNameScratchWindowTemplate =
+{
+    .bg = 0,
+    .tilemapLeft = 0,
+    .tilemapTop = 0,
+    .width = 8,
+    .height = 2,
+    .paletteNum = 0,
+    .baseBlock = 0,
 };
 
 static void BlitBitmapToPartyWindow_Equal(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 isEgg);
@@ -1283,6 +1374,7 @@ static void ResetPartyMenu(void)
     sPartyBgGfxTilemap = NULL;
     sPartyThemeTopWindowId = WINDOW_NONE;
     sPartyThemeBottomWindowId = WINDOW_NONE;
+    sPartyShinyNameScratchWindowId = WINDOW_NONE;
     sUsingBasicFieldPartyGeometry = FALSE;
 }
 
@@ -1818,20 +1910,6 @@ static void PartyPaletteBufferCopy(u8 palNum)
 
 static void FreePartyPointers(void)
 {
-    u32 i;
-
-    if (sPartyMenuBoxes)
-        for (i = 0; i < PARTY_SIZE; i++)
-        {
-            u8 spriteId = sPartyMenuBoxes[i].shinySpriteId;
-
-            DestroyPartyShinyNickname(&sPartyMenuBoxes[i]);
-            if (spriteId < MAX_SPRITES && gSprites[spriteId].inUse
-             && gSprites[spriteId].template == &sSpriteTemplate_PartyShinySparkle)
-                DestroySprite(&gSprites[spriteId]);
-        }
-    FreeSpriteTilesByTag(TAG_PARTY_SHINY_SPARKLE);
-    FreeSpritePaletteByTag(TAG_PARTY_SHINY_SPARKLE);
     if (sPartyMenuInternal)
         Free(sPartyMenuInternal);
     if (sPartyBgTilemapBuffer)
@@ -1872,9 +1950,7 @@ static void LoadPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[i].monSpriteId = SPRITE_NONE;
         sPartyMenuBoxes[i].itemSpriteId = SPRITE_NONE;
         sPartyMenuBoxes[i].shinySpriteId = SPRITE_NONE;
-        sPartyMenuBoxes[i].shinyNicknameSpriteId = SPRITE_NONE;
-        sPartyMenuBoxes[i].shinyNicknameTemplate = sPartyShinyNicknameTemplate;
-        sPartyMenuBoxes[i].shinyNicknameTemplate.tileTag += i;
+        sPartyMenuBoxes[i].shinyNameSpriteId = SPRITE_NONE;
         sPartyMenuBoxes[i].pokeballSpriteId = SPRITE_NONE;
         sPartyMenuBoxes[i].statusSpriteId = SPRITE_NONE;
     }
@@ -2149,6 +2225,7 @@ static void CreatePartyMonSprites(u8 slot)
     {
         CreatePartyMonIconSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot], slot);
         CreatePartyMonShinySparkleSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
+        CreatePartyMonShinyNameSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
         CreatePartyMonHeldItemSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
         CreatePartyMonPokeballSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
         CreatePartyMonStatusSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
@@ -3710,78 +3787,25 @@ static void DisplayPartyPokemonBarDetailToFit(u8 windowId, const u8 *str, u8 col
     AddTextPrinterParameterized3(windowId, GetFontIdToFit(str, FONT_SMALL, 0, width), align[0], align[1], sFontColorTable[color], 0, str);
 }
 
-static void DestroyPartyShinyNickname(struct PartyMenuBox *menuBox)
-{
-    u8 spriteId = menuBox->shinyNicknameSpriteId;
-
-    // Some exits reset sprites before freeing the Party Menu's own allocations.
-    if (spriteId < MAX_SPRITES
-     && gSprites[spriteId].inUse
-     && gSprites[spriteId].template == &menuBox->shinyNicknameTemplate)
-        DestroySprite(&gSprites[spriteId]);
-    menuBox->shinyNicknameSpriteId = SPRITE_NONE;
-    FreeSpriteTilesByTag(menuBox->shinyNicknameTemplate.tileTag);
-}
-
-static bool8 CreatePartyShinyNickname(struct PartyMenuBox *menuBox, const u8 *nickname)
-{
-    const struct WindowTemplate window = {.width = 8, .height = 4};
-    struct SpriteSheet sheet;
-    struct Sprite *sprite;
-    u8 windowId, spriteId;
-
-    if (IndexOfSpritePaletteTag(TAG_PARTY_SHINY_SPARKLE) == 0xFF)
-        return FALSE;
-    windowId = AddWindow(&window);
-    if (windowId == WINDOW_NONE)
-        return FALSE;
-
-    // Trade's text path: render into a temporary window, then load a tagged
-    // OBJ sheet. A 64x32 OBJ has the same 8-tile row stride as this window,
-    // so no tile rearrangement, persistent pixel buffer or SpriteFrameImage
-    // is needed. TEXT_SKIP_DRAW prevents any write to BG VRAM/tilemaps.
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(0));
-    AddTextPrinterParameterized3(windowId, GetFontIdToFit(nickname, FONT_SMALL, 0, 50),
-                                 0, 0, sPartyShinyTextColors, TEXT_SKIP_DRAW, nickname);
-    sheet.data = (const void *)GetWindowAttribute(windowId, WINDOW_TILE_DATA);
-    sheet.size = window.width * window.height * TILE_SIZE_4BPP;
-    sheet.tag = menuBox->shinyNicknameTemplate.tileTag;
-    LoadSpriteSheet(&sheet); // Synchronous copy; the window can now be freed.
-    RemoveWindow(windowId);
-    if (GetSpriteTileStartByTag(sheet.tag) == TAG_NONE)
-        return FALSE;
-
-    spriteId = CreateSprite(&menuBox->shinyNicknameTemplate,
-                           GetWindowAttribute(menuBox->windowId, WINDOW_TILEMAP_LEFT) * 8 + menuBox->infoRects->dimensions[0] + 32,
-                           GetWindowAttribute(menuBox->windowId, WINDOW_TILEMAP_TOP) * 8 + menuBox->infoRects->dimensions[1] + 16, 0);
-    if (spriteId == MAX_SPRITES)
-    {
-        FreeSpriteTilesByTag(sheet.tag);
-        return FALSE;
-    }
-    menuBox->shinyNicknameSpriteId = spriteId;
-    sprite = &gSprites[spriteId];
-    // DisplayPartyPokemonData already runs after SwitchPartyMon while both
-    // slots are offscreen. Rebuild from the current mon and inherit its slide.
-    if (menuBox->monSpriteId < MAX_SPRITES)
-        sprite->x2 = gSprites[menuBox->monSpriteId].x2;
-    return TRUE;
-}
-
 static void DisplayPartyPokemonNickname(struct Pokemon *mon, struct PartyMenuBox *menuBox, u8 c)
 {
     u8 nickname[POKEMON_NAME_LENGTH + 1];
 
-    DestroyPartyShinyNickname(menuBox);
     if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
     {
         if (c == 1)
             menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[0] >> 3, menuBox->infoRects->dimensions[1] >> 3, menuBox->infoRects->dimensions[2] >> 3, menuBox->infoRects->dimensions[3] >> 3, FALSE);
         GetMonNickname(mon, nickname);
-        if (GetMonData(mon, MON_DATA_IS_SHINY) && !GetMonData(mon, MON_DATA_IS_EGG)
-         && CreatePartyShinyNickname(menuBox, nickname))
-            return;
-        DisplayPartyPokemonBarDetailToFit(menuBox->windowId, nickname, 0, menuBox->infoRects->dimensions, 50);
+        // Shiny names are OBJ text with a dedicated OBJ palette. This avoids
+        // touching any 4bpp Party-window palette entry, so HP bars/gender/UI
+        // colors remain bit-for-bit unchanged. If sprite allocation ever
+        // fails, fall back to the normal readable BG nickname.
+        if (!(GetMonData(mon, MON_DATA_IS_SHINY)
+           && !GetMonData(mon, MON_DATA_IS_EGG)
+           && menuBox->shinyNameSpriteId != SPRITE_NONE))
+        {
+            DisplayPartyPokemonBarDetailToFit(menuBox->windowId, nickname, 0, menuBox->infoRects->dimensions, 50);
+        }
     }
 }
 
@@ -4751,9 +4775,8 @@ static void MovePartyMenuBoxSprites(struct PartyMenuBox *menuBox, s16 offset)
     // the same slide offset so reordering never leaves the sparkle behind.
     if (menuBox->shinySpriteId != SPRITE_NONE)
         gSprites[menuBox->shinySpriteId].x2 += offset * 8;
-
-    if (menuBox->shinyNicknameSpriteId != SPRITE_NONE)
-        gSprites[menuBox->shinyNicknameSpriteId].x2 += offset * 8;
+    if (menuBox->shinyNameSpriteId != SPRITE_NONE)
+        gSprites[menuBox->shinyNameSpriteId].x2 += offset * 8;
 
     gSprites[menuBox->monSpriteId].x2 += offset * 8;
     gSprites[menuBox->statusSpriteId].x2 += offset * 8;
@@ -4890,6 +4913,8 @@ static void SwitchPartyMon(void)
     // same strategy used below for held items.
     UpdatePartyMonShinySparkleSprite(mon1, menuBoxes[0]);
     UpdatePartyMonShinySparkleSprite(mon2, menuBoxes[1]);
+    UpdatePartyMonShinyNameSprite(mon1, menuBoxes[0]);
+    UpdatePartyMonShinyNameSprite(mon2, menuBoxes[1]);
 
     // Ícones de item: recriar com paletas corretas por slot.
     // BUG FIX: quando apenas UM dos pkms segura item, ShowOrHideHeldItemSprite
@@ -5901,13 +5926,29 @@ bool32 SetUpFieldMove_Dive(void)
 
 static void LoadPartyShinySparkleGfx(void)
 {
-    u32 paletteNum;
+    u8 slot;
+    struct SpriteSheet sheet =
+    {
+        .data = sPartyShinyNameBlankGfx,
+        .size = PARTY_SHINY_NAME_GFX_SIZE,
+        .tag = TAG_PARTY_SHINY_NAME_BASE,
+    };
 
     LoadCompressedSpriteSheet(&sPartyShinySparkleSpriteSheet);
-    paletteNum = LoadSpritePalette(&sPartyShinySparkleSpritePalette);
+    LoadSpritePalette(&sPartyShinySparkleSpritePalette);
 
-    if (paletteNum != 0xFF)
-        LoadPalette(sPartyShinyNicknameColors, OBJ_PLTT_ID(paletteNum) + 2, sizeof(sPartyShinyNicknameColors));
+    // Dedicated OBJ resources for the yellow nickname. Six independent tile
+    // ranges let every Shiny slot keep its own nickname without sharing BG
+    // palette indices with the HP bar.
+    LoadSpritePalette(&sPartyShinyNameSpritePalette);
+    for (slot = 0; slot < PARTY_SIZE; slot++)
+    {
+        sheet.tag = TAG_PARTY_SHINY_NAME_BASE + slot;
+        LoadSpriteSheet(&sheet);
+    }
+
+    if (sPartyShinyNameScratchWindowId == WINDOW_NONE)
+        sPartyShinyNameScratchWindowId = AddWindowWithoutTileMap(&sPartyShinyNameScratchWindowTemplate);
 }
 
 static void SetPartyShinySparklePosition(struct PartyMenuBox *menuBox)
@@ -5926,8 +5967,6 @@ static void SetPartyShinySparklePosition(struct PartyMenuBox *menuBox)
     // derived from spriteCoords, every slot/row/column gets the same placement.
     sprite->x = menuBox->spriteCoords[0] + 12;
     sprite->y = menuBox->spriteCoords[1] + 16;
-    // Same OBJ priority as the held-item icon: action/message windows on BG2
-    // stay in front of the sparkle instead of being covered by it.
     sprite->oam.priority = 1;
 }
 
@@ -5984,6 +6023,144 @@ static void UpdatePartyMonShinySparkleSprite(struct Pokemon *mon, struct PartyMe
         // comes back in attached to the correct Pokémon. No SE is played.
         gSprites[menuBox->shinySpriteId].x2 = slideX2;
         gSprites[menuBox->shinySpriteId].y2 = 0;
+    }
+}
+
+static void RenderPartyShinyNameGfx(struct Pokemon *mon, struct PartyMenuBox *menuBox)
+{
+    u8 slot;
+    u8 nickname[POKEMON_NAME_LENGTH + 1];
+    u16 tileStart;
+    const u8 *scratch;
+
+    if (sPartyShinyNameScratchWindowId == WINDOW_NONE || sPartyMenuBoxes == NULL)
+        return;
+
+    slot = menuBox - sPartyMenuBoxes;
+    if (slot >= PARTY_SIZE)
+        return;
+
+    tileStart = GetSpriteTileStartByTag(TAG_PARTY_SHINY_NAME_BASE + slot);
+    if (tileStart == 0xFFFF)
+        return;
+
+    GetMonNickname(mon, nickname);
+    FillWindowPixelBuffer(sPartyShinyNameScratchWindowId, PIXEL_FILL(0));
+    AddTextPrinterParameterized3(
+        sPartyShinyNameScratchWindowId,
+        GetFontIdToFit(nickname, FONT_SMALL, 0, 50),
+        0,
+        0,
+        sPartyShinyNameTextColors,
+        0,
+        nickname);
+
+    // Scratch window is 64x16 (8x2 tiles). The OBJ is 64x32, so copy the
+    // rendered top half and leave the bottom half transparent.
+    // Do not use CpuFill32/CpuCopy16 here: the modern compiler's alignment
+    // checks cannot prove that a runtime-indexed row of this EWRAM 2D array is
+    // aligned, even though the row size is a multiple of 4. memset/memcpy are
+    // alignment-safe for this temporary render buffer and avoid that false
+    // static assertion.
+    memset(sPartyShinyNameGfx[slot], 0, PARTY_SHINY_NAME_GFX_SIZE);
+    scratch = (const u8 *)GetWindowAttribute(sPartyShinyNameScratchWindowId, WINDOW_TILE_DATA);
+    memcpy(sPartyShinyNameGfx[slot], scratch, 8 * 2 * TILE_SIZE_4BPP);
+
+    // Queue for VBlank just like normal sprite graphics updates. Each slot has
+    // a persistent EWRAM source buffer, so multiple Shiny names can safely be
+    // queued in the same frame.
+    RequestSpriteCopy(
+        sPartyShinyNameGfx[slot],
+        (u8 *)(OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP),
+        PARTY_SHINY_NAME_GFX_SIZE);
+}
+
+static void SetPartyShinyNamePosition(struct PartyMenuBox *menuBox)
+{
+    struct Sprite *sprite;
+    u16 left;
+    u16 top;
+
+    if (menuBox->shinyNameSpriteId == SPRITE_NONE)
+        return;
+
+    sprite = &gSprites[menuBox->shinyNameSpriteId];
+    left = GetWindowAttribute(menuBox->windowId, WINDOW_TILEMAP_LEFT) * 8
+         + menuBox->infoRects->dimensions[0];
+    top = GetWindowAttribute(menuBox->windowId, WINDOW_TILEMAP_TOP) * 8
+        + menuBox->infoRects->dimensions[1];
+
+    // 64x32 OBJ: align its top-left exactly with the normal nickname origin.
+    sprite->x = left + 32;
+    sprite->y = top + 16;
+    sprite->oam.priority = 1;
+}
+
+static void CreatePartyMonShinyNameSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
+{
+    u8 slot;
+
+    if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE
+     || GetMonData(mon, MON_DATA_IS_EGG)
+     || !GetMonData(mon, MON_DATA_IS_SHINY)
+     || sPartyMenuBoxes == NULL)
+    {
+        menuBox->shinyNameSpriteId = SPRITE_NONE;
+        return;
+    }
+
+    slot = menuBox - sPartyMenuBoxes;
+    if (slot >= PARTY_SIZE)
+    {
+        menuBox->shinyNameSpriteId = SPRITE_NONE;
+        return;
+    }
+
+    menuBox->shinyNameSpriteId = CreateSprite(&sSpriteTemplate_PartyShinyName[slot], 0, 0, 0);
+    if (menuBox->shinyNameSpriteId < MAX_SPRITES)
+    {
+        RenderPartyShinyNameGfx(mon, menuBox);
+        SetPartyShinyNamePosition(menuBox);
+    }
+    else
+    {
+        menuBox->shinyNameSpriteId = SPRITE_NONE;
+    }
+}
+
+static void UpdatePartyMonShinyNameSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
+{
+    bool8 shouldShow = GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE
+                    && !GetMonData(mon, MON_DATA_IS_EGG)
+                    && GetMonData(mon, MON_DATA_IS_SHINY);
+    s16 slideX2 = 0;
+    s16 slideY2 = 0;
+
+    if (menuBox->monSpriteId != SPRITE_NONE)
+    {
+        slideX2 = gSprites[menuBox->monSpriteId].x2;
+        slideY2 = gSprites[menuBox->monSpriteId].y2;
+    }
+
+    if (!shouldShow)
+    {
+        if (menuBox->shinyNameSpriteId != SPRITE_NONE)
+        {
+            DestroySprite(&gSprites[menuBox->shinyNameSpriteId]);
+            menuBox->shinyNameSpriteId = SPRITE_NONE;
+        }
+        return;
+    }
+
+    if (menuBox->shinyNameSpriteId == SPRITE_NONE)
+        CreatePartyMonShinyNameSprite(mon, menuBox);
+
+    if (menuBox->shinyNameSpriteId != SPRITE_NONE)
+    {
+        RenderPartyShinyNameGfx(mon, menuBox);
+        SetPartyShinyNamePosition(menuBox);
+        gSprites[menuBox->shinyNameSpriteId].x2 = slideX2;
+        gSprites[menuBox->shinyNameSpriteId].y2 = slideY2;
     }
 }
 
