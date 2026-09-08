@@ -9086,7 +9086,6 @@ static const u16 sFeraligatrTeachableLearnset[] = {
     MOVE_SLEEP_TALK,
     MOVE_SNORE,
     MOVE_STRENGTH,
-    MOVE_SURF,
     MOVE_SWAGGER,
     MOVE_SWORDS_DANCE,
     MOVE_THIEF,
@@ -19159,6 +19158,10 @@ static const u16 sBidoofTeachableLearnset[] = {
 };
 
 static const u16 sBibarelTeachableLearnset[] = {
+    MOVE_DIVE,
+    MOVE_SURF,
+    MOVE_WATERFALL,
+    MOVE_WATER_PULSE,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_BIDOOF

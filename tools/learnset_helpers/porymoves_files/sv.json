@@ -36068,7 +36068,12 @@
   "BIBAREL": {
     "LevelMoves": [],
     "PreEvoMoves": [],
-    "TMMoves": [],
+    "TMMoves": [
+      "MOVE_WATER_PULSE",
+      "MOVE_SURF",
+      "MOVE_WATERFALL",
+      "MOVE_DIVE"
+    ],
     "EggMoves": [],
     "TutorMoves": []
   },

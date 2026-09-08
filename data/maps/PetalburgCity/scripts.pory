@@ -636,8 +636,6 @@ PetalburgCity_EventScript_LukaAfterGym_Center_Battle::
 	setobjectxy LOCALID_PETALBURG_LUKA_AFTER_GYM, 13, 12
 	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_ApproachCenter
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
 	goto PetalburgCity_EventScript_LukaAfterGym_StartBattle
 	end
 
@@ -651,8 +649,6 @@ PetalburgCity_EventScript_LukaAfterGym_Left_Battle::
 	setobjectxy LOCALID_PETALBURG_LUKA_AFTER_GYM, 13, 12
 	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_ApproachLeft
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
 	goto PetalburgCity_EventScript_LukaAfterGym_StartBattle
 	end
 
@@ -663,15 +659,15 @@ PetalburgCity_EventScript_LukaAfterGym_Right::
 PetalburgCity_EventScript_LukaAfterGym_Right_Battle::
 	lockall
 	addobject LOCALID_PETALBURG_LUKA_AFTER_GYM
-	setobjectxy LOCALID_PETALBURG_LUKA_AFTER_GYM, 20, 12
-	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_Approach5
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	setobjectxy LOCALID_PETALBURG_LUKA_AFTER_GYM, 13, 12
+	applymovement LOCALID_PETALBURG_LUKA_AFTER_GYM, PetalburgCity_Movement_LukaAfterGym_ApproachRight
 	waitmovement 0
 	goto PetalburgCity_EventScript_LukaAfterGym_StartBattle
 	end
 
 PetalburgCity_EventScript_LukaAfterGym_StartBattle::
+	turnobject LOCALID_PETALBURG_LUKA_AFTER_GYM, DIR_NORTH
+	turnobject LOCALID_PLAYER, DIR_SOUTH
 	setrespawn HEAL_LOCATION_PETALBURG_CITY
 	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 	msgbox PetalburgCity_Text_LukaAfterGym_Intro, MSGBOX_DEFAULT
@@ -707,7 +703,8 @@ PetalburgCity_Movement_LukaAfterGym_ApproachCenter:
 	walk_in_place_faster_up
 	step_end
 
-PetalburgCity_Movement_LukaAfterGym_Approach5:
+PetalburgCity_Movement_LukaAfterGym_ApproachRight:
+	walk_right
 	walk_up
 	walk_up
 	walk_up
@@ -723,7 +720,7 @@ PetalburgCity_Movement_LukaAfterGym_ApproachLeft:
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_faster_left
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_LukaAfterGym_Exit:

@@ -4,6 +4,7 @@ OldaleTown_MapScripts::
 	.byte 0
 
 OldaleTown_OnTransition:
+    call PetalburgCity_EventScript_HandleAquaGrunts
     call Common_EventScript_SetupRivalGfxId
     setflag FLAG_VISITED_OLDALE_TOWN
     call_if_unset FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_BlockWestEntrance

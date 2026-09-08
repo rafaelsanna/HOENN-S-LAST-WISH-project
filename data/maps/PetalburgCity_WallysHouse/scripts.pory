@@ -23,6 +23,14 @@ PetalburgCity_WallysHouse_EventScript_GiveHMSurf::
 	giveitem ITEM_HM_SURF
 	setflag FLAG_RECEIVED_HM_SURF
 	msgbox PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces, MSGBOX_DEFAULT
+	msgbox PetalburgCity_WallysHouse_Text_TakeABreak, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	special HealPlayerParty
+	playfanfare MUS_HEAL
+	waitfanfare
+	fadescreen FADE_FROM_BLACK
+	msgbox PetalburgCity_WallysHouse_Text_TakeCare, MSGBOX_DEFAULT
 	setvar VAR_PETALBURG_CITY_STATE, 5
 	releaseall
 	end
@@ -116,6 +124,13 @@ PetalburgCity_WallysHouse_Text_PleaseExcuseUs:
 PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces:
 	.string "If your POKéMON can SURF, you'll be\n"
 	.string "able to go to all sorts of places.$"
+
+PetalburgCity_WallysHouse_Text_TakeABreak:
+	.string "Before you go, why don't you\n"
+	.string "take a short break?$"
+
+PetalburgCity_WallysHouse_Text_TakeCare:
+	.string "Take care out there!$"
 
 PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon:
 	.string "LUKA's coming home soon.\n"

@@ -14,6 +14,7 @@
 #include "metatile_behavior.h"
 #include "overworld.h"
 #include "party_menu.h"
+#include "pokemon.h"
 #include "random.h"
 #include "rotating_gate.h"
 #include "rtc.h"
@@ -1642,7 +1643,8 @@ bool8 PartyHasMonWithSurf(void)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
                 break;
-            if (MonKnowsMove(&gPlayerParty[i], MOVE_SURF))
+            if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
+             && CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES), MOVE_SURF))
                 return TRUE;
         }
     }

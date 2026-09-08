@@ -39,6 +39,7 @@
 #include "constants/event_bg.h"
 #include "constants/event_objects.h"
 #include "constants/field_poison.h"
+#include "constants/maps.h"
 #include "constants/metatile_behaviors.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
@@ -1102,6 +1103,14 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+                if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ABANDONED_SHIP_TEAM_AQUA)
+                 && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ABANDONED_SHIP_TEAM_AQUA)
+                 && (warpEventId == 2 || warpEventId == 3)
+                 && !FlagGet(FLAG_AQUA_SHIP_KEYS))
+                {
+                    ScriptContext_SetupScript(AbandonedShip_TeamAqua_NeedKeys);
+                    return TRUE;
+                }
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();

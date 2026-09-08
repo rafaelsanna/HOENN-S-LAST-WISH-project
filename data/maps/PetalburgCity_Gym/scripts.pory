@@ -548,10 +548,7 @@ PetalburgCity_Gym_EventScript_WallysDadArrives::
 	applymovement LOCALID_PETALBURG_GYM_WALLYS_DAD, Common_Movement_Delay48
 	waitmovement 0
 	delay 10
-	call_if_eq VAR_0x8008, 1, PetalburgCity_Gym_EventScript_WallysDadApproachPlayerNorth
-	call_if_eq VAR_0x8008, 2, PetalburgCity_Gym_EventScript_WallysDadApproachPlayerEast
-	call_if_eq VAR_0x8008, 3, PetalburgCity_Gym_EventScript_WallysDadApproachPlayerWest
-	call_if_eq VAR_0x8008, 4, PetalburgCity_Gym_EventScript_WallysDadApproachPlayerSouth
+	call PetalburgCity_Gym_EventScript_WallysDadApproachGroup
 	msgbox PetalburgCity_Gym_Text_PleaseComeWithMe, MSGBOX_DEFAULT
 	msgbox PetalburgCity_Gym_Text_LetMeBorrowPlayer, MSGBOX_DEFAULT
 	closemessage
@@ -563,6 +560,45 @@ PetalburgCity_Gym_EventScript_WallysDadArrives::
 	waitstate
 	releaseall
 	end
+
+PetalburgCity_Gym_EventScript_WallysDadApproachGroup::
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_ne VAR_0x8004, 3, PetalburgCity_Gym_EventScript_WallysDadApproachGroupLeft
+	goto_if_eq VAR_0x8005, 3, PetalburgCity_Gym_EventScript_WallysDadApproachGroupBelow
+
+PetalburgCity_Gym_EventScript_WallysDadApproachGroupLeft::
+	applymovement LOCALID_PETALBURG_GYM_WALLYS_DAD, PetalburgCity_Gym_Movement_WallysDadToGroupLeft
+	waitmovement LOCALID_PETALBURG_GYM_WALLYS_DAD
+	turnobject LOCALID_PLAYER, DIR_WEST
+	turnobject LOCALID_PETALBURG_GYM_NORMAN, DIR_WEST
+	return
+
+PetalburgCity_Gym_EventScript_WallysDadApproachGroupBelow::
+	applymovement LOCALID_PETALBURG_GYM_WALLYS_DAD, PetalburgCity_Gym_Movement_WallysDadToGroupBelow
+	waitmovement LOCALID_PETALBURG_GYM_WALLYS_DAD
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	turnobject LOCALID_PETALBURG_GYM_NORMAN, DIR_SOUTH
+	return
+
+PetalburgCity_Gym_Movement_WallysDadToGroupLeft:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_right
+	step_end
+
+PetalburgCity_Gym_Movement_WallysDadToGroupBelow:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	face_up
+	step_end
 
 PetalburgCity_Gym_EventScript_WallysDadFaceNormanNorth::
 	applymovement LOCALID_PETALBURG_GYM_WALLYS_DAD, Common_Movement_WalkInPlaceFasterUp
