@@ -107,7 +107,7 @@ static const u16 sConcertLightColors[] =
 #define CONCERT_LIGHT_PHASE_FRAMES 80
 
 #define DARKNESS_BLEND_COLOR       RGB(0, 1, 4)
-#define DARKNESS_BLEND_COEFF       14
+#define DARKNESS_BLEND_COEFF       7
 #define DARKNESS_RAIN_BLEND_COEFF 11
 
 static const u8 sDarkenedContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32] =

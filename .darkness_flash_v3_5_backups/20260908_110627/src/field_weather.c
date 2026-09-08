@@ -107,7 +107,7 @@ static const u16 sConcertLightColors[] =
 #define CONCERT_LIGHT_PHASE_FRAMES 80
 
 #define DARKNESS_BLEND_COLOR       RGB(0, 1, 4)
-#define DARKNESS_BLEND_COEFF       14
+#define DARKNESS_BLEND_COEFF       7
 #define DARKNESS_RAIN_BLEND_COEFF 11
 
 static const u8 sDarkenedContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32] =
@@ -1014,25 +1014,6 @@ void ApplyWeatherColorMapIfIdle(s8 colorMapIndex)
 {
     if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE)
     {
-        // The overworld periodically refreshes Time-of-Day palettes and calls
-        // this function. Darkness keeps colorMapIndex at 0, so the stock path
-        // would restore the normal bright map palette for exactly one frame.
-        //
-        // Reapply the custom Darkness grade immediately in the SAME frame.
-        if (gWeatherPtr->currWeather == WEATHER_DARKNESS)
-        {
-            Darkness_ApplyLightingToCurrentPalettes(DARKNESS_BLEND_COEFF);
-            gWeatherPtr->colorMapIndex = 0;
-            return;
-        }
-
-        if (gWeatherPtr->currWeather == WEATHER_DARKNESS_RAIN)
-        {
-            Darkness_ApplyLightingToCurrentPalettes(DARKNESS_RAIN_BLEND_COEFF);
-            gWeatherPtr->colorMapIndex = 0;
-            return;
-        }
-
         ApplyColorMap(0, 32, colorMapIndex);
         gWeatherPtr->colorMapIndex = colorMapIndex;
     }

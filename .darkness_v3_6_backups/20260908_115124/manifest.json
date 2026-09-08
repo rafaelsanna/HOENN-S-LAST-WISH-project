@@ -1,0 +1,8 @@
+{
+  "created_at": "2026-09-08T11:51:24",
+  "file": "src/field_weather.c",
+  "sha256_before": "109cf0546f911ef1c8b0762cf64cab07c7704e8b47c30b847d1cdc9f7bfc378f",
+  "darkness_before": 7,
+  "darkness_after": 14,
+  "darkness_rain_unchanged": 11
+}

@@ -1053,10 +1053,10 @@ static const struct SpriteFrameImage sPicTable_Fossil[] = {
 };
 
 static const struct SpriteFrameImage sPicTable_DarkAura[] = {
-    overworld_frame(gObjectEventPic_DarkAura, 8, 8, 0),
-    overworld_frame(gObjectEventPic_DarkAura, 8, 8, 1),
-    overworld_frame(gObjectEventPic_DarkAura, 8, 8, 2),
-    overworld_frame(gObjectEventPic_DarkAura, 8, 8, 3),
+    overworld_frame(gObjectEventPic_DarkAura, 4, 4, 0),
+    overworld_frame(gObjectEventPic_DarkAura, 4, 4, 1),
+    overworld_frame(gObjectEventPic_DarkAura, 4, 4, 2),
+    overworld_frame(gObjectEventPic_DarkAura, 4, 4, 3),
 };
 
 static const struct SpriteFrameImage sPicTable_Regi[] = {

@@ -107,7 +107,7 @@ static const u16 sConcertLightColors[] =
 #define CONCERT_LIGHT_PHASE_FRAMES 80
 
 #define DARKNESS_BLEND_COLOR       RGB(0, 1, 4)
-#define DARKNESS_BLEND_COEFF       14
+#define DARKNESS_BLEND_COEFF       7
 #define DARKNESS_RAIN_BLEND_COEFF 11
 
 static const u8 sDarkenedContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32] =
@@ -487,21 +487,8 @@ static void Darkness_ApplyLightingToCurrentPalettes(u8 blendCoeff)
 
     for (i = 0; i < 32; i++)
     {
-        // Reserved BG palettes (notably overworld window/menu palettes)
-        // must not receive the Darkness grade.
-        if (sPaletteColorMapTypes[i] == COLOR_MAP_NONE)
-            continue;
-
-        // Custom OBJ palettes can also opt out of weather blending.
-        if (i >= 16
-         && IS_BLEND_IMMUNE_TAG(GetSpritePaletteTagByPaletteNum(i - 16)))
-            continue;
-
-        // Build the dark palette DIRECTLY from the stable unfaded source.
-        // The old restore-then-darken path could expose a bright frame during
-        // VBlank and could overwrite menu/window palettes.
         BlendPalettesFine(1,
-                          gPlttBufferUnfaded + PLTT_ID(i),
+                          gPlttBufferFaded + PLTT_ID(i),
                           gPlttBufferFaded + PLTT_ID(i),
                           blendCoeff,
                           DARKNESS_BLEND_COLOR);
@@ -510,6 +497,7 @@ static void Darkness_ApplyLightingToCurrentPalettes(u8 blendCoeff)
 
 static void Darkness_ApplyLighting(u8 blendCoeff)
 {
+    Darkness_RestoreBasePalettes();
     Darkness_ApplyLightingToCurrentPalettes(blendCoeff);
 }
 
@@ -562,11 +550,7 @@ static void DarknessRain_InitAll(void)
 
 static void DarknessRain_Main(void)
 {
-    // Normal rain only. No thunderstorm state machine is called here.
     Rain_Main();
-
-    // Extra safety: kill any stale thunder sound request.
-    gWeatherPtr->thunderEnqueued = FALSE;
 
     if (gWeatherPtr->weatherGfxLoaded
      && gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE
@@ -702,8 +686,10 @@ static bool8 FadeInScreen_Darkness(u8 darknessCoeff)
 
     gWeatherPtr->fadeScreenCounter++;
 
-    // Build the Darkness target directly from gPlttBufferUnfaded.
-    // There is no full-bright intermediate palette anymore.
+    // Build the final darkness palette first, then blend that palette against
+    // the fade color. This avoids the one-frame bright flash that a generic
+    // palette fade would produce when entering a Darkness map.
+    Darkness_RestoreBasePalettes();
     Darkness_ApplyLightingToCurrentPalettes(darknessCoeff);
 
     if (gWeatherPtr->fadeScreenCounter < 16)
@@ -1014,25 +1000,6 @@ void ApplyWeatherColorMapIfIdle(s8 colorMapIndex)
 {
     if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE)
     {
-        // The overworld periodically refreshes Time-of-Day palettes and calls
-        // this function. Darkness keeps colorMapIndex at 0, so the stock path
-        // would restore the normal bright map palette for exactly one frame.
-        //
-        // Reapply the custom Darkness grade immediately in the SAME frame.
-        if (gWeatherPtr->currWeather == WEATHER_DARKNESS)
-        {
-            Darkness_ApplyLightingToCurrentPalettes(DARKNESS_BLEND_COEFF);
-            gWeatherPtr->colorMapIndex = 0;
-            return;
-        }
-
-        if (gWeatherPtr->currWeather == WEATHER_DARKNESS_RAIN)
-        {
-            Darkness_ApplyLightingToCurrentPalettes(DARKNESS_RAIN_BLEND_COEFF);
-            gWeatherPtr->colorMapIndex = 0;
-            return;
-        }
-
         ApplyColorMap(0, 32, colorMapIndex);
         gWeatherPtr->colorMapIndex = colorMapIndex;
     }
