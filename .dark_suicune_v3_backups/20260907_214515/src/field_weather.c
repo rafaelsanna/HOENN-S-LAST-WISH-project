@@ -63,19 +63,6 @@ static bool8 ConcertLights_Finish(void);
 static void ConcertLights_ApplyLighting(void);
 static void ConcertLights_RestoreBasePalettes(void);
 
-// Hoenn's Last Wish - Darkness / Darkness Rain.
-static void Darkness_InitVars(void);
-static void Darkness_Main(void);
-static void Darkness_InitAll(void);
-static bool8 Darkness_Finish(void);
-static void DarknessRain_InitVars(void);
-static void DarknessRain_Main(void);
-static void DarknessRain_InitAll(void);
-static bool8 DarknessRain_Finish(void);
-static void Darkness_RestoreBasePalettes(void);
-static void Darkness_ApplyLighting(u8 blendCoeff);
-static bool8 FadeInScreen_Darkness(u8 darknessCoeff);
-
 // Beam rendering lives in field_weather_effect.c, alongside the other weather sprites.
 void ConcertBeam_Reset(void);
 void ConcertBeam_Update(void);
@@ -105,10 +92,6 @@ static const u16 sConcertLightColors[] =
 
 #define CONCERT_LIGHT_COLOR_COUNT ARRAY_COUNT(sConcertLightColors)
 #define CONCERT_LIGHT_PHASE_FRAMES 80
-
-#define DARKNESS_BLEND_COLOR       RGB(0, 1, 4)
-#define DARKNESS_BLEND_COEFF       7
-#define DARKNESS_RAIN_BLEND_COEFF 11
 
 static const u8 sDarkenedContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32] =
 {
@@ -189,8 +172,6 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     [WEATHER_FOREST_LIGHT]       = {ForestLight_InitVars,  ForestLight_Main,   ForestLight_InitAll,   ForestLight_Finish},
     [WEATHER_FALLING_LEAVES]     = {PinkLeaves_InitVars,   PinkLeaves_Main,    PinkLeaves_InitAll,    PinkLeaves_Finish},
     [WEATHER_CONCERT_LIGHTS]     = {ConcertLights_InitVars, ConcertLights_Main, ConcertLights_InitAll, ConcertLights_Finish},
-    [WEATHER_DARKNESS]           = {Darkness_InitVars,      Darkness_Main,      Darkness_InitAll,      Darkness_Finish},
-    [WEATHER_DARKNESS_RAIN]      = {DarknessRain_InitVars,  DarknessRain_Main,  DarknessRain_InitAll,  DarknessRain_Finish},
 };
 
 void (*const gWeatherPalStateFuncs[])(void) =
@@ -255,10 +236,7 @@ void StartWeather(void)
 
 void SetNextWeather(u8 weather)
 {
-    if (weather != WEATHER_RAIN
-     && weather != WEATHER_RAIN_THUNDERSTORM
-     && weather != WEATHER_DOWNPOUR
-     && weather != WEATHER_DARKNESS_RAIN)
+    if (weather != WEATHER_RAIN && weather != WEATHER_RAIN_THUNDERSTORM && weather != WEATHER_DOWNPOUR)
     {
         PlayRainStoppingSoundEffect();
     }
@@ -462,121 +440,6 @@ static bool8 ConcertLights_Finish(void)
     return FALSE;
 }
 
-// -----------------------------------------------------------------------------
-// Hoenn's Last Wish - Darkness / Darkness Rain
-// -----------------------------------------------------------------------------
-//
-// These are palette-filter weathers, not map-specific graphics. WEATHER_DARKNESS
-// gives the field a deep blue-black night grade. WEATHER_DARKNESS_RAIN uses the
-// normal Emerald rain sprites/sound but applies a much stronger darkness grade.
-
-static void Darkness_RestoreBasePalettes(void)
-{
-    CpuFastCopy(gPlttBufferUnfaded, gPlttBufferFaded, PLTT_BUFFER_SIZE * 2);
-
-    if (MapHasNaturalLight(gMapHeader.mapType))
-    {
-        UpdateAltBgPalettes(PALETTES_BG);
-        UpdatePalettesWithTime(PALETTES_ALL);
-    }
-}
-
-static void Darkness_ApplyLightingToCurrentPalettes(u8 blendCoeff)
-{
-    u8 i;
-
-    for (i = 0; i < 32; i++)
-    {
-        BlendPalettesFine(1,
-                          gPlttBufferFaded + PLTT_ID(i),
-                          gPlttBufferFaded + PLTT_ID(i),
-                          blendCoeff,
-                          DARKNESS_BLEND_COLOR);
-    }
-}
-
-static void Darkness_ApplyLighting(u8 blendCoeff)
-{
-    Darkness_RestoreBasePalettes();
-    Darkness_ApplyLightingToCurrentPalettes(blendCoeff);
-}
-
-static void Darkness_InitVars(void)
-{
-    gWeatherPtr->targetColorMapIndex = 0;
-    gWeatherPtr->colorMapStepDelay = 0;
-    gWeatherPtr->noShadows = FALSE;
-    Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY);
-}
-
-static void Darkness_InitAll(void)
-{
-    Darkness_InitVars();
-    Darkness_ApplyLighting(DARKNESS_BLEND_COEFF);
-}
-
-static void Darkness_Main(void)
-{
-    if (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_IDLE
-     || gPaletteFade.active)
-        return;
-
-    Darkness_ApplyLighting(DARKNESS_BLEND_COEFF);
-}
-
-static bool8 Darkness_Finish(void)
-{
-    Darkness_RestoreBasePalettes();
-    return FALSE;
-}
-
-static void DarknessRain_InitVars(void)
-{
-    // Reuse the engine's proven rain sprite/sound system, but neutralize the
-    // normal rain gamma target. Our palette filter supplies the darkness.
-    Rain_InitVars();
-    gWeatherPtr->targetColorMapIndex = 0;
-    gWeatherPtr->colorMapStepDelay = 0;
-}
-
-static void DarknessRain_InitAll(void)
-{
-    DarknessRain_InitVars();
-    while (!gWeatherPtr->weatherGfxLoaded)
-        Rain_Main();
-
-    Darkness_ApplyLighting(DARKNESS_RAIN_BLEND_COEFF);
-}
-
-static void DarknessRain_Main(void)
-{
-    Rain_Main();
-
-    if (gWeatherPtr->weatherGfxLoaded
-     && gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE
-     && !gPaletteFade.active)
-        Darkness_ApplyLighting(DARKNESS_RAIN_BLEND_COEFF);
-}
-
-static bool8 DarknessRain_Finish(void)
-{
-    bool8 busy = Rain_Finish();
-
-    if (busy)
-    {
-        if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE
-         && !gPaletteFade.active)
-            Darkness_ApplyLighting(DARKNESS_RAIN_BLEND_COEFF);
-    }
-    else
-    {
-        Darkness_RestoreBasePalettes();
-    }
-
-    return busy;
-}
-
-
 // When the weather is changing, it gradually updates the palettes
 // towards the desired color map.
 static void UpdateWeatherColorMap(void)
@@ -617,20 +480,6 @@ static void FadeInScreenWithWeather(void)
         if (FadeInScreen_RainShowShade() == FALSE)
         {
             gWeatherPtr->colorMapIndex = 3;
-            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
-        }
-        break;
-    case WEATHER_DARKNESS:
-        if (FadeInScreen_Darkness(DARKNESS_BLEND_COEFF) == FALSE)
-        {
-            gWeatherPtr->colorMapIndex = 0;
-            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
-        }
-        break;
-    case WEATHER_DARKNESS_RAIN:
-        if (FadeInScreen_Darkness(DARKNESS_RAIN_BLEND_COEFF) == FALSE)
-        {
-            gWeatherPtr->colorMapIndex = 0;
             gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
         }
         break;
@@ -677,33 +526,6 @@ static bool8 FadeInScreen_RainShowShade(void)
 
     ApplyColorMapWithBlend(0, 32, 3, 16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
     return TRUE;
-}
-
-static bool8 FadeInScreen_Darkness(u8 darknessCoeff)
-{
-    if (gWeatherPtr->fadeScreenCounter == 16)
-        return FALSE;
-
-    gWeatherPtr->fadeScreenCounter++;
-
-    // Build the final darkness palette first, then blend that palette against
-    // the fade color. This avoids the one-frame bright flash that a generic
-    // palette fade would produce when entering a Darkness map.
-    Darkness_RestoreBasePalettes();
-    Darkness_ApplyLightingToCurrentPalettes(darknessCoeff);
-
-    if (gWeatherPtr->fadeScreenCounter < 16)
-    {
-        BlendPalettesFine(PALETTES_ALL,
-                          gPlttBufferFaded,
-                          gPlttBufferFaded,
-                          16 - gWeatherPtr->fadeScreenCounter,
-                          gWeatherPtr->fadeDestColor);
-        return TRUE;
-    }
-
-    gWeatherPtr->fadeScreenCounter = 16;
-    return FALSE;
 }
 
 static bool8 FadeInScreen_Drought(void)
@@ -1054,8 +876,6 @@ void FadeScreen(u8 mode, s8 delay)
     case WEATHER_FOG_HORIZONTAL:
     case WEATHER_SHADE:
     case WEATHER_DROUGHT:
-    case WEATHER_DARKNESS:
-    case WEATHER_DARKNESS_RAIN:
         useWeatherPal = TRUE;
         break;
     default:
@@ -1372,12 +1192,6 @@ static void UNUSED SetFieldWeather(u8 weather)
     case WEATHER_CONCERT_LIGHTS:
         SetWeather(WEATHER_CONCERT_LIGHTS);
         break;
-    case WEATHER_DARKNESS:
-        SetWeather(WEATHER_DARKNESS);
-        break;
-    case WEATHER_DARKNESS_RAIN:
-        SetWeather(WEATHER_DARKNESS_RAIN);
-        break;
     case COORD_EVENT_WEATHER_RAIN_THUNDERSTORM:
         SetWeather(WEATHER_RAIN_THUNDERSTORM);
         break;
@@ -1525,8 +1339,6 @@ static const u8 sWeatherNames[WEATHER_COUNT][24] = {
     [WEATHER_FOREST_LIGHT]    = _("FOREST LIGHT"),
     [WEATHER_FALLING_LEAVES]  = _("FALLING LEAVES"),
     [WEATHER_CONCERT_LIGHTS]  = _("CONCERT LIGHTS"),
-    [WEATHER_DARKNESS]        = _("DARKNESS"),
-    [WEATHER_DARKNESS_RAIN]   = _("DARKNESS RAIN"),
 };
 
 static const u8 sDebugText_WeatherNotDefined[] = _("NOT DEFINED!!!");

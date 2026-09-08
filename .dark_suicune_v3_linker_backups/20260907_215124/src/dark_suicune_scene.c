@@ -134,8 +134,8 @@ enum
 #define tRunZoomScale data[6]
 #define tZoomTimer  data[7]
 
-EWRAM_DATA static u8 sDarkSuicuneMountainSpriteIds[DARK_SUICUNE_MOUNTAIN_SPRITES] = {0};
-EWRAM_DATA static u8 sDarkSuicuneSharedMatrix = 0;
+static u8 sDarkSuicuneMountainSpriteIds[DARK_SUICUNE_MOUNTAIN_SPRITES];
+static u8 sDarkSuicuneSharedMatrix = 0xFF;
 
 // -------------------------------------------------------------------------
 // Running sprite

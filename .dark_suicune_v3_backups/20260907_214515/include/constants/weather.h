@@ -25,9 +25,7 @@
 #define WEATHER_FALLING_LEAVES          25  
 #define WEATHER_SMOKE                   26
 #define WEATHER_CONCERT_LIGHTS                  27
-#define WEATHER_DARKNESS                28
-#define WEATHER_DARKNESS_RAIN           29
-#define WEATHER_COUNT                   30
+#define WEATHER_COUNT                   28
 
 // These are used in maps' coord_weather_event entries.
 // They are not a one-to-one mapping with the engine's

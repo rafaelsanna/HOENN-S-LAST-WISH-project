@@ -535,8 +535,7 @@ bool8 Rain_Finish(void)
     case 0:
         if (gWeatherPtr->nextWeather == WEATHER_RAIN
          || gWeatherPtr->nextWeather == WEATHER_RAIN_THUNDERSTORM
-         || gWeatherPtr->nextWeather == WEATHER_DOWNPOUR
-         || gWeatherPtr->nextWeather == WEATHER_DARKNESS_RAIN)
+         || gWeatherPtr->nextWeather == WEATHER_DOWNPOUR)
         {
             gWeatherPtr->finishStep = 0xFF;
             return FALSE;
@@ -1663,8 +1662,7 @@ bool8 Thunderstorm_Finish(void)
         {
             if (gWeatherPtr->nextWeather == WEATHER_RAIN
              || gWeatherPtr->nextWeather == WEATHER_RAIN_THUNDERSTORM
-             || gWeatherPtr->nextWeather == WEATHER_DOWNPOUR
-             || gWeatherPtr->nextWeather == WEATHER_DARKNESS_RAIN)
+             || gWeatherPtr->nextWeather == WEATHER_DOWNPOUR)
                 return FALSE;
 
             gWeatherPtr->targetRainSpriteCount = 0;
@@ -3531,8 +3529,6 @@ static u8 TranslateWeatherNum(u8 weather)
     case WEATHER_FOREST_LIGHT:       return WEATHER_FOREST_LIGHT;
     case WEATHER_FALLING_LEAVES:     return WEATHER_FALLING_LEAVES;
     case WEATHER_CONCERT_LIGHTS:     return WEATHER_CONCERT_LIGHTS;
-    case WEATHER_DARKNESS:           return WEATHER_DARKNESS;
-    case WEATHER_DARKNESS_RAIN:      return WEATHER_DARKNESS_RAIN;
     case WEATHER_ROUTE119_CYCLE:     return sWeatherCycleRoute119[gSaveBlock1Ptr->weatherCycleStage];
     case WEATHER_ROUTE123_CYCLE:     return sWeatherCycleRoute123[gSaveBlock1Ptr->weatherCycleStage];
     default:                         return WEATHER_NONE;
@@ -3549,9 +3545,7 @@ void UpdateWeatherPerDay(u16 increment)
 static void UpdateRainCounter(u8 newWeather, u8 oldWeather)
 {
     if (newWeather != oldWeather
-     && (newWeather == WEATHER_RAIN
-      || newWeather == WEATHER_RAIN_THUNDERSTORM
-      || newWeather == WEATHER_DARKNESS_RAIN))
+     && (newWeather == WEATHER_RAIN || newWeather == WEATHER_RAIN_THUNDERSTORM))
         IncrementGameStat(GAME_STAT_GOT_RAINED_ON);
 }
 
