@@ -1,11 +1,14 @@
 /*
- * Dark Suicune cutscene
+ * Dark Suicune cutscene V4
  *
  * Flow:
- * - bg01 scrolls quickly right-to-left behind the static bg02 mountains.
- * - Dark Suicune runs in from the right, pauses in the centre, then exits left.
- * - A black flash changes to the black-background close-up, which zooms in
- *   through an affine BG before the scene fades back to black.
+ * - bg01 scrolls right-to-left and accelerates as Suicune's run animation speeds up.
+ * - bg02 mountains stay as the original static BG for the entire running shot.
+ * - Suicune enters from the right, keeps running in place at centre while only
+ *   Suicune receives a slow affine zoom, then decelerates to a stop while its
+ *   palette turns progressively red.
+ * - A black flash changes to the reconstructed black-background close-up, which
+ *   zooms in slowly before the scene fades back to black.
  *
  * Entry: special StartDarkSuicuneScene
  */
@@ -85,27 +88,47 @@ static const u32 sDarkSuicuneCloseAffine_Map[] = INCBIN_U32("graphics/dark_suicu
 // Animation constants
 // -------------------------------------------------------------------------
 
-#define TAG_DARK_SUICUNE_RUN          0xD640
-#define DARK_SUICUNE_RUN_START_X      (DISPLAY_WIDTH + 32)
-#define DARK_SUICUNE_RUN_CENTER_X     (DISPLAY_WIDTH / 2)
-#define DARK_SUICUNE_RUN_END_X        (-32)
-#define DARK_SUICUNE_RUN_Y            128
-#define DARK_SUICUNE_RUN_SPEED          4
-#define DARK_SUICUNE_SCROLL_SPEED       5
-#define DARK_SUICUNE_RUN_PAUSE_FRAMES 144
-#define DARK_SUICUNE_BLACK_FLASH_FRAMES 8
-#define DARK_SUICUNE_CLOSE_START_SCALE 256
-#define DARK_SUICUNE_CLOSE_END_SCALE   160
-#define DARK_SUICUNE_CLOSE_ZOOM_SPEED    2
-#define DARK_SUICUNE_CLOSE_HOLD_FRAMES  90
+#define TAG_DARK_SUICUNE_RUN              0xD640
+#define DARK_SUICUNE_RUN_START_X          (DISPLAY_WIDTH + 32)
+#define DARK_SUICUNE_RUN_CENTER_X         (DISPLAY_WIDTH / 2)
+#define DARK_SUICUNE_RUN_Y                128
+#define DARK_SUICUNE_RUN_MOVE_SPEED         2
+
+#define DARK_SUICUNE_SCROLL_START_SPEED     4
+#define DARK_SUICUNE_SCROLL_MAX_SPEED      14
+#define DARK_SUICUNE_SCROLL_ACCEL_FRAMES   18
+#define DARK_SUICUNE_SCROLL_DECEL_FRAMES    6
+
+#define DARK_SUICUNE_SPRINT_FRAMES        216
+#define DARK_SUICUNE_RUN_ZOOM_END_SCALE   192
+#define DARK_SUICUNE_RUN_ZOOM_STEP_FRAMES   3
+
+#define DARK_SUICUNE_RED_STEP_FRAMES        4
+#define DARK_SUICUNE_RED_STOP_HOLD_FRAMES  30
+
+#define DARK_SUICUNE_BLACK_FLASH_FRAMES     8
+#define DARK_SUICUNE_CLOSE_START_SCALE     256
+#define DARK_SUICUNE_CLOSE_END_SCALE       160
+#define DARK_SUICUNE_CLOSE_ZOOM_SPEED        1
+#define DARK_SUICUNE_CLOSE_HOLD_FRAMES     180
+
+enum
+{
+    DARK_SUICUNE_RUN_ANIM_NORMAL,
+    DARK_SUICUNE_RUN_ANIM_QUICK,
+    DARK_SUICUNE_RUN_ANIM_FAST,
+    DARK_SUICUNE_RUN_ANIM_FASTER,
+    DARK_SUICUNE_RUN_ANIM_SPRINT,
+    DARK_SUICUNE_RUN_ANIM_STOP,
+};
 
 enum
 {
     DARK_SUICUNE_SCENE_INIT,
     DARK_SUICUNE_SCENE_FADE_IN,
     DARK_SUICUNE_SCENE_RUN_IN,
-    DARK_SUICUNE_SCENE_RUN_PAUSE,
-    DARK_SUICUNE_SCENE_RUN_OUT,
+    DARK_SUICUNE_SCENE_SPRINT,
+    DARK_SUICUNE_SCENE_RED_STOP,
     DARK_SUICUNE_SCENE_FLASH_TO_BLACK,
     DARK_SUICUNE_SCENE_BLACK_FLASH,
     DARK_SUICUNE_SCENE_CLOSE_FADE_IN,
@@ -115,12 +138,21 @@ enum
     DARK_SUICUNE_SCENE_DONE,
 };
 
-#define tState      data[0]
-#define tTimer      data[1]
-#define tRunSprite  data[2]
-#define tRunX       data[3]
-#define tBgScroll   data[4]
-#define tCloseScale data[5]
+#define tState          data[0]
+#define tTimer          data[1]
+#define tRunSprite      data[2]
+#define tRunX           data[3]
+#define tBgScroll       data[4]
+#define tCloseScale     data[5]
+#define tRunZoomScale   data[6]
+#define tZoomTimer      data[7]
+#define tBgSpeed        data[8]
+#define tAccelTimer     data[9]
+#define tRunAnimLevel   data[10]
+#define tRedLevel       data[11]
+#define tRedTimer       data[12]
+
+EWRAM_DATA static u8 sDarkSuicuneRunMatrix = 0;
 
 // -------------------------------------------------------------------------
 // Running sprite
@@ -143,19 +175,39 @@ static const struct OamData sOam_DarkSuicuneRun =
     .affineParam = 0,
 };
 
-static const union AnimCmd sAnim_DarkSuicuneRun[] =
+#define DARK_SUICUNE_RUN_ANIM(name, delay) \
+static const union AnimCmd sAnim_DarkSuicuneRun_##name[] = \
+{ \
+    ANIMCMD_FRAME(0,   delay), \
+    ANIMCMD_FRAME(64,  delay), \
+    ANIMCMD_FRAME(128, delay), \
+    ANIMCMD_FRAME(192, delay), \
+    ANIMCMD_JUMP(0), \
+}
+
+DARK_SUICUNE_RUN_ANIM(Normal, 6);
+DARK_SUICUNE_RUN_ANIM(Quick, 5);
+DARK_SUICUNE_RUN_ANIM(Fast, 4);
+DARK_SUICUNE_RUN_ANIM(Faster, 3);
+DARK_SUICUNE_RUN_ANIM(Sprint, 2);
+
+static const union AnimCmd sAnim_DarkSuicuneRun_Stop[] =
 {
-    ANIMCMD_FRAME(0,   6),
-    ANIMCMD_FRAME(64,  6),
-    ANIMCMD_FRAME(128, 6),
-    ANIMCMD_FRAME(192, 6),
+    ANIMCMD_FRAME(0, 63),
     ANIMCMD_JUMP(0),
 };
 
 static const union AnimCmd *const sAnims_DarkSuicuneRun[] =
 {
-    sAnim_DarkSuicuneRun,
+    sAnim_DarkSuicuneRun_Normal,
+    sAnim_DarkSuicuneRun_Quick,
+    sAnim_DarkSuicuneRun_Fast,
+    sAnim_DarkSuicuneRun_Faster,
+    sAnim_DarkSuicuneRun_Sprint,
+    sAnim_DarkSuicuneRun_Stop,
 };
+
+#undef DARK_SUICUNE_RUN_ANIM
 
 static const struct CompressedSpriteSheet sSpriteSheet_DarkSuicuneRun =
 {
@@ -180,6 +232,75 @@ static const struct SpriteTemplate sSpriteTemplate_DarkSuicuneRun =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
+
+static void SetDarkSuicuneRunScale(u16 scale)
+{
+    if (sDarkSuicuneRunMatrix != 0xFF)
+        SetOamMatrix(sDarkSuicuneRunMatrix, scale, 0, 0, scale);
+}
+
+static void InitDarkSuicuneRunAffine(u8 spriteId)
+{
+    if (spriteId == MAX_SPRITES)
+        return;
+
+    sDarkSuicuneRunMatrix = AllocOamMatrix();
+    if (sDarkSuicuneRunMatrix == 0xFF)
+        return;
+
+    SetDarkSuicuneRunScale(256);
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    gSprites[spriteId].oam.matrixNum = sDarkSuicuneRunMatrix;
+    CalcCenterToCornerVec(&gSprites[spriteId],
+                          gSprites[spriteId].oam.shape,
+                          gSprites[spriteId].oam.size,
+                          gSprites[spriteId].oam.affineMode);
+}
+
+static u8 GetDarkSuicuneRunAnimForSpeed(u16 speed)
+{
+    if (speed >= 12)
+        return DARK_SUICUNE_RUN_ANIM_SPRINT;
+    if (speed >= 10)
+        return DARK_SUICUNE_RUN_ANIM_FASTER;
+    if (speed >= 8)
+        return DARK_SUICUNE_RUN_ANIM_FAST;
+    if (speed >= 6)
+        return DARK_SUICUNE_RUN_ANIM_QUICK;
+    return DARK_SUICUNE_RUN_ANIM_NORMAL;
+}
+
+static void SetDarkSuicuneRunAnimForSpeed(s16 *data)
+{
+    u8 anim;
+
+    if (tRunSprite == MAX_SPRITES)
+        return;
+
+    anim = GetDarkSuicuneRunAnimForSpeed(tBgSpeed);
+    if (tRunAnimLevel != anim)
+    {
+        tRunAnimLevel = anim;
+        StartSpriteAnim(&gSprites[tRunSprite], anim);
+    }
+}
+
+static void ApplyDarkSuicuneRedTint(s16 *data)
+{
+    u8 paletteNum;
+
+    if (tRunSprite == MAX_SPRITES)
+        return;
+
+    paletteNum = gSprites[tRunSprite].oam.paletteNum;
+    BlendPalette(OBJ_PLTT_ID(paletteNum), 16, tRedLevel, RGB_RED);
+
+    // At coefficient 16 make the unfaded source red too. The following
+    // fade-to-black then starts from the red silhouette instead of snapping
+    // back to the original purple palette for one frame.
+    if (tRedLevel >= 16)
+        FillPalette(RGB_RED, OBJ_PLTT_ID(paletteNum) + 1, 15 * sizeof(u16));
+}
 
 static void VBlankCB_DarkSuicuneScene(void)
 {
@@ -308,15 +429,39 @@ static void LoadDarkSuicuneRunningBgs(void)
               | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
 }
 
-static void UpdateDarkSuicuneRunningBg(s16 *data)
+static void AdvanceDarkSuicuneRunningBg(s16 *data)
 {
-    tBgScroll += DARK_SUICUNE_SCROLL_SPEED;
-    if (tBgScroll >= DARK_SUICUNE_BG01_LOOP_WIDTH)
+    tBgScroll += tBgSpeed;
+    while (tBgScroll >= DARK_SUICUNE_BG01_LOOP_WIDTH)
         tBgScroll -= DARK_SUICUNE_BG01_LOOP_WIDTH;
 
-    // Increasing HOFS moves the image left on screen. BG0 now has a genuine
-    // 512px hardware period, so there is no 240px mid-frame reset anymore.
     SetGpuReg(REG_OFFSET_BG0HOFS, tBgScroll);
+}
+
+static void AccelerateDarkSuicuneRunningBg(s16 *data)
+{
+    if (++tAccelTimer >= DARK_SUICUNE_SCROLL_ACCEL_FRAMES)
+    {
+        tAccelTimer = 0;
+        if (tBgSpeed < DARK_SUICUNE_SCROLL_MAX_SPEED)
+            tBgSpeed++;
+        SetDarkSuicuneRunAnimForSpeed(data);
+    }
+
+    AdvanceDarkSuicuneRunningBg(data);
+}
+
+static void DecelerateDarkSuicuneRunningBg(s16 *data)
+{
+    if (++tAccelTimer >= DARK_SUICUNE_SCROLL_DECEL_FRAMES)
+    {
+        tAccelTimer = 0;
+        if (tBgSpeed > 0)
+            tBgSpeed--;
+        SetDarkSuicuneRunAnimForSpeed(data);
+    }
+
+    AdvanceDarkSuicuneRunningBg(data);
 }
 
 static void SetDarkSuicuneCloseAffine(u16 scale)
@@ -416,8 +561,18 @@ static void Task_DarkSuicuneScene(u8 taskId)
         if (spriteId != MAX_SPRITES)
             gSprites[spriteId].invisible = TRUE;
 
+        sDarkSuicuneRunMatrix = 0xFF;
+        InitDarkSuicuneRunAffine(spriteId);
+
         tTimer = 0;
         tBgScroll = 0;
+        tRunZoomScale = 256;
+        tZoomTimer = 0;
+        tBgSpeed = DARK_SUICUNE_SCROLL_START_SPEED;
+        tAccelTimer = 0;
+        tRunAnimLevel = DARK_SUICUNE_RUN_ANIM_NORMAL;
+        tRedLevel = 0;
+        tRedTimer = 0;
         SetVBlankCallback(VBlankCB_DarkSuicuneScene);
         BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
@@ -427,7 +582,7 @@ static void Task_DarkSuicuneScene(u8 taskId)
     }
 
     case DARK_SUICUNE_SCENE_FADE_IN:
-        UpdateDarkSuicuneRunningBg(data);
+        AdvanceDarkSuicuneRunningBg(data);
         if (!gPaletteFade.active)
         {
             if (tRunSprite != MAX_SPRITES)
@@ -437,37 +592,78 @@ static void Task_DarkSuicuneScene(u8 taskId)
         break;
 
     case DARK_SUICUNE_SCENE_RUN_IN:
-        UpdateDarkSuicuneRunningBg(data);
-        tRunX -= DARK_SUICUNE_RUN_SPEED;
+        AccelerateDarkSuicuneRunningBg(data);
+        tRunX -= DARK_SUICUNE_RUN_MOVE_SPEED;
         if (tRunSprite != MAX_SPRITES)
             gSprites[tRunSprite].x = tRunX;
+
         if (tRunX <= DARK_SUICUNE_RUN_CENTER_X)
         {
             tRunX = DARK_SUICUNE_RUN_CENTER_X;
             if (tRunSprite != MAX_SPRITES)
                 gSprites[tRunSprite].x = tRunX;
+
+            // No static pause. Suicune immediately keeps sprinting in place,
+            // while the panorama and leg animation continue to accelerate.
             tTimer = 0;
-            tState = DARK_SUICUNE_SCENE_RUN_PAUSE;
+            tZoomTimer = 0;
+            tRunZoomScale = 256;
+            tState = DARK_SUICUNE_SCENE_SPRINT;
         }
         break;
 
-    case DARK_SUICUNE_SCENE_RUN_PAUSE:
-        UpdateDarkSuicuneRunningBg(data);
-        if (++tTimer >= DARK_SUICUNE_RUN_PAUSE_FRAMES)
-            tState = DARK_SUICUNE_SCENE_RUN_OUT;
+    case DARK_SUICUNE_SCENE_SPRINT:
+        AccelerateDarkSuicuneRunningBg(data);
+
+        // Zoom only Suicune. BG1 remains the original static mountain layer,
+        // so it never disappears or gets converted into OBJ chunks.
+        if (++tZoomTimer >= DARK_SUICUNE_RUN_ZOOM_STEP_FRAMES)
+        {
+            tZoomTimer = 0;
+            if (tRunZoomScale > DARK_SUICUNE_RUN_ZOOM_END_SCALE)
+            {
+                tRunZoomScale--;
+                SetDarkSuicuneRunScale(tRunZoomScale);
+            }
+        }
+
+        if (++tTimer >= DARK_SUICUNE_SPRINT_FRAMES)
+        {
+            tTimer = 0;
+            tAccelTimer = 0;
+            tRedLevel = 0;
+            tRedTimer = 0;
+            tState = DARK_SUICUNE_SCENE_RED_STOP;
+        }
         break;
 
-    case DARK_SUICUNE_SCENE_RUN_OUT:
-        UpdateDarkSuicuneRunningBg(data);
-        tRunX -= DARK_SUICUNE_RUN_SPEED;
-        if (tRunSprite != MAX_SPRITES)
-            gSprites[tRunSprite].x = tRunX;
-        if (tRunX <= DARK_SUICUNE_RUN_END_X)
+    case DARK_SUICUNE_SCENE_RED_STOP:
+        // The climax is dynamic too: the apparent world speed brakes to zero
+        // while Suicune turns progressively red. Only when both reach their
+        // endpoints does the running animation finally freeze.
+        DecelerateDarkSuicuneRunningBg(data);
+
+        if (tRedLevel < 16 && ++tRedTimer >= DARK_SUICUNE_RED_STEP_FRAMES)
         {
-            if (tRunSprite != MAX_SPRITES)
-                gSprites[tRunSprite].invisible = TRUE;
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
-            tState = DARK_SUICUNE_SCENE_FLASH_TO_BLACK;
+            tRedTimer = 0;
+            tRedLevel++;
+        }
+        ApplyDarkSuicuneRedTint(data);
+
+        if (tBgSpeed == 0 && tRedLevel >= 16)
+        {
+            if (tTimer == 0 && tRunSprite != MAX_SPRITES)
+                StartSpriteAnim(&gSprites[tRunSprite], DARK_SUICUNE_RUN_ANIM_STOP);
+
+            if (++tTimer >= DARK_SUICUNE_RED_STOP_HOLD_FRAMES)
+            {
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+                tState = DARK_SUICUNE_SCENE_FLASH_TO_BLACK;
+            }
+        }
+        else
+        {
+            tTimer = 0;
         }
         break;
 
@@ -560,3 +756,10 @@ void StartDarkSuicuneScene(void)
 #undef tRunX
 #undef tBgScroll
 #undef tCloseScale
+#undef tRunZoomScale
+#undef tZoomTimer
+#undef tBgSpeed
+#undef tAccelTimer
+#undef tRunAnimLevel
+#undef tRedLevel
+#undef tRedTimer

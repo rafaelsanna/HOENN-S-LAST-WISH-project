@@ -86,18 +86,27 @@ static const u32 sDarkSuicuneCloseAffine_Map[] = INCBIN_U32("graphics/dark_suicu
 // -------------------------------------------------------------------------
 
 #define TAG_DARK_SUICUNE_RUN          0xD640
+#define TAG_DARK_SUICUNE_MOUNTAIN     0xD641
+#define DARK_SUICUNE_MOUNTAIN_SPRITES 12
+#define DARK_SUICUNE_MOUNTAIN_COLS     4
+#define DARK_SUICUNE_MOUNTAIN_ROWS     3
+#define DARK_SUICUNE_MOUNTAIN_TILE_START 256
+#define DARK_SUICUNE_MOUNTAIN_FOCUS_X 120
+#define DARK_SUICUNE_MOUNTAIN_FOCUS_Y  96
 #define DARK_SUICUNE_RUN_START_X      (DISPLAY_WIDTH + 32)
 #define DARK_SUICUNE_RUN_CENTER_X     (DISPLAY_WIDTH / 2)
 #define DARK_SUICUNE_RUN_END_X        (-32)
 #define DARK_SUICUNE_RUN_Y            128
-#define DARK_SUICUNE_RUN_SPEED          4
+#define DARK_SUICUNE_RUN_SPEED          2
 #define DARK_SUICUNE_SCROLL_SPEED       5
-#define DARK_SUICUNE_RUN_PAUSE_FRAMES 144
+#define DARK_SUICUNE_RUN_PAUSE_FRAMES  96
+#define DARK_SUICUNE_RUN_ZOOM_END_SCALE 176
+#define DARK_SUICUNE_RUN_ZOOM_STEP_FRAMES 2
 #define DARK_SUICUNE_BLACK_FLASH_FRAMES 8
 #define DARK_SUICUNE_CLOSE_START_SCALE 256
 #define DARK_SUICUNE_CLOSE_END_SCALE   160
-#define DARK_SUICUNE_CLOSE_ZOOM_SPEED    2
-#define DARK_SUICUNE_CLOSE_HOLD_FRAMES  90
+#define DARK_SUICUNE_CLOSE_ZOOM_SPEED    1
+#define DARK_SUICUNE_CLOSE_HOLD_FRAMES 180
 
 enum
 {
@@ -105,6 +114,7 @@ enum
     DARK_SUICUNE_SCENE_FADE_IN,
     DARK_SUICUNE_SCENE_RUN_IN,
     DARK_SUICUNE_SCENE_RUN_PAUSE,
+    DARK_SUICUNE_SCENE_RUN_ZOOM,
     DARK_SUICUNE_SCENE_RUN_OUT,
     DARK_SUICUNE_SCENE_FLASH_TO_BLACK,
     DARK_SUICUNE_SCENE_BLACK_FLASH,
@@ -121,6 +131,11 @@ enum
 #define tRunX       data[3]
 #define tBgScroll   data[4]
 #define tCloseScale data[5]
+#define tRunZoomScale data[6]
+#define tZoomTimer  data[7]
+
+EWRAM_DATA static u8 sDarkSuicuneMountainSpriteIds[DARK_SUICUNE_MOUNTAIN_SPRITES] = {0};
+EWRAM_DATA static u8 sDarkSuicuneSharedMatrix = 0;
 
 // -------------------------------------------------------------------------
 // Running sprite
@@ -170,6 +185,12 @@ static const struct SpritePalette sSpritePal_DarkSuicuneRun =
     .tag = TAG_DARK_SUICUNE_RUN,
 };
 
+static const struct SpritePalette sSpritePal_DarkSuicuneMountain =
+{
+    .data = sDarkSuicuneBg02_Pal,
+    .tag = TAG_DARK_SUICUNE_MOUNTAIN,
+};
+
 static const struct SpriteTemplate sSpriteTemplate_DarkSuicuneRun =
 {
     .tileTag = TAG_DARK_SUICUNE_RUN,
@@ -180,6 +201,211 @@ static const struct SpriteTemplate sSpriteTemplate_DarkSuicuneRun =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
+
+static const struct OamData sOam_DarkSuicuneMountain =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_DarkSuicuneMountain =
+{
+    // The mountain pixels are built directly in OBJ VRAM after the 4-frame
+    // running sheet. This tile tag simply gives CreateSprite a valid sheet;
+    // each mountain sprite's tileNum is overwritten immediately afterwards.
+    .tileTag = TAG_DARK_SUICUNE_RUN,
+    .paletteTag = TAG_DARK_SUICUNE_MOUNTAIN,
+    .oam = &sOam_DarkSuicuneMountain,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+
+static u8 GetDarkSuicuneBg02Pixel(const u8 *tile, u8 x, u8 y)
+{
+    u8 packed = tile[y * 4 + (x >> 1)];
+
+    if (x & 1)
+        return packed >> 4;
+    return packed & 0xF;
+}
+
+static void CopyDarkSuicuneBg02TileToObj(u16 mapEntry, u8 *dest)
+{
+    const u8 *src = (const u8 *)BG_CHAR_ADDR(DARK_SUICUNE_BG02_CHARBASE)
+                  + (mapEntry & 0x03FF) * 32;
+    bool8 hFlip = (mapEntry & (1 << 10)) != 0;
+    bool8 vFlip = (mapEntry & (1 << 11)) != 0;
+    u32 y;
+    u32 x;
+
+    for (y = 0; y < 8; y++)
+    {
+        for (x = 0; x < 4; x++)
+        {
+            u8 outX0 = x * 2;
+            u8 outX1 = outX0 + 1;
+            u8 srcX0 = hFlip ? 7 - outX0 : outX0;
+            u8 srcX1 = hFlip ? 7 - outX1 : outX1;
+            u8 srcY = vFlip ? 7 - y : y;
+            u8 p0 = GetDarkSuicuneBg02Pixel(src, srcX0, srcY);
+            u8 p1 = GetDarkSuicuneBg02Pixel(src, srcX1, srcY);
+
+            dest[y * 4 + x] = p0 | (p1 << 4);
+        }
+    }
+}
+
+static void BuildDarkSuicuneMountainObjTiles(void)
+{
+    u8 *objBase = (u8 *)OBJ_VRAM0;
+    u32 mapX;
+    u32 mapY;
+
+    // The run sheet consumes OBJ tiles 0..255 (0x2000 bytes). The mountain is
+    // rebuilt into the remaining 0x6000 bytes as twelve 64x64 OBJ chunks.
+    CpuFill32(0,
+              objBase + DARK_SUICUNE_MOUNTAIN_TILE_START * 32,
+              DARK_SUICUNE_MOUNTAIN_SPRITES * 0x800);
+
+    for (mapY = 0; mapY < DARK_SUICUNE_MAP_HEIGHT; mapY++)
+    {
+        for (mapX = 0; mapX < DARK_SUICUNE_MAP_WIDTH; mapX++)
+        {
+            u32 chunkX = mapX / 8;
+            u32 chunkY = mapY / 8;
+            u32 localX = mapX & 7;
+            u32 localY = mapY & 7;
+            u32 chunk = chunkY * DARK_SUICUNE_MOUNTAIN_COLS + chunkX;
+            u32 objTile = DARK_SUICUNE_MOUNTAIN_TILE_START
+                        + chunk * 64
+                        + localY * 8
+                        + localX;
+
+            CopyDarkSuicuneBg02TileToObj(
+                sDarkSuicuneBg02_Map[mapY * DARK_SUICUNE_MAP_WIDTH + mapX],
+                objBase + objTile * 32);
+        }
+    }
+}
+
+static void SetDarkSuicuneSharedScale(u16 scale)
+{
+    if (sDarkSuicuneSharedMatrix != 0xFF)
+        SetOamMatrix(sDarkSuicuneSharedMatrix, scale, 0, 0, scale);
+}
+
+static void PositionDarkSuicuneMountainSprites(u16 scale)
+{
+    u32 i;
+
+    for (i = 0; i < DARK_SUICUNE_MOUNTAIN_SPRITES; i++)
+    {
+        u8 spriteId = sDarkSuicuneMountainSpriteIds[i];
+
+        if (spriteId != MAX_SPRITES)
+        {
+            s32 col = i % DARK_SUICUNE_MOUNTAIN_COLS;
+            s32 row = i / DARK_SUICUNE_MOUNTAIN_COLS;
+            s32 baseX = col * 64 + 32;
+            s32 baseY = row * 64 + 32;
+
+            // OBJ affine scaling acts around each 64x64 chunk independently.
+            // Moving the chunk centers by the same zoom factor makes all twelve
+            // sprites behave like one large camera-zoomed mountain layer.
+            gSprites[spriteId].x = DARK_SUICUNE_MOUNTAIN_FOCUS_X
+                + ((baseX - DARK_SUICUNE_MOUNTAIN_FOCUS_X) * 256) / scale;
+            gSprites[spriteId].y = DARK_SUICUNE_MOUNTAIN_FOCUS_Y
+                + ((baseY - DARK_SUICUNE_MOUNTAIN_FOCUS_Y) * 256) / scale;
+        }
+    }
+}
+
+static void EnableDarkSuicuneRunZoom(u8 runSpriteId)
+{
+    u32 i;
+
+    SetDarkSuicuneSharedScale(256);
+    PositionDarkSuicuneMountainSprites(256);
+
+    for (i = 0; i < DARK_SUICUNE_MOUNTAIN_SPRITES; i++)
+    {
+        u8 spriteId = sDarkSuicuneMountainSpriteIds[i];
+
+        if (spriteId != MAX_SPRITES)
+            gSprites[spriteId].invisible = FALSE;
+    }
+
+    // Replace only the static mountain BG with its equivalent OBJ composition.
+    // BG0 (the scrolling pink background) keeps moving completely unchanged.
+    SetGpuReg(REG_OFFSET_DISPCNT,
+              GetGpuReg(REG_OFFSET_DISPCNT) & ~DISPCNT_BG1_ON);
+
+    if (runSpriteId != MAX_SPRITES)
+        gSprites[runSpriteId].invisible = FALSE;
+}
+
+static void CreateDarkSuicuneMountainSprites(u8 runSpriteId)
+{
+    u32 i;
+
+    BuildDarkSuicuneMountainObjTiles();
+    LoadSpritePalette(&sSpritePal_DarkSuicuneMountain);
+
+    sDarkSuicuneSharedMatrix = AllocOamMatrix();
+    if (sDarkSuicuneSharedMatrix == 0xFF)
+        return;
+
+    SetDarkSuicuneSharedScale(256);
+
+    if (runSpriteId != MAX_SPRITES)
+    {
+        gSprites[runSpriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+        gSprites[runSpriteId].oam.matrixNum = sDarkSuicuneSharedMatrix;
+        CalcCenterToCornerVec(&gSprites[runSpriteId],
+                              gSprites[runSpriteId].oam.shape,
+                              gSprites[runSpriteId].oam.size,
+                              gSprites[runSpriteId].oam.affineMode);
+    }
+
+    for (i = 0; i < DARK_SUICUNE_MOUNTAIN_SPRITES; i++)
+    {
+        s32 col = i % DARK_SUICUNE_MOUNTAIN_COLS;
+        s32 row = i / DARK_SUICUNE_MOUNTAIN_COLS;
+        u8 spriteId = CreateSprite(&sSpriteTemplate_DarkSuicuneMountain,
+                                   col * 64 + 32,
+                                   row * 64 + 32,
+                                   1);
+
+        sDarkSuicuneMountainSpriteIds[i] = spriteId;
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].oam.tileNum
+                = DARK_SUICUNE_MOUNTAIN_TILE_START + i * 64;
+            gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            gSprites[spriteId].oam.matrixNum = sDarkSuicuneSharedMatrix;
+            gSprites[spriteId].oam.priority = 0;
+            gSprites[spriteId].invisible = TRUE;
+            CalcCenterToCornerVec(&gSprites[spriteId],
+                                  gSprites[spriteId].oam.shape,
+                                  gSprites[spriteId].oam.size,
+                                  gSprites[spriteId].oam.affineMode);
+        }
+    }
+}
 
 static void VBlankCB_DarkSuicuneScene(void)
 {
@@ -416,8 +642,18 @@ static void Task_DarkSuicuneScene(u8 taskId)
         if (spriteId != MAX_SPRITES)
             gSprites[spriteId].invisible = TRUE;
 
+        {
+            u32 i;
+            for (i = 0; i < DARK_SUICUNE_MOUNTAIN_SPRITES; i++)
+                sDarkSuicuneMountainSpriteIds[i] = MAX_SPRITES;
+        }
+        sDarkSuicuneSharedMatrix = 0xFF;
+        CreateDarkSuicuneMountainSprites(spriteId);
+
         tTimer = 0;
         tBgScroll = 0;
+        tRunZoomScale = 256;
+        tZoomTimer = 0;
         SetVBlankCallback(VBlankCB_DarkSuicuneScene);
         BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
@@ -454,7 +690,30 @@ static void Task_DarkSuicuneScene(u8 taskId)
     case DARK_SUICUNE_SCENE_RUN_PAUSE:
         UpdateDarkSuicuneRunningBg(data);
         if (++tTimer >= DARK_SUICUNE_RUN_PAUSE_FRAMES)
-            tState = DARK_SUICUNE_SCENE_RUN_OUT;
+        {
+            tRunZoomScale = 256;
+            tZoomTimer = 0;
+            EnableDarkSuicuneRunZoom(tRunSprite);
+            tState = DARK_SUICUNE_SCENE_RUN_ZOOM;
+        }
+        break;
+
+    case DARK_SUICUNE_SCENE_RUN_ZOOM:
+        UpdateDarkSuicuneRunningBg(data);
+        if (++tZoomTimer >= DARK_SUICUNE_RUN_ZOOM_STEP_FRAMES)
+        {
+            tZoomTimer = 0;
+            if (tRunZoomScale > DARK_SUICUNE_RUN_ZOOM_END_SCALE)
+            {
+                tRunZoomScale--;
+                SetDarkSuicuneSharedScale(tRunZoomScale);
+                PositionDarkSuicuneMountainSprites(tRunZoomScale);
+            }
+            else
+            {
+                tState = DARK_SUICUNE_SCENE_RUN_OUT;
+            }
+        }
         break;
 
     case DARK_SUICUNE_SCENE_RUN_OUT:
@@ -560,3 +819,5 @@ void StartDarkSuicuneScene(void)
 #undef tRunX
 #undef tBgScroll
 #undef tCloseScale
+#undef tRunZoomScale
+#undef tZoomTimer
