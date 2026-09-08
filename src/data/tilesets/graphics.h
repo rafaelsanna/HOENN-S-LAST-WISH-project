@@ -1770,3 +1770,22 @@ const u16 gTilesetPalettes_DistortionWorld[][16] = {
     INCBIN_U16("data/tilesets/secondary/distortion_world/palettes/11.gbapal"),
     INCBIN_U16("data/tilesets/secondary/distortion_world/palettes/12.gbapal"),
 };
+
+const u16 gTilesetPalettes_NightmareTowns[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/nightmare_towns/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_NightmareTowns[] = INCBIN_U32("data/tilesets/secondary/nightmare_towns/tiles.4bpp.lz");

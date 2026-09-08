@@ -211,55 +211,82 @@ PetalburgCity_EventScript_QuakeCalendula::
 	release
 	end
 
+
 PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortal::
+	@ The rival starts outside the camera object-spawn range.
+	call Common_EventScript_SetupRivalGfxId
+	clearflag FLAG_HIDE_PETALBURG_CITY_QUAKE_RIVAL
+	addobject LOCALID_PETALBURG_QUAKE_RIVAL
+	setobjectxy LOCALID_PETALBURG_QUAKE_RIVAL, 24, 18
 	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
-	msgbox PetalburgCity_Text_QuakeCalendulaOpenNightmarePortal, MSGBOX_YESNO
+	msgbox PetalburgCity_Text_QuakeCalendulaNightmareInterrupt, MSGBOX_DEFAULT
 	removefieldmugshot
-	goto_if_eq VAR_RESULT, NO, PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortalCancel
 	closemessage
-	getplayerxy VAR_TEMP_1, VAR_TEMP_2
-	goto_if_eq VAR_TEMP_1, 19, PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromWest
-	goto_if_eq VAR_TEMP_1, 21, PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromEast
-	goto PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromSouth
-
-PetalburgCity_EventScript_QuakeCalendulaOpenNightmarePortalCancel::
-	release
-	end
-
-PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromSouth::
-	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerFromSouth
+	playbgm MUS_C_VS_LEGEND_BEAST, FALSE
+	call PetalburgCity_EventScript_NightmareQuake
+	call PetalburgCity_EventScript_NightmareQuake
+	applymovement LOCALID_PETALBURG_QUAKE_CALENDULA, Common_Movement_ExclamationMark
+	applymovement LOCALID_PETALBURG_QUAKE_LUKA, Common_Movement_ExclamationMark
+	applymovement LOCALID_PETALBURG_QUAKE_RIVAL, Common_Movement_ExclamationMark
+	waitmovement LOCALID_PETALBURG_QUAKE_CALENDULA
+	waitmovement LOCALID_PETALBURG_QUAKE_LUKA
+	waitmovement LOCALID_PETALBURG_QUAKE_RIVAL
+	applymovement LOCALID_PETALBURG_QUAKE_RIVAL, PetalburgCity_Movement_QuakeRivalRunToGroup
 	waitmovement 0
-	goto PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PetalburgCity_EventScript_QuakeZinniaNightmareInterrupt
+	goto_if_eq VAR_RESULT, FEMALE, PetalburgCity_EventScript_QuakeZennoNightmareInterrupt
+	goto PetalburgCity_EventScript_QuakeLukaNightmareInterrupt
 
-PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromWest::
-	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerFromWest
-	waitmovement 0
-	goto PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal
+PetalburgCity_EventScript_QuakeZinniaNightmareInterrupt::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeRivalNightmareInterrupt, MSGBOX_DEFAULT
+	removefieldmugshot
+	goto PetalburgCity_EventScript_QuakeLukaNightmareInterrupt
 
-PetalburgCity_EventScript_QuakeCalendulaMovePlayerFromEast::
-	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerFromEast
-	waitmovement 0
-	goto PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal
+PetalburgCity_EventScript_QuakeZennoNightmareInterrupt::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeRivalNightmareInterrupt, MSGBOX_DEFAULT
+	removefieldmugshot
+	goto PetalburgCity_EventScript_QuakeLukaNightmareInterrupt
 
-PetalburgCity_EventScript_QuakeCalendulaSummonNightmarePortal::
-	fadescreenspeed FADE_TO_WHITE, 4
-	delay 20
-	clearflag FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL
-	addobject LOCALID_PETALBURG_QUAKE_PORTAL
-	playse SE_WARP_IN
-	delay 20
-	fadescreenspeed FADE_FROM_WHITE, 4
-	delay 20
-	applymovement LOCALID_PLAYER, PetalburgCity_Movement_QuakePortalPlayerEnter
+PetalburgCity_EventScript_QuakeLukaNightmareInterrupt::
+	applymovement LOCALID_PETALBURG_QUAKE_LUKA, PetalburgCity_Movement_QuakeLukaMoveToGroup
 	waitmovement 0
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeLukaNightmareInterrupt, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_QuakeCalendulaPlayerSick, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	call PetalburgCity_EventScript_NightmareQuake
+	call PetalburgCity_EventScript_NightmareQuake
+	fadescreenspeed FADE_TO_BLACK, 4
+	delay 60
+	playse SE_M_STRENGTH
+	waitse
+	delay 60
+	playse SE_M_STRENGTH
+	waitse
+	delay 90
 	playse SE_WARP_OUT
-	fadescreenspeed FADE_TO_WHITE, 4
-	delay 20
-	warp MAP_NIGHTMARE_PETALBURG, 23, 11
+	waitse
+	delay 60
+	warpsilent MAP_NIGHTMARE_PETALBURG, 23, 11
 	waitstate
 	release
 	end
 
+PetalburgCity_EventScript_NightmareQuake::
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 5
+	playse SE_M_STRENGTH
+	special ShakeCamera
+	waitstate
+	return
 PetalburgCity_EventScript_QuakeLuka::
 	lock
 	faceplayer
@@ -476,35 +503,27 @@ PetalburgCity_Movement_WallyTutorialPlayer:
 	step_end
 
 
-PetalburgCity_Movement_QuakePortalPlayerFromSouth:
-	walk_down
-	walk_down
-	face_down
+
+PetalburgCity_Movement_QuakeRivalRunToGroup:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_up
 	step_end
 
-PetalburgCity_Movement_QuakePortalPlayerFromWest:
-	walk_down
-	walk_down
-	walk_down
+PetalburgCity_Movement_QuakeLukaMoveToGroup:
 	walk_right
-	face_down
-	step_end
-
-PetalburgCity_Movement_QuakePortalPlayerFromEast:
 	walk_right
-	walk_down
-	walk_down
-	walk_down
-	walk_left
-	walk_left
-	face_down
+	face_right
 	step_end
-
-PetalburgCity_Movement_QuakePortalPlayerEnter:
-	walk_down
-	walk_down
-	step_end
-
 PetalburgCity_Movement_WallyTutorialWally:
 	delay_8
 	walk_down
@@ -849,14 +868,23 @@ PetalburgCity_Text_QuakeCalendulaPart15:
 	.string "and return as soon as possible.$"
 
 
-PetalburgCity_Text_QuakeCalendulaOpenNightmarePortal:
-	.string "CALENDULA: {PLAYER}! Welcome back!\n"
-	.string "You have learned how to resolve\l"
-	.string "this disaster?\p"
-	.string "Wonderful! However, please make\n"
-	.string "sure you are prepared for what\l"
-	.string "is to come. Are you ready?$"
 
+PetalburgCity_Text_QuakeCalendulaNightmareInterrupt:
+	.string "CALENDULA: You're back, {PLAYER}!\n"
+	.string "The situation here is getting worse\l"
+	.string "by the minute. Did you learn-$"
+
+PetalburgCity_Text_QuakeRivalNightmareInterrupt:
+	.string "That was a big one!\n"
+	.string "Is everyone alright?$"
+
+PetalburgCity_Text_QuakeLukaNightmareInterrupt:
+	.string "LUKA: We're okay over here, but-\n"
+	.string "wait, {PLAYER}, you don't look so good.$"
+
+PetalburgCity_Text_QuakeCalendulaPlayerSick:
+	.string "CALENDULA: {PLAYER}, what's wrong?\n"
+	.string "Are you okay?$"
 PetalburgCity_Text_QuakeLukaPart15:
 	.string "LUKA: {PLAYER}! I'm glad to see\n"
 	.string "you, but we really need some help\l"

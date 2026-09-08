@@ -1,6 +1,15 @@
 NightmarePetalburg_MapScripts::
 	.byte 0
 
+NightmarePetalburg_EventScript_JaggedGlass::
+	msgbox NightmarePetalburg_Text_JaggedGlass, MSGBOX_SIGN
+	end
+
+NightmarePetalburg_Text_JaggedGlass:
+	.string "The glass is jagged and sharp.\n"
+	.string "You would cut yourself if you\l"
+	.string "tried to enter.$"
+
 doorwontbudge::
 	msgbox NightmarePetalburg_Text_DoorWontBudge, MSGBOX_SIGN
 	end

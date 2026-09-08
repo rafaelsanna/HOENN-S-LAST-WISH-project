@@ -5,7 +5,7 @@
   "music": "MUS_HLW_DISTORTION_WORLD",
   "region_map_section": "MAPSEC_NIGHTMARE_REALM",
   "requires_flash": false,
-  "weather": "WEATHER_DOWNPOUR",
+  "weather": "WEATHER_DARKNESS_RAIN",
   "map_type": "MAP_TYPE_NONE",
   "allow_cycling": true,
   "allow_escaping": false,
@@ -52,7 +52,7 @@
       "y": 16,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "doorwontbudge"
+      "script": "NightmarePetalburg_EventScript_JaggedGlass"
     },
     {
       "type": "sign",
@@ -60,7 +60,7 @@
       "y": 12,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "doorwontbudge"
+      "script": "NightmarePetalburg_EventScript_JaggedGlass"
     },
     {
       "type": "sign",
@@ -80,11 +80,27 @@
     },
     {
       "type": "sign",
-      "x": 19,
-      "y": 10,
+      "x": 22,
+      "y": 24,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "norman"
+      "script": "doorwontbudge"
+    },
+    {
+      "type": "sign",
+      "x": 9,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "doorwontbudge"
+    },
+    {
+      "type": "sign",
+      "x": 17,
+      "y": 8,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "NightmarePetalburg_EventScript_JaggedGlass"
     }
   ]
 }

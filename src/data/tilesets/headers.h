@@ -905,3 +905,14 @@ const struct Tileset gTileset_DistortionWorld = {
     .metatileAttributes = gMetatileAttributes_DistortionWorld,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_NightmareTowns =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_NightmareTowns,
+    .palettes = gTilesetPalettes_NightmareTowns,
+    .metatiles = gMetatiles_NightmareTowns,
+    .metatileAttributes = gMetatileAttributes_NightmareTowns,
+    .callback = NULL,
+};
