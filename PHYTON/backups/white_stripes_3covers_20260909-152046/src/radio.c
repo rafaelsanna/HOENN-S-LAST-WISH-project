@@ -710,9 +710,6 @@ enum RadioAlbumCoverId
     RADIO_COVER_WISH_YOU_WERE_HERE,
     RADIO_COVER_DARK_SIDE_OF_THE_MOON,
     RADIO_COVER_DIVISION_BELL,
-    RADIO_COVER_HELLO_OPERATOR,
-    RADIO_COVER_WHITE_BLOOD_CELLS,
-    RADIO_COVER_ELEPHANT,
     RADIO_COVER_COUNT,
 };
 
@@ -795,12 +792,6 @@ static const u16 sRadioCoverDarkSideOfTheMoon_Pal[] = INCBIN_U16("graphics/radio
 static const u32 sRadioCoverDarkSideOfTheMoon_Gfx[] = INCBIN_U32("graphics/radio/covers/darksideofthemoon.4bpp.smol");
 static const u16 sRadioCoverDivisionBell_Pal[] = INCBIN_U16("graphics/radio/covers/divisionbell.gbapal");
 static const u32 sRadioCoverDivisionBell_Gfx[] = INCBIN_U32("graphics/radio/covers/divisionbell.4bpp.smol");
-static const u16 sRadioCoverHelloOperator_Pal[] = INCBIN_U16("graphics/radio/covers/hellooperator.gbapal");
-static const u32 sRadioCoverHelloOperator_Gfx[] = INCBIN_U32("graphics/radio/covers/hellooperator.4bpp.smol");
-static const u16 sRadioCoverWhiteBloodCells_Pal[] = INCBIN_U16("graphics/radio/covers/whitebloodcells.gbapal");
-static const u32 sRadioCoverWhiteBloodCells_Gfx[] = INCBIN_U32("graphics/radio/covers/whitebloodcells.4bpp.smol");
-static const u16 sRadioCoverElephant_Pal[] = INCBIN_U16("graphics/radio/covers/elephant.gbapal");
-static const u32 sRadioCoverElephant_Gfx[] = INCBIN_U32("graphics/radio/covers/elephant.4bpp.smol");
 
 static const struct OamData sOamData_RadioCover =
 {
@@ -877,9 +868,6 @@ static const struct CompressedSpriteSheet sRadioCoverSheets[RADIO_COVER_COUNT] =
     [RADIO_COVER_WISH_YOU_WERE_HERE] = {sRadioCoverWishYouWereHere_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_DARK_SIDE_OF_THE_MOON] = {sRadioCoverDarkSideOfTheMoon_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_DIVISION_BELL] = {sRadioCoverDivisionBell_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_HELLO_OPERATOR] = {sRadioCoverHelloOperator_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_WHITE_BLOOD_CELLS] = {sRadioCoverWhiteBloodCells_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_ELEPHANT] = {sRadioCoverElephant_Gfx, 0x800, TAG_RADIO_COVER},
 };
 
 static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
@@ -922,9 +910,6 @@ static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
     [RADIO_COVER_WISH_YOU_WERE_HERE] = {sRadioCoverWishYouWereHere_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_DARK_SIDE_OF_THE_MOON] = {sRadioCoverDarkSideOfTheMoon_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_DIVISION_BELL] = {sRadioCoverDivisionBell_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_HELLO_OPERATOR] = {sRadioCoverHelloOperator_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_WHITE_BLOOD_CELLS] = {sRadioCoverWhiteBloodCells_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_ELEPHANT] = {sRadioCoverElephant_Pal, TAG_RADIO_COVER},
 };
 
 
@@ -7203,14 +7188,6 @@ static u8 Radio_GetAlbumCoverForSong(u16 songId)
         return RADIO_COVER_DARK_SIDE_OF_THE_MOON;
     case MUS_HIGH_HOPES:
         return RADIO_COVER_DIVISION_BELL;
-    case MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND:
-        return RADIO_COVER_WHITE_BLOOD_CELLS;
-    case MUS_I_CANT_WAIT_WHITE_STRIPES:
-        return RADIO_COVER_WHITE_BLOOD_CELLS;
-    case MUS_JOLENE_WHITE_STRIPES:
-        return RADIO_COVER_HELLO_OPERATOR;
-    case MUS_SEVEN_NATION_ARMY:
-        return RADIO_COVER_ELEPHANT;
     default:
         return RADIO_COVER_NONE;
     }

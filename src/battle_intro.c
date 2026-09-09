@@ -30,6 +30,7 @@ static const TaskFunc sBattleIntroSlideFuncs[] =
     [BATTLE_ENVIRONMENT_SAND]       = BattleIntroSlide2,
     [BATTLE_ENVIRONMENT_UNDERWATER] = BattleIntroSlide2,
     [BATTLE_ENVIRONMENT_WATER]      = BattleIntroSlide2,
+    [BATTLE_ENVIRONMENT_NIGHT_OCEAN] = BattleIntroSlide2,
     [BATTLE_ENVIRONMENT_POND]       = BattleIntroSlide1,
     [BATTLE_ENVIRONMENT_MOUNTAIN]   = BattleIntroSlide1,
     [BATTLE_ENVIRONMENT_CAVE]       = BattleIntroSlide1,
@@ -297,6 +298,7 @@ static void BattleIntroSlide2(u8 taskId)
     {
     case BATTLE_ENVIRONMENT_SAND:
     case BATTLE_ENVIRONMENT_WATER:
+    case BATTLE_ENVIRONMENT_NIGHT_OCEAN:
         gBattle_BG1_X += 8;
         break;
     case BATTLE_ENVIRONMENT_UNDERWATER:
@@ -304,7 +306,8 @@ static void BattleIntroSlide2(u8 taskId)
         break;
     }
 
-    if (gTasks[taskId].tEnvironment == BATTLE_ENVIRONMENT_WATER)
+    if (gTasks[taskId].tEnvironment == BATTLE_ENVIRONMENT_WATER
+     || gTasks[taskId].tEnvironment == BATTLE_ENVIRONMENT_NIGHT_OCEAN)
     {
         gBattle_BG1_Y = Cos2(gTasks[taskId].data[6]) / 512 - 8;
         if (gTasks[taskId].data[6] < 180)

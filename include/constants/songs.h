@@ -612,7 +612,11 @@
 #define MUS_THROUGH_THE_SEA_OF_TIME                 679
 #define MUS_INTRO_SUPERNOVA                              733
 #define MUS_SHADOW_LUGIA_THEME                   734
-#define END_MUS MUS_SHADOW_LUGIA_THEME
+#define MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND         735
+#define MUS_I_CANT_WAIT_WHITE_STRIPES                736
+#define MUS_JOLENE_WHITE_STRIPES                     737
+#define MUS_SEVEN_NATION_ARMY                        738
+#define END_MUS MUS_SEVEN_NATION_ARMY
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
 #define PH_TRAP_BLEND               562

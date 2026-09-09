@@ -38,6 +38,15 @@ NightmarePetalburg_Suicune::
     goto_if_set FLAG_DEFEATED_NIGHTMARE_PETALBURG_DARK_AURA, NightmarePetalburg_Suicune_AlreadyDone
     lockall
     setvar VAR_TEMP_0, 1
+    applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
+    waitmovement 0
+    playse SE_PIN
+    applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
+    waitmovement 0
+    waitse
+    @ SPECIES_SWANNA is the project's Dark Suicune slot and uses CRY_SUICUNE.
+    playmoncry SPECIES_SWANNA, CRY_MODE_NORMAL
+    waitmoncry
     special SpawnCameraObject
     applymovement LOCALID_CAMERA, NightmarePetalburg_Movement_CameraToDarkAura
     waitmovement 0

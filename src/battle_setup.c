@@ -655,6 +655,12 @@ enum BattleEnvironments BattleSetup_GetEnvironmentId(void)
     u16 tileBehavior;
     s16 x, y;
 
+    // Dark Aura has a map-defined battle scene. Keep gBattleEnvironment in
+    // sync so its entry animation and the battle intro use the same backdrop.
+    if (gBattleTypeFlags & BATTLE_TYPE_DARK_AURA
+     && GetCurrentMapBattleScene() == MAP_BATTLE_SCENE_NIGHT_OCEAN)
+        return BATTLE_ENVIRONMENT_NIGHT_OCEAN;
+
     if (I_FISHING_ENVIRONMENT >= GEN_4 && gIsFishingEncounter)
         GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     else

@@ -3,7 +3,7 @@
  *
  * Flow:
  * - bg01 scrolls quickly right-to-left behind the static bg02 mountains.
- * - Dark Suicune runs in from the left, pauses in the centre, then exits right.
+ * - Dark Suicune runs in from the right, pauses in the centre, then exits left.
  * - A black flash changes to the black-background close-up, which zooms in
  *   through an affine BG before the scene fades back to black.
  *
@@ -22,13 +22,10 @@
 #include "palette.h"
 #include "scanline_effect.h"
 #include "script.h"
-#include "sound.h"
 #include "sprite.h"
 #include "task.h"
-#include "trig.h"
 #include "util.h"
 #include "constants/rgb.h"
-#include "constants/songs.h"
 
 // -------------------------------------------------------------------------
 // Graphics
@@ -41,11 +38,6 @@ static const u16 sDarkSuicuneBg01_Map[] = INCBIN_U16("graphics/dark_suicune/bg01
 static const u16 sDarkSuicuneBg02_Pal[] = INCBIN_U16("graphics/dark_suicune/bg02.gbapal");
 static const u32 sDarkSuicuneBg02_Gfx[] = INCBIN_U32("graphics/dark_suicune/bg02.4bpp.smol");
 static const u16 sDarkSuicuneBg02_Map[] = INCBIN_U16("graphics/dark_suicune/bg02.bin");
-
-// Reuse the pond-water battle-entry animation as a foreground water floor.
-static const u16 sDarkSuicunePondWater_Pal[] = INCBIN_U16("graphics/battle_environment/pond_water/palette.gbapal");
-static const u32 sDarkSuicunePondWater_Gfx[] = INCBIN_U32("graphics/battle_environment/pond_water/anim_tiles.4bpp.smol");
-static const u32 sDarkSuicunePondWater_Map[] = INCBIN_U32("graphics/battle_environment/pond_water/anim_map.bin.smolTM");
 
 static const u16 sDarkSuicuneRun_Pal[] = INCBIN_U16("graphics/dark_suicune/run.gbapal");
 static const u32 sDarkSuicuneRun_Gfx[] = INCBIN_U32("graphics/dark_suicune/run.4bpp.smol");
@@ -64,10 +56,8 @@ static const u32 sDarkSuicuneCloseAffine_Map[] = INCBIN_U32("graphics/dark_suicu
 
 #define DARK_SUICUNE_BG01_CHARBASE       0
 #define DARK_SUICUNE_BG02_CHARBASE       1
-#define DARK_SUICUNE_WATER_CHARBASE      2
 #define DARK_SUICUNE_BG01_SCREENBASE     28
 #define DARK_SUICUNE_BG02_SCREENBASE     30
-#define DARK_SUICUNE_WATER_SCREENBASE    31
 
 #define DARK_SUICUNE_CLOSE_CHARBASE      0
 #define DARK_SUICUNE_CLOSE_SCREENBASE    24
@@ -90,28 +80,18 @@ static const u32 sDarkSuicuneCloseAffine_Map[] = INCBIN_U32("graphics/dark_suicu
 // motion always right-to-left while making both wrap boundaries pixel-perfect.
 #define DARK_SUICUNE_BG01_LOOP_WIDTH    512
 #define DARK_SUICUNE_BG01_HALF_TILES     32
-#define DARK_SUICUNE_WATER_LOOP_WIDTH   256
-#define DARK_SUICUNE_WATER_VOFS         208
-#define DARK_SUICUNE_WATER_LAST_ROW      13
-#define DARK_SUICUNE_WATER_FOOTER_ROW    14
 
 // -------------------------------------------------------------------------
 // Animation constants
 // -------------------------------------------------------------------------
 
 #define TAG_DARK_SUICUNE_RUN          0xD640
-#define DARK_SUICUNE_RUN_START_X      (-32)
+#define DARK_SUICUNE_RUN_START_X      (DISPLAY_WIDTH + 32)
 #define DARK_SUICUNE_RUN_CENTER_X     (DISPLAY_WIDTH / 2)
-#define DARK_SUICUNE_RUN_END_X        (DISPLAY_WIDTH + 32)
-#define DARK_SUICUNE_RUN_Y            120
+#define DARK_SUICUNE_RUN_END_X        (-32)
+#define DARK_SUICUNE_RUN_Y            128
 #define DARK_SUICUNE_RUN_SPEED          4
-#define DARK_SUICUNE_RUN_PRIORITY       0
 #define DARK_SUICUNE_SCROLL_SPEED       5
-#define DARK_SUICUNE_WATER_SCROLL_SPEED 2
-#define DARK_SUICUNE_WATER_PRIORITY     1
-#define DARK_SUICUNE_WATER_BOB_HEIGHT    4
-#define DARK_SUICUNE_WATER_BOB_SPEED     2
-#define DARK_SUICUNE_WATER_STEP_FRAMES  12
 #define DARK_SUICUNE_RUN_PAUSE_FRAMES 144
 #define DARK_SUICUNE_BLACK_FLASH_FRAMES 8
 #define DARK_SUICUNE_CLOSE_START_SCALE 256
@@ -141,9 +121,6 @@ enum
 #define tRunX       data[3]
 #define tBgScroll   data[4]
 #define tCloseScale data[5]
-#define tWaterScroll data[6]
-#define tWaterWaveAngle data[7]
-#define tWaterStepTimer data[8]
 
 // -------------------------------------------------------------------------
 // Running sprite
@@ -161,7 +138,7 @@ static const struct OamData sOam_DarkSuicuneRun =
     .matrixNum = 0,
     .size = SPRITE_SIZE(64x64),
     .tileNum = 0,
-    .priority = DARK_SUICUNE_RUN_PRIORITY,
+    .priority = 0,
     .paletteNum = 0,
     .affineParam = 0,
 };
@@ -299,11 +276,8 @@ static void CopyDarkSuicuneLoopingBg01Map(u16 *dest, const u16 *src, u8 paletteN
 
 static void LoadDarkSuicuneRunningBgs(void)
 {
-    u16 *waterMap;
-
     DecompressDataWithHeaderVram(sDarkSuicuneBg01_Gfx, (void *)BG_CHAR_ADDR(DARK_SUICUNE_BG01_CHARBASE));
     DecompressDataWithHeaderVram(sDarkSuicuneBg02_Gfx, (void *)BG_CHAR_ADDR(DARK_SUICUNE_BG02_CHARBASE));
-    DecompressDataWithHeaderVram(sDarkSuicunePondWater_Gfx, (void *)BG_CHAR_ADDR(DARK_SUICUNE_WATER_CHARBASE));
 
     CopyDarkSuicuneLoopingBg01Map(
         (u16 *)BG_SCREEN_ADDR(DARK_SUICUNE_BG01_SCREENBASE),
@@ -313,43 +287,25 @@ static void LoadDarkSuicuneRunningBgs(void)
         (u16 *)BG_SCREEN_ADDR(DARK_SUICUNE_BG02_SCREENBASE),
         sDarkSuicuneBg02_Map,
         1);
-    DecompressDataWithHeaderVram(sDarkSuicunePondWater_Map,
-                                 (void *)BG_SCREEN_ADDR(DARK_SUICUNE_WATER_SCREENBASE));
-
-    // The animated pond strip is only 24px tall and normally finishes exactly
-    // at the lower screen edge. Repeat its opaque base row below it so that,
-    // while the waves rise, blue water continues to fill the newly exposed
-    // pixels instead of letting the mountains show through.
-    waterMap = (u16 *)BG_SCREEN_ADDR(DARK_SUICUNE_WATER_SCREENBASE);
-    CpuCopy16(&waterMap[DARK_SUICUNE_WATER_LAST_ROW * DARK_SUICUNE_HW_MAP_WIDTH],
-              &waterMap[DARK_SUICUNE_WATER_FOOTER_ROW * DARK_SUICUNE_HW_MAP_WIDTH],
-              DARK_SUICUNE_HW_MAP_WIDTH * sizeof(*waterMap));
 
     LoadPalette(sDarkSuicuneBg01_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     LoadPalette(sDarkSuicuneBg02_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
-    LoadPalette(sDarkSuicunePondWater_Pal, BG_PLTT_ID(2), sizeof(sDarkSuicunePondWater_Pal));
 
     SetGpuReg(REG_OFFSET_BG0CNT,
-              BGCNT_PRIORITY(3) | BGCNT_CHARBASE(DARK_SUICUNE_BG01_CHARBASE)
+              BGCNT_PRIORITY(1) | BGCNT_CHARBASE(DARK_SUICUNE_BG01_CHARBASE)
               | BGCNT_SCREENBASE(DARK_SUICUNE_BG01_SCREENBASE)
               | BGCNT_16COLOR | BGCNT_TXT512x256);
     SetGpuReg(REG_OFFSET_BG1CNT,
-              BGCNT_PRIORITY(2) | BGCNT_CHARBASE(DARK_SUICUNE_BG02_CHARBASE)
+              BGCNT_PRIORITY(0) | BGCNT_CHARBASE(DARK_SUICUNE_BG02_CHARBASE)
               | BGCNT_SCREENBASE(DARK_SUICUNE_BG02_SCREENBASE)
-              | BGCNT_16COLOR | BGCNT_TXT256x256);
-    SetGpuReg(REG_OFFSET_BG2CNT,
-              BGCNT_PRIORITY(DARK_SUICUNE_WATER_PRIORITY) | BGCNT_CHARBASE(DARK_SUICUNE_WATER_CHARBASE)
-              | BGCNT_SCREENBASE(DARK_SUICUNE_WATER_SCREENBASE)
               | BGCNT_16COLOR | BGCNT_TXT256x256);
     SetGpuReg(REG_OFFSET_BG0HOFS, 0);
     SetGpuReg(REG_OFFSET_BG0VOFS, 0);
     SetGpuReg(REG_OFFSET_BG1HOFS, 0);
     SetGpuReg(REG_OFFSET_BG1VOFS, 0);
-    SetGpuReg(REG_OFFSET_BG2HOFS, 0);
-    SetGpuReg(REG_OFFSET_BG2VOFS, DARK_SUICUNE_WATER_VOFS);
     SetGpuReg(REG_OFFSET_DISPCNT,
               DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP
-              | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
+              | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
 }
 
 static void UpdateDarkSuicuneRunningBg(s16 *data)
@@ -361,39 +317,6 @@ static void UpdateDarkSuicuneRunningBg(s16 *data)
     // Increasing HOFS moves the image left on screen. BG0 now has a genuine
     // 512px hardware period, so there is no 240px mid-frame reset anymore.
     SetGpuReg(REG_OFFSET_BG0HOFS, tBgScroll);
-
-    // Increasing HOFS moves the foreground water left, opposite to the
-    // Dark Suicune run from left to right.
-    tWaterScroll += DARK_SUICUNE_WATER_SCROLL_SPEED;
-    if (tWaterScroll >= DARK_SUICUNE_WATER_LOOP_WIDTH)
-        tWaterScroll -= DARK_SUICUNE_WATER_LOOP_WIDTH;
-    SetGpuReg(REG_OFFSET_BG2HOFS, tWaterScroll);
-
-    // Raise the water by 0-4px and return it to the bottom. The duplicated
-    // opaque row below the waves keeps the entire lower edge covered, so this
-    // is visibly stronger without either a bottom crop or a mountain gap.
-    tWaterWaveAngle += DARK_SUICUNE_WATER_BOB_SPEED;
-    if (tWaterWaveAngle >= 360)
-        tWaterWaveAngle -= 360;
-    SetGpuReg(REG_OFFSET_BG2VOFS,
-              DARK_SUICUNE_WATER_VOFS
-              + (DARK_SUICUNE_WATER_BOB_HEIGHT * (0x1000 - Cos2(tWaterWaveAngle))) / 0x2000);
-}
-
-static void PlayDarkSuicuneWaterStep(s16 *data)
-{
-    if (tRunSprite == MAX_SPRITES)
-        return;
-
-    if (tWaterStepTimer == 0)
-    {
-        PlaySE(SE_PUDDLE);
-        tWaterStepTimer = DARK_SUICUNE_WATER_STEP_FRAMES - 1;
-    }
-    else
-    {
-        tWaterStepTimer--;
-    }
 }
 
 static void SetDarkSuicuneCloseAffine(u16 scale)
@@ -495,9 +418,6 @@ static void Task_DarkSuicuneScene(u8 taskId)
 
         tTimer = 0;
         tBgScroll = 0;
-        tWaterScroll = 0;
-        tWaterWaveAngle = 0;
-        tWaterStepTimer = 0;
         SetVBlankCallback(VBlankCB_DarkSuicuneScene);
         BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
@@ -518,11 +438,10 @@ static void Task_DarkSuicuneScene(u8 taskId)
 
     case DARK_SUICUNE_SCENE_RUN_IN:
         UpdateDarkSuicuneRunningBg(data);
-        PlayDarkSuicuneWaterStep(data);
-        tRunX += DARK_SUICUNE_RUN_SPEED;
+        tRunX -= DARK_SUICUNE_RUN_SPEED;
         if (tRunSprite != MAX_SPRITES)
             gSprites[tRunSprite].x = tRunX;
-        if (tRunX >= DARK_SUICUNE_RUN_CENTER_X)
+        if (tRunX <= DARK_SUICUNE_RUN_CENTER_X)
         {
             tRunX = DARK_SUICUNE_RUN_CENTER_X;
             if (tRunSprite != MAX_SPRITES)
@@ -535,19 +454,15 @@ static void Task_DarkSuicuneScene(u8 taskId)
     case DARK_SUICUNE_SCENE_RUN_PAUSE:
         UpdateDarkSuicuneRunningBg(data);
         if (++tTimer >= DARK_SUICUNE_RUN_PAUSE_FRAMES)
-        {
-            tWaterStepTimer = 0;
             tState = DARK_SUICUNE_SCENE_RUN_OUT;
-        }
         break;
 
     case DARK_SUICUNE_SCENE_RUN_OUT:
         UpdateDarkSuicuneRunningBg(data);
-        PlayDarkSuicuneWaterStep(data);
-        tRunX += DARK_SUICUNE_RUN_SPEED;
+        tRunX -= DARK_SUICUNE_RUN_SPEED;
         if (tRunSprite != MAX_SPRITES)
             gSprites[tRunSprite].x = tRunX;
-        if (tRunX >= DARK_SUICUNE_RUN_END_X)
+        if (tRunX <= DARK_SUICUNE_RUN_END_X)
         {
             if (tRunSprite != MAX_SPRITES)
                 gSprites[tRunSprite].invisible = TRUE;
@@ -645,6 +560,3 @@ void StartDarkSuicuneScene(void)
 #undef tRunX
 #undef tBgScroll
 #undef tCloseScale
-#undef tWaterScroll
-#undef tWaterWaveAngle
-#undef tWaterStepTimer

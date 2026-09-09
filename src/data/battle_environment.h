@@ -34,6 +34,10 @@ const u32 gBattleEnvironmentTiles_DistortionWorld[] = INCBIN_U32("graphics/battl
 const u16 gBattleEnvironmentPalette_DistortionWorld[] = INCBIN_U16("graphics/battle_environment/distortion_world/palette.gbapal");
 const u32 gBattleEnvironmentTilemap_DistortionWorld[] = INCBIN_U32("graphics/battle_environment/distortion_world/map.bin.smolTM");
 
+const u32 gBattleEnvironmentTiles_NightOcean[] = INCBIN_U32("graphics/battle_environment/night_ocean/tiles.4bpp.fastSmol");
+const u16 gBattleEnvironmentPalette_NightOcean[] = INCBIN_U16("graphics/battle_environment/night_ocean/palette.gbapal");
+const u32 gBattleEnvironmentTilemap_NightOcean[] = INCBIN_U32("graphics/battle_environment/night_ocean/map.bin.smolTM");
+
 const u16 gBattleEnvironmentPalette_Plain[] = INCBIN_U16("graphics/battle_environment/plain/palette.gbapal");
 
 const u32 gBattleEnvironmentTiles_Building[] = INCBIN_U32("graphics/battle_environment/building/tiles.4bpp.fastSmol");
@@ -411,6 +415,14 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .background = ENVIRONMENT_BACKGROUND(DistortionWorld),
     },
 
+    [BATTLE_ENVIRONMENT_NIGHT_OCEAN] =
+    {
+        .naturePower = MOVE_HYDRO_PUMP,
+        .secretPowerEffect = MOVE_EFFECT_ATK_MINUS_1,
+        .camouflageType = TYPE_WATER,
+        .background = ENVIRONMENT_BACKGROUND(NightOcean),
+    },
+
     [BATTLE_ENVIRONMENT_SPACE] =
     {
         .naturePower = MOVE_DRACO_METEOR,
@@ -438,5 +450,6 @@ static const struct {
     {MAP_BATTLE_SCENE_GLACIA,   BATTLE_ENVIRONMENT_GLACIA},
     {MAP_BATTLE_SCENE_DRAKE,    BATTLE_ENVIRONMENT_DRAKE},
     {MAP_BATTLE_SCENE_FRONTIER,         BATTLE_ENVIRONMENT_FRONTIER},
-    {MAP_BATTLE_SCENE_DISTORTION_WORLD, BATTLE_ENVIRONMENT_DISTORTION_WORLD}
+    {MAP_BATTLE_SCENE_DISTORTION_WORLD, BATTLE_ENVIRONMENT_DISTORTION_WORLD},
+    {MAP_BATTLE_SCENE_NIGHT_OCEAN,      BATTLE_ENVIRONMENT_NIGHT_OCEAN},
 };

@@ -51,3 +51,6 @@ const u32 gBattleEnvironmentAnimTilemap_Rayquaza[] = INCBIN_U32("graphics/battle
 
 const u32 gBattleEnvironmentAnimTiles_DistortionWorld[] = INCBIN_U32("graphics/battle_environment/distortion_world/anim_tiles.4bpp.smol");
 const u32 gBattleEnvironmentAnimTilemap_DistortionWorld[] = INCBIN_U32("graphics/battle_environment/distortion_world/anim_map.bin.smolTM");
+
+const u32 gBattleEnvironmentAnimTiles_NightOcean[] = INCBIN_U32("graphics/battle_environment/night_ocean/anim_tiles.4bpp.smol");
+const u32 gBattleEnvironmentAnimTilemap_NightOcean[] = INCBIN_U32("graphics/battle_environment/night_ocean/anim_map.bin.smolTM");
