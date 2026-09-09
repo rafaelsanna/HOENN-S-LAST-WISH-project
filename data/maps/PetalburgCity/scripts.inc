@@ -549,7 +549,7 @@ PetalburgCity_EventScript_QuakeLukaNightmareInterrupt::
 # 275 "data/maps/PetalburgCity/scripts.pory"
 	delay 60
 # 276 "data/maps/PetalburgCity/scripts.pory"
-	warpsilent MAP_NIGHTMARE_PETALBURG, 23, 11
+	warpsilent MAP_NIGHTMARE_PETALBURG, 47, 18
 # 277 "data/maps/PetalburgCity/scripts.pory"
 	waitstate
 # 278 "data/maps/PetalburgCity/scripts.pory"

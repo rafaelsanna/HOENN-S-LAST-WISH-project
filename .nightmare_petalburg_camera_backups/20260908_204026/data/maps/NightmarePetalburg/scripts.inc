@@ -27,79 +27,11 @@ norman::
 	end
 
 
-@ >>> HLW NIGHTMARE PETALBURG CAMERA SCENE BEGIN
-@
-@ Geometry read from map.json at install time:
-@ trigger=(47,24)
-@ DarkAura=(12,26)
-@ horizontal delta=-35; vertical delta=2 ignored on purpose
-@
-NightmarePetalburg_Suicune::
-    goto_if_set FLAG_DEFEATED_NIGHTMARE_PETALBURG_DARK_AURA, NightmarePetalburg_Suicune_AlreadyDone
-    lockall
-    setvar VAR_TEMP_0, 1
-    special SpawnCameraObject
-    applymovement LOCALID_CAMERA, NightmarePetalburg_Movement_CameraToDarkAura
-    waitmovement 0
-    delay 90
-    fadescreenspeed FADE_TO_BLACK, 8
-    special RemoveCameraObject
-    delay 8
-    special StartDarkSuicuneScene
-    waitstate
-    goto NightmarePetalburg_EventScript_DarkAuraBattle_AfterScene
-    end
-
-NightmarePetalburg_Suicune_AlreadyDone::
-    setvar VAR_TEMP_0, 1
-    end
-
-NightmarePetalburg_Movement_CameraToDarkAura:
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    walk_left
-    step_end
-@ <<< HLW NIGHTMARE PETALBURG CAMERA SCENE END
-
 NightmarePetalburg_EventScript_DarkAuraBattle::
 	lock
 	faceplayer
 	special StartDarkSuicuneScene
 	waitstate
-NightmarePetalburg_EventScript_DarkAuraBattle_AfterScene::
-    fadescreenspeed FADE_TO_BLACK, 1
 	waitse
 	playmoncry SPECIES_SWANNA, CRY_MODE_ENCOUNTER
 	delay 40
@@ -113,7 +45,7 @@ NightmarePetalburg_EventScript_DarkAuraBattle_AfterScene::
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, NightmarePetalburg_EventScript_DefeatedDarkAura
-	releaseall
+	release
 	end
 
 NightmarePetalburg_EventScript_DefeatedDarkAura::
@@ -123,7 +55,7 @@ NightmarePetalburg_EventScript_DefeatedDarkAura::
 	fadescreenswapbuffers FADE_FROM_BLACK
 	msgbox NightmarePetalburg_Text_DarkAuraFades, MSGBOX_DEFAULT
 	giveitem ITEM_COMET_SHARD
-	releaseall
+	release
 	end
 
 NightmarePetalburg_EventScript_CorviknightExit::

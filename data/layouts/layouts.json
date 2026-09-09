@@ -5124,8 +5124,8 @@
     {
       "id": "LAYOUT_NIGHTMARE_PETALBURG",
       "name": "NightmarePetalburg_Layout",
-      "width": 41,
-      "height": 32,
+      "width": 71,
+      "height": 52,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_NightmareTowns",
       "border_filepath": "data/layouts/NightmarePetalburg/border.bin",

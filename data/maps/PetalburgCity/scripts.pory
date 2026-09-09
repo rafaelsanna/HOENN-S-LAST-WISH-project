@@ -273,7 +273,7 @@ PetalburgCity_EventScript_QuakeLukaNightmareInterrupt::
 	playse SE_WARP_OUT
 	waitse
 	delay 60
-	warpsilent MAP_NIGHTMARE_PETALBURG, 23, 11
+	warpsilent MAP_NIGHTMARE_PETALBURG, 47, 18
 	waitstate
 	release
 	end
