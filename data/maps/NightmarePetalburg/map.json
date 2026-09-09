@@ -58,43 +58,19 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 22,
-      "y": 16,
+      "x": 57,
+      "y": 20,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "NightmarePetalburg_EventScript_JaggedGlass"
     },
     {
       "type": "sign",
-      "x": 27,
-      "y": 12,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NightmarePetalburg_EventScript_JaggedGlass"
-    },
-    {
-      "type": "sign",
-      "x": 10,
-      "y": 9,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "whoswally"
-    },
-    {
-      "type": "sign",
-      "x": 19,
+      "x": 47,
       "y": 16,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "petalburgcity"
-    },
-    {
-      "type": "sign",
-      "x": 22,
-      "y": 24,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "doorwontbudge"
+      "script": "NightmarePetalburg_EventScript_JaggedGlass"
     },
     {
       "type": "sign",
@@ -102,12 +78,36 @@
       "y": 17,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "whoswally"
+    },
+    {
+      "type": "sign",
+      "x": 49,
+      "y": 24,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "petalburgcity"
+    },
+    {
+      "type": "sign",
+      "x": 52,
+      "y": 32,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "doorwontbudge"
     },
     {
       "type": "sign",
-      "x": 17,
-      "y": 8,
+      "x": 39,
+      "y": 13,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "doorwontbudge"
+    },
+    {
+      "type": "sign",
+      "x": 52,
+      "y": 24,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "NightmarePetalburg_EventScript_JaggedGlass"
