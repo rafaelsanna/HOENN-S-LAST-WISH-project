@@ -3133,7 +3133,22 @@ static void UpdateSmokeSprite(struct Sprite *sprite)
 #define CONCERT_BEAM_POSE_FRAMES 36
 // Global stage alignment. Apply this directly to the map-space base X so it
 // cannot get mixed with the per-frame sprite compensation below.
-#define CONCERT_BEAM_STAGE_X_OFFSET 16
+#define CONCERT_BEAM_STAGE_X_OFFSET 40
+#define CONCERT_BEAM_STAGE_Y_OFFSET -4
+
+// Local-light simulation for OBJ sprites standing inside a beam. The GBA cannot
+// alpha-blend OBJ over OBJ, so the beam is drawn behind characters and their
+// existing overworld palette is brightened/tinted after the normal Concert
+// Lights weather grade has been applied.
+#define CONCERT_BEAM_LIGHT_COLOR              RGB(31, 29, 20)
+#define CONCERT_BEAM_LIGHT_MIN_COEFF          2
+#define CONCERT_BEAM_LIGHT_MAX_COEFF          6
+#define CONCERT_BEAM_CONE_LENGTH              64
+#define CONCERT_BEAM_CONE_BOTTOM_SHIFT        24
+#define CONCERT_BEAM_CONE_BASE_HALF_WIDTH     19
+#define CONCERT_BEAM_OBJECT_HALF_WIDTH        6
+#define CONCERT_BEAM_OBJECT_SAMPLE_Y_OFFSET  -8
+#define CONCERT_BEAM_OBJECT_PALETTE_COUNT     12
 
 // Fixed map anchors for the two spotlights.
 // These are map metatile coordinates (without MAP_OFFSET), not screen pixels.
@@ -3256,6 +3271,143 @@ static u8 GetConcertBeamPose(u16 timer, u8 beamId)
     return (beamId == 0) ? sBeam0Poses[step] : sBeam1Poses[step];
 }
 
+
+static u8 GetConcertBeamLightStrengthAtPoint(s16 pointX, s16 pointY, u8 beamId)
+{
+    struct Sprite *beam;
+    s16 apexX;
+    s16 apexY;
+    s16 dy;
+    s16 centerX;
+    s16 halfWidth;
+    s16 dx;
+    u8 pose;
+    u8 strength;
+
+    if (!sConcertBeamCreated || beamId >= NUM_CONCERT_BEAMS)
+        return 0;
+    if (sConcertBeamSpriteIds[beamId] >= MAX_SPRITES)
+        return 0;
+
+    beam = &gSprites[sConcertBeamSpriteIds[beamId]];
+    if (!beam->inUse || beam->invisible)
+        return 0;
+
+    pose = sConcertBeamLastPose[beamId];
+    if (pose > 2)
+        return 0;
+
+    // x2 compensates the off-center artwork so the visible light source/apex
+    // stays fixed. With that compensation, the apex is exactly beam->x.
+    // The artwork source is at the top of the 64x64 sprite, hence y - 32.
+    apexX = beam->x;
+    apexY = beam->y - 32;
+    dy = pointY - apexY;
+
+    if (dy < 0 || dy > CONCERT_BEAM_CONE_LENGTH)
+        return 0;
+
+    // Follow the visible sweep. LEFT/RIGHT end about 24 px away from the apex
+    // at the bottom of the 64 px cone; CENTER remains vertical.
+    centerX = apexX;
+    if (pose == 0)
+        centerX -= (dy * CONCERT_BEAM_CONE_BOTTOM_SHIFT) / CONCERT_BEAM_CONE_LENGTH;
+    else if (pose == 2)
+        centerX += (dy * CONCERT_BEAM_CONE_BOTTOM_SHIFT) / CONCERT_BEAM_CONE_LENGTH;
+
+    // The cone gets wider toward the bottom. Add a small character radius so
+    // entering the visible edge of the beam already starts to illuminate the OBJ.
+    halfWidth = 3
+              + (dy * CONCERT_BEAM_CONE_BASE_HALF_WIDTH) / CONCERT_BEAM_CONE_LENGTH
+              + CONCERT_BEAM_OBJECT_HALF_WIDTH;
+    dx = pointX - centerX;
+    if (dx < 0)
+        dx = -dx;
+    if (dx > halfWidth)
+        return 0;
+
+    // Strongest on the center line, softer near the edge.
+    strength = CONCERT_BEAM_LIGHT_MIN_COEFF;
+    strength += ((halfWidth - dx)
+              * (CONCERT_BEAM_LIGHT_MAX_COEFF - CONCERT_BEAM_LIGHT_MIN_COEFF))
+              / halfWidth;
+
+    return strength;
+}
+
+void ConcertBeam_ApplyObjectLighting(void)
+{
+    u8 paletteStrength[CONCERT_BEAM_OBJECT_PALETTE_COUNT] = {0};
+    u8 objectEventId;
+    u8 paletteNum;
+
+    if (!sConcertBeamCreated)
+        return;
+
+    // Collect the strongest beam contribution for every standard overworld OBJ
+    // palette. Doing one final blend per palette avoids double-brightening where
+    // the two spotlights cross.
+    for (objectEventId = 0; objectEventId < OBJECT_EVENTS_COUNT; objectEventId++)
+    {
+        struct ObjectEvent *objectEvent = &gObjectEvents[objectEventId];
+        struct Sprite *sprite;
+        s16 pointX;
+        s16 pointY;
+        u8 strength = 0;
+        u8 beamId;
+
+        if (!objectEvent->active || objectEvent->invisible)
+            continue;
+        if (objectEvent->spriteId >= MAX_SPRITES)
+            continue;
+
+        sprite = &gSprites[objectEvent->spriteId];
+        if (!sprite->inUse || sprite->invisible)
+            continue;
+
+        paletteNum = sprite->oam.paletteNum;
+
+        // Object-event palettes occupy the standard overworld slots 0..11.
+        // Ignore weather/UI/field-effect OBJ palettes so this local lighting
+        // cannot recolor the beam itself or unrelated interface sprites.
+        if (paletteNum >= CONCERT_BEAM_OBJECT_PALETTE_COUNT)
+            continue;
+
+        // Object sprites use map-space x/y too. Sample around the torso rather
+        // than the feet so the character starts glowing when the visible cone
+        // actually passes over their body.
+        pointX = sprite->x + sprite->x2;
+        pointY = sprite->y + sprite->y2 + CONCERT_BEAM_OBJECT_SAMPLE_Y_OFFSET;
+
+        for (beamId = 0; beamId < NUM_CONCERT_BEAMS; beamId++)
+        {
+            u8 beamStrength = GetConcertBeamLightStrengthAtPoint(pointX, pointY, beamId);
+            if (beamStrength > strength)
+                strength = beamStrength;
+        }
+
+        if (strength > paletteStrength[paletteNum])
+            paletteStrength[paletteNum] = strength;
+    }
+
+    // ConcertLights_ApplyLighting() has already rebuilt these palettes from the
+    // stable unfaded buffer this frame. Blend faded -> faded here so the local
+    // beam light is composed on top without accumulating from previous frames.
+    for (paletteNum = 0; paletteNum < CONCERT_BEAM_OBJECT_PALETTE_COUNT; paletteNum++)
+    {
+        if (paletteStrength[paletteNum] != 0)
+        {
+            BlendPalettesFine(
+                1,
+                gPlttBufferFaded + OBJ_PLTT_ID(paletteNum),
+                gPlttBufferFaded + OBJ_PLTT_ID(paletteNum),
+                paletteStrength[paletteNum],
+                CONCERT_BEAM_LIGHT_COLOR
+            );
+        }
+    }
+}
+
 void ConcertBeam_Reset(void)
 {
     u8 i;
@@ -3292,18 +3444,22 @@ void ConcertBeam_Update(void)
         // Create the two beams, then place them in MAP space below.
         // Using map coordinates is the important part: when the camera moves,
         // the beams scroll with the stage instead of remaining over the player.
+        // Keep the beam at hardware OBJ priority 2 so it can still alpha-blend
+        // over the map BGs, but give it the lowest OBJ subpriority. The GBA
+        // cannot alpha-blend one OBJ against another OBJ, so event/player
+        // sprites must be drawn in front of the beam instead of being covered.
         sConcertBeamSpriteIds[0] = CreateSpriteAtEnd(
             &sConcertBeamSpriteTemplate,
             0,
             0,
-            0
+            0xFF
         );
 
         sConcertBeamSpriteIds[1] = CreateSpriteAtEnd(
             &sConcertBeamSpriteTemplate,
             0,
             0,
-            0
+            0xFF
         );
 
         if (sConcertBeamSpriteIds[0] == MAX_SPRITES
@@ -3331,10 +3487,16 @@ void ConcertBeam_Update(void)
                 &sprite->y
             );
 
-            // Move the *base map anchor* 16 px to the right. Keep this separate
-            // from x2, because x2 is now reserved for per-pose art recentering.
-            // This makes the whole two-beam rig align with the stage/leader.
+            // Move the *base map anchor* 40 px to the right and 2 px upward.
+            // Keep this separate from x2/y2 so those remain available for
+            // per-pose art compensation. This aligns the whole rig to the stage.
             sprite->x += CONCERT_BEAM_STAGE_X_OFFSET;
+            sprite->y += CONCERT_BEAM_STAGE_Y_OFFSET;
+
+            // Put all normal overworld/event OBJ sprites in front of the light.
+            // Alpha blending still applies to BG tiles; OBJ-vs-OBJ alpha is not
+            // supported by the GBA hardware.
+            sprite->subpriority = 0xFF;
 
             // Let the engine apply gSpriteCoordOffsetX/Y as the camera moves.
             // This is what makes the beam stay attached to the stage.

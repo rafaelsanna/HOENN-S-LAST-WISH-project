@@ -80,6 +80,7 @@ static bool8 FadeInScreen_Darkness(u8 darknessCoeff);
 // Beam rendering lives in field_weather_effect.c, alongside the other weather sprites.
 void ConcertBeam_Reset(void);
 void ConcertBeam_Update(void);
+void ConcertBeam_ApplyObjectLighting(void);
 void ConcertBeam_Destroy(void);
 
 EWRAM_DATA struct Weather gWeather = {0};
@@ -464,12 +465,19 @@ static void ConcertLights_Main(void)
      || gPaletteFade.active)
         return;
 
-    // Create the fixed test beam from the weather-effects module.
-    // ConcertBeam_Update() is idempotent: after creation it does nothing.
+    // Update the fixed map-space beam sprites first so their current pose is
+    // available to the local OBJ-lighting pass below.
     ConcertBeam_Update();
 
     sConcertLightsTimer++;
     ConcertLights_ApplyLighting();
+
+    // The GBA cannot alpha-blend OBJ over OBJ. Characters therefore render in
+    // front of the beam, and this second pass brightens only overworld OBJ
+    // palettes whose sprites are currently inside either cone. Run it AFTER the
+    // normal Concert Lights grade so it composes on the freshly rebuilt faded
+    // palettes and never accumulates frame-to-frame.
+    ConcertBeam_ApplyObjectLighting();
 }
 
 static bool8 ConcertLights_Finish(void)
