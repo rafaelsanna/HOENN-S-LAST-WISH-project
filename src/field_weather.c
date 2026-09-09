@@ -74,6 +74,7 @@ static void DarknessRain_InitAll(void);
 static bool8 DarknessRain_Finish(void);
 static void Darkness_RestoreBasePalettes(void);
 static void Darkness_ApplyLighting(u8 blendCoeff);
+static void Darkness_ApplyFade(u8 darknessCoeff, u8 fadeCoeff, u32 fadeColor);
 static bool8 FadeInScreen_Darkness(u8 darknessCoeff);
 
 // Beam rendering lives in field_weather_effect.c, alongside the other weather sprites.
@@ -399,6 +400,7 @@ static void ConcertLights_ApplyLighting(void)
     u8 blendCoeff;
     u8 colorIndex;
     u16 blendColor;
+    u8 beamPal;
     u8 i;
 
     // One color per slow pulse. The color changes when the previous pulse has
@@ -418,20 +420,40 @@ static void ConcertLights_ApplyLighting(void)
     // but still slow enough to read as stage lighting rather than rapid flash.
     blendCoeff = 1 + (blendCoeff / 5);
 
-    ConcertLights_RestoreBasePalettes();
+    beamPal = 16 + gWeatherPtr->contrastColorMapSpritePalIndex;
 
-    // Apply the tint to the room/characters, but preserve the OBJ palette
-    // reserved for the concert beams. This keeps the beams warm white/yellow
-    // while the stadium itself cycles through blue/magenta/cyan/red/purple.
+    // IMPORTANT:
+    // Do NOT restore/copy the whole visible palette buffer every frame here.
+    // Menus (Party, Start Menu, Bag, etc.) can own palettes while the field
+    // weather task is still alive. Rebuilding all 32 palettes would overwrite
+    // those menu palettes and tint/flash the UI.
+    //
+    // Instead, build the Concert Lights tint directly from the stable unfaded
+    // source only for palettes that are actually weather-enabled.
     for (i = 0; i < 32; i++)
     {
-        u8 beamPal = 16 + gWeatherPtr->contrastColorMapSpritePalIndex;
+        // Reserved BG palettes (including overworld/menu/window palettes)
+        // explicitly opt out of weather grading.
+        if (sPaletteColorMapTypes[i] == COLOR_MAP_NONE)
+            continue;
 
+        // Custom OBJ palettes may explicitly opt out too.
+        if (i >= 16
+         && IS_BLEND_IMMUNE_TAG(GetSpritePaletteTagByPaletteNum(i - 16)))
+            continue;
+
+        // Keep the concert beam warm white/yellow instead of tinting it.
         if (gWeatherPtr->contrastColorMapSpritePalIndex < 16
          && i == beamPal)
             continue;
 
-        BlendPalette(i * 16, 16, blendCoeff, blendColor);
+        BlendPalettesFine(
+            1,
+            gPlttBufferUnfaded + PLTT_ID(i),
+            gPlttBufferFaded + PLTT_ID(i),
+            blendCoeff,
+            blendColor
+        );
     }
 }
 
@@ -511,6 +533,35 @@ static void Darkness_ApplyLightingToCurrentPalettes(u8 blendCoeff)
 static void Darkness_ApplyLighting(u8 blendCoeff)
 {
     Darkness_ApplyLightingToCurrentPalettes(blendCoeff);
+}
+
+// Compose the entire fade directly into the visible palette buffer.  Do not
+// first restore an unfiltered palette in gPlttBufferFaded and then darken it:
+// VBlank can occur between those two writes and briefly reveal a bright menu.
+static void Darkness_ApplyFade(u8 darknessCoeff, u8 fadeCoeff, u32 fadeColor)
+{
+    u8 i;
+    u16 darkPalette[16];
+
+    for (i = 0; i < 32; i++)
+    {
+        u16 *src = gPlttBufferUnfaded + PLTT_ID(i);
+        u16 *dst = gPlttBufferFaded + PLTT_ID(i);
+
+        if (sPaletteColorMapTypes[i] == COLOR_MAP_NONE
+         || (i >= 16
+          && IS_BLEND_IMMUNE_TAG(GetSpritePaletteTagByPaletteNum(i - 16))))
+        {
+            // UI and blend-immune palettes fade from their original colour.
+            BlendPalettesFine(1, src, dst, fadeCoeff, fadeColor);
+        }
+        else
+        {
+            // Keep the intermediate Darkness grade off the visible buffer.
+            BlendPalettesFine(1, src, darkPalette, darknessCoeff, DARKNESS_BLEND_COLOR);
+            BlendPalettesFine(1, darkPalette, dst, fadeCoeff, fadeColor);
+        }
+    }
 }
 
 static void Darkness_InitVars(void)
@@ -702,19 +753,14 @@ static bool8 FadeInScreen_Darkness(u8 darknessCoeff)
 
     gWeatherPtr->fadeScreenCounter++;
 
-    // Build the Darkness target directly from gPlttBufferUnfaded.
-    // There is no full-bright intermediate palette anymore.
-    Darkness_ApplyLightingToCurrentPalettes(darknessCoeff);
+    // Compose the weather grade and the screen fade in one visible-buffer
+    // pass, so VBlank never catches the menu in an unfiltered state.
+    Darkness_ApplyFade(darknessCoeff,
+                       16 - gWeatherPtr->fadeScreenCounter,
+                       gWeatherPtr->fadeDestColor);
 
     if (gWeatherPtr->fadeScreenCounter < 16)
-    {
-        BlendPalettesFine(PALETTES_ALL,
-                          gPlttBufferFaded,
-                          gPlttBufferFaded,
-                          16 - gWeatherPtr->fadeScreenCounter,
-                          gWeatherPtr->fadeDestColor);
         return TRUE;
-    }
 
     gWeatherPtr->fadeScreenCounter = 16;
     return FALSE;

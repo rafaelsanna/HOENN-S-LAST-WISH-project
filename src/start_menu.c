@@ -1146,11 +1146,12 @@ static void CreateStartMenuTask(TaskFunc followupFunc)
 static bool8 FieldCB_ReturnToFieldStartMenu(void)
 {
     if (InitStartMenuStep() == FALSE)
-    {
         return FALSE;
-    }
 
+    // FadeInFromBlack has now prepared an all-black palette. Only after that
+    // is it safe to let VBlank transfer the freshly rebuilt menu palettes.
     ReturnToFieldOpenStartMenu();
+    gPaletteFade.bufferTransferDisabled = FALSE;
     return TRUE;
 }
 
@@ -1158,6 +1159,10 @@ void ShowReturnToFieldStartMenu(void)
 {
     sInitStartMenuData[0] = 0;
     sInitStartMenuData[1] = 0;
+    // InitStartMenuStep rebuilds the window palettes over several frames.
+    // Keep the previous black screen in PRAM until the return fade is ready,
+    // preventing one normal-colour frame between Party and the Start Menu.
+    gPaletteFade.bufferTransferDisabled = TRUE;
     gFieldCallback2 = FieldCB_ReturnToFieldStartMenu;
 }
 

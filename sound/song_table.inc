@@ -742,6 +742,19 @@ gSongTable::
     song mus_i_cant_wait_white_stripes, 0, 0
     song mus_jolene_white_stripes, 0, 0
     song mus_seven_nation_army, 0, 0
+	song mus_bad_guy_billie_eilish, 0, 0
+	song mus_paparazzi_lady_gaga, 0, 0
+	song mus_bad_romance_lady_gaga, 0, 0
+	song mus_alejandro_lady_gaga, 0, 0
+	song mus_toxic_britney_spears, 0, 0
+	song mus_gurenge_lisa, 0, 0
+	song mus_umbrella_rihanna, 0, 0
+	song mus_disturbia_rihanna, 0, 0
+	song mus_diamonds_rihanna, 0, 0
+	song mus_irreplaceable_beyonce, 0, 0
+	song mus_broken_hearted_girl_beyonce, 0, 0
+	song mus_crazy_in_love_beyonce, 0, 0
+	song mus_halo_beyonce, 0, 0
 
 	.align 2
 dummy_song_header:

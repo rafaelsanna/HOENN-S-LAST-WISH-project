@@ -52,6 +52,11 @@ NightmarePetalburg_Suicune::
     waitmovement 0
     delay 90
     fadescreenspeed FADE_TO_BLACK, 8
+    @ RemoveCameraObject only changes the camera target; it does not undo its
+    @ accumulated map offset. Walk the exact inverse route while black so the
+    @ field returns from the battle centered on the player.
+    applymovement LOCALID_CAMERA, NightmarePetalburg_Movement_CameraReturnToPlayer
+    waitmovement 0
     special RemoveCameraObject
     delay 8
     special StartDarkSuicuneScene
@@ -99,6 +104,44 @@ NightmarePetalburg_Movement_CameraToDarkAura:
     walk_left
     walk_left
     walk_left
+    step_end
+
+NightmarePetalburg_Movement_CameraReturnToPlayer:
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
+    walk_right
     step_end
 @ <<< HLW NIGHTMARE PETALBURG CAMERA SCENE END
 

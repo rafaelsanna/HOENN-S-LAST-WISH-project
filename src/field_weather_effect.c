@@ -3120,8 +3120,8 @@ static void UpdateSmokeSprite(struct Sprite *sprite)
 // WEATHER_CONCERT_LIGHTS - V11 DUAL SHOW BEAMS
 //
 // Safe architecture:
-// - two fixed screen-space sprites
-// - no camera/player/coord-offset manipulation
+// - two fixed MAP-SPACE sprites anchored to the stage
+// - camera movement scrolls the beams with the map instead of following player
 // - no affine movement
 // - both sprites share one 3-frame sheet
 // - LEFT/CENTER/RIGHT poses create the illusion of moving spotlights
@@ -3131,6 +3131,32 @@ static void UpdateSmokeSprite(struct Sprite *sprite)
 #define GFXTAG_CONCERT_BEAM 0x1214
 #define NUM_CONCERT_BEAMS 2
 #define CONCERT_BEAM_POSE_FRAMES 36
+// Global stage alignment. Apply this directly to the map-space base X so it
+// cannot get mixed with the per-frame sprite compensation below.
+#define CONCERT_BEAM_STAGE_X_OFFSET 16
+
+// Fixed map anchors for the two spotlights.
+// These are map metatile coordinates (without MAP_OFFSET), not screen pixels.
+// For LavaridgeTown_Gym_1F the stage is at the top of the map.
+static const struct Coords16 sConcertBeamMapCoords[NUM_CONCERT_BEAMS] =
+{
+    { 5, 4 },
+    {10, 4 },
+};
+
+// The new 64x64 artwork cannot keep the light source at the same local X in
+// every frame. Measured source/apex X positions are approximately:
+//   LEFT frame   = 46
+//   CENTER frame = 32
+//   RIGHT frame  = 17
+// Recenter every pose on the CENTER frame's source (x = 32), otherwise the
+// top of the spotlight visibly "dances" when StartSpriteAnim changes pose.
+static const s8 sConcertBeamPoseXOffsets[] =
+{
+    -14, // LEFT:   32 - 46
+      0, // CENTER: 32 - 32
+     15, // RIGHT:  32 - 17
+};
 
 EWRAM_DATA static u8 sConcertBeamSpriteIds[NUM_CONCERT_BEAMS] = {0};
 EWRAM_DATA static bool8 sConcertBeamCreated = FALSE;
@@ -3197,6 +3223,25 @@ static const struct SpriteTemplate sConcertBeamSpriteTemplate =
     .callback = SpriteCallbackDummy,
 };
 
+static bool8 IsConcertBeamOnScreen(const struct Sprite *sprite)
+{
+    // coordOffsetEnabled makes the renderer add the camera offset to x/y.
+    // Do the same calculation here using signed math before OAM truncates the
+    // coordinates. Without this guard, a beam far above the camera can wrap
+    // around the GBA's 8-bit OBJ Y coordinate and reappear at the bottom edge.
+    s16 screenX = sprite->x + sprite->x2 + gSpriteCoordOffsetX;
+    s16 screenY = sprite->y + sprite->y2 + gSpriteCoordOffsetY;
+
+    // The beam is 64x64 and sprite x/y is its center, so keep it alive while
+    // any part of the image can still overlap the 240x160 viewport.
+    if (screenX < -32 || screenX > DISPLAY_WIDTH + 32)
+        return FALSE;
+    if (screenY < -32 || screenY > DISPLAY_HEIGHT + 32)
+        return FALSE;
+
+    return TRUE;
+}
+
 static u8 GetConcertBeamPose(u16 timer, u8 beamId)
 {
     // Four-step sweep:
@@ -3244,19 +3289,20 @@ void ConcertBeam_Update(void)
             PLTT_SIZE_4BPP
         );
 
-        // Two fixed screen-space light sources.
-        // Their X/Y never move; only the graphic pose changes.
+        // Create the two beams, then place them in MAP space below.
+        // Using map coordinates is the important part: when the camera moves,
+        // the beams scroll with the stage instead of remaining over the player.
         sConcertBeamSpriteIds[0] = CreateSpriteAtEnd(
             &sConcertBeamSpriteTemplate,
-            88,
-            52,
+            0,
+            0,
             0
         );
 
         sConcertBeamSpriteIds[1] = CreateSpriteAtEnd(
             &sConcertBeamSpriteTemplate,
-            152,
-            52,
+            0,
+            0,
             0
         );
 
@@ -3278,10 +3324,24 @@ void ConcertBeam_Update(void)
         {
             struct Sprite *sprite = &gSprites[sConcertBeamSpriteIds[i]];
 
-            sprite->coordOffsetEnabled = FALSE;
-            sprite->invisible = FALSE;
+            SetSpritePosToMapCoords(
+                sConcertBeamMapCoords[i].x + MAP_OFFSET,
+                sConcertBeamMapCoords[i].y + MAP_OFFSET,
+                &sprite->x,
+                &sprite->y
+            );
+
+            // Move the *base map anchor* 16 px to the right. Keep this separate
+            // from x2, because x2 is now reserved for per-pose art recentering.
+            // This makes the whole two-beam rig align with the stage/leader.
+            sprite->x += CONCERT_BEAM_STAGE_X_OFFSET;
+
+            // Let the engine apply gSpriteCoordOffsetX/Y as the camera moves.
+            // This is what makes the beam stay attached to the stage.
+            sprite->coordOffsetEnabled = TRUE;
             sprite->x2 = 0;
             sprite->y2 = 0;
+            sprite->invisible = !IsConcertBeamOnScreen(sprite);
             sConcertBeamLastPose[i] = 0xFF;
         }
 
@@ -3320,11 +3380,15 @@ void ConcertBeam_Update(void)
             sConcertBeamLastPose[i] = pose;
         }
 
-        // Keep them fixed and screen-relative.
-        sprite->coordOffsetEnabled = FALSE;
-        sprite->x2 = 0;
+        // Keep the base anchor fixed in map space. x2 only compensates for
+        // the different source/apex position inside each 64x64 art frame.
+        sprite->coordOffsetEnabled = TRUE;
+        sprite->x2 = sConcertBeamPoseXOffsets[pose];
         sprite->y2 = 0;
-        sprite->invisible = FALSE;
+
+        // Explicit viewport culling prevents signed map coordinates from
+        // wrapping through OBJ Y and showing the stage beam at the map entrance.
+        sprite->invisible = !IsConcertBeamOnScreen(sprite);
     }
 
     sConcertBeamTimer++;

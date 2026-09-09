@@ -1600,7 +1600,20 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND) \
     X(MUS_I_CANT_WAIT_WHITE_STRIPES) \
     X(MUS_JOLENE_WHITE_STRIPES) \
-    X(MUS_SEVEN_NATION_ARMY)
+    X(MUS_SEVEN_NATION_ARMY) \
+    X(MUS_BAD_GUY_BILLIE_EILISH) \
+    X(MUS_PAPARAZZI_LADY_GAGA) \
+    X(MUS_BAD_ROMANCE_LADY_GAGA) \
+    X(MUS_ALEJANDRO_LADY_GAGA) \
+    X(MUS_TOXIC_BRITNEY_SPEARS) \
+    X(MUS_GURENGE_LISA) \
+    X(MUS_UMBRELLA_RIHANNA) \
+    X(MUS_DISTURBIA_RIHANNA) \
+    X(MUS_DIAMONDS_RIHANNA) \
+    X(MUS_IRREPLACEABLE_BEYONCE) \
+    X(MUS_BROKEN_HEARTED_GIRL_BEYONCE) \
+    X(MUS_CRAZY_IN_LOVE_BEYONCE) \
+    X(MUS_HALO_BEYONCE)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -1936,6 +1949,19 @@ static const u16 sStation_All[] = {
     MUS_I_CANT_WAIT_WHITE_STRIPES,
     MUS_JOLENE_WHITE_STRIPES,
     MUS_SEVEN_NATION_ARMY,
+    MUS_BAD_GUY_BILLIE_EILISH,
+    MUS_PAPARAZZI_LADY_GAGA,
+    MUS_BAD_ROMANCE_LADY_GAGA,
+    MUS_ALEJANDRO_LADY_GAGA,
+    MUS_TOXIC_BRITNEY_SPEARS,
+    MUS_GURENGE_LISA,
+    MUS_UMBRELLA_RIHANNA,
+    MUS_DISTURBIA_RIHANNA,
+    MUS_DIAMONDS_RIHANNA,
+    MUS_IRREPLACEABLE_BEYONCE,
+    MUS_BROKEN_HEARTED_GIRL_BEYONCE,
+    MUS_CRAZY_IN_LOVE_BEYONCE,
+    MUS_HALO_BEYONCE,
     STATION_END
 };
 
@@ -2202,6 +2228,19 @@ static const u16 sStation_Pop[] = {
     MUS_ONE_MORE_TIME,
     MUS_AROUND_THE_WORLD,
     MUS_WHERE_IS_THE_LOVE,
+    MUS_BAD_GUY_BILLIE_EILISH,
+    MUS_PAPARAZZI_LADY_GAGA,
+    MUS_BAD_ROMANCE_LADY_GAGA,
+    MUS_ALEJANDRO_LADY_GAGA,
+    MUS_TOXIC_BRITNEY_SPEARS,
+    MUS_GURENGE_LISA,
+    MUS_UMBRELLA_RIHANNA,
+    MUS_DISTURBIA_RIHANNA,
+    MUS_DIAMONDS_RIHANNA,
+    MUS_IRREPLACEABLE_BEYONCE,
+    MUS_BROKEN_HEARTED_GIRL_BEYONCE,
+    MUS_CRAZY_IN_LOVE_BEYONCE,
+    MUS_HALO_BEYONCE,
     STATION_END
 };
 
@@ -2794,6 +2833,20 @@ static const u8 sPopName_OneMoreTime[] = _("ONE MORE TIME (DAFT PUNK)");
 static const u8 sPopName_AroundTheWorld[] = _("AROUND THE WORLD (DAFT PUNK)");
 static const u8 sPopName_WhereIsTheLove[] = _("WHERE IS THE LOVE (BLACK EYED PEAS)");
 
+static const u8 sPopName_BadGuyBillieEilish[] = _("BAD GUY (BILLIE EILISH)");
+static const u8 sPopName_PaparazziLadyGaga[] = _("PAPARAZZI (LADY GAGA)");
+static const u8 sPopName_BadRomanceLadyGaga[] = _("BAD ROMANCE (LADY GAGA)");
+static const u8 sPopName_AlejandroLadyGaga[] = _("ALEJANDRO (LADY GAGA)");
+static const u8 sPopName_ToxicBritneySpears[] = _("TOXIC (BRITNEY SPEARS)");
+static const u8 sPopName_GurengeLisa[] = _("GURENGE (LISA)");
+static const u8 sPopName_UmbrellaRihanna[] = _("UMBRELLA (RIHANNA)");
+static const u8 sPopName_DisturbiaRihanna[] = _("DISTURBIA (RIHANNA)");
+static const u8 sPopName_DiamondsRihanna[] = _("DIAMONDS (RIHANNA)");
+static const u8 sPopName_IrreplaceableBeyonce[] = _("IRREPLACEABLE (BEYONCE)");
+static const u8 sPopName_BrokenHeartedGirlBeyonce[] = _("BROKEN HEARTED GIRL (BEYONCE)");
+static const u8 sPopName_CrazyInLoveBeyonce[] = _("CRAZY IN LOVE (BEYONCE)");
+static const u8 sPopName_HaloBeyonce[] = _("HALO (BEYONCE)");
+
 static const u8 *Radio_GetPopDisplayName(u16 songId)
 {
     switch (songId)
@@ -2807,7 +2860,33 @@ static const u8 *Radio_GetPopDisplayName(u16 songId)
     case MUS_AROUND_THE_WORLD:
         return sPopName_AroundTheWorld;
     case MUS_WHERE_IS_THE_LOVE:
-        return sPopName_WhereIsTheLove;
+        return sPopName_WhereIsTheLove;    case MUS_BAD_GUY_BILLIE_EILISH:
+        return sPopName_BadGuyBillieEilish;
+    case MUS_PAPARAZZI_LADY_GAGA:
+        return sPopName_PaparazziLadyGaga;
+    case MUS_BAD_ROMANCE_LADY_GAGA:
+        return sPopName_BadRomanceLadyGaga;
+    case MUS_ALEJANDRO_LADY_GAGA:
+        return sPopName_AlejandroLadyGaga;
+    case MUS_TOXIC_BRITNEY_SPEARS:
+        return sPopName_ToxicBritneySpears;
+    case MUS_GURENGE_LISA:
+        return sPopName_GurengeLisa;
+    case MUS_UMBRELLA_RIHANNA:
+        return sPopName_UmbrellaRihanna;
+    case MUS_DISTURBIA_RIHANNA:
+        return sPopName_DisturbiaRihanna;
+    case MUS_DIAMONDS_RIHANNA:
+        return sPopName_DiamondsRihanna;
+    case MUS_IRREPLACEABLE_BEYONCE:
+        return sPopName_IrreplaceableBeyonce;
+    case MUS_BROKEN_HEARTED_GIRL_BEYONCE:
+        return sPopName_BrokenHeartedGirlBeyonce;
+    case MUS_CRAZY_IN_LOVE_BEYONCE:
+        return sPopName_CrazyInLoveBeyonce;
+    case MUS_HALO_BEYONCE:
+        return sPopName_HaloBeyonce;
+
     default:
         return NULL;
     }

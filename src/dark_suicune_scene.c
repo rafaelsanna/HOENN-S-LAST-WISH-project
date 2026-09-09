@@ -534,11 +534,9 @@ static void Task_DarkSuicuneScene(u8 taskId)
 
     case DARK_SUICUNE_SCENE_RUN_PAUSE:
         UpdateDarkSuicuneRunningBg(data);
+        PlayDarkSuicuneWaterStep(data);
         if (++tTimer >= DARK_SUICUNE_RUN_PAUSE_FRAMES)
-        {
-            tWaterStepTimer = 0;
             tState = DARK_SUICUNE_SCENE_RUN_OUT;
-        }
         break;
 
     case DARK_SUICUNE_SCENE_RUN_OUT:

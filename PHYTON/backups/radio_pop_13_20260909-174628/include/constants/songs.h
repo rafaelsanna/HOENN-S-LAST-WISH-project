@@ -616,20 +616,7 @@
 #define MUS_I_CANT_WAIT_WHITE_STRIPES                736
 #define MUS_JOLENE_WHITE_STRIPES                     737
 #define MUS_SEVEN_NATION_ARMY                        738
-#define MUS_BAD_GUY_BILLIE_EILISH                        739
-#define MUS_PAPARAZZI_LADY_GAGA                          740
-#define MUS_BAD_ROMANCE_LADY_GAGA                        741
-#define MUS_ALEJANDRO_LADY_GAGA                          742
-#define MUS_TOXIC_BRITNEY_SPEARS                         743
-#define MUS_GURENGE_LISA                                 744
-#define MUS_UMBRELLA_RIHANNA                             745
-#define MUS_DISTURBIA_RIHANNA                            746
-#define MUS_DIAMONDS_RIHANNA                             747
-#define MUS_IRREPLACEABLE_BEYONCE                        748
-#define MUS_BROKEN_HEARTED_GIRL_BEYONCE                  749
-#define MUS_CRAZY_IN_LOVE_BEYONCE                        750
-#define MUS_HALO_BEYONCE                                 751
-#define END_MUS MUS_HALO_BEYONCE
+#define END_MUS MUS_SEVEN_NATION_ARMY
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
 #define PH_TRAP_BLEND               562
