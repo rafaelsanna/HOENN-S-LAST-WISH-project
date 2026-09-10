@@ -1,10 +1,15 @@
 raw `
 LavaridgeTown_Gym_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_Gym_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, LavaridgeTown_Gym_1F_OnResume
 	.byte 0
 
 LavaridgeTown_Gym_1F_OnTransition:
 	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
+	end
+
+LavaridgeTown_Gym_1F_OnResume:
+	special StartLavaridgeGymStagePlaylist
 	end
 
 @ Unclear where/if these temp vars are getting checked
@@ -366,6 +371,254 @@ LavaridgeTown_Gym_1F_EventScript_StageBouncerRightTrigger::
 
 LavaridgeTown_Gym_1F_EventScript_BouncerTriggerPass::
 	end
+
+
+@ ---------------------------------------------------------------------------
+@ RENTON cameo - one-time POP joke at the Gym entrance.
+@ Renton starts off-screen at (18,28).
+@ FLAG_RENTON_LEFT (0x4B4) makes the event one-time.
+@ ---------------------------------------------------------------------------
+
+LavaridgeTown_Gym_1F_EventScript_RentonIdle::
+	lock
+	faceplayer
+	msgbox LavaridgeTown_Gym_1F_Text_RentonIdle, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Gym_1F_Renton_Likes_Pop::
+	goto_if_set FLAG_RENTON_LEFT, LavaridgeTown_Gym_1F_EventScript_RentonAlreadyLeft
+	lockall
+
+	@ Choose the approach according to which entrance trigger the player hit.
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_eq VAR_0x8004, 8, LavaridgeTown_Gym_1F_EventScript_RentonApproachX8
+	goto_if_eq VAR_0x8004, 9, LavaridgeTown_Gym_1F_EventScript_RentonApproachX9
+	goto_if_eq VAR_0x8004, 10, LavaridgeTown_Gym_1F_EventScript_RentonApproachX10
+	goto LavaridgeTown_Gym_1F_EventScript_RentonApproachX11
+
+LavaridgeTown_Gym_1F_EventScript_RentonApproachX8::
+	setvar VAR_TEMP_F, 1
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonApproachX8
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	goto LavaridgeTown_Gym_1F_EventScript_RentonStopped
+
+LavaridgeTown_Gym_1F_EventScript_RentonApproachX9::
+	setvar VAR_TEMP_F, 2
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonApproachX9
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	goto LavaridgeTown_Gym_1F_EventScript_RentonStopped
+
+LavaridgeTown_Gym_1F_EventScript_RentonApproachX10::
+	setvar VAR_TEMP_F, 3
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonApproachX10
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	goto LavaridgeTown_Gym_1F_EventScript_RentonStopped
+
+LavaridgeTown_Gym_1F_EventScript_RentonApproachX11::
+	setvar VAR_TEMP_F, 4
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonApproachX11
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+
+LavaridgeTown_Gym_1F_EventScript_RentonStopped::
+	@ The exclamation happens only after Renton is already in front of the player.
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonExclamation
+	waitmovement 0
+
+	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
+	msgbox LavaridgeTown_Gym_1F_Text_RentonLikesPop, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	delay 12
+
+	goto_if_eq VAR_TEMP_F, 1, LavaridgeTown_Gym_1F_EventScript_RentonExitX8
+	goto_if_eq VAR_TEMP_F, 2, LavaridgeTown_Gym_1F_EventScript_RentonExitX9
+	goto_if_eq VAR_TEMP_F, 3, LavaridgeTown_Gym_1F_EventScript_RentonExitX10
+	goto LavaridgeTown_Gym_1F_EventScript_RentonExitX11
+
+LavaridgeTown_Gym_1F_EventScript_RentonExitX8::
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonMakeRoomX8
+	waitmovement 0
+	playse SE_SWITCH
+	applymovement OBJ_EVENT_ID_PLAYER, LavaridgeTown_Gym_1F_Movement_PlayerShovedUp
+	waitmovement 0
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonLeaveViaLeftWarp
+	waitmovement 0
+	goto LavaridgeTown_Gym_1F_EventScript_RentonGone
+
+LavaridgeTown_Gym_1F_EventScript_RentonExitX9::
+	playse SE_SWITCH
+	applymovement OBJ_EVENT_ID_PLAYER, LavaridgeTown_Gym_1F_Movement_PlayerShovedLeft
+	waitmovement 0
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonLeaveViaRightWarp
+	waitmovement 0
+	goto LavaridgeTown_Gym_1F_EventScript_RentonGone
+
+LavaridgeTown_Gym_1F_EventScript_RentonExitX10::
+	playse SE_SWITCH
+	applymovement OBJ_EVENT_ID_PLAYER, LavaridgeTown_Gym_1F_Movement_PlayerShovedLeft
+	waitmovement 0
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonLeaveFromX11
+	waitmovement 0
+	goto LavaridgeTown_Gym_1F_EventScript_RentonGone
+
+LavaridgeTown_Gym_1F_EventScript_RentonExitX11::
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonMakeRoomX11
+	waitmovement 0
+	playse SE_SWITCH
+	applymovement OBJ_EVENT_ID_PLAYER, LavaridgeTown_Gym_1F_Movement_PlayerShovedUp
+	waitmovement 0
+	applymovement LOCALID_RENTON, LavaridgeTown_Gym_1F_Movement_RentonLeaveViaRightWarp
+	waitmovement 0
+
+LavaridgeTown_Gym_1F_EventScript_RentonGone::
+	removeobject LOCALID_RENTON
+	setflag FLAG_RENTON_LEFT
+	setvar VAR_TEMP_F, 0
+	releaseall
+	end
+
+LavaridgeTown_Gym_1F_EventScript_RentonAlreadyLeft::
+	end
+
+
+@ Renton starts at (18,28). He walks across the clear lower lane first,
+@ then drops down next to the player.
+
+LavaridgeTown_Gym_1F_Movement_RentonApproachX8:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	face_left
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonApproachX9:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_down
+	walk_fast_down
+	face_left
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonApproachX10:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_down
+	walk_fast_down
+	face_left
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonApproachX11:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_down
+	walk_fast_down
+	face_down
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonExclamation:
+	emote_exclamation_mark
+	delay_16
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonMakeRoomX8:
+	walk_fast_up
+	face_left
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonMakeRoomX11:
+	walk_fast_left
+	face_down
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_PlayerShovedLeft:
+	jump_left
+	face_right
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_PlayerShovedUp:
+	jump_up
+	face_down
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonLeaveViaLeftWarp:
+	walk_fast_down
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonLeaveViaRightWarp:
+	walk_fast_down
+	step_end
+
+LavaridgeTown_Gym_1F_Movement_RentonLeaveFromX11:
+	walk_fast_down
+	walk_fast_left
+	step_end
+
+
+LavaridgeTown_Gym_1F_Text_RentonIdle:
+	.string "Uh... I'm just passing through.\p"
+	.string "Don't make this weird, kid.$"
+
+LavaridgeTown_Gym_1F_Text_RentonLikesPop:
+	.string "Yo! There you are! HAHAHA!\p"
+	.string "I gotta admit, I liked our fight!\n"
+	.string "...Wait a second.\n"
+	.string "YOU like POP?!\p"
+	.string "HAHAHA!\p"
+	.string "Me? A POP fan? Pffft! No way!\n"
+	.string "AMATERASU's songs are all glitter!\p"
+	.string "At my GYM we listen to HEAVY\n"
+	.string "music! Real songs only!\p"
+	.string "Okay, maybe ONE chorus was\n"
+	.string "kinda catchy. Just one!\p"
+	.string "HEY! Forget you heard that!\p"
+	.string "Why am I here, then?\n"
+	.string "My BRASS KNUCKLES, obviously!\p"
+	.string "They got stuck in some AMATERASU\n"
+	.string "fan after I punched the guy.\p"
+	.string "I just came back to get them!\n"
+	.string "Perfectly normal explanation!\p"
+	.string "...What? Why are you grinning?\n"
+	.string "Red? ME?! I'm not red!\p"
+	.string "This place is packed, that's all!\n"
+	.string "It's hot! There's no air in here!\p"
+	.string "I'm definitely NOT embarrassed!\n"
+	.string "HAHAHA... ha...\p"
+	.string "Now scoot over before somebody\n"
+	.string "from my GYM sees me here!$"
 
 
 LavaridgeTown_Gym_1F_Text_FrontBouncer1:

@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_bad_romance_lady_gaga_grp, voicegroup_littleroot_test
+	.equ	mus_bad_romance_lady_gaga_grp, voicegroup_pink_and_white
 	.equ	mus_bad_romance_lady_gaga_pri, 0
-	.equ	mus_bad_romance_lady_gaga_rev, reverb_set+12
-	.equ	mus_bad_romance_lady_gaga_mvl, 88
+	.equ	mus_bad_romance_lady_gaga_rev, reverb_set+10
+	.equ	mus_bad_romance_lady_gaga_mvl, 84
 	.equ	mus_bad_romance_lady_gaga_key, 0
 	.equ	mus_bad_romance_lady_gaga_tbs, 1
 	.equ	mus_bad_romance_lady_gaga_exg, 1
@@ -21,8 +21,8 @@ mus_bad_romance_lady_gaga_1:
 @ 000   ----------------------------------------
 @ 001   ----------------------------------------
 	.byte	TEMPO , 120*mus_bad_romance_lady_gaga_tbs/2
-	.byte		VOICE , 73
-	.byte		N12   , Cn3 , v080
+	.byte		VOICE , 5
+	.byte		N12   , Cn3 , v072
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
@@ -210,7 +210,7 @@ mus_bad_romance_lady_gaga_1:
 	.byte	W12
 @ 014   ----------------------------------------
 mus_bad_romance_lady_gaga_1_014:
-	.byte		N12   , En2 , v080
+	.byte		N12   , En2 , v072
 	.byte		N12   , En3 
 	.byte	W12
 	.byte		        En2 
@@ -235,7 +235,7 @@ mus_bad_romance_lady_gaga_1_014:
 	.byte	PEND
 @ 015   ----------------------------------------
 mus_bad_romance_lady_gaga_1_015:
-	.byte		N12   , En2 , v080
+	.byte		N12   , En2 , v072
 	.byte		N12   , En3 
 	.byte	W12
 	.byte		        En2 
@@ -260,7 +260,7 @@ mus_bad_romance_lady_gaga_1_015:
 	.byte	PEND
 @ 016   ----------------------------------------
 mus_bad_romance_lady_gaga_1_016:
-	.byte		N12   , En2 , v080
+	.byte		N12   , En2 , v072
 	.byte		N12   , En3 
 	.byte	W12
 	.byte		        En2 
@@ -283,7 +283,7 @@ mus_bad_romance_lady_gaga_1_016:
 	.byte	PEND
 @ 017   ----------------------------------------
 mus_bad_romance_lady_gaga_1_017:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte	W12
 	.byte		N24   , Gn1 
 	.byte	W12
@@ -302,7 +302,7 @@ mus_bad_romance_lady_gaga_1_017:
 	.byte	PEND
 @ 018   ----------------------------------------
 mus_bad_romance_lady_gaga_1_018:
-	.byte		N12   , An2 , v080
+	.byte		N12   , An2 , v072
 	.byte	W12
 	.byte		N24   , An1 
 	.byte		N12   , An2 
@@ -323,7 +323,7 @@ mus_bad_romance_lady_gaga_1_018:
 	.byte	PEND
 @ 019   ----------------------------------------
 mus_bad_romance_lady_gaga_1_019:
-	.byte		N12   , Gn2 , v080
+	.byte		N12   , Gn2 , v072
 	.byte	W12
 	.byte		N24   , Fn2 
 	.byte	W24
@@ -340,7 +340,7 @@ mus_bad_romance_lady_gaga_1_019:
 	.byte	PEND
 @ 020   ----------------------------------------
 mus_bad_romance_lady_gaga_1_020:
-	.byte		N12   , An2 , v080
+	.byte		N12   , An2 , v072
 	.byte	W12
 	.byte		N24   , An1 
 	.byte		N12   , Gn2 
@@ -364,7 +364,7 @@ mus_bad_romance_lady_gaga_1_020:
 @ 021   ----------------------------------------
 mus_bad_romance_lady_gaga_1_021:
 	.byte	W12
-	.byte		N24   , Gn1 , v080
+	.byte		N24   , Gn1 , v072
 	.byte		N12   , En2 
 	.byte	W12
 	.byte		        Gn2 
@@ -382,7 +382,7 @@ mus_bad_romance_lady_gaga_1_021:
 @ 022   ----------------------------------------
 mus_bad_romance_lady_gaga_1_022:
 	.byte	W12
-	.byte		N24   , An1 , v080
+	.byte		N24   , An1 , v072
 	.byte	W24
 	.byte		N12   
 	.byte	W12
@@ -397,7 +397,7 @@ mus_bad_romance_lady_gaga_1_022:
 	.byte	PEND
 @ 023   ----------------------------------------
 mus_bad_romance_lady_gaga_1_023:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte		N12   , En3 
 	.byte		N12   , An3 
 	.byte	W12
@@ -447,7 +447,7 @@ mus_bad_romance_lady_gaga_1_023:
 	.byte	W12
 @ 026   ----------------------------------------
 mus_bad_romance_lady_gaga_1_026:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte	W12
 	.byte		N24   , An1 
 	.byte		N18   , Cn3 
@@ -469,7 +469,7 @@ mus_bad_romance_lady_gaga_1_026:
 @ 027   ----------------------------------------
 mus_bad_romance_lady_gaga_1_027:
 	.byte	W12
-	.byte		N24   , Fn2 , v080
+	.byte		N24   , Fn2 , v072
 	.byte	W24
 	.byte		N12   
 	.byte	W24
@@ -484,7 +484,7 @@ mus_bad_romance_lady_gaga_1_027:
 	.byte	PEND
 @ 028   ----------------------------------------
 mus_bad_romance_lady_gaga_1_028:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte	W12
 	.byte		N24   , An1 
 	.byte		N12   , An2 
@@ -507,7 +507,7 @@ mus_bad_romance_lady_gaga_1_028:
 	.byte	PEND
 @ 029   ----------------------------------------
 mus_bad_romance_lady_gaga_1_029:
-	.byte		N12   , Gn2 , v080
+	.byte		N12   , Gn2 , v072
 	.byte	W12
 	.byte		N24   , Gn1 
 	.byte		N12   , En2 
@@ -532,7 +532,7 @@ mus_bad_romance_lady_gaga_1_029:
 	 .word	mus_bad_romance_lady_gaga_1_023
 @ 032   ----------------------------------------
 	.byte	W12
-	.byte		N24   , En1 , v080
+	.byte		N24   , En1 , v072
 	.byte	W24
 	.byte		N12   
 	.byte	W24
@@ -543,7 +543,7 @@ mus_bad_romance_lady_gaga_1_029:
 @ 033   ----------------------------------------
 mus_bad_romance_lady_gaga_1_033:
 	.byte	W12
-	.byte		N24   , Gn1 , v080
+	.byte		N24   , Gn1 , v072
 	.byte	W24
 	.byte		N12   , Dn2 
 	.byte	W12
@@ -566,7 +566,7 @@ mus_bad_romance_lady_gaga_1_033:
 	.byte	PEND
 @ 034   ----------------------------------------
 mus_bad_romance_lady_gaga_1_034:
-	.byte		N12   , An1 , v080
+	.byte		N12   , An1 , v072
 	.byte	W09
 	.byte		N09   , En2 
 	.byte	W03
@@ -595,7 +595,7 @@ mus_bad_romance_lady_gaga_1_034:
 	.byte	PEND
 @ 035   ----------------------------------------
 mus_bad_romance_lady_gaga_1_035:
-	.byte		N12   , An1 , v080
+	.byte		N12   , An1 , v072
 	.byte	W09
 	.byte		N09   , En2 
 	.byte	W03
@@ -619,7 +619,7 @@ mus_bad_romance_lady_gaga_1_035:
 	.byte	PEND
 @ 036   ----------------------------------------
 mus_bad_romance_lady_gaga_1_036:
-	.byte		N12   , An1 , v080
+	.byte		N12   , An1 , v072
 	.byte		N24   , An2 
 	.byte	W12
 	.byte		N12   , An1 
@@ -639,7 +639,7 @@ mus_bad_romance_lady_gaga_1_036:
 @ 037   ----------------------------------------
 mus_bad_romance_lady_gaga_1_037:
 	.byte	W48
-	.byte		N12   , Fn2 , v080
+	.byte		N12   , Fn2 , v072
 	.byte	W12
 	.byte		N24   
 	.byte		N12   , Cn3 
@@ -658,7 +658,7 @@ mus_bad_romance_lady_gaga_1_037:
 	.byte	PEND
 @ 038   ----------------------------------------
 mus_bad_romance_lady_gaga_1_038:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte		N12   , Fn3 
 	.byte		N12   , An3 
 	.byte	W12
@@ -695,7 +695,7 @@ mus_bad_romance_lady_gaga_1_038:
 @ 039   ----------------------------------------
 mus_bad_romance_lady_gaga_1_039:
 	.byte	W12
-	.byte		N24   , Gn1 , v080
+	.byte		N24   , Gn1 , v072
 	.byte		N24   , Gn2 
 	.byte		N24   , Bn2 
 	.byte		N24   , Dn3 
@@ -727,7 +727,7 @@ mus_bad_romance_lady_gaga_1_039:
 	.byte	PEND
 @ 040   ----------------------------------------
 mus_bad_romance_lady_gaga_1_040:
-	.byte		N24   , Bn2 , v080
+	.byte		N24   , Bn2 , v072
 	.byte		N24   , Dn3 
 	.byte		N24   , Gn3 
 	.byte	W12
@@ -755,7 +755,7 @@ mus_bad_romance_lady_gaga_1_040:
 	.byte	PEND
 @ 041   ----------------------------------------
 mus_bad_romance_lady_gaga_1_041:
-	.byte		N12   , Dn2 , v080
+	.byte		N12   , Dn2 , v072
 	.byte	W12
 	.byte		        Cn2 
 	.byte	W12
@@ -786,7 +786,7 @@ mus_bad_romance_lady_gaga_1_041:
 @ 043   ----------------------------------------
 mus_bad_romance_lady_gaga_1_043:
 	.byte	W12
-	.byte		N24   , Gn1 , v080
+	.byte		N24   , Gn1 , v072
 	.byte		N24   , Gn2 
 	.byte		N24   , Bn2 
 	.byte		N24   , Dn3 
@@ -815,7 +815,7 @@ mus_bad_romance_lady_gaga_1_043:
 	.byte	PEND
 @ 044   ----------------------------------------
 mus_bad_romance_lady_gaga_1_044:
-	.byte		N24   , Bn2 , v080
+	.byte		N24   , Bn2 , v072
 	.byte		N24   , En3 
 	.byte		N24   , Gs3 
 	.byte	W12
@@ -908,7 +908,7 @@ mus_bad_romance_lady_gaga_1_044:
 	.byte	W12
 @ 048   ----------------------------------------
 mus_bad_romance_lady_gaga_1_048:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte		N12   , En3 
 	.byte	W12
 	.byte		        An2 
@@ -930,7 +930,7 @@ mus_bad_romance_lady_gaga_1_048:
 	.byte	PEND
 @ 049   ----------------------------------------
 mus_bad_romance_lady_gaga_1_049:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte		N12   
 	.byte	W12
 	.byte		        Dn3 
@@ -955,7 +955,7 @@ mus_bad_romance_lady_gaga_1_049:
 	.byte	PEND
 @ 050   ----------------------------------------
 mus_bad_romance_lady_gaga_1_050:
-	.byte		N12   , An2 , v080
+	.byte		N12   , An2 , v072
 	.byte		N12   , Fn3 
 	.byte	W12
 	.byte		        Cn3 
@@ -978,7 +978,7 @@ mus_bad_romance_lady_gaga_1_050:
 	.byte	PEND
 @ 051   ----------------------------------------
 mus_bad_romance_lady_gaga_1_051:
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte		N12   
 	.byte	W12
 	.byte		        Gn2 
@@ -1001,7 +1001,7 @@ mus_bad_romance_lady_gaga_1_051:
 	.byte	PEND
 @ 052   ----------------------------------------
 mus_bad_romance_lady_gaga_1_052:
-	.byte		N12   , Bn2 , v080
+	.byte		N12   , Bn2 , v072
 	.byte		N12   , En3 
 	.byte	W12
 	.byte		        Dn3 
@@ -1024,7 +1024,7 @@ mus_bad_romance_lady_gaga_1_052:
 	.byte	PEND
 @ 053   ----------------------------------------
 mus_bad_romance_lady_gaga_1_053:
-	.byte		N12   , An1 , v080
+	.byte		N12   , An1 , v072
 	.byte		N12   , En3 
 	.byte		N12   
 	.byte	W12
@@ -1119,7 +1119,7 @@ mus_bad_romance_lady_gaga_1_053:
 @ 064   ----------------------------------------
 mus_bad_romance_lady_gaga_1_064:
 	.byte	W12
-	.byte		N24   , An1 , v080
+	.byte		N24   , An1 , v072
 	.byte	W24
 	.byte		N12   
 	.byte	W24
@@ -1200,7 +1200,7 @@ mus_bad_romance_lady_gaga_1_064:
 	.byte	PATT
 	 .word	mus_bad_romance_lady_gaga_1_044
 @ 085   ----------------------------------------
-	.byte		N12   , An2 , v080
+	.byte		N12   , An2 , v072
 	.byte		N12   
 	.byte		N12   , Cn3 
 	.byte	W12
@@ -1297,7 +1297,7 @@ mus_bad_romance_lady_gaga_1_064:
 	.byte	PATT
 	 .word	mus_bad_romance_lady_gaga_1_016
 @ 097   ----------------------------------------
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte	W12
 	.byte		N24   , Gn1 
 	.byte	W12
@@ -1325,7 +1325,7 @@ mus_bad_romance_lady_gaga_1_064:
 	.byte	PATT
 	 .word	mus_bad_romance_lady_gaga_1_016
 @ 101   ----------------------------------------
-	.byte		N12   , Cn3 , v080
+	.byte		N12   , Cn3 , v072
 	.byte	W12
 	.byte		N24   , Gn1 
 	.byte	W12
@@ -1879,7 +1879,7 @@ mus_bad_romance_lady_gaga_1_064:
 	.byte	PATT
 	 .word	mus_bad_romance_lady_gaga_1_039
 @ 128   ----------------------------------------
-	.byte		N24   , Bn2 , v080
+	.byte		N24   , Bn2 , v072
 	.byte		N24   , Dn3 
 	.byte		N24   , Gn3 
 	.byte	W12
@@ -1930,7 +1930,7 @@ mus_bad_romance_lady_gaga_1_064:
 	.byte	PATT
 	 .word	mus_bad_romance_lady_gaga_1_043
 @ 132   ----------------------------------------
-	.byte		N24   , Bn2 , v080
+	.byte		N24   , Bn2 , v072
 	.byte		N24   , En3 
 	.byte		N24   , Gs3 
 	.byte	W12
@@ -1963,7 +1963,7 @@ mus_bad_romance_lady_gaga_1_064:
 	.byte	W12
 @ 134   ----------------------------------------
 mus_bad_romance_lady_gaga_1_134:
-	.byte		N12   , Fn2 , v080
+	.byte		N12   , Fn2 , v072
 	.byte	W12
 	.byte		        En2 
 	.byte	W12
@@ -1979,7 +1979,7 @@ mus_bad_romance_lady_gaga_1_134:
 	.byte	PEND
 @ 135   ----------------------------------------
 mus_bad_romance_lady_gaga_1_135:
-	.byte		N24   , Cn2 , v080
+	.byte		N24   , Cn2 , v072
 	.byte		N12   , Cn4 
 	.byte	W12
 	.byte		        An3 
@@ -2038,7 +2038,7 @@ mus_bad_romance_lady_gaga_1_135:
 	.byte	PATT
 	 .word	mus_bad_romance_lady_gaga_1_135
 @ 140   ----------------------------------------
-	.byte		N12   , Bn2 , v080
+	.byte		N12   , Bn2 , v072
 	.byte		N12   , Dn3 
 	.byte		N12   , Gn3 
 	.byte	W12

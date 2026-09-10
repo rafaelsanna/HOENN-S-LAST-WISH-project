@@ -2211,7 +2211,6 @@ static const u16 sStation_Anime[] = {
 
     MUS_HARUKA_KANATA,
     MUS_THE_RAISING_FIGHTING_SPIRIT,
-    MUS_GURENGE_LISA,
     STATION_END,
 };
 
@@ -2234,6 +2233,7 @@ static const u16 sStation_Pop[] = {
     MUS_BAD_ROMANCE_LADY_GAGA,
     MUS_ALEJANDRO_LADY_GAGA,
     MUS_TOXIC_BRITNEY_SPEARS,
+    MUS_GURENGE_LISA,
     MUS_UMBRELLA_RIHANNA,
     MUS_DISTURBIA_RIHANNA,
     MUS_DIAMONDS_RIHANNA,
@@ -3039,8 +3039,6 @@ static const u8 sAnimeName_GireiPain[]             = _("GIREI - PAIN THEME (NARU
 static const u8 sAnimeName_HarukaKanata[]          = _("HARUKA KANATA - (NARUTO)");
 static const u8 sAnimeName_RaisingFightingSpirit[] = _("THE RAISING FIGHTING SPIRIT - (NARUTO)");
 
-static const u8 sAnimeName_GurengeLisa[] = _("GURENGE - (DEMON SLAYER)");
-
 static const u8 *Radio_GetAnimeDisplayName(u16 songId)
 {
     switch (songId)
@@ -3080,9 +3078,7 @@ static const u8 *Radio_GetAnimeDisplayName(u16 songId)
     case MUS_HARUKA_KANATA:
         return sAnimeName_HarukaKanata;
     case MUS_THE_RAISING_FIGHTING_SPIRIT:
-        return sAnimeName_RaisingFightingSpirit;    case MUS_GURENGE_LISA:
-        return sAnimeName_GurengeLisa;
-
+        return sAnimeName_RaisingFightingSpirit;
     default:
         return NULL;
     }

@@ -1,8 +1,0 @@
-{
-  "created_at": "2026-09-09T10:52:34",
-  "files": {
-    "src/dark_suicune_scene.c": "850163211dc2be67fd976d43daa4ed56296b8ed78da353e1a280ae2600c36b3e",
-    "graphics/dark_suicune/close_affine.8bpp": "f44afee6ec261c3e854af0deca11e0aa103f2b328fac763d99c3c451748311f7",
-    "graphics/dark_suicune/close_affine.bin": "48ca53fafbaba4e10bf6094846d1b8ab36f1aa55cb3f92fb69bc12a4dd58528e"
-  }
-}

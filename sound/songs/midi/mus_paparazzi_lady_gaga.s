@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_paparazzi_lady_gaga_grp, voicegroup_littleroot_test
+	.equ	mus_paparazzi_lady_gaga_grp, voicegroup_pink_and_white
 	.equ	mus_paparazzi_lady_gaga_pri, 0
-	.equ	mus_paparazzi_lady_gaga_rev, reverb_set+12
-	.equ	mus_paparazzi_lady_gaga_mvl, 90
+	.equ	mus_paparazzi_lady_gaga_rev, reverb_set+8
+	.equ	mus_paparazzi_lady_gaga_mvl, 82
 	.equ	mus_paparazzi_lady_gaga_key, 0
 	.equ	mus_paparazzi_lady_gaga_tbs, 1
 	.equ	mus_paparazzi_lady_gaga_exg, 1
@@ -20,8 +20,8 @@ mus_paparazzi_lady_gaga_1:
 	.byte	KEYSH , mus_paparazzi_lady_gaga_key+0
 @ 000   ----------------------------------------
 	.byte	TEMPO , 116*mus_paparazzi_lady_gaga_tbs/2
-	.byte		VOICE , 45
-	.byte		TIE   , Cn2 , v036
+	.byte		VOICE , 5
+	.byte		TIE   , Cn2 , v028
 	.byte		TIE   , Gn2 
 	.byte		TIE   , Cn3 
 	.byte		TIE   , Ds3 
@@ -40,7 +40,7 @@ mus_paparazzi_lady_gaga_1:
 	.byte		        Gn3 
 @ 004   ----------------------------------------
 mus_paparazzi_lady_gaga_1_004:
-	.byte		N24   , Cn2 , v036
+	.byte		N24   , Cn2 , v028
 	.byte		N24   
 	.byte		TIE   , Gn2 
 	.byte		N36   , Cn3 
@@ -55,7 +55,7 @@ mus_paparazzi_lady_gaga_1_004:
 @ 005   ----------------------------------------
 mus_paparazzi_lady_gaga_1_005:
 	.byte	W12
-	.byte		N12   , Cn3 , v036
+	.byte		N12   , Cn3 , v028
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -64,7 +64,7 @@ mus_paparazzi_lady_gaga_1_005:
 	.byte	PEND
 @ 006   ----------------------------------------
 mus_paparazzi_lady_gaga_1_006:
-	.byte		N24   , Cn2 , v036
+	.byte		N24   , Cn2 , v028
 	.byte	W24
 	.byte		N12   , Cn3 
 	.byte	W12
@@ -74,7 +74,7 @@ mus_paparazzi_lady_gaga_1_006:
 @ 007   ----------------------------------------
 mus_paparazzi_lady_gaga_1_007:
 	.byte	W36
-	.byte		N12   , As1 , v036
+	.byte		N12   , As1 , v028
 	.byte	W12
 	.byte		        Cn2 
 	.byte	W12
@@ -90,7 +90,7 @@ mus_paparazzi_lady_gaga_1_007:
 	.byte		        Gn3 
 @ 008   ----------------------------------------
 mus_paparazzi_lady_gaga_1_008:
-	.byte		TIE   , Gs1 , v036
+	.byte		TIE   , Gs1 , v028
 	.byte		N24   , Cn2 
 	.byte		N24   
 	.byte		TIE   , Ds2 
@@ -105,7 +105,7 @@ mus_paparazzi_lady_gaga_1_008:
 	.byte	PEND
 @ 009   ----------------------------------------
 mus_paparazzi_lady_gaga_1_009:
-	.byte		N24   , Cn2 , v036
+	.byte		N24   , Cn2 , v028
 	.byte	W24
 	.byte		N12   , Cn3 
 	.byte	W12
@@ -158,7 +158,7 @@ mus_paparazzi_lady_gaga_1_009:
 	.byte		        Gs3 
 @ 018   ----------------------------------------
 mus_paparazzi_lady_gaga_1_018:
-	.byte		TIE   , Fn1 , v036
+	.byte		TIE   , Fn1 , v028
 	.byte		N24   , Cn2 
 	.byte		N24   
 	.byte		TIE   , Fn2 
@@ -179,7 +179,7 @@ mus_paparazzi_lady_gaga_1_018:
 	.byte		        Fn3 
 @ 020   ----------------------------------------
 mus_paparazzi_lady_gaga_1_020:
-	.byte		N96   , Gs1 , v036
+	.byte		N96   , Gs1 , v028
 	.byte		N96   
 	.byte		N96   , Cn2 
 	.byte		N96   
@@ -195,7 +195,7 @@ mus_paparazzi_lady_gaga_1_020:
 	.byte	PEND
 @ 021   ----------------------------------------
 mus_paparazzi_lady_gaga_1_021:
-	.byte		N96   , Ds2 , v036
+	.byte		N96   , Ds2 , v028
 	.byte		N96   
 	.byte		N96   , As2 
 	.byte		N96   
@@ -207,7 +207,7 @@ mus_paparazzi_lady_gaga_1_021:
 	.byte	PEND
 @ 022   ----------------------------------------
 mus_paparazzi_lady_gaga_1_022:
-	.byte		N96   , Fn1 , v036
+	.byte		N96   , Fn1 , v028
 	.byte		N96   
 	.byte		N96   , Cn2 
 	.byte		N96   
@@ -223,7 +223,7 @@ mus_paparazzi_lady_gaga_1_022:
 	.byte	PEND
 @ 023   ----------------------------------------
 mus_paparazzi_lady_gaga_1_023:
-	.byte		N96   , Cs2 , v036
+	.byte		N96   , Cs2 , v028
 	.byte		N96   
 	.byte		N96   , Fn2 
 	.byte		N96   
@@ -400,7 +400,7 @@ mus_paparazzi_lady_gaga_1_023:
 	 .word	mus_paparazzi_lady_gaga_1_023
 @ 072   ----------------------------------------
 mus_paparazzi_lady_gaga_1_072:
-	.byte		N36   , Gn2 , v036
+	.byte		N36   , Gn2 , v028
 	.byte	W36
 	.byte		N48   , Cn2 
 	.byte	W60
@@ -413,7 +413,7 @@ mus_paparazzi_lady_gaga_1_072:
 @ 075   ----------------------------------------
 	.byte	W96
 @ 076   ----------------------------------------
-	.byte		N24   , Cn2 , v036
+	.byte		N24   , Cn2 , v028
 	.byte	W24
 	.byte		N12   , Gn2 
 	.byte	W12
@@ -477,7 +477,7 @@ mus_paparazzi_lady_gaga_1_072:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_1_023
 @ 096   ----------------------------------------
-	.byte		N96   , Gs1 , v036
+	.byte		N96   , Gs1 , v028
 	.byte		N96   , Gs2 
 	.byte	W96
 @ 097   ----------------------------------------
@@ -517,32 +517,28 @@ mus_paparazzi_lady_gaga_2:
 	.byte		VOL   , 127*mus_paparazzi_lady_gaga_mvl/mxv
 	.byte	KEYSH , mus_paparazzi_lady_gaga_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 0
-	.byte		N24   , Cn1 , v036
+	.byte		VOICE , 118
+	.byte		N24   , Cn1 , v024
 	.byte	W24
-	.byte		N12   , Cn0 
-	.byte		N12   , Dn1 
+	.byte		N12   , En1 
 	.byte	W12
 	.byte		N06   , Cn1 
 	.byte	W06
 	.byte		N24   
 	.byte	W30
-	.byte		        Cn0 
-	.byte		N24   , Dn1 
+	.byte		        En1 
 	.byte	W24
 @ 001   ----------------------------------------
 mus_paparazzi_lady_gaga_2_001:
-	.byte		N24   , Cn1 , v036
+	.byte		N24   , Cn1 , v024
 	.byte	W24
-	.byte		N12   , Cn0 
-	.byte		N12   , Dn1 
+	.byte		N12   , En1 
 	.byte	W12
 	.byte		N06   , Cn1 
 	.byte	W06
 	.byte		N24   
 	.byte	W30
-	.byte		        Cn0 
-	.byte		N24   , Dn1 
+	.byte		        En1 
 	.byte	W24
 	.byte	PEND
 @ 002   ----------------------------------------
@@ -550,14 +546,13 @@ mus_paparazzi_lady_gaga_2_001:
 	 .word	mus_paparazzi_lady_gaga_2_001
 @ 003   ----------------------------------------
 mus_paparazzi_lady_gaga_2_003:
-	.byte		N12   , Cn1 , v036
+	.byte		N12   , Cn1 , v024
 	.byte	W12
 	.byte		N06   
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Cn0 
-	.byte		N12   , Dn1 
+	.byte		N12   , En1 
 	.byte	W12
 	.byte		N06   , Cn1 
 	.byte	W06
@@ -567,8 +562,7 @@ mus_paparazzi_lady_gaga_2_003:
 	.byte	W12
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Cn0 
-	.byte		N12   , Dn1 
+	.byte		N12   , En1 
 	.byte	W12
 	.byte		        Cn1 
 	.byte	W12
@@ -619,17 +613,7 @@ mus_paparazzi_lady_gaga_2_003:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_2_001
 @ 019   ----------------------------------------
-mus_paparazzi_lady_gaga_2_019:
-	.byte	W72
-	.byte		N06   , Cn0 , v036
-	.byte	W06
-	.byte		N06   
-	.byte	W06
-	.byte		N06   
-	.byte	W06
-	.byte		N06   
-	.byte	W06
-	.byte	PEND
+	.byte	W96
 @ 020   ----------------------------------------
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_2_001
@@ -736,8 +720,7 @@ mus_paparazzi_lady_gaga_2_019:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_2_001
 @ 055   ----------------------------------------
-	.byte	PATT
-	 .word	mus_paparazzi_lady_gaga_2_019
+	.byte	W96
 @ 056   ----------------------------------------
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_2_001
@@ -825,8 +808,7 @@ mus_paparazzi_lady_gaga_2_019:
 @ 086   ----------------------------------------
 	.byte	W96
 @ 087   ----------------------------------------
-	.byte	PATT
-	 .word	mus_paparazzi_lady_gaga_2_019
+	.byte	W96
 @ 088   ----------------------------------------
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_2_001
@@ -876,8 +858,6 @@ mus_paparazzi_lady_gaga_2_019:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_2_003
 @ 104   ----------------------------------------
-	.byte		N96   , Cn0 , v036
-	.byte		N96   
 	.byte	W96
 @ 105   ----------------------------------------
 	.byte	FINE
@@ -888,7 +868,7 @@ mus_paparazzi_lady_gaga_3:
 	.byte		VOL   , 127*mus_paparazzi_lady_gaga_mvl/mxv
 	.byte	KEYSH , mus_paparazzi_lady_gaga_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 45
+	.byte		VOICE , 5
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -898,7 +878,7 @@ mus_paparazzi_lady_gaga_3:
 	.byte	W96
 @ 004   ----------------------------------------
 mus_paparazzi_lady_gaga_3_004:
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v032
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -911,7 +891,7 @@ mus_paparazzi_lady_gaga_3_004:
 	.byte	PEND
 @ 005   ----------------------------------------
 mus_paparazzi_lady_gaga_3_005:
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v032
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -929,7 +909,7 @@ mus_paparazzi_lady_gaga_3_005:
 	 .word	mus_paparazzi_lady_gaga_3_005
 @ 007   ----------------------------------------
 mus_paparazzi_lady_gaga_3_007:
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v032
 	.byte	W12
 	.byte		        Gs2 
 	.byte	W12
@@ -944,7 +924,7 @@ mus_paparazzi_lady_gaga_3_007:
 	.byte	PEND
 @ 008   ----------------------------------------
 mus_paparazzi_lady_gaga_3_008:
-	.byte		N24   , Dn2 , v036
+	.byte		N24   , Dn2 , v032
 	.byte	W24
 	.byte		N12   , Ds2 
 	.byte	W12
@@ -953,7 +933,7 @@ mus_paparazzi_lady_gaga_3_008:
 	.byte	PEND
 @ 009   ----------------------------------------
 mus_paparazzi_lady_gaga_3_009:
-	.byte		N24   , Gn2 , v036
+	.byte		N24   , Gn2 , v032
 	.byte	W24
 	.byte		        Ds2 
 	.byte	W24
@@ -971,7 +951,7 @@ mus_paparazzi_lady_gaga_3_009:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_3_004
 @ 013   ----------------------------------------
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v032
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -995,7 +975,7 @@ mus_paparazzi_lady_gaga_3_009:
 	 .word	mus_paparazzi_lady_gaga_3_009
 @ 018   ----------------------------------------
 mus_paparazzi_lady_gaga_3_018:
-	.byte		N24   , Dn2 , v036
+	.byte		N24   , Dn2 , v032
 	.byte	W24
 	.byte		N12   , Ds2 
 	.byte	W12
@@ -1008,7 +988,7 @@ mus_paparazzi_lady_gaga_3_018:
 	.byte	PEND
 @ 019   ----------------------------------------
 mus_paparazzi_lady_gaga_3_019:
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v032
 	.byte	W12
 	.byte		N06   , Fn2 
 	.byte	W06
@@ -1021,7 +1001,7 @@ mus_paparazzi_lady_gaga_3_019:
 	.byte	PEND
 @ 020   ----------------------------------------
 mus_paparazzi_lady_gaga_3_020:
-	.byte		N12   , Gs3 , v036
+	.byte		N12   , Gs3 , v032
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1039,7 +1019,7 @@ mus_paparazzi_lady_gaga_3_020:
 @ 021   ----------------------------------------
 mus_paparazzi_lady_gaga_3_021:
 	.byte	W12
-	.byte		N12   , Gn3 , v036
+	.byte		N12   , Gn3 , v032
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1055,7 +1035,7 @@ mus_paparazzi_lady_gaga_3_021:
 @ 022   ----------------------------------------
 mus_paparazzi_lady_gaga_3_022:
 	.byte	W12
-	.byte		N24   , Gs3 , v036
+	.byte		N24   , Gs3 , v032
 	.byte	W36
 	.byte		N18   , Gn3 
 	.byte	W18
@@ -1064,7 +1044,7 @@ mus_paparazzi_lady_gaga_3_022:
 	.byte	PEND
 @ 023   ----------------------------------------
 mus_paparazzi_lady_gaga_3_023:
-	.byte		N18   , Gn3 , v036
+	.byte		N18   , Gn3 , v032
 	.byte	W18
 	.byte		        Gs3 
 	.byte	W18
@@ -1084,7 +1064,7 @@ mus_paparazzi_lady_gaga_3_023:
 	 .word	mus_paparazzi_lady_gaga_3_022
 @ 027   ----------------------------------------
 mus_paparazzi_lady_gaga_3_027:
-	.byte		N18   , Gn3 , v036
+	.byte		N18   , Gn3 , v032
 	.byte	W18
 	.byte		        Gs3 
 	.byte	W18
@@ -1097,7 +1077,7 @@ mus_paparazzi_lady_gaga_3_027:
 	.byte	PEND
 @ 028   ----------------------------------------
 mus_paparazzi_lady_gaga_3_028:
-	.byte		N24   , Ds4 , v036
+	.byte		N24   , Ds4 , v032
 	.byte	W24
 	.byte		        Cs4 
 	.byte	W24
@@ -1111,7 +1091,7 @@ mus_paparazzi_lady_gaga_3_028:
 @ 029   ----------------------------------------
 mus_paparazzi_lady_gaga_3_029:
 	.byte	W36
-	.byte		N12   , Ds3 , v036
+	.byte		N12   , Ds3 , v032
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1124,7 +1104,7 @@ mus_paparazzi_lady_gaga_3_029:
 	.byte	PEND
 @ 030   ----------------------------------------
 mus_paparazzi_lady_gaga_3_030:
-	.byte		N24   , Ds4 , v036
+	.byte		N24   , Ds4 , v032
 	.byte	W24
 	.byte		        Cs4 
 	.byte	W24
@@ -1249,7 +1229,7 @@ mus_paparazzi_lady_gaga_3_030:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_3_022
 @ 071   ----------------------------------------
-	.byte		N18   , Gn3 , v036
+	.byte		N18   , Gn3 , v032
 	.byte	W18
 	.byte		        Gs3 
 	.byte	W18
@@ -1258,10 +1238,10 @@ mus_paparazzi_lady_gaga_3_030:
 	.byte		        Gs3 
 	.byte	W32
 	.byte	W01
-	.byte		N06   , Fn3 , v032
+	.byte		N06   , Fn3 , v028
 	.byte	W03
 @ 072   ----------------------------------------
-	.byte		N36   , Gn3 , v036
+	.byte		N36   , Gn3 , v032
 	.byte	W36
 	.byte		        Cn3 
 	.byte	W36
@@ -1281,10 +1261,10 @@ mus_paparazzi_lady_gaga_3_030:
 	.byte	W12
 	.byte		N24   , Cn3 
 	.byte	W21
-	.byte		N06   , Fn3 , v032
+	.byte		N06   , Fn3 , v028
 	.byte	W03
 @ 074   ----------------------------------------
-	.byte		N36   , Gn3 , v036
+	.byte		N36   , Gn3 , v032
 	.byte	W36
 	.byte		N24   , Cn3 
 	.byte	W24
@@ -1308,9 +1288,9 @@ mus_paparazzi_lady_gaga_3_030:
 	.byte	W24
 @ 076   ----------------------------------------
 	.byte	W21
-	.byte		N06   , Fn3 , v032
+	.byte		N06   , Fn3 , v028
 	.byte	W03
-	.byte		N24   , Gn3 , v036
+	.byte		N24   , Gn3 , v032
 	.byte	W24
 	.byte		N48   , Cn3 
 	.byte	W48
@@ -1325,9 +1305,9 @@ mus_paparazzi_lady_gaga_3_030:
 	.byte	W60
 @ 078   ----------------------------------------
 	.byte	W21
-	.byte		N06   , Fn3 , v032
+	.byte		N06   , Fn3 , v028
 	.byte	W03
-	.byte		N24   , Gn3 , v036
+	.byte		N24   , Gn3 , v032
 	.byte	W24
 	.byte		N12   , Cn3 
 	.byte	W12
@@ -1416,7 +1396,7 @@ mus_paparazzi_lady_gaga_4:
 	.byte		VOL   , 127*mus_paparazzi_lady_gaga_mvl/mxv
 	.byte	KEYSH , mus_paparazzi_lady_gaga_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 73
+	.byte		VOICE , 33
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -1426,7 +1406,7 @@ mus_paparazzi_lady_gaga_4:
 	.byte	W96
 @ 004   ----------------------------------------
 mus_paparazzi_lady_gaga_4_004:
-	.byte		N24   , Cn1 , v036
+	.byte		N24   , Cn1 , v028
 	.byte	W24
 	.byte		N12   , Cn2 
 	.byte	W12
@@ -1436,7 +1416,7 @@ mus_paparazzi_lady_gaga_4_004:
 @ 005   ----------------------------------------
 mus_paparazzi_lady_gaga_4_005:
 	.byte	W12
-	.byte		N12   , Cn2 , v036
+	.byte		N12   , Cn2 , v028
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1449,7 +1429,7 @@ mus_paparazzi_lady_gaga_4_005:
 @ 007   ----------------------------------------
 mus_paparazzi_lady_gaga_4_007:
 	.byte	W36
-	.byte		N12   , As0 , v036
+	.byte		N12   , As0 , v028
 	.byte	W12
 	.byte		        Cn1 
 	.byte	W12
@@ -1496,7 +1476,7 @@ mus_paparazzi_lady_gaga_4_007:
 @ 019   ----------------------------------------
 	.byte	W96
 @ 020   ----------------------------------------
-	.byte		N96   , Gs0 , v036
+	.byte		N96   , Gs0 , v028
 	.byte		N96   , Gs1 
 	.byte	W96
 @ 021   ----------------------------------------
@@ -1620,7 +1600,7 @@ mus_paparazzi_lady_gaga_4_007:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_4_007
 @ 056   ----------------------------------------
-	.byte		N96   , Gs0 , v036
+	.byte		N96   , Gs0 , v028
 	.byte		N96   , Gs1 
 	.byte	W96
 @ 057   ----------------------------------------
@@ -1685,7 +1665,7 @@ mus_paparazzi_lady_gaga_4_007:
 	.byte	W96
 @ 072   ----------------------------------------
 mus_paparazzi_lady_gaga_4_072:
-	.byte		N36   , Gn1 , v036
+	.byte		N36   , Gn1 , v028
 	.byte	W36
 	.byte		N48   , Cn1 
 	.byte	W60
@@ -1698,7 +1678,7 @@ mus_paparazzi_lady_gaga_4_072:
 @ 075   ----------------------------------------
 	.byte	W96
 @ 076   ----------------------------------------
-	.byte		N24   , Cn1 , v036
+	.byte		N24   , Cn1 , v028
 	.byte	W24
 	.byte		N12   , Gn1 
 	.byte	W12
@@ -1802,7 +1782,7 @@ mus_paparazzi_lady_gaga_4_072:
 	.byte	PATT
 	 .word	mus_paparazzi_lady_gaga_4_007
 @ 104   ----------------------------------------
-	.byte		N12   , As0 , v036
+	.byte		N12   , As0 , v028
 	.byte	W12
 	.byte	FINE
 

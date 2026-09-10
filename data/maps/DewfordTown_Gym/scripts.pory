@@ -1,10 +1,15 @@
 raw `
 DewfordTown_Gym_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, DewfordTown_Gym_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, DewfordTown_Gym_OnResume
 	.byte 0
 
 DewfordTown_Gym_OnTransition:
 	call DewfordTown_Gym_EventScript_SetFlashLevel
+	end
+
+DewfordTown_Gym_OnResume:
+	special StartRentonGymRadio
 	end
 
 DewfordTown_Gym_EventScript_SetFlashLevel::
@@ -176,6 +181,13 @@ DewfordTown_Gym_EventScript_BrawlyDefeated::
 	msgbox DewfordTown_Gym_Text_ExplainBulkUp, MSGBOX_DEFAULT
 	removefieldmugshot
 	setflag FLAG_RECEIVED_TM_BULK_UP
+
+	@ Renton also gives the player the Radio (item id 834).
+	giveitem 834
+	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
+	msgbox DewfordTown_Gym_Text_RentonRadioGift, MSGBOX_DEFAULT
+	removefieldmugshot
+
 	closemessage
 	delay 30
 	waitfanfare
@@ -466,6 +478,13 @@ DewfordTown_Gym_Text_KnuckleBadgeInfoTakeThis:
 	.string "of battle.\p"
 	.string "If you'd like, use this TECHNICAL\n"
 	.string "MACHINE, too.$"
+
+DewfordTown_Gym_Text_RentonRadioGift:
+	.string "Oh! One more thing, take this RADIO.\p"
+	.string "You can make your own playlists with it.\n"
+	.string "I made a killer one for my GYM!\p"
+	.string "Mix whatever you want and make it loud!$"
+
 
 DewfordTown_Gym_Text_ExplainBulkUp:
 	.string "That TM08 contains BULK UP.\p"

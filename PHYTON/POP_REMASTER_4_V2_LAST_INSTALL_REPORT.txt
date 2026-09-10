@@ -1,0 +1,10 @@
+HLW POP REMASTER 4 V2
+Backup: /home/rafaelsanna/pokeemerald-expansion/PHYTON/backups/pop_remaster_4_v2_20260909-195016
+Reference: mus_broken_hearted_girl_beyonce
+Reference cfg: -E -R12 -G_pink_and_white -V084
+Roles: {'bass': 33, 'piano': 5, 'lead': 5, 'strings': 5, 'pad': 5, 'synth': 5, 'drums': 118}
+Replaced only MIDI + midi.cfg for:
+- ALEJANDRO (LADY GAGA)
+- IRREPLACEABLE (BEYONCE)
+- CRAZY IN LOVE (BEYONCE)
+- DISTURBIA (RIHANNA)

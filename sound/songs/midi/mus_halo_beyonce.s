@@ -2,8 +2,8 @@
 
 	.equ	mus_halo_beyonce_grp, voicegroup_pink_and_white
 	.equ	mus_halo_beyonce_pri, 0
-	.equ	mus_halo_beyonce_rev, reverb_set+12
-	.equ	mus_halo_beyonce_mvl, 84
+	.equ	mus_halo_beyonce_rev, reverb_set+10
+	.equ	mus_halo_beyonce_mvl, 82
 	.equ	mus_halo_beyonce_key, 0
 	.equ	mus_halo_beyonce_tbs, 1
 	.equ	mus_halo_beyonce_exg, 1
@@ -31,7 +31,7 @@ mus_halo_beyonce_1:
 	.byte	W96
 @ 005   ----------------------------------------
 mus_halo_beyonce_1_005:
-	.byte		N06   , Cs4 , v080
+	.byte		N06   , Cs4 , v072
 	.byte	W06
 	.byte		        En3 
 	.byte	W06
@@ -66,7 +66,7 @@ mus_halo_beyonce_1_005:
 	.byte	PEND
 @ 006   ----------------------------------------
 mus_halo_beyonce_1_006:
-	.byte		N06   , Dn4 , v080
+	.byte		N06   , Dn4 , v072
 	.byte	W06
 	.byte		        Fs3 
 	.byte	W06
@@ -92,9 +92,9 @@ mus_halo_beyonce_1_006:
 	.byte	W06
 	.byte		N03   , Bn3 
 	.byte	W03
-	.byte		        Cs4 , v072
+	.byte		        Cs4 , v064
 	.byte	W03
-	.byte		N06   , Bn3 , v080
+	.byte		N06   , Bn3 , v072
 	.byte	W06
 	.byte		        An3 
 	.byte	W06
@@ -103,7 +103,7 @@ mus_halo_beyonce_1_006:
 	.byte	PEND
 @ 007   ----------------------------------------
 mus_halo_beyonce_1_007:
-	.byte		N06   , An3 , v080
+	.byte		N06   , An3 , v072
 	.byte	W06
 	.byte		        Cs3 
 	.byte	W06
@@ -138,7 +138,7 @@ mus_halo_beyonce_1_007:
 	.byte	PEND
 @ 008   ----------------------------------------
 mus_halo_beyonce_1_008:
-	.byte		N06   , Fs3 , v080
+	.byte		N06   , Fs3 , v072
 	.byte	W06
 	.byte		        Dn3 
 	.byte	W06
@@ -175,7 +175,7 @@ mus_halo_beyonce_1_008:
 	.byte	W96
 @ 010   ----------------------------------------
 mus_halo_beyonce_1_010:
-	.byte		N12   , Dn3 , v080
+	.byte		N12   , Dn3 , v072
 	.byte	W48
 	.byte		N12   
 	.byte	W12
@@ -203,13 +203,13 @@ mus_halo_beyonce_1_010:
 	 .word	mus_halo_beyonce_1_010
 @ 015   ----------------------------------------
 	.byte	W24
-	.byte		N12   , Fs2 , v080
+	.byte		N12   , Fs2 , v072
 	.byte	W72
 @ 016   ----------------------------------------
 	.byte	W96
 @ 017   ----------------------------------------
 mus_halo_beyonce_1_017:
-	.byte		N12   , Cs3 , v080
+	.byte		N12   , Cs3 , v072
 	.byte	W12
 	.byte		N06   , En2 
 	.byte	W06
@@ -236,7 +236,7 @@ mus_halo_beyonce_1_017:
 	.byte	PEND
 @ 018   ----------------------------------------
 mus_halo_beyonce_1_018:
-	.byte		N12   , Dn3 , v080
+	.byte		N12   , Dn3 , v072
 	.byte	W12
 	.byte		N06   , Fs2 
 	.byte	W06
@@ -263,7 +263,7 @@ mus_halo_beyonce_1_018:
 	.byte	PEND
 @ 019   ----------------------------------------
 mus_halo_beyonce_1_019:
-	.byte		N12   , An2 , v080
+	.byte		N12   , An2 , v072
 	.byte	W12
 	.byte		N06   , Fs2 
 	.byte	W06
@@ -292,7 +292,7 @@ mus_halo_beyonce_1_019:
 	.byte	PEND
 @ 020   ----------------------------------------
 mus_halo_beyonce_1_020:
-	.byte		N06   , Fs2 , v080
+	.byte		N06   , Fs2 , v072
 	.byte	W06
 	.byte		        Dn2 
 	.byte	W06
@@ -365,7 +365,7 @@ mus_halo_beyonce_1_020:
 	.byte	PATT
 	 .word	mus_halo_beyonce_1_010
 @ 039   ----------------------------------------
-	.byte		N12   , Fs2 , v080
+	.byte		N12   , Fs2 , v072
 	.byte	W96
 @ 040   ----------------------------------------
 	.byte		        Dn2 
@@ -427,7 +427,7 @@ mus_halo_beyonce_1_020:
 	.byte	PATT
 	 .word	mus_halo_beyonce_1_008
 @ 065   ----------------------------------------
-	.byte		N06   , Cs4 , v080
+	.byte		N06   , Cs4 , v072
 	.byte	W06
 	.byte		        En3 
 	.byte	W06
@@ -540,7 +540,7 @@ mus_halo_beyonce_2:
 	.byte	KEYSH , mus_halo_beyonce_key+0
 @ 000   ----------------------------------------
 	.byte		VOICE , 5
-	.byte		N96   , An2 , v080
+	.byte		N96   , An2 , v060
 	.byte		N96   , Cs3 
 	.byte	W96
 @ 001   ----------------------------------------
@@ -822,7 +822,7 @@ mus_halo_beyonce_3:
 	.byte	W96
 @ 007   ----------------------------------------
 	.byte	W48
-	.byte		N12   , Fs2 , v080
+	.byte		N12   , Fs2 , v060
 	.byte	W12
 	.byte		        Gs2 
 	.byte	W12
@@ -831,7 +831,7 @@ mus_halo_beyonce_3:
 	.byte		        Bn2 
 	.byte	W12
 @ 008   ----------------------------------------
-	.byte		N96   , An1 , v096
+	.byte		N96   , An1 , v072
 	.byte	W96
 @ 009   ----------------------------------------
 	.byte		        Bn1 
@@ -856,7 +856,7 @@ mus_halo_beyonce_3:
 	.byte		        Dn1 
 	.byte	W96
 @ 016   ----------------------------------------
-	.byte		        An1 , v080
+	.byte		        An1 , v060
 	.byte	W96
 @ 017   ----------------------------------------
 	.byte		        Bn1 
@@ -868,7 +868,7 @@ mus_halo_beyonce_3:
 	.byte		        Dn1 
 	.byte	W96
 @ 020   ----------------------------------------
-	.byte		        An1 , v096
+	.byte		        An1 , v072
 	.byte	W96
 @ 021   ----------------------------------------
 	.byte		        Bn1 
@@ -1096,7 +1096,7 @@ mus_halo_beyonce_4:
 	.byte	W96
 @ 008   ----------------------------------------
 	.byte	W48
-	.byte		N06   , Cs3 , v080
+	.byte		N06   , Cs3 , v076
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -1261,9 +1261,9 @@ mus_halo_beyonce_4:
 	.byte	W06
 	.byte		N03   
 	.byte	W03
-	.byte		        Gs3 , v072
+	.byte		        Gs3 , v068
 	.byte	W03
-	.byte		N12   , An3 , v080
+	.byte		N12   , An3 , v076
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1304,7 +1304,7 @@ mus_halo_beyonce_4:
 @ 020   ----------------------------------------
 mus_halo_beyonce_4_020:
 	.byte	W42
-	.byte		N06   , An3 , v080
+	.byte		N06   , An3 , v076
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -1322,7 +1322,7 @@ mus_halo_beyonce_4_020:
 @ 021   ----------------------------------------
 mus_halo_beyonce_4_021:
 	.byte	W36
-	.byte		N06   , Bn3 , v080
+	.byte		N06   , Bn3 , v076
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -1342,7 +1342,7 @@ mus_halo_beyonce_4_021:
 @ 022   ----------------------------------------
 mus_halo_beyonce_4_022:
 	.byte	W12
-	.byte		N24   , Fs3 , v080
+	.byte		N24   , Fs3 , v076
 	.byte	W36
 	.byte		N06   , An3 
 	.byte	W06
@@ -1362,7 +1362,7 @@ mus_halo_beyonce_4_022:
 @ 023   ----------------------------------------
 mus_halo_beyonce_4_023:
 	.byte	W06
-	.byte		N24   , Dn3 , v080
+	.byte		N24   , Dn3 , v076
 	.byte	W36
 	.byte		N06   , An3 
 	.byte	W06
@@ -1382,7 +1382,7 @@ mus_halo_beyonce_4_023:
 @ 024   ----------------------------------------
 mus_halo_beyonce_4_024:
 	.byte	W36
-	.byte		N06   , An3 , v080
+	.byte		N06   , An3 , v076
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -1402,7 +1402,7 @@ mus_halo_beyonce_4_024:
 @ 025   ----------------------------------------
 mus_halo_beyonce_4_025:
 	.byte	W36
-	.byte		N06   , Bn3 , v080
+	.byte		N06   , Bn3 , v076
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -1422,7 +1422,7 @@ mus_halo_beyonce_4_025:
 @ 026   ----------------------------------------
 mus_halo_beyonce_4_026:
 	.byte	W06
-	.byte		N24   , Fs3 , v080
+	.byte		N24   , Fs3 , v076
 	.byte	W42
 	.byte		N06   , An3 
 	.byte	W06
@@ -1442,7 +1442,7 @@ mus_halo_beyonce_4_026:
 @ 027   ----------------------------------------
 mus_halo_beyonce_4_027:
 	.byte	W06
-	.byte		N24   , Dn3 , v080
+	.byte		N24   , Dn3 , v076
 	.byte	W42
 	.byte		N06   , An3 
 	.byte	W06
@@ -1457,7 +1457,7 @@ mus_halo_beyonce_4_027:
 	.byte	PEND
 @ 028   ----------------------------------------
 mus_halo_beyonce_4_028:
-	.byte		N24   , An3 , v080
+	.byte		N24   , An3 , v076
 	.byte	W48
 	.byte		N12   , Cs4 
 	.byte	W12
@@ -1467,7 +1467,7 @@ mus_halo_beyonce_4_028:
 @ 029   ----------------------------------------
 mus_halo_beyonce_4_029:
 	.byte	W48
-	.byte		N12   , Dn4 , v080
+	.byte		N12   , Dn4 , v076
 	.byte	W12
 	.byte		N24   , An3 
 	.byte	W36
@@ -1475,7 +1475,7 @@ mus_halo_beyonce_4_029:
 @ 030   ----------------------------------------
 mus_halo_beyonce_4_030:
 	.byte	W48
-	.byte		N12   , Cs4 , v080
+	.byte		N12   , Cs4 , v076
 	.byte	W12
 	.byte		N24   , An3 
 	.byte	W36
@@ -1483,7 +1483,7 @@ mus_halo_beyonce_4_030:
 @ 031   ----------------------------------------
 mus_halo_beyonce_4_031:
 	.byte	W48
-	.byte		N12   , Bn3 , v080
+	.byte		N12   , Bn3 , v076
 	.byte	W12
 	.byte		N24   , An3 
 	.byte	W36
@@ -1750,7 +1750,7 @@ mus_halo_beyonce_4_031:
 	.byte	PATT
 	 .word	mus_halo_beyonce_4_031
 @ 060   ----------------------------------------
-	.byte		N06   , En4 , v080
+	.byte		N06   , En4 , v076
 	.byte	W06
 	.byte		N24   , Cs4 
 	.byte	W90
@@ -1863,7 +1863,7 @@ mus_halo_beyonce_4_031:
 	.byte	PATT
 	 .word	mus_halo_beyonce_4_031
 @ 085   ----------------------------------------
-	.byte		N06   , En4 , v080
+	.byte		N06   , En4 , v076
 	.byte	W06
 	.byte		N24   , Cs4 
 	.byte	W24
@@ -1876,7 +1876,7 @@ mus_halo_beyonce_5:
 	.byte	KEYSH , mus_halo_beyonce_key+0
 @ 000   ----------------------------------------
 	.byte		VOICE , 5
-	.byte		N96   , An2 , v080
+	.byte		N96   , An2 , v056
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte		        Bn2 
@@ -2174,7 +2174,7 @@ mus_halo_beyonce_6:
 @ 016   ----------------------------------------
 mus_halo_beyonce_6_016:
 	.byte	W72
-	.byte		N06   , Bn3 , v080
+	.byte		N06   , Bn3 , v048
 	.byte		N06   
 	.byte	W06
 	.byte		N06   
@@ -2195,12 +2195,12 @@ mus_halo_beyonce_6_016:
 	.byte	PATT
 	 .word	mus_halo_beyonce_6_016
 @ 019   ----------------------------------------
-	.byte		N12   , An3 , v080
+	.byte		N12   , An3 , v048
 	.byte		N12   
 	.byte	W96
 @ 020   ----------------------------------------
 mus_halo_beyonce_6_020:
-	.byte		N12   , Cs4 , v080
+	.byte		N12   , Cs4 , v048
 	.byte	W12
 	.byte		N06   , An3 
 	.byte		N06   
@@ -2228,7 +2228,7 @@ mus_halo_beyonce_6_020:
 	.byte	PEND
 @ 021   ----------------------------------------
 mus_halo_beyonce_6_021:
-	.byte		N12   , Dn4 , v080
+	.byte		N12   , Dn4 , v048
 	.byte	W12
 	.byte		N06   , Bn3 
 	.byte		N06   
@@ -2256,7 +2256,7 @@ mus_halo_beyonce_6_021:
 	.byte	PEND
 @ 022   ----------------------------------------
 mus_halo_beyonce_6_022:
-	.byte		N12   , An3 , v080
+	.byte		N12   , An3 , v048
 	.byte	W12
 	.byte		N06   , Fs3 
 	.byte		N06   
@@ -2329,14 +2329,14 @@ mus_halo_beyonce_6_022:
 	.byte	PATT
 	 .word	mus_halo_beyonce_6_016
 @ 041   ----------------------------------------
-	.byte		N12   , An3 , v080
+	.byte		N12   , An3 , v048
 	.byte		N12   
 	.byte	W96
 @ 042   ----------------------------------------
 	.byte	PATT
 	 .word	mus_halo_beyonce_6_016
 @ 043   ----------------------------------------
-	.byte		N12   , An3 , v080
+	.byte		N12   , An3 , v048
 	.byte		N12   
 	.byte	W96
 @ 044   ----------------------------------------
@@ -2456,7 +2456,7 @@ mus_halo_beyonce_6_022:
 @ 085   ----------------------------------------
 	.byte	FINE
 
-@**************** Track 7 (Midi-Chn.14) ****************@
+@**************** Track 7 (Midi-Chn.16) ****************@
 
 mus_halo_beyonce_7:
 	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
@@ -2503,231 +2503,9 @@ mus_halo_beyonce_7:
 @ 019   ----------------------------------------
 	.byte	W96
 @ 020   ----------------------------------------
-	.byte	W96
-@ 021   ----------------------------------------
-mus_halo_beyonce_7_021:
-	.byte	W72
-	.byte		N06   , Bn3 , v080
-	.byte		N06   
-	.byte	W06
-	.byte		N06   
-	.byte		N06   
-	.byte	W06
-	.byte		N06   
-	.byte		N06   
-	.byte	W06
-	.byte		N06   
-	.byte		N06   
-	.byte	W06
-	.byte	PEND
-@ 022   ----------------------------------------
-	.byte		N12   , An3 
-	.byte		N12   
-	.byte	W96
-@ 023   ----------------------------------------
-	.byte	W96
-@ 024   ----------------------------------------
-	.byte	W96
-@ 025   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 026   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 027   ----------------------------------------
-	.byte	W96
-@ 028   ----------------------------------------
-	.byte	W96
-@ 029   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 030   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 031   ----------------------------------------
-	.byte	W96
-@ 032   ----------------------------------------
-	.byte	W96
-@ 033   ----------------------------------------
-	.byte	W96
-@ 034   ----------------------------------------
-	.byte	W96
-@ 035   ----------------------------------------
-	.byte	W96
-@ 036   ----------------------------------------
-	.byte	W96
-@ 037   ----------------------------------------
-	.byte	W96
-@ 038   ----------------------------------------
-	.byte	W96
-@ 039   ----------------------------------------
-	.byte	W96
-@ 040   ----------------------------------------
-	.byte	W96
-@ 041   ----------------------------------------
-	.byte	W96
-@ 042   ----------------------------------------
-	.byte	W96
-@ 043   ----------------------------------------
-	.byte	W96
-@ 044   ----------------------------------------
-	.byte	W96
-@ 045   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 046   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 047   ----------------------------------------
-	.byte	W96
-@ 048   ----------------------------------------
-	.byte	W96
-@ 049   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 050   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 051   ----------------------------------------
-	.byte	W96
-@ 052   ----------------------------------------
-	.byte	W96
-@ 053   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 054   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 055   ----------------------------------------
-	.byte	W96
-@ 056   ----------------------------------------
-	.byte	W96
-@ 057   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 058   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 059   ----------------------------------------
-	.byte	W96
-@ 060   ----------------------------------------
-	.byte	W96
-@ 061   ----------------------------------------
-	.byte	W96
-@ 062   ----------------------------------------
-	.byte	W96
-@ 063   ----------------------------------------
-	.byte	W96
-@ 064   ----------------------------------------
-	.byte	W96
-@ 065   ----------------------------------------
-	.byte	W96
-@ 066   ----------------------------------------
-	.byte	W96
-@ 067   ----------------------------------------
-	.byte	W96
-@ 068   ----------------------------------------
-	.byte	W96
-@ 069   ----------------------------------------
-	.byte	W96
-@ 070   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 071   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 072   ----------------------------------------
-	.byte	W96
-@ 073   ----------------------------------------
-	.byte	W96
-@ 074   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 075   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 076   ----------------------------------------
-	.byte	W96
-@ 077   ----------------------------------------
-	.byte	W96
-@ 078   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 079   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W96
-@ 080   ----------------------------------------
-	.byte	W96
-@ 081   ----------------------------------------
-	.byte	W96
-@ 082   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_7_021
-@ 083   ----------------------------------------
-	.byte		N12   , An3 , v080
-	.byte		N12   
-	.byte	W12
-	.byte	FINE
-
-@**************** Track 8 (Midi-Chn.16) ****************@
-
-mus_halo_beyonce_8:
-	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
-	.byte	KEYSH , mus_halo_beyonce_key+0
-@ 000   ----------------------------------------
-	.byte		VOICE , 5
-	.byte	W96
-@ 001   ----------------------------------------
-	.byte	W96
-@ 002   ----------------------------------------
-	.byte	W96
-@ 003   ----------------------------------------
-	.byte	W96
-@ 004   ----------------------------------------
-	.byte	W96
-@ 005   ----------------------------------------
-	.byte	W96
-@ 006   ----------------------------------------
-	.byte	W96
-@ 007   ----------------------------------------
-	.byte	W96
-@ 008   ----------------------------------------
-	.byte	W96
-@ 009   ----------------------------------------
-	.byte	W96
-@ 010   ----------------------------------------
-	.byte	W96
-@ 011   ----------------------------------------
-	.byte	W96
-@ 012   ----------------------------------------
-	.byte	W96
-@ 013   ----------------------------------------
-	.byte	W96
-@ 014   ----------------------------------------
-	.byte	W96
-@ 015   ----------------------------------------
-	.byte	W96
-@ 016   ----------------------------------------
-	.byte	W96
-@ 017   ----------------------------------------
-	.byte	W96
-@ 018   ----------------------------------------
-	.byte	W96
-@ 019   ----------------------------------------
-	.byte	W96
-@ 020   ----------------------------------------
-mus_halo_beyonce_8_020:
+mus_halo_beyonce_7_020:
 	.byte	W42
-	.byte		N06   , An2 , v080
+	.byte		N06   , An2 , v048
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -2743,9 +2521,9 @@ mus_halo_beyonce_8_020:
 	.byte	W06
 	.byte	PEND
 @ 021   ----------------------------------------
-mus_halo_beyonce_8_021:
+mus_halo_beyonce_7_021:
 	.byte	W36
-	.byte		N06   , Bn2 , v080
+	.byte		N06   , Bn2 , v048
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -2763,9 +2541,9 @@ mus_halo_beyonce_8_021:
 	.byte	W06
 	.byte	PEND
 @ 022   ----------------------------------------
-mus_halo_beyonce_8_022:
+mus_halo_beyonce_7_022:
 	.byte	W12
-	.byte		N24   , Fs2 , v080
+	.byte		N24   , Fs2 , v048
 	.byte	W36
 	.byte		N06   , An2 
 	.byte	W06
@@ -2783,9 +2561,9 @@ mus_halo_beyonce_8_022:
 	.byte	W06
 	.byte	PEND
 @ 023   ----------------------------------------
-mus_halo_beyonce_8_023:
+mus_halo_beyonce_7_023:
 	.byte	W06
-	.byte		N24   , Dn2 , v080
+	.byte		N24   , Dn2 , v048
 	.byte	W36
 	.byte		N06   , An2 
 	.byte	W06
@@ -2803,9 +2581,9 @@ mus_halo_beyonce_8_023:
 	.byte	W06
 	.byte	PEND
 @ 024   ----------------------------------------
-mus_halo_beyonce_8_024:
+mus_halo_beyonce_7_024:
 	.byte	W36
-	.byte		N06   , An2 , v080
+	.byte		N06   , An2 , v048
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -2823,9 +2601,9 @@ mus_halo_beyonce_8_024:
 	.byte	W06
 	.byte	PEND
 @ 025   ----------------------------------------
-mus_halo_beyonce_8_025:
+mus_halo_beyonce_7_025:
 	.byte	W36
-	.byte		N06   , Bn2 , v080
+	.byte		N06   , Bn2 , v048
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -2843,9 +2621,9 @@ mus_halo_beyonce_8_025:
 	.byte	W06
 	.byte	PEND
 @ 026   ----------------------------------------
-mus_halo_beyonce_8_026:
+mus_halo_beyonce_7_026:
 	.byte	W06
-	.byte		N24   , Fs2 , v080
+	.byte		N24   , Fs2 , v048
 	.byte	W42
 	.byte		N06   , An2 
 	.byte	W06
@@ -2863,9 +2641,9 @@ mus_halo_beyonce_8_026:
 	.byte	W06
 	.byte	PEND
 @ 027   ----------------------------------------
-mus_halo_beyonce_8_027:
+mus_halo_beyonce_7_027:
 	.byte	W06
-	.byte		N24   , Dn2 , v080
+	.byte		N24   , Dn2 , v048
 	.byte	W42
 	.byte		N06   , An2 
 	.byte	W06
@@ -2885,8 +2663,8 @@ mus_halo_beyonce_8_027:
 	.byte	W06
 	.byte	PEND
 @ 028   ----------------------------------------
-mus_halo_beyonce_8_028:
-	.byte		N12   , Cs4 , v080
+mus_halo_beyonce_7_028:
+	.byte		N12   , Cs4 , v048
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
@@ -2908,8 +2686,8 @@ mus_halo_beyonce_8_028:
 	.byte	W06
 	.byte	PEND
 @ 029   ----------------------------------------
-mus_halo_beyonce_8_029:
-	.byte		N12   , Dn4 , v080
+mus_halo_beyonce_7_029:
+	.byte		N12   , Dn4 , v048
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
@@ -2931,8 +2709,8 @@ mus_halo_beyonce_8_029:
 	.byte	W06
 	.byte	PEND
 @ 030   ----------------------------------------
-mus_halo_beyonce_8_030:
-	.byte		N12   , Cs4 , v080
+mus_halo_beyonce_7_030:
+	.byte		N12   , Cs4 , v048
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
@@ -2954,8 +2732,8 @@ mus_halo_beyonce_8_030:
 	.byte	W06
 	.byte	PEND
 @ 031   ----------------------------------------
-mus_halo_beyonce_8_031:
-	.byte		N12   , Cs4 , v080
+mus_halo_beyonce_7_031:
+	.byte		N12   , Cs4 , v048
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
@@ -2994,40 +2772,40 @@ mus_halo_beyonce_8_031:
 	.byte	W96
 @ 044   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_020
+	 .word	mus_halo_beyonce_7_020
 @ 045   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_021
+	 .word	mus_halo_beyonce_7_021
 @ 046   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_022
+	 .word	mus_halo_beyonce_7_022
 @ 047   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_023
+	 .word	mus_halo_beyonce_7_023
 @ 048   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_024
+	 .word	mus_halo_beyonce_7_024
 @ 049   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_025
+	 .word	mus_halo_beyonce_7_025
 @ 050   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_026
+	 .word	mus_halo_beyonce_7_026
 @ 051   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_027
+	 .word	mus_halo_beyonce_7_027
 @ 052   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_028
+	 .word	mus_halo_beyonce_7_028
 @ 053   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_029
+	 .word	mus_halo_beyonce_7_029
 @ 054   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_030
+	 .word	mus_halo_beyonce_7_030
 @ 055   ----------------------------------------
-mus_halo_beyonce_8_055:
-	.byte		N12   , Cs4 , v080
+mus_halo_beyonce_7_055:
+	.byte		N12   , Cs4 , v048
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
@@ -3039,7 +2817,7 @@ mus_halo_beyonce_8_055:
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
-	.byte		N06   , Fs3 , v064
+	.byte		N06   , Fs3 , v040
 	.byte	W06
 	.byte		        Gs3 
 	.byte	W06
@@ -3050,16 +2828,16 @@ mus_halo_beyonce_8_055:
 	.byte	PEND
 @ 056   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_028
+	 .word	mus_halo_beyonce_7_028
 @ 057   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_029
+	 .word	mus_halo_beyonce_7_029
 @ 058   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_030
+	 .word	mus_halo_beyonce_7_030
 @ 059   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_031
+	 .word	mus_halo_beyonce_7_031
 @ 060   ----------------------------------------
 	.byte	W96
 @ 061   ----------------------------------------
@@ -3080,51 +2858,51 @@ mus_halo_beyonce_8_055:
 	.byte	W96
 @ 069   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_020
+	 .word	mus_halo_beyonce_7_020
 @ 070   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_021
+	 .word	mus_halo_beyonce_7_021
 @ 071   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_022
+	 .word	mus_halo_beyonce_7_022
 @ 072   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_023
+	 .word	mus_halo_beyonce_7_023
 @ 073   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_024
+	 .word	mus_halo_beyonce_7_024
 @ 074   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_025
+	 .word	mus_halo_beyonce_7_025
 @ 075   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_026
+	 .word	mus_halo_beyonce_7_026
 @ 076   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_027
+	 .word	mus_halo_beyonce_7_027
 @ 077   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_028
+	 .word	mus_halo_beyonce_7_028
 @ 078   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_029
+	 .word	mus_halo_beyonce_7_029
 @ 079   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_030
+	 .word	mus_halo_beyonce_7_030
 @ 080   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_055
+	 .word	mus_halo_beyonce_7_055
 @ 081   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_028
+	 .word	mus_halo_beyonce_7_028
 @ 082   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_029
+	 .word	mus_halo_beyonce_7_029
 @ 083   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_8_030
+	 .word	mus_halo_beyonce_7_030
 @ 084   ----------------------------------------
-	.byte		N12   , Cs4 , v080
+	.byte		N12   , Cs4 , v048
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
@@ -3136,6 +2914,278 @@ mus_halo_beyonce_8_055:
 	.byte	W12
 	.byte		        An3 
 	.byte	W12
+	.byte	FINE
+
+@**************** Track 8 (Midi-Chn.10) ****************@
+
+mus_halo_beyonce_8:
+	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
+	.byte	KEYSH , mus_halo_beyonce_key+0
+@ 000   ----------------------------------------
+	.byte		VOICE , 118
+	.byte	W96
+@ 001   ----------------------------------------
+	.byte	W96
+@ 002   ----------------------------------------
+	.byte	W96
+@ 003   ----------------------------------------
+	.byte	W96
+@ 004   ----------------------------------------
+mus_halo_beyonce_8_004:
+	.byte	W24
+	.byte		N24   , En1 , v048
+	.byte	W48
+	.byte		N12   
+	.byte	W24
+	.byte	PEND
+@ 005   ----------------------------------------
+mus_halo_beyonce_8_005:
+	.byte	W24
+	.byte		N24   , En1 , v048
+	.byte	W48
+	.byte		N06   
+	.byte	W24
+	.byte	PEND
+@ 006   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 007   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 008   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 009   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 010   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 011   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 012   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 013   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 014   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 015   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 016   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 017   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 018   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 019   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 020   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 021   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 022   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 023   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 024   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 025   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 026   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 027   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 028   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 029   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 030   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 031   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 032   ----------------------------------------
+	.byte	W96
+@ 033   ----------------------------------------
+	.byte	W96
+@ 034   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 035   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 036   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 037   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 038   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 039   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 040   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 041   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 042   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 043   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 044   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 045   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 046   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 047   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 048   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 049   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 050   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 051   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 052   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 053   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 054   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 055   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 056   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 057   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 058   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 059   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 060   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 061   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 062   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 063   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 064   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 065   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 066   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 067   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 068   ----------------------------------------
+	.byte	W96
+@ 069   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 070   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 071   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 072   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 073   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 074   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 075   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 076   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 077   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 078   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 079   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 080   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 081   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 082   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 083   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_004
+@ 084   ----------------------------------------
+	.byte	PATT
+	 .word	mus_halo_beyonce_8_005
+@ 085   ----------------------------------------
+	.byte	W24
+	.byte		N24   , En1 , v048
+	.byte	W48
+	.byte		N06   
+	.byte	W06
 	.byte	FINE
 
 @**************** Track 9 (Midi-Chn.10) ****************@
@@ -3154,598 +3204,302 @@ mus_halo_beyonce_9:
 	.byte	W96
 @ 004   ----------------------------------------
 mus_halo_beyonce_9_004:
-	.byte	W24
-	.byte		N24   , Ds1 , v080
-	.byte	W48
-	.byte		N12   
-	.byte	W24
-	.byte	PEND
-@ 005   ----------------------------------------
-mus_halo_beyonce_9_005:
-	.byte	W24
-	.byte		N24   , Ds1 , v080
-	.byte	W48
-	.byte		N06   
-	.byte	W24
-	.byte	PEND
-@ 006   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 007   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 008   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 009   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 010   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 011   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 012   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 013   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 014   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 015   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 016   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 017   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 018   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 019   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 020   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 021   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 022   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 023   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 024   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 025   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 026   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 027   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 028   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 029   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 030   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 031   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 032   ----------------------------------------
-	.byte	W96
-@ 033   ----------------------------------------
-	.byte	W96
-@ 034   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 035   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 036   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 037   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 038   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 039   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 040   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 041   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 042   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 043   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 044   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 045   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 046   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 047   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 048   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 049   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 050   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 051   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 052   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 053   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 054   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 055   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 056   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 057   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 058   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 059   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 060   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 061   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 062   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 063   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 064   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 065   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 066   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 067   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 068   ----------------------------------------
-	.byte	W96
-@ 069   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 070   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 071   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 072   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 073   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 074   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 075   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 076   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 077   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 078   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 079   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 080   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 081   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 082   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 083   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_004
-@ 084   ----------------------------------------
-	.byte	PATT
-	 .word	mus_halo_beyonce_9_005
-@ 085   ----------------------------------------
-	.byte	W24
-	.byte		N24   , Ds1 , v080
-	.byte	W48
-	.byte		N06   
-	.byte	W06
-	.byte	FINE
-
-@**************** Track 10 (Midi-Chn.10) ****************@
-
-mus_halo_beyonce_10:
-	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
-	.byte	KEYSH , mus_halo_beyonce_key+0
-@ 000   ----------------------------------------
-	.byte		VOICE , 118
-	.byte	W96
-@ 001   ----------------------------------------
-	.byte	W96
-@ 002   ----------------------------------------
-	.byte	W96
-@ 003   ----------------------------------------
-	.byte	W96
-@ 004   ----------------------------------------
-mus_halo_beyonce_10_004:
-	.byte		N24   , Bn0 , v080
+	.byte		N24   , Cn1 , v052
 	.byte	W48
 	.byte		N24   
 	.byte	W36
 	.byte		N12   
-	.byte		N12   , Fn1 
 	.byte	W12
 	.byte	PEND
 @ 005   ----------------------------------------
-mus_halo_beyonce_10_005:
-	.byte		N18   , Bn0 , v080
+mus_halo_beyonce_9_005:
+	.byte		N18   , Cn1 , v052
 	.byte	W18
 	.byte		N06   
-	.byte		N06   , Fn1 
 	.byte	W30
-	.byte		N18   , Bn0 
+	.byte		N18   
 	.byte	W18
 	.byte		N06   
-	.byte		N06   , Fn1 
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W06
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W06
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W06
 	.byte	PEND
 @ 006   ----------------------------------------
-mus_halo_beyonce_10_006:
-	.byte		N24   , Bn0 , v080
+mus_halo_beyonce_9_006:
+	.byte		N24   , Cn1 , v052
 	.byte	W48
 	.byte		N18   
 	.byte	W18
 	.byte		N06   
-	.byte		N06   , Fn1 
 	.byte	W18
-	.byte		N12   , Bn0 
-	.byte		N12   , Fn1 
+	.byte		N12   
 	.byte	W12
 	.byte	PEND
 @ 007   ----------------------------------------
-mus_halo_beyonce_10_007:
-	.byte		N18   , Bn0 , v080
+mus_halo_beyonce_9_007:
+	.byte		N18   , Cn1 , v052
 	.byte	W18
 	.byte		N06   
-	.byte		N06   , Fn1 
 	.byte	W30
-	.byte		N18   , Bn0 
+	.byte		N18   
 	.byte	W18
 	.byte		N06   
-	.byte		N06   , Fn1 
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 
-	.byte		N12   , Fn1 
+	.byte		N12   
 	.byte	W12
 	.byte	PEND
 @ 008   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 009   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 010   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 011   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 012   ----------------------------------------
 	.byte	W48
-	.byte		N24   , Bn0 , v080
+	.byte		N24   , Cn1 , v052
 	.byte	W36
 	.byte		N12   
-	.byte		N12   , Fn1 
 	.byte	W12
 @ 013   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 014   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 015   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 016   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 017   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 018   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 019   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 020   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 021   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 022   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 023   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 024   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 025   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 026   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 027   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 028   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 029   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 030   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 031   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 032   ----------------------------------------
 	.byte	W96
 @ 033   ----------------------------------------
 	.byte	W96
 @ 034   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 035   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 036   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 037   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 038   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 039   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 040   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 041   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 042   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 043   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 044   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 045   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 046   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 047   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 048   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 049   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 050   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 051   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 052   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 053   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 054   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 055   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 056   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 057   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 058   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 059   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 060   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 061   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 062   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 063   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 064   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 065   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 066   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 067   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 068   ----------------------------------------
-	.byte	W72
-	.byte		N06   , Bn1 , v080
-	.byte	W06
-	.byte		        An1 
-	.byte	W06
-	.byte		N12   
-	.byte	W12
+	.byte	W96
 @ 069   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 070   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 071   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 072   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 073   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 074   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 075   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 076   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 077   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 078   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 079   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 080   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 081   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_004
+	 .word	mus_halo_beyonce_9_004
 @ 082   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_005
+	 .word	mus_halo_beyonce_9_005
 @ 083   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_006
+	 .word	mus_halo_beyonce_9_006
 @ 084   ----------------------------------------
 	.byte	PATT
-	 .word	mus_halo_beyonce_10_007
+	 .word	mus_halo_beyonce_9_007
 @ 085   ----------------------------------------
-	.byte		N18   , Bn0 , v080
+	.byte		N18   , Cn1 , v052
 	.byte	W18
 	.byte		N06   
-	.byte		N06   , Fn1 
 	.byte	W48
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W06
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W06
-	.byte		        Bn0 
-	.byte		N06   , Fn1 
+	.byte		N06   
 	.byte	W06
 @ 086   ----------------------------------------
-	.byte		N24   , Bn0 
+	.byte		N24   
 	.byte	W24
 	.byte	FINE
 
@@ -3753,7 +3507,7 @@ mus_halo_beyonce_10_007:
 	.align	2
 
 mus_halo_beyonce:
-	.byte	10	@ NumTrks
+	.byte	9	@ NumTrks
 	.byte	0	@ NumBlks
 	.byte	mus_halo_beyonce_pri	@ Priority
 	.byte	mus_halo_beyonce_rev	@ Reverb.
@@ -3769,6 +3523,5 @@ mus_halo_beyonce:
 	.word	mus_halo_beyonce_7
 	.word	mus_halo_beyonce_8
 	.word	mus_halo_beyonce_9
-	.word	mus_halo_beyonce_10
 
 	.end

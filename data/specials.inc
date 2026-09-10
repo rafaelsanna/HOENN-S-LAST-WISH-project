@@ -589,6 +589,8 @@ gSpecials::
 	def_special StartDarkSuicuneScene
 	def_special StartSnowballGame
 	def_special DoMrStoneEvilScene
+	def_special StartLavaridgeGymStagePlaylist
+	def_special StartRentonGymRadio
 	def_special HiddenGrotto_InitializeCurrent
 	def_special HiddenGrotto_EmptyCurrent
 	def_special HiddenGrotto_GetCurrentContentType

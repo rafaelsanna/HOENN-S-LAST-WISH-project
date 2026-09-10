@@ -14845,9 +14845,9 @@ const struct Item gItemsInfo[] =
     .name        = ITEM_NAME("Radio"),
     .price       = 0,
     .description = COMPOUND_STRING(
-        "A handheld radio that\n"
-        "plays any tune.\n"
-        "Reusable."),
+        "A handheld radio\n"
+        "that plays any\n"
+        "song and more."),
     .importance  = 1,
     .pocket      = POCKET_KEY_ITEMS,
     .type        = ITEM_USE_FIELD,
