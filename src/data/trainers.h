@@ -16701,7 +16701,7 @@ F_TRAINER_FEMALE |
 #line 6467
                 MOVE_SOLAR_BEAM,
                 MOVE_MOONBLAST,
-                MOVE_WEATHER_BALL,
+                MOVE_TORCH_SONG,
                 MOVE_SCORCHING_SANDS,
             },
             },
@@ -16789,7 +16789,7 @@ F_TRAINER_FEMALE |
 #line 6503
                 MOVE_SOLAR_BEAM,
                 MOVE_DARK_PULSE,
-                MOVE_FLAMETHROWER,
+                MOVE_FIERY_DANCE,
                 MOVE_TAUNT,
             },
             },
@@ -16830,7 +16830,7 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 6519
-                MOVE_FIRE_PUNCH,
+                MOVE_FIERY_DANCE,
                 MOVE_BRICK_BREAK,
                 MOVE_REST,
                 MOVE_ROAR,
@@ -16849,7 +16849,7 @@ F_TRAINER_FEMALE |
             .moves = {
 #line 6526
                 MOVE_EXTREME_SPEED,
-                MOVE_FLAMETHROWER,
+                MOVE_FIERY_DANCE,
                 MOVE_MORNING_SUN,
                 MOVE_WILD_CHARGE,
             },
@@ -16867,7 +16867,7 @@ F_TRAINER_FEMALE |
             .moves = {
 #line 6533
                 MOVE_DIG,
-                MOVE_TEMPER_FLARE,
+                MOVE_FIERY_DANCE,
                 MOVE_PROTECT,
                 MOVE_QUICK_ATTACK,
             },
@@ -16886,7 +16886,7 @@ F_TRAINER_FEMALE |
 #line 6540
                 MOVE_WILL_O_WISP,
                 MOVE_DARK_PULSE,
-                MOVE_FLAMETHROWER,
+                MOVE_FIERY_DANCE,
                 MOVE_TRAILBLAZE,
             },
             },
@@ -16905,7 +16905,7 @@ F_TRAINER_FEMALE |
             .moves = {
 #line 6547
                 MOVE_DAZZLING_GLEAM,
-                MOVE_FLAMETHROWER,
+                MOVE_TORCH_SONG,
                 MOVE_ENERGY_BALL,
                 MOVE_OVERHEAT,
             },

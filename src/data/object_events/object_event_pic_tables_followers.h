@@ -5598,7 +5598,7 @@ static const struct SpriteFrameImage sPicTable_Meltan[] = {
     overworld_ascending_frames(gObjectEventPic_Meltan, 4, 4),
 };
 static const struct SpriteFrameImage sPicTable_Melmetal[] = {
-    overworld_ascending_frames(gObjectEventPic_Melmetal, 4, 4),
+    overworld_ascending_frames(gObjectEventPic_Melmetal, 8, 8),
 };
 #if P_GIGANTAMAX_FORMS
 /*static const struct SpriteFrameImage sPicTable_MelmetalGmax[] = {

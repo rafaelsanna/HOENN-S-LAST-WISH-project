@@ -6466,7 +6466,7 @@ Level: 42
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Solar Beam  
 - Moonblast  
-- Weather Ball  
+- Torch song 
 - Scorching Sands  
 
 Granbull @ Sitrus Berry  
@@ -6502,7 +6502,7 @@ Level: 42
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Solar Beam  
 - Dark Pulse  
-- Flamethrower  
+- Fiery Dance    
 - Taunt  
 
 === TRAINER_FLANNERY_CASUAL ===
@@ -6516,7 +6516,7 @@ AI: Smart Trainer
 
 Granbull   
 Level: 41   
-- Fire Punch  
+- Fiery Dance    
 - Brick Break  
 - Rest 
 - Roar 
@@ -6524,14 +6524,14 @@ Level: 41
 Arcanine 
 Level: 40  
 - Extreme Speed  
-- Flamethrower 
+- Fiery Dance  
 - Morning Sun 
 - Wild Charge  
 
 Flareon   
 Level: 40    
 - Dig
-- Temper Flare 
+- Fiery Dance  
 - Protect  
 - Quick Attack 
 
@@ -6539,13 +6539,13 @@ Houndoom
 Level: 40  
 - Will-O-Wisp 
 - Dark Pulse  
-- Flamethrower  
+- Fiery Dance   
 - Trailblaze  
 
 Ninetales @ Mental Herb
 Level: 42  
 - Dazzling Gleam  
-- Flamethrower  
+- Torch song   
 - Energy Ball
 - Overheat 
 

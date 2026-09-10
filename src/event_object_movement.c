@@ -1767,6 +1767,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
         objectEvent->fixedPriority = TRUE;
         sprite->subpriority = 0xFF;  // Valor ALTO = renderiza POR BAIXO
     }
+
     // ============================
     
     return objectEventId;

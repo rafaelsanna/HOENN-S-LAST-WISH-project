@@ -1,6 +1,6 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_abracadabra_grp, voicegroup_abracadabra
+	.equ	mus_abracadabra_grp, voicegroup_diva_pop
 	.equ	mus_abracadabra_pri, 0
 	.equ	mus_abracadabra_rev, reverb_set+50
 	.equ	mus_abracadabra_mvl, 100

@@ -7651,10 +7651,10 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         FOOTPRINT(Melmetal)
         OVERWORLD(
             sPicTable_Melmetal,
-            SIZE_32x32,
+            SIZE_64x64,
             SHADOW_SIZE_M,
             TRACKS_FOOT,
-            sAnimTable_Following,
+            sAnimTable_Koraidon,
             gOverworldPalette_Melmetal,
             gShinyOverworldPalette_Melmetal
         )

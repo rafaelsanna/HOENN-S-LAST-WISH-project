@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_360_grp, voicegroup_littleroot_test
+	.equ	mus_360_grp, voicegroup_diva_pop
 	.equ	mus_360_pri, 0
-	.equ	mus_360_rev, reverb_set+50
-	.equ	mus_360_mvl, 96
+	.equ	mus_360_rev, reverb_set+12
+	.equ	mus_360_mvl, 90
 	.equ	mus_360_key, 0
 	.equ	mus_360_tbs, 1
 	.equ	mus_360_exg, 1
@@ -21,8 +21,8 @@ mus_360_1:
 @ 000   ----------------------------------------
 @ 001   ----------------------------------------
 	.byte	TEMPO , 120*mus_360_tbs/2
-	.byte		VOICE , 80
-	.byte		N12   , En2 , v040
+	.byte		VOICE , 7
+	.byte		N12   , En2 , v060
 	.byte		N12   , Bn2 
 	.byte	W12
 	.byte		        En2 
@@ -45,7 +45,7 @@ mus_360_1:
 	.byte	W36
 @ 002   ----------------------------------------
 mus_360_1_002:
-	.byte		N12   , En2 , v040
+	.byte		N12   , En2 , v060
 	.byte		N12   , Bn2 
 	.byte	W12
 	.byte		        En2 
@@ -63,13 +63,13 @@ mus_360_1_002:
 	.byte		N06   , Fn2 
 	.byte		N06   , Cn3 
 	.byte	W06
-	.byte		N24   , Cn3 , v040, gtp3
-	.byte		N24   , An3 , v040, gtp3
+	.byte		N24   , Cn3 , v060, gtp3
+	.byte		N24   , An3 , v060, gtp3
 	.byte	W36
 	.byte	PEND
 @ 003   ----------------------------------------
 mus_360_1_003:
-	.byte		N12   , En2 , v040
+	.byte		N12   , En2 , v060
 	.byte		N12   , Bn2 
 	.byte	W12
 	.byte		        En2 
@@ -94,7 +94,7 @@ mus_360_1_003:
 @ 004   ----------------------------------------
 mus_360_1_004:
 	.byte	W12
-	.byte		N12   , Gn2 , v040
+	.byte		N12   , Gn2 , v060
 	.byte		N12   , Bn2 
 	.byte	W12
 	.byte		        Gn2 
@@ -145,7 +145,7 @@ mus_360_2:
 	.byte		VOL   , 127*mus_360_mvl/mxv
 	.byte	KEYSH , mus_360_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 33
+	.byte		VOICE , 1
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -155,7 +155,7 @@ mus_360_2:
 	.byte	W96
 @ 004   ----------------------------------------
 mus_360_2_004:
-	.byte		N06   , En1 , v088
+	.byte		N06   , En1 , v076
 	.byte		N06   , En2 
 	.byte	W24
 	.byte		        En1 
@@ -176,7 +176,7 @@ mus_360_2_004:
 @ 006   ----------------------------------------
 mus_360_2_006:
 	.byte	W12
-	.byte		N06   , En1 , v088
+	.byte		N06   , En1 , v076
 	.byte		N06   , En2 
 	.byte	W12
 	.byte		        En1 
@@ -194,7 +194,7 @@ mus_360_2_006:
 	.byte	PEND
 @ 007   ----------------------------------------
 mus_360_2_007:
-	.byte		N06   , Gn1 , v088
+	.byte		N06   , Gn1 , v076
 	.byte		N06   , Gn2 
 	.byte	W24
 	.byte		        Gn1 
@@ -235,7 +235,7 @@ mus_360_3:
 	.byte		VOL   , 127*mus_360_mvl/mxv
 	.byte	KEYSH , mus_360_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 80
+	.byte		VOICE , 5
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -245,7 +245,7 @@ mus_360_3:
 	.byte	W96
 @ 004   ----------------------------------------
 mus_360_3_004:
-	.byte		N12   , En1 , v036
+	.byte		N12   , En1 , v052
 	.byte		N12   , Bn1 
 	.byte	W12
 	.byte		        En1 
@@ -269,7 +269,7 @@ mus_360_3_004:
 	.byte	PEND
 @ 005   ----------------------------------------
 mus_360_3_005:
-	.byte		N12   , En1 , v036
+	.byte		N12   , En1 , v052
 	.byte		N12   , Bn1 
 	.byte	W12
 	.byte		        En1 
@@ -287,8 +287,8 @@ mus_360_3_005:
 	.byte		N06   , Fn1 
 	.byte		N06   , Cn2 
 	.byte	W06
-	.byte		N24   , Cn2 , v036, gtp3
-	.byte		N24   , An2 , v036, gtp3
+	.byte		N24   , Cn2 , v052, gtp3
+	.byte		N24   , An2 , v052, gtp3
 	.byte	W36
 	.byte	PEND
 @ 006   ----------------------------------------
@@ -297,7 +297,7 @@ mus_360_3_005:
 @ 007   ----------------------------------------
 mus_360_3_007:
 	.byte	W12
-	.byte		N12   , Gn1 , v036
+	.byte		N12   , Gn1 , v052
 	.byte		N12   , Bn1 
 	.byte	W12
 	.byte		        Gn1 
@@ -336,7 +336,7 @@ mus_360_4:
 	.byte		VOL   , 127*mus_360_mvl/mxv
 	.byte	KEYSH , mus_360_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 48
+	.byte		VOICE , 2
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -346,7 +346,7 @@ mus_360_4:
 	.byte	W96
 @ 004   ----------------------------------------
 mus_360_4_004:
-	.byte		N06   , En1 , v048
+	.byte		N06   , En1 , v056
 	.byte	W24
 	.byte		N06   
 	.byte	W12
@@ -363,7 +363,7 @@ mus_360_4_004:
 @ 006   ----------------------------------------
 mus_360_4_006:
 	.byte	W12
-	.byte		N06   , En1 , v048
+	.byte		N06   , En1 , v056
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -377,7 +377,7 @@ mus_360_4_006:
 	.byte	PEND
 @ 007   ----------------------------------------
 mus_360_4_007:
-	.byte		N06   , Gn1 , v048
+	.byte		N06   , Gn1 , v056
 	.byte	W24
 	.byte		N06   
 	.byte	W12
@@ -413,7 +413,7 @@ mus_360_5:
 	.byte		VOL   , 127*mus_360_mvl/mxv
 	.byte	KEYSH , mus_360_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 0
+	.byte		VOICE , 8
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -423,33 +423,90 @@ mus_360_5:
 	.byte	W96
 @ 004   ----------------------------------------
 mus_360_5_004:
-	.byte	W24
-	.byte		N06   , Ds1 , v040
-	.byte	W48
-	.byte		N06   
-	.byte	W24
+	.byte		N02   , Cn1 , v084
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        En1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        Cn1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        En1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
 	.byte	PEND
 @ 005   ----------------------------------------
-	.byte	PATT
-	 .word	mus_360_5_004
+mus_360_5_005:
+	.byte		N02   , Cn1 , v084
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        En1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        Cn1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        En1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W06
+	.byte		        Cn1 , v056
+	.byte	W06
+	.byte	PEND
 @ 006   ----------------------------------------
 	.byte	PATT
 	 .word	mus_360_5_004
 @ 007   ----------------------------------------
 	.byte	PATT
-	 .word	mus_360_5_004
+	 .word	mus_360_5_005
 @ 008   ----------------------------------------
 	.byte	PATT
 	 .word	mus_360_5_004
 @ 009   ----------------------------------------
 	.byte	PATT
-	 .word	mus_360_5_004
+	 .word	mus_360_5_005
 @ 010   ----------------------------------------
 	.byte	PATT
 	 .word	mus_360_5_004
 @ 011   ----------------------------------------
-	.byte	PATT
-	 .word	mus_360_5_004
+	.byte		N02   , Cn1 , v084
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        En1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        Cn1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W06
+	.byte		        Cn1 , v056
+	.byte	W06
+	.byte		        En1 , v076
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v036
+	.byte	W12
 @ 012   ----------------------------------------
 	.byte	FINE
 

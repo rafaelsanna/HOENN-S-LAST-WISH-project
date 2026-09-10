@@ -1,6 +1,6 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_applause_grp, voicegroup_abracadabra
+	.equ	mus_applause_grp, voicegroup_diva_pop
 	.equ	mus_applause_pri, 0
 	.equ	mus_applause_rev, reverb_set+12
 	.equ	mus_applause_mvl, 90
