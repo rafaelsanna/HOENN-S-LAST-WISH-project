@@ -72,7 +72,7 @@
     },
     {
       "local_id": "LOCALID_MILLENNIUM_COMET",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZWEILOUS)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(KORAIDON)",
       "x": 25,
       "y": 4,
       "elevation": 0,
@@ -646,8 +646,9 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
+      "script": "MOSSDEEP01_EventScript_LostFather",
+      "flag": "0",
+      "local_id": "LOCALID_LOST_FATHER"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
@@ -659,8 +660,9 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
+      "script": "MOSSDEEP01_EventScript_LostMother",
+      "flag": "0",
+      "local_id": "LOCALID_LOST_MOTHER"
     }
   ],
   "warp_events": [],

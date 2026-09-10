@@ -21,7 +21,7 @@ mus_halo_beyonce_1:
 @ 000   ----------------------------------------
 @ 001   ----------------------------------------
 	.byte	TEMPO , 80*mus_halo_beyonce_tbs/2
-	.byte		VOICE , 5
+	.byte		VOICE , 0
 	.byte	W96
 @ 002   ----------------------------------------
 	.byte	W96
@@ -539,23 +539,16 @@ mus_halo_beyonce_2:
 	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
 	.byte	KEYSH , mus_halo_beyonce_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 5
-	.byte		N96   , An2 , v060
-	.byte		N96   , Cs3 
+	.byte		VOICE , 0
 	.byte	W96
 @ 001   ----------------------------------------
-	.byte		        Bn2 
-	.byte		N96   , Dn3 
 	.byte	W96
 @ 002   ----------------------------------------
-	.byte		        Fs2 
-	.byte		N96   , An2 
 	.byte	W96
 @ 003   ----------------------------------------
-	.byte		N48   , Dn2 
 	.byte	W96
 @ 004   ----------------------------------------
-	.byte		N96   , An2 
+	.byte		N96   , An2 , v060
 	.byte	W96
 @ 005   ----------------------------------------
 	.byte		        Bn2 
@@ -806,7 +799,7 @@ mus_halo_beyonce_3:
 	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
 	.byte	KEYSH , mus_halo_beyonce_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 5
+	.byte		VOICE , 0
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -1078,7 +1071,7 @@ mus_halo_beyonce_4:
 	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
 	.byte	KEYSH , mus_halo_beyonce_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 5
+	.byte		VOICE , 0
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -1875,20 +1868,16 @@ mus_halo_beyonce_5:
 	.byte		VOL   , 127*mus_halo_beyonce_mvl/mxv
 	.byte	KEYSH , mus_halo_beyonce_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 5
-	.byte		N96   , An2 , v056
+	.byte		VOICE , 0
 	.byte	W96
 @ 001   ----------------------------------------
-	.byte		        Bn2 
 	.byte	W96
 @ 002   ----------------------------------------
-	.byte		        Fs2 
 	.byte	W96
 @ 003   ----------------------------------------
-	.byte		N48   , Dn2 
 	.byte	W96
 @ 004   ----------------------------------------
-	.byte		N96   , An2 
+	.byte		N96   , An2 , v056
 	.byte	W96
 @ 005   ----------------------------------------
 	.byte		        Bn2 

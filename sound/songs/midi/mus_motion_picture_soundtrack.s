@@ -1,6 +1,6 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_motion_picture_soundtrack_grp, voicegroup_motion_picture_soundtrack
+	.equ	mus_motion_picture_soundtrack_grp, voicegroup_hlw_rock_metal
 	.equ	mus_motion_picture_soundtrack_pri, 0
 	.equ	mus_motion_picture_soundtrack_rev, reverb_set+50
 	.equ	mus_motion_picture_soundtrack_mvl, 100
@@ -20,7 +20,7 @@ mus_motion_picture_soundtrack_1:
 mus_motion_picture_soundtrack_1_B1:
 @ 000   ----------------------------------------
 	.byte	TEMPO , 48*mus_motion_picture_soundtrack_tbs/2
-	.byte		VOICE , 0
+	.byte		VOICE , 3
 	.byte		VOL   , 127*mus_motion_picture_soundtrack_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte		N92   , Gn1 , v092, gtp3

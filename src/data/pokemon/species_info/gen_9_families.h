@@ -7030,7 +7030,7 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
             SIZE_64x64,
             SHADOW_SIZE_M,
             TRACKS_NONE,
-            sAnimTable_Following,
+            sAnimTable_Koraidon,
             gOverworldPalette_Koraidon,
             gShinyOverworldPalette_Koraidon
         )

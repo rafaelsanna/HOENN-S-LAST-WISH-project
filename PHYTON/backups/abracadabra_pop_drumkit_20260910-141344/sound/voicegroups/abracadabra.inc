@@ -7,4 +7,3 @@ voice_group abracadabra
     voice_directsound 60, 0, DirectSoundWaveData_sc88pro_pizzicato_strings, 255, 226, 0, 38
     voice_keysplit_all voicegroup_rs_drumset
 	voice_keysplit voicegroup_piano_keysplit, keysplit_piano
-	voice_keysplit_all voicegroup_pink_and_white_drumset @ 118

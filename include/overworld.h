@@ -179,6 +179,7 @@ bool32 IsSendingKeysOverCable(void);
 void ClearLinkPlayerObjectEvents(void);
 bool16 SetTimeOfDay(u16 hours);
 extern const union AnimCmd *const sAnimTable_Spheal[];
+extern const union AnimCmd *const sAnimTable_Koraidon[];
 
 // Item Description Headers
 enum ItemObtainFlags

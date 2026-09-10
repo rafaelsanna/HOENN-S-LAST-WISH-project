@@ -20,67 +20,65 @@ mus_abracadabra_1:
 @ 000   ----------------------------------------
 @ 001   ----------------------------------------
 	.byte	TEMPO , 126*mus_abracadabra_tbs/2
-	.byte		VOICE , 0
+	.byte		VOICE , 5
 	.byte		VOL   , 76*mus_abracadabra_mvl/mxv
 	.byte		PAN   , c_v+0
-	.byte	W96
-@ 002   ----------------------------------------
 	.byte		N96   , As2 , v072
 	.byte	W96
-@ 003   ----------------------------------------
+@ 002   ----------------------------------------
 	.byte	W96
 mus_abracadabra_1_B1:
-@ 004   ----------------------------------------
+@ 003   ----------------------------------------
 	.byte		N96   , Cn3 , v052
 	.byte	W96
-@ 005   ----------------------------------------
+@ 004   ----------------------------------------
 	.byte		        Gn2 
+	.byte	W96
+@ 005   ----------------------------------------
+	.byte		        As2 
 	.byte	W96
 @ 006   ----------------------------------------
-	.byte		        As2 
 	.byte	W96
 @ 007   ----------------------------------------
+	.byte		        Cn3 
 	.byte	W96
 @ 008   ----------------------------------------
-	.byte		        Cn3 
+	.byte		        Gn2 
 	.byte	W96
 @ 009   ----------------------------------------
-	.byte		        Gn2 
+	.byte		        As2 
 	.byte	W96
 @ 010   ----------------------------------------
-	.byte		        As2 
 	.byte	W96
 @ 011   ----------------------------------------
-	.byte	W96
-@ 012   ----------------------------------------
 	.byte		        Cn3 , v076
 	.byte	W96
-@ 013   ----------------------------------------
+@ 012   ----------------------------------------
 	.byte		        Gn2 
+	.byte	W96
+@ 013   ----------------------------------------
+	.byte		        As2 
 	.byte	W96
 @ 014   ----------------------------------------
-	.byte		        As2 
+	.byte		        Gs2 
 	.byte	W96
 @ 015   ----------------------------------------
-	.byte		        Gs2 
-	.byte	W96
-@ 016   ----------------------------------------
 	.byte		        Cn3 
 	.byte	W96
-@ 017   ----------------------------------------
+@ 016   ----------------------------------------
 	.byte		        Gn2 
 	.byte	W96
-@ 018   ----------------------------------------
+@ 017   ----------------------------------------
 	.byte		        As2 
 	.byte	W96
-@ 019   ----------------------------------------
+@ 018   ----------------------------------------
 	.byte		        Gs2 
 	.byte	W96
-@ 020   ----------------------------------------
+@ 019   ----------------------------------------
 	.byte		        Cn2 , v052
 	.byte	W96
-@ 021   ----------------------------------------
-mus_abracadabra_1_021:
+@ 020   ----------------------------------------
+mus_abracadabra_1_020:
 	.byte		N03   , Fn2 , v052
 	.byte	W18
 	.byte		        Fn2 , v100
@@ -92,19 +90,19 @@ mus_abracadabra_1_021:
 	.byte		N24   , Fs2 
 	.byte	W24
 	.byte	PEND
-@ 022   ----------------------------------------
+@ 021   ----------------------------------------
 	.byte		N96   
 	.byte	W96
-@ 023   ----------------------------------------
+@ 022   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_1_021
-@ 024   ----------------------------------------
+	 .word	mus_abracadabra_1_020
+@ 023   ----------------------------------------
 	.byte		N48   , Fs2 , v100
 	.byte	W96
 	.byte	GOTO
 	 .word	mus_abracadabra_1_B1
 mus_abracadabra_1_B2:
-@ 025   ----------------------------------------
+@ 024   ----------------------------------------
 	.byte	FINE
 
 @**************** Track 2 (Midi-Chn.2) ****************@
@@ -115,8 +113,6 @@ mus_abracadabra_2:
 	.byte		VOICE , 1
 	.byte		VOL   , 116*mus_abracadabra_mvl/mxv
 	.byte		PAN   , c_v+0
-	.byte	W96
-@ 001   ----------------------------------------
 	.byte		N05   , As0 , v052
 	.byte	W06
 	.byte		        As0 , v060
@@ -149,7 +145,7 @@ mus_abracadabra_2:
 	.byte	W06
 	.byte		        As0 , v060
 	.byte	W06
-@ 002   ----------------------------------------
+@ 001   ----------------------------------------
 	.byte		        Gs0 , v052
 	.byte	W06
 	.byte		        Gs0 , v060
@@ -183,8 +179,8 @@ mus_abracadabra_2:
 	.byte		        Gs0 , v060
 	.byte	W06
 mus_abracadabra_2_B1:
-@ 003   ----------------------------------------
-mus_abracadabra_2_003:
+@ 002   ----------------------------------------
+mus_abracadabra_2_002:
 	.byte		N05   , Fn1 , v024
 	.byte	W06
 	.byte		        Fn1 , v032
@@ -218,8 +214,8 @@ mus_abracadabra_2_003:
 	.byte		        Fn1 , v032
 	.byte	W06
 	.byte	PEND
-@ 004   ----------------------------------------
-mus_abracadabra_2_004:
+@ 003   ----------------------------------------
+mus_abracadabra_2_003:
 	.byte		N05   , Cn1 , v024
 	.byte	W06
 	.byte		        Cn1 , v032
@@ -253,8 +249,8 @@ mus_abracadabra_2_004:
 	.byte		        Cn1 , v032
 	.byte	W06
 	.byte	PEND
-@ 005   ----------------------------------------
-mus_abracadabra_2_005:
+@ 004   ----------------------------------------
+mus_abracadabra_2_004:
 	.byte		N05   , As0 , v024
 	.byte	W06
 	.byte		        As0 , v032
@@ -288,39 +284,42 @@ mus_abracadabra_2_005:
 	.byte		        As0 , v032
 	.byte	W06
 	.byte	PEND
+@ 005   ----------------------------------------
+	.byte		        Gs0 , v024
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
+	.byte		        Gs0 , v044
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
+	.byte		        Gs0 , v024
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
+	.byte		        Gs0 , v044
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
+	.byte		        Gs0 , v024
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
+	.byte		        Gs0 , v044
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
+	.byte		        Gs0 , v024
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
+	.byte		        Gs0 , v044
+	.byte	W06
+	.byte		        Gs0 , v032
+	.byte	W06
 @ 006   ----------------------------------------
-	.byte		        Gs0 , v024
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
-	.byte		        Gs0 , v044
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
-	.byte		        Gs0 , v024
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
-	.byte		        Gs0 , v044
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
-	.byte		        Gs0 , v024
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
-	.byte		        Gs0 , v044
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
-	.byte		        Gs0 , v024
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
-	.byte		        Gs0 , v044
-	.byte	W06
-	.byte		        Gs0 , v032
-	.byte	W06
+	.byte	PATT
+	 .word	mus_abracadabra_2_002
 @ 007   ----------------------------------------
 	.byte	PATT
 	 .word	mus_abracadabra_2_003
@@ -328,9 +327,6 @@ mus_abracadabra_2_005:
 	.byte	PATT
 	 .word	mus_abracadabra_2_004
 @ 009   ----------------------------------------
-	.byte	PATT
-	 .word	mus_abracadabra_2_005
-@ 010   ----------------------------------------
 	.byte		N05   , Gs0 , v024
 	.byte	W06
 	.byte		        Gs0 , v032
@@ -355,8 +351,8 @@ mus_abracadabra_2_005:
 	.byte	W06
 	.byte		        Gs0 , v032
 	.byte	W30
-@ 011   ----------------------------------------
-mus_abracadabra_2_011:
+@ 010   ----------------------------------------
+mus_abracadabra_2_010:
 	.byte		N05   , Fn0 , v060
 	.byte	W06
 	.byte		        Fn0 , v072
@@ -390,8 +386,8 @@ mus_abracadabra_2_011:
 	.byte		        Fn0 , v068
 	.byte	W06
 	.byte	PEND
-@ 012   ----------------------------------------
-mus_abracadabra_2_012:
+@ 011   ----------------------------------------
+mus_abracadabra_2_011:
 	.byte		N05   , Cn1 , v060
 	.byte	W06
 	.byte		        Cn1 , v072
@@ -425,8 +421,8 @@ mus_abracadabra_2_012:
 	.byte		        Cn1 , v068
 	.byte	W06
 	.byte	PEND
-@ 013   ----------------------------------------
-mus_abracadabra_2_013:
+@ 012   ----------------------------------------
+mus_abracadabra_2_012:
 	.byte		N05   , As0 , v060
 	.byte	W06
 	.byte		        As0 , v072
@@ -460,8 +456,8 @@ mus_abracadabra_2_013:
 	.byte		        As0 , v068
 	.byte	W06
 	.byte	PEND
-@ 014   ----------------------------------------
-mus_abracadabra_2_014:
+@ 013   ----------------------------------------
+mus_abracadabra_2_013:
 	.byte		N05   , Gs0 , v060
 	.byte	W06
 	.byte		        Gs0 , v072
@@ -495,6 +491,9 @@ mus_abracadabra_2_014:
 	.byte		        Gs0 , v068
 	.byte	W06
 	.byte	PEND
+@ 014   ----------------------------------------
+	.byte	PATT
+	 .word	mus_abracadabra_2_010
 @ 015   ----------------------------------------
 	.byte	PATT
 	 .word	mus_abracadabra_2_011
@@ -505,8 +504,7 @@ mus_abracadabra_2_014:
 	.byte	PATT
 	 .word	mus_abracadabra_2_013
 @ 018   ----------------------------------------
-	.byte	PATT
-	 .word	mus_abracadabra_2_014
+	.byte	W96
 @ 019   ----------------------------------------
 	.byte	W96
 @ 020   ----------------------------------------
@@ -515,12 +513,10 @@ mus_abracadabra_2_014:
 	.byte	W96
 @ 022   ----------------------------------------
 	.byte	W96
-@ 023   ----------------------------------------
-	.byte	W96
 	.byte	GOTO
 	 .word	mus_abracadabra_2_B1
 mus_abracadabra_2_B2:
-@ 024   ----------------------------------------
+@ 023   ----------------------------------------
 	.byte	FINE
 
 @**************** Track 3 (Midi-Chn.3) ****************@
@@ -528,11 +524,9 @@ mus_abracadabra_2_B2:
 mus_abracadabra_3:
 	.byte	KEYSH , mus_abracadabra_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 2
+	.byte		VOICE , 3
 	.byte		VOL   , 64*mus_abracadabra_mvl/mxv
 	.byte		PAN   , c_v+20
-	.byte	W96
-@ 001   ----------------------------------------
 	.byte	W11
 	.byte		N12   , Dn3 , v088
 	.byte	W01
@@ -551,7 +545,7 @@ mus_abracadabra_3:
 	.byte	W01
 	.byte		        Dn3 , v088
 	.byte	W12
-@ 002   ----------------------------------------
+@ 001   ----------------------------------------
 	.byte	W11
 	.byte		N12   , Ds3 , v092
 	.byte	W01
@@ -570,7 +564,7 @@ mus_abracadabra_3:
 	.byte		        Cn3 
 	.byte	W12
 mus_abracadabra_3_B1:
-@ 003   ----------------------------------------
+@ 002   ----------------------------------------
 	.byte		N90   , Gs2 , v056
 	.byte		N90   , Fn3 , v048
 	.byte	W92
@@ -578,53 +572,53 @@ mus_abracadabra_3_B1:
 	.byte		        Gn2 
 	.byte		N90   , Cn3 , v056
 	.byte	W01
-@ 004   ----------------------------------------
+@ 003   ----------------------------------------
 	.byte	W92
 	.byte	W03
 	.byte		        Dn3 , v052
 	.byte	W01
-@ 005   ----------------------------------------
+@ 004   ----------------------------------------
 	.byte		        As2 , v048
 	.byte	W92
 	.byte	W03
 	.byte		        Fn2 
 	.byte	W01
-@ 006   ----------------------------------------
+@ 005   ----------------------------------------
 	.byte		        Gs2 , v052
 	.byte	W92
 	.byte	W03
 	.byte		        Cn3 , v048
 	.byte	W01
-@ 007   ----------------------------------------
+@ 006   ----------------------------------------
 	.byte		        Fn3 
 	.byte	W92
 	.byte	W03
 	.byte		        Gn2 , v052
 	.byte		N90   , Cn3 , v048
 	.byte	W01
-@ 008   ----------------------------------------
-mus_abracadabra_3_008:
+@ 007   ----------------------------------------
+mus_abracadabra_3_007:
 	.byte	W92
 	.byte	W03
 	.byte		N90   , Fn2 , v052
 	.byte	W01
 	.byte	PEND
-@ 009   ----------------------------------------
+@ 008   ----------------------------------------
 	.byte		        As2 , v056
 	.byte	W92
 	.byte	W03
 	.byte		N72   , Fn2 , v052
 	.byte		N72   , Gs2 
 	.byte	W01
-@ 010   ----------------------------------------
+@ 009   ----------------------------------------
 	.byte	W92
 	.byte	W03
 	.byte		N90   , Gs2 , v056
 	.byte		N90   , Cn3 , v048
 	.byte	W01
-@ 011   ----------------------------------------
+@ 010   ----------------------------------------
 	.byte	W96
-@ 012   ----------------------------------------
+@ 011   ----------------------------------------
 	.byte		        Ds2 , v052
 	.byte		N90   , Gn2 , v056
 	.byte	W92
@@ -632,11 +626,13 @@ mus_abracadabra_3_008:
 	.byte		        As2 
 	.byte		N90   , Dn3 , v048
 	.byte	W01
-@ 013   ----------------------------------------
+@ 012   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_3_008
-@ 014   ----------------------------------------
+	 .word	mus_abracadabra_3_007
+@ 013   ----------------------------------------
 	.byte		N90   , Gs2 , v048
+	.byte	W96
+@ 014   ----------------------------------------
 	.byte	W96
 @ 015   ----------------------------------------
 	.byte	W96
@@ -654,12 +650,10 @@ mus_abracadabra_3_008:
 	.byte	W96
 @ 022   ----------------------------------------
 	.byte	W96
-@ 023   ----------------------------------------
-	.byte	W96
 	.byte	GOTO
 	 .word	mus_abracadabra_3_B1
 mus_abracadabra_3_B2:
-@ 024   ----------------------------------------
+@ 023   ----------------------------------------
 	.byte	FINE
 
 @**************** Track 4 (Midi-Chn.4) ****************@
@@ -667,11 +661,9 @@ mus_abracadabra_3_B2:
 mus_abracadabra_4:
 	.byte	KEYSH , mus_abracadabra_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 3
+	.byte		VOICE , 7
 	.byte		VOL   , 108*mus_abracadabra_mvl/mxv
 	.byte		PAN   , c_v+0
-	.byte	W96
-@ 001   ----------------------------------------
 	.byte	W68
 	.byte	W03
 	.byte		N06   , Fn3 , v100
@@ -680,7 +672,7 @@ mus_abracadabra_4:
 	.byte	W12
 	.byte		        Gs3 , v096
 	.byte	W01
-@ 002   ----------------------------------------
+@ 001   ----------------------------------------
 	.byte	W12
 	.byte		N24   , Gs3 , v104
 	.byte	W24
@@ -691,7 +683,7 @@ mus_abracadabra_4:
 	.byte		        Fn3 , v096
 	.byte	W12
 mus_abracadabra_4_B1:
-@ 003   ----------------------------------------
+@ 002   ----------------------------------------
 	.byte		N24   , Gs3 , v104
 	.byte	W24
 	.byte		N12   , Gn3 , v100
@@ -702,7 +694,7 @@ mus_abracadabra_4_B1:
 	.byte	W12
 	.byte		N12   , Cn3 , v096
 	.byte	W12
-@ 004   ----------------------------------------
+@ 003   ----------------------------------------
 	.byte	W11
 	.byte		N06   , Ds3 , v100
 	.byte	W13
@@ -714,7 +706,7 @@ mus_abracadabra_4_B1:
 	.byte	W11
 	.byte		N12   
 	.byte	W13
-@ 005   ----------------------------------------
+@ 004   ----------------------------------------
 	.byte		N18   , Dn3 , v100
 	.byte	W24
 	.byte		        Dn3 , v096
@@ -725,13 +717,13 @@ mus_abracadabra_4_B1:
 	.byte	W24
 	.byte		N36   , Cn3 
 	.byte	W12
-@ 006   ----------------------------------------
+@ 005   ----------------------------------------
 	.byte	W72
 	.byte		N06   , Fn3 , v096
 	.byte	W12
 	.byte		        Fn3 , v100
 	.byte	W12
-@ 007   ----------------------------------------
+@ 006   ----------------------------------------
 	.byte		N24   , Gs3 
 	.byte	W24
 	.byte		N12   , Gn3 , v096
@@ -741,7 +733,7 @@ mus_abracadabra_4_B1:
 	.byte	W13
 	.byte		N12   , Cn3 , v104
 	.byte	W12
-@ 008   ----------------------------------------
+@ 007   ----------------------------------------
 	.byte	W11
 	.byte		N06   , Ds3 , v096
 	.byte	W13
@@ -754,7 +746,7 @@ mus_abracadabra_4_B1:
 	.byte	W12
 	.byte		N12   , Cn3 , v100
 	.byte	W12
-@ 009   ----------------------------------------
+@ 008   ----------------------------------------
 	.byte	W24
 	.byte		N18   , Dn3 , v104
 	.byte	W23
@@ -765,12 +757,12 @@ mus_abracadabra_4_B1:
 	.byte	W12
 	.byte		N36   , Cn3 , v104
 	.byte	W12
-@ 010   ----------------------------------------
+@ 009   ----------------------------------------
 	.byte	W92
 	.byte	W03
 	.byte		N06   , Cn4 , v100
 	.byte	W01
-@ 011   ----------------------------------------
+@ 010   ----------------------------------------
 	.byte	W12
 	.byte		        Cn4 , v096
 	.byte	W11
@@ -787,7 +779,7 @@ mus_abracadabra_4_B1:
 	.byte	W11
 	.byte		        As3 
 	.byte	W01
-@ 012   ----------------------------------------
+@ 011   ----------------------------------------
 	.byte	W12
 	.byte		N18   
 	.byte	W24
@@ -798,7 +790,7 @@ mus_abracadabra_4_B1:
 	.byte	W13
 	.byte		        Gn3 , v104
 	.byte	W12
-@ 013   ----------------------------------------
+@ 012   ----------------------------------------
 	.byte		        As3 , v100
 	.byte	W11
 	.byte		N18   , As3 , v104
@@ -810,13 +802,13 @@ mus_abracadabra_4_B1:
 	.byte	W11
 	.byte		        Gn3 , v104
 	.byte	W13
-@ 014   ----------------------------------------
+@ 013   ----------------------------------------
 	.byte		N12   , As3 , v100
 	.byte	W23
 	.byte		        Gn3 , v096
 	.byte	W72
 	.byte	W01
-@ 015   ----------------------------------------
+@ 014   ----------------------------------------
 	.byte		N06   , Cn4 , v100
 	.byte	W12
 	.byte		        Cn4 , v096
@@ -829,7 +821,7 @@ mus_abracadabra_4_B1:
 	.byte	W13
 	.byte		        Gs3 , v100
 	.byte	W12
-@ 016   ----------------------------------------
+@ 015   ----------------------------------------
 	.byte		        As3 
 	.byte	W11
 	.byte		N18   , As3 , v096
@@ -842,14 +834,14 @@ mus_abracadabra_4_B1:
 	.byte	W12
 	.byte		N24   , Gs3 , v100
 	.byte	W01
-@ 017   ----------------------------------------
+@ 016   ----------------------------------------
 	.byte	W24
 	.byte		N12   , Gn3 , v104
 	.byte	W68
 	.byte	W03
 	.byte		N18   , Gs3 , v096
 	.byte	W01
-@ 018   ----------------------------------------
+@ 017   ----------------------------------------
 	.byte	W24
 	.byte		N18   
 	.byte	W24
@@ -859,12 +851,12 @@ mus_abracadabra_4_B1:
 	.byte	W11
 	.byte		N60   
 	.byte	W13
-@ 019   ----------------------------------------
+@ 018   ----------------------------------------
 	.byte	W92
 	.byte	W03
 	.byte		N12   , Fn2 , v084
 	.byte	W01
-@ 020   ----------------------------------------
+@ 019   ----------------------------------------
 	.byte	W18
 	.byte		N06   , Cn3 , v080
 	.byte	W17
@@ -880,159 +872,159 @@ mus_abracadabra_4_B1:
 	.byte	W12
 	.byte		N48   , Gn2 
 	.byte	W01
-@ 021   ----------------------------------------
+@ 020   ----------------------------------------
 	.byte	W48
-	.byte		BEND  , c_v-1
+	.byte		BEND  , c_v+0
 	.byte		        c_v+0
 	.byte		N44   , Gs2 , v080, gtp3
 	.byte	W04
 	.byte		BEND  , c_v+0
 	.byte	W02
-	.byte		        c_v+1
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+2
+	.byte		        c_v+0
 	.byte	W02
-	.byte		        c_v+2
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+3
-	.byte		        c_v+3
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+4
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+5
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+5
-	.byte		        c_v+6
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+6
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+7
-	.byte		        c_v+8
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+8
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+9
-	.byte		        c_v+9
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+10
-	.byte		        c_v+11
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+11
-	.byte		        c_v+12
-	.byte		        c_v+12
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+13
-	.byte		        c_v+13
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+14
-	.byte		        c_v+15
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+15
-	.byte		        c_v+16
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+16
-	.byte		        c_v+17
-	.byte		        c_v+18
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+18
-	.byte		        c_v+19
-	.byte		        c_v+19
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+20
-	.byte		        c_v+21
-	.byte		        c_v+21
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+22
-	.byte		        c_v+22
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+23
-	.byte		        c_v+24
-	.byte		        c_v+24
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+25
-	.byte		        c_v+25
-	.byte		        c_v+26
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+27
-	.byte		        c_v+27
-	.byte		        c_v+28
-	.byte		        c_v+28
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+29
-	.byte		        c_v+30
-	.byte		        c_v+30
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+31
-	.byte		        c_v+31
-	.byte		        c_v+32
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+33
-	.byte		        c_v+33
-	.byte		        c_v+34
-	.byte		        c_v+34
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+35
-	.byte		        c_v+36
-	.byte		        c_v+36
-	.byte		        c_v+37
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+37
-	.byte		        c_v+38
-	.byte		        c_v+38
-	.byte		        c_v+39
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+40
-	.byte		        c_v+40
-	.byte		        c_v+41
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+41
-	.byte		        c_v+42
-	.byte		        c_v+43
-	.byte		        c_v+43
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+44
-	.byte		        c_v+44
-	.byte		        c_v+45
-	.byte		        c_v+46
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+46
-	.byte		        c_v+47
-	.byte		        c_v+47
-	.byte		        c_v+48
-	.byte		        c_v+49
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+49
-	.byte		        c_v+50
-	.byte		        c_v+50
-	.byte		        c_v+51
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+52
-	.byte		        c_v+52
-	.byte		        c_v+53
-	.byte		        c_v+53
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+54
-	.byte		        c_v+55
-	.byte		        c_v+55
-	.byte		        c_v+56
-	.byte		        c_v+56
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+57
-	.byte		        c_v+58
-	.byte		        c_v+58
-	.byte		        c_v+59
-	.byte		        c_v+59
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+60
-	.byte		        c_v+61
-	.byte		        c_v+61
-	.byte		        c_v+62
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+62
-	.byte		        c_v+63
-	.byte		        c_v+63
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W04
-@ 022   ----------------------------------------
+@ 021   ----------------------------------------
 	.byte		        c_v+0
 	.byte		N12   , Fn2 
 	.byte	W17
@@ -1052,166 +1044,166 @@ mus_abracadabra_4_B1:
 	.byte	W11
 	.byte		N48   , Gn2 
 	.byte	W01
-@ 023   ----------------------------------------
+@ 022   ----------------------------------------
 	.byte	W44
 	.byte	W03
 	.byte		N44   , Gs2 , v076, gtp3
 	.byte	W01
-	.byte		BEND  , c_v-1
+	.byte		BEND  , c_v+0
 	.byte		        c_v+0
 	.byte	W04
 	.byte		        c_v+0
 	.byte	W02
-	.byte		        c_v+1
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+2
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+2
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+3
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+3
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+4
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+5
-	.byte		        c_v+5
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+6
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+6
-	.byte		        c_v+7
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+8
-	.byte		        c_v+8
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+9
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+9
-	.byte		        c_v+10
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+11
-	.byte		        c_v+11
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+12
-	.byte		        c_v+12
-	.byte		        c_v+13
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+13
-	.byte		        c_v+14
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+15
-	.byte		        c_v+15
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+16
-	.byte		        c_v+16
-	.byte		        c_v+17
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+18
-	.byte		        c_v+18
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+19
-	.byte		        c_v+19
-	.byte		        c_v+20
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+21
-	.byte		        c_v+21
-	.byte		        c_v+22
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+22
-	.byte		        c_v+23
-	.byte		        c_v+24
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+24
-	.byte		        c_v+25
-	.byte		        c_v+25
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+26
-	.byte		        c_v+27
-	.byte		        c_v+27
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+28
-	.byte		        c_v+28
-	.byte		        c_v+29
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+30
-	.byte		        c_v+30
-	.byte		        c_v+31
-	.byte		        c_v+31
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+32
-	.byte		        c_v+33
-	.byte		        c_v+33
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+34
-	.byte		        c_v+34
-	.byte		        c_v+35
-	.byte		        c_v+36
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+36
-	.byte		        c_v+37
-	.byte		        c_v+37
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+38
-	.byte		        c_v+38
-	.byte		        c_v+39
-	.byte		        c_v+40
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+40
-	.byte		        c_v+41
-	.byte		        c_v+41
-	.byte		        c_v+42
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+43
-	.byte		        c_v+43
-	.byte		        c_v+44
-	.byte		        c_v+44
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+45
-	.byte		        c_v+46
-	.byte		        c_v+46
-	.byte		        c_v+47
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+47
-	.byte		        c_v+48
-	.byte		        c_v+49
-	.byte		        c_v+49
-	.byte		        c_v+50
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+50
-	.byte		        c_v+51
-	.byte		        c_v+52
-	.byte		        c_v+52
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+53
-	.byte		        c_v+53
-	.byte		        c_v+54
-	.byte		        c_v+55
-	.byte		        c_v+55
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+56
-	.byte		        c_v+56
-	.byte		        c_v+57
-	.byte		        c_v+58
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+58
-	.byte		        c_v+59
-	.byte		        c_v+59
-	.byte		        c_v+60
-	.byte		        c_v+61
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W01
-	.byte		        c_v+61
-	.byte		        c_v+62
-	.byte		        c_v+62
-	.byte		        c_v+63
-	.byte		        c_v+63
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
+	.byte		        c_v+0
 	.byte	W04
 	.byte		        c_v+0
 	.byte	W01
 	.byte	GOTO
 	 .word	mus_abracadabra_4_B1
 mus_abracadabra_4_B2:
-@ 024   ----------------------------------------
+@ 023   ----------------------------------------
 	.byte	FINE
 
 @**************** Track 5 (Midi-Chn.5) ****************@
@@ -1219,15 +1211,15 @@ mus_abracadabra_4_B2:
 mus_abracadabra_5:
 	.byte	KEYSH , mus_abracadabra_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 4
+	.byte		VOICE , 5
 	.byte		VOL   , 78*mus_abracadabra_mvl/mxv
 	.byte		PAN   , c_v+30
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
+mus_abracadabra_5_B1:
 @ 002   ----------------------------------------
 	.byte	W96
-mus_abracadabra_5_B1:
 @ 003   ----------------------------------------
 	.byte	W96
 @ 004   ----------------------------------------
@@ -1243,9 +1235,7 @@ mus_abracadabra_5_B1:
 @ 009   ----------------------------------------
 	.byte	W96
 @ 010   ----------------------------------------
-	.byte	W96
-@ 011   ----------------------------------------
-mus_abracadabra_5_011:
+mus_abracadabra_5_010:
 	.byte	W12
 	.byte		N06   , Gs3 , v052
 	.byte	W24
@@ -1256,8 +1246,8 @@ mus_abracadabra_5_011:
 	.byte		N06   
 	.byte	W12
 	.byte	PEND
-@ 012   ----------------------------------------
-mus_abracadabra_5_012:
+@ 011   ----------------------------------------
+mus_abracadabra_5_011:
 	.byte	W12
 	.byte		N06   , Gn3 , v052
 	.byte	W24
@@ -1268,11 +1258,11 @@ mus_abracadabra_5_012:
 	.byte		N06   
 	.byte	W12
 	.byte	PEND
-@ 013   ----------------------------------------
+@ 012   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_5_012
-@ 014   ----------------------------------------
-mus_abracadabra_5_014:
+	 .word	mus_abracadabra_5_011
+@ 013   ----------------------------------------
+mus_abracadabra_5_013:
 	.byte	W12
 	.byte		N06   , Fn3 , v052
 	.byte	W24
@@ -1283,18 +1273,20 @@ mus_abracadabra_5_014:
 	.byte		N06   
 	.byte	W12
 	.byte	PEND
+@ 014   ----------------------------------------
+	.byte	PATT
+	 .word	mus_abracadabra_5_010
 @ 015   ----------------------------------------
 	.byte	PATT
 	 .word	mus_abracadabra_5_011
 @ 016   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_5_012
+	 .word	mus_abracadabra_5_011
 @ 017   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_5_012
+	 .word	mus_abracadabra_5_013
 @ 018   ----------------------------------------
-	.byte	PATT
-	 .word	mus_abracadabra_5_014
+	.byte	W96
 @ 019   ----------------------------------------
 	.byte	W96
 @ 020   ----------------------------------------
@@ -1303,12 +1295,10 @@ mus_abracadabra_5_014:
 	.byte	W96
 @ 022   ----------------------------------------
 	.byte	W96
-@ 023   ----------------------------------------
-	.byte	W96
 	.byte	GOTO
 	 .word	mus_abracadabra_5_B1
 mus_abracadabra_5_B2:
-@ 024   ----------------------------------------
+@ 023   ----------------------------------------
 	.byte	FINE
 
 @**************** Track 6 (Midi-Chn.6) ****************@
@@ -1316,15 +1306,15 @@ mus_abracadabra_5_B2:
 mus_abracadabra_6:
 	.byte	KEYSH , mus_abracadabra_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 4
+	.byte		VOICE , 5
 	.byte		VOL   , 42*mus_abracadabra_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
+mus_abracadabra_6_B1:
 @ 002   ----------------------------------------
 	.byte	W96
-mus_abracadabra_6_B1:
 @ 003   ----------------------------------------
 	.byte	W96
 @ 004   ----------------------------------------
@@ -1340,40 +1330,40 @@ mus_abracadabra_6_B1:
 @ 009   ----------------------------------------
 	.byte	W96
 @ 010   ----------------------------------------
-	.byte	W96
-@ 011   ----------------------------------------
 	.byte		N92   , Cn2 , v060, gtp3
 	.byte		N96   , Fn4 , v044
 	.byte	W96
-@ 012   ----------------------------------------
-mus_abracadabra_6_012:
+@ 011   ----------------------------------------
+mus_abracadabra_6_011:
 	.byte		N96   , Cn2 , v060
 	.byte		N96   , Gn4 , v044
 	.byte	W96
 	.byte	PEND
-@ 013   ----------------------------------------
+@ 012   ----------------------------------------
 	.byte		        Fn2 , v060
 	.byte		N96   , As3 , v080
 	.byte	W96
-@ 014   ----------------------------------------
-mus_abracadabra_6_014:
+@ 013   ----------------------------------------
+mus_abracadabra_6_013:
 	.byte		N96   , Ds2 , v060
 	.byte		N96   , Gs3 , v080
 	.byte	W96
 	.byte	PEND
-@ 015   ----------------------------------------
+@ 014   ----------------------------------------
 	.byte		N92   , Cn2 , v060, gtp3
 	.byte	W96
-@ 016   ----------------------------------------
+@ 015   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_6_012
-@ 017   ----------------------------------------
+	 .word	mus_abracadabra_6_011
+@ 016   ----------------------------------------
 	.byte		N96   , Fn2 , v060
 	.byte		N96   , Fn3 , v080
 	.byte	W96
-@ 018   ----------------------------------------
+@ 017   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_6_014
+	 .word	mus_abracadabra_6_013
+@ 018   ----------------------------------------
+	.byte	W96
 @ 019   ----------------------------------------
 	.byte	W96
 @ 020   ----------------------------------------
@@ -1382,12 +1372,10 @@ mus_abracadabra_6_014:
 	.byte	W96
 @ 022   ----------------------------------------
 	.byte	W96
-@ 023   ----------------------------------------
-	.byte	W96
 	.byte	GOTO
 	 .word	mus_abracadabra_6_B1
 mus_abracadabra_6_B2:
-@ 024   ----------------------------------------
+@ 023   ----------------------------------------
 	.byte	FINE
 
 @**************** Track 7 (Midi-Chn.7) ****************@
@@ -1395,10 +1383,49 @@ mus_abracadabra_6_B2:
 mus_abracadabra_7:
 	.byte	KEYSH , mus_abracadabra_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 6
+	.byte		VOICE , 8
 	.byte		VOL   , 98*mus_abracadabra_mvl/mxv
 	.byte		PAN   , c_v+0
-	.byte	W96
+	.byte		N06   , Cn1 , v100
+	.byte		N06   
+	.byte		N06   , Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Cn1 , v100
+	.byte		N06   
+	.byte		N06   , En1 
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Cn1 , v100
+	.byte		N06   
+	.byte		N06   , Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Cn1 , v100
+	.byte		N06   
+	.byte		N06   , En1 
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
 @ 001   ----------------------------------------
 mus_abracadabra_7_001:
 	.byte		N06   , Cn1 , v100
@@ -1413,7 +1440,7 @@ mus_abracadabra_7_001:
 	.byte	W06
 	.byte		        Cn1 , v100
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
@@ -1425,6 +1452,7 @@ mus_abracadabra_7_001:
 	.byte		N06   
 	.byte		N06   , Fs1 , v052
 	.byte	W06
+	.byte	PEND
 	.byte		        Fs1 , v032
 	.byte	W06
 	.byte		        Fs1 , v088
@@ -1433,7 +1461,7 @@ mus_abracadabra_7_001:
 	.byte	W06
 	.byte		        Cn1 , v100
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
@@ -1441,11 +1469,9 @@ mus_abracadabra_7_001:
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
-	.byte	PEND
+mus_abracadabra_7_B1:
 @ 002   ----------------------------------------
 mus_abracadabra_7_002:
-	.byte		N06   , Cn1 , v100
-	.byte		N06   
 	.byte		N06   , Fs1 , v052
 	.byte	W06
 	.byte		        Fs1 , v032
@@ -1454,51 +1480,7 @@ mus_abracadabra_7_002:
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Cn1 , v100
-	.byte		N06   
-	.byte		N06   , Ds1 
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte	W06
-	.byte		        Fs1 , v088
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte	W06
-	.byte		        Cn1 , v100
-	.byte		N06   
-	.byte		N06   , Fs1 , v052
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte		N06   , An1 , v100
-	.byte	W06
-	.byte		        Fs1 , v088
-	.byte		N06   , Gn1 , v100
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte	W06
-	.byte		        Cn1 , v100
-	.byte		N06   
-	.byte		N06   , Ds1 
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte	W06
-	.byte		        Fs1 , v088
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte	W06
-	.byte	PEND
-mus_abracadabra_7_B1:
-@ 003   ----------------------------------------
-mus_abracadabra_7_003:
-	.byte		N06   , Fs1 , v052
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte	W06
-	.byte		        Fs1 , v088
-	.byte	W06
-	.byte		        Fs1 , v032
-	.byte	W06
-	.byte		        Ds1 , v100
+	.byte		        En1 , v100
 	.byte		N06   , Fs1 , v052
 	.byte	W06
 	.byte		        Fs1 , v032
@@ -1515,7 +1497,7 @@ mus_abracadabra_7_003:
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Ds1 , v100
+	.byte		        En1 , v100
 	.byte		N06   , Fs1 , v052
 	.byte	W06
 	.byte		        Fs1 , v032
@@ -1525,242 +1507,226 @@ mus_abracadabra_7_003:
 	.byte		        Fs1 , v032
 	.byte	W06
 	.byte	PEND
+@ 003   ----------------------------------------
+	.byte	PATT
+	 .word	mus_abracadabra_7_002
 @ 004   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_003
+	 .word	mus_abracadabra_7_002
 @ 005   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_003
+	 .word	mus_abracadabra_7_002
 @ 006   ----------------------------------------
-	.byte	PATT
-	 .word	mus_abracadabra_7_003
+	.byte		N06   , Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        En1 , v100
+	.byte		N06   , Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        En1 , v100
+	.byte		N06   , Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
 @ 007   ----------------------------------------
-	.byte		N06   , Dn1 , v012
+	.byte		        Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        En1 , v100
 	.byte		N06   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v016
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v016
-	.byte		N06   , Fs1 , v088
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v016
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v020
-	.byte		N06   , Ds1 , v100
+	.byte		        Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        En1 , v100
 	.byte		N06   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v020
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v020
-	.byte		N06   , Fs1 , v088
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v020
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v024
-	.byte		N06   , Fs1 , v052
-	.byte	W06
-	.byte		        Dn1 , v024
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v024
-	.byte		N06   , Fs1 , v088
-	.byte	W06
-	.byte		        Dn1 , v028
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v028
-	.byte		N06   , Ds1 , v100
-	.byte		N06   , Fs1 , v052
-	.byte	W06
-	.byte		        Dn1 , v028
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v028
-	.byte		N06   , Fs1 , v088
-	.byte	W06
-	.byte		        Dn1 , v032
-	.byte		N06   , Fs1 
+	.byte		        Fs1 , v032
 	.byte	W06
 @ 008   ----------------------------------------
-	.byte		        Dn1 
+	.byte		        Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        En1 , v100
 	.byte		N06   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v032
-	.byte		N06   , Fs1 
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v036
-	.byte		N06   , Fs1 , v088
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v036
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v036
-	.byte		N06   , Ds1 , v100
+	.byte		        Fs1 , v052
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        En1 , v100
 	.byte		N06   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v040
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v040
-	.byte		N06   , Fs1 , v088
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v040
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v040
-	.byte		N06   , Fs1 , v052
-	.byte	W06
-	.byte		        Dn1 , v044
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v044
-	.byte		N06   , Fs1 , v088
-	.byte	W06
-	.byte		        Dn1 , v044
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v048
-	.byte		N06   , Ds1 , v100
-	.byte		N06   , Fs1 , v052
-	.byte	W06
-	.byte		        Dn1 , v048
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v048
-	.byte		N06   , Fs1 , v088
-	.byte	W06
-	.byte		        Dn1 , v052
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
 @ 009   ----------------------------------------
-	.byte		        Dn1 , v052
-	.byte		N06   , Fs1 
+	.byte		        Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v052
-	.byte		N06   , Fs1 , v088
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v056
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v056
-	.byte		N06   , Ds1 , v100
+	.byte		        En1 , v100
 	.byte		N06   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v056
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v060
-	.byte		N06   , Fs1 , v088
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v060
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v060
-	.byte		N06   , Fs1 , v052
+	.byte		        Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v060
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v064
-	.byte		N06   , Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v064
-	.byte		N06   , Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v064
-	.byte		N06   , Ds1 , v100
-	.byte		N06   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v068
-	.byte		N06   , Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v068
-	.byte		N06   , Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v068
-	.byte		N06   , Fs1 , v032
 	.byte	W06
 @ 010   ----------------------------------------
-	.byte		        Dn1 , v072
-	.byte		N06   , Fs1 , v052
-	.byte		N09   , Cs2 , v084
-	.byte	W06
-	.byte		N06   , Dn1 , v072
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v072
-	.byte		N06   , Fs1 , v088
-	.byte	W06
-	.byte		        Dn1 , v072
-	.byte		N06   , Fs1 , v032
-	.byte	W06
-	.byte		        Dn1 , v076
-	.byte		N06   , Ds1 , v100
+mus_abracadabra_7_010:
+	.byte		N06   , Cn1 , v100
+	.byte		N06   
 	.byte		N06   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v076
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v076
-	.byte		N06   , Fs1 , v088
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v080
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v080
+	.byte		        Cn1 , v100
+	.byte		N06   
+	.byte		N06   , En1 
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Cn1 , v100
+	.byte		N06   
 	.byte		N06   , Fs1 , v052
-	.byte		N09   , Cs2 , v084
 	.byte	W06
-	.byte		N06   , Dn1 , v080
-	.byte		N06   , Fs1 , v032
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v080
-	.byte		N06   , Cn2 , v100
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v084
-	.byte		N06   , Cn2 , v100
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v084
-	.byte		N06   , Bn1 , v100
+	.byte		        Cn1 , v100
+	.byte		N06   
+	.byte		N06   , En1 
 	.byte	W06
-	.byte		        Dn1 , v084
-	.byte		N06   , Bn1 , v100
+	.byte		        Fs1 , v032
 	.byte	W06
-	.byte		        Dn1 , v088
-	.byte		N06   , An1 , v100
+	.byte		        Fs1 , v088
 	.byte	W06
-	.byte		        Dn1 , v088
-	.byte		N06   , An1 , v100
+	.byte		        Fs1 , v032
 	.byte	W06
+	.byte	PEND
 @ 011   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_001
+	 .word	mus_abracadabra_7_010
 @ 012   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_001
+	 .word	mus_abracadabra_7_010
 @ 013   ----------------------------------------
 	.byte	PATT
 	 .word	mus_abracadabra_7_001
+	.byte		N06   , Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Cn1 , v100
+	.byte		N06   
+	.byte		N06   , En1 
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
+	.byte		        Fs1 , v088
+	.byte	W06
+	.byte		        Fs1 , v032
+	.byte	W06
 @ 014   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_002
+	 .word	mus_abracadabra_7_010
 @ 015   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_001
+	 .word	mus_abracadabra_7_010
 @ 016   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_001
+	 .word	mus_abracadabra_7_010
 @ 017   ----------------------------------------
-	.byte	PATT
-	 .word	mus_abracadabra_7_001
-@ 018   ----------------------------------------
 	.byte		N06   , Cn1 , v100
 	.byte		N06   
 	.byte		N06   , Fs1 , v052
@@ -1773,7 +1739,7 @@ mus_abracadabra_7_003:
 	.byte	W06
 	.byte		        Cn1 , v100
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
@@ -1784,19 +1750,16 @@ mus_abracadabra_7_003:
 	.byte		        Cn1 , v100
 	.byte		N06   
 	.byte		N06   , Fs1 , v052
-	.byte		N09   , Cs2 , v084
 	.byte	W06
-	.byte		N06   , Fs1 , v032
-	.byte		N06   , An1 , v100
+	.byte		        Fs1 , v032
 	.byte	W06
 	.byte		        Fs1 , v088
-	.byte		N06   , Gn1 , v100
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
 	.byte		        Cn1 , v100
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
@@ -1804,55 +1767,51 @@ mus_abracadabra_7_003:
 	.byte	W06
 	.byte		        Fs1 , v032
 	.byte	W06
+@ 018   ----------------------------------------
+	.byte	W48
+	.byte	W48
 @ 019   ----------------------------------------
-	.byte	W48
-	.byte		N09   , Cs2 , v084
-	.byte	W48
-@ 020   ----------------------------------------
-mus_abracadabra_7_020:
+mus_abracadabra_7_019:
 	.byte		N06   , Cn1 , v100
 	.byte		N06   
 	.byte	W24
 	.byte		N06   
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W24
 	.byte		        Cn1 
 	.byte		N06   
 	.byte	W24
 	.byte		N06   
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W24
 	.byte	PEND
+@ 020   ----------------------------------------
+	.byte	PATT
+	 .word	mus_abracadabra_7_019
 @ 021   ----------------------------------------
 	.byte	PATT
-	 .word	mus_abracadabra_7_020
+	 .word	mus_abracadabra_7_019
 @ 022   ----------------------------------------
-	.byte	PATT
-	 .word	mus_abracadabra_7_020
-@ 023   ----------------------------------------
 	.byte		N06   , Cn1 , v100
 	.byte		N06   
 	.byte	W24
 	.byte		N06   
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W24
-	.byte		        Bn1 
 	.byte	W06
-	.byte		        An1 
 	.byte	W06
-	.byte		        Gn1 
 	.byte	W12
 	.byte		        Cn1 
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 
 	.byte	W24
 	.byte	GOTO
 	 .word	mus_abracadabra_7_B1
 mus_abracadabra_7_B2:
-@ 024   ----------------------------------------
+@ 023   ----------------------------------------
 	.byte	FINE
 
 @******************************************************@

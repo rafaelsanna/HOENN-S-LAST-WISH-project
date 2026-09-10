@@ -555,6 +555,7 @@ MOSSDEEP01_EventScript_LostMother::
 	faceplayer
 	msgbox MOSSDEEP01_Text_LostMother, MSGBOX_DEFAULT
 	closemessage
+	goto MOSSDEEP01_EventScript_RescueLostFamily
 
 MOSSDEEP01_EventScript_RescueLostFamily::
 	msgbox MOSSDEEP01_Text_PlayerGivesDirections, MSGBOX_DEFAULT

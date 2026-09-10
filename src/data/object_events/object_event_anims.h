@@ -295,6 +295,24 @@ static const union AnimCmd sAnim_GoEast2F[] =
     ANIMCMD_JUMP(0),
 };
 
+static const union AnimCmd sAnim_GoWestKoraidon[] =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(1, 2),
+    ANIMCMD_FRAME(2, 2),
+    ANIMCMD_FRAME(3, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoEastKoraidon[] =
+{
+    ANIMCMD_FRAME(0, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(1, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(2, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(3, 2, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
 static const union AnimCmd sAnim_GoEast2F_Asym[] =
 {
     ANIMCMD_FRAME(6, 6),
@@ -1171,6 +1189,33 @@ const union AnimCmd *const sAnimTable_Following[] = {
     [ANIM_STD_GO_FAST_WEST] = sAnim_GoFastWest2F,
     [ANIM_STD_GO_FAST_EAST] = sAnim_GoFastEast2F,
     // 'Faster' and above used for entering/exiting pokeball
+    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_EnterSouth,
+    [ANIM_STD_GO_FASTER_NORTH] = sAnim_EnterNorth,
+    [ANIM_STD_GO_FASTER_WEST] = sAnim_EnterWest,
+    [ANIM_STD_GO_FASTER_EAST] = sAnim_EnterEast,
+    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_ExitPokeballSouth,
+    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_ExitPokeballNorth,
+    [ANIM_STD_GO_FASTEST_WEST] = sAnim_ExitPokeballWest,
+    [ANIM_STD_GO_FASTEST_EAST] = sAnim_ExitPokeballEast,
+    [ANIM_EXIT_POKEBALL_FAST_SOUTH] = sAnim_ExitPokeballFastSouth,
+    [ANIM_EXIT_POKEBALL_FAST_NORTH] = sAnim_ExitPokeballFastNorth,
+    [ANIM_EXIT_POKEBALL_FAST_WEST] = sAnim_ExitPokeballFastWest,
+    [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_ExitPokeballFastEast,
+};
+
+const union AnimCmd *const sAnimTable_Koraidon[] = {
+    [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
+    [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth2F,
+    [ANIM_STD_FACE_WEST] = sAnim_FaceWest2F,
+    [ANIM_STD_FACE_EAST] = sAnim_FaceEast2F,
+    [ANIM_STD_GO_SOUTH] = sAnim_GoSouth2F,
+    [ANIM_STD_GO_NORTH] = sAnim_GoNorth2F,
+    [ANIM_STD_GO_WEST] = sAnim_GoWestKoraidon,
+    [ANIM_STD_GO_EAST] = sAnim_GoEastKoraidon,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_GoFastSouth2F,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_GoFastNorth2F,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_GoWestKoraidon,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_GoEastKoraidon,
     [ANIM_STD_GO_FASTER_SOUTH] = sAnim_EnterSouth,
     [ANIM_STD_GO_FASTER_NORTH] = sAnim_EnterNorth,
     [ANIM_STD_GO_FASTER_WEST] = sAnim_EnterWest,
