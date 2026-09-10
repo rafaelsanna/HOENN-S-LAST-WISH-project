@@ -190,7 +190,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Grandma",
-      "flag": "0"
+      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
     },
     {
       "local_id": "LOCALID_GRANDPA_MOSSDEEP01",
@@ -218,7 +218,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Child01",
-      "flag": "0"
+      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BRENDAN_NORMAL",
@@ -257,7 +257,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Child02",
-      "flag": "0"
+      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
     },
     {
       "local_id": "LOCALID_WAILORD_BLOCKER",
@@ -637,31 +637,29 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_LOST_FATHER",
       "graphics_id": "OBJ_EVENT_GFX_MAN_1",
       "x": 41,
       "y": 30,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MOSSDEEP01_EventScript_LostFather",
+      "script": "NULL",
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_LOST_MOTHER",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 40,
       "y": 30,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MOSSDEEP01_EventScript_LostMother",
+      "script": "NULL",
       "flag": "0"
     }
   ],
