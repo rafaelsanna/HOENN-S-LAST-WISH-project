@@ -12992,7 +12992,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         OVERWORLD(
             sPicTable_Zekrom,
             SIZE_64x64,
-            SHADOW_SIZE_M,
+            SHADOW_SIZE_NONE,
             TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Zekrom,

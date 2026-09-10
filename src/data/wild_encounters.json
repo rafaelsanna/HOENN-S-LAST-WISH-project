@@ -2952,8 +2952,8 @@
                 "species": "SPECIES_LINOONE"
               },
               {
-                "min_level": 32,
-                "max_level": 36,
+                "min_level": 36,
+                "max_level": 42,
                 "species": "SPECIES_MANECTRIC"
               },
               {

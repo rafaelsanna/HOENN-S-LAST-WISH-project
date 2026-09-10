@@ -193,6 +193,7 @@
       "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
     },
     {
+      "local_id": "LOCALID_GRANDPA_MOSSDEEP01",
       "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
       "x": 15,
       "y": 67,
@@ -273,6 +274,7 @@
       "flag": "FLAG_HIDE_WAILORD_PATH"
     },
     {
+      "local_id": "LOCALID_MIGHTYENA_HOSTILE",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)",
       "x": 46,
       "y": 49,
@@ -283,9 +285,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "MOSSDEEP01_EventScript_Mightyena",
-      "flag": "0"
+      "flag": "FLAG_WALLY_INTRO_DONE"
     },
     {
+      "local_id": "LOCALID_DARKRAI_HOSTILE",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(DARKRAI)",
       "x": 48,
       "y": 49,
@@ -296,9 +299,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "MOSSDEEP01_EventScript_Mightyena",
-      "flag": "0"
+      "flag": "FLAG_WALLY_INTRO_DONE"
     },
     {
+      "local_id": "LOCALID_PIDGEOT_INITIAL",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PIDGEOT)",
       "x": 37,
       "y": 59,
@@ -312,6 +316,7 @@
       "flag": "FLAG_HIDE_PIDGEOT_INITIAL"
     },
     {
+      "local_id": "LOCALID_LUKA_INITIAL",
       "graphics_id": "OBJ_EVENT_GFX_WALLY",
       "x": 37,
       "y": 60,
@@ -325,11 +330,12 @@
       "flag": "FLAG_HIDE_WALLY_INITIAL"
     },
     {
+      "local_id": "LOCALID_LUKA_GUARD",
       "graphics_id": "OBJ_EVENT_GFX_WALLY",
-      "x": 46,
-      "y": 48,
+      "x": 48,
+      "y": 46,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -338,16 +344,17 @@
       "flag": "FLAG_HIDE_WALLY_CLONE"
     },
     {
+      "local_id": "LOCALID_PIDGEOT_GUARD",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PIDGEOT)",
-      "x": 47,
-      "y": 48,
+      "x": 48,
+      "y": 44,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_LEFT",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_PidgeotInitial",
+      "script": "MOSSDEEP01_EventScript_GuardPidgeot",
       "flag": "FLAG_HIDE_PIDGEOT_CLONE"
     },
     {
@@ -546,17 +553,32 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_DARKRAI_GUARD",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(DARKRAI)",
-      "x": 48,
-      "y": 49,
+      "x": 49,
+      "y": 43,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_LEFT",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MOSSDEEP01_EventScript_Mightyena",
-      "flag": "0"
+      "script": "MOSSDEEP01_EventScript_GuardDarkrai",
+      "flag": "FLAG_HIDE_MOSSDEEP_GUARD_POKEMON"
+    },
+    {
+      "local_id": "LOCALID_MIGHTYENA_GUARD",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)",
+      "x": 47,
+      "y": 43,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_GuardMightyena",
+      "flag": "FLAG_HIDE_MOSSDEEP_GUARD_POKEMON"
     }
   ],
   "warp_events": [],
@@ -671,78 +693,6 @@
     },
     {
       "type": "trigger",
-      "x": 33,
-      "y": 22,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 32,
-      "y": 22,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 36,
-      "y": 20,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 37,
-      "y": 21,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 36,
-      "y": 21,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 37,
-      "y": 20,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 32,
-      "y": 18,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
-      "x": 33,
-      "y": 18,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOver"
-    },
-    {
-      "type": "trigger",
       "x": 48,
       "y": 48,
       "elevation": 0,
@@ -758,42 +708,6 @@
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "0",
       "script": "MOSSDEEP01_EventScript_WailordBlocksPath"
-    },
-    {
-      "type": "trigger",
-      "x": 32,
-      "y": 17,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter"
-    },
-    {
-      "type": "trigger",
-      "x": 33,
-      "y": 17,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter"
-    },
-    {
-      "type": "trigger",
-      "x": 34,
-      "y": 14,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter2"
-    },
-    {
-      "type": "trigger",
-      "x": 35,
-      "y": 14,
-      "elevation": 0,
-      "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
-      "var_value": "1",
-      "script": "MOSSDEEP01_EventScript_WailordJumpOverAfter2"
     }
   ],
   "bg_events": [],

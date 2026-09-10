@@ -22,9 +22,9 @@ LittlerootTown_MaysHouse_2F_EventScript_WeirdDreamDialogue::
 
 LittlerootTown_MaysHouse_2F_Text_WeirdDream:
 	.string "{PLAYER}: What a weird dream…\p"
-	.string "Were those JIRACHI and CELEBI?\n"
-	.string "Maybe it wasn't a dream…\l"
-	.string "Maybe it really happened…p"
+	.string "Were those JIRACHI and CELEBI?\p"
+	.string "Maybe it wasn't a dream…\p"
+	.string "Maybe it really happened…\p"
 	.string "…Either way, I have to get going.$"
 
 LittlerootTown_MaysHouse_2F_OnTransition:

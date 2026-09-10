@@ -1550,11 +1550,11 @@ Double Battle: Yes
 AI: Check Bad Move
 
 Magnemite
-Level: 29
+Level: 40
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Whismur
-Level: 29
+Level: 40
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_GABBY_AND_TY_2 ===
@@ -1567,11 +1567,11 @@ Double Battle: Yes
 AI: Check Bad Move
 
 Magnemite
-Level: 27
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Loudred
-Level: 27
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_GABBY_AND_TY_3 ===
@@ -8985,11 +8985,11 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Tentacool
-Level: 25
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Tentacool
-Level: 25
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_WADE ===
@@ -9860,7 +9860,11 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Wingull
-Level: 26
+Level: 40
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Pelipper
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_HUGH ===
