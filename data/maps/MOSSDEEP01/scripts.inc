@@ -51,1471 +51,1471 @@ MOSSDEEP01_OnTransition:
 # 26 "data/maps/MOSSDEEP01/scripts.pory"
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
 # 27 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING, MOSSDEEP01_EventScript_ScheduleMightyenaRepeatRecovery
+	goto_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_ShowRescuedMiner
 # 28 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING, MOSSDEEP01_EventScript_ScheduleMightyenaRecovery
+	setflag FLAG_HIDE_MOSSDEEP_RESCUED_MINER
 # 29 "data/maps/MOSSDEEP01/scripts.pory"
-	goto MOSSDEEP01_CheckPrologueTransition
+	goto MOSSDEEP01_EventScript_ContinueMinerTransition
 # 30 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 31 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_ScheduleMightyenaRecovery::
+MOSSDEEP01_EventScript_ShowRescuedMiner::
 # 32 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_TEMP_1, 1
+	clearflag FLAG_HIDE_MOSSDEEP_RESCUED_MINER
 # 33 "data/maps/MOSSDEEP01/scripts.pory"
-	goto MOSSDEEP01_CheckPrologueTransition
-# 34 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 34 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_ContinueMinerTransition::
 # 35 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_ScheduleMightyenaRepeatRecovery::
+	goto_if_set FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING, MOSSDEEP01_EventScript_ScheduleMightyenaRepeatRecovery
 # 36 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_TEMP_1, 2
+	goto_if_set FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING, MOSSDEEP01_EventScript_ScheduleMightyenaRecovery
 # 37 "data/maps/MOSSDEEP01/scripts.pory"
 	goto MOSSDEEP01_CheckPrologueTransition
 # 38 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 39 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_CheckPrologueTransition:
+MOSSDEEP01_EventScript_ScheduleMightyenaRecovery::
 # 40 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_PROLOGUE_COMPLETED, MOSSDEEP01_SkipPrologue
+	setvar VAR_TEMP_1, 1
 # 41 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_TEMP_0, 0
+	goto MOSSDEEP01_CheckPrologueTransition
 # 42 "data/maps/MOSSDEEP01/scripts.pory"
-	goto MOSSDEEP01_ContinueTransition
-# 43 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 43 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_ScheduleMightyenaRepeatRecovery::
 # 44 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_SkipPrologue:
+	setvar VAR_TEMP_1, 2
 # 45 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_TEMP_0, 1
+	goto MOSSDEEP01_CheckPrologueTransition
 # 46 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 47 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_ContinueTransition:
+MOSSDEEP01_CheckPrologueTransition:
 # 48 "data/maps/MOSSDEEP01/scripts.pory"
-	// A previous version of this map reused DN_FLAG_SEARCHING as a Mossdeep
+	goto_if_set FLAG_MOSSDEEP_PROLOGUE_COMPLETED, MOSSDEEP01_SkipPrologue
 # 49 "data/maps/MOSSDEEP01/scripts.pory"
-	// visibility flag. Clear that legacy state when loading the map so it cannot
+	setvar VAR_TEMP_0, 0
 # 50 "data/maps/MOSSDEEP01/scripts.pory"
-	// leave the player permanently creeping after the Mightyena recovery.
+	goto MOSSDEEP01_ContinueTransition
 # 51 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag DN_FLAG_SEARCHING
+
 # 52 "data/maps/MOSSDEEP01/scripts.pory"
-	// Hide/show Celebi based on rescue status
+MOSSDEEP01_SkipPrologue:
 # 53 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
+	setvar VAR_TEMP_0, 1
 # 54 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
+
 # 55 "data/maps/MOSSDEEP01/scripts.pory"
-	
+MOSSDEEP01_ContinueTransition:
 # 56 "data/maps/MOSSDEEP01/scripts.pory"
-    // Wailord management: hide UNTIL Celebi is rescued
+	// A previous version of this map reused DN_FLAG_SEARCHING as a Mossdeep
 # 57 "data/maps/MOSSDEEP01/scripts.pory"
-    call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideWailord
+	// visibility flag. Clear that legacy state when loading the map so it cannot
 # 58 "data/maps/MOSSDEEP01/scripts.pory"
-    call_if_set   FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_ShowWailord
+	// leave the player permanently creeping after the Mightyena recovery.
 # 59 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	clearflag DN_FLAG_SEARCHING
 # 60 "data/maps/MOSSDEEP01/scripts.pory"
-	// Hide comet initially
+	// Hide/show Celebi based on rescue status
 # 61 "data/maps/MOSSDEEP01/scripts.pory"
-	call MOSSDEEP01_EventScript_HideComet
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideStaticCelebi
 # 62 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideFollowerCelebi
 # 63 "data/maps/MOSSDEEP01/scripts.pory"
-	// Hide collected items
+	
 # 64 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
+    // Wailord management: hide UNTIL Celebi is rescued
 # 65 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
+    call_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideWailord
 # 66 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
+    call_if_set   FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_ShowWailord
 # 67 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 68 "data/maps/MOSSDEEP01/scripts.pory"
-	// Keep Jirachi awake if already awoken
+	// Hide comet initially
 # 69 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_EventScript_KeepJirachiAwake
+	call MOSSDEEP01_EventScript_HideComet
 # 70 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 71 "data/maps/MOSSDEEP01/scripts.pory"
-	// Setup rival NPC (gender-based)
+	// Hide collected items
 # 72 "data/maps/MOSSDEEP01/scripts.pory"
-	call MOSSDEEP01_EventScript_SetupRivalNPC
+	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_HideItem1
 # 73 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_HideItem2  
 # 74 "data/maps/MOSSDEEP01/scripts.pory"
-	// Manage Wally and Pidgeot visibility
+	call_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_HideItem3
 # 75 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideInitialWally
+	
 # 76 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowInitialWally
+	// Keep Jirachi awake if already awoken
 # 77 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowCloneWally
+	call_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_EventScript_KeepJirachiAwake
 # 78 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideCloneWally
+	
 # 79 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideGuardPokemon
+	// Setup rival NPC (gender-based)
 # 80 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowGuardPokemon
+	call MOSSDEEP01_EventScript_SetupRivalNPC
 # 81 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RemovePostCelebiGuardPokemon
+	
 # 82 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_SetPostCelebiGuardState
+	// Manage Wally and Pidgeot visibility
 # 83 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideInitialWally
 # 84 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowInitialWally
 # 85 "data/maps/MOSSDEEP01/scripts.pory"
-
+	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowCloneWally
 # 86 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_OnResume:
+	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideCloneWally
 # 87 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	call_if_unset FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_HideGuardPokemon
 # 88 "data/maps/MOSSDEEP01/scripts.pory"
-
+	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowGuardPokemon
 # 89 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_SetPostCelebiGuardState::
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RemovePostCelebiGuardPokemon
 # 90 "data/maps/MOSSDEEP01/scripts.pory"
-	setobjectmovementtype LOCALID_PIDGEOT_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_SetPostCelebiGuardState
 # 91 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	call_if_set FLAG_MOSSDEEP_DROWNING_MAN_RESCUED, MOSSDEEP01_EventScript_SetRescuedDrowningManState
 # 92 "data/maps/MOSSDEEP01/scripts.pory"
-
+	call_if_unset FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_SetTrappedMinerState
 # 93 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideGuardPokemon::
+	call_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_SetRescuedMinerState
 # 94 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
+	call_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_SetRescuedFamilyState
 # 95 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	
 # 96 "data/maps/MOSSDEEP01/scripts.pory"
-
+	end
 # 97 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_RemovePostCelebiGuardPokemon::
+
 # 98 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
+MOSSDEEP01_OnResume:
 # 99 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_MIGHTYENA_GUARD
+	end
 # 100 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_DARKRAI_GUARD
+
 # 101 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+MOSSDEEP01_EventScript_SetPostCelebiGuardState::
 # 102 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setobjectmovementtype LOCALID_PIDGEOT_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
 # 103 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_ShowGuardPokemon::
+	return
 # 104 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
+
 # 105 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+MOSSDEEP01_EventScript_HideGuardPokemon::
 # 106 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
 # 107 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	return
 # 108 "data/maps/MOSSDEEP01/scripts.pory"
-// PROLOGUE EVENT
+
 # 109 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+MOSSDEEP01_EventScript_RemovePostCelebiGuardPokemon::
 # 110 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
 # 111 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Prologue::
+	removeobject LOCALID_MIGHTYENA_GUARD
 # 112 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_TEMP_0, 1
+	removeobject LOCALID_DARKRAI_GUARD
 # 113 "data/maps/MOSSDEEP01/scripts.pory"
-	lockall
+	return
 # 114 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 120
+
 # 115 "data/maps/MOSSDEEP01/scripts.pory"
-	
+MOSSDEEP01_EventScript_ShowGuardPokemon::
 # 116 "data/maps/MOSSDEEP01/scripts.pory"
-	// Earthquake effects
+	clearflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
 # 117 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_ROCK_THROW
+	return
 # 118 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8004, 3
+
 # 119 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8005, 3
+MOSSDEEP01_EventScript_SetRescuedDrowningManState::
 # 120 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8006, 8
+	setobjectxyperm LOCALID_DROWNING_MAN, 47, 77
 # 121 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8007, 10
+	setobjectxy LOCALID_DROWNING_MAN, 47, 77
 # 122 "data/maps/MOSSDEEP01/scripts.pory"
-	special ShakeCamera
+	setobjectmovementtype LOCALID_DROWNING_MAN, MOVEMENT_TYPE_FACE_LEFT
 # 123 "data/maps/MOSSDEEP01/scripts.pory"
-	waitstate
+	turnobject LOCALID_DROWNING_MAN, DIR_WEST
 # 124 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 80
+	return
 # 125 "data/maps/MOSSDEEP01/scripts.pory"
-	
+
 # 126 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_EARTHQUAKE
+MOSSDEEP01_EventScript_SetTrappedMinerState::
 # 127 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8004, 4
+	removeobject LOCALID_RESCUED_MINER
 # 128 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8005, 4
+	return
 # 129 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8006, 10
+
 # 130 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8007, 12
+MOSSDEEP01_EventScript_SetRescuedMinerState::
 # 131 "data/maps/MOSSDEEP01/scripts.pory"
-	special ShakeCamera
+	setobjectxyperm LOCALID_RESCUED_MINER, 15, 72
 # 132 "data/maps/MOSSDEEP01/scripts.pory"
-	waitstate
+	setobjectxyperm LOCALID_MINER_WIFE, 16, 72
 # 133 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 100
+	setobjectxy LOCALID_RESCUED_MINER, 15, 72
 # 134 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	setobjectxy LOCALID_MINER_WIFE, 16, 72
 # 135 "data/maps/MOSSDEEP01/scripts.pory"
-	// Player exits tent
+	setobjectmovementtype LOCALID_RESCUED_MINER, MOVEMENT_TYPE_FACE_DOWN
 # 136 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_ExitTent
+	setobjectmovementtype LOCALID_MINER_WIFE, MOVEMENT_TYPE_FACE_DOWN
 # 137 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
+	turnobject LOCALID_RESCUED_MINER, DIR_SOUTH
 # 138 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 60
+	turnobject LOCALID_MINER_WIFE, DIR_SOUTH
 # 139 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	return
 # 140 "data/maps/MOSSDEEP01/scripts.pory"
-	// Grandma dialogue
+
 # 141 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_TEMP_1
+MOSSDEEP01_EventScript_SetRescuedFamilyState::
 # 142 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDMA_MOSSDEEP01, Common_Movement_FacePlayer
+	setobjectxyperm LOCALID_LOST_FATHER, 23, 68
 # 143 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
+	setobjectxyperm LOCALID_LOST_MOTHER, 25, 68
 # 144 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaWelcome, MSGBOX_DEFAULT
+	setobjectxyperm LOCALID_SURVIVOR, 24, 68
 # 145 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	setobjectxy LOCALID_LOST_FATHER, 23, 68
 # 146 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
+	setobjectxy LOCALID_LOST_MOTHER, 25, 68
 # 147 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	setobjectxy LOCALID_SURVIVOR, 24, 68
 # 148 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_EarthquakeWarning, MSGBOX_DEFAULT
+	setobjectmovementtype LOCALID_LOST_FATHER, MOVEMENT_TYPE_FACE_RIGHT
 # 149 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8004, 2
+	setobjectmovementtype LOCALID_LOST_MOTHER, MOVEMENT_TYPE_FACE_LEFT
 # 150 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8005, 2
+	setobjectmovementtype LOCALID_SURVIVOR, MOVEMENT_TYPE_FACE_DOWN
 # 151 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8006, 5
+	removeobject LOCALID_LOST_FATHER
 # 152 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8007, 8
+	removeobject LOCALID_LOST_MOTHER
 # 153 "data/maps/MOSSDEEP01/scripts.pory"
-	special ShakeCamera
+	removeobject LOCALID_SURVIVOR
 # 154 "data/maps/MOSSDEEP01/scripts.pory"
-	waitstate
+	addobject LOCALID_LOST_FATHER
 # 155 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_ROCK_THROW
+	addobject LOCALID_LOST_MOTHER
 # 156 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	addobject LOCALID_SURVIVOR
 # 157 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
+	turnobject LOCALID_LOST_FATHER, DIR_EAST
 # 158 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	turnobject LOCALID_LOST_MOTHER, DIR_WEST
 # 159 "data/maps/MOSSDEEP01/scripts.pory"
-	// Give Shiny Charm
+	turnobject LOCALID_SURVIVOR, DIR_SOUTH
 # 160 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaGivesCharm, MSGBOX_DEFAULT
+	return
 # 161 "data/maps/MOSSDEEP01/scripts.pory"
-	giveitem ITEM_SHINY_CHARM
+
 # 162 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaCharmExplanation, MSGBOX_DEFAULT
+// ====================================================================
 # 163 "data/maps/MOSSDEEP01/scripts.pory"
-	
+// PROLOGUE EVENT
 # 164 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_HoennDestroyed, MSGBOX_DEFAULT
+// ====================================================================
 # 165 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8004, 1
+
 # 166 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8005, 1
+MOSSDEEP01_EventScript_Prologue::
 # 167 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8006, 2
+	setvar VAR_TEMP_0, 1
 # 168 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8007, 5
+	lockall
 # 169 "data/maps/MOSSDEEP01/scripts.pory"
-	special ShakeCamera
+	delay 120
 # 170 "data/maps/MOSSDEEP01/scripts.pory"
-	waitstate
+	
 # 171 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	// Earthquake effects
 # 172 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
+	playse SE_M_ROCK_THROW
 # 173 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	setvar VAR_0x8004, 3
 # 174 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_PlayerDecision, MSGBOX_DEFAULT
+	setvar VAR_0x8005, 3
 # 175 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	setvar VAR_0x8006, 8
 # 176 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 15
+	setvar VAR_0x8007, 10
 # 177 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT
+	special ShakeCamera
 # 178 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	waitstate
 # 179 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	delay 80
 # 180 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_PROLOGUE_COMPLETED
+	
 # 181 "data/maps/MOSSDEEP01/scripts.pory"
-	releaseall
+	playse SE_M_EARTHQUAKE
 # 182 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	setvar VAR_0x8004, 4
 # 183 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setvar VAR_0x8005, 4
 # 184 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Movement_ExitTent:
+	setvar VAR_0x8006, 10
 # 185 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	setvar VAR_0x8007, 12
 # 186 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	special ShakeCamera
 # 187 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	waitstate
 # 188 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	delay 100
 # 189 "data/maps/MOSSDEEP01/scripts.pory"
-	step_end
+	
 # 190 "data/maps/MOSSDEEP01/scripts.pory"
-
+	// Player exits tent
 # 191 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	applymovement OBJ_EVENT_ID_PLAYER, MOSSDEEP01_Movement_ExitTent
 # 192 "data/maps/MOSSDEEP01/scripts.pory"
-// UTILITY FUNCTIONS
+	waitmovement 0
 # 193 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	delay 60
 # 194 "data/maps/MOSSDEEP01/scripts.pory"
-
+	
 # 195 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideStaticCelebi::
+	// Grandma dialogue
 # 196 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
+	setflag FLAG_TEMP_1
 # 197 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	applymovement LOCALID_GRANDMA_MOSSDEEP01, Common_Movement_FacePlayer
 # 198 "data/maps/MOSSDEEP01/scripts.pory"
-
+	waitmovement 0
 # 199 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideFollowerCelebi::
+	msgbox MOSSDEEP01_Text_GrandmaWelcome, MSGBOX_DEFAULT
 # 200 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER
+	closemessage
 # 201 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	delay 20
 # 202 "data/maps/MOSSDEEP01/scripts.pory"
-
+	
 # 203 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideWailord::
+	msgbox MOSSDEEP01_Text_EarthquakeWarning, MSGBOX_DEFAULT
 # 204 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_WAILORD_PATH
+	setvar VAR_0x8004, 2
 # 205 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	setvar VAR_0x8005, 2
 # 206 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setvar VAR_0x8006, 5
 # 207 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_ShowWailord::
+	setvar VAR_0x8007, 8
 # 208 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_WAILORD_PATH
+	special ShakeCamera
 # 209 "data/maps/MOSSDEEP01/scripts.pory"
-	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
+	waitstate
 # 210 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	playse SE_M_ROCK_THROW
 # 211 "data/maps/MOSSDEEP01/scripts.pory"
-
+	closemessage
 # 212 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideComet::
+	delay 20
 # 213 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_COMET
+	
 # 214 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	// Give Shiny Charm
 # 215 "data/maps/MOSSDEEP01/scripts.pory"
-
+	msgbox MOSSDEEP01_Text_GrandmaGivesCharm, MSGBOX_DEFAULT
 # 216 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideItem1::
+	giveitem ITEM_SHINY_CHARM
 # 217 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_TIME_GEAR_1
+	msgbox MOSSDEEP01_Text_GrandmaCharmExplanation, MSGBOX_DEFAULT
 # 218 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	
 # 219 "data/maps/MOSSDEEP01/scripts.pory"
-
+	msgbox MOSSDEEP01_Text_HoennDestroyed, MSGBOX_DEFAULT
 # 220 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideItem2::
+	setvar VAR_0x8004, 1
 # 221 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_TIME_GEAR_2
+	setvar VAR_0x8005, 1
 # 222 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	setvar VAR_0x8006, 2
 # 223 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setvar VAR_0x8007, 5
 # 224 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideItem3::
+	special ShakeCamera
 # 225 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_TIME_GEAR_3
+	waitstate
 # 226 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	closemessage
 # 227 "data/maps/MOSSDEEP01/scripts.pory"
-
+	delay 20
 # 228 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideInitialWally::
+	
 # 229 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_WALLY_INITIAL
+	msgbox MOSSDEEP01_Text_PlayerDecision, MSGBOX_DEFAULT
 # 230 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_PIDGEOT_INITIAL
+	closemessage
 # 231 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	delay 15
 # 232 "data/maps/MOSSDEEP01/scripts.pory"
-
+	msgbox MOSSDEEP01_Text_GoodLuck, MSGBOX_DEFAULT
 # 233 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_ShowInitialWally::
+	closemessage
 # 234 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_WALLY_INITIAL
+	
 # 235 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_PIDGEOT_INITIAL
+	setflag FLAG_MOSSDEEP_PROLOGUE_COMPLETED
 # 236 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	releaseall
 # 237 "data/maps/MOSSDEEP01/scripts.pory"
-
+	end
 # 238 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_ShowCloneWally::
+
 # 239 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_WALLY_CLONE
+MOSSDEEP01_Movement_ExitTent:
 # 240 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_PIDGEOT_CLONE
+	walk_down
 # 241 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	walk_down
 # 242 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_down
 # 243 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_HideCloneWally::
+	step_end
 # 244 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_WALLY_CLONE
+
 # 245 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_PIDGEOT_CLONE
+// ====================================================================
 # 246 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+// UTILITY FUNCTIONS
 # 247 "data/maps/MOSSDEEP01/scripts.pory"
-
+// ====================================================================
 # 248 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_KeepJirachiAwake::
+
 # 249 "data/maps/MOSSDEEP01/scripts.pory"
-	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
+MOSSDEEP01_EventScript_HideStaticCelebi::
 # 250 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
 # 251 "data/maps/MOSSDEEP01/scripts.pory"
-
+	return
 # 252 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+
 # 253 "data/maps/MOSSDEEP01/scripts.pory"
-// TIME GEAR COLLECTION
+MOSSDEEP01_EventScript_HideFollowerCelebi::
 # 254 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	setflag FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER
 # 255 "data/maps/MOSSDEEP01/scripts.pory"
-
+	return
 # 256 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Item1::
-# 257 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 258 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 259 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_Item_AlreadyCollected
-# 260 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_FoundItem1, MSGBOX_DEFAULT
-# 261 "data/maps/MOSSDEEP01/scripts.pory"
-	playfanfare MUS_OBTAIN_ITEM
-# 262 "data/maps/MOSSDEEP01/scripts.pory"
-	message MOSSDEEP01_Text_ObtainedTimeGear1
-# 263 "data/maps/MOSSDEEP01/scripts.pory"
-	waitfanfare
-# 264 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_1
-# 265 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_TIME_GEAR_1
-# 266 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 267 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 268 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 257 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_HideWailord::
+# 258 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_HIDE_WAILORD_PATH
+# 259 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 260 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 261 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_ShowWailord::
+# 262 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_WAILORD_PATH
+# 263 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
+# 264 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 265 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 266 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_HideComet::
+# 267 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_HIDE_MOSSDEEP_COMET
+# 268 "data/maps/MOSSDEEP01/scripts.pory"
+	return
 # 269 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Item2::
+
 # 270 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+MOSSDEEP01_EventScript_HideItem1::
 # 271 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+	removeobject LOCALID_TIME_GEAR_1
 # 272 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_Item_AlreadyCollected
+	return
 # 273 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_FoundItem2, MSGBOX_DEFAULT
+
 # 274 "data/maps/MOSSDEEP01/scripts.pory"
-	playfanfare MUS_OBTAIN_ITEM
+MOSSDEEP01_EventScript_HideItem2::
 # 275 "data/maps/MOSSDEEP01/scripts.pory"
-	message MOSSDEEP01_Text_ObtainedTimeGear2
-# 276 "data/maps/MOSSDEEP01/scripts.pory"
-	waitfanfare
-# 277 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_2
-# 278 "data/maps/MOSSDEEP01/scripts.pory"
 	removeobject LOCALID_TIME_GEAR_2
+# 276 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 277 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 278 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_HideItem3::
 # 279 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	removeobject LOCALID_TIME_GEAR_3
 # 280 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	return
 # 281 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 282 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Item3::
+MOSSDEEP01_EventScript_HideInitialWally::
 # 283 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+	setflag FLAG_HIDE_WALLY_INITIAL
 # 284 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+	setflag FLAG_HIDE_PIDGEOT_INITIAL
 # 285 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_Item_AlreadyCollected
-# 286 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_FoundItem3, MSGBOX_DEFAULT
-# 287 "data/maps/MOSSDEEP01/scripts.pory"
-	playfanfare MUS_OBTAIN_ITEM
-# 288 "data/maps/MOSSDEEP01/scripts.pory"
-	message MOSSDEEP01_Text_ObtainedTimeGear3
-# 289 "data/maps/MOSSDEEP01/scripts.pory"
-	waitfanfare
-# 290 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_3
-# 291 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_TIME_GEAR_3
-# 292 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 293 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 294 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 295 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Item_AlreadyCollected::
-# 296 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_AlreadyCollected, MSGBOX_DEFAULT
-# 297 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 298 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 299 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 300 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 301 "data/maps/MOSSDEEP01/scripts.pory"
-// CELEBI RESCUE EVENT
-# 302 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 303 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 304 "data/maps/MOSSDEEP01/scripts.pory"
-// No evento de interação com Celebi, após mostrar o Wailord:
-# 305 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Celebi::
-# 306 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 307 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 308 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiAlreadyRescued
-# 309 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_CelebiNeedGears
-# 310 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
-# 311 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
-# 312 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 313 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_unset FLAG_TALKED_TO_CELEBI, MOSSDEEP01_EventScript_CelebiIntroduction
-# 314 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
-# 315 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
-# 316 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 317 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 318 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_HYPER_BEAM
-# 319 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 320 "data/maps/MOSSDEEP01/scripts.pory"
-	// Transform static Celebi into follower
-# 321 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenswapbuffers FADE_TO_BLACK
-# 322 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
-# 323 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenswapbuffers FADE_FROM_BLACK
-# 324 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 325 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
-# 326 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
-# 327 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_MIGHTYENA_GUARD
-# 328 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_DARKRAI_GUARD
-# 329 "data/maps/MOSSDEEP01/scripts.pory"
-	setobjectmovementtype LOCALID_PIDGEOT_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
-# 330 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 331 "data/maps/MOSSDEEP01/scripts.pory"
-	// Show Wailord path and set subpriority to walk over it
-# 332 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_WAILORD_PATH
-# 333 "data/maps/MOSSDEEP01/scripts.pory"
-	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
-# 334 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_CelebiCallsWailord, MSGBOX_DEFAULT
-# 335 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 336 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
-# 337 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 338 "data/maps/MOSSDEEP01/scripts.pory"
-	// Set Celebi as follower
-# 339 "data/maps/MOSSDEEP01/scripts.pory"
-	destroyfollowernpc
-# 340 "data/maps/MOSSDEEP01/scripts.pory"
-	setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
-# 341 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 342 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
-# 343 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 344 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 345 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 346 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 347 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_CelebiNeedGears::
-# 348 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARAQUANID, 10, 3
-# 349 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
-# 350 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
-# 351 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 352 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
-# 353 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_TALKED_TO_CELEBI
-# 354 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 355 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 356 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 357 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_CelebiIntroduction::
-# 358 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARAQUANID, 10, 3
-# 359 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
-# 360 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
-# 361 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 362 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmessage
-# 363 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
-# 364 "data/maps/MOSSDEEP01/scripts.pory"
 	return
-# 365 "data/maps/MOSSDEEP01/scripts.pory"
+# 286 "data/maps/MOSSDEEP01/scripts.pory"
 
-# 366 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_CelebiAlreadyRescued::
-# 367 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
-# 368 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_CelebiThanks, MSGBOX_DEFAULT
-# 369 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 370 "data/maps/MOSSDEEP01/scripts.pory"
+# 287 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_ShowInitialWally::
+# 288 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_WALLY_INITIAL
+# 289 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_PIDGEOT_INITIAL
+# 290 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 291 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 292 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_ShowCloneWally::
+# 293 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_WALLY_CLONE
+# 294 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_PIDGEOT_CLONE
+# 295 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 296 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 297 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_HideCloneWally::
+# 298 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_HIDE_WALLY_CLONE
+# 299 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_HIDE_PIDGEOT_CLONE
+# 300 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 301 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 302 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_KeepJirachiAwake::
+# 303 "data/maps/MOSSDEEP01/scripts.pory"
+	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
+# 304 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 305 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 306 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 307 "data/maps/MOSSDEEP01/scripts.pory"
+// TIME GEAR COLLECTION
+# 308 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 309 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 310 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_Item1::
+# 311 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 312 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 313 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_Item_AlreadyCollected
+# 314 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_FoundItem1, MSGBOX_DEFAULT
+# 315 "data/maps/MOSSDEEP01/scripts.pory"
+	playfanfare MUS_OBTAIN_ITEM
+# 316 "data/maps/MOSSDEEP01/scripts.pory"
+	message MOSSDEEP01_Text_ObtainedTimeGear1
+# 317 "data/maps/MOSSDEEP01/scripts.pory"
+	waitfanfare
+# 318 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_1
+# 319 "data/maps/MOSSDEEP01/scripts.pory"
+	removeobject LOCALID_TIME_GEAR_1
+# 320 "data/maps/MOSSDEEP01/scripts.pory"
 	release
+# 321 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 322 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 323 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_Item2::
+# 324 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 325 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 326 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_Item_AlreadyCollected
+# 327 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_FoundItem2, MSGBOX_DEFAULT
+# 328 "data/maps/MOSSDEEP01/scripts.pory"
+	playfanfare MUS_OBTAIN_ITEM
+# 329 "data/maps/MOSSDEEP01/scripts.pory"
+	message MOSSDEEP01_Text_ObtainedTimeGear2
+# 330 "data/maps/MOSSDEEP01/scripts.pory"
+	waitfanfare
+# 331 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_2
+# 332 "data/maps/MOSSDEEP01/scripts.pory"
+	removeobject LOCALID_TIME_GEAR_2
+# 333 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 334 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 335 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 336 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_Item3::
+# 337 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 338 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 339 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_Item_AlreadyCollected
+# 340 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_FoundItem3, MSGBOX_DEFAULT
+# 341 "data/maps/MOSSDEEP01/scripts.pory"
+	playfanfare MUS_OBTAIN_ITEM
+# 342 "data/maps/MOSSDEEP01/scripts.pory"
+	message MOSSDEEP01_Text_ObtainedTimeGear3
+# 343 "data/maps/MOSSDEEP01/scripts.pory"
+	waitfanfare
+# 344 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_MOSSDEEP_COLLECTED_ITEM_3
+# 345 "data/maps/MOSSDEEP01/scripts.pory"
+	removeobject LOCALID_TIME_GEAR_3
+# 346 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 347 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 348 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 349 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_Item_AlreadyCollected::
+# 350 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_AlreadyCollected, MSGBOX_DEFAULT
+# 351 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 352 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 353 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 354 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 355 "data/maps/MOSSDEEP01/scripts.pory"
+// CELEBI RESCUE EVENT
+# 356 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 357 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 358 "data/maps/MOSSDEEP01/scripts.pory"
+// No evento de interação com Celebi, após mostrar o Wailord:
+# 359 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_Celebi::
+# 360 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 361 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 362 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_CelebiAlreadyRescued
+# 363 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_EventScript_CelebiNeedGears
+# 364 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_EventScript_CelebiNeedGears
+# 365 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_EventScript_CelebiNeedGears
+# 366 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 367 "data/maps/MOSSDEEP01/scripts.pory"
+	call_if_unset FLAG_TALKED_TO_CELEBI, MOSSDEEP01_EventScript_CelebiIntroduction
+# 368 "data/maps/MOSSDEEP01/scripts.pory"
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
+# 369 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_CelebiPower, MSGBOX_DEFAULT
+# 370 "data/maps/MOSSDEEP01/scripts.pory"
+	removefieldmugshot
 # 371 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	closemessage
 # 372 "data/maps/MOSSDEEP01/scripts.pory"
-
+	playse SE_M_HYPER_BEAM
 # 373 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	
 # 374 "data/maps/MOSSDEEP01/scripts.pory"
-// MIGHTYENA ZONE TRIGGER
+	// Transform static Celebi into follower
 # 375 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	fadescreenswapbuffers FADE_TO_BLACK
 # 376 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setflag FLAG_HIDE_MOSSDEEP_CELEBI_STATIC
 # 377 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_MightyenaZone::
+	fadescreenswapbuffers FADE_FROM_BLACK
 # 378 "data/maps/MOSSDEEP01/scripts.pory"
-	lockall
+	
 # 379 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_MightyenaZone_Safe
+	setflag FLAG_MOSSDEEP_CELEBI_RESCUED
 # 380 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_MightyenaZone_Safe
+	setflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
 # 381 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_WALLY_HELPING, MOSSDEEP01_EventScript_MightyenaZoneRepeat
+	removeobject LOCALID_MIGHTYENA_GUARD
 # 382 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	removeobject LOCALID_DARKRAI_GUARD
 # 383 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_PIN
+	setobjectmovementtype LOCALID_PIDGEOT_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
 # 384 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	
 # 385 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
+	// Show Wailord path and set subpriority to walk over it
 # 386 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
+	clearflag FLAG_HIDE_WAILORD_PATH
 # 387 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	setobjectsubpriority LOCALID_WAILORD_BLOCKER, MAP_MOSSDEEP01, 0xFF
 # 388 "data/maps/MOSSDEEP01/scripts.pory"
-	call MOSSDEEP01_EventScript_FindNearestMightyena
+	msgbox MOSSDEEP01_Text_CelebiCallsWailord, MSGBOX_DEFAULT
 # 389 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement VAR_0x8008, Common_Movement_ExclamationMark
+	closemessage
 # 390 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
+	delay 20
 # 391 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement VAR_0x8008, Common_Movement_FacePlayer
-# 392 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
-# 393 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 394 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
-# 395 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 396 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_BITE
-# 397 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreen FADE_TO_BLACK
-# 398 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 60
-# 399 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
-# 400 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 401 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 402 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_WALLY_ATTACKED_BY_MIGHTYENA
-# 403 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING
-# 404 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 405 "data/maps/MOSSDEEP01/scripts.pory"
-	setrespawn HEAL_LOCATION_MOSSDEEP_01
-# 406 "data/maps/MOSSDEEP01/scripts.pory"
-	warp MAP_MOSSDEEP01, 14, 67
-# 407 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 408 "data/maps/MOSSDEEP01/scripts.pory"
 
-# 409 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_MightyenaZoneRepeat::
-# 410 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
-# 411 "data/maps/MOSSDEEP01/scripts.pory"
+# 392 "data/maps/MOSSDEEP01/scripts.pory"
+	// Set Celebi as follower
+# 393 "data/maps/MOSSDEEP01/scripts.pory"
+	destroyfollowernpc
+# 394 "data/maps/MOSSDEEP01/scripts.pory"
+	setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
+# 395 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 396 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_CelebiCalmed, MSGBOX_DEFAULT
+# 397 "data/maps/MOSSDEEP01/scripts.pory"
 	closemessage
-# 412 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_BITE
-# 413 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreen FADE_TO_BLACK
-# 414 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 60
-# 415 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING
-# 416 "data/maps/MOSSDEEP01/scripts.pory"
-	setrespawn HEAL_LOCATION_MOSSDEEP_01
-# 417 "data/maps/MOSSDEEP01/scripts.pory"
-	warp MAP_MOSSDEEP01, 14, 67
-# 418 "data/maps/MOSSDEEP01/scripts.pory"
+# 398 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 399 "data/maps/MOSSDEEP01/scripts.pory"
 	end
+# 400 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 401 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_CelebiNeedGears::
+# 402 "data/maps/MOSSDEEP01/scripts.pory"
+	showmonpic SPECIES_ARAQUANID, 10, 3
+# 403 "data/maps/MOSSDEEP01/scripts.pory"
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
+# 404 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+# 405 "data/maps/MOSSDEEP01/scripts.pory"
+	removefieldmugshot
+# 406 "data/maps/MOSSDEEP01/scripts.pory"
+	hidemonpic
+# 407 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_TALKED_TO_CELEBI
+# 408 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 409 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 410 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 411 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_CelebiIntroduction::
+# 412 "data/maps/MOSSDEEP01/scripts.pory"
+	showmonpic SPECIES_ARAQUANID, 10, 3
+# 413 "data/maps/MOSSDEEP01/scripts.pory"
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
+# 414 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
+# 415 "data/maps/MOSSDEEP01/scripts.pory"
+	removefieldmugshot
+# 416 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmessage
+# 417 "data/maps/MOSSDEEP01/scripts.pory"
+	hidemonpic
+# 418 "data/maps/MOSSDEEP01/scripts.pory"
+	return
 # 419 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 420 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_FindNearestMightyena::
+MOSSDEEP01_EventScript_CelebiAlreadyRescued::
 # 421 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_0x8008, 0
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 # 422 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	msgbox MOSSDEEP01_Text_CelebiThanks, MSGBOX_DEFAULT
 # 423 "data/maps/MOSSDEEP01/scripts.pory"
-
+	removefieldmugshot
 # 424 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_MightyenaZone_Safe::
+	release
 # 425 "data/maps/MOSSDEEP01/scripts.pory"
-	releaseall
+	end
 # 426 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+
 # 427 "data/maps/MOSSDEEP01/scripts.pory"
-
+// ====================================================================
 # 428 "data/maps/MOSSDEEP01/scripts.pory"
-// Wing Interaction
+// MIGHTYENA ZONE TRIGGER
 # 429 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Wingull::
+// ====================================================================
 # 430 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+
 # 431 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+MOSSDEEP01_EventScript_MightyenaZone::
 # 432 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	lockall
 # 433 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_MightyenaZone_Safe
 # 434 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	goto_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_MightyenaZone_Safe
 # 435 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	goto_if_set FLAG_WALLY_HELPING, MOSSDEEP01_EventScript_MightyenaZoneRepeat
 # 436 "data/maps/MOSSDEEP01/scripts.pory"
-
+	
 # 437 "data/maps/MOSSDEEP01/scripts.pory"
-
+	playse SE_PIN
 # 438 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
 # 439 "data/maps/MOSSDEEP01/scripts.pory"
-// MIGHTYENA NPC INTERACTION
+	waitmovement 0
 # 440 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 441 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 442 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Mightyena::
-# 443 "data/maps/MOSSDEEP01/scripts.pory"
-	lockall
-# 444 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
-# 445 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
-# 446 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
-# 447 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaFriendly
-# 448 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_WALLY_HELPING, MOSSDEEP01_EventScript_MightyenaRepeat
-# 449 "data/maps/MOSSDEEP01/scripts.pory"
 	delay 20
+# 441 "data/maps/MOSSDEEP01/scripts.pory"
+	
+# 442 "data/maps/MOSSDEEP01/scripts.pory"
+	call MOSSDEEP01_EventScript_FindNearestMightyena
+# 443 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
+# 444 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmovement 0
+# 445 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement VAR_0x8008, Common_Movement_FacePlayer
+# 446 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmovement 0
+# 447 "data/maps/MOSSDEEP01/scripts.pory"
+	
+# 448 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
+# 449 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
 # 450 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
+	playse SE_M_BITE
 # 451 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	fadescreen FADE_TO_BLACK
 # 452 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+	delay 60
 # 453 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_BITE
-# 454 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreen FADE_TO_BLACK
-# 455 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 60
-# 456 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
-# 457 "data/maps/MOSSDEEP01/scripts.pory"
+# 454 "data/maps/MOSSDEEP01/scripts.pory"
 	closemessage
-# 458 "data/maps/MOSSDEEP01/scripts.pory"
+# 455 "data/maps/MOSSDEEP01/scripts.pory"
+	
+# 456 "data/maps/MOSSDEEP01/scripts.pory"
 	setflag FLAG_WALLY_ATTACKED_BY_MIGHTYENA
-# 459 "data/maps/MOSSDEEP01/scripts.pory"
+# 457 "data/maps/MOSSDEEP01/scripts.pory"
 	setflag FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING
+# 458 "data/maps/MOSSDEEP01/scripts.pory"
+	
+# 459 "data/maps/MOSSDEEP01/scripts.pory"
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
 # 460 "data/maps/MOSSDEEP01/scripts.pory"
-	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	warp MAP_MOSSDEEP01, 14, 67
 # 461 "data/maps/MOSSDEEP01/scripts.pory"
-	warp MAP_MOSSDEEP01, 14, 67
+	end
 # 462 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+
 # 463 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_EventScript_MightyenaZoneRepeat::
 # 464 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_MightyenaRepeat::
-# 465 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
+# 465 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
 # 466 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 467 "data/maps/MOSSDEEP01/scripts.pory"
 	playse SE_M_BITE
-# 468 "data/maps/MOSSDEEP01/scripts.pory"
+# 467 "data/maps/MOSSDEEP01/scripts.pory"
 	fadescreen FADE_TO_BLACK
-# 469 "data/maps/MOSSDEEP01/scripts.pory"
+# 468 "data/maps/MOSSDEEP01/scripts.pory"
 	delay 60
-# 470 "data/maps/MOSSDEEP01/scripts.pory"
+# 469 "data/maps/MOSSDEEP01/scripts.pory"
 	setflag FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING
-# 471 "data/maps/MOSSDEEP01/scripts.pory"
+# 470 "data/maps/MOSSDEEP01/scripts.pory"
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
-# 472 "data/maps/MOSSDEEP01/scripts.pory"
+# 471 "data/maps/MOSSDEEP01/scripts.pory"
 	warp MAP_MOSSDEEP01, 14, 67
+# 472 "data/maps/MOSSDEEP01/scripts.pory"
+	end
 # 473 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+
 # 474 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_EventScript_FindNearestMightyena::
 # 475 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_MightyenaRecovery::
+	setvar VAR_0x8008, 0
 # 476 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_TEMP_1, 0
+	return
 # 477 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING
+
 # 478 "data/maps/MOSSDEEP01/scripts.pory"
-	lockall
+MOSSDEEP01_MightyenaZone_Safe::
 # 479 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_PIN
+	releaseall
 # 480 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDMA_MOSSDEEP01, Common_Movement_ExclamationMark
+	end
 # 481 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_ExclamationMark
+
 # 482 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
+// ====================================================================
 # 483 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDMA_MOSSDEEP01, Common_Movement_FaceRight
+// DROWNING MAN RESCUE
 # 484 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_FaceLeft
+// ====================================================================
 # 485 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceLeft
+
 # 486 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
+MOSSDEEP01_EventScript_MinerWife::
 # 487 "data/maps/MOSSDEEP01/scripts.pory"
-	checkplayergender
-# 488 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, MALE
-# 489 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_EventScript_GrandmaRecoveryZinnia
-# 490 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaRecoveryZenno, MSGBOX_DEFAULT
-# 491 "data/maps/MOSSDEEP01/scripts.pory"
-	goto MOSSDEEP01_EventScript_GrandpaRecovery
-# 492 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 493 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GrandmaRecoveryZinnia::
-# 494 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaRecoveryZinnia, MSGBOX_DEFAULT
-# 495 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 496 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GrandpaRecovery::
-# 497 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_FaceLeft
-# 498 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
-# 499 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
-# 500 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandpaRecovery, MSGBOX_DEFAULT
-# 501 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_PIN
-# 502 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_ExclamationMark
-# 503 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
-# 504 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandpaSuggestLuka, MSGBOX_DEFAULT
-# 505 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_WALLY_HELPING
-# 506 "data/maps/MOSSDEEP01/scripts.pory"
-	releaseall
-# 507 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 508 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 509 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_MightyenaRepeatRecovery::
-# 510 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_TEMP_1, 0
-# 511 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING
-# 512 "data/maps/MOSSDEEP01/scripts.pory"
 	lockall
-# 513 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_FaceLeft
-# 514 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
-# 515 "data/maps/MOSSDEEP01/scripts.pory"
+# 488 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_MinerWifeThanks
+# 489 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+# 490 "data/maps/MOSSDEEP01/scripts.pory"
 	waitmovement 0
-# 516 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandpaMightyenaReminder, MSGBOX_DEFAULT
-# 517 "data/maps/MOSSDEEP01/scripts.pory"
+# 491 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MinerWifeHelp, MSGBOX_DEFAULT
+# 492 "data/maps/MOSSDEEP01/scripts.pory"
 	releaseall
-# 518 "data/maps/MOSSDEEP01/scripts.pory"
+# 493 "data/maps/MOSSDEEP01/scripts.pory"
 	end
-# 519 "data/maps/MOSSDEEP01/scripts.pory"
+# 494 "data/maps/MOSSDEEP01/scripts.pory"
 
-# 520 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_MightyenaFriendly::
-# 521 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 522 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 523 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
-# 524 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_Mightyena_NotReady
-# 525 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_MightyenaFriendly, MSGBOX_DEFAULT
-# 526 "data/maps/MOSSDEEP01/scripts.pory"
+# 495 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_MinerWifeThanks::
+# 496 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MinerWifeThanks, MSGBOX_DEFAULT
+# 497 "data/maps/MOSSDEEP01/scripts.pory"
 	releaseall
-# 527 "data/maps/MOSSDEEP01/scripts.pory"
+# 498 "data/maps/MOSSDEEP01/scripts.pory"
 	end
-# 528 "data/maps/MOSSDEEP01/scripts.pory"
+# 499 "data/maps/MOSSDEEP01/scripts.pory"
 
-# 529 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Mightyena_NotReady::
-# 530 "data/maps/MOSSDEEP01/scripts.pory"
-	releaseall
-# 531 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 532 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 533 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 534 "data/maps/MOSSDEEP01/scripts.pory"
-// POKEMON NPC INTERACTIONS
-# 535 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 536 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 537 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_PidgeotInitial::
-# 538 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 539 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 540 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_PIDGEOT, CRY_MODE_NORMAL
-# 541 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_PidgeotGreeting, MSGBOX_DEFAULT
-# 542 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
-# 543 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 544 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 545 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 546 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GuardPidgeot::
-# 547 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 548 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_PIDGEOT, CRY_MODE_NORMAL
-# 549 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
-# 550 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 551 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 552 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 553 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GuardMightyena::
-# 554 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 555 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
-# 556 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
-# 557 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 558 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 559 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 560 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GuardDarkrai::
-# 561 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 562 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_DARKRAI, CRY_MODE_NORMAL
-# 563 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
-# 564 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 565 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 566 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 567 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Bulbasaur::
-# 568 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 569 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 570 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_BULBASAUR, CRY_MODE_NORMAL
-# 571 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
-# 572 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 573 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 574 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 575 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Totodile::
-# 576 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 577 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 578 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_TOTODILE, CRY_MODE_NORMAL
-# 579 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
-# 580 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 581 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 582 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 583 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Torchic::
-# 584 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 585 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 586 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_TORCHIC, CRY_MODE_NORMAL
-# 587 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmoncry
-# 588 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 589 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 590 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 591 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 592 "data/maps/MOSSDEEP01/scripts.pory"
-// WALLY NPC - SIMPLIFIED
-# 593 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 594 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 595 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Wally::
-# 596 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 597 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 598 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 599 "data/maps/MOSSDEEP01/scripts.pory"
-	// PRIORIDADE MAXIMA (depois do Celebi)
-# 600 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
-# 601 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 602 "data/maps/MOSSDEEP01/scripts.pory"
-	// fluxo normal
-# 603 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_WallyAfterIntro
-# 604 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 605 "data/maps/MOSSDEEP01/scripts.pory"
-	// Check if attacked by Mightyenas
-# 606 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_WALLY_ATTACKED_BY_MIGHTYENA, MOSSDEEP01_EventScript_WallyNotReady
-# 607 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 608 "data/maps/MOSSDEEP01/scripts.pory"
-	// First conversation after the grandparents direct the player here.
-# 609 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
-# 610 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_WallyIntro, MSGBOX_DEFAULT
-# 611 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 612 "data/maps/MOSSDEEP01/scripts.pory"
+# 500 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_TrappedMiner::
+# 501 "data/maps/MOSSDEEP01/scripts.pory"
+	lockall
+# 502 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_TrappedMinerAlreadyRescued
+# 503 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_PlayerDigsOutMiner, MSGBOX_DEFAULT
+# 504 "data/maps/MOSSDEEP01/scripts.pory"
 	closemessage
+# 505 "data/maps/MOSSDEEP01/scripts.pory"
+	special StoreMossdeepMinerRescueCamera
+# 506 "data/maps/MOSSDEEP01/scripts.pory"
+	fadescreenswapbuffers FADE_TO_BLACK
+# 507 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectxyperm LOCALID_RESCUED_MINER, 15, 72
+# 508 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectxyperm LOCALID_MINER_WIFE, 16, 72
+# 509 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectxy LOCALID_RESCUED_MINER, 15, 72
+# 510 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectxy LOCALID_MINER_WIFE, 16, 72
+# 511 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectxy OBJ_EVENT_ID_PLAYER, 15, 73
+# 512 "data/maps/MOSSDEEP01/scripts.pory"
+	special FinishMossdeepMinerRescueCamera
+# 513 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectmovementtype LOCALID_RESCUED_MINER, MOVEMENT_TYPE_FACE_DOWN
+# 514 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectmovementtype LOCALID_MINER_WIFE, MOVEMENT_TYPE_FACE_DOWN
+# 515 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_MOSSDEEP_MINER_RESCUED
+# 516 "data/maps/MOSSDEEP01/scripts.pory"
+	removeobject LOCALID_TRAPPED_MINER
+# 517 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_MOSSDEEP_RESCUED_MINER
+# 518 "data/maps/MOSSDEEP01/scripts.pory"
+	addobject LOCALID_RESCUED_MINER
+# 519 "data/maps/MOSSDEEP01/scripts.pory"
+	fadescreenswapbuffers FADE_FROM_BLACK
+# 520 "data/maps/MOSSDEEP01/scripts.pory"
+	turnobject LOCALID_RESCUED_MINER, DIR_SOUTH
+# 521 "data/maps/MOSSDEEP01/scripts.pory"
+	turnobject LOCALID_MINER_WIFE, DIR_SOUTH
+# 522 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement LOCALID_RESCUED_MINER, Common_Movement_FaceDown
+# 523 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement LOCALID_MINER_WIFE, Common_Movement_FaceDown
+# 524 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
+# 525 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmovement 0
+# 526 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MinerThanks, MSGBOX_DEFAULT
+# 527 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MinerWifeThanks, MSGBOX_DEFAULT
+# 528 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 529 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 530 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 531 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_TrappedMinerAlreadyRescued::
+# 532 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 533 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 534 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 535 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_MinerThanks::
+# 536 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MinerThanks, MSGBOX_DEFAULT
+# 537 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 538 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 539 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 540 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 541 "data/maps/MOSSDEEP01/scripts.pory"
+// LOST FAMILY RESCUE
+# 542 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 543 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 544 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_LostFather::
+# 545 "data/maps/MOSSDEEP01/scripts.pory"
+	lockall
+# 546 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_LostFatherThanks
+# 547 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 548 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_LostFather, MSGBOX_DEFAULT
+# 549 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 550 "data/maps/MOSSDEEP01/scripts.pory"
+	goto MOSSDEEP01_EventScript_RescueLostFamily
+# 551 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 552 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_LostMother::
+# 553 "data/maps/MOSSDEEP01/scripts.pory"
+	lockall
+# 554 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_LostMotherThanks
+# 555 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 556 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_LostMother, MSGBOX_DEFAULT
+# 557 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 558 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 559 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_RescueLostFamily::
+# 560 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_PlayerGivesDirections, MSGBOX_DEFAULT
+# 561 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 562 "data/maps/MOSSDEEP01/scripts.pory"
+	special StoreMossdeepMinerRescueCamera
+# 563 "data/maps/MOSSDEEP01/scripts.pory"
+	fadescreenswapbuffers FADE_TO_BLACK
+# 564 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectxy OBJ_EVENT_ID_PLAYER, 24, 69
+# 565 "data/maps/MOSSDEEP01/scripts.pory"
+	special FinishMossdeepMinerRescueCamera
+# 566 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_MOSSDEEP_LOST_FAMILY_RESCUED
+# 567 "data/maps/MOSSDEEP01/scripts.pory"
+	call MOSSDEEP01_EventScript_SetRescuedFamilyState
+# 568 "data/maps/MOSSDEEP01/scripts.pory"
+	fadescreenswapbuffers FADE_FROM_BLACK
+# 569 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_DaughterThanksForParents, MSGBOX_DEFAULT
+# 570 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_ParentsReunionThanks, MSGBOX_DEFAULT
+# 571 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 572 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 573 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 574 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_LostFatherThanks::
+# 575 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 576 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_LostFatherThanks, MSGBOX_DEFAULT
+# 577 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 578 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 579 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 580 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_LostMotherThanks::
+# 581 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 582 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_LostMotherThanks, MSGBOX_DEFAULT
+# 583 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 584 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 585 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 586 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_DrowningManCallsForHelp::
+# 587 "data/maps/MOSSDEEP01/scripts.pory"
+	lockall
+# 588 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD, MOSSDEEP01_EventScript_DrowningManAlertDone
+# 589 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD
+# 590 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_DrowningManCallsForHelp, MSGBOX_DEFAULT
+# 591 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 592 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_DrowningManAlertDone::
+# 593 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 594 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 595 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 596 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_DrowningMan::
+# 597 "data/maps/MOSSDEEP01/scripts.pory"
+	lockall
+# 598 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_DROWNING_MAN_RESCUED, MOSSDEEP01_EventScript_DrowningManThanks
+# 599 "data/maps/MOSSDEEP01/scripts.pory"
+	goto MOSSDEEP01_EventScript_RescueDrowningMan
+# 600 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 601 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_DrowningManRescueReach::
+# 602 "data/maps/MOSSDEEP01/scripts.pory"
+	lockall
+# 603 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_DROWNING_MAN_RESCUED, MOSSDEEP01_EventScript_DrowningManRescueReachDone
+# 604 "data/maps/MOSSDEEP01/scripts.pory"
+	goto MOSSDEEP01_EventScript_RescueDrowningMan
+# 605 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 606 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_RescueDrowningMan::
+# 607 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_PlayerRescuesDrowningMan, MSGBOX_DEFAULT
+# 608 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 609 "data/maps/MOSSDEEP01/scripts.pory"
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DetachCelebiForDrowningRescue
+# 610 "data/maps/MOSSDEEP01/scripts.pory"
+	fadescreenswapbuffers FADE_TO_BLACK
+# 611 "data/maps/MOSSDEEP01/scripts.pory"
+	delay 40
+# 612 "data/maps/MOSSDEEP01/scripts.pory"
+	setobjectxyperm LOCALID_DROWNING_MAN, 47, 77
 # 613 "data/maps/MOSSDEEP01/scripts.pory"
-	call_if_eq VAR_FACING, DIR_EAST, MOSSDEEP01_EventScript_LukaMovePlayerDown
+	setobjectxy OBJ_EVENT_ID_PLAYER, 46, 77
 # 614 "data/maps/MOSSDEEP01/scripts.pory"
-	goto MOSSDEEP01_EventScript_LukaExit
+	setobjectmovementtype LOCALID_DROWNING_MAN, MOVEMENT_TYPE_FACE_LEFT
 # 615 "data/maps/MOSSDEEP01/scripts.pory"
-
+	removeobject LOCALID_DROWNING_MAN
 # 616 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_LukaMovePlayerDown::
+	setflag FLAG_MOSSDEEP_DROWNING_MAN_RESCUED
 # 617 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
+	fadescreenswapbuffers FADE_FROM_BLACK
 # 618 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
+	addobject LOCALID_DROWNING_MAN
 # 619 "data/maps/MOSSDEEP01/scripts.pory"
-
+	applymovement LOCALID_DROWNING_MAN, Common_Movement_FaceLeft
 # 620 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_LukaExit::
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
 # 621 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_LUKA_INITIAL, MOSSDEEP01_Movement_LukaExit
-# 622 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_PIDGEOT_INITIAL, MOSSDEEP01_Movement_PidgeotExit
-# 623 "data/maps/MOSSDEEP01/scripts.pory"
 	waitmovement 0
+# 622 "data/maps/MOSSDEEP01/scripts.pory"
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_ReattachCelebiAfterDrowningRescue
+# 623 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_DrowningManThanks, MSGBOX_DEFAULT
 # 624 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_WALLY_INTRO_DONE
+	releaseall
 # 625 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_WALLY_INITIAL
+	end
 # 626 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_PIDGEOT_INITIAL
+
 # 627 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_WALLY_CLONE
+MOSSDEEP01_EventScript_DrowningManRescueReachDone::
 # 628 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_PIDGEOT_CLONE
+	releaseall
 # 629 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
+	end
 # 630 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_LUKA_INITIAL
+
 # 631 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_PIDGEOT_INITIAL
+MOSSDEEP01_EventScript_DrowningManThanks::
 # 632 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_MIGHTYENA_HOSTILE
+	faceplayer
 # 633 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_DARKRAI_HOSTILE
+	msgbox MOSSDEEP01_Text_DrowningManThanks, MSGBOX_DEFAULT
 # 634 "data/maps/MOSSDEEP01/scripts.pory"
-	addobject LOCALID_LUKA_GUARD
+	releaseall
 # 635 "data/maps/MOSSDEEP01/scripts.pory"
-	addobject LOCALID_PIDGEOT_GUARD
+	end
 # 636 "data/maps/MOSSDEEP01/scripts.pory"
-	addobject LOCALID_DARKRAI_GUARD
+
 # 637 "data/maps/MOSSDEEP01/scripts.pory"
-	addobject LOCALID_MIGHTYENA_GUARD
+MOSSDEEP01_EventScript_DetachCelebiForDrowningRescue::
 # 638 "data/maps/MOSSDEEP01/scripts.pory"
-	setobjectmovementtype LOCALID_PIDGEOT_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_UP
+	destroyfollowernpc
 # 639 "data/maps/MOSSDEEP01/scripts.pory"
-	setobjectmovementtype LOCALID_DARKRAI_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
+	return
 # 640 "data/maps/MOSSDEEP01/scripts.pory"
-	setobjectmovementtype LOCALID_MIGHTYENA_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
+
 # 641 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+MOSSDEEP01_EventScript_ReattachCelebiAfterDrowningRescue::
 # 642 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
 # 643 "data/maps/MOSSDEEP01/scripts.pory"
-
+	return
 # 644 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Movement_LukaExit:
+
 # 645 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_left
+// Wing Interaction
 # 646 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_left
+MOSSDEEP01_EventScript_Wingull::
 # 647 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_left
+	lock
 # 648 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	faceplayer
 # 649 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 # 650 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	waitmoncry
 # 651 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
+	release
 # 652 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 653 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 654 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 655 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 656 "data/maps/MOSSDEEP01/scripts.pory"
-	step_end
-# 657 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 658 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Movement_PidgeotExit:
-# 659 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_left
-# 660 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_left
-# 661 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_left
-# 662 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 663 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 664 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 665 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 666 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 667 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 668 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 669 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_down
-# 670 "data/maps/MOSSDEEP01/scripts.pory"
-	step_end
-# 671 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 672 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WallyNotReady::
-# 673 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
-# 674 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 675 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
-# 676 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
-# 677 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_WallyBeforeMightyena, MSGBOX_DEFAULT
-# 678 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 679 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 680 "data/maps/MOSSDEEP01/scripts.pory"
 	end
-# 681 "data/maps/MOSSDEEP01/scripts.pory"
+# 653 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 654 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 655 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 656 "data/maps/MOSSDEEP01/scripts.pory"
+// MIGHTYENA NPC INTERACTION
+# 657 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 658 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 659 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_Mightyena::
+# 660 "data/maps/MOSSDEEP01/scripts.pory"
+	lockall
+# 661 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+# 662 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmovement 0
+# 663 "data/maps/MOSSDEEP01/scripts.pory"
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+# 664 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_MightyenaFriendly
+# 665 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_WALLY_HELPING, MOSSDEEP01_EventScript_MightyenaRepeat
+# 666 "data/maps/MOSSDEEP01/scripts.pory"
+	delay 20
+# 667 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
+# 668 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 669 "data/maps/MOSSDEEP01/scripts.pory"
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+# 670 "data/maps/MOSSDEEP01/scripts.pory"
+	playse SE_M_BITE
+# 671 "data/maps/MOSSDEEP01/scripts.pory"
+	fadescreen FADE_TO_BLACK
+# 672 "data/maps/MOSSDEEP01/scripts.pory"
+	delay 60
+# 673 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MightyenaBlackedOut, MSGBOX_DEFAULT
+# 674 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 675 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_WALLY_ATTACKED_BY_MIGHTYENA
+# 676 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING
+# 677 "data/maps/MOSSDEEP01/scripts.pory"
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
+# 678 "data/maps/MOSSDEEP01/scripts.pory"
+	warp MAP_MOSSDEEP01, 14, 67
+# 679 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 680 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 681 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_MightyenaRepeat::
 # 682 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WallyGuardMightyena::
+	msgbox MOSSDEEP01_Text_MightyenaAttack, MSGBOX_DEFAULT
 # 683 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+	closemessage
 # 684 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+	playse SE_M_BITE
 # 685 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
+	fadescreen FADE_TO_BLACK
 # 686 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	delay 60
 # 687 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_WallyNotReady, MSGBOX_DEFAULT
+	setflag FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING
 # 688 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
+	setrespawn HEAL_LOCATION_MOSSDEEP_01
 # 689 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	warp MAP_MOSSDEEP01, 14, 67
 # 690 "data/maps/MOSSDEEP01/scripts.pory"
 	end
 # 691 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 692 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WallyAfterIntro::
+MOSSDEEP01_EventScript_MightyenaRecovery::
 # 693 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	setvar VAR_TEMP_1, 0
 # 694 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
+	clearflag FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING
 # 695 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
+	lockall
 # 696 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	playse SE_PIN
 # 697 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	applymovement LOCALID_GRANDMA_MOSSDEEP01, Common_Movement_ExclamationMark
 # 698 "data/maps/MOSSDEEP01/scripts.pory"
-
+	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_ExclamationMark
 # 699 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WallyAfterCelebi::
+	waitmovement 0
 # 700 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	applymovement LOCALID_GRANDMA_MOSSDEEP01, Common_Movement_FaceRight
 # 701 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
+	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_FaceLeft
 # 702 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceLeft
 # 703 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	waitmovement 0
 # 704 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	checkplayergender
 # 705 "data/maps/MOSSDEEP01/scripts.pory"
-
+	compare VAR_RESULT, MALE
 # 706 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	goto_if_eq MOSSDEEP01_EventScript_GrandmaRecoveryZinnia
 # 707 "data/maps/MOSSDEEP01/scripts.pory"
-// SURVIVOR NPC
+	msgbox MOSSDEEP01_Text_GrandmaRecoveryZenno, MSGBOX_DEFAULT
 # 708 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	goto MOSSDEEP01_EventScript_GrandpaRecovery
 # 709 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 710 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Survivor::
+MOSSDEEP01_EventScript_GrandmaRecoveryZinnia::
 # 711 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+	msgbox MOSSDEEP01_Text_GrandmaRecoveryZinnia, MSGBOX_DEFAULT
 # 712 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+
 # 713 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_SurvivorAfterCelebi
+MOSSDEEP01_EventScript_GrandpaRecovery::
 # 714 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_SurvivorTrapped, MSGBOX_DEFAULT
+	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_FaceLeft
 # 715 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
 # 716 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 717 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 718 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_SurvivorAfterCelebi::
-# 719 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_TEMP_14, MOSSDEEP01_EventScript_SurvivorMoved
-# 720 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_SurvivorAmazed, MSGBOX_DEFAULT
-# 721 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 722 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_SurvivorGoing, MSGBOX_DEFAULT
-# 723 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 724 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_SURVIVOR, MOSSDEEP01_Movement_SurvivorGoUp
-# 725 "data/maps/MOSSDEEP01/scripts.pory"
 	waitmovement 0
+# 717 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_GrandpaRecovery, MSGBOX_DEFAULT
+# 718 "data/maps/MOSSDEEP01/scripts.pory"
+	playse SE_PIN
+# 719 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_ExclamationMark
+# 720 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmovement 0
+# 721 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_GrandpaSuggestLuka, MSGBOX_DEFAULT
+# 722 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_WALLY_HELPING
+# 723 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 724 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 725 "data/maps/MOSSDEEP01/scripts.pory"
+
 # 726 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_TEMP_14
+MOSSDEEP01_EventScript_MightyenaRepeatRecovery::
 # 727 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	setvar VAR_TEMP_1, 0
 # 728 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	clearflag FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING
 # 729 "data/maps/MOSSDEEP01/scripts.pory"
-
+	lockall
 # 730 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_SurvivorMoved::
+	applymovement LOCALID_GRANDPA_MOSSDEEP01, Common_Movement_FaceLeft
 # 731 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_SurvivorHappy, MSGBOX_DEFAULT
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
 # 732 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	waitmovement 0
 # 733 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	msgbox MOSSDEEP01_Text_GrandpaMightyenaReminder, MSGBOX_DEFAULT
 # 734 "data/maps/MOSSDEEP01/scripts.pory"
-
+	releaseall
 # 735 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Movement_SurvivorGoUp:
+	end
 # 736 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
+
 # 737 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
+MOSSDEEP01_EventScript_MightyenaFriendly::
 # 738 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
-# 739 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
-# 740 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
-# 741 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
-# 742 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
-# 743 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
-# 744 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_up
-# 745 "data/maps/MOSSDEEP01/scripts.pory"
-	step_end
-# 746 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 747 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 748 "data/maps/MOSSDEEP01/scripts.pory"
-// HEALER NPC
-# 749 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 750 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 751 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Healer::
-# 752 "data/maps/MOSSDEEP01/scripts.pory"
 	lock
-# 753 "data/maps/MOSSDEEP01/scripts.pory"
+# 739 "data/maps/MOSSDEEP01/scripts.pory"
 	faceplayer
+# 740 "data/maps/MOSSDEEP01/scripts.pory"
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+# 741 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_Mightyena_NotReady
+# 742 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_MightyenaFriendly, MSGBOX_DEFAULT
+# 743 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 744 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 745 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 746 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Mightyena_NotReady::
+# 747 "data/maps/MOSSDEEP01/scripts.pory"
+	releaseall
+# 748 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 749 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 750 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 751 "data/maps/MOSSDEEP01/scripts.pory"
+// POKEMON NPC INTERACTIONS
+# 752 "data/maps/MOSSDEEP01/scripts.pory"
+// ====================================================================
+# 753 "data/maps/MOSSDEEP01/scripts.pory"
+
 # 754 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_HealerWelcome, MSGBOX_DEFAULT
+MOSSDEEP01_EventScript_PidgeotInitial::
 # 755 "data/maps/MOSSDEEP01/scripts.pory"
-	playfanfare MUS_HEAL
+	lock
 # 756 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_Healing, MSGBOX_DEFAULT
+	faceplayer
 # 757 "data/maps/MOSSDEEP01/scripts.pory"
-	waitfanfare
+	playmoncry SPECIES_PIDGEOT, CRY_MODE_NORMAL
 # 758 "data/maps/MOSSDEEP01/scripts.pory"
-	special HealPlayerParty
+	msgbox MOSSDEEP01_Text_PidgeotGreeting, MSGBOX_DEFAULT
 # 759 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_HealedComplete, MSGBOX_DEFAULT
+	waitmoncry
 # 760 "data/maps/MOSSDEEP01/scripts.pory"
 	release
 # 761 "data/maps/MOSSDEEP01/scripts.pory"
@@ -1523,435 +1523,435 @@ MOSSDEEP01_EventScript_Healer::
 # 762 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 763 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+MOSSDEEP01_EventScript_GuardPidgeot::
 # 764 "data/maps/MOSSDEEP01/scripts.pory"
-// GRANDMA EVENT WITH STORY //
-# 765 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 766 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 767 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Grandma::
-# 768 "data/maps/MOSSDEEP01/scripts.pory"
 	lock
-# 769 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
-# 770 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_GrandmaAfterCelebi
-# 771 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaAfterFirstTalk
-# 772 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 773 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaAskStory, MSGBOX_YESNO
-# 774 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, YES
-# 775 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_EventScript_TellStory
-# 776 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaBeCareful, MSGBOX_DEFAULT
-# 777 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
-# 778 "data/maps/MOSSDEEP01/scripts.pory"
+# 765 "data/maps/MOSSDEEP01/scripts.pory"
+	playmoncry SPECIES_PIDGEOT, CRY_MODE_NORMAL
+# 766 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmoncry
+# 767 "data/maps/MOSSDEEP01/scripts.pory"
 	release
-# 779 "data/maps/MOSSDEEP01/scripts.pory"
+# 768 "data/maps/MOSSDEEP01/scripts.pory"
 	end
+# 769 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 770 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_GuardMightyena::
+# 771 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 772 "data/maps/MOSSDEEP01/scripts.pory"
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+# 773 "data/maps/MOSSDEEP01/scripts.pory"
+	waitmoncry
+# 774 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 775 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 776 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 777 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_GuardDarkrai::
+# 778 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 779 "data/maps/MOSSDEEP01/scripts.pory"
+	playmoncry SPECIES_DARKRAI, CRY_MODE_NORMAL
 # 780 "data/maps/MOSSDEEP01/scripts.pory"
-
+	waitmoncry
 # 781 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_TellStory::
+	release
 # 782 "data/maps/MOSSDEEP01/scripts.pory"
-	fadeoutbgm 0
+	end
 # 783 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreen FADE_TO_BLACK
+
 # 784 "data/maps/MOSSDEEP01/scripts.pory"
-	
+MOSSDEEP01_EventScript_Bulbasaur::
 # 785 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AEGISLASH, 10, 3
+	lock
 # 786 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	faceplayer
 # 787 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
+	playmoncry SPECIES_BULBASAUR, CRY_MODE_NORMAL
 # 788 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	waitmoncry
 # 789 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	release
 # 790 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	end
 # 791 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+
 # 792 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory2, MSGBOX_DEFAULT
+MOSSDEEP01_EventScript_Totodile::
 # 793 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	lock
 # 794 "data/maps/MOSSDEEP01/scripts.pory"
-
+	faceplayer
 # 795 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AVALUGG, 10, 3
+	playmoncry SPECIES_TOTODILE, CRY_MODE_NORMAL
 # 796 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_SURF
+	waitmoncry
 # 797 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_THUNDERBOLT
+	release
 # 798 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory3, MSGBOX_DEFAULT
+	end
 # 799 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+
 # 800 "data/maps/MOSSDEEP01/scripts.pory"
-	
+MOSSDEEP01_EventScript_Torchic::
 # 801 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AMAURA, 10, 3
+	lock
 # 802 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
+	faceplayer
 # 803 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	playmoncry SPECIES_TORCHIC, CRY_MODE_NORMAL
 # 804 "data/maps/MOSSDEEP01/scripts.pory"
-
+	waitmoncry
 # 805 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AROMATISSE, 10, 3
+	release
 # 806 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
+	end
 # 807 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+
 # 808 "data/maps/MOSSDEEP01/scripts.pory"
-
+// ====================================================================
 # 809 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARROKUDA, 10, 3
+// WALLY NPC - SIMPLIFIED
 # 810 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
+// ====================================================================
 # 811 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+
 # 812 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_EventScript_Wally::
 # 813 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AUDINO, 10, 3
+	lock
 # 814 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
+	faceplayer
 # 815 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+
 # 816 "data/maps/MOSSDEEP01/scripts.pory"
-
+	// PRIORIDADE MAXIMA (depois do Celebi)
 # 817 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AURORUS, 10, 3
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
 # 818 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
-# 819 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
-# 820 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 819 "data/maps/MOSSDEEP01/scripts.pory"
+	// fluxo normal
+# 820 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_WallyAfterIntro
 # 821 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AMOONGUSS, 10, 3
+	
 # 822 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory9, MSGBOX_DEFAULT
+	// Check if attacked by Mightyenas
 # 823 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	goto_if_unset FLAG_WALLY_ATTACKED_BY_MIGHTYENA, MOSSDEEP01_EventScript_WallyNotReady
 # 824 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 825 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_APPLIN, 10, 3
+	// First conversation after the grandparents direct the player here.
 # 826 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory10, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 # 827 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	msgbox MOSSDEEP01_Text_WallyIntro, MSGBOX_DEFAULT
 # 828 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	removefieldmugshot
 # 829 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_APPLETUN, 10, 3
+	closemessage
 # 830 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory11, MSGBOX_DEFAULT
+	call_if_eq VAR_FACING, DIR_EAST, MOSSDEEP01_EventScript_LukaMovePlayerDown
 # 831 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	goto MOSSDEEP01_EventScript_LukaExit
 # 832 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 833 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AXEW, 10, 3
+MOSSDEEP01_EventScript_LukaMovePlayerDown::
 # 834 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory12, MSGBOX_DEFAULT
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
 # 835 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	waitmovement 0
 # 836 "data/maps/MOSSDEEP01/scripts.pory"
-	
+
 # 837 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARBOLIVA, 10, 3
+MOSSDEEP01_EventScript_LukaExit::
 # 838 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaStory13, MSGBOX_DEFAULT
+	applymovement LOCALID_LUKA_INITIAL, MOSSDEEP01_Movement_LukaExit
 # 839 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	applymovement LOCALID_PIDGEOT_INITIAL, MOSSDEEP01_Movement_PidgeotExit
 # 840 "data/maps/MOSSDEEP01/scripts.pory"
-
+	waitmovement 0
 # 841 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARCHEN, 10, 3
+	setflag FLAG_WALLY_INTRO_DONE
 # 842 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
+	setflag FLAG_HIDE_WALLY_INITIAL
 # 843 "data/maps/MOSSDEEP01/scripts.pory"
-	hidemonpic
+	setflag FLAG_HIDE_PIDGEOT_INITIAL
 # 844 "data/maps/MOSSDEEP01/scripts.pory"
-
+	clearflag FLAG_HIDE_WALLY_CLONE
 # 845 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreen FADE_FROM_BLACK
+	clearflag FLAG_HIDE_PIDGEOT_CLONE
 # 846 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
+	clearflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
 # 847 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	removeobject LOCALID_LUKA_INITIAL
 # 848 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	removeobject LOCALID_PIDGEOT_INITIAL
 # 849 "data/maps/MOSSDEEP01/scripts.pory"
-
+	removeobject LOCALID_MIGHTYENA_HOSTILE
 # 850 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
+	removeobject LOCALID_DARKRAI_HOSTILE
 # 851 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaAskAgain, MSGBOX_YESNO
+	addobject LOCALID_LUKA_GUARD
 # 852 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, YES
+	addobject LOCALID_PIDGEOT_GUARD
 # 853 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_EventScript_TellStory
+	addobject LOCALID_DARKRAI_GUARD
 # 854 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
+	addobject LOCALID_MIGHTYENA_GUARD
 # 855 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	setobjectmovementtype LOCALID_PIDGEOT_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_UP
 # 856 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	setobjectmovementtype LOCALID_DARKRAI_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
 # 857 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setobjectmovementtype LOCALID_MIGHTYENA_GUARD, MOVEMENT_TYPE_WALK_IN_PLACE_DOWN
 # 858 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GrandmaAfterCelebi::
+	release
 # 859 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandmaAfterCelebi, MSGBOX_DEFAULT
+	end
 # 860 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+
 # 861 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+MOSSDEEP01_Movement_LukaExit:
 # 862 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_left
 # 863 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Grandpa::
+	walk_left
 # 864 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+	walk_left
 # 865 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+	walk_down
 # 866 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_GrandpaAfterCelebi
+	walk_down
 # 867 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandpaAfter
+	walk_down
 # 868 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandpaFirstTalk, MSGBOX_DEFAULT
+	walk_down
 # 869 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	walk_down
 # 870 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	walk_down
 # 871 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_down
 # 872 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GrandpaAfter::
+	walk_down
 # 873 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandpaAfterTalk, MSGBOX_DEFAULT
+	step_end
 # 874 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+
 # 875 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+MOSSDEEP01_Movement_PidgeotExit:
 # 876 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_left
 # 877 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_GrandpaAfterCelebi::
+	walk_left
 # 878 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_GrandpaAfterCelebi, MSGBOX_DEFAULT
+	walk_left
 # 879 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	walk_down
 # 880 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	walk_down
 # 881 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_down
 # 882 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	walk_down
 # 883 "data/maps/MOSSDEEP01/scripts.pory"
-// RIVAL NPC (GENDER-BASED)
+	walk_down
 # 884 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	walk_down
 # 885 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_down
 # 886 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_SetupRivalNPC::
+	walk_down
 # 887 "data/maps/MOSSDEEP01/scripts.pory"
-	checkplayergender
+	step_end
 # 888 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, MALE
-# 889 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_EventScript_ShowFemaleRival
-# 890 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE
-# 891 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_MOSSDEEP_RIVAL_MALE
-# 892 "data/maps/MOSSDEEP01/scripts.pory"
-	return
-# 893 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 889 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_WallyNotReady::
+# 890 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 891 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 892 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
+# 893 "data/maps/MOSSDEEP01/scripts.pory"
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 # 894 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_ShowFemaleRival::
+	msgbox MOSSDEEP01_Text_WallyBeforeMightyena, MSGBOX_DEFAULT
 # 895 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_RIVAL_MALE
+	removefieldmugshot
 # 896 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE
+	release
 # 897 "data/maps/MOSSDEEP01/scripts.pory"
-	return
+	end
 # 898 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 899 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_RivalMale::
+MOSSDEEP01_EventScript_WallyGuardMightyena::
 # 900 "data/maps/MOSSDEEP01/scripts.pory"
 	lock
 # 901 "data/maps/MOSSDEEP01/scripts.pory"
 	faceplayer
 # 902 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RivalMaleAfterCelebi
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
 # 903 "data/maps/MOSSDEEP01/scripts.pory"
-	random 4
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 # 904 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 0
+	msgbox MOSSDEEP01_Text_WallyNotReady, MSGBOX_DEFAULT
 # 905 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalMale_Case0
+	removefieldmugshot
 # 906 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 1
+	release
 # 907 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalMale_Case1
+	end
 # 908 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 2
+
 # 909 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalMale_Case2
+MOSSDEEP01_EventScript_WallyAfterIntro::
 # 910 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 3
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
 # 911 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalMale_Case3
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 # 912 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	msgbox MOSSDEEP01_Text_WallyNotReady, MSGBOX_DEFAULT
 # 913 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	removefieldmugshot
 # 914 "data/maps/MOSSDEEP01/scripts.pory"
-
+	release
 # 915 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalMale_Case0::
+	end
 # 916 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalMale01, MSGBOX_DEFAULT
+
 # 917 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+MOSSDEEP01_EventScript_WallyAfterCelebi::
 # 918 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
 # 919 "data/maps/MOSSDEEP01/scripts.pory"
-
+	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
 # 920 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalMale_Case1::
+	removefieldmugshot
 # 921 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalMale02, MSGBOX_DEFAULT
+	release
 # 922 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	end
 # 923 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+
 # 924 "data/maps/MOSSDEEP01/scripts.pory"
-
+// ====================================================================
 # 925 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalMale_Case2::
+// SURVIVOR NPC
 # 926 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalMale03, MSGBOX_DEFAULT
+// ====================================================================
 # 927 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+
 # 928 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+MOSSDEEP01_EventScript_Survivor::
 # 929 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 930 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalMale_Case3::
-# 931 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalMale04, MSGBOX_DEFAULT
-# 932 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 933 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 934 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 935 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_RivalMaleAfterCelebi::
-# 936 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalMaleAfterCelebi, MSGBOX_DEFAULT
-# 937 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 938 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 939 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 940 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_RivalFemale::
-# 941 "data/maps/MOSSDEEP01/scripts.pory"
 	lock
-# 942 "data/maps/MOSSDEEP01/scripts.pory"
+# 930 "data/maps/MOSSDEEP01/scripts.pory"
 	faceplayer
+# 931 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_SurvivorAfterCelebi
+# 932 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_SurvivorTrapped, MSGBOX_DEFAULT
+# 933 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 934 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 935 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 936 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_SurvivorAfterCelebi::
+# 937 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_TEMP_14, MOSSDEEP01_EventScript_SurvivorMoved
+# 938 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_SurvivorAmazed, MSGBOX_DEFAULT
+# 939 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 940 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_SurvivorGoing, MSGBOX_DEFAULT
+# 941 "data/maps/MOSSDEEP01/scripts.pory"
+	closemessage
+# 942 "data/maps/MOSSDEEP01/scripts.pory"
+	applymovement LOCALID_SURVIVOR, MOSSDEEP01_Movement_SurvivorGoUp
 # 943 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RivalFemaleAfterCelebi
+	waitmovement 0
 # 944 "data/maps/MOSSDEEP01/scripts.pory"
-	random 4
+	setflag FLAG_TEMP_14
 # 945 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 0
+	release
 # 946 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalFemale_Case0
+	end
 # 947 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 1
+
 # 948 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalFemale_Case1
+MOSSDEEP01_EventScript_SurvivorMoved::
 # 949 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 2
+	msgbox MOSSDEEP01_Text_SurvivorHappy, MSGBOX_DEFAULT
 # 950 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalFemale_Case2
+	release
 # 951 "data/maps/MOSSDEEP01/scripts.pory"
-	compare VAR_RESULT, 3
+	end
 # 952 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_RivalFemale_Case3
+
 # 953 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+MOSSDEEP01_Movement_SurvivorGoUp:
 # 954 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	walk_up
 # 955 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_up
 # 956 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalFemale_Case0::
+	walk_up
 # 957 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalFemale01, MSGBOX_DEFAULT
+	walk_up
 # 958 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	walk_up
 # 959 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	walk_up
 # 960 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_up
 # 961 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalFemale_Case1::
+	walk_up
 # 962 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalFemale02, MSGBOX_DEFAULT
+	walk_up
 # 963 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	step_end
 # 964 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+
 # 965 "data/maps/MOSSDEEP01/scripts.pory"
-
+// ====================================================================
 # 966 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalFemale_Case2::
+// HEALER NPC
 # 967 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalFemale03, MSGBOX_DEFAULT
+// ====================================================================
 # 968 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+
 # 969 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+MOSSDEEP01_EventScript_Healer::
 # 970 "data/maps/MOSSDEEP01/scripts.pory"
-
+	lock
 # 971 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_RivalFemale_Case3::
+	faceplayer
 # 972 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalFemale04, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_HealerWelcome, MSGBOX_DEFAULT
 # 973 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	playfanfare MUS_HEAL
 # 974 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	msgbox MOSSDEEP01_Text_Healing, MSGBOX_DEFAULT
 # 975 "data/maps/MOSSDEEP01/scripts.pory"
-
+	waitfanfare
 # 976 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_RivalFemaleAfterCelebi::
+	special HealPlayerParty
 # 977 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_RivalFemaleAfterCelebi, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_HealedComplete, MSGBOX_DEFAULT
 # 978 "data/maps/MOSSDEEP01/scripts.pory"
 	release
 # 979 "data/maps/MOSSDEEP01/scripts.pory"
@@ -1959,1558 +1959,2140 @@ MOSSDEEP01_EventScript_RivalFemaleAfterCelebi::
 # 980 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 981 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Child01::
+// ====================================================================
 # 982 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+// GRANDMA EVENT WITH STORY //
 # 983 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+// ====================================================================
 # 984 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_Child01, MSGBOX_DEFAULT
+
 # 985 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+MOSSDEEP01_EventScript_Grandma::
 # 986 "data/maps/MOSSDEEP01/scripts.pory"
-	end	
-# 987 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 988 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Child02::
-# 989 "data/maps/MOSSDEEP01/scripts.pory"
 	lock
-# 990 "data/maps/MOSSDEEP01/scripts.pory"
+# 987 "data/maps/MOSSDEEP01/scripts.pory"
 	faceplayer
+# 988 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_GrandmaAfterCelebi
+# 989 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandmaAfterFirstTalk
+# 990 "data/maps/MOSSDEEP01/scripts.pory"
+	
 # 991 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_Child02, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_GrandmaAskStory, MSGBOX_YESNO
 # 992 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	compare VAR_RESULT, YES
 # 993 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	goto_if_eq MOSSDEEP01_EventScript_TellStory
 # 994 "data/maps/MOSSDEEP01/scripts.pory"
-
+	msgbox MOSSDEEP01_Text_GrandmaBeCareful, MSGBOX_DEFAULT
 # 995 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
 # 996 "data/maps/MOSSDEEP01/scripts.pory"
-// WAILORD BLOCKER - Simple blocking system
+	release
 # 997 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	end
 # 998 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 999 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WailordBlocker::
+MOSSDEEP01_EventScript_TellStory::
 # 1000 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+	showmonpic SPECIES_AEGISLASH, 10, 3
 # 1001 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 1002 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WailordGone
+	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
 # 1003 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_WailordBlocking, MSGBOX_DEFAULT
+	hidemonpic
 # 1004 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	
 # 1005 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	showmonpic SPECIES_ALOMOMOLA, 10, 3
 # 1006 "data/maps/MOSSDEEP01/scripts.pory"
-
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 # 1007 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WailordGone::
+	msgbox MOSSDEEP01_Text_GrandmaStory2, MSGBOX_DEFAULT
 # 1008 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_PathNowOpen, MSGBOX_DEFAULT
+	hidemonpic
 # 1009 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+
 # 1010 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	showmonpic SPECIES_AVALUGG, 10, 3
 # 1011 "data/maps/MOSSDEEP01/scripts.pory"
-
+	playse SE_M_SURF
 # 1012 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WailordBlocksPath::
+	playse SE_M_THUNDERBOLT
 # 1013 "data/maps/MOSSDEEP01/scripts.pory"
-    lockall
+	msgbox MOSSDEEP01_Text_GrandmaStory3, MSGBOX_DEFAULT
 # 1014 "data/maps/MOSSDEEP01/scripts.pory"
-    msgbox MOSSDEEP01_Text_WailordBlocks, MSGBOX_DEFAULT
+	hidemonpic
 # 1015 "data/maps/MOSSDEEP01/scripts.pory"
-    closemessage
+	
 # 1016 "data/maps/MOSSDEEP01/scripts.pory"
-    applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
+	showmonpic SPECIES_AMAURA, 10, 3
 # 1017 "data/maps/MOSSDEEP01/scripts.pory"
-    waitmovement 0
+	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
 # 1018 "data/maps/MOSSDEEP01/scripts.pory"
-    releaseall
+	hidemonpic
 # 1019 "data/maps/MOSSDEEP01/scripts.pory"
-    end
+
 # 1020 "data/maps/MOSSDEEP01/scripts.pory"
-
+	showmonpic SPECIES_AROMATISSE, 10, 3
 # 1021 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_WailordPathClear::
+	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
 # 1022 "data/maps/MOSSDEEP01/scripts.pory"
-    // Path is clear, do nothing
+	hidemonpic
 # 1023 "data/maps/MOSSDEEP01/scripts.pory"
-    end
-# 1024 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1024 "data/maps/MOSSDEEP01/scripts.pory"
+	showmonpic SPECIES_ARROKUDA, 10, 3
 # 1025 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Wailord::
+	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
 # 1026 "data/maps/MOSSDEEP01/scripts.pory"
-    lock
+	hidemonpic
 # 1027 "data/maps/MOSSDEEP01/scripts.pory"
-    faceplayer
+
 # 1028 "data/maps/MOSSDEEP01/scripts.pory"
-    msgbox MOSSDEEP01_Text_WailordIdle, MSGBOX_DEFAULT
+	showmonpic SPECIES_AUDINO, 10, 3
 # 1029 "data/maps/MOSSDEEP01/scripts.pory"
-    release
+	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
 # 1030 "data/maps/MOSSDEEP01/scripts.pory"
-    end
+	hidemonpic
 # 1031 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1032 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Wailmer::
+	showmonpic SPECIES_AURORUS, 10, 3
 # 1033 "data/maps/MOSSDEEP01/scripts.pory"
-    lock
+	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
 # 1034 "data/maps/MOSSDEEP01/scripts.pory"
-    faceplayer
+	hidemonpic
 # 1035 "data/maps/MOSSDEEP01/scripts.pory"
-    msgbox MOSSDEEP01_Text_WailmerIdle, MSGBOX_DEFAULT
+
 # 1036 "data/maps/MOSSDEEP01/scripts.pory"
-    release
+	showmonpic SPECIES_AMOONGUSS, 10, 3
 # 1037 "data/maps/MOSSDEEP01/scripts.pory"
-    end
+	msgbox MOSSDEEP01_Text_GrandmaStory9, MSGBOX_DEFAULT
 # 1038 "data/maps/MOSSDEEP01/scripts.pory"
-
+	hidemonpic
 # 1039 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	
 # 1040 "data/maps/MOSSDEEP01/scripts.pory"
-// JIRACHI WAKE EVENT - TRIGGER BASED
+	showmonpic SPECIES_APPLIN, 10, 3
 # 1041 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	msgbox MOSSDEEP01_Text_GrandmaStory10, MSGBOX_DEFAULT
 # 1042 "data/maps/MOSSDEEP01/scripts.pory"
-
+	hidemonpic
 # 1043 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_JirachiTrigger::
+	
 # 1044 "data/maps/MOSSDEEP01/scripts.pory"
-	lockall
+	showmonpic SPECIES_APPLETUN, 10, 3
 # 1045 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	msgbox MOSSDEEP01_Text_GrandmaStory11, MSGBOX_DEFAULT
 # 1046 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiAlreadyAwake
+	hidemonpic
 # 1047 "data/maps/MOSSDEEP01/scripts.pory"
-	
+
 # 1048 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_JirachiWaking, MSGBOX_DEFAULT
+	showmonpic SPECIES_AXEW, 10, 3
 # 1049 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	msgbox MOSSDEEP01_Text_GrandmaStory12, MSGBOX_DEFAULT
 # 1050 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 15
+	hidemonpic
 # 1051 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 1052 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_TO_WHITE, 4
+	showmonpic SPECIES_ARBOLIVA, 10, 3
 # 1053 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_PSYBEAM
+	msgbox MOSSDEEP01_Text_GrandmaStory13, MSGBOX_DEFAULT
 # 1054 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 10
+	hidemonpic
 # 1055 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_FROM_WHITE, 4
+
 # 1056 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 15
+	showmonpic SPECIES_ARCHEN, 10, 3
 # 1057 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 # 1058 "data/maps/MOSSDEEP01/scripts.pory"
-	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_SOUTH
+	hidemonpic
 # 1059 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_PSYBEAM
+
 # 1060 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
+	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
 # 1061 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	release
 # 1062 "data/maps/MOSSDEEP01/scripts.pory"
-	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
+	end
 # 1063 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_SWIFT
+
 # 1064 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
+MOSSDEEP01_EventScript_GrandmaAfterFirstTalk::
 # 1065 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	msgbox MOSSDEEP01_Text_GrandmaAskAgain, MSGBOX_YESNO
 # 1066 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_JIRACHI_AWAKE
+	compare VAR_RESULT, YES
 # 1067 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_JirachiAwoken, MSGBOX_DEFAULT
+	goto_if_eq MOSSDEEP01_EventScript_TellStory
 # 1068 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
+	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 # 1069 "data/maps/MOSSDEEP01/scripts.pory"
-	releaseall
+	release
 # 1070 "data/maps/MOSSDEEP01/scripts.pory"
 	end
 # 1071 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1072 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_JirachiAlreadyAwake::
+MOSSDEEP01_EventScript_GrandmaAfterCelebi::
 # 1073 "data/maps/MOSSDEEP01/scripts.pory"
-	releaseall
+	msgbox MOSSDEEP01_Text_GrandmaAfterCelebi, MSGBOX_DEFAULT
 # 1074 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	release
 # 1075 "data/maps/MOSSDEEP01/scripts.pory"
-
+	end
 # 1076 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_Jirachi::
+
 # 1077 "data/maps/MOSSDEEP01/scripts.pory"
-	lock
+MOSSDEEP01_EventScript_Grandpa::
 # 1078 "data/maps/MOSSDEEP01/scripts.pory"
-	faceplayer
+	lock
 # 1079 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	faceplayer
 # 1080 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiSleeping
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_GrandpaAfterCelebi
 # 1081 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	goto_if_set FLAG_MOSSDEEP_GRANDPA_DIALOGUE, MOSSDEEP01_EventScript_GrandpaAfter
 # 1082 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_JirachiNeedCelebi
+	msgbox MOSSDEEP01_Text_GrandpaFirstTalk, MSGBOX_DEFAULT
 # 1083 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_JirachiNeedItems
+	release
 # 1084 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_JirachiNeedItems
+	end
 # 1085 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_JirachiNeedItems
+
 # 1086 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_set FLAG_MOSSDEEP_COMET_SCENE_PLAYED, MOSSDEEP01_JirachiAlreadyCompleted
+MOSSDEEP01_EventScript_GrandpaAfter::
 # 1087 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	msgbox MOSSDEEP01_Text_GrandpaAfterTalk, MSGBOX_DEFAULT
 # 1088 "data/maps/MOSSDEEP01/scripts.pory"
-	goto MOSSDEEP01_EventScript_QuestComplete
+	release
 # 1089 "data/maps/MOSSDEEP01/scripts.pory"
-
+	end
 # 1090 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_JirachiNeedCelebi::
+
 # 1091 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
+MOSSDEEP01_EventScript_GrandpaAfterCelebi::
 # 1092 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_JirachiNeedCelebi, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_GrandpaAfterCelebi, MSGBOX_DEFAULT
 # 1093 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
+	release
 # 1094 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	end
 # 1095 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+
 # 1096 "data/maps/MOSSDEEP01/scripts.pory"
-
+// ====================================================================
 # 1097 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_JirachiNeedItems::
+// RIVAL NPC (GENDER-BASED)
 # 1098 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
+// ====================================================================
 # 1099 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_JirachiNeedItems, MSGBOX_DEFAULT
+
 # 1100 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
+MOSSDEEP01_EventScript_SetupRivalNPC::
 # 1101 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 1102 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 1103 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1104 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_JirachiAlreadyCompleted::
-# 1105 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
-# 1106 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_JirachiCompleted, MSGBOX_DEFAULT
-# 1107 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 1108 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 1109 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 1110 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1111 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_JirachiSleeping::
-# 1112 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_JirachiStillSleeping, MSGBOX_DEFAULT
-# 1113 "data/maps/MOSSDEEP01/scripts.pory"
-	release
-# 1114 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 1115 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1116 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 1117 "data/maps/MOSSDEEP01/scripts.pory"
-// QUEST COMPLETION - JIRACHI SENDS PLAYER HOME
-# 1118 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
-# 1119 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1120 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_EventScript_QuestComplete::
-# 1121 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
-# 1122 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_ThankYou, MSGBOX_DEFAULT
-# 1123 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 1124 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 1125 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_CometAppears, MSGBOX_DEFAULT
-# 1126 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 1127 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_TO_BLACK, 8
-# 1128 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 40
-# 1129 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
-# 1130 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
-# 1131 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_FROM_BLACK, 4
-# 1132 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 10
-# 1133 "data/maps/MOSSDEEP01/scripts.pory"
-	clearflag FLAG_HIDE_MOSSDEEP_COMET
-# 1134 "data/maps/MOSSDEEP01/scripts.pory"
-	addobject LOCALID_MILLENNIUM_COMET
-# 1135 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_SHINY
-# 1136 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_TO_WHITE, 2
-# 1137 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 8
-# 1138 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_FROM_WHITE, 2
-# 1139 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 30
-# 1140 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_THUNDERSTORM
-# 1141 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 15
-# 1142 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_SACRED_FIRE
-# 1143 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
-# 1144 "data/maps/MOSSDEEP01/scripts.pory"
-	special SpawnCameraObject
-# 1145 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_SWIFT
-# 1146 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
-# 1147 "data/maps/MOSSDEEP01/scripts.pory"
-	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometCrossingSky
-# 1148 "data/maps/MOSSDEEP01/scripts.pory"
-	waitmovement 0
-# 1149 "data/maps/MOSSDEEP01/scripts.pory"
-	special RemoveCameraObject
-# 1150 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
-# 1151 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_EXPLOSION
-# 1152 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 15
-# 1153 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_TO_WHITE, 4
-# 1154 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 30
-# 1155 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_SOLAR_BEAM
-# 1156 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 40
-# 1157 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_FROM_WHITE, 8
-# 1158 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 20
-# 1159 "data/maps/MOSSDEEP01/scripts.pory"
-	removeobject LOCALID_MILLENNIUM_COMET
-# 1160 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_MOSSDEEP_COMET
-# 1161 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_COMET_SCENE_PLAYED
-# 1162 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_MOSSDEEP_QUEST_COMPLETED
-# 1163 "data/maps/MOSSDEEP01/scripts.pory"
-	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
-# 1164 "data/maps/MOSSDEEP01/scripts.pory"
-	msgbox MOSSDEEP01_Text_TimeToWakeUp, MSGBOX_DEFAULT
-# 1165 "data/maps/MOSSDEEP01/scripts.pory"
-	removefieldmugshot
-# 1166 "data/maps/MOSSDEEP01/scripts.pory"
-	closemessage
-# 1167 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 30
-# 1168 "data/maps/MOSSDEEP01/scripts.pory"
-	playse SE_M_TELEPORT
-# 1169 "data/maps/MOSSDEEP01/scripts.pory"
-	fadescreenspeed FADE_TO_BLACK, 12
-# 1170 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 80
-# 1171 "data/maps/MOSSDEEP01/scripts.pory"
-	delay 60
-# 1172 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 1173 "data/maps/MOSSDEEP01/scripts.pory"
-	// Set flags for Littleroot Town start
-# 1174 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_VISITED_LITTLEROOT_TOWN
-# 1175 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
-# 1176 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
-# 1177 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_SET_WALL_CLOCK
-# 1178 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_RESCUED_BIRCH
-# 1179 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
-# 1180 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_SYS_B_DASH
-# 1181 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_RECEIVED_RUNNING_SHOES
-# 1182 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_LITTLEROOT_INTRO_STATE, 6
-# 1183 "data/maps/MOSSDEEP01/scripts.pory"
-	setvar VAR_LITTLEROOT_TOWN_STATE, 4
-# 1184 "data/maps/MOSSDEEP01/scripts.pory"
-	
-# 1185 "data/maps/MOSSDEEP01/scripts.pory"
 	checkplayergender
-# 1186 "data/maps/MOSSDEEP01/scripts.pory"
+# 1102 "data/maps/MOSSDEEP01/scripts.pory"
 	compare VAR_RESULT, MALE
+# 1103 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_EventScript_ShowFemaleRival
+# 1104 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE
+# 1105 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_MOSSDEEP_RIVAL_MALE
+# 1106 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 1107 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1108 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_ShowFemaleRival::
+# 1109 "data/maps/MOSSDEEP01/scripts.pory"
+	setflag FLAG_HIDE_MOSSDEEP_RIVAL_MALE
+# 1110 "data/maps/MOSSDEEP01/scripts.pory"
+	clearflag FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE
+# 1111 "data/maps/MOSSDEEP01/scripts.pory"
+	return
+# 1112 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1113 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_RivalMale::
+# 1114 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 1115 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 1116 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RivalMaleAfterCelebi
+# 1117 "data/maps/MOSSDEEP01/scripts.pory"
+	random 4
+# 1118 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 0
+# 1119 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalMale_Case0
+# 1120 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 1
+# 1121 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalMale_Case1
+# 1122 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 2
+# 1123 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalMale_Case2
+# 1124 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 3
+# 1125 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalMale_Case3
+# 1126 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1127 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1128 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1129 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalMale_Case0::
+# 1130 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalMale01, MSGBOX_DEFAULT
+# 1131 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1132 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1133 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1134 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalMale_Case1::
+# 1135 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalMale02, MSGBOX_DEFAULT
+# 1136 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1137 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1138 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1139 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalMale_Case2::
+# 1140 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalMale03, MSGBOX_DEFAULT
+# 1141 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1142 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1143 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1144 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalMale_Case3::
+# 1145 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalMale04, MSGBOX_DEFAULT
+# 1146 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1147 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1148 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1149 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_RivalMaleAfterCelebi::
+# 1150 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalMaleAfterCelebi, MSGBOX_DEFAULT
+# 1151 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1152 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1153 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1154 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_RivalFemale::
+# 1155 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 1156 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
+# 1157 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RivalFemaleAfterCelebi
+# 1158 "data/maps/MOSSDEEP01/scripts.pory"
+	random 4
+# 1159 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 0
+# 1160 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalFemale_Case0
+# 1161 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 1
+# 1162 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalFemale_Case1
+# 1163 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 2
+# 1164 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalFemale_Case2
+# 1165 "data/maps/MOSSDEEP01/scripts.pory"
+	compare VAR_RESULT, 3
+# 1166 "data/maps/MOSSDEEP01/scripts.pory"
+	goto_if_eq MOSSDEEP01_RivalFemale_Case3
+# 1167 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1168 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1169 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1170 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalFemale_Case0::
+# 1171 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalFemale01, MSGBOX_DEFAULT
+# 1172 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1173 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1174 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1175 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalFemale_Case1::
+# 1176 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalFemale02, MSGBOX_DEFAULT
+# 1177 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1178 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1179 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1180 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalFemale_Case2::
+# 1181 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalFemale03, MSGBOX_DEFAULT
+# 1182 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1183 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1184 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1185 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_RivalFemale_Case3::
+# 1186 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_RivalFemale04, MSGBOX_DEFAULT
 # 1187 "data/maps/MOSSDEEP01/scripts.pory"
-	goto_if_eq MOSSDEEP01_WarpMale
+	release
 # 1188 "data/maps/MOSSDEEP01/scripts.pory"
-	
+	end
 # 1189 "data/maps/MOSSDEEP01/scripts.pory"
-	// Female player
+
 # 1190 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+MOSSDEEP01_EventScript_RivalFemaleAfterCelebi::
 # 1191 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	msgbox MOSSDEEP01_Text_RivalFemaleAfterCelebi, MSGBOX_DEFAULT
 # 1192 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	release
 # 1193 "data/maps/MOSSDEEP01/scripts.pory"
-	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
+	end
 # 1194 "data/maps/MOSSDEEP01/scripts.pory"
-	destroyfollowernpc
+
 # 1195 "data/maps/MOSSDEEP01/scripts.pory"
-	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
+MOSSDEEP01_EventScript_Child01::
 # 1196 "data/maps/MOSSDEEP01/scripts.pory"
-	waitstate
+	lock
 # 1197 "data/maps/MOSSDEEP01/scripts.pory"
-	release
+	goto_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_DaughterReunited
 # 1198 "data/maps/MOSSDEEP01/scripts.pory"
-	end
+	faceplayer
 # 1199 "data/maps/MOSSDEEP01/scripts.pory"
-
+	msgbox MOSSDEEP01_Text_Child01, MSGBOX_DEFAULT
 # 1200 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_WarpMale::
-# 1201 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
-# 1202 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
-# 1203 "data/maps/MOSSDEEP01/scripts.pory"
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
-# 1204 "data/maps/MOSSDEEP01/scripts.pory"
-	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
-# 1205 "data/maps/MOSSDEEP01/scripts.pory"
-	destroyfollowernpc
-# 1206 "data/maps/MOSSDEEP01/scripts.pory"
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
-# 1207 "data/maps/MOSSDEEP01/scripts.pory"
-	waitstate
-# 1208 "data/maps/MOSSDEEP01/scripts.pory"
 	release
-# 1209 "data/maps/MOSSDEEP01/scripts.pory"
-	end
-# 1210 "data/maps/MOSSDEEP01/scripts.pory"
+# 1201 "data/maps/MOSSDEEP01/scripts.pory"
+	end	
+# 1202 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1203 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_DaughterReunited::
+# 1204 "data/maps/MOSSDEEP01/scripts.pory"
+	msgbox MOSSDEEP01_Text_DaughterThanksForParents, MSGBOX_DEFAULT
+# 1205 "data/maps/MOSSDEEP01/scripts.pory"
+	release
+# 1206 "data/maps/MOSSDEEP01/scripts.pory"
+	end
+# 1207 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1208 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_EventScript_Child02::
+# 1209 "data/maps/MOSSDEEP01/scripts.pory"
+	lock
+# 1210 "data/maps/MOSSDEEP01/scripts.pory"
+	faceplayer
 # 1211 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	msgbox MOSSDEEP01_Text_Child02, MSGBOX_DEFAULT
 # 1212 "data/maps/MOSSDEEP01/scripts.pory"
-// MOVEMENT SCRIPTS
+	release
 # 1213 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	end
 # 1214 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1215 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Movement_CameraFollowComet:
+// ====================================================================
 # 1216 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+// WAILORD BLOCKER - Simple blocking system
 # 1217 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+// ====================================================================
 # 1218 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1219 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_WailordBlocker::
 # 1220 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	lock
 # 1221 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WailordGone
 # 1222 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_WailordBlocking, MSGBOX_DEFAULT
 # 1223 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	release
 # 1224 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1225 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1226 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_WailordGone::
 # 1227 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_PathNowOpen, MSGBOX_DEFAULT
 # 1228 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	release
 # 1229 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1230 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1231 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_WailordBlocksPath::
 # 1232 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    lockall
 # 1233 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    msgbox MOSSDEEP01_Text_WailordBlocks, MSGBOX_DEFAULT
 # 1234 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    closemessage
 # 1235 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkDown
 # 1236 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    waitmovement 0
 # 1237 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    releaseall
 # 1238 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    end
 # 1239 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1240 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_WailordPathClear::
 # 1241 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    // Path is clear, do nothing
 # 1242 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    end
 # 1243 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1244 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_Wailord::
 # 1245 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    lock
 # 1246 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    faceplayer
 # 1247 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    msgbox MOSSDEEP01_Text_WailordIdle, MSGBOX_DEFAULT
 # 1248 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    release
 # 1249 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    end
 # 1250 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1251 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_Wailmer::
 # 1252 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    lock
 # 1253 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    faceplayer
 # 1254 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    msgbox MOSSDEEP01_Text_WailmerIdle, MSGBOX_DEFAULT
 # 1255 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+    release
 # 1256 "data/maps/MOSSDEEP01/scripts.pory"
-	step_end
+    end
 # 1257 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1258 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Movement_CometCrossingSky:
+// ====================================================================
 # 1259 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+// JIRACHI WAKE EVENT - TRIGGER BASED
 # 1260 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+// ====================================================================
 # 1261 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1262 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_JirachiTrigger::
 # 1263 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	lockall
 # 1264 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1265 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_set FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiAlreadyAwake
 # 1266 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1267 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_JirachiWaking, MSGBOX_DEFAULT
 # 1268 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	closemessage
 # 1269 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	delay 15
 # 1270 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1271 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	fadescreenspeed FADE_TO_WHITE, 4
 # 1272 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	playse SE_M_PSYBEAM
 # 1273 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	delay 10
 # 1274 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	fadescreenspeed FADE_FROM_WHITE, 4
 # 1275 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	delay 15
 # 1276 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1277 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_SOUTH
 # 1278 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	playse SE_M_PSYBEAM
 # 1279 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	delay 20
 # 1280 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1281 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	turnobject LOCALID_MOSSDEEP_JIRACHI, DIR_NORTH
 # 1282 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	playse SE_M_SWIFT
 # 1283 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	delay 20
 # 1284 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1285 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	setflag FLAG_JIRACHI_AWAKE
 # 1286 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_JirachiAwoken, MSGBOX_DEFAULT
 # 1287 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	closemessage
 # 1288 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	releaseall
 # 1289 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1290 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1291 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_JirachiAlreadyAwake::
 # 1292 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	releaseall
 # 1293 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1294 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1295 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_EventScript_Jirachi::
 # 1296 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	lock
 # 1297 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	faceplayer
 # 1298 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1299 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_unset FLAG_JIRACHI_AWAKE, MOSSDEEP01_JirachiSleeping
 # 1300 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1301 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_unset FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_JirachiNeedCelebi
 # 1302 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_1, MOSSDEEP01_JirachiNeedItems
 # 1303 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_2, MOSSDEEP01_JirachiNeedItems
 # 1304 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_unset FLAG_MOSSDEEP_COLLECTED_ITEM_3, MOSSDEEP01_JirachiNeedItems
 # 1305 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto_if_set FLAG_MOSSDEEP_COMET_SCENE_PLAYED, MOSSDEEP01_JirachiAlreadyCompleted
 # 1306 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	
 # 1307 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	goto MOSSDEEP01_EventScript_QuestComplete
 # 1308 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1309 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_JirachiNeedCelebi::
 # 1310 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 1311 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_JirachiNeedCelebi, MSGBOX_DEFAULT
 # 1312 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	removefieldmugshot
 # 1313 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	release
 # 1314 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1315 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1316 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_JirachiNeedItems::
 # 1317 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 1318 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_JirachiNeedItems, MSGBOX_DEFAULT
 # 1319 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	removefieldmugshot
 # 1320 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	release
 # 1321 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1322 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1323 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_JirachiAlreadyCompleted::
 # 1324 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 1325 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_JirachiCompleted, MSGBOX_DEFAULT
 # 1326 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	removefieldmugshot
 # 1327 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	release
 # 1328 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1329 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1330 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+MOSSDEEP01_JirachiSleeping::
 # 1331 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	msgbox MOSSDEEP01_Text_JirachiStillSleeping, MSGBOX_DEFAULT
 # 1332 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	release
 # 1333 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+	end
 # 1334 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1335 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+// ====================================================================
 # 1336 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+// QUEST COMPLETION - JIRACHI SENDS PLAYER HOME
 # 1337 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+// ====================================================================
 # 1338 "data/maps/MOSSDEEP01/scripts.pory"
-	walk_fast_left
+
 # 1339 "data/maps/MOSSDEEP01/scripts.pory"
-	step_end
+MOSSDEEP01_EventScript_QuestComplete::
 # 1340 "data/maps/MOSSDEEP01/scripts.pory"
-
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 1341 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	msgbox MOSSDEEP01_Text_ThankYou, MSGBOX_DEFAULT
 # 1342 "data/maps/MOSSDEEP01/scripts.pory"
-// TEXT MESSAGES
+	removefieldmugshot
 # 1343 "data/maps/MOSSDEEP01/scripts.pory"
-// ====================================================================
+	closemessage
 # 1344 "data/maps/MOSSDEEP01/scripts.pory"
-
+	msgbox MOSSDEEP01_Text_CometAppears, MSGBOX_DEFAULT
 # 1345 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_NeedCelebiFirst:
+	closemessage
 # 1346 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: I sense something…\p"
+	fadescreenspeed FADE_TO_BLACK, 8
 # 1347 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The Guardian of the Forest,\n"
+	delay 40
 # 1348 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CELEBI, is in danger!\p"
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 # 1349 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please, help CELEBI first!\n"
+	waitmovement 0
 # 1350 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Only then can I assist you.$"
+	fadescreenspeed FADE_FROM_BLACK, 4
 # 1351 "data/maps/MOSSDEEP01/scripts.pory"
-
+	delay 10
 # 1352 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_NeedItems:
+	clearflag FLAG_HIDE_MOSSDEEP_COMET
 # 1353 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: Thank you for saving CELEBI!\p"
+	addobject LOCALID_MILLENNIUM_COMET
 # 1354 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Unfortunately, the flow of time is broken.\p"
+	playse SE_SHINY
 # 1355 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please find the three TIME GEARS\n"
+	fadescreenspeed FADE_TO_WHITE, 2
 # 1356 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "scattered around this place.\p"
+	delay 8
 # 1357 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Only then can I send you home!$"
+	fadescreenspeed FADE_FROM_WHITE, 2
 # 1358 "data/maps/MOSSDEEP01/scripts.pory"
-
+	delay 30
 # 1359 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ThankYou:
+	playse SE_THUNDERSTORM
 # 1360 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: You found all the TIME GEARS!\p"
+	delay 15
 # 1361 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The temporal flow is restoring…\n"
+	playse SE_M_SACRED_FIRE
 # 1362 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Look! The MILLENNIUM COMET!$"
+	delay 20
 # 1363 "data/maps/MOSSDEEP01/scripts.pory"
-
+	special SpawnCameraObject
 # 1364 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CometAppears:
+	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraPanToComet
 # 1365 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The sky begins to glow!\p"
+	waitmovement 0
 # 1366 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "A brilliant comet streaks across\n"
+	delay 20
 # 1367 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the heavens!$"
+	playse SE_M_SWIFT
 # 1368 "data/maps/MOSSDEEP01/scripts.pory"
-
+	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
 # 1369 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_TimeToWakeUp:
+	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CameraFollowComet
 # 1370 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: The timeline is restored!\p"
+	waitmovement 0
 # 1371 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It's time to wake up from this dream…$"
+	special RemoveCameraObject
 # 1372 "data/maps/MOSSDEEP01/scripts.pory"
-
+	delay 20
 # 1373 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_AlreadyHelped:
+	playse SE_M_EXPLOSION
 # 1374 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: You already helped restore\n"
+	delay 15
 # 1375 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the flow of time!\p"
+	fadescreenspeed FADE_TO_WHITE, 4
 # 1376 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you, time traveler!$"
+	delay 30
 # 1377 "data/maps/MOSSDEEP01/scripts.pory"
-
+	playse SE_M_SOLAR_BEAM
 # 1378 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_FoundItem1:
+	delay 40
 # 1379 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} found something shining\n"
+	fadescreenspeed FADE_FROM_WHITE, 8
 # 1380 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "in the grass…$"
+	delay 20
 # 1381 "data/maps/MOSSDEEP01/scripts.pory"
-
+	removeobject LOCALID_MILLENNIUM_COMET
 # 1382 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ObtainedTimeGear1:
+	setflag FLAG_HIDE_MOSSDEEP_COMET
 # 1383 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} obtained the TIME GEAR\n"
+	setflag FLAG_MOSSDEEP_COMET_SCENE_PLAYED
 # 1384 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of the PAST!$"
+	setflag FLAG_MOSSDEEP_QUEST_COMPLETED
 # 1385 "data/maps/MOSSDEEP01/scripts.pory"
-
+	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
 # 1386 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_FoundItem2:
+	msgbox MOSSDEEP01_Text_TimeToWakeUp, MSGBOX_DEFAULT
 # 1387 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} discovered something glowing\n"
+	removefieldmugshot
 # 1388 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "among the rocks…$"
+	closemessage
 # 1389 "data/maps/MOSSDEEP01/scripts.pory"
-
+	delay 30
 # 1390 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ObtainedTimeGear2:
+	playse SE_M_TELEPORT
 # 1391 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} obtained the TIME GEAR\n"
+	fadescreenspeed FADE_TO_BLACK, 12
 # 1392 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of the PRESENT!$"
+	delay 80
 # 1393 "data/maps/MOSSDEEP01/scripts.pory"
-
+	delay 60
 # 1394 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_FoundItem3:
+	
 # 1395 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} noticed something sparkling\n"
+	// Set flags for Littleroot Town start
 # 1396 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "in the water…$"
+	setflag FLAG_VISITED_LITTLEROOT_TOWN
 # 1397 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 # 1398 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ObtainedTimeGear3:
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
 # 1399 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} obtained the TIME GEAR\n"
+	setflag FLAG_SET_WALL_CLOCK
 # 1400 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of the FUTURE!$"
+	setflag FLAG_RESCUED_BIRCH
 # 1401 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
 # 1402 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_AlreadyCollected:
+	setflag FLAG_SYS_B_DASH
 # 1403 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "This place seems peaceful now.$"
+	setflag FLAG_RECEIVED_RUNNING_SHOES
 # 1404 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 # 1405 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiHelp:
+	setvar VAR_LITTLEROOT_TOWN_STATE, 4
 # 1406 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CELEBI: … … …\p"
+	
 # 1407 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The flow of time is broken…\p"
+	checkplayergender
 # 1408 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please… find the three TIME GEARS…\n"
+	compare VAR_RESULT, MALE
 # 1409 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Only then can I be freed…$"
+	goto_if_eq MOSSDEEP01_WarpMale
 # 1410 "data/maps/MOSSDEEP01/scripts.pory"
-
+	
 # 1411 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiPower:
+	// Female player
 # 1412 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CELEBI: You found all the TIME GEARS!\p"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
 # 1413 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Now I can use my power to restore\n"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 # 1414 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the temporal flow!$"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
 # 1415 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE
 # 1416 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiCalmed:
+	destroyfollowernpc
 # 1417 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The wild POKÉMON have calmed down!$"
+	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 7, 4
 # 1418 "data/maps/MOSSDEEP01/scripts.pory"
-
+	waitstate
 # 1419 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiThanks:
+	release
 # 1420 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CELEBI: Thank you, {PLAYER}!\n"
+	end
 # 1421 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Together we restored time!$"
+
 # 1422 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_WarpMale::
 # 1423 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MightyenaAttack:
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 # 1424 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The wild MIGHTYENA attacks!$"
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
 # 1425 "data/maps/MOSSDEEP01/scripts.pory"
-
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
 # 1426 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MightyenaBlackedOut:
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE
 # 1427 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The wild POKÉMON are too aggressive!\n"
+	destroyfollowernpc
 # 1428 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You blacked out!$"
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 1, 4
 # 1429 "data/maps/MOSSDEEP01/scripts.pory"
-
+	waitstate
 # 1430 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MightyenaFriendly:
+	release
 # 1431 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The MIGHTYENA looks calm and friendly.\n"
+	end
 # 1432 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Amazing, they're so peaceful now!\p"
+
 # 1433 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You can even pet them!$"
+// ====================================================================
 # 1434 "data/maps/MOSSDEEP01/scripts.pory"
-
+// MOVEMENT SCRIPTS
 # 1435 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorTrapped:
+// ====================================================================
 # 1436 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "SURVIVOR: Help! These wild POKÉMON\n"
+
 # 1437 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "are too aggressive!\p"
+MOSSDEEP01_Movement_CameraPanToComet:
 # 1438 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I can't escape!$"
+	walk_fast_up
 # 1439 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_up
 # 1440 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorAmazed:
+	walk_fast_up
 # 1441 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "SURVIVOR: Incredible! The POKÉMON\n"
+	walk_fast_up
 # 1442 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "suddenly calmed down!\p"
+	walk_fast_up
 # 1443 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "What happened?$"
+	walk_fast_up
 # 1444 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_up
 # 1445 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorGoing:
+	walk_fast_up
 # 1446 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I'm going to find a safer\n"
+	step_end
 # 1447 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "place. Thank you!$"
+
 # 1448 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Movement_CameraFollowComet:
 # 1449 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorHappy:
+	walk_fast_left
 # 1450 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "SURVIVOR: I feel much safer now.\n"
+	walk_fast_left
 # 1451 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you for your help!$"
+	walk_fast_left
 # 1452 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1453 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_HealerWelcome:
+	walk_fast_left
 # 1454 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "HEALER: Let me heal your POKÉMON.$"
+	walk_fast_left
 # 1455 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1456 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_Healing:
+	walk_fast_left
 # 1457 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Healing POKÉMON…$"
+	walk_fast_left
 # 1458 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1459 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_HealedComplete:
+	walk_fast_left
 # 1460 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "HEALER: Your POKÉMON are fully\n"
+	walk_fast_left
 # 1461 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "healed! Good luck!$"
+	walk_fast_left
 # 1462 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1463 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaWelcome:
+	walk_fast_left
 # 1464 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: {PLAYER}! You're awake!\p"
+	walk_fast_left
 # 1465 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The earthquake was terrible…\n"
+	walk_fast_left
 # 1466 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Many people are trapped…$"
+	walk_fast_left
 # 1467 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1468 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_EarthquakeWarning:
+	walk_fast_left
 # 1469 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Another tremor!\n"
+	walk_fast_left
 # 1470 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be careful out there!$"
+	walk_fast_left
 # 1471 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1472 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaGivesCharm:
+	walk_fast_left
 # 1473 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Take this SHINY CHARM.\n"
+	walk_fast_left
 # 1474 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It might bring you luck!$"
+	walk_fast_left
 # 1475 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1476 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaCharmExplanation:
+	walk_fast_left
 # 1477 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: This charm increases your\n"
+	walk_fast_left
 # 1478 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "chances of finding rare POKÉMON.\p"
+	walk_fast_left
 # 1479 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Use it well!$"
+	walk_fast_left
 # 1480 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1481 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_HoennDestroyed:
+	walk_fast_left
 # 1482 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: The HOENN region…\n"
+	walk_fast_left
 # 1483 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It's been completely destroyed…\p"
+	walk_fast_left
 # 1484 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "But there are survivors who need\n"
+	walk_fast_left
 # 1485 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "help. Please, {PLAYER}, help them!$"
+	walk_fast_left
 # 1486 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1487 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PlayerDecision:
+	walk_fast_left
 # 1488 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} decides to help the survivors\n"
+	walk_fast_left
 # 1489 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "and explore the devastated area.$"
+	step_end
 # 1490 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1491 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GoodLuck:
+MOSSDEEP01_Movement_CometCrossingSky:
 # 1492 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Good luck, {PLAYER}!\n"
+	walk_fast_left
 # 1493 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be very careful!$"
+	walk_fast_left
 # 1494 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1495 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaEncouragement:
+	walk_fast_left
 # 1496 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You're doing great, {PLAYER}!\n"
+	walk_fast_left
 # 1497 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Keep helping people!$"
+	walk_fast_left
 # 1498 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1499 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaFirstTalk:
+	walk_fast_left
 # 1500 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: The world has changed…\n"
+	walk_fast_left
 # 1501 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Everything is so different now…$"
+	walk_fast_left
 # 1502 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1503 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaAfterTalk:
+	walk_fast_left
 # 1504 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Thank you for helping\n"
+	walk_fast_left
 # 1505 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "everyone, {PLAYER}. You're a hero!$"
+	walk_fast_left
 # 1506 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1507 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaAfterCelebi:
+	walk_fast_left
 # 1508 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: {PLAYER}, that little\n"
+	walk_fast_left
 # 1509 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON following you seems so gentle.\p"
+	walk_fast_left
 # 1510 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It makes me feel like perhaps this world\n"
+	walk_fast_left
 # 1511 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "can still heal.$"
+	walk_fast_left
 # 1512 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1513 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaAfterCelebi:
+	walk_fast_left
 # 1514 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: I've never seen a POKÉMON like\n"
+	walk_fast_left
 # 1515 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "that before.\p"
+	walk_fast_left
 # 1516 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "If it chose to travel with you,\n"
+	walk_fast_left
 # 1517 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "it must see something special in you.$"
+	walk_fast_left
 # 1518 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1519 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory1:
+	walk_fast_left
 # 1520 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "This was the beginning…$"
+	walk_fast_left
 # 1521 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1522 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory2:
+	walk_fast_left
 # 1523 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Then the conflict started…$"
+	walk_fast_left
 # 1524 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1525 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory3:
+	walk_fast_left
 # 1526 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The great battle between land and\n"
+	walk_fast_left
 # 1527 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "sea…$"
+	walk_fast_left
 # 1528 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1529 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory4:
+	walk_fast_left
 # 1530 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The tsunami devastated everything…$"
+	walk_fast_left
 # 1531 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1532 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory5:
+	walk_fast_left
 # 1533 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Volcanoes erupted across the land…$"
+	walk_fast_left
 # 1534 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1535 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory6:
+	walk_fast_left
 # 1536 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The land became a barren wasteland…$"
+	walk_fast_left
 # 1537 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1538 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory7:
+	walk_fast_left
 # 1539 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The oceans raged with unending\n"
+	walk_fast_left
 # 1540 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "storms…$"
+	walk_fast_left
 # 1541 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1542 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory8:
+	walk_fast_left
 # 1543 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Survivors gathered in camps…$"
+	walk_fast_left
 # 1544 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1545 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory9:
+	walk_fast_left
 # 1546 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Hope began to fade…$"
+	walk_fast_left
 # 1547 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1548 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory10:
+	walk_fast_left
 # 1549 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "But then a legend appeared…$"
+	walk_fast_left
 # 1550 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1551 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory11:
+	walk_fast_left
 # 1552 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The sky guardian descended from\n"
+	walk_fast_left
 # 1553 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "above…$"
+	walk_fast_left
 # 1554 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1555 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory12:
+	walk_fast_left
 # 1556 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Peace was restored, but at a cost…$"
+	walk_fast_left
 # 1557 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1558 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory13:
+	walk_fast_left
 # 1559 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "And this is how our world became what it\n"
+	walk_fast_left
 # 1560 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "is today…$"
+	walk_fast_left
 # 1561 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1562 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaAskStory:
+	walk_fast_left
 # 1563 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Hi, {PLAYER}.\p"
+	walk_fast_left
 # 1564 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Would you like to hear the stories\n"
+	walk_fast_left
 # 1565 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of how HOENN became what it is now?$"
+	walk_fast_left
 # 1566 "data/maps/MOSSDEEP01/scripts.pory"
-
+	walk_fast_left
 # 1567 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaBeCareful:
+	walk_fast_left
 # 1568 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I understand.\p"
+	walk_fast_left
 # 1569 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please be very careful when exploring\n"
+	walk_fast_left
 # 1570 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the MOSSDEEP ruins.\p"
+	walk_fast_left
 # 1571 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "There are many dangers out there…$"
+	walk_fast_left
 # 1572 "data/maps/MOSSDEEP01/scripts.pory"
-
+	step_end
 # 1573 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaAskAgain:
+
 # 1574 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Would you like to hear\n"
+// ====================================================================
 # 1575 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the stories of HOENN again?$"
+// TEXT MESSAGES
 # 1576 "data/maps/MOSSDEEP01/scripts.pory"
-
+// ====================================================================
 # 1577 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale01:
+
 # 1578 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: Hey {PLAYER}! I'm helping\n"
+MOSSDEEP01_Text_NeedCelebiFirst:
 # 1579 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the survivors too!\p"
+	.string "JIRACHI: I sense something…\p"
 # 1580 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Let's work together!$"
+	.string "The Guardian of the Forest,\n"
 # 1581 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "CELEBI, is in danger!\p"
 # 1582 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale02:
+	.string "Please, help CELEBI first!\n"
 # 1583 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: These wild POKÉMON are\n"
+	.string "Only then can I assist you.$"
 # 1584 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "really aggressive!\p"
-# 1585 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be careful out there!$"
-# 1586 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1585 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_NeedItems:
+# 1586 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "JIRACHI: Thank you for saving CELEBI!\p"
 # 1587 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale03:
+	.string "Unfortunately, the flow of time is broken.\p"
 # 1588 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: I heard there's a special\n"
+	.string "Please find the three TIME GEARS\n"
 # 1589 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON that can help us.\p"
+	.string "scattered around this place.\p"
 # 1590 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Let's find it!$"
+	.string "Only then can I send you home!$"
 # 1591 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1592 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale04:
+MOSSDEEP01_Text_ThankYou:
 # 1593 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: We can do this, {PLAYER}!\n"
+	.string "JIRACHI: You found all the TIME GEARS!\p"
 # 1594 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Together we'll save everyone!$"
+	.string "The temporal flow is restoring…\n"
 # 1595 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Look! The MILLENNIUM COMET!$"
 # 1596 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMaleAfterCelebi:
+
 # 1597 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: {PLAYER}, that POKÉMON\n"
+MOSSDEEP01_Text_CometAppears:
 # 1598 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "following you is incredible!\p"
+	.string "The sky begins to glow!\p"
 # 1599 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I have a feeling we're witnessing\n"
+	.string "A brilliant comet streaks across\n"
 # 1600 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "something truly special.$"
+	.string "the heavens!$"
 # 1601 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1602 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale01:
+MOSSDEEP01_Text_TimeToWakeUp:
 # 1603 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: {PLAYER}! I'm so glad you're safe!\p"
+	.string "JIRACHI: The timeline is restored!\p"
 # 1604 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Let's help the survivors together!$"
+	.string "It's time to wake up from this dream…$"
 # 1605 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1606 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale02:
+MOSSDEEP01_Text_AlreadyHelped:
 # 1607 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: The wild POKÉMON are\n"
+	.string "JIRACHI: You already helped restore\n"
 # 1608 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "acting so strange…\p"
+	.string "the flow of time!\p"
 # 1609 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Something must be wrong!$"
+	.string "Thank you, time traveler!$"
 # 1610 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1611 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale03:
+MOSSDEEP01_Text_FoundItem1:
 # 1612 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: I heard about a legendary\n"
+	.string "{PLAYER} found something shining\n"
 # 1613 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON that controls time.\p"
+	.string "in the grass…$"
 # 1614 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Maybe it can help us!$"
+
 # 1615 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_ObtainedTimeGear1:
 # 1616 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale04:
+	.string "{PLAYER} obtained the TIME GEAR\n"
 # 1617 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: We make a great team,\n"
+	.string "of the PAST!$"
 # 1618 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER}! Let's keep going!$"
+
 # 1619 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_FoundItem2:
 # 1620 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemaleAfterCelebi:
+	.string "{PLAYER} discovered something glowing\n"
 # 1621 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: {PLAYER}, that POKÉMON\n"
+	.string "among the rocks…$"
 # 1622 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "following you is incredible!\p"
+
 # 1623 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I have a feeling we're witnessing\n"
+MOSSDEEP01_Text_ObtainedTimeGear2:
 # 1624 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "something truly special.$"
+	.string "{PLAYER} obtained the TIME GEAR\n"
 # 1625 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "of the PRESENT!$"
 # 1626 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_Child01:
+
 # 1627 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CHILD: I'm scared…\n"
+MOSSDEEP01_Text_FoundItem3:
 # 1628 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Where are my parents?$"
+	.string "{PLAYER} noticed something sparkling\n"
 # 1629 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "in the water…$"
 # 1630 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_Child02:
+
 # 1631 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CHILD: The ground shook really hard…\n"
+MOSSDEEP01_Text_ObtainedTimeGear3:
 # 1632 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Then everything changed…$"
+	.string "{PLAYER} obtained the TIME GEAR\n"
 # 1633 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "of the FUTURE!$"
 # 1634 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailordBlocking:
-# 1635 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "A massive WAILORD blocks the path!\p"
-# 1636 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It seems agitated by the chaos…\n"
-# 1637 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You can't get through.$"
-# 1638 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1635 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_AlreadyCollected:
+# 1636 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "This place seems peaceful now.$"
+# 1637 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1638 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_CelebiHelp:
 # 1639 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PathNowOpen:
+	.string "CELEBI: … … …\p"
 # 1640 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The WAILORD has calmed down.\n"
+	.string "The flow of time is broken…\p"
 # 1641 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It seems it will allow you to cross\p"
+	.string "Please… find the three TIME GEARS…\n"
 # 1642 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "over its back.$"
+	.string "Only then can I be freed…$"
 # 1643 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1644 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiWaking:
+MOSSDEEP01_Text_CelebiPower:
 # 1645 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "A mysterious POKÉMON is sleeping\n"
+	.string "CELEBI: You found all the TIME GEARS!\p"
 # 1646 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "near the rocks…\p"
+	.string "Now I can use my power to restore\n"
 # 1647 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It seems to be waking up!$"
+	.string "the temporal flow!$"
 # 1648 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1649 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiAwoken:
+MOSSDEEP01_Text_CelebiCalmed:
 # 1650 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI has awoken!$"
+	.string "The wild POKÉMON have calmed down!$"
 # 1651 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1652 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiNeedCelebi:
+MOSSDEEP01_Text_CelebiThanks:
 # 1653 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: I sense temporal disturbance…\n"
+	.string "CELEBI: Thank you, {PLAYER}!\n"
 # 1654 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The forest guardian needs help!\p"
+	.string "Together we restored time!$"
 # 1655 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please rescue CELEBI first!$"
-# 1656 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1656 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_MightyenaAttack:
 # 1657 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiNeedItems:
+	.string "The wild MIGHTYENA attacks!$"
 # 1658 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: Thank you for saving CELEBI!\n"
+
 # 1659 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "But time is still broken…\p"
+MOSSDEEP01_Text_MightyenaBlackedOut:
 # 1660 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please find the three TIME GEARS\n"
+	.string "The wild POKÉMON are too aggressive!\n"
 # 1661 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "to restore temporal flow!$"
+	.string "You blacked out!$"
 # 1662 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1663 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiCompleted:
+MOSSDEEP01_Text_MightyenaFriendly:
 # 1664 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: You restored the timeline!\n"
+	.string "The MIGHTYENA looks calm and friendly.\n"
 # 1665 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you, time traveler!$"
+	.string "Amazing, they're so peaceful now!\p"
 # 1666 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "You can even pet them!$"
 # 1667 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiStillSleeping:
-# 1668 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI is sleeping peacefully…\n"
-# 1669 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Maybe you should approach it?$"
-# 1670 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1668 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_SurvivorTrapped:
+# 1669 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "SURVIVOR: Help! These wild POKÉMON\n"
+# 1670 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "are too aggressive!\p"
 # 1671 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyIntro:
+	.string "I can't escape!$"
 # 1672 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: Hey, {PLAYER}!\p"
+
 # 1673 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Are you doing alright?\p"
+MOSSDEEP01_Text_SurvivorAmazed:
 # 1674 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Oh, you need help getting past some wild\n"
+	.string "SURVIVOR: Incredible! The POKÉMON\n"
 # 1675 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON?\p"
+	.string "suddenly calmed down!\p"
 # 1676 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Leave it to me and PIDGEOT!$"
+	.string "What happened?$"
 # 1677 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1678 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaRecoveryZinnia:
+MOSSDEEP01_Text_SurvivorGoing:
 # 1679 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: {PLAYER}, you're awake!\p"
+	.string "I'm going to find a safer\n"
 # 1680 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Oh, thank goodness. We were so worried\p"
+	.string "place. Thank you!$"
 # 1681 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "after you were attacked by that wild\n"
-# 1682 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON.\p"
-# 1683 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA just barely got you back here.$"
-# 1684 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1682 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_SurvivorHappy:
+# 1683 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "SURVIVOR: I feel much safer now.\n"
+# 1684 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Thank you for your help!$"
 # 1685 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaRecoveryZenno:
+
 # 1686 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: {PLAYER}, you're awake!\p"
+MOSSDEEP01_Text_HealerWelcome:
 # 1687 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Oh, thank goodness. We were so worried\p"
+	.string "HEALER: Let me heal your POKÉMON.$"
 # 1688 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "after you were attacked by that wild\n"
+
 # 1689 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON.\p"
+MOSSDEEP01_Text_Healing:
 # 1690 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO just barely got you back here.$"
+	.string "Healing POKÉMON…$"
 # 1691 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1692 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaRecovery:
+MOSSDEEP01_Text_HealedComplete:
 # 1693 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Wild POKÉMON are extremely\n"
+	.string "HEALER: Your POKÉMON are fully\n"
 # 1694 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "dangerous, {PLAYER}.\p"
+	.string "healed! Good luck!$"
 # 1695 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You must never approach one alone.\p"
+
 # 1696 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Very few people are able to have their\n"
+MOSSDEEP01_Text_GrandmaWelcome:
 # 1697 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "own POKÉMON.\p"
+	.string "GRANDMA: {PLAYER}! You're awake!\p"
 # 1698 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "There used to be a technology called\n"
+	.string "The earthquake was terrible…\n"
 # 1699 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉ BALLS that allowed us to catch\p"
+	.string "Many people are trapped…$"
 # 1700 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON, but those don't exist anymore.$"
+
 # 1701 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_EarthquakeWarning:
 # 1702 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaSuggestLuka:
+	.string "GRANDMA: Another tremor!\n"
 # 1703 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Come to think of it, that boy,\n"
+	.string "Be careful out there!$"
 # 1704 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA, has a PIDGEOT!\p"
+
 # 1705 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "If you need to get past those MIGHTYENA,\n"
+MOSSDEEP01_Text_GrandmaGivesCharm:
 # 1706 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "you should go ask him for help.$"
+	.string "GRANDMA: Take this SHINY CHARM.\n"
 # 1707 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "It might bring you luck!$"
 # 1708 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaMightyenaReminder:
+
 # 1709 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Be careful out there, {PLAYER}!\p"
+MOSSDEEP01_Text_GrandmaCharmExplanation:
 # 1710 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You should find LUKA and his PIDGEOT.\n"
+	.string "GRANDMA: This charm increases your\n"
 # 1711 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Perhaps they can help you.$"
+	.string "chances of finding rare POKÉMON.\p"
 # 1712 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Use it well!$"
 # 1713 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyAfterCelebi:
+
 # 1714 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: Wow… What is that Pokemon\n"
+MOSSDEEP01_Text_HoennDestroyed:
 # 1715 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "following you?\p"
+	.string "GRANDMA: The HOENN region…\n"
 # 1716 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It feels so magical…\n"
+	.string "It's been completely destroyed…\p"
 # 1717 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I have never seen anything like it.\p"
+	.string "But there are survivors who need\n"
 # 1718 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It reminds me of the old legends\n"
+	.string "help. Please, {PLAYER}, help them!$"
 # 1719 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "our grandparents used to tell…\p"
+
 # 1720 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Maybe those dreams you had…\n"
+MOSSDEEP01_Text_PlayerDecision:
 # 1721 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "they were real after all.$"
+	.string "{PLAYER} decides to help the survivors\n"
 # 1722 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "and explore the devastated area.$"
 # 1723 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyWarped:
-# 1724 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: I'll head there first!\p"
-# 1725 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Meet me ahead, {PLAYER}!$"
-# 1726 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1724 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GoodLuck:
+# 1725 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDMA: Good luck, {PLAYER}!\n"
+# 1726 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Be very careful!$"
 # 1727 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyNotReady:
+
 # 1728 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: {PLAYER}, we'll hold these wild\n"
+MOSSDEEP01_Text_GrandmaEncouragement:
 # 1729 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON off.\p"
+	.string "You're doing great, {PLAYER}!\n"
 # 1730 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Use this chance to get through!$"
+	.string "Keep helping people!$"
 # 1731 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1732 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyBeforeMightyena:
+MOSSDEEP01_Text_GrandpaFirstTalk:
 # 1733 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: Hello, {PLAYER}!\p"
+	.string "GRANDPA: The world has changed…\n"
 # 1734 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be careful out there! The wild\n"
+	.string "Everything is so different now…$"
 # 1735 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON are very aggressive.\p"
+
 # 1736 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "If you get into trouble, come\n"
+MOSSDEEP01_Text_GrandpaAfterTalk:
 # 1737 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "talk to me!$"
+	.string "GRANDPA: Thank you for helping\n"
 # 1738 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "everyone, {PLAYER}. You're a hero!$"
 # 1739 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PidgeotGreeting:
-# 1740 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "PIDGEOT: Piiidgeoo!$"
-# 1741 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1740 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaAfterCelebi:
+# 1741 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDMA: {PLAYER}, that little\n"
 # 1742 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailordBlocks:
+	.string "POKÉMON following you seems so gentle.\p"
 # 1743 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "There's only water ahead!\p"
+	.string "It makes me feel like perhaps this world\n"
 # 1744 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "You can't cross without help…$"
+	.string "can still heal.$"
 # 1745 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1746 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailordIdle:
+MOSSDEEP01_Text_GrandpaAfterCelebi:
 # 1747 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "WAILORD is calmly floating on the water.$"
+	.string "GRANDPA: I've never seen a POKÉMON like\n"
 # 1748 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "that before.\p"
 # 1749 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailmerIdle:
+	.string "If it chose to travel with you,\n"
 # 1750 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "The WAILMER are splashing playfully!$"
+	.string "it must see something special in you.$"
 # 1751 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1752 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiCallsWailord:
+MOSSDEEP01_Text_GrandmaStory1:
 # 1753 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "CELEBI calls out to the ocean!\p"
+	.string "This was the beginning…$"
 # 1754 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "A massive WAILORD appears and\n"
-# 1755 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "creates a path across the water!$"
-# 1756 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1755 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory2:
+# 1756 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Then the conflict started…$"
 # 1757 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_AfterTimeGears:
+
 # 1758 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory3:
+# 1759 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The great battle between land and\n"
+# 1760 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "sea…$"
+# 1761 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1762 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory4:
+# 1763 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The tsunami devastated everything…$"
+# 1764 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1765 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory5:
+# 1766 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Volcanoes erupted across the land…$"
+# 1767 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1768 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory6:
+# 1769 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The land became a barren wasteland…$"
+# 1770 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1771 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory7:
+# 1772 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The oceans raged with unending\n"
+# 1773 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "storms…$"
+# 1774 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1775 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory8:
+# 1776 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Survivors gathered in camps…$"
+# 1777 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1778 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory9:
+# 1779 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Hope began to fade…$"
+# 1780 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1781 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory10:
+# 1782 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "But then a legend appeared…$"
+# 1783 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1784 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory11:
+# 1785 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The sky guardian descended from\n"
+# 1786 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "above…$"
+# 1787 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1788 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory12:
+# 1789 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Peace was restored, but at a cost…$"
+# 1790 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1791 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory13:
+# 1792 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "And this is how our world became what it\n"
+# 1793 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "is today…$"
+# 1794 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1795 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaAskStory:
+# 1796 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDMA: Hi, {PLAYER}.\p"
+# 1797 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Would you like to hear the stories\n"
+# 1798 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "of how HOENN became what it is now?$"
+# 1799 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1800 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaBeCareful:
+# 1801 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "I understand.\p"
+# 1802 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Please be very careful when exploring\n"
+# 1803 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "the MOSSDEEP ruins.\p"
+# 1804 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "There are many dangers out there…$"
+# 1805 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1806 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaAskAgain:
+# 1807 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDMA: Would you like to hear\n"
+# 1808 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "the stories of HOENN again?$"
+# 1809 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1810 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalMale01:
+# 1811 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZENNO: Hey {PLAYER}! I'm helping\n"
+# 1812 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "the survivors too!\p"
+# 1813 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Let's work together!$"
+# 1814 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1815 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalMale02:
+# 1816 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZENNO: These wild POKÉMON are\n"
+# 1817 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "really aggressive!\p"
+# 1818 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Be careful out there!$"
+# 1819 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1820 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalMale03:
+# 1821 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZENNO: I heard there's a special\n"
+# 1822 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON that can help us.\p"
+# 1823 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Let's find it!$"
+# 1824 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1825 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalMale04:
+# 1826 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZENNO: We can do this, {PLAYER}!\n"
+# 1827 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Together we'll save everyone!$"
+# 1828 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1829 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalMaleAfterCelebi:
+# 1830 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZENNO: {PLAYER}, that POKÉMON\n"
+# 1831 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "following you is incredible!\p"
+# 1832 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "I have a feeling we're witnessing\n"
+# 1833 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "something truly special.$"
+# 1834 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1835 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale01:
+# 1836 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: {PLAYER}! I'm so glad you're safe!\p"
+# 1837 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Let's help the survivors together!$"
+# 1838 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1839 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale02:
+# 1840 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: The wild POKÉMON are\n"
+# 1841 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "acting so strange…\p"
+# 1842 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Something must be wrong!$"
+# 1843 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1844 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale03:
+# 1845 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: I heard about a legendary\n"
+# 1846 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON that controls time.\p"
+# 1847 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Maybe it can help us!$"
+# 1848 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1849 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale04:
+# 1850 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: We make a great team,\n"
+# 1851 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "{PLAYER}! Let's keep going!$"
+# 1852 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1853 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemaleAfterCelebi:
+# 1854 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: {PLAYER}, that POKÉMON\n"
+# 1855 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "following you is incredible!\p"
+# 1856 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "I have a feeling we're witnessing\n"
+# 1857 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "something truly special.$"
+# 1858 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1859 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_Child01:
+# 1860 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "CHILD: I'm scared…\n"
+# 1861 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Where are my parents?$"
+# 1862 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1863 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_LostFather:
+# 1864 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "MAN: The earthquake made the land\n"
+# 1865 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "shift so much that we're completely\p"
+# 1866 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "lost. We can't find our daughter.$"
+# 1867 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1868 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_LostMother:
+# 1869 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "WOMAN: Our daughter is out here\n"
+# 1870 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "somewhere, and I don't know how to\p"
+# 1871 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "get back to her. Please help us.$"
+# 1872 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1873 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_PlayerGivesDirections:
+# 1874 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "{PLAYER} gives the couple directions\n"
+# 1875 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "back to their daughter.$"
+# 1876 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1877 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_DaughterThanksForParents:
+# 1878 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "CHILD: You found my parents!\p"
+# 1879 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Thank you so much, {PLAYER}!$"
+# 1880 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1881 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_ParentsReunionThanks:
+# 1882 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "MAN: Thank you for helping us find\n"
+# 1883 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "our daughter, {PLAYER}!$"
+# 1884 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1885 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_LostFatherThanks:
+# 1886 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "MAN: We'll make sure we never get\n"
+# 1887 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "separated again. Thank you.$"
+# 1888 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1889 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_LostMotherThanks:
+# 1890 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "WOMAN: I was so worried about her.\n"
+# 1891 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Thank you for bringing us together.$"
+# 1892 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1893 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_Child02:
+# 1894 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "CHILD: The ground shook really hard…\n"
+# 1895 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Then everything changed…$"
+# 1896 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1897 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WailordBlocking:
+# 1898 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "A massive WAILORD blocks the path!\p"
+# 1899 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "It seems agitated by the chaos…\n"
+# 1900 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "You can't get through.$"
+# 1901 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1902 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_PathNowOpen:
+# 1903 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The WAILORD has calmed down.\n"
+# 1904 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "It seems it will allow you to cross\l"
+# 1905 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "over its back.$"
+# 1906 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1907 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_JirachiWaking:
+# 1908 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "A mysterious POKÉMON is sleeping\n"
+# 1909 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "near the rocks…\p"
+# 1910 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "It seems to be waking up!$"
+# 1911 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1912 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_JirachiAwoken:
+# 1913 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "JIRACHI has awoken!$"
+# 1914 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1915 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_JirachiNeedCelebi:
+# 1916 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "JIRACHI: I sense temporal disturbance…\n"
+# 1917 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The forest guardian needs help!\p"
+# 1918 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Please rescue CELEBI first!$"
+# 1919 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1920 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_JirachiNeedItems:
+# 1921 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "JIRACHI: Thank you for saving CELEBI!\n"
+# 1922 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "But time is still broken…\p"
+# 1923 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Please find the three TIME GEARS\n"
+# 1924 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "to restore temporal flow!$"
+# 1925 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1926 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_JirachiCompleted:
+# 1927 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "JIRACHI: You restored the timeline!\n"
+# 1928 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Thank you, time traveler!$"
+# 1929 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1930 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_JirachiStillSleeping:
+# 1931 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "JIRACHI is sleeping peacefully…\n"
+# 1932 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Maybe you should approach it?$"
+# 1933 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1934 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WallyIntro:
+# 1935 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "LUKA: Hey, {PLAYER}!\p"
+# 1936 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Are you doing alright?\p"
+# 1937 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Oh, you need help getting past some wild\n"
+# 1938 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON?\p"
+# 1939 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Leave it to me and PIDGEOT!$"
+# 1940 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1941 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaRecoveryZinnia:
+# 1942 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDMA: {PLAYER}, you're awake!\p"
+# 1943 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Oh, thank goodness. We were so worried\n"
+# 1944 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "after you were attacked by that wild\l"
+# 1945 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON.\p"
+# 1946 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA just barely got you back here.$"
+# 1947 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1948 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaRecoveryZenno:
+# 1949 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDMA: {PLAYER}, you're awake!\p"
+# 1950 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Oh, thank goodness. We were so worried\n"
+# 1951 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "after you were attacked by that wild\l"
+# 1952 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON.\p"
+# 1953 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZENNO just barely got you back here.$"
+# 1954 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1955 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandpaRecovery:
+# 1956 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDPA: Wild POKÉMON are extremely\n"
+# 1957 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "dangerous, {PLAYER}.\p"
+# 1958 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "You must never approach one alone.\p"
+# 1959 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Very few people are able to have their\n"
+# 1960 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "own POKÉMON.\p"
+# 1961 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "There used to be a technology called\n"
+# 1962 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉ BALLS that allowed us to catch\l"
+# 1963 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON, but those don't exist anymore.$"
+# 1964 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1965 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandpaSuggestLuka:
+# 1966 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDPA: Come to think of it, that boy,\n"
+# 1967 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "LUKA, has a PIDGEOT!\p"
+# 1968 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "If you need to get past those MIGHTYENA,\n"
+# 1969 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "you should go ask him for help.$"
+# 1970 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1971 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandpaMightyenaReminder:
+# 1972 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "GRANDPA: Be careful out there, {PLAYER}!\p"
+# 1973 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "You should find LUKA and his PIDGEOT.\n"
+# 1974 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Perhaps they can help you.$"
+# 1975 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1976 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WallyAfterCelebi:
+# 1977 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "LUKA: Wow… What is that Pokemon\n"
+# 1978 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "following you?\p"
+# 1979 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "It feels so magical…\n"
+# 1980 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "I have never seen anything like it.\p"
+# 1981 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "It reminds me of the old legends\n"
+# 1982 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "our grandparents used to tell…\p"
+# 1983 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Maybe those dreams you had…\n"
+# 1984 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "they were real after all.$"
+# 1985 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1986 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WallyWarped:
+# 1987 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "LUKA: I'll head there first!\p"
+# 1988 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Meet me ahead, {PLAYER}!$"
+# 1989 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1990 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WallyNotReady:
+# 1991 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "LUKA: {PLAYER}, we'll hold these wild\n"
+# 1992 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON off.\p"
+# 1993 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Use this chance to get through!$"
+# 1994 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1995 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WallyBeforeMightyena:
+# 1996 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "LUKA: Hello, {PLAYER}!\p"
+# 1997 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Be careful out there! The wild\n"
+# 1998 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON are very aggressive.\p"
+# 1999 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "If you get into trouble, come\n"
+# 2000 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "talk to me!$"
+# 2001 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2002 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_PidgeotGreeting:
+# 2003 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "PIDGEOT: Piiidgeoo!$"
+# 2004 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2005 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WailordBlocks:
+# 2006 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "There's only water ahead!\p"
+# 2007 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "You can't cross without help…$"
+# 2008 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2009 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WailordIdle:
+# 2010 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "WAILORD is calmly floating on the water.$"
+# 2011 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2012 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WailmerIdle:
+# 2013 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "The WAILMER are splashing playfully!$"
+# 2014 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2015 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_DrowningManCallsForHelp:
+# 2016 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "MAN: Help! I'm drowning!\n"
+# 2017 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Please, pull me out of here!$"
+# 2018 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2019 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_PlayerRescuesDrowningMan:
+# 2020 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "{PLAYER} pulls the drowning man\n"
+# 2021 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "from the water.$"
+# 2022 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2023 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_DrowningManThanks:
+# 2024 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "MAN: Thank you, {PLAYER}!\n"
+# 2025 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "You saved my life!$"
+# 2026 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2027 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_MinerWifeHelp:
+# 2028 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "WOMAN: Please help! My husband is\n"
+# 2029 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "trapped after a mine cave-in!$"
+# 2030 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2031 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_PlayerDigsOutMiner:
+# 2032 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "{PLAYER} digs the trapped miner\n"
+# 2033 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "out of the cave-in.$"
+# 2034 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2035 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_MinerThanks:
+# 2036 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "MINER: Thank you, {PLAYER}!\n"
+# 2037 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "I thought I was done for!$"
+# 2038 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2039 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_MinerWifeThanks:
+# 2040 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "WOMAN: Thank you for saving him!\n"
+# 2041 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "I can't thank you enough!$"
+# 2042 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2043 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_CelebiCallsWailord:
+# 2044 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "CELEBI calls out to the ocean!\p"
+# 2045 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "A massive WAILORD appears and\n"
+# 2046 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "creates a path across the water!$"
+# 2047 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2048 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_AfterTimeGears:
+# 2049 "data/maps/MOSSDEEP01/scripts.pory"
     .string "CELEBI: We are close, I can feel it…$"

@@ -266,6 +266,7 @@
 #define OBJ_EVENT_GFX_MEGARAYQUAZA_CUTSCENE      259
 #define OBJ_EVENT_GFX_RIO                        260
 #define OBJ_EVENT_GFX_DARK_AURA                  261
+#define OBJ_EVENT_GFX_TRAPPED_BLIPBUG             262
 
 // NOTE: The maximum amount of object events has been expanded from 255 to 65535.
 // Since dynamic graphics ids still require at least 16 free values, the actual limit
@@ -402,6 +403,7 @@
 #define OBJ_EVENT_PAL_TAG_DYNAMIC                 0x1124
 #define OBJ_EVENT_PAL_TAG_RIOMAR                  0x1125
 #define OBJ_EVENT_PAL_TAG_CALENDULA               0x1126
+#define OBJ_EVENT_PAL_TAG_TRAPPED_BLIPBUG         0x1127
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla

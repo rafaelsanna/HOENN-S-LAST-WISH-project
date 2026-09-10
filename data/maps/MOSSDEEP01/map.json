@@ -190,7 +190,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Grandma",
-      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
+      "flag": "0"
     },
     {
       "local_id": "LOCALID_GRANDPA_MOSSDEEP01",
@@ -218,7 +218,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Child01",
-      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
+      "flag": "0"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BRENDAN_NORMAL",
@@ -257,7 +257,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Child02",
-      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
+      "flag": "0"
     },
     {
       "local_id": "LOCALID_WAILORD_BLOCKER",
@@ -340,7 +340,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MOSSDEEP01_EventScript_WallyNotReady",
+      "script": "MOSSDEEP01_EventScript_WallyGuardMightyena",
       "flag": "FLAG_HIDE_WALLY_CLONE"
     },
     {
@@ -579,6 +579,90 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_GuardMightyena",
       "flag": "FLAG_HIDE_MOSSDEEP_GUARD_POKEMON"
+    },
+    {
+      "local_id": "LOCALID_DROWNING_MAN",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "x": 49,
+      "y": 77,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_RUN_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningMan",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_TRAPPED_MINER",
+      "graphics_id": "OBJ_EVENT_GFX_TRAPPED_BLIPBUG",
+      "x": 12,
+      "y": 73,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "FLAG_MOSSDEEP_MINER_RESCUED"
+    },
+    {
+      "local_id": "LOCALID_RESCUED_MINER",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BLIPBUG)",
+      "x": 15,
+      "y": 72,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_MinerThanks",
+      "flag": "FLAG_HIDE_MOSSDEEP_RESCUED_MINER"
+    },
+    {
+      "local_id": "LOCALID_MINER_WIFE",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
+      "x": 13,
+      "y": 73,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_MinerWife",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_LOST_FATHER",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "x": 41,
+      "y": 30,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_LostFather",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_LOST_MOTHER",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
+      "x": 40,
+      "y": 30,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MOSSDEEP01_EventScript_LostMother",
+      "flag": "0"
     }
   ],
   "warp_events": [],
@@ -708,9 +792,274 @@
       "var": "FLAG_MOSSDEEP_CELEBI_RESCUED",
       "var_value": "0",
       "script": "MOSSDEEP01_EventScript_WailordBlocksPath"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 74,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 47,
+      "y": 74,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 48,
+      "y": 74,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 49,
+      "y": 74,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 50,
+      "y": 74,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 51,
+      "y": 74,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 52,
+      "y": 74,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 75,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 52,
+      "y": 75,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 76,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 52,
+      "y": 76,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 77,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 52,
+      "y": 77,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 78,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 52,
+      "y": 78,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 79,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 52,
+      "y": 79,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 80,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 47,
+      "y": 80,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 48,
+      "y": 80,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 49,
+      "y": 80,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 50,
+      "y": 80,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 51,
+      "y": 80,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
+    },
+    {
+      "type": "trigger",
+      "x": 52,
+      "y": 80,
+      "elevation": 0,
+      "var": "FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD",
+      "var_value": "0",
+      "script": "MOSSDEEP01_EventScript_DrowningManCallsForHelp"
     }
   ],
-  "bg_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 12,
+      "y": 72,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MOSSDEEP01_EventScript_TrappedMiner"
+    },
+    {
+      "type": "sign",
+      "x": 49,
+      "y": 76,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MOSSDEEP01_EventScript_DrowningManRescueReach"
+    },
+    {
+      "type": "sign",
+      "x": 50,
+      "y": 76,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MOSSDEEP01_EventScript_DrowningManRescueReach"
+    },
+    {
+      "type": "sign",
+      "x": 48,
+      "y": 76,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MOSSDEEP01_EventScript_DrowningManRescueReach"
+    },
+    {
+      "type": "sign",
+      "x": 48,
+      "y": 77,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MOSSDEEP01_EventScript_DrowningManRescueReach"
+    },
+    {
+      "type": "sign",
+      "x": 48,
+      "y": 78,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MOSSDEEP01_EventScript_DrowningManRescueReach"
+    }
+  ],
   "object_events_extra": [
     {
       "elevation": 0,

@@ -24,6 +24,14 @@ MOSSDEEP01_OnFrame:
 
 MOSSDEEP01_OnTransition:
 	setrespawn HEAL_LOCATION_MOSSDEEP_01
+	goto_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_ShowRescuedMiner
+	setflag FLAG_HIDE_MOSSDEEP_RESCUED_MINER
+	goto MOSSDEEP01_EventScript_ContinueMinerTransition
+
+MOSSDEEP01_EventScript_ShowRescuedMiner::
+	clearflag FLAG_HIDE_MOSSDEEP_RESCUED_MINER
+
+MOSSDEEP01_EventScript_ContinueMinerTransition::
 	goto_if_set FLAG_MOSSDEEP_MIGHTYENA_REPEAT_PENDING, MOSSDEEP01_EventScript_ScheduleMightyenaRepeatRecovery
 	goto_if_set FLAG_MOSSDEEP_MIGHTYENA_RECOVERY_PENDING, MOSSDEEP01_EventScript_ScheduleMightyenaRecovery
 	goto MOSSDEEP01_CheckPrologueTransition
@@ -80,6 +88,10 @@ MOSSDEEP01_ContinueTransition:
 	call_if_set FLAG_WALLY_INTRO_DONE, MOSSDEEP01_EventScript_ShowGuardPokemon
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RemovePostCelebiGuardPokemon
 	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_SetPostCelebiGuardState
+	call_if_set FLAG_MOSSDEEP_DROWNING_MAN_RESCUED, MOSSDEEP01_EventScript_SetRescuedDrowningManState
+	call_if_unset FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_SetTrappedMinerState
+	call_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_SetRescuedMinerState
+	call_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_SetRescuedFamilyState
 	
 	end
 
@@ -102,6 +114,49 @@ MOSSDEEP01_EventScript_RemovePostCelebiGuardPokemon::
 
 MOSSDEEP01_EventScript_ShowGuardPokemon::
 	clearflag FLAG_HIDE_MOSSDEEP_GUARD_POKEMON
+	return
+
+MOSSDEEP01_EventScript_SetRescuedDrowningManState::
+	setobjectxyperm LOCALID_DROWNING_MAN, 47, 77
+	setobjectxy LOCALID_DROWNING_MAN, 47, 77
+	setobjectmovementtype LOCALID_DROWNING_MAN, MOVEMENT_TYPE_FACE_LEFT
+	turnobject LOCALID_DROWNING_MAN, DIR_WEST
+	return
+
+MOSSDEEP01_EventScript_SetTrappedMinerState::
+	removeobject LOCALID_RESCUED_MINER
+	return
+
+MOSSDEEP01_EventScript_SetRescuedMinerState::
+	setobjectxyperm LOCALID_RESCUED_MINER, 15, 72
+	setobjectxyperm LOCALID_MINER_WIFE, 16, 72
+	setobjectxy LOCALID_RESCUED_MINER, 15, 72
+	setobjectxy LOCALID_MINER_WIFE, 16, 72
+	setobjectmovementtype LOCALID_RESCUED_MINER, MOVEMENT_TYPE_FACE_DOWN
+	setobjectmovementtype LOCALID_MINER_WIFE, MOVEMENT_TYPE_FACE_DOWN
+	turnobject LOCALID_RESCUED_MINER, DIR_SOUTH
+	turnobject LOCALID_MINER_WIFE, DIR_SOUTH
+	return
+
+MOSSDEEP01_EventScript_SetRescuedFamilyState::
+	setobjectxyperm LOCALID_LOST_FATHER, 23, 68
+	setobjectxyperm LOCALID_LOST_MOTHER, 25, 68
+	setobjectxyperm LOCALID_SURVIVOR, 24, 68
+	setobjectxy LOCALID_LOST_FATHER, 23, 68
+	setobjectxy LOCALID_LOST_MOTHER, 25, 68
+	setobjectxy LOCALID_SURVIVOR, 24, 68
+	setobjectmovementtype LOCALID_LOST_FATHER, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectmovementtype LOCALID_LOST_MOTHER, MOVEMENT_TYPE_FACE_LEFT
+	setobjectmovementtype LOCALID_SURVIVOR, MOVEMENT_TYPE_FACE_DOWN
+	removeobject LOCALID_LOST_FATHER
+	removeobject LOCALID_LOST_MOTHER
+	removeobject LOCALID_SURVIVOR
+	addobject LOCALID_LOST_FATHER
+	addobject LOCALID_LOST_MOTHER
+	addobject LOCALID_SURVIVOR
+	turnobject LOCALID_LOST_FATHER, DIR_EAST
+	turnobject LOCALID_LOST_MOTHER, DIR_WEST
+	turnobject LOCALID_SURVIVOR, DIR_SOUTH
 	return
 
 // ====================================================================
@@ -182,7 +237,6 @@ MOSSDEEP01_EventScript_Prologue::
 	end
 
 MOSSDEEP01_Movement_ExitTent:
-	walk_down
 	walk_down
 	walk_down
 	walk_down
@@ -424,6 +478,169 @@ MOSSDEEP01_EventScript_FindNearestMightyena::
 MOSSDEEP01_MightyenaZone_Safe::
 	releaseall
 	end
+
+// ====================================================================
+// DROWNING MAN RESCUE
+// ====================================================================
+
+MOSSDEEP01_EventScript_MinerWife::
+	lockall
+	goto_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_MinerWifeThanks
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox MOSSDEEP01_Text_MinerWifeHelp, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_MinerWifeThanks::
+	msgbox MOSSDEEP01_Text_MinerWifeThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_TrappedMiner::
+	lockall
+	goto_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_TrappedMinerAlreadyRescued
+	msgbox MOSSDEEP01_Text_PlayerDigsOutMiner, MSGBOX_DEFAULT
+	closemessage
+	special StoreMossdeepMinerRescueCamera
+	fadescreenswapbuffers FADE_TO_BLACK
+	setobjectxyperm LOCALID_RESCUED_MINER, 15, 72
+	setobjectxyperm LOCALID_MINER_WIFE, 16, 72
+	setobjectxy LOCALID_RESCUED_MINER, 15, 72
+	setobjectxy LOCALID_MINER_WIFE, 16, 72
+	setobjectxy OBJ_EVENT_ID_PLAYER, 15, 73
+	special FinishMossdeepMinerRescueCamera
+	setobjectmovementtype LOCALID_RESCUED_MINER, MOVEMENT_TYPE_FACE_DOWN
+	setobjectmovementtype LOCALID_MINER_WIFE, MOVEMENT_TYPE_FACE_DOWN
+	setflag FLAG_MOSSDEEP_MINER_RESCUED
+	removeobject LOCALID_TRAPPED_MINER
+	clearflag FLAG_HIDE_MOSSDEEP_RESCUED_MINER
+	addobject LOCALID_RESCUED_MINER
+	fadescreenswapbuffers FADE_FROM_BLACK
+	turnobject LOCALID_RESCUED_MINER, DIR_SOUTH
+	turnobject LOCALID_MINER_WIFE, DIR_SOUTH
+	applymovement LOCALID_RESCUED_MINER, Common_Movement_FaceDown
+	applymovement LOCALID_MINER_WIFE, Common_Movement_FaceDown
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	msgbox MOSSDEEP01_Text_MinerThanks, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_MinerWifeThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_TrappedMinerAlreadyRescued::
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_MinerThanks::
+	msgbox MOSSDEEP01_Text_MinerThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+// ====================================================================
+// LOST FAMILY RESCUE
+// ====================================================================
+
+MOSSDEEP01_EventScript_LostFather::
+	lockall
+	goto_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_LostFatherThanks
+	faceplayer
+	msgbox MOSSDEEP01_Text_LostFather, MSGBOX_DEFAULT
+	closemessage
+	goto MOSSDEEP01_EventScript_RescueLostFamily
+
+MOSSDEEP01_EventScript_LostMother::
+	lockall
+	goto_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_LostMotherThanks
+	faceplayer
+	msgbox MOSSDEEP01_Text_LostMother, MSGBOX_DEFAULT
+	closemessage
+
+MOSSDEEP01_EventScript_RescueLostFamily::
+	msgbox MOSSDEEP01_Text_PlayerGivesDirections, MSGBOX_DEFAULT
+	closemessage
+	special StoreMossdeepMinerRescueCamera
+	fadescreenswapbuffers FADE_TO_BLACK
+	setobjectxy OBJ_EVENT_ID_PLAYER, 24, 69
+	special FinishMossdeepMinerRescueCamera
+	setflag FLAG_MOSSDEEP_LOST_FAMILY_RESCUED
+	call MOSSDEEP01_EventScript_SetRescuedFamilyState
+	fadescreenswapbuffers FADE_FROM_BLACK
+	msgbox MOSSDEEP01_Text_DaughterThanksForParents, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_ParentsReunionThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_LostFatherThanks::
+	faceplayer
+	msgbox MOSSDEEP01_Text_LostFatherThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_LostMotherThanks::
+	faceplayer
+	msgbox MOSSDEEP01_Text_LostMotherThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_DrowningManCallsForHelp::
+	lockall
+	goto_if_set FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD, MOSSDEEP01_EventScript_DrowningManAlertDone
+	setflag FLAG_MOSSDEEP_DROWNING_MAN_ALERT_HEARD
+	msgbox MOSSDEEP01_Text_DrowningManCallsForHelp, MSGBOX_DEFAULT
+
+MOSSDEEP01_EventScript_DrowningManAlertDone::
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_DrowningMan::
+	lockall
+	goto_if_set FLAG_MOSSDEEP_DROWNING_MAN_RESCUED, MOSSDEEP01_EventScript_DrowningManThanks
+	goto MOSSDEEP01_EventScript_RescueDrowningMan
+
+MOSSDEEP01_EventScript_DrowningManRescueReach::
+	lockall
+	goto_if_set FLAG_MOSSDEEP_DROWNING_MAN_RESCUED, MOSSDEEP01_EventScript_DrowningManRescueReachDone
+	goto MOSSDEEP01_EventScript_RescueDrowningMan
+
+MOSSDEEP01_EventScript_RescueDrowningMan::
+	msgbox MOSSDEEP01_Text_PlayerRescuesDrowningMan, MSGBOX_DEFAULT
+	closemessage
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DetachCelebiForDrowningRescue
+	fadescreenswapbuffers FADE_TO_BLACK
+	delay 40
+	setobjectxyperm LOCALID_DROWNING_MAN, 47, 77
+	setobjectxy OBJ_EVENT_ID_PLAYER, 46, 77
+	setobjectmovementtype LOCALID_DROWNING_MAN, MOVEMENT_TYPE_FACE_LEFT
+	removeobject LOCALID_DROWNING_MAN
+	setflag FLAG_MOSSDEEP_DROWNING_MAN_RESCUED
+	fadescreenswapbuffers FADE_FROM_BLACK
+	addobject LOCALID_DROWNING_MAN
+	applymovement LOCALID_DROWNING_MAN, Common_Movement_FaceLeft
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_ReattachCelebiAfterDrowningRescue
+	msgbox MOSSDEEP01_Text_DrowningManThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_DrowningManRescueReachDone::
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_DrowningManThanks::
+	faceplayer
+	msgbox MOSSDEEP01_Text_DrowningManThanks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MOSSDEEP01_EventScript_DetachCelebiForDrowningRescue::
+	destroyfollowernpc
+	return
+
+MOSSDEEP01_EventScript_ReattachCelebiAfterDrowningRescue::
+	setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
+	return
 
 // Wing Interaction
 MOSSDEEP01_EventScript_Wingull::
@@ -690,8 +907,9 @@ MOSSDEEP01_EventScript_WallyGuardMightyena::
 	end
 
 MOSSDEEP01_EventScript_WallyAfterIntro::
+	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WallyAfterCelebi
 	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
-	msgbox MOSSDEEP01_Text_WallyAfterCelebi, MSGBOX_DEFAULT
+	msgbox MOSSDEEP01_Text_WallyNotReady, MSGBOX_DEFAULT
 	removefieldmugshot
 	release
 	end
@@ -779,9 +997,6 @@ MOSSDEEP01_EventScript_Grandma::
 	end
 
 MOSSDEEP01_EventScript_TellStory::
-	fadeoutbgm 0
-	fadescreen FADE_TO_BLACK
-	
 	showmonpic SPECIES_AEGISLASH, 10, 3
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
@@ -842,7 +1057,6 @@ MOSSDEEP01_EventScript_TellStory::
 	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
 
-	fadescreen FADE_FROM_BLACK
 	setflag FLAG_MOSSDEEP_GRANDPA_DIALOGUE
 	release
 	end
@@ -980,10 +1194,16 @@ MOSSDEEP01_EventScript_RivalFemaleAfterCelebi::
 
 MOSSDEEP01_EventScript_Child01::
 	lock
+	goto_if_set FLAG_MOSSDEEP_LOST_FAMILY_RESCUED, MOSSDEEP01_EventScript_DaughterReunited
 	faceplayer
 	msgbox MOSSDEEP01_Text_Child01, MSGBOX_DEFAULT
 	release
 	end	
+
+MOSSDEEP01_EventScript_DaughterReunited::
+	msgbox MOSSDEEP01_Text_DaughterThanksForParents, MSGBOX_DEFAULT
+	release
+	end
 
 MOSSDEEP01_EventScript_Child02::
 	lock
@@ -998,7 +1218,6 @@ MOSSDEEP01_EventScript_Child02::
 
 MOSSDEEP01_EventScript_WailordBlocker::
 	lock
-	faceplayer
 	goto_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_WailordGone
 	msgbox MOSSDEEP01_Text_WailordBlocking, MSGBOX_DEFAULT
 	release
@@ -1142,9 +1361,12 @@ MOSSDEEP01_EventScript_QuestComplete::
 	playse SE_M_SACRED_FIRE
 	delay 20
 	special SpawnCameraObject
+	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraPanToComet
+	waitmovement 0
+	delay 20
 	playse SE_M_SWIFT
 	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
-	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometCrossingSky
+	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CameraFollowComet
 	waitmovement 0
 	special RemoveCameraObject
 	delay 20
@@ -1211,6 +1433,17 @@ MOSSDEEP01_WarpMale::
 // ====================================================================
 // MOVEMENT SCRIPTS
 // ====================================================================
+
+MOSSDEEP01_Movement_CameraPanToComet:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
 
 MOSSDEEP01_Movement_CameraFollowComet:
 	walk_fast_left
@@ -1627,6 +1860,36 @@ MOSSDEEP01_Text_Child01:
 	.string "CHILD: I'm scared…\n"
 	.string "Where are my parents?$"
 
+MOSSDEEP01_Text_LostFather:
+	.string "MAN: The earthquake made the land\n"
+	.string "shift so much that we're completely\p"
+	.string "lost. We can't find our daughter.$"
+
+MOSSDEEP01_Text_LostMother:
+	.string "WOMAN: Our daughter is out here\n"
+	.string "somewhere, and I don't know how to\p"
+	.string "get back to her. Please help us.$"
+
+MOSSDEEP01_Text_PlayerGivesDirections:
+	.string "{PLAYER} gives the couple directions\n"
+	.string "back to their daughter.$"
+
+MOSSDEEP01_Text_DaughterThanksForParents:
+	.string "CHILD: You found my parents!\p"
+	.string "Thank you so much, {PLAYER}!$"
+
+MOSSDEEP01_Text_ParentsReunionThanks:
+	.string "MAN: Thank you for helping us find\n"
+	.string "our daughter, {PLAYER}!$"
+
+MOSSDEEP01_Text_LostFatherThanks:
+	.string "MAN: We'll make sure we never get\n"
+	.string "separated again. Thank you.$"
+
+MOSSDEEP01_Text_LostMotherThanks:
+	.string "WOMAN: I was so worried about her.\n"
+	.string "Thank you for bringing us together.$"
+
 MOSSDEEP01_Text_Child02:
 	.string "CHILD: The ground shook really hard…\n"
 	.string "Then everything changed…$"
@@ -1638,7 +1901,7 @@ MOSSDEEP01_Text_WailordBlocking:
 
 MOSSDEEP01_Text_PathNowOpen:
 	.string "The WAILORD has calmed down.\n"
-	.string "It seems it will allow you to cross\p"
+	.string "It seems it will allow you to cross\l"
 	.string "over its back.$"
 
 MOSSDEEP01_Text_JirachiWaking:
@@ -1677,15 +1940,15 @@ MOSSDEEP01_Text_WallyIntro:
 
 MOSSDEEP01_Text_GrandmaRecoveryZinnia:
 	.string "GRANDMA: {PLAYER}, you're awake!\p"
-	.string "Oh, thank goodness. We were so worried\p"
-	.string "after you were attacked by that wild\n"
+	.string "Oh, thank goodness. We were so worried\n"
+	.string "after you were attacked by that wild\l"
 	.string "POKÉMON.\p"
 	.string "ZINNIA just barely got you back here.$"
 
 MOSSDEEP01_Text_GrandmaRecoveryZenno:
 	.string "GRANDMA: {PLAYER}, you're awake!\p"
-	.string "Oh, thank goodness. We were so worried\p"
-	.string "after you were attacked by that wild\n"
+	.string "Oh, thank goodness. We were so worried\n"
+	.string "after you were attacked by that wild\l"
 	.string "POKÉMON.\p"
 	.string "ZENNO just barely got you back here.$"
 
@@ -1696,7 +1959,7 @@ MOSSDEEP01_Text_GrandpaRecovery:
 	.string "Very few people are able to have their\n"
 	.string "own POKÉMON.\p"
 	.string "There used to be a technology called\n"
-	.string "POKÉ BALLS that allowed us to catch\p"
+	.string "POKÉ BALLS that allowed us to catch\l"
 	.string "POKÉMON, but those don't exist anymore.$"
 
 MOSSDEEP01_Text_GrandpaSuggestLuka:
@@ -1748,6 +2011,34 @@ MOSSDEEP01_Text_WailordIdle:
 
 MOSSDEEP01_Text_WailmerIdle:
     .string "The WAILMER are splashing playfully!$"
+
+MOSSDEEP01_Text_DrowningManCallsForHelp:
+	.string "MAN: Help! I'm drowning!\n"
+	.string "Please, pull me out of here!$"
+
+MOSSDEEP01_Text_PlayerRescuesDrowningMan:
+	.string "{PLAYER} pulls the drowning man\n"
+	.string "from the water.$"
+
+MOSSDEEP01_Text_DrowningManThanks:
+	.string "MAN: Thank you, {PLAYER}!\n"
+	.string "You saved my life!$"
+
+MOSSDEEP01_Text_MinerWifeHelp:
+	.string "WOMAN: Please help! My husband is\n"
+	.string "trapped after a mine cave-in!$"
+
+MOSSDEEP01_Text_PlayerDigsOutMiner:
+	.string "{PLAYER} digs the trapped miner\n"
+	.string "out of the cave-in.$"
+
+MOSSDEEP01_Text_MinerThanks:
+	.string "MINER: Thank you, {PLAYER}!\n"
+	.string "I thought I was done for!$"
+
+MOSSDEEP01_Text_MinerWifeThanks:
+	.string "WOMAN: Thank you for saving him!\n"
+	.string "I can't thank you enough!$"
 
 MOSSDEEP01_Text_CelebiCallsWailord:
     .string "CELEBI calls out to the ocean!\p"

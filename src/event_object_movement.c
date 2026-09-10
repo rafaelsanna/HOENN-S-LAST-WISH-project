@@ -537,6 +537,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_RubySapphireMay,       OBJ_EVENT_PAL_TAG_RS_MAY},
     {gObjectEventPal_Riomar,                OBJ_EVENT_PAL_TAG_RIOMAR},
     {gObjectEventPal_Calendula,             OBJ_EVENT_PAL_TAG_CALENDULA},
+    {gObjectEventPal_TrappedBlipbug,        OBJ_EVENT_PAL_TAG_TRAPPED_BLIPBUG},
 #if OW_FOLLOWERS_POKEBALLS
     {gObjectEventPal_MasterBall,            OBJ_EVENT_PAL_TAG_BALL_MASTER},
     {gObjectEventPal_UltraBall,             OBJ_EVENT_PAL_TAG_BALL_ULTRA},
@@ -6646,9 +6647,10 @@ u32 GetObjectObjectCollidesWith(struct ObjectEvent *objectEvent, s16 x, s16 y, b
     {
         curObject = &gObjectEvents[i];
         
-        // CHECK FOR ZEKROM - NO COLLISION
-        if (curObject->graphicsId == OBJ_EVENT_GFX_SPECIES(ZEKROM))
-            continue; // Skip collision for Zekrom
+        // Large set pieces and the buried miner are visual-only blockers.
+        if (curObject->graphicsId == OBJ_EVENT_GFX_SPECIES(ZEKROM)
+         || curObject->graphicsId == OBJ_EVENT_GFX_TRAPPED_BLIPBUG)
+            continue;
         
         if (curObject->active && (curObject->movementType != MOVEMENT_TYPE_FOLLOW_PLAYER || objectEvent != &gObjectEvents[gPlayerAvatar.objectEventId]) && curObject != objectEvent
          && !FollowerNPC_IsCollisionExempt(curObject, objectEvent)

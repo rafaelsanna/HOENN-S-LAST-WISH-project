@@ -418,6 +418,8 @@ const u16 gObjectEventPal_Lugia[] = INCBIN_U16("graphics/object_events/palettes/
 const u16 gObjectEventPaletteLight[] = INCBIN_U16("graphics/object_events/palettes/light.gbapal");
 const u16 gObjectEventPaletteLight2[] = INCBIN_U16("graphics/object_events/palettes/light2.gbapal");
 const u16 gObjectEventPal_Substitute[] = INCBIN_U16("graphics/object_events/pics/pokemon_old/substitute.gbapal");
+const u32 gObjectEventPic_TrappedBlipbug[] = INCBIN_U32("graphics/object_events/pics/pokemon_old/trapped_blipbug.4bpp");
+const u16 gObjectEventPal_TrappedBlipbug[] = INCBIN_U16("graphics/object_events/pics/pokemon_old/trapped_blipbug.gbapal");
 
 const u16 gObjectEventPaletteEmotes[] = INCBIN_U16("graphics/misc/emotes.gbapal");
 const u16 gObjectEventPaletteNeonLight[] = INCBIN_U16("graphics/object_events/palettes/neon_light.gbapal");

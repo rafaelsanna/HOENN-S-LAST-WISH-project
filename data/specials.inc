@@ -298,6 +298,9 @@ gSpecials::
 	def_special ShowGlassWorkshopMenu
 	def_special SpawnCameraObject
 	def_special RemoveCameraObject
+	def_special ResetMossdeepMinerSprite
+	def_special StoreMossdeepMinerRescueCamera
+	def_special FinishMossdeepMinerRescueCamera
 	def_special GetPokeblockNameByMonNature
 	def_special GetSecretBaseNearbyMapName
 	def_special CheckRelicanthWailord

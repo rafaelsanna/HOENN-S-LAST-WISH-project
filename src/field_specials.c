@@ -63,6 +63,7 @@
 #include "constants/items.h"
 #include "constants/heal_locations.h"
 #include "constants/mystery_gift.h"
+#include "constants/map_event_ids.h"
 #include "constants/slot_machine.h"
 #include "constants/songs.h"
 #include "constants/moves.h"
@@ -1234,6 +1235,72 @@ void RemoveCameraObject(void)
 {
     CameraObjectSetFollowedSpriteId(GetPlayerAvatarSpriteId());
     RemoveObjectEventByLocalIdAndMap(LOCALID_CAMERA, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
+}
+
+void ResetMossdeepMinerSprite(void)
+{
+    u8 objectEventId;
+    const u8 localIds[] = {LOCALID_TRAPPED_MINER, LOCALID_MINER_WIFE};
+    u8 i;
+
+    for (i = 0; i < ARRAY_COUNT(localIds); i++)
+    {
+        if (!TryGetObjectEventIdByLocalIdAndMap(localIds[i],
+                                                 gSaveBlock1Ptr->location.mapNum,
+                                                 gSaveBlock1Ptr->location.mapGroup,
+                                                 &objectEventId))
+        {
+            struct ObjectEvent *objectEvent = &gObjectEvents[objectEventId];
+            struct Sprite *sprite = &gSprites[objectEvent->spriteId];
+
+            if (localIds[i] == LOCALID_TRAPPED_MINER)
+            {
+                u8 j;
+
+                ObjectEventSetGraphicsId(objectEvent, OBJ_EVENT_GFX_SPECIES(BLIPBUG));
+                RequestSpriteFrameImageCopy(0, sprite->oam.tileNum, sprite->images);
+                for (j = 0; j < OBJECT_EVENT_TEMPLATES_COUNT; j++)
+                {
+                    if (gSaveBlock1Ptr->objectEventTemplates[j].localId == LOCALID_TRAPPED_MINER)
+                    {
+                        gSaveBlock1Ptr->objectEventTemplates[j].graphicsId = OBJ_EVENT_GFX_SPECIES(BLIPBUG);
+                        break;
+                    }
+                }
+            }
+            objectEvent->movementType = MOVEMENT_TYPE_FACE_DOWN;
+            objectEvent->disableAnim = FALSE;
+            objectEvent->enableAnim = TRUE;
+            sprite->animPaused = FALSE;
+            sprite->y2 = 0;
+            ClearObjectEventMovement(objectEvent, sprite);
+            ObjectEventTurnByLocalIdAndMap(localIds[i],
+                                            gSaveBlock1Ptr->location.mapNum,
+                                            gSaveBlock1Ptr->location.mapGroup,
+                                            DIR_SOUTH);
+        }
+    }
+}
+
+static s16 sMinerRescuePlayerX;
+static s16 sMinerRescuePlayerY;
+
+void StoreMossdeepMinerRescueCamera(void)
+{
+    struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+    sMinerRescuePlayerX = player->currentCoords.x;
+    sMinerRescuePlayerY = player->currentCoords.y;
+}
+
+void FinishMossdeepMinerRescueCamera(void)
+{
+    struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+    MoveCameraAndRedrawMap(player->currentCoords.x - sMinerRescuePlayerX,
+                           player->currentCoords.y - sMinerRescuePlayerY);
+    SetCameraPanning(0, 0);
+    CameraObjectReset();
 }
 
 u8 GetPokeblockNameByMonNature(void)
