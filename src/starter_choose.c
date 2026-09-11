@@ -580,7 +580,14 @@ static void Task_WaitForStarterSprite(u8 taskId)
 
 static void Task_AskConfirmStarter(u8 taskId)
 {
-    PlayCry_Normal(GetStarterPokemon(gTasks[taskId].tStarterSelection), 0);
+    u16 species = GetStarterPokemon(gTasks[taskId].tStarterSelection);
+    struct Sprite *sprite = &gSprites[gTasks[taskId].tPkmnSpriteId];
+
+    // Match the Pokédex behavior: play the cry and the native front-frame animation.
+    PlayCry_Normal(species, 0);
+    sprite->anims = gSpeciesInfo[species].frontAnimFrames;
+    StartSpriteAnim(sprite, 1);
+
     FillWindowPixelBuffer(0, PIXEL_FILL(1));
     AddTextPrinterParameterized(0, FONT_NORMAL, gText_ConfirmStarterChoice, 0, 1, 0, NULL);
     ScheduleBgCopyTilemapToVram(0);

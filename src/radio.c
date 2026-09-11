@@ -7518,13 +7518,31 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
     }
 }
 
+// Artwork follows the station/song currently shown by the Radio UI.
+// With NAVIGATION enabled, the browse candidate is intentionally independent
+// from the committed live playback context, so using sRadioStation here would
+// leave POP's Amaterasu visible while browsing GAMES/ANIME/etc.
+static u8 Radio_GetArtworkStation(void)
+{
+    return sRadioNavigationBrowseEnabled
+         ? sRadioMainBrowseStation
+         : sRadioStation;
+}
+
+static u16 Radio_GetArtworkSong(void)
+{
+    return sRadioNavigationBrowseEnabled
+         ? Radio_GetMainBrowseSong()
+         : sRadioCurrentSong;
+}
+
 // Apply the art preference immediately. This is used by the config toggle so
 // Jigglypuff never has to wait for a cover transition already in progress.
 static void Radio_RefreshAlbumCover(void)
 {
     u8 coverId;
 
-    if (sRadioStation == STATION_POP)
+    if (Radio_GetArtworkStation() == STATION_POP)
     {
         Radio_SetAmaterasuActive(TRUE);
         Radio_BlendVisibleArt(0);
@@ -7535,7 +7553,7 @@ static void Radio_RefreshAlbumCover(void)
 
     coverId = sRadioHideCovers
                ? RADIO_COVER_NONE
-               : Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+               : Radio_GetAlbumCoverForSong(Radio_GetArtworkSong());
 
     sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
     sRadioArtTransitionTimer = 0;
@@ -7548,7 +7566,7 @@ static void Radio_UpdateAlbumCover(void)
 {
     u8 coverId;
 
-    if (sRadioStation == STATION_POP)
+    if (Radio_GetArtworkStation() == STATION_POP)
     {
         Radio_SetAmaterasuActive(TRUE);
         return;
@@ -7561,7 +7579,7 @@ static void Radio_UpdateAlbumCover(void)
 
     coverId = sRadioHideCovers
             ? RADIO_COVER_NONE
-            : Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+            : Radio_GetAlbumCoverForSong(Radio_GetArtworkSong());
 
     // During a transition, remember the latest request. Fast song skipping
     // therefore converges to the newest album instead of flashing old covers.

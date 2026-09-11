@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_disturbia_rihanna_grp, voicegroup_pink_and_white
+	.equ	mus_disturbia_rihanna_grp, voicegroup_diva_pop
 	.equ	mus_disturbia_rihanna_pri, 0
-	.equ	mus_disturbia_rihanna_rev, reverb_set+8
-	.equ	mus_disturbia_rihanna_mvl, 82
+	.equ	mus_disturbia_rihanna_rev, reverb_set+12
+	.equ	mus_disturbia_rihanna_mvl, 90
 	.equ	mus_disturbia_rihanna_key, 0
 	.equ	mus_disturbia_rihanna_tbs, 1
 	.equ	mus_disturbia_rihanna_exg, 1
@@ -21,42 +21,42 @@ mus_disturbia_rihanna_1:
 @ 000   ----------------------------------------
 	.byte	TEMPO , 125*mus_disturbia_rihanna_tbs/2
 	.byte		VOICE , 5
-	.byte		N12   , Bn0 , v096
+	.byte		N12   , Bn1 , v052
 	.byte	W24
 	.byte		N12   
 	.byte	W24
-	.byte		        Dn1 
+	.byte		        Dn2 
 	.byte	W24
 	.byte		N12   
 	.byte	W24
 @ 001   ----------------------------------------
 mus_disturbia_rihanna_1_001:
-	.byte		N12   , An0 , v096
+	.byte		N12   , An1 , v052
 	.byte	W24
 	.byte		N12   
 	.byte	W24
-	.byte		        Gn0 
+	.byte		        Gn1 
 	.byte	W24
 	.byte		N12   
 	.byte	W24
 	.byte	PEND
 @ 002   ----------------------------------------
 mus_disturbia_rihanna_1_002:
-	.byte		N12   , Bn0 , v096
+	.byte		N12   , Bn1 , v052
 	.byte	W24
 	.byte		N12   
 	.byte	W24
-	.byte		        Dn1 
+	.byte		        Dn2 
 	.byte	W24
 	.byte		N12   
 	.byte	W24
 	.byte	PEND
 @ 003   ----------------------------------------
-	.byte		        An0 
+	.byte		        An1 
 	.byte	W24
 	.byte		N12   
 	.byte	W24
-	.byte		        En0 
+	.byte		        En1 
 	.byte	W24
 	.byte		N12   
 	.byte	W24
@@ -67,28 +67,28 @@ mus_disturbia_rihanna_1_002:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_1_001
 @ 006   ----------------------------------------
-	.byte		N22   , Bn0 , v096
+	.byte		N22   , Bn1 , v052
 	.byte	W24
 	.byte		N22   
 	.byte	W24
-	.byte		        Dn1 
+	.byte		        Dn2 
 	.byte	W24
 	.byte		N22   
 	.byte	W24
 @ 007   ----------------------------------------
-	.byte		        An0 
+	.byte		        An1 
 	.byte	W24
 	.byte		N12   
 	.byte	W12
-	.byte		        An1 
-	.byte	W12
-	.byte		        Gn1 
-	.byte	W12
-	.byte		        Gn0 
+	.byte		        An2 
 	.byte	W12
 	.byte		        Gn2 
 	.byte	W12
-	.byte		        Fs2 
+	.byte		        Gn1 
+	.byte	W12
+	.byte		        Gn3 
+	.byte	W12
+	.byte		        Fs3 
 	.byte	W12
 @ 008   ----------------------------------------
 	.byte	FINE
@@ -99,8 +99,8 @@ mus_disturbia_rihanna_2:
 	.byte		VOL   , 127*mus_disturbia_rihanna_mvl/mxv
 	.byte	KEYSH , mus_disturbia_rihanna_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 33
-	.byte		N06   , Bn0 , v068
+	.byte		VOICE , 1
+	.byte		N06   , Bn0 , v064
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -110,7 +110,7 @@ mus_disturbia_rihanna_2:
 	.byte	W24
 @ 001   ----------------------------------------
 mus_disturbia_rihanna_2_001:
-	.byte		N06   , An0 , v068
+	.byte		N06   , An0 , v064
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -121,7 +121,7 @@ mus_disturbia_rihanna_2_001:
 	.byte	PEND
 @ 002   ----------------------------------------
 mus_disturbia_rihanna_2_002:
-	.byte		N06   , Bn0 , v068
+	.byte		N06   , Bn0 , v064
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -174,7 +174,7 @@ mus_disturbia_rihanna_2_002:
 	 .word	mus_disturbia_rihanna_2_002
 @ 015   ----------------------------------------
 mus_disturbia_rihanna_2_015:
-	.byte		N06   , An0 , v068
+	.byte		N06   , An0 , v064
 	.byte	W24
 	.byte		N06   
 	.byte	W12
@@ -235,7 +235,7 @@ mus_disturbia_rihanna_2_015:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_2_002
 @ 031   ----------------------------------------
-	.byte		N06   , An0 , v068
+	.byte		N06   , An0 , v064
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -251,8 +251,8 @@ mus_disturbia_rihanna_3:
 	.byte		VOL   , 127*mus_disturbia_rihanna_mvl/mxv
 	.byte	KEYSH , mus_disturbia_rihanna_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 5
-	.byte		N06   , Bn1 , v052
+	.byte		VOICE , 7
+	.byte		N06   , Bn1 , v056
 	.byte		N06   , Bn2 
 	.byte		N06   , Bn3 
 	.byte		N06   , Bn4 
@@ -280,7 +280,7 @@ mus_disturbia_rihanna_3:
 @ 001   ----------------------------------------
 mus_disturbia_rihanna_3_001:
 	.byte	W12
-	.byte		N06   , Gn1 , v052
+	.byte		N06   , Gn1 , v056
 	.byte		N06   , Gn2 
 	.byte		N06   , Gn3 
 	.byte		N06   , Gn4 
@@ -303,7 +303,7 @@ mus_disturbia_rihanna_3_001:
 	.byte	PEND
 @ 002   ----------------------------------------
 mus_disturbia_rihanna_3_002:
-	.byte		N06   , Bn1 , v052
+	.byte		N06   , Bn1 , v056
 	.byte		N06   , Bn2 
 	.byte		N06   , Bn3 
 	.byte		N06   , Bn4 
@@ -349,7 +349,7 @@ mus_disturbia_rihanna_3_002:
 @ 009   ----------------------------------------
 mus_disturbia_rihanna_3_009:
 	.byte	W12
-	.byte		N06   , Bn1 , v052
+	.byte		N06   , Bn1 , v056
 	.byte		N06   , Bn2 
 	.byte		N06   , Bn3 
 	.byte	W12
@@ -397,14 +397,14 @@ mus_disturbia_rihanna_3_009:
 @ 017   ----------------------------------------
 mus_disturbia_rihanna_3_017:
 	.byte	W84
-	.byte		N06   , Cs2 , v052
+	.byte		N06   , Cs2 , v056
 	.byte		N06   , Cs3 
 	.byte		N06   , Cs4 
 	.byte	W12
 	.byte	PEND
 @ 018   ----------------------------------------
 mus_disturbia_rihanna_3_018:
-	.byte		N06   , Dn2 , v052
+	.byte		N06   , Dn2 , v056
 	.byte		N06   , Dn3 
 	.byte		N06   , Dn4 
 	.byte	W96
@@ -418,7 +418,7 @@ mus_disturbia_rihanna_3_018:
 @ 021   ----------------------------------------
 	.byte	W96
 @ 022   ----------------------------------------
-	.byte		N06   , Dn2 , v052
+	.byte		N06   , Dn2 , v056
 	.byte		N06   , Dn3 
 	.byte		N06   , Dn4 
 	.byte	W24
@@ -491,7 +491,7 @@ mus_disturbia_rihanna_3_018:
 	.byte	W12
 @ 025   ----------------------------------------
 mus_disturbia_rihanna_3_025:
-	.byte		N06   , En3 , v052
+	.byte		N06   , En3 , v056
 	.byte		N06   , An3 
 	.byte		N06   , Cs4 
 	.byte	W12
@@ -520,7 +520,7 @@ mus_disturbia_rihanna_3_025:
 	.byte	PEND
 @ 026   ----------------------------------------
 mus_disturbia_rihanna_3_026:
-	.byte		N06   , Bn1 , v052
+	.byte		N06   , Bn1 , v056
 	.byte		N06   , Dn2 
 	.byte		N06   , Fs2 
 	.byte		N06   , Bn2 
@@ -560,7 +560,7 @@ mus_disturbia_rihanna_3_026:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_3_026
 @ 029   ----------------------------------------
-	.byte		N06   , En3 , v052
+	.byte		N06   , En3 , v056
 	.byte		N06   , An3 
 	.byte		N06   , Cs4 
 	.byte	W12
@@ -637,8 +637,8 @@ mus_disturbia_rihanna_4:
 	.byte		VOL   , 127*mus_disturbia_rihanna_mvl/mxv
 	.byte	KEYSH , mus_disturbia_rihanna_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 118
-	.byte		N06   , Bn0 , v052
+	.byte		VOICE , 8
+	.byte		N06   , Cn1 , v060
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -648,7 +648,7 @@ mus_disturbia_rihanna_4:
 	.byte	W24
 @ 001   ----------------------------------------
 mus_disturbia_rihanna_4_001:
-	.byte		N06   , Bn0 , v052
+	.byte		N06   , Cn1 , v060
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -662,7 +662,7 @@ mus_disturbia_rihanna_4_001:
 	 .word	mus_disturbia_rihanna_4_001
 @ 003   ----------------------------------------
 mus_disturbia_rihanna_4_003:
-	.byte		N06   , Bn0 , v052
+	.byte		N06   , Cn1 , v060
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -687,15 +687,15 @@ mus_disturbia_rihanna_4_003:
 	 .word	mus_disturbia_rihanna_4_003
 @ 008   ----------------------------------------
 mus_disturbia_rihanna_4_008:
-	.byte		N06   , Bn0 , v052
+	.byte		N06   , Cn1 , v060
 	.byte	W24
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 , v064
 	.byte	W24
-	.byte		        Bn0 
+	.byte		        Cn1 , v060
 	.byte	W24
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 , v064
 	.byte	W24
 	.byte	PEND
 @ 009   ----------------------------------------
@@ -706,17 +706,17 @@ mus_disturbia_rihanna_4_008:
 	 .word	mus_disturbia_rihanna_4_008
 @ 011   ----------------------------------------
 mus_disturbia_rihanna_4_011:
-	.byte		N06   , Bn0 , v052
+	.byte		N06   , Cn1 , v060
 	.byte	W24
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 , v064
 	.byte	W24
-	.byte		        Bn0 
+	.byte		        Cn1 , v060
 	.byte	W24
 	.byte		N06   
-	.byte		N06   , Ds1 
+	.byte		N06   , En1 , v064
 	.byte	W12
-	.byte		        Bn0 
+	.byte		        Cn1 , v060
 	.byte	W12
 	.byte	PEND
 @ 012   ----------------------------------------
@@ -757,27 +757,27 @@ mus_disturbia_rihanna_4_011:
 	 .word	mus_disturbia_rihanna_4_011
 @ 024   ----------------------------------------
 mus_disturbia_rihanna_4_024:
-	.byte		N06   , Bn0 , v052
+	.byte		N06   , Cn1 , v060
 	.byte		N06   
 	.byte	W12
-	.byte		        Fs1 
+	.byte		        Fs1 , v036
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Dn1 
-	.byte		N06   , Ds1 
-	.byte	W12
-	.byte		        Fs1 
-	.byte	W12
-	.byte		        Bn0 
+	.byte		        Cn1 , v060
+	.byte		N06   , En1 , v064
 	.byte		N06   
 	.byte	W12
-	.byte		        Fs1 
+	.byte		        Fs1 , v036
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Dn1 
-	.byte		N06   , Ds1 
+	.byte		        Cn1 , v060
+	.byte		N06   
 	.byte	W12
-	.byte		        Fs1 
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        Cn1 , v060
+	.byte		N06   , En1 , v064
+	.byte		N06   
+	.byte	W12
+	.byte		        Fs1 , v036
 	.byte	W12
 	.byte	PEND
 @ 025   ----------------------------------------
@@ -787,28 +787,28 @@ mus_disturbia_rihanna_4_024:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_4_024
 @ 027   ----------------------------------------
-	.byte		N06   , Bn0 , v052
+	.byte		N06   , Cn1 , v060
 	.byte		N06   
 	.byte	W12
-	.byte		        Fs1 
+	.byte		        Fs1 , v036
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Dn1 
-	.byte		N06   , Ds1 
-	.byte	W12
-	.byte		        Fs1 
-	.byte	W12
-	.byte		        Bn0 
+	.byte		        Cn1 , v060
+	.byte		N06   , En1 , v064
 	.byte		N06   
 	.byte	W12
-	.byte		        Fs1 
+	.byte		        Fs1 , v036
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Dn1 
-	.byte		N06   , Ds1 
+	.byte		        Cn1 , v060
+	.byte		N06   
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Fs1 
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        Cn1 , v060
+	.byte		N06   , En1 , v064
+	.byte		N06   
+	.byte	W12
+	.byte		        Cn1 , v060
+	.byte		N06   , Fs1 , v036
 	.byte	W12
 @ 028   ----------------------------------------
 	.byte	PATT
@@ -820,28 +820,28 @@ mus_disturbia_rihanna_4_024:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_4_024
 @ 031   ----------------------------------------
-	.byte		N06   , Bn0 , v052
+	.byte		N06   , Cn1 , v060
 	.byte		N06   
 	.byte	W12
-	.byte		        Fs1 
+	.byte		        Fs1 , v036
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Dn1 
-	.byte		N06   , Ds1 
-	.byte	W12
-	.byte		        Fs1 
-	.byte	W12
-	.byte		        Bn0 
+	.byte		        Cn1 , v060
+	.byte		N06   , En1 , v064
 	.byte		N06   
 	.byte	W12
-	.byte		        Fs1 
+	.byte		        Fs1 , v036
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Dn1 
-	.byte		N06   , Ds1 
+	.byte		        Cn1 , v060
+	.byte		N06   
 	.byte	W12
-	.byte		        Bn0 
-	.byte		N06   , Fs1 
+	.byte		        Fs1 , v036
+	.byte	W12
+	.byte		        Cn1 , v060
+	.byte		N06   , En1 , v064
+	.byte		N06   
+	.byte	W12
+	.byte		        Cn1 , v060
+	.byte		N06   , Fs1 , v036
 	.byte	W06
 	.byte	FINE
 
@@ -851,8 +851,8 @@ mus_disturbia_rihanna_5:
 	.byte		VOL   , 127*mus_disturbia_rihanna_mvl/mxv
 	.byte	KEYSH , mus_disturbia_rihanna_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 5
-	.byte		N06   , Bn3 , v092
+	.byte		VOICE , 7
+	.byte		N06   , Bn3 , v068
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -865,7 +865,7 @@ mus_disturbia_rihanna_5:
 @ 001   ----------------------------------------
 mus_disturbia_rihanna_5_001:
 	.byte	W12
-	.byte		N06   , Gn3 , v092
+	.byte		N06   , Gn3 , v068
 	.byte	W24
 	.byte		        Fs3 
 	.byte	W12
@@ -876,7 +876,7 @@ mus_disturbia_rihanna_5_001:
 	.byte	PEND
 @ 002   ----------------------------------------
 mus_disturbia_rihanna_5_002:
-	.byte		N06   , Bn3 , v092
+	.byte		N06   , Bn3 , v068
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -905,7 +905,7 @@ mus_disturbia_rihanna_5_002:
 @ 008   ----------------------------------------
 mus_disturbia_rihanna_5_008:
 	.byte	W12
-	.byte		N06   , Dn4 , v092
+	.byte		N06   , Dn4 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -921,7 +921,7 @@ mus_disturbia_rihanna_5_008:
 @ 009   ----------------------------------------
 mus_disturbia_rihanna_5_009:
 	.byte	W12
-	.byte		N06   , Bn3 , v092
+	.byte		N06   , Bn3 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -944,7 +944,7 @@ mus_disturbia_rihanna_5_009:
 	 .word	mus_disturbia_rihanna_5_009
 @ 012   ----------------------------------------
 	.byte	W12
-	.byte		N06   , Dn4 , v092
+	.byte		N06   , Dn4 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -961,7 +961,7 @@ mus_disturbia_rihanna_5_009:
 	 .word	mus_disturbia_rihanna_5_009
 @ 014   ----------------------------------------
 	.byte	W12
-	.byte		N06   , Bn3 , v092
+	.byte		N06   , Bn3 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -990,7 +990,7 @@ mus_disturbia_rihanna_5_009:
 @ 016   ----------------------------------------
 mus_disturbia_rihanna_5_016:
 	.byte	W12
-	.byte		N06   , Dn3 , v092
+	.byte		N06   , Dn3 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -1020,7 +1020,7 @@ mus_disturbia_rihanna_5_016:
 	 .word	mus_disturbia_rihanna_5_016
 @ 019   ----------------------------------------
 	.byte	W12
-	.byte		N06   , Cs3 , v092
+	.byte		N06   , Cs3 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -1035,7 +1035,7 @@ mus_disturbia_rihanna_5_016:
 	 .word	mus_disturbia_rihanna_5_016
 @ 021   ----------------------------------------
 	.byte	W12
-	.byte		N06   , Cs3 , v092
+	.byte		N06   , Cs3 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -1081,7 +1081,7 @@ mus_disturbia_rihanna_5_016:
 	.byte	W12
 @ 025   ----------------------------------------
 mus_disturbia_rihanna_5_025:
-	.byte		N06   , Cs5 , v092
+	.byte		N06   , Cs5 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -1098,7 +1098,7 @@ mus_disturbia_rihanna_5_025:
 	.byte	PEND
 @ 026   ----------------------------------------
 mus_disturbia_rihanna_5_026:
-	.byte		N06   , Dn5 , v092
+	.byte		N06   , Dn5 , v068
 	.byte	W24
 	.byte		        Bn4 
 	.byte	W36
@@ -1116,7 +1116,7 @@ mus_disturbia_rihanna_5_026:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_5_026
 @ 029   ----------------------------------------
-	.byte		N06   , Cs5 , v092
+	.byte		N06   , Cs5 , v068
 	.byte	W12
 	.byte		N06   
 	.byte	W12
@@ -1145,7 +1145,7 @@ mus_disturbia_rihanna_6:
 	.byte		VOL   , 127*mus_disturbia_rihanna_mvl/mxv
 	.byte	KEYSH , mus_disturbia_rihanna_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 5
+	.byte		VOICE , 2
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -1179,7 +1179,7 @@ mus_disturbia_rihanna_6:
 	.byte	W96
 @ 016   ----------------------------------------
 mus_disturbia_rihanna_6_016:
-	.byte		N48   , Fs1 , v004
+	.byte		N48   , Fs1 , v032
 	.byte		N48   , Bn1 
 	.byte		N48   , Dn2 
 	.byte	W48
@@ -1191,7 +1191,7 @@ mus_disturbia_rihanna_6_016:
 	.byte	PEND
 @ 017   ----------------------------------------
 mus_disturbia_rihanna_6_017:
-	.byte		N48   , En1 , v004
+	.byte		N48   , En1 , v032
 	.byte		N48   , An1 
 	.byte		N48   , Cs2 
 	.byte		N48   , En2 
@@ -1224,7 +1224,7 @@ mus_disturbia_rihanna_6_017:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_6_016
 @ 023   ----------------------------------------
-	.byte		N48   , An1 , v004
+	.byte		N48   , An1 , v032
 	.byte		N48   , Cs2 
 	.byte		N48   , En2 
 	.byte		N48   , An2 
@@ -1236,7 +1236,7 @@ mus_disturbia_rihanna_6_017:
 	.byte	W48
 @ 024   ----------------------------------------
 mus_disturbia_rihanna_6_024:
-	.byte		N48   , Fs1 , v004
+	.byte		N48   , Fs1 , v032
 	.byte		N48   , Bn1 
 	.byte		N48   , Dn2 
 	.byte		N48   , Fs2 
@@ -1255,7 +1255,7 @@ mus_disturbia_rihanna_6_024:
 	.byte	PEND
 @ 025   ----------------------------------------
 mus_disturbia_rihanna_6_025:
-	.byte		N48   , En1 , v004
+	.byte		N48   , En1 , v032
 	.byte		N48   , An1 
 	.byte		N48   , Cs2 
 	.byte		N48   , En2 
@@ -1351,7 +1351,7 @@ mus_disturbia_rihanna_7:
 	.byte	W96
 @ 024   ----------------------------------------
 mus_disturbia_rihanna_7_024:
-	.byte		N06   , Bn3 , v052
+	.byte		N06   , Bn3 , v056
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -1366,7 +1366,7 @@ mus_disturbia_rihanna_7_024:
 	.byte	PEND
 @ 025   ----------------------------------------
 mus_disturbia_rihanna_7_025:
-	.byte		N06   , Cs4 , v052
+	.byte		N06   , Cs4 , v056
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -1381,7 +1381,7 @@ mus_disturbia_rihanna_7_025:
 	.byte	PEND
 @ 026   ----------------------------------------
 mus_disturbia_rihanna_7_026:
-	.byte		N06   , Bn3 , v052
+	.byte		N06   , Bn3 , v056
 	.byte	W24
 	.byte		N06   
 	.byte	W24
@@ -1419,7 +1419,7 @@ mus_disturbia_rihanna_7_026:
 	.byte	PATT
 	 .word	mus_disturbia_rihanna_7_026
 @ 031   ----------------------------------------
-	.byte		N06   , En4 , v052
+	.byte		N06   , En4 , v056
 	.byte	W12
 	.byte		N06   
 	.byte	W24
