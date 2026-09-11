@@ -65,3 +65,12 @@ temp_mining/
 *.bak_*
 /src/*.bak_*
 /debug_dev_supreme_*.patch
+
+# Local repair/backup files
+*.bak_*
+*.bak
+*.orig
+
+# Windows metadata accidentally copied into WSL
+*:Zone.Identifier
+Zone.Identifier
