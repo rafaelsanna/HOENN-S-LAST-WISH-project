@@ -7652,9 +7652,9 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         OVERWORLD(
             sPicTable_Melmetal,
             SIZE_64x64,
-            SHADOW_SIZE_M,
+            SHADOW_SIZE_NONE,
             TRACKS_FOOT,
-            sAnimTable_Koraidon,
+            sAnimTable_Melmetal,
             gOverworldPalette_Melmetal,
             gShinyOverworldPalette_Melmetal
         )

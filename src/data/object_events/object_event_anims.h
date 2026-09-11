@@ -1203,6 +1203,72 @@ const union AnimCmd *const sAnimTable_Following[] = {
     [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_ExitPokeballFastEast,
 };
 
+
+// Custom 4-frame 64x64 overworld animation for Melmetal.
+// The sheet is 256x64: four 64x64 frames (0, 1, 2, 3).
+static const union AnimCmd sAnim_FaceWestMelmetal[] =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_FaceEastMelmetal[] =
+{
+    ANIMCMD_FRAME(0, 16, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoWestMelmetal[] =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(1, 2),
+    ANIMCMD_FRAME(2, 2),
+    ANIMCMD_FRAME(3, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoEastMelmetal[] =
+{
+    ANIMCMD_FRAME(0, 10, .hFlip = TRUE),
+    ANIMCMD_FRAME(1, 10, .hFlip = TRUE),
+    ANIMCMD_FRAME(2, 10, .hFlip = TRUE),
+    ANIMCMD_FRAME(3, 10, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const sAnimTable_Melmetal[] =
+{
+    [ANIM_STD_FACE_SOUTH] = sAnim_FaceWestMelmetal,
+    [ANIM_STD_FACE_NORTH] = sAnim_FaceWestMelmetal,
+    [ANIM_STD_FACE_WEST] = sAnim_FaceWestMelmetal,
+    [ANIM_STD_FACE_EAST] = sAnim_FaceEastMelmetal,
+
+    [ANIM_STD_GO_SOUTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_NORTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_WEST] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_EAST] = sAnim_GoEastMelmetal,
+
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_GoEastMelmetal,
+
+    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FASTER_NORTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FASTER_WEST] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FASTER_EAST] = sAnim_GoEastMelmetal,
+
+    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FASTEST_WEST] = sAnim_GoWestMelmetal,
+    [ANIM_STD_GO_FASTEST_EAST] = sAnim_GoEastMelmetal,
+
+    [ANIM_EXIT_POKEBALL_FAST_SOUTH] = sAnim_GoWestMelmetal,
+    [ANIM_EXIT_POKEBALL_FAST_NORTH] = sAnim_GoWestMelmetal,
+    [ANIM_EXIT_POKEBALL_FAST_WEST] = sAnim_GoWestMelmetal,
+    [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_GoEastMelmetal,
+};
+
 const union AnimCmd *const sAnimTable_Koraidon[] = {
     [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
     [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth2F,

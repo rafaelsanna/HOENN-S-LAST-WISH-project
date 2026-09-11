@@ -180,6 +180,7 @@ void ClearLinkPlayerObjectEvents(void);
 bool16 SetTimeOfDay(u16 hours);
 extern const union AnimCmd *const sAnimTable_Spheal[];
 extern const union AnimCmd *const sAnimTable_Koraidon[];
+extern const union AnimCmd *const sAnimTable_Melmetal[];
 
 // Item Description Headers
 enum ItemObtainFlags

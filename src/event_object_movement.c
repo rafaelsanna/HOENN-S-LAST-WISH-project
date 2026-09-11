@@ -6077,6 +6077,7 @@ bool8 MovementType_MoveInPlace_Step1(struct ObjectEvent *objectEvent, struct Spr
     // similar to UpdateMonMoveInPlace
     else if (OW_FOLLOWERS_BOBBING == TRUE
           && IS_OW_MON_OBJ(objectEvent)
+          && objectEvent->graphicsId != OBJ_EVENT_GFX_SPECIES(MELMETAL)
           && (sprite->data[3] & 7) == 2)
     {
         sprite->y2 ^= 1;

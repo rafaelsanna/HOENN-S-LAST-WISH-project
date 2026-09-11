@@ -15,6 +15,8 @@
 #include "trig.h"
 #include "gpu_regs.h"
 #include "palette.h"
+#include "constants/event_objects.h"
+#include "constants/species.h"
 
 EWRAM_DATA static u8 sCurrentAbnormalWeather = 0;
 
@@ -3148,8 +3150,12 @@ static void UpdateSmokeSprite(struct Sprite *sprite)
 #define CONCERT_BEAM_CONE_BASE_HALF_WIDTH     19
 #define CONCERT_BEAM_OBJECT_HALF_WIDTH        6
 #define CONCERT_BEAM_OBJECT_SAMPLE_Y_OFFSET  -8
-#define CONCERT_BEAM_OBJECT_PALETTE_COUNT     12
+#define CONCERT_BEAM_STANDARD_PALETTE_COUNT   12
+#define CONCERT_BEAM_OBJECT_PALETTE_COUNT     16
 
+// Melmetal is used here as a custom 64x64 stage/screen sprite.
+// Sample three horizontal points so the spotlight can illuminate the
+// visible left/center/right portions of the large sprite.
 // Fixed map anchors for the two spotlights.
 // These are map metatile coordinates (without MAP_OFFSET), not screen pixels.
 // For LavaridgeTown_Gym_1F the stage is at the top of the map.
@@ -3335,6 +3341,66 @@ static u8 GetConcertBeamLightStrengthAtPoint(s16 pointX, s16 pointY, u8 beamId)
     return strength;
 }
 
+// Special case for the custom Melmetal stage sprite.
+//
+// Normal NPCs are small enough that one torso sample is a good approximation.
+// This Melmetal slot is a 64x64 animated screen/set-piece, so its map anchor can
+// sit outside the mathematical cone even while the visible upper part is clearly
+// crossed by the spotlight. Test the rendered sprite rectangle instead.
+static u8 GetConcertBeamLightStrengthForMelmetal(const struct Sprite *sprite, u8 beamId)
+{
+    s16 centerX = sprite->x + sprite->x2;
+    s16 centerY = sprite->y + sprite->y2;
+    s16 halfWidth = sprite->centerToCornerVecX;
+    s16 halfHeight = sprite->centerToCornerVecY;
+    s16 left;
+    s16 right;
+    s16 top;
+    s16 bottom;
+    u8 xIndex;
+    u8 yIndex;
+    u8 strength = 0;
+
+    // centerToCornerVec is normally negative. Be defensive in case this build
+    // stores/updates it differently; Melmetal is known to be 64x64.
+    if (halfWidth < 0)
+        halfWidth = -halfWidth;
+    if (halfHeight < 0)
+        halfHeight = -halfHeight;
+
+    if (halfWidth < 24 || halfWidth > 40)
+        halfWidth = 32;
+    if (halfHeight < 24 || halfHeight > 40)
+        halfHeight = 32;
+
+    // Stay a few pixels inside the OAM rectangle so transparent border pixels do
+    // not make the character light up noticeably before the cone reaches the art.
+    left   = centerX - halfWidth  + 4;
+    right  = centerX + halfWidth  - 4;
+    top    = centerY - halfHeight + 4;
+    bottom = centerY + halfHeight - 4;
+
+    // 5x5 coverage of the full 64x64 visual rectangle.
+    // This includes the upper half that the old torso-only test never reached.
+    for (yIndex = 0; yIndex < 5; yIndex++)
+    {
+        s16 sampleY = top + ((bottom - top) * yIndex) / 4;
+
+        for (xIndex = 0; xIndex < 5; xIndex++)
+        {
+            s16 sampleX = left + ((right - left) * xIndex) / 4;
+            u8 sampleStrength =
+                GetConcertBeamLightStrengthAtPoint(sampleX, sampleY, beamId);
+
+            if (sampleStrength > strength)
+                strength = sampleStrength;
+        }
+    }
+
+    return strength;
+}
+
+
 void ConcertBeam_ApplyObjectLighting(void)
 {
     u8 paletteStrength[CONCERT_BEAM_OBJECT_PALETTE_COUNT] = {0};
@@ -3344,9 +3410,10 @@ void ConcertBeam_ApplyObjectLighting(void)
     if (!sConcertBeamCreated)
         return;
 
-    // Collect the strongest beam contribution for every standard overworld OBJ
-    // palette. Doing one final blend per palette avoids double-brightening where
-    // the two spotlights cross.
+    // Collect the strongest beam contribution for each overworld OBJ palette.
+    // Ordinary object events remain restricted to the normal 0..11 slots.
+    // Melmetal may use one of the dynamic OBJ palette slots 12..15 because
+    // this species slot is being used as a custom 64x64 stage sprite.
     for (objectEventId = 0; objectEventId < OBJECT_EVENTS_COUNT; objectEventId++)
     {
         struct ObjectEvent *objectEvent = &gObjectEvents[objectEventId];
@@ -3355,6 +3422,7 @@ void ConcertBeam_ApplyObjectLighting(void)
         s16 pointY;
         u8 strength = 0;
         u8 beamId;
+        bool8 isMelmetal;
 
         if (!objectEvent->active || objectEvent->invisible)
             continue;
@@ -3367,21 +3435,47 @@ void ConcertBeam_ApplyObjectLighting(void)
 
         paletteNum = sprite->oam.paletteNum;
 
-        // Object-event palettes occupy the standard overworld slots 0..11.
-        // Ignore weather/UI/field-effect OBJ palettes so this local lighting
-        // cannot recolor the beam itself or unrelated interface sprites.
+        // Hardware OBJ palette numbers are 0..15.
         if (paletteNum >= CONCERT_BEAM_OBJECT_PALETTE_COUNT)
             continue;
 
-        // Object sprites use map-space x/y too. Sample around the torso rather
-        // than the feet so the character starts glowing when the visible cone
-        // actually passes over their body.
+        isMelmetal =
+            (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(MELMETAL));
+
+        // Keep custom/weather/UI OBJ palette slots protected for every normal
+        // object. Only our Melmetal stage sprite is allowed through here.
+        if (paletteNum >= CONCERT_BEAM_STANDARD_PALETTE_COUNT
+         && !isMelmetal)
+        {
+            continue;
+        }
+
+        // Object sprites use map-space x/y. Sample near the upper body.
         pointX = sprite->x + sprite->x2;
-        pointY = sprite->y + sprite->y2 + CONCERT_BEAM_OBJECT_SAMPLE_Y_OFFSET;
+        pointY = sprite->y + sprite->y2
+               + CONCERT_BEAM_OBJECT_SAMPLE_Y_OFFSET;
 
         for (beamId = 0; beamId < NUM_CONCERT_BEAMS; beamId++)
         {
-            u8 beamStrength = GetConcertBeamLightStrengthAtPoint(pointX, pointY, beamId);
+            u8 beamStrength = 0;
+
+            if (isMelmetal)
+            {
+                // 64x64 custom stage sprite: detect beam overlap against the
+                // whole visible rectangle, not a single NPC torso point.
+                beamStrength =
+                    GetConcertBeamLightStrengthForMelmetal(sprite, beamId);
+            }
+            else
+            {
+                beamStrength =
+                    GetConcertBeamLightStrengthAtPoint(
+                        pointX,
+                        pointY,
+                        beamId
+                    );
+            }
+
             if (beamStrength > strength)
                 strength = beamStrength;
         }
@@ -3390,10 +3484,11 @@ void ConcertBeam_ApplyObjectLighting(void)
             paletteStrength[paletteNum] = strength;
     }
 
-    // ConcertLights_ApplyLighting() has already rebuilt these palettes from the
-    // stable unfaded buffer this frame. Blend faded -> faded here so the local
-    // beam light is composed on top without accumulating from previous frames.
-    for (paletteNum = 0; paletteNum < CONCERT_BEAM_OBJECT_PALETTE_COUNT; paletteNum++)
+    // ConcertLights_ApplyLighting() already rebuilt the normal concert grade
+    // this frame. Add the local warm spotlight on top without accumulating.
+    for (paletteNum = 0;
+         paletteNum < CONCERT_BEAM_OBJECT_PALETTE_COUNT;
+         paletteNum++)
     {
         if (paletteStrength[paletteNum] != 0)
         {
