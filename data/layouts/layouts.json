@@ -5150,6 +5150,16 @@
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/route119grotto/border.bin",
       "blockdata_filepath": "data/layouts/route119grotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE120GROTTO",
+      "name": "route120grotto_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/route120grotto/border.bin",
+      "blockdata_filepath": "data/layouts/route120grotto/map.bin"
     }
   ]
 }

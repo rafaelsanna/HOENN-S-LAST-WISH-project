@@ -35,6 +35,9 @@ enum HiddenGrottoItemPool
     HIDDEN_GROTTO_ITEM_POOL_FIERY_PATH,
     HIDDEN_GROTTO_ITEM_POOL_ROUTE114,
     HIDDEN_GROTTO_ITEM_POOL_ROUTE115,
+    HIDDEN_GROTTO_ITEM_POOL_ROGUE_CANYON,
+    HIDDEN_GROTTO_ITEM_POOL_ROUTE119,
+    HIDDEN_GROTTO_ITEM_POOL_ROUTE120,
 };
 
 struct HiddenGrotto
@@ -92,7 +95,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
         ITEM_LEAF_STONE,
         {
             {SPECIES_RALTS, 0},
-            {SPECIES_MUDKIP, 0},
+            {SPECIES_TORCHIC, 0},
             {SPECIES_HERACROSS, 0},
             {SPECIES_PINSIR, 0},
         },
@@ -134,7 +137,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
         ITEM_FIRE_STONE,
         {
             {SPECIES_TOTODILE, 0},
-            {SPECIES_CARVANHA, 0},
+            {SPECIES_SHARPEDO, 0},
             {SPECIES_VULPIX, 0},
             {SPECIES_CHIMECHO, 0},
         },
@@ -167,9 +170,48 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_LOUDRED, 0},
         },
     },
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
+    {
+        MAP_GROUP(MAP_ROGUECANYONGROTTO),
+        MAP_NUM(MAP_ROGUECANYONGROTTO),
+        45,
+        LOCALID_ROGUECANYONGROTTO_POKEMON,
+        HIDDEN_GROTTO_ITEM_POOL_ROGUE_CANYON,
+        ITEM_RAZOR_FANG,
+        {
+            {SPECIES_DONPHAN, 0},
+            {SPECIES_GLISCOR, 0},
+            {SPECIES_LARVITAR, 0},
+            {SPECIES_MUDKIP, 0},
+        },
+    },
+    {
+        MAP_GROUP(MAP_ROUTE119GROTTO),
+        MAP_NUM(MAP_ROUTE119GROTTO),
+        45,
+        LOCALID_ROUTE119GROTTO_POKEMON,
+        HIDDEN_GROTTO_ITEM_POOL_ROUTE119,
+        ITEM_BLACK_AUGURITE,
+        {
+            {SPECIES_VIRIZION, 0},
+            {SPECIES_TANGELA, 0},
+            {SPECIES_LEAFEON, 0},
+            {SPECIES_SCYTHER, 0},
+        },
+    },
+    {
+        MAP_GROUP(MAP_ROUTE120GROTTO),
+        MAP_NUM(MAP_ROUTE120GROTTO),
+        50,
+        LOCALID_ROUTE120GROTTO_POKEMON,
+        HIDDEN_GROTTO_ITEM_POOL_ROUTE120,
+        ITEM_NONE,
+        {
+            {SPECIES_YANMA, 0},
+            {SPECIES_VILEPLUME, 0},
+            {SPECIES_BELLOSSOM, 0},
+            {SPECIES_BIBAREL, 0},
+        },
+    },
     HIDDEN_GROTTO_PLACEHOLDER,
     HIDDEN_GROTTO_PLACEHOLDER,
     HIDDEN_GROTTO_PLACEHOLDER,
@@ -330,6 +372,78 @@ static const struct WeightedHiddenGrottoItem sRoute115GrottoHiddenItems[] =
     {ITEM_CHARCOAL, 6},
     {ITEM_PP_UP, 4},
     {ITEM_RARE_CANDY, 2},
+};
+
+static const struct WeightedHiddenGrottoItem sRogueCanyonGrottoVisibleItems[] =
+{
+    {ITEM_HYPER_POTION, 18},
+    {ITEM_ULTRA_BALL, 16},
+    {ITEM_SUPER_REPEL, 12},
+    {ITEM_REVIVE, 10},
+    {ITEM_ETHER, 8},
+    {ITEM_SOFT_SAND, 8},
+    {ITEM_SMOOTH_ROCK, 6},
+    {ITEM_YELLOW_SHARD, 6},
+};
+
+static const struct WeightedHiddenGrottoItem sRogueCanyonGrottoHiddenItems[] =
+{
+    {ITEM_SOFT_SAND, 18},
+    {ITEM_STARDUST, 14},
+    {ITEM_YELLOW_SHARD, 12},
+    {ITEM_HARD_STONE, 10},
+    {ITEM_SUN_STONE, 8},
+    {ITEM_HEAT_ROCK, 8},
+    {ITEM_SMOOTH_ROCK, 6},
+    {ITEM_PP_UP, 4},
+};
+
+static const struct WeightedHiddenGrottoItem sRoute119GrottoVisibleItems[] =
+{
+    {ITEM_HYPER_POTION, 18},
+    {ITEM_ULTRA_BALL, 16},
+    {ITEM_SUPER_REPEL, 12},
+    {ITEM_REVIVE, 10},
+    {ITEM_ETHER, 8},
+    {ITEM_MIRACLE_SEED, 8},
+    {ITEM_LEAF_STONE, 6},
+    {ITEM_BIG_MUSHROOM, 6},
+};
+
+static const struct WeightedHiddenGrottoItem sRoute119GrottoHiddenItems[] =
+{
+    {ITEM_MIRACLE_SEED, 18},
+    {ITEM_BIG_MUSHROOM, 14},
+    {ITEM_SILVER_POWDER, 12},
+    {ITEM_ENERGY_ROOT, 10},
+    {ITEM_LEAF_STONE, 8},
+    {ITEM_MEADOW_PLATE, 8},
+    {ITEM_REVIVAL_HERB, 6},
+    {ITEM_WHITE_HERB, 4},
+};
+
+static const struct WeightedHiddenGrottoItem sRoute120GrottoVisibleItems[] =
+{
+    {ITEM_HYPER_POTION, 18},
+    {ITEM_ULTRA_BALL, 16},
+    {ITEM_SUPER_REPEL, 12},
+    {ITEM_REVIVE, 10},
+    {ITEM_ETHER, 8},
+    {ITEM_NET_BALL, 8},
+    {ITEM_ENERGY_ROOT, 6},
+    {ITEM_MIRACLE_SEED, 6},
+};
+
+static const struct WeightedHiddenGrottoItem sRoute120GrottoHiddenItems[] =
+{
+    {ITEM_ENERGY_ROOT, 18},
+    {ITEM_MIRACLE_SEED, 14},
+    {ITEM_BIG_MUSHROOM, 12},
+    {ITEM_DAMP_ROCK, 10},
+    {ITEM_WATER_STONE, 8},
+    {ITEM_MEADOW_PLATE, 8},
+    {ITEM_REVIVAL_HERB, 6},
+    {ITEM_LUM_BERRY, 4},
 };
 
 static u8 GetCurrentHiddenGrottoId(void);
@@ -699,6 +813,21 @@ static const struct WeightedHiddenGrottoItem *GetHiddenGrottoVisibleItemPool(con
         *count = ARRAY_COUNT(sRoute115GrottoVisibleItems);
         return sRoute115GrottoVisibleItems;
     }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_ROGUE_CANYON)
+    {
+        *count = ARRAY_COUNT(sRogueCanyonGrottoVisibleItems);
+        return sRogueCanyonGrottoVisibleItems;
+    }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_ROUTE119)
+    {
+        *count = ARRAY_COUNT(sRoute119GrottoVisibleItems);
+        return sRoute119GrottoVisibleItems;
+    }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_ROUTE120)
+    {
+        *count = ARRAY_COUNT(sRoute120GrottoVisibleItems);
+        return sRoute120GrottoVisibleItems;
+    }
 
     *count = ARRAY_COUNT(sHiddenGrottoVisibleItems);
     return sHiddenGrottoVisibleItems;
@@ -730,6 +859,21 @@ static const struct WeightedHiddenGrottoItem *GetHiddenGrottoHiddenItemPool(cons
     {
         *count = ARRAY_COUNT(sRoute115GrottoHiddenItems);
         return sRoute115GrottoHiddenItems;
+    }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_ROGUE_CANYON)
+    {
+        *count = ARRAY_COUNT(sRogueCanyonGrottoHiddenItems);
+        return sRogueCanyonGrottoHiddenItems;
+    }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_ROUTE119)
+    {
+        *count = ARRAY_COUNT(sRoute119GrottoHiddenItems);
+        return sRoute119GrottoHiddenItems;
+    }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_ROUTE120)
+    {
+        *count = ARRAY_COUNT(sRoute120GrottoHiddenItems);
+        return sRoute120GrottoHiddenItems;
     }
 
     *count = ARRAY_COUNT(sHiddenGrottoHiddenItems);
