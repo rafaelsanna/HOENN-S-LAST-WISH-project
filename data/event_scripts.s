@@ -1310,3 +1310,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/roguecanyongrotto/scripts.inc"
 
 	.include "data/maps/route119grotto/scripts.inc"
+
+	.include "data/maps/route120grotto/scripts.inc"
