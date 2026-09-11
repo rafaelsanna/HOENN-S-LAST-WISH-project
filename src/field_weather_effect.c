@@ -3347,54 +3347,71 @@ static u8 GetConcertBeamLightStrengthAtPoint(s16 pointX, s16 pointY, u8 beamId)
 // This Melmetal slot is a 64x64 animated screen/set-piece, so its map anchor can
 // sit outside the mathematical cone even while the visible upper part is clearly
 // crossed by the spotlight. Test the rendered sprite rectangle instead.
+// Special case for the custom Melmetal 64x64 stage sprite.
+//
+// IMPORTANT: vertical position is intentionally ignored here.
+//
+// The normal NPC lighting test rejects a point when its Y is above the beam
+// apex. That is correct for normal characters, but wrong for this 64x64 custom
+// stage sprite: its visible artwork can overlap the spotlight while its object
+// anchor / sampled Y is still above the mathematical cone.
+//
+// For Melmetal, project the lighting test onto a fixed horizontal slice inside
+// the beam (48 px below the apex), then test several X positions across the
+// sprite. Result: if the moving beam crosses Melmetal horizontally, Melmetal
+// receives the beam palette light regardless of its map Y.
 static u8 GetConcertBeamLightStrengthForMelmetal(const struct Sprite *sprite, u8 beamId)
 {
-    s16 centerX = sprite->x + sprite->x2;
-    s16 centerY = sprite->y + sprite->y2;
-    s16 halfWidth = sprite->centerToCornerVecX;
-    s16 halfHeight = sprite->centerToCornerVecY;
+    struct Sprite *beam;
+    s16 centerX;
+    s16 halfWidth;
     s16 left;
     s16 right;
-    s16 top;
-    s16 bottom;
-    u8 xIndex;
-    u8 yIndex;
+    s16 probeY;
+    u8 sample;
     u8 strength = 0;
 
-    // centerToCornerVec is normally negative. Be defensive in case this build
-    // stores/updates it differently; Melmetal is known to be 64x64.
+    if (!sConcertBeamCreated || beamId >= NUM_CONCERT_BEAMS)
+        return 0;
+
+    if (sConcertBeamSpriteIds[beamId] >= MAX_SPRITES)
+        return 0;
+
+    beam = &gSprites[sConcertBeamSpriteIds[beamId]];
+
+    if (!beam->inUse || beam->invisible)
+        return 0;
+
+    centerX = sprite->x + sprite->x2;
+
+    halfWidth = sprite->centerToCornerVecX;
     if (halfWidth < 0)
         halfWidth = -halfWidth;
-    if (halfHeight < 0)
-        halfHeight = -halfHeight;
 
+    // Melmetal is known to be a 64x64 custom overworld sprite.
     if (halfWidth < 24 || halfWidth > 40)
         halfWidth = 32;
-    if (halfHeight < 24 || halfHeight > 40)
-        halfHeight = 32;
 
-    // Stay a few pixels inside the OAM rectangle so transparent border pixels do
-    // not make the character light up noticeably before the cone reaches the art.
-    left   = centerX - halfWidth  + 4;
-    right  = centerX + halfWidth  - 4;
-    top    = centerY - halfHeight + 4;
-    bottom = centerY + halfHeight - 4;
+    // A little inset avoids transparent border pixels triggering too early.
+    left = centerX - halfWidth + 5;
+    right = centerX + halfWidth - 5;
 
-    // 5x5 coverage of the full 64x64 visual rectangle.
-    // This includes the upper half that the old torso-only test never reached.
-    for (yIndex = 0; yIndex < 5; yIndex++)
+    // GetConcertBeamLightStrengthAtPoint() defines:
+    //   apexY = beam->y - 32
+    //
+    // Probe at dy = 48, i.e. well inside the visible cone where it is wide
+    // enough to match what the player actually sees on screen.
+    probeY = beam->y + 16;
+
+    // Seven horizontal samples across the 64x64 sprite.
+    for (sample = 0; sample < 7; sample++)
     {
-        s16 sampleY = top + ((bottom - top) * yIndex) / 4;
+        s16 sampleX = left + ((right - left) * sample) / 6;
+        u8 sampleStrength =
+            GetConcertBeamLightStrengthAtPoint(sampleX, probeY, beamId);
 
-        for (xIndex = 0; xIndex < 5; xIndex++)
-        {
-            s16 sampleX = left + ((right - left) * xIndex) / 4;
-            u8 sampleStrength =
-                GetConcertBeamLightStrengthAtPoint(sampleX, sampleY, beamId);
-
-            if (sampleStrength > strength)
-                strength = sampleStrength;
-        }
+        if (sampleStrength > strength)
+            strength = sampleStrength;
     }
 
     return strength;
