@@ -4991,3 +4991,13 @@ $(OBJEVENTGFXDIR)/misc/ball_%.4bpp: $(OBJEVENTGFXDIR)/misc/ball_%.png ; $(GFX) $
 
 graphics/door_anims/battle_tower_multi_corridor.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
+
+
+# RADIO_AMATERASU_POP_V1
+# Four 64x64 frames; source may be 64x256 or 256x64.
+graphics/radio/amaterasu.4bpp: graphics/radio/amaterasu.png
+	$(GFX) $< $@ -mwidth 8 -mheight 8
+
+graphics/radio/amaterasu.gbapal: graphics/radio/amaterasu.png
+	$(GFX) $< $@
+

@@ -7493,11 +7493,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(40, 32) : MON_COORDS_SIZE(40, 40),
         .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 16 : 8,
         .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 15),
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(0, 15),
         ),
         .frontAnimId = ANIM_H_SHAKE,
@@ -7570,17 +7570,15 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Vibrava,
         .frontPicSize = MON_COORDS_SIZE(64, 48),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 12 : 10,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 12 : 3,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 15),
             ANIMCMD_FRAME(1, 15),
             ANIMCMD_FRAME(0, 15),
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(0, 50),
         ),
-        .frontAnimId = ANIM_H_SHAKE,
+        .frontAnimId = ANIM_CIRCULAR_VIBRATE,
         .backPic = gMonBackPic_Vibrava,
         .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 32) : MON_COORDS_SIZE(64, 40),
         .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 17 : 12,
@@ -7592,7 +7590,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconPalette = gMonIconPalette_Vibrava,
         .shinyIconPalette = gMonShinyIconPalette_Vibrava,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-2, 0, SHADOW_SIZE_L)
+        SHADOW(-5, 7, SHADOW_SIZE_L)
         FOOTPRINT(Vibrava)
         OVERWORLD(
             sPicTable_Vibrava,

@@ -284,6 +284,8 @@ static EWRAM_DATA u8 sRadioOverworldSkipCooldown;
 // Sprite IDs — initialized to 0xFF in Radio_Open() before first use.
 // Cannot use = 0xFF at declaration: that forces the variable into .data (discarded in GBA ROM).
 static EWRAM_DATA u8 sRadioJigSpriteId;
+static EWRAM_DATA u8 sRadioAmaterasuSpriteId;
+static EWRAM_DATA bool8 sRadioAmaterasuActive;
 static EWRAM_DATA u8 sRadioStereo1Id;
 static EWRAM_DATA u8 sRadioStereo2Id;
 static EWRAM_DATA u8 sRadioBtnPlayId;
@@ -456,6 +458,10 @@ static const u16 sRadioBg_Tilemap[] = INCBIN_U16("graphics/radio/radiobg.bin");
 static const u16 sRadioJig_Pal[] = INCBIN_U16("graphics/radio/jig.gbapal");
 static const u32 sRadioJig_Gfx[] = INCBIN_U32("graphics/radio/jig.4bpp.smol");
 
+// Amaterasu - POP station mascot, same 4x 64x64 animation layout as Jig.
+static const u16 sRadioAmaterasu_Pal[] = INCBIN_U16("graphics/radio/amaterasu.gbapal");
+static const u32 sRadioAmaterasu_Gfx[] = INCBIN_U32("graphics/radio/amaterasu.4bpp.smol");
+
 // Stereo — 1 frame 64x64, affine pulsing (speaker effect)
 // Sheet: 1 × 2048 = 0x800 bytes
 static const u16 sRadioStereo_Pal[] = INCBIN_U16("graphics/radio/stereo.gbapal");
@@ -559,8 +565,9 @@ static const s16 sRadioStickerSlotY[RADIO_STICKER_SLOT_COUNT] =
 // ---------------------------------------------------------------------------
 // Tags de sprite — valores arbitrários únicos no projeto
 // ---------------------------------------------------------------------------
-#define TAG_RADIO_JIG    0xD100
-#define TAG_RADIO_STEREO 0xD101
+#define TAG_RADIO_JIG       0xD100
+#define TAG_RADIO_STEREO    0xD101
+#define TAG_RADIO_AMATERASU 0xD10E
 
 // ---------------------------------------------------------------------------
 // OAM data
@@ -634,6 +641,14 @@ static const struct SpritePalette sSpritePalette_RadioJig[] =
     {},
 };
 
+// Amaterasu has its own tiles but deliberately reuses TAG_RADIO_JIG's
+// OBJ palette slot. Only one of Jig / Amaterasu is visible at a time.
+static const struct CompressedSpriteSheet sSpriteSheet_RadioAmaterasu[] =
+{
+    {sRadioAmaterasu_Gfx, 0x2000, TAG_RADIO_AMATERASU},
+    {},
+};
+
 static const struct CompressedSpriteSheet sSpriteSheet_RadioStereo[] =
 {
     {sRadioStereo_Gfx, 0x800, TAG_RADIO_STEREO},  // 1 frame × 2048 bytes
@@ -658,6 +673,17 @@ static const struct SpriteTemplate sSpriteTemplate_RadioJig =
 {
     .tileTag     = TAG_RADIO_JIG,
     .paletteTag  = TAG_RADIO_JIG,
+    .oam         = &sOamData_RadioJig,
+    .anims       = sAnims_RadioJig,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_RadioJig,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RadioAmaterasu =
+{
+    .tileTag     = TAG_RADIO_AMATERASU,
+    .paletteTag  = TAG_RADIO_JIG, // reuse Jig's one OBJ palette slot
     .oam         = &sOamData_RadioJig,
     .anims       = sAnims_RadioJig,
     .images      = NULL,
@@ -7080,6 +7106,9 @@ static void Task_RadioHandleInput(u8 taskId)
         if (sRadioJigSpriteId != 0xFF)
             gSprites[sRadioJigSpriteId].animPaused = !playing;
 
+        if (sRadioAmaterasuSpriteId != 0xFF)
+            gSprites[sRadioAmaterasuSpriteId].animPaused = !playing;
+
         if (sRadioStereo1Id != 0xFF)
             gSprites[sRadioStereo1Id].animPaused = !playing;
 
@@ -7336,8 +7365,77 @@ static bool8 Radio_LoadAlbumCoverPalette(u8 coverId)
     return TRUE;
 }
 
+static void Radio_LoadMascotPalette(const u16 *palette)
+{
+    u8 paletteNum = IndexOfSpritePaletteTag(TAG_RADIO_JIG);
+
+    if (paletteNum < 16)
+    {
+        LoadPalette(
+            palette,
+            OBJ_PLTT_ID(paletteNum),
+            PLTT_SIZE_4BPP
+        );
+    }
+}
+
+static void Radio_SetAmaterasuActive(bool8 active)
+{
+    if (active)
+    {
+        if (sRadioAmaterasuActive)
+            return;
+
+        // POP owns the center artwork completely.
+        sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
+        sRadioArtTransitionTimer = 0;
+        sRadioNextCoverId = RADIO_COVER_NONE;
+
+        if (sRadioCoverSpriteId < MAX_SPRITES)
+            Radio_DestroyAlbumCoverSprite();
+
+        sRadioCurrentCoverId = RADIO_COVER_NONE;
+
+        // Reuse Jig's OBJ palette slot; no extra OBJ palette allocation.
+        Radio_LoadMascotPalette(sRadioAmaterasu_Pal);
+
+        if (sRadioJigSpriteId < MAX_SPRITES)
+            gSprites[sRadioJigSpriteId].invisible = TRUE;
+
+        if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+        {
+            gSprites[sRadioAmaterasuSpriteId].invisible = FALSE;
+            gSprites[sRadioAmaterasuSpriteId].animPaused = !sRadioIsPlaying;
+        }
+
+        sRadioAmaterasuActive = TRUE;
+    }
+    else
+    {
+        if (!sRadioAmaterasuActive)
+            return;
+
+        Radio_LoadMascotPalette(sRadioJig_Pal);
+
+        if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+            gSprites[sRadioAmaterasuSpriteId].invisible = TRUE;
+
+        if (sRadioJigSpriteId < MAX_SPRITES)
+            gSprites[sRadioJigSpriteId].invisible =
+                (sRadioCurrentCoverId != RADIO_COVER_NONE);
+
+        sRadioAmaterasuActive = FALSE;
+    }
+}
+
 static u8 Radio_GetVisibleArtSpriteId(void)
 {
+    if (sRadioAmaterasuActive
+     && sRadioAmaterasuSpriteId < MAX_SPRITES)
+    {
+        return sRadioAmaterasuSpriteId;
+    }
+
     if (sRadioCurrentCoverId != RADIO_COVER_NONE
      && sRadioCoverSpriteId < MAX_SPRITES)
     {
@@ -7378,7 +7476,7 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
 
     if (coverId == RADIO_COVER_NONE)
     {
-        if (sRadioJigSpriteId < MAX_SPRITES)
+        if (!sRadioAmaterasuActive && sRadioJigSpriteId < MAX_SPRITES)
             gSprites[sRadioJigSpriteId].invisible = FALSE;
         return;
     }
@@ -7395,7 +7493,7 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
         sRadioCurrentCoverId = RADIO_COVER_NONE;
         FreeSpriteTilesByTag(TAG_RADIO_COVER);
 
-        if (sRadioJigSpriteId < MAX_SPRITES)
+        if (!sRadioAmaterasuActive && sRadioJigSpriteId < MAX_SPRITES)
             gSprites[sRadioJigSpriteId].invisible = FALSE;
         return;
     }
@@ -7415,7 +7513,7 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
         FreeSpriteTilesByTag(TAG_RADIO_COVER);
 
         // Keep the reserved cover palette alive even if sprite creation failed.
-        if (sRadioJigSpriteId < MAX_SPRITES)
+        if (!sRadioAmaterasuActive && sRadioJigSpriteId < MAX_SPRITES)
             gSprites[sRadioJigSpriteId].invisible = FALSE;
     }
 }
@@ -7424,7 +7522,18 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
 // Jigglypuff never has to wait for a cover transition already in progress.
 static void Radio_RefreshAlbumCover(void)
 {
-    u8 coverId = sRadioHideCovers
+    u8 coverId;
+
+    if (sRadioStation == STATION_POP)
+    {
+        Radio_SetAmaterasuActive(TRUE);
+        Radio_BlendVisibleArt(0);
+        return;
+    }
+
+    Radio_SetAmaterasuActive(FALSE);
+
+    coverId = sRadioHideCovers
                ? RADIO_COVER_NONE
                : Radio_GetAlbumCoverForSong(sRadioCurrentSong);
 
@@ -7438,6 +7547,14 @@ static void Radio_RefreshAlbumCover(void)
 static void Radio_UpdateAlbumCover(void)
 {
     u8 coverId;
+
+    if (sRadioStation == STATION_POP)
+    {
+        Radio_SetAmaterasuActive(TRUE);
+        return;
+    }
+
+    Radio_SetAmaterasuActive(FALSE);
 
     if (sRadioJigSpriteId >= MAX_SPRITES)
         return;
@@ -7532,11 +7649,22 @@ static void Radio_CreateSprites(void)
 
     LoadCompressedSpriteSheet(sSpriteSheet_RadioJig);
     LoadSpritePalettes(sSpritePalette_RadioJig);
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioAmaterasu);
     LoadCompressedSpriteSheet(sSpriteSheet_RadioStereo);
     LoadSpritePalettes(sSpritePalette_RadioStereo);
 
     // Jigglypuff
     sRadioJigSpriteId = CreateSprite(&sSpriteTemplate_RadioJig, RADIO_JIG_X, RADIO_JIG_Y, 0);
+
+    // POP mascot. Same center; different tiles; same OBJ palette slot as Jig.
+    sRadioAmaterasuSpriteId = CreateSprite(
+        &sSpriteTemplate_RadioAmaterasu,
+        RADIO_JIG_X,
+        RADIO_JIG_Y,
+        0
+    );
+    if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+        gSprites[sRadioAmaterasuSpriteId].invisible = TRUE;
 
     // Stereo LEFT — original pulse, smaller.
     sRadioStereo1Id = CreateSprite(&sSpriteTemplate_RadioStereo, RADIO_STEREO1_X, RADIO_STEREO1_Y, 0);
@@ -7556,6 +7684,8 @@ static void Radio_CreateSprites(void)
     if (!sRadioIsPlaying)
     {
         gSprites[sRadioJigSpriteId].animPaused  = TRUE;
+        if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+            gSprites[sRadioAmaterasuSpriteId].animPaused = TRUE;
         gSprites[sRadioStereo1Id].animPaused     = TRUE;
         gSprites[sRadioStereo2Id].animPaused     = TRUE;
     }
@@ -7818,7 +7948,9 @@ void Radio_Open(MainCallback returnCallback)
     // Invalida IDs de sprite (serão preenchidos em Radio_CreateSprites).
     // Cannot initialize to 0xFF at declaration — that would place the variable
     // in the .data section which is discarded on GBA. Set it here instead.
-    sRadioJigSpriteId = 0xFF;
+    sRadioJigSpriteId       = 0xFF;
+    sRadioAmaterasuSpriteId = 0xFF;
+    sRadioAmaterasuActive   = FALSE;
     sRadioStereo1Id   = 0xFF;
     sRadioStereo2Id   = 0xFF;
     sRadioBtnPlayId   = 0xFF;

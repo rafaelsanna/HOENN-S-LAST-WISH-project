@@ -3145,11 +3145,14 @@ static void UpdateSmokeSprite(struct Sprite *sprite)
 #define CONCERT_BEAM_LIGHT_COLOR              RGB(31, 29, 20)
 #define CONCERT_BEAM_LIGHT_MIN_COEFF          2
 #define CONCERT_BEAM_LIGHT_MAX_COEFF          6
-#define CONCERT_BEAM_CONE_LENGTH              64
-#define CONCERT_BEAM_CONE_BOTTOM_SHIFT        24
-#define CONCERT_BEAM_CONE_BASE_HALF_WIDTH     19
-#define CONCERT_BEAM_OBJECT_HALF_WIDTH        6
+#define CONCERT_BEAM_CONE_LENGTH              112
+#define CONCERT_BEAM_CONE_BOTTOM_SHIFT        52
+#define CONCERT_BEAM_CONE_BASE_HALF_WIDTH     30
+#define CONCERT_BEAM_OBJECT_HALF_WIDTH        10
 #define CONCERT_BEAM_OBJECT_SAMPLE_Y_OFFSET  -8
+
+#define CONCERT_BEAM_FLOOR_SPILL_START         48
+#define CONCERT_BEAM_FLOOR_SPILL_EXTRA_WIDTH   28
 #define CONCERT_BEAM_STANDARD_PALETTE_COUNT   12
 #define CONCERT_BEAM_OBJECT_PALETTE_COUNT     16
 
@@ -3161,8 +3164,8 @@ static void UpdateSmokeSprite(struct Sprite *sprite)
 // For LavaridgeTown_Gym_1F the stage is at the top of the map.
 static const struct Coords16 sConcertBeamMapCoords[NUM_CONCERT_BEAMS] =
 {
-    { 5, 4 },
-    {10, 4 },
+    { 3, 4 },
+    {12, 4 },
 };
 
 // The new 64x64 artwork cannot keep the light source at the same local X in
@@ -3326,6 +3329,18 @@ static u8 GetConcertBeamLightStrengthAtPoint(s16 pointX, s16 pointY, u8 beamId)
     halfWidth = 3
               + (dy * CONCERT_BEAM_CONE_BASE_HALF_WIDTH) / CONCERT_BEAM_CONE_LENGTH
               + CONCERT_BEAM_OBJECT_HALF_WIDTH;
+
+    // Extra diffuse stage-light spill below the visible 64x64 beam.
+    // Widen ONLY the lower mathematical light volume so the moved-outward
+    // beams can still illuminate actors on the center of the stage.
+    if (dy > CONCERT_BEAM_FLOOR_SPILL_START)
+    {
+        halfWidth += ((dy - CONCERT_BEAM_FLOOR_SPILL_START)
+                   * CONCERT_BEAM_FLOOR_SPILL_EXTRA_WIDTH)
+                   / (CONCERT_BEAM_CONE_LENGTH
+                    - CONCERT_BEAM_FLOOR_SPILL_START);
+    }
+
     dx = pointX - centerX;
     if (dx < 0)
         dx = -dx;
@@ -3340,6 +3355,76 @@ static u8 GetConcertBeamLightStrengthAtPoint(s16 pointX, s16 pointY, u8 beamId)
 
     return strength;
 }
+
+
+// Lower-stage spill used by the gym concert setup.
+//
+// The visible 64x64 beams were moved outward so they no longer close over the
+// large Melmetal stage-screen. Their normal cone test therefore does not reach
+// the exact center-stage tiles occupied by the leader and her Pokemon.
+//
+// This helper creates a SECONDARY, invisible palette-light pool only over the
+// lower stage area BETWEEN the two beam anchors. It does not move or resize the
+// visible beam sprites.
+//
+// Timing follows the actual beam poses:
+//   inward sweep  -> strong center-stage light
+//   center pose   -> weak transitional light
+//   outward sweep -> no center-stage spill
+static u8 GetConcertBeamStageFloorStrengthAtPoint(s16 pointX, s16 pointY, u8 beamId)
+{
+    struct Sprite *beam;
+    struct Sprite *beam0;
+    struct Sprite *beam1;
+    s16 leftX;
+    s16 rightX;
+    s16 topY;
+    s16 bottomY;
+    u8 pose;
+
+    if (!sConcertBeamCreated || beamId >= NUM_CONCERT_BEAMS)
+        return 0;
+
+    if (sConcertBeamSpriteIds[0] >= MAX_SPRITES
+     || sConcertBeamSpriteIds[1] >= MAX_SPRITES
+     || sConcertBeamSpriteIds[beamId] >= MAX_SPRITES)
+        return 0;
+
+    beam0 = &gSprites[sConcertBeamSpriteIds[0]];
+    beam1 = &gSprites[sConcertBeamSpriteIds[1]];
+    beam = &gSprites[sConcertBeamSpriteIds[beamId]];
+
+    if (!beam0->inUse || !beam1->inUse || !beam->inUse)
+        return 0;
+
+    if (beam0->invisible || beam1->invisible || beam->invisible)
+        return 0;
+
+    leftX = min(beam0->x, beam1->x) + 4;
+    rightX = max(beam0->x, beam1->x) - 4;
+
+    topY = beam->y + 24;
+    bottomY = beam->y + 72;
+
+    if (pointX < leftX || pointX > rightX)
+        return 0;
+    if (pointY < topY || pointY > bottomY)
+        return 0;
+
+    pose = sConcertBeamLastPose[beamId];
+    if (pose > 2)
+        return 0;
+
+    if ((beamId == 0 && pose == 2)
+     || (beamId == 1 && pose == 0))
+        return 6;
+
+    if (pose == 1)
+        return 3;
+
+    return 0;
+}
+
 
 // Special case for the custom Melmetal stage sprite.
 //
@@ -3459,6 +3544,13 @@ void ConcertBeam_ApplyObjectLighting(void)
         isMelmetal =
             (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(MELMETAL));
 
+        // The beams were moved away from the 64x64 stage screen on purpose.
+        // Keep Melmetal out of LOCAL beam lighting. It still receives the
+        // normal/global Concert Lights weather grade.
+        if (isMelmetal)
+            continue;
+
+
         // Keep custom/weather/UI OBJ palette slots protected for every normal
         // object. Only our Melmetal stage sprite is allowed through here.
         if (paletteNum >= CONCERT_BEAM_STANDARD_PALETTE_COUNT
@@ -3491,6 +3583,18 @@ void ConcertBeam_ApplyObjectLighting(void)
                         pointY,
                         beamId
                     );
+
+                {
+                    u8 floorStrength =
+                        GetConcertBeamStageFloorStrengthAtPoint(
+                            pointX,
+                            pointY,
+                            beamId
+                        );
+
+                    if (floorStrength > beamStrength)
+                        beamStrength = floorStrength;
+                }
             }
 
             if (beamStrength > strength)
