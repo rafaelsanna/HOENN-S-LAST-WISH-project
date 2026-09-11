@@ -629,7 +629,12 @@
 #define MUS_BROKEN_HEARTED_GIRL_BEYONCE                  749
 #define MUS_CRAZY_IN_LOVE_BEYONCE                        750
 #define MUS_HALO_BEYONCE                                 751
-#define END_MUS MUS_HALO_BEYONCE
+#define MUS_PINK_PONY_CLUB_CHAPPELL_ROAN                   752
+#define MUS_HOT_TO_GO_CHAPPELL_ROAN                        753
+#define MUS_WASHING_MACHINE_HEART_MITSKI                     754
+#define MUS_I_BET_ON_LOSING_DOGS_MITSKI                      755
+#define MUS_MY_LOVE_MINE_ALL_MINE_MITSKI                     756
+#define END_MUS MUS_MY_LOVE_MINE_ALL_MINE_MITSKI
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
 #define PH_TRAP_BLEND               562

@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_cruel_angels_thesis_grp, voicegroup_cruel_angels_thesis
+	.equ	mus_cruel_angels_thesis_grp, voicegroup_diva_pop
 	.equ	mus_cruel_angels_thesis_pri, 0
-	.equ	mus_cruel_angels_thesis_rev, reverb_set+50
-	.equ	mus_cruel_angels_thesis_mvl, 100
+	.equ	mus_cruel_angels_thesis_rev, reverb_set+12
+	.equ	mus_cruel_angels_thesis_mvl, 90
 	.equ	mus_cruel_angels_thesis_key, 0
 	.equ	mus_cruel_angels_thesis_tbs, 1
 	.equ	mus_cruel_angels_thesis_exg, 1
@@ -16,13 +16,12 @@
 @**************** Track 1 (Midi-Chn.1) ****************@
 
 mus_cruel_angels_thesis_1:
+	.byte		VOL   , 127*mus_cruel_angels_thesis_mvl/mxv
 	.byte	KEYSH , mus_cruel_angels_thesis_key+0
 @ 000   ----------------------------------------
 	.byte	TEMPO , 76*mus_cruel_angels_thesis_tbs/2
-	.byte		VOICE , 0
-	.byte		VOL   , 127*mus_cruel_angels_thesis_mvl/mxv
-	.byte		PAN   , c_v+0
-	.byte		N48   , Cn2 , v076
+	.byte		VOICE , 1
+	.byte		N48   , Cn2 , v060
 	.byte	W48
 	.byte		N48   
 	.byte	W48
@@ -45,7 +44,7 @@ mus_cruel_angels_thesis_1:
 mus_cruel_angels_thesis_1_B1:
 @ 005   ----------------------------------------
 	.byte	TEMPO , 126*mus_cruel_angels_thesis_tbs/2
-	.byte		N12   , Cn2 , v076
+	.byte		N12   , Cn2 , v060
 	.byte	W24
 	.byte		N12   
 	.byte	W24
@@ -57,7 +56,7 @@ mus_cruel_angels_thesis_1_B1:
 	.byte	W12
 @ 006   ----------------------------------------
 mus_cruel_angels_thesis_1_006:
-	.byte		N12   , As1 , v076
+	.byte		N12   , As1 , v060
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -74,7 +73,7 @@ mus_cruel_angels_thesis_1_006:
 	.byte	PEND
 @ 007   ----------------------------------------
 mus_cruel_angels_thesis_1_007:
-	.byte		N12   , Cn2 , v076
+	.byte		N12   , Cn2 , v060
 	.byte	W24
 	.byte		N12   
 	.byte	W24
@@ -87,7 +86,7 @@ mus_cruel_angels_thesis_1_007:
 	.byte	PEND
 @ 008   ----------------------------------------
 mus_cruel_angels_thesis_1_008:
-	.byte		N12   , As1 , v076
+	.byte		N12   , As1 , v060
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -108,7 +107,7 @@ mus_cruel_angels_thesis_1_008:
 	.byte	W96
 @ 011   ----------------------------------------
 mus_cruel_angels_thesis_1_011:
-	.byte		N48   , Cn2 , v076
+	.byte		N48   , Cn2 , v060
 	.byte	W48
 	.byte		        As1 
 	.byte	W48
@@ -118,14 +117,14 @@ mus_cruel_angels_thesis_1_011:
 	.byte	W96
 @ 013   ----------------------------------------
 mus_cruel_angels_thesis_1_013:
-	.byte		N48   , As1 , v076
+	.byte		N48   , As1 , v060
 	.byte	W48
 	.byte		N48   
 	.byte	W48
 	.byte	PEND
 @ 014   ----------------------------------------
 mus_cruel_angels_thesis_1_014:
-	.byte		N48   , Ds2 , v076
+	.byte		N48   , Ds2 , v060
 	.byte	W48
 	.byte		        Cn2 
 	.byte	W48
@@ -148,7 +147,7 @@ mus_cruel_angels_thesis_1_014:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_1_011
 @ 020   ----------------------------------------
-	.byte		N96   , Gs1 , v076
+	.byte		N96   , Gs1 , v060
 	.byte	W96
 @ 021   ----------------------------------------
 	.byte	PATT
@@ -157,7 +156,7 @@ mus_cruel_angels_thesis_1_014:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_1_014
 @ 023   ----------------------------------------
-	.byte		N96   , Dn2 , v076
+	.byte		N96   , Dn2 , v060
 	.byte	W96
 @ 024   ----------------------------------------
 	.byte		N24   , Gn1 
@@ -170,7 +169,7 @@ mus_cruel_angels_thesis_1_014:
 	.byte	W24
 @ 025   ----------------------------------------
 mus_cruel_angels_thesis_1_025:
-	.byte		N12   , Gs1 , v076
+	.byte		N12   , Gs1 , v060
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -181,7 +180,7 @@ mus_cruel_angels_thesis_1_025:
 	.byte	PEND
 @ 026   ----------------------------------------
 mus_cruel_angels_thesis_1_026:
-	.byte		N12   , Gn1 , v076
+	.byte		N12   , Gn1 , v060
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -215,7 +214,7 @@ mus_cruel_angels_thesis_1_026:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_1_026
 @ 031   ----------------------------------------
-	.byte		N12   , Dn2 , v076
+	.byte		N12   , Dn2 , v060
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -242,7 +241,7 @@ mus_cruel_angels_thesis_1_026:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_1_007
 @ 036   ----------------------------------------
-	.byte		N12   , As1 , v076
+	.byte		N12   , As1 , v060
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -274,7 +273,7 @@ mus_cruel_angels_thesis_1_026:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_1_007
 @ 044   ----------------------------------------
-	.byte		N12   , As1 , v076
+	.byte		N12   , As1 , v060
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -289,7 +288,7 @@ mus_cruel_angels_thesis_1_026:
 @ 045   ----------------------------------------
 mus_cruel_angels_thesis_1_045:
 	.byte	W24
-	.byte		N24   , Cn1 , v076
+	.byte		N24   , Cn1 , v060
 	.byte	W48
 	.byte		N24   
 	.byte	W24
@@ -300,7 +299,7 @@ mus_cruel_angels_thesis_1_045:
 @ 047   ----------------------------------------
 mus_cruel_angels_thesis_1_047:
 	.byte	W24
-	.byte		N24   , Gs0 , v076
+	.byte		N24   , Gs0 , v060
 	.byte	W48
 	.byte		N24   
 	.byte	W24
@@ -308,7 +307,7 @@ mus_cruel_angels_thesis_1_047:
 @ 048   ----------------------------------------
 mus_cruel_angels_thesis_1_048:
 	.byte	W24
-	.byte		N24   , As0 , v076
+	.byte		N24   , As0 , v060
 	.byte	W48
 	.byte		N24   
 	.byte	W24
@@ -326,7 +325,7 @@ mus_cruel_angels_thesis_1_048:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_1_048
 @ 053   ----------------------------------------
-	.byte		N12   , Fn1 , v076
+	.byte		N12   , Fn1 , v060
 	.byte	W12
 	.byte		N12   
 	.byte	W60
@@ -390,12 +389,11 @@ mus_cruel_angels_thesis_1_B2:
 @**************** Track 2 (Midi-Chn.2) ****************@
 
 mus_cruel_angels_thesis_2:
+	.byte		VOL   , 127*mus_cruel_angels_thesis_mvl/mxv
 	.byte	KEYSH , mus_cruel_angels_thesis_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 1
-	.byte		VOL   , 58*mus_cruel_angels_thesis_mvl/mxv
-	.byte		PAN   , c_v-12
-	.byte		N48   , Ds3 , v052
+	.byte		VOICE , 2
+	.byte		N48   , Ds3 , v048
 	.byte		N48   , Gn3 
 	.byte	W48
 	.byte		        Fn3 
@@ -426,7 +424,7 @@ mus_cruel_angels_thesis_2_B1:
 @ 005   ----------------------------------------
 mus_cruel_angels_thesis_2_005:
 	.byte	W48
-	.byte		N18   , Gs2 , v052
+	.byte		N18   , Gs2 , v048
 	.byte		N18   , Cn3 
 	.byte	W48
 	.byte	PEND
@@ -436,7 +434,7 @@ mus_cruel_angels_thesis_2_005:
 	.byte	W96
 @ 007   ----------------------------------------
 mus_cruel_angels_thesis_2_007:
-	.byte		N24   , Ds3 , v052
+	.byte		N24   , Ds3 , v048
 	.byte	W48
 	.byte		N18   , Fn3 
 	.byte		N18   , Gs3 
@@ -444,7 +442,7 @@ mus_cruel_angels_thesis_2_007:
 	.byte	PEND
 @ 008   ----------------------------------------
 mus_cruel_angels_thesis_2_008:
-	.byte		N12   , Dn3 , v052
+	.byte		N12   , Dn3 , v048
 	.byte		N12   , Fn3 
 	.byte	W12
 	.byte		        Dn3 
@@ -470,7 +468,7 @@ mus_cruel_angels_thesis_2_008:
 	.byte	W96
 @ 011   ----------------------------------------
 mus_cruel_angels_thesis_2_011:
-	.byte		N48   , Ds2 , v052
+	.byte		N48   , Ds2 , v048
 	.byte		N48   , Gn2 
 	.byte	W48
 	.byte		        Dn2 
@@ -483,7 +481,7 @@ mus_cruel_angels_thesis_2_011:
 	.byte	W96
 @ 013   ----------------------------------------
 mus_cruel_angels_thesis_2_013:
-	.byte		N48   , Ds2 , v052
+	.byte		N48   , Ds2 , v048
 	.byte		N48   , Fn2 
 	.byte	W48
 	.byte		        Dn2 
@@ -492,7 +490,7 @@ mus_cruel_angels_thesis_2_013:
 	.byte	PEND
 @ 014   ----------------------------------------
 mus_cruel_angels_thesis_2_014:
-	.byte		N48   , As2 , v052
+	.byte		N48   , As2 , v048
 	.byte	W48
 	.byte		N48   
 	.byte	W48
@@ -518,7 +516,7 @@ mus_cruel_angels_thesis_2_014:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_2_011
 @ 020   ----------------------------------------
-	.byte		N96   , Cn2 , v052
+	.byte		N96   , Cn2 , v048
 	.byte		N96   , Gn2 
 	.byte	W96
 @ 021   ----------------------------------------
@@ -528,7 +526,7 @@ mus_cruel_angels_thesis_2_014:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_2_014
 @ 023   ----------------------------------------
-	.byte		N96   , Cn3 , v052
+	.byte		N96   , Cn3 , v048
 	.byte	W96
 @ 024   ----------------------------------------
 	.byte		N24   , An3 
@@ -628,7 +626,7 @@ mus_cruel_angels_thesis_2_014:
 @ 033   ----------------------------------------
 mus_cruel_angels_thesis_2_033:
 	.byte	W24
-	.byte		N24   , Gn3 , v052
+	.byte		N24   , Gn3 , v048
 	.byte		N24   , Cn4 
 	.byte	W24
 	.byte		N48   , Gs3 
@@ -639,7 +637,7 @@ mus_cruel_angels_thesis_2_033:
 	.byte	W96
 @ 035   ----------------------------------------
 mus_cruel_angels_thesis_2_035:
-	.byte		N24   , Ds4 , v052
+	.byte		N24   , Ds4 , v048
 	.byte	W24
 	.byte		N24   
 	.byte		N24   , Gn4 
@@ -660,7 +658,7 @@ mus_cruel_angels_thesis_2_035:
 	 .word	mus_cruel_angels_thesis_2_035
 @ 040   ----------------------------------------
 mus_cruel_angels_thesis_2_040:
-	.byte		N12   , Dn4 , v052
+	.byte		N12   , Dn4 , v048
 	.byte		N12   , Fn4 
 	.byte	W12
 	.byte		        Dn4 
@@ -707,7 +705,7 @@ mus_cruel_angels_thesis_2_040:
 @ 052   ----------------------------------------
 	.byte	W96
 @ 053   ----------------------------------------
-	.byte		N12   , Ds3 , v052
+	.byte		N12   , Ds3 , v048
 	.byte		N12   , Gs3 
 	.byte	W12
 	.byte		N18   , Ds3 
@@ -756,7 +754,7 @@ mus_cruel_angels_thesis_2_040:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_2_005
 @ 062   ----------------------------------------
-	.byte		N12   , As2 , v052
+	.byte		N12   , As2 , v048
 	.byte		N12   , Dn3 
 	.byte	W96
 @ 063   ----------------------------------------
@@ -774,12 +772,11 @@ mus_cruel_angels_thesis_2_B2:
 @**************** Track 3 (Midi-Chn.3) ****************@
 
 mus_cruel_angels_thesis_3:
+	.byte		VOL   , 127*mus_cruel_angels_thesis_mvl/mxv
 	.byte	KEYSH , mus_cruel_angels_thesis_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 2
-	.byte		VOL   , 110*mus_cruel_angels_thesis_mvl/mxv
-	.byte		PAN   , c_v+10
-	.byte		N24   , Cn4 , v064
+	.byte		VOICE , 7
+	.byte		N24   , Cn4 , v056
 	.byte	W24
 	.byte		        Ds4 
 	.byte	W24
@@ -832,7 +829,7 @@ mus_cruel_angels_thesis_3:
 mus_cruel_angels_thesis_3_B1:
 @ 005   ----------------------------------------
 mus_cruel_angels_thesis_3_005:
-	.byte		N11   , Cn3 , v064
+	.byte		N11   , Cn3 , v056
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -853,7 +850,7 @@ mus_cruel_angels_thesis_3_005:
 	.byte	PEND
 @ 006   ----------------------------------------
 mus_cruel_angels_thesis_3_006:
-	.byte		N12   , Fn3 , v064
+	.byte		N12   , Fn3 , v056
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -874,7 +871,7 @@ mus_cruel_angels_thesis_3_006:
 	.byte	PEND
 @ 007   ----------------------------------------
 mus_cruel_angels_thesis_3_007:
-	.byte		N24   , Gn3 , v064
+	.byte		N24   , Gn3 , v056
 	.byte	W12
 	.byte		N12   , Cn3 
 	.byte	W12
@@ -895,7 +892,7 @@ mus_cruel_angels_thesis_3_007:
 	.byte	PEND
 @ 008   ----------------------------------------
 mus_cruel_angels_thesis_3_008:
-	.byte		N12   , As3 , v064
+	.byte		N12   , As3 , v056
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -914,7 +911,7 @@ mus_cruel_angels_thesis_3_008:
 	.byte	PEND
 @ 009   ----------------------------------------
 mus_cruel_angels_thesis_3_009:
-	.byte		N96   , As2 , v064
+	.byte		N96   , As2 , v056
 	.byte	W24
 	.byte		N12   , Ds4 
 	.byte	W12
@@ -927,7 +924,7 @@ mus_cruel_angels_thesis_3_009:
 	.byte	PEND
 @ 010   ----------------------------------------
 mus_cruel_angels_thesis_3_010:
-	.byte		N18   , Ds4 , v064
+	.byte		N18   , Ds4 , v056
 	.byte	W18
 	.byte		        Fn4 
 	.byte	W18
@@ -940,7 +937,7 @@ mus_cruel_angels_thesis_3_010:
 	.byte	PEND
 @ 011   ----------------------------------------
 mus_cruel_angels_thesis_3_011:
-	.byte		N18   , Gn4 , v064
+	.byte		N18   , Gn4 , v056
 	.byte	W18
 	.byte		        Gs4 
 	.byte	W18
@@ -955,7 +952,7 @@ mus_cruel_angels_thesis_3_011:
 	.byte	PEND
 @ 012   ----------------------------------------
 mus_cruel_angels_thesis_3_012:
-	.byte		N18   , Gn4 , v064
+	.byte		N18   , Gn4 , v056
 	.byte	W18
 	.byte		        Gs4 
 	.byte	W18
@@ -970,7 +967,7 @@ mus_cruel_angels_thesis_3_012:
 	.byte	PEND
 @ 013   ----------------------------------------
 mus_cruel_angels_thesis_3_013:
-	.byte		N18   , Ds4 , v064
+	.byte		N18   , Ds4 , v056
 	.byte	W18
 	.byte		N18   
 	.byte	W18
@@ -985,7 +982,7 @@ mus_cruel_angels_thesis_3_013:
 	.byte	PEND
 @ 014   ----------------------------------------
 mus_cruel_angels_thesis_3_014:
-	.byte		N18   , Gs4 , v064
+	.byte		N18   , Gs4 , v056
 	.byte	W18
 	.byte		        Gn4 
 	.byte	W18
@@ -1033,7 +1030,7 @@ mus_cruel_angels_thesis_3_014:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_3_014
 @ 023   ----------------------------------------
-	.byte		N18   , Gn4 , v064
+	.byte		N18   , Gn4 , v056
 	.byte	W18
 	.byte		        Fn4 
 	.byte	W18
@@ -1056,7 +1053,7 @@ mus_cruel_angels_thesis_3_014:
 	.byte	W24
 @ 025   ----------------------------------------
 mus_cruel_angels_thesis_3_025:
-	.byte		N18   , Ds4 , v064
+	.byte		N18   , Ds4 , v056
 	.byte	W12
 	.byte		N12   , Gs3 
 	.byte	W06
@@ -1140,7 +1137,7 @@ mus_cruel_angels_thesis_3_025:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_3_025
 @ 030   ----------------------------------------
-	.byte		N18   , Fn4 , v064
+	.byte		N18   , Fn4 , v056
 	.byte	W12
 	.byte		N12   , Gn3 
 	.byte	W06
@@ -1192,7 +1189,7 @@ mus_cruel_angels_thesis_3_025:
 	.byte	W12
 @ 033   ----------------------------------------
 mus_cruel_angels_thesis_3_033:
-	.byte		N24   , Cn4 , v064
+	.byte		N24   , Cn4 , v056
 	.byte	W12
 	.byte		N12   , Cn3 
 	.byte	W12
@@ -1213,7 +1210,7 @@ mus_cruel_angels_thesis_3_033:
 	.byte	PEND
 @ 034   ----------------------------------------
 mus_cruel_angels_thesis_3_034:
-	.byte		N12   , Fn4 , v064
+	.byte		N12   , Fn4 , v056
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1234,7 +1231,7 @@ mus_cruel_angels_thesis_3_034:
 	.byte	PEND
 @ 035   ----------------------------------------
 mus_cruel_angels_thesis_3_035:
-	.byte		N24   , Gn4 , v064
+	.byte		N24   , Gn4 , v056
 	.byte	W12
 	.byte		N12   , Cn3 
 	.byte	W12
@@ -1280,7 +1277,7 @@ mus_cruel_angels_thesis_3_035:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_3_035
 @ 040   ----------------------------------------
-	.byte		N12   , As4 , v064
+	.byte		N12   , As4 , v056
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1306,7 +1303,7 @@ mus_cruel_angels_thesis_3_035:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_3_035
 @ 044   ----------------------------------------
-	.byte		N12   , As4 , v064
+	.byte		N12   , As4 , v056
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1320,7 +1317,7 @@ mus_cruel_angels_thesis_3_035:
 	.byte	W30
 @ 045   ----------------------------------------
 mus_cruel_angels_thesis_3_045:
-	.byte		N06   , Gn3 , v064
+	.byte		N06   , Gn3 , v056
 	.byte	W06
 	.byte		        As2 
 	.byte	W06
@@ -1358,7 +1355,7 @@ mus_cruel_angels_thesis_3_045:
 	 .word	mus_cruel_angels_thesis_3_045
 @ 047   ----------------------------------------
 mus_cruel_angels_thesis_3_047:
-	.byte		N06   , Ds3 , v064
+	.byte		N06   , Ds3 , v056
 	.byte	W06
 	.byte		        Fs3 
 	.byte	W06
@@ -1393,7 +1390,7 @@ mus_cruel_angels_thesis_3_047:
 	.byte	PEND
 @ 048   ----------------------------------------
 mus_cruel_angels_thesis_3_048:
-	.byte		N06   , Fn3 , v064
+	.byte		N06   , Fn3 , v056
 	.byte	W06
 	.byte		        Gs3 
 	.byte	W06
@@ -1439,7 +1436,7 @@ mus_cruel_angels_thesis_3_048:
 	.byte	PATT
 	 .word	mus_cruel_angels_thesis_3_048
 @ 053   ----------------------------------------
-	.byte		N12   , Cn4 , v064
+	.byte		N12   , Cn4 , v056
 	.byte	W12
 	.byte		N18   
 	.byte	W12

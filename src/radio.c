@@ -1639,7 +1639,12 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_IRREPLACEABLE_BEYONCE) \
     X(MUS_BROKEN_HEARTED_GIRL_BEYONCE) \
     X(MUS_CRAZY_IN_LOVE_BEYONCE) \
-    X(MUS_HALO_BEYONCE)
+    X(MUS_HALO_BEYONCE) \
+    X(MUS_PINK_PONY_CLUB_CHAPPELL_ROAN) \
+    X(MUS_HOT_TO_GO_CHAPPELL_ROAN) \
+    X(MUS_WASHING_MACHINE_HEART_MITSKI) \
+    X(MUS_I_BET_ON_LOSING_DOGS_MITSKI) \
+    X(MUS_MY_LOVE_MINE_ALL_MINE_MITSKI)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -1988,6 +1993,11 @@ static const u16 sStation_All[] = {
     MUS_BROKEN_HEARTED_GIRL_BEYONCE,
     MUS_CRAZY_IN_LOVE_BEYONCE,
     MUS_HALO_BEYONCE,
+    MUS_PINK_PONY_CLUB_CHAPPELL_ROAN,
+    MUS_HOT_TO_GO_CHAPPELL_ROAN,
+    MUS_WASHING_MACHINE_HEART_MITSKI,
+    MUS_I_BET_ON_LOSING_DOGS_MITSKI,
+    MUS_MY_LOVE_MINE_ALL_MINE_MITSKI,
     STATION_END
 };
 
@@ -2267,6 +2277,8 @@ static const u16 sStation_Pop[] = {
     MUS_BROKEN_HEARTED_GIRL_BEYONCE,
     MUS_CRAZY_IN_LOVE_BEYONCE,
     MUS_HALO_BEYONCE,
+    MUS_PINK_PONY_CLUB_CHAPPELL_ROAN,
+    MUS_HOT_TO_GO_CHAPPELL_ROAN,
     STATION_END
 };
 
@@ -2341,6 +2353,9 @@ static const u16 sStation_IndieRock[] = {
     MUS_I_CANT_WAIT_WHITE_STRIPES,
     MUS_JOLENE_WHITE_STRIPES,
     MUS_SEVEN_NATION_ARMY,
+    MUS_WASHING_MACHINE_HEART_MITSKI,
+    MUS_I_BET_ON_LOSING_DOGS_MITSKI,
+    MUS_MY_LOVE_MINE_ALL_MINE_MITSKI,
     STATION_END
 };
 
@@ -2872,6 +2887,8 @@ static const u8 sPopName_IrreplaceableBeyonce[] = _("IRREPLACEABLE (BEYONCE)");
 static const u8 sPopName_BrokenHeartedGirlBeyonce[] = _("BROKEN HEARTED GIRL (BEYONCE)");
 static const u8 sPopName_CrazyInLoveBeyonce[] = _("CRAZY IN LOVE (BEYONCE)");
 static const u8 sPopName_HaloBeyonce[] = _("HALO (BEYONCE)");
+static const u8 sPopName_PinkPonyClubChappellRoan[] = _("PINK PONY CLUB (CHAPPELL ROAN)");
+static const u8 sPopName_HotToGoChappellRoan[] = _("HOT TO GO! (CHAPPELL ROAN)");
 
 static const u8 *Radio_GetPopDisplayName(u16 songId)
 {
@@ -2912,6 +2929,11 @@ static const u8 *Radio_GetPopDisplayName(u16 songId)
         return sPopName_CrazyInLoveBeyonce;
     case MUS_HALO_BEYONCE:
         return sPopName_HaloBeyonce;
+
+    case MUS_PINK_PONY_CLUB_CHAPPELL_ROAN:
+        return sPopName_PinkPonyClubChappellRoan;
+    case MUS_HOT_TO_GO_CHAPPELL_ROAN:
+        return sPopName_HotToGoChappellRoan;
 
     default:
         return NULL;
@@ -2961,6 +2983,10 @@ static const u8 sIndieName_DeadLeavesDirtyGround[] = _("DEAD LEAVES AND THE DIRT
 static const u8 sIndieName_ICantWaitWhiteStripes[] = _("I CAN'T WAIT (THE WHITE STRIPES)");
 static const u8 sIndieName_JoleneWhiteStripes[] = _("JOLENE (THE WHITE STRIPES)");
 static const u8 sIndieName_SevenNationArmy[] = _("SEVEN NATION ARMY (THE WHITE STRIPES)");
+
+static const u8 sIndieName_WashingMachineHeartMitski[] = _("WASHING MACHINE HEART (MITSKI)");
+static const u8 sIndieName_IBetOnLosingDogsMitski[] = _("I BET ON LOSING DOGS (MITSKI)");
+static const u8 sIndieName_MyLoveMineAllMineMitski[] = _("MY LOVE MINE ALL MINE (MITSKI)");
 
 static const u8 *Radio_GetIndieDisplayName(u16 songId)
 {
@@ -3035,6 +3061,13 @@ static const u8 *Radio_GetIndieDisplayName(u16 songId)
         return sIndieName_JoleneWhiteStripes;
     case MUS_SEVEN_NATION_ARMY:
         return sIndieName_SevenNationArmy;
+
+    case MUS_WASHING_MACHINE_HEART_MITSKI:
+        return sIndieName_WashingMachineHeartMitski;
+    case MUS_I_BET_ON_LOSING_DOGS_MITSKI:
+        return sIndieName_IBetOnLosingDogsMitski;
+    case MUS_MY_LOVE_MINE_ALL_MINE_MITSKI:
+        return sIndieName_MyLoveMineAllMineMitski;
 
     default:
         return NULL;

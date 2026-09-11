@@ -1,6 +1,6 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_distance_grp, voicegroup_distance
+	.equ	mus_distance_grp, voicegroup_diva_pop
 	.equ	mus_distance_pri, 0
 	.equ	mus_distance_rev, reverb_set+50
 	.equ	mus_distance_mvl, 100

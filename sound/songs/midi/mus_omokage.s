@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_omokage_grp, voicegroup_omokage
+	.equ	mus_omokage_grp, voicegroup_hlw_rock_metal
 	.equ	mus_omokage_pri, 0
-	.equ	mus_omokage_rev, reverb_set+50
-	.equ	mus_omokage_mvl, 100
+	.equ	mus_omokage_rev, reverb_set+14
+	.equ	mus_omokage_mvl, 90
 	.equ	mus_omokage_key, 0
 	.equ	mus_omokage_tbs, 1
 	.equ	mus_omokage_exg, 1
@@ -20,12 +20,12 @@ mus_omokage_1:
 mus_omokage_1_B1:
 @ 000   ----------------------------------------
 	.byte	TEMPO , 110*mus_omokage_tbs/2
-	.byte		VOICE , 0
-	.byte		VOL   , 127*mus_omokage_mvl/mxv
+	.byte		VOICE , 33
+	.byte		VOL   , 88*mus_omokage_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte	W24
 @ 001   ----------------------------------------
-	.byte		N21   , Gs1 , v096
+	.byte		N21   , Gs1 , v076
 	.byte	W24
 	.byte		N10   , Ds2 
 	.byte	W24
@@ -62,7 +62,7 @@ mus_omokage_1_B1:
 	.byte	W24
 @ 005   ----------------------------------------
 mus_omokage_1_005:
-	.byte		N21   , Cn2 , v096
+	.byte		N21   , Cn2 , v076
 	.byte	W24
 	.byte		N21   
 	.byte	W24
@@ -73,7 +73,7 @@ mus_omokage_1_005:
 	.byte	PEND
 @ 006   ----------------------------------------
 mus_omokage_1_006:
-	.byte		N21   , Gs1 , v096
+	.byte		N21   , Gs1 , v076
 	.byte	W24
 	.byte		N21   
 	.byte	W24
@@ -103,7 +103,7 @@ mus_omokage_1_006:
 	.byte	PATT
 	 .word	mus_omokage_1_006
 @ 011   ----------------------------------------
-	.byte		N21   , Cn2 , v096
+	.byte		N21   , Cn2 , v076
 	.byte	W24
 	.byte		N21   
 	.byte	W24
@@ -114,7 +114,7 @@ mus_omokage_1_006:
 @ 012   ----------------------------------------
 mus_omokage_1_012:
 	.byte	W24
-	.byte		N10   , Ds2 , v096
+	.byte		N10   , Ds2 , v076
 	.byte	W12
 	.byte		        Gs1 
 	.byte	W12
@@ -127,7 +127,7 @@ mus_omokage_1_012:
 	.byte	PEND
 @ 013   ----------------------------------------
 mus_omokage_1_013:
-	.byte		N21   , Gs1 , v096
+	.byte		N21   , Gs1 , v076
 	.byte	W24
 	.byte		N10   , Ds2 
 	.byte	W12
@@ -155,7 +155,7 @@ mus_omokage_1_013:
 	.byte	W24
 	.byte		        Dn2 
 	.byte	W40
-	.byte		N15   , Gn1 , v084
+	.byte		N15   , Gn1 , v064
 	.byte	W15
 	.byte		N16   
 	.byte	W17
@@ -167,7 +167,7 @@ mus_omokage_1_013:
 	 .word	mus_omokage_1_013
 @ 018   ----------------------------------------
 mus_omokage_1_018:
-	.byte		N21   , Gn1 , v096
+	.byte		N21   , Gn1 , v076
 	.byte	W24
 	.byte		N10   , Dn2 
 	.byte	W24
@@ -180,19 +180,19 @@ mus_omokage_1_018:
 	.byte	PATT
 	 .word	mus_omokage_1_018
 @ 020   ----------------------------------------
-	.byte		N21   , Gn1 , v096
+	.byte		N21   , Gn1 , v076
 	.byte	W12
-	.byte		N10   , Bn1 , v084
+	.byte		N10   , Bn1 , v064
 	.byte	W12
-	.byte		        Dn2 , v096
+	.byte		        Dn2 , v076
 	.byte	W12
 	.byte		        Gn1 
 	.byte	W12
 	.byte		N21   
 	.byte	W12
-	.byte		N10   , Bn1 , v124
+	.byte		N10   , Bn1 
 	.byte	W12
-	.byte		        Dn2 , v096
+	.byte		        Dn2 
 	.byte	W12
 	.byte		        Gn1 
 	.byte	W12
@@ -214,13 +214,13 @@ mus_omokage_1_018:
 	.byte	W12
 @ 022   ----------------------------------------
 mus_omokage_1_022:
-	.byte		N07   , Gs1 , v096
+	.byte		N07   , Gs1 , v076
 	.byte	W24
 	.byte		N21   
 	.byte	W36
-	.byte		N12   , Bn1 , v084
+	.byte		N12   , Bn1 , v064
 	.byte	W12
-	.byte		N10   , Dn2 , v096
+	.byte		N10   , Dn2 , v076
 	.byte	W12
 	.byte		        Gn1 
 	.byte	W12
@@ -228,7 +228,7 @@ mus_omokage_1_022:
 @ 023   ----------------------------------------
 mus_omokage_1_023:
 	.byte	W24
-	.byte		N10   , Gn2 , v096
+	.byte		N10   , Gn2 , v076
 	.byte	W12
 	.byte		        Cn2 
 	.byte	W36
@@ -240,7 +240,7 @@ mus_omokage_1_023:
 @ 024   ----------------------------------------
 mus_omokage_1_024:
 	.byte	W24
-	.byte		N10   , Ds2 , v096
+	.byte		N10   , Ds2 , v076
 	.byte	W12
 	.byte		        Gs1 
 	.byte	W36
@@ -251,11 +251,11 @@ mus_omokage_1_024:
 	.byte	PEND
 @ 025   ----------------------------------------
 mus_omokage_1_025:
-	.byte		N21   , Cn2 , v096
+	.byte		N21   , Cn2 , v076
 	.byte	W24
 	.byte		N10   , Gn2 
 	.byte	W12
-	.byte		N24   , Cn2 , v096, gtp3
+	.byte		N24   , Cn2 , v076, gtp3
 	.byte	W28
 	.byte		N15   
 	.byte	W15
@@ -264,15 +264,15 @@ mus_omokage_1_025:
 	.byte	PEND
 @ 026   ----------------------------------------
 mus_omokage_1_026:
-	.byte		N07   , Gs1 , v096
+	.byte		N07   , Gs1 , v076
 	.byte	W24
 	.byte		N11   
 	.byte	W12
 	.byte		N10   
 	.byte	W24
-	.byte		N12   , Bn1 , v084
+	.byte		N12   , Bn1 , v064
 	.byte	W12
-	.byte		N10   , Dn2 , v096
+	.byte		N10   , Dn2 , v076
 	.byte	W12
 	.byte		        Gn1 
 	.byte	W12
@@ -280,30 +280,30 @@ mus_omokage_1_026:
 @ 027   ----------------------------------------
 mus_omokage_1_027:
 	.byte	W24
-	.byte		N10   , Gn2 , v096
+	.byte		N10   , Gn2 , v076
 	.byte	W12
 	.byte		        Cn2 
 	.byte	W36
-	.byte		        Fn2 , v072
+	.byte		        Fn2 , v056
 	.byte	W12
-	.byte		        As1 , v084
+	.byte		        As1 , v064
 	.byte	W12
 	.byte	PEND
 @ 028   ----------------------------------------
 mus_omokage_1_028:
-	.byte		N21   , Gs1 , v092
+	.byte		N21   , Gs1 , v068
 	.byte	W24
-	.byte		N10   , Ds2 , v104
+	.byte		N10   , Ds2 , v076
 	.byte	W12
-	.byte		        Gs1 , v112
+	.byte		        Gs1 
 	.byte	W06
-	.byte		N54   , Bn1 , v084
+	.byte		N54   , Bn1 , v064
 	.byte	W30
-	.byte		N10   , Dn2 , v124
+	.byte		N10   , Dn2 , v076
 	.byte	W24
 	.byte	PEND
 @ 029   ----------------------------------------
-	.byte		N21   , Gn1 , v096
+	.byte		N21   , Gn1 
 	.byte	W24
 	.byte		N10   , Dn2 
 	.byte	W12
@@ -337,7 +337,7 @@ mus_omokage_1_028:
 	.byte	PATT
 	 .word	mus_omokage_1_028
 @ 037   ----------------------------------------
-	.byte		N05   , Gn1 , v096
+	.byte		N05   , Gn1 , v076
 	.byte	W06
 	.byte		N11   
 	.byte	W12
@@ -349,7 +349,7 @@ mus_omokage_1_028:
 	.byte	W12
 	.byte		N21   
 	.byte	W12
-	.byte		N32   , Cn2 , v096, gtp1
+	.byte		N32   , Cn2 , v076, gtp1
 	.byte	W36
 @ 038   ----------------------------------------
 	.byte	W18
@@ -372,12 +372,12 @@ mus_omokage_2:
 	.byte	KEYSH , mus_omokage_key+0
 mus_omokage_2_B1:
 @ 000   ----------------------------------------
-	.byte		VOICE , 1
-	.byte		VOL   , 48*mus_omokage_mvl/mxv
-	.byte		PAN   , c_v-12
+	.byte		VOICE , 29
+	.byte		VOL   , 82*mus_omokage_mvl/mxv
+	.byte		PAN   , c_v-16
 	.byte	W24
 @ 001   ----------------------------------------
-	.byte		N21   , Ds3 , v056
+	.byte		N21   , Ds3 , v052
 	.byte	W24
 	.byte		N10   , Gs2 
 	.byte		N21   , Gn4 
@@ -406,7 +406,7 @@ mus_omokage_2_B1:
 	.byte		N15   , Cn4 
 	.byte	W15
 	.byte		N16   , Gs2 
-	.byte		N30   , Cn4 , v056, gtp1
+	.byte		N30   , Cn4 , v052, gtp1
 	.byte	W17
 @ 004   ----------------------------------------
 	.byte	W06
@@ -417,14 +417,14 @@ mus_omokage_2_B1:
 	.byte	W12
 	.byte		N10   
 	.byte	W12
-	.byte		N24   , Bn2 , v048
+	.byte		N24   , Bn2 , v044
 	.byte	W24
 	.byte		        Bn1 
-	.byte		N10   , Dn2 , v056
+	.byte		N10   , Dn2 , v052
 	.byte	W24
 @ 005   ----------------------------------------
 mus_omokage_2_005:
-	.byte		N21   , Ds2 , v056
+	.byte		N21   , Ds2 , v052
 	.byte		N21   , Gn2 
 	.byte	W24
 	.byte		        Ds2 
@@ -438,7 +438,7 @@ mus_omokage_2_005:
 	.byte	PEND
 @ 006   ----------------------------------------
 mus_omokage_2_006:
-	.byte		N21   , Cn2 , v056
+	.byte		N21   , Cn2 , v052
 	.byte		N05   , Cn4 
 	.byte	W06
 	.byte		N16   , Cn3 
@@ -447,11 +447,11 @@ mus_omokage_2_006:
 	.byte		N21   , Cn2 
 	.byte		N21   , Ds2 
 	.byte	W24
-	.byte		N23   , Bn1 , v048
-	.byte		N21   , Dn2 , v056
+	.byte		N23   , Bn1 , v044
+	.byte		N21   , Dn2 , v052
 	.byte	W24
-	.byte		N24   , Bn1 , v048
-	.byte		N21   , Dn2 , v056
+	.byte		N24   , Bn1 , v044
+	.byte		N21   , Dn2 , v052
 	.byte	W24
 	.byte	PEND
 @ 007   ----------------------------------------
@@ -474,11 +474,11 @@ mus_omokage_2_006:
 	.byte		N21   
 	.byte		N21   , Ds2 
 	.byte	W24
-	.byte		N23   , Bn1 , v048
-	.byte		N21   , Dn2 , v056
+	.byte		N23   , Bn1 , v044
+	.byte		N21   , Dn2 , v052
 	.byte	W24
-	.byte		N24   , Bn1 , v048
-	.byte		N21   , Dn2 , v056
+	.byte		N24   , Bn1 , v044
+	.byte		N21   , Dn2 , v052
 	.byte	W24
 @ 009   ----------------------------------------
 	.byte	PATT
@@ -487,7 +487,7 @@ mus_omokage_2_006:
 	.byte	PATT
 	 .word	mus_omokage_2_006
 @ 011   ----------------------------------------
-	.byte		N21   , Ds2 , v056
+	.byte		N21   , Ds2 , v052
 	.byte		N21   , Dn3 
 	.byte	W24
 	.byte		        Ds2 
@@ -502,7 +502,7 @@ mus_omokage_2_006:
 @ 012   ----------------------------------------
 mus_omokage_2_012:
 	.byte	W24
-	.byte		N10   , Gs2 , v056
+	.byte		N10   , Gs2 , v052
 	.byte	W24
 	.byte		N17   , Cn3 
 	.byte		N17   , Ds3 
@@ -514,7 +514,7 @@ mus_omokage_2_012:
 @ 013   ----------------------------------------
 mus_omokage_2_013:
 	.byte	W24
-	.byte		N10   , Gs2 , v056
+	.byte		N10   , Gs2 , v052
 	.byte		N17   , Ds3 
 	.byte	W18
 	.byte		N21   , Cn3 
@@ -532,11 +532,11 @@ mus_omokage_2_013:
 	.byte	W24
 	.byte		N10   
 	.byte	W40
-	.byte		N15   , Gn2 , v048
-	.byte		N15   , Ds3 , v056
+	.byte		N15   , Gn2 , v044
+	.byte		N15   , Ds3 , v052
 	.byte	W15
-	.byte		N16   , Gn2 , v048
-	.byte		N16   , Cn3 , v056
+	.byte		N16   , Gn2 , v044
+	.byte		N16   , Cn3 , v052
 	.byte	W17
 @ 016   ----------------------------------------
 	.byte	PATT
@@ -545,10 +545,10 @@ mus_omokage_2_013:
 	.byte	PATT
 	 .word	mus_omokage_2_013
 @ 018   ----------------------------------------
-	.byte		N23   , Bn2 , v048
+	.byte		N23   , Bn2 , v044
 	.byte	W24
-	.byte		N10   , Gn2 , v056
-	.byte		N23   , Bn2 , v048
+	.byte		N10   , Gn2 , v052
+	.byte		N23   , Bn2 , v044
 	.byte	W24
 	.byte		N16   
 	.byte	W16
@@ -558,10 +558,10 @@ mus_omokage_2_013:
 	.byte	W17
 @ 019   ----------------------------------------
 	.byte		N23   , Bn2 
-	.byte		N21   , Dn3 , v056
+	.byte		N21   , Dn3 , v052
 	.byte	W24
 	.byte		N10   , Gn2 
-	.byte		N23   , Bn2 , v048
+	.byte		N23   , Bn2 , v044
 	.byte	W24
 	.byte		N16   
 	.byte	W16
@@ -570,23 +570,23 @@ mus_omokage_2_013:
 	.byte		N16   , Cn3 
 	.byte	W17
 @ 020   ----------------------------------------
-	.byte		N10   , Bn2 , v056
+	.byte		N10   , Bn2 , v052
 	.byte		N10   , Dn3 
 	.byte	W12
-	.byte		        Dn3 , v048
+	.byte		        Dn3 , v044
 	.byte	W12
-	.byte		        Gn2 , v056
+	.byte		        Gn2 , v052
 	.byte		N10   , Dn3 
 	.byte	W12
-	.byte		        Bn2 , v060
+	.byte		        Bn2 , v056
 	.byte		N10   , Dn3 
 	.byte	W12
-	.byte		        Bn2 , v068
+	.byte		        Bn2 , v064
 	.byte		N10   , Dn3 
 	.byte	W12
 	.byte		N10   
 	.byte	W12
-	.byte		        Gn2 , v056
+	.byte		        Gn2 , v052
 	.byte		N10   , Dn3 
 	.byte	W12
 	.byte		        Bn2 
@@ -596,7 +596,7 @@ mus_omokage_2_013:
 	.byte	W96
 @ 022   ----------------------------------------
 mus_omokage_2_022:
-	.byte		N07   , Ds2 , v056
+	.byte		N07   , Ds2 , v052
 	.byte		N21   , Ds3 
 	.byte	W60
 	.byte		N10   , Dn3 
@@ -607,7 +607,7 @@ mus_omokage_2_022:
 @ 023   ----------------------------------------
 mus_omokage_2_023:
 	.byte	W24
-	.byte		N21   , Cn3 , v056
+	.byte		N21   , Cn3 , v052
 	.byte	W48
 	.byte		N10   
 	.byte		N21   , Gn3 
@@ -616,7 +616,7 @@ mus_omokage_2_023:
 @ 024   ----------------------------------------
 mus_omokage_2_024:
 	.byte	W24
-	.byte		N10   , Gs2 , v056
+	.byte		N10   , Gs2 , v052
 	.byte		N10   , Cn3 
 	.byte	W48
 	.byte		        Gn2 
@@ -625,7 +625,7 @@ mus_omokage_2_024:
 @ 025   ----------------------------------------
 mus_omokage_2_025:
 	.byte	W24
-	.byte		N10   , Cn3 , v056
+	.byte		N10   , Cn3 , v052
 	.byte	W40
 	.byte		N15   , Ds2 
 	.byte	W15
@@ -634,7 +634,7 @@ mus_omokage_2_025:
 	.byte	PEND
 @ 026   ----------------------------------------
 mus_omokage_2_026:
-	.byte		N07   , Ds2 , v056
+	.byte		N07   , Ds2 , v052
 	.byte		N07   , Gs2 
 	.byte	W60
 	.byte		N10   , Dn3 
@@ -645,15 +645,15 @@ mus_omokage_2_026:
 @ 027   ----------------------------------------
 mus_omokage_2_027:
 	.byte	W24
-	.byte		N10   , Cn3 , v056
+	.byte		N10   , Cn3 , v052
 	.byte	W48
 	.byte		        As2 , v044
-	.byte		N21   , Gn3 , v056
+	.byte		N21   , Gn3 , v052
 	.byte	W24
 	.byte	PEND
 @ 028   ----------------------------------------
 mus_omokage_2_028:
-	.byte		N32   , Cn3 , v056
+	.byte		N32   , Cn3 , v052
 	.byte		N10   , Ds3 
 	.byte	W42
 	.byte		N16   , Dn3 
@@ -676,7 +676,7 @@ mus_omokage_2_028:
 	.byte		N10   , Gn3 
 	.byte	W12
 	.byte		N19   , Ds2 
-	.byte		N32   , Gn3 , v056, gtp1
+	.byte		N32   , Gn3 , v052, gtp1
 	.byte	W19
 	.byte		N15   , Ds2 
 	.byte	W17
@@ -702,7 +702,7 @@ mus_omokage_2_028:
 	.byte	PATT
 	 .word	mus_omokage_2_028
 @ 037   ----------------------------------------
-	.byte		N05   , Gn2 , v056
+	.byte		N05   , Gn2 , v052
 	.byte		N05   , Gn3 
 	.byte	W06
 	.byte		N10   , Gn2 
@@ -719,8 +719,8 @@ mus_omokage_2_028:
 	.byte		        Gn2 
 	.byte		N10   , Gn3 
 	.byte	W12
-	.byte		N32   , Cn3 , v056, gtp1
-	.byte		N32   , Gn3 , v056, gtp1
+	.byte		N32   , Cn3 , v052, gtp1
+	.byte		N32   , Gn3 , v052, gtp1
 	.byte	W36
 @ 038   ----------------------------------------
 	.byte	W36
@@ -740,16 +740,16 @@ mus_omokage_3:
 	.byte	KEYSH , mus_omokage_key+0
 mus_omokage_3_B1:
 @ 000   ----------------------------------------
-	.byte		VOICE , 2
-	.byte		VOL   , 106*mus_omokage_mvl/mxv
-	.byte		PAN   , c_v+10
-	.byte		N05   , Cn3 , v092
+	.byte		VOICE , 28
+	.byte		VOL   , 94*mus_omokage_mvl/mxv
+	.byte		PAN   , c_v+16
+	.byte		N05   , Cn3 , v080
 	.byte	W06
-	.byte		        Dn3 , v084
+	.byte		        Dn3 , v076
 	.byte	W06
-	.byte		        Ds3 , v112
+	.byte		        Ds3 , v084
 	.byte	W06
-	.byte		        Gn3 , v092
+	.byte		        Gn3 , v080
 	.byte	W06
 @ 001   ----------------------------------------
 	.byte		N21   , Cn4 
@@ -767,7 +767,7 @@ mus_omokage_3_B1:
 @ 002   ----------------------------------------
 	.byte		N21   , Gs4 
 	.byte	W24
-	.byte		N42   , As4 , v092, gtp1
+	.byte		N42   , As4 , v080, gtp1
 	.byte	W12
 	.byte		N10   , Cn3 
 	.byte	W12
@@ -788,7 +788,7 @@ mus_omokage_3_B1:
 	.byte	W28
 	.byte		N15   , Ds4 
 	.byte	W15
-	.byte		N30   , Ds4 , v092, gtp1
+	.byte		N30   , Ds4 , v080, gtp1
 	.byte	W17
 @ 004   ----------------------------------------
 	.byte		N15   , Gs2 
@@ -834,7 +834,7 @@ mus_omokage_3_B1:
 	.byte	W08
 @ 006   ----------------------------------------
 mus_omokage_3_006:
-	.byte		N05   , Ds4 , v092
+	.byte		N05   , Ds4 , v080
 	.byte	W06
 	.byte		N16   , Gn3 
 	.byte	W18
@@ -916,7 +916,7 @@ mus_omokage_3_006:
 	.byte	PATT
 	 .word	mus_omokage_3_006
 @ 011   ----------------------------------------
-	.byte		N21   , Dn4 , v092
+	.byte		N21   , Dn4 , v080
 	.byte	W24
 	.byte		        Ds4 
 	.byte	W24
@@ -926,7 +926,7 @@ mus_omokage_3_006:
 	.byte	W24
 @ 012   ----------------------------------------
 mus_omokage_3_012:
-	.byte		N21   , Gs2 , v092
+	.byte		N21   , Gs2 , v080
 	.byte	W12
 	.byte		N10   , Gn2 
 	.byte	W12
@@ -947,7 +947,7 @@ mus_omokage_3_012:
 	.byte	PEND
 @ 013   ----------------------------------------
 mus_omokage_3_013:
-	.byte		N10   , Cn3 , v092
+	.byte		N10   , Cn3 , v080
 	.byte	W12
 	.byte		        Ds3 
 	.byte	W12
@@ -986,11 +986,11 @@ mus_omokage_3_013:
 @ 015   ----------------------------------------
 	.byte		N21   , Gn2 
 	.byte	W12
-	.byte		N06   , Cn3 , v080
+	.byte		N06   , Cn3 , v072
 	.byte	W06
 	.byte		N05   , As2 
 	.byte	W06
-	.byte		N40   , As2 , v092
+	.byte		N40   , As2 , v080
 	.byte	W12
 	.byte		N10   , Gn2 
 	.byte	W12
@@ -998,7 +998,7 @@ mus_omokage_3_013:
 	.byte	W16
 	.byte		N15   , Gn3 
 	.byte	W15
-	.byte		N16   , Fs3 , v080
+	.byte		N16   , Fs3 , v072
 	.byte	W17
 @ 016   ----------------------------------------
 	.byte	PATT
@@ -1007,7 +1007,7 @@ mus_omokage_3_013:
 	.byte	PATT
 	 .word	mus_omokage_3_013
 @ 018   ----------------------------------------
-	.byte		N21   , Dn3 , v092
+	.byte		N21   , Dn3 , v080
 	.byte	W24
 	.byte		N21   
 	.byte	W12
@@ -1015,13 +1015,13 @@ mus_omokage_3_013:
 	.byte	W12
 	.byte		N16   , Dn3 
 	.byte	W16
-	.byte		N15   , As3 , v080
+	.byte		N15   , As3 , v072
 	.byte	W08
-	.byte		N10   , Gn2 , v092
+	.byte		N10   , Gn2 , v080
 	.byte	W07
-	.byte		N16   , Gs3 , v080
+	.byte		N16   , Gs3 , v072
 	.byte	W05
-	.byte		N10   , Gn2 , v092
+	.byte		N10   , Gn2 , v080
 	.byte	W12
 @ 019   ----------------------------------------
 	.byte		N64   , Gn3 
@@ -1032,28 +1032,28 @@ mus_omokage_3_013:
 	.byte	W12
 	.byte		N16   , Dn3 
 	.byte	W16
-	.byte		N15   , As3 , v080
+	.byte		N15   , As3 , v072
 	.byte	W08
-	.byte		N10   , Gn2 , v092
+	.byte		N10   , Gn2 , v080
 	.byte	W07
-	.byte		N16   , Gs3 , v080
+	.byte		N16   , Gs3 , v072
 	.byte	W05
-	.byte		N10   , Gn2 , v092
+	.byte		N10   , Gn2 , v080
 	.byte	W12
 @ 020   ----------------------------------------
 	.byte		        Gn3 
 	.byte	W12
+	.byte		        Gn3 , v072
+	.byte	W12
 	.byte		        Gn3 , v080
 	.byte	W12
-	.byte		        Gn3 , v092
-	.byte	W12
-	.byte		        Gn3 , v100
-	.byte	W12
-	.byte		        Gn3 , v112
+	.byte		        Gn3 , v084
 	.byte	W12
 	.byte		N10   
 	.byte	W12
-	.byte		        Gn3 , v092
+	.byte		N10   
+	.byte	W12
+	.byte		        Gn3 , v080
 	.byte	W12
 	.byte		N10   
 	.byte	W12
@@ -1075,7 +1075,7 @@ mus_omokage_3_013:
 	.byte	W12
 @ 022   ----------------------------------------
 mus_omokage_3_022:
-	.byte		N21   , Gn3 , v092
+	.byte		N21   , Gn3 , v080
 	.byte	W24
 	.byte		        Ds3 
 	.byte	W12
@@ -1096,7 +1096,7 @@ mus_omokage_3_022:
 	.byte	PEND
 @ 023   ----------------------------------------
 mus_omokage_3_023:
-	.byte		N21   , Cn3 , v092
+	.byte		N21   , Cn3 , v080
 	.byte	W24
 	.byte		        Ds3 
 	.byte	W12
@@ -1117,7 +1117,7 @@ mus_omokage_3_023:
 	.byte	PEND
 @ 024   ----------------------------------------
 mus_omokage_3_024:
-	.byte		N21   , Gs2 , v092
+	.byte		N21   , Gs2 , v080
 	.byte	W24
 	.byte		N10   , Ds3 
 	.byte	W12
@@ -1136,13 +1136,13 @@ mus_omokage_3_024:
 	.byte	PEND
 @ 025   ----------------------------------------
 mus_omokage_3_025:
-	.byte		N21   , Ds3 , v092
+	.byte		N21   , Ds3 , v080
 	.byte	W24
 	.byte		N10   , Fn3 
 	.byte	W12
 	.byte		N05   , Ds3 
 	.byte	W06
-	.byte		N48   , Gn3 , v092, gtp1
+	.byte		N48   , Gn3 , v080, gtp1
 	.byte	W22
 	.byte		N15   , Gn2 
 	.byte	W15
@@ -1151,7 +1151,7 @@ mus_omokage_3_025:
 	.byte	PEND
 @ 026   ----------------------------------------
 mus_omokage_3_026:
-	.byte		N32   , Gn3 , v092
+	.byte		N32   , Gn3 , v080
 	.byte	W24
 	.byte		N10   , Ds3 
 	.byte	W12
@@ -1172,7 +1172,7 @@ mus_omokage_3_026:
 	.byte	PEND
 @ 027   ----------------------------------------
 mus_omokage_3_027:
-	.byte		N21   , Cn3 , v092
+	.byte		N21   , Cn3 , v080
 	.byte	W24
 	.byte		N10   , Ds3 
 	.byte	W12
@@ -1191,19 +1191,19 @@ mus_omokage_3_027:
 	.byte	PEND
 @ 028   ----------------------------------------
 mus_omokage_3_028:
-	.byte		N10   , Gn3 , v092
+	.byte		N10   , Gn3 , v080
 	.byte	W24
-	.byte		        Gs2 , v096
+	.byte		        Gs2 , v084
 	.byte	W12
-	.byte		N05   , Gn3 , v092
+	.byte		N05   , Gn3 , v080
 	.byte	W06
-	.byte		N48   , Fn3 , v092, gtp1
+	.byte		N48   , Fn3 , v080, gtp1
 	.byte	W06
-	.byte		N21   , Gn2 , v112
+	.byte		N21   , Gn2 , v084
 	.byte	W24
 	.byte		N10   
 	.byte	W12
-	.byte		        Gn2 , v092
+	.byte		        Gn2 , v080
 	.byte	W12
 	.byte	PEND
 @ 029   ----------------------------------------
@@ -1221,7 +1221,7 @@ mus_omokage_3_028:
 	.byte	W12
 	.byte		N10   
 	.byte	W12
-	.byte		N32   , Cn4 , v092, gtp1
+	.byte		N32   , Cn4 , v080, gtp1
 	.byte	W19
 	.byte		N16   , Gn2 
 	.byte	W17
@@ -1247,7 +1247,7 @@ mus_omokage_3_028:
 	.byte	PATT
 	 .word	mus_omokage_3_028
 @ 037   ----------------------------------------
-	.byte		N05   , As3 , v092
+	.byte		N05   , As3 , v080
 	.byte	W06
 	.byte		N10   
 	.byte	W12
@@ -1259,7 +1259,7 @@ mus_omokage_3_028:
 	.byte	W12
 	.byte		N10   
 	.byte	W12
-	.byte		N32   , Cn4 , v092, gtp1
+	.byte		N32   , Cn4 , v080, gtp1
 	.byte	W36
 @ 038   ----------------------------------------
 	.byte	W18
@@ -1276,11 +1276,204 @@ mus_omokage_3_028:
 mus_omokage_3_B2:
 	.byte	FINE
 
+@**************** Track 4 (Midi-Chn.10) ****************@
+
+mus_omokage_4:
+	.byte	KEYSH , mus_omokage_key+0
+mus_omokage_4_B1:
+@ 000   ----------------------------------------
+	.byte		VOICE , 0
+	.byte		VOL   , 90*mus_omokage_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte	W24
+@ 001   ----------------------------------------
+mus_omokage_4_001:
+	.byte		N02   , Cn1 , v072
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Fs1 , v032
+	.byte	W12
+	.byte		        En1 , v072
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Cn1 , v048
+	.byte		N02   , Fs1 , v032
+	.byte	W12
+	.byte		        Cn1 , v068
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Fs1 , v032
+	.byte	W12
+	.byte		        En1 , v076
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Cn1 , v052
+	.byte		N02   , Fs1 , v032
+	.byte	W12
+	.byte	PEND
+@ 002   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 003   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 004   ----------------------------------------
+mus_omokage_4_004:
+	.byte		N02   , Cn1 , v072
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Fs1 , v032
+	.byte	W12
+	.byte		        En1 , v072
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Cn1 , v048
+	.byte		N02   , Fs1 , v032
+	.byte	W12
+	.byte		        Cn1 , v068
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Fs1 , v032
+	.byte	W12
+	.byte		        En1 , v076
+	.byte		N02   , En1 , v044
+	.byte		N02   , Fs1 , v040
+	.byte	W06
+	.byte		        En1 , v052
+	.byte	W06
+	.byte		        Cn1 
+	.byte		N02   , En1 , v060
+	.byte		N02   , Fs1 , v032
+	.byte	W06
+	.byte		        En1 , v068
+	.byte	W06
+	.byte	PEND
+@ 005   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 006   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 007   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 008   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 009   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 010   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 011   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 012   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 013   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 014   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 015   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 016   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 017   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 018   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 019   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 020   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 021   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 022   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 023   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 024   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 025   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 026   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 027   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 028   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 029   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 030   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 031   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 032   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 033   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 034   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 035   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 036   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_004
+@ 037   ----------------------------------------
+	.byte	PATT
+	 .word	mus_omokage_4_001
+@ 038   ----------------------------------------
+	.byte		N02   , Cn1 , v072
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Fs1 , v032
+	.byte	W12
+	.byte		        En1 , v072
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Cn1 , v048
+	.byte		N02   , Fs1 , v032
+	.byte	W12
+	.byte		        Cn1 , v068
+	.byte		N02   , Fs1 , v040
+	.byte	W12
+	.byte		        Fs1 , v032
+	.byte	W09
+	.byte	GOTO
+	 .word	mus_omokage_4_B1
+mus_omokage_4_B2:
+	.byte	FINE
+
 @******************************************************@
 	.align	2
 
 mus_omokage:
-	.byte	3	@ NumTrks
+	.byte	4	@ NumTrks
 	.byte	0	@ NumBlks
 	.byte	mus_omokage_pri	@ Priority
 	.byte	mus_omokage_rev	@ Reverb.
@@ -1290,5 +1483,6 @@ mus_omokage:
 	.word	mus_omokage_1
 	.word	mus_omokage_2
 	.word	mus_omokage_3
+	.word	mus_omokage_4
 
 	.end

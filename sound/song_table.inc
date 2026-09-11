@@ -755,6 +755,13 @@ gSongTable::
 	song mus_broken_hearted_girl_beyonce, 0, 0
 	song mus_crazy_in_love_beyonce, 0, 0
 	song mus_halo_beyonce, 0, 0
+	song mus_pink_pony_club_chappell_roan, 0, 0
+	song mus_hot_to_go_chappell_roan, 0, 0
+	song mus_washing_machine_heart_mitski, 0, 0
+	song mus_i_bet_on_losing_dogs_mitski, 0, 0
+	song mus_my_love_mine_all_mine_mitski, 0, 0
+
+
 
 	.align 2
 dummy_song_header:

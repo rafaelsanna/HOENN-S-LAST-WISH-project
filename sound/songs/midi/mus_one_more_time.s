@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_one_more_time_grp, voicegroup_littleroot_test
+	.equ	mus_one_more_time_grp, voicegroup_diva_pop
 	.equ	mus_one_more_time_pri, 0
-	.equ	mus_one_more_time_rev, reverb_set+50
-	.equ	mus_one_more_time_mvl, 94
+	.equ	mus_one_more_time_rev, reverb_set+12
+	.equ	mus_one_more_time_mvl, 90
 	.equ	mus_one_more_time_key, 0
 	.equ	mus_one_more_time_tbs, 1
 	.equ	mus_one_more_time_exg, 1
@@ -21,8 +21,8 @@ mus_one_more_time_1:
 @ 000   ----------------------------------------
 @ 001   ----------------------------------------
 	.byte	TEMPO , 122*mus_one_more_time_tbs/2
-	.byte		VOICE , 80
-	.byte		N24   , Bn2 , v048
+	.byte		VOICE , 7
+	.byte		N24   , Bn2 , v052
 	.byte		N24   , Dn4 
 	.byte	W24
 	.byte		N24   
@@ -36,7 +36,7 @@ mus_one_more_time_1:
 	.byte	W24
 @ 002   ----------------------------------------
 mus_one_more_time_1_002:
-	.byte		N24   , Bn2 , v048
+	.byte		N24   , Bn2 , v052
 	.byte		N24   , Dn4 
 	.byte	W24
 	.byte		N24   
@@ -48,7 +48,7 @@ mus_one_more_time_1_002:
 	.byte	PEND
 @ 003   ----------------------------------------
 mus_one_more_time_1_003:
-	.byte		N24   , Bn2 , v048
+	.byte		N24   , Bn2 , v052
 	.byte		N24   , Dn4 
 	.byte	W24
 	.byte		N24   
@@ -72,7 +72,7 @@ mus_one_more_time_1_003:
 	 .word	mus_one_more_time_1_002
 @ 007   ----------------------------------------
 mus_one_more_time_1_007:
-	.byte		N24   , Bn2 , v048
+	.byte		N24   , Bn2 , v052
 	.byte		N24   , En4 
 	.byte	W24
 	.byte		        Bn2 
@@ -87,7 +87,7 @@ mus_one_more_time_1_007:
 	.byte	PEND
 @ 008   ----------------------------------------
 mus_one_more_time_1_008:
-	.byte		N24   , Bn2 , v048
+	.byte		N24   , Bn2 , v052
 	.byte		N24   , En4 
 	.byte	W24
 	.byte		        Bn2 
@@ -519,7 +519,7 @@ mus_one_more_time_2:
 	.byte		VOL   , 127*mus_one_more_time_mvl/mxv
 	.byte	KEYSH , mus_one_more_time_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 48
+	.byte		VOICE , 7
 	.byte		N12   , Gn1 , v048
 	.byte		N12   , Gn3 
 	.byte	W12
@@ -1157,8 +1157,8 @@ mus_one_more_time_3:
 	.byte		VOL   , 127*mus_one_more_time_mvl/mxv
 	.byte	KEYSH , mus_one_more_time_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 29
-	.byte		N12   , Gn1 , v044
+	.byte		VOICE , 2
+	.byte		N12   , Gn1 , v048
 	.byte	W12
 	.byte		N06   , Bn2 
 	.byte	W06
@@ -1172,7 +1172,7 @@ mus_one_more_time_3:
 	.byte	W30
 @ 001   ----------------------------------------
 mus_one_more_time_3_001:
-	.byte		N12   , Gn1 , v044
+	.byte		N12   , Gn1 , v048
 	.byte	W12
 	.byte		N06   , Bn2 
 	.byte	W06
@@ -1183,7 +1183,7 @@ mus_one_more_time_3_001:
 	.byte	PEND
 @ 002   ----------------------------------------
 mus_one_more_time_3_002:
-	.byte		N12   , Gn1 , v044
+	.byte		N12   , Gn1 , v048
 	.byte	W12
 	.byte		N06   , Bn2 
 	.byte	W06
@@ -1207,7 +1207,7 @@ mus_one_more_time_3_002:
 	 .word	mus_one_more_time_3_001
 @ 006   ----------------------------------------
 mus_one_more_time_3_006:
-	.byte		N12   , An1 , v044
+	.byte		N12   , An1 , v048
 	.byte	W12
 	.byte		N06   , Cs3 
 	.byte	W06
@@ -1234,7 +1234,7 @@ mus_one_more_time_3_006:
 	.byte	PEND
 @ 007   ----------------------------------------
 mus_one_more_time_3_007:
-	.byte		N12   , An1 , v044
+	.byte		N12   , An1 , v048
 	.byte	W12
 	.byte		N06   , Cs3 
 	.byte	W06
@@ -1417,7 +1417,7 @@ mus_one_more_time_3_007:
 	 .word	mus_one_more_time_3_007
 @ 064   ----------------------------------------
 mus_one_more_time_3_064:
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v040
 	.byte	W12
 	.byte		N12   
 	.byte	W36
@@ -1428,7 +1428,7 @@ mus_one_more_time_3_064:
 	.byte	PEND
 @ 065   ----------------------------------------
 mus_one_more_time_3_065:
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v040
 	.byte	W48
 	.byte		N12   
 	.byte	W12
@@ -1440,7 +1440,7 @@ mus_one_more_time_3_065:
 	 .word	mus_one_more_time_3_064
 @ 067   ----------------------------------------
 mus_one_more_time_3_067:
-	.byte		N12   , Gn2 , v036
+	.byte		N12   , Gn2 , v040
 	.byte	W12
 	.byte		N12   
 	.byte	W36
@@ -1698,7 +1698,7 @@ mus_one_more_time_4:
 	.byte		VOL   , 127*mus_one_more_time_mvl/mxv
 	.byte	KEYSH , mus_one_more_time_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 65
+	.byte		VOICE , 7
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -1731,14 +1731,14 @@ mus_one_more_time_4:
 @ 015   ----------------------------------------
 mus_one_more_time_4_015:
 	.byte	W48
-	.byte		N12   , An3 , v072
+	.byte		N12   , An3 , v056
 	.byte	W24
 	.byte		        Fs3 
 	.byte	W24
 	.byte	PEND
 @ 016   ----------------------------------------
 mus_one_more_time_4_016:
-	.byte		N12   , Dn3 , v072
+	.byte		N12   , Dn3 , v056
 	.byte	W12
 	.byte		        Bn2 
 	.byte	W84
@@ -1778,7 +1778,7 @@ mus_one_more_time_4_016:
 @ 032   ----------------------------------------
 mus_one_more_time_4_032:
 	.byte	W48
-	.byte		N12   , Fs3 , v072
+	.byte		N12   , Fs3 , v056
 	.byte	W12
 	.byte		        Gn3 
 	.byte	W24
@@ -1788,7 +1788,7 @@ mus_one_more_time_4_032:
 @ 033   ----------------------------------------
 mus_one_more_time_4_033:
 	.byte	W12
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
@@ -1806,7 +1806,7 @@ mus_one_more_time_4_033:
 @ 034   ----------------------------------------
 mus_one_more_time_4_034:
 	.byte	W24
-	.byte		N12   , En3 , v072
+	.byte		N12   , En3 , v056
 	.byte	W24
 	.byte		        Dn3 
 	.byte	W24
@@ -1815,7 +1815,7 @@ mus_one_more_time_4_034:
 	.byte	PEND
 @ 035   ----------------------------------------
 mus_one_more_time_4_035:
-	.byte		N12   , Dn3 , v072
+	.byte		N12   , Dn3 , v056
 	.byte	W12
 	.byte		        Bn2 
 	.byte	W12
@@ -1860,7 +1860,7 @@ mus_one_more_time_4_035:
 	 .word	mus_one_more_time_4_033
 @ 046   ----------------------------------------
 	.byte	W24
-	.byte		N12   , En3 , v072
+	.byte		N12   , En3 , v056
 	.byte	W24
 	.byte		        Dn3 
 	.byte	W48
@@ -1920,7 +1920,7 @@ mus_one_more_time_4_035:
 	 .word	mus_one_more_time_4_033
 @ 070   ----------------------------------------
 	.byte	W24
-	.byte		N12   , En3 , v072
+	.byte		N12   , En3 , v056
 	.byte	W24
 	.byte		        Dn3 
 	.byte	W12
@@ -2014,7 +2014,7 @@ mus_one_more_time_4_035:
 	.byte	W96
 @ 082   ----------------------------------------
 mus_one_more_time_4_082:
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W24
@@ -2031,7 +2031,7 @@ mus_one_more_time_4_082:
 @ 085   ----------------------------------------
 mus_one_more_time_4_085:
 	.byte	W12
-	.byte		N12   , An2 , v072
+	.byte		N12   , An2 , v056
 	.byte	W12
 	.byte		        Bn2 
 	.byte	W12
@@ -2051,7 +2051,7 @@ mus_one_more_time_4_085:
 @ 087   ----------------------------------------
 mus_one_more_time_4_087:
 	.byte	W48
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W24
@@ -2072,7 +2072,7 @@ mus_one_more_time_4_087:
 	 .word	mus_one_more_time_4_087
 @ 092   ----------------------------------------
 	.byte	W12
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W60
 	.byte		        An2 
 	.byte	W12
@@ -2088,7 +2088,7 @@ mus_one_more_time_4_087:
 	.byte	W12
 @ 094   ----------------------------------------
 mus_one_more_time_4_094:
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
@@ -2175,11 +2175,11 @@ mus_one_more_time_4_094:
 	 .word	mus_one_more_time_4_087
 @ 105   ----------------------------------------
 	.byte	W12
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W84
 @ 106   ----------------------------------------
 mus_one_more_time_4_106:
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
@@ -2213,7 +2213,7 @@ mus_one_more_time_4_106:
 @ 113   ----------------------------------------
 mus_one_more_time_4_113:
 	.byte	W12
-	.byte		N12   , Bn2 , v072
+	.byte		N12   , Bn2 , v056
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -2385,7 +2385,7 @@ mus_one_more_time_5:
 	.byte		VOL   , 127*mus_one_more_time_mvl/mxv
 	.byte	KEYSH , mus_one_more_time_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 29
+	.byte		VOICE , 5
 	.byte	W12
 	.byte		N06   , Dn4 , v032
 	.byte	W06
@@ -2517,47 +2517,115 @@ mus_one_more_time_5_007:
 	.byte	PATT
 	 .word	mus_one_more_time_5_007
 @ 016   ----------------------------------------
-	.byte	PATT
-	 .word	mus_one_more_time_5_002
+mus_one_more_time_5_016:
+	.byte	W12
+	.byte		N06   , Dn4 , v036
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W06
+	.byte	PEND
 @ 017   ----------------------------------------
-	.byte	PATT
-	 .word	mus_one_more_time_5_001
+mus_one_more_time_5_017:
+	.byte	W12
+	.byte		N06   , Dn4 , v036
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		        Cs4 
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W06
+	.byte	PEND
 @ 018   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 019   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 020   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 021   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 022   ----------------------------------------
-	.byte	PATT
-	 .word	mus_one_more_time_5_006
+mus_one_more_time_5_022:
+	.byte	W12
+	.byte		N06   , En4 , v036
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W06
+	.byte	PEND
 @ 023   ----------------------------------------
-	.byte	PATT
-	 .word	mus_one_more_time_5_007
+mus_one_more_time_5_023:
+	.byte	W12
+	.byte		N06   , En4 , v036
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		        Cs4 
+	.byte	W06
+	.byte		N06   
+	.byte	W18
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
+	.byte	W06
+	.byte	PEND
 @ 024   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 025   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 026   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 027   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 028   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 029   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 030   ----------------------------------------
 	.byte	PATT
 	 .word	mus_one_more_time_5_006
@@ -2566,98 +2634,98 @@ mus_one_more_time_5_007:
 	 .word	mus_one_more_time_5_007
 @ 032   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 033   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 034   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 035   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 036   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 037   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 038   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 039   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 040   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 041   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 042   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 043   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 044   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 045   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 046   ----------------------------------------
 	.byte	W96
 @ 047   ----------------------------------------
 	.byte	W96
 @ 048   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 049   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 050   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 051   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 052   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 053   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 054   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_006
+	 .word	mus_one_more_time_5_022
 @ 055   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_007
+	 .word	mus_one_more_time_5_023
 @ 056   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 057   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 058   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 059   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 060   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 061   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 062   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_006
+	 .word	mus_one_more_time_5_022
 @ 063   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_007
+	 .word	mus_one_more_time_5_023
 @ 064   ----------------------------------------
 	.byte	W96
 @ 065   ----------------------------------------
@@ -2764,144 +2832,144 @@ mus_one_more_time_5_007:
 	.byte	W96
 @ 116   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 117   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 118   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 119   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 120   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 121   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 122   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 123   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 124   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 125   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 126   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 127   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 128   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 129   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 130   ----------------------------------------
 	.byte	W96
 @ 131   ----------------------------------------
 	.byte	W96
 @ 132   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 133   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 134   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 135   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 136   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 137   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 138   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_006
+	 .word	mus_one_more_time_5_022
 @ 139   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_007
+	 .word	mus_one_more_time_5_023
 @ 140   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 141   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 142   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 143   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 144   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 145   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 146   ----------------------------------------
 	.byte	W96
 @ 147   ----------------------------------------
 	.byte	W96
 @ 148   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 149   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 150   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 151   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 152   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 153   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 154   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_006
+	 .word	mus_one_more_time_5_022
 @ 155   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_007
+	 .word	mus_one_more_time_5_023
 @ 156   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 157   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 158   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 159   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 160   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_002
+	 .word	mus_one_more_time_5_016
 @ 161   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_001
+	 .word	mus_one_more_time_5_017
 @ 162   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_006
+	 .word	mus_one_more_time_5_022
 @ 163   ----------------------------------------
 	.byte	PATT
-	 .word	mus_one_more_time_5_007
+	 .word	mus_one_more_time_5_023
 @ 164   ----------------------------------------
 	.byte	FINE
 
@@ -2911,8 +2979,8 @@ mus_one_more_time_6:
 	.byte		VOL   , 127*mus_one_more_time_mvl/mxv
 	.byte	KEYSH , mus_one_more_time_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 33
-	.byte		N24   , Gn1 , v112
+	.byte		VOICE , 1
+	.byte		N24   , Gn1 , v060
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -2922,7 +2990,7 @@ mus_one_more_time_6:
 	.byte	W12
 @ 001   ----------------------------------------
 mus_one_more_time_6_001:
-	.byte		N24   , Gn1 , v112
+	.byte		N24   , Gn1 , v060
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -2933,7 +3001,7 @@ mus_one_more_time_6_001:
 	.byte	PEND
 @ 002   ----------------------------------------
 mus_one_more_time_6_002:
-	.byte		N24   , Gn1 , v112
+	.byte		N24   , Gn1 , v060
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -2953,7 +3021,7 @@ mus_one_more_time_6_002:
 	 .word	mus_one_more_time_6_001
 @ 006   ----------------------------------------
 mus_one_more_time_6_006:
-	.byte		N24   , Fs1 , v112
+	.byte		N24   , Fs1 , v060
 	.byte	W24
 	.byte		N24   
 	.byte	W24
@@ -2964,7 +3032,7 @@ mus_one_more_time_6_006:
 	.byte	PEND
 @ 007   ----------------------------------------
 mus_one_more_time_6_007:
-	.byte		N24   , Fs1 , v112
+	.byte		N24   , Fs1 , v060
 	.byte	W24
 	.byte		N24   
 	.byte	W24
@@ -2999,7 +3067,7 @@ mus_one_more_time_6_007:
 	 .word	mus_one_more_time_6_007
 @ 016   ----------------------------------------
 mus_one_more_time_6_016:
-	.byte		N24   , Gn1 , v120
+	.byte		N24   , Gn1 , v064
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -3010,7 +3078,7 @@ mus_one_more_time_6_016:
 	.byte	PEND
 @ 017   ----------------------------------------
 mus_one_more_time_6_017:
-	.byte		N24   , Gn1 , v120
+	.byte		N24   , Gn1 , v064
 	.byte	W36
 	.byte		N12   
 	.byte	W12
@@ -3033,7 +3101,7 @@ mus_one_more_time_6_017:
 	 .word	mus_one_more_time_6_017
 @ 022   ----------------------------------------
 mus_one_more_time_6_022:
-	.byte		N24   , Fs1 , v120
+	.byte		N24   , Fs1 , v064
 	.byte	W24
 	.byte		N24   
 	.byte	W24
@@ -3044,7 +3112,7 @@ mus_one_more_time_6_022:
 	.byte	PEND
 @ 023   ----------------------------------------
 mus_one_more_time_6_023:
-	.byte		N24   , Fs1 , v120
+	.byte		N24   , Fs1 , v064
 	.byte	W24
 	.byte		N24   
 	.byte	W24
@@ -3196,7 +3264,7 @@ mus_one_more_time_6_023:
 	.byte	PATT
 	 .word	mus_one_more_time_6_001
 @ 072   ----------------------------------------
-	.byte		N96   , Gn1 , v112
+	.byte		N96   , Gn1 , v060
 	.byte	W96
 @ 073   ----------------------------------------
 	.byte		        Fs1 
@@ -3476,7 +3544,7 @@ mus_one_more_time_7:
 	.byte		VOL   , 127*mus_one_more_time_mvl/mxv
 	.byte	KEYSH , mus_one_more_time_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 0
+	.byte		VOICE , 8
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -3570,33 +3638,33 @@ mus_one_more_time_7:
 	.byte	W96
 @ 046   ----------------------------------------
 mus_one_more_time_7_046:
-	.byte		N06   , Fs2 , v040
-	.byte	W06
-	.byte		        Fs2 , v032
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		        Fs2 , v040
+	.byte		N06   
 	.byte	W06
-	.byte		        Fs2 , v032
+	.byte		N06   
 	.byte	W06
 	.byte		N06   
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		        Fs2 , v040
+	.byte		N06   
 	.byte	W06
-	.byte		        Fs2 , v032
+	.byte		N06   
 	.byte	W06
 	.byte		N06   
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		        Fs2 , v040
+	.byte		N06   
 	.byte	W06
-	.byte		        Fs2 , v032
+	.byte		N06   
+	.byte	W06
+	.byte		N06   
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -3869,81 +3937,81 @@ mus_one_more_time_8:
 	.byte		VOL   , 127*mus_one_more_time_mvl/mxv
 	.byte	KEYSH , mus_one_more_time_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 0
-	.byte		N12   , Bn0 , v056
+	.byte		VOICE , 8
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Dn1 , v056
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Dn1 , v056
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
 @ 001   ----------------------------------------
 mus_one_more_time_8_001:
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Dn1 , v056
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
 	.byte	PEND
 @ 002   ----------------------------------------
 mus_one_more_time_8_002:
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Dn1 , v056
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Dn1 , v056
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -3959,27 +4027,27 @@ mus_one_more_time_8_002:
 	 .word	mus_one_more_time_8_001
 @ 006   ----------------------------------------
 mus_one_more_time_8_006:
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -4013,29 +4081,29 @@ mus_one_more_time_8_006:
 	 .word	mus_one_more_time_8_006
 @ 016   ----------------------------------------
 mus_one_more_time_8_016:
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Dn1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Dn1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -4063,33 +4131,33 @@ mus_one_more_time_8_016:
 	 .word	mus_one_more_time_8_016
 @ 024   ----------------------------------------
 mus_one_more_time_8_024:
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Fn1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , As1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Dn1 
-	.byte		N12   , Fn1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , En1 , v064
+	.byte		N12   
 	.byte	W12
-	.byte		N06   , As1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Fn1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , As1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Dn1 
-	.byte		N12   , Fn1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , En1 , v064
+	.byte		N12   
 	.byte	W12
-	.byte		N06   , As1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
@@ -4211,27 +4279,27 @@ mus_one_more_time_8_024:
 	 .word	mus_one_more_time_8_024
 @ 064   ----------------------------------------
 mus_one_more_time_8_064:
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Fs1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , Fs1 , v032
 	.byte	W12
-	.byte		        As1 , v052
+	.byte		N12   
 	.byte	W12
-	.byte		        Bn0 , v056
-	.byte		N12   , Dn1 
-	.byte		N12   , Fs1 
+	.byte		        Cn1 , v060
+	.byte		N12   , En1 , v064
+	.byte		N12   , Fs1 , v032
 	.byte	W12
-	.byte		        As1 , v052
+	.byte		N12   
 	.byte	W12
-	.byte		        Bn0 , v056
-	.byte		N12   , Fs1 
+	.byte		        Cn1 , v060
+	.byte		N12   , Fs1 , v032
 	.byte	W12
-	.byte		        As1 , v052
+	.byte		N12   
 	.byte	W12
-	.byte		        Bn0 , v056
-	.byte		N12   , Dn1 
-	.byte		N12   , Fs1 
+	.byte		        Cn1 , v060
+	.byte		N12   , En1 , v064
+	.byte		N12   , Fs1 , v032
 	.byte	W12
-	.byte		        As1 , v052
+	.byte		N12   
 	.byte	W12
 	.byte	PEND
 @ 065   ----------------------------------------
@@ -4348,28 +4416,28 @@ mus_one_more_time_8_064:
 	 .word	mus_one_more_time_8_016
 @ 117   ----------------------------------------
 mus_one_more_time_8_117:
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
-	.byte		N12   , Dn1 
+	.byte		N12   , Cn1 , v060
+	.byte		N12   , En1 , v064
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06
-	.byte		N12   , Bn0 , v056
+	.byte		N12   , Cn1 , v060
 	.byte	W12
-	.byte		N06   , Fs1 , v052
+	.byte		N06   , Fs1 , v032
 	.byte	W06
 	.byte		N06   
 	.byte	W06

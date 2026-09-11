@@ -1,6 +1,6 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_blue_bird_grp, voicegroup_blue_bird
+	.equ	mus_blue_bird_grp, voicegroup_diva_pop
 	.equ	mus_blue_bird_pri, 0
 	.equ	mus_blue_bird_rev, reverb_set+50
 	.equ	mus_blue_bird_mvl, 100

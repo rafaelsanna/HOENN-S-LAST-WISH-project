@@ -1,9 +1,9 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_kanashimi_wo_yasashisa_ni_grp, voicegroup_kanashimi_wo_yasashisa_ni
+	.equ	mus_kanashimi_wo_yasashisa_ni_grp, voicegroup_diva_pop
 	.equ	mus_kanashimi_wo_yasashisa_ni_pri, 0
-	.equ	mus_kanashimi_wo_yasashisa_ni_rev, reverb_set+50
-	.equ	mus_kanashimi_wo_yasashisa_ni_mvl, 100
+	.equ	mus_kanashimi_wo_yasashisa_ni_rev, reverb_set+12
+	.equ	mus_kanashimi_wo_yasashisa_ni_mvl, 90
 	.equ	mus_kanashimi_wo_yasashisa_ni_key, 0
 	.equ	mus_kanashimi_wo_yasashisa_ni_tbs, 1
 	.equ	mus_kanashimi_wo_yasashisa_ni_exg, 1
@@ -16,13 +16,12 @@
 @**************** Track 1 (Midi-Chn.1) ****************@
 
 mus_kanashimi_wo_yasashisa_ni_1:
+	.byte		VOL   , 127*mus_kanashimi_wo_yasashisa_ni_mvl/mxv
 	.byte	KEYSH , mus_kanashimi_wo_yasashisa_ni_key+0
 @ 000   ----------------------------------------
 @ 001   ----------------------------------------
 	.byte	TEMPO , 126*mus_kanashimi_wo_yasashisa_ni_tbs/2
-	.byte		VOICE , 0
-	.byte		VOL   , 127*mus_kanashimi_wo_yasashisa_ni_mvl/mxv
-	.byte		PAN   , c_v+0
+	.byte		VOICE , 1
 	.byte	W96
 @ 002   ----------------------------------------
 	.byte	W96
@@ -38,7 +37,7 @@ mus_kanashimi_wo_yasashisa_ni_1:
 	.byte	W96
 @ 008   ----------------------------------------
 	.byte	W36
-	.byte		N11   , Bn0 , v124
+	.byte		N11   , Bn0 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -50,7 +49,7 @@ mus_kanashimi_wo_yasashisa_ni_1:
 	.byte	W12
 @ 009   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_009:
-	.byte		N11   , Bn0 , v124
+	.byte		N11   , Bn0 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -86,7 +85,7 @@ mus_kanashimi_wo_yasashisa_ni_1_009:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_1_009
 @ 012   ----------------------------------------
-	.byte		N23   , An0 , v124
+	.byte		N23   , An0 , v060
 	.byte	W24
 	.byte		N11   
 	.byte	W12
@@ -113,7 +112,7 @@ mus_kanashimi_wo_yasashisa_ni_1_009:
 	.byte	W60
 @ 014   ----------------------------------------
 	.byte	W36
-	.byte		TIE   , Gn1 , v108
+	.byte		TIE   , Gn1 , v052
 	.byte	W60
 @ 015   ----------------------------------------
 	.byte	W96
@@ -161,14 +160,14 @@ mus_kanashimi_wo_yasashisa_ni_1_009:
 	.byte	W12
 @ 022   ----------------------------------------
 	.byte	W12
-	.byte		N24   , Fs1 , v127
+	.byte		N24   , Fs1 , v060
 	.byte	W24
-	.byte		N72   , Bn0 , v124
+	.byte		N72   , Bn0 
 	.byte	W60
 @ 023   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_023:
 	.byte	W12
-	.byte		N12   , An0 , v124
+	.byte		N12   , An0 , v060
 	.byte	W12
 	.byte		        Bn0 
 	.byte	W12
@@ -200,7 +199,7 @@ mus_kanashimi_wo_yasashisa_ni_1_023:
 	 .word	mus_kanashimi_wo_yasashisa_ni_1_023
 @ 028   ----------------------------------------
 	.byte	W36
-	.byte		N44   , Fs1 , v124, gtp3
+	.byte		N44   , Fs1 , v060, gtp3
 	.byte	W48
 	.byte		N24   
 	.byte	W12
@@ -214,7 +213,7 @@ mus_kanashimi_wo_yasashisa_ni_1_B1:
 	.byte	W60
 @ 031   ----------------------------------------
 	.byte	W36
-	.byte		N11   , En1 , v124
+	.byte		N11   , En1 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -226,7 +225,7 @@ mus_kanashimi_wo_yasashisa_ni_1_B1:
 	.byte	W12
 @ 032   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_032:
-	.byte		N11   , Fs1 , v124
+	.byte		N11   , Fs1 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -245,7 +244,7 @@ mus_kanashimi_wo_yasashisa_ni_1_032:
 	.byte	PEND
 @ 033   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_033:
-	.byte		N11   , Gs0 , v124
+	.byte		N11   , Gs0 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -264,7 +263,7 @@ mus_kanashimi_wo_yasashisa_ni_1_033:
 	.byte	PEND
 @ 034   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_034:
-	.byte		N11   , Fs1 , v124
+	.byte		N11   , Fs1 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -283,7 +282,7 @@ mus_kanashimi_wo_yasashisa_ni_1_034:
 	.byte	PEND
 @ 035   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_035:
-	.byte		N11   , Ds1 , v124
+	.byte		N11   , Ds1 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -302,7 +301,7 @@ mus_kanashimi_wo_yasashisa_ni_1_035:
 	.byte	PEND
 @ 036   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_036:
-	.byte		N11   , Fs1 , v124
+	.byte		N11   , Fs1 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -321,7 +320,7 @@ mus_kanashimi_wo_yasashisa_ni_1_036:
 	.byte	PEND
 @ 037   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_1_037:
-	.byte		N11   , Gs1 , v124
+	.byte		N11   , Gs1 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -391,7 +390,7 @@ mus_kanashimi_wo_yasashisa_ni_1_037:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_1_037
 @ 046   ----------------------------------------
-	.byte		N11   , Fs1 , v124
+	.byte		N11   , Fs1 , v060
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -405,11 +404,10 @@ mus_kanashimi_wo_yasashisa_ni_1_B2:
 @**************** Track 2 (Midi-Chn.2) ****************@
 
 mus_kanashimi_wo_yasashisa_ni_2:
+	.byte		VOL   , 127*mus_kanashimi_wo_yasashisa_ni_mvl/mxv
 	.byte	KEYSH , mus_kanashimi_wo_yasashisa_ni_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 1
-	.byte		VOL   , 48*mus_kanashimi_wo_yasashisa_ni_mvl/mxv
-	.byte		PAN   , c_v-12
+	.byte		VOICE , 2
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -425,7 +423,7 @@ mus_kanashimi_wo_yasashisa_ni_2:
 	.byte	W96
 @ 007   ----------------------------------------
 	.byte	W12
-	.byte		N12   , Bn2 , v052
+	.byte		N12   , Bn2 , v048
 	.byte	W12
 	.byte		        Cs3 
 	.byte	W12
@@ -441,7 +439,7 @@ mus_kanashimi_wo_yasashisa_ni_2:
 	.byte	W12
 @ 008   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_008:
-	.byte		N11   , Ds3 , v052
+	.byte		N11   , Ds3 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -460,7 +458,7 @@ mus_kanashimi_wo_yasashisa_ni_2_008:
 	.byte	PEND
 @ 009   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_009:
-	.byte		N11   , Cs3 , v052
+	.byte		N11   , Cs3 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -484,7 +482,7 @@ mus_kanashimi_wo_yasashisa_ni_2_009:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_2_009
 @ 012   ----------------------------------------
-	.byte		N11   , Ds3 , v052
+	.byte		N11   , Ds3 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -492,18 +490,18 @@ mus_kanashimi_wo_yasashisa_ni_2_009:
 	.byte	W12
 	.byte		N03   
 	.byte	W03
-	.byte		N92   , Cs3 , v052, gtp1
+	.byte		N92   , Cs3 , v048, gtp1
 	.byte	W56
 	.byte	W01
 @ 013   ----------------------------------------
 	.byte	W48
-	.byte		N20   , Gn2 , v068
+	.byte		N20   , Gn2 , v052
 	.byte	W24
 	.byte		        Dn3 
 	.byte	W24
 @ 014   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_014:
-	.byte		N32   , En3 , v068
+	.byte		N32   , En3 , v052
 	.byte	W48
 	.byte		N20   , Gn2 
 	.byte	W24
@@ -512,7 +510,7 @@ mus_kanashimi_wo_yasashisa_ni_2_014:
 	.byte	PEND
 @ 015   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_015:
-	.byte		N32   , En3 , v068
+	.byte		N32   , En3 , v052
 	.byte	W48
 	.byte		N20   , An2 
 	.byte	W24
@@ -535,15 +533,15 @@ mus_kanashimi_wo_yasashisa_ni_2_015:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_2_015
 @ 021   ----------------------------------------
-	.byte		N32   , En3 , v068
+	.byte		N32   , En3 , v052
 	.byte	W36
-	.byte		N96   , Fs2 , v052
+	.byte		N96   , Fs2 , v048
 	.byte		N96   , Dn3 
 	.byte	W60
 @ 022   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_022:
 	.byte	W36
-	.byte		N96   , En2 , v052
+	.byte		N96   , En2 , v048
 	.byte		N96   , Cs3 
 	.byte	W60
 	.byte	PEND
@@ -566,7 +564,7 @@ mus_kanashimi_wo_yasashisa_ni_2_022:
 	 .word	mus_kanashimi_wo_yasashisa_ni_2_022
 @ 027   ----------------------------------------
 	.byte	W36
-	.byte		N96   , Cs2 , v052
+	.byte		N96   , Cs2 , v048
 	.byte		N96   , Bn2 
 	.byte	W60
 @ 028   ----------------------------------------
@@ -575,7 +573,7 @@ mus_kanashimi_wo_yasashisa_ni_2_022:
 	.byte	W36
 mus_kanashimi_wo_yasashisa_ni_2_B1:
 	.byte	W12
-	.byte		N12   , En3 , v076
+	.byte		N12   , En3 , v052
 	.byte	W12
 	.byte		        Ds3 
 	.byte	W12
@@ -590,7 +588,7 @@ mus_kanashimi_wo_yasashisa_ni_2_B1:
 	.byte	W12
 	.byte		        En3 
 	.byte	W12
-	.byte		N11   , Bn2 , v052
+	.byte		N11   , Bn2 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -602,7 +600,7 @@ mus_kanashimi_wo_yasashisa_ni_2_B1:
 	.byte	W12
 @ 031   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_031:
-	.byte		N11   , Cs3 , v052
+	.byte		N11   , Cs3 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -621,7 +619,7 @@ mus_kanashimi_wo_yasashisa_ni_2_031:
 	.byte	PEND
 @ 032   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_032:
-	.byte		N11   , Gs2 , v052
+	.byte		N11   , Gs2 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -640,7 +638,7 @@ mus_kanashimi_wo_yasashisa_ni_2_032:
 	.byte	PEND
 @ 033   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_033:
-	.byte		N11   , As2 , v052
+	.byte		N11   , As2 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -693,7 +691,7 @@ mus_kanashimi_wo_yasashisa_ni_2_033:
 	.byte	W12
 @ 036   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_2_036:
-	.byte		N11   , Gs2 , v052
+	.byte		N11   , Gs2 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -728,13 +726,13 @@ mus_kanashimi_wo_yasashisa_ni_2_036:
 	.byte		        Bn2 
 	.byte	W12
 @ 038   ----------------------------------------
-	.byte		        Fs2 , v068
+	.byte		        Fs2 , v052
 	.byte	W12
 	.byte		        Gs2 
 	.byte	W12
 	.byte		        As2 
 	.byte	W12
-	.byte		N11   , Bn2 , v052
+	.byte		N11   , Bn2 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -754,7 +752,7 @@ mus_kanashimi_wo_yasashisa_ni_2_036:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_2_033
 @ 042   ----------------------------------------
-	.byte		N11   , Ds3 , v052
+	.byte		N11   , Ds3 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -791,7 +789,7 @@ mus_kanashimi_wo_yasashisa_ni_2_036:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_2_036
 @ 045   ----------------------------------------
-	.byte		N11   , Fs2 , v052
+	.byte		N11   , Fs2 , v048
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -805,12 +803,11 @@ mus_kanashimi_wo_yasashisa_ni_2_B2:
 @**************** Track 3 (Midi-Chn.3) ****************@
 
 mus_kanashimi_wo_yasashisa_ni_3:
+	.byte		VOL   , 127*mus_kanashimi_wo_yasashisa_ni_mvl/mxv
 	.byte	KEYSH , mus_kanashimi_wo_yasashisa_ni_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 2
-	.byte		VOL   , 106*mus_kanashimi_wo_yasashisa_ni_mvl/mxv
-	.byte		PAN   , c_v+10
-	.byte		N20   , Gs4 , v112
+	.byte		VOICE , 7
+	.byte		N20   , Gs4 , v052
 	.byte	W24
 	.byte		N11   , As4 
 	.byte	W12
@@ -825,7 +822,7 @@ mus_kanashimi_wo_yasashisa_ni_3:
 @ 001   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_001:
 	.byte	W04
-	.byte		N15   , Bn4 , v112
+	.byte		N15   , Bn4 , v052
 	.byte	W16
 	.byte		        As4 
 	.byte	W16
@@ -864,7 +861,7 @@ mus_kanashimi_wo_yasashisa_ni_3_001:
 @ 004   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_004:
 	.byte	W36
-	.byte		N15   , Bn4 , v112
+	.byte		N15   , Bn4 , v052
 	.byte	W16
 	.byte		N15   
 	.byte	W16
@@ -878,7 +875,7 @@ mus_kanashimi_wo_yasashisa_ni_3_004:
 	 .word	mus_kanashimi_wo_yasashisa_ni_3_001
 @ 006   ----------------------------------------
 	.byte	W24
-	.byte		N11   , As4 , v112
+	.byte		N11   , As4 , v052
 	.byte	W12
 	.byte		N20   , Bn4 
 	.byte	W24
@@ -901,7 +898,7 @@ mus_kanashimi_wo_yasashisa_ni_3_004:
 @ 009   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_009:
 	.byte	W12
-	.byte		N24   , Cs5 , v112
+	.byte		N24   , Cs5 , v052
 	.byte	W24
 	.byte		N48   , Bn4 
 	.byte	W60
@@ -918,7 +915,7 @@ mus_kanashimi_wo_yasashisa_ni_3_009:
 @ 013   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_013:
 	.byte	W36
-	.byte		N05   , An4 , v112
+	.byte		N05   , An4 , v052
 	.byte	W06
 	.byte		N05   
 	.byte	W06
@@ -939,7 +936,7 @@ mus_kanashimi_wo_yasashisa_ni_3_013:
 	.byte	PEND
 @ 014   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_014:
-	.byte		N05   , Fs4 , v112
+	.byte		N05   , Fs4 , v052
 	.byte	W06
 	.byte		N05   
 	.byte	W06
@@ -951,7 +948,7 @@ mus_kanashimi_wo_yasashisa_ni_3_014:
 @ 015   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_015:
 	.byte	W36
-	.byte		N05   , An4 , v112
+	.byte		N05   , An4 , v052
 	.byte	W06
 	.byte		N11   
 	.byte	W12
@@ -987,7 +984,7 @@ mus_kanashimi_wo_yasashisa_ni_3_015:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_3_015
 @ 020   ----------------------------------------
-	.byte		N11   , Fs4 , v112
+	.byte		N11   , Fs4 , v052
 	.byte	W12
 	.byte		        Gn4 
 	.byte	W12
@@ -996,9 +993,9 @@ mus_kanashimi_wo_yasashisa_ni_3_015:
 @ 021   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_021:
 	.byte	W12
-	.byte		N20   , Bn3 , v112
+	.byte		N20   , Bn3 , v052
 	.byte	W24
-	.byte		N56   , Fs4 , v112, gtp3
+	.byte		N56   , Fs4 , v052, gtp3
 	.byte	W60
 	.byte	PEND
 @ 022   ----------------------------------------
@@ -1014,7 +1011,7 @@ mus_kanashimi_wo_yasashisa_ni_3_021:
 	.byte	W24
 	.byte		N11   
 	.byte	W12
-	.byte		N56   , An4 , v112, gtp3
+	.byte		N56   , An4 , v052, gtp3
 	.byte	W60
 @ 024   ----------------------------------------
 	.byte		N11   , Gn4 
@@ -1031,7 +1028,7 @@ mus_kanashimi_wo_yasashisa_ni_3_021:
 	.byte	PATT
 	 .word	mus_kanashimi_wo_yasashisa_ni_3_021
 @ 026   ----------------------------------------
-	.byte		N20   , Bn3 , v112
+	.byte		N20   , Bn3 , v052
 	.byte	W24
 	.byte		N11   , Fs4 
 	.byte	W12
@@ -1064,7 +1061,7 @@ mus_kanashimi_wo_yasashisa_ni_3_B1:
 	.byte	W60
 @ 030   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_030:
-	.byte		N20   , Gs4 , v112
+	.byte		N20   , Gs4 , v052
 	.byte	W24
 	.byte		N11   , As4 
 	.byte	W12
@@ -1083,7 +1080,7 @@ mus_kanashimi_wo_yasashisa_ni_3_030:
 @ 032   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_032:
 	.byte	W24
-	.byte		N11   , Ds4 , v112
+	.byte		N11   , Ds4 , v052
 	.byte	W12
 	.byte		N20   , En4 
 	.byte	W24
@@ -1094,7 +1091,7 @@ mus_kanashimi_wo_yasashisa_ni_3_032:
 	.byte	PEND
 @ 033   ----------------------------------------
 mus_kanashimi_wo_yasashisa_ni_3_033:
-	.byte		N24   , Gs4 , v112
+	.byte		N24   , Gs4 , v052
 	.byte	W24
 	.byte		N23   , Fs4 
 	.byte	W24
@@ -1115,7 +1112,7 @@ mus_kanashimi_wo_yasashisa_ni_3_033:
 	 .word	mus_kanashimi_wo_yasashisa_ni_3_001
 @ 036   ----------------------------------------
 	.byte	W24
-	.byte		N11   , As4 , v112
+	.byte		N11   , As4 , v052
 	.byte	W12
 	.byte		N20   , Bn4 
 	.byte	W24
@@ -1149,7 +1146,7 @@ mus_kanashimi_wo_yasashisa_ni_3_033:
 	 .word	mus_kanashimi_wo_yasashisa_ni_3_001
 @ 044   ----------------------------------------
 	.byte	W24
-	.byte		N11   , As4 , v112
+	.byte		N11   , As4 , v052
 	.byte	W12
 	.byte		N20   , Bn4 
 	.byte	W24
@@ -1168,11 +1165,211 @@ mus_kanashimi_wo_yasashisa_ni_3_033:
 mus_kanashimi_wo_yasashisa_ni_3_B2:
 	.byte	FINE
 
+@**************** Track 4 (Midi-Chn.10) ****************@
+
+mus_kanashimi_wo_yasashisa_ni_4:
+	.byte		VOL   , 127*mus_kanashimi_wo_yasashisa_ni_mvl/mxv
+	.byte	KEYSH , mus_kanashimi_wo_yasashisa_ni_key+0
+@ 000   ----------------------------------------
+	.byte		VOICE , 8
+	.byte	W96
+@ 001   ----------------------------------------
+	.byte	W96
+@ 002   ----------------------------------------
+	.byte	W96
+@ 003   ----------------------------------------
+	.byte	W96
+@ 004   ----------------------------------------
+	.byte	W96
+@ 005   ----------------------------------------
+	.byte	W96
+@ 006   ----------------------------------------
+	.byte	W96
+@ 007   ----------------------------------------
+	.byte	W12
+	.byte		N04   , Cn1 , v060
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , En1 , v064
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , Cn1 , v060
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , En1 , v064
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+@ 008   ----------------------------------------
+mus_kanashimi_wo_yasashisa_ni_4_008:
+	.byte		N03   , Fs1 , v028
+	.byte	W12
+	.byte		N04   , Cn1 , v060
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , En1 , v064
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , Cn1 , v060
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , En1 , v064
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte	PEND
+@ 009   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 010   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 011   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 012   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 013   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 014   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 015   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 016   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 017   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 018   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 019   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 020   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 021   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 022   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 023   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 024   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 025   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 026   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 027   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 028   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 029   ----------------------------------------
+mus_kanashimi_wo_yasashisa_ni_4_029:
+	.byte		N03   , Fs1 , v028
+	.byte	W12
+	.byte		N04   , Cn1 , v060
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte	PEND
+mus_kanashimi_wo_yasashisa_ni_4_B1:
+	.byte		N04   , En1 , v064
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , Cn1 , v060
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+	.byte		        Fs1 , v028
+	.byte	W12
+	.byte		N04   , En1 , v064
+	.byte		N03   , Fs1 , v032
+	.byte	W12
+@ 030   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 031   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 032   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 033   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 034   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 035   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 036   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 037   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 038   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 039   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 040   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 041   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 042   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 043   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 044   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_008
+@ 045   ----------------------------------------
+	.byte	PATT
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_029
+	.byte	GOTO
+	 .word	mus_kanashimi_wo_yasashisa_ni_4_B1
+mus_kanashimi_wo_yasashisa_ni_4_B2:
+	.byte	FINE
+
 @******************************************************@
 	.align	2
 
 mus_kanashimi_wo_yasashisa_ni:
-	.byte	3	@ NumTrks
+	.byte	4	@ NumTrks
 	.byte	0	@ NumBlks
 	.byte	mus_kanashimi_wo_yasashisa_ni_pri	@ Priority
 	.byte	mus_kanashimi_wo_yasashisa_ni_rev	@ Reverb.
@@ -1182,5 +1379,6 @@ mus_kanashimi_wo_yasashisa_ni:
 	.word	mus_kanashimi_wo_yasashisa_ni_1
 	.word	mus_kanashimi_wo_yasashisa_ni_2
 	.word	mus_kanashimi_wo_yasashisa_ni_3
+	.word	mus_kanashimi_wo_yasashisa_ni_4
 
 	.end
