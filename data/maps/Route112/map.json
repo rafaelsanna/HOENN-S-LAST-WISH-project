@@ -226,6 +226,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route112_EventScript_OldManBlocker",
       "flag": "FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CHANSEY)",
+      "x": 23,
+      "y": 44,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Common_EventScript_HungryChansey",
+      "flag": "0"
     }
   ],
   "warp_events": [

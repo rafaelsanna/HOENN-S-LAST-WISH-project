@@ -182,28 +182,35 @@ DewfordTown_Gym_EventScript_BrawlyDefeated::
 	removefieldmugshot
 	setflag FLAG_RECEIVED_TM_BULK_UP
 
-	@ Renton also gives the player the Radio (item id 834).
-	giveitem 834
-	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
-	msgbox DewfordTown_Gym_Text_RentonRadioGift, MSGBOX_DEFAULT
-	removefieldmugshot
-
-	closemessage
-	delay 30
-	waitfanfare
-	closemessage
-	delay 30
-	release
-	end
+	@ Renton also gives the player the Radio.
+	goto DewfordTown_Gym_EventScript_GiveRadio
 
 DewfordTown_Gym_AfterBattle::
 	@ Only reached when player talks to Renton after flag is already set
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
 	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
+	checkitem ITEM_RADIO
+	goto_if_eq VAR_RESULT, FALSE, DewfordTown_Gym_EventScript_GiveRadio
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
 	removefieldmugshot
+	release
+	end
+
+
+DewfordTown_Gym_EventScript_GiveRadio:
+	checkitemspace ITEM_RADIO
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	giveitem ITEM_RADIO
+	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
+	msgbox DewfordTown_Gym_Text_RentonRadioGift, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	delay 30
+	waitfanfare
+	closemessage
+	delay 30
 	release
 	end
 

@@ -601,3 +601,5 @@ gSpecials::
 	def_special HiddenGrotto_CreateCurrentMon
 	def_special HiddenGrotto_TestCurrentMonBounds
 	def_special HiddenGrotto_IsCurrentMap
+	def_special HungryChansey_GetRequestedBerry
+	def_special HungryChansey_ClearRequestedBerry

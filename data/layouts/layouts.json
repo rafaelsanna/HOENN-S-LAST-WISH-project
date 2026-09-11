@@ -5130,6 +5130,26 @@
       "secondary_tileset": "gTileset_NightmareTowns",
       "border_filepath": "data/layouts/NightmarePetalburg/border.bin",
       "blockdata_filepath": "data/layouts/NightmarePetalburg/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROGUECANYONGROTTO",
+      "name": "roguecanyongrotto_Layout",
+      "width": 20,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Desert",
+      "border_filepath": "data/layouts/roguecanyongrotto/border.bin",
+      "blockdata_filepath": "data/layouts/roguecanyongrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE119GROTTO",
+      "name": "route119grotto_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/route119grotto/border.bin",
+      "blockdata_filepath": "data/layouts/route119grotto/map.bin"
     }
   ]
 }

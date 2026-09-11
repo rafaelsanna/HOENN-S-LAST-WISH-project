@@ -379,6 +379,8 @@ PetalburgCity_EventScript_ShowGymToPlayer::
 	playbgm MUS_FOLLOW_ME, FALSE
 	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_DEFAULT
 	closemessage
+	applymovement LOCALID_PLAYER, Common_Movement_WalkRight
+	waitmovement 0
 	releaseall
 	end
 

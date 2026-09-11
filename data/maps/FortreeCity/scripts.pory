@@ -42,7 +42,12 @@ FortreeCity_EventScript_Boy::
 	end
 
 FortreeCity_EventScript_GameboyKid::
-	msgbox FortreeCity_Text_PokemonThatEvolveWhenTraded, MSGBOX_NPC
+	goto_if_set FLAG_ITEM_FORTREE_CITY_TIMID_MINT, FortreeCity_EventScript_GameboyKidAfterMint
+	msgbox FortreeCity_Text_GameboyKidItemLedge, MSGBOX_NPC
+	end
+
+FortreeCity_EventScript_GameboyKidAfterMint::
+	msgbox FortreeCity_Text_GameboyKidGotItem, MSGBOX_NPC
 	end
 
 FortreeCity_EventScript_CitySign::
@@ -127,9 +132,14 @@ FortreeCity_Text_BugPokemonComeThroughWindow:
 	.string "through windows.\l"
 	.string "It can be really startling.$"
 
-FortreeCity_Text_PokemonThatEvolveWhenTraded:
-	.string "There are POKéMON that evolve when\n"
-	.string "you trade them! That's what I heard.$"
+FortreeCity_Text_GameboyKidItemLedge:
+	.string "I think I see an item up on that\n"
+	.string "ledge there, but how could I get to it...?\p"
+
+FortreeCity_Text_GameboyKidGotItem:
+	.string "Wow! I can't believe you jumped\n"
+	.string "across all those trees to get that.\p"
+	.string "You're way braver than me!$"
 
 FortreeCity_Text_SomethingUnseeable:
 	.string "Something unseeable is in the way.$"

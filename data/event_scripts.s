@@ -698,6 +698,7 @@ EventScript_SetBrineyLocation_Route109::
 	.include "data/scripts/obtain_item.inc"
 	.include "data/scripts/record_mix.inc"
 	.include "data/scripts/pc.inc"
+	.include "data/scripts/hungry_chansey.inc"
 
 @ scripts/notices.inc? signs.inc? See comment about text/notices.inc
 Common_EventScript_ShowPokemartSign::
@@ -1305,3 +1306,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Route115Grotto/scripts.inc"
 
 	.include "data/maps/NightmarePetalburg/scripts.inc"
+
+	.include "data/maps/roguecanyongrotto/scripts.inc"
+
+	.include "data/maps/route119grotto/scripts.inc"

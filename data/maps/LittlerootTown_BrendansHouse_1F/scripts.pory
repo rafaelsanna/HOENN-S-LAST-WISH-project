@@ -454,8 +454,8 @@ PlayersHouse_1F_Text_PortsInSlateportLilycove:
 
 PlayersHouse_1F_Text_BetterGetBackToGym:
 	.string "I'd better get back to PETALBURG GYM.\p"
-	.string "Your MOM thanks for looking after the house\n"
-	.string "while I'm away.$"
+	.string "Your MOM thanks for looking after\n"
+	.string "the house while I'm away.$"
 
 PlayersHouse_1F_Text_DadShouldStayLonger:
 	.string "GRANDMA: That DAD of yours…\p"
@@ -483,7 +483,8 @@ PlayersHouse_1F_Text_LatiEmergencyNewsFlash:
 
 PlayersHouse_1F_Text_WhatColorDidTheySay:
 	.string "GRANDMA: {PLAYER}, you're still having\n"
-	.string "those strange dreams almost every night…\p"
+	.string "those strange dreams almost every\n"
+	.string "night…\p"
 	.string "And now this comet…\n"
 	.string "Perhaps it's a sign… A heavenly sign…\p"
 	.string "Please be careful out there, dear.$"

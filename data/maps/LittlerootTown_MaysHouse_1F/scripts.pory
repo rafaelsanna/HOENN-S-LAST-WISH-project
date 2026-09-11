@@ -378,8 +378,8 @@ RivalsHouse_1F_Text_OhYoureTheNewNeighbor:
 RivalsHouse_1F_Text_LikeChildLikeFather:
 	.string "PROFESSOR ACACIA is truly the pride\n"
 	.string "of LITTLEROOT TOWN.\p"
-	.string "Her research on POKéMON has helped\n"
-	.string "so many young TRAINERS begin their journeys.\p"
+	.string "Her POKéMON research has helped many\n"
+	.string "young TRAINERS begin their journeys.\p"
 	.string "We're so fortunate to have such an\n"
 	.string "amazing researcher in our small town.$"
 
@@ -398,7 +398,8 @@ RivalsHouse_1F_Text_ShouldGoHomeEverySoOften:
 	.string "I think it's wonderful for people to\n"
 	.string "travel with POKéMON.\p"
 	.string "But you should go home every so often\n"
-	.string "to let your grandmother know you're okay.\p"
+	.string "to let your grandmother know you're\n"
+	.string "okay.\p"
 	.string "She might not say it, but I'm sure she\n"
 	.string "worries about you, {PLAYER}{KUN}.$"
 

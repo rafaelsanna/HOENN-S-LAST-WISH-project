@@ -1631,7 +1631,7 @@ LittlerootTown_ProfessorBirchsLab_Text_BirchRivalGoneHome:
 # 816 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	.string "They could also still be home.\n"
 # 817 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	.string "You might just have to look around!"
+	.string "You might just have to look around!\p"
 # 818 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	.string "If you or your POKéMON get tired,\n"
 # 819 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"

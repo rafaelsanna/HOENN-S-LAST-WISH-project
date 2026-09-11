@@ -73,7 +73,7 @@
     {
       "local_id": "LOCALID_MILLENNIUM_COMET",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(KORAIDON)",
-      "x": 25,
+      "x": 33,
       "y": 4,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -190,7 +190,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Grandma",
-      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
+      "flag": "0"
     },
     {
       "local_id": "LOCALID_GRANDPA_MOSSDEEP01",
@@ -218,7 +218,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Child01",
-      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
+      "flag": "0"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BRENDAN_NORMAL",
@@ -257,7 +257,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_Child02",
-      "flag": "FLAG_MOSSDEEP_GRANDMA_DIALOGUE"
+      "flag": "0"
     },
     {
       "local_id": "LOCALID_WAILORD_BLOCKER",
@@ -477,7 +477,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 47,
-      "y": 73,
+      "y": 71,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 0,
@@ -637,32 +637,32 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_LOST_FATHER",
       "graphics_id": "OBJ_EVENT_GFX_MAN_1",
       "x": 41,
       "y": 30,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_LostFather",
-      "flag": "0",
-      "local_id": "LOCALID_LOST_FATHER"
+      "flag": "0"
     },
     {
+      "local_id": "LOCALID_LOST_MOTHER",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 40,
       "y": 30,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MOSSDEEP01_EventScript_LostMother",
-      "flag": "0",
-      "local_id": "LOCALID_LOST_MOTHER"
+      "flag": "0"
     }
   ],
   "warp_events": [],

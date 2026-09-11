@@ -502,6 +502,7 @@ MOSSDEEP01_EventScript_TrappedMiner::
 	goto_if_set FLAG_MOSSDEEP_MINER_RESCUED, MOSSDEEP01_EventScript_TrappedMinerAlreadyRescued
 	msgbox MOSSDEEP01_Text_PlayerDigsOutMiner, MSGBOX_DEFAULT
 	closemessage
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideCelebiForRescue
 	special StoreMossdeepMinerRescueCamera
 	fadescreenswapbuffers FADE_TO_BLACK
 	setobjectxyperm LOCALID_RESCUED_MINER, 15, 72
@@ -523,6 +524,7 @@ MOSSDEEP01_EventScript_TrappedMiner::
 	applymovement LOCALID_MINER_WIFE, Common_Movement_FaceDown
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RestoreCelebiAfterRescue
 	msgbox MOSSDEEP01_Text_MinerThanks, MSGBOX_DEFAULT
 	msgbox MOSSDEEP01_Text_MinerWifeThanks, MSGBOX_DEFAULT
 	releaseall
@@ -560,6 +562,7 @@ MOSSDEEP01_EventScript_LostMother::
 MOSSDEEP01_EventScript_RescueLostFamily::
 	msgbox MOSSDEEP01_Text_PlayerGivesDirections, MSGBOX_DEFAULT
 	closemessage
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideCelebiForRescue
 	special StoreMossdeepMinerRescueCamera
 	fadescreenswapbuffers FADE_TO_BLACK
 	setobjectxy OBJ_EVENT_ID_PLAYER, 24, 69
@@ -567,6 +570,7 @@ MOSSDEEP01_EventScript_RescueLostFamily::
 	setflag FLAG_MOSSDEEP_LOST_FAMILY_RESCUED
 	call MOSSDEEP01_EventScript_SetRescuedFamilyState
 	fadescreenswapbuffers FADE_FROM_BLACK
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RestoreCelebiAfterRescue
 	msgbox MOSSDEEP01_Text_DaughterThanksForParents, MSGBOX_DEFAULT
 	msgbox MOSSDEEP01_Text_ParentsReunionThanks, MSGBOX_DEFAULT
 	releaseall
@@ -607,11 +611,13 @@ MOSSDEEP01_EventScript_DrowningManRescueReach::
 MOSSDEEP01_EventScript_RescueDrowningMan::
 	msgbox MOSSDEEP01_Text_PlayerRescuesDrowningMan, MSGBOX_DEFAULT
 	closemessage
-	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_DetachCelebiForDrowningRescue
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_HideCelebiForRescue
+	special StoreMossdeepMinerRescueCamera
 	fadescreenswapbuffers FADE_TO_BLACK
 	delay 40
 	setobjectxyperm LOCALID_DROWNING_MAN, 47, 77
 	setobjectxy OBJ_EVENT_ID_PLAYER, 46, 77
+	special FinishMossdeepMinerRescueCamera
 	setobjectmovementtype LOCALID_DROWNING_MAN, MOVEMENT_TYPE_FACE_LEFT
 	removeobject LOCALID_DROWNING_MAN
 	setflag FLAG_MOSSDEEP_DROWNING_MAN_RESCUED
@@ -620,7 +626,7 @@ MOSSDEEP01_EventScript_RescueDrowningMan::
 	applymovement LOCALID_DROWNING_MAN, Common_Movement_FaceLeft
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
 	waitmovement 0
-	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_ReattachCelebiAfterDrowningRescue
+	call_if_set FLAG_MOSSDEEP_CELEBI_RESCUED, MOSSDEEP01_EventScript_RestoreCelebiAfterRescue
 	msgbox MOSSDEEP01_Text_DrowningManThanks, MSGBOX_DEFAULT
 	releaseall
 	end
@@ -635,12 +641,12 @@ MOSSDEEP01_EventScript_DrowningManThanks::
 	releaseall
 	end
 
-MOSSDEEP01_EventScript_DetachCelebiForDrowningRescue::
-	destroyfollowernpc
+MOSSDEEP01_EventScript_HideCelebiForRescue::
+	hidefollowernpc
 	return
 
-MOSSDEEP01_EventScript_ReattachCelebiAfterDrowningRescue::
-	setfollowernpc LOCALID_CELEBI_STATIC, FNPC_ALL, NULL, 0
+MOSSDEEP01_EventScript_RestoreCelebiAfterRescue::
+	callnative FollowerNPC_WarpSetEnd
 	return
 
 // Wing Interaction
@@ -1366,8 +1372,7 @@ MOSSDEEP01_EventScript_QuestComplete::
 	waitmovement 0
 	delay 20
 	playse SE_M_SWIFT
-	applymovement OBJ_EVENT_ID_CAMERA, MOSSDEEP01_Movement_CameraFollowComet
-	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CameraFollowComet
+	applymovement LOCALID_MILLENNIUM_COMET, MOSSDEEP01_Movement_CometLegacy
 	waitmovement 0
 	special RemoveCameraObject
 	delay 20
@@ -1446,7 +1451,7 @@ MOSSDEEP01_Movement_CameraPanToComet:
 	walk_fast_up
 	step_end
 
-MOSSDEEP01_Movement_CameraFollowComet:
+MOSSDEEP01_Movement_CometLegacy:
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left

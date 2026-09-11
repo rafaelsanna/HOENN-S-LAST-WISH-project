@@ -1424,7 +1424,7 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Baltoy
-Level: 47
+Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Psybeam
 - Self Destruct
@@ -1432,7 +1432,7 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Ancient Power
 
 Sandshrew
-Level: 47
+Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Dig
 - Slash
@@ -1440,7 +1440,7 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Poison Sting
 
 Sandslash
-Level: 47
+Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Dig
 - Slash
@@ -2383,15 +2383,15 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Xatu
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Obstagoon
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Virizion
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Dustox
@@ -4597,23 +4597,23 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Gligar
-Level: 42
+Level: 39
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Noctowl
-Level: 42
+Level: 39
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Furret
-Level: 42
+Level: 39
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Magcargo
-Level: 42
+Level: 39
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Golbat
-Level: 42
+Level: 39
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_DONALD ===
@@ -4626,15 +4626,15 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware
 
 Ariados
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Forretress
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Masquerain
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Beautifly
@@ -4651,15 +4651,15 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware
 
 Wigglytuff
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Stantler
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Donphan
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Raticate
@@ -4676,27 +4676,27 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Forretress
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Volbeat
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Masquerain
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Kirlia
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Dustox
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Illumise
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_DEREK ===
@@ -9877,11 +9877,11 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Wingull
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Tropius
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PHIL ===
@@ -9894,15 +9894,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Skarmory
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Xatu
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Swellow
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 
@@ -9988,11 +9988,11 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Wingull
-Level: 47
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Natu
-Level: 47
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_ROBERT_1 ===
@@ -10005,7 +10005,7 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Swablu
-Level: 48
+Level: 45
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BENNY ===
@@ -10166,7 +10166,7 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Ninjask
-Level: 44
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TAKASHI ===
@@ -10179,11 +10179,11 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Ninjask
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Koffing
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DIANNE ===
@@ -10584,15 +10584,15 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Poliwhirl
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Azumarill
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Volbeat
-Level: 48
+Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Lanturn
@@ -10609,15 +10609,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Lanturn
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Wigglytuff
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Mantine
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Castform
@@ -12962,15 +12962,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Virizion
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Pelipper
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Volbeat
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_LORENZO ===
@@ -12984,19 +12984,19 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Nidoking
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Camerupt
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Golbat
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Magcargo
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_SEBASTIAN ===
@@ -13088,15 +13088,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Vileplume
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Azumarill
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Ambipom
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_JENNA ===
@@ -13110,15 +13110,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Lotad
-Level: 47
+Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Lombre
-Level: 47
+Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 Azumarill
-Level: 47
+Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_SOPHIA ===
@@ -14229,11 +14229,11 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Nincada
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Ninjask
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GREG ===
@@ -14246,11 +14246,11 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware
 
 Dustox
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Beautifly
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_KENT ===
@@ -14263,15 +14263,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Dustox
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Volbeat
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Illumise
-Level: 43
+Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_JAMES_1 ===
@@ -14853,7 +14853,7 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Koffing
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Tackle
 - Self Destruct
@@ -14861,7 +14861,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Smokescreen
 
 Koffing
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Tackle
 - Poison Gas
@@ -14878,11 +14878,11 @@ Double Battle: Yes
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Scyther @ Eviolite
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Weezing
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_RILEY ===
@@ -14895,15 +14895,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Ninjask
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Weezing
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Dustox
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_FLINT ===
@@ -15959,15 +15959,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Magikarp
-Level: 41
+Level: 38
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Tentacool
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Feebas
-Level: 42
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Tentacool
@@ -17089,7 +17089,7 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Manectric
-Level: 44
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DAYTON ===
@@ -17102,15 +17102,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Granbull
-Level: 44
+Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Magmar
-Level: 44
+Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Weezing
-Level: 44
+Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_RACHEL ===
@@ -17123,15 +17123,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Golduck
-Level: 44
+Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Lombre
-Level: 44
+Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Bibarel
-Level: 44
+Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_LEONEL ===
@@ -17145,15 +17145,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Manectric
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Furret
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Dragonair
-Level: 49
+Level: 46
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Castform
@@ -17174,15 +17174,15 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Medicham
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Hariyama
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Furret
-Level: 50
+Level: 47
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_CALE ===
