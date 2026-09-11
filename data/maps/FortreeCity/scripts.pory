@@ -134,7 +134,7 @@ FortreeCity_Text_BugPokemonComeThroughWindow:
 
 FortreeCity_Text_GameboyKidItemLedge:
 	.string "I think I see an item up on that\n"
-	.string "ledge there, but how could I get to it...?\p"
+	.string "ledge there, but how could I get to it...?$"
 
 FortreeCity_Text_GameboyKidGotItem:
 	.string "Wow! I can't believe you jumped\n"

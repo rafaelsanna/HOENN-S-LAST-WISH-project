@@ -271,7 +271,7 @@ FortreeCity_Text_GameboyKidItemLedge:
 # 136 "data/maps/FortreeCity/scripts.pory"
 	.string "I think I see an item up on that\n"
 # 137 "data/maps/FortreeCity/scripts.pory"
-	.string "ledge there, but how could I get to it...?\p"
+	.string "ledge there, but how could I get to it...?$"
 # 138 "data/maps/FortreeCity/scripts.pory"
 
 # 139 "data/maps/FortreeCity/scripts.pory"
