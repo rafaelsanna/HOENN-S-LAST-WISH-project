@@ -4163,12 +4163,27 @@ static u8 DisplaySelectionWindow(u8 windowType)
     for (i = 0; i < sPartyMenuInternal->numActions; i++)
     {
         const u8 *text;
-        u8 fontColorsId = (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES) ? 4 : 3;
+        const u8 *textColors;
+        // Field moves / HMs use the same blue pair as font color table 4,
+        // but with foreground and shadow swapped for better readability on
+        // the dark action-window background: light blue text, dark blue shadow.
+        u8 fieldMoveTextColors[] =
+        {
+            sFontColorTable[4][0],
+            sFontColorTable[4][2],
+            sFontColorTable[4][1],
+        };
 
         if (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES)
+        {
             text = GetMoveName(FieldMove_GetMoveId(sPartyMenuInternal->actions[i] - MENU_FIELD_MOVES));
+            textColors = fieldMoveTextColors;
+        }
         else
+        {
             text = sCursorOptions[sPartyMenuInternal->actions[i]].text;
+            textColors = sFontColorTable[3];
+        }
 
         AddTextPrinterParameterized4(
             sPartyMenuInternal->windowId[0],
@@ -4177,7 +4192,7 @@ static u8 DisplaySelectionWindow(u8 windowType)
             (i * rowHeight) + 1,
             letterSpacing,
             0,
-            sFontColorTable[fontColorsId],
+            textColors,
             0,
             text);
     }

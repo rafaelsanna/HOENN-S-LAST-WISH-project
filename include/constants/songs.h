@@ -639,7 +639,8 @@
 #define MUS_YOUSEEBIGGIRL_T_T                                759
 #define MUS_HUNTING_FOR_YOUR_DREAM                           760
 #define MUS_IVE_SEEN_MUCH                                    761
-#define END_MUS MUS_IVE_SEEN_MUCH
+#define MUS_THEME_RAGNAROK                                   762
+#define END_MUS MUS_THEME_RAGNAROK
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
 #define PH_TRAP_BLEND               562

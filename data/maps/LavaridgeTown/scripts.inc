@@ -1081,7 +1081,7 @@ LavaridgeTown_Text_ShowQueue1:
 # 541 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ShowQueueAlejandro:
 # 542 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Beat it! I'm off duty right now!\p"
+	.string "ALEJANDRO: I'm off duty right now!\p"
 # 543 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I can enjoy a show too, okay?\p"
 # 544 "data/maps/LavaridgeTown/scripts.pory"

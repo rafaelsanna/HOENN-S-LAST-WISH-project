@@ -765,6 +765,8 @@ gSongTable::
 	song mus_youseebiggirl_tt, 0, 0
 	song mus_hunting_for_your_dream, 0, 0
 	song mus_ive_seen_much, 0, 0
+	song mus_theme_ragnarok, 0, 0
+
 
 
 

@@ -539,7 +539,7 @@ LavaridgeTown_Text_ShowQueue1:
 	.string "all day to see her perform!$"
 
 LavaridgeTown_Text_ShowQueueAlejandro:
-	.string "Beat it! I'm off duty right now!\p"
+	.string "ALEJANDRO: I'm off duty right now!\p"
 	.string "I can enjoy a show too, okay?\p"
 	.string "We'll settle things later...$"
 

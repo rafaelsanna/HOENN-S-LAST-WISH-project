@@ -1,12 +1,12 @@
 	.include "MPlayDef.s"
 
-	.equ	mus_hope_grand_chase_grp, voicegroup_hope_grand_chase
+	.equ	mus_hope_grand_chase_grp, voicegroup_hlw_rock_metal
 	.equ	mus_hope_grand_chase_pri, 0
-	.equ	mus_hope_grand_chase_rev, reverb_set+50
-	.equ	mus_hope_grand_chase_mvl, 100
+	.equ	mus_hope_grand_chase_rev, reverb_set+16
+	.equ	mus_hope_grand_chase_mvl, 90
 	.equ	mus_hope_grand_chase_key, 0
 	.equ	mus_hope_grand_chase_tbs, 1
-	.equ	mus_hope_grand_chase_exg, 1
+	.equ	mus_hope_grand_chase_exg, 0
 	.equ	mus_hope_grand_chase_cmp, 1
 
 	.section .rodata
@@ -17,11 +17,10 @@
 
 mus_hope_grand_chase_1:
 	.byte	KEYSH , mus_hope_grand_chase_key+0
-mus_hope_grand_chase_1_B1:
 @ 000   ----------------------------------------
 	.byte	TEMPO , 124*mus_hope_grand_chase_tbs/2
-	.byte		VOICE , 0
-	.byte		VOL   , 125*mus_hope_grand_chase_mvl/mxv
+	.byte		VOICE , 33
+	.byte		VOL   , 82*mus_hope_grand_chase_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte	W96
 @ 001   ----------------------------------------
@@ -44,40 +43,40 @@ mus_hope_grand_chase_1_B1:
 	.byte	W96
 @ 010   ----------------------------------------
 mus_hope_grand_chase_1_010:
-	.byte		N32   , As1 , v116, gtp3
+	.byte		N32   , As1 , v076
 	.byte	W36
-	.byte		        As1 , v116, gtp3
+	.byte		N32   
 	.byte	W36
-	.byte		N23   , Fn2 
+	.byte		N23   , Fn1 
 	.byte	W24
 	.byte	PEND
 @ 011   ----------------------------------------
 mus_hope_grand_chase_1_011:
-	.byte		N32   , Fn1 , v116, gtp3
+	.byte		N32   , Fn1 , v076
 	.byte	W36
-	.byte		N11   , Fn2 
+	.byte		N11   
 	.byte	W12
-	.byte		N23   , Cn2 , v084
+	.byte		N23   , Cn2 , v068
 	.byte	W24
-	.byte		N11   , Cn2 , v116
+	.byte		N11   , Cn2 , v076
 	.byte	W12
 	.byte		        As1 
 	.byte	W12
 	.byte	PEND
 @ 012   ----------------------------------------
 mus_hope_grand_chase_1_012:
-	.byte		N17   , Gn1 , v116
+	.byte		N17   , Gn1 , v076
 	.byte	W18
 	.byte		N06   , Dn2 
 	.byte	W18
-	.byte		N32   , Gn1 , v116, gtp3
+	.byte		N32   , Gn1 
 	.byte	W36
 	.byte		N23   , Fn1 
 	.byte	W24
 	.byte	PEND
 @ 013   ----------------------------------------
 mus_hope_grand_chase_1_013:
-	.byte		N17   , Ds2 , v116
+	.byte		N17   , Ds2 , v076
 	.byte	W18
 	.byte		N06   , Dn2 
 	.byte	W18
@@ -100,17 +99,17 @@ mus_hope_grand_chase_1_013:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_012
 @ 017   ----------------------------------------
-	.byte		N44   , Ds2 , v116, gtp3
+	.byte		N44   , Ds2 , v076
 	.byte	W48
-	.byte		N11   , Fn2 
+	.byte		N11   , Fn1 
 	.byte	W12
-	.byte		        Fn2 , v084
+	.byte		        Fn1 , v068
 	.byte	W12
-	.byte		N23   , Cn2 , v116
+	.byte		N23   , Cn2 , v076
 	.byte	W24
 @ 018   ----------------------------------------
 mus_hope_grand_chase_1_018:
-	.byte		N11   , As1 , v116
+	.byte		N11   , As1 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -137,7 +136,7 @@ mus_hope_grand_chase_1_018:
 	.byte	PEND
 @ 019   ----------------------------------------
 mus_hope_grand_chase_1_019:
-	.byte		N11   , Fn2 , v116
+	.byte		N11   , Fn1 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -164,34 +163,34 @@ mus_hope_grand_chase_1_019:
 	.byte	PEND
 @ 020   ----------------------------------------
 mus_hope_grand_chase_1_020:
-	.byte		N11   , Gn1 , v116
+	.byte		N11   , Gn1 , v076
 	.byte	W12
-	.byte		N02   , Gn2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , Gn1 
+	.byte		N11   
 	.byte	W12
-	.byte		N02   , Gn2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , Gn1 
+	.byte		N11   
 	.byte	W12
-	.byte		N02   , Gn2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , Gn1 
+	.byte		N11   
 	.byte	W12
-	.byte		N02   , Gn2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
 	.byte	PEND
 @ 021   ----------------------------------------
 mus_hope_grand_chase_1_021:
-	.byte		N11   , Ds2 , v116
+	.byte		N11   , Ds2 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -227,7 +226,7 @@ mus_hope_grand_chase_1_021:
 	 .word	mus_hope_grand_chase_1_020
 @ 025   ----------------------------------------
 mus_hope_grand_chase_1_025:
-	.byte		N11   , Ds2 , v116
+	.byte		N11   , Ds2 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -241,7 +240,7 @@ mus_hope_grand_chase_1_025:
 	.byte	W06
 	.byte		N11   
 	.byte	W12
-	.byte		N02   , Fn2 
+	.byte		N02   , Fn1 
 	.byte	W06
 	.byte		N02   
 	.byte	W06
@@ -261,15 +260,15 @@ mus_hope_grand_chase_1_025:
 	.byte	W01
 	.byte		        As1 
 	.byte	W02
-	.byte		        An2 
+	.byte		        An1 
 	.byte	W01
-	.byte		        Gs2 
+	.byte		        Gs1 
 	.byte	W02
-	.byte		N02   , Gn2 
+	.byte		N02   , Gn1 
 	.byte	W03
-	.byte		        Fs2 
+	.byte		        Fs1 
 	.byte	W03
-	.byte		        Fn2 
+	.byte		        Fn1 
 	.byte	W03
 	.byte	PEND
 @ 026   ----------------------------------------
@@ -277,27 +276,27 @@ mus_hope_grand_chase_1_025:
 	 .word	mus_hope_grand_chase_1_018
 @ 027   ----------------------------------------
 mus_hope_grand_chase_1_027:
-	.byte		N11   , An1 , v116
+	.byte		N11   , An1 , v076
 	.byte	W12
-	.byte		N02   , An2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , An1 
+	.byte		N11   
 	.byte	W12
-	.byte		N02   , An2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , An1 
+	.byte		N11   
 	.byte	W12
-	.byte		N02   , An2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , An1 
+	.byte		N11   
 	.byte	W12
-	.byte		N02   , An2 
+	.byte		N02   
 	.byte	W06
 	.byte		N02   
 	.byte	W06
@@ -307,7 +306,7 @@ mus_hope_grand_chase_1_027:
 	 .word	mus_hope_grand_chase_1_020
 @ 029   ----------------------------------------
 mus_hope_grand_chase_1_029:
-	.byte		N11   , Dn2 , v116
+	.byte		N11   , Dn2 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -334,7 +333,7 @@ mus_hope_grand_chase_1_029:
 	.byte	PEND
 @ 030   ----------------------------------------
 mus_hope_grand_chase_1_030:
-	.byte		N11   , Ds2 , v116
+	.byte		N11   , Ds2 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -364,7 +363,7 @@ mus_hope_grand_chase_1_030:
 	 .word	mus_hope_grand_chase_1_018
 @ 032   ----------------------------------------
 mus_hope_grand_chase_1_032:
-	.byte		N11   , Cn2 , v116
+	.byte		N11   , Cn2 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -423,32 +422,8 @@ mus_hope_grand_chase_1_032:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_019
 @ 044   ----------------------------------------
-mus_hope_grand_chase_1_044:
-	.byte		N11   , Gn2 , v116
-	.byte	W12
-	.byte		N02   
-	.byte	W06
-	.byte		N02   
-	.byte	W06
-	.byte		N11   
-	.byte	W12
-	.byte		N02   
-	.byte	W06
-	.byte		N02   
-	.byte	W06
-	.byte		N11   
-	.byte	W12
-	.byte		N02   
-	.byte	W06
-	.byte		N02   
-	.byte	W06
-	.byte		N11   
-	.byte	W12
-	.byte		N02   
-	.byte	W06
-	.byte		N02   
-	.byte	W06
-	.byte	PEND
+	.byte	PATT
+	 .word	mus_hope_grand_chase_1_020
 @ 045   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_021
@@ -460,10 +435,10 @@ mus_hope_grand_chase_1_044:
 	 .word	mus_hope_grand_chase_1_019
 @ 048   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 049   ----------------------------------------
 mus_hope_grand_chase_1_049:
-	.byte		N11   , Ds2 , v116
+	.byte		N11   , Ds2 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -475,7 +450,7 @@ mus_hope_grand_chase_1_049:
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , Fn2 
+	.byte		N11   , Fn1 
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -496,7 +471,7 @@ mus_hope_grand_chase_1_049:
 	 .word	mus_hope_grand_chase_1_019
 @ 052   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 053   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_021
@@ -508,7 +483,7 @@ mus_hope_grand_chase_1_049:
 	 .word	mus_hope_grand_chase_1_019
 @ 056   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 057   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_049
@@ -538,29 +513,29 @@ mus_hope_grand_chase_1_049:
 	 .word	mus_hope_grand_chase_1_025
 @ 066   ----------------------------------------
 mus_hope_grand_chase_1_066:
-	.byte		N32   , As1 , v116
+	.byte		N32   , As1 , v076
 	.byte	W36
 	.byte		N32   
 	.byte	W36
-	.byte		N20   , Fn2 
+	.byte		N20   , Fn1 
 	.byte	W24
 	.byte	PEND
 @ 067   ----------------------------------------
 mus_hope_grand_chase_1_067:
-	.byte		N32   , Fn1 , v116
+	.byte		N32   , Fn1 , v076
 	.byte	W36
 	.byte		N11   , Cn2 
 	.byte	W12
-	.byte		N23   , Cn2 , v084
+	.byte		N23   , Cn2 , v068
 	.byte	W24
-	.byte		N11   , Fn2 , v116
+	.byte		N11   , Fn1 , v076
 	.byte	W12
 	.byte		        Cn2 
 	.byte	W12
 	.byte	PEND
 @ 068   ----------------------------------------
 mus_hope_grand_chase_1_068:
-	.byte		N17   , Gn1 , v116
+	.byte		N17   , Gn1 , v076
 	.byte	W18
 	.byte		N06   , Dn2 
 	.byte	W18
@@ -580,13 +555,13 @@ mus_hope_grand_chase_1_068:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_068
 @ 073   ----------------------------------------
-	.byte		N42   , Ds2 , v116
+	.byte		N42   , Ds2 , v076
 	.byte	W48
-	.byte		N11   , Fn2 
+	.byte		N11   , Fn1 
 	.byte	W12
-	.byte		        Fn2 , v084
+	.byte		        Fn1 , v068
 	.byte	W12
-	.byte		N20   , Cn2 , v116
+	.byte		N20   , Cn2 , v076
 	.byte	W24
 @ 074   ----------------------------------------
 	.byte	PATT
@@ -644,7 +619,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 092   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 093   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_021
@@ -656,7 +631,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 096   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 097   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_049
@@ -668,7 +643,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 100   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 101   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_021
@@ -680,7 +655,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 104   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 105   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_049
@@ -692,7 +667,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 108   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 109   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_021
@@ -704,7 +679,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 112   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 113   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_049
@@ -716,7 +691,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 116   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 117   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_021
@@ -728,20 +703,20 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 120   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 121   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_049
 @ 122   ----------------------------------------
-	.byte		N17   , As1 , v116
+	.byte		N17   , As1 , v076
 	.byte	W18
 	.byte		        Dn2 
 	.byte	W18
-	.byte		N11   , Fn2 
+	.byte		N11   , Fn1 
 	.byte	W12
 	.byte		        En2 
 	.byte	W12
-	.byte		        Fs2 
+	.byte		        Fs1 
 	.byte	W12
 	.byte		        As1 
 	.byte	W12
@@ -755,7 +730,7 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 125   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 126   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_1_021
@@ -767,10 +742,10 @@ mus_hope_grand_chase_1_068:
 	 .word	mus_hope_grand_chase_1_019
 @ 129   ----------------------------------------
 	.byte	PATT
-	 .word	mus_hope_grand_chase_1_044
+	 .word	mus_hope_grand_chase_1_020
 @ 130   ----------------------------------------
 	.byte	TEMPO , 123*mus_hope_grand_chase_tbs/2
-	.byte		N11   , Ds2 , v116
+	.byte		N11   , Ds2 , v076
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -782,7 +757,7 @@ mus_hope_grand_chase_1_068:
 	.byte	W06
 	.byte		N02   
 	.byte	W06
-	.byte		N11   , Fn2 
+	.byte		N11   , Fn1 
 	.byte	W12
 	.byte		N02   
 	.byte	W06
@@ -797,28 +772,22 @@ mus_hope_grand_chase_1_068:
 @ 131   ----------------------------------------
 	.byte	TEMPO , 122*mus_hope_grand_chase_tbs/2
 	.byte		N90   , As1 
-	.byte	W96
-@ 132   ----------------------------------------
 	.byte	W90
-	.byte	GOTO
-	 .word	mus_hope_grand_chase_1_B1
-mus_hope_grand_chase_1_B2:
 	.byte	FINE
 
 @**************** Track 2 (Midi-Chn.2) ****************@
 
 mus_hope_grand_chase_2:
 	.byte	KEYSH , mus_hope_grand_chase_key+0
-mus_hope_grand_chase_2_B1:
 @ 000   ----------------------------------------
 	.byte		VOICE , 1
-	.byte		VOL   , 48*mus_hope_grand_chase_mvl/mxv
-	.byte		PAN   , c_v-12
+	.byte		VOL   , 88*mus_hope_grand_chase_mvl/mxv
+	.byte		PAN   , c_v-10
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
 @ 002   ----------------------------------------
-	.byte		N90   , As2 , v056
+	.byte		N90   , As2 , v064
 	.byte	W96
 @ 003   ----------------------------------------
 	.byte		        An2 
@@ -845,7 +814,7 @@ mus_hope_grand_chase_2_B1:
 	.byte	W96
 @ 010   ----------------------------------------
 mus_hope_grand_chase_2_010:
-	.byte		N17   , As2 , v064
+	.byte		N17   , As2 , v068
 	.byte	W18
 	.byte		N06   
 	.byte	W18
@@ -858,7 +827,7 @@ mus_hope_grand_chase_2_010:
 	.byte	PEND
 @ 011   ----------------------------------------
 mus_hope_grand_chase_2_011:
-	.byte		N17   , Cn3 , v064
+	.byte		N17   , Cn3 , v068
 	.byte	W18
 	.byte		N06   
 	.byte	W18
@@ -873,7 +842,7 @@ mus_hope_grand_chase_2_011:
 	.byte	PEND
 @ 012   ----------------------------------------
 mus_hope_grand_chase_2_012:
-	.byte		N17   , Dn2 , v064
+	.byte		N17   , Dn2 , v068
 	.byte	W18
 	.byte		N06   
 	.byte	W18
@@ -888,7 +857,7 @@ mus_hope_grand_chase_2_012:
 	.byte	PEND
 @ 013   ----------------------------------------
 mus_hope_grand_chase_2_013:
-	.byte		N17   , As2 , v064
+	.byte		N17   , As2 , v068
 	.byte	W18
 	.byte		N05   
 	.byte	W18
@@ -911,7 +880,7 @@ mus_hope_grand_chase_2_013:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_2_012
 @ 017   ----------------------------------------
-	.byte		N17   , As2 , v064
+	.byte		N17   , As2 , v068
 	.byte	W18
 	.byte		N05   
 	.byte	W18
@@ -931,7 +900,7 @@ mus_hope_grand_chase_2_013:
 	 .word	mus_hope_grand_chase_2_011
 @ 020   ----------------------------------------
 mus_hope_grand_chase_2_020:
-	.byte		N17   , Dn2 , v064
+	.byte		N17   , Dn2 , v068
 	.byte	W18
 	.byte		N06   
 	.byte	W18
@@ -957,7 +926,7 @@ mus_hope_grand_chase_2_020:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_2_012
 @ 025   ----------------------------------------
-	.byte		N17   , As2 , v064
+	.byte		N17   , As2 , v068
 	.byte	W18
 	.byte		N05   
 	.byte	W18
@@ -971,21 +940,21 @@ mus_hope_grand_chase_2_020:
 	.byte	W12
 @ 026   ----------------------------------------
 mus_hope_grand_chase_2_026:
-	.byte		N32   , Fn2 , v064
+	.byte		N32   , Fn2 , v068
 	.byte	W36
 	.byte		N54   
 	.byte	W60
 	.byte	PEND
 @ 027   ----------------------------------------
 mus_hope_grand_chase_2_027:
-	.byte		N32   , An2 , v064
+	.byte		N32   , An2 , v068
 	.byte	W36
 	.byte		N54   
 	.byte	W60
 	.byte	PEND
 @ 028   ----------------------------------------
 mus_hope_grand_chase_2_028:
-	.byte		N32   , As2 , v064
+	.byte		N32   , As2 , v068
 	.byte	W36
 	.byte		N54   
 	.byte	W60
@@ -995,7 +964,7 @@ mus_hope_grand_chase_2_028:
 	 .word	mus_hope_grand_chase_2_027
 @ 030   ----------------------------------------
 mus_hope_grand_chase_2_030:
-	.byte		N32   , Gn2 , v064
+	.byte		N32   , Gn2 , v068
 	.byte	W36
 	.byte		N54   
 	.byte	W60
@@ -1035,7 +1004,7 @@ mus_hope_grand_chase_2_030:
 	 .word	mus_hope_grand_chase_2_027
 @ 042   ----------------------------------------
 mus_hope_grand_chase_2_042:
-	.byte		N11   , Dn3 , v064
+	.byte		N11   , Dn3 , v068
 	.byte	W12
 	.byte		N32   
 	.byte	W36
@@ -1046,7 +1015,7 @@ mus_hope_grand_chase_2_042:
 	.byte	PEND
 @ 043   ----------------------------------------
 mus_hope_grand_chase_2_043:
-	.byte		N11   , Cn3 , v064
+	.byte		N11   , Cn3 , v068
 	.byte	W12
 	.byte		N32   
 	.byte	W36
@@ -1057,7 +1026,7 @@ mus_hope_grand_chase_2_043:
 	.byte	PEND
 @ 044   ----------------------------------------
 mus_hope_grand_chase_2_044:
-	.byte		N11   , As2 , v064
+	.byte		N11   , As2 , v068
 	.byte	W12
 	.byte		N32   
 	.byte	W36
@@ -1068,7 +1037,7 @@ mus_hope_grand_chase_2_044:
 	.byte	PEND
 @ 045   ----------------------------------------
 mus_hope_grand_chase_2_045:
-	.byte		N11   , As2 , v064
+	.byte		N11   , As2 , v068
 	.byte	W12
 	.byte		N32   
 	.byte	W36
@@ -1092,7 +1061,7 @@ mus_hope_grand_chase_2_045:
 	 .word	mus_hope_grand_chase_2_044
 @ 049   ----------------------------------------
 mus_hope_grand_chase_2_049:
-	.byte		N17   , As2 , v064
+	.byte		N17   , As2 , v068
 	.byte	W18
 	.byte		N05   
 	.byte	W18
@@ -1154,7 +1123,7 @@ mus_hope_grand_chase_2_049:
 	 .word	mus_hope_grand_chase_2_020
 @ 065   ----------------------------------------
 mus_hope_grand_chase_2_065:
-	.byte		N17   , As2 , v064
+	.byte		N17   , As2 , v068
 	.byte	W18
 	.byte		N05   
 	.byte	W18
@@ -1339,7 +1308,7 @@ mus_hope_grand_chase_2_065:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_2_044
 @ 124   ----------------------------------------
-	.byte		N11   , Fn3 , v064
+	.byte		N11   , Fn3 , v068
 	.byte	W12
 	.byte		N32   
 	.byte	W36
@@ -1366,29 +1335,25 @@ mus_hope_grand_chase_2_065:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_2_049
 @ 131   ----------------------------------------
-	.byte		TIE   , Dn3 , v064
+	.byte		TIE   , Dn3 , v068
 	.byte	W96
 @ 132   ----------------------------------------
 	.byte	W90
 	.byte		EOT   
-	.byte	GOTO
-	 .word	mus_hope_grand_chase_2_B1
-mus_hope_grand_chase_2_B2:
 	.byte	FINE
 
 @**************** Track 3 (Midi-Chn.3) ****************@
 
 mus_hope_grand_chase_3:
 	.byte	KEYSH , mus_hope_grand_chase_key+0
-mus_hope_grand_chase_3_B1:
 @ 000   ----------------------------------------
-	.byte		VOICE , 2
-	.byte		VOL   , 104*mus_hope_grand_chase_mvl/mxv
-	.byte		PAN   , c_v+10
+	.byte		VOICE , 64
+	.byte		VOL   , 82*mus_hope_grand_chase_mvl/mxv
+	.byte		PAN   , c_v+18
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W72
-	.byte		N11   , Dn4 , v127
+	.byte		N11   , Dn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -1408,7 +1373,7 @@ mus_hope_grand_chase_3_B1:
 	.byte	W12
 	.byte		        Dn4 
 	.byte	W12
-	.byte		N32   , Fn4 , v127, gtp3
+	.byte		N32   , Fn4 
 	.byte	W36
 	.byte		N11   
 	.byte	W12
@@ -1441,7 +1406,7 @@ mus_hope_grand_chase_3_B1:
 	.byte	W06
 	.byte		        Gn4 
 	.byte	W06
-	.byte		N44   , Fn4 , v127, gtp3
+	.byte		N44   , Fn4 
 	.byte	W48
 	.byte		N11   
 	.byte	W12
@@ -1452,12 +1417,12 @@ mus_hope_grand_chase_3_B1:
 	.byte		        Dn5 
 	.byte	W06
 @ 007   ----------------------------------------
-	.byte		N68   , Cn5 , v127, gtp3
+	.byte		N68   , Cn5 
 	.byte	W72
 	.byte		N23   , As4 
 	.byte	W24
 @ 008   ----------------------------------------
-	.byte		N68   , As4 , v127, gtp3
+	.byte		N68   
 	.byte	W72
 	.byte		N23   
 	.byte	W24
@@ -1470,7 +1435,7 @@ mus_hope_grand_chase_3_B1:
 	.byte	W24
 	.byte		N11   , Cn5 
 	.byte	W12
-	.byte		N28   , As4 , v127, gtp1
+	.byte		N28   , As4 
 	.byte	W12
 @ 010   ----------------------------------------
 	.byte	W30
@@ -1478,7 +1443,7 @@ mus_hope_grand_chase_3_B1:
 	.byte	W06
 	.byte		        As4 
 	.byte	W06
-	.byte		TIE   , As3 , v112
+	.byte		TIE   , As3 , v072
 	.byte	W54
 @ 011   ----------------------------------------
 	.byte	W90
@@ -1489,7 +1454,7 @@ mus_hope_grand_chase_3_B1:
 @ 013   ----------------------------------------
 	.byte	W96
 @ 014   ----------------------------------------
-	.byte		N90   , As3 , v080
+	.byte		N90   , As3 , v064
 	.byte	W96
 @ 015   ----------------------------------------
 	.byte	W96
@@ -1516,9 +1481,10 @@ mus_hope_grand_chase_3_B1:
 @ 025   ----------------------------------------
 	.byte	W96
 @ 026   ----------------------------------------
-	.byte		N11   
+mus_hope_grand_chase_3_026:
+	.byte		N11   , As3 , v064
 	.byte	W12
-	.byte		        Dn4 , v127
+	.byte		        Dn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -1532,9 +1498,10 @@ mus_hope_grand_chase_3_B1:
 	.byte	W12
 	.byte		N11   
 	.byte	W12
+	.byte	PEND
 @ 027   ----------------------------------------
 mus_hope_grand_chase_3_027:
-	.byte		N17   , Cn4 , v127
+	.byte		N17   , Cn4 , v076
 	.byte	W18
 	.byte		        Dn4 
 	.byte	W18
@@ -1544,7 +1511,7 @@ mus_hope_grand_chase_3_027:
 @ 028   ----------------------------------------
 mus_hope_grand_chase_3_028:
 	.byte	W12
-	.byte		N05   , Dn4 , v127
+	.byte		N05   , Dn4 , v076
 	.byte	W06
 	.byte		N05   
 	.byte	W06
@@ -1563,7 +1530,7 @@ mus_hope_grand_chase_3_028:
 	.byte	PEND
 @ 029   ----------------------------------------
 mus_hope_grand_chase_3_029:
-	.byte		N17   , Cn4 , v127
+	.byte		N17   , Cn4 , v076
 	.byte	W18
 	.byte		        Dn4 
 	.byte	W18
@@ -1574,7 +1541,7 @@ mus_hope_grand_chase_3_029:
 	.byte	PEND
 @ 030   ----------------------------------------
 mus_hope_grand_chase_3_030:
-	.byte		N32   , Ds4 , v127, gtp3
+	.byte		N32   , Ds4 , v076
 	.byte	W36
 	.byte		N23   , Cn4 
 	.byte	W24
@@ -1586,7 +1553,7 @@ mus_hope_grand_chase_3_030:
 @ 031   ----------------------------------------
 mus_hope_grand_chase_3_031:
 	.byte	W12
-	.byte		N11   , As3 , v127
+	.byte		N11   , As3 , v076
 	.byte	W12
 	.byte		        Cn4 
 	.byte	W12
@@ -1599,7 +1566,7 @@ mus_hope_grand_chase_3_031:
 	.byte	PEND
 @ 032   ----------------------------------------
 mus_hope_grand_chase_3_032:
-	.byte		N20   , Gn4 , v127
+	.byte		N20   , Gn4 , v076
 	.byte	W24
 	.byte		N20   
 	.byte	W24
@@ -1609,13 +1576,13 @@ mus_hope_grand_chase_3_032:
 	.byte	W12
 	.byte		N11   
 	.byte	W12
-	.byte		N68   , Fn4 , v127, gtp3
+	.byte		N68   
 	.byte	W12
 	.byte	PEND
 @ 033   ----------------------------------------
 mus_hope_grand_chase_3_033:
 	.byte	W60
-	.byte		N11   , Fn4 , v127
+	.byte		N11   , Fn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -1624,7 +1591,7 @@ mus_hope_grand_chase_3_033:
 	.byte	PEND
 @ 034   ----------------------------------------
 mus_hope_grand_chase_3_034:
-	.byte		N11   , Gn4 , v127
+	.byte		N11   , Gn4 , v076
 	.byte	W12
 	.byte		N05   , Fn4 
 	.byte	W06
@@ -1652,7 +1619,7 @@ mus_hope_grand_chase_3_034:
 	 .word	mus_hope_grand_chase_3_029
 @ 038   ----------------------------------------
 mus_hope_grand_chase_3_038:
-	.byte		N32   , Ds4 , v127, gtp3
+	.byte		N32   , Ds4 , v076
 	.byte	W36
 	.byte		N23   , Fn4 
 	.byte	W24
@@ -1664,7 +1631,7 @@ mus_hope_grand_chase_3_038:
 @ 039   ----------------------------------------
 mus_hope_grand_chase_3_039:
 	.byte	W12
-	.byte		N11   , Fn4 , v127
+	.byte		N11   , Fn4 , v076
 	.byte	W12
 	.byte		        Gn4 
 	.byte	W12
@@ -1677,7 +1644,7 @@ mus_hope_grand_chase_3_039:
 	.byte	PEND
 @ 040   ----------------------------------------
 mus_hope_grand_chase_3_040:
-	.byte		N20   , Gn4 , v127
+	.byte		N20   , Gn4 , v076
 	.byte	W24
 	.byte		N20   
 	.byte	W24
@@ -1693,7 +1660,7 @@ mus_hope_grand_chase_3_040:
 @ 041   ----------------------------------------
 mus_hope_grand_chase_3_041:
 	.byte	W24
-	.byte		N20   , Fn4 , v127
+	.byte		N20   , Fn4 , v076
 	.byte	W24
 	.byte		        As4 
 	.byte	W24
@@ -1702,7 +1669,7 @@ mus_hope_grand_chase_3_041:
 	.byte	PEND
 @ 042   ----------------------------------------
 mus_hope_grand_chase_3_042:
-	.byte		N11   , As4 , v127
+	.byte		N11   , As4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W24
@@ -1732,7 +1699,7 @@ mus_hope_grand_chase_3_042:
 	.byte	W12
 @ 044   ----------------------------------------
 mus_hope_grand_chase_3_044:
-	.byte		N11   , Gn4 , v127
+	.byte		N11   , Gn4 , v076
 	.byte	W12
 	.byte		N05   , Fn4 
 	.byte	W06
@@ -1760,7 +1727,7 @@ mus_hope_grand_chase_3_044:
 	.byte	W24
 @ 046   ----------------------------------------
 mus_hope_grand_chase_3_046:
-	.byte		N11   , Fn4 , v127
+	.byte		N11   , Fn4 , v076
 	.byte	W12
 	.byte		N20   , Dn4 
 	.byte	W24
@@ -1791,15 +1758,15 @@ mus_hope_grand_chase_3_046:
 	.byte		        Cn4 
 	.byte	W12
 @ 048   ----------------------------------------
-	.byte		        As3 , v080
+	.byte		        As3 , v064
 	.byte	W12
-	.byte		N54   , As3 , v127
+	.byte		N54   , As3 , v076
 	.byte	W72
 	.byte		N11   , Gn3 
 	.byte	W12
 @ 049   ----------------------------------------
 mus_hope_grand_chase_3_049:
-	.byte		N20   , Ds4 , v127
+	.byte		N20   , Ds4 , v076
 	.byte	W24
 	.byte		N20   
 	.byte	W24
@@ -1815,7 +1782,7 @@ mus_hope_grand_chase_3_049:
 	 .word	mus_hope_grand_chase_3_046
 @ 051   ----------------------------------------
 mus_hope_grand_chase_3_051:
-	.byte		N11   , Fn4 , v127
+	.byte		N11   , Fn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -1831,9 +1798,9 @@ mus_hope_grand_chase_3_051:
 	.byte	W12
 	.byte	PEND
 @ 052   ----------------------------------------
-	.byte		        As3 , v080
+	.byte		        As3 , v064
 	.byte	W12
-	.byte		N32   , Gn4 , v127
+	.byte		N32   , Gn4 , v076
 	.byte	W48
 	.byte		N11   
 	.byte	W12
@@ -1843,7 +1810,7 @@ mus_hope_grand_chase_3_051:
 	.byte	W12
 @ 053   ----------------------------------------
 mus_hope_grand_chase_3_053:
-	.byte		N11   , Gn4 , v127
+	.byte		N11   , Gn4 , v076
 	.byte	W12
 	.byte		N05   
 	.byte	W06
@@ -1858,7 +1825,7 @@ mus_hope_grand_chase_3_053:
 	.byte	PEND
 @ 054   ----------------------------------------
 mus_hope_grand_chase_3_054:
-	.byte		N11   , As4 , v127
+	.byte		N11   , As4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W24
@@ -1874,9 +1841,10 @@ mus_hope_grand_chase_3_054:
 	.byte	W12
 	.byte	PEND
 @ 055   ----------------------------------------
-	.byte		N23   , Cn4 , v080
+mus_hope_grand_chase_3_055:
+	.byte		N23   , Cn4 , v064
 	.byte	W24
-	.byte		N11   , Cn5 , v127
+	.byte		N11   , Cn5 , v076
 	.byte	W12
 	.byte		N23   , As4 
 	.byte	W24
@@ -1884,12 +1852,14 @@ mus_hope_grand_chase_3_054:
 	.byte	W24
 	.byte		N11   , Dn5 
 	.byte	W12
+	.byte	PEND
 @ 056   ----------------------------------------
-	.byte		        As3 , v080
+mus_hope_grand_chase_3_056:
+	.byte		N11   , As3 , v064
 	.byte	W12
-	.byte		N05   , Cn5 , v127
+	.byte		N05   , Cn5 , v076
 	.byte	W06
-	.byte		N40   , As4 , v127, gtp1
+	.byte		N40   , As4 
 	.byte	W42
 	.byte		N05   , Gn4 
 	.byte	W06
@@ -1899,6 +1869,7 @@ mus_hope_grand_chase_3_054:
 	.byte	W12
 	.byte		N11   
 	.byte	W12
+	.byte	PEND
 @ 057   ----------------------------------------
 	.byte		N20   , Ds5 
 	.byte	W24
@@ -1908,11 +1879,11 @@ mus_hope_grand_chase_3_054:
 	.byte	W24
 	.byte		N11   , Cn5 
 	.byte	W12
-	.byte		N44   , As4 , v127, gtp3
+	.byte		N44   , As4 
 	.byte	W12
 @ 058   ----------------------------------------
 	.byte	W36
-	.byte		N05   , An3 , v100
+	.byte		N05   , An3 , v068
 	.byte	W06
 	.byte		TIE   , As3 
 	.byte	W54
@@ -1925,7 +1896,7 @@ mus_hope_grand_chase_3_054:
 @ 061   ----------------------------------------
 	.byte	W96
 @ 062   ----------------------------------------
-	.byte		N90   , As3 , v088
+	.byte		N90   , As3 , v064
 	.byte	W96
 @ 063   ----------------------------------------
 	.byte	W96
@@ -1952,22 +1923,8 @@ mus_hope_grand_chase_3_054:
 @ 073   ----------------------------------------
 	.byte	W96
 @ 074   ----------------------------------------
-	.byte		N11   
-	.byte	W12
-	.byte		        Dn4 , v127
-	.byte	W12
-	.byte		N11   
-	.byte	W12
-	.byte		N11   
-	.byte	W12
-	.byte		N11   
-	.byte	W12
-	.byte		        Cn4 
-	.byte	W12
-	.byte		        As3 
-	.byte	W12
-	.byte		N11   
-	.byte	W12
+	.byte	PATT
+	 .word	mus_hope_grand_chase_3_026
 @ 075   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_3_027
@@ -1975,7 +1932,7 @@ mus_hope_grand_chase_3_054:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_3_028
 @ 077   ----------------------------------------
-	.byte		N17   , Cn4 , v127
+	.byte		N17   , Cn4 , v076
 	.byte	W18
 	.byte		        Dn4 
 	.byte	W18
@@ -2024,7 +1981,7 @@ mus_hope_grand_chase_3_054:
 	 .word	mus_hope_grand_chase_3_042
 @ 091   ----------------------------------------
 mus_hope_grand_chase_3_091:
-	.byte		N11   , An4 , v127
+	.byte		N11   , An4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -2042,7 +1999,7 @@ mus_hope_grand_chase_3_091:
 	 .word	mus_hope_grand_chase_3_044
 @ 093   ----------------------------------------
 mus_hope_grand_chase_3_093:
-	.byte		N11   , Gn4 , v127
+	.byte		N11   , Gn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -2058,7 +2015,7 @@ mus_hope_grand_chase_3_093:
 	 .word	mus_hope_grand_chase_3_046
 @ 095   ----------------------------------------
 mus_hope_grand_chase_3_095:
-	.byte		N11   , Fn4 , v127
+	.byte		N11   , Fn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -2075,9 +2032,9 @@ mus_hope_grand_chase_3_095:
 	.byte	PEND
 @ 096   ----------------------------------------
 mus_hope_grand_chase_3_096:
-	.byte		N11   , As3 , v088
+	.byte		N11   , As3 , v064
 	.byte	W12
-	.byte		N44   , As3 , v127
+	.byte		N44   , As3 , v076
 	.byte	W48
 	.byte		N20   , Gn3 
 	.byte	W24
@@ -2089,9 +2046,9 @@ mus_hope_grand_chase_3_096:
 	 .word	mus_hope_grand_chase_3_049
 @ 098   ----------------------------------------
 mus_hope_grand_chase_3_098:
-	.byte		N11   , As3 , v088
+	.byte		N11   , As3 , v064
 	.byte	W12
-	.byte		        Fn4 , v127
+	.byte		        Fn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -2105,9 +2062,9 @@ mus_hope_grand_chase_3_098:
 	.byte	W24
 	.byte	PEND
 @ 099   ----------------------------------------
-	.byte		N11   , Cn4 , v088
+	.byte		N11   , Cn4 , v064
 	.byte	W12
-	.byte		N05   , Fn4 , v127
+	.byte		N05   , Fn4 , v076
 	.byte	W06
 	.byte		N05   
 	.byte	W06
@@ -2122,9 +2079,9 @@ mus_hope_grand_chase_3_098:
 	.byte		N23   , Fn4 
 	.byte	W24
 @ 100   ----------------------------------------
-	.byte		N11   , Dn4 , v088
+	.byte		N11   , Dn4 , v064
 	.byte	W12
-	.byte		        Gn4 , v127
+	.byte		        Gn4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -2153,9 +2110,9 @@ mus_hope_grand_chase_3_098:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_3_098
 @ 103   ----------------------------------------
-	.byte		N11   , An3 , v088
+	.byte		N11   , An3 , v064
 	.byte	W12
-	.byte		N05   , Fn4 , v127
+	.byte		N05   , Fn4 , v076
 	.byte	W06
 	.byte		N05   
 	.byte	W06
@@ -2172,9 +2129,9 @@ mus_hope_grand_chase_3_098:
 	.byte		        As4 
 	.byte	W12
 @ 104   ----------------------------------------
-	.byte		        Gn3 , v088
+	.byte		        Gn3 , v064
 	.byte	W12
-	.byte		N23   , An4 , v127
+	.byte		N23   , An4 , v076
 	.byte	W24
 	.byte		        Gn4 
 	.byte	W24
@@ -2198,9 +2155,9 @@ mus_hope_grand_chase_3_098:
 	.byte		        As4 
 	.byte	W12
 @ 106   ----------------------------------------
-	.byte		        As3 , v088
+	.byte		        As3 , v064
 	.byte	W12
-	.byte		        As4 , v127
+	.byte		        As4 , v076
 	.byte	W24
 	.byte		        Fn4 
 	.byte	W12
@@ -2240,9 +2197,9 @@ mus_hope_grand_chase_3_098:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_3_051
 @ 116   ----------------------------------------
-	.byte		N11   , Dn4 , v088
+	.byte		N11   , Dn4 , v064
 	.byte	W12
-	.byte		N32   , Gn4 , v127
+	.byte		N32   , Gn4 , v076
 	.byte	W48
 	.byte		N11   
 	.byte	W12
@@ -2257,41 +2214,21 @@ mus_hope_grand_chase_3_098:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_3_054
 @ 119   ----------------------------------------
-	.byte		N23   , Cn4 , v088
-	.byte	W24
-	.byte		N11   , Cn5 , v127
-	.byte	W12
-	.byte		N23   , As4 
-	.byte	W24
-	.byte		N20   , Cn5 
-	.byte	W24
-	.byte		N11   , Dn5 
-	.byte	W12
+	.byte	PATT
+	 .word	mus_hope_grand_chase_3_055
 @ 120   ----------------------------------------
-	.byte		        As3 , v088
-	.byte	W12
-	.byte		N05   , Cn5 , v127
-	.byte	W06
-	.byte		N40   , As4 , v127, gtp1
-	.byte	W42
-	.byte		N05   , Gn4 
-	.byte	W06
-	.byte		N05   
-	.byte	W06
-	.byte		N11   
-	.byte	W12
-	.byte		N11   
-	.byte	W12
+	.byte	PATT
+	 .word	mus_hope_grand_chase_3_056
 @ 121   ----------------------------------------
-	.byte		N20   , Ds5 
+	.byte		N20   , Ds5 , v076
 	.byte	W24
 	.byte		        Dn5 
 	.byte	W24
 	.byte		N11   , As4 
 	.byte	W12
-	.byte		        Cn4 , v088
+	.byte		        Cn4 , v064
 	.byte	W12
-	.byte		        Cn5 , v127
+	.byte		        Cn5 , v076
 	.byte	W12
 	.byte		        As4 
 	.byte	W12
@@ -2348,7 +2285,7 @@ mus_hope_grand_chase_3_098:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_3_042
 @ 124   ----------------------------------------
-	.byte		N11   , An4 , v127
+	.byte		N11   , An4 , v076
 	.byte	W12
 	.byte		N11   
 	.byte	W12
@@ -2410,9 +2347,9 @@ mus_hope_grand_chase_3_098:
 	.byte		        An4 
 	.byte	W12
 @ 128   ----------------------------------------
-	.byte		        An3 , v088
+	.byte		        An3 , v064
 	.byte	W12
-	.byte		        An4 , v127
+	.byte		        An4 , v076
 	.byte	W12
 	.byte		        As4 
 	.byte	W12
@@ -2448,9 +2385,9 @@ mus_hope_grand_chase_3_098:
 	.byte	W12
 	.byte		        As4 
 	.byte	W12
-	.byte		        An3 , v088
+	.byte		        An3 , v064
 	.byte	W12
-	.byte		        Cn5 , v127
+	.byte		        Cn5 , v076
 	.byte	W12
 	.byte		        As4 
 	.byte	W12
@@ -2462,52 +2399,49 @@ mus_hope_grand_chase_3_098:
 @ 132   ----------------------------------------
 	.byte	W90
 	.byte		EOT   
-	.byte	GOTO
-	 .word	mus_hope_grand_chase_3_B1
-mus_hope_grand_chase_3_B2:
 	.byte	FINE
 
 @**************** Track 4 (Midi-Chn.10) ****************@
 
 mus_hope_grand_chase_4:
 	.byte	KEYSH , mus_hope_grand_chase_key+0
-mus_hope_grand_chase_4_B1:
 @ 000   ----------------------------------------
-	.byte		VOICE , 3
-	.byte		VOL   , 88*mus_hope_grand_chase_mvl/mxv
-	.byte		N02   , An4 , v080
+	.byte		VOICE , 0
+	.byte		VOL   , 94*mus_hope_grand_chase_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
 @ 001   ----------------------------------------
 mus_hope_grand_chase_4_001:
-	.byte		N02   , An4 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
 	.byte	PEND
 @ 002   ----------------------------------------
@@ -2523,22 +2457,22 @@ mus_hope_grand_chase_4_001:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_001
 @ 006   ----------------------------------------
-	.byte		N02   , An4 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v084
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
 @ 007   ----------------------------------------
 	.byte	PATT
@@ -2550,100 +2484,100 @@ mus_hope_grand_chase_4_001:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_001
 @ 010   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W12
 	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v048
-	.byte	W12
-	.byte		N02   
-	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W12
 	.byte		N02   
 	.byte	W12
-	.byte		        An4 , v056
+	.byte		        Fs1 , v044
+	.byte	W12
+	.byte		N02   
+	.byte	W12
+	.byte		N02   
 	.byte	W12
 @ 011   ----------------------------------------
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v060
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
 	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v068
-	.byte	W12
-	.byte		N02   
-	.byte	W12
-	.byte		        An4 , v072
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W12
 	.byte		N02   
 	.byte	W12
-	.byte		        An4 , v076
+	.byte		N02   
+	.byte	W12
+	.byte		N02   
+	.byte	W12
+	.byte		N02   
 	.byte	W12
 @ 012   ----------------------------------------
 mus_hope_grand_chase_4_012:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W12
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
 	.byte	PEND
 @ 013   ----------------------------------------
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W12
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W03
 	.byte		N02   
 	.byte	W03
 	.byte		N02   
-	.byte		N02   , An4 , v052
+	.byte		N02   , Fs1 , v044
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
 	.byte		N02   
-	.byte		N02   , An4 , v044
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
 @ 014   ----------------------------------------
 	.byte	PATT
@@ -2652,163 +2586,145 @@ mus_hope_grand_chase_4_012:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_012
 @ 016   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W12
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W12
 @ 017   ----------------------------------------
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte	W06
-	.byte		N02   
-	.byte		N02   , An4 , v064
-	.byte	W06
-	.byte		        Cn1 , v092
-	.byte		N02   , Dn1 
+	.byte		        En1 , v080
 	.byte	W06
 	.byte		N02   
-	.byte		N02   , An4 , v052
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Dn1 , v092
+	.byte		        Cn1 , v080
+	.byte		N02   , En1 
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v044
+	.byte		N02   
+	.byte		N02   , Fs1 , v044
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
-	.byte	W06
-	.byte		        Dn1 , v092
+	.byte		        En1 , v080
 	.byte	W06
 	.byte		        Cn1 
-	.byte		N02   , An4 , v064
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Dn1 , v092
+	.byte		        En1 , v080
 	.byte	W06
 	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		N02   , Fs1 , v052
+	.byte	W06
+	.byte		        En1 , v080
+	.byte	W06
+	.byte		        Cn1 
+	.byte		N02   , Fs1 , v048
+	.byte	W06
+	.byte		        En1 , v080
+	.byte	W06
+	.byte		        Cn1 
+	.byte		N02   , Fs1 , v044
 	.byte	W01
-	.byte		N01   , Dn1 , v092
-	.byte	W02
+	.byte		N01   , En1 , v080
+	.byte	W03
 	.byte		N01   
-	.byte	W01
+	.byte	W03
 	.byte		N01   
-	.byte	W02
-	.byte		N01   
-	.byte	W01
-	.byte		N01   
-	.byte	W02
-	.byte		N01   
-	.byte	W01
+	.byte	W03
 	.byte		N01   
 	.byte	W02
 	.byte		N02   , Cn1 
-	.byte		N02   , An4 , v044
+	.byte		N02   , Fs1 , v040
 	.byte	W01
-	.byte		N01   , Dn1 , v092
-	.byte	W02
-	.byte		N01   
-	.byte	W01
+	.byte		N01   , En1 , v080
+	.byte	W03
 	.byte		N01   
 	.byte	W02
 	.byte		N02   , Cn1 
-	.byte		N01   , Dn1 
 	.byte	W01
-	.byte		N01   
-	.byte	W02
-	.byte		N01   
-	.byte	W01
+	.byte		N01   , En1 
+	.byte	W03
 	.byte		N01   
 	.byte	W02
 @ 018   ----------------------------------------
 mus_hope_grand_chase_4_018:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
 	.byte	PEND
 @ 019   ----------------------------------------
 mus_hope_grand_chase_4_019:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
 	.byte	PEND
 @ 020   ----------------------------------------
@@ -2828,38 +2744,37 @@ mus_hope_grand_chase_4_019:
 	 .word	mus_hope_grand_chase_4_018
 @ 025   ----------------------------------------
 mus_hope_grand_chase_4_025:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Cn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
 	.byte	PEND
 @ 026   ----------------------------------------
@@ -2908,38 +2823,36 @@ mus_hope_grand_chase_4_025:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_018
 @ 041   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Cn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
 @ 042   ----------------------------------------
 	.byte	PATT
@@ -2960,39 +2873,37 @@ mus_hope_grand_chase_4_025:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_018
 @ 048   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
-	.byte	W06
-	.byte		        Gs1 , v092
-	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
-	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
-	.byte	W06
-	.byte		        Gs1 , v092
-	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
-	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
 	.byte		N02   
-	.byte		N02   , An4 , v064
 	.byte	W06
-	.byte		        Gs1 , v092
-	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
+	.byte	W06
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
+	.byte	W06
+	.byte		        Cn1 , v080
+	.byte	W06
+	.byte		N02   
+	.byte		N02   , Fs1 , v048
+	.byte	W06
+	.byte		        Fs1 , v056
+	.byte	W06
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
+	.byte	W06
+	.byte		        Fs1 , v056
 	.byte	W06
 @ 049   ----------------------------------------
 	.byte	PATT
@@ -3019,31 +2930,31 @@ mus_hope_grand_chase_4_025:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_018
 @ 057   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
 @ 058   ----------------------------------------
 	.byte	PATT
@@ -3067,111 +2978,107 @@ mus_hope_grand_chase_4_025:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_018
 @ 065   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W06
-	.byte		        Cn1 , v092
+	.byte		        Cn1 , v080
 	.byte	W06
 	.byte		N02   
-	.byte		N02   , An4 , v064
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Cn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
 @ 066   ----------------------------------------
 mus_hope_grand_chase_4_066:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
 	.byte	PEND
 @ 067   ----------------------------------------
 mus_hope_grand_chase_4_067:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
 	.byte	PEND
 @ 068   ----------------------------------------
@@ -3190,38 +3097,38 @@ mus_hope_grand_chase_4_067:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_066
 @ 073   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Cn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
 @ 074   ----------------------------------------
 	.byte	PATT
@@ -3269,38 +3176,36 @@ mus_hope_grand_chase_4_067:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_018
 @ 089   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
 @ 090   ----------------------------------------
 	.byte	PATT
@@ -3324,58 +3229,55 @@ mus_hope_grand_chase_4_067:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_018
 @ 097   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Fs1 , v056
 	.byte	W06
-	.byte		        Gs1 , v092
+	.byte		N02   
 	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
 @ 098   ----------------------------------------
 mus_hope_grand_chase_4_098:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
 	.byte	PEND
 @ 099   ----------------------------------------
@@ -3386,24 +3288,24 @@ mus_hope_grand_chase_4_098:
 	 .word	mus_hope_grand_chase_4_098
 @ 101   ----------------------------------------
 mus_hope_grand_chase_4_101:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
 	.byte	PEND
 @ 102   ----------------------------------------
@@ -3411,53 +3313,53 @@ mus_hope_grand_chase_4_101:
 	 .word	mus_hope_grand_chase_4_101
 @ 103   ----------------------------------------
 mus_hope_grand_chase_4_103:
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v064
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v048
 	.byte	W12
-	.byte		        An4 , v052
+	.byte		        Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
 	.byte	PEND
 @ 104   ----------------------------------------
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_103
 @ 105   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        An4 , v044
+	.byte		        Fs1 , v040
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W12
-	.byte		        Cn1 , v092
-	.byte		N02   , An4 , v052
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
 	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v044
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v040
 	.byte	W06
-	.byte		        Dn1 , v092
+	.byte		        En1 , v080
 	.byte	W06
 @ 106   ----------------------------------------
 	.byte	PATT
@@ -3508,15 +3410,15 @@ mus_hope_grand_chase_4_103:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_019
 @ 122   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An2 
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v072
 	.byte	W12
-	.byte		        An4 , v080
+	.byte		        Fs1 , v052
 	.byte	W24
-	.byte		        An4 , v064
+	.byte		        Fs1 , v048
 	.byte	W36
-	.byte		        Cn1 , v092
-	.byte		N02   , Dn1 
+	.byte		        Cn1 , v080
+	.byte		N02   , En1 
 	.byte	W12
 	.byte		        Cn1 
 	.byte	W12
@@ -3542,51 +3444,44 @@ mus_hope_grand_chase_4_103:
 	.byte	PATT
 	 .word	mus_hope_grand_chase_4_018
 @ 130   ----------------------------------------
-	.byte		N02   , Cn1 , v092
-	.byte		N02   , An4 , v080
+	.byte		N02   , Cn1 , v080
+	.byte		N02   , Fs1 , v052
 	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v064
-	.byte	W06
-	.byte		        Gs1 , v092
-	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
-	.byte	W12
-	.byte		        Gs1 , v092
-	.byte		N02   , An4 , v044
-	.byte	W06
-	.byte		        Gs1 , v092
-	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
-	.byte	W12
-	.byte		        Dn1 , v092
-	.byte		N02   , An4 , v064
-	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
-	.byte	W06
-	.byte		        Cn1 
-	.byte		N02   , An4 , v052
-	.byte	W06
-	.byte		        Dn1 , v092
+	.byte		        Fs1 , v056
 	.byte	W06
 	.byte		N02   
-	.byte		N02   , An4 , v044
 	.byte	W06
-	.byte		        Dn1 , v092
-	.byte		N02   , Gs1 
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
+	.byte	W12
+	.byte		        Fs1 , v056
+	.byte	W06
+	.byte		N02   
+	.byte	W06
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
+	.byte	W12
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v048
+	.byte	W06
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
+	.byte	W06
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v044
+	.byte	W06
+	.byte		        En1 , v080
+	.byte	W06
+	.byte		N02   
+	.byte		N02   , Fs1 , v040
+	.byte	W06
+	.byte		        En1 , v080
+	.byte		N02   , Fs1 , v056
 	.byte	W06
 @ 131   ----------------------------------------
-	.byte		        Cn1 
-	.byte		N02   , An4 , v080
-	.byte	W96
-@ 132   ----------------------------------------
-	.byte	W90
-	.byte	GOTO
-	 .word	mus_hope_grand_chase_4_B1
-mus_hope_grand_chase_4_B2:
+	.byte		        Cn1 , v080
+	.byte		N02   , Fs1 , v052
+	.byte	W02
 	.byte	FINE
 
 @******************************************************@

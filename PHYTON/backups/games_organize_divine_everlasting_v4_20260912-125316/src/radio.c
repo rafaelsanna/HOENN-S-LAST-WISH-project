@@ -284,6 +284,8 @@ static EWRAM_DATA u8 sRadioOverworldSkipCooldown;
 // Sprite IDs — initialized to 0xFF in Radio_Open() before first use.
 // Cannot use = 0xFF at declaration: that forces the variable into .data (discarded in GBA ROM).
 static EWRAM_DATA u8 sRadioJigSpriteId;
+static EWRAM_DATA u8 sRadioAmaterasuSpriteId;
+static EWRAM_DATA bool8 sRadioAmaterasuActive;
 static EWRAM_DATA u8 sRadioStereo1Id;
 static EWRAM_DATA u8 sRadioStereo2Id;
 static EWRAM_DATA u8 sRadioBtnPlayId;
@@ -456,6 +458,10 @@ static const u16 sRadioBg_Tilemap[] = INCBIN_U16("graphics/radio/radiobg.bin");
 static const u16 sRadioJig_Pal[] = INCBIN_U16("graphics/radio/jig.gbapal");
 static const u32 sRadioJig_Gfx[] = INCBIN_U32("graphics/radio/jig.4bpp.smol");
 
+// Amaterasu - POP station mascot, same 4x 64x64 animation layout as Jig.
+static const u16 sRadioAmaterasu_Pal[] = INCBIN_U16("graphics/radio/amaterasu.gbapal");
+static const u32 sRadioAmaterasu_Gfx[] = INCBIN_U32("graphics/radio/amaterasu.4bpp.smol");
+
 // Stereo — 1 frame 64x64, affine pulsing (speaker effect)
 // Sheet: 1 × 2048 = 0x800 bytes
 static const u16 sRadioStereo_Pal[] = INCBIN_U16("graphics/radio/stereo.gbapal");
@@ -559,8 +565,9 @@ static const s16 sRadioStickerSlotY[RADIO_STICKER_SLOT_COUNT] =
 // ---------------------------------------------------------------------------
 // Tags de sprite — valores arbitrários únicos no projeto
 // ---------------------------------------------------------------------------
-#define TAG_RADIO_JIG    0xD100
-#define TAG_RADIO_STEREO 0xD101
+#define TAG_RADIO_JIG       0xD100
+#define TAG_RADIO_STEREO    0xD101
+#define TAG_RADIO_AMATERASU 0xD10E
 
 // ---------------------------------------------------------------------------
 // OAM data
@@ -634,6 +641,14 @@ static const struct SpritePalette sSpritePalette_RadioJig[] =
     {},
 };
 
+// Amaterasu has its own tiles but deliberately reuses TAG_RADIO_JIG's
+// OBJ palette slot. Only one of Jig / Amaterasu is visible at a time.
+static const struct CompressedSpriteSheet sSpriteSheet_RadioAmaterasu[] =
+{
+    {sRadioAmaterasu_Gfx, 0x2000, TAG_RADIO_AMATERASU},
+    {},
+};
+
 static const struct CompressedSpriteSheet sSpriteSheet_RadioStereo[] =
 {
     {sRadioStereo_Gfx, 0x800, TAG_RADIO_STEREO},  // 1 frame × 2048 bytes
@@ -658,6 +673,17 @@ static const struct SpriteTemplate sSpriteTemplate_RadioJig =
 {
     .tileTag     = TAG_RADIO_JIG,
     .paletteTag  = TAG_RADIO_JIG,
+    .oam         = &sOamData_RadioJig,
+    .anims       = sAnims_RadioJig,
+    .images      = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback    = SpriteCB_RadioJig,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RadioAmaterasu =
+{
+    .tileTag     = TAG_RADIO_AMATERASU,
+    .paletteTag  = TAG_RADIO_JIG, // reuse Jig's one OBJ palette slot
     .oam         = &sOamData_RadioJig,
     .anims       = sAnims_RadioJig,
     .images      = NULL,
@@ -710,6 +736,9 @@ enum RadioAlbumCoverId
     RADIO_COVER_WISH_YOU_WERE_HERE,
     RADIO_COVER_DARK_SIDE_OF_THE_MOON,
     RADIO_COVER_DIVISION_BELL,
+    RADIO_COVER_HELLO_OPERATOR,
+    RADIO_COVER_WHITE_BLOOD_CELLS,
+    RADIO_COVER_ELEPHANT,
     RADIO_COVER_COUNT,
 };
 
@@ -792,6 +821,12 @@ static const u16 sRadioCoverDarkSideOfTheMoon_Pal[] = INCBIN_U16("graphics/radio
 static const u32 sRadioCoverDarkSideOfTheMoon_Gfx[] = INCBIN_U32("graphics/radio/covers/darksideofthemoon.4bpp.smol");
 static const u16 sRadioCoverDivisionBell_Pal[] = INCBIN_U16("graphics/radio/covers/divisionbell.gbapal");
 static const u32 sRadioCoverDivisionBell_Gfx[] = INCBIN_U32("graphics/radio/covers/divisionbell.4bpp.smol");
+static const u16 sRadioCoverHelloOperator_Pal[] = INCBIN_U16("graphics/radio/covers/hellooperator.gbapal");
+static const u32 sRadioCoverHelloOperator_Gfx[] = INCBIN_U32("graphics/radio/covers/hellooperator.4bpp.smol");
+static const u16 sRadioCoverWhiteBloodCells_Pal[] = INCBIN_U16("graphics/radio/covers/whitebloodcells.gbapal");
+static const u32 sRadioCoverWhiteBloodCells_Gfx[] = INCBIN_U32("graphics/radio/covers/whitebloodcells.4bpp.smol");
+static const u16 sRadioCoverElephant_Pal[] = INCBIN_U16("graphics/radio/covers/elephant.gbapal");
+static const u32 sRadioCoverElephant_Gfx[] = INCBIN_U32("graphics/radio/covers/elephant.4bpp.smol");
 
 static const struct OamData sOamData_RadioCover =
 {
@@ -868,6 +903,9 @@ static const struct CompressedSpriteSheet sRadioCoverSheets[RADIO_COVER_COUNT] =
     [RADIO_COVER_WISH_YOU_WERE_HERE] = {sRadioCoverWishYouWereHere_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_DARK_SIDE_OF_THE_MOON] = {sRadioCoverDarkSideOfTheMoon_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_DIVISION_BELL] = {sRadioCoverDivisionBell_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_HELLO_OPERATOR] = {sRadioCoverHelloOperator_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_WHITE_BLOOD_CELLS] = {sRadioCoverWhiteBloodCells_Gfx, 0x800, TAG_RADIO_COVER},
+    [RADIO_COVER_ELEPHANT] = {sRadioCoverElephant_Gfx, 0x800, TAG_RADIO_COVER},
 };
 
 static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
@@ -910,6 +948,9 @@ static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
     [RADIO_COVER_WISH_YOU_WERE_HERE] = {sRadioCoverWishYouWereHere_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_DARK_SIDE_OF_THE_MOON] = {sRadioCoverDarkSideOfTheMoon_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_DIVISION_BELL] = {sRadioCoverDivisionBell_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_HELLO_OPERATOR] = {sRadioCoverHelloOperator_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_WHITE_BLOOD_CELLS] = {sRadioCoverWhiteBloodCells_Pal, TAG_RADIO_COVER},
+    [RADIO_COVER_ELEPHANT] = {sRadioCoverElephant_Pal, TAG_RADIO_COVER},
 };
 
 
@@ -1578,7 +1619,38 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_DONT_EVER_FORGET) \
     X(MUS_TEMPORAL_TOWER) \
     X(MUS_TEMPORAL_SPIRE) \
-    X(MUS_THROUGH_THE_SEA_OF_TIME)
+    X(MUS_THROUGH_THE_SEA_OF_TIME) \
+    X(MUS_HARUKA_KANATA) \
+    X(MUS_THE_RAISING_FIGHTING_SPIRIT) \
+    X(MUS_INTRO_SUPERNOVA) \
+    X(MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND) \
+    X(MUS_I_CANT_WAIT_WHITE_STRIPES) \
+    X(MUS_JOLENE_WHITE_STRIPES) \
+    X(MUS_SEVEN_NATION_ARMY) \
+    X(MUS_BAD_GUY_BILLIE_EILISH) \
+    X(MUS_PAPARAZZI_LADY_GAGA) \
+    X(MUS_BAD_ROMANCE_LADY_GAGA) \
+    X(MUS_ALEJANDRO_LADY_GAGA) \
+    X(MUS_TOXIC_BRITNEY_SPEARS) \
+    X(MUS_GURENGE_LISA) \
+    X(MUS_UMBRELLA_RIHANNA) \
+    X(MUS_DISTURBIA_RIHANNA) \
+    X(MUS_DIAMONDS_RIHANNA) \
+    X(MUS_IRREPLACEABLE_BEYONCE) \
+    X(MUS_BROKEN_HEARTED_GIRL_BEYONCE) \
+    X(MUS_CRAZY_IN_LOVE_BEYONCE) \
+    X(MUS_HALO_BEYONCE) \
+    X(MUS_PINK_PONY_CLUB_CHAPPELL_ROAN) \
+    X(MUS_HOT_TO_GO_CHAPPELL_ROAN) \
+    X(MUS_WASHING_MACHINE_HEART_MITSKI) \
+    X(MUS_I_BET_ON_LOSING_DOGS_MITSKI) \
+    X(MUS_MY_LOVE_MINE_ALL_MINE_MITSKI) \
+    X(MUS_YOU_SAY_RUN) \
+    X(MUS_BEHELIT) \
+    X(MUS_YOUSEEBIGGIRL_T_T) \
+    X(MUS_HUNTING_FOR_YOUR_DREAM) \
+    X(MUS_IVE_SEEN_MUCH) \
+    X(MUS_THEME_RAGNAROK)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -1907,6 +1979,37 @@ static const u16 sStation_All[] = {
     MUS_TEMPORAL_TOWER,
     MUS_TEMPORAL_SPIRE,
     MUS_THROUGH_THE_SEA_OF_TIME,
+    MUS_HARUKA_KANATA,
+    MUS_THE_RAISING_FIGHTING_SPIRIT,
+    MUS_INTRO_SUPERNOVA,
+    MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND,
+    MUS_I_CANT_WAIT_WHITE_STRIPES,
+    MUS_JOLENE_WHITE_STRIPES,
+    MUS_SEVEN_NATION_ARMY,
+    MUS_BAD_GUY_BILLIE_EILISH,
+    MUS_PAPARAZZI_LADY_GAGA,
+    MUS_BAD_ROMANCE_LADY_GAGA,
+    MUS_ALEJANDRO_LADY_GAGA,
+    MUS_TOXIC_BRITNEY_SPEARS,
+    MUS_GURENGE_LISA,
+    MUS_UMBRELLA_RIHANNA,
+    MUS_DISTURBIA_RIHANNA,
+    MUS_DIAMONDS_RIHANNA,
+    MUS_IRREPLACEABLE_BEYONCE,
+    MUS_BROKEN_HEARTED_GIRL_BEYONCE,
+    MUS_CRAZY_IN_LOVE_BEYONCE,
+    MUS_HALO_BEYONCE,
+    MUS_PINK_PONY_CLUB_CHAPPELL_ROAN,
+    MUS_HOT_TO_GO_CHAPPELL_ROAN,
+    MUS_WASHING_MACHINE_HEART_MITSKI,
+    MUS_I_BET_ON_LOSING_DOGS_MITSKI,
+    MUS_MY_LOVE_MINE_ALL_MINE_MITSKI,
+    MUS_YOU_SAY_RUN,
+    MUS_BEHELIT,
+    MUS_YOUSEEBIGGIRL_T_T,
+    MUS_HUNTING_FOR_YOUR_DREAM,
+    MUS_IVE_SEEN_MUCH,
+    MUS_THEME_RAGNAROK,
     STATION_END
 };
 
@@ -2089,7 +2192,7 @@ static const u16 sStation_PokemonGba[] = {
     MUS_HLW_DISTORTION_WORLD,
     MUS_HLW_VS_EVIL,
     MUS_HLW_PHOENIX_TOWN,
-    STATION_END
+STATION_END
 };
 
 // GAMES: non-Pokemon videogame / visual-novel music.
@@ -2127,6 +2230,8 @@ static const u16 sStation_Games[] = {
     MUS_TEMPORAL_TOWER,
     MUS_TEMPORAL_SPIRE,
     MUS_THROUGH_THE_SEA_OF_TIME,
+    MUS_INTRO_SUPERNOVA,
+    MUS_THEME_RAGNAROK,
     STATION_END
 };
 
@@ -2150,10 +2255,17 @@ static const u16 sStation_Anime[] = {
     MUS_PAINS_THEME,
 
     /* ANIME RADIO MUSIC PACK: BEGIN */
-    MUS_HARUKA_KANATA,
-    MUS_THE_RAISING_FIGHTING_SPIRIT,
+
     /* ANIME RADIO MUSIC PACK: END */
 
+    MUS_HARUKA_KANATA,
+    MUS_THE_RAISING_FIGHTING_SPIRIT,
+    MUS_GURENGE_LISA,
+    MUS_YOU_SAY_RUN,
+    MUS_BEHELIT,
+    MUS_YOUSEEBIGGIRL_T_T,
+    MUS_HUNTING_FOR_YOUR_DREAM,
+    MUS_IVE_SEEN_MUCH,
     STATION_END,
 };
 
@@ -2171,6 +2283,20 @@ static const u16 sStation_Pop[] = {
     MUS_ONE_MORE_TIME,
     MUS_AROUND_THE_WORLD,
     MUS_WHERE_IS_THE_LOVE,
+    MUS_BAD_GUY_BILLIE_EILISH,
+    MUS_PAPARAZZI_LADY_GAGA,
+    MUS_BAD_ROMANCE_LADY_GAGA,
+    MUS_ALEJANDRO_LADY_GAGA,
+    MUS_TOXIC_BRITNEY_SPEARS,
+    MUS_UMBRELLA_RIHANNA,
+    MUS_DISTURBIA_RIHANNA,
+    MUS_DIAMONDS_RIHANNA,
+    MUS_IRREPLACEABLE_BEYONCE,
+    MUS_BROKEN_HEARTED_GIRL_BEYONCE,
+    MUS_CRAZY_IN_LOVE_BEYONCE,
+    MUS_HALO_BEYONCE,
+    MUS_PINK_PONY_CLUB_CHAPPELL_ROAN,
+    MUS_HOT_TO_GO_CHAPPELL_ROAN,
     STATION_END
 };
 
@@ -2241,6 +2367,13 @@ static const u16 sStation_IndieRock[] = {
     MUS_NEW_DAWN_FADES,
     MUS_DISORDER,
     MUS_LOVE_WILL_TEAR_US_APART,
+    MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND,
+    MUS_I_CANT_WAIT_WHITE_STRIPES,
+    MUS_JOLENE_WHITE_STRIPES,
+    MUS_SEVEN_NATION_ARMY,
+    MUS_WASHING_MACHINE_HEART_MITSKI,
+    MUS_I_BET_ON_LOSING_DOGS_MITSKI,
+    MUS_MY_LOVE_MINE_ALL_MINE_MITSKI,
     STATION_END
 };
 
@@ -2759,6 +2892,22 @@ static const u8 sPopName_OneMoreTime[] = _("ONE MORE TIME (DAFT PUNK)");
 static const u8 sPopName_AroundTheWorld[] = _("AROUND THE WORLD (DAFT PUNK)");
 static const u8 sPopName_WhereIsTheLove[] = _("WHERE IS THE LOVE (BLACK EYED PEAS)");
 
+static const u8 sPopName_BadGuyBillieEilish[] = _("BAD GUY (BILLIE EILISH)");
+static const u8 sPopName_PaparazziLadyGaga[] = _("PAPARAZZI (LADY GAGA)");
+static const u8 sPopName_BadRomanceLadyGaga[] = _("BAD ROMANCE (LADY GAGA)");
+static const u8 sPopName_AlejandroLadyGaga[] = _("ALEJANDRO (LADY GAGA)");
+static const u8 sPopName_ToxicBritneySpears[] = _("TOXIC (BRITNEY SPEARS)");
+static const u8 sPopName_GurengeLisa[] = _("GURENGE (LISA)");
+static const u8 sPopName_UmbrellaRihanna[] = _("UMBRELLA (RIHANNA)");
+static const u8 sPopName_DisturbiaRihanna[] = _("DISTURBIA (RIHANNA)");
+static const u8 sPopName_DiamondsRihanna[] = _("DIAMONDS (RIHANNA)");
+static const u8 sPopName_IrreplaceableBeyonce[] = _("IRREPLACEABLE (BEYONCE)");
+static const u8 sPopName_BrokenHeartedGirlBeyonce[] = _("BROKEN HEARTED GIRL (BEYONCE)");
+static const u8 sPopName_CrazyInLoveBeyonce[] = _("CRAZY IN LOVE (BEYONCE)");
+static const u8 sPopName_HaloBeyonce[] = _("HALO (BEYONCE)");
+static const u8 sPopName_PinkPonyClubChappellRoan[] = _("PINK PONY CLUB (CHAPPELL ROAN)");
+static const u8 sPopName_HotToGoChappellRoan[] = _("HOT TO GO! (CHAPPELL ROAN)");
+
 static const u8 *Radio_GetPopDisplayName(u16 songId)
 {
     switch (songId)
@@ -2772,7 +2921,38 @@ static const u8 *Radio_GetPopDisplayName(u16 songId)
     case MUS_AROUND_THE_WORLD:
         return sPopName_AroundTheWorld;
     case MUS_WHERE_IS_THE_LOVE:
-        return sPopName_WhereIsTheLove;
+        return sPopName_WhereIsTheLove;    case MUS_BAD_GUY_BILLIE_EILISH:
+        return sPopName_BadGuyBillieEilish;
+    case MUS_PAPARAZZI_LADY_GAGA:
+        return sPopName_PaparazziLadyGaga;
+    case MUS_BAD_ROMANCE_LADY_GAGA:
+        return sPopName_BadRomanceLadyGaga;
+    case MUS_ALEJANDRO_LADY_GAGA:
+        return sPopName_AlejandroLadyGaga;
+    case MUS_TOXIC_BRITNEY_SPEARS:
+        return sPopName_ToxicBritneySpears;
+    case MUS_GURENGE_LISA:
+        return sPopName_GurengeLisa;
+    case MUS_UMBRELLA_RIHANNA:
+        return sPopName_UmbrellaRihanna;
+    case MUS_DISTURBIA_RIHANNA:
+        return sPopName_DisturbiaRihanna;
+    case MUS_DIAMONDS_RIHANNA:
+        return sPopName_DiamondsRihanna;
+    case MUS_IRREPLACEABLE_BEYONCE:
+        return sPopName_IrreplaceableBeyonce;
+    case MUS_BROKEN_HEARTED_GIRL_BEYONCE:
+        return sPopName_BrokenHeartedGirlBeyonce;
+    case MUS_CRAZY_IN_LOVE_BEYONCE:
+        return sPopName_CrazyInLoveBeyonce;
+    case MUS_HALO_BEYONCE:
+        return sPopName_HaloBeyonce;
+
+    case MUS_PINK_PONY_CLUB_CHAPPELL_ROAN:
+        return sPopName_PinkPonyClubChappellRoan;
+    case MUS_HOT_TO_GO_CHAPPELL_ROAN:
+        return sPopName_HotToGoChappellRoan;
+
     default:
         return NULL;
     }
@@ -2816,6 +2996,15 @@ static const u8 sIndieName_Shadowplay[]               = _("SHADOWPLAY (JOY DIVIS
 static const u8 sIndieName_NewDawnFades[]             = _("NEW DAWN FADES (JOY DIVISION)");
 static const u8 sIndieName_Disorder[]                 = _("DISORDER (JOY DIVISION)");
 static const u8 sIndieName_LoveWillTearUsApart[]      = _("LOVE WILL TEAR US APART (JOY DIVISION)");
+
+static const u8 sIndieName_DeadLeavesDirtyGround[] = _("DEAD LEAVES AND THE DIRTY GROUND (THE WHITE STRIPES)");
+static const u8 sIndieName_ICantWaitWhiteStripes[] = _("I CAN'T WAIT (THE WHITE STRIPES)");
+static const u8 sIndieName_JoleneWhiteStripes[] = _("JOLENE (THE WHITE STRIPES)");
+static const u8 sIndieName_SevenNationArmy[] = _("SEVEN NATION ARMY (THE WHITE STRIPES)");
+
+static const u8 sIndieName_WashingMachineHeartMitski[] = _("WASHING MACHINE HEART (MITSKI)");
+static const u8 sIndieName_IBetOnLosingDogsMitski[] = _("I BET ON LOSING DOGS (MITSKI)");
+static const u8 sIndieName_MyLoveMineAllMineMitski[] = _("MY LOVE MINE ALL MINE (MITSKI)");
 
 static const u8 *Radio_GetIndieDisplayName(u16 songId)
 {
@@ -2882,7 +3071,22 @@ static const u8 *Radio_GetIndieDisplayName(u16 songId)
     case MUS_DISORDER:
         return sIndieName_Disorder;
     case MUS_LOVE_WILL_TEAR_US_APART:
-        return sIndieName_LoveWillTearUsApart;
+        return sIndieName_LoveWillTearUsApart;    case MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND:
+        return sIndieName_DeadLeavesDirtyGround;
+    case MUS_I_CANT_WAIT_WHITE_STRIPES:
+        return sIndieName_ICantWaitWhiteStripes;
+    case MUS_JOLENE_WHITE_STRIPES:
+        return sIndieName_JoleneWhiteStripes;
+    case MUS_SEVEN_NATION_ARMY:
+        return sIndieName_SevenNationArmy;
+
+    case MUS_WASHING_MACHINE_HEART_MITSKI:
+        return sIndieName_WashingMachineHeartMitski;
+    case MUS_I_BET_ON_LOSING_DOGS_MITSKI:
+        return sIndieName_IBetOnLosingDogsMitski;
+    case MUS_MY_LOVE_MINE_ALL_MINE_MITSKI:
+        return sIndieName_MyLoveMineAllMineMitski;
+
     default:
         return NULL;
     }
@@ -2909,7 +3113,16 @@ static const u8 sAnimeName_GazeAtTheSkies[]        = _("GAZE AT THE SKIES - (BER
 static const u8 sAnimeName_Kokuten[]               = _("KOKUTEN - (NARUTO)");
 static const u8 sAnimeName_GutsTheme[]             = _("GUTS THEME - (BERSERK)");
 static const u8 sAnimeName_GireiPain[]             = _("GIREI - PAIN THEME (NARUTO)");
+static const u8 sAnimeName_HarukaKanata[]          = _("HARUKA KANATA - (NARUTO)");
+static const u8 sAnimeName_RaisingFightingSpirit[] = _("THE RAISING FIGHTING SPIRIT - (NARUTO)");
 
+static const u8 sAnimeName_GurengeLisa[] = _("GURENGE - (DEMON SLAYER)");
+
+static const u8 sAnimeName_YouSayRun[] = _("YOU SAY RUN - (MY HERO ACADEMIA)");
+static const u8 sAnimeName_Behelit[] = _("BEHELIT - (BERSERK 1997)");
+static const u8 sAnimeName_YouSeeBigGirlTT[] = _("YOUSEEBIGGIRL/T:T - (ATTACK ON TITAN)");
+static const u8 sAnimeName_HuntingForYourDream[] = _("HUNTING FOR YOUR DREAM - (HUNTER X HUNTER)");
+static const u8 sAnimeName_IveSeenMuch[] = _("I'VE SEEN MUCH - (NARUTO)");
 static const u8 *Radio_GetAnimeDisplayName(u16 songId)
 {
     switch (songId)
@@ -2946,6 +3159,22 @@ static const u8 *Radio_GetAnimeDisplayName(u16 songId)
         return sAnimeName_GutsTheme;
     case MUS_PAINS_THEME:
         return sAnimeName_GireiPain;
+    case MUS_HARUKA_KANATA:
+        return sAnimeName_HarukaKanata;
+    case MUS_THE_RAISING_FIGHTING_SPIRIT:
+        return sAnimeName_RaisingFightingSpirit;    case MUS_GURENGE_LISA:
+        return sAnimeName_GurengeLisa;
+
+    case MUS_YOU_SAY_RUN:
+        return sAnimeName_YouSayRun;
+    case MUS_BEHELIT:
+        return sAnimeName_Behelit;
+    case MUS_YOUSEEBIGGIRL_T_T:
+        return sAnimeName_YouSeeBigGirlTT;
+    case MUS_HUNTING_FOR_YOUR_DREAM:
+        return sAnimeName_HuntingForYourDream;
+    case MUS_IVE_SEEN_MUCH:
+        return sAnimeName_IveSeenMuch;
     default:
         return NULL;
     }
@@ -2998,7 +3227,8 @@ static const u8 sGamesName_DontEverForget[] = _("DON'T EVER FORGET (POKEMON MYST
 static const u8 sGamesName_TemporalTower[] = _("TEMPORAL TOWER (POKEMON MYSTERY DUNGEON)");
 static const u8 sGamesName_TemporalSpire[] = _("TEMPORAL SPIRE (POKEMON MYSTERY DUNGEON)");
 static const u8 sGamesName_ThroughTheSeaOfTime[] = _("THROUGH THE SEA OF TIME (POKEMON MYSTERY DUNGEON)");
-
+static const u8 sGamesName_IntroSupernova[] = _("INTRO (SUPERNOVA)");
+static const u8 sGamesName_RagnarokTheme[] = _("THEME (RAGNAROK)");
 static const u8 *Radio_GetGamesDisplayName(u16 songId)
 {
     switch (songId)
@@ -3077,8 +3307,9 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
         return sGamesName_TemporalSpire;
     case MUS_THROUGH_THE_SEA_OF_TIME:
         return sGamesName_ThroughTheSeaOfTime;
-
-    default:
+    case MUS_THEME_RAGNAROK:
+        return sGamesName_RagnarokTheme;
+default:
         return NULL;
     }
 }
@@ -3134,6 +3365,9 @@ static const u8 *Radio_GetRockMetalDisplayName(u16 songId)
         return sRockMetalName_Kryptonite;
     case MUS_ANIMAL_I_HAVE_BECOME:
         return sRockMetalName_AnimalIHaveBecome;
+    case MUS_INTRO_SUPERNOVA:
+        return sGamesName_IntroSupernova;
+
     default:
         return NULL;
     }
@@ -6941,6 +7175,9 @@ static void Task_RadioHandleInput(u8 taskId)
         if (sRadioJigSpriteId != 0xFF)
             gSprites[sRadioJigSpriteId].animPaused = !playing;
 
+        if (sRadioAmaterasuSpriteId != 0xFF)
+            gSprites[sRadioAmaterasuSpriteId].animPaused = !playing;
+
         if (sRadioStereo1Id != 0xFF)
             gSprites[sRadioStereo1Id].animPaused = !playing;
 
@@ -7147,6 +7384,14 @@ static u8 Radio_GetAlbumCoverForSong(u16 songId)
         return RADIO_COVER_DARK_SIDE_OF_THE_MOON;
     case MUS_HIGH_HOPES:
         return RADIO_COVER_DIVISION_BELL;
+    case MUS_DEAD_LEAVES_AND_THE_DIRTY_GROUND:
+        return RADIO_COVER_WHITE_BLOOD_CELLS;
+    case MUS_I_CANT_WAIT_WHITE_STRIPES:
+        return RADIO_COVER_WHITE_BLOOD_CELLS;
+    case MUS_JOLENE_WHITE_STRIPES:
+        return RADIO_COVER_HELLO_OPERATOR;
+    case MUS_SEVEN_NATION_ARMY:
+        return RADIO_COVER_ELEPHANT;
     default:
         return RADIO_COVER_NONE;
     }
@@ -7189,8 +7434,77 @@ static bool8 Radio_LoadAlbumCoverPalette(u8 coverId)
     return TRUE;
 }
 
+static void Radio_LoadMascotPalette(const u16 *palette)
+{
+    u8 paletteNum = IndexOfSpritePaletteTag(TAG_RADIO_JIG);
+
+    if (paletteNum < 16)
+    {
+        LoadPalette(
+            palette,
+            OBJ_PLTT_ID(paletteNum),
+            PLTT_SIZE_4BPP
+        );
+    }
+}
+
+static void Radio_SetAmaterasuActive(bool8 active)
+{
+    if (active)
+    {
+        if (sRadioAmaterasuActive)
+            return;
+
+        // POP owns the center artwork completely.
+        sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
+        sRadioArtTransitionTimer = 0;
+        sRadioNextCoverId = RADIO_COVER_NONE;
+
+        if (sRadioCoverSpriteId < MAX_SPRITES)
+            Radio_DestroyAlbumCoverSprite();
+
+        sRadioCurrentCoverId = RADIO_COVER_NONE;
+
+        // Reuse Jig's OBJ palette slot; no extra OBJ palette allocation.
+        Radio_LoadMascotPalette(sRadioAmaterasu_Pal);
+
+        if (sRadioJigSpriteId < MAX_SPRITES)
+            gSprites[sRadioJigSpriteId].invisible = TRUE;
+
+        if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+        {
+            gSprites[sRadioAmaterasuSpriteId].invisible = FALSE;
+            gSprites[sRadioAmaterasuSpriteId].animPaused = !sRadioIsPlaying;
+        }
+
+        sRadioAmaterasuActive = TRUE;
+    }
+    else
+    {
+        if (!sRadioAmaterasuActive)
+            return;
+
+        Radio_LoadMascotPalette(sRadioJig_Pal);
+
+        if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+            gSprites[sRadioAmaterasuSpriteId].invisible = TRUE;
+
+        if (sRadioJigSpriteId < MAX_SPRITES)
+            gSprites[sRadioJigSpriteId].invisible =
+                (sRadioCurrentCoverId != RADIO_COVER_NONE);
+
+        sRadioAmaterasuActive = FALSE;
+    }
+}
+
 static u8 Radio_GetVisibleArtSpriteId(void)
 {
+    if (sRadioAmaterasuActive
+     && sRadioAmaterasuSpriteId < MAX_SPRITES)
+    {
+        return sRadioAmaterasuSpriteId;
+    }
+
     if (sRadioCurrentCoverId != RADIO_COVER_NONE
      && sRadioCoverSpriteId < MAX_SPRITES)
     {
@@ -7231,7 +7545,7 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
 
     if (coverId == RADIO_COVER_NONE)
     {
-        if (sRadioJigSpriteId < MAX_SPRITES)
+        if (!sRadioAmaterasuActive && sRadioJigSpriteId < MAX_SPRITES)
             gSprites[sRadioJigSpriteId].invisible = FALSE;
         return;
     }
@@ -7248,7 +7562,7 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
         sRadioCurrentCoverId = RADIO_COVER_NONE;
         FreeSpriteTilesByTag(TAG_RADIO_COVER);
 
-        if (sRadioJigSpriteId < MAX_SPRITES)
+        if (!sRadioAmaterasuActive && sRadioJigSpriteId < MAX_SPRITES)
             gSprites[sRadioJigSpriteId].invisible = FALSE;
         return;
     }
@@ -7268,18 +7582,47 @@ static void Radio_SetAlbumCoverImmediate(u8 coverId)
         FreeSpriteTilesByTag(TAG_RADIO_COVER);
 
         // Keep the reserved cover palette alive even if sprite creation failed.
-        if (sRadioJigSpriteId < MAX_SPRITES)
+        if (!sRadioAmaterasuActive && sRadioJigSpriteId < MAX_SPRITES)
             gSprites[sRadioJigSpriteId].invisible = FALSE;
     }
+}
+
+// Artwork follows the station/song currently shown by the Radio UI.
+// With NAVIGATION enabled, the browse candidate is intentionally independent
+// from the committed live playback context, so using sRadioStation here would
+// leave POP's Amaterasu visible while browsing GAMES/ANIME/etc.
+static u8 Radio_GetArtworkStation(void)
+{
+    return sRadioNavigationBrowseEnabled
+         ? sRadioMainBrowseStation
+         : sRadioStation;
+}
+
+static u16 Radio_GetArtworkSong(void)
+{
+    return sRadioNavigationBrowseEnabled
+         ? Radio_GetMainBrowseSong()
+         : sRadioCurrentSong;
 }
 
 // Apply the art preference immediately. This is used by the config toggle so
 // Jigglypuff never has to wait for a cover transition already in progress.
 static void Radio_RefreshAlbumCover(void)
 {
-    u8 coverId = sRadioHideCovers
+    u8 coverId;
+
+    if (Radio_GetArtworkStation() == STATION_POP)
+    {
+        Radio_SetAmaterasuActive(TRUE);
+        Radio_BlendVisibleArt(0);
+        return;
+    }
+
+    Radio_SetAmaterasuActive(FALSE);
+
+    coverId = sRadioHideCovers
                ? RADIO_COVER_NONE
-               : Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+               : Radio_GetAlbumCoverForSong(Radio_GetArtworkSong());
 
     sRadioArtTransitionState = RADIO_ART_TRANS_IDLE;
     sRadioArtTransitionTimer = 0;
@@ -7292,12 +7635,20 @@ static void Radio_UpdateAlbumCover(void)
 {
     u8 coverId;
 
+    if (Radio_GetArtworkStation() == STATION_POP)
+    {
+        Radio_SetAmaterasuActive(TRUE);
+        return;
+    }
+
+    Radio_SetAmaterasuActive(FALSE);
+
     if (sRadioJigSpriteId >= MAX_SPRITES)
         return;
 
     coverId = sRadioHideCovers
             ? RADIO_COVER_NONE
-            : Radio_GetAlbumCoverForSong(sRadioCurrentSong);
+            : Radio_GetAlbumCoverForSong(Radio_GetArtworkSong());
 
     // During a transition, remember the latest request. Fast song skipping
     // therefore converges to the newest album instead of flashing old covers.
@@ -7385,11 +7736,22 @@ static void Radio_CreateSprites(void)
 
     LoadCompressedSpriteSheet(sSpriteSheet_RadioJig);
     LoadSpritePalettes(sSpritePalette_RadioJig);
+    LoadCompressedSpriteSheet(sSpriteSheet_RadioAmaterasu);
     LoadCompressedSpriteSheet(sSpriteSheet_RadioStereo);
     LoadSpritePalettes(sSpritePalette_RadioStereo);
 
     // Jigglypuff
     sRadioJigSpriteId = CreateSprite(&sSpriteTemplate_RadioJig, RADIO_JIG_X, RADIO_JIG_Y, 0);
+
+    // POP mascot. Same center; different tiles; same OBJ palette slot as Jig.
+    sRadioAmaterasuSpriteId = CreateSprite(
+        &sSpriteTemplate_RadioAmaterasu,
+        RADIO_JIG_X,
+        RADIO_JIG_Y,
+        0
+    );
+    if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+        gSprites[sRadioAmaterasuSpriteId].invisible = TRUE;
 
     // Stereo LEFT — original pulse, smaller.
     sRadioStereo1Id = CreateSprite(&sSpriteTemplate_RadioStereo, RADIO_STEREO1_X, RADIO_STEREO1_Y, 0);
@@ -7409,6 +7771,8 @@ static void Radio_CreateSprites(void)
     if (!sRadioIsPlaying)
     {
         gSprites[sRadioJigSpriteId].animPaused  = TRUE;
+        if (sRadioAmaterasuSpriteId < MAX_SPRITES)
+            gSprites[sRadioAmaterasuSpriteId].animPaused = TRUE;
         gSprites[sRadioStereo1Id].animPaused     = TRUE;
         gSprites[sRadioStereo2Id].animPaused     = TRUE;
     }
@@ -7671,7 +8035,9 @@ void Radio_Open(MainCallback returnCallback)
     // Invalida IDs de sprite (serão preenchidos em Radio_CreateSprites).
     // Cannot initialize to 0xFF at declaration — that would place the variable
     // in the .data section which is discarded on GBA. Set it here instead.
-    sRadioJigSpriteId = 0xFF;
+    sRadioJigSpriteId       = 0xFF;
+    sRadioAmaterasuSpriteId = 0xFF;
+    sRadioAmaterasuActive   = FALSE;
     sRadioStereo1Id   = 0xFF;
     sRadioStereo2Id   = 0xFF;
     sRadioBtnPlayId   = 0xFF;

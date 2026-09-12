@@ -1649,7 +1649,8 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_BEHELIT) \
     X(MUS_YOUSEEBIGGIRL_T_T) \
     X(MUS_HUNTING_FOR_YOUR_DREAM) \
-    X(MUS_IVE_SEEN_MUCH)
+    X(MUS_IVE_SEEN_MUCH) \
+    X(MUS_THEME_RAGNAROK)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -2008,6 +2009,7 @@ static const u16 sStation_All[] = {
     MUS_YOUSEEBIGGIRL_T_T,
     MUS_HUNTING_FOR_YOUR_DREAM,
     MUS_IVE_SEEN_MUCH,
+    MUS_THEME_RAGNAROK,
     STATION_END
 };
 
@@ -2195,11 +2197,8 @@ STATION_END
 
 // GAMES: non-Pokemon videogame / visual-novel music.
 static const u16 sStation_Games[] = {
-    MUS_SCARS_OF_TIME,
-    MUS_MIDNAS_LAMENT,
-    MUS_TETRIS_MAIN_THEME,
-    MUS_THE_YOUNG_PHOTOGRAPHER,
-    MUS_HOPE_GRAND_CHASE,
+    // RAGNAROK
+    MUS_THEME_RAGNAROK,
     MUS_ANCIENT_GROOVER,
     MUS_DIVINE_GRACE,
     MUS_THEME_OF_MORROC,
@@ -2207,28 +2206,60 @@ static const u16 sStation_Games[] = {
     MUS_THEME_OF_GEFFEN,
     MUS_THEME_OF_ALBERTA,
     MUS_THEME_OF_PRONTERA,
+
+    // CHRONO CROSS
+    MUS_SCARS_OF_TIME,
+
+    // ZELDA
+    MUS_MIDNAS_LAMENT,
+
+    // POKEMON SNAP
+    MUS_THE_YOUNG_PHOTOGRAPHER,
+
+    // GRAND CHASE
+    MUS_HOPE_GRAND_CHASE,
+
+    // UMINEKO
     MUS_UMINEKO_HOPE,
     MUS_UMINEKO_600_MILLION,
     MUS_UMINEKO_WINGLESS,
     MUS_UMINEKO_WORLDEND,
     MUS_UMINEKO_FAR,
     MUS_UMINEKO_WORLDEND_DOMINATOR,
+
+    // TOUHOU 5
+    MUS_TOUHOU5_TITLE,
     MUS_TOUHOU5_STAGE1_BOSS,
     MUS_TOUHOU5_STAGE2,
     MUS_TOUHOU5_STAGE3_BOSS,
     MUS_TOUHOU5_STAGE5_BOSS,
-    MUS_TOUHOU5_TITLE,
+
+    // TOUHOU 6
     MUS_TOUHOU6_STAGE2_BOSS,
+
+    // TOUHOU 7
     MUS_TOUHOU7_STAGE6_BOSS,
+
+    // TOUHOU 8
     MUS_TOUHOU8_STAGE1_BOSS,
+
+    // TOUHOU 10
     MUS_TOUHOU10_STAGE2,
     MUS_TOUHOU10_STAGE5_BOSS,
+
+    // POKEMON MYSTERY DUNGEON
     MUS_TIME_GEAR,
     MUS_DONT_EVER_FORGET,
     MUS_TEMPORAL_TOWER,
     MUS_TEMPORAL_SPIRE,
     MUS_THROUGH_THE_SEA_OF_TIME,
+
+    // SUPERNOVA
     MUS_INTRO_SUPERNOVA,
+
+    // TETRIS - LAST
+    MUS_TETRIS_MAIN_THEME,
+
     STATION_END
 };
 
@@ -3225,6 +3256,7 @@ static const u8 sGamesName_TemporalTower[] = _("TEMPORAL TOWER (POKEMON MYSTERY 
 static const u8 sGamesName_TemporalSpire[] = _("TEMPORAL SPIRE (POKEMON MYSTERY DUNGEON)");
 static const u8 sGamesName_ThroughTheSeaOfTime[] = _("THROUGH THE SEA OF TIME (POKEMON MYSTERY DUNGEON)");
 static const u8 sGamesName_IntroSupernova[] = _("INTRO (SUPERNOVA)");
+static const u8 sGamesName_RagnarokTheme[] = _("THEME (RAGNAROK)");
 static const u8 *Radio_GetGamesDisplayName(u16 songId)
 {
     switch (songId)
@@ -3303,6 +3335,8 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
         return sGamesName_TemporalSpire;
     case MUS_THROUGH_THE_SEA_OF_TIME:
         return sGamesName_ThroughTheSeaOfTime;
+    case MUS_THEME_RAGNAROK:
+        return sGamesName_RagnarokTheme;
 default:
         return NULL;
     }
