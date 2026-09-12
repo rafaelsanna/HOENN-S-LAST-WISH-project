@@ -5612,63 +5612,63 @@
             "encounter_rate": 10,
             "mons": [
               {
-                "min_level": 24,
-                "max_level": 24,
+                "min_level": 40,
+                "max_level": 43,
                 "species": "SPECIES_VOLTORB"
               },
               {
-                "min_level": 24,
-                "max_level": 24,
+                "min_level": 40,
+                "max_level": 43,
                 "species": "SPECIES_MAGNEMITE"
               },
               {
-                "min_level": 25,
-                "max_level": 25,
+                "min_level": 40,
+                "max_level": 43,
                 "species": "SPECIES_VOLTORB"
               },
               {
-                "min_level": 25,
-                "max_level": 25,
+                "min_level": 40,
+                "max_level": 43,
                 "species": "SPECIES_MAGNEMITE"
               },
               {
-                "min_level": 23,
-                "max_level": 23,
+                "min_level": 40,
+                "max_level": 43,
                 "species": "SPECIES_VOLTORB"
               },
               {
-                "min_level": 23,
-                "max_level": 23,
+                "min_level": 42,
+                "max_level": 45,
                 "species": "SPECIES_MAGNEMITE"
               },
               {
-                "min_level": 26,
-                "max_level": 26,
+                "min_level": 42,
+                "max_level": 45,
                 "species": "SPECIES_VOLTORB"
               },
               {
-                "min_level": 26,
-                "max_level": 26,
+                "min_level": 42,
+                "max_level": 45,
                 "species": "SPECIES_ELECTABUZZ"
               },
               {
-                "min_level": 22,
-                "max_level": 22,
+                "min_level": 42,
+                "max_level": 45,
                 "species": "SPECIES_POLIWHIRL"
               },
               {
-                "min_level": 22,
-                "max_level": 22,
+                "min_level": 42,
+                "max_level": 45,
                 "species": "SPECIES_POLIWHIRL"
               },
               {
-                "min_level": 26,
-                "max_level": 26,
+                "min_level": 45,
+                "max_level": 48,
                 "species": "SPECIES_ELECTRODE"
               },
               {
-                "min_level": 26,
-                "max_level": 26,
+                "min_level": 45,
+                "max_level": 48,
                 "species": "SPECIES_MAGNETON"
               }
             ]

@@ -443,9 +443,9 @@ struct PartyMenuInternal
     u32 spriteIdCancelPokeball:7;
     u32 messageId:14;
     u8 windowId[3];
-    // Field menu can contain SUMMARY + 4 field moves + SWITCH + FOLLOWER + ITEM + CANCEL.
-    // Keep enough room for the true worst case (9 entries); 8 silently overflowed into numActions.
-    u8 actions[MAX_MON_MOVES + 5];
+    // Field menu can contain SUMMARY + 4 known field moves + 2 acquired HM moves + SWITCH + FOLLOWER + ITEM + CANCEL.
+    // Keep enough room for the true worst case (11 entries).
+    u8 actions[MAX_MON_MOVES + 7];
     u8 numActions;
     // In vanilla Emerald, only the first 0xB0 hwords (0x160 bytes) are actually used.
     // However, a full 0x100 hwords (0x200 bytes) are allocated.
@@ -4239,6 +4239,43 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
     }
 }
 
+static bool32 MonKnowsFieldMove(struct Pokemon *mon, u8 fieldMove)
+{
+    u8 i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMonData(mon, MON_DATA_MOVE1 + i) == FieldMove_GetMoveId(fieldMove))
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static bool32 IsAcquiredCompatibleHMFieldMove(struct Pokemon *mon, u8 fieldMove)
+{
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    u16 item;
+
+    if (species == SPECIES_NONE || GetMonData(mon, MON_DATA_IS_EGG))
+        return FALSE;
+
+    switch (fieldMove)
+    {
+    case FIELD_MOVE_FLASH:
+        item = ITEM_HM05;
+        break;
+    case FIELD_MOVE_FLY:
+        item = ITEM_HM02;
+        break;
+    default:
+        return FALSE;
+    }
+
+    return IsFieldMoveUnlocked(fieldMove)
+        && CheckBagHasItem(item, 1)
+        && CanLearnTeachableMove(species, FieldMove_GetMoveId(fieldMove));
+}
+
 static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
     u8 i, j;
@@ -4253,10 +4290,23 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
         {
             if (GetMonData(&mons[slotId], i + MON_DATA_MOVE1) == FieldMove_GetMoveId(j))
             {
-                AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, j + MENU_FIELD_MOVES);
+                if ((j != FIELD_MOVE_FLASH && j != FIELD_MOVE_FLY)
+                 || IsAcquiredCompatibleHMFieldMove(&mons[slotId], j))
+                    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, j + MENU_FIELD_MOVES);
                 break;
             }
         }
+    }
+
+    // Flash and Fly can be used directly from the party menu with a compatible
+    // Pokémon when the player has the HM and the required badge, even if the
+    // Pokémon does not currently know the move.
+    for (j = 0; j < FIELD_MOVES_COUNT; j++)
+    {
+        if ((j == FIELD_MOVE_FLASH || j == FIELD_MOVE_FLY)
+         && !MonKnowsFieldMove(&mons[slotId], j)
+         && IsAcquiredCompatibleHMFieldMove(&mons[slotId], j))
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, j + MENU_FIELD_MOVES);
     }
 
     // Switch option (only if there's at least 2 Pokémon)

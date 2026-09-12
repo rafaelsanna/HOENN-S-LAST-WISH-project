@@ -171,10 +171,12 @@ script JaggedPass_EventScript_MinerNPC {
 	lock
 	faceplayer
 	if (flag(FLAG_LEARNED_MINING) == true) {
-		msgbox(JaggedPass_Text_MinerNPC_AlreadyKnows)
-		closemessage
-		fadescreen(FADE_TO_BLACK)
-		special(StartMining)
+		msgbox(JaggedPass_Text_MinerNPC_AlreadyKnows, MSGBOX_YESNO)
+		if (var(VAR_RESULT) == YES) {
+			closemessage
+			fadescreen(FADE_TO_BLACK)
+			special(StartMining)
+		}
 		release
 	} else {
 		msgbox(JaggedPass_Text_MinerNPC_Teach)
@@ -341,5 +343,6 @@ text JaggedPass_Text_MinerNPC_Teach {
 
 text JaggedPass_Text_MinerNPC_AlreadyKnows {
 	"Go on, give the rocks a try!\n"
-	"You never know what you'll dig up."
+	"You never know what you'll dig up.\p"
+	"Would you like to try mining?"
 }
