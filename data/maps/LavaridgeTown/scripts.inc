@@ -1028,3 +1028,111 @@ LavaridgeTown_Text_MakeItRainDone:
 	.string "The crowd still hasn't come back.\n"
 # 515 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Peace and quiet at last!$"
+# 516 "data/maps/LavaridgeTown/scripts.pory"
+
+# 517 "data/maps/LavaridgeTown/scripts.pory"
+// SHOW QUEUE CHATTER: BEGIN
+# 518 "data/maps/LavaridgeTown/scripts.pory"
+// Short pre-show conversations for the Make It Rain queue.
+# 519 "data/maps/LavaridgeTown/scripts.pory"
+
+# 520 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_EventScript_ShowQueue1::
+# 521 "data/maps/LavaridgeTown/scripts.pory"
+	msgbox LavaridgeTown_Text_ShowQueue1, MSGBOX_NPC
+# 522 "data/maps/LavaridgeTown/scripts.pory"
+	end
+# 523 "data/maps/LavaridgeTown/scripts.pory"
+
+# 524 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_EventScript_ShowQueueAlejandro::
+# 525 "data/maps/LavaridgeTown/scripts.pory"
+	msgbox LavaridgeTown_Text_ShowQueueAlejandro, MSGBOX_NPC
+# 526 "data/maps/LavaridgeTown/scripts.pory"
+	end
+# 527 "data/maps/LavaridgeTown/scripts.pory"
+
+# 528 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_EventScript_ShowQueue3::
+# 529 "data/maps/LavaridgeTown/scripts.pory"
+	msgbox LavaridgeTown_Text_ShowQueue3, MSGBOX_NPC
+# 530 "data/maps/LavaridgeTown/scripts.pory"
+	end
+# 531 "data/maps/LavaridgeTown/scripts.pory"
+
+# 532 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_EventScript_ShowQueue4::
+# 533 "data/maps/LavaridgeTown/scripts.pory"
+	msgbox LavaridgeTown_Text_ShowQueue4, MSGBOX_NPC
+# 534 "data/maps/LavaridgeTown/scripts.pory"
+	end
+# 535 "data/maps/LavaridgeTown/scripts.pory"
+
+# 536 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_EventScript_ShowQueue5::
+# 537 "data/maps/LavaridgeTown/scripts.pory"
+	msgbox LavaridgeTown_Text_ShowQueue5, MSGBOX_NPC
+# 538 "data/maps/LavaridgeTown/scripts.pory"
+	end
+# 539 "data/maps/LavaridgeTown/scripts.pory"
+
+# 540 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_EventScript_ShowQueue6::
+# 541 "data/maps/LavaridgeTown/scripts.pory"
+	msgbox LavaridgeTown_Text_ShowQueue6, MSGBOX_NPC
+# 542 "data/maps/LavaridgeTown/scripts.pory"
+	end
+# 543 "data/maps/LavaridgeTown/scripts.pory"
+
+# 544 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_Text_ShowQueue1:
+# 545 "data/maps/LavaridgeTown/scripts.pory"
+	.string "I love AMATERASU! I've been waiting\n"
+# 546 "data/maps/LavaridgeTown/scripts.pory"
+	.string "all day to see her perform!$"
+# 547 "data/maps/LavaridgeTown/scripts.pory"
+
+# 548 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_Text_ShowQueueAlejandro:
+# 549 "data/maps/LavaridgeTown/scripts.pory"
+	.string "Beat it! I'm off duty right now!\p"
+# 550 "data/maps/LavaridgeTown/scripts.pory"
+	.string "I can enjoy a show too, okay?\p"
+# 551 "data/maps/LavaridgeTown/scripts.pory"
+	.string "We'll settle things later...$"
+# 552 "data/maps/LavaridgeTown/scripts.pory"
+
+# 553 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_Text_ShowQueue3:
+# 554 "data/maps/LavaridgeTown/scripts.pory"
+	.string "AMATERASU's songs are so good!\n"
+# 555 "data/maps/LavaridgeTown/scripts.pory"
+	.string "I hope she plays my favorite tonight!$"
+# 556 "data/maps/LavaridgeTown/scripts.pory"
+
+# 557 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_Text_ShowQueue4:
+# 558 "data/maps/LavaridgeTown/scripts.pory"
+	.string "I heard AMATERASU is even better\n"
+# 559 "data/maps/LavaridgeTown/scripts.pory"
+	.string "live. This line is totally worth it!$"
+# 560 "data/maps/LavaridgeTown/scripts.pory"
+
+# 561 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_Text_ShowQueue5:
+# 562 "data/maps/LavaridgeTown/scripts.pory"
+	.string "I've had AMATERASU's songs stuck\n"
+# 563 "data/maps/LavaridgeTown/scripts.pory"
+	.string "in my head all week. I can't wait!$"
+# 564 "data/maps/LavaridgeTown/scripts.pory"
+
+# 565 "data/maps/LavaridgeTown/scripts.pory"
+LavaridgeTown_Text_ShowQueue6:
+# 566 "data/maps/LavaridgeTown/scripts.pory"
+	.string "Almost there! I just hope I can get\n"
+# 567 "data/maps/LavaridgeTown/scripts.pory"
+	.string "close enough to the stage!$"
+# 568 "data/maps/LavaridgeTown/scripts.pory"
+
+# 569 "data/maps/LavaridgeTown/scripts.pory"
+// SHOW QUEUE CHATTER: END

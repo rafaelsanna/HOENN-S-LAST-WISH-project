@@ -513,4 +513,58 @@ LavaridgeTown_Text_MakeItRainDone:
 	.string "Ah, my little rainmaker!\p"
 	.string "The crowd still hasn't come back.\n"
 	.string "Peace and quiet at last!$"
+
+// SHOW QUEUE CHATTER: BEGIN
+// Short pre-show conversations for the Make It Rain queue.
+
+LavaridgeTown_EventScript_ShowQueue1::
+	msgbox LavaridgeTown_Text_ShowQueue1, MSGBOX_NPC
+	end
+
+LavaridgeTown_EventScript_ShowQueueAlejandro::
+	msgbox LavaridgeTown_Text_ShowQueueAlejandro, MSGBOX_NPC
+	end
+
+LavaridgeTown_EventScript_ShowQueue3::
+	msgbox LavaridgeTown_Text_ShowQueue3, MSGBOX_NPC
+	end
+
+LavaridgeTown_EventScript_ShowQueue4::
+	msgbox LavaridgeTown_Text_ShowQueue4, MSGBOX_NPC
+	end
+
+LavaridgeTown_EventScript_ShowQueue5::
+	msgbox LavaridgeTown_Text_ShowQueue5, MSGBOX_NPC
+	end
+
+LavaridgeTown_EventScript_ShowQueue6::
+	msgbox LavaridgeTown_Text_ShowQueue6, MSGBOX_NPC
+	end
+
+LavaridgeTown_Text_ShowQueue1:
+	.string "I love AMATERASU! I've been waiting\n"
+	.string "all day to see her perform!$"
+
+LavaridgeTown_Text_ShowQueueAlejandro:
+	.string "Beat it! I'm off duty right now!\p"
+	.string "I can enjoy a show too, okay?\p"
+	.string "We'll settle things later...$"
+
+LavaridgeTown_Text_ShowQueue3:
+	.string "AMATERASU's songs are so good!\n"
+	.string "I hope she plays my favorite tonight!$"
+
+LavaridgeTown_Text_ShowQueue4:
+	.string "I heard AMATERASU is even better\n"
+	.string "live. This line is totally worth it!$"
+
+LavaridgeTown_Text_ShowQueue5:
+	.string "I've had AMATERASU's songs stuck\n"
+	.string "in my head all week. I can't wait!$"
+
+LavaridgeTown_Text_ShowQueue6:
+	.string "Almost there! I just hope I can get\n"
+	.string "close enough to the stage!$"
+
+// SHOW QUEUE CHATTER: END
 `

@@ -189,7 +189,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_EventScript_ShowQueue3",
       "flag": "FLAG_MAKE_IT_RAIN"
     },
     {
@@ -203,7 +203,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_EventScript_ShowQueue1",
       "flag": "FLAG_MAKE_IT_RAIN"
     },
     {
@@ -217,7 +217,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_EventScript_ShowQueue5",
       "flag": "FLAG_MAKE_IT_RAIN"
     },
     {
@@ -231,7 +231,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_EventScript_ShowQueueAlejandro",
       "flag": "FLAG_MAKE_IT_RAIN"
     },
     {
@@ -245,7 +245,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_EventScript_ShowQueue4",
       "flag": "FLAG_MAKE_IT_RAIN"
     },
     {
@@ -272,7 +272,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "LavaridgeTown_EventScript_ShowQueue6",
       "flag": "FLAG_MAKE_IT_RAIN"
     }
   ],
