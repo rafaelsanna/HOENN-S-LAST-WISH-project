@@ -285,7 +285,6 @@ LavaridgeTown_EventScript_MakeItRain::
 	end
 
 LavaridgeTown_EventScript_MakeItRainNoRainmaker::
-	msgbox LavaridgeTown_Text_MakeItRainNoRainmaker, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -480,39 +479,33 @@ LavaridgeTown_Text_Boy:
 
 // MAKE IT RAIN dialogue
 LavaridgeTown_Text_MakeItRainComplaint:
-	.string "Honestly! Look at this ridiculous\n"
-	.string "line! Everyone is roasting out here.\p"
-	.string "No shade, no breeze, not even a\n"
-	.string "single cloud in the sky!\p"
-	.string "If only somebody had a POKéMON\n"
-	.string "that could bring us some rain...$"
-
-LavaridgeTown_Text_MakeItRainNoRainmaker:
-	.string "Hmm... No luck.\p"
-	.string "Come back with a POKéMON that has\n"
-	.string "DRIZZLE, or one that knows\l"
-	.string "RAIN DANCE.\p"
-	.string "This crowd isn't going anywhere\n"
-	.string "until somebody cools them off!$"
+	.string "Honestly... all this noise is ruining\n"
+	.string "the peace and quiet of LAVARIDGE!\p"
+	.string "People shouting, laughing, lining up\n"
+	.string "all day... What a nuisance.\p"
+	.string "A good downpour would send them all\n"
+	.string "running for cover.\p"
+	.string "If only I had a POKéMON that could\n"
+	.string "make it rain...$"
 
 LavaridgeTown_Text_MakeItRainCanHelp:
-	.string "Oh! Wait a moment!\p"
-	.string "One of your POKéMON can actually\n"
-	.string "make it rain?\p"
-	.string "Well, don't just stand there!\n"
-	.string "Let's see what it can do!$"
+	.string "Hmm... Wait a moment.\p"
+	.string "There's something unusual about one\n"
+	.string "of your POKéMON...\p"
+	.string "Don't tell me... You can actually\n"
+	.string "bring the rain?$"
 
 LavaridgeTown_Text_MakeItRainSuccess:
-	.string "HA! Would you look at that!\p"
-	.string "The whole line vanished the moment\n"
-	.string "the rain started!\p"
-	.string "A little weather works better than\n"
-	.string "any crowd control I've ever seen.$"
+	.string "HA! Look at them run!\p"
+	.string "So much for that noisy little crowd!\p"
+	.string "Now this is the peaceful LAVARIDGE\n"
+	.string "I remember.$"
 
 LavaridgeTown_Text_MakeItRainDone:
-	.string "Ah, my little rainmaker!\p"
-	.string "The crowd still hasn't come back.\n"
-	.string "Peace and quiet at last!$"
+	.string "Ahh... Listen to that.\p"
+	.string "No shouting. No crowds. Just peace\n"
+	.string "and quiet again.\p"
+	.string "Much better.$"
 
 // SHOW QUEUE CHATTER: BEGIN
 // Short pre-show conversations for the Make It Rain queue.

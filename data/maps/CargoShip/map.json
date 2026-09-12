@@ -69,15 +69,15 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 18,
-      "y": 11,
+      "y": 2,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_WATER_STONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_TM_RAIN_DANCE",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_CARGO_SHIP_WATER_STONE"
+      "flag": "FLAG_ITEM_CARGO_SHIP_RAIN_DANCE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
@@ -104,6 +104,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "CargoShip_EventScript_Sailor",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 18,
+      "y": 11,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_WATER_STONE",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_CARGO_SHIP_WATER_STONE"
     }
   ],
   "warp_events": [

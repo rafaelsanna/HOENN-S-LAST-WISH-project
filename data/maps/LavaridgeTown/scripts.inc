@@ -573,566 +573,552 @@ LavaridgeTown_EventScript_MakeItRain::
 # 287 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_MakeItRainNoRainmaker::
 # 288 "data/maps/LavaridgeTown/scripts.pory"
-	msgbox LavaridgeTown_Text_MakeItRainNoRainmaker, MSGBOX_DEFAULT
+	releaseall
 # 289 "data/maps/LavaridgeTown/scripts.pory"
-	releaseall
+	end
 # 290 "data/maps/LavaridgeTown/scripts.pory"
-	end
-# 291 "data/maps/LavaridgeTown/scripts.pory"
 
-# 292 "data/maps/LavaridgeTown/scripts.pory"
+# 291 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_MakeItRainDone::
-# 293 "data/maps/LavaridgeTown/scripts.pory"
+# 292 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_MakeItRainDone, MSGBOX_DEFAULT
-# 294 "data/maps/LavaridgeTown/scripts.pory"
+# 293 "data/maps/LavaridgeTown/scripts.pory"
 	releaseall
-# 295 "data/maps/LavaridgeTown/scripts.pory"
+# 294 "data/maps/LavaridgeTown/scripts.pory"
 	end
+# 295 "data/maps/LavaridgeTown/scripts.pory"
+
 # 296 "data/maps/LavaridgeTown/scripts.pory"
 
 # 297 "data/maps/LavaridgeTown/scripts.pory"
-
-# 298 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_EggWoman::
-# 299 "data/maps/LavaridgeTown/scripts.pory"
+# 298 "data/maps/LavaridgeTown/scripts.pory"
 	lock
-# 300 "data/maps/LavaridgeTown/scripts.pory"
+# 299 "data/maps/LavaridgeTown/scripts.pory"
 	faceplayer
-# 301 "data/maps/LavaridgeTown/scripts.pory"
+# 300 "data/maps/LavaridgeTown/scripts.pory"
 	goto_if_set FLAG_RECEIVED_LAVARIDGE_EGG, LavaridgeTown_EventScript_ReceivedEgg
-# 302 "data/maps/LavaridgeTown/scripts.pory"
+# 301 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_HaveEggWillYouTakeIt, MSGBOX_YESNO
-# 303 "data/maps/LavaridgeTown/scripts.pory"
+# 302 "data/maps/LavaridgeTown/scripts.pory"
 	goto_if_eq VAR_RESULT, NO, LavaridgeTown_EventScript_DeclineEgg
-# 304 "data/maps/LavaridgeTown/scripts.pory"
+# 303 "data/maps/LavaridgeTown/scripts.pory"
 	getpartysize
-# 305 "data/maps/LavaridgeTown/scripts.pory"
+# 304 "data/maps/LavaridgeTown/scripts.pory"
 	goto_if_eq VAR_RESULT, PARTY_SIZE, LavaridgeTown_EventScript_NoRoomForEgg
-# 306 "data/maps/LavaridgeTown/scripts.pory"
+# 305 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg, MSGBOX_DEFAULT
-# 307 "data/maps/LavaridgeTown/scripts.pory"
+# 306 "data/maps/LavaridgeTown/scripts.pory"
 	setflag FLAG_RECEIVED_LAVARIDGE_EGG
-# 308 "data/maps/LavaridgeTown/scripts.pory"
+# 307 "data/maps/LavaridgeTown/scripts.pory"
 	playfanfare MUS_OBTAIN_ITEM
-# 309 "data/maps/LavaridgeTown/scripts.pory"
+# 308 "data/maps/LavaridgeTown/scripts.pory"
 	message LavaridgeTown_Text_ReceivedTheEgg
-# 310 "data/maps/LavaridgeTown/scripts.pory"
+# 309 "data/maps/LavaridgeTown/scripts.pory"
 	waitfanfare
-# 311 "data/maps/LavaridgeTown/scripts.pory"
+# 310 "data/maps/LavaridgeTown/scripts.pory"
 	giveegg SPECIES_WYNAUT
+# 311 "data/maps/LavaridgeTown/scripts.pory"
+	release
 # 312 "data/maps/LavaridgeTown/scripts.pory"
-	release
+	end
 # 313 "data/maps/LavaridgeTown/scripts.pory"
-	end
+
 # 314 "data/maps/LavaridgeTown/scripts.pory"
-
-# 315 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_ReceivedEgg::
-# 316 "data/maps/LavaridgeTown/scripts.pory"
+# 315 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare, MSGBOX_DEFAULT
+# 316 "data/maps/LavaridgeTown/scripts.pory"
+	release
 # 317 "data/maps/LavaridgeTown/scripts.pory"
-	release
+	end
 # 318 "data/maps/LavaridgeTown/scripts.pory"
-	end
+
 # 319 "data/maps/LavaridgeTown/scripts.pory"
-
-# 320 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_NoRoomForEgg::
-# 321 "data/maps/LavaridgeTown/scripts.pory"
+# 320 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_NoRoomForThisEgg, MSGBOX_DEFAULT
+# 321 "data/maps/LavaridgeTown/scripts.pory"
+	release
 # 322 "data/maps/LavaridgeTown/scripts.pory"
-	release
+	end
 # 323 "data/maps/LavaridgeTown/scripts.pory"
-	end
+
 # 324 "data/maps/LavaridgeTown/scripts.pory"
-
-# 325 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_DeclineEgg::
-# 326 "data/maps/LavaridgeTown/scripts.pory"
+# 325 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_AsYouWishThen, MSGBOX_DEFAULT
-# 327 "data/maps/LavaridgeTown/scripts.pory"
+# 326 "data/maps/LavaridgeTown/scripts.pory"
 	release
+# 327 "data/maps/LavaridgeTown/scripts.pory"
+	end
 # 328 "data/maps/LavaridgeTown/scripts.pory"
-	end
+
 # 329 "data/maps/LavaridgeTown/scripts.pory"
-
-# 330 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_TownSign::
-# 331 "data/maps/LavaridgeTown/scripts.pory"
+# 330 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_TownSign, MSGBOX_SIGN
+# 331 "data/maps/LavaridgeTown/scripts.pory"
+	end
 # 332 "data/maps/LavaridgeTown/scripts.pory"
-	end
+
 # 333 "data/maps/LavaridgeTown/scripts.pory"
-
-# 334 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_GymSign::
-# 335 "data/maps/LavaridgeTown/scripts.pory"
+# 334 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_GymSign, MSGBOX_SIGN
+# 335 "data/maps/LavaridgeTown/scripts.pory"
+	end
 # 336 "data/maps/LavaridgeTown/scripts.pory"
-	end
+
 # 337 "data/maps/LavaridgeTown/scripts.pory"
-
-# 338 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_HerbShopSign::
-# 339 "data/maps/LavaridgeTown/scripts.pory"
+# 338 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_HerbShopSign, MSGBOX_SIGN
-# 340 "data/maps/LavaridgeTown/scripts.pory"
+# 339 "data/maps/LavaridgeTown/scripts.pory"
 	end
+# 340 "data/maps/LavaridgeTown/scripts.pory"
+
 # 341 "data/maps/LavaridgeTown/scripts.pory"
-
-# 342 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_MayNiceBadgesTakeThis:
-# 343 "data/maps/LavaridgeTown/scripts.pory"
+# 342 "data/maps/LavaridgeTown/scripts.pory"
 	.string "ZINNIA: {PLAYER}{KUN}! Long time no see!\p"
-# 344 "data/maps/LavaridgeTown/scripts.pory"
+# 343 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Oh? While I visited the hot springs,\n"
-# 345 "data/maps/LavaridgeTown/scripts.pory"
+# 344 "data/maps/LavaridgeTown/scripts.pory"
 	.string "you got the LAVARIDGE GYM BADGE.\p"
-# 346 "data/maps/LavaridgeTown/scripts.pory"
+# 345 "data/maps/LavaridgeTown/scripts.pory"
 	.string "You must have collected\n"
-# 347 "data/maps/LavaridgeTown/scripts.pory"
+# 346 "data/maps/LavaridgeTown/scripts.pory"
 	.string "good POKéMON…\l"
-# 348 "data/maps/LavaridgeTown/scripts.pory"
+# 347 "data/maps/LavaridgeTown/scripts.pory"
 	.string "No, I believe you raised some.\p"
-# 349 "data/maps/LavaridgeTown/scripts.pory"
+# 348 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I guess it would be okay for you to\n"
-# 350 "data/maps/LavaridgeTown/scripts.pory"
+# 349 "data/maps/LavaridgeTown/scripts.pory"
 	.string "have this.$"
+# 350 "data/maps/LavaridgeTown/scripts.pory"
+
 # 351 "data/maps/LavaridgeTown/scripts.pory"
-
-# 352 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_MayExplainGoGogglesChallengeDad:
-# 353 "data/maps/LavaridgeTown/scripts.pory"
+# 352 "data/maps/LavaridgeTown/scripts.pory"
 	.string "ZINNIA: With those GO-GOGGLES, you'll\n"
-# 354 "data/maps/LavaridgeTown/scripts.pory"
+# 353 "data/maps/LavaridgeTown/scripts.pory"
 	.string "have no trouble getting through the\l"
-# 355 "data/maps/LavaridgeTown/scripts.pory"
+# 354 "data/maps/LavaridgeTown/scripts.pory"
 	.string "desert near ROUTE 111.\p"
-# 356 "data/maps/LavaridgeTown/scripts.pory"
+# 355 "data/maps/LavaridgeTown/scripts.pory"
 	.string "But, wow, {PLAYER}{KUN}…\n"
-# 357 "data/maps/LavaridgeTown/scripts.pory"
+# 356 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Challenging GYMS…\p"
-# 358 "data/maps/LavaridgeTown/scripts.pory"
+# 357 "data/maps/LavaridgeTown/scripts.pory"
 	.string "You're trying hard because you don't\n"
-# 359 "data/maps/LavaridgeTown/scripts.pory"
+# 358 "data/maps/LavaridgeTown/scripts.pory"
 	.string "want to lose to me, I bet!\p"
-# 360 "data/maps/LavaridgeTown/scripts.pory"
+# 359 "data/maps/LavaridgeTown/scripts.pory"
 	.string "{PLAYER}{KUN}, I think I should challenge\n"
-# 361 "data/maps/LavaridgeTown/scripts.pory"
+# 360 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Professor CALENDULA at the PETALBURG GYM.\p"
-# 362 "data/maps/LavaridgeTown/scripts.pory"
+# 361 "data/maps/LavaridgeTown/scripts.pory"
 	.string "See you again!$"
-# 363 "data/maps/LavaridgeTown/scripts.pory"
+# 362 "data/maps/LavaridgeTown/scripts.pory"
 	
-# 364 "data/maps/LavaridgeTown/scripts.pory"
+# 363 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_BrendanNiceBadgesTakeThis:
-# 365 "data/maps/LavaridgeTown/scripts.pory"
+# 364 "data/maps/LavaridgeTown/scripts.pory"
 	.string "ZENNO: {PLAYER}, hey, it's been a while.\n"
-# 366 "data/maps/LavaridgeTown/scripts.pory"
+# 365 "data/maps/LavaridgeTown/scripts.pory"
 	.string "How's it going?\p"
-# 367 "data/maps/LavaridgeTown/scripts.pory"
+# 366 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Hmm…\n"
-# 368 "data/maps/LavaridgeTown/scripts.pory"
+# 367 "data/maps/LavaridgeTown/scripts.pory"
 	.string "That's a decent collection of BADGES.\p"
-# 369 "data/maps/LavaridgeTown/scripts.pory"
+# 368 "data/maps/LavaridgeTown/scripts.pory"
 	.string "All right, then.\n"
-# 370 "data/maps/LavaridgeTown/scripts.pory"
+# 369 "data/maps/LavaridgeTown/scripts.pory"
 	.string "You may as well have this.$"
+# 370 "data/maps/LavaridgeTown/scripts.pory"
+
 # 371 "data/maps/LavaridgeTown/scripts.pory"
-
-# 372 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_BrendanExplainGoGogglesChallengeDad:
-# 373 "data/maps/LavaridgeTown/scripts.pory"
+# 372 "data/maps/LavaridgeTown/scripts.pory"
 	.string "ZENNO: Keep those with you if you're\n"
-# 374 "data/maps/LavaridgeTown/scripts.pory"
+# 373 "data/maps/LavaridgeTown/scripts.pory"
 	.string "planning on going into that desert near\l"
-# 375 "data/maps/LavaridgeTown/scripts.pory"
+# 374 "data/maps/LavaridgeTown/scripts.pory"
 	.string "ROUTE 111.\p"
-# 376 "data/maps/LavaridgeTown/scripts.pory"
+# 375 "data/maps/LavaridgeTown/scripts.pory"
 	.string "There should be some POKéMON that\n"
-# 377 "data/maps/LavaridgeTown/scripts.pory"
+# 376 "data/maps/LavaridgeTown/scripts.pory"
 	.string "are exclusively desert-dwellers.\l"
-# 378 "data/maps/LavaridgeTown/scripts.pory"
+# 377 "data/maps/LavaridgeTown/scripts.pory"
 	.string "You might look around for those.\p"
-# 379 "data/maps/LavaridgeTown/scripts.pory"
+# 378 "data/maps/LavaridgeTown/scripts.pory"
 	.string "As for me…\n"
-# 380 "data/maps/LavaridgeTown/scripts.pory"
+# 379 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I'm thinking... are we ready to face\l"
-# 381 "data/maps/LavaridgeTown/scripts.pory"
+# 380 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Professor CALENDULA at the GYM?\p"
-# 382 "data/maps/LavaridgeTown/scripts.pory"
+# 381 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Hmm... I think I'll try anyway!\n"
-# 383 "data/maps/LavaridgeTown/scripts.pory"
+# 382 "data/maps/LavaridgeTown/scripts.pory"
 	.string "See you around!$"
+# 383 "data/maps/LavaridgeTown/scripts.pory"
+
 # 384 "data/maps/LavaridgeTown/scripts.pory"
-
-# 385 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_HaveEggWillYouTakeIt:
-# 386 "data/maps/LavaridgeTown/scripts.pory"
+# 385 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I have here an EGG.\p"
-# 387 "data/maps/LavaridgeTown/scripts.pory"
+# 386 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I'd hoped to hatch it by covering it in\n"
-# 388 "data/maps/LavaridgeTown/scripts.pory"
+# 387 "data/maps/LavaridgeTown/scripts.pory"
 	.string "hot sand by the hot springs.\l"
-# 389 "data/maps/LavaridgeTown/scripts.pory"
+# 388 "data/maps/LavaridgeTown/scripts.pory"
 	.string "But that doesn't seem to be enough…\p"
-# 390 "data/maps/LavaridgeTown/scripts.pory"
+# 389 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I've heard it would be best if it were\n"
-# 391 "data/maps/LavaridgeTown/scripts.pory"
+# 390 "data/maps/LavaridgeTown/scripts.pory"
 	.string "kept together with POKéMON and\l"
-# 392 "data/maps/LavaridgeTown/scripts.pory"
+# 391 "data/maps/LavaridgeTown/scripts.pory"
 	.string "carried about.\p"
-# 393 "data/maps/LavaridgeTown/scripts.pory"
+# 392 "data/maps/LavaridgeTown/scripts.pory"
 	.string "You are a TRAINER, yes?\n"
-# 394 "data/maps/LavaridgeTown/scripts.pory"
+# 393 "data/maps/LavaridgeTown/scripts.pory"
 	.string "And your POKéMON radiate vitality.\p"
-# 395 "data/maps/LavaridgeTown/scripts.pory"
+# 394 "data/maps/LavaridgeTown/scripts.pory"
 	.string "So, what say you?\n"
-# 396 "data/maps/LavaridgeTown/scripts.pory"
+# 395 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Will you take this EGG to hatch?$"
+# 396 "data/maps/LavaridgeTown/scripts.pory"
+
 # 397 "data/maps/LavaridgeTown/scripts.pory"
-
-# 398 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg:
-# 399 "data/maps/LavaridgeTown/scripts.pory"
+# 398 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Good! I hope you'll walk plenty with\n"
-# 400 "data/maps/LavaridgeTown/scripts.pory"
+# 399 "data/maps/LavaridgeTown/scripts.pory"
 	.string "this here EGG!$"
+# 400 "data/maps/LavaridgeTown/scripts.pory"
+
 # 401 "data/maps/LavaridgeTown/scripts.pory"
-
-# 402 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ReceivedTheEgg:
-# 403 "data/maps/LavaridgeTown/scripts.pory"
+# 402 "data/maps/LavaridgeTown/scripts.pory"
 	.string "{PLAYER} received the EGG.$"
+# 403 "data/maps/LavaridgeTown/scripts.pory"
+
 # 404 "data/maps/LavaridgeTown/scripts.pory"
-
-# 405 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_NoRoomForThisEgg:
-# 406 "data/maps/LavaridgeTown/scripts.pory"
+# 405 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Oh? You've too many POKéMON.\n"
-# 407 "data/maps/LavaridgeTown/scripts.pory"
+# 406 "data/maps/LavaridgeTown/scripts.pory"
 	.string "There's no room for this EGG…$"
+# 407 "data/maps/LavaridgeTown/scripts.pory"
+
 # 408 "data/maps/LavaridgeTown/scripts.pory"
-
-# 409 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_AsYouWishThen:
-# 410 "data/maps/LavaridgeTown/scripts.pory"
+# 409 "data/maps/LavaridgeTown/scripts.pory"
 	.string "As you wish, then…\p"
-# 411 "data/maps/LavaridgeTown/scripts.pory"
+# 410 "data/maps/LavaridgeTown/scripts.pory"
 	.string "If you have a change of heart about\n"
-# 412 "data/maps/LavaridgeTown/scripts.pory"
+# 411 "data/maps/LavaridgeTown/scripts.pory"
 	.string "hatching this EGG, I will be here.$"
+# 412 "data/maps/LavaridgeTown/scripts.pory"
+
 # 413 "data/maps/LavaridgeTown/scripts.pory"
-
-# 414 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare:
-# 415 "data/maps/LavaridgeTown/scripts.pory"
+# 414 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Every so often, an EGG will be found at\n"
-# 416 "data/maps/LavaridgeTown/scripts.pory"
+# 415 "data/maps/LavaridgeTown/scripts.pory"
 	.string "the POKéMON DAY CARE.\p"
-# 417 "data/maps/LavaridgeTown/scripts.pory"
+# 416 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Or at least that's how the rumor goes.$"
+# 417 "data/maps/LavaridgeTown/scripts.pory"
+
 # 418 "data/maps/LavaridgeTown/scripts.pory"
-
-# 419 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_HotSpringsNeverRunDry:
-# 420 "data/maps/LavaridgeTown/scripts.pory"
+# 419 "data/maps/LavaridgeTown/scripts.pory"
 	.string "We draw as much hot water as we need,\n"
-# 421 "data/maps/LavaridgeTown/scripts.pory"
+# 420 "data/maps/LavaridgeTown/scripts.pory"
 	.string "and yet the hot springs never run dry.\p"
-# 422 "data/maps/LavaridgeTown/scripts.pory"
+# 421 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Isn't it magical?\p"
-# 423 "data/maps/LavaridgeTown/scripts.pory"
+# 422 "data/maps/LavaridgeTown/scripts.pory"
 	.string "These hot springs appear near active\n"
-# 424 "data/maps/LavaridgeTown/scripts.pory"
+# 423 "data/maps/LavaridgeTown/scripts.pory"
 	.string "volcanoes. Veins of water under the\l"
-# 425 "data/maps/LavaridgeTown/scripts.pory"
+# 424 "data/maps/LavaridgeTown/scripts.pory"
 	.string "ground are heated by magma to well up\l"
-# 426 "data/maps/LavaridgeTown/scripts.pory"
+# 425 "data/maps/LavaridgeTown/scripts.pory"
 	.string "as hot springs.$"
+# 426 "data/maps/LavaridgeTown/scripts.pory"
+
 # 427 "data/maps/LavaridgeTown/scripts.pory"
-
-# 428 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_PokemonNippedBackside:
-# 429 "data/maps/LavaridgeTown/scripts.pory"
+# 428 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Being buried in this hot sand is…\n"
-# 430 "data/maps/LavaridgeTown/scripts.pory"
+# 429 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Sigh…\p"
-# 431 "data/maps/LavaridgeTown/scripts.pory"
+# 430 "data/maps/LavaridgeTown/scripts.pory"
 	.string "So warm and heavenly…\p"
-# 432 "data/maps/LavaridgeTown/scripts.pory"
+# 431 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Eh? Gyaah! Ouch!\p"
-# 433 "data/maps/LavaridgeTown/scripts.pory"
+# 432 "data/maps/LavaridgeTown/scripts.pory"
 	.string "A POKéMON nipped my backside!$"
+# 433 "data/maps/LavaridgeTown/scripts.pory"
+
 # 434 "data/maps/LavaridgeTown/scripts.pory"
-
-# 435 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_OhYouLikeHotSprings:
-# 436 "data/maps/LavaridgeTown/scripts.pory"
+# 435 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Oh, you like hot springs, do you?\p"
-# 437 "data/maps/LavaridgeTown/scripts.pory"
+# 436 "data/maps/LavaridgeTown/scripts.pory"
 	.string "That's surprising for one as young\n"
-# 438 "data/maps/LavaridgeTown/scripts.pory"
+# 437 "data/maps/LavaridgeTown/scripts.pory"
 	.string "as you.$"
+# 438 "data/maps/LavaridgeTown/scripts.pory"
+
 # 439 "data/maps/LavaridgeTown/scripts.pory"
-
-# 440 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_BatheInHotSpringsEveryDay:
-# 441 "data/maps/LavaridgeTown/scripts.pory"
+# 440 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I bathe in the hot springs every day.\p"
-# 442 "data/maps/LavaridgeTown/scripts.pory"
+# 441 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I want to become a beautiful and strong\n"
-# 443 "data/maps/LavaridgeTown/scripts.pory"
+# 442 "data/maps/LavaridgeTown/scripts.pory"
 	.string "GYM LEADER like FLANNERY.$"
+# 443 "data/maps/LavaridgeTown/scripts.pory"
+
 # 444 "data/maps/LavaridgeTown/scripts.pory"
-
-# 445 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_IfPokemonInHotSprings:
-# 446 "data/maps/LavaridgeTown/scripts.pory"
+# 445 "data/maps/LavaridgeTown/scripts.pory"
 	.string "If people put POKéMON in hot springs,\n"
-# 447 "data/maps/LavaridgeTown/scripts.pory"
+# 446 "data/maps/LavaridgeTown/scripts.pory"
 	.string "it might be seriously strange.\p"
-# 448 "data/maps/LavaridgeTown/scripts.pory"
+# 447 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Why, it might be an electric bath, or\n"
-# 449 "data/maps/LavaridgeTown/scripts.pory"
+# 448 "data/maps/LavaridgeTown/scripts.pory"
 	.string "a bubble bath, or even a lava bath…$"
+# 449 "data/maps/LavaridgeTown/scripts.pory"
+
 # 450 "data/maps/LavaridgeTown/scripts.pory"
-
-# 451 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_HotSpringsClaims:
-# 452 "data/maps/LavaridgeTown/scripts.pory"
+# 451 "data/maps/LavaridgeTown/scripts.pory"
 	.string "They're claiming that these hot springs\n"
-# 453 "data/maps/LavaridgeTown/scripts.pory"
+# 452 "data/maps/LavaridgeTown/scripts.pory"
 	.string "are good for calming nervous tension,\l"
-# 454 "data/maps/LavaridgeTown/scripts.pory"
+# 453 "data/maps/LavaridgeTown/scripts.pory"
 	.string "relieving aching muscles, solving\l"
-# 455 "data/maps/LavaridgeTown/scripts.pory"
+# 454 "data/maps/LavaridgeTown/scripts.pory"
 	.string "romantic problems, and attracting\l"
-# 456 "data/maps/LavaridgeTown/scripts.pory"
+# 455 "data/maps/LavaridgeTown/scripts.pory"
 	.string "money…$"
+# 456 "data/maps/LavaridgeTown/scripts.pory"
+
 # 457 "data/maps/LavaridgeTown/scripts.pory"
-
-# 458 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_TownSign:
-# 459 "data/maps/LavaridgeTown/scripts.pory"
+# 458 "data/maps/LavaridgeTown/scripts.pory"
 	.string "LAVARIDGE TOWN\p"
-# 460 "data/maps/LavaridgeTown/scripts.pory"
+# 459 "data/maps/LavaridgeTown/scripts.pory"
 	.string "“POKéMON CENTER HOT SPRINGS\n"
-# 461 "data/maps/LavaridgeTown/scripts.pory"
+# 460 "data/maps/LavaridgeTown/scripts.pory"
 	.string "An excellent place for relaxing!”$"
+# 461 "data/maps/LavaridgeTown/scripts.pory"
+
 # 462 "data/maps/LavaridgeTown/scripts.pory"
-
-# 463 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_GymSign:
-# 464 "data/maps/LavaridgeTown/scripts.pory"
+# 463 "data/maps/LavaridgeTown/scripts.pory"
 	.string "LAVARIDGE TOWN POKéMON GYM\n"
-# 465 "data/maps/LavaridgeTown/scripts.pory"
+# 464 "data/maps/LavaridgeTown/scripts.pory"
 	.string "LEADER: FLANNERY\l"
-# 466 "data/maps/LavaridgeTown/scripts.pory"
+# 465 "data/maps/LavaridgeTown/scripts.pory"
 	.string "“One with a fiery passion that burns!”$"
+# 466 "data/maps/LavaridgeTown/scripts.pory"
+
 # 467 "data/maps/LavaridgeTown/scripts.pory"
-
-# 468 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_HerbShopSign:
-# 469 "data/maps/LavaridgeTown/scripts.pory"
+# 468 "data/maps/LavaridgeTown/scripts.pory"
 	.string "POKéMON HERB SHOP\n"
-# 470 "data/maps/LavaridgeTown/scripts.pory"
+# 469 "data/maps/LavaridgeTown/scripts.pory"
 	.string "“Bitter taste--better cure!”$"
+# 470 "data/maps/LavaridgeTown/scripts.pory"
+
 # 471 "data/maps/LavaridgeTown/scripts.pory"
-
-# 472 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_Boy:
-# 473 "data/maps/LavaridgeTown/scripts.pory"
+# 472 "data/maps/LavaridgeTown/scripts.pory"
     .string "Yo! My grandpa says\n"
-# 474 "data/maps/LavaridgeTown/scripts.pory"
+# 473 "data/maps/LavaridgeTown/scripts.pory"
     .string "it wasn't this hot before here.\p"
-# 475 "data/maps/LavaridgeTown/scripts.pory"
+# 474 "data/maps/LavaridgeTown/scripts.pory"
     .string "Something must've changed\n"
-# 476 "data/maps/LavaridgeTown/scripts.pory"
+# 475 "data/maps/LavaridgeTown/scripts.pory"
     .string "deep in the mountain...\p"
-# 477 "data/maps/LavaridgeTown/scripts.pory"
+# 476 "data/maps/LavaridgeTown/scripts.pory"
     .string "When I grow up, I'm going\n"
-# 478 "data/maps/LavaridgeTown/scripts.pory"
+# 477 "data/maps/LavaridgeTown/scripts.pory"
     .string "to check out FIERY PATH\l"
-# 479 "data/maps/LavaridgeTown/scripts.pory"
+# 478 "data/maps/LavaridgeTown/scripts.pory"
     .string "and find rare POKéMON!$"
+# 479 "data/maps/LavaridgeTown/scripts.pory"
+
 # 480 "data/maps/LavaridgeTown/scripts.pory"
-
-# 481 "data/maps/LavaridgeTown/scripts.pory"
 // MAKE IT RAIN dialogue
-# 482 "data/maps/LavaridgeTown/scripts.pory"
+# 481 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_MakeItRainComplaint:
+# 482 "data/maps/LavaridgeTown/scripts.pory"
+	.string "Honestly... all this noise is ruining\n"
 # 483 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Honestly! Look at this ridiculous\n"
+	.string "the peace and quiet of LAVARIDGE!\p"
 # 484 "data/maps/LavaridgeTown/scripts.pory"
-	.string "line! Everyone is roasting out here.\p"
+	.string "People shouting, laughing, lining up\n"
 # 485 "data/maps/LavaridgeTown/scripts.pory"
-	.string "No shade, no breeze, not even a\n"
+	.string "all day... What a nuisance.\p"
 # 486 "data/maps/LavaridgeTown/scripts.pory"
-	.string "single cloud in the sky!\p"
+	.string "A good downpour would send them all\n"
 # 487 "data/maps/LavaridgeTown/scripts.pory"
-	.string "If only somebody had a POKéMON\n"
+	.string "running for cover.\p"
 # 488 "data/maps/LavaridgeTown/scripts.pory"
-	.string "that could bring us some rain...$"
+	.string "If only I had a POKéMON that could\n"
 # 489 "data/maps/LavaridgeTown/scripts.pory"
-
+	.string "make it rain...$"
 # 490 "data/maps/LavaridgeTown/scripts.pory"
-LavaridgeTown_Text_MakeItRainNoRainmaker:
+
 # 491 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Hmm... No luck.\p"
+LavaridgeTown_Text_MakeItRainCanHelp:
 # 492 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Come back with a POKéMON that has\n"
+	.string "Hmm... Wait a moment.\p"
 # 493 "data/maps/LavaridgeTown/scripts.pory"
-	.string "DRIZZLE, or one that knows\l"
+	.string "There's something unusual about one\n"
 # 494 "data/maps/LavaridgeTown/scripts.pory"
-	.string "RAIN DANCE.\p"
+	.string "of your POKéMON...\p"
 # 495 "data/maps/LavaridgeTown/scripts.pory"
-	.string "This crowd isn't going anywhere\n"
+	.string "Don't tell me... You can actually\n"
 # 496 "data/maps/LavaridgeTown/scripts.pory"
-	.string "until somebody cools them off!$"
+	.string "bring the rain?$"
 # 497 "data/maps/LavaridgeTown/scripts.pory"
 
 # 498 "data/maps/LavaridgeTown/scripts.pory"
-LavaridgeTown_Text_MakeItRainCanHelp:
-# 499 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Oh! Wait a moment!\p"
-# 500 "data/maps/LavaridgeTown/scripts.pory"
-	.string "One of your POKéMON can actually\n"
-# 501 "data/maps/LavaridgeTown/scripts.pory"
-	.string "make it rain?\p"
-# 502 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Well, don't just stand there!\n"
-# 503 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Let's see what it can do!$"
-# 504 "data/maps/LavaridgeTown/scripts.pory"
-
-# 505 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_MakeItRainSuccess:
-# 506 "data/maps/LavaridgeTown/scripts.pory"
-	.string "HA! Would you look at that!\p"
-# 507 "data/maps/LavaridgeTown/scripts.pory"
-	.string "The whole line vanished the moment\n"
-# 508 "data/maps/LavaridgeTown/scripts.pory"
-	.string "the rain started!\p"
-# 509 "data/maps/LavaridgeTown/scripts.pory"
-	.string "A little weather works better than\n"
-# 510 "data/maps/LavaridgeTown/scripts.pory"
-	.string "any crowd control I've ever seen.$"
-# 511 "data/maps/LavaridgeTown/scripts.pory"
+# 499 "data/maps/LavaridgeTown/scripts.pory"
+	.string "HA! Look at them run!\p"
+# 500 "data/maps/LavaridgeTown/scripts.pory"
+	.string "So much for that noisy little crowd!\p"
+# 501 "data/maps/LavaridgeTown/scripts.pory"
+	.string "Now this is the peaceful LAVARIDGE\n"
+# 502 "data/maps/LavaridgeTown/scripts.pory"
+	.string "I remember.$"
+# 503 "data/maps/LavaridgeTown/scripts.pory"
 
-# 512 "data/maps/LavaridgeTown/scripts.pory"
+# 504 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_MakeItRainDone:
+# 505 "data/maps/LavaridgeTown/scripts.pory"
+	.string "Ahh... Listen to that.\p"
+# 506 "data/maps/LavaridgeTown/scripts.pory"
+	.string "No shouting. No crowds. Just peace\n"
+# 507 "data/maps/LavaridgeTown/scripts.pory"
+	.string "and quiet again.\p"
+# 508 "data/maps/LavaridgeTown/scripts.pory"
+	.string "Much better.$"
+# 509 "data/maps/LavaridgeTown/scripts.pory"
+
+# 510 "data/maps/LavaridgeTown/scripts.pory"
+// SHOW QUEUE CHATTER: BEGIN
+# 511 "data/maps/LavaridgeTown/scripts.pory"
+// Short pre-show conversations for the Make It Rain queue.
+# 512 "data/maps/LavaridgeTown/scripts.pory"
+
 # 513 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Ah, my little rainmaker!\p"
+LavaridgeTown_EventScript_ShowQueue1::
 # 514 "data/maps/LavaridgeTown/scripts.pory"
-	.string "The crowd still hasn't come back.\n"
+	msgbox LavaridgeTown_Text_ShowQueue1, MSGBOX_NPC
 # 515 "data/maps/LavaridgeTown/scripts.pory"
-	.string "Peace and quiet at last!$"
+	end
 # 516 "data/maps/LavaridgeTown/scripts.pory"
 
 # 517 "data/maps/LavaridgeTown/scripts.pory"
-// SHOW QUEUE CHATTER: BEGIN
-# 518 "data/maps/LavaridgeTown/scripts.pory"
-// Short pre-show conversations for the Make It Rain queue.
-# 519 "data/maps/LavaridgeTown/scripts.pory"
-
-# 520 "data/maps/LavaridgeTown/scripts.pory"
-LavaridgeTown_EventScript_ShowQueue1::
-# 521 "data/maps/LavaridgeTown/scripts.pory"
-	msgbox LavaridgeTown_Text_ShowQueue1, MSGBOX_NPC
-# 522 "data/maps/LavaridgeTown/scripts.pory"
-	end
-# 523 "data/maps/LavaridgeTown/scripts.pory"
-
-# 524 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_ShowQueueAlejandro::
-# 525 "data/maps/LavaridgeTown/scripts.pory"
+# 518 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_ShowQueueAlejandro, MSGBOX_NPC
-# 526 "data/maps/LavaridgeTown/scripts.pory"
+# 519 "data/maps/LavaridgeTown/scripts.pory"
 	end
-# 527 "data/maps/LavaridgeTown/scripts.pory"
+# 520 "data/maps/LavaridgeTown/scripts.pory"
 
-# 528 "data/maps/LavaridgeTown/scripts.pory"
+# 521 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_ShowQueue3::
-# 529 "data/maps/LavaridgeTown/scripts.pory"
+# 522 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_ShowQueue3, MSGBOX_NPC
-# 530 "data/maps/LavaridgeTown/scripts.pory"
+# 523 "data/maps/LavaridgeTown/scripts.pory"
 	end
-# 531 "data/maps/LavaridgeTown/scripts.pory"
+# 524 "data/maps/LavaridgeTown/scripts.pory"
 
-# 532 "data/maps/LavaridgeTown/scripts.pory"
+# 525 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_ShowQueue4::
-# 533 "data/maps/LavaridgeTown/scripts.pory"
+# 526 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_ShowQueue4, MSGBOX_NPC
-# 534 "data/maps/LavaridgeTown/scripts.pory"
+# 527 "data/maps/LavaridgeTown/scripts.pory"
 	end
-# 535 "data/maps/LavaridgeTown/scripts.pory"
+# 528 "data/maps/LavaridgeTown/scripts.pory"
 
-# 536 "data/maps/LavaridgeTown/scripts.pory"
+# 529 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_ShowQueue5::
-# 537 "data/maps/LavaridgeTown/scripts.pory"
+# 530 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_ShowQueue5, MSGBOX_NPC
-# 538 "data/maps/LavaridgeTown/scripts.pory"
+# 531 "data/maps/LavaridgeTown/scripts.pory"
 	end
-# 539 "data/maps/LavaridgeTown/scripts.pory"
+# 532 "data/maps/LavaridgeTown/scripts.pory"
 
-# 540 "data/maps/LavaridgeTown/scripts.pory"
+# 533 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_EventScript_ShowQueue6::
-# 541 "data/maps/LavaridgeTown/scripts.pory"
+# 534 "data/maps/LavaridgeTown/scripts.pory"
 	msgbox LavaridgeTown_Text_ShowQueue6, MSGBOX_NPC
-# 542 "data/maps/LavaridgeTown/scripts.pory"
+# 535 "data/maps/LavaridgeTown/scripts.pory"
 	end
-# 543 "data/maps/LavaridgeTown/scripts.pory"
+# 536 "data/maps/LavaridgeTown/scripts.pory"
 
-# 544 "data/maps/LavaridgeTown/scripts.pory"
+# 537 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ShowQueue1:
-# 545 "data/maps/LavaridgeTown/scripts.pory"
+# 538 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I love AMATERASU! I've been waiting\n"
-# 546 "data/maps/LavaridgeTown/scripts.pory"
+# 539 "data/maps/LavaridgeTown/scripts.pory"
 	.string "all day to see her perform!$"
-# 547 "data/maps/LavaridgeTown/scripts.pory"
+# 540 "data/maps/LavaridgeTown/scripts.pory"
 
-# 548 "data/maps/LavaridgeTown/scripts.pory"
+# 541 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ShowQueueAlejandro:
-# 549 "data/maps/LavaridgeTown/scripts.pory"
+# 542 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Beat it! I'm off duty right now!\p"
-# 550 "data/maps/LavaridgeTown/scripts.pory"
+# 543 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I can enjoy a show too, okay?\p"
-# 551 "data/maps/LavaridgeTown/scripts.pory"
+# 544 "data/maps/LavaridgeTown/scripts.pory"
 	.string "We'll settle things later...$"
-# 552 "data/maps/LavaridgeTown/scripts.pory"
+# 545 "data/maps/LavaridgeTown/scripts.pory"
 
-# 553 "data/maps/LavaridgeTown/scripts.pory"
+# 546 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ShowQueue3:
-# 554 "data/maps/LavaridgeTown/scripts.pory"
+# 547 "data/maps/LavaridgeTown/scripts.pory"
 	.string "AMATERASU's songs are so good!\n"
-# 555 "data/maps/LavaridgeTown/scripts.pory"
+# 548 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I hope she plays my favorite tonight!$"
-# 556 "data/maps/LavaridgeTown/scripts.pory"
+# 549 "data/maps/LavaridgeTown/scripts.pory"
 
-# 557 "data/maps/LavaridgeTown/scripts.pory"
+# 550 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ShowQueue4:
-# 558 "data/maps/LavaridgeTown/scripts.pory"
+# 551 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I heard AMATERASU is even better\n"
-# 559 "data/maps/LavaridgeTown/scripts.pory"
+# 552 "data/maps/LavaridgeTown/scripts.pory"
 	.string "live. This line is totally worth it!$"
-# 560 "data/maps/LavaridgeTown/scripts.pory"
+# 553 "data/maps/LavaridgeTown/scripts.pory"
 
-# 561 "data/maps/LavaridgeTown/scripts.pory"
+# 554 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ShowQueue5:
-# 562 "data/maps/LavaridgeTown/scripts.pory"
+# 555 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I've had AMATERASU's songs stuck\n"
-# 563 "data/maps/LavaridgeTown/scripts.pory"
+# 556 "data/maps/LavaridgeTown/scripts.pory"
 	.string "in my head all week. I can't wait!$"
-# 564 "data/maps/LavaridgeTown/scripts.pory"
+# 557 "data/maps/LavaridgeTown/scripts.pory"
 
-# 565 "data/maps/LavaridgeTown/scripts.pory"
+# 558 "data/maps/LavaridgeTown/scripts.pory"
 LavaridgeTown_Text_ShowQueue6:
-# 566 "data/maps/LavaridgeTown/scripts.pory"
+# 559 "data/maps/LavaridgeTown/scripts.pory"
 	.string "Almost there! I just hope I can get\n"
-# 567 "data/maps/LavaridgeTown/scripts.pory"
+# 560 "data/maps/LavaridgeTown/scripts.pory"
 	.string "close enough to the stage!$"
-# 568 "data/maps/LavaridgeTown/scripts.pory"
+# 561 "data/maps/LavaridgeTown/scripts.pory"
 
-# 569 "data/maps/LavaridgeTown/scripts.pory"
+# 562 "data/maps/LavaridgeTown/scripts.pory"
 // SHOW QUEUE CHATTER: END

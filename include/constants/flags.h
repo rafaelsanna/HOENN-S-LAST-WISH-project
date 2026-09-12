@@ -1260,7 +1260,7 @@
 #define FLAG_DEFEATED_NIGHTMARE_PETALBURG_DARK_AURA                 0x4B3
 #define FLAG_RENTON_LEFT                                           0x4B4 // Unused Flag
 #define FLAG_MAKE_IT_RAIN                                         0x4B5 // Unused Flag
-#define FLAG_UNUSED_0x4B6                                           0x4B6 // Unused Flag
+#define FLAG_ITEM_CARGO_SHIP_RAIN_DANCE                            0x4B6 
 #define FLAG_UNUSED_0x4B7                                           0x4B7 // Unused Flag
 #define FLAG_UNUSED_0x4B8                                           0x4B8 // Unused Flag
 #define FLAG_UNUSED_0x4B9                                           0x4B9 // Unused Flag

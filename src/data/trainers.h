@@ -31931,7 +31931,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 12287
-            .species = SPECIES_PELIPPER,
+            .species = SPECIES_CAMERUPT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12289
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -31942,7 +31942,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 12291
-            .species = SPECIES_LOMBRE,
+            .species = SPECIES_SWALOT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12293
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -32447,7 +32447,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 12476
-            .species = SPECIES_PELIPPER,
+            .species = SPECIES_CAMERUPT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12478
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
@@ -32458,7 +32458,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 12480
-            .species = SPECIES_LOMBRE,
+            .species = SPECIES_SWALOT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 12482
             .iv = TRAINER_PARTY_IVS(12, 12, 12, 12, 12, 12),
