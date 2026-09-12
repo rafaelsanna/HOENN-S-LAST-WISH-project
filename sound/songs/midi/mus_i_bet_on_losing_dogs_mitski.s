@@ -24,8 +24,6 @@ mus_i_bet_on_losing_dogs_mitski_1:
 	.byte		PAN   , c_v+12
 	.byte	W96
 @ 001   ----------------------------------------
-	.byte	W96
-@ 002   ----------------------------------------
 	.byte		N48   , Bn2 , v076
 	.byte	W24
 	.byte		N24   , En3 
@@ -36,8 +34,8 @@ mus_i_bet_on_losing_dogs_mitski_1:
 	.byte	W24
 	.byte		        En3 
 	.byte	W12
-@ 003   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_1_003:
+@ 002   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_1_002:
 	.byte		N48   , Bn2 , v076
 	.byte	W12
 	.byte		N24   , Dn3 
@@ -47,7 +45,7 @@ mus_i_bet_on_losing_dogs_mitski_1_003:
 	.byte		N48   , An2 
 	.byte	W48
 	.byte	PEND
-@ 004   ----------------------------------------
+@ 003   ----------------------------------------
 	.byte		N12   , En3 
 	.byte	W12
 	.byte		N24   , Dn3 
@@ -60,8 +58,8 @@ mus_i_bet_on_losing_dogs_mitski_1_003:
 	.byte	W24
 	.byte		        En3 
 	.byte	W12
-@ 005   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_1_005:
+@ 004   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_1_004:
 	.byte		N36   , Dn3 , v076
 	.byte	W12
 	.byte		N24   
@@ -73,7 +71,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte		N24   , Bn2 
 	.byte	W36
 	.byte	PEND
-@ 006   ----------------------------------------
+@ 005   ----------------------------------------
 	.byte		N60   , Cs3 
 	.byte	W48
 	.byte		N12   
@@ -82,10 +80,10 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W24
 	.byte		        En3 
 	.byte	W12
-@ 007   ----------------------------------------
+@ 006   ----------------------------------------
 	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_1_003
-@ 008   ----------------------------------------
+	 .word	mus_i_bet_on_losing_dogs_mitski_1_002
+@ 007   ----------------------------------------
 	.byte		N12   , En3 , v076
 	.byte	W12
 	.byte		N24   , Dn3 
@@ -100,10 +98,10 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W06
 	.byte		N24   , En3 
 	.byte	W12
-@ 009   ----------------------------------------
+@ 008   ----------------------------------------
 	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_1_005
-@ 010   ----------------------------------------
+	 .word	mus_i_bet_on_losing_dogs_mitski_1_004
+@ 009   ----------------------------------------
 	.byte		N48   , Cs3 , v076
 	.byte	W48
 	.byte		N12   , Bn2 
@@ -112,7 +110,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W24
 	.byte		        Dn3 
 	.byte	W12
-@ 011   ----------------------------------------
+@ 010   ----------------------------------------
 	.byte		N12   
 	.byte	W12
 	.byte		N24   , Cs3 
@@ -121,7 +119,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		N36   
 	.byte	W48
-@ 012   ----------------------------------------
+@ 011   ----------------------------------------
 	.byte		N24   
 	.byte	W12
 	.byte		N12   
@@ -138,7 +136,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		        An2 
 	.byte	W12
-@ 013   ----------------------------------------
+@ 012   ----------------------------------------
 	.byte		N18   , Gs2 
 	.byte	W18
 	.byte		N06   , Fs2 
@@ -155,7 +153,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W06
 	.byte		N12   
 	.byte	W12
-@ 014   ----------------------------------------
+@ 013   ----------------------------------------
 	.byte		N48   , An2 
 	.byte	W18
 	.byte		N06   , Dn3 
@@ -172,7 +170,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
-@ 015   ----------------------------------------
+@ 014   ----------------------------------------
 	.byte		N18   
 	.byte	W18
 	.byte		N06   , En3 
@@ -185,7 +183,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W36
 	.byte		N60   , Cs3 
 	.byte	W12
-@ 016   ----------------------------------------
+@ 015   ----------------------------------------
 	.byte		N48   , An2 
 	.byte	W48
 	.byte		N12   , Bn2 
@@ -194,7 +192,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W24
 	.byte		        Dn3 
 	.byte	W12
-@ 017   ----------------------------------------
+@ 016   ----------------------------------------
 	.byte		N48   , An2 
 	.byte	W12
 	.byte		N24   , Cs3 
@@ -203,7 +201,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		N24   
 	.byte	W48
-@ 018   ----------------------------------------
+@ 017   ----------------------------------------
 	.byte		N48   , An2 
 	.byte	W36
 	.byte		N12   , Cs3 
@@ -214,7 +212,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W24
 	.byte		        Dn3 
 	.byte	W12
-@ 019   ----------------------------------------
+@ 018   ----------------------------------------
 	.byte		N48   , Bn2 
 	.byte	W12
 	.byte		N24   , Cs3 
@@ -223,67 +221,67 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		        En2 
 	.byte	W48
-@ 020   ----------------------------------------
+@ 019   ----------------------------------------
 	.byte		N96   , En3 
 	.byte	W96
-@ 021   ----------------------------------------
+@ 020   ----------------------------------------
 	.byte		N48   , Dn3 
 	.byte	W48
 	.byte		        Bn2 
 	.byte	W48
-@ 022   ----------------------------------------
+@ 021   ----------------------------------------
 	.byte		N48   
 	.byte	W48
 	.byte		        Dn3 
 	.byte	W48
-@ 023   ----------------------------------------
+@ 022   ----------------------------------------
 	.byte		N96   , Bn2 
 	.byte	W96
-@ 024   ----------------------------------------
+@ 023   ----------------------------------------
 	.byte		N48   , Dn3 
 	.byte	W48
 	.byte		N96   , Cs3 
 	.byte	W48
-@ 025   ----------------------------------------
+@ 024   ----------------------------------------
 	.byte	W48
 	.byte		N48   , Bn2 
 	.byte	W48
-@ 026   ----------------------------------------
+@ 025   ----------------------------------------
 	.byte		        An2 
 	.byte	W48
 	.byte		        Bn2 
 	.byte	W48
-@ 027   ----------------------------------------
+@ 026   ----------------------------------------
 	.byte		N48   
 	.byte	W48
 	.byte		N96   
 	.byte	W48
-@ 028   ----------------------------------------
+@ 027   ----------------------------------------
 	.byte	W48
 	.byte		N48   , Dn3 
 	.byte	W48
-@ 029   ----------------------------------------
+@ 028   ----------------------------------------
 	.byte		N96   , Bn2 
 	.byte	W96
-@ 030   ----------------------------------------
+@ 029   ----------------------------------------
 	.byte		N12   , Ds3 
 	.byte	W12
 	.byte		N24   , En3 
 	.byte	W24
 	.byte		N60   , An3 
 	.byte	W60
-@ 031   ----------------------------------------
+@ 030   ----------------------------------------
 	.byte		N36   , Gn3 
 	.byte	W48
 	.byte		        Fn3 
 	.byte	W36
 	.byte		N60   , Ds3 
 	.byte	W12
-@ 032   ----------------------------------------
+@ 031   ----------------------------------------
 	.byte	W48
 	.byte		        Dn3 
 	.byte	W48
-@ 033   ----------------------------------------
+@ 032   ----------------------------------------
 	.byte		N12   , An2 
 	.byte	W12
 	.byte		N24   , As2 
@@ -294,7 +292,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W24
 	.byte		N36   
 	.byte	W12
-@ 034   ----------------------------------------
+@ 033   ----------------------------------------
 	.byte	W48
 	.byte		N24   
 	.byte	W12
@@ -304,7 +302,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
-@ 035   ----------------------------------------
+@ 034   ----------------------------------------
 	.byte		        As2 
 	.byte	W12
 	.byte		N36   , Cn3 
@@ -321,7 +319,7 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		N18   , As2 
 	.byte	W12
-@ 036   ----------------------------------------
+@ 035   ----------------------------------------
 	.byte		N06   
 	.byte	W18
 	.byte		N12   , Cn3 
@@ -338,8 +336,8 @@ mus_i_bet_on_losing_dogs_mitski_1_005:
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
-@ 037   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_1_037:
+@ 036   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_1_036:
 	.byte		N12   , As2 , v076
 	.byte	W12
 	.byte		        Cn3 
@@ -357,7 +355,7 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte		N36   , Dn3 
 	.byte	W12
 	.byte	PEND
-@ 038   ----------------------------------------
+@ 037   ----------------------------------------
 	.byte		N48   , As2 
 	.byte	W36
 	.byte		N36   , Dn3 
@@ -368,7 +366,7 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
-@ 039   ----------------------------------------
+@ 038   ----------------------------------------
 	.byte		        As2 
 	.byte	W12
 	.byte		        Cn3 
@@ -385,11 +383,11 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte	W12
 	.byte		N48   
 	.byte	W12
-@ 040   ----------------------------------------
+@ 039   ----------------------------------------
 	.byte	W48
 	.byte		N48   
 	.byte	W48
-@ 041   ----------------------------------------
+@ 040   ----------------------------------------
 	.byte		N12   , Cn3 
 	.byte	W12
 	.byte		N24   , As2 
@@ -400,7 +398,7 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte	W24
 	.byte		N48   
 	.byte	W12
-@ 042   ----------------------------------------
+@ 041   ----------------------------------------
 	.byte	W48
 	.byte		        As2 
 	.byte	W12
@@ -410,7 +408,7 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
-@ 043   ----------------------------------------
+@ 042   ----------------------------------------
 	.byte		        As2 
 	.byte	W12
 	.byte		        Cn3 
@@ -427,7 +425,7 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte	W12
 	.byte		N18   , As2 
 	.byte	W12
-@ 044   ----------------------------------------
+@ 043   ----------------------------------------
 	.byte	W18
 	.byte		N06   , Cn3 
 	.byte	W06
@@ -443,16 +441,16 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte	W12
 	.byte		        Dn3 
 	.byte	W12
-@ 045   ----------------------------------------
+@ 044   ----------------------------------------
 	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_1_037
-@ 046   ----------------------------------------
+	 .word	mus_i_bet_on_losing_dogs_mitski_1_036
+@ 045   ----------------------------------------
 	.byte	W36
 	.byte		N60   , Dn3 , v076
 	.byte	W12
 	.byte		N48   , As2 
 	.byte	W48
-@ 047   ----------------------------------------
+@ 046   ----------------------------------------
 	.byte		N24   , Cn3 
 	.byte	W24
 	.byte		N12   , As2 
@@ -465,15 +463,15 @@ mus_i_bet_on_losing_dogs_mitski_1_037:
 	.byte	W24
 	.byte		N36   , An2 
 	.byte	W12
-@ 048   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_1_048:
+@ 047   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_1_047:
 	.byte	W48
 	.byte		N48   , As2 , v076
 	.byte	W36
 	.byte		N12   , Dn3 
 	.byte	W12
 	.byte	PEND
-@ 049   ----------------------------------------
+@ 048   ----------------------------------------
 	.byte		N24   , Cn3 
 	.byte	W24
 	.byte		N12   , As2 
@@ -484,10 +482,10 @@ mus_i_bet_on_losing_dogs_mitski_1_048:
 	.byte	W24
 	.byte		N48   , An2 
 	.byte	W12
-@ 050   ----------------------------------------
+@ 049   ----------------------------------------
 	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_1_048
-@ 051   ----------------------------------------
+	 .word	mus_i_bet_on_losing_dogs_mitski_1_047
+@ 050   ----------------------------------------
 	.byte		N06   , Cn3 , v076
 	.byte	W06
 	.byte		N30   , As2 
@@ -500,11 +498,11 @@ mus_i_bet_on_losing_dogs_mitski_1_048:
 	.byte	W24
 	.byte		N36   
 	.byte	W12
-@ 052   ----------------------------------------
+@ 051   ----------------------------------------
 	.byte	W48
 	.byte		N48   
 	.byte	W48
-@ 053   ----------------------------------------
+@ 052   ----------------------------------------
 	.byte		N24   , Cn3 
 	.byte	W24
 	.byte		N12   , As2 
@@ -523,8 +521,6 @@ mus_i_bet_on_losing_dogs_mitski_2:
 	.byte		VOICE , 7
 	.byte		VOL   , 70*mus_i_bet_on_losing_dogs_mitski_mvl/mxv
 	.byte		PAN   , c_v-16
-	.byte	W96
-@ 001   ----------------------------------------
 	.byte		N17   , Gs1 , v044
 	.byte		N17   , Ds2 
 	.byte	W24
@@ -535,7 +531,7 @@ mus_i_bet_on_losing_dogs_mitski_2:
 	.byte	W24
 	.byte		        Gs1 
 	.byte	W24
-@ 002   ----------------------------------------
+@ 001   ----------------------------------------
 	.byte		N17   
 	.byte		N17   , Ds2 
 	.byte	W24
@@ -546,8 +542,8 @@ mus_i_bet_on_losing_dogs_mitski_2:
 	.byte	W24
 	.byte		        An1 
 	.byte	W24
-@ 003   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_2_003:
+@ 002   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_2_002:
 	.byte		N17   , Bn1 , v044
 	.byte		N17   , Fs2 
 	.byte	W24
@@ -559,8 +555,8 @@ mus_i_bet_on_losing_dogs_mitski_2_003:
 	.byte		N17   
 	.byte	W24
 	.byte	PEND
-@ 004   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_2_004:
+@ 003   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_2_003:
 	.byte		N17   , An1 , v044
 	.byte		N17   , En2 
 	.byte	W24
@@ -572,8 +568,8 @@ mus_i_bet_on_losing_dogs_mitski_2_004:
 	.byte		N17   
 	.byte	W24
 	.byte	PEND
-@ 005   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_2_005:
+@ 004   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_2_004:
 	.byte		N17   , Bn1 , v044
 	.byte		N17   , Fs2 
 	.byte	W24
@@ -585,7 +581,7 @@ mus_i_bet_on_losing_dogs_mitski_2_005:
 	.byte		N17   
 	.byte	W24
 	.byte	PEND
-@ 006   ----------------------------------------
+@ 005   ----------------------------------------
 	.byte		        An1 
 	.byte		N17   , En2 
 	.byte	W24
@@ -596,6 +592,9 @@ mus_i_bet_on_losing_dogs_mitski_2_005:
 	.byte	W24
 	.byte		        An1 
 	.byte	W24
+@ 006   ----------------------------------------
+	.byte	PATT
+	 .word	mus_i_bet_on_losing_dogs_mitski_2_002
 @ 007   ----------------------------------------
 	.byte	PATT
 	 .word	mus_i_bet_on_losing_dogs_mitski_2_003
@@ -603,9 +602,6 @@ mus_i_bet_on_losing_dogs_mitski_2_005:
 	.byte	PATT
 	 .word	mus_i_bet_on_losing_dogs_mitski_2_004
 @ 009   ----------------------------------------
-	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_2_005
-@ 010   ----------------------------------------
 	.byte		N17   , Bn1 , v044
 	.byte		N17   , En2 
 	.byte	W24
@@ -618,33 +614,33 @@ mus_i_bet_on_losing_dogs_mitski_2_005:
 	.byte		        An1 
 	.byte		N17   , En2 
 	.byte	W24
+@ 010   ----------------------------------------
+	.byte		        Bn1 
+	.byte		N17   , Fs2 
+	.byte	W24
+	.byte		        Bn1 
+	.byte		N17   , Fs2 
+	.byte	W24
+	.byte		        Cs2 
+	.byte		N17   , Fs2 
+	.byte	W24
+	.byte		        Cs2 
+	.byte		N17   , Fs2 
+	.byte	W24
 @ 011   ----------------------------------------
-	.byte		        Bn1 
-	.byte		N17   , Fs2 
+	.byte		        An1 
+	.byte		N17   , En2 
+	.byte	W24
+	.byte		        An1 
+	.byte		N17   , En2 
 	.byte	W24
 	.byte		        Bn1 
-	.byte		N17   , Fs2 
+	.byte		N17   , En2 
 	.byte	W24
-	.byte		        Cs2 
-	.byte		N17   , Fs2 
-	.byte	W24
-	.byte		        Cs2 
-	.byte		N17   , Fs2 
+	.byte		        Bn1 
+	.byte		N17   , En2 
 	.byte	W24
 @ 012   ----------------------------------------
-	.byte		        An1 
-	.byte		N17   , En2 
-	.byte	W24
-	.byte		        An1 
-	.byte		N17   , En2 
-	.byte	W24
-	.byte		        Bn1 
-	.byte		N17   , En2 
-	.byte	W24
-	.byte		        Bn1 
-	.byte		N17   , En2 
-	.byte	W24
-@ 013   ----------------------------------------
 	.byte		        Bn1 
 	.byte		N17   , Fs2 
 	.byte	W24
@@ -661,66 +657,64 @@ mus_i_bet_on_losing_dogs_mitski_3:
 	.byte		VOICE , 1
 	.byte		VOL   , 64*mus_i_bet_on_losing_dogs_mitski_mvl/mxv
 	.byte		PAN   , c_v+0
-	.byte	W96
-@ 001   ----------------------------------------
 	.byte		N36   , Gs1 , v056
 	.byte	W48
 	.byte		N36   
 	.byte	W48
-@ 002   ----------------------------------------
+@ 001   ----------------------------------------
 	.byte		N36   
 	.byte	W48
 	.byte		        An1 
 	.byte	W48
-@ 003   ----------------------------------------
+@ 002   ----------------------------------------
 	.byte		        Bn1 
 	.byte	W48
 	.byte		        Fs1 
 	.byte	W48
-@ 004   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_3_004:
+@ 003   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_3_003:
 	.byte		N36   , An1 , v056
 	.byte	W48
 	.byte		        En1 
 	.byte	W48
 	.byte	PEND
-@ 005   ----------------------------------------
+@ 004   ----------------------------------------
 	.byte		        Bn1 
 	.byte	W48
 	.byte		        Dn1 
 	.byte	W48
-@ 006   ----------------------------------------
+@ 005   ----------------------------------------
 	.byte		        An1 
 	.byte	W48
 	.byte		N36   
 	.byte	W48
-@ 007   ----------------------------------------
-mus_i_bet_on_losing_dogs_mitski_3_007:
+@ 006   ----------------------------------------
+mus_i_bet_on_losing_dogs_mitski_3_006:
 	.byte		N36   , Bn0 , v056
 	.byte	W48
 	.byte		        Fs1 
 	.byte	W48
 	.byte	PEND
-@ 008   ----------------------------------------
+@ 007   ----------------------------------------
 	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_3_004
-@ 009   ----------------------------------------
+	 .word	mus_i_bet_on_losing_dogs_mitski_3_003
+@ 008   ----------------------------------------
 	.byte		N36   , Bn0 , v056
 	.byte	W48
 	.byte		        Dn1 
 	.byte	W48
-@ 010   ----------------------------------------
+@ 009   ----------------------------------------
 	.byte		        En1 
 	.byte	W48
 	.byte		        An1 
 	.byte	W48
+@ 010   ----------------------------------------
+	.byte	PATT
+	 .word	mus_i_bet_on_losing_dogs_mitski_3_006
 @ 011   ----------------------------------------
 	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_3_007
+	 .word	mus_i_bet_on_losing_dogs_mitski_3_003
 @ 012   ----------------------------------------
-	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_3_004
-@ 013   ----------------------------------------
 	.byte		N36   , Bn0 , v056
 	.byte	W36
 	.byte	W02
@@ -734,7 +728,26 @@ mus_i_bet_on_losing_dogs_mitski_4:
 	.byte		VOICE , 8
 	.byte		VOL   , 58*mus_i_bet_on_losing_dogs_mitski_mvl/mxv
 	.byte		PAN   , c_v+0
-	.byte	W96
+	.byte		N02   , Cn1 , v040
+	.byte		N02   , Fs1 , v024
+	.byte	W12
+	.byte		N02   
+	.byte	W12
+	.byte		        En1 , v036
+	.byte		N02   , Fs1 , v024
+	.byte	W12
+	.byte		N02   
+	.byte	W12
+	.byte		        Cn1 , v036
+	.byte		N02   , Fs1 , v024
+	.byte	W12
+	.byte		N02   
+	.byte	W12
+	.byte		        En1 , v036
+	.byte		N02   , Fs1 , v024
+	.byte	W12
+	.byte		N02   
+	.byte	W12
 @ 001   ----------------------------------------
 mus_i_bet_on_losing_dogs_mitski_4_001:
 	.byte		N02   , Cn1 , v040
@@ -909,9 +922,6 @@ mus_i_bet_on_losing_dogs_mitski_4_001:
 	.byte	PATT
 	 .word	mus_i_bet_on_losing_dogs_mitski_4_001
 @ 052   ----------------------------------------
-	.byte	PATT
-	 .word	mus_i_bet_on_losing_dogs_mitski_4_001
-@ 053   ----------------------------------------
 	.byte		N02   , Cn1 , v040
 	.byte		N02   , Fs1 , v024
 	.byte	W12

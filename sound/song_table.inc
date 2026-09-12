@@ -760,6 +760,8 @@ gSongTable::
 	song mus_washing_machine_heart_mitski, 0, 0
 	song mus_i_bet_on_losing_dogs_mitski, 0, 0
 	song mus_my_love_mine_all_mine_mitski, 0, 0
+	song mus_you_say_run, 0, 0
+
 
 
 

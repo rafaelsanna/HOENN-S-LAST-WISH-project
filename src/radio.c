@@ -1644,7 +1644,8 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_HOT_TO_GO_CHAPPELL_ROAN) \
     X(MUS_WASHING_MACHINE_HEART_MITSKI) \
     X(MUS_I_BET_ON_LOSING_DOGS_MITSKI) \
-    X(MUS_MY_LOVE_MINE_ALL_MINE_MITSKI)
+    X(MUS_MY_LOVE_MINE_ALL_MINE_MITSKI) \
+    X(MUS_YOU_SAY_RUN)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -1998,6 +1999,7 @@ static const u16 sStation_All[] = {
     MUS_WASHING_MACHINE_HEART_MITSKI,
     MUS_I_BET_ON_LOSING_DOGS_MITSKI,
     MUS_MY_LOVE_MINE_ALL_MINE_MITSKI,
+    MUS_YOU_SAY_RUN,
     STATION_END
 };
 
@@ -2248,6 +2250,7 @@ static const u16 sStation_Anime[] = {
     MUS_HARUKA_KANATA,
     MUS_THE_RAISING_FIGHTING_SPIRIT,
     MUS_GURENGE_LISA,
+    MUS_YOU_SAY_RUN,
     STATION_END,
 };
 
@@ -3100,6 +3103,7 @@ static const u8 sAnimeName_RaisingFightingSpirit[] = _("THE RAISING FIGHTING SPI
 
 static const u8 sAnimeName_GurengeLisa[] = _("GURENGE - (DEMON SLAYER)");
 
+static const u8 sAnimeName_YouSayRun[] = _("YOU SAY RUN - (MY HERO ACADEMIA)");
 static const u8 *Radio_GetAnimeDisplayName(u16 songId)
 {
     switch (songId)
@@ -3142,6 +3146,8 @@ static const u8 *Radio_GetAnimeDisplayName(u16 songId)
         return sAnimeName_RaisingFightingSpirit;    case MUS_GURENGE_LISA:
         return sAnimeName_GurengeLisa;
 
+    case MUS_YOU_SAY_RUN:
+        return sAnimeName_YouSayRun;
     default:
         return NULL;
     }

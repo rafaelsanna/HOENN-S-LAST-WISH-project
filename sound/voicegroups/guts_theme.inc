@@ -1,4 +1,3 @@
 voice_group guts_theme
-    voice_directsound 60, 0, DirectSoundWaveData_sc88pro_fingered_bass, 255, 252, 0, 127 @ 0 - bass
-    voice_directsound 60, 0, DirectSoundWaveData_sc88pro_square_wave, 255, 204, 0, 127 @ 1 - harmony
-    voice_directsound 60, 0, DirectSoundWaveData_dp_altosax_c3_16, 255, 0, 255, 127 @ 2 - lead
+    voice_keysplit voicegroup_piano_keysplit, keysplit_piano @ 0 - HLW LIMAK PIANO
+    voice_directsound 60, 0, DirectSoundWaveData_classical_choir_voice_ahhs, 205, 0, 245, 225 @ 1 - HLW ONE LOW CHOIR AAH

@@ -634,7 +634,8 @@
 #define MUS_WASHING_MACHINE_HEART_MITSKI                     754
 #define MUS_I_BET_ON_LOSING_DOGS_MITSKI                      755
 #define MUS_MY_LOVE_MINE_ALL_MINE_MITSKI                     756
-#define END_MUS MUS_MY_LOVE_MINE_ALL_MINE_MITSKI
+#define MUS_YOU_SAY_RUN                                      757
+#define END_MUS MUS_YOU_SAY_RUN
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
 #define PH_TRAP_BLEND               562
