@@ -78,6 +78,7 @@
 #include "nuzlocke.h"
 #include "constants/species.h"
 #include "constants/abilities.h"
+#include "sprite.h"
 
 #define TAG_ITEM_ICON 5500
 
@@ -4560,28 +4561,37 @@ void Special_CheckPartyHasWaterMon(void)
 // or knows Rain Dance.
 void Special_HasDrizzleOrRainDanceInParty(void)
 {
-    u8 i;
+    u8 partyIndex;
     u8 moveSlot;
 
+    // ONLY the Pokemon currently in the player's party are checked.
+    // No learnsets, TMs, tutors, PC boxes, possible abilities, or future moves.
     gSpecialVar_Result = FALSE;
 
-    for (i = 0; i < PARTY_SIZE; i++)
+    for (partyIndex = 0; partyIndex < PARTY_SIZE; partyIndex++)
     {
-        struct Pokemon *mon = &gPlayerParty[i];
+        struct Pokemon *mon = &gPlayerParty[partyIndex];
         u16 species = GetMonData(mon, MON_DATA_SPECIES);
 
-        if (species == SPECIES_NONE || GetMonData(mon, MON_DATA_IS_EGG))
+        if (species == SPECIES_NONE)
             continue;
 
+        if (GetMonData(mon, MON_DATA_IS_EGG))
+            continue;
+
+        // Exact CURRENT ability only.
         if (GetMonAbility(mon) == ABILITY_DRIZZLE)
         {
             gSpecialVar_Result = TRUE;
             return;
         }
 
+        // Exact CURRENT move slots only.
         for (moveSlot = 0; moveSlot < MAX_MON_MOVES; moveSlot++)
         {
-            if (GetMonData(mon, MON_DATA_MOVE1 + moveSlot) == MOVE_RAIN_DANCE)
+            u16 move = GetMonData(mon, MON_DATA_MOVE1 + moveSlot);
+
+            if (move == MOVE_RAIN_DANCE)
             {
                 gSpecialVar_Result = TRUE;
                 return;
@@ -4589,3 +4599,45 @@ void Special_HasDrizzleOrRainDanceInParty(void)
         }
     }
 }
+
+void Special_HideLavaridgeMakeItRainQueueNow(void)
+{
+    static const u8 sQueueLocalIds[] =
+    {
+        LOCALID_LAVARIDGE_RAIN_QUEUE_1,
+        LOCALID_LAVARIDGE_RAIN_QUEUE_2,
+        LOCALID_LAVARIDGE_RAIN_QUEUE_3,
+        LOCALID_LAVARIDGE_RAIN_QUEUE_4,
+        LOCALID_LAVARIDGE_RAIN_QUEUE_5,
+        LOCALID_LAVARIDGE_RAIN_QUEUE_6,
+    };
+    u8 i;
+
+    for (i = 0; i < ARRAY_COUNT(sQueueLocalIds); i++)
+    {
+        u8 objectEventId;
+
+        if (!TryGetObjectEventIdByLocalIdAndMap(
+                sQueueLocalIds[i],
+                gSaveBlock1Ptr->location.mapNum,
+                gSaveBlock1Ptr->location.mapGroup,
+                &objectEventId))
+        {
+            struct ObjectEvent *objectEvent = &gObjectEvents[objectEventId];
+
+            // Force the currently loaded sprite invisible immediately.
+            objectEvent->invisible = TRUE;
+
+            if (objectEvent->spriteId < MAX_SPRITES)
+                gSprites[objectEvent->spriteId].invisible = TRUE;
+        }
+
+        // Then remove the live ObjectEvent itself.
+        RemoveObjectEventByLocalIdAndMap(
+            sQueueLocalIds[i],
+            gSaveBlock1Ptr->location.mapNum,
+            gSaveBlock1Ptr->location.mapGroup
+        );
+    }
+}
+

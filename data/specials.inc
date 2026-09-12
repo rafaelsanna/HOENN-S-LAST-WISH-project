@@ -604,3 +604,4 @@ gSpecials::
 	def_special HungryChansey_GetRequestedBerry
 	def_special HungryChansey_ClearRequestedBerry
 	def_special Special_HasDrizzleOrRainDanceInParty
+	def_special Special_HideLavaridgeMakeItRainQueueNow

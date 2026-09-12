@@ -235,16 +235,26 @@ LavaridgeTown_EventScript_MakeItRain::
 	goto_if_set FLAG_MAKE_IT_RAIN, LavaridgeTown_EventScript_MakeItRainDone
 
 	msgbox LavaridgeTown_Text_MakeItRainComplaint, MSGBOX_DEFAULT
-	specialvar VAR_RESULT, Special_HasDrizzleOrRainDanceInParty
-	goto_if_eq VAR_RESULT, FALSE, LavaridgeTown_EventScript_MakeItRainNoRainmaker
+
+	// Keep the strict checker that already works:
+	// only CURRENT Drizzle or CURRENT Rain Dance in the party.
+	setvar VAR_RESULT, FALSE
+	special Special_HasDrizzleOrRainDanceInParty
+	goto_if_ne VAR_RESULT, TRUE, LavaridgeTown_EventScript_MakeItRainNoRainmaker
 
 	msgbox LavaridgeTown_Text_MakeItRainCanHelp, MSGBOX_DEFAULT
 	closemessage
 
+	// STOCK normal rain sequence.
+	// Same structure used by the working weather scripts:
+	// setweather -> doweather -> WaitWeather -> waitstate.
 	setweather WEATHER_RAIN
 	doweather
-	delay 30
+	special WaitWeather
+	waitstate
+	delay 20
 
+	// The whole queue reacts at once.
 	playse SE_PIN
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_1, Common_Movement_ExclamationMark
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_2, Common_Movement_ExclamationMark
@@ -252,25 +262,23 @@ LavaridgeTown_EventScript_MakeItRain::
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, Common_Movement_ExclamationMark
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, Common_Movement_ExclamationMark
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_6, Common_Movement_ExclamationMark
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_7, Common_Movement_ExclamationMark
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_8, Common_Movement_ExclamationMark
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_9, Common_Movement_ExclamationMark
 	waitmovement 0
-	delay 30
-
-	fadescreen FADE_TO_BLACK
-	setflag FLAG_MAKE_IT_RAIN
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_1
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_2
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_3
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_4
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_5
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_6
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_7
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_8
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_9
+	waitse
 	delay 20
-	fadescreen FADE_FROM_BLACK
+
+	// Use the exact stock-style fade/removal pattern.
+	fadescreenswapbuffers FADE_TO_BLACK
+
+	setflag FLAG_MAKE_IT_RAIN
+	special Special_HideLavaridgeMakeItRainQueueNow
+
+	// Same order as the working stock-style examples:
+	// set the hide flag FIRST, then remove the live objects.
+	// This prevents the current-map object templates from recreating them.
+
+
+	delay 2
+	fadescreenswapbuffers FADE_FROM_BLACK
 
 	msgbox LavaridgeTown_Text_MakeItRainSuccess, MSGBOX_DEFAULT
 	releaseall
@@ -285,6 +293,7 @@ LavaridgeTown_EventScript_MakeItRainDone::
 	msgbox LavaridgeTown_Text_MakeItRainDone, MSGBOX_DEFAULT
 	releaseall
 	end
+
 
 LavaridgeTown_EventScript_EggWoman::
 	lock
