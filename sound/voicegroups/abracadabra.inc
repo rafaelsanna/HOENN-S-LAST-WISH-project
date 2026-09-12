@@ -8,3 +8,4 @@ voice_group diva_pop
     voice_keysplit_all voicegroup_rs_drumset
 	voice_keysplit voicegroup_piano_keysplit, keysplit_piano
 	voice_keysplit_all voicegroup_pink_and_white_drumset @ 118
+    voice_directsound 60, 0, DirectSoundWaveData_sc88pro_string_ensemble_72, 255, 0, 240, 180 @ BEHELIT V2 VIOLIN SUPPORT

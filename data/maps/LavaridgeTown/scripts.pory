@@ -225,6 +225,67 @@ LavaridgeTown_EventScript_ExpertF::
 	msgbox LavaridgeTown_Text_OhYouLikeHotSprings, MSGBOX_NPC
 	end
 
+
+// -----------------------------------------------------------------------------
+// MAKE IT RAIN - queue event
+// -----------------------------------------------------------------------------
+LavaridgeTown_EventScript_MakeItRain::
+	lockall
+	faceplayer
+	goto_if_set FLAG_MAKE_IT_RAIN, LavaridgeTown_EventScript_MakeItRainDone
+
+	msgbox LavaridgeTown_Text_MakeItRainComplaint, MSGBOX_DEFAULT
+	specialvar VAR_RESULT, Special_HasDrizzleOrRainDanceInParty
+	goto_if_eq VAR_RESULT, FALSE, LavaridgeTown_EventScript_MakeItRainNoRainmaker
+
+	msgbox LavaridgeTown_Text_MakeItRainCanHelp, MSGBOX_DEFAULT
+	closemessage
+
+	setweather WEATHER_RAIN
+	doweather
+	delay 30
+
+	playse SE_PIN
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_1, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_2, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_3, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_6, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_7, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_8, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_9, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 30
+
+	fadescreen FADE_TO_BLACK
+	setflag FLAG_MAKE_IT_RAIN
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_1
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_2
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_3
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_4
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_5
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_6
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_7
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_8
+	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_9
+	delay 20
+	fadescreen FADE_FROM_BLACK
+
+	msgbox LavaridgeTown_Text_MakeItRainSuccess, MSGBOX_DEFAULT
+	releaseall
+	end
+
+LavaridgeTown_EventScript_MakeItRainNoRainmaker::
+	msgbox LavaridgeTown_Text_MakeItRainNoRainmaker, MSGBOX_DEFAULT
+	releaseall
+	end
+
+LavaridgeTown_EventScript_MakeItRainDone::
+	msgbox LavaridgeTown_Text_MakeItRainDone, MSGBOX_DEFAULT
+	releaseall
+	end
+
 LavaridgeTown_EventScript_EggWoman::
 	lock
 	faceplayer
@@ -408,7 +469,39 @@ LavaridgeTown_Text_Boy:
     .string "to check out FIERY PATH\l"
     .string "and find rare POKéMON!$"
 
+// MAKE IT RAIN dialogue
+LavaridgeTown_Text_MakeItRainComplaint:
+	.string "Honestly! Look at this ridiculous\n"
+	.string "line! Everyone is roasting out here.\p"
+	.string "No shade, no breeze, not even a\n"
+	.string "single cloud in the sky!\p"
+	.string "If only somebody had a POKéMON\n"
+	.string "that could bring us some rain...$"
 
+LavaridgeTown_Text_MakeItRainNoRainmaker:
+	.string "Hmm... No luck.\p"
+	.string "Come back with a POKéMON that has\n"
+	.string "DRIZZLE, or one that knows\l"
+	.string "RAIN DANCE.\p"
+	.string "This crowd isn't going anywhere\n"
+	.string "until somebody cools them off!$"
 
+LavaridgeTown_Text_MakeItRainCanHelp:
+	.string "Oh! Wait a moment!\p"
+	.string "One of your POKéMON can actually\n"
+	.string "make it rain?\p"
+	.string "Well, don't just stand there!\n"
+	.string "Let's see what it can do!$"
 
+LavaridgeTown_Text_MakeItRainSuccess:
+	.string "HA! Would you look at that!\p"
+	.string "The whole line vanished the moment\n"
+	.string "the rain started!\p"
+	.string "A little weather works better than\n"
+	.string "any crowd control I've ever seen.$"
+
+LavaridgeTown_Text_MakeItRainDone:
+	.string "Ah, my little rainmaker!\p"
+	.string "The crowd still hasn't come back.\n"
+	.string "Peace and quiet at last!$"
 `

@@ -763,10 +763,6 @@ gSongTable::
 	song mus_you_say_run, 0, 0
 	song mus_behelit, 0, 0
 	song mus_youseebiggirl_tt, 0, 0
-	song mus_hunting_for_your_dream, 0, 0
-	song mus_ive_seen_much, 0, 0
-
-
 
 
 

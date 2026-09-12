@@ -1647,9 +1647,7 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_MY_LOVE_MINE_ALL_MINE_MITSKI) \
     X(MUS_YOU_SAY_RUN) \
     X(MUS_BEHELIT) \
-    X(MUS_YOUSEEBIGGIRL_T_T) \
-    X(MUS_HUNTING_FOR_YOUR_DREAM) \
-    X(MUS_IVE_SEEN_MUCH)
+    X(MUS_YOUSEEBIGGIRL_T_T)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -2006,8 +2004,6 @@ static const u16 sStation_All[] = {
     MUS_YOU_SAY_RUN,
     MUS_BEHELIT,
     MUS_YOUSEEBIGGIRL_T_T,
-    MUS_HUNTING_FOR_YOUR_DREAM,
-    MUS_IVE_SEEN_MUCH,
     STATION_END
 };
 
@@ -2261,8 +2257,6 @@ static const u16 sStation_Anime[] = {
     MUS_YOU_SAY_RUN,
     MUS_BEHELIT,
     MUS_YOUSEEBIGGIRL_T_T,
-    MUS_HUNTING_FOR_YOUR_DREAM,
-    MUS_IVE_SEEN_MUCH,
     STATION_END,
 };
 
@@ -3118,8 +3112,6 @@ static const u8 sAnimeName_GurengeLisa[] = _("GURENGE - (DEMON SLAYER)");
 static const u8 sAnimeName_YouSayRun[] = _("YOU SAY RUN - (MY HERO ACADEMIA)");
 static const u8 sAnimeName_Behelit[] = _("BEHELIT - (BERSERK 1997)");
 static const u8 sAnimeName_YouSeeBigGirlTT[] = _("YOUSEEBIGGIRL/T:T - (ATTACK ON TITAN)");
-static const u8 sAnimeName_HuntingForYourDream[] = _("HUNTING FOR YOUR DREAM - (HUNTER X HUNTER)");
-static const u8 sAnimeName_IveSeenMuch[] = _("I'VE SEEN MUCH - (NARUTO)");
 static const u8 *Radio_GetAnimeDisplayName(u16 songId)
 {
     switch (songId)
@@ -3168,10 +3160,6 @@ static const u8 *Radio_GetAnimeDisplayName(u16 songId)
         return sAnimeName_Behelit;
     case MUS_YOUSEEBIGGIRL_T_T:
         return sAnimeName_YouSeeBigGirlTT;
-    case MUS_HUNTING_FOR_YOUR_DREAM:
-        return sAnimeName_HuntingForYourDream;
-    case MUS_IVE_SEEN_MUCH:
-        return sAnimeName_IveSeenMuch;
     default:
         return NULL;
     }

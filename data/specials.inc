@@ -603,3 +603,4 @@ gSpecials::
 	def_special HiddenGrotto_IsCurrentMap
 	def_special HungryChansey_GetRequestedBerry
 	def_special HungryChansey_ClearRequestedBerry
+	def_special Special_HasDrizzleOrRainDanceInParty

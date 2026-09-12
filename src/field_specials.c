@@ -77,6 +77,7 @@
 #include "naming_screen.h"
 #include "nuzlocke.h"
 #include "constants/species.h"
+#include "constants/abilities.h"
 
 #define TAG_ITEM_ICON 5500
 
@@ -4550,6 +4551,41 @@ void Special_CheckPartyHasWaterMon(void)
         {
             gSpecialVar_Result = TRUE;
             return;
+        }
+    }
+}
+
+// Lavaridge "Make It Rain" queue event.
+// VAR_RESULT = TRUE if any non-Egg party Pokemon has Drizzle
+// or knows Rain Dance.
+void Special_HasDrizzleOrRainDanceInParty(void)
+{
+    u8 i;
+    u8 moveSlot;
+
+    gSpecialVar_Result = FALSE;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        struct Pokemon *mon = &gPlayerParty[i];
+        u16 species = GetMonData(mon, MON_DATA_SPECIES);
+
+        if (species == SPECIES_NONE || GetMonData(mon, MON_DATA_IS_EGG))
+            continue;
+
+        if (GetMonAbility(mon) == ABILITY_DRIZZLE)
+        {
+            gSpecialVar_Result = TRUE;
+            return;
+        }
+
+        for (moveSlot = 0; moveSlot < MAX_MON_MOVES; moveSlot++)
+        {
+            if (GetMonData(mon, MON_DATA_MOVE1 + moveSlot) == MOVE_RAIN_DANCE)
+            {
+                gSpecialVar_Result = TRUE;
+                return;
+            }
         }
     }
 }
