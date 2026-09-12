@@ -175,7 +175,7 @@ DewfordTown_Gym_EventScript_BrawlyDefeated::
 	setvar VAR_0x8008, 2
 	call Common_EventScript_SetGymTrainers
 	@ Give TM inline — never go through AfterBattle on first victory
-	giveitem ITEM_TM_BULK_UP
+	giveitem ITEM_TM_POWER_UP_PUNCH
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_BagIsFull
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox DewfordTown_Gym_Text_ExplainBulkUp, MSGBOX_DEFAULT
@@ -216,7 +216,7 @@ DewfordTown_Gym_EventScript_GiveRadio:
 
 
 DewfordTown_Gym_EventScript_GiveBulkUp2:
-	giveitem ITEM_TM_BULK_UP
+	giveitem ITEM_TM_POWER_UP_PUNCH
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox DewfordTown_Gym_Text_ExplainBulkUp, MSGBOX_DEFAULT
@@ -494,9 +494,9 @@ DewfordTown_Gym_Text_RentonRadioGift:
 
 
 DewfordTown_Gym_Text_ExplainBulkUp:
-	.string "That TM08 contains BULK UP.\p"
-	.string "It raises both ATTACK and DEFENSE.\p"
-	.string "… … … … … …$"
+	.string "That TM08 contains POWER-UP PUNCH.\p"
+	.string "Landing the punch raises the user's\n"
+	.string "ATTACK. Keep the pressure on!$"
 
 DewfordTown_Gym_Text_RegisteredBrawly:
 	.string "Registered GYM LEADER RENTON\n"

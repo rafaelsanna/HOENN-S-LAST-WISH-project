@@ -249,7 +249,7 @@ MauvilleCity_Gym_EventScript_WattsonDefeated::
 # 125 "data/maps/MauvilleCity_Gym/scripts.pory"
 MauvilleCity_Gym_EventScript_GiveShockWave2::
 # 126 "data/maps/MauvilleCity_Gym/scripts.pory"
-	giveitem ITEM_TM_SHOCK_WAVE
+	giveitem ITEM_TM_VOLT_SWITCH
 # 127 "data/maps/MauvilleCity_Gym/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 # 128 "data/maps/MauvilleCity_Gym/scripts.pory"
@@ -265,7 +265,7 @@ MauvilleCity_Gym_EventScript_GiveShockWave2::
 # 133 "data/maps/MauvilleCity_Gym/scripts.pory"
 MauvilleCity_Gym_EventScript_GiveShockWave::
 # 134 "data/maps/MauvilleCity_Gym/scripts.pory"
-	giveitem ITEM_TM_SHOCK_WAVE
+	giveitem ITEM_TM_VOLT_SWITCH
 # 135 "data/maps/MauvilleCity_Gym/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
 # 136 "data/maps/MauvilleCity_Gym/scripts.pory"
@@ -807,11 +807,11 @@ MauvilleCity_Gym_Text_ExplainDynamoBadgeTakeThis:
 # 404 "data/maps/MauvilleCity_Gym/scripts.pory"
 MauvilleCity_Gym_Text_ExplainShockWave:
 # 405 "data/maps/MauvilleCity_Gym/scripts.pory"
-	.string "That TM34 there contains SHOCK WAVE.\p"
+	.string "That TM34 there contains VOLT SWITCH.\p"
 # 406 "data/maps/MauvilleCity_Gym/scripts.pory"
-	.string "It's a trustworthy move that never\n"
+	.string "It attacks with electricity, then\n"
 # 407 "data/maps/MauvilleCity_Gym/scripts.pory"
-	.string "misses! You can count on it!$"
+	.string "lets the user switch out!$"
 # 408 "data/maps/MauvilleCity_Gym/scripts.pory"
 
 # 409 "data/maps/MauvilleCity_Gym/scripts.pory"

@@ -113,7 +113,9 @@ MossdeepCity_Gym_EventScript_TateAndLizaDefeated::
 	end
 
 MossdeepCity_Gym_EventScript_GiveCalmMind2::
-	giveitem ITEM_TM_CALM_MIND
+	giveitem ITEM_TM_DAZZLING_GLEAM
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	giveitem ITEM_TM_DARK_PULSE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	createfieldmugshot MUGSHOT_LUNA, EMOTE_NORMAL
 	msgbox MossdeepCity_Gym_Text_ExplainCalmMind, MSGBOX_DEFAULT
@@ -123,7 +125,9 @@ MossdeepCity_Gym_EventScript_GiveCalmMind2::
 	end
 
 MossdeepCity_Gym_EventScript_GiveCalmMind::
-	giveitem ITEM_TM_CALM_MIND
+	giveitem ITEM_TM_DAZZLING_GLEAM
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
+	giveitem ITEM_TM_DARK_PULSE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
 	createfieldmugshot MUGSHOT_LUNA, EMOTE_NORMAL
 	msgbox MossdeepCity_Gym_Text_ExplainCalmMind, MSGBOX_DEFAULT
@@ -647,13 +651,12 @@ MossdeepCity_Gym_Text_ExplainMindBadgeTakeThis:
 	.string "SOUL: You should also take this, too.$"
 
 MossdeepCity_Gym_Text_ExplainCalmMind:
-	.string "LUNA: That TM04 contains…\n"
-	.string "SOUL: CALM MIND!\p"
-	.string "LUNA: It raises SP. ATK and…\n"
-	.string "SOUL: It raises SP. DEF!\p"
-	.string "LUNA: It's a move that's perfect…\n"
-	.string "SOUL: For ofense and defense!\p"
-	.string "… … … … … …$"
+	.string "LUNA: TM04 contains…\n"
+	.string "SOUL: DAZZLING GLEAM!\p"
+	.string "LUNA: And TM56 contains…\n"
+	.string "SOUL: DARK PULSE!\p"
+	.string "LUNA: Light and darkness…\n"
+	.string "SOUL: Two powers for one victory!$"
 
 MossdeepCity_Gym_Text_RegisteredTateAndLiza:
 	.string "Registered GYM LEADERS SOUL & LUNA\n"

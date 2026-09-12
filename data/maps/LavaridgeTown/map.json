@@ -61,8 +61,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_TWIN",
-      "x": 24,
-      "y": 16,
+      "x": 23,
+      "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
       "movement_range_x": 0,
@@ -154,8 +154,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(GROWLITHE)",
-      "x": 8,
-      "y": 14,
+      "x": 24,
+      "y": 16,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,

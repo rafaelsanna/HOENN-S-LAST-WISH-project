@@ -315,11 +315,12 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	closemessage
 	delay 20
 	
-	// AGORA PERGUNTA SE QUER PULAR
+	// PERGUNTA SE QUER JOGAR O PROLOGO
+	// YES e a opcao padrao: joga o prologo. NO pula o prologo.
 	msgbox LittlerootTown_01_Text_Question, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq LittlerootTown_01_JirachiWarp
-	goto LittlerootTown_01_Stay
+	goto_if_eq LittlerootTown_01_Stay
+	goto LittlerootTown_01_JirachiWarp
 
 LittlerootTown_01_JirachiWarp::
 	createfieldmugshot MUGSHOT_JIRACHI, EMOTE_NORMAL
@@ -560,7 +561,7 @@ LittlerootTown_01_Text_JirachiCloseEyes:
 	.string "Remember how it all happened…$"
 
 LittlerootTown_01_Text_Question:
-	.string "Skip prologue?$"
+	.string "Play prologue?$"
 
 LittlerootTown_01_Text_JirachiTimeWarp:
 	.string "JIRACHI: Your wish is my command!\n"

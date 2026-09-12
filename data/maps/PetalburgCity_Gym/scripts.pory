@@ -514,7 +514,7 @@ PetalburgCity_Gym_EventScript_GiveEnigmaBerry::
 	end
 
 PetalburgCity_Gym_EventScript_GiveFacade::
-	giveitem ITEM_TM_FACADE
+	giveitem ITEM_TM_WISH
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
 	setflag FLAG_RECEIVED_TM_FACADE
 	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
@@ -1779,12 +1779,9 @@ PetalburgCity_Gym_Text_ExplainBalanceBadgeTakeThis:
 	.string "sure you can use it correctly.$"
 
 PetalburgCity_Gym_Text_ExplainFacade:
-	.string "CALENDULA: TM42 contains FACADE.\p"
-	.string "It doubles the power of moves if\n"
-	.string "the POKéMON is poisoned, paralyzed,\l"
-	.string "or burned.\p"
-	.string "It might be able to turn a bad\n"
-	.string "situation into an advantage.$"
+	.string "CALENDULA: TM42 contains WISH.\p"
+	.string "A wish made now restores HP at the\n"
+	.string "end of the next turn.$"
 
 PetalburgCity_Gym_Text_DadHappyAndSad:
 	.string "CALENDULA: As the GYM LEADER, I can't\n"

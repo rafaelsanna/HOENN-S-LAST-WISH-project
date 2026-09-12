@@ -353,7 +353,7 @@ DewfordTown_Gym_EventScript_BrawlyDefeated::
 # 177 "data/maps/DewfordTown_Gym/scripts.pory"
 	@ Give TM inline — never go through AfterBattle on first victory
 # 178 "data/maps/DewfordTown_Gym/scripts.pory"
-	giveitem ITEM_TM_BULK_UP
+	giveitem ITEM_TM_POWER_UP_PUNCH
 # 179 "data/maps/DewfordTown_Gym/scripts.pory"
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_BagIsFull
 # 180 "data/maps/DewfordTown_Gym/scripts.pory"
@@ -435,7 +435,7 @@ DewfordTown_Gym_EventScript_GiveRadio:
 # 218 "data/maps/DewfordTown_Gym/scripts.pory"
 DewfordTown_Gym_EventScript_GiveBulkUp2:
 # 219 "data/maps/DewfordTown_Gym/scripts.pory"
-	giveitem ITEM_TM_BULK_UP
+	giveitem ITEM_TM_POWER_UP_PUNCH
 # 220 "data/maps/DewfordTown_Gym/scripts.pory"
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
 # 221 "data/maps/DewfordTown_Gym/scripts.pory"
@@ -991,11 +991,11 @@ DewfordTown_Gym_Text_RentonRadioGift:
 # 496 "data/maps/DewfordTown_Gym/scripts.pory"
 DewfordTown_Gym_Text_ExplainBulkUp:
 # 497 "data/maps/DewfordTown_Gym/scripts.pory"
-	.string "That TM08 contains BULK UP.\p"
+	.string "That TM08 contains POWER-UP PUNCH.\p"
 # 498 "data/maps/DewfordTown_Gym/scripts.pory"
-	.string "It raises both ATTACK and DEFENSE.\p"
+	.string "Landing the punch raises the user's\n"
 # 499 "data/maps/DewfordTown_Gym/scripts.pory"
-	.string "… … … … … …$"
+	.string "ATTACK. Keep the pressure on!$"
 # 500 "data/maps/DewfordTown_Gym/scripts.pory"
 
 # 501 "data/maps/DewfordTown_Gym/scripts.pory"

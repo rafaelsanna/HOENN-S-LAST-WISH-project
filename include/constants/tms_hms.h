@@ -4,12 +4,12 @@
 #define FOREACH_TM(F) \
     F(FOCUS_PUNCH) \
     F(DRAGON_CLAW) \
-    F(WATER_PULSE) \
-    F(CALM_MIND) \
+    F(FLIP_TURN) \
+    F(DAZZLING_GLEAM) \
     F(ROAR) \
     F(TOXIC) \
     F(HAIL) \
-    F(BULK_UP) \
+    F(POWER_UP_PUNCH) \
     F(BULLET_SEED) \
     F(HIDDEN_POWER) \
     F(SUNNY_DAY) \
@@ -35,15 +35,15 @@
     F(BRICK_BREAK) \
     F(DOUBLE_TEAM) \
     F(REFLECT) \
-    F(SHOCK_WAVE) \
+    F(VOLT_SWITCH) \
     F(FLAMETHROWER) \
     F(SLUDGE_BOMB) \
     F(SANDSTORM) \
     F(FIRE_BLAST) \
     F(ROCK_TOMB) \
-    F(AERIAL_ACE) \
+    F(ACROBATICS) \
     F(TORMENT) \
-    F(FACADE) \
+    F(WISH) \
     F(SECRET_POWER) \
     F(REST) \
     F(ATTRACT) \
@@ -51,9 +51,8 @@
     F(STEEL_WING) \
     F(SKILL_SWAP) \
     F(SNATCH) \
-    F(OVERHEAT) \
+    F(FIERY_DANCE) \
     F(NIGHT_SHADE) \
-    F(DAZZLING_GLEAM) \
     F(DRAGON_PULSE) \
     F(SHADOW_CLAW) \
     F(POISON_JAB) \
@@ -64,7 +63,6 @@
     F(AURA_SPHERE) \
     F(KNOCK_OFF) \
     F(WILL_O_WISP) \
-    F(VOLT_SWITCH) \
     F(U_TURN) \
     F(SLASH) \
     F(TRICK_ROOM) \
