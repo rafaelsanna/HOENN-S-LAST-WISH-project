@@ -26,7 +26,7 @@ static void ApplyNewEncryptionKeyToAllEncryptedData(u32 encryptionKey);
 struct LoadedSaveData
 {
  /*0x0000*/ struct Bag bag;
- /*0x02E8*/ struct Mail mail[MAIL_COUNT];
+ /*0x0600*/ struct Mail mail[MAIL_COUNT];
 };
 
 // EWRAM DATA
@@ -256,7 +256,23 @@ void LoadPlayerBag(void)
     int i;
 
     // load player bag.
-    memcpy(&gLoadedSaveData.bag, &gSaveBlock1Ptr->bag, sizeof(struct Bag));
+    memcpy(gLoadedSaveData.bag.items, gSaveBlock1Ptr->bag.items, sizeof(gSaveBlock1Ptr->bag.items));
+    memcpy(&gLoadedSaveData.bag.items[BAG_LEGACY_ITEMS_COUNT],
+           gSaveBlock1Ptr->bagExpansion.itemsExtra,
+           sizeof(gSaveBlock1Ptr->bagExpansion.itemsExtra));
+    memcpy(gLoadedSaveData.bag.medicine,
+           gSaveBlock1Ptr->bagExpansion.medicine,
+           sizeof(gSaveBlock1Ptr->bagExpansion.medicine));
+    memcpy(gLoadedSaveData.bag.keyItems, gSaveBlock1Ptr->bag.keyItems, sizeof(gSaveBlock1Ptr->bag.keyItems));
+    memcpy(gLoadedSaveData.bag.pokeBalls, gSaveBlock1Ptr->bag.pokeBalls, sizeof(gSaveBlock1Ptr->bag.pokeBalls));
+    memcpy(&gLoadedSaveData.bag.pokeBalls[BAG_LEGACY_POKEBALLS_COUNT],
+           gSaveBlock1Ptr->bagExpansion.pokeBallsExtra,
+           sizeof(gSaveBlock1Ptr->bagExpansion.pokeBallsExtra));
+    memcpy(gLoadedSaveData.bag.TMsHMs, gSaveBlock1Ptr->bag.TMsHMs, sizeof(gSaveBlock1Ptr->bag.TMsHMs));
+    memcpy(&gLoadedSaveData.bag.TMsHMs[BAG_LEGACY_TMHM_COUNT],
+           gSaveBlock1Ptr->bagExpansion.TMsHMsExtra,
+           sizeof(gSaveBlock1Ptr->bagExpansion.TMsHMsExtra));
+    memcpy(gLoadedSaveData.bag.berries, gSaveBlock1Ptr->bag.berries, sizeof(gSaveBlock1Ptr->bag.berries));
 
     // load mail.
     for (i = 0; i < MAIL_COUNT; i++)
@@ -271,7 +287,23 @@ void SavePlayerBag(void)
     u32 encryptionKeyBackup;
 
     // save player bag.
-    memcpy(&gSaveBlock1Ptr->bag, &gLoadedSaveData.bag, sizeof(struct Bag));
+    memcpy(gSaveBlock1Ptr->bag.items, gLoadedSaveData.bag.items, sizeof(gSaveBlock1Ptr->bag.items));
+    memcpy(gSaveBlock1Ptr->bagExpansion.itemsExtra,
+           &gLoadedSaveData.bag.items[BAG_LEGACY_ITEMS_COUNT],
+           sizeof(gSaveBlock1Ptr->bagExpansion.itemsExtra));
+    memcpy(gSaveBlock1Ptr->bagExpansion.medicine,
+           gLoadedSaveData.bag.medicine,
+           sizeof(gSaveBlock1Ptr->bagExpansion.medicine));
+    memcpy(gSaveBlock1Ptr->bag.keyItems, gLoadedSaveData.bag.keyItems, sizeof(gSaveBlock1Ptr->bag.keyItems));
+    memcpy(gSaveBlock1Ptr->bag.pokeBalls, gLoadedSaveData.bag.pokeBalls, sizeof(gSaveBlock1Ptr->bag.pokeBalls));
+    memcpy(gSaveBlock1Ptr->bagExpansion.pokeBallsExtra,
+           &gLoadedSaveData.bag.pokeBalls[BAG_LEGACY_POKEBALLS_COUNT],
+           sizeof(gSaveBlock1Ptr->bagExpansion.pokeBallsExtra));
+    memcpy(gSaveBlock1Ptr->bag.TMsHMs, gLoadedSaveData.bag.TMsHMs, sizeof(gSaveBlock1Ptr->bag.TMsHMs));
+    memcpy(gSaveBlock1Ptr->bagExpansion.TMsHMsExtra,
+           &gLoadedSaveData.bag.TMsHMs[BAG_LEGACY_TMHM_COUNT],
+           sizeof(gSaveBlock1Ptr->bagExpansion.TMsHMsExtra));
+    memcpy(gSaveBlock1Ptr->bag.berries, gLoadedSaveData.bag.berries, sizeof(gSaveBlock1Ptr->bag.berries));
 
     // save mail.
     for (i = 0; i < MAIL_COUNT; i++)

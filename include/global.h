@@ -1085,9 +1085,42 @@ struct ExternalEventFlags
 
 } __attribute__((packed));/*size = 0x15*/
 
+struct LegacyBag
+{
+    struct ItemSlot items[BAG_LEGACY_ITEMS_COUNT];
+    struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
+    struct ItemSlot pokeBalls[BAG_LEGACY_POKEBALLS_COUNT];
+    struct ItemSlot TMsHMs[BAG_LEGACY_TMHM_COUNT];
+    struct ItemSlot berries[BAG_BERRIES_COUNT];
+};
+
+#define BAG_EXPANSION_MAGIC 0x42414758
+#define BAG_EXPANSION_VERSION 1
+
+// This occupies the former Mystery Gift save range. Keeping the total size
+// unchanged allows saves from the previous layout to be loaded safely.
+struct BagExpansionSave
+{
+    u32 magic;
+    u16 version;
+    u16 size;
+    struct ItemSlot itemsExtra[BAG_ITEMS_EXTRA_COUNT];
+    struct ItemSlot medicine[BAG_MEDICINE_COUNT];
+    struct ItemSlot pokeBallsExtra[BAG_POKEBALLS_EXTRA_COUNT];
+    struct ItemSlot TMsHMsExtra[BAG_TMHM_EXTRA_COUNT];
+    u8 reserved[sizeof(struct MysteryGiftSave) - 8
+                - sizeof(struct ItemSlot) * (BAG_ITEMS_EXTRA_COUNT
+                                            + BAG_MEDICINE_COUNT
+                                            + BAG_POKEBALLS_EXTRA_COUNT
+                                            + BAG_TMHM_EXTRA_COUNT)];
+};
+
+STATIC_ASSERT(sizeof(struct BagExpansionSave) == sizeof(struct MysteryGiftSave), BagExpansionSaveSize);
+
 struct Bag
 {
     struct ItemSlot items[BAG_ITEMS_COUNT];
+    struct ItemSlot medicine[BAG_MEDICINE_COUNT];
     struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
     struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
     struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
@@ -1165,7 +1198,7 @@ struct SaveBlock1
               u16 registeredItemL; // registered for use with L button
     /*0x498*/ struct ItemSlot pcItems[PC_ITEMS_COUNT];
     /*0x560 -> 0x848 is bag storage*/
-    /*0x560*/ struct Bag bag;
+    /*0x560*/ struct LegacyBag bag;
     /*0x848*/ struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
 #if FREE_EXTRA_SEEN_FLAGS_SAVEBLOCK1 == FALSE
     /*0x988*/ u8 filler1[0x34]; // Previously Dex Flags, feel free to remove.
@@ -1228,9 +1261,13 @@ struct SaveBlock1
     /*0x31DC*/ struct Roamer roamer[ROAMER_COUNT];
 #if FREE_ENIGMA_BERRY == FALSE
     /*0x31F8*/ struct EnigmaBerry enigmaBerry;
+#else
+    /*0x31F8*/ u8 reservedEnigmaBerry[sizeof(struct EnigmaBerry)];
 #endif //FREE_ENIGMA_BERRY
 #if FREE_MYSTERY_GIFT == FALSE
     /*0x322C*/ struct MysteryGiftSave mysteryGift;
+#else
+    /*0x322C*/ struct BagExpansionSave bagExpansion;
 #endif //FREE_MYSTERY_GIFT
     /*0x3???*/ u8 dexSeen[NUM_DEX_FLAG_BYTES];
     /*0x3???*/ u8 dexCaught[NUM_DEX_FLAG_BYTES];
@@ -1245,6 +1282,8 @@ struct SaveBlock1
     /*0x3???*/ struct TrainerNameRecord trainerNameRecords[20];
 #if FREE_UNION_ROOM_CHAT == FALSE
     /*0x3???*/ u8 registeredTexts[UNION_ROOM_KB_ROW_COUNT][21];
+#else
+    /*0x3???*/ u8 reservedUnionRoomChat[UNION_ROOM_KB_ROW_COUNT][21];
 #endif //FREE_UNION_ROOM_CHAT
 #if FREE_TRAINER_HILL == FALSE
     /*0x3???*/ struct TrainerHillSave trainerHill;
