@@ -51,32 +51,6 @@
 #include "graphics.h"
 #include "comfy_anim.h"
 
-// HLW_BATTLE_RADIO_MEDIA_KEYS_V1_1
-extern bool8 RadioPriority_ShouldBlockBgmChange(void);
-extern bool8 RadioPriority_NextTrack(void);
-extern bool8 RadioPriority_PreviousTrack(void);
-
-extern void Radio_Open(MainCallback returnCallback);
-
-
-// HLW_BATTLE_RADIO_UI_AND_L_OPEN_V2
-// User-provided 128x16 battle-radio strip.
-// The .bin is a 30x20 tilemap authored at screen coordinates; only the
-// x=15..29 / y=0..1 strip is copied into the battle action page (BG0 y=160).
-#define BATTLE_RADIO_DISPLAY_TILE_BASE    0x3C0
-#define BATTLE_RADIO_DISPLAY_PAL_NUM      15
-#define BATTLE_RADIO_DISPLAY_SRC_WIDTH    30
-#define BATTLE_RADIO_DISPLAY_SRC_X        15
-#define BATTLE_RADIO_DISPLAY_SRC_Y        0
-#define BATTLE_RADIO_DISPLAY_X            15
-#define BATTLE_RADIO_DISPLAY_Y            20
-#define BATTLE_RADIO_DISPLAY_WIDTH        15
-#define BATTLE_RADIO_DISPLAY_HEIGHT       2
-
-static const u32 sBattleRadioDisplayGfx[] = INCBIN_U32("graphics/battle_interface/radiodisplay.4bpp");
-static const u16 sBattleRadioDisplayPal[] = INCBIN_U16("graphics/battle_interface/radiodisplay.gbapal");
-static const u16 sBattleRadioDisplayMap[] = INCBIN_U16("graphics/battle_interface/radiodisplay.bin");
-
 static void PlayerHandleLoadMonSprite(u32 battler);
 static void PlayerHandleDrawTrainerPic(u32 battler);
 static void PlayerHandleTrainerSlide(u32 battler);
@@ -104,25 +78,6 @@ static void PlayerHandleResetActionMoveSelection(u32 battler);
 static void PlayerHandleEndLinkBattle(u32 battler);
 static void PlayerHandleBattleDebug(u32 battler);
 
-static void BattleRadioDisplay_Update(void);
-
-// HLW_BATTLE_RADIO_RETURN_FIX_V2_1
-// BattleMainCB1 keeps running while full-screen battle submenus are open.
-// Therefore the player controller MUST stay in a wait function until:
-//   1) the Radio has closed,
-//   2) ReshowBattleScreenAfterMenu has rebuilt battle graphics/windows/sprites,
-//   3) the return palette fade is finished.
-//
-// This mirrors the existing Bag/Party controller pattern and prevents
-// PlayerHandleChooseAction from running against the Radio's windows/BGs.
-static void WaitForBattleRadioReturn(u32 battler)
-{
-    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
-        gBattlerControllerFuncs[battler] = PlayerHandleChooseAction;
-}
-
-static void OpenRadioFromBattle(u32 battler);
-static void WaitForBattleRadioReturn(u32 battler);
 static void PlayerBufferRunCommand(u32 battler);
 static void MoveSelectionDisplayPpNumber(u32 battler);
 static void MoveSelectionDisplayPpString(u32 battler);
@@ -360,36 +315,6 @@ static void HandleInputChooseAction(u32 battler)
                 BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_THROW_BALL, 0);
                 BtlController_Complete(battler);
             }
-            return;
-        }
-    }
-
-
-    // HLW_BATTLE_RADIO_UI_AND_L_OPEN_V2
-    // Active only on the main Battle / Bag / Pokemon / Run command screen.
-    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED)))
-    {
-        if (RadioPriority_ShouldBlockBgmChange())
-        {
-            if (JOY_NEW(START_BUTTON))
-            {
-                RadioPriority_NextTrack();
-                return;
-            }
-            else if (JOY_NEW(SELECT_BUTTON))
-            {
-                RadioPriority_PreviousTrack();
-                return;
-            }
-        }
-
-        // Raw L is intentional: with Options L=A, normal input may mirror L into A.
-        // Catch physical L before the ordinary A_BUTTON action chain.
-        if (gMain.newKeysRaw & L_BUTTON)
-        {
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
-            gBattlerInMenuId = battler;
-            gBattlerControllerFuncs[battler] = OpenRadioFromBattle;
             return;
         }
     }
@@ -2045,92 +1970,12 @@ static void PlayerHandlePause(u32 battler)
     BtlController_Complete(battler);
 }
 
-
-// HLW_BATTLE_RADIO_UI_AND_L_OPEN_V2
-static void BattleRadioDisplay_Update(void)
-{
-    u16 tiles[BATTLE_RADIO_DISPLAY_WIDTH * BATTLE_RADIO_DISPLAY_HEIGHT];
-    u32 x;
-    u32 y;
-
-    if (!RadioPriority_ShouldBlockBgmChange())
-    {
-        FillBgTilemapBufferRect(
-            0,
-            0,
-            BATTLE_RADIO_DISPLAY_X,
-            BATTLE_RADIO_DISPLAY_Y,
-            BATTLE_RADIO_DISPLAY_WIDTH,
-            BATTLE_RADIO_DISPLAY_HEIGHT,
-            0
-        );
-        CopyBgTilemapBufferToVram(0);
-        return;
-    }
-
-    LoadBgTiles(
-        0,
-        sBattleRadioDisplayGfx,
-        sizeof(sBattleRadioDisplayGfx),
-        BATTLE_RADIO_DISPLAY_TILE_BASE
-    );
-    LoadPalette(
-        sBattleRadioDisplayPal,
-        BG_PLTT_ID(BATTLE_RADIO_DISPLAY_PAL_NUM),
-        PLTT_SIZE_4BPP
-    );
-
-    for (y = 0; y < BATTLE_RADIO_DISPLAY_HEIGHT; y++)
-    {
-        for (x = 0; x < BATTLE_RADIO_DISPLAY_WIDTH; x++)
-        {
-            u16 entry = sBattleRadioDisplayMap[
-                (BATTLE_RADIO_DISPLAY_SRC_Y + y) * BATTLE_RADIO_DISPLAY_SRC_WIDTH
-                + BATTLE_RADIO_DISPLAY_SRC_X + x
-            ];
-            u16 tile = entry & 0x03FF;
-
-            if (tile != 0)
-                entry = (entry & ~0x03FF) | (BATTLE_RADIO_DISPLAY_TILE_BASE + tile);
-
-            tiles[y * BATTLE_RADIO_DISPLAY_WIDTH + x] = entry;
-        }
-    }
-
-    CopyToBgTilemapBufferRect_ChangePalette(
-        0,
-        tiles,
-        BATTLE_RADIO_DISPLAY_X,
-        BATTLE_RADIO_DISPLAY_Y,
-        BATTLE_RADIO_DISPLAY_WIDTH,
-        BATTLE_RADIO_DISPLAY_HEIGHT,
-        BATTLE_RADIO_DISPLAY_PAL_NUM
-    );
-    CopyBgTilemapBufferToVram(0);
-}
-
-static void OpenRadioFromBattle(u32 battler)
-{
-    if (!gPaletteFade.active)
-    {
-        gBattlerInMenuId = battler;
-        gBattlerControllerFuncs[battler] = WaitForBattleRadioReturn;
-
-        FreeAllWindowBuffers();
-
-        // Radio's loader is state-driven; battle can leave gMain.state elsewhere.
-        gMain.state = 0;
-        Radio_Open(ReshowBattleScreenAfterMenu);
-    }
-}
-
 static void HandleChooseActionAfterDma3(u32 battler)
 {
     if (!IsDma3ManagerBusyWithBgCopy())
     {
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = DISPLAY_HEIGHT;
-        BattleRadioDisplay_Update();
         if (gBattleStruct->aiDelayTimer != 0)
         {
             gBattleStruct->aiDelayFrames = gMain.vblankCounter1 - gBattleStruct->aiDelayTimer;

@@ -105,24 +105,7 @@ static void PlayerHandleEndLinkBattle(u32 battler);
 static void PlayerHandleBattleDebug(u32 battler);
 
 static void BattleRadioDisplay_Update(void);
-
-// HLW_BATTLE_RADIO_RETURN_FIX_V2_1
-// BattleMainCB1 keeps running while full-screen battle submenus are open.
-// Therefore the player controller MUST stay in a wait function until:
-//   1) the Radio has closed,
-//   2) ReshowBattleScreenAfterMenu has rebuilt battle graphics/windows/sprites,
-//   3) the return palette fade is finished.
-//
-// This mirrors the existing Bag/Party controller pattern and prevents
-// PlayerHandleChooseAction from running against the Radio's windows/BGs.
-static void WaitForBattleRadioReturn(u32 battler)
-{
-    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
-        gBattlerControllerFuncs[battler] = PlayerHandleChooseAction;
-}
-
 static void OpenRadioFromBattle(u32 battler);
-static void WaitForBattleRadioReturn(u32 battler);
 static void PlayerBufferRunCommand(u32 battler);
 static void MoveSelectionDisplayPpNumber(u32 battler);
 static void MoveSelectionDisplayPpString(u32 battler);
@@ -2114,7 +2097,7 @@ static void OpenRadioFromBattle(u32 battler)
     if (!gPaletteFade.active)
     {
         gBattlerInMenuId = battler;
-        gBattlerControllerFuncs[battler] = WaitForBattleRadioReturn;
+        gBattlerControllerFuncs[battler] = PlayerHandleChooseAction;
 
         FreeAllWindowBuffers();
 
