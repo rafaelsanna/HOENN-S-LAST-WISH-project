@@ -12105,14 +12105,14 @@ const struct Item gItemsInfo[] =
         .name = ITEM_NAME("TM79"),
         .price = 3000,
         .description = COMPOUND_STRING(
-            "Uses the target's\n"
-            "Attack stat to\n"
-            "deal damage."),
+            "Turns foe power\n"
+            "against it.\n"
+            "Uses foe Attack."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
-        .secondaryId = MOVE_PSYCHO_CUT,
+        .secondaryId = MOVE_FOUL_PLAY,
     },
 
     [ITEM_TM80] =

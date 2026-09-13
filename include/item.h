@@ -145,6 +145,10 @@ static inline enum TMHMIndex GetItemTMHMIndex(u16 item)
          * etc */
         FOREACH_TM(UNPACK_ITEM_TO_TM_INDEX)
         FOREACH_HM(UNPACK_ITEM_TO_HM_INDEX)
+        // Foul Play was TM81 before the 90.2 TM rework. Keep old save data
+        // usable after it moved to the current TM79 slot.
+        case ITEM_TM81:
+            return ENUM_TM_HM_FOUL_PLAY + 1;
         default:
             return 0;
     }
@@ -162,6 +166,9 @@ static inline u16 GetItemTMHMMoveId(u16 item)
          * etc */
         FOREACH_TM(UNPACK_ITEM_TO_TM_MOVE_ID)
         FOREACH_HM(UNPACK_ITEM_TO_HM_MOVE_ID)
+        // Compatibility for Foul Play items stored as TM81 by older saves.
+        case ITEM_TM81:
+            return MOVE_FOUL_PLAY;
         default:
             return MOVE_NONE;
     }
