@@ -5,9 +5,6 @@ static const int sSpriteTileTable[][16] = {
     [MININGID_WATER_STONE] = {
       1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0,
     },
-    [MININGID_ARMOR_FOSSIL] = {
-      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    },
     [MININGID_MOON_STONE] = {
       0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,
     },
@@ -25,12 +22,6 @@ static const int sSpriteTileTable[][16] = {
     },
     [MININGID_DAMP_ROCK] = {
       1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,0,
-    },
-    [MININGID_ODD_KEY_STONE] = {
-      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    },
-    [MININGID_SKULL_FOSSIL] = {
-      1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,
     },
     [MININGID_FIRE_STONE] = {
       1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,0,
@@ -79,6 +70,21 @@ static const int sSpriteTileTable[][16] = {
     },
     [MININGID_SUN_STONE] = {
       0,1,0,0,1,1,1,0,1,1,1,0,0,0,0,0,
+    },
+    [MININGID_HELIX_FOSSIL] = {
+      0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+    },
+    [MININGID_DOME_FOSSIL] = {
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    },
+    [MININGID_OLD_AMBER] = {
+      0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+    },
+    [MININGID_ROOT_FOSSIL] = {
+      1,1,1,1,1,1,1,1,0,0,1,1,0,0,1,1,
+    },
+    [MININGID_CLAW_FOSSIL] = {
+      0,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,
     },
     [MININGID_STONE_MUSHROOM2] = {
       0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,
