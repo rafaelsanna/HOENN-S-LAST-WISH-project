@@ -43,6 +43,8 @@
 /* >> Specials << */
 void StartMining(void);
 void TryDailyMiningWall(void);
+u16 GetMiningFreeSessionsRemaining(void);
+u16 TryMiningFreeSession(void);
 
 /* >> Callbacks << */
 static void Mining_Init(MainCallback callback);
@@ -97,6 +99,11 @@ static u32 GetDailyMiningWallAttemptId(void);
 static bool8 HasTriedDailyMiningWall(void);
 static void SetTriedDailyMiningWall(void);
 static void ClearDailyMiningWallAttemptsIfNewDay(void);
+static void MiningSession_InitSaveData(void);
+static void MiningSession_ClearIfNewDay(void);
+static u16 MiningSession_GetDay(void);
+static u8 MiningSession_GetCount(u16 location);
+static void MiningSession_SetCount(u16 location, u8 count);
 static u32 GetBuriedBagItemId(u32 index);
 static u32 GetBuriedMiningItemId(u32 index);
 #if MINING_DEBUG_ENABLE == FALSE || MINING_DEBUG_INFINITE_HITS == FALSE
@@ -236,6 +243,7 @@ enum
 };
 
 static EWRAM_DATA struct MiningState *sMiningUiState = NULL;
+static u8 sMiningItemPool = MINING_POOL_DEFAULT;
 
 static const struct WindowTemplate sWindowTemplates[] =
 {
@@ -690,6 +698,36 @@ static const u32 gItemClawFossilGfx[] = INCBIN_U32("graphics/mining_minigame/ite
 static const u32 gItemOldAmberGfx[] = INCBIN_U32("graphics/mining_minigame/items/Old_Amber.4bpp.smol");
 static const u16 gItemOldAmberPal[] = INCBIN_U16("graphics/mining_minigame/items/old_amber.gbapal");
 
+static const u32 gItemDuskStoneGfx[] = INCBIN_U32("graphics/mining_minigame/items/dusk_stone.4bpp.smol");
+static const u16 gItemDuskStonePal[] = INCBIN_U16("graphics/mining_minigame/items/dusk_stone.gbapal");
+
+static const u32 gItemShinyStoneGfx[] = INCBIN_U32("graphics/mining_minigame/items/shiny_stone.4bpp.smol");
+static const u16 gItemShinyStonePal[] = INCBIN_U16("graphics/mining_minigame/items/shiny_stone.gbapal");
+
+static const u32 gItemPrismScaleGfx[] = INCBIN_U32("graphics/mining_minigame/items/prism_scale.4bpp.smol");
+static const u16 gItemPrismScalePal[] = INCBIN_U16("graphics/mining_minigame/items/prism_scale.gbapal");
+
+static const u32 gItemKingsRockGfx[] = INCBIN_U32("graphics/mining_minigame/items/kings_rock.4bpp.smol");
+static const u16 gItemKingsRockPal[] = INCBIN_U16("graphics/mining_minigame/items/kings_rock.gbapal");
+
+static const u32 gItemBigNuggetGfx[] = INCBIN_U32("graphics/mining_minigame/items/big_nugget_64.4bpp.smol");
+static const u16 gItemBigNuggetPal[] = INCBIN_U16("graphics/mining_minigame/items/big_nugget.gbapal");
+
+static const u32 gItemIceStoneGfx[] = INCBIN_U32("graphics/mining_minigame/items/ice_stone.4bpp.smol");
+static const u16 gItemIceStonePal[] = INCBIN_U16("graphics/mining_minigame/items/ice_stone.gbapal");
+
+static const u32 gItemDawnStoneGfx[] = INCBIN_U32("graphics/mining_minigame/items/dawn_stone.4bpp.smol");
+static const u16 gItemDawnStonePal[] = INCBIN_U16("graphics/mining_minigame/items/dawn_stone.gbapal");
+
+static const u32 gItemRareBoneGfx[] = INCBIN_U32("graphics/mining_minigame/items/rare_bone.4bpp.smol");
+static const u16 gItemRareBonePal[] = INCBIN_U16("graphics/mining_minigame/items/rare_bone.gbapal");
+
+static const u32 gItemBigPearlGfx[] = INCBIN_U32("graphics/mining_minigame/items/big_pearl.4bpp.smol");
+static const u16 gItemBigPearlPal[] = INCBIN_U16("graphics/mining_minigame/items/big_pearl.gbapal");
+
+static const u32 gItemCometShardGfx[] = INCBIN_U32("graphics/mining_minigame/items/comet_shard.4bpp.smol");
+static const u16 gItemCometShardPal[] = INCBIN_U16("graphics/mining_minigame/items/comet_shard.gbapal");
+
 // Stone SpriteSheets and SpritePalettes
 static const struct CompressedSpriteSheet sSpriteSheet_Stone1x4[] =
 {
@@ -1005,6 +1043,76 @@ static const struct CompressedSpriteSheet sSpriteSheet_ItemClawFossil =
     gItemClawFossilGfx,
     64 * 64 / 2,
     MINING_TAG_ITEM_CLAW_FOSSIL,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemDuskStone =
+{
+    gItemDuskStoneGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_DUSK_STONE,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemShinyStone =
+{
+    gItemShinyStoneGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_SHINY_STONE,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemPrismScale =
+{
+    gItemPrismScaleGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_PRISM_SCALE,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemKingsRock =
+{
+    gItemKingsRockGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_KINGS_ROCK,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemBigNugget =
+{
+    gItemBigNuggetGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_BIG_NUGGET,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemIceStone =
+{
+    gItemIceStoneGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_ICE_STONE,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemDawnStone =
+{
+    gItemDawnStoneGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_DAWN_STONE,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemRareBone =
+{
+    gItemRareBoneGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_RARE_BONE,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemBigPearl =
+{
+    gItemBigPearlGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_BIG_PEARL,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_ItemCometShard =
+{
+    gItemCometShardGfx,
+    64 * 64 / 2,
+    MINING_TAG_ITEM_COMET_SHARD,
 };
 
 static const struct SpriteTemplate gSpriteStone1x4 =
@@ -1331,6 +1439,76 @@ static const struct MiningItem MiningItemList[] =
         .sheet = &sSpriteSheet_ItemClawFossil,
         .paldata = gItemFossilPal,
     },
+    [MININGID_DUSK_STONE] =
+    {
+        .bagItemId = ITEM_DUSK_STONE,
+        .tag = MINING_TAG_ITEM_DUSK_STONE,
+        .sheet = &sSpriteSheet_ItemDuskStone,
+        .paldata = gItemDuskStonePal,
+    },
+    [MININGID_SHINY_STONE] =
+    {
+        .bagItemId = ITEM_SHINY_STONE,
+        .tag = MINING_TAG_ITEM_SHINY_STONE,
+        .sheet = &sSpriteSheet_ItemShinyStone,
+        .paldata = gItemShinyStonePal,
+    },
+    [MININGID_PRISM_SCALE] =
+    {
+        .bagItemId = ITEM_PRISM_SCALE,
+        .tag = MINING_TAG_ITEM_PRISM_SCALE,
+        .sheet = &sSpriteSheet_ItemPrismScale,
+        .paldata = gItemPrismScalePal,
+    },
+    [MININGID_KINGS_ROCK] =
+    {
+        .bagItemId = ITEM_KINGS_ROCK,
+        .tag = MINING_TAG_ITEM_KINGS_ROCK,
+        .sheet = &sSpriteSheet_ItemKingsRock,
+        .paldata = gItemKingsRockPal,
+    },
+    [MININGID_BIG_NUGGET] =
+    {
+        .bagItemId = ITEM_BIG_NUGGET,
+        .tag = MINING_TAG_ITEM_BIG_NUGGET,
+        .sheet = &sSpriteSheet_ItemBigNugget,
+        .paldata = gItemBigNuggetPal,
+    },
+    [MININGID_ICE_STONE] =
+    {
+        .bagItemId = ITEM_ICE_STONE,
+        .tag = MINING_TAG_ITEM_ICE_STONE,
+        .sheet = &sSpriteSheet_ItemIceStone,
+        .paldata = gItemIceStonePal,
+    },
+    [MININGID_DAWN_STONE] =
+    {
+        .bagItemId = ITEM_DAWN_STONE,
+        .tag = MINING_TAG_ITEM_DAWN_STONE,
+        .sheet = &sSpriteSheet_ItemDawnStone,
+        .paldata = gItemDawnStonePal,
+    },
+    [MININGID_RARE_BONE] =
+    {
+        .bagItemId = ITEM_RARE_BONE,
+        .tag = MINING_TAG_ITEM_RARE_BONE,
+        .sheet = &sSpriteSheet_ItemRareBone,
+        .paldata = gItemRareBonePal,
+    },
+    [MININGID_BIG_PEARL] =
+    {
+        .bagItemId = ITEM_BIG_PEARL,
+        .tag = MINING_TAG_ITEM_BIG_PEARL,
+        .sheet = &sSpriteSheet_ItemBigPearl,
+        .paldata = gItemBigPearlPal,
+    },
+    [MININGID_COMET_SHARD] =
+    {
+        .bagItemId = ITEM_COMET_SHARD,
+        .tag = MINING_TAG_ITEM_COMET_SHARD,
+        .sheet = &sSpriteSheet_ItemCometShard,
+        .paldata = gItemCometShardPal,
+    },
 };
 
 static const u8 sText_SomethingPinged[] = _("Something pinged in the wall!\n{STR_VAR_1} confirmed!");
@@ -1403,7 +1581,155 @@ static u32 random(u32 amount)
 
 void StartMining(void)
 {
+    sMiningItemPool = gSpecialVar_0x8004;
+    if (sMiningItemPool > MINING_POOL_MOSSDEEP_CAVE)
+        sMiningItemPool = MINING_POOL_DEFAULT;
     Mining_Init(CB2_ReturnToField);
+}
+
+// The last 12 bytes of HLWSaveExtension.future[] are reserved for the
+// location-based mining allowance system. Keeping this data in the fixed-size
+// extension preserves the SaveBlock1 layout for existing saves.
+#define MINING_SESSION_SAVE_TAG0_OFFSET    340
+#define MINING_SESSION_SAVE_TAG1_OFFSET    341
+#define MINING_SESSION_SAVE_VERSION_OFFSET 342
+#define MINING_SESSION_SAVE_DAY_OFFSET     343
+#define MINING_SESSION_SAVE_COUNT_OFFSET   345
+#define MINING_SESSION_SAVE_COUNT_BYTES    7
+#define MINING_SESSION_SAVE_MAX_LOCATIONS  ((MINING_SESSION_SAVE_COUNT_BYTES * 8) / 3)
+#define MINING_SESSION_SAVE_END_OFFSET     (MINING_SESSION_SAVE_COUNT_OFFSET + MINING_SESSION_SAVE_COUNT_BYTES)
+
+STATIC_ASSERT(MINING_SESSION_SAVE_END_OFFSET <= sizeof(((struct HLWSaveExtension *)0)->future),
+              MiningSessionSaveFitsInExtension);
+
+static void MiningSession_InitSaveData(void)
+{
+    struct HLWSaveExtension *extension;
+    u16 day;
+
+    if (gSaveBlock1Ptr == NULL)
+        return;
+
+    extension = &gSaveBlock1Ptr->hlwSave;
+    if (extension->future[MINING_SESSION_SAVE_TAG0_OFFSET] != 'M'
+     || extension->future[MINING_SESSION_SAVE_TAG1_OFFSET] != 'S'
+     || extension->future[MINING_SESSION_SAVE_VERSION_OFFSET] != 1)
+    {
+        day = (u16)RtcGetLocalDayCount();
+        extension->future[MINING_SESSION_SAVE_TAG0_OFFSET] = 'M';
+        extension->future[MINING_SESSION_SAVE_TAG1_OFFSET] = 'S';
+        extension->future[MINING_SESSION_SAVE_VERSION_OFFSET] = 1;
+        extension->future[MINING_SESSION_SAVE_DAY_OFFSET] = (u8)day;
+        extension->future[MINING_SESSION_SAVE_DAY_OFFSET + 1] = (u8)(day >> 8);
+        memset(&extension->future[MINING_SESSION_SAVE_COUNT_OFFSET],
+               0,
+               MINING_SESSION_SAVE_COUNT_BYTES);
+    }
+}
+
+static u16 MiningSession_GetDay(void)
+{
+    struct HLWSaveExtension *extension = &gSaveBlock1Ptr->hlwSave;
+
+    return extension->future[MINING_SESSION_SAVE_DAY_OFFSET]
+         | ((u16)extension->future[MINING_SESSION_SAVE_DAY_OFFSET + 1] << 8);
+}
+
+static u8 MiningSession_GetCount(u16 location)
+{
+    struct HLWSaveExtension *extension = &gSaveBlock1Ptr->hlwSave;
+    u16 bitOffset;
+    u8 count = 0;
+    u8 bit;
+
+    if (location >= MINING_LOCATION_COUNT || location >= MINING_SESSION_SAVE_MAX_LOCATIONS)
+        location = MINING_LOCATION_JAGGED_PASS;
+
+    bitOffset = location * 3;
+    for (bit = 0; bit < 3; bit++)
+    {
+        if (extension->future[MINING_SESSION_SAVE_COUNT_OFFSET + ((bitOffset + bit) >> 3)]
+            & (1 << ((bitOffset + bit) & 7)))
+        {
+            count |= 1 << bit;
+        }
+    }
+
+    return count;
+}
+
+static void MiningSession_SetCount(u16 location, u8 count)
+{
+    struct HLWSaveExtension *extension = &gSaveBlock1Ptr->hlwSave;
+    u16 bitOffset;
+    u8 bit;
+
+    if (location >= MINING_LOCATION_COUNT || location >= MINING_SESSION_SAVE_MAX_LOCATIONS)
+        location = MINING_LOCATION_JAGGED_PASS;
+
+    bitOffset = location * 3;
+    for (bit = 0; bit < 3; bit++)
+    {
+        u8 *byte = &extension->future[MINING_SESSION_SAVE_COUNT_OFFSET + ((bitOffset + bit) >> 3)];
+        u8 mask = 1 << ((bitOffset + bit) & 7);
+
+        if (count & (1 << bit))
+            *byte |= mask;
+        else
+            *byte &= ~mask;
+    }
+}
+
+static void MiningSession_ClearIfNewDay(void)
+{
+    struct HLWSaveExtension *extension;
+    u16 day;
+
+    MiningSession_InitSaveData();
+    extension = &gSaveBlock1Ptr->hlwSave;
+    day = (u16)RtcGetLocalDayCount();
+
+    if (MiningSession_GetDay() != day)
+    {
+        extension->future[MINING_SESSION_SAVE_DAY_OFFSET] = (u8)day;
+        extension->future[MINING_SESSION_SAVE_DAY_OFFSET + 1] = (u8)(day >> 8);
+        memset(&extension->future[MINING_SESSION_SAVE_COUNT_OFFSET],
+               0,
+               MINING_SESSION_SAVE_COUNT_BYTES);
+    }
+}
+
+u16 GetMiningFreeSessionsRemaining(void)
+{
+    u8 count;
+
+    if (gSaveBlock1Ptr == NULL)
+        return MINING_FREE_SESSIONS_PER_DAY;
+
+    MiningSession_ClearIfNewDay();
+    count = MiningSession_GetCount(gSpecialVar_0x8005);
+    if (count >= MINING_FREE_SESSIONS_PER_DAY)
+        return 0;
+
+    return MINING_FREE_SESSIONS_PER_DAY - count;
+}
+
+u16 TryMiningFreeSession(void)
+{
+    u8 count;
+
+    if (gSaveBlock1Ptr == NULL)
+        return MINING_SESSION_RESULT_REQUIRES_PAYMENT;
+
+    MiningSession_ClearIfNewDay();
+    count = MiningSession_GetCount(gSpecialVar_0x8005);
+    if (count < MINING_FREE_SESSIONS_PER_DAY)
+    {
+        MiningSession_SetCount(gSpecialVar_0x8005, count + 1);
+        return MINING_SESSION_RESULT_FREE;
+    }
+
+    return MINING_SESSION_RESULT_REQUIRES_PAYMENT;
 }
 
 void TryDailyMiningWall(void)
@@ -1912,6 +2238,7 @@ static const u32 ItemRarityTable_Uncommon[] =
     MININGID_HARD_STONE,
     MININGID_REVIVE,
     MININGID_EVER_STONE,
+    MININGID_BIG_NUGGET,
 };
 
 static const u32 ItemRarityTable_Rare[] =
@@ -1935,6 +2262,59 @@ static const u32 ItemRarityTable_Rare[] =
     MININGID_OLD_AMBER,
     MININGID_ROOT_FOSSIL,
     MININGID_CLAW_FOSSIL,
+    MININGID_DUSK_STONE,
+    MININGID_SHINY_STONE,
+    MININGID_PRISM_SCALE,
+    MININGID_KINGS_ROCK,
+    MININGID_ICE_STONE,
+    MININGID_DAWN_STONE,
+    MININGID_RARE_BONE,
+    MININGID_BIG_PEARL,
+    MININGID_COMET_SHARD,
+};
+
+static const u32 ItemRarityTable_Rare_GraniteCave[] =
+{
+    MININGID_OVAL_STONE,
+    MININGID_LEAF_STONE,
+    MININGID_FIRE_STONE,
+    MININGID_WATER_STONE,
+    MININGID_THUNDER_STONE,
+    MININGID_MOON_STONE,
+    MININGID_SUN_STONE,
+    MININGID_DUSK_STONE,
+    MININGID_SHINY_STONE,
+    MININGID_ICE_STONE,
+    MININGID_DAWN_STONE,
+};
+
+static const u32 ItemRarityTable_Rare_Route111[] =
+{
+    MININGID_HELIX_FOSSIL,
+    MININGID_DOME_FOSSIL,
+    MININGID_OLD_AMBER,
+    MININGID_ROOT_FOSSIL,
+    MININGID_CLAW_FOSSIL,
+};
+
+static const u32 ItemRarityTable_Rare_VictoryRoad[] =
+{
+    MININGID_DAMP_ROCK,
+    MININGID_HEAT_ROCK,
+    MININGID_LIGHT_CLAY,
+    MININGID_ICY_ROCK,
+    MININGID_SMOOTH_ROCK,
+};
+
+static const u32 ItemRarityTable_Rare_MossdeepCave[] =
+{
+    MININGID_STAR_PIECE,
+    MININGID_REVIVE_MAX,
+    MININGID_PRISM_SCALE,
+    MININGID_KINGS_ROCK,
+    MININGID_RARE_BONE,
+    MININGID_BIG_PEARL,
+    MININGID_COMET_SHARD,
 };
 
 #if MINING_DEBUG_ENABLE == FALSE || MINING_DEBUG_ENABLE_ITEM_GENERATION_OPTIONS == FALSE
@@ -1943,14 +2323,53 @@ static u8 GetRandomItemId()
     u32 rarity;
     u32 index;
     u32 itemId;
-    u32 rnd = random(7);
+    u32 rnd;
+    const u32 *rareTable = ItemRarityTable_Rare;
+    u32 rareTableCount = ARRAY_COUNT(ItemRarityTable_Rare);
 
-    if (rnd < 4)
-        rarity = RARITY_COMMON;
-    else if (rnd < 6)
-        rarity = RARITY_UNCOMMON;
+    if (sMiningItemPool == MINING_POOL_GRANITE_CAVE)
+    {
+        rareTable = ItemRarityTable_Rare_GraniteCave;
+        rareTableCount = ARRAY_COUNT(ItemRarityTable_Rare_GraniteCave);
+    }
+    else if (sMiningItemPool == MINING_POOL_ROUTE_111)
+    {
+        rareTable = ItemRarityTable_Rare_Route111;
+        rareTableCount = ARRAY_COUNT(ItemRarityTable_Rare_Route111);
+    }
+    else if (sMiningItemPool == MINING_POOL_VICTORY_ROAD)
+    {
+        rareTable = ItemRarityTable_Rare_VictoryRoad;
+        rareTableCount = ARRAY_COUNT(ItemRarityTable_Rare_VictoryRoad);
+    }
+    else if (sMiningItemPool == MINING_POOL_MOSSDEEP_CAVE)
+    {
+        rareTable = ItemRarityTable_Rare_MossdeepCave;
+        rareTableCount = ARRAY_COUNT(ItemRarityTable_Rare_MossdeepCave);
+    }
+
+    if (sMiningItemPool == MINING_POOL_JAGGED_PASS)
+    {
+        // Keep the uncommon chance approximately the same while increasing
+        // the common chance to compensate for Jagged Pass's 5% rare chance.
+        rnd = random(100);
+        if (rnd < 66)
+            rarity = RARITY_COMMON;
+        else if (rnd < 95)
+            rarity = RARITY_UNCOMMON;
+        else
+            rarity = RARITY_RARE;
+    }
     else
-        rarity = RARITY_RARE;
+    {
+        rnd = random(7);
+        if (rnd < 4)
+            rarity = RARITY_COMMON;
+        else if (rnd < 6)
+            rarity = RARITY_UNCOMMON;
+        else
+            rarity = RARITY_RARE;
+    }
 
     switch (rarity)
     {
@@ -1963,8 +2382,8 @@ static u8 GetRandomItemId()
             itemId =  ItemRarityTable_Uncommon[index];
             break;
         case RARITY_RARE:
-            index = random(ARRAY_COUNT(ItemRarityTable_Rare));
-            itemId =  ItemRarityTable_Rare[index];
+            index = random(rareTableCount);
+            itemId = rareTable[index];
             break;
     }
 

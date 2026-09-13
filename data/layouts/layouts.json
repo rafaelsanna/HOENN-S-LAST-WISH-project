@@ -5160,6 +5160,16 @@
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/route120grotto/border.bin",
       "blockdata_filepath": "data/layouts/route120grotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_MOSSDEEPCAVE",
+      "name": "Mossdeepcave_Layout",
+      "width": 10,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/Mossdeepcave/border.bin",
+      "blockdata_filepath": "data/layouts/Mossdeepcave/map.bin"
     }
   ]
 }

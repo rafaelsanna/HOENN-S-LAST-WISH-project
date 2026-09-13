@@ -580,6 +580,8 @@ gSpecials::
 	def_special Debug_UnlockNextAchievement
     def_special StartMining
     def_special TryDailyMiningWall
+    def_special GetMiningFreeSessionsRemaining
+    def_special TryMiningFreeSession
     def_special StartGacha
     def_special StartBlackJack
     def_special StartSnake

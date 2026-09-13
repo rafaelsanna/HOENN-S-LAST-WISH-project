@@ -171,20 +171,25 @@ script JaggedPass_EventScript_MinerNPC {
 	lock
 	faceplayer
 	if (flag(FLAG_LEARNED_MINING) == true) {
+		setvar(VAR_0x8005, MINING_LOCATION_JAGGED_PASS)
+		specialvar(VAR_RESULT, GetMiningFreeSessionsRemaining)
+		buffernumberstring(STR_VAR_1, VAR_RESULT)
 		msgbox(JaggedPass_Text_MinerNPC_AlreadyKnows, MSGBOX_YESNO)
 		if (var(VAR_RESULT) == YES) {
-			closemessage
-			fadescreen(FADE_TO_BLACK)
-			special(StartMining)
+			setvar(VAR_0x8004, MINING_POOL_JAGGED_PASS)
+			goto(EventScript_Mining_TrySession)
 		}
 		release
 	} else {
 		msgbox(JaggedPass_Text_MinerNPC_Teach)
 		closemessage
 		setflag(FLAG_LEARNED_MINING)
-		fadescreen(FADE_TO_BLACK)
-		special(StartMining)
-		release
+		setvar(VAR_0x8004, MINING_POOL_JAGGED_PASS)
+		setvar(VAR_0x8005, MINING_LOCATION_JAGGED_PASS)
+		specialvar(VAR_RESULT, GetMiningFreeSessionsRemaining)
+		buffernumberstring(STR_VAR_1, VAR_RESULT)
+		msgbox(Text_Mining_FreeSessionsNotice)
+		goto(EventScript_Mining_TrySession)
 	}
 }
 
@@ -337,12 +342,21 @@ text JaggedPass_Text_MinerNPC_Teach {
 	"for treasure in the rocks?\p"
 	"It's easy! Just tap the rock where\n"
 	"you think something's buried.\p"
+	"I'm happy to share with a fellow\n"
+	"miner, so you get five free sessions\n"
+	"here each day.\p"
+	"Taking more than five sessions in one\n"
+	"spot means less mining for everyone\n"
+	"else, but you could persuade me with\n"
+	"¥2000 per extra session.\p"
 	"Watch closely, I'll show you how\n"
 	"it's done!"
 }
 
 text JaggedPass_Text_MinerNPC_AlreadyKnows {
-	"Go on, give the rocks a try!\n"
-	"You never know what you'll dig up.\p"
+	"Rare items are harder to find here,\n"
+	"but there's a little bit of everything.\p"
+	"You have {STR_VAR_1} free mining\n"
+	"session(s) left here today.\p"
 	"Would you like to try mining?"
 }

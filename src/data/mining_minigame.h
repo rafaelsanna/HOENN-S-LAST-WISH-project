@@ -86,6 +86,36 @@ static const int sSpriteTileTable[][16] = {
     [MININGID_CLAW_FOSSIL] = {
       0,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,
     },
+    [MININGID_DUSK_STONE] = {
+      0,0,0,0,0,0,1,1,0,1,1,1,0,1,1,1,
+    },
+    [MININGID_SHINY_STONE] = {
+      0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,0,
+    },
+    [MININGID_PRISM_SCALE] = {
+      0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,
+    },
+    [MININGID_KINGS_ROCK] = {
+      0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,1,
+    },
+    [MININGID_BIG_NUGGET] = {
+      0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,
+    },
+    [MININGID_ICE_STONE] = {
+      0,0,0,0,0,0,1,1,0,1,1,1,0,1,1,1,
+    },
+    [MININGID_DAWN_STONE] = {
+      0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,0,
+    },
+    [MININGID_RARE_BONE] = {
+      0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,
+    },
+    [MININGID_BIG_PEARL] = {
+      0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,
+    },
+    [MININGID_COMET_SHARD] = {
+      0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,
+    },
     [MININGID_STONE_MUSHROOM2] = {
       0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,
     },

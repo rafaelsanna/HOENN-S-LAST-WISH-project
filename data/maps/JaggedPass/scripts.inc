@@ -300,43 +300,53 @@ JaggedPass_EventScript_MinerNPC::
 	faceplayer
 # 173 "data/maps/JaggedPass/scripts.pory"
 	goto_if_set FLAG_LEARNED_MINING, JaggedPass_EventScript_MinerNPC_1
-# 182 "data/maps/JaggedPass/scripts.pory"
-	msgbox JaggedPass_Text_MinerNPC_Teach
-# 183 "data/maps/JaggedPass/scripts.pory"
-	closemessage
 # 184 "data/maps/JaggedPass/scripts.pory"
-	setflag FLAG_LEARNED_MINING
+	msgbox JaggedPass_Text_MinerNPC_Teach
 # 185 "data/maps/JaggedPass/scripts.pory"
-	fadescreen FADE_TO_BLACK
+	closemessage
 # 186 "data/maps/JaggedPass/scripts.pory"
-	special StartMining
+	setflag FLAG_LEARNED_MINING
 # 187 "data/maps/JaggedPass/scripts.pory"
-	release
+	setvar VAR_0x8004, MINING_POOL_JAGGED_PASS
+# 188 "data/maps/JaggedPass/scripts.pory"
+	setvar VAR_0x8005, MINING_LOCATION_JAGGED_PASS
+# 189 "data/maps/JaggedPass/scripts.pory"
+	specialvar VAR_RESULT, GetMiningFreeSessionsRemaining
+# 190 "data/maps/JaggedPass/scripts.pory"
+	buffernumberstring STR_VAR_1, VAR_RESULT
+# 191 "data/maps/JaggedPass/scripts.pory"
+	msgbox Text_Mining_FreeSessionsNotice
+# 192 "data/maps/JaggedPass/scripts.pory"
+	goto EventScript_Mining_TrySession
 	return
 
 JaggedPass_EventScript_MinerNPC_1:
 # 174 "data/maps/JaggedPass/scripts.pory"
-	msgbox JaggedPass_Text_MinerNPC_AlreadyKnows, MSGBOX_YESNO
+	setvar VAR_0x8005, MINING_LOCATION_JAGGED_PASS
 # 175 "data/maps/JaggedPass/scripts.pory"
+	specialvar VAR_RESULT, GetMiningFreeSessionsRemaining
+# 176 "data/maps/JaggedPass/scripts.pory"
+	buffernumberstring STR_VAR_1, VAR_RESULT
+# 177 "data/maps/JaggedPass/scripts.pory"
+	msgbox JaggedPass_Text_MinerNPC_AlreadyKnows, MSGBOX_YESNO
+# 178 "data/maps/JaggedPass/scripts.pory"
 	compare VAR_RESULT, YES
 	goto_if_eq JaggedPass_EventScript_MinerNPC_5
 JaggedPass_EventScript_MinerNPC_4:
-# 180 "data/maps/JaggedPass/scripts.pory"
+# 182 "data/maps/JaggedPass/scripts.pory"
 	release
 	return
 
 JaggedPass_EventScript_MinerNPC_5:
-# 176 "data/maps/JaggedPass/scripts.pory"
-	closemessage
-# 177 "data/maps/JaggedPass/scripts.pory"
-	fadescreen FADE_TO_BLACK
-# 178 "data/maps/JaggedPass/scripts.pory"
-	special StartMining
+# 179 "data/maps/JaggedPass/scripts.pory"
+	setvar VAR_0x8004, MINING_POOL_JAGGED_PASS
+# 180 "data/maps/JaggedPass/scripts.pory"
+	goto EventScript_Mining_TrySession
 	goto JaggedPass_EventScript_MinerNPC_4
 
 
 JaggedPass_Text_EricIntro::
-# 191 "data/maps/JaggedPass/scripts.pory"
+# 196 "data/maps/JaggedPass/scripts.pory"
 	.string "MT. CHIMNEY's JAGGED PASS…\p"
 	.string "Now this is what I've always wanted\n"
 	.string "in a mountain.\p"
@@ -344,152 +354,161 @@ JaggedPass_Text_EricIntro::
 	.string "It rocks my soul!$"
 
 JaggedPass_Text_EricDefeat::
-# 199 "data/maps/JaggedPass/scripts.pory"
+# 204 "data/maps/JaggedPass/scripts.pory"
 	.string "Losing left me bitter!$"
 
 JaggedPass_Text_EricPostBattle::
-# 203 "data/maps/JaggedPass/scripts.pory"
+# 208 "data/maps/JaggedPass/scripts.pory"
 	.string "Yes, I did lose at POKéMON…\p"
 	.string "But, when it comes to the love of\n"
 	.string "the mountains, I have you beat!$"
 
 JaggedPass_Text_DianaIntro::
-# 209 "data/maps/JaggedPass/scripts.pory"
+# 214 "data/maps/JaggedPass/scripts.pory"
 	.string "This place isn't your casual hike.\n"
 	.string "It's not suited for a picnic.$"
 
 JaggedPass_Text_DianaDefeat::
-# 214 "data/maps/JaggedPass/scripts.pory"
+# 219 "data/maps/JaggedPass/scripts.pory"
 	.string "Ohhh, no!\n"
 	.string "The ground is too bumpy…$"
 
 JaggedPass_Text_DianaPostBattle::
-# 219 "data/maps/JaggedPass/scripts.pory"
+# 224 "data/maps/JaggedPass/scripts.pory"
 	.string "Did you know?\p"
 	.string "Some people cleverly ride their\n"
 	.string "bicycles up this horribly bumpy pass.$"
 
 JaggedPass_Text_DianaRegister::
-# 225 "data/maps/JaggedPass/scripts.pory"
+# 230 "data/maps/JaggedPass/scripts.pory"
 	.string "Will you ever be back in this area?\n"
 	.string "If you do return, I'd like a rematch.$"
 
 JaggedPass_Text_DianaRematchIntro::
-# 230 "data/maps/JaggedPass/scripts.pory"
+# 235 "data/maps/JaggedPass/scripts.pory"
 	.string "Picnics are fun wherever you go.\n"
 	.string "Just like POKéMON!$"
 
 JaggedPass_Text_DianaRematchDefeat::
-# 235 "data/maps/JaggedPass/scripts.pory"
+# 240 "data/maps/JaggedPass/scripts.pory"
 	.string "I only lost because the ground is\n"
 	.string "too bumpy!$"
 
 JaggedPass_Text_DianaPostRematch::
-# 240 "data/maps/JaggedPass/scripts.pory"
+# 245 "data/maps/JaggedPass/scripts.pory"
 	.string "I'll forget about losing and just\n"
 	.string "enjoy this bumpy hike.$"
 
 JaggedPass_Text_EthanIntro::
-# 245 "data/maps/JaggedPass/scripts.pory"
+# 250 "data/maps/JaggedPass/scripts.pory"
 	.string "JAGGED PASS is hard to walk on.\n"
 	.string "It's a good place for training.$"
 
 JaggedPass_Text_EthanDefeat::
-# 250 "data/maps/JaggedPass/scripts.pory"
+# 255 "data/maps/JaggedPass/scripts.pory"
 	.string "It was all over while we were still\n"
 	.string "trying to find a good footing…$"
 
 JaggedPass_Text_EthanPostBattle::
-# 255 "data/maps/JaggedPass/scripts.pory"
+# 260 "data/maps/JaggedPass/scripts.pory"
 	.string "If I had an ACRO BIKE, I'd be able to\n"
 	.string "jump ledges.$"
 
 JaggedPass_Text_EthanRegister::
-# 260 "data/maps/JaggedPass/scripts.pory"
+# 265 "data/maps/JaggedPass/scripts.pory"
 	.string "When I get more used to this bumpiness,\n"
 	.string "I'll be sure to win!\p"
 	.string "Can you register me in your POKéNAV?$"
 
 JaggedPass_Text_EthanRematchIntro::
-# 266 "data/maps/JaggedPass/scripts.pory"
+# 271 "data/maps/JaggedPass/scripts.pory"
 	.string "I got used to this bumpiness.\n"
 	.string "I sing while I climb now.$"
 
 JaggedPass_Text_EthanRematchDefeat::
-# 271 "data/maps/JaggedPass/scripts.pory"
+# 276 "data/maps/JaggedPass/scripts.pory"
 	.string "It's still not easy to battle on this\n"
 	.string "bumpy ground…$"
 
 JaggedPass_Text_EthanPostRematch::
-# 276 "data/maps/JaggedPass/scripts.pory"
+# 281 "data/maps/JaggedPass/scripts.pory"
 	.string "I should get an ACRO BIKE from RYDEL\n"
 	.string "in MAUVILLE CITY…$"
 
 JaggedPass_Text_GruntIntro::
-# 281 "data/maps/JaggedPass/scripts.pory"
+# 286 "data/maps/JaggedPass/scripts.pory"
 	.string "Wah!\n"
 	.string "What are you doing here?\p"
 	.string "What am I doing in a place like this?\p"
 	.string "What business is it of yours?$"
 
 JaggedPass_Text_GruntDefeat::
-# 288 "data/maps/JaggedPass/scripts.pory"
+# 293 "data/maps/JaggedPass/scripts.pory"
 	.string "Urrrgh…\p"
 	.string "I should've ducked into our HIDEOUT\n"
 	.string "right away…$"
 
 JaggedPass_Text_GoWhereverYouWant::
-# 294 "data/maps/JaggedPass/scripts.pory"
+# 299 "data/maps/JaggedPass/scripts.pory"
 	.string "Okay, oh-kay!\n"
 	.string "I admit it--you're strong!\p"
 	.string "Don't worry about me.\n"
 	.string "Go wherever you want!$"
 
 JaggedPass_Text_BoulderShakingInResponseToEmblem::
-# 301 "data/maps/JaggedPass/scripts.pory"
+# 306 "data/maps/JaggedPass/scripts.pory"
 	.string "Oh! This boulder is shaking in response\n"
 	.string "to the MAGMA EMBLEM!$"
 
 JaggedPass_Text_JulioIntro::
-# 306 "data/maps/JaggedPass/scripts.pory"
+# 311 "data/maps/JaggedPass/scripts.pory"
 	.string "Aiyeeh! It's awfully scary to shoot\n"
 	.string "down the mountain in one go!$"
 
 JaggedPass_Text_JulioDefeat::
-# 311 "data/maps/JaggedPass/scripts.pory"
+# 316 "data/maps/JaggedPass/scripts.pory"
 	.string "I feel like I'm falling apart…$"
 
 JaggedPass_Text_JulioPostBattle::
-# 315 "data/maps/JaggedPass/scripts.pory"
+# 320 "data/maps/JaggedPass/scripts.pory"
 	.string "My bicycle bounced around so much,\n"
 	.string "my rear end's sore…$"
 
 JaggedPass_Text_AutumnIntro::
-# 320 "data/maps/JaggedPass/scripts.pory"
+# 325 "data/maps/JaggedPass/scripts.pory"
 	.string "I climb this hill every day.\n"
 	.string "I have confidence in my strength!$"
 
 JaggedPass_Text_AutumnDefeat::
-# 325 "data/maps/JaggedPass/scripts.pory"
+# 330 "data/maps/JaggedPass/scripts.pory"
 	.string "Hmm…\n"
 	.string "What went wrong?$"
 
 JaggedPass_Text_AutumnPostBattle::
-# 330 "data/maps/JaggedPass/scripts.pory"
+# 335 "data/maps/JaggedPass/scripts.pory"
 	.string "What is that odd rock protrusion\n"
 	.string "a little up the hill from here?$"
 
 JaggedPass_Text_MinerNPC_Teach::
-# 335 "data/maps/JaggedPass/scripts.pory"
+# 340 "data/maps/JaggedPass/scripts.pory"
 	.string "Hm? You want to know how to dig\n"
 	.string "for treasure in the rocks?\p"
 	.string "It's easy! Just tap the rock where\n"
 	.string "you think something's buried.\p"
+	.string "I'm happy to share with a fellow\n"
+	.string "miner, so you get five free sessions\n"
+	.string "here each day.\p"
+	.string "Taking more than five sessions in one\n"
+	.string "spot means less mining for everyone\n"
+	.string "else, but you could persuade me with\n"
+	.string "¥2000 per extra session.\p"
 	.string "Watch closely, I'll show you how\n"
 	.string "it's done!$"
 
 JaggedPass_Text_MinerNPC_AlreadyKnows::
-# 344 "data/maps/JaggedPass/scripts.pory"
-	.string "Go on, give the rocks a try!\n"
-	.string "You never know what you'll dig up.\p"
+# 356 "data/maps/JaggedPass/scripts.pory"
+	.string "Rare items are harder to find here,\n"
+	.string "but there's a little bit of everything.\p"
+	.string "You have {STR_VAR_1} free mining\n"
+	.string "session(s) left here today.\p"
 	.string "Would you like to try mining?$"

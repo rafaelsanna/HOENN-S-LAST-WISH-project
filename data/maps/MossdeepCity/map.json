@@ -328,6 +328,13 @@
       "elevation": 0,
       "dest_map": "MAP_MOSSDEEP_CITY_GAME_CORNER_1F",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 68,
+      "y": 31,
+      "elevation": 0,
+      "dest_map": "MAP_MOSSDEEPCAVE",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
