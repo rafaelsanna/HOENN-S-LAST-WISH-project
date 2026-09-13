@@ -5774,15 +5774,6 @@ static void Radio_HandleOverlayInput(u8 taskId)
             {
             case RADIO_MENU_PRIORITY:
                 PlaySE(SE_SELECT);
-
-                // HLW_BATTLE_RADIO_PRIORITY_LOCK_V2_2
-                // Mid-battle, Priority may be turned ON but never OFF.
-                if (gMain.inBattle && sRadioPriorityEnabled)
-                {
-                    Radio_DrawMenu(songId);
-                    return;
-                }
-
                 sRadioPriorityEnabled = !sRadioPriorityEnabled;
 
                 if (sRadioPriorityEnabled && playing)
@@ -5903,14 +5894,6 @@ static void Radio_HandleOverlayInput(u8 taskId)
                 break;
 
             case RADIO_MENU_PRIORITY:
-                // HLW_BATTLE_RADIO_PRIORITY_LOCK_V2_2
-                // Same rule on A: battle + ON stays ON; OFF may still be enabled.
-                if (gMain.inBattle && sRadioPriorityEnabled)
-                {
-                    Radio_DrawMenu(songId);
-                    break;
-                }
-
                 sRadioPriorityEnabled = !sRadioPriorityEnabled;
 
                 if (sRadioPriorityEnabled && playing)
