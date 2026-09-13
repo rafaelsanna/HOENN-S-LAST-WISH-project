@@ -4,8 +4,6 @@
 #include "battle_controllers.h"
 #include "battle_gimmick.h"
 #include "decompress.h"
-#include "event_data.h"
-#include "constants/flags.h"
 #include "graphics.h"
 #include "pokedex.h"
 #include "sprite.h"
@@ -245,10 +243,7 @@ void LoadTypeIcons(u32 battler)
     struct Pokemon* mon = GetBattlerMon(battler);
     u32 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
 
-    // HLW_SHOW_TYPES_OPTION_V1
-    // The feature stays compiled in, while this persistent flag controls visibility.
-    if (FlagGet(FLAG_HIDE_BATTLE_TYPES)
-        || B_SHOW_TYPES == SHOW_TYPES_NEVER
+    if (B_SHOW_TYPES == SHOW_TYPES_NEVER 
         || (B_SHOW_TYPES == SHOW_TYPES_SEEN && !GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN)))
         return;
 

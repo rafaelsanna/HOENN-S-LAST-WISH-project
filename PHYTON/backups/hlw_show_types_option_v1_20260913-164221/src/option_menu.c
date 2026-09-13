@@ -107,11 +107,9 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_BATTLESTYLE,
     MENUITEM_DIF_INFCANDY,
     MENUITEM_DIF_LEVELCAPS,
-    MENUITEM_DIF_SHOW_TYPES,
     MENUITEM_DIF_NUZLOCKE,
     MENUITEM_DIF_RANDOMIZER_E,
     MENUITEM_DIF_RANDOMIZER_T,
-    MENUITEM_DIF_INVERSE_BATTLE,
     MENUITEM_DIF_DEBUGMENU,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
@@ -260,8 +258,6 @@ static void DrawChoices_BattleItems(int selection, int y);
 static void DrawChoices_BattleStyle(int selection, int y);
 static void DrawChoices_InfCandy(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
-static void DrawChoices_ShowTypes(int selection, int y);
-static void DrawChoices_InverseBattle(int selection, int y);
 static void DrawChoices_Nuzlocke(int selection, int y);
 static void DrawChoices_AutoFishing(int selection, int y);
 static void DrawChoices_RandomizerE(int selection, int y);
@@ -346,8 +342,6 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_BATTLESTYLE]    = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
     [MENUITEM_DIF_INFCANDY]       = {DrawChoices_InfCandy,    ProcessInput_Options_Two},
     [MENUITEM_DIF_LEVELCAPS]      = {DrawChoices_LevelCaps,   ProcessInput_Options_Two},
-    [MENUITEM_DIF_SHOW_TYPES]     = {DrawChoices_ShowTypes,   ProcessInput_Options_Two},
-    [MENUITEM_DIF_INVERSE_BATTLE] = {DrawChoices_InverseBattle, ProcessInput_Options_Two},
     [MENUITEM_DIF_NUZLOCKE]       = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
     [MENUITEM_DIF_RANDOMIZER_E]   = {DrawChoices_RandomizerE, ProcessInput_Options_Two},
     [MENUITEM_DIF_RANDOMIZER_T]   = {DrawChoices_RandomizerT, ProcessInput_Options_Two},
@@ -360,8 +354,6 @@ static const u8 sText_NpcTeams[]        = _("NPC TEAMS");
 static const u8 sText_BattleItems[]     = _("BTL ITEMS");
 static const u8 sText_InfiniteCandy[]   = _("INF. CANDY");
 static const u8 sText_LevelCaps[]       = _("LEVEL CAPS");
-static const u8 sText_ShowTypes[]       = _("SHOW TYPES");
-static const u8 sText_InverseBattle[]   = _("INVERSE BTL");
 static const u8 sText_Nuzlocke[]        = _("NUZLOCKE");
 static const u8 sText_RandomizerE[]     = _("RANDOM POKéMON");
 static const u8 sText_RandomizerT[]     = _("RANDOM TRAINERS");
@@ -396,8 +388,6 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_BATTLESTYLE]    = gText_BattleStyle,
     [MENUITEM_DIF_INFCANDY]       = sText_InfiniteCandy,
     [MENUITEM_DIF_LEVELCAPS]      = sText_LevelCaps,
-    [MENUITEM_DIF_SHOW_TYPES]     = sText_ShowTypes,
-    [MENUITEM_DIF_INVERSE_BATTLE] = sText_InverseBattle,
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
     [MENUITEM_DIF_RANDOMIZER_E]   = sText_RandomizerE,
     [MENUITEM_DIF_RANDOMIZER_T]   = sText_RandomizerT,
@@ -422,21 +412,12 @@ static bool8 IsHardNpcTeamsSelected(void)
 
 static void EnforceHardNpcTeamsRules(void)
 {
-    // HLW_BATTLE_RULES_CONFIG_V2
-    // Sleep Clause follows the current mode silently and has no menu entry.
     if (!IsHardNpcTeamsSelected())
-    {
-        FlagClear(FLAG_HARD_MODE_SLEEP_CLAUSE);
         return;
-    }
 
-    FlagSet(FLAG_HARD_MODE_SLEEP_CLAUSE);
     sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS]  = OPTIONS_BATTLEITEMS_OFF;
     sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]  = OPTIONS_BATTLE_STYLE_SET;
     sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]    = OPTIONS_LEVELCAPS_ON;
-    // HLW_SHOW_TYPES_OPTION_V1: Hard mode never reveals battle type indicators.
-    sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES]   = FALSE;
-    sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T] = FALSE;
 }
 
@@ -469,8 +450,6 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_BATTLESTYLE:      return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_INFCANDY:         return TRUE;
         case MENUITEM_DIF_LEVELCAPS:        return !IsHardNpcTeamsSelected();
-        case MENUITEM_DIF_SHOW_TYPES:       return !IsHardNpcTeamsSelected();
-        case MENUITEM_DIF_INVERSE_BATTLE:   return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
         case MENUITEM_DIF_RANDOMIZER_E:     return TRUE;
         case MENUITEM_DIF_RANDOMIZER_T:     return !IsHardNpcTeamsSelected();
@@ -508,10 +487,6 @@ static const u8 sText_Desc_BattleStyle_Shift[]  = _("Get the option to switch yo
 static const u8 sText_Desc_BattleStyle_Set[]    = _("No free switch after fainting the\nenemies POKéMON.");
 static const u8 sText_Desc_LevelCapsOn[]        = _("Your POKéMON cannot outlevel the\nace of the next gym leader.");
 static const u8 sText_Desc_LevelCapsOff[]       = _("Your POKéMON can reach any level,\nbut may disobey if too overleveled.");
-static const u8 sText_Desc_ShowTypesOff[]       = _("Hide the opposing POKéMON's types\nduring battle.");
-static const u8 sText_Desc_ShowTypesOn[]        = _("Show the opposing POKéMON's types\nduring battle.");
-static const u8 sText_Desc_InverseBattleOff[]   = _("Use normal type matchups in battle.");
-static const u8 sText_Desc_InverseBattleOn[]    = _("Invert type matchups in battle.");
 static const u8 sText_Desc_BattleItemsOn[]      = _("Permits the use of items in battle.");
 static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items in battle.");
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
@@ -562,8 +537,6 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_BATTLESTYLE]  = {sText_Desc_BattleStyle_Shift,   sText_Desc_BattleStyle_Set, sText_Empty},
     [MENUITEM_DIF_INFCANDY]     = {sText_Desc_InfiniteCandyOff,    sText_Desc_InfiniteCandyOn, sText_Empty},
     [MENUITEM_DIF_LEVELCAPS]    = {sText_Desc_LevelCapsOn,         sText_Desc_LevelCapsOff,   sText_Empty},
-    [MENUITEM_DIF_SHOW_TYPES]   = {sText_Desc_ShowTypesOff,        sText_Desc_ShowTypesOn,    sText_Empty},
-    [MENUITEM_DIF_INVERSE_BATTLE] = {sText_Desc_InverseBattleOff,  sText_Desc_InverseBattleOn, sText_Empty},
     [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,         sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
     [MENUITEM_DIF_RANDOMIZER_E] = {sText_Desc_RandomizerEOff,      sText_Desc_RandomizerEOn,  sText_Empty},
     [MENUITEM_DIF_RANDOMIZER_T] = {sText_Desc_RandomizerTOff,      sText_Desc_RandomizerTOn,  sText_Empty},
@@ -600,8 +573,6 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_BATTLESTYLE]  = sText_Desc_HardLocked,
     [MENUITEM_DIF_INFCANDY]     = sText_Empty,
     [MENUITEM_DIF_LEVELCAPS]    = sText_Desc_HardLocked,
-    [MENUITEM_DIF_SHOW_TYPES]   = sText_Desc_HardLocked,
-    [MENUITEM_DIF_INVERSE_BATTLE] = sText_Desc_HardLocked,
     [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
     [MENUITEM_DIF_RANDOMIZER_E] = sText_Empty,
     [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_HardLocked,
@@ -685,14 +656,6 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_LEVELCAPS))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_LEVELCAPS];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_LEVELCAPS][sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]];
-        case MENUITEM_DIF_SHOW_TYPES:
-            if (!CheckConditions(MENUITEM_DIF_SHOW_TYPES))
-                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_SHOW_TYPES];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_SHOW_TYPES][sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES]];
-        case MENUITEM_DIF_INVERSE_BATTLE:
-            if (!CheckConditions(MENUITEM_DIF_INVERSE_BATTLE))
-                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_INVERSE_BATTLE];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_INVERSE_BATTLE][sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE]];
         case MENUITEM_DIF_NUZLOCKE:
             if (!CheckConditions(MENUITEM_DIF_NUZLOCKE))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_NUZLOCKE];
@@ -1166,10 +1129,6 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE]    = gSaveBlock2Ptr->optionsBattleStyle;
     sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY]       = gSaveBlock2Ptr->optionsInfiniteCandy;
     sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS]      = gSaveBlock2Ptr->optionsLevelCaps;
-    // The inverted flag keeps type indicators ON for old and new Casual saves.
-    sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES]     = !FlagGet(FLAG_HIDE_BATTLE_TYPES);
-    // Inverse Battle is OFF by default because its persistent flag starts clear.
-    sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FlagGet(FLAG_INVERSE_BATTLE_OPTION);
     sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
@@ -1331,16 +1290,6 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 if (sItemFunctionsDifficulty[cursor].processInput != NULL)
                 {
                     sOptions->sel_difficulty[cursor] = sItemFunctionsDifficulty[cursor].processInput(previousOption);
-
-                    // Restore the intended Casual defaults when leaving Hard mode.
-                    if (cursor == MENUITEM_DIF_NPCTEAMS
-                     && previousOption == OPTIONS_NPCTEAMS_HARD
-                     && !IsHardNpcTeamsSelected())
-                    {
-                        sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES] = TRUE;
-                        sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FALSE;
-                    }
-
                     EnforceHardNpcTeamsRules();
                     ReDrawAll();
                     DrawDescriptionText();
@@ -1427,16 +1376,6 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsInfiniteCandy    = sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY];
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
     gSaveBlock2Ptr->optionsNuzlocke         = sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE];
-
-    if (sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES])
-        FlagClear(FLAG_HIDE_BATTLE_TYPES);
-    else
-        FlagSet(FLAG_HIDE_BATTLE_TYPES);
-
-    if (sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE])
-        FlagSet(FLAG_INVERSE_BATTLE_OPTION);
-    else
-        FlagClear(FLAG_INVERSE_BATTLE_OPTION);
 
     if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E])
         FlagSet(RANDOMIZER_FLAG_WILD_MON);
@@ -1880,42 +1819,6 @@ static void DrawChoices_LevelCaps(int selection, int y)
 
     DrawOptionMenuChoice(sText_OptionLevelCapsOn, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_OptionLevelCapsOff, GetStringRightAlignXOffset(1, sText_OptionLevelCapsOff, 198), y, styles[1], active);
-}
-
-static void DrawChoices_ShowTypes(int selection, int y)
-{
-    bool8 active = CheckConditions(MENUITEM_DIF_SHOW_TYPES);
-    u8 styles[2] = {0};
-
-    if (selection > TRUE)
-        selection = TRUE;
-
-    styles[selection] = 1;
-
-    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[FALSE], active);
-    DrawOptionMenuChoice(sText_OptionTrue,
-                         GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198),
-                         y,
-                         styles[TRUE],
-                         active);
-}
-
-static void DrawChoices_InverseBattle(int selection, int y)
-{
-    bool8 active = CheckConditions(MENUITEM_DIF_INVERSE_BATTLE);
-    u8 styles[2] = {0};
-
-    if (selection > TRUE)
-        selection = FALSE;
-
-    styles[selection] = 1;
-
-    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[FALSE], active);
-    DrawOptionMenuChoice(sText_OptionTrue,
-                         GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198),
-                         y,
-                         styles[TRUE],
-                         active);
 }
 
 static void DrawChoices_Nuzlocke(int selection, int y)
