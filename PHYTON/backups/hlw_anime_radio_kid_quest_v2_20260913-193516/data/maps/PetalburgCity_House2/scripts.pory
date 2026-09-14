@@ -2,97 +2,74 @@ raw `
 PetalburgCity_House2_MapScripts::
 	.byte 0
 
-@ HLW_ANIME_RADIO_KID_QUEST_V1
-@ HLW_ANIME_RADIO_KID_QUEST_V2
-@ The trigger uses FLAG_KID_LOVES_ANIME instead of trigger 0 because
-@ immediate coordinate scripts cannot run cutscenes or wait commands.
+@ The mother remains stationary until the Anime radio trigger starts.
 PetalburgCity_House2_EventScript_Woman::
-	lockall
+	lock
 	faceplayer
 	goto_if_set FLAG_KID_LOVES_ANIME, PetalburgCity_House2_EventScript_MotherAfterQuest
-	setvar VAR_0x8004, 1 @ STATION_ANIME
-	special Special_IsRadioStationPlaying
-	goto_if_eq VAR_RESULT, TRUE, PetalburgCity_House2_EventScript_AnimeRadioSuccessFromTalk
 	msgbox PetalburgCity_House2_Text_MotherWorried, MSGBOX_DEFAULT
-	releaseall
+	release
 	end
 
-PetalburgCity_House2_EventScript_AnimeRadioSuccessFromTalk::
-	setvar VAR_0x8005, 0 @ Started by talking to the mother
-	goto PetalburgCity_House2_EventScript_AnimeRadioScene
-	end
-
-PetalburgCity_House2_EventScript_SchoolKid_Trigger_Upper::
+@ Both coordinate triggers call this script.
+PetalburgCity_House2_EventScript_SchoolKid_Trigger::
 	lockall
-	goto_if_set FLAG_KID_LOVES_ANIME, PetalburgCity_House2_EventScript_TriggerNoAction
+	goto_if_set FLAG_KID_LOVES_ANIME, PetalburgCity_House2_EventScript_TriggerEnd
+
 	setvar VAR_0x8004, 1 @ STATION_ANIME
 	special Special_IsRadioStationPlaying
-	goto_if_eq VAR_RESULT, FALSE, PetalburgCity_House2_EventScript_TriggerNoAction
-	setvar VAR_0x8005, 1 @ Upper trigger route
+	goto_if_eq VAR_RESULT, FALSE, PetalburgCity_House2_EventScript_TriggerEnd
+
+	getplayerxy VAR_TEMP_0, VAR_TEMP_1
+	applymovement 1, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 20
+
+	goto_if_eq VAR_TEMP_1, 2, PetalburgCity_House2_EventScript_MotherApproachUpper
+	goto PetalburgCity_House2_EventScript_MotherApproachLower
+
+PetalburgCity_House2_EventScript_MotherApproachUpper::
 	applymovement 1, PetalburgCity_House2_Movement_MotherToUpperTrigger
-	waitmovement 0
-	applymovement 1, Common_Movement_FacePlayer
-	waitmovement 0
-	goto PetalburgCity_House2_EventScript_AnimeRadioScene
-	end
+	goto PetalburgCity_House2_EventScript_AnimeRadioSuccess
 
-PetalburgCity_House2_EventScript_SchoolKid_Trigger_Lower::
-	lockall
-	goto_if_set FLAG_KID_LOVES_ANIME, PetalburgCity_House2_EventScript_TriggerNoAction
-	setvar VAR_0x8004, 1 @ STATION_ANIME
-	special Special_IsRadioStationPlaying
-	goto_if_eq VAR_RESULT, FALSE, PetalburgCity_House2_EventScript_TriggerNoAction
-	setvar VAR_0x8005, 2 @ Lower trigger route
+PetalburgCity_House2_EventScript_MotherApproachLower::
 	applymovement 1, PetalburgCity_House2_Movement_MotherToLowerTrigger
+	goto PetalburgCity_House2_EventScript_AnimeRadioSuccess
+
+PetalburgCity_House2_EventScript_AnimeRadioSuccess::
 	waitmovement 0
+
 	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
-	goto PetalburgCity_House2_EventScript_AnimeRadioScene
-	end
 
-PetalburgCity_House2_EventScript_TriggerNoAction::
-	releaseall
-	end
-
-PetalburgCity_House2_EventScript_AnimeRadioScene::
 	msgbox PetalburgCity_House2_Text_MotherHearsAnime, MSGBOX_DEFAULT
 	closemessage
+
 	applymovement 2, Common_Movement_ExclamationMark
 	waitmovement 0
 	delay 20
 	applymovement 2, Common_Movement_FacePlayer
 	waitmovement 0
+
 	msgbox PetalburgCity_House2_Text_KidCalmsDown, MSGBOX_DEFAULT
 	msgbox PetalburgCity_House2_Text_MotherThanks, MSGBOX_DEFAULT
+
 	giveitem ITEM_LUCKY_EGG
-	goto_if_eq VAR_RESULT, FALSE, PetalburgCity_House2_EventScript_QuestBagFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+
 	setflag FLAG_KID_LOVES_ANIME
 	msgbox PetalburgCity_House2_Text_MotherGiftComplete, MSGBOX_DEFAULT
 	releaseall
 	end
 
-PetalburgCity_House2_EventScript_QuestBagFull::
-	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
-	goto_if_eq VAR_0x8005, 1, PetalburgCity_House2_EventScript_ReturnMotherFromUpper
-	goto_if_eq VAR_0x8005, 2, PetalburgCity_House2_EventScript_ReturnMotherFromLower
-	releaseall
-	end
-
-PetalburgCity_House2_EventScript_ReturnMotherFromUpper::
-	applymovement 1, PetalburgCity_House2_Movement_MotherFromUpperTrigger
-	waitmovement 0
-	releaseall
-	end
-
-PetalburgCity_House2_EventScript_ReturnMotherFromLower::
-	applymovement 1, PetalburgCity_House2_Movement_MotherFromLowerTrigger
-	waitmovement 0
+PetalburgCity_House2_EventScript_TriggerEnd::
 	releaseall
 	end
 
 PetalburgCity_House2_EventScript_MotherAfterQuest::
 	msgbox PetalburgCity_House2_Text_MotherAfterQuest, MSGBOX_DEFAULT
-	releaseall
+	release
 	end
 
 PetalburgCity_House2_EventScript_SchoolKid::
@@ -108,8 +85,7 @@ PetalburgCity_House2_EventScript_HappySchoolKid::
 	release
 	end
 
-@ The mother stops two tiles from the trigger so a follower behind the player
-@ cannot occupy her destination and block waitmovement.
+@ Mother starts at (4,4) and stops at (7,2), left of the upper trigger.
 PetalburgCity_House2_Movement_MotherToUpperTrigger:
 	walk_up
 	walk_up
@@ -118,24 +94,12 @@ PetalburgCity_House2_Movement_MotherToUpperTrigger:
 	walk_right
 	step_end
 
+@ Mother starts at (4,4) and stops at (7,3), left of the lower trigger.
 PetalburgCity_House2_Movement_MotherToLowerTrigger:
 	walk_up
 	walk_right
 	walk_right
 	walk_right
-	step_end
-
-PetalburgCity_House2_Movement_MotherFromUpperTrigger:
-	walk_left
-	walk_left
-	walk_down
-	walk_down
-	step_end
-
-PetalburgCity_House2_Movement_MotherFromLowerTrigger:
-	walk_left
-	walk_left
-	walk_down
 	step_end
 
 PetalburgCity_House2_Text_MotherWorried:

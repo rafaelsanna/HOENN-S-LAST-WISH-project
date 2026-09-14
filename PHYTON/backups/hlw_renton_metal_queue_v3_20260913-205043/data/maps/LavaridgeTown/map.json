@@ -355,9 +355,9 @@
     {
       "type": "trigger",
       "x": 8,
-      "y": 6,
+      "y": 5,
       "elevation": 3,
-      "var": "VAR_TEMP_1",
+      "var": "FLAG_MAKE_IT_RAIN",
       "var_value": "0",
       "script": "LavaridgeTown_EventScript_Renton_Likes_Metal_Right"
     },
@@ -366,7 +366,7 @@
       "x": 6,
       "y": 6,
       "elevation": 3,
-      "var": "VAR_TEMP_1",
+      "var": "FLAG_MAKE_IT_RAIN",
       "var_value": "0",
       "script": "LavaridgeTown_EventScript_Renton_Likes_Metal_Left"
     }

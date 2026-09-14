@@ -12,8 +12,6 @@ LavaridgeTown_OnTransition:
 	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_CheckSetRivalPos
 	call_if_eq VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_HideMapNamePopup
-	@ HLW_RENTON_METAL_QUEUE_EVENT_V2: Renton stays hidden until a METAL trigger starts.
-	setflag FLAG_HIDE_LAVARIDGE_METAL_RENTON
 	end
 
 LavaridgeTown_EventScript_ClearLavaridgeWhiteOut::
@@ -228,202 +226,70 @@ LavaridgeTown_EventScript_ExpertF::
 	end
 
 
-// HLW_RENTON_METAL_QUEUE_EVENT_V3: BEGIN
-// Both coordinate events use VAR_TEMP_1; flags are not valid trigger variables.
-LavaridgeTown_EventScript_Renton_Likes_Metal_Right::
+// HLW_RENTON_METAL_QUEUE_EVENT_V1: BEGIN
+// Renton reacts only while the ROCK/METAL station is truly playing.
+// FLAG_MAKE_IT_RAIN is shared by both valid ways of clearing the queue.
+LavaridgeTown_EventScript_Renton_Likes_Metal::
 	goto_if_set FLAG_MAKE_IT_RAIN, LavaridgeTown_EventScript_RentonMetalNoAction
-	setvar VAR_0x8007, 1 @ Player is at (8,6), to Renton's right
-	goto LavaridgeTown_EventScript_RentonMetalCheckRadio
-	end
-
-LavaridgeTown_EventScript_Renton_Likes_Metal_Left::
-	goto_if_set FLAG_MAKE_IT_RAIN, LavaridgeTown_EventScript_RentonMetalNoAction
-	setvar VAR_0x8007, 2 @ Player is at (6,6), to Renton's left
-	goto LavaridgeTown_EventScript_RentonMetalCheckRadio
-	end
-
-LavaridgeTown_EventScript_RentonMetalCheckRadio::
 	goto_if_set FLAG_RENTON_LEFT, LavaridgeTown_EventScript_RentonMetalNoAction
 	setvar VAR_0x8004, 8 @ STATION_ROCK_METAL
 	special Special_IsRadioStationPlaying
 	goto_if_eq VAR_RESULT, FALSE, LavaridgeTown_EventScript_RentonMetalNoAction
 	lockall
 	hidefollower 1
-
-	@ Spawn Renton inside the Gym and make him walk through the open door.
-	clearflag FLAG_HIDE_LAVARIDGE_METAL_RENTON
-	opendoor 7, 4
-	waitdooranim
-	addobject LOCALID_LAVARIDGE_METAL_RENTON
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonExitGym
-	waitmovement 0
+	getplayerxy VAR_0x8005, VAR_0x8006
 	applymovement LOCALID_LAVARIDGE_METAL_RENTON, Common_Movement_ExclamationMark
 	waitmovement 0
-	goto_if_eq VAR_0x8007, 1, LavaridgeTown_EventScript_RentonPushQueueLeft
-	goto LavaridgeTown_EventScript_RentonPushQueueRight
+	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
+	msgbox LavaridgeTown_Text_RentonHearsMetal, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	goto_if_eq VAR_0x8005, 8, LavaridgeTown_EventScript_RentonPushQueueLeft
+	goto_if_eq VAR_0x8005, 6, LavaridgeTown_EventScript_RentonPushQueueRight
+	goto LavaridgeTown_EventScript_RentonMetalAbort
 	end
 
-// The right trigger makes Renton push every queue member to the left.
 LavaridgeTown_EventScript_RentonPushQueueLeft::
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_1, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
 	playse SE_M_STRENGTH
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_1, LavaridgeTown_Movement_MetalQueuePushLeft
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	closedoor 7, 4
-	waitdooranim
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_3, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_3, LavaridgeTown_Movement_MetalQueuePushLeft
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_2, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_2, LavaridgeTown_Movement_MetalQueuePushLeft
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_6, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_3, LavaridgeTown_Movement_MetalQueuePushLeft
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, LavaridgeTown_Movement_MetalQueuePushLeft
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, LavaridgeTown_Movement_MetalQueuePushLeft
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_6, LavaridgeTown_Movement_MetalQueuePushLeft
 	waitmovement 0
 	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, LavaridgeTown_Movement_MetalQueuePushLeft
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, LavaridgeTown_Movement_MetalQueuePushLeft
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	goto LavaridgeTown_EventScript_RentonFinishedPushing
+	goto LavaridgeTown_EventScript_RentonMetalAfterPush
 	end
 
-// The left trigger makes Renton push every queue member to the right.
 LavaridgeTown_EventScript_RentonPushQueueRight::
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_1, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
 	playse SE_M_STRENGTH
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_1, LavaridgeTown_Movement_MetalQueuePushRight
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	closedoor 7, 4
-	waitdooranim
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_3, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_3, LavaridgeTown_Movement_MetalQueuePushRight
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_2, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_2, LavaridgeTown_Movement_MetalQueuePushRight
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_6, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_3, LavaridgeTown_Movement_MetalQueuePushRight
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, LavaridgeTown_Movement_MetalQueuePushRight
+	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, LavaridgeTown_Movement_MetalQueuePushRight
 	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_6, LavaridgeTown_Movement_MetalQueuePushRight
 	waitmovement 0
 	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_4, LavaridgeTown_Movement_MetalQueuePushRight
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, Common_Movement_ExclamationMark
-	waitmovement 0
-	delay 8
-	playse SE_M_STRENGTH
-	applymovement LOCALID_LAVARIDGE_RAIN_QUEUE_5, LavaridgeTown_Movement_MetalQueuePushRight
-	waitmovement 0
-	waitse
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonAdvanceOne
-	waitmovement 0
-	goto LavaridgeTown_EventScript_RentonFinishedPushing
+	goto LavaridgeTown_EventScript_RentonMetalAfterPush
 	end
 
-LavaridgeTown_EventScript_RentonFinishedPushing::
+LavaridgeTown_EventScript_RentonMetalAfterPush::
+	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonWalkUpQueue
+	waitmovement 0
 	fadescreenswapbuffers FADE_TO_BLACK
 	setflag FLAG_MAKE_IT_RAIN
 	setflag FLAG_RENTON_LEFT
-
-	@ Remove the live objects explicitly before moving Renton. This prevents
-	@ the shifted queue from occupying his destination and locking the event.
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_1
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_3
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_2
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_6
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_4
-	removeobject LOCALID_LAVARIDGE_RAIN_QUEUE_5
-	setobjectxy LOCALID_LAVARIDGE_METAL_RENTON, 7, 6
+	setflag FLAG_HIDE_LAVARIDGE_RAIN_WOMAN
+	special Special_HideLavaridgeMakeItRainQueueNow
+	removeobject LOCALID_LAVARIDGE_MAKE_IT_RAIN_WOMAN
+	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonReachMeetingPoint
+	waitmovement 0
 	delay 2
 	fadescreenswapbuffers FADE_FROM_BLACK
-	goto_if_eq VAR_0x8007, 1, LavaridgeTown_EventScript_RentonMeetFromRight
-	goto LavaridgeTown_EventScript_RentonMeetFromLeft
-	end
-
-// Player stands at (8,6): both actors turn toward each other horizontally.
-LavaridgeTown_EventScript_RentonMeetFromRight::
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceLeft
+	applymovement LOCALID_LAVARIDGE_METAL_RENTON, Common_Movement_FacePlayer
 	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, Common_Movement_FaceRight
-	waitmovement 0
-	goto LavaridgeTown_EventScript_RentonMetalDialogue
-	end
-
-// Player stands at (6,6): both actors turn toward each other horizontally.
-LavaridgeTown_EventScript_RentonMeetFromLeft::
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceRight
-	waitmovement 0
-	applymovement LOCALID_LAVARIDGE_METAL_RENTON, Common_Movement_FaceLeft
-	waitmovement 0
-	goto LavaridgeTown_EventScript_RentonMetalDialogue
-	end
-
-LavaridgeTown_EventScript_RentonMetalDialogue::
 	createfieldmugshot MUGSHOT_RENTON, EMOTE_NORMAL
 	msgbox LavaridgeTown_Text_RentonClearedQueue, MSGBOX_DEFAULT
 	removefieldmugshot
@@ -431,25 +297,22 @@ LavaridgeTown_EventScript_RentonMetalDialogue::
 	applymovement LOCALID_LAVARIDGE_METAL_RENTON, LavaridgeTown_Movement_RentonLeaveSouth
 	waitmovement 0
 	removeobject LOCALID_LAVARIDGE_METAL_RENTON
-	setflag FLAG_HIDE_LAVARIDGE_METAL_RENTON
-	setvar VAR_0x8007, 0
+	releaseall
+	end
+
+LavaridgeTown_EventScript_RentonMetalAbort::
 	releaseall
 	end
 
 LavaridgeTown_EventScript_RentonMetalNoAction::
 	end
 
-// Renton is normally hidden; this is only a safe interaction fallback.
-LavaridgeTown_EventScript_RentonMetalObject::
+LavaridgeTown_EventScript_RentonMetalIdle::
+	lock
+	faceplayer
+	msgbox LavaridgeTown_Text_RentonWaitingInQueue, MSGBOX_DEFAULT
+	release
 	end
-
-LavaridgeTown_Movement_RentonExitGym:
-	walk_down
-	step_end
-
-LavaridgeTown_Movement_RentonAdvanceOne:
-	walk_down
-	step_end
 
 LavaridgeTown_Movement_MetalQueuePushLeft:
 	walk_fast_left
@@ -457,6 +320,20 @@ LavaridgeTown_Movement_MetalQueuePushLeft:
 
 LavaridgeTown_Movement_MetalQueuePushRight:
 	walk_fast_right
+	step_end
+
+// Renton starts at (7,11), walks through the cleared center column to (7,6),
+// and reaches the shared meeting point at (8,6) while the screen is black.
+LavaridgeTown_Movement_RentonWalkUpQueue:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
+
+LavaridgeTown_Movement_RentonReachMeetingPoint:
+	walk_right
 	step_end
 
 LavaridgeTown_Movement_RentonLeaveSouth:
@@ -469,23 +346,20 @@ LavaridgeTown_Movement_RentonLeaveSouth:
 	walk_down
 	step_end
 
+LavaridgeTown_Text_RentonHearsMetal:
+	.string "Now THAT is music! Turn it up!\p"
+	.string "Everyone, make way! I've got a GYM\n"
+	.string "to get back to! HAHAHA!$"
+
 LavaridgeTown_Text_RentonClearedQueue:
-	.string "Whoa... I don't even like POP\n"
-	.string "music, you know... Usually.\p"
-	.string "But since your taste is this good,\n"
-	.string "I guess I can tell you something.\p"
-	.string "That AMATERASU... Well...\n"
-	.string "I think she's kind of my type.\p"
-	.string "...HEY! WHY ARE YOU LAUGHING?!\n"
-	.string "Knock it off!\p"
-	.string "And... some of her songs are\n"
-	.string "actually pretty good, okay?\p"
-	.string "You only got away with this\n"
-	.string "because that RADIO station is\l"
-	.string "way too good!\p"
-	.string "Now get lost! We'll battle again\n"
-	.string "some other time! HAHAHA!$"
-// HLW_RENTON_METAL_QUEUE_EVENT_V3: END
+	.string "See? That's how you clear a line!\p"
+	.string "Tell them at my GYM I found\n"
+	.string "somewhere more METAL to be!$"
+
+LavaridgeTown_Text_RentonWaitingInQueue:
+	.string "This line needs heavier music...\p"
+	.string "Something with real METAL!$"
+// HLW_RENTON_METAL_QUEUE_EVENT_V1: END
 
 // -----------------------------------------------------------------------------
 // MAKE IT RAIN - queue event
@@ -763,9 +637,10 @@ LavaridgeTown_Text_MakeItRainSuccess:
 	.string "I remember.$"
 
 LavaridgeTown_Text_MakeItRainDone:
-	.string "Now that that noisy crowd is gone,\n"
-	.string "LAVARIDGE feels so much calmer.\p"
-	.string "This is how our town should be.$"
+	.string "Ahh... Listen to that.\p"
+	.string "No shouting. No crowds. Just peace\n"
+	.string "and quiet again.\p"
+	.string "Much better.$"
 
 // SHOW QUEUE CHATTER: BEGIN
 // Short pre-show conversations for the Make It Rain queue.

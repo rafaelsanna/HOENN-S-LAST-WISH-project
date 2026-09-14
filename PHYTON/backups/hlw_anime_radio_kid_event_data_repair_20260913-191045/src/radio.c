@@ -46,7 +46,6 @@
 #include "bg.h"
 #include "comfy_anim.h"
 #include "decompress.h"
-#include "event_data.h"
 #include "field_screen_effect.h"
 #include "gpu_regs.h"
 #include "m4a.h"

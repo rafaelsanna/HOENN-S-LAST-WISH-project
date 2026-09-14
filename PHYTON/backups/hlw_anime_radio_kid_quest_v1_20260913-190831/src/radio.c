@@ -46,7 +46,6 @@
 #include "bg.h"
 #include "comfy_anim.h"
 #include "decompress.h"
-#include "event_data.h"
 #include "field_screen_effect.h"
 #include "gpu_regs.h"
 #include "m4a.h"
@@ -3906,20 +3905,6 @@ bool8 RadioPriority_ShouldBlockBgmChange(void)
 u16 RadioPriority_GetSong(void)
 {
     return sRadioCurrentSong;
-}
-
-// HLW_ANIME_RADIO_KID_QUEST_V1
-// Scripts pass a station ID through VAR_0x8004 and receive TRUE/FALSE in RESULT.
-static bool8 Radio_IsStationPlaying(u8 station)
-{
-    return sRadioIsPlaying
-        && sRadioStation == station
-        && gMPlayInfo_BGM.songHeader == gSongTable[sRadioCurrentSong].header;
-}
-
-void Special_IsRadioStationPlaying(void)
-{
-    gSpecialVar_Result = Radio_IsStationPlaying((u8)gSpecialVar_0x8004);
 }
 
 static void Radio_ResetPlaybackMonitor(void)

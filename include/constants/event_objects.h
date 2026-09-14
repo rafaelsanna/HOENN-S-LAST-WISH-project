@@ -404,6 +404,7 @@
 #define OBJ_EVENT_PAL_TAG_RIOMAR                  0x1125
 #define OBJ_EVENT_PAL_TAG_CALENDULA               0x1126
 #define OBJ_EVENT_PAL_TAG_TRAPPED_BLIPBUG         0x1127
+#define OBJ_EVENT_PAL_TAG_ZENNO                   0x1128
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla

@@ -1265,7 +1265,7 @@
 #define FLAG_HARD_MODE_SLEEP_CLAUSE                                 0x4B8 // HLW_BATTLE_RULES_CONFIG_V2: enabled only by Hard mode
 #define FLAG_INVERSE_BATTLE_OPTION                                  0x4B9 // HLW_BATTLE_RULES_CONFIG_V2: persistent Casual option
 #define FLAG_KID_LOVES_ANIME                                         0x4BA // Unused Flag
-#define FLAG_HIDE_LAVARIDGE_METAL_RENTON                                 0x4BB // HLW_RENTON_METAL_QUEUE_EVENT_V2: temporary outside-map visibility
+#define FLAG_UNUSED_0x4BB                                           0x4BB // Unused Flag
 #define FLAG_UNUSED_0x4BC                                           0x4BC // Unused Flag
 #define FLAG_UNUSED_0x4BD                                           0x4BD // Unused Flag
 #define FLAG_UNUSED_0x4BE                                           0x4BE // Unused Flag

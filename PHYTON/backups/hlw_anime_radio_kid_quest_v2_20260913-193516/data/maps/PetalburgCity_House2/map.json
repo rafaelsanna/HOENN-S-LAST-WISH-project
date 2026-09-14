@@ -61,20 +61,20 @@
     {
       "type": "trigger",
       "x": 8,
-      "y": 2,
+      "y": 3,
       "elevation": 3,
-      "var": "FLAG_KID_LOVES_ANIME",
+      "var": "0",
       "var_value": "0",
-      "script": "PetalburgCity_House2_EventScript_SchoolKid_Trigger_Upper"
+      "script": "PetalburgCity_House2_EventScript_SchoolKid_Trigger"
     },
     {
       "type": "trigger",
       "x": 8,
-      "y": 3,
+      "y": 2,
       "elevation": 3,
-      "var": "FLAG_KID_LOVES_ANIME",
+      "var": "0",
       "var_value": "0",
-      "script": "PetalburgCity_House2_EventScript_SchoolKid_Trigger_Lower"
+      "script": "PetalburgCity_House2_EventScript_SchoolKid_Trigger"
     }
   ],
   "bg_events": []

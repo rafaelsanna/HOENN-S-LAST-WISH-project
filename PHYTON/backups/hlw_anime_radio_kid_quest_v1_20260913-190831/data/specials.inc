@@ -596,7 +596,6 @@ gSpecials::
 	def_special DoMrStoneEvilScene
 	def_special StartLavaridgeGymStagePlaylist
 	def_special StartRentonGymRadio
-	def_special Special_IsRadioStationPlaying @ HLW_ANIME_RADIO_KID_QUEST_V1
 	def_special HiddenGrotto_InitializeCurrent
 	def_special HiddenGrotto_EmptyCurrent
 	def_special HiddenGrotto_GetCurrentContentType
