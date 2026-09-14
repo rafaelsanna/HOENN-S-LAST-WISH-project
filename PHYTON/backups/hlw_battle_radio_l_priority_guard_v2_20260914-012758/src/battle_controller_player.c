@@ -53,7 +53,6 @@
 
 // HLW_BATTLE_RADIO_MEDIA_KEYS_V1_1
 extern bool8 RadioPriority_ShouldBlockBgmChange(void);
-extern bool8 RadioPriority_IsEnabled(void);
 extern bool8 RadioPriority_NextTrack(void);
 extern bool8 RadioPriority_PreviousTrack(void);
 
@@ -386,9 +385,7 @@ static void HandleInputChooseAction(u32 battler)
 
         // Raw L is intentional: with Options L=A, normal input may mirror L into A.
         // Catch physical L before the ordinary A_BUTTON action chain.
-        // HLW_BATTLE_RADIO_L_PRIORITY_GUARD_V2
-        // Check Priority before starting the fade or changing battle callbacks.
-        if ((gMain.newKeysRaw & L_BUTTON) && RadioPriority_IsEnabled())
+        if (gMain.newKeysRaw & L_BUTTON)
         {
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
             gBattlerInMenuId = battler;

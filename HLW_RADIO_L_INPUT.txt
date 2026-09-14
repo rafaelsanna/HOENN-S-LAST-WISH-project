@@ -1,0 +1,1593 @@
+src/menu_helpers.c-245-    }
+src/menu_helpers.c-246-    else if (JOY_REPEAT(DPAD_ANY) == DPAD_LEFT)
+src/menu_helpers.c-247-    {
+src/menu_helpers.c-248-        *quantity -= 10;
+src/menu_helpers.c-249-        if (*quantity <= 0)
+src/menu_helpers.c-250-            *quantity = 1;
+src/menu_helpers.c-251-
+src/menu_helpers.c-252-        if (*quantity == valBefore)
+src/menu_helpers.c-253-        {
+src/menu_helpers.c-254-            return FALSE;
+src/menu_helpers.c-255-        }
+src/menu_helpers.c-256-        else
+src/menu_helpers.c-257-        {
+src/menu_helpers.c-258-            PlaySE(SE_SELECT);
+src/menu_helpers.c-259-            return TRUE;
+src/menu_helpers.c-260-        }
+src/menu_helpers.c-261-    }
+src/menu_helpers.c-262-
+src/menu_helpers.c-263-    return FALSE;
+src/menu_helpers.c-264-}
+src/menu_helpers.c-265-
+src/menu_helpers.c-266-u8 GetLRKeysPressed(void)
+src/menu_helpers.c-267-{
+src/menu_helpers.c-268-    if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
+src/menu_helpers.c-269-    {
+src/menu_helpers.c:270:        if (JOY_NEW(L_BUTTON))
+src/menu_helpers.c-271-            return MENU_L_PRESSED;
+src/menu_helpers.c-272-        if (JOY_NEW(R_BUTTON))
+src/menu_helpers.c-273-            return MENU_R_PRESSED;
+src/menu_helpers.c-274-    }
+src/menu_helpers.c-275-
+src/menu_helpers.c-276-    return 0;
+src/menu_helpers.c-277-}
+src/menu_helpers.c-278-
+src/menu_helpers.c-279-u8 GetLRKeysPressedAndHeld(void)
+src/menu_helpers.c-280-{
+src/menu_helpers.c-281-    if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
+src/menu_helpers.c-282-    {
+src/menu_helpers.c-283-        if (JOY_REPEAT(L_BUTTON))
+src/menu_helpers.c-284-            return MENU_L_PRESSED;
+src/menu_helpers.c-285-        if (JOY_REPEAT(R_BUTTON))
+src/menu_helpers.c-286-            return MENU_R_PRESSED;
+src/menu_helpers.c-287-    }
+src/menu_helpers.c-288-
+src/menu_helpers.c-289-    return 0;
+src/menu_helpers.c-290-}
+src/menu_helpers.c-291-
+src/menu_helpers.c-292-bool8 IsHoldingItemAllowed(u16 itemId)
+src/menu_helpers.c-293-{
+src/menu_helpers.c-294-    // e-Reader Enigma Berry can't be held in link areas
+src/menu_helpers.c-295-    if (itemId == ITEM_ENIGMA_BERRY_E_READER
+--
+src/option_menu.c-1355-            else
+src/option_menu.c-1356-            {
+src/option_menu.c-1357-                PlaySE(SE_FAILURE);
+src/option_menu.c-1358-            }
+src/option_menu.c-1359-        }
+src/option_menu.c-1360-    }
+src/option_menu.c-1361-    else if (JOY_NEW(R_BUTTON))
+src/option_menu.c-1362-    {
+src/option_menu.c-1363-        if (sOptions->submenu == PAGE_GENERAL && Debug_IsWishMenuBlockedByEliteFour())
+src/option_menu.c-1364-        {
+src/option_menu.c-1365-            PlaySE(SE_FAILURE);
+src/option_menu.c-1366-            return;
+src/option_menu.c-1367-        }
+src/option_menu.c-1368-
+src/option_menu.c-1369-        if (sOptions->submenu != PAGE_DIFFICULTY)
+src/option_menu.c-1370-        {
+src/option_menu.c-1371-            sOptions->submenu++;
+src/option_menu.c-1372-            PlaySE(SE_SELECT);
+src/option_menu.c-1373-        }
+src/option_menu.c-1374-
+src/option_menu.c-1375-        DrawTopBarText();
+src/option_menu.c-1376-        ReDrawAll();
+src/option_menu.c-1377-        HighlightOptionMenuItem();
+src/option_menu.c-1378-        DrawDescriptionText();
+src/option_menu.c-1379-    }
+src/option_menu.c:1380:    else if (JOY_NEW(L_BUTTON))
+src/option_menu.c-1381-    {
+src/option_menu.c-1382-        if (sOptions->submenu != PAGE_GENERAL)
+src/option_menu.c-1383-        {
+src/option_menu.c-1384-            sOptions->submenu--;
+src/option_menu.c-1385-            PlaySE(SE_SELECT);
+src/option_menu.c-1386-        }
+src/option_menu.c-1387-        
+src/option_menu.c-1388-        DrawTopBarText();
+src/option_menu.c-1389-        ReDrawAll();
+src/option_menu.c-1390-        HighlightOptionMenuItem();
+src/option_menu.c-1391-        DrawDescriptionText();
+src/option_menu.c-1392-    }
+src/option_menu.c-1393-}
+src/option_menu.c-1394-
+src/option_menu.c-1395-static void Task_OptionMenuSave(u8 taskId)
+src/option_menu.c-1396-{
+src/option_menu.c-1397-    EnforceHardNpcTeamsRules();
+src/option_menu.c-1398-
+src/option_menu.c-1399-    gSaveBlock2Ptr->optionsTextSpeed        = sOptions->sel[MENUITEM_GEN_TEXTSPEED];
+src/option_menu.c-1400-    gSaveBlock2Ptr->optionsBattleSceneOff   = sOptions->sel[MENUITEM_GEN_BATTLESCENE];
+src/option_menu.c-1401-    SaveBattleSpeedOption(sOptions->sel[MENUITEM_GEN_BATTLESPEED]);
+src/option_menu.c-1402-
+src/option_menu.c-1403-    if (sOptions->sel[MENUITEM_GEN_FASTSLIDE])
+src/option_menu.c-1404-        FlagSet(FLAG_FAST_INTRO_NO_SLIDE);
+src/option_menu.c-1405-    else
+--
+src/pokedex.c-3487-            gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
+src/pokedex.c-3488-            PlaySE(SE_PIN);
+src/pokedex.c-3489-            break;
+src/pokedex.c-3490-        case SIZE_SCREEN:
+src/pokedex.c-3491-            if (!sPokedexListItem->owned)
+src/pokedex.c-3492-            {
+src/pokedex.c-3493-                PlaySE(SE_FAILURE);
+src/pokedex.c-3494-            }
+src/pokedex.c-3495-            else
+src/pokedex.c-3496-            {
+src/pokedex.c-3497-                BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex.c-3498-                sPokedexView->screenSwitchState = 3;
+src/pokedex.c-3499-                gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
+src/pokedex.c-3500-                PlaySE(SE_PIN);
+src/pokedex.c-3501-            }
+src/pokedex.c-3502-            break;
+src/pokedex.c-3503-        case CANCEL_SCREEN:
+src/pokedex.c-3504-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+src/pokedex.c-3505-            gTasks[taskId].func = Task_ExitInfoScreen;
+src/pokedex.c-3506-            PlaySE(SE_PC_OFF);
+src/pokedex.c-3507-            break;
+src/pokedex.c-3508-        }
+src/pokedex.c-3509-        return;
+src/pokedex.c-3510-    }
+src/pokedex.c-3511-    if ((JOY_NEW(DPAD_LEFT)
+src/pokedex.c:3512:     || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex.c-3513-     && sPokedexView->selectedScreen > 0)
+src/pokedex.c-3514-    {
+src/pokedex.c-3515-        sPokedexView->selectedScreen--;
+src/pokedex.c-3516-        HighlightScreenSelectBarItem(sPokedexView->selectedScreen, 0xD);
+src/pokedex.c-3517-        PlaySE(SE_DEX_PAGE);
+src/pokedex.c-3518-        return;
+src/pokedex.c-3519-    }
+src/pokedex.c-3520-    if ((JOY_NEW(DPAD_RIGHT)
+src/pokedex.c-3521-     || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex.c-3522-     && sPokedexView->selectedScreen < CANCEL_SCREEN)
+src/pokedex.c-3523-    {
+src/pokedex.c-3524-        sPokedexView->selectedScreen++;
+src/pokedex.c-3525-        HighlightScreenSelectBarItem(sPokedexView->selectedScreen, 0xD);
+src/pokedex.c-3526-        PlaySE(SE_DEX_PAGE);
+src/pokedex.c-3527-        return;
+src/pokedex.c-3528-    }
+src/pokedex.c-3529-}
+src/pokedex.c-3530-
+src/pokedex.c-3531-static void Task_SwitchScreensFromInfoScreen(u8 taskId)
+src/pokedex.c-3532-{
+src/pokedex.c-3533-    if (!gPaletteFade.active)
+src/pokedex.c-3534-    {
+src/pokedex.c-3535-        FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
+src/pokedex.c-3536-        switch (sPokedexView->screenSwitchState)
+src/pokedex.c-3537-        {
+--
+src/pokedex.c-3760-    UpdateCryWaveformWindow(2);
+src/pokedex.c-3761-
+src/pokedex.c-3762-    if (IsCryPlaying())
+src/pokedex.c-3763-        LoadPlayArrowPalette(TRUE);
+src/pokedex.c-3764-    else
+src/pokedex.c-3765-        LoadPlayArrowPalette(FALSE);
+src/pokedex.c-3766-
+src/pokedex.c-3767-    if (JOY_NEW(A_BUTTON))
+src/pokedex.c-3768-    {
+src/pokedex.c-3769-        LoadPlayArrowPalette(TRUE);
+src/pokedex.c-3770-        CryScreenPlayButton(NationalPokedexNumToSpecies(sPokedexListItem->dexNum));
+src/pokedex.c-3771-        return;
+src/pokedex.c-3772-    }
+src/pokedex.c-3773-    else if (!gPaletteFade.active)
+src/pokedex.c-3774-    {
+src/pokedex.c-3775-        if (JOY_NEW(B_BUTTON))
+src/pokedex.c-3776-        {
+src/pokedex.c-3777-            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex.c-3778-            m4aMPlayContinue(&gMPlayInfo_BGM);
+src/pokedex.c-3779-            sPokedexView->screenSwitchState = 1;
+src/pokedex.c-3780-            gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
+src/pokedex.c-3781-            PlaySE(SE_PC_OFF);
+src/pokedex.c-3782-            return;
+src/pokedex.c-3783-        }
+src/pokedex.c-3784-        if (JOY_NEW(DPAD_LEFT)
+src/pokedex.c:3785:         || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex.c-3786-        {
+src/pokedex.c-3787-            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex.c-3788-            m4aMPlayContinue(&gMPlayInfo_BGM);
+src/pokedex.c-3789-            sPokedexView->screenSwitchState = 2;
+src/pokedex.c-3790-            gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
+src/pokedex.c-3791-            PlaySE(SE_DEX_PAGE);
+src/pokedex.c-3792-            return;
+src/pokedex.c-3793-        }
+src/pokedex.c-3794-        if (JOY_NEW(DPAD_RIGHT)
+src/pokedex.c-3795-         || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex.c-3796-        {
+src/pokedex.c-3797-            if (!sPokedexListItem->owned)
+src/pokedex.c-3798-            {
+src/pokedex.c-3799-                PlaySE(SE_FAILURE);
+src/pokedex.c-3800-            }
+src/pokedex.c-3801-            else
+src/pokedex.c-3802-            {
+src/pokedex.c-3803-                BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex.c-3804-                m4aMPlayContinue(&gMPlayInfo_BGM);
+src/pokedex.c-3805-                sPokedexView->screenSwitchState = 3;
+src/pokedex.c-3806-                gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
+src/pokedex.c-3807-                PlaySE(SE_DEX_PAGE);
+src/pokedex.c-3808-            }
+src/pokedex.c-3809-            return;
+src/pokedex.c-3810-        }
+--
+src/pokedex.c-3930-        ShowBg(2);
+src/pokedex.c-3931-        ShowBg(3);
+src/pokedex.c-3932-        gMain.state++;
+src/pokedex.c-3933-        break;
+src/pokedex.c-3934-    case 9:
+src/pokedex.c-3935-        if (!gPaletteFade.active)
+src/pokedex.c-3936-        {
+src/pokedex.c-3937-            sPokedexView->screenSwitchState = 0;
+src/pokedex.c-3938-            gMain.state = 0;
+src/pokedex.c-3939-            gTasks[taskId].func = Task_HandleSizeScreenInput;
+src/pokedex.c-3940-        }
+src/pokedex.c-3941-        break;
+src/pokedex.c-3942-    }
+src/pokedex.c-3943-}
+src/pokedex.c-3944-
+src/pokedex.c-3945-static void Task_HandleSizeScreenInput(u8 taskId)
+src/pokedex.c-3946-{
+src/pokedex.c-3947-    if (JOY_NEW(B_BUTTON))
+src/pokedex.c-3948-    {
+src/pokedex.c-3949-        BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex.c-3950-        sPokedexView->screenSwitchState = 1;
+src/pokedex.c-3951-        gTasks[taskId].func = Task_SwitchScreensFromSizeScreen;
+src/pokedex.c-3952-        PlaySE(SE_PC_OFF);
+src/pokedex.c-3953-    }
+src/pokedex.c-3954-    else if (JOY_NEW(DPAD_LEFT)
+src/pokedex.c:3955:     || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex.c-3956-    {
+src/pokedex.c-3957-        BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex.c-3958-        sPokedexView->screenSwitchState = 2;
+src/pokedex.c-3959-        gTasks[taskId].func = Task_SwitchScreensFromSizeScreen;
+src/pokedex.c-3960-        PlaySE(SE_DEX_PAGE);
+src/pokedex.c-3961-    }
+src/pokedex.c-3962-}
+src/pokedex.c-3963-
+src/pokedex.c-3964-static void Task_SwitchScreensFromSizeScreen(u8 taskId)
+src/pokedex.c-3965-{
+src/pokedex.c-3966-    if (!gPaletteFade.active)
+src/pokedex.c-3967-    {
+src/pokedex.c-3968-        FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
+src/pokedex.c-3969-        FreeAndDestroyTrainerPicSprite(gTasks[taskId].tTrainerSpriteId);
+src/pokedex.c-3970-        switch (sPokedexView->screenSwitchState)
+src/pokedex.c-3971-        {
+src/pokedex.c-3972-        default:
+src/pokedex.c-3973-        case 1:
+src/pokedex.c-3974-            gTasks[taskId].func = Task_LoadInfoScreen;
+src/pokedex.c-3975-            break;
+src/pokedex.c-3976-        case 2:
+src/pokedex.c-3977-            gTasks[taskId].func = Task_LoadCryScreen;
+src/pokedex.c-3978-            break;
+src/pokedex.c-3979-        }
+src/pokedex.c-3980-    }
+--
+src/link.c-419-        {
+src/link.c-420-            if ((status >> i) & 1)
+src/link.c-421-            {
+src/link.c-422-                gLinkTestBlockChecksums[i] = LinkTestCalcBlockChecksum(gBlockRecvBuffer[i], sBlockRecv[i].size);
+src/link.c-423-                ResetBlockReceivedFlag(i);
+src/link.c-424-                if (gLinkTestBlockChecksums[i] != 0x0342)
+src/link.c-425-                {
+src/link.c-426-                    sLinkTestDebugValuesEnabled = FALSE;
+src/link.c-427-                    sDummyFlag = FALSE;
+src/link.c-428-                }
+src/link.c-429-            }
+src/link.c-430-        }
+src/link.c-431-    }
+src/link.c-432-}
+src/link.c-433-
+src/link.c-434-static void LinkTestProcessKeyInput(void)
+src/link.c-435-{
+src/link.c-436-    if (JOY_NEW(A_BUTTON))
+src/link.c-437-    {
+src/link.c-438-        gShouldAdvanceLinkState = 1;
+src/link.c-439-    }
+src/link.c-440-    if (JOY_HELD(B_BUTTON))
+src/link.c-441-    {
+src/link.c-442-        InitBlockSend(gHeap + 0x4000, 0x00002004);
+src/link.c-443-    }
+src/link.c:444:    if (JOY_NEW(L_BUTTON))
+src/link.c-445-    {
+src/link.c-446-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB(2, 0, 0));
+src/link.c-447-    }
+src/link.c-448-    if (JOY_NEW(START_BUTTON))
+src/link.c-449-    {
+src/link.c-450-        SetSuppressLinkErrorMessage(TRUE);
+src/link.c-451-    }
+src/link.c-452-    if (JOY_NEW(R_BUTTON))
+src/link.c-453-    {
+src/link.c-454-        TrySavingData(SAVE_LINK);
+src/link.c-455-    }
+src/link.c-456-    if (JOY_NEW(SELECT_BUTTON))
+src/link.c-457-    {
+src/link.c-458-        SetCloseLinkCallback();
+src/link.c-459-    }
+src/link.c-460-    if (sLinkTestDebugValuesEnabled)
+src/link.c-461-    {
+src/link.c-462-        SetLinkDebugValues(gMain.vblankCounter2, gLinkCallback ? gLinkVSyncDisabled : gLinkVSyncDisabled | 0x10);
+src/link.c-463-    }
+src/link.c-464-}
+src/link.c-465-
+src/link.c-466-static void CB2_LinkTest(void)
+src/link.c-467-{
+src/link.c-468-    LinkTestProcessKeyInput();
+src/link.c-469-    TestBlockTransfer(1, 1, 0);
+--
+src/battle_controller_player.c-363-            return;
+src/battle_controller_player.c-364-        }
+src/battle_controller_player.c-365-    }
+src/battle_controller_player.c-366-
+src/battle_controller_player.c-367-
+src/battle_controller_player.c-368-    // HLW_BATTLE_RADIO_UI_AND_L_OPEN_V2
+src/battle_controller_player.c-369-    // Active only on the main Battle / Bag / Pokemon / Run command screen.
+src/battle_controller_player.c-370-    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED)))
+src/battle_controller_player.c-371-    {
+src/battle_controller_player.c-372-        if (RadioPriority_ShouldBlockBgmChange())
+src/battle_controller_player.c-373-        {
+src/battle_controller_player.c-374-            if (JOY_NEW(START_BUTTON))
+src/battle_controller_player.c-375-            {
+src/battle_controller_player.c-376-                RadioPriority_NextTrack();
+src/battle_controller_player.c-377-                return;
+src/battle_controller_player.c-378-            }
+src/battle_controller_player.c-379-            else if (JOY_NEW(SELECT_BUTTON))
+src/battle_controller_player.c-380-            {
+src/battle_controller_player.c-381-                RadioPriority_PreviousTrack();
+src/battle_controller_player.c-382-                return;
+src/battle_controller_player.c-383-            }
+src/battle_controller_player.c-384-        }
+src/battle_controller_player.c-385-
+src/battle_controller_player.c-386-        // Raw L is intentional: with Options L=A, normal input may mirror L into A.
+src/battle_controller_player.c-387-        // Catch physical L before the ordinary A_BUTTON action chain.
+src/battle_controller_player.c:388:        if (gMain.newKeysRaw & L_BUTTON)
+src/battle_controller_player.c-389-        {
+src/battle_controller_player.c-390-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+src/battle_controller_player.c-391-            gBattlerInMenuId = battler;
+src/battle_controller_player.c-392-            gBattlerControllerFuncs[battler] = OpenRadioFromBattle;
+src/battle_controller_player.c-393-            return;
+src/battle_controller_player.c-394-        }
+src/battle_controller_player.c-395-    }
+src/battle_controller_player.c-396-
+src/battle_controller_player.c-397-    if (JOY_NEW(A_BUTTON))
+src/battle_controller_player.c-398-    {
+src/battle_controller_player.c-399-        PlaySE(SE_SELECT);
+src/battle_controller_player.c-400-        TryHideLastUsedBall();
+src/battle_controller_player.c-401-
+src/battle_controller_player.c-402-        switch (gActionSelectionCursor[battler])
+src/battle_controller_player.c-403-        {
+src/battle_controller_player.c-404-        case 0: // Top left
+src/battle_controller_player.c-405-            BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_USE_MOVE, 0);
+src/battle_controller_player.c-406-            break;
+src/battle_controller_player.c-407-        case 1: // Top right
+src/battle_controller_player.c-408-            BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_USE_ITEM, 0);
+src/battle_controller_player.c-409-            break;
+src/battle_controller_player.c-410-        case 2: // Bottom left
+src/battle_controller_player.c-411-            BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_SWITCH, 0);
+src/battle_controller_player.c-412-            break;
+src/battle_controller_player.c-413-        case 3: // Bottom right
+--
+src/party_menu.c-2756-            movementDir = 0;
+src/party_menu.c-2757-        }
+src/party_menu.c-2758-        else
+src/party_menu.c-2759-        {
+src/party_menu.c-2760-            switch (GetLRKeysPressedAndHeld())
+src/party_menu.c-2761-            {
+src/party_menu.c-2762-            case MENU_L_PRESSED:
+src/party_menu.c-2763-                movementDir = MENU_DIR_UP;
+src/party_menu.c-2764-                break;
+src/party_menu.c-2765-            case MENU_R_PRESSED:
+src/party_menu.c-2766-                movementDir = MENU_DIR_DOWN;
+src/party_menu.c-2767-                break;
+src/party_menu.c-2768-            default:
+src/party_menu.c-2769-                movementDir = 0;
+src/party_menu.c-2770-                break;
+src/party_menu.c-2771-            }
+src/party_menu.c-2772-        }
+src/party_menu.c-2773-        break;
+src/party_menu.c-2774-    }
+src/party_menu.c-2775-
+src/party_menu.c-2776-    // In the redesigned basic field menu L/R are theme controls. In normal
+src/party_menu.c-2777-    // single AND double battle Party Menus both shoulders are exposed so
+src/party_menu.c-2778-    // either one opens the selected Pokémon's Summary Screen.
+src/party_menu.c-2779-    if (IsBasicFieldPartyMenu() || IsBattleSummaryShoulderPartyMenu())
+src/party_menu.c-2780-    {
+src/party_menu.c:2781:        if (JOY_NEW(L_BUTTON))
+src/party_menu.c-2782-            return L_BUTTON;
+src/party_menu.c-2783-        if (JOY_NEW(R_BUTTON))
+src/party_menu.c-2784-            return R_BUTTON;
+src/party_menu.c-2785-    }
+src/party_menu.c-2786-    else
+src/party_menu.c-2787-    {
+src/party_menu.c-2788-        // Preserve the project's existing shortcuts in every other context.
+src/party_menu.c-2789-        if (PARTY_MENU_PC_ACCESS && JOY_NEW(R_BUTTON))
+src/party_menu.c-2790-            return R_BUTTON;
+src/party_menu.c:2791:        if (!PARTY_MENU_PC_ACCESS && JOY_NEW(L_BUTTON))
+src/party_menu.c-2792-            return L_BUTTON;
+src/party_menu.c-2793-    }
+src/party_menu.c-2794-    
+src/party_menu.c-2795-    if (JOY_NEW(START_BUTTON))
+src/party_menu.c-2796-        return START_BUTTON;
+src/party_menu.c-2797-    if (JOY_NEW(SELECT_BUTTON))
+src/party_menu.c-2798-        return SELECT_BUTTON;
+src/party_menu.c-2799-        
+src/party_menu.c-2800-    if (movementDir && gPlayerPartyCount != 0)
+src/party_menu.c-2801-    {
+src/party_menu.c-2802-        UpdateCurrentPartySelection(slotPtr, movementDir);
+src/party_menu.c-2803-        return 0;
+src/party_menu.c-2804-    }
+src/party_menu.c-2805-
+src/party_menu.c-2806-    // Pressed Cancel
+src/party_menu.c-2807-    if (JOY_NEW(A_BUTTON) && *slotPtr == PARTY_SIZE + 1)
+src/party_menu.c-2808-        return B_BUTTON;
+src/party_menu.c-2809-
+src/party_menu.c-2810-    return JOY_NEW(A_BUTTON | B_BUTTON);
+src/party_menu.c-2811-}
+src/party_menu.c-2812-
+src/party_menu.c-2813-static void UpdateCurrentPartySelection(s8 *slotPtr, s8 movementDir)
+src/party_menu.c-2814-{
+src/party_menu.c-2815-    s8 newSlotId = *slotPtr;
+src/party_menu.c-2816-    u8 layout = gPartyMenu.layout;
+--
+src/berry_blender.c-2182-        {
+src/berry_blender.c-2183-            pressedA = TRUE;
+src/berry_blender.c-2184-        }
+src/berry_blender.c-2185-
+src/berry_blender.c-2186-        if (pressedA)
+src/berry_blender.c-2187-        {
+src/berry_blender.c-2188-            u8 proximity;
+src/berry_blender.c-2189-            StartSpriteAnim(&gSprites[sBerryBlender->playerArrowSpriteIds[sBerryBlender->arrowIdToPlayerId[arrowId]]], arrowId + 4);
+src/berry_blender.c-2190-            proximity = GetArrowProximity(sBerryBlender->arrowPos, playerId);
+src/berry_blender.c-2191-
+src/berry_blender.c-2192-            if (proximity == PROXIMITY_BEST)
+src/berry_blender.c-2193-                gSendCmd[BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_BEST;
+src/berry_blender.c-2194-            else if (proximity == PROXIMITY_GOOD)
+src/berry_blender.c-2195-                gSendCmd[BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
+src/berry_blender.c-2196-            else
+src/berry_blender.c-2197-                gSendCmd[BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_MISS;
+src/berry_blender.c-2198-        }
+src/berry_blender.c-2199-    }
+src/berry_blender.c-2200-    if (++sBerryBlender->slowdownTimer > 5)
+src/berry_blender.c-2201-    {
+src/berry_blender.c-2202-        if (sBerryBlender->speed > MIN_ARROW_SPEED)
+src/berry_blender.c-2203-            sBerryBlender->speed--;
+src/berry_blender.c-2204-        sBerryBlender->slowdownTimer = 0;
+src/berry_blender.c-2205-    }
+src/berry_blender.c-2206-
+src/berry_blender.c:2207:    if (gEnableContestDebugging && JOY_NEW(L_BUTTON))
+src/berry_blender.c-2208-        sBerryBlender->perfectOpponents ^= 1;
+src/berry_blender.c-2209-}
+src/berry_blender.c-2210-
+src/berry_blender.c-2211-static void CB2_PlayBlender(void)
+src/berry_blender.c-2212-{
+src/berry_blender.c-2213-    UpdateBlenderCenter();
+src/berry_blender.c-2214-
+src/berry_blender.c-2215-    if (sBerryBlender->gameFrameTime < (99 * 60 * 60) + (59 * 60)) // game time can't be longer than 99 minutes and 59 seconds, can't print 3 digits
+src/berry_blender.c-2216-        sBerryBlender->gameFrameTime++;
+src/berry_blender.c-2217-
+src/berry_blender.c-2218-    HandlePlayerInput();
+src/berry_blender.c-2219-    SetLinkDebugValues((u16)(sBerryBlender->speed), sBerryBlender->progressBarValue);
+src/berry_blender.c-2220-    UpdateOpponentScores();
+src/berry_blender.c-2221-    TryUpdateProgressBar(sBerryBlender->progressBarValue, MAX_PROGRESS_BAR);
+src/berry_blender.c-2222-    UpdateRPM(sBerryBlender->speed);
+src/berry_blender.c-2223-    RestoreBgCoords();
+src/berry_blender.c-2224-    ProcessLinkPlayerCmds();
+src/berry_blender.c-2225-    if (sBerryBlender->gameEndState == 0 && sBerryBlender->maxProgressBarValue >= MAX_PROGRESS_BAR)
+src/berry_blender.c-2226-    {
+src/berry_blender.c-2227-        sBerryBlender->progressBarValue = MAX_PROGRESS_BAR;
+src/berry_blender.c-2228-        sBerryBlender->gameEndState = 1;
+src/berry_blender.c-2229-        SetMainCallback2(CB2_EndBlenderGame);
+src/berry_blender.c-2230-    }
+src/berry_blender.c-2231-
+src/berry_blender.c-2232-    Blender_DummiedOutFunc(sBerryBlender->bg_X, sBerryBlender->bg_Y);
+--
+src/battle_debug.c-830-                                                 gBattleMons[data->aiBattlerId].personality,
+src/battle_debug.c-831-                                                 TRUE,
+src/battle_debug.c-832-                                                 39, 130, 15, TAG_NONE);
+src/battle_debug.c-833-        data->aiViewState++;
+src/battle_debug.c-834-        break;
+src/battle_debug.c-835-    // Put text
+src/battle_debug.c-836-    case 1:
+src/battle_debug.c-837-        winTemplate = CreateWindowTemplate(1, 0, 4, 30, 14, 15, 0x200);
+src/battle_debug.c-838-        data->aiMovesWindowId = AddWindow(&winTemplate);
+src/battle_debug.c-839-        PutWindowTilemap(data->aiMovesWindowId);
+src/battle_debug.c-840-        PutMovesPointsText(data);
+src/battle_debug.c-841-
+src/battle_debug.c-842-        data->aiViewState++;
+src/battle_debug.c-843-        break;
+src/battle_debug.c-844-    // Input
+src/battle_debug.c-845-    case 2:
+src/battle_debug.c-846-        if (JOY_NEW(R_BUTTON) && IsDoubleBattle())
+src/battle_debug.c-847-        {
+src/battle_debug.c-848-            CleanUpAiInfoWindow(taskId);
+src/battle_debug.c-849-            do {
+src/battle_debug.c-850-                data->battlerId++;
+src/battle_debug.c-851-                data->battlerId %= gBattlersCount;
+src/battle_debug.c-852-            } while (!IsBattlerAlive(data->battlerId));
+src/battle_debug.c-853-            data->aiViewState = 0;
+src/battle_debug.c-854-        }
+src/battle_debug.c:855:        else if (JOY_NEW(L_BUTTON) && IsDoubleBattle())
+src/battle_debug.c-856-        {
+src/battle_debug.c-857-            CleanUpAiInfoWindow(taskId);
+src/battle_debug.c-858-            do {
+src/battle_debug.c-859-                if (data->battlerId == 0)
+src/battle_debug.c-860-                    data->battlerId = gBattlersCount - 1;
+src/battle_debug.c-861-                else
+src/battle_debug.c-862-                    data->battlerId--;
+src/battle_debug.c-863-            } while (!IsBattlerAlive(data->battlerId) || !BattlerHasAi(data->battlerId));
+src/battle_debug.c-864-            data->aiViewState = 0;
+src/battle_debug.c-865-        }
+src/battle_debug.c-866-        else if (JOY_NEW(SELECT_BUTTON | B_BUTTON))
+src/battle_debug.c-867-        {
+src/battle_debug.c-868-            SwitchToDebugView(taskId);
+src/battle_debug.c-869-            HideBg(1);
+src/battle_debug.c-870-            ShowBg(0);
+src/battle_debug.c-871-            return;
+src/battle_debug.c-872-        }
+src/battle_debug.c-873-        break;
+src/battle_debug.c-874-    }
+src/battle_debug.c-875-}
+src/battle_debug.c-876-
+src/battle_debug.c-877-static void SwitchToAiPointsView(u8 taskId)
+src/battle_debug.c-878-{
+src/battle_debug.c-879-    gTasks[taskId].func = Task_ShowAiPoints;
+src/battle_debug.c-880-    GetStructPtr(taskId)->aiViewState = 0;
+--
+src/battle_debug.c-1142-{
+src/battle_debug.c-1143-    if (!gPaletteFade.active)
+src/battle_debug.c-1144-        gTasks[taskId].func = Task_DebugMenuProcessInput;
+src/battle_debug.c-1145-}
+src/battle_debug.c-1146-
+src/battle_debug.c-1147-static void Task_DebugMenuProcessInput(u8 taskId)
+src/battle_debug.c-1148-{
+src/battle_debug.c-1149-    s32 listItemId = 0;
+src/battle_debug.c-1150-    struct BattleDebugMenu *data = GetStructPtr(taskId);
+src/battle_debug.c-1151-
+src/battle_debug.c-1152-    // Exit the menu.
+src/battle_debug.c-1153-    if (JOY_NEW(SELECT_BUTTON) || ((JOY_NEW(B_BUTTON)) && data->activeWindow == ACTIVE_WIN_MAIN))
+src/battle_debug.c-1154-    {
+src/battle_debug.c-1155-        BeginNormalPaletteFade(-1, 0, 0, 0x10, 0);
+src/battle_debug.c-1156-        gTasks[taskId].func = Task_DebugMenuFadeOut;
+src/battle_debug.c-1157-        return;
+src/battle_debug.c-1158-    }
+src/battle_debug.c-1159-
+src/battle_debug.c-1160-    // Try changing active battler.
+src/battle_debug.c-1161-    if (JOY_NEW(R_BUTTON))
+src/battle_debug.c-1162-    {
+src/battle_debug.c-1163-        if (data->battlerId++ == gBattlersCount - 1)
+src/battle_debug.c-1164-            data->battlerId = 0;
+src/battle_debug.c-1165-        UpdateWindowsOnChangedBattler(data);
+src/battle_debug.c-1166-    }
+src/battle_debug.c:1167:    else if (JOY_NEW(L_BUTTON))
+src/battle_debug.c-1168-    {
+src/battle_debug.c-1169-        if (data->battlerId-- == 0)
+src/battle_debug.c-1170-            data->battlerId = gBattlersCount - 1;
+src/battle_debug.c-1171-        UpdateWindowsOnChangedBattler(data);
+src/battle_debug.c-1172-    }
+src/battle_debug.c-1173-
+src/battle_debug.c-1174-    // A main list item is active, handle input.
+src/battle_debug.c-1175-    if (data->activeWindow == ACTIVE_WIN_MAIN)
+src/battle_debug.c-1176-    {
+src/battle_debug.c-1177-        listItemId = ListMenu_ProcessInput(data->mainListTaskId);
+src/battle_debug.c-1178-        if (listItemId != LIST_CANCEL && listItemId != LIST_NOTHING_CHOSEN && listItemId < LIST_ITEM_COUNT)
+src/battle_debug.c-1179-        {
+src/battle_debug.c-1180-            if (listItemId == LIST_ITEM_AI_MOVES_PTS && JOY_NEW(A_BUTTON))
+src/battle_debug.c-1181-            {
+src/battle_debug.c-1182-                SwitchToAiPointsView(taskId);
+src/battle_debug.c-1183-                return;
+src/battle_debug.c-1184-            }
+src/battle_debug.c-1185-            else if (listItemId == LIST_ITEM_AI_INFO && JOY_NEW(A_BUTTON))
+src/battle_debug.c-1186-            {
+src/battle_debug.c-1187-                SwitchToAiInfoView(taskId);
+src/battle_debug.c-1188-                return;
+src/battle_debug.c-1189-            }
+src/battle_debug.c-1190-            else if (listItemId == LIST_ITEM_AI_PARTY && JOY_NEW(A_BUTTON))
+src/battle_debug.c-1191-            {
+src/battle_debug.c-1192-                SwitchToAiPartyView(taskId);
+--
+src/overworld.c-1531-
+src/overworld.c-1532-static void ResetSafariZoneFlag_(void)
+src/overworld.c-1533-{
+src/overworld.c-1534-    ResetSafariZoneFlag();
+src/overworld.c-1535-}
+src/overworld.c-1536-
+src/overworld.c-1537-bool32 IsOverworldLinkActive(void)
+src/overworld.c-1538-{
+src/overworld.c-1539-    if (gMain.callback1 == CB1_OverworldLink)
+src/overworld.c-1540-        return TRUE;
+src/overworld.c-1541-    else
+src/overworld.c-1542-        return FALSE;
+src/overworld.c-1543-}
+src/overworld.c-1544-
+src/overworld.c-1545-static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
+src/overworld.c-1546-{
+src/overworld.c-1547-    struct FieldInput inputStruct;
+src/overworld.c-1548-
+src/overworld.c-1549-    // RADIO PRIORITY owns L/R in the overworld.
+src/overworld.c-1550-    // Consume them BEFORE FieldGetPlayerInput(), so DexNav, registered-item
+src/overworld.c-1551-    // shortcuts and other field systems cannot steal the same press.
+src/overworld.c-1552-    if (RadioPriority_ShouldBlockBgmChange())
+src/overworld.c-1553-    {
+src/overworld.c-1554-        if (newKeys & R_BUTTON)
+src/overworld.c-1555-            RadioPriority_NextTrack();
+src/overworld.c:1556:        else if (newKeys & L_BUTTON)
+src/overworld.c-1557-            RadioPriority_PreviousTrack();
+src/overworld.c-1558-
+src/overworld.c:1559:        newKeys &= ~(R_BUTTON | L_BUTTON);
+src/overworld.c-1560-        heldKeys &= ~(R_BUTTON | L_BUTTON);
+src/overworld.c-1561-    }
+src/overworld.c-1562-
+src/overworld.c-1563-    UpdatePlayerAvatarTransitionState();
+src/overworld.c-1564-    FieldClearPlayerInput(&inputStruct);
+src/overworld.c-1565-    FieldGetPlayerInput(&inputStruct, newKeys, heldKeys);
+src/overworld.c-1566-    CancelSignPostMessageBox(&inputStruct);
+src/overworld.c-1567-    if (!ArePlayerFieldControlsLocked())
+src/overworld.c-1568-    {
+src/overworld.c-1569-        if (ProcessPlayerFieldInput(&inputStruct) == 1)
+src/overworld.c-1570-        {
+src/overworld.c-1571-            LockPlayerFieldControls();
+src/overworld.c-1572-            HideMapNamePopUpWindow();
+src/overworld.c-1573-        }
+src/overworld.c-1574-        else
+src/overworld.c-1575-        {
+src/overworld.c-1576-            PlayerStep(inputStruct.dpadDirection, newKeys, heldKeys);
+src/overworld.c-1577-        }
+src/overworld.c-1578-    }
+src/overworld.c-1579-    // If stop running but keep holding B -> fix follower frame.
+src/overworld.c-1580-    if (PlayerHasFollowerNPC() && (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_ON_FOOT) && IsPlayerStandingStill())
+src/overworld.c-1581-        ObjectEventSetHeldMovement(&gObjectEvents[GetFollowerNPCObjectId()], GetFaceDirectionAnimNum(gObjectEvents[GetFollowerNPCObjectId()].facingDirection));
+src/overworld.c-1582-}
+src/overworld.c-1583-
+src/overworld.c-1584-void CB1_Overworld(void)
+--
+src/rogue_voltorbflip.c-841-    {
+src/rogue_voltorbflip.c-842-        if(sVoltorbFlipState->cursorX < BOARD_WIDTH - 1)
+src/rogue_voltorbflip.c-843-        {
+src/rogue_voltorbflip.c-844-            PlaySE(SE_DEX_SCROLL);
+src/rogue_voltorbflip.c-845-            ++sVoltorbFlipState->cursorX;
+src/rogue_voltorbflip.c-846-        }
+src/rogue_voltorbflip.c-847-    }
+src/rogue_voltorbflip.c-848-
+src/rogue_voltorbflip.c-849-    if (JOY_NEW(DPAD_UP))
+src/rogue_voltorbflip.c-850-    {
+src/rogue_voltorbflip.c-851-        if(sVoltorbFlipState->cursorY > 0)
+src/rogue_voltorbflip.c-852-        {
+src/rogue_voltorbflip.c-853-            PlaySE(SE_DEX_SCROLL);
+src/rogue_voltorbflip.c-854-            --sVoltorbFlipState->cursorY;
+src/rogue_voltorbflip.c-855-        }
+src/rogue_voltorbflip.c-856-    }
+src/rogue_voltorbflip.c-857-    if (JOY_NEW(DPAD_DOWN))
+src/rogue_voltorbflip.c-858-    {
+src/rogue_voltorbflip.c-859-        if(sVoltorbFlipState->cursorY < BOARD_HEIGHT - 1)
+src/rogue_voltorbflip.c-860-        {
+src/rogue_voltorbflip.c-861-            PlaySE(SE_DEX_SCROLL);
+src/rogue_voltorbflip.c-862-            ++sVoltorbFlipState->cursorY;
+src/rogue_voltorbflip.c-863-        }
+src/rogue_voltorbflip.c-864-    }
+src/rogue_voltorbflip.c-865-
+src/rogue_voltorbflip.c:866:    if (JOY_NEW(L_BUTTON))
+src/rogue_voltorbflip.c-867-    {
+src/rogue_voltorbflip.c-868-        if(sVoltorbFlipState->cursorWriteValue > 0)
+src/rogue_voltorbflip.c-869-        {
+src/rogue_voltorbflip.c-870-            PlaySE(SE_SELECT);
+src/rogue_voltorbflip.c-871-            --sVoltorbFlipState->cursorWriteValue;
+src/rogue_voltorbflip.c-872-            DrawNoteTiles();
+src/rogue_voltorbflip.c-873-        }
+src/rogue_voltorbflip.c-874-    }
+src/rogue_voltorbflip.c-875-    if (JOY_NEW(R_BUTTON))
+src/rogue_voltorbflip.c-876-    {
+src/rogue_voltorbflip.c-877-        if(sVoltorbFlipState->cursorWriteValue < CARD_VALUE_COUNT)
+src/rogue_voltorbflip.c-878-        {
+src/rogue_voltorbflip.c-879-            PlaySE(SE_SELECT);
+src/rogue_voltorbflip.c-880-            ++sVoltorbFlipState->cursorWriteValue;
+src/rogue_voltorbflip.c-881-            DrawNoteTiles();
+src/rogue_voltorbflip.c-882-        }
+src/rogue_voltorbflip.c-883-    }
+src/rogue_voltorbflip.c-884-
+src/rogue_voltorbflip.c-885-    if (JOY_NEW(A_BUTTON))
+src/rogue_voltorbflip.c-886-    {
+src/rogue_voltorbflip.c-887-        u8 cardIdx = COORDS_TO_CARD(sVoltorbFlipState->cursorX, sVoltorbFlipState->cursorY);
+src/rogue_voltorbflip.c-888-
+src/rogue_voltorbflip.c-889-        if(!sVoltorbFlipState->cardStates[cardIdx].isShown)
+src/rogue_voltorbflip.c-890-        {
+src/rogue_voltorbflip.c-891-            switch (sVoltorbFlipState->cursorWriteValue)
+--
+src/radio.c-6059-                break;
+src/radio.c-6060-
+src/radio.c-6061-            default:
+src/radio.c-6062-                sRadioUiMode = RADIO_UI_MENU;
+src/radio.c-6063-                Radio_DrawMenu(songId);
+src/radio.c-6064-                return;
+src/radio.c-6065-            }
+src/radio.c-6066-
+src/radio.c-6067-            Radio_DrawSoundConfig();
+src/radio.c-6068-            return;
+src/radio.c-6069-        }
+src/radio.c-6070-
+src/radio.c-6071-        return;
+src/radio.c-6072-    }
+src/radio.c-6073-
+src/radio.c-6074-    if (sRadioUiMode == RADIO_UI_STICKER_EDITOR)
+src/radio.c-6075-    {
+src/radio.c-6076-        if (JOY_NEW(B_BUTTON) || JOY_NEW(START_BUTTON))
+src/radio.c-6077-        {
+src/radio.c-6078-            PlaySE(SE_SELECT);
+src/radio.c-6079-            sRadioUiMode = RADIO_UI_MENU;
+src/radio.c-6080-            Radio_DrawMenu(songId);
+src/radio.c-6081-            return;
+src/radio.c-6082-        }
+src/radio.c-6083-
+src/radio.c:6084:        if (JOY_NEW(L_BUTTON))
+src/radio.c-6085-        {
+src/radio.c-6086-            sRadioStickerSelected =
+src/radio.c-6087-                (sRadioStickerSelected > 0)
+src/radio.c-6088-                    ? sRadioStickerSelected - 1
+src/radio.c-6089-                    : RADIO_STICKER_COUNT - 1;
+src/radio.c-6090-            PlaySE(SE_SELECT);
+src/radio.c-6091-            Radio_DrawStickerEditor();
+src/radio.c-6092-            return;
+src/radio.c-6093-        }
+src/radio.c-6094-
+src/radio.c-6095-        if (JOY_NEW(R_BUTTON))
+src/radio.c-6096-        {
+src/radio.c-6097-            sRadioStickerSelected =
+src/radio.c-6098-                (sRadioStickerSelected + 1) % RADIO_STICKER_COUNT;
+src/radio.c-6099-            PlaySE(SE_SELECT);
+src/radio.c-6100-            Radio_DrawStickerEditor();
+src/radio.c-6101-            return;
+src/radio.c-6102-        }
+src/radio.c-6103-
+src/radio.c-6104-        if (JOY_NEW(A_BUTTON))
+src/radio.c-6105-        {
+src/radio.c-6106-            if (sRadioStickerVisibleMask & (1 << sRadioStickerSelected))
+src/radio.c-6107-                Radio_HideSticker(sRadioStickerSelected);
+src/radio.c-6108-            else
+src/radio.c-6109-                Radio_ShowStickerWithLimit(sRadioStickerSelected);
+--
+src/radio.c-7049-
+src/radio.c-7050-                PlaySE(SE_SELECT);
+src/radio.c-7051-                Radio_PressButton(sRadioBtnNextId);
+src/radio.c-7052-                Radio_DrawMusicInfo(Radio_GetMainBrowseSong(), playing);
+src/radio.c-7053-            }
+src/radio.c-7054-        }
+src/radio.c-7055-        else
+src/radio.c-7056-        {
+src/radio.c-7057-            u16 count = Station_Count(sRadioStation);
+src/radio.c-7058-
+src/radio.c-7059-            if (count != 0)
+src/radio.c-7060-            {
+src/radio.c-7061-                sRadioStationIndex =
+src/radio.c-7062-                    (sRadioStationIndex + 1 < count)
+src/radio.c-7063-                        ? sRadioStationIndex + 1
+src/radio.c-7064-                        : 0;
+src/radio.c-7065-
+src/radio.c-7066-                Radio_SyncSong();
+src/radio.c-7067-                songId = sRadioCurrentSong;
+src/radio.c-7068-                changed = TRUE;
+src/radio.c-7069-                Radio_PressButton(sRadioBtnNextId);
+src/radio.c-7070-            }
+src/radio.c-7071-        }
+src/radio.c-7072-    }
+src/radio.c-7073-    else if ((sRadioMainSelection == RADIO_MAIN_SELECT_SONG && JOY_NEW(DPAD_LEFT))
+src/radio.c:7074:          || JOY_NEW(L_BUTTON))
+src/radio.c-7075-    {
+src/radio.c-7076-        if (sRadioNavigationBrowseEnabled)
+src/radio.c-7077-        {
+src/radio.c-7078-            u16 count = Radio_GetMainBrowseCount();
+src/radio.c-7079-
+src/radio.c-7080-            if (count != 0)
+src/radio.c-7081-            {
+src/radio.c-7082-                sRadioMainBrowseStationIndex =
+src/radio.c-7083-                    (sRadioMainBrowseStationIndex > 0)
+src/radio.c-7084-                        ? sRadioMainBrowseStationIndex - 1
+src/radio.c-7085-                        : count - 1;
+src/radio.c-7086-
+src/radio.c-7087-                PlaySE(SE_SELECT);
+src/radio.c-7088-                Radio_PressButton(sRadioBtnBackId);
+src/radio.c-7089-                Radio_DrawMusicInfo(Radio_GetMainBrowseSong(), playing);
+src/radio.c-7090-            }
+src/radio.c-7091-        }
+src/radio.c-7092-        else
+src/radio.c-7093-        {
+src/radio.c-7094-            u16 count = Station_Count(sRadioStation);
+src/radio.c-7095-
+src/radio.c-7096-            if (count != 0)
+src/radio.c-7097-            {
+src/radio.c-7098-                sRadioStationIndex =
+src/radio.c-7099-                    (sRadioStationIndex > 0)
+--
+src/pokemon_summary_screen.c-2589-}
+src/pokemon_summary_screen.c-2590-
+src/pokemon_summary_screen.c-2591-static void WriteToStatsTilemapBuffer(u32 length, u32 block, u32 statsCoordX, u32 statsCoordY)
+src/pokemon_summary_screen.c-2592-{
+src/pokemon_summary_screen.c-2593-    u32 i;
+src/pokemon_summary_screen.c-2594-
+src/pokemon_summary_screen.c-2595-    for (i = 0; i <= length; i++)
+src/pokemon_summary_screen.c-2596-        FillBgTilemapBufferRect(1, block + i, statsCoordX + i, statsCoordY, 1, 1, 2);
+src/pokemon_summary_screen.c-2597-}
+src/pokemon_summary_screen.c-2598-
+src/pokemon_summary_screen.c-2599-static void ClearStatLabel(u32 length, u32 statsCoordX, u32 statsCoordY)
+src/pokemon_summary_screen.c-2600-{
+src/pokemon_summary_screen.c-2601-    u32 blankStatsBlock = 1241;
+src/pokemon_summary_screen.c-2602-
+src/pokemon_summary_screen.c-2603-    u32 i;
+src/pokemon_summary_screen.c-2604-    u32 blankOffset = 3;
+src/pokemon_summary_screen.c-2605-
+src/pokemon_summary_screen.c-2606-    for (i = 0; i <= length; i++)
+src/pokemon_summary_screen.c-2607-        FillBgTilemapBufferRect(1, blankStatsBlock, statsCoordX + blankOffset + i, statsCoordY, 1, 1, 2);
+src/pokemon_summary_screen.c-2608-}
+src/pokemon_summary_screen.c-2609-
+src/pokemon_summary_screen.c-2610-static void Task_HandleInput(u8 taskId)
+src/pokemon_summary_screen.c-2611-{
+src/pokemon_summary_screen.c-2612-    if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE && !gPaletteFade.active)
+src/pokemon_summary_screen.c-2613-    {
+src/pokemon_summary_screen.c:2614:        if (JOY_NEW(L_BUTTON))
+src/pokemon_summary_screen.c-2615-        {
+src/pokemon_summary_screen.c-2616-            PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-2617-            ChangeSummaryColorTheme(-1);
+src/pokemon_summary_screen.c-2618-        }
+src/pokemon_summary_screen.c-2619-        else if (JOY_NEW(R_BUTTON))
+src/pokemon_summary_screen.c-2620-        {
+src/pokemon_summary_screen.c-2621-            PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-2622-            ChangeSummaryColorTheme(1);
+src/pokemon_summary_screen.c-2623-        }
+src/pokemon_summary_screen.c-2624-        else if (JOY_NEW(DPAD_UP))
+src/pokemon_summary_screen.c-2625-        {
+src/pokemon_summary_screen.c-2626-            ChangeSummaryPokemon(taskId, -1);
+src/pokemon_summary_screen.c-2627-        }
+src/pokemon_summary_screen.c-2628-        else if (JOY_NEW(DPAD_DOWN))
+src/pokemon_summary_screen.c-2629-        {
+src/pokemon_summary_screen.c-2630-            ChangeSummaryPokemon(taskId, 1);
+src/pokemon_summary_screen.c-2631-        }
+src/pokemon_summary_screen.c-2632-        else if (JOY_NEW(DPAD_LEFT))
+src/pokemon_summary_screen.c-2633-        {
+src/pokemon_summary_screen.c-2634-            ChangePage(taskId, -1);
+src/pokemon_summary_screen.c-2635-        }
+src/pokemon_summary_screen.c-2636-        else if (JOY_NEW(DPAD_RIGHT))
+src/pokemon_summary_screen.c-2637-        {
+src/pokemon_summary_screen.c-2638-            ChangePage(taskId, 1);
+src/pokemon_summary_screen.c-2639-        }
+--
+src/pokemon_summary_screen.c-3325-        ShowUtilityPrompt(SUMMARY_MODE_SELECT_MOVE);
+src/pokemon_summary_screen.c-3326-    }
+src/pokemon_summary_screen.c-3327-    else
+src/pokemon_summary_screen.c-3328-    {
+src/pokemon_summary_screen.c-3329-        ShowUtilityPrompt(SUMMARY_MODE_NORMAL);
+src/pokemon_summary_screen.c-3330-    }
+src/pokemon_summary_screen.c-3331-
+src/pokemon_summary_screen.c-3332-    TilemapFiveMovesDisplay(sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0], 3, FALSE);
+src/pokemon_summary_screen.c-3333-    TilemapFiveMovesDisplay(sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0], 1, FALSE);
+src/pokemon_summary_screen.c-3334-    PrintMoveDetails(move);
+src/pokemon_summary_screen.c-3335-    PrintNewMoveDetailsOrCancelText();
+src/pokemon_summary_screen.c-3336-    SetNewMoveTypeIcon();
+src/pokemon_summary_screen.c-3337-    ScheduleBgCopyTilemapToVram(0);
+src/pokemon_summary_screen.c-3338-    ScheduleBgCopyTilemapToVram(1);
+src/pokemon_summary_screen.c-3339-    ScheduleBgCopyTilemapToVram(2);
+src/pokemon_summary_screen.c-3340-    CreateMoveSelectorSprites(SPRITE_ARR_ID_MOVE_SELECTOR1);
+src/pokemon_summary_screen.c-3341-    gTasks[taskId].func = Task_HandleInput_MoveSelect;
+src/pokemon_summary_screen.c-3342-}
+src/pokemon_summary_screen.c-3343-
+src/pokemon_summary_screen.c-3344-static void Task_HandleInput_MoveSelect(u8 taskId)
+src/pokemon_summary_screen.c-3345-{
+src/pokemon_summary_screen.c-3346-    s16 *data = gTasks[taskId].data;
+src/pokemon_summary_screen.c-3347-
+src/pokemon_summary_screen.c-3348-    if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
+src/pokemon_summary_screen.c-3349-    {
+src/pokemon_summary_screen.c:3350:        if (JOY_NEW(L_BUTTON))
+src/pokemon_summary_screen.c-3351-        {
+src/pokemon_summary_screen.c-3352-            PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-3353-            ChangeSummaryColorTheme(-1);
+src/pokemon_summary_screen.c-3354-        }
+src/pokemon_summary_screen.c-3355-        else if (JOY_NEW(R_BUTTON))
+src/pokemon_summary_screen.c-3356-        {
+src/pokemon_summary_screen.c-3357-            PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-3358-            ChangeSummaryColorTheme(1);
+src/pokemon_summary_screen.c-3359-        }
+src/pokemon_summary_screen.c-3360-        else if (JOY_NEW(DPAD_UP))
+src/pokemon_summary_screen.c-3361-        {
+src/pokemon_summary_screen.c-3362-            data[0] = 4;
+src/pokemon_summary_screen.c-3363-            ChangeSelectedMove(data, -1, &sMonSummaryScreen->firstMoveIndex);
+src/pokemon_summary_screen.c-3364-        }
+src/pokemon_summary_screen.c-3365-        else if (JOY_NEW(DPAD_DOWN))
+src/pokemon_summary_screen.c-3366-        {
+src/pokemon_summary_screen.c-3367-            data[0] = 4;
+src/pokemon_summary_screen.c-3368-            ChangeSelectedMove(data, 1, &sMonSummaryScreen->firstMoveIndex);
+src/pokemon_summary_screen.c-3369-        }
+src/pokemon_summary_screen.c-3370-        else if (JOY_NEW(A_BUTTON))
+src/pokemon_summary_screen.c-3371-        {
+src/pokemon_summary_screen.c-3372-            if (sMonSummaryScreen->lockMovesFlag == TRUE
+src/pokemon_summary_screen.c-3373-                || (sMonSummaryScreen->newMove == MOVE_NONE && sMonSummaryScreen->firstMoveIndex == MAX_MON_MOVES))
+src/pokemon_summary_screen.c-3374-            {
+src/pokemon_summary_screen.c-3375-                PlaySE(SE_SELECT);
+--
+src/pokemon_summary_screen.c-3481-        ClearWindowTilemap(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM);
+src/pokemon_summary_screen.c-3482-        DestroyCategoryIcon();
+src/pokemon_summary_screen.c-3483-        HandlePowerAccTilemap(0, 3);
+src/pokemon_summary_screen.c-3484-        HandleAppealJamTilemap(0, 3, 0);
+src/pokemon_summary_screen.c-3485-    }
+src/pokemon_summary_screen.c-3486-    ScheduleBgCopyTilemapToVram(0);
+src/pokemon_summary_screen.c-3487-    ScheduleBgCopyTilemapToVram(1);
+src/pokemon_summary_screen.c-3488-    ScheduleBgCopyTilemapToVram(2);
+src/pokemon_summary_screen.c-3489-    gTasks[taskId].func = Task_HandleInput;
+src/pokemon_summary_screen.c-3490-}
+src/pokemon_summary_screen.c-3491-
+src/pokemon_summary_screen.c-3492-static void SwitchToMovePositionSwitchMode(u8 taskId)
+src/pokemon_summary_screen.c-3493-{
+src/pokemon_summary_screen.c-3494-    sMonSummaryScreen->secondMoveIndex = sMonSummaryScreen->firstMoveIndex;
+src/pokemon_summary_screen.c-3495-    SetMainMoveSelectorColor(1);
+src/pokemon_summary_screen.c-3496-    CreateMoveSelectorSprites(SPRITE_ARR_ID_MOVE_SELECTOR2);
+src/pokemon_summary_screen.c-3497-    gTasks[taskId].func = Task_HandleInput_MovePositionSwitch;
+src/pokemon_summary_screen.c-3498-}
+src/pokemon_summary_screen.c-3499-
+src/pokemon_summary_screen.c-3500-static void Task_HandleInput_MovePositionSwitch(u8 taskId)
+src/pokemon_summary_screen.c-3501-{
+src/pokemon_summary_screen.c-3502-    s16 *data = gTasks[taskId].data;
+src/pokemon_summary_screen.c-3503-
+src/pokemon_summary_screen.c-3504-    if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
+src/pokemon_summary_screen.c-3505-    {
+src/pokemon_summary_screen.c:3506:        if (JOY_NEW(L_BUTTON))
+src/pokemon_summary_screen.c-3507-        {
+src/pokemon_summary_screen.c-3508-            PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-3509-            ChangeSummaryColorTheme(-1);
+src/pokemon_summary_screen.c-3510-        }
+src/pokemon_summary_screen.c-3511-        else if (JOY_NEW(R_BUTTON))
+src/pokemon_summary_screen.c-3512-        {
+src/pokemon_summary_screen.c-3513-            PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-3514-            ChangeSummaryColorTheme(1);
+src/pokemon_summary_screen.c-3515-        }
+src/pokemon_summary_screen.c-3516-        else if (JOY_NEW(DPAD_UP))
+src/pokemon_summary_screen.c-3517-        {
+src/pokemon_summary_screen.c-3518-            data[0] = 3;
+src/pokemon_summary_screen.c-3519-            ChangeSelectedMove(&data[0], -1, &sMonSummaryScreen->secondMoveIndex);
+src/pokemon_summary_screen.c-3520-        }
+src/pokemon_summary_screen.c-3521-        else if (JOY_NEW(DPAD_DOWN))
+src/pokemon_summary_screen.c-3522-        {
+src/pokemon_summary_screen.c-3523-            data[0] = 3;
+src/pokemon_summary_screen.c-3524-            ChangeSelectedMove(&data[0], 1, &sMonSummaryScreen->secondMoveIndex);
+src/pokemon_summary_screen.c-3525-        }
+src/pokemon_summary_screen.c-3526-        else if (JOY_NEW(A_BUTTON))
+src/pokemon_summary_screen.c-3527-        {
+src/pokemon_summary_screen.c-3528-            if (sMonSummaryScreen->firstMoveIndex == sMonSummaryScreen->secondMoveIndex)
+src/pokemon_summary_screen.c-3529-                ExitMovePositionSwitchMode(taskId, FALSE);
+src/pokemon_summary_screen.c-3530-            else
+src/pokemon_summary_screen.c-3531-                ExitMovePositionSwitchMode(taskId, TRUE);
+--
+src/pokemon_summary_screen.c-3634-
+src/pokemon_summary_screen.c-3635-    summary->moves[moveIndex1] = move2;
+src/pokemon_summary_screen.c-3636-    summary->moves[moveIndex2] = move1;
+src/pokemon_summary_screen.c-3637-
+src/pokemon_summary_screen.c-3638-    summary->pp[moveIndex1] = move2pp;
+src/pokemon_summary_screen.c-3639-    summary->pp[moveIndex2] = move1pp;
+src/pokemon_summary_screen.c-3640-
+src/pokemon_summary_screen.c-3641-    summary->ppBonuses = ppBonuses;
+src/pokemon_summary_screen.c-3642-}
+src/pokemon_summary_screen.c-3643-
+src/pokemon_summary_screen.c-3644-static void Task_SetHandleReplaceMoveInput(u8 taskId)
+src/pokemon_summary_screen.c-3645-{
+src/pokemon_summary_screen.c-3646-    SetNewMoveTypeIcon();
+src/pokemon_summary_screen.c-3647-    CreateMoveSelectorSprites(SPRITE_ARR_ID_MOVE_SELECTOR1);
+src/pokemon_summary_screen.c-3648-    gTasks[taskId].func = Task_HandleReplaceMoveInput;
+src/pokemon_summary_screen.c-3649-}
+src/pokemon_summary_screen.c-3650-
+src/pokemon_summary_screen.c-3651-static void Task_HandleReplaceMoveInput(u8 taskId)
+src/pokemon_summary_screen.c-3652-{
+src/pokemon_summary_screen.c-3653-    s16 *data = gTasks[taskId].data;
+src/pokemon_summary_screen.c-3654-
+src/pokemon_summary_screen.c-3655-    if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
+src/pokemon_summary_screen.c-3656-    {
+src/pokemon_summary_screen.c-3657-        if (gPaletteFade.active != TRUE)
+src/pokemon_summary_screen.c-3658-        {
+src/pokemon_summary_screen.c:3659:            if (JOY_NEW(L_BUTTON))
+src/pokemon_summary_screen.c-3660-            {
+src/pokemon_summary_screen.c-3661-                PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-3662-                ChangeSummaryColorTheme(-1);
+src/pokemon_summary_screen.c-3663-            }
+src/pokemon_summary_screen.c-3664-            else if (JOY_NEW(R_BUTTON))
+src/pokemon_summary_screen.c-3665-            {
+src/pokemon_summary_screen.c-3666-                PlaySE(SE_SELECT);
+src/pokemon_summary_screen.c-3667-                ChangeSummaryColorTheme(1);
+src/pokemon_summary_screen.c-3668-            }
+src/pokemon_summary_screen.c-3669-            else if (JOY_NEW(DPAD_UP))
+src/pokemon_summary_screen.c-3670-            {
+src/pokemon_summary_screen.c-3671-                data[0] = 4;
+src/pokemon_summary_screen.c-3672-                ChangeSelectedMove(data, -1, &sMonSummaryScreen->firstMoveIndex);
+src/pokemon_summary_screen.c-3673-            }
+src/pokemon_summary_screen.c-3674-            else if (JOY_NEW(DPAD_DOWN))
+src/pokemon_summary_screen.c-3675-            {
+src/pokemon_summary_screen.c-3676-                data[0] = 4;
+src/pokemon_summary_screen.c-3677-                ChangeSelectedMove(data, 1, &sMonSummaryScreen->firstMoveIndex);
+src/pokemon_summary_screen.c-3678-            }
+src/pokemon_summary_screen.c-3679-            else if (JOY_NEW(DPAD_LEFT))
+src/pokemon_summary_screen.c-3680-            {
+src/pokemon_summary_screen.c-3681-                ChangePage(taskId, -1);
+src/pokemon_summary_screen.c-3682-            }
+src/pokemon_summary_screen.c-3683-            else if (JOY_NEW(DPAD_RIGHT))
+src/pokemon_summary_screen.c-3684-            {
+--
+src/pokedex_area_screen.c-874-        gTasks[taskId].tState = 0;
+src/pokedex_area_screen.c-875-        return;
+src/pokedex_area_screen.c-876-    }
+src/pokedex_area_screen.c-877-
+src/pokedex_area_screen.c-878-    gTasks[taskId].tState++;
+src/pokedex_area_screen.c-879-}
+src/pokedex_area_screen.c-880-
+src/pokedex_area_screen.c-881-static void Task_HandlePokedexAreaScreenInput(u8 taskId)
+src/pokedex_area_screen.c-882-{
+src/pokedex_area_screen.c-883-    DoAreaGlow();
+src/pokedex_area_screen.c-884-    switch (gTasks[taskId].tState)
+src/pokedex_area_screen.c-885-    {
+src/pokedex_area_screen.c-886-    default:
+src/pokedex_area_screen.c-887-        gTasks[taskId].tState = 0;
+src/pokedex_area_screen.c-888-        // fall through
+src/pokedex_area_screen.c-889-    case 0:
+src/pokedex_area_screen.c-890-        if (gPaletteFade.active)
+src/pokedex_area_screen.c-891-            return;
+src/pokedex_area_screen.c-892-        break;
+src/pokedex_area_screen.c-893-    case 1:
+src/pokedex_area_screen.c-894-        if (JOY_NEW(B_BUTTON))
+src/pokedex_area_screen.c-895-        {
+src/pokedex_area_screen.c-896-            gTasks[taskId].data[1] = 1;
+src/pokedex_area_screen.c-897-            PlaySE(SE_DEX_PAGE);
+src/pokedex_area_screen.c-898-        }
+src/pokedex_area_screen.c:899:        else if (JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex_area_screen.c-900-        {
+src/pokedex_area_screen.c-901-            gTasks[taskId].data[1] = 1;
+src/pokedex_area_screen.c-902-            PlaySE(SE_DEX_PAGE);
+src/pokedex_area_screen.c-903-        }
+src/pokedex_area_screen.c-904-        else if (JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex_area_screen.c-905-        {
+src/pokedex_area_screen.c-906-            if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(sPokedexAreaScreen->species), FLAG_GET_CAUGHT))
+src/pokedex_area_screen.c-907-            {
+src/pokedex_area_screen.c-908-                PlaySE(SE_FAILURE);
+src/pokedex_area_screen.c-909-                return;
+src/pokedex_area_screen.c-910-            }
+src/pokedex_area_screen.c-911-            gTasks[taskId].data[1] = 2;
+src/pokedex_area_screen.c-912-            PlaySE(SE_DEX_PAGE);
+src/pokedex_area_screen.c-913-        }
+src/pokedex_area_screen.c-914-        else if (JOY_NEW(DPAD_UP) && OW_TIME_OF_DAY_ENCOUNTERS == TRUE)
+src/pokedex_area_screen.c-915-        {
+src/pokedex_area_screen.c-916-            gTasks[taskId].data[1] = 3;
+src/pokedex_area_screen.c-917-            gAreaTimeOfDay = TryDecrementTimeOfDay(gAreaTimeOfDay);
+src/pokedex_area_screen.c-918-            sPokedexAreaScreen->areaState = DEX_UPDATE_AREA_SCREEN;
+src/pokedex_area_screen.c-919-            PlaySE(SE_DEX_PAGE);
+src/pokedex_area_screen.c-920-        }
+src/pokedex_area_screen.c-921-        else if (JOY_NEW(DPAD_DOWN) && OW_TIME_OF_DAY_ENCOUNTERS == TRUE)
+src/pokedex_area_screen.c-922-        {
+src/pokedex_area_screen.c-923-            gTasks[taskId].data[1] = 3;
+src/pokedex_area_screen.c-924-            gAreaTimeOfDay = TryIncrementTimeOfDay(gAreaTimeOfDay);
+--
+src/field_control_avatar.c-108-    input->input_field_1_3 = FALSE;
+src/field_control_avatar.c-109-    input->dpadDirection = 0;
+src/field_control_avatar.c-110-    input->pressedLButton = FALSE;
+src/field_control_avatar.c-111-}
+src/field_control_avatar.c-112-
+src/field_control_avatar.c-113-void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
+src/field_control_avatar.c-114-{
+src/field_control_avatar.c-115-    u8 tileTransitionState = gPlayerAvatar.tileTransitionState;
+src/field_control_avatar.c-116-    u8 runningState = gPlayerAvatar.runningState;
+src/field_control_avatar.c-117-    bool8 forcedMove = MetatileBehavior_IsForcedMovementTile(GetPlayerCurMetatileBehavior(runningState));
+src/field_control_avatar.c-118-
+src/field_control_avatar.c-119-    if ((tileTransitionState == T_TILE_CENTER && forcedMove == FALSE) || tileTransitionState == T_NOT_MOVING)
+src/field_control_avatar.c-120-    {
+src/field_control_avatar.c-121-        if (GetPlayerSpeed() != PLAYER_SPEED_FASTEST)
+src/field_control_avatar.c-122-        {
+src/field_control_avatar.c-123-            if (newKeys & START_BUTTON)
+src/field_control_avatar.c-124-                input->pressedStartButton = TRUE;
+src/field_control_avatar.c-125-            if (newKeys & SELECT_BUTTON)
+src/field_control_avatar.c-126-                input->pressedSelectButton = TRUE;
+src/field_control_avatar.c-127-            if (newKeys & A_BUTTON)
+src/field_control_avatar.c-128-                input->pressedAButton = TRUE;
+src/field_control_avatar.c-129-            if (newKeys & B_BUTTON)
+src/field_control_avatar.c-130-                input->pressedBButton = TRUE;
+src/field_control_avatar.c-131-            if (newKeys & R_BUTTON && !FlagGet(DN_FLAG_SEARCHING))
+src/field_control_avatar.c-132-                input->pressedRButton = TRUE;
+src/field_control_avatar.c:133:            if (newKeys & L_BUTTON)
+src/field_control_avatar.c-134-                input->pressedLButton = TRUE;    
+src/field_control_avatar.c-135-        }
+src/field_control_avatar.c-136-
+src/field_control_avatar.c-137-        if (heldKeys & (DPAD_UP | DPAD_DOWN | DPAD_LEFT | DPAD_RIGHT))
+src/field_control_avatar.c-138-        {
+src/field_control_avatar.c-139-            input->heldDirection = TRUE;
+src/field_control_avatar.c-140-            input->heldDirection2 = TRUE;
+src/field_control_avatar.c-141-        }
+src/field_control_avatar.c-142-
+src/field_control_avatar.c-143-        if (newKeys & R_BUTTON)
+src/field_control_avatar.c-144-            input->pressedRButton = TRUE;
+src/field_control_avatar.c-145-    }
+src/field_control_avatar.c-146-
+src/field_control_avatar.c-147-    if (forcedMove == FALSE)
+src/field_control_avatar.c-148-    {
+src/field_control_avatar.c-149-        if (tileTransitionState == T_TILE_CENTER && runningState == MOVING)
+src/field_control_avatar.c-150-            input->tookStep = TRUE;
+src/field_control_avatar.c-151-        if (forcedMove == FALSE && tileTransitionState == T_TILE_CENTER)
+src/field_control_avatar.c-152-            input->checkStandardWildEncounter = TRUE;
+src/field_control_avatar.c-153-    }
+src/field_control_avatar.c-154-
+src/field_control_avatar.c-155-    if (heldKeys & DPAD_UP)
+src/field_control_avatar.c-156-        input->dpadDirection = DIR_NORTH;
+src/field_control_avatar.c-157-    else if (heldKeys & DPAD_DOWN)
+src/field_control_avatar.c-158-        input->dpadDirection = DIR_SOUTH;
+--
+src/main.c-281-    // because it compares the raw key input with the remapped held keys.
+src/main.c-282-    // Note that newAndRepeatedKeys is never remapped either.
+src/main.c-283-
+src/main.c-284-    if (keyInput != 0 && gMain.heldKeys == keyInput)
+src/main.c-285-    {
+src/main.c-286-        gMain.keyRepeatCounter--;
+src/main.c-287-
+src/main.c-288-        if (gMain.keyRepeatCounter == 0)
+src/main.c-289-        {
+src/main.c-290-            gMain.newAndRepeatedKeys = keyInput;
+src/main.c-291-            gMain.keyRepeatCounter = gKeyRepeatContinueDelay;
+src/main.c-292-        }
+src/main.c-293-    }
+src/main.c-294-    else
+src/main.c-295-    {
+src/main.c-296-        // If there is no input or the input has changed, reset the counter.
+src/main.c-297-        gMain.keyRepeatCounter = gKeyRepeatStartDelay;
+src/main.c-298-    }
+src/main.c-299-
+src/main.c-300-    gMain.heldKeysRaw = keyInput;
+src/main.c-301-    gMain.heldKeys = gMain.heldKeysRaw;
+src/main.c-302-
+src/main.c-303-    // Remap L to A if the L=A option is enabled.
+src/main.c-304-    if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_L_EQUALS_A)
+src/main.c-305-    {
+src/main.c:306:        if (JOY_NEW(L_BUTTON))
+src/main.c-307-            gMain.newKeys |= A_BUTTON;
+src/main.c-308-
+src/main.c-309-        if (JOY_HELD(L_BUTTON))
+src/main.c-310-            gMain.heldKeys |= A_BUTTON;
+src/main.c-311-    }
+src/main.c-312-
+src/main.c-313-    if (JOY_NEW(gMain.watchedKeysMask))
+src/main.c-314-        gMain.watchedKeysPressed = TRUE;
+src/main.c-315-}
+src/main.c-316-
+src/main.c-317-void InitIntrHandlers(void)
+src/main.c-318-{
+src/main.c-319-    int i;
+src/main.c-320-
+src/main.c-321-    for (i = 0; i < INTR_COUNT; i++)
+src/main.c-322-        gIntrTable[i] = gIntrTableTemplate[i];
+src/main.c-323-
+src/main.c-324-    INTR_VECTOR = IntrMain;
+src/main.c-325-
+src/main.c-326-    SetVBlankCallback(NULL);
+src/main.c-327-    SetHBlankCallback(NULL);
+src/main.c-328-    SetSerialCallback(NULL);
+src/main.c-329-
+src/main.c-330-    REG_IME = 1;
+src/main.c-331-
+--
+src/item_menu.c-1733-
+src/item_menu.c-1734-    if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE && !gPaletteFade.active)
+src/item_menu.c-1735-    {
+src/item_menu.c-1736-        switch (GetSwitchBagPocketDirection())
+src/item_menu.c-1737-        {
+src/item_menu.c-1738-        case SWITCH_POCKET_LEFT:
+src/item_menu.c-1739-            SwitchBagPocket(taskId, MENU_CURSOR_DELTA_LEFT, FALSE);
+src/item_menu.c-1740-            return;
+src/item_menu.c-1741-        case SWITCH_POCKET_RIGHT:
+src/item_menu.c-1742-            SwitchBagPocket(taskId, MENU_CURSOR_DELTA_RIGHT, FALSE);
+src/item_menu.c-1743-            return;
+src/item_menu.c-1744-        default:
+src/item_menu.c-1745-            if (JOY_NEW(SELECT_BUTTON))
+src/item_menu.c-1746-            {
+src/item_menu.c-1747-                if (CanSwapItems() == TRUE)
+src/item_menu.c-1748-                {
+src/item_menu.c-1749-                    ListMenuGetScrollAndRow(tListTaskId, scrollPos, cursorPos);
+src/item_menu.c-1750-                    if ((*scrollPos + *cursorPos) != gBagMenu->numItemStacks[gBagPosition.pocket] - 1)
+src/item_menu.c-1751-                    {
+src/item_menu.c-1752-                        PlaySE(SE_SELECT);
+src/item_menu.c-1753-                        StartItemSwap(taskId);
+src/item_menu.c-1754-                    }
+src/item_menu.c-1755-                }
+src/item_menu.c-1756-                return;
+src/item_menu.c-1757-            }
+src/item_menu.c:1758:if (JOY_NEW(R_BUTTON) || JOY_NEW(L_BUTTON))
+src/item_menu.c-1759-{
+src/item_menu.c-1760-    u16 itemId;
+src/item_menu.c-1761-    ListMenuGetScrollAndRow(tListTaskId, scrollPos, cursorPos);
+src/item_menu.c-1762-    itemId = GetBagItemIdAndQuantity(gBagPosition.pocket, *scrollPos + *cursorPos).itemId;
+src/item_menu.c-1763-    if (itemId != ITEM_NONE && GetItemFieldFunc(itemId) != NULL)
+src/item_menu.c-1764-    {
+src/item_menu.c-1765-        // NOVO: bloquear se já registrado no SELECT
+src/item_menu.c-1766-        if (gSaveBlock1Ptr->registeredItem == itemId)
+src/item_menu.c-1767-        {
+src/item_menu.c-1768-            PlaySE(SE_FAILURE);
+src/item_menu.c-1769-            return;
+src/item_menu.c-1770-        }
+src/item_menu.c-1771-
+src/item_menu.c-1772-if (JOY_NEW(R_BUTTON))
+src/item_menu.c-1773-{
+src/item_menu.c-1774-    if (gSaveBlock1Ptr->registeredItemR == itemId)
+src/item_menu.c-1775-        gSaveBlock1Ptr->registeredItemR = ITEM_NONE;  // desregistra
+src/item_menu.c-1776-    else
+src/item_menu.c-1777-        gSaveBlock1Ptr->registeredItemR = itemId;     // registra
+src/item_menu.c-1778-}
+src/item_menu.c:1779:else if (JOY_NEW(L_BUTTON))
+src/item_menu.c-1780-{
+src/item_menu.c-1781-    if (gSaveBlock1Ptr->registeredItemL == itemId)
+src/item_menu.c-1782-        gSaveBlock1Ptr->registeredItemL = ITEM_NONE;  // desregistra
+src/item_menu.c-1783-    else
+src/item_menu.c-1784-        gSaveBlock1Ptr->registeredItemL = itemId;     // registra
+src/item_menu.c-1785-}
+src/item_menu.c-1786-        PlaySE(SE_PC_LOGIN);
+src/item_menu.c-1787-
+src/item_menu.c-1788-        DestroyListMenuTask(tListTaskId, NULL, NULL);
+src/item_menu.c-1789-        tListTaskId = ListMenuInit(&gMultiuseListMenuTemplate, *scrollPos, *cursorPos);
+src/item_menu.c-1790-        ScheduleBgCopyTilemapToVram(0);
+src/item_menu.c-1791-        return;
+src/item_menu.c-1792-    }
+src/item_menu.c-1793-}
+src/item_menu.c-1794-            else if (JOY_NEW(START_BUTTON))
+src/item_menu.c-1795-            {
+src/item_menu.c-1796-                if ((gBagMenu->numItemStacks[gBagPosition.pocket] - 1) <= 1) //can't sort with 0 or 1 item in bag
+src/item_menu.c-1797-                {
+src/item_menu.c-1798-                    static const u8 sText_NothingToSort[] = _("There's nothing to sort!");
+src/item_menu.c-1799-                    PlaySE(SE_FAILURE);
+src/item_menu.c-1800-                    DisplayItemMessage(taskId, 1, sText_NothingToSort, HandleErrorMessage);
+src/item_menu.c-1801-                    break;
+src/item_menu.c-1802-                }
+src/item_menu.c-1803-                else
+src/item_menu.c-1804-                {
+--
+src/pokemon_sprite_visualizer.c-1694-
+src/pokemon_sprite_visualizer.c-1695-#define STORE_PTR_IN_TASK(ptr, taskId, dataId)                 \
+src/pokemon_sprite_visualizer.c-1696-{                                                              \
+src/pokemon_sprite_visualizer.c-1697-    gTasks[taskId].data[dataId] = (u32)(ptr);                  \
+src/pokemon_sprite_visualizer.c-1698-    gTasks[taskId].data[dataId + 1] = (u32)(ptr) >> 16;        \
+src/pokemon_sprite_visualizer.c-1699-}
+src/pokemon_sprite_visualizer.c-1700-
+src/pokemon_sprite_visualizer.c-1701-#define sAnimId    data[2]
+src/pokemon_sprite_visualizer.c-1702-#define sAnimDelay data[3]
+src/pokemon_sprite_visualizer.c-1703-
+src/pokemon_sprite_visualizer.c-1704-static void Task_AnimateAfterDelay(u8 taskId)
+src/pokemon_sprite_visualizer.c-1705-{
+src/pokemon_sprite_visualizer.c-1706-    if (--gTasks[taskId].sAnimDelay == 0)
+src/pokemon_sprite_visualizer.c-1707-    {
+src/pokemon_sprite_visualizer.c-1708-        LaunchAnimationTaskForFrontSprite(READ_PTR_FROM_TASK(taskId, 0), gTasks[taskId].sAnimId);
+src/pokemon_sprite_visualizer.c-1709-        DestroyTask(taskId);
+src/pokemon_sprite_visualizer.c-1710-    }
+src/pokemon_sprite_visualizer.c-1711-}
+src/pokemon_sprite_visualizer.c-1712-
+src/pokemon_sprite_visualizer.c-1713-static void HandleInput_PokemonSpriteVisualizer(u8 taskId)
+src/pokemon_sprite_visualizer.c-1714-{
+src/pokemon_sprite_visualizer.c-1715-    struct PokemonSpriteVisualizer *data = GetStructPtr(taskId);
+src/pokemon_sprite_visualizer.c-1716-    struct Sprite *Frontsprite = &gSprites[data->frontspriteId];
+src/pokemon_sprite_visualizer.c-1717-    struct Sprite *Backsprite = &gSprites[data->backspriteId];
+src/pokemon_sprite_visualizer.c-1718-
+src/pokemon_sprite_visualizer.c:1719:    if (JOY_NEW(L_BUTTON)  && (Backsprite->callback == SpriteCallbackDummy))
+src/pokemon_sprite_visualizer.c-1720-    {
+src/pokemon_sprite_visualizer.c-1721-        PlayCryInternal(data->currentmonId, 0, 120, 10, CRY_MODE_NORMAL);
+src/pokemon_sprite_visualizer.c-1722-        LaunchAnimationTaskForBackSprite(Backsprite, data->animIdBack-1);
+src/pokemon_sprite_visualizer.c-1723-    }
+src/pokemon_sprite_visualizer.c-1724-    if (JOY_NEW(R_BUTTON) && (Frontsprite->callback == SpriteCallbackDummy))
+src/pokemon_sprite_visualizer.c-1725-    {
+src/pokemon_sprite_visualizer.c-1726-        PlayCryInternal(data->currentmonId, 0, 120, 10, CRY_MODE_NORMAL);
+src/pokemon_sprite_visualizer.c-1727-        if (HasTwoFramesAnimation(data->currentmonId))
+src/pokemon_sprite_visualizer.c-1728-            StartSpriteAnim(Frontsprite, 1);
+src/pokemon_sprite_visualizer.c-1729-
+src/pokemon_sprite_visualizer.c-1730-        if (gSpeciesInfo[data->currentmonId].frontAnimDelay != 0)
+src/pokemon_sprite_visualizer.c-1731-        {
+src/pokemon_sprite_visualizer.c-1732-            // Animation has delay, start delay task
+src/pokemon_sprite_visualizer.c-1733-            u8 taskId = CreateTask(Task_AnimateAfterDelay, 0);
+src/pokemon_sprite_visualizer.c-1734-            STORE_PTR_IN_TASK(Frontsprite, taskId, 0);
+src/pokemon_sprite_visualizer.c-1735-            gTasks[taskId].sAnimId = data->animIdFront;
+src/pokemon_sprite_visualizer.c-1736-            gTasks[taskId].sAnimDelay = gSpeciesInfo[data->currentmonId].frontAnimDelay;
+src/pokemon_sprite_visualizer.c-1737-        }
+src/pokemon_sprite_visualizer.c-1738-        else
+src/pokemon_sprite_visualizer.c-1739-        {
+src/pokemon_sprite_visualizer.c-1740-            // No delay, start animation
+src/pokemon_sprite_visualizer.c-1741-            LaunchAnimationTaskForFrontSprite(Frontsprite, data->animIdFront);
+src/pokemon_sprite_visualizer.c-1742-        }
+src/pokemon_sprite_visualizer.c-1743-    }
+src/pokemon_sprite_visualizer.c-1744-
+--
+src/pokemon_storage_system.c-2613-enum {
+src/pokemon_storage_system.c-2614-    MSTATE_HANDLE_INPUT,
+src/pokemon_storage_system.c-2615-    MSTATE_MOVE_CURSOR,
+src/pokemon_storage_system.c-2616-    MSTATE_SCROLL_BOX,
+src/pokemon_storage_system.c-2617-    MSTATE_WAIT_MSG,
+src/pokemon_storage_system.c-2618-    MSTATE_ERROR_LAST_PARTY_MON,
+src/pokemon_storage_system.c-2619-    MSTATE_ERROR_HAS_MAIL,
+src/pokemon_storage_system.c-2620-    MSTATE_WAIT_ERROR_MSG,
+src/pokemon_storage_system.c-2621-    MSTATE_MULTIMOVE_RUN,
+src/pokemon_storage_system.c-2622-    MSTATE_MULTIMOVE_RUN_CANCEL,
+src/pokemon_storage_system.c-2623-    MSTATE_MULTIMOVE_RUN_MOVED,
+src/pokemon_storage_system.c-2624-    MSTATE_SCROLL_BOX_ITEM,
+src/pokemon_storage_system.c-2625-    MSTATE_WAIT_ITEM_ANIM,
+src/pokemon_storage_system.c-2626-};
+src/pokemon_storage_system.c-2627-
+src/pokemon_storage_system.c-2628-static void Task_PokeStorageMain(u8 taskId)
+src/pokemon_storage_system.c-2629-{
+src/pokemon_storage_system.c-2630-    switch (sStorage->state)
+src/pokemon_storage_system.c-2631-    {
+src/pokemon_storage_system.c-2632-    case MSTATE_HANDLE_INPUT:
+src/pokemon_storage_system.c-2633-        // HLW PC background browser. L/R is reserved for the background theme
+src/pokemon_storage_system.c-2634-        // while the normal storage screen is active. Box changing still works
+src/pokemon_storage_system.c-2635-        // with the D-pad on the box title / horizontal edge as before.
+src/pokemon_storage_system.c-2636-        if (sStorage->inBoxMovingMode == MOVE_MODE_NORMAL)
+src/pokemon_storage_system.c-2637-        {
+src/pokemon_storage_system.c:2638:            if (JOY_NEW(L_BUTTON))
+src/pokemon_storage_system.c-2639-            {
+src/pokemon_storage_system.c-2640-                CycleStorageBackground(-1);
+src/pokemon_storage_system.c-2641-                break;
+src/pokemon_storage_system.c-2642-            }
+src/pokemon_storage_system.c-2643-            if (JOY_NEW(R_BUTTON))
+src/pokemon_storage_system.c-2644-            {
+src/pokemon_storage_system.c-2645-                CycleStorageBackground(1);
+src/pokemon_storage_system.c-2646-                break;
+src/pokemon_storage_system.c-2647-            }
+src/pokemon_storage_system.c-2648-        }
+src/pokemon_storage_system.c-2649-
+src/pokemon_storage_system.c-2650-        switch (HandleInput())
+src/pokemon_storage_system.c-2651-        {
+src/pokemon_storage_system.c-2652-        case INPUT_MOVE_CURSOR:
+src/pokemon_storage_system.c-2653-            PlaySE(SE_SELECT);
+src/pokemon_storage_system.c-2654-            sStorage->state = MSTATE_MOVE_CURSOR;
+src/pokemon_storage_system.c-2655-            break;
+src/pokemon_storage_system.c-2656-        case INPUT_SHOW_PARTY:
+src/pokemon_storage_system.c-2657-            if (sStorage->boxOption != OPTION_MOVE_MONS && sStorage->boxOption != OPTION_MOVE_ITEMS)
+src/pokemon_storage_system.c-2658-            {
+src/pokemon_storage_system.c-2659-                PrintMessage(MSG_WHICH_ONE_WILL_TAKE);
+src/pokemon_storage_system.c-2660-                sStorage->state = MSTATE_WAIT_MSG;
+src/pokemon_storage_system.c-2661-            }
+src/pokemon_storage_system.c-2662-            else
+src/pokemon_storage_system.c-2663-            {
+--
+src/pokedex_plus_hgss.c-2533-{
+src/pokedex_plus_hgss.c-2534-    sPokedexView->isSearchResults = FALSE;
+src/pokedex_plus_hgss.c-2535-    sPokedexView->sEvoScreenData.fromEvoPage = FALSE;
+src/pokedex_plus_hgss.c-2536-    sPokedexView->formSpecies = 0;
+src/pokedex_plus_hgss.c-2537-    if (LoadPokedexListPage(PAGE_MAIN))
+src/pokedex_plus_hgss.c-2538-        gTasks[taskId].func = Task_HandlePokedexInput;
+src/pokedex_plus_hgss.c-2539-}
+src/pokedex_plus_hgss.c-2540-
+src/pokedex_plus_hgss.c-2541-#define tLoadScreenTaskId data[0]
+src/pokedex_plus_hgss.c-2542-
+src/pokedex_plus_hgss.c-2543-static void Task_HandlePokedexInput(u8 taskId)
+src/pokedex_plus_hgss.c-2544-{
+src/pokedex_plus_hgss.c-2545-    SetGpuReg(REG_OFFSET_BG0VOFS, sPokedexView->menuY);
+src/pokedex_plus_hgss.c-2546-
+src/pokedex_plus_hgss.c-2547-    if (sPokedexView->menuY)
+src/pokedex_plus_hgss.c-2548-    {
+src/pokedex_plus_hgss.c-2549-        sPokedexView->menuY -= 8;
+src/pokedex_plus_hgss.c-2550-        if (sPokedexView->menuIsOpen == FALSE && sPokedexView->menuY == 8)
+src/pokedex_plus_hgss.c-2551-        {
+src/pokedex_plus_hgss.c-2552-            CreateStatBars(&sPokedexView->pokedexList[sPokedexView->selectedPokemon]);
+src/pokedex_plus_hgss.c-2553-            CreateStatBarsBg();
+src/pokedex_plus_hgss.c-2554-        }
+src/pokedex_plus_hgss.c-2555-    }
+src/pokedex_plus_hgss.c-2556-    else
+src/pokedex_plus_hgss.c-2557-    {
+src/pokedex_plus_hgss.c:2558:        if (JOY_NEW(L_BUTTON))
+src/pokedex_plus_hgss.c-2559-        {
+src/pokedex_plus_hgss.c-2560-            PlaySE(SE_SELECT);
+src/pokedex_plus_hgss.c-2561-            ChangePokedexColorTheme(-1);
+src/pokedex_plus_hgss.c-2562-        }
+src/pokedex_plus_hgss.c-2563-        else if (JOY_NEW(R_BUTTON))
+src/pokedex_plus_hgss.c-2564-        {
+src/pokedex_plus_hgss.c-2565-            PlaySE(SE_SELECT);
+src/pokedex_plus_hgss.c-2566-            ChangePokedexColorTheme(1);
+src/pokedex_plus_hgss.c-2567-        }
+src/pokedex_plus_hgss.c-2568-        else if (JOY_NEW(A_BUTTON) && sPokedexView->pokedexList[sPokedexView->selectedPokemon].seen)
+src/pokedex_plus_hgss.c-2569-        {
+src/pokedex_plus_hgss.c-2570-            TryDestroyStatBars();
+src/pokedex_plus_hgss.c-2571-            UpdateSelectedMonSpriteId();
+src/pokedex_plus_hgss.c-2572-            BeginNormalPaletteFade(~(1 << (gSprites[sPokedexView->selectedMonSpriteId].oam.paletteNum + 16)), 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-2573-            gSprites[sPokedexView->selectedMonSpriteId].callback = SpriteCB_MoveMonForInfoScreen;
+src/pokedex_plus_hgss.c-2574-            gTasks[taskId].func = Task_OpenInfoScreenAfterMonMovement;
+src/pokedex_plus_hgss.c-2575-            PlaySE(SE_PIN);
+src/pokedex_plus_hgss.c-2576-            FreeWindowAndBgBuffers();
+src/pokedex_plus_hgss.c-2577-        }
+src/pokedex_plus_hgss.c-2578-        else if (JOY_NEW(START_BUTTON))
+src/pokedex_plus_hgss.c-2579-        {
+src/pokedex_plus_hgss.c-2580-            TryDestroyStatBars();
+src/pokedex_plus_hgss.c-2581-            TryDestroyStatBarsBg();
+src/pokedex_plus_hgss.c-2582-            sPokedexView->menuY = 0;
+src/pokedex_plus_hgss.c-2583-            sPokedexView->menuIsOpen = TRUE;
+--
+src/pokedex_plus_hgss.c-6175-
+src/pokedex_plus_hgss.c-6176-        FillWindowPixelBuffer(WIN_STATS_MOVES_DESCRIPTION, PIXEL_FILL(0));
+src/pokedex_plus_hgss.c-6177-        PrintStatsScreen_Moves_Description(taskId);
+src/pokedex_plus_hgss.c-6178-
+src/pokedex_plus_hgss.c-6179-        FillWindowPixelRect(WIN_STATS_MOVES_BOTTOM, PIXEL_FILL(0), 50, 0, 20, 16);
+src/pokedex_plus_hgss.c-6180-        FillWindowPixelRect(WIN_STATS_MOVES_BOTTOM, PIXEL_FILL(0), 120, 0, 20, 16);
+src/pokedex_plus_hgss.c-6181-        PrintStatsScreen_Moves_Bottom(taskId);
+src/pokedex_plus_hgss.c-6182-    }
+src/pokedex_plus_hgss.c-6183-    if (JOY_REPEAT(DPAD_DOWN) && sPokedexView->moveSelected < sPokedexView->movesTotal -1 )
+src/pokedex_plus_hgss.c-6184-    {
+src/pokedex_plus_hgss.c-6185-        sPokedexView->moveSelected = sPokedexView->moveSelected + 1;
+src/pokedex_plus_hgss.c-6186-        PlaySE(SE_SELECT);
+src/pokedex_plus_hgss.c-6187-        FillWindowPixelBuffer(WIN_STATS_MOVES_TOP, PIXEL_FILL(0));
+src/pokedex_plus_hgss.c-6188-        PrintStatsScreen_DestroyMoveItemIcon(taskId);
+src/pokedex_plus_hgss.c-6189-        PrintStatsScreen_Moves_Top(taskId);
+src/pokedex_plus_hgss.c-6190-
+src/pokedex_plus_hgss.c-6191-        FillWindowPixelBuffer(WIN_STATS_MOVES_DESCRIPTION, PIXEL_FILL(0));
+src/pokedex_plus_hgss.c-6192-        PrintStatsScreen_Moves_Description(taskId);
+src/pokedex_plus_hgss.c-6193-
+src/pokedex_plus_hgss.c-6194-        FillWindowPixelRect(WIN_STATS_MOVES_BOTTOM, PIXEL_FILL(0), 50, 0, 20, 16);
+src/pokedex_plus_hgss.c-6195-        FillWindowPixelRect(WIN_STATS_MOVES_BOTTOM, PIXEL_FILL(0), 120, 0, 20, 16);
+src/pokedex_plus_hgss.c-6196-        PrintStatsScreen_Moves_Bottom(taskId);
+src/pokedex_plus_hgss.c-6197-    }
+src/pokedex_plus_hgss.c-6198-
+src/pokedex_plus_hgss.c-6199-    //Switch screens
+src/pokedex_plus_hgss.c:6200:    if ((JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+src/pokedex_plus_hgss.c-6201-    {
+src/pokedex_plus_hgss.c-6202-        sPokedexView->selectedScreen = INFO_SCREEN;
+src/pokedex_plus_hgss.c-6203-        BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-6204-        sPokedexView->screenSwitchState = 1;
+src/pokedex_plus_hgss.c-6205-        gTasks[taskId].func = Task_SwitchScreensFromStatsScreen;
+src/pokedex_plus_hgss.c-6206-        PlaySE(SE_PIN);
+src/pokedex_plus_hgss.c-6207-    }
+src/pokedex_plus_hgss.c-6208-    if ((JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+src/pokedex_plus_hgss.c-6209-    {
+src/pokedex_plus_hgss.c-6210-        if (!sPokedexListItem->owned)
+src/pokedex_plus_hgss.c-6211-            PlaySE(SE_FAILURE);
+src/pokedex_plus_hgss.c-6212-        else
+src/pokedex_plus_hgss.c-6213-        {
+src/pokedex_plus_hgss.c-6214-            sPokedexView->selectedScreen = EVO_SCREEN;
+src/pokedex_plus_hgss.c-6215-            BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-6216-            sPokedexView->screenSwitchState = 3;
+src/pokedex_plus_hgss.c-6217-            gTasks[taskId].func = Task_SwitchScreensFromStatsScreen;
+src/pokedex_plus_hgss.c-6218-            PlaySE(SE_PIN);
+src/pokedex_plus_hgss.c-6219-        }
+src/pokedex_plus_hgss.c-6220-    }
+src/pokedex_plus_hgss.c-6221-}
+src/pokedex_plus_hgss.c-6222-
+src/pokedex_plus_hgss.c-6223-#define ITEM_TAG 0xFDF3
+src/pokedex_plus_hgss.c-6224-
+src/pokedex_plus_hgss.c-6225-static void PrintStatsScreen_DestroyMoveItemIcon(u8 taskId)
+--
+src/pokedex_plus_hgss.c-7371-            sPokedexListItem->seen   = GetSetPokedexFlag(dexNum, FLAG_GET_SEEN);
+src/pokedex_plus_hgss.c-7372-            sPokedexListItem->owned  = GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT);
+src/pokedex_plus_hgss.c-7373-
+src/pokedex_plus_hgss.c-7374-                if (GetSpeciesFormTable(targetSpecies) != NULL)
+src/pokedex_plus_hgss.c-7375-                    sPokedexView->formSpecies = targetSpecies;
+src/pokedex_plus_hgss.c-7376-                else
+src/pokedex_plus_hgss.c-7377-                    sPokedexView->formSpecies = 0;
+src/pokedex_plus_hgss.c-7378-
+src/pokedex_plus_hgss.c-7379-            sPokedexView->sEvoScreenData.fromEvoPage = TRUE;
+src/pokedex_plus_hgss.c-7380-            PlaySE(SE_PIN);
+src/pokedex_plus_hgss.c-7381-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+src/pokedex_plus_hgss.c-7382-            gTasks[taskId].func = Task_LoadInfoScreenWaitForFade;
+src/pokedex_plus_hgss.c-7383-        }
+src/pokedex_plus_hgss.c-7384-    }
+src/pokedex_plus_hgss.c-7385-
+src/pokedex_plus_hgss.c-7386-    //Exit to overview
+src/pokedex_plus_hgss.c-7387-    if (JOY_NEW(B_BUTTON))
+src/pokedex_plus_hgss.c-7388-    {
+src/pokedex_plus_hgss.c-7389-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+src/pokedex_plus_hgss.c-7390-        gTasks[taskId].func = Task_ExitEvolutionScreen;
+src/pokedex_plus_hgss.c-7391-        PlaySE(SE_PC_OFF);
+src/pokedex_plus_hgss.c-7392-        return;
+src/pokedex_plus_hgss.c-7393-    }
+src/pokedex_plus_hgss.c-7394-
+src/pokedex_plus_hgss.c-7395-    //Switch screens
+src/pokedex_plus_hgss.c:7396:    if ((JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+src/pokedex_plus_hgss.c-7397-    {
+src/pokedex_plus_hgss.c-7398-        sPokedexView->selectedScreen = STATS_SCREEN;
+src/pokedex_plus_hgss.c-7399-        BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-7400-        sPokedexView->screenSwitchState = 1;
+src/pokedex_plus_hgss.c-7401-        gTasks[taskId].func = Task_SwitchScreensFromEvolutionScreen;
+src/pokedex_plus_hgss.c-7402-        PlaySE(SE_PIN);
+src/pokedex_plus_hgss.c-7403-    }
+src/pokedex_plus_hgss.c-7404-    if ((JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+src/pokedex_plus_hgss.c-7405-    {
+src/pokedex_plus_hgss.c-7406-        if (!sPokedexListItem->owned)
+src/pokedex_plus_hgss.c-7407-            PlaySE(SE_FAILURE);
+src/pokedex_plus_hgss.c-7408-        else
+src/pokedex_plus_hgss.c-7409-        {
+src/pokedex_plus_hgss.c-7410-            sPokedexView->selectedScreen = CRY_SCREEN;
+src/pokedex_plus_hgss.c-7411-            BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-7412-            sPokedexView->screenSwitchState = 2;
+src/pokedex_plus_hgss.c-7413-            gTasks[taskId].func = Task_SwitchScreensFromEvolutionScreen;
+src/pokedex_plus_hgss.c-7414-            PlaySE(SE_PIN);
+src/pokedex_plus_hgss.c-7415-        }
+src/pokedex_plus_hgss.c-7416-    }
+src/pokedex_plus_hgss.c-7417-}
+src/pokedex_plus_hgss.c-7418-
+src/pokedex_plus_hgss.c-7419-static void HandleTargetSpeciesPrintText(u32 targetSpecies, u32 base_x, u32 base_y, u32 base_y_offset, u32 base_i)
+src/pokedex_plus_hgss.c-7420-{
+src/pokedex_plus_hgss.c-7421-    bool32 seen = GetSetPokedexFlag(SpeciesToNationalPokedexNum(targetSpecies), FLAG_GET_SEEN);
+--
+src/pokedex_plus_hgss.c-8494-    UpdateCryWaveformWindow(2);
+src/pokedex_plus_hgss.c-8495-
+src/pokedex_plus_hgss.c-8496-    if (IsCryPlaying())
+src/pokedex_plus_hgss.c-8497-        LoadPlayArrowPalette(TRUE);
+src/pokedex_plus_hgss.c-8498-    else
+src/pokedex_plus_hgss.c-8499-        LoadPlayArrowPalette(FALSE);
+src/pokedex_plus_hgss.c-8500-
+src/pokedex_plus_hgss.c-8501-    if (JOY_NEW(A_BUTTON))
+src/pokedex_plus_hgss.c-8502-    {
+src/pokedex_plus_hgss.c-8503-        LoadPlayArrowPalette(TRUE);
+src/pokedex_plus_hgss.c-8504-        CryScreenPlayButton(NationalPokedexNumToSpeciesHGSS(sPokedexListItem->dexNum));
+src/pokedex_plus_hgss.c-8505-        return;
+src/pokedex_plus_hgss.c-8506-    }
+src/pokedex_plus_hgss.c-8507-    else if (!gPaletteFade.active)
+src/pokedex_plus_hgss.c-8508-    {
+src/pokedex_plus_hgss.c-8509-        if (JOY_NEW(B_BUTTON))
+src/pokedex_plus_hgss.c-8510-        {
+src/pokedex_plus_hgss.c-8511-            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-8512-            m4aMPlayContinue(&gMPlayInfo_BGM);
+src/pokedex_plus_hgss.c-8513-            sPokedexView->screenSwitchState = 1;
+src/pokedex_plus_hgss.c-8514-            gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
+src/pokedex_plus_hgss.c-8515-            PlaySE(SE_PC_OFF);
+src/pokedex_plus_hgss.c-8516-            return;
+src/pokedex_plus_hgss.c-8517-        }
+src/pokedex_plus_hgss.c-8518-        if (JOY_NEW(DPAD_LEFT)
+src/pokedex_plus_hgss.c:8519:         || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex_plus_hgss.c-8520-        {
+src/pokedex_plus_hgss.c-8521-            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-8522-            m4aMPlayContinue(&gMPlayInfo_BGM);
+src/pokedex_plus_hgss.c-8523-            sPokedexView->screenSwitchState = 2;
+src/pokedex_plus_hgss.c-8524-            gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
+src/pokedex_plus_hgss.c-8525-            PlaySE(SE_DEX_PAGE);
+src/pokedex_plus_hgss.c-8526-            return;
+src/pokedex_plus_hgss.c-8527-        }
+src/pokedex_plus_hgss.c-8528-        if (JOY_NEW(DPAD_RIGHT)
+src/pokedex_plus_hgss.c-8529-         || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex_plus_hgss.c-8530-        {
+src/pokedex_plus_hgss.c-8531-            if (!sPokedexListItem->owned)
+src/pokedex_plus_hgss.c-8532-            {
+src/pokedex_plus_hgss.c-8533-                PlaySE(SE_FAILURE);
+src/pokedex_plus_hgss.c-8534-            }
+src/pokedex_plus_hgss.c-8535-            else
+src/pokedex_plus_hgss.c-8536-            {
+src/pokedex_plus_hgss.c-8537-                BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-8538-                m4aMPlayContinue(&gMPlayInfo_BGM);
+src/pokedex_plus_hgss.c-8539-                sPokedexView->screenSwitchState = 3;
+src/pokedex_plus_hgss.c-8540-                gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
+src/pokedex_plus_hgss.c-8541-                PlaySE(SE_DEX_PAGE);
+src/pokedex_plus_hgss.c-8542-            }
+src/pokedex_plus_hgss.c-8543-            return;
+src/pokedex_plus_hgss.c-8544-        }
+--
+src/pokedex_plus_hgss.c-8668-        break;
+src/pokedex_plus_hgss.c-8669-    }
+src/pokedex_plus_hgss.c-8670-}
+src/pokedex_plus_hgss.c-8671-
+src/pokedex_plus_hgss.c-8672-static void LoadPlayArrowPalette(bool8 cryPlaying)
+src/pokedex_plus_hgss.c-8673-{
+src/pokedex_plus_hgss.c-8674-    u16 color;
+src/pokedex_plus_hgss.c-8675-
+src/pokedex_plus_hgss.c-8676-    if (cryPlaying)
+src/pokedex_plus_hgss.c-8677-        color = RGB(18, 28, 0);
+src/pokedex_plus_hgss.c-8678-    else
+src/pokedex_plus_hgss.c-8679-        color = RGB(15, 21, 0);
+src/pokedex_plus_hgss.c-8680-    LoadPalette(&color, BG_PLTT_ID(5) + 13, PLTT_SIZEOF(1));
+src/pokedex_plus_hgss.c-8681-}
+src/pokedex_plus_hgss.c-8682-
+src/pokedex_plus_hgss.c-8683-static void Task_HandleSizeScreenInput(u8 taskId)
+src/pokedex_plus_hgss.c-8684-{
+src/pokedex_plus_hgss.c-8685-    if (JOY_NEW(B_BUTTON))
+src/pokedex_plus_hgss.c-8686-    {
+src/pokedex_plus_hgss.c-8687-        BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-8688-        sPokedexView->screenSwitchState = 1;
+src/pokedex_plus_hgss.c-8689-        gTasks[taskId].func = Task_SwitchScreensFromSizeScreen;
+src/pokedex_plus_hgss.c-8690-        PlaySE(SE_PC_OFF);
+src/pokedex_plus_hgss.c-8691-    }
+src/pokedex_plus_hgss.c-8692-    else if (JOY_NEW(DPAD_LEFT)
+src/pokedex_plus_hgss.c:8693:     || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+src/pokedex_plus_hgss.c-8694-    {
+src/pokedex_plus_hgss.c-8695-        BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+src/pokedex_plus_hgss.c-8696-        sPokedexView->screenSwitchState = 2;
+src/pokedex_plus_hgss.c-8697-        gTasks[taskId].func = Task_SwitchScreensFromSizeScreen;
+src/pokedex_plus_hgss.c-8698-        PlaySE(SE_DEX_PAGE);
+src/pokedex_plus_hgss.c-8699-    }
+src/pokedex_plus_hgss.c-8700-}
+src/pokedex_plus_hgss.c-8701-
+src/pokedex_plus_hgss.c-8702-static void Task_SwitchScreensFromSizeScreen(u8 taskId)
+src/pokedex_plus_hgss.c-8703-{
+src/pokedex_plus_hgss.c-8704-    if (!gPaletteFade.active)
+src/pokedex_plus_hgss.c-8705-    {
+src/pokedex_plus_hgss.c-8706-        FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
+src/pokedex_plus_hgss.c-8707-        FreeAndDestroyTrainerPicSprite(gTasks[taskId].tTrainerSpriteId);
+src/pokedex_plus_hgss.c-8708-        switch (sPokedexView->screenSwitchState)
+src/pokedex_plus_hgss.c-8709-        {
+src/pokedex_plus_hgss.c-8710-        default:
+src/pokedex_plus_hgss.c-8711-        case 1:
+src/pokedex_plus_hgss.c-8712-            gTasks[taskId].func = Task_LoadInfoScreen;
+src/pokedex_plus_hgss.c-8713-            break;
+src/pokedex_plus_hgss.c-8714-        case 2:
+src/pokedex_plus_hgss.c-8715-            gTasks[taskId].func = Task_LoadCryScreen;
+src/pokedex_plus_hgss.c-8716-            break;
+src/pokedex_plus_hgss.c-8717-        }
+src/pokedex_plus_hgss.c-8718-    }
