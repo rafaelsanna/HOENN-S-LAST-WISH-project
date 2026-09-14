@@ -1437,6 +1437,7 @@ static bool8 StartMenuDebugCallback(void)
     else
     {
         FlagClear(FLAG_UNUSED_0x275);
+        CopyBgTilemapBufferToVram(0);
     }
 
     return TRUE;
@@ -1454,7 +1455,10 @@ static bool8 StartMenuSafariZoneRetireCallback(void)
 static void HideStartMenuDebug(void)
 {
     PlaySE(SE_SELECT);
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+    // The Wish Menu publishes BG0 after its graphics have been queued.
+    // An earlier map copy would reveal its tiles while they still contain
+    // the Start Menu's clock/profile graphics.
+    ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
     RemoveStartMenuWindow();
 }
 
@@ -2166,7 +2170,10 @@ void SaveForBattleTowerLink(void)
 
 static void HideStartMenuWindow(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+    // Remove only the tilemap: the window graphics are freed immediately below.
+    // Queuing COPYWIN_FULL here leaves DMA reading freed/reused window memory.
+    ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
+    CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
     RemoveStartMenuWindow();
     ScriptUnfreezeObjectEvents();
     UnlockPlayerFieldControls();

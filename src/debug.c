@@ -262,6 +262,7 @@ EWRAM_DATA u64 gDebugAIFlags = 0;
 static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *items);
 static u8 Debug_GenerateListMenuNames(void);
 static void Debug_DestroyMenu(u8 taskId);
+static void Debug_ClearWindow(u8 windowId);
 static void DebugAction_Cancel(u8 taskId);
 static void DebugAction_DestroyExtraWindow(u8 taskId);
 static void Debug_RefreshListMenu(u8 taskId);
@@ -1141,15 +1142,15 @@ static void Debug_ShowWishWarningTextBlock(void)
     DrawStdWindowFrame(windowId, FALSE);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
 
-    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_WishWarningBlock, 8, 8, 0, NULL);
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, sDebugText_WishWarningYes, 56, 120, 0, NULL);
+    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_WishWarningBlock, 8, 8, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, sDebugText_WishWarningNo, 56, 120, TEXT_SKIP_DRAW, NULL);
 
     PutWindowTilemap(windowId);
     CopyWindowToVram(windowId, COPYWIN_FULL);
 
     taskId = CreateTask(DebugTask_HandleWishWarningTextBlock, 3);
     gTasks[taskId].data[1] = windowId;
-    gTasks[taskId].data[3] = 0; // 0 = YES, 1 = NO
+    gTasks[taskId].data[3] = 1; // 0 = YES, 1 = NO; keep the warning by default
 }
 
 static void DebugTask_HandleWishWarningTextBlock(u8 taskId)
@@ -1168,7 +1169,7 @@ static void DebugTask_HandleWishWarningTextBlock(u8 taskId)
             gTasks[taskId].data[3] == 0 ? sDebugText_WishWarningYes : sDebugText_WishWarningNo,
             56,
             120,
-            0,
+            TEXT_SKIP_DRAW,
             NULL
         );
         CopyWindowToVram(windowId, COPYWIN_GFX);
@@ -1182,9 +1183,7 @@ static void DebugTask_HandleWishWarningTextBlock(u8 taskId)
         if (gTasks[taskId].data[3] == 0)
             FlagSet(FLAG_WISH_WARNING);
 
-        ClearStdWindowAndFrame(windowId, TRUE);
-        ClearWindowTilemap(windowId);
-        CopyBgTilemapBufferToVram(0);
+        Debug_ClearWindow(windowId);
         RemoveWindow(windowId);
         DestroyTask(taskId);
 
@@ -1196,9 +1195,7 @@ static void DebugTask_HandleWishWarningTextBlock(u8 taskId)
         // B behaves like NO: keep the warning enabled for the next opening.
         PlaySE(SE_SELECT);
 
-        ClearStdWindowAndFrame(windowId, TRUE);
-        ClearWindowTilemap(windowId);
-        CopyBgTilemapBufferToVram(0);
+        Debug_ClearWindow(windowId);
         RemoveWindow(windowId);
         DestroyTask(taskId);
 
@@ -1350,12 +1347,24 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
 
     Debug_RefreshListMenu(inputTaskId);
 
-    // draw everything
-    CopyWindowToVram(windowId, COPYWIN_FULL);
+    // ListMenuInit already queued the completed graphics. Publish the map
+    // after that upload, without copying the same graphics a second time.
+    CopyWindowToVram(windowId, COPYWIN_MAP);
+}
+
+// Closing a window only needs to clear its tilemap. COPYWIN_FULL would
+// queue a DMA read from tileData immediately before RemoveWindow frees it.
+static void Debug_ClearWindow(u8 windowId)
+{
+    ClearStdWindowAndFrame(windowId, FALSE);
+    CopyWindowToVram(windowId, COPYWIN_MAP);
 }
 
 static void Debug_DestroyMenu(u8 taskId)
 {
+    // The replacement window publishes the finished tilemap in this frame.
+    // Clear the old frame too, since the replacement may be smaller or offset.
+    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, FALSE);
     DestroyListMenuTask(gTasks[taskId].tMenuTaskId, NULL, NULL);
     RemoveWindow(gTasks[taskId].tWindowId);
     DestroyTask(taskId);
@@ -1369,7 +1378,7 @@ static void Debug_DestroyMenu_Full(u8 taskId)
         DebugAction_DestroyExtraWindow(taskId);
     }
     DestroyListMenuTask(gTasks[taskId].tMenuTaskId, NULL, NULL);
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
     DestroyTask(taskId);
     UnfreezeObjectEvents();
@@ -1418,10 +1427,10 @@ static void DebugAction_Cancel(u8 taskId)
 
 static void DebugAction_DestroyExtraWindow(u8 taskId)
 {
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
-    ClearStdWindowAndFrame(gTasks[taskId].tSubWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tSubWindowId);
     RemoveWindow(gTasks[taskId].tSubWindowId);
 
     DestroyListMenuTask(gTasks[taskId].tMenuTaskId, NULL, NULL);
@@ -1866,7 +1875,7 @@ static void DebugAction_Util_Warp_Warp(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -2100,7 +2109,7 @@ static void DebugAction_Util_Weather(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -2282,8 +2291,7 @@ static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId)
 
             DebugSetPlayerSpeedMode(gTasks[taskId].tPlayerSpeedTarget);
 
-            ClearStdWindowAndFrame(windowId, TRUE);
-            ClearWindowTilemap(windowId);
+            Debug_ClearWindow(windowId);
             RemoveWindow(windowId);
             gTasks[taskId].tSubWindowId = 0;
 
@@ -2302,8 +2310,7 @@ static void DebugTask_HandlePlayerSpeedConfirmation(u8 taskId)
         return;
     }
 
-    ClearStdWindowAndFrame(windowId, TRUE);
-    ClearWindowTilemap(windowId);
+    Debug_ClearWindow(windowId);
     RemoveWindow(windowId);
     gTasks[taskId].tSubWindowId = 0;
 
@@ -2409,12 +2416,12 @@ static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset)
 
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
 
-    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_InfoItemsTitle, 8, 4, 0, NULL);
-    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_InfoItemsControls, 120, 4, 0, NULL);
+    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_InfoItemsTitle, 8, 4, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_InfoItemsControls, 120, 4, TEXT_SKIP_DRAW, NULL);
 
     if (total == 0 || events == NULL)
     {
-        AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_InfoItemsNone, 8, 24, 0, NULL);
+        AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_InfoItemsNone, 8, 24, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(windowId, COPYWIN_GFX);
         return 0;
     }
@@ -2438,7 +2445,7 @@ static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset)
             continue;
 
         CopyItemName(bg->bgUnion.hiddenItem.item, gStringVar1);
-        AddTextPrinterParameterized(windowId, FONT_SMALL, gStringVar1, 8, y, 0, NULL);
+        AddTextPrinterParameterized(windowId, FONT_SMALL, gStringVar1, 8, y, TEXT_SKIP_DRAW, NULL);
 
         AddTextPrinterParameterized(
             windowId,
@@ -2448,7 +2455,7 @@ static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset)
                 : sDebugText_InfoItemsAvailable,
             145,
             y,
-            0,
+            TEXT_SKIP_DRAW,
             NULL
         );
 
@@ -2469,7 +2476,7 @@ static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset)
         if (logicalIndex++ < offset)
             continue;
 
-        AddTextPrinterParameterized(windowId, FONT_SMALL, itemName, 8, y, 0, NULL);
+        AddTextPrinterParameterized(windowId, FONT_SMALL, itemName, 8, y, TEXT_SKIP_DRAW, NULL);
 
         AddTextPrinterParameterized(
             windowId,
@@ -2479,7 +2486,7 @@ static u8 Debug_DrawInfoItemsPage(u8 windowId, u8 offset)
                 : sDebugText_InfoItemsAvailable,
             145,
             y,
-            0,
+            TEXT_SKIP_DRAW,
             NULL
         );
 
@@ -2510,7 +2517,8 @@ static void DebugAction_Util_InfoItems(u8 taskId)
     maxOffset = Debug_DrawInfoItemsPage(windowId, 0);
 
     PutWindowTilemap(windowId);
-    CopyWindowToVram(windowId, COPYWIN_FULL);
+    // The page renderer already queued the completed graphics.
+    CopyWindowToVram(windowId, COPYWIN_MAP);
 
     infoTaskId = CreateTask(DebugTask_HandleInfoItems, 3);
     gTasks[infoTaskId].tInfoItemsWindowId = windowId;
@@ -2551,9 +2559,7 @@ static void DebugTask_HandleInfoItems(u8 taskId)
 
     PlaySE(SE_SELECT);
 
-    ClearStdWindowAndFrame(windowId, TRUE);
-    ClearWindowTilemap(windowId);
-    CopyBgTilemapBufferToVram(0);
+    Debug_ClearWindow(windowId);
     RemoveWindow(windowId);
     DestroyTask(taskId);
 
@@ -2627,7 +2633,8 @@ static void DebugAction_Util_EncounterInfo(u8 taskId)
     maxOffset = Debug_DrawEncounterInfoPage(windowId, 0, 0);
 
     PutWindowTilemap(windowId);
-    CopyWindowToVram(windowId, COPYWIN_FULL);
+    // The page renderer already queued the completed graphics.
+    CopyWindowToVram(windowId, COPYWIN_MAP);
 
     infoTaskId = CreateTask(DebugTask_HandleEncounterInfo, 3);
     gTasks[infoTaskId].tEncounterWindowId = windowId;
@@ -2702,12 +2709,12 @@ static u8 Debug_DrawEncounterInfoPage(u8 windowId, u8 page, u8 offset)
         break;
     }
 
-    AddTextPrinterParameterized(windowId, FONT_SMALL, title, 8, 4, 0, NULL);
-    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_EncounterControls, 84, 4, 0, NULL);
+    AddTextPrinterParameterized(windowId, FONT_SMALL, title, 8, 4, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_EncounterControls, 84, 4, TEXT_SKIP_DRAW, NULL);
 
     if (headerId == HEADER_NONE)
     {
-        AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_EncounterNoData, 8, 24, 0, NULL);
+        AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_EncounterNoData, 8, 24, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(windowId, COPYWIN_GFX);
         return 0;
     }
@@ -2734,7 +2741,7 @@ static u8 Debug_DrawEncounterInfoPage(u8 windowId, u8 page, u8 offset)
 
     if (info == NULL || info->encounterRate == 0)
     {
-        AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_EncounterEmpty, 8, 24, 0, NULL);
+        AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_EncounterEmpty, 8, 24, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(windowId, COPYWIN_GFX);
         return 0;
     }
@@ -2789,7 +2796,7 @@ static u8 Debug_DrawEncounterInfoPage(u8 windowId, u8 page, u8 offset)
     y = 20;
     for (i = offset; i < endIndex; i++)
     {
-        AddTextPrinterParameterized(windowId, FONT_SMALL, GetSpeciesName(speciesList[i]), 8, y, 0, NULL);
+        AddTextPrinterParameterized(windowId, FONT_SMALL, GetSpeciesName(speciesList[i]), 8, y, TEXT_SKIP_DRAW, NULL);
 
         StringCopy(gStringVar4, sDebugText_EncounterLevel);
         ConvertIntToDecimalStringN(gStringVar1, minLevels[i], STR_CONV_MODE_LEFT_ALIGN, 3);
@@ -2807,7 +2814,7 @@ static u8 Debug_DrawEncounterInfoPage(u8 windowId, u8 page, u8 offset)
         StringAppend(gStringVar4, gStringVar1);
         StringAppend(gStringVar4, COMPOUND_STRING("%"));
 
-        AddTextPrinterParameterized(windowId, FONT_SMALL, gStringVar4, 120, y, 0, NULL);
+        AddTextPrinterParameterized(windowId, FONT_SMALL, gStringVar4, 120, y, TEXT_SKIP_DRAW, NULL);
 
         y += 12;
     }
@@ -2886,9 +2893,7 @@ static void DebugTask_HandleEncounterInfo(u8 taskId)
 
     PlaySE(SE_SELECT);
 
-    ClearStdWindowAndFrame(windowId, TRUE);
-    ClearWindowTilemap(windowId);
-    CopyBgTilemapBufferToVram(0);
+    Debug_ClearWindow(windowId);
     RemoveWindow(windowId);
     DestroyTask(taskId);
 
@@ -3065,8 +3070,7 @@ static void DebugTask_HandleSetMonLevelCap(u8 taskId)
         return;
     }
 
-    ClearStdWindowAndFrame(windowId, TRUE);
-    ClearWindowTilemap(windowId);
+    Debug_ClearWindow(windowId);
     RemoveWindow(windowId);
     gTasks[taskId].tSubWindowId = 0;
 
@@ -3100,7 +3104,7 @@ static void DebugAction_ROMInfo_PatchNumber(u8 taskId)
     windowId = AddWindow(&sDebugMenuWindowTemplatePatchText);
     DrawStdWindowFrame(windowId, FALSE);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
-    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_PatchInfoBlock, 8, 8, 0, NULL);
+    AddTextPrinterParameterized(windowId, FONT_SMALL, sDebugText_PatchInfoBlock, 8, 8, TEXT_SKIP_DRAW, NULL);
 
     PutWindowTilemap(windowId);
     CopyWindowToVram(windowId, COPYWIN_FULL);
@@ -3119,9 +3123,7 @@ static void DebugTask_HandlePatchInfoTextBlock(u8 taskId)
 
     PlaySE(SE_SELECT);
 
-    ClearStdWindowAndFrame(windowId, TRUE);
-    ClearWindowTilemap(windowId);
-    CopyBgTilemapBufferToVram(0);
+    Debug_ClearWindow(windowId);
     RemoveWindow(windowId);
     DestroyTask(taskId);
 
@@ -3202,7 +3204,7 @@ static void DebugAction_FlagsVars_Flags(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -3249,7 +3251,7 @@ static void DebugAction_FlagsVars_Vars(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -3647,7 +3649,7 @@ static void DebugAction_Give_Item(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -3792,7 +3794,7 @@ static void DebugAction_Give_PokemonSimple(u8 taskId)
     ResetMonDataStruct(sDebugMonData);
 
     //Window initialization
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -3827,7 +3829,7 @@ static void DebugAction_Give_PokemonComplex(u8 taskId)
     ResetMonDataStruct(sDebugMonData);
 
     //Window initialization
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -4619,7 +4621,7 @@ static void DebugAction_Give_Decoration(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -5005,8 +5007,7 @@ static void DebugTask_HandleDestructiveConfirmation(u8 taskId)
         return;
     }
 
-    ClearStdWindowAndFrame(windowId, TRUE);
-    ClearWindowTilemap(windowId);
+    Debug_ClearWindow(windowId);
     RemoveWindow(windowId);
     gTasks[taskId].tSubWindowId = 0;
 
@@ -5043,7 +5044,7 @@ static void DebugAction_Sound_SE(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
@@ -5108,7 +5109,7 @@ static void DebugAction_Sound_MUS(u8 taskId)
 {
     u8 windowId;
 
-    ClearStdWindowAndFrame(gTasks[taskId].tWindowId, TRUE);
+    Debug_ClearWindow(gTasks[taskId].tWindowId);
     RemoveWindow(gTasks[taskId].tWindowId);
 
     HideMapNamePopUpWindow();
