@@ -698,8 +698,8 @@
       "x": 19,
       "y": 58,
       "elevation": 0,
-      "dest_map": "MAP_MIRAGE_TOWER_1F",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_ROUTE111",
+      "dest_warp_id": "3"
     },
     {
       "x": 31,

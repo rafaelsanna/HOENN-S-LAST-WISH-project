@@ -3496,7 +3496,7 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
 //            BattleScriptPushCursorAndCallback(BattleScript_OverworldTerrain);
 //            effect++;
 //        }
-//        break;
+        break;
     case ABILITYEFFECT_SWITCH_IN_WEATHER:
         gBattleScripting.battler = battler;
         if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED))

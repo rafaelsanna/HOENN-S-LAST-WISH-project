@@ -40,8 +40,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
-      "x": 34,
-      "y": 29,
+      "x": 32,
+      "y": 28,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 2,
@@ -92,8 +92,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(AIPOM)",
-      "x": 41,
-      "y": 27,
+      "x": 47,
+      "y": 31,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 2,
@@ -105,8 +105,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(AIPOM)",
-      "x": 38,
-      "y": 27,
+      "x": 36,
+      "y": 23,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 2,

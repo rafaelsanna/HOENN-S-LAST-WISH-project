@@ -467,13 +467,13 @@ RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis:
 # 234 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
 	.string "That's why I want you to have this\n"
 # 235 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
-	.string "prototype device the DEXéNAV!$"
+	.string "prototype device the DEXNAV!$"
 # 236 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
 
 # 237 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
 RustboroCity_DevonCorp_3F_Text_ReceivedDexnav:
 # 238 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
-	.string "{PLAYER} received the DEXéNAV!$"
+	.string "{PLAYER} received the DEXNAV!$"
 # 239 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
 
 # 240 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
@@ -481,7 +481,7 @@ RustboroCity_DevonCorp_3F_Text_MrStoneExplainDexnavRestUp:
 # 241 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
 	.string "MR. STONE: That device is the\n"
 # 242 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
-	.string "DEXéNAV a DEVON prototype.\p"
+	.string "DEXNAV a DEVON prototype.\p"
 # 243 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"
 	.string "It's an advanced scanner that\n"
 # 244 "data/maps/RustboroCity_DevonCorp_3F/scripts.pory"

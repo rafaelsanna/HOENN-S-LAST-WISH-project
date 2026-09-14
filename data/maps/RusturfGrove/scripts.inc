@@ -101,7 +101,7 @@ CutterPostBattle::
 # 51 "data/maps/RusturfGrove/scripts.pory"
 # 47 "data/maps/RusturfGrove/scripts.pory"
 # 52 "data/maps/RusturfGrove/scripts.pory"
-	fadescreen FADE_TO_BLACK
+	fadescreenswapbuffers FADE_TO_BLACK
 # 53 "data/maps/RusturfGrove/scripts.pory"
 # 48 "data/maps/RusturfGrove/scripts.pory"
 # 54 "data/maps/RusturfGrove/scripts.pory"
@@ -117,7 +117,7 @@ CutterPostBattle::
 # 59 "data/maps/RusturfGrove/scripts.pory"
 # 51 "data/maps/RusturfGrove/scripts.pory"
 # 60 "data/maps/RusturfGrove/scripts.pory"
-	fadescreen FADE_FROM_BLACK
+	fadescreenswapbuffers FADE_FROM_BLACK
 # 61 "data/maps/RusturfGrove/scripts.pory"
 # 52 "data/maps/RusturfGrove/scripts.pory"
 # 62 "data/maps/RusturfGrove/scripts.pory"

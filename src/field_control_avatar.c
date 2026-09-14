@@ -1111,6 +1111,14 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
                     ScriptContext_SetupScript(AbandonedShip_TeamAqua_NeedKeys);
                     return TRUE;
                 }
+
+                // Keep this warp slot so existing saves inside Mirage Tower can still
+                // use the tower's return warp, but disable entry from Route 111.
+                if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE111)
+                 && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE111)
+                 && warpEventId == 3)
+                    return TRUE;
+
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();

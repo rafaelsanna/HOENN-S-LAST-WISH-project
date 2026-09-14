@@ -48,6 +48,8 @@ Route104_OnTransition:
 # 34 "data/maps/Route104/scripts.pory"
 	call Route104_EventScript_TrySetRivalPos
 # 35 "data/maps/Route104/scripts.pory"
+	call Route104_EventScript_TryShowBrineyRival
+# 35 "data/maps/Route104/scripts.pory"
 	call Route104_EventScript_ShowOrHideWhiteHerbFlorist
 # 36 "data/maps/Route104/scripts.pory"
 	end
@@ -92,6 +94,24 @@ Route104_EventScript_DontSetRivalPos::
 # 56 "data/maps/Route104/scripts.pory"
 	return
 # 57 "data/maps/Route104/scripts.pory"
+
+Route104_EventScript_TryShowBrineyRival::
+	goto_if_set FLAG_ROUTE_104_RIVAL_BOAT_TRIP, Route104_EventScript_HideBrineyRival
+	goto_if_unset FLAG_DEFEATED_RIVAL_RUSTBORO, Route104_EventScript_HideBrineyRival
+	setobjectxyperm LOCALID_ROUTE104_BRINEY_RIVAL, 19, 52
+	clearflag FLAG_HIDE_ROUTE_104_BRINEY_RIVAL
+	return
+
+Route104_EventScript_HideBrineyRival::
+	setflag FLAG_HIDE_ROUTE_104_BRINEY_RIVAL
+	return
+
+Route104_EventScript_BrineyRival::
+	lock
+	faceplayer
+	msgbox Route104_Text_BrineyRivalWaiting, MSGBOX_DEFAULT
+	release
+	end
 
 # 58 "data/maps/Route104/scripts.pory"
 Route104_EventScript_Rival::
@@ -720,6 +740,8 @@ Route104_EventScript_SailToDewford::
 # 364 "data/maps/Route104/scripts.pory"
 	setobjectsubpriority LOCALID_PLAYER, MAP_ROUTE104, 0
 # 365 "data/maps/Route104/scripts.pory"
+	setobjectsubpriority LOCALID_ROUTE104_BRINEY_RIVAL, MAP_ROUTE104, 0
+# 365 "data/maps/Route104/scripts.pory"
 	applymovement LOCALID_ROUTE104_BRINEY, Route104_Movement_BrineyBoardBoat
 # 366 "data/maps/Route104/scripts.pory"
 	waitmovement 0
@@ -731,6 +753,26 @@ Route104_EventScript_SailToDewford::
 	waitmovement 0
 # 370 "data/maps/Route104/scripts.pory"
 	hideobjectat LOCALID_PLAYER, MAP_ROUTE104
+# 371 "data/maps/Route104/scripts.pory"
+	playse SE_PIN
+# 372 "data/maps/Route104/scripts.pory"
+	applymovement LOCALID_ROUTE104_BRINEY_RIVAL, Common_Movement_ExclamationMark
+# 373 "data/maps/Route104/scripts.pory"
+	waitmovement 0
+# 374 "data/maps/Route104/scripts.pory"
+	applymovement LOCALID_ROUTE104_BRINEY_RIVAL, Common_Movement_Delay48
+# 375 "data/maps/Route104/scripts.pory"
+	waitmovement 0
+# 376 "data/maps/Route104/scripts.pory"
+	applymovement LOCALID_ROUTE104_BRINEY_RIVAL, Route104_Movement_RivalBoardBoat
+# 377 "data/maps/Route104/scripts.pory"
+	waitmovement 0
+# 378 "data/maps/Route104/scripts.pory"
+	removeobject LOCALID_ROUTE104_BRINEY_RIVAL
+# 379 "data/maps/Route104/scripts.pory"
+	setflag FLAG_ROUTE_104_RIVAL_BOAT_TRIP
+# 380 "data/maps/Route104/scripts.pory"
+	setflag FLAG_HIDE_ROUTE_104_BRINEY_RIVAL
 # 371 "data/maps/Route104/scripts.pory"
 	call Common_EventScript_PlayBrineysBoatMusic
 # 372 "data/maps/Route104/scripts.pory"
@@ -803,6 +845,8 @@ Route104_EventScript_ArriveInDewford::
 # 406 "data/maps/Route104/scripts.pory"
 	showobjectat LOCALID_PLAYER, MAP_DEWFORD_TOWN
 # 407 "data/maps/Route104/scripts.pory"
+	call_if_unset FLAG_DEWFORD_RIVAL_ARRIVAL_DONE, Route104_EventScript_SetupDewfordArrivalRival
+# 407 "data/maps/Route104/scripts.pory"
 	applymovement LOCALID_PLAYER, Route104_Movement_PlayerMoveForBriney
 # 408 "data/maps/Route104/scripts.pory"
 	waitmovement 0
@@ -846,10 +890,49 @@ Route104_EventScript_ArriveInDewford::
 	end
 # 428 "data/maps/Route104/scripts.pory"
 
+Route104_EventScript_SetupDewfordArrivalRival::
+	setobjectxyperm LOCALID_DEWFORD_ARRIVAL_RIVAL, 18, 8
+	addobject LOCALID_DEWFORD_ARRIVAL_RIVAL
+	setobjectsubpriority LOCALID_DEWFORD_ARRIVAL_RIVAL, MAP_DEWFORD_TOWN, 0
+	clearflag FLAG_HIDE_DEWFORD_ARRIVAL_RIVAL
+	applymovement LOCALID_DEWFORD_ARRIVAL_RIVAL, Route104_Movement_DewfordArrivalRivalDisembark
+	waitmovement 0
+	return
+
+Route104_EventScript_DewfordRivalFarewell::
+	applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
+	waitmovement 0
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, Route104_EventScript_DewfordRivalFarewellZinnia
+	goto_if_eq VAR_RESULT, FEMALE, Route104_EventScript_DewfordRivalFarewellZenno
+	return
+
+Route104_EventScript_DewfordRivalFarewellZinnia::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox Route104_Text_DewfordArrivalZinnia, MSGBOX_DEFAULT
+	removefieldmugshot
+	goto Route104_EventScript_DewfordRivalLeave
+
+Route104_EventScript_DewfordRivalFarewellZenno::
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox Route104_Text_DewfordArrivalZenno, MSGBOX_DEFAULT
+	removefieldmugshot
+	goto Route104_EventScript_DewfordRivalLeave
+
+Route104_EventScript_DewfordRivalLeave::
+	applymovement LOCALID_DEWFORD_ARRIVAL_RIVAL, Route104_Movement_DewfordArrivalRivalLeave
+	waitmovement 0
+	removeobject LOCALID_DEWFORD_ARRIVAL_RIVAL
+	setflag FLAG_HIDE_DEWFORD_ARRIVAL_RIVAL
+	setflag FLAG_DEWFORD_RIVAL_ARRIVAL_DONE
+	return
+
 # 429 "data/maps/Route104/scripts.pory"
 Route104_EventScript_DeliverLetterReminder::
 # 430 "data/maps/Route104/scripts.pory"
 	msgbox Route104_Text_LandedInDewfordDeliverLetter, MSGBOX_DEFAULT
+# 431 "data/maps/Route104/scripts.pory"
+	call_if_unset FLAG_DEWFORD_RIVAL_ARRIVAL_DONE, Route104_EventScript_DewfordRivalFarewell
 # 431 "data/maps/Route104/scripts.pory"
 	releaseall
 # 432 "data/maps/Route104/scripts.pory"
@@ -860,6 +943,8 @@ Route104_EventScript_DeliverLetterReminder::
 Route104_EventScript_LandedInDewford::
 # 435 "data/maps/Route104/scripts.pory"
 	msgbox DewfordTown_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
+# 436 "data/maps/Route104/scripts.pory"
+	call_if_unset FLAG_DEWFORD_RIVAL_ARRIVAL_DONE, Route104_EventScript_DewfordRivalFarewell
 # 436 "data/maps/Route104/scripts.pory"
 	releaseall
 # 437 "data/maps/Route104/scripts.pory"
@@ -1692,6 +1777,33 @@ Route104_Movement_PlayerMoveForBriney:
 	step_end
 # 851 "data/maps/Route104/scripts.pory"
 
+Route104_Movement_DewfordArrivalRivalDisembark:
+	walk_down
+	walk_left
+	walk_left
+	walk_in_place_faster_right
+	step_end
+
+Route104_Movement_DewfordArrivalRivalLeave:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
 # 852 "data/maps/Route104/scripts.pory"
 Route104_Movement_BrineyBoardBoat:
 # 853 "data/maps/Route104/scripts.pory"
@@ -1699,6 +1811,17 @@ Route104_Movement_BrineyBoardBoat:
 # 854 "data/maps/Route104/scripts.pory"
 	walk_down
 # 855 "data/maps/Route104/scripts.pory"
+	step_end
+
+Route104_Movement_RivalBoardBoat:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_down
 	step_end
 # 856 "data/maps/Route104/scripts.pory"
 
@@ -2471,4 +2594,23 @@ CaesarIntro::
 CaesarLose::
 # 13 "data/maps/Route104/scripts.pory"
 	.string "Maybe you can...$"
+
+Route104_Text_BrineyRivalWaiting:
+	.string "This is MR. BRINEY's place.\n"
+	.string "I'll wait out here while you speak to him\l"
+	.string "about going to DEWFORD.$"
+
+Route104_Text_DewfordArrivalZinnia:
+	.string "ZINNIA: Wow! We got here in no time.\p"
+	.string "While I'm here, I think I'll check out the\n"
+	.string "jungle and challenge the GYM before\n"
+	.string "heading to SLATEPORT.\p"
+	.string "Good luck, {PLAYER}! I'll see you around.$"
+
+Route104_Text_DewfordArrivalZenno:
+	.string "ZENNO: Wow! We got here in no time.\p"
+	.string "While I'm here, I think I'll check out the\n"
+	.string "jungle and challenge the GYM before\l"
+	.string "heading to SLATEPORT.\p"
+	.string "Good luck, {PLAYER}! I'll see you around.$"
 `

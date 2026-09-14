@@ -566,6 +566,7 @@ MOSSDEEP01_EventScript_RescueLostFamily::
 	special StoreMossdeepMinerRescueCamera
 	fadescreenswapbuffers FADE_TO_BLACK
 	setobjectxy OBJ_EVENT_ID_PLAYER, 24, 69
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	special FinishMossdeepMinerRescueCamera
 	setflag FLAG_MOSSDEEP_LOST_FAMILY_RESCUED
 	call MOSSDEEP01_EventScript_SetRescuedFamilyState

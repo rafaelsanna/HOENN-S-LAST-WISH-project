@@ -232,14 +232,14 @@ RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis:
 	.string "So, I'd never be so cheap as to ask\n"
 	.string "a favor for nothing in return.\p"
 	.string "That's why I want you to have this\n"
-	.string "prototype device the DEXéNAV!$"
+	.string "prototype device the DEXNAV!$"
 
 RustboroCity_DevonCorp_3F_Text_ReceivedDexnav:
-	.string "{PLAYER} received the DEXéNAV!$"
+	.string "{PLAYER} received the DEXNAV!$"
 
 RustboroCity_DevonCorp_3F_Text_MrStoneExplainDexnavRestUp:
 	.string "MR. STONE: That device is the\n"
-	.string "DEXéNAV a DEVON prototype.\p"
+	.string "DEXNAV a DEVON prototype.\p"
 	.string "It's an advanced scanner that\n"
 	.string "detects POKéMON hiding nearby.\p"
 	.string "It can reveal their moves, traits,\n"

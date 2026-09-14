@@ -34,7 +34,7 @@ const u8 gWeatherForestLightTiles[] = INCBIN_U8("graphics/weather/forest_light.4
 const u16 gWeatherForestLightPal[]  = INCBIN_U16("graphics/weather/forest_light.gbapal");
 const u8 gWeatherPinkLeafTiles[]    = INCBIN_U8("graphics/weather/pink_leaves.4bpp");
 const u16 gPinkLeavesWeatherPalette[] = INCBIN_U16("graphics/weather/pink_leaves.gbapal");
-const struct SpritePalette sPinkLeavesSpritePalette = {gPinkLeavesWeatherPalette, GFXTAG_PINK_LEAVES};
+const struct SpritePalette sPinkLeavesSpritePalette = {gPinkLeavesWeatherPalette, PALTAG_PINK_LEAVES};
 
 const u8 gWeatherSmokeTiles[] = INCBIN_U8("graphics/weather/smoke.4bpp");
 const u16 gWeatherSmokePalette[] = INCBIN_U16("graphics/weather/smoke.gbapal");
@@ -4003,6 +4003,7 @@ static void UpdateRainCounter(u8 newWeather, u8 oldWeather)
 
 static void UpdatePinkLeafSprite(struct Sprite *);
 static bool8 UpdateVisiblePinkLeafSprites(void);
+static bool8 LoadPinkLeavesResources(void);
 static bool8 CreatePinkLeafSprite(void);
 static bool8 DestroyPinkLeafSprite(void);
 static void InitPinkLeafSpriteMovement(struct Sprite *);
@@ -4031,8 +4032,14 @@ void PinkLeaves_InitAll(void)
     u16 i;
 
     PinkLeaves_InitVars();
-    LoadSpriteSheet(&sPinkLeavesSpriteSheet);
-    LoadCustomWeatherSpritePalette(gPinkLeavesWeatherPalette);
+    if (!LoadPinkLeavesResources())
+    {
+        // Do not create sprites with missing tile or palette resources. An
+        // invalid OAM palette index can make the leaves use unrelated colors.
+        gWeatherPtr->targetPinkLeafSpriteCount = 0;
+        gWeatherPtr->weatherGfxLoaded = TRUE;
+        return;
+    }
 
     while (gWeatherPtr->weatherGfxLoaded == FALSE)
     {
@@ -4063,6 +4070,8 @@ bool8 PinkLeaves_Finish(void)
     case 1:
         if (!UpdateVisiblePinkLeafSprites())
         {
+            FreeSpriteTilesByTag(GFXTAG_PINK_LEAVES);
+            FreeSpritePaletteByTag(PALTAG_PINK_LEAVES);
             gWeatherPtr->finishStep++;
             return FALSE;
         }
@@ -4080,7 +4089,10 @@ static bool8 UpdateVisiblePinkLeafSprites(void)
     {
         gWeatherPtr->pinkLeafVisibleCounter = 0;
         if (gWeatherPtr->pinkLeafSpriteCount < gWeatherPtr->targetPinkLeafSpriteCount)
-            CreatePinkLeafSprite();
+        {
+            if (!CreatePinkLeafSprite())
+                gWeatherPtr->targetPinkLeafSpriteCount = gWeatherPtr->pinkLeafSpriteCount;
+        }
         else
             DestroyPinkLeafSprite();
     }
@@ -4158,7 +4170,7 @@ static const union AnimCmd *const sPinkLeafAnimCmds[] =
 static const struct SpriteTemplate sPinkLeafSpriteTemplate =
 {
     .tileTag = GFXTAG_PINK_LEAVES,
-    .paletteTag = PALTAG_WEATHER_2,
+    .paletteTag = PALTAG_PINK_LEAVES,
     .oam = &sPinkLeafSpriteOamData,
     .anims = sPinkLeafAnimCmds,
     .images = NULL,
@@ -4175,9 +4187,43 @@ static const struct SpriteTemplate sPinkLeafSpriteTemplate =
 #define tFallDuration data[6]
 #define tDeltaX      data[7]
 
+static bool8 LoadPinkLeavesResources(void)
+{
+    u8 paletteIndex;
+
+    if (GetSpriteTileStartByTag(GFXTAG_PINK_LEAVES) == TAG_NONE)
+    {
+        LoadSpriteSheet(&sPinkLeavesSpriteSheet);
+        if (GetSpriteTileStartByTag(GFXTAG_PINK_LEAVES) == TAG_NONE)
+            return FALSE;
+    }
+
+    if (LoadSpritePalette(&sPinkLeavesSpritePalette) == 0xFF)
+    {
+        FreeSpriteTilesByTag(GFXTAG_PINK_LEAVES);
+        return FALSE;
+    }
+
+    paletteIndex = IndexOfSpritePaletteTag(PALTAG_PINK_LEAVES);
+    if (paletteIndex == 0xFF)
+    {
+        FreeSpriteTilesByTag(GFXTAG_PINK_LEAVES);
+        return FALSE;
+    }
+
+    UpdateSpritePaletteWithWeather(paletteIndex, TRUE);
+    return TRUE;
+}
+
 static bool8 CreatePinkLeafSprite(void)
 {
-    u8 spriteId = CreateSpriteAtEnd(&sPinkLeafSpriteTemplate, 0, 0, 78);
+    u8 spriteId;
+
+    if (GetSpriteTileStartByTag(GFXTAG_PINK_LEAVES) == TAG_NONE
+     || IndexOfSpritePaletteTag(PALTAG_PINK_LEAVES) == 0xFF)
+        return FALSE;
+
+    spriteId = CreateSpriteAtEnd(&sPinkLeafSpriteTemplate, 0, 0, 78);
     if (spriteId == MAX_SPRITES)
         return FALSE;
 

@@ -736,10 +736,10 @@
 #define FLAG_HIDE_MOSSDEEP_RESCUED_MINER         0x2B0
 #define FLAG_MOSSDEEP_LOST_FAMILY_RESCUED         0x2B1
 #define FLAG_UNUSED_0x2AF  0x2AF // Unused Flag
-#define FLAG_UNUSED_0x2B2  0x2B2 // Unused Flag
-#define FLAG_UNUSED_0x2B3  0x2B3 // Unused Flag
-#define FLAG_UNUSED_0x2B4  0x2B4 // Unused Flag
-#define FLAG_UNUSED_0x2B5  0x2B5 // Unused Flag
+#define FLAG_ROUTE_104_RIVAL_BOAT_TRIP             0x2B2
+#define FLAG_HIDE_ROUTE_104_BRINEY_RIVAL           0x2B3
+#define FLAG_DEWFORD_RIVAL_ARRIVAL_DONE             0x2B4
+#define FLAG_HIDE_DEWFORD_ARRIVAL_RIVAL             0x2B5
 #define FLAG_UNUSED_0x2B6  0x2B6 // Unused Flag
 #define FLAG_UNUSED_0x2B7  0x2B7 // Unused Flag
 #define FLAG_UNUSED_0x2B8  0x2B8 // Unused Flag

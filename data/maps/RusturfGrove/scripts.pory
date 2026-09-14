@@ -49,7 +49,7 @@ CutterPostBattle::
 	msgbox CutterDialogueAfter2, MSGBOX_DEFAULT
 	removefieldmugshot
 # 47 "data/maps/RusturfGrove/scripts.pory"
-	fadescreen FADE_TO_BLACK
+	fadescreenswapbuffers FADE_TO_BLACK
 # 48 "data/maps/RusturfGrove/scripts.pory"
 	delay 45
 # 49 "data/maps/RusturfGrove/scripts.pory"
@@ -57,7 +57,7 @@ CutterPostBattle::
 # 50 "data/maps/RusturfGrove/scripts.pory"
 	removeobject LOCALID_CUTTER
 # 51 "data/maps/RusturfGrove/scripts.pory"
-	fadescreen FADE_FROM_BLACK
+	fadescreenswapbuffers FADE_FROM_BLACK
 # 52 "data/maps/RusturfGrove/scripts.pory"
 	release
 	end

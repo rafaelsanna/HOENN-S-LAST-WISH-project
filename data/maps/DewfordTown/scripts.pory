@@ -4,7 +4,9 @@ DewfordTown_MapScripts::
 	.byte 0
 
 DewfordTown_OnTransition:
+	call Common_EventScript_SetupRivalGfxId
 	setflag FLAG_VISITED_DEWFORD_TOWN
+	setflag FLAG_HIDE_DEWFORD_ARRIVAL_RIVAL
 	end
 
 DewfordTown_EventScript_Briney::
@@ -73,7 +75,7 @@ DewfordTown_EventScript_GymSign::
 DewfordTown_EventScript_HallSign::
 	msgbox DewfordTown_Text_HallSign, MSGBOX_SIGN
 	end
-	
+
 DewfordTown_EventScript_OldRodFisherman::
 	lock
 	faceplayer
