@@ -1,0 +1,101 @@
+static void BattleRadioDisplay_Update(void)
+{
+    u16 tiles[BATTLE_RADIO_DISPLAY_WIDTH * BATTLE_RADIO_DISPLAY_HEIGHT];
+    u32 x;
+    u32 y;
+
+    if (!RadioPriority_ShouldBlockBgmChange())
+    {
+        FillBgTilemapBufferRect(
+            0,
+            0,
+            BATTLE_RADIO_DISPLAY_X,
+            BATTLE_RADIO_DISPLAY_Y,
+            BATTLE_RADIO_DISPLAY_WIDTH,
+            BATTLE_RADIO_DISPLAY_HEIGHT,
+            0
+        );
+        CopyBgTilemapBufferToVram(0);
+        return;
+    }
+
+    LoadBgTiles(
+        0,
+        sBattleRadioDisplayGfx,
+        sizeof(sBattleRadioDisplayGfx),
+        BATTLE_RADIO_DISPLAY_TILE_BASE
+    );
+    LoadPalette(
+        sBattleRadioDisplayPal,
+        BG_PLTT_ID(BATTLE_RADIO_DISPLAY_PAL_NUM),
+        PLTT_SIZE_4BPP
+    );
+
+    for (y = 0; y < BATTLE_RADIO_DISPLAY_HEIGHT; y++)
+    {
+        for (x = 0; x < BATTLE_RADIO_DISPLAY_WIDTH; x++)
+        {
+            u16 entry = sBattleRadioDisplayMap[
+                (BATTLE_RADIO_DISPLAY_SRC_Y + y) * BATTLE_RADIO_DISPLAY_SRC_WIDTH
+                + BATTLE_RADIO_DISPLAY_SRC_X + x
+            ];
+            u16 tile = entry & 0x03FF;
+
+            if (tile != 0)
+                entry = (entry & ~0x03FF) | (BATTLE_RADIO_DISPLAY_TILE_BASE + tile);
+
+            tiles[y * BATTLE_RADIO_DISPLAY_WIDTH + x] = entry;
+        }
+    }
+
+    CopyToBgTilemapBufferRect_ChangePalette(
+        0,
+        tiles,
+        BATTLE_RADIO_DISPLAY_X,
+        BATTLE_RADIO_DISPLAY_Y,
+        BATTLE_RADIO_DISPLAY_WIDTH,
+        BATTLE_RADIO_DISPLAY_HEIGHT,
+        BATTLE_RADIO_DISPLAY_PAL_NUM
+    );
+    CopyBgTilemapBufferToVram(0);
+}
+
+static void OpenRadioFromBattle(u32 battler)
+{
+    if (!gPaletteFade.active)
+    {
+        gBattlerInMenuId = battler;
+        gBattlerControllerFuncs[battler] = WaitForBattleRadioReturn;
+
+        FreeAllWindowBuffers();
+
+        // Radio's loader is state-driven; battle can leave gMain.state elsewhere.
+        gMain.state = 0;
+        Radio_Open(ReshowBattleScreenAfterMenu);
+    }
+}
+
+static void HandleChooseActionAfterDma3(u32 battler)
+{
+    if (!IsDma3ManagerBusyWithBgCopy())
+    {
+        gBattle_BG0_X = 0;
+        gBattle_BG0_Y = DISPLAY_HEIGHT;
+        BattleRadioDisplay_Update();
+        if (gBattleStruct->aiDelayTimer != 0)
+        {
+            gBattleStruct->aiDelayFrames = gMain.vblankCounter1 - gBattleStruct->aiDelayTimer;
+            gBattleStruct->aiDelayTimer = 0;
+            if (DEBUG_AI_DELAY_TIMER)
+            {
+                static const u8 sFramesText[] = _(" frames thinking\n");
+                static const u8 sCyclesText[] = _(" cycles");
+                ConvertIntToDecimalStringN(gDisplayedStringBattle, gBattleStruct->aiDelayFrames, STR_CONV_MODE_RIGHT_ALIGN, 3);
+                u8* end = StringAppend(gDisplayedStringBattle, sFramesText);
+                ConvertIntToDecimalStringN(end, gBattleStruct->aiDelayCycles, STR_CONV_MODE_RIGHT_ALIGN, 8);
+                // Clear old result once read out
+                gBattleStruct->aiDelayCycles = 0;
+                StringAppend(gDisplayedStringBattle, sCyclesText);
+                BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_ACTION_PROMPT);
+            }
+        }

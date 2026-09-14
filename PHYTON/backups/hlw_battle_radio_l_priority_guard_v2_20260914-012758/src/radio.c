@@ -8085,6 +8085,12 @@ void Radio_Open(MainCallback returnCallback)
 
     Radio_LoadPersistentState();
 
+    // HLW_BATTLE_RADIO_L_PRIORITY_GUARD_V1: BEGIN
+    // Radio Priority OFF means the Radio does not own battle input or BGM.
+    // Refuse the battle entry before the Radio changes callbacks or UI state.
+    if (gMain.inBattle && !sRadioPriorityEnabled)
+        return;
+    // HLW_BATTLE_RADIO_L_PRIORITY_GUARD_V1: END
 
     if (sRadioMonitorSong != sRadioCurrentSong)
         Radio_ResetPlaybackMonitor();

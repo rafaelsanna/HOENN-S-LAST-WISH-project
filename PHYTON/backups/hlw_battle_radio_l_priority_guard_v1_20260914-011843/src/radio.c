@@ -8085,7 +8085,6 @@ void Radio_Open(MainCallback returnCallback)
 
     Radio_LoadPersistentState();
 
-
     if (sRadioMonitorSong != sRadioCurrentSong)
         Radio_ResetPlaybackMonitor();
 

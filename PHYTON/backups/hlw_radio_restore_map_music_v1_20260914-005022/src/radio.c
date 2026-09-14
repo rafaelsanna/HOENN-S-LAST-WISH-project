@@ -57,7 +57,6 @@
 #include "menu.h"
 #include "overworld.h"
 #include "palette.h"
-#include "pokemon.h"
 #include "script.h"
 #include "scanline_effect.h"
 #include "sound.h"
@@ -7269,33 +7268,6 @@ static void Task_RadioFadeAndExit(u8 taskId)
     }
 }
 
-// HLW_RADIO_RESTORE_CONTEXT_MUSIC_V2: BEGIN
-// A stopped Radio track must restore the active audio context. Battles own
-// their own BGM selection, while every other screen returns to map music.
-static void Radio_RestoreContextMusicOnExit(void)
-{
-    if (!sRadioIsPlaying && IsBGMPausedOrStopped())
-    {
-        Radio_ClearNowPlayingPopupQueue();
-
-        if (gMain.inBattle)
-        {
-            // This selects the correct wild, trainer, leader, rival, legendary,
-            // Frontier, or other battle theme from the current battle state.
-            PlayBattleBGM();
-        }
-        else
-        {
-            // Reset stale map-music bookkeeping before requesting the current
-            // map, surfing, underwater, weather, or saved special music.
-            Overworld_ResetMapMusic();
-            Overworld_PlaySpecialMapMusic();
-        }
-    }
-}
-// HLW_RADIO_RESTORE_CONTEXT_MUSIC_V2: END
-
-
 static void Task_RadioWaitFadeExit(u8 taskId)
 {
     if (!gPaletteFade.active)
@@ -7303,7 +7275,6 @@ static void Task_RadioWaitFadeExit(u8 taskId)
         DestroyTask(taskId);
         FreeAllWindowBuffers();
         ResetBgsAndClearDma3BusyFlags(0);
-        Radio_RestoreContextMusicOnExit();
         SetMainCallback2(sRadioReturnCallback);
     }
 }
@@ -8084,7 +8055,6 @@ void Radio_Open(MainCallback returnCallback)
     sRadioReturnCallback = returnCallback;
 
     Radio_LoadPersistentState();
-
 
     if (sRadioMonitorSong != sRadioCurrentSong)
         Radio_ResetPlaybackMonitor();
