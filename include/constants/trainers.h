@@ -172,9 +172,10 @@
 #define TRAINER_PIC_GAMBLER              154
 #define TRAINER_PIC_LAZULI               155
 #define TRAINER_PIC_ROB                  156
+#define TRAINER_PIC_ACCOUNTANT           157
 // COUNT
 
-#define TRAINER_PIC_COUNT                157
+#define TRAINER_PIC_COUNT                158
 
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)

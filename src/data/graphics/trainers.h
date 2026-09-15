@@ -510,6 +510,10 @@ const u16 gTrainerPalette_Lazuli[] = INCBIN_U16("graphics/trainers/front_pics/la
 const u32 gTrainerFrontPic_Rob[] = INCBIN_U32("graphics/trainers/front_pics/rob.4bpp.smol");
 const u16 gTrainerPalette_Rob[] = INCBIN_U16("graphics/trainers/front_pics/rob.gbapal");
 
+// ACCOUNTANT
+const u32 gTrainerFrontPic_Accountant[] = INCBIN_U32("graphics/trainers/front_pics/accountant.4bpp.smol");
+const u16 gTrainerPalette_Accountant[] = INCBIN_U16("graphics/trainers/front_pics/accountant.gbapal");
+
 
 // The first two parameters invoke a front pic and palette by
 // calling a "TRAINER_PIC" constant (e.g. TRAINER_PIC_HIKER), and
@@ -683,6 +687,7 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_GAMBLER, gTrainerFrontPic_Gambler, gTrainerPalette_Gambler),
     TRAINER_SPRITE(TRAINER_PIC_LAZULI, gTrainerFrontPic_Lazuli, gTrainerPalette_Lazuli),
     TRAINER_SPRITE(TRAINER_PIC_ROB, gTrainerFrontPic_Rob, gTrainerPalette_Rob),
+    TRAINER_SPRITE(TRAINER_PIC_ACCOUNTANT, gTrainerFrontPic_Accountant, gTrainerPalette_Accountant),
 
 
 };

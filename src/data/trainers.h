@@ -53584,7 +53584,7 @@ F_TRAINER_FEMALE |
 #line 20595
         .trainerClass = TRAINER_CLASS_ACCOUNTANT,
 #line 20596
-        .trainerPic = TRAINER_PIC_GENTLEMAN,
+        .trainerPic = TRAINER_PIC_ACCOUNTANT,
         .encounterMusic_gender =
 #line 20598
             TRAINER_ENCOUNTER_MUSIC_RICH,
@@ -53593,7 +53593,7 @@ F_TRAINER_FEMALE |
 #line 20600
         .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_TRY_TO_2HKO,
 #line 0
-        .trainerBackPic = TRAINER_PIC_GENTLEMAN,
+        .trainerBackPic = TRAINER_PIC_ACCOUNTANT,
         .partySize = 3,
         .party = (const struct TrainerMon[])
         {
