@@ -2,13 +2,87 @@ raw `
 PHOENIXHOUSE1_MapScripts::
 	.byte 0
 
-PHOENIXHOUSE1_EventScript_Man::
-	msgbox PHOENIXHOUSE1_Text_QuakeHome, MSGBOX_NPC
+PHOENIXHOUSE1_EventScript_OldMan_Quest::
+	lock
+	faceplayer
+	goto_if_set FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN, PHOENIXHOUSE1_EventScript_OldMan_QuestFinished
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_STARTED, PHOENIXHOUSE1_EventScript_OldMan_QuestStart
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_FAMILY_MET, PHOENIXHOUSE1_EventScript_OldMan_QuestStart
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_LETTER, PHOENIXHOUSE1_EventScript_OldMan_QuestGiveLetter
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY, PHOENIXHOUSE1_EventScript_OldMan_QuestWaitingForReply
+	goto PHOENIXHOUSE1_EventScript_OldMan_QuestComplete
+
+PHOENIXHOUSE1_EventScript_OldMan_QuestStart::
+	msgbox PHOENIXHOUSE1_Text_OldMan_QuestStart, MSGBOX_DEFAULT
+	setflag FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_STARTED
+	release
 	end
 
-PHOENIXHOUSE1_Text_QuakeHome:
-	.string "Every crack in these walls\n"
-	.string "has a story.\p"
-	.string "The great quake gave us\n"
-	.string "a home.$"
+PHOENIXHOUSE1_EventScript_OldMan_QuestGiveLetter::
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox PHOENIXHOUSE1_Text_OldMan_QuestGiveLetter, MSGBOX_DEFAULT
+	setflag FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_LETTER
+	release
+	end
+
+PHOENIXHOUSE1_EventScript_OldMan_QuestWaitingForReply::
+	msgbox PHOENIXHOUSE1_Text_OldMan_QuestWaitingForReply, MSGBOX_DEFAULT
+	release
+	end
+
+PHOENIXHOUSE1_EventScript_OldMan_QuestComplete::
+	msgbox PHOENIXHOUSE1_Text_OldMan_QuestComplete, MSGBOX_DEFAULT
+	checkitemspace ITEM_CATCHING_CHARM
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	giveitem ITEM_CATCHING_CHARM
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN
+	msgbox PHOENIXHOUSE1_Text_OldMan_QuestReward, MSGBOX_DEFAULT
+	release
+	end
+
+PHOENIXHOUSE1_EventScript_OldMan_QuestFinished::
+	msgbox PHOENIXHOUSE1_Text_OldMan_QuestFinished, MSGBOX_NPC
+	release
+	end
+
+PHOENIXHOUSE1_Text_OldMan_QuestStart:
+	.string "I was just looking at the sky.\p"
+	.string "It made me think of my granddaughter.\n"
+	.string "She loved wandering about…\p"
+	.string "A little shopping, a long walk, and a\n"
+	.string "high place where the clouds felt close.\p"
+	.string "But after her parents divorced, I never\n"
+	.string "saw her again. Some days, I miss her\n"
+	.string "so much the house feels awfully quiet.$"
+
+PHOENIXHOUSE1_Text_OldMan_QuestGiveLetter:
+	.string "Oh… did you really find her?\p"
+	.string "I kept this close for so long. If you\n"
+	.string "see her, would you give it to her?\p"
+	.string "There is no grand message inside…\n"
+	.string "Only a few words from an old man who\n"
+	.string "still looks up at the sky.$"
+
+PHOENIXHOUSE1_Text_OldMan_QuestWaitingForReply:
+	.string "Perhaps she is reading it now…\p"
+	.string "I wonder if she still remembers the\n"
+	.string "little walks we used to take.$"
+
+PHOENIXHOUSE1_Text_OldMan_QuestComplete:
+	.string "She wrote back…\p"
+	.string "After all this time, she still remembers\n"
+	.string "the sky we used to watch together.$"
+
+PHOENIXHOUSE1_Text_OldMan_QuestReward:
+	.string "You have given an old heart a little\n"
+	.string "sunshine. Thank you, my friend.\p"
+	.string "Please take this CATCHING CHARM. It has\n"
+	.string "brought me good fortune.$"
+
+PHOENIXHOUSE1_Text_OldMan_QuestFinished:
+	.string "I will never forget the little bit of\n"
+	.string "sunshine you brought to us. Thank you.$"
 `

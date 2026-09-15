@@ -1266,12 +1266,12 @@
 #define FLAG_INVERSE_BATTLE_OPTION                                  0x4B9 // HLW_BATTLE_RULES_CONFIG_V2: persistent Casual option
 #define FLAG_KID_LOVES_ANIME                                         0x4BA // Unused Flag
 #define FLAG_HIDE_LAVARIDGE_METAL_RENTON                                 0x4BB // HLW_RENTON_METAL_QUEUE_EVENT_V2: temporary outside-map visibility
-#define FLAG_UNUSED_0x4BC                                           0x4BC // Unused Flag
-#define FLAG_UNUSED_0x4BD                                           0x4BD // Unused Flag
-#define FLAG_UNUSED_0x4BE                                           0x4BE // Unused Flag
-#define FLAG_UNUSED_0x4BF                                           0x4BF // Unused Flag
-#define FLAG_UNUSED_0x4C0                                           0x4C0 // Unused Flag
-#define FLAG_UNUSED_0x4C1                                           0x4C1 // Unused Flag
+#define FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_STARTED                    0x4BC
+#define FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_FAMILY_MET                 0x4BD
+#define FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_LETTER                     0x4BE
+#define FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY                      0x4BF
+#define FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN                             0x4C0
+#define FLAG_HIDE_LILYCOVE_DEPARTMENT_STORE_ROOFTOP_OLD_MAN         0x4C1
 #define FLAG_UNUSED_0x4C2                                           0x4C2 // Unused Flag
 #define FLAG_UNUSED_0x4C3                                           0x4C3 // Unused Flag
 #define FLAG_UNUSED_0x4C4                                           0x4C4 // Unused Flag

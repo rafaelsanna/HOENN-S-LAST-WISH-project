@@ -7,6 +7,12 @@ LilycoveCity_DepartmentStoreRooftop_OnTransition:
 	getpokenewsactive POKENEWS_LILYCOVE
 	call_if_eq VAR_RESULT, TRUE, LilycoveCity_DepartmentStoreRooftop_EventScript_ShowSaleWoman
 	call_if_eq VAR_RESULT, FALSE, LilycoveCity_DepartmentStoreRooftop_EventScript_HideSaleWoman
+	goto_if_set FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN, LilycoveCity_DepartmentStoreRooftop_EventScript_ShowQuestOldMan
+	setflag FLAG_HIDE_LILYCOVE_DEPARTMENT_STORE_ROOFTOP_OLD_MAN
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_ShowQuestOldMan::
+	clearflag FLAG_HIDE_LILYCOVE_DEPARTMENT_STORE_ROOFTOP_OLD_MAN
 	end
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_ShowSaleWoman::
@@ -63,6 +69,101 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_ManClearOutSale::
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_ThirstyMan::
 	msgbox LilycoveCity_DepartmentStoreRooftop_Text_BoneDryThirsty, MSGBOX_NPC
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_Quest::
+	lock
+	faceplayer
+	goto_if_set FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN, LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestComplete
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_STARTED, LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestNormal
+	goto_if_set FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY, LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestReplySent
+	goto_if_set FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_LETTER, LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestReceiveLetter
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_FAMILY_MET, LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestIntroduction
+	goto LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestWaiting
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestNormal::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestNormal, MSGBOX_NPC
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestIntroduction::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestIntroduction, MSGBOX_DEFAULT
+	setflag FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_FAMILY_MET
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestWaiting::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestWaiting, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestReceiveLetter::
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestReceiveLetter, MSGBOX_DEFAULT
+	clearflag FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_LETTER
+	setflag FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestGiveReply, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestReplySent::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestReplySent, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_OldWoman_QuestComplete::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestComplete, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKid::
+	lock
+	faceplayer
+	goto_if_set FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN, LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidComplete
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_STARTED, LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidNormal
+	goto_if_set FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY, LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidReplySent
+	goto_if_set FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_LETTER, LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidReceiveLetter
+	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_FAMILY_MET, LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidIntroduction
+	goto LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidWaiting
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidNormal::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Normal, MSGBOX_NPC
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidIntroduction::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Introduction, MSGBOX_DEFAULT
+	setflag FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_FAMILY_MET
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidReceiveLetter::
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_ReceiveLetter, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidReplySent::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_ReplySent, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidWaiting::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Waiting, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestKidComplete::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Complete, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStoreRooftop_EventScript_QuestOldMan::
+	msgbox LilycoveCity_DepartmentStoreRooftop_Text_QuestOldMan_Complete, MSGBOX_NPC
 	end
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_VendingMachine::
@@ -218,4 +319,73 @@ LilycoveCity_DepartmentStoreRooftop_Text_NotEnoughMoney:
 
 LilycoveCity_DepartmentStoreRooftop_Text_DecidedAgainstBuyingDrink:
 	.string "Decided against buying a drink.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestNormal:
+	.string "The breeze is gentle today.\n"
+	.string "It is easy to lose an afternoon up here.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestIntroduction:
+	.string "Grandfather…?\p"
+	.string "I remember his warm hands and the way\n"
+	.string "he found pictures in the clouds.\p"
+	.string "It has been such a long time…\n"
+	.string "If you happen to see him, tell him we\n"
+	.string "still look up at the same sky.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestWaiting:
+	.string "We have been thinking about him ever\n"
+	.string "since you came by.\p"
+	.string "The sky feels a little bigger today.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestReceiveLetter:
+	.string "From him…?\p"
+	.string "Oh, my dear… These are the words I have\n"
+	.string "been waiting for all these years.\p"
+	.string "I thought the wind had carried him away.\n"
+	.string "But he was still looking at our sky.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestGiveReply:
+	.string "I wrote a few words for him.\p"
+	.string "Please carry this back to Grandpa. Tell\n"
+	.string "him the sky is still beautiful from here.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestReplySent:
+	.string "I hope he reads it beneath an open sky…\n"
+	.string "Maybe the distance will feel smaller then.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_OldWoman_QuestComplete:
+	.string "He came all this way…\p"
+	.string "The clouds look brighter than they did\n"
+	.string "this morning.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Normal:
+	.string "Look! That cloud looks like a WAILMER!\n"
+	.string "Or maybe a big fluffy hat.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Introduction:
+	.string "Grandpa… I remember his stories.\p"
+	.string "He could find pictures in every cloud.\n"
+	.string "Please tell him I still remember.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_ReceiveLetter:
+	.string "Grandpa wrote to us!\p"
+	.string "Grandma is crying… but she is smiling.\n"
+	.string "Are those happy tears?$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_ReplySent:
+	.string "I hope Grandpa likes Grandma's letter.\n"
+	.string "Maybe one day we can watch the clouds\n"
+	.string "together.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Waiting:
+	.string "Do you think Grandpa is looking at the\n"
+	.string "sky right now?$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_QuestKid_Complete:
+	.string "Grandpa is here!\p"
+	.string "Now we can watch the clouds together.$"
+
+LilycoveCity_DepartmentStoreRooftop_Text_QuestOldMan_Complete:
+	.string "This view is even better with family.\n"
+	.string "Thank you for bringing us here.$"
 `

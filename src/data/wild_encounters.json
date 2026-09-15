@@ -18906,6 +18906,36 @@
               }
             ]
           },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 30,
+                "max_level": 35,
+                "species": "SPECIES_PELIPPER"
+              },
+              {
+                "min_level": 30,
+                "max_level": 35,
+                "species": "SPECIES_KRABBY"
+              },
+              {
+                "min_level": 30,
+                "max_level": 35,
+                "species": "SPECIES_CHINCHOU"
+              },
+              {
+                "min_level": 30,
+                "max_level": 35,
+                "species": "SPECIES_LUVDISC"
+              },
+              {
+                "min_level": 30,
+                "max_level": 35,
+                "species": "SPECIES_OCTILLERY"
+              }
+            ]
+          },
           "rock_smash_mons": {
             "encounter_rate": 20,
             "mons": [
@@ -18993,36 +19023,6 @@
                 "min_level": 30,
                 "max_level": 40,
                 "species": "SPECIES_DRATINI"
-              }
-            ]
-          },
-          "water_mons": {
-            "encounter_rate": 4,
-            "mons": [
-              {
-                "min_level": 30,
-                "max_level": 35,
-                "species": "SPECIES_PELIPPER"
-              },
-              {
-                "min_level": 30,
-                "max_level": 35,
-                "species": "SPECIES_KRABBY"
-              },
-              {
-                "min_level": 30,
-                "max_level": 35,
-                "species": "SPECIES_CHINCHOU"
-              },
-              {
-                "min_level": 30,
-                "max_level": 35,
-                "species": "SPECIES_LUVDISC"
-              },
-              {
-                "min_level": 30,
-                "max_level": 35,
-                "species": "SPECIES_OCTILLERY"
               }
             ]
           }
