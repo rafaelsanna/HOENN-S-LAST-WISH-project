@@ -406,6 +406,7 @@
 #define OBJ_EVENT_PAL_TAG_CALENDULA               0x1126
 #define OBJ_EVENT_PAL_TAG_TRAPPED_BLIPBUG         0x1127
 #define OBJ_EVENT_PAL_TAG_ZENNO                   0x1128
+#define OBJ_EVENT_PAL_TAG_ACCOUNTANT              0x1129
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla
