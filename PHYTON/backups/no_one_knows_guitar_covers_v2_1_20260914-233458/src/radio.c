@@ -741,8 +741,6 @@ enum RadioAlbumCoverId
     RADIO_COVER_HELLO_OPERATOR,
     RADIO_COVER_WHITE_BLOOD_CELLS,
     RADIO_COVER_ELEPHANT,
-    RADIO_COVER_LULLABIES_TO_PARALYZE,
-
     RADIO_COVER_COUNT,
 };
 
@@ -765,8 +763,6 @@ static const u16 sRadioCoverMeteora_Pal[] = INCBIN_U16("graphics/radio/covers/me
 static const u32 sRadioCoverMeteora_Gfx[] = INCBIN_U32("graphics/radio/covers/meteora.4bpp.smol");
 static const u16 sRadioCoverOneX_Pal[] = INCBIN_U16("graphics/radio/covers/onex.gbapal");
 static const u32 sRadioCoverOneX_Gfx[] = INCBIN_U32("graphics/radio/covers/onex.4bpp.smol");
-static const u16 sRadioCoverLullabiesToParalyze_Pal[] = INCBIN_U16("graphics/radio/covers/lullabiestoparalyze.gbapal");
-static const u32 sRadioCoverLullabiesToParalyze_Gfx[] = INCBIN_U32("graphics/radio/covers/lullabiestoparalyze.4bpp.smol");
 static const u16 sRadioCoverSongsForTheDeaf_Pal[] = INCBIN_U16("graphics/radio/covers/songsforthedeaf.gbapal");
 static const u32 sRadioCoverSongsForTheDeaf_Gfx[] = INCBIN_U32("graphics/radio/covers/songsforthedeaf.4bpp.smol");
 static const u16 sRadioCoverWhitePony_Pal[] = INCBIN_U16("graphics/radio/covers/whitepony.gbapal");
@@ -879,7 +875,6 @@ static const struct CompressedSpriteSheet sRadioCoverSheets[RADIO_COVER_COUNT] =
     [RADIO_COVER_LIKE_CLOCKWORK] = {sRadioCoverLikeClockwork_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_METEORA] = {sRadioCoverMeteora_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Gfx, 0x800, TAG_RADIO_COVER},
-    [RADIO_COVER_LULLABIES_TO_PARALYZE] = {sRadioCoverLullabiesToParalyze_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Gfx, 0x800, TAG_RADIO_COVER},
     [RADIO_COVER_HAIL_TO_THE_THIEF] = {sRadioCoverHailToTheThief_Gfx, 0x800, TAG_RADIO_COVER},
@@ -925,7 +920,6 @@ static const struct SpritePalette sRadioCoverPalettes[RADIO_COVER_COUNT] =
     [RADIO_COVER_LIKE_CLOCKWORK] = {sRadioCoverLikeClockwork_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_METEORA] = {sRadioCoverMeteora_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_ONE_X] = {sRadioCoverOneX_Pal, TAG_RADIO_COVER},
-    [RADIO_COVER_LULLABIES_TO_PARALYZE] = {sRadioCoverLullabiesToParalyze_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_SONGS_FOR_THE_DEAF] = {sRadioCoverSongsForTheDeaf_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_WHITE_PONY] = {sRadioCoverWhitePony_Pal, TAG_RADIO_COVER},
     [RADIO_COVER_HAIL_TO_THE_THIEF] = {sRadioCoverHailToTheThief_Pal, TAG_RADIO_COVER},
@@ -7410,15 +7404,12 @@ static u8 Radio_GetAlbumCoverForSong(u16 songId)
     case MUS_BE_QUIET_AND_DRIVE:
     case MUS_AROUND_THE_FUR:
         return RADIO_COVER_AROUND_THE_FUR;
-    case MUS_LITTLE_SISTER:
-        return RADIO_COVER_LULLABIES_TO_PARALYZE;
     case MUS_3S_AND_7S:
         return RADIO_COVER_ERA_VULGARIS;
     case MUS_IN_THE_END:
         return RADIO_COVER_HYBRID_THEORY;
     case MUS_ROSEMARY_DEFTONES:
         return RADIO_COVER_KOI_NO_YOKAN;
-    case MUS_I_APPEAR_MISSING:
     case MUS_MY_GOD_IS_THE_SUN:
         return RADIO_COVER_LIKE_CLOCKWORK;
     case MUS_FAINT:
@@ -7427,7 +7418,6 @@ static u8 Radio_GetAlbumCoverForSong(u16 songId)
         return RADIO_COVER_METEORA;
     case MUS_ANIMAL_I_HAVE_BECOME:
         return RADIO_COVER_ONE_X;
-    case MUS_NO_ONE_KNOWS:
     case MUS_GO_WITH_THE_FLOW:
         return RADIO_COVER_SONGS_FOR_THE_DEAF;
     case MUS_CHANGE_IN_THE_HOUSE_OF_FLIES:

@@ -2,11 +2,11 @@
 
 	.equ	mus_3s_and_7s_grp, voicegroup_hlw_rock_metal
 	.equ	mus_3s_and_7s_pri, 0
-	.equ	mus_3s_and_7s_rev, reverb_set+12
-	.equ	mus_3s_and_7s_mvl, 90
+	.equ	mus_3s_and_7s_rev, reverb_set+15
+	.equ	mus_3s_and_7s_mvl, 96
 	.equ	mus_3s_and_7s_key, 0
 	.equ	mus_3s_and_7s_tbs, 1
-	.equ	mus_3s_and_7s_exg, 0
+	.equ	mus_3s_and_7s_exg, 1
 	.equ	mus_3s_and_7s_cmp, 1
 
 	.section .rodata
@@ -21,23 +21,26 @@ mus_3s_and_7s_1:
 @ 001   ----------------------------------------
 	.byte	TEMPO , 134*mus_3s_and_7s_tbs/2
 	.byte		VOICE , 29
-	.byte		VOL   , 102*mus_3s_and_7s_mvl/mxv
-	.byte		PAN   , c_v-12
-	.byte		N06   , Dn2 , v088
-	.byte		N06   , En2 
+	.byte		VOL   , 55*mus_3s_and_7s_mvl/mxv
+	.byte		N06   , En1 , v096
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , As1 
 	.byte		N12   , Fn2 
@@ -47,13 +50,15 @@ mus_3s_and_7s_1:
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , Cs2 
 	.byte		N12   , Gs2 
@@ -69,17 +74,19 @@ mus_3s_and_7s_1:
 	.byte	W12
 @ 002   ----------------------------------------
 mus_3s_and_7s_1_002:
-	.byte		N12   , As1 , v088
+	.byte		N12   , As1 , v096
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , Gs1 
 	.byte		N12   , Ds2 
@@ -93,30 +100,36 @@ mus_3s_and_7s_1_002:
 	.byte		N12   , Dn2 
 	.byte		N12   , Gn2 
 	.byte	W12
+	.byte		N24   , Fn1 
 	.byte		N24   , Cn2 
 	.byte		N24   , Fn2 
 	.byte	W24
+	.byte		N12   , Fn1 
 	.byte		N12   , Cn2 
 	.byte		N12   , Fn2 
 	.byte	W12
 	.byte	PEND
 @ 003   ----------------------------------------
 mus_3s_and_7s_1_003:
-	.byte		N06   , Dn2 , v088
-	.byte		N06   , En2 
+	.byte		N06   , En1 , v096
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , As1 
 	.byte		N12   , Fn2 
@@ -126,13 +139,15 @@ mus_3s_and_7s_1_003:
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , Cs2 
 	.byte		N12   , Gs2 
@@ -152,13 +167,15 @@ mus_3s_and_7s_1_003:
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , Gs1 
 	.byte		N12   , Ds2 
@@ -172,6 +189,7 @@ mus_3s_and_7s_1_003:
 	.byte		N12   , Dn2 
 	.byte		N12   , Gn2 
 	.byte	W12
+	.byte		N24   , Fn1 
 	.byte		N24   , Cn2 
 	.byte		N24   , Fn2 
 	.byte	W36
@@ -185,13 +203,15 @@ mus_3s_and_7s_1_003:
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , Cs2 
 	.byte		N12   , Gs2 
@@ -276,39 +296,47 @@ mus_3s_and_7s_1_003:
 	 .word	mus_3s_and_7s_1_002
 @ 029   ----------------------------------------
 mus_3s_and_7s_1_029:
-	.byte		N06   , Dn2 , v088
-	.byte		N06   , En2 
+	.byte		N06   , En1 , v096
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
+	.byte		N12   , En1 
 	.byte		N12   , Bn1 
 	.byte		N12   , En2 
 	.byte	W12
-	.byte		        Bn1 
+	.byte		        En1 
+	.byte		N12   , Bn1 
 	.byte		N12   , En2 
 	.byte	W36
-	.byte		        Cs2 
+	.byte		        Fs1 
+	.byte		N12   , Cs2 
 	.byte		N12   , Fs2 
 	.byte	W12
-	.byte		        Cs2 
+	.byte		        Fs1 
+	.byte		N12   , Cs2 
 	.byte		N12   , Fs2 
 	.byte	W12
 	.byte	PEND
 @ 030   ----------------------------------------
 mus_3s_and_7s_1_030:
 	.byte	W24
-	.byte		N12   , Gs1 , v088
+	.byte		N12   , Gs1 , v096
 	.byte		N12   , Ds2 
 	.byte		N12   , Gs2 
 	.byte	W12
@@ -316,36 +344,44 @@ mus_3s_and_7s_1_030:
 	.byte		N12   , Ds2 
 	.byte		N12   , Gs2 
 	.byte	W36
-	.byte		        Bn1 
+	.byte		        En1 
+	.byte		N12   , Bn1 
 	.byte		N12   , En2 
 	.byte	W12
-	.byte		        Bn1 
+	.byte		        En1 
+	.byte		N12   , Bn1 
 	.byte		N12   , En2 
 	.byte	W12
 	.byte	PEND
 @ 031   ----------------------------------------
 mus_3s_and_7s_1_031:
 	.byte	W24
-	.byte		N12   , Bn1 , v088
+	.byte		N12   , En1 , v096
+	.byte		N12   , Bn1 
 	.byte		N12   , En2 
 	.byte	W12
-	.byte		        Bn1 
+	.byte		        En1 
+	.byte		N12   , Bn1 
 	.byte		N12   , En2 
 	.byte	W36
-	.byte		        Cs2 
+	.byte		        Fs1 
+	.byte		N12   , Cs2 
 	.byte		N12   , Fs2 
 	.byte	W12
-	.byte		        Cs2 
+	.byte		        Fs1 
+	.byte		N12   , Cs2 
 	.byte		N12   , Fs2 
 	.byte	W12
 	.byte	PEND
 @ 032   ----------------------------------------
 mus_3s_and_7s_1_032:
 	.byte	W24
-	.byte		N12   , Cs2 , v088
+	.byte		N12   , Fs1 , v096
+	.byte		N12   , Cs2 
 	.byte		N12   , Fs2 
 	.byte	W12
-	.byte		        Cs2 
+	.byte		        Fs1 
+	.byte		N12   , Cs2 
 	.byte		N12   , Fs2 
 	.byte	W36
 	.byte		        Gs1 
@@ -372,7 +408,7 @@ mus_3s_and_7s_1_032:
 @ 037   ----------------------------------------
 mus_3s_and_7s_1_037:
 	.byte	W24
-	.byte		N24   , An1 , v088
+	.byte		N24   , An1 , v096
 	.byte		N24   , En2 
 	.byte		N24   , An2 
 	.byte	W24
@@ -398,13 +434,15 @@ mus_3s_and_7s_1_037:
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , Cs2 
 	.byte		N12   , Gs2 
@@ -510,7 +548,7 @@ mus_3s_and_7s_1_037:
 	 .word	mus_3s_and_7s_1_031
 @ 069   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_1_030
+	 .word	mus_3s_and_7s_1_032
 @ 070   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_1_031
@@ -522,27 +560,31 @@ mus_3s_and_7s_1_037:
 	 .word	mus_3s_and_7s_1_031
 @ 073   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_1_030
+	 .word	mus_3s_and_7s_1_032
 @ 074   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_1_037
 @ 075   ----------------------------------------
-	.byte		N24   , An1 , v088
+	.byte		N24   , An1 , v096
 	.byte		N24   , En2 
 	.byte		N24   , An2 
 	.byte	W24
 @ 076   ----------------------------------------
 mus_3s_and_7s_1_076:
 	.byte	TEMPO , 118*mus_3s_and_7s_tbs/2
-	.byte		N12   , Cn2 , v088
-	.byte		N12   , Fn2 
-	.byte	W12
-	.byte		N08   , Cn2 
-	.byte		N08   , Fn2 
-	.byte	W08
+	.byte		N12   , Fn1 , v096
 	.byte		N12   , Cn2 
 	.byte		N12   , Fn2 
 	.byte	W12
+	.byte		N08   , Fn1 
+	.byte		N08   , Cn2 
+	.byte		N08   , Fn2 
+	.byte	W08
+	.byte		N12   , Fn1 
+	.byte		N12   , Cn2 
+	.byte		N12   , Fn2 
+	.byte	W12
+	.byte		N08   , Fn1 
 	.byte		N08   , Cn2 
 	.byte		N08   , Fn2 
 	.byte	W08
@@ -581,7 +623,7 @@ mus_3s_and_7s_1_076:
 	.byte	PEND
 @ 077   ----------------------------------------
 mus_3s_and_7s_1_077:
-	.byte		N12   , As1 , v088
+	.byte		N12   , As1 , v096
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
@@ -634,7 +676,7 @@ mus_3s_and_7s_1_077:
 @ 079   ----------------------------------------
 mus_3s_and_7s_1_079:
 	.byte	TEMPO , 134*mus_3s_and_7s_tbs/2
-	.byte		N08   , Cs2 , v088
+	.byte		N08   , Cs2 , v096
 	.byte		N08   , Gs2 
 	.byte		N08   , Cs3 
 	.byte	W08
@@ -717,7 +759,7 @@ mus_3s_and_7s_1_079:
 	.byte	PATT
 	 .word	mus_3s_and_7s_1_079
 @ 095   ----------------------------------------
-	.byte		N08   , Gs1 , v088
+	.byte		N08   , Gs1 , v096
 	.byte		N08   , Ds2 
 	.byte		N08   , Gs2 
 	.byte	W08
@@ -779,7 +821,7 @@ mus_3s_and_7s_1_079:
 	.byte	W08
 @ 096   ----------------------------------------
 mus_3s_and_7s_1_096:
-	.byte		N08   , Gs1 , v088
+	.byte		N08   , Gs1 , v096
 	.byte		N08   , Ds2 
 	.byte		N08   , Gs2 
 	.byte	W08
@@ -829,7 +871,7 @@ mus_3s_and_7s_1_096:
 @ 101   ----------------------------------------
 	.byte	W96
 @ 102   ----------------------------------------
-	.byte		N96   , As1 , v088
+	.byte		N96   , As1 , v096
 	.byte		N96   , Fn2 
 	.byte		N96   , As2 
 	.byte	W96
@@ -844,7 +886,7 @@ mus_3s_and_7s_1_096:
 	.byte	W96
 @ 107   ----------------------------------------
 mus_3s_and_7s_1_107:
-	.byte		N12   , As1 , v088
+	.byte		N12   , As1 , v096
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
@@ -852,13 +894,15 @@ mus_3s_and_7s_1_107:
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte		N12   , Cs2 
 	.byte		N12   , Gs2 
@@ -876,18 +920,20 @@ mus_3s_and_7s_1_107:
 	.byte		N12   , Fn2 
 	.byte		N12   , As2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte	PEND
 @ 108   ----------------------------------------
 mus_3s_and_7s_1_108:
-	.byte		N12   , Gs1 , v088
+	.byte		N12   , Gs1 , v096
 	.byte		N12   , Ds2 
 	.byte		N12   , Gs2 
 	.byte	W12
@@ -899,27 +945,33 @@ mus_3s_and_7s_1_108:
 	.byte		N12   , Dn2 
 	.byte		N12   , Gn2 
 	.byte	W12
+	.byte		N24   , Fn1 
 	.byte		N24   , Cn2 
 	.byte		N24   , Fn2 
 	.byte	W24
+	.byte		N12   , Fn1 
 	.byte		N12   , Cn2 
 	.byte		N12   , Fn2 
 	.byte	W12
+	.byte		N06   , En1 
 	.byte		N06   , Dn2 
-	.byte		N06   , En2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
-	.byte		        Dn2 
-	.byte		N06   , En2 
+	.byte		        En1 
+	.byte		N06   , Dn2 
 	.byte		N06   , An2 
+	.byte		N06   , Dn3 
 	.byte	W06
 	.byte	PEND
 @ 109   ----------------------------------------
@@ -962,7 +1014,7 @@ mus_3s_and_7s_1_108:
 	.byte	PATT
 	 .word	mus_3s_and_7s_1_107
 @ 122   ----------------------------------------
-	.byte		N12   , Gs1 , v088
+	.byte		N12   , Gs1 , v096
 	.byte		N12   , Ds2 
 	.byte		N12   , Gs2 
 	.byte	W12
@@ -974,19 +1026,19 @@ mus_3s_and_7s_1_108:
 	.byte		N12   , Dn2 
 	.byte		N12   , Gn2 
 	.byte	W12
+	.byte		N48   , Fn1 
 	.byte		N48   , Cn2 
 	.byte		N48   , Fn2 
 	.byte	W48
 	.byte	FINE
 
-@**************** Track 2 (Midi-Chn.2) ****************@
+@**************** Track 2 (Midi-Chn.3) ****************@
 
 mus_3s_and_7s_2:
 	.byte	KEYSH , mus_3s_and_7s_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 29
-	.byte		VOL   , 104*mus_3s_and_7s_mvl/mxv
-	.byte		PAN   , c_v+14
+	.byte		VOICE , 28
+	.byte		VOL   , 127*mus_3s_and_7s_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -997,7 +1049,7 @@ mus_3s_and_7s_2:
 @ 004   ----------------------------------------
 mus_3s_and_7s_2_004:
 	.byte	W36
-	.byte		N06   , Ds4 , v096
+	.byte		N06   , Ds4 , v068
 	.byte	W06
 	.byte		N12   , Fn4 
 	.byte	W18
@@ -1011,7 +1063,7 @@ mus_3s_and_7s_2_004:
 @ 005   ----------------------------------------
 mus_3s_and_7s_2_005:
 	.byte	W24
-	.byte		N12   , Ds3 , v096
+	.byte		N12   , Ds3 , v068
 	.byte	W12
 	.byte		        Fn3 
 	.byte	W12
@@ -1024,7 +1076,7 @@ mus_3s_and_7s_2_005:
 	.byte	PEND
 @ 006   ----------------------------------------
 mus_3s_and_7s_2_006:
-	.byte		N12   , As2 , v096
+	.byte		N12   , As2 , v068
 	.byte	W36
 	.byte		N06   , Ds4 
 	.byte	W06
@@ -1041,41 +1093,200 @@ mus_3s_and_7s_2_006:
 	.byte	PATT
 	 .word	mus_3s_and_7s_2_005
 @ 008   ----------------------------------------
-	.byte		N12   , As2 , v096
-	.byte	W96
+	.byte		N12   , As2 , v068
+	.byte	W24
+	.byte		        As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		        As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		N06   , En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		N12   , Cs2 
+	.byte		N12   , Gs2 
+	.byte		N12   , Cs3 
+	.byte	W12
+	.byte		        Cs2 
+	.byte		N12   , Gs2 
+	.byte		N12   , Cs3 
+	.byte	W12
+	.byte		        As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
 @ 009   ----------------------------------------
-	.byte	W96
+mus_3s_and_7s_2_009:
+	.byte		N12   , As1 , v068
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		N06   , En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		N12   , Gs1 
+	.byte		N12   , Ds2 
+	.byte		N12   , Gs2 
+	.byte	W12
+	.byte		        Gs1 
+	.byte		N12   , Ds2 
+	.byte		N12   , Gs2 
+	.byte	W12
+	.byte		        Gn1 
+	.byte		N12   , Dn2 
+	.byte		N12   , Gn2 
+	.byte	W12
+	.byte		N24   , Fn1 
+	.byte		N24   , Cn2 
+	.byte		N24   , Fn2 
+	.byte	W24
+	.byte		N12   , Fn1 
+	.byte		N12   , Cn2 
+	.byte		N12   , Fn2 
+	.byte	W12
+	.byte	PEND
 @ 010   ----------------------------------------
-	.byte	W96
+mus_3s_and_7s_2_010:
+	.byte		N06   , En1 , v068
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		N12   , As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		        As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		N06   , En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		N12   , Cs2 
+	.byte		N12   , Gs2 
+	.byte		N12   , Cs3 
+	.byte	W12
+	.byte		        Cs2 
+	.byte		N12   , Gs2 
+	.byte		N12   , Cs3 
+	.byte	W12
+	.byte		        As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte	PEND
 @ 011   ----------------------------------------
-	.byte	W96
-@ 012   ----------------------------------------
-	.byte	W96
-@ 013   ----------------------------------------
-	.byte	W96
-@ 014   ----------------------------------------
-	.byte	W96
-@ 015   ----------------------------------------
-	.byte	W96
-@ 016   ----------------------------------------
-	.byte	W96
-@ 017   ----------------------------------------
-	.byte	W96
-@ 018   ----------------------------------------
-	.byte	W96
-@ 019   ----------------------------------------
-	.byte	W96
-@ 020   ----------------------------------------
-	.byte	W96
-@ 021   ----------------------------------------
-	.byte	W96
-@ 022   ----------------------------------------
-	.byte	W96
-@ 023   ----------------------------------------
-	.byte	W96
-@ 024   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_2_004
+	 .word	mus_3s_and_7s_2_009
+@ 012   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
+@ 013   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
+@ 014   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
+@ 015   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
+@ 016   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
+@ 017   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
+@ 018   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
+@ 019   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
+@ 020   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
+@ 021   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
+@ 022   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
+@ 023   ----------------------------------------
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
+@ 024   ----------------------------------------
+mus_3s_and_7s_2_024:
+	.byte		N06   , En1 , v068
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W18
+	.byte		        Ds4 
+	.byte	W06
+	.byte		N12   , Fn4 
+	.byte	W18
+	.byte		N06   , Cn4 
+	.byte	W06
+	.byte		        Cs4 
+	.byte	W24
+	.byte		        As3 
+	.byte	W06
+	.byte	PEND
 @ 025   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_2_005
@@ -1087,7 +1298,7 @@ mus_3s_and_7s_2_006:
 	 .word	mus_3s_and_7s_2_005
 @ 028   ----------------------------------------
 mus_3s_and_7s_2_028:
-	.byte		N12   , As2 , v096
+	.byte		N12   , As2 , v068
 	.byte	W48
 	.byte		        Bn2 
 	.byte	W12
@@ -1096,7 +1307,7 @@ mus_3s_and_7s_2_028:
 	.byte	PEND
 @ 029   ----------------------------------------
 mus_3s_and_7s_2_029:
-	.byte		N12   , Ds3 , v096
+	.byte		N12   , Ds3 , v068
 	.byte	W12
 	.byte		        Cs3 
 	.byte	W36
@@ -1107,7 +1318,7 @@ mus_3s_and_7s_2_029:
 	.byte	PEND
 @ 030   ----------------------------------------
 mus_3s_and_7s_2_030:
-	.byte		N12   , Ds3 , v096
+	.byte		N12   , Ds3 , v068
 	.byte	W12
 	.byte		        Bn2 
 	.byte	W36
@@ -1118,7 +1329,7 @@ mus_3s_and_7s_2_030:
 	.byte	PEND
 @ 031   ----------------------------------------
 mus_3s_and_7s_2_031:
-	.byte		N12   , Cs3 , v096
+	.byte		N12   , Cs3 , v068
 	.byte	W12
 	.byte		        Bn2 
 	.byte	W12
@@ -1136,7 +1347,8 @@ mus_3s_and_7s_2_031:
 	.byte	W12
 	.byte	PEND
 @ 032   ----------------------------------------
-	.byte		        As2 
+mus_3s_and_7s_2_032:
+	.byte		N12   , As2 , v068
 	.byte	W12
 	.byte		        Bn2 
 	.byte	W36
@@ -1144,6 +1356,7 @@ mus_3s_and_7s_2_031:
 	.byte	W12
 	.byte		        As2 
 	.byte	W36
+	.byte	PEND
 @ 033   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_2_029
@@ -1154,13 +1367,13 @@ mus_3s_and_7s_2_031:
 	.byte	PATT
 	 .word	mus_3s_and_7s_2_031
 @ 036   ----------------------------------------
-	.byte		N12   , As2 , v096
+	.byte		N12   , As2 , v068
 	.byte	W12
 	.byte		        Bn2 
 	.byte	W84
 @ 037   ----------------------------------------
 	.byte	W36
-	.byte		        Ds2 
+	.byte		        Ds2 , v060
 	.byte	W24
 	.byte		        Cs2 
 	.byte	W24
@@ -1219,40 +1432,85 @@ mus_3s_and_7s_2_031:
 	.byte		N48   , An3 
 	.byte	W24
 @ 041   ----------------------------------------
-	.byte	W96
+	.byte	W24
+	.byte		N12   , As1 , v068
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		        As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		N06   , En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		        En1 
+	.byte		N06   , Dn2 
+	.byte		N06   , An2 
+	.byte		N06   , Dn3 
+	.byte	W06
+	.byte		N12   , Cs2 
+	.byte		N12   , Gs2 
+	.byte		N12   , Cs3 
+	.byte	W12
+	.byte		        Cs2 
+	.byte		N12   , Gs2 
+	.byte		N12   , Cs3 
+	.byte	W12
+	.byte		        As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
 @ 042   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 043   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
 @ 044   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 045   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
 @ 046   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 047   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
 @ 048   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 049   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
 @ 050   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 051   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
 @ 052   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 053   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
 @ 054   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 055   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_010
 @ 056   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_009
 @ 057   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_2_004
+	 .word	mus_3s_and_7s_2_024
 @ 058   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_2_005
@@ -1267,7 +1525,7 @@ mus_3s_and_7s_2_031:
 	 .word	mus_3s_and_7s_2_006
 @ 062   ----------------------------------------
 	.byte	W24
-	.byte		N12   , Ds3 , v096
+	.byte		N12   , Ds3 , v068
 	.byte	W12
 	.byte		        Fn3 
 	.byte	W12
@@ -1294,10 +1552,10 @@ mus_3s_and_7s_2_031:
 	 .word	mus_3s_and_7s_2_030
 @ 068   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_2_029
+	 .word	mus_3s_and_7s_2_031
 @ 069   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_2_030
+	 .word	mus_3s_and_7s_2_032
 @ 070   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_2_029
@@ -1306,52 +1564,218 @@ mus_3s_and_7s_2_031:
 	 .word	mus_3s_and_7s_2_030
 @ 072   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_2_029
+	 .word	mus_3s_and_7s_2_031
 @ 073   ----------------------------------------
-	.byte		N12   , Ds3 , v096
+	.byte		N12   , As2 , v068
 	.byte	W12
 	.byte		        Bn2 
-	.byte	W84
+	.byte	W12
+	.byte		N24   , An1 
+	.byte		N24   , En2 
+	.byte		N24   , An2 
+	.byte	W24
+	.byte		        An1 
+	.byte		N24   , En2 
+	.byte		N24   , An2 
+	.byte	W24
+	.byte		        An1 
+	.byte		N24   , En2 
+	.byte		N24   , An2 
+	.byte	W24
 @ 074   ----------------------------------------
+	.byte		        An1 
+	.byte		N24   , En2 
+	.byte		N24   , An2 
 	.byte	W24
 @ 075   ----------------------------------------
-	.byte	W96
-	.byte	W24
+mus_3s_and_7s_2_075:
+	.byte		N12   , Fn1 , v068
+	.byte		N12   , Cn2 
+	.byte		N12   , Fn2 
+	.byte	W12
+	.byte		N08   , Fn1 
+	.byte		N08   , Cn2 
+	.byte		N08   , Fn2 
+	.byte	W08
+	.byte		N12   , Fn1 
+	.byte		N12   , Cn2 
+	.byte		N12   , Fn2 
+	.byte	W12
+	.byte		N08   , Fn1 
+	.byte		N08   , Cn2 
+	.byte		N08   , Fn2 
+	.byte	W08
+	.byte		N12   , Gs1 
+	.byte		N12   , Ds2 
+	.byte		N12   , Gs2 
+	.byte	W12
+	.byte		N08   , Gs1 
+	.byte		N08   , Ds2 
+	.byte		N08   , Gs2 
+	.byte	W08
+	.byte		N12   , Gs1 
+	.byte		N12   , Ds2 
+	.byte		N12   , Gs2 
+	.byte	W12
+	.byte		N08   , Gs1 
+	.byte		N08   , Ds2 
+	.byte		N08   , Gs2 
+	.byte	W08
+	.byte		N12   , Gn1 
+	.byte		N12   , Dn2 
+	.byte		N12   , Gn2 
+	.byte	W12
+	.byte		N08   , Gn1 
+	.byte		N08   , Dn2 
+	.byte		N08   , Gn2 
+	.byte	W08
+	.byte		N12   , Gn1 
+	.byte		N12   , Dn2 
+	.byte		N12   , Gn2 
+	.byte	W12
+	.byte		N08   , Gn1 
+	.byte		N08   , Dn2 
+	.byte		N08   , Gn2 
+	.byte	W08
+	.byte	PEND
 @ 076   ----------------------------------------
-	.byte	W96
-	.byte	W24
+mus_3s_and_7s_2_076:
+	.byte		N12   , As1 , v068
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		N08   , As1 
+	.byte		N08   , Fn2 
+	.byte		N08   , As2 
+	.byte	W08
+	.byte		N12   , As1 
+	.byte		N12   , Fn2 
+	.byte		N12   , As2 
+	.byte	W12
+	.byte		N08   , As1 
+	.byte		N08   , Fn2 
+	.byte		N08   , As2 
+	.byte	W08
+	.byte		N12   , An1 
+	.byte		N12   , En2 
+	.byte		N12   , An2 
+	.byte	W12
+	.byte		N08   , An1 
+	.byte		N08   , En2 
+	.byte		N08   , An2 
+	.byte	W08
+	.byte		N12   , An1 
+	.byte		N12   , En2 
+	.byte		N12   , An2 
+	.byte	W12
+	.byte		N08   , An1 
+	.byte		N08   , En2 
+	.byte		N08   , An2 
+	.byte	W08
+	.byte		N12   , Cn2 
+	.byte		N12   , Gn2 
+	.byte		N12   , Cn3 
+	.byte	W12
+	.byte		N08   , Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte		N12   , Cn2 
+	.byte		N12   , Gn2 
+	.byte		N12   , Cn3 
+	.byte	W12
+	.byte		N08   , Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte	PEND
 @ 077   ----------------------------------------
-	.byte	W96
+mus_3s_and_7s_2_077:
+	.byte		N08   , Cs2 , v068
+	.byte		N08   , Gs2 
+	.byte		N08   , Cs3 
+	.byte	W08
+	.byte		        Cs2 
+	.byte		N08   , Gs2 
+	.byte		N08   , Cs3 
+	.byte	W08
+	.byte		        Cs2 
+	.byte		N08   , Gs2 
+	.byte		N08   , Cs3 
+	.byte	W08
+	.byte		        Cs2 
+	.byte		N08   , Gs2 
+	.byte		N08   , Cs3 
+	.byte	W08
+	.byte		        Cs2 
+	.byte		N08   , Gs2 
+	.byte		N08   , Cs3 
+	.byte	W08
+	.byte		        Cs2 
+	.byte		N08   , Gs2 
+	.byte		N08   , Cs3 
+	.byte	W08
+	.byte		        Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte		        Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte		        Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte		        Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte		        Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte		        Cn2 
+	.byte		N08   , Gn2 
+	.byte		N08   , Cn3 
+	.byte	W08
+	.byte	PEND
 @ 078   ----------------------------------------
-	.byte	W96
-	.byte	W24
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_075
 @ 079   ----------------------------------------
-	.byte	W96
-	.byte	W24
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_076
 @ 080   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_077
 @ 081   ----------------------------------------
-	.byte	W96
-	.byte	W24
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_075
 @ 082   ----------------------------------------
-	.byte	W96
-	.byte	W24
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_076
 @ 083   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_077
 @ 084   ----------------------------------------
-	.byte	W96
-	.byte	W24
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_075
 @ 085   ----------------------------------------
-	.byte	W96
-	.byte	W24
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_076
 @ 086   ----------------------------------------
-	.byte	W96
+	.byte	PATT
+	 .word	mus_3s_and_7s_2_077
 @ 087   ----------------------------------------
+	.byte		N96   , Gs1 , v068
+	.byte		N96   , Ds2 
+	.byte		N96   , Gs2 
 	.byte	W96
 	.byte	W24
 @ 088   ----------------------------------------
 mus_3s_and_7s_2_088:
-	.byte		N08   , Fn2 , v096
+	.byte		N08   , Fn2 , v068
 	.byte	W08
 	.byte		N08   
 	.byte	W08
@@ -1369,6 +1793,7 @@ mus_3s_and_7s_2_088:
 	.byte	W08
 	.byte		N08   
 	.byte	W08
+	.byte		N24   , Fn1 
 	.byte		N24   , Cn2 
 	.byte		N24   , Fn2 
 	.byte	W48
@@ -1386,7 +1811,7 @@ mus_3s_and_7s_2_088:
 @ 093   ----------------------------------------
 	.byte	W96
 @ 094   ----------------------------------------
-	.byte		N08   , Cs3 , v096
+	.byte		N08   , Cs3 , v068
 	.byte	W08
 	.byte		N08   
 	.byte	W08
@@ -1468,7 +1893,7 @@ mus_3s_and_7s_2_088:
 	.byte		        Ds3 
 	.byte	W08
 @ 102   ----------------------------------------
-	.byte		N12   , Cs3 , v100
+	.byte		N12   , Cs3 , v072
 	.byte	W12
 	.byte		        An2 
 	.byte	W12
@@ -1621,7 +2046,7 @@ mus_3s_and_7s_2_088:
 	.byte	W36
 @ 111   ----------------------------------------
 mus_3s_and_7s_2_111:
-	.byte		N06   , Cn3 , v100
+	.byte		N06   , Cn3 , v072
 	.byte	W06
 	.byte		        Cs3 
 	.byte	W06
@@ -1659,7 +2084,7 @@ mus_3s_and_7s_2_111:
 	.byte	PATT
 	 .word	mus_3s_and_7s_2_111
 @ 114   ----------------------------------------
-	.byte		N12   , Ds3 , v100
+	.byte		N12   , Ds3 , v072
 	.byte	W12
 	.byte		N06   , Cs3 
 	.byte	W06
@@ -1670,17 +2095,16 @@ mus_3s_and_7s_2_111:
 	.byte		        Cn3 
 	.byte	W06
 	.byte		N24   , Gs2 
-	.byte	W24
+	.byte	W48
 	.byte	FINE
 
-@**************** Track 3 (Midi-Chn.3) ****************@
+@**************** Track 3 (Midi-Chn.5) ****************@
 
 mus_3s_and_7s_3:
 	.byte	KEYSH , mus_3s_and_7s_key+0
 @ 000   ----------------------------------------
 	.byte		VOICE , 33
-	.byte		VOL   , 98*mus_3s_and_7s_mvl/mxv
-	.byte		PAN   , c_v+0
+	.byte		VOL   , 118*mus_3s_and_7s_mvl/mxv
 	.byte	W96
 @ 001   ----------------------------------------
 	.byte	W96
@@ -1690,7 +2114,7 @@ mus_3s_and_7s_3:
 	.byte	W96
 @ 004   ----------------------------------------
 	.byte	W24
-	.byte		N24   , As0 , v084
+	.byte		N24   , As0 , v096
 	.byte	W24
 	.byte		        Cs1 
 	.byte	W24
@@ -1698,7 +2122,7 @@ mus_3s_and_7s_3:
 	.byte	W24
 @ 005   ----------------------------------------
 mus_3s_and_7s_3_005:
-	.byte		N12   , Gs1 , v084
+	.byte		N12   , Gs1 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1713,7 +2137,7 @@ mus_3s_and_7s_3_005:
 	.byte	PEND
 @ 006   ----------------------------------------
 mus_3s_and_7s_3_006:
-	.byte		N24   , Fn1 , v084
+	.byte		N24   , Fn1 , v096
 	.byte	W24
 	.byte		        As0 
 	.byte	W24
@@ -1787,13 +2211,13 @@ mus_3s_and_7s_3_006:
 	 .word	mus_3s_and_7s_3_005
 @ 028   ----------------------------------------
 mus_3s_and_7s_3_028:
-	.byte		N24   , Fn1 , v084
+	.byte		N24   , Fn1 , v096
 	.byte	W24
-	.byte		N12   , En1 
+	.byte		N12   , En0 
 	.byte	W12
 	.byte		N12   
 	.byte	W36
-	.byte		        Fs1 
+	.byte		        Fs0 
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1801,11 +2225,11 @@ mus_3s_and_7s_3_028:
 @ 029   ----------------------------------------
 mus_3s_and_7s_3_029:
 	.byte	W24
-	.byte		N12   , Gs1 , v084
+	.byte		N12   , Gs0 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W36
-	.byte		        En1 
+	.byte		        En0 
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1813,11 +2237,11 @@ mus_3s_and_7s_3_029:
 @ 030   ----------------------------------------
 mus_3s_and_7s_3_030:
 	.byte	W24
-	.byte		N12   , En1 , v084
+	.byte		N12   , En0 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W36
-	.byte		        Fs1 
+	.byte		        Fs0 
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1825,11 +2249,11 @@ mus_3s_and_7s_3_030:
 @ 031   ----------------------------------------
 mus_3s_and_7s_3_031:
 	.byte	W24
-	.byte		N12   , Fs1 , v084
+	.byte		N12   , Fs0 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W36
-	.byte		        Gs1 
+	.byte		        Gs0 
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1849,7 +2273,7 @@ mus_3s_and_7s_3_031:
 @ 036   ----------------------------------------
 mus_3s_and_7s_3_036:
 	.byte	W24
-	.byte		N24   , An0 , v084
+	.byte		N24   , An0 , v096
 	.byte	W24
 	.byte		N24   
 	.byte	W24
@@ -1957,7 +2381,7 @@ mus_3s_and_7s_3_036:
 	 .word	mus_3s_and_7s_3_030
 @ 068   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_3_029
+	 .word	mus_3s_and_7s_3_031
 @ 069   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_3_030
@@ -1969,22 +2393,22 @@ mus_3s_and_7s_3_036:
 	 .word	mus_3s_and_7s_3_030
 @ 072   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_3_029
+	 .word	mus_3s_and_7s_3_031
 @ 073   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_3_036
 @ 074   ----------------------------------------
-	.byte		N24   , An0 , v084
+	.byte		N24   , An0 , v096
 	.byte	W24
 @ 075   ----------------------------------------
 mus_3s_and_7s_3_075:
-	.byte		N12   , Fn1 , v084
+	.byte		N12   , Fn0 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W12
 	.byte		N12   
 	.byte	W12
-	.byte		        Gs1 
+	.byte		        Gs0 
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -1992,7 +2416,7 @@ mus_3s_and_7s_3_075:
 	.byte	W12
 	.byte		N12   
 	.byte	W12
-	.byte		        Gn1 
+	.byte		        Gn0 
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -2001,7 +2425,7 @@ mus_3s_and_7s_3_075:
 	.byte	PEND
 @ 076   ----------------------------------------
 mus_3s_and_7s_3_076:
-	.byte		N12   , As0 , v084
+	.byte		N12   , As0 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -2024,7 +2448,7 @@ mus_3s_and_7s_3_076:
 	.byte	PEND
 @ 077   ----------------------------------------
 mus_3s_and_7s_3_077:
-	.byte		N12   , Cs1 , v084
+	.byte		N12   , Cs1 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -2069,7 +2493,7 @@ mus_3s_and_7s_3_077:
 	.byte	PATT
 	 .word	mus_3s_and_7s_3_077
 @ 087   ----------------------------------------
-	.byte		N08   , Gs1 , v084
+	.byte		N08   , Gs0 , v096
 	.byte	W08
 	.byte		N08   
 	.byte	W08
@@ -2101,7 +2525,7 @@ mus_3s_and_7s_3_077:
 	.byte	W08
 @ 088   ----------------------------------------
 mus_3s_and_7s_3_088:
-	.byte		N08   , Cs1 , v084
+	.byte		N08   , Cs1 , v096
 	.byte	W08
 	.byte		N08   
 	.byte	W08
@@ -2121,7 +2545,7 @@ mus_3s_and_7s_3_088:
 	.byte	W08
 	.byte		N08   
 	.byte	W08
-	.byte		        Gs1 
+	.byte		        Gs0 
 	.byte	W08
 	.byte		N08   
 	.byte	W08
@@ -2134,7 +2558,7 @@ mus_3s_and_7s_3_088:
 	.byte	PEND
 @ 089   ----------------------------------------
 mus_3s_and_7s_3_089:
-	.byte		N08   , Gs1 , v084
+	.byte		N08   , Gs0 , v096
 	.byte	W08
 	.byte		N08   
 	.byte	W08
@@ -2172,7 +2596,7 @@ mus_3s_and_7s_3_089:
 	.byte	PATT
 	 .word	mus_3s_and_7s_3_089
 @ 094   ----------------------------------------
-	.byte		N12   , Gs1 , v084
+	.byte		N12   , Gs0 , v096
 	.byte	W12
 	.byte		N12   
 	.byte	W12
@@ -2202,7 +2626,7 @@ mus_3s_and_7s_3_089:
 	.byte	W12
 @ 096   ----------------------------------------
 mus_3s_and_7s_3_096:
-	.byte		N12   , Ds1 , v084
+	.byte		N12   , Ds1 , v096
 	.byte	W12
 	.byte		        Gs1 
 	.byte	W12
@@ -2215,7 +2639,7 @@ mus_3s_and_7s_3_096:
 	.byte	PEND
 @ 097   ----------------------------------------
 mus_3s_and_7s_3_097:
-	.byte		N24   , As0 , v084
+	.byte		N24   , As0 , v096
 	.byte	W24
 	.byte		        Cs1 
 	.byte	W24
@@ -2279,12 +2703,12 @@ mus_3s_and_7s_3_097:
 	.byte	PATT
 	 .word	mus_3s_and_7s_3_097
 @ 114   ----------------------------------------
-	.byte		N12   , Ds1 , v084
+	.byte		N12   , Ds1 , v096
 	.byte	W12
 	.byte		        Gs1 
 	.byte	W12
 	.byte		N24   , Fn1 
-	.byte	W24
+	.byte	W60
 	.byte	FINE
 
 @**************** Track 4 (Midi-Chn.10) ****************@
@@ -2293,68 +2717,67 @@ mus_3s_and_7s_4:
 	.byte	KEYSH , mus_3s_and_7s_key+0
 @ 000   ----------------------------------------
 	.byte		VOICE , 0
-	.byte		VOL   , 112*mus_3s_and_7s_mvl/mxv
-	.byte		PAN   , c_v+0
+	.byte		VOL   , 120*mus_3s_and_7s_mvl/mxv
 	.byte	W36
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Dn1 , v092
 	.byte	W24
-	.byte		N02   
+	.byte		N12   
 	.byte	W24
-	.byte		N02   
+	.byte		N12   
 	.byte	W12
 @ 001   ----------------------------------------
 	.byte	W60
-	.byte		N02   
+	.byte		N12   
 	.byte	W24
-	.byte		N02   
+	.byte		N12   
 	.byte	W12
 @ 002   ----------------------------------------
 	.byte	W12
-	.byte		N02   
+	.byte		N12   
 	.byte	W24
-	.byte		N02   
+	.byte		N12   
 	.byte	W24
-	.byte		N02   
+	.byte		N12   
 	.byte	W24
-	.byte		N02   
+	.byte		N12   
 	.byte	W12
 @ 003   ----------------------------------------
 	.byte	W60
-	.byte		N02   
+	.byte		N24   
 	.byte	W36
 @ 004   ----------------------------------------
 	.byte	W24
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		        Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		N02   
+	.byte		N12   
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
 @ 005   ----------------------------------------
 mus_3s_and_7s_4_005:
-	.byte		N02   , En1 , v076
+	.byte		N12   , Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
 	.byte	PEND
 @ 006   ----------------------------------------
@@ -2365,76 +2788,80 @@ mus_3s_and_7s_4_005:
 	 .word	mus_3s_and_7s_4_005
 @ 008   ----------------------------------------
 mus_3s_and_7s_4_008:
-	.byte		N02   , En1 , v076
+	.byte		N12   , Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		N02   
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		        Dn1 , v092
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		N02   
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
 	.byte	W12
 	.byte	PEND
 @ 009   ----------------------------------------
 mus_3s_and_7s_4_009:
-	.byte		N02   , En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		N02   
+	.byte		N12   
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
 	.byte	PEND
 @ 010   ----------------------------------------
 mus_3s_and_7s_4_010:
-	.byte		N02   , En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		N02   
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		        Dn1 , v092
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		N02   
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
 	.byte	W12
 	.byte	PEND
 @ 011   ----------------------------------------
@@ -2478,23 +2905,24 @@ mus_3s_and_7s_4_010:
 	 .word	mus_3s_and_7s_4_009
 @ 024   ----------------------------------------
 mus_3s_and_7s_4_024:
-	.byte		N02   , En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
 	.byte	PEND
 @ 025   ----------------------------------------
@@ -2508,121 +2936,173 @@ mus_3s_and_7s_4_024:
 	 .word	mus_3s_and_7s_4_005
 @ 028   ----------------------------------------
 mus_3s_and_7s_4_028:
-	.byte		N02   , En1 , v076
+	.byte		N12   , Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		N06   , Cs2 , v072
 	.byte	W06
-	.byte		        En1 , v076
+	.byte		N03   , Dn1 , v092
 	.byte	W03
-	.byte		N02   
+	.byte		N03   
 	.byte	W03
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N06   , Dn1 , v092
 	.byte	W12
-	.byte		N02   
+	.byte		        As1 , v068
 	.byte	W06
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
 	.byte	W06
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
 	.byte	PEND
 @ 029   ----------------------------------------
 mus_3s_and_7s_4_029:
-	.byte		N02   , En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Dn1 , v092
 	.byte	W12
-	.byte		N02   
+	.byte		N06   , As1 , v068
 	.byte	W06
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
 	.byte	W06
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		        Dn1 , v092
 	.byte	W12
-	.byte		N02   
+	.byte		N06   , As1 , v068
 	.byte	W06
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
 	.byte	W06
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
 	.byte	W12
 	.byte	PEND
 @ 030   ----------------------------------------
-	.byte	PATT
-	 .word	mus_3s_and_7s_4_029
+mus_3s_and_7s_4_030:
+	.byte		N12   , Dn1 , v092
+	.byte	W12
+	.byte		N06   , As1 , v068
+	.byte	W06
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
+	.byte	W06
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , As1 , v068
+	.byte	W12
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
+	.byte	W12
+	.byte		N06   , Dn1 , v092
+	.byte	W12
+	.byte		        As1 , v068
+	.byte	W06
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
+	.byte	W06
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , As1 , v068
+	.byte	W12
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
+	.byte	W12
+	.byte	PEND
 @ 031   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_029
 @ 032   ----------------------------------------
-	.byte	PATT
-	 .word	mus_3s_and_7s_4_029
+mus_3s_and_7s_4_032:
+	.byte		N12   , Dn1 , v092
+	.byte	W12
+	.byte		N06   , As1 , v068
+	.byte	W06
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
+	.byte	W06
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
+	.byte	W12
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
+	.byte	W12
+	.byte		N06   , Dn1 , v092
+	.byte	W12
+	.byte		        As1 , v068
+	.byte	W06
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
+	.byte	W06
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , As1 , v068
+	.byte	W12
+	.byte		        Cn1 , v096
+	.byte		N12   , As1 , v068
+	.byte	W12
+	.byte	PEND
 @ 033   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_029
 @ 034   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_029
+	 .word	mus_3s_and_7s_4_030
 @ 035   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_029
 @ 036   ----------------------------------------
 mus_3s_and_7s_4_036:
-	.byte		N02   , En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Dn1 , v092
 	.byte	W12
-	.byte		N02   
+	.byte		N06   , As1 , v068
 	.byte	W06
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
+	.byte		N06   , As1 , v068
 	.byte	W06
-	.byte		N02   
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		        Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		        Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
 	.byte	PEND
 @ 037   ----------------------------------------
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N24   , Dn1 , v092
+	.byte		N24   , Cs2 , v072
 	.byte	W24
-	.byte		        Cn1 , v080
+	.byte		N12   , Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
 @ 038   ----------------------------------------
 	.byte	PATT
@@ -2713,19 +3193,19 @@ mus_3s_and_7s_4_036:
 	 .word	mus_3s_and_7s_4_029
 @ 067   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_029
+	 .word	mus_3s_and_7s_4_030
 @ 068   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_029
 @ 069   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_029
+	 .word	mus_3s_and_7s_4_032
 @ 070   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_029
 @ 071   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_029
+	 .word	mus_3s_and_7s_4_030
 @ 072   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_029
@@ -2733,136 +3213,174 @@ mus_3s_and_7s_4_036:
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_036
 @ 074   ----------------------------------------
-	.byte		N02   , En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N24   , Dn1 , v092
+	.byte		N24   , Cs2 , v072
 	.byte	W24
 @ 075   ----------------------------------------
-	.byte		N02   
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , En1 , v076
+	.byte		N08   , Cn1 , v096
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
 @ 076   ----------------------------------------
-	.byte		        Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , En1 , v076
+	.byte		N08   , Cn1 , v096
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		N08   , Cn1 , v096
 	.byte	W08
-	.byte		        En1 , v076
-	.byte		N02   , Fs1 , v056
+	.byte		N12   
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
-	.byte		N02   , En1 , v076
+	.byte		N08   , Cn1 , v096
+	.byte		N08   , Dn1 , v092
 	.byte	W08
 @ 077   ----------------------------------------
 mus_3s_and_7s_4_077:
-	.byte		N02   , Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N08   , Cn1 , v096
+	.byte		N08   , An2 , v072
 	.byte	W08
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N08   , Cs2 , v072
 	.byte	W08
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
 	.byte	PEND
 @ 078   ----------------------------------------
 mus_3s_and_7s_4_078:
-	.byte		N02   , Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , An2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , An2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , An2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
 	.byte	PEND
 @ 079   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_078
 @ 080   ----------------------------------------
-	.byte	PATT
-	 .word	mus_3s_and_7s_4_077
+mus_3s_and_7s_4_080:
+	.byte		N08   , Cn1 , v096
+	.byte		N08   , Cs2 , v072
+	.byte	W08
+	.byte		        Dn1 , v092
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte		        Cn1 , v096
+	.byte		N08   , An2 , v072
+	.byte	W08
+	.byte		        Dn1 , v092
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte		N08   
+	.byte	W08
+	.byte	PEND
 @ 081   ----------------------------------------
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_078
@@ -2873,78 +3391,119 @@ mus_3s_and_7s_4_078:
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_077
 @ 084   ----------------------------------------
-	.byte	PATT
-	 .word	mus_3s_and_7s_4_078
+mus_3s_and_7s_4_084:
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
+	.byte	W12
+	.byte		N08   , Dn1 , v092
+	.byte	W08
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
+	.byte	W12
+	.byte		N08   , Dn1 , v092
+	.byte	W08
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
+	.byte	W12
+	.byte		N08   , Dn1 , v092
+	.byte	W08
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
+	.byte	W12
+	.byte		N08   , Dn1 , v092
+	.byte	W08
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
+	.byte	W12
+	.byte		N08   , Dn1 , v092
+	.byte	W08
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
+	.byte	W12
+	.byte		N08   , Dn1 , v092
+	.byte	W08
+	.byte	PEND
 @ 085   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_078
+	 .word	mus_3s_and_7s_4_084
 @ 086   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_077
+	 .word	mus_3s_and_7s_4_080
 @ 087   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_078
+	 .word	mus_3s_and_7s_4_084
 @ 088   ----------------------------------------
 mus_3s_and_7s_4_088:
-	.byte		N02   , Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N08   , Cn1 , v096
+	.byte		N08   , Cs2 , v072
 	.byte	W08
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		        Cn1 , v096
+	.byte		N08   , An2 , v072
 	.byte	W08
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
-	.byte		N02   
+	.byte		N08   
 	.byte	W08
 	.byte	PEND
 @ 089   ----------------------------------------
 mus_3s_and_7s_4_089:
-	.byte		N02   , Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W08
-	.byte		        Cn1 , v080
-	.byte		N02   , Fs1 , v056
+	.byte		N12   , Cn1 , v096
+	.byte		N12   , Dn1 , v092
+	.byte		N12   , Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		N08   , Dn1 , v092
 	.byte	W04
 	.byte	PEND
 @ 090   ----------------------------------------
@@ -2961,7 +3520,7 @@ mus_3s_and_7s_4_089:
 	 .word	mus_3s_and_7s_4_089
 @ 094   ----------------------------------------
 	.byte	PATT
-	 .word	mus_3s_and_7s_4_077
+	 .word	mus_3s_and_7s_4_080
 @ 095   ----------------------------------------
 	.byte	W96
 	.byte	W24
@@ -2973,21 +3532,21 @@ mus_3s_and_7s_4_089:
 	.byte	W96
 @ 099   ----------------------------------------
 mus_3s_and_7s_4_099:
-	.byte		N02   , Cn1 , v080
+	.byte		N12   , Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        Cn1 , v080
+	.byte		        Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
 	.byte	PEND
 @ 100   ----------------------------------------
@@ -3033,14 +3592,14 @@ mus_3s_and_7s_4_099:
 	.byte	PATT
 	 .word	mus_3s_and_7s_4_099
 @ 114   ----------------------------------------
-	.byte		N02   , Cn1 , v080
+	.byte		N12   , Cn1 , v096
 	.byte	W12
-	.byte		        Fs1 , v056
+	.byte		        Cs2 , v072
 	.byte	W12
-	.byte		        En1 , v076
+	.byte		        Dn1 , v092
 	.byte	W12
-	.byte		        Fs1 , v056
-	.byte	W02
+	.byte		        Cs2 , v072
+	.byte	W48
 	.byte	FINE
 
 @******************************************************@

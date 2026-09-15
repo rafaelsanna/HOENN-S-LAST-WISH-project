@@ -766,12 +766,6 @@ gSongTable::
 	song mus_hunting_for_your_dream, 0, 0
 	song mus_ive_seen_much, 0, 0
 	song mus_theme_ragnarok, 0, 0
-	song mus_no_one_knows, 0, 0
-	song mus_little_sister, 0, 0
-	song mus_i_appear_missing, 0, 0
-
-
-
 
 
 
