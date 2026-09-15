@@ -1538,19 +1538,22 @@ static u32 MiningUtil_GetLeftValue(u32 itemId)
     u32 x, y;
     u32 left = 0;
 
+    // Return the furthest occupied column from the item's origin. Some item
+    // masks are intentionally offset within their 4x4 mask, so counting the
+    // occupied columns would underestimate the placement bounds.
     for (x = 0; x < 4; x++)
     {
         for (y = 0; y < 4; y++)
         {
             if (sSpriteTileTable[itemId][x+y*4] == 1)
             {
-                left++;
+                left = x;
                 break;
             }
         }
     }
-    DebugPrintf("ItemID: %d, Left: %d", itemId, left-1);
-    return left - 1;
+    DebugPrintf("ItemID: %d, Rightmost: %d", itemId, left);
+    return left;
 }
 
 static u32 MiningUtil_GetTopValue(u32 itemId)
@@ -1558,19 +1561,21 @@ static u32 MiningUtil_GetTopValue(u32 itemId)
     u32 x, y;
     u32 top = 0;
 
+    // Return the furthest occupied row from the item's origin. This must use
+    // the actual row index for masks whose graphics sit below the origin.
     for (y = 0; y < 4; y++)
     {
         for (x = 0; x < 4; x++)
         {
             if (sSpriteTileTable[itemId][x+y*4] == 1)
             {
-                top++;
+                top = y;
                 break;
             }
         }
     }
-    DebugPrintf("ItemID: %d, Top: %d", itemId, top-1);
-    return top - 1;
+    DebugPrintf("ItemID: %d, Bottommost: %d", itemId, top);
+    return top;
 }
 
 // Creates a random number between 0 and amount-1
@@ -2912,7 +2917,13 @@ static void DrawItemSprite(u8 x, u8 y, u8 itemId, u32 itemNumPalTag, u32 itemSta
 // Defines && Macros
 static void SetItemState(u32 posX, u32 posY, u32 x, u32 y, u32 itemStateId)
 {
-    sMiningUiState->itemMap[posX + x + (posY + y) * 12] = itemStateId;
+    u32 mapX = posX + x;
+    u32 mapY = posY + y;
+
+    // Keep malformed or future item masks from corrupting the state that
+    // follows itemMap in MiningState.
+    if (mapX < MINING_ZONE_WIDTH && mapY < MINING_ZONE_HEIGHT)
+        sMiningUiState->itemMap[mapX + mapY * MINING_ZONE_WIDTH] = itemStateId;
 }
 
 static void OverwriteItemMapData(u8 posX, u8 posY, u8 itemStateId, u8 itemId)

@@ -1315,4 +1315,10 @@ EventScript_VsSeekerChargingDone::
 
 	.include "data/maps/Mossdeepcave/scripts.inc"
 
+	.include "data/maps/SeabreezeShipping1F/scripts.inc"
+
+	.include "data/maps/SeabreezeShipping2F/scripts.inc"
+
 	.include "data/maps/MossdeepCity_House5/scripts.inc"
+
+	.include "data/maps/LilycoveCity_House5/scripts.inc"

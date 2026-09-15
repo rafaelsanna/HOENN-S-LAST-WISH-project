@@ -15,6 +15,7 @@ Route121_EventScript_SafariZoneSign::
 	end
 
 Route121_EventScript_AquaGruntsMoveOut::
+	goto_if_unset FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE, Route121_EventScript_AquaGruntsTriggerInactive
 	lockall
 	playbgm MUS_ENCOUNTER_AQUA, FALSE
 	applymovement LOCALID_ROUTE121_GRUNT_2, Common_Movement_WalkInPlaceRight
@@ -24,14 +25,60 @@ Route121_EventScript_AquaGruntsMoveOut::
 	applymovement LOCALID_ROUTE121_GRUNT_1, Route121_Movement_Grunt1Exit
 	applymovement LOCALID_ROUTE121_GRUNT_2, Route121_Movement_Grunt2Exit
 	applymovement LOCALID_ROUTE121_GRUNT_3, Route121_Movement_Grunt3Exit
+	applymovement LOCALID_ROUTE121_GRUNT_4, Route121_Movement_Grunt4Exit
 	waitmovement 0
 	fadedefaultbgm
 	removeobject LOCALID_ROUTE121_GRUNT_1
 	removeobject LOCALID_ROUTE121_GRUNT_2
 	removeobject LOCALID_ROUTE121_GRUNT_3
+	removeobject LOCALID_ROUTE121_GRUNT_4
+	setflag FLAG_HIDE_ROUTE_121_TEAM_AQUA_GRUNTS
 	setvar VAR_ROUTE121_STATE, 1
 	releaseall
 	end
+
+Route121_EventScript_AquaGruntsTriggerInactive::
+	end
+
+Route121_EventScript_AquaGruntWaiting::
+	goto_if_set FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE, Route121_EventScript_AquaGruntAfterShippingHQ
+	lock
+	msgbox Route121_Text_AquaGruntsWaiting, MSGBOX_DEFAULT
+	closemessage
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 20
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox Route121_Text_AquaGruntsNervous, MSGBOX_DEFAULT
+	closemessage
+	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_1, Route121_EventScript_AquaGrunt1FaceOriginalDirection
+	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_2, Route121_EventScript_AquaGrunt2FaceOriginalDirection
+	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_3, Route121_EventScript_AquaGrunt3FaceOriginalDirection
+	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_4, Route121_EventScript_AquaGrunt4FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+Route121_EventScript_AquaGruntAfterShippingHQ::
+	end
+
+Route121_EventScript_AquaGrunt1FaceOriginalDirection::
+	applymovement LOCALID_ROUTE121_GRUNT_1, Route121_Movement_Grunt1FaceUp
+	return
+
+Route121_EventScript_AquaGrunt2FaceOriginalDirection::
+	applymovement LOCALID_ROUTE121_GRUNT_2, Route121_Movement_Grunt2FaceRight
+	return
+
+Route121_EventScript_AquaGrunt3FaceOriginalDirection::
+	applymovement LOCALID_ROUTE121_GRUNT_3, Route121_Movement_Grunt3FaceLeft
+	return
+
+Route121_EventScript_AquaGrunt4FaceOriginalDirection::
+	applymovement LOCALID_ROUTE121_GRUNT_4, Route121_Movement_Grunt4FaceDown
+	return
 
 Route121_Movement_Grunt1Exit:
 	walk_down
@@ -64,6 +111,33 @@ Route121_Movement_Grunt3Exit:
 	walk_down
 	walk_down
 	walk_down
+	step_end
+
+Route121_Movement_Grunt4Exit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+Route121_Movement_Grunt1FaceUp:
+	face_up
+	step_end
+
+Route121_Movement_Grunt2FaceRight:
+	face_right
+	step_end
+
+Route121_Movement_Grunt3FaceLeft:
+	face_left
+	step_end
+
+Route121_Movement_Grunt4FaceDown:
+	face_down
 	step_end
 
 Route121_EventScript_Vanessa::
@@ -172,6 +246,17 @@ Route121_EventScript_RematchCristin::
 Route121_Text_OkayMoveOutToMtPyre:
 	.string "Okay!\n"
 	.string "We're to move out to MT. PYRE!$"
+
+Route121_Text_AquaGruntsWaiting:
+	.string "We're still waiting on our people in\n"
+	.string "SLATEPORT at the SEABREEZE SHIPPING\l"
+	.string "HQ to give us the go-ahead.$"
+
+Route121_Text_AquaGruntsNervous:
+	.string "Huh?! You heard that?!\p"
+	.string "There's nothing suspicious about the\n"
+	.string "SEABREEZE SHIPPING COMPANY in\l"
+	.string "SLATEPORT! Nothing at all!$"
 
 Route121_Text_AheadLoomsMtPyre:
 	.string "Ahead looms MT. PYRE…\p"

@@ -211,6 +211,7 @@ void PinkLeaves_InitVars(void);
 void PinkLeaves_Main(void);
 void PinkLeaves_InitAll(void);
 bool8 PinkLeaves_Finish(void);
+void PinkLeaves_PrepareResources(void);
 void ForestLight_InitVars(void);
 void ForestLight_Main(void);
 void ForestLight_InitAll(void);

@@ -4,7 +4,29 @@ raw `
 	.align 2
 
 CargoShip_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, CargoShip_OnTransition
 	.byte 0
+
+CargoShip_OnTransition:
+	setflag FLAG_HIDE_CARGO_SHIP_PIDGEOT
+	goto_if_unset FLAG_LUKA_SLATEPORT_CARGO_INTRO, CargoShip_EventScript_HideLuka
+	goto_if_set FLAG_LUKA_CARGO_SHIP_ENCOUNTERED, CargoShip_EventScript_SetLukaAfterScene
+	goto CargoShip_EventScript_HideLuka
+
+CargoShip_EventScript_HideLuka::
+	setflag FLAG_HIDE_CARGO_SHIP_LUKA
+	end
+
+CargoShip_EventScript_SetLukaAfterScene::
+	setflag FLAG_HIDE_CARGO_SHIP_LUKA
+	setobjectxyperm LOCALID_CARGO_SHIP_SAILOR, 3, 2
+	setobjectmovementtype LOCALID_CARGO_SHIP_SAILOR, MOVEMENT_TYPE_LOOK_AROUND
+	end
+
+@ Called when Luka's upper-deck scene has been completed.
+CargoShip_EventScript_MarkLukaEncountered::
+	setflag FLAG_LUKA_CARGO_SHIP_ENCOUNTERED
+	return
 
 CargoShip_EventScript_Scientist1::
 	msgbox CargoShip_Text_Scientist1_1, MSGBOX_NPC
@@ -28,8 +50,125 @@ CargoShip_EventScript_Scientist2::
 	end
 
 CargoShip_EventScript_Sailor::
+	lock
+	faceplayer
+	goto_if_unset FLAG_LUKA_SLATEPORT_CARGO_INTRO, CargoShip_EventScript_SailorBeforeLuka
+	goto_if_set FLAG_LUKA_CARGO_SHIP_ENCOUNTERED, CargoShip_EventScript_SailorAfterLuka
 	msgbox CargoShip_Text_Sailor_1, MSGBOX_NPC
+	closemessage
+	goto CargoShip_EventScript_LukaCargoShipIntro
+
+CargoShip_EventScript_SailorBeforeLuka::
+	msgbox CargoShip_Text_Sailor_1, MSGBOX_NPC
+	release
 	end
+
+CargoShip_EventScript_SailorAfterLuka::
+	msgbox CargoShip_Text_SailorConfused, MSGBOX_NPC
+	release
+	end
+
+CargoShip_EventScript_LukaCargoShipIntro::
+	lockall
+	clearflag FLAG_HIDE_CARGO_SHIP_LUKA
+	setobjectxyperm LOCALID_CARGO_SHIP_LUKA, 10, 1
+	addobject LOCALID_CARGO_SHIP_LUKA
+	applymovement LOCALID_CARGO_SHIP_LUKA, CargoShip_Movement_LukaEnter
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox CargoShip_Text_LukaCargoShipIntro, MSGBOX_DEFAULT
+	applymovement LOCALID_PLAYER, CargoShip_Movement_PlayerMoveAside
+	waitmovement 0
+	playse SE_BALL_THROW
+	clearflag FLAG_HIDE_CARGO_SHIP_PIDGEOT
+	setobjectxyperm LOCALID_CARGO_SHIP_PIDGEOT, 4, 3
+	addobject LOCALID_CARGO_SHIP_PIDGEOT
+	waitse
+	msgbox CargoShip_Text_LukaUseConfusion, MSGBOX_DEFAULT
+	playmoncry SPECIES_PIDGEOT, CRY_MODE_NORMAL
+	waitmoncry
+	playse SE_PIN
+	applymovement LOCALID_CARGO_SHIP_SAILOR, Common_Movement_ExclamationMark
+	waitmovement 0
+	waitse
+	applymovement LOCALID_CARGO_SHIP_SAILOR, CargoShip_Movement_SailorSpin
+	waitmovement 0
+	delay 30
+	fadescreen FADE_TO_BLACK
+	removeobject LOCALID_CARGO_SHIP_PIDGEOT
+	setflag FLAG_HIDE_CARGO_SHIP_PIDGEOT
+	removeobject LOCALID_CARGO_SHIP_SAILOR
+	setobjectxyperm LOCALID_CARGO_SHIP_SAILOR, 3, 2
+	setobjectmovementtype LOCALID_CARGO_SHIP_SAILOR, MOVEMENT_TYPE_LOOK_AROUND
+	addobject LOCALID_CARGO_SHIP_SAILOR
+	setobjectxyperm LOCALID_CARGO_SHIP_LUKA, 6, 3
+	setobjectxy LOCALID_CARGO_SHIP_LUKA, 6, 3
+	setobjectxy LOCALID_PLAYER, 5, 3
+	applymovement LOCALID_CARGO_SHIP_LUKA, Common_Movement_FaceLeft
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	fadescreen FADE_FROM_BLACK
+	msgbox CargoShip_Text_SailorConfused, MSGBOX_DEFAULT
+	msgbox CargoShip_Text_LukaThatTakesCareOfHim, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PLAYER, CargoShip_Movement_PlayerEnterHold
+	waitmovement 0
+	hideobjectat LOCALID_PLAYER, MAP_CARGO_SHIP
+	applymovement LOCALID_CARGO_SHIP_LUKA, CargoShip_Movement_LukaEnterHold
+	waitmovement 0
+	removeobject LOCALID_CARGO_SHIP_LUKA
+	call CargoShip_EventScript_MarkLukaEncountered
+	warp MAP_CARGO_SHIP_B1FHOLD, 20, 0
+	waitstate
+	releaseall
+	end
+
+CargoShip_Movement_LukaEnter:
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	face_player
+	step_end
+
+CargoShip_Movement_PlayerMoveAside:
+	walk_up
+	walk_right
+	walk_right
+	face_left
+	step_end
+
+CargoShip_Movement_SailorSpin:
+	face_right
+	face_down
+	face_left
+	face_up
+	face_right
+	face_down
+	face_left
+	face_up
+	face_right
+	face_down
+	face_left
+	face_up
+	step_end
+
+CargoShip_Movement_PlayerEnterHold:
+	walk_left
+	walk_down
+	walk_down
+	step_end
+
+CargoShip_Movement_LukaEnterHold:
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	step_end
 
 CargoShip_Text_Scientist1_1:
 	.string "My coworkers are the shady sort, but\nthe research potential is unbeatable!$"
@@ -49,5 +188,22 @@ CargoShip_Text_Sailor_1:
 	.string "Sorry, kid. I have more sense than\n"
 	.string "the loser you fought at the door.\p"
 	.string "Scram.$"
+
+CargoShip_Text_LukaCargoShipIntro:
+	.string "LUKA: Looks like we were right to check\n"
+	.string "things out. There's definitely something\l"
+	.string "going on here.\p"
+	.string "This guy won't let you\n"
+	.string "through? I'll take care of that.$"
+
+CargoShip_Text_LukaUseConfusion:
+	.string "LUKA: PIDGEOT, use CONFUSION!$"
+
+CargoShip_Text_SailorConfused:
+	.string "What...? Who...?$"
+
+CargoShip_Text_LukaThatTakesCareOfHim:
+	.string "LUKA: That takes care of him. Let's get\n"
+	.string "going.$"
 
 `

@@ -5180,6 +5180,36 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/MossdeepCity_House5/border.bin",
       "blockdata_filepath": "data/layouts/MossdeepCity_House5/map.bin"
+    },
+    {
+      "id": "LAYOUT_LILYCOVE_CITY_HOUSE5",
+      "name": "LilycoveCity_House5_Layout",
+      "width": 10,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/LilycoveCity_House5/border.bin",
+      "blockdata_filepath": "data/layouts/LilycoveCity_House5/map.bin"
+    },
+    {
+      "id": "LAYOUT_SEABREEZE_SHIPPING2F",
+      "name": "SeabreezeShipping2F_Layout",
+      "width": 11,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Facility_2",
+      "border_filepath": "data/layouts/SeabreezeShipping2F/border.bin",
+      "blockdata_filepath": "data/layouts/SeabreezeShipping2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_SEABREEZE_SHIPPING1F",
+      "name": "SeabreezeShipping1F_Layout",
+      "width": 16,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/SeabreezeShipping1F/border.bin",
+      "blockdata_filepath": "data/layouts/SeabreezeShipping1F/map.bin"
     }
   ]
 }

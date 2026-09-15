@@ -14855,6 +14855,20 @@ const struct Item gItemsInfo[] =
     .iconPic     = gItemIcon_Radio,
     .iconPalette = gItemIconPalette_Radio,
 },
+[ITEM_SB_KEY_CARD] =
+{
+    .name        = ITEM_NAME("SB Key Card"),
+    .price       = 0,
+    .description = COMPOUND_STRING(
+        "Key card for\n"
+        "Seabreeze Shipping."),
+    .importance  = 1,
+    .pocket      = POCKET_KEY_ITEMS,
+    .type        = ITEM_USE_BAG_MENU,
+    .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+    .iconPic     = gItemIcon_CardKey,
+    .iconPalette = gItemIconPalette_CardKey,
+},
 };
 
 #undef ITEM_NAME

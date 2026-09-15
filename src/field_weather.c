@@ -252,6 +252,13 @@ void StartWeather(void)
         gWeatherPtr->readyForInit = FALSE;
         gWeatherPtr->weatherChangeComplete = TRUE;
         gWeatherPtr->taskId = CreateTask(Task_WeatherInit, 80);
+
+        // Falling leaves use their own OBJ palette. Load that small resource
+        // before map object-event sprites are created, while the dynamic
+        // palette pool is still empty, so a crowded map cannot make the
+        // effect silently fail to initialize.
+        if (GetSavedWeather() == WEATHER_FALLING_LEAVES)
+            PinkLeaves_PrepareResources();
     }
 }
 
