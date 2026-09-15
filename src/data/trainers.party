@@ -20590,6 +20590,27 @@ Feraligatr
 Level: 60
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
+=== TRAINER_ACCOUNTANT_JUAN ===
+Name: JUAN
+Class: Accountant
+Pic: Gentleman
+Gender: Male
+Music: Rich
+Double Battle: No
+AI: Basic Trainer / HP Aware / Try to 2HKO
+
+Persian
+Level: 45
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Swampert
+Level: 45
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Virizion
+Level: 45
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 === TRAINER_BRENDAN_EVERGRANDE_TREECKO_HARD ===
 Name: ZENNO
 Class: Rival

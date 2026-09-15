@@ -129,7 +129,7 @@ PetalburgCity_EventScript_HideQuakeEventNpcs::
 # 65 "data/maps/PetalburgCity/scripts.pory"
 PetalburgCity_EventScript_HandleAquaGrunts::
 # 66 "data/maps/PetalburgCity/scripts.pory"
-	goto_if_set FLAG_AQUA_GRUNTS_PETALBURG_DONE, PetalburgCity_EventScript_HideAquaGrunts
+	goto_if_set FLAG_LUKA_SLATEPORT_CARGO_INTRO, PetalburgCity_EventScript_HideAquaGrunts
 # 67 "data/maps/PetalburgCity/scripts.pory"
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_ShowAquaGrunts
 # 68 "data/maps/PetalburgCity/scripts.pory"

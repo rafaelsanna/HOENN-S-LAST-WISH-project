@@ -214,7 +214,9 @@
     "SlateportCity_Mart",
     "CargoShip",
     "SeabreezeShipping",
-    "CargoShipB1FHold"
+    "CargoShipB1FHold",
+    "SeabreezeShipping1F",
+    "SeabreezeShipping2F"
   ],
   "gMapGroup_IndoorMauville": [
     "MauvilleCity_Gym",

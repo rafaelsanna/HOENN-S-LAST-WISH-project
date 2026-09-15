@@ -1278,18 +1278,18 @@
 #define FLAG_UNUSED_0x4C5                                           0x4C5 // Unused Flag
 #define FLAG_UNUSED_0x4C6                                           0x4C6 // Unused Flag
 #define FLAG_UNUSED_0x4C7                                           0x4C7 // Unused Flag
-#define FLAG_UNUSED_0x4C8                                           0x4C8 // Unused Flag
-#define FLAG_UNUSED_0x4C9                                           0x4C9 // Unused Flag
-#define FLAG_UNUSED_0x4CA                                           0x4CA // Unused Flag
-#define FLAG_UNUSED_0x4CB                                           0x4CB // Unused Flag
-#define FLAG_UNUSED_0x4CC                                           0x4CC // Unused Flag
-#define FLAG_UNUSED_0x4CD                                           0x4CD // Unused Flag
-#define FLAG_UNUSED_0x4CE                                           0x4CE // Unused Flag
-#define FLAG_UNUSED_0x4CF                                           0x4CF // Unused Flag
-#define FLAG_UNUSED_0x4D0                                           0x4D0 // Unused Flag
-#define FLAG_UNUSED_0x4D1                                           0x4D1 // Unused Flag
-#define FLAG_UNUSED_0x4D2                                           0x4D2 // Unused Flag
-#define FLAG_UNUSED_0x4D3                                           0x4D3 // Unused Flag
+#define FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO                         0x4C8 // HLW_SLATEPORT_LUKA_CARGO_EVENT_V1: hide until Aqua event, then after Cargo Ship encounter
+#define FLAG_LUKA_SLATEPORT_CARGO_INTRO                             0x4C9 // HLW_SLATEPORT_LUKA_CARGO_EVENT_V1: first Slateport conversation completed
+#define FLAG_LUKA_CARGO_SHIP_ENCOUNTERED                            0x4CA // HLW_SLATEPORT_LUKA_CARGO_EVENT_V1: Luka encountered aboard Cargo Ship
+#define FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE                         0x4CB // HLW_ROUTE121_AQUA_EVENT_V1: Shipping HQ event completed
+#define FLAG_HIDE_CARGO_SHIP_LUKA                                  0x4CC // HLW_CARGO_SHIP_LUKA_EVENT_V1: hide until Slateport conversation, then after the upper-deck scene
+#define FLAG_HIDE_CARGO_SHIP_PIDGEOT                               0x4CD // HLW_CARGO_SHIP_LUKA_EVENT_V1: temporary Pidgeot scene object
+#define FLAG_HIDE_CARGO_SHIP_B1F_HOLD_LUKA                         0x4CE // HLW_CARGO_SHIP_LUKA_EVENT_V1: hide Luka until the hold arrival scene
+#define FLAG_CARGO_SHIP_B1F_HOLD_INTRO_COMPLETE                    0x4CF // HLW_CARGO_SHIP_LUKA_EVENT_V1: one-time hold arrival scene complete
+#define FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND                  0x4D0 // HLW_CARGO_SHIP_LUKA_EVENT_V1: key card collected from the Cargo Ship hold
+#define FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO_RETURN                 0x4D1 // HLW_CARGO_SHIP_LUKA_EVENT_V1: temporary Luka object for the return scene
+#define FLAG_CARGO_SHIP_EVENT_COMPLETE                             0x4D2 // HLW_CARGO_SHIP_LUKA_EVENT_V1: Cargo Ship hold sequence completed
+#define FLAG_SEABREEZE_SHIPPING_ELEVATOR_INTRO                    0x4D3 // HLW_SEABREEZE_SHIPPING_ELEVATOR_V1: first key-card elevator conversation completed
 #define FLAG_UNUSED_0x4D4                                           0x4D4 // Unused Flag
 #define FLAG_UNUSED_0x4D5                                           0x4D5 // Unused Flag
 #define FLAG_UNUSED_0x4D6                                           0x4D6 // Unused Flag

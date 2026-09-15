@@ -2,7 +2,7 @@
   "id": "MAP_ROGUE_CANYON",
   "name": "RogueCanyon",
   "layout": "LAYOUT_ROGUE_CANYON",
-  "music": "MUS_DESERT",
+  "music": "MUS_HLW_PHOENIX_TOWN",
   "region_map_section": "MAPSEC_ROGUE_CANYON",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",

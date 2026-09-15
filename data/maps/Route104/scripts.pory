@@ -97,6 +97,7 @@ Route104_EventScript_DontSetRivalPos::
 
 Route104_EventScript_TryShowBrineyRival::
 	goto_if_set FLAG_ROUTE_104_RIVAL_BOAT_TRIP, Route104_EventScript_HideBrineyRival
+	goto_if_set FLAG_VISITED_DEWFORD_TOWN, Route104_EventScript_HideBrineyRival
 	goto_if_unset FLAG_DEFEATED_RIVAL_RUSTBORO, Route104_EventScript_HideBrineyRival
 	setobjectxyperm LOCALID_ROUTE104_BRINEY_RIVAL, 19, 52
 	clearflag FLAG_HIDE_ROUTE_104_BRINEY_RIVAL
@@ -2603,7 +2604,7 @@ Route104_Text_BrineyRivalWaiting:
 Route104_Text_DewfordArrivalZinnia:
 	.string "ZINNIA: Wow! We got here in no time.\p"
 	.string "While I'm here, I think I'll check out the\n"
-	.string "jungle and challenge the GYM before\n"
+	.string "jungle and challenge the GYM before\l"
 	.string "heading to SLATEPORT.\p"
 	.string "Good luck, {PLAYER}! I'll see you around.$"
 

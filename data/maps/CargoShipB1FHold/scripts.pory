@@ -1,4 +1,141 @@
 raw `
 CargoShipB1FHold_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, CargoShipB1FHold_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, CargoShipB1FHold_OnWarp
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, CargoShipB1FHold_OnFrame
 	.byte 0
+
+CargoShipB1FHold_OnTransition:
+	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_2, 0
+	goto_if_unset FLAG_CARGO_SHIP_B1F_HOLD_INTRO_COMPLETE, CargoShipB1FHold_EventScript_HideLuka
+	setvar VAR_TEMP_1, 1
+	goto_if_set FLAG_CARGO_SHIP_EVENT_COMPLETE, CargoShipB1FHold_EventScript_SetLukaAfterConclusion
+	goto_if_set FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND, CargoShipB1FHold_EventScript_SetKeyCardReturnPending
+	clearflag FLAG_HIDE_CARGO_SHIP_B1F_HOLD_LUKA
+	setobjectxyperm LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, 20, 1
+	setobjectmovementtype LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, MOVEMENT_TYPE_FACE_DOWN
+	end
+
+CargoShipB1FHold_EventScript_SetKeyCardReturnPending::
+	setvar VAR_TEMP_2, 1
+	clearflag FLAG_HIDE_CARGO_SHIP_B1F_HOLD_LUKA
+	setobjectxyperm LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, 20, 1
+	setobjectmovementtype LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, MOVEMENT_TYPE_FACE_DOWN
+	end
+
+CargoShipB1FHold_EventScript_SetLukaAfterConclusion::
+	setflag FLAG_HIDE_CARGO_SHIP_B1F_HOLD_LUKA
+	end
+
+CargoShipB1FHold_EventScript_HideLuka::
+	setvar VAR_TEMP_2, 0
+	setvar VAR_TEMP_1, 0
+	setflag FLAG_HIDE_CARGO_SHIP_B1F_HOLD_LUKA
+	end
+
+CargoShipB1FHold_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, CargoShipB1FHold_EventScript_SetArrivalPending
+	.2byte 0
+
+CargoShipB1FHold_EventScript_SetArrivalPending::
+	setvar VAR_TEMP_0, 1
+	setvar VAR_TEMP_1, 1
+	end
+
+CargoShipB1FHold_OnFrame:
+	map_script_2 VAR_TEMP_0, 1, CargoShipB1FHold_EventScript_Arrival
+	map_script_2 VAR_TEMP_2, 1, CargoShipB1FHold_EventScript_KeyCardReturn
+	.2byte 0
+
+CargoShipB1FHold_EventScript_Arrival::
+	setvar VAR_TEMP_0, 2
+	setvar VAR_TEMP_1, 1
+	goto_if_set FLAG_CARGO_SHIP_B1F_HOLD_INTRO_COMPLETE, CargoShipB1FHold_EventScript_EndArrival
+	goto_if_unset FLAG_LUKA_CARGO_SHIP_ENCOUNTERED, CargoShipB1FHold_EventScript_EndArrival
+	lockall
+	applymovement LOCALID_PLAYER, CargoShipB1FHold_Movement_PlayerArrival
+	waitmovement 0
+	clearflag FLAG_HIDE_CARGO_SHIP_B1F_HOLD_LUKA
+	addobject LOCALID_CARGO_SHIP_B1F_HOLD_LUKA
+	applymovement LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, CargoShipB1FHold_Movement_LukaArrival
+	waitmovement 0
+	applymovement LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, Common_Movement_FacePlayer
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	msgbox CargoShipB1FHold_Text_LukaKeepYourVoiceLow, MSGBOX_DEFAULT
+	setobjectxyperm LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, 20, 1
+	setflag FLAG_CARGO_SHIP_B1F_HOLD_INTRO_COMPLETE
+	releaseall
+
+CargoShipB1FHold_EventScript_EndArrival:
+	end
+
+CargoShipB1FHold_EventScript_Luka::
+	lock
+	faceplayer
+	goto_if_set FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND, CargoShipB1FHold_EventScript_LukaAfterKeyCard
+	msgbox CargoShipB1FHold_Text_LukaKeepYourVoiceLow, MSGBOX_DEFAULT
+	release
+	end
+
+CargoShipB1FHold_EventScript_LukaAfterKeyCard::
+	release
+	end
+
+CargoShipB1FHold_EventScript_AquaGrunt::
+	msgbox CargoShipB1FHold_Text_AquaGruntCaughtPlayer, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	warp MAP_CARGO_SHIP_B1FHOLD, 20, 2
+	waitstate
+	end
+
+CargoShipB1FHold_EventScript_KeyCard::
+	setvar VAR_0x8000, ITEM_SB_KEY_CARD
+	setvar VAR_0x8001, 1
+	call Std_FindItem
+	goto_if_eq VAR_0x8007, FALSE, CargoShipB1FHold_EventScript_KeyCardEnd
+	setflag FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND
+	fadescreen FADE_TO_BLACK
+	warp MAP_CARGO_SHIP_B1FHOLD, 20, 2
+	waitstate
+	end
+
+CargoShipB1FHold_EventScript_KeyCardEnd::
+	end
+
+CargoShipB1FHold_EventScript_KeyCardReturn::
+	setvar VAR_TEMP_2, 0
+	lockall
+	applymovement LOCALID_CARGO_SHIP_B1F_HOLD_LUKA, Common_Movement_FaceDown
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	msgbox CargoShipB1FHold_Text_LukaFoundKeyCard, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	warp MAP_SLATEPORT_CITY, 10, 45
+	waitstate
+	end
+
+CargoShipB1FHold_Movement_PlayerArrival:
+	walk_down
+	walk_down
+	step_end
+
+CargoShipB1FHold_Movement_LukaArrival:
+	walk_down
+	step_end
+
+CargoShipB1FHold_Text_LukaKeepYourVoiceLow:
+	.string "LUKA: Keep your voice low. Let's quickly\n"
+	.string "find out what they're plotting and get\l"
+	.string "out of here.$"
+
+CargoShipB1FHold_Text_AquaGruntCaughtPlayer:
+	.string "Hey! You're not supposed to be here!$"
+
+CargoShipB1FHold_Text_LukaFoundKeyCard:
+	.string "LUKA: You got something? Great! Let's\n"
+	.string "get out of here.$"
 `

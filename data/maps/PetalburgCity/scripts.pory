@@ -63,7 +63,7 @@ PetalburgCity_EventScript_HideQuakeEventNpcs::
 	return
 
 PetalburgCity_EventScript_HandleAquaGrunts::
-	goto_if_set FLAG_AQUA_GRUNTS_PETALBURG_DONE, PetalburgCity_EventScript_HideAquaGrunts
+	goto_if_set FLAG_LUKA_SLATEPORT_CARGO_INTRO, PetalburgCity_EventScript_HideAquaGrunts
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_EventScript_ShowAquaGrunts
 	goto PetalburgCity_EventScript_HideAquaGrunts
 

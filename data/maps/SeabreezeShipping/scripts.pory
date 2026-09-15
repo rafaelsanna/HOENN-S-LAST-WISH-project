@@ -1,8 +1,51 @@
 raw `
 SeabreezeShipping_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SeabreezeShipping_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, SeabreezeShipping_OnFrame
 	.byte 0
 
+SeabreezeShipping_OnTransition:
+	goto_if_eq VAR_TEMP_0, 2, SeabreezeShipping_EventScript_SetFaceDownOnArrival
+	end
+
+SeabreezeShipping_OnFrame:
+	map_script_2 VAR_TEMP_1, 1, SeabreezeShipping_EventScript_FaceUpOnArrival
+	.2byte 0
+
+SeabreezeShipping_EventScript_SetFaceDownOnArrival::
+	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_1, 1
+	end
+
+SeabreezeShipping_EventScript_FaceDownOnArrival::
+	setvar VAR_TEMP_1, 0
+	lockall
+	applymovement LOCALID_PLAYER, Common_Movement_FaceDown
+	waitmovement 0
+	releaseall
+	end
+
+SeabreezeShipping_EventScript_FaceUpOnArrival::
+	setvar VAR_TEMP_1, 0
+	lockall
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	releaseall
+	end
+
+@ Called by the future Shipping HQ event when the Aqua operation is complete.
+SeabreezeShipping_EventScript_CompleteShippingHQ::
+	setflag FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE
+	setvar VAR_ROUTE121_STATE, 0
+	return
+
 SeabreezeShipping_EventScript_Receptionist1::
+	goto_if_unset FLAG_CARGO_SHIP_EVENT_COMPLETE, SeabreezeShipping_EventScript_ReceptionistClosed
+	goto_if_unset FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND, SeabreezeShipping_EventScript_ReceptionistClosed
+	msgbox SeabreezeShipping_Text_ReceptionistOpen, MSGBOX_NPC
+	end
+
+SeabreezeShipping_EventScript_ReceptionistClosed::
 	msgbox SeabreezeShipping_Text_Receptionist1_1, MSGBOX_NPC
 	end
 
@@ -11,11 +54,61 @@ SeabreezeShipping_Text_Receptionist1_1:
 	.string "We apologize, but we are\n"
 	.string "closed for the time being.$"
 
+SeabreezeShipping_Text_ReceptionistOpen:
+	.string "Welcome to SEABREEZE SHIPPING!\p"
+	.string "We are responsible for managing\n"
+	.string "international shipping lines\l"
+	.string "that connect to the HOENN region.\p"
+	.string "You can only visit upstairs if\n"
+	.string "you're an employee or affiliate.$"
+
 SeabreezeShipping_EventScript_Elevatorman::
+	lock
+	faceplayer
+	goto_if_unset FLAG_CARGO_SHIP_EVENT_COMPLETE, SeabreezeShipping_EventScript_ElevatormanClosed
+	goto_if_unset FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND, SeabreezeShipping_EventScript_ElevatormanClosed
+	goto_if_set FLAG_SEABREEZE_SHIPPING_ELEVATOR_INTRO, SeabreezeShipping_EventScript_ElevatormanPrompt
+	msgbox SeabreezeShipping_Text_Elevatorman_1, MSGBOX_DEFAULT
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	setflag FLAG_SEABREEZE_SHIPPING_ELEVATOR_INTRO
+	msgbox SeabreezeShipping_Text_Elevatorman_KeyCard, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SeabreezeShipping_EventScript_ElevatormanGoUp
+	release
+	end
+
+SeabreezeShipping_EventScript_ElevatormanClosed::
 	msgbox SeabreezeShipping_Text_Elevatorman_1, MSGBOX_NPC
+	release
+	end
+
+SeabreezeShipping_EventScript_ElevatormanPrompt::
+	msgbox SeabreezeShipping_Text_Elevatorman_GoUp, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SeabreezeShipping_EventScript_ElevatormanGoUp
+	release
+	end
+
+SeabreezeShipping_EventScript_ElevatormanGoUp::
+	setvar VAR_TEMP_0, 1
+	closemessage
+	fadescreen FADE_TO_BLACK
+	playse SE_ELEVATOR
+	waitse
+	warp MAP_SEABREEZE_SHIPPING1F, 12, 3
+	waitstate
 	end
 
 SeabreezeShipping_Text_Elevatorman_1:
-	.string "Sorry, kid. We're closed.$"
+	.string "Sorry, kid, the building is\n"
+	.string "closed.$"
+
+SeabreezeShipping_Text_Elevatorman_KeyCard:
+	.string "Is that a key card? I apologize.\n"
+	.string "I assumed you were not an affiliate\l"
+	.string "due to your age.\p"
+	.string "Would you like to go up?$"
+
+SeabreezeShipping_Text_Elevatorman_GoUp:
+	.string "Would you like to go up?$"
 
 `

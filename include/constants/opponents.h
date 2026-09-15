@@ -951,6 +951,7 @@
 #define TRAINER_STELLA_HARD_DOUBLES_TROOM              945
 #define TRAINER_AURORA_PHOENIX                         946
 #define TRAINER_AURORA_PHOENIX_HARD                    947
+#define TRAINER_ACCOUNTANT_JUAN                        948
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled

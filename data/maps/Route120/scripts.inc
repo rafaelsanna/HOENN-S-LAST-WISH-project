@@ -129,7 +129,7 @@ Route120_EventScript_SetWeather::
 # 65 "data/maps/Route120/scripts.pory"
 	goto_if_le VAR_TEMP_1, 60, Route120_EventScript_TrySetRainyWeather
 # 66 "data/maps/Route120/scripts.pory"
-	goto_if_ge VAR_TEMP_1, 61, Route120_EventScript_SetCloudyWeather
+	goto_if_ge VAR_TEMP_1, 61, Route120_EventScript_SetSunnyWeather
 # 67 "data/maps/Route120/scripts.pory"
 	return
 # 68 "data/maps/Route120/scripts.pory"

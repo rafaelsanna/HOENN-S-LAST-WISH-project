@@ -1,0 +1,76 @@
+raw `
+SeabreezeShipping1F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SeabreezeShipping1F_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, SeabreezeShipping1F_OnFrame
+	.byte 0
+
+SeabreezeShipping1F_OnTransition:
+	getplayerxy VAR_TEMP_2, VAR_TEMP_3
+	goto_if_ne VAR_TEMP_2, 2, SeabreezeShipping1F_EventScript_CheckElevatorArrival
+	goto_if_ne VAR_TEMP_3, 2, SeabreezeShipping1F_EventScript_CheckElevatorArrival
+	setvar VAR_TEMP_1, 2
+	end
+
+SeabreezeShipping1F_EventScript_CheckElevatorArrival::
+	goto_if_eq VAR_TEMP_0, 1, SeabreezeShipping1F_EventScript_SetFaceUpOnArrival
+	end
+
+SeabreezeShipping1F_OnFrame:
+	map_script_2 VAR_TEMP_1, 1, SeabreezeShipping1F_EventScript_FaceUpOnArrival
+	map_script_2 VAR_TEMP_1, 2, SeabreezeShipping1F_EventScript_FaceDownOnArrival
+	.2byte 0
+
+SeabreezeShipping1F_EventScript_SetFaceUpOnArrival::
+	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_1, 1
+	end
+
+SeabreezeShipping1F_EventScript_FaceUpOnArrival::
+	setvar VAR_TEMP_1, 0
+	lockall
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	releaseall
+	end
+
+SeabreezeShipping1F_EventScript_FaceDownOnArrival::
+	setvar VAR_TEMP_1, 0
+	lockall
+	applymovement LOCALID_PLAYER, Common_Movement_FaceDown
+	waitmovement 0
+	releaseall
+	end
+
+SeabreezeShipping1F_EventScript_Elevatorman::
+	lock
+	faceplayer
+	goto_if_unset FLAG_CARGO_SHIP_EVENT_COMPLETE, SeabreezeShipping1F_EventScript_ElevatormanClosed
+	goto_if_unset FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND, SeabreezeShipping1F_EventScript_ElevatormanClosed
+	msgbox SeabreezeShipping1F_Text_Elevatorman_GoDown, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SeabreezeShipping1F_EventScript_ElevatormanGoDown
+	release
+	end
+
+SeabreezeShipping1F_EventScript_ElevatormanClosed::
+	msgbox SeabreezeShipping1F_Text_Elevatorman_Closed, MSGBOX_NPC
+	release
+	end
+
+SeabreezeShipping1F_EventScript_ElevatormanGoDown::
+	setvar VAR_TEMP_0, 2
+	closemessage
+	fadescreen FADE_TO_BLACK
+	playse SE_ELEVATOR
+	waitse
+	warp MAP_SEABREEZE_SHIPPING, 12, 4
+	waitstate
+	end
+
+SeabreezeShipping1F_Text_Elevatorman_Closed:
+	.string "Sorry, kid, the building is\n"
+	.string "closed.$"
+
+SeabreezeShipping1F_Text_Elevatorman_GoDown:
+	.string "Would you like to go down?$"
+
+`

@@ -1,0 +1,182 @@
+raw `
+SeabreezeShipping2F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SeabreezeShipping2F_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, SeabreezeShipping2F_OnFrame
+	.byte 0
+
+SeabreezeShipping2F_OnTransition:
+	goto_if_set FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE, SeabreezeShipping2F_EventScript_TransitionComplete
+	setvar VAR_TEMP_0, 1
+	end
+
+SeabreezeShipping2F_EventScript_TransitionComplete::
+	setvar VAR_TEMP_0, 0
+	end
+
+SeabreezeShipping2F_OnFrame:
+	map_script_2 VAR_TEMP_0, 1, SeabreezeShipping2F_EventScript_IllegalBusinessScene
+	.2byte 0
+
+SeabreezeShipping2F_EventScript_IllegalBusinessScene::
+	setvar VAR_TEMP_0, 0
+	lockall
+	applymovement LOCALID_PLAYER, SeabreezeShipping2F_Movement_PlayerListen
+	waitmovement 0
+
+	msgbox SeabreezeShipping2F_Text_PresidentBusiness, MSGBOX_DEFAULT
+	msgbox SeabreezeShipping2F_Text_AlejandroBusiness, MSGBOX_DEFAULT
+	msgbox SeabreezeShipping2F_Text_PresidentWarning, MSGBOX_DEFAULT
+
+	playse SE_PIN
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_ALEJANDRO, Common_Movement_ExclamationMark
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_PRESIDENT, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_ALEJANDRO, Common_Movement_FaceLeft
+	waitmovement 0
+	msgbox SeabreezeShipping2F_Text_AlejandroOverheard, MSGBOX_DEFAULT
+
+	@ Alejandro reaches the player's column, then the player steps aside before he passes.
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_ALEJANDRO, SeabreezeShipping2F_Movement_AlejandroToPlayerColumn
+	waitmovement 0
+	applymovement LOCALID_PLAYER, SeabreezeShipping2F_Movement_PlayerMoveAside
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_ALEJANDRO, SeabreezeShipping2F_Movement_AlejandroToDoor
+	waitmovement 0
+	removeobject LOCALID_SEABREEZE_SHIPPING2F_ALEJANDRO
+
+	playse SE_PIN
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_PRESIDENT, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox SeabreezeShipping2F_Text_PresidentFlustered, MSGBOX_DEFAULT
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_PRESIDENT, SeabreezeShipping2F_Movement_PresidentToDoor
+	waitmovement 0
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_PRESIDENT, Common_Movement_FaceDown
+	waitmovement 0
+	msgbox SeabreezeShipping2F_Text_PresidentDemand, MSGBOX_DEFAULT
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_PRESIDENT, SeabreezeShipping2F_Movement_PresidentExit
+	waitmovement 0
+	removeobject LOCALID_SEABREEZE_SHIPPING2F_PRESIDENT
+
+	applymovement LOCALID_SEABREEZE_SHIPPING2F_ACCOUNTANT, SeabreezeShipping2F_Movement_AccountantApproach
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceDown
+	waitmovement 0
+	msgbox SeabreezeShipping2F_Text_AccountantChallenge, MSGBOX_DEFAULT
+	setflag FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE
+	trainerbattle_no_intro TRAINER_ACCOUNTANT_JUAN, SeabreezeShipping2F_Text_AccountantDefeat
+	releaseall
+	end
+
+SeabreezeShipping2F_EventScript_Accountant::
+	lock
+	faceplayer
+	goto_if_set FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE, SeabreezeShipping2F_EventScript_AccountantAfterBattle
+	msgbox SeabreezeShipping2F_Text_AccountantGrumbling, MSGBOX_DEFAULT
+	release
+	end
+
+SeabreezeShipping2F_EventScript_AccountantAfterBattle::
+	msgbox SeabreezeShipping2F_Text_AccountantAfterBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SeabreezeShipping2F_Movement_AlejandroToPlayerColumn:
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+SeabreezeShipping2F_Movement_PlayerMoveAside:
+	walk_left
+	step_end
+
+SeabreezeShipping2F_Movement_AlejandroToDoor:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SeabreezeShipping2F_Movement_PlayerListen:
+	walk_down
+	walk_down
+	face_right
+	step_end
+
+SeabreezeShipping2F_Movement_PresidentToDoor:
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+SeabreezeShipping2F_Movement_PresidentExit:
+	face_up
+	walk_up
+	step_end
+
+SeabreezeShipping2F_Movement_AccountantApproach:
+	walk_right
+	walk_right
+	face_up
+	step_end
+
+SeabreezeShipping2F_Text_PresidentBusiness:
+	.string "PRESIDENT: The shipment is ready.\p"
+	.string "Once the paperwork is filed, nobody\n"
+	.string "will know where the cargo really came\l"
+	.string "from.$"
+
+SeabreezeShipping2F_Text_AlejandroBusiness:
+	.string "ALEJANDRO: Excellent.\p"
+	.string "TEAM AQUA will have no trouble\n"
+	.string "moving it through the port.$"
+
+SeabreezeShipping2F_Text_PresidentWarning:
+	.string "PRESIDENT: If anyone learns\n"
+	.string "what this company is involved in...$"
+
+SeabreezeShipping2F_Text_AlejandroOverheard:
+	.string "ALEJANDRO: Well, well. I didn't expect\n"
+	.string "you to show up here. It doesn't\l"
+	.string "matter, though. Nothing can stop this\l"
+	.string "operation now.$"
+
+SeabreezeShipping2F_Text_PresidentFlustered:
+	.string "This isn't what it looks like! I have no\n"
+	.string "affiliation with TEAM AQUA!$"
+
+SeabreezeShipping2F_Text_PresidentDemand:
+	.string "I was assured there would be no risk if\n"
+	.string "I took on this role!\p"
+	.string "JUAN! You have POKéMON, don't you?\n"
+	.string "Battle that brat and buy me some time!$"
+
+SeabreezeShipping2F_Text_AccountantChallenge:
+	.string "Seriously? I don't have enough work?\p"
+	.string "Not to mention that this is not even\n"
+	.string "remotely part of my job description.\p"
+	.string "You know what? Fine. I need to blow off\n"
+	.string "some steam anyway.$"
+
+SeabreezeShipping2F_Text_AccountantDefeat:
+	.string "Well, at least I got to vent my\n"
+	.string "frustration. Back to work.$"
+
+SeabreezeShipping2F_Text_AccountantGrumbling:
+	.string "I have too much accounting work to do\n"
+	.string "already. Why am I being dragged into\l"
+	.string "this as well?$"
+
+SeabreezeShipping2F_Text_AccountantAfterBattle:
+	.string "What? It's not like our battle was\n"
+	.string "personal, kid. Shouldn't you be chasing\l"
+	.string "after those AQUA guys? I have work to do.$"
+`

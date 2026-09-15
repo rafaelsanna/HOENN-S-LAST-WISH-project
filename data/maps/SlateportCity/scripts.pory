@@ -7,6 +7,8 @@ SlateportCity_MapScripts::
 SlateportCity_OnTransition:
 	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 0
 	call SlateportCity_EventScript_EnterSlateport
+	call SlateportCity_EventScript_UpdateLukaCargo
+	call SlateportCity_EventScript_UpdateCargoShipReturn
 	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_MovePeopleForSternInterview
 	///// call_if_eq VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_SetReadyForScottScene /// remove scott 
 	end
@@ -16,6 +18,143 @@ SlateportCity_EventScript_EnterSlateport::
 	setvar VAR_CONTEST_HALL_STATE, 0
 	setflag FLAG_HIDE_SLATEPORT_CITY_CONTEST_REPORTER
 	return
+
+@ Keep the Slateport Luka object synchronized for both new and existing saves.
+SlateportCity_EventScript_UpdateLukaCargo::
+	goto_if_unset FLAG_AQUA_GRUNTS_PETALBURG_DONE, SlateportCity_EventScript_HideLukaCargo
+	goto_if_set FLAG_LUKA_CARGO_SHIP_ENCOUNTERED, SlateportCity_EventScript_HideLukaCargo
+	clearflag FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO
+	return
+
+SlateportCity_EventScript_HideLukaCargo::
+	setflag FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO
+	return
+
+SlateportCity_EventScript_UpdateCargoShipReturn::
+	goto_if_set FLAG_CARGO_SHIP_EVENT_COMPLETE, SlateportCity_EventScript_HideCargoShipReturn
+	goto_if_unset FLAG_SEABREEZE_SHIPPING_HQ_KEY_CARD_FOUND, SlateportCity_EventScript_HideCargoShipReturn
+	setvar VAR_TEMP_2, 1
+	clearflag FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO_RETURN
+	return
+
+SlateportCity_EventScript_HideCargoShipReturn::
+	setvar VAR_TEMP_2, 0
+	setflag FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO_RETURN
+	return
+
+SlateportCity_OnFrame:
+	map_script_2 VAR_TEMP_2, 1, SlateportCity_EventScript_CargoShipReturn
+	/////////// map_script_2 VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_ScottScene //// remove scott
+	.2byte 0
+
+SlateportCity_EventScript_CargoShipReturn::
+	setvar VAR_TEMP_2, 0
+	lockall
+	applymovement LOCALID_SLATEPORT_LUKA_CARGO_RETURN, Common_Movement_FaceLeft
+	applymovement LOCALID_PLAYER, Common_Movement_FaceRight
+	waitmovement 0
+	msgbox SlateportCity_Text_LukaCargoShipReturn, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_SLATEPORT_LUKA_CARGO_RETURN, SlateportCity_Movement_LukaCargoReturnExit
+	waitmovement 0
+	removeobject LOCALID_SLATEPORT_LUKA_CARGO_RETURN
+	setflag FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO_RETURN
+	setflag FLAG_CARGO_SHIP_EVENT_COMPLETE
+	releaseall
+	end
+
+SlateportCity_EventScript_LukaCargo::
+	lock
+	faceplayer
+	goto_if_unset FLAG_LUKA_SLATEPORT_CARGO_INTRO, SlateportCity_EventScript_LukaCargoFirstTalk
+	msgbox SlateportCity_Text_LukaCargoRepeat, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_EventScript_LukaCargoFirstTalk::
+	msgbox SlateportCity_Text_LukaCargoIntro, MSGBOX_DEFAULT
+	setflag FLAG_LUKA_SLATEPORT_CARGO_INTRO
+	release
+	end
+
+SlateportCity_EventScript_LukaCargoTrigger::
+	goto_if_unset FLAG_AQUA_GRUNTS_PETALBURG_DONE, SlateportCity_EventScript_LukaCargoTriggerDone
+	goto_if_set FLAG_LUKA_SLATEPORT_CARGO_INTRO, SlateportCity_EventScript_LukaCargoTriggerDone
+	goto_if_set FLAG_LUKA_CARGO_SHIP_ENCOUNTERED, SlateportCity_EventScript_LukaCargoTriggerDone
+	lockall
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_eq VAR_0x8004, 37, SlateportCity_EventScript_LukaCargoPath37
+	goto_if_eq VAR_0x8004, 39, SlateportCity_EventScript_LukaCargoPath39
+	goto_if_eq VAR_0x8004, 40, SlateportCity_EventScript_LukaCargoPath40
+
+SlateportCity_EventScript_LukaCargoPath38:
+	applymovement LOCALID_SLATEPORT_LUKA_CARGO, SlateportCity_Movement_LukaCargoToPlayer38
+	goto SlateportCity_EventScript_LukaCargoStartDialogue
+
+SlateportCity_EventScript_LukaCargoPath37:
+	applymovement LOCALID_SLATEPORT_LUKA_CARGO, SlateportCity_Movement_LukaCargoToPlayer37
+	goto SlateportCity_EventScript_LukaCargoStartDialogue
+
+SlateportCity_EventScript_LukaCargoPath39:
+	applymovement LOCALID_SLATEPORT_LUKA_CARGO, SlateportCity_Movement_LukaCargoToPlayer39
+	goto SlateportCity_EventScript_LukaCargoStartDialogue
+
+SlateportCity_EventScript_LukaCargoPath40:
+	applymovement LOCALID_SLATEPORT_LUKA_CARGO, SlateportCity_Movement_LukaCargoToPlayer40
+
+SlateportCity_EventScript_LukaCargoStartDialogue:
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox SlateportCity_Text_LukaCargoIntro, MSGBOX_DEFAULT
+	setflag FLAG_LUKA_SLATEPORT_CARGO_INTRO
+	releaseall
+	end
+
+SlateportCity_EventScript_LukaCargoTriggerDone::
+	end
+
+SlateportCity_Movement_LukaCargoToPlayer37:
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SlateportCity_Movement_LukaCargoToPlayer38:
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SlateportCity_Movement_LukaCargoToPlayer39:
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SlateportCity_Movement_LukaCargoToPlayer40:
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SlateportCity_Movement_LukaCargoReturnExit:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
 
 SlateportCity_EventScript_MovePeopleForSternInterview::
 	setobjectxyperm LOCALID_SLATEPORT_CAPT_STERN, 28, 13
@@ -46,10 +185,6 @@ SlateportCity_EventScript_MovePeopleForSternInterview::
 	////setobjectxyperm LOCALID_SLATEPORT_SCOTT, 22, 27
 	////setobjectmovementtype LOCALID_SLATEPORT_SCOTT, MOVEMENT_TYPE_FACE_RIGHT
 	////return
-
-SlateportCity_OnFrame:
-	/////////// map_script_2 VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_ScottScene //// remove scott
-	.2byte 0
 
 SlateportCity_EventScript_ScottScene::
 	lockall
@@ -1256,6 +1391,14 @@ SlateportCity_Text_SternsShipyardFerryComplete:
 	.string "ferry S.S. TIDAL is handled at the\l"
 	.string "HARBOR.”$"
 
+seabreeze::
+	msgbox SlateportCity_Text_SeabreezeSign, MSGBOX_SIGN
+	end
+
+SlateportCity_Text_SeabreezeSign:
+	.string "SEABREEZE SHIPPING\n"
+	.string "Connecting HOENN to the world.$"
+
 SlateportCity_Text_PokemonFanClubSign:
 	.string "POKéMON FAN CLUB\n"
 	.string "“Calling all fans of POKéMON!”$"
@@ -1393,7 +1536,32 @@ SlateportCity_Text_TakingBattleTentChallenge:
 
 SlateportCity_Text_Newfisherman:
     .string "My grandfather used to tell legends\n"
-    .string "about giant sea monsters hiding\n"
+    .string "about giant sea monsters hiding\l"
     .string "deep in the ocean…\p"
     .string "But lately… all I've been finding\n"
     .string "is MAGIKARP. And tiny ones at that.$"
+
+SlateportCity_Text_LukaCargoIntro:
+	.string "LUKA: Hey, {PLAYER}! All these AQUA\n"
+	.string "thugs have been blocking routes and\l"
+	.string "making it a pain to get around, so I\l"
+	.string "had to go through SLATEPORT on my\l"
+	.string "way to FORTREE.\p"
+	.string "But you know, they're really\n"
+	.string "suspicious. I get a feeling we can't\l"
+	.string "leave them be.\p"
+	.string "I saw a bunch of them loading a\n"
+	.string "a cargo ship over at the\l"
+	.string "SLATEPORT dock.$"
+
+SlateportCity_Text_LukaCargoRepeat:
+	.string "LUKA: We should go check out what\n"
+	.string "those shady AQUA members were doing\l"
+	.string "at the dock.$"
+
+SlateportCity_Text_LukaCargoShipReturn:
+	.string "LUKA: A key for the SEABREEZE SHIPPING\n"
+	.string "building? That's strange. I didn't think\l"
+	.string "they had any connection to TEAM AQUA.\p"
+	.string "I need to go fill CALENDULA in on this.\n"
+	.string "If you confront them, be careful.$"

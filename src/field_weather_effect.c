@@ -4025,6 +4025,11 @@ void PinkLeaves_InitVars(void)
     gWeatherPtr->pinkLeafVisibleCounter = 0;
     gWeatherPtr->noShadows = FALSE;
     Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY);
+
+    // Map connections transition weather in place and do not call
+    // StartWeather(), so prepare the resources here when entering Verdanturf
+    // from a connected map such as Route 117.
+    PinkLeaves_PrepareResources();
 }
 
 void PinkLeaves_InitAll(void)
@@ -4047,6 +4052,15 @@ void PinkLeaves_InitAll(void)
         for (i = 0; i < gWeatherPtr->pinkLeafSpriteCount; i++)
             UpdatePinkLeafSprite(gWeatherPtr->sprites.s1.rainSprites[i]);
     }
+}
+
+void PinkLeaves_PrepareResources(void)
+{
+    if (GetSpriteTileStartByTag(GFXTAG_PINK_LEAVES) == TAG_NONE)
+        LoadSpriteSheet(&sPinkLeavesSpriteSheet);
+
+    if (IndexOfSpritePaletteTag(PALTAG_PINK_LEAVES) == 0xFF)
+        LoadSpritePalette(&sPinkLeavesSpritePalette);
 }
 
 void PinkLeaves_Main(void)
