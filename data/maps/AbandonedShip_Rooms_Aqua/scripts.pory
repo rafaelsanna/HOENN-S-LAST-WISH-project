@@ -313,10 +313,10 @@ AbandonedShip_Text_Alejandro_Defeat:
 
 AbandonedShip_Text_Stella_Arrives:
 	.string "STELLA: Are you alright?\p"
-	.string "I can't believe you made it\n"
-	.string "here before me...\p"
-	.string "I've been tracking this ship\n"
-	.string "for three days straight.\p"
+	.string "I can't believe you made it here\n"
+	.string "before me...\p"
+	.string "I've been tracking this ship for three\n"
+	.string "days straight.\p"
 	.string "You shouldn't have come alone.$"
 
 AbandonedShip_Text_Alejandro_Retreats:
@@ -333,19 +333,17 @@ AbandonedShip_Text_Alejandro_Retreats:
 
 AbandonedShip_Text_Stella_Warning:
 	.string "STELLA: Listen carefully.\p"
-	.string "What Team Aqua is doing here\n"
-	.string "isn't just about this ship.\p"
-	.string "They're seizing control of\n"
-	.string "every major shipping lane\l"
-	.string "in Hoenn.\p"
-	.string "Cut the ports, cut the supply\n"
-	.string "lines -- the whole region\l"
-	.string "goes quiet.\p"
-	.string "That's the plan.\n"
-	.string "And it's already in motion.\p"
+	.string "What Team Aqua is doing here isn't\n"
+	.string "just about this ship.\p"
+	.string "They're seizing control of every\n"
+	.string "major shipping lane in Hoenn.\p"
+	.string "Cut the ports, cut the supply lines --\n"
+	.string "the whole region goes quiet.\p"
+	.string "That's the plan. And it's already in\n"
+	.string "motion.\p"
 	.string "We can't let them finish it.$"
 
 AbandonedShip_Text_Stella_Idle:
-	.string "STELLA: Stay close.\n"
-	.string "This place isn't safe.$"
+	.string "STELLA: Stay close. This place isn't\n"
+	.string "safe.$"
 `

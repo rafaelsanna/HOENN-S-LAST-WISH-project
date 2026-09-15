@@ -192,7 +192,9 @@ MossdeepCity_SpaceCenter_1F_EventScript_OldManMagma::
 MossdeepCity_SpaceCenter_1F_EventScript_Steven::
 	lock
 	faceplayer
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox MossdeepCity_SpaceCenter_1F_Text_StevenMagmaCantBeAllowedToTakeFuel, MSGBOX_DEFAULT
+	removefieldmugshot
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
@@ -367,14 +369,14 @@ MossdeepCity_SpaceCenter_1F_Text_MagmaWantsToSpoilMyDream:
 	.string "I'm not having any of that!$"
 
 MossdeepCity_SpaceCenter_1F_Text_StevenMagmaCantBeAllowedToTakeFuel:
-	.string "STEVEN: {PLAYER}{KUN}, have you read that\n"
-	.string "proclamation already?\p"
+	.string "STELLA: {PLAYER}{KUN}, have you read\n"
+	.string "that proclamation already?\p"
 	.string "TEAM MAGMA is coming after the rocket\n"
 	.string "fuel on this island.\p"
 	.string "I don't know what they'd need it for,\n"
 	.string "but they can't be allowed to take it.\p"
-	.string "I'll keep an eye on things for\n"
-	.string "a while longer.\p"
+	.string "I'll keep an eye on things for a while\n"
+	.string "longer.\p"
 	.string "In the meantime, why don't you go\n"
 	.string "check out the town?$"
 

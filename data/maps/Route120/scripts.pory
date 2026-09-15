@@ -373,17 +373,17 @@ Route120_EventScript_Callie::
 	end
 
 Route120_Text_StevenGreeting:
-	.string "STELLA: Hm? {PLAYER}{KUN}, hi.\n"
-	.string "It's been a while.\p"
+	.string "STELLA: Hm? {PLAYER}{KUN}, hi. It's been\n"
+	.string "a while.\p"
 	.string "There's something here that you can't\n"
 	.string "see, right?\p"
 	.string "Now, if I were to use this device on\n"
 	.string "the invisible obstacle…\p"
-	.string "No, no. Rather than describing it,\n"
-	.string "I should just show you.\l"
-	.string "That would be more fun.\p"
-	.string "{PLAYER}{KUN}, are your POKéMON ready for\n"
-	.string "battle?$"
+	.string "No, no. Rather than describing it, I\n"
+	.string "should just show you. That would be\l"
+	.string "more fun.\p"
+	.string "{PLAYER}{KUN}, are your POKéMON ready\n"
+	.string "for battle?$"
 
 Route120_Text_StevenIllWaitHere:
 	.string "STELLA: No?\p"
@@ -394,22 +394,21 @@ Route120_Text_StevenReadyForBattle:
 	.string "ready for battle?$"
 
 Route120_Text_StevenShowMeYourPower:
-	.string "STELLA: {PLAYER}{KUN}, show me your true\n"
-	.string "power as a TRAINER!$"
+	.string "STELLA: {PLAYER}{KUN}, show me your\n"
+	.string "true power as a TRAINER!$"
 
 Route120_Text_StevenUsedDevonScope:
-	.string "STEVEN used the DEVON SCOPE.\p"
-	.string "An invisible POKéMON became completely\n"
-	.string "visible!\p"
+	.string "STELLA used the DEVON SCOPE.\p"
+	.string "An invisible POKéMON became\n"
+	.string "completely visible!\p"
 	.string "The startled POKéMON attacked!$"
 
 Route120_Text_StevenGiveDevonScope:
-	.string "STELLA: I see…\n"
-	.string "Your battle style is intriguing.\p"
+	.string "STELLA: I see… Your battle style is\n"
+	.string "intriguing.\p"
 	.string "Your POKéMON have obviously grown\n"
 	.string "since I first met you in DEWFORD.\p"
-	.string "I'd like you to have this\n"
-	.string "DEVON SCOPE.\p"
+	.string "I'd like you to have this DEVON SCOPE.\p"
 	.string "Who knows, there may be other\n"
 	.string "concealed POKéMON.$"
 

@@ -13,9 +13,13 @@ MeteorFalls_StevensCave_EventScript_Steven::
 	waitmovement 0
 	applymovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_FacePlayer
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst, MSGBOX_DEFAULT
+	removefieldmugshot
 	trainerbattle_no_intro TRAINER_STEVEN, MeteorFalls_StevensCave_Text_StevenDefeat
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox MeteorFalls_StevensCave_Text_MyPredictionCameTrue, MSGBOX_DEFAULT
+	removefieldmugshot
 	setflag FLAG_DEFEATED_METEOR_FALLS_STEVEN
 	release
 	end
@@ -23,37 +27,36 @@ MeteorFalls_StevensCave_EventScript_Steven::
 MeteorFalls_StevensCave_EventScript_Defeated::
 	applymovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_FacePlayer
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox MeteorFalls_StevensCave_Text_MyPredictionCameTrue, MSGBOX_DEFAULT
+	removefieldmugshot
 	release
 	end
 
 MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst:
-	.string "STEVEN: Oh, wow, {PLAYER}{KUN}.\n"
-	.string "I'm amazed you knew where to find me.\p"
-	.string "Do you, uh…maybe think of me as\n"
-	.string "just a rock maniac?\p"
-	.string "No, that can't be right.\p"
-	.string "We battled alongside each other at\n"
-	.string "the SOOTOPOLIS SPACE CENTER.\p"
-	.string "You should have a very good idea\n"
-	.string "about how good I am.\p"
-	.string "Okay, {PLAYER}{KUN}, if you're going to mount\n"
-	.string "a serious challenge, expect the worst!$"
+	.string "STELLA: {PLAYER}!\p"
+	.string "You found me! I came to study the\n"
+	.string "stones in this cave.\p"
+	.string "But you know I do more than study\n"
+	.string "ancient ruins.\p"
+	.string "We fought side by side at the\n"
+	.string "MOSSDEEP SPACE CENTER.\p"
+	.string "Now, let's see how far you've come!\p"
+	.string "Give me everything you've got!$"
 
 MeteorFalls_StevensCave_Text_StevenDefeat:
-	.string "You…\n"
-	.string "I had no idea you'd become so strong…$"
+	.string "You've grown so strong...\p"
+	.string "I'm proud of you!$"
 
 MeteorFalls_StevensCave_Text_MyPredictionCameTrue:
-	.string "STEVEN: Come to think of it, ever since\n"
-	.string "our paths first crossed in GRANITE\l"
-	.string "CAVE in DEWFORD, I had this feeling.\p"
-	.string "I thought that you would eventually\n"
-	.string "become the CHAMPION.\p"
-	.string "My predictions usually come true.\p"
-	.string "And where will you go from here?\p"
-	.string "… … … … … …\n"
-	.string "… … … … … …\p"
-	.string "Fufufu, even I couldn't tell you that.$"
+	.string "STELLA: You've come so far.\p"
+	.string "When we met in GRANITE CAVE, you had\n"
+	.string "already stood up to MAGMA.\p"
+	.string "I knew you had something special. Now\n"
+	.string "you're the CHAMPION!\p"
+	.string "So, what's next, weird friend?\p"
+	.string "More mysteries? More battles?\p"
+	.string "Whatever you choose, keep that\n"
+	.string "courage of yours.$"
 
 `

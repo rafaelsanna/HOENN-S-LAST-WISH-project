@@ -5,7 +5,9 @@ GraniteCave_StevensRoom_MapScripts::
 GraniteCave_StevensRoom_EventScript_Steven::
 	lock
 	faceplayer
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox GraniteCave_StevensRoom_Text_ImStevenLetterForMe, MSGBOX_DEFAULT
+	removefieldmugshot
 	setvar VAR_0x8004, ITEM_LETTER
 	call Common_EventScript_PlayerHandedOverTheItem
 	setflag FLAG_DELIVERED_STEVEN_LETTER
@@ -63,7 +65,9 @@ GraniteCave_StevensRoom_EventScript_StevenExitSouth::
 	return
 
 GraniteCave_StevensRoom_EventScript_BagFull::
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox GraniteCave_StevensRoom_Text_OhBagIsFull, MSGBOX_DEFAULT
+	removefieldmugshot
 	return
 
 GraniteCave_StevensRoom_Movement_StevenExit:
@@ -107,29 +111,27 @@ GraniteCave_StevensRoom_EventScript_AncientPaiting::
 
 GraniteCave_StevensRoom_Text_ImStevenLetterForMe:
 	.string "My name is STELLA.\p"
-	.string "What are you doing in this cave\n"
-	.string "with such strange clothes?\p"
-	.string "Don't tell me you're with\n"
-	.string "TEAM MAGMA...\p"
-	.string "Oh? You're just exploring?\n"
-	.string "Good. You startled me.\p"
-	.string "A LETTER for me?\n"
-	.string "Really? Thank you.$"
+	.string "What are you doing in this cave with\n"
+	.string "such strange clothes?\p"
+	.string "Don't tell me you're with TEAM MAGMA...\p"
+	.string "Oh? You're just exploring? Good. You\n"
+	.string "startled me.\p"
+	.string "A LETTER for me? Really? Thank you.$"
 
 GraniteCave_StevensRoom_Text_ThankYouTakeThis:
 	.string "STELLA: You beat two MAGMA grunts\n"
 	.string "alone and still made it here...\p"
-	.string "Just to deliver this to me.\n"
-	.string "Thank you, weird friend!\p"
-	.string "Here, take this TM, STEEL WING.\n"
-	.string "It's my favorite move.$"
+	.string "Just to deliver this to me. Thank you,\n"
+	.string "weird friend!\p"
+	.string "Here, take this TM, STEEL WING. It's my\n"
+	.string "favorite move.$"
 
 GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:
 	.string "STELLA: I don't know what MAGMA is\n"
 	.string "after here... Rare ore? Energy?\p"
-	.string "Whatever it is, it's bad news,\n"
-	.string "but you beat them easily.$"
-	
+	.string "Whatever it is, it's bad news, but you\n"
+	.string "beat them easily.$"
+
 GraniteCave_StevensRoom_Text_RegisteredSteven:
 	.string "...$"
 
@@ -141,18 +143,19 @@ GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 	.string "STELLA: I came to study this old\n"
 	.string "painting. It must be thousands of\l"
 	.string "years old. Maybe even more...\p"
-	.string "It shows two titans - one of land,\n"
-	.string "one of sea. Ancient guardians.\p"
+	.string "It shows two titans - one of land, one\n"
+	.string "of sea. Ancient guardians.\p"
 	.string "That strange meteor in the sky made\n"
 	.string "me wonder if it was connected.\p"
-	.string "Maybe Team MAGMA was looking for this,\n"
-	.string "but good thing you stopped them.\p"
+	.string "Maybe Team MAGMA was looking for\n"
+	.string "this, but good thing you stopped\l"
+	.string "them.\p"
 	.string "I should go. I think Team MAGMA may be\n"
 	.string "exploring other caves in HOENN.\p"
 	.string "Good luck out there.$"
 
 GraniteCave_StevensRoom_Text_OhBagIsFull:
-	.string "Oh, your BAG is full…\n"
-	.string "That's too bad, then.$"
+	.string "Oh, your BAG is full… That's too bad,\n"
+	.string "then.$"
 
 `

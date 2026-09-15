@@ -56,15 +56,21 @@ Route128_EventScript_KyogreAwakenedScene::
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox Route128_Text_StevenWhatIsHappening, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenWalkUp
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox Route128_Text_StevenWholeWorldWillDrown, MSGBOX_DEFAULT
+	removefieldmugshot
 	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox Route128_Text_StevenImGoingToSootopolis, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -279,26 +285,26 @@ Route128_Text_MaxieThisDefiesBelief:
 	.string "They've upset the balance of nature…$"
 
 Route128_Text_StevenWhatIsHappening:
-	.string "STEVEN: {PLAYER}{KUN}!\n"
-	.string "What is happening?$"
+	.string "STELLA: {PLAYER}{KUN}! What is\n"
+	.string "happening?$"
 
 Route128_Text_StevenWholeWorldWillDrown:
 	.string "This is terrible…\p"
 	.string "After the scorching heat wave ended,\n"
 	.string "this deluge began.\p"
-	.string "If this doesn't stop, all of HOENN…\n"
-	.string "No, the whole world will drown.\p"
-	.string "This huge rain cloud is spreading\n"
-	.string "from above SOOTOPOLIS…\p"
-	.string "What in the world is taking place there?\p"
+	.string "If this doesn't stop, all of HOENN… No,\n"
+	.string "the whole world will drown.\p"
+	.string "This huge rain cloud is spreading from\n"
+	.string "above SOOTOPOLIS…\p"
+	.string "What in the world is taking place\n"
+	.string "there?\p"
 	.string "There's no point arguing here…\n"
 	.string "SOOTOPOLIS might provide answers…$"
 
 Route128_Text_StevenImGoingToSootopolis:
-	.string "{PLAYER}{KUN}…\n"
-	.string "I don't know what you intend to do,\l"
-	.string "but don't do anything reckless.\p"
-	.string "Okay.\n"
-	.string "I'm going to SOOTOPOLIS.$"
+	.string "{PLAYER}{KUN}… I don't know what you\n"
+	.string "intend to do, but don't do anything\l"
+	.string "reckless.\p"
+	.string "Okay. I'm going to SOOTOPOLIS.$"
 
 `

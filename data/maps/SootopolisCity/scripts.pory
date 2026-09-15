@@ -892,31 +892,43 @@ SootopolisCity_EventScript_Steven::
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 3, SootopolisCity_EventScript_StevenHelpedWallace
 	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_StevenHelpedWallace
 	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_StevenMaxieArchieLeft
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_SoThatsRayquaza, MSGBOX_DEFAULT
+	removefieldmugshot
 	releaseall
 	end
 
 SootopolisCity_EventScript_StevenHelpWallace::
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_KnowWhatsNeededToHelpHim, MSGBOX_DEFAULT
+	removefieldmugshot
 	releaseall
 	end
 
 SootopolisCity_EventScript_StevenMaxieArchieLeft::
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_MaxieArchieLeft, MSGBOX_DEFAULT
+	removefieldmugshot
 	releaseall
 	end
 
 SootopolisCity_EventScript_StevenHelpedWallace::
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_NeverBeenToSkyPillar, MSGBOX_DEFAULT
+	removefieldmugshot
 	releaseall
 	end
 
 SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin::
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_InvolvedWithCrisisComeWithMe, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_StartWalkToCaveOfOriginWest
 	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_DoesThisMakeYourFearPokemon, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenWalkToCaveOfOrigin
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerWalkToCaveOfOrigin
@@ -927,7 +939,9 @@ SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin::
 	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenArriveCaveEntrance
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerArriveCaveEntrance
 	waitmovement 0
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 	msgbox SootopolisCity_Text_HereWereAreHelpWallace, MSGBOX_DEFAULT
+	removefieldmugshot
 	closemessage
 	setflag FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerEnterCaveOfOrigin
@@ -2058,52 +2072,52 @@ SootopolisCity_Text_TryingMeaninglessToPokemon:
 	.string "to POKéMON…$"
 
 SootopolisCity_Text_InvolvedWithCrisisComeWithMe:
-	.string "STEVEN: Those POKéMON fighting…\n"
+	.string "STELLA: Those POKéMON fighting…\n"
 	.string "GROUDON… And KYOGRE…\p"
-	.string "The two super-ancient POKéMON\n"
-	.string "were awakened from a long sleep…\p"
+	.string "The two super-ancient POKéMON were\n"
+	.string "awakened from a long sleep…\p"
 	.string "And now they are smashing each other\n"
 	.string "with their uncontrollable energy…\p"
 	.string "…{PLAYER}{KUN}.\p"
 	.string "You being here now I'll take to mean\n"
 	.string "that you're prepared to become\l"
 	.string "involved in this crisis.\p"
-	.string "Well, then, there's someone that\n"
-	.string "I'd like you to meet.\p"
+	.string "Well, then, there's someone that I'd\n"
+	.string "like you to meet.\p"
 	.string "Come with me, please.$"
 
 SootopolisCity_Text_DoesThisMakeYourFearPokemon:
-	.string "STEVEN: Listen, {PLAYER}{KUN}.\p"
-	.string "Does seeing GROUDON and KYOGRE make\n"
-	.string "you think POKéMON are to be feared?\p"
-	.string "But that's not true.\n"
-	.string "POKéMON are really more…\p"
-	.string "…Why am I asking you this?\n"
-	.string "You already know.$"
+	.string "STELLA: Listen, {PLAYER}.\p"
+	.string "I know their power is frightening.\p"
+	.string "But GROUDON and KYOGRE aren't the\n"
+	.string "only side of POKéMON.\p"
+	.string "Think of the partners who have stood\n"
+	.string "by you all this way.\p"
+	.string "We have to find a way to stop this.$"
 
 SootopolisCity_Text_HereWereAreHelpWallace:
-	.string "STEVEN: Okay, here we are!\p"
+	.string "STELLA: Okay, here we are!\p"
 	.string "Inside here you'll find someone named\n"
 	.string "WALLACE.\p"
 	.string "I think you have what's needed to\n"
 	.string "help him…$"
 
 SootopolisCity_Text_KnowWhatsNeededToHelpHim:
-	.string "STEVEN: I think you have what's\n"
+	.string "STELLA: I think you have what's\n"
 	.string "needed to help him…$"
 
 SootopolisCity_Text_NeverBeenToSkyPillar:
-	.string "STEVEN: The SKY PILLAR…\p"
-	.string "I've never been there.\n"
-	.string "I wonder where it could be?$"
+	.string "STELLA: The SKY PILLAR…\p"
+	.string "I've never been there. I wonder where\n"
+	.string "it could be?$"
 
 SootopolisCity_Text_SoThatsRayquaza:
-	.string "STEVEN: So that's RAYQUAZA…\p"
+	.string "STELLA: So that's RAYQUAZA…\p"
 	.string "It's incredible how the two rampaging\n"
 	.string "POKéMON would flee from it in fear…$"
 
 SootopolisCity_Text_MaxieArchieLeft:
-	.string "STEVEN: It looks like both MAGNUS and\n"
+	.string "STELLA: It looks like both MAGNUS and\n"
 	.string "INAE have gone away somewhere.\p"
 	.string "Perhaps they've gone to MT. PYRE to\n"
 	.string "return those ORBS…$"

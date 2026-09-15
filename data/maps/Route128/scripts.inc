@@ -115,490 +115,502 @@ Route128_EventScript_KyogreAwakenedScene::
 # 58 "data/maps/Route128/scripts.pory"
 	waitmovement 0
 # 59 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_StevenWhatIsHappening, MSGBOX_DEFAULT
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 60 "data/maps/Route128/scripts.pory"
-	closemessage
+	msgbox Route128_Text_StevenWhatIsHappening, MSGBOX_DEFAULT
 # 61 "data/maps/Route128/scripts.pory"
-	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenWalkUp
+	removefieldmugshot
 # 62 "data/maps/Route128/scripts.pory"
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-# 63 "data/maps/Route128/scripts.pory"
-	waitmovement 0
-# 64 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_StevenWholeWorldWillDrown, MSGBOX_DEFAULT
-# 65 "data/maps/Route128/scripts.pory"
-	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
-# 66 "data/maps/Route128/scripts.pory"
-	waitmovement 0
-# 67 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_StevenImGoingToSootopolis, MSGBOX_DEFAULT
-# 68 "data/maps/Route128/scripts.pory"
 	closemessage
+# 63 "data/maps/Route128/scripts.pory"
+	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenWalkUp
+# 64 "data/maps/Route128/scripts.pory"
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+# 65 "data/maps/Route128/scripts.pory"
+	waitmovement 0
+# 66 "data/maps/Route128/scripts.pory"
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
+# 67 "data/maps/Route128/scripts.pory"
+	msgbox Route128_Text_StevenWholeWorldWillDrown, MSGBOX_DEFAULT
+# 68 "data/maps/Route128/scripts.pory"
+	removefieldmugshot
 # 69 "data/maps/Route128/scripts.pory"
 	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
 # 70 "data/maps/Route128/scripts.pory"
 	waitmovement 0
 # 71 "data/maps/Route128/scripts.pory"
-	delay 50
+	createfieldmugshot MUGSHOT_STELLA, EMOTE_NORMAL
 # 72 "data/maps/Route128/scripts.pory"
-	setfieldeffectargument 0, 1
+	msgbox Route128_Text_StevenImGoingToSootopolis, MSGBOX_DEFAULT
 # 73 "data/maps/Route128/scripts.pory"
-	dofieldeffect FLDEFF_NPCFLY_OUT
+	removefieldmugshot
 # 74 "data/maps/Route128/scripts.pory"
-	delay 15
+	closemessage
 # 75 "data/maps/Route128/scripts.pory"
-	removeobject LOCALID_ROUTE128_STEVEN
+	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
 # 76 "data/maps/Route128/scripts.pory"
-	waitfieldeffect FLDEFF_NPCFLY_OUT
+	waitmovement 0
 # 77 "data/maps/Route128/scripts.pory"
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	delay 50
 # 78 "data/maps/Route128/scripts.pory"
-	setvar VAR_ROUTE128_STATE, 2
+	setfieldeffectargument 0, 1
 # 79 "data/maps/Route128/scripts.pory"
-	releaseall
+	dofieldeffect FLDEFF_NPCFLY_OUT
 # 80 "data/maps/Route128/scripts.pory"
-	end
+	delay 15
 # 81 "data/maps/Route128/scripts.pory"
-
+	removeobject LOCALID_ROUTE128_STEVEN
 # 82 "data/maps/Route128/scripts.pory"
-Route128_Movement_Unused1:
+	waitfieldeffect FLDEFF_NPCFLY_OUT
 # 83 "data/maps/Route128/scripts.pory"
-	walk_fast_left
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 # 84 "data/maps/Route128/scripts.pory"
-	step_end
+	setvar VAR_ROUTE128_STATE, 2
 # 85 "data/maps/Route128/scripts.pory"
-
+	releaseall
 # 86 "data/maps/Route128/scripts.pory"
-Route128_Movement_Unused2:
+	end
 # 87 "data/maps/Route128/scripts.pory"
-	walk_left
-# 88 "data/maps/Route128/scripts.pory"
-	walk_left
-# 89 "data/maps/Route128/scripts.pory"
-	walk_left
-# 90 "data/maps/Route128/scripts.pory"
-	walk_left
-# 91 "data/maps/Route128/scripts.pory"
-	walk_left
-# 92 "data/maps/Route128/scripts.pory"
-	walk_left
-# 93 "data/maps/Route128/scripts.pory"
-	walk_up
-# 94 "data/maps/Route128/scripts.pory"
-	walk_up
-# 95 "data/maps/Route128/scripts.pory"
-	walk_up
-# 96 "data/maps/Route128/scripts.pory"
-	walk_up
-# 97 "data/maps/Route128/scripts.pory"
-	walk_up
-# 98 "data/maps/Route128/scripts.pory"
-	walk_up
-# 99 "data/maps/Route128/scripts.pory"
-	step_end
-# 100 "data/maps/Route128/scripts.pory"
 
+# 88 "data/maps/Route128/scripts.pory"
+Route128_Movement_Unused1:
+# 89 "data/maps/Route128/scripts.pory"
+	walk_fast_left
+# 90 "data/maps/Route128/scripts.pory"
+	step_end
+# 91 "data/maps/Route128/scripts.pory"
+
+# 92 "data/maps/Route128/scripts.pory"
+Route128_Movement_Unused2:
+# 93 "data/maps/Route128/scripts.pory"
+	walk_left
+# 94 "data/maps/Route128/scripts.pory"
+	walk_left
+# 95 "data/maps/Route128/scripts.pory"
+	walk_left
+# 96 "data/maps/Route128/scripts.pory"
+	walk_left
+# 97 "data/maps/Route128/scripts.pory"
+	walk_left
+# 98 "data/maps/Route128/scripts.pory"
+	walk_left
+# 99 "data/maps/Route128/scripts.pory"
+	walk_up
+# 100 "data/maps/Route128/scripts.pory"
+	walk_up
 # 101 "data/maps/Route128/scripts.pory"
-Route128_Movement_StevenWalkUp:
+	walk_up
 # 102 "data/maps/Route128/scripts.pory"
 	walk_up
 # 103 "data/maps/Route128/scripts.pory"
-	step_end
+	walk_up
 # 104 "data/maps/Route128/scripts.pory"
-
+	walk_up
 # 105 "data/maps/Route128/scripts.pory"
-Route128_Movement_StevenApproachPlayer:
+	step_end
 # 106 "data/maps/Route128/scripts.pory"
-	walk_fast_left
+
 # 107 "data/maps/Route128/scripts.pory"
-	step_end
+Route128_Movement_StevenWalkUp:
 # 108 "data/maps/Route128/scripts.pory"
-
+	walk_up
 # 109 "data/maps/Route128/scripts.pory"
-Route128_Movement_ArchieLookAround:
+	step_end
 # 110 "data/maps/Route128/scripts.pory"
-	walk_fast_down
+
 # 111 "data/maps/Route128/scripts.pory"
-	walk_in_place_faster_left
+Route128_Movement_StevenApproachPlayer:
 # 112 "data/maps/Route128/scripts.pory"
-	delay_16
+	walk_fast_left
 # 113 "data/maps/Route128/scripts.pory"
-	walk_in_place_faster_right
+	step_end
 # 114 "data/maps/Route128/scripts.pory"
-	delay_16
+
 # 115 "data/maps/Route128/scripts.pory"
-	delay_16
+Route128_Movement_ArchieLookAround:
 # 116 "data/maps/Route128/scripts.pory"
-	walk_in_place_faster_down
+	walk_fast_down
 # 117 "data/maps/Route128/scripts.pory"
-	step_end
+	walk_in_place_faster_left
 # 118 "data/maps/Route128/scripts.pory"
-
+	delay_16
 # 119 "data/maps/Route128/scripts.pory"
-Route128_Movement_ArchieBackUp:
-# 120 "data/maps/Route128/scripts.pory"
-	lock_facing_direction
-# 121 "data/maps/Route128/scripts.pory"
-	walk_slow_up
-# 122 "data/maps/Route128/scripts.pory"
-	delay_16
-# 123 "data/maps/Route128/scripts.pory"
-	unlock_facing_direction
-# 124 "data/maps/Route128/scripts.pory"
-	step_end
-# 125 "data/maps/Route128/scripts.pory"
-
-# 126 "data/maps/Route128/scripts.pory"
-Route128_Movement_ArchieRunLeft:
-# 127 "data/maps/Route128/scripts.pory"
-	walk_fast_left
-# 128 "data/maps/Route128/scripts.pory"
-	walk_fast_left
-# 129 "data/maps/Route128/scripts.pory"
-	walk_fast_left
-# 130 "data/maps/Route128/scripts.pory"
 	walk_in_place_faster_right
-# 131 "data/maps/Route128/scripts.pory"
+# 120 "data/maps/Route128/scripts.pory"
+	delay_16
+# 121 "data/maps/Route128/scripts.pory"
+	delay_16
+# 122 "data/maps/Route128/scripts.pory"
+	walk_in_place_faster_down
+# 123 "data/maps/Route128/scripts.pory"
 	step_end
-# 132 "data/maps/Route128/scripts.pory"
+# 124 "data/maps/Route128/scripts.pory"
 
+# 125 "data/maps/Route128/scripts.pory"
+Route128_Movement_ArchieBackUp:
+# 126 "data/maps/Route128/scripts.pory"
+	lock_facing_direction
+# 127 "data/maps/Route128/scripts.pory"
+	walk_slow_up
+# 128 "data/maps/Route128/scripts.pory"
+	delay_16
+# 129 "data/maps/Route128/scripts.pory"
+	unlock_facing_direction
+# 130 "data/maps/Route128/scripts.pory"
+	step_end
+# 131 "data/maps/Route128/scripts.pory"
+
+# 132 "data/maps/Route128/scripts.pory"
+Route128_Movement_ArchieRunLeft:
 # 133 "data/maps/Route128/scripts.pory"
-Route128_Movement_ArchieExit:
-# 134 "data/maps/Route128/scripts.pory"
-	delay_16
-# 135 "data/maps/Route128/scripts.pory"
-	delay_16
-# 136 "data/maps/Route128/scripts.pory"
-	walk_fast_up
-# 137 "data/maps/Route128/scripts.pory"
 	walk_fast_left
+# 134 "data/maps/Route128/scripts.pory"
+	walk_fast_left
+# 135 "data/maps/Route128/scripts.pory"
+	walk_fast_left
+# 136 "data/maps/Route128/scripts.pory"
+	walk_in_place_faster_right
+# 137 "data/maps/Route128/scripts.pory"
+	step_end
 # 138 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+
 # 139 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+Route128_Movement_ArchieExit:
 # 140 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+	delay_16
 # 141 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+	delay_16
 # 142 "data/maps/Route128/scripts.pory"
 	walk_fast_up
 # 143 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+	walk_fast_left
 # 144 "data/maps/Route128/scripts.pory"
 	walk_fast_up
 # 145 "data/maps/Route128/scripts.pory"
 	walk_fast_up
 # 146 "data/maps/Route128/scripts.pory"
-	step_end
+	walk_fast_up
 # 147 "data/maps/Route128/scripts.pory"
-
+	walk_fast_up
 # 148 "data/maps/Route128/scripts.pory"
-Route128_Movement_MaxieWalkLeft:
+	walk_fast_up
 # 149 "data/maps/Route128/scripts.pory"
-	walk_left
+	walk_fast_up
 # 150 "data/maps/Route128/scripts.pory"
-	walk_left
+	walk_fast_up
 # 151 "data/maps/Route128/scripts.pory"
-	delay_8
+	walk_fast_up
 # 152 "data/maps/Route128/scripts.pory"
-	delay_4
-# 153 "data/maps/Route128/scripts.pory"
 	step_end
-# 154 "data/maps/Route128/scripts.pory"
+# 153 "data/maps/Route128/scripts.pory"
 
+# 154 "data/maps/Route128/scripts.pory"
+Route128_Movement_MaxieWalkLeft:
 # 155 "data/maps/Route128/scripts.pory"
-Route128_Movement_MaxieApproachArchie:
+	walk_left
 # 156 "data/maps/Route128/scripts.pory"
 	walk_left
 # 157 "data/maps/Route128/scripts.pory"
-	walk_in_place_faster_down
+	delay_8
 # 158 "data/maps/Route128/scripts.pory"
-	step_end
+	delay_4
 # 159 "data/maps/Route128/scripts.pory"
-
+	step_end
 # 160 "data/maps/Route128/scripts.pory"
-Route128_Movement_MaxieExit:
+
 # 161 "data/maps/Route128/scripts.pory"
-	walk_fast_left
+Route128_Movement_MaxieApproachArchie:
 # 162 "data/maps/Route128/scripts.pory"
-	walk_fast_left
+	walk_left
 # 163 "data/maps/Route128/scripts.pory"
-	walk_fast_left
+	walk_in_place_faster_down
 # 164 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+	step_end
 # 165 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+
 # 166 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+Route128_Movement_MaxieExit:
 # 167 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+	walk_fast_left
 # 168 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+	walk_fast_left
 # 169 "data/maps/Route128/scripts.pory"
-	walk_fast_up
+	walk_fast_left
 # 170 "data/maps/Route128/scripts.pory"
 	walk_fast_up
 # 171 "data/maps/Route128/scripts.pory"
-	step_end
+	walk_fast_up
 # 172 "data/maps/Route128/scripts.pory"
-
+	walk_fast_up
 # 173 "data/maps/Route128/scripts.pory"
-Route128_Movement_MaxieApproachPlayer:
+	walk_fast_up
 # 174 "data/maps/Route128/scripts.pory"
-	walk_right
+	walk_fast_up
 # 175 "data/maps/Route128/scripts.pory"
-	walk_in_place_faster_down
+	walk_fast_up
 # 176 "data/maps/Route128/scripts.pory"
-	step_end
+	walk_fast_up
 # 177 "data/maps/Route128/scripts.pory"
-
+	step_end
 # 178 "data/maps/Route128/scripts.pory"
-Route128_EventScript_Isaiah::
+
 # 179 "data/maps/Route128/scripts.pory"
-	trainerbattle_single TRAINER_ISAIAH_1, Route128_Text_IsaiahIntro, Route128_Text_IsaiahDefeat
+Route128_Movement_MaxieApproachPlayer:
 # 180 "data/maps/Route128/scripts.pory"
-	specialvar VAR_RESULT, ShouldTryRematchBattle
+	walk_right
 # 181 "data/maps/Route128/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, Route128_EventScript_RematchIsaiah
+	walk_in_place_faster_down
 # 182 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_IsaiahPostBattle, MSGBOX_DEFAULT
+	step_end
 # 183 "data/maps/Route128/scripts.pory"
-	release
+
 # 184 "data/maps/Route128/scripts.pory"
-	end
+Route128_EventScript_Isaiah::
 # 185 "data/maps/Route128/scripts.pory"
-
+	trainerbattle_single TRAINER_ISAIAH_1, Route128_Text_IsaiahIntro, Route128_Text_IsaiahDefeat
 # 186 "data/maps/Route128/scripts.pory"
-Route128_EventScript_RegisterIsaiah::
-# 187 "data/maps/Route128/scripts.pory"
-	special PlayerFaceTrainerAfterBattle
-# 188 "data/maps/Route128/scripts.pory"
-	waitmovement 0
-# 189 "data/maps/Route128/scripts.pory"
-	@ PokéNav removed msgbox Route128_Text_IsaiahRegister, MSGBOX_DEFAULT
-# 190 "data/maps/Route128/scripts.pory"
-	@ PokéNav removed register_matchcall TRAINER_ISAIAH_1
-# 191 "data/maps/Route128/scripts.pory"
-	release
-# 192 "data/maps/Route128/scripts.pory"
-	end
-# 193 "data/maps/Route128/scripts.pory"
-
-# 194 "data/maps/Route128/scripts.pory"
-Route128_EventScript_RematchIsaiah::
-# 195 "data/maps/Route128/scripts.pory"
-	trainerbattle_rematch TRAINER_ISAIAH_1, Route128_Text_IsaiahRematchIntro, Route128_Text_IsaiahRematchDefeat
-# 196 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_IsaiahPostRematch, MSGBOX_AUTOCLOSE
-# 197 "data/maps/Route128/scripts.pory"
-	end
-# 198 "data/maps/Route128/scripts.pory"
-
-# 199 "data/maps/Route128/scripts.pory"
-Route128_EventScript_Katelyn::
-# 200 "data/maps/Route128/scripts.pory"
-	trainerbattle_single TRAINER_KATELYN_1, Route128_Text_KatelynIntro, Route128_Text_KatelynDefeat
-# 201 "data/maps/Route128/scripts.pory"
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-# 202 "data/maps/Route128/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, Route128_EventScript_RematchKatelyn
-# 203 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_KatelynPostBattle, MSGBOX_DEFAULT
-# 204 "data/maps/Route128/scripts.pory"
+# 187 "data/maps/Route128/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, Route128_EventScript_RematchIsaiah
+# 188 "data/maps/Route128/scripts.pory"
+	msgbox Route128_Text_IsaiahPostBattle, MSGBOX_DEFAULT
+# 189 "data/maps/Route128/scripts.pory"
 	release
-# 205 "data/maps/Route128/scripts.pory"
+# 190 "data/maps/Route128/scripts.pory"
 	end
-# 206 "data/maps/Route128/scripts.pory"
+# 191 "data/maps/Route128/scripts.pory"
 
-# 207 "data/maps/Route128/scripts.pory"
-Route128_EventScript_RegisterKatelyn::
-# 208 "data/maps/Route128/scripts.pory"
+# 192 "data/maps/Route128/scripts.pory"
+Route128_EventScript_RegisterIsaiah::
+# 193 "data/maps/Route128/scripts.pory"
 	special PlayerFaceTrainerAfterBattle
-# 209 "data/maps/Route128/scripts.pory"
+# 194 "data/maps/Route128/scripts.pory"
 	waitmovement 0
-# 210 "data/maps/Route128/scripts.pory"
-	@ PokéNav removed msgbox Route128_Text_KatelynRegister, MSGBOX_DEFAULT
-# 211 "data/maps/Route128/scripts.pory"
-	@ PokéNav removed register_matchcall TRAINER_KATELYN_1
-# 212 "data/maps/Route128/scripts.pory"
+# 195 "data/maps/Route128/scripts.pory"
+	@ PokéNav removed msgbox Route128_Text_IsaiahRegister, MSGBOX_DEFAULT
+# 196 "data/maps/Route128/scripts.pory"
+	@ PokéNav removed register_matchcall TRAINER_ISAIAH_1
+# 197 "data/maps/Route128/scripts.pory"
 	release
+# 198 "data/maps/Route128/scripts.pory"
+	end
+# 199 "data/maps/Route128/scripts.pory"
+
+# 200 "data/maps/Route128/scripts.pory"
+Route128_EventScript_RematchIsaiah::
+# 201 "data/maps/Route128/scripts.pory"
+	trainerbattle_rematch TRAINER_ISAIAH_1, Route128_Text_IsaiahRematchIntro, Route128_Text_IsaiahRematchDefeat
+# 202 "data/maps/Route128/scripts.pory"
+	msgbox Route128_Text_IsaiahPostRematch, MSGBOX_AUTOCLOSE
+# 203 "data/maps/Route128/scripts.pory"
+	end
+# 204 "data/maps/Route128/scripts.pory"
+
+# 205 "data/maps/Route128/scripts.pory"
+Route128_EventScript_Katelyn::
+# 206 "data/maps/Route128/scripts.pory"
+	trainerbattle_single TRAINER_KATELYN_1, Route128_Text_KatelynIntro, Route128_Text_KatelynDefeat
+# 207 "data/maps/Route128/scripts.pory"
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+# 208 "data/maps/Route128/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, Route128_EventScript_RematchKatelyn
+# 209 "data/maps/Route128/scripts.pory"
+	msgbox Route128_Text_KatelynPostBattle, MSGBOX_DEFAULT
+# 210 "data/maps/Route128/scripts.pory"
+	release
+# 211 "data/maps/Route128/scripts.pory"
+	end
+# 212 "data/maps/Route128/scripts.pory"
+
 # 213 "data/maps/Route128/scripts.pory"
-	end
+Route128_EventScript_RegisterKatelyn::
 # 214 "data/maps/Route128/scripts.pory"
-
+	special PlayerFaceTrainerAfterBattle
 # 215 "data/maps/Route128/scripts.pory"
-Route128_EventScript_RematchKatelyn::
+	waitmovement 0
 # 216 "data/maps/Route128/scripts.pory"
-	trainerbattle_rematch TRAINER_KATELYN_1, Route128_Text_KatelynRematchIntro, Route128_Text_KatelynRematchDefeat
+	@ PokéNav removed msgbox Route128_Text_KatelynRegister, MSGBOX_DEFAULT
 # 217 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_KatelynPostRematch, MSGBOX_AUTOCLOSE
+	@ PokéNav removed register_matchcall TRAINER_KATELYN_1
 # 218 "data/maps/Route128/scripts.pory"
-	end
+	release
 # 219 "data/maps/Route128/scripts.pory"
-
+	end
 # 220 "data/maps/Route128/scripts.pory"
-Route128_EventScript_Alexa::
+
 # 221 "data/maps/Route128/scripts.pory"
-	trainerbattle_single TRAINER_ALEXA, Route128_Text_AlexaIntro, Route128_Text_AlexaDefeat
+Route128_EventScript_RematchKatelyn::
 # 222 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_AlexaPostBattle, MSGBOX_AUTOCLOSE
+	trainerbattle_rematch TRAINER_KATELYN_1, Route128_Text_KatelynRematchIntro, Route128_Text_KatelynRematchDefeat
 # 223 "data/maps/Route128/scripts.pory"
-	end
+	msgbox Route128_Text_KatelynPostRematch, MSGBOX_AUTOCLOSE
 # 224 "data/maps/Route128/scripts.pory"
-
+	end
 # 225 "data/maps/Route128/scripts.pory"
-Route128_EventScript_Ruben::
+
 # 226 "data/maps/Route128/scripts.pory"
-	trainerbattle_single TRAINER_RUBEN, Route128_Text_RubenIntro, Route128_Text_RubenDefeat
+Route128_EventScript_Alexa::
 # 227 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_RubenPostBattle, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_ALEXA, Route128_Text_AlexaIntro, Route128_Text_AlexaDefeat
 # 228 "data/maps/Route128/scripts.pory"
-	end
+	msgbox Route128_Text_AlexaPostBattle, MSGBOX_AUTOCLOSE
 # 229 "data/maps/Route128/scripts.pory"
-
+	end
 # 230 "data/maps/Route128/scripts.pory"
-Route128_EventScript_Wayne::
+
 # 231 "data/maps/Route128/scripts.pory"
-	trainerbattle_single TRAINER_WAYNE, Route128_Text_WayneIntro, Route128_Text_WayneDefeat
+Route128_EventScript_Ruben::
 # 232 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_WaynePostBattle, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_RUBEN, Route128_Text_RubenIntro, Route128_Text_RubenDefeat
 # 233 "data/maps/Route128/scripts.pory"
-	end
+	msgbox Route128_Text_RubenPostBattle, MSGBOX_AUTOCLOSE
 # 234 "data/maps/Route128/scripts.pory"
-
+	end
 # 235 "data/maps/Route128/scripts.pory"
-Route128_EventScript_Harrison::
+
 # 236 "data/maps/Route128/scripts.pory"
-	trainerbattle_single TRAINER_HARRISON, Route128_Text_HarrisonIntro, Route128_Text_HarrisonDefeat
+Route128_EventScript_Wayne::
 # 237 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_HarrisonPostBattle, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_WAYNE, Route128_Text_WayneIntro, Route128_Text_WayneDefeat
 # 238 "data/maps/Route128/scripts.pory"
-	end
+	msgbox Route128_Text_WaynePostBattle, MSGBOX_AUTOCLOSE
 # 239 "data/maps/Route128/scripts.pory"
-
-# 240 "data/maps/Route128/scripts.pory"
-Route128_EventScript_Carlee::
-# 241 "data/maps/Route128/scripts.pory"
-	trainerbattle_single TRAINER_CARLEE, Route128_Text_CarleeIntro, Route128_Text_CarleeDefeat
-# 242 "data/maps/Route128/scripts.pory"
-	msgbox Route128_Text_CarleePostBattle, MSGBOX_AUTOCLOSE
-# 243 "data/maps/Route128/scripts.pory"
 	end
+# 240 "data/maps/Route128/scripts.pory"
+
+# 241 "data/maps/Route128/scripts.pory"
+Route128_EventScript_Harrison::
+# 242 "data/maps/Route128/scripts.pory"
+	trainerbattle_single TRAINER_HARRISON, Route128_Text_HarrisonIntro, Route128_Text_HarrisonDefeat
+# 243 "data/maps/Route128/scripts.pory"
+	msgbox Route128_Text_HarrisonPostBattle, MSGBOX_AUTOCLOSE
 # 244 "data/maps/Route128/scripts.pory"
-
+	end
 # 245 "data/maps/Route128/scripts.pory"
-Route128_Text_ArchieWhatHappened:
+
 # 246 "data/maps/Route128/scripts.pory"
-	.string "ARCHIE: What happened…\n"
+Route128_EventScript_Carlee::
 # 247 "data/maps/Route128/scripts.pory"
-	.string "What is this wretched scene…\p"
+	trainerbattle_single TRAINER_CARLEE, Route128_Text_CarleeIntro, Route128_Text_CarleeDefeat
 # 248 "data/maps/Route128/scripts.pory"
-	.string "Did I…make a horrible mistake?$"
+	msgbox Route128_Text_CarleePostBattle, MSGBOX_AUTOCLOSE
 # 249 "data/maps/Route128/scripts.pory"
-
+	end
 # 250 "data/maps/Route128/scripts.pory"
-Route128_Text_ArchieIOnlyWanted:
+
 # 251 "data/maps/Route128/scripts.pory"
-	.string "I…\n"
+Route128_Text_ArchieWhatHappened:
 # 252 "data/maps/Route128/scripts.pory"
-	.string "I only wanted…$"
+	.string "ARCHIE: What happened…\n"
 # 253 "data/maps/Route128/scripts.pory"
-
+	.string "What is this wretched scene…\p"
 # 254 "data/maps/Route128/scripts.pory"
-Route128_Text_MaxieDoYouUnderstandNow:
+	.string "Did I…make a horrible mistake?$"
 # 255 "data/maps/Route128/scripts.pory"
-	.string "MAXIE: Do you understand now,\n"
+
 # 256 "data/maps/Route128/scripts.pory"
-	.string "ARCHIE?\p"
+Route128_Text_ArchieIOnlyWanted:
 # 257 "data/maps/Route128/scripts.pory"
-	.string "Do you finally see how disastrous\n"
+	.string "I…\n"
 # 258 "data/maps/Route128/scripts.pory"
-	.string "your dream turned out to be?\p"
+	.string "I only wanted…$"
 # 259 "data/maps/Route128/scripts.pory"
-	.string "We have to hurry! We have to do\n"
+
 # 260 "data/maps/Route128/scripts.pory"
-	.string "something before the situation goes\l"
+Route128_Text_MaxieDoYouUnderstandNow:
 # 261 "data/maps/Route128/scripts.pory"
-	.string "completely out of control!$"
+	.string "MAXIE: Do you understand now,\n"
 # 262 "data/maps/Route128/scripts.pory"
-
+	.string "ARCHIE?\p"
 # 263 "data/maps/Route128/scripts.pory"
-Route128_Text_MaxieResposibilityFallsToArchieAndMe:
+	.string "Do you finally see how disastrous\n"
 # 264 "data/maps/Route128/scripts.pory"
-	.string "MAXIE: {PLAYER}, don't say anything.\p"
+	.string "your dream turned out to be?\p"
 # 265 "data/maps/Route128/scripts.pory"
-	.string "I know that I have no right to be\n"
+	.string "We have to hurry! We have to do\n"
 # 266 "data/maps/Route128/scripts.pory"
-	.string "critical of ARCHIE…\p"
+	.string "something before the situation goes\l"
 # 267 "data/maps/Route128/scripts.pory"
-	.string "But the way things are now, I doubt\n"
+	.string "completely out of control!$"
 # 268 "data/maps/Route128/scripts.pory"
-	.string "that we humans will be capable of\l"
-# 269 "data/maps/Route128/scripts.pory"
-	.string "doing anything about it.\p"
-# 270 "data/maps/Route128/scripts.pory"
-	.string "But neither can we stand by and\n"
-# 271 "data/maps/Route128/scripts.pory"
-	.string "just watch helplessly.\p"
-# 272 "data/maps/Route128/scripts.pory"
-	.string "The responsibility for putting an end\n"
-# 273 "data/maps/Route128/scripts.pory"
-	.string "to this falls to ARCHIE and me…$"
-# 274 "data/maps/Route128/scripts.pory"
 
+# 269 "data/maps/Route128/scripts.pory"
+Route128_Text_MaxieResposibilityFallsToArchieAndMe:
+# 270 "data/maps/Route128/scripts.pory"
+	.string "MAXIE: {PLAYER}, don't say anything.\p"
+# 271 "data/maps/Route128/scripts.pory"
+	.string "I know that I have no right to be\n"
+# 272 "data/maps/Route128/scripts.pory"
+	.string "critical of ARCHIE…\p"
+# 273 "data/maps/Route128/scripts.pory"
+	.string "But the way things are now, I doubt\n"
+# 274 "data/maps/Route128/scripts.pory"
+	.string "that we humans will be capable of\l"
 # 275 "data/maps/Route128/scripts.pory"
-Route128_Text_MaxieThisDefiesBelief:
+	.string "doing anything about it.\p"
 # 276 "data/maps/Route128/scripts.pory"
-	.string "MAXIE: This defies belief…\p"
+	.string "But neither can we stand by and\n"
 # 277 "data/maps/Route128/scripts.pory"
-	.string "Those super-ancient POKéMON…\p"
+	.string "just watch helplessly.\p"
 # 278 "data/maps/Route128/scripts.pory"
-	.string "Their power is unbelievable.\n"
+	.string "The responsibility for putting an end\n"
 # 279 "data/maps/Route128/scripts.pory"
-	.string "They've upset the balance of nature…$"
+	.string "to this falls to ARCHIE and me…$"
 # 280 "data/maps/Route128/scripts.pory"
 
 # 281 "data/maps/Route128/scripts.pory"
-Route128_Text_StevenWhatIsHappening:
+Route128_Text_MaxieThisDefiesBelief:
 # 282 "data/maps/Route128/scripts.pory"
-	.string "STEVEN: {PLAYER}{KUN}!\n"
+	.string "MAXIE: This defies belief…\p"
 # 283 "data/maps/Route128/scripts.pory"
-	.string "What is happening?$"
+	.string "Those super-ancient POKéMON…\p"
 # 284 "data/maps/Route128/scripts.pory"
-
+	.string "Their power is unbelievable.\n"
 # 285 "data/maps/Route128/scripts.pory"
-Route128_Text_StevenWholeWorldWillDrown:
+	.string "They've upset the balance of nature…$"
 # 286 "data/maps/Route128/scripts.pory"
-	.string "This is terrible…\p"
-# 287 "data/maps/Route128/scripts.pory"
-	.string "After the scorching heat wave ended,\n"
-# 288 "data/maps/Route128/scripts.pory"
-	.string "this deluge began.\p"
-# 289 "data/maps/Route128/scripts.pory"
-	.string "If this doesn't stop, all of HOENN…\n"
-# 290 "data/maps/Route128/scripts.pory"
-	.string "No, the whole world will drown.\p"
-# 291 "data/maps/Route128/scripts.pory"
-	.string "This huge rain cloud is spreading\n"
-# 292 "data/maps/Route128/scripts.pory"
-	.string "from above SOOTOPOLIS…\p"
-# 293 "data/maps/Route128/scripts.pory"
-	.string "What in the world is taking place there?\p"
-# 294 "data/maps/Route128/scripts.pory"
-	.string "There's no point arguing here…\n"
-# 295 "data/maps/Route128/scripts.pory"
-	.string "SOOTOPOLIS might provide answers…$"
-# 296 "data/maps/Route128/scripts.pory"
 
+# 287 "data/maps/Route128/scripts.pory"
+Route128_Text_StevenWhatIsHappening:
+# 288 "data/maps/Route128/scripts.pory"
+	.string "STELLA: {PLAYER}{KUN}! What is\n"
+# 289 "data/maps/Route128/scripts.pory"
+	.string "happening?$"
+# 290 "data/maps/Route128/scripts.pory"
+
+# 291 "data/maps/Route128/scripts.pory"
+Route128_Text_StevenWholeWorldWillDrown:
+# 292 "data/maps/Route128/scripts.pory"
+	.string "This is terrible…\p"
+# 293 "data/maps/Route128/scripts.pory"
+	.string "After the scorching heat wave ended,\n"
+# 294 "data/maps/Route128/scripts.pory"
+	.string "this deluge began.\p"
+# 295 "data/maps/Route128/scripts.pory"
+	.string "If this doesn't stop, all of HOENN… No,\n"
+# 296 "data/maps/Route128/scripts.pory"
+	.string "the whole world will drown.\p"
 # 297 "data/maps/Route128/scripts.pory"
-Route128_Text_StevenImGoingToSootopolis:
+	.string "This huge rain cloud is spreading from\n"
 # 298 "data/maps/Route128/scripts.pory"
-	.string "{PLAYER}{KUN}…\n"
+	.string "above SOOTOPOLIS…\p"
 # 299 "data/maps/Route128/scripts.pory"
-	.string "I don't know what you intend to do,\l"
+	.string "What in the world is taking place\n"
 # 300 "data/maps/Route128/scripts.pory"
-	.string "but don't do anything reckless.\p"
+	.string "there?\p"
 # 301 "data/maps/Route128/scripts.pory"
-	.string "Okay.\n"
+	.string "There's no point arguing here…\n"
 # 302 "data/maps/Route128/scripts.pory"
-	.string "I'm going to SOOTOPOLIS.$"
+	.string "SOOTOPOLIS might provide answers…$"
+# 303 "data/maps/Route128/scripts.pory"
+
+# 304 "data/maps/Route128/scripts.pory"
+Route128_Text_StevenImGoingToSootopolis:
+# 305 "data/maps/Route128/scripts.pory"
+	.string "{PLAYER}{KUN}… I don't know what you\n"
+# 306 "data/maps/Route128/scripts.pory"
+	.string "intend to do, but don't do anything\l"
+# 307 "data/maps/Route128/scripts.pory"
+	.string "reckless.\p"
+# 308 "data/maps/Route128/scripts.pory"
+	.string "Okay. I'm going to SOOTOPOLIS.$"
