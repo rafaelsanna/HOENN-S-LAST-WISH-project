@@ -17103,7 +17103,7 @@ F_TRAINER_FEMALE |
 #line 6629
             .iv = TRAINER_PARTY_IVS(24, 24, 24, 24, 24, 24),
 #line 6627
-            .ability = ABILITY_TECHNICIAN,
+            .ability = ABILITY_ADAPTABILITY,
 #line 6628
             .lvl = 43,
             .nature = NATURE_HARDY,
@@ -17151,8 +17151,10 @@ F_TRAINER_FEMALE |
             },
             {
 #line 6648
-            .species = SPECIES_URSALUNA,
+            .species = SPECIES_SNORLAX,
             .gender = TRAINER_MON_RANDOM_GENDER,
+#line 6648
+            .heldItem = ITEM_CHESTO_BERRY,
 #line 6650
             .iv = TRAINER_PARTY_IVS(24, 24, 24, 0, 24, 24),
 #line 6649
@@ -17161,10 +17163,10 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 6651
-                MOVE_FACADE,
-                MOVE_HIGH_HORSEPOWER,
                 MOVE_REST,
-                MOVE_PROTECT,
+                MOVE_SLEEP_TALK,
+                MOVE_BODY_SLAM,
+                MOVE_CRUNCH,
             },
             },
             {
@@ -17172,7 +17174,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_MUNCHLAX,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6656
-            .heldItem = ITEM_CHESTO_BERRY,
+            .heldItem = ITEM_EVIOLITE,
 #line 6658
             .iv = TRAINER_PARTY_IVS(24, 24, 24, 0, 24, 24),
 #line 6657
