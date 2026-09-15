@@ -1314,3 +1314,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/route120grotto/scripts.inc"
 
 	.include "data/maps/Mossdeepcave/scripts.inc"
+
+	.include "data/maps/MossdeepCity_House5/scripts.inc"

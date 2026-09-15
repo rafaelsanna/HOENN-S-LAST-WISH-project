@@ -5170,6 +5170,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/Mossdeepcave/border.bin",
       "blockdata_filepath": "data/layouts/Mossdeepcave/map.bin"
+    },
+    {
+      "id": "LAYOUT_MOSSDEEP_CITY_HOUSE5",
+      "name": "MossdeepCity_House5_Layout",
+      "width": 10,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/MossdeepCity_House5/border.bin",
+      "blockdata_filepath": "data/layouts/MossdeepCity_House5/map.bin"
     }
   ]
 }
