@@ -8,4 +8,6 @@
 // Exported ROM declarations
 void HideMapNamePopUpWindow(void);
 void ShowMapNamePopup(void);
+bool8 MapNamePopup_IsActive(void);
+void MapNamePopup_TryShowQueuedPopup(void);
 #endif //GUARD_MAP_NAME_POPUP_H

@@ -65,6 +65,7 @@
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
+#include "text_window.h"
 #include "window.h"
 #include "radio.h"
 #include "constants/rgb.h"
@@ -3511,6 +3512,8 @@ static const u8 *Radio_GetSpecialDisplayName(u16 songId)
 // icon so the song name gets the full width.
 // ---------------------------------------------------------------------------
 #define RADIO_POPUP_WINDOW_WIDTH       15
+#define RADIO_POPUP_TEXT_PALETTE_NUM   15
+#define RADIO_POPUP_FRAME_PALETTE_NUM  13
 #define RADIO_POPUP_OFFSCREEN_Y        40
 #define RADIO_POPUP_SLIDE_DURATION     18
 #define RADIO_POPUP_SCROLL_DELAY        7
@@ -3550,7 +3553,7 @@ static const struct WindowTemplate sRadioPopupWindowTemplate =
     .tilemapTop = 1,
     .width = RADIO_POPUP_WINDOW_WIDTH,
     .height = 3,
-    .paletteNum = 15,
+    .paletteNum = RADIO_POPUP_TEXT_PALETTE_NUM,
     .baseBlock = 0x240,
 };
 
@@ -3667,8 +3670,12 @@ static void Radio_DrawNowPlayingPopup(u8 taskId)
 
     visible[i] = EOS;
 
-    FillWindowPixelBuffer(task->rtWindowId, PIXEL_FILL(1));
-    DrawStdWindowFrame(task->rtWindowId, FALSE);
+    DrawStdFrameWithCustomTileAndPalette(
+        task->rtWindowId,
+        FALSE,
+        STD_WINDOW_BASE_TILE_NUM,
+        RADIO_POPUP_FRAME_PALETTE_NUM
+    );
 
     // SAME LINE:
     //   Now PLAYING BLUE BIRD - (NARUTO)...
@@ -3758,6 +3765,7 @@ static bool8 Radio_UpdatePopupSlide(u8 taskId)
 static bool8 Radio_ShouldYieldPopup(void)
 {
     return gMain.callback2 != CB2_Overworld
+        || MapNamePopup_IsActive()
         || GetMapNamePopUpWindowId() != WINDOW_NONE
         || GetStartMenuWindowId() != WINDOW_NONE
         || IsOverworldLinkActive()
@@ -3790,6 +3798,14 @@ static void Radio_DestroyNowPlayingPopup(u8 taskId)
     DestroyTask(taskId);
 }
 
+void Radio_CancelNowPlayingPopup(void)
+{
+    u8 taskId = FindTaskIdByFunc(Task_RadioNowPlayingPopup);
+
+    if (taskId != TASK_NONE)
+        Radio_DestroyNowPlayingPopup(taskId);
+}
+
 static void Task_RadioNowPlayingPopup(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
@@ -3814,6 +3830,11 @@ static void Task_RadioNowPlayingPopup(u8 taskId)
             return;
         }
 
+        LoadPalette(
+            GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->pal,
+            BG_PLTT_ID(RADIO_POPUP_FRAME_PALETTE_NUM),
+            PLTT_SIZE_4BPP
+        );
         Radio_SetPopupOffset(taskId, RADIO_POPUP_OFFSCREEN_Y);
         PutWindowTilemap(task->rtWindowId);
         Radio_DrawNowPlayingPopup(taskId);
@@ -3882,6 +3903,7 @@ void Radio_TryShowQueuedPopup(void)
     if (sRadioPopupPendingSong == 0
      || RadioPopup_IsActive()
      || AchievementPopup_IsActive()
+     || MapNamePopup_IsActive()
      || GetMapNamePopUpWindowId() != WINDOW_NONE
      || GetStartMenuWindowId() != WINDOW_NONE
      || IsOverworldLinkActive()

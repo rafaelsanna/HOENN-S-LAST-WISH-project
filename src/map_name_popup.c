@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "map_name_popup.h"
 #include "palette.h"
+#include "radio.h"
 #include "region_map.h"
 #include "rtc.h"
 #include "start_menu.h"
@@ -47,6 +48,7 @@ static void LoadMapNamePopUpWindowBg(void);
 
 // EWRAM
 EWRAM_DATA u8 gPopupTaskId = 0;
+static EWRAM_DATA bool8 sMapNamePopupPending;
 
 // .rodata
 static const u8 sMapPopUp_Table[][960] =
@@ -363,36 +365,67 @@ enum {
 
 void ShowMapNamePopup(void)
 {
-    if (FlagGet(FLAG_HIDE_MAP_NAME_POPUP) != TRUE)
+    if (FlagGet(FLAG_HIDE_MAP_NAME_POPUP) == TRUE)
     {
-        if (!FuncIsActiveTask(Task_MapNamePopUpWindow))
+        sMapNamePopupPending = FALSE;
+        return;
+    }
+
+    // The radio and the BW map popup both use BG0. Defer the map popup while
+    // the radio popup owns that layer instead of letting the HBlank callback
+    // and BG0 tilemap overwrite the radio window.
+    if (RadioPopup_IsActive())
+    {
+        sMapNamePopupPending = TRUE;
+        return;
+    }
+
+    sMapNamePopupPending = FALSE;
+
+    if (!MapNamePopup_IsActive())
+    {
+        // New pop up window
+        if (OW_POPUP_GENERATION == GEN_5)
         {
-            // New pop up window
-            if (OW_POPUP_GENERATION == GEN_5)
-            {
-                gPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 100);
+            gPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 100);
 
-                if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
-                    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
-            }
-            else
-            {
-                gPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 90);
-                SetGpuReg(REG_OFFSET_BG0VOFS, POPUP_OFFSCREEN_Y);
-            }
-
-            gTasks[gPopupTaskId].tState = STATE_PRINT;
-            gTasks[gPopupTaskId].tYOffset = POPUP_OFFSCREEN_Y;
+            if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
+                SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
         }
         else
         {
-            // There's already a pop up window running.
-            // Hurry the old pop up offscreen so the new one can appear.
-            if (gTasks[gPopupTaskId].tState != STATE_SLIDE_OUT)
-                gTasks[gPopupTaskId].tState = STATE_SLIDE_OUT;
-            gTasks[gPopupTaskId].tIncomingPopUp = TRUE;
+            gPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 90);
+            SetGpuReg(REG_OFFSET_BG0VOFS, POPUP_OFFSCREEN_Y);
         }
+
+        gTasks[gPopupTaskId].tState = STATE_PRINT;
+        gTasks[gPopupTaskId].tYOffset = POPUP_OFFSCREEN_Y;
     }
+    else
+    {
+        // There's already a pop up window running.
+        // Hurry the old pop up offscreen so the new one can appear.
+        if (gTasks[gPopupTaskId].tState != STATE_SLIDE_OUT)
+            gTasks[gPopupTaskId].tState = STATE_SLIDE_OUT;
+        gTasks[gPopupTaskId].tIncomingPopUp = TRUE;
+    }
+}
+
+bool8 MapNamePopup_IsActive(void)
+{
+    return FuncIsActiveTask(Task_MapNamePopUpWindow);
+}
+
+void MapNamePopup_TryShowQueuedPopup(void)
+{
+    if (!sMapNamePopupPending
+     || FlagGet(FLAG_HIDE_MAP_NAME_POPUP) == TRUE
+     || RadioPopup_IsActive()
+     || MapNamePopup_IsActive())
+        return;
+
+    sMapNamePopupPending = FALSE;
+    ShowMapNamePopup();
 }
 
 static void Task_MapNamePopUpWindow(u8 taskId)
@@ -470,6 +503,8 @@ static void Task_MapNamePopUpWindow(u8 taskId)
 
 void HideMapNamePopUpWindow(void)
 {
+    sMapNamePopupPending = FALSE;
+
     if (FuncIsActiveTask(Task_MapNamePopUpWindow))
     {
     #ifdef UBFIX

@@ -48,6 +48,7 @@
 #include "palette.h"
 #include "play_time.h"
 #include "random.h"
+#include "radio.h"
 #include "roamer.h"
 #include "rotating_gate.h"
 #include "rtc.h"
@@ -85,7 +86,6 @@
 extern bool8 RadioPriority_ShouldBlockBgmChange(void);
 extern bool8 RadioPriority_NextTrack(void);
 extern bool8 RadioPriority_PreviousTrack(void);
-extern void Radio_TryShowQueuedPopup(void);
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -1738,6 +1738,7 @@ static void OverworldBasic(void)
     RunTasks();
     Achievement_TryShowQueuedPopup();
     Radio_TryShowQueuedPopup();
+    MapNamePopup_TryShowQueuedPopup();
     AnimateSprites();
     CameraUpdate();
     UpdateCameraPanning();
@@ -2082,6 +2083,7 @@ static void FieldClearVBlankHBlankCallbacks(void)
 
     SetVBlankCallback(NULL);
     SetHBlankCallback(NULL);
+    Radio_CancelNowPlayingPopup();
 }
 
 static void SetFieldVBlankCallback(void)
