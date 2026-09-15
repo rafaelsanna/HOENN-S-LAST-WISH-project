@@ -6624,7 +6624,7 @@ Double Battle: Yes
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Eevee @ Eviolite  
-Ability: Technician  
+Ability: Adaptability  
 Level: 43  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
 - Last Resort 
@@ -6645,15 +6645,15 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe
 - Tri Attack  
 - Thunderbolt   
 
-Ursaluna   
+Snorlax @ Chesto Berry   
 Level: 44
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe  
-- Facade  
-- High Horsepower
-- Rest
-- Protect 
+- Rest  
+- Sleep Talk
+- Body Slam
+- Crunch
 
-Munchlax @ Chesto Berry    
+Munchlax @ Eviolite   
 Level: 43  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe   
 - Rest  
