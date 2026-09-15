@@ -309,6 +309,9 @@ $(OBJEVENTGFXDIR)/people/man_3.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/man_4.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
+$(OBJEVENTGFXDIR)/people/accountant.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 2 -mheight 4
+
 $(OBJEVENTGFXDIR)/people/mr_stone.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
@@ -5000,4 +5003,3 @@ graphics/radio/amaterasu.4bpp: graphics/radio/amaterasu.png
 
 graphics/radio/amaterasu.gbapal: graphics/radio/amaterasu.png
 	$(GFX) $< $@
-

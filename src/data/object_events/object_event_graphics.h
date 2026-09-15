@@ -138,6 +138,7 @@ const u32 gObjectEventPic_CyclingTriathleteM[] = INCBIN_U32("graphics/object_eve
 const u32 gObjectEventPic_CyclingTriathleteF[] = INCBIN_U32("graphics/object_events/pics/people/cycling_triathlete_f.4bpp");
 const u32 gObjectEventPic_MrStone[] = INCBIN_U32("graphics/object_events/pics/people/mr_stone.4bpp");
 const u32 gObjectEventPic_Man4[] = INCBIN_U32("graphics/object_events/pics/people/man_4.4bpp");
+const u32 gObjectEventPic_Accountant[] = INCBIN_U32("graphics/object_events/pics/people/accountant.4bpp");
 const u32 gObjectEventPic_Man5[] = INCBIN_U32("graphics/object_events/pics/people/man_5.4bpp");
 const u32 gObjectEventPic_Nurse[] = INCBIN_U32("graphics/object_events/pics/people/nurse.4bpp");
 const u32 gObjectEventPic_ProfBirch[] = INCBIN_U32("graphics/object_events/pics/people/prof_birch.4bpp");
@@ -421,6 +422,7 @@ const u16 gObjectEventPaletteLight2[] = INCBIN_U16("graphics/object_events/palet
 const u16 gObjectEventPal_Substitute[] = INCBIN_U16("graphics/object_events/pics/pokemon_old/substitute.gbapal");
 const u32 gObjectEventPic_TrappedBlipbug[] = INCBIN_U32("graphics/object_events/pics/pokemon_old/trapped_blipbug.4bpp");
 const u16 gObjectEventPal_TrappedBlipbug[] = INCBIN_U16("graphics/object_events/pics/pokemon_old/trapped_blipbug.gbapal");
+const u16 gObjectEventPal_Accountant[] = INCBIN_U16("graphics/object_events/palettes/accountant.gbapal");
 
 const u16 gObjectEventPaletteEmotes[] = INCBIN_U16("graphics/misc/emotes.gbapal");
 const u16 gObjectEventPaletteNeonLight[] = INCBIN_U16("graphics/object_events/palettes/neon_light.gbapal");

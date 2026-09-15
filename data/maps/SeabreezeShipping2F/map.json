@@ -44,7 +44,7 @@
     },
     {
       "local_id": "LOCALID_SEABREEZE_SHIPPING2F_ACCOUNTANT",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_ACCOUNTANT",
       "x": 0,
       "y": 5,
       "elevation": 0,
