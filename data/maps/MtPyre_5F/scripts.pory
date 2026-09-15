@@ -1,6 +1,45 @@
 raw `
 MtPyre_5F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_5F_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, MtPyre_5F_OnWarpIntoMap
 	.byte 0
+
+MtPyre_5F_OnTransition::
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MtPyre_5F_OnTransition_End
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MtPyre_5F_OnTransition_End
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_5F_OnTransition_End
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_5F_OnTransition_End
+	random 5
+	copyvar VAR_MOSSDEEP_TEDDIURSA_FLOOR, VAR_RESULT
+	goto_if_eq VAR_MOSSDEEP_TEDDIURSA_FLOOR, 4, MtPyre_5F_ShowTeddiursa
+	goto MtPyre_5F_OnTransition_End
+
+MtPyre_5F_ShowTeddiursa:
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+
+MtPyre_5F_OnTransition_End:
+	end
+
+MtPyre_5F_OnWarpIntoMap:
+	map_script_2 VAR_TEMP_0, VAR_TEMP_0, MtPyre_5F_EventScript_UpdateTeddiursaVisibility
+	.2byte 0
+
+MtPyre_5F_EventScript_UpdateTeddiursaVisibility:
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MtPyre_5F_HideTeddiursa
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MtPyre_5F_HideTeddiursa
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_5F_HideTeddiursa
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_5F_HideTeddiursa
+	goto_if_ne VAR_MOSSDEEP_TEDDIURSA_FLOOR, 4, MtPyre_5F_HideTeddiursa
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	end
+
+MtPyre_5F_HideTeddiursa:
+	removeobject LOCALID_MT_PYRE_5F_TEDDIURSA
+	end
 
 @ Seems like the scripts for the 4F and 5F were swapped
 

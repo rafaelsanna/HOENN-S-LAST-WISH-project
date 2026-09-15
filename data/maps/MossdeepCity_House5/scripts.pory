@@ -1,0 +1,182 @@
+raw `
+MossdeepCity_House5_MapScripts::
+	.byte 0
+
+MossdeepCity_House5_EventScript_LittleGirl_StartQuest::
+	lock
+	faceplayer
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_EventScript_LittleGirl_Complete
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_LittleGirl_BeginQuest
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, MossdeepCity_House5_EventScript_LittleGirl_GiveHoney
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, MossdeepCity_House5_EventScript_LittleGirl_GiveHoney
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MossdeepCity_House5_EventScript_LittleGirl_StillSearching
+	msgbox MossdeepCity_House5_Text_LittleGirl_StillSearching, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_House5_EventScript_LittleGirl_StillSearching::
+	msgbox MossdeepCity_House5_Text_LittleGirl_StillSearching, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_House5_EventScript_LittleGirl_BeginQuest::
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox MossdeepCity_House5_Text_LittleGirl_BeginQuest, MSGBOX_DEFAULT
+	setflag FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED
+	release
+	end
+
+MossdeepCity_House5_EventScript_LittleGirl_GiveHoney::
+	msgbox MossdeepCity_House5_Text_LittleGirl_GiveHoney, MSGBOX_DEFAULT
+	giveitem ITEM_HONEY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 0
+	setvar VAR_MOSSDEEP_TEDDIURSA_FLOOR, 0
+	setflag FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN
+	msgbox MossdeepCity_House5_Text_LittleGirl_HoneyGiven, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll::
+	checkfollowernpc
+	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_LittleGirl_FollowerMissing
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox MossdeepCity_House5_Text_LittleGirl_ReceiveDoll, MSGBOX_DEFAULT
+	checkitemspace ITEM_PEAT_BLOCK
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	giveitem ITEM_PEAT_BLOCK
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	destroyfollowernpc
+	setflag FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED
+	msgbox MossdeepCity_House5_Text_LittleGirl_Reward, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_House5_EventScript_LittleGirl_FollowerMissing::
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND
+	msgbox MossdeepCity_House5_Text_LittleGirl_FollowerMissing, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_House5_EventScript_LittleGirl_Complete::
+	msgbox MossdeepCity_House5_Text_LittleGirl_Complete, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_House5_EventScript_Dad::
+	lock
+	faceplayer
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_EventScript_Dad_Complete
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_Dad_AfterQuestStart
+	msgbox MossdeepCity_House5_Text_Dad_BeforeQuest, MSGBOX_NPC
+	release
+	end
+
+MossdeepCity_House5_EventScript_Dad_AfterQuestStart::
+	msgbox MossdeepCity_House5_Text_Dad_AfterQuestStart, MSGBOX_NPC
+	release
+	end
+
+MossdeepCity_House5_EventScript_Dad_Complete::
+	msgbox MossdeepCity_House5_Text_Dad_Complete, MSGBOX_NPC
+	release
+	end
+
+MossdeepCity_House5_EventScript_Mom::
+	lock
+	faceplayer
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_EventScript_Mom_Complete
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_Mom_AfterQuestStart
+	msgbox MossdeepCity_House5_Text_Mom_BeforeQuest, MSGBOX_NPC
+	release
+	end
+
+MossdeepCity_House5_EventScript_Mom_AfterQuestStart::
+	msgbox MossdeepCity_House5_Text_Mom_AfterQuestStart, MSGBOX_NPC
+	release
+	end
+
+MossdeepCity_House5_EventScript_Mom_Complete::
+	msgbox MossdeepCity_House5_Text_Mom_Complete, MSGBOX_NPC
+	release
+	end
+
+MossdeepCity_House5_Text_LittleGirl_BeginQuest:
+	.string "My little doll is gone…\p"
+    .string "She was right beside me, and then...\n"
+    .string "just like that... she wasn't.\p"
+	.string "My brother saw her last. He got scared\n"
+	.string "and won't tell me what happened.\p"
+	.string "Would you help me find her?$"
+
+MossdeepCity_House5_Text_LittleGirl_StillSearching:
+	.string "I wonder where she is now…\n"
+	.string "I hope she isn't lonely.$"
+
+MossdeepCity_House5_Text_LittleGirl_GiveHoney:
+	.string "You found my brother…\p"
+	.string "He said the doll was left on MT. PYRE?\n"
+	.string "That sounds like a very lonely place.\p"
+	.string "Maybe this will help you find her.\n"
+	.string "Teddiursa can't resist something sweet…$"
+
+MossdeepCity_House5_Text_LittleGirl_HoneyGiven:
+	.string "Take the HONEY with you.\p"
+	.string "If you hear a tiny rustle in the dark,\n"
+	.string "please don't frighten her.$"
+
+MossdeepCity_House5_Text_LittleGirl_ReceiveDoll:
+	.string "Oh! You came back… and she's with you!\p"
+	.string "She looks a little different now.\n"
+	.string "As if the mountain taught her a secret.\p"
+	.string "But she's still my doll. I knew she'd\n"
+	.string "find her way home.$"
+
+MossdeepCity_House5_Text_LittleGirl_Reward:
+	.string "Thank you for bringing her back to me.\p"
+	.string "Please take this. It belonged to my\n"
+	.string "brother's old collection, but I think it\n"
+	.string "belongs with someone who keeps promises.$"
+
+MossdeepCity_House5_Text_LittleGirl_FollowerMissing:
+	.string "She's not here…\p"
+	.string "Maybe the mountain called her back.\n"
+	.string "Could you look for her once more?$"
+
+MossdeepCity_House5_Text_LittleGirl_Complete:
+	.string "She sleeps beside me every night now.\n"
+	.string "Even when the room gets very quiet.$"
+
+MossdeepCity_House5_Text_Dad_BeforeQuest:
+	.string "That doll has been her little shadow\n"
+	.string "for as long as I can remember.\p"
+	.string "She says it came from somewhere strange…\n"
+	.string "but children have such wonderful stories.$"
+
+MossdeepCity_House5_Text_Dad_AfterQuestStart:
+	.string "Our son lives in Lilycove.\p"
+	.string "He was the last one to see the doll.\n"
+	.string "Perhaps he knows more than he wants to say.$"
+
+MossdeepCity_House5_Text_Dad_Complete:
+	.string "The house feels warmer somehow.\n"
+	.string "Thank you for bringing that little smile\n"
+	.string "back to my daughter.$"
+
+MossdeepCity_House5_Text_Mom_BeforeQuest:
+	.string "She calls that doll her little friend.\p"
+	.string "I only wish her brother hadn't looked\n"
+	.string "so frightened when I asked about it.$"
+
+MossdeepCity_House5_Text_Mom_AfterQuestStart:
+	.string "I hope the path to MT. PYRE is kind to\n"
+	.string "you. Some things don't like being found.$"
+
+MossdeepCity_House5_Text_Mom_Complete:
+	.string "Somehow, even the doll seems happier.\n"
+	.string "Or perhaps that's just my heart.$"
+
+`

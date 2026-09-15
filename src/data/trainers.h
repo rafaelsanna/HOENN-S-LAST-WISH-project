@@ -53899,3 +53899,181 @@ F_TRAINER_FEMALE |
             },
         },
     },
+#line 20713
+    [DIFFICULTY_NORMAL][TRAINER_REN_BROTHER_QUEST_CASUAL] =
+    {
+#line 20714
+        .trainerName = _("REN"),
+#line 20715
+        .trainerClass = TRAINER_CLASS_COOLTRAINER,
+#line 20716
+        .trainerPic = TRAINER_PIC_COOLTRAINER_M,
+        .encounterMusic_gender =
+#line 20718
+            TRAINER_ENCOUNTER_MUSIC_COOL,
+#line 20719
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 20720
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_TRY_TO_2HKO,
+#line 0
+        .trainerBackPic = TRAINER_PIC_COOLTRAINER_M,
+        .partySize = 6,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 20722
+            .species = SPECIES_AMBIPOM,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20724
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20723
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20726
+            .species = SPECIES_MANECTRIC,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20728
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20727
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20730
+            .species = SPECIES_VILEPLUME,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20732
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20731
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20734
+            .species = SPECIES_OBSTAGOON,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20736
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20735
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20738
+            .species = SPECIES_EXPLOUD,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20740
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20739
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20742
+            .species = SPECIES_FERALIGATR,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20744
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20743
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 20746
+    [DIFFICULTY_NORMAL][TRAINER_REN_BROTHER_QUEST_HARD] =
+    {
+#line 20747
+        .trainerName = _("REN"),
+#line 20748
+        .trainerClass = TRAINER_CLASS_COOLTRAINER,
+#line 20749
+        .trainerPic = TRAINER_PIC_COOLTRAINER_M,
+        .encounterMusic_gender =
+#line 20751
+            TRAINER_ENCOUNTER_MUSIC_COOL,
+#line 20752
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 20753
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_TRY_TO_2HKO,
+#line 0
+        .trainerBackPic = TRAINER_PIC_COOLTRAINER_M,
+        .partySize = 6,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 20755
+            .species = SPECIES_AMBIPOM,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20757
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20756
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20759
+            .species = SPECIES_MANECTRIC,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20761
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20760
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20763
+            .species = SPECIES_VILEPLUME,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20765
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20764
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20767
+            .species = SPECIES_OBSTAGOON,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20769
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20768
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20771
+            .species = SPECIES_EXPLOUD,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20773
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20772
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20775
+            .species = SPECIES_FERALIGATR,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20777
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 20776
+            .lvl = 50,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },

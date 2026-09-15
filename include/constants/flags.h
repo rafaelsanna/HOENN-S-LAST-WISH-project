@@ -1272,11 +1272,12 @@
 #define FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY                      0x4BF
 #define FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN                             0x4C0
 #define FLAG_HIDE_LILYCOVE_DEPARTMENT_STORE_ROOFTOP_OLD_MAN         0x4C1
-#define FLAG_UNUSED_0x4C2                                           0x4C2 // Unused Flag
-#define FLAG_UNUSED_0x4C3                                           0x4C3 // Unused Flag
-#define FLAG_UNUSED_0x4C4                                           0x4C4 // Unused Flag
-#define FLAG_UNUSED_0x4C5                                           0x4C5 // Unused Flag
-#define FLAG_UNUSED_0x4C6                                           0x4C6 // Unused Flag
+#define FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED                      0x4C2 // Teddiursa quest: little girl has asked for help
+#define FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN                        0x4C3 // Teddiursa quest: Honey given to the player
+#define FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND                         0x4C4 // Teddiursa quest: cursed doll found
+#define FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED                    0x4C5 // Teddiursa quest completed
+#define FLAG_UNUSED_0x4C6                                           0x4C6 // Reserved for Teddiursa quest object visibility
+#define FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN                       FLAG_UNUSED_0x4C6
 #define FLAG_UNUSED_0x4C7                                           0x4C7 // Unused Flag
 #define FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO                         0x4C8 // HLW_SLATEPORT_LUKA_CARGO_EVENT_V1: hide until Aqua event, then after Cargo Ship encounter
 #define FLAG_LUKA_SLATEPORT_CARGO_INTRO                             0x4C9 // HLW_SLATEPORT_LUKA_CARGO_EVENT_V1: first Slateport conversation completed

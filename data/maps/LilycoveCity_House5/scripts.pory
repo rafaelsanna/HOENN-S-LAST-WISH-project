@@ -1,0 +1,97 @@
+raw `
+LilycoveCity_House5_MapScripts::
+	.byte 0
+
+LilycoveCity_House5_EventScript_Brother::
+	lock
+	faceplayer
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, LilycoveCity_House5_EventScript_Brother_NoQuest
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_EventScript_Brother_PostBattle
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_EventScript_Brother_PostBattle
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	goto_if_set FLAG_HARD_MODE_SLEEP_CLAUSE, LilycoveCity_House5_EventScript_Brother_Hard
+	trainerbattle_single TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_Text_Brother_Intro, LilycoveCity_House5_Text_Brother_Defeat
+	goto LilycoveCity_House5_EventScript_Brother_PostBattle
+
+LilycoveCity_House5_EventScript_Brother_Hard::
+	trainerbattle_single TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_Text_Brother_Intro, LilycoveCity_House5_Text_Brother_Defeat
+
+LilycoveCity_House5_EventScript_Brother_PostBattle::
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox LilycoveCity_House5_Text_Brother_PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_House5_EventScript_Brother_NoQuest::
+	msgbox LilycoveCity_House5_Text_Brother_NoQuest, MSGBOX_NPC
+	release
+	end
+
+LilycoveCity_House5_EventScript_BrotherGf::
+	lock
+	faceplayer
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, LilycoveCity_House5_EventScript_BrotherGf_NoQuest
+	goto_if_not_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_EventScript_BrotherGf_BeforeBattle
+	goto_if_not_defeated TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_EventScript_BrotherGf_BeforeBattle
+	goto LilycoveCity_House5_EventScript_BrotherGf_AfterBattle
+
+LilycoveCity_House5_EventScript_BrotherGf_BeforeBattle::
+	msgbox LilycoveCity_House5_Text_BrotherGf_BeforeBattle, MSGBOX_NPC
+	release
+	end
+
+LilycoveCity_House5_EventScript_BrotherGf_AfterBattle::
+	msgbox LilycoveCity_House5_Text_BrotherGf_AfterBattle, MSGBOX_NPC
+	release
+	end
+
+LilycoveCity_House5_EventScript_BrotherGf_NoQuest::
+	msgbox LilycoveCity_House5_Text_BrotherGf_NoQuest, MSGBOX_NPC
+	release
+	end
+
+LilycoveCity_House5_Text_Brother_Intro:
+	.string "You came all the way from Mossdeep…\p"
+	.string "She sent you, didn't she?\p"
+	.string "I don't want to talk about the doll.\n"
+	.string "If you really want the truth, show me\n"
+	.string "you can handle it.$"
+
+LilycoveCity_House5_Text_Brother_Defeat:
+	.string "All right…\p"
+	.string "I'll tell you what happened.$"
+
+LilycoveCity_House5_Text_Brother_PostBattle:
+	.string "After the meteor, the doll felt different.\p"
+	.string "It was only a toy, but sometimes I could\n"
+	.string "swear it was watching me.\p"
+	.string "I panicked and threw it into MT. PYRE.\n"
+	.string "I thought the spirits there would keep it\n"
+	.string "quiet. I didn't think she'd miss it so much.$"
+
+LilycoveCity_House5_Text_Brother_NotEnoughMons:
+	.string "If you want the truth, bring a partner.\n"
+	.string "I won't battle someone who comes alone.$"
+
+LilycoveCity_House5_Text_Brother_NoQuest:
+	.string "Ren is lost in thought.\n"
+	.string "He doesn't seem ready to talk.$"
+
+LilycoveCity_House5_Text_BrotherGf_BeforeBattle:
+	.string "Ren hasn't slept well since he came back\n"
+	.string "from MT. PYRE.\p"
+	.string "Whatever happened there, he keeps it\n"
+	.string "tucked away behind that quiet face.$"
+
+LilycoveCity_House5_Text_BrotherGf_AfterBattle:
+	.string "He finally told you…\p"
+	.string "I think he was more frightened of hurting\n"
+	.string "his sister's feelings than of the doll itself.$"
+
+LilycoveCity_House5_Text_BrotherGf_NoQuest:
+	.string "Ren is out today.\n"
+	.string "I wonder when he'll be back.$"
+
+`

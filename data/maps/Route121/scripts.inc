@@ -109,69 +109,69 @@ Route121_EventScript_AquaGruntWaiting::
 # 55 "data/maps/Route121/scripts.pory"
 	closemessage
 # 56 "data/maps/Route121/scripts.pory"
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_1, Route121_EventScript_AquaGrunt1FaceOriginalDirection
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_1
 # 57 "data/maps/Route121/scripts.pory"
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_2, Route121_EventScript_AquaGrunt2FaceOriginalDirection
+	call_if TRUE, Route121_EventScript_AquaGrunt1FaceOriginalDirection
 # 58 "data/maps/Route121/scripts.pory"
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_3, Route121_EventScript_AquaGrunt3FaceOriginalDirection
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_2
 # 59 "data/maps/Route121/scripts.pory"
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_4, Route121_EventScript_AquaGrunt4FaceOriginalDirection
+	call_if TRUE, Route121_EventScript_AquaGrunt2FaceOriginalDirection
 # 60 "data/maps/Route121/scripts.pory"
-	waitmovement 0
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_3
 # 61 "data/maps/Route121/scripts.pory"
-	release
+	call_if TRUE, Route121_EventScript_AquaGrunt3FaceOriginalDirection
 # 62 "data/maps/Route121/scripts.pory"
-	end
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_4
 # 63 "data/maps/Route121/scripts.pory"
-
+	call_if TRUE, Route121_EventScript_AquaGrunt4FaceOriginalDirection
 # 64 "data/maps/Route121/scripts.pory"
-Route121_EventScript_AquaGruntAfterShippingHQ::
+	waitmovement 0
 # 65 "data/maps/Route121/scripts.pory"
-	end
+	release
 # 66 "data/maps/Route121/scripts.pory"
-
+	end
 # 67 "data/maps/Route121/scripts.pory"
-Route121_EventScript_AquaGrunt1FaceOriginalDirection::
+
 # 68 "data/maps/Route121/scripts.pory"
-	applymovement LOCALID_ROUTE121_GRUNT_1, Route121_Movement_Grunt1FaceUp
+Route121_EventScript_AquaGruntAfterShippingHQ::
 # 69 "data/maps/Route121/scripts.pory"
-	return
+	end
 # 70 "data/maps/Route121/scripts.pory"
 
 # 71 "data/maps/Route121/scripts.pory"
-Route121_EventScript_AquaGrunt2FaceOriginalDirection::
+Route121_EventScript_AquaGrunt1FaceOriginalDirection::
 # 72 "data/maps/Route121/scripts.pory"
-	applymovement LOCALID_ROUTE121_GRUNT_2, Route121_Movement_Grunt2FaceRight
+	applymovement LOCALID_ROUTE121_GRUNT_1, Route121_Movement_Grunt1FaceUp
 # 73 "data/maps/Route121/scripts.pory"
 	return
 # 74 "data/maps/Route121/scripts.pory"
 
 # 75 "data/maps/Route121/scripts.pory"
-Route121_EventScript_AquaGrunt3FaceOriginalDirection::
+Route121_EventScript_AquaGrunt2FaceOriginalDirection::
 # 76 "data/maps/Route121/scripts.pory"
-	applymovement LOCALID_ROUTE121_GRUNT_3, Route121_Movement_Grunt3FaceLeft
+	applymovement LOCALID_ROUTE121_GRUNT_2, Route121_Movement_Grunt2FaceRight
 # 77 "data/maps/Route121/scripts.pory"
 	return
 # 78 "data/maps/Route121/scripts.pory"
 
 # 79 "data/maps/Route121/scripts.pory"
-Route121_EventScript_AquaGrunt4FaceOriginalDirection::
+Route121_EventScript_AquaGrunt3FaceOriginalDirection::
 # 80 "data/maps/Route121/scripts.pory"
-	applymovement LOCALID_ROUTE121_GRUNT_4, Route121_Movement_Grunt4FaceDown
+	applymovement LOCALID_ROUTE121_GRUNT_3, Route121_Movement_Grunt3FaceLeft
 # 81 "data/maps/Route121/scripts.pory"
 	return
 # 82 "data/maps/Route121/scripts.pory"
 
 # 83 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt1Exit:
+Route121_EventScript_AquaGrunt4FaceOriginalDirection::
 # 84 "data/maps/Route121/scripts.pory"
-	walk_down
+	applymovement LOCALID_ROUTE121_GRUNT_4, Route121_Movement_Grunt4FaceDown
 # 85 "data/maps/Route121/scripts.pory"
-	walk_down
+	return
 # 86 "data/maps/Route121/scripts.pory"
-	walk_down
+
 # 87 "data/maps/Route121/scripts.pory"
-	walk_down
+Route121_Movement_Grunt1Exit:
 # 88 "data/maps/Route121/scripts.pory"
 	walk_down
 # 89 "data/maps/Route121/scripts.pory"
@@ -181,19 +181,19 @@ Route121_Movement_Grunt1Exit:
 # 91 "data/maps/Route121/scripts.pory"
 	walk_down
 # 92 "data/maps/Route121/scripts.pory"
-	step_end
+	walk_down
 # 93 "data/maps/Route121/scripts.pory"
-
+	walk_down
 # 94 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt2Exit:
+	walk_down
 # 95 "data/maps/Route121/scripts.pory"
 	walk_down
 # 96 "data/maps/Route121/scripts.pory"
-	walk_down
+	step_end
 # 97 "data/maps/Route121/scripts.pory"
-	walk_down
+
 # 98 "data/maps/Route121/scripts.pory"
-	walk_down
+Route121_Movement_Grunt2Exit:
 # 99 "data/maps/Route121/scripts.pory"
 	walk_down
 # 100 "data/maps/Route121/scripts.pory"
@@ -203,19 +203,19 @@ Route121_Movement_Grunt2Exit:
 # 102 "data/maps/Route121/scripts.pory"
 	walk_down
 # 103 "data/maps/Route121/scripts.pory"
-	step_end
+	walk_down
 # 104 "data/maps/Route121/scripts.pory"
-
+	walk_down
 # 105 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt3Exit:
+	walk_down
 # 106 "data/maps/Route121/scripts.pory"
 	walk_down
 # 107 "data/maps/Route121/scripts.pory"
-	walk_down
+	step_end
 # 108 "data/maps/Route121/scripts.pory"
-	walk_down
+
 # 109 "data/maps/Route121/scripts.pory"
-	walk_down
+Route121_Movement_Grunt3Exit:
 # 110 "data/maps/Route121/scripts.pory"
 	walk_down
 # 111 "data/maps/Route121/scripts.pory"
@@ -225,19 +225,19 @@ Route121_Movement_Grunt3Exit:
 # 113 "data/maps/Route121/scripts.pory"
 	walk_down
 # 114 "data/maps/Route121/scripts.pory"
-	step_end
+	walk_down
 # 115 "data/maps/Route121/scripts.pory"
-
+	walk_down
 # 116 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt4Exit:
+	walk_down
 # 117 "data/maps/Route121/scripts.pory"
 	walk_down
 # 118 "data/maps/Route121/scripts.pory"
-	walk_down
+	step_end
 # 119 "data/maps/Route121/scripts.pory"
-	walk_down
+
 # 120 "data/maps/Route121/scripts.pory"
-	walk_down
+Route121_Movement_Grunt4Exit:
 # 121 "data/maps/Route121/scripts.pory"
 	walk_down
 # 122 "data/maps/Route121/scripts.pory"
@@ -247,300 +247,308 @@ Route121_Movement_Grunt4Exit:
 # 124 "data/maps/Route121/scripts.pory"
 	walk_down
 # 125 "data/maps/Route121/scripts.pory"
-	step_end
+	walk_down
 # 126 "data/maps/Route121/scripts.pory"
-
+	walk_down
 # 127 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt1FaceUp:
+	walk_down
 # 128 "data/maps/Route121/scripts.pory"
-	face_up
+	walk_down
 # 129 "data/maps/Route121/scripts.pory"
 	step_end
 # 130 "data/maps/Route121/scripts.pory"
 
 # 131 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt2FaceRight:
+Route121_Movement_Grunt1FaceUp:
 # 132 "data/maps/Route121/scripts.pory"
-	face_right
+	face_up
 # 133 "data/maps/Route121/scripts.pory"
 	step_end
 # 134 "data/maps/Route121/scripts.pory"
 
 # 135 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt3FaceLeft:
+Route121_Movement_Grunt2FaceRight:
 # 136 "data/maps/Route121/scripts.pory"
-	face_left
+	face_right
 # 137 "data/maps/Route121/scripts.pory"
 	step_end
 # 138 "data/maps/Route121/scripts.pory"
 
 # 139 "data/maps/Route121/scripts.pory"
-Route121_Movement_Grunt4FaceDown:
+Route121_Movement_Grunt3FaceLeft:
 # 140 "data/maps/Route121/scripts.pory"
-	face_down
+	face_left
 # 141 "data/maps/Route121/scripts.pory"
 	step_end
 # 142 "data/maps/Route121/scripts.pory"
 
 # 143 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Vanessa::
+Route121_Movement_Grunt4FaceDown:
 # 144 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_VANESSA, Route121_Text_VanessaIntro, Route121_Text_VanessaDefeat
+	face_down
 # 145 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_VanessaPostBattle, MSGBOX_AUTOCLOSE
+	step_end
 # 146 "data/maps/Route121/scripts.pory"
-	end
+
 # 147 "data/maps/Route121/scripts.pory"
-
+Route121_EventScript_Vanessa::
 # 148 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Walter::
+	trainerbattle_single TRAINER_VANESSA, Route121_Text_VanessaIntro, Route121_Text_VanessaDefeat
 # 149 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_WALTER_1, Route121_Text_WalterIntro, Route121_Text_WalterDefeat, Route121_EventScript_RegisterWalter
+	msgbox Route121_Text_VanessaPostBattle, MSGBOX_AUTOCLOSE
 # 150 "data/maps/Route121/scripts.pory"
-	specialvar VAR_RESULT, ShouldTryRematchBattle
+	end
 # 151 "data/maps/Route121/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchWalter
+
 # 152 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_WalterPostBattle, MSGBOX_DEFAULT
+Route121_EventScript_Walter::
 # 153 "data/maps/Route121/scripts.pory"
-	release
+	trainerbattle_single TRAINER_WALTER_1, Route121_Text_WalterIntro, Route121_Text_WalterDefeat, Route121_EventScript_RegisterWalter
 # 154 "data/maps/Route121/scripts.pory"
-	end
+	specialvar VAR_RESULT, ShouldTryRematchBattle
 # 155 "data/maps/Route121/scripts.pory"
-
+	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchWalter
 # 156 "data/maps/Route121/scripts.pory"
-Route121_EventScript_RegisterWalter::
+	msgbox Route121_Text_WalterPostBattle, MSGBOX_DEFAULT
 # 157 "data/maps/Route121/scripts.pory"
-	special PlayerFaceTrainerAfterBattle
+	release
 # 158 "data/maps/Route121/scripts.pory"
-	waitmovement 0
+	end
 # 159 "data/maps/Route121/scripts.pory"
-	@ PokéNav removed msgbox Route121_Text_WalterRegister, MSGBOX_DEFAULT
+
 # 160 "data/maps/Route121/scripts.pory"
-	@ PokéNav removed register_matchcall TRAINER_WALTER_1
+Route121_EventScript_RegisterWalter::
 # 161 "data/maps/Route121/scripts.pory"
-	release
+	special PlayerFaceTrainerAfterBattle
 # 162 "data/maps/Route121/scripts.pory"
-	end
+	waitmovement 0
 # 163 "data/maps/Route121/scripts.pory"
-
+	@ PokéNav removed msgbox Route121_Text_WalterRegister, MSGBOX_DEFAULT
 # 164 "data/maps/Route121/scripts.pory"
-Route121_EventScript_RematchWalter::
+	@ PokéNav removed register_matchcall TRAINER_WALTER_1
 # 165 "data/maps/Route121/scripts.pory"
-	trainerbattle_rematch TRAINER_WALTER_1, Route121_Text_WalterRematchIntro, Route121_Text_WalterRematchDefeat
+	release
 # 166 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_WalterPostRematch, MSGBOX_AUTOCLOSE
+	end
 # 167 "data/maps/Route121/scripts.pory"
-	end
+
 # 168 "data/maps/Route121/scripts.pory"
-
+Route121_EventScript_RematchWalter::
 # 169 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Tammy::
+	trainerbattle_rematch TRAINER_WALTER_1, Route121_Text_WalterRematchIntro, Route121_Text_WalterRematchDefeat
 # 170 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_TAMMY, Route121_Text_TammyIntro, Route121_Text_TammyDefeat
+	msgbox Route121_Text_WalterPostRematch, MSGBOX_AUTOCLOSE
 # 171 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_TammyPostBattle, MSGBOX_AUTOCLOSE
+	end
 # 172 "data/maps/Route121/scripts.pory"
-	end
+
 # 173 "data/maps/Route121/scripts.pory"
-
+Route121_EventScript_Tammy::
 # 174 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Kate::
+	trainerbattle_single TRAINER_TAMMY, Route121_Text_TammyIntro, Route121_Text_TammyDefeat
 # 175 "data/maps/Route121/scripts.pory"
-	trainerbattle_double TRAINER_KATE_AND_JOY, Route121_Text_KateIntro, Route121_Text_KateDefeat, Route121_Text_KateNotEnoughMons
+	msgbox Route121_Text_TammyPostBattle, MSGBOX_AUTOCLOSE
 # 176 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_KatePostBattle, MSGBOX_AUTOCLOSE
+	end
 # 177 "data/maps/Route121/scripts.pory"
-	end
+
 # 178 "data/maps/Route121/scripts.pory"
-
+Route121_EventScript_Kate::
 # 179 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Joy::
+	trainerbattle_double TRAINER_KATE_AND_JOY, Route121_Text_KateIntro, Route121_Text_KateDefeat, Route121_Text_KateNotEnoughMons
 # 180 "data/maps/Route121/scripts.pory"
-	trainerbattle_double TRAINER_KATE_AND_JOY, Route121_Text_JoyIntro, Route121_Text_JoyDefeat, Route121_Text_JoyNotEnoughMons
+	msgbox Route121_Text_KatePostBattle, MSGBOX_AUTOCLOSE
 # 181 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_JoyPostBattle, MSGBOX_AUTOCLOSE
+	end
 # 182 "data/maps/Route121/scripts.pory"
-	end
+
 # 183 "data/maps/Route121/scripts.pory"
-
+Route121_EventScript_Joy::
 # 184 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Jessica::
+	trainerbattle_double TRAINER_KATE_AND_JOY, Route121_Text_JoyIntro, Route121_Text_JoyDefeat, Route121_Text_JoyNotEnoughMons
 # 185 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_JESSICA_1, Route121_Text_JessicaIntro, Route121_Text_JessicaDefeat, Route121_EventScript_RegisterJessica
+	msgbox Route121_Text_JoyPostBattle, MSGBOX_AUTOCLOSE
 # 186 "data/maps/Route121/scripts.pory"
-	specialvar VAR_RESULT, ShouldTryRematchBattle
+	end
 # 187 "data/maps/Route121/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchJessica
+
 # 188 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_JessicaPostBattle, MSGBOX_DEFAULT
+Route121_EventScript_Jessica::
 # 189 "data/maps/Route121/scripts.pory"
-	release
+	trainerbattle_single TRAINER_JESSICA_1, Route121_Text_JessicaIntro, Route121_Text_JessicaDefeat, Route121_EventScript_RegisterJessica
 # 190 "data/maps/Route121/scripts.pory"
-	end
-# 191 "data/maps/Route121/scripts.pory"
-
-# 192 "data/maps/Route121/scripts.pory"
-Route121_EventScript_RegisterJessica::
-# 193 "data/maps/Route121/scripts.pory"
-	special PlayerFaceTrainerAfterBattle
-# 194 "data/maps/Route121/scripts.pory"
-	waitmovement 0
-# 195 "data/maps/Route121/scripts.pory"
-	@ PokéNav removed msgbox Route121_Text_JessicaRegister, MSGBOX_DEFAULT
-# 196 "data/maps/Route121/scripts.pory"
-	@ PokéNav removed register_matchcall TRAINER_JESSICA_1
-# 197 "data/maps/Route121/scripts.pory"
-	release
-# 198 "data/maps/Route121/scripts.pory"
-	end
-# 199 "data/maps/Route121/scripts.pory"
-
-# 200 "data/maps/Route121/scripts.pory"
-Route121_EventScript_RematchJessica::
-# 201 "data/maps/Route121/scripts.pory"
-	trainerbattle_rematch TRAINER_JESSICA_1, Route121_Text_JessicaRematchIntro, Route121_Text_JessicaRematchDefeat
-# 202 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_JessicaPostRematch, MSGBOX_AUTOCLOSE
-# 203 "data/maps/Route121/scripts.pory"
-	end
-# 204 "data/maps/Route121/scripts.pory"
-
-# 205 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Cale::
-# 206 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_CALE, Route121_Text_CaleIntro, Route121_Text_CaleDefeat
-# 207 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_CalePostBattle, MSGBOX_AUTOCLOSE
-# 208 "data/maps/Route121/scripts.pory"
-	end
-# 209 "data/maps/Route121/scripts.pory"
-
-# 210 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Myles::
-# 211 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_MYLES, Route121_Text_MylesIntro, Route121_Text_MylesDefeat
-# 212 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_MylesPostBattle, MSGBOX_AUTOCLOSE
-# 213 "data/maps/Route121/scripts.pory"
-	end
-# 214 "data/maps/Route121/scripts.pory"
-
-# 215 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Pat::
-# 216 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_PAT, Route121_Text_PatIntro, Route121_Text_PatDefeat
-# 217 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_PatPostBattle, MSGBOX_AUTOCLOSE
-# 218 "data/maps/Route121/scripts.pory"
-	end
-# 219 "data/maps/Route121/scripts.pory"
-
-# 220 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Marcel::
-# 221 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_MARCEL, Route121_Text_MarcelIntro, Route121_Text_MarcelDefeat
-# 222 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_MarcelPostBattle, MSGBOX_AUTOCLOSE
-# 223 "data/maps/Route121/scripts.pory"
-	end
-# 224 "data/maps/Route121/scripts.pory"
-
-# 225 "data/maps/Route121/scripts.pory"
-Route121_EventScript_Cristin::
-# 226 "data/maps/Route121/scripts.pory"
-	trainerbattle_single TRAINER_CRISTIN_1, Route121_Text_CristinIntro, Route121_Text_CristinDefeat, Route121_EventScript_RegisterCristin
-# 227 "data/maps/Route121/scripts.pory"
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-# 228 "data/maps/Route121/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchCristin
-# 229 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_CristinPostBattle, MSGBOX_DEFAULT
-# 230 "data/maps/Route121/scripts.pory"
+# 191 "data/maps/Route121/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchJessica
+# 192 "data/maps/Route121/scripts.pory"
+	msgbox Route121_Text_JessicaPostBattle, MSGBOX_DEFAULT
+# 193 "data/maps/Route121/scripts.pory"
 	release
-# 231 "data/maps/Route121/scripts.pory"
+# 194 "data/maps/Route121/scripts.pory"
 	end
-# 232 "data/maps/Route121/scripts.pory"
+# 195 "data/maps/Route121/scripts.pory"
 
-# 233 "data/maps/Route121/scripts.pory"
-Route121_EventScript_RegisterCristin::
-# 234 "data/maps/Route121/scripts.pory"
+# 196 "data/maps/Route121/scripts.pory"
+Route121_EventScript_RegisterJessica::
+# 197 "data/maps/Route121/scripts.pory"
 	special PlayerFaceTrainerAfterBattle
-# 235 "data/maps/Route121/scripts.pory"
+# 198 "data/maps/Route121/scripts.pory"
 	waitmovement 0
-# 236 "data/maps/Route121/scripts.pory"
-	@ PokéNav removed msgbox Route121_Text_CristinRegister, MSGBOX_DEFAULT
-# 237 "data/maps/Route121/scripts.pory"
-	@ PokéNav removed register_matchcall TRAINER_CRISTIN_1
-# 238 "data/maps/Route121/scripts.pory"
+# 199 "data/maps/Route121/scripts.pory"
+	@ PokéNav removed msgbox Route121_Text_JessicaRegister, MSGBOX_DEFAULT
+# 200 "data/maps/Route121/scripts.pory"
+	@ PokéNav removed register_matchcall TRAINER_JESSICA_1
+# 201 "data/maps/Route121/scripts.pory"
 	release
+# 202 "data/maps/Route121/scripts.pory"
+	end
+# 203 "data/maps/Route121/scripts.pory"
+
+# 204 "data/maps/Route121/scripts.pory"
+Route121_EventScript_RematchJessica::
+# 205 "data/maps/Route121/scripts.pory"
+	trainerbattle_rematch TRAINER_JESSICA_1, Route121_Text_JessicaRematchIntro, Route121_Text_JessicaRematchDefeat
+# 206 "data/maps/Route121/scripts.pory"
+	msgbox Route121_Text_JessicaPostRematch, MSGBOX_AUTOCLOSE
+# 207 "data/maps/Route121/scripts.pory"
+	end
+# 208 "data/maps/Route121/scripts.pory"
+
+# 209 "data/maps/Route121/scripts.pory"
+Route121_EventScript_Cale::
+# 210 "data/maps/Route121/scripts.pory"
+	trainerbattle_single TRAINER_CALE, Route121_Text_CaleIntro, Route121_Text_CaleDefeat
+# 211 "data/maps/Route121/scripts.pory"
+	msgbox Route121_Text_CalePostBattle, MSGBOX_AUTOCLOSE
+# 212 "data/maps/Route121/scripts.pory"
+	end
+# 213 "data/maps/Route121/scripts.pory"
+
+# 214 "data/maps/Route121/scripts.pory"
+Route121_EventScript_Myles::
+# 215 "data/maps/Route121/scripts.pory"
+	trainerbattle_single TRAINER_MYLES, Route121_Text_MylesIntro, Route121_Text_MylesDefeat
+# 216 "data/maps/Route121/scripts.pory"
+	msgbox Route121_Text_MylesPostBattle, MSGBOX_AUTOCLOSE
+# 217 "data/maps/Route121/scripts.pory"
+	end
+# 218 "data/maps/Route121/scripts.pory"
+
+# 219 "data/maps/Route121/scripts.pory"
+Route121_EventScript_Pat::
+# 220 "data/maps/Route121/scripts.pory"
+	trainerbattle_single TRAINER_PAT, Route121_Text_PatIntro, Route121_Text_PatDefeat
+# 221 "data/maps/Route121/scripts.pory"
+	msgbox Route121_Text_PatPostBattle, MSGBOX_AUTOCLOSE
+# 222 "data/maps/Route121/scripts.pory"
+	end
+# 223 "data/maps/Route121/scripts.pory"
+
+# 224 "data/maps/Route121/scripts.pory"
+Route121_EventScript_Marcel::
+# 225 "data/maps/Route121/scripts.pory"
+	trainerbattle_single TRAINER_MARCEL, Route121_Text_MarcelIntro, Route121_Text_MarcelDefeat
+# 226 "data/maps/Route121/scripts.pory"
+	msgbox Route121_Text_MarcelPostBattle, MSGBOX_AUTOCLOSE
+# 227 "data/maps/Route121/scripts.pory"
+	end
+# 228 "data/maps/Route121/scripts.pory"
+
+# 229 "data/maps/Route121/scripts.pory"
+Route121_EventScript_Cristin::
+# 230 "data/maps/Route121/scripts.pory"
+	trainerbattle_single TRAINER_CRISTIN_1, Route121_Text_CristinIntro, Route121_Text_CristinDefeat, Route121_EventScript_RegisterCristin
+# 231 "data/maps/Route121/scripts.pory"
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+# 232 "data/maps/Route121/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchCristin
+# 233 "data/maps/Route121/scripts.pory"
+	msgbox Route121_Text_CristinPostBattle, MSGBOX_DEFAULT
+# 234 "data/maps/Route121/scripts.pory"
+	release
+# 235 "data/maps/Route121/scripts.pory"
+	end
+# 236 "data/maps/Route121/scripts.pory"
+
+# 237 "data/maps/Route121/scripts.pory"
+Route121_EventScript_RegisterCristin::
+# 238 "data/maps/Route121/scripts.pory"
+	special PlayerFaceTrainerAfterBattle
 # 239 "data/maps/Route121/scripts.pory"
-	end
+	waitmovement 0
 # 240 "data/maps/Route121/scripts.pory"
-
+	@ PokéNav removed msgbox Route121_Text_CristinRegister, MSGBOX_DEFAULT
 # 241 "data/maps/Route121/scripts.pory"
-Route121_EventScript_RematchCristin::
+	@ PokéNav removed register_matchcall TRAINER_CRISTIN_1
 # 242 "data/maps/Route121/scripts.pory"
-	trainerbattle_rematch TRAINER_CRISTIN_1, Route121_Text_CristinRematchIntro, Route121_Text_CristinRematchDefeat
+	release
 # 243 "data/maps/Route121/scripts.pory"
-	msgbox Route121_Text_CristinPostRematch, MSGBOX_AUTOCLOSE
-# 244 "data/maps/Route121/scripts.pory"
 	end
-# 245 "data/maps/Route121/scripts.pory"
+# 244 "data/maps/Route121/scripts.pory"
 
+# 245 "data/maps/Route121/scripts.pory"
+Route121_EventScript_RematchCristin::
 # 246 "data/maps/Route121/scripts.pory"
-Route121_Text_OkayMoveOutToMtPyre:
+	trainerbattle_rematch TRAINER_CRISTIN_1, Route121_Text_CristinRematchIntro, Route121_Text_CristinRematchDefeat
 # 247 "data/maps/Route121/scripts.pory"
-	.string "Okay!\n"
+	msgbox Route121_Text_CristinPostRematch, MSGBOX_AUTOCLOSE
 # 248 "data/maps/Route121/scripts.pory"
-	.string "We're to move out to MT. PYRE!$"
+	end
 # 249 "data/maps/Route121/scripts.pory"
 
 # 250 "data/maps/Route121/scripts.pory"
-Route121_Text_AquaGruntsWaiting:
+Route121_Text_OkayMoveOutToMtPyre:
 # 251 "data/maps/Route121/scripts.pory"
-	.string "We're still waiting on our people in\n"
+	.string "Okay!\n"
 # 252 "data/maps/Route121/scripts.pory"
-	.string "SLATEPORT at the SEABREEZE SHIPPING\l"
+	.string "We're to move out to MT. PYRE!$"
 # 253 "data/maps/Route121/scripts.pory"
-	.string "HQ to give us the go-ahead.$"
+
 # 254 "data/maps/Route121/scripts.pory"
-
+Route121_Text_AquaGruntsWaiting:
 # 255 "data/maps/Route121/scripts.pory"
-Route121_Text_AquaGruntsNervous:
+	.string "We're still waiting on our people in\n"
 # 256 "data/maps/Route121/scripts.pory"
-	.string "Huh?! You heard that?!\p"
+	.string "SLATEPORT at the SEABREEZE SHIPPING\l"
 # 257 "data/maps/Route121/scripts.pory"
-	.string "There's nothing suspicious about the\n"
+	.string "HQ to give us the go-ahead.$"
 # 258 "data/maps/Route121/scripts.pory"
-	.string "SEABREEZE SHIPPING COMPANY in\l"
+
 # 259 "data/maps/Route121/scripts.pory"
-	.string "SLATEPORT! Nothing at all!$"
+Route121_Text_AquaGruntsNervous:
 # 260 "data/maps/Route121/scripts.pory"
-
+	.string "Huh?! You heard that?!\p"
 # 261 "data/maps/Route121/scripts.pory"
-Route121_Text_AheadLoomsMtPyre:
+	.string "There's nothing suspicious about the\n"
 # 262 "data/maps/Route121/scripts.pory"
-	.string "Ahead looms MT. PYRE…\p"
+	.string "SEABREEZE SHIPPING COMPANY in\l"
 # 263 "data/maps/Route121/scripts.pory"
-	.string "It is a natural monument to the spirits \n"
+	.string "SLATEPORT! Nothing at all!$"
 # 264 "data/maps/Route121/scripts.pory"
-	.string "of departed POKéMON…$"
+
 # 265 "data/maps/Route121/scripts.pory"
-
+Route121_Text_AheadLoomsMtPyre:
 # 266 "data/maps/Route121/scripts.pory"
-Route121_Text_MtPyrePierSign:
+	.string "Ahead looms MT. PYRE…\p"
 # 267 "data/maps/Route121/scripts.pory"
-	.string "MT. PYRE PIER\p"
+	.string "It is a natural monument to the spirits \n"
 # 268 "data/maps/Route121/scripts.pory"
-	.string "…The sign is old and worn out.\n"
+	.string "of departed POKéMON…$"
 # 269 "data/maps/Route121/scripts.pory"
-	.string "The words are barely legible…$"
-# 270 "data/maps/Route121/scripts.pory"
 
+# 270 "data/maps/Route121/scripts.pory"
+Route121_Text_MtPyrePierSign:
 # 271 "data/maps/Route121/scripts.pory"
-Route121_Text_SafariZoneSign:
+	.string "MT. PYRE PIER\p"
 # 272 "data/maps/Route121/scripts.pory"
-	.string "“Filled with rare POKéMON!”\n"
+	.string "…The sign is old and worn out.\n"
 # 273 "data/maps/Route121/scripts.pory"
+	.string "The words are barely legible…$"
+# 274 "data/maps/Route121/scripts.pory"
+
+# 275 "data/maps/Route121/scripts.pory"
+Route121_Text_SafariZoneSign:
+# 276 "data/maps/Route121/scripts.pory"
+	.string "“Filled with rare POKéMON!”\n"
+# 277 "data/maps/Route121/scripts.pory"
 	.string "SAFARI ZONE$"

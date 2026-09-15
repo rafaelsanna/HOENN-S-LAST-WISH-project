@@ -1,6 +1,45 @@
 raw `
 MtPyre_1F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_1F_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, MtPyre_1F_OnWarpIntoMap
 	.byte 0
+
+MtPyre_1F_OnTransition::
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MtPyre_1F_OnTransition_End
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MtPyre_1F_OnTransition_End
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_1F_OnTransition_End
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_1F_OnTransition_End
+	random 5
+	copyvar VAR_MOSSDEEP_TEDDIURSA_FLOOR, VAR_RESULT
+	goto_if_eq VAR_MOSSDEEP_TEDDIURSA_FLOOR, 0, MtPyre_1F_ShowTeddiursa
+	goto MtPyre_1F_OnTransition_End
+
+MtPyre_1F_ShowTeddiursa:
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+
+MtPyre_1F_OnTransition_End:
+	end
+
+MtPyre_1F_OnWarpIntoMap:
+	map_script_2 VAR_TEMP_0, VAR_TEMP_0, MtPyre_1F_EventScript_UpdateTeddiursaVisibility
+	.2byte 0
+
+MtPyre_1F_EventScript_UpdateTeddiursaVisibility:
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MtPyre_1F_HideTeddiursa
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MtPyre_1F_HideTeddiursa
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_1F_HideTeddiursa
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_1F_HideTeddiursa
+	goto_if_ne VAR_MOSSDEEP_TEDDIURSA_FLOOR, 0, MtPyre_1F_HideTeddiursa
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	end
+
+MtPyre_1F_HideTeddiursa:
+	removeobject LOCALID_MT_PYRE_1F_TEDDIURSA
+	end
 
 MtPyre_1F_EventScript_CleanseTagWoman::
 	lock
@@ -26,6 +65,50 @@ MtPyre_1F_EventScript_Man::
 	msgbox MtPyre_1F_Text_RestingPlaceOfZigzagoon, MSGBOX_NPC
 	end
 
+MtPyre_1F_EventScript_TeddiursaHideNSeek::
+	lock
+	faceplayer
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_1F_EventScript_Teddiursa_Day
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MtPyre_1F_EventScript_Teddiursa_NotInterested
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MtPyre_1F_EventScript_Teddiursa_NotInterested
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_1F_EventScript_Teddiursa_Follower
+	checkitem ITEM_HONEY
+	goto_if_eq VAR_RESULT, FALSE, MtPyre_1F_EventScript_Teddiursa_NeedHoney
+	addvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 1
+	removeobject VAR_LAST_TALKED
+	goto_if_ge VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 3, MtPyre_1F_EventScript_Teddiursa_FinalFind
+	msgbox MtPyre_1F_Text_Teddiursa_FoundAgain, MSGBOX_DEFAULT
+	release
+	end
+
+MtPyre_1F_EventScript_Teddiursa_FinalFind:
+	setflag FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND
+	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND, MtPyre_1F_EventScript_Teddiursa_Follower
+	msgbox MtPyre_1F_Text_Teddiursa_Found, MSGBOX_DEFAULT
+	release
+	end
+
+MtPyre_1F_EventScript_Teddiursa_Follower::
+	msgbox MtPyre_1F_Text_Teddiursa_Follower, MSGBOX_DEFAULT
+	release
+	end
+
+MtPyre_1F_EventScript_Teddiursa_Day::
+	msgbox MtPyre_1F_Text_Teddiursa_Day, MSGBOX_NPC
+	release
+	end
+
+MtPyre_1F_EventScript_Teddiursa_NotInterested::
+	msgbox MtPyre_1F_Text_Teddiursa_NotInterested, MSGBOX_NPC
+	release
+	end
+
+MtPyre_1F_EventScript_Teddiursa_NeedHoney::
+	msgbox MtPyre_1F_Text_Teddiursa_NeedHoney, MSGBOX_NPC
+	release
+	end
+
 MtPyre_1F_Text_TakeThisForYourOwnGood:
 	.string "All sorts of beings wander the slopes\n"
 	.string "of MT. PYRE…\p"
@@ -45,5 +128,35 @@ MtPyre_1F_Text_ComeToPayRespects:
 MtPyre_1F_Text_RestingPlaceOfZigzagoon:
 	.string "This is the final resting place of my\n"
 	.string "ZIGZAGOON. I cherished it…$"
+
+MtPyre_1F_Text_Teddiursa_Found:
+	.string "The HONEY's scent drifts through the\n"
+	.string "still mountain air…\p"
+	.string "A small TEDDIURSA steps from the shadows.\n"
+	.string "It looks at you, then at the path ahead.\p"
+	.string "The little bear follows you.$"
+
+MtPyre_1F_Text_Teddiursa_FoundAgain:
+	.string "The HONEY's scent drifts through the\n"
+	.string "still mountain air…\p"
+	.string "A small TEDDIURSA peeks from the shadows,\n"
+	.string "then disappears before you can reach it.\p"
+	.string "It seems you'll have to find it again.$"
+
+MtPyre_1F_Text_Teddiursa_Follower:
+	.string "TEDDIURSA stays close behind you.\n"
+	.string "Its tiny paws make almost no sound.$"
+
+MtPyre_1F_Text_Teddiursa_Day:
+	.string "The mountain is quiet in the daylight.\n"
+	.string "Whatever you were looking for is hiding.$"
+
+MtPyre_1F_Text_Teddiursa_NotInterested:
+	.string "The TEDDIURSA watches you from a distance.\n"
+	.string "It doesn't seem ready to come closer.$"
+
+MtPyre_1F_Text_Teddiursa_NeedHoney:
+	.string "The TEDDIURSA sniffs the air, then turns\n"
+	.string "away. Something sweet might bring it out.$"
 
 `

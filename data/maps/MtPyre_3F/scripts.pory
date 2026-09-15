@@ -1,6 +1,45 @@
 raw `
 MtPyre_3F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_3F_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, MtPyre_3F_OnWarpIntoMap
 	.byte 0
+
+MtPyre_3F_OnTransition::
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MtPyre_3F_OnTransition_End
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MtPyre_3F_OnTransition_End
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_3F_OnTransition_End
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_3F_OnTransition_End
+	random 5
+	copyvar VAR_MOSSDEEP_TEDDIURSA_FLOOR, VAR_RESULT
+	goto_if_eq VAR_MOSSDEEP_TEDDIURSA_FLOOR, 2, MtPyre_3F_ShowTeddiursa
+	goto MtPyre_3F_OnTransition_End
+
+MtPyre_3F_ShowTeddiursa:
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+
+MtPyre_3F_OnTransition_End:
+	end
+
+MtPyre_3F_OnWarpIntoMap:
+	map_script_2 VAR_TEMP_0, VAR_TEMP_0, MtPyre_3F_EventScript_UpdateTeddiursaVisibility
+	.2byte 0
+
+MtPyre_3F_EventScript_UpdateTeddiursaVisibility:
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MtPyre_3F_HideTeddiursa
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MtPyre_3F_HideTeddiursa
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_3F_HideTeddiursa
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_3F_HideTeddiursa
+	goto_if_ne VAR_MOSSDEEP_TEDDIURSA_FLOOR, 2, MtPyre_3F_HideTeddiursa
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	end
+
+MtPyre_3F_HideTeddiursa:
+	removeobject LOCALID_MT_PYRE_3F_TEDDIURSA
+	end
 
 MtPyre_3F_EventScript_William::
 	trainerbattle_single TRAINER_WILLIAM, MtPyre_3F_Text_WilliamIntro, MtPyre_3F_Text_WilliamDefeat

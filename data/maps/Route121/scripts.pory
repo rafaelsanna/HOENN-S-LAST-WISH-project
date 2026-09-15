@@ -53,10 +53,14 @@ Route121_EventScript_AquaGruntWaiting::
 	waitmovement 0
 	msgbox Route121_Text_AquaGruntsNervous, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_1, Route121_EventScript_AquaGrunt1FaceOriginalDirection
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_2, Route121_EventScript_AquaGrunt2FaceOriginalDirection
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_3, Route121_EventScript_AquaGrunt3FaceOriginalDirection
-	call_if_eq VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_4, Route121_EventScript_AquaGrunt4FaceOriginalDirection
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_1
+	call_if TRUE, Route121_EventScript_AquaGrunt1FaceOriginalDirection
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_2
+	call_if TRUE, Route121_EventScript_AquaGrunt2FaceOriginalDirection
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_3
+	call_if TRUE, Route121_EventScript_AquaGrunt3FaceOriginalDirection
+	compare_var_to_value VAR_LAST_TALKED, LOCALID_ROUTE121_GRUNT_4
+	call_if TRUE, Route121_EventScript_AquaGrunt4FaceOriginalDirection
 	waitmovement 0
 	release
 	end

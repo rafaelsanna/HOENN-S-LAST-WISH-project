@@ -146,6 +146,8 @@
 #define VAR_ROUTE131_STATE                               0x407E // Unused Var
 #define VAR_ROUTE132_STATE                               0x407F // Unused Var
 #define VAR_ROUTE133_STATE                               0x4080 // Unused Var
+#define VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT              VAR_ROUTE132_STATE
+#define VAR_MOSSDEEP_TEDDIURSA_FLOOR                    VAR_ROUTE133_STATE
 #define VAR_HIDDEN_GROTTO_RESET_DAYS                 0x4081
 #define VAR_LITTLEROOT_HOUSES_STATE_MAY                  0x4082
 #define VAR_HIDDEN_GROTTO_00                             0x4083
