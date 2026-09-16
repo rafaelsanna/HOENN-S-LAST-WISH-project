@@ -145,9 +145,11 @@ SeabreezeShipping2F_Text_PresidentWarning:
 
 SeabreezeShipping2F_Text_AlejandroOverheard:
 	.string "ALEJANDRO: Well, well. I didn't expect\n"
-	.string "you to show up here. It doesn't\l"
-	.string "matter, though. Nothing can stop this\l"
-	.string "operation now.$"
+	.string "you to show up here.\p"
+	.string "It doesn't matter, though.\n"
+	.string "The signal has already been given to\l"
+	.string "the team on ROUTE 121.\p"
+	.string "Nothing can stop this operation now.$"
 
 SeabreezeShipping2F_Text_PresidentFlustered:
 	.string "This isn't what it looks like! I have no\n"

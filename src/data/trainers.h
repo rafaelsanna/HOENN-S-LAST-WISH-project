@@ -54077,3 +54077,173 @@ F_TRAINER_FEMALE |
             },
         },
     },
+#line 20779
+    [DIFFICULTY_NORMAL][TRAINER_SEABREEZE_SHIPPING1F_GRUNT_1] =
+    {
+#line 20780
+        .trainerName = _("GRUNT"),
+#line 20781
+        .trainerClass = TRAINER_CLASS_TEAM_AQUA,
+#line 20782
+        .trainerPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .encounterMusic_gender =
+#line 20784
+            TRAINER_ENCOUNTER_MUSIC_AQUA,
+#line 20785
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 20786
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .partySize = 3,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 20788
+            .species = SPECIES_CAMERUPT,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20790
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20789
+            .lvl = 42,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20792
+            .species = SPECIES_CRAWDAUNT,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20794
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20793
+            .lvl = 43,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20796
+            .species = SPECIES_PELIPPER,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20798
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20797
+            .lvl = 44,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 20800
+    [DIFFICULTY_NORMAL][TRAINER_SEABREEZE_SHIPPING1F_GRUNT_2] =
+    {
+#line 20801
+        .trainerName = _("GRUNT"),
+#line 20802
+        .trainerClass = TRAINER_CLASS_TEAM_AQUA,
+#line 20803
+        .trainerPic = TRAINER_PIC_AQUA_GRUNT_F,
+        .encounterMusic_gender =
+#line 20804
+F_TRAINER_FEMALE | 
+#line 20805
+            TRAINER_ENCOUNTER_MUSIC_AQUA,
+#line 20806
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 20807
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_AQUA_GRUNT_F,
+        .partySize = 3,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 20809
+            .species = SPECIES_TENTACRUEL,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20811
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20810
+            .lvl = 42,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20813
+            .species = SPECIES_MIGHTYENA,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20815
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20814
+            .lvl = 43,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20817
+            .species = SPECIES_GYARADOS,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20819
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20818
+            .lvl = 44,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 20821
+    [DIFFICULTY_NORMAL][TRAINER_SEABREEZE_SHIPPING1F_GRUNT_3] =
+    {
+#line 20822
+        .trainerName = _("GRUNT"),
+#line 20823
+        .trainerClass = TRAINER_CLASS_TEAM_AQUA,
+#line 20824
+        .trainerPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .encounterMusic_gender =
+#line 20826
+            TRAINER_ENCOUNTER_MUSIC_AQUA,
+#line 20827
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 20828
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .partySize = 3,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 20830
+            .species = SPECIES_STARMIE,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20832
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20831
+            .lvl = 42,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20834
+            .species = SPECIES_HONCHKROW,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20836
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20835
+            .lvl = 43,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20838
+            .species = SPECIES_OMASTAR,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20840
+            .iv = TRAINER_PARTY_IVS(6, 6, 6, 6, 6, 6),
+#line 20839
+            .lvl = 44,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },

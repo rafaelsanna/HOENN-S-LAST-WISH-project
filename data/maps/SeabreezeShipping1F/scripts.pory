@@ -41,6 +41,49 @@ SeabreezeShipping1F_EventScript_FaceDownOnArrival::
 	releaseall
 	end
 
+SeabreezeShipping1F_EventScript_Employee1::
+	lock
+	faceplayer
+	msgbox SeabreezeShipping1F_Text_Employee1, MSGBOX_NPC
+	release
+	end
+
+SeabreezeShipping1F_EventScript_Employee2::
+	lock
+	faceplayer
+	msgbox SeabreezeShipping1F_Text_Employee2, MSGBOX_NPC
+	release
+	end
+
+SeabreezeShipping1F_EventScript_Employee3::
+	lock
+	faceplayer
+	msgbox SeabreezeShipping1F_Text_Employee3, MSGBOX_NPC
+	release
+	end
+
+SeabreezeShipping1F_EventScript_Employee4::
+	lock
+	faceplayer
+	msgbox SeabreezeShipping1F_Text_Employee4, MSGBOX_NPC
+	release
+	end
+
+SeabreezeShipping1F_EventScript_Grunt1::
+	trainerbattle_single TRAINER_SEABREEZE_SHIPPING1F_GRUNT_1, SeabreezeShipping1F_Text_Grunt1Intro, SeabreezeShipping1F_Text_Grunt1Defeat
+	msgbox SeabreezeShipping1F_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SeabreezeShipping1F_EventScript_Grunt2::
+	trainerbattle_single TRAINER_SEABREEZE_SHIPPING1F_GRUNT_2, SeabreezeShipping1F_Text_Grunt2Intro, SeabreezeShipping1F_Text_Grunt2Defeat
+	msgbox SeabreezeShipping1F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SeabreezeShipping1F_EventScript_Grunt3::
+	trainerbattle_single TRAINER_SEABREEZE_SHIPPING1F_GRUNT_3, SeabreezeShipping1F_Text_Grunt3Intro, SeabreezeShipping1F_Text_Grunt3Defeat
+	msgbox SeabreezeShipping1F_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
+	end
+
 SeabreezeShipping1F_EventScript_Elevatorman::
 	lock
 	faceplayer
@@ -72,5 +115,69 @@ SeabreezeShipping1F_Text_Elevatorman_Closed:
 
 SeabreezeShipping1F_Text_Elevatorman_GoDown:
 	.string "Would you like to go down?$"
+
+SeabreezeShipping1F_Text_Employee1:
+	.string "Something about these new orders\n"
+	.string "doesn't feel right. I've been asked to\l"
+	.string "change the cargo records, but I never\l"
+	.string "saw the shipments myself.$"
+
+SeabreezeShipping1F_Text_Employee2:
+	.string "Those AQUA members have been watching\n"
+	.string "us all day. Is the PRESIDENT really\l"
+	.string "okay with this?$"
+
+SeabreezeShipping1F_Text_Employee3:
+	.string "The president says everything is\n"
+	.string "legitimate, but why are we changing the\l"
+	.string "destinations after the cargo is loaded?\p"
+	.string "I really don't get paid enough for this.$"
+
+SeabreezeShipping1F_Text_Employee4:
+	.string "I thought I worked for a shipping\n"
+	.string "company, not a smuggling operation.\p"
+	.string "Please don't tell them I said that.$"
+
+SeabreezeShipping1F_Text_Grunt1Intro:
+	.string "Hey! No one is supposed to go upstairs\n"
+	.string "while the boss is having his meeting.\p"
+	.string "Your trespassing ends here, kid!$"
+
+SeabreezeShipping1F_Text_Grunt1Defeat:
+	.string "What? How did I lose to someone who\n"
+	.string "looks so ridiculous?$"
+
+SeabreezeShipping1F_Text_Grunt1PostBattle:
+	.string "We were told this would be an easy\n"
+	.string "assignment. No one told me I'd have\l"
+	.string "to fight some crazy strong kid\l"
+	.string "wearing RPG cosplay!$"
+
+SeabreezeShipping1F_Text_Grunt2Intro:
+	.string "The workers have their orders, and we're\n"
+	.string "here to make sure they follow them.$"
+
+SeabreezeShipping1F_Text_Grunt2Defeat:
+	.string "Hey! You embarrassed me in front of\n"
+	.string "all these minimum wage losers!$"
+
+SeabreezeShipping1F_Text_Grunt2PostBattle:
+	.string "The workers will keep quiet if they know\n"
+	.string "what's good for them.$"
+
+SeabreezeShipping1F_Text_Grunt3Intro:
+	.string "This shipping company is under TEAM\n"
+	.string "AQUA's protection. You don't have\l"
+	.string "permission to interfere!$"
+
+SeabreezeShipping1F_Text_Grunt3Defeat:
+	.string "The boss won't be happy about\n"
+	.string "this...$"
+
+SeabreezeShipping1F_Text_Grunt3PostBattle:
+	.string "Want to know a secret?\p"
+	.string "This company's PRESIDENT is really\n"
+	.string "just a puppet planted by TEAM AQUA.\p"
+	.string "That's the level of power we command.$"
 
 `

@@ -1291,8 +1291,8 @@
 #define FLAG_HIDE_SLATEPORT_CITY_LUKA_CARGO_RETURN                 0x4D1 // HLW_CARGO_SHIP_LUKA_EVENT_V1: temporary Luka object for the return scene
 #define FLAG_CARGO_SHIP_EVENT_COMPLETE                             0x4D2 // HLW_CARGO_SHIP_LUKA_EVENT_V1: Cargo Ship hold sequence completed
 #define FLAG_SEABREEZE_SHIPPING_ELEVATOR_INTRO                    0x4D3 // HLW_SEABREEZE_SHIPPING_ELEVATOR_V1: first key-card elevator conversation completed
-#define FLAG_UNUSED_0x4D4                                           0x4D4 // Unused Flag
-#define FLAG_UNUSED_0x4D5                                           0x4D5 // Unused Flag
+#define FLAG_ITEM_SEABREEZE_SHIPPING1F_HYPER_POTION                0x4D4
+#define FLAG_ITEM_SEABREEZE_SHIPPING2F_NUGGET                      0x4D5
 #define FLAG_UNUSED_0x4D6                                           0x4D6 // Unused Flag
 #define FLAG_UNUSED_0x4D7                                           0x4D7 // Unused Flag
 #define FLAG_UNUSED_0x4D8                                           0x4D8 // Unused Flag
