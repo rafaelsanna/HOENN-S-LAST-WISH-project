@@ -1,68 +1,133 @@
 raw `
 MossdeepCity_House5_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_House5_SetMrButtonsVisibility
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, MossdeepCity_House5_OnWarpIntoMap
+	@ ON_RESUME runs before NPC sprites are rebuilt; spawning there leaves a duplicate sprite.
+	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, MossdeepCity_House5_UpdateMrButtonsVisibility
 	.byte 0
 
+MossdeepCity_House5_SetMrButtonsVisibility:
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_VisibilityEnd
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MossdeepCity_House5_VisibilityEnd
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+MossdeepCity_House5_VisibilityEnd:
+	end
+
+MossdeepCity_House5_OnWarpIntoMap:
+	map_script_2 VAR_TEMP_0, VAR_TEMP_0, MossdeepCity_House5_UpdateMrButtonsVisibility
+	.2byte 0
+
+MossdeepCity_House5_UpdateMrButtonsVisibility:
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_HideMrButtons
+	gettimeofday
+	goto_if_ne VAR_0x8000, TIME_NIGHT, MossdeepCity_House5_HideMrButtons
+	clearflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	addobject LOCALID_MOSSDEEP_HOUSE5_MR_BUTTONS
+	end
+MossdeepCity_House5_HideMrButtons:
+	removeobject LOCALID_MOSSDEEP_HOUSE5_MR_BUTTONS
+	end
+
 MossdeepCity_House5_EventScript_LittleGirl_StartQuest::
-	lock
+	lockall
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_EventScript_LittleGirl_Complete
 	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll
 	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_LittleGirl_BeginQuest
-	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, MossdeepCity_House5_EventScript_LittleGirl_GiveHoney
-	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, MossdeepCity_House5_EventScript_LittleGirl_GiveHoney
-	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MossdeepCity_House5_EventScript_LittleGirl_StillSearching
-	msgbox MossdeepCity_House5_Text_LittleGirl_StillSearching, MSGBOX_DEFAULT
-	release
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MossdeepCity_House5_EventScript_LittleGirl_StillSearching
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, MossdeepCity_House5_EventScript_LittleGirl_HeardConfession
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, MossdeepCity_House5_EventScript_LittleGirl_HeardConfession
+	msgbox MossdeepCity_House5_Text_LittleGirl_PleaseHelp, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MossdeepCity_House5_EventScript_LittleGirl_HeardConfession:
+	goto_if_eq VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, MR_BUTTONS_ESTHER_REASSURED, MossdeepCity_House5_EventScript_LittleGirl_AskMom
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox MossdeepCity_House5_Text_LittleGirl_HeardConfession, MSGBOX_DEFAULT
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, MR_BUTTONS_ESTHER_REASSURED
+MossdeepCity_House5_EventScript_LittleGirl_AskMom:
+	msgbox MossdeepCity_House5_Text_LittleGirl_AskMom, MSGBOX_DEFAULT
+	releaseall
 	end
 
 MossdeepCity_House5_EventScript_LittleGirl_StillSearching::
 	msgbox MossdeepCity_House5_Text_LittleGirl_StillSearching, MSGBOX_DEFAULT
-	release
+	releaseall
 	end
 
 MossdeepCity_House5_EventScript_LittleGirl_BeginQuest::
-	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
-	waitmovement 0
 	msgbox MossdeepCity_House5_Text_LittleGirl_BeginQuest, MSGBOX_DEFAULT
 	setflag FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED
-	release
-	end
-
-MossdeepCity_House5_EventScript_LittleGirl_GiveHoney::
-	msgbox MossdeepCity_House5_Text_LittleGirl_GiveHoney, MSGBOX_DEFAULT
-	giveitem ITEM_HONEY
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 0
 	setvar VAR_MOSSDEEP_TEDDIURSA_FLOOR, 0
-	setflag FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN
-	msgbox MossdeepCity_House5_Text_LittleGirl_HoneyGiven, MSGBOX_DEFAULT
-	release
+	releaseall
 	end
 
 MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll::
 	checkfollowernpc
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_LittleGirl_FollowerMissing
+	checkitemspace ITEM_PEAT_BLOCK
+	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_BagFull
 	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
 	waitmovement 0
 	msgbox MossdeepCity_House5_Text_LittleGirl_ReceiveDoll, MSGBOX_DEFAULT
-	checkitemspace ITEM_PEAT_BLOCK
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	closemessage
+	getobjectcurrentxy LOCALID_MOSSDEEP_HOUSE5_ESTHER, CURRENT_POSITION, VAR_0x8005, VAR_0x8006
+	addvar VAR_0x8006, 1
+	setvar VAR_0x8004, OBJ_EVENT_ID_NPC_FOLLOWER
+	call MrButtons_EventScript_WalkToTarget
+	applymovement LOCALID_MOSSDEEP_HOUSE5_ESTHER, MossdeepCity_House5_Movement_Embrace
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_NPC_FOLLOWER, MossdeepCity_House5_Movement_BearHug
+	waitmovement 0
+	delay 48
+	msgbox MossdeepCity_House5_Text_LittleGirl_Hug, MSGBOX_DEFAULT
+	msgbox MossdeepCity_House5_Text_LittleGirl_Reward, MSGBOX_DEFAULT
 	giveitem ITEM_PEAT_BLOCK
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_BagFull
+	closemessage
+	playse SE_M_TELEPORT
+	applymovement OBJ_EVENT_ID_NPC_FOLLOWER, MrButtons_Movement_Disappear
+	waitmovement 0
 	destroyfollowernpc
 	setflag FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED
-	msgbox MossdeepCity_House5_Text_LittleGirl_Reward, MSGBOX_DEFAULT
-	release
+	setflag FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN
+	msgbox MossdeepCity_House5_Text_LittleGirl_Goodnight, MSGBOX_DEFAULT
+	faceplayer
+	releaseall
 	end
 
 MossdeepCity_House5_EventScript_LittleGirl_FollowerMissing::
 	clearflag FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 0
 	msgbox MossdeepCity_House5_Text_LittleGirl_FollowerMissing, MSGBOX_DEFAULT
-	release
+	releaseall
 	end
 
 MossdeepCity_House5_EventScript_LittleGirl_Complete::
 	msgbox MossdeepCity_House5_Text_LittleGirl_Complete, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MossdeepCity_House5_Movement_Embrace:
+	face_down
+	emote_heart
+	step_end
+MossdeepCity_House5_Movement_BearHug:
+	face_up
+	walk_slow_up
+	emote_heart
+	step_end
+
+MossdeepCity_House5_EventScript_MrButtons::
+	lock
+	faceplayer
+	msgbox MossdeepCity_House5_Text_MrButtons, MSGBOX_DEFAULT
 	release
 	end
 
@@ -70,7 +135,12 @@ MossdeepCity_House5_EventScript_Dad::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_EventScript_Dad_Complete
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_Dad_BeforeQuest
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MossdeepCity_House5_EventScript_Dad_AfterConfession
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, MossdeepCity_House5_EventScript_Dad_AfterConfession
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, MossdeepCity_House5_EventScript_Dad_AfterConfession
 	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_Dad_AfterQuestStart
+MossdeepCity_House5_EventScript_Dad_BeforeQuest:
 	msgbox MossdeepCity_House5_Text_Dad_BeforeQuest, MSGBOX_NPC
 	release
 	end
@@ -85,11 +155,21 @@ MossdeepCity_House5_EventScript_Dad_Complete::
 	release
 	end
 
+MossdeepCity_House5_EventScript_Dad_AfterConfession:
+	msgbox MossdeepCity_House5_Text_Dad_AfterConfession, MSGBOX_DEFAULT
+	release
+	end
+
 MossdeepCity_House5_EventScript_Mom::
 	lock
 	faceplayer
 	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, MossdeepCity_House5_EventScript_Mom_Complete
+	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_Mom_BeforeQuest
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN, MossdeepCity_House5_EventScript_Mom_HoneyGiven
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, MossdeepCity_House5_EventScript_Mom_GiveHoney
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, MossdeepCity_House5_EventScript_Mom_GiveHoney
 	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, MossdeepCity_House5_EventScript_Mom_AfterQuestStart
+MossdeepCity_House5_EventScript_Mom_BeforeQuest:
 	msgbox MossdeepCity_House5_Text_Mom_BeforeQuest, MSGBOX_NPC
 	release
 	end
@@ -104,79 +184,91 @@ MossdeepCity_House5_EventScript_Mom_Complete::
 	release
 	end
 
-MossdeepCity_House5_Text_LittleGirl_BeginQuest:
-	.string "My little doll is gone…\p"
-    .string "She was right beside me, and then...\n"
-    .string "just like that... she wasn't.\p"
-	.string "My brother saw her last. He got scared\n"
-	.string "and won't tell me what happened.\p"
-	.string "Would you help me find her?$"
-
-MossdeepCity_House5_Text_LittleGirl_StillSearching:
-	.string "I wonder where she is now…\n"
-	.string "I hope she isn't lonely.$"
-
-MossdeepCity_House5_Text_LittleGirl_GiveHoney:
-	.string "You found my brother…\p"
-	.string "He said the doll was left on MT. PYRE?\n"
-	.string "That sounds like a very lonely place.\p"
-	.string "Maybe this will help you find her.\n"
-	.string "Teddiursa can't resist something sweet…$"
-
-MossdeepCity_House5_Text_LittleGirl_HoneyGiven:
-	.string "Take the HONEY with you.\p"
-	.string "If you hear a tiny rustle in the dark,\n"
-	.string "please don't frighten her.$"
-
-MossdeepCity_House5_Text_LittleGirl_ReceiveDoll:
-	.string "Oh! You came back… and she's with you!\p"
-	.string "She looks a little different now.\n"
-	.string "As if the mountain taught her a secret.\p"
-	.string "But she's still my doll. I knew she'd\n"
-	.string "find her way home.$"
-
-MossdeepCity_House5_Text_LittleGirl_Reward:
-	.string "Thank you for bringing her back to me.\p"
-	.string "Please take this. It belonged to my\n"
-	.string "brother's old collection, but I think it\n"
-	.string "belongs with someone who keeps promises.$"
-
-MossdeepCity_House5_Text_LittleGirl_FollowerMissing:
-	.string "She's not here…\p"
-	.string "Maybe the mountain called her back.\n"
-	.string "Could you look for her once more?$"
-
-MossdeepCity_House5_Text_LittleGirl_Complete:
-	.string "She sleeps beside me every night now.\n"
-	.string "Even when the room gets very quiet.$"
-
-MossdeepCity_House5_Text_Dad_BeforeQuest:
-	.string "That doll has been her little shadow\n"
-	.string "for as long as I can remember.\p"
-	.string "She says it came from somewhere strange…\n"
-	.string "but children have such wonderful stories.$"
-
-MossdeepCity_House5_Text_Dad_AfterQuestStart:
-	.string "Our son lives in Lilycove.\p"
-	.string "He was the last one to see the doll.\n"
-	.string "Perhaps he knows more than he wants to say.$"
-
-MossdeepCity_House5_Text_Dad_Complete:
-	.string "The house feels warmer somehow.\n"
-	.string "Thank you for bringing that little smile\n"
-	.string "back to my daughter.$"
-
-MossdeepCity_House5_Text_Mom_BeforeQuest:
-	.string "She calls that doll her little friend.\p"
-	.string "I only wish her brother hadn't looked\n"
-	.string "so frightened when I asked about it.$"
-
-MossdeepCity_House5_Text_Mom_AfterQuestStart:
-	.string "I hope the path to MT. PYRE is kind to\n"
-	.string "you. Some things don't like being found.$"
-
-MossdeepCity_House5_Text_Mom_Complete:
-	.string "Somehow, even the doll seems happier.\n"
-	.string "Or perhaps that's just my heart.$"
-
+MossdeepCity_House5_EventScript_Mom_GiveHoney:
+	goto_if_ne VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, MR_BUTTONS_ESTHER_REASSURED, MossdeepCity_House5_EventScript_Mom_AskEsther
+	msgbox MossdeepCity_House5_Text_Mom_GiveHoney, MSGBOX_DEFAULT
+	giveitem ITEM_HONEY
+	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_BagFull
+	setflag FLAG_MOSSDEEP_TEDDIURSA_HONEY_GIVEN
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 0
+	setvar VAR_MOSSDEEP_TEDDIURSA_FLOOR, 0
+MossdeepCity_House5_EventScript_Mom_HoneyGiven:
+	msgbox MossdeepCity_House5_Text_Mom_HoneyGiven, MSGBOX_DEFAULT
+	release
+	end
+MossdeepCity_House5_EventScript_Mom_AskEsther:
+	msgbox MossdeepCity_House5_Text_Mom_AskEsther, MSGBOX_DEFAULT
+	release
+	end
+MossdeepCity_House5_EventScript_BagFull:
+	msgbox gText_BagIsFull, MSGBOX_DEFAULT
+	releaseall
+	end
 `
+
+text MossdeepCity_House5_Text_LittleGirl_BeginQuest {
+    format("I can't sleep anymore…\pMy little bear… He's gone.\pI used to hold him every night until I fell asleep.\pThen he disappeared. I looked all over the city…\pBut I couldn't find him anywhere.")
+}
+text MossdeepCity_House5_Text_LittleGirl_PleaseHelp {
+    format("Would you help me find Mr. Buttons?\pHe was old, and covered in little patches…\pBut I loved him so much.")
+}
+text MossdeepCity_House5_Text_LittleGirl_HeardConfession {
+    format("You found Ren? He really threw Mr. Buttons away?!\pI can't believe it…\pCursed? That's silly! I may be little, but I know some things.\pMr. Buttons was kind. Even if he was old and all patched up.\pRen always looks after me… But how could he do that?")
+}
+text MossdeepCity_House5_Text_LittleGirl_AskMom {
+    format("Ask Mama! She gave him to me. He used to be hers, and Grandma's before that.\pShe'll tell you. Mr. Buttons wouldn't hurt anyone.")
+}
+text MossdeepCity_House5_Text_LittleGirl_StillSearching {
+    format("Mr. Buttons never liked being alone in the dark…\pIf you find him tonight, please tell him Esther is waiting.")
+}
+text MossdeepCity_House5_Text_LittleGirl_ReceiveDoll {
+    format("Mr. Buttons! You came home!\pOh… I can see right through you. So you really are a ghost?\pWell, you're MY ghost. And you're a good one.\pCome here. I've missed you so much!")
+}
+text MossdeepCity_House5_Text_LittleGirl_Hug {
+    format("Esther gathers Mr. Buttons into her arms. His little paws reach around her.\pFor a moment, even the quiet room seems warm.\pSee? He remembers our hugs…")
+}
+text MossdeepCity_House5_Text_LittleGirl_Reward {
+    format("Thank you for bringing my friend home.\pHere… You can have this PEAT BLOCK. Mama says it helps URSARING evolve at night.\pMaybe it can help another little bear find his way, too.")
+}
+text MossdeepCity_House5_Text_LittleGirl_Goodnight {
+    format("Oh… He's gone again.\pBut that's all right. I think he'll come back when it's dark.\pGoodnight, Mr. Buttons. I'll leave a little room on my pillow.")
+}
+text MossdeepCity_House5_Text_LittleGirl_FollowerMissing {
+    format("Mr. Buttons isn't with you?\pMaybe he slipped back to the mountain. Could you look for him again tonight?")
+}
+text MossdeepCity_House5_Text_LittleGirl_Complete {
+    format("Mr. Buttons comes home every night now.\pSometimes I can't see him, but I know he's there.\pI've been sleeping ever so well.")
+}
+text MossdeepCity_House5_Text_MrButtons {
+    format("Mr. Buttons lifts a little paw. His eyes are gentle in the dim light.\pHe settles close to Esther. At last, he's home.")
+}
+text MossdeepCity_House5_Text_Dad_BeforeQuest {
+    format("Esther hasn't been sleeping well…\pIt's hard to see your little girl so sad, and not know how to help.")
+}
+text MossdeepCity_House5_Text_Dad_AfterQuestStart {
+    format("Our daughter's been so unhappy without her favorite stuffed bear.\pI did notice something odd about it, though. Especially at night…\pSometimes it seemed to look right at us. Or move a little.\pPerhaps I was just tired. You start seeing things, don't you?\pBut Ren, our eldest, was frightened of it. He never would admit that.\pIf you'd like to help, perhaps you could speak to him.\pHe lives with his girlfriend in LILYCOVE.")
+}
+text MossdeepCity_House5_Text_Dad_AfterConfession {
+    format("So Ren finally told you…\pHe wanted to protect us. I wish he'd trusted us enough to talk about it.\pDo be careful if you go looking for the bear.")
+}
+text MossdeepCity_House5_Text_Dad_Complete {
+    format("A ghost in our house… I'd never have believed it.\pBut Esther is smiling again. I suppose kindness comes in all sorts of shapes.")
+}
+text MossdeepCity_House5_Text_Mom_BeforeQuest {
+    format("Our dear Esther has been so quiet lately…\pI miss hearing her laugh around the house.")
+}
+text MossdeepCity_House5_Text_Mom_AfterQuestStart {
+    format("Our dear Esther has been so sad…\pWe suspect Ren, our eldest son, knows something about her bear.\pBut I don't think he meant any harm. He's always been very protective of her.")
+}
+text MossdeepCity_House5_Text_Mom_AskEsther {
+    format("You spoke to Ren?\pWould you tell Esther what happened first? She's been waiting so patiently.")
+}
+text MossdeepCity_House5_Text_Mom_GiveHoney {
+    format("Yes, Mr. Buttons was mine, and my mother's before me.\pHe never hurt a soul. I was so happy to pass him on to Esther.\pStill… We all felt something strange around him sometimes.\pI can understand why Ren was afraid. I wish he'd told me.\pHere, take a little HONEY. People say little bears love it, don't they?\pPerhaps it'll bring you luck finding him.")
+}
+text MossdeepCity_House5_Text_Mom_HoneyGiven {
+    format("Take the HONEY to MT. PYRE after dark. If his little heart remembers anything, it might remember something sweet.\pMaybe spirits really do exist…\pIf they do, I hope someone is keeping our bear company.")
+}
+text MossdeepCity_House5_Text_Mom_Complete {
+    format("Mother used to say love stays in the things we mend.\pSeeing Esther with Mr. Buttons… I think I understand her now.")
+}

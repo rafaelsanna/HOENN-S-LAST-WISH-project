@@ -15,6 +15,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_MOSSDEEP_HOUSE5_ESTHER",
       "graphics_id": "OBJ_EVENT_GFX_TWIN",
       "x": 3,
       "y": 4,
@@ -52,6 +53,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MossdeepCity_House5_EventScript_Mom",
       "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_MOSSDEEP_HOUSE5_MR_BUTTONS",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TEDDIURSA)",
+      "x": 3,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MossdeepCity_House5_EventScript_MrButtons",
+      "flag": "FLAG_MOSSDEEP_TEDDIURSA_OBJECT_HIDDEN"
     }
   ],
   "warp_events": [

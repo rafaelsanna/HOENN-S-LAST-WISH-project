@@ -66,7 +66,7 @@ MtPyre_1F_EventScript_Man::
 	end
 
 MtPyre_1F_EventScript_TeddiursaHideNSeek::
-	lock
+	lockall
 	faceplayer
 	gettimeofday
 	goto_if_ne VAR_0x8000, TIME_NIGHT, MtPyre_1F_EventScript_Teddiursa_Day
@@ -75,39 +75,110 @@ MtPyre_1F_EventScript_TeddiursaHideNSeek::
 	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND, MtPyre_1F_EventScript_Teddiursa_Follower
 	checkitem ITEM_HONEY
 	goto_if_eq VAR_RESULT, FALSE, MtPyre_1F_EventScript_Teddiursa_NeedHoney
+	checkfollowernpc
+	goto_if_eq VAR_RESULT, TRUE, MtPyre_1F_EventScript_Teddiursa_BringAlone
+	playse SE_M_TELEPORT
 	addvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 1
-	removeobject VAR_LAST_TALKED
 	goto_if_ge VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 3, MtPyre_1F_EventScript_Teddiursa_FinalFind
 	msgbox MtPyre_1F_Text_Teddiursa_FoundAgain, MSGBOX_DEFAULT
-	release
+	closemessage
+	playse SE_M_TELEPORT
+	applymovement VAR_LAST_TALKED, MrButtons_Movement_Disappear
+	waitmovement 0
+	removeobject VAR_LAST_TALKED
+	releaseall
 	end
 
 MtPyre_1F_EventScript_Teddiursa_FinalFind:
-	setflag FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND
-	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND, MtPyre_1F_EventScript_Teddiursa_Follower
 	msgbox MtPyre_1F_Text_Teddiursa_Found, MSGBOX_DEFAULT
-	release
+	closemessage
+	getobjectcurrentxy OBJ_EVENT_ID_PLAYER, CURRENT_POSITION, VAR_0x8005, VAR_0x8006
+	copyvar VAR_0x8004, VAR_LAST_TALKED
+	call MrButtons_EventScript_WalkToTarget
+	playse SE_M_TELEPORT
+	applymovement VAR_LAST_TALKED, MrButtons_Movement_Disappear
+	waitmovement 0
+	removeobject VAR_LAST_TALKED
+	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND, MtPyre_1F_EventScript_Teddiursa_Follower
+	checkfollowernpc
+	goto_if_eq VAR_RESULT, FALSE, MtPyre_1F_EventScript_Teddiursa_Retry
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 3
+	setflag FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND
+	msgbox MtPyre_1F_Text_Teddiursa_ComingHome, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MtPyre_1F_EventScript_Teddiursa_Retry:
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 2
+	msgbox MtPyre_1F_Text_Teddiursa_BringAlone, MSGBOX_DEFAULT
+	releaseall
 	end
 
 MtPyre_1F_EventScript_Teddiursa_Follower::
 	msgbox MtPyre_1F_Text_Teddiursa_Follower, MSGBOX_DEFAULT
-	release
+	releaseall
 	end
 
 MtPyre_1F_EventScript_Teddiursa_Day::
 	msgbox MtPyre_1F_Text_Teddiursa_Day, MSGBOX_NPC
-	release
+	releaseall
 	end
 
 MtPyre_1F_EventScript_Teddiursa_NotInterested::
 	msgbox MtPyre_1F_Text_Teddiursa_NotInterested, MSGBOX_NPC
-	release
+	releaseall
 	end
 
 MtPyre_1F_EventScript_Teddiursa_NeedHoney::
 	msgbox MtPyre_1F_Text_Teddiursa_NeedHoney, MSGBOX_NPC
-	release
+	releaseall
 	end
+
+MtPyre_1F_EventScript_Teddiursa_BringAlone:
+	msgbox MtPyre_1F_Text_Teddiursa_BringAlone, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ Shared by the last find and the reunion. Scripted ghost steps can cross walls.
+@ 8004 = actor local ID; 8005/8006 = target map coordinates.
+MrButtons_EventScript_WalkToTarget::
+	getobjectcurrentxy VAR_0x8004, CURRENT_POSITION, VAR_0x8007, VAR_0x8008
+	goto_if_lt VAR_0x8007, VAR_0x8005, MrButtons_WalkRight
+	goto_if_gt VAR_0x8007, VAR_0x8005, MrButtons_WalkLeft
+	goto_if_lt VAR_0x8008, VAR_0x8006, MrButtons_WalkDown
+	goto_if_gt VAR_0x8008, VAR_0x8006, MrButtons_WalkUp
+	return
+MrButtons_WalkRight:
+	applymovement VAR_0x8004, MrButtons_Movement_WalkRight
+	waitmovement 0
+	goto MrButtons_EventScript_WalkToTarget
+MrButtons_WalkLeft:
+	applymovement VAR_0x8004, MrButtons_Movement_WalkLeft
+	waitmovement 0
+	goto MrButtons_EventScript_WalkToTarget
+MrButtons_WalkDown:
+	applymovement VAR_0x8004, MrButtons_Movement_WalkDown
+	waitmovement 0
+	goto MrButtons_EventScript_WalkToTarget
+MrButtons_WalkUp:
+	applymovement VAR_0x8004, MrButtons_Movement_WalkUp
+	waitmovement 0
+	goto MrButtons_EventScript_WalkToTarget
+MrButtons_Movement_WalkRight:
+	walk_right
+	step_end
+MrButtons_Movement_WalkLeft:
+	walk_left
+	step_end
+MrButtons_Movement_WalkDown:
+	walk_down
+	step_end
+MrButtons_Movement_WalkUp:
+	walk_up
+	step_end
+MrButtons_Movement_Disappear::
+	set_invisible
+	step_end
 
 MtPyre_1F_Text_TakeThisForYourOwnGood:
 	.string "All sorts of beings wander the slopes\n"
@@ -129,34 +200,29 @@ MtPyre_1F_Text_RestingPlaceOfZigzagoon:
 	.string "This is the final resting place of my\n"
 	.string "ZIGZAGOON. I cherished it…$"
 
-MtPyre_1F_Text_Teddiursa_Found:
-	.string "The HONEY's scent drifts through the\n"
-	.string "still mountain air…\p"
-	.string "A small TEDDIURSA steps from the shadows.\n"
-	.string "It looks at you, then at the path ahead.\p"
-	.string "The little bear follows you.$"
-
-MtPyre_1F_Text_Teddiursa_FoundAgain:
-	.string "The HONEY's scent drifts through the\n"
-	.string "still mountain air…\p"
-	.string "A small TEDDIURSA peeks from the shadows,\n"
-	.string "then disappears before you can reach it.\p"
-	.string "It seems you'll have to find it again.$"
-
-MtPyre_1F_Text_Teddiursa_Follower:
-	.string "TEDDIURSA stays close behind you.\n"
-	.string "Its tiny paws make almost no sound.$"
-
-MtPyre_1F_Text_Teddiursa_Day:
-	.string "The mountain is quiet in the daylight.\n"
-	.string "Whatever you were looking for is hiding.$"
-
-MtPyre_1F_Text_Teddiursa_NotInterested:
-	.string "The TEDDIURSA watches you from a distance.\n"
-	.string "It doesn't seem ready to come closer.$"
-
-MtPyre_1F_Text_Teddiursa_NeedHoney:
-	.string "The TEDDIURSA sniffs the air, then turns\n"
-	.string "away. Something sweet might bring it out.$"
-
 `
+
+text MtPyre_1F_Text_Teddiursa_Found {
+    format("There he is again… A little bear, sewn with crooked stitches and love.\pThis time, he doesn't turn away.\pHe reaches for you with one small paw. Perhaps he's tired of hiding.")
+}
+text MtPyre_1F_Text_Teddiursa_ComingHome {
+    format("Mr. Buttons stays close behind you. His little paws make no sound at all.\pIt's time to take him home to Esther.")
+}
+text MtPyre_1F_Text_Teddiursa_FoundAgain {
+    format("The scent of HONEY hangs in the cool air…\pA little patched bear peeks out at you. For a moment, you can see the wall through him.\pThen he gives a shy little wave…\pIs he asking you to play hide-and-seek?")
+}
+text MtPyre_1F_Text_Teddiursa_Follower {
+    format("Mr. Buttons tilts his head. He seems to be listening for a familiar voice.\pHis little paw brushes yours, light as a whisper.")
+}
+text MtPyre_1F_Text_Teddiursa_Day {
+    format("The mountain is quiet in the daylight.\pPerhaps a little friend is waiting for nightfall.")
+}
+text MtPyre_1F_Text_Teddiursa_NotInterested {
+    format("The little bear watches you from a distance.\pHe doesn't seem ready to come closer.")
+}
+text MtPyre_1F_Text_Teddiursa_NeedHoney {
+    format("The little bear sniffs the air, then looks away.\pSomething sweet might earn his trust.")
+}
+text MtPyre_1F_Text_Teddiursa_BringAlone {
+    format("The little bear hangs back, shy of your traveling companion.\pPerhaps you should bring them home before asking him to follow.")
+}

@@ -148,6 +148,9 @@
 #define VAR_ROUTE133_STATE                               0x4080 // Unused Var
 #define VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT              VAR_ROUTE132_STATE
 #define VAR_MOSSDEEP_TEDDIURSA_FLOOR                    VAR_ROUTE133_STATE
+// Reuse the search counter outside the hunt instead of allocating more flags.
+#define MR_BUTTONS_ESTHER_REASSURED                    4 // Before Honey: Esther referred the player to Mom
+#define MR_BUTTONS_REN_TM_RECEIVED                     0xFFFF // After completion: Ren's one-time gift received
 #define VAR_HIDDEN_GROTTO_RESET_DAYS                 0x4081
 #define VAR_LITTLEROOT_HOUSES_STATE_MAY                  0x4082
 #define VAR_HIDDEN_GROTTO_00                             0x4083

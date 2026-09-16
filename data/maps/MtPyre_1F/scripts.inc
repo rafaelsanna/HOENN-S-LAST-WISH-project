@@ -135,7 +135,7 @@ MtPyre_1F_EventScript_Man::
 # 68 "data/maps/MtPyre_1F/scripts.pory"
 MtPyre_1F_EventScript_TeddiursaHideNSeek::
 # 69 "data/maps/MtPyre_1F/scripts.pory"
-	lock
+	lockall
 # 70 "data/maps/MtPyre_1F/scripts.pory"
 	faceplayer
 # 71 "data/maps/MtPyre_1F/scripts.pory"
@@ -153,168 +153,307 @@ MtPyre_1F_EventScript_TeddiursaHideNSeek::
 # 77 "data/maps/MtPyre_1F/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, MtPyre_1F_EventScript_Teddiursa_NeedHoney
 # 78 "data/maps/MtPyre_1F/scripts.pory"
-	addvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 1
+	checkfollowernpc
 # 79 "data/maps/MtPyre_1F/scripts.pory"
-	removeobject VAR_LAST_TALKED
+	goto_if_eq VAR_RESULT, TRUE, MtPyre_1F_EventScript_Teddiursa_BringAlone
 # 80 "data/maps/MtPyre_1F/scripts.pory"
-	goto_if_ge VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 3, MtPyre_1F_EventScript_Teddiursa_FinalFind
+	playse SE_M_TELEPORT
 # 81 "data/maps/MtPyre_1F/scripts.pory"
-	msgbox MtPyre_1F_Text_Teddiursa_FoundAgain, MSGBOX_DEFAULT
+	addvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 1
 # 82 "data/maps/MtPyre_1F/scripts.pory"
-	release
+	goto_if_ge VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 3, MtPyre_1F_EventScript_Teddiursa_FinalFind
 # 83 "data/maps/MtPyre_1F/scripts.pory"
-	end
+	msgbox MtPyre_1F_Text_Teddiursa_FoundAgain, MSGBOX_DEFAULT
 # 84 "data/maps/MtPyre_1F/scripts.pory"
-
+	closemessage
 # 85 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_EventScript_Teddiursa_FinalFind:
+	playse SE_M_TELEPORT
 # 86 "data/maps/MtPyre_1F/scripts.pory"
-	setflag FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND
+	applymovement VAR_LAST_TALKED, MrButtons_Movement_Disappear
 # 87 "data/maps/MtPyre_1F/scripts.pory"
-	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND, MtPyre_1F_EventScript_Teddiursa_Follower
+	waitmovement 0
 # 88 "data/maps/MtPyre_1F/scripts.pory"
-	msgbox MtPyre_1F_Text_Teddiursa_Found, MSGBOX_DEFAULT
+	removeobject VAR_LAST_TALKED
 # 89 "data/maps/MtPyre_1F/scripts.pory"
-	release
+	releaseall
 # 90 "data/maps/MtPyre_1F/scripts.pory"
 	end
 # 91 "data/maps/MtPyre_1F/scripts.pory"
 
 # 92 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_EventScript_Teddiursa_Follower::
+MtPyre_1F_EventScript_Teddiursa_FinalFind:
 # 93 "data/maps/MtPyre_1F/scripts.pory"
-	msgbox MtPyre_1F_Text_Teddiursa_Follower, MSGBOX_DEFAULT
+	msgbox MtPyre_1F_Text_Teddiursa_Found, MSGBOX_DEFAULT
 # 94 "data/maps/MtPyre_1F/scripts.pory"
-	release
+	closemessage
 # 95 "data/maps/MtPyre_1F/scripts.pory"
-	end
+	getobjectcurrentxy OBJ_EVENT_ID_PLAYER, CURRENT_POSITION, VAR_0x8005, VAR_0x8006
 # 96 "data/maps/MtPyre_1F/scripts.pory"
-
+	copyvar VAR_0x8004, VAR_LAST_TALKED
 # 97 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_EventScript_Teddiursa_Day::
+	call MrButtons_EventScript_WalkToTarget
 # 98 "data/maps/MtPyre_1F/scripts.pory"
-	msgbox MtPyre_1F_Text_Teddiursa_Day, MSGBOX_NPC
+	playse SE_M_TELEPORT
 # 99 "data/maps/MtPyre_1F/scripts.pory"
-	release
+	applymovement VAR_LAST_TALKED, MrButtons_Movement_Disappear
 # 100 "data/maps/MtPyre_1F/scripts.pory"
-	end
+	waitmovement 0
 # 101 "data/maps/MtPyre_1F/scripts.pory"
-
+	removeobject VAR_LAST_TALKED
 # 102 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_EventScript_Teddiursa_NotInterested::
+	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND, MtPyre_1F_EventScript_Teddiursa_Follower
 # 103 "data/maps/MtPyre_1F/scripts.pory"
-	msgbox MtPyre_1F_Text_Teddiursa_NotInterested, MSGBOX_NPC
+	checkfollowernpc
 # 104 "data/maps/MtPyre_1F/scripts.pory"
-	release
+	goto_if_eq VAR_RESULT, FALSE, MtPyre_1F_EventScript_Teddiursa_Retry
 # 105 "data/maps/MtPyre_1F/scripts.pory"
-	end
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 3
 # 106 "data/maps/MtPyre_1F/scripts.pory"
-
+	setflag FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND
 # 107 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_EventScript_Teddiursa_NeedHoney::
+	msgbox MtPyre_1F_Text_Teddiursa_ComingHome, MSGBOX_DEFAULT
 # 108 "data/maps/MtPyre_1F/scripts.pory"
-	msgbox MtPyre_1F_Text_Teddiursa_NeedHoney, MSGBOX_NPC
+	releaseall
 # 109 "data/maps/MtPyre_1F/scripts.pory"
-	release
-# 110 "data/maps/MtPyre_1F/scripts.pory"
 	end
+# 110 "data/maps/MtPyre_1F/scripts.pory"
+
 # 111 "data/maps/MtPyre_1F/scripts.pory"
-
+MtPyre_1F_EventScript_Teddiursa_Retry:
 # 112 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_TakeThisForYourOwnGood:
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 2
 # 113 "data/maps/MtPyre_1F/scripts.pory"
-	.string "All sorts of beings wander the slopes\n"
+	msgbox MtPyre_1F_Text_Teddiursa_BringAlone, MSGBOX_DEFAULT
 # 114 "data/maps/MtPyre_1F/scripts.pory"
-	.string "of MT. PYRE…\p"
+	releaseall
 # 115 "data/maps/MtPyre_1F/scripts.pory"
-	.string "There is no telling what may happen.\n"
+	end
 # 116 "data/maps/MtPyre_1F/scripts.pory"
-	.string "Take this. It's for your own good.$"
+
 # 117 "data/maps/MtPyre_1F/scripts.pory"
-
+MtPyre_1F_EventScript_Teddiursa_Follower::
 # 118 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_ExplainCleanseTag:
+	msgbox MtPyre_1F_Text_Teddiursa_Follower, MSGBOX_DEFAULT
 # 119 "data/maps/MtPyre_1F/scripts.pory"
-	.string "Have a POKéMON hold that\n"
+	releaseall
 # 120 "data/maps/MtPyre_1F/scripts.pory"
-	.string "CLEANSE TAG.\p"
+	end
 # 121 "data/maps/MtPyre_1F/scripts.pory"
-	.string "It will help ward off wild POKéMON.$"
+
 # 122 "data/maps/MtPyre_1F/scripts.pory"
-
+MtPyre_1F_EventScript_Teddiursa_Day::
 # 123 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_ComeToPayRespects:
+	msgbox MtPyre_1F_Text_Teddiursa_Day, MSGBOX_NPC
 # 124 "data/maps/MtPyre_1F/scripts.pory"
-	.string "Did you come to pay your respect\n"
+	releaseall
 # 125 "data/maps/MtPyre_1F/scripts.pory"
-	.string "to the spirits of departed POKéMON?\p"
+	end
 # 126 "data/maps/MtPyre_1F/scripts.pory"
-	.string "You must care for your POKéMON a lot.$"
-# 127 "data/maps/MtPyre_1F/scripts.pory"
 
+# 127 "data/maps/MtPyre_1F/scripts.pory"
+MtPyre_1F_EventScript_Teddiursa_NotInterested::
 # 128 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_RestingPlaceOfZigzagoon:
+	msgbox MtPyre_1F_Text_Teddiursa_NotInterested, MSGBOX_NPC
 # 129 "data/maps/MtPyre_1F/scripts.pory"
-	.string "This is the final resting place of my\n"
+	releaseall
 # 130 "data/maps/MtPyre_1F/scripts.pory"
-	.string "ZIGZAGOON. I cherished it…$"
+	end
 # 131 "data/maps/MtPyre_1F/scripts.pory"
 
 # 132 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_Teddiursa_Found:
+MtPyre_1F_EventScript_Teddiursa_NeedHoney::
 # 133 "data/maps/MtPyre_1F/scripts.pory"
-	.string "The HONEY's scent drifts through the\n"
+	msgbox MtPyre_1F_Text_Teddiursa_NeedHoney, MSGBOX_NPC
 # 134 "data/maps/MtPyre_1F/scripts.pory"
-	.string "still mountain air…\p"
+	releaseall
 # 135 "data/maps/MtPyre_1F/scripts.pory"
-	.string "A small TEDDIURSA steps from the shadows.\n"
+	end
 # 136 "data/maps/MtPyre_1F/scripts.pory"
-	.string "It looks at you, then at the path ahead.\p"
+
 # 137 "data/maps/MtPyre_1F/scripts.pory"
-	.string "The little bear follows you.$"
+MtPyre_1F_EventScript_Teddiursa_BringAlone:
 # 138 "data/maps/MtPyre_1F/scripts.pory"
-
+	msgbox MtPyre_1F_Text_Teddiursa_BringAlone, MSGBOX_DEFAULT
 # 139 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_Teddiursa_FoundAgain:
+	releaseall
 # 140 "data/maps/MtPyre_1F/scripts.pory"
-	.string "The HONEY's scent drifts through the\n"
+	end
 # 141 "data/maps/MtPyre_1F/scripts.pory"
-	.string "still mountain air…\p"
+
 # 142 "data/maps/MtPyre_1F/scripts.pory"
-	.string "A small TEDDIURSA peeks from the shadows,\n"
+@ Shared by the last find and the reunion. Scripted ghost steps can cross walls.
 # 143 "data/maps/MtPyre_1F/scripts.pory"
-	.string "then disappears before you can reach it.\p"
+@ 8004 = actor local ID; 8005/8006 = target map coordinates.
 # 144 "data/maps/MtPyre_1F/scripts.pory"
-	.string "It seems you'll have to find it again.$"
+MrButtons_EventScript_WalkToTarget::
 # 145 "data/maps/MtPyre_1F/scripts.pory"
-
+	getobjectcurrentxy VAR_0x8004, CURRENT_POSITION, VAR_0x8007, VAR_0x8008
 # 146 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_Teddiursa_Follower:
+	goto_if_lt VAR_0x8007, VAR_0x8005, MrButtons_WalkRight
 # 147 "data/maps/MtPyre_1F/scripts.pory"
-	.string "TEDDIURSA stays close behind you.\n"
+	goto_if_gt VAR_0x8007, VAR_0x8005, MrButtons_WalkLeft
 # 148 "data/maps/MtPyre_1F/scripts.pory"
-	.string "Its tiny paws make almost no sound.$"
+	goto_if_lt VAR_0x8008, VAR_0x8006, MrButtons_WalkDown
 # 149 "data/maps/MtPyre_1F/scripts.pory"
-
+	goto_if_gt VAR_0x8008, VAR_0x8006, MrButtons_WalkUp
 # 150 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_Teddiursa_Day:
+	return
 # 151 "data/maps/MtPyre_1F/scripts.pory"
-	.string "The mountain is quiet in the daylight.\n"
+MrButtons_WalkRight:
 # 152 "data/maps/MtPyre_1F/scripts.pory"
-	.string "Whatever you were looking for is hiding.$"
+	applymovement VAR_0x8004, MrButtons_Movement_WalkRight
 # 153 "data/maps/MtPyre_1F/scripts.pory"
-
+	waitmovement 0
 # 154 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_Teddiursa_NotInterested:
+	goto MrButtons_EventScript_WalkToTarget
 # 155 "data/maps/MtPyre_1F/scripts.pory"
-	.string "The TEDDIURSA watches you from a distance.\n"
+MrButtons_WalkLeft:
 # 156 "data/maps/MtPyre_1F/scripts.pory"
-	.string "It doesn't seem ready to come closer.$"
+	applymovement VAR_0x8004, MrButtons_Movement_WalkLeft
 # 157 "data/maps/MtPyre_1F/scripts.pory"
-
+	waitmovement 0
 # 158 "data/maps/MtPyre_1F/scripts.pory"
-MtPyre_1F_Text_Teddiursa_NeedHoney:
+	goto MrButtons_EventScript_WalkToTarget
 # 159 "data/maps/MtPyre_1F/scripts.pory"
-	.string "The TEDDIURSA sniffs the air, then turns\n"
+MrButtons_WalkDown:
 # 160 "data/maps/MtPyre_1F/scripts.pory"
-	.string "away. Something sweet might bring it out.$"
+	applymovement VAR_0x8004, MrButtons_Movement_WalkDown
+# 161 "data/maps/MtPyre_1F/scripts.pory"
+	waitmovement 0
+# 162 "data/maps/MtPyre_1F/scripts.pory"
+	goto MrButtons_EventScript_WalkToTarget
+# 163 "data/maps/MtPyre_1F/scripts.pory"
+MrButtons_WalkUp:
+# 164 "data/maps/MtPyre_1F/scripts.pory"
+	applymovement VAR_0x8004, MrButtons_Movement_WalkUp
+# 165 "data/maps/MtPyre_1F/scripts.pory"
+	waitmovement 0
+# 166 "data/maps/MtPyre_1F/scripts.pory"
+	goto MrButtons_EventScript_WalkToTarget
+# 167 "data/maps/MtPyre_1F/scripts.pory"
+MrButtons_Movement_WalkRight:
+# 168 "data/maps/MtPyre_1F/scripts.pory"
+	walk_right
+# 169 "data/maps/MtPyre_1F/scripts.pory"
+	step_end
+# 170 "data/maps/MtPyre_1F/scripts.pory"
+MrButtons_Movement_WalkLeft:
+# 171 "data/maps/MtPyre_1F/scripts.pory"
+	walk_left
+# 172 "data/maps/MtPyre_1F/scripts.pory"
+	step_end
+# 173 "data/maps/MtPyre_1F/scripts.pory"
+MrButtons_Movement_WalkDown:
+# 174 "data/maps/MtPyre_1F/scripts.pory"
+	walk_down
+# 175 "data/maps/MtPyre_1F/scripts.pory"
+	step_end
+# 176 "data/maps/MtPyre_1F/scripts.pory"
+MrButtons_Movement_WalkUp:
+# 177 "data/maps/MtPyre_1F/scripts.pory"
+	walk_up
+# 178 "data/maps/MtPyre_1F/scripts.pory"
+	step_end
+# 179 "data/maps/MtPyre_1F/scripts.pory"
+MrButtons_Movement_Disappear::
+# 180 "data/maps/MtPyre_1F/scripts.pory"
+	set_invisible
+# 181 "data/maps/MtPyre_1F/scripts.pory"
+	step_end
+# 182 "data/maps/MtPyre_1F/scripts.pory"
+
+# 183 "data/maps/MtPyre_1F/scripts.pory"
+MtPyre_1F_Text_TakeThisForYourOwnGood:
+# 184 "data/maps/MtPyre_1F/scripts.pory"
+	.string "All sorts of beings wander the slopes\n"
+# 185 "data/maps/MtPyre_1F/scripts.pory"
+	.string "of MT. PYRE…\p"
+# 186 "data/maps/MtPyre_1F/scripts.pory"
+	.string "There is no telling what may happen.\n"
+# 187 "data/maps/MtPyre_1F/scripts.pory"
+	.string "Take this. It's for your own good.$"
+# 188 "data/maps/MtPyre_1F/scripts.pory"
+
+# 189 "data/maps/MtPyre_1F/scripts.pory"
+MtPyre_1F_Text_ExplainCleanseTag:
+# 190 "data/maps/MtPyre_1F/scripts.pory"
+	.string "Have a POKéMON hold that\n"
+# 191 "data/maps/MtPyre_1F/scripts.pory"
+	.string "CLEANSE TAG.\p"
+# 192 "data/maps/MtPyre_1F/scripts.pory"
+	.string "It will help ward off wild POKéMON.$"
+# 193 "data/maps/MtPyre_1F/scripts.pory"
+
+# 194 "data/maps/MtPyre_1F/scripts.pory"
+MtPyre_1F_Text_ComeToPayRespects:
+# 195 "data/maps/MtPyre_1F/scripts.pory"
+	.string "Did you come to pay your respect\n"
+# 196 "data/maps/MtPyre_1F/scripts.pory"
+	.string "to the spirits of departed POKéMON?\p"
+# 197 "data/maps/MtPyre_1F/scripts.pory"
+	.string "You must care for your POKéMON a lot.$"
+# 198 "data/maps/MtPyre_1F/scripts.pory"
+
+# 199 "data/maps/MtPyre_1F/scripts.pory"
+MtPyre_1F_Text_RestingPlaceOfZigzagoon:
+# 200 "data/maps/MtPyre_1F/scripts.pory"
+	.string "This is the final resting place of my\n"
+# 201 "data/maps/MtPyre_1F/scripts.pory"
+	.string "ZIGZAGOON. I cherished it…$"
+
+MtPyre_1F_Text_Teddiursa_Found::
+# 205 "data/maps/MtPyre_1F/scripts.pory"
+	.string "There he is again… A little bear, sewn\n"
+	.string "with crooked stitches and love.\p"
+	.string "This time, he doesn't turn away.\p"
+	.string "He reaches for you with one small paw.\n"
+	.string "Perhaps he's tired of hiding.$"
+
+MtPyre_1F_Text_Teddiursa_ComingHome::
+# 208 "data/maps/MtPyre_1F/scripts.pory"
+	.string "Mr. Buttons stays close behind you. His\n"
+	.string "little paws make no sound at all.\p"
+	.string "It's time to take him home to Esther.$"
+
+MtPyre_1F_Text_Teddiursa_FoundAgain::
+# 211 "data/maps/MtPyre_1F/scripts.pory"
+	.string "The scent of HONEY hangs in the cool\n"
+	.string "air…\p"
+	.string "A little patched bear peeks out at you.\n"
+	.string "For a moment, you can see the wall\l"
+	.string "through him.\p"
+	.string "Then he gives a shy little wave…\p"
+	.string "Is he asking you to play\n"
+	.string "hide-and-seek?$"
+
+MtPyre_1F_Text_Teddiursa_Follower::
+# 214 "data/maps/MtPyre_1F/scripts.pory"
+	.string "Mr. Buttons tilts his head. He seems to\n"
+	.string "be listening for a familiar voice.\p"
+	.string "His little paw brushes yours, light as a\n"
+	.string "whisper.$"
+
+MtPyre_1F_Text_Teddiursa_Day::
+# 217 "data/maps/MtPyre_1F/scripts.pory"
+	.string "The mountain is quiet in the daylight.\p"
+	.string "Perhaps a little friend is waiting for\n"
+	.string "nightfall.$"
+
+MtPyre_1F_Text_Teddiursa_NotInterested::
+# 220 "data/maps/MtPyre_1F/scripts.pory"
+	.string "The little bear watches you from a\n"
+	.string "distance.\p"
+	.string "He doesn't seem ready to come closer.$"
+
+MtPyre_1F_Text_Teddiursa_NeedHoney::
+# 223 "data/maps/MtPyre_1F/scripts.pory"
+	.string "The little bear sniffs the air, then\n"
+	.string "looks away.\p"
+	.string "Something sweet might earn his trust.$"
+
+MtPyre_1F_Text_Teddiursa_BringAlone::
+# 226 "data/maps/MtPyre_1F/scripts.pory"
+	.string "The little bear hangs back, shy of your\n"
+	.string "traveling companion.\p"
+	.string "Perhaps you should bring them home\n"
+	.string "before asking him to follow.$"

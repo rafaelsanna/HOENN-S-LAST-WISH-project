@@ -6,21 +6,42 @@ LilycoveCity_House5_EventScript_Brother::
 	lock
 	faceplayer
 	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, LilycoveCity_House5_EventScript_Brother_NoQuest
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, LilycoveCity_House5_EventScript_Brother_GiveTM
 	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_EventScript_Brother_PostBattle
 	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_EventScript_Brother_PostBattle
 	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
 	waitmovement 0
 	goto_if_set FLAG_HARD_MODE_SLEEP_CLAUSE, LilycoveCity_House5_EventScript_Brother_Hard
-	trainerbattle_single TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_Text_Brother_Intro, LilycoveCity_House5_Text_Brother_Defeat
-	goto LilycoveCity_House5_EventScript_Brother_PostBattle
+	trainerbattle_single TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_Text_Brother_Intro, LilycoveCity_House5_Text_Brother_Defeat, LilycoveCity_House5_EventScript_Brother_PostBattle
+	end
 
 LilycoveCity_House5_EventScript_Brother_Hard::
-	trainerbattle_single TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_Text_Brother_Intro, LilycoveCity_House5_Text_Brother_Defeat
+	trainerbattle_single TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_Text_Brother_Intro, LilycoveCity_House5_Text_Brother_Defeat, LilycoveCity_House5_EventScript_Brother_PostBattle
+	end
 
 LilycoveCity_House5_EventScript_Brother_PostBattle::
+	lock
+	faceplayer
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_EventScript_Brother_Confession
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_EventScript_Brother_Confession
+	release
+	end
+
+LilycoveCity_House5_EventScript_Brother_Confession:
 	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
 	waitmovement 0
 	msgbox LilycoveCity_House5_Text_Brother_PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_House5_EventScript_Brother_GiveTM:
+	goto_if_eq VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, MR_BUTTONS_REN_TM_RECEIVED, LilycoveCity_House5_EventScript_Brother_Complete
+	msgbox LilycoveCity_House5_Text_Brother_GiveTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM_U_TURN
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, MR_BUTTONS_REN_TM_RECEIVED
+LilycoveCity_House5_EventScript_Brother_Complete:
+	msgbox LilycoveCity_House5_Text_Brother_Complete, MSGBOX_DEFAULT
 	release
 	end
 
@@ -33,9 +54,9 @@ LilycoveCity_House5_EventScript_BrotherGf::
 	lock
 	faceplayer
 	goto_if_unset FLAG_MOSSDEEP_TEDDIURSA_QUEST_STARTED, LilycoveCity_House5_EventScript_BrotherGf_NoQuest
-	goto_if_not_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_EventScript_BrotherGf_BeforeBattle
-	goto_if_not_defeated TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_EventScript_BrotherGf_BeforeBattle
-	goto LilycoveCity_House5_EventScript_BrotherGf_AfterBattle
+	goto_if_set FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED, LilycoveCity_House5_EventScript_BrotherGf_Complete
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_CASUAL, LilycoveCity_House5_EventScript_BrotherGf_AfterBattle
+	goto_if_defeated TRAINER_REN_BROTHER_QUEST_HARD, LilycoveCity_House5_EventScript_BrotherGf_AfterBattle
 
 LilycoveCity_House5_EventScript_BrotherGf_BeforeBattle::
 	msgbox LilycoveCity_House5_Text_BrotherGf_BeforeBattle, MSGBOX_NPC
@@ -52,46 +73,39 @@ LilycoveCity_House5_EventScript_BrotherGf_NoQuest::
 	release
 	end
 
-LilycoveCity_House5_Text_Brother_Intro:
-	.string "You came all the way from Mossdeep…\p"
-	.string "She sent you, didn't she?\p"
-	.string "I don't want to talk about the doll.\n"
-	.string "If you really want the truth, show me\n"
-	.string "you can handle it.$"
-
-LilycoveCity_House5_Text_Brother_Defeat:
-	.string "All right…\p"
-	.string "I'll tell you what happened.$"
-
-LilycoveCity_House5_Text_Brother_PostBattle:
-	.string "After the meteor, the doll felt different.\p"
-	.string "It was only a toy, but sometimes I could\n"
-	.string "swear it was watching me.\p"
-	.string "I panicked and threw it into MT. PYRE.\n"
-	.string "I thought the spirits there would keep it\n"
-	.string "quiet. I didn't think she'd miss it so much.$"
-
-LilycoveCity_House5_Text_Brother_NotEnoughMons:
-	.string "If you want the truth, bring a partner.\n"
-	.string "I won't battle someone who comes alone.$"
-
-LilycoveCity_House5_Text_Brother_NoQuest:
-	.string "Ren is lost in thought.\n"
-	.string "He doesn't seem ready to talk.$"
-
-LilycoveCity_House5_Text_BrotherGf_BeforeBattle:
-	.string "Ren hasn't slept well since he came back\n"
-	.string "from MT. PYRE.\p"
-	.string "Whatever happened there, he keeps it\n"
-	.string "tucked away behind that quiet face.$"
-
-LilycoveCity_House5_Text_BrotherGf_AfterBattle:
-	.string "He finally told you…\p"
-	.string "I think he was more frightened of hurting\n"
-	.string "his sister's feelings than of the doll itself.$"
-
-LilycoveCity_House5_Text_BrotherGf_NoQuest:
-	.string "Ren is out today.\n"
-	.string "I wonder when he'll be back.$"
-
+LilycoveCity_House5_EventScript_BrotherGf_Complete:
+	msgbox LilycoveCity_House5_Text_BrotherGf_Complete, MSGBOX_DEFAULT
+	release
+	end
 `
+
+text LilycoveCity_House5_Text_Brother_Intro {
+    format("You came all the way from MOSSDEEP? Just to ask about some silly stuffed bear?\pMe, scared? Ha! As if!\pMaybe I ought to teach you a few manners.\pI'm training for the POKéMON LEAGUE anyway. A battle will do me good!")
+}
+text LilycoveCity_House5_Text_Brother_Defeat {
+    format("All right… You win.\pI suppose I owe you the truth.")
+}
+text LilycoveCity_House5_Text_Brother_PostBattle {
+    format("Okay. I was scared. There… I said it. I was too embarrassed to admit it.\pThat bear used to be mine when I was little. Before that, he was Mom's.\pEvery night, I was sure I saw him move. I threw him away once, even then.\pBut Mom kept him. When Esther was born, she gave him to her.\pI was grown up by then. I told myself I'd imagined it all.\pThen that strange comet came over HOENN…\pAfter that, on nights with a full moon, I swear I saw him WALKING around the house.\pRight THROUGH THE WALLS!\pSo I took him to the cemetery on MT. PYRE and threw him as far away as I could.\pI know how that sounds…\pBut I did it for my family. That thing is cursed. I couldn't let it hurt Esther.")
+}
+text LilycoveCity_House5_Text_Brother_NoQuest {
+    format("We only just moved into this house. Still getting used to the sea breeze.\pI'm Ren. A pretty strong Trainer, if I say so myself!\pI'm getting ready for the POKéMON LEAGUE.\pOh, you're a Trainer too? Well, keep working at it. Maybe we'll meet at the LEAGUE!")
+}
+text LilycoveCity_House5_Text_Brother_GiveTM {
+    format("So Mr. Buttons came home…\pHm. All right, I admit he's sort of cute. Esther looks so happy with him.\pYou were right to give me a beating. I had that coming.\pHere… To prove I'm not such a jerk, take this TM. It's U-TURN.\pTurns out there's nothing wrong with changing your mind.")
+}
+text LilycoveCity_House5_Text_Brother_Complete {
+    format("Keep going, okay? You've got more than strong POKéMON on your side.\pYou listen to people. That's something I still need to learn.\pI'll see you at the LEAGUE someday. Let's both make it there!")
+}
+text LilycoveCity_House5_Text_BrotherGf_BeforeBattle {
+    format("You're here about Esther's bear?\pRen's trying to act tough… But I think there's something he's afraid to say.\pBe patient with him, will you?")
+}
+text LilycoveCity_House5_Text_BrotherGf_AfterBattle {
+    format("He finally told you…\pRen loves his sister so much. Sometimes his worries get the better of him.\pI hope her little bear finds his way home.")
+}
+text LilycoveCity_House5_Text_BrotherGf_NoQuest {
+    format("We moved here together recently. Isn't the light through these windows lovely?\pRen's training for the LEAGUE. I'm just happy we have a place to call ours.")
+}
+text LilycoveCity_House5_Text_BrotherGf_Complete {
+    format("Ren went to see Esther. I haven't seen him smile like that in a long time.\pWho knew one little bear could bring a family so close together?")
+}
