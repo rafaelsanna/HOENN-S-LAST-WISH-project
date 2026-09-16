@@ -196,8 +196,13 @@ NightmarePetalburg_EventScript_UseTimeGear::
 	setvar VAR_PETALBURG_GYM_STATE, 6
 	call Common_EventScript_ReadyPetalburgGymForBattle
 	playse SE_WARP_OUT
-	fadescreenspeed FADE_TO_WHITE, 4
-	delay 20
+	playbgm MUS_RG_TITLE, FALSE
+	fadescreenspeed FADE_TO_BLACK, 4
+	delay 40
+	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
+	msgbox NightmarePetalburg_Text_CelebiTimelineRestored, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
 	warp MAP_PETALBURG_CITY, 20, 10
 	waitstate
 	release
@@ -206,6 +211,17 @@ NightmarePetalburg_EventScript_UseTimeGear::
 NightmarePetalburg_Text_TimeGearTurn:
 	.string "The TIME GEAR sits depleted and\n"
 	.string "still. Turn it?$"
+
+NightmarePetalburg_Text_CelebiTimelineRestored:
+	.string "CELEBI: {PLAYER}...\n"
+	.string "Thank you.\p"
+	.string "I can now restore this portion of the\n"
+	.string "timeline.\p"
+	.string "Your path is a lonely one.\n"
+	.string "What has been broken and restored...\l"
+	.string "Most cannot remember it.\p"
+	.string "Still, lean on those close to you,\n"
+	.string "and continue forward.$"
 
 NightmarePetalburg_Text_DarkAuraFades:
 	.string "The dark aura fades away.$"
