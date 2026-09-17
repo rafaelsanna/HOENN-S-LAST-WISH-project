@@ -1970,6 +1970,17 @@ static bool32 CanRunExtraBattleTick(void)
     if (gBattleMainFunc == HandleTurnActionSelectionState)
         return FALSE;
 
+    // The intro controller synchronizes both sides' Poké Ball release sprites
+    // and cry tasks through animationData->introAnimActive.  Advancing those
+    // tasks multiple times per VBlank can complete one battler's callback
+    // before its partner has installed the matching state, leaving the battle
+    // controller waiting forever (most visible in trainer doubles).  Intro
+    // send-out is cosmetic/startup work, so keep it on the original 1x tick.
+    if (gBattleSpritesDataPtr != NULL
+     && gBattleSpritesDataPtr->animationData != NULL
+     && gBattleSpritesDataPtr->animationData->introAnimActive)
+        return FALSE;
+
     // Palette fades require a real transfer between updates. If a fade begins
     // during callback1 or RunTasks, the next extra tick is blocked.
     if (gPaletteFade.active)
