@@ -1,195 +1,377 @@
 #include "global.h"
-#include "event_object_movement.h"
+#include "bg.h"
 #include "gpu_regs.h"
-#include "malloc.h"
+#include "main.h"
+#include "menu.h"
+#include "overworld.h"
 #include "palette.h"
+#include "random.h"
+#include "script.h"
 #include "sprite.h"
 #include "task.h"
+#include "text.h"
 #include "constants/rgb.h"
 
 // ============================================================================
-// Jirachi / Celebi story static background
+// HLW Jirachi / Celebi story scene
 //
-// This file is intentionally independent from ui_main_menu.c and painting.c.
-// It uses a dedicated 128x128 repeating background supplied for the story.
+// IMPORTANT DESIGN:
+// This is NOT an overlay on the live overworld anymore.
 //
-// IMPORTANT:
-// - Overworld BG1/BG2/BG3 all use charblock 0.
-// - BG0 windows/text use charblock 2.
-// - showmonpic creates an OBJ Pokémon plus a BG0 window (baseBlock 100).
-// - Therefore charblock 3 is the clean bank for the story art.
-// - The 0x2000-byte story tiles occupy screenblocks 24..27 inside charblock 3;
-//   screenblock 28 starts immediately after them and is used for our tilemap.
-//   BG1/BG2 are hidden while the story is active.
+// The previous experiments corrupted the field because the overworld already
+// owns the normal BG VRAM regions. This version temporarily owns the rendering
+// callback while the story is running, draws one static BG, keeps BG0 + OBJ
+// available for msgbox/showmonpic, and then asks the normal field-return code
+// to reload the map completely when the story ends.
 //
-// Script flow:
-//   fadescreen FADE_TO_BLACK
-//   callnative HLW_StartJirachiStoryBackground
-//   fadescreen FADE_FROM_BLACK
-//   ... showmonpic / msgbox sequence ...
-//   fadescreen FADE_TO_BLACK
-//   callnative HLW_StopJirachiStoryBackground
-//   fadescreen FADE_FROM_BLACK
-//
-// While active, overworld object events are made invisible at the ObjectEvent
-// level, so player/NPC sprites stay hidden even while showmonpic is repeatedly
-// created/destroyed. Their original invisibility states are restored afterward.
+// No ui_main_menu.c.
+// No painting.c modifications.
+// No scroll.
+// No attempt to manually restore field tile graphics.
 // ============================================================================
 
-#define STORY_BG_CHARBASE            3
-#define STORY_BG_MAPBASE             28
-#define STORY_BG_PRIORITY            3
-#define STORY_BG_PALETTE_SLOT        1
+#define STORY_BG_CHARBASE       0
+#define STORY_BG_MAPBASE        30
+#define STORY_BG_PRIORITY       3
+#define STORY_BG_PALETTE_SLOT   13
 
-#define STORY_BG_GFX_SIZE            0x2000
-#define STORY_BG_MAP_SIZE            0x0800
-#define STORY_BG_BACKUP_SIZE         STORY_BG_MAP_SIZE
+#define STORY_STAR_TAG           5610
+#define STORY_STAR_COUNT         16
+#define STORY_STAR_PRIORITY      2
+
+#define STORY_MAP_WIDTH         30
+#define STORY_MAP_HEIGHT        20
+#define STORY_HW_MAP_WIDTH      32
+#define STORY_HW_MAP_HEIGHT     32
 
 #define STORY_BG_CNT \
     (STORY_BG_PRIORITY | (STORY_BG_CHARBASE << 2) | (STORY_BG_MAPBASE << 8))
 
 #define STORY_BG_CHAR_ADDR \
-    ((void *)(VRAM + (STORY_BG_CHARBASE * 0x4000)))
+    ((void *)(VRAM + STORY_BG_CHARBASE * 0x4000))
 
 #define STORY_BG_MAP_ADDR \
-    ((void *)(VRAM + (STORY_BG_MAPBASE * 0x0800)))
+    ((volatile u16 *)(VRAM + STORY_BG_MAPBASE * 0x0800))
 
+// Generated automatically by the normal graphics rules from the PNG.
 static const u32 sStoryBgTiles[] =
     INCBIN_U32("graphics/story/jirachi_story_bg.4bpp");
-static const u16 sStoryBgTilemap[] =
-    INCBIN_U16("graphics/story/jirachi_story_bg.bin");
+
 static const u16 sStoryBgPalette[] =
     INCBIN_U16("graphics/story/jirachi_story_bg.gbapal");
 
-struct StoryBgState
+
+// Small standalone falling stars. These are intentionally local to this story
+// scene; no ui_main_menu.c code or assets are reused.
+static const u32 sStoryStarTiles[][8] =
 {
-    bool8 active;
-    u8 taskId;
-
-    u16 savedDispcnt;
-    u16 savedBg3Cnt;
-    u16 savedBg3Hofs;
-    u16 savedBg3Vofs;
-
-    u16 savedPalette[PLTT_SIZE_4BPP / sizeof(u16)];
-    bool8 savedObjectInvisible[OBJECT_EVENTS_COUNT];
-
-    void *vramBackup;
+    // Small cross
+    {
+        0x00000000,
+        0x00010000,
+        0x00111000,
+        0x00010000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+    },
+    // Larger sparkle
+    {
+        0x00010000,
+        0x00010000,
+        0x00111000,
+        0x01111100,
+        0x00111000,
+        0x00010000,
+        0x00010000,
+        0x00000000,
+    },
 };
 
-static EWRAM_DATA struct StoryBgState sStoryBgState = {0};
-static EWRAM_DATA u16 sStoryBgMapWithPalette[BG_SCREEN_SIZE / sizeof(u16)];
+static const u16 sStoryStarPalette[] =
+{
+    RGB(0, 0, 0),
+    RGB(31, 31, 31),
+    RGB(22, 24, 31),
+    RGB(0, 0, 0),
+};
 
-static void BuildStoryTilemap(void)
+static const struct SpriteSheet sStoryStarSheet =
+{
+    .data = sStoryStarTiles,
+    .size = sizeof(sStoryStarTiles),
+    .tag = STORY_STAR_TAG,
+};
+
+static const struct SpritePalette sStoryStarSpritePalette =
+{
+    .data = sStoryStarPalette,
+    .tag = STORY_STAR_TAG,
+};
+
+static const struct OamData sStoryStarOam =
+{
+    .shape = SPRITE_SHAPE(8x8),
+    .size = SPRITE_SIZE(8x8),
+    .priority = STORY_STAR_PRIORITY,
+};
+
+static const union AnimCmd sStoryStarAnimSmall[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sStoryStarAnimLarge[] =
+{
+    ANIMCMD_FRAME(1, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sStoryStarAnimTable[] =
+{
+    sStoryStarAnimSmall,
+    sStoryStarAnimLarge,
+};
+
+static void SpriteCB_JirachiStoryStar(struct Sprite *sprite);
+
+static const struct SpriteTemplate sStoryStarTemplate =
+{
+    .tileTag = STORY_STAR_TAG,
+    .paletteTag = STORY_STAR_TAG,
+    .oam = &sStoryStarOam,
+    .anims = sStoryStarAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_JirachiStoryStar,
+};
+
+static EWRAM_DATA u8 sStoryStarSpriteIds[STORY_STAR_COUNT];
+
+// Authored 30x20 map supplied by the user.
+static const u16 sStoryBgMap30x20[] =
+    INCBIN_U16("graphics/story/jirachi_story_bg.bin");
+
+// Snapshot of sprites that existed before entering the story.
+// showmonpic sprites are created later, so they are intentionally not hidden.
+#define STORY_SPRITE_MASK_WORDS ((MAX_SPRITES + 31) / 32)
+static EWRAM_DATA u32 sStoryOldSpriteMask[STORY_SPRITE_MASK_WORDS];
+static EWRAM_DATA bool8 sStorySceneActive = FALSE;
+
+static void StoryMaskSet(u32 spriteId)
+{
+    sStoryOldSpriteMask[spriteId / 32] |= 1u << (spriteId % 32);
+}
+
+static bool8 StoryMaskGet(u32 spriteId)
+{
+    return (sStoryOldSpriteMask[spriteId / 32] & (1u << (spriteId % 32))) != 0;
+}
+
+static void HidePreStorySprites(void)
 {
     u32 i;
 
-    for (i = 0; i < ARRAY_COUNT(sStoryBgMapWithPalette); i++)
+    for (i = 0; i < MAX_SPRITES; i++)
     {
-        sStoryBgMapWithPalette[i] =
-            (sStoryBgTilemap[i] & 0x0FFF)
-            | (STORY_BG_PALETTE_SLOT << 12);
+        if (StoryMaskGet(i) && gSprites[i].inUse)
+            gSprites[i].invisible = TRUE;
     }
 }
 
-static void HideStoryObjectEvents(void)
+static void UploadStoryTilemap(void)
 {
-    u32 i;
+    u32 x;
+    u32 y;
+    volatile u16 *dst = STORY_BG_MAP_ADDR;
 
-    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    // Hardware text BG is 32x32. Clear it, then copy exactly the authored
+    // 30x20 visible area (240x160).
+    for (y = 0; y < STORY_HW_MAP_HEIGHT; y++)
     {
-        if (!gObjectEvents[i].active)
-            continue;
+        for (x = 0; x < STORY_HW_MAP_WIDTH; x++)
+            dst[y * STORY_HW_MAP_WIDTH + x] = 0;
+    }
 
-        // Persistently hide at the ObjectEvent level.
-        gObjectEvents[i].invisible = TRUE;
-
-        // Also force the current sprite invisible immediately.
-        if (gObjectEvents[i].spriteId < MAX_SPRITES
-         && gSprites[gObjectEvents[i].spriteId].inUse)
+    for (y = 0; y < STORY_MAP_HEIGHT; y++)
+    {
+        for (x = 0; x < STORY_MAP_WIDTH; x++)
         {
-            gSprites[gObjectEvents[i].spriteId].invisible = TRUE;
+            u16 entry = sStoryBgMap30x20[y * STORY_MAP_WIDTH + x];
+
+            dst[y * STORY_HW_MAP_WIDTH + x] =
+                (entry & 0x0FFF)
+                | (STORY_BG_PALETTE_SLOT << 12);
         }
     }
 }
 
-static void Task_KeepJirachiStoryBackground(u8 taskId)
+
+static void SpriteCB_JirachiStoryStar(struct Sprite *sprite)
 {
-    if (!sStoryBgState.active)
+    // data[0] = frames per downward pixel (1..4)
+    // data[1] = movement timer
+    if (++sprite->data[1] >= sprite->data[0])
     {
-        DestroyTask(taskId);
-        return;
+        sprite->data[1] = 0;
+        sprite->y++;
     }
 
-    // Use BG3 as the dedicated story plane. The overworld's BG0 remains
-    // untouched for msgbox/showmonpic UI, while BG1/BG2 are hidden.
+    // Tiny side drift so the fall does not look perfectly mechanical.
+    if ((gMain.vblankCounter1 & 15) == (sprite->data[2] & 15))
+    {
+        if (sprite->data[3] == 0)
+            sprite->x++;
+        else if (sprite->data[3] == 1)
+            sprite->x--;
+    }
+
+    if (sprite->y > DISPLAY_HEIGHT + 8)
+    {
+        sprite->y = -8 - (Random2() % 32);
+        sprite->x = Random2() % DISPLAY_WIDTH;
+        sprite->data[0] = 1 + (Random2() % 4);
+        sprite->data[2] = Random2() & 15;
+        sprite->data[3] = Random2() % 3; // right / left / no drift
+        StartSpriteAnim(sprite, Random2() & 1);
+    }
+
+    if (sprite->x < -8)
+        sprite->x = DISPLAY_WIDTH + 8;
+    else if (sprite->x > DISPLAY_WIDTH + 8)
+        sprite->x = -8;
+}
+
+static void CreateJirachiStoryStars(void)
+{
+    u32 i;
+
+    LoadSpriteSheet(&sStoryStarSheet);
+    LoadSpritePalette(&sStoryStarSpritePalette);
+
+    for (i = 0; i < STORY_STAR_COUNT; i++)
+    {
+        u8 spriteId = CreateSprite(
+            &sStoryStarTemplate,
+            Random2() % DISPLAY_WIDTH,
+            Random2() % DISPLAY_HEIGHT,
+            100
+        );
+
+        sStoryStarSpriteIds[i] = spriteId;
+
+        if (spriteId == MAX_SPRITES)
+            continue;
+
+        gSprites[spriteId].data[0] = 1 + (Random2() % 4);
+        gSprites[spriteId].data[1] = 0;
+        gSprites[spriteId].data[2] = Random2() & 15;
+        gSprites[spriteId].data[3] = Random2() % 3;
+        StartSpriteAnim(&gSprites[spriteId], Random2() & 1);
+    }
+}
+
+static void DestroyJirachiStoryStars(void)
+{
+    u32 i;
+
+    for (i = 0; i < STORY_STAR_COUNT; i++)
+    {
+        u8 spriteId = sStoryStarSpriteIds[i];
+
+        if (spriteId != MAX_SPRITES
+         && spriteId < MAX_SPRITES
+         && gSprites[spriteId].inUse)
+        {
+            DestroySprite(&gSprites[spriteId]);
+        }
+
+        sStoryStarSpriteIds[i] = MAX_SPRITES;
+    }
+
+    FreeSpriteTilesByTag(STORY_STAR_TAG);
+    FreeSpritePaletteByTag(STORY_STAR_TAG);
+}
+
+static void VBlankCB_JirachiStory(void)
+{
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+}
+
+static void CB2_JirachiStory(void)
+{
+    // This is the critical piece the previous version was missing:
+    // the normal overworld calls ScriptContext_RunScript() every frame BEFORE
+    // RunTasks(). Without it, waitmessage / waitbuttonpress never resume after
+    // the first text box, which looks exactly like a softlock on A.
+    ScriptContext_RunScript();
+
+    // Match the normal overworld ordering. RunTasks() already runs
+    // Task_DrawFieldMessage, which advances the field text printer exactly once
+    // per frame. Do NOT call RunTextPrinters() again here or dialogue gets
+    // double-ticked and can advance/disappear without the intended A/B wait.
+    RunTasks();
+    AnimateSprites();
+
+    // Object-event sprites existed before this scene, so hide them after their
+    // callbacks ran. showmonpic sprites were created later and remain visible.
+    HidePreStorySprites();
+
+    BuildOamBuffer();
+
+    // Needed by BG0 windows used for dialogue/showmonpic.
+    DoScheduledBgTilemapCopiesToVram();
+
+    UpdatePaletteFade();
+
+    // Keep the scene registers authoritative. We intentionally do NOT run the
+    // overworld renderer while this callback owns the screen.
     SetGpuReg(REG_OFFSET_BG3CNT, STORY_BG_CNT);
     SetGpuReg(REG_OFFSET_BG3HOFS, 0);
     SetGpuReg(REG_OFFSET_BG3VOFS, 0);
 
     SetGpuReg(
         REG_OFFSET_DISPCNT,
-        (sStoryBgState.savedDispcnt & ~(DISPCNT_BG1_ON | DISPCNT_BG2_ON))
+        (GetGpuReg(REG_OFFSET_DISPCNT) & ~(DISPCNT_BG1_ON | DISPCNT_BG2_ON))
         | DISPCNT_BG0_ON
         | DISPCNT_BG3_ON
         | DISPCNT_OBJ_ON
     );
-
-    HideStoryObjectEvents();
 }
 
 // Script-callable.
-void HLW_StartJirachiStoryBackground(void)
+// The script already calls this after FADE_TO_BLACK.
+void HLW_StartJirachiStoryBackground(struct ScriptContext *ctx)
 {
     u32 i;
-    u16 paletteOffset;
 
-    if (sStoryBgState.active)
+    (void)ctx;
+
+    if (sStorySceneActive)
         return;
 
-    memset(&sStoryBgState, 0, sizeof(sStoryBgState));
-    sStoryBgState.taskId = TASK_NONE;
+    memset(sStoryOldSpriteMask, 0, sizeof(sStoryOldSpriteMask));
 
-    // Only screenblock 28 belongs to the field (BG2 tilemap), so preserve
-    // that 2 KB. Charblock 3 itself is intentionally unused by the normal
-    // overworld layout and does not need an 8 KB backup.
-    sStoryBgState.vramBackup = Alloc(STORY_BG_BACKUP_SIZE);
-    if (sStoryBgState.vramBackup == NULL)
-        return;
+    // Remember only sprites that already exist now (player/NPCs/field effects).
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (gSprites[i].inUse)
+            StoryMaskSet(i);
+    }
 
-    CpuCopy16(
-        STORY_BG_MAP_ADDR,
-        sStoryBgState.vramBackup,
-        STORY_BG_MAP_SIZE
-    );
+    // We are taking ownership of BG rendering now. Discard pending field BG
+    // copies so an old map copy cannot overwrite the story after we upload it.
+    ClearScheduledBgCopiesToVram();
 
-    sStoryBgState.savedDispcnt = GetGpuReg(REG_OFFSET_DISPCNT);
-    sStoryBgState.savedBg3Cnt = GetGpuReg(REG_OFFSET_BG3CNT);
-    sStoryBgState.savedBg3Hofs = GetGpuReg(REG_OFFSET_BG3HOFS);
-    sStoryBgState.savedBg3Vofs = GetGpuReg(REG_OFFSET_BG3VOFS);
-
-    paletteOffset = BG_PLTT_ID(STORY_BG_PALETTE_SLOT);
-    for (i = 0; i < ARRAY_COUNT(sStoryBgState.savedPalette); i++)
-        sStoryBgState.savedPalette[i] = gPlttBufferUnfaded[paletteOffset + i];
-
-    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
-        sStoryBgState.savedObjectInvisible[i] = gObjectEvents[i].invisible;
-
-    BuildStoryTilemap();
-
-    // IMPORTANT: charblock 3 is isolated from showmonpic's BG0 window data.
-    // Previous revisions used charblock 1/0 and were visibly overwritten
-    // whenever the Pokémon picture window changed.
-    CpuCopy16(
-        sStoryBgTiles,
-        STORY_BG_CHAR_ADDR,
-        STORY_BG_GFX_SIZE
-    );
-    CpuCopy16(
-        sStoryBgMapWithPalette,
-        STORY_BG_MAP_ADDR,
-        STORY_BG_MAP_SIZE
-    );
+    // It is intentional to overwrite the field's BG charblock here.
+    // At the end we DO NOT attempt to restore it manually; the normal
+    // CB2_ReturnToFieldContinueScriptPlayMapMusic path reloads the map.
+    CpuCopy16(sStoryBgTiles, STORY_BG_CHAR_ADDR, sizeof(sStoryBgTiles));
+    UploadStoryTilemap();
 
     LoadPalette(
         sStoryBgPalette,
@@ -197,89 +379,54 @@ void HLW_StartJirachiStoryBackground(void)
         PLTT_SIZE_4BPP
     );
 
-    // The caller is already fully black. Keep this bank black until the
-    // following FADE_FROM_BLACK begins.
+    // The caller is fully black at this point. Keep the new bank black until
+    // the following FADE_FROM_BLACK command.
     BlendPalettes(1u << STORY_BG_PALETTE_SLOT, 16, RGB_BLACK);
 
-    sStoryBgState.active = TRUE;
+    HidePreStorySprites();
+    CreateJirachiStoryStars();
 
     SetGpuReg(REG_OFFSET_BG3CNT, STORY_BG_CNT);
     SetGpuReg(REG_OFFSET_BG3HOFS, 0);
     SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+
     SetGpuReg(
         REG_OFFSET_DISPCNT,
-        (sStoryBgState.savedDispcnt & ~(DISPCNT_BG1_ON | DISPCNT_BG2_ON))
+        (GetGpuReg(REG_OFFSET_DISPCNT) & ~(DISPCNT_BG1_ON | DISPCNT_BG2_ON))
         | DISPCNT_BG0_ON
         | DISPCNT_BG3_ON
         | DISPCNT_OBJ_ON
     );
 
-    HideStoryObjectEvents();
+    sStorySceneActive = TRUE;
 
-    // Run after normal field/script tasks. This prevents object-event refreshes
-    // from making the player/NPCs visible for a frame between showmonpic swaps.
-    sStoryBgState.taskId = CreateTask(Task_KeepJirachiStoryBackground, 255);
+    SetVBlankCallback(VBlankCB_JirachiStory);
+    SetMainCallback2(CB2_JirachiStory);
 }
 
 // Script-callable.
-void HLW_StopJirachiStoryBackground(void)
+// The script calls this after FADE_TO_BLACK at the end of the slideshow.
+void HLW_StopJirachiStoryBackground(struct ScriptContext *ctx)
 {
-    u32 i;
-    u16 paletteOffset;
+    (void)ctx;
 
-    if (!sStoryBgState.active)
+    if (!sStorySceneActive)
         return;
 
-    sStoryBgState.active = FALSE;
+    sStorySceneActive = FALSE;
+    DestroyJirachiStoryStars();
 
-    if (sStoryBgState.taskId != TASK_NONE
-     && sStoryBgState.taskId < NUM_TASKS
-     && gTasks[sStoryBgState.taskId].isActive)
-    {
-        DestroyTask(sStoryBgState.taskId);
-    }
+    // This branch does not expose ScriptContext::waitAfterCallNative.
+    // The Pory script places an explicit `waitstate` immediately after this
+    // callnative, which yields the global script context while the field reloads.
+    // ReturnToFieldLocal is a small state machine driven by gMain.state.
+    // Start it from state 0 every time.
+    gMain.state = 0;
 
-    // Restore the field BG2 tilemap we borrowed at screenblock 28.
-    CpuCopy16(
-        sStoryBgState.vramBackup,
-        STORY_BG_MAP_ADDR,
-        STORY_BG_MAP_SIZE
-    );
-
-    Free(sStoryBgState.vramBackup);
-    sStoryBgState.vramBackup = NULL;
-
-    SetGpuReg(REG_OFFSET_BG3CNT, sStoryBgState.savedBg3Cnt);
-    SetGpuReg(REG_OFFSET_BG3HOFS, sStoryBgState.savedBg3Hofs);
-    SetGpuReg(REG_OFFSET_BG3VOFS, sStoryBgState.savedBg3Vofs);
-    SetGpuReg(REG_OFFSET_DISPCNT, sStoryBgState.savedDispcnt);
-
-    paletteOffset = BG_PLTT_ID(STORY_BG_PALETTE_SLOT);
-    CpuCopy16(
-        sStoryBgState.savedPalette,
-        &gPlttBufferUnfaded[paletteOffset],
-        PLTT_SIZE_4BPP
-    );
-
-    // We are still inside FADE_TO_BLACK here. Keep the restored bank black;
-    // the next FADE_FROM_BLACK will reveal the original field palette.
-    FillPalette(RGB_BLACK, BG_PLTT_ID(STORY_BG_PALETTE_SLOT), PLTT_SIZE_4BPP);
-
-    // Restore each active object's previous invisibility state.
-    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
-    {
-        if (!gObjectEvents[i].active)
-            continue;
-
-        gObjectEvents[i].invisible = sStoryBgState.savedObjectInvisible[i];
-
-        if (gObjectEvents[i].spriteId < MAX_SPRITES
-         && gSprites[gObjectEvents[i].spriteId].inUse)
-        {
-            gSprites[gObjectEvents[i].spriteId].invisible =
-                sStoryBgState.savedObjectInvisible[i];
-        }
-    }
-
-    memset(&sStoryBgState, 0, sizeof(sStoryBgState));
+    // Do NOT manually restore charblocks/screenblocks. That was the source of
+    // the broken map in the previous versions. Ask the normal overworld return
+    // path to rebuild the field from its real map/tileset data and continue
+    // this same script afterward.
+    SetVBlankCallback(NULL);
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
