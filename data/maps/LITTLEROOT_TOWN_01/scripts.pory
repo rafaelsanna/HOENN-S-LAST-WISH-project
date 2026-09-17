@@ -173,10 +173,12 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	msgbox LittlerootTown_01_Text_JirachiCloseEyes, MSGBOX_DEFAULT
 	removefieldmugshot 
 	
-	// Fade to black and silence music
+	// Dedicated static story backdrop. No ui_main_menu code is used.
 	fadeoutbgm 0
 	fadescreen FADE_TO_BLACK
-	removefieldmugshot 
+	removefieldmugshot
+	callnative HLW_StartJirachiStoryBackground
+	fadescreen FADE_FROM_BLACK
 	delay 40
 	
 	// 0. ARCTIBAX - forgotten age
@@ -305,7 +307,9 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
 
-// Return to normal screen
+	// Remove the dedicated story BG while fully black, then reveal the map again.
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StopJirachiStoryBackground
 	fadescreen FADE_FROM_BLACK
 	delay 20
 	fadeinbgm 1

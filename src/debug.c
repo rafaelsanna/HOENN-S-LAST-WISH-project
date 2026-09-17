@@ -280,6 +280,7 @@ static void DebugAction_OpenSubMenuFakeRTC(u8 taskId, const struct DebugMenuOpti
 static void DebugAction_OpenSubMenuCreateFollowerNPC(u8 taskId, const struct DebugMenuOption *items);
 static void DebugAction_ExecuteScript(u8 taskId, const u8 *script);
 static void DebugAction_ToggleFlag(u8 taskId);
+static void DebugAction_Dev_QuickSetup(u8 taskId);
 
 static void DebugTask_HandleMenuInput_General(u8 taskId);
 
@@ -991,9 +992,16 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
     { NULL }
 };
 
+static const struct DebugMenuOption sDebugMenu_Actions_Dev[] =
+{
+    { COMPOUND_STRING("Quick setup"), DebugAction_Dev_QuickSetup },
+    { NULL }
+};
+
 static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
 {
     { COMPOUND_STRING("Utilities…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
+    { COMPOUND_STRING("Dev…"),          DebugAction_OpenSubMenu, sDebugMenu_Actions_Dev, },
     { COMPOUND_STRING("PC/Bag…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag, },
     { COMPOUND_STRING("Party…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Party, },
     { COMPOUND_STRING("Give X…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Give, },
@@ -1854,6 +1862,79 @@ static void DebugAction_OpenSubMenuCreateFollowerNPC(u8 taskId, const struct Deb
     {
         Debug_DestroyMenu_Full_Script(taskId, Debug_Follower_NPC_Not_Enabled);
     }
+}
+
+// *******************************
+// DEV quick setup
+//
+// Intended for fresh debug saves:
+// - unlock every Fly location
+// - grant every badge
+// - force collision OFF
+// - ensure the party contains two Lv.100 Bulbasaur
+//
+// The Pokémon part is idempotent: pressing Quick setup again does not keep
+// adding more Lv.100 Bulbasaur if two are already present.
+static void DebugAction_Dev_QuickSetup(u8 taskId)
+{
+    u32 i;
+    u8 slot;
+    u8 bulbasaurCount = 0;
+    enum NationalDexOrder nationalDexNum = SpeciesToNationalPokedexNum(SPECIES_BULBASAUR);
+
+    // Fly: force every location flag ON (do not toggle).
+    for (i = 0; i < ARRAY_COUNT(sLocationFlags); i++)
+        FlagSet(sLocationFlags[i]);
+
+    // Badges: force every badge flag ON (do not toggle).
+    for (i = 0; i < ARRAY_COUNT(gBadgeFlags); i++)
+        FlagSet(gBadgeFlags[i]);
+
+    // Collision OFF: force the project's no-collision flag ON.
+#if OW_FLAG_NO_COLLISION != 0
+    FlagSet(OW_FLAG_NO_COLLISION);
+#endif
+
+    // Count existing Lv.100 Bulbasaur first so this action is safe to press twice.
+    for (slot = 0; slot < PARTY_SIZE; slot++)
+    {
+        if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES, NULL) == SPECIES_BULBASAUR
+         && GetMonData(&gPlayerParty[slot], MON_DATA_LEVEL, NULL) == 100)
+            bulbasaurCount++;
+    }
+
+    while (bulbasaurCount < 2)
+    {
+        struct Pokemon mon;
+
+        // Find the next empty party slot. Quick setup never deletes existing mons.
+        for (slot = 0; slot < PARTY_SIZE; slot++)
+        {
+            if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
+                break;
+        }
+
+        // No room: leave the existing party untouched.
+        if (slot >= PARTY_SIZE)
+            break;
+
+        CreateMonWithNature(&mon, SPECIES_BULBASAUR, 100, USE_RANDOM_IVS, NATURE_HARDY);
+        SetMonData(&mon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
+        SetMonData(&mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
+
+        CopyMon(&gPlayerParty[slot], &mon, sizeof(mon));
+        gPlayerPartyCount = slot + 1;
+        bulbasaurCount++;
+    }
+
+    // Match the normal debug give-Pokémon convenience state.
+    GetSetPokedexFlag(nationalDexNum, FLAG_SET_SEEN);
+    GetSetPokedexFlag(nationalDexNum, FLAG_SET_CAUGHT);
+    FlagSet(FLAG_SYS_POKEMON_GET);
+
+    PlaySE(SE_PC_LOGIN);
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
 }
 
 // *******************************

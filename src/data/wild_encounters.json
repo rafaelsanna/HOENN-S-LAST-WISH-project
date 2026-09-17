@@ -3780,27 +3780,27 @@
               {
                 "min_level": 24,
                 "max_level": 24,
-                "species": "SPECIES_SHUPPET"
+                "species": "SPECIES_MEOWTH"
               },
               {
                 "min_level": 23,
                 "max_level": 23,
-                "species": "SPECIES_SHUPPET"
+                "species": "SPECIES_MEOWTH"
               },
               {
                 "min_level": 22,
                 "max_level": 22,
-                "species": "SPECIES_SHUPPET"
+                "species": "SPECIES_GASTLY"
               },
               {
                 "min_level": 29,
                 "max_level": 29,
-                "species": "SPECIES_SHUPPET"
+                "species": "SPECIES_MEOWTH"
               },
               {
                 "min_level": 24,
                 "max_level": 24,
-                "species": "SPECIES_SHUPPET"
+                "species": "SPECIES_MISDREAVUS"
               },
               {
                 "min_level": 29,
@@ -3810,7 +3810,7 @@
               {
                 "min_level": 24,
                 "max_level": 24,
-                "species": "SPECIES_GASTLY"
+                "species": "SPECIES_MISDREAVUS"
               }
             ]
           }
@@ -3825,7 +3825,72 @@
         },
         {
           "map": "MAP_MT_PYRE_1F",
-          "base_label": "gMtPyre_1F_Night"
+          "base_label": "gMtPyre_1F_Night",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 28,
+                "max_level": 28,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 26,
+                "max_level": 26,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 25,
+                "max_level": 25,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_MEOWTH"
+              },
+              {
+                "min_level": 23,
+                "max_level": 23,
+                "species": "SPECIES_MEOWTH"
+              },
+              {
+                "min_level": 22,
+                "max_level": 22,
+                "species": "SPECIES_GASTLY"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_MEOWTH"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_MISDREAVUS"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              }
+            ]
+          }
         },
         {
           "map": "MAP_VICTORY_ROAD_1F",
@@ -6555,7 +6620,24 @@
         },
         {
           "map": "MAP_MT_PYRE_2F",
-          "base_label": "gMtPyre_2F_Night"
+          "base_label": "gMtPyre_2F_Night",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
+              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
+              { "min_level": 26, "max_level": 26, "species": "SPECIES_DUSKULL" },
+              { "min_level": 25, "max_level": 25, "species": "SPECIES_DUSKULL" },
+              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
+              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
+              { "min_level": 23, "max_level": 23, "species": "SPECIES_SHUPPET" },
+              { "min_level": 22, "max_level": 22, "species": "SPECIES_SHUPPET" },
+              { "min_level": 29, "max_level": 29, "species": "SPECIES_SHUPPET" },
+              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+            ]
+          }
         },
         {
           "map": "MAP_MT_PYRE_3F",
@@ -6636,7 +6718,24 @@
         },
         {
           "map": "MAP_MT_PYRE_3F",
-          "base_label": "gMtPyre_3F_Night"
+          "base_label": "gMtPyre_3F_Night",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
+              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
+              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
+              { "min_level": 25, "max_level": 25, "species": "SPECIES_SHUPPET" },
+              { "min_level": 29, "max_level": 29, "species": "SPECIES_SHUPPET" },
+              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
+              { "min_level": 23, "max_level": 23, "species": "SPECIES_SHUPPET" },
+              { "min_level": 22, "max_level": 22, "species": "SPECIES_SHUPPET" },
+              { "min_level": 29, "max_level": 29, "species": "SPECIES_SHUPPET" },
+              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+            ]
+          }
         },
         {
           "map": "MAP_MT_PYRE_4F",
@@ -6717,7 +6816,24 @@
         },
         {
           "map": "MAP_MT_PYRE_4F",
-          "base_label": "gMtPyre_4F_Night"
+          "base_label": "gMtPyre_4F_Night",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
+              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
+              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
+              { "min_level": 25, "max_level": 25, "species": "SPECIES_SHUPPET" },
+              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
+              { "min_level": 24, "max_level": 24, "species": "SPECIES_DUSKULL" },
+              { "min_level": 23, "max_level": 23, "species": "SPECIES_DUSKULL" },
+              { "min_level": 22, "max_level": 22, "species": "SPECIES_DUSKULL" },
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_MISDREAVUS" },
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_GASTLY" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+            ]
+          }
         },
         {
           "map": "MAP_MT_PYRE_5F",
@@ -6798,7 +6914,24 @@
         },
         {
           "map": "MAP_MT_PYRE_5F",
-          "base_label": "gMtPyre_5F_Night"
+          "base_label": "gMtPyre_5F_Night",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
+              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
+              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
+              { "min_level": 25, "max_level": 25, "species": "SPECIES_DUSKULL" },
+              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
+              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
+              { "min_level": 23, "max_level": 23, "species": "SPECIES_MISDREAVUS" },
+              { "min_level": 22, "max_level": 22, "species": "SPECIES_GASTLY" },
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+            ]
+          }
         },
         {
           "map": "MAP_MT_PYRE_6F",
@@ -6879,7 +7012,24 @@
         },
         {
           "map": "MAP_MT_PYRE_6F",
-          "base_label": "gMtPyre_6F_Night"
+          "base_label": "gMtPyre_6F_Night",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
+              { "min_level": 28, "max_level": 28, "species": "SPECIES_DUSKULL" },
+              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
+              { "min_level": 25, "max_level": 25, "species": "SPECIES_DUSKULL" },
+              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
+              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
+              { "min_level": 23, "max_level": 23, "species": "SPECIES_MISDREAVUS" },
+              { "min_level": 22, "max_level": 22, "species": "SPECIES_GASTLY" },
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
+              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
+              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+            ]
+          }
         },
         {
           "map": "MAP_MT_PYRE_EXTERIOR",

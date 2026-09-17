@@ -489,6 +489,10 @@ static EWRAM_DATA u8 sPartyThemeBottomWindowId;
 // aligns the right column upward with the left so the bottom row no longer
 // crowds item-use / give-item text windows.
 static EWRAM_DATA u8 sRaisedItemTargetSpriteCoords[PARTY_SIZE][4 * 2];
+// Battle-only geometry buffers. These are derived from the existing data tables
+// at runtime so the normal field Party Menu stays untouched.
+static EWRAM_DATA u8 sOptimizedDoubleBattleSpriteCoords[PARTY_SIZE][4 * 2];
+static EWRAM_DATA struct PartyMenuBoxInfoRects sOptimizedDoubleBattleLeftInfoRects;
 // Remembers which geometry was actually initialized. This must survive temporary
 // action changes such as PARTY_ACTION_SWITCHING, when IsBasicFieldPartyMenu()
 // intentionally returns FALSE even though the six boxes are still in the custom layout.
@@ -512,11 +516,14 @@ static void ResetPartyMenu(void);
 static bool8 IsBasicFieldPartyMenu(void);
 static bool8 IsRaisedItemTargetPartyMenu(void);
 static bool8 IsBattleSinglePartyMenu(void);
+static bool8 IsBattleDoublePartyMenu(void);
 static bool8 IsBattleSummaryShoulderPartyMenu(void);
 static bool8 UsesQuadrantLoopNavigation(void);
 static bool8 CanUseBattleSummaryShoulderShortcut(s8 slot);
 static void BuildRaisedItemTargetSpriteCoords(void);
 static void InitRaisedItemTargetWindows(void);
+static void BuildOptimizedDoubleBattleGeometry(void);
+static void InitOptimizedDoubleBattleWindows(void);
 static void ExtendBasicPartyBackgroundFooter(void);
 static void InitPartyThemeSaveExtensionIfNeeded(void);
 static void LoadPartyColorThemeFromSave(void);
@@ -1326,7 +1333,16 @@ static bool8 IsBattleSinglePartyMenu(void)
         && gPlayerPartyCount != 0;
 }
 
-// Keep battle controls consistent without touching the double-battle layout:
+static bool8 IsBattleDoublePartyMenu(void)
+{
+    return sPartyMenuInternal != NULL
+        && gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE
+        && gPartyMenu.layout == PARTY_LAYOUT_DOUBLE
+        && !sPartyMenuInternal->chooseHalf
+        && gPlayerPartyCount != 0;
+}
+
+// Keep battle controls consistent:
 // in normal single OR double battle Party Menus, either shoulder opens the
 // selected Pokémon's Summary Screen. D-pad wrapping remains single-only.
 static bool8 IsBattleSummaryShoulderPartyMenu(void)
@@ -1363,9 +1379,10 @@ static void BuildRaisedItemTargetSpriteCoords(void)
            sPartyMenuSpriteCoords[PARTY_LAYOUT_SINGLE],
            sizeof(sRaisedItemTargetSpriteCoords));
 
-    // The stock Equal layout staggers the right column down by one tile.
-    // For item targeting, copy each paired left-slot Y coordinate to the right
-    // slot so all three rows sit as high as the layout permits.
+    // The custom Equal layout staggers the right column down by one tile.
+    // That looks fine as a decorative field layout, but in item targeting and
+    // the in-battle single layout it wastes the last 8 px and crowds the
+    // message window. Align each right slot to its paired left slot instead.
     for (slot = 1; slot < PARTY_SIZE; slot += 2)
     {
         for (coord = 1; coord < 4 * 2; coord += 2)
@@ -1382,10 +1399,125 @@ static void InitRaisedItemTargetWindows(void)
     memcpy(windows, sSinglePartyMenuWindowTemplate_Equal, sizeof(windows));
 
     // Preserve every stock window property (including the message window),
-    // changing only the Pokémon box Y positions. This keeps item-use, give,
-    // Cancel and battle-specific text behavior untouched.
+    // changing only the Pokémon box Y positions.
     for (slot = 1; slot < PARTY_SIZE; slot += 2)
         windows[slot].tilemapTop = windows[slot - 1].tilemapTop;
+
+    InitWindows(windows);
+}
+
+static void BuildOptimizedDoubleBattleGeometry(void)
+{
+    u8 slot;
+    u8 levelRowY;
+    u8 hpRowY;
+    u8 rowDelta = 0;
+
+    memcpy(sOptimizedDoubleBattleSpriteCoords,
+           sPartyMenuSpriteCoords[PARTY_LAYOUT_DOUBLE],
+           sizeof(sOptimizedDoubleBattleSpriteCoords));
+
+    memcpy(&sOptimizedDoubleBattleLeftInfoRects,
+           &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN],
+           sizeof(sOptimizedDoubleBattleLeftInfoRects));
+
+    // LEFT / active battlers:
+    //
+    // Keep the nickname on its original row. The previous pass moved it up
+    // 8 px, which made the tall boxes look vertically disconnected.
+    //
+    // Instead, use the mock-up's cleaner information order:
+    //   nickname
+    //   HP bar
+    //   numeric HP
+    //   Lv / gender / ailment
+    //
+    // The stock tall box has Lv/gender above the numeric HP, so swap those
+    // two text rows while preserving each element's X coordinate.
+    levelRowY = sOptimizedDoubleBattleLeftInfoRects.dimensions[5];
+    hpRowY = sOptimizedDoubleBattleLeftInfoRects.dimensions[13];
+
+    if (hpRowY > levelRowY)
+    {
+        rowDelta = hpRowY - levelRowY;
+
+        // Move Lv and gender down to the former HP-number row.
+        sOptimizedDoubleBattleLeftInfoRects.dimensions[5] += rowDelta;
+        sOptimizedDoubleBattleLeftInfoRects.dimensions[9] += rowDelta;
+
+        // Move current/max HP numbers up to the former Lv row.
+        sOptimizedDoubleBattleLeftInfoRects.dimensions[13] -= rowDelta;
+        sOptimizedDoubleBattleLeftInfoRects.dimensions[17] -= rowDelta;
+    }
+
+    // Give 3-digit HP values a little more breathing room on the left box.
+    if (sOptimizedDoubleBattleLeftInfoRects.dimensions[12] >= 6)
+        sOptimizedDoubleBattleLeftInfoRects.dimensions[12] -= 6;
+    if (sOptimizedDoubleBattleLeftInfoRects.dimensions[16] >= 6)
+        sOptimizedDoubleBattleLeftInfoRects.dimensions[16] -= 6;
+
+    // The ailment badge now lives on the LEFT side of the bottom row, so move
+    // Lv to the right half of that row instead of letting BRN/PSN/FNT cover it.
+    // Put gender on the free top-right corner, beside the nickname; this keeps
+    // it visible even when the bottom row contains both status and Lv.
+    sOptimizedDoubleBattleLeftInfoRects.dimensions[4] = 48;
+    sOptimizedDoubleBattleLeftInfoRects.dimensions[8] = 68;
+    sOptimizedDoubleBattleLeftInfoRects.dimensions[9] =
+        sOptimizedDoubleBattleLeftInfoRects.dimensions[1];
+
+    for (slot = 0; slot < 2; slot++)
+    {
+        // Raise only the decorative sprites slightly; text rows are handled by
+        // the battle-only info rect above.
+        if (sOptimizedDoubleBattleSpriteCoords[slot][1] >= 4)
+            sOptimizedDoubleBattleSpriteCoords[slot][1] -= 4; // mon icon Y
+        if (sOptimizedDoubleBattleSpriteCoords[slot][3] >= 4)
+            sOptimizedDoubleBattleSpriteCoords[slot][3] -= 4; // held item Y
+        if (sOptimizedDoubleBattleSpriteCoords[slot][7] >= 4)
+            sOptimizedDoubleBattleSpriteCoords[slot][7] -= 4; // small Poké Ball Y
+
+        // Ailment text is a sprite, not BG text. Keep it inside the left half
+        // of the tall box, matching the mock-up; Lv occupies the right half.
+        sOptimizedDoubleBattleSpriteCoords[slot][4] = 32;
+
+        // Lv/gender moved down one row, so the ailment sprite must follow it.
+        if (rowDelta != 0
+         && sOptimizedDoubleBattleSpriteCoords[slot][5] <= 255 - rowDelta)
+            sOptimizedDoubleBattleSpriteCoords[slot][5] += rowDelta;
+    }
+
+    // RIGHT / reserve battlers:
+    //
+    // Their WINDOWS are moved up by one tile in InitOptimizedDoubleBattleWindows.
+    // The previous pass forgot to move their OBJ sprites with the windows,
+    // leaving icons/status/item graphics 8 px too low and visually outside
+    // their bars. Move every Y anchor by the same 8 px.
+    for (slot = 2; slot < PARTY_SIZE; slot++)
+    {
+        u8 coord;
+
+        for (coord = 1; coord < 4 * 2; coord += 2)
+        {
+            if (sOptimizedDoubleBattleSpriteCoords[slot][coord] >= 8)
+                sOptimizedDoubleBattleSpriteCoords[slot][coord] -= 8;
+        }
+    }
+}
+
+static void InitOptimizedDoubleBattleWindows(void)
+{
+    struct WindowTemplate windows[ARRAY_COUNT(sDoublePartyMenuWindowTemplate)];
+    u8 slot;
+
+    memcpy(windows, sDoublePartyMenuWindowTemplate, sizeof(windows));
+
+    // Right column: 1/5/9/13 -> 0/4/8/12. This keeps all four 24px rows
+    // completely above the battle message window at tile row 15.
+    for (slot = 2; slot < PARTY_SIZE; slot++)
+    {
+        if (windows[slot].tilemapTop != 0)
+            windows[slot].tilemapTop--;
+    }
 
     InitWindows(windows);
 }
@@ -1858,11 +1990,18 @@ static void LoadPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[i].infoRects = &sPartyBoxInfoRects[PARTY_BOX_RIGHT_COLUMN];
         if (layout == PARTY_LAYOUT_SINGLE)
             sPartyMenuBoxes[i].infoRects = &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN];
-        if (IsRaisedItemTargetPartyMenu())
+
+        if (IsRaisedItemTargetPartyMenu() || IsBattleSinglePartyMenu())
         {
             if (i == 0)
                 BuildRaisedItemTargetSpriteCoords();
             sPartyMenuBoxes[i].spriteCoords = sRaisedItemTargetSpriteCoords[i];
+        }
+        else if (IsBattleDoublePartyMenu())
+        {
+            if (i == 0)
+                BuildOptimizedDoubleBattleGeometry();
+            sPartyMenuBoxes[i].spriteCoords = sOptimizedDoubleBattleSpriteCoords[i];
         }
         else if (sUsingBasicFieldPartyGeometry)
             sPartyMenuBoxes[i].spriteCoords = sBasicFieldPartySpriteCoords[i];
@@ -1879,14 +2018,25 @@ static void LoadPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[i].statusSpriteId = SPRITE_NONE;
     }
     
-// Apenas define coluna esquerda se NÃO for SINGLE
-if (layout != PARTY_LAYOUT_SINGLE)
-    sPartyMenuBoxes[0].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
+    // Left-column boxes use the tall 10x7 data layout. In a normal double
+    // battle, use the compacted battle-only text positions from the mock-up.
+    if (layout != PARTY_LAYOUT_SINGLE)
+    {
+        if (IsBattleDoublePartyMenu())
+            sPartyMenuBoxes[0].infoRects = &sOptimizedDoubleBattleLeftInfoRects;
+        else
+            sPartyMenuBoxes[0].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
+    }
 
     if (layout == PARTY_LAYOUT_MULTI_SHOWCASE)
         sPartyMenuBoxes[3].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
     else if (layout != PARTY_LAYOUT_SINGLE)
-        sPartyMenuBoxes[1].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
+    {
+        if (IsBattleDoublePartyMenu())
+            sPartyMenuBoxes[1].infoRects = &sOptimizedDoubleBattleLeftInfoRects;
+        else
+            sPartyMenuBoxes[1].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
+    }
 }
 
 static void RenderPartyMenuBox(u8 slot)
@@ -3465,7 +3615,7 @@ static void InitPartyMenuWindows(u8 layout)
     switch (layout)
     {
     case PARTY_LAYOUT_SINGLE:
-        if (IsRaisedItemTargetPartyMenu())
+        if (IsRaisedItemTargetPartyMenu() || IsBattleSinglePartyMenu())
             InitRaisedItemTargetWindows();
         else if (IsBasicFieldPartyMenu())
         {
@@ -3476,7 +3626,10 @@ static void InitPartyMenuWindows(u8 layout)
             InitWindows(sSinglePartyMenuWindowTemplate_Equal);
         break;
     case PARTY_LAYOUT_DOUBLE:
-        InitWindows(sDoublePartyMenuWindowTemplate);
+        if (IsBattleDoublePartyMenu())
+            InitOptimizedDoubleBattleWindows();
+        else
+            InitWindows(sDoublePartyMenuWindowTemplate);
         break;
     case PARTY_LAYOUT_MULTI:
         InitWindows(sMultiPartyMenuWindowTemplate);
@@ -6177,7 +6330,7 @@ static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBo
         {
             if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
             {
-                if (IsRaisedItemTargetPartyMenu())
+                if (IsRaisedItemTargetPartyMenu() || IsBattleSinglePartyMenu())
                 {
                     u8 pairedLeftSlot = slot & ~1;
                     gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
@@ -6241,7 +6394,7 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
         {
             if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
             {
-                if (IsRaisedItemTargetPartyMenu())
+                if (IsRaisedItemTargetPartyMenu() || IsBattleSinglePartyMenu())
                 {
                     u8 pairedLeftSlot = slot & ~1;
                     gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];

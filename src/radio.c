@@ -1527,6 +1527,15 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_CRUEL_ANGELS_THESIS) \
     X(MUS_PEGASUS_FANTASY) \
     X(MUS_LUGIAS_SONG) \
+    X(MUS_THE_OATH) \
+    X(MUS_REQUIEM_OF_SPIRIT) \
+    X(MUS_THE_GREAT_SEA) \
+    X(MUS_TWILIGHT_PRINCESS_TITLE) \
+    X(MUS_SACRED_GROVE) \
+    X(MUS_SMASH_BROS_BRAWL_MAIN_THEME) \
+    X(MUS_FIRE_EMBLEM_MELEE) \
+    X(MUS_REQUIEM_FIRE_EMBLEM) \
+    X(MUS_FIRE_EMBLEM_MYSTERY_OF_THE_EMBLEM) \
     X(MUS_MIDNAS_LAMENT) \
     X(MUS_SHOUSHIN_NO_KIKI) \
     X(MUS_OMOKAGE) \
@@ -1889,6 +1898,15 @@ static const u16 sStation_All[] = {
     MUS_CRUEL_ANGELS_THESIS,
     MUS_PEGASUS_FANTASY,
     MUS_LUGIAS_SONG,
+    MUS_THE_OATH,
+    MUS_REQUIEM_OF_SPIRIT,
+    MUS_THE_GREAT_SEA,
+    MUS_TWILIGHT_PRINCESS_TITLE,
+    MUS_SACRED_GROVE,
+    MUS_SMASH_BROS_BRAWL_MAIN_THEME,
+    MUS_FIRE_EMBLEM_MELEE,
+    MUS_REQUIEM_FIRE_EMBLEM,
+    MUS_FIRE_EMBLEM_MYSTERY_OF_THE_EMBLEM,
     MUS_MIDNAS_LAMENT,
     MUS_SHOUSHIN_NO_KIKI,
     MUS_OMOKAGE,
@@ -2212,6 +2230,34 @@ STATION_END
 
 // GAMES: non-Pokemon videogame / visual-novel music.
 static const u16 sStation_Games[] = {
+    // POKEMON MYSTERY DUNGEON
+    MUS_TIME_GEAR,
+    MUS_DONT_EVER_FORGET,
+    MUS_TEMPORAL_TOWER,
+    MUS_TEMPORAL_SPIRE,
+    MUS_THROUGH_THE_SEA_OF_TIME,
+
+    // THE LEGEND OF ZELDA: THE WIND WAKER
+    MUS_THE_GREAT_SEA,
+
+    // THE LEGEND OF ZELDA: TWILIGHT PRINCESS
+    MUS_TWILIGHT_PRINCESS_TITLE,
+    MUS_MIDNAS_LAMENT,
+    MUS_SACRED_GROVE,
+    MUS_REQUIEM_OF_SPIRIT,
+
+    // FIRE EMBLEM: MYSTERY OF THE EMBLEM
+    MUS_FIRE_EMBLEM_MYSTERY_OF_THE_EMBLEM,
+
+    // FIRE EMBLEM: THE BLAZING BLADE
+    MUS_REQUIEM_FIRE_EMBLEM,
+
+    // SUPER SMASH BROS. MELEE
+    MUS_FIRE_EMBLEM_MELEE,
+
+    // SUPER SMASH BROS. BRAWL
+    MUS_SMASH_BROS_BRAWL_MAIN_THEME,
+
     // RAGNAROK
     MUS_THEME_RAGNAROK,
     MUS_ANCIENT_GROOVER,
@@ -2225,8 +2271,8 @@ static const u16 sStation_Games[] = {
     // CHRONO CROSS
     MUS_SCARS_OF_TIME,
 
-    // ZELDA
-    MUS_MIDNAS_LAMENT,
+    // FINAL FANTASY VIII
+    MUS_THE_OATH,
 
     // POKEMON SNAP
     MUS_THE_YOUNG_PHOTOGRAPHER,
@@ -2262,14 +2308,7 @@ static const u16 sStation_Games[] = {
     MUS_TOUHOU10_STAGE2,
     MUS_TOUHOU10_STAGE5_BOSS,
 
-    // POKEMON MYSTERY DUNGEON
-    MUS_TIME_GEAR,
-    MUS_DONT_EVER_FORGET,
-    MUS_TEMPORAL_TOWER,
-    MUS_TEMPORAL_SPIRE,
-    MUS_THROUGH_THE_SEA_OF_TIME,
-
-    // SUPERNOVA
+    // SUPERNOVA - SECOND LAST
     MUS_INTRO_SUPERNOVA,
 
     // TETRIS - LAST
@@ -3236,7 +3275,16 @@ static const u8 sGamesName_HlwVsEvil[] = _("VS EVIL (HLW)");
 static const u8 sGamesName_HlwPhoenixTown[] = _("PHOENIX TOWN (HLW)");
 
 static const u8 sGamesName_ScarsOfTime[] = _("SCARS OF TIME (CHRONO CROSS)");
-static const u8 sGamesName_MidnasLament[] = _("MIDNAS LAMENT (ZELDA)");
+static const u8 sGamesName_TheOath[] = _("THE OATH (FINAL FANTASY VIII)");
+static const u8 sGamesName_RequiemOfSpirit[] = _("REQUIEM OF SPIRIT (ZELDA: TWILIGHT PRINCESS)");
+static const u8 sGamesName_TheGreatSea[] = _("THE GREAT SEA (ZELDA: THE WIND WAKER)");
+static const u8 sGamesName_TwilightPrincessTitle[] = _("TITLE THEME (ZELDA: TWILIGHT PRINCESS)");
+static const u8 sGamesName_SacredGrove[] = _("SACRED GROVE (ZELDA: TWILIGHT PRINCESS)");
+static const u8 sGamesName_FireEmblemMystery[] = _("FIRE EMBLEM (MYSTERY OF THE EMBLEM)");
+static const u8 sGamesName_RequiemFireEmblem[] = _("REQUIEM (FIRE EMBLEM: THE BLAZING BLADE)");
+static const u8 sGamesName_FireEmblemMelee[] = _("FIRE EMBLEM (SUPER SMASH BROS. MELEE)");
+static const u8 sGamesName_SmashBrawlMainTheme[] = _("MAIN THEME (SUPER SMASH BROS. BRAWL)");
+static const u8 sGamesName_MidnasLament[] = _("MIDNA'S LAMENT (ZELDA: TWILIGHT PRINCESS)");
 static const u8 sGamesName_TetrisMainTheme[] = _("TETRIS MAIN THEME (TETRIS)");
 static const u8 sGamesName_YoungPhotographer[] = _("THE YOUNG PHOTOGRAPHER (POKEMON SNAP)");
 static const u8 sGamesName_HopeGrandChase[] = _("HOPE (GRAND CHASE)");
@@ -3287,6 +3335,24 @@ static const u8 *Radio_GetGamesDisplayName(u16 songId)
         return sGamesName_HlwPhoenixTown;
     case MUS_SCARS_OF_TIME:
         return sGamesName_ScarsOfTime;
+    case MUS_THE_OATH:
+        return sGamesName_TheOath;
+    case MUS_REQUIEM_OF_SPIRIT:
+        return sGamesName_RequiemOfSpirit;
+    case MUS_THE_GREAT_SEA:
+        return sGamesName_TheGreatSea;
+    case MUS_TWILIGHT_PRINCESS_TITLE:
+        return sGamesName_TwilightPrincessTitle;
+    case MUS_SACRED_GROVE:
+        return sGamesName_SacredGrove;
+    case MUS_FIRE_EMBLEM_MYSTERY_OF_THE_EMBLEM:
+        return sGamesName_FireEmblemMystery;
+    case MUS_REQUIEM_FIRE_EMBLEM:
+        return sGamesName_RequiemFireEmblem;
+    case MUS_FIRE_EMBLEM_MELEE:
+        return sGamesName_FireEmblemMelee;
+    case MUS_SMASH_BROS_BRAWL_MAIN_THEME:
+        return sGamesName_SmashBrawlMainTheme;
     case MUS_MIDNAS_LAMENT:
         return sGamesName_MidnasLament;
     case MUS_TETRIS_MAIN_THEME:

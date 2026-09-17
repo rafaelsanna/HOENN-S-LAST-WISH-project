@@ -643,7 +643,16 @@
 #define MUS_NO_ONE_KNOWS                                     763
 #define MUS_LITTLE_SISTER                                    764
 #define MUS_I_APPEAR_MISSING                                 765
-#define END_MUS MUS_I_APPEAR_MISSING
+#define MUS_THE_OATH                                         766
+#define MUS_REQUIEM_OF_SPIRIT                                767
+#define MUS_THE_GREAT_SEA                                    768
+#define MUS_TWILIGHT_PRINCESS_TITLE                          769
+#define MUS_SACRED_GROVE                                     770
+#define MUS_FIRE_EMBLEM_MYSTERY_OF_THE_EMBLEM                771
+#define MUS_REQUIEM_FIRE_EMBLEM                              772
+#define MUS_FIRE_EMBLEM_MELEE                                773
+#define MUS_SMASH_BROS_BRAWL_MAIN_THEME                      774
+#define END_MUS MUS_SMASH_BROS_BRAWL_MAIN_THEME
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
 #define PH_TRAP_BLEND               562

@@ -4767,6 +4767,10 @@ bool32 DoesMonMeetAdditionalConditions(struct Pokemon *mon, const struct Evoluti
                 removeHoldItem = TRUE;
             }
             break;
+        case IF_HOLD_ITEM_NO_CONSUME:
+            if (heldItem == params[i].arg1)
+                currentCondition = TRUE;
+            break;
         // Gen 3
         case IF_PID_UPPER_MODULO_10_GT:
             if ((upperPersonality % 10) > params[i].arg1)

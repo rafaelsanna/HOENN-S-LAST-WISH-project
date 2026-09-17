@@ -6071,8 +6071,10 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .levelUpLearnset = sUrsaringLevelUpLearnset,
         .teachableLearnset = sUrsaringTeachableLearnset,
     #if P_GEN_8_CROSS_EVOS
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_PEAT_BLOCK, SPECIES_URSALUNA, CONDITIONS({IF_TIME, TIME_NIGHT})},
-                                {EVO_NONE, 0, SPECIES_URSALUNA_BLOODMOON}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 0, SPECIES_URSALUNA,
+                                 CONDITIONS({IF_TIME, TIME_NIGHT},
+                                            {IF_IN_MAPSEC, MAPSEC_MT_PYRE},
+                                            {IF_HOLD_ITEM_NO_CONSUME, ITEM_DESTINY_KNOT})}),
     #endif
     },
 
@@ -6128,6 +6130,8 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
     .shinyPalette = gMonShinyPalette_Ursaluna,
     .iconSprite = gMonIcon_Ursaluna,
     .iconPalIndex = 2,
+    .iconPalette = gMonIconPalette_Ursaluna,
+    .shinyIconPalette = gMonShinyIconPalette_Ursaluna,
     .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
     SHADOW(-1, 10, SHADOW_SIZE_XL_BATTLE_ONLY)
     FOOTPRINT(Ursaluna)

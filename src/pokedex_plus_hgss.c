@@ -7838,6 +7838,7 @@ static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, u16 species, u8 dept
                     }
                     break;
                 case IF_HOLD_ITEM:
+                case IF_HOLD_ITEM_NO_CONSUME:
                     StringAppend(gStringVar4, COMPOUND_STRING("holds "));
                     if (isAlcremie && IsItemSweet(evolutions[i].params[j].arg1))
                     {
@@ -10230,4 +10231,3 @@ static void ClearSearchParameterBoxText(void)
 {
     ClearSearchMenuRect(144, 8, 96, 96);
 }
-

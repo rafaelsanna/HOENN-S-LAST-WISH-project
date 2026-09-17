@@ -769,6 +769,24 @@ gSongTable::
 	song mus_no_one_knows, 0, 0
 	song mus_little_sister, 0, 0
 	song mus_i_appear_missing, 0, 0
+	song mus_the_oath, 0, 0
+	song mus_requiem_of_spirit, 0, 0
+	song mus_the_great_sea, 0, 0
+	song mus_twilight_princess_title, 0, 0
+	song mus_sacred_grove, 0, 0
+	song mus_fire_emblem_mystery_of_the_emblem, 0, 0
+	song mus_requiem_fire_emblem, 0, 0
+	song mus_fire_emblem_melee, 0, 0
+	song mus_smash_bros_brawl_main_theme, 0, 0
+
+
+
+
+
+
+
+
+
 
 
 

@@ -71,7 +71,7 @@ MossdeepCity_House5_EventScript_LittleGirl_BeginQuest::
 MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll::
 	checkfollowernpc
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_LittleGirl_FollowerMissing
-	checkitemspace ITEM_PEAT_BLOCK
+	checkitemspace ITEM_DESTINY_KNOT
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_BagFull
 	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
 	waitmovement 0
@@ -88,7 +88,7 @@ MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll::
 	delay 48
 	msgbox MossdeepCity_House5_Text_LittleGirl_Hug, MSGBOX_DEFAULT
 	msgbox MossdeepCity_House5_Text_LittleGirl_Reward, MSGBOX_DEFAULT
-	giveitem ITEM_PEAT_BLOCK
+	giveitem ITEM_DESTINY_KNOT
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_BagFull
 	closemessage
 	playse SE_M_TELEPORT
@@ -228,7 +228,7 @@ text MossdeepCity_House5_Text_LittleGirl_Hug {
     format("Esther gathers Mr. Buttons into her arms. His little paws reach around her.\pFor a moment, even the quiet room seems warm.\pSee? He remembers our hugs…")
 }
 text MossdeepCity_House5_Text_LittleGirl_Reward {
-    format("Thank you for bringing my friend home.\pHere… You can have this PEAT BLOCK. Mama says it helps URSARING evolve at night.\pMaybe it can help another little bear find his way, too.")
+    format("Thank you for bringing my friend home.\pHere… You can have this DESTINY KNOT. Mama says it ties together hearts meant to meet.\pPerhaps an URSARING holding it could find a new path at MT. PYRE after dark.")
 }
 text MossdeepCity_House5_Text_LittleGirl_Goodnight {
     format("Oh… He's gone again.\pBut that's all right. I think he'll come back when it's dark.\pGoodnight, Mr. Buttons. I'll leave a little room on my pillow.")

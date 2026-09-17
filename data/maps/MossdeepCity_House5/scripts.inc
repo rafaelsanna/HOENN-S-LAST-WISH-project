@@ -145,7 +145,7 @@ MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll::
 # 73 "data/maps/MossdeepCity_House5/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_LittleGirl_FollowerMissing
 # 74 "data/maps/MossdeepCity_House5/scripts.pory"
-	checkitemspace ITEM_PEAT_BLOCK
+	checkitemspace ITEM_DESTINY_KNOT
 # 75 "data/maps/MossdeepCity_House5/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_BagFull
 # 76 "data/maps/MossdeepCity_House5/scripts.pory"
@@ -179,7 +179,7 @@ MossdeepCity_House5_EventScript_LittleGirl_ReceiveDoll::
 # 90 "data/maps/MossdeepCity_House5/scripts.pory"
 	msgbox MossdeepCity_House5_Text_LittleGirl_Reward, MSGBOX_DEFAULT
 # 91 "data/maps/MossdeepCity_House5/scripts.pory"
-	giveitem ITEM_PEAT_BLOCK
+	giveitem ITEM_DESTINY_KNOT
 # 92 "data/maps/MossdeepCity_House5/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_House5_EventScript_BagFull
 # 93 "data/maps/MossdeepCity_House5/scripts.pory"
@@ -474,11 +474,11 @@ MossdeepCity_House5_Text_LittleGirl_Hug::
 MossdeepCity_House5_Text_LittleGirl_Reward::
 # 230 "data/maps/MossdeepCity_House5/scripts.pory"
 	.string "Thank you for bringing my friend home.\p"
-	.string "Here… You can have this PEAT BLOCK.\n"
-	.string "Mama says it helps URSARING evolve at\l"
-	.string "night.\p"
-	.string "Maybe it can help another little bear\n"
-	.string "find his way, too.$"
+	.string "Here… You can have this DESTINY KNOT.\n"
+	.string "Mama says it ties together hearts\l"
+	.string "meant to meet.\p"
+	.string "Perhaps an URSARING holding it could\n"
+	.string "find a new path at MT. PYRE after dark.$"
 
 MossdeepCity_House5_Text_LittleGirl_Goodnight::
 # 233 "data/maps/MossdeepCity_House5/scripts.pory"
