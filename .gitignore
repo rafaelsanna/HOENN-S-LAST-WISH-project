@@ -70,6 +70,10 @@ temp_mining/
 *.bak_*
 *.bak
 *.orig
+/TABLED_ISSUES.local.md
+/hlw_double_battle_forensics_report.md
+/SENDOUT_TRACE_INSTRUCTIONS.md
+/diagnostics/
 
 # Windows metadata accidentally copied into WSL
 *:Zone.Identifier

@@ -7185,7 +7185,7 @@ gBattleAnimMove_Snarl::
 	loadspritegfx ANIM_TAG_JAGGED_MUSIC_NOTE
 	loadspritegfx ANIM_TAG_THIN_RING
 	loadspritegfx ANIM_TAG_IMPACT
-	monbg ANIM_DEF_PARTNER
+	@ Keep defenders as sprites; moving them to BG can hide them after a faint in doubles.
 	fadetobg BG_DARK
 	waitbgfadeout
 	createvisualtask AnimTask_UproarDistortion, 0x2, 0x0
@@ -7221,7 +7221,6 @@ gBattleAnimMove_Snarl::
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
 	call UnsetPsychicBg
-	clearmonbg ANIM_DEF_PARTNER
 	blendoff
 	end
 
