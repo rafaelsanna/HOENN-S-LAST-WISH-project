@@ -6624,18 +6624,66 @@
           "land_mons": {
             "encounter_rate": 10,
             "mons": [
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
-              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
-              { "min_level": 26, "max_level": 26, "species": "SPECIES_DUSKULL" },
-              { "min_level": 25, "max_level": 25, "species": "SPECIES_DUSKULL" },
-              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
-              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
-              { "min_level": 23, "max_level": 23, "species": "SPECIES_SHUPPET" },
-              { "min_level": 22, "max_level": 22, "species": "SPECIES_SHUPPET" },
-              { "min_level": 29, "max_level": 29, "species": "SPECIES_SHUPPET" },
-              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 28,
+                "max_level": 28,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 26,
+                "max_level": 26,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 25,
+                "max_level": 25,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 23,
+                "max_level": 23,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 22,
+                "max_level": 22,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              }
             ]
           }
         },
@@ -6722,18 +6770,66 @@
           "land_mons": {
             "encounter_rate": 10,
             "mons": [
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
-              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
-              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
-              { "min_level": 25, "max_level": 25, "species": "SPECIES_SHUPPET" },
-              { "min_level": 29, "max_level": 29, "species": "SPECIES_SHUPPET" },
-              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
-              { "min_level": 23, "max_level": 23, "species": "SPECIES_SHUPPET" },
-              { "min_level": 22, "max_level": 22, "species": "SPECIES_SHUPPET" },
-              { "min_level": 29, "max_level": 29, "species": "SPECIES_SHUPPET" },
-              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 28,
+                "max_level": 28,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 26,
+                "max_level": 26,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 25,
+                "max_level": 25,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 23,
+                "max_level": 23,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 22,
+                "max_level": 22,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              }
             ]
           }
         },
@@ -6820,18 +6916,66 @@
           "land_mons": {
             "encounter_rate": 10,
             "mons": [
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
-              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
-              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
-              { "min_level": 25, "max_level": 25, "species": "SPECIES_SHUPPET" },
-              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
-              { "min_level": 24, "max_level": 24, "species": "SPECIES_DUSKULL" },
-              { "min_level": 23, "max_level": 23, "species": "SPECIES_DUSKULL" },
-              { "min_level": 22, "max_level": 22, "species": "SPECIES_DUSKULL" },
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_MISDREAVUS" },
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_GASTLY" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 28,
+                "max_level": 28,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 26,
+                "max_level": 26,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 25,
+                "max_level": 25,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 23,
+                "max_level": 23,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 22,
+                "max_level": 22,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_MISDREAVUS"
+              },
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_GASTLY"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              }
             ]
           }
         },
@@ -6918,18 +7062,66 @@
           "land_mons": {
             "encounter_rate": 10,
             "mons": [
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
-              { "min_level": 28, "max_level": 28, "species": "SPECIES_SHUPPET" },
-              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
-              { "min_level": 25, "max_level": 25, "species": "SPECIES_DUSKULL" },
-              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
-              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
-              { "min_level": 23, "max_level": 23, "species": "SPECIES_MISDREAVUS" },
-              { "min_level": 22, "max_level": 22, "species": "SPECIES_GASTLY" },
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 28,
+                "max_level": 28,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 26,
+                "max_level": 26,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 25,
+                "max_level": 25,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 23,
+                "max_level": 23,
+                "species": "SPECIES_MISDREAVUS"
+              },
+              {
+                "min_level": 22,
+                "max_level": 22,
+                "species": "SPECIES_GASTLY"
+              },
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              }
             ]
           }
         },
@@ -7016,18 +7208,66 @@
           "land_mons": {
             "encounter_rate": 10,
             "mons": [
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_SHUPPET" },
-              { "min_level": 28, "max_level": 28, "species": "SPECIES_DUSKULL" },
-              { "min_level": 26, "max_level": 26, "species": "SPECIES_SHUPPET" },
-              { "min_level": 25, "max_level": 25, "species": "SPECIES_DUSKULL" },
-              { "min_level": 29, "max_level": 29, "species": "SPECIES_DUSKULL" },
-              { "min_level": 24, "max_level": 24, "species": "SPECIES_SHUPPET" },
-              { "min_level": 23, "max_level": 23, "species": "SPECIES_MISDREAVUS" },
-              { "min_level": 22, "max_level": 22, "species": "SPECIES_GASTLY" },
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
-              { "min_level": 27, "max_level": 27, "species": "SPECIES_DUSKULL" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" },
-              { "min_level": 24, "max_level": 29, "species": "SPECIES_TEDDIURSA" }
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 28,
+                "max_level": 28,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 26,
+                "max_level": 26,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 25,
+                "max_level": 25,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 24,
+                "max_level": 24,
+                "species": "SPECIES_SHUPPET"
+              },
+              {
+                "min_level": 23,
+                "max_level": 23,
+                "species": "SPECIES_MISDREAVUS"
+              },
+              {
+                "min_level": 22,
+                "max_level": 22,
+                "species": "SPECIES_GASTLY"
+              },
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_DUSKULL"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 24,
+                "max_level": 29,
+                "species": "SPECIES_TEDDIURSA"
+              }
             ]
           }
         },
