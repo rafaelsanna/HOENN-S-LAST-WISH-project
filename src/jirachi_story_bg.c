@@ -38,6 +38,7 @@
 #define STORY_STAR_TAG           5610
 #define STORY_STAR_COUNT         16
 #define STORY_STAR_PRIORITY      2
+#define STORY_STAR_PALETTE_SLOT_FIRST 12
 
 #define STORY_MAP_WIDTH         30
 #define STORY_MAP_HEIGHT        20
@@ -89,11 +90,36 @@ static const u32 sStoryStarTiles[][8] =
     },
 };
 
-static const u16 sStoryStarPalette[] =
+// Same glow palette ladder used by the custom main menu stars.
+static const u16 sStoryStarPal0[4] =
+{
+    RGB(0, 0, 0),
+    RGB(7, 9, 14),
+    RGB(0, 0, 0),
+    RGB(0, 0, 0),
+};
+
+static const u16 sStoryStarPal1[4] =
+{
+    RGB(0, 0, 0),
+    RGB(14, 16, 22),
+    RGB(0, 0, 0),
+    RGB(0, 0, 0),
+};
+
+static const u16 sStoryStarPal2[4] =
+{
+    RGB(0, 0, 0),
+    RGB(22, 24, 29),
+    RGB(0, 0, 0),
+    RGB(0, 0, 0),
+};
+
+static const u16 sStoryStarPal3[4] =
 {
     RGB(0, 0, 0),
     RGB(31, 31, 31),
-    RGB(22, 24, 31),
+    RGB(0, 0, 0),
     RGB(0, 0, 0),
 };
 
@@ -104,9 +130,19 @@ static const struct SpriteSheet sStoryStarSheet =
     .tag = STORY_STAR_TAG,
 };
 
+// Dummy palette only registers the tag. The four real brightness palettes are
+// loaded manually into OBJ palette slots 12-15, matching ui_main_menu.c.
+static const u16 sStoryStarPalDummy[4] =
+{
+    RGB(0, 0, 0),
+    RGB(31, 31, 31),
+    RGB(0, 0, 0),
+    RGB(0, 0, 0),
+};
+
 static const struct SpritePalette sStoryStarSpritePalette =
 {
-    .data = sStoryStarPalette,
+    .data = sStoryStarPalDummy,
     .tag = STORY_STAR_TAG,
 };
 
@@ -211,8 +247,18 @@ static void UploadStoryTilemap(void)
 
 static void SpriteCB_JirachiStoryStar(struct Sprite *sprite)
 {
+    u8 phase;
+    u8 triangle;
+    u8 hiPhase;
+    u8 depth;
+
     // data[0] = frames per downward pixel (1..4)
     // data[1] = movement timer
+    // data[2] = drift phase
+    // data[3] = drift direction
+    // data[4] = random glow phase (0..255)
+    // data[5] = glow counter
+    // data[6] = star size/depth (0 = medium, 1 = large)
     if (++sprite->data[1] >= sprite->data[0])
     {
         sprite->data[1] = 0;
@@ -228,14 +274,29 @@ static void SpriteCB_JirachiStoryStar(struct Sprite *sprite)
             sprite->x--;
     }
 
+    // Same smooth triangular glow as the custom main menu stars.
+    sprite->data[5] = (sprite->data[5] + 1) & 0xFF;
+    phase = (u8)((sprite->data[5] + sprite->data[4]) & 0xFF);
+    triangle = (phase < 128) ? phase : (u8)(255 - phase);
+    hiPhase = (triangle >= 64) ? 1 : 0;
+
+    depth = (u8)sprite->data[6];
+    sprite->oam.paletteNum =
+        STORY_STAR_PALETTE_SLOT_FIRST + depth + hiPhase;
+
     if (sprite->y > DISPLAY_HEIGHT + 8)
     {
+        u8 sizeType = Random2() & 1;
+
         sprite->y = -8 - (Random2() % 32);
         sprite->x = Random2() % DISPLAY_WIDTH;
         sprite->data[0] = 1 + (Random2() % 4);
         sprite->data[2] = Random2() & 15;
         sprite->data[3] = Random2() % 3; // right / left / no drift
-        StartSpriteAnim(sprite, Random2() & 1);
+        sprite->data[4] = Random2() & 0xFF;
+        sprite->data[5] = 0;
+        sprite->data[6] = sizeType;
+        StartSpriteAnim(sprite, sizeType);
     }
 
     if (sprite->x < -8)
@@ -251,8 +312,31 @@ static void CreateJirachiStoryStars(void)
     LoadSpriteSheet(&sStoryStarSheet);
     LoadSpritePalette(&sStoryStarSpritePalette);
 
+    // Same four brightness levels as ui_main_menu.c.
+    LoadPalette(
+        sStoryStarPal0,
+        OBJ_PLTT_ID(STORY_STAR_PALETTE_SLOT_FIRST + 0),
+        sizeof(sStoryStarPal0)
+    );
+    LoadPalette(
+        sStoryStarPal1,
+        OBJ_PLTT_ID(STORY_STAR_PALETTE_SLOT_FIRST + 1),
+        sizeof(sStoryStarPal1)
+    );
+    LoadPalette(
+        sStoryStarPal2,
+        OBJ_PLTT_ID(STORY_STAR_PALETTE_SLOT_FIRST + 2),
+        sizeof(sStoryStarPal2)
+    );
+    LoadPalette(
+        sStoryStarPal3,
+        OBJ_PLTT_ID(STORY_STAR_PALETTE_SLOT_FIRST + 3),
+        sizeof(sStoryStarPal3)
+    );
+
     for (i = 0; i < STORY_STAR_COUNT; i++)
     {
+        u8 sizeType = Random2() & 1;
         u8 spriteId = CreateSprite(
             &sStoryStarTemplate,
             Random2() % DISPLAY_WIDTH,
@@ -269,7 +353,15 @@ static void CreateJirachiStoryStars(void)
         gSprites[spriteId].data[1] = 0;
         gSprites[spriteId].data[2] = Random2() & 15;
         gSprites[spriteId].data[3] = Random2() % 3;
-        StartSpriteAnim(&gSprites[spriteId], Random2() & 1);
+        gSprites[spriteId].data[4] = Random2() & 0xFF;
+        gSprites[spriteId].data[5] = 0;
+        gSprites[spriteId].data[6] = sizeType;
+
+        StartSpriteAnim(&gSprites[spriteId], sizeType);
+
+        // Give the first frame a valid glow palette immediately.
+        gSprites[spriteId].oam.paletteNum =
+            STORY_STAR_PALETTE_SLOT_FIRST + sizeType;
     }
 }
 
