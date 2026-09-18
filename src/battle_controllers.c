@@ -2757,6 +2757,22 @@ static void Task_StartSendOutAnim(u8 taskId)
         u32 battlerPartner;
         u32 battler = gTasks[taskId].tBattlerId;
 
+        // A paired player send-out needs four battler/control sprites and two
+        // Poké Ball sprites. Let earlier intro effects release their sprites
+        // before starting both Pokémon in the same task frame.
+        if (IsOnPlayerSide(battler) && TwoMonsAtSendOut(battler))
+        {
+            u32 i;
+            u32 freeSprites = 0;
+
+            for (i = 0; i < MAX_SPRITES; i++)
+                if (!gSprites[i].inUse)
+                    freeSprites++;
+
+            if (freeSprites < 6 || gBattleSpritesDataPtr->animationData->numBallParticles != 0)
+                return;
+        }
+
         if (TwoMonsAtSendOut(battler))
         {
             gBattleResources->bufferA[battler][1] = gBattlerPartyIndexes[battler];
