@@ -61,13 +61,10 @@ LittlerootTown_EventScript_Poochyena::
 LittlerootTown_EventScript_SnowballGame::
 	lock
 	faceplayer
-
-	// TEMPORARY TEST:
-	// Unlocks the alternate Mega Rayquaza title screen.
-	setflag FLAG_ENCOUNTER_MEGA_RAY
-
-	special StartSnowballGame
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGrandmaBookTest
 	waitstate
+	fadescreen FADE_FROM_BLACK
 	release
 	end
 
