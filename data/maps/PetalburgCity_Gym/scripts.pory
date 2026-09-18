@@ -1014,6 +1014,60 @@ PetalburgCity_Gym_EventScript_RightGymLeadersRoomDoor::
 	goto_if_eq VAR_RESULT, NO, PetalburgCity_Gym_EventScript_DontEnterRoom
 	end
 
+PetalburgCity_Gym_EventScript_StudyBookParker::
+	lockall
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymStudyBookParker
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
+
+PetalburgCity_Gym_EventScript_StudyBookMary::
+	lockall
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymStudyBookMary
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
+
+PetalburgCity_Gym_EventScript_StudyBookGeorge::
+	lockall
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymStudyBookGeorge
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
+
+PetalburgCity_Gym_EventScript_StudyBookAlexia::
+	lockall
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymStudyBookAlexia
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
+
+PetalburgCity_Gym_EventScript_StudyBookBerke::
+	lockall
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymStudyBookBerke
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
+
+PetalburgCity_Gym_EventScript_StudyBookJody::
+	lockall
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymStudyBookJody
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	releaseall
+	end
+
 PetalburgCity_Gym_EventScript_LibraryEmptyBook::
 	msgbox PetalburgCity_Gym_Text_LibraryEmptyBook, MSGBOX_SIGN
 	end
@@ -1044,11 +1098,14 @@ PetalburgCity_Gym_EventScript_Parker::
 	goto_if_set FLAG_PETALBURG_GYM_GUARD_0_CLEARED, PetalburgCity_Gym_EventScript_ParkerPostBattle
 	goto_if_defeated TRAINER_PARKER, PetalburgCity_Gym_EventScript_ClearParkerGuard
 	msgbox PetalburgCity_Gym_Text_ParkerGymIntro, MSGBOX_DEFAULT
-	msgbox PetalburgCity_Gym_Text_ParkerQuestion, MSGBOX_DEFAULT
-	multichoice 20, 6, MULTI_TRUE_FALSE_LATER, FALSE
+	closemessage
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymQuestionParker
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	callnative HLW_GetGymQuestionResult
 	goto_if_eq VAR_RESULT, 0, PetalburgCity_Gym_EventScript_ParkerCorrectAnswer
 	goto_if_eq VAR_RESULT, 2, PetalburgCity_Gym_EventScript_GuardAnswerLater
-	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, PetalburgCity_Gym_EventScript_GuardAnswerLater
 	msgbox PetalburgCity_Gym_Text_ParkerWrongAnswer, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_PARKER, PetalburgCity_Gym_Text_ParkerDefeat
 	goto PetalburgCity_Gym_EventScript_ClearParkerGuard
@@ -1103,11 +1160,14 @@ PetalburgCity_Gym_EventScript_Mary::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_MaryPostBadge
 	goto_if_set FLAG_PETALBURG_GYM_GUARD_1_CLEARED, PetalburgCity_Gym_EventScript_MaryPostBattle
 	goto_if_defeated TRAINER_MARY, PetalburgCity_Gym_EventScript_ClearMaryGuard
-	msgbox PetalburgCity_Gym_Text_MaryQuestion, MSGBOX_DEFAULT
-	multichoice 20, 4, MULTI_PETALBURG_GYM_TYPES_QUESTION, FALSE
+	closemessage
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymQuestionMary
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	callnative HLW_GetGymQuestionResult
 	goto_if_eq VAR_RESULT, 2, PetalburgCity_Gym_EventScript_MaryCorrectAnswer
 	goto_if_eq VAR_RESULT, 4, PetalburgCity_Gym_EventScript_GuardAnswerLater
-	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, PetalburgCity_Gym_EventScript_GuardAnswerLater
 	msgbox PetalburgCity_Gym_Text_MaryWrongAnswer, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_MARY, PetalburgCity_Gym_Text_MaryDefeat
 	goto PetalburgCity_Gym_EventScript_ClearMaryGuard
@@ -1158,11 +1218,14 @@ PetalburgCity_Gym_EventScript_George::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_GeorgePostBadge
 	goto_if_set FLAG_PETALBURG_GYM_GUARD_2_CLEARED, PetalburgCity_Gym_EventScript_GeorgePostBattle
 	goto_if_defeated TRAINER_GEORGE, PetalburgCity_Gym_EventScript_ClearGeorgeGuard
-	msgbox PetalburgCity_Gym_Text_GeorgeQuestion, MSGBOX_DEFAULT
-	multichoice 20, 6, MULTI_TRUE_FALSE_LATER, FALSE
+	closemessage
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymQuestionGeorge
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	callnative HLW_GetGymQuestionResult
 	goto_if_eq VAR_RESULT, 0, PetalburgCity_Gym_EventScript_GeorgeCorrectAnswer
-	goto_if_eq VAR_RESULT, 2, PetalburgCity_Gym_EventScript_GuardAnswerLater
-	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, PetalburgCity_Gym_EventScript_GuardAnswerLater
+	goto_if_eq VAR_RESULT, 4, PetalburgCity_Gym_EventScript_GuardAnswerLater
 	msgbox PetalburgCity_Gym_Text_GeorgeWrongAnswer, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_GEORGE, PetalburgCity_Gym_Text_GeorgeDefeat
 	goto PetalburgCity_Gym_EventScript_ClearGeorgeGuard
@@ -1213,11 +1276,14 @@ PetalburgCity_Gym_EventScript_Alexia::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_AlexiaPostBadge
 	goto_if_set FLAG_PETALBURG_GYM_GUARD_3_CLEARED, PetalburgCity_Gym_EventScript_AlexiaPostBattle
 	goto_if_defeated TRAINER_ALEXIA, PetalburgCity_Gym_EventScript_ClearAlexiaGuard
-	msgbox PetalburgCity_Gym_Text_AlexiaQuestion, MSGBOX_DEFAULT
-	multichoice 20, 6, MULTI_TRUE_FALSE_LATER, FALSE
+	closemessage
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymQuestionAlexia
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	callnative HLW_GetGymQuestionResult
 	goto_if_eq VAR_RESULT, 1, PetalburgCity_Gym_EventScript_AlexiaCorrectAnswer
-	goto_if_eq VAR_RESULT, 2, PetalburgCity_Gym_EventScript_GuardAnswerLater
-	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, PetalburgCity_Gym_EventScript_GuardAnswerLater
+	goto_if_eq VAR_RESULT, 4, PetalburgCity_Gym_EventScript_GuardAnswerLater
 	msgbox PetalburgCity_Gym_Text_AlexiaWrongAnswer, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_ALEXIA, PetalburgCity_Gym_Text_AlexiaDefeat
 	goto PetalburgCity_Gym_EventScript_ClearAlexiaGuard
@@ -1255,11 +1321,14 @@ PetalburgCity_Gym_EventScript_Berke::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_BerkePostBadge
 	goto_if_set FLAG_PETALBURG_GYM_GUARD_4_CLEARED, PetalburgCity_Gym_EventScript_BerkePostBattle
 	goto_if_defeated TRAINER_BERKE, PetalburgCity_Gym_EventScript_ClearBerkeGuard
-	msgbox PetalburgCity_Gym_Text_BerkeQuestion, MSGBOX_DEFAULT
-	multichoice 20, 6, MULTI_TRUE_FALSE_LATER, FALSE
-	goto_if_eq VAR_RESULT, 0, PetalburgCity_Gym_EventScript_BerkeCorrectAnswer
-	goto_if_eq VAR_RESULT, 2, PetalburgCity_Gym_EventScript_GuardAnswerLater
-	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, PetalburgCity_Gym_EventScript_GuardAnswerLater
+	closemessage
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymQuestionBerke
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	callnative HLW_GetGymQuestionResult
+	goto_if_eq VAR_RESULT, 2, PetalburgCity_Gym_EventScript_BerkeCorrectAnswer
+	goto_if_eq VAR_RESULT, 4, PetalburgCity_Gym_EventScript_GuardAnswerLater
 	msgbox PetalburgCity_Gym_Text_BerkeWrongAnswer, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_BERKE, PetalburgCity_Gym_Text_BerkeDefeat
 	goto PetalburgCity_Gym_EventScript_ClearBerkeGuard
@@ -1297,11 +1366,14 @@ PetalburgCity_Gym_EventScript_Jody::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_JodyPostBadge
 	goto_if_set FLAG_PETALBURG_GYM_GUARD_5_CLEARED, PetalburgCity_Gym_EventScript_JodyPostBattle
 	goto_if_defeated TRAINER_JODY, PetalburgCity_Gym_EventScript_ClearJodyGuard
-	msgbox PetalburgCity_Gym_Text_JodyQuestion, MSGBOX_DEFAULT
-	multichoice 20, 6, MULTI_TRUE_FALSE_LATER, FALSE
-	goto_if_eq VAR_RESULT, 1, PetalburgCity_Gym_EventScript_JodyCorrectAnswer
-	goto_if_eq VAR_RESULT, 2, PetalburgCity_Gym_EventScript_GuardAnswerLater
-	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, PetalburgCity_Gym_EventScript_GuardAnswerLater
+	closemessage
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymQuestionJody
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	callnative HLW_GetGymQuestionResult
+	goto_if_eq VAR_RESULT, 3, PetalburgCity_Gym_EventScript_JodyCorrectAnswer
+	goto_if_eq VAR_RESULT, 4, PetalburgCity_Gym_EventScript_GuardAnswerLater
 	msgbox PetalburgCity_Gym_Text_JodyWrongAnswer, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_JODY, PetalburgCity_Gym_Text_JodyDefeat
 	goto PetalburgCity_Gym_EventScript_ClearJodyGuard
@@ -1915,13 +1987,13 @@ PetalburgCity_Gym_Text_ParkerQuestion:
 	.string "an EEVEE.$"
 
 PetalburgCity_Gym_Text_ParkerCorrectAnswer:
-	.string "Correct. EEVEE was the first POKEMON\n"
-	.string "to help CALENDULA with her research.\p"
+	.string "Correct! EEVEE was CALENDULA's first\n"
+	.string "partner and helped begin her research.\p"
 	.string "You may proceed.$"
 
 PetalburgCity_Gym_Text_ParkerWrongAnswer:
-	.string "Incorrect. CALENDULA and EEVEE go\n"
-	.string "back farther than this lab itself.\p"
+	.string "Incorrect. CALENDULA's first partner\n"
+	.string "was EEVEE.\p"
 	.string "Let's see how you handle battle.$"
 
 PetalburgCity_Gym_Text_GeorgeIntro:
@@ -2031,7 +2103,7 @@ PetalburgCity_Gym_Text_JodyPostBadge:
 
 PetalburgCity_Gym_Text_MaryQuestion:
 	.string "Research check! How many different\n"
-	.string "POKéMON types are currently known?$"
+	.string "POKéMON types are known today?$"
 
 PetalburgCity_Gym_Text_MaryCorrectAnswer:
 	.string "Correct! There are 18 different\n"
@@ -2039,66 +2111,73 @@ PetalburgCity_Gym_Text_MaryCorrectAnswer:
 	.string "You've earned your way through.$"
 
 PetalburgCity_Gym_Text_MaryWrongAnswer:
-	.string "Not quite! If you want a hint,\n"
-	.string "look around the library.\p"
-	.string "Let me show you why research\n"
-	.string "matters in battle.$"
+	.string "Not quite. The answer is 18 types.\p"
+	.string "A good Trainer should know the\n"
+	.string "type chart before a serious battle.$"
 
 PetalburgCity_Gym_Text_GeorgeQuestion:
-	.string "Recovery check! Can a held BERRY\n"
-	.string "restore HP without using up\l"
-	.string "the POKEMON's turn?$"
+	.string "Ignoring abilities and immunities,\n"
+	.string "which STEEL dual type resists the\l"
+	.string "greatest number of attack types?$"
 
 PetalburgCity_Gym_Text_GeorgeCorrectAnswer:
-	.string "Correct. A well-timed held item\n"
-	.string "can save a battle all by itself.\p"
-	.string "Go on through.$"
+	.string "Correct! ELECTRIC/STEEL resists 11\n"
+	.string "different attacking types.\p"
+	.string "Its POISON immunity is not counted\n"
+	.string "as a resistance. Go on through.$"
 
 PetalburgCity_Gym_Text_GeorgeWrongAnswer:
-	.string "That's not right. If you overlook\n"
-	.string "held items, recovery will surprise you!$"
+	.string "Not quite. ELECTRIC/STEEL has the\n"
+	.string "most resistances among those choices:\l"
+	.string "11, without counting immunities.$"
 
 PetalburgCity_Gym_Text_AlexiaQuestion:
-	.string "Defense check! Does the DEFENSE\n"
-	.string "stat reduce damage from\l"
-	.string "special moves?$"
+	.string "Ignoring abilities, how many attacking\n"
+	.string "types are super effective against\l"
+	.string "SHEDINJA's BUG/GHOST typing?$"
 
 PetalburgCity_Gym_Text_AlexiaCorrectAnswer:
-	.string "Correct! DEFENSE handles physical\n"
-	.string "damage. Special moves test\l"
-	.string "SP. DEF instead. You may pass.$"
+	.string "Correct! There are five: FIRE, FLYING,\n"
+	.string "ROCK, GHOST, and DARK.\p"
+	.string "WONDER GUARD was ignored for the quiz.$"
 
 PetalburgCity_Gym_Text_AlexiaWrongAnswer:
-	.string "Wrong answer. A strong wall still\n"
-	.string "needs the right kind of defense!$"
+	.string "Not quite. BUG/GHOST has five type\n"
+	.string "weaknesses: FIRE, FLYING, ROCK,\l"
+	.string "GHOST, and DARK.$"
 
 PetalburgCity_Gym_Text_BerkeQuestion:
-	.string "Critical-hit check! Can a critical\n"
-	.string "hit break through some stat changes\l"
-	.string "that would weaken its damage?$"
+	.string "Ignoring abilities, which dual typing\n"
+	.string "has the most attack-type immunities?$"
 
 PetalburgCity_Gym_Text_BerkeCorrectAnswer:
-	.string "Correct. Critical hits can cut\n"
-	.string "through more than just HP.\p"
-	.string "You've got sharp instincts.$"
+	.string "Correct! NORMAL/GHOST has three:\n"
+	.string "NORMAL, FIGHTING, and GHOST.\p"
+	.string "Every other choice has only two.$"
 
 PetalburgCity_Gym_Text_BerkeWrongAnswer:
-	.string "Careful! Critical hits don't play\n"
-	.string "by ordinary damage rules.$"
+	.string "Not quite. NORMAL/GHOST has three\n"
+	.string "immunities: NORMAL, FIGHTING,\l"
+	.string "and GHOST.$"
 
 PetalburgCity_Gym_Text_JodyQuestion:
-	.string "Final check! Is the move with the\n"
-	.string "highest base power always the\l"
-	.string "best move to choose?$"
+	.string "You face a CHANSEY holding EVIOLITE.\n"
+	.string "Which move would you choose?$"
 
 PetalburgCity_Gym_Text_JodyCorrectAnswer:
-	.string "Correct. Power matters, but timing,\n"
-	.string "accuracy, and strategy matter too.\p"
-	.string "You're ready to continue.$"
+	.string "Yes! PSYSHOCK is the right choice.\p"
+	.string "Unlike the other special moves listed,\n"
+	.string "PSYSHOCK calculates damage using the\l"
+	.string "target's physical DEFENSE.\p"
+	.string "That targets CHANSEY's weaker\n"
+	.string "defensive side.$"
 
 PetalburgCity_Gym_Text_JodyWrongAnswer:
-	.string "Nope! Raw power alone won't carry\n"
-	.string "you through CALENDULA's battle.$"
+	.string "Not quite. BLIZZARD, FIRE BLAST, and\n"
+	.string "THUNDER all calculate damage against\l"
+	.string "SP. DEF.\p"
+	.string "PSYSHOCK is special, but it uses the\n"
+	.string "target's physical DEFENSE instead.$"
 
 PetalburgCity_Gym_Text_GuardAnswerLater:
 	.string "Okay. Come back when you're ready\n"
