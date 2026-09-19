@@ -389,7 +389,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookAlexia"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -397,7 +397,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookGeorge"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -405,7 +405,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookJody"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -413,7 +413,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookParker"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -421,7 +421,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookBerke"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -429,7 +429,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookJody"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -437,7 +437,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookMary"
+      "script": "PetalburgCity_Gym_EventScript_LibraryTypesBook"
     },
     {
       "type": "sign",
@@ -445,7 +445,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookGeorge"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -453,7 +453,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookParker"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -461,7 +461,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookMary"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -469,7 +469,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookAlexia"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -477,7 +477,7 @@
       "y": 94,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookBerke"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -485,7 +485,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookBerke"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -493,7 +493,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookAlexia"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -501,7 +501,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookMary"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -509,7 +509,7 @@
       "y": 90,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookGeorge"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -517,7 +517,7 @@
       "y": 86,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookParker"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -525,7 +525,7 @@
       "y": 86,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookMary"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -533,7 +533,7 @@
       "y": 86,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookGeorge"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -541,7 +541,7 @@
       "y": 86,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookAlexia"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -549,7 +549,7 @@
       "y": 86,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookBerke"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -557,7 +557,7 @@
       "y": 86,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookJody"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     },
     {
       "type": "sign",
@@ -565,7 +565,7 @@
       "y": 86,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgCity_Gym_EventScript_StudyBookParker"
+      "script": "PetalburgCity_Gym_EventScript_LibraryEmptyBook"
     }
   ]
 }

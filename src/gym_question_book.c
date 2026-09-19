@@ -272,16 +272,13 @@ static const u8 *const sOptionsTypeImmunities[] =
     sOptionAnswerLater,
 };
 
-// Jody — old correct result: 1 (FALSE), later result: 2.
 // Jody — Chansey + Eviolite mechanics question.
-// All four attacks are special-category moves. PSYSHOCK is the exception
-// because it calculates damage using the target's physical DEFENSE.
+// The NPC explains the mechanic only after the player answers.
 static const u8 sGymQuestionJody[] =
     _("You face a CHANSEY\n"
       "holding EVIOLITE.\n"
-      "Which special move\n"
-      "hits its physical\n"
-      "DEFENSE?");
+      "Which move would\n"
+      "you choose?");
 
 static const u8 sOptionBlizzard[]  = _("BLIZZARD");
 static const u8 sOptionFireBlast[] = _("FIRE BLAST");
@@ -780,35 +777,31 @@ void HLW_StartGymQuestionJody(struct ScriptContext *ctx)
 
 
 // ============================================================================
-// HLW PETALBURG GYM STUDY BOOKS
+// HLW PETALBURG GYM — SINGLE STUDY GUIDE
 //
-// Read-only books placed in the gym library.
-// Left page  = a useful clue for one quiz topic.
-// Right page = related battle knowledge / explanation.
-// A or B closes the book.
+// Exactly one bookshelf tile opens this book.
+// All other bookshelf tiles keep using "There's nothing useful here."
 //
-// These intentionally teach the mechanic without formatting the page as
-// "Question -> Answer". The player can study first, then answer the NPC quiz.
+// The useful book has six read-only pages:
+//   left page  = clue / useful fact for one quiz
+//   right page = related battle knowledge
+//
+// A = next page (or close on the last page)
+// B = close immediately
+//
+// Text is manually wrapped. Every visible line is <= 14 characters so it
+// remains safely inside the book pages.
 // ============================================================================
 
-enum GymStudyBookId
-{
-    GYM_STUDY_PARKER,
-    GYM_STUDY_MARY,
-    GYM_STUDY_GEORGE,
-    GYM_STUDY_ALEXIA,
-    GYM_STUDY_BERKE,
-    GYM_STUDY_JODY,
-    GYM_STUDY_COUNT,
-};
+#define GYM_STUDY_PAGE_COUNT 6
 
-enum GymStudyBookWindow
+enum GymStudyWindow
 {
     WIN_GYM_STUDY_LEFT,
     WIN_GYM_STUDY_RIGHT,
 };
 
-enum GymStudyBookState
+enum GymStudyState
 {
     GYM_STUDY_STATE_FADE_IN,
     GYM_STUDY_STATE_WAIT_INPUT,
@@ -816,147 +809,109 @@ enum GymStudyBookState
     GYM_STUDY_STATE_RETURN_FIELD,
 };
 
-struct GymStudyBookPage
+struct GymStudyPage
 {
     const u8 *left;
     const u8 *right;
 };
 
-struct GymStudyBookScene
+struct GymStudyScene
 {
     u8 state;
-    u8 pageId;
+    u8 page;
     void *bg0TilemapBuffer;
 };
 
-static EWRAM_DATA struct GymStudyBookScene *sGymStudyBook = NULL;
+static EWRAM_DATA struct GymStudyScene *sGymStudy = NULL;
 
-// ---------------------------------------------------------------------------
-// Study text
-// ---------------------------------------------------------------------------
+static const u8 sGymStudyPage1Left[] =
+    _(      "Old notes say\n"
+      "CALENDULA's\n"
+      "first partner\n"
+      "was an EEVEE.");
 
-// Parker / CALENDULA
-static const u8 sGymStudyParkerLeft[] =
-    _("CALENDULA's earliest\n"
-      "field notes mention\n"
-      "an EEVEE traveling\n"
-      "beside her from\n"
-      "the very beginning.");
+static const u8 sGymStudyPage1Right[] =
+    _(      "EEVEE adapts\n"
+      "to many paths.\n"
+      "Its odd genes\n"
+      "allow several\n"
+      "evolutions.");
 
-static const u8 sGymStudyParkerRight[] =
-    _("EEVEE is famous for\n"
-      "its adaptability.\n"
-      "Its unstable genes\n"
-      "can lead to many\n"
-      "different evolutions.");
+static const u8 sGymStudyPage2Left[] =
+    _(      "Modern study\n"
+      "recognizes 18\n"
+      "POKéMON types\n"
+      "in the world.");
 
-// Mary / type count
-static const u8 sGymStudyMaryLeft[] =
-    _("Modern research\n"
-      "recognizes eighteen\n"
-      "different POKéMON\n"
-      "types.");
+static const u8 sGymStudyPage2Right[] =
+    _(      "A POKéMON may\n"
+      "have one type\n"
+      "or two types.\n"
+      "Dual types mix\n"
+      "both matchups.");
 
-static const u8 sGymStudyMaryRight[] =
-    _("A POKéMON may have\n"
-      "one or two types.\n"
-      "Dual typings combine\n"
-      "the matchups of\n"
-      "both types.");
+static const u8 sGymStudyPage3Left[] =
+    _(      "ELECTRIC/STEEL\n"
+      "stands out for\n"
+      "its many type\n"
+      "resistances.");
 
-// George / Steel resistances
-static const u8 sGymStudyGeorgeLeft[] =
-    _("Among STEEL pairings,\n"
-      "ELECTRIC/STEEL is\n"
-      "known for resisting\n"
-      "an exceptional range\n"
-      "of attacks.");
+static const u8 sGymStudyPage3Right[] =
+    _(      "Resistance\n"
+      "cuts damage.\n"
+      "Immunity means\n"
+      "zero damage.\n"
+      "They differ.");
 
-static const u8 sGymStudyGeorgeRight[] =
-    _("Resistance reduces\n"
-      "damage. Immunity means\n"
-      "a type deals no damage.\n"
-      "Do not count those\n"
-      "as the same thing.");
+static const u8 sGymStudyPage4Left[] =
+    _(      "BUG/GHOST is\n"
+      "weak to FIRE,\n"
+      "FLYING, ROCK,\n"
+      "GHOST, DARK.");
 
-// Alexia / Shedinja weaknesses
-static const u8 sGymStudyAlexiaLeft[] =
-    _("BUG/GHOST fears FIRE,\n"
-      "FLYING, ROCK, GHOST,\n"
-      "and DARK attacks on\n"
-      "the type chart.");
+static const u8 sGymStudyPage4Right[] =
+    _(      "Type weakness\n"
+      "comes from the\n"
+      "type chart.\n"
+      "Abilities can\n"
+      "alter results.");
 
-static const u8 sGymStudyAlexiaRight[] =
-    _("Abilities may change\n"
-      "battle interactions,\n"
-      "but type weaknesses\n"
-      "still come from the\n"
-      "type chart itself.");
+static const u8 sGymStudyPage5Left[] =
+    _(      "NORMAL/GHOST\n"
+      "ignores NORMAL\n"
+      "and FIGHTING,\n"
+      "plus GHOST.");
 
-// Berke / immunities
-static const u8 sGymStudyBerkeLeft[] =
-    _("NORMAL/GHOST ignores\n"
-      "NORMAL, FIGHTING,\n"
-      "and GHOST attacks\n"
-      "by type alone.");
+static const u8 sGymStudyPage5Right[] =
+    _(      "Dual types can\n"
+      "gain immunity\n"
+      "from either of\n"
+      "their types.");
 
-static const u8 sGymStudyBerkeRight[] =
-    _("An immunity from\n"
-      "either half of a dual\n"
-      "typing can cancel an\n"
-      "attack completely.");
+static const u8 sGymStudyPage6Left[] =
+    _(      "PSYSHOCK is a\n"
+      "special move,\n"
+      "but it uses\n"
+      "physical\n"
+      "DEFENSE.");
 
-// Jody / Psyshock
-static const u8 sGymStudyJodyLeft[] =
-    _("PSYSHOCK is a special\n"
-      "move, yet its damage\n"
-      "uses the target's\n"
-      "physical DEFENSE.");
+static const u8 sGymStudyPage6Right[] =
+    _(      "Most physical\n"
+      "moves test\n"
+      "DEFENSE. Most\n"
+      "special moves\n"
+      "test SP. DEF.");
 
-static const u8 sGymStudyJodyRight[] =
-    _("Usually, physical\n"
-      "moves test DEFENSE and\n"
-      "special moves test\n"
-      "SP. DEF. Some moves\n"
-      "break that rule.");
 
-static const struct GymStudyBookPage sGymStudyPages[GYM_STUDY_COUNT] =
+static const struct GymStudyPage sGymStudyPages[GYM_STUDY_PAGE_COUNT] =
 {
-    [GYM_STUDY_PARKER] =
-    {
-        .left = sGymStudyParkerLeft,
-        .right = sGymStudyParkerRight,
-    },
-    [GYM_STUDY_MARY] =
-    {
-        .left = sGymStudyMaryLeft,
-        .right = sGymStudyMaryRight,
-    },
-    [GYM_STUDY_GEORGE] =
-    {
-        .left = sGymStudyGeorgeLeft,
-        .right = sGymStudyGeorgeRight,
-    },
-    [GYM_STUDY_ALEXIA] =
-    {
-        .left = sGymStudyAlexiaLeft,
-        .right = sGymStudyAlexiaRight,
-    },
-    [GYM_STUDY_BERKE] =
-    {
-        .left = sGymStudyBerkeLeft,
-        .right = sGymStudyBerkeRight,
-    },
-    [GYM_STUDY_JODY] =
-    {
-        .left = sGymStudyJodyLeft,
-        .right = sGymStudyJodyRight,
-    },
+    { sGymStudyPage1Left, sGymStudyPage1Right },
+    { sGymStudyPage2Left, sGymStudyPage2Right },
+    { sGymStudyPage3Left, sGymStudyPage3Right },
+    { sGymStudyPage4Left, sGymStudyPage4Right },
+    { sGymStudyPage5Left, sGymStudyPage5Right },
+    { sGymStudyPage6Left, sGymStudyPage6Right },
 };
-
-// ---------------------------------------------------------------------------
-// Study-book windows
-// ---------------------------------------------------------------------------
 
 static const struct WindowTemplate sGymStudyWindowTemplates[] =
 {
@@ -983,22 +938,21 @@ static const struct WindowTemplate sGymStudyWindowTemplates[] =
     DUMMY_WIN_TEMPLATE,
 };
 
-static void CB2_InitGymStudyBook(void);
-static void CB2_GymStudyBook(void);
-static void VBlankCB_GymStudyBook(void);
-static void GymStudyBook_Draw(void);
-static void GymStudyBook_BeginExit(void);
-static void GymStudyBook_CleanupAndReturnToField(void);
-static void GymStudyBook_Start(enum GymStudyBookId pageId);
+static void CB2_InitGymStudy(void);
+static void CB2_GymStudy(void);
+static void VBlankCB_GymStudy(void);
+static void GymStudy_DrawPage(void);
+static void GymStudy_BeginExit(void);
+static void GymStudy_CleanupAndReturn(void);
 
-static void GymStudyBook_Draw(void)
+static void GymStudy_DrawPage(void)
 {
-    const struct GymStudyBookPage *page;
+    const struct GymStudyPage *page;
 
-    if (sGymStudyBook == NULL)
+    if (sGymStudy == NULL || sGymStudy->page >= GYM_STUDY_PAGE_COUNT)
         return;
 
-    page = &sGymStudyPages[sGymStudyBook->pageId];
+    page = &sGymStudyPages[sGymStudy->page];
 
     FillWindowPixelBuffer(WIN_GYM_STUDY_LEFT, PIXEL_FILL(0));
     FillWindowPixelBuffer(WIN_GYM_STUDY_RIGHT, PIXEL_FILL(0));
@@ -1033,18 +987,18 @@ static void GymStudyBook_Draw(void)
     CopyWindowToVram(WIN_GYM_STUDY_RIGHT, COPYWIN_FULL);
 }
 
-static void GymStudyBook_BeginExit(void)
+static void GymStudy_BeginExit(void)
 {
-    if (sGymStudyBook == NULL)
+    if (sGymStudy == NULL)
         return;
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
-    sGymStudyBook->state = GYM_STUDY_STATE_FADE_OUT;
+    sGymStudy->state = GYM_STUDY_STATE_FADE_OUT;
 }
 
-static void GymStudyBook_CleanupAndReturnToField(void)
+static void GymStudy_CleanupAndReturn(void)
 {
-    if (sGymStudyBook == NULL)
+    if (sGymStudy == NULL)
         return;
 
     SetVBlankCallback(NULL);
@@ -1054,29 +1008,29 @@ static void GymStudyBook_CleanupAndReturnToField(void)
 
     FreeAllWindowBuffers();
 
-    if (sGymStudyBook->bg0TilemapBuffer != NULL)
+    if (sGymStudy->bg0TilemapBuffer != NULL)
     {
         UnsetBgTilemapBuffer(GYM_Q_TEXT_BG_ID);
-        Free(sGymStudyBook->bg0TilemapBuffer);
-        sGymStudyBook->bg0TilemapBuffer = NULL;
+        Free(sGymStudy->bg0TilemapBuffer);
+        sGymStudy->bg0TilemapBuffer = NULL;
     }
 
     ResetBgsAndClearDma3BusyFlags(0);
 
-    Free(sGymStudyBook);
-    sGymStudyBook = NULL;
+    Free(sGymStudy);
+    sGymStudy = NULL;
 
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-static void VBlankCB_GymStudyBook(void)
+static void VBlankCB_GymStudy(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-static void CB2_GymStudyBook(void)
+static void CB2_GymStudy(void)
 {
     DoScheduledBgTilemapCopiesToVram();
     UpdatePaletteFade();
@@ -1086,43 +1040,52 @@ static void CB2_GymStudyBook(void)
     SetGpuReg(REG_OFFSET_BG2HOFS, 0);
     SetGpuReg(REG_OFFSET_BG2VOFS, 0);
 
-    // The study book is BG/window-only. Keep map sprites hidden.
+    // This screen uses only BGs/windows. Hide overworld OBJ sprites.
     SetGpuReg(
         REG_OFFSET_DISPCNT,
         GetGpuReg(REG_OFFSET_DISPCNT) & ~DISPCNT_OBJ_ON
     );
 
-    if (sGymStudyBook == NULL)
+    if (sGymStudy == NULL)
         return;
 
-    switch (sGymStudyBook->state)
+    switch (sGymStudy->state)
     {
     case GYM_STUDY_STATE_FADE_IN:
         if (!gPaletteFade.active)
-            sGymStudyBook->state = GYM_STUDY_STATE_WAIT_INPUT;
+            sGymStudy->state = GYM_STUDY_STATE_WAIT_INPUT;
         break;
 
     case GYM_STUDY_STATE_WAIT_INPUT:
-        if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
-            GymStudyBook_BeginExit();
+        if (JOY_NEW(B_BUTTON))
+        {
+            GymStudy_BeginExit();
+        }
+        else if (JOY_NEW(A_BUTTON))
+        {
+            if (++sGymStudy->page >= GYM_STUDY_PAGE_COUNT)
+                GymStudy_BeginExit();
+            else
+                GymStudy_DrawPage();
+        }
         break;
 
     case GYM_STUDY_STATE_FADE_OUT:
         if (!gPaletteFade.active)
-            sGymStudyBook->state = GYM_STUDY_STATE_RETURN_FIELD;
+            sGymStudy->state = GYM_STUDY_STATE_RETURN_FIELD;
         break;
 
     case GYM_STUDY_STATE_RETURN_FIELD:
-        GymStudyBook_CleanupAndReturnToField();
+        GymStudy_CleanupAndReturn();
         break;
     }
 }
 
-static void CB2_InitGymStudyBook(void)
+static void CB2_InitGymStudy(void)
 {
     SetVBlankCallback(NULL);
 
-    if (sGymStudyBook == NULL)
+    if (sGymStudy == NULL)
     {
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         return;
@@ -1138,19 +1101,19 @@ static void CB2_InitGymStudyBook(void)
         ARRAY_COUNT(sGymQuestionBgTemplates)
     );
 
-    sGymStudyBook->bg0TilemapBuffer = AllocZeroed(BG_SCREEN_SIZE);
+    sGymStudy->bg0TilemapBuffer = AllocZeroed(BG_SCREEN_SIZE);
 
-    if (sGymStudyBook->bg0TilemapBuffer == NULL)
+    if (sGymStudy->bg0TilemapBuffer == NULL)
     {
-        Free(sGymStudyBook);
-        sGymStudyBook = NULL;
+        Free(sGymStudy);
+        sGymStudy = NULL;
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         return;
     }
 
     SetBgTilemapBuffer(
         GYM_Q_TEXT_BG_ID,
-        sGymStudyBook->bg0TilemapBuffer
+        sGymStudy->bg0TilemapBuffer
     );
 
     InitWindows(sGymStudyWindowTemplates);
@@ -1162,9 +1125,9 @@ static void CB2_InitGymStudyBook(void)
         PLTT_SIZE_4BPP
     );
 
-    // Same authored bookquestion.png + bookquestion.bin background.
+    // Reuse the already-working question-book artwork.
     GymQuestion_LoadBackground();
-    GymStudyBook_Draw();
+    GymStudy_DrawPage();
 
     ShowBg(GYM_Q_BG_ID);
     ShowBg(GYM_Q_TEXT_BG_ID);
@@ -1179,64 +1142,28 @@ static void CB2_InitGymStudyBook(void)
     SetGpuReg(REG_OFFSET_BG2HOFS, 0);
     SetGpuReg(REG_OFFSET_BG2VOFS, 0);
 
-    SetVBlankCallback(VBlankCB_GymStudyBook);
-    SetMainCallback2(CB2_GymStudyBook);
+    SetVBlankCallback(VBlankCB_GymStudy);
+    SetMainCallback2(CB2_GymStudy);
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
-    sGymStudyBook->state = GYM_STUDY_STATE_FADE_IN;
+    sGymStudy->state = GYM_STUDY_STATE_FADE_IN;
 }
 
-static void GymStudyBook_Start(enum GymStudyBookId pageId)
+void HLW_StartGymStudyBook(struct ScriptContext *ctx)
 {
-    if (sGymStudyBook != NULL
-     || sGymQuestion != NULL
-     || pageId >= GYM_STUDY_COUNT)
+    (void)ctx;
+
+    if (sGymStudy != NULL || sGymQuestion != NULL)
         return;
 
-    sGymStudyBook = AllocZeroed(sizeof(*sGymStudyBook));
+    sGymStudy = AllocZeroed(sizeof(*sGymStudy));
 
-    if (sGymStudyBook == NULL)
+    if (sGymStudy == NULL)
         return;
 
-    sGymStudyBook->pageId = pageId;
+    sGymStudy->page = 0;
 
     gMain.state = 0;
-    SetMainCallback2(CB2_InitGymStudyBook);
-}
-
-void HLW_StartGymStudyBookParker(struct ScriptContext *ctx)
-{
-    (void)ctx;
-    GymStudyBook_Start(GYM_STUDY_PARKER);
-}
-
-void HLW_StartGymStudyBookMary(struct ScriptContext *ctx)
-{
-    (void)ctx;
-    GymStudyBook_Start(GYM_STUDY_MARY);
-}
-
-void HLW_StartGymStudyBookGeorge(struct ScriptContext *ctx)
-{
-    (void)ctx;
-    GymStudyBook_Start(GYM_STUDY_GEORGE);
-}
-
-void HLW_StartGymStudyBookAlexia(struct ScriptContext *ctx)
-{
-    (void)ctx;
-    GymStudyBook_Start(GYM_STUDY_ALEXIA);
-}
-
-void HLW_StartGymStudyBookBerke(struct ScriptContext *ctx)
-{
-    (void)ctx;
-    GymStudyBook_Start(GYM_STUDY_BERKE);
-}
-
-void HLW_StartGymStudyBookJody(struct ScriptContext *ctx)
-{
-    (void)ctx;
-    GymStudyBook_Start(GYM_STUDY_JODY);
+    SetMainCallback2(CB2_InitGymStudy);
 }
 

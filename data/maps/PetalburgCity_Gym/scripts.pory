@@ -1014,66 +1014,17 @@ PetalburgCity_Gym_EventScript_RightGymLeadersRoomDoor::
 	goto_if_eq VAR_RESULT, NO, PetalburgCity_Gym_EventScript_DontEnterRoom
 	end
 
-PetalburgCity_Gym_EventScript_StudyBookParker::
-	lockall
-	fadescreen FADE_TO_BLACK
-	callnative HLW_StartGymStudyBookParker
-	waitstate
-	fadescreen FADE_FROM_BLACK
-	releaseall
-	end
-
-PetalburgCity_Gym_EventScript_StudyBookMary::
-	lockall
-	fadescreen FADE_TO_BLACK
-	callnative HLW_StartGymStudyBookMary
-	waitstate
-	fadescreen FADE_FROM_BLACK
-	releaseall
-	end
-
-PetalburgCity_Gym_EventScript_StudyBookGeorge::
-	lockall
-	fadescreen FADE_TO_BLACK
-	callnative HLW_StartGymStudyBookGeorge
-	waitstate
-	fadescreen FADE_FROM_BLACK
-	releaseall
-	end
-
-PetalburgCity_Gym_EventScript_StudyBookAlexia::
-	lockall
-	fadescreen FADE_TO_BLACK
-	callnative HLW_StartGymStudyBookAlexia
-	waitstate
-	fadescreen FADE_FROM_BLACK
-	releaseall
-	end
-
-PetalburgCity_Gym_EventScript_StudyBookBerke::
-	lockall
-	fadescreen FADE_TO_BLACK
-	callnative HLW_StartGymStudyBookBerke
-	waitstate
-	fadescreen FADE_FROM_BLACK
-	releaseall
-	end
-
-PetalburgCity_Gym_EventScript_StudyBookJody::
-	lockall
-	fadescreen FADE_TO_BLACK
-	callnative HLW_StartGymStudyBookJody
-	waitstate
-	fadescreen FADE_FROM_BLACK
-	releaseall
-	end
-
 PetalburgCity_Gym_EventScript_LibraryEmptyBook::
 	msgbox PetalburgCity_Gym_Text_LibraryEmptyBook, MSGBOX_SIGN
 	end
 
 PetalburgCity_Gym_EventScript_LibraryTypesBook::
-	msgbox PetalburgCity_Gym_Text_LibraryTypesBook, MSGBOX_SIGN
+	lockall
+	fadescreen FADE_TO_BLACK
+	callnative HLW_StartGymStudyBook
+	waitstate
+	fadescreen FADE_FROM_BLACK
+	releaseall
 	end
 
 PetalburgCity_Gym_EventScript_Randall::
