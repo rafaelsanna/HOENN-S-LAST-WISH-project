@@ -1322,3 +1322,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/MossdeepCity_House5/scripts.inc"
 
 	.include "data/maps/LilycoveCity_House5/scripts.inc"
+
+	.include "data/maps/MtPyre_Cave/scripts.inc"

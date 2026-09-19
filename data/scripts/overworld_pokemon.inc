@@ -8,6 +8,726 @@ EventScript_OverworldPokemonCry_AZUMARILL::
 	release
 	end
 
+EventScript_OverworldPokemonCry_RATTATA::
+	lock
+	faceplayer
+	playmoncry SPECIES_RATTATA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SPEAROW::
+	lock
+	faceplayer
+	playmoncry SPECIES_SPEAROW, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_NIDORAN_F::
+	lock
+	faceplayer
+	playmoncry SPECIES_NIDORAN_F, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_NIDORINA::
+	lock
+	faceplayer
+	playmoncry SPECIES_NIDORINA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_NIDORAN_M::
+	lock
+	faceplayer
+	playmoncry SPECIES_NIDORAN_M, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_CLEFABLE::
+	lock
+	faceplayer
+	playmoncry SPECIES_CLEFABLE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_JIGGLYPUFF::
+	lock
+	faceplayer
+	playmoncry SPECIES_JIGGLYPUFF, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_ODDISH::
+	lock
+	faceplayer
+	playmoncry SPECIES_ODDISH, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_GLOOM::
+	lock
+	faceplayer
+	playmoncry SPECIES_GLOOM, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MANKEY::
+	lock
+	faceplayer
+	playmoncry SPECIES_MANKEY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_ABRA::
+	lock
+	faceplayer
+	playmoncry SPECIES_ABRA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MACHOP::
+	lock
+	faceplayer
+	playmoncry SPECIES_MACHOP, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_TENTACOOL::
+	lock
+	faceplayer
+	playmoncry SPECIES_TENTACOOL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_GEODUDE::
+	lock
+	faceplayer
+	playmoncry SPECIES_GEODUDE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_DODUO::
+	lock
+	faceplayer
+	playmoncry SPECIES_DODUO, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_KRABBY::
+	lock
+	faceplayer
+	playmoncry SPECIES_KRABBY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_EXEGGCUTE::
+	lock
+	faceplayer
+	playmoncry SPECIES_EXEGGCUTE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_KOFFING::
+	lock
+	faceplayer
+	playmoncry SPECIES_KOFFING, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_RHYHORN::
+	lock
+	faceplayer
+	playmoncry SPECIES_RHYHORN, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_CHANSEY::
+	lock
+	faceplayer
+	playmoncry SPECIES_CHANSEY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_TANGELA::
+	lock
+	faceplayer
+	playmoncry SPECIES_TANGELA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_HORSEA::
+	lock
+	faceplayer
+	playmoncry SPECIES_HORSEA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_GOLDEEN::
+	lock
+	faceplayer
+	playmoncry SPECIES_GOLDEEN, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_STARYU::
+	lock
+	faceplayer
+	playmoncry SPECIES_STARYU, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SCYTHER::
+	lock
+	faceplayer
+	playmoncry SPECIES_SCYTHER, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_JYNX::
+	lock
+	faceplayer
+	playmoncry SPECIES_JYNX, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MAGMAR::
+	lock
+	faceplayer
+	playmoncry SPECIES_MAGMAR, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_PINSIR::
+	lock
+	faceplayer
+	playmoncry SPECIES_PINSIR, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MAGIKARP::
+	lock
+	faceplayer
+	playmoncry SPECIES_MAGIKARP, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_GYARADOS::
+	lock
+	faceplayer
+	playmoncry SPECIES_GYARADOS, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_DRATINI::
+	lock
+	faceplayer
+	playmoncry SPECIES_DRATINI, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_HOOTHOOT::
+	lock
+	faceplayer
+	playmoncry SPECIES_HOOTHOOT, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SPINARAK::
+	lock
+	faceplayer
+	playmoncry SPECIES_SPINARAK, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_NATU::
+	lock
+	faceplayer
+	playmoncry SPECIES_NATU, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_XATU::
+	lock
+	faceplayer
+	playmoncry SPECIES_XATU, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_AIPOM::
+	lock
+	faceplayer
+	playmoncry SPECIES_AIPOM, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SUNKERN::
+	lock
+	faceplayer
+	playmoncry SPECIES_SUNKERN, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MURKROW::
+	lock
+	faceplayer
+	playmoncry SPECIES_MURKROW, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_WOBBUFFET::
+	lock
+	faceplayer
+	playmoncry SPECIES_WOBBUFFET, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_GIRAFARIG::
+	lock
+	faceplayer
+	playmoncry SPECIES_GIRAFARIG, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_GLIGAR::
+	lock
+	faceplayer
+	playmoncry SPECIES_GLIGAR, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SNUBBULL::
+	lock
+	faceplayer
+	playmoncry SPECIES_SNUBBULL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_HERACROSS::
+	lock
+	faceplayer
+	playmoncry SPECIES_HERACROSS, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SNEASEL::
+	lock
+	faceplayer
+	playmoncry SPECIES_SNEASEL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_TEDDIURSA::
+	lock
+	faceplayer
+	playmoncry SPECIES_TEDDIURSA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SLUGMA::
+	lock
+	faceplayer
+	playmoncry SPECIES_SLUGMA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_CORSOLA::
+	lock
+	faceplayer
+	playmoncry SPECIES_CORSOLA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_HOUNDOUR::
+	lock
+	faceplayer
+	playmoncry SPECIES_HOUNDOUR, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_PHANPY::
+	lock
+	faceplayer
+	playmoncry SPECIES_PHANPY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_STANTLER::
+	lock
+	faceplayer
+	playmoncry SPECIES_STANTLER, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_POOCHYENA::
+	lock
+	faceplayer
+	playmoncry SPECIES_POOCHYENA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MIGHTYENA::
+	lock
+	faceplayer
+	playmoncry SPECIES_MIGHTYENA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_LINOONE::
+	lock
+	faceplayer
+	playmoncry SPECIES_LINOONE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_WURMPLE::
+	lock
+	faceplayer
+	playmoncry SPECIES_WURMPLE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SILCOON::
+	lock
+	faceplayer
+	playmoncry SPECIES_SILCOON, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_BEAUTIFLY::
+	lock
+	faceplayer
+	playmoncry SPECIES_BEAUTIFLY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_CASCOON::
+	lock
+	faceplayer
+	playmoncry SPECIES_CASCOON, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_DUSTOX::
+	lock
+	faceplayer
+	playmoncry SPECIES_DUSTOX, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_LOTAD::
+	lock
+	faceplayer
+	playmoncry SPECIES_LOTAD, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_LOMBRE::
+	lock
+	faceplayer
+	playmoncry SPECIES_LOMBRE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SEEDOT::
+	lock
+	faceplayer
+	playmoncry SPECIES_SEEDOT, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_NUZLEAF::
+	lock
+	faceplayer
+	playmoncry SPECIES_NUZLEAF, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SWELLOW::
+	lock
+	faceplayer
+	playmoncry SPECIES_SWELLOW, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_RALTS::
+	lock
+	faceplayer
+	playmoncry SPECIES_RALTS, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SHROOMISH::
+	lock
+	faceplayer
+	playmoncry SPECIES_SHROOMISH, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_NINCADA::
+	lock
+	faceplayer
+	playmoncry SPECIES_NINCADA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_LOUDRED::
+	lock
+	faceplayer
+	playmoncry SPECIES_LOUDRED, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_HARIYAMA::
+	lock
+	faceplayer
+	playmoncry SPECIES_HARIYAMA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SKITTY::
+	lock
+	faceplayer
+	playmoncry SPECIES_SKITTY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MANECTRIC::
+	lock
+	faceplayer
+	playmoncry SPECIES_MANECTRIC, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_PLUSLE::
+	lock
+	faceplayer
+	playmoncry SPECIES_PLUSLE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_GULPIN::
+	lock
+	faceplayer
+	playmoncry SPECIES_GULPIN, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SHARPEDO::
+	lock
+	faceplayer
+	playmoncry SPECIES_SHARPEDO, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_WAILMER::
+	lock
+	faceplayer
+	playmoncry SPECIES_WAILMER, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_WAILORD::
+	lock
+	faceplayer
+	playmoncry SPECIES_WAILORD, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_NUMEL::
+	lock
+	faceplayer
+	playmoncry SPECIES_NUMEL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SPOINK::
+	lock
+	faceplayer
+	playmoncry SPECIES_SPOINK, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SPINDA::
+	lock
+	faceplayer
+	playmoncry SPECIES_SPINDA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_TRAPINCH::
+	lock
+	faceplayer
+	playmoncry SPECIES_TRAPINCH, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SWABLU::
+	lock
+	faceplayer
+	playmoncry SPECIES_SWABLU, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_ZANGOOSE::
+	lock
+	faceplayer
+	playmoncry SPECIES_ZANGOOSE, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SEVIPER::
+	lock
+	faceplayer
+	playmoncry SPECIES_SEVIPER, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_SHUPPET::
+	lock
+	faceplayer
+	playmoncry SPECIES_SHUPPET, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_DUSKULL::
+	lock
+	faceplayer
+	playmoncry SPECIES_DUSKULL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_TROPIUS::
+	lock
+	faceplayer
+	playmoncry SPECIES_TROPIUS, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_CHIMECHO::
+	lock
+	faceplayer
+	playmoncry SPECIES_CHIMECHO, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_ABSOL::
+	lock
+	faceplayer
+	playmoncry SPECIES_ABSOL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_LUVDISC::
+	lock
+	faceplayer
+	playmoncry SPECIES_LUVDISC, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_BAGON::
+	lock
+	faceplayer
+	playmoncry SPECIES_BAGON, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_BELDUM::
+	lock
+	faceplayer
+	playmoncry SPECIES_BELDUM, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 EventScript_OverworldPokemonCry_AZURILL::
 	lock
 	faceplayer

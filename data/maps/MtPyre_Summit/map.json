@@ -139,6 +139,32 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MtPyre_Summit_EventScript_Relic",
       "flag": "FLAG_HIDE_MT_PYRE_SUMMIT_RELIC"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CHIMECHO)",
+      "x": 40,
+      "y": 32,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_OverworldPokemonCry_CHIMECHO",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SHUPPET)",
+      "x": 22,
+      "y": 23,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_OverworldPokemonCry_SHUPPET",
+      "flag": "0"
     }
   ],
   "warp_events": [
@@ -161,6 +187,13 @@
       "y": 31,
       "elevation": 3,
       "dest_map": "MAP_MT_PYRE_EXTERIOR",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 10,
+      "y": 26,
+      "elevation": 0,
+      "dest_map": "MAP_MT_PYRE_CAVE",
       "dest_warp_id": "1"
     }
   ],

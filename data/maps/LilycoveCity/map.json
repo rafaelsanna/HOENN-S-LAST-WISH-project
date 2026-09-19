@@ -340,6 +340,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_EventScript_Rio",
       "flag": "FLAG_HIDE_MAR_LILI_VISIBILITY"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MAGIKARP)",
+      "x": 69,
+      "y": 24,
+      "elevation": 1,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_OverworldPokemonCry_MAGIKARP",
+      "flag": "0"
     }
   ],
   "warp_events": [
