@@ -52,14 +52,11 @@ MtPyre_Exterior_EventScript_MagmaScene::
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2, MtPyre_Exterior_Movement_Grunt2Approach
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3, MtPyre_Exterior_Movement_Grunt3Approach
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4, MtPyre_Exterior_Movement_Grunt4Approach
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGNUS
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_1
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4
+	@ Use bounded scene timing so an obstructed NPC cannot lock the player.
+	delay 128
 	playse SE_PIN
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGNUS, Common_Movement_ExclamationMark
-	waitmovement 0
+	delay 32
 	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
 	msgbox MtPyre_Exterior_Text_MagnusSeesPlayer, MSGBOX_DEFAULT
 	removefieldmugshot
@@ -74,11 +71,9 @@ MtPyre_Exterior_EventScript_MagmaScene::
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3, MtPyre_Exterior_Movement_Grunt3Exit
 	delay 32
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4, MtPyre_Exterior_Movement_Grunt4Exit
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGNUS
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_1
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4
+	@ The final grunt normally finishes in 256 frames. This buffer lets all
+	@ five actors clear the stairs before cleanup without waiting on an NPC.
+	delay 288
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGNUS
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_1
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2

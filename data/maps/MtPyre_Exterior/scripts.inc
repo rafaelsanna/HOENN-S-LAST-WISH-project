@@ -107,199 +107,199 @@ MtPyre_Exterior_EventScript_MagmaScene::
 # 54 "data/maps/MtPyre_Exterior/scripts.pory"
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4, MtPyre_Exterior_Movement_Grunt4Approach
 # 55 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGNUS
+	@ Use bounded scene timing so an obstructed NPC cannot lock the player.
 # 56 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_1
+	delay 128
 # 57 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2
-# 58 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3
-# 59 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4
-# 60 "data/maps/MtPyre_Exterior/scripts.pory"
 	playse SE_PIN
-# 61 "data/maps/MtPyre_Exterior/scripts.pory"
+# 58 "data/maps/MtPyre_Exterior/scripts.pory"
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGNUS, Common_Movement_ExclamationMark
-# 62 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement 0
-# 63 "data/maps/MtPyre_Exterior/scripts.pory"
+# 59 "data/maps/MtPyre_Exterior/scripts.pory"
+	delay 32
+# 60 "data/maps/MtPyre_Exterior/scripts.pory"
 	createfieldmugshot MUGSHOT_MAGNUS, EMOTE_NORMAL
-# 64 "data/maps/MtPyre_Exterior/scripts.pory"
+# 61 "data/maps/MtPyre_Exterior/scripts.pory"
 	msgbox MtPyre_Exterior_Text_MagnusSeesPlayer, MSGBOX_DEFAULT
-# 65 "data/maps/MtPyre_Exterior/scripts.pory"
+# 62 "data/maps/MtPyre_Exterior/scripts.pory"
 	removefieldmugshot
-# 66 "data/maps/MtPyre_Exterior/scripts.pory"
+# 63 "data/maps/MtPyre_Exterior/scripts.pory"
 	closemessage
-# 67 "data/maps/MtPyre_Exterior/scripts.pory"
+# 64 "data/maps/MtPyre_Exterior/scripts.pory"
 	call_if_eq VAR_0x8008, 1, MtPyre_Exterior_EventScript_StepAside
-# 68 "data/maps/MtPyre_Exterior/scripts.pory"
+# 65 "data/maps/MtPyre_Exterior/scripts.pory"
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGNUS, MtPyre_Exterior_Movement_MagnusExit
-# 69 "data/maps/MtPyre_Exterior/scripts.pory"
+# 66 "data/maps/MtPyre_Exterior/scripts.pory"
 	delay 32
-# 70 "data/maps/MtPyre_Exterior/scripts.pory"
+# 67 "data/maps/MtPyre_Exterior/scripts.pory"
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_1, MtPyre_Exterior_Movement_Grunt1Exit
-# 71 "data/maps/MtPyre_Exterior/scripts.pory"
+# 68 "data/maps/MtPyre_Exterior/scripts.pory"
 	delay 32
-# 72 "data/maps/MtPyre_Exterior/scripts.pory"
+# 69 "data/maps/MtPyre_Exterior/scripts.pory"
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2, MtPyre_Exterior_Movement_Grunt2Exit
-# 73 "data/maps/MtPyre_Exterior/scripts.pory"
+# 70 "data/maps/MtPyre_Exterior/scripts.pory"
 	delay 32
-# 74 "data/maps/MtPyre_Exterior/scripts.pory"
+# 71 "data/maps/MtPyre_Exterior/scripts.pory"
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3, MtPyre_Exterior_Movement_Grunt3Exit
-# 75 "data/maps/MtPyre_Exterior/scripts.pory"
+# 72 "data/maps/MtPyre_Exterior/scripts.pory"
 	delay 32
-# 76 "data/maps/MtPyre_Exterior/scripts.pory"
+# 73 "data/maps/MtPyre_Exterior/scripts.pory"
 	applymovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4, MtPyre_Exterior_Movement_Grunt4Exit
+# 74 "data/maps/MtPyre_Exterior/scripts.pory"
+	@ The final grunt normally finishes in 256 frames. This buffer lets all
+# 75 "data/maps/MtPyre_Exterior/scripts.pory"
+	@ five actors clear the stairs before cleanup without waiting on an NPC.
+# 76 "data/maps/MtPyre_Exterior/scripts.pory"
+	delay 288
 # 77 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGNUS
-# 78 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_1
-# 79 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2
-# 80 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3
-# 81 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4
-# 82 "data/maps/MtPyre_Exterior/scripts.pory"
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGNUS
-# 83 "data/maps/MtPyre_Exterior/scripts.pory"
+# 78 "data/maps/MtPyre_Exterior/scripts.pory"
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_1
-# 84 "data/maps/MtPyre_Exterior/scripts.pory"
+# 79 "data/maps/MtPyre_Exterior/scripts.pory"
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_2
-# 85 "data/maps/MtPyre_Exterior/scripts.pory"
+# 80 "data/maps/MtPyre_Exterior/scripts.pory"
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_3
-# 86 "data/maps/MtPyre_Exterior/scripts.pory"
+# 81 "data/maps/MtPyre_Exterior/scripts.pory"
 	removeobject LOCALID_MT_PYRE_EXTERIOR_MAGMA_GRUNT_4
-# 87 "data/maps/MtPyre_Exterior/scripts.pory"
+# 82 "data/maps/MtPyre_Exterior/scripts.pory"
 	setflag FLAG_HIDE_MT_PYRE_EXTERIOR_MAGMA
-# 88 "data/maps/MtPyre_Exterior/scripts.pory"
+# 83 "data/maps/MtPyre_Exterior/scripts.pory"
 	setflag FLAG_MT_PYRE_EXTERIOR_MAGMA_SCENE_DONE
-# 89 "data/maps/MtPyre_Exterior/scripts.pory"
+# 84 "data/maps/MtPyre_Exterior/scripts.pory"
 	fadedefaultbgm
-# 90 "data/maps/MtPyre_Exterior/scripts.pory"
+# 85 "data/maps/MtPyre_Exterior/scripts.pory"
 	releaseall
-# 91 "data/maps/MtPyre_Exterior/scripts.pory"
+# 86 "data/maps/MtPyre_Exterior/scripts.pory"
 	end
+# 87 "data/maps/MtPyre_Exterior/scripts.pory"
+
+# 88 "data/maps/MtPyre_Exterior/scripts.pory"
+MtPyre_Exterior_EventScript_StepAside::
+# 89 "data/maps/MtPyre_Exterior/scripts.pory"
+	applymovement LOCALID_PLAYER, MtPyre_Exterior_Movement_PlayerStepAside
+# 90 "data/maps/MtPyre_Exterior/scripts.pory"
+	waitmovement 0
+# 91 "data/maps/MtPyre_Exterior/scripts.pory"
+	return
 # 92 "data/maps/MtPyre_Exterior/scripts.pory"
 
 # 93 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_EventScript_StepAside::
-# 94 "data/maps/MtPyre_Exterior/scripts.pory"
-	applymovement LOCALID_PLAYER, MtPyre_Exterior_Movement_PlayerStepAside
-# 95 "data/maps/MtPyre_Exterior/scripts.pory"
-	waitmovement 0
-# 96 "data/maps/MtPyre_Exterior/scripts.pory"
-	return
-# 97 "data/maps/MtPyre_Exterior/scripts.pory"
-
-# 98 "data/maps/MtPyre_Exterior/scripts.pory"
 MtPyre_Exterior_EventScript_MagmaSceneSkip::
-# 99 "data/maps/MtPyre_Exterior/scripts.pory"
+# 94 "data/maps/MtPyre_Exterior/scripts.pory"
 	end
-# 100 "data/maps/MtPyre_Exterior/scripts.pory"
+# 95 "data/maps/MtPyre_Exterior/scripts.pory"
 
-# 101 "data/maps/MtPyre_Exterior/scripts.pory"
+# 96 "data/maps/MtPyre_Exterior/scripts.pory"
 MtPyre_Exterior_Movement_PlayerStepAside:
-# 102 "data/maps/MtPyre_Exterior/scripts.pory"
+# 97 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
-# 103 "data/maps/MtPyre_Exterior/scripts.pory"
+# 98 "data/maps/MtPyre_Exterior/scripts.pory"
 	step_end
-# 104 "data/maps/MtPyre_Exterior/scripts.pory"
+# 99 "data/maps/MtPyre_Exterior/scripts.pory"
 
-# 105 "data/maps/MtPyre_Exterior/scripts.pory"
+# 100 "data/maps/MtPyre_Exterior/scripts.pory"
 MtPyre_Exterior_Movement_MagnusApproach:
+# 101 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 102 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 103 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 104 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 105 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
 # 106 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 107 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	step_end
 # 108 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+
 # 109 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+MtPyre_Exterior_Movement_Grunt1Approach:
 # 110 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 111 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 112 "data/maps/MtPyre_Exterior/scripts.pory"
-	step_end
+	walk_right
 # 113 "data/maps/MtPyre_Exterior/scripts.pory"
-
+	walk_right
 # 114 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_Movement_Grunt1Approach:
+	walk_right
 # 115 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	step_end
 # 116 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+
 # 117 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+MtPyre_Exterior_Movement_Grunt2Approach:
 # 118 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 119 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 120 "data/maps/MtPyre_Exterior/scripts.pory"
-	step_end
+	walk_right
 # 121 "data/maps/MtPyre_Exterior/scripts.pory"
-
+	walk_right
 # 122 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_Movement_Grunt2Approach:
+	walk_right
 # 123 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	step_end
 # 124 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+
 # 125 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+MtPyre_Exterior_Movement_Grunt3Approach:
 # 126 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 127 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 128 "data/maps/MtPyre_Exterior/scripts.pory"
-	step_end
+	walk_right
 # 129 "data/maps/MtPyre_Exterior/scripts.pory"
-
+	walk_right
 # 130 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_Movement_Grunt3Approach:
+	walk_right
 # 131 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	step_end
 # 132 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+
 # 133 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+MtPyre_Exterior_Movement_Grunt4Approach:
 # 134 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 135 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 136 "data/maps/MtPyre_Exterior/scripts.pory"
-	step_end
+	walk_right
 # 137 "data/maps/MtPyre_Exterior/scripts.pory"
-
+	walk_right
 # 138 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_Movement_Grunt4Approach:
+	walk_right
 # 139 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	step_end
 # 140 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+
 # 141 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+MtPyre_Exterior_Movement_MagnusExit:
 # 142 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 143 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 144 "data/maps/MtPyre_Exterior/scripts.pory"
-	step_end
+	walk_right
 # 145 "data/maps/MtPyre_Exterior/scripts.pory"
-
+	walk_right
 # 146 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_Movement_MagnusExit:
+	walk_right
 # 147 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 148 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 149 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 150 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 151 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 152 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 153 "data/maps/MtPyre_Exterior/scripts.pory"
@@ -307,35 +307,35 @@ MtPyre_Exterior_Movement_MagnusExit:
 # 154 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 155 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+	step_end
 # 156 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+
 # 157 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+MtPyre_Exterior_Movement_Grunt1Exit:
 # 158 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+	walk_right
 # 159 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 160 "data/maps/MtPyre_Exterior/scripts.pory"
-	step_end
+	walk_right
 # 161 "data/maps/MtPyre_Exterior/scripts.pory"
-
+	walk_right
 # 162 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_Movement_Grunt1Exit:
+	walk_right
 # 163 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 164 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+	walk_right
 # 165 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 166 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 167 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 168 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 169 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 170 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 171 "data/maps/MtPyre_Exterior/scripts.pory"
@@ -343,21 +343,21 @@ MtPyre_Exterior_Movement_Grunt1Exit:
 # 172 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 173 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 174 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 175 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 176 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 177 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 178 "data/maps/MtPyre_Exterior/scripts.pory"
 	step_end
-# 179 "data/maps/MtPyre_Exterior/scripts.pory"
+# 174 "data/maps/MtPyre_Exterior/scripts.pory"
 
-# 180 "data/maps/MtPyre_Exterior/scripts.pory"
+# 175 "data/maps/MtPyre_Exterior/scripts.pory"
 MtPyre_Exterior_Movement_Grunt2Exit:
+# 176 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 177 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 178 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 179 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 180 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
 # 181 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 182 "data/maps/MtPyre_Exterior/scripts.pory"
@@ -367,15 +367,15 @@ MtPyre_Exterior_Movement_Grunt2Exit:
 # 184 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 185 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 186 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 187 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 188 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 189 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 190 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 191 "data/maps/MtPyre_Exterior/scripts.pory"
@@ -383,25 +383,25 @@ MtPyre_Exterior_Movement_Grunt2Exit:
 # 192 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 193 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+	step_end
 # 194 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+
 # 195 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+MtPyre_Exterior_Movement_Grunt3Exit:
 # 196 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+	walk_right
 # 197 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 198 "data/maps/MtPyre_Exterior/scripts.pory"
-	step_end
+	walk_right
 # 199 "data/maps/MtPyre_Exterior/scripts.pory"
-
+	walk_right
 # 200 "data/maps/MtPyre_Exterior/scripts.pory"
-MtPyre_Exterior_Movement_Grunt3Exit:
+	walk_right
 # 201 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 202 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
+	walk_right
 # 203 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 204 "data/maps/MtPyre_Exterior/scripts.pory"
@@ -409,35 +409,35 @@ MtPyre_Exterior_Movement_Grunt3Exit:
 # 205 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 206 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 207 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 208 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 209 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 210 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 211 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 212 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 213 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 214 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 215 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 216 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 217 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 218 "data/maps/MtPyre_Exterior/scripts.pory"
 	step_end
-# 219 "data/maps/MtPyre_Exterior/scripts.pory"
+# 214 "data/maps/MtPyre_Exterior/scripts.pory"
 
-# 220 "data/maps/MtPyre_Exterior/scripts.pory"
+# 215 "data/maps/MtPyre_Exterior/scripts.pory"
 MtPyre_Exterior_Movement_Grunt4Exit:
+# 216 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 217 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 218 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 219 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
+# 220 "data/maps/MtPyre_Exterior/scripts.pory"
+	walk_right
 # 221 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 222 "data/maps/MtPyre_Exterior/scripts.pory"
@@ -447,46 +447,36 @@ MtPyre_Exterior_Movement_Grunt4Exit:
 # 224 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_right
 # 225 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 226 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 227 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 228 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 229 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_right
+	walk_down
 # 230 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 231 "data/maps/MtPyre_Exterior/scripts.pory"
 	walk_down
 # 232 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 233 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 234 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 235 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 236 "data/maps/MtPyre_Exterior/scripts.pory"
-	walk_down
-# 237 "data/maps/MtPyre_Exterior/scripts.pory"
 	step_end
-# 238 "data/maps/MtPyre_Exterior/scripts.pory"
+# 233 "data/maps/MtPyre_Exterior/scripts.pory"
 
-# 239 "data/maps/MtPyre_Exterior/scripts.pory"
+# 234 "data/maps/MtPyre_Exterior/scripts.pory"
 MtPyre_Exterior_Text_MagnusSeesPlayer:
-# 240 "data/maps/MtPyre_Exterior/scripts.pory"
+# 235 "data/maps/MtPyre_Exterior/scripts.pory"
 	.string "MAGNUS: You again…\p"
-# 241 "data/maps/MtPyre_Exterior/scripts.pory"
+# 236 "data/maps/MtPyre_Exterior/scripts.pory"
 	.string "Did you come to stop us, too?\p"
-# 242 "data/maps/MtPyre_Exterior/scripts.pory"
+# 237 "data/maps/MtPyre_Exterior/scripts.pory"
 	.string "Ha! TEAM AQUA raced up to the\n"
-# 243 "data/maps/MtPyre_Exterior/scripts.pory"
+# 238 "data/maps/MtPyre_Exterior/scripts.pory"
 	.string "summit. They never even noticed\p"
-# 244 "data/maps/MtPyre_Exterior/scripts.pory"
-	.string "TEAM MAGMA slipping down the\n"
-# 245 "data/maps/MtPyre_Exterior/scripts.pory"
+# 239 "data/maps/MtPyre_Exterior/scripts.pory"
+	.string "our group slipping down the\n"
+# 240 "data/maps/MtPyre_Exterior/scripts.pory"
 	.string "other side.\p"
-# 246 "data/maps/MtPyre_Exterior/scripts.pory"
+# 241 "data/maps/MtPyre_Exterior/scripts.pory"
 	.string "Now, step aside.$"
