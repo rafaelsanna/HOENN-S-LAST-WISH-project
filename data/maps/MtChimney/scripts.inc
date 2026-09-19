@@ -1513,7 +1513,7 @@ MtChimney_Text_ArchieGoStopTeamMagma:
 # 757 "data/maps/MtChimney/scripts.pory"
 	.string "And when the tectonic plates shift...\n"
 # 758 "data/maps/MtChimney/scripts.pory"
-	.string "our coastlines. Our territories.\l"
+	.string "our coastlines... our territories...\l"
 # 759 "data/maps/MtChimney/scripts.pory"
 	.string "Everything we've built. Gone.$"
 # 760 "data/maps/MtChimney/scripts.pory"

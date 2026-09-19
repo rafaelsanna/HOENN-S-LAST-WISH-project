@@ -206,28 +206,28 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Skitty
-Level: 26
+Delcatty
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Poochyena
-Level: 26
+Mightyena
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Zigzagoon
-Level: 26
+Linoone
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Lotad
-Level: 26
+Lombre
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Rattata
-Level: 26
+Bibarel
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Taillow
-Level: 26
+Swellow
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_PETALBURG_WOODS ===
@@ -532,8 +532,12 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 32
+Crobat
+Level: 48
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Camerupt
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MT_PYRE_2 ===
@@ -545,8 +549,12 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Tentacool
-Level: 32
+Tentacruel
+Level: 48
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Crawdaunt
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MT_PYRE_3 ===
@@ -558,12 +566,12 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Poochyena
-Level: 30
+Darkrai
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Tentacool
-Level: 30
+Tentacruel
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_WEATHER_INST_4 ===
@@ -756,7 +764,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Hariyama
-Level: 31
+Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_SHELLY_WEATHER_INSTITUTE ===
@@ -923,8 +931,8 @@ Music: Suspicious
 Double Battle: No
 AI: Check Bad Move
 
-Spoink
-Level: 31
+Grumpig
+Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DAISY ===
@@ -2645,7 +2653,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Sableye
-Level: 32
+Level: 50
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TASHA ===
@@ -2657,8 +2665,8 @@ Music: Suspicious
 Double Battle: No
 AI: Check Bad Move
 
-Shuppet
-Level: 32
+Banette
+Level: 50
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_VALERIE_2 ===
@@ -3305,8 +3313,8 @@ Music: Suspicious
 Double Battle: No
 AI: Check Bad Move
 
-Rhyhorn
-Level: 31
+Rhydon
+Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MT_CHIMNEY_1 ===
@@ -4011,7 +4019,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Hariyama
-Level: 32
+Level: 50
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_KIRK ===
@@ -4893,16 +4901,16 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Ralts
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-
-Ralts
-Level: 26
+Kirlia
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Kirlia
-Level: 26
+Level: 44
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Gardevoir
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JOSHUA ===
@@ -5086,15 +5094,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Wobbuffet
-Level: 26
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Natu
-Level: 26
+Xatu
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Kadabra
-Level: 26
+Alakazam
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_ALEXIS ===
@@ -11297,7 +11305,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Wobbuffet
-Level: 32
+Level: 50
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Destiny Bond
 - Safeguard
@@ -13266,12 +13274,12 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Wailmer
-Level: 30
+Wailord
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Zubat
-Level: 30
+Crobat
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_JAGGED_PASS ===
@@ -14659,11 +14667,11 @@ Double Battle: Yes
 AI: Check Bad Move
 
 Delcatty
-Level: 31
+Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Manectric
-Level: 31
+Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LEA_AND_JED ===

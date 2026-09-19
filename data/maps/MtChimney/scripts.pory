@@ -755,7 +755,7 @@ MtChimney_Text_ArchieGoStopTeamMagma:
 	.string "Doing something like that will cause\n"
 	.string "the volcano's eruption!\p"
 	.string "And when the tectonic plates shift...\n"
-	.string "our coastlines. Our territories.\l"
+	.string "our coastlines... our territories...\l"
 	.string "Everything we've built. Gone.$"
 
 MtChimney_Text_ArchieIHaveMyHandsFull:
