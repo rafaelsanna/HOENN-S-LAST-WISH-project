@@ -93,8 +93,26 @@ DewdropJungle_EventScript_Waterfallgirl::
 # 47 "data/maps/DewdropJungle/scripts.pory"
 
 # 48 "data/maps/DewdropJungle/scripts.pory"
-DewdropJungle_Text_Waterfallgirl:
+DewdropJungle_EventScript_Krabby::
 # 49 "data/maps/DewdropJungle/scripts.pory"
-	.string "I like to come out here to watch\n"
+	lock
 # 50 "data/maps/DewdropJungle/scripts.pory"
+	applymovement LOCALID_DEWDROP_JUNGLE_KRABBY, Common_Movement_FacePlayer
+# 51 "data/maps/DewdropJungle/scripts.pory"
+	waitmovement 0
+# 52 "data/maps/DewdropJungle/scripts.pory"
+	playmoncry SPECIES_KRABBY, CRY_MODE_NORMAL
+# 53 "data/maps/DewdropJungle/scripts.pory"
+	waitmoncry
+# 54 "data/maps/DewdropJungle/scripts.pory"
+	release
+# 55 "data/maps/DewdropJungle/scripts.pory"
+	end
+# 56 "data/maps/DewdropJungle/scripts.pory"
+
+# 57 "data/maps/DewdropJungle/scripts.pory"
+DewdropJungle_Text_Waterfallgirl:
+# 58 "data/maps/DewdropJungle/scripts.pory"
+	.string "I like to come out here to watch\n"
+# 59 "data/maps/DewdropJungle/scripts.pory"
 	.string "the waterfall. So peaceful...$"

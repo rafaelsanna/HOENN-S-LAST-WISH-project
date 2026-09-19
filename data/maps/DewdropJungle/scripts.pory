@@ -45,6 +45,15 @@ DewdropJungle_EventScript_Waterfallgirl::
 	msgbox DewdropJungle_Text_Waterfallgirl, MSGBOX_NPC
 	end
 
+DewdropJungle_EventScript_Krabby::
+	lock
+	applymovement LOCALID_DEWDROP_JUNGLE_KRABBY, Common_Movement_FacePlayer
+	waitmovement 0
+	playmoncry SPECIES_KRABBY, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 DewdropJungle_Text_Waterfallgirl:
 	.string "I like to come out here to watch\n"
 	.string "the waterfall. So peaceful...$"
