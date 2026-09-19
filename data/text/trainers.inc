@@ -708,7 +708,7 @@ FieryPath_Text_FlemingPostBattle:
 FieryPath_Text_EvaIntro:
 	.string "Huh. Another trainer crawling through\n"
 	.string "this oven? Whatever...\p"
-	.string "You heard that AMASTERASU girl?\n"
+	.string "You heard that AMATERASU girl?\n"
 	.string "Her pop songs make my ears bleed.\p"
 	.string "This cave? This HEAT? Now THAT's\n"
 	.string "real, loud, raw, and vulcanic!\p"
@@ -722,8 +722,6 @@ FieryPath_Text_EvaDefeated:
 FieryPath_Text_EvaPostBattle:
 	.string "AMATERASU can keep her bubblegum\n"
 	.string "trash. I'll take heat over melody.\p"
-	.string "Down here is PURE, fire is real...\n"
-	.string "No autotune, no filters, just power.\p"
 	.string "If you ever want a REAL concert,\n"
 	.string "find me where the ground burns.\p"
 	.string "Later. Don't get cooked.$"

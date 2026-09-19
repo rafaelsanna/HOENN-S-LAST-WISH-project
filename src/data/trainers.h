@@ -54269,3 +54269,76 @@ F_TRAINER_FEMALE |
             },
         },
     },
+#line 20850
+    [DIFFICULTY_NORMAL][TRAINER_SOLANA] =
+    {
+#line 20851
+        .trainerName = _("SOLANA"),
+#line 20852
+        .trainerClass = TRAINER_CLASS_PUNK,
+#line 20853
+        .trainerPic = TRAINER_PIC_LADY4,
+        .encounterMusic_gender =
+#line 20854
+F_TRAINER_FEMALE | 
+#line 20855
+            TRAINER_ENCOUNTER_MUSIC_FEMALE,
+#line 20856
+        .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
+#line 20857
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_LADY4,
+        .partySize = 4,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 20859
+            .species = SPECIES_SUNFLORA,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20861
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20860
+            .lvl = 31,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20863
+            .species = SPECIES_JIGGLYPUFF,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20865
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20864
+            .lvl = 31,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20867
+            .species = SPECIES_LOUDRED,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20869
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20868
+            .lvl = 31,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 20871
+            .species = SPECIES_VULPIX,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20873
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20872
+            .lvl = 31,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 20874
+                MOVE_FIERY_DANCE,
+            },
+            },
+        },
+    },

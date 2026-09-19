@@ -421,7 +421,6 @@ RusturfTunnel_EventScript_Mike::
 
 RusturfTunnel_EventScript_TooScaredToHop::
 	lock
-	faceplayer
 	msgbox RusturfTunnel_Text_SacaredToHop, MSGBOX_AUTOCLOSE
 	release
 	end
