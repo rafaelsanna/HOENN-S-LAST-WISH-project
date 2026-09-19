@@ -337,7 +337,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SEEDOT)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PSYDUCK)",
       "x": 68,
       "y": 12,
       "elevation": 3,
@@ -346,7 +346,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "EventScript_OverworldPokemonCry_SEEDOT",
+      "script": "EventScript_OverworldPokemonCry_PSYDUCK",
       "flag": "0"
     }
   ],

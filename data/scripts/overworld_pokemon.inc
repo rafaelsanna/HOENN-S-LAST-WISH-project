@@ -152,14 +152,6 @@ EventScript_OverworldPokemonCry_RHYHORN::
 	release
 	end
 
-EventScript_OverworldPokemonCry_CHANSEY::
-	lock
-	faceplayer
-	playmoncry SPECIES_CHANSEY, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
 EventScript_OverworldPokemonCry_HORSEA::
 	lock
 	faceplayer
@@ -248,14 +240,6 @@ EventScript_OverworldPokemonCry_HOOTHOOT::
 	release
 	end
 
-EventScript_OverworldPokemonCry_SPINARAK::
-	lock
-	faceplayer
-	playmoncry SPECIES_SPINARAK, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
 EventScript_OverworldPokemonCry_NATU::
 	lock
 	faceplayer
@@ -324,14 +308,6 @@ EventScript_OverworldPokemonCry_HERACROSS::
 	lock
 	faceplayer
 	playmoncry SPECIES_HERACROSS, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
-EventScript_OverworldPokemonCry_SNEASEL::
-	lock
-	faceplayer
-	playmoncry SPECIES_SNEASEL, CRY_MODE_NORMAL
 	waitmoncry
 	release
 	end
@@ -432,14 +408,6 @@ EventScript_OverworldPokemonCry_LOTAD::
 	release
 	end
 
-EventScript_OverworldPokemonCry_SEEDOT::
-	lock
-	faceplayer
-	playmoncry SPECIES_SEEDOT, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
 EventScript_OverworldPokemonCry_NUZLEAF::
 	lock
 	faceplayer
@@ -472,22 +440,6 @@ EventScript_OverworldPokemonCry_NINCADA::
 	release
 	end
 
-EventScript_OverworldPokemonCry_LOUDRED::
-	lock
-	faceplayer
-	playmoncry SPECIES_LOUDRED, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
-EventScript_OverworldPokemonCry_HARIYAMA::
-	lock
-	faceplayer
-	playmoncry SPECIES_HARIYAMA, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
 EventScript_OverworldPokemonCry_SKITTY::
 	lock
 	faceplayer
@@ -516,14 +468,6 @@ EventScript_OverworldPokemonCry_GULPIN::
 	lock
 	faceplayer
 	playmoncry SPECIES_GULPIN, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
-EventScript_OverworldPokemonCry_SHARPEDO::
-	lock
-	faceplayer
-	playmoncry SPECIES_SHARPEDO, CRY_MODE_NORMAL
 	waitmoncry
 	release
 	end
@@ -572,14 +516,6 @@ EventScript_OverworldPokemonCry_TRAPINCH::
 	lock
 	faceplayer
 	playmoncry SPECIES_TRAPINCH, CRY_MODE_NORMAL
-	waitmoncry
-	release
-	end
-
-EventScript_OverworldPokemonCry_ZANGOOSE::
-	lock
-	faceplayer
-	playmoncry SPECIES_ZANGOOSE, CRY_MODE_NORMAL
 	waitmoncry
 	release
 	end
@@ -908,6 +844,46 @@ EventScript_OverworldPokemonCry_ZUBAT::
 	lock
 	faceplayer
 	playmoncry SPECIES_ZUBAT, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_PSYDUCK::
+	lock
+	faceplayer
+	playmoncry SPECIES_PSYDUCK, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_TENTACRUEL::
+	lock
+	faceplayer
+	playmoncry SPECIES_TENTACRUEL, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_CURSOLA::
+	lock
+	faceplayer
+	playmoncry SPECIES_CURSOLA, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_RELICANTH::
+	lock
+	faceplayer
+	playmoncry SPECIES_RELICANTH, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_MILTANK::
+	lock
+	faceplayer
+	playmoncry SPECIES_MILTANK, CRY_MODE_NORMAL
 	waitmoncry
 	release
 	end

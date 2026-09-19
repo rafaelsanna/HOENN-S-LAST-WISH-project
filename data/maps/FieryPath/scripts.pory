@@ -39,6 +39,11 @@ FieryPath__EventScript_PunkGirlEva::
 	msgbox FieryPath_Text_EvaPostBattle, MSGBOX_AUTOCLOSE
 	end	
 
+FieryPath_EventScript_PunkGirlSolana::
+	trainerbattle_single TRAINER_SOLANA, FieryPath_Text_SolanaIntro, FieryPath_Text_SolanaDefeated
+	msgbox FieryPath_Text_SolanaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 FieryPath__EventScript_PicsGuyJaime::
 	trainerbattle_single TRAINER_JAIME, FieryPath_Text_JaimeIntro, FieryPath_Text_JaimeDefeated
 	msgbox FieryPath_Text_JaimePostBattle, MSGBOX_AUTOCLOSE
@@ -259,6 +264,25 @@ FieryPath_Text_FisherGotBurned:
 	.string "and I've got no story to tell...\p"
 	.string "Guess I'll just sit here and\n"
 	.string "watch the lava flow...$"
+
+FieryPath_Text_SolanaIntro:
+	.string "Wait...do you hear that rhythm?\p"
+	.string "I play every AMATERASU song at full\n"
+	.string "volume! I'm her biggest fan!\p"
+	.string "Eva says her music is fake. She's just\n"
+	.string "jealous!\p"
+	.string "My team knows every beat! Let's give\n"
+	.string "you a private concert!$"
+
+FieryPath_Text_SolanaDefeated:
+	.string "Encore!\n"
+	.string "...Right after I tune up.$"
+
+FieryPath_Text_SolanaPostBattle:
+	.string "AMATERASU's voice could make even\n"
+	.string "this lava feel cold!\p"
+	.string "Eva can complain all she wants. I'll\n"
+	.string "be in the front row forever!$"
 
 FieryPath_Text_MagmaIntro_F:
     .string "Ugh... ALL day in this heat,\n"

@@ -404,8 +404,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(SEVIPER)",
-      "x": 13,
-      "y": 54,
+      "x": 16,
+      "y": 39,
       "elevation": 4,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,

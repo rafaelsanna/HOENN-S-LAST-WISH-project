@@ -679,8 +679,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(JYNX)",
-      "x": 32,
-      "y": 72,
+      "x": 29,
+      "y": 77,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
