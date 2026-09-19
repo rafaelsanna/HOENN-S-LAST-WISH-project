@@ -487,7 +487,8 @@
     "Ice_cave_Entrance",
     "Ice_cave_entrance2",
     "Ic_cave_main",
-    "NightmarePetalburg"
+    "NightmarePetalburg",
+    "MtPyre_Cave"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

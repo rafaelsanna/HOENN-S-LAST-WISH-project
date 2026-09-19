@@ -417,7 +417,8 @@ static void Task_TimeWarpScene(u8 taskId)
          * Hand off to the warp script NightmareRealm1_WarpIn (defined in
          * data/maps/MtPyre_Summit/scripts.pory). That script does:
          *   lockall -> warp MAP_NIGHTMARE_REALM_1, 10, 10
-         *   -> waitstate -> releaseall -> end
+         *   -> waitstate -> walk player north to (10, 9)
+         *   -> NightmareRealm1_Arrival
          *
          * ScriptContext_SetupScript loads it into the script engine.
          * CB2_ReturnToField restores the overworld loop, which then ticks

@@ -308,6 +308,19 @@
       "trainer_sight_or_berry_tree_id": "ITEM_TM_FOUL_PLAY",
       "script": "Common_EventScript_FindItem",
       "flag": "FLAG_ITEM_RUSTBORO_CITY_TM_FOUL_PLAY"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_M)",
+      "x": 4,
+      "y": 32,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_OverworldPokemonCry_NIDORAN_M",
+      "flag": "0"
     }
   ],
   "warp_events": [

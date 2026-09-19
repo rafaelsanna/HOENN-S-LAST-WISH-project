@@ -5210,6 +5210,16 @@
       "secondary_tileset": "gTileset_Shop",
       "border_filepath": "data/layouts/SeabreezeShipping1F/border.bin",
       "blockdata_filepath": "data/layouts/SeabreezeShipping1F/map.bin"
+    },
+    {
+      "id": "LAYOUT_MT_PYRE_CAVE",
+      "name": "MtPyre_Cave_Layout",
+      "width": 20,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/MtPyre_Cave/border.bin",
+      "blockdata_filepath": "data/layouts/MtPyre_Cave/map.bin"
     }
   ]
 }

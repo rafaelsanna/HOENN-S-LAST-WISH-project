@@ -244,7 +244,7 @@
 #define VAR_LUKA_PETALBURG_ENCOUNTER                     0x40DB /// LUKA AFTER 5 GYM
 #define VAR_WALLY_TUTORIAL_RESULT                        0x40DC //  If you lose to LUKA first battle
 #define VAR_GIFT_PICHU_SLOT                              0x40DD
-#define VAR_NIGHTMARE_STATE                              0x40DE // Var is written to, but never read
+#define VAR_NIGHTMARE_STATE                              0x40DE
 #define VAR_HIDDEN_GROTTO_07                             0x40DF
 #define VAR_HIDDEN_GROTTO_08                             0x40E0
 #define VAR_HIDDEN_GROTTO_09                             0x40E1

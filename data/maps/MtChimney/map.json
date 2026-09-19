@@ -434,6 +434,32 @@
       "trainer_sight_or_berry_tree_id": "ITEM_TM_FIRE_PUNCH",
       "script": "Common_EventScript_FindItem",
       "flag": "FLAG_ITEM_MT_CHIMNEY_TM_FIRE_PUNCH"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RHYHORN)",
+      "x": 28,
+      "y": 36,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_OverworldPokemonCry_RHYHORN",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SNUBBULL)",
+      "x": 10,
+      "y": 38,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_OverworldPokemonCry_SNUBBULL",
+      "flag": "0"
     }
   ],
   "warp_events": [

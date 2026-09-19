@@ -9,8 +9,8 @@ NIGHTMARE_REALM_1_MapScripts::
 
 @ Set all battle restriction flags on every entry to this map.
 @ On victory these are cleared in OnVictory.
-@ On defeat (whiteout) the engine resets the map — ON_TRANSITION re-sets them
-@ automatically on the next entry, so no manual cleanup needed.
+@ On defeat (whiteout) the engine clears battle flags. The independent retry
+@ flag remains set so the summit relic can bring the player back.
 NightmareRealm1_OnTransition::
     setflag B_FLAG_NO_RUNNING
     setflag B_FLAG_NO_BAG_USE
@@ -21,7 +21,8 @@ NightmareRealm1_OnTransition::
 
 @ =============================================================================
 @ NightmareRealm1_Arrival
-@ Triggered by coord event (x=8..12, y=9), only when VAR_NIGHTMARE_STATE == 0.
+@ Started directly by NightmareRealm1_WarpIn after the player walks to (10,9).
+@ The coord events on y=9 remain as a fallback for other map entries.
 @
 @ Player position: (10, 9) — the trigger tile.
 @
@@ -31,11 +32,8 @@ NightmareRealm1_OnTransition::
 @        (9,11) JIR    CEL (11,11)   ← legendaries, facing up
 @
 @ WIN  → VAR_NIGHTMARE_STATE = 1. Never repeats.
-@ LOSE → whiteout. VAR_NIGHTMARE_STATE stays 0.
-@         Engine warps player to last Pokémon Center.
-@         Player climbs Mt Pyre again, talks to old lady.
-@         Old lady detects VAR_NIGHTMARE_STATE == 0 AND VAR_MT_PYRE_STATE == 1
-@         and re-launches StartTimeWarpScene → player returns here → loop.
+@ LOSE → whiteout. VAR_NIGHTMARE_STATE stays 0 and the retry flag, armed
+@         before battle, survives the whiteout. The summit relic appears.
 @ =============================================================================
 NightmareRealm1_Arrival::
     lockall
@@ -88,18 +86,13 @@ NightmareRealm1_Arrival::
     delay 20
 
     @ --- PHASE 5: BATTLE — double wild --------------------------------------
+    @ Whiteout does not resume this script, so arm retry before the battle.
+    setflag FLAG_LOST_NIGHTMARE_BATTLE
     setwildbattle SPECIES_DUCKLETT, 45, ITEM_NONE, SPECIES_ESCAVALIER, 45, ITEM_NONE
     dowildbattle
 
-    @ VAR_RESULT: 1 = player won, 0 = player lost (whiteout already happened)
+    @ Only a non-whiteout outcome resumes the script.
     goto_if_eq VAR_RESULT, 1, NightmareRealm1_OnVictory
-    releaseall
-    @ ---- DEFEAT PATH -------------------------------------------------------
-    @ Whiteout happened — player is at Pokémon Center, map is reset.
-    @ Set FLAG_LOST_NIGHTMARE_BATTLE so the old lady on the Summit detects
-    @ the defeat and re-launches the warp instead of giving normal dialogue.
-    @ VAR_NIGHTMARE_STATE stays 0 so the coord event re-fires on next entry.
-    setflag FLAG_LOST_NIGHTMARE_BATTLE
     releaseall
     end
 
@@ -108,6 +101,7 @@ NightmareRealm1_Arrival::
 @ =============================================================================
 NightmareRealm1_OnVictory::
     setvar VAR_NIGHTMARE_STATE, 1
+    clearflag FLAG_LOST_NIGHTMARE_BATTLE
 
     clearflag B_FLAG_NO_RUNNING
     clearflag B_FLAG_NO_BAG_USE
@@ -195,8 +189,7 @@ NightmareRealm1_EventScript_EndingSequence::
     delay 20
 
     fadescreen FADE_TO_BLACK
-    clearflag FLAG_LOST_NIGHTMARE_BATTLE
-    warp MAP_MT_PYRE_SUMMIT, 23, 5
+    warp MAP_MT_PYRE_SUMMIT, 23, 6
     waitstate
     releaseall
     end
@@ -346,28 +339,32 @@ NightmareRealm1_Text_CelebiPleas:
     .string "They are distillations of every\n"
     .string "terrible thing that happened\l"
     .string "since the timeline broke.\p"
-    .string "Every loss. Every scar.\n"
+    .string "Every loss, scar, and tragedy,\n"
     .string "Focused into a single purpose:\p"
     .string "to stop the future\n"
-    .string "from ever being repaired.$"
+    .string "from ever being repaired.\p"
+    .string "You have suppressed this darkness\n"
+    .string "once before.\p"
+    .string "Each time one manifests, it will only\n"
+    .string "continue to fester until it corrupts\l"
+    .string "every thread of the timeline.$"
 
 NightmareRealm1_Text_ShadowsSurge:
     .string "The two dark forms lock onto you.\p"
-    .string "They do not speak.\n"
-    .string "They do not need to.\p"
+    .string "Their suffocating aura intensifies,\n"
+    .string "as though they can sense that you are\l"
+    .string "the one who will erase them.\p"
     .string "Whatever they are, they will not\n"
     .string "let you take another step forward.$"
 
 NightmareRealm1_Text_VictoryJirachi:
     .string "JIRACHI: They are gone.\p"
     .string "The darkness that wore our faces…\n"
-    .string "it has dissolved.\p"
-    .string "You did not run.\n"
-    .string "That is why you could end this.$"
+    .string "it has dissolved.$"
 
 NightmareRealm1_Text_VictoryCelebi:
-    .string "CELEBI: The rift is still open.\p"
-    .string "But the shadows that fed on it\n"
+    .string "CELEBI: The rift is still open,\n"
+    .string "but the shadows that fed on it\l"
     .string "are no more.\p"
     .string "You have bought HOENN time,\n"
     .string "chosen one. Use it well.$"
@@ -376,8 +373,9 @@ NightmareRealm1_Text_JirachiPostVictory:
     .string "JIRACHI: We cannot leave\n"
     .string "this place yet.\p"
     .string "The boundary needs anchoring\n"
-    .string "from this side.\p"
-    .string "But you you can still go back.\n"
+    .string "from this side. It is not as simple\l"
+    .string "a fix as the previous rift.\p"
+    .string "But you can still go back.\n"
     .string "The path forward is yours.$"
 
 NightmareRealm1_Text_CelebiPostVictory:
@@ -386,11 +384,13 @@ NightmareRealm1_Text_CelebiPostVictory:
     .string "more.\p"
     .string "Go back through the warp.\n"
     .string "Finish what you started.\p"
+    .string "There may be more rifts, and you\n"
+    .string "must be prepared.\p"
     .string "We will be watching.$"
 
 NightmareRealm1_Text_HoennFateJirachi:
-    .string "JIRACHI: This is where our paths\n"
-    .string "must part, {PLAYER}.\p"
+    .string "JIRACHI: This is where our path\n"
+    .string "must part for now, {PLAYER}.\p"
     .string "HOENN's fate was never written by\n"
     .string "a single moment, but by the countless\l"
     .string "threads that connect every timeline.\p"
@@ -407,5 +407,6 @@ NightmareRealm1_Text_HoennFateCelebi:
     .string "with you.\p"
     .string "We will remain here, watching over\n"
     .string "the boundary between what was\l"
-    .string "and what may yet be.$"
+    .string "and what may yet be until we are\l"
+    .string "needed once more.$"
 `
