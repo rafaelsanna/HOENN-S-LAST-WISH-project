@@ -1,4 +1,5 @@
 raw `
+
 PetalburgCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgCity_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, PetalburgCity_OnFrame
@@ -374,7 +375,7 @@ PetalburgCity_EventScript_NightmareReturn_Down::
 	goto_if_set FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE, PetalburgCity_EventScript_NightmareReturn_Unavailable
 	lockall
 	setvar VAR_TEMP_2, 1
-	setvar VAR_TEMP_3, 2
+	setvar VAR_TEMP_3, 3
 	call PetalburgCity_EventScript_NightmareReturn_NoticePlayer
 	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaApproachDown
 	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalApproachDown
@@ -483,7 +484,8 @@ PetalburgCity_EventScript_NightmareReturn_ZinniaLeaves::
 PetalburgCity_EventScript_NightmareReturn_RivalExit::
 	goto_if_eq VAR_TEMP_3, 0, PetalburgCity_EventScript_NightmareReturn_RivalExitLeft
 	goto_if_eq VAR_TEMP_3, 1, PetalburgCity_EventScript_NightmareReturn_RivalExitRight
-	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalExitMiddle
+	goto_if_eq VAR_TEMP_3, 3, PetalburgCity_EventScript_NightmareReturn_RivalExitDown
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalExitUp
 	waitmovement 0
 	return
 
@@ -497,10 +499,16 @@ PetalburgCity_EventScript_NightmareReturn_RivalExitRight::
 	waitmovement 0
 	return
 
+PetalburgCity_EventScript_NightmareReturn_RivalExitDown::
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalExitDown
+	waitmovement 0
+	return
+
 PetalburgCity_EventScript_NightmareReturn_LukaExit::
 	goto_if_eq VAR_TEMP_3, 0, PetalburgCity_EventScript_NightmareReturn_LukaExitLeft
 	goto_if_eq VAR_TEMP_3, 1, PetalburgCity_EventScript_NightmareReturn_LukaExitRight
-	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaExitMiddle
+	goto_if_eq VAR_TEMP_3, 3, PetalburgCity_EventScript_NightmareReturn_LukaExitDown
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaExitUp
 	waitmovement 0
 	return
 
@@ -511,6 +519,11 @@ PetalburgCity_EventScript_NightmareReturn_LukaExitLeft::
 
 PetalburgCity_EventScript_NightmareReturn_LukaExitRight::
 	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaExitRight
+	waitmovement 0
+	return
+
+PetalburgCity_EventScript_NightmareReturn_LukaExitDown::
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaExitDown
 	waitmovement 0
 	return
 
@@ -579,128 +592,202 @@ PetalburgCity_Movement_NightmareReturn_RivalApproachDown:
 	step_end
 
 PetalburgCity_Movement_NightmareReturn_RivalExitLeft:
-	walk_fast_down
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
 	set_invisible
 	step_end
 
-PetalburgCity_Movement_NightmareReturn_RivalExitMiddle:
-	walk_fast_down
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
+PetalburgCity_Movement_NightmareReturn_RivalExitUp:
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
 	set_invisible
 	step_end
 
 PetalburgCity_Movement_NightmareReturn_RivalExitRight:
-	walk_fast_down
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	set_invisible
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalExitDown:
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
 	set_invisible
 	step_end
 
 PetalburgCity_Movement_NightmareReturn_LukaExitLeft:
-	walk_fast_down
-	walk_fast_right
-	walk_fast_down
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
 	set_invisible
 	step_end
 
-PetalburgCity_Movement_NightmareReturn_LukaExitMiddle:
-	walk_fast_down
-	walk_fast_right
-	walk_fast_down
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
+PetalburgCity_Movement_NightmareReturn_LukaExitUp:
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
 	set_invisible
 	step_end
 
 PetalburgCity_Movement_NightmareReturn_LukaExitRight:
-	walk_fast_down
-	walk_fast_right
-	walk_fast_down
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	set_invisible
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_LukaExitDown:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
 	set_invisible
 	step_end
 

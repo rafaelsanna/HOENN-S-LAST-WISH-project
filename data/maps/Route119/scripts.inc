@@ -1033,9 +1033,9 @@ Route119_Text_BrendanDefeat:
 # 517 "data/maps/Route119/scripts.pory"
 	.string "You've gotten pretty darn decent.\p"
 # 518 "data/maps/Route119/scripts.pory"
-	.string "I'm relieved to see that the events\n"
+	.string "I'm relieved to see that you're\n"
 # 519 "data/maps/Route119/scripts.pory"
-	.string "in PETALBURG haven't worn you out.$"
+	.string "feeling better than PETALBURG.$"
 # 520 "data/maps/Route119/scripts.pory"
 
 # 521 "data/maps/Route119/scripts.pory"

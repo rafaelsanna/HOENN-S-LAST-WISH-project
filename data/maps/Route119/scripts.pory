@@ -515,8 +515,8 @@ Route119_Text_BrendanIntro:
 Route119_Text_BrendanDefeat:
 	.string "Hmm…\n"
 	.string "You've gotten pretty darn decent.\p"
-	.string "I'm relieved to see that the events\n"
-	.string "in PETALBURG haven't worn you out.$"
+	.string "I'm relieved to see that you're\n"
+	.string "feeling better than PETALBURG.$"
 
 Route119_Text_BrendanIllGiveYouThis:
 	.string "ZENNO: I'd say you're good enough\n"
