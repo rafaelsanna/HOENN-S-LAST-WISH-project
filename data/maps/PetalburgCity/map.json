@@ -282,6 +282,34 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
       "flag": "FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL"
+    },
+    {
+      "local_id": "LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA",
+      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "x": 15,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_LUKA"
+    },
+    {
+      "local_id": "LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL",
+      "graphics_id": "OBJ_EVENT_GFX_VAR_0",
+      "x": 15,
+      "y": 11,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_RIVAL"
     }
   ],
   "warp_events": [
@@ -490,6 +518,42 @@
       "var": "VAR_LUKA_PETALBURG_ENCOUNTER",
       "var_value": "0",
       "script": "PetalburgCity_EventScript_LostLukaRight"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "PetalburgCity_EventScript_NightmareReturn_Left"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "PetalburgCity_EventScript_NightmareReturn_Right"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 9,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "PetalburgCity_EventScript_NightmareReturn_Up"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 11,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "PetalburgCity_EventScript_NightmareReturn_Down"
     }
   ],
   "bg_events": [

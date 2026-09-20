@@ -1837,7 +1837,7 @@ LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat:
 # 919 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"
 LavaridgeTown_Gym_1F_Text_FlanneryPostRematch:
 # 920 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"
-	.string "FLANNERY: I lost the match,\n"
+	.string "AMATERASU: I lost the match,\n"
 # 921 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"
 	.string "but I'm completely satisfied.\p"
 # 922 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"
@@ -1853,7 +1853,7 @@ LavaridgeTown_Gym_1F_Text_FlanneryPostRematch:
 # 927 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"
 LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons:
 # 928 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"
-	.string "FLANNERY: Losing a battle isn't going\n"
+	.string "AMATERASU: Losing a battle isn't going\n"
 # 929 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"
 	.string "to deflate me.\p"
 # 930 "data/maps/LavaridgeTown_Gym_1F/scripts.pory"

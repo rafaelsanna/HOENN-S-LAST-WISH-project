@@ -617,8 +617,13 @@ LavaridgeTown_Text_MayExplainGoGogglesChallengeDad:
 	.string "Challenging GYMS…\p"
 	.string "You're trying hard because you don't\n"
 	.string "want to lose to me, I bet!\p"
-	.string "{PLAYER}{KUN}, I think I should challenge\n"
-	.string "Professor CALENDULA at the PETALBURG GYM.\p"
+	.string "{PLAYER}{KUN}, I actually got a call\n"
+	.string "from Professor ACACIA recently.\p"
+	.string "Apparently there have been unusual\n"
+	.string "readings coming from PETALBURG.\p"
+	.string "She said the data is similar to other\n"
+	.string "locations that had links to the comet.\p"
+	.string "I'm going to go check it out.\n"
 	.string "See you again!$"
 	
 LavaridgeTown_Text_BrendanNiceBadgesTakeThis:
@@ -636,10 +641,13 @@ LavaridgeTown_Text_BrendanExplainGoGogglesChallengeDad:
 	.string "There should be some POKéMON that\n"
 	.string "are exclusively desert-dwellers.\l"
 	.string "You might look around for those.\p"
-	.string "As for me…\n"
-	.string "I'm thinking... are we ready to face\l"
-	.string "Professor CALENDULA at the GYM?\p"
-	.string "Hmm... I think I'll try anyway!\n"
+	.string "As for me… I actually got a call\n"
+	.string "from Professor ACACIA recently.\p"
+	.string "Apparently there have been unusual\n"
+	.string "readings coming from PETALBURG.\p"
+	.string "She said the data is similar to other\n"
+	.string "locations that had links to the comet.\p"
+	.string "I'm going to go check it out.\n"
 	.string "See you around!$"
 
 LavaridgeTown_Text_HaveEggWillYouTakeIt:

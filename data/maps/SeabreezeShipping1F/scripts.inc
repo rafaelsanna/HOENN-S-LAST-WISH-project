@@ -287,7 +287,7 @@ SeabreezeShipping1F_Text_DestinationList:
 # 144 "data/maps/SeabreezeShipping1F/scripts.pory"
 	.string "It's a list of shipping destinations\n"
 # 145 "data/maps/SeabreezeShipping1F/scripts.pory"
-	.string "in HOENN, but the names are encoded\n"
+	.string "in HOENN, but the names are encoded\l"
 # 146 "data/maps/SeabreezeShipping1F/scripts.pory"
 	.string "and impossible to decipher.$"
 # 147 "data/maps/SeabreezeShipping1F/scripts.pory"

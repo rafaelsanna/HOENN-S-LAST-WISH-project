@@ -156,7 +156,7 @@
       "y": 4,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
-      "script": "SeabreezeShipping1F_EventScript_ShippingLog"
+      "script": "SeabreezeShipping1F_EventScript_CargoReport"
     },
     {
       "type": "sign",
@@ -164,7 +164,7 @@
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
-      "script": "SeabreezeShipping1F_EventScript_CargoReport"
+      "script": "SeabreezeShipping1F_EventScript_ShippingLog"
     },
     {
       "type": "sign",

@@ -1299,9 +1299,9 @@
 #define FLAG_HIDE_RUSTBORO_CITY_LUKA_SCHOOL_SCENE                  0x4D9
 #define FLAG_ROUTE112_ACACIA_CHIMNEY_SCENE_COMPLETE                0x4DA
 #define FLAG_HIDE_ROUTE112_ACACIA_CHIMNEY_SCENE                    0x4DB
-#define FLAG_UNUSED_0x4DC                                           0x4DC // Unused Flag
-#define FLAG_UNUSED_0x4DD                                           0x4DD // Unused Flag
-#define FLAG_UNUSED_0x4DE                                           0x4DE // Unused Flag
+#define FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE              0x4DC
+#define FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_LUKA                   0x4DD
+#define FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_RIVAL                  0x4DE
 #define FLAG_UNUSED_0x4DF                                           0x4DF // Unused Flag
 #define FLAG_UNUSED_0x4E0                                           0x4E0 // Unused Flag
 #define FLAG_UNUSED_0x4E1                                           0x4E1 // Unused Flag

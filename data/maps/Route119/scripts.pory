@@ -482,8 +482,9 @@ Route119_Text_MayIntro:
 Route119_Text_MayDefeat:
 	.string "Achah!\n"
 	.string "{PLAYER}{KUN}, you're strong!\p"
-	.string "I was worried that you might be\n"
-	.string "struggling with your training.$"
+	.string "I was worried that you might still be\n"
+	.string "feeling unwell after what happened\l"
+	.string "in PETALBURG.$"
 
 Route119_Text_MayPresentForYou:
 	.string "ZINNIA: But I had absolutely nothing to\n"
@@ -499,7 +500,7 @@ Route119_Text_MayExplainFly:
 	.string "That's important, so don't forget.\p"
 	.string "You should FLY home and visit\n"
 	.string "LITTLEROOT for a change.\p"
-	.string "I bet your mom's worried about you,\n"
+	.string "I bet your grandma's worried about you,\n"
 	.string "{PLAYER}{KUN}.\p"
 	.string "Well, let's meet again somewhere!$"
 
@@ -513,7 +514,9 @@ Route119_Text_BrendanIntro:
 
 Route119_Text_BrendanDefeat:
 	.string "Hmm…\n"
-	.string "You've gotten pretty darn decent.$"
+	.string "You've gotten pretty darn decent.\p"
+	.string "I'm relieved to see that the events\n"
+	.string "in PETALBURG haven't worn you out.$"
 
 Route119_Text_BrendanIllGiveYouThis:
 	.string "ZENNO: I'd say you're good enough\n"

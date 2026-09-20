@@ -903,7 +903,7 @@ RusturfTunnel_Text_GruntTakePackage:
 # 452 "data/maps/RusturfTunnel/scripts.pory"
 	.string "All I had to do was steal some package\n"
 # 453 "data/maps/RusturfTunnel/scripts.pory"
-	.string "from DEVON.\p"
+	.string "from DEVON. Everything was lined up!\p"
 # 454 "data/maps/RusturfTunnel/scripts.pory"
 	.string "Tch!\n"
 # 455 "data/maps/RusturfTunnel/scripts.pory"

@@ -289,7 +289,7 @@ SeabreezeShipping2F_Text_MoneyTransfers:
 # 145 "data/maps/SeabreezeShipping2F/scripts.pory"
 	.string "DEVON, but there are many payments\l"
 # 146 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "to clients labeled \"MGMA\" and \"AQA\".$"
+	.string "to clients labeled “MGMA” and “AQA”.$"
 # 147 "data/maps/SeabreezeShipping2F/scripts.pory"
 
 # 148 "data/maps/SeabreezeShipping2F/scripts.pory"

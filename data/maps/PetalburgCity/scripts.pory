@@ -7,8 +7,10 @@ PetalburgCity_MapScripts::
 PetalburgCity_OnTransition:
 	setflag FLAG_VISITED_PETALBURG_CITY
 	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_2, 0
 	call Common_EventScript_SetupRivalGfxId
 	call PetalburgCity_EventScript_HandleQuakeRainEvent
+	call PetalburgCity_EventScript_HandleNightmareReturnScene
 	call_if_eq VAR_LUKA_PETALBURG_ENCOUNTER, 0, PetalburgCity_EventScript_HideLukaAfterGym
 	call_if_eq VAR_PETALBURG_CITY_STATE, 0, PetalburgCity_EventScript_MoveGymBoyToWestEntrance
 	call_if_eq VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_DisableMapNameAndMusic
@@ -60,6 +62,18 @@ PetalburgCity_EventScript_HideQuakeEventNpcs::
 	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_LUKA
 	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_RIVAL
 	setflag FLAG_HIDE_PETALBURG_CITY_QUAKE_PORTAL
+	return
+
+PetalburgCity_EventScript_HandleNightmareReturnScene::
+	goto_if_unset FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_HideNightmareReturnScene
+	goto_if_set FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE, PetalburgCity_EventScript_HideNightmareReturnScene
+	clearflag FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_LUKA
+	clearflag FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_RIVAL
+	return
+
+PetalburgCity_EventScript_HideNightmareReturnScene::
+	setflag FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_LUKA
+	setflag FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_RIVAL
 	return
 
 PetalburgCity_EventScript_HandleAquaGrunts::
@@ -318,6 +332,377 @@ PetalburgCity_EventScript_QuakeZennoPart15::
 	removefieldmugshot
 	release
 	end
+
+PetalburgCity_EventScript_NightmareReturn_Left::
+	goto_if_unset FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	goto_if_set FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	lockall
+	setvar VAR_TEMP_2, 1
+	setvar VAR_TEMP_3, 0
+	call PetalburgCity_EventScript_NightmareReturn_NoticePlayer
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaApproachLeft
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalApproachLeft
+	waitmovement 0
+	goto PetalburgCity_EventScript_NightmareReturn_Dialogue
+
+PetalburgCity_EventScript_NightmareReturn_Right::
+	goto_if_unset FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	goto_if_set FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	lockall
+	setvar VAR_TEMP_2, 1
+	setvar VAR_TEMP_3, 1
+	call PetalburgCity_EventScript_NightmareReturn_NoticePlayer
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaApproachRight
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalApproachRight
+	waitmovement 0
+	goto PetalburgCity_EventScript_NightmareReturn_Dialogue
+
+PetalburgCity_EventScript_NightmareReturn_Up::
+	goto_if_unset FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	goto_if_set FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	lockall
+	setvar VAR_TEMP_2, 1
+	setvar VAR_TEMP_3, 2
+	call PetalburgCity_EventScript_NightmareReturn_NoticePlayer
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaApproachUp
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalApproachUp
+	waitmovement 0
+	goto PetalburgCity_EventScript_NightmareReturn_Dialogue
+
+PetalburgCity_EventScript_NightmareReturn_Down::
+	goto_if_unset FLAG_PETALBURG_QUAKE_STORM_CLEARED, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	goto_if_set FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE, PetalburgCity_EventScript_NightmareReturn_Unavailable
+	lockall
+	setvar VAR_TEMP_2, 1
+	setvar VAR_TEMP_3, 2
+	call PetalburgCity_EventScript_NightmareReturn_NoticePlayer
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaApproachDown
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalApproachDown
+	waitmovement 0
+	goto PetalburgCity_EventScript_NightmareReturn_Dialogue
+
+PetalburgCity_EventScript_NightmareReturn_Unavailable::
+	setvar VAR_TEMP_2, 1
+	end
+
+PetalburgCity_EventScript_NightmareReturn_NoticePlayer::
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, Common_Movement_ExclamationMark
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, Common_Movement_ExclamationMark
+	waitmovement 0
+	turnobject LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, DIR_EAST
+	turnobject LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, DIR_EAST
+	return
+
+PetalburgCity_EventScript_NightmareReturn_Dialogue::
+	turnobject LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, DIR_EAST
+	turnobject LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, DIR_NORTH
+	turnobject LOCALID_PLAYER, DIR_WEST
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_LukaAwake, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	call PetalburgCity_EventScript_NightmareReturn_RivalPassedOut
+	turnobject LOCALID_PLAYER, DIR_WEST
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_LukaRelieved, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	call PetalburgCity_EventScript_NightmareReturn_RivalGhost
+	turnobject LOCALID_PLAYER, DIR_WEST
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_LukaUnsettled, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	call PetalburgCity_EventScript_NightmareReturn_RivalLeaves
+	call PetalburgCity_EventScript_NightmareReturn_RivalExit
+	setflag FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_RIVAL
+	removeobject LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL
+	turnobject LOCALID_PLAYER, DIR_WEST
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_LukaLeaves, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	call PetalburgCity_EventScript_NightmareReturn_LukaExit
+	setflag FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_LUKA
+	removeobject LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA
+	setflag FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE
+	releaseall
+	end
+
+PetalburgCity_EventScript_NightmareReturn_RivalPassedOut::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PetalburgCity_EventScript_NightmareReturn_ZinniaPassedOut
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_RivalPassedOut, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	return
+
+PetalburgCity_EventScript_NightmareReturn_ZinniaPassedOut::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_RivalPassedOut, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	return
+
+PetalburgCity_EventScript_NightmareReturn_RivalGhost::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PetalburgCity_EventScript_NightmareReturn_ZinniaGhost
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_RivalGhost, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	return
+
+PetalburgCity_EventScript_NightmareReturn_ZinniaGhost::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_RivalGhost, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	return
+
+PetalburgCity_EventScript_NightmareReturn_RivalLeaves::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, PetalburgCity_EventScript_NightmareReturn_ZinniaLeaves
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_RivalLeaves, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	return
+
+PetalburgCity_EventScript_NightmareReturn_ZinniaLeaves::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox PetalburgCity_Text_NightmareReturn_RivalLeaves, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	return
+
+PetalburgCity_EventScript_NightmareReturn_RivalExit::
+	goto_if_eq VAR_TEMP_3, 0, PetalburgCity_EventScript_NightmareReturn_RivalExitLeft
+	goto_if_eq VAR_TEMP_3, 1, PetalburgCity_EventScript_NightmareReturn_RivalExitRight
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalExitMiddle
+	waitmovement 0
+	return
+
+PetalburgCity_EventScript_NightmareReturn_RivalExitLeft::
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalExitLeft
+	waitmovement 0
+	return
+
+PetalburgCity_EventScript_NightmareReturn_RivalExitRight::
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_RIVAL, PetalburgCity_Movement_NightmareReturn_RivalExitRight
+	waitmovement 0
+	return
+
+PetalburgCity_EventScript_NightmareReturn_LukaExit::
+	goto_if_eq VAR_TEMP_3, 0, PetalburgCity_EventScript_NightmareReturn_LukaExitLeft
+	goto_if_eq VAR_TEMP_3, 1, PetalburgCity_EventScript_NightmareReturn_LukaExitRight
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaExitMiddle
+	waitmovement 0
+	return
+
+PetalburgCity_EventScript_NightmareReturn_LukaExitLeft::
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaExitLeft
+	waitmovement 0
+	return
+
+PetalburgCity_EventScript_NightmareReturn_LukaExitRight::
+	applymovement LOCALID_PETALBURG_NIGHTMARE_RETURN_LUKA, PetalburgCity_Movement_NightmareReturn_LukaExitRight
+	waitmovement 0
+	return
+
+PetalburgCity_Movement_NightmareReturn_LukaApproachLeft:
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalApproachLeft:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_LukaApproachRight:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalApproachRight:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_LukaApproachUp:
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalApproachUp:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_LukaApproachDown:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalApproachDown:
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalExitLeft:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	set_invisible
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalExitMiddle:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	set_invisible
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_RivalExitRight:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	set_invisible
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_LukaExitLeft:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	set_invisible
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_LukaExitMiddle:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	set_invisible
+	step_end
+
+PetalburgCity_Movement_NightmareReturn_LukaExitRight:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	set_invisible
+	step_end
 
 PetalburgCity_EventScript_Boy::
 	lock
@@ -899,6 +1284,44 @@ PetalburgCity_Text_QuakeZennoPart15:
 	.string "ZENNO: This rain just won't stop,\n"
 	.string "and the earthquakes are getting\l"
 	.string "worse...$"
+
+PetalburgCity_Text_NightmareReturn_LukaAwake:
+	.string "LUKA: {PLAYER}! You're awake!$"
+
+PetalburgCity_Text_NightmareReturn_RivalPassedOut:
+	.string "RIVAL: You were about to enter the\n"
+	.string "GYM, but you passed out all of a\l"
+	.string "sudden.\p"
+	.string "We were just deciding whether we\n"
+	.string "should move you into LUKA's house.$"
+
+PetalburgCity_Text_NightmareReturn_LukaRelieved:
+	.string "LUKA: But you woke up so quickly!\n"
+	.string "That's a relief.$"
+
+PetalburgCity_Text_NightmareReturn_RivalGhost:
+	.string "RIVAL: You look like you've seen a\n"
+	.string "ghost, {PLAYER}. Are you alright?$"
+
+PetalburgCity_Text_NightmareReturn_LukaUnsettled:
+	.string "LUKA: It's been peaceful here, but\n"
+	.string "I don't know...\p"
+	.string "I've just got an unsettling feeling.$"
+
+PetalburgCity_Text_NightmareReturn_RivalLeaves:
+	.string "RIVAL: I know what you mean. But...\n"
+	.string "there's no point lingering on it too\l"
+	.string "much.\p"
+	.string "I'm off to continue my journey.\n"
+	.string "Take care of yourselves, both of you.$"
+
+PetalburgCity_Text_NightmareReturn_LukaLeaves:
+	.string "LUKA: ...\p"
+	.string "It's just too strange. Whatever that\n"
+	.string "feeling was is gone now.\p"
+	.string "Hey, {PLAYER}, I'm going to ask around\n"
+	.string "to see if anyone else noticed anything.\p"
+	.string "Be careful.$"
 
 PetalburgCity_Text_QuakeScientistFirst:
 	.string "Careful, TRAINER! Did you feel\n"

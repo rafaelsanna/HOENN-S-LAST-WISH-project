@@ -143,7 +143,7 @@ SeabreezeShipping2F_Text_MoneyTransfers:
 	.string "out of the company.\p"
 	.string "Most of their income comes from\n"
 	.string "DEVON, but there are many payments\l"
-	.string "to clients labeled \"MGMA\" and \"AQA\".$"
+	.string "to clients labeled “MGMA” and “AQA”.$"
 
 SeabreezeShipping2F_Text_AlejandroBusiness:
 	.string "ALEJANDRO: Excellent.\p"
