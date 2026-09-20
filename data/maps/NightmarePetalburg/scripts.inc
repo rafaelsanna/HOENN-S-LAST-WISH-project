@@ -209,14 +209,16 @@ NightmarePetalburg_EventScript_UseTimeGear::
 	end
 
 NightmarePetalburg_Text_TimeGearTurn:
-	.string "The TIME GEAR sits depleted and\n"
-	.string "still. Turn it?$"
+	.string "A TIME GEAR sits depleted and\n"
+	.string "still. Turn it and leave this place?$"
 
 NightmarePetalburg_Text_CelebiTimelineRestored:
 	.string "CELEBI: {PLAYER}...\n"
 	.string "Thank you.\p"
+    .string "We could not break the barrier to\n"
+    .string "enter this place on our own.\p"
 	.string "I can now restore this portion of the\n"
-	.string "timeline.\p"
+	.string "timeline. This town will be safe.\p"
 	.string "Your path is a lonely one.\n"
 	.string "What has been broken and restored...\l"
 	.string "Most cannot remember it.\p"

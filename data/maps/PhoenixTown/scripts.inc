@@ -1315,374 +1315,406 @@ PhoenixTown_Text_LukaNoAnswers:
 # 658 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_AuroraSoYouCame:
 # 659 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: So you came.\p"
+	.string "AURORA: ...\p"
 # 660 "data/maps/PhoenixTown/scripts.pory"
-	.string "It happened again, then.$"
+	.string "So you came.\n"
 # 661 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "It happened again, then.\p"
 # 662 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaStopDisasters:
+	.string "I can sense no malice or greed\n"
 # 663 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: You sent that letter?\p"
+	.string "from any of you.\p"
 # 664 "data/maps/PhoenixTown/scripts.pory"
-	.string "Do you know how to stop the\n"
+	.string "I am AURORA. I will help you.$"
 # 665 "data/maps/PhoenixTown/scripts.pory"
-	.string "disasters in our city?$"
+
 # 666 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Text_ZinniaStopDisasters:
 # 667 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoStopDisasters:
+	.string "ZINNIA: You sent that letter?\p"
 # 668 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: You sent that letter?\p"
-# 669 "data/maps/PhoenixTown/scripts.pory"
 	.string "Do you know how to stop the\n"
-# 670 "data/maps/PhoenixTown/scripts.pory"
+# 669 "data/maps/PhoenixTown/scripts.pory"
 	.string "disasters in our city?$"
-# 671 "data/maps/PhoenixTown/scripts.pory"
+# 670 "data/maps/PhoenixTown/scripts.pory"
 
+# 671 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_ZennoStopDisasters:
 # 672 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaTellUs:
+	.string "ZENNO: You sent that letter?\p"
 # 673 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: Please, tell us what\n"
+	.string "Do you know how to stop the\n"
 # 674 "data/maps/PhoenixTown/scripts.pory"
-	.string "you know.$"
+	.string "disasters in our city?$"
 # 675 "data/maps/PhoenixTown/scripts.pory"
 
 # 676 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaCometQuestion:
+PhoenixTown_Text_CalendulaTellUs:
 # 677 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: It has to do with the\n"
+	.string "CALENDULA: Please, tell us what\n"
 # 678 "data/maps/PhoenixTown/scripts.pory"
-	.string "comet, right?$"
+	.string "you know.$"
 # 679 "data/maps/PhoenixTown/scripts.pory"
 
 # 680 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraCometSavior:
+PhoenixTown_Text_LukaCometQuestion:
 # 681 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: You are correct.\p"
+	.string "LUKA: It has to do with the\n"
 # 682 "data/maps/PhoenixTown/scripts.pory"
-	.string "The comet is our savior, but\n"
+	.string "comet, right?$"
 # 683 "data/maps/PhoenixTown/scripts.pory"
-	.string "there are forces trying to return\l"
-# 684 "data/maps/PhoenixTown/scripts.pory"
-	.string "us to the path of ruin.$"
-# 685 "data/maps/PhoenixTown/scripts.pory"
 
+# 684 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_AuroraCometSavior:
+# 685 "data/maps/PhoenixTown/scripts.pory"
+	.string "AURORA: You are correct.\p"
 # 686 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaWhatDoesThatMean:
+	.string "The comet is our savior, but\n"
 # 687 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: What...?\p"
+	.string "there are forces trying to return\l"
 # 688 "data/maps/PhoenixTown/scripts.pory"
-	.string "What is that supposed to mean?$"
+	.string "us to the path of ruin.$"
 # 689 "data/maps/PhoenixTown/scripts.pory"
 
 # 690 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoWhatDoesThatMean:
+PhoenixTown_Text_ZinniaWhatDoesThatMean:
 # 691 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: What...?\p"
+	.string "ZINNIA: What...?\p"
 # 692 "data/maps/PhoenixTown/scripts.pory"
 	.string "What is that supposed to mean?$"
 # 693 "data/maps/PhoenixTown/scripts.pory"
 
 # 694 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraGiftOnly:
+PhoenixTown_Text_ZennoWhatDoesThatMean:
 # 695 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: It is possible to save\n"
+	.string "ZENNO: What...?\p"
 # 696 "data/maps/PhoenixTown/scripts.pory"
-	.string "your home, but I can only teach\l"
+	.string "What is that supposed to mean?$"
 # 697 "data/maps/PhoenixTown/scripts.pory"
-	.string "those who have the gift.$"
+
 # 698 "data/maps/PhoenixTown/scripts.pory"
-
+PhoenixTown_Text_AuroraGiftOnly:
 # 699 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaWhatGift:
+	.string "AURORA: Tragedy and devastation\n"
 # 700 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: What is this gift?$"
+	.string "do not disappear so easily.\p"
 # 701 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "Mending a broken reality always\n"
 # 702 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraNotYou:
+	.string "inevitably leaves echoes.\p"
 # 703 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: Not you.$"
+	.string "It is possible to save\n"
 # 704 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "your home, but I can only teach\l"
 # 705 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraNorYou:
+	.string "someone of extraordinary ability.\p"
 # 706 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: Nor you.$"
+	.string "All of you have some sensitivity,\n"
 # 707 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "but to borrow the power of CELEBI\l"
 # 708 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraFinalBattle:
+	.string "and JIRACHI, a gift is needed.$"
 # 709 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: Hm...\p"
+
 # 710 "data/maps/PhoenixTown/scripts.pory"
-	.string "I sense it in you. You have\n"
+PhoenixTown_Text_LukaWhatGift:
 # 711 "data/maps/PhoenixTown/scripts.pory"
-	.string "the gift.\p"
+	.string "LUKA: What is this gift?$"
 # 712 "data/maps/PhoenixTown/scripts.pory"
-	.string "But that alone is not enough.\n"
+
 # 713 "data/maps/PhoenixTown/scripts.pory"
-	.string "You must have the strength\l"
+PhoenixTown_Text_AuroraNotYou:
 # 714 "data/maps/PhoenixTown/scripts.pory"
-	.string "to weather the challenges\l"
+	.string "AURORA: Hm...\p"
 # 715 "data/maps/PhoenixTown/scripts.pory"
-	.string "before you.\p"
+	.string "You are more attuned than most,\n"
 # 716 "data/maps/PhoenixTown/scripts.pory"
-	.string "Prove it to me in battle.$"
+	.string "but you do not have it.$"
 # 717 "data/maps/PhoenixTown/scripts.pory"
 
 # 718 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraFinalBattleDefeat:
+PhoenixTown_Text_AuroraNorYou:
 # 719 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: I see it now...$"
+	.string "AURORA: ...\p"
 # 720 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "Another of unusual ability,\n"
 # 721 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_AuroraPlayerHasGift:
+	.string "but still not enough.$"
 # 722 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: You.\p"
+
 # 723 "data/maps/PhoenixTown/scripts.pory"
-	.string "You have it. I will teach you.\p"
+PhoenixTown_Text_AuroraFinalBattle:
 # 724 "data/maps/PhoenixTown/scripts.pory"
-	.string "Come through the cave to learn.$"
+	.string "AURORA: Oh...\p"
 # 725 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "I sense it in you. You have\n"
 # 726 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaWhatWasThat:
+	.string "the gift.\p"
 # 727 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: What... was that?$"
+	.string "But that alone does not guarantee\n"
 # 728 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "success with such high stakes.\p"
 # 729 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaCanWeTrust:
+	.string "You must have the strength to\n"
 # 730 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: Can we really trust\n"
+	.string "weather the challenges before you.\p"
 # 731 "data/maps/PhoenixTown/scripts.pory"
-	.string "someone we know so little about?$"
+	.string "Prove it to me in battle.$"
 # 732 "data/maps/PhoenixTown/scripts.pory"
 
 # 733 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoCanWeTrust:
+PhoenixTown_Text_AuroraFinalBattleDefeat:
 # 734 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: Can we really trust\n"
+	.string "AURORA: I see it now...$"
 # 735 "data/maps/PhoenixTown/scripts.pory"
-	.string "someone we know so little about?$"
-# 736 "data/maps/PhoenixTown/scripts.pory"
 
+# 736 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_AuroraPlayerHasGift:
 # 737 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaNoChoiceZinnia:
+	.string "AURORA: You.\p"
 # 738 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: Right now, we have no\n"
+	.string "You have both the gift and the\n"
 # 739 "data/maps/PhoenixTown/scripts.pory"
-	.string "choice.\p"
+	.string "strength to withstand the darkness.\p"
 # 740 "data/maps/PhoenixTown/scripts.pory"
-	.string "{PLAYER} is the only one who she\n"
+	.string "Come through the cave to learn.$"
 # 741 "data/maps/PhoenixTown/scripts.pory"
-	.string "will teach, so they should stay\l"
+
 # 742 "data/maps/PhoenixTown/scripts.pory"
-	.string "here and see what they can learn.\p"
+PhoenixTown_Text_LukaWhatWasThat:
 # 743 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA, ZINNIA, we will go back to\n"
+	.string "LUKA: What... was that?$"
 # 744 "data/maps/PhoenixTown/scripts.pory"
-	.string "PETALBURG.\p"
+
 # 745 "data/maps/PhoenixTown/scripts.pory"
-	.string "We must do whatever we can to\n"
+PhoenixTown_Text_ZinniaCanWeTrust:
 # 746 "data/maps/PhoenixTown/scripts.pory"
-	.string "protect the city and its people\l"
+	.string "ZINNIA: Can we really trust\n"
 # 747 "data/maps/PhoenixTown/scripts.pory"
-	.string "until {PLAYER} returns.$"
+	.string "someone we know so little about?$"
 # 748 "data/maps/PhoenixTown/scripts.pory"
 
 # 749 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaNoChoiceZenno:
+PhoenixTown_Text_ZennoCanWeTrust:
 # 750 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: Right now, we have no\n"
+	.string "ZENNO: Can we really trust\n"
 # 751 "data/maps/PhoenixTown/scripts.pory"
-	.string "choice.\p"
+	.string "someone we know so little about?$"
 # 752 "data/maps/PhoenixTown/scripts.pory"
-	.string "{PLAYER} is the only one who she\n"
+
 # 753 "data/maps/PhoenixTown/scripts.pory"
-	.string "will teach, so they should stay\l"
+PhoenixTown_Text_CalendulaNoChoiceZinnia:
 # 754 "data/maps/PhoenixTown/scripts.pory"
-	.string "here and see what they can learn.\p"
+	.string "CALENDULA: Right now, we have no\n"
 # 755 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA, ZENNO, we will go back to\n"
+	.string "choice.\p"
 # 756 "data/maps/PhoenixTown/scripts.pory"
-	.string "PETALBURG.\p"
+	.string "{PLAYER} is the only one who she\n"
 # 757 "data/maps/PhoenixTown/scripts.pory"
-	.string "We must do whatever we can to\n"
+	.string "will teach, so he should stay\l"
 # 758 "data/maps/PhoenixTown/scripts.pory"
-	.string "protect the city and its people\l"
+	.string "here and see what he can learn.\p"
 # 759 "data/maps/PhoenixTown/scripts.pory"
-	.string "until {PLAYER} returns.$"
+	.string "LUKA, ZINNIA, we will go back to\n"
 # 760 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "PETALBURG.\p"
 # 761 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaIUnderstand:
+	.string "We must do whatever we can to\n"
 # 762 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: I understand.$"
+	.string "protect the city and its people\l"
 # 763 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "until {PLAYER} returns.$"
 # 764 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoIUnderstand:
+
 # 765 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: I understand.$"
+PhoenixTown_Text_CalendulaNoChoiceZenno:
 # 766 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "CALENDULA: Right now, we have no\n"
 # 767 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZinniaGoodLuck:
+	.string "choice.\p"
 # 768 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: Good luck, {PLAYER}.\p"
+	.string "{PLAYER} is the only one who she\n"
 # 769 "data/maps/PhoenixTown/scripts.pory"
-	.string "I'll see you soon in PETALBURG,\n"
+	.string "will teach, so she should stay\l"
 # 770 "data/maps/PhoenixTown/scripts.pory"
-	.string "hopefully.$"
+	.string "here and see what she can learn.\p"
 # 771 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "LUKA, ZENNO, we will go back to\n"
 # 772 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_ZennoGoodLuck:
+	.string "PETALBURG.\p"
 # 773 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: Good luck, {PLAYER}.\p"
+	.string "We must do whatever we can to\n"
 # 774 "data/maps/PhoenixTown/scripts.pory"
-	.string "I'll see you soon in PETALBURG,\n"
+	.string "protect the city and its people\l"
 # 775 "data/maps/PhoenixTown/scripts.pory"
-	.string "hopefully.$"
+	.string "until {PLAYER} returns.$"
 # 776 "data/maps/PhoenixTown/scripts.pory"
 
 # 777 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LukaTrustYou:
+PhoenixTown_Text_ZinniaIUnderstand:
 # 778 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: I trust you, {PLAYER}.\p"
+	.string "ZINNIA: I understand.$"
 # 779 "data/maps/PhoenixTown/scripts.pory"
-	.string "Once you get back, make sure you\n"
-# 780 "data/maps/PhoenixTown/scripts.pory"
-	.string "tell me everything!$"
-# 781 "data/maps/PhoenixTown/scripts.pory"
 
+# 780 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_ZennoIUnderstand:
+# 781 "data/maps/PhoenixTown/scripts.pory"
+	.string "ZENNO: I understand.$"
 # 782 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_CalendulaBeSafe:
+
 # 783 "data/maps/PhoenixTown/scripts.pory"
-	.string "CALENDULA: I know you won't let\n"
+PhoenixTown_Text_ZinniaGoodLuck:
 # 784 "data/maps/PhoenixTown/scripts.pory"
-	.string "us down, {PLAYER}.\p"
+	.string "ZINNIA: Good luck, {PLAYER}.\p"
 # 785 "data/maps/PhoenixTown/scripts.pory"
-	.string "Be safe, and return as soon as\n"
+	.string "I'll see you soon in PETALBURG,\n"
 # 786 "data/maps/PhoenixTown/scripts.pory"
-	.string "you can.$"
+	.string "hopefully.$"
 # 787 "data/maps/PhoenixTown/scripts.pory"
 
 # 788 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_Hiker::
+PhoenixTown_Text_ZennoGoodLuck:
 # 789 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_Hiker, MSGBOX_NPC
+	.string "ZENNO: Good luck, {PLAYER}.\p"
 # 790 "data/maps/PhoenixTown/scripts.pory"
-	end
+	.string "I'll see you soon in PETALBURG,\n"
 # 791 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "hopefully.$"
 # 792 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_Woman::
+
 # 793 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_Woman, MSGBOX_NPC
+PhoenixTown_Text_LukaTrustYou:
 # 794 "data/maps/PhoenixTown/scripts.pory"
-	end
+	.string "LUKA: I trust you, {PLAYER}.\p"
 # 795 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "Once you get back, make sure you\n"
 # 796 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_Youngster::
+	.string "tell me everything!$"
 # 797 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_Youngster, MSGBOX_NPC
-# 798 "data/maps/PhoenixTown/scripts.pory"
-	end
-# 799 "data/maps/PhoenixTown/scripts.pory"
 
+# 798 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_CalendulaBeSafe:
+# 799 "data/maps/PhoenixTown/scripts.pory"
+	.string "CALENDULA: I know you won't let\n"
 # 800 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_Man::
+	.string "us down, {PLAYER}.\p"
 # 801 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_Man, MSGBOX_NPC
+	.string "Be safe, and return as soon as\n"
 # 802 "data/maps/PhoenixTown/scripts.pory"
-	end
+	.string "you can.$"
 # 803 "data/maps/PhoenixTown/scripts.pory"
 
 # 804 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_LittleGirl::
+PhoenixTown_EventScript_Hiker::
 # 805 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_LittleGirl, MSGBOX_NPC
+	msgbox PhoenixTown_Text_Hiker, MSGBOX_NPC
 # 806 "data/maps/PhoenixTown/scripts.pory"
 	end
 # 807 "data/maps/PhoenixTown/scripts.pory"
 
 # 808 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_EventScript_Gentleman::
+PhoenixTown_EventScript_Woman::
 # 809 "data/maps/PhoenixTown/scripts.pory"
-	msgbox PhoenixTown_Text_Gentleman, MSGBOX_NPC
+	msgbox PhoenixTown_Text_Woman, MSGBOX_NPC
 # 810 "data/maps/PhoenixTown/scripts.pory"
 	end
 # 811 "data/maps/PhoenixTown/scripts.pory"
 
 # 812 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_Hiker:
+PhoenixTown_EventScript_Youngster::
 # 813 "data/maps/PhoenixTown/scripts.pory"
-	.string "PHOENIX TOWN rose when the\n"
+	msgbox PhoenixTown_Text_Youngster, MSGBOX_NPC
 # 814 "data/maps/PhoenixTown/scripts.pory"
-	.string "canyon split in a great quake.\p"
+	end
 # 815 "data/maps/PhoenixTown/scripts.pory"
-	.string "The first settlers followed\n"
-# 816 "data/maps/PhoenixTown/scripts.pory"
-	.string "the new springs to safety.$"
-# 817 "data/maps/PhoenixTown/scripts.pory"
 
+# 816 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_EventScript_Man::
+# 817 "data/maps/PhoenixTown/scripts.pory"
+	msgbox PhoenixTown_Text_Man, MSGBOX_NPC
 # 818 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_Woman:
+	end
 # 819 "data/maps/PhoenixTown/scripts.pory"
-	.string "At night, the earth hums\n"
+
 # 820 "data/maps/PhoenixTown/scripts.pory"
-	.string "beneath these streets.\p"
+PhoenixTown_EventScript_LittleGirl::
 # 821 "data/maps/PhoenixTown/scripts.pory"
-	.string "We say the canyon is\n"
+	msgbox PhoenixTown_Text_LittleGirl, MSGBOX_NPC
 # 822 "data/maps/PhoenixTown/scripts.pory"
-	.string "dreaming.$"
+	end
 # 823 "data/maps/PhoenixTown/scripts.pory"
 
 # 824 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_Youngster:
+PhoenixTown_EventScript_Gentleman::
 # 825 "data/maps/PhoenixTown/scripts.pory"
-	.string "It is quiet here, far from\n"
+	msgbox PhoenixTown_Text_Gentleman, MSGBOX_NPC
 # 826 "data/maps/PhoenixTown/scripts.pory"
-	.string "every busy road.\p"
+	end
 # 827 "data/maps/PhoenixTown/scripts.pory"
-	.string "That is why I love this\n"
+
 # 828 "data/maps/PhoenixTown/scripts.pory"
-	.string "isolated desert town.$"
+PhoenixTown_Text_Hiker:
 # 829 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "PHOENIX TOWN rose when the\n"
 # 830 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_Man:
+	.string "canyon split in a great quake.\p"
 # 831 "data/maps/PhoenixTown/scripts.pory"
-	.string "A tremor can reveal a path\n"
+	.string "The first settlers followed\n"
 # 832 "data/maps/PhoenixTown/scripts.pory"
-	.string "the desert hid for years.\p"
+	.string "the new springs to safety.$"
 # 833 "data/maps/PhoenixTown/scripts.pory"
-	.string "Never cross the canyon\n"
+
 # 834 "data/maps/PhoenixTown/scripts.pory"
-	.string "without water.$"
+PhoenixTown_Text_Woman:
 # 835 "data/maps/PhoenixTown/scripts.pory"
-
+	.string "At night, the earth hums\n"
 # 836 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_LittleGirl:
+	.string "beneath these streets.\p"
 # 837 "data/maps/PhoenixTown/scripts.pory"
-	.string "At sunset, the canyon walls\n"
+	.string "We say the canyon is\n"
 # 838 "data/maps/PhoenixTown/scripts.pory"
-	.string "glow like a sleeping\n"
+	.string "dreaming.$"
 # 839 "data/maps/PhoenixTown/scripts.pory"
-	.string "PHOENIX.$"
-# 840 "data/maps/PhoenixTown/scripts.pory"
 
+# 840 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Youngster:
 # 841 "data/maps/PhoenixTown/scripts.pory"
-PhoenixTown_Text_Gentleman:
+	.string "It is quiet here, far from\n"
 # 842 "data/maps/PhoenixTown/scripts.pory"
-	.string "No city lights reach us here.\p"
+	.string "every busy road.\p"
 # 843 "data/maps/PhoenixTown/scripts.pory"
-	.string "The stars make the desert\n"
+	.string "That is why I love this\n"
 # 844 "data/maps/PhoenixTown/scripts.pory"
+	.string "isolated desert town.$"
+# 845 "data/maps/PhoenixTown/scripts.pory"
+
+# 846 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Man:
+# 847 "data/maps/PhoenixTown/scripts.pory"
+	.string "A tremor can reveal a path\n"
+# 848 "data/maps/PhoenixTown/scripts.pory"
+	.string "the desert hid for years.\p"
+# 849 "data/maps/PhoenixTown/scripts.pory"
+	.string "Never cross the canyon\n"
+# 850 "data/maps/PhoenixTown/scripts.pory"
+	.string "without water.$"
+# 851 "data/maps/PhoenixTown/scripts.pory"
+
+# 852 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_LittleGirl:
+# 853 "data/maps/PhoenixTown/scripts.pory"
+	.string "At sunset, the canyon walls\n"
+# 854 "data/maps/PhoenixTown/scripts.pory"
+	.string "glow like a sleeping\n"
+# 855 "data/maps/PhoenixTown/scripts.pory"
+	.string "PHOENIX.$"
+# 856 "data/maps/PhoenixTown/scripts.pory"
+
+# 857 "data/maps/PhoenixTown/scripts.pory"
+PhoenixTown_Text_Gentleman:
+# 858 "data/maps/PhoenixTown/scripts.pory"
+	.string "No city lights reach us here.\p"
+# 859 "data/maps/PhoenixTown/scripts.pory"
+	.string "The stars make the desert\n"
+# 860 "data/maps/PhoenixTown/scripts.pory"
 	.string "feel less lonely.$"

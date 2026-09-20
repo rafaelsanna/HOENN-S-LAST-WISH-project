@@ -1599,7 +1599,9 @@ MOSSDEEP01_Text_NeedItems:
 MOSSDEEP01_Text_ThankYou:
 	.string "JIRACHI: You found all the TIME GEARS!\p"
 	.string "The temporal flow is restoring…\n"
-	.string "Look! The MILLENNIUM COMET!$"
+	.string "The MILLENNIUM COMET approaches.\p"
+	.string "This is our one opportunity!\n"
+	.string "{PLAYER}, now! Make your wish!$"
 
 MOSSDEEP01_Text_CometAppears:
 	.string "The sky begins to glow!\p"
@@ -1658,7 +1660,12 @@ MOSSDEEP01_Text_CelebiCalmed:
 
 MOSSDEEP01_Text_CelebiThanks:
 	.string "CELEBI: Thank you, {PLAYER}!\n"
-	.string "Together we restored time!$"
+	.string "Together we restored time!\p"
+	.string "However, to truly repair reality,\n"
+	.string "we will need more.\p"
+	.string "There is something mystical coming.\n"
+	.string "We must find the wish POKÉMON.\p"
+	.string "Quickly, this is our chance!$"
 
 MOSSDEEP01_Text_MightyenaAttack:
 	.string "The wild MIGHTYENA attacks!$"

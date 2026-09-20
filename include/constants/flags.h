@@ -1293,12 +1293,12 @@
 #define FLAG_SEABREEZE_SHIPPING_ELEVATOR_INTRO                    0x4D3 // HLW_SEABREEZE_SHIPPING_ELEVATOR_V1: first key-card elevator conversation completed
 #define FLAG_ITEM_SEABREEZE_SHIPPING1F_HYPER_POTION                0x4D4
 #define FLAG_ITEM_SEABREEZE_SHIPPING2F_NUGGET                      0x4D5
-#define FLAG_UNUSED_0x4D6                                           0x4D6 // Unused Flag
-#define FLAG_UNUSED_0x4D7                                           0x4D7 // Unused Flag
-#define FLAG_UNUSED_0x4D8                                           0x4D8 // Unused Flag
-#define FLAG_UNUSED_0x4D9                                           0x4D9 // Unused Flag
-#define FLAG_UNUSED_0x4DA                                           0x4DA // Unused Flag
-#define FLAG_UNUSED_0x4DB                                           0x4DB // Unused Flag
+#define FLAG_ITEM_NIGHTMARE_PETALBURG_REAPER_CLOTH                 0x4D6
+#define FLAG_ITEM_NIGHTMARE_PETALBURG_RARE_BONE                    0x4D7
+#define FLAG_RUSTBORO_LUKA_SCHOOL_SCENE_COMPLETE                   0x4D8
+#define FLAG_HIDE_RUSTBORO_CITY_LUKA_SCHOOL_SCENE                  0x4D9
+#define FLAG_ROUTE112_ACACIA_CHIMNEY_SCENE_COMPLETE                0x4DA
+#define FLAG_HIDE_ROUTE112_ACACIA_CHIMNEY_SCENE                    0x4DB
 #define FLAG_UNUSED_0x4DC                                           0x4DC // Unused Flag
 #define FLAG_UNUSED_0x4DD                                           0x4DD // Unused Flag
 #define FLAG_UNUSED_0x4DE                                           0x4DE // Unused Flag

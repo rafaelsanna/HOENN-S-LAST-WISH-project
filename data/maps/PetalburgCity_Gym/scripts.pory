@@ -1684,8 +1684,11 @@ PetalburgCity_Gym_Text_WallyOhWowThankYou:
     .string "believe in me.$"
 
 PetalburgCity_Gym_Text_WouldYouReallyComeWithMe:
-    .string "LUKA: {PLAYER}, ready?\n"
-    .string "Let's head to ROUTE 102 and\l"
+    .string "LUKA: {PLAYER}, you know,\n"
+	.string "I get a strange sense of familiarity\l"
+	.string "when I look at you.\p"
+	.string "Perhaps it was fate for us to meet.\n"
+    .string "Now, let's head to ROUTE 102 and\l"
     .string "have a battle to remember!$"
 
 PetalburgCity_Gym_Text_DadSoDidItWorkOut_LukaWon:

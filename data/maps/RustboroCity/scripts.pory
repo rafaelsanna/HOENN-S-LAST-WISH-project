@@ -7,6 +7,7 @@ RustboroCity_MapScripts::
 RustboroCity_OnTransition:
 	setflag FLAG_VISITED_RUSTBORO_CITY
 	call Common_EventScript_SetupRivalGfxId
+	setflag FLAG_HIDE_RUSTBORO_CITY_LUKA_SCHOOL_SCENE
 	@ MAR's object is tied to FLAG_HIDE_MAR_RUST_VISIBILITY in map.json.
 	@ Force it set on every map load so he's hidden by default; the
 	@ trigger clears it only for the duration of his cutscene.
@@ -15,6 +16,98 @@ RustboroCity_OnTransition:
 
 RustboroCity_OnFrame:
 	.2byte 0
+
+RustboroCity_EventScript_LukaSchoolTrigger20::
+	goto_if_set FLAG_RUSTBORO_LUKA_SCHOOL_SCENE_COMPLETE, RustboroCity_EventScript_LukaSchoolTriggerDone
+	lockall
+	clearflag FLAG_HIDE_RUSTBORO_CITY_LUKA_SCHOOL_SCENE
+	addobject LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE
+	applymovement LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE, RustboroCity_Movement_LukaApproachPlayer20
+	waitmovement 0
+	turnobject LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE, DIR_WEST
+	turnobject LOCALID_PLAYER, DIR_EAST
+	goto RustboroCity_EventScript_LukaSchoolDialogue
+
+RustboroCity_EventScript_LukaSchoolTrigger21::
+	goto_if_set FLAG_RUSTBORO_LUKA_SCHOOL_SCENE_COMPLETE, RustboroCity_EventScript_LukaSchoolTriggerDone
+	lockall
+	clearflag FLAG_HIDE_RUSTBORO_CITY_LUKA_SCHOOL_SCENE
+	addobject LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE
+	applymovement LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE, RustboroCity_Movement_LukaApproachPlayer21
+	waitmovement 0
+	turnobject LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE, DIR_EAST
+	turnobject LOCALID_PLAYER, DIR_WEST
+
+RustboroCity_EventScript_LukaSchoolDialogue:
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox RustboroCity_Text_LukaSchoolScene, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE, RustboroCity_Movement_LukaSchoolExit
+	waitmovement 0
+	setflag FLAG_RUSTBORO_LUKA_SCHOOL_SCENE_COMPLETE
+	setflag FLAG_HIDE_RUSTBORO_CITY_LUKA_SCHOOL_SCENE
+	removeobject LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE
+	setvar VAR_TEMP_2, 1
+	releaseall
+	end
+
+RustboroCity_EventScript_LukaSchoolTriggerDone:
+	setvar VAR_TEMP_2, 1
+	end
+
+RustboroCity_Movement_LukaApproachPlayer20:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_down
+	step_end
+
+RustboroCity_Movement_LukaApproachPlayer21:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+RustboroCity_Movement_LukaSchoolExit:
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	step_end
+
+RustboroCity_Text_LukaSchoolScene:
+	.string "LUKA: Hey, {PLAYER}! I was heading to\n"
+	.string "VERDANTURF, but it looks like that\l"
+	.string "tunnel still isn't open, so I'll have\l"
+	.string "to go a different way.\p"
+	.string "I stopped by the TRAINER SCHOOL here,\n"
+	.string "but they didn't have anything useful\l"
+	.string "about the comet.\p"
+	.string "There were lots of books that would\n"
+	.string "help someone starting a new POKEMON\l"
+	.string "journey, though.\p"
+	.string "You should stop by if you haven't\n"
+	.string "already.\p"
+	.string "See you around!$"
 
 RustboroCity_EventScript_FatMan::
 	lock

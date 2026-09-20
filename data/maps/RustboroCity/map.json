@@ -310,6 +310,20 @@
       "flag": "FLAG_ITEM_RUSTBORO_CITY_TM_FOUL_PLAY"
     },
     {
+      "local_id": "LOCALID_RUSTBORO_LUKA_SCHOOL_SCENE",
+      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "x": 20,
+      "y": 16,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_RUSTBORO_CITY_LUKA_SCHOOL_SCENE"
+    },
+    {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(NIDORAN_M)",
       "x": 4,
       "y": 32,
@@ -607,6 +621,24 @@
       "var": "VAR_UNUSED_0x40BB",
       "var_value": "0",
       "script": "RustboroCity_EventScript_ChallangeTerra"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 25,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "RustboroCity_EventScript_LukaSchoolTrigger20"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 25,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "RustboroCity_EventScript_LukaSchoolTrigger21"
     }
   ],
   "bg_events": [

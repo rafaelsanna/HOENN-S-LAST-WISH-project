@@ -617,8 +617,11 @@ MauvilleCity_Text_WallyDefeat:
 	.string "LUKA: I see now…\p"
 	.string "You really do have a natural talent\n"
 	.string "for battles.\p"
-	.string "I focused too much on research\n"
+	.string "I couldn't get the dreams off my mind,\n"
+	.string "so I focused too much on research\l"
 	.string "and not enough on training.\p"
+	.string "But I can't just let that control\n"
+	.string "my entire life. I need to be stronger.\p"
 	.string "Congratulations, {PLAYER}.\n"
 	.string "You're truly impressive.$"
 	
@@ -630,10 +633,10 @@ MauvilleCity_Text_ThankYouNotEnoughToBattle:
 	.string "LUKA: {PLAYER}, thank you.\p"
 	.string "I realize now that I need to train\n"
 	.string "my POKéMON more… and catch new ones.\p"
-	.string "I've been so focused on uncovering\n"
-	.string "the truth behind that comet\l"
-	.string "that I let my training slip.\p"
-	.string "But that's okay.\n"
+	.string "Understanding the comet is my priority,\n"
+	.string "but I will need the support of my\l"
+	.string "POKéMON to accomplish that.\p"
+	.string "I forgot this fact, but that's okay.\n"
 	.string "This just gave me clarity.$"
 
 MauvilleCity_Text_UncleNoNeedToBeDown:

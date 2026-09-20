@@ -48,7 +48,7 @@ There are also short survivor-rescue scenes around the ruined map. They add atmo
 
 After waking in Littleroot, visit the neighboring house and meet your rival. Then head north through Oldale toward Route 101.
 
-On Route 101, **Professor Acacia** is being chased by a Zigzagoon. Choose a starter from the bag and defeat it. Acacia takes you to the lab, recognizes your potential, and lets you keep the Pokémon.
+On Route 101, **Professor Acacia** is being chased by a Sentret. Choose a starter from the bag and defeat it. Acacia takes you to the lab, recognizes your potential, and lets you keep the Pokémon.
 
 Travel to Route 103 and battle your rival. The rival has also noticed the Millennium Comet and says Acacia has been watching your progress. After winning, return to Acacia's lab. You receive the **Pokédex** and **Town Map**. Acacia explains that the comet may have changed reality and asks you to travel Hoenn and investigate. She also directs you toward her partner, **Calendula**, the Petalburg Gym Leader.
 
@@ -56,7 +56,7 @@ Travel to Route 103 and battle your rival. The rival has also noticed the Millen
 
 At Petalburg Gym, Calendula introduces you to **Luka**, an energetic young Trainer studying the comet. Luka battles you on Route 102; the story continues whether you win or lose. Back at the Gym, Calendula gives you an **Eevee Egg** and an **Everstone**, but will not accept your Gym challenge until you have four Badges.
 
-Continue through Route 104 and Petalburg Woods. A Team Aqua grunt attacks a Devon employee and tries to steal the Devon Goods. Defeat the grunt and continue to Rustboro.
+Continue through Route 104 and Petalburg Woods. Two Team Aqua grunts attack a Devon employee and try to steal the Devon Goods. Defeat both grunts. The employee gives you an **Ability Patch** for helping, then you can continue to Rustboro.
 
 ### Gym 1 — Terra
 
@@ -64,7 +64,7 @@ Challenge **Terra** at Rustboro Gym. Victory earns the **Stone Badge** and **TM 
 
 ### Devon Goods and Mr. Stone
 
-After the Gym, a thief runs toward Route 116. Follow through Rusturf Tunnel, defeat the Team Aqua grunt, recover the **Devon Goods**, and rescue Mr. Briney's Peeko.
+After the Gym, a thief runs toward Route 116. Follow through Rusturf Tunnel, defeat the Team Aqua grunt, recover the **Devon Goods**, and rescue Mr. Briney's **Nami**.
 
 On returning the goods in Rustboro, the Devon employee gives you an **Ability Capsule** and escorts you to **Mr. Stone**. Mr. Stone asks you to deliver a **Letter** to his granddaughter Stella in Dewford and the Devon Goods to Captain Stern in Slateport. He also gives you the **DexNav**.
 
@@ -86,7 +86,7 @@ If you return to Mr. Stone after delivering Stella's Letter, he rewards you with
 
 ## 5. Slateport, Team Aqua, and Mauville
 
-Ask Mr. Briney to sail to Slateport. Take the Devon Goods to Captain Stern at the Oceanic Museum. Defeat the Team Aqua members who confront Stern; their leader, **Inae**, states Team Aqua's intention to expand the sea before withdrawing.
+Ask Mr. Briney to sail to Slateport. Take the Devon Goods to Captain Stern at the Oceanic Museum. Defeat the Team Aqua members who confront Stern; **Alejandro** states Team Aqua's intention to expand the sea before withdrawing.
 
 Continue north along Route 110. Your rival challenges you again and gives you the **Dowsing Machine** after the battle.
 
@@ -106,7 +106,7 @@ Travel north through Route 111, Fiery Path, Route 113, and Fallarbor to Meteor F
 
 After the teams leave, speak to **Calendula**. The grunts had tried to take her research. She explains that the cavern and meteorite contain energy matching the Millennium Comet, then leaves to compare her notes with the instruments at Mossdeep Space Center.
 
-Return toward Mt. Chimney and ride the cable car up. Fight through Team Magma, defeat their administrator, and then defeat leader **Magnus** at the meteorite machine. Magnus is trying to use the Meteorite's power to reshape Hoenn through the volcano. Remove the **Meteorite** from the machine after the battle.
+Return toward Mt. Chimney and ride the cable car up. Fight through Team Magma, defeat administrator **Netsu**, and then defeat leader **Magnus** at the meteorite machine. Magnus is trying to use the Meteorite's power to reshape Hoenn through the volcano. Remove the **Meteorite** from the machine after the battle.
 
 Descend Jagged Pass to Lavaridge.
 
@@ -118,7 +118,7 @@ Defeat **Amaterasu** for the **Heat Badge** and **TM Fiery Dance**. Outside, you
 
 Return to Petalburg. An earthquake and unnatural storm have struck, Calendula is missing, and the Gym is closed. Follow the clue that Calendula went to the desert after receiving a letter. Cross Route 111's desert and continue to Phoenix Town.
 
-There you find Calendula, Luka, and your rival waiting near the cave. **Aurora** appears and reveals that she sent the letter. She believes the Millennium Comet is a savior trying to return the world to its ruined state, and that only someone with a special “gift” can repair the timeline. She rejects Luka and the rival as candidates, then challenges you.
+There you find Calendula, Luka, and your rival waiting near the cave. **Aurora** appears and reveals that she sent the letter. She believes the Millennium Comet is a savior trying to reverse the events that caused the world to become ruined, and that only someone with a special “gift” can repair the timeline. She rejects Luka and the rival as candidates, then challenges you.
 
 Defeat Aurora. She confirms that you carry the gift and asks you to follow her. Enter Phoenix Cave and take the portal to **Aurora Grove**, a place between dreams and reality. Aurora explains that Celebi and Jirachi once repaired a broken world, but the timeline is tearing again. She grants you the ability to enter and purify nightmare rifts. She also warns that ordinary people will forget a restored timeline; only the gifted retain what happened.
 
@@ -128,7 +128,7 @@ Return through the cave and go back to Petalburg. Speak with Calendula. Another 
 
 This distorted Petalburg contains signs and dialogue from a false history—including a world that does not remember Luka. Explore until you reach the dark-aura Pokémon.
 
-Defeat **Dark Suicune** in the special scripted battle. You receive a **Comet Shard**. Continue to the Corviknight and the depleted Time Gear, then choose to turn the gear. Celebi appears, restores this portion of the timeline, and warns that most people will not remember what was repaired. You awaken in the real Petalburg and the Gym becomes available.
+Defeat **Dark Suicune** in the special scripted battle. You receive a **Comet Shard**. Continue to the depleted Time Gear, then choose to turn it. Celebi appears, restores this portion of the timeline, and warns that most people will not remember what was repaired. You awaken in the real Petalburg and the Gym becomes available.
 
 ### Gym 5 — Calendula
 
@@ -142,7 +142,7 @@ When you leave after the fifth Badge, Luka challenges you again in Petalburg. Th
 
 ### Abandoned Ship
 
-Use Surf to reach the Abandoned Ship on Route 108. Find the department/ship **Keys**, defeat the Aqua grunt, and confront Captain **Alejandro**. After the story battle, Stella arrives. Alejandro retreats, and Stella warns that Team Aqua is taking control of ports and shipping routes across Hoenn.
+Use Surf to reach the Abandoned Ship on Route 108. Find the department/ship **Keys**, defeat the Aqua grunt, and confront **Inae**. After the story battle, Stella arrives. Inae retreats, and Stella warns that Team Aqua is taking control of ports and shipping routes across Hoenn.
 
 ### Cargo Ship with Luka
 
@@ -166,19 +166,19 @@ Continue to Fortree, then go east onto Route 120. Stella demonstrates the invisi
 
 Defeat **Taka** for the **Feather Badge** and **TM Acrobatics**.
 
-## 10. Mt. Pyre and the second Nightmare Realm
+## 10. Mt. Pyre and the Nightmare Realm
 
 Continue through Route 121. Team Aqua moves toward Mt. Pyre after the Seabreeze operation collapses. Cross Route 122, enter Mt. Pyre, climb through the interior, and follow the exterior path to the summit.
 
 On the exterior, Magnus reveals that Team Magma slipped down the far side while Team Aqua rushed toward the summit. At the top, fight through Team Aqua. Inae escapes with one Orb; Team Magma has already taken the other. The shrine keeper gives you the **Magma Emblem**, which opens the hidden Magma base in Jagged Pass.
 
-The keepers then recount the legend of the chosen one beside statues of Jirachi and Celebi. A temporal rift pulls you into **Nightmare Realm 1**.
+The keepers then recount the legend of the chosen one beside statues of Jirachi and Celebi. A temporal rift pulls you into the **Nightmare Realm**.
 
-### Nightmare map: Nightmare Realm 1
+### Nightmare map: Nightmare Realm
 
-Jirachi and Celebi are being pursued by dark imitations. The shadows are the accumulated grief and ruin of the broken future given form, and they are trying to prevent the timeline from being repaired.
+Jirachi and Celebi are being pursued by their shadow counterparts. These beings are the accumulated grief and ruin of the broken future given form, and they are trying to prevent the timeline from being repaired.
 
-Defeat the shadow Ducklett and Escavalier in the forced double battle. You cannot run, catch them, or use the Bag. After winning, speak to either Jirachi or Celebi to finish the scene. They explain that time is a river with many branches: the ruined future cannot simply be erased, but it does not have to repeat. They remain behind to anchor the boundary and return you to Mt. Pyre.
+Defeat **Shadow Celebi** and **Shadow Jirachi** in the forced double battle. You cannot run, catch them, or use the Bag. After winning, speak to either Jirachi or Celebi to finish the scene. They explain that time is a river with many branches: the ruined future cannot simply be erased, but it does not have to repeat. They remain behind to anchor the boundary and return you to Mt. Pyre.
 
 If you lose, a relic appears at the summit. Interact with it to heal your party and retry the nightmare battle.
 
@@ -267,6 +267,7 @@ Your rival arrives just after the battle, followed by Professor Acacia. Acacia e
 - **Exp. Share:** from the rival after the Rustboro battle.
 - **DexNav:** from Mr. Stone when he assigns the Dewford and Slateport deliveries.
 - **Ability Capsule:** from the Devon employee after recovering the Devon Goods.
+- **Ability Patch:** from the Devon employee after saving him from the two Aqua grunts in Petalburg Woods.
 - **Shiny Stone:** from Mr. Stone after Stella receives his Letter.
 - **Comet Shard:** for defeating Dark Suicune in Nightmare Petalburg.
 - **Seabreeze Shipping HQ Key Card:** found with Luka in the cargo ship hold.

@@ -3201,713 +3201,713 @@ MOSSDEEP01_Text_ThankYou:
 # 1601 "data/maps/MOSSDEEP01/scripts.pory"
 	.string "The temporal flow is restoring…\n"
 # 1602 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Look! The MILLENNIUM COMET!$"
+	.string "The MILLENNIUM COMET approaches.\p"
 # 1603 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "This is our one opportunity!\n"
 # 1604 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CometAppears:
+	.string "{PLAYER}, now! Make your wish!$"
 # 1605 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The sky begins to glow!\p"
+
 # 1606 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "A brilliant comet streaks across\n"
+MOSSDEEP01_Text_CometAppears:
 # 1607 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the heavens!$"
+	.string "The sky begins to glow!\p"
 # 1608 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "A brilliant comet streaks across\n"
 # 1609 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_TimeToWakeUp:
+	.string "the heavens!$"
 # 1610 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: The timeline is restored!\p"
+
 # 1611 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It's time to wake up from this dream…$"
+MOSSDEEP01_Text_TimeToWakeUp:
 # 1612 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "JIRACHI: The timeline is restored!\p"
 # 1613 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_AlreadyHelped:
+	.string "It's time to wake up from this dream…$"
 # 1614 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: You already helped restore\n"
+
 # 1615 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the flow of time!\p"
+MOSSDEEP01_Text_AlreadyHelped:
 # 1616 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you, time traveler!$"
+	.string "JIRACHI: You already helped restore\n"
 # 1617 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "the flow of time!\p"
 # 1618 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_FoundItem1:
+	.string "Thank you, time traveler!$"
 # 1619 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} found something shining\n"
+
 # 1620 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "in the grass…$"
+MOSSDEEP01_Text_FoundItem1:
 # 1621 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "{PLAYER} found something shining\n"
 # 1622 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ObtainedTimeGear1:
+	.string "in the grass…$"
 # 1623 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} obtained the TIME GEAR\n"
+
 # 1624 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of the PAST!$"
+MOSSDEEP01_Text_ObtainedTimeGear1:
 # 1625 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "{PLAYER} obtained the TIME GEAR\n"
 # 1626 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_FoundItem2:
+	.string "of the PAST!$"
 # 1627 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} discovered something glowing\n"
+
 # 1628 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "among the rocks…$"
+MOSSDEEP01_Text_FoundItem2:
 # 1629 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "{PLAYER} discovered something glowing\n"
 # 1630 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ObtainedTimeGear2:
+	.string "among the rocks…$"
 # 1631 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} obtained the TIME GEAR\n"
+
 # 1632 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of the PRESENT!$"
+MOSSDEEP01_Text_ObtainedTimeGear2:
 # 1633 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1634 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_FoundItem3:
-# 1635 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} noticed something sparkling\n"
-# 1636 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "in the water…$"
-# 1637 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1638 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ObtainedTimeGear3:
-# 1639 "data/maps/MOSSDEEP01/scripts.pory"
 	.string "{PLAYER} obtained the TIME GEAR\n"
+# 1634 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "of the PRESENT!$"
+# 1635 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1636 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_FoundItem3:
+# 1637 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "{PLAYER} noticed something sparkling\n"
+# 1638 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "in the water…$"
+# 1639 "data/maps/MOSSDEEP01/scripts.pory"
+
 # 1640 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of the FUTURE!$"
+MOSSDEEP01_Text_ObtainedTimeGear3:
 # 1641 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "{PLAYER} obtained the TIME GEAR\n"
 # 1642 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_AlreadyCollected:
+	.string "of the FUTURE!$"
 # 1643 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "This place seems peaceful now.$"
+
 # 1644 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_AlreadyCollected:
 # 1645 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiHelp:
+	.string "This place seems peaceful now.$"
 # 1646 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CELEBI: … … …\p"
+
 # 1647 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The flow of time is broken…\p"
+MOSSDEEP01_Text_CelebiHelp:
 # 1648 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please… find the three TIME GEARS…\n"
+	.string "CELEBI: … … …\p"
 # 1649 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Only then can I be freed…$"
+	.string "The flow of time is broken…\p"
 # 1650 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Please… find the three TIME GEARS…\n"
 # 1651 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiPower:
+	.string "Only then can I be freed…$"
 # 1652 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CELEBI: You found all the TIME GEARS!\p"
+
 # 1653 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Now I can use my power to restore\n"
+MOSSDEEP01_Text_CelebiPower:
 # 1654 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the temporal flow!$"
+	.string "CELEBI: You found all the TIME GEARS!\p"
 # 1655 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Now I can use my power to restore\n"
 # 1656 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiCalmed:
+	.string "the temporal flow!$"
 # 1657 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The wild POKÉMON have calmed down!$"
+
 # 1658 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_CelebiCalmed:
 # 1659 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiThanks:
+	.string "The wild POKÉMON have calmed down!$"
 # 1660 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CELEBI: Thank you, {PLAYER}!\n"
+
 # 1661 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Together we restored time!$"
+MOSSDEEP01_Text_CelebiThanks:
 # 1662 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "CELEBI: Thank you, {PLAYER}!\n"
 # 1663 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MightyenaAttack:
+	.string "Together we restored time!\p"
 # 1664 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The wild MIGHTYENA attacks!$"
+	.string "However, to truly repair reality,\n"
 # 1665 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "we will need more.\p"
 # 1666 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MightyenaBlackedOut:
+	.string "There is something mystical coming.\n"
 # 1667 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The wild POKÉMON are too aggressive!\n"
+	.string "We must find the wish POKÉMON.\p"
 # 1668 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You blacked out!$"
+	.string "Quickly, this is our chance!$"
 # 1669 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1670 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MightyenaFriendly:
+MOSSDEEP01_Text_MightyenaAttack:
 # 1671 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The MIGHTYENA looks calm and friendly.\n"
+	.string "The wild MIGHTYENA attacks!$"
 # 1672 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Amazing, they're so peaceful now!\p"
+
 # 1673 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You can even pet them!$"
+MOSSDEEP01_Text_MightyenaBlackedOut:
 # 1674 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "The wild POKÉMON are too aggressive!\n"
 # 1675 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorTrapped:
+	.string "You blacked out!$"
 # 1676 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "SURVIVOR: Help! These wild POKÉMON\n"
+
 # 1677 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "are too aggressive!\p"
+MOSSDEEP01_Text_MightyenaFriendly:
 # 1678 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I can't escape!$"
+	.string "The MIGHTYENA looks calm and friendly.\n"
 # 1679 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Amazing, they're so peaceful now!\p"
 # 1680 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorAmazed:
+	.string "You can even pet them!$"
 # 1681 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "SURVIVOR: Incredible! The POKÉMON\n"
+
 # 1682 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "suddenly calmed down!\p"
+MOSSDEEP01_Text_SurvivorTrapped:
 # 1683 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "What happened?$"
+	.string "SURVIVOR: Help! These wild POKÉMON\n"
 # 1684 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "are too aggressive!\p"
 # 1685 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorGoing:
+	.string "I can't escape!$"
 # 1686 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I'm going to find a safer\n"
+
 # 1687 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "place. Thank you!$"
+MOSSDEEP01_Text_SurvivorAmazed:
 # 1688 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "SURVIVOR: Incredible! The POKÉMON\n"
 # 1689 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_SurvivorHappy:
+	.string "suddenly calmed down!\p"
 # 1690 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "SURVIVOR: I feel much safer now.\n"
+	.string "What happened?$"
 # 1691 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you for your help!$"
-# 1692 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1692 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_SurvivorGoing:
 # 1693 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_HealerWelcome:
+	.string "I'm going to find a safer\n"
 # 1694 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "HEALER: Let me heal your POKÉMON.$"
+	.string "place. Thank you!$"
 # 1695 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1696 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_Healing:
+MOSSDEEP01_Text_SurvivorHappy:
 # 1697 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Healing POKÉMON…$"
+	.string "SURVIVOR: I feel much safer now.\n"
 # 1698 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Thank you for your help!$"
 # 1699 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_HealedComplete:
+
 # 1700 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "HEALER: Your POKÉMON are fully\n"
+MOSSDEEP01_Text_HealerWelcome:
 # 1701 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "healed! Good luck!$"
+	.string "HEALER: Let me heal your POKÉMON.$"
 # 1702 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1703 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaWelcome:
+MOSSDEEP01_Text_Healing:
 # 1704 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: {PLAYER}! You're awake!\p"
+	.string "Healing POKÉMON…$"
 # 1705 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The earthquake was terrible…\n"
+
 # 1706 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Many people are trapped…$"
+MOSSDEEP01_Text_HealedComplete:
 # 1707 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "HEALER: Your POKÉMON are fully\n"
 # 1708 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_EarthquakeWarning:
+	.string "healed! Good luck!$"
 # 1709 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Another tremor!\n"
+
 # 1710 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be careful out there!$"
+MOSSDEEP01_Text_GrandmaWelcome:
 # 1711 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "GRANDMA: {PLAYER}! You're awake!\p"
 # 1712 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaGivesCharm:
+	.string "The earthquake was terrible…\n"
 # 1713 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Take this SHINY CHARM.\n"
+	.string "Many people are trapped…$"
 # 1714 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It might bring you luck!$"
+
 # 1715 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_EarthquakeWarning:
 # 1716 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaCharmExplanation:
+	.string "GRANDMA: Another tremor!\n"
 # 1717 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: This charm increases your\n"
+	.string "Be careful out there!$"
 # 1718 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "chances of finding rare POKÉMON.\p"
+
 # 1719 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Use it well!$"
+MOSSDEEP01_Text_GrandmaGivesCharm:
 # 1720 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "GRANDMA: Take this SHINY CHARM.\n"
 # 1721 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_HoennDestroyed:
+	.string "It might bring you luck!$"
 # 1722 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: The HOENN region…\n"
+
 # 1723 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It's been completely destroyed…\p"
+MOSSDEEP01_Text_GrandmaCharmExplanation:
 # 1724 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "But there are survivors who need\n"
+	.string "GRANDMA: This charm increases your\n"
 # 1725 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "help. Please, {PLAYER}, help them!$"
+	.string "chances of finding rare POKÉMON.\p"
 # 1726 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Use it well!$"
 # 1727 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PlayerDecision:
+
 # 1728 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} decides to help the survivors\n"
+MOSSDEEP01_Text_HoennDestroyed:
 # 1729 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "and explore the devastated area.$"
+	.string "GRANDMA: The HOENN region…\n"
 # 1730 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "It's been completely destroyed…\p"
 # 1731 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GoodLuck:
+	.string "But there are survivors who need\n"
 # 1732 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Good luck, {PLAYER}!\n"
+	.string "help. Please, {PLAYER}, help them!$"
 # 1733 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be very careful!$"
+
 # 1734 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_PlayerDecision:
 # 1735 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaEncouragement:
+	.string "{PLAYER} decides to help the survivors\n"
 # 1736 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You're doing great, {PLAYER}!\n"
+	.string "and explore the devastated area.$"
 # 1737 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Keep helping people!$"
+
 # 1738 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_GoodLuck:
 # 1739 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaFirstTalk:
+	.string "GRANDMA: Good luck, {PLAYER}!\n"
 # 1740 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: The world has changed…\n"
+	.string "Be very careful!$"
 # 1741 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Everything is so different now…$"
+
 # 1742 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_GrandmaEncouragement:
 # 1743 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaAfterTalk:
+	.string "You're doing great, {PLAYER}!\n"
 # 1744 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Thank you for helping\n"
+	.string "Keep helping people!$"
 # 1745 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "everyone, {PLAYER}. You're a hero!$"
+
 # 1746 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_GrandpaFirstTalk:
 # 1747 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaAfterCelebi:
+	.string "GRANDPA: The world has changed…\n"
 # 1748 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: {PLAYER}, that little\n"
+	.string "Everything is so different now…$"
 # 1749 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON following you seems so gentle.\p"
+
 # 1750 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It makes me feel like perhaps this world\n"
+MOSSDEEP01_Text_GrandpaAfterTalk:
 # 1751 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "can still heal.$"
+	.string "GRANDPA: Thank you for helping\n"
 # 1752 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "everyone, {PLAYER}. You're a hero!$"
 # 1753 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaAfterCelebi:
+
 # 1754 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: I've never seen a POKÉMON like\n"
+MOSSDEEP01_Text_GrandmaAfterCelebi:
 # 1755 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "that before.\p"
+	.string "GRANDMA: {PLAYER}, that little\n"
 # 1756 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "If it chose to travel with you,\n"
+	.string "POKÉMON following you seems so gentle.\p"
 # 1757 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "it must see something special in you.$"
+	.string "It makes me feel like perhaps this world\n"
 # 1758 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "can still heal.$"
 # 1759 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory1:
+
 # 1760 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "This was the beginning…$"
+MOSSDEEP01_Text_GrandpaAfterCelebi:
 # 1761 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "GRANDPA: I've never seen a POKÉMON like\n"
 # 1762 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory2:
+	.string "that before.\p"
 # 1763 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Then the conflict started…$"
+	.string "If it chose to travel with you,\n"
 # 1764 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "it must see something special in you.$"
 # 1765 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory3:
+
 # 1766 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The great battle between land and\n"
+MOSSDEEP01_Text_GrandmaStory1:
 # 1767 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "sea…$"
+	.string "This was the beginning…$"
 # 1768 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1769 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory4:
+MOSSDEEP01_Text_GrandmaStory2:
 # 1770 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The tsunami devastated everything…$"
+	.string "Then the conflict started…$"
 # 1771 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1772 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory5:
+MOSSDEEP01_Text_GrandmaStory3:
 # 1773 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Volcanoes erupted across the land…$"
+	.string "The great battle between land and\n"
 # 1774 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "sea…$"
 # 1775 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory6:
-# 1776 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The land became a barren wasteland…$"
-# 1777 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1776 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory4:
+# 1777 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "The tsunami devastated everything…$"
 # 1778 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory7:
+
 # 1779 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The oceans raged with unending\n"
+MOSSDEEP01_Text_GrandmaStory5:
 # 1780 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "storms…$"
+	.string "Volcanoes erupted across the land…$"
 # 1781 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1782 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory8:
+MOSSDEEP01_Text_GrandmaStory6:
 # 1783 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Survivors gathered in camps…$"
+	.string "The land became a barren wasteland…$"
 # 1784 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1785 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory9:
+MOSSDEEP01_Text_GrandmaStory7:
 # 1786 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Hope began to fade…$"
+	.string "The oceans raged with unending\n"
 # 1787 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "storms…$"
 # 1788 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory10:
-# 1789 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "But then a legend appeared…$"
-# 1790 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1789 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_GrandmaStory8:
+# 1790 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Survivors gathered in camps…$"
 # 1791 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory11:
+
 # 1792 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The sky guardian descended from\n"
+MOSSDEEP01_Text_GrandmaStory9:
 # 1793 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "above…$"
+	.string "Hope began to fade…$"
 # 1794 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1795 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory12:
+MOSSDEEP01_Text_GrandmaStory10:
 # 1796 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Peace was restored, but at a cost…$"
+	.string "But then a legend appeared…$"
 # 1797 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1798 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaStory13:
+MOSSDEEP01_Text_GrandmaStory11:
 # 1799 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "And this is how our world became what it\n"
+	.string "The sky guardian descended from\n"
 # 1800 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "is today…$"
+	.string "above…$"
 # 1801 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1802 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaAskStory:
+MOSSDEEP01_Text_GrandmaStory12:
 # 1803 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Hi, {PLAYER}.\p"
+	.string "Peace was restored, but at a cost…$"
 # 1804 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Would you like to hear the stories\n"
+
 # 1805 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "of how HOENN became what it is now?$"
+MOSSDEEP01_Text_GrandmaStory13:
 # 1806 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "And this is how our world became what it\n"
 # 1807 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaBeCareful:
+	.string "is today…$"
 # 1808 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I understand.\p"
+
 # 1809 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please be very careful when exploring\n"
+MOSSDEEP01_Text_GrandmaAskStory:
 # 1810 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the MOSSDEEP ruins.\p"
+	.string "GRANDMA: Hi, {PLAYER}.\p"
 # 1811 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "There are many dangers out there…$"
+	.string "Would you like to hear the stories\n"
 # 1812 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "of how HOENN became what it is now?$"
 # 1813 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaAskAgain:
+
 # 1814 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: Would you like to hear\n"
+MOSSDEEP01_Text_GrandmaBeCareful:
 # 1815 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the stories of HOENN again?$"
+	.string "I understand.\p"
 # 1816 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Please be very careful when exploring\n"
 # 1817 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale01:
+	.string "the MOSSDEEP ruins.\p"
 # 1818 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: Hey {PLAYER}! I'm helping\n"
+	.string "There are many dangers out there…$"
 # 1819 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "the survivors too!\p"
+
 # 1820 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Let's work together!$"
+MOSSDEEP01_Text_GrandmaAskAgain:
 # 1821 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "GRANDMA: Would you like to hear\n"
 # 1822 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale02:
+	.string "the stories of HOENN again?$"
 # 1823 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: These wild POKÉMON are\n"
+
 # 1824 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "really aggressive!\p"
+MOSSDEEP01_Text_RivalMale01:
 # 1825 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be careful out there!$"
+	.string "ZENNO: Hey {PLAYER}! I'm helping\n"
 # 1826 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "the survivors too!\p"
 # 1827 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale03:
+	.string "Let's work together!$"
 # 1828 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: I heard there's a special\n"
+
 # 1829 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON that can help us.\p"
+MOSSDEEP01_Text_RivalMale02:
 # 1830 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Let's find it!$"
+	.string "ZENNO: These wild POKÉMON are\n"
 # 1831 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "really aggressive!\p"
 # 1832 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMale04:
+	.string "Be careful out there!$"
 # 1833 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: We can do this, {PLAYER}!\n"
+
 # 1834 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Together we'll save everyone!$"
+MOSSDEEP01_Text_RivalMale03:
 # 1835 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "ZENNO: I heard there's a special\n"
 # 1836 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalMaleAfterCelebi:
+	.string "POKÉMON that can help us.\p"
 # 1837 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO: {PLAYER}, that POKÉMON\n"
+	.string "Let's find it!$"
 # 1838 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "following you is incredible!\p"
+
 # 1839 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I have a feeling we're witnessing\n"
+MOSSDEEP01_Text_RivalMale04:
 # 1840 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "something truly special.$"
+	.string "ZENNO: We can do this, {PLAYER}!\n"
 # 1841 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Together we'll save everyone!$"
 # 1842 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale01:
+
 # 1843 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: {PLAYER}! I'm so glad you're safe!\p"
+MOSSDEEP01_Text_RivalMaleAfterCelebi:
 # 1844 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Let's help the survivors together!$"
+	.string "ZENNO: {PLAYER}, that POKÉMON\n"
 # 1845 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1846 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale02:
-# 1847 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: The wild POKÉMON are\n"
-# 1848 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "acting so strange…\p"
-# 1849 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Something must be wrong!$"
-# 1850 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1851 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale03:
-# 1852 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: I heard about a legendary\n"
-# 1853 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON that controls time.\p"
-# 1854 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Maybe it can help us!$"
-# 1855 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1856 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemale04:
-# 1857 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: We make a great team,\n"
-# 1858 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER}! Let's keep going!$"
-# 1859 "data/maps/MOSSDEEP01/scripts.pory"
-
-# 1860 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_RivalFemaleAfterCelebi:
-# 1861 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA: {PLAYER}, that POKÉMON\n"
-# 1862 "data/maps/MOSSDEEP01/scripts.pory"
 	.string "following you is incredible!\p"
-# 1863 "data/maps/MOSSDEEP01/scripts.pory"
+# 1846 "data/maps/MOSSDEEP01/scripts.pory"
 	.string "I have a feeling we're witnessing\n"
-# 1864 "data/maps/MOSSDEEP01/scripts.pory"
+# 1847 "data/maps/MOSSDEEP01/scripts.pory"
 	.string "something truly special.$"
+# 1848 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1849 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale01:
+# 1850 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: {PLAYER}! I'm so glad you're safe!\p"
+# 1851 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Let's help the survivors together!$"
+# 1852 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1853 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale02:
+# 1854 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: The wild POKÉMON are\n"
+# 1855 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "acting so strange…\p"
+# 1856 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Something must be wrong!$"
+# 1857 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1858 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale03:
+# 1859 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: I heard about a legendary\n"
+# 1860 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "POKÉMON that controls time.\p"
+# 1861 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "Maybe it can help us!$"
+# 1862 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 1863 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_RivalFemale04:
+# 1864 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "ZINNIA: We make a great team,\n"
 # 1865 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "{PLAYER}! Let's keep going!$"
 # 1866 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_Child01:
+
 # 1867 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CHILD: I'm scared…\n"
+MOSSDEEP01_Text_RivalFemaleAfterCelebi:
 # 1868 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Where are my parents?$"
+	.string "ZINNIA: {PLAYER}, that POKÉMON\n"
 # 1869 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "following you is incredible!\p"
 # 1870 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_LostFather:
+	.string "I have a feeling we're witnessing\n"
 # 1871 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "MAN: The earthquake made the land\n"
+	.string "something truly special.$"
 # 1872 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "shift so much that we're completely\p"
+
 # 1873 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "lost. We can't find our daughter.$"
+MOSSDEEP01_Text_Child01:
 # 1874 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "CHILD: I'm scared…\n"
 # 1875 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_LostMother:
+	.string "Where are my parents?$"
 # 1876 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "WOMAN: Our daughter is out here\n"
+
 # 1877 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "somewhere, and I don't know how to\p"
+MOSSDEEP01_Text_LostFather:
 # 1878 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "get back to her. Please help us.$"
+	.string "MAN: The earthquake made the land\n"
 # 1879 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "shift so much that we're completely\p"
 # 1880 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PlayerGivesDirections:
+	.string "lost. We can't find our daughter.$"
 # 1881 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} gives the couple directions\n"
+
 # 1882 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "back to their daughter.$"
+MOSSDEEP01_Text_LostMother:
 # 1883 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "WOMAN: Our daughter is out here\n"
 # 1884 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_DaughterThanksForParents:
+	.string "somewhere, and I don't know how to\p"
 # 1885 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CHILD: You found my parents!\p"
+	.string "get back to her. Please help us.$"
 # 1886 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you so much, {PLAYER}!$"
+
 # 1887 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_PlayerGivesDirections:
 # 1888 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_ParentsReunionThanks:
+	.string "{PLAYER} gives the couple directions\n"
 # 1889 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "MAN: Thank you for helping us find\n"
+	.string "back to their daughter.$"
 # 1890 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "our daughter, {PLAYER}!$"
+
 # 1891 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_DaughterThanksForParents:
 # 1892 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_LostFatherThanks:
+	.string "CHILD: You found my parents!\p"
 # 1893 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "MAN: We'll make sure we never get\n"
+	.string "Thank you so much, {PLAYER}!$"
 # 1894 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "separated again. Thank you.$"
+
 # 1895 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_ParentsReunionThanks:
 # 1896 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_LostMotherThanks:
+	.string "MAN: Thank you for helping us find\n"
 # 1897 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "WOMAN: I was so worried about her.\n"
+	.string "our daughter, {PLAYER}!$"
 # 1898 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you for bringing us together.$"
+
 # 1899 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_LostFatherThanks:
 # 1900 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_Child02:
+	.string "MAN: We'll make sure we never get\n"
 # 1901 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "CHILD: The ground shook really hard…\n"
+	.string "separated again. Thank you.$"
 # 1902 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Then everything changed…$"
+
 # 1903 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_LostMotherThanks:
 # 1904 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailordBlocking:
+	.string "WOMAN: I was so worried about her.\n"
 # 1905 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "A massive WAILORD blocks the path!\p"
+	.string "Thank you for bringing us together.$"
 # 1906 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It seems agitated by the chaos…\n"
+
 # 1907 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You can't get through.$"
+MOSSDEEP01_Text_Child02:
 # 1908 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "CHILD: The ground shook really hard…\n"
 # 1909 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PathNowOpen:
+	.string "Then everything changed…$"
 # 1910 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The WAILORD has calmed down.\n"
+
 # 1911 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It seems it will allow you to cross\l"
+MOSSDEEP01_Text_WailordBlocking:
 # 1912 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "over its back.$"
+	.string "A massive WAILORD blocks the path!\p"
 # 1913 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "It seems agitated by the chaos…\n"
 # 1914 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiWaking:
+	.string "You can't get through.$"
 # 1915 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "A mysterious POKÉMON is sleeping\n"
+
 # 1916 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "near the rocks…\p"
+MOSSDEEP01_Text_PathNowOpen:
 # 1917 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It seems to be waking up!$"
+	.string "The WAILORD has calmed down.\n"
 # 1918 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "It seems it will allow you to cross\l"
 # 1919 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiAwoken:
+	.string "over its back.$"
 # 1920 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI has awoken!$"
+
 # 1921 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_JirachiWaking:
 # 1922 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiNeedCelebi:
+	.string "A mysterious POKÉMON is sleeping\n"
 # 1923 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: I sense temporal disturbance…\n"
+	.string "near the rocks…\p"
 # 1924 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "The forest guardian needs help!\p"
+	.string "It seems to be waking up!$"
 # 1925 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please rescue CELEBI first!$"
+
 # 1926 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_JirachiAwoken:
 # 1927 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiNeedItems:
+	.string "JIRACHI has awoken!$"
 # 1928 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: Thank you for saving CELEBI!\n"
+
 # 1929 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "But time is still broken…\p"
+MOSSDEEP01_Text_JirachiNeedCelebi:
 # 1930 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please find the three TIME GEARS\n"
+	.string "JIRACHI: I sense temporal disturbance…\n"
 # 1931 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "to restore temporal flow!$"
+	.string "The forest guardian needs help!\p"
 # 1932 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Please rescue CELEBI first!$"
 # 1933 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiCompleted:
+
 # 1934 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI: You restored the timeline!\n"
+MOSSDEEP01_Text_JirachiNeedItems:
 # 1935 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Thank you, time traveler!$"
+	.string "JIRACHI: Thank you for saving CELEBI!\n"
 # 1936 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "But time is still broken…\p"
 # 1937 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_JirachiStillSleeping:
+	.string "Please find the three TIME GEARS\n"
 # 1938 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "JIRACHI is sleeping peacefully…\n"
+	.string "to restore temporal flow!$"
 # 1939 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Maybe you should approach it?$"
-# 1940 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 1940 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_JirachiCompleted:
 # 1941 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyIntro:
+	.string "JIRACHI: You restored the timeline!\n"
 # 1942 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: Hey, {PLAYER}!\p"
+	.string "Thank you, time traveler!$"
 # 1943 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Are you doing alright?\p"
+
 # 1944 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Oh, you need help getting past some wild\n"
+MOSSDEEP01_Text_JirachiStillSleeping:
 # 1945 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON?\p"
+	.string "JIRACHI is sleeping peacefully…\n"
 # 1946 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Leave it to me and PIDGEOT!$"
+	.string "Maybe you should approach it?$"
 # 1947 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1948 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaRecoveryZinnia:
+MOSSDEEP01_Text_WallyIntro:
 # 1949 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDMA: {PLAYER}, you're awake!\p"
+	.string "LUKA: Hey, {PLAYER}!\p"
 # 1950 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Oh, thank goodness. We were so worried\n"
+	.string "Are you doing alright?\p"
 # 1951 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "after you were attacked by that wild\l"
+	.string "Oh, you need help getting past some wild\n"
 # 1952 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON.\p"
+	.string "POKÉMON?\p"
 # 1953 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZINNIA just barely got you back here.$"
+	.string "Leave it to me and PIDGEOT!$"
 # 1954 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1955 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandmaRecoveryZenno:
+MOSSDEEP01_Text_GrandmaRecoveryZinnia:
 # 1956 "data/maps/MOSSDEEP01/scripts.pory"
 	.string "GRANDMA: {PLAYER}, you're awake!\p"
 # 1957 "data/maps/MOSSDEEP01/scripts.pory"
@@ -3917,196 +3917,210 @@ MOSSDEEP01_Text_GrandmaRecoveryZenno:
 # 1959 "data/maps/MOSSDEEP01/scripts.pory"
 	.string "POKÉMON.\p"
 # 1960 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "ZENNO just barely got you back here.$"
+	.string "ZINNIA just barely got you back here.$"
 # 1961 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1962 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaRecovery:
+MOSSDEEP01_Text_GrandmaRecoveryZenno:
 # 1963 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Wild POKÉMON are extremely\n"
+	.string "GRANDMA: {PLAYER}, you're awake!\p"
 # 1964 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "dangerous, {PLAYER}.\p"
+	.string "Oh, thank goodness. We were so worried\n"
 # 1965 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You must never approach one alone.\p"
+	.string "after you were attacked by that wild\l"
 # 1966 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Very few people are able to have their\n"
+	.string "POKÉMON.\p"
 # 1967 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "own POKÉMON.\p"
+	.string "ZENNO just barely got you back here.$"
 # 1968 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "There used to be a technology called\n"
+
 # 1969 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉ BALLS that allowed us to catch\l"
+MOSSDEEP01_Text_GrandpaRecovery:
 # 1970 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON, but those don't exist anymore.$"
+	.string "GRANDPA: Wild POKÉMON are extremely\n"
 # 1971 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "dangerous, {PLAYER}.\p"
 # 1972 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaSuggestLuka:
+	.string "You must never approach one alone.\p"
 # 1973 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Come to think of it, that boy,\n"
+	.string "Very few people are able to have their\n"
 # 1974 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA, has a PIDGEOT!\p"
+	.string "own POKÉMON.\p"
 # 1975 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "If you need to get past those MIGHTYENA,\n"
+	.string "There used to be a technology called\n"
 # 1976 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "you should go ask him for help.$"
+	.string "POKÉ BALLS that allowed us to catch\l"
 # 1977 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "POKÉMON, but those don't exist anymore.$"
 # 1978 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_GrandpaMightyenaReminder:
+
 # 1979 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "GRANDPA: Be careful out there, {PLAYER}!\p"
+MOSSDEEP01_Text_GrandpaSuggestLuka:
 # 1980 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You should find LUKA and his PIDGEOT.\n"
+	.string "GRANDPA: Come to think of it, that boy,\n"
 # 1981 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Perhaps they can help you.$"
+	.string "LUKA, has a PIDGEOT!\p"
 # 1982 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "If you need to get past those MIGHTYENA,\n"
 # 1983 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyAfterCelebi:
+	.string "you should go ask him for help.$"
 # 1984 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: Wow… What is that Pokemon\n"
+
 # 1985 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "following you?\p"
+MOSSDEEP01_Text_GrandpaMightyenaReminder:
 # 1986 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It feels so magical…\n"
+	.string "GRANDPA: Be careful out there, {PLAYER}!\p"
 # 1987 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I have never seen anything like it.\p"
+	.string "You should find LUKA and his PIDGEOT.\n"
 # 1988 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "It reminds me of the old legends\n"
+	.string "Perhaps they can help you.$"
 # 1989 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "our grandparents used to tell…\p"
+
 # 1990 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Maybe those dreams you had…\n"
+MOSSDEEP01_Text_WallyAfterCelebi:
 # 1991 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "they were real after all.$"
+	.string "LUKA: Wow… What is that Pokemon\n"
 # 1992 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "following you?\p"
 # 1993 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyWarped:
+	.string "It feels so magical…\n"
 # 1994 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: I'll head there first!\p"
+	.string "I have never seen anything like it.\p"
 # 1995 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Meet me ahead, {PLAYER}!$"
+	.string "It reminds me of the old legends\n"
 # 1996 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "our grandparents used to tell…\p"
 # 1997 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyNotReady:
+	.string "Maybe those dreams you had…\n"
 # 1998 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: {PLAYER}, we'll hold these wild\n"
+	.string "they were real after all.$"
 # 1999 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON off.\p"
-# 2000 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Use this chance to get through!$"
-# 2001 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 2000 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_WallyWarped:
+# 2001 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "LUKA: I'll head there first!\p"
 # 2002 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WallyBeforeMightyena:
+	.string "Meet me ahead, {PLAYER}!$"
 # 2003 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "LUKA: Hello, {PLAYER}!\p"
+
 # 2004 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Be careful out there! The wild\n"
+MOSSDEEP01_Text_WallyNotReady:
 # 2005 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "POKÉMON are very aggressive.\p"
+	.string "LUKA: {PLAYER}, we'll hold these wild\n"
 # 2006 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "If you get into trouble, come\n"
+	.string "POKÉMON off.\p"
 # 2007 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "talk to me!$"
+	.string "Use this chance to get through!$"
 # 2008 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 2009 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PidgeotGreeting:
+MOSSDEEP01_Text_WallyBeforeMightyena:
 # 2010 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "PIDGEOT: Piiidgeoo!$"
+	.string "LUKA: Hello, {PLAYER}!\p"
 # 2011 "data/maps/MOSSDEEP01/scripts.pory"
-
+	.string "Be careful out there! The wild\n"
 # 2012 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailordBlocks:
+	.string "POKÉMON are very aggressive.\p"
 # 2013 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "There's only water ahead!\p"
+	.string "If you get into trouble, come\n"
 # 2014 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "You can't cross without help…$"
+	.string "talk to me!$"
 # 2015 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 2016 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailordIdle:
+MOSSDEEP01_Text_PidgeotGreeting:
 # 2017 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "WAILORD is calmly floating on the water.$"
+	.string "PIDGEOT: Piiidgeoo!$"
 # 2018 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 2019 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_WailmerIdle:
+MOSSDEEP01_Text_WailordBlocks:
 # 2020 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "The WAILMER are splashing playfully!$"
+    .string "There's only water ahead!\p"
 # 2021 "data/maps/MOSSDEEP01/scripts.pory"
-
+    .string "You can't cross without help…$"
 # 2022 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_DrowningManCallsForHelp:
+
 # 2023 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "MAN: Help! I'm drowning!\n"
+MOSSDEEP01_Text_WailordIdle:
 # 2024 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "Please, pull me out of here!$"
+    .string "WAILORD is calmly floating on the water.$"
 # 2025 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 2026 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PlayerRescuesDrowningMan:
+MOSSDEEP01_Text_WailmerIdle:
 # 2027 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} pulls the drowning man\n"
+    .string "The WAILMER are splashing playfully!$"
 # 2028 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "from the water.$"
+
 # 2029 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_DrowningManCallsForHelp:
 # 2030 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_DrowningManThanks:
+	.string "MAN: Help! I'm drowning!\n"
 # 2031 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "MAN: Thank you, {PLAYER}!\n"
+	.string "Please, pull me out of here!$"
 # 2032 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "You saved my life!$"
+
 # 2033 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_PlayerRescuesDrowningMan:
 # 2034 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MinerWifeHelp:
+	.string "{PLAYER} pulls the drowning man\n"
 # 2035 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "WOMAN: Please help! My husband is\n"
+	.string "from the water.$"
 # 2036 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "trapped after a mine cave-in!$"
+
 # 2037 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_DrowningManThanks:
 # 2038 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_PlayerDigsOutMiner:
+	.string "MAN: Thank you, {PLAYER}!\n"
 # 2039 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "{PLAYER} digs the trapped miner\n"
+	.string "You saved my life!$"
 # 2040 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "out of the cave-in.$"
+
 # 2041 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_MinerWifeHelp:
 # 2042 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MinerThanks:
+	.string "WOMAN: Please help! My husband is\n"
 # 2043 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "MINER: Thank you, {PLAYER}!\n"
+	.string "trapped after a mine cave-in!$"
 # 2044 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I thought I was done for!$"
+
 # 2045 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_PlayerDigsOutMiner:
 # 2046 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_MinerWifeThanks:
+	.string "{PLAYER} digs the trapped miner\n"
 # 2047 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "WOMAN: Thank you for saving him!\n"
+	.string "out of the cave-in.$"
 # 2048 "data/maps/MOSSDEEP01/scripts.pory"
-	.string "I can't thank you enough!$"
+
 # 2049 "data/maps/MOSSDEEP01/scripts.pory"
-
+MOSSDEEP01_Text_MinerThanks:
 # 2050 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_CelebiCallsWailord:
+	.string "MINER: Thank you, {PLAYER}!\n"
 # 2051 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "CELEBI calls out to the ocean!\p"
+	.string "I thought I was done for!$"
 # 2052 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "A massive WAILORD appears and\n"
-# 2053 "data/maps/MOSSDEEP01/scripts.pory"
-    .string "creates a path across the water!$"
-# 2054 "data/maps/MOSSDEEP01/scripts.pory"
 
+# 2053 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_MinerWifeThanks:
+# 2054 "data/maps/MOSSDEEP01/scripts.pory"
+	.string "WOMAN: Thank you for saving him!\n"
 # 2055 "data/maps/MOSSDEEP01/scripts.pory"
-MOSSDEEP01_Text_AfterTimeGears:
+	.string "I can't thank you enough!$"
 # 2056 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2057 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_CelebiCallsWailord:
+# 2058 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "CELEBI calls out to the ocean!\p"
+# 2059 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "A massive WAILORD appears and\n"
+# 2060 "data/maps/MOSSDEEP01/scripts.pory"
+    .string "creates a path across the water!$"
+# 2061 "data/maps/MOSSDEEP01/scripts.pory"
+
+# 2062 "data/maps/MOSSDEEP01/scripts.pory"
+MOSSDEEP01_Text_AfterTimeGears:
+# 2063 "data/maps/MOSSDEEP01/scripts.pory"
     .string "CELEBI: We are close, I can feel it…$"

@@ -656,8 +656,12 @@ PhoenixTown_Text_LukaNoAnswers:
 	.string "anything!$"
 
 PhoenixTown_Text_AuroraSoYouCame:
-	.string "AURORA: So you came.\p"
-	.string "It happened again, then.$"
+	.string "AURORA: ...\p"
+	.string "So you came.\n"
+	.string "It happened again, then.\p"
+	.string "I can sense no malice or greed\n"
+	.string "from any of you.\p"
+	.string "I am AURORA. I will help you.$"
 
 PhoenixTown_Text_ZinniaStopDisasters:
 	.string "ZINNIA: You sent that letter?\p"
@@ -692,27 +696,38 @@ PhoenixTown_Text_ZennoWhatDoesThatMean:
 	.string "What is that supposed to mean?$"
 
 PhoenixTown_Text_AuroraGiftOnly:
-	.string "AURORA: It is possible to save\n"
+	.string "AURORA: Tragedy and devastation\n"
+	.string "do not disappear so easily.\p"
+	.string "Mending a broken reality always\n"
+	.string "inevitably leaves echoes.\p"
+	.string "It is possible to save\n"
 	.string "your home, but I can only teach\l"
-	.string "those who have the gift.$"
+	.string "someone of extraordinary ability.\p"
+	.string "All of you have some sensitivity,\n"
+	.string "but to borrow the power of CELEBI\l"
+	.string "and JIRACHI, a gift is needed.$"
 
 PhoenixTown_Text_LukaWhatGift:
 	.string "LUKA: What is this gift?$"
 
 PhoenixTown_Text_AuroraNotYou:
-	.string "AURORA: Not you.$"
+	.string "AURORA: Hm...\p"
+	.string "You are more attuned than most,\n"
+	.string "but you do not have it.$"
 
 PhoenixTown_Text_AuroraNorYou:
-	.string "AURORA: Nor you.$"
+	.string "AURORA: ...\p"
+	.string "Another of unusual ability,\n"
+	.string "but still not enough.$"
 
 PhoenixTown_Text_AuroraFinalBattle:
-	.string "AURORA: Hm...\p"
+	.string "AURORA: Oh...\p"
 	.string "I sense it in you. You have\n"
 	.string "the gift.\p"
-	.string "But that alone is not enough.\n"
-	.string "You must have the strength\l"
-	.string "to weather the challenges\l"
-	.string "before you.\p"
+	.string "But that alone does not guarantee\n"
+	.string "success with such high stakes.\p"
+	.string "You must have the strength to\n"
+	.string "weather the challenges before you.\p"
 	.string "Prove it to me in battle.$"
 
 PhoenixTown_Text_AuroraFinalBattleDefeat:
@@ -720,7 +735,8 @@ PhoenixTown_Text_AuroraFinalBattleDefeat:
 
 PhoenixTown_Text_AuroraPlayerHasGift:
 	.string "AURORA: You.\p"
-	.string "You have it. I will teach you.\p"
+	.string "You have both the gift and the\n"
+	.string "strength to withstand the darkness.\p"
 	.string "Come through the cave to learn.$"
 
 PhoenixTown_Text_LukaWhatWasThat:
@@ -738,8 +754,8 @@ PhoenixTown_Text_CalendulaNoChoiceZinnia:
 	.string "CALENDULA: Right now, we have no\n"
 	.string "choice.\p"
 	.string "{PLAYER} is the only one who she\n"
-	.string "will teach, so they should stay\l"
-	.string "here and see what they can learn.\p"
+	.string "will teach, so he should stay\l"
+	.string "here and see what he can learn.\p"
 	.string "LUKA, ZINNIA, we will go back to\n"
 	.string "PETALBURG.\p"
 	.string "We must do whatever we can to\n"
@@ -750,8 +766,8 @@ PhoenixTown_Text_CalendulaNoChoiceZenno:
 	.string "CALENDULA: Right now, we have no\n"
 	.string "choice.\p"
 	.string "{PLAYER} is the only one who she\n"
-	.string "will teach, so they should stay\l"
-	.string "here and see what they can learn.\p"
+	.string "will teach, so she should stay\l"
+	.string "here and see what she can learn.\p"
 	.string "LUKA, ZENNO, we will go back to\n"
 	.string "PETALBURG.\p"
 	.string "We must do whatever we can to\n"

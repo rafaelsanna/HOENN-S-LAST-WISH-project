@@ -5,8 +5,99 @@ Route112_MapScripts::
 
 Route112_OnTransition:
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
+	setflag FLAG_HIDE_ROUTE112_ACACIA_CHIMNEY_SCENE
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
 	end
+
+Route112_EventScript_AcaciaChimneyTrigger26::
+	goto_if_unset FLAG_MET_ARCHIE_METEOR_FALLS, Route112_EventScript_AcaciaChimneyTriggerUnavailable
+	goto_if_set FLAG_ROUTE112_ACACIA_CHIMNEY_SCENE_COMPLETE, Route112_EventScript_AcaciaChimneyTriggerDone
+	lockall
+	clearflag FLAG_HIDE_ROUTE112_ACACIA_CHIMNEY_SCENE
+	addobject LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE
+	applymovement LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE, Route112_Movement_AcaciaApproachPlayer26
+	waitmovement 0
+	turnobject LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE, DIR_WEST
+	turnobject LOCALID_PLAYER, DIR_EAST
+	goto Route112_EventScript_AcaciaChimneyDialogue
+
+Route112_EventScript_AcaciaChimneyTrigger27::
+	goto_if_unset FLAG_MET_ARCHIE_METEOR_FALLS, Route112_EventScript_AcaciaChimneyTriggerUnavailable
+	goto_if_set FLAG_ROUTE112_ACACIA_CHIMNEY_SCENE_COMPLETE, Route112_EventScript_AcaciaChimneyTriggerDone
+	lockall
+	clearflag FLAG_HIDE_ROUTE112_ACACIA_CHIMNEY_SCENE
+	addobject LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE
+	applymovement LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE, Route112_Movement_AcaciaApproachPlayer27
+	waitmovement 0
+	turnobject LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE, DIR_EAST
+	turnobject LOCALID_PLAYER, DIR_WEST
+
+Route112_EventScript_AcaciaChimneyDialogue:
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
+	msgbox Route112_Text_AcaciaChimneyScene, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE, Route112_Movement_AcaciaChimneyExit
+	waitmovement 0
+	setflag FLAG_ROUTE112_ACACIA_CHIMNEY_SCENE_COMPLETE
+	setflag FLAG_HIDE_ROUTE112_ACACIA_CHIMNEY_SCENE
+	removeobject LOCALID_ROUTE112_ACACIA_CHIMNEY_SCENE
+	setvar VAR_TEMP_2, 1
+	releaseall
+	end
+
+Route112_EventScript_AcaciaChimneyTriggerDone:
+	setvar VAR_TEMP_2, 1
+	end
+
+Route112_EventScript_AcaciaChimneyTriggerUnavailable:
+	end
+
+Route112_Movement_AcaciaApproachPlayer26:
+	walk_down
+	walk_left
+	walk_down
+	walk_down
+	step_end
+
+Route112_Movement_AcaciaApproachPlayer27:
+	walk_down
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	step_end
+
+Route112_Movement_AcaciaChimneyExit:
+	walk_down
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+Route112_Text_AcaciaChimneyScene:
+	.string "PROF. ACACIA: Oh! Hello, {PLAYER}.\p"
+	.string "All of my instruments recently started\n"
+	.string "going haywire in the direction of\l"
+	.string "MT. CHIMNEY, so I came out here to\l"
+	.string "see if there was some relation to\l"
+	.string "the comet.\p"
+	.string "I couldn't get very far, though.\p"
+	.string "There is a dangerous conflict\n"
+	.string "happening between TEAM AQUA and\l"
+	.string "TEAM MAGMA.\p"
+	.string "Whatever they're doing, it seems to\n"
+	.string "be creating some sort of\l"
+	.string "destabilization.\p"
+	.string "I need to get back to the lab and\n"
+	.string "record these readings.\p"
+	.string "If you're going up, please be careful.$"
 
 Route112_EventScript_MagmaGrunts::
 	lockall
