@@ -84,6 +84,18 @@ SeabreezeShipping1F_EventScript_Grunt3::
 	msgbox SeabreezeShipping1F_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
 
+SeabreezeShipping1F_EventScript_ShippingLog::
+	msgbox SeabreezeShipping1F_Text_ShippingLog, MSGBOX_SIGN
+	end
+
+SeabreezeShipping1F_EventScript_CargoReport::
+	msgbox SeabreezeShipping1F_Text_CargoReport, MSGBOX_SIGN
+	end
+
+SeabreezeShipping1F_EventScript_DestinationList::
+	msgbox SeabreezeShipping1F_Text_DestinationList, MSGBOX_SIGN
+	end
+
 SeabreezeShipping1F_EventScript_Elevatorman::
 	lock
 	faceplayer
@@ -115,6 +127,23 @@ SeabreezeShipping1F_Text_Elevatorman_Closed:
 
 SeabreezeShipping1F_Text_Elevatorman_GoDown:
 	.string "Would you like to go down?$"
+
+SeabreezeShipping1F_Text_ShippingLog:
+	.string "It's a log of goods shipped in and\n"
+	.string "out of SLATEPORT!\p"
+	.string "DEVON appears to be the biggest\n"
+	.string "importer.$"
+
+SeabreezeShipping1F_Text_CargoReport:
+	.string "The figures on this cargo report\n"
+	.string "were changed recently.\p"
+	.string "An entry for 600 DEXNAVs was\n"
+	.string "changed to 1200.$"
+
+SeabreezeShipping1F_Text_DestinationList:
+	.string "It's a list of shipping destinations\n"
+	.string "in HOENN, but the names are encoded\l"
+	.string "and impossible to decipher.$"
 
 SeabreezeShipping1F_Text_Employee1:
 	.string "Something about these new orders\n"
@@ -177,7 +206,7 @@ SeabreezeShipping1F_Text_Grunt3Defeat:
 SeabreezeShipping1F_Text_Grunt3PostBattle:
 	.string "Want to know a secret?\p"
 	.string "This company's PRESIDENT is really\n"
-	.string "just a puppet planted by TEAM AQUA.\p"
+	.string "just a puppet planted by our sponsor.\p"
 	.string "That's the level of power we command.$"
 
 `

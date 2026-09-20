@@ -82,6 +82,10 @@ SeabreezeShipping2F_EventScript_AccountantAfterBattle::
 	release
 	end
 
+SeabreezeShipping2F_EventScript_MoneyTransfers::
+	msgbox SeabreezeShipping2F_Text_MoneyTransfers, MSGBOX_SIGN
+	end
+
 SeabreezeShipping2F_Movement_AlejandroToPlayerColumn:
 	walk_left
 	walk_left
@@ -133,6 +137,13 @@ SeabreezeShipping2F_Text_PresidentBusiness:
 	.string "Once the paperwork is filed, nobody\n"
 	.string "will know where the cargo really came\l"
 	.string "from.$"
+
+SeabreezeShipping2F_Text_MoneyTransfers:
+	.string "A record of money transfers in and\n"
+	.string "out of the company.\p"
+	.string "Most of their income comes from\n"
+	.string "DEVON, but there are many payments\l"
+	.string "to clients labeled \"MGMA\" and \"AQA\".$"
 
 SeabreezeShipping2F_Text_AlejandroBusiness:
 	.string "ALEJANDRO: Excellent.\p"

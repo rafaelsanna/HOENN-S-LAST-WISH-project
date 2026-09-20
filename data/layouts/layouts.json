@@ -764,7 +764,7 @@
     {
       "id": "LAYOUT_VERDANTURF_TOWN_WANDAS_HOUSE",
       "name": "VerdanturfTown_WandasHouse_Layout",
-      "width": 17,
+      "width": 20,
       "height": 8,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_GenericBuilding",

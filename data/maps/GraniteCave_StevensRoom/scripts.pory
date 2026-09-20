@@ -116,7 +116,12 @@ GraniteCave_StevensRoom_Text_ImStevenLetterForMe:
 	.string "Don't tell me you're with TEAM MAGMA...\p"
 	.string "Oh? You're just exploring? Good. You\n"
 	.string "startled me.\p"
-	.string "A LETTER for me? Really? Thank you.$"
+	.string "A LETTER for me? Really? Thank you.\p"
+	.string "...\n"
+	.string "...\p"
+	.string "Why does Grandfather want me to...?\p"
+	.string "Oh! I'm sorry, I got distracted by\n"
+	.string "this LETTER. How rude of me.$"
 
 GraniteCave_StevensRoom_Text_ThankYouTakeThis:
 	.string "STELLA: You beat two MAGMA grunts\n"

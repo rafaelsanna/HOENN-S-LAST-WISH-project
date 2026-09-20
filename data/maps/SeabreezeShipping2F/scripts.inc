@@ -167,19 +167,19 @@ SeabreezeShipping2F_EventScript_AccountantAfterBattle::
 # 84 "data/maps/SeabreezeShipping2F/scripts.pory"
 
 # 85 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Movement_AlejandroToPlayerColumn:
+SeabreezeShipping2F_EventScript_MoneyTransfers::
 # 86 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_left
+	msgbox SeabreezeShipping2F_Text_MoneyTransfers, MSGBOX_SIGN
 # 87 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_left
+	end
 # 88 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_left
-# 89 "data/maps/SeabreezeShipping2F/scripts.pory"
-	step_end
-# 90 "data/maps/SeabreezeShipping2F/scripts.pory"
 
+# 89 "data/maps/SeabreezeShipping2F/scripts.pory"
+SeabreezeShipping2F_Movement_AlejandroToPlayerColumn:
+# 90 "data/maps/SeabreezeShipping2F/scripts.pory"
+	walk_left
 # 91 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Movement_PlayerMoveAside:
+	walk_left
 # 92 "data/maps/SeabreezeShipping2F/scripts.pory"
 	walk_left
 # 93 "data/maps/SeabreezeShipping2F/scripts.pory"
@@ -187,180 +187,202 @@ SeabreezeShipping2F_Movement_PlayerMoveAside:
 # 94 "data/maps/SeabreezeShipping2F/scripts.pory"
 
 # 95 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Movement_AlejandroToDoor:
+SeabreezeShipping2F_Movement_PlayerMoveAside:
 # 96 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_up
+	walk_left
 # 97 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_up
+	step_end
 # 98 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_up
+
 # 99 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_up
+SeabreezeShipping2F_Movement_AlejandroToDoor:
 # 100 "data/maps/SeabreezeShipping2F/scripts.pory"
-	step_end
+	walk_up
 # 101 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+	walk_up
 # 102 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Movement_PlayerListen:
+	walk_up
 # 103 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_down
+	walk_up
 # 104 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_down
-# 105 "data/maps/SeabreezeShipping2F/scripts.pory"
-	face_right
-# 106 "data/maps/SeabreezeShipping2F/scripts.pory"
 	step_end
-# 107 "data/maps/SeabreezeShipping2F/scripts.pory"
+# 105 "data/maps/SeabreezeShipping2F/scripts.pory"
 
+# 106 "data/maps/SeabreezeShipping2F/scripts.pory"
+SeabreezeShipping2F_Movement_PlayerListen:
+# 107 "data/maps/SeabreezeShipping2F/scripts.pory"
+	walk_down
 # 108 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Movement_PresidentToDoor:
+	walk_down
 # 109 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_up
+	face_right
 # 110 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_up
+	step_end
 # 111 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_left
+
 # 112 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_left
+SeabreezeShipping2F_Movement_PresidentToDoor:
 # 113 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_left
+	walk_up
 # 114 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_left
+	walk_up
 # 115 "data/maps/SeabreezeShipping2F/scripts.pory"
 	walk_left
 # 116 "data/maps/SeabreezeShipping2F/scripts.pory"
 	walk_left
 # 117 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_up
+	walk_left
 # 118 "data/maps/SeabreezeShipping2F/scripts.pory"
-	step_end
+	walk_left
 # 119 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+	walk_left
 # 120 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Movement_PresidentExit:
+	walk_left
 # 121 "data/maps/SeabreezeShipping2F/scripts.pory"
-	face_up
-# 122 "data/maps/SeabreezeShipping2F/scripts.pory"
 	walk_up
+# 122 "data/maps/SeabreezeShipping2F/scripts.pory"
+	step_end
 # 123 "data/maps/SeabreezeShipping2F/scripts.pory"
-	step_end
+
 # 124 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+SeabreezeShipping2F_Movement_PresidentExit:
 # 125 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Movement_AccountantApproach:
-# 126 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_right
-# 127 "data/maps/SeabreezeShipping2F/scripts.pory"
-	walk_right
-# 128 "data/maps/SeabreezeShipping2F/scripts.pory"
 	face_up
-# 129 "data/maps/SeabreezeShipping2F/scripts.pory"
+# 126 "data/maps/SeabreezeShipping2F/scripts.pory"
+	walk_up
+# 127 "data/maps/SeabreezeShipping2F/scripts.pory"
 	step_end
+# 128 "data/maps/SeabreezeShipping2F/scripts.pory"
+
+# 129 "data/maps/SeabreezeShipping2F/scripts.pory"
+SeabreezeShipping2F_Movement_AccountantApproach:
 # 130 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+	walk_right
 # 131 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_PresidentBusiness:
+	walk_right
 # 132 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "PRESIDENT: The shipment is ready.\p"
+	face_up
 # 133 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "Once the paperwork is filed, nobody\n"
+	step_end
 # 134 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "will know where the cargo really came\l"
+
 # 135 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "from.$"
+SeabreezeShipping2F_Text_PresidentBusiness:
 # 136 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+	.string "PRESIDENT: The shipment is ready.\p"
 # 137 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_AlejandroBusiness:
+	.string "Once the paperwork is filed, nobody\n"
 # 138 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "ALEJANDRO: Excellent.\p"
+	.string "will know where the cargo really came\l"
 # 139 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "TEAM AQUA will have no trouble\n"
+	.string "from.$"
 # 140 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "moving it through the port.$"
+
 # 141 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+SeabreezeShipping2F_Text_MoneyTransfers:
 # 142 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_PresidentWarning:
+	.string "A record of money transfers in and\n"
 # 143 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "PRESIDENT: If anyone learns\n"
+	.string "out of the company.\p"
 # 144 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "what this company is involved in...$"
+	.string "Most of their income comes from\n"
 # 145 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+	.string "DEVON, but there are many payments\l"
 # 146 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_AlejandroOverheard:
+	.string "to clients labeled \"MGMA\" and \"AQA\".$"
 # 147 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "ALEJANDRO: Well, well. I didn't expect\n"
+
 # 148 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "you to show up here.\p"
+SeabreezeShipping2F_Text_AlejandroBusiness:
 # 149 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "It doesn't matter, though.\n"
+	.string "ALEJANDRO: Excellent.\p"
 # 150 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "The signal has already been given to\l"
+	.string "TEAM AQUA will have no trouble\n"
 # 151 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "the team on ROUTE 121.\p"
+	.string "moving it through the port.$"
 # 152 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "Nothing can stop this operation now.$"
+
 # 153 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+SeabreezeShipping2F_Text_PresidentWarning:
 # 154 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_PresidentFlustered:
+	.string "PRESIDENT: If anyone learns\n"
 # 155 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "This isn't what it looks like! I have no\n"
+	.string "what this company is involved in...$"
 # 156 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "affiliation with TEAM AQUA!$"
+
 # 157 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+SeabreezeShipping2F_Text_AlejandroOverheard:
 # 158 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_PresidentDemand:
+	.string "ALEJANDRO: Well, well. I didn't expect\n"
 # 159 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "I was assured there would be no risk if\n"
+	.string "you to show up here.\p"
 # 160 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "I took on this role!\p"
+	.string "It doesn't matter, though.\n"
 # 161 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "JUAN! You have POKéMON, don't you?\n"
+	.string "The signal has already been given to\l"
 # 162 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "Battle that brat and buy me some time!$"
+	.string "the team on ROUTE 121.\p"
 # 163 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+	.string "Nothing can stop this operation now.$"
 # 164 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_AccountantChallenge:
-# 165 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "Seriously? I don't have enough work?\p"
-# 166 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "Not to mention that this is not even\n"
-# 167 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "remotely part of my job description.\p"
-# 168 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "You know what? Fine. I need to blow off\n"
-# 169 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "some steam anyway.$"
-# 170 "data/maps/SeabreezeShipping2F/scripts.pory"
 
+# 165 "data/maps/SeabreezeShipping2F/scripts.pory"
+SeabreezeShipping2F_Text_PresidentFlustered:
+# 166 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "This isn't what it looks like! I have no\n"
+# 167 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "affiliation with TEAM AQUA!$"
+# 168 "data/maps/SeabreezeShipping2F/scripts.pory"
+
+# 169 "data/maps/SeabreezeShipping2F/scripts.pory"
+SeabreezeShipping2F_Text_PresidentDemand:
+# 170 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "I was assured there would be no risk if\n"
 # 171 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_AccountantDefeat:
+	.string "I took on this role!\p"
 # 172 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "Well, at least I got to vent my\n"
+	.string "JUAN! You have POKéMON, don't you?\n"
 # 173 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "frustration. Back to work.$"
+	.string "Battle that brat and buy me some time!$"
 # 174 "data/maps/SeabreezeShipping2F/scripts.pory"
 
 # 175 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_AccountantGrumbling:
+SeabreezeShipping2F_Text_AccountantChallenge:
 # 176 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "I have too much accounting work to do\n"
+	.string "Seriously? I don't have enough work?\p"
 # 177 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "already. Why am I being dragged into\l"
+	.string "Not to mention that this is not even\n"
 # 178 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "this as well?$"
+	.string "remotely part of my job description.\p"
 # 179 "data/maps/SeabreezeShipping2F/scripts.pory"
-
+	.string "You know what? Fine. I need to blow off\n"
 # 180 "data/maps/SeabreezeShipping2F/scripts.pory"
-SeabreezeShipping2F_Text_AccountantAfterBattle:
+	.string "some steam anyway.$"
 # 181 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "What? It's not like our battle was\n"
+
 # 182 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "personal, kid. Shouldn't you be chasing\l"
+SeabreezeShipping2F_Text_AccountantDefeat:
 # 183 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "Well, at least I got to vent my\n"
+# 184 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "frustration. Back to work.$"
+# 185 "data/maps/SeabreezeShipping2F/scripts.pory"
+
+# 186 "data/maps/SeabreezeShipping2F/scripts.pory"
+SeabreezeShipping2F_Text_AccountantGrumbling:
+# 187 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "I have too much accounting work to do\n"
+# 188 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "already. Why am I being dragged into\l"
+# 189 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "this as well?$"
+# 190 "data/maps/SeabreezeShipping2F/scripts.pory"
+
+# 191 "data/maps/SeabreezeShipping2F/scripts.pory"
+SeabreezeShipping2F_Text_AccountantAfterBattle:
+# 192 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "What? It's not like our battle was\n"
+# 193 "data/maps/SeabreezeShipping2F/scripts.pory"
+	.string "personal, kid. Shouldn't you be chasing\l"
+# 194 "data/maps/SeabreezeShipping2F/scripts.pory"
 	.string "after those AQUA guys? I have work to do.$"

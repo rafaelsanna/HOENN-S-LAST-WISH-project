@@ -273,6 +273,9 @@ SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron3::
 SlateportCity_OceanicMuseum_2F_Text_ThankYouForTheParts:
 	.string "Yes? If you're looking for STERN,\n"
 	.string "that would be me.\p"
+	.string "I'm sorry for your trouble finding me.\n"
+	.string "I had just got word of a fantastic new\l"
+	.string "discovery here and had to see it.\p"
 	.string "Ah! Those must be the parts I ordered\n"
 	.string "from MR. STONE of DEVON.\p"
 	.string "Thank you! That's great!\n"
@@ -284,7 +287,8 @@ SlateportCity_OceanicMuseum_2F_Text_WellTakeThoseParts:
 
 SlateportCity_OceanicMuseum_2F_Text_SternWhoAreYou:
 	.string "CAPT. STERN: Wh-what?\n"
-	.string "Who are you people?$"
+	.string "Who are you people?\p"
+	.string "How did you know we would be here?$"
 
 SlateportCity_OceanicMuseum_2F_Text_WereTeamAqua:
 	.string "We're TEAM AQUA!\p"
@@ -457,6 +461,7 @@ SlateportCity_OceanicMuseum_2F_Text_AlejandroAfterBattle:
 	.string "been causing trouble for TEAM AQUA.\p"
 	.string "Well, I was careless and brought few\n"
 	.string "POKéMON this time.\p"
+	.string "Everything was so carefully arranged,\n"
 	.string "I didn't think I would have problems.\p"
-	.string "Next time won't be so easy!$"
+	.string "Next time, we will be prepared.$"
 `
