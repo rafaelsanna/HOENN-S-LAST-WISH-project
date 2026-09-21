@@ -63,7 +63,7 @@ GraniteCave_StevensRoom_EventScript_Steven::
 # 32 "data/maps/GraniteCave_StevensRoom/scripts.pory"
 	removefieldmugshot
 # 33 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	showpainting(PAINTING_1)
+	callnative HLW_StartPrimalScrollPainting
 # 34 "data/maps/GraniteCave_StevensRoom/scripts.pory"
     waitstate
 # 35 "data/maps/GraniteCave_StevensRoom/scripts.pory"
@@ -211,7 +211,7 @@ GraniteCave_StevensRoom_EventScript_AncientPaiting::
 # 106 "data/maps/GraniteCave_StevensRoom/scripts.pory"
 	faceplayer
 # 107 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	showpainting(PAINTING_1)
+	callnative HLW_StartPrimalScrollPainting
 # 108 "data/maps/GraniteCave_StevensRoom/scripts.pory"
     waitstate
 # 109 "data/maps/GraniteCave_StevensRoom/scripts.pory"
@@ -299,7 +299,7 @@ GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 # 150 "data/maps/GraniteCave_StevensRoom/scripts.pory"
 	.string "years old. Maybe even more...\p"
 # 151 "data/maps/GraniteCave_StevensRoom/scripts.pory"
-	.string "It shows two titans - one of land, one\n"
+	.string "It shows two titans, one of land, one\n"
 # 152 "data/maps/GraniteCave_StevensRoom/scripts.pory"
 	.string "of sea. Ancient guardians.\p"
 # 153 "data/maps/GraniteCave_StevensRoom/scripts.pory"
