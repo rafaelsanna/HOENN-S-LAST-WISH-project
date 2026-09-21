@@ -224,6 +224,8 @@ gSpecials::
 	def_special SetCB2WhiteOut
 	def_special RotatingGate_InitPuzzle
 	def_special RotatingGate_InitPuzzleAndGraphics
+	def_special FortreeGym_ApplyFloatingBridgeState
+	def_special FortreeGym_InitFloatingBridgePuzzle
 	def_special SetSSTidalFlag
 	def_special ResetSSTidalFlag
 	def_special EnterSafariMode

@@ -1,22 +1,48 @@
 raw `
 FortreeCity_Gym_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, FortreeCity_Gym_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, FortreeCity_Gym_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, FortreeCity_Gym_OnResume
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, FortreeCity_Gym_OnWarp
 	.byte 0
 
 FortreeCity_Gym_OnTransition:
-	special RotatingGate_InitPuzzle
-	setflag FLAG_TEMP_HIDE_FOLLOWER @ Hide follower bc of rotating gates
+	setflag FLAG_TEMP_HIDE_FOLLOWER @ Keep followers off the floating bridge puzzle
+	end
+
+FortreeCity_Gym_OnLoad:
+	special FortreeGym_ApplyFloatingBridgeState
+	end
+
+FortreeCity_Gym_OnResume:
+	special FortreeGym_InitFloatingBridgePuzzle
 	end
 
 FortreeCity_Gym_OnWarp:
-	map_script_2 VAR_TEMP_0, VAR_TEMP_0, FortreeCity_Gym_EventScript_InitRotatingGates
+	map_script_2 VAR_TEMP_0, VAR_TEMP_0, FortreeCity_Gym_EventScript_InitFloatingBridges
 	.2byte 0
 
-@ NOTE: This rotating gate puzzle makes use of VAR_TEMP_0 - VAR_TEMP_3
-FortreeCity_Gym_EventScript_InitRotatingGates::
-	special RotatingGate_InitPuzzleAndGraphics
+FortreeCity_Gym_EventScript_InitFloatingBridges::
+	special FortreeGym_InitFloatingBridgePuzzle
 	end
+
+FortreeCity_Gym_EventScript_FallFromSky::
+	lockall
+	playse SE_FALL
+	waitse
+	delay 8
+	applymovement LOCALID_PLAYER, FortreeCity_Gym_Movement_HideFallingPlayer
+	waitmovement 0
+	playse SE_WARP_OUT
+	waitse
+	delay 12
+	warpsilent MAP_FORTREE_CITY_GYM, 10, 27
+	waitstate
+	end
+
+FortreeCity_Gym_Movement_HideFallingPlayer:
+	set_invisible
+	step_end
 
 // Fortree City Gym - Winona
 FortreeCity_Gym_EventScript_Winona::

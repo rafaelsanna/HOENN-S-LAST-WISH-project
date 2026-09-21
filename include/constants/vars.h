@@ -130,6 +130,13 @@
 #define VAR_ROUTE115_STATE                               0x406E // Unused Var
 #define VAR_ROUTE116_STATE                               0x406F
 #define VAR_ROUTE117_STATE                               0x4070 // Unused Var
+// Five save words store one persistent reveal bit for each of the 79 floating
+// bridge tiles in Fortree Gym. These route-state slots have no other users.
+#define VAR_FORTREE_GYM_BRIDGE_REVEALS_0                 VAR_ROUTE112_STATE
+#define VAR_FORTREE_GYM_BRIDGE_REVEALS_1                 VAR_ROUTE113_STATE
+#define VAR_FORTREE_GYM_BRIDGE_REVEALS_2                 VAR_ROUTE114_STATE
+#define VAR_FORTREE_GYM_BRIDGE_REVEALS_3                 VAR_ROUTE115_STATE
+#define VAR_FORTREE_GYM_BRIDGE_REVEALS_4                 VAR_ROUTE117_STATE
 #define VAR_ROUTE118_STATE                               0x4071
 #define VAR_ROUTE119_STATE                               0x4072
 #define VAR_ROUTE120_STATE                               0x4073 // Unused Var
