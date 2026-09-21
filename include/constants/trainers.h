@@ -468,6 +468,7 @@ enum TrainerClassID
 #define TRAINER_ENCOUNTER_MUSIC_HIKER       11 // used for other trainer classes too
 #define TRAINER_ENCOUNTER_MUSIC_INTERVIEWER 12
 #define TRAINER_ENCOUNTER_MUSIC_RICH        13 // Rich Boys and Gentlemen
+#define TRAINER_ENCOUNTER_MUSIC_GYM_LEADER  14
 
 #define F_TRAINER_FEMALE (1 << 7)
 

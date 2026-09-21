@@ -5,7 +5,12 @@ MagmaHideout_1F_MapScripts::
 
 MagmaHideout_1F_OnTransition:
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
+	call_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_DisableMrStoneTriggers
 	end
+
+MagmaHideout_1F_EventScript_DisableMrStoneTriggers::
+	setvar VAR_TEMP_0, 1
+	return
 
 MagmaHideout_1F_EventScript_Grunt1::
 	trainerbattle_single TRAINER_GRUNT_MAGMA_HIDEOUT_1, MagmaHideout_1F_Text_Grunt1Intro, MagmaHideout_1F_Text_Grunt1Defeat
@@ -65,18 +70,22 @@ MagmaHideout_1F_EventScript_MrStoneAlreadyLeft::
 MagmaHideout_1F_EventScript_MrStoneExitUp::
 	goto_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_MrStoneNoOp
 	lockall
+	setvar VAR_TEMP_0, 1
 	playse SE_PIN
 	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
 	waitmovement LOCALID_PLAYER
 	addobject LOCALID_MR_STONE
 	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneApproachUp
 	waitmovement LOCALID_MR_STONE
+	turnobject LOCALID_MR_STONE, DIR_SOUTH
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	goto MagmaHideout_1F_EventScript_MrStoneTalkUp
 	end
 
 MagmaHideout_1F_EventScript_MrStoneExitLeft::
 	goto_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_MrStoneNoOp
 	lockall
+	setvar VAR_TEMP_0, 1
 	playse SE_PIN
 	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
 	waitmovement LOCALID_PLAYER
@@ -92,6 +101,7 @@ MagmaHideout_1F_EventScript_MrStoneExitLeft::
 MagmaHideout_1F_EventScript_MrStoneExitRight::
 	goto_if_set FLAG_MR_STONE_LEFT, MagmaHideout_1F_EventScript_MrStoneNoOp
 	lockall
+	setvar VAR_TEMP_0, 1
 	playse SE_PIN
 	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
 	waitmovement LOCALID_PLAYER
@@ -105,6 +115,7 @@ MagmaHideout_1F_EventScript_MrStoneExitRight::
 	end
 
 MagmaHideout_1F_EventScript_MrStoneNoOp::
+	setvar VAR_TEMP_0, 1
 	end
 
 MagmaHideout_1F_EventScript_MrStoneTalk::
@@ -120,7 +131,6 @@ MagmaHideout_1F_EventScript_MrStoneTalk::
 	end
 
 MagmaHideout_1F_EventScript_MrStoneTalkUp::
-	faceplayer
 	msgbox MagmaHideout_1F_Text_MrStoneSuspicious, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneLeaveUp
@@ -132,7 +142,6 @@ MagmaHideout_1F_EventScript_MrStoneTalkUp::
 	end
 
 MagmaHideout_1F_EventScript_MrStoneTalkLeft::
-	faceplayer
 	msgbox MagmaHideout_1F_Text_MrStoneSuspicious, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneLeaveLeft
@@ -144,7 +153,6 @@ MagmaHideout_1F_EventScript_MrStoneTalkLeft::
 	end
 
 MagmaHideout_1F_EventScript_MrStoneTalkRight::
-	faceplayer
 	msgbox MagmaHideout_1F_Text_MrStoneSuspicious, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_MR_STONE, MagmaHideout_1F_Movement_MrStoneLeaveRight
@@ -201,17 +209,15 @@ MagmaHideout_1F_Movement_MrStoneLeaveUp:
 	walk_down
 	walk_down
 	walk_left
-	walk_down
+	face_down
 	step_end
 
 MagmaHideout_1F_Movement_MrStoneLeaveLeft:
-	walk_down
-	walk_down
+	face_down
 	step_end
 
 MagmaHideout_1F_Movement_MrStoneLeaveRight:
-	walk_down
-	walk_down
+	face_down
 	step_end
 
 MagmaHideout_1F_Text_MrStoneSuspicious:

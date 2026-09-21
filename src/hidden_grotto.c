@@ -38,6 +38,7 @@ enum HiddenGrottoItemPool
     HIDDEN_GROTTO_ITEM_POOL_ROGUE_CANYON,
     HIDDEN_GROTTO_ITEM_POOL_ROUTE119,
     HIDDEN_GROTTO_ITEM_POOL_ROUTE120,
+    HIDDEN_GROTTO_ITEM_POOL_MT_PYRE,
 };
 
 struct HiddenGrotto
@@ -206,13 +207,26 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
         HIDDEN_GROTTO_ITEM_POOL_ROUTE120,
         ITEM_NONE,
         {
-            {SPECIES_YANMA, 0},
+            {SPECIES_TREECKO, 0},
             {SPECIES_VILEPLUME, 0},
             {SPECIES_BELLOSSOM, 0},
             {SPECIES_BIBAREL, 0},
         },
     },
-    HIDDEN_GROTTO_PLACEHOLDER,
+    {
+        MAP_GROUP(MAP_MTPYREGROTTO),
+        MAP_NUM(MAP_MTPYREGROTTO),
+        48,
+        LOCALID_MTPYREGROTTO_POKEMON,
+        HIDDEN_GROTTO_ITEM_POOL_MT_PYRE,
+        ITEM_REAPER_CLOTH,
+        {
+            {SPECIES_URSARING, 0},
+            {SPECIES_PERSIAN, 0},
+            {SPECIES_BANETTE, 0},
+            {SPECIES_ANNIHILAPE, 0},
+        },
+    },
     HIDDEN_GROTTO_PLACEHOLDER,
     HIDDEN_GROTTO_PLACEHOLDER,
     HIDDEN_GROTTO_PLACEHOLDER,
@@ -444,6 +458,30 @@ static const struct WeightedHiddenGrottoItem sRoute120GrottoHiddenItems[] =
     {ITEM_MEADOW_PLATE, 8},
     {ITEM_REVIVAL_HERB, 6},
     {ITEM_LUM_BERRY, 4},
+};
+
+static const struct WeightedHiddenGrottoItem sMtPyreGrottoVisibleItems[] =
+{
+    {ITEM_HYPER_POTION, 18},
+    {ITEM_DUSK_BALL, 16},
+    {ITEM_REVIVE, 14},
+    {ITEM_FULL_HEAL, 12},
+    {ITEM_MAX_REPEL, 10},
+    {ITEM_ETHER, 8},
+    {ITEM_CLEANSE_TAG, 7},
+    {ITEM_RARE_BONE, 5},
+};
+
+static const struct WeightedHiddenGrottoItem sMtPyreGrottoHiddenItems[] =
+{
+    {ITEM_RARE_BONE, 18},
+    {ITEM_SPELL_TAG, 14},
+    {ITEM_REVIVAL_HERB, 12},
+    {ITEM_DUSK_STONE, 10},
+    {ITEM_MAX_ETHER, 8},
+    {ITEM_CLEANSE_TAG, 8},
+    {ITEM_PP_UP, 6},
+    {ITEM_RARE_CANDY, 4},
 };
 
 static u8 GetCurrentHiddenGrottoId(void);
@@ -828,6 +866,11 @@ static const struct WeightedHiddenGrottoItem *GetHiddenGrottoVisibleItemPool(con
         *count = ARRAY_COUNT(sRoute120GrottoVisibleItems);
         return sRoute120GrottoVisibleItems;
     }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_MT_PYRE)
+    {
+        *count = ARRAY_COUNT(sMtPyreGrottoVisibleItems);
+        return sMtPyreGrottoVisibleItems;
+    }
 
     *count = ARRAY_COUNT(sHiddenGrottoVisibleItems);
     return sHiddenGrottoVisibleItems;
@@ -874,6 +917,11 @@ static const struct WeightedHiddenGrottoItem *GetHiddenGrottoHiddenItemPool(cons
     {
         *count = ARRAY_COUNT(sRoute120GrottoHiddenItems);
         return sRoute120GrottoHiddenItems;
+    }
+    if (grotto != NULL && grotto->itemPool == HIDDEN_GROTTO_ITEM_POOL_MT_PYRE)
+    {
+        *count = ARRAY_COUNT(sMtPyreGrottoHiddenItems);
+        return sMtPyreGrottoHiddenItems;
     }
 
     *count = ARRAY_COUNT(sHiddenGrottoHiddenItems);

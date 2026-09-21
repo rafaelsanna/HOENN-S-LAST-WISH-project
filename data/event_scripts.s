@@ -1324,3 +1324,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LilycoveCity_House5/scripts.inc"
 
 	.include "data/maps/MtPyre_Cave/scripts.inc"
+
+	.include "data/maps/DevonHideout/scripts.inc"
+
+	.include "data/maps/Mtpyregrotto/scripts.inc"

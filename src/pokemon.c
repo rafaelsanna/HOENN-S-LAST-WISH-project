@@ -6067,6 +6067,17 @@ u16 GetBattleBGM(void)
     {
         enum TrainerClassID trainerClass;
 
+        if (!(gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL)))
+        {
+            switch (SanitizeTrainerId(TRAINER_BATTLE_PARAM.opponentA))
+            {
+            case TRAINER_AURORA:
+            case TRAINER_AURORA_PHOENIX:
+            case TRAINER_AURORA_PHOENIX_HARD:
+                return MUS_VS_GYM_LEADER;
+            }
+        }
+
         if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
             trainerClass = GetFrontierOpponentClass(TRAINER_BATTLE_PARAM.opponentA);
         else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)

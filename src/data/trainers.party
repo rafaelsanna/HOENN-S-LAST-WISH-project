@@ -8764,7 +8764,7 @@ Name: AURORA
 Class: Cultist
 Pic: Aurora
 Gender: Female
-Music: Hiker
+Music: Gym Leader
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
@@ -8805,7 +8805,7 @@ Name: AURORA
 Class: Cultist
 Pic: Aurora
 Gender: Female
-Music: Hiker
+Music: Gym Leader
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
@@ -8862,7 +8862,7 @@ Name: AURORA
 Class: Cultist
 Pic: Aurora
 Gender: Female
-Music: Hiker
+Music: Gym Leader
 Double Battle: Yes
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
