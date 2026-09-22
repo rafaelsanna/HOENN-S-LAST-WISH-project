@@ -231,3 +231,6 @@ const u16 gMetatileAttributes_DistortionWorld[] = INCBIN_U16("data/tilesets/seco
 
 const u16 gMetatiles_NightmareTowns[] = INCBIN_U16("data/tilesets/secondary/nightmare_towns/metatiles.bin");
 const u16 gMetatileAttributes_NightmareTowns[] = INCBIN_U16("data/tilesets/secondary/nightmare_towns/metatile_attributes.bin");
+
+const u16 gMetatiles_Cafe[] = INCBIN_U16("data/tilesets/secondary/cafe/metatiles.bin");
+const u16 gMetatileAttributes_Cafe[] = INCBIN_U16("data/tilesets/secondary/cafe/metatile_attributes.bin");

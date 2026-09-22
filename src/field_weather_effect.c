@@ -3028,9 +3028,10 @@ void HighClouds_InitVars(void)
     gWeatherPtr->colorMapStepDelay = 20;
     gWeatherPtr->noShadows = FALSE;
 
-    // High clouds are normal opaque OBJ sprites. Do not leave an alpha-blend
-    // requirement behind for menus or the next weather.
-    Weather_SetBlendCoeffs(16, 0);
+    // High clouds are normal opaque OBJ sprites, but overworld shadows use
+    // OBJ alpha blending. Keep the standard field coefficients so those
+    // shadows remain translucent instead of rendering as solid black.
+    Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY);
 }
 
 void HighClouds_InitAll(void)

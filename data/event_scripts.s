@@ -1328,3 +1328,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/DevonHideout/scripts.inc"
 
 	.include "data/maps/Mtpyregrotto/scripts.inc"
+
+	.include "data/maps/VerdanturfTowncafe/scripts.inc"

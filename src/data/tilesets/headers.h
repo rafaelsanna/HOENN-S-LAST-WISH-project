@@ -916,3 +916,14 @@ const struct Tileset gTileset_NightmareTowns =
     .metatileAttributes = gMetatileAttributes_NightmareTowns,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_Cafe =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Cafe,
+    .palettes = gTilesetPalettes_Cafe,
+    .metatiles = gMetatiles_Cafe,
+    .metatileAttributes = gMetatileAttributes_Cafe,
+    .callback = NULL,
+};

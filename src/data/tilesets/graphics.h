@@ -1789,3 +1789,22 @@ const u16 gTilesetPalettes_NightmareTowns[][16] =
 };
 
 const u32 gTilesetTiles_NightmareTowns[] = INCBIN_U32("data/tilesets/secondary/nightmare_towns/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_Cafe[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/cafe/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_Cafe[] = INCBIN_U32("data/tilesets/secondary/cafe/tiles.4bpp.lz");

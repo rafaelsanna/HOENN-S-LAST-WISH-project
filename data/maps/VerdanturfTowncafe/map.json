@@ -1,0 +1,35 @@
+{
+  "id": "MAP_VERDANTURF_TOWNCAFE",
+  "name": "VerdanturfTowncafe",
+  "layout": "LAYOUT_VERDANTURF_TOWNCAFE",
+  "music": "MUS_VERDANTURF",
+  "region_map_section": "MAPSEC_VERDANTURF_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 8,
+      "y": 11,
+      "elevation": 0,
+      "dest_map": "MAP_VERDANTURF_TOWN",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 7,
+      "y": 11,
+      "elevation": 0,
+      "dest_map": "MAP_VERDANTURF_TOWN",
+      "dest_warp_id": "7"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

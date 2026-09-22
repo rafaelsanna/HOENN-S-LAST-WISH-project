@@ -5240,6 +5240,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/Mtpyregrotto/border.bin",
       "blockdata_filepath": "data/layouts/Mtpyregrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_VERDANTURF_TOWNCAFE",
+      "name": "VerdanturfTowncafe_Layout",
+      "width": 18,
+      "height": 12,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cafe",
+      "border_filepath": "data/layouts/VerdanturfTowncafe/border.bin",
+      "blockdata_filepath": "data/layouts/VerdanturfTowncafe/map.bin"
     }
   ]
 }
