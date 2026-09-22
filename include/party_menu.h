@@ -93,6 +93,7 @@ void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId);
 void SwitchPartyOrderLinkMulti(u8 battler, u8 slot, u8 slot2);
 void SwitchPartyMonSlots(u8 slot, u8 slot2);
 u8 GetPartyIdFromBattlePartyId(u8 battlePartyId);
+u8 GetPartyIdFromBattleSlot(u8 slot);
 void ShowPartyMenuToShowcaseMultiBattleParty(void);
 void ChooseMonForDaycare(void);
 bool8 CB2_FadeFromPartyMenu(void);

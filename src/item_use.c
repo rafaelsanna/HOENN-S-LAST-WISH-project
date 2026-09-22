@@ -1310,6 +1310,13 @@ bool32 CannotUseItemsInBattle(u16 itemId, struct Pokemon *mon)
         if (gBattleMons[gBattlerInMenuId].statStages[GetItemEffect(itemId)[1]] == MAX_STAT_STAGE)
             cannotUse = TRUE;
         break;
+    case EFFECT_ITEM_CURE_SLEEP_AND_INCREASE_SPEED:
+        if (GetPartyIdFromBattleSlot(gPartyMenu.slotId) != gBattlerPartyIndexes[gBattlerInMenuId]
+            || hp == 0
+            || (!(GetMonData(mon, MON_DATA_STATUS) & STATUS1_SLEEP)
+                && gBattleMons[gBattlerInMenuId].statStages[STAT_SPEED] == MAX_STAT_STAGE))
+            cannotUse = TRUE;
+        break;
     case EFFECT_ITEM_SET_FOCUS_ENERGY:
         if (gBattleMons[gBattlerInMenuId].volatiles.dragonCheer || gBattleMons[gBattlerInMenuId].volatiles.focusEnergy)
             cannotUse = TRUE;

@@ -26,6 +26,7 @@ gBattlescriptsForUsingItem::
 	.4byte BattleScript_ItemRestorePP                @ EFFECT_ITEM_RESTORE_PP
 	.4byte BattleScript_ItemIncreaseAllStats         @ EFFECT_ITEM_INCREASE_ALL_STATS
 	.4byte BattleScript_UsePokeFlute                 @ EFFECT_ITEM_USE_POKE_FLUTE
+	.4byte BattleScript_ItemIcedCoffee               @ EFFECT_ITEM_CURE_SLEEP_AND_INCREASE_SPEED
 
 	.align 2
 gBattlescriptsForSafariActions::
@@ -103,6 +104,19 @@ BattleScript_ItemHealAndCureStatusEnd::
 
 BattleScript_ItemIncreaseStat::
 	call BattleScript_UseItemMessage
+	itemincreasestat
+	statbuffchange BS_ATTACKER, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_ItemEnd
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+	end
+
+BattleScript_ItemIcedCoffee::
+	call BattleScript_UseItemMessage
+	itemcurestatus BattleScript_ItemIcedCoffeeSpeed
+	updatestatusicon BS_SCRIPTING
+	printstring STRINGID_ITEMCUREDSPECIESSTATUS
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_ItemIcedCoffeeSpeed:
 	itemincreasestat
 	statbuffchange BS_ATTACKER, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_ItemEnd
 	printfromtable gStatUpStringIds

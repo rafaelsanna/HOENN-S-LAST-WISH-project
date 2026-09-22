@@ -608,7 +608,7 @@ static void AnimateSelectedPartyIcon(u8, u8);
 static void PartyMenuStartSpriteAnim(u8, u8);
 static u8 GetPartyBoxPaletteFlags(u8, u8);
 static bool8 PartyBoxPal_ParnterOrDisqualifiedInArena(u8);
-static u8 GetPartyIdFromBattleSlot(u8);
+u8 GetPartyIdFromBattleSlot(u8);
 static void Task_ClosePartyMenuAndSetCB2(u8);
 static void UpdatePartyToFieldOrder(void);
 static void MoveCursorToConfirm(void);
@@ -8962,6 +8962,10 @@ u8 GetItemEffectType(u16 item)
     if (itemEffect == NULL)
         return ITEM_EFFECT_NONE;
 
+    // Iced Coffee's Speed boost is handled by its battle script.
+    if (item == ITEM_ICED_COFFEE)
+        return ITEM_EFFECT_CURE_SLEEP;
+
     if ((itemEffect[0] & ITEM0_DIRE_HIT) || itemEffect[1] || (itemEffect[3] & ITEM3_GUARD_SPEC))
         return ITEM_EFFECT_X_ITEM;
     else if (itemEffect[0] & ITEM0_SACRED_ASH)
@@ -9717,7 +9721,7 @@ void SwitchPartyOrderLinkMulti(u8 battler, u8 slot, u8 slot2)
     }
 }
 
-static u8 GetPartyIdFromBattleSlot(u8 slot)
+u8 GetPartyIdFromBattleSlot(u8 slot)
 {
     u8 modResult = slot & 1;
     u8 retVal;

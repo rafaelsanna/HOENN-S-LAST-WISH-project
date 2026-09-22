@@ -1,0 +1,84 @@
+raw `
+VerdanturfTowncafe_MapScripts::
+	.byte 0
+
+VerdanturfTowncafe_EventScript_Cashier::
+	lock
+	faceplayer
+	message VerdanturfTowncafe_Text_Cashier
+	waitmessage
+	pokemart VerdanturfTowncafe_Pokemart_Coffee
+	msgbox VerdanturfTowncafe_Text_CashierFarewell, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+VerdanturfTowncafe_Pokemart_Coffee:
+	.2byte ITEM_HOT_COFFEE
+	.2byte ITEM_ICED_COFFEE
+	pokemartlistend
+
+VerdanturfTowncafe_EventScript_Barista::
+	msgbox VerdanturfTowncafe_Text_Barista, MSGBOX_NPC
+	end
+
+VerdanturfTowncafe_EventScript_Boy::
+	msgbox VerdanturfTowncafe_Text_Boy, MSGBOX_NPC
+	end
+
+VerdanturfTowncafe_EventScript_Lass::
+	msgbox VerdanturfTowncafe_Text_Lass, MSGBOX_NPC
+	end
+
+VerdanturfTowncafe_EventScript_Daughter::
+	msgbox VerdanturfTowncafe_Text_Daughter, MSGBOX_NPC
+	end
+
+VerdanturfTowncafe_EventScript_Mother::
+	msgbox VerdanturfTowncafe_Text_Mother, MSGBOX_NPC
+	end
+
+VerdanturfTowncafe_EventScript_Father::
+	msgbox VerdanturfTowncafe_Text_Father, MSGBOX_NPC
+	end
+
+VerdanturfTowncafe_Text_Cashier:
+	.string "Welcome to the VERDANTURF CAFE!\p"
+	.string "HOT COFFEE or ICED COFFEE?\n"
+	.string "What can I get for you?$"
+
+VerdanturfTowncafe_Text_CashierFarewell:
+	.string "Thanks! Come back whenever you\n"
+	.string "need a little pick-me-up.$"
+
+VerdanturfTowncafe_Text_Barista:
+	.string "One HOT COFFEE coming up!\p"
+	.string "The whole cafe smells wonderful\n"
+	.string "when the beans are brewing.$"
+
+VerdanturfTowncafe_Text_Boy:
+	.string "I asked her here for coffee...\p"
+	.string "Now I've forgotten everything\n"
+	.string "I was going to say.$"
+
+VerdanturfTowncafe_Text_Lass:
+	.string "He keeps stirring his coffee,\n"
+	.string "even though he finished it.\p"
+	.string "It's kind of cute.$"
+
+VerdanturfTowncafe_Text_Daughter:
+	.string "Mom and Dad won't let me have\n"
+	.string "coffee!\p"
+	.string "They say I'd bounce off walls.\n"
+	.string "I can already do that!$"
+
+VerdanturfTowncafe_Text_Mother:
+	.string "We brought her out for a treat.\p"
+	.string "She's not stopped asking for\n"
+	.string "coffee since we arrived.$"
+
+VerdanturfTowncafe_Text_Father:
+	.string "She's having berry juice.\n"
+	.string "We thought she'd like it better.\p"
+	.string "She disagrees.$"
+`

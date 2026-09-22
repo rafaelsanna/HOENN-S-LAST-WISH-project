@@ -110,6 +110,12 @@ const u32 gItemIcon_MaxRevive[] = INCBIN_U32("graphics/items/icons/max_revive.4b
 const u32 gItemIcon_FreshWater[] = INCBIN_U32("graphics/items/icons/fresh_water.4bpp.smol");
 const u16 gItemIconPalette_FreshWater[] = INCBIN_U16("graphics/items/icon_palettes/fresh_water.gbapal");
 
+const u32 gItemIcon_HotCoffee[] = INCBIN_U32("graphics/items/icons/HOTCOFFEE.4bpp.smol");
+const u16 gItemIconPalette_HotCoffee[] = INCBIN_U16("graphics/items/icon_palettes/hot_coffee.gbapal");
+
+const u32 gItemIcon_IcedCoffee[] = INCBIN_U32("graphics/items/icons/ICEDCOFFEE.4bpp.smol");
+const u16 gItemIconPalette_IcedCoffee[] = INCBIN_U16("graphics/items/icon_palettes/iced_coffee.gbapal");
+
 const u32 gItemIcon_SodaPop[] = INCBIN_U32("graphics/items/icons/soda_pop.4bpp.smol");
 const u16 gItemIconPalette_SodaPop[] = INCBIN_U16("graphics/items/icon_palettes/soda_pop.gbapal");
 

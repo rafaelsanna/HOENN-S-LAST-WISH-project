@@ -38,6 +38,7 @@
 #include "constants/decorations.h"
 #include "constants/event_objects.h"
 #include "constants/items.h"
+#include "constants/layouts.h"
 #include "constants/metatile_behaviors.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -47,6 +48,7 @@
 
 #define MAX_ITEMS_SHOWN 8
 #define SHOP_MENU_PALETTE_ID 12
+#define CAFE_PREVIEW_PALETTE_ID 5
 
 enum {
     WIN_BUY_SELL_QUIT,
@@ -139,9 +141,8 @@ static void BuyMenuCollectObjectEventData(void);
 static void BuyMenuDrawObjectEvents(void);
 static void BuyMenuDrawMapBg(void);
 static bool8 BuyMenuCheckForOverlapWithMenuBg(int, int);
-static void BuyMenuDrawMapMetatile(s16, s16, const u16 *, u8);
+static void BuyMenuDrawMapMetatile(s16, s16, const u16 *);
 static void BuyMenuDrawMapMetatileLayer(u16 *dest, s16 offset1, s16 offset2, const u16 *src);
-static bool8 IsMetatileLayerEmpty(const u16 *src);
 static bool8 BuyMenuCheckIfObjectEventOverlapsMenuBg(s16 *);
 static void ExitBuyMenu(u8 taskId);
 static void Task_ExitBuyMenu(u8 taskId);
@@ -658,7 +659,7 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
             StringCopy(gStringVar4, gText_SoldOut);
         else
             StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
-        x = GetStringRightAlignXOffset(FONT_NARROW, gStringVar4, 120);
+        x = GetStringRightAlignXOffset(FONT_NARROW, gStringVar4, GetWindowAttribute(windowId, WINDOW_WIDTH) * 8);
         AddTextPrinterParameterized4(windowId, FONT_NARROW, x, y, 0, 0, sShopBuyMenuTextColors[COLORID_ITEM_LIST], TEXT_SKIP_DRAW, gStringVar4);
     }
 }
@@ -756,9 +757,35 @@ static void BuyMenuInitBgs(void)
 
 static void BuyMenuDecompressBgGraphics(void)
 {
+    u32 row;
+
     DecompressAndCopyTileDataToVram(1, gShopMenu_Gfx, 0x3A0, 0x3E3, 0);
     DecompressDataWithHeaderWram(gShopMenu_Tilemap, sShopData->tilemapBuffers[0]);
+
+    if (gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWNCAFE)
+    {
+        // Expose the full equipment metatile between the money box and list.
+        // Narrow only this shop's list panel by one 8-pixel tile.
+        for (row = 0; row < 20; row++)
+        {
+            sShopData->tilemapBuffers[0][row * 32 + 14] = sShopData->tilemapBuffers[0][row * 32 + 13];
+            if (row == 12)
+                sShopData->tilemapBuffers[0][row * 32 + 13] = 0x08; // description top edge
+            else if (row == 19)
+                sShopData->tilemapBuffers[0][row * 32 + 13] = 0x0B; // description bottom edge
+            else if (row > 12)
+                sShopData->tilemapBuffers[0][row * 32 + 13] = 0x01; // description background
+            else
+                sShopData->tilemapBuffers[0][row * 32 + 13] = 0;
+        }
+    }
+
     LoadPalette(gShopMenu_Pal, BG_PLTT_ID(SHOP_MENU_PALETTE_ID), PLTT_SIZE_4BPP);
+
+    // The cafe uses palette 12 for its equipment, which the shop menu replaces.
+    // Its preview only uses primary metatile 0 (blank), leaving palette 5 free.
+    if (gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWNCAFE)
+        LoadPalette(gMapHeader.mapLayout->secondaryTileset->palettes[SHOP_MENU_PALETTE_ID], BG_PLTT_ID(CAFE_PREVIEW_PALETTE_ID), PLTT_SIZE_4BPP);
 
     // The item list is transparent and shows this BG palette underneath it.
     LoadPalette(&sShopMenuDarkPanelColors[0], BG_PLTT_ID(SHOP_MENU_PALETTE_ID) + 1, PLTT_SIZEOF(1));
@@ -768,7 +795,16 @@ static void BuyMenuDecompressBgGraphics(void)
 
 static void BuyMenuInitWindows(void)
 {
-    InitWindows(sShopBuyMenuWindowTemplates);
+    struct WindowTemplate windows[ARRAY_COUNT(sShopBuyMenuWindowTemplates)];
+
+    memcpy(windows, sShopBuyMenuWindowTemplates, sizeof(windows));
+    if (gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWNCAFE)
+    {
+        windows[WIN_ITEM_LIST].tilemapLeft++;
+        windows[WIN_ITEM_LIST].width--;
+    }
+
+    InitWindows(windows);
     DeactivateAllTextPrinters();
     LoadUserWindowBorderGfx(WIN_MONEY, 1, BG_PLTT_ID(13));
     LoadUserWindowBorderGfx(WIN_MESSAGE, 1, BG_PLTT_ID(13));
@@ -814,7 +850,6 @@ static void BuyMenuDrawMapBg(void)
     s16 x, y;
     const struct MapLayout *mapLayout;
     u16 metatile;
-    u8 metatileLayerType;
 
     mapLayout = gMapHeader.mapLayout;
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
@@ -826,61 +861,24 @@ static void BuyMenuDrawMapBg(void)
         for (i = 0; i < 15; i++)
         {
             metatile = MapGridGetMetatileIdAt(x + i, y + j);
-            if (BuyMenuCheckForOverlapWithMenuBg(i, j) == TRUE)
-                metatileLayerType = METATILE_LAYER_TYPE_NORMAL;
-            else
-                metatileLayerType = METATILE_LAYER_TYPE_COVERED;
-
             if (metatile < NUM_METATILES_IN_PRIMARY)
-                BuyMenuDrawMapMetatile(i, j, mapLayout->primaryTileset->metatiles + metatile * NUM_TILES_PER_METATILE, metatileLayerType);
+                BuyMenuDrawMapMetatile(i, j, mapLayout->primaryTileset->metatiles + metatile * NUM_TILES_PER_METATILE);
             else
-                BuyMenuDrawMapMetatile(i, j, mapLayout->secondaryTileset->metatiles + ((metatile - NUM_METATILES_IN_PRIMARY) * NUM_TILES_PER_METATILE), metatileLayerType);
+                BuyMenuDrawMapMetatile(i, j, mapLayout->secondaryTileset->metatiles + ((metatile - NUM_METATILES_IN_PRIMARY) * NUM_TILES_PER_METATILE));
         }
     }
 }
 
-static void BuyMenuDrawMapMetatile(s16 x, s16 y, const u16 *src, u8 metatileLayerType)
+static void BuyMenuDrawMapMetatile(s16 x, s16 y, const u16 *src)
 {
     u16 offset1 = x * 2;
     u16 offset2 = y * 64;
 
-    if (metatileLayerType == METATILE_LAYER_TYPE_NORMAL)
-    {
-        BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[2], offset1, offset2, src + 0);
-        BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[3], offset1, offset2, src + 4);
-        BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[1], offset1, offset2, src + 8);
-    }
-    else
-    {
-        if (IsMetatileLayerEmpty(src))
-        {
-            BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[2], offset1, offset2, src + 4);
-            BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[3], offset1, offset2, src + 8);
-        }
-        else if (IsMetatileLayerEmpty(src + 4))
-        {
-            BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[2], offset1, offset2, src);
-            BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[3], offset1, offset2, src + 8);
-        }
-        else if (IsMetatileLayerEmpty(src + 8))
-        {
-            BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[2], offset1, offset2, src);
-            BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[3], offset1, offset2, src + 4);
-        }
-    }
-}
-
-static bool8 IsMetatileLayerEmpty(const u16 *src)
-{
-    u32 i;
-
-    for (i = 0; i < 4; i++)
-    {
-        if ((src[i] & 0x3FF) != 0)
-            return FALSE;
-    }
-
-    return TRUE;
+    // Keep the preview's map layers intact right up to the window edges.
+    // BuyMenuCopyMenuBgToBg1TilemapBuffer overlays the purchase windows later.
+    BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[2], offset1, offset2, src + 0);
+    BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[3], offset1, offset2, src + 4);
+    BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[1], offset1, offset2, src + 8);
 }
 
 static void BuyMenuDrawMapMetatileLayer(u16 *dest, s16 offset1, s16 offset2, const u16 *src)
@@ -890,6 +888,23 @@ static void BuyMenuDrawMapMetatileLayer(u16 *dest, s16 offset1, s16 offset2, con
     dest[offset1 + offset2 + 1] = src[1]; // top right
     dest[offset1 + offset2 + 32] = src[2]; // bottom left
     dest[offset1 + offset2 + 33] = src[3]; // bottom right
+
+    if (gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWNCAFE)
+    {
+        u16 *tiles[] = {
+            &dest[offset1 + offset2],
+            &dest[offset1 + offset2 + 1],
+            &dest[offset1 + offset2 + 32],
+            &dest[offset1 + offset2 + 33],
+        };
+        u32 i;
+
+        for (i = 0; i < ARRAY_COUNT(tiles); i++)
+        {
+            if ((*tiles[i] >> 12) == SHOP_MENU_PALETTE_ID)
+                *tiles[i] = (*tiles[i] & 0x0FFF) | (CAFE_PREVIEW_PALETTE_ID << 12);
+        }
+    }
 }
 
 static void BuyMenuCollectObjectEventData(void)
@@ -966,7 +981,15 @@ static void BuyMenuDrawObjectEvents(void)
             (u16)sShopData->viewportObjects[i][Y_COORD] * 16 + 48 - graphicsInfo->height / 2,
             2);
 
-        if (BuyMenuCheckIfObjectEventOverlapsMenuBg(sShopData->viewportObjects[i]) == TRUE)
+        if (gObjectEvents[sShopData->viewportObjects[i][OBJ_EVENT_ID]].localId == OBJ_EVENT_ID_FOLLOWER
+         && graphicsInfo->subspriteTables != NULL)
+        {
+            // Draw the whole follower at one priority so its lower half is not
+            // hidden by the floor; the higher-priority windows still cover it.
+            gSprites[spriteId].subspriteTableNum = 1;
+            gSprites[spriteId].subspriteMode = SUBSPRITES_ON;
+        }
+        else if (BuyMenuCheckIfObjectEventOverlapsMenuBg(sShopData->viewportObjects[i]) == TRUE)
         {
             gSprites[spriteId].subspriteTableNum = 4;
             gSprites[spriteId].subspriteMode = SUBSPRITES_ON;

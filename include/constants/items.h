@@ -1000,11 +1000,13 @@
 #define ITEM_TIME_GEAR 833
 #define ITEM_RADIO 834
 #define ITEM_SB_KEY_CARD 835
+#define ITEM_HOT_COFFEE 836
+#define ITEM_ICED_COFFEE 837
 
 // HOPO BERRY
 // LEGEND PLATE
 
-#define ITEMS_COUNT 836
+#define ITEMS_COUNT 838
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations
@@ -1078,6 +1080,7 @@
 #define EFFECT_ITEM_RESTORE_PP              10
 #define EFFECT_ITEM_INCREASE_ALL_STATS      11
 #define EFFECT_ITEM_USE_POKE_FLUTE          12
+#define EFFECT_ITEM_CURE_SLEEP_AND_INCREASE_SPEED 13
 
 // Enigma Berry dummy constant
 #define EFFECT_ITEM_ENIGMA_BERRY_EREADER    1

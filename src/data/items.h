@@ -14855,7 +14855,7 @@ const struct Item gItemsInfo[] =
     .iconPic     = gItemIcon_Radio,
     .iconPalette = gItemIconPalette_Radio,
 },
-[ITEM_SB_KEY_CARD] =
+    [ITEM_SB_KEY_CARD] =
 {
     .name        = ITEM_NAME("SB Key Card"),
     .price       = 0,
@@ -14869,6 +14869,46 @@ const struct Item gItemsInfo[] =
     .iconPic     = gItemIcon_CardKey,
     .iconPalette = gItemIconPalette_CardKey,
 },
+
+    [ITEM_HOT_COFFEE] =
+    {
+        .name = ITEM_NAME("Hot Coffee"),
+        .price = 750,
+        .holdEffectParam = 50,
+        .description = COMPOUND_STRING(
+            "A warm coffee that\n"
+            "restores 50 HP and\n"
+            "cures sleep."),
+        .pocket = POCKET_MEDICINE,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Medicine,
+        .battleUsage = EFFECT_ITEM_HEAL_AND_CURE_STATUS,
+        .effect = gItemEffect_HotCoffee,
+        .flingPower = 30,
+        .iconPic = gItemIcon_HotCoffee,
+        .iconPalette = gItemIconPalette_HotCoffee,
+    },
+
+    [ITEM_ICED_COFFEE] =
+    {
+        .name = ITEM_NAME("Iced Coffee"),
+        .price = 750,
+        .holdEffectParam = 1,
+        .description = COMPOUND_STRING(
+            "Cures sleep and\n"
+            "raises Speed by one\n"
+            "stage in battle."),
+        .pocket = POCKET_MEDICINE,
+        .sortType = ITEM_TYPE_STATUS_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Medicine,
+        .battleUsage = EFFECT_ITEM_CURE_SLEEP_AND_INCREASE_SPEED,
+        .effect = gItemEffect_IcedCoffee,
+        .flingPower = 30,
+        .iconPic = gItemIcon_IcedCoffee,
+        .iconPalette = gItemIconPalette_IcedCoffee,
+    },
 };
 
 #undef ITEM_NAME
