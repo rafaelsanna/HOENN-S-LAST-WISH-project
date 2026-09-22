@@ -227,508 +227,532 @@ FortreeCity_Gym_EventScript_Jared::
 # 114 "data/maps/FortreeCity_Gym/scripts.pory"
 	trainerbattle_single TRAINER_JARED, FortreeCity_Gym_Text_JaredIntro, FortreeCity_Gym_Text_JaredDefeat
 # 115 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_JaredPostBattle, MSGBOX_AUTOCLOSE
+	setvar VAR_0x8004, 8
 # 116 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+	setvar VAR_0x8005, 17
 # 117 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	special FortreeGym_RevealBridgeAt
 # 118 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_Edwardo::
+	msgbox FortreeCity_Gym_Text_JaredPostBattle, MSGBOX_AUTOCLOSE
 # 119 "data/maps/FortreeCity_Gym/scripts.pory"
-	trainerbattle_single TRAINER_EDWARDO, FortreeCity_Gym_Text_EdwardoIntro, FortreeCity_Gym_Text_EdwardoDefeat
+	end
 # 120 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_EdwardoPostBattle, MSGBOX_AUTOCLOSE
+
 # 121 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+FortreeCity_Gym_EventScript_Edwardo::
 # 122 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	trainerbattle_single TRAINER_EDWARDO, FortreeCity_Gym_Text_EdwardoIntro, FortreeCity_Gym_Text_EdwardoDefeat
 # 123 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_Flint::
+	setvar VAR_0x8004, 3
 # 124 "data/maps/FortreeCity_Gym/scripts.pory"
-	trainerbattle_single TRAINER_FLINT, FortreeCity_Gym_Text_FlintIntro, FortreeCity_Gym_Text_FlintDefeat
+	setvar VAR_0x8005, 11
 # 125 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_FlintPostBattle, MSGBOX_AUTOCLOSE
+	special FortreeGym_RevealBridgeAt
 # 126 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+	setvar VAR_0x8004, 9
 # 127 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	setvar VAR_0x8005, 11
 # 128 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_Ashley::
+	special FortreeGym_RevealBridgeAt
 # 129 "data/maps/FortreeCity_Gym/scripts.pory"
-	trainerbattle_single TRAINER_ASHLEY, FortreeCity_Gym_Text_AshleyIntro, FortreeCity_Gym_Text_AshleyDefeat
+	msgbox FortreeCity_Gym_Text_EdwardoPostBattle, MSGBOX_AUTOCLOSE
 # 130 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_AshleyPostBattle, MSGBOX_AUTOCLOSE
+	end
 # 131 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+
 # 132 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_EventScript_Flint::
 # 133 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_Humberto::
+	trainerbattle_single TRAINER_FLINT, FortreeCity_Gym_Text_FlintIntro, FortreeCity_Gym_Text_FlintDefeat
 # 134 "data/maps/FortreeCity_Gym/scripts.pory"
-	trainerbattle_single TRAINER_HUMBERTO, FortreeCity_Gym_Text_HumbertoIntro, FortreeCity_Gym_Text_HumbertoDefeat
+	msgbox FortreeCity_Gym_Text_FlintPostBattle, MSGBOX_AUTOCLOSE
 # 135 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_HumbertoPostBattle, MSGBOX_AUTOCLOSE
+	end
 # 136 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+
 # 137 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_EventScript_Ashley::
 # 138 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_Darius::
+	trainerbattle_single TRAINER_ASHLEY, FortreeCity_Gym_Text_AshleyIntro, FortreeCity_Gym_Text_AshleyDefeat
 # 139 "data/maps/FortreeCity_Gym/scripts.pory"
-	trainerbattle_single TRAINER_DARIUS, FortreeCity_Gym_Text_DariusIntro, FortreeCity_Gym_Text_DariusDefeat
+	msgbox FortreeCity_Gym_Text_AshleyPostBattle, MSGBOX_AUTOCLOSE
 # 140 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_DariusPostBattle, MSGBOX_AUTOCLOSE
+	end
 # 141 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+
 # 142 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_EventScript_Humberto::
 # 143 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_GymGuide::
+	trainerbattle_single TRAINER_HUMBERTO, FortreeCity_Gym_Text_HumbertoIntro, FortreeCity_Gym_Text_HumbertoDefeat
 # 144 "data/maps/FortreeCity_Gym/scripts.pory"
-	lock
+	msgbox FortreeCity_Gym_Text_HumbertoPostBattle, MSGBOX_AUTOCLOSE
 # 145 "data/maps/FortreeCity_Gym/scripts.pory"
-	faceplayer
+	end
 # 146 "data/maps/FortreeCity_Gym/scripts.pory"
-	goto_if_set FLAG_DEFEATED_FORTREE_GYM, FortreeCity_Gym_EventScript_GymGuidePostVictory
+
 # 147 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_GymGuideAdvice, MSGBOX_DEFAULT
+FortreeCity_Gym_EventScript_Darius::
 # 148 "data/maps/FortreeCity_Gym/scripts.pory"
-	release
+	trainerbattle_single TRAINER_DARIUS, FortreeCity_Gym_Text_DariusIntro, FortreeCity_Gym_Text_DariusDefeat
 # 149 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+	setvar VAR_0x8004, 18
 # 150 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	setvar VAR_0x8005, 16
 # 151 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_GymGuidePostVictory::
+	special FortreeGym_RevealBridgeAt
 # 152 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_GymGuidePostVictory, MSGBOX_DEFAULT
+	msgbox FortreeCity_Gym_Text_DariusPostBattle, MSGBOX_AUTOCLOSE
 # 153 "data/maps/FortreeCity_Gym/scripts.pory"
-	release
+	end
 # 154 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+
 # 155 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_EventScript_GymGuide::
 # 156 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_LeftGymStatue::
+	lock
 # 157 "data/maps/FortreeCity_Gym/scripts.pory"
-	lockall
+	faceplayer
 # 158 "data/maps/FortreeCity_Gym/scripts.pory"
-	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
+	goto_if_set FLAG_DEFEATED_FORTREE_GYM, FortreeCity_Gym_EventScript_GymGuidePostVictory
 # 159 "data/maps/FortreeCity_Gym/scripts.pory"
-	goto FortreeCity_Gym_EventScript_GymStatue
+	msgbox FortreeCity_Gym_Text_GymGuideAdvice, MSGBOX_DEFAULT
 # 160 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+	release
 # 161 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	end
 # 162 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_RightGymStatue::
+
 # 163 "data/maps/FortreeCity_Gym/scripts.pory"
-	lockall
+FortreeCity_Gym_EventScript_GymGuidePostVictory::
 # 164 "data/maps/FortreeCity_Gym/scripts.pory"
-	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
+	msgbox FortreeCity_Gym_Text_GymGuidePostVictory, MSGBOX_DEFAULT
 # 165 "data/maps/FortreeCity_Gym/scripts.pory"
-	goto FortreeCity_Gym_EventScript_GymStatue
+	release
 # 166 "data/maps/FortreeCity_Gym/scripts.pory"
 	end
 # 167 "data/maps/FortreeCity_Gym/scripts.pory"
 
 # 168 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_GymStatueCertified::
+FortreeCity_Gym_EventScript_LeftGymStatue::
 # 169 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_GymStatueCertified, MSGBOX_DEFAULT
+	lockall
 # 170 "data/maps/FortreeCity_Gym/scripts.pory"
-	releaseall
+	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
 # 171 "data/maps/FortreeCity_Gym/scripts.pory"
-	end
+	goto FortreeCity_Gym_EventScript_GymStatue
 # 172 "data/maps/FortreeCity_Gym/scripts.pory"
-
-# 173 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_EventScript_GymStatue::
-# 174 "data/maps/FortreeCity_Gym/scripts.pory"
-	msgbox FortreeCity_Gym_Text_GymStatue, MSGBOX_DEFAULT
-# 175 "data/maps/FortreeCity_Gym/scripts.pory"
-	releaseall
-# 176 "data/maps/FortreeCity_Gym/scripts.pory"
 	end
+# 173 "data/maps/FortreeCity_Gym/scripts.pory"
+
+# 174 "data/maps/FortreeCity_Gym/scripts.pory"
+FortreeCity_Gym_EventScript_RightGymStatue::
+# 175 "data/maps/FortreeCity_Gym/scripts.pory"
+	lockall
+# 176 "data/maps/FortreeCity_Gym/scripts.pory"
+	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
 # 177 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	goto FortreeCity_Gym_EventScript_GymStatue
 # 178 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_GymGuideAdvice:
+	end
 # 179 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Yo, CHAMPION-bound {PLAYER}!\p"
+
 # 180 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TAKA, our LEADER, lives\n"
+FortreeCity_Gym_EventScript_GymStatueCertified::
 # 181 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "for the open sky.\p"
+	msgbox FortreeCity_Gym_Text_GymStatueCertified, MSGBOX_DEFAULT
 # 182 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "He says battle should feel\n"
+	releaseall
 # 183 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "like riding the wind.\p"
+	end
 # 184 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Keep your footing steady,\n"
+
 # 185 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "or you'll fall fast!$"
+FortreeCity_Gym_EventScript_GymStatue::
 # 186 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	msgbox FortreeCity_Gym_Text_GymStatue, MSGBOX_DEFAULT
 # 187 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_GymGuidePostVictory:
+	releaseall
 # 188 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You did it!\n"
+	end
 # 189 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You soared past gravity!$"
+
 # 190 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_Text_GymGuideAdvice:
 # 191 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_JaredIntro:
+	.string "Yo, CHAMPION-bound {PLAYER}!\p"
 # 192 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Feel that breeze?\n"
+	.string "TAKA, our LEADER, lives\n"
 # 193 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "That's freedom calling!\p"
+	.string "for the open sky.\p"
 # 194 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Let's see if you can\n"
+	.string "He says battle should feel\n"
 # 195 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "stay airborne!$"
+	.string "like riding the wind.\p"
 # 196 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "Keep your footing steady,\n"
 # 197 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_JaredDefeat:
+	.string "or you'll fall fast!$"
 # 198 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Wow…\n"
+
 # 199 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "The wind slipped away…$"
+FortreeCity_Gym_Text_GymGuidePostVictory:
 # 200 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "You did it!\n"
 # 201 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_JaredPostBattle:
+	.string "You soared past gravity!$"
 # 202 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Battles shift like currents.\p"
-# 203 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "If you panic midair,\n"
-# 204 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "you'll lose control.\p"
-# 205 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Can you stay steady\n"
-# 206 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "against TAKA?$"
-# 207 "data/maps/FortreeCity_Gym/scripts.pory"
 
+# 203 "data/maps/FortreeCity_Gym/scripts.pory"
+FortreeCity_Gym_Text_JaredIntro:
+# 204 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "Feel that breeze?\n"
+# 205 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "That's freedom calling!\p"
+# 206 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "Let's see if you can\n"
+# 207 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "stay airborne!$"
 # 208 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_EdwardoIntro:
+
 # 209 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Only those who love the sky\n"
+FortreeCity_Gym_Text_JaredDefeat:
 # 210 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "truly belong here.\p"
+	.string "Wow…\n"
 # 211 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I won't fall easily!$"
+	.string "The wind slipped away…$"
 # 212 "data/maps/FortreeCity_Gym/scripts.pory"
 
 # 213 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_EdwardoDefeat:
+FortreeCity_Gym_Text_JaredPostBattle:
 # 214 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "The height overwhelmed me…$"
+	.string "Battles shift like currents.\p"
 # 215 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "If you panic midair,\n"
 # 216 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_EdwardoPostBattle:
+	.string "you'll lose control.\p"
 # 217 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "The world below looks small\n"
+	.string "Can you stay steady\n"
 # 218 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "from up high.\p"
+	.string "against TAKA?$"
 # 219 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "But the fall is always\n"
-# 220 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "a risk.\p"
-# 221 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I'll fly higher again.$"
-# 222 "data/maps/FortreeCity_Gym/scripts.pory"
 
+# 220 "data/maps/FortreeCity_Gym/scripts.pory"
+FortreeCity_Gym_Text_EdwardoIntro:
+# 221 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "Only those who love the sky\n"
+# 222 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "truly belong here.\p"
 # 223 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_FlintIntro:
+	.string "I won't fall easily!$"
 # 224 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You think you can face TAKA?\p"
+
 # 225 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You'll have to get past\n"
+FortreeCity_Gym_Text_EdwardoDefeat:
 # 226 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "this gust first!$"
+	.string "The height overwhelmed me…$"
 # 227 "data/maps/FortreeCity_Gym/scripts.pory"
 
 # 228 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_FlintDefeat:
+FortreeCity_Gym_Text_EdwardoPostBattle:
 # 229 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TAKA, I…\n"
+	.string "The world below looks small\n"
 # 230 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I lost!$"
+	.string "from up high.\p"
 # 231 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "But the fall is always\n"
 # 232 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_FlintPostBattle:
+	.string "a risk.\p"
 # 233 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TAKA doesn't fear heights.\n"
+	.string "I'll fly higher again.$"
 # 234 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "He embraces them.\p"
+
 # 235 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Up there, he's untouchable.$"
+FortreeCity_Gym_Text_FlintIntro:
 # 236 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "You think you can face TAKA?\p"
 # 237 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_AshleyIntro:
+	.string "You'll have to get past\n"
 # 238 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TAKA taught me to trust\n"
+	.string "this gust first!$"
 # 239 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "the wind beneath me!\p"
+
 # 240 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I won't lose balance!$"
+FortreeCity_Gym_Text_FlintDefeat:
 # 241 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "TAKA, I…\n"
 # 242 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_AshleyDefeat:
+	.string "I lost!$"
 # 243 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I couldn't keep altitude…$"
+
 # 244 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_Text_FlintPostBattle:
 # 245 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_AshleyPostBattle:
+	.string "TAKA doesn't fear heights.\n"
 # 246 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Because of TAKA,\n"
+	.string "He embraces them.\p"
 # 247 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "we're not afraid of falling.\p"
+	.string "Up there, he's untouchable.$"
 # 248 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "We learn to rise again.$"
+
 # 249 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_Text_AshleyIntro:
 # 250 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_HumbertoIntro:
+	.string "TAKA taught me to trust\n"
 # 251 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "When TAKA battles,\n"
+	.string "the wind beneath me!\p"
 # 252 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "he looks completely free.\p"
+	.string "I won't lose balance!$"
 # 253 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I won't let you\n"
+
 # 254 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "see that sky today!$"
+FortreeCity_Gym_Text_AshleyDefeat:
 # 255 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "I couldn't keep altitude…$"
 # 256 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_HumbertoDefeat:
+
 # 257 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Urk!\n"
+FortreeCity_Gym_Text_AshleyPostBattle:
 # 258 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I couldn't stop you.$"
+	.string "Because of TAKA,\n"
 # 259 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "we're not afraid of falling.\p"
 # 260 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_HumbertoPostBattle:
+	.string "We learn to rise again.$"
 # 261 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Careful up there.\n"
+
 # 262 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "One wrong move,\l"
+FortreeCity_Gym_Text_HumbertoIntro:
 # 263 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "and you plummet.\p"
+	.string "When TAKA battles,\n"
 # 264 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Freedom demands courage!$"
+	.string "he looks completely free.\p"
 # 265 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "I won't let you\n"
 # 266 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_DariusIntro:
+	.string "see that sky today!$"
 # 267 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Flying POKEMON aren't\n"
+
 # 268 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "all the same.\p"
+FortreeCity_Gym_Text_HumbertoDefeat:
 # 269 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Some soar.\n"
+	.string "Urk!\n"
 # 270 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Some dive.\p"
+	.string "I couldn't stop you.$"
 # 271 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Can you handle both?$"
+
 # 272 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_Text_HumbertoPostBattle:
 # 273 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_DariusDefeat:
+	.string "Careful up there.\n"
 # 274 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You handled the air well.$"
+	.string "One wrong move,\l"
 # 275 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "and you plummet.\p"
 # 276 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_DariusPostBattle:
+	.string "Freedom demands courage!$"
 # 277 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Sure, you beat me.\p"
+
 # 278 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "But TAKA moves like\n"
+FortreeCity_Gym_Text_DariusIntro:
 # 279 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "a shifting gale.\p"
+	.string "Flying POKEMON aren't\n"
 # 280 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Stay sharp up there.$"
+	.string "all the same.\p"
 # 281 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "Some soar.\n"
 # 282 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_WinonaIntro:
+	.string "Some dive.\p"
 # 283 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "So you've made it this high.\p"
+	.string "Can you handle both?$"
 # 284 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I am TAKA, Leader of\n"
+
 # 285 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "the FORTREE GYM.\p"
+FortreeCity_Gym_Text_DariusDefeat:
 # 286 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "The sky is my true home.\n"
+	.string "You handled the air well.$"
 # 287 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Up there, I feel limitless.\p"
+
 # 288 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "With my FLYING POKEMON,\n"
+FortreeCity_Gym_Text_DariusPostBattle:
 # 289 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I chase the wind itself.\p"
+	.string "Sure, you beat me.\p"
 # 290 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Show me, can you battle\n"
+	.string "But TAKA moves like\n"
 # 291 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "with the same freedom?$"
+	.string "a shifting gale.\p"
 # 292 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "Stay sharp up there.$"
 # 293 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_WinonaDefeat:
+
 # 294 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Incredible…\n"
+FortreeCity_Gym_Text_WinonaIntro:
 # 295 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You rode the wind perfectly.\p"
+	.string "So you've made it this high.\p"
 # 296 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Very well.\n"
+	.string "I am TAKA, Leader of\n"
 # 297 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You have earned this GYM BADGE.$"
+	.string "the FORTREE GYM.\p"
 # 298 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "The sky is my true home.\n"
 # 299 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_ReceivedFeatherBadge:
+	.string "Up there, I feel limitless.\p"
 # 300 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "{PLAYER} received the FEATHER BADGE\n"
+	.string "With my FLYING POKEMON,\n"
 # 301 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "from TAKA.$"
+	.string "I chase the wind itself.\p"
 # 302 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "Show me, can you battle\n"
 # 303 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_ExplainFeatherBadgeTakeThis:
+	.string "with the same freedom?$"
 # 304 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "With the FEATHER BADGE, all POKéMON up\n"
+
 # 305 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "to LV 70, even those received through\l"
+FortreeCity_Gym_Text_WinonaDefeat:
 # 306 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "trades, will obey your every command.\p"
+	.string "Incredible…\n"
 # 307 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You will also be able to use\n"
+	.string "You rode the wind perfectly.\p"
 # 308 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "the HM move FLY outside of battle.\p"
+	.string "Very well.\n"
 # 309 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "And this…\n"
+	.string "You have earned this GYM BADGE.$"
 # 310 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "This is a gift from me.$"
+
 # 311 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_Text_ReceivedFeatherBadge:
 # 312 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_ExplainAerialAce:
+	.string "{PLAYER} received the FEATHER BADGE\n"
 # 313 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TM40 contains ACROBATICS.\p"
+	.string "from TAKA.$"
 # 314 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "It becomes much stronger when the\n"
+
 # 315 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "user is not holding an item.$"
+FortreeCity_Gym_Text_ExplainFeatherBadgeTakeThis:
 # 316 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "With the FEATHER BADGE, all POKéMON up\n"
 # 317 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_RegisteredWinona:
+	.string "to LV 70, even those received through\l"
 # 318 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Registered GYM LEADER TAKA\n"
+	.string "trades, will obey your every command.\p"
 # 319 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "in the POKéNAV.$"
+	.string "You will also be able to use\n"
 # 320 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "the HM move FLY outside of battle.\p"
 # 321 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_WinonaPostBattle:
+	.string "And this…\n"
 # 322 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Even in defeat, I feel lighter.\p"
+	.string "This is a gift from me.$"
 # 323 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "A true battle is like flight,\n"
+
 # 324 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "you must trust the wind.\p"
+FortreeCity_Gym_Text_ExplainAerialAce:
 # 325 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Keep chasing new heights!$"
+	.string "TM40 contains ACROBATICS.\p"
 # 326 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "It becomes much stronger when the\n"
 # 327 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_GymStatue:
+	.string "user is not holding an item.$"
 # 328 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "FORTREE CITY POKéMON GYM$"
+
 # 329 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_Text_RegisteredWinona:
 # 330 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_GymStatueCertified:
+	.string "Registered GYM LEADER TAKA\n"
 # 331 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "FORTREE CITY POKéMON GYM\p"
+	.string "in the POKéNAV.$"
 # 332 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TAKA'S CERTIFIED TRAINERS:\n"
+
 # 333 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "{PLAYER}$"
+FortreeCity_Gym_Text_WinonaPostBattle:
 # 334 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "Even in defeat, I feel lighter.\p"
 # 335 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_WinonaPreRematch:
+	.string "A true battle is like flight,\n"
 # 336 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TAKA: We humans can never escape\n"
+	.string "you must trust the wind.\p"
 # 337 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "gravity's pull on the ground.\p"
+	.string "Keep chasing new heights!$"
 # 338 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "But by striving for excellence,\n"
+
 # 339 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "we have the power to soar!\p"
+FortreeCity_Gym_Text_GymStatue:
 # 340 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "You have scaled the pinnacle as\n"
+	.string "FORTREE CITY POKéMON GYM$"
 # 341 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "the reigning CHAMPION.\p"
+
 # 342 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Please, allow me to see your power\n"
+FortreeCity_Gym_Text_GymStatueCertified:
 # 343 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "at full flight!$"
+	.string "FORTREE CITY POKéMON GYM\p"
 # 344 "data/maps/FortreeCity_Gym/scripts.pory"
-
+	.string "TAKA'S CERTIFIED TRAINERS:\n"
 # 345 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_WinonaRematchDefeat:
+	.string "{PLAYER}$"
 # 346 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I failed to reach your height again…$"
+
 # 347 "data/maps/FortreeCity_Gym/scripts.pory"
-
+FortreeCity_Gym_Text_WinonaPreRematch:
 # 348 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_WinonaPostRematch:
-# 349 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "TAKA: Even though I have lost,\n"
-# 350 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "the wings of my heart remain unbroken.\p"
-# 351 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I can rise and soar again and\n"
-# 352 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "yet again.\p"
-# 353 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "I am convinced of it!$"
-# 354 "data/maps/FortreeCity_Gym/scripts.pory"
-
-# 355 "data/maps/FortreeCity_Gym/scripts.pory"
-FortreeCity_Gym_Text_WinonaRematchNeedTwoMons:
-# 356 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "TAKA: We humans can never escape\n"
-# 357 "data/maps/FortreeCity_Gym/scripts.pory"
+# 349 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "gravity's pull on the ground.\p"
-# 358 "data/maps/FortreeCity_Gym/scripts.pory"
+# 350 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "But by striving for excellence,\n"
-# 359 "data/maps/FortreeCity_Gym/scripts.pory"
+# 351 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "we have the power to soar!\p"
-# 360 "data/maps/FortreeCity_Gym/scripts.pory"
+# 352 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "You have scaled the pinnacle as\n"
-# 361 "data/maps/FortreeCity_Gym/scripts.pory"
+# 353 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "the reigning CHAMPION.\p"
-# 362 "data/maps/FortreeCity_Gym/scripts.pory"
+# 354 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "Please, allow me to see your power\n"
+# 355 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "at full flight!$"
+# 356 "data/maps/FortreeCity_Gym/scripts.pory"
+
+# 357 "data/maps/FortreeCity_Gym/scripts.pory"
+FortreeCity_Gym_Text_WinonaRematchDefeat:
+# 358 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "I failed to reach your height again…$"
+# 359 "data/maps/FortreeCity_Gym/scripts.pory"
+
+# 360 "data/maps/FortreeCity_Gym/scripts.pory"
+FortreeCity_Gym_Text_WinonaPostRematch:
+# 361 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "TAKA: Even though I have lost,\n"
+# 362 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "the wings of my heart remain unbroken.\p"
 # 363 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "at full flight!\p"
+	.string "I can rise and soar again and\n"
 # 364 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Oh, no… Do you have but one\n"
+	.string "yet again.\p"
 # 365 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "POKéMON with you?\p"
+	.string "I am convinced of it!$"
 # 366 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Please return with two POKéMON\n"
+
 # 367 "data/maps/FortreeCity_Gym/scripts.pory"
+FortreeCity_Gym_Text_WinonaRematchNeedTwoMons:
+# 368 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "TAKA: We humans can never escape\n"
+# 369 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "gravity's pull on the ground.\p"
+# 370 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "But by striving for excellence,\n"
+# 371 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "we have the power to soar!\p"
+# 372 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "You have scaled the pinnacle as\n"
+# 373 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "the reigning CHAMPION.\p"
+# 374 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "Please, allow me to see your power\n"
+# 375 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "at full flight!\p"
+# 376 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "Oh, no… Do you have but one\n"
+# 377 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "POKéMON with you?\p"
+# 378 "data/maps/FortreeCity_Gym/scripts.pory"
+	.string "Please return with two POKéMON\n"
+# 379 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "at the very least.$"

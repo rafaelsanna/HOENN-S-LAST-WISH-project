@@ -112,11 +112,20 @@ FortreeCity_Gym_EventScript_WinonaRematch::
 
 FortreeCity_Gym_EventScript_Jared::
 	trainerbattle_single TRAINER_JARED, FortreeCity_Gym_Text_JaredIntro, FortreeCity_Gym_Text_JaredDefeat
+	setvar VAR_0x8004, 8
+	setvar VAR_0x8005, 17
+	special FortreeGym_RevealBridgeAt
 	msgbox FortreeCity_Gym_Text_JaredPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 FortreeCity_Gym_EventScript_Edwardo::
 	trainerbattle_single TRAINER_EDWARDO, FortreeCity_Gym_Text_EdwardoIntro, FortreeCity_Gym_Text_EdwardoDefeat
+	setvar VAR_0x8004, 3
+	setvar VAR_0x8005, 11
+	special FortreeGym_RevealBridgeAt
+	setvar VAR_0x8004, 9
+	setvar VAR_0x8005, 11
+	special FortreeGym_RevealBridgeAt
 	msgbox FortreeCity_Gym_Text_EdwardoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -137,6 +146,9 @@ FortreeCity_Gym_EventScript_Humberto::
 
 FortreeCity_Gym_EventScript_Darius::
 	trainerbattle_single TRAINER_DARIUS, FortreeCity_Gym_Text_DariusIntro, FortreeCity_Gym_Text_DariusDefeat
+	setvar VAR_0x8004, 18
+	setvar VAR_0x8005, 16
+	special FortreeGym_RevealBridgeAt
 	msgbox FortreeCity_Gym_Text_DariusPostBattle, MSGBOX_AUTOCLOSE
 	end
 

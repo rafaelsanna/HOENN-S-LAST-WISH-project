@@ -226,6 +226,7 @@ gSpecials::
 	def_special RotatingGate_InitPuzzleAndGraphics
 	def_special FortreeGym_ApplyFloatingBridgeState
 	def_special FortreeGym_InitFloatingBridgePuzzle
+	def_special FortreeGym_RevealBridgeAt
 	def_special SetSSTidalFlag
 	def_special ResetSSTidalFlag
 	def_special EnterSafariMode
