@@ -125,6 +125,7 @@ EWRAM_DATA static u8 (*sSaveDialogCallback)(void) = NULL;
 EWRAM_DATA static u8 sSaveDialogTimer = 0;
 EWRAM_DATA static bool8 sSavingComplete = FALSE;
 EWRAM_DATA static u8 sSaveInfoWindowId = 0;
+EWRAM_DATA static bool8 sSaveInfoWindowVisible = FALSE;
 
 // Menu action callbacks
 static bool8 StartMenuPokedexCallback(void);
@@ -181,6 +182,30 @@ static u16 sOriginalColor5 = 0;
 static u16 sOriginalColor6 = 0;
 static u16 sOriginalColor5Unfaded = 0;
 static u16 sOriginalColor6Unfaded = 0;
+static u16 sOriginalSaveInfoGenderColors[4] = {0};
+static u16 sOriginalSaveInfoGenderColorsUnfaded[4] = {0};
+
+static const u8 sSaveInfoGenderColorIndices[] =
+{
+    TEXT_COLOR_RED,
+    TEXT_COLOR_LIGHT_RED,
+    TEXT_COLOR_BLUE,
+    TEXT_COLOR_LIGHT_BLUE,
+};
+
+// BufferSaveMenuText uses the first entry as COLOR (the visible glyph) and the
+// second as SHADOW. Keep the pastel shade first and the dark shade second.
+static const u16 sSaveInfoPlayerColors[2][2] =
+{
+    [MALE]   = {RGB(17, 24, 31), RGB(5, 10, 17)},
+    [FEMALE] = {RGB(31, 18, 20), RGB(16, 6, 8)},
+};
+
+static const u16 sSaveInfoLocationColors[2] =
+{
+    RGB(25, 20, 31),
+    RGB(20, 10, 25),
+};
 
 // Reorder feedback: the grabbed WISHMENU entry and its selector arrow use a
 // muted gray foreground with a darker shadow until the new position is confirmed.
@@ -1614,10 +1639,31 @@ void SaveGame(void)
     CreateTask(SaveGameTask, 0x50);
 }
 
+static void ApplySaveInfoWindowPalette(void)
+{
+    u8 gender = gSaveBlock2Ptr->playerGender;
+    u8 color = (gender == FEMALE) ? TEXT_COLOR_RED : TEXT_COLOR_BLUE;
+    u16 textPalBase = BG_PLTT_ID(SAVE_INFO_TEXT_PALETTE);
+
+    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = sSaveInfoLocationColors[0];
+    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = sSaveInfoLocationColors[1];
+    gPlttBufferFaded[textPalBase + color] = sSaveInfoPlayerColors[gender][0];
+    gPlttBufferFaded[textPalBase + color + 1] = sSaveInfoPlayerColors[gender][1];
+    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = sSaveInfoLocationColors[0];
+    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = sSaveInfoLocationColors[1];
+    gPlttBufferUnfaded[textPalBase + color] = sSaveInfoPlayerColors[gender][0];
+    gPlttBufferUnfaded[textPalBase + color + 1] = sSaveInfoPlayerColors[gender][1];
+    UpdatePaletteFade();
+}
+
 static void ShowSaveMessage(const u8 *message, u8 (*saveCallback)(void))
 {
     StringExpandPlaceholders(gStringVar4, message);
     LoadMessageBoxAndBorderGfx();
+    // Loading the dialogue frame also reloads BG palette 15, which is shared
+    // by the Save Info window. Restore its text colors after every message.
+    if (sSaveInfoWindowVisible)
+        ApplySaveInfoWindowPalette();
     DrawStdWindowFrame(0, TRUE);
     AddTextPrinterForMessage_2(TRUE);
     sSavingComplete = TRUE;
@@ -2049,6 +2095,7 @@ static void Task_SaveAfterLinkBattle(u8 taskId)
 static void ShowSaveInfoWindow(void)
 {
     struct WindowTemplate saveInfoWindow = sSaveInfoWindowTemplate;
+    u32 i;
     u8 gender;
     u8 color;
     u32 textRightEdge;
@@ -2066,12 +2113,7 @@ static void ShowSaveInfoWindow(void)
     textRightEdge = saveInfoWindow.width * 8;
 
     gender = gSaveBlock2Ptr->playerGender;
-    // Use TEXT_DYNAMIC_COLOR_6 para feminino (roxo), TEXT_COLOR_LIGHT_BLUE para masculino
-    color = TEXT_COLOR_LIGHT_GREEN;  // será roxo
-    if (gender == MALE)
-    {
-        color = TEXT_COLOR_LIGHT_BLUE; // mantém azul claro
-    }
+    color = (gender == FEMALE) ? TEXT_COLOR_RED : TEXT_COLOR_BLUE;
 
     // Save the original colors from the Save Info window palette only.
     // TEXT_DYNAMIC_COLOR_5/6 are local indices inside palette 15.
@@ -2080,17 +2122,16 @@ static void ShowSaveInfoWindow(void)
     sOriginalColor5Unfaded = gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_5];
     sOriginalColor6Unfaded = gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_6];
 
-    // Definir novas cores (use os valores RGB que preferir)
-    // lilás claro: R=200, G=160, B=255 -> valores GBA: 200/8=25, 160/8=20, 255/8=31
-    // roxo: R=160, G=80, B=200 -> 160/8=20, 80/8=10, 200/8=25
-    #define RGB_LILAS   ( (25) | (20 << 5) | (31 << 10) )
-    #define RGB_PURPLE2 ( (20) | (10 << 5) | (25 << 10) )  // nome diferente para não conflitar
+    for (i = 0; i < ARRAY_COUNT(sSaveInfoGenderColorIndices); i++)
+    {
+        u32 colorIndex = sSaveInfoGenderColorIndices[i];
 
-    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
-    gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
-    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = RGB_LILAS;
-    gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = RGB_PURPLE2;
-    UpdatePaletteFade();
+        sOriginalSaveInfoGenderColors[i] = gPlttBufferFaded[textPalBase + colorIndex];
+        sOriginalSaveInfoGenderColorsUnfaded[i] = gPlttBufferUnfaded[textPalBase + colorIndex];
+    }
+
+    sSaveInfoWindowVisible = TRUE;
+    ApplySaveInfoWindowPalette();
 
     // Print region name (antes usava TEXT_COLOR_GREEN, agora usa TEXT_DYNAMIC_COLOR_5 = lilás)
     yOffset = 1;
@@ -2100,7 +2141,7 @@ static void ShowSaveInfoWindow(void)
     // Print player name
     yOffset += 16;
     AddTextPrinterParameterized(sSaveInfoWindowId, FONT_NORMAL, gText_SavingPlayer, 0, yOffset, TEXT_SKIP_DRAW, NULL);
-    BufferSaveMenuText(SAVE_MENU_NAME, gStringVar4, color);  // color já é TEXT_DYNAMIC_COLOR_6 (roxo) ou azul
+    BufferSaveMenuText(SAVE_MENU_NAME, gStringVar4, color);
     xOffset = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, textRightEdge);
     PrintPlayerNameOnWindow(sSaveInfoWindowId, gStringVar4, xOffset, yOffset);
 
@@ -2133,7 +2174,10 @@ static void ShowSaveInfoWindow(void)
 
 static void RemoveSaveInfoWindow(void)
 {
+    u32 i;
     u16 textPalBase = BG_PLTT_ID(SAVE_INFO_TEXT_PALETTE);
+
+    sSaveInfoWindowVisible = FALSE;
 
     // Restore only the Save Info window's own palette. The previous code wrote
     // TEXT_DYNAMIC_COLOR_5/6 into BG palette 0, which is also used by the live
@@ -2142,6 +2186,14 @@ static void RemoveSaveInfoWindow(void)
     gPlttBufferFaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = sOriginalColor6;
     gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_5] = sOriginalColor5Unfaded;
     gPlttBufferUnfaded[textPalBase + TEXT_DYNAMIC_COLOR_6] = sOriginalColor6Unfaded;
+
+    for (i = 0; i < ARRAY_COUNT(sSaveInfoGenderColorIndices); i++)
+    {
+        u32 colorIndex = sSaveInfoGenderColorIndices[i];
+
+        gPlttBufferFaded[textPalBase + colorIndex] = sOriginalSaveInfoGenderColors[i];
+        gPlttBufferUnfaded[textPalBase + colorIndex] = sOriginalSaveInfoGenderColorsUnfaded[i];
+    }
     UpdatePaletteFade();
 
     ClearStdWindowAndFrame(sSaveInfoWindowId, FALSE);
