@@ -91,6 +91,7 @@ enum //General's Menu Items
     MENUITEM_GEN_BATTLESPEED,
     MENUITEM_GEN_FASTSLIDE,
     MENUITEM_GEN_HPBAR,
+    MENUITEM_GEN_MOVECOLORS,
     MENUITEM_GEN_AUTORUN,
     MENUITEM_GEN_AUTOFISHING,
     MENUITEM_GEN_SOUND,
@@ -251,6 +252,7 @@ static void DrawChoices_BattleSpeed(int selection, int y);
 static void DrawChoices_FastSlide(int selection, int y);
 static void DrawChoices_AutoRun(int selection, int y);
 static void DrawChoices_HpBar(int selection, int y);
+static void DrawChoices_MoveColors(int selection, int y);
 static void DrawChoices_Sound(int selection, int y);
 static void DrawChoices_ButtonMode(int selection, int y);
 static void DrawChoices_OnOff(int selection, int y);
@@ -327,6 +329,7 @@ struct // PAGE_GENERAL
     [MENUITEM_GEN_BATTLESPEED]   = {DrawChoices_BattleSpeed, ProcessInput_Options_Three},
     [MENUITEM_GEN_FASTSLIDE]     = {DrawChoices_FastSlide,   ProcessInput_Options_Two},
     [MENUITEM_GEN_HPBAR]         = {DrawChoices_HpBar,       ProcessInput_Options_Two},
+    [MENUITEM_GEN_MOVECOLORS]    = {DrawChoices_MoveColors,  ProcessInput_Options_Two},
     [MENUITEM_GEN_AUTORUN]       = {DrawChoices_AutoRun,     ProcessInput_Options_Two},
     [MENUITEM_GEN_AUTOFISHING]   = {DrawChoices_AutoFishing, ProcessInput_Options_Two},
     [MENUITEM_GEN_SOUND]         = {DrawChoices_Sound,       ProcessInput_Sound},
@@ -370,6 +373,7 @@ static const u8 sText_FastSlide[]       = _("FAST SLIDE");
 static const u8 sText_AutoRun[]         = _("AUTO RUN");
 static const u8 sText_BattleSpeed[]     = _("BATTLE SPEED");
 static const u8 sText_HpBar[]           = _("HP BAR");
+static const u8 sText_MoveColors[]      = _("MOVE COLORS");
 
 static const u8 sText_Desc_FastSlideOff[] = _("Display the slide animation at the\nbeginning of battles.");
 static const u8 sText_Desc_FastSlideOn[]  = _("Skip the slide animation at the\nbeginning of battles.");
@@ -381,6 +385,7 @@ static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
     [MENUITEM_GEN_BATTLESPEED]   = sText_BattleSpeed,
     [MENUITEM_GEN_FASTSLIDE]     = sText_FastSlide,
     [MENUITEM_GEN_HPBAR]         = sText_HpBar,
+    [MENUITEM_GEN_MOVECOLORS]    = sText_MoveColors,
     [MENUITEM_GEN_AUTORUN]       = sText_AutoRun,
     [MENUITEM_GEN_AUTOFISHING]   = sText_AutoFishing,
     [MENUITEM_GEN_SOUND]         = gText_Sound,
@@ -453,6 +458,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_GEN_BATTLESPEED:      return TRUE;
         case MENUITEM_GEN_FASTSLIDE:        return TRUE;
         case MENUITEM_GEN_HPBAR:            return TRUE;
+        case MENUITEM_GEN_MOVECOLORS:       return TRUE;
         case MENUITEM_GEN_AUTORUN:          return TRUE;
         case MENUITEM_GEN_AUTOFISHING:      return TRUE;
         case MENUITEM_GEN_SOUND:            return TRUE;
@@ -495,6 +501,8 @@ static const u8 sText_Desc_AutoRunOff[]         = _("Hold B to run normally.\nAu
 static const u8 sText_Desc_AutoRunOn[]          = _("Run without holding B.\nAuto Run can also be toggled with L+B.");
 static const u8 sText_Desc_HpBarNormal[]        = _("Animate HP changes with the standard\nhealth-bar drain and recovery.");
 static const u8 sText_Desc_HpBarInstant[]       = _("Apply HP bar changes immediately.\nDamage and healing skip bar animation.");
+static const u8 sText_Desc_MoveColorsOff[]      = _("Display every move name in white\nduring battle.");
+static const u8 sText_Desc_MoveColorsOn[]       = _("Color each move name according to\nits type during battle.");
 static const u8 sText_Desc_SoundMono[]          = _("Sound is the same in all speakers.\nRecommended for original hardware.");
 static const u8 sText_Desc_SoundStereo[]        = _("Play the left and right audio channel\nseperatly. Great with headphones.");
 static const u8 sText_Desc_ButtonMode[]         = _("All buttons work as normal.");
@@ -547,6 +555,7 @@ static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3]
     [MENUITEM_GEN_BATTLESPEED]  = {sText_Desc_BattleSpeedNormal,    sText_Desc_BattleSpeed2x,   sText_Desc_BattleSpeed4x},
     [MENUITEM_GEN_FASTSLIDE]    = {sText_Desc_FastSlideOff,         sText_Desc_FastSlideOn,     sText_Empty},
     [MENUITEM_GEN_HPBAR]        = {sText_Desc_HpBarNormal,          sText_Desc_HpBarInstant,    sText_Empty},
+    [MENUITEM_GEN_MOVECOLORS]   = {sText_Desc_MoveColorsOff,        sText_Desc_MoveColorsOn,    sText_Empty},
     [MENUITEM_GEN_AUTORUN]      = {sText_Desc_AutoRunOff,           sText_Desc_AutoRunOn,       sText_Empty},
     [MENUITEM_GEN_AUTOFISHING]  = {sText_Desc_AutoFishingOff,       sText_Desc_AutoFishingOn,   sText_Empty},
     [MENUITEM_GEN_SOUND]        = {sText_Desc_SoundMono,            sText_Desc_SoundStereo,     sText_Empty},
@@ -584,6 +593,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_C
     [MENUITEM_GEN_BATTLESPEED]  = sText_Empty,
     [MENUITEM_GEN_FASTSLIDE]    = sText_Empty,
     [MENUITEM_GEN_HPBAR]        = sText_Empty,
+    [MENUITEM_GEN_MOVECOLORS]   = sText_Empty,
     [MENUITEM_GEN_AUTORUN]      = sText_Empty,
     [MENUITEM_GEN_AUTOFISHING]  = sText_Empty,
     [MENUITEM_GEN_SOUND]        = sText_Empty,
@@ -636,6 +646,10 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_GEN_HPBAR))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_HPBAR];
             return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_HPBAR][sOptions->sel[MENUITEM_GEN_HPBAR]];
+        case MENUITEM_GEN_MOVECOLORS:
+            if (!CheckConditions(MENUITEM_GEN_MOVECOLORS))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_MOVECOLORS];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_MOVECOLORS][sOptions->sel[MENUITEM_GEN_MOVECOLORS]];
         case MENUITEM_GEN_AUTORUN:
             if (!CheckConditions(MENUITEM_GEN_AUTORUN))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_AUTORUN];
@@ -889,6 +903,13 @@ bool32 IsHpBarInstant(void)
         return FALSE;
 
     return ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] == HLW_HP_BAR_INSTANT;
+}
+
+// The flag stores the disabled state so existing saves get the new colored
+// move names by default without requiring a save-data migration.
+bool32 AreMoveTypeColorsEnabled(void)
+{
+    return !FlagGet(FLAG_DISABLE_MOVE_TYPE_COLORS);
 }
 
 // Main code
@@ -1155,6 +1176,7 @@ void CB2_InitOptionMenu(void)
     sOptions->sel[MENUITEM_GEN_BATTLESPEED] = LoadBattleSpeedOption();
     sOptions->sel[MENUITEM_GEN_FASTSLIDE]   = FlagGet(FLAG_FAST_INTRO_NO_SLIDE);
     sOptions->sel[MENUITEM_GEN_HPBAR]       = LoadHpBarOption();
+    sOptions->sel[MENUITEM_GEN_MOVECOLORS]  = AreMoveTypeColorsEnabled();
     sOptions->sel[MENUITEM_GEN_AUTORUN]     = FlagGet(FLAG_SYS_AUTO_RUN);
     sOptions->sel[MENUITEM_GEN_AUTOFISHING] = FlagGet(FLAG_AUTO_FISHING);
     sOptions->sel[MENUITEM_GEN_SOUND]       = gSaveBlock2Ptr->optionsSound;
@@ -1406,6 +1428,11 @@ static void Task_OptionMenuSave(u8 taskId)
         FlagClear(FLAG_FAST_INTRO_NO_SLIDE);
 
     SaveHpBarOption(sOptions->sel[MENUITEM_GEN_HPBAR]);
+
+    if (sOptions->sel[MENUITEM_GEN_MOVECOLORS])
+        FlagClear(FLAG_DISABLE_MOVE_TYPE_COLORS);
+    else
+        FlagSet(FLAG_DISABLE_MOVE_TYPE_COLORS);
 
     if (sOptions->sel[MENUITEM_GEN_AUTORUN])
         FlagSet(FLAG_SYS_AUTO_RUN);
@@ -1977,6 +2004,24 @@ static void DrawChoices_HpBar(int selection, int y)
                          GetStringRightAlignXOffset(FONT_NORMAL, sText_HpBarInstant, 198),
                          y,
                          styles[HLW_HP_BAR_INSTANT],
+                         active);
+}
+
+static void DrawChoices_MoveColors(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_GEN_MOVECOLORS);
+    u8 styles[2] = {0};
+
+    if (selection > TRUE)
+        selection = TRUE;
+
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[FALSE], active);
+    DrawOptionMenuChoice(sText_OptionTrue,
+                         GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198),
+                         y,
+                         styles[TRUE],
                          active);
 }
 

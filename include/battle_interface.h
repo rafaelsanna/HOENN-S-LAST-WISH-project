@@ -47,6 +47,7 @@ enum
 #define TAG_HEALTHBOX_PALS_2            0xD70A
 #define TAG_HEALTHBOX_SAFARI_TILE       0xD70B
 #define TAG_STATUS_SUMMARY_BAR_TILE     0xD70C
+#define TAG_SHINY_HEALTHBOX_SPARKLE     0xD70D
 
 #define TAG_STATUS_SUMMARY_BAR_PAL      0xD710
 #define TAG_STATUS_SUMMARY_BALLS_PAL    0xD712
@@ -135,6 +136,7 @@ void TryAddLastUsedBallItemSprites(void);
 void SwapBallToDisplay(bool32 sameBall);
 void ArrowsChangeColorLastBallCycle(bool32 showArrows);
 void UpdateAbilityPopup(u8 battlerId);
+void LoadBattleShinyHealthboxGfx(void);
 void CategoryIcons_LoadSpritesGfx(void);
 void TryToAddMoveInfoWindow(void);
 void TryToHideMoveInfoWindow(void);

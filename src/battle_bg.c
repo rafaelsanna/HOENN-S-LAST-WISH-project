@@ -189,7 +189,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 55,
         .width = 16,    //for z move names
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0300,
     },
     [B_WIN_MOVE_NAME_2] = {
@@ -198,7 +198,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 55,
         .width = 8,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0318,
     },
     [B_WIN_MOVE_NAME_3] = {
@@ -207,7 +207,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 57,
         .width = 16,    //for z effect descriptions
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0328,
     },
     [B_WIN_MOVE_NAME_4] = {
@@ -216,7 +216,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 57,
         .width = 8,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0340,
     },
     [B_WIN_PP] = {
@@ -225,7 +225,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 55,
         .width = 4,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x0290,
     },
     [B_WIN_DUMMY] = {
@@ -243,7 +243,7 @@ static const struct WindowTemplate sStandardBattleWindowTemplates[] =
         .tilemapTop = 55,
         .width = 4,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x0298,
     },
     [B_WIN_MOVE_TYPE] = {
@@ -419,7 +419,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 55,
         .width = 8,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0300,
     },
     [B_WIN_MOVE_NAME_2] = {
@@ -428,7 +428,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 55,
         .width = 8,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0310,
     },
     [B_WIN_MOVE_NAME_3] = {
@@ -437,7 +437,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 57,
         .width = 8,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0320,
     },
     [B_WIN_MOVE_NAME_4] = {
@@ -446,7 +446,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 57,
         .width = 8,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = BATTLE_MOVE_NAMES_BG_PALETTE,
         .baseBlock = 0x0330,
     },
     [B_WIN_PP] = {
@@ -455,7 +455,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 55,
         .width = 4,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x0290,
     },
     [B_WIN_DUMMY] = {
@@ -473,7 +473,7 @@ static const struct WindowTemplate sBattleArenaWindowTemplates[] =
         .tilemapTop = 55,
         .width = 4,
         .height = 2,
-        .paletteNum = 5,
+        .paletteNum = 0,
         .baseBlock = 0x0298,
     },
     [B_WIN_MOVE_TYPE] = {
@@ -722,8 +722,8 @@ static const u16 sCustomBattleWindowPalette[] =
     RGB(24, 24, 24),     // 3
     RGB(4, 4, 5),        // 4
     RGB(4, 4, 5),        // 5
-    RGB(4, 4, 5),        // 6
-    RGB(4, 4, 5),        // 7
+    RGB(9, 9, 9),        // 6  - #4A4A4A (clean horizontal frame)
+    RGB_BLACK,           // 7  - continuous black vertical frame
     RGB(4, 4, 5),        // 8
     RGB(4, 4, 5),        // 9
     RGB(4, 4, 5),        // 10
@@ -734,10 +734,19 @@ static const u16 sCustomBattleWindowPalette[] =
     RGB(16, 16, 16),     // 15 - gray (shadow)
 };
 
+static const u16 sCleanBattleFrameColors[] =
+{
+    RGB_BLACK,
+    RGB_WHITE,
+    RGB(9, 9, 9), // #4A4A4A
+};
+
 void LoadBattleMenuWindowGfx(void)
 {
-    LoadUserWindowBorderGfx(2, 0x12, BG_PLTT_ID(1));
+    // Tiles 0x12-0x1A belong to the clean action/move frames in textbox.png.
+    // Only load the user frame used by temporary battle windows.
     LoadUserWindowBorderGfx(2, 0x22, BG_PLTT_ID(1));
+    LoadPalette(sCleanBattleFrameColors, BG_PLTT_ID(1) + 13, sizeof(sCleanBattleFrameColors));
     LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
 
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
@@ -752,7 +761,7 @@ void LoadBattleMenuWindowGfx(void)
 
 void LoadBattleTextboxPalette(void)
 {
-    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
 }
 
 void DrawMainBattleBackground(void)
@@ -1133,7 +1142,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         CopyBgTilemapBufferToVram(0);
         break;
     case 2:
-        LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+        LoadPalette(sCustomBattleWindowPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
         break;
     case 3:
         DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));

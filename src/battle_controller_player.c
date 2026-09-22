@@ -18,6 +18,7 @@
 #include "main.h"
 #include "m4a.h"
 #include "palette.h"
+#include "option_menu.h"
 #include "party_menu.h"
 #include "pokeball.h"
 #include "pokemon.h"
@@ -74,6 +75,11 @@ extern void Radio_Open(MainCallback returnCallback);
 #define BATTLE_RADIO_DISPLAY_WIDTH        15
 #define BATTLE_RADIO_DISPLAY_HEIGHT       2
 
+// Only one move-type icon is visible at a time, so it can reuse one allocated
+// OBJ palette. The original fixed slots 13-15 can already belong to MOVE INFO
+// or another battle sprite.
+#define TAG_BATTLE_MOVE_TYPE_PAL           0xD730
+
 static const u32 sBattleRadioDisplayGfx[] = INCBIN_U32("graphics/battle_interface/radiodisplay.4bpp");
 static const u16 sBattleRadioDisplayPal[] = INCBIN_U16("graphics/battle_interface/radiodisplay.gbapal");
 static const u16 sBattleRadioDisplayMap[] = INCBIN_U16("graphics/battle_interface/radiodisplay.bin");
@@ -129,6 +135,7 @@ static void MoveSelectionDisplayPpNumber(u32 battler);
 static void MoveSelectionDisplayPpString(u32 battler);
 static void MoveSelectionDisplayMoveType(u32 battler);
 static void MoveSelectionDisplayMoveNames(u32 battler);
+static u32 GetMoveSelectionDisplayType(u32 battler, u32 move);
 static void TryMoveSelectionDisplayMoveDescription(u32 battler);
 static void MoveSelectionDisplayMoveDescription(u32 battler);
 static void WaitForMonSelection(u32 battler);
@@ -1726,20 +1733,29 @@ static void MoveSelectionDisplayMoveNames(u32 battler)
 {
     s32 i;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
+    bool32 useTypeColors = AreMoveTypeColorsEnabled();
     gNumberOfMovesToChoose = 0;
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
+        u32 move = moveInfo->moves[i];
+
         MoveSelectionDestroyCursorAt(i);
         if (IsGimmickSelected(battler, GIMMICK_DYNAMAX) || GetActiveGimmick(battler) == GIMMICK_DYNAMAX)
-            StringCopy(gDisplayedStringBattle, GetMoveName(GetMaxMove(battler, moveInfo->moves[i])));
+            StringCopy(gDisplayedStringBattle, GetMoveName(GetMaxMove(battler, move)));
         else
-            StringCopy(gDisplayedStringBattle, GetMoveName(moveInfo->moves[i]));
+            StringCopy(gDisplayedStringBattle, GetMoveName(move));
+
+        SetBattleMoveNameTypeColor(i, GetMoveSelectionDisplayType(battler, move), useTypeColors && move != MOVE_NONE);
         // Prints on windows B_WIN_MOVE_NAME_1, B_WIN_MOVE_NAME_2, B_WIN_MOVE_NAME_3, B_WIN_MOVE_NAME_4
         BattlePutTextOnWindow(gDisplayedStringBattle, i + B_WIN_MOVE_NAME_1);
-        if (moveInfo->moves[i] != MOVE_NONE)
+        if (move != MOVE_NONE)
             gNumberOfMovesToChoose++;
     }
+
+    // Reapply the four color pairs in the shared move-name palette after every
+    // move window is drawn.
+    RefreshBattleMoveNameTypeColors();
 }
 
 static void MoveSelectionDisplayPpString(u32 battler)
@@ -1765,13 +1781,17 @@ static void MoveSelectionDisplayPpNumber(u32 battler)
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP_REMAINING);
 }
 
-static void MoveSelectionDisplayMoveType(u32 battler)
+static u32 GetMoveSelectionDisplayType(u32 battler, u32 move)
 {
     u32 speciesId = gBattleMons[battler].species;
-    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
-    u32 move = moveInfo->moves[gMoveSelectionCursor[battler]];
-    u32 type = GetMoveType(move);
-    enum BattleMoveEffects effect = GetMoveEffect(move);
+    u32 type;
+    enum BattleMoveEffects effect;
+
+    if (move == MOVE_NONE)
+        return TYPE_NONE;
+
+    type = GetMoveType(move);
+    effect = GetMoveEffect(move);
 
     if (effect == EFFECT_TERA_BLAST)
     {
@@ -1801,9 +1821,20 @@ static void MoveSelectionDisplayMoveType(u32 battler)
         struct Pokemon *mon = GetBattlerMon(battler);
         type = CheckDynamicMoveType(mon, move, battler, MON_IN_BATTLE);
     }
+
+    return type;
+}
+
+static void MoveSelectionDisplayMoveType(u32 battler)
+{
+    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
+    u32 move = moveInfo->moves[gMoveSelectionCursor[battler]];
+    u32 type = GetMoveSelectionDisplayType(battler, move);
+
     StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
     MoveSelectionDisplayMoveTypeIcon(type);
+    RefreshBattleMoveNameTypeColors();
 }
 
 static void TryMoveSelectionDisplayMoveDescription(u32 battler)
@@ -1873,7 +1904,7 @@ void MoveSelectionCreateCursorAt(u8 cursorPosition, u8 baseTileNum)
     src[0] = baseTileNum + 1;
     src[1] = baseTileNum + 2;
 
-    CopyToBgTilemapBufferRect_ChangePalette(0, src, 9 * (cursorPosition & 1) + 1, 55 + (cursorPosition & 2), 1, 2, 5); // 0x11 → 5
+    CopyToBgTilemapBufferRect_ChangePalette(0, src, 9 * (cursorPosition & 1) + 1, 55 + (cursorPosition & 2), 1, 2, 0);
     CopyBgTilemapBufferToVram(0);
 }
 
@@ -1893,7 +1924,7 @@ void ActionSelectionCreateCursorAt(u8 cursorPosition, u8 baseTileNum)
     src[0] = 1;
     src[1] = 2;
 
-    CopyToBgTilemapBufferRect_ChangePalette(0, src, 7 * (cursorPosition & 1) + 16, 35 + (cursorPosition & 2), 1, 2, 5); // 0x11 → 5
+    CopyToBgTilemapBufferRect_ChangePalette(0, src, 7 * (cursorPosition & 1) + 16, 35 + (cursorPosition & 2), 1, 2, 0);
     CopyBgTilemapBufferToVram(0);
 }
 
@@ -2640,7 +2671,10 @@ static void DestroyMoveTypeIconSprite(void)
     }
 
     if (anyDestroyed)
+    {
         FreeSpriteTilesByTag(gSpriteSheet_MoveTypes.tag);
+        FreeSpritePaletteByTag(TAG_BATTLE_MOVE_TYPE_PAL);
+    }
 }
 
 static void SpriteCB_TypeIconSlideIn(struct Sprite *sprite)
@@ -2658,14 +2692,24 @@ static void SpriteCB_TypeIconSlideIn(struct Sprite *sprite)
 static void MoveSelectionDisplayMoveTypeIcon(u32 type)
 {
     u32 i;
+    u32 paletteGroup;
+    u32 paletteNum;
     u8 spriteId = 0xFF;
     struct Sprite *sprite;
 
     if (IndexOfSpriteTileTag(gSpriteSheet_MoveTypes.tag) == 0xFF)
-    {
         LoadCompressedSpriteSheet(&gSpriteSheet_MoveTypes);
-        LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
-    }
+
+    paletteGroup = gTypesInfo[type].palette - 13;
+    if (paletteGroup >= 3)
+        paletteGroup = 0;
+
+    paletteNum = IndexOfSpritePaletteTag(TAG_BATTLE_MOVE_TYPE_PAL);
+    if (paletteNum == 0xFF)
+        paletteNum = AllocSpritePalette(TAG_BATTLE_MOVE_TYPE_PAL);
+    if (paletteNum == 0xFF)
+        return;
+    LoadPalette(&gMoveTypes_Pal[paletteGroup * 16], OBJ_PLTT_ID(paletteNum), PLTT_SIZE_4BPP);
 
     for (i = 0; i < MAX_SPRITES; i++)
     {
@@ -2688,7 +2732,7 @@ static void MoveSelectionDisplayMoveTypeIcon(u32 type)
 
     sprite = &gSprites[spriteId];
     StartSpriteAnim(sprite, type);
-    sprite->oam.paletteNum = gTypesInfo[type].palette;
+    sprite->oam.paletteNum = paletteNum;
     sprite->oam.priority = 0;
 
     // Se já havia uma animação em andamento, libera antes de criar outra

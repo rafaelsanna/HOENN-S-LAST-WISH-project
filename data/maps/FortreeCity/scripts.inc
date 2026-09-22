@@ -223,7 +223,7 @@ FortreeCity_Text_ThisTimeIllBeatWinona:
 # 112 "data/maps/FortreeCity/scripts.pory"
 	.string "I've got my pride-and-joy POKéMON\n"
 # 113 "data/maps/FortreeCity/scripts.pory"
-	.string "with me. This time, I'll beat WINONA.$"
+	.string "with me. This time, I'll beat TAKA.$"
 # 114 "data/maps/FortreeCity/scripts.pory"
 
 # 115 "data/maps/FortreeCity/scripts.pory"

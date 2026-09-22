@@ -25,6 +25,7 @@
 #include "battle_message.h"
 #include "pokedex.h"
 #include "palette.h"
+#include "option_menu.h"
 #include "international_string_util.h"
 #include "safari_zone.h"
 #include "battle_anim.h"
@@ -273,6 +274,7 @@ bool32 MoveSelectionDisplayZMove(u16 zmove, u32 battler)
         for (i = 0; i < MAX_MON_MOVES; ++i)
         {
             MoveSelectionDestroyCursorAt(i);
+            SetBattleMoveNameTypeColor(i, TYPE_NONE, FALSE);
             StringCopy(gDisplayedStringBattle, gText_EmptyString2);
             BattlePutTextOnWindow(gDisplayedStringBattle, i + 3);
         }
@@ -376,6 +378,7 @@ bool32 MoveSelectionDisplayZMove(u16 zmove, u32 battler)
             ZMoveSelectionDisplayPower(move, zmove);
             StringCopy(gDisplayedStringBattle, GetMoveName(zmove));
         }
+        SetBattleMoveNameTypeColor(0, GetBattleMoveType(zmove), AreMoveTypeColorsEnabled());
         BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_NAME_1);
 
         ZMoveSelectionDisplayPpNumber(battler);

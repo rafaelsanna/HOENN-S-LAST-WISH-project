@@ -174,7 +174,7 @@ enum
 
 static const u8 *GetHealthboxElementGfxPtr(u8);
 static u8 *AddTextPrinterAndCreateWindowOnHealthbox(const u8 *, u32, u32, u32, u32 *);
-static u8 *AddTextPrinterAndCreateWindowOnHealthboxToFit(const u8 *, u32, u32, u32, u32 *, u32);
+static u8 *AddTextPrinterAndCreateWindowOnHealthboxToFit(const u8 *, u32, u32, u32, u32 *, u32, bool32);
 
 static void RemoveWindowOnHealthbox(u32 windowId);
 static void UpdateHpTextInHealthboxInDoubles(u32 healthboxSpriteId, u32 maxOrCurrent, s16 currHp, s16 maxHp);
@@ -192,6 +192,8 @@ static void Task_HidePartyStatusSummary_DuringBattle(u8);
 
 static void SpriteCB_HealthBoxOther(struct Sprite *);
 static void SpriteCB_HealthBar(struct Sprite *);
+static void SpriteCB_ShinyHealthboxSparkle(struct Sprite *);
+static void CreateShinyHealthboxSparkle(u8, u8);
 static void SpriteCB_StatusSummaryBar_Enter(struct Sprite *);
 static void SpriteCB_StatusSummaryBar_Exit(struct Sprite *);
 static void SpriteCB_StatusSummaryBalls_Enter(struct Sprite *);
@@ -286,6 +288,71 @@ static const struct SpriteTemplate sHealthboxSafariSpriteTemplate =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
+};
+
+// Reuses the four-frame sparkle already used by the custom Party Menu.
+static const u32 sShinyHealthboxSparkleGfx[] = INCBIN_U32("graphics/party_menu/shiny.4bpp.lz");
+static const u16 sShinyHealthboxSparklePal[] = INCBIN_U16("graphics/party_menu/shiny.gbapal");
+
+// These match the shiny nickname colors used by the custom Party Menu.
+// Palette indices 8 and 9 are unused by the healthbox frame graphics.
+enum
+{
+    HEALTHBOX_TEXT_COLOR = 1,
+    HEALTHBOX_TEXT_SHADOW = 5,
+    HEALTHBOX_SHINY_TEXT_SHADOW = 8,
+    HEALTHBOX_SHINY_TEXT_COLOR,
+};
+
+static const u16 sShinyHealthboxNicknameColors[] =
+{
+    RGB(15, 12, 4),
+    RGB(31, 30, 16),
+};
+
+static const struct CompressedSpriteSheet sShinyHealthboxSparkleSpriteSheet =
+{
+    .data = sShinyHealthboxSparkleGfx,
+    .size = 16 * 64 / 2,
+    .tag = TAG_SHINY_HEALTHBOX_SPARKLE,
+};
+
+static const struct SpritePalette sShinyHealthboxSparkleSpritePalette =
+{
+    .data = sShinyHealthboxSparklePal,
+    .tag = TAG_SHINY_HEALTHBOX_SPARKLE,
+};
+
+static const struct OamData sOamData_ShinyHealthboxSparkle =
+{
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 0,
+};
+
+static const union AnimCmd sSpriteAnim_ShinyHealthboxSparkle[] =
+{
+    ANIMCMD_FRAME(0, 6),
+    ANIMCMD_FRAME(4, 6),
+    ANIMCMD_FRAME(8, 6),
+    ANIMCMD_FRAME(12, 6),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sSpriteAnimTable_ShinyHealthboxSparkle[] =
+{
+    sSpriteAnim_ShinyHealthboxSparkle,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_ShinyHealthboxSparkle =
+{
+    .tileTag = TAG_SHINY_HEALTHBOX_SPARKLE,
+    .paletteTag = TAG_SHINY_HEALTHBOX_SPARKLE,
+    .oam = &sOamData_ShinyHealthboxSparkle,
+    .anims = sSpriteAnimTable_ShinyHealthboxSparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_ShinyHealthboxSparkle,
 };
 
 static const struct OamData sOamData_Healthbar =
@@ -640,6 +707,10 @@ static const struct WindowTemplate sHealthboxWindowTemplate = {
 #define hBar_HealthBoxSpriteId      data[5]
 #define hBar_Data6                  data[6]
 
+// data fields for shiny healthbox sparkle
+#define sSparkle_Battler            data[0]
+#define sSparkle_HealthboxSpriteId  data[1]
+
 // This function is here to cover a specific case - one player's mon in a 2 vs 1 double battle. In this scenario - display singles layout.
 // The same goes for a 2 vs 1 where opponent has only one pokemon.
 enum BattleCoordTypes GetBattlerCoordsIndex(u32 battler)
@@ -652,6 +723,31 @@ enum BattleCoordTypes GetBattlerCoordsIndex(u32 battler)
         return BATTLE_COORDS_DOUBLES;
     else
         return BATTLE_COORDS_SINGLES;
+}
+
+void LoadBattleShinyHealthboxGfx(void)
+{
+    u32 paletteNum;
+
+    LoadCompressedSpriteSheet(&sShinyHealthboxSparkleSpriteSheet);
+    LoadSpritePalette(&sShinyHealthboxSparkleSpritePalette);
+
+    paletteNum = IndexOfSpritePaletteTag(TAG_HEALTHBOX_PAL);
+    if (paletteNum != 0xFF)
+        LoadPalette(sShinyHealthboxNicknameColors, OBJ_PLTT_ID(paletteNum) + HEALTHBOX_SHINY_TEXT_SHADOW, sizeof(sShinyHealthboxNicknameColors));
+}
+
+static void CreateShinyHealthboxSparkle(u8 battler, u8 healthboxSpriteId)
+{
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ShinyHealthboxSparkle, DISPLAY_WIDTH, DISPLAY_HEIGHT, 0);
+
+    if (spriteId == MAX_SPRITES)
+        return;
+
+    gSprites[spriteId].sSparkle_Battler = battler;
+    gSprites[spriteId].sSparkle_HealthboxSpriteId = healthboxSpriteId;
+    gSprites[spriteId].invisible = TRUE;
+    SpriteCB_ShinyHealthboxSparkle(&gSprites[spriteId]);
 }
 
 u8 CreateBattlerHealthboxSprites(u8 battler)
@@ -733,6 +829,7 @@ u8 CreateBattlerHealthboxSprites(u8 battler)
     healthBarSpritePtr->invisible = TRUE;
 
     CreateIndicatorSprite(battler);
+    CreateShinyHealthboxSparkle(battler, healthboxLeftSpriteId);
 
     gBattleStruct->ballSpriteIds[0] = MAX_SPRITES;
     gBattleStruct->ballSpriteIds[1] = MAX_SPRITES;
@@ -790,6 +887,43 @@ static void SpriteCB_HealthBar(struct Sprite *sprite)
 
     sprite->x2 = gSprites[healthboxSpriteId].x2;
     sprite->y2 = gSprites[healthboxSpriteId].y2;
+}
+
+static void SpriteCB_ShinyHealthboxSparkle(struct Sprite *sprite)
+{
+    u32 battler = sprite->sSparkle_Battler;
+    u32 healthboxSpriteId = sprite->sSparkle_HealthboxSpriteId;
+    struct Sprite *healthbox;
+    struct Pokemon *mon;
+
+    if (battler >= gBattlersCount
+     || healthboxSpriteId >= MAX_SPRITES
+     || !gSprites[healthboxSpriteId].inUse)
+    {
+        sprite->invisible = TRUE;
+        return;
+    }
+
+    healthbox = &gSprites[healthboxSpriteId];
+    mon = GetBattlerMon(battler);
+
+    if (IsOnPlayerSide(battler))
+    {
+        sprite->x = healthbox->x - 16;
+        sprite->y = healthbox->y + 8;
+    }
+    else
+    {
+        // Sit between the nickname/gender and Lv instead of covering the level.
+        sprite->x = healthbox->x + 28;
+        sprite->y = healthbox->y - 8;
+    }
+
+    sprite->x2 = healthbox->x2;
+    sprite->y2 = healthbox->y2;
+    sprite->invisible = healthbox->invisible
+                       || GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE
+                       || !GetMonData(mon, MON_DATA_IS_SHINY);
 }
 
 static void SpriteCB_HealthBoxOther(struct Sprite *sprite)
@@ -961,7 +1095,7 @@ static void UpdateLvlInHealthbox(u8 healthboxSpriteId, u8 lvl)
     RemoveWindowOnHealthbox(windowId);
 }
 
-static void PrintHpOnHealthbox(u32 spriteId, s16 currHp, s16 maxHp, u32 bgColor, u32 rightTile, u32 leftTile)
+static void PrintHpOnHealthbox(u32 spriteId, s16 currHp, s16 maxHp, u32 bgColor, u32 rightTile, u32 leftTile, u32 y)
 {
     u8 *windowTileData;
     u32 windowId, tilesCount, x;
@@ -974,7 +1108,7 @@ static void PrintHpOnHealthbox(u32 spriteId, s16 currHp, s16 maxHp, u32 bgColor,
     *txtPtr++ = CHAR_SLASH;
     txtPtr = ConvertIntToDecimalStringN(txtPtr, maxHp, STR_CONV_MODE_LEFT_ALIGN, 4);
     // Print last 6 chars on the right window
-    windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(txtPtr - 6, 0, 5, bgColor, &windowId);
+    windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(txtPtr - 6, 0, y, bgColor, &windowId);
     HpTextIntoHealthboxObject(objVram + rightTile, windowTileData, 4);
     RemoveWindowOnHealthbox(windowId);
     // Print the rest of the chars on the left window
@@ -984,7 +1118,7 @@ static void PrintHpOnHealthbox(u32 spriteId, s16 currHp, s16 maxHp, u32 bgColor,
         x = 9, tilesCount = 3;
     else
         x = 6, tilesCount = 2, leftTile += 0x20;
-    windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(text, x, 5, bgColor, &windowId);
+    windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(text, x, y, bgColor, &windowId);
     HpTextIntoHealthboxObject(objVram + leftTile, windowTileData, tilesCount);
     RemoveWindowOnHealthbox(windowId);
 }
@@ -1076,7 +1210,8 @@ void UpdateHpTextInHealthbox(u32 healthboxSpriteId, u32 maxOrCurrent, s16 currHp
     {
         if (IsOnPlayerSide(battler)) // Player
         {
-            PrintHpOnHealthbox(healthboxSpriteId, currHp, maxHp, 2, 0xB00, 0x3A0);
+            // One pixel higher keeps the bottom of the numbers off the frame.
+            PrintHpOnHealthbox(healthboxSpriteId, currHp, maxHp, 2, 0xB00, 0x3A0, 4);
         }
         else // Opponent
         {
@@ -1096,7 +1231,7 @@ static void UpdateHpTextInHealthboxInDoubles(u32 healthboxSpriteId, u32 maxOrCur
     {
         if (gBattleSpritesDataPtr->battlerData[gSprites[healthboxSpriteId].data[6]].hpNumbersNoBars) // don't print text if only bars are visible
         {
-            PrintHpOnHealthbox(barSpriteId, currHp, maxHp, 0, 0x80, 0x20);
+            PrintHpOnHealthbox(barSpriteId, currHp, maxHp, 0, 0x80, 0x20, 5);
             // Clears the end of the healthbar gfx.
             CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_FRAME_END),
                           (void *)(OBJ_VRAM0 + 0x680) + (gSprites[healthboxSpriteId].oam.tileNum * TILE_SIZE_4BPP),
@@ -1721,10 +1856,11 @@ static void SpriteCB_StatusSummaryBalls_OnSwitchout(struct Sprite *sprite)
 static void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
 {
     u8 nickname[POKEMON_NAME_LENGTH + 1];
-    void *ptr;
+    u8 *ptr;
     u32 windowId, spriteTileNum, species;
     u8 *windowTileData;
     u8 gender;
+    bool32 isShiny;
     struct Pokemon *illusionMon = GetIllusionMonPtr(gSprites[healthboxSpriteId].hMain_Battler);
     if (illusionMon != NULL)
         mon = illusionMon;
@@ -1736,9 +1872,18 @@ static void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
 
     gender = GetMonGender(mon);
     species = GetMonData(mon, MON_DATA_SPECIES);
+    isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
 
     if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M) && StringCompare(nickname, GetSpeciesName(species)) == 0)
         gender = 100;
+
+    // Keep the gender symbol's normal color/shadow; only the nickname is gold.
+    if (isShiny)
+    {
+        *ptr++ = EXT_CTRL_CODE_BEGIN;
+        *ptr++ = EXT_CTRL_CODE_SHADOW;
+        *ptr++ = HEALTHBOX_TEXT_SHADOW;
+    }
 
     switch (gender)
     {
@@ -1753,7 +1898,8 @@ static void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
         break;
     }
 
-    windowTileData = AddTextPrinterAndCreateWindowOnHealthboxToFit(gDisplayedStringBattle, 0, 3, 2, &windowId, 55);
+    windowTileData = AddTextPrinterAndCreateWindowOnHealthboxToFit(gDisplayedStringBattle, 0, 3, 2, &windowId, 55,
+                                                                  isShiny);
 
     spriteTileNum = gSprites[healthboxSpriteId].oam.tileNum * TILE_SIZE_4BPP;
 
@@ -2424,8 +2570,8 @@ static u8 *AddTextPrinterAndCreateWindowOnHealthboxWithFont(const u8 *str, u32 x
     FillWindowPixelBuffer(winId, PIXEL_FILL(bgColor));
 
     color[0] = bgColor;
-    color[1] = 1;
-    color[2] = 5;
+    color[1] = HEALTHBOX_TEXT_COLOR;
+    color[2] = HEALTHBOX_TEXT_SHADOW;
 
     AddTextPrinterParameterized4(winId, fontId, x, y, 0, 0, color, TEXT_SKIP_DRAW, str);
 
@@ -2438,10 +2584,24 @@ static u8 *AddTextPrinterAndCreateWindowOnHealthbox(const u8 *str, u32 x, u32 y,
     return AddTextPrinterAndCreateWindowOnHealthboxWithFont(str, x, y, bgColor, windowId, FONT_SMALL);
 }
 
-static u8 *AddTextPrinterAndCreateWindowOnHealthboxToFit(const u8 *str, u32 x, u32 y, u32 bgColor, u32 *windowId, u32 width)
+static u8 *AddTextPrinterAndCreateWindowOnHealthboxToFit(const u8 *str, u32 x, u32 y, u32 bgColor, u32 *windowId, u32 width, bool32 isShiny)
 {
+    u8 color[3];
+    u16 winId;
+    struct WindowTemplate winTemplate = sHealthboxWindowTemplate;
     u32 fontId = GetFontIdToFit(str, FONT_SMALL, 0, width);
-    return AddTextPrinterAndCreateWindowOnHealthboxWithFont(str, x, y, bgColor, windowId, fontId);
+
+    winId = AddWindow(&winTemplate);
+    FillWindowPixelBuffer(winId, PIXEL_FILL(bgColor));
+
+    color[0] = bgColor;
+    color[1] = isShiny ? HEALTHBOX_SHINY_TEXT_COLOR : HEALTHBOX_TEXT_COLOR;
+    color[2] = isShiny ? HEALTHBOX_SHINY_TEXT_SHADOW : HEALTHBOX_TEXT_SHADOW;
+
+    AddTextPrinterParameterized4(winId, fontId, x, y, 0, 0, color, TEXT_SKIP_DRAW, str);
+
+    *windowId = winId;
+    return (u8 *)(GetWindowAttribute(winId, WINDOW_TILE_DATA));
 }
 
 static void RemoveWindowOnHealthbox(u32 windowId)

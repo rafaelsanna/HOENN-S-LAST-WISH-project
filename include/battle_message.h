@@ -13,6 +13,9 @@
 #define BATTLE_MSG_MAX_WIDTH    208
 #define BATTLE_MSG_MAX_LINES    2
 
+// Dedicated BG palette shared only by the four move-name windows.
+#define BATTLE_MOVE_NAMES_BG_PALETTE 12
+
 // for 0xFD
 #define B_TXT_BUFF1 0x0
 #define B_TXT_BUFF2 0x1
@@ -252,6 +255,8 @@ void BufferStringBattle(enum StringID stringID, u32 battler);
 u32 BattleStringExpandPlaceholdersToDisplayedString(const u8 *src);
 u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst, u32 dstSize);
 void BattlePutTextOnWindow(const u8 *text, u8 windowId);
+void SetBattleMoveNameTypeColor(u32 moveSlot, u32 type, bool32 enabled);
+void RefreshBattleMoveNameTypeColors(void);
 void SetPpNumbersPaletteInMoveSelection(u32 battler);
 u8 GetCurrentPpToMaxPpState(u8 currentPp, u8 maxPp);
 void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst);

@@ -31,6 +31,7 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/opponents.h"
+#include "constants/rgb.h"
 #include "constants/species.h"
 #include "constants/trainers.h"
 #include "constants/trainer_hill.h"
@@ -56,6 +57,125 @@ EWRAM_DATA u16 sBattlerAbilities[MAX_BATTLERS_COUNT] = {0};
 static EWRAM_DATA u16 sBattlerAbilities[MAX_BATTLERS_COUNT] = {0};
 #endif
 EWRAM_DATA struct BattleMsgData *gBattleMsgDataPtr = NULL;
+
+// The four move-name windows share one private palette bank. Each position
+// prints with its own foreground/shadow pair, so all names can stay colored at
+// once and the colors follow the moves when SELECT changes their order.
+static const u8 sMoveNamePaletteColors[MAX_MON_MOVES][2] =
+{
+    {2, 3},
+    {4, 5},
+    {8, 9},
+    {10, 11},
+};
+
+// Four palette pairs are reserved so all four move names can have distinct
+// colors at the same time. The shades stay bright enough to read against the
+// dark battle menu while following the familiar colors of each type.
+static const u16 sMoveTypeTextColors[NUMBER_OF_MON_TYPES] =
+{
+    [TYPE_NONE]     = RGB_WHITE,
+    [TYPE_NORMAL]   = RGB(25, 25, 23),
+    [TYPE_FIGHTING] = RGB(31, 11, 9),
+    [TYPE_FLYING]   = RGB(20, 22, 31),
+    [TYPE_POISON]   = RGB(25, 11, 28),
+    [TYPE_GROUND]   = RGB(31, 20, 4),
+    [TYPE_ROCK]     = RGB(24, 21, 10),
+    [TYPE_BUG]      = RGB(21, 25, 6),
+    [TYPE_GHOST]    = RGB(19, 15, 25),
+    [TYPE_STEEL]    = RGB(23, 24, 27),
+    [TYPE_MYSTERY]  = RGB_WHITE,
+    [TYPE_FIRE]     = RGB(31, 13, 6),
+    [TYPE_WATER]    = RGB(7, 20, 31),
+    [TYPE_GRASS]    = RGB(12, 25, 9),
+    [TYPE_ELECTRIC] = RGB(31, 27, 6),
+    [TYPE_PSYCHIC]  = RGB(31, 12, 20),
+    [TYPE_ICE]      = RGB(15, 29, 29),
+    [TYPE_DRAGON]   = RGB(14, 12, 31),
+    [TYPE_DARK]     = RGB(19, 17, 16),
+    [TYPE_FAIRY]    = RGB(31, 17, 24),
+    [TYPE_STELLAR]  = RGB(18, 26, 31),
+};
+
+// Darker, type-matched shades keep the text outline readable without adding
+// the same gray shadow to every move.
+static const u16 sMoveTypeTextShadowColors[NUMBER_OF_MON_TYPES] =
+{
+    [TYPE_NONE]     = RGB(16, 16, 16),
+    [TYPE_NORMAL]   = RGB(12, 12, 10),
+    [TYPE_FIGHTING] = RGB(14, 4, 3),
+    [TYPE_FLYING]   = RGB(8, 9, 16),
+    [TYPE_POISON]   = RGB(11, 4, 14),
+    [TYPE_GROUND]   = RGB(15, 8, 1),
+    [TYPE_ROCK]     = RGB(11, 9, 3),
+    [TYPE_BUG]      = RGB(9, 12, 2),
+    [TYPE_GHOST]    = RGB(8, 6, 12),
+    [TYPE_STEEL]    = RGB(10, 11, 13),
+    [TYPE_MYSTERY]  = RGB(16, 16, 16),
+    [TYPE_FIRE]     = RGB(15, 5, 2),
+    [TYPE_WATER]    = RGB(2, 8, 15),
+    [TYPE_GRASS]    = RGB(4, 12, 3),
+    [TYPE_ELECTRIC] = RGB(15, 12, 1),
+    [TYPE_PSYCHIC]  = RGB(15, 4, 9),
+    [TYPE_ICE]      = RGB(5, 14, 14),
+    [TYPE_DRAGON]   = RGB(5, 4, 15),
+    [TYPE_DARK]     = RGB(9, 7, 7),
+    [TYPE_FAIRY]    = RGB(15, 6, 11),
+    [TYPE_STELLAR]  = RGB(7, 12, 15),
+};
+
+static EWRAM_DATA u8 sMoveNameTypes[MAX_MON_MOVES] = {0};
+static EWRAM_DATA bool8 sMoveNameTypeColorsEnabled[MAX_MON_MOVES] = {0};
+
+static void LoadBattleMoveNameTypePalette(u32 moveSlot)
+{
+    u32 type = sMoveNameTypes[moveSlot];
+    u32 paletteOffset = BG_PLTT_ID(BATTLE_MOVE_NAMES_BG_PALETTE);
+    u16 backgroundColor = RGB(4, 4, 5);
+    u16 foregroundColor = RGB_WHITE;
+    u16 shadowColor = RGB(16, 16, 16);
+
+    if (sMoveNameTypeColorsEnabled[moveSlot])
+    {
+        foregroundColor = sMoveTypeTextColors[type];
+        shadowColor = sMoveTypeTextShadowColors[type];
+    }
+
+    // Standard battles fill move windows with index 1; Arena uses index 14.
+    LoadPalette(&backgroundColor, paletteOffset + 1, PLTT_SIZEOF(1));
+    LoadPalette(&backgroundColor, paletteOffset + 14, PLTT_SIZEOF(1));
+    LoadPalette(&foregroundColor, paletteOffset + sMoveNamePaletteColors[moveSlot][0], PLTT_SIZEOF(1));
+    LoadPalette(&shadowColor, paletteOffset + sMoveNamePaletteColors[moveSlot][1], PLTT_SIZEOF(1));
+}
+
+void RefreshBattleMoveNameTypeColors(void)
+{
+    u32 moveSlot;
+
+    for (moveSlot = 0; moveSlot < MAX_MON_MOVES; moveSlot++)
+        LoadBattleMoveNameTypePalette(moveSlot);
+}
+
+void SetBattleMoveNameTypeColor(u32 moveSlot, u32 type, bool32 enabled)
+{
+    if (moveSlot >= MAX_MON_MOVES)
+        return;
+
+    if (!enabled)
+    {
+        sMoveNameTypes[moveSlot] = TYPE_NONE;
+        sMoveNameTypeColorsEnabled[moveSlot] = FALSE;
+        LoadBattleMoveNameTypePalette(moveSlot);
+        return;
+    }
+
+    if (type >= NUMBER_OF_MON_TYPES)
+        type = TYPE_MYSTERY;
+
+    sMoveNameTypes[moveSlot] = type;
+    sMoveNameTypeColorsEnabled[moveSlot] = TRUE;
+    LoadBattleMoveNameTypePalette(moveSlot);
+}
 
 // todo: make some of those names less vague: attacker/target vs pkmn, etc.
 
@@ -3468,6 +3588,11 @@ void BattlePutTextOnWindow(const u8 *text, u8 windowId)
 
     if (B_WIN_MOVE_NAME_1 <= windowId && windowId <= B_WIN_MOVE_NAME_4)
     {
+        u32 moveSlot = windowId - B_WIN_MOVE_NAME_1;
+
+        printerTemplate.fgColor = sMoveNamePaletteColors[moveSlot][0];
+        printerTemplate.shadowColor = sMoveNamePaletteColors[moveSlot][1];
+
         // We cannot check the actual width of the window because
         // B_WIN_MOVE_NAME_1 and B_WIN_MOVE_NAME_3 are 16 wide for
         // Z-move details.
@@ -3532,11 +3657,11 @@ void SetPpNumbersPaletteInMoveSelection(u32 battler)
     else
         var = 3;
 
-    gPlttBufferUnfaded[BG_PLTT_ID(5) + 12] = palPtr[(var * 2) + 0];
-    gPlttBufferUnfaded[BG_PLTT_ID(5) + 11] = palPtr[(var * 2) + 1];
+    gPlttBufferUnfaded[BG_PLTT_ID(0) + 12] = palPtr[(var * 2) + 0];
+    gPlttBufferUnfaded[BG_PLTT_ID(0) + 11] = palPtr[(var * 2) + 1];
 
-    CpuCopy16(&gPlttBufferUnfaded[BG_PLTT_ID(5) + 12], &gPlttBufferFaded[BG_PLTT_ID(5) + 12], PLTT_SIZEOF(1));
-    CpuCopy16(&gPlttBufferUnfaded[BG_PLTT_ID(5) + 11], &gPlttBufferFaded[BG_PLTT_ID(5) + 11], PLTT_SIZEOF(1));
+    CpuCopy16(&gPlttBufferUnfaded[BG_PLTT_ID(0) + 12], &gPlttBufferFaded[BG_PLTT_ID(0) + 12], PLTT_SIZEOF(1));
+    CpuCopy16(&gPlttBufferUnfaded[BG_PLTT_ID(0) + 11], &gPlttBufferFaded[BG_PLTT_ID(0) + 11], PLTT_SIZEOF(1));
 }
 
 u8 GetCurrentPpToMaxPpState(u8 currentPp, u8 maxPp)

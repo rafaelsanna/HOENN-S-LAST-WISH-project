@@ -3,5 +3,6 @@
 
 void CB2_InitOptionMenu(void);
 void CB2_InitOptionMenu_DifficultyTab(void);
+bool32 AreMoveTypeColorsEnabled(void);
 
 #endif // GUARD_OPTION_MENU_H
