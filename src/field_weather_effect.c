@@ -43,6 +43,11 @@ const u8 gWeatherAshTiles[] = INCBIN_U8("graphics/weather/ash.4bpp");
 const u8 gWeatherRainTiles[] = INCBIN_U8("graphics/weather/rain.4bpp");
 const u8 gWeatherSandstormTiles[] = INCBIN_U8("graphics/weather/sandstorm.4bpp");
 
+// Hoenn's Last Wish - High Clouds. The supplied cloud art is packed into
+// six 64x32 frames. Index 0 in the palette is transparent.
+static const u8 sWeatherHighCloudTiles[] = INCBIN_U8("graphics/weather/high_clouds.4bpp");
+static const u16 sWeatherHighCloudPalette[] = INCBIN_U16("graphics/weather/high_clouds.gbapal");
+
 // Hoenn's Last Wish - Concert Lights diagnostic beam.
 // Source file: graphics/weather/concert_beam_v11.png
 const u8 gWeatherConcertBeamTiles[] = INCBIN_U8("graphics/weather/concert_beam_v11.4bpp");
@@ -2904,6 +2909,350 @@ static void UpdateBubbleSprite(struct Sprite *sprite)
 #undef tCounter
 
 //------------------------------------------------------------------------------
+// WEATHER_HIGH_CLOUDS
+//
+// Slow world-space cloud layer for sky maps.
+// - Clouds drift horizontally on their own while camera movement affects them naturally.
+// - coordOffsetEnabled is deliberately TRUE so they never stay glued to the player.
+// - Six sprites are enough to cover the screen without overloading the view.
+// - When a cloud leaves the left side, it respawns beyond the right side with
+//   a new lane, frame and small spacing variation.
+//
+// Uses its own WEATHER_HIGH_CLOUDS id and dedicated sprite/palette tags.
+//------------------------------------------------------------------------------
+
+#define NUM_HIGH_CLOUD_SPRITES 6
+#define HIGH_CLOUD_FRAME_TILES 32 // 64x32 at 4bpp = 32 tiles per frame
+
+static u8 sHighCloudSpriteIds[NUM_HIGH_CLOUD_SPRITES];
+static bool8 sHighCloudsCreated;
+
+static void CreateHighCloudSprites(void);
+static void DestroyHighCloudSprites(void);
+static void InitHighCloudSprite(struct Sprite *sprite, u8 id, bool8 initial);
+static void UpdateHighCloudSprite(struct Sprite *sprite);
+static bool8 AreHighCloudSpritesAlive(void);
+
+static const struct SpriteSheet sHighCloudSpriteSheet =
+{
+    .data = sWeatherHighCloudTiles,
+    .size = sizeof(sWeatherHighCloudTiles),
+    .tag = GFXTAG_HIGH_CLOUDS,
+};
+
+static const struct SpritePalette sHighCloudSpritePalette =
+{
+    .data = sWeatherHighCloudPalette,
+    .tag = PALTAG_HIGH_CLOUDS,
+};
+
+static const struct OamData sHighCloudOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sHighCloudAnim0[] =
+{
+    ANIMCMD_FRAME(HIGH_CLOUD_FRAME_TILES * 0, 1),
+    ANIMCMD_END,
+};
+static const union AnimCmd sHighCloudAnim1[] =
+{
+    ANIMCMD_FRAME(HIGH_CLOUD_FRAME_TILES * 1, 1),
+    ANIMCMD_END,
+};
+static const union AnimCmd sHighCloudAnim2[] =
+{
+    ANIMCMD_FRAME(HIGH_CLOUD_FRAME_TILES * 2, 1),
+    ANIMCMD_END,
+};
+static const union AnimCmd sHighCloudAnim3[] =
+{
+    ANIMCMD_FRAME(HIGH_CLOUD_FRAME_TILES * 3, 1),
+    ANIMCMD_END,
+};
+static const union AnimCmd sHighCloudAnim4[] =
+{
+    ANIMCMD_FRAME(HIGH_CLOUD_FRAME_TILES * 4, 1),
+    ANIMCMD_END,
+};
+static const union AnimCmd sHighCloudAnim5[] =
+{
+    ANIMCMD_FRAME(HIGH_CLOUD_FRAME_TILES * 5, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sHighCloudAnimCmds[] =
+{
+    sHighCloudAnim0,
+    sHighCloudAnim1,
+    sHighCloudAnim2,
+    sHighCloudAnim3,
+    sHighCloudAnim4,
+    sHighCloudAnim5,
+};
+
+static const struct SpriteTemplate sHighCloudSpriteTemplate =
+{
+    .tileTag = GFXTAG_HIGH_CLOUDS,
+    .paletteTag = PALTAG_HIGH_CLOUDS,
+    .oam = &sHighCloudOamData,
+    .anims = sHighCloudAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateHighCloudSprite,
+};
+
+#define tHighCloudTimer data[0]
+#define tHighCloudDelay data[1]
+#define tHighCloudId    data[2]
+#define tHighCloudFrame data[3]
+
+void HighClouds_InitVars(void)
+{
+    gWeatherPtr->initStep = 0;
+    gWeatherPtr->weatherGfxLoaded = FALSE;
+    gWeatherPtr->targetColorMapIndex = 0;
+    gWeatherPtr->colorMapStepDelay = 20;
+    gWeatherPtr->noShadows = FALSE;
+
+    // High clouds are normal opaque OBJ sprites. Do not leave an alpha-blend
+    // requirement behind for menus or the next weather.
+    Weather_SetBlendCoeffs(16, 0);
+}
+
+void HighClouds_InitAll(void)
+{
+    HighClouds_InitVars();
+    while (!gWeatherPtr->weatherGfxLoaded)
+        HighClouds_Main();
+}
+
+void HighClouds_Main(void)
+{
+    // initAll is only used when weather starts with the map. During an in-map
+    // weather transition the engine calls InitVars and then Main, so resource
+    // creation must also live here. Sprite callbacks handle all later motion.
+    if (gWeatherPtr->initStep == 0)
+    {
+        CreateHighCloudSprites();
+        gWeatherPtr->weatherGfxLoaded = TRUE;
+        gWeatherPtr->initStep++;
+    }
+}
+
+bool8 HighClouds_Finish(void)
+{
+    DestroyHighCloudSprites();
+    gWeatherPtr->weatherGfxLoaded = FALSE;
+    return FALSE;
+}
+
+static bool8 AreHighCloudSpritesAlive(void)
+{
+    u8 i;
+
+    if (!sHighCloudsCreated)
+        return FALSE;
+
+    for (i = 0; i < NUM_HIGH_CLOUD_SPRITES; i++)
+    {
+        u8 spriteId = sHighCloudSpriteIds[i];
+        if (spriteId >= MAX_SPRITES
+         || !gSprites[spriteId].inUse
+         || gSprites[spriteId].callback != UpdateHighCloudSprite)
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+static void CreateHighCloudSprites(void)
+{
+    u8 i;
+
+    if (AreHighCloudSpritesAlive())
+        return;
+
+    // A map/sprite reset can invalidate the stored IDs without running the
+    // weather finish callback. Never destroy those stale IDs here, because a
+    // new unrelated sprite may already have reused the slot.
+    sHighCloudsCreated = FALSE;
+    for (i = 0; i < NUM_HIGH_CLOUD_SPRITES; i++)
+        sHighCloudSpriteIds[i] = MAX_SPRITES;
+
+    LoadSpriteSheet(&sHighCloudSpriteSheet);
+    LoadSpritePalette(&sHighCloudSpritePalette);
+
+    for (i = 0; i < NUM_HIGH_CLOUD_SPRITES; i++)
+    {
+        u8 spriteId = CreateSpriteAtEnd(&sHighCloudSpriteTemplate, 0, 0, 78);
+
+        if (spriteId == MAX_SPRITES)
+            continue;
+
+        sHighCloudSpriteIds[i] = spriteId;
+        InitHighCloudSprite(&gSprites[spriteId], i, TRUE);
+    }
+
+    sHighCloudsCreated = TRUE;
+}
+
+static void InitHighCloudSprite(struct Sprite *sprite, u8 id, bool8 initial)
+{
+    u16 rand = Random();
+    s16 screenX;
+    s16 screenY;
+
+    sprite->tHighCloudId = id;
+    sprite->tHighCloudTimer = rand & 3;
+
+    // One pixel every 4..7 frames: a deliberately slow horizontal drift.
+    sprite->tHighCloudDelay = 4 + ((rand + id) & 3);
+
+    /*
+     * WORLD / MAP SPACE.
+     *
+     * The previous build used coordOffsetEnabled = FALSE, which made the
+     * clouds screen-locked. TRUE lets the camera move them naturally relative
+     * to the player while their own slow horizontal wind remains independent.
+     */
+    sprite->coordOffsetEnabled = TRUE;
+    sprite->x2 = 0;
+    sprite->y2 = 0;
+
+    if (initial)
+    {
+        screenX = ((id * 53 + (rand & 31)) % (DISPLAY_WIDTH + 80)) - 24;
+        screenY = 14 + ((id * 29 + ((rand >> 5) & 15)) % 136);
+        sprite->tHighCloudFrame = id % 6;
+    }
+    else
+    {
+        screenX = DISPLAY_WIDTH + 36 + (rand % 88);
+        screenY = 12 + ((id * 37 + rand) % 140);
+        sprite->tHighCloudFrame = rand % 6;
+    }
+
+    // Convert the desired screen position into a stable world-space anchor.
+    sprite->x = screenX - gSpriteCoordOffsetX;
+    sprite->y = screenY - gSpriteCoordOffsetY;
+
+    StartSpriteAnim(sprite, sprite->tHighCloudFrame);
+    sprite->invisible = FALSE;
+}
+
+static void UpdateHighCloudSprite(struct Sprite *sprite)
+{
+    s16 screenX;
+    s16 screenY;
+    u16 rand;
+
+    // Independent horizontal wind in world space.
+    if (++sprite->tHighCloudTimer >= sprite->tHighCloudDelay)
+    {
+        sprite->tHighCloudTimer = 0;
+        sprite->x--;
+    }
+
+    screenX = sprite->x + gSpriteCoordOffsetX;
+    screenY = sprite->y + gSpriteCoordOffsetY;
+
+    // Horizontal recycling keeps the small sprite pool distributed everywhere.
+    if (screenX < -48)
+    {
+        rand = Random();
+        sprite->x = (DISPLAY_WIDTH + 36 + (rand % 88)) - gSpriteCoordOffsetX;
+        sprite->y = (12 + ((sprite->tHighCloudId * 37 + rand) % 140))
+                  - gSpriteCoordOffsetY;
+        sprite->tHighCloudFrame = rand % 6;
+        StartSpriteAnim(sprite, sprite->tHighCloudFrame);
+        return;
+    }
+    else if (screenX > DISPLAY_WIDTH + 80)
+    {
+        rand = Random();
+        sprite->x = (-36 - (rand % 40)) - gSpriteCoordOffsetX;
+        sprite->y = (12 + ((sprite->tHighCloudId * 31 + rand) % 140))
+                  - gSpriteCoordOffsetY;
+        sprite->tHighCloudFrame = rand % 6;
+        StartSpriteAnim(sprite, sprite->tHighCloudFrame);
+        return;
+    }
+
+    /*
+     * Do not cancel vertical camera movement. Let the cloud travel naturally
+     * with the map; recycle it only after it is fully outside the viewport.
+     */
+    if (screenY < -32)
+    {
+        rand = Random();
+        screenX = 16 + (rand % (DISPLAY_WIDTH - 32));
+        screenY = DISPLAY_HEIGHT + 24 + (rand & 31);
+
+        sprite->x = screenX - gSpriteCoordOffsetX;
+        sprite->y = screenY - gSpriteCoordOffsetY;
+        sprite->tHighCloudFrame = rand % 6;
+        StartSpriteAnim(sprite, sprite->tHighCloudFrame);
+    }
+    else if (screenY > DISPLAY_HEIGHT + 32)
+    {
+        rand = Random();
+        screenX = 16 + (rand % (DISPLAY_WIDTH - 32));
+        screenY = -24 - (rand & 31);
+
+        sprite->x = screenX - gSpriteCoordOffsetX;
+        sprite->y = screenY - gSpriteCoordOffsetY;
+        sprite->tHighCloudFrame = rand % 6;
+        StartSpriteAnim(sprite, sprite->tHighCloudFrame);
+    }
+}
+
+static void DestroyHighCloudSprites(void)
+{
+    u8 i;
+
+    if (!sHighCloudsCreated)
+        return;
+
+    for (i = 0; i < NUM_HIGH_CLOUD_SPRITES; i++)
+    {
+        u8 spriteId = sHighCloudSpriteIds[i];
+
+        // Only destroy a slot if it is still one of our clouds. This matters on
+        // map transitions where sprite IDs can be recycled before weather state
+        // is fully rebuilt.
+        if (spriteId < MAX_SPRITES
+         && gSprites[spriteId].inUse
+         && gSprites[spriteId].callback == UpdateHighCloudSprite)
+            DestroySprite(&gSprites[spriteId]);
+
+        sHighCloudSpriteIds[i] = MAX_SPRITES;
+    }
+
+    FreeSpriteTilesByTag(GFXTAG_HIGH_CLOUDS);
+    FreeSpritePaletteByTag(PALTAG_HIGH_CLOUDS);
+    sHighCloudsCreated = FALSE;
+}
+
+#undef tHighCloudTimer
+#undef tHighCloudDelay
+#undef tHighCloudId
+#undef tHighCloudFrame
+
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // WEATHER_SMOKE
@@ -3975,6 +4324,7 @@ static u8 TranslateWeatherNum(u8 weather)
     case WEATHER_CONCERT_LIGHTS:     return WEATHER_CONCERT_LIGHTS;
     case WEATHER_DARKNESS:           return WEATHER_DARKNESS;
     case WEATHER_DARKNESS_RAIN:      return WEATHER_DARKNESS_RAIN;
+    case WEATHER_HIGH_CLOUDS:        return WEATHER_HIGH_CLOUDS;
     case WEATHER_ROUTE119_CYCLE:     return sWeatherCycleRoute119[gSaveBlock1Ptr->weatherCycleStage];
     case WEATHER_ROUTE123_CYCLE:     return sWeatherCycleRoute123[gSaveBlock1Ptr->weatherCycleStage];
     default:                         return WEATHER_NONE;

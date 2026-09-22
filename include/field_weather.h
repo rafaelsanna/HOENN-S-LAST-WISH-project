@@ -18,12 +18,14 @@ enum {
     PALTAG_STAR,
     PALTAG_FOREST_LIGHT,
     GFXTAG_SMOKE,
+    GFXTAG_HIGH_CLOUDS,
 };
 enum {
     PALTAG_WEATHER = TAG_WEATHER_START,
     PALTAG_WEATHER_2,
     PALTAG_SMOKE,
-    PALTAG_PINK_LEAVES
+    PALTAG_PINK_LEAVES,
+    PALTAG_HIGH_CLOUDS
 };
 
 #define NUM_WEATHER_COLOR_MAPS 19
@@ -255,6 +257,10 @@ void Smoke_InitVars(void);
 void Smoke_Main(void);
 void Smoke_InitAll(void);
 bool8 Smoke_Finish(void);
+void HighClouds_InitVars(void);
+void HighClouds_Main(void);
+void HighClouds_InitAll(void);
+bool8 HighClouds_Finish(void);
 
 u8 GetSavedWeather(void);
 void SetSavedWeather(u32 weather);

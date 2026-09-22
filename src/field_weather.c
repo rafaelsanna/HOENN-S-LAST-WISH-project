@@ -186,7 +186,8 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     [WEATHER_DROUGHT]            = {Drought_InitVars,       Drought_Main,       Drought_InitAll,       Drought_Finish},
     [WEATHER_DOWNPOUR]           = {Downpour_InitVars,      Thunderstorm_Main,  Downpour_InitAll,      Thunderstorm_Finish},
     [WEATHER_UNDERWATER_BUBBLES] = {Bubbles_InitVars,       Bubbles_Main,       Bubbles_InitAll,       Bubbles_Finish},
-    [WEATHER_STARS]              = {Stars_InitVars,        Stars_Main,         Stars_InitAll,         Stars_Finish},
+    [WEATHER_HIGH_CLOUDS]        = {HighClouds_InitVars,    HighClouds_Main,    HighClouds_InitAll,    HighClouds_Finish},
+    [WEATHER_STARS]              = {Stars_InitVars,         Stars_Main,         Stars_InitAll,         Stars_Finish},
     [WEATHER_SMOKE]              = {Smoke_InitVars,        Smoke_Main,         Smoke_InitAll,         Smoke_Finish},
     [WEATHER_FOREST_LIGHT]       = {ForestLight_InitVars,  ForestLight_Main,   ForestLight_InitAll,   ForestLight_Finish},
     [WEATHER_FALLING_LEAVES]     = {PinkLeaves_InitVars,   PinkLeaves_Main,    PinkLeaves_InitAll,    PinkLeaves_Finish},
@@ -1500,6 +1501,9 @@ static void UNUSED SetFieldWeather(u8 weather)
     case WEATHER_DARKNESS_RAIN:
         SetWeather(WEATHER_DARKNESS_RAIN);
         break;
+    case WEATHER_HIGH_CLOUDS:
+        SetWeather(WEATHER_HIGH_CLOUDS);
+        break;
     case COORD_EVENT_WEATHER_RAIN_THUNDERSTORM:
         SetWeather(WEATHER_RAIN_THUNDERSTORM);
         break;
@@ -1649,6 +1653,7 @@ static const u8 sWeatherNames[WEATHER_COUNT][24] = {
     [WEATHER_CONCERT_LIGHTS]  = _("CONCERT LIGHTS"),
     [WEATHER_DARKNESS]        = _("DARKNESS"),
     [WEATHER_DARKNESS_RAIN]   = _("DARKNESS RAIN"),
+    [WEATHER_HIGH_CLOUDS]     = _("HIGH CLOUDS"),
 };
 
 static const u8 sDebugText_WeatherNotDefined[] = _("NOT DEFINED!!!");
