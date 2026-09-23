@@ -496,7 +496,7 @@ PlayersHouse_1F_Text_LatiEmergencyNewsFlash:
 
 PlayersHouse_1F_Text_WhatColorDidTheySay:
 	.string "GRANDMA: {PLAYER}, you're still having\n"
-	.string "those strange dreams almost every\n"
+	.string "those strange dreams almost every\l"
 	.string "night…\p"
 	.string "And now this comet…\n"
 	.string "Perhaps it's a sign… A heavenly sign…\p"

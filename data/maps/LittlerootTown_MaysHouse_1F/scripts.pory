@@ -381,8 +381,8 @@ RivalsHouse_1F_Text_OhYoureTheNewNeighbor:
 	.string "beautiful comet from last night?\p"
 	.string "It was absolutely stunning, wasn't it?\n"
 	.string "It lit up the whole sky!\p"
-	.string "Except when it darkened everything.\p"
-	.string "Ho ho!\n"
+	.string "Except when it darkened everything.\n"
+	.string "Ho ho!\p"
 	.string "Anyway, {RIVAL} may be upstairs…\n"
 	.string "I'm not sure, actually…\p"
 	.string "Sorry, I've been a bit distracted today!\n"
@@ -399,7 +399,7 @@ RivalsHouse_1F_Text_LikeChildLikeFather:
 RivalsHouse_1F_Text_TooBusyToNoticeVisit:
 	.string "That {RIVAL}!\p"
 	.string "I suppose that kid is too busy\n"
-	.string "on studying that comet to notice\l"
+	.string "studying that comet to notice\l"
 	.string "you've come to visit, {PLAYER}{KUN}.$"
 
 RivalsHouse_1F_Text_WentOutToRoute103:
@@ -411,7 +411,7 @@ RivalsHouse_1F_Text_ShouldGoHomeEverySoOften:
 	.string "I think it's wonderful for people to\n"
 	.string "travel with POKéMON.\p"
 	.string "But you should go home every so often\n"
-	.string "to let your grandmother know you're\n"
+	.string "to let your grandmother know you're\l"
 	.string "okay.\p"
 	.string "She might not say it, but I'm sure she\n"
 	.string "worries about you, {PLAYER}{KUN}.$"
@@ -442,7 +442,7 @@ RivalsHouse_1F_Text_BrendanWhoAreYou:
 	.string "PROFESSOR ACACIA said it might be\n"
 	.string "connected to POKeMON somehow.\p"
 	.string "Me? Of course I made a wish.\n"
-	.string "I'm not telling you though, or it won't\n"
+	.string "I'm not telling you though, or it won't\l"
 	.string "come true.$"
 	.string "Anyway, I should get going.\n"
 	.string "Got some training on ROUTE 103 to do.\p"
