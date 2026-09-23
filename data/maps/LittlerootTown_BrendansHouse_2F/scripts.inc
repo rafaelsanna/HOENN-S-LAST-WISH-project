@@ -745,9 +745,9 @@ PlayersHouse_2F_Text_ClockIsStopped:
 # 373 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 PlayersHouse_2F_Text_HowDoYouLikeYourRoom:
 # 374 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	.string "MOM: {PLAYER}, how do you like your\n"
+	.string "GRANDMA: {PLAYER}, how do you\n"
 # 375 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	.string "new room?\p"
+	.string "like your new room?\p"
 # 376 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	.string "Good! Everything's put away neatly!\p"
 # 377 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"

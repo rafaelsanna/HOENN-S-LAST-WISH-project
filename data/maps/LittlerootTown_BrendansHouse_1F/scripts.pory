@@ -6,9 +6,22 @@ LittlerootTown_BrendansHouse_1F_MapScripts::
 	.byte 0
 
 LittlerootTown_BrendansHouse_1F_OnLoad:
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_BrendansHouse_1F_EventScript_ShowPlayersGrandma
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_BrendansHouse_1F_EventScript_ShowRivalsGrandma
 	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
 	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
 	end
+
+LittlerootTown_BrendansHouse_1F_EventScript_ShowPlayersGrandma::
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	return
+
+LittlerootTown_BrendansHouse_1F_EventScript_ShowRivalsGrandma::
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes::
 	setmetatile 5, 4, METATILE_BrendansMaysHouse_MovingBox_Open, TRUE
@@ -340,7 +353,7 @@ PlayersHouse_1F_Text_MoversPokemonGoSetClock:
 	.string "This is so convenient!\p"
 	.string "{PLAYER}, your room is upstairs.\n"
 	.string "Go check it out, dear!\p"
-	.string "DAD bought you a new clock to mark\n"
+	.string "You bought a new clock to mark\n"
 	.string "our move here.\l"
 	.string "Don't forget to set it!$"
 

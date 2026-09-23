@@ -6,9 +6,22 @@ LittlerootTown_MaysHouse_1F_MapScripts::
 	.byte 0
 
 LittlerootTown_MaysHouse_1F_OnLoad:
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_1F_EventScript_ShowRivalsGrandma
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_1F_EventScript_ShowPlayersGrandma
 	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes
 	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual
 	end
+
+LittlerootTown_MaysHouse_1F_EventScript_ShowPlayersGrandma::
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	return
+
+LittlerootTown_MaysHouse_1F_EventScript_ShowRivalsGrandma::
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	return
 
 LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes::
 	setmetatile 5, 4, METATILE_BrendansMaysHouse_MovingBox_Open, TRUE

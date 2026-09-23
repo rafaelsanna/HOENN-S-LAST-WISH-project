@@ -895,8 +895,8 @@ gText_PokemonCenterSign::
 	.string "“Rejuvenate your tired partners!”\n"
 	.string "POKéMON CENTER$"
 
-gText_MomOrDadMightLikeThisProgram::
-	.string "{STR_VAR_1} might like this program.\n"
+gText_GrandmaMightLikeThisProgram::
+	.string "GRANDMA might like this program.\n"
 	.string "… … … … … … … … … … … … … … … …\p"
 	.string "Better get going!$"
 
@@ -955,7 +955,7 @@ gText_MonsHealed::
 	.string "We hope you excel!$"
 
 gText_HadQuiteAnExperienceTakeRest::
-	.string "MOM: {PLAYER}!\n"
+	.string "GRANDMA: {PLAYER}!\n"
 	.string "Welcome home.\p"
 	.string "It sounds like you had quite\n"
 	.string "an experience.\p"
@@ -963,10 +963,10 @@ gText_HadQuiteAnExperienceTakeRest::
 	.string "rest.$"
 
 gText_MomExplainHPGetPotions::
-	.string "MOM: Oh, good! You and your\n"
+	.string "GRANDMA: Oh, good! You and your\n"
 	.string "POKéMON are looking great.\p"
 	.string "I just heard from PROF. ACACIA.\p"
-	.string "He said that POKéMON's energy is\n"
+	.string "She said that POKéMON's energy is\n"
 	.string "measured in HP.\p"
 	.string "If your POKéMON lose their HP,\n"
 	.string "you can restore them at any\l"

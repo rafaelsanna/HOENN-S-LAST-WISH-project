@@ -183,13 +183,13 @@ VerdanturfTown_Text_AirCleanHere:
 # 92 "data/maps/VerdanturfTown/scripts.pory"
 VerdanturfTown_Text_MakeBattleTentDebut:
 # 93 "data/maps/VerdanturfTown/scripts.pory"
-	.string "My POKéMON and I, we've been riding\n"
+	.string "Every time I get back from a camping\n"
 # 94 "data/maps/VerdanturfTown/scripts.pory"
-	.string "a hot winning streak.\p"
+	.string "trip, I stop by the CAFE.\p"
 # 95 "data/maps/VerdanturfTown/scripts.pory"
-	.string "So I decided to make my BATTLE TENT\n"
+	.string "The HOT COFFEE is so comforting, and\n"
 # 96 "data/maps/VerdanturfTown/scripts.pory"
-	.string "debut in this town.$"
+	.string "the ICED COFFEE will perk you right up!.$"
 # 97 "data/maps/VerdanturfTown/scripts.pory"
 
 # 98 "data/maps/VerdanturfTown/scripts.pory"
