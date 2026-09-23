@@ -2407,7 +2407,7 @@ Route104_Text_TrainerTipsDoubleBattles:
 # 1146 "data/maps/Route104/scripts.pory"
 Route104_Text_MayWeShouldRegister:
 # 1147 "data/maps/Route104/scripts.pory"
-	.string "MAY: Oh, hi, {PLAYER}{KUN}!\p"
+	.string "ZINNIA: Oh, hi, {PLAYER}{KUN}!\p"
 # 1148 "data/maps/Route104/scripts.pory"
 	.string "DEVON upgraded your POKéNAV with\n"
 # 1149 "data/maps/Route104/scripts.pory"
@@ -2421,7 +2421,7 @@ Route104_Text_MayWeShouldRegister:
 # 1153 "data/maps/Route104/scripts.pory"
 Route104_Text_RegisteredMay:
 # 1154 "data/maps/Route104/scripts.pory"
-	.string "{PLAYER} registered MAY\n"
+	.string "{PLAYER} registered ZINNIA\n"
 # 1155 "data/maps/Route104/scripts.pory"
 	.string "in the POKéNAV.$"
 # 1156 "data/maps/Route104/scripts.pory"
@@ -2429,7 +2429,7 @@ Route104_Text_RegisteredMay:
 # 1157 "data/maps/Route104/scripts.pory"
 Route104_Text_MayHowsYourPokedex:
 # 1158 "data/maps/Route104/scripts.pory"
-	.string "MAY: Oh, by the way, {PLAYER}{KUN},\n"
+	.string "ZINNIA: Oh, by the way, {PLAYER}{KUN},\n"
 # 1159 "data/maps/Route104/scripts.pory"
 	.string "how's your POKéDEX coming along?$"
 # 1160 "data/maps/Route104/scripts.pory"
@@ -2447,7 +2447,7 @@ Route104_Text_MayMinesDecentLetsBattle:
 # 1166 "data/maps/Route104/scripts.pory"
 Route104_Text_MayHaventRaisedPokemon:
 # 1167 "data/maps/Route104/scripts.pory"
-	.string "MAY: Oh, what's the matter?\p"
+	.string "ZINNIA: Oh, what's the matter?\p"
 # 1168 "data/maps/Route104/scripts.pory"
 	.string "Haven't you caught or raised your\n"
 # 1169 "data/maps/Route104/scripts.pory"
@@ -2459,7 +2459,7 @@ Route104_Text_MayHaventRaisedPokemon:
 # 1172 "data/maps/Route104/scripts.pory"
 Route104_Text_MayLetsBattle:
 # 1173 "data/maps/Route104/scripts.pory"
-	.string "MAY: So, what do you think?\n"
+	.string "ZINNIA: So, what do you think?\n"
 # 1174 "data/maps/Route104/scripts.pory"
 	.string "How about a little battle here?$"
 # 1175 "data/maps/Route104/scripts.pory"
@@ -2467,7 +2467,7 @@ Route104_Text_MayLetsBattle:
 # 1176 "data/maps/Route104/scripts.pory"
 Route104_Text_MayIntro:
 # 1177 "data/maps/Route104/scripts.pory"
-	.string "MAY: You just became a TRAINER,\n"
+	.string "ZINNIA: You just became a TRAINER,\n"
 # 1178 "data/maps/Route104/scripts.pory"
 	.string "{PLAYER}{KUN}. I'm not going to lose!$"
 # 1179 "data/maps/Route104/scripts.pory"
@@ -2483,7 +2483,7 @@ Route104_Text_MayDefeat:
 # 1184 "data/maps/Route104/scripts.pory"
 Route104_Text_MayPostBattle:
 # 1185 "data/maps/Route104/scripts.pory"
-	.string "MAY: I can tell you've gotten pretty\n"
+	.string "ZINNIA: I can tell you've gotten pretty\n"
 # 1186 "data/maps/Route104/scripts.pory"
 	.string "good with the way you handle POKéMON.\p"
 # 1187 "data/maps/Route104/scripts.pory"
@@ -2499,7 +2499,7 @@ Route104_Text_MayPostBattle:
 # 1192 "data/maps/Route104/scripts.pory"
 Route104_Text_BrendanWeShouldRegister:
 # 1193 "data/maps/Route104/scripts.pory"
-	.string "BRENDAN: Oh, hey, {PLAYER}!\p"
+	.string "ZENNO: Oh, hey, {PLAYER}!\p"
 # 1194 "data/maps/Route104/scripts.pory"
 	.string "Cool, you had DEVON install the MATCH\n"
 # 1195 "data/maps/Route104/scripts.pory"

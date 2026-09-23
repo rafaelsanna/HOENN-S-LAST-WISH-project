@@ -12133,7 +12133,7 @@ Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_WALLY_VR_1 ===
-Name: WALLY
+Name: LUKA
 Class: Rival
 Pic: Wally
 Gender: Male
@@ -13823,7 +13823,7 @@ Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MAXIE_MAGMA_HIDEOUT ===
-Name: MAXIE
+Name: MAGNUS
 Class: Magma Leader
 Pic: Magma Leader Maxie
 Gender: Male
@@ -15054,7 +15054,7 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Wing Attack
 
 === TRAINER_WALLY_VR_2 ===
-Name: WALLY
+Name: LUKA
 Class: Rival
 Pic: Wally
 Gender: Male
@@ -15104,7 +15104,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Future Sight
 
 === TRAINER_WALLY_VR_3 ===
-Name: WALLY
+Name: LUKA
 Class: Rival
 Pic: Wally
 Gender: Male
@@ -15154,7 +15154,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Future Sight
 
 === TRAINER_WALLY_VR_4 ===
-Name: WALLY
+Name: LUKA
 Class: Rival
 Pic: Wally
 Gender: Male
@@ -15204,7 +15204,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Future Sight
 
 === TRAINER_WALLY_VR_5 ===
-Name: WALLY
+Name: LUKA
 Class: Rival
 Pic: Wally
 Gender: Male
@@ -15271,7 +15271,7 @@ Level: 6
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_WALLY_MAUVILLE_1 ===
-Name: WALLY
+Name: LUKA
 Class: Rival
 Pic: Wally
 Gender: Male
@@ -16673,7 +16673,7 @@ Level: 56
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_MAXIE_MOSSDEEP ===
-Name: MAXIE
+Name: MAGNUS
 Class: Magma Leader
 Pic: Magma Leader Maxie
 Gender: Male
@@ -17337,7 +17337,7 @@ Level: 20
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_ROXANNE_2 ===
-Name: ROXANNE
+Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
 Gender: Female
@@ -17379,7 +17379,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 
 === TRAINER_ROXANNE_3 ===
-Name: ROXANNE
+Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
 Gender: Female
@@ -17429,7 +17429,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 
 === TRAINER_ROXANNE_4 ===
-Name: ROXANNE
+Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
 Gender: Female
@@ -17479,7 +17479,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 
 === TRAINER_ROXANNE_5 ===
-Name: ROXANNE
+Name: TERRA
 Class: Leader
 Pic: Leader Roxanne
 Gender: Female
@@ -17537,7 +17537,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 
 === TRAINER_BRAWLY_2 ===
-Name: BRAWLY
+Name: RENTON
 Class: Leader
 Pic: Leader Brawly
 Gender: Male
@@ -17579,7 +17579,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_BRAWLY_3 ===
-Name: BRAWLY
+Name: RENTON
 Class: Leader
 Pic: Leader Brawly
 Gender: Male
@@ -17621,7 +17621,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_BRAWLY_4 ===
-Name: BRAWLY
+Name: RENTON
 Class: Leader
 Pic: Leader Brawly
 Gender: Male
@@ -17671,7 +17671,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_BRAWLY_5 ===
-Name: BRAWLY
+Name: RENTON
 Class: Leader
 Pic: Leader Brawly
 Gender: Male
@@ -17729,7 +17729,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_WATTSON_2 ===
-Name: WATTSON
+Name: DEN
 Class: Leader
 Pic: Leader Wattson
 Gender: Male
@@ -17771,7 +17771,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Protect
 
 === TRAINER_WATTSON_3 ===
-Name: WATTSON
+Name: DEN
 Class: Leader
 Pic: Leader Wattson
 Gender: Male
@@ -17821,7 +17821,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Protect
 
 === TRAINER_WATTSON_4 ===
-Name: WATTSON
+Name: DEN
 Class: Leader
 Pic: Leader Wattson
 Gender: Male
@@ -17871,7 +17871,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Protect
 
 === TRAINER_WATTSON_5 ===
-Name: WATTSON
+Name: DEN
 Class: Leader
 Pic: Leader Wattson
 Gender: Male
@@ -17929,7 +17929,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Protect
 
 === TRAINER_FLANNERY_2 ===
-Name: FLANNERY
+Name: AMATERASU
 Class: Leader
 Pic: Leader Flannery
 Gender: Female
@@ -17971,7 +17971,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Attract
 
 === TRAINER_FLANNERY_3 ===
-Name: FLANNERY
+Name: AMATERASU
 Class: Leader
 Pic: Leader Flannery
 Gender: Female
@@ -18021,7 +18021,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Attract
 
 === TRAINER_FLANNERY_4 ===
-Name: FLANNERY
+Name: AMATERASU
 Class: Leader
 Pic: Leader Flannery
 Gender: Female
@@ -18079,7 +18079,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Attract
 
 === TRAINER_FLANNERY_5 ===
-Name: FLANNERY
+Name: AMATERASU
 Class: Leader
 Pic: Leader Flannery
 Gender: Female
@@ -18137,7 +18137,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Attract
 
 === TRAINER_NORMAN_2 ===
-Name: NORMAN
+Name: CALENDULA
 Class: Leader
 Pic: Leader Norman
 Gender: Male
@@ -18179,7 +18179,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball
 
 === TRAINER_NORMAN_3 ===
-Name: NORMAN
+Name: CALENDULA
 Class: Leader
 Pic: Leader Norman
 Gender: Male
@@ -18229,7 +18229,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball
 
 === TRAINER_NORMAN_4 ===
-Name: NORMAN
+Name: CALENDULA
 Class: Leader
 Pic: Leader Norman
 Gender: Male
@@ -18279,7 +18279,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball
 
 === TRAINER_NORMAN_5 ===
-Name: NORMAN
+Name: CALENDULA
 Class: Leader
 Pic: Leader Norman
 Gender: Male
@@ -18337,7 +18337,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shadow Ball
 
 === TRAINER_WINONA_2 ===
-Name: WINONA
+Name: TAKA
 Class: Leader
 Pic: Leader Winona
 Gender: Female
@@ -18387,7 +18387,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_WINONA_3 ===
-Name: WINONA
+Name: TAKA
 Class: Leader
 Pic: Leader Winona
 Gender: Female
@@ -18445,7 +18445,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_WINONA_4 ===
-Name: WINONA
+Name: TAKA
 Class: Leader
 Pic: Leader Winona
 Gender: Female
@@ -18503,7 +18503,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_WINONA_5 ===
-Name: WINONA
+Name: TAKA
 Class: Leader
 Pic: Leader Winona
 Gender: Female
@@ -18561,7 +18561,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 
 === TRAINER_TATE_AND_LIZA_2 ===
-Name: TATE&LIZA
+Name: SOUL&LUNA
 Class: Leader
 Pic: Leader Tate And Liza
 Gender: Male
@@ -18611,7 +18611,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
 
 === TRAINER_TATE_AND_LIZA_3 ===
-Name: TATE&LIZA
+Name: SOUL&LUNA
 Class: Leader
 Pic: Leader Tate And Liza
 Gender: Male
@@ -18669,7 +18669,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
 
 === TRAINER_TATE_AND_LIZA_4 ===
-Name: TATE&LIZA
+Name: SOUL&LUNA
 Class: Leader
 Pic: Leader Tate And Liza
 Gender: Male
@@ -18727,7 +18727,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
 
 === TRAINER_TATE_AND_LIZA_5 ===
-Name: TATE&LIZA
+Name: SOUL&LUNA
 Class: Leader
 Pic: Leader Tate And Liza
 Gender: Male
@@ -18785,7 +18785,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
 
 === TRAINER_JUAN_2 ===
-Name: JUAN
+Name: RIO
 Class: Leader
 Pic: Leader Juan
 Gender: Male
@@ -18835,7 +18835,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rest
 
 === TRAINER_JUAN_3 ===
-Name: JUAN
+Name: RIO
 Class: Leader
 Pic: Leader Juan
 Gender: Male
@@ -18885,7 +18885,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rest
 
 === TRAINER_JUAN_4 ===
-Name: JUAN
+Name: RIO
 Class: Leader
 Pic: Leader Juan
 Gender: Male
@@ -18943,7 +18943,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rest
 
 === TRAINER_JUAN_5 ===
-Name: JUAN
+Name: RIO
 Class: Leader
 Pic: Leader Juan
 Gender: Male
@@ -19043,11 +19043,11 @@ Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_STEVEN ===
-Name: STEVEN
+Name: STELLA
 Class: Rival
 Pic: Steven
-Gender: Male
-Music: Male
+Gender: Female
+Music: Female
 Items: Full Restore / Full Restore / Full Restore / Full Restore
 Double Battle: No
 AI: Basic Trainer

@@ -54,10 +54,10 @@ AquaHideout_1F_EventScript_Grunt1Defeated::
 AquaHideout_1F_Text_OurBossIsSnatchingSomething:
 	.string "What? What? What do you want with \n"
 	.string "TEAM AQUA?\p"
-	.string "Our BOSS isn't here! He's gone off to\n"
+	.string "Our BOSS isn't here! She's gone off to\n"
 	.string "snatch something important!\p"
 	.string "… …\n"
-	.string "Where did he go?\p"
+	.string "Where did she go?\p"
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 
@@ -73,19 +73,19 @@ AquaHideout_1F_Text_BossWentToJackASubmarine:
 	.string "What? What? What do you want with \n"
 	.string "TEAM AQUA?\p"
 	.string "Our BOSS isn't here!\n"
-	.string "He's gone off to jack a submarine!\p"
+	.string "She's gone off to jack a submarine!\p"
 	.string "… …\n"
-	.string "Where did he go?\p"
+	.string "Where did she go?\p"
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 
 AquaHideout_1F_Text_BossIsOnRoute122:
 	.string "What? What? What do you want with \n"
 	.string "TEAM AQUA?\p"
-	.string "Our BOSS isn't here! He's on his way to\n"
+	.string "Our BOSS isn't here! She's on her way to\n"
 	.string "MT. PYRE on ROUTE 122!\p"
 	.string "… …\n"
-	.string "Why did he go?\p"
+	.string "Why did she go?\p"
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 
@@ -100,9 +100,9 @@ AquaHideout_1F_Text_BossIsInSlateportCity:
 	.string "What? What? What do you want with\n"
 	.string "TEAM AQUA?\p"
 	.string "Our BOSS isn't here!\n"
-	.string "He's on his way to SLATEPORT CITY!\p"
+	.string "She's on her way to SLATEPORT CITY!\p"
 	.string "… …\n"
-	.string "Why did he go?\p"
+	.string "Why did she go?\p"
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 

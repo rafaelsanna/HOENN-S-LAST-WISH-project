@@ -869,7 +869,7 @@ MossdeepCity_SpaceCenter_2F_Text_WellTakeCareOfYou:
 # 435 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 MossdeepCity_SpaceCenter_2F_Text_MaxieDontInterfere:
 # 436 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	.string "MAXIE: Clear out of the way!\n"
+	.string "MAGNUS: Clear out of the way!\n"
 # 437 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 	.string "Don't you dare interfere!$"
 # 438 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
@@ -887,7 +887,7 @@ MossdeepCity_SpaceCenter_2F_Text_StevenWhyStealRocketFuel:
 # 444 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 MossdeepCity_SpaceCenter_2F_Text_MaxieUseFuelToEruptVolcano:
 # 445 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	.string "MAXIE: Fufufu… Since you're so\n"
+	.string "MAGNUS: Fufufu… Since you're so\n"
 # 446 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 	.string "curious, you deserve an explanation.\p"
 # 447 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
@@ -943,7 +943,7 @@ MossdeepCity_SpaceCenter_Text_TabithaDefeat:
 # 472 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 MossdeepCity_SpaceCenter_2F_Text_MaxieWeFailedIsAquaAlsoMisguided:
 # 473 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	.string "MAXIE: We failed to make the volcano\n"
+	.string "MAGNUS: We failed to make the volcano\n"
 # 474 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 	.string "erupt…\p"
 # 475 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
@@ -973,7 +973,7 @@ MossdeepCity_SpaceCenter_2F_Text_MaxieWeFailedIsAquaAlsoMisguided:
 # 487 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 MossdeepCity_SpaceCenter_2F_Text_MaxieWeWillGiveUp:
 # 488 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
-	.string "MAXIE: All right…\n"
+	.string "MAGNUS: All right…\n"
 # 489 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"
 	.string "We will give up on the fuel…\p"
 # 490 "data/maps/MossdeepCity_SpaceCenter_2F/scripts.pory"

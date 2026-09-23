@@ -649,7 +649,7 @@ SSTidalCorridor_Text_BrineyWelcomeAboard:
 # 325 "data/maps/SSTidalCorridor/scripts.pory"
 SSTidalCorridor_Text_Peeko:
 # 326 "data/maps/SSTidalCorridor/scripts.pory"
-	.string "PEEKO: Pihyo pihyohyo…$"
+	.string "NAMI: Pihyo pihyohyo…$"
 # 327 "data/maps/SSTidalCorridor/scripts.pory"
 
 # 328 "data/maps/SSTidalCorridor/scripts.pory"

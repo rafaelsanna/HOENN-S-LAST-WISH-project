@@ -53,8 +53,8 @@ LittlerootTown_OnTransition:
 LittlerootTown_EventScript_Poochyena::
 	lock
 	faceplayer
-	callnative StartElectricWiresGame
-	waitstate
+	playmoncry SPECIES_EEVEE, CRY_MODE_NORMAL
+	waitmoncry
 	release
 	end
 
@@ -62,7 +62,6 @@ LittlerootTown_EventScript_SnowballGame::
 	lock
 	faceplayer
 	fadescreen FADE_TO_BLACK
-	special StartElectricWiresGame
 	callnative HLW_StartGrandmaBookTest
 	waitstate
 	fadescreen FADE_FROM_BLACK
@@ -963,8 +962,8 @@ LittlerootTown_Text_WearTheseRunningShoes:
 	.string "introduce yourself to PROF. ACACIA?\p"
 	.string "Oh! What an adorable POKéMON!\n"
 	.string "You got it from PROF. ACACIA. How nice!\p"
-	.string "You're your father's child, all right.\n"
-	.string "You look good together with POKéMON!\p"
+	.string "You've got a gift for caring for\n"
+	.string "POKéMON. You look good together!\p"
 	.string "Here, honey! If you're going out on an\n"
 	.string "adventure, wear these RUNNING SHOES.\p"
 	.string "They'll put a zip in your step!$"
@@ -986,7 +985,8 @@ LittlerootTown_Text_ComeHomeIfAnythingHappens:
 	.string "… … … … … … … …\p"
 	.string "To think that you have your very own\n"
 	.string "POKéMON now…\l"
-	.string "Your father will be overjoyed.\p"
+	.string "I can't wait to hear about your\n"
+	.string "adventures.\p"
 	.string "…But please be careful.\n"
 	.string "If anything happens, you can come home.\p"
 	.string "Go on, go get them, honey!$"

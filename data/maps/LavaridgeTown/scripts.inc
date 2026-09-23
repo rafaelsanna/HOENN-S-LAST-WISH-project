@@ -1419,7 +1419,7 @@ LavaridgeTown_Text_BatheInHotSpringsEveryDay:
 # 710 "data/maps/LavaridgeTown/scripts.pory"
 	.string "I want to become a beautiful and strong\n"
 # 711 "data/maps/LavaridgeTown/scripts.pory"
-	.string "GYM LEADER like FLANNERY.$"
+	.string "GYM LEADER like AMATERASU.$"
 # 712 "data/maps/LavaridgeTown/scripts.pory"
 
 # 713 "data/maps/LavaridgeTown/scripts.pory"
@@ -1463,7 +1463,7 @@ LavaridgeTown_Text_GymSign:
 # 732 "data/maps/LavaridgeTown/scripts.pory"
 	.string "LAVARIDGE TOWN POKéMON GYM\n"
 # 733 "data/maps/LavaridgeTown/scripts.pory"
-	.string "LEADER: FLANNERY\l"
+	.string "LEADER: AMATERASU\l"
 # 734 "data/maps/LavaridgeTown/scripts.pory"
 	.string "“One with a fiery passion that burns!”$"
 # 735 "data/maps/LavaridgeTown/scripts.pory"

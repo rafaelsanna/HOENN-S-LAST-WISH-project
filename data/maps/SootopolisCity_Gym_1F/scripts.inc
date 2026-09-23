@@ -617,7 +617,7 @@ SootopolisCity_Gym_1F_Text_JuanRematchDefeat:
 # 309 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
 SootopolisCity_Gym_1F_Text_JuanPostRematch:
 # 310 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
-	.string "JUAN: If I told you to become my\n"
+	.string "RIO: If I told you to become my\n"
 # 311 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
 	.string "apprentice, you will refuse, I am sure.\p"
 # 312 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
@@ -637,7 +637,7 @@ SootopolisCity_Gym_1F_Text_JuanPostRematch:
 # 319 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
 SootopolisCity_Gym_1F_Text_JuanRematchNeedTwoMons:
 # 320 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
-	.string "JUAN: Ah, this GYM had returned to its\n"
+	.string "RIO: Ah, this GYM had returned to its\n"
 # 321 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
 	.string "usual state of serenity…\p"
 # 322 "data/maps/SootopolisCity_Gym_1F/scripts.pory"

@@ -1899,9 +1899,9 @@ Route110_TrickHousePuzzle5_Text_Mechadoll2Quiz1:
 # 950 "data/maps/Route110_TrickHousePuzzle5/scripts.pory"
 	.string "MECHADOLL 2 QUIZ.\p"
 # 951 "data/maps/Route110_TrickHousePuzzle5/scripts.pory"
-	.string "Which of these POKéMON did WALLY\n"
+	.string "Which of these POKéMON was one of\n"
 # 952 "data/maps/Route110_TrickHousePuzzle5/scripts.pory"
-	.string "borrow from your father?$"
+	.string "LUKA's first partners?$"
 # 953 "data/maps/Route110_TrickHousePuzzle5/scripts.pory"
 
 # 954 "data/maps/Route110_TrickHousePuzzle5/scripts.pory"

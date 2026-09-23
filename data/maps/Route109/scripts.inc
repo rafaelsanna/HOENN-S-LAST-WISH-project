@@ -1003,7 +1003,7 @@ Route109_Text_BrineyDewfordItIs:
 # 502 "data/maps/Route109/scripts.pory"
 	.string "Anchors aweigh!\n"
 # 503 "data/maps/Route109/scripts.pory"
-	.string "PEEKO, we're setting sail, my darling!$"
+	.string "NAMI, we're setting sail, my darling!$"
 # 504 "data/maps/Route109/scripts.pory"
 
 # 505 "data/maps/Route109/scripts.pory"

@@ -13168,7 +13168,7 @@ const struct Item gItemsInfo[] =
         .name = ITEM_NAME("Letter"),
         .price = 0,
         .description = COMPOUND_STRING(
-            "A letter to Steven\n"
+            "A letter to Stella\n"
             "from the President\n"
             "of the Devon Corp."),
         .importance = 2,

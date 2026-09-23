@@ -287,7 +287,7 @@ SkyPillar_Outside_Text_DoorIsClosed:
 # 144 "data/maps/SkyPillar_Outside/scripts.pory"
 SkyPillar_Outside_Text_OpenedDoorToSkyPillar:
 # 145 "data/maps/SkyPillar_Outside/scripts.pory"
-	.string "WALLACE: Oh, my, I'm terribly sorry!\p"
+	.string "MAR: Oh, my, I'm terribly sorry!\p"
 # 146 "data/maps/SkyPillar_Outside/scripts.pory"
 	.string "In my haste, I didn't notice that\n"
 # 147 "data/maps/SkyPillar_Outside/scripts.pory"
@@ -303,7 +303,7 @@ SkyPillar_Outside_Text_OpenedDoorToSkyPillar:
 # 152 "data/maps/SkyPillar_Outside/scripts.pory"
 SkyPillar_Outside_Text_EarthquakeNotMomentToWaste:
 # 153 "data/maps/SkyPillar_Outside/scripts.pory"
-	.string "WALLACE: It's an earthquake!\p"
+	.string "MAR: It's an earthquake!\p"
 # 154 "data/maps/SkyPillar_Outside/scripts.pory"
 	.string "There's not a moment to waste!\n"
 # 155 "data/maps/SkyPillar_Outside/scripts.pory"
@@ -313,7 +313,7 @@ SkyPillar_Outside_Text_EarthquakeNotMomentToWaste:
 # 157 "data/maps/SkyPillar_Outside/scripts.pory"
 SkyPillar_Outside_Text_SituationGettingWorse:
 # 158 "data/maps/SkyPillar_Outside/scripts.pory"
-	.string "WALLACE: Hmm…\n"
+	.string "MAR: Hmm…\n"
 # 159 "data/maps/SkyPillar_Outside/scripts.pory"
 	.string "The situation is getting worse…$"
 # 160 "data/maps/SkyPillar_Outside/scripts.pory"
@@ -321,7 +321,7 @@ SkyPillar_Outside_Text_SituationGettingWorse:
 # 161 "data/maps/SkyPillar_Outside/scripts.pory"
 SkyPillar_Outside_Text_GotToGoBackForSootopolis:
 # 162 "data/maps/SkyPillar_Outside/scripts.pory"
-	.string "WALLACE: This isn't good…\p"
+	.string "MAR: This isn't good…\p"
 # 163 "data/maps/SkyPillar_Outside/scripts.pory"
 	.string "The weather distortion is spreading\n"
 # 164 "data/maps/SkyPillar_Outside/scripts.pory"

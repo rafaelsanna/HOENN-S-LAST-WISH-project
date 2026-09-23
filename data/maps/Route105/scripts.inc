@@ -187,6 +187,6 @@ Route104_Text_DadPokenavCall:
 # 94 "data/maps/Route105/scripts.pory"
 Route104_Text_RegisteredDadInPokenav:
 # 95 "data/maps/Route105/scripts.pory"
-	.string "Registered DAD NORMAN\n"
+	.string "Registered CALENDULA\n"
 # 96 "data/maps/Route105/scripts.pory"
 	.string "in the POKéNAV.$"

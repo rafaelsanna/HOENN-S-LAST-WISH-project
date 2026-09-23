@@ -211,7 +211,7 @@ AquaHideout_B2F_Text_OurBossGotThroughHisPreparations:
 # 106 "data/maps/AquaHideout_B2F/scripts.pory"
 	.string "While I was toying with you, our BOSS\n"
 # 107 "data/maps/AquaHideout_B2F/scripts.pory"
-	.string "got through his preparations!$"
+	.string "got through her preparations!$"
 # 108 "data/maps/AquaHideout_B2F/scripts.pory"
 
 # 109 "data/maps/AquaHideout_B2F/scripts.pory"
@@ -219,7 +219,7 @@ AquaHideout_B2F_Text_MattPostBattle:
 # 110 "data/maps/AquaHideout_B2F/scripts.pory"
 	.string "Hehehe!\p"
 # 111 "data/maps/AquaHideout_B2F/scripts.pory"
-	.string "Our BOSS has already gone on his way to\n"
+	.string "Our BOSS has already gone on her way to\n"
 # 112 "data/maps/AquaHideout_B2F/scripts.pory"
 	.string "some cave under the sea!\p"
 # 113 "data/maps/AquaHideout_B2F/scripts.pory"

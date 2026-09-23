@@ -643,7 +643,7 @@ AbandonedShip_Text_Stella_Arrives:
 # 322 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 AbandonedShip_Text_Alejandro_Retreats:
 # 323 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "INEA: ...\p"
+	.string "INAE: ...\p"
 # 324 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "Stella.\p"
 # 325 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"

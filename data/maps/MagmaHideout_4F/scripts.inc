@@ -367,7 +367,7 @@ MagmaHideout_4F_Text_TabithaPostBattle:
 # 184 "data/maps/MagmaHideout_4F/scripts.pory"
 MagmaHideout_4F_Text_MaxieAwakenGroudon:
 # 185 "data/maps/MagmaHideout_4F/scripts.pory"
-	.string "MAXIE: GROUDON…\p"
+	.string "MAGNUS: GROUDON…\p"
 # 186 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "Nothing could awaken you from your\n"
 # 187 "data/maps/MagmaHideout_4F/scripts.pory"
@@ -389,7 +389,7 @@ MagmaHideout_4F_Text_MaxieAwakenGroudon:
 # 195 "data/maps/MagmaHideout_4F/scripts.pory"
 MagmaHideout_4F_Text_MaxieGroudonWhatsWrong:
 # 196 "data/maps/MagmaHideout_4F/scripts.pory"
-	.string "MAXIE: GROUDON!\n"
+	.string "MAGNUS: GROUDON!\n"
 # 197 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "What's wrong?\p"
 # 198 "data/maps/MagmaHideout_4F/scripts.pory"
@@ -403,7 +403,7 @@ MagmaHideout_4F_Text_MaxieGroudonWhatsWrong:
 # 202 "data/maps/MagmaHideout_4F/scripts.pory"
 MagmaHideout_4F_Text_MaxieOhItWasYou:
 # 203 "data/maps/MagmaHideout_4F/scripts.pory"
-	.string "MAXIE: Oh, so it was you?\p"
+	.string "MAGNUS: Oh, so it was you?\p"
 # 204 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "I've seen you poking around uninvited\n"
 # 205 "data/maps/MagmaHideout_4F/scripts.pory"
@@ -425,7 +425,7 @@ MagmaHideout_4F_Text_MaxieDefeat:
 # 213 "data/maps/MagmaHideout_4F/scripts.pory"
 MagmaHideout_4F_Text_MaxieImGoingAfterGroudon:
 # 214 "data/maps/MagmaHideout_4F/scripts.pory"
-	.string "MAXIE: There has to be some reason\n"
+	.string "MAGNUS: There has to be some reason\n"
 # 215 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "why GROUDON fled…\p"
 # 216 "data/maps/MagmaHideout_4F/scripts.pory"

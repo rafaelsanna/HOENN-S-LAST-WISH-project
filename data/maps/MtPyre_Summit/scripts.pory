@@ -629,7 +629,7 @@ MtPyre_Summit_Text_Grunt3PostBattle:
 	.string "Heh, it doesn't matter!\n"
 	.string "We bought ourselves some time!\p"
 	.string "The BOSS should have snatched what\n"
-	.string "he was after!$"
+	.string "she was after!$"
 
 MtPyre_Summit_Text_Grunt4Intro:
 	.string "Oh, I know!\n"
@@ -777,7 +777,7 @@ MtPyre_Summit_Text_WellThatTooIsFine:
 	.string "Well, that, too, is fine…$"
 
 MtPyre_Summit_Text_MaxieSilence:
-	.string "MAXIE: {PLAYER}…\p"
+	.string "MAGNUS: {PLAYER}…\p"
 	.string "… … … … … …\n"
 	.string "… … … … … …$"
 

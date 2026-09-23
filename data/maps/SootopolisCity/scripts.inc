@@ -3509,7 +3509,7 @@ SootopolisCity_Text_MaxieShockedAtStone:
 # 1755 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_ArchieShockedAtStone:
 # 1756 "data/maps/SootopolisCity/scripts.pory"
-	.string "INEA: You used both of us…\p"
+	.string "INAE: You used both of us…\p"
 # 1757 "data/maps/SootopolisCity/scripts.pory"
 	.string "So that's what this was…\n"
 # 1758 "data/maps/SootopolisCity/scripts.pory"
@@ -3539,7 +3539,7 @@ SootopolisCity_Text_MagnusAfterPrimalAwakening:
 # 1770 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_InaeAfterPrimalAwakening:
 # 1771 "data/maps/SootopolisCity/scripts.pory"
-	.string "INEA: But Titans wield power far beyond\n"
+	.string "INAE: But Titans wield power far beyond\n"
 # 1772 "data/maps/SootopolisCity/scripts.pory"
 	.string "human understanding.\p"
 # 1773 "data/maps/SootopolisCity/scripts.pory"
@@ -3677,7 +3677,7 @@ SootopolisCity_Text_MagnusBoatReaction:
 # 1839 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_InaeBoatReaction:
 # 1840 "data/maps/SootopolisCity/scripts.pory"
-	.string "INEA: He's going to awaken\n"
+	.string "INAE: He's going to awaken\n"
 # 1841 "data/maps/SootopolisCity/scripts.pory"
 	.string "them. We have to stop him.$"
 # 1842 "data/maps/SootopolisCity/scripts.pory"
@@ -3959,7 +3959,7 @@ SootopolisCity_Text_LeadSuperiorTrainerToCave:
 # 1980 "data/maps/SootopolisCity/scripts.pory"
 	.string "If such a person were to appear, I was\n"
 # 1981 "data/maps/SootopolisCity/scripts.pory"
-	.string "instructed by WALLACE to lead that\l"
+	.string "instructed by MAR to lead that\l"
 # 1982 "data/maps/SootopolisCity/scripts.pory"
 	.string "TRAINER to this CAVE.$"
 # 1983 "data/maps/SootopolisCity/scripts.pory"
@@ -4073,7 +4073,7 @@ SootopolisCity_Text_YouBroughtFlyingMon:
 # 2037 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_GroudonPleaseStop:
 # 2038 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAXIE: G… GROUDON…\n"
+	.string "MAGNUS: G… GROUDON…\n"
 # 2039 "data/maps/SootopolisCity/scripts.pory"
 	.string "Please! Stop what you're doing!\p"
 # 2040 "data/maps/SootopolisCity/scripts.pory"
@@ -4087,7 +4087,7 @@ SootopolisCity_Text_GroudonPleaseStop:
 # 2044 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_AfterAllOurScheming:
 # 2045 "data/maps/SootopolisCity/scripts.pory"
-	.string "MAXIE: So the super-ancient POKéMON\n"
+	.string "MAGNUS: So the super-ancient POKéMON\n"
 # 2046 "data/maps/SootopolisCity/scripts.pory"
 	.string "weren't only GROUDON and KYOGRE…\p"
 # 2047 "data/maps/SootopolisCity/scripts.pory"
@@ -4107,7 +4107,7 @@ SootopolisCity_Text_AfterAllOurScheming:
 # 2054 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_KyogreCalmDown:
 # 2055 "data/maps/SootopolisCity/scripts.pory"
-	.string "ARCHIE: KYOGRE! What's wrong?!\n"
+	.string "INAE: KYOGRE! What's wrong?!\n"
 # 2056 "data/maps/SootopolisCity/scripts.pory"
 	.string "Look over here! It's the RED ORB!\l"
 # 2057 "data/maps/SootopolisCity/scripts.pory"
@@ -4125,7 +4125,7 @@ SootopolisCity_Text_KyogreCalmDown:
 # 2063 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_TryingMeaninglessToPokemon:
 # 2064 "data/maps/SootopolisCity/scripts.pory"
-	.string "ARCHIE: KYOGRE and GROUDON both\n"
+	.string "INAE: KYOGRE and GROUDON both\n"
 # 2065 "data/maps/SootopolisCity/scripts.pory"
 	.string "flew off to who knows where.\p"
 # 2066 "data/maps/SootopolisCity/scripts.pory"
@@ -4199,11 +4199,11 @@ SootopolisCity_Text_HereWereAreHelpWallace:
 # 2100 "data/maps/SootopolisCity/scripts.pory"
 	.string "Inside here you'll find someone named\n"
 # 2101 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE.\p"
+	.string "MAR.\p"
 # 2102 "data/maps/SootopolisCity/scripts.pory"
 	.string "I think you have what's needed to\n"
 # 2103 "data/maps/SootopolisCity/scripts.pory"
-	.string "help him…$"
+	.string "help MAR…$"
 # 2104 "data/maps/SootopolisCity/scripts.pory"
 
 # 2105 "data/maps/SootopolisCity/scripts.pory"
@@ -4211,7 +4211,7 @@ SootopolisCity_Text_KnowWhatsNeededToHelpHim:
 # 2106 "data/maps/SootopolisCity/scripts.pory"
 	.string "STELLA: I think you have what's\n"
 # 2107 "data/maps/SootopolisCity/scripts.pory"
-	.string "needed to help him…$"
+	.string "needed to help MAR…$"
 # 2108 "data/maps/SootopolisCity/scripts.pory"
 
 # 2109 "data/maps/SootopolisCity/scripts.pory"
@@ -4249,7 +4249,7 @@ SootopolisCity_Text_MaxieArchieLeft:
 # 2125 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_HaventYouScaledSkyPillar:
 # 2126 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: Oh?\n"
+	.string "MAR: Oh?\n"
 # 2127 "data/maps/SootopolisCity/scripts.pory"
 	.string "{PLAYER}{KUN}?\p"
 # 2128 "data/maps/SootopolisCity/scripts.pory"
@@ -4265,7 +4265,7 @@ SootopolisCity_Text_HaventYouScaledSkyPillar:
 # 2133 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_AquaMagmaDidntMeanHarm:
 # 2134 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: {PLAYER}{KUN}…\p"
+	.string "MAR: {PLAYER}{KUN}…\p"
 # 2135 "data/maps/SootopolisCity/scripts.pory"
 	.string "The leaders of TEAM MAGMA and AQUA,\n"
 # 2136 "data/maps/SootopolisCity/scripts.pory"
@@ -4279,7 +4279,7 @@ SootopolisCity_Text_AquaMagmaDidntMeanHarm:
 # 2140 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_ThankYouForHelpAcceptThis:
 # 2141 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: {PLAYER}{KUN}…\n"
+	.string "MAR: {PLAYER}{KUN}…\n"
 # 2142 "data/maps/SootopolisCity/scripts.pory"
 	.string "My eyes didn't deceive me.\p"
 # 2143 "data/maps/SootopolisCity/scripts.pory"
@@ -4323,8 +4323,8 @@ SootopolisCity_Text_ExplainWaterfallGoToGym:
 # 2162 "data/maps/SootopolisCity/scripts.pory"
 SootopolisCity_Text_DazzledByMentor:
 # 2163 "data/maps/SootopolisCity/scripts.pory"
-	.string "WALLACE: I'm sure that you will be\n"
+	.string "MAR: I'm sure that you will be\n"
 # 2164 "data/maps/SootopolisCity/scripts.pory"
-	.string "dazzled by my mentor's breathtakingly\l"
+	.string "dazzled by my son's breathtakingly\l"
 # 2165 "data/maps/SootopolisCity/scripts.pory"
 	.string "elegant battle style.$"

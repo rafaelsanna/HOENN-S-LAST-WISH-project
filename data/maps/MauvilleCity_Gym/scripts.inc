@@ -859,7 +859,7 @@ MauvilleCity_Gym_Text_GymStatueCertified:
 # 430 "data/maps/MauvilleCity_Gym/scripts.pory"
 MauvilleCity_Gym_Text_WattsonPreRematch:
 # 431 "data/maps/MauvilleCity_Gym/scripts.pory"
-	.string "WATTSON: Ah-ha! Here at last!\n"
+	.string "DEN: Ah-ha! Here at last!\n"
 # 432 "data/maps/MauvilleCity_Gym/scripts.pory"
 	.string "I know what you want.\l"
 # 433 "data/maps/MauvilleCity_Gym/scripts.pory"
@@ -883,7 +883,7 @@ MauvilleCity_Gym_Text_WattsonRematchDefeat:
 # 442 "data/maps/MauvilleCity_Gym/scripts.pory"
 MauvilleCity_Gym_Text_WattsonPostRematch:
 # 443 "data/maps/MauvilleCity_Gym/scripts.pory"
-	.string "WATTSON: We'll have to recharge our\n"
+	.string "DEN: We'll have to recharge our\n"
 # 444 "data/maps/MauvilleCity_Gym/scripts.pory"
 	.string "batteries again.\p"
 # 445 "data/maps/MauvilleCity_Gym/scripts.pory"
@@ -899,7 +899,7 @@ MauvilleCity_Gym_Text_WattsonPostRematch:
 # 450 "data/maps/MauvilleCity_Gym/scripts.pory"
 MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons:
 # 451 "data/maps/MauvilleCity_Gym/scripts.pory"
-	.string "WATTSON: Ah-ha! Here at last!\n"
+	.string "DEN: Ah-ha! Here at last!\n"
 # 452 "data/maps/MauvilleCity_Gym/scripts.pory"
 	.string "I know what you want.\l"
 # 453 "data/maps/MauvilleCity_Gym/scripts.pory"

@@ -507,7 +507,7 @@ EverGrandeCity_ChampionsRoom_Movement_BirchArrives:
 # 254 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 EverGrandeCity_ChampionsRoom_Text_IntroSpeech:
 # 255 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "WALLACE: Welcome, {PLAYER}{KUN}.\p"
+	.string "STELLA: Welcome, {PLAYER}{KUN}.\p"
 # 256 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "That incident in SOOTOPOLIS CITY…\n"
 # 257 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
@@ -571,7 +571,7 @@ EverGrandeCity_ChampionsRoom_Text_Defeat:
 # 286 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech:
 # 287 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "WALLACE: The POKéMON you sent into\n"
+	.string "STELLA: The POKéMON you sent into\n"
 # 288 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "battle…\p"
 # 289 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
@@ -625,7 +625,7 @@ EverGrandeCity_ChampionsRoom_Text_MayItsAlreadyOver:
 # 313 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 EverGrandeCity_ChampionsRoom_Text_BrendanAdvice:
 # 314 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "BRENDAN: {PLAYER}!\p"
+	.string "ZENNO: {PLAYER}!\p"
 # 315 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "How would you like some advice before\n"
 # 316 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
@@ -635,7 +635,7 @@ EverGrandeCity_ChampionsRoom_Text_BrendanAdvice:
 # 318 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 EverGrandeCity_ChampionsRoom_Text_BrendanYouveWon:
 # 319 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "BRENDAN: {PLAYER}…\p"
+	.string "ZENNO: {PLAYER}…\p"
 # 320 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "Are you trying to tell me…\n"
 # 321 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
@@ -659,7 +659,7 @@ EverGrandeCity_ChampionsRoom_Text_BirchArriveRatePokedex:
 # 330 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "When I heard that you defeated your\n"
 # 331 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "own father at the PETALBURG GYM,\l"
+	.string "mentor at the PETALBURG GYM,\l"
 # 332 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "I thought perhaps you had a chance…\p"
 # 333 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
@@ -687,7 +687,7 @@ EverGrandeCity_ChampionsRoom_Text_BirchCongratulations:
 # 344 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 EverGrandeCity_ChampionsRoom_Text_WallaceComeWithMe:
 # 345 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "WALLACE: {PLAYER}{KUN}…\p"
+	.string "STELLA: {PLAYER}{KUN}…\p"
 # 346 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "No, let me rephrase that properly.\p"
 # 347 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
@@ -699,7 +699,7 @@ EverGrandeCity_ChampionsRoom_Text_WallaceComeWithMe:
 # 350 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 EverGrandeCity_ChampionsRoom_Text_WallaceWaitOutside:
 # 351 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "WALLACE: I'm sorry, but…\p"
+	.string "STELLA: I'm sorry, but…\p"
 # 352 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "From here on, only those TRAINERS who\n"
 # 353 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
@@ -731,7 +731,7 @@ EverGrandeCity_ChampionsRoom_Text_MayCongratulations:
 # 366 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 EverGrandeCity_ChampionsRoom_Text_BrendanCongratulations:
 # 367 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
-	.string "BRENDAN: Whaaaat?! … … … … …\n"
+	.string "ZENNO: Whaaaat?! … … … … …\n"
 # 368 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"
 	.string "… … … … … … … …\p"
 # 369 "data/maps/EverGrandeCity_ChampionsRoom/scripts.pory"

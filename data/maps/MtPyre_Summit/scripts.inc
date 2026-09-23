@@ -1261,7 +1261,7 @@ MtPyre_Summit_Text_Grunt3PostBattle:
 # 631 "data/maps/MtPyre_Summit/scripts.pory"
 	.string "The BOSS should have snatched what\n"
 # 632 "data/maps/MtPyre_Summit/scripts.pory"
-	.string "he was after!$"
+	.string "she was after!$"
 # 633 "data/maps/MtPyre_Summit/scripts.pory"
 
 # 634 "data/maps/MtPyre_Summit/scripts.pory"
@@ -1557,7 +1557,7 @@ MtPyre_Summit_Text_WellThatTooIsFine:
 # 779 "data/maps/MtPyre_Summit/scripts.pory"
 MtPyre_Summit_Text_MaxieSilence:
 # 780 "data/maps/MtPyre_Summit/scripts.pory"
-	.string "MAXIE: {PLAYER}…\p"
+	.string "MAGNUS: {PLAYER}…\p"
 # 781 "data/maps/MtPyre_Summit/scripts.pory"
 	.string "… … … … … …\n"
 # 782 "data/maps/MtPyre_Summit/scripts.pory"

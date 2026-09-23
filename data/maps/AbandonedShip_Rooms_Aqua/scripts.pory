@@ -320,7 +320,7 @@ AbandonedShip_Text_Stella_Arrives:
 	.string "You shouldn't have come alone.$"
 
 AbandonedShip_Text_Alejandro_Retreats:
-	.string "INEA: ...\p"
+	.string "INAE: ...\p"
 	.string "Stella.\p"
 	.string "Of all the people to show up.\p"
 	.string "Two against one, on my own\n"

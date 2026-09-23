@@ -325,7 +325,7 @@ FortreeCity_Text_GymSign:
 # 163 "data/maps/FortreeCity/scripts.pory"
 	.string "FORTREE CITY POKéMON GYM\n"
 # 164 "data/maps/FortreeCity/scripts.pory"
-	.string "LEADER: WINONA\p"
+	.string "LEADER: TAKA\p"
 # 165 "data/maps/FortreeCity/scripts.pory"
 	.string "“The bird user taking flight into\n"
 # 166 "data/maps/FortreeCity/scripts.pory"

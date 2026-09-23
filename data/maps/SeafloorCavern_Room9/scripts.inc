@@ -443,13 +443,13 @@ SeafloorCavern_Room9_Movement_Delay32:
 # 222 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieHoldItRightThere:
 # 223 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: Hold it right there.$"
+	.string "INAE: Hold it right there.$"
 # 224 "data/maps/SeafloorCavern_Room9/scripts.pory"
 
 # 225 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieSoItWasYou:
 # 226 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: Fufufu…\n"
+	.string "INAE: Fufufu…\n"
 # 227 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "So it was you, after all.$"
 # 228 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -457,7 +457,7 @@ SeafloorCavern_Room9_Text_ArchieSoItWasYou:
 # 229 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieBeholdKyogre:
 # 230 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: Behold!\p"
+	.string "INAE: Behold!\p"
 # 231 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "See how beautiful it is, the sleeping\n"
 # 232 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -471,7 +471,7 @@ SeafloorCavern_Room9_Text_ArchieBeholdKyogre:
 # 236 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieYouMustDisappear:
 # 237 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: It surprises me, how you've\n"
+	.string "INAE: It surprises me, how you've\n"
 # 238 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "managed to chase me here.\p"
 # 239 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -493,7 +493,7 @@ SeafloorCavern_Room9_Text_ArchieDefeat:
 # 247 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieWithThisRedOrb:
 # 248 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: Fufufu…\p"
+	.string "INAE: Fufufu…\p"
 # 249 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "I commend you. I must recognize that\n"
 # 250 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -517,7 +517,7 @@ SeafloorCavern_Room9_Text_RedOrbShinesByItself:
 # 259 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieWhereDidKyogreGo:
 # 260 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: What?!\p"
+	.string "INAE: What?!\p"
 # 261 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "I didn't do anything.\n"
 # 262 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -529,7 +529,7 @@ SeafloorCavern_Room9_Text_ArchieWhereDidKyogreGo:
 # 265 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieAMessageFromOutside:
 # 266 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: Hm? It's a message from our\n"
+	.string "INAE: Hm? It's a message from our\n"
 # 267 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "members outside…$"
 # 268 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -537,7 +537,7 @@ SeafloorCavern_Room9_Text_ArchieAMessageFromOutside:
 # 269 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieWhatRainingTooHard:
 # 270 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: Yes, what is it?\p"
+	.string "INAE: Yes, what is it?\p"
 # 271 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "Hm…\n"
 # 272 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -569,7 +569,7 @@ SeafloorCavern_Room9_Text_ArchieWhatRainingTooHard:
 # 285 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieWhyDidKyogreDisappear:
 # 286 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: There's something wrong…\p"
+	.string "INAE: There's something wrong…\p"
 # 287 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "The RED ORB is supposed to awaken\n"
 # 288 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -585,9 +585,9 @@ SeafloorCavern_Room9_Text_ArchieWhyDidKyogreDisappear:
 # 293 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_MaxieWhatHaveYouWrought:
 # 294 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "MAXIE: What have you wrought?\p"
+	.string "MAGNUS: What have you wrought?\p"
 # 295 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE… You've finally awoken KYOGRE,\n"
+	.string "INAE… You've finally awoken KYOGRE,\n"
 # 296 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "haven't you?\p"
 # 297 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -603,7 +603,7 @@ SeafloorCavern_Room9_Text_MaxieWhatHaveYouWrought:
 # 302 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_ArchieDontGetAllHighAndMighty:
 # 303 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "ARCHIE: W-what?!\n"
+	.string "INAE: W-what?!\n"
 # 304 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "Don't get all high and mighty with me!\p"
 # 305 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -621,7 +621,7 @@ SeafloorCavern_Room9_Text_ArchieDontGetAllHighAndMighty:
 # 311 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue:
 # 312 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "MAXIE: We don't have the time to\n"
+	.string "MAGNUS: We don't have the time to\n"
 # 313 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "argue about it here!\p"
 # 314 "data/maps/SeafloorCavern_Room9/scripts.pory"
@@ -635,6 +635,6 @@ SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue:
 # 318 "data/maps/SeafloorCavern_Room9/scripts.pory"
 SeafloorCavern_Room9_Text_MaxieComeOnPlayer:
 # 319 "data/maps/SeafloorCavern_Room9/scripts.pory"
-	.string "MAXIE: {PLAYER}, come on, you have\n"
+	.string "MAGNUS: {PLAYER}, come on, you have\n"
 # 320 "data/maps/SeafloorCavern_Room9/scripts.pory"
 	.string "to get out of here, too!$"

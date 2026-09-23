@@ -27,14 +27,16 @@
     [DIFFICULTY_NORMAL][PARTNER_STEVEN] =
     {
 #line 10
-        .trainerName = _("STEVEN"),
+        .trainerName = _("STELLA"),
 #line 11
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12
         .trainerPic = TRAINER_PIC_STEVEN,
         .encounterMusic_gender =
+#line 13
+F_TRAINER_FEMALE | 
 #line 14
-            TRAINER_ENCOUNTER_MUSIC_MALE,
+            TRAINER_ENCOUNTER_MUSIC_FEMALE,
 #line 16
         .aiFlags = AI_FLAG_BASIC_TRAINER,
 #line 15
