@@ -401,11 +401,11 @@ static const struct YesNoFuncTable sYesNoSellItemFunctions = {ConfirmSell, Cance
 
 static const struct ScrollArrowsTemplate sBagScrollArrowsTemplate = {
     .firstArrowType = SCROLL_ARROW_LEFT,
-    .firstX = 28,
-    .firstY = 16,
+    .firstX = 116,
+    .firstY = 8,
     .secondArrowType = SCROLL_ARROW_RIGHT,
-    .secondX = 100,
-    .secondY = 16,
+    .secondX = 224,
+    .secondY = 8,
     .fullyUpThreshold = -1,
     .fullyDownThreshold = -1,
     .tileTag = TAG_BAG_SCROLL_ARROW,
@@ -417,6 +417,268 @@ static const u8 sText_RButton[] = _("R");
 static const u8 sText_LButton[] = _("L");
 
 static const u8 sRegisteredSelect_Gfx[] = INCBIN_U8("graphics/bag/select_button.4bpp");
+
+// ---------------------------------------------------------------------------
+// HLW Bag rework V3 - custom panel + per-pocket visual
+// ---------------------------------------------------------------------------
+#define BAG_CUSTOM_TILEMAP_WIDTH  30
+#define BAG_CUSTOM_TILEMAP_HEIGHT 20
+
+#define BAG_POCKET_VISUAL_GFX_TAG 0x5B20
+#define BAG_POCKET_VISUAL_PAL_TAG 0x5B21
+#define BAG_BASE_X                32
+#define BAG_BASE_Y                64
+#define BAG_POCKET_VISUAL_X       76
+#define BAG_POCKET_VISUAL_Y       33
+
+enum
+{
+    BAG_POCKET_ART_ITEMS,
+    BAG_POCKET_ART_MEDICINE,
+    BAG_POCKET_ART_BERRIES,
+    BAG_POCKET_ART_KEY,
+    BAG_POCKET_ART_BALLS,
+    BAG_POCKET_ART_TMS,
+    BAG_POCKET_ART_COUNT,
+    BAG_POCKET_ART_NONE = 0xFF,
+};
+
+enum
+{
+    BAG_POCKET_VISUAL_ANIM_ENTER,
+    BAG_POCKET_VISUAL_ANIM_EXIT,
+    BAG_POCKET_VISUAL_ANIM_IDLE,
+};
+
+static const u8 sBagMenuCustom_Gfx[] = INCBIN_U8("graphics/bag/custom/bagui.4bpp");
+static const u16 sBagMenuCustom_Pal[] = INCBIN_U16("graphics/bag/custom/bagui.gbapal");
+static const u16 sBagMenuCustom_Tilemap[] = INCBIN_U16("graphics/bag/custom/bagui.bin");
+
+static const u8 sBagPocketItems_Gfx[] = INCBIN_U8("graphics/bag/custom/items.4bpp");
+static const u16 sBagPocketItems_Pal[] = INCBIN_U16("graphics/bag/custom/items.gbapal");
+static const u8 sBagPocketMedicine_Gfx[] = INCBIN_U8("graphics/bag/custom/medicine.4bpp");
+static const u16 sBagPocketMedicine_Pal[] = INCBIN_U16("graphics/bag/custom/medicine.gbapal");
+static const u8 sBagPocketBerries_Gfx[] = INCBIN_U8("graphics/bag/custom/berry.4bpp");
+static const u16 sBagPocketBerries_Pal[] = INCBIN_U16("graphics/bag/custom/berry.gbapal");
+static const u8 sBagPocketKey_Gfx[] = INCBIN_U8("graphics/bag/custom/key.4bpp");
+static const u16 sBagPocketKey_Pal[] = INCBIN_U16("graphics/bag/custom/key.gbapal");
+static const u8 sBagPocketBalls_Gfx[] = INCBIN_U8("graphics/bag/custom/pokeballs.4bpp");
+static const u16 sBagPocketBalls_Pal[] = INCBIN_U16("graphics/bag/custom/pokeballs.gbapal");
+static const u8 sBagPocketTms_Gfx[] = INCBIN_U8("graphics/bag/custom/tms.4bpp");
+static const u16 sBagPocketTms_Pal[] = INCBIN_U16("graphics/bag/custom/tms.gbapal");
+
+struct BagPocketVisualResource
+{
+    const u8 *gfx;
+    u32 gfxSize;
+    const u16 *pal;
+};
+
+static const struct BagPocketVisualResource sBagPocketVisualResources[BAG_POCKET_ART_COUNT] =
+{
+    [BAG_POCKET_ART_ITEMS]    = {sBagPocketItems_Gfx,    sizeof(sBagPocketItems_Gfx),    sBagPocketItems_Pal},
+    [BAG_POCKET_ART_MEDICINE] = {sBagPocketMedicine_Gfx, sizeof(sBagPocketMedicine_Gfx), sBagPocketMedicine_Pal},
+    [BAG_POCKET_ART_BERRIES]  = {sBagPocketBerries_Gfx,  sizeof(sBagPocketBerries_Gfx),  sBagPocketBerries_Pal},
+    [BAG_POCKET_ART_KEY]      = {sBagPocketKey_Gfx,      sizeof(sBagPocketKey_Gfx),      sBagPocketKey_Pal},
+    [BAG_POCKET_ART_BALLS]    = {sBagPocketBalls_Gfx,    sizeof(sBagPocketBalls_Gfx),    sBagPocketBalls_Pal},
+    [BAG_POCKET_ART_TMS]      = {sBagPocketTms_Gfx,      sizeof(sBagPocketTms_Gfx),      sBagPocketTms_Pal},
+};
+
+static const struct OamData sBagPocketVisualOam =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sBagPocketVisualAnimEnter[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(64, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sBagPocketVisualAnimExit[] =
+{
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sBagPocketVisualAnimIdle[] =
+{
+    ANIMCMD_FRAME(64, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sBagPocketVisualAnimTable[] =
+{
+    [BAG_POCKET_VISUAL_ANIM_ENTER] = sBagPocketVisualAnimEnter,
+    [BAG_POCKET_VISUAL_ANIM_EXIT] = sBagPocketVisualAnimExit,
+    [BAG_POCKET_VISUAL_ANIM_IDLE] = sBagPocketVisualAnimIdle,
+};
+
+static const struct SpriteTemplate sBagPocketVisualTemplate =
+{
+    .tileTag = BAG_POCKET_VISUAL_GFX_TAG,
+    .paletteTag = BAG_POCKET_VISUAL_PAL_TAG,
+    .oam = &sBagPocketVisualOam,
+    .anims = sBagPocketVisualAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static EWRAM_DATA u8 sBagPocketVisualSpriteId = 0;
+static EWRAM_DATA u8 sBagPocketVisualPendingPocket = 0;
+static EWRAM_DATA bool8 sBagPocketVisualResourcesLoaded = FALSE;
+static EWRAM_DATA bool8 sBagPocketVisualUsesLegacyBag = FALSE;
+
+static u8 GetBagPocketVisualArt(u8 pocket)
+{
+    switch (pocket)
+    {
+    case POCKET_ITEMS:
+        return BAG_POCKET_ART_ITEMS;
+    case POCKET_MEDICINE:
+        return BAG_POCKET_ART_MEDICINE;
+    case POCKET_BERRIES:
+        return BAG_POCKET_ART_BERRIES;
+    case POCKET_KEY_ITEMS:
+        return BAG_POCKET_ART_KEY;
+    case POCKET_POKE_BALLS:
+        return BAG_POCKET_ART_BALLS;
+    case POCKET_TM_HM:
+        return BAG_POCKET_ART_TMS;
+    default:
+        return BAG_POCKET_ART_NONE;
+    }
+}
+
+static void LoadBagMenuCustomTilemap(void)
+{
+    u32 x;
+    u32 y;
+    u16 *dst = (u16 *)gBagMenu->tilemapBuffer;
+
+    /*
+     * gBagMenu->tilemapBuffer lives inside struct BagMenu. The GBA CpuFill16 /
+     * CpuCopy16 wrappers intentionally reject destinations whose compile-time
+     * alignment is not guaranteed. A plain memset + scalar u16 copy is safe
+     * here and this function only runs once when opening the Bag.
+     */
+    memset(gBagMenu->tilemapBuffer, 0, sizeof(gBagMenu->tilemapBuffer));
+
+    // bagui.bin is a packed 30x20 visible-screen tilemap. BG screenblocks have
+    // a 32-tile stride, so expand each 30-tile row into the 32-tile buffer.
+    for (y = 0; y < BAG_CUSTOM_TILEMAP_HEIGHT; y++)
+    {
+        for (x = 0; x < BAG_CUSTOM_TILEMAP_WIDTH; x++)
+            dst[y * 32 + x] = sBagMenuCustom_Tilemap[y * BAG_CUSTOM_TILEMAP_WIDTH + x];
+    }
+}
+
+static void DestroyBagPocketVisual(void)
+{
+    /*
+     * V3.4: this function owns ONLY the removable pocket case.
+     * The original Bag sprite is a permanent part of the layout and must stay
+     * alive in every pocket.
+     */
+    if (sBagPocketVisualSpriteId != SPRITE_NONE)
+    {
+        if (sBagPocketVisualSpriteId < MAX_SPRITES
+         && gSprites[sBagPocketVisualSpriteId].inUse)
+            DestroySprite(&gSprites[sBagPocketVisualSpriteId]);
+
+        sBagPocketVisualSpriteId = SPRITE_NONE;
+    }
+
+    if (sBagPocketVisualResourcesLoaded)
+    {
+        FreeSpriteTilesByTag(BAG_POCKET_VISUAL_GFX_TAG);
+        FreeSpritePaletteByTag(BAG_POCKET_VISUAL_PAL_TAG);
+        sBagPocketVisualResourcesLoaded = FALSE;
+    }
+}
+
+static void CreateBagPocketVisual(u8 pocket, bool8 animate)
+{
+    u8 art = GetBagPocketVisualArt(pocket);
+
+    DestroyBagPocketVisual();
+
+    if (art == BAG_POCKET_ART_NONE)
+    {
+        // ITEMS has no removable case artwork. The base Bag still remains.
+        return;
+    }
+    else
+    {
+        struct SpriteSheet sheet =
+        {
+            .data = sBagPocketVisualResources[art].gfx,
+            .size = sBagPocketVisualResources[art].gfxSize,
+            .tag = BAG_POCKET_VISUAL_GFX_TAG,
+        };
+        struct SpritePalette palette =
+        {
+            .data = sBagPocketVisualResources[art].pal,
+            .tag = BAG_POCKET_VISUAL_PAL_TAG,
+        };
+
+        LoadSpriteSheet(&sheet);
+        LoadSpritePalette(&palette);
+        sBagPocketVisualResourcesLoaded = TRUE;
+
+        sBagPocketVisualSpriteId = CreateSprite(&sBagPocketVisualTemplate,
+                                                BAG_POCKET_VISUAL_X,
+                                                BAG_POCKET_VISUAL_Y,
+                                                0);
+        if (sBagPocketVisualSpriteId == MAX_SPRITES)
+        {
+            sBagPocketVisualSpriteId = SPRITE_NONE;
+            FreeSpriteTilesByTag(BAG_POCKET_VISUAL_GFX_TAG);
+            FreeSpritePaletteByTag(BAG_POCKET_VISUAL_PAL_TAG);
+            sBagPocketVisualResourcesLoaded = FALSE;
+            return;
+        }
+
+        if (animate)
+            StartSpriteAnim(&gSprites[sBagPocketVisualSpriteId], BAG_POCKET_VISUAL_ANIM_ENTER);
+        else
+            StartSpriteAnim(&gSprites[sBagPocketVisualSpriteId], BAG_POCKET_VISUAL_ANIM_IDLE);
+    }
+}
+
+static void StartBagPocketVisualExit(u8 newPocket)
+{
+    sBagPocketVisualPendingPocket = newPocket;
+
+    // Only the removable case animates out. The Bag itself never disappears.
+    if (sBagPocketVisualSpriteId != SPRITE_NONE
+     && sBagPocketVisualSpriteId < MAX_SPRITES
+     && gSprites[sBagPocketVisualSpriteId].inUse)
+    {
+        StartSpriteAnim(&gSprites[sBagPocketVisualSpriteId], BAG_POCKET_VISUAL_ANIM_EXIT);
+    }
+}
+
+static void FinishBagPocketVisualSwitch(void)
+{
+    CreateBagPocketVisual(sBagPocketVisualPendingPocket, TRUE);
+}
+
 
 // HLW Bag rework V2:
 // - the old striped fill in the Bag interface stays transparent;
@@ -770,8 +1032,9 @@ static const struct WindowTemplate sDefaultBagWindows[] =
     },
     [WIN_POCKET_NAME] = {
         .bg = 0,
-        .tilemapLeft = 4,
-        .tilemapTop = 1,
+        // Pocket title now lives in the top bar of the item-list panel.
+        .tilemapLeft = 18,
+        .tilemapTop = 0,
         .width = 8,
         .height = 2,
         .paletteNum = 1,
@@ -1069,6 +1332,15 @@ static bool8 SetupBagMenu(void)
         break;
     case 4:
         ResetSpriteData();
+
+        // Mutable Bag V3 state lives in EWRAM/BSS. Set the non-zero sprite
+        // sentinel at runtime because the modern linker deliberately discards
+        // the generic .data section.
+        sBagPocketVisualSpriteId = SPRITE_NONE;
+        sBagPocketVisualPendingPocket = POCKET_ITEMS;
+        sBagPocketVisualResourcesLoaded = FALSE;
+        sBagPocketVisualUsesLegacyBag = FALSE;
+
         gMain.state++;
         break;
     case 5:
@@ -1122,7 +1394,18 @@ static bool8 SetupBagMenu(void)
         gMain.state++;
         break;
     case 15:
+        // V3.4 layout: the original Bag is permanent and the pocket-specific
+        // artwork is a separate removable case placed beside it.
         AddBagVisualSprite(gBagPosition.pocket);
+        if (gBagMenu->spriteIds[ITEMMENUSPRITE_BAG] != SPRITE_NONE)
+        {
+            struct Sprite *bagSprite = &gSprites[gBagMenu->spriteIds[ITEMMENUSPRITE_BAG]];
+            bagSprite->x = BAG_BASE_X;
+            bagSprite->y = BAG_BASE_Y;
+            bagSprite->x2 = 0;
+            bagSprite->y2 = 0;
+        }
+        CreateBagPocketVisual(gBagPosition.pocket, TRUE);
         gMain.state++;
         break;
     case 16:
@@ -1202,7 +1485,11 @@ static bool8 LoadBagMenu_Graphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            DecompressDataWithHeaderWram(gBagScreen_GfxTileMap, gBagMenu->tilemapBuffer);
+            // Keep menu_scrolling loaded because BG3 uses its sky-gradient tiles
+            // (64-79), but replace interface tiles 0-31 and the visible 30x20
+            // tilemap with the new custom layout.
+            LoadBgTiles(2, sBagMenuCustom_Gfx, sizeof(sBagMenuCustom_Gfx), 0);
+            LoadBagMenuCustomTilemap();
             gBagMenu->graphicsLoadState++;
         }
         break;
@@ -1217,6 +1504,10 @@ static bool8 LoadBagMenu_Graphics(void)
             LoadPalette(gBagScreenMale_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
 
         ApplyBagMenuDarkTheme();
+
+        // bagui.png uses index 0 as transparent. Load only its visible colors
+        // so the source key color can never become the global backdrop.
+        LoadPalette(sBagMenuCustom_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(4));
         LoadPalette(sBagMenuScrolling_Pal, BG_PLTT_ID(BAG_SCROLL_BG_PALETTE), PLTT_SIZE_4BPP);
         gBagMenu->graphicsLoadState++;
         break;
@@ -1370,7 +1661,9 @@ static void BagMenu_MoveCursorCallback(s32 itemIndex, bool8 onInit, struct ListM
     if (onInit != TRUE)
     {
         PlaySE(SE_SELECT);
-        ShakeBagSprite();
+        // Only the generic ITEMS fallback uses the legacy Bag sprite.
+        if (gBagMenu->spriteIds[ITEMMENUSPRITE_BAG] != SPRITE_NONE)
+            ShakeBagSprite();
     }
     if (gBagMenu->toSwapPos == NOT_SWAPPING)
     {
@@ -1528,8 +1821,8 @@ static void CreatePocketScrollArrowPair(void)
     if (gBagMenu->pocketScrollArrowsTask == TASK_NONE)
         gBagMenu->pocketScrollArrowsTask = AddScrollIndicatorArrowPairParameterized(
             SCROLL_ARROW_UP,
-            172,
-            12,
+            228,
+            24,
             148,
             gBagMenu->numItemStacks[gBagPosition.pocket] - gBagMenu->numShownItems[gBagPosition.pocket],
             TAG_POCKET_SCROLL_ARROW,
@@ -1608,6 +1901,7 @@ static void Task_CloseBagMenu(u8 taskId)
             SetMainCallback2(gBagPosition.exitCallback);
 
         BagDestroyPocketScrollArrowPair();
+        DestroyBagPocketVisual();
         DestroyBagStars();
         ResetSpriteData();
         FreeAllSpritePalettes();
@@ -1925,11 +2219,18 @@ static void SwitchBagPocket(u8 taskId, s16 deltaBagPocketId, bool16 skipEraseLis
     }
     DrawPocketIndicatorSquare(gBagPosition.pocket, FALSE);
     DrawPocketIndicatorSquare(newPocket, TRUE);
-    FillBgTilemapBufferRect_Palette0(2, 11, 14, 2, 15, 16);
+    // Tile 5 is the interior fill in bagui. Legacy tile IDs 11/17 now
+    // represent border shapes and would corrupt the custom frame.
+    FillBgTilemapBufferRect_Palette0(2, 5, 14, 2, 15, 16);
     ScheduleBgCopyTilemapToVram(2);
+
+    // Keep the original Bag visible in every pocket. It can still use its
+    // normal per-pocket frame/switch behavior, but the rotating Poké Ball is gone.
     SetBagVisualPocketId(newPocket, TRUE);
-    RemoveBagSprite(ITEMMENUSPRITE_BALL);
-    AddSwitchPocketRotatingBallSprite(deltaBagPocketId);
+
+    // The removable case plays 1 -> 0 while leaving; the incoming case then
+    // plays 0 -> 1 and holds.
+    StartBagPocketVisualExit(newPocket);
     SetTaskFuncWithFollowupFunc(taskId, Task_SwitchBagPocket, gTasks[taskId].func);
 }
 
@@ -1964,6 +2265,12 @@ static void Task_SwitchBagPocket(u8 taskId)
             else
                 CopyPocketNameToWindow((u8)(8 - (tPocketSwitchTimer >> 1)));
         }
+
+        // Eight frames finish the outgoing 1 -> 0 pose. Swap resources here
+        // and replay 0 -> 1 for the incoming pocket.
+        if (tPocketSwitchTimer == 8)
+            FinishBagPocketVisualSwitch();
+
         if (tPocketSwitchTimer == 16)
             tPocketSwitchState++;
         break;
@@ -1984,7 +2291,8 @@ static void Task_SwitchBagPocket(u8 taskId)
 // When the pocket is switched this lighter background is redrawn row by row
 static void DrawItemListBgRow(u8 y)
 {
-    FillBgTilemapBufferRect_Palette0(2, 17, 14, y + 2, 15, 1);
+    // Tile 5 is the dark interior tile in the new bagui tileset.
+    FillBgTilemapBufferRect_Palette0(2, 5, 14, y + 2, 15, 1);
     ScheduleBgCopyTilemapToVram(2);
 }
 

@@ -590,7 +590,8 @@ void AddBagItemIconSprite(u16 itemId, u8 id)
         if (iconSpriteId != MAX_SPRITES)
         {
             *spriteId = iconSpriteId;
-            gSprites[iconSpriteId].x2 = 24;
+            gSprites[iconSpriteId].x2 = 92;
+        // HLW Bag rework V3: move the selected-item icon into the custom inset box.
             gSprites[iconSpriteId].y2 = 88;
         }
     }
