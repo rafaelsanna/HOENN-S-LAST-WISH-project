@@ -42,6 +42,34 @@ static const struct SpritePalette sSpritePalette_HWLLogo = {
 };
 
 // ============================================================
+// DISCLAIMER INTRO V4 (integrated fade-only)
+// Ordem: Copyright -> HLW -> Disclaimer -> Expansion Intro
+// ============================================================
+#define DISCLAIMER_BG               0
+#define DISCLAIMER_HOLD_FRAMES      240
+#define DISCLAIMER_TOTAL_COLUMNS    30
+#define DISCLAIMER_TOTAL_ROWS       20
+
+static const u32 sDisclaimer_Gfx[] =
+    INCBIN_U32("graphics/disclaimer/disclaimer.4bpp");
+static const u16 sDisclaimer_Pal[] =
+    INCBIN_U16("graphics/disclaimer/disclaimer.gbapal");
+static const u16 sDisclaimer_Tilemap[] =
+    INCBIN_U16("graphics/disclaimer/disclaimer.bin");
+
+static const struct BgTemplate sBgTemplates_Disclaimer[] =
+{
+    {
+        .bg = DISCLAIMER_BG,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0
+    },
+};
+
+// ============================================================
 // OAM
 // ============================================================
 static const struct OamData sOamData_HWLLogo = {
@@ -111,14 +139,21 @@ enum {
     HWL_STATE_FADE_IN = 0,
     HWL_STATE_SHOW,
     HWL_STATE_SHRINK,
-    HWL_STATE_WAIT_FRAME,  // ← frame vazio: garante que o OAM e a VRAM
-                            //   estao limpos antes de a proxima cena carregar
+    HWL_STATE_WAIT_FRAME,
+    HWL_STATE_DISCLAIMER_SETUP,
+    HWL_STATE_DISCLAIMER_FADE_IN,
+    HWL_STATE_DISCLAIMER_HOLD,
+    HWL_STATE_DISCLAIMER_FADE_OUT,
     HWL_STATE_DONE,
 };
 
 static void Task_HWLIntro(u8 taskId);
 static void VBlankCB_HWL(void);
 static void CB2_HWLMain(void);
+
+static void DisclaimerIntro_InitBgs(void);
+static void DisclaimerIntro_LoadGraphics(void);
+static void DisclaimerIntro_LoadTilemapToVram(void);
 
 // ============================================================
 // ENTRY POINT
@@ -171,7 +206,6 @@ static void Task_HWLIntro(u8 taskId)
         {
             struct Sprite *logo = &gSprites[data[1]];
 
-            // Habilita AFFINE_DOUBLE para o shrink
             logo->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
             logo->oam.matrixNum  = HWL_AFFINE_MATRIX;
             CalcCenterToCornerVec(logo,
@@ -179,10 +213,7 @@ static void Task_HWLIntro(u8 taskId)
                                   SPRITE_SIZE(64x64),
                                   ST_OAM_AFFINE_DOUBLE);
 
-            StartSpriteAffineAnim(logo, 1);  // shrink
-
-            // Fade de saida ligeiramente mais rapido que o shrink (delay=2)
-            // assim a tela ja esta quase preta quando o sprite chega em 0x
+            StartSpriteAffineAnim(logo, 1);
             BeginNormalPaletteFade(PALETTES_ALL, 2, 0, 16, RGB_BLACK);
 
             data[0] = HWL_STATE_SHRINK;
@@ -190,32 +221,82 @@ static void Task_HWLIntro(u8 taskId)
         break;
 
     case HWL_STATE_SHRINK:
-        // Aguarda o fade de saida terminar (cobre o shrink)
         if (!gPaletteFade.active)
         {
-            // Destroi sprite e libera memoria ENQUANTO a tela ja esta preta
-            // (nao ha nada visivel, portanto nao aparece fragmento)
             if (data[1] != SPRITE_NONE)
                 DestroySprite(&gSprites[data[1]]);
+
             FreeSpriteTilesByTag(TAG_HWL_LOGO);
             FreeSpritePaletteByTag(PAL_TAG_HWL);
 
+            data[1] = SPRITE_NONE;
+            data[2] = 0;
             data[0] = HWL_STATE_WAIT_FRAME;
         }
         break;
 
     case HWL_STATE_WAIT_FRAME:
-        // Espera UM frame para o OAM/VRAM processarem o DestroySprite antes
-        // de entregar o controle para a proxima cena.
-        // Isso elimina o fragmento visual na transicao.
-        data[0] = HWL_STATE_DONE;
+        // One empty frame lets OAM settle after DestroySprite.
+        data[0] = HWL_STATE_DISCLAIMER_SETUP;
+        break;
+
+    case HWL_STATE_DISCLAIMER_SETUP:
+        /*
+         * IMPORTANT:
+         * The disclaimer is NOT a new callback and NOT a new task.
+         * It is just more states inside the already-working HWL task.
+         */
+        DisclaimerIntro_InitBgs();
+        DisclaimerIntro_LoadGraphics();
+        DisclaimerIntro_LoadTilemapToVram();
+
+        ShowBg(DISCLAIMER_BG);
+
+        data[2] = 0;
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        data[0] = HWL_STATE_DISCLAIMER_FADE_IN;
+        break;
+
+    case HWL_STATE_DISCLAIMER_FADE_IN:
+        if (!gPaletteFade.active)
+        {
+            data[2] = 0;
+            data[0] = HWL_STATE_DISCLAIMER_HOLD;
+        }
+        break;
+
+    case HWL_STATE_DISCLAIMER_HOLD:
+        if (++data[2] >= DISCLAIMER_HOLD_FRAMES
+         || (gMain.newKeys & (A_BUTTON | B_BUTTON | START_BUTTON)))
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            data[0] = HWL_STATE_DISCLAIMER_FADE_OUT;
+        }
+        break;
+
+    case HWL_STATE_DISCLAIMER_FADE_OUT:
+        if (!gPaletteFade.active)
+            data[0] = HWL_STATE_DONE;
         break;
 
     case HWL_STATE_DONE:
+    {
+        u8 i;
+
+        /*
+         * Reuse THIS SAME task slot as Task_HandleExpansionIntro.
+         * No DestroyTask/CreateTask pair, no intermediate callback, and no
+         * chance to recycle a task slot while RunTasks is traversing it.
+         */
+        SetVBlankCallback(NULL);
+
+        for (i = 0; i < 16; i++)
+            data[i] = 0;
+
+        gTasks[taskId].func = Task_HandleExpansionIntro;
         SetMainCallback2(CB2_ExpansionIntro);
-        CreateTask(Task_HandleExpansionIntro, 0);
-        DestroyTask(taskId);
         break;
+    }
     }
 }
 
@@ -235,4 +316,69 @@ static void CB2_HWLMain(void)
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
+}
+
+// ============================================================
+// DISCLAIMER - integrated into Task_HWLIntro
+// ============================================================
+static void DisclaimerIntro_InitBgs(void)
+{
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sBgTemplates_Disclaimer, ARRAY_COUNT(sBgTemplates_Disclaimer));
+
+    HideBg(0);
+    HideBg(1);
+    HideBg(2);
+    HideBg(3);
+
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+    SetGpuReg(REG_OFFSET_BLDY, 0);
+    SetGpuReg(REG_OFFSET_WININ, 0);
+    SetGpuReg(REG_OFFSET_WINOUT, 0);
+
+    // Plain BG only. No windows, wipe, or extra callback.
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_BG0_ON);
+}
+
+static void DisclaimerIntro_LoadGraphics(void)
+{
+    // Tile 0 stays blank. Disclaimer graphics start at tile 1.
+    LoadBgTiles(DISCLAIMER_BG, sDisclaimer_Gfx, sizeof(sDisclaimer_Gfx), 1);
+    LoadPalette(sDisclaimer_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+
+    // The source PNG's palette index 0 is pink. On a text BG that entry is
+    // the backdrop/transparent color, so force it to black.
+    gPlttBufferUnfaded[BG_PLTT_ID(0)] = RGB_BLACK;
+    gPlttBufferFaded[BG_PLTT_ID(0)] = RGB_BLACK;
+}
+
+static void DisclaimerIntro_LoadTilemapToVram(void)
+{
+    u16 x;
+    u16 y;
+    volatile u16 *dst = (volatile u16 *)BG_SCREEN_ADDR(31);
+
+    /*
+     * Write directly to the 32x32 screenblock. This removes the old 2 KB
+     * RAM tilemap buffer and SetBgTilemapBuffer/CopyBgTilemapBufferToVram
+     * path entirely.
+     */
+    for (y = 0; y < 32; y++)
+    {
+        for (x = 0; x < 32; x++)
+            dst[y * 32 + x] = 0;
+    }
+
+    // disclaimer.bin is a packed 30x20 tilemap.
+    for (y = 0; y < DISCLAIMER_TOTAL_ROWS; y++)
+    {
+        for (x = 0; x < DISCLAIMER_TOTAL_COLUMNS; x++)
+        {
+            u16 entry = sDisclaimer_Tilemap[y * DISCLAIMER_TOTAL_COLUMNS + x];
+            u16 tileNum = (entry & 0x03FF) + 1;
+
+            dst[y * 32 + x] = (entry & 0xFC00) | tileNum;
+        }
+    }
 }

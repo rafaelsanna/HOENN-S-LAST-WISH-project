@@ -6570,15 +6570,15 @@ static void CreatePartyMonStatusSprite(struct Pokemon *mon, struct PartyMenuBox 
     {
         s16 statusX = menuBox->spriteCoords[4];
 
-        // HLW DOUBLE BATTLE RESERVE STATUS RIGHT V3
-        // Same surgical fix, now with +48 px total for reserve slots in the
-        // double-battle party menu. Main slots (0-1) remain untouched.
+        // HLW DOUBLE BATTLE RESERVE STATUS RIGHT V2
+        // Same idea as V1, but push the reserve status badges even farther right
+        // so they do not sit under the HP digits either.
         if (IsBattleDoublePartyMenu())
         {
             u32 slot = menuBox - sPartyMenuBoxes;
 
             if (slot >= 2 && slot < PARTY_SIZE)
-                statusX += 48;
+                statusX += 32;
         }
 
         menuBox->statusSpriteId = CreateSprite(&gSpriteTemplate_StatusIcons,

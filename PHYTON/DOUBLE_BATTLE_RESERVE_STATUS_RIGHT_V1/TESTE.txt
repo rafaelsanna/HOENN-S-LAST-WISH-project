@@ -1,0 +1,15 @@
+DRY-RUN OK.
+ party_menu.c: mudaria
+ alteração única: status dos slots 2-5 em doubles -> +16 px no X
+
+Fix aplicado.
+Backup: /mnt/data/DOUBLE_BATTLE_RESERVE_STATUS_RIGHT_V1/backups/party_menu_20260923_153044.c
+
+Mudança ÚNICA:
+ - doubles battle party menu
+ - slots principais 0-1: intocados
+ - slots reserva 2-5: status +16 px para a direita
+ - nenhuma mudança em nome/Lv/HP/barra/windows/sprites do Pokémon
+
+Compile com:
+  make -j8

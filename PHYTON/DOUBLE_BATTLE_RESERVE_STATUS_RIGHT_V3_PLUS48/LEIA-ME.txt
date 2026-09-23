@@ -1,0 +1,1 @@
+V3 do fix dos status na party de batalha dupla. Agora os slots de reserva (2-5) recebem +48 px no X. Compatível com original, V1 ou V2.

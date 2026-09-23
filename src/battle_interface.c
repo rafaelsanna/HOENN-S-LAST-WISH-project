@@ -179,6 +179,7 @@ static u8 *AddTextPrinterAndCreateWindowOnHealthboxToFit(const u8 *, u32, u32, u
 static void RemoveWindowOnHealthbox(u32 windowId);
 static void UpdateHpTextInHealthboxInDoubles(u32 healthboxSpriteId, u32 maxOrCurrent, s16 currHp, s16 maxHp);
 static void PrintCurrentHpWithBar(u32 healthboxSpriteId, s16 currHp);
+static void SetPlayerDoublesHpNumberVisible(u32 healthboxSpriteId, bool32 visible);
 static void UpdateStatusIconInHealthbox(u8);
 static void CopyStatusIconGfx(const u8 *src, void *dest, u8 paletteIndex);
 
@@ -304,6 +305,16 @@ enum
     HEALTHBOX_SHINY_TEXT_SHADOW = 8,
     HEALTHBOX_SHINY_TEXT_COLOR,
 };
+
+// HLW DOUBLE HP UI FIX V1
+// #4A4A4A maps to RGB(9, 9, 9) in GBA RGB555.
+static const u16 sHealthboxTextShadowColor = RGB(9, 9, 9);
+
+// HLW DOUBLE HP UI FIX V2
+// The HP number lives on TAG_HEALTHBAR_PAL, not TAG_HEALTHBOX_PAL.
+#define HEALTHBAR_HP_TEXT_COLOR  2
+#define HEALTHBAR_HP_TEXT_SHADOW 15
+static const u16 sHealthbarHpTextShadowColor = RGB(9, 9, 9);
 
 static const u16 sShinyHealthboxNicknameColors[] =
 {
@@ -441,7 +452,8 @@ static const struct Subsprite sHealthBar_Subsprites_Player[] =
 static const struct Subsprite sHealthBar_Subsprites_PlayerDoublesNumbers[] =
 {
     {
-        .x = -16,
+        // V2: move only the numeric HP area 2 px left.
+        .x = -18,
         .y = 0,
         .shape = SPRITE_SHAPE(16x8),
         .size = SPRITE_SIZE(16x8),
@@ -477,6 +489,42 @@ static const struct Subsprite sHealthBar_Subsprites_PlayerDoublesNumbers[] =
 static const struct SubspriteTable sHealthBar_SubspriteTable_PlayerDoublesNumbers =
 {
     ARRAY_COUNT(sHealthBar_Subsprites_PlayerDoublesNumbers), sHealthBar_Subsprites_PlayerDoublesNumbers
+};
+
+// HLW DOUBLE HP UI FIX V3
+// Status active: omit the 16x8 numeric HP subsprite completely.
+static const struct Subsprite sHealthBar_Subsprites_PlayerDoublesStatus[] =
+{
+    {
+        .x = -8,
+        .y = 0,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 8,
+        .priority = 1
+    },
+    {
+        .x = 0,
+        .y = 0,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 2,
+        .priority = 1
+    },
+    {
+        .x = 16,
+        .y = 0,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 4,
+        .priority = 1
+    }
+};
+
+static const struct SubspriteTable sHealthBar_SubspriteTable_PlayerDoublesStatus =
+{
+    ARRAY_COUNT(sHealthBar_Subsprites_PlayerDoublesStatus),
+    sHealthBar_Subsprites_PlayerDoublesStatus
 };
 
 /*       v-- Origin
@@ -778,7 +826,16 @@ void LoadBattleShinyHealthboxGfx(void)
 
     paletteNum = IndexOfSpritePaletteTag(TAG_HEALTHBOX_PAL);
     if (paletteNum != 0xFF)
-        LoadPalette(sShinyHealthboxNicknameColors, OBJ_PLTT_ID(paletteNum) + HEALTHBOX_SHINY_TEXT_SHADOW, sizeof(sShinyHealthboxNicknameColors));
+    {
+        // Keep the normal foreground white, but darken its shadow from the
+        // old ~#848484 to the requested ~#4A4A4A.
+        LoadPalette(&sHealthboxTextShadowColor,
+                    OBJ_PLTT_ID(paletteNum) + HEALTHBOX_TEXT_SHADOW,
+                    sizeof(sHealthboxTextShadowColor));
+        LoadPalette(sShinyHealthboxNicknameColors,
+                    OBJ_PLTT_ID(paletteNum) + HEALTHBOX_SHINY_TEXT_SHADOW,
+                    sizeof(sShinyHealthboxNicknameColors));
+    }
 }
 
 static void CreateShinyHealthboxSparkle(u8 battler, u8 healthboxSpriteId)
@@ -1178,56 +1235,58 @@ static void PrintHpOnHealthbox(u32 spriteId, s16 currHp, s16 maxHp, u32 bgColor,
 // tiles; the doubles subsprite layout positions them left of the bar.
 static void PrintCurrentHpWithBar(u32 healthboxSpriteId, s16 currHp)
 {
-    static const u8 sDigitRows[10][5] = {
-        {7, 5, 5, 5, 7}, // 0
-        {2, 6, 2, 2, 7}, // 1
-        {7, 1, 7, 4, 7}, // 2
-        {7, 1, 7, 1, 7}, // 3
-        {5, 5, 7, 1, 1}, // 4
-        {7, 4, 7, 1, 7}, // 5
-        {7, 4, 7, 5, 7}, // 6
-        {7, 1, 1, 1, 1}, // 7
-        {7, 5, 7, 5, 7}, // 8
-        {7, 5, 7, 1, 7}, // 9
-    };
-    u32 tiles[2 * TILE_SIZE_4BPP / sizeof(u32)] = {0};
-    u8 *pixels = (u8 *)tiles;
+    u8 text[8];
+    u8 color[3];
+    u8 *windowTileData;
+    u32 windowId;
+    u32 x;
+    u32 paletteNum;
     u32 barSpriteId = gSprites[healthboxSpriteId].hMain_HealthBarSpriteId;
-    u16 hp = currHp < 0 ? 0 : min(currHp, 9999);
-    u16 divisor = 1000;
-    u8 digits[4];
-    u8 count = 0;
-    u8 digit, row, col, x;
+    struct WindowTemplate winTemplate = sHealthboxWindowTemplate;
     void *barVram = (void *)(OBJ_VRAM0 + gSprites[barSpriteId].oam.tileNum * TILE_SIZE_4BPP);
 
-    do
-    {
-        digit = hp / divisor;
-        hp %= divisor;
-        if (digit != 0 || count != 0 || divisor == 1)
-            digits[count++] = digit;
-        divisor /= 10;
-    } while (divisor != 0);
+    /*
+     * V1 used HEALTHBOX palette indices on HEALTHBAR tiles, so the foreground
+     * resolved to a dark entry. V2 renders with the bar's own palette:
+     * white = entry 2, custom shadow = entry 15.
+     */
+    currHp = max(currHp, 0);
+    ConvertIntToDecimalStringN(text, currHp, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    x = GetStringRightAlignXOffset(FONT_SMALL, text, 16);
 
-    x = (16 - (count * 4 - 1)) / 2;
-    for (digit = 0; digit < count; digit++, x += 4)
-    {
-        for (row = 0; row < 5; row++)
-        {
-            for (col = 0; col < 3; col++)
-            {
-                if (sDigitRows[digits[digit]][row] & (1 << (2 - col)))
-                {
-                    u8 px = x + col;
-                    u32 offset = (px / 8) * TILE_SIZE_4BPP + (row + 1) * 4 + (px % 8) / 2;
-                    // Palette entry 2, not entry 1, is white on the bar sprite.
-                    pixels[offset] |= (px & 1) ? 0x20 : 0x02;
-                }
-            }
-        }
-    }
+    paletteNum = gSprites[barSpriteId].oam.paletteNum;
+    LoadPalette(&sHealthbarHpTextShadowColor,
+                OBJ_PLTT_ID(paletteNum) + HEALTHBAR_HP_TEXT_SHADOW,
+                sizeof(sHealthbarHpTextShadowColor));
 
-    CpuCopy32(tiles, barVram, sizeof(tiles));
+    windowId = AddWindow(&winTemplate);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(0));
+
+    color[0] = 0;
+    color[1] = HEALTHBAR_HP_TEXT_COLOR;
+    color[2] = HEALTHBAR_HP_TEXT_SHADOW;
+
+    AddTextPrinterParameterized4(windowId, FONT_SMALL, x, 4, 0, 0,
+                                 color, TEXT_SKIP_DRAW, text);
+
+    windowTileData = (u8 *)GetWindowAttribute(windowId, WINDOW_TILE_DATA);
+    HpTextIntoHealthboxObject(barVram, windowTileData, 2);
+    RemoveWindowOnHealthbox(windowId);
+}
+
+static void SetPlayerDoublesHpNumberVisible(u32 healthboxSpriteId, bool32 visible)
+{
+    u32 battler = gSprites[healthboxSpriteId].hMain_Battler;
+    u32 barSpriteId = gSprites[healthboxSpriteId].hMain_HealthBarSpriteId;
+
+    if (!IsOnPlayerSide(battler)
+     || GetBattlerCoordsIndex(battler) != BATTLE_COORDS_DOUBLES)
+        return;
+
+    if (visible)
+        SetSubspriteTables(&gSprites[barSpriteId], &sHealthBar_SubspriteTable_PlayerDoublesNumbers);
+    else
+        SetSubspriteTables(&gSprites[barSpriteId], &sHealthBar_SubspriteTable_PlayerDoublesStatus);
 }
 
 // Note: this is only possible to trigger via debug, it was an unused GF function.
@@ -1348,7 +1407,19 @@ static void UpdateHpTextInHealthboxInDoubles(u32 healthboxSpriteId, u32 maxOrCur
         }
         else
         {
-            PrintCurrentHpWithBar(healthboxSpriteId, currHp);
+            u32 battler = gSprites[healthboxSpriteId].hMain_Battler;
+
+            // In doubles the status badge shares this compact region.
+            // Never redraw current HP while BRN/PSN/PAR/SLP/FRZ/etc. is active.
+            if (GetMonData(GetBattlerMon(battler), MON_DATA_STATUS) == 0)
+            {
+                SetPlayerDoublesHpNumberVisible(healthboxSpriteId, TRUE);
+                PrintCurrentHpWithBar(healthboxSpriteId, currHp);
+            }
+            else
+            {
+                SetPlayerDoublesHpNumberVisible(healthboxSpriteId, FALSE);
+            }
         }
     }
     else // Opponent
@@ -2158,7 +2229,10 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
         TryAddPokeballIconToHealthbox(healthboxSpriteId, TRUE);
         if (IsOnPlayerSide(battler) && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES
          && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
+        {
+            SetPlayerDoublesHpNumberVisible(healthboxSpriteId, TRUE);
             PrintCurrentHpWithBar(healthboxSpriteId, GetMonData(GetBattlerMon(battler), MON_DATA_HP));
+        }
         return;
     }
 
@@ -2170,18 +2244,17 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
     CopyStatusIconGfx(statusGfxPtr,
                       (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder) * TILE_SIZE_4BPP),
                       battler + 12);
-    if (GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES || !IsOnPlayerSide(battler))
+    if (IsOnPlayerSide(battler)
+     && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES
+     && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
     {
-        if (!gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
-        {
-            CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_0), (void *)(OBJ_VRAM0 + gSprites[healthBarSpriteId].oam.tileNum * TILE_SIZE_4BPP), 32);
-            CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_65), (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 1) * TILE_SIZE_4BPP), 32);
-        }
+        // Hide the number subsprite itself; do not draw fake blank tiles.
+        SetPlayerDoublesHpNumberVisible(healthboxSpriteId, FALSE);
     }
     TryAddPokeballIconToHealthbox(healthboxSpriteId, FALSE);
-    if (IsOnPlayerSide(battler) && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES
-     && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
-        PrintCurrentHpWithBar(healthboxSpriteId, GetMonData(GetBattlerMon(battler), MON_DATA_HP));
+
+    // Deliberately do NOT print current HP here. The status badge owns this
+    // compact area until the status is cured.
 }
 
 static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battler)
