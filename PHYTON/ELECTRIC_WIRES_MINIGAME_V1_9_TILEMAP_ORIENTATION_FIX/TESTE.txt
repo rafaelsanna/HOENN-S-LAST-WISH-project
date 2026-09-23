@@ -1,0 +1,44 @@
+=== ELECTRIC WIRES V1.9 ===
+Correção real do tilemap:
+  connected*.bin = 128 entries
+  dimensão correta = 8 x 16 tiles = 64 x 128 px
+  a versão anterior interpretava 16 x 8 = 128 x 64 px
+
+Novos valores:
+  CONNECT_MAP_W = 8
+  CONNECT_MAP_H = 16
+  CONNECT_MAP_X = 11
+  CONNECT_MAP_Y = 2
+
+Ao conectar:
+  - esconde ROSA
+  - esconde AZUL
+  - esconde VERDE
+  - desenha somente connectedtoblue OU connectedtogreen
+
+DRY-RUN OK.
+ src/electric_wires.c: mudaria
+
+=== ELECTRIC WIRES V1.9 ===
+Correção real do tilemap:
+  connected*.bin = 128 entries
+  dimensão correta = 8 x 16 tiles = 64 x 128 px
+  a versão anterior interpretava 16 x 8 = 128 x 64 px
+
+Novos valores:
+  CONNECT_MAP_W = 8
+  CONNECT_MAP_H = 16
+  CONNECT_MAP_X = 11
+  CONNECT_MAP_Y = 2
+
+Ao conectar:
+  - esconde ROSA
+  - esconde AZUL
+  - esconde VERDE
+  - desenha somente connectedtoblue OU connectedtogreen
+
+Fix aplicado.
+Backup: /mnt/data/ELECTRIC_WIRES_MINIGAME_V1_9_TILEMAP_ORIENTATION_FIX/backups/electric_wires_20260923_200306.c
+
+Compile com:
+  make -j8

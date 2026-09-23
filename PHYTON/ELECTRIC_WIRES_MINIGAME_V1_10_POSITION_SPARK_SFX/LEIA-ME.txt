@@ -1,0 +1,28 @@
+ELECTRIC WIRES MINIGAME V1.10
+==============================
+
+Aplicar em cima da V1.9.
+
+Ajustes exatos:
+- BLUE conectado: 39 px para cima
+- GREEN conectado: 16 px para cima
+
+O deslocamento usa BG0 VOFS, então 39 px é realmente 39 px
+(não arredonda para múltiplos de 8).
+
+Ao conectar:
+- rosa, azul e verde somem;
+- fica somente o connected escolhido;
+- toca SE_THUNDER;
+- reutiliza o SPARK_2 nativo do jogo;
+- sparks aparecem aleatoriamente enquanto conectado;
+- usa SE_THUNDER e bursts de SE_THUNDERSTORM;
+- SE_THUNDERSTORM_STOP encerra os bursts.
+
+USO
+----
+cd ~/pokeemerald-expansion
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_10_POSITION_SPARK_SFX/fix_position_add_sparks_sfx.py --dry-run
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_10_POSITION_SPARK_SFX/fix_position_add_sparks_sfx.py --compile --jobs 8

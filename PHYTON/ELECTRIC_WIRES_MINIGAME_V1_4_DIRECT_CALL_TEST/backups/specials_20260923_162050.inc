@@ -596,7 +596,7 @@ gSpecials::
 	def_special StartMegaRayVisionScene
 	def_special StartDarkSuicuneScene
 	def_special StartSnowballGame
-	def_special StartElectricWiresGame
+	def_special StartElectricWiresGame, waitstate=1
 	def_special DoMrStoneEvilScene
 	def_special StartLavaridgeGymStagePlaylist
 	def_special StartRentonGymRadio

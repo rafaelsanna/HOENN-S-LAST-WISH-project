@@ -53,8 +53,9 @@ LittlerootTown_OnTransition:
 LittlerootTown_EventScript_Poochyena::
 	lock
 	faceplayer
-	callnative StartElectricWiresGame
-	waitstate
+	special StartElectricWiresGame
+	playmoncry SPECIES_EEVEE, CRY_MODE_NORMAL
+	waitmoncry
 	release
 	end
 

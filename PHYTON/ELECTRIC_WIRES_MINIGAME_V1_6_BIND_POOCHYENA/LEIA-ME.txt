@@ -1,0 +1,20 @@
+ELECTRIC WIRES MINIGAME V1.6 - BIND POOCHYENA
+================================================
+
+O diagnóstico mostrou que o Poochyena de LittlerootTown ainda estava ligado a:
+  EventScript_OverworldPokemonCry_POOCHYENA
+
+Por isso falar com ele nunca chamava o minigame.
+
+Este patch muda APENAS o object_event do Poochyena para:
+  LittlerootTown_EventScript_Poochyena
+
+O script do minigame já está preparado com callnative + waitstate.
+
+USO
+---
+cd ~/pokeemerald-expansion
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_6_BIND_POOCHYENA/bind_poochyena_to_electric_wires.py --dry-run
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_6_BIND_POOCHYENA/bind_poochyena_to_electric_wires.py --compile --jobs 8

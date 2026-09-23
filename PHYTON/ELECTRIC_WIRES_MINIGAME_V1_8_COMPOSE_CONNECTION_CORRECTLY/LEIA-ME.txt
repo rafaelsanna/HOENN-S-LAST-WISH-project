@@ -1,0 +1,21 @@
+ELECTRIC WIRES MINIGAME V1.8 - COMPOSE CONNECTION CORRECTLY
+==============================================================
+
+O erro conceitual corrigido aqui é simples:
+
+- connectedtoblue / connectedtogreen NÃO são o desenho completo da conexão;
+- eles são a FAIXA INFERIOR da conexão;
+- o cableup (o cabo de cima / do meio) precisa continuar aparecendo;
+- essa faixa connected deve encaixar na altura correta para os desenhos se juntarem no meio.
+
+Este patch faz 2 coisas:
+1) CONNECT_MAP_Y volta para 5
+2) HideCableSprites passa a esconder só left/right e mantém cableUp visível
+
+Uso
+---
+cd ~/pokeemerald-expansion
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_8_COMPOSE_CONNECTION_CORRECTLY/fix_connection_composition.py --dry-run
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_8_COMPOSE_CONNECTION_CORRECTLY/fix_connection_composition.py --compile --jobs 8

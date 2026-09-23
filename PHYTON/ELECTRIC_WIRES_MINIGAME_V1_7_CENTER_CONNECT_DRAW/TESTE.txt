@@ -1,0 +1,24 @@
+=== ELECTRIC WIRES CONNECT DRAW FIX ===
+Repo: /tmp/ewires_drawfix_0bn185nj
+
+Mudança:
+  CONNECT_MAP_Y: 5 -> 8
+  Efeito: move o overlay connectedtoblue/connectedtogreen 24 px para baixo
+          para as pontas se juntarem no meio, como no mockup.
+
+DRY-RUN OK.
+ electric_wires.c: mudaria
+
+=== ELECTRIC WIRES CONNECT DRAW FIX ===
+Repo: /tmp/ewires_drawfix_0bn185nj
+
+Mudança:
+  CONNECT_MAP_Y: 5 -> 8
+  Efeito: move o overlay connectedtoblue/connectedtogreen 24 px para baixo
+          para as pontas se juntarem no meio, como no mockup.
+
+Fix aplicado.
+Backup: /mnt/data/ELECTRIC_WIRES_MINIGAME_V1_7_CENTER_CONNECT_DRAW/backups/electric_wires_20260923_194234.c
+
+Compile com:
+  make -j8

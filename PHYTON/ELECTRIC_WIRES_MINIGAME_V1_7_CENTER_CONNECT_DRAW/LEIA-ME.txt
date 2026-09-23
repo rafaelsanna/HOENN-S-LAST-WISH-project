@@ -1,0 +1,22 @@
+ELECTRIC WIRES MINIGAME V1.7 - CENTER CONNECT DRAW
+====================================================
+
+Problema corrigido
+------------------
+O minigame já abre e funciona, mas o overlay de conexão
+(connectedtoblue / connectedtogreen) estava alto demais,
+então os cabos conectados ficavam "flutuando" em vez de
+se juntarem no meio.
+
+Este patch muda somente:
+  #define CONNECT_MAP_Y  5  ->  8
+
+Isso move o overlay 24 px para baixo.
+
+Uso
+---
+cd ~/pokeemerald-expansion
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_7_CENTER_CONNECT_DRAW/fix_connected_overlay_position.py --dry-run
+
+python3 PHYTON/ELECTRIC_WIRES_MINIGAME_V1_7_CENTER_CONNECT_DRAW/fix_connected_overlay_position.py --compile --jobs 8
