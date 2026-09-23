@@ -178,6 +178,7 @@ static u8 *AddTextPrinterAndCreateWindowOnHealthboxToFit(const u8 *, u32, u32, u
 
 static void RemoveWindowOnHealthbox(u32 windowId);
 static void UpdateHpTextInHealthboxInDoubles(u32 healthboxSpriteId, u32 maxOrCurrent, s16 currHp, s16 maxHp);
+static void PrintCurrentHpWithBar(u32 healthboxSpriteId, s16 currHp);
 static void UpdateStatusIconInHealthbox(u8);
 static void CopyStatusIconGfx(const u8 *src, void *dest, u8 paletteIndex);
 
@@ -433,6 +434,49 @@ static const struct Subsprite sHealthBar_Subsprites_Player[] =
         .tileOffset = 4,
         .priority = 1
     }
+};
+
+// Doubles show current HP in the two tiles that normally say "HP". Give
+// those tiles their own subsprite so they can sit left of the unchanged bar.
+static const struct Subsprite sHealthBar_Subsprites_PlayerDoublesNumbers[] =
+{
+    {
+        .x = -16,
+        .y = 0,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 0,
+        .priority = 1
+    },
+    {
+        .x = -8,
+        .y = 0,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 8,
+        .priority = 1
+    },
+    {
+        .x = 0,
+        .y = 0,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 2,
+        .priority = 1
+    },
+    {
+        .x = 16,
+        .y = 0,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 4,
+        .priority = 1
+    }
+};
+
+static const struct SubspriteTable sHealthBar_SubspriteTable_PlayerDoublesNumbers =
+{
+    ARRAY_COUNT(sHealthBar_Subsprites_PlayerDoublesNumbers), sHealthBar_Subsprites_PlayerDoublesNumbers
 };
 
 /*       v-- Origin
@@ -812,11 +856,17 @@ u8 CreateBattlerHealthboxSprites(u8 battler)
 
     healthbarSpriteId = CreateSpriteAtEnd(&sHealthbarSpriteTemplates[gBattlerPositions[battler]], 140, 60, 0);
     healthBarSpritePtr = &gSprites[healthbarSpriteId];
-    SetSubspriteTables(healthBarSpritePtr, &sHealthBar_SubspriteTables[GetBattlerSide(battler)]);
+    if (IsOnPlayerSide(battler) && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES)
+        SetSubspriteTables(healthBarSpritePtr, &sHealthBar_SubspriteTable_PlayerDoublesNumbers);
+    else
+        SetSubspriteTables(healthBarSpritePtr, &sHealthBar_SubspriteTables[GetBattlerSide(battler)]);
     healthBarSpritePtr->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
     healthBarSpritePtr->oam.priority = 1;
 
     CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_1), (void *)(OBJ_VRAM0 + healthBarSpritePtr->oam.tileNum * TILE_SIZE_4BPP), 64);
+    if (IsOnPlayerSide(battler) && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES)
+        CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_2),
+                  (void *)(OBJ_VRAM0 + (healthBarSpritePtr->oam.tileNum + 8) * TILE_SIZE_4BPP), TILE_SIZE_4BPP);
 
     gSprites[healthboxLeftSpriteId].hMain_HealthBarSpriteId = healthbarSpriteId;
     gSprites[healthboxLeftSpriteId].hMain_Battler = battler;
@@ -1123,6 +1173,63 @@ static void PrintHpOnHealthbox(u32 spriteId, s16 currHp, s16 maxHp, u32 bgColor,
     RemoveWindowOnHealthbox(windowId);
 }
 
+// The first two bar tiles contain the "HP" label, while the six tiles after
+// them contain the actual bar. Draw compact white digits in those first two
+// tiles; the doubles subsprite layout positions them left of the bar.
+static void PrintCurrentHpWithBar(u32 healthboxSpriteId, s16 currHp)
+{
+    static const u8 sDigitRows[10][5] = {
+        {7, 5, 5, 5, 7}, // 0
+        {2, 6, 2, 2, 7}, // 1
+        {7, 1, 7, 4, 7}, // 2
+        {7, 1, 7, 1, 7}, // 3
+        {5, 5, 7, 1, 1}, // 4
+        {7, 4, 7, 1, 7}, // 5
+        {7, 4, 7, 5, 7}, // 6
+        {7, 1, 1, 1, 1}, // 7
+        {7, 5, 7, 5, 7}, // 8
+        {7, 5, 7, 1, 7}, // 9
+    };
+    u32 tiles[2 * TILE_SIZE_4BPP / sizeof(u32)] = {0};
+    u8 *pixels = (u8 *)tiles;
+    u32 barSpriteId = gSprites[healthboxSpriteId].hMain_HealthBarSpriteId;
+    u16 hp = currHp < 0 ? 0 : min(currHp, 9999);
+    u16 divisor = 1000;
+    u8 digits[4];
+    u8 count = 0;
+    u8 digit, row, col, x;
+    void *barVram = (void *)(OBJ_VRAM0 + gSprites[barSpriteId].oam.tileNum * TILE_SIZE_4BPP);
+
+    do
+    {
+        digit = hp / divisor;
+        hp %= divisor;
+        if (digit != 0 || count != 0 || divisor == 1)
+            digits[count++] = digit;
+        divisor /= 10;
+    } while (divisor != 0);
+
+    x = (16 - (count * 4 - 1)) / 2;
+    for (digit = 0; digit < count; digit++, x += 4)
+    {
+        for (row = 0; row < 5; row++)
+        {
+            for (col = 0; col < 3; col++)
+            {
+                if (sDigitRows[digits[digit]][row] & (1 << (2 - col)))
+                {
+                    u8 px = x + col;
+                    u32 offset = (px / 8) * TILE_SIZE_4BPP + (row + 1) * 4 + (px % 8) / 2;
+                    // Palette entry 2, not entry 1, is white on the bar sprite.
+                    pixels[offset] |= (px & 1) ? 0x20 : 0x02;
+                }
+            }
+        }
+    }
+
+    CpuCopy32(tiles, barVram, sizeof(tiles));
+}
+
 // Note: this is only possible to trigger via debug, it was an unused GF function.
 static void UpdateOpponentHpTextDoubles(u32 healthboxSpriteId, u32 barSpriteId, s16 value, u8 maxOrCurrent)
 {
@@ -1238,6 +1345,10 @@ static void UpdateHpTextInHealthboxInDoubles(u32 healthboxSpriteId, u32 maxOrCur
                            0x20);
             // Erases HP bar leftover.
             FillHealthboxObject((void *)(OBJ_VRAM0) + (gSprites[barSpriteId].oam.tileNum * TILE_SIZE_4BPP), 0, 2);
+        }
+        else
+        {
+            PrintCurrentHpWithBar(healthboxSpriteId, currHp);
         }
     }
     else // Opponent
@@ -2045,6 +2156,9 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
             CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_1), (void *)(OBJ_VRAM0 + gSprites[healthBarSpriteId].oam.tileNum * TILE_SIZE_4BPP), 64);
 
         TryAddPokeballIconToHealthbox(healthboxSpriteId, TRUE);
+        if (IsOnPlayerSide(battler) && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES
+         && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
+            PrintCurrentHpWithBar(healthboxSpriteId, GetMonData(GetBattlerMon(battler), MON_DATA_HP));
         return;
     }
 
@@ -2065,6 +2179,9 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
         }
     }
     TryAddPokeballIconToHealthbox(healthboxSpriteId, FALSE);
+    if (IsOnPlayerSide(battler) && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES
+     && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
+        PrintCurrentHpWithBar(healthboxSpriteId, GetMonData(GetBattlerMon(battler), MON_DATA_HP));
 }
 
 static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battler)
