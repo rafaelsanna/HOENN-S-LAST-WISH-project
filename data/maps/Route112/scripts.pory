@@ -83,7 +83,9 @@ Route112_Movement_AcaciaChimneyExit:
 
 Route112_Text_AcaciaChimneyScene:
 	.string "PROF. ACACIA: Oh! Hello, {PLAYER}.\p"
-	.string "All of my instruments recently started\n"
+	.string "I just got back from MT. CHIMNEY.\n"
+	.string "As I'm sure you remember,\n"
+	.string "all of my instruments recently started\l"
 	.string "going haywire in the direction of\l"
 	.string "MT. CHIMNEY, so I came out here to\l"
 	.string "see if there was some relation to\l"
@@ -94,7 +96,7 @@ Route112_Text_AcaciaChimneyScene:
 	.string "TEAM MAGMA.\p"
 	.string "Whatever they're doing, it seems to\n"
 	.string "be creating some sort of\l"
-	.string "destabilization.\p"
+	.string "destabilization again.\p"
 	.string "I need to get back to the lab and\n"
 	.string "record these readings.\p"
 	.string "If you're going up, please be careful.$"
@@ -219,9 +221,10 @@ Route112_Text_CantLetAnyonePassUntilTheyreBack:
 	.string "we're not to let anyone pass, right.$"
 
 Route112_Text_NotEasyToGetBackToLavaridge:
-	.string "Eh, I'd like to get to MAUVILLE, but if\n"
-	.string "I went down these ledges, it'd be no\l"
-	.string "easy matter to get back to LAVARIDGE.$"
+	.string "These stairs were built to make it\n"
+	.string "easier for everyone to see AMATERASU.\p"
+	.string "Now I can go to MAUVILLE\n"
+	.string "whenever I want!$"
 
 Route112_Text_OldManBlocker:
 	.string "These old legs aren't what they used\n"

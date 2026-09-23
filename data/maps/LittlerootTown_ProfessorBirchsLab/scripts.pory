@@ -842,6 +842,8 @@ LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex:
     .string "with it.\p"
 	.string "You may wonder why I'm giving you this.\n"
 	.string "Truth is, I have a request for you both.\p"
+	.string "I've installed a sensor on your POKéDEX\n"
+	.string "that will measure comet-related energy.\l"
 	.string "The data is still being collected, but…\p"
 	.string "I'm sure you've already noticed it\n"
 	.string "yourselves.\p"
