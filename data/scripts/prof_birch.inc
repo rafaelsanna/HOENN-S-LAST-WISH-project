@@ -1,4 +1,13 @@
 ProfAcacia_EventScript_UpdateLocation::
+	goto_if_unset FLAG_DEFEATED_WALLY_MAUVILLE, ProfAcacia_EventScript_UpdateLocationNormally
+	goto_if_set FLAG_LUKA_VERDANTURF_CAFE_SCENE_COMPLETE, ProfAcacia_EventScript_UpdateLocationNormally
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_UNKNOWN_0x380
+	setflag FLAG_HIDE_ROUTE_101_BIRCH
+	setflag FLAG_HIDE_ROUTE_103_BIRCH
+	return
+
+ProfAcacia_EventScript_UpdateLocationNormally::
 	goto_if_eq VAR_PETALBURG_GYM_STATE, 0, Common_EventScript_NopReturn
 	goto_if_set FLAG_SYS_GAME_CLEAR, ProfBirch_EventScript_MoveToLab
 	call_if_eq VAR_BIRCH_STATE, 0, ProfBirch_EventScript_MoveToLab

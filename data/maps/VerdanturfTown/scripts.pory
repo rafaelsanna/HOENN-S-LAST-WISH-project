@@ -62,6 +62,10 @@ VerdanturfTown_EventScript_RusturfTunnelSign::
 	msgbox VerdanturfTown_Text_RusturfTunnelSign, MSGBOX_SIGN
 	end
 
+VerdanturfTown_EventScript_CafeSign::
+	msgbox VerdanturfTown_Text_CafeSign, MSGBOX_SIGN
+	end
+
 VerdanturfTown_Text_ManTryingToDigTunnel:
 	.string "My papa told me.\p"
 	.string "He says this tunnel is full of\n"
@@ -123,5 +127,9 @@ VerdanturfTown_Text_RusturfTunnelSign:
 	.string "“Linking RUSTBORO and VERDANTURF\p"
 	.string "“The tunnel project has been\n"
 	.string "canceled.”$"
+
+VerdanturfTown_Text_CafeSign:
+	.string "VERDANTURF CAFE\n"
+	.string "Fresh coffee brewed daily!$"
 
 `

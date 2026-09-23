@@ -95,6 +95,10 @@ MauvilleCity_EventScript_GymSign::
 	msgbox MauvilleCity_Text_GymSign, MSGBOX_SIGN
 	end
 
+MauvilleCity_EventScript_GymClosedForRepairs::
+	msgbox MauvilleCity_Text_GymClosedForRepairs, MSGBOX_SIGN
+	end
+
 MauvilleCity_EventScript_BikeShopSign::
 	msgbox MauvilleCity_Text_BikeShopSign, MSGBOX_SIGN
 	end
@@ -212,7 +216,10 @@ MauvilleCity_EventScript_WallyAndUncleExitEast::
 MauvilleCity_EventScript_DefeatedWally::
 	removeobject LOCALID_MAUVILLE_WALLY
 	removeobject LOCALID_MAUVILLE_WALLYS_UNCLE
-	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
+	@ LUKA stays at the cafe until the gathering ends.
+	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCH
+	setflag FLAG_HIDE_PETALBURG_GYM_NORMAN
 	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLYS_UNCLE
 	setflag FLAG_DEFEATED_WALLY_MAUVILLE
 	setvar VAR_WALLY_CALL_STEP_COUNTER, 0
@@ -556,38 +563,42 @@ MauvilleCity_EventScript_RegisterWallyCall::
 	end
 
 MauvilleCity_Text_UncleHesTooPeppy:
-	.string "UNCLE: It's because of POKéMON that\n"
-	.string "this boy's got more pep, I suppose…\l"
-	.string "But he's become a bit too peppy…$"
+	.string "UNCLE: DEN's doing emergency\n"
+	.string "repairs on the GYM again.\p"
+	.string "LUKA's been itching for a battle\n"
+	.string "while we wait.$"
 
 MauvilleCity_Text_WallyWantToChallengeGym:
-	.string "LUKA: UNCLE, I really think\n"
-	.string "I'm ready now!\p"
-	.string "I've trained hard and grown a lot.\n"
-	.string "I want to challenge this GYM\l"
-	.string "and prove how strong I've become.$"
+	.string "LUKA: This blows. We came out here\n"
+	.string "to challenge the GYM, UNCLE, but\l"
+	.string "now it's suddenly closed for\l"
+	.string "emergency repairs.$"
 
 MauvilleCity_Text_UncleYourePushingIt:
-	.string "UNCLE: Easy there, LUKA.\p"
-	.string "You do have other priorities right now.\p"
-	.string "With all your research into the\l"
-	.string "mysteries of that comet, you haven't\l"
-	.string "had as much time to train.\p"
-	.string "A bit more preparation wouldn't hurt.$"
+	.string "UNCLE: Easy there, LUKA. You'll\n"
+	.string "have your chance to challenge DEN\l"
+	.string "soon enough.\p"
+	.string "It's not the first time he's\n"
+	.string "blown up his GYM by trying out\l"
+	.string "some wacky new electrical\l"
+	.string "experiment.\p"
+	.string "This GYM is always back up and\n"
+	.string "running shortly.$"
 
 MauvilleCity_Text_WallyWeCanBeatAnyone:
-	.string "LUKA: You're right… maybe I do need\l"
-	.string "to focus a bit more on my training.\p"
-	.string "That GYM LEADER really does seem\n"
-	.string "tougher than I expected.$"
+	.string "LUKA: You're right… I suppose it\n"
+	.string "wouldn't hurt to spend some more\l"
+	.string "time on my research while I wait.$"
 
 MauvilleCity_Text_WallyWillYouBattleMe:
-	.string "LUKA: Oh! {PLAYER}, you're here?\p"
-	.string "Nice timing! You're here to challenge\n"
-	.string "the GYM too, right?\p"
-	.string "Then this is the perfect chance.\p"
-	.string "Let's battle and see if I really\n"
-	.string "need more training!$"
+	.string "LUKA: Oh! {PLAYER}, you're here?\n"
+	.string "What timing. You're here to\l"
+	.string "challenge the GYM too, right?\p"
+	.string "Unfortunately, DEN blew it up\n"
+	.string "again, so it's closed.\p"
+	.string "Hey, since we're both here and\n"
+	.string "itching for a battle, how about\l"
+	.string "we battle each other?$"
 
 MauvilleCity_Text_WallyMyUncleWontKnowImStrong:
 	.string "LUKA: Huh? If you won't battle me,\p"
@@ -597,20 +608,17 @@ MauvilleCity_Text_WallyMyUncleWontKnowImStrong:
 	.string "how will you face the LEADER?$"
 
 MauvilleCity_Text_UncleCanYouBattleWally:
-	.string "UNCLE: You're {PLAYER}{KUN}, right?\p"
-	.string "CALENDULA has done a great job\n"
-	.string "guiding you both this far.\p"
-	.string "You've all grown so much already.\n"
-	.string "I'm sure this will be a great battle!$"
+	.string "UNCLE: DEN's still repairing the\n"
+	.string "GYM. Could you battle LUKA while\l"
+	.string "we wait?$"
 
 MauvilleCity_Text_WallyPleaseBattleMe:
-	.string "LUKA: {PLAYER}, nice!\p"
-	.string "Let's have an amazing battle.\n"
-	.string "I'm sure we'll both learn a lot!$"
+	.string "LUKA: {PLAYER}, nice! I'm so bored\n"
+	.string "waiting for this GYM to open.\p"
+	.string "Let's have an amazing battle.$"
 
 MauvilleCity_Text_WallyHereICome:
-	.string "LUKA: {PLAYER}, thank you!\p"
-	.string "All right then!\n"
+	.string "LUKA: All right then, {PLAYER}!\n"
 	.string "Get ready!$"
 
 MauvilleCity_Text_WallyDefeat:
@@ -624,42 +632,46 @@ MauvilleCity_Text_WallyDefeat:
 	.string "my entire life. I need to be stronger.\p"
 	.string "Congratulations, {PLAYER}.\n"
 	.string "You're truly impressive.$"
-	
+
 MauvilleCity_Text_WallyIllGoBackToVerdanturf:
-	.string "LUKA: UNCLE… and {PLAYER}...\n"
-	.string "I'll go back to VERDANTURF…$"
+	.string "LUKA: That was a great battle\n"
+	.string "but... now what are we supposed\l"
+	.string "to do?$"
 
 MauvilleCity_Text_ThankYouNotEnoughToBattle:
-	.string "LUKA: {PLAYER}, thank you.\p"
-	.string "I realize now that I need to train\n"
-	.string "my POKéMON more… and catch new ones.\p"
-	.string "Understanding the comet is my priority,\n"
-	.string "but I will need the support of my\l"
-	.string "POKéMON to accomplish that.\p"
-	.string "I forgot this fact, but that's okay.\n"
-	.string "This just gave me clarity.$"
+	.string "LUKA: Oh! {PLAYER}, it's going to\n"
+	.string "take a little more time for this\l"
+	.string "GYM to open, so why don't you\l"
+	.string "come visit VERDANTURF while you\l"
+	.string "wait?\p"
+	.string "I'm actually going to meet with\n"
+	.string "everyone at the CAFE there.\p"
+	.string "I'm sure they'd like to see you\n"
+	.string "too.$"
 
 MauvilleCity_Text_UncleNoNeedToBeDown:
 	.string "UNCLE: That's the spirit, LUKA.\p"
-	.string "Curiosity and strength don't cancel\n"
-	.string "each other out.\p"
-	.string "Train, explore, and learn.\n"
-	.string "All of that will make you stronger.\p"
-	.string "Come on, let's head home.\n"
-	.string "You’ve got a path ahead of you.$"
+	.string "It's okay to not be always\n"
+	.string "rushing toward your next goal.\p"
+	.string "Train, explore, rest, and learn.\n"
+	.string "All of that will make you\l"
+	.string "stronger.\p"
+	.string "Come on, let's head home.$"
 
 MauvilleCity_Text_UncleVisitUsSometime:
 	.string "UNCLE: {PLAYER}{KUN}, thank you for\n"
-	.string "pushing LUKA forward today.\p"
+	.string "battling LUKA today.\p"
 	.string "He may have lost, but he gained\n"
 	.string "something far more important.\p"
-	.string "Why don't you visit us in VERDANTURF\n"
-	.string "sometime?\l"
-	.string "Next time, he must be ready,\n"
-	.string "both in mind and in strength.$"
+	.string "When you visit VERDANTURF, why\n"
+	.string "don't you stop by our home too?\p"
+	.string "The family would love to meet you.$"
+
+MauvilleCity_Text_GymClosedForRepairs:
+	.string "Closed for emergency repairs.$"
 
 MauvilleCity_Text_WallyPokenavCall:
-	.string "… … … … … …\n" 
+	.string "… … … … … …\n"
 	.string "… … … … … Beep!\p"
 	.string "LUKA: Oh, hi, {PLAYER}!\p"
 	.string "Professor CALENDULA gave me\n"
@@ -670,7 +682,7 @@ MauvilleCity_Text_WallyPokenavCall:
 	.string "about the comet or Hoenn,\l"
 	.string "I will contact you right away!\p"
 	.string "Talk to you soon, {PLAYER}!\p"
-	.string "… … … … … …\n" 
+	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
 
 MauvilleCity_Text_RegisteredWally:

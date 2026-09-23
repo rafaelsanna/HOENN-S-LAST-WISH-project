@@ -104,6 +104,62 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "VerdanturfTowncafe_EventScript_Father",
       "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_VERDANTURF_CAFE_CALENDULA",
+      "graphics_id": "OBJ_EVENT_GFX_NORMAN",
+      "x": 2,
+      "y": 3,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "VerdanturfTowncafe_EventScript_Calendula",
+      "flag": "FLAG_HIDE_VERDANTURF_CAFE_CALENDULA"
+    },
+    {
+      "local_id": "LOCALID_VERDANTURF_CAFE_ACACIA",
+      "graphics_id": "OBJ_EVENT_GFX_PROF_BIRCH",
+      "x": 2,
+      "y": 4,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "VerdanturfTowncafe_EventScript_Acacia",
+      "flag": "FLAG_HIDE_VERDANTURF_CAFE_ACACIA"
+    },
+    {
+      "local_id": "LOCALID_VERDANTURF_CAFE_RIVAL",
+      "graphics_id": "OBJ_EVENT_GFX_VAR_0",
+      "x": 5,
+      "y": 3,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "VerdanturfTowncafe_EventScript_Rival",
+      "flag": "FLAG_HIDE_VERDANTURF_CAFE_RIVAL"
+    },
+    {
+      "local_id": "LOCALID_VERDANTURF_CAFE_LUKA",
+      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "x": 7,
+      "y": 9,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "VerdanturfTowncafe_EventScript_Luka",
+      "flag": "FLAG_HIDE_VERDANTURF_CAFE_LUKA"
     }
   ],
   "warp_events": [

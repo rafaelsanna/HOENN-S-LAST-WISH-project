@@ -1,6 +1,402 @@
 raw `
 VerdanturfTowncafe_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, VerdanturfTowncafe_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, VerdanturfTowncafe_OnFrame
 	.byte 0
+
+VerdanturfTowncafe_OnTransition:
+	setvar VAR_TEMP_0, 0
+	call Common_EventScript_SetupRivalGfxId
+	goto_if_unset FLAG_DEFEATED_WALLY_MAUVILLE, VerdanturfTowncafe_EventScript_HideGathering
+	goto_if_set FLAG_LUKA_VERDANTURF_CAFE_SCENE_COMPLETE, VerdanturfTowncafe_EventScript_HideGathering
+	clearflag FLAG_HIDE_VERDANTURF_CAFE_CALENDULA
+	clearflag FLAG_HIDE_VERDANTURF_CAFE_ACACIA
+	clearflag FLAG_HIDE_VERDANTURF_CAFE_RIVAL
+	clearflag FLAG_HIDE_VERDANTURF_CAFE_LUKA
+	setvar VAR_TEMP_0, 1
+	return
+
+VerdanturfTowncafe_EventScript_HideGathering::
+	setflag FLAG_HIDE_VERDANTURF_CAFE_CALENDULA
+	setflag FLAG_HIDE_VERDANTURF_CAFE_ACACIA
+	setflag FLAG_HIDE_VERDANTURF_CAFE_RIVAL
+	setflag FLAG_HIDE_VERDANTURF_CAFE_LUKA
+	return
+
+VerdanturfTowncafe_OnFrame:
+	map_script_2 VAR_TEMP_0, 1, VerdanturfTowncafe_EventScript_GatheringIntro
+	.2byte 0
+
+VerdanturfTowncafe_EventScript_GatheringIntro::
+	lockall
+	setvar VAR_TEMP_0, 2
+	getplayerxy VAR_TEMP_2, VAR_TEMP_3
+	goto_if_ne VAR_TEMP_2, 9, VerdanturfTowncafe_EventScript_NotAtEntrance
+	goto_if_ne VAR_TEMP_3, 11, VerdanturfTowncafe_EventScript_NotAtEntrance
+	applymovement LOCALID_VERDANTURF_CAFE_LUKA, Common_Movement_ExclamationMark
+	waitmovement 0
+	turnobject LOCALID_VERDANTURF_CAFE_LUKA, DIR_SOUTH
+	turnobject LOCALID_PLAYER, DIR_NORTH
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_LukaWelcome, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_VERDANTURF_CAFE_LUKA, VerdanturfTowncafe_Movement_LukaTakeSeat
+	waitmovement 0
+	applymovement LOCALID_PLAYER, VerdanturfTowncafe_Movement_PlayerTakeSeat
+	waitmovement 0
+	turnobject LOCALID_VERDANTURF_CAFE_RIVAL, DIR_SOUTH
+	turnobject LOCALID_PLAYER, DIR_NORTH
+	call VerdanturfTowncafe_EventScript_RivalGreeting
+	turnobject LOCALID_VERDANTURF_CAFE_RIVAL, DIR_WEST
+	turnobject LOCALID_PLAYER, DIR_WEST
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_AcaciaPraisesTrainers, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_CalendulaPraisesLuka, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_AcaciaCometMeasurements, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_CalendulaTeamEnergy, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_AcaciaErraticReadings, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_CalendulaUnpredictable, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_AcaciaSafety, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_CalendulaCaution, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_LukaConfidence, MSGBOX_DEFAULT
+	removefieldmugshot
+	call VerdanturfTowncafe_EventScript_RivalReassurance
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_AcaciaWorry, MSGBOX_DEFAULT
+	removefieldmugshot
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_CalendulaMeteorFalls, MSGBOX_DEFAULT
+	removefieldmugshot
+	turnobject LOCALID_VERDANTURF_CAFE_CALENDULA, DIR_SOUTH
+	turnobject LOCALID_VERDANTURF_CAFE_ACACIA, DIR_NORTH
+	createfieldmugshot MUGSHOT_CALENDULA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_CalendulaTakeCare, MSGBOX_DEFAULT
+	removefieldmugshot
+	turnobject LOCALID_VERDANTURF_CAFE_ACACIA, DIR_EAST
+	closemessage
+	applymovement LOCALID_VERDANTURF_CAFE_CALENDULA, VerdanturfTowncafe_Movement_CalendulaExit
+	waitmovement 0
+	setflag FLAG_HIDE_VERDANTURF_CAFE_CALENDULA
+	removeobject LOCALID_VERDANTURF_CAFE_CALENDULA
+	createfieldmugshot MUGSHOT_ACACIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_AcaciaMtChimney, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_VERDANTURF_CAFE_ACACIA, VerdanturfTowncafe_Movement_AcaciaExit
+	waitmovement 0
+	setflag FLAG_HIDE_VERDANTURF_CAFE_ACACIA
+	removeobject LOCALID_VERDANTURF_CAFE_ACACIA
+	turnobject LOCALID_PLAYER, DIR_NORTH
+	turnobject LOCALID_VERDANTURF_CAFE_LUKA, DIR_NORTH
+	turnobject LOCALID_VERDANTURF_CAFE_RIVAL, DIR_SOUTH
+	call VerdanturfTowncafe_EventScript_RivalFarewell
+	closemessage
+	applymovement LOCALID_VERDANTURF_CAFE_RIVAL, VerdanturfTowncafe_Movement_RivalExit
+	waitmovement 0
+	setflag FLAG_HIDE_VERDANTURF_CAFE_RIVAL
+	removeobject LOCALID_VERDANTURF_CAFE_RIVAL
+	turnobject LOCALID_PLAYER, DIR_SOUTH
+	createfieldmugshot MUGSHOT_LUKA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_LukaFarewell, MSGBOX_DEFAULT
+	removefieldmugshot
+	closemessage
+	applymovement LOCALID_VERDANTURF_CAFE_LUKA, VerdanturfTowncafe_Movement_LukaExit
+	waitmovement 0
+	setflag FLAG_HIDE_VERDANTURF_CAFE_LUKA
+	removeobject LOCALID_VERDANTURF_CAFE_LUKA
+	setflag FLAG_VERDANTURF_CAFE_GATHERING_INTRO_COMPLETE
+	setflag FLAG_LUKA_VERDANTURF_CAFE_SCENE_COMPLETE
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
+	clearflag FLAG_HIDE_PETALBURG_GYM_NORMAN
+	call ProfAcacia_EventScript_UpdateLocation
+	releaseall
+	end
+
+VerdanturfTowncafe_EventScript_NotAtEntrance::
+	releaseall
+	end
+
+VerdanturfTowncafe_EventScript_RivalGreeting::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, VerdanturfTowncafe_EventScript_RivalGreetingMay
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_RivalGreeting, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+VerdanturfTowncafe_EventScript_RivalGreetingMay::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_RivalGreeting, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+VerdanturfTowncafe_EventScript_RivalReassurance::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, VerdanturfTowncafe_EventScript_RivalReassuranceMay
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_RivalReassuranceFemale, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+VerdanturfTowncafe_EventScript_RivalReassuranceMay::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_RivalReassuranceMale, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+VerdanturfTowncafe_EventScript_RivalFarewell::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, VerdanturfTowncafe_EventScript_RivalFarewellMay
+	createfieldmugshot MUGSHOT_ZENNO, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_RivalFarewell, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+VerdanturfTowncafe_EventScript_RivalFarewellMay::
+	createfieldmugshot MUGSHOT_ZINNIA, EMOTE_NORMAL
+	msgbox VerdanturfTowncafe_Text_RivalFarewell, MSGBOX_DEFAULT
+	removefieldmugshot
+	return
+
+VerdanturfTowncafe_Movement_LukaTakeSeat:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	face_left
+	step_end
+
+VerdanturfTowncafe_Movement_PlayerTakeSeat:
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	face_left
+	step_end
+
+VerdanturfTowncafe_Movement_CalendulaExit:
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	set_invisible
+	step_end
+
+VerdanturfTowncafe_Movement_AcaciaExit:
+	walk_left
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	set_invisible
+	step_end
+
+VerdanturfTowncafe_Movement_RivalExit:
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	set_invisible
+	step_end
+
+VerdanturfTowncafe_Movement_LukaExit:
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	set_invisible
+	step_end
+
+VerdanturfTowncafe_EventScript_Calendula::
+	end
+
+VerdanturfTowncafe_EventScript_Acacia::
+	end
+
+VerdanturfTowncafe_EventScript_Rival::
+	end
+
+VerdanturfTowncafe_EventScript_Luka::
+	end
+
+VerdanturfTowncafe_Text_LukaWelcome:
+	.string "{PLAYER}, you made it! Come on,\n"
+	.string "we've all been waiting for you.$"
+
+VerdanturfTowncafe_Text_RivalGreeting:
+	.string "Hey, {PLAYER}! It's good to see\n"
+	.string "you.\p"
+	.string "We were just getting ready to talk\n"
+	.string "about our research progress.$"
+
+VerdanturfTowncafe_Text_AcaciaPraisesTrainers:
+	.string "{PLAYER} and {RIVAL}, it's\n"
+	.string "wonderful to see how much you've\l"
+	.string "both grown as trainers.$"
+
+VerdanturfTowncafe_Text_CalendulaPraisesLuka:
+	.string "You as well, LUKA. ACACIA and I\n"
+	.string "couldn't have chosen better\l"
+	.string "apprentices.$"
+
+VerdanturfTowncafe_Text_AcaciaCometMeasurements:
+	.string "Now, to get into the reason we're\n"
+	.string "all here...\p"
+	.string "CALENDULA and I have been\n"
+	.string "noticing some strange phenomena\l"
+	.string "occurring at various locations in\l"
+	.string "the region.\p"
+	.string "When the comet passed over, my\n"
+	.string "instruments recorded its energy\l"
+	.string "signature.\p"
+	.string "After converting it into a\n"
+	.string "formula, I have been able to\l"
+	.string "measure the level of comet energy\l"
+	.string "in an area.$"
+
+VerdanturfTowncafe_Text_CalendulaTeamEnergy:
+	.string "We have noticed highly increased\n"
+	.string "energy in areas where {RIVAL} and\l"
+	.string "LUKA have told us they encountered\l"
+	.string "TEAM MAGMA or AQUA.$"
+
+VerdanturfTowncafe_Text_AcaciaErraticReadings:
+	.string "Lately, though, we have been\n"
+	.string "getting erratic readings from\l"
+	.string "MT. CHIMNEY and METEOR FALLS.\p"
+	.string "CALENDULA and I have decided to\n"
+	.string "investigate more closely.$"
+
+VerdanturfTowncafe_Text_CalendulaUnpredictable:
+	.string "You three, you have all grown\n"
+	.string "immensely, but the situation\l"
+	.string "surrounding the comet is\l"
+	.string "becoming more and more\l"
+	.string "unpredictable.$"
+
+VerdanturfTowncafe_Text_AcaciaSafety:
+	.string "With this discovery that TEAM\n"
+	.string "MAGMA and TEAM AQUA are related\l"
+	.string "to comet energy, your safety\l"
+	.string "is of the utmost importance.$"
+
+VerdanturfTowncafe_Text_CalendulaCaution:
+	.string "We could never have gathered all\n"
+	.string "this data without you, but please\l"
+	.string "exercise caution whenever you\l"
+	.string "run into dangerous criminals.$"
+
+VerdanturfTowncafe_Text_LukaConfidence:
+	.string "Come on, PROFESSORS! We have\n"
+	.string "stomped every single one of those\l"
+	.string "thugs we've come across.$"
+
+VerdanturfTowncafe_Text_RivalReassuranceMale:
+	.string "Yeah, you don't need to worry\n"
+	.string "about us! {PLAYER} especially has\l"
+	.string "shown he can handle himself\l"
+	.string "several times already.$"
+
+VerdanturfTowncafe_Text_RivalReassuranceFemale:
+	.string "Yeah, you don't need to worry\n"
+	.string "about us! {PLAYER} especially has\l"
+	.string "shown she can handle herself\l"
+	.string "several times already.$"
+
+VerdanturfTowncafe_Text_AcaciaWorry:
+	.string "Of course we know how strong you\n"
+	.string "are, but we still worry.$"
+
+VerdanturfTowncafe_Text_CalendulaMeteorFalls:
+	.string "Well then, I'll be off to\n"
+	.string "METEOR FALLS.\p"
+	.string "{RIVAL}, LUKA, and {PLAYER}, I\n"
+	.string "look forward to seeing your\l"
+	.string "progress when we next meet.$"
+
+VerdanturfTowncafe_Text_CalendulaTakeCare:
+	.string "Take care, dear. No dangerous\n"
+	.string "trips without me.$"
+
+VerdanturfTowncafe_Text_AcaciaMtChimney:
+	.string "I'll be going to investigate\n"
+	.string "MT. CHIMNEY. Stay safe, you three.$"
+
+VerdanturfTowncafe_Text_RivalFarewell:
+	.string "{PLAYER}, LUKA, it was great to\n"
+	.string "see you both here.\p"
+	.string "I've got so many more places to\n"
+	.string "check out, so I'll be heading out\l"
+	.string "now too. I hope to see you around!$"
+
+VerdanturfTowncafe_Text_LukaFarewell:
+	.string "It's a shame we couldn't challenge\n"
+	.string "the GYM, but it was nice to take\l"
+	.string "some time to have a coffee with\l"
+	.string "everyone and catch up.\p"
+	.string "I bet the GYM would be open again\n"
+	.string "by now, but I think I'll go visit\l"
+	.string "my family first.\p"
+	.string "I've realized my priorities needed\n"
+	.string "some reordering.\p"
+	.string "Stop by and say hello if you've\n"
+	.string "got time, {PLAYER}. See you later!$"
 
 VerdanturfTowncafe_EventScript_Cashier::
 	lock

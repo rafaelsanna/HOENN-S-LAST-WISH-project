@@ -1302,12 +1302,12 @@
 #define FLAG_PETALBURG_NIGHTMARE_RETURN_SCENE_COMPLETE              0x4DC
 #define FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_LUKA                   0x4DD
 #define FLAG_HIDE_PETALBURG_NIGHTMARE_RETURN_RIVAL                  0x4DE
-#define FLAG_UNUSED_0x4DF                                           0x4DF // Unused Flag
-#define FLAG_UNUSED_0x4E0                                           0x4E0 // Unused Flag
-#define FLAG_UNUSED_0x4E1                                           0x4E1 // Unused Flag
-#define FLAG_UNUSED_0x4E2                                           0x4E2 // Unused Flag
-#define FLAG_UNUSED_0x4E3                                           0x4E3 // Unused Flag
-#define FLAG_UNUSED_0x4E4                                           0x4E4 // Unused Flag
+#define FLAG_LUKA_VERDANTURF_CAFE_SCENE_COMPLETE                    0x4DF // Opens Mauville Gym after the cafe gathering
+#define FLAG_VERDANTURF_CAFE_GATHERING_INTRO_COMPLETE               0x4E0
+#define FLAG_HIDE_VERDANTURF_CAFE_CALENDULA                         0x4E1
+#define FLAG_HIDE_VERDANTURF_CAFE_ACACIA                            0x4E2
+#define FLAG_HIDE_VERDANTURF_CAFE_RIVAL                             0x4E3
+#define FLAG_HIDE_VERDANTURF_CAFE_LUKA                              0x4E4
 #define FLAG_UNUSED_0x4E5                                           0x4E5 // Unused Flag
 #define FLAG_UNUSED_0x4E6                                           0x4E6 // Unused Flag
 #define FLAG_UNUSED_0x4E7                                           0x4E7 // Unused Flag

@@ -71,6 +71,7 @@ static bool8 IsArrowWarpMetatileBehavior(u16, u8);
 static s8 GetWarpEventAtMapPosition(struct MapHeader *, struct MapPosition *);
 static void SetupWarp(struct MapHeader *, s8, struct MapPosition *);
 static bool8 TryDoorWarp(struct MapPosition *, u16, u8);
+static bool8 IsMauvilleGymClosedDoor(struct MapPosition *, u8);
 static s8 GetWarpEventAtPosition(struct MapHeader *, u16, u16, u8);
 static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *, u16, u16, u8);
 static const struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *, u16, u16, u8);
@@ -548,6 +549,9 @@ static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position
 static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 metatileBehavior, u8 direction)
 {
     s8 elevation;
+
+    if (IsMauvilleGymClosedDoor(position, direction))
+        return MauvilleCity_EventScript_GymClosedForRepairs;
 
     if (MetatileBehavior_IsPlayerFacingTVScreen(metatileBehavior, direction) == TRUE)
         return EventScript_TV;
@@ -1103,6 +1107,12 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+                if (IsMauvilleGymClosedDoor(position, direction))
+                {
+                    ScriptContext_SetupScript(MauvilleCity_EventScript_GymClosedForRepairs);
+                    return TRUE;
+                }
+
                 if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ABANDONED_SHIP_TEAM_AQUA)
                  && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ABANDONED_SHIP_TEAM_AQUA)
                  && (warpEventId == 2 || warpEventId == 3)
@@ -1127,6 +1137,16 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
         }
     }
     return FALSE;
+}
+
+static bool8 IsMauvilleGymClosedDoor(struct MapPosition *position, u8 direction)
+{
+    return direction == DIR_NORTH
+        && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MAUVILLE_CITY)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MAUVILLE_CITY)
+        && GetWarpEventAtMapPosition(&gMapHeader, position) == 0
+        && !FlagGet(FLAG_LUKA_VERDANTURF_CAFE_SCENE_COMPLETE)
+        && !FlagGet(FLAG_BADGE03_GET);
 }
 
 static s8 GetWarpEventAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 elevation)

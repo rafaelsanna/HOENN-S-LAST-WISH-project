@@ -17,12 +17,18 @@ PetalburgCity_Gym_EventScript_UnlockAllDoors::
 	return
 
 PetalburgCity_Gym_OnTransition:
+	call_if_set FLAG_DEFEATED_WALLY_MAUVILLE, PetalburgCity_Gym_EventScript_HideCalendulaDuringCafe
 	call_if_eq VAR_PETALBURG_GYM_STATE, 1, PetalburgCity_Gym_EventScript_MoveWallyToEntrance
 	call_if_ne VAR_PETALBURG_GYM_STATE, 6, PetalburgCity_Gym_EventScript_MoveNormanToEntrance
 	call_if_eq VAR_PETALBURG_GYM_STATE, 6, PetalburgCity_Gym_EventScript_MoveNormanToGymLeaderRoom
 	call_if_set FLAG_SYS_GAME_CLEAR, PetalburgCity_Gym_EventScript_CheckNormanForRematch
 	call PetalburgCity_Gym_EventScript_PositionClearedGuards
 	end
+
+PetalburgCity_Gym_EventScript_HideCalendulaDuringCafe::
+	goto_if_set FLAG_LUKA_VERDANTURF_CAFE_SCENE_COMPLETE, Common_EventScript_NopReturn
+	setflag FLAG_HIDE_PETALBURG_GYM_NORMAN
+	return
 
 PetalburgCity_Gym_EventScript_MoveWallyToEntrance::
 	setobjectxyperm LOCALID_PETALBURG_GYM_WALLY, 5, 108
