@@ -90,35 +90,37 @@ VerdanturfTown_WandasHouse_EventScript_WallysAuntEverGrande::
 VerdanturfTown_WandasHouse_Text_StrongerSpeech:
 	.string "LUKA: I lost to you, {PLAYER}, but I'm\n"
 	.string "not feeling down anymore.\p"
-	.string "Because I have a new purpose in life.\n"
-	.string "Together with my RALTS, I'm going\l"
-	.string "to challenge POKéMON GYMS and become\l"
-	.string "a great TRAINER.\p"
-	.string "Please watch me, {PLAYER}.\n"
-	.string "I'm going to be stronger than you.\p"
-	.string "When I do, I'm going to challenge you\n"
-	.string "to another battle.$"
+	.string "You taught me there's more to life than\n"
+	.string "always rushing toward the next goal.\p"
+	.string "I'm still going to search for clues\n"
+	.string "about the comet, don't worry.\p"
+	.string "I'll just make sure to take some time\n"
+	.string "to appreciate those who support me too.\p"
+	.string "Next time I see you, let's rematch!\n"
+	.string "I'll have tons of new things to show you.$"
 
 VerdanturfTown_WandasHouse_Text_StrongerSpeechShort:
-	.string "LUKA: Please watch me, {PLAYER}.\n"
+	.string "LUKA: Just wait, {PLAYER}.\n"
 	.string "I'm going to get stronger than you.\p"
 	.string "When I do, I'm going to challenge you\n"
 	.string "to another battle.$"
 
 VerdanturfTown_WandasHouse_Text_WallysNextDoor:
 	.string "UNCLE: Oh! {PLAYER}{KUN}!\n"
-	.string "LUKA's next door.\p"
+	.string "How nice of you to visit.\p"
 	.string "But, boy, there's something I have to\n"
 	.string "tell you.\p"
-	.string "This natural environment is doing\n"
-	.string "wonders for LUKA's health.\p"
-	.string "Maybe it's not just the environment.\n"
-	.string "It could be POKéMON that are giving\l"
-	.string "the boy hope.$"
+	.string "LUKA has been a changed kid lately.\n"
+	.string "The whole family is grateful to you.\p"
+	.string "For a while there, he was so obsessed\n"
+	.string "with the comet, it was as though we\l"
+	.string "lost him entirely.\p"
+	.string "We finally have him back.$"
 
 VerdanturfTown_WandasHouse_Text_WallySlippedOff:
-	.string "LUKA's gone away…\n"
-	.string "He slipped off on his own…$"
+	.string "LUKA's keeping in touch with us much\n"
+	.string "more now. It's great to hear what\l"
+	.string "he's up to.$"
 
 VerdanturfTown_WandasHouse_Text_WallyGoneThatFar:
 	.string "UNCLE: Is that right?\n"
@@ -134,14 +136,14 @@ VerdanturfTown_WandasHouse_Text_MeetWanda:
 	.string "telling me about.\p"
 	.string "I'm LUKA's cousin.\n"
 	.string "Glad to meet you!\p"
-	.string "I think LUKA's become a lot more lively\n"
-	.string "and healthy since he came here.$"
+	.string "I think LUKA's felt much more at peace\n"
+	.string "and relaxed since he came here.$"
 
 VerdanturfTown_WandasHouse_Text_DontWorryAboutWally:
 	.string "WANDA: Don't worry about LUKA.\n"
 	.string "He'll be just fine.\p"
 	.string "I know my little cousin, and he has\n"
-	.string "POKéMON with him, too.$"
+	.string "never let a challenge get him down.$"
 
 VerdanturfTown_WandasHouse_Text_CanSeeGirlfriendEveryDay:
 	.string "Thanks to you, I can see my girlfriend\n"
@@ -163,12 +165,14 @@ VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendWasDigging:
 
 VerdanturfTown_WandasHouse_Text_IfAnythingHappenedToWally:
 	.string "If anything were to happen to LUKA,\n"
-	.string "I would never be able to look his\l"
-	.string "parents in PETALBURG in the eye…$"
+	.string "I would never be able to look our\l"
+	.string "family in PETALBURG in the eye…\p"
+	.string "We all know how strong he is, but\n"
+	.string "its natural for family to worry.$"
 
 VerdanturfTown_WandasHouse_Text_WallyWasInEverGrande:
 	.string "LUKA was in EVER GRANDE?\p"
-	.string "His parents in PETALBURG would be\n"
-	.string "astonished to hear that!$"
+	.string "His family in PETALBURG would be\n"
+	.string "entirely unsurprised to hear that!$"
 
 `
