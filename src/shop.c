@@ -47,7 +47,9 @@
 #define TAG_ITEM_ICON_BASE 9110 // immune to time blending
 
 #define MAX_ITEMS_SHOWN 8
+#define SHOP_LIST_SCROLL_STEP 5
 #define SHOP_MENU_PALETTE_ID 12
+#define SHOP_MENU_BASE_TILE 0x3EC
 #define CAFE_PREVIEW_PALETTE_ID 5
 
 enum {
@@ -57,6 +59,7 @@ enum {
 
 enum {
     WIN_MONEY,
+    WIN_ITEM_HEADERS,
     WIN_ITEM_LIST,
     WIN_ITEM_DESCRIPTION,
     WIN_QUANTITY_IN_BAG,
@@ -127,11 +130,14 @@ static void ShowShopMenuAfterExitingBuyOrSellMenu(u8 taskId);
 static void BuyMenuDrawGraphics(void);
 static void BuyMenuAddScrollIndicatorArrows(void);
 static void Task_BuyMenu(u8 taskId);
+static s32 BuyMenuProcessInput(u8 listTaskId);
+static void BuyMenuWrapListSelection(u8 listTaskId, bool8 moveToLast);
 static void BuyMenuBuildListMenuTemplate(void);
 static void BuyMenuInitBgs(void);
 static void BuyMenuInitWindows(void);
 static void BuyMenuDecompressBgGraphics(void);
 static void BuyMenuSetListEntry(struct ListMenuItem *, u16, u8 *);
+static void BuyMenuPrintHeaders(void);
 static void BuyMenuAddItemIcon(u16, u8);
 static void BuyMenuRemoveItemIcon(u16, u8);
 static void BuyMenuPrint(u8 windowId, const u8 *text, u8 x, u8 y, s8 speed, u8 colorSet);
@@ -277,6 +283,15 @@ static const struct WindowTemplate sShopBuyMenuWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 0x001E,
     },
+    [WIN_ITEM_HEADERS] = {
+        .bg = 0,
+        .tilemapLeft = 14,
+        .tilemapTop = 0,
+        .width = 15,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x0222,
+    },
     [WIN_ITEM_LIST] = {
         .bg = 0,
         .tilemapLeft = 14,
@@ -343,12 +358,29 @@ static const u8 sShopBuyMenuTextColors[][3] =
     [COLORID_GRAY_CURSOR] = {0, 3, 2},
 };
 
-static const u16 sShopMenuDarkPanelColors[] =
+static const u8 sText_ShopItemHeader[] = _("ITEM");
+static const u8 sText_ShopPriceHeader[] = _("PRICE");
+
+// Palette 15 is shared by every text window in the buy menu. Load it
+// explicitly so its colors never depend on the map that opened the shop.
+static const u16 sShopBuyMenuTextPalette[16] =
 {
-    RGB(4, 4, 5),  // Description panel background: #212129.
-    RGB(21, 13, 27), // Item-list border: lavender.
-    RGB(7, 7, 10), // First item-list stripe.
-    RGB(9, 9, 13), // Second item-list stripe.
+    RGB( 0,  0,  0), // Transparent
+    RGB( 4,  4,  5), // Window background: #212129
+    RGB(31, 31, 31), // Text
+    RGB( 9,  9,  9), // Text shadow: #4A4A4A
+    RGB(27, 27, 27),
+    RGB(18, 18, 18),
+    RGB(24, 24, 24),
+    RGB(15, 15, 15),
+    RGB(29, 29, 29),
+    RGB(20, 20, 20),
+    RGB(31, 31, 31),
+    RGB(26, 26, 26),
+    RGB(22, 22, 22),
+    RGB(17, 17, 17),
+    RGB(12, 12, 12),
+    RGB( 7,  7,  7),
 };
 
 static u8 CreateShopMenu(u8 martType)
@@ -757,10 +789,27 @@ static void BuyMenuInitBgs(void)
 
 static void BuyMenuDecompressBgGraphics(void)
 {
+    u32 column;
     u32 row;
 
-    DecompressAndCopyTileDataToVram(1, gShopMenu_Gfx, 0x3A0, 0x3E3, 0);
+    // newshop contains 20 used tiles. Loading only those keeps the data inside
+    // the final 20 slots of this charblock (0x3EC-0x3FF).
+    DecompressAndCopyTileDataToVram(1, gShopMenu_Gfx, 20 * TILE_SIZE_4BPP, SHOP_MENU_BASE_TILE, 0);
     DecompressDataWithHeaderWram(gShopMenu_Tilemap, sShopData->tilemapBuffers[0]);
+
+    // The authored tilemap is screen-sized (30x20), while the engine's regular
+    // BG tilemap buffer is 32x32. Expand it in place from bottom-right so rows
+    // retain their intended alignment without an additional allocation.
+    for (row = 20; row != 0; row--)
+    {
+        u32 sourceRow = row - 1;
+
+        for (column = 30; column != 0; column--)
+            sShopData->tilemapBuffers[0][sourceRow * 32 + column - 1] = sShopData->tilemapBuffers[0][sourceRow * 30 + column - 1];
+
+        sShopData->tilemapBuffers[0][sourceRow * 32 + 30] = 0;
+        sShopData->tilemapBuffers[0][sourceRow * 32 + 31] = 0;
+    }
 
     if (gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWNCAFE)
     {
@@ -770,11 +819,11 @@ static void BuyMenuDecompressBgGraphics(void)
         {
             sShopData->tilemapBuffers[0][row * 32 + 14] = sShopData->tilemapBuffers[0][row * 32 + 13];
             if (row == 12)
-                sShopData->tilemapBuffers[0][row * 32 + 13] = 0x08; // description top edge
+                sShopData->tilemapBuffers[0][row * 32 + 13] = 15; // description top edge
             else if (row == 19)
-                sShopData->tilemapBuffers[0][row * 32 + 13] = 0x0B; // description bottom edge
+                sShopData->tilemapBuffers[0][row * 32 + 13] = 18; // description bottom edge
             else if (row > 12)
-                sShopData->tilemapBuffers[0][row * 32 + 13] = 0x01; // description background
+                sShopData->tilemapBuffers[0][row * 32 + 13] = 2; // description background
             else
                 sShopData->tilemapBuffers[0][row * 32 + 13] = 0;
         }
@@ -787,10 +836,6 @@ static void BuyMenuDecompressBgGraphics(void)
     if (gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWNCAFE)
         LoadPalette(gMapHeader.mapLayout->secondaryTileset->palettes[SHOP_MENU_PALETTE_ID], BG_PLTT_ID(CAFE_PREVIEW_PALETTE_ID), PLTT_SIZE_4BPP);
 
-    // The item list is transparent and shows this BG palette underneath it.
-    LoadPalette(&sShopMenuDarkPanelColors[0], BG_PLTT_ID(SHOP_MENU_PALETTE_ID) + 1, PLTT_SIZEOF(1));
-    LoadPalette(&sShopMenuDarkPanelColors[1], BG_PLTT_ID(SHOP_MENU_PALETTE_ID) + 8, PLTT_SIZEOF(1));
-    LoadPalette(&sShopMenuDarkPanelColors[2], BG_PLTT_ID(SHOP_MENU_PALETTE_ID) + 9, PLTT_SIZEOF(2));
 }
 
 static void BuyMenuInitWindows(void)
@@ -800,6 +845,8 @@ static void BuyMenuInitWindows(void)
     memcpy(windows, sShopBuyMenuWindowTemplates, sizeof(windows));
     if (gMapHeader.mapLayoutId == LAYOUT_VERDANTURF_TOWNCAFE)
     {
+        windows[WIN_ITEM_HEADERS].tilemapLeft++;
+        windows[WIN_ITEM_HEADERS].width--;
         windows[WIN_ITEM_LIST].tilemapLeft++;
         windows[WIN_ITEM_LIST].width--;
     }
@@ -809,14 +856,28 @@ static void BuyMenuInitWindows(void)
     LoadUserWindowBorderGfx(WIN_MONEY, 1, BG_PLTT_ID(13));
     LoadUserWindowBorderGfx(WIN_MESSAGE, 1, BG_PLTT_ID(13));
     LoadMessageBoxGfx(WIN_MONEY, 0xA, BG_PLTT_ID(14));
+    LoadPalette(sShopBuyMenuTextPalette, BG_PLTT_ID(15), sizeof(sShopBuyMenuTextPalette));
     PutWindowTilemap(WIN_MONEY);
+    PutWindowTilemap(WIN_ITEM_HEADERS);
     PutWindowTilemap(WIN_ITEM_LIST);
     PutWindowTilemap(WIN_ITEM_DESCRIPTION);
+    BuyMenuPrintHeaders();
 }
 
 static void BuyMenuPrint(u8 windowId, const u8 *text, u8 x, u8 y, s8 speed, u8 colorSet)
 {
     AddTextPrinterParameterized4(windowId, FONT_NORMAL, x, y, 0, 0, sShopBuyMenuTextColors[colorSet], speed, text);
+}
+
+static void BuyMenuPrintHeaders(void)
+{
+    u32 rightEdge = GetWindowAttribute(WIN_ITEM_HEADERS, WINDOW_WIDTH) * 8;
+    u32 priceX = GetStringRightAlignXOffset(FONT_SMALL_NARROW, sText_ShopPriceHeader, rightEdge);
+
+    FillWindowPixelBuffer(WIN_ITEM_HEADERS, PIXEL_FILL(0));
+    AddTextPrinterParameterized4(WIN_ITEM_HEADERS, FONT_SMALL_NARROW, sShopBuyMenuListTemplate.item_X, 0, 0, 0, sShopBuyMenuTextColors[COLORID_ITEM_LIST], TEXT_SKIP_DRAW, sText_ShopItemHeader);
+    AddTextPrinterParameterized4(WIN_ITEM_HEADERS, FONT_SMALL_NARROW, priceX, 0, 0, 0, sShopBuyMenuTextColors[COLORID_ITEM_LIST], TEXT_SKIP_DRAW, sText_ShopPriceHeader);
+    CopyWindowToVram(WIN_ITEM_HEADERS, COPYWIN_GFX);
 }
 
 static void BuyMenuDisplayMessage(u8 taskId, const u8 *text, TaskFunc callback)
@@ -1019,7 +1080,7 @@ static void BuyMenuCopyMenuBgToBg1TilemapBuffer(void)
     for (i = 0; i < 1024; i++)
     {
         if (src[i] != 0)
-            dest[i] = src[i] + ((SHOP_MENU_PALETTE_ID << 12) | 0x3E3);
+            dest[i] = src[i] + ((SHOP_MENU_PALETTE_ID << 12) | SHOP_MENU_BASE_TILE);
     }
 }
 
@@ -1044,7 +1105,7 @@ static void Task_BuyMenu(u8 taskId)
 
     if (!gPaletteFade.active)
     {
-        s32 itemId = ListMenu_ProcessInput(tListTaskId);
+        s32 itemId = BuyMenuProcessInput(tListTaskId);
         ListMenuGetScrollAndRow(tListTaskId, &sShopData->scrollOffset, &sShopData->selectedRow);
 
         switch (itemId)
@@ -1112,6 +1173,59 @@ static void Task_BuyMenu(u8 taskId)
             break;
         }
     }
+}
+
+static s32 BuyMenuProcessInput(u8 listTaskId)
+{
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
+    u16 itemIndex = list->scrollOffset + list->selectedRow;
+
+    // Keep A/B priority identical to the standard list input handling.
+    if (!JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        if (JOY_REPEAT(DPAD_LEFT))
+        {
+            ListMenuChangeSelection(list, TRUE, SHOP_LIST_SCROLL_STEP, FALSE);
+            return LIST_NOTHING_CHOSEN;
+        }
+        else if (JOY_REPEAT(DPAD_RIGHT))
+        {
+            ListMenuChangeSelection(list, TRUE, SHOP_LIST_SCROLL_STEP, TRUE);
+            return LIST_NOTHING_CHOSEN;
+        }
+        else if (JOY_REPEAT(DPAD_UP) && itemIndex == 0)
+        {
+            BuyMenuWrapListSelection(listTaskId, TRUE);
+            return LIST_NOTHING_CHOSEN;
+        }
+        else if (JOY_REPEAT(DPAD_DOWN) && itemIndex == list->template.totalItems - 1)
+        {
+            BuyMenuWrapListSelection(listTaskId, FALSE);
+            return LIST_NOTHING_CHOSEN;
+        }
+    }
+
+    return ListMenu_ProcessInput(listTaskId);
+}
+
+static void BuyMenuWrapListSelection(u8 listTaskId, bool8 moveToLast)
+{
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
+
+    if (moveToLast)
+    {
+        list->selectedRow = list->template.maxShowed - 1;
+        list->scrollOffset = list->template.totalItems - list->template.maxShowed;
+    }
+    else
+    {
+        list->selectedRow = 0;
+        list->scrollOffset = 0;
+    }
+
+    RedrawListMenu(listTaskId);
+    if (list->template.moveCursorFunc != NULL)
+        list->template.moveCursorFunc(list->template.items[list->scrollOffset + list->selectedRow].id, FALSE, list);
 }
 
 static void Task_BuyHowManyDialogueInit(u8 taskId)
