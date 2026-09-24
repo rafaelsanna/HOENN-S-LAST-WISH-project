@@ -78,3 +78,10 @@ temp_mining/
 # Windows metadata accidentally copied into WSL
 *:Zone.Identifier
 Zone.Identifier
+
+# Local Codex environment and private story-writing documents
+/.codex/environments/
+/HOENNS_LAST_WISH_STORY_BIBLE.pdf
+/HOENNS_LAST_WISH_WALKTHROUGH.pdf
+/STORY_OVERVIEW.md
+/WALKTHROUGH.md
