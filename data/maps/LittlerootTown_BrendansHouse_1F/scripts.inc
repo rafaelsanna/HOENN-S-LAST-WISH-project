@@ -995,7 +995,7 @@ PlayersHouse_1F_Text_WhatColorDidTheySay:
 # 498 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"
 	.string "GRANDMA: {PLAYER}, you're still having\n"
 # 499 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"
-	.string "those strange dreams almost every\n"
+	.string "those strange dreams almost every\l"
 # 500 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"
 	.string "night…\p"
 # 501 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"
