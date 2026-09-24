@@ -1,0 +1,136 @@
+raw `
+LavaridgeTownincense_MapScripts::
+	.byte 0
+
+LavaridgeTownincense_EventScript_Merchant::
+	lock
+	faceplayer
+	message LavaridgeTownincense_Text_MerchantGreeting
+	waitmessage
+	setvar VAR_0x8004, 0
+	call_if_set FLAG_BADGE01_GET, LavaridgeTownincense_EventScript_CountBadge
+	call_if_set FLAG_BADGE02_GET, LavaridgeTownincense_EventScript_CountBadge
+	call_if_set FLAG_BADGE03_GET, LavaridgeTownincense_EventScript_CountBadge
+	call_if_set FLAG_BADGE04_GET, LavaridgeTownincense_EventScript_CountBadge
+	call_if_set FLAG_BADGE05_GET, LavaridgeTownincense_EventScript_CountBadge
+	call_if_set FLAG_BADGE06_GET, LavaridgeTownincense_EventScript_CountBadge
+	call_if_set FLAG_BADGE07_GET, LavaridgeTownincense_EventScript_CountBadge
+	call_if_set FLAG_BADGE08_GET, LavaridgeTownincense_EventScript_CountBadge
+	goto_if_ge VAR_0x8004, 8, LavaridgeTownincense_EventScript_Shop8Badges
+	goto_if_ge VAR_0x8004, 7, LavaridgeTownincense_EventScript_Shop7Badges
+	goto_if_ge VAR_0x8004, 6, LavaridgeTownincense_EventScript_Shop6Badges
+	goto_if_ge VAR_0x8004, 5, LavaridgeTownincense_EventScript_Shop5Badges
+	goto_if_ge VAR_0x8004, 4, LavaridgeTownincense_EventScript_Shop4Badges
+	pokemart LavaridgeTownincense_Pokemart_Base
+	goto LavaridgeTownincense_EventScript_Farewell
+
+LavaridgeTownincense_EventScript_CountBadge::
+	addvar VAR_0x8004, 1
+	return
+
+LavaridgeTownincense_EventScript_Shop4Badges::
+	pokemart LavaridgeTownincense_Pokemart_4Badges
+	goto LavaridgeTownincense_EventScript_Farewell
+
+LavaridgeTownincense_EventScript_Shop5Badges::
+	pokemart LavaridgeTownincense_Pokemart_5Badges
+	goto LavaridgeTownincense_EventScript_Farewell
+
+LavaridgeTownincense_EventScript_Shop6Badges::
+	pokemart LavaridgeTownincense_Pokemart_6Badges
+	goto LavaridgeTownincense_EventScript_Farewell
+
+LavaridgeTownincense_EventScript_Shop7Badges::
+	pokemart LavaridgeTownincense_Pokemart_7Badges
+	goto LavaridgeTownincense_EventScript_Farewell
+
+LavaridgeTownincense_EventScript_Shop8Badges::
+	pokemart LavaridgeTownincense_Pokemart_8Badges
+	goto LavaridgeTownincense_EventScript_Farewell
+
+LavaridgeTownincense_EventScript_Farewell::
+	msgbox LavaridgeTownincense_Text_MerchantFarewell, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+LavaridgeTownincense_Pokemart_Base:
+	.2byte ITEM_FULL_INCENSE
+	.2byte ITEM_LAX_INCENSE
+	.2byte ITEM_PURE_INCENSE
+	pokemartlistend
+
+	.align 2
+LavaridgeTownincense_Pokemart_4Badges:
+	.2byte ITEM_FULL_INCENSE
+	.2byte ITEM_LAX_INCENSE
+	.2byte ITEM_PURE_INCENSE
+	.2byte ITEM_SEA_INCENSE
+	pokemartlistend
+
+	.align 2
+LavaridgeTownincense_Pokemart_5Badges:
+	.2byte ITEM_FULL_INCENSE
+	.2byte ITEM_LAX_INCENSE
+	.2byte ITEM_PURE_INCENSE
+	.2byte ITEM_SEA_INCENSE
+	.2byte ITEM_LUCK_INCENSE
+	pokemartlistend
+
+	.align 2
+LavaridgeTownincense_Pokemart_6Badges:
+	.2byte ITEM_FULL_INCENSE
+	.2byte ITEM_LAX_INCENSE
+	.2byte ITEM_PURE_INCENSE
+	.2byte ITEM_SEA_INCENSE
+	.2byte ITEM_LUCK_INCENSE
+	.2byte ITEM_ROCK_INCENSE
+	pokemartlistend
+
+	.align 2
+LavaridgeTownincense_Pokemart_7Badges:
+	.2byte ITEM_FULL_INCENSE
+	.2byte ITEM_LAX_INCENSE
+	.2byte ITEM_PURE_INCENSE
+	.2byte ITEM_SEA_INCENSE
+	.2byte ITEM_LUCK_INCENSE
+	.2byte ITEM_ROCK_INCENSE
+	.2byte ITEM_ODD_INCENSE
+	pokemartlistend
+
+	.align 2
+LavaridgeTownincense_Pokemart_8Badges:
+	.2byte ITEM_FULL_INCENSE
+	.2byte ITEM_LAX_INCENSE
+	.2byte ITEM_PURE_INCENSE
+	.2byte ITEM_SEA_INCENSE
+	.2byte ITEM_LUCK_INCENSE
+	.2byte ITEM_ROCK_INCENSE
+	.2byte ITEM_ODD_INCENSE
+	.2byte ITEM_ROSE_INCENSE
+	pokemartlistend
+
+LavaridgeTownincense_EventScript_Husband::
+	msgbox LavaridgeTownincense_Text_Husband, MSGBOX_NPC
+	end
+
+LavaridgeTownincense_Text_MerchantGreeting:
+	.string "Hello hello! I love incense.\p"
+	.string "In fact, I love it so much that I\n"
+	.string "want everyone to have some!\p"
+	.string "But it's so expensive, I'd go broke\n"
+	.string "if I just gave it away!\p"
+	.string "Here, I'll sell it to you!$"
+
+LavaridgeTownincense_Text_MerchantFarewell:
+	.string "Come back again! I know you will.\p"
+	.string "Everyone loves incense!$"
+
+LavaridgeTownincense_Text_Husband:
+	.string "My husband is completely obsessed\n"
+	.string "with incense.\p"
+	.string "Every drawer, pot, and cabinet in\n"
+	.string "our house is stuffed with it.\p"
+	.string "Please, for the love of ARCEUS,\n"
+	.string "buy some and get it out of here...$"
+`

@@ -99,7 +99,7 @@ MtPyre_1F_EventScript_Teddiursa_FinalFind:
 	applymovement VAR_LAST_TALKED, MrButtons_Movement_Disappear
 	waitmovement 0
 	removeobject VAR_LAST_TALKED
-	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND, MtPyre_1F_EventScript_Teddiursa_Follower
+	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND | FNPC_SURF | FNPC_HIDE_WHILE_SURFING, MtPyre_1F_EventScript_Teddiursa_Follower
 	checkfollowernpc
 	goto_if_eq VAR_RESULT, FALSE, MtPyre_1F_EventScript_Teddiursa_Retry
 	setvar VAR_MOSSDEEP_TEDDIURSA_FOUND_COUNT, 3

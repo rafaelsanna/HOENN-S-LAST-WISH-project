@@ -154,7 +154,8 @@
     "LavaridgeTown_House",
     "LavaridgeTown_Mart",
     "LavaridgeTown_PokemonCenter_1F",
-    "LavaridgeTown_PokemonCenter_2F"
+    "LavaridgeTown_PokemonCenter_2F",
+    "LavaridgeTownincense"
   ],
   "gMapGroup_IndoorFallarbor": [
     "FallarborTown_Mart",
@@ -651,7 +652,8 @@
     "Route104_PrototypePrettyPetalFlowerShop"
   ],
   "gMapGroup_IndoorRoute109": [
-    "Route109_SeashoreHouse"
+    "Route109_SeashoreHouse",
+    "Route109ballshop"
   ],
   "gMapGroup_IndoorRoute110": [
     "Route110_TrickHouseEntrance",

@@ -201,7 +201,7 @@ MtPyre_1F_EventScript_Teddiursa_FinalFind:
 # 101 "data/maps/MtPyre_1F/scripts.pory"
 	removeobject VAR_LAST_TALKED
 # 102 "data/maps/MtPyre_1F/scripts.pory"
-	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND, MtPyre_1F_EventScript_Teddiursa_Follower
+	createfollowernpc OBJ_EVENT_GFX_SPECIES(TEDDIURSA), FNPC_ALL_LAND | FNPC_SURF | FNPC_HIDE_WHILE_SURFING, MtPyre_1F_EventScript_Teddiursa_Follower
 # 103 "data/maps/MtPyre_1F/scripts.pory"
 	checkfollowernpc
 # 104 "data/maps/MtPyre_1F/scripts.pory"

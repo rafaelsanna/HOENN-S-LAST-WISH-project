@@ -114,6 +114,7 @@ void FollowerNPC_FollowerToWater(void);
 void FollowerNPC_SetIndicatorToRecreateSurfBlob(void);
 void FollowerNPC_BindToSurfBlobOnReloadScreen(void);
 void PrepareFollowerNPCDismountSurf(void);
+void FollowerNPC_ReappearAfterSurf(void);
 
 bool32 FollowerNPCComingThroughDoor(void);
 void FollowerNPC_SetIndicatorToComeOutDoor(void);

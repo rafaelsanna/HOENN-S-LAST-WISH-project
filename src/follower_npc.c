@@ -29,6 +29,7 @@
 #include "task.h"
 #include "trig.h"
 #include "constants/event_object_movement.h"
+#include "constants/event_objects.h"
 #include "constants/field_effects.h"
 #include "constants/frontier_util.h"
 #include "constants/map_types.h"
@@ -1104,6 +1105,13 @@ void NPCFollow(struct ObjectEvent *npc, u32 state, bool32 ignoreScriptActive)
         SetFollowerNPCData(FNPC_DATA_WARP_END, FNPC_WARP_REAPPEAR);
     }
 
+    if (CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING) && TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
+    {
+        HideNPCFollower();
+        SetFollowerNPCData(FNPC_DATA_WARP_END, FNPC_WARP_REAPPEAR);
+        return;
+    }
+
     // Restore post warp behavior after setobjectxy.
     if (GetFollowerNPCData(FNPC_DATA_COME_OUT_DOOR) == FNPC_DOOR_NO_POS_SET)
         SetFollowerNPCData(FNPC_DATA_COME_OUT_DOOR, FNPC_DOOR_NONE);
@@ -1247,6 +1255,16 @@ void CreateFollowerNPCAvatar(void)
 
 void FollowerNPC_HandleSprite(void)
 {
+    // Upgrade Mr. Buttons in saves made while he was already following the player.
+    if (PlayerHasFollowerNPC()
+     && FlagGet(FLAG_MOSSDEEP_TEDDIURSA_DOLL_FOUND)
+     && !FlagGet(FLAG_MOSSDEEP_TEDDIURSA_QUEST_COMPLETED)
+     && GetFollowerNPCData(FNPC_DATA_GFX_ID) == OBJ_EVENT_GFX_SPECIES(TEDDIURSA))
+    {
+        u16 flags = GetFollowerNPCData(FNPC_DATA_FOLLOWER_FLAGS);
+        SetFollowerNPCData(FNPC_DATA_FOLLOWER_FLAGS, flags | FOLLOWER_NPC_FLAG_CAN_SURF | FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING);
+    }
+
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_BIKE) && CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_CAN_BIKE))
     {
         if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
@@ -1361,8 +1379,17 @@ void FollowerNPC_WarpSetEnd(void)
     }
     else if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
     {
-        SetFollowerNPCSprite(FOLLOWER_NPC_SPRITE_INDEX_SURF);
-        SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_RECREATE);
+        if (CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING))
+        {
+            follower->invisible = TRUE;
+            SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_NONE);
+            SetFollowerNPCData(FNPC_DATA_WARP_END, FNPC_WARP_REAPPEAR);
+        }
+        else
+        {
+            SetFollowerNPCSprite(FOLLOWER_NPC_SPRITE_INDEX_SURF);
+            SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_RECREATE);
+        }
     }
 
     follower->facingDirection = player->facingDirection;
@@ -1407,6 +1434,14 @@ void FollowerNPC_FollowerToWater(void)
     if (!PlayerHasFollowerNPC())
         return;
 
+    if (CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING))
+    {
+        HideNPCFollower();
+        SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_NONE);
+        SetFollowerNPCData(FNPC_DATA_WARP_END, FNPC_WARP_REAPPEAR);
+        return;
+    }
+
     // Prepare for making the follower do the jump and spawn the surf blob right in front of the follower's location.
     NPCFollow(&gObjectEvents[gPlayerAvatar.objectEventId], MOVEMENT_ACTION_JUMP_DOWN, TRUE);
     SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_NEW);
@@ -1414,7 +1449,7 @@ void FollowerNPC_FollowerToWater(void)
 
 void FollowerNPC_SetIndicatorToRecreateSurfBlob(void)
 {
-    if (PlayerHasFollowerNPC())
+    if (PlayerHasFollowerNPC() && !CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING))
         SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_RECREATE);
 }
 
@@ -1423,6 +1458,9 @@ void FollowerNPC_BindToSurfBlobOnReloadScreen(void)
     struct ObjectEvent *follower;
 
     if (!PlayerHasFollowerNPC())
+        return;
+
+    if (CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING))
         return;
 
     follower = &gObjectEvents[GetFollowerNPCObjectId()];
@@ -1442,8 +1480,19 @@ void PrepareFollowerNPCDismountSurf(void)
     if (!PlayerHasFollowerNPC())
         return;
 
+    if (CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING))
+        return;
+
     NPCFollow(&gObjectEvents[gPlayerAvatar.objectEventId], MOVEMENT_ACTION_WALK_NORMAL_DOWN, TRUE);
     SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_DESTROY);
+}
+
+void FollowerNPC_ReappearAfterSurf(void)
+{
+    if (!PlayerHasFollowerNPC() || !CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_HIDE_WHILE_SURFING))
+        return;
+
+    NPCFollow(&gObjectEvents[gPlayerAvatar.objectEventId], MOVEMENT_ACTION_WALK_NORMAL_DOWN, TRUE);
 }
 
 void SetFollowerNPCSurfSpriteAfterDive(void)

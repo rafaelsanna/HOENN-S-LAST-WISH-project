@@ -1330,3 +1330,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Mtpyregrotto/scripts.inc"
 
 	.include "data/maps/VerdanturfTowncafe/scripts.inc"
+
+	.include "data/maps/LavaridgeTownincense/scripts.inc"
+
+	.include "data/maps/Route109ballshop/scripts.inc"

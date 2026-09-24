@@ -5250,6 +5250,26 @@
       "secondary_tileset": "gTileset_Cafe",
       "border_filepath": "data/layouts/VerdanturfTowncafe/border.bin",
       "blockdata_filepath": "data/layouts/VerdanturfTowncafe/map.bin"
+    },
+    {
+      "id": "LAYOUT_LAVARIDGE_TOWNINCENSE",
+      "name": "LavaridgeTownincense_Layout",
+      "width": 11,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/LavaridgeTownincense/border.bin",
+      "blockdata_filepath": "data/layouts/LavaridgeTownincense/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE109BALLSHOP",
+      "name": "Route109ballshop_Layout",
+      "width": 13,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/Route109ballshop/border.bin",
+      "blockdata_filepath": "data/layouts/Route109ballshop/map.bin"
     }
   ]
 }

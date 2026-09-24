@@ -1,0 +1,42 @@
+raw `
+Route109ballshop_MapScripts::
+	.byte 0
+
+Route109ballshop_EventScript_Merchant::
+	lock
+	faceplayer
+	message Route109ballshop_Text_MerchantGreeting
+	waitmessage
+	pokemart Route109ballshop_Pokemart
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+Route109ballshop_Pokemart:
+	.2byte ITEM_DUSK_BALL
+	.2byte ITEM_LUXURY_BALL
+	.2byte ITEM_QUICK_BALL
+	.2byte ITEM_LURE_BALL
+	.2byte ITEM_HEAVY_BALL
+	.2byte ITEM_LOVE_BALL
+	.2byte ITEM_LEVEL_BALL
+	.2byte ITEM_FAST_BALL
+	.2byte ITEM_MOON_BALL
+	pokemartlistend
+
+Route109ballshop_EventScript_Customer::
+	msgbox Route109ballshop_Text_Customer, MSGBOX_NPC
+	end
+
+Route109ballshop_Text_MerchantGreeting:
+	.string "Welcome to the POKE BALL shop!\p"
+	.string "We import POKE BALLS from all over\n"
+	.string "the world. Would you like to take a\l"
+	.string "look at our stock?$"
+
+Route109ballshop_Text_Customer:
+	.string "This shop sells POKE BALLS that\n"
+	.string "are found nowhere else in HOENN.\p"
+	.string "Isn't global trade amazing?$"
+`

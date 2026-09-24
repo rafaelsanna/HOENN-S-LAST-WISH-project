@@ -374,6 +374,10 @@ Route109_EventScript_SeashoreHouseSign::
 	msgbox Route109_Text_SeashoreHouseSign, MSGBOX_SIGN
 	end
 
+Route109_EventScript_PokeBallShopSign::
+	msgbox Route109_Text_PokeBallShopSign, MSGBOX_SIGN
+	end
+
 Route109_EventScript_TrainerTipsSign::
 	msgbox Route109_Text_TrainerTipsSign, MSGBOX_SIGN
 	end
@@ -564,6 +568,10 @@ Route109_Text_SeashoreHouseSign:
 	.string "SEASHORE HOUSE\p"
 	.string "“May hot battles rage on hot sands!\n"
 	.string "The place for hot TRAINERS!”$"
+
+Route109_Text_PokeBallShopSign:
+	.string "POKE BALL shop!\p"
+	.string "Rare POKE BALLS sold here!$"
 
 Route109_Text_TrainerTipsSign:
 	.string "TRAINER TIPS\p"
