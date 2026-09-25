@@ -347,25 +347,137 @@
     <script src="script.js"></script>
     <script type="text/javascript" src="rom-patcher-js/RomPatcher.webapp.js"></script>
     <script type="text/javascript">
-        window.addEventListener('load', function(){
+        window.addEventListener('load', async function () {
             try {
+                /*
+                 * Automatic patch detection:
+                 * Reads the public GitHub repository folder and finds .bps files.
+                 * If there is more than one versioned patch, the highest version wins.
+                 *
+                 * Example:
+                 *   HLW v0.4.6.bps
+                 *   HLW v0.4.7.bps  <- selected automatically
+                 */
+                const apiUrl =
+                    'https://api.github.com/repos/rafaelsanna/HOENN-S-LAST-WISH-project/contents/rom-patcher-js?ref=main';
+
+                const response = await fetch(apiUrl, {
+                    cache: 'no-store',
+                    headers: {
+                        'Accept': 'application/vnd.github+json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        'Could not read rom-patcher-js folder from GitHub. HTTP ' +
+                        response.status
+                    );
+                }
+
+                const files = await response.json();
+
+                if (!Array.isArray(files)) {
+                    throw new Error('Unexpected response while reading patch folder.');
+                }
+
+                const patchFiles = files.filter(function (file) {
+                    return file &&
+                        file.type === 'file' &&
+                        typeof file.name === 'string' &&
+                        file.name.toLowerCase().endsWith('.bps');
+                });
+
+                if (patchFiles.length === 0) {
+                    throw new Error('No .bps patch found inside rom-patcher-js.');
+                }
+
+                // Extracts numeric versions such as 0.4.7 from "HLW v0.4.7.bps".
+                function getVersionParts(filename) {
+                    const match = filename.match(/(?:^|[^0-9])v?(\d+(?:\.\d+)+)/i);
+
+                    if (!match) {
+                        return null;
+                    }
+
+                    return match[1].split('.').map(function (part) {
+                        return parseInt(part, 10) || 0;
+                    });
+                }
+
+                function compareVersions(a, b) {
+                    const versionA = getVersionParts(a.name);
+                    const versionB = getVersionParts(b.name);
+
+                    // Versioned files are preferred over files without a version.
+                    if (versionA && !versionB) return -1;
+                    if (!versionA && versionB) return 1;
+
+                    // If neither has a detectable version, sort by filename.
+                    if (!versionA && !versionB) {
+                        return b.name.localeCompare(a.name, undefined, {
+                            numeric: true,
+                            sensitivity: 'base'
+                        });
+                    }
+
+                    const length = Math.max(versionA.length, versionB.length);
+
+                    for (let i = 0; i < length; i++) {
+                        const valueA = versionA[i] || 0;
+                        const valueB = versionB[i] || 0;
+
+                        if (valueA !== valueB) {
+                            return valueB - valueA;
+                        }
+                    }
+
+                    return b.name.localeCompare(a.name, undefined, {
+                        numeric: true,
+                        sensitivity: 'base'
+                    });
+                }
+
+                patchFiles.sort(compareVersions);
+
+                const patch = patchFiles[0];
+                const patchName = patch.name.replace(/\.bps$/i, '');
+                const patchUrl =
+                    './rom-patcher-js/' + encodeURIComponent(patch.name);
+
+                console.log('Automatic patch detected:', patch.name);
+
+                if (patchFiles.length > 1) {
+                    console.log(
+                        'Multiple .bps files found. Newest detected version selected:',
+                        patch.name
+                    );
+                }
+
                 RomPatcherWeb.initialize({
                     language: 'en',
                     requireValidation: true,
                     allowDropFiles: true
                 }, {
-                    file: 'rom-patcher-js/HLW v0.3.21.bps',
-                    name: 'Hoenn Last Wish v0.3.21',
+                    file: patchUrl,
+                    name: patchName,
                     inputCrc32: 0x2144df1c,
                     inputMd5: 'fcc1c8ce5c6d3b1943a8b1c9807f8a32',
                     description: 'Last Updated Patch for Pokemon Hoenn Last Wish.',
-                    outputName: 'Hoenn Last Wish v0.3.21 (Patched).gba'
+                    outputName: patchName + ' (Patched).gba'
                 });
+
             } catch (err) {
                 console.error('Rom Patcher JS failed to initialize:', err);
-                var container = document.getElementById('rom-patcher-container');
+
+                const container = document.getElementById('rom-patcher-container');
+
                 if (container) {
-                    container.innerHTML = 'Something went wrong loading the patcher. <a href="https://www.romhacking.net/patch/" target="_blank" style="color:#7ec8e3;">Use the online tool instead</a>.';
+                    container.innerHTML =
+                        'Something went wrong loading the patcher. ' +
+                        '<a href="https://www.romhacking.net/patch/" ' +
+                        'target="_blank" style="color:#7ec8e3;">' +
+                        'Use the online tool instead</a>.';
                 }
             }
         });
