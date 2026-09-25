@@ -220,9 +220,6 @@ static void SpriteCB_MoveInfoWin(struct Sprite *sprite);
 
 static struct ComfyAnim sLastUsedBallAnim;
 
-// V1.1: used by CreateBattlerHealthboxSprites, so declare it first.
-static bool8 sPlayerSinglesStatusUpperBackupValid[MAX_BATTLERS_COUNT];
-
 static const struct OamData sOamData_64x32 =
 {
     .y = 0,
@@ -857,8 +854,6 @@ static void CreateShinyHealthboxSparkle(u8 battler, u8 healthboxSpriteId)
 u8 CreateBattlerHealthboxSprites(u8 battler)
 {
     s16 data6 = 0;
-
-    sPlayerSinglesStatusUpperBackupValid[battler] = FALSE;
     u8 healthboxLeftSpriteId, healthboxRightSpriteId;
     u8 healthbarSpriteId;
     struct Sprite *healthBarSpritePtr;
@@ -2136,117 +2131,6 @@ static void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
         CpuFill32(0, (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 32);
 }
 
-// HLW PLAYER SINGLES STATUS UP 3PX V1
-#define PLAYER_SINGLES_STATUS_SHIFT       3
-#define PLAYER_SINGLES_STATUS_TILE_COUNT  3
-#define PLAYER_SINGLES_STATUS_UPPER_TILE  0x12
-#define PLAYER_SINGLES_STATUS_LOWER_TILE  0x1A
-#define TILE_ROW_4BPP_BYTES               4
-
-static u8 sPlayerSinglesStatusUpperBackup[MAX_BATTLERS_COUNT]
-                                              [PLAYER_SINGLES_STATUS_TILE_COUNT
-                                             * PLAYER_SINGLES_STATUS_SHIFT
-                                             * TILE_ROW_4BPP_BYTES];
-
-static u8 Get4bppPixel(const u8 *tile, u32 x, u32 y)
-{
-    u8 value = tile[y * TILE_ROW_4BPP_BYTES + x / 2];
-    return (x & 1) ? value >> 4 : value & 0xF;
-}
-
-static void Set4bppPixel(u8 *tile, u32 x, u32 y, u8 value)
-{
-    u8 *dst = &tile[y * TILE_ROW_4BPP_BYTES + x / 2];
-    if (x & 1)
-        *dst = (*dst & 0x0F) | (value << 4);
-    else
-        *dst = (*dst & 0xF0) | value;
-}
-
-static void RestorePlayerSinglesStatusUpperRows(u8 healthboxSpriteId)
-{
-    u32 battler = gSprites[healthboxSpriteId].hMain_Battler;
-    u32 baseTile = gSprites[healthboxSpriteId].oam.tileNum;
-    u32 tile;
-
-    if (!sPlayerSinglesStatusUpperBackupValid[battler])
-        return;
-
-    for (tile = 0; tile < PLAYER_SINGLES_STATUS_TILE_COUNT; tile++)
-    {
-        void *dst = (void *)(OBJ_VRAM0
-                           + (baseTile + PLAYER_SINGLES_STATUS_UPPER_TILE + tile) * TILE_SIZE_4BPP
-                           + (8 - PLAYER_SINGLES_STATUS_SHIFT) * TILE_ROW_4BPP_BYTES);
-        CpuCopy32(&sPlayerSinglesStatusUpperBackup[battler]
-                    [tile * PLAYER_SINGLES_STATUS_SHIFT * TILE_ROW_4BPP_BYTES],
-                  dst,
-                  PLAYER_SINGLES_STATUS_SHIFT * TILE_ROW_4BPP_BYTES);
-    }
-    sPlayerSinglesStatusUpperBackupValid[battler] = FALSE;
-}
-
-static void CopyPlayerSinglesStatusIconGfxShiftedUp3(u8 healthboxSpriteId,
-                                                      const u8 *src,
-                                                      u8 paletteIndex)
-{
-    u32 battler = gSprites[healthboxSpriteId].hMain_Battler;
-    u32 baseTile = gSprites[healthboxSpriteId].oam.tileNum;
-    const u8 *blankTile = GetHealthboxElementGfxPtr(HEALTHBOX_GFX_39);
-    u32 upperTiles[PLAYER_SINGLES_STATUS_TILE_COUNT * TILE_SIZE_4BPP / sizeof(u32)];
-    u32 lowerTiles[PLAYER_SINGLES_STATUS_TILE_COUNT * TILE_SIZE_4BPP / sizeof(u32)];
-    u8 *upper = (u8 *)upperTiles;
-    u8 *lower = (u8 *)lowerTiles;
-    u32 tile, x, y;
-
-    RestorePlayerSinglesStatusUpperRows(healthboxSpriteId);
-
-    CpuCopy32((void *)(OBJ_VRAM0 + (baseTile + PLAYER_SINGLES_STATUS_UPPER_TILE) * TILE_SIZE_4BPP),
-              upperTiles, sizeof(upperTiles));
-
-    for (tile = 0; tile < PLAYER_SINGLES_STATUS_TILE_COUNT; tile++)
-    {
-        CpuCopy32(&upper[tile * TILE_SIZE_4BPP + (8 - PLAYER_SINGLES_STATUS_SHIFT) * TILE_ROW_4BPP_BYTES],
-                  &sPlayerSinglesStatusUpperBackup[battler]
-                    [tile * PLAYER_SINGLES_STATUS_SHIFT * TILE_ROW_4BPP_BYTES],
-                  PLAYER_SINGLES_STATUS_SHIFT * TILE_ROW_4BPP_BYTES);
-        CpuCopy32(blankTile, &lower[tile * TILE_SIZE_4BPP], TILE_SIZE_4BPP);
-    }
-    sPlayerSinglesStatusUpperBackupValid[battler] = TRUE;
-
-    for (tile = 0; tile < PLAYER_SINGLES_STATUS_TILE_COUNT; tile++)
-    {
-        const u8 *srcTile = src + tile * TILE_SIZE_4BPP;
-        u8 *upperTile = upper + tile * TILE_SIZE_4BPP;
-        u8 *lowerTile = lower + tile * TILE_SIZE_4BPP;
-
-        for (y = 0; y < 8; y++)
-        {
-            for (x = 0; x < 8; x++)
-            {
-                u8 pixel = Get4bppPixel(srcTile, x, y);
-                u8 blankPixel = Get4bppPixel(blankTile, x, y);
-                s32 shiftedY;
-                if (pixel == blankPixel)
-                    continue;
-                if (pixel == 0xF)
-                    pixel = paletteIndex;
-                shiftedY = (s32)y - PLAYER_SINGLES_STATUS_SHIFT;
-                if (shiftedY < 0)
-                    Set4bppPixel(upperTile, x, shiftedY + 8, pixel);
-                else
-                    Set4bppPixel(lowerTile, x, shiftedY, pixel);
-            }
-        }
-    }
-
-    CpuCopy32(upperTiles,
-              (void *)(OBJ_VRAM0 + (baseTile + PLAYER_SINGLES_STATUS_UPPER_TILE) * TILE_SIZE_4BPP),
-              sizeof(upperTiles));
-    CpuCopy32(lowerTiles,
-              (void *)(OBJ_VRAM0 + (baseTile + PLAYER_SINGLES_STATUS_LOWER_TILE) * TILE_SIZE_4BPP),
-              sizeof(lowerTiles));
-}
-
 static void CopyStatusIconGfx(const u8 *src, void *dest, u8 paletteIndex)
 {
     u32 statusGfx[3 * TILE_SIZE_4BPP / sizeof(u32)];
@@ -2336,10 +2220,6 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
     {
         statusGfxPtr = GetHealthboxElementGfxPtr(HEALTHBOX_GFX_39);
 
-        if (IsOnPlayerSide(battler)
-         && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_SINGLES)
-            RestorePlayerSinglesStatusUpperRows(healthboxSpriteId);
-
         for (i = 0; i < 3; i++)
             CpuCopy32(statusGfxPtr, (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder + i) * TILE_SIZE_4BPP), 32);
 
@@ -2361,17 +2241,9 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
 
     FillPalette(sStatusIconColors[statusPalId], OBJ_PLTT_OFFSET + pltAdder, PLTT_SIZEOF(1));
     CpuCopy16(&gPlttBufferUnfaded[OBJ_PLTT_OFFSET + pltAdder], (u16 *)OBJ_PLTT + pltAdder, PLTT_SIZEOF(1));
-    if (IsOnPlayerSide(battler)
-     && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_SINGLES)
-    {
-        CopyPlayerSinglesStatusIconGfxShiftedUp3(healthboxSpriteId, statusGfxPtr, battler + 12);
-    }
-    else
-    {
-        CopyStatusIconGfx(statusGfxPtr,
-                          (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder) * TILE_SIZE_4BPP),
-                          battler + 12);
-    }
+    CopyStatusIconGfx(statusGfxPtr,
+                      (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder) * TILE_SIZE_4BPP),
+                      battler + 12);
     if (IsOnPlayerSide(battler)
      && GetBattlerCoordsIndex(battler) == BATTLE_COORDS_DOUBLES
      && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)

@@ -1,0 +1,8 @@
+=== PLAYER SINGLES STATUS UP 3PX ===
+Somente PLAYER + SINGLES. BRN/PSN/PAR/SLP/FRZ/FRB sobem exatamente 3 px.
+Opponent e doubles não mudam.
+DRY-RUN OK: mudaria
+=== PLAYER SINGLES STATUS UP 3PX ===
+Somente PLAYER + SINGLES. BRN/PSN/PAR/SLP/FRZ/FRB sobem exatamente 3 px.
+Opponent e doubles não mudam.
+Patch aplicado. Backup: /mnt/data/BATTLE_PLAYER_SINGLES_STATUS_UP3_V1/backups/battle_interface_20260924_234740.c

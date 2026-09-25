@@ -1,0 +1,9 @@
+BATTLE PLAYER SINGLES STATUS UP 3PX V1
+
+Move somente BRN/PSN/PAR/SLP/FRZ/FRB do Pokemon do PLAYER em battle SINGLES exatamente 3 pixels para cima.
+Opponent e doubles nao mudam.
+
+Uso:
+cd ~/pokeemerald-expansion
+python3 PHYTON/BATTLE_PLAYER_SINGLES_STATUS_UP3_V1/move_player_singles_status_up3.py --dry-run
+python3 PHYTON/BATTLE_PLAYER_SINGLES_STATUS_UP3_V1/move_player_singles_status_up3.py --compile --jobs 8

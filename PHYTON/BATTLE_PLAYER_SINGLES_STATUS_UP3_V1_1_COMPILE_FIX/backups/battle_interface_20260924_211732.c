@@ -220,9 +220,6 @@ static void SpriteCB_MoveInfoWin(struct Sprite *sprite);
 
 static struct ComfyAnim sLastUsedBallAnim;
 
-// V1.1: used by CreateBattlerHealthboxSprites, so declare it first.
-static bool8 sPlayerSinglesStatusUpperBackupValid[MAX_BATTLERS_COUNT];
-
 static const struct OamData sOamData_64x32 =
 {
     .y = 0,
@@ -2147,6 +2144,7 @@ static u8 sPlayerSinglesStatusUpperBackup[MAX_BATTLERS_COUNT]
                                               [PLAYER_SINGLES_STATUS_TILE_COUNT
                                              * PLAYER_SINGLES_STATUS_SHIFT
                                              * TILE_ROW_4BPP_BYTES];
+static bool8 sPlayerSinglesStatusUpperBackupValid[MAX_BATTLERS_COUNT];
 
 static u8 Get4bppPixel(const u8 *tile, u32 x, u32 y)
 {

@@ -1,0 +1,20 @@
+BATTLE PLAYER SINGLES STATUS UP3 V1.1 - COMPILE FIX
+=====================================================
+
+Aplicar por cima da V1 já aplicada.
+
+Corrige exatamente:
+  error: 'sPlayerSinglesStatusUpperBackupValid' undeclared
+
+A V1 colocou essa variável estática abaixo da função
+CreateBattlerHealthboxSprites(), mas a função já usa a variável antes.
+
+A V1.1 apenas move a declaração para cima.
+Não muda o efeito de 3 px, opponent, doubles, HP bar etc.
+
+Uso:
+cd ~/pokeemerald-expansion
+
+python3 PHYTON/BATTLE_PLAYER_SINGLES_STATUS_UP3_V1_1_COMPILE_FIX/fix_status_up3_compile.py --dry-run
+
+python3 PHYTON/BATTLE_PLAYER_SINGLES_STATUS_UP3_V1_1_COMPILE_FIX/fix_status_up3_compile.py --compile --jobs 8

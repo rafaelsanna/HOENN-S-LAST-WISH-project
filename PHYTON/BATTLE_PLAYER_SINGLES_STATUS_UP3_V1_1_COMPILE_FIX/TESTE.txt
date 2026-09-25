@@ -1,0 +1,12 @@
+=== STATUS UP 3PX V1.1 COMPILE FIX ===
+Corrigindo somente a ordem da declaração:
+ sPlayerSinglesStatusUpperBackupValid -> antes de CreateBattlerHealthboxSprites
+
+DRY-RUN OK.
+
+=== STATUS UP 3PX V1.1 COMPILE FIX ===
+Corrigindo somente a ordem da declaração:
+ sPlayerSinglesStatusUpperBackupValid -> antes de CreateBattlerHealthboxSprites
+
+Compile fix aplicado.
+Backup: /mnt/data/BATTLE_PLAYER_SINGLES_STATUS_UP3_V1_1_COMPILE_FIX/backups/battle_interface_20260925_001653.c
