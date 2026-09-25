@@ -669,19 +669,61 @@ nav {
 }
 
 /* ===== PATCH SECTION ===== */
+#applypatch,
+#download,
+#installation-guide {
+    scroll-margin-top: 120px;
+}
+
 #applypatch .download-info {
     max-width: 980px;
     margin: 0 auto;
 }
 
-#applypatch .patch-accordion {
+.patch-section-intro {
+    max-width: 760px;
+    margin: 0 auto 2rem auto !important;
+}
+
+.patch-panel {
     border: 1px solid #404040;
     border-radius: 10px;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.04);
 }
 
-#applypatch .patch-accordion > summary {
+.patch-panel-title {
+    padding: 1rem 1.25rem;
+    font-family: 'Oxanium', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid #404040;
+}
+
+.patch-panel-body {
+    padding: 0.5rem 1rem 1.25rem;
+}
+
+#rom-patcher-container {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem;
+}
+
+/* ===== INSTALLATION GUIDE ACCORDION ===== */
+.installation-accordion {
+    margin-top: 2rem;
+    border: 1px solid #404040;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e0e0e0;
+}
+
+.installation-accordion > summary {
     list-style: none;
     cursor: pointer;
     padding: 1rem 1.25rem;
@@ -690,41 +732,64 @@ nav {
     font-weight: 700;
     color: #ffffff;
     background: rgba(255, 255, 255, 0.06);
-    border-bottom: 1px solid transparent;
+    user-select: none;
 }
 
-#applypatch .patch-accordion > summary::-webkit-details-marker {
+.installation-accordion > summary::-webkit-details-marker {
     display: none;
 }
 
-#applypatch .patch-accordion[open] > summary {
-    border-bottom-color: #404040;
-}
-
-#applypatch .patch-accordion > summary::after {
+.installation-accordion > summary::after {
     content: '+';
     float: right;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     line-height: 1.2;
 }
 
-#applypatch .patch-accordion[open] > summary::after {
+.installation-accordion[open] > summary::after {
     content: '-';
 }
 
-#applypatch .patch-accordion .installation-guide {
-    margin-top: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent !important;
-    box-shadow: none !important;
+.installation-accordion[open] > summary {
+    border-bottom: 1px solid #404040;
 }
 
-#rom-patcher-container {
-    width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 1.5rem 1.25rem;
+.installation-guide-content {
+    padding: 1.5rem 2rem 2rem;
+}
+
+.installation-option + .installation-option {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #404040;
+}
+
+.installation-guide-content h4 {
+    margin-bottom: 0.8rem;
+    color: #ffffff !important;
+}
+
+.installation-guide-content p {
+    text-align: left !important;
+    margin-bottom: 0.8rem !important;
+}
+
+.installation-guide-content ol {
+    margin: 0.75rem 0 0 1.5rem;
+}
+
+.installation-guide-content li {
+    color: #cccccc !important;
+    margin-bottom: 0.5rem;
+}
+
+.installation-guide-content a {
+    color: #7ec8e3;
+}
+
+.guide-link {
+    display: inline-block;
+    margin-top: 0.35rem;
 }
 
 /* ===== TEAM SECTION ===== */
@@ -992,8 +1057,21 @@ body.light-mode .download {
 }
 
 body.light-mode .download-info p,
-body.light-mode .installation-guide li {
+body.light-mode .installation-guide li,
+body.light-mode .installation-guide-content li {
     color: #e0e0e0 !important;
+}
+
+body.light-mode .patch-panel,
+body.light-mode .installation-accordion {
+    border-color: #566573;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+body.light-mode .patch-panel-title,
+body.light-mode .installation-accordion > summary {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 body.light-mode .team-section {
@@ -1281,6 +1359,19 @@ body.light-mode .download-btn.hackdex-download {
     
     .installation-guide {
         padding: 1.5rem;
+    }
+
+    .patch-panel-body {
+        padding: 0.25rem 0.25rem 1rem;
+    }
+
+    .installation-guide-content {
+        padding: 1.25rem;
+    }
+
+    .installation-accordion > summary,
+    .patch-panel-title {
+        padding: 1rem;
     }
     
     .theme-toggle {

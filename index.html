@@ -147,51 +147,18 @@
         </div>
     </section>
 
-    <!-- Download Section -->
-    <section id="download" class="download">
-        <div class="container">
-            <h2>Download</h2>
-            <div class="download-info">
-                <h3>Patch File</h3>
-                <p>Download the .bps patch file and apply it to a clean Pokémon Emerald ROM (1.0 US version).</p>
-                
-                <div class="download-links">
-                    <a href="https://drive.google.com/drive/folders/1Kczj59U4ZCFtgkXeLXAMmM9c05i0XHek?usp=sharing" class="download-btn" target="_blank">
-                        Download BPS Patch
-                    </a>
-                    <a href="#applypatch" class="download-btn info">
-                        Apply Patch
-                    </a>
-                    <a href="https://www.romhacking.net/patch/" class="download-btn secondary" target="_blank">
-                        How to Apply Patch
-                    </a>
-                    <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="download-btn hackdex-download" target="_blank">
-                        <img src="./images/download_banner.png" alt="Download now at hackdex.app">
-                    </a>
-                </div>
-
-                <div class="installation-guide">
-                    <h4>Installation Guide</h4>
-                    <ol>
-                        <li>Get a clean Pokémon Emerald (US) ROM</li>
-                        <li>Download the BPS patch file above</li>
-                        <li>Use a patching tool (FLIPS, etc.)</li>
-                        <li>Apply patch to your clean ROM</li>
-                        <li>Enjoy your new adventure!</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Apply Patch Section -->
-    <section id="applypatch" class="download">
+    <section id="applypatch" class="download patch-section">
         <div class="container">
             <h2>Apply Patch</h2>
             <div class="download-info">
-                <details class="patch-accordion">
-                    <summary>Patch Application</summary>
-                    <div class="installation-guide">
+                <p class="patch-section-intro">
+                    Patch your clean Pokémon Emerald ROM directly in the browser. Your ROM stays on your device.
+                </p>
+
+                <div class="patch-panel">
+                    <div class="patch-panel-title">Patch Application</div>
+                    <div class="patch-panel-body">
                         <div id="rom-patcher-container">
                             <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-rom">
                                 <div class="text-right"><label for="rom-patcher-input-file-rom">ROM file:</label></div>
@@ -199,6 +166,7 @@
                                     <input type="file" id="rom-patcher-input-file-rom" class="empty" disabled />
                                 </div>
                             </div>
+
                             <div class="margin-bottom text-selectable text-mono text-muted" id="rom-patcher-rom-info">
                                 <div class="rom-patcher-row">
                                     <div class="text-right">CRC32:</div>
@@ -224,10 +192,12 @@
                                     <select id="rom-patcher-select-patch"></select>
                                 </div>
                             </div>
+
                             <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-patch-description">
                                 <div class="text-right text-mono text-muted">Description:</div>
                                 <div class="text-truncate" id="rom-patcher-patch-description"></div>
                             </div>
+
                             <div class="rom-patcher-row margin-bottom text-selectable text-mono text-muted" id="rom-patcher-row-patch-requirements">
                                 <div class="text-right text-mono" id="rom-patcher-patch-requirements-type">ROM requirements:</div>
                                 <div class="text-truncate" id="rom-patcher-patch-requirements-value"></div>
@@ -238,8 +208,74 @@
                                 <button id="rom-patcher-button-apply" disabled>Apply patch</button>
                             </div>
                         </div>
+
                         <div id="rom-patcher-powered" class="text-center">
                             <a href="https://github.com/marcrobledo/RomPatcher.js" target="_blank">Powered by Rom Patcher JS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Download</h2>
+            <div class="download-info">
+                <h3>Choose how you want to patch</h3>
+                <p>
+                    Apply the latest patch directly on this site, download the BPS from Google Drive,
+                    or use HackDex.
+                </p>
+
+                <div class="download-links">
+                    <a href="#applypatch" class="download-btn info">
+                        Apply Patch
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1Kczj59U4ZCFtgkXeLXAMmM9c05i0XHek?usp=sharing" class="download-btn" target="_blank">
+                        Download BPS Patch
+                    </a>
+
+                    <a href="#installation-guide" class="download-btn secondary" id="how-to-apply-btn">
+                        How to Apply Patch
+                    </a>
+
+                    <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="download-btn hackdex-download" target="_blank">
+                        <img src="./images/download_banner.png" alt="Download now at hackdex.app">
+                    </a>
+                </div>
+
+                <details class="installation-accordion" id="installation-guide">
+                    <summary>Installation Guide</summary>
+                    <div class="installation-guide-content">
+                        <div class="installation-option">
+                            <h4>Option 1 — Patch directly on this site</h4>
+                            <ol>
+                                <li>Go to the <a href="#applypatch">Apply Patch</a> section above.</li>
+                                <li>Select a clean Pokémon Emerald (USA/Europe) ROM.</li>
+                                <li>The latest Hoenn's Last Wish BPS patch is selected automatically.</li>
+                                <li>Click <strong>Apply patch</strong> and save the generated .gba file.</li>
+                            </ol>
+                        </div>
+
+                        <div class="installation-option">
+                            <h4>Option 2 — HackDex</h4>
+                            <p>Open the Hoenn's Last Wish page on HackDex and use the download/patch options available there.</p>
+                            <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="guide-link" target="_blank">
+                                Open Hoenn's Last Wish on HackDex
+                            </a>
+                        </div>
+
+                        <div class="installation-option">
+                            <h4>Option 3 — Google Drive / manual BPS patch</h4>
+                            <ol>
+                                <li>Download the latest .bps patch from Google Drive.</li>
+                                <li>Use a clean Pokémon Emerald (USA/Europe) ROM.</li>
+                                <li>Apply the .bps with FLIPS or another compatible BPS patcher.</li>
+                                <li>Save the patched ROM and enjoy your adventure.</li>
+                            </ol>
                         </div>
                     </div>
                 </details>
@@ -475,10 +511,31 @@
                 if (container) {
                     container.innerHTML =
                         'Something went wrong loading the patcher. ' +
-                        '<a href="https://www.romhacking.net/patch/" ' +
+                        '<a href="https://www.hackdex.app/hack/hoenns-last-wish" ' +
                         'target="_blank" style="color:#7ec8e3;">' +
-                        'Use the online tool instead</a>.';
+                        'Open Hoenn\'s Last Wish on HackDex instead</a>.';
                 }
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const howToApplyButton = document.getElementById('how-to-apply-btn');
+            const installationGuide = document.getElementById('installation-guide');
+
+            if (howToApplyButton && installationGuide) {
+                howToApplyButton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    installationGuide.open = true;
+
+                    requestAnimationFrame(function () {
+                        installationGuide.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    });
+                });
             }
         });
     </script>
