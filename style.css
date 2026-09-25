@@ -26,6 +26,22 @@ body {
     color: #e0e0e0 !important;
 }
 
+#kofi-floating-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+}
+
+@media (max-width: 600px) {
+    #kofi-floating-btn {
+        bottom: 12px;
+        left: 12px;
+        transform: scale(0.9);
+        transform-origin: bottom left;
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Tiny5', 'Oxanium', cursive;
     font-weight: 700;

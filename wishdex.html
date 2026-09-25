@@ -178,11 +178,12 @@
     <!-- Scripts -->
     <script src="script.js"></script>
 
-    <!-- Ko-fi Widget -->
+    <!-- Ko-fi Floating Button -->
+    <div id="kofi-floating-btn"></div>
     <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
     <script type='text/javascript'>
         kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'K1U827MYHT');
-        kofiwidget2.draw();
+        document.getElementById('kofi-floating-btn').innerHTML = kofiwidget2.getHTML();
     </script>
 </body>
 </html>

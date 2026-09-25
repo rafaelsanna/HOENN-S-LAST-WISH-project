@@ -114,24 +114,24 @@
         <div class="container">
             <h2>The Story</h2>
             <div class="story-content">
-                <p class="intro">Imagine a world where <strong>Rayquaza failed to stop the primal clash</strong> between Groudon and Kyogre a catastrophic failure that triggered the <strong>complete ecological collapse of the Hoenn region</strong>.</p>
-                
-                <p>Years of relentless natural disasters have left Hoenn in ruins. <strong>The age of Pokémon trainers has ended</strong>, Poké Balls are forgotten relics, and civilization has crumbled. What remains are nomadic tribes of survivors, scavenging in a world where Pokémon have reclaimed the land as wild, untamed forces of nature.</p>
-                
-                <p>But hope emerges from the ashes. <strong>The Millennium Comet arrives</strong>, carrying with it <strong>Jirachi, the wish-granter</strong>, and <strong>Celebi, the time traveler</strong>. Together, they offer one last chance: <strong>a journey back through time to prevent the catastrophe before it begins</strong>.</p>
-                
-                <p>As you return to the past, you discover that <strong>echoes of the ruined future are already seeping into the timeline</strong>. The Hoenn you remember is changing:</p>
-                
+                <p class="intro">Picture Hoenn already falling apart once. <strong>Rayquaza couldn't stop Groudon and Kyogre in time</strong>, and by the time the dust settled, there wasn't much of a region left.</p>
+
+                <p>No more Trainers, no more Poké Balls, just scattered survivors trying to get through the day in a Hoenn that's been taken back by wild, untamed Pokémon. Rough place to grow up in.</p>
+
+                <p>Then the <strong>Millennium Comet</strong> shows up, and with it come <strong>Jirachi</strong> and <strong>Celebi</strong> offering something nobody saw coming: a chance to go back and stop all of this before it ever happens.</p>
+
+                <p>So you get a second shot as a normal Trainer in a Hoenn that looks familiar... mostly. Turns out fixing the timeline doesn't mean it holds together perfectly. Weird stuff keeps slipping through the cracks:</p>
+
                 <ul>
-                    <li><strong>New Pokémon forms</strong> emerging from temporal distortions</li>
-                    <li><strong>Familiar characters transformed</strong> by glimpses of the doomed future</li>
-                    <li><strong>Mysterious factions</strong> with conflicting agendas for the timeline</li>
-                    <li><strong>Gym Leaders facing unprecedented challenges</strong> in a world on the brink</li>
+                    <li>Pokémon forms nobody's ever seen before</li>
+                    <li>Familiar faces acting a little off</li>
+                    <li>Old rivalries between factions that suddenly feel a lot more serious</li>
+                    <li>Gym Leaders dealing with problems way above their pay grade</li>
                 </ul>
-                
-                <p class="highlight">This is no ordinary Pokémon journey. You carry the weight of two timelines <strong>racing against time to heal the wounds of a future that should never exist</strong>, while navigating a present that grows more unstable with each passing moment.</p>
-                
-                <p>Every battle, every choice, every alliance could mean the difference between <strong>salvation and absolute destruction</strong>. The fate of Hoenn rests in your hands, in this <strong>last wish for redemption</strong>.</p>
+
+                <p class="highlight">This isn't just another badge run. You're the only one who remembers what almost happened — and that's starting to feel like a problem.</p>
+
+                <p>Every battle and every choice pulls you a little deeper into what's really going on. Hoenn got a second wish. Whether it deserves one is up to you.</p>
             </div>
         </div>
     </section>
@@ -331,11 +331,12 @@
         });
     </script>
 
-    <!-- Ko-fi Widget -->
+    <!-- Ko-fi Floating Button -->
+    <div id="kofi-floating-btn"></div>
     <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
     <script type='text/javascript'>
         kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'K1U827MYHT');
-        kofiwidget2.draw();
+        document.getElementById('kofi-floating-btn').innerHTML = kofiwidget2.getHTML();
     </script>
 </body>
 </html>
