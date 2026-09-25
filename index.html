@@ -32,30 +32,41 @@
     <!-- Header -->
     <header>
         <nav>
-            <a href="index.html" class="logo-link">
+            <a href="index.html" class="logo-link" aria-label="Pokémon: Hoenn's Last Wish - Home">
                 <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
             </a>
-            
-            <div class="header-animated">
-                <img src="images/jirachi-celebi00.png" 
-                     alt="Jirachi & Celebi" 
-                     class="animated-header-img"
-                     data-normal="images/jirachi-celebi00.png"
-                     data-hover="images/jirachi-celebi01.png">
-            </div>
-            
-            <button class="hamburger" id="hamburger">
+
+            <button class="hamburger" id="hamburger"
+                    aria-label="Open navigation menu"
+                    aria-controls="nav-links"
+                    aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
-            
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="#story">Story</a></li>
-                <li><a href="#screenshots">Screenshots</a></li>
-                <li><a href="#download">Download</a></li>
-                <li><a href="wishdex.html">WishDex</a></li>
-                <li><a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588" target="_blank">Documentation</a></li>
-            </ul>
+
+            <div class="nav-menu" id="nav-links">
+                <ul class="nav-links nav-links-left">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#story">Story</a></li>
+                    <li><a href="#screenshots">Screenshots</a></li>
+                </ul>
+
+                <a href="#home" class="header-animated" aria-label="Back to Home">
+                    <img src="images/jirachi-celebi00.png"
+                         alt="Jirachi & Celebi"
+                         class="animated-header-img"
+                         data-normal="images/jirachi-celebi00.png"
+                         data-hover="images/jirachi-celebi01.png">
+                </a>
+
+                <ul class="nav-links nav-links-right">
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="wishdex.html">WishDex</a></li>
+                    <li>
+                        <a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588"
+                           target="_blank" rel="noopener noreferrer">Documentation</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </header>
 
@@ -86,8 +97,13 @@
                     <a href="https://www.youtube.com/@hoennslastwish" class="youtube-button" target="_blank">
                         <i class="fab fa-youtube"></i> YouTube Channel
                     </a>
-                    <a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588" class="sheets-button" target="_blank">
+                    <a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588"
+                       class="sheets-button" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-table"></i> Documentation
+                    </a>
+                    <a href="https://ko-fi.com/K1U827MYHT"
+                       class="support-button" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-heart"></i> Support the Project
                     </a>
                 </div>
             </div>
@@ -137,11 +153,11 @@
             <h2>Screenshots</h2>
             <div class="slideshow-container">
                 <div class="simple-slideshow">
-                    <img id="slideshow-image" src="images/screenshots/pokeemerald-0.png" alt="In-Game Screenshot">
+                    <img id="slideshow-image" src="images/screenshots/Pokemon_HLW-0.png" alt="In-Game Screenshot 1 of 19">
                 </div>
                 <div class="slideshow-nav">
-                    <button id="prev-slide"><i class="fas fa-chevron-left"></i></button>
-                    <button id="next-slide"><i class="fas fa-chevron-right"></i></button>
+                    <button id="prev-slide" type="button" aria-label="Previous screenshot"><i class="fas fa-chevron-left"></i></button>
+                    <button id="next-slide" type="button" aria-label="Next screenshot"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>
@@ -380,7 +396,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
+    <script src="script.js?v=20260925-nav-slides"></script>
     <script type="text/javascript" src="rom-patcher-js/RomPatcher.webapp.js"></script>
     <script type="text/javascript">
         window.addEventListener('load', async function () {

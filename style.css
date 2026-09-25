@@ -2179,3 +2179,327 @@ body.light-mode .wishdex-intro-content {
         margin: 0 auto;
     }
 }
+
+/* =========================================================
+   V3 — HEADER / HERO / SCREENSHOTS RESPONSIVE OVERRIDES
+   ========================================================= */
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* ----- Header: links split around Jirachi & Celebi ----- */
+header nav {
+    max-width: 1320px;
+    gap: 1rem;
+}
+
+.nav-menu {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-menu .nav-links {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 1.35vw, 1.6rem);
+    white-space: nowrap;
+}
+
+.nav-links-left {
+    justify-content: flex-end;
+}
+
+.nav-links-right {
+    justify-content: flex-start;
+}
+
+.nav-menu .header-animated {
+    position: static;
+    left: auto;
+    transform: none;
+    width: 150px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.nav-menu .animated-header-img {
+    height: 118px;
+    max-width: 150px;
+    object-fit: contain;
+}
+
+.nav-menu .animated-header-img:hover {
+    transform: scale(1.07);
+}
+
+/* Slightly tighter desktop nav before mobile menu takes over */
+@media (max-width: 1120px) and (min-width: 901px) {
+    header nav {
+        padding: 0 1rem;
+        gap: 0.65rem;
+    }
+
+    .nav-menu {
+        grid-template-columns: minmax(0, 1fr) 120px minmax(0, 1fr);
+        gap: 0.6rem;
+    }
+
+    .nav-menu .nav-links {
+        gap: 0.65rem;
+    }
+
+    .nav-menu .nav-links a {
+        font-size: 0.88rem;
+    }
+
+    .nav-menu .header-animated {
+        width: 120px;
+    }
+
+    .nav-menu .animated-header-img {
+        height: 104px;
+        max-width: 120px;
+    }
+
+    .logo-img {
+        height: 52px;
+    }
+}
+
+/* ----- Hero buttons ----- */
+.cta-button,
+.discord-button,
+.youtube-button,
+.sheets-button,
+.support-button {
+    min-height: 50px;
+    padding: 12px 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.support-button {
+    background: #72a4f2 !important;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.support-button:hover {
+    background: #5b8bd8 !important;
+    transform: translateY(-2px);
+}
+
+.support-button i {
+    margin-right: 8px;
+}
+
+/* ----- Slideshow stability / small fade ----- */
+.simple-slideshow {
+    overflow: hidden;
+}
+
+.simple-slideshow img {
+    transition: opacity 0.16s ease;
+}
+
+.simple-slideshow img.is-switching {
+    opacity: 0.35;
+}
+
+.slideshow-nav button:disabled {
+    opacity: 0.55;
+    cursor: default;
+    transform: none !important;
+}
+
+/* ----- Mobile/tablet navigation ----- */
+@media (max-width: 900px) {
+    header {
+        height: 70px !important;
+    }
+
+    header nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    .logo-img {
+        height: 45px;
+    }
+
+    .hamburger {
+        display: block;
+        margin-left: auto;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0;
+        padding: 1.2rem 1.5rem 2rem;
+        overflow-y: auto;
+        background: var(--pokemon-dark);
+        transition: left 0.28s ease;
+        z-index: 1000;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu .header-animated {
+        display: none;
+    }
+
+    .nav-menu .nav-links {
+        position: static !important;
+        display: flex !important;
+        flex-direction: column;
+        width: 100% !important;
+        height: auto !important;
+        gap: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+
+    .nav-menu .nav-links li {
+        width: 100%;
+        margin: 0.3rem 0 !important;
+        text-align: center;
+    }
+
+    .nav-menu .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 0.8rem 1rem;
+        font-family: 'Tiny5', 'Oxanium', cursive;
+        font-size: 1rem;
+        color: #ffffff;
+    }
+
+    .nav-links-right {
+        margin-top: 0.2rem !important;
+    }
+
+    body.light-mode .nav-menu {
+        background: #f8f9fa;
+    }
+
+    body.light-mode .nav-menu .nav-links a {
+        color: #2c3e50;
+    }
+
+    /* Five hero buttons now fit without getting clipped. */
+    .hero-with-banner {
+        height: 520px !important;
+        min-height: 520px;
+    }
+
+    .hero-content-overlay {
+        top: 64% !important;
+        padding: 0 12px;
+    }
+
+    .button-row {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .cta-button,
+    .discord-button,
+    .youtube-button,
+    .sheets-button,
+    .support-button {
+        width: min(220px, calc(100vw - 56px)) !important;
+        min-height: 43px;
+        height: auto !important;
+        margin: 0 auto;
+        padding: 10px 13px !important;
+        font-size: 0.88rem !important;
+        line-height: 1.15;
+        white-space: nowrap !important;
+    }
+
+    .cta-button i,
+    .discord-button i,
+    .youtube-button i,
+    .sheets-button i,
+    .support-button i {
+        margin-right: 7px;
+    }
+
+    .theme-toggle {
+        top: 76px;
+    }
+
+    #kofi-floating-btn {
+        transform: scale(0.82);
+        transform-origin: bottom left;
+        left: 8px;
+        bottom: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-with-banner {
+        height: 500px !important;
+        min-height: 500px;
+    }
+
+    .hero-content-overlay {
+        top: 63% !important;
+    }
+
+    .cta-button,
+    .discord-button,
+    .youtube-button,
+    .sheets-button,
+    .support-button {
+        width: min(210px, calc(100vw - 48px)) !important;
+        min-height: 41px;
+        padding: 9px 11px !important;
+        font-size: 0.83rem !important;
+    }
+
+    .simple-slideshow {
+        padding: 0.65rem;
+    }
+
+    .simple-slideshow img {
+        height: 190px !important;
+    }
+}
+
