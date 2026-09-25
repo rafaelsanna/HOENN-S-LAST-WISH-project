@@ -33,6 +33,36 @@ body {
     z-index: 9999;
 }
 
+/* ===== ROM PATCHER (DARK THEME OVERRIDE) ===== */
+#rom-patcher-container {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #404040;
+}
+
+#rom-patcher-container .text-muted {
+    color: #999 !important;
+}
+
+#rom-patcher-container input[type=file],
+#rom-patcher-container select {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+#rom-patcher-container input[type=file]:hover:not(:disabled),
+#rom-patcher-container select:hover:not(:disabled) {
+    background-color: #242424 !important;
+}
+
+#rom-patcher-container button {
+    background-color: var(--pokemon-red) !important;
+}
+
+#rom-patcher-container button:not(:disabled):hover {
+    background-color: #c0392b !important;
+}
+
 @media (max-width: 600px) {
     #kofi-floating-btn {
         bottom: 12px;

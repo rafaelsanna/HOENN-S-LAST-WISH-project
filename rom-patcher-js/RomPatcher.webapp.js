@@ -7,7 +7,7 @@
 *
 * MIT License
 * 
-* Copyright (c) 2016-2025 Marc Robledo
+* Copyright (c) 2016-2026 Marc Robledo
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -458,7 +458,7 @@ const RomPatcherWeb = (function () {
 		romFile._u8array = event.data.u8array;
 
 		if (WEB_CRYPTO_AVAILABLE) {
-			romFile.hashSHA1().then(function (res) {
+			romFile.hashSHA1(_getChecksumStartOffset()).then(function (res) {
 				htmlElements.setText('span-sha1', res);
 			});
 		}
@@ -501,7 +501,7 @@ const RomPatcherWeb = (function () {
 				}
 			}
 			if (!scriptPath)
-				scriptPath = './rom-patcher-js/';
+				scriptPath = ROM_PATCHER_JS_PATH;
 		}
 		return scriptPath.substring(0, scriptPath.lastIndexOf('/') + 1);
 	}
@@ -549,6 +549,44 @@ const RomPatcherWeb = (function () {
 		}
 		return false;
 	}
+	const _addDragOverClass = function (elem) { if (!/ drag-over/.test(elem.className)) elem.className += ' drag-over' }
+	const _removeDragOverClass = function (elem) { elem.className = elem.className.replace(/ drag-over/g, '') }
+	const _addDragOverEvents = function (elem) {
+		let draggingOver = false, timeout;
+
+		elem.addEventListener('dragenter', function (evt) {
+			if (_dragEventContainsFiles(evt)) {
+				_addDragOverClass(elem);
+				draggingOver = true;
+			}
+		});
+		elem.addEventListener('dragleave', function (evt) {
+			draggingOver = false;
+			if (timeout)
+				clearTimeout(timeout);
+			timeout = setTimeout(function () {
+				if (!draggingOver)
+					_removeDragOverClass(elem);
+			}, 200);
+		});
+		elem.addEventListener('dragover', function (evt) {
+			if (_dragEventContainsFiles(evt)) {
+				//evt.stopPropagation();
+				//evt.preventDefault();
+				draggingOver = true;
+			}
+		});
+		elem.addEventListener('drop', function (evt) {
+			evt.stopPropagation();
+			_removeDragOverClass(elem);
+		});
+	}
+
+
+
+
+
+
 	const _initialize = function (newSettings, embededPatchInfo) {
 		/* embeded patches */
 		var validEmbededPatch = _checkEmbededPatchParameter(embededPatchInfo);
@@ -682,6 +720,16 @@ const RomPatcherWeb = (function () {
 			});
 			window.addEventListener('drop', function (evt) {
 				evt.preventDefault();
+				_removeDragOverClass(htmlInputFileRom);
+				if (!validEmbededPatch)
+					_removeDragOverClass(htmlElements.get('input-file-patch'));
+
+				//do not guess dropped files if inputs are not visible (e.g.: creator mode)
+				const htmlInputFileRomClientRect = htmlInputFileRom.getBoundingClientRect();
+				if (htmlInputFileRomClientRect.width <= 0 || htmlInputFileRomClientRect.height <= 0) {
+					return false;
+				}
+
 				if (_dragEventContainsFiles(evt)) {
 					const droppedFiles = evt.dataTransfer.files;
 					if (droppedFiles && droppedFiles.length === 1) {
@@ -699,14 +747,9 @@ const RomPatcherWeb = (function () {
 					}
 				}
 			});
-			htmlInputFileRom.addEventListener('drop', function (evt) {
-				evt.stopPropagation();
-			});
-			if (!validEmbededPatch) {
-				htmlElements.get('input-file-patch').addEventListener('drop', function (evt) {
-					evt.stopPropagation();
-				});
-			}
+			_addDragOverEvents(htmlInputFileRom);
+			if (!validEmbededPatch)
+				_addDragOverEvents(htmlElements.get('input-file-patch'));
 		}
 
 		console.log('Rom Patcher JS initialized');
@@ -735,6 +778,8 @@ const RomPatcherWeb = (function () {
 	var initialized = false;
 	var loading = 0;
 	return {
+		_addDragOverEvents: _addDragOverEvents,
+
 		_: function (str) { /* public localization function for external usage purposes */
 			return _(str);
 		},
@@ -1678,7 +1723,7 @@ const PatchBuilderWeb = (function (romPatcherWeb) {
 				});
 			});
 			document.getElementById('patch-builder-button-create').addEventListener('click', function () {
-				const patchFormat=document.getElementById('patch-builder-select-patch-type').value;
+				const patchFormat = document.getElementById('patch-builder-select-patch-type').value;
 				_setElementsStatus(false);
 				_setCreateButtonSpinner(true);
 				webWorkerCreate.postMessage(
@@ -1688,11 +1733,14 @@ const PatchBuilderWeb = (function (romPatcherWeb) {
 						format: patchFormat,
 						metadata: _buildMetadataObject(patchFormat)
 					}, [
-						originalRom._u8array.buffer,
-						modifiedRom._u8array.buffer
-					]
+					originalRom._u8array.buffer,
+					modifiedRom._u8array.buffer
+				]
 				);
 			});
+
+			RomPatcherWeb._addDragOverEvents(document.getElementById('patch-builder-input-file-original'));
+			RomPatcherWeb._addDragOverEvents(document.getElementById('patch-builder-input-file-modified'));
 
 			console.log('Patch Builder JS initialized');
 			initialized = true;

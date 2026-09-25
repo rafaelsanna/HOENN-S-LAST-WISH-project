@@ -192,10 +192,54 @@
                 <details class="patch-accordion">
                     <summary>Patch Application</summary>
                     <div class="installation-guide">
-                        <div id="rom-patcher-container" style="text-align: center; padding: 1.5rem;">
-                            <a href="https://www.romhacking.net/patch/" class="download-btn" target="_blank">
-                                Apply Patch Online
-                            </a>
+                        <div id="rom-patcher-container">
+                            <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-rom">
+                                <div class="text-right"><label for="rom-patcher-input-file-rom">ROM file:</label></div>
+                                <div class="rom-patcher-container-input">
+                                    <input type="file" id="rom-patcher-input-file-rom" class="empty" disabled />
+                                </div>
+                            </div>
+                            <div class="margin-bottom text-selectable text-mono text-muted" id="rom-patcher-rom-info">
+                                <div class="rom-patcher-row">
+                                    <div class="text-right">CRC32:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-crc32"></span></div>
+                                </div>
+                                <div class="rom-patcher-row">
+                                    <div class="text-right">MD5:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-md5"></span></div>
+                                </div>
+                                <div class="rom-patcher-row">
+                                    <div class="text-right">SHA-1:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-sha1"></span></div>
+                                </div>
+                                <div class="rom-patcher-row" id="rom-patcher-row-info-rom">
+                                    <div class="text-right">ROM:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-rom-info"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-patch">
+                                <div class="text-right"><label for="rom-patcher-select-patch">Patch file:</label></div>
+                                <div class="rom-patcher-container-input">
+                                    <select id="rom-patcher-select-patch"></select>
+                                </div>
+                            </div>
+                            <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-patch-description">
+                                <div class="text-right text-mono text-muted">Description:</div>
+                                <div class="text-truncate" id="rom-patcher-patch-description"></div>
+                            </div>
+                            <div class="rom-patcher-row margin-bottom text-selectable text-mono text-muted" id="rom-patcher-row-patch-requirements">
+                                <div class="text-right text-mono" id="rom-patcher-patch-requirements-type">ROM requirements:</div>
+                                <div class="text-truncate" id="rom-patcher-patch-requirements-value"></div>
+                            </div>
+
+                            <div class="text-center" id="rom-patcher-row-apply">
+                                <div id="rom-patcher-row-error-message" class="margin-bottom"><span id="rom-patcher-error-message"></span></div>
+                                <button id="rom-patcher-button-apply" disabled>Apply patch</button>
+                            </div>
+                        </div>
+                        <div id="rom-patcher-powered" class="text-center">
+                            <a href="https://github.com/marcrobledo/RomPatcher.js" target="_blank">Powered by Rom Patcher JS</a>
                         </div>
                     </div>
                 </details>
@@ -304,14 +348,12 @@
     <script type="text/javascript" src="rom-patcher-js/RomPatcher.webapp.js"></script>
     <script type="text/javascript">
         window.addEventListener('load', function(){
-            if (typeof RomPatcherWeb !== 'undefined') {
-                const myPatcherSettings={
+            try {
+                RomPatcherWeb.initialize({
                     language: 'en',
                     requireValidation: true,
                     allowDropFiles: true
-                };
-                
-                RomPatcherWeb.initialize(myPatcherSettings, {
+                }, {
                     file: 'rom-patcher-js/HLW v0.3.21.bps',
                     name: 'Hoenn Last Wish v0.3.21',
                     inputCrc32: 0x2144df1c,
@@ -319,6 +361,12 @@
                     description: 'Last Updated Patch for Pokemon Hoenn Last Wish.',
                     outputName: 'Hoenn Last Wish v0.3.21 (Patched).gba'
                 });
+            } catch (err) {
+                console.error('Rom Patcher JS failed to initialize:', err);
+                var container = document.getElementById('rom-patcher-container');
+                if (container) {
+                    container.innerHTML = 'Something went wrong loading the patcher. <a href="https://www.romhacking.net/patch/" target="_blank" style="color:#7ec8e3;">Use the online tool instead</a>.';
+                }
             }
         });
     </script>
