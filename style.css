@@ -431,21 +431,19 @@ nav {
 }
 
 .story-content .intro {
+    color: #cccccc !important;
     font-size: 1.0rem;
-    font-weight: 500;
     line-height: 1.5;
-    margin-bottom: 2rem;
-    text-align: center;
-    font-style: italic;
+    margin-bottom: 1.5rem;
+    text-align: justify;
 }
 
 .story-content .highlight {
-    background: rgba(0, 0, 0, 0.05);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--pokemon-purple);
-    font-weight: 500;
-    margin: 2rem 0;
+    color: #cccccc !important;
+    font-size: 1.0rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    text-align: justify;
 }
 
 .story-content ul {
