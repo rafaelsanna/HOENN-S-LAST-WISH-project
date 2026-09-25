@@ -1308,8 +1308,8 @@
 #define FLAG_HIDE_VERDANTURF_CAFE_ACACIA                            0x4E2
 #define FLAG_HIDE_VERDANTURF_CAFE_RIVAL                             0x4E3
 #define FLAG_HIDE_VERDANTURF_CAFE_LUKA                              0x4E4
-#define FLAG_UNUSED_0x4E5                                           0x4E5 // Unused Flag
-#define FLAG_UNUSED_0x4E6                                           0x4E6 // Unused Flag
+#define FLAG_ITEM_MAGMA_HIDEOUT_2F_1R_MAX_REVIVE                    0x4E5
+#define FLAG_ITEM_MAGMA_HIDEOUT_1F_HEAT_ROCK                        0x4E6
 #define FLAG_UNUSED_0x4E7                                           0x4E7 // Unused Flag
 #define FLAG_UNUSED_0x4E8                                           0x4E8 // Unused Flag
 #define FLAG_UNUSED_0x4E9                                           0x4E9 // Unused Flag

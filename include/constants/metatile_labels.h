@@ -274,6 +274,10 @@
 #define METATILE_Lavaridge_CaveEntrance_Bottom  0x25E
 #define METATILE_Lavaridge_CaveEntrance_Top     0x256
 #define METATILE_Lavaridge_LavaField            0x271
+#define METATILE_Lavaridge_MuddySlope_Frame0    0x3D7
+#define METATILE_Lavaridge_MuddySlope_Frame1    0x3D6
+#define METATILE_Lavaridge_MuddySlope_Frame2    0x3CE
+#define METATILE_Lavaridge_MuddySlope_Frame3    0x3CF
 #define METATILE_Lavaridge_NormalGrass          0x206
 #define METATILE_Lavaridge_RockWall             0x274
 
