@@ -2154,6 +2154,8 @@ static void ReturnToItemList(u8 taskId)
     CreatePocketSwitchArrowPair();
     ClearWindowTilemap(WIN_TMHM_INFO_ICONS);
     ClearWindowTilemap(WIN_TMHM_INFO);
+    // Closing a message on BG0 clears part of the item list's tilemap.
+    PutWindowTilemap(WIN_ITEM_LIST);
     PutWindowTilemap(WIN_DESCRIPTION);
     ScheduleBgCopyTilemapToVram(0);
     gTasks[taskId].func = Task_BagMenu_HandleInput;

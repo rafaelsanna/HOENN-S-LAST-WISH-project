@@ -50,6 +50,8 @@
 #define SHOP_LIST_SCROLL_STEP 5
 #define SHOP_MENU_PALETTE_ID 12
 #define SHOP_MENU_BASE_TILE 0x3EC
+#define SHOP_MENU_UI_BASE_TILE 0x240 // After the buy-menu text windows.
+#define SHOP_MENU_MAP_EDGE_TILE 1
 #define CAFE_PREVIEW_PALETTE_ID 5
 
 enum {
@@ -142,7 +144,7 @@ static void BuyMenuAddItemIcon(u16, u8);
 static void BuyMenuRemoveItemIcon(u16, u8);
 static void BuyMenuPrint(u8 windowId, const u8 *text, u8 x, u8 y, s8 speed, u8 colorSet);
 static void BuyMenuDrawMapGraphics(void);
-static void BuyMenuCopyMenuBgToBg1TilemapBuffer(void);
+static void BuyMenuCopyMenuBgToTilemapBuffers(void);
 static void BuyMenuCollectObjectEventData(void);
 static void BuyMenuDrawObjectEvents(void);
 static void BuyMenuDrawMapBg(void);
@@ -795,6 +797,9 @@ static void BuyMenuDecompressBgGraphics(void)
     // newshop contains 20 used tiles. Loading only those keeps the data inside
     // the final 20 slots of this charblock (0x3EC-0x3FF).
     DecompressAndCopyTileDataToVram(1, gShopMenu_Gfx, 20 * TILE_SIZE_4BPP, SHOP_MENU_BASE_TILE, 0);
+    // The transparent map-side border needs a separate UI layer so it does
+    // not replace the counter's top map layer underneath its clear pixels.
+    DecompressAndCopyTileDataToVram(0, gShopMenu_Gfx, 20 * TILE_SIZE_4BPP, SHOP_MENU_UI_BASE_TILE, 0);
     DecompressDataWithHeaderWram(gShopMenu_Tilemap, sShopData->tilemapBuffers[0]);
 
     // The authored tilemap is screen-sized (30x20), while the engine's regular
@@ -889,7 +894,7 @@ static void BuyMenuDisplayMessage(u8 taskId, const u8 *text, TaskFunc callback)
 static void BuyMenuDrawGraphics(void)
 {
     BuyMenuDrawMapGraphics();
-    BuyMenuCopyMenuBgToBg1TilemapBuffer();
+    BuyMenuCopyMenuBgToTilemapBuffers();
     AddMoneyLabelObject(19, 11);
     PrintMoneyAmountInMoneyBoxWithBorder(WIN_MONEY, 1, 13, GetMoney(&gSaveBlock1Ptr->money));
     ScheduleBgCopyTilemapToVram(0);
@@ -936,7 +941,7 @@ static void BuyMenuDrawMapMetatile(s16 x, s16 y, const u16 *src)
     u16 offset2 = y * 64;
 
     // Keep the preview's map layers intact right up to the window edges.
-    // BuyMenuCopyMenuBgToBg1TilemapBuffer overlays the purchase windows later.
+    // BuyMenuCopyMenuBgToTilemapBuffers overlays the purchase windows later.
     BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[2], offset1, offset2, src + 0);
     BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[3], offset1, offset2, src + 4);
     BuyMenuDrawMapMetatileLayer(sShopData->tilemapBuffers[1], offset1, offset2, src + 8);
@@ -1071,7 +1076,7 @@ static bool8 BuyMenuCheckIfObjectEventOverlapsMenuBg(s16 *object)
         return FALSE;
 }
 
-static void BuyMenuCopyMenuBgToBg1TilemapBuffer(void)
+static void BuyMenuCopyMenuBgToTilemapBuffers(void)
 {
     s16 i;
     u16 *dest = sShopData->tilemapBuffers[1];
@@ -1079,7 +1084,13 @@ static void BuyMenuCopyMenuBgToBg1TilemapBuffer(void)
 
     for (i = 0; i < 1024; i++)
     {
-        if (src[i] != 0)
+        if ((src[i] & 0x3FF) == SHOP_MENU_MAP_EDGE_TILE)
+        {
+            // Keep the entire top map tile intact behind the clear border.
+            FillBgTilemapBufferRect(0, src[i] + SHOP_MENU_UI_BASE_TILE,
+                                    i % 32, i / 32, 1, 1, SHOP_MENU_PALETTE_ID);
+        }
+        else if (src[i] != 0)
             dest[i] = src[i] + ((SHOP_MENU_PALETTE_ID << 12) | SHOP_MENU_BASE_TILE);
     }
 }
@@ -1395,6 +1406,7 @@ static void BuyMenuReturnToItemList(u8 taskId)
     s16 *data = gTasks[taskId].data;
 
     ClearDialogWindowAndFrameToTransparent(WIN_MESSAGE, FALSE);
+    BuyMenuCopyMenuBgToTilemapBuffers();
     RedrawListMenu(tListTaskId);
     BuyMenuPrintCursor(tListTaskId, COLORID_ITEM_LIST);
     PutWindowTilemap(WIN_ITEM_LIST);
