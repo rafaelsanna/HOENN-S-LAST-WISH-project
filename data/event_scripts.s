@@ -1334,3 +1334,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LavaridgeTownincense/scripts.inc"
 
 	.include "data/maps/Route109ballshop/scripts.inc"
+
+	.include "data/maps/Route119bedrockmining/scripts.inc"
+
+	.include "data/maps/bedrockmininginterior/scripts.inc"

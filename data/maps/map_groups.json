@@ -681,7 +681,9 @@
     "Route119_WeatherInstitute_1F",
     "Route119_WeatherInstitute_2F",
     "Route119_House",
-    "Route120_FrogsHouse"
+    "Route120_FrogsHouse",
+    "Route119bedrockmining",
+    "bedrockmininginterior"
   ],
   "gMapGroup_IndoorRoute124": [
     "Route124_DivingTreasureHuntersHouse"

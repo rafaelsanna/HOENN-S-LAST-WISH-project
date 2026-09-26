@@ -5270,6 +5270,26 @@
       "secondary_tileset": "gTileset_Shop",
       "border_filepath": "data/layouts/Route109ballshop/border.bin",
       "blockdata_filepath": "data/layouts/Route109ballshop/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE119BEDROCKMINING",
+      "name": "Route119bedrockmining_Layout",
+      "width": 29,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lavaridge",
+      "border_filepath": "data/layouts/Route119bedrockmining/border.bin",
+      "blockdata_filepath": "data/layouts/Route119bedrockmining/map.bin"
+    },
+    {
+      "id": "LAYOUT_BEDROCKMININGINTERIOR",
+      "name": "bedrockmininginterior_Layout",
+      "width": 8,
+      "height": 12,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/bedrockmininginterior/border.bin",
+      "blockdata_filepath": "data/layouts/bedrockmininginterior/map.bin"
     }
   ]
 }

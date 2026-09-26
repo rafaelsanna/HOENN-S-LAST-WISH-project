@@ -229,8 +229,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CHANSEY)",
-      "x": 23,
-      "y": 44,
+      "x": 21,
+      "y": 34,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -242,8 +242,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MACHOP)",
-      "x": 32,
-      "y": 45,
+      "x": 33,
+      "y": 43,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -323,6 +323,13 @@
       "elevation": 0,
       "dest_map": "MAP_FIERY_PATH",
       "dest_warp_id": "1"
+    },
+    {
+      "x": 29,
+      "y": 41,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE119BEDROCKMINING",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
@@ -369,6 +376,14 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Route112_EventScript_RouteSignLavaridge"
+    },
+    {
+      "type": "sign",
+      "x": 30,
+      "y": 42,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Route112_EventScript_BedrockMiningSign"
     }
   ]
 }
