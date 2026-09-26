@@ -44,6 +44,19 @@ const server = http.createServer((request, response) => {
         assert.equal(await page.locator('.pokemon-card').count(), 100);
         assert.equal(await page.locator('button.pokemon-card').count(), 98);
         assert.equal(await page.locator('.pokemon-card-hidden').count(), 2);
+        async function assertGridLabels(color) {
+            const labels = await page.locator('.pokemon-card-name').evaluateAll(elements =>
+                elements.map(element => {
+                    const style = getComputedStyle(element);
+                    return { color: style.color, weight: style.fontWeight };
+                }));
+            assert.equal(labels.length, 100);
+            for (const label of labels) {
+                assert.equal(label.color, color, 'selection labels match the current theme');
+                assert.equal(label.weight, '700', 'selection labels are bold');
+            }
+        }
+        await assertGridLabels('rgb(255, 255, 255)');
         assert(!JSON.stringify(data).match(/Salamence|Quagsire/i));
         for (const hidden of data.filter(pokemon => pokemon.hidden)) {
             assert.deepEqual(Object.keys(hidden).sort(), ['hidden', 'id', 'sprite']);
@@ -111,6 +124,7 @@ const server = http.createServer((request, response) => {
         }
 
         await page.evaluate(() => document.body.classList.add('light-mode'));
+        await assertGridLabels('rgb(44, 62, 80)');
         await first.click();
         assert.equal(await page.locator('#modal-pokemon-name').evaluate(element => getComputedStyle(element).color), 'rgb(44, 62, 80)');
         await page.keyboard.press('Escape');

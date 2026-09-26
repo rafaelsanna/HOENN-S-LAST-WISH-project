@@ -1455,9 +1455,10 @@ body.light-mode .download-btn.hackdex-download {
     color: var(--pokemon-light);
 }
 
-.pokemon-card-name {
+.wishdex-grid .pokemon-card-name {
+    color: #ffffff;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .pokemon-card:focus-visible {
@@ -1476,7 +1477,8 @@ body.light-mode .download-btn.hackdex-download {
     opacity: 1;
 }
 
-body.light-mode .wishdex-grid .pokemon-card {
+body.light-mode .wishdex-grid .pokemon-card,
+body.light-mode .wishdex-grid .pokemon-card-name {
     color: #2c3e50;
 }
 
