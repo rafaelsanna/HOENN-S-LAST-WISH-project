@@ -1310,9 +1310,9 @@
 #define FLAG_HIDE_VERDANTURF_CAFE_LUKA                              0x4E4
 #define FLAG_ITEM_MAGMA_HIDEOUT_2F_1R_MAX_REVIVE                    0x4E5
 #define FLAG_ITEM_MAGMA_HIDEOUT_1F_HEAT_ROCK                        0x4E6
-#define FLAG_UNUSED_0x4E7                                           0x4E7 // Unused Flag
-#define FLAG_UNUSED_0x4E8                                           0x4E8 // Unused Flag
-#define FLAG_UNUSED_0x4E9                                           0x4E9 // Unused Flag
+#define FLAG_ITEM_ROUTE_111_QUICK_BALL                             0x4E7
+#define FLAG_ITEM_ROUTE_119_BEDROCK_MINING_IRON                    0x4E8
+#define FLAG_HIDDEN_ITEM_BEDROCK_MINING_INTERIOR_HEAVY_BALL        0x4E9
 #define FLAG_UNUSED_0x4EA                                           0x4EA // Unused Flag
 #define FLAG_UNUSED_0x4EB                                           0x4EB // Unused Flag
 #define FLAG_UNUSED_0x4EC                                           0x4EC // Unused Flag

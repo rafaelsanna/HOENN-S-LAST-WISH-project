@@ -1,0 +1,117 @@
+raw `
+Route119bedrockmining_MapScripts::
+	.byte 0
+
+@ NPC1: scientist at (22, 18)
+Route119bedrockmining_EventScript_NPC1::
+	msgbox Route119bedrockmining_Text_NPC1, MSGBOX_NPC
+	end
+
+@ NPC2: scientist at (18, 9)
+Route119bedrockmining_EventScript_NPC2::
+	msgbox Route119bedrockmining_Text_NPC2, MSGBOX_NPC
+	end
+
+@ NPC3: BLIPBUG graphic at (10, 22)
+Route119bedrockmining_EventScript_NPC3::
+	msgbox Route119bedrockmining_Text_NPC3, MSGBOX_NPC
+	end
+
+@ NPC4: scientist at (21, 18)
+Route119bedrockmining_EventScript_NPC4::
+	msgbox Route119bedrockmining_Text_NPC4, MSGBOX_NPC
+	end
+
+@ NPC5: BLIPBUG graphic at (11, 8)
+Route119bedrockmining_EventScript_NPC5::
+	msgbox Route119bedrockmining_Text_NPC5, MSGBOX_NPC
+	end
+
+@ Female MAGMA grunt at (15, 5): starts and ends facing left.
+Route119bedrockmining_EventScript_MagmaGruntF::
+	lock
+	msgbox Route119bedrockmining_Text_MagmaGruntF_BeforeTurning, MSGBOX_DEFAULT
+	closemessage
+	faceplayer
+	msgbox Route119bedrockmining_Text_MagmaGruntF_AfterTurning, MSGBOX_DEFAULT
+	closemessage
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+@ Male MAGMA grunt at (14, 5): starts and ends facing right.
+Route119bedrockmining_EventScript_MagmaGruntM::
+	lock
+	msgbox Route119bedrockmining_Text_MagmaGruntM_BeforeTurning, MSGBOX_DEFAULT
+	closemessage
+	faceplayer
+	msgbox Route119bedrockmining_Text_MagmaGruntM_AfterTurning, MSGBOX_DEFAULT
+	closemessage
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+Route119bedrockmining_Text_NPC1:
+	.string "Don't you think it's strange?\p"
+	.string "All of a sudden, we're moved to a new\n"
+	.string "location with such little warning\l"
+	.string "and then told to immediately start\l"
+	.string "scanning for high heat signatures.\p"
+	.string "What happened to our normal process?$"
+
+Route119bedrockmining_Text_NPC2:
+	.string "This machine is helping us find\n"
+	.string "pockets of high heat in the ground.\p"
+	.string "It makes no sense, though.\p"
+	.string "Why would a mining company care\n"
+	.string "about something like that?$"
+
+Route119bedrockmining_Text_NPC3:
+	.string "It's essential to maintain this\n"
+	.string "equipment with the utmost care.\p"
+	.string "I check every one of them twice\n"
+	.string "a day!$"
+
+Route119bedrockmining_Text_NPC4:
+	.string "I've worked for this company for\n"
+	.string "decades, but never have we set up\l"
+	.string "a new mining base this quickly.\p"
+	.string "The executives won't tell us what's\n"
+	.string "going on either, and I keep seeing\l"
+	.string "strange people coming in and out.$"
+
+Route119bedrockmining_Text_NPC5:
+	.string "I've got a real passion for\n"
+	.string "all things mining-related.\p"
+	.string "However, strange people in weird\n"
+	.string "red costumes have been coming by\l"
+	.string "a lot lately to see the boss.\p"
+	.string "They've been talking like they\n"
+	.string "run the place!$"
+
+@ Opening lines: the grunt keeps facing the other grunt.
+Route119bedrockmining_Text_MagmaGruntF_BeforeTurning:
+	.string "How long are we going to be\n"
+	.string "assigned to such a boring place?\p"
+	.string "I'm so sick of keeping watch over\n"
+	.string "all these science nerds.$"
+
+@ These lines appear after the grunt turns toward the player.
+Route119bedrockmining_Text_MagmaGruntF_AfterTurning:
+	.string "Hey! It's rude to eavesdrop, kid.\p"
+	.string "Our presence here is none of your\n"
+	.string "business.$"
+
+Route119bedrockmining_Text_MagmaGruntM_BeforeTurning:
+	.string "That company president was so\n"
+	.string "easy to bribe. The guy would do\l"
+	.string "anything for mining rights.\p"
+	.string "Once we accomplish our goals, we'll\n"
+	.string "own everything anyway.$"
+
+Route119bedrockmining_Text_MagmaGruntM_AfterTurning:
+	.string "What? What do you want? Get out\n"
+	.string "of here before I make you.$"
+`

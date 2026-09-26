@@ -1,0 +1,105 @@
+raw `
+bedrockmininginterior_MapScripts::
+	.byte 0
+
+@ NPC1: scientist at (6, 5)
+bedrockmininginterior_EventScript_NPC1::
+	msgbox bedrockmininginterior_Text_NPC1, MSGBOX_NPC
+	end
+
+@ NPC2: scientist at (1, 6)
+bedrockmininginterior_EventScript_NPC2::
+	msgbox bedrockmininginterior_Text_NPC2, MSGBOX_NPC
+	end
+
+@ NPC3: scientist at (1, 9)
+bedrockmininginterior_EventScript_NPC3::
+	msgbox bedrockmininginterior_Text_NPC3, MSGBOX_NPC
+	end
+
+@ NPC4: ruin maniac at (3, 3)
+bedrockmininginterior_EventScript_NPC4::
+	msgbox bedrockmininginterior_Text_NPC4, MSGBOX_NPC
+	end
+
+@ Sign1 at (6, 7)
+bedrockmininginterior_EventScript_Sign1::
+	msgbox bedrockmininginterior_Text_Sign1, MSGBOX_SIGN
+	end
+
+@ Sign2 at (6, 10)
+bedrockmininginterior_EventScript_Sign2::
+	msgbox bedrockmininginterior_Text_Sign2, MSGBOX_SIGN
+	end
+
+@ Sign3 at (1, 7)
+bedrockmininginterior_EventScript_Sign3::
+	msgbox bedrockmininginterior_Text_Sign3, MSGBOX_SIGN
+	end
+
+@ Sign4 at (2, 1)
+bedrockmininginterior_EventScript_Sign4::
+	msgbox bedrockmininginterior_Text_Sign4, MSGBOX_SIGN
+	end
+
+bedrockmininginterior_Text_NPC1:
+	.string "I manage the sale of our ore to\n"
+	.string "other companies.\p"
+	.string "We usually supply a variety of\n"
+	.string "clients, but lately the higher-\l"
+	.string "ups have told us to reroute all\l"
+	.string "product to DEVON.$"
+
+bedrockmininginterior_Text_NPC2:
+	.string "We have been instructed to create\n"
+	.string "blueprints for a new machine.\p"
+	.string "It is supposed to be able to map\n"
+	.string "mineral veins within volcanic rock.$"
+
+bedrockmininginterior_Text_NPC3:
+	.string "Sometimes, bossy people in red\n"
+	.string "jumpsuits come in and insist on\l"
+	.string "looking through all our work.\p"
+	.string "The boss tells us to comply and\n"
+	.string "not ask questions...\p"
+	.string "Is this really okay?$"
+
+bedrockmininginterior_Text_NPC4:
+	.string "Hello! I am the president of the\n"
+	.string "BEDROCK MINING COMPANY.\p"
+	.string "Please forgive the mess. We move\n"
+	.string "to a new location whenever we\l"
+	.string "find something worth mining.\p"
+	.string "Setting up a new HQ every time\n"
+	.string "doesn't allow for the nicest\l"
+	.string "of amenities.$"
+
+bedrockmininginterior_Text_Sign1:
+	.string "It's the company's financial\n"
+	.string "records. Sales to DEVON have\l"
+	.string "increased substantially.\p"
+	.string "DEVON now accounts for nearly\n"
+	.string "all of their income.$"
+
+bedrockmininginterior_Text_Sign2:
+	.string "The boss's email is left open.\n"
+	.string "A little peek couldn't hurt.\p"
+	.string "...\p"
+	.string "An anonymous sender is offering\n"
+	.string "mining rights to all of HOENN in\l"
+	.string "exchange for his cooperation.\p"
+	.string "Who could possibly have that much\n"
+	.string "authority?$"
+
+bedrockmininginterior_Text_Sign3:
+	.string "There's a document sticking out\n"
+	.string "of the drawer.\p"
+	.string "A substantial number of payments\n"
+	.string "have been made to someone called\l"
+	.string "MAGNUS.$"
+
+bedrockmininginterior_Text_Sign4:
+	.string "It's a cabinet containing a\n"
+	.string "number of labelled drawers.\p"
+	.string "One seems to be dedicated to DEVON.$"
+`

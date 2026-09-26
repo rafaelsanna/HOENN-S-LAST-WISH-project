@@ -35,6 +35,8 @@ static bool32 CheckPyramidBagHasSpace(u16 itemId, u16 count);
 static const u8 *GetItemPluralName(u16);
 static bool32 DoesItemHavePluralName(u16);
 static void NONNULL BagPocket_CompactItems(struct BagPocket *pocket);
+static u32 NONNULL BagPocket_GetFreeSpaceForItem(struct BagPocket *pocket, u16 itemId);
+static void MigrateMedicinePocket(void);
 
 EWRAM_DATA struct BagPocket gBagPockets[POCKETS_COUNT] = {0};
 
@@ -207,7 +209,10 @@ void MigrateBagExpansion(void)
     if (gSaveBlock1Ptr->bagExpansion.magic == BAG_EXPANSION_MAGIC
      && gSaveBlock1Ptr->bagExpansion.version == BAG_EXPANSION_VERSION
      && gSaveBlock1Ptr->bagExpansion.size == sizeof(struct BagExpansionSave))
+    {
+        MigrateMedicinePocket();
         return;
+    }
 
     memcpy(oldItems, gSaveBlock1Ptr->bag.items, sizeof(oldItems));
     CpuFastFill(0, gSaveBlock1Ptr->bag.items, sizeof(gSaveBlock1Ptr->bag.items));
@@ -220,10 +225,8 @@ void MigrateBagExpansion(void)
         if (oldItems[i].itemId == ITEM_NONE)
             continue;
 
-        if (GetItemPocket(oldItems[i].itemId) == POCKET_MEDICINE)
+        if (GetItemPocket(oldItems[i].itemId) == POCKET_MEDICINE && medicineSlot < BAG_MEDICINE_COUNT)
         {
-            if (medicineSlot >= BAG_MEDICINE_COUNT)
-                continue;
             destination = &gSaveBlock1Ptr->bagExpansion.medicine[medicineSlot++];
         }
         else
@@ -243,6 +246,66 @@ void MigrateBagExpansion(void)
     gSaveBlock1Ptr->bagExpansion.magic = BAG_EXPANSION_MAGIC;
     gSaveBlock1Ptr->bagExpansion.version = BAG_EXPANSION_VERSION;
     gSaveBlock1Ptr->bagExpansion.size = sizeof(struct BagExpansionSave);
+    MigrateMedicinePocket();
+}
+
+static void MigrateMedicinePocket(void)
+{
+    struct BagPocket items =
+    {
+        .itemSlots = gSaveBlock1Ptr->bag.items,
+        .extraItemSlots = gSaveBlock1Ptr->bagExpansion.itemsExtra,
+        .primaryCapacity = BAG_LEGACY_ITEMS_COUNT,
+        .capacity = BAG_ITEMS_COUNT,
+        .id = POCKET_ITEMS,
+    };
+    struct BagPocket medicine =
+    {
+        .itemSlots = gSaveBlock1Ptr->bagExpansion.medicine,
+        .primaryCapacity = BAG_MEDICINE_COUNT,
+        .capacity = BAG_MEDICINE_COUNT,
+        .id = POCKET_MEDICINE,
+    };
+    bool32 movedItems = FALSE;
+
+    // Run on every load: item assignments can change without changing the save layout.
+    for (u32 i = 0; i < items.capacity; i++)
+    {
+        struct ItemSlot item = BagPocket_GetSlotData(&items, i);
+        u32 remaining = item.quantity;
+
+        if (item.itemId == ITEM_NONE || GetItemPocket(item.itemId) != POCKET_MEDICINE)
+            continue;
+
+        // Keep the original stack intact if Medicine is full; retry on a later load.
+        if (BagPocket_GetFreeSpaceForItem(&medicine, item.itemId) < remaining)
+            continue;
+
+        // Fill matching stacks before using empty slots, preserving the stack limit.
+        for (u32 pass = 0; pass < 2 && remaining > 0; pass++)
+        {
+            for (u32 j = 0; j < medicine.capacity && remaining > 0; j++)
+            {
+                struct ItemSlot destination = BagPocket_GetSlotData(&medicine, j);
+                u32 added;
+
+                if (destination.itemId != (pass == 0 ? item.itemId : ITEM_NONE))
+                    continue;
+                if (destination.itemId == ITEM_NONE)
+                    destination.quantity = 0;
+
+                added = min(remaining, MAX_BAG_ITEM_CAPACITY - destination.quantity);
+                BagPocket_SetSlotItemIdAndCount(&medicine, j, item.itemId, destination.quantity + added);
+                remaining -= added;
+            }
+        }
+
+        BagPocket_SetSlotItemIdAndCount(&items, i, ITEM_NONE, 0);
+        movedItems = TRUE;
+    }
+
+    if (movedItems)
+        BagPocket_CompactItems(&items);
 }
 
 u8 *CopyItemName(u16 itemId, u8 *dst)
