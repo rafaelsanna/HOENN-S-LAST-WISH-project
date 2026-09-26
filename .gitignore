@@ -36,6 +36,8 @@ build/
 *.diff
 *.sym
 *.js
+!/wishdex.js
+!/wishdex-data.js
 !rom-patcher-js/*.js
 !rom-patcher-js/modules/**/*.js
 /pokeemerald-*.png

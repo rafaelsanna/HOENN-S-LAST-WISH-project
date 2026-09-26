@@ -31,6 +31,7 @@ jobs:
           cp style.css _site/ 2>/dev/null || true
           cp script.js _site/ 2>/dev/null || true
           cp wishdex.html _site/ 2>/dev/null || true
+          cp wishdex.js wishdex-data.js _site/
           cp -r images _site/ 2>/dev/null || true
           touch _site/.nojekyll
 
