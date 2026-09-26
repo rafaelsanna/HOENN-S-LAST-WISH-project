@@ -1,0 +1,73 @@
+{
+  "id": "MAP_ROUTE110GROTTO",
+  "name": "Route110grotto",
+  "layout": "LAYOUT_ROUTE110GROTTO",
+  "music": "MUS_ROUTE110",
+  "region_map_section": "MAPSEC_ROUTE_110",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "local_id": "LOCALID_ROUTE110GROTTO_POKEMON",
+      "graphics_id": "OBJ_EVENT_GFX_VAR_0",
+      "x": 4,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route110grotto_EventScript_Pokemon",
+      "flag": "FLAG_TEMP_5"
+    },
+    {
+      "local_id": "LOCALID_ROUTE110GROTTO_ITEM",
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 4,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route110grotto_EventScript_VisibleItem",
+      "flag": "FLAG_TEMP_6"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 4,
+      "y": 16,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE110",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 3,
+      "y": 16,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE110",
+      "dest_warp_id": "8"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 5,
+      "y": 9,
+      "elevation": 3,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Route110grotto_EventScript_HiddenItem"
+    }
+  ]
+}

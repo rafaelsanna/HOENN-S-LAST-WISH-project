@@ -630,6 +630,20 @@
       "elevation": 0,
       "dest_map": "MAP_ROUTE110HOUSE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE110GROTTO",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE110GROTTO",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

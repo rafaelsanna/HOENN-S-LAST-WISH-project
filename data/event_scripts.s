@@ -1338,3 +1338,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Route119bedrockmining/scripts.inc"
 
 	.include "data/maps/bedrockmininginterior/scripts.inc"
+
+	.include "data/maps/Route110grotto/scripts.inc"

@@ -5290,6 +5290,16 @@
       "secondary_tileset": "gTileset_Facility",
       "border_filepath": "data/layouts/bedrockmininginterior/border.bin",
       "blockdata_filepath": "data/layouts/bedrockmininginterior/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE110GROTTO",
+      "name": "Route110grotto_Layout",
+      "width": 8,
+      "height": 18,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/Route110grotto/border.bin",
+      "blockdata_filepath": "data/layouts/Route110grotto/map.bin"
     }
   ]
 }
