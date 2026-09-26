@@ -150,7 +150,7 @@ MagmaHideout_4F_Text_Grunt12Defeat:
 	.string "I've come so far, but now this?$"
 
 MagmaHideout_4F_Text_Grunt12PostBattle:
-	.string "MAEGOR, sir!\n"
+	.string "NETSU, sir!\n"
 	.string "An intruder is headed your way!$"
 
 MagmaHideout_4F_Text_Grunt13Intro:
@@ -169,7 +169,7 @@ MagmaHideout_4F_Text_TabithaIntro:
 	.string "Fine. Since you're already here,\n"
 	.string "I'll spell it out for you!\p"
 	.string "Just ahead, GROUDON is waiting!\n"
-	.string "NETSU reached it moments ago!\p"
+	.string "MAGNUS reached it moments ago!\p"
 	.string "Its awakening is about to begin!\n"
 	.string "You're already too late!$"
 
@@ -179,7 +179,7 @@ MagmaHideout_4F_Text_TabithaDefeat:
 
 MagmaHideout_4F_Text_TabithaPostBattle:
 	.string "…And while you wasted time with me,\n"
-	.string "MAEGOR should have awakened GROUDON…$"
+	.string "MAGNUS should have awakened GROUDON…$"
 
 MagmaHideout_4F_Text_MaxieAwakenGroudon:
 	.string "MAGNUS: GROUDON…\p"

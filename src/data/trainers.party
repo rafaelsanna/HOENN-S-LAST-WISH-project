@@ -16406,8 +16406,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 29
+Crobat
+Level: 46
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Swalot
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_2 ===
@@ -16419,8 +16423,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Poochyena
-Level: 29
+Darkrai
+Level: 46
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Nuzleaf
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_3 ===
@@ -16432,8 +16440,8 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Snubbull
-Level: 29
+Granbull
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_4 ===
@@ -16445,12 +16453,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Baltoy
-Level: 28
+Claydol
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Zubat
-Level: 28
+Crobat
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_5 ===
@@ -16462,12 +16470,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Baltoy
-Level: 28
+Claydol
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Snubbull
-Level: 28
+Granbull
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_6 ===
@@ -16479,8 +16487,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Mightyena
-Level: 29
+Darkrai
+Level: 46
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Sharpedo
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_7 ===
@@ -16492,8 +16504,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 29
+Electrode
+Level: 46
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Croconaw
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_8 ===
@@ -16505,8 +16521,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Poochyena
-Level: 29
+Chimecho
+Level: 46
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Furret
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_9 ===
@@ -16518,8 +16538,8 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 29
+Swalot
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_10 ===
@@ -16531,8 +16551,8 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Mightyena
-Level: 29
+Sharpedo
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_11 ===
@@ -16544,8 +16564,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Baltoy
-Level: 29
+Seviper
+Level: 46
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Nuzleaf
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_12 ===
@@ -16557,8 +16581,12 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Snubbull
-Level: 29
+Granbull
+Level: 46
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Swalot
+Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_13 ===
@@ -16570,8 +16598,8 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 29
+Crobat
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_14 ===
@@ -16583,8 +16611,8 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Mightyena
-Level: 29
+Shiftry
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_15 ===
@@ -16596,8 +16624,8 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Snubbull
-Level: 29
+Granbull
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MAGMA_HIDEOUT_16 ===
@@ -16609,8 +16637,8 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Baltoy
-Level: 29
+Ninetales
+Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TABITHA_MAGMA_HIDEOUT ===

@@ -303,7 +303,7 @@ MagmaHideout_4F_Text_Grunt12Defeat:
 # 152 "data/maps/MagmaHideout_4F/scripts.pory"
 MagmaHideout_4F_Text_Grunt12PostBattle:
 # 153 "data/maps/MagmaHideout_4F/scripts.pory"
-	.string "MAEGOR, sir!\n"
+	.string "NETSU, sir!\n"
 # 154 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "An intruder is headed your way!$"
 # 155 "data/maps/MagmaHideout_4F/scripts.pory"
@@ -341,7 +341,7 @@ MagmaHideout_4F_Text_TabithaIntro:
 # 171 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "Just ahead, GROUDON is waiting!\n"
 # 172 "data/maps/MagmaHideout_4F/scripts.pory"
-	.string "NETSU reached it moments ago!\p"
+	.string "MAGNUS reached it moments ago!\p"
 # 173 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "Its awakening is about to begin!\n"
 # 174 "data/maps/MagmaHideout_4F/scripts.pory"
@@ -361,7 +361,7 @@ MagmaHideout_4F_Text_TabithaPostBattle:
 # 181 "data/maps/MagmaHideout_4F/scripts.pory"
 	.string "…And while you wasted time with me,\n"
 # 182 "data/maps/MagmaHideout_4F/scripts.pory"
-	.string "MAEGOR should have awakened GROUDON…$"
+	.string "MAGNUS should have awakened GROUDON…$"
 # 183 "data/maps/MagmaHideout_4F/scripts.pory"
 
 # 184 "data/maps/MagmaHideout_4F/scripts.pory"
