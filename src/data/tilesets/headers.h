@@ -927,3 +927,14 @@ const struct Tileset gTileset_Cafe =
     .metatileAttributes = gMetatileAttributes_Cafe,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_Safari =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Safari,
+    .palettes = gTilesetPalettes_Safari,
+    .metatiles = gMetatiles_Safari,
+    .metatileAttributes = gMetatileAttributes_Safari,
+    .callback = NULL,
+};

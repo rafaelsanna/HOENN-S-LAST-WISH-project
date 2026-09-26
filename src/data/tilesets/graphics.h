@@ -1808,3 +1808,22 @@ const u16 gTilesetPalettes_Cafe[][16] =
 };
 
 const u32 gTilesetTiles_Cafe[] = INCBIN_U32("data/tilesets/secondary/cafe/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_Safari[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/safari/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_Safari[] = INCBIN_U32("data/tilesets/secondary/safari/tiles.4bpp.lz");
