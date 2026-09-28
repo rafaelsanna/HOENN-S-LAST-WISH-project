@@ -144,8 +144,6 @@ gSpecials::
 	def_special TryPutNameRaterShowOnTheAir
 	def_special BufferMonNickname
 	def_special IsMonOTIDNotPlayers
-	def_special Script_CanChangeSelectedMonGender
-	def_special Script_ChangeSelectedMonGender
 	def_special BufferTrendyPhraseString
 	def_special IsTrendyPhraseBoring
 	def_special BufferDeepLinkPhrase
@@ -179,7 +177,6 @@ gSpecials::
 	def_special ChooseStarter
 	def_special StartWallyTutorialBattle
 	def_special ChangePokemonNickname
-	def_special ShouldForceStarterNickname
 	def_special ChoosePartyMon
 	def_special GetFirstFreePokeblockSlot
 	def_special DoBerryBlending
@@ -224,9 +221,6 @@ gSpecials::
 	def_special SetCB2WhiteOut
 	def_special RotatingGate_InitPuzzle
 	def_special RotatingGate_InitPuzzleAndGraphics
-	def_special FortreeGym_ApplyFloatingBridgeState
-	def_special FortreeGym_InitFloatingBridgePuzzle
-	def_special FortreeGym_RevealBridgeAt
 	def_special SetSSTidalFlag
 	def_special ResetSSTidalFlag
 	def_special EnterSafariMode
@@ -301,9 +295,6 @@ gSpecials::
 	def_special ShowGlassWorkshopMenu
 	def_special SpawnCameraObject
 	def_special RemoveCameraObject
-	def_special ResetMossdeepMinerSprite
-	def_special StoreMossdeepMinerRescueCamera
-	def_special FinishMossdeepMinerRescueCamera
 	def_special GetPokeblockNameByMonNature
 	def_special GetSecretBaseNearbyMapName
 	def_special CheckRelicanthWailord
@@ -313,7 +304,6 @@ gSpecials::
 	def_special WaitWeather
 	def_special BufferEReaderTrainerName
 	def_special GetSlotMachineId
-	def_special ShowSlotMachineMinWagerPrompt
 	def_special GetPlayerFacingDirection, requests_effects=TRUE
 	def_special FoundAbandonedShipRoom1Key
 	def_special FoundAbandonedShipRoom2Key
@@ -340,8 +330,6 @@ gSpecials::
 	def_special ShakeCamera
 	def_special StartGroudonKyogreBattle
 	def_special BattleSetup_StartLegendaryBattle
-	def_special SetScriptedWildMonPerfectIVs
-	def_special BattleSetup_StartDarkAuraBattle
 	def_special StartRegiBattle
 	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect_Short
@@ -576,40 +564,5 @@ gSpecials::
 	def_special EnterCode
 	def_special GetCodeFeedback
 	def_special SetHiddenNature
-	def_special Special_CheckPartyHasWaterMon
-	def_special Achievement_CheckAll
-	def_special GetCompletedAchievementsCount
-	def_special Script_OpenAchievementsMenu
-	def_special Debug_UnlockNextAchievement
-    def_special StartMining
-    def_special TryDailyMiningWall
-    def_special GetMiningFreeSessionsRemaining
-    def_special TryMiningFreeSession
-    def_special StartGacha
-    def_special StartBlackJack
-    def_special StartSnake
-    def_special StartBlockStacker
-    def_special StartDerby
-    def_special GetNewDerby
-    def_special Special_ViewVoltorbFlip
-	def_special StartTimeWarpScene
-	def_special StartMegaRayVisionScene
-	def_special StartDarkSuicuneScene
-	def_special StartSnowballGame
-	def_special StartElectricWiresGame
 	def_special DoMrStoneEvilScene
-	def_special StartLavaridgeGymStagePlaylist
-	def_special StartRentonGymRadio
-	def_special Special_IsRadioStationPlaying @ HLW_ANIME_RADIO_KID_QUEST_V1
-	def_special HiddenGrotto_InitializeCurrent
-	def_special HiddenGrotto_EmptyCurrent
-	def_special HiddenGrotto_GetCurrentContentType
-	def_special HiddenGrotto_GetCurrentContentId
-	def_special HiddenGrotto_CreateCurrentMon
-	def_special HiddenGrotto_TestCurrentMonBounds
-	def_special HiddenGrotto_IsCurrentMap
-	def_special HungryChansey_GetRequestedBerry
-	def_special HungryChansey_ClearRequestedBerry
-	def_special Special_HasDrizzleOrRainDanceInParty
-	def_special Special_HideLavaridgeMakeItRainQueueNow
-	def_special Script_GetDifficulty, requests_effects=1
+	def_special Special_IsRadioStationPlaying

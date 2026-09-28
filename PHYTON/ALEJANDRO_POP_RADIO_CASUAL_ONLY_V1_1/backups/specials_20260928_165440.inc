@@ -612,4 +612,3 @@ gSpecials::
 	def_special HungryChansey_ClearRequestedBerry
 	def_special Special_HasDrizzleOrRainDanceInParty
 	def_special Special_HideLavaridgeMakeItRainQueueNow
-	def_special Script_GetDifficulty, requests_effects=1

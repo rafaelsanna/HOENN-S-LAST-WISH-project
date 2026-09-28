@@ -1,0 +1,29 @@
+=== ALEJANDRO POP - CASUAL ONLY V1.1 ===
+
+CASUAL:
+  checa POP; se POP estiver tocando, Alejandro poupa a batalha
+HARD:
+  ignora completamente o check da rádio e vai direto para a batalha
+
+scripts.pory: mudaria
+specials.inc: mudaria
+
+DRY-RUN OK.
+
+=== ALEJANDRO POP - CASUAL ONLY V1.1 ===
+
+CASUAL:
+  checa POP; se POP estiver tocando, Alejandro poupa a batalha
+HARD:
+  ignora completamente o check da rádio e vai direto para a batalha
+
+scripts.pory: mudaria
+specials.inc: mudaria
+Backup: /mnt/data/ALEJANDRO_POP_RADIO_CASUAL_ONLY_V1_1/backups/scripts_20260928_193220.pory
+Backup: /mnt/data/ALEJANDRO_POP_RADIO_CASUAL_ONLY_V1_1/backups/specials_20260928_193220.inc
+
+Patch aplicado.
+
+VALIDATION: OK
+HARD (VAR_RESULT == 2) jumps directly to AlejandroBattleNormally.
+Radio POP check remains after the HARD guard.

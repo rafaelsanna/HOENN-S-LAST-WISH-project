@@ -1,0 +1,25 @@
+=== ALEJANDRO POP RADIO BATTLE SKIP V1 ===
+Antes da batalha:
+ - checa STATION_POP (ID 2)
+ - POP tocando -> pula batalha e mostra fala especial
+ - POP não tocando -> batalha e pós-batalha originais seguem iguais
+
+scripts.pory: mudaria
+specials.inc: mudaria
+map.json/events.inc: não são alterados
+
+DRY-RUN OK.
+
+=== ALEJANDRO POP RADIO BATTLE SKIP V1 ===
+Antes da batalha:
+ - checa STATION_POP (ID 2)
+ - POP tocando -> pula batalha e mostra fala especial
+ - POP não tocando -> batalha e pós-batalha originais seguem iguais
+
+scripts.pory: mudaria
+specials.inc: mudaria
+map.json/events.inc: não são alterados
+Backup: /mnt/data/ALEJANDRO_POP_RADIO_BATTLE_SKIP_V1/backups/scripts_20260928_180924.pory
+Backup: /mnt/data/ALEJANDRO_POP_RADIO_BATTLE_SKIP_V1/backups/specials_20260928_180924.inc
+
+Patch aplicado.

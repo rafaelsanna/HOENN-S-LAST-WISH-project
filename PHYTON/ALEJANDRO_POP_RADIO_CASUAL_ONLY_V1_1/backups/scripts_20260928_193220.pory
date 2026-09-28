@@ -53,13 +53,9 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	closemessage
 	applymovement LOCALID_OCEANIC_MUSEUM_2F_ARCHIE, SlateportCity_OceanicMuseum_2F_Movement_ArchieApproachPlayer
 	waitmovement 0
-	@ Radio mercy is CASUAL-only. HARD skips the radio check entirely.
-	special Script_GetDifficulty
-	goto_if_eq VAR_RESULT, 2, SlateportCity_OceanicMuseum_2F_EventScript_AlejandroBattleNormally @ DIFFICULTY_HARD
 	setvar VAR_0x8004, 2 @ STATION_POP
 	special Special_IsRadioStationPlaying
 	goto_if_eq VAR_RESULT, TRUE, SlateportCity_OceanicMuseum_2F_EventScript_AlejandroPopRadio
-SlateportCity_OceanicMuseum_2F_EventScript_AlejandroBattleNormally::
 	trainerbattle_no_intro TRAINER_ALEJANDRO_1, SlateportCity_OceanicMuseum_2F_Text_AlejandroDefeat
 	msgbox SlateportCity_OceanicMuseum_2F_Text_AlejandroAfterBattle, MSGBOX_DEFAULT
 	closemessage

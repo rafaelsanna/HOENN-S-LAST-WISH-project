@@ -53,17 +53,9 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	closemessage
 	applymovement LOCALID_OCEANIC_MUSEUM_2F_ARCHIE, SlateportCity_OceanicMuseum_2F_Movement_ArchieApproachPlayer
 	waitmovement 0
-	@ Radio mercy is CASUAL-only. HARD skips the radio check entirely.
-	special Script_GetDifficulty
-	goto_if_eq VAR_RESULT, 2, SlateportCity_OceanicMuseum_2F_EventScript_AlejandroBattleNormally @ DIFFICULTY_HARD
-	setvar VAR_0x8004, 2 @ STATION_POP
-	special Special_IsRadioStationPlaying
-	goto_if_eq VAR_RESULT, TRUE, SlateportCity_OceanicMuseum_2F_EventScript_AlejandroPopRadio
-SlateportCity_OceanicMuseum_2F_EventScript_AlejandroBattleNormally::
 	trainerbattle_no_intro TRAINER_ALEJANDRO_1, SlateportCity_OceanicMuseum_2F_Text_AlejandroDefeat
 	msgbox SlateportCity_OceanicMuseum_2F_Text_AlejandroAfterBattle, MSGBOX_DEFAULT
 	closemessage
-SlateportCity_OceanicMuseum_2F_EventScript_AlejandroContinue::
 	savebgm MUS_DUMMY
 	fadedefaultbgm
 	fadescreen FADE_TO_BLACK
@@ -94,12 +86,6 @@ SlateportCity_OceanicMuseum_2F_EventScript_AlejandroContinue::
 	setvar VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1
 	fadescreen FADE_FROM_BLACK
 	release
-	end
-
-SlateportCity_OceanicMuseum_2F_EventScript_AlejandroPopRadio::
-	msgbox SlateportCity_OceanicMuseum_2F_Text_AlejandroLovesPop, MSGBOX_DEFAULT
-	closemessage
-	goto SlateportCity_OceanicMuseum_2F_EventScript_AlejandroContinue
 	end
 
 SlateportCity_OceanicMuseum_2F_EventScript_ReadyRegisterBirch::
@@ -463,14 +449,6 @@ SlateportCity_OceanicMuseum_2F_Text_SSAnneReplica:
 	.string "circles the globe.”$"
 
 ///////////// ALEJANDRO PART
-
-SlateportCity_OceanicMuseum_2F_Text_AlejandroLovesPop:
-	.string "ALEJANDRO: Wait... Is that POP\n"
-	.string "you're listening to?\p"
-	.string "Heh, I love POP.\n"
-	.string "You've got really good taste.\p"
-	.string "All right. Just this once,\n"
-	.string "I'll let you off.$"
 
 SlateportCity_OceanicMuseum_2F_Text_AlejandroDefeat:
 	.string "Impressive…$"
