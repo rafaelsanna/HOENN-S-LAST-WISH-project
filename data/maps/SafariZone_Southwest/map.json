@@ -27,8 +27,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
-      "x": 22,
-      "y": 9,
+      "x": 8,
+      "y": 4,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -40,8 +40,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 0,
-      "y": 37,
+      "x": 18,
+      "y": 38,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -53,8 +53,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PIKACHU)",
-      "x": 11,
-      "y": 26,
+      "x": 35,
+      "y": 35,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -66,8 +66,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(NATU)",
-      "x": 29,
-      "y": 31,
+      "x": 5,
+      "y": 18,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -80,8 +80,8 @@
   ],
   "warp_events": [
     {
-      "x": 29,
-      "y": 7,
+      "x": 10,
+      "y": 3,
       "elevation": 3,
       "dest_map": "MAP_SAFARI_ZONE_REST_HOUSE",
       "dest_warp_id": "0"
@@ -91,8 +91,8 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 32,
-      "y": 7,
+      "x": 13,
+      "y": 3,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "SafariZone_Southwest_EventScript_RestHouseSign"
