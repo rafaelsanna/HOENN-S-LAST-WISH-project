@@ -28,7 +28,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_RICH_BOY",
       "x": 7,
-      "y": 8,
+      "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -41,7 +41,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
       "x": 20,
-      "y": 31,
+      "y": 32,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -54,7 +54,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
       "x": 10,
-      "y": 26,
+      "y": 27,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -67,7 +67,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 26,
-      "y": 21,
+      "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -80,7 +80,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMPER",
       "x": 12,
-      "y": 16,
+      "y": 17,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 1,
@@ -93,7 +93,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(SUNKERN)",
       "x": 14,
-      "y": 37,
+      "y": 38,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -106,7 +106,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(AIPOM)",
       "x": 12,
-      "y": 8,
+      "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -123,7 +123,7 @@
     {
       "type": "hidden_item",
       "x": 32,
-      "y": 15,
+      "y": 16,
       "elevation": 3,
       "item": "ITEM_PP_UP",
       "flag": "FLAG_HIDDEN_ITEM_SAFARI_ZONE_SOUTH_EAST_PP_UP"
@@ -131,7 +131,7 @@
     {
       "type": "hidden_item",
       "x": 17,
-      "y": 28,
+      "y": 29,
       "elevation": 0,
       "item": "ITEM_FULL_RESTORE",
       "flag": "FLAG_HIDDEN_ITEM_SAFARI_ZONE_SOUTH_EAST_FULL_RESTORE"
