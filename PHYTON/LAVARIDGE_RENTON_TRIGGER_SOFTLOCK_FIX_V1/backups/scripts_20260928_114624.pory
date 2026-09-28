@@ -42,8 +42,6 @@ LavaridgeTown_EventScript_HideMapNamePopup::
 
 LavaridgeTown_OnFrame:
 	map_script_2 VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_RivalGiveGoGoggles
-	map_script_2 VAR_TEMP_1, 1, LavaridgeTown_EventScript_RentonMetalStartRight
-	map_script_2 VAR_TEMP_1, 2, LavaridgeTown_EventScript_RentonMetalStartLeft
 	.2byte 0
 
 LavaridgeTown_EventScript_RivalGiveGoGoggles::
@@ -231,42 +229,24 @@ LavaridgeTown_EventScript_ExpertF::
 
 
 // HLW_RENTON_METAL_QUEUE_EVENT_V3: BEGIN
-// Coord triggers run immediately; VAR_TEMP_1 only hands off to the real cutscene.
+// Both coordinate events use VAR_TEMP_1; flags are not valid trigger variables.
 LavaridgeTown_EventScript_Renton_Likes_Metal_Right::
-	@ Immediate checker only: no wait/movement/cutscene here.
 	goto_if_set FLAG_MAKE_IT_RAIN, LavaridgeTown_EventScript_RentonMetalNoAction
-	goto_if_set FLAG_RENTON_LEFT, LavaridgeTown_EventScript_RentonMetalNoAction
-	setvar VAR_0x8004, 8 @ STATION_ROCK_METAL
-	special Special_IsRadioStationPlaying
-	goto_if_eq VAR_RESULT, FALSE, LavaridgeTown_EventScript_RentonMetalNoAction
-	setvar VAR_TEMP_1, 1 @ handoff: player is on the right trigger
+	setvar VAR_0x8007, 1 @ Player is at (8,6), to Renton's right
+	goto LavaridgeTown_EventScript_RentonMetalCheckRadio
 	end
 
 LavaridgeTown_EventScript_Renton_Likes_Metal_Left::
-	@ Immediate checker only: no wait/movement/cutscene here.
 	goto_if_set FLAG_MAKE_IT_RAIN, LavaridgeTown_EventScript_RentonMetalNoAction
+	setvar VAR_0x8007, 2 @ Player is at (6,6), to Renton's left
+	goto LavaridgeTown_EventScript_RentonMetalCheckRadio
+	end
+
+LavaridgeTown_EventScript_RentonMetalCheckRadio::
 	goto_if_set FLAG_RENTON_LEFT, LavaridgeTown_EventScript_RentonMetalNoAction
 	setvar VAR_0x8004, 8 @ STATION_ROCK_METAL
 	special Special_IsRadioStationPlaying
 	goto_if_eq VAR_RESULT, FALSE, LavaridgeTown_EventScript_RentonMetalNoAction
-	setvar VAR_TEMP_1, 2 @ handoff: player is on the left trigger
-	end
-
-LavaridgeTown_EventScript_RentonMetalStartRight::
-	@ Disable both coord triggers before entering the real global cutscene.
-	setvar VAR_TEMP_1, 3
-	setvar VAR_0x8007, 1
-	goto LavaridgeTown_EventScript_RentonMetalBegin
-	end
-
-LavaridgeTown_EventScript_RentonMetalStartLeft::
-	@ Disable both coord triggers before entering the real global cutscene.
-	setvar VAR_TEMP_1, 3
-	setvar VAR_0x8007, 2
-	goto LavaridgeTown_EventScript_RentonMetalBegin
-	end
-
-LavaridgeTown_EventScript_RentonMetalBegin::
 	lockall
 	hidefollower 1
 
@@ -453,7 +433,6 @@ LavaridgeTown_EventScript_RentonMetalDialogue::
 	removeobject LOCALID_LAVARIDGE_METAL_RENTON
 	setflag FLAG_HIDE_LAVARIDGE_METAL_RENTON
 	setvar VAR_0x8007, 0
-	setvar VAR_TEMP_1, 0
 	releaseall
 	end
 

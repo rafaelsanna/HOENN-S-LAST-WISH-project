@@ -1,0 +1,27 @@
+LAVARIDGE RENTON TRIGGER SOFTLOCK FIX V1
+========================================
+
+Corrige o softlock ao pisar nos triggers do Renton SEM a estação ROCK/METAL.
+
+Arquitetura:
+- os coord events de (8,6) e (6,6) viram TRIGGER_RUN_IMMEDIATELY;
+- o trigger imediato faz apenas:
+    flags
+    Special_IsRadioStationPlaying
+    VAR_RESULT
+- se ROCK/METAL NÃO estiver tocando: END imediato e nenhum lock;
+- se estiver tocando: VAR_TEMP_1 recebe 1 ou 2;
+- LavaridgeTown_OnFrame detecta 1/2 e inicia a cutscene normal;
+- a cutscene muda VAR_TEMP_1 para 3 antes dos waits/movements;
+- no fim volta VAR_TEMP_1 para 0.
+
+Assim o check sem rádio nunca entra no contexto global que controla o player,
+mas a cutscene completa continua podendo usar lockall/waitmovement/waitdooranim.
+
+USO
+----
+cd ~/pokeemerald-expansion
+
+python3 PHYTON/LAVARIDGE_RENTON_TRIGGER_SOFTLOCK_FIX_V1/fix_renton_trigger_softlock.py --dry-run
+
+python3 PHYTON/LAVARIDGE_RENTON_TRIGGER_SOFTLOCK_FIX_V1/fix_renton_trigger_softlock.py --compile --jobs 8

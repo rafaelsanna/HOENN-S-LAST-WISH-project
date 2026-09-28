@@ -1,0 +1,34 @@
+=== LAVARIDGE RENTON TRIGGER SOFTLOCK FIX V1 ===
+
+Sem ROCK/METAL:
+  coord trigger roda imediatamente -> check -> END -> jogador continua livre
+
+Com ROCK/METAL:
+  coord trigger seta VAR_TEMP_1=1/2
+  OnFrame inicia a cutscene normal
+  cutscene seta VAR_TEMP_1=3 antes de lock/waits
+
+scripts.pory: mudaria
+map.json:     mudaria
+events.inc:   mudaria
+
+DRY-RUN OK.
+
+=== LAVARIDGE RENTON TRIGGER SOFTLOCK FIX V1 ===
+
+Sem ROCK/METAL:
+  coord trigger roda imediatamente -> check -> END -> jogador continua livre
+
+Com ROCK/METAL:
+  coord trigger seta VAR_TEMP_1=1/2
+  OnFrame inicia a cutscene normal
+  cutscene seta VAR_TEMP_1=3 antes de lock/waits
+
+scripts.pory: mudaria
+map.json:     mudaria
+events.inc:   mudaria
+Backup: /mnt/data/LAVARIDGE_RENTON_TRIGGER_SOFTLOCK_FIX_V1/backups/scripts_20260928_141149.pory
+Backup: /mnt/data/LAVARIDGE_RENTON_TRIGGER_SOFTLOCK_FIX_V1/backups/map_20260928_141149.json
+Backup: /mnt/data/LAVARIDGE_RENTON_TRIGGER_SOFTLOCK_FIX_V1/backups/events_20260928_141149.inc
+
+Patch aplicado.
