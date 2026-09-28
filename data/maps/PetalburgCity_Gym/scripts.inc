@@ -267,7 +267,7 @@ PetalburgCity_Gym_Text_RecievedEgg:
 # 134 "data/maps/PetalburgCity_Gym/scripts.pory"
 PetalburgCity_Gym_Text_Everstone:
 # 135 "data/maps/PetalburgCity_Gym/scripts.pory"
-	.string "{PLAYER} recieved an Everstone!$"
+	.string "{PLAYER} recieved an Everstone!$"	
 # 136 "data/maps/PetalburgCity_Gym/scripts.pory"
 
 # 137 "data/maps/PetalburgCity_Gym/scripts.pory"
@@ -301,7 +301,7 @@ PetalburgCity_Gym_EventScript_Norman::
 # 151 "data/maps/PetalburgCity_Gym/scripts.pory"
 PetalburgCity_Gym_EventScript_NormanCasual::
 # 152 "data/maps/PetalburgCity_Gym/scripts.pory"
-    // Modo Casual -
+    // Modo Casual - 
 # 153 "data/maps/PetalburgCity_Gym/scripts.pory"
     switch VAR_PETALBURG_GYM_STATE
 # 154 "data/maps/PetalburgCity_Gym/scripts.pory"
@@ -415,7 +415,7 @@ PetalburgCity_Gym_EventScript_NormanBattleHard::
 # 208 "data/maps/PetalburgCity_Gym/scripts.pory"
 
 # 209 "data/maps/PetalburgCity_Gym/scripts.pory"
-// Pós-batalha
+// Pós-batalha 
 # 210 "data/maps/PetalburgCity_Gym/scripts.pory"
 PetalburgCity_Gym_EventScript_NormanAfterBattle::
 # 211 "data/maps/PetalburgCity_Gym/scripts.pory"
@@ -487,7 +487,7 @@ PetalburgCity_Gym_EventScript_NormanAfterBattle::
 # 244 "data/maps/PetalburgCity_Gym/scripts.pory"
 
 # 245 "data/maps/PetalburgCity_Gym/scripts.pory"
-// Rematch
+// Rematch 
 # 246 "data/maps/PetalburgCity_Gym/scripts.pory"
 PetalburgCity_Gym_EventScript_NormanRematch::
 # 247 "data/maps/PetalburgCity_Gym/scripts.pory"
@@ -3763,7 +3763,7 @@ PetalburgCity_Gym_Text_GymGuidePostVictory:
 # 1882 "data/maps/PetalburgCity_Gym/scripts.pory"
 	.string "What an unexpected outcome!$"
 # 1883 "data/maps/PetalburgCity_Gym/scripts.pory"
-
+	
 # 1884 "data/maps/PetalburgCity_Gym/scripts.pory"
 PetalburgCity_Gym_Text_LibraryEmptyBook:
 # 1885 "data/maps/PetalburgCity_Gym/scripts.pory"
@@ -3969,7 +3969,7 @@ PetalburgCity_Gym_Text_BerkeIntro:
 # 1985 "data/maps/PetalburgCity_Gym/scripts.pory"
 	.string "when a POKEMON takes a critical hit!$"
 # 1986 "data/maps/PetalburgCity_Gym/scripts.pory"
-
+	
 # 1987 "data/maps/PetalburgCity_Gym/scripts.pory"
 PetalburgCity_Gym_Text_BerkeDefeat:
 # 1988 "data/maps/PetalburgCity_Gym/scripts.pory"
@@ -4109,7 +4109,7 @@ PetalburgCity_Gym_Text_JodyPostBattle:
 # 2055 "data/maps/PetalburgCity_Gym/scripts.pory"
 	.string "learned, and go show her.$"
 # 2056 "data/maps/PetalburgCity_Gym/scripts.pory"
-
+	
 # 2057 "data/maps/PetalburgCity_Gym/scripts.pory"
 PetalburgCity_Gym_Text_JodyPostBadge:
 # 2058 "data/maps/PetalburgCity_Gym/scripts.pory"

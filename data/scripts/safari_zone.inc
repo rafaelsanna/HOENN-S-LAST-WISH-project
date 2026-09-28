@@ -21,15 +21,6 @@ SafariZone_EventScript_RetirePrompt::
 SafariZone_EventScript_Retire::
 	goto SafariZone_EventScript_Exit
 
-SafariZone_EventScript_TimesUp::
-	lockall
-	playse SE_DING_DONG
-	message SafariZone_Text_TimesUp
-	waitmessage
-	waitbuttonpress
-	releaseall
-	goto SafariZone_EventScript_Exit
-
 SafariZone_EventScript_OutOfBalls::
 	lockall
 	playse SE_DING_DONG
@@ -76,10 +67,6 @@ SafariZone_Text_WouldYouLikeToExit:
 	.string "Would you like to exit the SAFARI\n"
 	.string "ZONE right now?$"
 
-SafariZone_Text_TimesUp:
-	.string "Ding-dong! Time's up!\n"
-	.string "Your SAFARI Game is over.$"
-
 SafariZone_Text_OutOfBalls:
 	.string "You've run out of SAFARI BALLS.\n"
 	.string "Your SAFARI Game is over.$"
@@ -119,9 +106,9 @@ Route121_SafariZoneEntrance_Text_FirstTimeInfo:
 	.string "When you enter the SAFARI ZONE, you\n"
 	.string "start with 30 SAFARI BALLS for\l"
 	.string "catching POKéMON.\p"
-	.string "The SAFARI Game is over when you run\n"
-	.string "out of SAFARI BALLS, or when you've\l"
-	.string "walked 500 steps.\p"
+	.string "You can explore for as long as you\n"
+	.string "like. The SAFARI Game ends when you\l"
+	.string "run out of SAFARI BALLS.\p"
 	.string "Come in and enjoy the SAFARI ZONE!$"
 
 Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay:
@@ -166,8 +153,8 @@ Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase:
 	.string "the LILYCOVE CONTEST HALL.$"
 
 SafariZone_South_Text_StillHaveTimeExit:
-	.string "You still have time left. Would you like\n"
-	.string "to exit the SAFARI ZONE now?$"
+	.string "Would you like to end your SAFARI\n"
+	.string "Game and leave now?$"
 
 SafariZone_South_Text_EnjoyTheRestOfYourAdventure:
 	.string "Please enjoy the rest of your wild\n"
