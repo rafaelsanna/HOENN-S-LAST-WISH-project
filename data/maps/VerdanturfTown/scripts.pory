@@ -29,6 +29,37 @@ VerdanturfTown_EventScript_Man::
 	msgbox VerdanturfTown_Text_AirCleanHere, MSGBOX_NPC
 	end
 
+VerdanturfTown_House_EventScript_RedCardJudge::
+	lock
+	faceplayer
+	goto_if_set FLAG_RED_CARD_JUDGE, VerdanturfTown_EventScript_OldJudgeAfterReward
+	msgbox VerdanturfTown_Text_OldJudgeIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, VerdanturfTown_EventScript_OldJudgeNo
+	closemessage
+	checkitemspace ITEM_RED_CARD, 1
+	goto_if_eq VAR_RESULT, FALSE, VerdanturfTown_EventScript_OldJudgeBagFull
+	msgbox VerdanturfTown_Text_OldJudgeYes, MSGBOX_DEFAULT
+	giveitem ITEM_RED_CARD
+	goto_if_eq VAR_RESULT, FALSE, VerdanturfTown_EventScript_OldJudgeBagFull
+	setflag FLAG_RED_CARD_JUDGE
+	release
+	end
+
+VerdanturfTown_EventScript_OldJudgeNo::
+	msgbox VerdanturfTown_Text_OldJudgeNo, MSGBOX_DEFAULT
+	release
+	end
+
+VerdanturfTown_EventScript_OldJudgeBagFull::
+	msgbox VerdanturfTown_Text_OldJudgeBagFull, MSGBOX_DEFAULT
+	release
+	end
+
+VerdanturfTown_EventScript_OldJudgeAfterReward::
+	msgbox VerdanturfTown_Text_OldJudgeAfterReward, MSGBOX_DEFAULT
+	release
+	end
+
 VerdanturfTown_EventScript_Camper::
 	msgbox VerdanturfTown_Text_MakeBattleTentDebut, MSGBOX_NPC
 	end
@@ -131,5 +162,43 @@ VerdanturfTown_Text_RusturfTunnelSign:
 VerdanturfTown_Text_CafeSign:
 	.string "VERDANTURF CAFE\n"
 	.string "Fresh coffee brewed daily!$"
+
+VerdanturfTown_Text_OldJudgeIntro:
+	.string "OLD JUDGE: I used to be a battle\n"
+	.string "JUDGE, you know.\p"
+	.string "I even served as a JUDGE for the\n"
+	.string "ELITE FOUR once.\p"
+	.string "But when I retired, I realized\n"
+	.string "something rather sad...\p"
+	.string "The glory always goes to the\n"
+	.string "TRAINERS and their POKéMON.\p"
+	.string "Hardly anyone remembers the people\n"
+	.string "who make the difficult calls.\p"
+	.string "Tell me... Do you think a JUDGE's\n"
+	.string "work is important?$"
+
+VerdanturfTown_Text_OldJudgeNo:
+	.string "OLD JUDGE: Yeah... I understand.\n"
+	.string "The fame belongs to the battlers.\p"
+	.string "That's how it's always been.$"
+
+VerdanturfTown_Text_OldJudgeYes:
+	.string "OLD JUDGE: You... really think so?\n"
+	.string "You think serving the ELITE FOUR\p"
+	.string "as a JUDGE was impressive?\p"
+	.string "Heh... Thank you. I haven't heard\n"
+	.string "words like that in a long time.\p"
+	.string "Please, take this RED CARD.\n"
+	.string "Consider it an old JUDGE's thanks.$"
+
+VerdanturfTown_Text_OldJudgeBagFull:
+	.string "OLD JUDGE: Ah, your BAG is full.\n"
+	.string "Make some room and come back.\p"
+	.string "I still want you to have this.$"
+
+VerdanturfTown_Text_OldJudgeAfterReward:
+	.string "OLD JUDGE: Every battle needs\n"
+	.string "someone willing to make hard calls.\p"
+	.string "Thank you for remembering that.$"
 
 `
