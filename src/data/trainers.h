@@ -16193,7 +16193,7 @@ F_TRAINER_FEMALE |
 #line 6262
             .ability = ABILITY_LEVITATE,
 #line 6263
-            .lvl = 16,
+            .lvl = 15,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
