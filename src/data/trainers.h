@@ -54421,3 +54421,128 @@ F_TRAINER_FEMALE |
             },
         },
     },
+#line 20904
+    [DIFFICULTY_NORMAL][TRAINER_GON] =
+    {
+#line 20905
+        .trainerName = _("GON"),
+#line 20906
+        .trainerClass = TRAINER_CLASS_BLACK_BELT,
+#line 20907
+        .trainerPic = TRAINER_PIC_BLACK_BELT,
+        .encounterMusic_gender =
+#line 20909
+            TRAINER_ENCOUNTER_MUSIC_INTENSE,
+#line 20910
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 20911
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_BLACK_BELT,
+        .partySize = 5,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 20913
+            .species = SPECIES_MEDICHAM,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20913
+            .heldItem = ITEM_PROTECTIVE_PADS,
+#line 20915
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20916
+            .ability = ABILITY_PURE_POWER,
+#line 20914
+            .lvl = 45,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 20917
+                MOVE_BULLET_PUNCH,
+                MOVE_FOCUS_PUNCH,
+                MOVE_THUNDER_PUNCH,
+                MOVE_DRAIN_PUNCH,
+            },
+            },
+            {
+#line 20922
+            .species = SPECIES_HARIYAMA,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20922
+            .heldItem = ITEM_PROTECTIVE_PADS,
+#line 20924
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20923
+            .lvl = 43,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 20925
+                MOVE_DRAIN_PUNCH,
+                MOVE_FOCUS_PUNCH,
+                MOVE_THUNDER_PUNCH,
+                MOVE_ICE_PUNCH,
+            },
+            },
+            {
+#line 20930
+            .species = SPECIES_PRIMEAPE,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20930
+            .heldItem = ITEM_PROTECTIVE_PADS,
+#line 20932
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20931
+            .lvl = 42,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 20933
+                MOVE_DRAIN_PUNCH,
+                MOVE_FIRE_PUNCH,
+                MOVE_THUNDER_PUNCH,
+                MOVE_ICE_PUNCH,
+            },
+            },
+            {
+#line 20938
+            .species = SPECIES_BRELOOM,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20938
+            .heldItem = ITEM_PROTECTIVE_PADS,
+#line 20940
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20939
+            .lvl = 43,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 20941
+                MOVE_DRAIN_PUNCH,
+                MOVE_MACH_PUNCH,
+                MOVE_THUNDER_PUNCH,
+                MOVE_FOCUS_PUNCH,
+            },
+            },
+            {
+#line 20946
+            .species = SPECIES_POLIWRATH,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 20946
+            .heldItem = ITEM_PROTECTIVE_PADS,
+#line 20948
+            .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
+#line 20947
+            .lvl = 44,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 20949
+                MOVE_DRAIN_PUNCH,
+                MOVE_ICE_PUNCH,
+                MOVE_THUNDER_PUNCH,
+                MOVE_FOCUS_PUNCH,
+            },
+            },
+        },
+    },

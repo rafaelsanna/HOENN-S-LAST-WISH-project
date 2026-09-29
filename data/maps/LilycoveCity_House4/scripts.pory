@@ -11,13 +11,17 @@ LilycoveCity_House4_EventScript_Man2::
 	end
 
 LilycoveCity_House4_Text_MysteriesAtBottomOfSea:
-	.string "This planet's biggest mysteries are\n"
-	.string "at the bottom of the sea.\p"
-	.string "Somebody said that, but I don't know…$"
+	.string "We've been married for years.\n"
+	.string "LILYCOVE, the place to find love!\p"
+	.string "The calm, the view, it's perfect.\n"
+	.string "You don't seem focused on this, do you?\l"
+	.string "Fair enough, focused solely on battles?\p"
+	.string "With that spirit, you can go far!\p"
+	.string "Like, becoming the Champion of HOENN!$"
 
 LilycoveCity_House4_Text_UnderwaterTrenchMossdeepSootopolis:
-	.string "There's a deep underwater trench\n"
-	.string "between MOSSDEEP and SOOTOPOLIS.\p"
-	.string "That's what someone told me, anyway.$"
+	.string "Getting married is good…\n"
+	.string "But focusing on what you like,\p"
+	.string "It's the best thing you can ever do!$"
 
 `

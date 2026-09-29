@@ -589,18 +589,18 @@ LilycoveCity_Text_StrangeCaveInCove:
 	.string "the cove at the edge of town?$"
 
 LilycoveCity_Text_GoingToMoveDeleterForHMs:
-	.string "I'm going to teach my POKéMON some new\n"
-	.string "moves for entering a CONTEST.\p"
-	.string "So, I'm going to see the MOVE DELETER\n"
-	.string "and make it forget HM moves.$"
+	.string "Battles aren't for me!\n"
+	.string "Too much brutality and rivalry.\p"
+	.string "CONTEST are much more exciting!\n"
+	.string "Beauty matters more than strength!$"
 
 LilycoveCity_Text_ImFromKanto:
-	.string "I came from KANTO.\p"
-	.string "The HOENN region is beautiful with\n"
-	.string "all its water and verdant nature.\p"
-	.string "Hunh? Wait a second…\p"
-	.string "Could there be rare POKéMON that live\n"
-	.string "only in this area?$"
+    .string "What an amazing outfit!\p"
+    .string "Now that is style…\n"
+    .string "It's a shame you just plagiarist!\p"
+    .string "Everyone knows there's a famous trainer\p"
+    .string "who is beating everyone!\n"
+    .string "But his outfit is even more stylish!$" 
 
 LilycoveCity_Text_TeamAquaBeenTrainingWailmer:
 	.string "TEAM AQUA's been training their\n"
@@ -732,7 +732,7 @@ LilycoveCity_Text_ExplainBerryBlender:
 	.string "its condition will improve by a lot.$"
 
 LilycoveCity_Text_HeardTowerCalledSkyPillar:
-	.string "I heard there's a tower somewhere out\n"
+	.string "I sailed for years and years…\n"
 	.string "on the sea routes.\p"
 	.string "It's called the SKY PILLAR, I hear.$"
 

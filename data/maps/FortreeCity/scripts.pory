@@ -103,10 +103,10 @@ FortreeCity_Text_SawGiganticPokemonInSky:
 	.string "Were you at a volcano or something?$"
 
 FortreeCity_Text_SomethingBlockingGym:
-	.string "I want to go to the POKéMON GYM,\n"
-	.string "but something's blocking the way.\p"
-	.string "After all the bother I went through\n"
-	.string "training on ROUTE 120…$"
+	.string "TAKA is so cool! He is fearless!\n"
+	.string "His GYM is in the middle of the clouds.\p"
+	.string "Do you think you can beat him?\n"
+	.string "You? No chance…$"
 
 FortreeCity_Text_ThisTimeIllBeatWinona:
 	.string "I've got my pride-and-joy POKéMON\n"
@@ -123,7 +123,7 @@ FortreeCity_Text_EveryoneHealthyAndLively:
 	.string "trees.\p"
 	.string "Perhaps because of that lifestyle,\n"
 	.string "everyone is healthy and lively.\p"
-	.string "Why, even myself--I feel as if I've\n"
+	.string "Why, even myself! I feel as if I've\n"
 	.string "grown thirty years younger.$"
 
 FortreeCity_Text_BugPokemonComeThroughWindow:
@@ -134,7 +134,7 @@ FortreeCity_Text_BugPokemonComeThroughWindow:
 
 FortreeCity_Text_GameboyKidItemLedge:
 	.string "I think I see an item up on that\n"
-	.string "ledge there, but how could I get to it...?$"
+	.string "ledge there, but how could I get to it…?$"
 
 FortreeCity_Text_GameboyKidGotItem:
 	.string "Wow! I can't believe you jumped\n"

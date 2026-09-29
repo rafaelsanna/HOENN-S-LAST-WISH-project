@@ -611,18 +611,18 @@ LilycoveCity_Text_StrangeCaveInCove:
 	.string "the cove at the edge of town?$"
 
 LilycoveCity_Text_GoingToMoveDeleterForHMs:
-	.string "I'm going to teach my POKéMON some new\n"
-	.string "moves for entering a CONTEST.\p"
-	.string "So, I'm going to see the MOVE DELETER\n"
-	.string "and make it forget HM moves.$"
+	.string "Battles aren't for me!\n"
+	.string "Too much brutality and rivalry.\p"
+	.string "CONTEST are much more exciting!\n"
+	.string "Beauty matters more than strength!$"
 
 LilycoveCity_Text_ImFromKanto:
-	.string "I came from KANTO.\p"
-	.string "The HOENN region is beautiful with\n"
-	.string "all its water and verdant nature.\p"
-	.string "Hunh? Wait a second…\p"
-	.string "Could there be rare POKéMON that live\n"
-	.string "only in this area?$"
+    .string "What an amazing outfit!\p"
+    .string "Now that is style…\n"
+    .string "It's a shame you just plagiarized!\p"
+    .string "Everyone knows there's a famous trainer\n"
+    .string "who is beating everyone!\p"
+    .string "But his outfit is even more stylish!$" 
 
 LilycoveCity_Text_TeamAquaBeenTrainingWailmer:
 	.string "TEAM AQUA's been training their\n"
@@ -754,14 +754,20 @@ LilycoveCity_Text_ExplainBerryBlender:
 	.string "its condition will improve by a lot.$"
 
 LilycoveCity_Text_HeardTowerCalledSkyPillar:
-	.string "I heard there's a tower somewhere out\n"
-	.string "on the sea routes.\p"
-	.string "It's called the SKY PILLAR, I hear.$"
+	.string "I have been sailing for years, and one day,\n"
+	.string "after a storm, I saw a tower near Route 131.\p"
+	.string "It was so tall that it scratched the heavens.\n"
+	.string "The currents made it impossible to get close.\p"
+	.string "The storm returned, so I had to turn back.\n"
+	.string "I never saw that tower again…\p"
+	.string "My friend says I was sailing while drunk.\n"
+	.string "But it's true, I'm sure of it!\p"
+	.string "Legends say the name is… SKY PILLAR!$"
 
 LilycoveCity_Text_SawTallTowerOnRoute131:
-	.string "I saw this tall tower somewhere\n"
-	.string "around ROUTE 131.\p"
-	.string "Could that possibly be…?$"
+	.string "Don't pay too much attention to him!\n"
+	.string "He gets wasted and goes to the sea.\p"
+	.string "Then he comes telling these tall tales!$"
 
 LilycoveCity_Text_JustArrivedAndSawRarePokemon:
 	.string "We just arrived here on our\n"

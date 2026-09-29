@@ -957,7 +957,8 @@
 #define TRAINER_SEABREEZE_SHIPPING1F_GRUNT_1           951
 #define TRAINER_SEABREEZE_SHIPPING1F_GRUNT_2           952
 #define TRAINER_SEABREEZE_SHIPPING1F_GRUNT_3           953
-#define TRAINER_SOLANA                                  954
+#define TRAINER_SOLANA                                 954
+#define TRAINER_GON                                 955
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled

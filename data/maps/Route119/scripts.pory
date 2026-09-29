@@ -430,6 +430,41 @@ Route119_EventScript_Rachel::
 	msgbox Route119_Text_RachelPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route119_EventScript_ProtectivePads::
+	lock
+	faceplayer
+	goto_if_set FLAG_PROTECTIVE_PADS, Route119_EventScript_GonAfterReward
+	goto_if_defeated TRAINER_GON, Route119_EventScript_GonGiveReward
+	msgbox Route119_Text_GonChallenge, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route119_EventScript_GonDecline
+	closemessage
+	trainerbattle_no_intro TRAINER_GON, Route119_Text_GonDefeat
+	goto Route119_EventScript_GonGiveReward
+	end
+
+Route119_EventScript_GonGiveReward::
+	msgbox Route119_Text_GonReward, MSGBOX_DEFAULT
+	giveitem ITEM_PROTECTIVE_PADS
+	goto_if_eq VAR_RESULT, FALSE, Route119_EventScript_GonBagFull
+	setflag FLAG_PROTECTIVE_PADS
+	release
+	end
+
+Route119_EventScript_GonBagFull::
+	msgbox Route119_Text_GonBagFull, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_EventScript_GonDecline::
+	msgbox Route119_Text_GonDecline, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_EventScript_GonAfterReward::
+	msgbox Route119_Text_GonAfterReward, MSGBOX_DEFAULT
+	release
+	end
+
 Route119_EventScript_BridgeAquaGrunt1::
 	lock
 	faceplayer
@@ -470,6 +505,44 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 	addvar VAR_SCOTT_STATE, 1
 	releaseall
 	end
+
+Route119_Text_GonChallenge:
+	.string "HEADBUTTING TREES?\n"
+	.string "For items? That's nonsense!\p"
+	.string "My POKéMON and I train hard.\n"
+	.string "We punch trees until they fall!\p"
+	.string "Have we knocked one down yet?\n"
+	.string "...Well, not quite.\p"
+	.string "But our hands are definitely\n"
+	.string "getting nice and callused!\p"
+	.string "If you think you're so clever,\n"
+	.string "why don't you prove it?\p"
+	.string "Think you can beat me?$"
+
+Route119_Text_GonDefeat:
+	.string "Oof... So much for\n"
+	.string "all that fist training...$"
+
+Route119_Text_GonReward:
+	.string "All right, you got me!\n"
+	.string "You've earned my respect.\p"
+	.string "Take these PROTECTIVE PADS.\n"
+	.string "Your hands will thank you.$"
+
+Route119_Text_GonBagFull:
+	.string "Your BAG is full!\n"
+	.string "Make some room and come back.\p"
+	.string "I still owe you those pads.$"
+
+Route119_Text_GonDecline:
+	.string "Hah! Thought so.\n"
+	.string "We'll keep training our fists.$"
+
+Route119_Text_GonAfterReward:
+	.string "Those PROTECTIVE PADS\n"
+	.string "should keep your hands safe.\p"
+	.string "We'll knock a tree down someday.\n"
+	.string "Just you wait!$"
 
 Route119_Text_MayIntro:
 	.string "ZINNIA: {PLAYER}{KUN}!\n"
@@ -607,4 +680,14 @@ Route119_Text_TrainerTipsDecoration:
 	.string "Pick your favorite items and create\n"
 	.string "your very own SECRET BASE exactly the\l"
 	.string "way you want.$"
+
+EventScript_OverworldPokemonCry_MEDICHAM::
+	lock
+	faceplayer
+	playmoncry SPECIES_MEDICHAM, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
 `
+
