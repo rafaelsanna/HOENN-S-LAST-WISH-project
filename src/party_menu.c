@@ -720,6 +720,7 @@ static void Task_HandleReplaceMoveYesNoInput(u8);
 static void Task_ShowSummaryScreenToForgetMove(u8);
 static void StopLearningMovePrompt(u8);
 static void CB2_ShowSummaryScreenToForgetMove(void);
+static bool8 CanKeepUsingLevelUpItem(void);
 static void CB2_ReturnToPartyMenuWhileLearningMove(void);
 static void Task_ReturnToPartyMenuWhileLearningMove(u8);
 static void DisplayPartyMenuForgotMoveMessage(u8);
@@ -7623,11 +7624,19 @@ static void CB2_ShowSummaryScreenToForgetMove(void)
     ShowSelectMovePokemonSummaryScreen(gPlayerParty, gPartyMenu.slotId, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuWhileLearningMove, gPartyMenu.data1);
 }
 
+static bool8 CanKeepUsingLevelUpItem(void)
+{
+    return (GetItemFieldFunc(gSpecialVar_ItemId) == ItemUseOutOfBattle_RareCandy
+         || gSpecialVar_ItemId == ITEM_INFINITE_CANDY)
+        && gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD
+        && CheckBagHasItem(gSpecialVar_ItemId, 1);
+}
+
 static void CB2_ReturnToPartyMenuWhileLearningMove(void)
 {
     if (sFinalLevel != 0)
         SetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_LEVEL, &sFinalLevel); // to avoid displaying incorrect level
-    if (GetItemFieldFunc(gSpecialVar_ItemId) == ItemUseOutOfBattle_RareCandy && gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD && CheckBagHasItem(gSpecialVar_ItemId, 1))
+    if (CanKeepUsingLevelUpItem())
         InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_USE_ITEM, TRUE, PARTY_MSG_NONE, Task_ReturnToPartyMenuWhileLearningMove, gPartyMenu.exitCallback);
     else
         InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, TRUE, PARTY_MSG_NONE, Task_ReturnToPartyMenuWhileLearningMove, gPartyMenu.exitCallback);
@@ -8015,7 +8024,7 @@ static void PartyMenuTryEvolution(u8 taskId)
     {
         GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, DO_EVO);
         FreePartyPointers();
-        if (GetItemFieldFunc(gSpecialVar_ItemId) == ItemUseOutOfBattle_RareCandy && gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD && CheckBagHasItem(gSpecialVar_ItemId, 1))
+        if (CanKeepUsingLevelUpItem())
             gCB2_AfterEvolution = CB2_ReturnToPartyMenuUsingRareCandy;
         else
             gCB2_AfterEvolution = gPartyMenu.exitCallback;
