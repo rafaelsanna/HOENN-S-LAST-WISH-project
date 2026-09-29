@@ -6631,7 +6631,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
             ANIMCMD_FRAME(1, 6),
             ANIMCMD_FRAME(0, 6),
             ANIMCMD_FRAME(1, 6),
-            ANIMCMD_FRAME(0, 22),
+            ANIMCMD_FRAME(1, 6),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 6),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 6),
+            ANIMCMD_FRAME(0, 6),
         ),
         .frontAnimId = ANIM_H_JUMPS_V_STRETCH_TWICE,
         .backPic = gMonBackPic_Sharpedo,
@@ -6645,7 +6650,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .iconPalette = gMonIconPalette_Sharpedo,
         .shinyIconPalette = gMonShinyIconPalette_Sharpedo,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-2, 14, SHADOW_SIZE_M)
+        SHADOW(-2, 10, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Sharpedo)
         OVERWORLD(
             sPicTable_Sharpedo,
