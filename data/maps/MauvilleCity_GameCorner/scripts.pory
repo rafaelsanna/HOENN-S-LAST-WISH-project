@@ -2110,4 +2110,185 @@ MauvilleCity_GameCorner_Text_ArcadeCoinsLost:
 
 MauvilleCity_GameCorner_Text_ArcadeCoinsEven:
 	.string "You're even on COINS.$"
+
+@ ============================================================
+@ GENTLEMAN + VOLTORB: LOADED DICE NUMBER GAME
+@ ============================================================
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpin::
+	lockall
+	faceplayer
+	goto_if_set FLAG_LOADED_DICE_GAME_CORNER, MauvilleCity_GameCorner_EventScript_VoltorbSpinAlreadyWon
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinIntro, MSGBOX_YESNO
+	closemessage
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_VoltorbSpinDecline
+
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoCoinCase
+
+	checkcoins VAR_TEMP_3
+	goto_if_lt VAR_TEMP_3, 50, MauvilleCity_GameCorner_EventScript_VoltorbSpinNotEnoughCoins
+
+	checkitemspace ITEM_LOADED_DICE, 1
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpace
+
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinPickNumber, MSGBOX_DEFAULT
+	dynmultichoice 24, 0, TRUE, 6, 0, DYN_MULTICHOICE_CB_NONE, MauvilleCity_GameCorner_Text_VoltorbSpinChoice1, MauvilleCity_GameCorner_Text_VoltorbSpinChoice2, MauvilleCity_GameCorner_Text_VoltorbSpinChoice3, MauvilleCity_GameCorner_Text_VoltorbSpinChoice4, MauvilleCity_GameCorner_Text_VoltorbSpinChoice5, MauvilleCity_GameCorner_Text_VoltorbSpinChoice6
+	copyvar VAR_TEMP_1, VAR_RESULT
+	addvar VAR_TEMP_1, 1
+	buffernumberstring STR_VAR_1, VAR_TEMP_1
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked, MSGBOX_DEFAULT
+
+	random 6
+	addvar VAR_RESULT, 1
+	copyvar VAR_TEMP_2, VAR_RESULT
+
+	playse SE_BALL
+	applymovement LOCALID_MAUVILLE_CITY_GAME_CORNER_VOLTORB_SPIN, MauvilleCity_GameCorner_Movement_VoltorbSpin
+	waitmovement 0
+	playmoncry SPECIES_VOLTORB, CRY_MODE_NORMAL
+	waitmoncry
+
+	buffernumberstring STR_VAR_1, VAR_TEMP_2
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinResult, MSGBOX_DEFAULT
+
+	compare VAR_TEMP_1, VAR_TEMP_2
+	goto_if_eq MauvilleCity_GameCorner_EventScript_VoltorbSpinWin
+
+	removecoins 50
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinLose, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpinWin::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinWin, MSGBOX_DEFAULT
+	giveitem ITEM_LOADED_DICE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpaceAfterWin
+	setflag FLAG_LOADED_DICE_GAME_CORNER
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpaceAfterWin::
+	@ Extremely defensive fallback. The game checks item space before the roll.
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpinAlreadyWon::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinAlreadyWon, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpinDecline::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinDecline, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNoCoinCase::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNoCoinCase, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNotEnoughCoins::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNotEnoughCoins, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpace::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNoBagSpace, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_Movement_VoltorbSpin:
+	face_up
+	delay_1
+	face_right
+	delay_1
+	face_down
+	delay_1
+	face_left
+	delay_1
+	face_up
+	delay_1
+	face_right
+	delay_1
+	face_down
+	delay_1
+	face_left
+	delay_1
+	face_right
+	step_end
+
+MauvilleCity_GameCorner_Text_VoltorbSpinIntro:
+	.string "HAHAHA! My VOLTORB and I love\n"
+	.string "to gamble!\p"
+	.string "Want to play a little game?\n"
+	.string "Guess the number it will roll.\p"
+	.string "Get it right and I'll give you\n"
+	.string "a prize. Miss, and you pay\p"
+	.string "me just 50 COINS. What do\n"
+	.string "you say?$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinPickNumber:
+	.string "Pick a number from 1 to 6.$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked:
+	.string "You picked {STR_VAR_1}!\n"
+	.string "All right, VOLTORB... ROLL!$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinResult:
+	.string "VOLTORB rolled a {STR_VAR_1}!$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinWin:
+	.string "HAHAHA! You got it exactly!\n"
+	.string "A deal is a deal.\p"
+	.string "Take this LOADED DICE.\n"
+	.string "You've earned it!$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinLose:
+	.string "HAHAHA! Wrong number!\n"
+	.string "That's 50 COINS for me.\p"
+	.string "Come back if you want another\n"
+	.string "shot at beating VOLTORB!$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinDecline:
+	.string "HAHAHA! Playing it safe?\n"
+	.string "VOLTORB will be waiting!$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinNoCoinCase:
+	.string "You'll need a COIN CASE\n"
+	.string "before we can make a wager.$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinNotEnoughCoins:
+	.string "HAHAHA! You're a little short.\n"
+	.string "Come back with 50 COINS.$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinNoBagSpace:
+	.string "Hold on! Your BAG is full.\n"
+	.string "Make room for the prize first.$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinAlreadyWon:
+	.string "HAHAHA! You already beat\n"
+	.string "VOLTORB at its own game!\p"
+	.string "Enjoy that LOADED DICE.\n"
+	.string "You earned those lucky rolls!$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice1:
+	.string "1$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice2:
+	.string "2$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice3:
+	.string "3$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice4:
+	.string "4$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice5:
+	.string "5$"
+
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice6:
+	.string "6$"
+
 `
