@@ -183,7 +183,7 @@
 #define FLAG_CUTE_PAINTING_MADE              0xA2
 #define FLAG_SMART_PAINTING_MADE             0xA3
 #define FLAG_TOUGH_PAINTING_MADE             0xA4
-#define FLAG_RECEIVED_TM_ROCK_TOMB           0xA5
+#define FLAG_RECEIVED_TM_STEALTH_ROCK        0xA5
 #define FLAG_RECEIVED_TM_BULK_UP             0xA6
 #define FLAG_RECEIVED_TM_SHOCK_WAVE          0xA7
 #define FLAG_RECEIVED_TM_OVERHEAT            0xA8
@@ -1316,7 +1316,7 @@
 #define FLAG_PROTECTIVE_PADS                                        0x4EA
 #define FLAG_LOADED_DICE_GAME_CORNER                                0x4EB 
 #define FLAG_RED_CARD_JUDGE                                         0x4EC 
-#define FLAG_UNUSED_0x4ED                                           0x4ED // Unused Flag
+#define FLAG_ITEM_SAFARI_ZONE_SOUTH_POWER_GEM_TM                    0x4ED
 #define FLAG_UNUSED_0x4EE                                           0x4EE // Unused Flag
 #define FLAG_UNUSED_0x4EF                                           0x4EF // Unused Flag
 

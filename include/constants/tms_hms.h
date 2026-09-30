@@ -40,7 +40,7 @@
     F(SLUDGE_BOMB) \
     F(SANDSTORM) \
     F(FIRE_BLAST) \
-    F(ROCK_TOMB) \
+    F(STEALTH_ROCK) \
     F(ACROBATICS) \
     F(TORMENT) \
     F(WISH) \
@@ -56,7 +56,7 @@
     F(DRAGON_PULSE) \
     F(SHADOW_CLAW) \
     F(POISON_JAB) \
-    F(ROCK_SLIDE) \
+    F(POWER_GEM) \
     F(DARK_PULSE) \
     F(FLASH_CANNON) \
     F(X_SCISSOR) \

@@ -93,7 +93,7 @@ RustboroCity_Gym_AfterBattle::
 # 47 "data/maps/RustboroCity_Gym/scripts.pory"
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
 # 48 "data/maps/RustboroCity_Gym/scripts.pory"
-	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
+	goto_if_unset FLAG_RECEIVED_TM_STEALTH_ROCK, RustboroCity_Gym_EventScript_GiveStealthRock
 # 49 "data/maps/RustboroCity_Gym/scripts.pory"
 	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
 # 50 "data/maps/RustboroCity_Gym/scripts.pory"
@@ -107,17 +107,17 @@ RustboroCity_Gym_AfterBattle::
 # 54 "data/maps/RustboroCity_Gym/scripts.pory"
 	
 # 55 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_EventScript_GiveRockTomb::
+RustboroCity_Gym_EventScript_GiveStealthRock::
 # 56 "data/maps/RustboroCity_Gym/scripts.pory"
-	giveitem ITEM_TM_ROCK_TOMB
+	giveitem ITEM_TM_STEALTH_ROCK
 # 57 "data/maps/RustboroCity_Gym/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 # 58 "data/maps/RustboroCity_Gym/scripts.pory"
-	setflag FLAG_RECEIVED_TM_ROCK_TOMB
+	setflag FLAG_RECEIVED_TM_STEALTH_ROCK
 # 59 "data/maps/RustboroCity_Gym/scripts.pory"
 	createfieldmugshot MUGSHOT_TERRA, EMOTE_NORMAL
 # 60 "data/maps/RustboroCity_Gym/scripts.pory"
-	msgbox RustboroCity_Gym_Text_ExplainRockTomb, MSGBOX_DEFAULT
+	msgbox RustboroCity_Gym_Text_ExplainStealthRock, MSGBOX_DEFAULT
 # 61 "data/maps/RustboroCity_Gym/scripts.pory"
 	removefieldmugshot
 # 62 "data/maps/RustboroCity_Gym/scripts.pory"
@@ -573,178 +573,184 @@ RustboroCity_Gym_Text_StoneBadgeInfoTakeThis:
 # 287 "data/maps/RustboroCity_Gym/scripts.pory"
 
 # 288 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_ExplainRockTomb:
+RustboroCity_Gym_Text_ExplainStealthRock:
 # 289 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "That TM39 contains ROCK TOMB.\p"
+	.string "That TM39 contains STEALTH ROCK.\p"
 # 290 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "It inflicts damage and lowers SPEED.\p"
+	.string "It sets a trap of floating stones around\n"
 # 291 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "A TM instantly teaches the move\n"
+	.string "the opposing team.\p"
 # 292 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "to a POKEMON.\p"
+	.string "The trap hurts opposing POKEMON when\n"
 # 293 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "In the past, TMs could only be used once,\n"
+	.string "they switch into battle.\p"
 # 294 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "but technology has evolved, hasn't it?\p"
+	.string "A TM instantly teaches the move\n"
 # 295 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Now we can use them indefinitely,\n"
+	.string "to a POKEMON.\p"
 # 296 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "that's just great!$"
+	.string "In the past, TMs could only be used once,\n"
 # 297 "data/maps/RustboroCity_Gym/scripts.pory"
-
+	.string "but technology has evolved, hasn't it?\p"
 # 298 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_RoxannePostBattle:
+	.string "Now we can use them indefinitely,\n"
 # 299 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "If you want a real challenge, come\n"
+	.string "that's just great!$"
 # 300 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "back later! I'll have my true team ready.\p"
-# 301 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Maybe we can even hit a climbing\n"
-# 302 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "route together someday!$"
-# 303 "data/maps/RustboroCity_Gym/scripts.pory"
 
+# 301 "data/maps/RustboroCity_Gym/scripts.pory"
+RustboroCity_Gym_Text_RoxannePostBattle:
+# 302 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "If you want a real challenge, come\n"
+# 303 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "back later! I'll have my true team ready.\p"
 # 304 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_GymStatue:
+	.string "Maybe we can even hit a climbing\n"
 # 305 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "RUSTBORO CITY POKEMON GYM$"
+	.string "route together someday!$"
 # 306 "data/maps/RustboroCity_Gym/scripts.pory"
 
 # 307 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_GymStatueCertified:
+RustboroCity_Gym_Text_GymStatue:
 # 308 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "RUSTBORO CITY POKEMON GYM\p"
+	.string "RUSTBORO CITY POKEMON GYM$"
 # 309 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "TERRA'S CERTIFIED TRAINERS:\n"
+
 # 310 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "{PLAYER}$"
+RustboroCity_Gym_Text_GymStatueCertified:
 # 311 "data/maps/RustboroCity_Gym/scripts.pory"
-
+	.string "RUSTBORO CITY POKEMON GYM\p"
 # 312 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_RoxanneRegisterCall:
+	.string "TERRA'S CERTIFIED TRAINERS:\n"
 # 313 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "... ... ... ... ... ...\n"
+	.string "{PLAYER}$"
 # 314 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "... ... ... ... ... Beep!\p"
+
 # 315 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "TERRA: Hey, {PLAYER}!\n"
+RustboroCity_Gym_Text_RoxanneRegisterCall:
 # 316 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "It's TERRA from RUSTBORO CITY.\p"
-# 317 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "RENTON called me - said there's some\n"
-# 318 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "rookie with a cape who looks badass.\p"
-# 319 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Then he invited me for a night out\n"
-# 320 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "to get into trouble around town.\p"
-# 321 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Obviously I said no! I've got rocks\n"
-# 322 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "to climb and a Gym to run!\p"
-# 323 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "But don't get too comfortable ahead!\n"
-# 324 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "I'm training hard for our rematch!\p"
-# 325 "data/maps/RustboroCity_Gym/scripts.pory"
 	.string "... ... ... ... ... ...\n"
+# 317 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "... ... ... ... ... Beep!\p"
+# 318 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "TERRA: Hey, {PLAYER}!\n"
+# 319 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "It's TERRA from RUSTBORO CITY.\p"
+# 320 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "RENTON called me - said there's some\n"
+# 321 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "rookie with a cape who looks badass.\p"
+# 322 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "Then he invited me for a night out\n"
+# 323 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "to get into trouble around town.\p"
+# 324 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "Obviously I said no! I've got rocks\n"
+# 325 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "to climb and a Gym to run!\p"
 # 326 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "... ... ... ... ... Click!$"
+	.string "But don't get too comfortable ahead!\n"
 # 327 "data/maps/RustboroCity_Gym/scripts.pory"
-
+	.string "I'm training hard for our rematch!\p"
 # 328 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_RegisteredRoxanne:
+	.string "... ... ... ... ... ...\n"
 # 329 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Registered GYM LEADER TERRA\n"
+	.string "... ... ... ... ... Click!$"
 # 330 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "in the POKENAV.$"
+
 # 331 "data/maps/RustboroCity_Gym/scripts.pory"
-
+RustboroCity_Gym_Text_RegisteredRoxanne:
 # 332 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_RoxannePreRematch:
+	.string "Registered GYM LEADER TERRA\n"
 # 333 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "TERRA: Hey, you're back! Great to see\n"
+	.string "in the POKENAV.$"
 # 334 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "you again on my mountain.\p"
+
 # 335 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "I'm TERRA - since our last battle,\n"
+RustboroCity_Gym_Text_RoxannePreRematch:
 # 336 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "I hit the summit and found some\l"
+	.string "TERRA: Hey, you're back! Great to see\n"
 # 337 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "badass Rock-type POKEMON.\p"
+	.string "you again on my mountain.\p"
 # 338 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "I've been training nonstop.\n"
+	.string "I'm TERRA - since our last battle,\n"
 # 339 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Let's see how much we've leveled up!\p"
+	.string "I hit the summit and found some\l"
 # 340 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Ready for a real rematch?\n"
+	.string "badass Rock-type POKEMON.\p"
 # 341 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Let's CLIMB!$"
+	.string "I've been training nonstop.\n"
 # 342 "data/maps/RustboroCity_Gym/scripts.pory"
-
+	.string "Let's see how much we've leveled up!\p"
 # 343 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_RoxanneRematchDefeat:
+	.string "Ready for a real rematch?\n"
 # 344 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Grr...\n"
+	.string "Let's CLIMB!$"
 # 345 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Again, I have lost...$"
+
 # 346 "data/maps/RustboroCity_Gym/scripts.pory"
-
+RustboroCity_Gym_Text_RoxanneRematchDefeat:
 # 347 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_RoxannePostRematch:
+	.string "Grr...\n"
 # 348 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "TERRA: Guess I've still got some climbing\n"
+	.string "Again, I have lost...$"
 # 349 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "to do in POKEMON battles.\p"
+
 # 350 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "But that fires me up - there's always\n"
+RustboroCity_Gym_Text_RoxannePostRematch:
 # 351 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "another peak to reach!$"
+	.string "TERRA: Guess I've still got some climbing\n"
 # 352 "data/maps/RustboroCity_Gym/scripts.pory"
-
+	.string "to do in POKEMON battles.\p"
 # 353 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
+	.string "But that fires me up - there's always\n"
 # 354 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "TERRA: Hey, you're back! Always good\n"
+	.string "another peak to reach!$"
 # 355 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "to see you on my mountain.\p"
+
 # 356 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "We've both climbed through tons\n"
+RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
 # 357 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "of battles since last time, huh?\p"
+	.string "TERRA: Hey, you're back! Always good\n"
 # 358 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Oh - hold up.\n"
+	.string "to see you on my mountain.\p"
 # 359 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "You've only got one POKEMON?\p"
+	.string "We've both climbed through tons\n"
 # 360 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Come back with at least one more\n"
+	.string "of battles since last time, huh?\p"
 # 361 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "for a real climb of a battle!$"
+	.string "Oh - hold up.\n"
 # 362 "data/maps/RustboroCity_Gym/scripts.pory"
-
+	.string "You've only got one POKEMON?\p"
 # 363 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_AskDifficulty:
+	.string "Come back with at least one more\n"
 # 364 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "GYM GUIDE: Before you challenge\n"
+	.string "for a real climb of a battle!$"
 # 365 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "TERRA, I can adjust the difficulty!\p"
+
 # 366 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "Play on HARD mode where trainers\n"
+RustboroCity_Gym_Text_AskDifficulty:
 # 367 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "have optimized teams?$"
+	.string "GYM GUIDE: Before you challenge\n"
 # 368 "data/maps/RustboroCity_Gym/scripts.pory"
-
+	.string "TERRA, I can adjust the difficulty!\p"
 # 369 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_HardSelected:
+	.string "Play on HARD mode where trainers\n"
 # 370 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "GYM GUIDE: Hard mode selected!\n"
+	.string "have optimized teams?$"
 # 371 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "TERRA is waiting!$"
-# 372 "data/maps/RustboroCity_Gym/scripts.pory"
 
+# 372 "data/maps/RustboroCity_Gym/scripts.pory"
+RustboroCity_Gym_Text_HardSelected:
 # 373 "data/maps/RustboroCity_Gym/scripts.pory"
-RustboroCity_Gym_Text_NormalSelected:
+	.string "GYM GUIDE: Hard mode selected!\n"
 # 374 "data/maps/RustboroCity_Gym/scripts.pory"
-	.string "GYM GUIDE: Casual mode selected!\n"
+	.string "TERRA is waiting!$"
 # 375 "data/maps/RustboroCity_Gym/scripts.pory"
+
+# 376 "data/maps/RustboroCity_Gym/scripts.pory"
+RustboroCity_Gym_Text_NormalSelected:
+# 377 "data/maps/RustboroCity_Gym/scripts.pory"
+	.string "GYM GUIDE: Casual mode selected!\n"
+# 378 "data/maps/RustboroCity_Gym/scripts.pory"
 	.string "TERRA is waiting!$"
