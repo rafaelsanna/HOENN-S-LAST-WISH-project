@@ -27,6 +27,15 @@ VictoryRoad_B1F_EventScript_Halle::
 	msgbox VictoryRoad_B1F_Text_HallePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+VictoryRoad_B1F_EventScript_IcePunch::
+VictoryRoad_B1F_EventScript_ThunderPunch::
+VictoryRoad_B1F_EventScript_FirePunch::
+	msgbox VictoryRoad_B1F_Text_WipNpc, MSGBOX_NPC
+	end
+
+VictoryRoad_B1F_Text_WipNpc:
+	.string "Hi.$"
+
 VictoryRoad_B1F_Text_SamuelIntro:
 	.string "The thought that I'm getting closer to\n"
 	.string "the POKéMON LEAGUE…\p"

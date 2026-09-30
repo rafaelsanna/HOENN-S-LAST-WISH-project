@@ -13164,7 +13164,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .formChangeTable = sRayquazaFormChangeTable,
     },
 
-#if P_MEGA_EVOLUTIONS
+#if P_MEGA_RAYQUAZA
     [SPECIES_RAYQUAZA_MEGA] =
     {
         .baseHP        = 105,
@@ -13238,7 +13238,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .formSpeciesIdTable = sRayquazaFormSpeciesIdTable,
         .formChangeTable = sRayquazaFormChangeTable,
     },
-#endif //P_MEGA_EVOLUTIONS
+#endif //P_MEGA_RAYQUAZA
 #endif //P_FAMILY_RAYQUAZA
 
 #if P_FAMILY_JIRACHI

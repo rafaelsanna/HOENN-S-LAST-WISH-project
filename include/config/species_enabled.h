@@ -24,6 +24,7 @@
 
 // Battle gimmick specific Forms.
 #define P_MEGA_EVOLUTIONS                FALSE
+#define P_MEGA_RAYQUAZA                  TRUE // Mega Rayquaza only; independent from other Mega Evolutions.
 #define P_PRIMAL_REVERSIONS              TRUE // Groudon and Kyogre only.
 #define P_ULTRA_BURST_FORMS              FALSE // Ultra Necrozma only.
 #define P_GIGANTAMAX_FORMS               FALSE

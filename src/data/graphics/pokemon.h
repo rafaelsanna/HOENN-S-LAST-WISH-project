@@ -14989,7 +14989,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
 
-#if P_MEGA_EVOLUTIONS
+#if P_MEGA_RAYQUAZA
     const u32 gMonFrontPic_RayquazaMega[] = INCBIN_U32("graphics/pokemon/rayquaza/mega/front.4bpp.smol");
     const u16 gMonPalette_RayquazaMega[] = INCBIN_U16("graphics/pokemon/rayquaza/mega/normal.gbapal");
     const u32 gMonBackPic_RayquazaMega[] = INCBIN_U32("graphics/pokemon/rayquaza/mega/back.4bpp.smol");
@@ -15004,7 +15004,7 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gShinyOverworldPalette_RayquazaMega[] = INCBIN_U16("graphics/pokemon/rayquaza/mega/overworld_shiny.gbapal");
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS && OW_BATTLE_ONLY_FORMS
-#endif //P_MEGA_EVOLUTIONS
+#endif //P_MEGA_RAYQUAZA
 #endif //P_FAMILY_RAYQUAZA
 
 #if P_FAMILY_JIRACHI

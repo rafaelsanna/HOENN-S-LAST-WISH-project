@@ -1070,9 +1070,9 @@ gCryTable::
 .endif @ P_FAMILY_GROUDON
 .if P_FAMILY_RAYQUAZA == TRUE
 	cry Cry_Rayquaza
-.if P_MEGA_EVOLUTIONS == TRUE
+.if P_MEGA_RAYQUAZA == TRUE
 	cry Cry_RayquazaMega
-.endif @ P_MEGA_EVOLUTIONS
+.endif @ P_MEGA_RAYQUAZA
 .endif @ P_FAMILY_RAYQUAZA
 .if P_FAMILY_JIRACHI == TRUE
 	cry Cry_Jirachi
@@ -3498,9 +3498,9 @@ gCryTable_Reverse::
 .endif @ P_FAMILY_GROUDON
 .if P_FAMILY_RAYQUAZA == TRUE
 	cry_reverse Cry_Rayquaza
-.if P_MEGA_EVOLUTIONS == TRUE
+.if P_MEGA_RAYQUAZA == TRUE
 	cry_reverse Cry_RayquazaMega
-.endif @ P_MEGA_EVOLUTIONS
+.endif @ P_MEGA_RAYQUAZA
 .endif @ P_FAMILY_RAYQUAZA
 .if P_FAMILY_JIRACHI == TRUE
 	cry_reverse Cry_Jirachi

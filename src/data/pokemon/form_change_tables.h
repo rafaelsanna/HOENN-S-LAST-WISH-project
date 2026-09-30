@@ -497,7 +497,7 @@ static const struct FormChange sGroudonFormChangeTable[] = {
 
 #if P_FAMILY_RAYQUAZA
 static const struct FormChange sRayquazaFormChangeTable[] = {
-#if P_MEGA_EVOLUTIONS
+#if P_MEGA_RAYQUAZA
     {FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE,    SPECIES_RAYQUAZA_MEGA, MOVE_DRAGON_ASCENT},
 #endif
     {FORM_CHANGE_TERMINATOR},

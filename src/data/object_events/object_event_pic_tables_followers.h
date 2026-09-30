@@ -3044,11 +3044,11 @@ static const struct SpriteFrameImage sPicTable_Rayquaza[] = {
     overworld_ascending_frames(gObjectEventPic_Rayquaza, 8, 8),
 };
 #if OW_BATTLE_ONLY_FORMS
-#if P_MEGA_EVOLUTIONS
+#if P_MEGA_RAYQUAZA
 static const struct SpriteFrameImage sPicTable_RayquazaMega[] = {
     overworld_ascending_frames(gObjectEventPic_RayquazaMega, 4, 4),
 };
-#endif // P_MEGA_EVOLUTIONS
+#endif // P_MEGA_RAYQUAZA
 #endif // OW_BATTLE_ONLY_FORMS
 #endif //P_FAMILY_RAYQUAZA
 

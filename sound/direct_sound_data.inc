@@ -2875,11 +2875,11 @@ Cry_GroudonPrimal::
 Cry_Rayquaza::
 	.incbin "sound/direct_sound_samples/cries/rayquaza.bin"
 
-.if P_MEGA_EVOLUTIONS == TRUE
+.if P_MEGA_RAYQUAZA == TRUE
 	.align 2
 Cry_RayquazaMega::
 	.incbin "sound/direct_sound_samples/cries/rayquaza_mega.bin"
-.endif @ P_MEGA_EVOLUTIONS
+.endif @ P_MEGA_RAYQUAZA
 .endif @ P_FAMILY_RAYQUAZA
 
 .if P_FAMILY_JIRACHI == TRUE
