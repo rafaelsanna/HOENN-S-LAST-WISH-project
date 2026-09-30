@@ -99,6 +99,7 @@ DOUBLE_BATTLE_TEST("Ultra Burst happens after switching, but before Focus Punch-
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Ultra Burst and Mega Evolution can happen on the same turn")
 {
     GIVEN {
@@ -119,3 +120,4 @@ SINGLE_BATTLE_TEST("Ultra Burst and Mega Evolution can happen on the same turn")
         EXPECT_EQ(opponent->species, SPECIES_GARDEVOIR_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "hlw_media_save.h"
 #include "comfy_anim.h"
 #include "battle_main.h"
 #include "battle_util.h"
@@ -492,16 +493,6 @@ static const struct SpritePalette sPokedexThemeNavOutlineSpritePalette =
     TAG_POKEDEX_THEME_NAV_OUTLINE
 };
 
-#define POKEDEX_THEME_SAVE_TAG0_OFFSET      68
-#define POKEDEX_THEME_SAVE_TAG1_OFFSET      69
-#define POKEDEX_THEME_SAVE_VERSION_OFFSET   70
-#define POKEDEX_THEME_SAVE_VALUE_OFFSET     71
-#define POKEDEX_THEME_SAVE_TAG0             0x44 // 'D'
-#define POKEDEX_THEME_SAVE_TAG1             0x54 // 'T'
-#define POKEDEX_THEME_SAVE_VERSION          1
-#define POKEDEX_HLW_SAVE_EXTENSION_MAGIC    0x484C5753
-#define POKEDEX_HLW_SAVE_EXTENSION_VERSION  1
-
 static const u8 sText_PokedexThemesPrefix[] = _("{L_BUTTON} {R_BUTTON} THEMES ");
 static const u8 sText_PokedexThemeTotal[]   = _("/16");
 static const u8 sText_PokedexThemeSpace[]   = _(" ");
@@ -702,7 +693,6 @@ static void Task_ReturnToPokedexFromSearchResults(u8);
 static void Task_ClosePokedexFromSearchResultsStartMenu(u8);
 static bool8 LoadPokedexListPage(u8);
 static void LoadPokedexBgPalette(bool8);
-static void InitPokedexThemeSaveExtensionIfNeeded(void);
 static void LoadPokedexColorThemeFromSave(void);
 static void SavePokedexColorThemeToSave(void);
 static u8 GetPokedexThemeCyclePosition(void);
@@ -2797,26 +2787,6 @@ static void ApplyPokedexSearchResultsDarkBackground(void)
 #define POKEDEX_OLD_LILAC         RGB(15, 13, 23)
 #define POKEDEX_OLD_LILAC_SHADOW  RGB(11, 10, 14)
 
-static void InitPokedexThemeSaveExtensionIfNeeded(void)
-{
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->magic != POKEDEX_HLW_SAVE_EXTENSION_MAGIC
-     || ext->version != POKEDEX_HLW_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext))
-    {
-        memset(ext, 0, sizeof(*ext));
-        ext->magic = POKEDEX_HLW_SAVE_EXTENSION_MAGIC;
-        ext->version = POKEDEX_HLW_SAVE_EXTENSION_VERSION;
-        ext->size = sizeof(*ext);
-    }
-}
-
 static void LoadPokedexColorThemeFromSave(void)
 {
     struct HLWSaveExtension *ext;
@@ -2826,23 +2796,12 @@ static void LoadPokedexColorThemeFromSave(void)
     if (gSaveBlock1Ptr == NULL)
         return;
 
-    InitPokedexThemeSaveExtensionIfNeeded();
     ext = &gSaveBlock1Ptr->hlwSave;
 
-    if (ext->future[POKEDEX_THEME_SAVE_TAG0_OFFSET] == POKEDEX_THEME_SAVE_TAG0
-     && ext->future[POKEDEX_THEME_SAVE_TAG1_OFFSET] == POKEDEX_THEME_SAVE_TAG1
-     && ext->future[POKEDEX_THEME_SAVE_VERSION_OFFSET] == POKEDEX_THEME_SAVE_VERSION
-     && ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET] < POKEDEX_COLOR_THEME_COUNT)
-    {
-        sPokedexColorTheme = ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET];
-    }
+    if (ext->future[HLW_MEDIA_POKEDEX_THEME_OFFSET] < POKEDEX_COLOR_THEME_COUNT)
+        sPokedexColorTheme = ext->future[HLW_MEDIA_POKEDEX_THEME_OFFSET];
     else
-    {
-        ext->future[POKEDEX_THEME_SAVE_TAG0_OFFSET] = POKEDEX_THEME_SAVE_TAG0;
-        ext->future[POKEDEX_THEME_SAVE_TAG1_OFFSET] = POKEDEX_THEME_SAVE_TAG1;
-        ext->future[POKEDEX_THEME_SAVE_VERSION_OFFSET] = POKEDEX_THEME_SAVE_VERSION;
-        ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET] = POKEDEX_COLOR_THEME_DEFAULT;
-    }
+        ext->future[HLW_MEDIA_POKEDEX_THEME_OFFSET] = POKEDEX_COLOR_THEME_DEFAULT;
 }
 
 static void SavePokedexColorThemeToSave(void)
@@ -2852,13 +2811,9 @@ static void SavePokedexColorThemeToSave(void)
     if (gSaveBlock1Ptr == NULL)
         return;
 
-    InitPokedexThemeSaveExtensionIfNeeded();
     ext = &gSaveBlock1Ptr->hlwSave;
 
-    ext->future[POKEDEX_THEME_SAVE_TAG0_OFFSET] = POKEDEX_THEME_SAVE_TAG0;
-    ext->future[POKEDEX_THEME_SAVE_TAG1_OFFSET] = POKEDEX_THEME_SAVE_TAG1;
-    ext->future[POKEDEX_THEME_SAVE_VERSION_OFFSET] = POKEDEX_THEME_SAVE_VERSION;
-    ext->future[POKEDEX_THEME_SAVE_VALUE_OFFSET] =
+    ext->future[HLW_MEDIA_POKEDEX_THEME_OFFSET] =
         (sPokedexColorTheme < POKEDEX_COLOR_THEME_COUNT)
             ? sPokedexColorTheme
             : POKEDEX_COLOR_THEME_DEFAULT;

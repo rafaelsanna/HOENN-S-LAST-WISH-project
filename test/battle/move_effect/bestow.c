@@ -61,6 +61,7 @@ SINGLE_BATTLE_TEST("Bestow fails if the user is holding Mail")
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Bestow fails if the user's held item is a Mega Stone")
 {
     GIVEN {
@@ -75,6 +76,7 @@ SINGLE_BATTLE_TEST("Bestow fails if the user's held item is a Mega Stone")
         EXPECT(opponent->item == ITEM_NONE);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Bestow fails if the user's held item is a Z-Crystal")
 {

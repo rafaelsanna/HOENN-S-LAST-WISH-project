@@ -337,6 +337,7 @@ SINGLE_BATTLE_TEST("Embargo can be reflected by Magic Coat")
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Embargo doesn't prevent Mega Evolution")
 {
     GIVEN {
@@ -361,6 +362,7 @@ SINGLE_BATTLE_TEST("Embargo doesn't prevent Mega Evolution")
         MESSAGE("The opposing Charizard has Mega Evolved into Mega Charizard!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Embargo doesn't prevent Primal Reversion")
 {

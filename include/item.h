@@ -113,6 +113,8 @@ struct ALIGNED(2) BagPocket
     struct ItemSlot *itemSlots;
     struct ItemSlot *extraItemSlots;
     struct ItemSlot *finalItemSlots;
+    // Logical slot order is primary, secondary, then final. Capacities count
+    // slots in each segment, not cumulative end offsets.
     u16 primaryCapacity;
     u16 secondaryCapacity;
     u16 capacity:10;

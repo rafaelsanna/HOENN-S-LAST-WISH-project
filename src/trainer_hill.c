@@ -702,9 +702,18 @@ void LoadTrainerHillObjectEventTemplates(void)
 
 bool32 LoadTrainerHillFloorObjectEventScripts(void)
 {
-    SetUpDataStruct();
-    // Something may have been dummied here
-    FreeDataStruct();
+    struct ObjectEventTemplate *events = gSaveBlock1Ptr->objectEventTemplates;
+
+    // Entrance and roof use ordinary map events. Generated challenge floors
+    // use the same current-ROM trainer script for their two stable local IDs.
+    if (!InTrainerHill())
+    {
+        LoadSaveblockObjEventScripts();
+        return TRUE;
+    }
+    for (u32 i = 0; i < OBJECT_EVENT_TEMPLATES_COUNT; i++)
+        events[i].script = events[i].localId >= 1 && events[i].localId <= HILL_TRAINERS_PER_FLOOR
+            ? TrainerHill_EventScript_TrainerBattle : NULL;
     return TRUE;
 }
 

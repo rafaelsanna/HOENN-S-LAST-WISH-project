@@ -21,15 +21,15 @@ static void Nuzlocke_EnsureMapFlagsInit(void)
     if (gSaveBlock3Ptr == NULL)
         return;
 
-    if (gSaveBlock1Ptr != NULL)
-        memset(gSaveBlock1Ptr->nuzlockeReleasedSpeciesFlags, 0, ROUND_BITS_TO_BYTES(NUM_SPECIES));
+    memset(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags, 0, sizeof(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags));
     memset(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, 0, NUZLOCKE_WILD_HEADER_FLAG_BYTES);
     FlagSet(FLAG_SYS_NUZLOCKE_FLAGS_INITIALIZED);
 }
 
 static bool8 Nuzlocke_IsSpeciesFlagSet(const u8 *flags, u16 species)
 {
-    if (species == SPECIES_NONE || species >= NUM_SPECIES)
+    if (species == SPECIES_NONE || species >= NUM_SPECIES
+     || species >= sizeof(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags) * 8)
         return FALSE;
 
     return flags[species >> 3] & (1 << (species & 7));
@@ -37,7 +37,8 @@ static bool8 Nuzlocke_IsSpeciesFlagSet(const u8 *flags, u16 species)
 
 static void Nuzlocke_SetSpeciesFlag(u8 *flags, u16 species)
 {
-    if (species == SPECIES_NONE || species >= NUM_SPECIES)
+    if (species == SPECIES_NONE || species >= NUM_SPECIES
+     || species >= sizeof(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags) * 8)
         return;
 
     flags[species >> 3] |= 1 << (species & 7);
@@ -99,7 +100,7 @@ static bool8 Nuzlocke_IsSpeciesAlreadyOwned(u16 species)
     if (Nuzlocke_IsSpeciesInPlayerCollection(species))
         return TRUE;
 
-    if (gSaveBlock1Ptr != NULL && Nuzlocke_IsSpeciesFlagSet(gSaveBlock1Ptr->nuzlockeReleasedSpeciesFlags, species))
+    if (gSaveBlock3Ptr != NULL && Nuzlocke_IsSpeciesFlagSet(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags, species))
         return TRUE;
 
     return FALSE;
@@ -125,10 +126,10 @@ static bool8 Nuzlocke_HasAvailableWildSpecies(void)
 
 static void Nuzlocke_RecordReleasedSpecies(u16 species)
 {
-    if (gSaveBlock1Ptr == NULL)
+    if (gSaveBlock3Ptr == NULL)
         return;
 
-    Nuzlocke_SetSpeciesFlag(gSaveBlock1Ptr->nuzlockeReleasedSpeciesFlags, species);
+    Nuzlocke_SetSpeciesFlag(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags, species);
 }
 
 static bool8 IsCurrentRouteShinyEncounter(void)
@@ -214,7 +215,7 @@ static bool8 IsTrackableWildBattle(void)
     if (!FlagGet(FLAG_SYS_POKEDEX_GET))
         return FALSE;
 
-    return GetCurrentMapWildMonHeaderId() != HEADER_NONE;
+    return GetCurrentMapEncounterId() != ENCOUNTER_ID_NONE;
 }
 
 static bool8 HasUncaughtWildMonInBattle(void)
@@ -264,7 +265,7 @@ void Nuzlocke_OnBattleStart(void)
     if (!HasUncaughtWildMonInBattle())
         return;
 
-    headerId = GetCurrentMapWildMonHeaderId();
+    headerId = GetCurrentMapEncounterId();
 
     if (!Nuzlocke_IsWildHeaderFlagSet(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, headerId, 0))
     {
@@ -294,7 +295,7 @@ bool8 Nuzlocke_CanThrowBallThisBattle(void)
         if (!Nuzlocke_HasAvailableWildSpecies())
             return FALSE;
 
-        return !Nuzlocke_IsWildHeaderFlagSet(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, GetCurrentMapWildMonHeaderId(), 1);
+        return !Nuzlocke_IsWildHeaderFlagSet(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, GetCurrentMapEncounterId(), 1);
     }
 
     return sNuzlockeCanThrowBallThisBattle;
@@ -312,7 +313,7 @@ void Nuzlocke_OnMonCaught(struct Pokemon *mon)
     if (GetMonData(mon, MON_DATA_IS_SHINY))
         return;
 
-    Nuzlocke_SetWildHeaderFlag(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, GetCurrentMapWildMonHeaderId(), 1);
+    Nuzlocke_SetWildHeaderFlag(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, GetCurrentMapEncounterId(), 1);
 }
 
 void Nuzlocke_ApplyPermadeathToPlayerParty(void)

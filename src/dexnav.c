@@ -1,4 +1,5 @@
 #include "global.h"
+#include "save.h"
 #include "comfy_anim.h"
 #include "battle_main.h"
 #include "battle_setup.h"
@@ -893,7 +894,8 @@ static u8 GetSearchLevel(u16 species)
 {
     u8 searchLevel;
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
-    searchLevel = gSaveBlock3Ptr->dexNavSearchLevels[species];
+    searchLevel = species < ARRAY_COUNT(gHlwSaveBlock4.dexNavSearch)
+        ? gHlwSaveBlock4.dexNavSearch[species] : 0;
 #else
     searchLevel = 0;
 #endif
@@ -2884,8 +2886,11 @@ u32 CalculateDexNavShinyRolls(void)
 void TryIncrementSpeciesSearchLevel()
 {
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
-    if (gMapHeader.regionMapSectionId != MAPSEC_BATTLE_FRONTIER && gSaveBlock3Ptr->dexNavSearchLevels[gDexNavSpecies] < 255)
-        gSaveBlock3Ptr->dexNavSearchLevels[gDexNavSpecies]++;
+    if (gMapHeader.regionMapSectionId != MAPSEC_BATTLE_FRONTIER
+     && gDexNavSpecies != SPECIES_NONE
+     && gDexNavSpecies < ARRAY_COUNT(gHlwSaveBlock4.dexNavSearch)
+     && gHlwSaveBlock4.dexNavSearch[gDexNavSpecies] < 255)
+        gHlwSaveBlock4.dexNavSearch[gDexNavSpecies]++;
 #endif
 }
 

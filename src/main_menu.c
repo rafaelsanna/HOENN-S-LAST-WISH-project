@@ -308,12 +308,14 @@ static const u8  sGenderCombinedTilemaps[] = INCBIN_U8("graphics/birch_speech/zi
 #define sGenderGirlTilemapSrc ((const u16 *)(sGenderCombinedTilemaps + BIRCH_GENDER_TILEMAP_STRIDE * sizeof(u16)))
 
 static const u8 gText_SaveFileCorrupted[] = _("The save file is corrupted. The\nprevious save file will be loaded.");
-static const u8 gText_SaveFileErased[] = _("The save file has been erased\ndue to corruption or damage.");
 static const u8 gJPText_No1MSubCircuit[] = _("1Mサブきばんが ささっていません！");
 static const u8 gText_BatteryRunDry[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
 
 static const u8 gText_MainMenuNewGame[] = _("NEW GAME");
 static const u8 gText_MainMenuContinue[] = _("CONTINUE");
+static const u8 sText_SaveIncompatible[] = _("Incompatible save format.\nSave unchanged. Cannot continue.");
+static const u8 sText_SaveNewerVersion[] = _("This save needs a newer version.\nSave unchanged. Cannot continue.");
+static const u8 sText_NoCompleteSave[] = _("No complete save could be loaded.\nThe save data was not erased.");
 static const u8 gText_MainMenuOption[] = _("OPTION");
 static const u8 gText_MainMenuMysteryGift[] = _("MYSTERY GIFT");
 static const u8 gText_MainMenuMysteryGift2[] = _("MYSTERY GIFT");
@@ -912,7 +914,17 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
                 gTasks[taskId].func = Task_MainMenuCheckBattery;
                 break;
             case SAVE_STATUS_CORRUPT:
-                CreateMainMenuErrorWindow(gText_SaveFileErased);
+                CreateMainMenuErrorWindow(sText_NoCompleteSave);
+                tMenuType = HAS_NO_SAVED_GAME;
+                gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
+                break;
+            case SAVE_STATUS_INCOMPATIBLE:
+                CreateMainMenuErrorWindow(sText_SaveIncompatible);
+                tMenuType = HAS_NO_SAVED_GAME;
+                gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
+                break;
+            case SAVE_STATUS_NEWER_VERSION:
+                CreateMainMenuErrorWindow(sText_SaveNewerVersion);
                 tMenuType = HAS_NO_SAVED_GAME;
                 gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
                 break;

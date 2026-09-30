@@ -1,4 +1,5 @@
 #include "global.h"
+#include "hlw_media_save.h"
 #include "comfy_anim.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -257,43 +258,19 @@ EWRAM_DATA u8 gCategoryIconSpriteId = 0;
 // session-only 10X override without changing the saved base speed.
 enum
 {
-    HLW_BATTLE_SPEED_NORMAL,
-    HLW_BATTLE_SPEED_2X,
-    HLW_BATTLE_SPEED_4X,
-    HLW_BATTLE_SPEED_COUNT,
+    HLW_BATTLE_SPEED_NORMAL = 0,
+    HLW_BATTLE_SPEED_2X = 1,
+    HLW_BATTLE_SPEED_4X = 2,
+    HLW_BATTLE_SPEED_COUNT = 3,
 };
 
-#define HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET      72
-#define HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET      73
-#define HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET   74
-#define HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET     75
-#define HLW_BATTLE_SPEED_SAVE_TAG0             0x42 // 'B'
-#define HLW_BATTLE_SPEED_SAVE_TAG1             0x53 // 'S'
-#define HLW_BATTLE_SPEED_SAVE_VERSION          1
-#define HLW_BATTLE_SPEED_SAVE_MAGIC            0x484C5753
-#define HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION 1
 
 static EWRAM_DATA bool8 sDebugBattleSpeed10xEnabled = FALSE;
 
 static u8 GetSavedBattleSpeedSetting(void)
 {
-    const struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return HLW_BATTLE_SPEED_NORMAL;
-
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->magic != HLW_BATTLE_SPEED_SAVE_MAGIC
-     || ext->version != HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext)
-     || ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG0
-     || ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG1
-     || ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] != HLW_BATTLE_SPEED_SAVE_VERSION
-     || ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] >= HLW_BATTLE_SPEED_COUNT)
-        return HLW_BATTLE_SPEED_NORMAL;
-
-    return ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET];
+    u8 value = gSaveBlock1Ptr == NULL ? HLW_BATTLE_SPEED_NORMAL : gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_BATTLE_SPEED_OFFSET];
+    return value < HLW_BATTLE_SPEED_COUNT ? value : HLW_BATTLE_SPEED_NORMAL;
 }
 
 static u32 GetBattleSpeedScale(void)

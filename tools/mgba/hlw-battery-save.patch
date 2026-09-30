@@ -1,0 +1,21 @@
+# Validation-only frontend patch for mGBA commit
+# dbffb46c4e7d2e7a2cbed7c3488cece4c2176d4c (the bundled Linux runner's source).
+# Apply in an isolated upstream checkout with: git apply /path/to/this.patch
+# Configure BUILD_ROM_TEST=ON; build target mgba-rom-test. The emulator core is
+# unmodified. Normal core->unloadROM/core->deinit flush the battery at SWI exit.
+# Run using ROMTEST=/absolute/path/to/mgba-rom-test sh tools/check_hlw_cold_boot.sh.
+diff --git a/src/platform/test/rom-test-main.c b/src/platform/test/rom-test-main.c
+--- a/src/platform/test/rom-test-main.c
++++ b/src/platform/test/rom-test-main.c
+@@ -149,6 +149,11 @@ int main(int argc, char * argv[]) {
+ 	if (!mCoreLoadFile(core, args.fname)) {
+ 		goto loadError;
+ 	}
++	// HLW validation-only frontend: attach the normal battery file before
++	// reset; the unmodified core unload/deinit path flushes it on SWI exit.
++	if (!mCoreAutoloadSave(core)) {
++		goto loadError;
++	}
+ 	if (args.patch) {
+ 		core->loadPatch(core, VFileOpen(args.patch, O_RDONLY));
+ 	}

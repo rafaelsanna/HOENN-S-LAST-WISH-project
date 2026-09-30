@@ -115,8 +115,10 @@ __attribute__((section(".text.header_gf"))) USED static const struct GFRomHeader
     .flagsOffset = offsetof(struct SaveBlock1, flags),
     .varsOffset = offsetof(struct SaveBlock1, vars),
     .pokedexOffset = offsetof(struct SaveBlock2, pokedex),
-    .seen1Offset = offsetof(struct SaveBlock1, dexSeen),
-    .seen2Offset = offsetof(struct SaveBlock1, dexSeen), // dex flags are combined, just provide the same pointer
+    // External retail save editors cannot represent the striped 0.9 dex bank.
+    // Zero is an explicit unsupported sentinel, never a fake SB1 alias.
+    .seen1Offset = 0,
+    .seen2Offset = 0,
     .pokedexVar = VAR_NATIONAL_DEX - VARS_START,
     .pokedexFlag = FLAG_RECEIVED_POKEDEX_FROM_BIRCH,
     .mysteryEventFlag = FLAG_SYS_MYSTERY_EVENT_ENABLE,

@@ -264,6 +264,9 @@ void LoadPlayerBag(void)
            gSaveBlock1Ptr->bagExpansion.medicine,
            sizeof(gSaveBlock1Ptr->bagExpansion.medicine));
     memcpy(gLoadedSaveData.bag.keyItems, gSaveBlock1Ptr->bag.keyItems, sizeof(gSaveBlock1Ptr->bag.keyItems));
+    memcpy(&gLoadedSaveData.bag.keyItems[BAG_LEGACY_KEYITEMS_COUNT],
+           gPokemonStoragePtr->bagSupplement.keyItemsExtra,
+           sizeof(gPokemonStoragePtr->bagSupplement.keyItemsExtra));
     memcpy(gLoadedSaveData.bag.pokeBalls, gSaveBlock1Ptr->bag.pokeBalls, sizeof(gSaveBlock1Ptr->bag.pokeBalls));
     memcpy(&gLoadedSaveData.bag.pokeBalls[BAG_LEGACY_POKEBALLS_COUNT],
            gSaveBlock1Ptr->bagExpansion.pokeBallsExtra,
@@ -272,7 +275,13 @@ void LoadPlayerBag(void)
     memcpy(&gLoadedSaveData.bag.TMsHMs[BAG_LEGACY_TMHM_COUNT],
            gSaveBlock1Ptr->bagExpansion.TMsHMsExtra,
            sizeof(gSaveBlock1Ptr->bagExpansion.TMsHMsExtra));
+    memcpy(&gLoadedSaveData.bag.TMsHMs[BAG_LEGACY_TMHM_COUNT + BAG_TMHM_EXPANSION_COUNT],
+           gPokemonStoragePtr->bagSupplement.TMsHMsExtra,
+           sizeof(gPokemonStoragePtr->bagSupplement.TMsHMsExtra));
     memcpy(gLoadedSaveData.bag.berries, gSaveBlock1Ptr->bag.berries, sizeof(gSaveBlock1Ptr->bag.berries));
+    memcpy(&gLoadedSaveData.bag.berries[BAG_LEGACY_BERRIES_COUNT],
+           gPokemonStoragePtr->bagSupplement.berriesExtra,
+           sizeof(gPokemonStoragePtr->bagSupplement.berriesExtra));
 
     // load mail.
     for (i = 0; i < MAIL_COUNT; i++)
@@ -295,6 +304,9 @@ void SavePlayerBag(void)
            gLoadedSaveData.bag.medicine,
            sizeof(gSaveBlock1Ptr->bagExpansion.medicine));
     memcpy(gSaveBlock1Ptr->bag.keyItems, gLoadedSaveData.bag.keyItems, sizeof(gSaveBlock1Ptr->bag.keyItems));
+    memcpy(gPokemonStoragePtr->bagSupplement.keyItemsExtra,
+           &gLoadedSaveData.bag.keyItems[BAG_LEGACY_KEYITEMS_COUNT],
+           sizeof(gPokemonStoragePtr->bagSupplement.keyItemsExtra));
     memcpy(gSaveBlock1Ptr->bag.pokeBalls, gLoadedSaveData.bag.pokeBalls, sizeof(gSaveBlock1Ptr->bag.pokeBalls));
     memcpy(gSaveBlock1Ptr->bagExpansion.pokeBallsExtra,
            &gLoadedSaveData.bag.pokeBalls[BAG_LEGACY_POKEBALLS_COUNT],
@@ -303,7 +315,13 @@ void SavePlayerBag(void)
     memcpy(gSaveBlock1Ptr->bagExpansion.TMsHMsExtra,
            &gLoadedSaveData.bag.TMsHMs[BAG_LEGACY_TMHM_COUNT],
            sizeof(gSaveBlock1Ptr->bagExpansion.TMsHMsExtra));
+    memcpy(gPokemonStoragePtr->bagSupplement.TMsHMsExtra,
+           &gLoadedSaveData.bag.TMsHMs[BAG_LEGACY_TMHM_COUNT + BAG_TMHM_EXPANSION_COUNT],
+           sizeof(gPokemonStoragePtr->bagSupplement.TMsHMsExtra));
     memcpy(gSaveBlock1Ptr->bag.berries, gLoadedSaveData.bag.berries, sizeof(gSaveBlock1Ptr->bag.berries));
+    memcpy(gPokemonStoragePtr->bagSupplement.berriesExtra,
+           &gLoadedSaveData.bag.berries[BAG_LEGACY_BERRIES_COUNT],
+           sizeof(gPokemonStoragePtr->bagSupplement.berriesExtra));
 
     // save mail.
     for (i = 0; i < MAIL_COUNT; i++)

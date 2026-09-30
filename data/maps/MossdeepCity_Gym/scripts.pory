@@ -58,10 +58,11 @@ MossdeepCity_Gym_EventScript_SetSwitch4Metatiles::
 MossdeepCity_Gym_EventScript_TateAndLiza::
     lock
     faceplayer
+    goto_if_set FLAG_DEFEATED_MOSSDEEP_GYM, MossdeepCity_Gym_EventScript_TateAndLizaAfterBattle
     getdifficulty VAR_RESULT
     goto_if_eq VAR_RESULT, 1, MossdeepCity_Gym_EventScript_TateAndLizaHard
 
-    // Casual Mode 
+    // Casual Mode
     trainerbattle_double TRAINER_SOULLUNA_CASUAL, MossdeepCity_Gym_Text_TateAndLizaIntro, MossdeepCity_Gym_Text_TateAndLizaDefeat, MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons, MossdeepCity_Gym_EventScript_TateAndLizaDefeated, NO_MUSIC
     goto MossdeepCity_Gym_EventScript_TateAndLizaAfterBattle
 
@@ -71,9 +72,10 @@ MossdeepCity_Gym_EventScript_TateAndLizaHard::
     // Fall through to AfterBattle
 
 MossdeepCity_Gym_EventScript_TateAndLizaAfterBattle::
+    goto_if_unset FLAG_RECEIVED_TM_CALM_MIND, MossdeepCity_Gym_EventScript_GiveCalmMind2
+    setorcopyvar VAR_TRAINER_BATTLE_OPPONENT_A, TRAINER_TATE_AND_LIZA_1
     specialvar VAR_RESULT, ShouldTryRematchBattle
     goto_if_eq VAR_RESULT, TRUE, MossdeepCity_Gym_EventScript_TateAndLizaRematch
-    goto_if_unset FLAG_RECEIVED_TM_CALM_MIND, MossdeepCity_Gym_EventScript_GiveCalmMind2
     createfieldmugshot MUGSHOT_LUNA, EMOTE_NORMAL
     msgbox MossdeepCity_Gym_Text_TateAndLizaPostBattle, MSGBOX_DEFAULT
     removefieldmugshot

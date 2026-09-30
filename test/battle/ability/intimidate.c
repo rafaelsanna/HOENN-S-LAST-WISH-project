@@ -376,6 +376,7 @@ DOUBLE_BATTLE_TEST("Intimidate will correctly decrease the attack of the second 
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Intimidate does not lose timing after mega evolution and switch out by a hit escape move")
 {
     GIVEN {
@@ -390,6 +391,7 @@ SINGLE_BATTLE_TEST("Intimidate does not lose timing after mega evolution and swi
         ABILITY_POPUP(opponent, ABILITY_INTIMIDATE);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 DOUBLE_BATTLE_TEST("Intimidate drop down both opposing atk before eject pack has the chance to activate")
 {

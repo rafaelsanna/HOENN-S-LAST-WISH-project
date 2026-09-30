@@ -137,9 +137,6 @@ static u32 Achievement_CountWishForms(void);
 static void Achievement_RegisterWishForm(u16 species);
 static void Achievement_RegisterOwnedWishForms(void);
 static void Achievement_QueuePopup(enum AchievementId id);
-static u8 Achievement_GetPackedByte(u8 slot, u8 byteIndex);
-static void Achievement_SetPackedByte(u8 slot, u8 byteIndex, u8 value);
-static void Achievement_IncrementPackedByte(u8 slot, u8 byteIndex, u8 amount);
 
 static const u8 sText_AchReceiveStarterName[] = _("I Choose You!");
 static const u8 sText_AchReceiveStarterDesc[] = _("Receive your first partner Pokémon.");
@@ -257,98 +254,98 @@ static const u16 sTierBallItems[] =
     [ACH_TIER_PLATINUM] = ITEM_MASTER_BALL,
 };
 
-void Achievement_EnsureSaveInitialized(void)
+// Explicit IDs, independent of species numbers and registry order.
+struct WishFormRegistryEntry { u16 id; u16 species; };
+static const struct WishFormRegistryEntry sWishFormRegistry[] =
 {
-    if (gSaveBlock1Ptr->achievements.magic != ACHIEVEMENT_SAVE_MAGIC)
+#define WISH_FORM(id, species) { id, SPECIES_##species },
+#include "data/wish_form_registry.inc"
+#undef WISH_FORM
+};
+STATIC_ASSERT(ACH_WISH_ORIGINAL_FORM_COUNT == 128, WishOriginalCapacity);
+STATIC_ASSERT(ACH_WISH_CUSTOM_FORM_COUNT == 100, WishCustomCapacity);
+STATIC_ASSERT(ACH_SHADOW_POKEMON_COUNT == 30, ShadowCapacity);
+STATIC_ASSERT(ACH_COUNTER_COUNT <= ACHIEVEMENT_SAVED_COUNTERS, AchievementCounterCapacity);
+
+u16 WishForm_GetIdForSpecies(u16 species)
+{
+    u32 i;
+    for (i = 0; i < ARRAY_COUNT(sWishFormRegistry); i++)
+        if (sWishFormRegistry[i].species == species)
+            return sWishFormRegistry[i].id;
+    return WISH_FORM_ID_NONE;
+}
+
+bool32 WishForm_IsRegistered(bool32 custom, u16 id)
+{
+    const u8 *bits;
+    if (gSaveBlock3Ptr == NULL || id >= (custom ? ACH_WISH_CUSTOM_FORM_COUNT : ACH_WISH_ORIGINAL_FORM_COUNT))
+        return FALSE;
+    bits = custom ? gSaveBlock3Ptr->achievements.wishCustomForms : gSaveBlock3Ptr->achievements.wishOriginalForms;
+    return (bits[id / 8] & (1 << (id % 8))) != 0;
+}
+
+bool32 WishForm_Register(bool32 custom, u16 id)
+{
+    u8 *bits;
+    if (gSaveBlock3Ptr == NULL || id >= (custom ? ACH_WISH_CUSTOM_FORM_COUNT : ACH_WISH_ORIGINAL_FORM_COUNT))
+        return FALSE;
+    bits = custom ? gSaveBlock3Ptr->achievements.wishCustomForms : gSaveBlock3Ptr->achievements.wishOriginalForms;
+    bits[id / 8] |= 1 << (id % 8);
+    return TRUE;
+}
+
+u16 ShadowPokemon_GetIdForSpecies(u16 species)
+{
+    // Repurposed species slots are content; these small IDs are persistent.
+    switch (species)
     {
-        memset(&gSaveBlock1Ptr->achievements, 0, sizeof(gSaveBlock1Ptr->achievements));
-        gSaveBlock1Ptr->achievements.magic = ACHIEVEMENT_SAVE_MAGIC;
+    case SPECIES_ESCAVALIER: return SHADOW_ID_EVIL_CELEBI;
+    case SPECIES_DUCKLETT:   return SHADOW_ID_JIRACHI;
+    case SPECIES_SWANNA:     return SHADOW_ID_SUICUNE;
+    default:                return SHADOW_ID_NONE;
     }
 }
 
-// -----------------------------------------------------------------------------
-// Compact custom-stat storage
-// -----------------------------------------------------------------------------
-// The original achievement save block has five u32 counters. Existing counters
-// only need small values for their current trophies, so their low 16 bits are
-// preserved while custom HLW counters use individual bytes in the high halves.
-//
-// slot 0 high bytes: Time Gear uses / Game Corner game bitmask
-// slot 1 high bytes: Fishing catches / Game Corner plays
-// slot 2 high bytes: League wins / Team Magma grunt defeats
-// slot 3 high bytes: Team Aqua grunt defeats / reserved
-//
-// This keeps ACHIEVEMENT_SAVE_DATA_SIZE at 48 bytes and avoids moving anything
-// else inside SaveBlock1.
-
-static u8 Achievement_GetPackedByte(u8 slot, u8 byteIndex)
+bool32 ShadowPokemon_IsDefeated(u16 id)
 {
-    u32 value = gSaveBlock1Ptr->achievements.counters[slot];
-    return (value >> (16 + byteIndex * 8)) & 0xFF;
+    if (gSaveBlock3Ptr == NULL || id >= ACH_SHADOW_POKEMON_COUNT)
+        return FALSE;
+    // Celebi and Jirachi share the existing Nightmare story encounter.
+    // Their bitmap positions stay reserved; there is only one live owner.
+    if (id == SHADOW_ID_EVIL_CELEBI || id == SHADOW_ID_JIRACHI)
+        return gSaveBlock3Ptr->achievements.shadowNightmareState == 1;
+    return (gSaveBlock3Ptr->achievements.shadowPokemon[id / 8] & (1 << (id % 8))) != 0;
 }
 
-static void Achievement_SetPackedByte(u8 slot, u8 byteIndex, u8 value)
+bool32 ShadowPokemon_SetDefeated(u16 id, bool32 defeated)
 {
-    u32 shift = 16 + byteIndex * 8;
-    u32 mask = 0xFFu << shift;
-    u32 packed = gSaveBlock1Ptr->achievements.counters[slot];
-
-    packed = (packed & ~mask) | ((u32)value << shift);
-    gSaveBlock1Ptr->achievements.counters[slot] = packed;
-}
-
-static void Achievement_IncrementPackedByte(u8 slot, u8 byteIndex, u8 amount)
-{
-    u8 value = Achievement_GetPackedByte(slot, byteIndex);
-
-    if (255 - value < amount)
-        value = 255;
+    u8 *byte;
+    if (gSaveBlock3Ptr == NULL || id >= ACH_SHADOW_POKEMON_COUNT)
+        return FALSE;
+    if (id == SHADOW_ID_EVIL_CELEBI || id == SHADOW_ID_JIRACHI)
+    {
+        gSaveBlock3Ptr->achievements.shadowNightmareState = defeated ? 1 : 0;
+        return TRUE;
+    }
+    byte = &gSaveBlock3Ptr->achievements.shadowPokemon[id / 8];
+    if (defeated)
+        *byte |= 1 << (id % 8);
     else
-        value += amount;
-
-    Achievement_SetPackedByte(slot, byteIndex, value);
+        *byte &= ~(1 << (id % 8));
+    return TRUE;
 }
-
-// -----------------------------------------------------------------------------
-// Wish Form registration
-// -----------------------------------------------------------------------------
-// The 95 Wish Forms are the project's custom forms appended immediately after
-// MAX_SPECIES_CANONICAL_FORM_NUM. Each form receives one permanent bit in the
-// unused tail of the existing 128-bit achievement bitmap.
-//
-// If future custom forms unrelated to the Wish Dex are appended before these,
-// change ACH_WISH_FIRST_SPECIES below instead of changing the save format.
-#define ACH_WISH_FIRST_SPECIES (NUM_SPECIES - ACH_WISH_FORM_COUNT)
 
 static void Achievement_RegisterWishForm(u16 species)
 {
-    u32 formIndex;
-    u32 bitIndex;
-
-    if (species < ACH_WISH_FIRST_SPECIES
-     || species >= ACH_WISH_FIRST_SPECIES + ACH_WISH_FORM_COUNT)
-        return;
-
-    formIndex = species - ACH_WISH_FIRST_SPECIES;
-    bitIndex = ACH_WISH_TRACKING_BASE + formIndex;
-    gSaveBlock1Ptr->achievements.unlocked[bitIndex / 8] |= 1 << (bitIndex % 8);
+    WishForm_Register(FALSE, WishForm_GetIdForSpecies(species));
 }
 
 static u32 Achievement_CountWishForms(void)
 {
-    u32 i;
-    u32 count = 0;
-
-    Achievement_EnsureSaveInitialized();
-
-    for (i = 0; i < ACH_WISH_FORM_COUNT; i++)
-    {
-        u32 bitIndex = ACH_WISH_TRACKING_BASE + i;
-
-        if (gSaveBlock1Ptr->achievements.unlocked[bitIndex / 8] & (1 << (bitIndex % 8)))
-            count++;
-    }
-
+    u32 i, count = 0;
+    for (i = 0; i < ACH_WISH_ORIGINAL_FORM_COUNT; i++)
+        count += WishForm_IsRegistered(FALSE, i);
     return count;
 }
 
@@ -434,7 +431,6 @@ static u32 Achievement_CountCollectedTMs(void)
 
 u16 Achievement_GetCount(void)
 {
-    Achievement_EnsureSaveInitialized();
     return ARRAY_COUNT(sAchievements);
 }
 
@@ -475,20 +471,18 @@ bool32 Achievement_IsUnlocked(enum AchievementId id)
 {
     if ((u32)id >= ACHIEVEMENTS_MAX)
         return FALSE;
-    Achievement_EnsureSaveInitialized();
-    return (gSaveBlock1Ptr->achievements.unlocked[id / 8] & (1 << (id % 8))) != 0;
+    return (gSaveBlock3Ptr->achievements.unlocked[id / 8] & (1 << (id % 8))) != 0;
 }
 
 u16 Achievement_CountUnlocked(void)
 {
     u16 i, count = 0;
 
-    Achievement_EnsureSaveInitialized();
     for (i = 0; i < ARRAY_COUNT(sAchievements); i++)
     {
         enum AchievementId id = sAchievements[i].id;
 
-        if (gSaveBlock1Ptr->achievements.unlocked[id / 8] & (1 << (id % 8)))
+        if (gSaveBlock3Ptr->achievements.unlocked[id / 8] & (1 << (id % 8)))
             count++;
     }
     return count;
@@ -504,7 +498,6 @@ void Debug_UnlockNextAchievement(void)
 {
     u16 i;
 
-    Achievement_EnsureSaveInitialized();
     for (i = 0; i < ARRAY_COUNT(sAchievements); i++)
     {
         enum AchievementId id = sAchievements[i].id;
@@ -522,7 +515,6 @@ void Debug_UnlockNextAchievement(void)
 
 u32 Achievement_GetCounter(enum AchievementCounter counter)
 {
-    Achievement_EnsureSaveInitialized();
 
     switch (counter)
     {
@@ -533,11 +525,9 @@ u32 Achievement_GetCounter(enum AchievementCounter counter)
     case ACH_COUNTER_POKEDEX_CAUGHT:
         return GetNationalPokedexCount(FLAG_GET_CAUGHT);
 
-    case ACH_COUNTER_TIME_GEAR_USES:
-        return Achievement_GetPackedByte(0, 0);
     case ACH_COUNTER_GAME_CORNER_GAMES:
     {
-        u8 mask = Achievement_GetPackedByte(0, 1);
+        u8 mask = gSaveBlock3Ptr->achievements.gameCornerMask;
         u8 i;
         u8 count = 0;
 
@@ -548,24 +538,14 @@ u32 Achievement_GetCounter(enum AchievementCounter counter)
         }
         return count;
     }
-    case ACH_COUNTER_FISHING_CATCHES:
-        return Achievement_GetPackedByte(1, 0);
-    case ACH_COUNTER_GAME_CORNER_PLAYS:
-        return Achievement_GetPackedByte(1, 1);
-    case ACH_COUNTER_LEAGUE_WINS:
-        return Achievement_GetPackedByte(2, 0);
-    case ACH_COUNTER_MAGMA_GRUNTS:
-        return Achievement_GetPackedByte(2, 1);
-    case ACH_COUNTER_AQUA_GRUNTS:
-        return Achievement_GetPackedByte(3, 0);
     case ACH_COUNTER_WISH_FORMS:
         return Achievement_CountWishForms();
     default:
         break;
     }
 
-    if (counter < ACH_COUNTER_COUNT)
-        return gSaveBlock1Ptr->achievements.counters[counter] & 0xFFFF;
+    if ((u32)counter < ACH_COUNTER_COUNT)
+        return gSaveBlock3Ptr->achievements.counters[counter];
 
     return 0;
 }
@@ -594,12 +574,11 @@ static void Achievement_QueuePopup(enum AchievementId id)
 {
     u8 i;
 
-    Achievement_EnsureSaveInitialized();
     for (i = 0; i < ACHIEVEMENT_POPUP_QUEUE_SIZE; i++)
     {
-        if (gSaveBlock1Ptr->achievements.popupQueue[i] == 0)
+        if (gSaveBlock3Ptr->achievements.popupQueue[i] == 0)
         {
-            gSaveBlock1Ptr->achievements.popupQueue[i] = id + 1;
+            gSaveBlock3Ptr->achievements.popupQueue[i] = id + 1;
             return;
         }
     }
@@ -610,15 +589,13 @@ bool32 Achievement_Unlock(enum AchievementId id)
     if ((u32)id >= ACHIEVEMENTS_MAX || Achievement_GetById(id) == NULL || Achievement_IsUnlocked(id))
         return FALSE;
 
-    Achievement_EnsureSaveInitialized();
-    gSaveBlock1Ptr->achievements.unlocked[id / 8] |= (1 << (id % 8));
+    gSaveBlock3Ptr->achievements.unlocked[id / 8] |= (1 << (id % 8));
     Achievement_QueuePopup(id);
     return TRUE;
 }
 
 void Achievement_OnPokemonObtained(u16 species)
 {
-    Achievement_EnsureSaveInitialized();
     Achievement_RegisterWishForm(species);
     Achievement_CheckCounter(ACH_COUNTER_WISH_FORMS);
     Achievement_CheckAll();
@@ -628,7 +605,6 @@ void Achievement_CheckAll(void)
 {
     u16 i;
 
-    Achievement_EnsureSaveInitialized();
     Achievement_RegisterOwnedWishForms();
     for (i = 0; i < ARRAY_COUNT(sAchievements); i++)
     {
@@ -650,7 +626,6 @@ void Achievement_CheckCounter(enum AchievementCounter counter)
 
     if (counter == ACH_COUNTER_NONE)
         return;
-    Achievement_EnsureSaveInitialized();
     for (i = 0; i < ARRAY_COUNT(sAchievements); i++)
     {
         const struct Achievement *achievement = &sAchievements[i];
@@ -671,50 +646,10 @@ void Achievement_UnlockHallOfFameDebut(void)
 void Achievement_IncrementCounter(enum AchievementCounter counter, u32 amount)
 {
     u32 value;
-
-    Achievement_EnsureSaveInitialized();
-
-    // Preserve the low 16-bit layout of the five original counters.
-    if (counter < ACH_COUNTER_COUNT)
-    {
-        value = gSaveBlock1Ptr->achievements.counters[counter] & 0xFFFF;
-        if (0xFFFF - value < amount)
-            value = 0xFFFF;
-        else
-            value += amount;
-
-        gSaveBlock1Ptr->achievements.counters[counter] =
-            (gSaveBlock1Ptr->achievements.counters[counter] & 0xFFFF0000)
-          | value;
-
-        Achievement_CheckCounter(counter);
+    if ((u32)counter >= ACH_COUNTER_COUNT)
         return;
-    }
-
-    switch (counter)
-    {
-    case ACH_COUNTER_TIME_GEAR_USES:
-        Achievement_IncrementPackedByte(0, 0, amount);
-        break;
-    case ACH_COUNTER_FISHING_CATCHES:
-        Achievement_IncrementPackedByte(1, 0, amount);
-        break;
-    case ACH_COUNTER_GAME_CORNER_PLAYS:
-        Achievement_IncrementPackedByte(1, 1, amount);
-        break;
-    case ACH_COUNTER_LEAGUE_WINS:
-        Achievement_IncrementPackedByte(2, 0, amount);
-        break;
-    case ACH_COUNTER_MAGMA_GRUNTS:
-        Achievement_IncrementPackedByte(2, 1, amount);
-        break;
-    case ACH_COUNTER_AQUA_GRUNTS:
-        Achievement_IncrementPackedByte(3, 0, amount);
-        break;
-    default:
-        return;
-    }
-
+    value = gSaveBlock3Ptr->achievements.counters[counter];
+    gSaveBlock3Ptr->achievements.counters[counter] = (0xFFFFFFFFu - value < amount) ? 0xFFFFFFFFu : value + amount;
     Achievement_CheckCounter(counter);
 }
 
@@ -725,55 +660,13 @@ void Achievement_AddBattlePointsEarned(u32 amount)
 
 void Achievement_SetCounterMax(enum AchievementCounter counter, u32 value)
 {
-    u32 current;
-
-    Achievement_EnsureSaveInitialized();
-
-    if (counter < ACH_COUNTER_COUNT)
+    if ((u32)counter >= ACH_COUNTER_COUNT)
+        return;
+    if (gSaveBlock3Ptr->achievements.counters[counter] < value)
     {
-        current = gSaveBlock1Ptr->achievements.counters[counter] & 0xFFFF;
-        if (value > 0xFFFF)
-            value = 0xFFFF;
-
-        if (current < value)
-        {
-            gSaveBlock1Ptr->achievements.counters[counter] =
-                (gSaveBlock1Ptr->achievements.counters[counter] & 0xFFFF0000)
-              | value;
-            Achievement_CheckCounter(counter);
-        }
-        return;
+        gSaveBlock3Ptr->achievements.counters[counter] = value;
+        Achievement_CheckCounter(counter);
     }
-
-    current = Achievement_GetCounter(counter);
-    if (current >= value)
-        return;
-
-    switch (counter)
-    {
-    case ACH_COUNTER_TIME_GEAR_USES:
-        Achievement_SetPackedByte(0, 0, min(value, 255));
-        break;
-    case ACH_COUNTER_FISHING_CATCHES:
-        Achievement_SetPackedByte(1, 0, min(value, 255));
-        break;
-    case ACH_COUNTER_GAME_CORNER_PLAYS:
-        Achievement_SetPackedByte(1, 1, min(value, 255));
-        break;
-    case ACH_COUNTER_LEAGUE_WINS:
-        Achievement_SetPackedByte(2, 0, min(value, 255));
-        break;
-    case ACH_COUNTER_MAGMA_GRUNTS:
-        Achievement_SetPackedByte(2, 1, min(value, 255));
-        break;
-    case ACH_COUNTER_AQUA_GRUNTS:
-        Achievement_SetPackedByte(3, 0, min(value, 255));
-        break;
-    default:
-        return;
-    }
-
-    Achievement_CheckCounter(counter);
 }
 
 void Achievement_OnTrainerDefeated(u16 trainerId)
@@ -816,7 +709,6 @@ void Achievement_RecordGameCornerPlay(enum AchievementGameCornerGame game)
 {
     u8 mask;
 
-    Achievement_EnsureSaveInitialized();
 
     // Every actual play counts toward ALL IN.
     Achievement_IncrementCounter(ACH_COUNTER_GAME_CORNER_PLAYS, 1);
@@ -825,9 +717,9 @@ void Achievement_RecordGameCornerPlay(enum AchievementGameCornerGame game)
         return;
 
     // Gambler remembers which distinct Game Corner games were tried.
-    mask = Achievement_GetPackedByte(0, 1);
+    mask = gSaveBlock3Ptr->achievements.gameCornerMask;
     mask |= 1 << game;
-    Achievement_SetPackedByte(0, 1, mask);
+    gSaveBlock3Ptr->achievements.gameCornerMask = mask;
     Achievement_CheckCounter(ACH_COUNTER_GAME_CORNER_GAMES);
 }
 

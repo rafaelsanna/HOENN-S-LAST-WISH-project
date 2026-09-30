@@ -357,6 +357,7 @@ DOUBLE_BATTLE_TEST("Pursuit attacks a switching foe but isn't affected by Follow
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Pursuit user mega evolves before attacking a switching foe and hits twice if user has Parental Bond")
 {
     GIVEN {
@@ -374,7 +375,9 @@ SINGLE_BATTLE_TEST("Pursuit user mega evolves before attacking a switching foe a
         SEND_IN_MESSAGE("Zigzagoon");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 DOUBLE_BATTLE_TEST("Pursuit user mega evolves before attacking a switching foe and others mega evolve after switch")
 {
     GIVEN {
@@ -396,6 +399,7 @@ DOUBLE_BATTLE_TEST("Pursuit user mega evolves before attacking a switching foe a
         ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, playerLeft);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Pursuit user terastalizes before attacking a switching foe and gets the damage boost from the tera type", s16 damage)
 {

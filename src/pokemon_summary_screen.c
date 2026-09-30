@@ -1,4 +1,5 @@
 #include "global.h"
+#include "hlw_media_save.h"
 #include "main.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -137,22 +138,22 @@ struct SummaryThemeColors
 enum SummaryColorTheme
 {
     SUMMARY_COLOR_THEME_DEFAULT = 0, // untouched #101821 dark UI
-    SUMMARY_COLOR_THEME_AMETHYST,
-    SUMMARY_COLOR_THEME_BURGUNDY,
-    SUMMARY_COLOR_THEME_MIDNIGHT_SKY,
-    SUMMARY_COLOR_THEME_EMERALD,
-    SUMMARY_COLOR_THEME_DEEP_OCEAN,
-    SUMMARY_COLOR_THEME_COPPER,
-    SUMMARY_COLOR_THEME_ROSEWOOD,
-    SUMMARY_COLOR_THEME_INDIGO,
-    SUMMARY_COLOR_THEME_SILVER,
-    SUMMARY_COLOR_THEME_PASTEL_PINK,
-    SUMMARY_COLOR_THEME_LAVENDER_MIST,
-    SUMMARY_COLOR_THEME_BABY_BLUE,
-    SUMMARY_COLOR_THEME_MINT,
-    SUMMARY_COLOR_THEME_PEACH,
-    SUMMARY_COLOR_THEME_GOLD,
-    SUMMARY_COLOR_THEME_COUNT,
+    SUMMARY_COLOR_THEME_AMETHYST = 1,
+    SUMMARY_COLOR_THEME_BURGUNDY = 2,
+    SUMMARY_COLOR_THEME_MIDNIGHT_SKY = 3,
+    SUMMARY_COLOR_THEME_EMERALD = 4,
+    SUMMARY_COLOR_THEME_DEEP_OCEAN = 5,
+    SUMMARY_COLOR_THEME_COPPER = 6,
+    SUMMARY_COLOR_THEME_ROSEWOOD = 7,
+    SUMMARY_COLOR_THEME_INDIGO = 8,
+    SUMMARY_COLOR_THEME_SILVER = 9,
+    SUMMARY_COLOR_THEME_PASTEL_PINK = 10,
+    SUMMARY_COLOR_THEME_LAVENDER_MIST = 11,
+    SUMMARY_COLOR_THEME_BABY_BLUE = 12,
+    SUMMARY_COLOR_THEME_MINT = 13,
+    SUMMARY_COLOR_THEME_PEACH = 14,
+    SUMMARY_COLOR_THEME_GOLD = 15,
+    SUMMARY_COLOR_THEME_COUNT = 16,
 };
 
 // Compact 3-5 character labels for the small header slot between the page
@@ -304,15 +305,6 @@ static const struct SummaryThemeColors sSummaryThemeColors[SUMMARY_COLOR_THEME_C
 // Persistent Summary theme slot inside HLWSaveExtension.future[].
 // Radio currently owns future[0..63], so Summary starts at 64 and does not
 // change the frozen 512-byte HLW save ABI.
-#define SUMMARY_THEME_SAVE_TAG0_OFFSET      64
-#define SUMMARY_THEME_SAVE_TAG1_OFFSET      65
-#define SUMMARY_THEME_SAVE_VERSION_OFFSET   66
-#define SUMMARY_THEME_SAVE_VALUE_OFFSET     67
-#define SUMMARY_THEME_SAVE_TAG0             0x53 // 'S'
-#define SUMMARY_THEME_SAVE_TAG1             0x54 // 'T'
-#define SUMMARY_THEME_SAVE_VERSION          1
-#define SUMMARY_HLW_SAVE_EXTENSION_MAGIC    0x484C5753
-#define SUMMARY_HLW_SAVE_EXTENSION_VERSION  1
 
 
 // Dynamic fields for the Pokémon Info page
@@ -438,7 +430,6 @@ static void InitBGs(void);
 static bool8 DecompressGraphics(void);
 static void ApplySkillsGuideTilePalettes(void);
 static void InitSkillsGuidePalettes(void);
-static void InitSummaryThemeSaveExtensionIfNeeded(void);
 static void LoadSummaryColorThemeFromSave(void);
 static void SaveSummaryColorThemeToSave(void);
 static u16 RemapSummaryThemeNeutralColor(u16 color);
@@ -1788,75 +1779,17 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
-static void InitSummaryThemeSaveExtensionIfNeeded(void)
-{
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    // Same ABI guard used by the Radio. Only initialize the extension when its
-    // header is invalid; a valid Radio save is left completely untouched.
-    if (ext->magic != SUMMARY_HLW_SAVE_EXTENSION_MAGIC
-     || ext->version != SUMMARY_HLW_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext))
-    {
-        memset(ext, 0, sizeof(*ext));
-        ext->magic = SUMMARY_HLW_SAVE_EXTENSION_MAGIC;
-        ext->version = SUMMARY_HLW_SAVE_EXTENSION_VERSION;
-        ext->size = sizeof(*ext);
-    }
-}
-
 static void LoadSummaryColorThemeFromSave(void)
 {
-    struct HLWSaveExtension *ext;
-
     sSummaryColorTheme = SUMMARY_COLOR_THEME_DEFAULT;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    InitSummaryThemeSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->future[SUMMARY_THEME_SAVE_TAG0_OFFSET] == SUMMARY_THEME_SAVE_TAG0
-     && ext->future[SUMMARY_THEME_SAVE_TAG1_OFFSET] == SUMMARY_THEME_SAVE_TAG1
-     && ext->future[SUMMARY_THEME_SAVE_VERSION_OFFSET] == SUMMARY_THEME_SAVE_VERSION
-     && ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET] < SUMMARY_COLOR_THEME_COUNT)
-    {
-        sSummaryColorTheme = ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET];
-    }
-    else
-    {
-        // Old saves/default state: Theme 0. Register the new field in RAM;
-        // the game's normal save flow will write it to flash later.
-        ext->future[SUMMARY_THEME_SAVE_TAG0_OFFSET] = SUMMARY_THEME_SAVE_TAG0;
-        ext->future[SUMMARY_THEME_SAVE_TAG1_OFFSET] = SUMMARY_THEME_SAVE_TAG1;
-        ext->future[SUMMARY_THEME_SAVE_VERSION_OFFSET] = SUMMARY_THEME_SAVE_VERSION;
-        ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET] = SUMMARY_COLOR_THEME_DEFAULT;
-    }
+    if (gSaveBlock1Ptr != NULL && gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] < SUMMARY_COLOR_THEME_COUNT)
+        sSummaryColorTheme = gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET];
 }
 
 static void SaveSummaryColorThemeToSave(void)
 {
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    InitSummaryThemeSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    ext->future[SUMMARY_THEME_SAVE_TAG0_OFFSET] = SUMMARY_THEME_SAVE_TAG0;
-    ext->future[SUMMARY_THEME_SAVE_TAG1_OFFSET] = SUMMARY_THEME_SAVE_TAG1;
-    ext->future[SUMMARY_THEME_SAVE_VERSION_OFFSET] = SUMMARY_THEME_SAVE_VERSION;
-    ext->future[SUMMARY_THEME_SAVE_VALUE_OFFSET] =
-        (sSummaryColorTheme < SUMMARY_COLOR_THEME_COUNT)
-            ? sSummaryColorTheme
-            : SUMMARY_COLOR_THEME_DEFAULT;
+    if (gSaveBlock1Ptr != NULL)
+        gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] = (sSummaryColorTheme < SUMMARY_COLOR_THEME_COUNT) ? sSummaryColorTheme : SUMMARY_COLOR_THEME_DEFAULT;
 }
 
 static u16 RemapSummaryThemeNeutralColor(u16 color)

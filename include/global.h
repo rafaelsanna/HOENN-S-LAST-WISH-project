@@ -132,8 +132,8 @@
 
 #define ROUND_BITS_TO_BYTES(numBits) DIV_ROUND_UP(numBits, 8)
 
-#define NUM_DEX_FLAG_BYTES ROUND_BITS_TO_BYTES(POKEMON_SLOTS_NUMBER)
-#define NUM_FLAG_BYTES ROUND_BITS_TO_BYTES(FLAGS_COUNT)
+#define NUM_DEX_FLAG_BYTES 129 // Frozen 0.9 legacy dex capacity.
+#define NUM_FLAG_BYTES 318 // Frozen legacy region; custom flags use SB4.
 #define NUM_TRENDY_SAYING_BYTES ROUND_BITS_TO_BYTES(NUM_TRENDY_SAYINGS)
 
 // This produces an error at compile-time if expr is zero.
@@ -259,19 +259,14 @@ struct AchievementSave
     u16 version;
     u16 size;
     u8 unlocked[ACHIEVEMENT_UNLOCKED_BYTES];
-    u8 wishForms[ACH_WISH_FORM_BYTES];
+    u8 wishOriginalForms[16];
+    u8 wishCustomForms[13];
     u8 shadowPokemon[ACH_SHADOW_POKEMON_BYTES];
-    u8 popupQueue[ACHIEVEMENT_POPUP_QUEUE_SIZE];
     u8 gameCornerMask;
+    u16 popupQueue[ACHIEVEMENT_POPUP_QUEUE_SIZE];
+    u16 shadowNightmareState;
     u32 counters[ACHIEVEMENT_SAVED_COUNTERS];
-    u8 reserved[ACHIEVEMENT_SAVE_DATA_SIZE
-                - sizeof(u32) - sizeof(u16) * 2
-                - ACHIEVEMENT_UNLOCKED_BYTES
-                - ACH_WISH_FORM_BYTES
-                - ACH_SHADOW_POKEMON_BYTES
-                - ACHIEVEMENT_POPUP_QUEUE_SIZE
-                - sizeof(u8)
-                - sizeof(u32) * ACHIEVEMENT_SAVED_COUNTERS];
+    u8 reserved[8];
 };
 
 STATIC_ASSERT(sizeof(struct MiningWallSave) == 68, MiningWallSaveSize);
@@ -288,8 +283,8 @@ struct HiddenGrottoContent
 #define HLW_SAVE_BLOCK3_VERSION               1
 #define HLW_TRAINER_FLAG_COUNT                2048
 #define HLW_TRAINER_FLAG_BYTES                (HLW_TRAINER_FLAG_COUNT / 8)
-#define HLW_DEX_FLAG_BYTES                    192
-#define HLW_RELEASED_SPECIES_FLAG_BYTES       256
+#define HLW_DEX_FLAG_BYTES                    129
+#define HLW_RELEASED_SPECIES_FLAG_BYTES       191
 #define HLW_ITEM_SEEN_FLAG_BYTES              128
 
 struct SaveBlock3Header
@@ -315,6 +310,7 @@ struct SaveBlock3
     u8 dexCaught[HLW_DEX_FLAG_BYTES];
     u8 nuzlockeReleasedSpeciesFlags[HLW_RELEASED_SPECIES_FLAG_BYTES];
     u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES];
+    u8 encounterReserved[3];
     struct AchievementSave achievements;
     struct MiningWallSave miningWalls;
     u8 itemFlags[HLW_ITEM_SEEN_FLAG_BYTES];
@@ -327,6 +323,7 @@ struct SaveBlock3
                     - HLW_DEX_FLAG_BYTES * 2
                     - HLW_RELEASED_SPECIES_FLAG_BYTES
                     - NUZLOCKE_WILD_HEADER_FLAG_BYTES
+                    - 3
                     - sizeof(struct AchievementSave)
                     - sizeof(struct MiningWallSave)
                     - HLW_ITEM_SEEN_FLAG_BYTES];
@@ -691,6 +688,7 @@ struct SaveBlock2
     u8 optionsInfiniteCandy; //OPTINOS_INFINITECANDY_[OFF/ON]
     u8 optionsLevelCaps; //OPTIONS_LEVELCAPS_[ON/OFF]
     u8 optionsBattleItems; //OPTIONS_BATTLEITEMS_[ON/OFF]
+    u8 futureReserved[80];
 }; // sizeof=0xF4C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;
@@ -1151,7 +1149,8 @@ struct LegacyBag
 #define BAG_EXPANSION_VERSION 2
 
 // This occupies the former Mystery Gift save range. Keeping the total size
-// unchanged allows saves from the previous layout to be loaded safely.
+// unchanged preserves this byte range inside the frozen 0.9 layout. It does
+// not make pre-0.9 saves compatible with the released schema.
 struct BagExpansionSave
 {
     u32 magic;
@@ -1182,9 +1181,9 @@ struct Bag
 
 
 // ==========================================================================
-// HLW SAVE ABI - FREEZE TARGET FOR RELEASE 1.0
+// HLW SAVE ABI - FROZEN FOR RELEASE 0.9
 //
-// AFTER 1.0:
+// AFTER 0.9:
 //   * do not move hlwSave
 //   * do not change sizeof(struct HLWSaveExtension)
 //   * consume bytes from future[]
@@ -1220,7 +1219,7 @@ struct HLWSaveExtension
 
     struct RadioSaveData radio;
 
-    // Reserved BEFORE 1.0 for future persistent HLW features.
+    // Owned byte ranges and remaining reserve: see hlw_media_save.h.
     u8 future[352];
 };
 
@@ -1266,7 +1265,7 @@ struct SaveBlock1
     /*0xA30*/ struct ObjectEvent objectEvents[OBJECT_EVENTS_COUNT];
     /*0xC70*/ struct ObjectEventTemplate objectEventTemplates[OBJECT_EVENT_TEMPLATES_COUNT];
     /*0x1270*/ u8 flags[NUM_FLAG_BYTES];
-    /*0x139C*/ u16 vars[VARS_COUNT];
+    /*0x139C*/ u16 vars[257]; // Frozen legacy var bank.
     /*0x159C*/ u32 gameStats[NUM_GAME_STATS];
     /*0x169C*/ struct BerryTree berryTrees[BERRY_TREES_COUNT];
     /*0x1A9C*/ struct SecretBase secretBases[SECRET_BASES_COUNT];
@@ -1343,8 +1342,9 @@ struct SaveBlock1
     // sizeof: 0x3???
 
     // HLW persistent extension.
-    // APPENDED at the end so older SaveBlock1 fields keep their offsets.
+    // Appended after the frozen legacy payload; pre-0.9 saves are unsupported.
     struct HLWSaveExtension hlwSave;
+    u8 futureReserved[488];
 };
 
 extern struct SaveBlock1 *gSaveBlock1Ptr;

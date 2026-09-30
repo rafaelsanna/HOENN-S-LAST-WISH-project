@@ -7,6 +7,7 @@ ASSUMPTIONS
     ASSUME(GetMovePower(MOVE_SCRATCH) > 0);
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Aerilate turns a Normal-type move into Flying-type move")
 {
     GIVEN {
@@ -20,7 +21,9 @@ SINGLE_BATTLE_TEST("Aerilate turns a Normal-type move into Flying-type move")
         MESSAGE("It's super effective!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Aerilate can not turn certain moves into Flying type moves")
 {
     u32 move;
@@ -44,7 +47,9 @@ SINGLE_BATTLE_TEST("Aerilate can not turn certain moves into Flying type moves")
         }
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Aerilate boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6)", s16 damage)
 {
     u32 move, genConfig;
@@ -70,7 +75,9 @@ SINGLE_BATTLE_TEST("Aerilate boosts power of affected moves by 20% (Gen7+) or 30
             EXPECT_MUL_EQ(results[1].damage, Q_4_12(1.3), results[3].damage); // No STAB
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Aerilate doesn't affect Weather Ball's type", s16 damage)
 {
     u32 move1, move2;
@@ -101,7 +108,9 @@ SINGLE_BATTLE_TEST("Aerilate doesn't affect Weather Ball's type", s16 damage)
         EXPECT_EQ(results[1].damage, results[3].damage);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Aerilate doesn't affect Natural Gift's type")
 {
     u16 move;
@@ -122,7 +131,9 @@ SINGLE_BATTLE_TEST("Aerilate doesn't affect Natural Gift's type")
         MESSAGE("It doesn't affect the opposing Salamence…");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Aerilate doesn't affect Judgment / Techno Blast / Multi-Attack's type")
 {
     u16 move, item;
@@ -153,6 +164,7 @@ SINGLE_BATTLE_TEST("Aerilate doesn't affect Judgment / Techno Blast / Multi-Atta
         MESSAGE("It doesn't affect the opposing Diglett…");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Aerilate doesn't affect Hidden Power's type")
 {

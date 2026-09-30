@@ -5,6 +5,11 @@
 
 #define MOVEMENT_INVALID 0xFE
 
+// Frozen persistent identities; these values never depend on ROM addresses.
+#define FOLLOWER_SCRIPT_NONE       0
+#define FOLLOWER_SCRIPT_TEDDIURSA   1
+#define FOLLOWER_SCRIPT_DEBUG      2
+
 struct FollowerNPCSpriteGraphics
 {
     u16 normalId;

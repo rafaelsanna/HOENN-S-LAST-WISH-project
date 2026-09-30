@@ -7,6 +7,7 @@ ASSUMPTIONS
     ASSUME(GetMovePower(MOVE_SCRATCH) > 0);
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Pixilate turns a Normal-type move into a Fairy-type move")
 {
     GIVEN {
@@ -20,6 +21,7 @@ SINGLE_BATTLE_TEST("Pixilate turns a Normal-type move into a Fairy-type move")
         MESSAGE("It's super effective!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Pixilate boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6)", s16 damage)
 {

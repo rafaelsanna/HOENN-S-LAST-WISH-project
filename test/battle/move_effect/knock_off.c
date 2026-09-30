@@ -272,6 +272,7 @@ DOUBLE_BATTLE_TEST("Knock Off does not trigger the opposing ally's Symbiosis")
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Knock Off does knock off Mega Stones from Pokemon that don't actually use them")
 {
     GIVEN {
@@ -283,7 +284,9 @@ SINGLE_BATTLE_TEST("Knock Off does knock off Mega Stones from Pokemon that don't
         MESSAGE("Wobbuffet knocked off the opposing Wobbuffet's Absolite!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Knock Off doesn't knock off Mega Stones from Pokemon that actually use them")
 {
     GIVEN {
@@ -295,6 +298,7 @@ SINGLE_BATTLE_TEST("Knock Off doesn't knock off Mega Stones from Pokemon that ac
         NOT MESSAGE("Wobbuffet knocked off the opposing Absol's Absolite!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Knock Off does knock off Orbs for Primal Reversion from Pokemon that don't actually use them")
 {

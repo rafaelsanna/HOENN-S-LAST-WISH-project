@@ -1,4 +1,5 @@
 #include "global.h"
+#include "save.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "hidden_grotto.h"
@@ -59,36 +60,10 @@ struct WeightedHiddenGrottoItem
     u8 weight;
 };
 
-#define HIDDEN_GROTTO_PLACEHOLDER {HIDDEN_GROTTO_NO_MAP_GROUP, HIDDEN_GROTTO_NO_MAP_NUM, 5, LOCALID_NONE, HIDDEN_GROTTO_ITEM_POOL_DEFAULT, ITEM_NONE, {{SPECIES_NONE, 0}, {SPECIES_NONE, 0}, {SPECIES_NONE, 0}, {SPECIES_NONE, 0}}}
-
-static const u16 sHiddenGrottoVars[NUM_HIDDEN_GROTTOES] =
-{
-    VAR_HIDDEN_GROTTO_00,
-    VAR_HIDDEN_GROTTO_01,
-    VAR_HIDDEN_GROTTO_02,
-    VAR_HIDDEN_GROTTO_03,
-    VAR_HIDDEN_GROTTO_04,
-    VAR_HIDDEN_GROTTO_05,
-    VAR_HIDDEN_GROTTO_06,
-    VAR_HIDDEN_GROTTO_07,
-    VAR_HIDDEN_GROTTO_08,
-    VAR_HIDDEN_GROTTO_09,
-    VAR_HIDDEN_GROTTO_10,
-    VAR_HIDDEN_GROTTO_11,
-    VAR_HIDDEN_GROTTO_12,
-    VAR_HIDDEN_GROTTO_13,
-    VAR_HIDDEN_GROTTO_14,
-    VAR_HIDDEN_GROTTO_15,
-    VAR_HIDDEN_GROTTO_16,
-    VAR_HIDDEN_GROTTO_17,
-    VAR_HIDDEN_GROTTO_18,
-    VAR_HIDDEN_GROTTO_19,
-};
-
-// Fill these entries when actual Hidden Grotto maps/objects are placed in Hoenn.
+// Designators are permanent save IDs, independent of the source/table order.
 static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
 {
-    {
+    [HIDDEN_GROTTO_ID_PETALBURG_WOODS_EAST] = {
         MAP_GROUP(MAP_PETALBURG_WOODS_EAST_GROTTO),
         MAP_NUM(MAP_PETALBURG_WOODS_EAST_GROTTO),
         8,
@@ -102,7 +77,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_PINSIR, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_GRANITE_HILL] = {
         MAP_GROUP(MAP_GRANITE_HILL_GROTTO),
         MAP_NUM(MAP_GRANITE_HILL_GROTTO),
         18,
@@ -116,7 +91,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_WOOPER, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_ROUTE111] = {
         MAP_GROUP(MAP_ROUTE111GROTTO_),
         MAP_NUM(MAP_ROUTE111GROTTO_),
         25,
@@ -130,7 +105,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_ILLUMISE, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_FIERY_PATH] = {
         MAP_GROUP(MAP_FIERY_PATH_GROTTO),
         MAP_NUM(MAP_FIERY_PATH_GROTTO),
         24,
@@ -144,7 +119,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_CHIMECHO, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_ROUTE114] = {
         MAP_GROUP(MAP_ROUTE114GROTTO),
         MAP_NUM(MAP_ROUTE114GROTTO),
         26,
@@ -158,7 +133,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_GOLBAT, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_ROUTE115] = {
         MAP_GROUP(MAP_ROUTE115GROTTO),
         MAP_NUM(MAP_ROUTE115GROTTO),
         28,
@@ -172,7 +147,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_LOUDRED, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_ROGUE_CANYON] = {
         MAP_GROUP(MAP_ROGUECANYONGROTTO),
         MAP_NUM(MAP_ROGUECANYONGROTTO),
         45,
@@ -186,7 +161,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_MUDKIP, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_ROUTE119] = {
         MAP_GROUP(MAP_ROUTE119GROTTO),
         MAP_NUM(MAP_ROUTE119GROTTO),
         45,
@@ -200,7 +175,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_SCYTHER, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_ROUTE120] = {
         MAP_GROUP(MAP_ROUTE120GROTTO),
         MAP_NUM(MAP_ROUTE120GROTTO),
         50,
@@ -214,7 +189,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_BIBAREL, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_MT_PYRE] = {
         MAP_GROUP(MAP_MTPYREGROTTO),
         MAP_NUM(MAP_MTPYREGROTTO),
         48,
@@ -228,7 +203,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_ANNIHILAPE, 0},
         },
     },
-    {
+    [HIDDEN_GROTTO_ID_ROUTE110] = {
         MAP_GROUP(MAP_ROUTE110GROTTO),
         MAP_NUM(MAP_ROUTE110GROTTO),
         22,
@@ -242,16 +217,9 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_HAPPINY, 0},
         },
     },
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
-    HIDDEN_GROTTO_PLACEHOLDER,
 };
+
+STATIC_ASSERT(NUM_HIDDEN_GROTTOES == HLW_GROTTO_STATE_COUNT, HiddenGrottoSaveCapacity);
 
 static const struct WeightedHiddenGrottoItem sHiddenGrottoVisibleItems[] =
 {
@@ -539,17 +507,14 @@ static bool8 IsHiddenGrottoContentValid(struct HiddenGrottoContent content);
 
 void ResetHiddenGrottoes(void)
 {
-    u8 i;
+    memset(gHlwSaveBlock4.grottoStates, 0, sizeof(gHlwSaveBlock4.grottoStates));
 
-    for (i = 0; i < NUM_HIDDEN_GROTTOES; i++)
-        VarSet(sHiddenGrottoVars[i], 0);
-
-    VarSet(VAR_HIDDEN_GROTTO_RESET_DAYS, 0);
+    VarSet(VAR_HLW_GROTTO_RESET_DAYS, 0);
 }
 
 void UpdateHiddenGrottoesPerDay(u16 daysSince)
 {
-    u16 daysSinceReset = VarGet(VAR_HIDDEN_GROTTO_RESET_DAYS);
+    u16 daysSinceReset = VarGet(VAR_HLW_GROTTO_RESET_DAYS);
 
     if (daysSinceReset >= HIDDEN_GROTTO_RESET_INTERVAL_DAYS)
         return;
@@ -559,7 +524,7 @@ void UpdateHiddenGrottoesPerDay(u16 daysSince)
     {
         if (IsCurrentMapHiddenGrotto())
         {
-            VarSet(VAR_HIDDEN_GROTTO_RESET_DAYS, HIDDEN_GROTTO_RESET_INTERVAL_DAYS);
+            VarSet(VAR_HLW_GROTTO_RESET_DAYS, HIDDEN_GROTTO_RESET_INTERVAL_DAYS);
             return;
         }
 
@@ -567,7 +532,7 @@ void UpdateHiddenGrottoesPerDay(u16 daysSince)
         daysSinceReset %= HIDDEN_GROTTO_RESET_INTERVAL_DAYS;
     }
 
-    VarSet(VAR_HIDDEN_GROTTO_RESET_DAYS, daysSinceReset);
+    VarSet(VAR_HLW_GROTTO_RESET_DAYS, daysSinceReset);
 }
 
 void HiddenGrotto_InitializeCurrent(void)
@@ -583,7 +548,7 @@ void HiddenGrotto_InitializeCurrent(void)
     if (grotto == NULL)
         return;
 
-    if (VarGet(VAR_HIDDEN_GROTTO_RESET_DAYS) >= HIDDEN_GROTTO_RESET_INTERVAL_DAYS)
+    if (VarGet(VAR_HLW_GROTTO_RESET_DAYS) >= HIDDEN_GROTTO_RESET_INTERVAL_DAYS)
         ResetHiddenGrottoes();
 
     content = UnpackHiddenGrottoContent(GetCurrentHiddenGrottoPackedContent());
@@ -762,13 +727,19 @@ bool8 IsCurrentMapHiddenGrotto(void)
 
 static u8 GetCurrentHiddenGrottoId(void)
 {
+    return GetHiddenGrottoIdForMap(((u8)gSaveBlock1Ptr->location.mapGroup << 8)
+                                 | (u8)gSaveBlock1Ptr->location.mapNum);
+}
+
+u8 GetHiddenGrottoIdForMap(u16 map)
+{
     u8 i;
 
     for (i = 0; i < NUM_HIDDEN_GROTTOES; i++)
     {
-        if (sHiddenGrottoData[i].mapGroup == HIDDEN_GROTTO_NO_MAP_GROUP || sHiddenGrottoData[i].mapNum == HIDDEN_GROTTO_NO_MAP_NUM)
+        if (sHiddenGrottoData[i].monLevel == 0)
             continue;
-        if (sHiddenGrottoData[i].mapGroup == gSaveBlock1Ptr->location.mapGroup && sHiddenGrottoData[i].mapNum == gSaveBlock1Ptr->location.mapNum)
+        if (sHiddenGrottoData[i].mapGroup == MAP_GROUP(map) && sHiddenGrottoData[i].mapNum == MAP_NUM(map))
             return i;
     }
 
@@ -790,7 +761,7 @@ static u16 GetCurrentHiddenGrottoPackedContent(void)
 
     if (id == NUM_HIDDEN_GROTTOES)
         return 0;
-    return VarGet(sHiddenGrottoVars[id]);
+    return gHlwSaveBlock4.grottoStates[id];
 }
 
 static void SetCurrentHiddenGrottoPackedContent(u16 packed)
@@ -798,7 +769,7 @@ static void SetCurrentHiddenGrottoPackedContent(u16 packed)
     u8 id = GetCurrentHiddenGrottoId();
 
     if (id != NUM_HIDDEN_GROTTOES)
-        VarSet(sHiddenGrottoVars[id], packed);
+        gHlwSaveBlock4.grottoStates[id] = packed;
 }
 
 static struct HiddenGrottoContent UnpackHiddenGrottoContent(u16 packed)

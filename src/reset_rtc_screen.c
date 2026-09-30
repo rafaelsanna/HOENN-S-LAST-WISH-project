@@ -734,8 +734,8 @@ static void Task_ResetRtcScreen(u8 taskId)
     case MAINSTATE_CHECK_SAVE:
         if (!gPaletteFade.active)
         {
-            if (gSaveFileStatus == SAVE_STATUS_EMPTY
-             || gSaveFileStatus == SAVE_STATUS_CORRUPT)
+            if (gSaveFileStatus != SAVE_STATUS_OK
+             && gSaveFileStatus != SAVE_STATUS_ERROR)
             {
                 ShowMessage(gText_NoSaveFileCantSetTime);
                 tState = MAINSTATE_WAIT_EXIT;

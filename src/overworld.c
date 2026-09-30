@@ -553,12 +553,24 @@ void LoadObjEventTemplatesFromHeader(void)
 
 void LoadSaveblockObjEventScripts(void)
 {
-    const struct ObjectEventTemplate *mapHeaderObjTemplates = gMapHeader.events->objectEvents;
+    const struct MapEvents *events = gMapHeader.events;
     struct ObjectEventTemplate *savObjTemplates = gSaveBlock1Ptr->objectEventTemplates;
-    s32 i;
 
-    for (i = 0; i < OBJECT_EVENT_TEMPLATES_COUNT; i++)
-        savObjTemplates[i].script = mapHeaderObjTemplates[i].script;
+    // Saved pointers belong to the old ROM. Resolve current scripts by local
+    // identity, preserving saved positions/movement and never reading beyond
+    // a short ROM object table. Retired/empty objects retain no stale pointer.
+    for (u32 i = 0; i < OBJECT_EVENT_TEMPLATES_COUNT; i++)
+    {
+        const struct ObjectEventTemplate *current;
+
+        savObjTemplates[i].script = NULL;
+        if (savObjTemplates[i].localId == 0 || events == NULL || events->objectEvents == NULL)
+            continue;
+        current = FindObjectEventTemplateByLocalId(savObjTemplates[i].localId,
+                                                 events->objectEvents, events->objectEventCount);
+        if (current != NULL)
+            savObjTemplates[i].script = current->script;
+    }
 }
 
 void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)

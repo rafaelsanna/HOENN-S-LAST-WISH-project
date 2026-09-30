@@ -1,6 +1,7 @@
 #include "global.h"
 #include "test/battle.h"
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Venusaur can Mega Evolve holding Venusaurite")
 {
     GIVEN {
@@ -16,7 +17,9 @@ SINGLE_BATTLE_TEST("Venusaur can Mega Evolve holding Venusaurite")
         EXPECT_EQ(player->species, SPECIES_VENUSAUR_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 DOUBLE_BATTLE_TEST("Mega Evolution's order is determined by Speed - opponent faster")
 {
     GIVEN {
@@ -35,7 +38,9 @@ DOUBLE_BATTLE_TEST("Mega Evolution's order is determined by Speed - opponent fas
         MESSAGE("Venusaur has Mega Evolved into Mega Venusaur!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 DOUBLE_BATTLE_TEST("Mega Evolution's order is determined by Speed - player faster")
 {
     GIVEN {
@@ -54,6 +59,7 @@ DOUBLE_BATTLE_TEST("Mega Evolution's order is determined by Speed - player faste
         MESSAGE("The opposing Gardevoir has Mega Evolved into Mega Gardevoir!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Rayquaza can Mega Evolve knowing Dragon Ascent")
 {
@@ -71,6 +77,7 @@ SINGLE_BATTLE_TEST("Rayquaza can Mega Evolve knowing Dragon Ascent")
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Mega Evolution doesn't affect turn order (Gen6)")
 {
     GIVEN {
@@ -86,7 +93,9 @@ SINGLE_BATTLE_TEST("Mega Evolution doesn't affect turn order (Gen6)")
         ASSUME(player->speed == 205);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Mega Evolution affects turn order (Gen7+)")
 {
     GIVEN {
@@ -102,7 +111,9 @@ SINGLE_BATTLE_TEST("Mega Evolution affects turn order (Gen7+)")
         ASSUME(player->speed == 205);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Abilities replaced by Mega Evolution do not affect turn order")
 {
     GIVEN {
@@ -120,7 +131,9 @@ SINGLE_BATTLE_TEST("Abilities replaced by Mega Evolution do not affect turn orde
         ASSUME(player->speed == 105);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 DOUBLE_BATTLE_TEST("Mega Evolution happens after switching, but before Focus Punch-like Moves")
 {
     GIVEN {
@@ -148,7 +161,9 @@ DOUBLE_BATTLE_TEST("Mega Evolution happens after switching, but before Focus Pun
         MESSAGE("Wobbuffet is tightening its focus!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Regular Mega Evolution and Fervent Wish Mega Evolution can happen on the same turn")
 {
     GIVEN {
@@ -169,7 +184,9 @@ SINGLE_BATTLE_TEST("Regular Mega Evolution and Fervent Wish Mega Evolution can h
         EXPECT_EQ(opponent->species, SPECIES_GARDEVOIR_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Mega Evolved Pokemon do not change abilities after fainting")
 {
     GIVEN {
@@ -192,3 +209,4 @@ SINGLE_BATTLE_TEST("Mega Evolved Pokemon do not change abilities after fainting"
         }
     }
 }
+#endif // P_MEGA_EVOLUTIONS

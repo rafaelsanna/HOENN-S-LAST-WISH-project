@@ -43,6 +43,7 @@
 // Visible stickers may never share the same position. Maximum 3 remain active.
 
 #include "global.h"
+#include "hlw_media_save.h"
 #include "bg.h"
 #include "comfy_anim.h"
 #include "decompress.h"
@@ -243,16 +244,16 @@ static EWRAM_DATA u8    sRadioStickerActiveCount;
 enum RadioColorTheme
 {
     RADIO_COLOR_THEME_NORMAL = 0,
-    RADIO_COLOR_THEME_DARK,
-    RADIO_COLOR_THEME_PURPLE,
-    RADIO_COLOR_THEME_PINK,
-    RADIO_COLOR_THEME_BLUE,
-    RADIO_COLOR_THEME_BLACK,
-    RADIO_COLOR_THEME_GRAY,
-    RADIO_COLOR_THEME_GREEN,
-    RADIO_COLOR_THEME_ORANGE,
-    RADIO_COLOR_THEME_YELLOW,
-    RADIO_COLOR_THEME_COUNT,
+    RADIO_COLOR_THEME_DARK = 1,
+    RADIO_COLOR_THEME_PURPLE = 2,
+    RADIO_COLOR_THEME_PINK = 3,
+    RADIO_COLOR_THEME_BLUE = 4,
+    RADIO_COLOR_THEME_BLACK = 5,
+    RADIO_COLOR_THEME_GRAY = 6,
+    RADIO_COLOR_THEME_GREEN = 7,
+    RADIO_COLOR_THEME_ORANGE = 8,
+    RADIO_COLOR_THEME_YELLOW = 9,
+    RADIO_COLOR_THEME_COUNT = 10,
 };
 
 // Playback-pass monitor.
@@ -1690,16 +1691,16 @@ enum RadioStation
 {
     // Numeric values 0..9 intentionally preserve the old save ABI.
     STATION_ALL = 0,
-    STATION_ANIME,
-    STATION_POP,          // keeps legacy numeric save slot 2
-    STATION_POKEMON_GBA,  // keeps legacy numeric save slot 3
-    STATION_INDIE_ROCK,
-    STATION_FAVORITES,
-    STATION_PLAYLIST,
-    STATION_GAMES,
-    STATION_ROCK_METAL,
-    STATION_CLASSIC_ROCK,
-    STATION_COUNT,
+    STATION_ANIME = 1,
+    STATION_POP = 2,          // keeps legacy numeric save slot 2
+    STATION_POKEMON_GBA = 3,  // keeps legacy numeric save slot 3
+    STATION_INDIE_ROCK = 4,
+    STATION_FAVORITES = 5,
+    STATION_PLAYLIST = 6,
+    STATION_GAMES = 7,
+    STATION_ROCK_METAL = 8,
+    STATION_CLASSIC_ROCK = 9,
+    STATION_COUNT = 10,
 };
 
 // Each station is a flat array of song IDs terminated by 0xFFFF.
@@ -4372,13 +4373,11 @@ void RadioPriority_MaintainBgm(void)
 // exactly 152 bytes for V8.1 compatibility. Playlist 1 reuses the old
 // save->playlist[32] field. Playlist 1 uses slots 0..19, while Playlist 2
 // reuses the 12 legacy spare slots 20..31 before spilling its last 8 slots
-// into future[]. Playlist 3 also lives in future[]. Only 56 bytes of
-// hlwSave.future[] are consumed, leaving 296 bytes reserved.
+// into future[]. Playlist 3 also lives in future[]. Radio owns 64 bytes of
+// hlwSave.future[] including stickers; other feature ownership is frozen in
+// hlw_media_save.h. No radio reset may clear that shared region.
 // Metadata for the 3-playlist format lives in RadioSaveData.reserved[].
 // ---------------------------------------------------------------------------
-
-#define HLW_SAVE_EXTENSION_MAGIC   0x484C5753
-#define HLW_SAVE_EXTENSION_VERSION 1
 
 #define RADIO_SAVE_MAGIC           0x484C5752
 #define RADIO_SAVE_VERSION         1
@@ -4402,14 +4401,14 @@ void RadioPriority_MaintainBgm(void)
 
 #define RADIO_PLAYLIST2_LEGACY_SLOTS          (RADIO_LIBRARY_CAPACITY - RADIO_PLAYLIST_CAPACITY)
 #define RADIO_PLAYLIST2_FUTURE_SLOTS          (RADIO_PLAYLIST_CAPACITY - RADIO_PLAYLIST2_LEGACY_SLOTS)
-#define RADIO_PLAYLIST_FUTURE_OFFSET_2_TAIL   0
-#define RADIO_PLAYLIST_FUTURE_OFFSET_3        (RADIO_PLAYLIST2_FUTURE_SLOTS * sizeof(u16))
+#define RADIO_PLAYLIST_FUTURE_OFFSET_2_TAIL   HLW_MEDIA_RADIO_PLAYLIST2_OFFSET
+#define RADIO_PLAYLIST_FUTURE_OFFSET_3        HLW_MEDIA_RADIO_PLAYLIST3_OFFSET
 #define RADIO_PLAYLIST_FUTURE_BYTES           ((RADIO_PLAYLIST2_FUTURE_SLOTS + RADIO_PLAYLIST_CAPACITY) * sizeof(u16))
 
 // Sticker save data starts immediately after the 56 playlist bytes already
 // used in hlwSave.future[]. This consumes only 8 more bytes and does not
 // change HLWSaveExtension or RadioSaveData sizes.
-#define RADIO_STICKER_SAVE_OFFSET             RADIO_PLAYLIST_FUTURE_BYTES
+#define RADIO_STICKER_SAVE_OFFSET             HLW_MEDIA_RADIO_STICKER_OFFSET
 #define RADIO_STICKER_SAVE_TAG                0x53 // S
 #define RADIO_STICKER_SAVE_VERSION            1
 #define RADIO_STICKER_SAVE_TAG_OFFSET         (RADIO_STICKER_SAVE_OFFSET + 0)
@@ -4436,26 +4435,22 @@ void RadioPriority_MaintainBgm(void)
 #define RADIO_RETIRED_SONG_SLOT_1         598
 #define RADIO_RETIRED_SONG_SLOT_2         604
 
+STATIC_ASSERT(RADIO_LIBRARY_CAPACITY == 32, RadioSavedLibraryCapacity);
+STATIC_ASSERT(RADIO_PLAYLIST_CAPACITY == 20, RadioSavedPlaylistCapacity);
+STATIC_ASSERT(RADIO_STICKER_COUNT == 5, RadioSavedStickerCount);
+STATIC_ASSERT(RADIO_PLAYLIST_FUTURE_BYTES == 56, RadioSavedPlaylistExtent);
+STATIC_ASSERT(RADIO_PLAYLIST_FUTURE_BYTES + RADIO_STICKER_SAVE_BYTES == HLW_MEDIA_RADIO_SIZE, RadioOwnedBytes);
+STATIC_ASSERT(offsetof(struct HLWSaveExtension, radio) == 8, MediaRadioOffset);
+STATIC_ASSERT(offsetof(struct HLWSaveExtension, future) == 160, MediaFutureOffset);
+STATIC_ASSERT(HLW_MEDIA_WISH_MENU_ACTIONS_OFFSET + HLW_MEDIA_WISH_MENU_ACTION_CAPACITY <= HLW_MEDIA_CHANSEY_OFFSET, MediaWishMenuOwnership);
+STATIC_ASSERT(HLW_MEDIA_CHANSEY_OFFSET + HLW_MEDIA_CHANSEY_ENTRY_SIZE * HLW_MEDIA_CHANSEY_ENTRY_COUNT == HLW_MEDIA_RESERVED_OFFSET, MediaChanseyOwnership);
+STATIC_ASSERT(HLW_MEDIA_RESERVED_OFFSET + HLW_MEDIA_RESERVED_SIZE == sizeof(((struct HLWSaveExtension *)0)->future), MediaReservedExtent);
+
 static bool8 Radio_SaveHasThreePlaylists(const struct RadioSaveData *save)
 {
     return save->reserved[RADIO_SAVE_RSVD_TAG0] == RADIO_PLAYLIST_SAVE_TAG0
         && save->reserved[RADIO_SAVE_RSVD_TAG1] == RADIO_PLAYLIST_SAVE_TAG1
         && save->reserved[RADIO_SAVE_RSVD_PLAYLIST_VERSION] == RADIO_PLAYLIST_SAVE_VERSION;
-}
-
-static void Radio_InitSaveExtensionIfNeeded(void)
-{
-    struct HLWSaveExtension *ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->magic != HLW_SAVE_EXTENSION_MAGIC
-     || ext->version != HLW_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext))
-    {
-        memset(ext, 0, sizeof(*ext));
-        ext->magic = HLW_SAVE_EXTENSION_MAGIC;
-        ext->version = HLW_SAVE_EXTENSION_VERSION;
-        ext->size = sizeof(*ext);
-    }
 }
 
 static void Radio_RebuildStickerActiveOrder(void)
@@ -4717,7 +4712,6 @@ static void Radio_ResetPersistentState(void)
     struct HLWSaveExtension *ext;
     struct RadioSaveData *save;
 
-    Radio_InitSaveExtensionIfNeeded();
     ext = &gSaveBlock1Ptr->hlwSave;
     save = &ext->radio;
 
@@ -4742,6 +4736,17 @@ static void Radio_ResetPersistentState(void)
     save->reserved[RADIO_SAVE_RSVD_CONFIG] =
         RADIO_SAVE_CONFIG_TAG | RADIO_SAVE_CONFIG_TRANSITION;
     Radio_SaveStickerState(ext);
+}
+
+// New-game initialization only; callers must not use this to repair a loaded save.
+void HlwMedia_InitDefaults(void)
+{
+    Radio_ResetPersistentState();
+    gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] = 0;
+    gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_POKEDEX_THEME_OFFSET] = 0;
+    gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_BATTLE_SPEED_OFFSET] = 0;
+    gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_HP_BAR_OFFSET] = 0;
+    gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_WISH_MENU_COUNT_OFFSET] = 0;
 }
 
 static bool8 Radio_SaveSongIdIsValid(u16 songId)
@@ -4838,16 +4843,13 @@ static void Radio_LoadPersistentState(void)
     u16 savedPlaylist2[RADIO_PLAYLIST_CAPACITY];
     u16 savedPlaylist3[RADIO_PLAYLIST_CAPACITY];
 
-    Radio_InitSaveExtensionIfNeeded();
     ext = &gSaveBlock1Ptr->hlwSave;
     save = &ext->radio;
 
     if (save->magic != RADIO_SAVE_MAGIC
      || save->version != RADIO_SAVE_VERSION)
     {
-        Radio_ResetPersistentState();
-        ext = &gSaveBlock1Ptr->hlwSave;
-        save = &ext->radio;
+        return; // Unsupported state is rejected by the save manager.
     }
 
     memset(sRadioFavorites, 0, sizeof(sRadioFavorites));
@@ -4992,7 +4994,6 @@ static void Radio_SavePersistentState(void)
     struct RadioSaveData *save;
     u8 flags = 0;
 
-    Radio_InitSaveExtensionIfNeeded();
     ext = &gSaveBlock1Ptr->hlwSave;
     save = &ext->radio;
 

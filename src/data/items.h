@@ -11077,8 +11077,8 @@ const struct Item gItemsInfo[] =
         .name = ITEM_NAME("TM67"),
         .price = 3000,
         .description = COMPOUND_STRING(
-            "Icy punch that\n"
-            "may freeze\n"
+            "Punches with fire\n"
+            "and may burn\n"
             "the target."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
@@ -11092,9 +11092,9 @@ const struct Item gItemsInfo[] =
         .name = ITEM_NAME("TM68"),
         .price = 3000,
         .description = COMPOUND_STRING(
-            "Uses a random\n"
-            "move while the\n"
-            "user is asleep."),
+            "Electric punch\n"
+            "that may paralyze\n"
+            "the target."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
@@ -11107,9 +11107,9 @@ const struct Item gItemsInfo[] =
         .name = ITEM_NAME("TM69"),
         .price = 3000,
         .description = COMPOUND_STRING(
-            "Works on sleeping\n"
-            "foes and restores\n"
-            "half damage as HP"),
+            "Icy punch that\n"
+            "may freeze\n"
+            "the target."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,

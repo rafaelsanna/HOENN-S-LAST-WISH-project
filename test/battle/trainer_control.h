@@ -155,7 +155,7 @@
     },
 #line 57
 #line 64
-    [DIFFICULTY_EASY][2] =
+    [DIFFICULTY_NORMAL][11] =
     {
 #line 58
         .trainerName = _("Test2"),

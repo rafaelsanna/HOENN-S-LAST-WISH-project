@@ -203,7 +203,7 @@ enum DebugBattleEnvironment
 #define DEBUG_MENU_WIDTH_FLAGVAR 4
 #define DEBUG_MENU_HEIGHT_FLAGVAR 2
 
-#define DEBUG_NUMBER_DIGITS_FLAGS 4
+#define DEBUG_NUMBER_DIGITS_FLAGS 5
 #define DEBUG_NUMBER_DIGITS_VARIABLES 5
 #define DEBUG_NUMBER_DIGITS_VARIABLE_VALUE 5
 #define DEBUG_NUMBER_DIGITS_ITEMS 4
@@ -3270,9 +3270,11 @@ void DebugMenu_CalculateTimeOfDay(struct ScriptContext *ctx)
 static void Debug_Display_FlagInfo(u32 flag, u32 digit, u8 windowId)
 {
     ConvertIntToDecimalStringN(gStringVar1, flag, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_FLAGS);
-    ConvertIntToHexStringN(gStringVar2, flag, STR_CONV_MODE_LEFT_ALIGN, 3);
+    ConvertIntToHexStringN(gStringVar2, flag, STR_CONV_MODE_LEFT_ALIGN, 4);
     StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_1}{CLEAR_TO 90}\n0x{STR_VAR_2}{CLEAR_TO 90}"));
-    if (FlagGet(flag))
+    if (!IsFlagValid(flag))
+        StringCopyPadded(gStringVar2, COMPOUND_STRING("Invalid ID"), CHAR_SPACE, 15);
+    else if (FlagGet(flag))
         StringCopyPadded(gStringVar2, sDebugText_True, CHAR_SPACE, 15);
     else
         StringCopyPadded(gStringVar2, sDebugText_False, CHAR_SPACE, 15);
@@ -3308,6 +3310,11 @@ static void DebugAction_FlagsVars_FlagsSelect(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
+        if (!IsFlagValid(gTasks[taskId].tInput))
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
         PlaySE(SE_SELECT);
         FlagToggle(gTasks[taskId].tInput);
     }
@@ -3318,7 +3325,7 @@ static void DebugAction_FlagsVars_FlagsSelect(u8 taskId)
         return;
     }
 
-    Debug_HandleInput_Numeric(taskId, 1, HLW_CUSTOM_FLAGS_END, DEBUG_NUMBER_DIGITS_FLAGS);
+    Debug_HandleInput_Numeric(taskId, 1, TRAINER_FLAGS_END, DEBUG_NUMBER_DIGITS_FLAGS);
 
     if (JOY_NEW(DPAD_ANY) || JOY_NEW(A_BUTTON))
     {
@@ -3361,7 +3368,7 @@ static void DebugAction_FlagsVars_Vars(u8 taskId)
 
 static void DebugAction_FlagsVars_Select(u8 taskId)
 {
-    Debug_HandleInput_Numeric(taskId, VARS_START, VARS_END, DEBUG_NUMBER_DIGITS_VARIABLES);
+    Debug_HandleInput_Numeric(taskId, VARS_START, HLW_CUSTOM_VARS_END, DEBUG_NUMBER_DIGITS_VARIABLES);
 
     if (JOY_NEW(DPAD_ANY))
     {
@@ -3370,11 +3377,17 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].tInput, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         ConvertIntToHexStringN(gStringVar2, gTasks[taskId].tInput, STR_CONV_MODE_LEFT_ALIGN, 4);
         StringExpandPlaceholders(gStringVar1, sDebugText_FlagsVars_VariableHex);
-        if (VarGetIfExist(gTasks[taskId].tInput) == 0xFFFF)
+        if (GetVarPointer(gTasks[taskId].tInput) == NULL)
+        {
             gTasks[taskId].tVarValue = 0;
+            StringCopy(gStringVar3, COMPOUND_STRING("Invalid ID"));
+        }
         else
+        {
             gTasks[taskId].tVarValue = VarGet(gTasks[taskId].tInput);
-        ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+            ConvertIntToDecimalStringN(gStringVar3, (u16)gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+        }
+        StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
         StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].tDigit]);
 
         //Combine str's to full window string
@@ -3384,6 +3397,11 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
+        if (GetVarPointer(gTasks[taskId].tInput) == NULL)
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
         gTasks[taskId].tDigit = 0;
 
         PlaySE(SE_SELECT);
@@ -3391,11 +3409,8 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].tInput, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         ConvertIntToHexStringN(gStringVar2, gTasks[taskId].tInput, STR_CONV_MODE_LEFT_ALIGN, 4);
         StringExpandPlaceholders(gStringVar1, sDebugText_FlagsVars_VariableHex);
-        if (VarGetIfExist(gTasks[taskId].tInput) == 0xFFFF)
-            gTasks[taskId].tVarValue = 0;
-        else
-            gTasks[taskId].tVarValue = VarGet(gTasks[taskId].tInput);
-        ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+        gTasks[taskId].tVarValue = VarGet(gTasks[taskId].tInput);
+        ConvertIntToDecimalStringN(gStringVar3, (u16)gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
         StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].tDigit]);
         StringExpandPlaceholders(gStringVar4, sDebugText_FlagsVars_VariableValueSet);
@@ -3414,22 +3429,14 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
 
 static void DebugAction_FlagsVars_SetValue(u8 taskId)
 {
-    if (JOY_NEW(DPAD_UP))
-    {
-        if (gTasks[taskId].data[6] + sPowersOfTen[gTasks[taskId].tDigit] <= 32000)
-            gTasks[taskId].data[6] += sPowersOfTen[gTasks[taskId].tDigit];
-        else
-            gTasks[taskId].data[6] = 32000 - 1;
+    u32 value = (u16)gTasks[taskId].data[6];
+    u32 step = sPowersOfTen[gTasks[taskId].tDigit];
 
-        if (gTasks[taskId].data[6] >= 32000)
-            gTasks[taskId].data[6] = 32000 - 1;
-    }
+    if (JOY_NEW(DPAD_UP))
+        value = min(value + step, 0xFFFF);
     if (JOY_NEW(DPAD_DOWN))
-    {
-        gTasks[taskId].data[6] -= sPowersOfTen[gTasks[taskId].tDigit];
-        if (gTasks[taskId].data[6] < 0)
-            gTasks[taskId].data[6] = 0;
-    }
+        value = value >= step ? value - step : 0;
+    gTasks[taskId].data[6] = (u16)value;
     if (JOY_NEW(DPAD_LEFT))
     {
         gTasks[taskId].tDigit -= 1;
@@ -3463,7 +3470,7 @@ static void DebugAction_FlagsVars_SetValue(u8 taskId)
         ConvertIntToHexStringN(gStringVar2, gTasks[taskId].tInput, STR_CONV_MODE_LEFT_ALIGN, 4);
         StringExpandPlaceholders(gStringVar1, sDebugText_FlagsVars_VariableHex);
         StringCopyPadded(gStringVar1, gStringVar1, CHAR_SPACE, 15);
-        ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].data[6], STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+        ConvertIntToDecimalStringN(gStringVar3, (u16)gTasks[taskId].data[6], STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
         StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].tDigit]);
         StringExpandPlaceholders(gStringVar4, sDebugText_FlagsVars_VariableValueSet);
@@ -3485,9 +3492,9 @@ static void DebugAction_FlagsVars_PokedexFlags_Reset(u8 taskId)
     int boxId, boxPosition, partyId;
     u16 species;
 
-    // Reset Pokedex to emtpy
-    memset(&gSaveBlock1Ptr->dexCaught, 0, sizeof(gSaveBlock1Ptr->dexCaught));
-    memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
+    // Reset the canonical Pokedex banks before repopulating owned Pokemon.
+    memset(gSaveBlock3Ptr->dexCaught, 0, sizeof(gSaveBlock3Ptr->dexCaught));
+    memset(gSaveBlock3Ptr->dexSeen, 0, sizeof(gSaveBlock3Ptr->dexSeen));
 
     // Add party Pokemon to Pokedex
     for (partyId = 0; partyId < PARTY_SIZE; partyId++)

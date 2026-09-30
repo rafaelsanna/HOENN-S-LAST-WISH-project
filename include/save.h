@@ -37,6 +37,8 @@
 #define SAVE_STATUS_OK       1
 #define SAVE_STATUS_CORRUPT  2
 #define SAVE_STATUS_NO_FLASH 4
+#define SAVE_STATUS_INCOMPATIBLE 5
+#define SAVE_STATUS_NEWER_VERSION 6
 #define SAVE_STATUS_ERROR    0xFF
 
 // Special sector id value for certain save functions to
@@ -87,6 +89,7 @@ struct SaveSector
 #define HLW_SAVE_EXTENSION_COMPLETE_MARKER   0xC0DEC0DE
 #define HLW_SAVE_PHYSICAL_VERSION            1
 #define HLW_SAVE_SCHEMA_VERSION              1
+#define HLW_SAVE_FLAG_REPLACED_GAME           1
 #define HLW_SAVE_EXTENSION_HEADER_SIZE       64
 #define HLW_SAVE_EXTENSION_PAYLOAD_SIZE      (SECTOR_SIZE - HLW_SAVE_EXTENSION_HEADER_SIZE)
 #define HLW_CUSTOM_FLAG_BYTES                256
@@ -131,6 +134,45 @@ struct HlwSaveExtensionSector
     struct HlwSaveBlock4Payload payload;
 };
 
+#define HLW_HOF_MAGIC                 0x46485748 // "HWHF"
+#define HLW_HOF_NO_BANK               0xFF
+#define HLW_HOF_ARCHIVE_TEAMS         28
+#define HLW_HOF_TOTAL_TEAMS           30
+#define HLW_HOF_TEAM_BYTES            144
+
+struct HlwHallOfFameHeader
+{
+    u32 magic;
+    u16 physicalVersion;
+    u16 headerLength;
+    u32 generation;
+    u8 saveUuid[16];
+    u32 payloadCrc32;
+    u32 headerCrc32;
+    u32 completeMarker;
+    u8 reserved[24];
+};
+
+struct HlwHallOfFameArchive
+{
+    struct HlwHallOfFameHeader header;
+    u8 teams[HLW_HOF_ARCHIVE_TEAMS * HLW_HOF_TEAM_BYTES];
+};
+
+// CRC-32/ISO-HDLC: reflected 0xEDB88320, init/final xor 0xFFFFFFFF.
+u32 HlwSave_Crc32(const void *data, u32 size);
+void InitHlwPersistentData(void);
+bool8 ValidateHlwPersistentData(void);
+
+#if TESTING
+void HlwSave_TestFailWriteAfter(s32 count);
+u8 HlwSave_TestBegin(u8 saveType);
+u8 HlwSave_TestWriteNext(void);
+u8 HlwSave_TestCommit(void);
+void HlwSave_TestAbort(void);
+u8 HlwSave_TestSelect(void);
+#endif
+
 #define SECTOR_SIGNATURE_OFFSET offsetof(struct SaveSector, signature)
 #define SECTOR_COUNTER_OFFSET   offsetof(struct SaveSector, counter)
 
@@ -167,5 +209,8 @@ void Task_LinkFullSave(u8 taskId);
 
 // save_failed_screen.c
 void DoSaveFailedScreen(u8 saveType);
+#if TESTING
+bool32 SaveFailedScreen_TestWindowBufferBounds(bool32 clockWindow, u8 fillValue);
+#endif
 
 #endif // GUARD_SAVE_H

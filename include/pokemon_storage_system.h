@@ -13,9 +13,8 @@
 #define POKEMON_STORAGE_SAVE_SIZE                    0x8B80
 #define POKEMON_STORAGE_METADATA_SIZE                64
 #define POKEMON_STORAGE_HALL_OF_FAME_TAIL_SIZE       288
-#define POKEMON_STORAGE_EXTRA_ROAMERS_SIZE            196
 #define POKEMON_STORAGE_BAG_SUPPLEMENT_SIZE           336
-#define POKEMON_STORAGE_FUTURE_RESERVED_SIZE         1084
+#define POKEMON_STORAGE_FUTURE_RESERVED_SIZE         1280
 
 #define HLW_SAVE_METADATA_MAGIC                      0x4D574C48 // "HLWM"
 #define HLW_SAVE_METADATA_SIZE                       64
@@ -26,7 +25,11 @@ struct HlwSaveMetadata
     u16 schemaVersion;
     u16 size;
     u8 saveUuid[16];
-    u8 reserved[40];
+    u32 hallOfFameGeneration;
+    u32 hallOfFameCrc32;
+    u8 hallOfFameBank;
+    u8 flags;
+    u8 reserved[30];
 };
 
 // Fixed 0.9 overflow segments for pockets that do not fit in SaveBlock1's
@@ -59,9 +62,8 @@ struct PokemonStorage
     /*0x83C2*/ u8 boxWallpapers[TOTAL_BOXES_COUNT];
     /*0x83D0*/ struct HlwSaveMetadata metadata;
     /*0x8410*/ u8 hallOfFameTail[POKEMON_STORAGE_HALL_OF_FAME_TAIL_SIZE];
-    /*0x8530*/ u8 extraRoamers[POKEMON_STORAGE_EXTRA_ROAMERS_SIZE];
-    /*0x85F4*/ struct HlwBagSupplement bagSupplement;
-    /*0x8744*/ u8 futureReserved[POKEMON_STORAGE_FUTURE_RESERVED_SIZE];
+    /*0x8530*/ struct HlwBagSupplement bagSupplement;
+    /*0x8680*/ u8 futureReserved[POKEMON_STORAGE_FUTURE_RESERVED_SIZE];
 };
 
 extern struct PokemonStorage *gPokemonStoragePtr;

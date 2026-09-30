@@ -119,8 +119,8 @@ static void SetDefaultOptions(void)
 static void ClearPokedexFlags(void)
 {
     gUnusedPokedexU8 = 0;
-    memset(&gSaveBlock1Ptr->dexCaught, 0, sizeof(gSaveBlock1Ptr->dexCaught));
-    memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
+    memset(gSaveBlock3Ptr->dexCaught, 0, sizeof(gSaveBlock3Ptr->dexCaught));
+    memset(gSaveBlock3Ptr->dexSeen, 0, sizeof(gSaveBlock3Ptr->dexSeen));
 }
 
 // Contest system management
@@ -190,6 +190,8 @@ void NewGameInitData(void)
     
     // Player identification and timing
     InitPlayerTrainerId();
+    ResetPokemonStorageSystem();
+    InitHlwPersistentData();
     PlayTimeCounter_Reset();
     ClearPokedexFlags();
     
@@ -223,8 +225,6 @@ void NewGameInitData(void)
     ClearPlayerLinkBattleRecords();
     InitSeedotSizeRecord();
     InitLotadSizeRecord();
-    ResetPokemonStorageSystem();
-    ResetHlwSaveBlock4();
     
     // Communication and social systems
     InitEasyChatPhrases();
@@ -292,7 +292,7 @@ static void ResetItemFlags(void)
 static void ResetDexNav(void)
 {
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
-    memset(gSaveBlock3Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock3Ptr->dexNavSearchLevels));
+    memset(gHlwSaveBlock4.dexNavSearch, 0, sizeof(gHlwSaveBlock4.dexNavSearch));
 #endif
     gSaveBlock3Ptr->dexNavChain = 0;
 }

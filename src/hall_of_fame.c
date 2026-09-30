@@ -15,6 +15,7 @@
 #include "constants/songs.h"
 #include "decompress.h"
 #include "save.h"
+#include "load_save.h"
 #include "strings.h"
 #include "window.h"
 #include "credits.h"
@@ -44,6 +45,7 @@
 #define HOF_MON_FILTER_COLOR RGB(16, 25, 31)
 
 STATIC_ASSERT(sizeof(struct HallofFameTeam) * HALL_OF_FAME_MAX_TEAMS <= SECTOR_DATA_SIZE * NUM_HOF_SECTORS, HallOfFameFreeSpace);
+STATIC_ASSERT(HALL_OF_FAME_MAX_TEAMS == HLW_HOF_TOTAL_TEAMS, HallOfFamePersistentTeamCount);
 
 struct HofGfx
 {
@@ -430,7 +432,10 @@ static bool8 InitHallOfFameScreen(void)
 static void AllocateHoFTeams(void)
 {
     sHofMonPtr = AllocZeroed(sizeof(*sHofMonPtr));
-    gHoFSaveBuffer = Alloc(SECTOR_SIZE * NUM_HOF_SECTORS);
+    // Recovery keeps the pending archive alive while the save-failure screen
+    // retries. Reuse it when that screen resumes the ceremony.
+    if (gHoFSaveBuffer == NULL)
+        gHoFSaveBuffer = Alloc(SECTOR_SIZE * NUM_HOF_SECTORS);
 }
 
 void CB2_DoHallOfFameScreen(void)
@@ -549,13 +554,21 @@ static void FreeAllHoFMem(void)
 static void Task_Hof_TrySaveData(u8 taskId)
 {
     gGameContinueCallback = CB2_DoHallOfFameScreenDontSaveData;
-    if (TrySavingData(SAVE_HALL_OF_FAME) == SAVE_STATUS_ERROR && gDamagedSaveSectors != 0)
+    if (TrySavingData(SAVE_HALL_OF_FAME) != SAVE_STATUS_OK)
     {
+        // TrySavingData opens recovery only when flash was detected. A game
+        // played without flash still needs an explicit failure exit here.
+        if (gFlashMemoryPresent != TRUE)
+            DoSaveFailedScreen(SAVE_HALL_OF_FAME);
         UnsetBgTilemapBuffer(1);
         UnsetBgTilemapBuffer(3);
         FreeAllWindowBuffers();
 
-        FreeAllHoFMem();
+        // Release only display resources. The retry transaction still needs
+        // the complete pending archive in gHoFSaveBuffer. Normal ceremony
+        // cleanup frees it after recovery; an unrecoverable error soft-resets.
+        TRY_FREE_AND_SET_NULL(sHofGfxPtr);
+        TRY_FREE_AND_SET_NULL(sHofMonPtr);
 
         DestroyTask(taskId);
     }

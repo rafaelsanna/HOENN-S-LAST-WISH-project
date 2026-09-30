@@ -223,6 +223,7 @@ SINGLE_BATTLE_TEST("Prankster-affected moves which are reflected by Magic Coat c
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Prankster-affected moves can still be bounced back by a Dark-type with Magic Bounce")
 {
     GIVEN {
@@ -235,7 +236,9 @@ SINGLE_BATTLE_TEST("Prankster-affected moves can still be bounced back by a Dark
         ANIMATION(ANIM_TYPE_MOVE, MOVE_CONFUSE_RAY, player);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Prankster-affected moves that are bounced back by Magic Bounce can affect Dark-type Pokémon")
 {
     GIVEN {
@@ -249,6 +252,7 @@ SINGLE_BATTLE_TEST("Prankster-affected moves that are bounced back by Magic Boun
         MESSAGE("The opposing Murkrow became confused!");
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 TO_DO_BATTLE_TEST("Prankster-affected moves called via Nature Power don't affect Dark-type Pokémon");
 TO_DO_BATTLE_TEST("Prankster increases the priority of status Z-Moves by 1");

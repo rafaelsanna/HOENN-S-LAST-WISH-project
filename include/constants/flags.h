@@ -444,7 +444,7 @@
 #define FLAG_REGISTERED_TRENT                (TRAINER_REGISTERED_FLAGS_START + REMATCH_TRENT)
 #define FLAG_REGISTERED_SAWYER               (TRAINER_REGISTERED_FLAGS_START + REMATCH_SAWYER)
 #define FLAG_REGISTERED_KIRA_AND_DAN         (TRAINER_REGISTERED_FLAGS_START + REMATCH_KIRA_AND_DAN)
-#define FLAG_REGISTERED_WALLY                (TRAINER_REGISTERED_FLAGS_START + REMATCH_WALLY)
+#define FLAG_REGISTERED_WALLY                (TRAINER_REGISTERED_FLAGS_START + REMATCH_WALLY_VR)
 #define FLAG_REGISTERED_ROXANNE              (TRAINER_REGISTERED_FLAGS_START + REMATCH_ROXANNE)
 #define FLAG_REGISTERED_BRAWLY               (TRAINER_REGISTERED_FLAGS_START + REMATCH_BRAWLY)
 #define FLAG_REGISTERED_WATTSON              (TRAINER_REGISTERED_FLAGS_START + REMATCH_WATTSON)
@@ -1341,12 +1341,14 @@
 #define FLAG_UNUSED_0x4FF                                           0x4FF // Unused Flag
 
 // Trainer Flags
-// Legacy trainer flags occupy 0x500 - 0x8E8. Their range and all system flag
-// IDs are frozen. Defeated trainer state now lives in SaveBlock3's dedicated
-// 2,048-bit bank; adding trainers must never move SYSTEM_FLAGS again.
-
-#define TRAINER_FLAGS_START                                         0x500
-#define TRAINER_FLAGS_END                                           0x8E8
+// Legacy trainer flag IDs remain aliases of the dedicated bank. Their former
+// bytes in SaveBlock1 are retired; no defeated state is stored there.
+// The new range and system flag IDs never depend on the ROM trainer count.
+#define LEGACY_TRAINER_FLAGS_START                                  0x500
+#define LEGACY_TRAINER_FLAGS_END                                    0x8E8
+#define TRAINER_FLAGS_START                                         0x2000
+#define TRAINER_FLAGS_END                                           0x27FF
+#define NUM_TRAINER_FLAGS                                           (TRAINER_FLAGS_END - TRAINER_FLAGS_START + 1)
 
 // System Flags
 

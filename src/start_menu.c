@@ -1,4 +1,5 @@
 #include "global.h"
+#include "hlw_media_save.h"
 #include "achievements.h"
 #include "comfy_anim.h"
 #include "battle_pike.h"
@@ -59,22 +60,22 @@
 // Menu actions
 enum
 {
-    MENU_ACTION_POKEDEX,
-    MENU_ACTION_POKEMON,
-    MENU_ACTION_BAG,
-    MENU_ACTION_POKENAV,
-    MENU_ACTION_PLAYER,
-    MENU_ACTION_SAVE,
-    MENU_ACTION_OPTION,
-    MENU_ACTION_CONFIG,
-    MENU_ACTION_ACHIEVEMENTS,
-    MENU_ACTION_RETIRE_SAFARI,
-    MENU_ACTION_PLAYER_LINK,
-    MENU_ACTION_REST_FRONTIER,
-    MENU_ACTION_RETIRE_FRONTIER,
-    MENU_ACTION_PYRAMID_BAG,
-    MENU_ACTION_DEBUG,
-    MENU_ACTION_DEXNAV,
+    MENU_ACTION_POKEDEX = 0,
+    MENU_ACTION_POKEMON = 1,
+    MENU_ACTION_BAG = 2,
+    MENU_ACTION_POKENAV = 3,
+    MENU_ACTION_PLAYER = 4,
+    MENU_ACTION_SAVE = 5,
+    MENU_ACTION_OPTION = 6,
+    MENU_ACTION_CONFIG = 7,
+    MENU_ACTION_ACHIEVEMENTS = 8,
+    MENU_ACTION_RETIRE_SAFARI = 9,
+    MENU_ACTION_PLAYER_LINK = 10,
+    MENU_ACTION_REST_FRONTIER = 11,
+    MENU_ACTION_RETIRE_FRONTIER = 12,
+    MENU_ACTION_PYRAMID_BAG = 13,
+    MENU_ACTION_DEBUG = 14,
+    MENU_ACTION_DEXNAV = 15,
 };
 
 // Save status
@@ -101,16 +102,7 @@ EWRAM_DATA static bool8 sWishMenuReorderActive = FALSE;
 EWRAM_DATA static u8 sWishMenuOrderBackup[9] = {0};
 EWRAM_DATA static u8 sWishMenuReorderStartPos = 0;
 
-// WISHMENU order persistence. Summary/Party themes currently own future[64..67],
-// so this feature starts at 68 and keeps the frozen HLW save extension size intact.
-#define WISH_MENU_ORDER_SAVE_TAG0_OFFSET      68
-#define WISH_MENU_ORDER_SAVE_TAG1_OFFSET      69
-#define WISH_MENU_ORDER_SAVE_VERSION_OFFSET   70
-#define WISH_MENU_ORDER_SAVE_COUNT_OFFSET     71
-#define WISH_MENU_ORDER_SAVE_DATA_OFFSET      72
-#define WISH_MENU_ORDER_SAVE_TAG0             0x57 // 'W'
-#define WISH_MENU_ORDER_SAVE_TAG1             0x4D // 'M'
-#define WISH_MENU_ORDER_SAVE_VERSION          1
+// Wish-menu IDs have a separate manager-owned segment; no feature-local headers.
 
 // WISHMENU adds a ninth entry to the normal Start Menu. The stock Start Menu
 // window assumes 16 px per entry plus two extra interior tile rows; with nine
@@ -493,15 +485,12 @@ static void LoadWishMenuOrderFromSave(void)
         return;
 
     ext = &gSaveBlock1Ptr->hlwSave;
-    if (ext->future[WISH_MENU_ORDER_SAVE_TAG0_OFFSET] != WISH_MENU_ORDER_SAVE_TAG0
-     || ext->future[WISH_MENU_ORDER_SAVE_TAG1_OFFSET] != WISH_MENU_ORDER_SAVE_TAG1
-     || ext->future[WISH_MENU_ORDER_SAVE_VERSION_OFFSET] != WISH_MENU_ORDER_SAVE_VERSION
-     || ext->future[WISH_MENU_ORDER_SAVE_COUNT_OFFSET] != sNumStartMenuActions)
+    if (ext->future[HLW_MEDIA_WISH_MENU_COUNT_OFFSET] != sNumStartMenuActions)
         return;
 
     memset(savedOrder, 0xFF, sizeof(savedOrder));
     memcpy(savedOrder,
-           &ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
+           &ext->future[HLW_MEDIA_WISH_MENU_ACTIONS_OFFSET],
            sNumStartMenuActions);
 
     if (IsWishMenuSavedOrderValid(savedOrder))
@@ -516,14 +505,11 @@ static void SaveWishMenuOrderToSave(void)
         return;
 
     ext = &gSaveBlock1Ptr->hlwSave;
-    ext->future[WISH_MENU_ORDER_SAVE_TAG0_OFFSET] = WISH_MENU_ORDER_SAVE_TAG0;
-    ext->future[WISH_MENU_ORDER_SAVE_TAG1_OFFSET] = WISH_MENU_ORDER_SAVE_TAG1;
-    ext->future[WISH_MENU_ORDER_SAVE_VERSION_OFFSET] = WISH_MENU_ORDER_SAVE_VERSION;
-    ext->future[WISH_MENU_ORDER_SAVE_COUNT_OFFSET] = sNumStartMenuActions;
-    memset(&ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
+    ext->future[HLW_MEDIA_WISH_MENU_COUNT_OFFSET] = sNumStartMenuActions;
+    memset(&ext->future[HLW_MEDIA_WISH_MENU_ACTIONS_OFFSET],
            0xFF,
            ARRAY_COUNT(sCurrentStartMenuActions));
-    memcpy(&ext->future[WISH_MENU_ORDER_SAVE_DATA_OFFSET],
+    memcpy(&ext->future[HLW_MEDIA_WISH_MENU_ACTIONS_OFFSET],
            sCurrentStartMenuActions,
            sNumStartMenuActions);
 }

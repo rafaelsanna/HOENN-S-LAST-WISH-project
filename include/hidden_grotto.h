@@ -3,6 +3,8 @@
 
 #include "constants/hidden_grotto.h"
 
+u8 GetHiddenGrottoIdForMap(u16 map);
+
 void ResetHiddenGrottoes(void);
 void UpdateHiddenGrottoesPerDay(u16 daysSince);
 void HiddenGrotto_InitializeCurrent(void);

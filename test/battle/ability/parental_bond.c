@@ -1,6 +1,7 @@
 #include "global.h"
 #include "test/battle.h"
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond converts Scratch into a two-strike move")
 {
     GIVEN {
@@ -23,7 +24,9 @@ SINGLE_BATTLE_TEST("Parental Bond converts Scratch into a two-strike move")
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond does not convert a move with three or more strikes to a two-strike move")
 {
     GIVEN {
@@ -46,7 +49,9 @@ SINGLE_BATTLE_TEST("Parental Bond does not convert a move with three or more str
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond converts multi-target moves into a two-strike move in Single Battles")
 {
     u16 move;
@@ -74,7 +79,9 @@ SINGLE_BATTLE_TEST("Parental Bond converts multi-target moves into a two-strike 
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 DOUBLE_BATTLE_TEST("Parental Bond does not convert multi-target moves into a two-strike move in Double Battles, even if it only damages one")
 {
     GIVEN {
@@ -102,7 +109,9 @@ DOUBLE_BATTLE_TEST("Parental Bond does not convert multi-target moves into a two
         EXPECT_EQ(playerLeft->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond-converted moves only hit once on Lightning Rod/Storm Drain mons")
 {
     u16 move, species, ability, type;
@@ -130,7 +139,9 @@ SINGLE_BATTLE_TEST("Parental Bond-converted moves only hit once on Lightning Rod
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they still hit twice 37.5/35% of the time")
 {
     u32 genConfig, passes, trials;
@@ -159,7 +170,9 @@ SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they stil
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they still hit thrice 37.5/35% of the time")
 {
     u32 genConfig, passes, trials;
@@ -189,7 +202,9 @@ SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they stil
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they still hit four times 12.5/15% of the time")
 {
     u32 genConfig, passes, trials;
@@ -220,7 +235,9 @@ SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they stil
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they still hit five times 12.5/15% of the time")
 {
     u32 genConfig, passes, trials;
@@ -250,7 +267,9 @@ SINGLE_BATTLE_TEST("Parental Bond has no affect on multi hit moves and they stil
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond Smack Down effect triggers after 2nd hit")
 {
     GIVEN {
@@ -274,6 +293,7 @@ SINGLE_BATTLE_TEST("Parental Bond Smack Down effect triggers after 2nd hit")
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 SINGLE_BATTLE_TEST("Parental Bond Snore strikes twice while asleep")
 {
@@ -298,6 +318,7 @@ SINGLE_BATTLE_TEST("Parental Bond Snore strikes twice while asleep")
     }
 }
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond only triggers Dragon Tail's target switch out on the second hit")
 {
     GIVEN {
@@ -317,7 +338,9 @@ SINGLE_BATTLE_TEST("Parental Bond only triggers Dragon Tail's target switch out 
         EXPECT_EQ(player->species, SPECIES_KANGASKHAN_MEGA);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond does not trigger on semi-invulnerable moves")
 {
     GIVEN {
@@ -334,7 +357,9 @@ SINGLE_BATTLE_TEST("Parental Bond does not trigger on semi-invulnerable moves")
         NOT HP_BAR(opponent);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
+#if P_MEGA_EVOLUTIONS
 SINGLE_BATTLE_TEST("Parental Bond does not trigger on two turn attacks")
 {
     GIVEN {
@@ -351,6 +376,7 @@ SINGLE_BATTLE_TEST("Parental Bond does not trigger on two turn attacks")
         NOT HP_BAR(opponent);
     }
 }
+#endif // P_MEGA_EVOLUTIONS
 
 TO_DO_BATTLE_TEST("Parental Bond tests");
 

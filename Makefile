@@ -285,6 +285,17 @@ $(shell mkdir -p $(SUBDIRS))
 modern: all
 compare: all
 debug: all
+
+# Released save identities and bit layouts are as important as struct sizes.
+# This target checks the frozen baseline; it never regenerates it.
+.PHONY: check-save-abi
+check-save-abi: include/constants/map_event_ids.h include/constants/map_groups.h include/constants/layouts.h
+	@python3 tools/check_hlw_save_abi.py
+	@python3 tools/check_hlw_encounter_registry.py
+	@python3 tools/check_hlw_registries.py
+
+all: check-save-abi
+check: check-save-abi
 # Uncomment the next line, and then comment the 4 lines after it to reenable agbcc.
 #agbcc: all
 agbcc:

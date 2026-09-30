@@ -1,4 +1,5 @@
 #include "global.h"
+#include "hlw_media_save.h"
 #include "comfy_anim.h"
 #include "debug.h"
 #include "event_data.h"
@@ -25,44 +26,19 @@
 // HLW Battle Speed values stored by the Options Menu.
 enum
 {
-    HLW_BATTLE_SPEED_NORMAL,
-    HLW_BATTLE_SPEED_2X,
-    HLW_BATTLE_SPEED_4X,
-    HLW_BATTLE_SPEED_COUNT,
+    HLW_BATTLE_SPEED_NORMAL = 0,
+    HLW_BATTLE_SPEED_2X = 1,
+    HLW_BATTLE_SPEED_4X = 2,
+    HLW_BATTLE_SPEED_COUNT = 3,
 };
-
-// Persistent Battle Speed slot inside HLWSaveExtension.future[].
-// future[64..67] is already used by the shared Party/Summary theme,
-// future[68..71] is used by the Pokédex theme, so Battle Speed starts at 72.
-#define HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET      72
-#define HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET      73
-#define HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET   74
-#define HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET     75
-#define HLW_BATTLE_SPEED_SAVE_TAG0             0x42 // 'B'
-#define HLW_BATTLE_SPEED_SAVE_TAG1             0x53 // 'S'
-#define HLW_BATTLE_SPEED_SAVE_VERSION          1
-#define HLW_BATTLE_SPEED_SAVE_MAGIC            0x484C5753
-#define HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION 1
 
 // HLW HP bar animation values stored by the Options Menu.
 enum
 {
-    HLW_HP_BAR_NORMAL,
-    HLW_HP_BAR_INSTANT,
-    HLW_HP_BAR_COUNT,
+    HLW_HP_BAR_NORMAL = 0,
+    HLW_HP_BAR_INSTANT = 1,
+    HLW_HP_BAR_COUNT = 2,
 };
-
-// Persistent HP Bar slot inside HLWSaveExtension.future[].
-// Battle Speed uses future[72..75], so HP Bar starts at 76.
-#define HLW_HP_BAR_SAVE_TAG0_OFFSET       76
-#define HLW_HP_BAR_SAVE_TAG1_OFFSET       77
-#define HLW_HP_BAR_SAVE_VERSION_OFFSET    78
-#define HLW_HP_BAR_SAVE_VALUE_OFFSET      79
-#define HLW_HP_BAR_SAVE_TAG0              0x48 // 'H'
-#define HLW_HP_BAR_SAVE_TAG1              0x50 // 'P'
-#define HLW_HP_BAR_SAVE_VERSION           1
-#define HLW_HP_BAR_SAVE_MAGIC             0x484C5753
-#define HLW_HP_BAR_SAVE_EXTENSION_VERSION 1
 
 
 #ifndef OPTIONS_TEXT_SPEED_INSTANT
@@ -228,10 +204,8 @@ static int ProcessInput_Options_Two(int selection);
 static int ProcessInput_Options_Three(int selection);
 static int ProcessInput_TextSpeed(int selection);
 static int ProcessInput_Sound(int selection);
-static void InitBattleSpeedSaveExtensionIfNeeded(void);
 static u8 LoadBattleSpeedOption(void);
 static void SaveBattleSpeedOption(u8 selection);
-static void InitHpBarSaveExtensionIfNeeded(void);
 static u8 LoadHpBarOption(void);
 static void SaveHpBarOption(u8 selection);
 bool32 IsHpBarInstant(void);
@@ -753,156 +727,34 @@ static u8 MenuItemCancel(void)
     return MENUITEM_DIF_CANCEL;
 }
 
-// Persistent battle-speed option.
-// This uses HLWSaveExtension.future[] instead of changing SaveBlock2's frozen ABI.
-static void InitBattleSpeedSaveExtensionIfNeeded(void)
-{
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->magic != HLW_BATTLE_SPEED_SAVE_MAGIC
-     || ext->version != HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext))
-    {
-        memset(ext, 0, sizeof(*ext));
-        ext->magic = HLW_BATTLE_SPEED_SAVE_MAGIC;
-        ext->version = HLW_BATTLE_SPEED_SAVE_EXTENSION_VERSION;
-        ext->size = sizeof(*ext);
-    }
-}
-
+// The save manager owns initialization and validation of these settings.
 static u8 LoadBattleSpeedOption(void)
 {
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return HLW_BATTLE_SPEED_NORMAL;
-
-    InitBattleSpeedSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG0
-     || ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] != HLW_BATTLE_SPEED_SAVE_TAG1
-     || ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] != HLW_BATTLE_SPEED_SAVE_VERSION
-     || ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] >= HLW_BATTLE_SPEED_COUNT)
-    {
-        ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG0;
-        ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG1;
-        ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] = HLW_BATTLE_SPEED_SAVE_VERSION;
-        ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] = HLW_BATTLE_SPEED_NORMAL;
-    }
-
-    return ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET];
+    u8 value = gSaveBlock1Ptr == NULL ? HLW_BATTLE_SPEED_NORMAL : gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_BATTLE_SPEED_OFFSET];
+    return value < HLW_BATTLE_SPEED_COUNT ? value : HLW_BATTLE_SPEED_NORMAL;
 }
 
 static void SaveBattleSpeedOption(u8 selection)
 {
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    if (selection >= HLW_BATTLE_SPEED_COUNT)
-        selection = HLW_BATTLE_SPEED_NORMAL;
-
-    InitBattleSpeedSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    ext->future[HLW_BATTLE_SPEED_SAVE_TAG0_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG0;
-    ext->future[HLW_BATTLE_SPEED_SAVE_TAG1_OFFSET] = HLW_BATTLE_SPEED_SAVE_TAG1;
-    ext->future[HLW_BATTLE_SPEED_SAVE_VERSION_OFFSET] = HLW_BATTLE_SPEED_SAVE_VERSION;
-    ext->future[HLW_BATTLE_SPEED_SAVE_VALUE_OFFSET] = selection;
-}
-
-// Persistent HP-bar animation option.
-// Kept in HLWSaveExtension.future[] so SaveBlock2's frozen ABI is untouched.
-static void InitHpBarSaveExtensionIfNeeded(void)
-{
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->magic != HLW_HP_BAR_SAVE_MAGIC
-     || ext->version != HLW_HP_BAR_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext))
-    {
-        memset(ext, 0, sizeof(*ext));
-        ext->magic = HLW_HP_BAR_SAVE_MAGIC;
-        ext->version = HLW_HP_BAR_SAVE_EXTENSION_VERSION;
-        ext->size = sizeof(*ext);
-    }
+    if (gSaveBlock1Ptr != NULL)
+        gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_BATTLE_SPEED_OFFSET] = selection < HLW_BATTLE_SPEED_COUNT ? selection : HLW_BATTLE_SPEED_NORMAL;
 }
 
 static u8 LoadHpBarOption(void)
 {
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return HLW_HP_BAR_NORMAL;
-
-    InitHpBarSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] != HLW_HP_BAR_SAVE_TAG0
-     || ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] != HLW_HP_BAR_SAVE_TAG1
-     || ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] != HLW_HP_BAR_SAVE_VERSION
-     || ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] >= HLW_HP_BAR_COUNT)
-    {
-        ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] = HLW_HP_BAR_SAVE_TAG0;
-        ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] = HLW_HP_BAR_SAVE_TAG1;
-        ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] = HLW_HP_BAR_SAVE_VERSION;
-        ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] = HLW_HP_BAR_NORMAL;
-    }
-
-    return ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET];
+    u8 value = gSaveBlock1Ptr == NULL ? HLW_HP_BAR_NORMAL : gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_HP_BAR_OFFSET];
+    return value < HLW_HP_BAR_COUNT ? value : HLW_HP_BAR_NORMAL;
 }
 
 static void SaveHpBarOption(u8 selection)
 {
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    if (selection >= HLW_HP_BAR_COUNT)
-        selection = HLW_HP_BAR_NORMAL;
-
-    InitHpBarSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] = HLW_HP_BAR_SAVE_TAG0;
-    ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] = HLW_HP_BAR_SAVE_TAG1;
-    ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] = HLW_HP_BAR_SAVE_VERSION;
-    ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] = selection;
+    if (gSaveBlock1Ptr != NULL)
+        gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_HP_BAR_OFFSET] = selection < HLW_HP_BAR_COUNT ? selection : HLW_HP_BAR_NORMAL;
 }
 
-// Battle code can query this without mutating save data.
-// NORMAL is the safe fallback for old/invalid saves.
 bool32 IsHpBarInstant(void)
 {
-    const struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return FALSE;
-
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->magic != HLW_HP_BAR_SAVE_MAGIC
-     || ext->version != HLW_HP_BAR_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext)
-     || ext->future[HLW_HP_BAR_SAVE_TAG0_OFFSET] != HLW_HP_BAR_SAVE_TAG0
-     || ext->future[HLW_HP_BAR_SAVE_TAG1_OFFSET] != HLW_HP_BAR_SAVE_TAG1
-     || ext->future[HLW_HP_BAR_SAVE_VERSION_OFFSET] != HLW_HP_BAR_SAVE_VERSION)
-        return FALSE;
-
-    return ext->future[HLW_HP_BAR_SAVE_VALUE_OFFSET] == HLW_HP_BAR_INSTANT;
+    return LoadHpBarOption() == HLW_HP_BAR_INSTANT;
 }
 
 // The flag stores the disabled state so existing saves get the new colored

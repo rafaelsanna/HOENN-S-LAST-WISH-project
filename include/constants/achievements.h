@@ -6,19 +6,25 @@
 #define ACHIEVEMENT_POPUP_QUEUE_SIZE 6
 #define ACHIEVEMENT_SAVE_MAGIC 0x48434148 // "HACH"
 #define ACHIEVEMENT_SAVE_VERSION 1
-#define ACHIEVEMENT_SAVE_DATA_SIZE 208
+#define ACHIEVEMENT_SAVE_DATA_SIZE 224
 #define ACHIEVEMENT_SAVED_COUNTERS 32
 
-// Frozen 0.9 registries. The first 100 Wish slots have an explicit species
-// manifest; the second 100 are reserved for custom/DLC forms. Shadow tracking
-// has 30 stable slots, of which the first three are assigned at release.
-#define ACH_WISH_ORIGINAL_FORM_COUNT 100
+// Frozen capacities, separate from the number of assigned content IDs.
+#define ACH_WISH_ORIGINAL_FORM_COUNT 128
 #define ACH_WISH_CUSTOM_FORM_COUNT 100
 #define ACH_WISH_FORM_COUNT (ACH_WISH_ORIGINAL_FORM_COUNT + ACH_WISH_CUSTOM_FORM_COUNT)
 #define ACH_WISH_FORM_BYTES ((ACH_WISH_FORM_COUNT + 7) / 8)
+#define ACH_WISH_ORIGINAL_FORM_BYTES 16
+#define ACH_WISH_CUSTOM_FORM_BYTES 13
 #define ACH_WISH_FORM_TARGET 85
 #define ACH_SHADOW_POKEMON_COUNT 30
 #define ACH_SHADOW_POKEMON_BYTES ((ACH_SHADOW_POKEMON_COUNT + 7) / 8)
+
+#define SHADOW_ID_EVIL_CELEBI 0
+#define SHADOW_ID_JIRACHI     1
+#define SHADOW_ID_SUICUNE     2
+#define SHADOW_ID_NONE       0xFFFF
+#define WISH_FORM_ID_NONE     0xFFFF
 
 enum AchievementTier
 {
@@ -30,78 +36,77 @@ enum AchievementTier
 
 enum AchievementCounter
 {
-    // Original save-backed counters. These remain in the low 16 bits of the
-    // original five u32 slots for save compatibility.
-    ACH_COUNTER_CRITICAL_HITS,
-    ACH_COUNTER_CAPTURED_MONS,
-    ACH_COUNTER_SHINY_CAPTURES,
-    ACH_COUNTER_DAYCARE_EGGS,
-    ACH_COUNTER_HATCHED_EGGS,
-    ACH_COUNTER_TIME_GEAR_USES,
-    ACH_COUNTER_FISHING_CATCHES,
-    ACH_COUNTER_GAME_CORNER_PLAYS,
-    ACH_COUNTER_LEAGUE_WINS,
-    ACH_COUNTER_MAGMA_GRUNTS,
-    ACH_COUNTER_AQUA_GRUNTS,
-    ACH_COUNTER_COUNT,
+    // Frozen 0.9 counter IDs; never renumber or reuse released IDs.
+    ACH_COUNTER_CRITICAL_HITS = 0,
+    ACH_COUNTER_CAPTURED_MONS = 1,
+    ACH_COUNTER_SHINY_CAPTURES = 2,
+    ACH_COUNTER_DAYCARE_EGGS = 3,
+    ACH_COUNTER_HATCHED_EGGS = 4,
+    ACH_COUNTER_TIME_GEAR_USES = 5,
+    ACH_COUNTER_FISHING_CATCHES = 6,
+    ACH_COUNTER_GAME_CORNER_PLAYS = 7,
+    ACH_COUNTER_LEAGUE_WINS = 8,
+    ACH_COUNTER_MAGMA_GRUNTS = 9,
+    ACH_COUNTER_AQUA_GRUNTS = 10,
+    ACH_COUNTER_COUNT = 11,
 
     // Counters resolved from existing game state.
-    ACH_COUNTER_GAME_CORNER_GAMES = 0xF4,
-    ACH_COUNTER_WISH_FORMS = 0xF5,
-    ACH_COUNTER_EVOLVED_POKEMON = 0xF6,
-    ACH_COUNTER_TMS_COLLECTED = 0xFD,
-    ACH_COUNTER_POKEDEX_CAUGHT = 0xFE,
-    ACH_COUNTER_NONE = 0xFF,
+    ACH_COUNTER_GAME_CORNER_GAMES = 0xf4,
+    ACH_COUNTER_WISH_FORMS = 0xf5,
+    ACH_COUNTER_EVOLVED_POKEMON = 0xf6,
+    ACH_COUNTER_TMS_COLLECTED = 0xfd,
+    ACH_COUNTER_POKEDEX_CAUGHT = 0xfe,
+    ACH_COUNTER_NONE = 0xff,
 };
 
 enum AchievementGameCornerGame
 {
-    ACH_GAME_CORNER_SLOTS,
-    ACH_GAME_CORNER_ROULETTE,
-    ACH_GAME_CORNER_GAME_COUNT,
+    ACH_GAME_CORNER_SLOTS = 0,
+    ACH_GAME_CORNER_ROULETTE = 1,
+    ACH_GAME_CORNER_GAME_COUNT = 2,
 };
 
 enum AchievementId
 {
     // Keep all original IDs stable for existing saves.
-    ACH_RECEIVE_STARTER,
-    ACH_FIRST_CAPTURE,
-    ACH_FIRST_CRITICAL,
-    ACH_CRITICAL_100,
-    ACH_CAPTURE_100,
-    ACH_CAPTURE_SHINY,
-    ACH_DAYCARE_EGG_1,
-    ACH_DAYCARE_EGGS_100,
-    ACH_HATCH_EGGS_100,
-    ACH_TM_1,
-    ACH_TM_20,
-    ACH_TM_50,
+    ACH_RECEIVE_STARTER = 0,
+    ACH_FIRST_CAPTURE = 1,
+    ACH_FIRST_CRITICAL = 2,
+    ACH_CRITICAL_100 = 3,
+    ACH_CAPTURE_100 = 4,
+    ACH_CAPTURE_SHINY = 5,
+    ACH_DAYCARE_EGG_1 = 6,
+    ACH_DAYCARE_EGGS_100 = 7,
+    ACH_HATCH_EGGS_100 = 8,
+    ACH_TM_1 = 9,
+    ACH_TM_20 = 10,
+    ACH_TM_50 = 11,
 
     // Legacy IDs intentionally hidden from the new menu.
     // Do not reuse these values or old saves could unlock the wrong trophy.
-    ACH_TM_100,
-    ACH_POKEDEX_200,
-    ACH_POKEDEX_350,
-    ACH_POKEDEX_500,
+    ACH_TM_100 = 12,
+    ACH_POKEDEX_200 = 13,
+    ACH_POKEDEX_350 = 14,
+    ACH_POKEDEX_500 = 15,
 
-    ACH_PEAK_OF_POWER,
-    ACH_GAINING_POWER,
+    ACH_PEAK_OF_POWER = 16,
+    ACH_GAINING_POWER = 17,
 
     // New Hoenn's Last Wish achievements.
-    ACH_WISH_ADDICTION,
-    ACH_TOURIST,
-    ACH_TIME_TRAVELLER,
-    ACH_PERFECTIONIST,
-    ACH_SUSHI_MAN,
-    ACH_GAMBLER,
-    ACH_ALL_IN,
-    ACH_INDEED_CHAMPION,
-    ACH_TITAN_POWER,
-    ACH_GODS_OF_NATURE,
-    ACH_TEAM_MAGMA_HATER,
-    ACH_TEAM_AQUA_HATER,
+    ACH_WISH_ADDICTION = 18,
+    ACH_TOURIST = 19,
+    ACH_TIME_TRAVELLER = 20,
+    ACH_PERFECTIONIST = 21,
+    ACH_SUSHI_MAN = 22,
+    ACH_GAMBLER = 23,
+    ACH_ALL_IN = 24,
+    ACH_INDEED_CHAMPION = 25,
+    ACH_TITAN_POWER = 26,
+    ACH_GODS_OF_NATURE = 27,
+    ACH_TEAM_MAGMA_HATER = 28,
+    ACH_TEAM_AQUA_HATER = 29,
 
-    ACH_ID_COUNT,
+    ACH_ID_COUNT = 30,
 };
 
 #define ACH_LEGACY_ID_COUNT 0

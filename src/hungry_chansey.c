@@ -1,72 +1,35 @@
 #include "global.h"
+#include "hlw_media_save.h"
 #include "event_data.h"
 #include "random.h"
 #include "constants/items.h"
 
-#define HUNGRY_CHANSEY_SAVE_MAGIC              0x484C5753
-#define HUNGRY_CHANSEY_SAVE_VERSION            1
-
-// The first 80 bytes are already used by the radio, UI themes, and options.
-// This table uses the remaining reserved extension space without changing the
-// size or layout of the save block.
-#define HUNGRY_CHANSEY_SAVE_TAG0_OFFSET        80
-#define HUNGRY_CHANSEY_SAVE_TAG1_OFFSET        81
-#define HUNGRY_CHANSEY_SAVE_VERSION_OFFSET     82
-#define HUNGRY_CHANSEY_SAVE_TABLE_OFFSET       84
-#define HUNGRY_CHANSEY_SAVE_ENTRY_SIZE         4
-#define HUNGRY_CHANSEY_SAVE_ENTRY_COUNT        64
+// Persistent entries have one fixed owner; the manager initializes them.
+#define HUNGRY_CHANSEY_SAVE_TABLE_OFFSET HLW_MEDIA_CHANSEY_OFFSET
+#define HUNGRY_CHANSEY_SAVE_ENTRY_SIZE HLW_MEDIA_CHANSEY_ENTRY_SIZE
+#define HUNGRY_CHANSEY_SAVE_ENTRY_COUNT HLW_MEDIA_CHANSEY_ENTRY_COUNT
 
 // Each entry stores map group, map number, local ID, and the requested berry
-// as a one-based index into sHungryChanseyBerryPool. Zero means unused.
+// as a frozen one-based berry ID (table indices below + 1). Never renumber
+// these assignments; zero means unused.
 static const u16 sHungryChanseyBerryPool[] =
 {
-    ITEM_CHERI_BERRY,
-    ITEM_CHESTO_BERRY,
-    ITEM_PECHA_BERRY,
-    ITEM_RAWST_BERRY,
-    ITEM_ASPEAR_BERRY,
-    ITEM_LEPPA_BERRY,
-    ITEM_ORAN_BERRY,
-    ITEM_PERSIM_BERRY,
-    ITEM_LUM_BERRY,
-    ITEM_SITRUS_BERRY,
+    [0] = ITEM_CHERI_BERRY,
+    [1] = ITEM_CHESTO_BERRY,
+    [2] = ITEM_PECHA_BERRY,
+    [3] = ITEM_RAWST_BERRY,
+    [4] = ITEM_ASPEAR_BERRY,
+    [5] = ITEM_LEPPA_BERRY,
+    [6] = ITEM_ORAN_BERRY,
+    [7] = ITEM_PERSIM_BERRY,
+    [8] = ITEM_LUM_BERRY,
+    [9] = ITEM_SITRUS_BERRY,
 };
 
 STATIC_ASSERT(HUNGRY_CHANSEY_SAVE_TABLE_OFFSET
               + HUNGRY_CHANSEY_SAVE_ENTRY_SIZE * HUNGRY_CHANSEY_SAVE_ENTRY_COUNT
               <= sizeof(((struct HLWSaveExtension *)0)->future),
               HungryChanseySaveFitsInExtension);
-
-static void HungryChansey_InitSaveData(void)
-{
-    struct HLWSaveExtension *extension;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    extension = &gSaveBlock1Ptr->hlwSave;
-    if (extension->magic != HUNGRY_CHANSEY_SAVE_MAGIC
-     || extension->version != HUNGRY_CHANSEY_SAVE_VERSION
-     || extension->size != sizeof(*extension))
-    {
-        memset(extension, 0, sizeof(*extension));
-        extension->magic = HUNGRY_CHANSEY_SAVE_MAGIC;
-        extension->version = HUNGRY_CHANSEY_SAVE_VERSION;
-        extension->size = sizeof(*extension);
-    }
-
-    if (extension->future[HUNGRY_CHANSEY_SAVE_TAG0_OFFSET] != 'C'
-     || extension->future[HUNGRY_CHANSEY_SAVE_TAG1_OFFSET] != 'H'
-     || extension->future[HUNGRY_CHANSEY_SAVE_VERSION_OFFSET] != HUNGRY_CHANSEY_SAVE_VERSION)
-    {
-        extension->future[HUNGRY_CHANSEY_SAVE_TAG0_OFFSET] = 'C';
-        extension->future[HUNGRY_CHANSEY_SAVE_TAG1_OFFSET] = 'H';
-        extension->future[HUNGRY_CHANSEY_SAVE_VERSION_OFFSET] = HUNGRY_CHANSEY_SAVE_VERSION;
-        memset(&extension->future[HUNGRY_CHANSEY_SAVE_TABLE_OFFSET],
-               0,
-               HUNGRY_CHANSEY_SAVE_ENTRY_SIZE * HUNGRY_CHANSEY_SAVE_ENTRY_COUNT);
-    }
-}
 
 static u8 *HungryChansey_GetEntry(u8 entry)
 {
@@ -112,8 +75,8 @@ u16 HungryChansey_GetRequestedBerry(void)
 {
     u8 *entry;
     u16 berry;
+    u8 berryId;
 
-    HungryChansey_InitSaveData();
     if (gSaveBlock1Ptr == NULL)
         return sHungryChanseyBerryPool[Random() % ARRAY_COUNT(sHungryChanseyBerryPool)];
 
@@ -121,14 +84,15 @@ u16 HungryChansey_GetRequestedBerry(void)
     if (entry != NULL && entry[3] <= ARRAY_COUNT(sHungryChanseyBerryPool))
         return sHungryChanseyBerryPool[entry[3] - 1];
 
-    berry = sHungryChanseyBerryPool[Random() % ARRAY_COUNT(sHungryChanseyBerryPool)];
+    berryId = Random() % ARRAY_COUNT(sHungryChanseyBerryPool);
+    berry = sHungryChanseyBerryPool[berryId];
     entry = HungryChansey_FindFreeEntry();
     if (entry != NULL)
     {
         entry[0] = (u8)gSaveBlock1Ptr->location.mapGroup;
         entry[1] = (u8)gSaveBlock1Ptr->location.mapNum;
         entry[2] = (u8)gSpecialVar_LastTalked;
-        entry[3] = (u8)(berry - ITEM_CHERI_BERRY + 1);
+        entry[3] = berryId + 1;
     }
 
     return berry;
@@ -138,7 +102,6 @@ void HungryChansey_ClearRequestedBerry(void)
 {
     u8 *entry;
 
-    HungryChansey_InitSaveData();
     if (gSaveBlock1Ptr == NULL)
         return;
 

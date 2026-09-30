@@ -84,6 +84,7 @@ SootopolisCity_Gym_1F_Movement_FallThroughIce:
 SootopolisCity_Gym_1F_EventScript_Juan::
     lock
     faceplayer
+    goto_if_set FLAG_DEFEATED_SOOTOPOLIS_GYM, SootopolisCity_Gym_1F_EventScript_JuanAfterBattle
     getdifficulty VAR_RESULT
     goto_if_eq VAR_RESULT, 1, SootopolisCity_Gym_1F_EventScript_JuanHard
 
@@ -97,9 +98,10 @@ SootopolisCity_Gym_1F_EventScript_JuanHard::
     // Fall through to AfterBattle
 
 SootopolisCity_Gym_1F_EventScript_JuanAfterBattle::
+    goto_if_unset FLAG_RECEIVED_TM_WATER_PULSE, SootopolisCity_Gym_1F_EventScript_GiveWaterPulse2
+    setorcopyvar VAR_TRAINER_BATTLE_OPPONENT_A, TRAINER_JUAN_1
     specialvar VAR_RESULT, ShouldTryRematchBattle
     goto_if_eq VAR_RESULT, TRUE, SootopolisCity_Gym_1F_EventScript_JuanRematch
-    goto_if_unset FLAG_RECEIVED_TM_WATER_PULSE, SootopolisCity_Gym_1F_EventScript_GiveWaterPulse2
     goto_if_unset FLAG_BADGE06_GET, SootopolisCity_Gym_1F_EventScript_GoGetFortreeBadge
     msgbox SootopolisCity_Gym_1F_Text_JuanPostBattle, MSGBOX_DEFAULT
     release

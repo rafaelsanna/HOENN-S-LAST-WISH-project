@@ -155,19 +155,19 @@ bool32 AchievementPopup_IsActive(void)
 
 static enum AchievementId PeekQueuedAchievement(void)
 {
-    return gSaveBlock1Ptr->achievements.popupQueue[0] - 1;
+    return gSaveBlock3Ptr->achievements.popupQueue[0] - 1;
 }
 
 static bool32 RemoveQueuedAchievement(enum AchievementId id)
 {
     u8 i;
 
-    if (gSaveBlock1Ptr->achievements.popupQueue[0] != id + 1)
+    if (gSaveBlock3Ptr->achievements.popupQueue[0] != id + 1)
         return FALSE;
 
     for (i = 1; i < ACHIEVEMENT_POPUP_QUEUE_SIZE; i++)
-        gSaveBlock1Ptr->achievements.popupQueue[i - 1] = gSaveBlock1Ptr->achievements.popupQueue[i];
-    gSaveBlock1Ptr->achievements.popupQueue[ACHIEVEMENT_POPUP_QUEUE_SIZE - 1] = 0;
+        gSaveBlock3Ptr->achievements.popupQueue[i - 1] = gSaveBlock3Ptr->achievements.popupQueue[i];
+    gSaveBlock3Ptr->achievements.popupQueue[ACHIEVEMENT_POPUP_QUEUE_SIZE - 1] = 0;
     return TRUE;
 }
 
@@ -176,8 +176,7 @@ void Achievement_TryShowQueuedPopup(void)
     u8 taskId;
     enum AchievementId id;
 
-    Achievement_EnsureSaveInitialized();
-    if (gSaveBlock1Ptr->achievements.popupQueue[0] == 0
+    if (gSaveBlock3Ptr->achievements.popupQueue[0] == 0
      || IsAchievementPopupActive()
      || RadioPopup_IsActive()
      || GetMapNamePopUpWindowId() != WINDOW_NONE

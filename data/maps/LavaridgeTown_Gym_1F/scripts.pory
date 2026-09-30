@@ -52,6 +52,7 @@ LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers::
 LavaridgeTown_Gym_1F_EventScript_Flannery::
     lock
     faceplayer
+    goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, LavaridgeTown_Gym_1F_EventScript_FlanneryAfterBattle
     getdifficulty VAR_RESULT
     goto_if_eq VAR_RESULT, 1, LavaridgeTown_Gym_1F_EventScript_FlanneryHard
 
@@ -65,9 +66,10 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryHard::
     // Fall through to AfterBattle
 
 LavaridgeTown_Gym_1F_EventScript_FlanneryAfterBattle::
+    goto_if_unset FLAG_RECEIVED_TM_OVERHEAT, LavaridgeTown_Gym_1F_EventScript_GiveOverheat2
+    setorcopyvar VAR_TRAINER_BATTLE_OPPONENT_A, TRAINER_FLANNERY_1
     specialvar VAR_RESULT, ShouldTryRematchBattle
     goto_if_eq VAR_RESULT, TRUE, LavaridgeTown_Gym_1F_EventScript_FlanneryRematch
-    goto_if_unset FLAG_RECEIVED_TM_OVERHEAT, LavaridgeTown_Gym_1F_EventScript_GiveOverheat2
     msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostBattle, MSGBOX_DEFAULT
     release
     end

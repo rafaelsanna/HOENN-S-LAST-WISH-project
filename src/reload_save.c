@@ -1,5 +1,6 @@
 #include "global.h"
 #include "main.h"
+#include "main_menu.h"
 #include "crt0.h"
 #include "gpu_regs.h"
 #include "m4a.h"
@@ -24,9 +25,14 @@ void ReloadSave(void)
     ResetMenuAndMonGlobals();
     Save_ResetSaveCounters();
     LoadGameSave(SAVE_NORMAL);
-    if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
+    if (gSaveFileStatus != SAVE_STATUS_OK && gSaveFileStatus != SAVE_STATUS_ERROR)
         Sav2_ClearSetDefault();
     SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
     InitHeap(gHeap, HEAP_SIZE);
-    SetMainCallback2(CB2_ContinueSavedGame);
+    // Only OK and ERROR (a verified compatible backup) contain a loaded game.
+    // A rejected schema must return through the menu's no-Continue message.
+    if (gSaveFileStatus == SAVE_STATUS_OK || gSaveFileStatus == SAVE_STATUS_ERROR)
+        SetMainCallback2(CB2_ContinueSavedGame);
+    else
+        SetMainCallback2(CB2_InitMainMenu);
 }

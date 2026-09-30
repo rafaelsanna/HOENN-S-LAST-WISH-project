@@ -2,6 +2,9 @@
 #include "gba/types.h"
 #include "gba/defines.h"
 #include "global.h"
+#include "mining_minigame.h"
+#include "fieldmap.h"
+#include "constants/maps.h"
 #include "comfy_anim.h"
 #include "main.h"
 #include "bg.h"
@@ -95,13 +98,11 @@ static bool32 AreAllItemsFound(void);
 #endif
 static void SetBuriedItemsId(u32 index, u32 itemId);
 static void SetBuriedItemStatus(u32 index, bool32 status);
-static u32 GetDailyMiningWallAttemptId(void);
+static u16 GetDailyMiningWallAttemptId(void);
 static bool8 HasTriedDailyMiningWall(void);
 static void SetTriedDailyMiningWall(void);
 static void ClearDailyMiningWallAttemptsIfNewDay(void);
-static void MiningSession_InitSaveData(void);
 static void MiningSession_ClearIfNewDay(void);
-static u16 MiningSession_GetDay(void);
 static u8 MiningSession_GetCount(u16 location);
 static void MiningSession_SetCount(u16 location, u8 count);
 static u32 GetBuriedBagItemId(u32 index);
@@ -1592,123 +1593,72 @@ void StartMining(void)
     Mining_Init(CB2_ReturnToField);
 }
 
-// The last 12 bytes of HLWSaveExtension.future[] are reserved for the
-// location-based mining allowance system. Keeping this data in the fixed-size
-// extension preserves the SaveBlock1 layout for existing saves.
-#define MINING_SESSION_SAVE_TAG0_OFFSET    340
-#define MINING_SESSION_SAVE_TAG1_OFFSET    341
-#define MINING_SESSION_SAVE_VERSION_OFFSET 342
-#define MINING_SESSION_SAVE_DAY_OFFSET     343
-#define MINING_SESSION_SAVE_COUNT_OFFSET   345
-#define MINING_SESSION_SAVE_COUNT_BYTES    7
-#define MINING_SESSION_SAVE_MAX_LOCATIONS  ((MINING_SESSION_SAVE_COUNT_BYTES * 8) / 3)
-#define MINING_SESSION_SAVE_END_OFFSET     (MINING_SESSION_SAVE_COUNT_OFFSET + MINING_SESSION_SAVE_COUNT_BYTES)
+STATIC_ASSERT(MINING_WALL_SAVE_CAPACITY == sizeof(((struct MiningWallSave *)0)->attemptedWalls) * 8, MiningWallCapacity);
+STATIC_ASSERT(MINING_LOCATION_SAVE_CAPACITY == sizeof(((struct MiningWallSave *)0)->sessionCounts), MiningLocationCapacity);
+STATIC_ASSERT(MINING_WALL_ATTEMPT_COUNT <= 255, MiningDailyCountFits);
+STATIC_ASSERT(MINING_LOCATION_COUNT <= MINING_LOCATION_SAVE_CAPACITY, MiningLocationIdsFit);
 
-STATIC_ASSERT(MINING_SESSION_SAVE_END_OFFSET <= sizeof(((struct HLWSaveExtension *)0)->future),
-              MiningSessionSaveFitsInExtension);
-
-static void MiningSession_InitSaveData(void)
+struct MiningWallRegistryEntry { u16 id; u16 map; s16 x; s16 y; };
+static const struct MiningWallRegistryEntry sMiningWallRegistry[] =
 {
-    struct HLWSaveExtension *extension;
-    u16 day;
+#define MINING_WALL(id, map, x, y) { id, map, x, y },
+#include "data/mining_wall_registry.inc"
+#undef MINING_WALL
+    { MINING_WALL_ID_NONE, 0, 0, 0 },
+};
 
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    extension = &gSaveBlock1Ptr->hlwSave;
-    if (extension->future[MINING_SESSION_SAVE_TAG0_OFFSET] != 'M'
-     || extension->future[MINING_SESSION_SAVE_TAG1_OFFSET] != 'S'
-     || extension->future[MINING_SESSION_SAVE_VERSION_OFFSET] != 1)
-    {
-        day = (u16)RtcGetLocalDayCount();
-        extension->future[MINING_SESSION_SAVE_TAG0_OFFSET] = 'M';
-        extension->future[MINING_SESSION_SAVE_TAG1_OFFSET] = 'S';
-        extension->future[MINING_SESSION_SAVE_VERSION_OFFSET] = 1;
-        extension->future[MINING_SESSION_SAVE_DAY_OFFSET] = (u8)day;
-        extension->future[MINING_SESSION_SAVE_DAY_OFFSET + 1] = (u8)(day >> 8);
-        memset(&extension->future[MINING_SESSION_SAVE_COUNT_OFFSET],
-               0,
-               MINING_SESSION_SAVE_COUNT_BYTES);
-    }
+u16 MiningWall_GetId(u16 map, s16 x, s16 y)
+{
+    u32 i;
+    for (i = 0; sMiningWallRegistry[i].id != MINING_WALL_ID_NONE; i++)
+        if (sMiningWallRegistry[i].map == map && sMiningWallRegistry[i].x == x && sMiningWallRegistry[i].y == y)
+            return sMiningWallRegistry[i].id;
+    return MINING_WALL_ID_NONE;
 }
 
-static u16 MiningSession_GetDay(void)
+bool32 MiningWall_WasAttempted(u16 wallId)
 {
-    struct HLWSaveExtension *extension = &gSaveBlock1Ptr->hlwSave;
+    if (gSaveBlock3Ptr == NULL || wallId >= MINING_WALL_SAVE_CAPACITY)
+        return FALSE;
+    return (gSaveBlock3Ptr->miningWalls.attemptedWalls[wallId / 8] & (1 << (wallId % 8))) != 0;
+}
 
-    return extension->future[MINING_SESSION_SAVE_DAY_OFFSET]
-         | ((u16)extension->future[MINING_SESSION_SAVE_DAY_OFFSET + 1] << 8);
+bool32 MiningWall_RecordAttempt(u16 wallId)
+{
+    struct MiningWallSave *save;
+    if (gSaveBlock3Ptr == NULL || wallId >= MINING_WALL_SAVE_CAPACITY || MiningWall_WasAttempted(wallId))
+        return FALSE;
+    save = &gSaveBlock3Ptr->miningWalls;
+    if (save->count >= MINING_WALL_ATTEMPT_COUNT)
+        return FALSE;
+    save->attemptedWalls[wallId / 8] |= 1 << (wallId % 8);
+    save->count++;
+    return TRUE;
 }
 
 static u8 MiningSession_GetCount(u16 location)
 {
-    struct HLWSaveExtension *extension = &gSaveBlock1Ptr->hlwSave;
-    u16 bitOffset;
-    u8 count = 0;
-    u8 bit;
-
-    if (location >= MINING_LOCATION_COUNT || location >= MINING_SESSION_SAVE_MAX_LOCATIONS)
-        location = MINING_LOCATION_JAGGED_PASS;
-
-    bitOffset = location * 3;
-    for (bit = 0; bit < 3; bit++)
-    {
-        if (extension->future[MINING_SESSION_SAVE_COUNT_OFFSET + ((bitOffset + bit) >> 3)]
-            & (1 << ((bitOffset + bit) & 7)))
-        {
-            count |= 1 << bit;
-        }
-    }
-
-    return count;
+    if (location >= MINING_LOCATION_SAVE_CAPACITY)
+        return MINING_FREE_SESSIONS_PER_DAY;
+    return gSaveBlock3Ptr->miningWalls.sessionCounts[location];
 }
 
 static void MiningSession_SetCount(u16 location, u8 count)
 {
-    struct HLWSaveExtension *extension = &gSaveBlock1Ptr->hlwSave;
-    u16 bitOffset;
-    u8 bit;
-
-    if (location >= MINING_LOCATION_COUNT || location >= MINING_SESSION_SAVE_MAX_LOCATIONS)
-        location = MINING_LOCATION_JAGGED_PASS;
-
-    bitOffset = location * 3;
-    for (bit = 0; bit < 3; bit++)
-    {
-        u8 *byte = &extension->future[MINING_SESSION_SAVE_COUNT_OFFSET + ((bitOffset + bit) >> 3)];
-        u8 mask = 1 << ((bitOffset + bit) & 7);
-
-        if (count & (1 << bit))
-            *byte |= mask;
-        else
-            *byte &= ~mask;
-    }
+    if (location < MINING_LOCATION_SAVE_CAPACITY)
+        gSaveBlock3Ptr->miningWalls.sessionCounts[location] = min(count, MINING_FREE_SESSIONS_PER_DAY);
 }
 
 static void MiningSession_ClearIfNewDay(void)
 {
-    struct HLWSaveExtension *extension;
-    u16 day;
-
-    MiningSession_InitSaveData();
-    extension = &gSaveBlock1Ptr->hlwSave;
-    day = (u16)RtcGetLocalDayCount();
-
-    if (MiningSession_GetDay() != day)
-    {
-        extension->future[MINING_SESSION_SAVE_DAY_OFFSET] = (u8)day;
-        extension->future[MINING_SESSION_SAVE_DAY_OFFSET + 1] = (u8)(day >> 8);
-        memset(&extension->future[MINING_SESSION_SAVE_COUNT_OFFSET],
-               0,
-               MINING_SESSION_SAVE_COUNT_BYTES);
-    }
+    ClearDailyMiningWallAttemptsIfNewDay();
 }
 
 u16 GetMiningFreeSessionsRemaining(void)
 {
     u8 count;
 
-    if (gSaveBlock1Ptr == NULL)
+    if (gSaveBlock3Ptr == NULL)
         return MINING_FREE_SESSIONS_PER_DAY;
 
     MiningSession_ClearIfNewDay();
@@ -1723,7 +1673,7 @@ u16 TryMiningFreeSession(void)
 {
     u8 count;
 
-    if (gSaveBlock1Ptr == NULL)
+    if (gSaveBlock3Ptr == NULL)
         return MINING_SESSION_RESULT_REQUIRES_PAYMENT;
 
     MiningSession_ClearIfNewDay();
@@ -1739,11 +1689,22 @@ u16 TryMiningFreeSession(void)
 
 void TryDailyMiningWall(void)
 {
+    if (gSaveBlock1Ptr == NULL || gSaveBlock3Ptr == NULL)
+    {
+        gSpecialVar_Result = MINING_WALL_RESULT_EMPTY;
+        return;
+    }
     ClearDailyMiningWallAttemptsIfNewDay();
 
     if (!FlagGet(FLAG_SYS_MINING_WALLS_UNLOCKED))
     {
         gSpecialVar_Result = MINING_WALL_RESULT_LOCKED;
+        return;
+    }
+
+    if (GetDailyMiningWallAttemptId() == MINING_WALL_ID_NONE)
+    {
+        gSpecialVar_Result = MINING_WALL_RESULT_EMPTY;
         return;
     }
 
@@ -1753,7 +1714,7 @@ void TryDailyMiningWall(void)
         return;
     }
 
-    if (gSaveBlock1Ptr->miningWalls.count >= MINING_WALL_ATTEMPT_COUNT)
+    if (gSaveBlock3Ptr->miningWalls.count >= MINING_WALL_ATTEMPT_COUNT)
     {
         gSpecialVar_Result = MINING_WALL_RESULT_NO_ENERGY;
         return;
@@ -1768,50 +1729,31 @@ void TryDailyMiningWall(void)
 
 static bool8 HasTriedDailyMiningWall(void)
 {
-    u16 i;
-    u32 attemptId = GetDailyMiningWallAttemptId();
-    struct MiningWallSave *miningWalls = &gSaveBlock1Ptr->miningWalls;
-
-    for (i = 0; i < miningWalls->count; i++)
-    {
-        if (miningWalls->attempts[i] == attemptId)
-            return TRUE;
-    }
-
-    return FALSE;
+    return MiningWall_WasAttempted(GetDailyMiningWallAttemptId());
 }
 
 static void SetTriedDailyMiningWall(void)
 {
-    struct MiningWallSave *miningWalls = &gSaveBlock1Ptr->miningWalls;
-
-    if (miningWalls->count >= MINING_WALL_ATTEMPT_COUNT)
-        return;
-
-    miningWalls->attempts[miningWalls->count++] = GetDailyMiningWallAttemptId();
+    MiningWall_RecordAttempt(GetDailyMiningWallAttemptId());
 }
 
-static u32 GetDailyMiningWallAttemptId(void)
+static u16 GetDailyMiningWallAttemptId(void)
 {
-    s16 x;
-    s16 y;
-
+    s16 x, y;
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
-    return ((u8)gSaveBlock1Ptr->location.mapGroup << 24)
-         | ((u8)gSaveBlock1Ptr->location.mapNum << 16)
-         | ((u8)x << 8)
-         | (u8)y;
+    return MiningWall_GetId((u8)gSaveBlock1Ptr->location.mapNum | ((u8)gSaveBlock1Ptr->location.mapGroup << 8), x - MAP_OFFSET, y - MAP_OFFSET);
 }
 
 static void ClearDailyMiningWallAttemptsIfNewDay(void)
 {
-    struct MiningWallSave *miningWalls = &gSaveBlock1Ptr->miningWalls;
+    struct MiningWallSave *save = &gSaveBlock3Ptr->miningWalls;
     u16 day = RtcGetLocalDayCount();
-
-    if (miningWalls->day != day || miningWalls->count > MINING_WALL_ATTEMPT_COUNT)
+    if (save->day != day)
     {
-        miningWalls->day = day;
-        miningWalls->count = 0;
+        save->day = day;
+        save->count = 0;
+        memset(save->attemptedWalls, 0, sizeof(save->attemptedWalls));
+        memset(save->sessionCounts, 0, sizeof(save->sessionCounts));
     }
 }
 

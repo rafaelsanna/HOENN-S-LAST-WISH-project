@@ -53,7 +53,7 @@ SINGLE_BATTLE_TEST("Setting level doesn't overwrite set stats")
 SINGLE_BATTLE_TEST("Changing forms doesn't overwrite set stats (not HP)")
 {
     GIVEN {
-        PLAYER(SPECIES_DIANCIE) {Attack(10); Defense(10); Speed(10); SpAttack(10); SpDefense(10); Item(ITEM_DIANCITE);}
+        PLAYER(SPECIES_RAYQUAZA) {Attack(10); Defense(10); Speed(10); SpAttack(10); SpDefense(10); Moves(MOVE_DRAGON_ASCENT, MOVE_CELEBRATE);}
         OPPONENT(SPECIES_WOBBUFFET) {Speed(1);}
     } WHEN {
         TURN { MOVE(player, MOVE_CELEBRATE, gimmick: GIMMICK_MEGA); }

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "hlw_media_save.h"
 #include "comfy_anim.h"
 #include "malloc.h"
 #include "battle.h"
@@ -244,22 +245,22 @@ struct PartyThemeColors
 enum PartyColorTheme
 {
     PARTY_COLOR_THEME_DEFAULT = 0,
-    PARTY_COLOR_THEME_AMETHYST,
-    PARTY_COLOR_THEME_BURGUNDY,
-    PARTY_COLOR_THEME_MIDNIGHT_SKY,
-    PARTY_COLOR_THEME_EMERALD,
-    PARTY_COLOR_THEME_DEEP_OCEAN,
-    PARTY_COLOR_THEME_COPPER,
-    PARTY_COLOR_THEME_ROSEWOOD,
-    PARTY_COLOR_THEME_INDIGO,
-    PARTY_COLOR_THEME_SILVER,
-    PARTY_COLOR_THEME_PASTEL_PINK,
-    PARTY_COLOR_THEME_LAVENDER_MIST,
-    PARTY_COLOR_THEME_BABY_BLUE,
-    PARTY_COLOR_THEME_MINT,
-    PARTY_COLOR_THEME_PEACH,
-    PARTY_COLOR_THEME_GOLD,
-    PARTY_COLOR_THEME_COUNT,
+    PARTY_COLOR_THEME_AMETHYST = 1,
+    PARTY_COLOR_THEME_BURGUNDY = 2,
+    PARTY_COLOR_THEME_MIDNIGHT_SKY = 3,
+    PARTY_COLOR_THEME_EMERALD = 4,
+    PARTY_COLOR_THEME_DEEP_OCEAN = 5,
+    PARTY_COLOR_THEME_COPPER = 6,
+    PARTY_COLOR_THEME_ROSEWOOD = 7,
+    PARTY_COLOR_THEME_INDIGO = 8,
+    PARTY_COLOR_THEME_SILVER = 9,
+    PARTY_COLOR_THEME_PASTEL_PINK = 10,
+    PARTY_COLOR_THEME_LAVENDER_MIST = 11,
+    PARTY_COLOR_THEME_BABY_BLUE = 12,
+    PARTY_COLOR_THEME_MINT = 13,
+    PARTY_COLOR_THEME_PEACH = 14,
+    PARTY_COLOR_THEME_GOLD = 15,
+    PARTY_COLOR_THEME_COUNT = 16,
 };
 
 static const u8 sPartyThemeName_Default[]     = _("BASE");
@@ -391,15 +392,6 @@ static const struct PartyThemeColors sPartyThemeColors[PARTY_COLOR_THEME_COUNT] 
 
 // Same four bytes already owned by the Summary Screen. No extra save space is
 // consumed by the Party Menu; the value is deliberately shared.
-#define PARTY_THEME_SAVE_TAG0_OFFSET      64
-#define PARTY_THEME_SAVE_TAG1_OFFSET      65
-#define PARTY_THEME_SAVE_VERSION_OFFSET   66
-#define PARTY_THEME_SAVE_VALUE_OFFSET     67
-#define PARTY_THEME_SAVE_TAG0             0x53 // 'S'
-#define PARTY_THEME_SAVE_TAG1             0x54 // 'T'
-#define PARTY_THEME_SAVE_VERSION          1
-#define PARTY_HLW_SAVE_EXTENSION_MAGIC    0x484C5753
-#define PARTY_HLW_SAVE_EXTENSION_VERSION  1
 
 #define PARTY_THEME_BAR_PAL               12
 
@@ -525,7 +517,6 @@ static void InitRaisedItemTargetWindows(void);
 static void BuildOptimizedDoubleBattleGeometry(void);
 static void InitOptimizedDoubleBattleWindows(void);
 static void ExtendBasicPartyBackgroundFooter(void);
-static void InitPartyThemeSaveExtensionIfNeeded(void);
 static void LoadPartyColorThemeFromSave(void);
 static void SavePartyColorThemeToSave(void);
 static u8 GetPartyThemeCyclePosition(void);
@@ -1416,68 +1407,17 @@ static void ExtendBasicPartyBackgroundFooter(void)
     CpuCopy16(&tilemap[17 * 32], &tilemap[19 * 32], 32 * sizeof(u16));
 }
 
-static void InitPartyThemeSaveExtensionIfNeeded(void)
-{
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    ext = &gSaveBlock1Ptr->hlwSave;
-    if (ext->magic != PARTY_HLW_SAVE_EXTENSION_MAGIC
-     || ext->version != PARTY_HLW_SAVE_EXTENSION_VERSION
-     || ext->size != sizeof(*ext))
-    {
-        memset(ext, 0, sizeof(*ext));
-        ext->magic = PARTY_HLW_SAVE_EXTENSION_MAGIC;
-        ext->version = PARTY_HLW_SAVE_EXTENSION_VERSION;
-        ext->size = sizeof(*ext);
-    }
-}
-
 static void LoadPartyColorThemeFromSave(void)
 {
-    struct HLWSaveExtension *ext;
-
     sPartyColorTheme = PARTY_COLOR_THEME_DEFAULT;
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    InitPartyThemeSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-
-    if (ext->future[PARTY_THEME_SAVE_TAG0_OFFSET] == PARTY_THEME_SAVE_TAG0
-     && ext->future[PARTY_THEME_SAVE_TAG1_OFFSET] == PARTY_THEME_SAVE_TAG1
-     && ext->future[PARTY_THEME_SAVE_VERSION_OFFSET] == PARTY_THEME_SAVE_VERSION
-     && ext->future[PARTY_THEME_SAVE_VALUE_OFFSET] < PARTY_COLOR_THEME_COUNT)
-    {
-        sPartyColorTheme = ext->future[PARTY_THEME_SAVE_VALUE_OFFSET];
-    }
-    else
-    {
-        ext->future[PARTY_THEME_SAVE_TAG0_OFFSET] = PARTY_THEME_SAVE_TAG0;
-        ext->future[PARTY_THEME_SAVE_TAG1_OFFSET] = PARTY_THEME_SAVE_TAG1;
-        ext->future[PARTY_THEME_SAVE_VERSION_OFFSET] = PARTY_THEME_SAVE_VERSION;
-        ext->future[PARTY_THEME_SAVE_VALUE_OFFSET] = PARTY_COLOR_THEME_DEFAULT;
-    }
+    if (gSaveBlock1Ptr != NULL && gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] < PARTY_COLOR_THEME_COUNT)
+        sPartyColorTheme = gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET];
 }
 
 static void SavePartyColorThemeToSave(void)
 {
-    struct HLWSaveExtension *ext;
-
-    if (gSaveBlock1Ptr == NULL)
-        return;
-
-    InitPartyThemeSaveExtensionIfNeeded();
-    ext = &gSaveBlock1Ptr->hlwSave;
-    ext->future[PARTY_THEME_SAVE_TAG0_OFFSET] = PARTY_THEME_SAVE_TAG0;
-    ext->future[PARTY_THEME_SAVE_TAG1_OFFSET] = PARTY_THEME_SAVE_TAG1;
-    ext->future[PARTY_THEME_SAVE_VERSION_OFFSET] = PARTY_THEME_SAVE_VERSION;
-    ext->future[PARTY_THEME_SAVE_VALUE_OFFSET] =
-        (sPartyColorTheme < PARTY_COLOR_THEME_COUNT)
-            ? sPartyColorTheme
-            : PARTY_COLOR_THEME_DEFAULT;
+    if (gSaveBlock1Ptr != NULL)
+        gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] = (sPartyColorTheme < PARTY_COLOR_THEME_COUNT) ? sPartyColorTheme : PARTY_COLOR_THEME_DEFAULT;
 }
 
 static u8 GetPartyThemeCyclePosition(void)

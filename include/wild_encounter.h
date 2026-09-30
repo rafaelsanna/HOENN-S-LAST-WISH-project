@@ -3,6 +3,7 @@
 
 #include "rtc.h"
 #include "constants/wild_encounter.h"
+#include "constants/encounter_ids.h"
 
 #define HEADER_NONE 0xFFFF
 
@@ -63,6 +64,8 @@ bool8 StandardWildEncounter_Debug(void);
 u32 CalculateChainFishingShinyRolls(void);
 void CreateWildMon(u16 species, u8 level);
 u16 GetCurrentMapWildMonHeaderId(void);
+u16 GetPersistentEncounterId(u16 map, u8 variant);
+u16 GetCurrentMapEncounterId(void);
 u32 ChooseWildMonIndex_Land(void);
 u32 ChooseWildMonIndex_Water(void);
 u32 ChooseWildMonIndex_Rocks(void);

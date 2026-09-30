@@ -64,6 +64,44 @@ EWRAM_DATA u8 gChainFishingDexNavStreak = 0;
 
 #include "data/wild_encounters.h"
 
+struct PersistentEncounterIdentity
+{
+    u16 id;
+    u16 map;
+    u8 variant;
+};
+
+#define ENCOUNTER_REGISTRY_ENTRY(name, id, map, variant) {id, map, variant},
+static const struct PersistentEncounterIdentity sEncounterIdentities[] =
+{
+    HLW_ENCOUNTER_REGISTRY(ENCOUNTER_REGISTRY_ENTRY)
+};
+#undef ENCOUNTER_REGISTRY_ENTRY
+
+u16 GetPersistentEncounterId(u16 map, u8 variant)
+{
+    for (u32 i = 0; i < ARRAY_COUNT(sEncounterIdentities); i++)
+        if (sEncounterIdentities[i].map == map && sEncounterIdentities[i].variant == variant)
+            return sEncounterIdentities[i].id;
+    return ENCOUNTER_ID_NONE;
+}
+
+u16 GetCurrentMapEncounterId(void)
+{
+    u16 map = ((u8)gSaveBlock1Ptr->location.mapGroup << 8) | (u8)gSaveBlock1Ptr->location.mapNum;
+    u16 variant = 0;
+
+    if (GetCurrentMapWildMonHeaderId() == HEADER_NONE)
+        return ENCOUNTER_ID_NONE;
+    if (map == MAP_ALTERING_CAVE)
+    {
+        variant = VarGet(VAR_ALTERING_CAVE_WILD_SET);
+        if (variant >= NUM_ALTERING_CAVE_TABLES)
+            variant = 0;
+    }
+    return GetPersistentEncounterId(map, variant);
+}
+
 static const struct WildPokemon sWildFeebas = {20, 25, SPECIES_FEEBAS};
 
 static const u16 sRoute119WaterTileData[] =

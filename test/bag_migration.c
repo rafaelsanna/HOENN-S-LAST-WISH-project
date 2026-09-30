@@ -144,7 +144,7 @@ TEST("Medicine migration leaves both stacks unchanged if only part of the quanti
     EXPECT_EQ(GetBagItemQuantity(POCKET_MEDICINE, 55), MAX_BAG_ITEM_CAPACITY - 4);
 }
 
-TEST("Legacy bag migration assigns recovery items and vitamins directly to Medicine")
+TEST("Unrecognized bag layouts are preserved for the save manager to reject")
 {
     PrepareBag();
     memset(&gSaveBlock1Ptr->bagExpansion, 0xA5, sizeof(gSaveBlock1Ptr->bagExpansion));
@@ -156,34 +156,28 @@ TEST("Legacy bag migration assigns recovery items and vitamins directly to Medic
     MigrateBagExpansion();
 
     for (u32 i = 0; i < ARRAY_COUNT(sMovedMedicineItems); i++)
-        EXPECT_EQ(CountTotalItemQuantityInBag(sMovedMedicineItems[i]), i + 1);
-    EXPECT_EQ(GetBagItemId(POCKET_ITEMS, 0), ITEM_NUGGET);
-    EXPECT_EQ(GetBagItemQuantity(POCKET_ITEMS, 0), 3);
-    EXPECT_EQ(GetBagItemId(POCKET_ITEMS, 1), ITEM_NONE);
-    EXPECT_EQ(gSaveBlock1Ptr->bagExpansion.magic, BAG_EXPANSION_MAGIC);
-    EXPECT_EQ(gSaveBlock1Ptr->bagExpansion.version, BAG_EXPANSION_VERSION);
-    EXPECT_EQ(gSaveBlock1Ptr->bagExpansion.size, sizeof(struct BagExpansionSave));
+    {
+        EXPECT_EQ(GetBagItemId(POCKET_ITEMS, i), sMovedMedicineItems[i]);
+        EXPECT_EQ(GetBagItemQuantity(POCKET_ITEMS, i), i + 1);
+    }
+    EXPECT_EQ(GetBagItemId(POCKET_ITEMS, 20), ITEM_NUGGET);
+    EXPECT_EQ(GetBagItemQuantity(POCKET_ITEMS, 20), 3);
+    for (u32 i = 0; i < sizeof(gSaveBlock1Ptr->bagExpansion); i++)
+        EXPECT_EQ(((u8 *)&gSaveBlock1Ptr->bagExpansion)[i], 0xA5);
 }
 
-TEST("Legacy migration preserves medicine stacks beyond the pocket capacity")
+TEST("Unsupported bag versions cannot clear existing expanded pockets")
 {
     PrepareBag();
-    gSaveBlock1Ptr->bagExpansion.magic = 0;
-    for (u32 i = 0; i < BAG_LEGACY_ITEMS_COUNT; i++)
-        BagPocket_SetSlotItemIdAndCount(&gBagPockets[POCKET_ITEMS], i, ITEM_POTION, MAX_BAG_ITEM_CAPACITY);
+    gSaveBlock1Ptr->bagExpansion.version = BAG_EXPANSION_VERSION + 1;
+    BagPocket_SetSlotItemIdAndCount(&gBagPockets[POCKET_ITEMS], BAG_ITEMS_COUNT - 1, ITEM_NUGGET, 15);
+    BagPocket_SetSlotItemIdAndCount(&gBagPockets[POCKET_MEDICINE], BAG_MEDICINE_COUNT - 1, ITEM_POTION, 27);
 
     MigrateBagExpansion();
     MigrateBagExpansion();
 
-    for (u32 i = 0; i < BAG_MEDICINE_COUNT; i++)
-    {
-        EXPECT_EQ(GetBagItemId(POCKET_MEDICINE, i), ITEM_POTION);
-        EXPECT_EQ(GetBagItemQuantity(POCKET_MEDICINE, i), MAX_BAG_ITEM_CAPACITY);
-    }
-    for (u32 i = 0; i < BAG_LEGACY_ITEMS_COUNT - BAG_MEDICINE_COUNT; i++)
-    {
-        EXPECT_EQ(GetBagItemId(POCKET_ITEMS, i), ITEM_POTION);
-        EXPECT_EQ(GetBagItemQuantity(POCKET_ITEMS, i), MAX_BAG_ITEM_CAPACITY);
-    }
-    EXPECT_EQ(GetBagItemId(POCKET_ITEMS, BAG_LEGACY_ITEMS_COUNT - BAG_MEDICINE_COUNT), ITEM_NONE);
+    EXPECT_EQ(GetBagItemId(POCKET_ITEMS, BAG_ITEMS_COUNT - 1), ITEM_NUGGET);
+    EXPECT_EQ(GetBagItemQuantity(POCKET_ITEMS, BAG_ITEMS_COUNT - 1), 15);
+    EXPECT_EQ(GetBagItemQuantity(POCKET_MEDICINE, BAG_MEDICINE_COUNT - 1), 27);
+    EXPECT_EQ(gSaveBlock1Ptr->bagExpansion.version, BAG_EXPANSION_VERSION + 1);
 }

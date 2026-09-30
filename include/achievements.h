@@ -41,7 +41,13 @@ u16 Achievement_CountUnlocked(void);
 void GetCompletedAchievementsCount(void);
 void Debug_UnlockNextAchievement(void);
 bool32 Achievement_IsUnlocked(enum AchievementId id);
-void Achievement_EnsureSaveInitialized(void);
+u16 WishForm_GetIdForSpecies(u16 species);
+bool32 WishForm_IsRegistered(bool32 custom, u16 id);
+bool32 WishForm_Register(bool32 custom, u16 id);
+u16 ShadowPokemon_GetIdForSpecies(u16 species);
+// IDs 0 and 1 share the existing joint Nightmare encounter's story state.
+bool32 ShadowPokemon_IsDefeated(u16 id);
+bool32 ShadowPokemon_SetDefeated(u16 id, bool32 defeated);
 u32 Achievement_GetCounter(enum AchievementCounter counter);
 u32 Achievement_GetProgress(const struct Achievement *achievement);
 u32 Achievement_GetTarget(const struct Achievement *achievement);

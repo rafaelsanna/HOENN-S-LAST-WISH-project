@@ -13,19 +13,22 @@
 #include "menu.h"
 #include "save.h"
 #include "starter_choose.h"
-#include "gba/flash_internal.h"
 #include "text_window.h"
 #include "constants/rgb.h"
 
 #define MSG_WIN_TOP 12
 #define CLOCK_WIN_TOP (MSG_WIN_TOP - 4)
+#define SAVE_TEXT_WIN_WIDTH 28
+#define SAVE_TEXT_WIN_HEIGHT 6
+#define SAVE_CLOCK_WIN_WIDTH 2
+#define SAVE_CLOCK_WIN_HEIGHT 2
+#define SAVE_WINDOW_TILE_BYTES 32
 
 extern const u8 gText_SaveFailedCheckingBackup[];
-extern const u8 gText_BackupMemoryDamaged[];
-extern const u8 gText_CheckCompleted[];
 extern const u8 gText_SaveCompleteGameCannotContinue[];
 extern const u8 gText_SaveCompletePressA[];
-extern const u8 gText_GamePlayCannotBeContinued[];
+
+static const u8 sText_SaveRetryFailed[] = _("Saving could not be completed.\nNo previous save was erased.\nPress A to return to the title.");
 
 // sClockInfo enum
 enum
@@ -42,6 +45,7 @@ enum
 };
 
 static EWRAM_DATA u16 sSaveFailedType = {0};
+static EWRAM_DATA u8 sSaveRetryCount = 0;
 static EWRAM_DATA u16 sClockInfo[2] = {0};
 static EWRAM_DATA u8 sWindowIds[2] = {0};
 
@@ -101,8 +105,8 @@ static const struct WindowTemplate sWindowTemplate_Text[] =
         .bg = 0,
         .tilemapLeft = 1,
         .tilemapTop = 13,
-        .width = 28,
-        .height = 6,
+        .width = SAVE_TEXT_WIN_WIDTH,
+        .height = SAVE_TEXT_WIN_HEIGHT,
         .paletteNum = 15,
         .baseBlock = 1,
     }
@@ -114,8 +118,8 @@ static const struct WindowTemplate sWindowTemplate_Clock[] =
         .bg = 0,
         .tilemapLeft = 14,
         .tilemapTop = 9,
-        .width = 2,
-        .height = 2,
+        .width = SAVE_CLOCK_WIN_WIDTH,
+        .height = SAVE_CLOCK_WIN_HEIGHT,
         .paletteNum = 15,
         .baseBlock = 169,
     }
@@ -137,13 +141,10 @@ static const u8 sSaveFailedClockPal[] = INCBIN_U8("graphics/misc/clock_small.gba
 static const u32 sSaveFailedClockGfx[] = INCBIN_U32("graphics/misc/clock_small.4bpp.smol");
 
 static void CB2_SaveFailedScreen(void);
-static void CB2_WipeSave(void);
-static void CB2_GameplayCannotBeContinued(void);
+static void CB2_RetrySave(void);
 static void CB2_FadeAndReturnToTitleScreen(void);
 static void CB2_ReturnToTitleScreen(void);
 static void VBlankCB_UpdateClockGraphics(void);
-static bool8 VerifySectorWipe(u16 sector);
-static bool8 WipeSectors(u32);
 
 // Although this is a general text printer, it's only used in this file.
 static void SaveFailedScreenTextPrint(const u8 *text, u8 x, u8 y)
@@ -160,6 +161,7 @@ void DoSaveFailedScreen(u8 saveType)
 {
     SetMainCallback2(CB2_SaveFailedScreen);
     sSaveFailedType = saveType;
+    sSaveRetryCount = 0;
     sClockInfo[CLOCK_RUNNING] = FALSE;
     sClockInfo[DEBUG_TIMER] = 0;
     sWindowIds[TEXT_WIN_ID] = 0;
@@ -176,11 +178,69 @@ static void VBlankCB(void)
 struct SaveFailedBuffers
 {
     ALIGNED(4) u8 tilemapBuffer[BG_SCREEN_SIZE];
-    ALIGNED(4) u8 window1TileData[0x200];
-    ALIGNED(4) u8 window2TileData[0x200];
+    ALIGNED(4) u8 window1TileData[SAVE_TEXT_WIN_WIDTH * SAVE_TEXT_WIN_HEIGHT * SAVE_WINDOW_TILE_BYTES];
+    ALIGNED(4) u8 window2TileData[SAVE_CLOCK_WIN_WIDTH * SAVE_CLOCK_WIN_HEIGHT * SAVE_WINDOW_TILE_BYTES];
 };
 
 static EWRAM_DATA struct SaveFailedBuffers *sSaveFailedBuffers = NULL;
+
+#if TESTING
+// Exercise the real window fill primitive without entering the recovery UI.
+// The adjacent tilemap/other-window bytes are internal canaries. A full fill's
+// worth of trailing guard safely contains even the historical undersized text
+// buffer overflow, so a regression reports failure rather than damaging heap.
+bool32 SaveFailedScreen_TestWindowBufferBounds(bool32 clockWindow, u8 fillValue)
+{
+    struct GuardedSaveFailedBuffers
+    {
+        u32 before[8];
+        struct SaveFailedBuffers buffers;
+        u8 after[(SAVE_TEXT_WIN_WIDTH * SAVE_TEXT_WIN_HEIGHT
+                + SAVE_CLOCK_WIN_WIDTH * SAVE_CLOCK_WIN_HEIGHT) * SAVE_WINDOW_TILE_BYTES];
+    };
+    struct GuardedSaveFailedBuffers *guarded = Alloc(sizeof(*guarded));
+    struct Window savedWindow = gWindows[0];
+    u8 canary = fillValue ^ 0xFF;
+    u8 *target;
+    u32 targetSize;
+    u32 targetOffset;
+    u32 i;
+    bool32 valid = TRUE;
+
+    if (guarded == NULL)
+        return FALSE;
+
+    memset(guarded, canary, sizeof(*guarded));
+    if (clockWindow)
+    {
+        target = guarded->buffers.window2TileData;
+        targetSize = sizeof(guarded->buffers.window2TileData);
+        gWindows[0].window = sWindowTemplate_Clock[0];
+    }
+    else
+    {
+        target = guarded->buffers.window1TileData;
+        targetSize = sizeof(guarded->buffers.window1TileData);
+        gWindows[0].window = sWindowTemplate_Text[0];
+    }
+    targetOffset = target - (u8 *)guarded;
+    gWindows[0].tileData = target;
+    FillWindowPixelBuffer(0, fillValue);
+    gWindows[0] = savedWindow;
+
+    for (i = 0; i < sizeof(*guarded); i++)
+    {
+        u8 expected = i >= targetOffset && i < targetOffset + targetSize ? fillValue : canary;
+        if (((u8 *)guarded)[i] != expected)
+        {
+            valid = FALSE;
+            break;
+        }
+    }
+    Free(guarded);
+    return valid;
+}
+#endif
 
 static void CB2_SaveFailedScreen(void)
 {
@@ -190,6 +250,13 @@ static void CB2_SaveFailedScreen(void)
     default:
         SetVBlankCallback(NULL);
         sSaveFailedBuffers = Alloc(sizeof(*sSaveFailedBuffers));
+        if (sSaveFailedBuffers == NULL)
+        {
+            // No flash is changed here. Reboot to the last committed bundle
+            // rather than dereferencing a failed recovery-screen allocation.
+            DoSoftReset();
+            return;
+        }
         SetGpuReg(REG_OFFSET_DISPCNT, 0);
         SetGpuReg(REG_OFFSET_BG3CNT, 0);
         SetGpuReg(REG_OFFSET_BG2CNT, 0);
@@ -217,9 +284,9 @@ static void CB2_SaveFailedScreen(void)
         LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
         InitWindows(sDummyWindowTemplate);
         sWindowIds[TEXT_WIN_ID] = AddWindowWithoutTileMap(sWindowTemplate_Text);
-        SetWindowAttribute(sWindowIds[TEXT_WIN_ID], 7, (u32)&sSaveFailedBuffers->window1TileData);
+        SetWindowAttribute(sWindowIds[TEXT_WIN_ID], WINDOW_TILE_DATA, (u32)&sSaveFailedBuffers->window1TileData);
         sWindowIds[CLOCK_WIN_ID] = AddWindowWithoutTileMap(sWindowTemplate_Clock);
-        SetWindowAttribute(sWindowIds[CLOCK_WIN_ID], 7, (u32)&sSaveFailedBuffers->window2TileData);
+        SetWindowAttribute(sWindowIds[CLOCK_WIN_ID], WINDOW_TILE_DATA, (u32)&sSaveFailedBuffers->window2TileData);
         DeactivateAllTextPrinters();
         ResetSpriteData();
         ResetTasks();
@@ -248,69 +315,36 @@ static void CB2_SaveFailedScreen(void)
     case 1:
         if (!UpdatePaletteFade())
         {
-            SetMainCallback2(CB2_WipeSave);
+            SetMainCallback2(CB2_RetrySave);
             SetVBlankCallback(VBlankCB_UpdateClockGraphics);
         }
         break;
     }
 }
 
-static void CB2_WipeSave(void)
+static void CB2_RetrySave(void)
 {
-    u8 wipeTries = 0;
-
     sClockInfo[CLOCK_RUNNING] = TRUE;
 
-    while (gDamagedSaveSectors != 0 && wipeTries < 3)
-    {
-        if (WipeSectors(gDamagedSaveSectors))
-        {
-            FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-            SaveFailedScreenTextPrint(gText_BackupMemoryDamaged, 1, 0);
-            SetMainCallback2(CB2_GameplayCannotBeContinued);
-            return;
-        }
-
-        FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-        SaveFailedScreenTextPrint(gText_CheckCompleted, 1, 0);
-        HandleSavingData(sSaveFailedType);
-
-        if (gDamagedSaveSectors != 0)
-        {
-            FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-            SaveFailedScreenTextPrint(gText_SaveFailedCheckingBackup, 1, 0);
-        }
-
-        wipeTries++;
-    }
-
-    if (wipeTries == 3)
+    // Only the transaction manager may choose or erase a destination bank.
+    // Retrying the complete transaction preserves the previous committed
+    // slot, extension and Hall of Fame. Never wipe sectors from this screen.
+    // Check the result, not the damaged-sector bitmap: allocation or schema
+    // failures can occur without a damaged flash sector.
+    if (HandleSavingData(sSaveFailedType) == SAVE_STATUS_OK)
     {
         FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-        SaveFailedScreenTextPrint(gText_BackupMemoryDamaged, 1, 0);
-    }
-    else
-    {
-        FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-
         if (gGameContinueCallback == NULL)
             SaveFailedScreenTextPrint(gText_SaveCompleteGameCannotContinue, 1, 0);
         else
             SaveFailedScreenTextPrint(gText_SaveCompletePressA, 1, 0);
+        SetMainCallback2(CB2_FadeAndReturnToTitleScreen);
     }
-
-    SetMainCallback2(CB2_FadeAndReturnToTitleScreen);
-}
-
-static void CB2_GameplayCannotBeContinued(void)
-{
-    sClockInfo[CLOCK_RUNNING] = FALSE;
-
-    if (JOY_NEW(A_BUTTON))
+    else if (++sSaveRetryCount >= 3)
     {
         FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-        SaveFailedScreenTextPrint(gText_GamePlayCannotBeContinued, 1, 0);
-        SetVBlankCallback(VBlankCB);
+        SaveFailedScreenTextPrint(sText_SaveRetryFailed, 1, 0);
+        gGameContinueCallback = NULL;
         SetMainCallback2(CB2_FadeAndReturnToTitleScreen);
     }
 }
@@ -331,6 +365,11 @@ static void CB2_ReturnToTitleScreen(void)
 {
     if (!UpdatePaletteFade())
     {
+        // These pointers refer inside the single allocation, not to separate
+        // window allocations. Detach them before the next screen frees windows.
+        SetWindowAttribute(sWindowIds[TEXT_WIN_ID], WINDOW_TILE_DATA, 0);
+        SetWindowAttribute(sWindowIds[CLOCK_WIN_ID], WINDOW_TILE_DATA, 0);
+        SetBgTilemapBuffer(0, NULL);
         TRY_FREE_AND_SET_NULL(sSaveFailedBuffers);
         if (gGameContinueCallback == NULL) // no callback exists, so do a soft reset.
         {
@@ -366,52 +405,6 @@ static void VBlankCB_UpdateClockGraphics(void)
 
     if (sClockInfo[DEBUG_TIMER])
         sClockInfo[DEBUG_TIMER]--;
-}
-
-static bool8 VerifySectorWipe(u16 sector)
-{
-    u32 *ptr = (u32 *)&gSaveDataBuffer;
-    u16 i;
-
-    ReadFlash(sector, 0, (u8 *)ptr, SECTOR_SIZE);
-
-    // 1/4 because ptr is u32
-    for (i = 0; i < SECTOR_SIZE / 4; i++, ptr++)
-        if (*ptr)
-            return TRUE; // Sector has nonzero data, failed
-
-    return FALSE;
-}
-
-static bool8 WipeSector(u16 sector)
-{
-    u16 i, j;
-    bool8 failed = TRUE;
-
-    // Attempt to wipe sector with an arbitrary attempt limit of 130
-    for (i = 0; failed && i < 130; i++)
-    {
-        for (j = 0; j < SECTOR_SIZE; j++)
-            ProgramFlashByte(sector, j, 0);
-
-        failed = VerifySectorWipe(sector);
-    }
-
-    return failed;
-}
-
-static bool8 WipeSectors(u32 sectorBits)
-{
-    u16 i;
-
-    for (i = 0; i < SECTORS_COUNT; i++)
-        if ((sectorBits & (1 << i)) && !WipeSector(i))
-            sectorBits &= ~(1 << i);
-
-    if (sectorBits == 0)
-        return FALSE;
-    else
-        return TRUE;
 }
 
 void CB2_FlashNotDetectedScreen(void)

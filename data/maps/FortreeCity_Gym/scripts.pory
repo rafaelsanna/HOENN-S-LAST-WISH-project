@@ -48,6 +48,7 @@ FortreeCity_Gym_Movement_HideFallingPlayer:
 FortreeCity_Gym_EventScript_Winona::
     lock
     faceplayer
+    goto_if_set FLAG_DEFEATED_FORTREE_GYM, FortreeCity_Gym_EventScript_WinonaAfterBattle
     getdifficulty VAR_RESULT
     goto_if_eq VAR_RESULT, 1, FortreeCity_Gym_EventScript_WinonaHard
 
@@ -61,9 +62,10 @@ FortreeCity_Gym_EventScript_WinonaHard::
     // Fall through to AfterBattle
 
 FortreeCity_Gym_EventScript_WinonaAfterBattle::
+    goto_if_unset FLAG_RECEIVED_TM_AERIAL_ACE, FortreeCity_Gym_EventScript_GiveAerialAce2
+    setorcopyvar VAR_TRAINER_BATTLE_OPPONENT_A, TRAINER_WINONA_1
     specialvar VAR_RESULT, ShouldTryRematchBattle
     goto_if_eq VAR_RESULT, TRUE, FortreeCity_Gym_EventScript_WinonaRematch
-    goto_if_unset FLAG_RECEIVED_TM_AERIAL_ACE, FortreeCity_Gym_EventScript_GiveAerialAce2
     msgbox FortreeCity_Gym_Text_WinonaPostBattle, MSGBOX_DEFAULT
     release
     end
