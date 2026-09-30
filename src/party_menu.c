@@ -539,9 +539,7 @@ static void HideBasicPartyThemeChrome(void);
 static void ClearBasicPartyMessageFooterRemainder(u8 windowId);
 static void DrawBasicPartyThemeChrome(void);
 static void CB2_InitPartyMenu(void);
-static void CB2_ReloadPartyMenu(void);
 static bool8 ShowPartyMenu(void);
-static bool8 ReloadPartyMenu(void);
 static void SetPartyMonsAllowedInMinigame(void);
 static void ExitPartyMenu(void);
 static bool8 AllocPartyMenuBg(void);
@@ -994,18 +992,6 @@ static void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCurs
     }
 }
 
-static void RefreshPartyMenu(void) //Refreshes the party menu without restarting tasks
-{
-    u16 i;
-    for (i = 0; i < ARRAY_COUNT(sPartyMenuInternal->data); i++)
-        sPartyMenuInternal->data[i] = 0;
-    for (i = 0; i < ARRAY_COUNT(sPartyMenuInternal->windowId); i++)
-        sPartyMenuInternal->windowId[i] = WINDOW_NONE;
-    gTextFlags.autoScroll = 0;
-    CalculatePlayerPartyCount();
-    SetMainCallback2(CB2_ReloadPartyMenu);
-}
-
 static void CB2_UpdatePartyMenu(void)
 {
     RunTasks();
@@ -1027,15 +1013,6 @@ static void CB2_InitPartyMenu(void)
     while (TRUE)
     {
         if (MenuHelpers_ShouldWaitForLinkRecv() == TRUE || ShowPartyMenu() == TRUE || MenuHelpers_IsLinkActive() == TRUE)
-            break;
-    }
-}
-
-static void CB2_ReloadPartyMenu(void)
-{
-    while (TRUE)
-    {
-        if (MenuHelpers_ShouldWaitForLinkRecv() == TRUE || ReloadPartyMenu() == TRUE || MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -1156,105 +1133,6 @@ case 11:
         break;
     case 22:
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
-        gMain.state++;
-        break;
-    default:
-        SetVBlankCallback(VBlankCB_PartyMenu);
-        SetMainCallback2(CB2_UpdatePartyMenu);
-        return TRUE;
-    }
-    return FALSE;
-}
-
-static bool8 ReloadPartyMenu(void)
-{
-    switch (gMain.state)
-    {
-    case 0:
-        SetVBlankHBlankCallbacksToNull();
-        ClearScheduledBgCopiesToVram();
-        gMain.state++;
-        break;
-    case 1:
-        ScanlineEffect_Stop();
-        gMain.state++;
-        break;
-    case 2:
-        ResetPaletteFade();
-        gPaletteFade.bufferTransferDisabled = TRUE;
-        gMain.state++;
-        break;
-    case 3:
-        ResetSpriteData();
-        gMain.state++;
-        break;
-    case 4:
-        FreeAllSpritePalettes();
-        gMain.state++;
-        break;
-    case 5:
-        SetPartyMonsAllowedInMinigame();
-        gMain.state++;
-        break;
-    case 6:
-        sPartyMenuInternal->data[0] = 0;
-        gMain.state++;
-        break;
-    case 7:
-        LoadPartyMenuWindows();
-        gMain.state++;
-        break;
-    case 8:
-        LoadPartyMenuBoxes(gPartyMenu.layout);
-        sPartyMenuInternal->data[0] = 0;
-        gMain.state++;
-        break;
-    case 9:
-        LoadHeldItemIcons();
-        gMain.state++;
-        break;
-    case 10:
-        LoadPartyMenuPokeballGfx();
-        gMain.state++;
-        break;
-    case 11:
-        LoadPartyMenuAilmentGfx();
-        gMain.state++;
-        break;
-    case 12:
-        LoadMonIconPalettes();
-        LoadPartyShinySparkleGfx();
-        gMain.state++;
-        break;
-    case 13:
-        if (CreatePartyMonSpritesLoop())
-        {
-            sPartyMenuInternal->data[0] = 0;
-            gMain.state++;
-        }
-        break;
-    case 14:
-        if (RenderPartyMenuBoxes())
-        {
-            sPartyMenuInternal->data[0] = 0;
-            gMain.state++;
-        }
-        break;
-    case 15:
-        CreateCancelConfirmPokeballSprites();
-        gMain.state++;
-        break;
-    case 16:
-        CreateCancelConfirmWindows(sPartyMenuInternal->chooseHalf);
-        gMain.state++;
-        break;
-    case 17:
-        BlendPalettes(PALETTES_ALL, 16, RGB_WHITEALPHA);
-        gPaletteFade.bufferTransferDisabled = FALSE;
-        gMain.state++;
-        break;
-    case 18:
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_WHITEALPHA);
         gMain.state++;
         break;
     default:
@@ -8241,14 +8119,15 @@ void ItemUseCB_EvolutionStone(u8 taskId, TaskFunc task)
     }
 }
 
-#define FUSE_MON        1
-#define UNFUSE_MON      2
-#define SECOND_FUSE_MON 3
-
 #define tState          data[0]
 #define tTargetSpecies  data[1]
 #define tAnimWait       data[2]
 #define tNextFunc       3
+
+#if P_FUSION_FORMS
+#define FUSE_MON        1
+#define UNFUSE_MON      2
+#define SECOND_FUSE_MON 3
 
 #define fusionType           data[6]
 #define firstFusion          data[7]
@@ -8262,7 +8141,6 @@ void ItemUseCB_EvolutionStone(u8 taskId, TaskFunc task)
 #define storageIndex         data[15]
 
 static void Task_TryItemUseFusionChange(u8 taskId);
-static void SpriteCB_FormChangeIconMosaic(struct Sprite *sprite);
 
 u8 IsFusionMon(u16 species)
 {
@@ -8281,6 +8159,9 @@ u8 IsFusionMon(u16 species)
     }
     return FALSE;
 }
+#endif //P_FUSION_FORMS
+
+static void SpriteCB_FormChangeIconMosaic(struct Sprite *sprite);
 
 void FormChangeTeachMove(u8 taskId, u32 move, u32 slot)
 {
@@ -8341,6 +8222,7 @@ bool32 DoesMonHaveAnyMoves(struct Pokemon *mon)
     return FALSE;
 }
 
+#if P_FUSION_FORMS
 bool32 TryItemUseFusionChange(u8 taskId, TaskFunc task)
 {
     u16 targetSpecies = gTasks[taskId].fusionResult;
@@ -8708,6 +8590,7 @@ void ItemUseCB_Fusion(u8 taskId, TaskFunc taskFunc)
 #undef moveToLearn
 #undef forgetMove
 #undef storageIndex
+#endif //P_FUSION_FORMS
 
 static void SpriteCB_FormChangeIconMosaic(struct Sprite *sprite)
 {

@@ -7,7 +7,40 @@
 #define IN_BOX_COLUMNS          6 // Number of columns, 5 Pokémon per column
 #define IN_BOX_COUNT            (IN_BOX_ROWS * IN_BOX_COLUMNS)
 #define BOX_NAME_LENGTH         8
-#define MAX_FUSION_STORAGE      4
+
+// 0.9 save ABI: all nine storage sectors are part of the fixed image.
+// Fusion storage was deliberately removed; HLW does not support fusion forms.
+#define POKEMON_STORAGE_SAVE_SIZE                    0x8B80
+#define POKEMON_STORAGE_METADATA_SIZE                64
+#define POKEMON_STORAGE_HALL_OF_FAME_TAIL_SIZE       288
+#define POKEMON_STORAGE_EXTRA_ROAMERS_SIZE            196
+#define POKEMON_STORAGE_BAG_SUPPLEMENT_SIZE           336
+#define POKEMON_STORAGE_FUTURE_RESERVED_SIZE         1084
+
+#define HLW_SAVE_METADATA_MAGIC                      0x4D574C48 // "HLWM"
+#define HLW_SAVE_METADATA_SIZE                       64
+
+struct HlwSaveMetadata
+{
+    u32 magic;
+    u16 schemaVersion;
+    u16 size;
+    u8 saveUuid[16];
+    u8 reserved[40];
+};
+
+// Fixed 0.9 overflow segments for pockets that do not fit in SaveBlock1's
+// legacy bag or its Mystery Gift replacement. This structure owns the entire
+// 336-byte storage range; append-only changes may consume reserved bytes.
+struct HlwBagSupplement
+{
+    struct ItemSlot TMsHMsExtra[BAG_TMHM_SUPPLEMENT_COUNT];
+    struct ItemSlot keyItemsExtra[BAG_KEYITEMS_EXTRA_COUNT];
+    struct ItemSlot berriesExtra[BAG_BERRIES_EXTRA_COUNT];
+    u8 reserved[4];
+};
+
+STATIC_ASSERT(sizeof(struct HlwBagSupplement) == POKEMON_STORAGE_BAG_SUPPLEMENT_SIZE, HlwBagSupplementSize);
 
 /*
             COLUMNS
@@ -21,10 +54,14 @@ ROWS        0   1   2   3   4   5
 struct PokemonStorage
 {
     /*0x0000*/ u8 currentBox;
-    /*0x0001*/ struct BoxPokemon boxes[TOTAL_BOXES_COUNT][IN_BOX_COUNT];
+    /*0x0004*/ struct BoxPokemon boxes[TOTAL_BOXES_COUNT][IN_BOX_COUNT];
     /*0x8344*/ u8 boxNames[TOTAL_BOXES_COUNT][BOX_NAME_LENGTH + 1];
     /*0x83C2*/ u8 boxWallpapers[TOTAL_BOXES_COUNT];
-    /*0x8432*/ struct Pokemon fusions[MAX_FUSION_STORAGE];
+    /*0x83D0*/ struct HlwSaveMetadata metadata;
+    /*0x8410*/ u8 hallOfFameTail[POKEMON_STORAGE_HALL_OF_FAME_TAIL_SIZE];
+    /*0x8530*/ u8 extraRoamers[POKEMON_STORAGE_EXTRA_ROAMERS_SIZE];
+    /*0x85F4*/ struct HlwBagSupplement bagSupplement;
+    /*0x8744*/ u8 futureReserved[POKEMON_STORAGE_FUTURE_RESERVED_SIZE];
 };
 
 extern struct PokemonStorage *gPokemonStoragePtr;

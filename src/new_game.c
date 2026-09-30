@@ -224,6 +224,7 @@ void NewGameInitData(void)
     InitSeedotSizeRecord();
     InitLotadSizeRecord();
     ResetPokemonStorageSystem();
+    ResetHlwSaveBlock4();
     
     // Communication and social systems
     InitEasyChatPhrases();

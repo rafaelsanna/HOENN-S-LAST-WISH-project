@@ -23,8 +23,12 @@
 // Save Slot 1: 0-13;  Save Slot 2: 14-27
 #define SECTOR_ID_HOF_1              28
 #define SECTOR_ID_HOF_2              29
-#define SECTOR_ID_TRAINER_HILL       30
-#define SECTOR_ID_RECORDED_BATTLE    31
+#define SECTOR_ID_HLW_EXTENSION_A    30
+#define SECTOR_ID_HLW_EXTENSION_B    31
+// Compatibility names for the retired APIs. These sectors now belong to the
+// mandatory HLW 0.9 save extension and must never be written independently.
+#define SECTOR_ID_TRAINER_HILL       SECTOR_ID_HLW_EXTENSION_A
+#define SECTOR_ID_RECORDED_BATTLE    SECTOR_ID_HLW_EXTENSION_B
 #define SECTORS_COUNT                32
 
 #define NUM_HOF_SECTORS 2
@@ -76,6 +80,57 @@ struct SaveSector
     u32 counter;
 }; // size is SECTOR_SIZE (0x1000)
 
+// HLW 0.9 save extension. One complete image is stored in sector 30 for normal
+// slot A and sector 31 for normal slot B. The exact layout is part of the
+// frozen 0.9 save ABI.
+#define HLW_SAVE_EXTENSION_MAGIC             0x45574C48 // "HLWE"
+#define HLW_SAVE_EXTENSION_COMPLETE_MARKER   0xC0DEC0DE
+#define HLW_SAVE_PHYSICAL_VERSION            1
+#define HLW_SAVE_SCHEMA_VERSION              1
+#define HLW_SAVE_EXTENSION_HEADER_SIZE       64
+#define HLW_SAVE_EXTENSION_PAYLOAD_SIZE      (SECTOR_SIZE - HLW_SAVE_EXTENSION_HEADER_SIZE)
+#define HLW_CUSTOM_FLAG_BYTES                256
+#define HLW_CUSTOM_VAR_COUNT                 256
+#define HLW_DEXNAV_SEARCH_BYTES              2048
+#define HLW_GROTTO_STATE_COUNT               64
+#define HLW_EXTENSION_RESERVED_BYTES         1088
+
+struct HlwSaveBlock4Payload
+{
+    u8 customFlags[HLW_CUSTOM_FLAG_BYTES];
+    u16 customVars[HLW_CUSTOM_VAR_COUNT];
+    u8 dexNavSearch[HLW_DEXNAV_SEARCH_BYTES];
+    u16 grottoStates[HLW_GROTTO_STATE_COUNT];
+    u8 futureReserved[HLW_EXTENSION_RESERVED_BYTES];
+};
+
+struct HlwSaveExtensionHeader
+{
+    u32 magic;
+    u16 physicalVersion;
+    u16 headerLength;
+    u16 schemaVersion;
+    u16 payloadLength;
+    u32 generation;
+    u8 saveUuid[16];
+    u32 mainImageCrc32;
+    u32 payloadCrc32;
+    u32 hallOfFameGeneration;
+    u32 hallOfFameCrc32;
+    u8 normalSlot;
+    u8 hallOfFameBank;
+    u16 flags;
+    u32 headerCrc32;
+    u32 reserved;
+    u32 completeMarker;
+};
+
+struct HlwSaveExtensionSector
+{
+    struct HlwSaveExtensionHeader header;
+    struct HlwSaveBlock4Payload payload;
+};
+
 #define SECTOR_SIGNATURE_OFFSET offsetof(struct SaveSector, signature)
 #define SECTOR_COUNTER_OFFSET   offsetof(struct SaveSector, counter)
 
@@ -91,9 +146,11 @@ extern void (*gGameContinueCallback)(void);
 extern struct SaveSectorLocation gRamSaveSectorLocations[];
 
 extern struct SaveSector gSaveDataBuffer;
+extern struct HlwSaveBlock4Payload gHlwSaveBlock4;
 
 void ClearSaveData(void);
 void Save_ResetSaveCounters(void);
+void ResetHlwSaveBlock4(void);
 u8 HandleSavingData(u8 saveType);
 u8 TrySavingData(u8 saveType);
 bool8 LinkFullSave_Init(void);

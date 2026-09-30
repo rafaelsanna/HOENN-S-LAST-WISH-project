@@ -1461,17 +1461,21 @@ extern const u32 gItemIcon_Gracidea[];
 extern const u16 gItemIconPalette_Gracidea[];
 extern const u32 gItemIcon_RevealGlass[];
 extern const u16 gItemIconPalette_RevealGlass[];
+#if P_FUSION_FORMS
 extern const u32 gItemIcon_DNASplicers[];
 extern const u16 gItemIconPalette_DNASplicers[];
+#endif //P_FUSION_FORMS
 extern const u32 gItemIcon_ZygardeCube[];
 extern const u16 gItemIconPalette_ZygardeCube[];
 extern const u32 gItemIcon_PrisonBottle[];
 extern const u16 gItemIconPalette_PrisonBottle[];
+#if P_FUSION_FORMS
 extern const u32 gItemIcon_NecrozmaFuser[];
 extern const u16 gItemIconPalette_NSolarizer[];
 extern const u16 gItemIconPalette_NLunarizer[];
 extern const u32 gItemIcon_ReinsOfUnity[];
 extern const u16 gItemIconPalette_ReinsOfUnity[];
+#endif //P_FUSION_FORMS
 // Battle Mechanic Key Items
 extern const u32 gItemIcon_MegaRing[];
 extern const u16 gItemIconPalette_MegaRing[];

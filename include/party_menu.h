@@ -76,7 +76,6 @@ void ItemUseCB_FormChange(u8 taskId, TaskFunc task);
 void ItemUseCB_FormChange_ConsumedOnUse(u8 taskId, TaskFunc task);
 void ItemUseCB_RotomCatalog(u8 taskId, TaskFunc task);
 void ItemUseCB_ZygardeCube(u8 taskId, TaskFunc task);
-void ItemUseCB_Fusion(u8 taskId, TaskFunc task);
 u8 GetItemEffectType(u16 item);
 void CB2_PartyMenuFromStartMenu(void);
 void CB2_ChooseMonToGiveItem(void);

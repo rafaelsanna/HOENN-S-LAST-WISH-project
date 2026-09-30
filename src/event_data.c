@@ -1,6 +1,7 @@
 #include "global.h"
 #include "event_data.h"
 #include "pokedex.h"
+#include "save.h"
 
 #define SPECIAL_FLAGS_SIZE  (NUM_SPECIAL_FLAGS / 8)  // 8 flags per byte
 #define TEMP_FLAGS_SIZE     (NUM_TEMP_FLAGS / 8)
@@ -51,6 +52,7 @@ const u16 gBadgeFlags[NUM_BADGES] =
 void InitEventData(void)
 {
     memset(gSaveBlock1Ptr->flags, 0, sizeof(gSaveBlock1Ptr->flags));
+    memset(gHlwSaveBlock4.customFlags, 0, sizeof(gHlwSaveBlock4.customFlags));
     memset(gSaveBlock1Ptr->vars, 0, sizeof(gSaveBlock1Ptr->vars));
     memset(sSpecialFlags, 0, sizeof(sSpecialFlags));
 }
@@ -221,14 +223,17 @@ u8 *GetFlagPointer(u16 id)
 {
     if (id == 0)
         return NULL;
-    else if (id < SPECIAL_FLAGS_START)
+    else if (id < FLAGS_COUNT)
         return &gSaveBlock1Ptr->flags[id / 8];
+    else if (id >= HLW_CUSTOM_FLAGS_START && id <= HLW_CUSTOM_FLAGS_END)
+        return &gHlwSaveBlock4.customFlags[(id - HLW_CUSTOM_FLAGS_START) / 8];
+    else if (id >= SPECIAL_FLAGS_START && id <= SPECIAL_FLAGS_END)
+        return &sSpecialFlags[(id - SPECIAL_FLAGS_START) / 8];
 #if TESTING
-    else if (id >= TESTING_FLAGS_START)
+    else if (id >= TESTING_FLAGS_START && id < TESTING_FLAGS_START + TEST_FLAGS_SIZE * 8)
         return &sTestFlags[(id - TESTING_FLAGS_START) / 8];
 #endif // TESTING
-    else
-        return &sSpecialFlags[(id - SPECIAL_FLAGS_START) / 8];
+    return NULL;
 }
 
 u8 FlagSet(u16 id)

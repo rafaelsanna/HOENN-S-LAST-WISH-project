@@ -229,7 +229,11 @@ struct NPCFollower
     u8 delayedState;
     struct NPCFollowerPadding padding;
     struct Coords16 log;
-    const u8 *script;
+    // Never persist a ROM pointer: link order can change its address between
+    // releases. Reconstruct the script from this stable identity instead.
+    u16 originMap;
+    u8 originLocalId;
+    u8 customScriptId;
     u16 flag;
     u16 graphicsId;
     u16 flags;
@@ -243,18 +247,35 @@ struct NPCFollower
 struct MiningWallSave
 {
     u16 day;
-    u16 count;
-    u32 attempts[MINING_WALL_ATTEMPT_COUNT];
+    u8 count;
+    u8 version;
+    u8 attemptedWalls[32]; // 256 stable wall IDs.
+    u8 sessionCounts[32];  // 32 stable mining locations.
 };
 
 struct AchievementSave
 {
-    u16 magic;
+    u32 magic;
+    u16 version;
+    u16 size;
     u8 unlocked[ACHIEVEMENT_UNLOCKED_BYTES];
+    u8 wishForms[ACH_WISH_FORM_BYTES];
+    u8 shadowPokemon[ACH_SHADOW_POKEMON_BYTES];
     u8 popupQueue[ACHIEVEMENT_POPUP_QUEUE_SIZE];
-    u32 counters[ACH_COUNTER_COUNT];
-    u8 padding[ACHIEVEMENT_SAVE_DATA_SIZE - (sizeof(u16) + ACHIEVEMENT_UNLOCKED_BYTES + ACHIEVEMENT_POPUP_QUEUE_SIZE + sizeof(u32) * ACH_COUNTER_COUNT)];
+    u8 gameCornerMask;
+    u32 counters[ACHIEVEMENT_SAVED_COUNTERS];
+    u8 reserved[ACHIEVEMENT_SAVE_DATA_SIZE
+                - sizeof(u32) - sizeof(u16) * 2
+                - ACHIEVEMENT_UNLOCKED_BYTES
+                - ACH_WISH_FORM_BYTES
+                - ACH_SHADOW_POKEMON_BYTES
+                - ACHIEVEMENT_POPUP_QUEUE_SIZE
+                - sizeof(u8)
+                - sizeof(u32) * ACHIEVEMENT_SAVED_COUNTERS];
 };
+
+STATIC_ASSERT(sizeof(struct MiningWallSave) == 68, MiningWallSaveSize);
+STATIC_ASSERT(sizeof(struct AchievementSave) == ACHIEVEMENT_SAVE_DATA_SIZE, AchievementSaveSize);
 
 struct HiddenGrottoContent
 {
@@ -262,24 +283,56 @@ struct HiddenGrottoContent
     u16 id;
 };
 
+#define HLW_SAVE_BLOCK3_SIZE                  1624
+#define HLW_SAVE_BLOCK3_MAGIC                 0x33424C48 // "HLB3"
+#define HLW_SAVE_BLOCK3_VERSION               1
+#define HLW_TRAINER_FLAG_COUNT                2048
+#define HLW_TRAINER_FLAG_BYTES                (HLW_TRAINER_FLAG_COUNT / 8)
+#define HLW_DEX_FLAG_BYTES                    192
+#define HLW_RELEASED_SPECIES_FLAG_BYTES       256
+#define HLW_ITEM_SEEN_FLAG_BYTES              128
+
+struct SaveBlock3Header
+{
+    u32 magic;
+    u16 version;
+    u16 size;
+    u8 reserved[8];
+};
+
+// Frozen 0.9 striped save block. Fields are deliberately fixed-capacity and
+// must not depend on NUM_SPECIES, ITEMS_COUNT, or the number of trainers.
 struct SaveBlock3
 {
-#if OW_USE_FAKE_RTC
+    struct SaveBlock3Header header;
     struct SiiRtcInfo fakeRTC;
-#endif
-#if FNPC_ENABLE_NPC_FOLLOWERS
     struct NPCFollower NPCfollower;
-#endif
-#if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_FIRST_TIME
-    u8 itemFlags[ITEM_FLAGS_COUNT];
-#endif
-#if USE_DEXNAV_SEARCH_LEVELS == TRUE
-    u8 dexNavSearchLevels[NUM_SPECIES];
-#endif
     u8 dexNavChain;
-    u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES];
     u8 followerIndex;
+    u8 controlReserved[2];
+    u8 trainerFlags[HLW_TRAINER_FLAG_BYTES];
+    u8 dexSeen[HLW_DEX_FLAG_BYTES];
+    u8 dexCaught[HLW_DEX_FLAG_BYTES];
+    u8 nuzlockeReleasedSpeciesFlags[HLW_RELEASED_SPECIES_FLAG_BYTES];
+    u8 nuzlockeWildHeaderFlags[NUZLOCKE_WILD_HEADER_FLAG_BYTES];
+    struct AchievementSave achievements;
+    struct MiningWallSave miningWalls;
+    u8 itemFlags[HLW_ITEM_SEEN_FLAG_BYTES];
+    u8 futureReserved[HLW_SAVE_BLOCK3_SIZE
+                    - sizeof(struct SaveBlock3Header)
+                    - sizeof(struct SiiRtcInfo)
+                    - sizeof(struct NPCFollower)
+                    - 4
+                    - HLW_TRAINER_FLAG_BYTES
+                    - HLW_DEX_FLAG_BYTES * 2
+                    - HLW_RELEASED_SPECIES_FLAG_BYTES
+                    - NUZLOCKE_WILD_HEADER_FLAG_BYTES
+                    - sizeof(struct AchievementSave)
+                    - sizeof(struct MiningWallSave)
+                    - HLW_ITEM_SEEN_FLAG_BYTES];
 };
+
+STATIC_ASSERT(sizeof(struct SaveBlock3) == HLW_SAVE_BLOCK3_SIZE, SaveBlock3AbiSize);
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;
 
@@ -1088,14 +1141,14 @@ struct ExternalEventFlags
 struct LegacyBag
 {
     struct ItemSlot items[BAG_LEGACY_ITEMS_COUNT];
-    struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
+    struct ItemSlot keyItems[BAG_LEGACY_KEYITEMS_COUNT];
     struct ItemSlot pokeBalls[BAG_LEGACY_POKEBALLS_COUNT];
     struct ItemSlot TMsHMs[BAG_LEGACY_TMHM_COUNT];
-    struct ItemSlot berries[BAG_BERRIES_COUNT];
+    struct ItemSlot berries[BAG_LEGACY_BERRIES_COUNT];
 };
 
 #define BAG_EXPANSION_MAGIC 0x42414758
-#define BAG_EXPANSION_VERSION 1
+#define BAG_EXPANSION_VERSION 2
 
 // This occupies the former Mystery Gift save range. Keeping the total size
 // unchanged allows saves from the previous layout to be loaded safely.
@@ -1107,12 +1160,12 @@ struct BagExpansionSave
     struct ItemSlot itemsExtra[BAG_ITEMS_EXTRA_COUNT];
     struct ItemSlot medicine[BAG_MEDICINE_COUNT];
     struct ItemSlot pokeBallsExtra[BAG_POKEBALLS_EXTRA_COUNT];
-    struct ItemSlot TMsHMsExtra[BAG_TMHM_EXTRA_COUNT];
+    struct ItemSlot TMsHMsExtra[BAG_TMHM_EXPANSION_COUNT];
     u8 reserved[sizeof(struct MysteryGiftSave) - 8
                 - sizeof(struct ItemSlot) * (BAG_ITEMS_EXTRA_COUNT
                                             + BAG_MEDICINE_COUNT
                                             + BAG_POKEBALLS_EXTRA_COUNT
-                                            + BAG_TMHM_EXTRA_COUNT)];
+                                            + BAG_TMHM_EXPANSION_COUNT)];
 };
 
 STATIC_ASSERT(sizeof(struct BagExpansionSave) == sizeof(struct MysteryGiftSave), BagExpansionSaveSize);
@@ -1269,8 +1322,6 @@ struct SaveBlock1
 #else
     /*0x322C*/ struct BagExpansionSave bagExpansion;
 #endif //FREE_MYSTERY_GIFT
-    /*0x3???*/ u8 dexSeen[NUM_DEX_FLAG_BYTES];
-    /*0x3???*/ u8 dexCaught[NUM_DEX_FLAG_BYTES];
 #if FREE_TRAINER_HILL == FALSE
     /*0x3???*/ u32 trainerHillTimes[NUM_TRAINER_HILL_MODES];
 #endif //FREE_TRAINER_HILL
@@ -1289,9 +1340,6 @@ struct SaveBlock1
     /*0x3???*/ struct TrainerHillSave trainerHill;
 #endif //FREE_TRAINER_HILL
     /*0x3???*/ struct WaldaPhrase waldaPhrase;
-    /*0x3???*/ u8 nuzlockeReleasedSpeciesFlags[ROUND_BITS_TO_BYTES(NUM_SPECIES)]; // Tracks species released under Nuzlocke.
-    struct MiningWallSave miningWalls;
-    struct AchievementSave achievements;
     // sizeof: 0x3???
 
     // HLW persistent extension.

@@ -1,20 +1,24 @@
 #ifndef GUARD_CONSTANTS_ACHIEVEMENTS_H
 #define GUARD_CONSTANTS_ACHIEVEMENTS_H
 
-#define ACHIEVEMENTS_MAX 128
+#define ACHIEVEMENTS_MAX 256
 #define ACHIEVEMENT_UNLOCKED_BYTES ((ACHIEVEMENTS_MAX + 7) / 8)
 #define ACHIEVEMENT_POPUP_QUEUE_SIZE 6
-#define ACHIEVEMENT_SAVE_MAGIC 0xACE1
-#define ACHIEVEMENT_SAVE_DATA_SIZE 48
+#define ACHIEVEMENT_SAVE_MAGIC 0x48434148 // "HACH"
+#define ACHIEVEMENT_SAVE_VERSION 1
+#define ACHIEVEMENT_SAVE_DATA_SIZE 208
+#define ACHIEVEMENT_SAVED_COUNTERS 32
 
-// Hoenn's Last Wish custom-form board currently contains 95 forms.
-// "Wish Addiction" intentionally allows the player to miss any 10 forms.
-#define ACH_WISH_FORM_COUNT 95
-#define ACH_WISH_FORM_TARGET (ACH_WISH_FORM_COUNT - 10)
-
-// Wish-form registration is stored in the unused high end of the existing
-// 128-bit unlocked bitmap. This keeps AchievementSaveData exactly the same size.
-#define ACH_WISH_TRACKING_BASE ACH_ID_COUNT
+// Frozen 0.9 registries. The first 100 Wish slots have an explicit species
+// manifest; the second 100 are reserved for custom/DLC forms. Shadow tracking
+// has 30 stable slots, of which the first three are assigned at release.
+#define ACH_WISH_ORIGINAL_FORM_COUNT 100
+#define ACH_WISH_CUSTOM_FORM_COUNT 100
+#define ACH_WISH_FORM_COUNT (ACH_WISH_ORIGINAL_FORM_COUNT + ACH_WISH_CUSTOM_FORM_COUNT)
+#define ACH_WISH_FORM_BYTES ((ACH_WISH_FORM_COUNT + 7) / 8)
+#define ACH_WISH_FORM_TARGET 85
+#define ACH_SHADOW_POKEMON_COUNT 30
+#define ACH_SHADOW_POKEMON_BYTES ((ACH_SHADOW_POKEMON_COUNT + 7) / 8)
 
 enum AchievementTier
 {
@@ -33,20 +37,17 @@ enum AchievementCounter
     ACH_COUNTER_SHINY_CAPTURES,
     ACH_COUNTER_DAYCARE_EGGS,
     ACH_COUNTER_HATCHED_EGGS,
-    ACH_COUNTER_COUNT,
-
-    // Virtual counters packed into the previously unused high 16 bits of the
-    // five existing counter slots. They do NOT enlarge AchievementSaveData.
-    ACH_COUNTER_TIME_GEAR_USES = 0xE0,
+    ACH_COUNTER_TIME_GEAR_USES,
     ACH_COUNTER_FISHING_CATCHES,
     ACH_COUNTER_GAME_CORNER_PLAYS,
     ACH_COUNTER_LEAGUE_WINS,
     ACH_COUNTER_MAGMA_GRUNTS,
     ACH_COUNTER_AQUA_GRUNTS,
-    ACH_COUNTER_GAME_CORNER_GAMES,
-    ACH_COUNTER_WISH_FORMS,
+    ACH_COUNTER_COUNT,
 
     // Counters resolved from existing game state.
+    ACH_COUNTER_GAME_CORNER_GAMES = 0xF4,
+    ACH_COUNTER_WISH_FORMS = 0xF5,
     ACH_COUNTER_EVOLVED_POKEMON = 0xF6,
     ACH_COUNTER_TMS_COLLECTED = 0xFD,
     ACH_COUNTER_POKEDEX_CAUGHT = 0xFE,
@@ -109,9 +110,5 @@ enum AchievementId
 // longer displayed or counted toward the total.
 #define ACH_REMOVED_COUNT 2
 #define ACH_COUNT (ACH_ID_COUNT - ACH_REMOVED_COUNT)
-
-#if (ACH_WISH_TRACKING_BASE + ACH_WISH_FORM_COUNT) > ACHIEVEMENTS_MAX
-#error "Wish Form tracking exceeds the 128-bit achievement bitmap."
-#endif
 
 #endif // GUARD_CONSTANTS_ACHIEVEMENTS_H

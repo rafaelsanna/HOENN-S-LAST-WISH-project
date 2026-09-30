@@ -11737,6 +11737,7 @@ const struct Item gItemsInfo[] =
         .iconPalette = gItemIconPalette_RevealGlass,
     },
 
+#if P_FUSION_FORMS
     [ITEM_DNA_SPLICERS] =
     {
         .name = ITEM_NAME("DNA Splicers"),
@@ -11753,6 +11754,7 @@ const struct Item gItemsInfo[] =
         .iconPic = gItemIcon_DNASplicers,
         .iconPalette = gItemIconPalette_DNASplicers,
     },
+#endif //P_FUSION_FORMS
 
     [ITEM_ZYGARDE_CUBE] =
     {
@@ -11786,6 +11788,7 @@ const struct Item gItemsInfo[] =
         .iconPalette = gItemIconPalette_PrisonBottle,
     },
 
+#if P_FUSION_FORMS
     [ITEM_N_SOLARIZER] =
     {
         .name = ITEM_NAME("N-Solarizer"),
@@ -11834,6 +11837,7 @@ const struct Item gItemsInfo[] =
         .iconPic = gItemIcon_ReinsOfUnity,
         .iconPalette = gItemIconPalette_ReinsOfUnity,
     },
+#endif //P_FUSION_FORMS
 
 // Battle Mechanic Key Items
 

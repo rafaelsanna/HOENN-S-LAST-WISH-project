@@ -635,6 +635,7 @@ struct FormChange
     u16 param3;
 };
 
+#if P_FUSION_FORMS
 enum FusionExtraMoveHandling
 {
     FORGET_EXTRA_MOVES,
@@ -655,7 +656,6 @@ struct Fusion
 
 extern const struct Fusion *const gFusionTablePointers[NUM_SPECIES];
 
-#if P_FUSION_FORMS
 #if P_FAMILY_KYUREM
 #if P_FAMILY_RESHIRAM
 extern const u16 gKyurenWhiteSwapMoveTable[][2];

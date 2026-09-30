@@ -960,12 +960,12 @@
 #define TRAINER_SOLANA                                 954
 #define TRAINER_GON                                 955
 
-// NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
-//       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
-//       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
-
+// TRAINERS_COUNT is the number of ROM table entries currently compiled.
+// MAX_TRAINERS_COUNT is the frozen 0.9 ID namespace and defeated-state save
+// capacity. Future trainers may grow TRAINERS_COUNT up to this limit without
+// moving system flags or changing the save layout.
 #define TRAINERS_COUNT                      1000
-#define MAX_TRAINERS_COUNT                  1001
+#define MAX_TRAINERS_COUNT                  2048
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

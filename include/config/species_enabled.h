@@ -31,7 +31,7 @@
 #define P_TERA_FORMS                     FALSE
 
 // Fusion forms
-#define P_FUSION_FORMS                   FALSE
+#define P_FUSION_FORMS                   FALSE // Permanent for HLW 0.9+: the save ABI has no fusion storage.
 
 // Regional Forms. Includes Regional Form evolutions, like Sirfetch'd.
 #define P_REGIONAL_FORMS                 TRUE

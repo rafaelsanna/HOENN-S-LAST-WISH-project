@@ -112,7 +112,9 @@ struct ALIGNED(2) BagPocket
 {
     struct ItemSlot *itemSlots;
     struct ItemSlot *extraItemSlots;
+    struct ItemSlot *finalItemSlots;
     u16 primaryCapacity;
+    u16 secondaryCapacity;
     u16 capacity:10;
     enum Pocket id:6;
 };

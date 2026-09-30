@@ -1638,8 +1638,10 @@ const u16 gItemIconPalette_Gracidea[] = INCBIN_U16("graphics/items/icon_palettes
 const u32 gItemIcon_RevealGlass[] = INCBIN_U32("graphics/items/icons/reveal_glass.4bpp.smol");
 const u16 gItemIconPalette_RevealGlass[] = INCBIN_U16("graphics/items/icon_palettes/reveal_glass.gbapal");
 
+#if P_FUSION_FORMS
 const u32 gItemIcon_DNASplicers[] = INCBIN_U32("graphics/items/icons/dna_splicers.4bpp.smol");
 const u16 gItemIconPalette_DNASplicers[] = INCBIN_U16("graphics/items/icon_palettes/dna_splicers.gbapal");
+#endif //P_FUSION_FORMS
 
 const u32 gItemIcon_ZygardeCube[] = INCBIN_U32("graphics/items/icons/zygarde_cube.4bpp.smol");
 const u16 gItemIconPalette_ZygardeCube[] = INCBIN_U16("graphics/items/icon_palettes/zygarde_cube.gbapal");
@@ -1647,12 +1649,14 @@ const u16 gItemIconPalette_ZygardeCube[] = INCBIN_U16("graphics/items/icon_palet
 const u32 gItemIcon_PrisonBottle[] = INCBIN_U32("graphics/items/icons/prison_bottle.4bpp.smol");
 const u16 gItemIconPalette_PrisonBottle[] = INCBIN_U16("graphics/items/icon_palettes/prison_bottle.gbapal");
 
+#if P_FUSION_FORMS
 const u32 gItemIcon_NecrozmaFuser[] = INCBIN_U32("graphics/items/icons/necrozma_fuser.4bpp.smol");
 const u16 gItemIconPalette_NSolarizer[] = INCBIN_U16("graphics/items/icon_palettes/n_solarizer.gbapal");
 const u16 gItemIconPalette_NLunarizer[] = INCBIN_U16("graphics/items/icon_palettes/n_lunarizer.gbapal");
 
 const u32 gItemIcon_ReinsOfUnity[] = INCBIN_U32("graphics/items/icons/reins_of_unity.4bpp.smol");
 const u16 gItemIconPalette_ReinsOfUnity[] = INCBIN_U16("graphics/items/icon_palettes/reins_of_unity.gbapal");
+#endif //P_FUSION_FORMS
 
 // Battle Mechanic Key Items
 
