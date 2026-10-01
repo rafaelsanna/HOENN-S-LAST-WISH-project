@@ -43,37 +43,52 @@ BirdKeeperLee::
 
 
 ArtistPortinari::
-# 50 "data/maps/LittlerootCoast/scripts.pory"
-	trainerbattle_single TRAINER_PORTINARI, PortinariIntro, PortinariLose
-# 51 "data/maps/LittlerootCoast/scripts.pory"
-	lock
-# 52 "data/maps/LittlerootCoast/scripts.pory"
-	msgbox PortinariDialogue
 # 53 "data/maps/LittlerootCoast/scripts.pory"
+	trainerbattle_single TRAINER_PORTINARI, PortinariIntro, PortinariLose
+# 54 "data/maps/LittlerootCoast/scripts.pory"
+	lock
+# 55 "data/maps/LittlerootCoast/scripts.pory"
+	msgbox PortinariDialogue
+# 56 "data/maps/LittlerootCoast/scripts.pory"
 	release
 	end
 
 
 LeeDialogue::
-# 29 "data/maps/LittlerootCoast/scripts.pory"
-	.string "I'm trying to catch a WINGULL!\n All my other birds get crushed by ROCK-types,\n so I need one that can actually fight back!$"
+# 32 "data/maps/LittlerootCoast/scripts.pory"
+	.string "I'm trying to catch a WINGULL! All my\n"
+	.string "other birds get crushed by ROCK-types,\l"
+	.string "so I need one that can actually fight\l"
+	.string "back!$"
 
 LeeIntro::
-# 35 "data/maps/LittlerootCoast/scripts.pory"
-	.string "Birds are amazing, you know?\n Some glide, some dive, some just scream.\n But every one of them has style!\n Think you can handle me?$"
+# 38 "data/maps/LittlerootCoast/scripts.pory"
+	.string "Birds are amazing, you know? Some glide,\n"
+	.string "some dive, some just scream. But every\l"
+	.string "one of them has style! Think you can\l"
+	.string "handle me?$"
 
 LeeLose::
-# 42 "data/maps/LittlerootCoast/scripts.pory"
-	.string "That's why I need a WINGULL!\n Terra, the Rustboro Gym Leader's ROCK-types\n flatten every other bird I have!\p But a WINGULL… THAT one might stand a chance!$"
+# 45 "data/maps/LittlerootCoast/scripts.pory"
+	.string "That's why I need a WINGULL! Terra, the\n"
+	.string "Rustboro Gym Leader's ROCK-types\l"
+	.string "flatten every other bird I have!\p"
+	.string "But a WINGULL… THAT one might stand a\n"
+	.string "chance!$"
 
 PortinariDialogue::
-# 57 "data/maps/LittlerootCoast/scripts.pory"
-	.string "I came here to watch the waves.\n This peaceful coast always inspires my art.$"
+# 60 "data/maps/LittlerootCoast/scripts.pory"
+	.string "I came here to watch the waves. This\n"
+	.string "peaceful coast always inspires my art.$"
 
 PortinariIntro::
-# 62 "data/maps/LittlerootCoast/scripts.pory"
-	.string "The rhythm of the sea… the waves...\n All of it fuels my creativity!\p Let me capture your style in battle!$"
+# 65 "data/maps/LittlerootCoast/scripts.pory"
+	.string "The rhythm of the sea… the waves... All\n"
+	.string "of it fuels my creativity!\p"
+	.string "Let me capture your style in battle!$"
 
 PortinariLose::
-# 68 "data/maps/LittlerootCoast/scripts.pory"
-	.string "Defeated… yet inspired.\n Your technique has given me a new idea\n for my next painting!$"
+# 71 "data/maps/LittlerootCoast/scripts.pory"
+	.string "Defeated… yet inspired. Your technique\n"
+	.string "has given me a new idea for my next\l"
+	.string "painting!$"

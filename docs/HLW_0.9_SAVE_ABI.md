@@ -406,6 +406,8 @@ The following offsets are relative to payload base 64.
 
 The payload reserve is 1,088 bytes. Normal-slot association, generation, UUID and Hall of Fame references must agree with the validated normal image. A normal slot without its required valid extension is not usable.
 
+Full Random owns custom flag 0x1003 (`FLAG_RANDOMIZER_FULL_WILD`), previously unused. It defaults to off in existing and new saves and is mutually exclusive with the existing table-randomizer flag. No saved field, bitmap extent, or released identity moved.
+
 ## Hall of Fame archive byte map
 
 Each alternating archive is exactly 4,096 bytes. Its 64-byte header is followed by twenty-eight teams at offsets 64–4095. The other two teams occupy the 288-byte storage tail, so their publication is part of the normal bundle.

@@ -1264,8 +1264,14 @@ static bool8 HandleStartMenuInput(void)
                 return FALSE;
         }
         if (sCurrentStartMenuActions[sStartMenuCursorPos] == MENU_ACTION_DEXNAV
-          && MapHasNoEncounterData())
-            return FALSE;
+          && DexNav_IsBlocked())
+        {
+            // Show the field message without fading into a GUI that cannot open.
+            RemoveExtraStartMenuWindows();
+            HideStartMenu();
+            DexNav_ShowBlockedMessage();
+            return TRUE;
+        }
 
         gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void;
 

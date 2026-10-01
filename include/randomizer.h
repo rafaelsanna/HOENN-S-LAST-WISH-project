@@ -22,11 +22,14 @@ enum RandomizerSpeciesMode
 
 void Randomizer_Init(bool8 randomizeWild, bool8 randomizeTrainers, enum RandomizerSpeciesMode mode);
 bool8 Randomizer_WildEnabled(void);
+bool8 Randomizer_FullWildEnabled(void);
+void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom);
 bool8 Randomizer_TrainerEnabled(void);
 enum RandomizerSpeciesMode Randomizer_GetSpeciesMode(void);
 u32 Randomizer_GetSeed(void);
 u16 Randomizer_GetSpecies(u16 originalSpecies, enum RandomizerContext context, u32 contextKey);
 u16 Randomizer_OnWildEncounter(u16 species, u8 mapGroup, u8 mapNum, u8 area, u8 slot);
+u16 Randomizer_OnFullWildEncounter(u16 species);
 u16 Randomizer_OnTrainerMon(u16 species, u16 trainerId, u8 slotIndex);
 u16 Randomizer_GetFixedStarter(u8 slot);
 
@@ -46,8 +49,11 @@ u16 Randomizer_GetRandomStarter(u16 originalSpecies, u8 slot);
 #else
 
 #define Randomizer_WildEnabled() FALSE
+#define Randomizer_FullWildEnabled() FALSE
+#define Randomizer_SetWildModes(tables, full) ((void)0)
 #define Randomizer_TrainerEnabled() FALSE
 #define Randomizer_OnWildEncounter(species, mapGroup, mapNum, area, slot) (species)
+#define Randomizer_OnFullWildEncounter(species) (species)
 #define Randomizer_OnTrainerMon(species, trainerId, slotIndex) (species)
 #define Randomizer_Init(wild, trainers, mode) ((void)0)
 

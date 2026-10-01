@@ -152,8 +152,8 @@ SeabreezeShipping1F_Text_Employee1:
 	.string "saw the shipments myself.$"
 
 SeabreezeShipping1F_Text_Employee2:
-	.string "Those AQUA members have been watching\n"
-	.string "us all day. Is the PRESIDENT really\l"
+	.string "It's so scary when those AQUA members\n"
+	.string "come by. Is the PRESIDENT really\l"
 	.string "okay with this?$"
 
 SeabreezeShipping1F_Text_Employee3:

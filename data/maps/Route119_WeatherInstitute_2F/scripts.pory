@@ -3,20 +3,27 @@ Route119_WeatherInstitute_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route119_WeatherInstitute_2F_OnTransition
 	.byte 0
 
-Route119_WeatherInstitute_2F_OnTransition:
+Route119_WeatherInstitute_2F_OnTransition::
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_2F_EventScript_SetScientistPosAquaHere
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 1, Route119_WeatherInstitute_2F_EventScript_SetScientistPosAquaGone
+	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 2, Route119_WeatherInstitute_2F_EventScript_SetScientistPosReturnVisit
 	call_if_set FLAG_SYS_GAME_CLEAR, Route119_WeatherInstitute_2F_EventScript_SetScientistPosGameClear
 	end
 
 Route119_WeatherInstitute_2F_EventScript_SetScientistPosAquaHere::
-	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 1, 6
+	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 0, 5
 	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route119_WeatherInstitute_2F_EventScript_SetScientistPosAquaGone::
-	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 4, 6
-	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 5, 6
+	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, MOVEMENT_TYPE_FACE_DOWN
+	return
+
+Route119_WeatherInstitute_2F_EventScript_SetScientistPosReturnVisit::
+	@ The meeting seat is now the map default; retain the old return-visit position.
+	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 18, 6
+	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, MOVEMENT_TYPE_LOOK_AROUND
 	return
 
 Route119_WeatherInstitute_2F_EventScript_SetScientistPosGameClear::
@@ -60,6 +67,15 @@ Route119_WeatherInstitute_2F_EventScript_ShellyDefeated::
 	waitmovement 0
 	msgbox Route119_WeatherInstitute_2F_Text_WeHaveToHurryToMtPyre, MSGBOX_DEFAULT
 	closemessage
+	@ The messenger leaves first, clearing y6 for Netsu's departure.
+	applymovement LOCALID_WEATHER_INSTITUTE_2F_GRUNT_3, Route119_WeatherInstitute_2F_Movement_MessengerExit
+	waitmovement 0
+	removeobject LOCALID_WEATHER_INSTITUTE_2F_GRUNT_3
+	applymovement LOCALID_WEATHER_INSTITUTE_2F_SHELLY, Route119_WeatherInstitute_2F_Movement_NetsuExit
+	waitmovement 0
+	removeobject LOCALID_WEATHER_INSTITUTE_2F_SHELLY
+	applymovement LOCALID_PLAYER, Route119_WeatherInstitute_2F_Movement_PlayerReturnToPosition
+	waitmovement 0
 	setvar VAR_WEATHER_INSTITUTE_STATE, 1
 	clearflag FLAG_HIDE_WEATHER_INSTITUTE_2F_WORKERS
 	fadedefaultbgm
@@ -68,12 +84,21 @@ Route119_WeatherInstitute_2F_EventScript_ShellyDefeated::
 	setflag FLAG_HIDE_WEATHER_INSTITUTE_2F_AQUA_GRUNT_M
 	removeobject LOCALID_WEATHER_INSTITUTE_2F_GRUNT_1
 	removeobject LOCALID_WEATHER_INSTITUTE_2F_GRUNT_2
-	removeobject LOCALID_WEATHER_INSTITUTE_2F_SHELLY
 	removeobject LOCALID_WEATHER_INSTITUTE_2F_GRUNT_4
-	removeobject LOCALID_WEATHER_INSTITUTE_2F_GRUNT_3
-	applymovement LOCALID_PLAYER, Route119_WeatherInstitute_2F_Movement_PlayerReturnToPosition
-	waitmovement 0
 	fadescreen FADE_FROM_BLACK
+
+	@ President: (2,5) -> (4,6), beside the player at (5,6).
+	applymovement LOCALID_WEATHER_INSTITUTE_2F_BEDROCK_PRESIDENT, Route119_WeatherInstitute_2F_Movement_PresidentApproachPlayer
+	waitmovement 0
+	msgbox Route119_WeatherInstitute_2F_Text_BedrockPresident, MSGBOX_DEFAULT
+	closemessage
+	@ Push the player to (5,7) before the president crosses their old tile.
+	applymovement LOCALID_PLAYER, Route119_WeatherInstitute_2F_Movement_PresidentPushPlayer
+	waitmovement 0
+	applymovement LOCALID_WEATHER_INSTITUTE_2F_BEDROCK_PRESIDENT, Route119_WeatherInstitute_2F_Movement_PresidentExit
+	waitmovement 0
+	removeobject LOCALID_WEATHER_INSTITUTE_2F_BEDROCK_PRESIDENT
+
 	applymovement LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer
 	waitmovement 0
 	copyobjectxytoperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST
@@ -191,11 +216,90 @@ Route119_WeatherInstitute_2F_Movement_PlayerReturnToPosition:
 	walk_in_place_faster_left
 	step_end
 
-Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer:
+Route119_WeatherInstitute_2F_Movement_MessengerExit::
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
 	walk_right
 	walk_right
 	walk_right
 	step_end
+
+Route119_WeatherInstitute_2F_Movement_NetsuExit::
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+Route119_WeatherInstitute_2F_Movement_PresidentApproachPlayer::
+	walk_down
+	walk_right
+	walk_right
+	face_right
+	step_end
+
+Route119_WeatherInstitute_2F_Movement_PresidentPushPlayer::
+	ride_water_current_down
+	face_up
+	step_end
+
+Route119_WeatherInstitute_2F_Movement_PresidentExit::
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer::
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	face_down
+	step_end
+
+@ State 0 is before Netsu's defeat; states 1/2 use the after-event dialogue.
+Route119_WeatherInstitute_2F_EventScript_InstituteWorker1::
+	goto_if_ne VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_2F_EventScript_InstituteWorker1AfterNetsu
+	msgbox Route119_WeatherInstitute_2F_Text_Worker1BeforeNetsu, MSGBOX_NPC
+	end
+
+Route119_WeatherInstitute_2F_EventScript_InstituteWorker1AfterNetsu:
+	msgbox Route119_WeatherInstitute_2F_Text_Worker1AfterNetsu, MSGBOX_NPC
+	end
+
+Route119_WeatherInstitute_2F_EventScript_InstituteWorker2::
+	goto_if_ne VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_2F_EventScript_InstituteWorker2AfterNetsu
+	msgbox Route119_WeatherInstitute_2F_Text_Worker2BeforeNetsu, MSGBOX_NPC
+	end
+
+Route119_WeatherInstitute_2F_EventScript_InstituteWorker2AfterNetsu:
+	msgbox Route119_WeatherInstitute_2F_Text_Worker2AfterNetsu, MSGBOX_NPC
+	end
 
 Route119_WeatherInstitute_2F_EventScript_WeatherScientist::
 	lock
@@ -205,38 +309,34 @@ Route119_WeatherInstitute_2F_EventScript_WeatherScientist::
 	end
 
 Route119_WeatherInstitute_2F_Text_Grunt2Intro:
-	.string "The INSTITUTE created a type of\n"
-	.string "POKéMON that can influence weather patterns.\l"
-	.string "We're here to secure them.\p"
+	.string "The INSTITUTE studies weather, but their\n"
+	.string "equipment is also ideal for finding\l"
+	.string "pockets of high heat within the earth.\p"
 	.string "You understand, don't you?\n"
-	.string "Control the weather... control production.\l"
-	.string "Control the rain... control the crops.\l"
-	.string "Control the sun... control energy output.\p"
-	.string "All for the revolution!$"
+	.string "The legendary POKéMON sleeping there...\p"
+	.string "We could create new land, generate\n"
+	.string "unlimited power, but most importantly,\l"
+	.string "destroy all competitors!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt2Defeat:
 	.string "Our plan's being spoiled by a kid?\n"
 	.string "The BOSS won't believe this.$"
 
 Route119_WeatherInstitute_2F_Text_Grunt2PostBattle:
-	.string "If the POKéMON they made here can\n"
-	.string "control the weather freely, then we of\l"
-	.string "TEAM AQUA definitely need it!\p"
-	.string "With weather control, we can amplify\n"
-	.string "ocean currents. Generate power.\l"
-	.string "Create rain cycles that never end.\p"
-	.string "The hydroelectric potential alone...\n"
-	.string "worth more than you can imagine!$"
+	.string "You might be a strong trainer, kid,\n"
+	.string "but even you can't beat capitalism.\p"
+	.string "Money is what runs the world!\p"
+	.string "With our puppet sponsor, we can do\n"
+	.string "so much more than we ever could alone.$"
 
 Route119_WeatherInstitute_2F_Text_Grunt3Intro:
-	.string "We're TEAM AQUA!\n"
-	.string "We appear wherever valuable assets\l"
-	.string "are found!\p"
-	.string "Weather manipulation technology...\n"
-	.string "Do you have any idea what that's worth?\p"
-	.string "The droughts. The floods.\n"
-	.string "We could control both.\l"
-	.string "And sell the solution to both.$"
+	.string "Hey! Don't get in the way, kid!\p"
+	.string "Our boss is busy making these nerds\n"
+	.string "a deal they can't refuse!\p"
+	.string "Once this place is ours, we'll use their\n"
+	.string "equipment to find what we're looking for.\p"
+	.string "Police can't do anything to us if we\n"
+	.string "have enough money!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt3Defeat:
 	.string "You got me!\n"
@@ -244,100 +344,99 @@ Route119_WeatherInstitute_2F_Text_Grunt3Defeat:
 
 Route119_WeatherInstitute_2F_Text_Grunt3PostBattle:
 	.string "You don't have any idea what we of\n"
-	.string "TEAM AQUA are working towards!\l"
+	.string "TEAM MAGMA are working towards!\l"
 	.string "You stay out of our way!\p"
-	.string "When we control the seas,\n"
-	.string "we control the trade.\l"
-	.string "When we control the trade...\l"
-	.string "we control everything!$"
+	.string "Or better yet, join us!\p"
+	.string "Between you and me, we have a sweet\n"
+	.string "thing going with BEDROCK MINING.\p"
+	.string "If you get in early, you'll end up\n"
+	.string "on top when everything is done!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt5Intro:
-	.string "Don't tell me you're looking for that\n"
-	.string "weather POKéMON, too?\p"
-	.string "That's a no-no!\n"
-	.string "We were here to get it first!\p"
-	.string "Do you know what unlimited energy\n"
-	.string "would do for our cause?\p"
-	.string "Coastal cities may be gone...\n"
-	.string "A small price...$"
+	.string "Hey! Loser! Don't get in the way!\p"
+	.string "We're taking over this place.\n"
+	.string "When we do, not just anyone will\l"
+	.string "be able to waltz in here!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt5Defeat:
 	.string "You are the one they talk about?\n"
 	.string "Defeating everyone... Damn you!$"
 
 Route119_WeatherInstitute_2F_Text_Grunt5PostBattle:
-	.string "Humph, so what?\n"
-	.string "What we want…\p"
-	.string "What we really want isn't here…\n"
+	.string "Humph, so what?\p"
+	.string "As soon as we own this place, we'll\n"
+	.string "just have you trespassed.\p"
+	.string "Better get out before then!\n"
 	.string "Ihihihihi…$"
 
 Route119_WeatherInstitute_2F_Text_ShellyIntro:
 	.string "Ahahahaha!\p"
-	.string "You're going to meddle in TEAM AQUA's\n"
-	.string "affairs?\p"
+	.string "You're going to meddle in our affairs?\n"
+	.string "Good luck with that this time!\p"
 	.string "You're either absolutely fearless,\n"
 	.string "simply ignorant, or both!\p"
 	.string "You're so cute, you're disgusting!\n"
-	.string "I'll put you down, kiddy!\p"
-	.string "Do you understand economics?\n"
-	.string "Supply and demand?\p"
-	.string "If we control the tides,\n"
-	.string "we control the supply.\l"
-	.string "If we control the supply...\l"
-	.string "we name the price.$"
+	.string "You remind me of stupid ALEJANDRO!\p"
+	.string "Do you understand economics?\p"
+	.string "You can't do crap to us when we're\n"
+	.string "using a legit business as a front to\l"
+	.string "get us what we want.\p"
+	.string "The deal is happening right behind me.\n"
+	.string "I won't let you interfere!$"
 
 Route119_WeatherInstitute_2F_Text_ShellyDefeat:
 	.string "Ahahahaha!\n"
-	.string "You're disgustingly strong!\n"
+	.string "You're disgustingly strong!\l"
 	.string "And annoyingly idealistic.$"
 
 Route119_WeatherInstitute_2F_Text_ShellyPostBattle:
-	.string "It's bad enough to have TEAM MAGMA\n"
-	.string "blunder about, but now there's you!\p"
-	.string "What makes you want to sniff around\n"
-	.string "in our business, anyway?\p"
-	.string "This is about survival.\n"
-	.string "About progress.\p"
-	.string "The world runs on energy.\n"
-	.string "Whoever controls it... runs the world.\p"
-	.string "But you're just a child.\n"
-	.string "You wouldn't understand.$"
+	.string "It doesn't matter anyway. Your efforts\n"
+	.string "mean nothing, kid.\p"
+	.string "Do you get it now? You're powerless to\n"
+	.string "stop us with just brute force.\p"
+	.string "The deal has already gone through.\n"
+	.string "Are you going to rip up the contract?\p"
+	.string "Hahaha! I can't wait to rub this in\n"
+	.string "that loser ALEJANDRO's face!$"
 
 Route119_WeatherInstitute_2F_Text_TeamMagmaJustPassedBy:
 	.string "We have a situation here!\p"
-	.string "A TEAM MAGMA mob just passed\n"
+	.string "A TEAM AQUA mob just passed\n"
 	.string "the WEATHER INSTITUTE.\p"
 	.string "They appear to be headed for\n"
 	.string "MT. PYRE!\p"
-	.string "If they get there first...\n"
-	.string "the ORBS. The ancient relics.\p"
-	.string "They'll control the land's resources\n"
-	.string "completely. We can't let that happen.$"
+	.string "Our team is already at MT. PYRE, but\n"
+	.string "it's just a small group and the boss.\p"
+	.string "We need to warn them now before they\n"
+	.string "run into TEAM AQUA!$"
 
 Route119_WeatherInstitute_2F_Text_WeHaveToHurryToMtPyre:
 	.string "What?!\p"
 	.string "We can't waste any more time here!\n"
-	.string "We have to hurry to MT. PYRE, too!\p"
+	.string "We have to meet up with them, pronto!\p"
 	.string "Ahahahaha!\n"
-	.string "TEAM MAGMA, just you wait!\p"
+	.string "TEAM AQUA, just you wait!\p"
 	.string "This isn't about ideology anymore.\n"
 	.string "This is about who controls HOENN's future.$"
 
 Route119_WeatherInstitute_2F_Text_ThanksPleaseTakePokemon:
-	.string "Thanks!\n"
-	.string "Thanks to you, we're safe!\p"
-	.string "It might be an odd way of thanking you,\n"
-	.string "but take this POKéMON.\p"
-	.string "It responds to weather.\n"
-	.string "Maybe it'll help you understand\l"
-	.string "why controlling nature is so... tempting.$"
+	.string "I'm... I'm so sorry. I had no choice.\p"
+	.string "My kid is doing okay for now, but he\n"
+	.string "won't be if that company buys the rights\l"
+	.string "to the medicine he needs.\p"
+	.string "They threatened to charge us a fortune,\n"
+	.string "just to force me to sell the institute!\p"
+	.string "Worse, they're still making me run it.\n"
+	.string "How could I ever face my workers?\p"
+	.string "It's not nearly enough as an apology,\n"
+	.string "but for your efforts in stopping this\l"
+	.string "madness, please accept this POKéMON.$"
 
 @ Unused
 Route119_WeatherInstitute_2F_Text_NoRoomForPokemon:
 	.string "Hm? You don't seem to have any room\n"
 	.string "for this POKéMON.\p"
-	.string "Come back when you're ready.\n"
-	.string "The world isn't going to wait.$"
+	.string "Come back when you're ready.$"
 
 Route119_WeatherInstitute_2F_Text_PlayerReceivedCastform:
 	.string "{PLAYER} received CASTFORM!$"
@@ -348,14 +447,15 @@ Route119_WeatherInstitute_2F_Text_PokemonChangesWithWeather:
 	.string "There're plenty of them in the\n"
 	.string "INSTITUTE--go ahead and take it.\p"
 	.string "A reminder that nature adapts.\n"
-	.string "But can it survive exploitation?$"
+	.string "I only hope we can, too.$"
 
 Route119_WeatherInstitute_2F_Text_ChangingWeatherRidiculous:
 	.string "I've been researching rain for many\n"
 	.string "years, but it's ridiculous to think that\l"
-	.string "humans can freely change the weather.\p"
-	.string "And yet... these corporations.\n"
-	.string "These teams. They're trying.\p"
+	.string "humans can change the world's climate\l"
+	.string "without devestating consequences.\p"
+	.string "And yet... these corporations and\n"
+	.string "these teams are trying.\p"
 	.string "And they might just succeed.\n"
 	.string "God help us all if they do.$"
 
@@ -366,8 +466,7 @@ Route119_WeatherInstitute_2F_Text_GroudonWeather:
 	.string "in {STR_VAR_1}.\p"
 	.string "Could that mean, somewhere near\n"
 	.string "{STR_VAR_1}…\p"
-	.string "Something is awakening.\n"
-	.string "Something that thirsts.$"
+	.string "Something is awakening.$"
 
 Route119_WeatherInstitute_2F_Text_KyogreWeather:
 	.string "I track weather patterns over\n"
@@ -376,8 +475,7 @@ Route119_WeatherInstitute_2F_Text_KyogreWeather:
 	.string "recorded over {STR_VAR_1}.\p"
 	.string "Could that mean, somewhere near\n"
 	.string "{STR_VAR_1}…\p"
-	.string "Something stirs beneath the waves.\n"
-	.string "Something ancient. Hungry.$"
+	.string "Something stirs beneath the waves.$"
 
 Route119_WeatherInstitute_2F_Text_NoAbnormalWeather:
 	.string "Abnormal weather conditions are\n"
@@ -387,7 +485,34 @@ Route119_WeatherInstitute_2F_Text_NoAbnormalWeather:
 	.string "For now... balance holds.\n"
 	.string "But for how long?\p"
 	.string "The corporations are watching.\n"
-	.string "The teams are waiting.\l"
+	.string "The teams are poised to strike.\l"
 	.string "And we're just counting raindrops.$"
 
 `
+
+text Route119_WeatherInstitute_2F_Text_BedrockPresident {
+	format("Hello, child. I just purchased this building for BEDROCK MINING CO. "
+	       "Not to worry, we will be retaining all staff. "
+	       "Only their assignments will change. I'll be going now.")
+}
+
+// Replace these four placeholders with the workers' dialogue.
+text Route119_WeatherInstitute_2F_Text_Worker1BeforeNetsu {
+	format("All these people suddenly stormed in. "
+		   "The boss just told us to continue our work... "
+		   "How can we just ignore everything that is happening?")
+}
+
+text Route119_WeatherInstitute_2F_Text_Worker1AfterNetsu {
+	format("Now that those strange people have left, at least we can focus on our work again.")
+}
+
+text Route119_WeatherInstitute_2F_Text_Worker2BeforeNetsu {
+	format("I caught a glimpse of the boss's face while I was walking by the meeting room. "
+		   "He was white as a sheet.")
+}
+
+text Route119_WeatherInstitute_2F_Text_Worker2AfterNetsu {
+	format("It is disappointing that the weather institute is no longer an independent organization. "
+	       "But, on the bright side, at least none of us are getting laid off.")
+}

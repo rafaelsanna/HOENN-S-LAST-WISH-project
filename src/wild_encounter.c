@@ -518,7 +518,7 @@ u8 PickWildMonNature(void)
     return Random() % NUM_NATURES;
 }
 
-void CreateWildMon(u16 species, u8 level)
+static void CreateWildMonInternal(u16 species, u8 level)
 {
     bool32 checkCuteCharm = TRUE;
 
@@ -553,6 +553,26 @@ void CreateWildMon(u16 species, u8 level)
     }
 
     CreateMonWithNature(&gEnemyParty[0], species, level, USE_RANDOM_IVS, PickWildMonNature());
+}
+
+void CreateWildMon(u16 species, u8 level)
+{
+    // Frontier tables initially create placeholder species used as table indexes.
+    // Reroll those only after their real species and levels have been resolved.
+    if (!InBattlePike() && CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+        species = Randomizer_OnFullWildEncounter(species);
+    CreateWildMonInternal(species, level);
+}
+
+static void RandomizeFacilityWildMon(void)
+{
+    if (Randomizer_FullWildEnabled())
+    {
+        u16 species = Randomizer_OnFullWildEncounter(GetMonData(&gEnemyParty[0], MON_DATA_SPECIES));
+        u8 level = GetMonData(&gEnemyParty[0], MON_DATA_LEVEL);
+
+        CreateWildMonInternal(species, level);
+    }
 }
 #ifdef BUGFIX
 #define TRY_GET_ABILITY_INFLUENCED_WILD_MON_INDEX(wildPokemon, type, ability, ptr, count) TryGetAbilityInfluencedWildMonIndex(wildPokemon, type, ability, ptr, count)
@@ -644,7 +664,7 @@ static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 
     CreateWildMon(randomizedSpecies, level);
     // --- FIM PATCH ---
 
-    return randomizedSpecies;
+    return GetMonData(&gEnemyParty[0], MON_DATA_SPECIES);
 }
 
 static bool8 SetUpMassOutbreakEncounter(u8 flags)
@@ -655,11 +675,29 @@ static bool8 SetUpMassOutbreakEncounter(u8 flags)
         return FALSE;
 
     CreateWildMon(gSaveBlock1Ptr->outbreakPokemonSpecies, gSaveBlock1Ptr->outbreakPokemonLevel);
-    for (i = 0; i < MAX_MON_MOVES; i++)
-        SetMonMoveSlot(&gEnemyParty[0], gSaveBlock1Ptr->outbreakPokemonMoves[i], i);
+    if (!Randomizer_FullWildEnabled())
+        for (i = 0; i < MAX_MON_MOVES; i++)
+            SetMonMoveSlot(&gEnemyParty[0], gSaveBlock1Ptr->outbreakPokemonMoves[i], i);
 
     return TRUE;
 }
+
+#if TESTING
+void WildEncounter_TestRandomizeFacilityMon(void)
+{
+    RandomizeFacilityWildMon();
+}
+
+bool8 WildEncounter_TestMassOutbreak(void)
+{
+    return SetUpMassOutbreakEncounter(0);
+}
+
+u16 WildEncounter_TestFishingMon(const struct WildPokemonInfo *info, u8 rod)
+{
+    return GenerateFishingWildMon(info, rod);
+}
+#endif
 
 static bool8 DoMassOutbreakEncounterTest(void)
 {
@@ -768,6 +806,7 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
             else if (!TryGenerateBattlePikeWildMon(TRUE))
                 return FALSE;
 
+            RandomizeFacilityWildMon();
             BattleSetup_StartBattlePikeWildBattle();
             return TRUE;
         }
@@ -784,6 +823,7 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
                 return FALSE;
 
             GenerateBattlePyramidWildMon();
+            RandomizeFacilityWildMon();
             BattleSetup_StartWildBattle();
             return TRUE;
         }
@@ -949,6 +989,7 @@ bool8 SweetScentWildEncounter(void)
                 return FALSE;
 
             TryGenerateBattlePikeWildMon(FALSE);
+            RandomizeFacilityWildMon();
             BattleSetup_StartBattlePikeWildBattle();
             return TRUE;
         }
@@ -961,6 +1002,7 @@ bool8 SweetScentWildEncounter(void)
                 return FALSE;
 
             GenerateBattlePyramidWildMon();
+            RandomizeFacilityWildMon();
             BattleSetup_StartWildBattle();
             return TRUE;
         }
@@ -1061,6 +1103,7 @@ void FishingWildEncounter(u8 rod)
     }
 
     IncrementGameStat(GAME_STAT_FISHING_ENCOUNTERS);
+    species = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES);
     SetPokemonAnglerSpecies(species);
     BattleSetup_StartWildBattle();
 }

@@ -31,7 +31,7 @@ SafariZone_South_EventScript_EnterSafariZone::
 # 16 "data/maps/SafariZone_South/scripts.pory"
 	waitmovement 0
 # 17 "data/maps/SafariZone_South/scripts.pory"
-	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 32, 34
+	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 32, 35
 # 18 "data/maps/SafariZone_South/scripts.pory"
 	setvar VAR_SAFARI_ZONE_STATE, 0
 # 19 "data/maps/SafariZone_South/scripts.pory"
@@ -51,7 +51,7 @@ SafariZone_South_OnTransition:
 # 26 "data/maps/SafariZone_South/scripts.pory"
 SafariZone_South_EventScript_SetExitAttendantAside::
 # 27 "data/maps/SafariZone_South/scripts.pory"
-	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 31, 34
+	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 31, 35
 # 28 "data/maps/SafariZone_South/scripts.pory"
 	return
 # 29 "data/maps/SafariZone_South/scripts.pory"

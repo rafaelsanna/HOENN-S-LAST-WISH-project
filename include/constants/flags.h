@@ -1226,6 +1226,8 @@
 #define FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL                  0x492
 
 #define FLAG_ITEM_MT_CHIMNEY_TM_FIRE_PUNCH                          0x493
+// Keep the original pickup bit so replacing its TM preserves collected state.
+#define FLAG_ITEM_MT_CHIMNEY_TM_FLAME_CHARGE                        FLAG_ITEM_MT_CHIMNEY_TM_FIRE_PUNCH
 #define FLAG_ITEM_PETALBURG_CAVE_GREAT_BALL                         0x494
 #define FLAG_FIERY_PATH_MAGMA_GRUNTS_DONE                           0x495 
 #define FLAG_HIDE_PETALBURG_CITY_LUKA_AFTER_GYM                     0x496 
@@ -1654,7 +1656,7 @@
 #define FLAG_IPPO_FIRE_PUNCH_REWARD                 (HLW_CUSTOM_FLAGS_START + 0x000)
 #define FLAG_MAMORU_ICE_PUNCH_REWARD               (HLW_CUSTOM_FLAGS_START + 0x001)
 #define FLAG_RYO_THUNDER_PUNCH_REWARD               (HLW_CUSTOM_FLAGS_START + 0x002)
-#define FLAG_UNUSED_0x1003                           (HLW_CUSTOM_FLAGS_START + 0x003) // Unused Flag
+#define FLAG_RANDOMIZER_FULL_WILD                  (HLW_CUSTOM_FLAGS_START + 0x003) // Full Random config option; formerly unowned.
 #define FLAG_UNUSED_0x1004                           (HLW_CUSTOM_FLAGS_START + 0x004) // Unused Flag
 #define FLAG_UNUSED_0x1005                           (HLW_CUSTOM_FLAGS_START + 0x005) // Unused Flag
 #define FLAG_UNUSED_0x1006                           (HLW_CUSTOM_FLAGS_START + 0x006) // Unused Flag

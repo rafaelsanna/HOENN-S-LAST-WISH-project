@@ -28,6 +28,14 @@ EventScript_TooDark::
 	msgbox sText_TooDark, MSGBOX_SIGN
 	end
 
+EventScript_DexNavBlocked::
+	msgbox DexNav_Text_Blocked, MSGBOX_SIGN
+	end
+
+DexNav_Text_Blocked::
+	.string "You can't use the DexNav\n"
+	.string "right now.$"
+
 sText_NotFoundNearby:
 	.string "It couldn't be found nearby.\n"
 	.string "Try looking in a different area!$"

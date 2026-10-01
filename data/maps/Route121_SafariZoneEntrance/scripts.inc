@@ -157,7 +157,7 @@ Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone::
 # 79 "data/maps/Route121_SafariZoneEntrance/scripts.pory"
 	clearflag FLAG_GOOD_LUCK_SAFARI_ZONE
 # 80 "data/maps/Route121_SafariZoneEntrance/scripts.pory"
-	warp MAP_SAFARI_ZONE_SOUTH, 32, 33
+	warp MAP_SAFARI_ZONE_SOUTH, 32, 34
 # 81 "data/maps/Route121_SafariZoneEntrance/scripts.pory"
 	waitstate
 # 82 "data/maps/Route121_SafariZoneEntrance/scripts.pory"

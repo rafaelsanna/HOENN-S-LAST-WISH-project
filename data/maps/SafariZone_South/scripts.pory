@@ -14,7 +14,7 @@ SafariZone_South_EventScript_EnterSafariZone::
 	waitmovement 0
 	applymovement LOCALID_SAFARI_EXIT_ATTENDANT, SafariZone_South_Movement_ExitAttendantBlockDoor
 	waitmovement 0
-	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 32, 34
+	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 32, 35
 	setvar VAR_SAFARI_ZONE_STATE, 0
 	releaseall
 	end
@@ -24,7 +24,7 @@ SafariZone_South_OnTransition:
 	end
 
 SafariZone_South_EventScript_SetExitAttendantAside::
-	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 31, 34
+	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 31, 35
 	return
 
 SafariZone_South_Movement_PlayerEnter:

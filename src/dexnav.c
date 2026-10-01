@@ -1081,13 +1081,31 @@ static void DexNavDrawIcons(void)
 /////////////////////
 //// SEARCH TASK ////
 /////////////////////
+bool8 DexNav_IsBlocked(void)
+{
+    return !DEXNAV_ENABLED
+        || Randomizer_WildEnabled()
+        || Randomizer_FullWildEnabled()
+        || MapHasNoEncounterData();
+}
+
+void DexNav_ShowBlockedMessage(void)
+{
+    ScriptContext_SetupScript(EventScript_DexNavBlocked);
+}
+
 bool8 TryStartDexNavSearch(void)
 {
     u8 taskId;
     u16 val = VarGet(DN_VAR_SPECIES);
 
-    if (Randomizer_WildEnabled())
-        return FALSE;
+    if (DexNav_IsBlocked())
+    {
+        DexNav_ShowBlockedMessage();
+        // Consume the field input so movement/other actions cannot run over
+        // the message script started by the search shortcut.
+        return TRUE;
+    }
 
     if (FlagGet(DN_FLAG_SEARCHING) || (val & DEXNAV_MASK_SPECIES) == SPECIES_NONE)
         return FALSE;
@@ -1315,6 +1333,11 @@ static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityN
     u8 perfectIv = 31;
 
     CreateWildMon(species, level);  // shiny rate bonus handled in CreateBoxMon
+
+    // An already-running search must not apply the old species' moves/ability
+    // if Full Random was enabled after the search began.
+    if (Randomizer_FullWildEnabled())
+        return;
 
     // Pick random, unique IVs to set to 31. The number of perfect IVs that are assigned is equal to the potential
     iv[0] = Random() % NUM_STATS;               // choose 1st perfect stat
@@ -2528,17 +2551,23 @@ static void DexNavGuiInit(MainCallback callback)
 
 void Task_OpenDexNavFromStartMenu(u8 taskId)
 {
+    if (gPaletteFade.active)
+        return;
+
     if (DEXNAV_ENABLED == FALSE)
-    {   // must have it enabled to enter
         DebugPrintfLevel(MGBA_LOG_ERROR, "DexNav was opened when DEXNAV_ENABLED config was disabled! Check include/config/dexnav.h");
+
+    if (DexNav_IsBlocked())
+    {
+        // Normally the Start Menu catches this before fading. Keep this
+        // fallback safe for other callers or a restriction changing mid-fade.
+        DexNav_ShowBlockedMessage();
+        ScriptContext_Stop();
+        CleanupOverworldWindowsAndTilemaps();
         DestroyTask(taskId);
+        SetMainCallback2(CB2_ReturnToFieldContinueScript);
     }
-    else if (Randomizer_WildEnabled() && !gPaletteFade.active)
-    {   // DexNav disabled while wild randomizer is active
-        DestroyTask(taskId);
-        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
-    }
-    else if (!gPaletteFade.active)
+    else
     {
         CleanupOverworldWindowsAndTilemaps();
         DexNavGuiInit(CB2_ReturnToFieldWithOpenMenu);

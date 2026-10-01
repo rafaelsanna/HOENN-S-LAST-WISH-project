@@ -11267,19 +11267,19 @@ const struct Item gItemsInfo[] =
         .secondaryId = MOVE_FOUL_PLAY,
     },
 
-    [ITEM_TM80] =
+    [ITEM_TM_FLAME_CHARGE] =
     {
         .name = ITEM_NAME("TM80"),
         .price = 3000,
         .description = COMPOUND_STRING(
-            "The user plays rough\n"
-            "with the target.\n"
-            "May lower Attack."),
+            "Attacks with fire\n"
+            "and raises the\n"
+            "user's Speed."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
-        .secondaryId = MOVE_PLAY_ROUGH,
+        .secondaryId = MOVE_FLAME_CHARGE,
     },
 
     [ITEM_TM81] =

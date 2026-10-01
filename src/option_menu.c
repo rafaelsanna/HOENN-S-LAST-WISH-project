@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "event_data.h"
 #include "option_menu.h"
+#include "randomizer.h"
 #include "bg.h"
 #include "gpu_regs.h"
 #include "international_string_util.h"
@@ -87,6 +88,7 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_SHOW_TYPES,
     MENUITEM_DIF_NUZLOCKE,
     MENUITEM_DIF_RANDOMIZER_E,
+    MENUITEM_DIF_FULL_RANDOM,
     MENUITEM_DIF_RANDOMIZER_T,
     MENUITEM_DIF_INVERSE_BATTLE,
     MENUITEM_DIF_DEBUGMENU,
@@ -241,6 +243,7 @@ static void DrawChoices_InverseBattle(int selection, int y);
 static void DrawChoices_Nuzlocke(int selection, int y);
 static void DrawChoices_AutoFishing(int selection, int y);
 static void DrawChoices_RandomizerE(int selection, int y);
+static void DrawChoices_FullRandom(int selection, int y);
 static void DrawChoices_RandomizerT(int selection, int y);
 static void DrawBgWindowFrames(void);
 static EWRAM_DATA u8 sOptionMenuStartPage = PAGE_GENERAL;
@@ -327,6 +330,7 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_INVERSE_BATTLE] = {DrawChoices_InverseBattle, ProcessInput_Options_Two},
     [MENUITEM_DIF_NUZLOCKE]       = {DrawChoices_Nuzlocke,    ProcessInput_Options_Three},
     [MENUITEM_DIF_RANDOMIZER_E]   = {DrawChoices_RandomizerE, ProcessInput_Options_Two},
+    [MENUITEM_DIF_FULL_RANDOM]    = {DrawChoices_FullRandom, ProcessInput_Options_Two},
     [MENUITEM_DIF_RANDOMIZER_T]   = {DrawChoices_RandomizerT, ProcessInput_Options_Two},
     [MENUITEM_DIF_DEBUGMENU]      = {DrawChoices_OnOff,        ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]         = {NULL, NULL},
@@ -341,6 +345,7 @@ static const u8 sText_ShowTypes[]       = _("SHOW TYPES");
 static const u8 sText_InverseBattle[]   = _("INVERSE BTL");
 static const u8 sText_Nuzlocke[]        = _("NUZLOCKE");
 static const u8 sText_RandomizerE[]     = _("RANDOM POKéMON");
+static const u8 sText_FullRandom[]      = _("FULL RANDOM");
 static const u8 sText_RandomizerT[]     = _("RANDOM TRAINERS");
 static const u8 sText_AutoFishing[]     = _("AUTO FISH");
 static const u8 sText_FastSlide[]       = _("FAST SLIDE");
@@ -379,6 +384,7 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_INVERSE_BATTLE] = sText_InverseBattle,
     [MENUITEM_DIF_NUZLOCKE]       = sText_Nuzlocke,
     [MENUITEM_DIF_RANDOMIZER_E]   = sText_RandomizerE,
+    [MENUITEM_DIF_FULL_RANDOM]    = sText_FullRandom,
     [MENUITEM_DIF_RANDOMIZER_T]   = sText_RandomizerT,
     [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("WISH MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
@@ -452,7 +458,8 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_SHOW_TYPES:       return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_INVERSE_BATTLE:   return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
-        case MENUITEM_DIF_RANDOMIZER_E:     return TRUE;
+        case MENUITEM_DIF_RANDOMIZER_E:     return !sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM];
+        case MENUITEM_DIF_FULL_RANDOM:      return !sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E];
         case MENUITEM_DIF_RANDOMIZER_T:     return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
@@ -483,7 +490,7 @@ static const u8 sText_Desc_ButtonMode[]         = _("All buttons work as normal.
 static const u8 sText_Desc_ButtonMode_LR[]      = _("On some screens the L and R buttons\nact as left and right.");
 static const u8 sText_Desc_ButtonMode_LA[]      = _("The L button acts as another A\nbutton for one-handed play.");
 static const u8 sText_Desc_FrameType[]          = _("Choose the frame surrounding the\nwindows.");
-static const u8 sText_Desc_NpcTeams[]           = _("The difficulty of NPC teams,\ncasual = vanilla, hard = competitive.");
+static const u8 sText_Desc_NpcTeams[]           = _("The difficulty of NPC teams,\nnormal = vanilla, hard = competitive.");
 static const u8 sText_Desc_InfiniteCandyOff[]   = _("Disables the use of the infinite\ncandy.");
 static const u8 sText_Desc_InfiniteCandyOn[]    = _("Enables the use of the infinite candy.");
 static const u8 sText_Desc_BattleStyle_Shift[]  = _("Get the option to switch your\nPOKéMON after the enemies faints.");
@@ -499,8 +506,12 @@ static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items 
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
 static const u8 sText_Desc_NuzlockeNormal[]     = _("One non-shiny capture per route,\nbut any shiny may still be caught.");
 static const u8 sText_Desc_NuzlockeHard[]       = _("Only the first wild POKeMON seen\nin each route may be captured.");
-static const u8 sText_Desc_RandomizerEOff[]     = _("Wild POKéMON appear normally.");
-static const u8 sText_Desc_RandomizerEOn[]      = _("Wild POKéMON are randomized.");
+static const u8 sText_Desc_RandomizerEOff[]     = _("OFF: Normal encounter tables.\nON: Randomized, fixed table slots.");
+static const u8 sText_Desc_RandomizerEOn[]      = _("Randomizes wild encounter tables.\nSlots stay fixed between encounters.");
+static const u8 sText_Desc_FullRandomOff[]      = _("When ON, roll any Pokédex POKéMON\nanew for every wild encounter.");
+static const u8 sText_Desc_FullRandomOn[]       = _("Roll a fresh Pokédex POKéMON\nfor every wild encounter.");
+static const u8 sText_Desc_TableRandomLocked[]  = _("Disable FULL RANDOM first.\nThis mode randomizes table slots.");
+static const u8 sText_Desc_FullRandomLocked[]   = _("Disable RANDOM POKéMON first.\nThis mode rerolls every encounter.");
 static const u8 sText_Desc_RandomizerTOff[]     = _("Trainer teams appear normally.");
 static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.");
 static const u8 sText_Desc_AutoFishingOff[]     = _("Fishing uses the normal wait timer\nand A-button check.");
@@ -508,7 +519,7 @@ static const u8 sText_Desc_AutoFishingOn[]      = _("Fishing advances automatica
 static const u8 sText_Desc_HardLocked[]         = _("Locked by HARD NPC\nTEAMS.");
 
 // Option strings
-static const u8 sText_OptionNpcTeamsCasual[]    = _("CASUAL");
+static const u8 sText_OptionNpcTeamsCasual[]    = _("NORMAL");
 static const u8 sText_OptionNpcTeamsHard[]      = _("HARD");
 static const u8 sText_OptionBattleItemsOn[]     = _("ON");
 static const u8 sText_OptionBattleItemsOff[]    = _("OFF");
@@ -549,6 +560,7 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_INVERSE_BATTLE] = {sText_Desc_InverseBattleOff,  sText_Desc_InverseBattleOn, sText_Empty},
     [MENUITEM_DIF_NUZLOCKE]     = {sText_Desc_NuzlockeOff,         sText_Desc_NuzlockeNormal, sText_Desc_NuzlockeHard},
     [MENUITEM_DIF_RANDOMIZER_E] = {sText_Desc_RandomizerEOff,      sText_Desc_RandomizerEOn,  sText_Empty},
+    [MENUITEM_DIF_FULL_RANDOM]  = {sText_Desc_FullRandomOff,       sText_Desc_FullRandomOn,   sText_Empty},
     [MENUITEM_DIF_RANDOMIZER_T] = {sText_Desc_RandomizerTOff,      sText_Desc_RandomizerTOn,  sText_Empty},
     [MENUITEM_DIF_DEBUGMENU]    = {
         COMPOUND_STRING("Disables the debug menu completely."),
@@ -587,7 +599,8 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_SHOW_TYPES]   = sText_Desc_HardLocked,
     [MENUITEM_DIF_INVERSE_BATTLE] = sText_Desc_HardLocked,
     [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
-    [MENUITEM_DIF_RANDOMIZER_E] = sText_Empty,
+    [MENUITEM_DIF_RANDOMIZER_E] = sText_Desc_TableRandomLocked,
+    [MENUITEM_DIF_FULL_RANDOM]  = sText_Desc_FullRandomLocked,
     [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_HardLocked,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
@@ -689,6 +702,10 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_RANDOMIZER_E))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER_E];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER_E][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]];
+        case MENUITEM_DIF_FULL_RANDOM:
+            if (!CheckConditions(MENUITEM_DIF_FULL_RANDOM))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_FULL_RANDOM];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_FULL_RANDOM][sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]];
         case MENUITEM_DIF_RANDOMIZER_T:
             if (!CheckConditions(MENUITEM_DIF_RANDOMIZER_T))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER_T];
@@ -706,6 +723,26 @@ static const u8 *const OptionTextDescription(void)
     }
     return sText_Empty;
 }
+
+#if TESTING
+const u8 *OptionMenu_TestWildRandomizerOption(bool8 fullOption, bool8 tablesSelected, bool8 fullSelected, bool8 *canToggle)
+{
+    struct OptionMenu options = {0};
+    struct OptionMenu *previous = sOptions;
+    u8 selection = fullOption ? MENUITEM_DIF_FULL_RANDOM : MENUITEM_DIF_RANDOMIZER_E;
+    const u8 *description;
+
+    options.submenu = PAGE_DIFFICULTY;
+    options.sel_difficulty[MENUITEM_DIF_RANDOMIZER_E] = tablesSelected;
+    options.sel_difficulty[MENUITEM_DIF_FULL_RANDOM] = fullSelected;
+    options.menuCursor[PAGE_DIFFICULTY] = selection;
+    sOptions = &options;
+    *canToggle = CheckConditions(selection);
+    description = OptionTextDescription();
+    sOptions = previous;
+    return description;
+}
+#endif
 
 static u8 MenuItemCount(void)
 {
@@ -1046,6 +1083,7 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FlagGet(FLAG_INVERSE_BATTLE_OPTION);
     sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
+    sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]    = Randomizer_FullWildEnabled();
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
     EnforceHardNpcTeamsRules();
@@ -1317,10 +1355,8 @@ static void Task_OptionMenuSave(u8 taskId)
     else
         FlagClear(FLAG_INVERSE_BATTLE_OPTION);
 
-    if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E])
-        FlagSet(RANDOMIZER_FLAG_WILD_MON);
-    else
-        FlagClear(RANDOMIZER_FLAG_WILD_MON);
+    Randomizer_SetWildModes(sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E],
+        sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]);
 
     if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T])
         FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
@@ -1890,6 +1926,16 @@ static void DrawChoices_OnOff(int selection, int y)
 static void DrawChoices_RandomizerE(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_DIF_RANDOMIZER_E);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_OptionFalse, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
+}
+
+static void DrawChoices_FullRandom(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIF_FULL_RANDOM);
     u8 styles[2] = {0};
     styles[selection] = 1;
 

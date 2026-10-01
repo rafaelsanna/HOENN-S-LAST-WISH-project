@@ -1,7 +1,10 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "event_data.h"
+#include "mail.h"
 #include "nuzlocke.h"
+#include "overworld.h"
 #include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
@@ -316,6 +319,78 @@ void Nuzlocke_OnMonCaught(struct Pokemon *mon)
     Nuzlocke_SetWildHeaderFlag(gSaveBlock3Ptr->nuzlockeWildHeaderFlags, GetCurrentMapEncounterId(), 1);
 }
 
+static void Nuzlocke_BoxNormalModeFaintedMons(void)
+{
+    s32 i;
+    s32 firstNonEgg = -1;
+    s32 firstAlive = -1;
+    s32 keepSlot = -1;
+    u8 followerIndex = gSaveBlock3Ptr->followerIndex;
+    u8 newFollowerIndex = OW_FOLLOWER_NOT_SET;
+    u8 retainedCount = 0;
+    bool8 removedAny = FALSE;
+    bool8 lostBattle = gBattleOutcome == B_OUTCOME_LOST
+                    || gBattleOutcome == B_OUTCOME_DREW
+                    || DidPlayerForfeitNormalTrainerBattle();
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE
+         || GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+            continue;
+        if (firstNonEgg == -1)
+            firstNonEgg = i;
+        if (firstAlive == -1 && GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
+            firstAlive = i;
+    }
+
+    // An already-invalid, egg-only party has no safety Pokémon to choose.
+    if (firstNonEgg == -1)
+        return;
+
+    // Eggs cannot be the safety Pokémon. A fainted keeper is healed by whiteout.
+    if (lostBattle || firstAlive == -1)
+        keepSlot = firstAlive != -1 ? firstAlive : firstNonEgg;
+
+    // Preserve the existing two-level penalty when this is the only owned mon.
+    if (keepSlot != -1 && gPokemonStoragePtr != NULL)
+        TryApplyLoneMonPenalty(&gPlayerParty[keepSlot]);
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        struct Pokemon *mon = &gPlayerParty[i];
+
+        if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE)
+            continue;
+        if (i != keepSlot && (lostBattle
+         || (!GetMonData(mon, MON_DATA_IS_EGG) && GetMonData(mon, MON_DATA_HP) == 0)))
+        {
+            // Never delete a mon if storage is full/unavailable. Attached mail
+            // must be removed by the player, just like a normal PC deposit.
+            if (gPokemonStoragePtr != NULL && !MonHasMail(mon)
+             && CopyMonToPC(mon) == MON_GIVEN_TO_PC)
+            {
+                ZeroMonData(mon);
+                removedAny = TRUE;
+                continue;
+            }
+        }
+        if (i == followerIndex)
+            newFollowerIndex = retainedCount;
+        retainedCount++;
+    }
+
+    if (removedAny)
+    {
+        CompactPartySlots();
+        CalculatePlayerPartyCount();
+        // Several removals can shift a surviving follower by more than one slot.
+        gSaveBlock3Ptr->followerIndex = newFollowerIndex;
+        if (followerIndex < PARTY_SIZE && newFollowerIndex == OW_FOLLOWER_NOT_SET)
+            gFollowerSteps = 0;
+    }
+}
+
 void Nuzlocke_ApplyPermadeathToPlayerParty(void)
 {
     bool8 removedAny = FALSE;
@@ -323,6 +398,12 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void)
 
     if (!Nuzlocke_HasStarted())
         return;
+
+    if (Nuzlocke_GetMode() == OPTIONS_NUZLOCKE_NORMAL)
+    {
+        Nuzlocke_BoxNormalModeFaintedMons();
+        return;
+    }
 
     for (i = 0; i < PARTY_SIZE; i++)
     {

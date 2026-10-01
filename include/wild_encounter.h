@@ -73,4 +73,10 @@ u32 ChooseHiddenMonIndex(void);
 bool32 MapHasNoEncounterData(void);
 enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area);
 
+#if TESTING
+void WildEncounter_TestRandomizeFacilityMon(void);
+bool8 WildEncounter_TestMassOutbreak(void);
+u16 WildEncounter_TestFishingMon(const struct WildPokemonInfo *info, u8 rod);
+#endif
+
 #endif // GUARD_WILD_ENCOUNTER_H

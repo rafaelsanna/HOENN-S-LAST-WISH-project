@@ -19,6 +19,7 @@
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
+#include "randomizer.h"
 #include "script.h"
 #include "sprite.h"
 #include "string_util.h"
@@ -115,6 +116,7 @@ void CreateScriptedWildMon(u16 species, u8 level, u16 item)
 {
     u8 heldItem[2];
 
+    species = Randomizer_OnFullWildEncounter(species);
     ZeroEnemyPartyMons();
     if (OW_SYNCHRONIZE_NATURE > GEN_3)
         CreateMonWithNature(&gEnemyParty[0], species, level, USE_RANDOM_IVS, PickWildMonNature());
@@ -142,6 +144,8 @@ void CreateScriptedDoubleWildMon(u16 species1, u8 level1, u16 item1, u16 species
     u8 heldItem1[2];
     u8 heldItem2[2];
 
+    species1 = Randomizer_OnFullWildEncounter(species1);
+    species2 = Randomizer_OnFullWildEncounter(species2);
     ZeroEnemyPartyMons();
 
     if (OW_SYNCHRONIZE_NATURE > GEN_3)

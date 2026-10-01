@@ -26,6 +26,13 @@ TITLESCREENGFXDIR := graphics/title_screen
 types := none normal fight flying poison ground rock bug ghost steel mystery fire water grass electric psychic ice dragon dark fairy stellar
 contest_types := cool beauty cute smart tough
 
+### Temporary Battle Girl placeholder ###
+
+# battle_girl_repacked.png currently reuses battle_girl.png. Keep each 16x32
+# frame contiguous in the output; the source sheet has nine frames in a row.
+$(OBJEVENTGFXDIR)/pics/people/battle_girl_repacked.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 2 -mheight 4
+
 ### Tilesets ###
 
 $(TILESETGFXDIR)/secondary/petalburg/tiles.4bpp: %.4bpp: %.png

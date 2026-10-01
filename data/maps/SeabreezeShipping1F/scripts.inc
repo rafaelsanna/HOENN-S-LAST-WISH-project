@@ -307,9 +307,9 @@ SeabreezeShipping1F_Text_Employee1:
 # 154 "data/maps/SeabreezeShipping1F/scripts.pory"
 SeabreezeShipping1F_Text_Employee2:
 # 155 "data/maps/SeabreezeShipping1F/scripts.pory"
-	.string "Those AQUA members have been watching\n"
+	.string "It's so scary when those AQUA members\n"
 # 156 "data/maps/SeabreezeShipping1F/scripts.pory"
-	.string "us all day. Is the PRESIDENT really\l"
+	.string "come by. Is the PRESIDENT really\l"
 # 157 "data/maps/SeabreezeShipping1F/scripts.pory"
 	.string "okay with this?$"
 # 158 "data/maps/SeabreezeShipping1F/scripts.pory"

@@ -95,7 +95,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
       "script": "SeabreezeShipping1F_EventScript_Grunt1",
-      "flag": "0"
+      "flag": "FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE"
     },
     {
       "local_id": "LOCALID_SEABREEZE_SHIPPING1F_GRUNT_2",
@@ -109,7 +109,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
       "script": "SeabreezeShipping1F_EventScript_Grunt2",
-      "flag": "0"
+      "flag": "FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE"
     },
     {
       "local_id": "LOCALID_SEABREEZE_SHIPPING1F_GRUNT_3",
@@ -123,7 +123,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
       "script": "SeabreezeShipping1F_EventScript_Grunt3",
-      "flag": "0"
+      "flag": "FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",

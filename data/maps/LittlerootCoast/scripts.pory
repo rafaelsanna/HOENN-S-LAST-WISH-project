@@ -26,24 +26,27 @@ script BirdKeeperLee {
 	end
 }
 
+// format() wraps text to the box, using \n for line 2 and \l to wait/scroll.
+// Adjacent quoted strings are joined; keep a space between sentences.
+// Use \p to wait and start a fresh page. Poryscript adds the final $ for you.
 text LeeDialogue {
-	"I'm trying to catch a WINGULL!\n
-	All my other birds get crushed by ROCK-types,\n
-	so I need one that can actually fight back!"
+	format("I'm trying to catch a WINGULL! "
+	       "All my other birds get crushed by ROCK-types, "
+	       "so I need one that can actually fight back!")
 }
 
 text LeeIntro {
-	"Birds are amazing, you know?\n
-	Some glide, some dive, some just scream.\n
-	But every one of them has style!\n
-	Think you can handle me?"
+	format("Birds are amazing, you know? "
+	       "Some glide, some dive, some just scream. "
+	       "But every one of them has style! "
+	       "Think you can handle me?")
 }
 
 text LeeLose {
-	"That's why I need a WINGULL!\n
-	Terra, the Rustboro Gym Leader's ROCK-types\n
-	flatten every other bird I have!\p
-	But a WINGULL… THAT one might stand a chance!"
+	format("That's why I need a WINGULL! "
+	       "Terra, the Rustboro Gym Leader's ROCK-types "
+	       "flatten every other bird I have!\p"
+	       "But a WINGULL… THAT one might stand a chance!")
 }
 
 script ArtistPortinari {
@@ -55,18 +58,18 @@ script ArtistPortinari {
 }
 
 text PortinariDialogue {
-	"I came here to watch the waves.\n
-	This peaceful coast always inspires my art."
+	format("I came here to watch the waves. "
+	       "This peaceful coast always inspires my art.")
 }
 
 text PortinariIntro {
-	"The rhythm of the sea… the waves...\n
-	All of it fuels my creativity!\p
-	Let me capture your style in battle!"
+	format("The rhythm of the sea… the waves... "
+	       "All of it fuels my creativity!\p"
+	       "Let me capture your style in battle!")
 }
 
 text PortinariLose {
-	"Defeated… yet inspired.\n
-	Your technique has given me a new idea\n
-	for my next painting!"
+	format("Defeated… yet inspired. "
+	       "Your technique has given me a new idea "
+	       "for my next painting!")
 }

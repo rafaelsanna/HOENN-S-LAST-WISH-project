@@ -80,7 +80,8 @@
     F(DRAGON_TAIL) \
     F(PSYCHO_CUT) \
     F(PLAY_ROUGH) \
-    F(FOUL_PLAY)
+    F(FOUL_PLAY) \
+    F(FLAME_CHARGE)
 
 
 #define FOREACH_HM(F) \

@@ -7,6 +7,7 @@
 #include "randomizer.h"
 #include "event_data.h"
 #include "pokemon.h"
+#include "random.h"
 #include "constants/flags.h"
 #include "constants/vars.h"
 #include "constants/species.h"
@@ -521,6 +522,25 @@ bool8 Randomizer_WildEnabled(void)
     return FlagGet(RANDOMIZER_FLAG_WILD_MON);
 }
 
+bool8 Randomizer_FullWildEnabled(void)
+{
+    // Preserve the established table mode if a malformed save has both bits set.
+    return !Randomizer_WildEnabled() && FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON);
+}
+
+void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom)
+{
+    if (randomizeTables)
+        FlagSet(RANDOMIZER_FLAG_WILD_MON);
+    else
+        FlagClear(RANDOMIZER_FLAG_WILD_MON);
+
+    if (fullRandom && !randomizeTables)
+        FlagSet(RANDOMIZER_FLAG_FULL_WILD_MON);
+    else
+        FlagClear(RANDOMIZER_FLAG_FULL_WILD_MON);
+}
+
 bool8 Randomizer_TrainerEnabled(void)
 {
     return FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
@@ -548,10 +568,7 @@ enum RandomizerSpeciesMode Randomizer_GetSpeciesMode(void)
 
 void Randomizer_Init(bool8 randomizeWild, bool8 randomizeTrainers, enum RandomizerSpeciesMode mode)
 {
-    if (randomizeWild)
-        FlagSet(RANDOMIZER_FLAG_WILD_MON);
-    else
-        FlagClear(RANDOMIZER_FLAG_WILD_MON);
+    Randomizer_SetWildModes(randomizeWild, FALSE);
 
     if (randomizeTrainers)
         FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
@@ -659,6 +676,26 @@ u16 Randomizer_GetSpecies(u16 originalSpecies, enum RandomizerContext context, u
 }
 
 // Hooks
+u16 Randomizer_OnFullWildEncounter(u16 species)
+{
+    if (!Randomizer_FullWildEnabled())
+        return species;
+
+    // Use the same roster as the regional Pokédex, not the table-mode pool.
+    // A fresh draw includes every dex entry, regardless of evolution or rarity.
+    for (u32 attempt = 0; attempt < HOENN_DEX_COUNT - 1; attempt++)
+    {
+        u16 dexNum = 1 + Random32() % (HOENN_DEX_COUNT - 1);
+        u16 candidate = NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum));
+
+        if (candidate != SPECIES_NONE && candidate < NUM_SPECIES && gSpeciesInfo[candidate].baseHP != 0)
+            return candidate;
+    }
+
+    // Keep encounters safe if a future dex configuration has missing species.
+    return species;
+}
+
 u16 Randomizer_OnWildEncounter(u16 species, u8 mapGroup, u8 mapNum, u8 area, u8 slot)
 {
     if (!Randomizer_WildEnabled()) return species;

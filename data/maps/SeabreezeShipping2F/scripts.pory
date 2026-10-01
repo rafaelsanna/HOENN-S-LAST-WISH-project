@@ -64,6 +64,9 @@ SeabreezeShipping2F_EventScript_IllegalBusinessScene::
 	applymovement LOCALID_PLAYER, Common_Movement_FaceDown
 	waitmovement 0
 	msgbox SeabreezeShipping2F_Text_AccountantChallenge, MSGBOX_DEFAULT
+
+SeabreezeShipping2F_EventScript_StartAccountantBattle::
+	@ Juan is buying time: either battle outcome advances HQ and clears the 1F grunts.
 	setflag FLAG_SEABREEZE_SHIPPING_HQ_COMPLETE
 	trainerbattle_no_intro TRAINER_ACCOUNTANT_JUAN, SeabreezeShipping2F_Text_AccountantDefeat
 	releaseall

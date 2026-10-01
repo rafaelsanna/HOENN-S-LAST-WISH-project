@@ -372,57 +372,57 @@ Ability: Prankster
 
 === TRAINER_GRUNT_WEATHER_INST_1 ===
 Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt M
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Male
-Music: Aqua
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 27
+Sharpedo
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Poochyena
-Level: 27
+Mightyena
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_WEATHER_INST_2 ===
 Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt M
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Male
-Music: Aqua
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Poochyena
-Level: 27
+Granbull
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Tentacool
-Level: 27
+Chimecho
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_WEATHER_INST_3 ===
 Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt M
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Male
-Music: Aqua
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Poochyena
-Level: 26
+Swalot
+Level: 43
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Zubat
-Level: 26
+Mightyena
+Level: 43
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Tentacool
-Level: 26
+Nuzleaf
+Level: 43
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MUSEUM_1 ===
@@ -576,15 +576,15 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_WEATHER_INST_4 ===
 Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt F
+Class: Team Magma
+Pic: Magma Grunt F
 Gender: Female
-Music: Aqua
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Tentacool
-Level: 28
+Ninetales
+Level: 45
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_AQUA_HIDEOUT_5 ===
@@ -768,21 +768,45 @@ Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_SHELLY_WEATHER_INSTITUTE ===
-Name: SHELLY
-Class: Aqua Admin
-Pic: Aqua Admin F
-Gender: Female
-Music: Aqua
-Double Battle: No
+Name: NETSU
+Class: Magma Admin
+Pic: Netsu
+Gender: Male
+Music: Magma
+Double Battle: Yes
 AI: Basic Trainer
 
-Tentacool
-Level: 28
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+Houndoom @ Charcoal
+Level: 50
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Dark Pulse
+- Protect
+- Flame Charge
+- Incinerate
 
-Mightyena
-Level: 28
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+Pinsir @ Sitrus Berry
+Level: 50
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Knock Off
+- Protect
+- Brick Break
+- Bug Bite
+
+Granbull @ Passho Berry
+Level: 50
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Bulldoze
+- Protect
+- Brick Break
+- Fire Punch
+
+Magmortar @ Rocky Helmet
+Level: 50
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Will-O-Wisp
+- Protect
+- Fire Punch
+- Thunder Punch
 
 === TRAINER_SHELLY_SEAFLOOR_CAVERN ===
 Name: SHELLY
@@ -13251,9 +13275,9 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 === TRAINER_GRUNT_UNUSED ===
 Name: GRUNT
 Class: Team Magma
-Pic: Aqua Grunt F
+Pic: Magma Grunt F
 Gender: Female
-Music: Aqua
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
@@ -13706,19 +13730,19 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_WEATHER_INST_5 ===
 Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt F
+Class: Team Magma
+Pic: Magma Grunt F
 Gender: Female
-Music: Aqua
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Zubat
-Level: 27
+Croconaw
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Poochyena
-Level: 27
+Crobat
+Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TABITHA_MT_CHIMNEY ===

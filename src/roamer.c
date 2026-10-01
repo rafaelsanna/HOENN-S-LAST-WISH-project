@@ -2,6 +2,7 @@
 #include "event_data.h"
 #include "pokemon.h"
 #include "random.h"
+#include "randomizer.h"
 #include "roamer.h"
 
 // Despite having a variable to track it, the roamer is
@@ -242,10 +243,15 @@ void CreateRoamerMonInstance(u32 roamerIndex)
 {
     u32 status = ROAMER(roamerIndex)->statusA + (ROAMER(roamerIndex)->statusB << 8);
     struct Pokemon *mon = &gEnemyParty[0];
+    u16 species = Randomizer_OnFullWildEncounter(ROAMER(roamerIndex)->species);
+    u16 hp = ROAMER(roamerIndex)->hp;
+
     ZeroEnemyPartyMons();
-    CreateMonWithIVsPersonality(mon, ROAMER(roamerIndex)->species, ROAMER(roamerIndex)->level, ROAMER(roamerIndex)->ivs, ROAMER(roamerIndex)->personality);
+    CreateMonWithIVsPersonality(mon, species, ROAMER(roamerIndex)->level, ROAMER(roamerIndex)->ivs, ROAMER(roamerIndex)->personality);
+    if (Randomizer_FullWildEnabled())
+        hp = min(hp, GetMonData(mon, MON_DATA_MAX_HP));
     SetMonData(mon, MON_DATA_STATUS, &status);
-    SetMonData(mon, MON_DATA_HP, &ROAMER(roamerIndex)->hp);
+    SetMonData(mon, MON_DATA_HP, &hp);
     SetMonData(mon, MON_DATA_COOL, &ROAMER(roamerIndex)->cool);
     SetMonData(mon, MON_DATA_BEAUTY, &ROAMER(roamerIndex)->beauty);
     SetMonData(mon, MON_DATA_CUTE, &ROAMER(roamerIndex)->cute);

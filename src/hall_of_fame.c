@@ -28,6 +28,7 @@
 #include "scanline_effect.h"
 #include "trig.h"
 #include "random.h"
+#include "randomizer.h"
 #include "event_data.h"
 #include "overworld.h"
 #include "menu.h"
@@ -153,6 +154,7 @@ static const u8 sText_InfiniteCandyNo[] = _("Infinity Candy: No - ");
 static const u8 sText_WishMenuUsed[] = _("Wish Menu: Used");
 static const u8 sText_WishMenuNo[] = _("Wish Menu: No");
 static const u8 sText_RandomWildsOn[] = _("Random Wilds: On - ");
+static const u8 sText_RandomWildsFull[] = _("Random Wilds: Full - ");
 static const u8 sText_RandomWildsOff[] = _("Random Wilds: Off - ");
 static const u8 sText_RandomTrainersOn[] = _("Random Trainers: On");
 static const u8 sText_RandomTrainersOff[] = _("Random Trainers: Off");
@@ -1149,7 +1151,8 @@ static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
     stringPtr = StringCopy(line2, gSaveBlock2Ptr->optionsInfiniteCandy == OPTIONS_INFINITECANDY_ON ? sText_InfiniteCandyYes : sText_InfiniteCandyNo);
     StringCopy(stringPtr, FlagGet(FLAG_USED_DEBUG_MENU) ? sText_WishMenuUsed : sText_WishMenuNo);
 
-    stringPtr = StringCopy(line3, FlagGet(RANDOMIZER_FLAG_WILD_MON) ? sText_RandomWildsOn : sText_RandomWildsOff);
+    stringPtr = StringCopy(line3, Randomizer_FullWildEnabled() ? sText_RandomWildsFull
+        : Randomizer_WildEnabled() ? sText_RandomWildsOn : sText_RandomWildsOff);
     StringCopy(stringPtr, FlagGet(RANDOMIZER_FLAG_TRAINER_MON) ? sText_RandomTrainersOn : sText_RandomTrainersOff);
 
     FillWindowPixelBuffer(0, PIXEL_FILL(0));
