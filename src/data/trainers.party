@@ -5377,7 +5377,7 @@ Gender:Female
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer / HP Aware
+AI: Basic Trainer / HP Aware / Ace Pokemon
 Mugshot: Purple
 
 Shedinja @ Focus Sash
@@ -5398,16 +5398,6 @@ Jolly Nature
 - X-Scissor  
 - Swords Dance  
 - Aerial Ace  
-- Substitute  
-
-Delcatty @ Expert Belt 
-Level: 65
-IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
-Ability: Sharpness  
-Jolly Nature  
-- Swords Dance  
-- Slash  
-- Sacred Sword  
 - Substitute  
 
 Kleavor @ Lum Berry
@@ -5438,6 +5428,16 @@ Jolly Nature
 - X-Scissor 
 - Drain Punch  
 - Ice Punch  
+- Substitute  
+
+Delcatty @ Expert Belt 
+Level: 65
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+Ability: Sharpness  
+Jolly Nature  
+- Swords Dance  
+- Slash  
+- Sacred Sword  
 - Substitute  
 
 === TRAINER_TSUBAKI_HARD_DOUBLES ===
@@ -5590,7 +5590,7 @@ Gender: Female
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: Yes
-AI: Basic Trainer / HP Aware
+AI: Basic Trainer / HP Aware / Double Ace Pokemon
 Mugshot: Green
 
 Chimecho @ Mental Herb  
@@ -5803,18 +5803,18 @@ Gender: Male
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer / HP Aware
+AI: Basic Trainer / HP Aware / Ace Pokemon
 Mugshot: Pink
 
-Torkoal @ Icy Rock  
+Cacturne @ Chople Berry  
 Level: 66
 IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
-Ability: Snow Warning   
-Bold Nature
-- Rapid Spin  
-- Stealth Rock  
-- Haze  
-- Icy Wind  
+Ability: Snow Cloak  
+Adamant Nature
+- Spikes  
+- Drain Punch  
+- Sucker Punch  
+- Avalanche  
 
 Jumpluff @ Babiri Berry  
 Level: 66
@@ -5846,16 +5846,6 @@ IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 - Shadow Ball  
 - Draining Kiss 
 
-Cacturne @ Chople Berry  
-Level: 66
-IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
-Ability: Snow Cloak  
-Adamant Nature
-- Curse  
-- Drain Punch  
-- Sucker Punch  
-- Avalanche  
-
 Lapras @ Heavy-Duty Boots 
 Level: 66
 IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
@@ -5866,6 +5856,16 @@ Shiny: Yes
 - Ice Beam  
 - Surf  
 - Earthquake  
+
+Torkoal @ Icy Rock  
+Level: 66
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+Ability: Snow Warning   
+Modest Nature
+- Blizzard 
+- Freeze-Dry  
+- Haze  
+- Earth Power
 
 === TRAINER_SARK_HARD_SINGLES ===
 Name: STARK
@@ -6017,7 +6017,7 @@ Gender: Male
 Music: Elite Four
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer / HP Aware
+AI: Basic Trainer / HP Aware / Ace Pokemon
 Mugshot: Blue
 
 Kingdra @ Mental Herb  
@@ -6229,7 +6229,7 @@ Pic: Leader Roxanne
 Gender: Female
 Music: Female
 Double Battle: No
-AI: Basic Trainer
+AI: Basic Trainer / Ace Pokemon
 
 Lileep  
 Ability: Suction Cups
@@ -6298,7 +6298,7 @@ Pic: Leader Brawly
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Basic Trainer
+AI: Basic Trainer / Ace Pokemon
 
 Mankey  
 Level: 22  
@@ -6314,15 +6314,7 @@ Level: 24
 - Headbutt
 - Power-Up Punch
 - Mega Drain 
-- Leech Seed
-
-Furret @ Expert Belt  
-Ability: Adaptability  
-Level: 25  
-- Rock Smash 
-- Dig 
-- Rollout  
-- Power-Up Punch   
+- Leech Seed 
 
 Heracross 
 Level: 23 
@@ -6330,6 +6322,14 @@ Level: 23
 - Aerial Ace
 - Horn Leech 
 - Endure
+
+Furret @ Expert Belt  
+Ability: Adaptability  
+Level: 25  
+- Rock Smash 
+- Dig 
+- Rollout  
+- Power-Up Punch  
 
 === TRAINER_BRAWLY ===
 Name: RENTON
@@ -6386,7 +6386,7 @@ Pic: Leader Wattson
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Basic Trainer
+AI: Basic Trainer / Ace Pokemon
 
 Plusle  
 Ability: Lightning Rod 
@@ -6513,7 +6513,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Fiery Dance
 - Baton Pass
 
-Ninetales @ Heat Rock  
+Ninetales @ Throat Spray
 Ability: Drought  
 Timid Nature  
 Level: 42  
@@ -6570,7 +6570,7 @@ Pic: Leader Flannery
 Gender: Female
 Music: Female
 Double Battle: No
-AI: Smart Trainer
+AI: Basic Trainer / Ace Pokemon
 
 Granbull   
 Level: 41   
@@ -6600,7 +6600,7 @@ Level: 40
 - Fiery Dance   
 - Trailblaze  
 
-Ninetales @ Mental Herb
+Ninetales @ Sitrus Berry
 Level: 42  
 - Dazzling Gleam  
 - Torch song   
@@ -6679,7 +6679,7 @@ Gender: Female
 Music: Female
 Items: Hyper Potion / Hyper Potion
 Double Battle: Yes
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / Double Ace Pokemon
 
 Eevee @ Eviolite  
 Ability: Adaptability  
@@ -6807,7 +6807,7 @@ Gender: Male
 Music: Male
 Items: Hyper Potion / Hyper Potion
 Double Battle: No
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / Ace Pokemon
 
 Wigglytuff  
 Level: 47  
@@ -6930,7 +6930,7 @@ Gender: Male
 Music: Female
 Items: Hyper Potion / Hyper Potion / Hyper Potion / Hyper Potion
 Double Battle: Yes
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / Double Ace Pokemon
 
 Gorebyss @ Sitrus Berry  
 Level: 55
@@ -7053,7 +7053,7 @@ Gender: Male
 Music: Male
 Items: Hyper Potion / Hyper Potion
 Double Battle: No
-AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+AI: Basic Trainer / Ace Pokemon
 
 Pelipper  
 Level: 58
@@ -7061,13 +7061,6 @@ Level: 58
 - Surf  
 - Air Slash  
 - Roost  
-
-Cursola  
-Level: 60
-- Moonblast  
-- Surf  
-- Flip Turn   
-- Sing  
 
 Venusaur  
 Level: 60 
@@ -7096,6 +7089,13 @@ Level: 60
 - Flip Turn
 - Icy Wind
 - Volt Switch
+
+Cursola  
+Level: 60
+- Moonblast  
+- Surf  
+- Flip Turn   
+- Sing  
 
 === TRAINER_JERRY_1 ===
 Name: JERRY
@@ -8453,7 +8453,7 @@ Gender: Female
 Music: Female
 Items: Full Restore / Full Restore / Full Restore / Full Restore
 Double Battle: No
-AI: Smart Trainer / HP Aware
+AI: Smart Trainer / HP Aware / Ace Pokemon
 Mugshot: Yellow
 
 Probopass @ Sitrus Berry 

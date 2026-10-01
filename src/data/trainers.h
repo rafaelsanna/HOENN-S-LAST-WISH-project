@@ -14103,7 +14103,7 @@ F_TRAINER_FEMALE |
 #line 5379
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 5380
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_ACE_POKEMON,
 #line 5381
         .mugshotColor = MUGSHOT_COLOR_PURPLE,
 #line 0
@@ -14159,10 +14159,10 @@ F_TRAINER_FEMALE |
             },
             {
 #line 5403
-            .species = SPECIES_DELCATTY,
+            .species = SPECIES_KLEAVOR,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5403
-            .heldItem = ITEM_EXPERT_BELT,
+            .heldItem = ITEM_LUM_BERRY,
 #line 5405
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5406
@@ -14174,29 +14174,6 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 5408
-                MOVE_SWORDS_DANCE,
-                MOVE_SLASH,
-                MOVE_SACRED_SWORD,
-                MOVE_SUBSTITUTE,
-            },
-            },
-            {
-#line 5413
-            .species = SPECIES_KLEAVOR,
-            .gender = TRAINER_MON_RANDOM_GENDER,
-#line 5413
-            .heldItem = ITEM_LUM_BERRY,
-#line 5415
-            .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
-#line 5416
-            .ability = ABILITY_SHARPNESS,
-#line 5414
-            .lvl = 65,
-#line 5417
-            .nature = NATURE_JOLLY,
-            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-            .moves = {
-#line 5418
                 MOVE_STONE_AXE,
                 MOVE_X_SCISSOR,
                 MOVE_U_TURN,
@@ -14204,22 +14181,22 @@ F_TRAINER_FEMALE |
             },
             },
             {
-#line 5423
+#line 5413
             .species = SPECIES_WEAVILE,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 5423
+#line 5413
             .heldItem = ITEM_HEAVY_DUTY_BOOTS,
-#line 5425
+#line 5415
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
-#line 5426
+#line 5416
             .ability = ABILITY_PRESSURE,
-#line 5424
+#line 5414
             .lvl = 65,
-#line 5427
+#line 5417
             .nature = NATURE_JOLLY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
-#line 5428
+#line 5418
                 MOVE_SUBSTITUTE,
                 MOVE_SWORDS_DANCE,
                 MOVE_ICE_SHARD,
@@ -14227,12 +14204,35 @@ F_TRAINER_FEMALE |
             },
             },
             {
-#line 5433
+#line 5423
             .species = SPECIES_GALLADE,
-#line 5433
+#line 5423
             .gender = TRAINER_MON_MALE,
-#line 5433
+#line 5423
             .heldItem = ITEM_SITRUS_BERRY,
+#line 5425
+            .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
+#line 5426
+            .ability = ABILITY_SHARPNESS,
+#line 5424
+            .lvl = 65,
+#line 5427
+            .nature = NATURE_JOLLY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 5428
+                MOVE_X_SCISSOR,
+                MOVE_DRAIN_PUNCH,
+                MOVE_ICE_PUNCH,
+                MOVE_SUBSTITUTE,
+            },
+            },
+            {
+#line 5433
+            .species = SPECIES_DELCATTY,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 5433
+            .heldItem = ITEM_EXPERT_BELT,
 #line 5435
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5436
@@ -14244,9 +14244,9 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 5438
-                MOVE_X_SCISSOR,
-                MOVE_DRAIN_PUNCH,
-                MOVE_ICE_PUNCH,
+                MOVE_SWORDS_DANCE,
+                MOVE_SLASH,
+                MOVE_SACRED_SWORD,
                 MOVE_SUBSTITUTE,
             },
             },
@@ -14607,7 +14607,7 @@ F_TRAINER_FEMALE |
 #line 5592
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 5593
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_DOUBLE_ACE_POKEMON,
 #line 5594
         .mugshotColor = MUGSHOT_COLOR_GREEN,
 #line 0
@@ -15106,7 +15106,7 @@ F_TRAINER_FEMALE |
 #line 5805
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 5806
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_ACE_POKEMON,
 #line 5807
         .mugshotColor = MUGSHOT_COLOR_PINK,
 #line 0
@@ -15116,25 +15116,25 @@ F_TRAINER_FEMALE |
         {
             {
 #line 5809
-            .species = SPECIES_TORKOAL,
+            .species = SPECIES_CACTURNE,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5809
-            .heldItem = ITEM_ICY_ROCK,
+            .heldItem = ITEM_CHOPLE_BERRY,
 #line 5811
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5812
-            .ability = ABILITY_SNOW_WARNING,
+            .ability = ABILITY_SNOW_CLOAK,
 #line 5810
             .lvl = 66,
 #line 5813
-            .nature = NATURE_BOLD,
+            .nature = NATURE_ADAMANT,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 5814
-                MOVE_RAPID_SPIN,
-                MOVE_STEALTH_ROCK,
-                MOVE_HAZE,
-                MOVE_ICY_WIND,
+                MOVE_SPIKES,
+                MOVE_DRAIN_PUNCH,
+                MOVE_SUCKER_PUNCH,
+                MOVE_AVALANCHE,
             },
             },
             {
@@ -15209,50 +15209,50 @@ F_TRAINER_FEMALE |
             },
             {
 #line 5849
-            .species = SPECIES_CACTURNE,
+            .species = SPECIES_LAPRAS,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 5849
-            .heldItem = ITEM_CHOPLE_BERRY,
+            .heldItem = ITEM_HEAVY_DUTY_BOOTS,
 #line 5851
             .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
 #line 5852
-            .ability = ABILITY_SNOW_CLOAK,
+            .ability = ABILITY_WATER_ABSORB,
 #line 5850
             .lvl = 66,
 #line 5853
-            .nature = NATURE_ADAMANT,
-            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-            .moves = {
-#line 5854
-                MOVE_CURSE,
-                MOVE_DRAIN_PUNCH,
-                MOVE_SUCKER_PUNCH,
-                MOVE_AVALANCHE,
-            },
-            },
-            {
-#line 5859
-            .species = SPECIES_LAPRAS,
-            .gender = TRAINER_MON_RANDOM_GENDER,
-#line 5859
-            .heldItem = ITEM_HEAVY_DUTY_BOOTS,
-#line 5861
-            .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
-#line 5862
-            .ability = ABILITY_WATER_ABSORB,
-#line 5860
-            .lvl = 66,
-#line 5863
             .nature = NATURE_MODEST,
-#line 5864
+#line 5854
             .isShiny = TRUE,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
-#line 5865
+#line 5855
                 MOVE_FREEZE_DRY,
                 MOVE_ICE_BEAM,
                 MOVE_SURF,
                 MOVE_EARTHQUAKE,
+            },
+            },
+            {
+#line 5860
+            .species = SPECIES_TORKOAL,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 5860
+            .heldItem = ITEM_ICY_ROCK,
+#line 5862
+            .iv = TRAINER_PARTY_IVS(28, 28, 28, 28, 28, 28),
+#line 5863
+            .ability = ABILITY_SNOW_WARNING,
+#line 5861
+            .lvl = 66,
+#line 5864
+            .nature = NATURE_MODEST,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 5865
+                MOVE_BLIZZARD,
+                MOVE_FREEZE_DRY,
+                MOVE_HAZE,
+                MOVE_EARTH_POWER,
             },
             },
         },
@@ -15606,7 +15606,7 @@ F_TRAINER_FEMALE |
 #line 6019
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 6020
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_ACE_POKEMON,
 #line 6021
         .mugshotColor = MUGSHOT_COLOR_BLUE,
 #line 0
@@ -16101,7 +16101,7 @@ F_TRAINER_FEMALE |
 #line 6231
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 6232
-        .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_ROXANNE,
         .partySize = 3,
@@ -16277,7 +16277,7 @@ F_TRAINER_FEMALE |
 #line 6300
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 6301
-        .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_BRAWLY,
         .partySize = 4,
@@ -16325,42 +16325,42 @@ F_TRAINER_FEMALE |
             },
             {
 #line 6319
-            .species = SPECIES_FURRET,
-            .gender = TRAINER_MON_RANDOM_GENDER,
-#line 6319
-            .heldItem = ITEM_EXPERT_BELT,
-#line 6322
-            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 6320
-            .ability = ABILITY_ADAPTABILITY,
-#line 6321
-            .lvl = 25,
-            .nature = NATURE_HARDY,
-            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
-            .moves = {
-#line 6322
-                MOVE_ROCK_SMASH,
-                MOVE_DIG,
-                MOVE_ROLLOUT,
-                MOVE_POWER_UP_PUNCH,
-            },
-            },
-            {
-#line 6327
             .species = SPECIES_HERACROSS,
             .gender = TRAINER_MON_RANDOM_GENDER,
-#line 6329
+#line 6321
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
-#line 6328
+#line 6320
             .lvl = 23,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
-#line 6329
+#line 6321
                 MOVE_POWER_UP_PUNCH,
                 MOVE_AERIAL_ACE,
                 MOVE_HORN_LEECH,
                 MOVE_ENDURE,
+            },
+            },
+            {
+#line 6326
+            .species = SPECIES_FURRET,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 6326
+            .heldItem = ITEM_EXPERT_BELT,
+#line 6329
+            .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 6327
+            .ability = ABILITY_ADAPTABILITY,
+#line 6328
+            .lvl = 25,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 6329
+                MOVE_ROCK_SMASH,
+                MOVE_DIG,
+                MOVE_ROLLOUT,
+                MOVE_POWER_UP_PUNCH,
             },
             },
         },
@@ -16495,7 +16495,7 @@ F_TRAINER_FEMALE |
 #line 6388
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 6389
-        .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_WATTSON,
         .partySize = 5,
@@ -16814,7 +16814,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_NINETALES,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6516
-            .heldItem = ITEM_HEAT_ROCK,
+            .heldItem = ITEM_THROAT_SPRAY,
 #line 6520
             .iv = TRAINER_PARTY_IVS(24, 24, 24, 24, 24, 24),
 #line 6517
@@ -16943,7 +16943,7 @@ F_TRAINER_FEMALE |
 #line 6572
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 6573
-        .aiFlags = AI_FLAG_SMART_TRAINER,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_FLANNERY,
         .partySize = 5,
@@ -17026,7 +17026,7 @@ F_TRAINER_FEMALE |
             .species = SPECIES_NINETALES,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6603
-            .heldItem = ITEM_MENTAL_HERB,
+            .heldItem = ITEM_SITRUS_BERRY,
 #line 6605
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
 #line 6604
@@ -17219,7 +17219,7 @@ F_TRAINER_FEMALE |
 #line 6681
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 6682
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_DOUBLE_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_NORMAN,
         .partySize = 6,
@@ -17527,7 +17527,7 @@ F_TRAINER_FEMALE |
 #line 6809
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 6810
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_WINONA,
         .partySize = 6,
@@ -17821,7 +17821,7 @@ F_TRAINER_FEMALE |
 #line 6932
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 6933
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_DOUBLE_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_TATE_AND_LIZA,
         .partySize = 6,
@@ -18119,7 +18119,7 @@ F_TRAINER_FEMALE |
 #line 7055
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 7056
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_PREDICTION | AI_FLAG_TRY_TO_2HKO | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_ACE_POKEMON,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_JUAN,
         .partySize = 6,
@@ -18145,7 +18145,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 7065
-            .species = SPECIES_CURSOLA,
+            .species = SPECIES_VENUSAUR,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7067
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
@@ -18155,15 +18155,15 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 7067
-                MOVE_MOONBLAST,
-                MOVE_SURF,
+                MOVE_BULLDOZE,
+                MOVE_WATERFALL,
                 MOVE_FLIP_TURN,
-                MOVE_SING,
+                MOVE_CRUNCH,
             },
             },
             {
 #line 7072
-            .species = SPECIES_VENUSAUR,
+            .species = SPECIES_LUDICOLO,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7074
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
@@ -18173,15 +18173,15 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 7074
-                MOVE_BULLDOZE,
-                MOVE_WATERFALL,
+                MOVE_SURF,
+                MOVE_GIGA_DRAIN,
                 MOVE_FLIP_TURN,
-                MOVE_CRUNCH,
+                MOVE_FAKE_OUT,
             },
             },
             {
 #line 7079
-            .species = SPECIES_LUDICOLO,
+            .species = SPECIES_STARMIE,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7081
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
@@ -18191,15 +18191,15 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 7081
-                MOVE_SURF,
-                MOVE_GIGA_DRAIN,
                 MOVE_FLIP_TURN,
-                MOVE_FAKE_OUT,
+                MOVE_SURF,
+                MOVE_PSYSHOCK,
+                MOVE_POWER_GEM,
             },
             },
             {
 #line 7086
-            .species = SPECIES_STARMIE,
+            .species = SPECIES_LANTURN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7088
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
@@ -18209,15 +18209,15 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 7088
-                MOVE_FLIP_TURN,
                 MOVE_SURF,
-                MOVE_PSYSHOCK,
-                MOVE_POWER_GEM,
+                MOVE_FLIP_TURN,
+                MOVE_ICY_WIND,
+                MOVE_VOLT_SWITCH,
             },
             },
             {
 #line 7093
-            .species = SPECIES_LANTURN,
+            .species = SPECIES_CURSOLA,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 7095
             .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
@@ -18227,10 +18227,10 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 7095
+                MOVE_MOONBLAST,
                 MOVE_SURF,
                 MOVE_FLIP_TURN,
-                MOVE_ICY_WIND,
-                MOVE_VOLT_SWITCH,
+                MOVE_SING,
             },
             },
         },
@@ -21812,7 +21812,7 @@ F_TRAINER_FEMALE |
 #line 8455
         .battleType = TRAINER_BATTLE_TYPE_SINGLES,
 #line 8456
-        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_HP_AWARE,
+        .aiFlags = AI_FLAG_SMART_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_ACE_POKEMON,
 #line 8457
         .mugshotColor = MUGSHOT_COLOR_YELLOW,
 #line 0

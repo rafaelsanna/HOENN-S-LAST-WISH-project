@@ -7147,10 +7147,10 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_TORKOAL] =
     {
         .baseHP        = 70,
-        .baseAttack    = 85,
+        .baseAttack    = 65,
         .baseDefense   = 70,
         .baseSpeed     = 20,
-        .baseSpAttack  = 85,
+        .baseSpAttack  = 105,
         .baseSpDefense = 140,
         .types = MON_TYPES(TYPE_ICE),
         .catchRate = 90,
