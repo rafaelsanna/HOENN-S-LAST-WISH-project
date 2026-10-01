@@ -1651,9 +1651,9 @@
 // HLW 0.9 persistent custom flags (stored in SaveBlock4 sectors 30/31).
 // This range is intentionally separate from the frozen legacy flag array.
 #define HLW_CUSTOM_FLAGS_START                      0x1000
-#define FLAG_UNUSED_0x1000                           (HLW_CUSTOM_FLAGS_START + 0x000) // Unused Flag
-#define FLAG_UNUSED_0x1001                           (HLW_CUSTOM_FLAGS_START + 0x001) // Unused Flag
-#define FLAG_UNUSED_0x1002                           (HLW_CUSTOM_FLAGS_START + 0x002) // Unused Flag
+#define FLAG_IPPO_FIRE_PUNCH_REWARD                 (HLW_CUSTOM_FLAGS_START + 0x000)
+#define FLAG_MAMORU_ICE_PUNCH_REWARD               (HLW_CUSTOM_FLAGS_START + 0x001)
+#define FLAG_RYO_THUNDER_PUNCH_REWARD               (HLW_CUSTOM_FLAGS_START + 0x002)
 #define FLAG_UNUSED_0x1003                           (HLW_CUSTOM_FLAGS_START + 0x003) // Unused Flag
 #define FLAG_UNUSED_0x1004                           (HLW_CUSTOM_FLAGS_START + 0x004) // Unused Flag
 #define FLAG_UNUSED_0x1005                           (HLW_CUSTOM_FLAGS_START + 0x005) // Unused Flag

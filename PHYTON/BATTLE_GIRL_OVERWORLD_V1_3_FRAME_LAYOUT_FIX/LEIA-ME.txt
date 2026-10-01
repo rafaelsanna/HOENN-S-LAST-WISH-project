@@ -1,0 +1,40 @@
+BATTLE GIRL OVERWORLD V1.3 - FRAME LAYOUT FIX
+================================================
+
+Sintoma:
+- palette correta;
+- NPC aparece "fatiado" / com pedaços horizontais de vários frames.
+
+Causa:
+O sprite Battle Girl foi montado como vários frames 16x32 LADO A LADO
+em um PNG horizontal.
+
+O conversor de PNG -> 4bpp grava tiles por linha da imagem inteira.
+Por isso os tiles de um frame 16x32 NÃO ficam contíguos no .4bpp.
+
+Mas:
+  sPicTable_BattleGirl
+  overworld_ascending_frames(..., 2, 4)
+  sAnimTable_Standard
+
+esperam que cada frame 16x32 ocupe um bloco contínuo de 256 bytes.
+
+Resultado: o jogo combina linhas de vários frames e o sprite fica fatiado.
+
+A correção NÃO troca a animation table.
+Ela reorganiza somente os tiles do gfx:
+- lê battle_girl.png para descobrir width/height;
+- lê battle_girl.4bpp já gerado pelo repo;
+- junta os tiles corretos de cada frame 16x32;
+- gera battle_girl_repacked.4bpp;
+- aponta gObjectEventPic_BattleGirl para esse arquivo.
+
+A palette própria continua igual.
+
+USO
+----
+cd ~/pokeemerald-expansion
+
+python3 PHYTON/BATTLE_GIRL_OVERWORLD_V1_3_FRAME_LAYOUT_FIX/fix_battle_girl_frame_layout.py --dry-run
+
+python3 PHYTON/BATTLE_GIRL_OVERWORLD_V1_3_FRAME_LAYOUT_FIX/fix_battle_girl_frame_layout.py --compile --jobs 8

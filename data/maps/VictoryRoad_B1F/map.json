@@ -288,9 +288,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
-      "x": 29,
-      "y": 21,
+      "graphics_id": "OBJ_EVENT_GFX_BATTLE_GIRL",
+      "x": 23,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT_AND_RIGHT",
       "movement_range_x": 0,
@@ -314,9 +314,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
-      "x": 30,
-      "y": 21,
+      "graphics_id": "OBJ_EVENT_GFX_BATTLE_GIRL",
+      "x": 21,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT_AND_RIGHT",
       "movement_range_x": 0,
@@ -327,9 +327,9 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
-      "x": 28,
-      "y": 21,
+      "graphics_id": "OBJ_EVENT_GFX_BATTLE_GIRL",
+      "x": 22,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT_AND_RIGHT",
       "movement_range_x": 0,

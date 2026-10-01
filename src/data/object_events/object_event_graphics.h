@@ -127,6 +127,7 @@ const u32 gObjectEventPic_Punkboy[] = INCBIN_U32("graphics/object_events/pics/pe
 const u32 gObjectEventPic_Rob[] = INCBIN_U32("graphics/object_events/pics/people/rob.4bpp");
 const u32 gObjectEventPic_Lazuli[] = INCBIN_U32("graphics/object_events/pics/people/lazuli.4bpp");
 const u32 gObjectEventPic_Alejandro[] = INCBIN_U32("graphics/object_events/pics/people/alejandro.4bpp");
+const u32 gObjectEventPic_BattleGirl[] = INCBIN_U32("graphics/object_events/pics/people/battle_girl_repacked.4bpp");
 const u32 gObjectEventPic_Netsu[] = INCBIN_U32("graphics/object_events/pics/people/netsu.4bpp");
 const u32 gObjectEventPic_Pokefan2[] = INCBIN_U32("graphics/object_events/pics/people/pokefan_2.4bpp");
 const u32 gObjectEventPic_BirdKeeper1[] = INCBIN_U32("graphics/object_events/pics/people/bird_keeper_1.4bpp");
@@ -498,6 +499,7 @@ const u16 gObjectEventPal_BeastBall[] = INCBIN_U16("graphics/object_events/pics/
 // Gen VIII
 #ifdef ITEM_STRANGE_BALL
 const u16 gObjectEventPal_StrangeBall[] = INCBIN_U16("graphics/object_events/pics/misc/ball_strange.gbapal");
+const u16 gObjectEventPal_BattleGirl[] = INCBIN_U16("graphics/object_events/palettes/battle_girl.gbapal");
 #endif //ITEM_STRANGE_BALL
 #endif //OW_FOLLOWERS_POKEBALLS
 

@@ -20950,3 +20950,153 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 - Ice Punch
 - Thunder Punch  
 - Focus Punch
+
+=== TRAINER_IPPO ===
+Name: SAGIRI
+Class: Battle Girl
+Pic: Battle Girl
+Gender: Female
+Music: Intense
+Double Battle: No
+AI: Check Bad Move
+
+Medicham @ Protective Pads
+Level: 45  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Ability: Pure Power  
+- Bullet Punch  
+- Focus Punch  
+- Thunder Punch  
+- Drain Punch
+
+Hariyama @ Protective Pads
+Level: 43  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Focus Punch  
+- Thunder Punch  
+- Ice Punch
+
+Primeape @ Protective Pads
+Level: 42  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Fire Punch 
+- Thunder Punch  
+- Ice Punch
+
+Breloom @ Protective Pads
+Level: 43  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Mach Punch
+- Thunder Punch  
+- Focus Punch
+
+Poliwrath @ Protective Pads
+Level: 44  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Ice Punch
+- Thunder Punch  
+- Focus Punch
+
+=== TRAINER_MAMORU ===
+Name: YUI
+Class: Battle Girl
+Pic: Battle Girl
+Gender: Female
+Music: Intense
+Double Battle: No
+AI: Check Bad Move
+
+Medicham @ Protective Pads
+Level: 45  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Ability: Pure Power  
+- Bullet Punch  
+- Focus Punch  
+- Thunder Punch  
+- Drain Punch
+
+Hariyama @ Protective Pads
+Level: 43  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Focus Punch  
+- Thunder Punch  
+- Ice Punch
+
+Primeape @ Protective Pads
+Level: 42  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Fire Punch 
+- Thunder Punch  
+- Ice Punch
+
+Breloom @ Protective Pads
+Level: 43  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Mach Punch
+- Thunder Punch  
+- Focus Punch
+
+Poliwrath @ Protective Pads
+Level: 44  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Ice Punch
+- Thunder Punch  
+- Focus Punch
+
+=== TRAINER_RYO ===
+Name: YUZUHIRA
+Class: Battle Girl
+Pic: Battle Girl
+Gender: Female
+Music: Intense
+Double Battle: No
+AI: Check Bad Move
+
+Medicham @ Protective Pads
+Level: 45  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Ability: Pure Power  
+- Bullet Punch  
+- Focus Punch  
+- Thunder Punch  
+- Drain Punch
+
+Hariyama @ Protective Pads
+Level: 43  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Focus Punch  
+- Thunder Punch  
+- Ice Punch
+
+Primeape @ Protective Pads
+Level: 42  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Fire Punch 
+- Thunder Punch  
+- Ice Punch
+
+Breloom @ Protective Pads
+Level: 43  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Mach Punch
+- Thunder Punch  
+- Focus Punch
+
+Poliwrath @ Protective Pads
+Level: 44  
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe 
+- Drain Punch  
+- Ice Punch
+- Thunder Punch  
+- Focus Punch

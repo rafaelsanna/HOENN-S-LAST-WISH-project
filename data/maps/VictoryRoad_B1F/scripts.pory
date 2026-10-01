@@ -28,13 +28,189 @@ VictoryRoad_B1F_EventScript_Halle::
 	end
 
 VictoryRoad_B1F_EventScript_IcePunch::
-VictoryRoad_B1F_EventScript_ThunderPunch::
-VictoryRoad_B1F_EventScript_FirePunch::
-	msgbox VictoryRoad_B1F_Text_WipNpc, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_MAMORU_ICE_PUNCH_REWARD, VictoryRoad_B1F_EventScript_MamoruAfterReward
+	goto_if_defeated TRAINER_MAMORU, VictoryRoad_B1F_EventScript_MamoruReward
+	msgbox VictoryRoad_B1F_Text_MamoruChallenge, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, VictoryRoad_B1F_EventScript_MamoruDecline
+	closemessage
+	trainerbattle_no_intro TRAINER_MAMORU, VictoryRoad_B1F_Text_MamoruDefeat
+	goto VictoryRoad_B1F_EventScript_MamoruReward
 	end
 
-VictoryRoad_B1F_Text_WipNpc:
-	.string "Hi.$"
+VictoryRoad_B1F_EventScript_ThunderPunch::
+	lock
+	faceplayer
+	goto_if_set FLAG_RYO_THUNDER_PUNCH_REWARD, VictoryRoad_B1F_EventScript_RyoAfterReward
+	goto_if_defeated TRAINER_RYO, VictoryRoad_B1F_EventScript_RyoReward
+	msgbox VictoryRoad_B1F_Text_RyoChallenge, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, VictoryRoad_B1F_EventScript_RyoDecline
+	closemessage
+	trainerbattle_no_intro TRAINER_RYO, VictoryRoad_B1F_Text_RyoDefeat
+	goto VictoryRoad_B1F_EventScript_RyoReward
+	end
+
+VictoryRoad_B1F_EventScript_FirePunch::
+	lock
+	faceplayer
+	goto_if_set FLAG_IPPO_FIRE_PUNCH_REWARD, VictoryRoad_B1F_EventScript_IppoAfterReward
+	goto_if_defeated TRAINER_IPPO, VictoryRoad_B1F_EventScript_IppoReward
+	msgbox VictoryRoad_B1F_Text_IppoChallenge, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, VictoryRoad_B1F_EventScript_IppoDecline
+	closemessage
+	trainerbattle_no_intro TRAINER_IPPO, VictoryRoad_B1F_Text_IppoDefeat
+	goto VictoryRoad_B1F_EventScript_IppoReward
+	end
+
+VictoryRoad_B1F_EventScript_IppoReward::
+	checkitemspace ITEM_TM_FIRE_PUNCH, 1
+	goto_if_eq VAR_RESULT, FALSE, VictoryRoad_B1F_EventScript_PunchDojoBagFull
+	msgbox VictoryRoad_B1F_Text_IppoReward, MSGBOX_DEFAULT
+	giveitem ITEM_TM_FIRE_PUNCH
+	goto_if_eq VAR_RESULT, FALSE, VictoryRoad_B1F_EventScript_PunchDojoBagFull
+	setflag FLAG_IPPO_FIRE_PUNCH_REWARD
+	release
+	end
+
+VictoryRoad_B1F_EventScript_MamoruReward::
+	checkitemspace ITEM_TM_ICE_PUNCH, 1
+	goto_if_eq VAR_RESULT, FALSE, VictoryRoad_B1F_EventScript_PunchDojoBagFull
+	msgbox VictoryRoad_B1F_Text_MamoruReward, MSGBOX_DEFAULT
+	giveitem ITEM_TM_ICE_PUNCH
+	goto_if_eq VAR_RESULT, FALSE, VictoryRoad_B1F_EventScript_PunchDojoBagFull
+	setflag FLAG_MAMORU_ICE_PUNCH_REWARD
+	release
+	end
+
+VictoryRoad_B1F_EventScript_RyoReward::
+	checkitemspace ITEM_TM_THUNDER_PUNCH, 1
+	goto_if_eq VAR_RESULT, FALSE, VictoryRoad_B1F_EventScript_PunchDojoBagFull
+	msgbox VictoryRoad_B1F_Text_RyoReward, MSGBOX_DEFAULT
+	giveitem ITEM_TM_THUNDER_PUNCH
+	goto_if_eq VAR_RESULT, FALSE, VictoryRoad_B1F_EventScript_PunchDojoBagFull
+	setflag FLAG_RYO_THUNDER_PUNCH_REWARD
+	release
+	end
+
+VictoryRoad_B1F_EventScript_IppoDecline::
+	msgbox VictoryRoad_B1F_Text_IppoDecline, MSGBOX_DEFAULT
+	release
+	end
+
+VictoryRoad_B1F_EventScript_MamoruDecline::
+	msgbox VictoryRoad_B1F_Text_MamoruDecline, MSGBOX_DEFAULT
+	release
+	end
+
+VictoryRoad_B1F_EventScript_RyoDecline::
+	msgbox VictoryRoad_B1F_Text_RyoDecline, MSGBOX_DEFAULT
+	release
+	end
+
+VictoryRoad_B1F_EventScript_IppoAfterReward::
+	msgbox VictoryRoad_B1F_Text_IppoAfterReward, MSGBOX_DEFAULT
+	release
+	end
+
+VictoryRoad_B1F_EventScript_MamoruAfterReward::
+	msgbox VictoryRoad_B1F_Text_MamoruAfterReward, MSGBOX_DEFAULT
+	release
+	end
+
+VictoryRoad_B1F_EventScript_RyoAfterReward::
+	msgbox VictoryRoad_B1F_Text_RyoAfterReward, MSGBOX_DEFAULT
+	release
+	end
+
+VictoryRoad_B1F_EventScript_PunchDojoBagFull::
+	msgbox VictoryRoad_B1F_Text_PunchDojoBagFull, MSGBOX_DEFAULT
+	release
+	end
+
+VictoryRoad_B1F_Text_IppoChallenge:
+	.string "IPPO: MAMORU, RYO, and I\n"
+	.string "trained at the same dojo.\p"
+	.string "Our SENSEI taught us that a fist\n"
+	.string "needs more than raw strength.\p"
+	.string "I chose the path of FIRE.\n"
+	.string "One clean strike, full of spirit!\p"
+	.string "Want to test your style against\n"
+	.string "my FIRE PUNCH?$"
+
+VictoryRoad_B1F_Text_IppoDefeat:
+	.string "IPPO: Your spirit burned\n"
+	.string "brighter than mine!$"
+
+VictoryRoad_B1F_Text_IppoReward:
+	.string "IPPO: You earned this.\n"
+	.string "Take the FIRE PUNCH TM.\p"
+	.string "Carry our dojo's fire with you.$"
+
+VictoryRoad_B1F_Text_IppoDecline:
+	.string "IPPO: No shame in that.\n"
+	.string "The flame can wait.$"
+
+VictoryRoad_B1F_Text_IppoAfterReward:
+	.string "IPPO: Keep that fire alive.\n"
+	.string "Our SENSEI would approve.$"
+
+VictoryRoad_B1F_Text_MamoruChallenge:
+	.string "MAMORU: IPPO, RYO, and I\n"
+	.string "trained under the same SENSEI.\p"
+	.string "Where IPPO chose flame, I chose\n"
+	.string "cold focus and perfect control.\p"
+	.string "A steady fist can freeze even\n"
+	.string "the fiercest momentum.\p"
+	.string "Will you face my ICE PUNCH?$"
+
+VictoryRoad_B1F_Text_MamoruDefeat:
+	.string "MAMORU: Even ice can crack...\n"
+	.string "Well fought.$"
+
+VictoryRoad_B1F_Text_MamoruReward:
+	.string "MAMORU: Your focus was sharper.\n"
+	.string "Take the ICE PUNCH TM.\p"
+	.string "Use it with discipline.$"
+
+VictoryRoad_B1F_Text_MamoruDecline:
+	.string "MAMORU: A calm decision.\n"
+	.string "Perhaps another time.$"
+
+VictoryRoad_B1F_Text_MamoruAfterReward:
+	.string "MAMORU: Strength without control\n"
+	.string "is only wasted motion.$"
+
+VictoryRoad_B1F_Text_RyoChallenge:
+	.string "RYO: IPPO, MAMORU, and I\n"
+	.string "trained in the same dojo.\p"
+	.string "Our SENSEI made us choose a path.\n"
+	.string "Mine was speed--pure lightning.\p"
+	.string "A punch should land before your\n"
+	.string "opponent sees it coming.\p"
+	.string "Think you can handle my\n"
+	.string "THUNDER PUNCH?$"
+
+VictoryRoad_B1F_Text_RyoDefeat:
+	.string "RYO: You were faster than\n"
+	.string "my lightning!$"
+
+VictoryRoad_B1F_Text_RyoReward:
+	.string "RYO: That speed was no fluke.\n"
+	.string "Take the THUNDER PUNCH TM.\p"
+	.string "Strike before they can react.$"
+
+VictoryRoad_B1F_Text_RyoDecline:
+	.string "RYO: Heh. Too fast for you?\n"
+	.string "I'll be right here.$"
+
+VictoryRoad_B1F_Text_RyoAfterReward:
+	.string "RYO: Don't hesitate.\n"
+	.string "Speed means committing first.$"
+
+VictoryRoad_B1F_Text_PunchDojoBagFull:
+	.string "Your BAG is full.\n"
+	.string "Make room and come back.$"
 
 VictoryRoad_B1F_Text_SamuelIntro:
 	.string "The thought that I'm getting closer to\n"

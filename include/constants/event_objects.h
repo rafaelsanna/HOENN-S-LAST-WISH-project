@@ -453,11 +453,13 @@
 #define OBJ_EVENT_PAL_TAG_DARK_AURA              0x0005
 // Not a real OW palette tag; used for the white flash applied to followers
 #define OBJ_EVENT_PAL_TAG_WHITE                   (OBJ_EVENT_PAL_TAG_NONE - 1)
+#define OBJ_EVENT_PAL_TAG_BATTLE_GIRL 0x112B
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 // This + localId is used as the tileTag
 // for compressed graphicsInfos
 // '(C)ompressed (E)vent'
 #define COMP_OW_TILE_TAG_BASE 0xCE00
+#define OBJ_EVENT_GFX_BATTLE_GIRL                264
 
 #endif  // GUARD_CONSTANTS_EVENT_OBJECTS_H

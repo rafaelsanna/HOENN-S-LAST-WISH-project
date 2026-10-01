@@ -958,7 +958,10 @@
 #define TRAINER_SEABREEZE_SHIPPING1F_GRUNT_2           952
 #define TRAINER_SEABREEZE_SHIPPING1F_GRUNT_3           953
 #define TRAINER_SOLANA                                 954
-#define TRAINER_GON                                 955
+#define TRAINER_GON                                    955
+#define TRAINER_IPPO                                   956
+#define TRAINER_MAMORU                                 957
+#define TRAINER_RYO                                    958
 
 // TRAINERS_COUNT is the number of ROM table entries currently compiled.
 // MAX_TRAINERS_COUNT is the frozen 0.9 ID namespace and defeated-state save
