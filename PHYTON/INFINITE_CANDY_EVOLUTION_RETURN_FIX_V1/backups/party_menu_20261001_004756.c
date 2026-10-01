@@ -710,7 +710,6 @@ static void Task_ShowSummaryScreenToForgetMove(u8);
 static void StopLearningMovePrompt(u8);
 static void CB2_ShowSummaryScreenToForgetMove(void);
 static bool8 CanKeepUsingLevelUpItem(void);
-static void CB2_ReturnToPartyMenuUsingRareCandy(void);
 static void CB2_ReturnToPartyMenuWhileLearningMove(void);
 static void Task_ReturnToPartyMenuWhileLearningMove(u8);
 static void DisplayPartyMenuForgotMoveMessage(u8);
@@ -7647,14 +7646,8 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
                 RemoveBagItem(gSpecialVar_ItemId, 1);
             }
             
-            // Preserve continuous Rare/Infinite Candy use in this evolution path too.
-            bool8 keepUsingLevelUpItem = CanKeepUsingLevelUpItem();
-
             FreePartyPointers();
-            if (keepUsingLevelUpItem)
-                gCB2_AfterEvolution = CB2_ReturnToPartyMenuUsingRareCandy;
-            else
-                gCB2_AfterEvolution = gPartyMenu.exitCallback;
+            gCB2_AfterEvolution = gPartyMenu.exitCallback;
             BeginEvolutionScene(mon, targetSpecies, canStopEvo, gPartyMenu.slotId);
             DestroyTask(taskId);
         }
@@ -7829,9 +7822,6 @@ static void Task_TryLearningNextMove(u8 taskId)
 
 static void CB2_ReturnToPartyMenuUsingRareCandy(void)
 {
-    // EvolutionScene returns through gCB2_AfterEvolution without resetting
-    // gMain.state. Party Menu initialization must restart at state 0.
-    gMain.state = 0;
     gItemUseCB = ItemUseCB_RareCandy;
     SetMainCallback2(CB2_ShowPartyMenuForItemUse);
 }
