@@ -1672,7 +1672,11 @@ static const struct WindowTemplate sRadioWindowTemplates[] =
     X(MUS_YOUSEEBIGGIRL_T_T) \
     X(MUS_HUNTING_FOR_YOUR_DREAM) \
     X(MUS_IVE_SEEN_MUCH) \
-    X(MUS_THEME_RAGNAROK)
+    X(MUS_THEME_RAGNAROK) \
+    X(MUS_ZINNIA_LAST_MON_GBA) \
+    X(MUS_ZINNIA_LAST_MON_METAL) \
+    X(MUS_ZINNIA_LAST_MON_EPIC) \
+    X(MUS_ZINNIA_LAST_MON_POP)
 #define X(songId) static const u8 sRadioBGMName_##songId[] = _(#songId);
 RADIO_SOUND_LIST_BGM
 #undef X
@@ -2044,6 +2048,11 @@ static const u16 sStation_All[] = {
     MUS_HUNTING_FOR_YOUR_DREAM,
     MUS_IVE_SEEN_MUCH,
     MUS_THEME_RAGNAROK,
+    // ZINNIA - HLW LAST MON THEMES
+    MUS_ZINNIA_LAST_MON_GBA,
+    MUS_ZINNIA_LAST_MON_METAL,
+    MUS_ZINNIA_LAST_MON_EPIC,
+    MUS_ZINNIA_LAST_MON_POP,
     STATION_END
 };
 
@@ -2226,6 +2235,11 @@ static const u16 sStation_PokemonGba[] = {
     MUS_HLW_DISTORTION_WORLD,
     MUS_HLW_VS_EVIL,
     MUS_HLW_PHOENIX_TOWN,
+    // ZINNIA - HLW LAST MON THEMES
+    MUS_ZINNIA_LAST_MON_GBA,
+    MUS_ZINNIA_LAST_MON_METAL,
+    MUS_ZINNIA_LAST_MON_EPIC,
+    MUS_ZINNIA_LAST_MON_POP,
 STATION_END
 };
 
@@ -3544,11 +3558,39 @@ static const u8 *Radio_GetClassicRockDisplayName(u16 songId)
     }
 }
 
+// HLW_ZINNIA_POKEMON_GBA_RADIO_V1
+// These are in POKEMON GBA because they are battle themes made for HLW itself.
+static const u8 sPokemonGbaName_ZinniaGba[]   = _("ZINNIA THEME (GBA VERSION)");
+static const u8 sPokemonGbaName_ZinniaMetal[] = _("ZINNIA THEME (METAL VERSION)");
+static const u8 sPokemonGbaName_ZinniaEpic[]  = _("ZINNIA THEME (EPIC VERSION)");
+static const u8 sPokemonGbaName_ZinniaPop[]   = _("ZINNIA THEME (POP VERSION)");
+
+static const u8 *Radio_GetZinniaDisplayName(u16 songId)
+{
+    switch (songId)
+    {
+    case MUS_ZINNIA_LAST_MON_GBA:
+        return sPokemonGbaName_ZinniaGba;
+    case MUS_ZINNIA_LAST_MON_METAL:
+        return sPokemonGbaName_ZinniaMetal;
+    case MUS_ZINNIA_LAST_MON_EPIC:
+        return sPokemonGbaName_ZinniaEpic;
+    case MUS_ZINNIA_LAST_MON_POP:
+        return sPokemonGbaName_ZinniaPop;
+    default:
+        return NULL;
+    }
+}
+
 static const u8 *Radio_GetSpecialDisplayName(u16 songId)
 {
     const u8 *name;
 
-    name = Radio_GetClassicRockDisplayName(songId);
+        name = Radio_GetZinniaDisplayName(songId);
+    if (name != NULL)
+        return name;
+
+name = Radio_GetClassicRockDisplayName(songId);
     if (name != NULL)
         return name;
 

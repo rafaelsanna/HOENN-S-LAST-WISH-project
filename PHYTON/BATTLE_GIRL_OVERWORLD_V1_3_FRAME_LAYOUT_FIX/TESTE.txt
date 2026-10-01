@@ -1,4 +1,0 @@
-Synthetic horizontal-strip repack OK.
-Frames: 9
-Input: 144x32
-Frame 0 tile order: [0, 1, 18, 19, 36, 37, 54, 55]

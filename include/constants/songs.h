@@ -652,7 +652,11 @@
 #define MUS_REQUIEM_FIRE_EMBLEM                              772
 #define MUS_FIRE_EMBLEM_MELEE                                773
 #define MUS_SMASH_BROS_BRAWL_MAIN_THEME                      774
-#define END_MUS MUS_SMASH_BROS_BRAWL_MAIN_THEME
+#define MUS_ZINNIA_LAST_MON_GBA                              775
+#define MUS_ZINNIA_LAST_MON_METAL                            776
+#define MUS_ZINNIA_LAST_MON_EPIC                             777
+#define MUS_ZINNIA_LAST_MON_POP                              778
+#define END_MUS MUS_ZINNIA_LAST_MON_POP
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
 #define PH_TRAP_BLEND               562

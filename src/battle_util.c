@@ -1274,7 +1274,27 @@ void UpdateSentPokesToOpponentValue(u32 battler)
             // Se sobrou só 1 e ainda não tocou a música
             if (aliveCount == 1 && !gBattleStruct->lastMonMusicPlayed)
             {
-                    PlayBGM(MUS_RG_VS_GYM_LEADER);
+                    // HLW_ZINNIA_LAST_MON_MUSIC_V2
+                // FLARY / AMATERASU = POP.
+                // RENTON / BRAWLY = METAL.
+                // Todo outro Gym Leader = EPIC.
+                if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_1 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_2 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_3 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_4 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_5 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_CASUAL)
+                    PlayBGM(MUS_ZINNIA_LAST_MON_POP);
+                else if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_1 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_2 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_3 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_4 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_5 ||
+                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_CASUAL)
+                    PlayBGM(MUS_ZINNIA_LAST_MON_METAL);
+                else
+                    PlayBGM(MUS_ZINNIA_LAST_MON_EPIC);
                 gBattleStruct->lastMonMusicPlayed = TRUE;
             }
         }

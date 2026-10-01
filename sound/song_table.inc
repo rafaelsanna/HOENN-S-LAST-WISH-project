@@ -778,6 +778,14 @@ gSongTable::
 	song mus_requiem_fire_emblem, 0, 0
 	song mus_fire_emblem_melee, 0, 0
 	song mus_smash_bros_brawl_main_theme, 0, 0
+	song mus_zinnia_last_mon_gba, 0, 0
+	song mus_zinnia_last_mon_metal, 0, 0
+	song mus_zinnia_last_mon_epic, 0, 0
+	song mus_zinnia_last_mon_pop, 0, 0
+
+
+
+
 
 
 
