@@ -1257,51 +1257,113 @@ void UpdateSentPokesToOpponentValue(u32 battler)
             gSentPokesToOpponent[(i & BIT_FLANK) >> 1] |= 1u << gBattlerPartyIndexes[battler];
     }
     // Tocar a musica quando o lider de ginasio fica com um pokémon
-    switch (GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA))
+    // HLW_ZINNIA_LAST_MON_ROUTING_DEFINITIVE_V1
+    {
+        u16 hlwLastMonSong = 0;
+
+        switch (TRAINER_BATTLE_PARAM.opponentA)
         {
-        // caso se a classe do treinador for líder de ginásio
-        case TRAINER_CLASS_LEADER:
+        case TRAINER_BRAWLY_1:
+        case TRAINER_BRAWLY:
+        case TRAINER_BRAWLY_2:
+        case TRAINER_BRAWLY_3:
+        case TRAINER_BRAWLY_4:
+        case TRAINER_BRAWLY_5:
+        case TRAINER_BRAWLY_CASUAL:
+            hlwLastMonSong = MUS_ZINNIA_LAST_MON_METAL;
+            break;
+
+        case TRAINER_FLANNERY_CASUAL:
+        case TRAINER_FLANNERY_1:
+        case TRAINER_FLANNERY_2:
+        case TRAINER_FLANNERY_3:
+        case TRAINER_FLANNERY_4:
+        case TRAINER_FLANNERY_5:
+            hlwLastMonSong = MUS_ZINNIA_LAST_MON_POP;
+            break;
+
+        case TRAINER_TERRA_CASUAL:
+        case TRAINER_TERRA_HARD:
+        case TRAINER_ROXANNE_2:
+        case TRAINER_ROXANNE_3:
+        case TRAINER_ROXANNE_4:
+        case TRAINER_ROXANNE_5:
+        case TRAINER_DEN_CASUAL:
+        case TRAINER_WATTSON_1:
+        case TRAINER_WATTSON_2:
+        case TRAINER_WATTSON_3:
+        case TRAINER_WATTSON_4:
+        case TRAINER_WATTSON_5:
+        case TRAINER_CALENDULA_CASUAL:
+        case TRAINER_NORMAN_1:
+        case TRAINER_NORMAN_2:
+        case TRAINER_NORMAN_3:
+        case TRAINER_NORMAN_4:
+        case TRAINER_NORMAN_5:
+        case TRAINER_TAKA_CASUAL:
+        case TRAINER_WINONA_1:
+        case TRAINER_WINONA_2:
+        case TRAINER_WINONA_3:
+        case TRAINER_WINONA_4:
+        case TRAINER_WINONA_5:
+        case TRAINER_SOULLUNA_CASUAL:
+        case TRAINER_TATE_AND_LIZA_1:
+        case TRAINER_TATE_AND_LIZA_2:
+        case TRAINER_TATE_AND_LIZA_3:
+        case TRAINER_TATE_AND_LIZA_4:
+        case TRAINER_TATE_AND_LIZA_5:
+        case TRAINER_RIO_CASUAL:
+        case TRAINER_JUAN_1:
+        case TRAINER_JUAN_2:
+        case TRAINER_JUAN_3:
+        case TRAINER_JUAN_4:
+        case TRAINER_JUAN_5:
+            hlwLastMonSong = MUS_ZINNIA_LAST_MON_GBA;
+            break;
+
+        case TRAINER_SIDNEY:
+        case TRAINER_TSUBAKI_HARD_SINGLES:
+        case TRAINER_TSUBAKI_HARD_DOUBLES:
+        case TRAINER_PHOEBE:
+        case TRAINER_PHOEBE_HARD_SINGLES:
+        case TRAINER_PHOEBE_HARD_DOUBLES:
+        case TRAINER_GLACIA:
+        case TRAINER_SARK_HARD_SINGLES:
+        case TRAINER_SARK_HARD_DOUBLES:
+        case TRAINER_DRAKE:
+        case TRAINER_DAEMON_HARD_SINGLES:
+        case TRAINER_DAEMON_HARD_DOUBLES:
+            hlwLastMonSong = MUS_ZINNIA_LAST_MON_EPIC;
+            break;
+
+        case TRAINER_WALLACE:
+        case TRAINER_STELLA_HARD_HO_TAILWIND:
+        case TRAINER_STELLA_HARD_BALANCE_HAZZARDS:
+        case TRAINER_STELLA_HARD_DOUBLES_TROOM:
+            hlwLastMonSong = MUS_ZINNIA_CHAMPION_GRAND_EPIC;
+            break;
+
+        default:
+            break;
+        }
+
+        if (hlwLastMonSong != 0 && !gBattleStruct->lastMonMusicPlayed)
         {
             u8 aliveCount = 0;
 
-            // Conta quantos Pokémon vivos o líder ainda tem
             for (int i = 0; i < PARTY_SIZE; i++)
             {
                 if (GetMonData(&gEnemyParty[i], MON_DATA_HP) > 0)
                     aliveCount++;
             }
 
-            // Se sobrou só 1 e ainda não tocou a música
-            if (aliveCount == 1 && !gBattleStruct->lastMonMusicPlayed)
+            if (aliveCount == 1)
             {
-                    // HLW_ZINNIA_LAST_MON_MUSIC_V2
-                // FLARY / AMATERASU = POP.
-                // RENTON / BRAWLY = METAL.
-                // Todo outro Gym Leader = EPIC.
-                if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_1 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_2 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_3 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_4 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_5 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_FLANNERY_CASUAL)
-                    PlayBGM(MUS_ZINNIA_LAST_MON_POP);
-                else if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_1 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_2 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_3 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_4 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_5 ||
-                        TRAINER_BATTLE_PARAM.opponentA == TRAINER_BRAWLY_CASUAL)
-                    PlayBGM(MUS_ZINNIA_LAST_MON_METAL);
-                else
-                    PlayBGM(MUS_ZINNIA_LAST_MON_EPIC);
+                PlayBGM(hlwLastMonSong);
                 gBattleStruct->lastMonMusicPlayed = TRUE;
             }
         }
-        // caso para todos as outras classes   
-        default:
-            break;
-        }
+    }
 }
 
 void BattleScriptPush(const u8 *bsPtr)

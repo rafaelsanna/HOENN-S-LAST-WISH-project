@@ -6235,7 +6235,7 @@ Lileep
 Ability: Suction Cups
 Level: 13  
 - Astonish  
-- Constrict  
+- Stealth Rock  
 - Rock Tomb  
 - Ingrain  
 
@@ -6244,7 +6244,7 @@ Ability: Natural Cure
 Level: 14
 - Rock Tomb  
 - Water Gun  
-- Harden  
+- Stealth Rock  
 - Refresh  
 
 Nosepass @ Oran Berry  
@@ -6302,17 +6302,17 @@ AI: Basic Trainer
 
 Mankey  
 Level: 22  
-- Low Kick  
+- Power-Up Punch  
 - Fury Swipes    
 - Focus Energy  
 - Leer  
 
 Breloom  
-Ability: Technician  
+Ability: Poison Heal
 Shiny: Yes   
 Level: 24 
 - Headbutt
-- Counter
+- Power-Up Punch
 - Mega Drain 
 - Leech Seed
 
@@ -6322,11 +6322,11 @@ Level: 25
 - Rock Smash 
 - Dig 
 - Rollout  
-- Bulk Up  
+- Power-Up Punch   
 
 Heracross 
 Level: 23 
-- Arm Thrust 
+- Power-Up Punch 
 - Aerial Ace
 - Horn Leech 
 - Endure
@@ -6391,7 +6391,7 @@ AI: Basic Trainer
 Plusle  
 Ability: Lightning Rod 
 Level: 31 
-- Shock Wave  
+- Volt Switch  
 - Nuzzle  
 - Super Fang  
 - Wish  
@@ -6399,28 +6399,28 @@ Level: 31
 Minun  
 Ability: Volt Absorb  
 Level: 31  
-- Shock Wave  
+- Volt Switch 
 - Nuzzle  
 - Fake Tears  
 - Swift  
 
 Volbeat (M) 
 Level: 32  
-- Shock Wave  
+- Volt Switch  
 - Struggle Bug  
 - Chilling Water  
 - Metronome  
 
 Magnezone   
 Level: 33  
-- Shock Wave  
+- Volt Switch  
 - Tri Attack  
 - Iron Head  
 - Magnet Rise
 
 Politoed @ Sitrus Berry  
 Level: 34  
-- Shock Wave  
+- Volt Switch  
 - Water Pulse  
 - Encore  
 - Icy Wind  
@@ -6433,6 +6433,16 @@ Gender: Male
 Music: Male
 Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
+
+Electrode @ Focus Sash  
+Ability: Aftermath 
+Relaxed Nature  
+Level: 34  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
+- Volt Switch  
+- Spikes
+- Stealth Rock  
+- Explosion 
 
 Volbeat (M) @ Sitrus Berry  
 Ability: Volt Absorb 
@@ -6492,8 +6502,20 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
+Smeargle @ Focus Sash  
+Ability: Moody  
+Timid Nature  
+Shiny: Yes  
+Level: 42  
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
+- Quiver Dance  
+- Victory Dance  
+- Fiery Dance
+- Baton Pass
+
 Ninetales @ Heat Rock  
 Ability: Drought  
+Timid Nature  
 Level: 42  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Solar Beam  
@@ -6503,6 +6525,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Granbull @ Sitrus Berry  
 Ability: Intimidate   
+Adamant Nature  
 Level: 42   
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Flare Blitz  
@@ -6512,6 +6535,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Arcanine @ Assault Vest  
 Ability: Intimidate  
+Adamant Nature
 Level: 42  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Extreme Speed  
@@ -6521,6 +6545,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Flareon @ Toxic Orb  
 Ability: Guts  
+Adamant Nature
 Level: 42    
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Facade  
@@ -6529,7 +6554,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Protect  
 
 Houndoom @ Air Balloon  
-Ability: Solar Power  
+Ability: Solar Power 
+Timid Nature   
 Level: 42  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Solar Beam  
@@ -6659,6 +6685,7 @@ Eevee @ Eviolite
 Ability: Adaptability  
 Level: 43  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe  
+- Wish
 - Last Resort 
 
 Ambipom  
@@ -6677,21 +6704,21 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe
 - Tri Attack  
 - Thunderbolt   
 
-Snorlax @ Chesto Berry   
+Chansey @ Eviolite  
 Level: 44
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe  
-- Rest  
-- Sleep Talk
+- Wish  
+- Heal Bell
 - Body Slam
-- Crunch
+- Healing Wish
 
 Munchlax @ Eviolite   
 Level: 43  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 0 Spe   
+- Wish  
 - Rest  
-- Sleep Talk  
 - Body Slam  
-- Crunch
+- Sleep Talk
 
 Obstagoon @ Sitrus Berry 
 Ability: Quick Feet  
@@ -6712,26 +6739,29 @@ Items: Hyper Potion / Hyper Potion
 Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
-Wigglytuff @ Assault Vest  
+Wigglytuff @ Sitrus Berry  
 Ability: Competitive 
+Modest Nature
 Level: 50  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
 - Heat Wave  
 - Moonblast  
-- Hurricane  
-- Energy Ball  
+- Air Slash  
+- Tailwind 
 
-Pidgeot @ Blunder Policy  
-Ability: Magic Bounce
+Altaria @ Babiri Berry    
+Ability: Pixilate 
+Jolly Nature
 Level: 50    
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
-- Hurricane  
-- Heat Wave  
-- Psychic  
-- Tailwind  
+- Dragon Dance
+- Return
+- Acrobatics  
+- Roost
 
 Gliscor @ Toxic Orb  
-Ability: Poison Heal  
+Ability: Poison Heal 
+Jolly Nature 
 Level: 50  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Protect  
@@ -6741,24 +6771,27 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 
 Gyarados @ Wacan Berry  
 Ability: Intimidate  
+Jolly Nature
 Level: 50  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Dragon Dance  
 - Waterfall  
-- Earthquake  
+- Acrobatics  
 - Ice Fang  
 
 Blaziken @ Yache Berry  
 Ability: Speed Boost
+Hasty Nature
 Level: 50  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
 - Defog  
-- Giga Drain  
-- Air Slash  
+- Energy Ball 
+- Acrobatics  
 - Earth Power
 
 Volcarona @ Heavy-Duty Boots  
 Ability: Water Bubble  
+Modest Nature
 Level: 50  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
 - Surf  
@@ -6779,24 +6812,24 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 Wigglytuff  
 Level: 47  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
-- Air Slash  
+- Acrobatics 
 - Draining Kiss  
 - Icy Wind  
 - Soft-Boiled 
 
-Pidgeot  
+Altaria  
 Level: 48    
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
-- Air Cutter  
-- Mirror Move  
-- Psychic  
-- Twister  
+- Acrobatics  
+- Moonblast
+- Dragon Pulse  
+- Heat Wave
 
 Gliscor  
 Level: 48  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Protect  
-- Fly  
+- Acrobatics  
 - U-turn  
 - Earthquake  
 
@@ -6805,7 +6838,7 @@ Level: 48
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Surf  
 - Roost  
-- Air Slash  
+- Acrobatics  
 - Whirlpool  
 
 Tropius
@@ -6813,10 +6846,10 @@ Level: 49
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
 - Leaf Blade  
 - Defog 
-- Air Slash  
+- Acrobatics 
 - Leech Seed
 
-Masquerain @ Heavy-Duty Boots  
+Volcarona @ Heavy-Duty Boots  
 Ability: Water Bubble  
 Level: 50  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
@@ -6853,23 +6886,23 @@ Ability: Synchronize
 - Helping Hand  
 - Foul Play  
 
-Togekiss @ Sitrus Berry 
+Persian @ Sitrus Berry 
 Level: 55
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
-Ability: Serene Grace  
-- Air Slash  
-- Draining Kiss  
-- Roost  
-- Thunder Wave  
+Ability: Prankster
+- Will-O-Wisp 
+- Follow Me
+- Play Rough
+- Foul Play
 
-Honchkrow @ Heavy-Duty Boots 
+Espeon @ Ability Shield
 Level: 55
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe 
-Ability: Moxie   
-- Tailwind  
-- Brave Bird  
-- Sucker Punch  
-- U-turn  
+Ability: Magic Bounce   
+- Dazzling Gleam 
+- Dark Pulse  
+- Calm Mind
+- Stored Power
 
 Gorebyss @ Focus Sash  
 Level: 55
@@ -6983,7 +7016,7 @@ Ability: Swift Swim
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe   
 - Earthquake  
 - Waterfall  
-- Dragon Tail  
+- Flip Turn 
 - Crunch  
 
 Ludicolo @ Life Orb  
@@ -6995,22 +7028,22 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Ice Beam  
 - Rain Dance  
 
-Starmie @ Assault Vest   
+Armaldo @ Assault Vest  
 Level: 60  
-Ability: Natural Cure  
+Ability: Swift Swim 
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
-- Rapid Spin  
-- Surf  
-- Psyshock  
-- Thunderbolt
+- Flip Turn  
+- First Impression  
+- X-Scissor 
+- Stone Edge
 
-Crawdaunt @ Focus Sash  
-Ability: Adaptability  
+Lanturn @ Air Balloon  
+Ability: Volt Absorb  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Waterfall  
-- Aqua Jet  
-- Dragon Dance 
-- Knock Off   
+- Volt Switch 
+- Thunder
+- Weather Ball 
+- Ice Beam
 
 === TRAINER_RIO_CASUAL ===
 Name: RIO
@@ -7024,7 +7057,7 @@ AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Pelipper  
 Level: 58
-- Rain Dance  
+- Flip Turn  
 - Surf  
 - Air Slash  
 - Roost  
@@ -7033,36 +7066,36 @@ Cursola
 Level: 60
 - Moonblast  
 - Surf  
-- Heal Bell  
+- Flip Turn   
 - Sing  
 
 Venusaur  
 Level: 60 
 - Bulldoze  
 - Waterfall  
-- Dragon Tail  
+- Flip Turn  
 - Crunch  
 
 Ludicolo  
 Level: 60 
 - Surf  
 - Giga Drain  
-- Leech Seed  
+- Flip Turn  
 - Fake Out  
 
 Starmie  
 Level: 60 
-- Rapid Spin  
+- Flip Turn   
 - Surf  
 - Psyshock  
 - Power Gem  
 
-Crawdaunt
+Lanturn
 Level: 60 
-- Waterfall  
-- Aqua Jet  
-- Knock Off 
-- Brick Break  
+- Surf 
+- Flip Turn
+- Icy Wind
+- Volt Switch
 
 === TRAINER_JERRY_1 ===
 Name: JERRY
