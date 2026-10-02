@@ -7,30 +7,6 @@
 //Ghoulslash:           https://github.com/ghoulslash/pokeemerald
 //Jaizu:                https://jaizu.moe/
 //AND OTHER RHH POKEEMERALD-EXPANSION CONTRIBUTORS
-
-/*
- * HOENN'S LAST WISH - PLAYER / WISH MENU DEBUG VARIANT
- *
- * This is the curated debug source that is shipped to players as the Wish Menu.
- * It is intentionally NOT the full developer debug menu.
- *
- * Purpose:
- * - provide safe player-facing utilities and quality-of-life actions;
- * - expose controlled cheats that are useful during normal play;
- * - provide read-only diagnostics such as encounter, item, IV and ROM info;
- * - keep destructive actions behind explicit confirmation prompts;
- * - keep developer-only test tools, raw flag/var editors and dangerous shortcuts
- *   out of the visible menu tree.
- *
- * Maintenance notes:
- * - Some developer implementations remain in this source but are deliberately
- *   unreachable. Hidden reference arrays keep those static functions referenced
- *   so this project can still build with -Werror without exposing them to players.
- * - Shared engine fixes (for example follower behavior) live in their normal
- *   engine source files and are automatically used by this player menu.
- * - Do not copy DEV-only menu entries here unless they are explicitly approved
- *   for the player-facing Wish Menu.
- */
 #include "global.h"
 #include "achievements.h"
 #include "battle.h"
@@ -105,14 +81,13 @@
 #include "fake_rtc.h"
 #include "save.h"
 
-// Shared Wish Menu player-speed core implemented in src/field_player_avatar.c.
-// 0 = normal speed, 5 = x5, 10 = x10.
+// DEV-only QoL core hook implemented in src/field_player_avatar.c.
+// 0 = normal player speed, 5 = x5, 10 = x10.
 u8 DebugGetPlayerSpeedMode(void);
 void DebugSetPlayerSpeedMode(u8 mode);
 
-// Shared follower suppression implemented in src/follower_npc.c.
-// Both NPC followers and party Pokémon followers are removed while fast
-// player movement is active.
+// DEV follower suppression implemented in src/follower_npc.c.
+// Handles BOTH NPC followers and party Pokémon followers.
 void DebugDisableFollowersForPlayerSpeed(void);
 void DebugRestoreFollowersAfterPlayerSpeed(void);
 
@@ -141,17 +116,19 @@ enum FollowerNPCCreateDebugMenu
 
 enum FlagsVarsDebugMenu
 {
-    // Player-facing Cheats menu.
-    // Raw Flag/Var editing, Pokédex Reset, National Dex and Game Clear
-    // are intentionally hidden.
+    DEBUG_FLAGVAR_MENU_ITEM_FLAGS,
+    DEBUG_FLAGVAR_MENU_ITEM_VARS,
     DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_ALL,
+    DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_RESET,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX,
+    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV,
     // PokéNav was removed from HLW.
     // Match Call is intentionally hidden from the Wish Menu.
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL,
+    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER,
@@ -226,7 +203,7 @@ enum DebugBattleEnvironment
 #define DEBUG_MENU_WIDTH_FLAGVAR 4
 #define DEBUG_MENU_HEIGHT_FLAGVAR 2
 
-#define DEBUG_NUMBER_DIGITS_FLAGS 4
+#define DEBUG_NUMBER_DIGITS_FLAGS 5
 #define DEBUG_NUMBER_DIGITS_VARIABLES 5
 #define DEBUG_NUMBER_DIGITS_VARIABLE_VALUE 5
 #define DEBUG_NUMBER_DIGITS_ITEMS 4
@@ -303,6 +280,7 @@ static void DebugAction_OpenSubMenuFakeRTC(u8 taskId, const struct DebugMenuOpti
 static void DebugAction_OpenSubMenuCreateFollowerNPC(u8 taskId, const struct DebugMenuOption *items);
 static void DebugAction_ExecuteScript(u8 taskId, const u8 *script);
 static void DebugAction_ToggleFlag(u8 taskId);
+static void DebugAction_Dev_QuickSetup(u8 taskId);
 
 static void DebugTask_HandleMenuInput_General(u8 taskId);
 
@@ -852,9 +830,11 @@ static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_BerryFunctions[] =
 {
-    { COMPOUND_STRING("Clear map trees"), DebugAction_BerryFunctions_ClearAll },
-    { COMPOUND_STRING("Ready map trees"), DebugAction_BerryFunctions_Ready },
-    { COMPOUND_STRING("Grow map trees"),  DebugAction_BerryFunctions_NextStage },
+    { COMPOUND_STRING("Clear map trees"),      DebugAction_BerryFunctions_ClearAll },
+    { COMPOUND_STRING("Ready map trees"),      DebugAction_BerryFunctions_Ready },
+    { COMPOUND_STRING("Grow map trees"),       DebugAction_BerryFunctions_NextStage },
+    { COMPOUND_STRING("Give map trees pests"), DebugAction_BerryFunctions_Pests },
+    { COMPOUND_STRING("Give map trees weeds"), DebugAction_BerryFunctions_Weeds },
     { NULL }
 };
 
@@ -868,27 +848,37 @@ static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu[] =
 static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
 {
     { COMPOUND_STRING("Fly to map…"),        DebugAction_Util_Fly },
+    { COMPOUND_STRING("Warp to map warp…"),  DebugAction_Util_Warp_Warp },
     { COMPOUND_STRING("Encounter Info"),     DebugAction_Util_EncounterInfo },
     { COMPOUND_STRING("Info Items"),         DebugAction_Util_InfoItems },
     { COMPOUND_STRING("Set Mon to Lv Cap"),  DebugAction_Util_SetMonLevelCap },
     { COMPOUND_STRING("Last Heal Point"),    DebugAction_Util_LastHealPoint },
     { COMPOUND_STRING("10x Battle Speed"),   DebugAction_Util_BattleSpeed10x },
     { COMPOUND_STRING("Set weather…"),       DebugAction_Util_Weather },
+    { COMPOUND_STRING("Font Test…"),         DebugAction_ExecuteScript, Debug_EventScript_FontTest },
     { COMPOUND_STRING("Sprite Visualizer"),  DebugAction_Util_SpriteVisualizer },
     { COMPOUND_STRING("Time Functions…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
+    { COMPOUND_STRING("Watch credits…"),     DebugAction_Util_WatchCredits },
+    { COMPOUND_STRING("Cheat start"),        DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Achievements…"),      DebugAction_Util_OpenAchievements },
+    { COMPOUND_STRING("Test Ach Popup"),     DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
+    { COMPOUND_STRING("EWRAM Counters…"),    DebugAction_ExecuteScript, Debug_EventScript_EWRAMCounters },
     { COMPOUND_STRING("Follower NPC…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_FollowerNPCMenu },
+    { COMPOUND_STRING("Steven Multi"),       DebugAction_ExecuteScript, Debug_EventScript_Steven_Multi },
     { NULL }
 };
 
 static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
 {
-    { COMPOUND_STRING("Fill Pocket Items"),       DebugAction_PCBag_Fill_PocketItems },
-    { COMPOUND_STRING("Fill Pocket Poké Balls"),  DebugAction_PCBag_Fill_PocketPokeBalls },
-    { COMPOUND_STRING("Fill Pocket TMHM"),        DebugAction_PCBag_Fill_PocketTMHM },
-    { COMPOUND_STRING("Fill Pocket Berries"),     DebugAction_PCBag_Fill_PocketBerries },
-    { COMPOUND_STRING("Fill Pocket Key Items"),   DebugAction_PCBag_Fill_PocketKeyItems },
+    { COMPOUND_STRING("Fill PC Boxes Fast"),        DebugAction_PCBag_Fill_PCBoxes_Fast },
+    { COMPOUND_STRING("Fill PC Boxes Slow (LAG!)"), DebugAction_PCBag_Fill_PCBoxes_Slow },
+    { COMPOUND_STRING("Fill PC Items") ,            DebugAction_PCBag_Fill_PCItemStorage },
+    { COMPOUND_STRING("Fill Pocket Items"),         DebugAction_PCBag_Fill_PocketItems },
+    { COMPOUND_STRING("Fill Pocket Poké Balls"),    DebugAction_PCBag_Fill_PocketPokeBalls },
+    { COMPOUND_STRING("Fill Pocket TMHM"),          DebugAction_PCBag_Fill_PocketTMHM },
+    { COMPOUND_STRING("Fill Pocket Berries"),       DebugAction_PCBag_Fill_PocketBerries },
+    { COMPOUND_STRING("Fill Pocket Key Items"),     DebugAction_PCBag_Fill_PocketKeyItems },
     { NULL }
 };
 
@@ -912,6 +902,9 @@ static const struct DebugMenuOption sDebugMenu_Actions_Party[] =
     { COMPOUND_STRING("Set Hidden Nature"),  DebugAction_ExecuteScript, Debug_EventScript_SetHiddenNature },
     { COMPOUND_STRING("Check EVs"),          DebugAction_ExecuteScript, Debug_EventScript_CheckEVs },
     { COMPOUND_STRING("Check IVs"),          DebugAction_ExecuteScript, Debug_EventScript_CheckIVs },
+    { COMPOUND_STRING("Clear Party"),        DebugAction_Party_ClearParty },
+    { COMPOUND_STRING("Set Party"),          DebugAction_Party_SetParty },
+    { COMPOUND_STRING("Start Debug Battle"), DebugAction_Party_BattleSingle },
     { NULL }
 };
 
@@ -924,16 +917,17 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
     { COMPOUND_STRING("Max Money"),         DebugAction_Give_MaxMoney },
     { COMPOUND_STRING("Max Coins"),         DebugAction_Give_MaxCoins },
     { COMPOUND_STRING("Max Battle Points"), DebugAction_Give_MaxBattlePoints },
+    { COMPOUND_STRING("Daycare Egg"),       DebugAction_Give_DayCareEgg },
     { NULL }
 };
 
 static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
 {
-    { COMPOUND_STRING("Player name"),          DebugAction_Player_Name },
-    { COMPOUND_STRING("Toggle gender"),        DebugAction_Player_Gender },
+    { COMPOUND_STRING("Player name"),           DebugAction_Player_Name },
+    { COMPOUND_STRING("Toggle gender"),         DebugAction_Player_Gender },
     { COMPOUND_STRING("Player Speed Normal"),  DebugAction_Player_NormalSpeed },
-    { COMPOUND_STRING("Player Speed x5"),      DebugAction_Player_Speed5x },
-    { COMPOUND_STRING("Player Speed x10"),     DebugAction_Player_Speed10x },
+    { COMPOUND_STRING("Player Speed x5"),       DebugAction_Player_Speed5x },
+    { COMPOUND_STRING("Player Speed x10"),      DebugAction_Player_Speed10x },
 
     // Trainer ID editing is intentionally hidden in HLW.
     // { COMPOUND_STRING("New Trainer ID"), DebugAction_Player_Id },
@@ -964,14 +958,20 @@ static const struct DebugMenuOption sDebugMenu_Actions_Sound[] =
 static const struct DebugMenuOption sDebugMenu_Actions_ROMInfo2[] =
 {
     { COMPOUND_STRING("Patch Number 0.5.1"), DebugAction_ROMInfo_PatchNumber },
+    { COMPOUND_STRING("Save Block space"),   DebugAction_ExecuteScript, Debug_CheckSaveBlock },
+    { COMPOUND_STRING("ROM space"),          DebugAction_ExecuteScript, Debug_CheckROMSpace },
     { COMPOUND_STRING("Expansion Version"),  DebugAction_ExecuteScript, Debug_ShowExpansionVersion },
     { NULL }
 };
 
 static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
 {
-    [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_ALL]         = { COMPOUND_STRING("Complete Pokédex"),                  DebugAction_FlagsVars_PokedexFlags_All },
+    [DEBUG_FLAGVAR_MENU_ITEM_FLAGS]                = { COMPOUND_STRING("Set Flag XYZ…"),                     DebugAction_FlagsVars_Flags },
+    [DEBUG_FLAGVAR_MENU_ITEM_VARS]                 = { COMPOUND_STRING("Set Var XYZ…"),                      DebugAction_FlagsVars_Vars },
+    [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_ALL]         = { COMPOUND_STRING("Complete Pokédex"),                 DebugAction_FlagsVars_PokedexFlags_All },
+    [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_RESET]       = { COMPOUND_STRING("Pokédex Flags Reset"),               DebugAction_FlagsVars_PokedexFlags_Reset },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX]       = { COMPOUND_STRING("Toggle {STR_VAR_1}Pokédex"),         DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchDex },
+    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX]        = { COMPOUND_STRING("Toggle {STR_VAR_1}National Dex"),    DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchNatDex },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV]        = { COMPOUND_STRING("Toggle {STR_VAR_1}DexNav"),          DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchDexNav },
 
     // PokéNav no longer exists in HLW.
@@ -980,6 +980,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Running Shoes"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_RunningShoes },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Fly Flags"),       DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleFlyFlags },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL]    = { COMPOUND_STRING("Toggle {STR_VAR_1}All badges"),      DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleBadgeFlags },
+    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR]    = { COMPOUND_STRING("Toggle {STR_VAR_1}Game clear"),      DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleGameClear },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS] = { COMPOUND_STRING("Toggle {STR_VAR_1}Frontier Pass"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_ToggleFrontierPass },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Collision OFF"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_CollisionOnOff },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER]     = { COMPOUND_STRING("Toggle {STR_VAR_1}Encounter OFF"),   DebugAction_ToggleFlag, DebugAction_FlagsVars_EncounterOnOff },
@@ -991,62 +992,27 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
     { NULL }
 };
 
-// Visible root of the PLAYER/WISH MENU.
-// Keep this list curated: every entry here is intentionally available to players.
-static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Dev[] =
 {
-    { COMPOUND_STRING("Utilities…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
-    { COMPOUND_STRING("PC/Bag…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag, },
-    { COMPOUND_STRING("Party…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_Party, },
-    { COMPOUND_STRING("Give X…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Give, },
-    { COMPOUND_STRING("Player…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Player, },
-    { COMPOUND_STRING("Cheats…"),    DebugAction_OpenSubMenuFlagsVars, sDebugMenu_Actions_Flags, },
-    { COMPOUND_STRING("Sound…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_Sound, },
-    { COMPOUND_STRING("ROM Info…"),  DebugAction_OpenSubMenu, sDebugMenu_Actions_ROMInfo2, },
-    { COMPOUND_STRING("Cancel"),     DebugAction_Cancel, },
+    { COMPOUND_STRING("Quick setup"), DebugAction_Dev_QuickSetup },
     { NULL }
 };
 
-// PLAYER/WISH MENU SAFETY BOUNDARY
-//
-// The functions referenced below are intentionally NOT reachable from the
-// player-facing menu tree. They remain only as shared maintenance code.
-// Keeping a reference here prevents unused-static warnings from becoming
-// build failures under -Werror.
-//
-// IMPORTANT: adding a function to this list does not expose it to players.
-// To expose an action, it must be explicitly added to one of the visible
-// sDebugMenu_Actions_* arrays above after being approved for the Wish Menu.
-static const DebugFunc sDebugPlayerHiddenFunctions[] __attribute__((unused)) =
+static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
 {
-    DebugAction_Util_Warp_Warp,
-    DebugAction_Util_WatchCredits,
-    DebugAction_Util_CheatStart,
-    DebugAction_Util_UnlockNextAchievement,
-    DebugAction_PCBag_Fill_PCBoxes_Slow,
-
-    // Additional player-build removals.
-    DebugAction_PCBag_Fill_PCBoxes_Fast,
-    DebugAction_PCBag_Fill_PCItemStorage,
-    DebugAction_Give_DayCareEgg,
-    DebugAction_Party_ClearParty,
-    DebugAction_Party_SetParty,
-    DebugAction_Party_BattleSingle,
-    DebugAction_FlagsVars_SwitchNatDex,
-    DebugAction_FlagsVars_ToggleGameClear,
-    DebugAction_BerryFunctions_Pests,
-    DebugAction_BerryFunctions_Weeds,
-
-    DebugAction_FlagsVars_Flags,
-    DebugAction_FlagsVars_Vars,
-    DebugAction_FlagsVars_PokedexFlags_Reset,
+    { COMPOUND_STRING("Utilities…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
+    { COMPOUND_STRING("Dev…"),          DebugAction_OpenSubMenu, sDebugMenu_Actions_Dev, },
+    { COMPOUND_STRING("PC/Bag…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag, },
+    { COMPOUND_STRING("Party…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Party, },
+    { COMPOUND_STRING("Give X…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Give, },
+    { COMPOUND_STRING("Player…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Player, },
+    { COMPOUND_STRING("Scripts…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_Scripts, },
+    { COMPOUND_STRING("Flags & Vars…"), DebugAction_OpenSubMenuFlagsVars, sDebugMenu_Actions_Flags, },
+    { COMPOUND_STRING("Sound…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Sound, },
+    { COMPOUND_STRING("ROM Info…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_ROMInfo2, },
+    { COMPOUND_STRING("Cancel"),        DebugAction_Cancel, },
+    { NULL }
 };
-
-static const struct DebugMenuOption *const sDebugPlayerHiddenMenus[] __attribute__((unused)) =
-{
-    sDebugMenu_Actions_Scripts,
-};
-
 
 // *******************************
 // Windows
@@ -1513,6 +1479,9 @@ static u8 Debug_CheckToggleFlags(u8 id)
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX:
             result = FlagGet(FLAG_SYS_POKEDEX_GET);
             break;
+        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX:
+            result = IsNationalPokedexEnabled();
+            break;
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_DEXNAV:
             result = FlagGet(DN_FLAG_DEXNAV_GET);
             break;
@@ -1541,6 +1510,9 @@ static u8 Debug_CheckToggleFlags(u8 id)
                     break;
                 }
             }
+            break;
+        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR:
+            result = FlagGet(FLAG_SYS_GAME_CLEAR);
             break;
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS:
             result = FlagGet(FLAG_SYS_FRONTIER_PASS);
@@ -1640,7 +1612,6 @@ static void Debug_RefreshListMenu(u8 taskId)
     gMultiuseListMenuTemplate.fontId = 1;
     gMultiuseListMenuTemplate.cursorKind = 0;
 }
-
 
 // HLW Debug/Wish Menu: allow the cursor to wrap at the ends of every
 // standard debug list. UP on the first entry jumps to the last entry, and
@@ -1891,6 +1862,79 @@ static void DebugAction_OpenSubMenuCreateFollowerNPC(u8 taskId, const struct Deb
     {
         Debug_DestroyMenu_Full_Script(taskId, Debug_Follower_NPC_Not_Enabled);
     }
+}
+
+// *******************************
+// DEV quick setup
+//
+// Intended for fresh debug saves:
+// - unlock every Fly location
+// - grant every badge
+// - force collision OFF
+// - ensure the party contains two Lv.100 Bulbasaur
+//
+// The Pokémon part is idempotent: pressing Quick setup again does not keep
+// adding more Lv.100 Bulbasaur if two are already present.
+static void DebugAction_Dev_QuickSetup(u8 taskId)
+{
+    u32 i;
+    u8 slot;
+    u8 bulbasaurCount = 0;
+    enum NationalDexOrder nationalDexNum = SpeciesToNationalPokedexNum(SPECIES_BULBASAUR);
+
+    // Fly: force every location flag ON (do not toggle).
+    for (i = 0; i < ARRAY_COUNT(sLocationFlags); i++)
+        FlagSet(sLocationFlags[i]);
+
+    // Badges: force every badge flag ON (do not toggle).
+    for (i = 0; i < ARRAY_COUNT(gBadgeFlags); i++)
+        FlagSet(gBadgeFlags[i]);
+
+    // Collision OFF: force the project's no-collision flag ON.
+#if OW_FLAG_NO_COLLISION != 0
+    FlagSet(OW_FLAG_NO_COLLISION);
+#endif
+
+    // Count existing Lv.100 Bulbasaur first so this action is safe to press twice.
+    for (slot = 0; slot < PARTY_SIZE; slot++)
+    {
+        if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES, NULL) == SPECIES_BULBASAUR
+         && GetMonData(&gPlayerParty[slot], MON_DATA_LEVEL, NULL) == 100)
+            bulbasaurCount++;
+    }
+
+    while (bulbasaurCount < 2)
+    {
+        struct Pokemon mon;
+
+        // Find the next empty party slot. Quick setup never deletes existing mons.
+        for (slot = 0; slot < PARTY_SIZE; slot++)
+        {
+            if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
+                break;
+        }
+
+        // No room: leave the existing party untouched.
+        if (slot >= PARTY_SIZE)
+            break;
+
+        CreateMonWithNature(&mon, SPECIES_BULBASAUR, 100, USE_RANDOM_IVS, NATURE_HARDY);
+        SetMonData(&mon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
+        SetMonData(&mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
+
+        CopyMon(&gPlayerParty[slot], &mon, sizeof(mon));
+        gPlayerPartyCount = slot + 1;
+        bulbasaurCount++;
+    }
+
+    // Match the normal debug give-Pokémon convenience state.
+    GetSetPokedexFlag(nationalDexNum, FLAG_SET_SEEN);
+    GetSetPokedexFlag(nationalDexNum, FLAG_SET_CAUGHT);
+    FlagSet(FLAG_SYS_POKEMON_GET);
+
+    PlaySE(SE_PC_LOGIN);
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
 }
 
 // *******************************
@@ -2233,9 +2277,6 @@ static void DebugAction_Player_Gender(u8 taskId)
     ScriptContext_Enable();
 }
 
-// Player-facing Wish Menu speed controls.
-// x5/x10 intentionally disable followers first so follower objects cannot lag
-// behind the player or become visually desynchronized.
 static void DebugAction_Player_NormalSpeed(u8 taskId)
 {
     DebugSetPlayerSpeedMode(0);
@@ -3229,9 +3270,11 @@ void DebugMenu_CalculateTimeOfDay(struct ScriptContext *ctx)
 static void Debug_Display_FlagInfo(u32 flag, u32 digit, u8 windowId)
 {
     ConvertIntToDecimalStringN(gStringVar1, flag, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_FLAGS);
-    ConvertIntToHexStringN(gStringVar2, flag, STR_CONV_MODE_LEFT_ALIGN, 3);
+    ConvertIntToHexStringN(gStringVar2, flag, STR_CONV_MODE_LEFT_ALIGN, 4);
     StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_1}{CLEAR_TO 90}\n0x{STR_VAR_2}{CLEAR_TO 90}"));
-    if (FlagGet(flag))
+    if (!IsFlagValid(flag))
+        StringCopyPadded(gStringVar2, COMPOUND_STRING("Invalid ID"), CHAR_SPACE, 15);
+    else if (FlagGet(flag))
         StringCopyPadded(gStringVar2, sDebugText_True, CHAR_SPACE, 15);
     else
         StringCopyPadded(gStringVar2, sDebugText_False, CHAR_SPACE, 15);
@@ -3267,6 +3310,11 @@ static void DebugAction_FlagsVars_FlagsSelect(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
+        if (!IsFlagValid(gTasks[taskId].tInput))
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
         PlaySE(SE_SELECT);
         FlagToggle(gTasks[taskId].tInput);
     }
@@ -3277,7 +3325,7 @@ static void DebugAction_FlagsVars_FlagsSelect(u8 taskId)
         return;
     }
 
-    Debug_HandleInput_Numeric(taskId, 1, FLAGS_COUNT - 1, DEBUG_NUMBER_DIGITS_FLAGS);
+    Debug_HandleInput_Numeric(taskId, 1, TRAINER_FLAGS_END, DEBUG_NUMBER_DIGITS_FLAGS);
 
     if (JOY_NEW(DPAD_ANY) || JOY_NEW(A_BUTTON))
     {
@@ -3320,7 +3368,7 @@ static void DebugAction_FlagsVars_Vars(u8 taskId)
 
 static void DebugAction_FlagsVars_Select(u8 taskId)
 {
-    Debug_HandleInput_Numeric(taskId, VARS_START, VARS_END, DEBUG_NUMBER_DIGITS_VARIABLES);
+    Debug_HandleInput_Numeric(taskId, VARS_START, HLW_CUSTOM_VARS_END, DEBUG_NUMBER_DIGITS_VARIABLES);
 
     if (JOY_NEW(DPAD_ANY))
     {
@@ -3329,11 +3377,17 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].tInput, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         ConvertIntToHexStringN(gStringVar2, gTasks[taskId].tInput, STR_CONV_MODE_LEFT_ALIGN, 4);
         StringExpandPlaceholders(gStringVar1, sDebugText_FlagsVars_VariableHex);
-        if (VarGetIfExist(gTasks[taskId].tInput) == 0xFFFF)
+        if (GetVarPointer(gTasks[taskId].tInput) == NULL)
+        {
             gTasks[taskId].tVarValue = 0;
+            StringCopy(gStringVar3, COMPOUND_STRING("Invalid ID"));
+        }
         else
+        {
             gTasks[taskId].tVarValue = VarGet(gTasks[taskId].tInput);
-        ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+            ConvertIntToDecimalStringN(gStringVar3, (u16)gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+        }
+        StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
         StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].tDigit]);
 
         //Combine str's to full window string
@@ -3343,6 +3397,11 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
+        if (GetVarPointer(gTasks[taskId].tInput) == NULL)
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
         gTasks[taskId].tDigit = 0;
 
         PlaySE(SE_SELECT);
@@ -3350,11 +3409,8 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].tInput, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         ConvertIntToHexStringN(gStringVar2, gTasks[taskId].tInput, STR_CONV_MODE_LEFT_ALIGN, 4);
         StringExpandPlaceholders(gStringVar1, sDebugText_FlagsVars_VariableHex);
-        if (VarGetIfExist(gTasks[taskId].tInput) == 0xFFFF)
-            gTasks[taskId].tVarValue = 0;
-        else
-            gTasks[taskId].tVarValue = VarGet(gTasks[taskId].tInput);
-        ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+        gTasks[taskId].tVarValue = VarGet(gTasks[taskId].tInput);
+        ConvertIntToDecimalStringN(gStringVar3, (u16)gTasks[taskId].tVarValue, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
         StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].tDigit]);
         StringExpandPlaceholders(gStringVar4, sDebugText_FlagsVars_VariableValueSet);
@@ -3373,22 +3429,14 @@ static void DebugAction_FlagsVars_Select(u8 taskId)
 
 static void DebugAction_FlagsVars_SetValue(u8 taskId)
 {
-    if (JOY_NEW(DPAD_UP))
-    {
-        if (gTasks[taskId].data[6] + sPowersOfTen[gTasks[taskId].tDigit] <= 32000)
-            gTasks[taskId].data[6] += sPowersOfTen[gTasks[taskId].tDigit];
-        else
-            gTasks[taskId].data[6] = 32000 - 1;
+    u32 value = (u16)gTasks[taskId].data[6];
+    u32 step = sPowersOfTen[gTasks[taskId].tDigit];
 
-        if (gTasks[taskId].data[6] >= 32000)
-            gTasks[taskId].data[6] = 32000 - 1;
-    }
+    if (JOY_NEW(DPAD_UP))
+        value = min(value + step, 0xFFFF);
     if (JOY_NEW(DPAD_DOWN))
-    {
-        gTasks[taskId].data[6] -= sPowersOfTen[gTasks[taskId].tDigit];
-        if (gTasks[taskId].data[6] < 0)
-            gTasks[taskId].data[6] = 0;
-    }
+        value = value >= step ? value - step : 0;
+    gTasks[taskId].data[6] = (u16)value;
     if (JOY_NEW(DPAD_LEFT))
     {
         gTasks[taskId].tDigit -= 1;
@@ -3422,7 +3470,7 @@ static void DebugAction_FlagsVars_SetValue(u8 taskId)
         ConvertIntToHexStringN(gStringVar2, gTasks[taskId].tInput, STR_CONV_MODE_LEFT_ALIGN, 4);
         StringExpandPlaceholders(gStringVar1, sDebugText_FlagsVars_VariableHex);
         StringCopyPadded(gStringVar1, gStringVar1, CHAR_SPACE, 15);
-        ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].data[6], STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
+        ConvertIntToDecimalStringN(gStringVar3, (u16)gTasks[taskId].data[6], STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_VARIABLES);
         StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
         StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].tDigit]);
         StringExpandPlaceholders(gStringVar4, sDebugText_FlagsVars_VariableValueSet);
@@ -3444,11 +3492,11 @@ static void DebugAction_FlagsVars_PokedexFlags_Reset(u8 taskId)
     int boxId, boxPosition, partyId;
     u16 species;
 
-    // Reset the Pokédex to empty.
+    // Reset the canonical Pokedex banks before repopulating owned Pokemon.
     memset(gSaveBlock3Ptr->dexCaught, 0, sizeof(gSaveBlock3Ptr->dexCaught));
     memset(gSaveBlock3Ptr->dexSeen, 0, sizeof(gSaveBlock3Ptr->dexSeen));
 
-    // Add party Pokémon back to the Pokédex.
+    // Add party Pokemon to Pokedex
     for (partyId = 0; partyId < PARTY_SIZE; partyId++)
     {
         if (GetMonData(&gPlayerParty[partyId], MON_DATA_SANITY_HAS_SPECIES))
@@ -3459,7 +3507,7 @@ static void DebugAction_FlagsVars_PokedexFlags_Reset(u8 taskId)
         }
     }
 
-    // Add boxed Pokémon back to the Pokédex.
+    // Add box Pokemon to Pokedex
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
     {
         for (boxPosition = 0; boxPosition < IN_BOX_COUNT; boxPosition++)
@@ -4005,8 +4053,8 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
             PlaySE(MUS_LEVEL_UP);
             ScriptGiveMon(sDebugMonData->species, gTasks[taskId].tInput, ITEM_NONE);
 
-            // HLW player-facing Wish Menu: Basic Give Mon must never
-            // generate a shiny. ScriptGiveMon can create a naturally
+            // HLW Wish/Debug Menu: Basic Give Mon must never
+            // generate a shiny either. ScriptGiveMon can create a naturally
             // shiny personality, so force shininess off immediately after the
             // new party member is created.
             {
@@ -4062,14 +4110,14 @@ static void Debug_Display_Nature(u32 natureId, u32 digit, u8 windowId)
 #if 0
 // Legacy shiny selector implementation kept for reference only.
 // This code is intentionally disabled in Hoenn's Last Wish.
-static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) // Legacy selector; shiny creation is disabled.
+static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) //// you can't gain shinys now
 {
     if (JOY_NEW(DPAD_ANY))
     {
         PlaySE(SE_SELECT);
         gTasks[taskId].tInput ^= JOY_NEW(DPAD_UP | DPAD_DOWN) > 0;
         // Debug_Display_TrueFalse(gTasks[taskId].tInput, gTasks[taskId].tSubWindowId, sDebugText_PokemonShiny);
-        // Always force FALSE (non-shiny).
+        // Forçar sempre FALSE (não shiny)
         gTasks[taskId].tInput = 0;
         Debug_Display_TrueFalse(gTasks[taskId].tInput, gTasks[taskId].tSubWindowId, sDebugText_PokemonShiny);
     }
@@ -4077,7 +4125,7 @@ static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId) // Legacy selector; 
     if (JOY_NEW(A_BUTTON))
     {
         // sDebugMonData->isShiny = gTasks[taskId].tInput;
-        sDebugMonData->isShiny = FALSE; // Always keep Wish Menu-created Pokémon non-shiny.
+        sDebugMonData->isShiny = FALSE; // Forçar sempre não shiny
         gTasks[taskId].tInput = 0;
         gTasks[taskId].tDigit = 0;
         Debug_Display_Nature(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
@@ -4576,7 +4624,7 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
         SetMonMoveSlot(&mon, moves[i], i);
     }
 
-    // Ability
+    //Ability
     if (abilityNum == 0xFF || GetAbilityBySpecies(species, abilityNum) == ABILITY_NONE)
     {
         do {
@@ -4587,7 +4635,7 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     SetMonData(&mon, MON_DATA_ABILITY_NUM, &abilityNum);
 
     
-// +++ DEBUG MARKING (TRIANGLE) +++
+// +++ MARCA DEBUG (TRIÂNGULO) +++
 
 {
     u8 currentMarkings = (u8)GetMonData(&mon, MON_DATA_MARKINGS, NULL);
@@ -4595,12 +4643,12 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     SetMonData(&mon, MON_DATA_MARKINGS, &debugMarking);
 }
 
-// +++ END DEBUG MARKING +++
+// +++ FIM +++
 
-    // Update stats before giving the Pokémon to the player.
+    //Update mon stats before giving it to the player
     CalculateMonStats(&mon);
 
-    // Give the Pokémon to the player.
+    // give player the mon
     SetMonData(&mon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
     SetMonData(&mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
     for (i = 0; i < PARTY_SIZE; i++)
@@ -4790,32 +4838,47 @@ static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId)
 // *******************************
 // Actions PCBag
 
-static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) // Player build: Gen I-III only
+static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId) //Credit: Sierraffinity
 {
     int boxId, boxPosition;
+    u32 personality;
     struct BoxPokemon boxMon;
-    u16 species = SPECIES_BULBASAUR;
+    u16 species = SPECIES_GROOKEY;
+    u8 speciesName[POKEMON_NAME_LENGTH + 1];
     bool32 isShiny = TRUE;
 
-    for (boxId = 0; boxId < TOTAL_BOXES_COUNT && species <= SPECIES_DEOXYS; boxId++)
+    personality = Random32();
+
+    CreateBoxMon(&boxMon, species, 100, USE_RANDOM_IVS, FALSE, personality, OT_ID_PLAYER_ID, 0);
+
+    for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
     {
-        for (boxPosition = 0;
-             boxPosition < IN_BOX_COUNT && species <= SPECIES_DEOXYS;
-             boxPosition++)
+        for (boxPosition = 0; boxPosition < IN_BOX_COUNT; boxPosition++, species++)
         {
             if (!GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES))
             {
-                u32 personality = Random32();
-
-                CreateBoxMon(&boxMon, species, 100, USE_RANDOM_IVS, FALSE, personality, OT_ID_PLAYER_ID, 0);
+                StringCopy(speciesName, GetSpeciesName(species));
+                SetBoxMonData(&boxMon, MON_DATA_NICKNAME, &speciesName);
+                SetBoxMonData(&boxMon, MON_DATA_SPECIES, &species);
                 SetBoxMonData(&boxMon, MON_DATA_IS_SHINY, &isShiny);
                 GiveBoxMonInitialMoveset(&boxMon);
                 gPokemonStoragePtr->boxes[boxId][boxPosition] = boxMon;
-                species++;
             }
+
+            if (species == SPECIES_ENAMORUS_INCARNATE)
+                species = SPECIES_MEOWTH_GALAR - 1;
+            if (species == SPECIES_DECIDUEYE_HISUI)
+                species = SPECIES_CRAMORANT_GULPING - 1;
+            if (species == SPECIES_POLTEAGEIST_ANTIQUE)
+                species = SPECIES_EISCUE_NOICE - 1;
+            if (species == SPECIES_BASCULEGION_F)
+                species = SPECIES_VENUSAUR_GMAX - 1;
+            if (species == SPECIES_URSHIFU_RAPID_STRIKE_GMAX)
+                return;
         }
     }
 
+    // Set flag for user convenience
     FlagSet(FLAG_SYS_POKEMON_GET);
     Debug_DestroyMenu_Full(taskId);
     ScriptContext_Enable();
@@ -5212,14 +5275,9 @@ static void DebugAction_CreateFollowerNPC(u8 taskId)
 
     Debug_DestroyMenu_Full(taskId);
     LockPlayerFieldControls();
-
-    // The shared follower core keeps NPC followers and party Pokémon followers
-    // mutually exclusive. Replacing the current NPC follower is immediate, and
-    // CreateFollowerNPC() refreshes/hides the party Pokémon follower immediately.
     DestroyFollowerNPC();
     SetFollowerNPCData(FNPC_DATA_BATTLE_PARTNER, PARTNER_STEVEN);
     CreateFollowerNPC(gfx, FNPC_ALL, Debug_Follower_NPC_Event_Script);
-
     UnlockPlayerFieldControls();
 }
 
