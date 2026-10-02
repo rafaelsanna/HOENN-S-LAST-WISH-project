@@ -61,7 +61,7 @@ LittlerootTown_ProfessorBirchsLab_OnTransition:
 # 31 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter::
 # 32 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
-	specialvar VAR_RESULT, HasAllHoennMons
+	specialvar VAR_RESULT, HasAllHoennMonsForJohtoStarter
 # 33 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"
 	goto_if_eq VAR_RESULT, TRUE, LittlerootTown_ProfessorBirchsLab_EventScript_SetReadyForJohtoStarter
 # 34 "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.pory"

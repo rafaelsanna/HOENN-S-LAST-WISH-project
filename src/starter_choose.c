@@ -64,7 +64,6 @@ const u32 gBirchGrassTilemap[] = INCBIN_U32("graphics/starter_choose/birch_grass
 const u32 gBirchBagGrass_Gfx[] = INCBIN_U32("graphics/starter_choose/tiles.4bpp.smol");
 const u32 gPokeballSelection_Gfx[] = INCBIN_U32("graphics/starter_choose/pokeball_selection.4bpp.smol");
 static const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/starter_choose/starter_circle.4bpp.smol");
-static u16 sRandomizedStarters[STARTER_MON_COUNT];
 static bool8 sStartersInitialized = FALSE;
 static bool8 sStarterShiny[STARTER_MON_COUNT];
 static bool8 sChosenStarterShiny;
@@ -356,19 +355,6 @@ static const struct SpriteTemplate sSpriteTemplate_StarterCircle =
     .callback = SpriteCB_StarterPokemon
 };
 
-static void InitRandomizedStarters(void)
-{
-    u8 i;
-    if (sStartersInitialized)
-        return;
-    for (i = 0; i < 3; i++)
-    {
-        sRandomizedStarters[i] = Randomizer_GetFixedStarter(i);
-        sStarterShiny[i] = (Random() % 65536) < SHINY_ODDS;
-    }
-    sStartersInitialized = TRUE;
-}
-
 static void InitStarterShiny(void)
 {
     u8 i;
@@ -393,16 +379,15 @@ u16 GetStarterPokemon(u16 chosenStarterId)
 {
     if (chosenStarterId >= STARTER_MON_COUNT)
         chosenStarterId = 0;
- 
-#if RANDOMIZER_AVAILABLE == TRUE
-    if (Randomizer_WildEnabled())
-    {
-        InitRandomizedStarters();
-        return sRandomizedStarters[chosenStarterId];
-    }
-#endif
 
     InitStarterShiny();
+#if RANDOMIZER_AVAILABLE == TRUE
+    // Species are deterministic, so a cache would only become stale when
+    // switching modes. Keep the independent shiny rolls cached as before.
+    if (Randomizer_WildEnabled() || Randomizer_FullWildEnabled())
+        return Randomizer_GetFixedStarter(chosenStarterId);
+#endif
+
     return sStarterMon[chosenStarterId];
 }
 

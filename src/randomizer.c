@@ -47,6 +47,14 @@ static const u16 sHoennDexPool[] =
     SPECIES_BEAUTIFLY,
     SPECIES_CASCOON,
     SPECIES_DUSTOX,
+    SPECIES_LEDYBA,
+    SPECIES_LEDIAN,
+    SPECIES_SPINARAK,
+    SPECIES_ARIADOS,
+    SPECIES_VENONAT,
+    SPECIES_VENOMOTH,
+    SPECIES_PARAS,
+    SPECIES_PARASECT,
     SPECIES_NIDORAN_F,
     SPECIES_NIDORINA,
     SPECIES_NIDOQUEEN,
@@ -69,6 +77,10 @@ static const u16 sHoennDexPool[] =
     SPECIES_PIDGEY,
     SPECIES_PIDGEOTTO,
     SPECIES_PIDGEOT,
+    SPECIES_SPEAROW,
+    SPECIES_FEAROW,
+    SPECIES_HOOTHOOT,
+    SPECIES_NOCTOWL,
     SPECIES_RALTS,
     SPECIES_KIRLIA,
     SPECIES_GARDEVOIR,
@@ -83,6 +95,7 @@ static const u16 sHoennDexPool[] =
     SPECIES_SLAKOTH,
     SPECIES_VIGOROTH,
     SPECIES_SLAKING,
+    SPECIES_AIPOM,
     SPECIES_ABRA,
     SPECIES_KADABRA,
     SPECIES_ALAKAZAM,
@@ -110,6 +123,8 @@ static const u16 sHoennDexPool[] =
     SPECIES_HOPPIP,
     SPECIES_SKIPLOOM,
     SPECIES_JUMPLUFF,
+    SPECIES_SUNKERN,
+    SPECIES_SUNFLORA,
 
     // ── Rocha / Terra ─────────────────────────────────────────────────────
     SPECIES_GEODUDE,
@@ -119,6 +134,7 @@ static const u16 sHoennDexPool[] =
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
     SPECIES_PROBOPASS,
 #endif
+    SPECIES_SUDOWOODO,
 
     // ── Normais / Fofos ───────────────────────────────────────────────────
     SPECIES_SKITTY,
@@ -153,6 +169,9 @@ static const u16 sHoennDexPool[] =
     // ── Elétrico ──────────────────────────────────────────────────────────
     SPECIES_ELECTRIKE,
     SPECIES_MANECTRIC,
+    SPECIES_MAREEP,
+    SPECIES_FLAAFFY,
+    SPECIES_AMPHAROS,
     SPECIES_PLUSLE,
     SPECIES_MINUN,
     SPECIES_MAGNEMITE,
@@ -170,6 +189,11 @@ static const u16 sHoennDexPool[] =
     SPECIES_GLOOM,
     SPECIES_VILEPLUME,
     SPECIES_BELLOSSOM,
+    SPECIES_BELLSPROUT,
+    SPECIES_WEEPINBELL,
+    SPECIES_VICTREEBEL,
+    SPECIES_EXEGGCUTE,
+    SPECIES_EXEGGUTOR,
     SPECIES_DODUO,
     SPECIES_DODRIO,
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
@@ -212,8 +236,11 @@ static const u16 sHoennDexPool[] =
     // ── Terra ─────────────────────────────────────────────────────────────
     SPECIES_SANDSHREW,
     SPECIES_SANDSLASH,
+    SPECIES_DIGLETT,
+    SPECIES_DUGTRIO,
     SPECIES_PINECO,
     SPECIES_FORRETRESS,
+    SPECIES_SHUCKLE,
     SPECIES_SPINDA,
 
     // ── Aço / Voador ──────────────────────────────────────────────────────
@@ -250,6 +277,8 @@ static const u16 sHoennDexPool[] =
     SPECIES_URSALUNA,
 
     // ── Veneno / Normal ───────────────────────────────────────────────────
+    SPECIES_EKANS,
+    SPECIES_ARBOK,
     SPECIES_SEVIPER,
 
     // ── Rocha / Psíquico ──────────────────────────────────────────────────
@@ -266,10 +295,17 @@ static const u16 sHoennDexPool[] =
     SPECIES_WHISCASH,
     SPECIES_CORPHISH,
     SPECIES_CRAWDAUNT,
+    SPECIES_KRABBY,
+    SPECIES_KINGLER,
 
     // ── Terra / Psíquico ──────────────────────────────────────────────────
     SPECIES_BALTOY,
     SPECIES_CLAYDOL,
+    SPECIES_OMANYTE,
+    SPECIES_OMASTAR,
+    SPECIES_KABUTO,
+    SPECIES_KABUTOPS,
+    SPECIES_AERODACTYL,
 
     // ── Fósseis ───────────────────────────────────────────────────────────
     SPECIES_LILEEP,
@@ -281,6 +317,9 @@ static const u16 sHoennDexPool[] =
     SPECIES_IGGLYBUFF,
     SPECIES_JIGGLYPUFF,
     SPECIES_WIGGLYTUFF,
+    SPECIES_MILTANK,
+    SPECIES_TAUROS,
+    SPECIES_KANGASKHAN,
 
     // ── Água ──────────────────────────────────────────────────────────────
     SPECIES_FEEBAS,
@@ -291,6 +330,7 @@ static const u16 sHoennDexPool[] =
 
     // ── Normal ────────────────────────────────────────────────────────────
     SPECIES_KECLEON,
+    SPECIES_DITTO,
 
     // ── Fantasma ──────────────────────────────────────────────────────────
     SPECIES_SHUPPET,
@@ -325,6 +365,22 @@ static const u16 sHoennDexPool[] =
     SPECIES_NINETALES,
     SPECIES_GROWLITHE,
     SPECIES_ARCANINE,
+    SPECIES_PONYTA,
+    SPECIES_RAPIDASH,
+
+    // Grotto and postgame starter families.
+    SPECIES_TREECKO,
+    SPECIES_GROVYLE,
+    SPECIES_SCEPTILE,
+    SPECIES_MUDKIP,
+    SPECIES_MARSHTOMP,
+    SPECIES_SWAMPERT,
+    SPECIES_CHIKORITA,
+    SPECIES_BAYLEEF,
+    SPECIES_MEGANIUM,
+    SPECIES_CYNDAQUIL,
+    SPECIES_QUILAVA,
+    SPECIES_TYPHLOSION,
 
     // ── Elétrico / Normal ────────────────────────────────────────────────
     SPECIES_PICHU,
@@ -379,6 +435,8 @@ static const u16 sHoennDexPool[] =
 
     // ── Normal ───────────────────────────────────────────────────────────
     SPECIES_SMEARGLE,
+    SPECIES_DUNSPARCE,
+    SPECIES_DUDUNSPARCE,
     SPECIES_PINSIR,
     SPECIES_HERACROSS,
 
@@ -405,6 +463,7 @@ static const u16 sHoennDexPool[] =
     // ── Gelo / Psíquico ──────────────────────────────────────────────────
     SPECIES_SMOOCHUM,
     SPECIES_JYNX,
+    SPECIES_DELIBIRD,
 
     // ── Gelo ─────────────────────────────────────────────────────────────
     SPECIES_SNORUNT,
@@ -412,14 +471,21 @@ static const u16 sHoennDexPool[] =
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
     SPECIES_FROSLASS,
 #endif
+    SPECIES_SWINUB,
+    SPECIES_PILOSWINE,
+    SPECIES_MAMOSWINE,
     SPECIES_SPHEAL,
     SPECIES_SEALEO,
     SPECIES_WALREIN,
+    SPECIES_SEEL,
+    SPECIES_DEWGONG,
 
     // ── Água ─────────────────────────────────────────────────────────────
     SPECIES_CLAMPERL,
     SPECIES_HUNTAIL,
     SPECIES_GOREBYSS,
+    SPECIES_SHELLDER,
+    SPECIES_CLOYSTER,
     SPECIES_RELICANTH,
     SPECIES_CORSOLA,
 #if P_NEW_EVOS_IN_REGIONAL_DEX && P_GALARIAN_FORMS
@@ -427,6 +493,8 @@ static const u16 sHoennDexPool[] =
 #endif
     SPECIES_CHINCHOU,
     SPECIES_LANTURN,
+    SPECIES_REMORAID,
+    SPECIES_OCTILLERY,
     SPECIES_MANTYKE,
     SPECIES_MANTINE,
     SPECIES_LUVDISC,
@@ -443,6 +511,9 @@ static const u16 sHoennDexPool[] =
     SPECIES_BAGON,
     SPECIES_SHELGON,
     SPECIES_SALAMENCE,
+    SPECIES_LARVITAR,
+    SPECIES_PUPITAR,
+    SPECIES_TYRANITAR,
 
     // ── Aço / Psíquico ───────────────────────────────────────────────────
     SPECIES_BELDUM,
@@ -725,9 +796,43 @@ static u32 Rz_GetStarterSeed(void)
 
 u16 Randomizer_GetFixedStarter(u8 slot)
 {
+    static const u16 vanillaStarters[3] = { SPECIES_BULBASAUR, SPECIES_TOTODILE, SPECIES_TORCHIC };
+
+    if (Randomizer_FullWildEnabled())
+    {
+        u16 choices[ARRAY_COUNT(vanillaStarters)] = {SPECIES_NONE};
+        u32 state = Rz_MixSeed(Rz_GetStarterSeed(), 0x53544152); // "STAR"
+
+        slot %= ARRAY_COUNT(choices);
+        // Rebuild the same distinct choices from the save's trainer ID. Do
+        // not consume encounter RNG or reroll between previews and rewards.
+        for (u8 choice = 0; choice <= slot; choice++)
+        {
+            for (u32 attempt = 0; attempt < HOENN_DEX_COUNT - 1; attempt++)
+            {
+                u16 dexNum = 1 + Rz_Next(&state, HOENN_DEX_COUNT - 1);
+                u16 species = NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum));
+                bool8 alreadyChosen = FALSE;
+
+                if (species == SPECIES_NONE || species >= NUM_SPECIES || gSpeciesInfo[species].baseHP == 0)
+                    continue;
+                for (u8 previous = 0; previous < choice; previous++)
+                    alreadyChosen |= choices[previous] == species;
+                if (!alreadyChosen)
+                {
+                    choices[choice] = species;
+                    break;
+                }
+            }
+            // Remain safe if a future dex has too few valid starter species.
+            if (choices[choice] == SPECIES_NONE)
+                return vanillaStarters[slot];
+        }
+        return choices[slot];
+    }
+
     if (!Randomizer_WildEnabled())
     {
-        static const u16 vanillaStarters[3] = { SPECIES_BULBASAUR, SPECIES_TOTODILE, SPECIES_TORCHIC };
         return vanillaStarters[slot % 3];
     }
 

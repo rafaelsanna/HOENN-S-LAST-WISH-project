@@ -4667,17 +4667,31 @@ u16 GetKantoPokedexCount(u8 caseID)
     return count;
 }
 
-bool16 HasAllHoennMons(void)
+static bool16 HasAllHoennMonsInternal(bool8 excludeJohtoReward)
 {
     u32 i, j;
 
     for (i = 0; i < HOENN_DEX_COUNT - 1; i++)
     {
         j = HoennToNationalOrder(i + 1);
+        // These families are awarded for completing the rest of the regional
+        // dex. Requiring them here would prevent the player earning the reward.
+        if (excludeJohtoReward && j >= NATIONAL_DEX_CHIKORITA && j <= NATIONAL_DEX_TYPHLOSION)
+            continue;
         if (!(gSpeciesInfo[j].isMythical && !gSpeciesInfo[j].dexForceRequired) && !GetSetPokedexFlag(j, FLAG_GET_CAUGHT))
             return FALSE;
     }
     return TRUE;
+}
+
+bool16 HasAllHoennMons(void)
+{
+    return HasAllHoennMonsInternal(FALSE);
+}
+
+bool16 HasAllHoennMonsForJohtoStarter(void)
+{
+    return HasAllHoennMonsInternal(TRUE);
 }
 
 bool8 HasAllKantoMons(void)

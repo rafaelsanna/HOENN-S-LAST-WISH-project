@@ -8,6 +8,7 @@
 #include "roamer.h"
 #include "script_pokemon_util.h"
 #include "script.h"
+#include "starter_choose.h"
 #include "text.h"
 #include "wild_encounter.h"
 #include "constants/items.h"
@@ -339,12 +340,110 @@ TEST("Full Random disabled preserves standard scripted and roaming wild species"
     EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_HP), 50);
 }
 
-TEST("Full Random does not randomize starters trainer teams or gifts")
+TEST("Full Random randomizes all three starters from the actual Hoenn dex with distinct choices")
+{
+    bool8 sawChangedStarter = FALSE, sawLegend = FALSE;
+    static const u16 normalStarters[] = {SPECIES_BULBASAUR, SPECIES_TOTODILE, SPECIES_TORCHIC};
+
+    SetUpRandomizer(FALSE, TRUE);
+    for (u32 seed = 0; seed < 64; seed++)
+    {
+        u16 choices[ARRAY_COUNT(normalStarters)];
+
+        for (u32 byte = 0; byte < sizeof(gSaveBlock2Ptr->playerTrainerId); byte++)
+            gSaveBlock2Ptr->playerTrainerId[byte] = seed >> (byte * 8);
+        for (u32 slot = 0; slot < ARRAY_COUNT(choices); slot++)
+        {
+            choices[slot] = Randomizer_GetFixedStarter(slot);
+            ExpectHoennSpecies(choices[slot]);
+            sawChangedStarter |= choices[slot] != normalStarters[slot];
+            sawLegend |= gSpeciesInfo[choices[slot]].isLegendary || gSpeciesInfo[choices[slot]].isMythical;
+            for (u32 previous = 0; previous < slot; previous++)
+                EXPECT_NE(choices[slot], choices[previous]);
+        }
+    }
+    EXPECT(sawChangedStarter);
+    EXPECT(sawLegend);
+}
+
+TEST("Full Random starter species are stable per save and independent of wild encounter RNG or restrictions")
+{
+    u16 choices[3];
+    u32 nextRandom;
+
+    SetUpRandomizer(FALSE, TRUE);
+    for (u32 byte = 0; byte < sizeof(gSaveBlock2Ptr->playerTrainerId); byte++)
+        gSaveBlock2Ptr->playerTrainerId[byte] = 0x12345678 >> (byte * 8);
+    for (u32 slot = 0; slot < ARRAY_COUNT(choices); slot++)
+        choices[slot] = Randomizer_GetFixedStarter(slot);
+    nextRandom = Random32();
+    SeedRng(0x12345678);
+    for (u32 slot = 0; slot < ARRAY_COUNT(choices); slot++)
+        EXPECT_EQ(Randomizer_GetFixedStarter(slot), choices[slot]);
+    EXPECT_EQ(Random32(), nextRandom);
+    for (u32 mode = 0; mode < MAX_RANDOMIZER_SPECIES_MODE; mode++)
+    {
+        VarSet(RANDOMIZER_VAR_SPECIES_MODE, mode);
+        for (u32 repeat = 0; repeat < 16; repeat++)
+        {
+            Randomizer_OnFullWildEncounter(SPECIES_POOCHYENA);
+            for (u32 slot = 0; slot < ARRAY_COUNT(choices); slot++)
+                EXPECT_EQ(Randomizer_GetFixedStarter(slot), choices[slot]);
+        }
+    }
+}
+
+TEST("Full Random starter previews and rewards match each stable choice")
 {
     SetUpRandomizer(FALSE, TRUE);
-    EXPECT_EQ(Randomizer_GetFixedStarter(0), SPECIES_BULBASAUR);
-    EXPECT_EQ(Randomizer_GetFixedStarter(1), SPECIES_TOTODILE);
-    EXPECT_EQ(Randomizer_GetFixedStarter(2), SPECIES_TORCHIC);
+    for (u32 slot = 0; slot < 3; slot++)
+    {
+        u16 species = Randomizer_GetFixedStarter(slot);
+
+        EXPECT_EQ(GetStarterPokemon(slot), species);
+        EXPECT_EQ(Randomizer_GetRandomStarter(SPECIES_BULBASAUR, slot), species);
+        ScriptGiveMon(GetStarterPokemon(slot), 5, ITEM_NONE);
+        EXPECT_EQ(GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES), species);
+        EXPECT_EQ(GetMonData(&gPlayerParty[slot], MON_DATA_LEVEL), 5);
+        EXPECT_EQ(GetStarterPokemon(slot), species);
+    }
+    EXPECT_EQ(GetStarterPokemon(3), GetStarterPokemon(0));
+}
+
+TEST("Starter mode changes do not retain a stale species preview and table mode keeps its existing choices")
+{
+    static const u16 normalStarters[] = {SPECIES_BULBASAUR, SPECIES_TOTODILE, SPECIES_TORCHIC};
+    u16 tableChoices[ARRAY_COUNT(normalStarters)];
+
+    SetUpRandomizer(FALSE, FALSE);
+    FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+    for (u32 slot = 0; slot < ARRAY_COUNT(normalStarters); slot++)
+        EXPECT_EQ(GetStarterPokemon(slot), normalStarters[slot]);
+    Randomizer_SetWildModes(TRUE, FALSE);
+    for (u32 slot = 0; slot < ARRAY_COUNT(tableChoices); slot++)
+    {
+        tableChoices[slot] = Randomizer_GetFixedStarter(slot);
+        EXPECT_EQ(GetStarterPokemon(slot), tableChoices[slot]);
+    }
+    Randomizer_SetWildModes(FALSE, TRUE);
+    for (u32 slot = 0; slot < ARRAY_COUNT(normalStarters); slot++)
+        EXPECT_EQ(GetStarterPokemon(slot), Randomizer_GetFixedStarter(slot));
+    Randomizer_SetWildModes(TRUE, FALSE);
+    // Malformed saves with both bits set must still preserve table mode.
+    FlagSet(RANDOMIZER_FLAG_FULL_WILD_MON);
+    for (u32 slot = 0; slot < ARRAY_COUNT(tableChoices); slot++)
+    {
+        EXPECT_EQ(Randomizer_GetFixedStarter(slot), tableChoices[slot]);
+        EXPECT_EQ(GetStarterPokemon(slot), tableChoices[slot]);
+    }
+    Randomizer_SetWildModes(FALSE, FALSE);
+    for (u32 slot = 0; slot < ARRAY_COUNT(normalStarters); slot++)
+        EXPECT_EQ(GetStarterPokemon(slot), normalStarters[slot]);
+}
+
+TEST("Full Random does not randomize trainer teams or gifts")
+{
+    SetUpRandomizer(FALSE, TRUE);
     EXPECT_EQ(Randomizer_OnTrainerMon(SPECIES_POOCHYENA, 1, 0), SPECIES_POOCHYENA);
     ScriptGiveMon(SPECIES_CASTFORM, 30, ITEM_NONE);
     EXPECT_EQ(GetMonData(&gPlayerParty[0], MON_DATA_SPECIES), SPECIES_CASTFORM);

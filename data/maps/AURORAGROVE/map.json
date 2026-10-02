@@ -15,6 +15,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_AURORA_GROVE_PORTAL",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(KYUREM)",
       "x": 14,
       "y": 26,
@@ -25,10 +26,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "AURORAGROVE_MapScripts_MagicCrystal",
-      "flag": "FLAG_HIDE_AURORA_GROVE_PORTAL",
-      "local_id": "LOCALID_AURORA_GROVE_PORTAL"
+      "flag": "FLAG_HIDE_AURORA_GROVE_PORTAL"
     },
     {
+      "local_id": "LOCALID_AURORA_GROVE_AURORA",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(THIEVUL)",
       "x": 14,
       "y": 18,
@@ -39,8 +40,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "AURORAGROVE_EventScript_Aurora",
-      "flag": "0",
-      "local_id": "LOCALID_AURORA_GROVE_AURORA"
+      "flag": "0"
     }
   ],
   "warp_events": [
