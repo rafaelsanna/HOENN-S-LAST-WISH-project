@@ -609,6 +609,14 @@ static void CB2_EndWildBattle(void)
     }
 
     Nuzlocke_ApplyPermadeathToPlayerParty();
+
+    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
+    if (Nuzlocke_ShouldHardGameOver())
+    {
+        Nuzlocke_StartHardGameOverScreen();
+        return;
+    }
+
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
     if ((IsPlayerDefeated(gBattleOutcome) == TRUE || nuzlockePartyWiped)
@@ -632,6 +640,14 @@ static void CB2_EndScriptedWildBattle(void)
     ResetOamRange(0, 128);
 
     Nuzlocke_ApplyPermadeathToPlayerParty();
+
+    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
+    if (Nuzlocke_ShouldHardGameOver())
+    {
+        Nuzlocke_StartHardGameOverScreen();
+        return;
+    }
+
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
     if (IsPlayerDefeated(gBattleOutcome) == TRUE || nuzlockePartyWiped)
@@ -1347,6 +1363,14 @@ static void CB2_EndTrainerBattle(void)
     }
 
     Nuzlocke_ApplyPermadeathToPlayerParty();
+
+    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
+    if (Nuzlocke_ShouldHardGameOver())
+    {
+        Nuzlocke_StartHardGameOverScreen();
+        return;
+    }
+
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
@@ -1385,6 +1409,14 @@ static void CB2_EndRematchBattle(void)
     bool8 nuzlockePartyWiped;
 
     Nuzlocke_ApplyPermadeathToPlayerParty();
+
+    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
+    if (Nuzlocke_ShouldHardGameOver())
+    {
+        Nuzlocke_StartHardGameOverScreen();
+        return;
+    }
+
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)

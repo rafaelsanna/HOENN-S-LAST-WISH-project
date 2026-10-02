@@ -14,5 +14,8 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void);
 bool8 Nuzlocke_HasLoneMonPenaltyMessage(void);
 bool8 Nuzlocke_ConsumeLoneMonPenaltyMessage(void);
 const u8 *Nuzlocke_GetLoneMonPenaltyMessage(void);
+bool8 Nuzlocke_ShouldHardGameOver(void);
+void Nuzlocke_StartHardGameOverScreen(void);
+
 
 #endif // GUARD_NUZLOCKE_H

@@ -8,9 +8,22 @@
 #include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
+#include "save.h"
 #include "wild_encounter.h"
 #include "constants/flags.h"
 #include "constants/battle.h"
+#include "bg.h"
+#include "gpu_regs.h"
+#include "main.h"
+#include "menu.h"
+#include "menu_helpers.h"
+#include "palette.h"
+#include "scanline_effect.h"
+#include "sprite.h"
+#include "task.h"
+#include "text.h"
+#include "window.h"
+#include "constants/rgb.h"
 
 static const u8 sTextNuzlockeLoneMonPenalty[] = _("You lost with Nuzlocke, so your only Pokemon lost 2 levels.");
 
@@ -414,9 +427,6 @@ void Nuzlocke_ApplyPermadeathToPlayerParty(void)
         if (GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
             continue;
 
-        if (TryApplyLoneMonPenalty(&gPlayerParty[i]))
-            continue;
-
         // Nuzlocke release: dead party mons are deleted permanently.
         Nuzlocke_RecordReleasedSpecies(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES));
         ZeroMonData(&gPlayerParty[i]);
@@ -443,3 +453,246 @@ const u8 *Nuzlocke_GetLoneMonPenaltyMessage(void)
 {
     return sTextNuzlockeLoneMonPenalty;
 }
+
+// ============================================================================
+// NUZLOCKE HARD GAME OVER
+// HARD party wipe = failed run. The player may erase the save or keep it.
+// Deleting requires a second confirmation and defaults to NO.
+// ============================================================================
+// NUZLOCKE HARD GAME OVER
+// HARD party wipe = failed run. The player may erase the save or keep it.
+// Uses a manual text cursor to avoid white menu-tile artifacts.
+// ============================================================================
+static const u8 sTextNuzlockeHardGameOver[] =
+    _("GAME OVER\n"
+      "You failed the NUZLOCKE.\n"
+      "You lost all your POKéMON.");
+
+static const u8 sTextNuzlockeHardGameOverDelete[] =
+    _("Delete the save file.");
+
+static const u8 sTextNuzlockeHardGameOverContinue[] =
+    _("Continue the same save file.");
+
+static const u8 sTextNuzlockeHardGameOverDeleteConfirm[] =
+    _("GAME OVER\n"
+      "Delete the save file?\n"
+      "This cannot be undone.");
+
+static const u8 sTextNuzlockeHardGameOverYes[] = _("YES");
+static const u8 sTextNuzlockeHardGameOverNo[] = _("NO");
+static const u8 sTextNuzlockeHardGameOverArrow[] = _(">");
+
+static const u8 sNuzlockeHardGameOverTextColors[] =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_WHITE,
+    TEXT_COLOR_DARK_GRAY,
+};
+
+static bool8 sNuzlockeHardGameOverConfirmDelete;
+static u8 sNuzlockeHardGameOverSelection;
+
+static const struct BgTemplate sNuzlockeHardGameOverBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+};
+
+static const struct WindowTemplate sNuzlockeHardGameOverWindowTemplates[] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 3,
+        .width = 26,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 10,
+        .width = 26,
+        .height = 5,
+        .paletteNum = 15,
+        .baseBlock = 157,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+static void VBlankCB_NuzlockeHardGameOver(void)
+{
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+}
+
+static void Nuzlocke_RenderHardGameOverOptions(bool8 confirmDelete)
+{
+    FillWindowPixelBuffer(1, PIXEL_FILL(0));
+
+    if (confirmDelete)
+    {
+        AddTextPrinterParameterized3(1, FONT_NORMAL, 18, 1,  sNuzlockeHardGameOverTextColors, TEXT_SKIP_DRAW, sTextNuzlockeHardGameOverYes);
+        AddTextPrinterParameterized3(1, FONT_NORMAL, 18, 17, sNuzlockeHardGameOverTextColors, TEXT_SKIP_DRAW, sTextNuzlockeHardGameOverNo);
+    }
+    else
+    {
+        AddTextPrinterParameterized3(1, FONT_NORMAL, 18, 1,  sNuzlockeHardGameOverTextColors, TEXT_SKIP_DRAW, sTextNuzlockeHardGameOverDelete);
+        AddTextPrinterParameterized3(1, FONT_NORMAL, 18, 17, sNuzlockeHardGameOverTextColors, TEXT_SKIP_DRAW, sTextNuzlockeHardGameOverContinue);
+    }
+
+    AddTextPrinterParameterized3(1,
+                                 FONT_NORMAL,
+                                 4,
+                                 (sNuzlockeHardGameOverSelection == 0) ? 1 : 17,
+                                 sNuzlockeHardGameOverTextColors,
+                                 TEXT_SKIP_DRAW,
+                                 sTextNuzlockeHardGameOverArrow);
+
+    PutWindowTilemap(1);
+    CopyWindowToVram(1, COPYWIN_FULL);
+}
+
+static void Nuzlocke_DrawHardGameOverMainMenu(void)
+{
+    FillWindowPixelBuffer(0, PIXEL_FILL(0));
+    AddTextPrinterParameterized3(0,
+                                 FONT_NORMAL,
+                                 8,
+                                 1,
+                                 sNuzlockeHardGameOverTextColors,
+                                 TEXT_SKIP_DRAW,
+                                 sTextNuzlockeHardGameOver);
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_FULL);
+
+    sNuzlockeHardGameOverConfirmDelete = FALSE;
+    sNuzlockeHardGameOverSelection = 1; // safer default = Continue
+    Nuzlocke_RenderHardGameOverOptions(FALSE);
+}
+
+static void Nuzlocke_DrawHardGameOverDeleteConfirm(void)
+{
+    FillWindowPixelBuffer(0, PIXEL_FILL(0));
+    AddTextPrinterParameterized3(0,
+                                 FONT_NORMAL,
+                                 8,
+                                 1,
+                                 sNuzlockeHardGameOverTextColors,
+                                 TEXT_SKIP_DRAW,
+                                 sTextNuzlockeHardGameOverDeleteConfirm);
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_FULL);
+
+    sNuzlockeHardGameOverConfirmDelete = TRUE;
+    sNuzlockeHardGameOverSelection = 1; // safer default = NO
+    Nuzlocke_RenderHardGameOverOptions(TRUE);
+}
+
+static void CB2_NuzlockeHardGameOver(void)
+{
+    if (JOY_NEW(DPAD_UP) || JOY_NEW(DPAD_DOWN))
+    {
+        sNuzlockeHardGameOverSelection ^= 1;
+        Nuzlocke_RenderHardGameOverOptions(sNuzlockeHardGameOverConfirmDelete);
+        return;
+    }
+
+    if (JOY_NEW(B_BUTTON))
+    {
+        if (sNuzlockeHardGameOverConfirmDelete)
+            Nuzlocke_DrawHardGameOverMainMenu();
+        return;
+    }
+
+    if (!JOY_NEW(A_BUTTON))
+        return;
+
+    if (sNuzlockeHardGameOverConfirmDelete)
+    {
+        if (sNuzlockeHardGameOverSelection == 0) // YES
+        {
+            ClearSaveData();
+            Save_ResetSaveCounters();
+            DoSoftReset();
+        }
+        else // NO
+        {
+            Nuzlocke_DrawHardGameOverMainMenu();
+        }
+        return;
+    }
+
+    if (sNuzlockeHardGameOverSelection == 0) // Delete the save file.
+        Nuzlocke_DrawHardGameOverDeleteConfirm();
+    else // Continue the same save file.
+        DoSoftReset();
+}
+
+bool8 Nuzlocke_ShouldHardGameOver(void)
+{
+    s32 i;
+
+    if (!Nuzlocke_HasStarted() || Nuzlocke_GetMode() != OPTIONS_NUZLOCKE_HARD)
+        return FALSE;
+
+    // HARD rule: a full PARTY wipe ends the run immediately.
+    // Boxed Pokemon do NOT save the run.
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+            continue;
+        if (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+            continue;
+        if (GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+void Nuzlocke_StartHardGameOverScreen(void)
+{
+    SetVBlankHBlankCallbacksToNull();
+    ScanlineEffect_Stop();
+    ResetTasks();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetPaletteFade();
+    FreeAllWindowBuffers();
+
+    ResetVramOamAndBgCntRegs();
+    ResetBgsAndClearDma3BusyFlags(FALSE);
+    InitBgsFromTemplates(0,
+                        sNuzlockeHardGameOverBgTemplates,
+                        ARRAY_COUNT(sNuzlockeHardGameOverBgTemplates));
+    ResetAllBgsCoordinates();
+
+    InitWindows(sNuzlockeHardGameOverWindowTemplates);
+    DeactivateAllTextPrinters();
+
+    SetBackdropFromColor(RGB_BLACK);
+    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+
+    FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 0);
+    Nuzlocke_DrawHardGameOverMainMenu();
+    CopyBgTilemapBufferToVram(0);
+
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0);
+    ShowBg(0);
+
+    gPaletteFade.bufferTransferDisabled = FALSE;
+    SetVBlankCallback(VBlankCB_NuzlockeHardGameOver);
+    SetMainCallback2(CB2_NuzlockeHardGameOver);
+}
+

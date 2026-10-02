@@ -1858,7 +1858,7 @@ void CB2_NewGame(void)
 
 void CB2_WhiteOut(void)
 {
-    u8 state;
+u8 state;
 
     if (++gMain.state >= 120)
     {
