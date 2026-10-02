@@ -38,11 +38,18 @@ PetalburgCity_WallysHouse_EventScript_GiveHMSurf::
 PetalburgCity_WallysHouse_EventScript_WallysDad::
 	lock
 	faceplayer
+PetalburgCity_WallysHouse_EventScript_GrandfatherDialogue::
 	goto_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, PetalburgCity_WallysHouse_EventScript_DefeatedWallyInVictoryRoad
 	goto_if_set FLAG_RECEIVED_HM_SURF, PetalburgCity_WallysHouse_EventScript_ReceievedHMSurf
+	goto_if_lt VAR_PETALBURG_GYM_STATE, 2, PetalburgCity_WallysHouse_EventScript_GrandfatherBeforeMeetingLuka
 	goto_if_set FLAG_THANKED_FOR_PLAYING_WITH_WALLY, PetalburgCity_WallysHouse_EventScript_PlayedWithWally
 	msgbox PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally, MSGBOX_DEFAULT
 	setflag FLAG_THANKED_FOR_PLAYING_WITH_WALLY
+	release
+	end
+
+PetalburgCity_WallysHouse_EventScript_GrandfatherBeforeMeetingLuka::
+	msgbox PetalburgCity_WallysHouse_Text_GrandfatherBeforeMeetingLuka, MSGBOX_DEFAULT
 	release
 	end
 
@@ -64,8 +71,15 @@ PetalburgCity_WallysHouse_EventScript_PlayedWithWally::
 PetalburgCity_WallysHouse_EventScript_WallysMom::
 	lock
 	faceplayer
+PetalburgCity_WallysHouse_EventScript_GrandmotherDialogue::
 	goto_if_set FLAG_RECEIVED_HM_SURF, PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf
+	goto_if_lt VAR_PETALBURG_GYM_STATE, 2, PetalburgCity_WallysHouse_EventScript_GrandmotherBeforeMeetingLuka
 	msgbox PetalburgCity_WallysHouse_Text_WallyWasReallyHappy, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgCity_WallysHouse_EventScript_GrandmotherBeforeMeetingLuka::
+	msgbox PetalburgCity_WallysHouse_Text_GrandmotherBeforeMeetingLuka, MSGBOX_DEFAULT
 	release
 	end
 
@@ -74,7 +88,18 @@ PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf::
 	release
 	end
 
-PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally:
+@ Placeholder dialogue: replace these with the final pre-meeting lines.
+PetalburgCity_WallysHouse_Text_GrandfatherBeforeMeetingLuka::
+	.string "Our grandson, LUKA, is insisting on\n"
+	.string "leaving for VERDANTURF TOWN soon.\p"
+	.string "Those dreams are really getting to him.$"
+
+PetalburgCity_WallysHouse_Text_GrandmotherBeforeMeetingLuka::
+	.string "Have you seen our grandson, LUKA?\p"
+	.string "I hope he hasn't already left yet.\n"
+	.string "He's always so headstrong and hasty.$"
+
+PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally::
     .string "You are...\n"
     .string "Ah, you must be {PLAYER}{KUN}, right?\p"
     .string "Thank you for spending time with LUKA\n"
@@ -88,23 +113,26 @@ PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally:
     .string "Ever since that comet passed over HOENN,\n"
     .string "he has been unable to think about\l"
     .string "anything else.\p"
-    .string "We are sending him to stay with our\n"
-    .string "relatives in VERDANTURF TOWN.\p"
-    .string "The air is calmer there, and maybe he\n"
-    .string "can finally rest.\p"
+    .string "He's heading to visit our relatives in\n"
+    .string "VERDANTURF TOWN before investigating\l"
+	.string "other areas in the region that may have\l"
+	.string "been affected by the comet.\p"
+    .string "Knowing him, he won't stay in VERDANTURF\n"
+    .string "for long, but we hope he does finally\l"
+	.string "calm down and rest a little.\p"
     .string "What is that? Where is LUKA now?\n"
     .string "He already left.\p"
     .string "I wonder how far he has gotten\n"
     .string "by now...$"
 
 
-PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing:
+PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing::
 	.string "I wonder how our LUKA is doing?$"
 
 PetalburgCity_WallysHouse_Text_PleaseExcuseUs:
     .string "{PLAYER}{KUN}! Please excuse us for\n"
     .string "calling you here so suddenly.\p"
-    .string "Since LUKA went to VERDANTURF TOWN,\n"
+    .string "Since LUKA took off on his adventure,\n"
     .string "he has been doing incredibly well.\p"
     .string "We believe you had a big part in that.\p"
     .string "When he left town, you sent him off\n"
@@ -132,11 +160,11 @@ PetalburgCity_WallysHouse_Text_TakeABreak:
 PetalburgCity_WallysHouse_Text_TakeCare:
 	.string "Take care out there!$"
 
-PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon:
+PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon::
 	.string "LUKA's coming home soon.\n"
 	.string "I'm looking forward to that.$"
 
-PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity:
+PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity::
     .string "Oh? You met LUKA in\n"
     .string "EVER GRANDE CITY?\p"
     .string "Well... knowing him, I suppose it is\n"
@@ -146,12 +174,12 @@ PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity:
     .string "saw that strange comet.\p"
     .string "If something is calling to him, he will\n"
     .string "chase it, no matter how far it is.\p"
-    .string "Still, it is a surprise...\n"
+    .string "Still, it is impressive...\n"
     .string "EVER GRANDE CITY is quite the journey.\p"
     .string "But if anyone would go that far on his\n"
     .string "own, it would be LUKA.$"
 
-PetalburgCity_WallysHouse_Text_WallyWasReallyHappy:
+PetalburgCity_WallysHouse_Text_WallyWasReallyHappy::
     .string "LUKA was really happy when he told\n"
     .string "us he befriended another strong TRAINER.\p"
     .string "He has always loved battling together\n"
@@ -159,11 +187,11 @@ PetalburgCity_WallysHouse_Text_WallyWasReallyHappy:
     .string "Seeing him smile like that again...\n"
     .string "it felt completely natural.$"
 
-PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling:
+PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling::
     .string "I want you to keep this a secret\n"
     .string "from my husband...\p"
-    .string "LUKA left VERDANTURF TOWN without\n"
-    .string "telling anyone.\p"
+    .string "LUKA left VERDANTURF TOWN to chase\n"
+    .string "information on that comet again.\p"
     .string "He has always been brave and\n"
     .string "restless, following his instincts.\p"
     .string "I worry, of course... but I know him.\n"

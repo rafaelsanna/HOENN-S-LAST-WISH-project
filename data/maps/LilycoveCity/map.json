@@ -105,8 +105,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
-      "x": 35,
-      "y": 37,
+      "x": 11,
+      "y": 50,
       "elevation": 5,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -118,8 +118,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
-      "x": 34,
-      "y": 37,
+      "x": 10,
+      "y": 50,
       "elevation": 5,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -157,8 +157,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 61,
-      "y": 36,
+      "x": 55,
+      "y": 14,
       "elevation": 5,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -343,8 +343,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MAGIKARP)",
-      "x": 69,
-      "y": 24,
+      "x": 53,
+      "y": 46,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -353,6 +353,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_OverworldPokemonCry_MAGIKARP",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 38,
+      "y": 42,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_WAVE_INCENSE",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_LILYCOVE_CITY_WAVE_INCENSE"
     }
   ],
   "warp_events": [
@@ -371,7 +384,7 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 24,
+      "x": 25,
       "y": 14,
       "elevation": 0,
       "dest_map": "MAP_LILYCOVE_CITY_POKEMON_CENTER_1F",
@@ -420,8 +433,8 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 55,
-      "y": 15,
+      "x": 16,
+      "y": 14,
       "elevation": 0,
       "dest_map": "MAP_LILYCOVE_CITY_HOUSE2",
       "dest_warp_id": "0"
@@ -434,7 +447,7 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 12,
+      "x": 10,
       "y": 14,
       "elevation": 0,
       "dest_map": "MAP_LILYCOVE_CITY_HOUSE4",
@@ -493,7 +506,7 @@
     },
     {
       "type": "sign",
-      "x": 25,
+      "x": 26,
       "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
@@ -509,7 +522,7 @@
     },
     {
       "type": "sign",
-      "x": 26,
+      "x": 27,
       "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
@@ -566,7 +579,7 @@
     {
       "type": "hidden_item",
       "x": 36,
-      "y": 31,
+      "y": 32,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
       "flag": "FLAG_HIDDEN_ITEM_LILYCOVE_CITY_HEART_SCALE"
@@ -586,6 +599,14 @@
       "elevation": 0,
       "item": "ITEM_POKE_BALL",
       "flag": "FLAG_HIDDEN_ITEM_LILYCOVE_CITY_POKE_BALL"
+    },
+    {
+      "type": "hidden_item",
+      "x": 9,
+      "y": 47,
+      "elevation": 0,
+      "item": "ITEM_STAR_PIECE",
+      "flag": "FLAG_HIDDEN_ITEM_LILYCOVE_CITY_STAR_PIECE"
     }
   ]
 }

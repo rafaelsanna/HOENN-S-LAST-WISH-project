@@ -408,6 +408,8 @@ The payload reserve is 1,088 bytes. Normal-slot association, generation, UUID an
 
 Full Random owns custom flag 0x1003 (`FLAG_RANDOMIZER_FULL_WILD`), previously unused. It defaults to off in existing and new saves and is mutually exclusive with the existing table-randomizer flag. No saved field, bitmap extent, or released identity moved.
 
+Lilycove City's new hidden Star Piece and Wave Incense item ball own custom flags 0x1004 (`FLAG_HIDDEN_ITEM_LILYCOVE_CITY_STAR_PIECE`) and 0x1005 (`FLAG_ITEM_LILYCOVE_CITY_WAVE_INCENSE`), respectively. Both bits were previously unused, so the pickups are available in existing saves without changing any saved layout or existing collection flag.
+
 ## Hall of Fame archive byte map
 
 Each alternating archive is exactly 4,096 bytes. Its 64-byte header is followed by twenty-eight teams at offsets 64–4095. The other two teams occupy the 288-byte storage tail, so their publication is part of the normal bundle.
@@ -453,6 +455,8 @@ tools/hlw_save_abi_v1.json records the released ARM layouts, normalized saved de
 The guard covers 1,626 ARM layout expressions, 113 configuration values, 94 saved type declarations, 13,919 numeric IDs, 5,093 local enum/map bindings and 775 song slots. It includes game statistics, Easy Chat/mail words, berry stages/tree IDs, facilities, object graphics/movement IDs, layouts, flags/vars/trainers, map-local IDs, ordered warp records, named NPC script bindings, themes, Wish Menu actions, wallpaper tables and radio saved encodings. Bitfield declarations are frozen, with separate runtime packing tests.
 
 After release, append IDs without moving existing meanings. Keep deleted IDs as tombstones. Reordering map objects or warps, changing a frozen mapping, or assigning an owned reserve requires an explicit compatibility review. Checker --report and --assertions print candidates only; they never rewrite the baseline. Intentional compatible changes to coordinates, assets or script symbol names may require a reviewed mapping update even when a migration is unnecessary.
+
+Reviewed coordinate-only update (2026-10-01): Lilycove City warp 2 (Pokémon Center) moved from (24, 14) to (25, 14), warp 9 (House2) from (55, 15) to (16, 14), and warp 11 (House4) from (12, 14) to (10, 14). Only these three baseline records were updated. Their indices, destinations, destination warp IDs and elevations are unchanged, and interior exits still target the same indices. Lilycove's Fly landing position was also moved to (25, 15) to match the Pokémon Center. No saved layout or schema version changed; older saves made outdoors still retain their original player coordinates.
 
 No known structural requirement remains that forces another planned save break. Exceeding the fixed capacities or reinterpreting a released ID could still require a deliberate migration. Reserve is finite, and static RAM is especially tight. Preserve exact extents when consuming reserve and account for the resulting runtime buffers separately.
 

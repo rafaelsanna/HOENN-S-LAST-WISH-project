@@ -63,7 +63,7 @@
     {
       "id": "HEAL_LOCATION_LILYCOVE_CITY",
       "map": "MAP_LILYCOVE_CITY",
-      "x": 24,
+      "x": 25,
       "y": 15,
       "respawn_map": "MAP_LILYCOVE_CITY_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_LILYCOVE_NURSE"

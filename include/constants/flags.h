@@ -1657,8 +1657,8 @@
 #define FLAG_MAMORU_ICE_PUNCH_REWARD               (HLW_CUSTOM_FLAGS_START + 0x001)
 #define FLAG_RYO_THUNDER_PUNCH_REWARD               (HLW_CUSTOM_FLAGS_START + 0x002)
 #define FLAG_RANDOMIZER_FULL_WILD                  (HLW_CUSTOM_FLAGS_START + 0x003) // Full Random config option; formerly unowned.
-#define FLAG_UNUSED_0x1004                           (HLW_CUSTOM_FLAGS_START + 0x004) // Unused Flag
-#define FLAG_UNUSED_0x1005                           (HLW_CUSTOM_FLAGS_START + 0x005) // Unused Flag
+#define FLAG_HIDDEN_ITEM_LILYCOVE_CITY_STAR_PIECE     (HLW_CUSTOM_FLAGS_START + 0x004)
+#define FLAG_ITEM_LILYCOVE_CITY_WAVE_INCENSE          (HLW_CUSTOM_FLAGS_START + 0x005)
 #define FLAG_UNUSED_0x1006                           (HLW_CUSTOM_FLAGS_START + 0x006) // Unused Flag
 #define FLAG_UNUSED_0x1007                           (HLW_CUSTOM_FLAGS_START + 0x007) // Unused Flag
 #define FLAG_UNUSED_0x1008                           (HLW_CUSTOM_FLAGS_START + 0x008) // Unused Flag

@@ -3121,6 +3121,13 @@ static void SpriteCB_BounceEffect(struct Sprite *sprite)
     s32 index = sprite->sSinIndex;
     s32 y = Sin(index, sprite->sAmplitude) + sprite->sAmplitude;
 
+    if (sprite->sWhich == BOUNCE_HEALTHBOX && IsOnPlayerSide(sprite->sBattler))
+    {
+        // Reverse and halve the wave: rest to one pixel up, never down
+        // into the dialogue window (all healthbox callers use amplitude 1).
+        y = -((y + 1) / 2);
+    }
+
     gSprites[bouncerSpriteId].y2 = y;
     sprite->sSinIndex = (sprite->sSinIndex + sprite->sDelta) & 0xFF;
 }

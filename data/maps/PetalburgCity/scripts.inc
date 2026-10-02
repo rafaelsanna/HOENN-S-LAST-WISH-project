@@ -2547,9 +2547,9 @@ PetalburgCity_Text_WhereIsWally:
 # 1274 "data/maps/PetalburgCity/scripts.pory"
 	.string "Where has our LUKA gone?\p"
 # 1275 "data/maps/PetalburgCity/scripts.pory"
-	.string "We have to leave for VERDANTURF TOWN\n"
+	.string "Surely he hasn't left for VERDANTURF\n"
 # 1276 "data/maps/PetalburgCity/scripts.pory"
-	.string "very soon…$"
+	.string "already without saying goodbye...$"
 # 1277 "data/maps/PetalburgCity/scripts.pory"
 
 # 1278 "data/maps/PetalburgCity/scripts.pory"

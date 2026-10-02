@@ -66,7 +66,8 @@ PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
 
 PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:
 	.string "The berries near the woods have been\n"
-	.string "ripening wrong - too fast and bright.\p"
+	.string "ripening in strange ways, almost like\l"
+	.string "some are frozen in time or sped up.\p"
 	.string "It's probably nothing, but just pay\n"
 	.string "attention to what you keep.$"
 
@@ -99,7 +100,7 @@ PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:
 
 PetalburgCity_PokemonCenter_1F_Text_Newgirl:   
 	.string "My dream was to be a POKéMON trainer,\n"
-	.string "but sometimes work gets in the way of\n"
+	.string "but sometimes work gets in the way of\l"
 	.string "following our dreams, doesn't it?\p"
 	.string "Adult life can be difficult sometimes.\n"
 	.string "We have to enjoy our youth.$"

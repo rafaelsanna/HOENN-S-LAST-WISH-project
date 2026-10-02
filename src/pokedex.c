@@ -4088,7 +4088,12 @@ u32 Pokedex_CreateCaughtMonSprite(u32 species, s32 x, s32 y)
     u32 spriteId;
 
     SetMultiuseSpriteTemplateToPokemon(species, GetCatchingBattler());
+    // Entering the caught-entry page clears the battle's palette tags. A
+    // missing species tag would resolve to 0xFF and become OBJ palette 15,
+    // overwriting the type icons. Use a fixed portrait slot below their banks.
+    gMultiuseSpriteTemplate.paletteTag = TAG_NONE;
     spriteId = CreateSprite(&gMultiuseSpriteTemplate, x, y, 0);
+    gSprites[spriteId].oam.paletteNum = 0;
     gSprites[spriteId].oam.priority = 0;
     gSprites[spriteId].callback = SpriteCallbackDummy;
     return spriteId;

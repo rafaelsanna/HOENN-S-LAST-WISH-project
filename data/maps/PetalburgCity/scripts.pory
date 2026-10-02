@@ -1272,8 +1272,8 @@ PetalburgCity_Text_WallyTutorial_LukaGoBack:
 
 PetalburgCity_Text_WhereIsWally:
 	.string "Where has our LUKA gone?\p"
-	.string "We have to leave for VERDANTURF TOWN\n"
-	.string "very soon…$"
+	.string "Surely he hasn't left for VERDANTURF\n"
+	.string "already without saying goodbye...$"
 
 PetalburgCity_Text_AreYouRookieTrainer:
     .string "Hey, you're not from around here,\n"

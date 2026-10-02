@@ -3159,7 +3159,11 @@ static void SetBerryTreeGraphicsById(struct ObjectEvent *objectEvent, u8 berryId
     const u16 graphicsId = gBerryTreeObjectEventGraphicsIdTable[berryStage];
     const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
     struct Sprite *sprite = &gSprites[objectEvent->spriteId];
-    UpdateSpritePalette(&sObjectEventSpritePalettes[gBerryTreePaletteSlotTablePointers[berryId][berryStage]-2], sprite);
+    // Berry tables use legacy palette slots, not indices into the sprite palette registry.
+    const u16 paletteTag = GetObjectPaletteTag(gBerryTreePaletteSlotTablePointers[berryId][berryStage]);
+    const u8 paletteIndex = FindObjectEventPaletteIndexByTag(paletteTag);
+
+    UpdateSpritePalette(&sObjectEventSpritePalettes[paletteIndex], sprite);
     sprite->oam.shape = graphicsInfo->oam->shape;
     sprite->oam.size = graphicsInfo->oam->size;
     sprite->images = gBerryTreePicTablePointers[berryId];
@@ -3175,6 +3179,13 @@ static void SetBerryTreeGraphicsById(struct ObjectEvent *objectEvent, u8 berryId
     if (objectEvent->trackedByCamera)
         CameraObjectReset();
 }
+
+#if TESTING
+void ObjectEvent_TestSetBerryTreeGraphics(struct ObjectEvent *objectEvent, u8 berryId, u8 berryStage)
+{
+    SetBerryTreeGraphicsById(objectEvent, berryId, berryStage);
+}
+#endif
 
 static void SetBerryTreeGraphics(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {

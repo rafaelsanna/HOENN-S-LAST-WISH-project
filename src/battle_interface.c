@@ -1131,8 +1131,8 @@ static const s16 sBattlerHealthboxCoords[BATTLE_COORDS_COUNT][MAX_BATTLERS_COUNT
     },
     [BATTLE_COORDS_DOUBLES] =
     {
-        [B_POSITION_PLAYER_LEFT]    = { 159, 76 },
-        [B_POSITION_PLAYER_RIGHT]   = { 171, 101 },
+        [B_POSITION_PLAYER_LEFT]    = { 159, 75 },
+        [B_POSITION_PLAYER_RIGHT]   = { 171, 100 },
         [B_POSITION_OPPONENT_LEFT]  = { 44,  19 },
         [B_POSITION_OPPONENT_RIGHT] = { 32,  44 },
     },
@@ -1292,6 +1292,10 @@ static void SetPlayerDoublesHpNumberVisible(u32 healthboxSpriteId, bool32 visibl
         SetSubspriteTables(&gSprites[barSpriteId], &sHealthBar_SubspriteTable_PlayerDoublesNumbers);
     else
         SetSubspriteTables(&gSprites[barSpriteId], &sHealthBar_SubspriteTable_PlayerDoublesStatus);
+
+    // SetSubspriteTables resets the mode. Keep every bar segment on its
+    // parent's priority so it stays in front with the rest of the healthbox.
+    gSprites[barSpriteId].subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
 }
 
 // Note: this is only possible to trigger via debug, it was an unused GF function.
