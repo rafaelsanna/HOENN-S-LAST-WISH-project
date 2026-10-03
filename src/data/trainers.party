@@ -10485,11 +10485,11 @@ IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 - Tackle
 - Sludge
 
-=== TRAINER_JOCELYN ===
-Name: JOCELYN
-Class: Battle Girl
-Pic: Battle Girl
-Gender: Female
+=== TRAINER_FRUSCIANTE ===
+Name: FRUSCIANTE
+Class: Guitarist
+Pic: Guitarist
+Gender: Male
 Music: Intense
 Double Battle: No
 AI: Check Bad Move

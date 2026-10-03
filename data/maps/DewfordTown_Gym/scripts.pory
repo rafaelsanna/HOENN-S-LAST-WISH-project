@@ -121,7 +121,7 @@ DewfordTown_Gym_EventScript_CountTrainersDefeated::
 	goto_if_not_defeated TRAINER_TAKAO, DewfordTown_Gym_EventScript_CheckJocelyn
 	addvar VAR_0x8000, 1
 DewfordTown_Gym_EventScript_CheckJocelyn::
-	goto_if_not_defeated TRAINER_JOCELYN, DewfordTown_Gym_EventScript_CheckLaura
+	goto_if_not_defeated TRAINER_FRUSCIANTE, DewfordTown_Gym_EventScript_CheckLaura
 	addvar VAR_0x8000, 1
 DewfordTown_Gym_EventScript_CheckLaura::
 	goto_if_not_defeated TRAINER_LAURA, DewfordTown_Gym_EventScript_CheckBrenden
@@ -245,8 +245,8 @@ DewfordTown_Gym_EventScript_TakaoBrightenRoom::
 	end
 
 DewfordTown_Gym_EventScript_Jocelyn::
-	trainerbattle_single TRAINER_JOCELYN, DewfordTown_Gym_Text_JocelynIntro, DewfordTown_Gym_Text_JocelynDefeat, DewfordTown_Gym_EventScript_JocelynBrightenRoom
-	msgbox DewfordTown_Gym_Text_JocelynPostBattle, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_FRUSCIANTE, DewfordTown_Gym_Text_FruscianteIntro, DewfordTown_Gym_Text_FruscianteDefeat, DewfordTown_Gym_EventScript_JocelynBrightenRoom
+	msgbox DewfordTown_Gym_Text_FrusciantePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 DewfordTown_Gym_EventScript_JocelynBrightenRoom::
@@ -360,26 +360,22 @@ DewfordTown_Gym_Text_TakaoPostBattle:
 	.string "Your skill overcame my strength!\n"
 	.string "Your technique is commendable!$"
 
-DewfordTown_Gym_Text_JocelynIntro:
-	.string "No way I'm letting RENTON handle this!\n"
-	.string "You do NOT want that!\p"
-	.string "I'd rather face wild Pokemon or even\n"
-	.string "the ELITE FOUR than his street brawls!\p"
-	.string "He demolished the old Gym Leader,\n"
-	.string "and it wasn't even a Pokemon battle!\l"
-	.string "Hahaha!$"
+DewfordTown_Gym_Text_FruscianteIntro:
+	.string "Close your eyes. Feel that riff?\n"
+	.string "That's the groove talking!\p"
+	.string "I live for heavy sound and thick\n"
+	.string "guitar tones! Let's jam!$"
 
-DewfordTown_Gym_Text_JocelynDefeat:
-	.string "You're tough... but be careful!\n"
-	.string "Don't get cocky around RENTON,\p"
-	.string "or you'll end up in real trouble!\n"
-	.string "But he respects fighters like you...$"
+DewfordTown_Gym_Text_FruscianteDefeat:
+	.string "What a killer solo...\n"
+	.string "You broke my groove!$"
 
-DewfordTown_Gym_Text_JocelynPostBattle:
-	.string "That battle fired me up!\n"
-	.string "I'm gonna train like crazy!\p"
-	.string "One day I'll be totally badass...\n"
-	.string "just like RENTON!$"
+DewfordTown_Gym_Text_FrusciantePostBattle:
+	.string "Your rhythm was unreal!\n"
+	.string "Every great riff needs a strong\n"
+	.string "groove behind it.\p"
+	.string "I'll turn this loss into a new\n"
+	.string "heavy track!$"
 
 DewfordTown_Gym_Text_LauraIntro:
 	.string "Don't brush me off!\n"

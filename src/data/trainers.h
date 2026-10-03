@@ -27072,17 +27072,15 @@ F_TRAINER_FEMALE |
         },
     },
 #line 10488
-    [DIFFICULTY_NORMAL][TRAINER_JOCELYN] =
+    [DIFFICULTY_NORMAL][TRAINER_FRUSCIANTE] =
     {
 #line 10489
-        .trainerName = _("JOCELYN"),
+        .trainerName = _("FRUSCIANTE"),
 #line 10490
-        .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
+        .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 10491
-        .trainerPic = TRAINER_PIC_BATTLE_GIRL,
+        .trainerPic = TRAINER_PIC_GUITARIST,
         .encounterMusic_gender =
-#line 10492
-F_TRAINER_FEMALE | 
 #line 10493
             TRAINER_ENCOUNTER_MUSIC_INTENSE,
 #line 10494
@@ -27090,7 +27088,7 @@ F_TRAINER_FEMALE |
 #line 10495
         .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
 #line 0
-        .trainerBackPic = TRAINER_PIC_BATTLE_GIRL,
+        .trainerBackPic = TRAINER_PIC_GUITARIST,
         .partySize = 1,
         .party = (const struct TrainerMon[])
         {

@@ -428,7 +428,8 @@
 #define TRAINER_LAO_3                       422
 #define TRAINER_LAO_4                       423
 #define TRAINER_LAO_5                       424
-#define TRAINER_JOCELYN                     425
+#define TRAINER_JOCELYN                     425 // Legacy save-compatible alias for Frusciante
+#define TRAINER_FRUSCIANTE                  425
 #define TRAINER_LAURA                       426
 #define TRAINER_CYNDY_1                     427
 #define TRAINER_CORA                        428
