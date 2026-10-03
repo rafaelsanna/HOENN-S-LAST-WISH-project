@@ -427,10 +427,12 @@ static void EnforceHardNpcTeamsRules(void)
     // HLW_SHOW_TYPES_OPTION_V1: Hard mode never reveals battle type indicators.
     sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES]   = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FALSE;
+    sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = FALSE;
     FlagClear(FLAG_OPS_ALL_MOVES);
     FlagClear(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    FlagClear(RANDOMIZER_FLAG_FULL_WILD_MON);
 }
 
 // Menu left side text conditions
@@ -467,7 +469,8 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_INVERSE_BATTLE:   return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
         case MENUITEM_DIF_RANDOMIZER_E:     return !sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM];
-        case MENUITEM_DIF_FULL_RANDOM:      return !sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E];
+        case MENUITEM_DIF_FULL_RANDOM:      return !IsHardNpcTeamsSelected()
+                                                   && !sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E];
         case MENUITEM_DIF_RANDOMIZER_T:     return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT: return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;

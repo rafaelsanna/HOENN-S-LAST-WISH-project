@@ -596,7 +596,10 @@ bool8 Randomizer_WildEnabled(void)
 bool8 Randomizer_FullWildEnabled(void)
 {
     // Preserve the established table mode if a malformed save has both bits set.
-    return !Randomizer_WildEnabled() && FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON);
+    return gSaveBlock2Ptr != NULL
+        && gSaveBlock2Ptr->optionsNpcTeams != OPTIONS_NPCTEAMS_HARD
+        && !Randomizer_WildEnabled()
+        && FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON);
 }
 
 void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom)
