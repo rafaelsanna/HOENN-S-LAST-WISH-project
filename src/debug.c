@@ -864,7 +864,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Time Functions…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
     { COMPOUND_STRING("Watch credits…"),     DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),        DebugAction_Util_CheatStart },
-    { COMPOUND_STRING("LEARN ALL MOVES: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
+    { COMPOUND_STRING("Learn All Moves: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
     { COMPOUND_STRING("Achievements…"),      DebugAction_Util_OpenAchievements },
     { COMPOUND_STRING("Test Ach Popup"),     DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
@@ -928,7 +928,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_Player_Cheats[] =
 {
-    { COMPOUND_STRING("LEARN ALL MOVES: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
+    { COMPOUND_STRING("Learn All Moves: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
     { NULL }
 };
 
@@ -2283,6 +2283,8 @@ static void DebugAction_Player_Name(u8 taskId)
 
 static void DebugAction_Cheat_OpsAllMoves(u8 taskId)
 {
+    const struct DebugMenuOption *items;
+
     // The cheat remains unavailable in Hard mode even when opened through the
     // Wish/Debug Menu instead of the regular Configuration screen.
     if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
@@ -2290,9 +2292,22 @@ static void DebugAction_Cheat_OpsAllMoves(u8 taskId)
     else
         FlagToggle(FLAG_OPS_ALL_MOVES);
 
-    // Reopen the current submenu so its ON/OFF label reflects the new state.
-    Debug_DestroyMenu(taskId);
-    Debug_ShowMenu(DebugTask_HandleMenuInput_General, NULL);
+    // Update the selected entry in place. Rebuilding the window here would
+    // resolve the callback stack to the parent menu and move the player away
+    // from the cheat after pressing A.
+    items = Debug_GetCurrentCallbackMenu();
+    for (u32 i = 0; items[i].text != NULL; i++)
+    {
+        if (items[i].action == DebugAction_Cheat_OpsAllMoves)
+        {
+            StringCopy(gStringVar1, IsOpsAllMovesEnabled() ? sDebugText_On : sDebugText_Off);
+            StringExpandPlaceholders(gStringVar4, items[i].text);
+            StringCopy(&sDebugMenuListData->itemNames[i][0], gStringVar4);
+            sDebugMenuListData->listItems[i].name = &sDebugMenuListData->itemNames[i][0];
+            break;
+        }
+    }
+    RedrawListMenu(gTasks[taskId].tMenuTaskId);
 }
 
 static void DebugAction_Player_Gender(u8 taskId)
