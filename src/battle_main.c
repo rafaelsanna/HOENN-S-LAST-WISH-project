@@ -66,6 +66,7 @@
 #include "window.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
+#include "constants/flags.h"
 #include "constants/battle_move_effects.h"
 #include "constants/battle_string_ids.h"
 #include "constants/battle_partner.h"
@@ -4633,6 +4634,18 @@ static void HandleTurnActionSelectionState(void)
                 }
 
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER
+                    && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
+                    && Nuzlocke_GetMode() == OPTIONS_NUZLOCKE_HARD
+                    && FlagGet(FLAG_SYS_POKEDEX_GET)
+                    && gBattleResources->bufferB[battler][1] == B_ACTION_RUN)
+                {
+                    // HARD Nuzlocke: trainer battles cannot be escaped/forfeited.
+                    // Reuse the vanilla trainer "can't run" message and return
+                    // to action selection without counting this as a loss.
+                    BattleScriptExecute(BattleScript_PrintCantRunFromTrainer);
+                    gBattleCommunication[battler] = STATE_BEFORE_ACTION_CHOSEN;
+                }
+                else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER
                     && gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL)
                     && gBattleResources->bufferB[battler][1] == B_ACTION_RUN)
                 {
@@ -6405,6 +6418,12 @@ static s32 Factorial(s32 n)
 bool32 CanPlayerForfeitNormalTrainerBattle(void)
 {
     if (!B_RUN_TRAINER_BATTLE)
+        return FALSE;
+
+    // HARD Nuzlocke: once the run is active, trainer battles are mandatory.
+    // Keep the expansion's trainer-forfeit QoL unchanged in NORMAL/OFF.
+    if (Nuzlocke_GetMode() == OPTIONS_NUZLOCKE_HARD
+     && FlagGet(FLAG_SYS_POKEDEX_GET))
         return FALSE;
 
     if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
