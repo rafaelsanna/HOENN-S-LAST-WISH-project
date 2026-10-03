@@ -96,10 +96,7 @@
       "MOVE_CURSE"
     ],
     "EggMoves": [
-      "MOVE_PETAL_DANCE",
-      "MOVE_TOXIC",
-      "MOVE_CURSE",
-      "MOVE_INGRAIN"
+      "MOVE_CURSE"
     ],
     "TutorMoves": []
   },
@@ -201,10 +198,7 @@
       "MOVE_CURSE"
     ],
     "EggMoves": [
-      "MOVE_CURSE",
-      "MOVE_INGRAIN",
-      "MOVE_PETAL_DANCE",
-      "MOVE_TOXIC"
+      "MOVE_CURSE"
     ],
     "TutorMoves": []
   },
@@ -322,10 +316,7 @@
       "MOVE_CURSE"
     ],
     "EggMoves": [
-      "MOVE_CURSE",
-      "MOVE_INGRAIN",
-      "MOVE_PETAL_DANCE",
-      "MOVE_TOXIC"
+      "MOVE_CURSE"
     ],
     "TutorMoves": []
   },
@@ -2504,7 +2495,8 @@
       "MOVE_HOWL",
       "MOVE_HYPNOSIS",
       "MOVE_MEMENTO",
-      "MOVE_ROAR"
+      "MOVE_ROAR",
+      "MOVE_TORCH_SONG"
     ],
     "TutorMoves": []
   },
@@ -5212,7 +5204,9 @@
     "EggMoves": [
       "MOVE_ENDEAVOR",
       "MOVE_MIST",
-      "MOVE_SPLASH"
+      "MOVE_MUDDY_WATER",
+      "MOVE_SPLASH",
+      "MOVE_WATER_PULSE"
     ],
     "TutorMoves": []
   },
@@ -16430,14 +16424,9 @@
       "MOVE_DOUBLE_EDGE"
     ],
     "EggMoves": [
-      "MOVE_COTTON_GUARD",
       "MOVE_ENCORE",
-      "MOVE_GRASSY_TERRAIN",
       "MOVE_RAGE_POWDER",
-      "MOVE_SEED_BOMB",
-      "MOVE_STRENGTH_SAP",
-      "MOVE_SWITCHEROO",
-      "MOVE_WORRY_SEED"
+      "MOVE_SWITCHEROO"
     ],
     "TutorMoves": []
   },
@@ -16542,14 +16531,9 @@
       "MOVE_ENDEAVOR"
     ],
     "EggMoves": [
-      "MOVE_COTTON_GUARD",
       "MOVE_ENCORE",
-      "MOVE_GRASSY_TERRAIN",
       "MOVE_RAGE_POWDER",
-      "MOVE_SEED_BOMB",
-      "MOVE_STRENGTH_SAP",
-      "MOVE_SWITCHEROO",
-      "MOVE_WORRY_SEED"
+      "MOVE_SWITCHEROO"
     ],
     "TutorMoves": []
   },
@@ -16657,14 +16641,9 @@
       "MOVE_ENDEAVOR"
     ],
     "EggMoves": [
-      "MOVE_COTTON_GUARD",
       "MOVE_ENCORE",
-      "MOVE_GRASSY_TERRAIN",
       "MOVE_RAGE_POWDER",
-      "MOVE_SEED_BOMB",
-      "MOVE_STRENGTH_SAP",
-      "MOVE_SWITCHEROO",
-      "MOVE_WORRY_SEED"
+      "MOVE_SWITCHEROO"
     ],
     "TutorMoves": []
   },
@@ -20006,7 +19985,6 @@
       "MOVE_ACID_ARMOR",
       "MOVE_CURSE",
       "MOVE_GUARD_SWAP",
-      "MOVE_INFERNO",
       "MOVE_MEMENTO",
       "MOVE_ROLLOUT",
       "MOVE_SMOKESCREEN",
@@ -20122,7 +20100,6 @@
       "MOVE_ACID_ARMOR",
       "MOVE_CURSE",
       "MOVE_GUARD_SWAP",
-      "MOVE_INFERNO",
       "MOVE_MEMENTO",
       "MOVE_ROLLOUT",
       "MOVE_SMOKESCREEN",
@@ -23238,12 +23215,8 @@
     ],
     "EggMoves": [
       "MOVE_DOUBLE_KICK",
-      "MOVE_ABSORB",
-      "MOVE_LEECH_SEED",
       "MOVE_SLASH",
       "MOVE_DRAGON_BREATH",
-      "MOVE_SYNTHESIS",
-      "MOVE_WORRY_SEED",
       "MOVE_NIGHT_SLASH"
     ],
     "TutorMoves": []
@@ -23370,14 +23343,10 @@
       "MOVE_UPPER_HAND"
     ],
     "EggMoves": [
-      "MOVE_ABSORB",
       "MOVE_DOUBLE_KICK",
       "MOVE_DRAGON_BREATH",
-      "MOVE_LEECH_SEED",
       "MOVE_NIGHT_SLASH",
-      "MOVE_SLASH",
-      "MOVE_SYNTHESIS",
-      "MOVE_WORRY_SEED"
+      "MOVE_SLASH"
     ],
     "TutorMoves": []
   },
@@ -23524,14 +23493,10 @@
       "MOVE_UPPER_HAND"
     ],
     "EggMoves": [
-      "MOVE_ABSORB",
       "MOVE_DOUBLE_KICK",
       "MOVE_DRAGON_BREATH",
-      "MOVE_LEECH_SEED",
       "MOVE_NIGHT_SLASH",
-      "MOVE_SLASH",
-      "MOVE_SYNTHESIS",
-      "MOVE_WORRY_SEED"
+      "MOVE_SLASH"
     ],
     "TutorMoves": []
   },
@@ -25789,6 +25754,7 @@
       "MOVE_KNOCK_OFF",
       "MOVE_MEAN_LOOK",
       "MOVE_MEMENTO",
+      "MOVE_MYSTICAL_FIRE",
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": []
@@ -25922,6 +25888,7 @@
       "MOVE_KNOCK_OFF",
       "MOVE_MEAN_LOOK",
       "MOVE_MEMENTO",
+      "MOVE_MYSTICAL_FIRE",
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": []
@@ -26088,6 +26055,7 @@
       "MOVE_KNOCK_OFF",
       "MOVE_MEAN_LOOK",
       "MOVE_MEMENTO",
+      "MOVE_MYSTICAL_FIRE",
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": []
@@ -28622,9 +28590,12 @@
       "MOVE_CURSE"
     ],
     "EggMoves": [
+      "MOVE_ACID_ARMOR",
+      "MOVE_CLEAR_SMOG",
       "MOVE_CURSE",
       "MOVE_DESTINY_BOND",
       "MOVE_MUD_SLAP",
+      "MOVE_SMOG",
       "MOVE_STUFF_CHEEKS"
     ],
     "TutorMoves": []
@@ -28750,9 +28721,12 @@
       "MOVE_CURSE"
     ],
     "EggMoves": [
+      "MOVE_ACID_ARMOR",
+      "MOVE_CLEAR_SMOG",
       "MOVE_CURSE",
       "MOVE_DESTINY_BOND",
       "MOVE_MUD_SLAP",
+      "MOVE_SMOG",
       "MOVE_STUFF_CHEEKS"
     ],
     "TutorMoves": []
@@ -42737,6 +42711,7 @@
       "MOVE_KNOCK_OFF",
       "MOVE_MEAN_LOOK",
       "MOVE_MEMENTO",
+      "MOVE_MYSTICAL_FIRE",
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": []

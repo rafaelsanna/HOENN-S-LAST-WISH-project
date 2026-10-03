@@ -84,11 +84,8 @@
     ],
     "EggMoves": [
       "MOVE_CURSE",
-      "MOVE_INGRAIN",
       "MOVE_NATURE_POWER",
-      "MOVE_PETAL_DANCE",
-      "MOVE_SKULL_BASH",
-      "MOVE_TOXIC"
+      "MOVE_SKULL_BASH"
     ],
     "TutorMoves": [
       "MOVE_GRASS_PLEDGE",
@@ -180,11 +177,8 @@
     ],
     "EggMoves": [
       "MOVE_CURSE",
-      "MOVE_INGRAIN",
       "MOVE_NATURE_POWER",
-      "MOVE_PETAL_DANCE",
-      "MOVE_SKULL_BASH",
-      "MOVE_TOXIC"
+      "MOVE_SKULL_BASH"
     ],
     "TutorMoves": [
       "MOVE_GRASS_PLEDGE",
@@ -295,11 +289,8 @@
     ],
     "EggMoves": [
       "MOVE_CURSE",
-      "MOVE_INGRAIN",
       "MOVE_NATURE_POWER",
-      "MOVE_PETAL_DANCE",
-      "MOVE_SKULL_BASH",
-      "MOVE_TOXIC"
+      "MOVE_SKULL_BASH"
     ],
     "TutorMoves": [
       "MOVE_FRENZY_PLANT",
@@ -2945,7 +2936,8 @@
       "MOVE_HOWL",
       "MOVE_HYPNOSIS",
       "MOVE_MEMENTO",
-      "MOVE_ROAR"
+      "MOVE_ROAR",
+      "MOVE_TORCH_SONG"
     ],
     "TutorMoves": []
   },
@@ -5218,7 +5210,8 @@
       "MOVE_HAZE",
       "MOVE_MIND_READER",
       "MOVE_MIST",
-      "MOVE_SPLASH"
+      "MOVE_SPLASH",
+      "MOVE_WATER_PULSE"
     ],
     "TutorMoves": [
       "MOVE_COACHING"
@@ -21158,14 +21151,10 @@
       "MOVE_WORK_UP"
     ],
     "EggMoves": [
-      "MOVE_ABSORB",
       "MOVE_DOUBLE_KICK",
       "MOVE_DRAGON_BREATH",
-      "MOVE_LEECH_SEED",
       "MOVE_NIGHT_SLASH",
-      "MOVE_SLASH",
-      "MOVE_SYNTHESIS",
-      "MOVE_WORRY_SEED"
+      "MOVE_SLASH"
     ],
     "TutorMoves": [
       "MOVE_GRASS_PLEDGE",
@@ -21293,14 +21282,10 @@
       "MOVE_WORK_UP"
     ],
     "EggMoves": [
-      "MOVE_ABSORB",
       "MOVE_DOUBLE_KICK",
       "MOVE_DRAGON_BREATH",
-      "MOVE_LEECH_SEED",
       "MOVE_NIGHT_SLASH",
-      "MOVE_SLASH",
-      "MOVE_SYNTHESIS",
-      "MOVE_WORRY_SEED"
+      "MOVE_SLASH"
     ],
     "TutorMoves": [
       "MOVE_GRASS_PLEDGE",
@@ -21449,14 +21434,10 @@
       "MOVE_THROAT_CHOP"
     ],
     "EggMoves": [
-      "MOVE_ABSORB",
       "MOVE_DOUBLE_KICK",
       "MOVE_DRAGON_BREATH",
-      "MOVE_LEECH_SEED",
       "MOVE_NIGHT_SLASH",
-      "MOVE_SLASH",
-      "MOVE_SYNTHESIS",
-      "MOVE_WORRY_SEED"
+      "MOVE_SLASH"
     ],
     "TutorMoves": [
       "MOVE_FRENZY_PLANT",

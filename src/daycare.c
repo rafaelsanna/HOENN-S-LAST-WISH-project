@@ -42,6 +42,152 @@ static u8 ModifyBreedingScoreForOvalCharm(u8 score);
 static u16 GetEggSpecies(u16 species);
 static void TryAnimateRoute117DaycareEggIndicator(void);
 
+// Special singing partners for the Vulpix line. These are deliberately listed
+// by exact species so regional forms and Gigantamax forms are not included.
+static bool8 IsVulpixSingerSpecies(u16 species)
+{
+    switch (species)
+    {
+    case SPECIES_IGGLYBUFF:
+    case SPECIES_JIGGLYPUFF:
+    case SPECIES_WIGGLYTUFF:
+    case SPECIES_LAPRAS:
+    case SPECIES_CORSOLA:
+    case SPECIES_CURSOLA:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static bool8 IsVulpixSingerBreedingPair(u16 species1, u16 species2)
+{
+    return (species1 == SPECIES_VULPIX || species1 == SPECIES_NINETALES)
+        ? IsVulpixSingerSpecies(species2)
+        : (species2 == SPECIES_VULPIX || species2 == SPECIES_NINETALES)
+            && IsVulpixSingerSpecies(species1);
+}
+
+// These pairings are deliberately restricted to exact species from the
+// project's playable Dex. Regional forms and later-generation species are not
+// included, even when they share an Egg Group with the target species.
+static bool8 IsJigglypuffHurricaneBreedingPair(u16 species1, u16 species2)
+{
+    bool8 jigglypuffFamily = species1 == SPECIES_JIGGLYPUFF || species1 == SPECIES_WIGGLYTUFF;
+    bool8 hoothootFamily = species2 == SPECIES_HOOTHOOT || species2 == SPECIES_NOCTOWL;
+
+    return (jigglypuffFamily && hoothootFamily)
+        || ((species2 == SPECIES_JIGGLYPUFF || species2 == SPECIES_WIGGLYTUFF)
+            && (species1 == SPECIES_HOOTHOOT || species1 == SPECIES_NOCTOWL));
+}
+
+static bool8 IsSkarmoryHighJumpKickBreedingPair(u16 species1, u16 species2)
+{
+    bool8 skarmory = species1 == SPECIES_SKARMORY;
+    bool8 hitmonFamily = species2 == SPECIES_HITMONLEE || species2 == SPECIES_HITMONTOP;
+
+    return (skarmory && hitmonFamily)
+        || (species2 == SPECIES_SKARMORY
+            && (species1 == SPECIES_HITMONLEE || species1 == SPECIES_HITMONTOP));
+}
+
+static bool8 IsWishSpecialBreedingPair(u16 species1, u16 species2)
+{
+    return IsVulpixSingerBreedingPair(species1, species2)
+        || IsJigglypuffHurricaneBreedingPair(species1, species2)
+        || IsSkarmoryHighJumpKickBreedingPair(species1, species2);
+}
+
+static bool8 IsTotodileDragonDonor(u16 parentSpecies, u16 move)
+{
+    switch (move)
+    {
+    case MOVE_DRACO_METEOR:
+        return parentSpecies == SPECIES_DRATINI
+            || parentSpecies == SPECIES_DRAGONAIR
+            || parentSpecies == SPECIES_DRAGONITE
+            || parentSpecies == SPECIES_KINGDRA;
+    case MOVE_DRAGON_PULSE:
+        return parentSpecies == SPECIES_LAPRAS
+            || parentSpecies == SPECIES_DRATINI
+            || parentSpecies == SPECIES_DRAGONAIR
+            || parentSpecies == SPECIES_DRAGONITE
+            || parentSpecies == SPECIES_KINGDRA;
+    case MOVE_DRAGON_RUSH:
+        return parentSpecies == SPECIES_DRATINI
+            || parentSpecies == SPECIES_DRAGONAIR
+            || parentSpecies == SPECIES_DRAGONITE;
+    case MOVE_DRAGON_BREATH:
+        return parentSpecies == SPECIES_DRATINI
+            || parentSpecies == SPECIES_DRAGONAIR
+            || parentSpecies == SPECIES_DRAGONITE
+            || parentSpecies == SPECIES_KINGDRA;
+    case MOVE_DRAGON_CLAW:
+        return parentSpecies == SPECIES_DRAGONITE
+            || parentSpecies == SPECIES_KINGDRA;
+    default:
+        return FALSE;
+    }
+}
+
+static bool8 CanParentTeachWishSpecialEggMove(u16 eggSpecies, u16 parentSpecies, u16 move)
+{
+    if (eggSpecies == SPECIES_VULPIX)
+    {
+        if (move == MOVE_TORCH_SONG)
+            return IsVulpixSingerSpecies(parentSpecies);
+        if (move == MOVE_FIERY_DANCE)
+            return parentSpecies == SPECIES_CURSOLA;
+    }
+
+    if (eggSpecies == SPECIES_BULBASAUR && move == MOVE_AVALANCHE)
+        return parentSpecies == SPECIES_LAPRAS;
+
+    if (eggSpecies == SPECIES_SENTRET && move == MOVE_POWER_UP_PUNCH)
+        return parentSpecies == SPECIES_WOOPER || parentSpecies == SPECIES_QUAGSIRE;
+
+    if (eggSpecies == SPECIES_TOTODILE && IsTotodileDragonDonor(parentSpecies, move))
+        return TRUE;
+
+    if (eggSpecies == SPECIES_TOTODILE && move == MOVE_FIERY_DANCE)
+        return parentSpecies == SPECIES_CURSOLA;
+
+    if (eggSpecies == SPECIES_IGGLYBUFF && move == MOVE_HURRICANE)
+        return parentSpecies == SPECIES_HOOTHOOT || parentSpecies == SPECIES_NOCTOWL;
+
+    if (eggSpecies == SPECIES_SKARMORY && move == MOVE_HIGH_JUMP_KICK)
+        return parentSpecies == SPECIES_HITMONLEE || parentSpecies == SPECIES_HITMONTOP;
+
+    return TRUE;
+}
+
+static void GiveMoveToEggWithReplacement(struct Pokemon *egg, u16 move)
+{
+    if (GiveMoveToMon(egg, move) == MON_HAS_MAX_MOVES)
+        DeleteFirstMoveAndGiveMoveToMon(egg, move);
+}
+
+static void GiveWishSpecialEggMoves(struct Pokemon *egg, struct BoxPokemon *father, struct BoxPokemon *mother)
+{
+    u16 fatherSpecies = GetBoxMonData(father, MON_DATA_SPECIES);
+    u16 motherSpecies = GetBoxMonData(mother, MON_DATA_SPECIES);
+
+    if (GetMonData(egg, MON_DATA_SPECIES) == SPECIES_VULPIX)
+    {
+        if (IsVulpixSingerSpecies(fatherSpecies) || IsVulpixSingerSpecies(motherSpecies))
+            GiveMoveToEggWithReplacement(egg, MOVE_TORCH_SONG);
+
+        if (fatherSpecies == SPECIES_CURSOLA || motherSpecies == SPECIES_CURSOLA)
+            GiveMoveToEggWithReplacement(egg, MOVE_FIERY_DANCE);
+    }
+
+    // Fiery Dance is the one Totodile-line move that is granted directly by
+    // the custom Cursola pairing, matching the existing Vulpix rule.
+    if (GetMonData(egg, MON_DATA_SPECIES) == SPECIES_TOTODILE
+        && (fatherSpecies == SPECIES_CURSOLA || motherSpecies == SPECIES_CURSOLA))
+        GiveMoveToEggWithReplacement(egg, MOVE_FIERY_DANCE);
+}
+
 // RAM buffers used to assist with BuildEggMoveset()
 EWRAM_DATA static u16 sHatchedEggLevelUpMoves[EGG_LVL_UP_MOVES_ARRAY_COUNT] = {0};
 EWRAM_DATA static u16 sHatchedEggFatherMoves[MAX_MON_MOVES] = {0};
@@ -898,6 +1044,9 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
     u16 numSharedParentMoves;
     u32 numLevelUpMoves;
     u16 numEggMoves;
+    u16 eggSpecies;
+    u16 fatherSpecies;
+    u16 motherSpecies;
     u16 i, j;
 
     numSharedParentMoves = 0;
@@ -911,7 +1060,10 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
     for (i = 0; i < EGG_LVL_UP_MOVES_ARRAY_COUNT; i++)
         sHatchedEggLevelUpMoves[i] = MOVE_NONE;
 
-    numLevelUpMoves = GetLevelUpMovesBySpecies(GetMonData(egg, MON_DATA_SPECIES), sHatchedEggLevelUpMoves);
+    eggSpecies = GetMonData(egg, MON_DATA_SPECIES);
+    fatherSpecies = GetBoxMonData(father, MON_DATA_SPECIES);
+    motherSpecies = GetBoxMonData(mother, MON_DATA_SPECIES);
+    numLevelUpMoves = GetLevelUpMovesBySpecies(eggSpecies, sHatchedEggLevelUpMoves);
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         sHatchedEggFatherMoves[i] = GetBoxMonData(father, MON_DATA_MOVE1 + i);
@@ -928,7 +1080,8 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
             {
                 for (j = 0; j < numEggMoves; j++)
                 {
-                    if (sHatchedEggMotherMoves[i] == sHatchedEggEggMoves[j])
+                    if (sHatchedEggMotherMoves[i] == sHatchedEggEggMoves[j]
+                        && CanParentTeachWishSpecialEggMove(eggSpecies, motherSpecies, sHatchedEggMotherMoves[i]))
                     {
                         if (GiveMoveToMon(egg, sHatchedEggMotherMoves[i]) == MON_HAS_MAX_MOVES)
                             DeleteFirstMoveAndGiveMoveToMon(egg, sHatchedEggMotherMoves[i]);
@@ -949,7 +1102,8 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
         {
             for (j = 0; j < numEggMoves; j++)
             {
-                if (sHatchedEggFatherMoves[i] == sHatchedEggEggMoves[j])
+                if (sHatchedEggFatherMoves[i] == sHatchedEggEggMoves[j]
+                    && CanParentTeachWishSpecialEggMove(eggSpecies, fatherSpecies, sHatchedEggFatherMoves[i]))
                 {
                     if (GiveMoveToMon(egg, sHatchedEggFatherMoves[i]) == MON_HAS_MAX_MOVES)
                         DeleteFirstMoveAndGiveMoveToMon(egg, sHatchedEggFatherMoves[i]);
@@ -1007,6 +1161,8 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
             }
         }
     }
+
+    GiveWishSpecialEggMoves(egg, father, mother);
 }
 
 static void RemoveEggFromDayCare(struct DayCare *daycare)
@@ -1412,7 +1568,8 @@ u8 GetDaycareCompatibilityScore(struct DayCare *daycare)
             return PARENTS_INCOMPATIBLE;
         if (genders[0] == MON_GENDERLESS || genders[1] == MON_GENDERLESS)
             return PARENTS_INCOMPATIBLE;
-        if (!EggGroupsOverlap(eggGroups[0], eggGroups[1]))
+        if (!EggGroupsOverlap(eggGroups[0], eggGroups[1])
+            && !IsWishSpecialBreedingPair(species[0], species[1]))
             return PARENTS_INCOMPATIBLE;
 
         if (species[0] == species[1])

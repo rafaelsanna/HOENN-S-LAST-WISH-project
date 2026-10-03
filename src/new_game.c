@@ -197,6 +197,8 @@ void NewGameInitData(void)
     
     // Event and story systems
     InitEventData();
+    // OPS ALL MOVES is a fun Casual-only option and starts disabled.
+    FlagClear(FLAG_OPS_ALL_MOVES);
     ClearTVShowData();
     ResetGabbyAndTy();
     

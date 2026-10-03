@@ -66,10 +66,7 @@
     "EggMoves": [
       "MOVE_CHARM",
       "MOVE_CURSE",
-      "MOVE_GRASS_WHISTLE",
       "MOVE_LIGHT_SCREEN",
-      "MOVE_MAGICAL_LEAF",
-      "MOVE_PETAL_DANCE",
       "MOVE_SAFEGUARD",
       "MOVE_SKULL_BASH"
     ],
@@ -160,10 +157,7 @@
     "EggMoves": [
       "MOVE_CHARM",
       "MOVE_CURSE",
-      "MOVE_GRASS_WHISTLE",
       "MOVE_LIGHT_SCREEN",
-      "MOVE_MAGICAL_LEAF",
-      "MOVE_PETAL_DANCE",
       "MOVE_SAFEGUARD",
       "MOVE_SKULL_BASH"
     ],
@@ -261,10 +255,7 @@
     "EggMoves": [
       "MOVE_CHARM",
       "MOVE_CURSE",
-      "MOVE_GRASS_WHISTLE",
       "MOVE_LIGHT_SCREEN",
-      "MOVE_MAGICAL_LEAF",
-      "MOVE_PETAL_DANCE",
       "MOVE_SAFEGUARD",
       "MOVE_SKULL_BASH"
     ],
@@ -3308,7 +3299,8 @@
       "MOVE_HOWL",
       "MOVE_HYPNOSIS",
       "MOVE_PSYCH_UP",
-      "MOVE_SPITE"
+      "MOVE_SPITE",
+      "MOVE_TORCH_SONG"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -5612,11 +5604,13 @@
       "MOVE_DIVE"
     ],
     "EggMoves": [
+      "MOVE_BUBBLE_BEAM",
       "MOVE_HAZE",
       "MOVE_ICE_BALL",
       "MOVE_MIND_READER",
       "MOVE_MIST",
-      "MOVE_SPLASH"
+      "MOVE_SPLASH",
+      "MOVE_WATER_SPORT"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -20220,8 +20214,7 @@
       "MOVE_ROCK_SMASH"
     ],
     "EggMoves": [
-      "MOVE_ACID_ARMOR",
-      "MOVE_HEAT_WAVE"
+      "MOVE_ACID_ARMOR"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -20303,8 +20296,7 @@
       "MOVE_ROCK_SMASH"
     ],
     "EggMoves": [
-      "MOVE_ACID_ARMOR",
-      "MOVE_HEAT_WAVE"
+      "MOVE_ACID_ARMOR"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -23296,7 +23288,6 @@
       "MOVE_CRUSH_CLAW",
       "MOVE_DRAGON_BREATH",
       "MOVE_ENDEAVOR",
-      "MOVE_LEECH_SEED",
       "MOVE_MUD_SPORT"
     ],
     "TutorMoves": [
@@ -23411,7 +23402,6 @@
       "MOVE_CRUSH_CLAW",
       "MOVE_DRAGON_BREATH",
       "MOVE_ENDEAVOR",
-      "MOVE_LEECH_SEED",
       "MOVE_MUD_SPORT"
     ],
     "TutorMoves": [
@@ -23530,7 +23520,6 @@
       "MOVE_CRUSH_CLAW",
       "MOVE_DRAGON_BREATH",
       "MOVE_ENDEAVOR",
-      "MOVE_LEECH_SEED",
       "MOVE_MUD_SPORT"
     ],
     "TutorMoves": [
@@ -25844,7 +25833,8 @@
       "MOVE_DESTINY_BOND",
       "MOVE_DISABLE",
       "MOVE_MEAN_LOOK",
-      "MOVE_MEMENTO"
+      "MOVE_MEMENTO",
+      "MOVE_WILL_O_WISP"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -25954,7 +25944,8 @@
       "MOVE_DESTINY_BOND",
       "MOVE_DISABLE",
       "MOVE_MEAN_LOOK",
-      "MOVE_MEMENTO"
+      "MOVE_MEMENTO",
+      "MOVE_WILL_O_WISP"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -26065,7 +26056,8 @@
       "MOVE_DESTINY_BOND",
       "MOVE_DISABLE",
       "MOVE_MEAN_LOOK",
-      "MOVE_MEMENTO"
+      "MOVE_MEMENTO",
+      "MOVE_WILL_O_WISP"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -29628,8 +29620,10 @@
       "MOVE_ROCK_SMASH"
     ],
     "EggMoves": [
+      "MOVE_ACID_ARMOR",
       "MOVE_DREAM_EATER",
-      "MOVE_PAIN_SPLIT"
+      "MOVE_PAIN_SPLIT",
+      "MOVE_SMOG"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -29740,8 +29734,10 @@
       "MOVE_ROCK_SMASH"
     ],
     "EggMoves": [
+      "MOVE_ACID_ARMOR",
       "MOVE_DREAM_EATER",
-      "MOVE_PAIN_SPLIT"
+      "MOVE_PAIN_SPLIT",
+      "MOVE_SMOG"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -31109,7 +31105,6 @@
       "MOVE_ACID",
       "MOVE_COUNTER",
       "MOVE_DYNAMIC_PUNCH",
-      "MOVE_GRASS_WHISTLE",
       "MOVE_TEETER_DANCE"
     ],
     "TutorMoves": [
@@ -31218,7 +31213,6 @@
       "MOVE_ACID",
       "MOVE_COUNTER",
       "MOVE_DYNAMIC_PUNCH",
-      "MOVE_GRASS_WHISTLE",
       "MOVE_TEETER_DANCE"
     ],
     "TutorMoves": [
@@ -34760,8 +34754,7 @@
       "MOVE_MAGNITUDE",
       "MOVE_ROCK_SLIDE",
       "MOVE_SKULL_BASH",
-      "MOVE_SLEEP_TALK",
-      "MOVE_WATER_SPORT"
+      "MOVE_SLEEP_TALK"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",

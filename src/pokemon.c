@@ -2113,9 +2113,23 @@ void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon) //Credit: AsparagusEdua
     }
 }
 
+bool32 IsOpsAllMovesEnabled(void)
+{
+    // OPS ALL MOVES is a Casual-only configuration option. Keep this guard
+    // here as well as in the Options Menu so Hard mode can never use it,
+    // including if an old save has the custom flag set.
+    return gSaveBlock2Ptr != NULL
+        && gSaveBlock2Ptr->optionsNpcTeams != OPTIONS_NPCTEAMS_HARD
+        && FlagGet(FLAG_OPS_ALL_MOVES);
+}
+
 u16 MonTryLearningNewMoveAtLevel(struct Pokemon *mon, bool32 firstMove, u32 level)
 {
     u32 retVal = MOVE_NONE;
+
+    if (IsOpsAllMovesEnabled())
+        return MOVE_NONE;
+
     u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
     const struct LevelUpMove *learnset = GetSpeciesLevelUpLearnset(species);
 
@@ -6008,7 +6022,7 @@ u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves)
 
         moveLevel = learnset[i].level;
 
-        if (moveLevel <= level)
+        if (IsOpsAllMovesEnabled() || moveLevel <= level)
         {
             for (j = 0; j < MAX_MON_MOVES && learnedMoves[j] != learnset[i].move; j++)
                 ;
@@ -6064,7 +6078,7 @@ u8 GetNumberOfRelearnableMoves(struct Pokemon *mon)
 
         moveLevel = learnset[i].level;
 
-        if (moveLevel <= level)
+        if (IsOpsAllMovesEnabled() || moveLevel <= level)
         {
             for (j = 0; j < MAX_MON_MOVES && learnedMoves[j] != learnset[i].move; j++)
                 ;
@@ -7105,6 +7119,9 @@ bool32 DoesSpeciesHaveFormChangeMethod(u16 species, enum FormChanges method)
 
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove)
 {
+    if (IsOpsAllMovesEnabled())
+        return MOVE_NONE;
+
     u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
     u8 level = GetMonData(mon, MON_DATA_LEVEL, NULL);
     const struct LevelUpMove *learnset = GetSpeciesLevelUpLearnset(species);
