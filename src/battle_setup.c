@@ -43,6 +43,7 @@
 #include "mirage_tower.h"
 #include "field_screen_effect.h"
 #include "data.h"
+#include "difficulty.h"
 #include "vs_seeker.h"
 #include "item.h"
 #include "constants/battle_frontier.h"
@@ -1217,7 +1218,11 @@ bool8 GetTrainerFlag(void)
 static void SetBattledTrainersFlags(void)
 {
     if (TRAINER_BATTLE_PARAM.opponentB != 0)
+    {
+        RecordTrainerDifficultyVictory(TRAINER_BATTLE_PARAM.opponentB);
         FlagSet(GetTrainerBFlag());
+    }
+    RecordTrainerDifficultyVictory(TRAINER_BATTLE_PARAM.opponentA);
     FlagSet(GetTrainerAFlag());
 }
 

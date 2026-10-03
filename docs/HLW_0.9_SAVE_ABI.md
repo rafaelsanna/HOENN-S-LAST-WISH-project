@@ -414,6 +414,10 @@ Route 123's new Jolly Mint item ball and hidden Nugget own custom flags 0x1006 (
 
 Route 117's new Nest Ball item ball owns custom flag 0x1008 (`FLAG_ITEM_ROUTE_117_NEST_BALL`), previously unused. The pickup is available once in existing saves without changing any saved layout or existing collection flag.
 
+Normal/Hard victory history owns the previously unused custom flags 0x100C–0x1027. No saved layout, capacity, or released identity changes. `FLAG_DEFEATED_GYM_1_NORMAL` / `_HARD` through gym 8 follow badge order (Rustboro, Dewford, Mauville, Lavaridge, Petalburg, Fortree, Mossdeep, Sootopolis). `FLAG_DEFEATED_ELITE_FOUR_1_NORMAL` / `_HARD` through member 4 follow League room order; `FLAG_DEFEATED_ELITE_FOUR_NORMAL` / `_HARD` mean that all four individual members have been defeated in that same mode, possibly across multiple League attempts. `FLAG_DEFEATED_CHAMPION_NORMAL` / `_HARD` record champion wins independently.
+
+History is recorded only on actual story trainer victories using the configured Normal/Hard mode. Gym history is limited to the initial badge battle: rematches and battles after owning that gym's badge cannot add or change its history. League victories can accumulate both modes on later attempts. Losses, draws, forfeits, facility/link/recorded battles, setting ordinary defeated-trainer flags, and collecting a pending gym TM do not award history. Existing saves retain their badges and ordinary progress, but these new bits remain unset until qualifying new victories; historical difficulty is not guessed from the current setting or canonical trainer flags.
+
 ## Hall of Fame archive byte map
 
 Each alternating archive is exactly 4,096 bytes. Its 64-byte header is followed by twenty-eight teams at offsets 64–4095. The other two teams occupy the 288-byte storage tail, so their publication is part of the normal bundle.

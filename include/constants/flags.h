@@ -1665,34 +1665,35 @@
 #define FLAG_OPS_ALL_MOVES                           (HLW_CUSTOM_FLAGS_START + 0x009) // Configuration: expose every level-up move to the Move Reminder
 #define FLAG_PHYSICAL_SPECIAL_SPLIT                 (HLW_CUSTOM_FLAGS_START + 0x00A) // Configuration: use move-based physical/special categories
 #define FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED      (HLW_CUSTOM_FLAGS_START + 0x00B) // Save migration marker for the split option
-#define FLAG_UNUSED_0x100C                           (HLW_CUSTOM_FLAGS_START + 0x00C) // Unused Flag
-#define FLAG_UNUSED_0x100D                           (HLW_CUSTOM_FLAGS_START + 0x00D) // Unused Flag
-#define FLAG_UNUSED_0x100E                           (HLW_CUSTOM_FLAGS_START + 0x00E) // Unused Flag
-#define FLAG_UNUSED_0x100F                           (HLW_CUSTOM_FLAGS_START + 0x00F) // Unused Flag
-#define FLAG_UNUSED_0x1010                           (HLW_CUSTOM_FLAGS_START + 0x010) // Unused Flag
-#define FLAG_UNUSED_0x1011                           (HLW_CUSTOM_FLAGS_START + 0x011) // Unused Flag
-#define FLAG_UNUSED_0x1012                           (HLW_CUSTOM_FLAGS_START + 0x012) // Unused Flag
-#define FLAG_UNUSED_0x1013                           (HLW_CUSTOM_FLAGS_START + 0x013) // Unused Flag
-#define FLAG_UNUSED_0x1014                           (HLW_CUSTOM_FLAGS_START + 0x014) // Unused Flag
-#define FLAG_UNUSED_0x1015                           (HLW_CUSTOM_FLAGS_START + 0x015) // Unused Flag
-#define FLAG_UNUSED_0x1016                           (HLW_CUSTOM_FLAGS_START + 0x016) // Unused Flag
-#define FLAG_UNUSED_0x1017                           (HLW_CUSTOM_FLAGS_START + 0x017) // Unused Flag
-#define FLAG_UNUSED_0x1018                           (HLW_CUSTOM_FLAGS_START + 0x018) // Unused Flag
-#define FLAG_UNUSED_0x1019                           (HLW_CUSTOM_FLAGS_START + 0x019) // Unused Flag
-#define FLAG_UNUSED_0x101A                           (HLW_CUSTOM_FLAGS_START + 0x01A) // Unused Flag
-#define FLAG_UNUSED_0x101B                           (HLW_CUSTOM_FLAGS_START + 0x01B) // Unused Flag
-#define FLAG_UNUSED_0x101C                           (HLW_CUSTOM_FLAGS_START + 0x01C) // Unused Flag
-#define FLAG_UNUSED_0x101D                           (HLW_CUSTOM_FLAGS_START + 0x01D) // Unused Flag
-#define FLAG_UNUSED_0x101E                           (HLW_CUSTOM_FLAGS_START + 0x01E) // Unused Flag
-#define FLAG_UNUSED_0x101F                           (HLW_CUSTOM_FLAGS_START + 0x01F) // Unused Flag
-#define FLAG_UNUSED_0x1020                           (HLW_CUSTOM_FLAGS_START + 0x020) // Unused Flag
-#define FLAG_UNUSED_0x1021                           (HLW_CUSTOM_FLAGS_START + 0x021) // Unused Flag
-#define FLAG_UNUSED_0x1022                           (HLW_CUSTOM_FLAGS_START + 0x022) // Unused Flag
-#define FLAG_UNUSED_0x1023                           (HLW_CUSTOM_FLAGS_START + 0x023) // Unused Flag
-#define FLAG_UNUSED_0x1024                           (HLW_CUSTOM_FLAGS_START + 0x024) // Unused Flag
-#define FLAG_UNUSED_0x1025                           (HLW_CUSTOM_FLAGS_START + 0x025) // Unused Flag
-#define FLAG_UNUSED_0x1026                           (HLW_CUSTOM_FLAGS_START + 0x026) // Unused Flag
-#define FLAG_UNUSED_0x1027                           (HLW_CUSTOM_FLAGS_START + 0x027) // Unused Flag
+// Permanent difficulty history. Gym flags record the first badge battle only.
+#define FLAG_DEFEATED_GYM_1_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x00C)
+#define FLAG_DEFEATED_GYM_1_HARD                     (HLW_CUSTOM_FLAGS_START + 0x00D)
+#define FLAG_DEFEATED_GYM_2_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x00E)
+#define FLAG_DEFEATED_GYM_2_HARD                     (HLW_CUSTOM_FLAGS_START + 0x00F)
+#define FLAG_DEFEATED_GYM_3_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x010)
+#define FLAG_DEFEATED_GYM_3_HARD                     (HLW_CUSTOM_FLAGS_START + 0x011)
+#define FLAG_DEFEATED_GYM_4_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x012)
+#define FLAG_DEFEATED_GYM_4_HARD                     (HLW_CUSTOM_FLAGS_START + 0x013)
+#define FLAG_DEFEATED_GYM_5_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x014)
+#define FLAG_DEFEATED_GYM_5_HARD                     (HLW_CUSTOM_FLAGS_START + 0x015)
+#define FLAG_DEFEATED_GYM_6_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x016)
+#define FLAG_DEFEATED_GYM_6_HARD                     (HLW_CUSTOM_FLAGS_START + 0x017)
+#define FLAG_DEFEATED_GYM_7_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x018)
+#define FLAG_DEFEATED_GYM_7_HARD                     (HLW_CUSTOM_FLAGS_START + 0x019)
+#define FLAG_DEFEATED_GYM_8_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x01A)
+#define FLAG_DEFEATED_GYM_8_HARD                     (HLW_CUSTOM_FLAGS_START + 0x01B)
+#define FLAG_DEFEATED_ELITE_FOUR_1_NORMAL            (HLW_CUSTOM_FLAGS_START + 0x01C)
+#define FLAG_DEFEATED_ELITE_FOUR_1_HARD              (HLW_CUSTOM_FLAGS_START + 0x01D)
+#define FLAG_DEFEATED_ELITE_FOUR_2_NORMAL            (HLW_CUSTOM_FLAGS_START + 0x01E)
+#define FLAG_DEFEATED_ELITE_FOUR_2_HARD              (HLW_CUSTOM_FLAGS_START + 0x01F)
+#define FLAG_DEFEATED_ELITE_FOUR_3_NORMAL            (HLW_CUSTOM_FLAGS_START + 0x020)
+#define FLAG_DEFEATED_ELITE_FOUR_3_HARD              (HLW_CUSTOM_FLAGS_START + 0x021)
+#define FLAG_DEFEATED_ELITE_FOUR_4_NORMAL            (HLW_CUSTOM_FLAGS_START + 0x022)
+#define FLAG_DEFEATED_ELITE_FOUR_4_HARD              (HLW_CUSTOM_FLAGS_START + 0x023)
+#define FLAG_DEFEATED_ELITE_FOUR_NORMAL              (HLW_CUSTOM_FLAGS_START + 0x024)
+#define FLAG_DEFEATED_ELITE_FOUR_HARD                (HLW_CUSTOM_FLAGS_START + 0x025)
+#define FLAG_DEFEATED_CHAMPION_NORMAL                (HLW_CUSTOM_FLAGS_START + 0x026)
+#define FLAG_DEFEATED_CHAMPION_HARD                  (HLW_CUSTOM_FLAGS_START + 0x027)
 #define FLAG_UNUSED_0x1028                           (HLW_CUSTOM_FLAGS_START + 0x028) // Unused Flag
 #define FLAG_UNUSED_0x1029                           (HLW_CUSTOM_FLAGS_START + 0x029) // Unused Flag
 #define FLAG_UNUSED_0x102A                           (HLW_CUSTOM_FLAGS_START + 0x02A) // Unused Flag
