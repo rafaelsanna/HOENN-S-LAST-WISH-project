@@ -355,7 +355,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_PARASOL_LADY",
       "x": 16,
       "y": 7,
       "elevation": 3,
@@ -368,7 +368,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_PARASOL_LADY",
       "x": 25,
       "y": 34,
       "elevation": 3,

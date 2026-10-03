@@ -541,6 +541,12 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Calendula,             OBJ_EVENT_PAL_TAG_CALENDULA},
     {gObjectEventPal_TrappedBlipbug,        OBJ_EVENT_PAL_TAG_TRAPPED_BLIPBUG},
     {gObjectEventPal_Accountant,             OBJ_EVENT_PAL_TAG_ACCOUNTANT},
+    {gObjectEventPal_ParasolLady,            OBJ_EVENT_PAL_TAG_PARASOL_LADY},
+    {gObjectEventPal_GuitaristMan,            OBJ_EVENT_PAL_TAG_GUITARIST_MAN},
+    {gObjectEventPal_AquaMemberF2,            OBJ_EVENT_PAL_TAG_AQUA_MEMBER_F2},
+    {gObjectEventPal_AquaMemberM2,            OBJ_EVENT_PAL_TAG_AQUA_MEMBER_M2},
+    {gObjectEventPal_MagmaMemberF2,           OBJ_EVENT_PAL_TAG_MAGMA_MEMBER_F2},
+    {gObjectEventPal_MagmaMemberM2,           OBJ_EVENT_PAL_TAG_MAGMA_MEMBER_M2},
     {gObjectEventPal_Phoebe,                 OBJ_EVENT_PAL_TAG_PHOEBE},
 #if OW_FOLLOWERS_POKEBALLS
     {gObjectEventPal_MasterBall,            OBJ_EVENT_PAL_TAG_BALL_MASTER},

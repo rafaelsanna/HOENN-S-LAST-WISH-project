@@ -370,6 +370,14 @@ static const struct SpriteFrameImage sPicTable_Accountant[] = {
     overworld_ascending_frames(gObjectEventPic_Accountant, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_ParasolLady[] = {
+    overworld_ascending_frames(gObjectEventPic_ParasolLady, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_GuitaristMan[] = {
+    overworld_ascending_frames(gObjectEventPic_GuitaristMan, 2, 4),
+};
+
 static const struct SpriteFrameImage sPicTable_Man5[] = {
     overworld_ascending_frames(gObjectEventPic_Man5, 2, 4),
 };
@@ -561,12 +569,28 @@ static const struct SpriteFrameImage sPicTable_AquaMemberF[] = {
     overworld_ascending_frames(gObjectEventPic_AquaMemberF, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_AquaMemberF2[] = {
+    overworld_ascending_frames(gObjectEventPic_AquaMemberF2, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_AquaMemberM2[] = {
+    overworld_ascending_frames(gObjectEventPic_AquaMemberM2, 2, 4),
+};
+
 static const struct SpriteFrameImage sPicTable_MagmaMemberM[] = {
     overworld_ascending_frames(gObjectEventPic_MagmaMemberM, 2, 4),
 };
 
 static const struct SpriteFrameImage sPicTable_MagmaMemberF[] = {
     overworld_ascending_frames(gObjectEventPic_MagmaMemberF, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_MagmaMemberF2[] = {
+    overworld_ascending_frames(gObjectEventPic_MagmaMemberF2, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_MagmaMemberM2[] = {
+    overworld_ascending_frames(gObjectEventPic_MagmaMemberM2, 2, 4),
 };
 
 static const struct SpriteFrameImage sPicTable_Sidney[] = {

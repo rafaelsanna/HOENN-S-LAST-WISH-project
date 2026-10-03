@@ -268,6 +268,12 @@
 #define OBJ_EVENT_GFX_DARK_AURA                  261
 #define OBJ_EVENT_GFX_TRAPPED_BLIPBUG             262
 #define OBJ_EVENT_GFX_ACCOUNTANT                  263
+#define OBJ_EVENT_GFX_PARASOL_LADY               265
+#define OBJ_EVENT_GFX_GUITARIST_MAN              266
+#define OBJ_EVENT_GFX_AQUA_MEMBER_F2             267
+#define OBJ_EVENT_GFX_AQUA_MEMBER_M2             268
+#define OBJ_EVENT_GFX_MAGMA_MEMBER_F2            269
+#define OBJ_EVENT_GFX_MAGMA_MEMBER_M2            270
 
 // NOTE: The maximum amount of object events has been expanded from 255 to 65535.
 // Since dynamic graphics ids still require at least 16 free values, the actual limit
@@ -408,6 +414,12 @@
 #define OBJ_EVENT_PAL_TAG_ZENNO                   0x1128
 #define OBJ_EVENT_PAL_TAG_ACCOUNTANT              0x1129
 #define OBJ_EVENT_PAL_TAG_PHOEBE                  0x112A
+#define OBJ_EVENT_PAL_TAG_PARASOL_LADY            0x112C
+#define OBJ_EVENT_PAL_TAG_GUITARIST_MAN           0x112D
+#define OBJ_EVENT_PAL_TAG_AQUA_MEMBER_F2          0x112E
+#define OBJ_EVENT_PAL_TAG_AQUA_MEMBER_M2          0x112F
+#define OBJ_EVENT_PAL_TAG_MAGMA_MEMBER_F2         0x1130
+#define OBJ_EVENT_PAL_TAG_MAGMA_MEMBER_M2         0x1131
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla
