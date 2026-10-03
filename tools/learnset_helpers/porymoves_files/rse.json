@@ -40,10 +40,6 @@
       {
         "Level": 39,
         "Move": "MOVE_SYNTHESIS"
-      },
-      {
-        "Level": 46,
-        "Move": "MOVE_SOLAR_BEAM"
       }
     ],
     "PreEvoMoves": [],
@@ -141,10 +137,6 @@
       {
         "Level": 47,
         "Move": "MOVE_SYNTHESIS"
-      },
-      {
-        "Level": 56,
-        "Move": "MOVE_SOLAR_BEAM"
       }
     ],
     "PreEvoMoves": [],
@@ -243,10 +235,6 @@
       {
         "Level": 53,
         "Move": "MOVE_SYNTHESIS"
-      },
-      {
-        "Level": 65,
-        "Move": "MOVE_SOLAR_BEAM"
       }
     ],
     "PreEvoMoves": [],
@@ -5624,13 +5612,11 @@
       "MOVE_DIVE"
     ],
     "EggMoves": [
-      "MOVE_BUBBLE_BEAM",
       "MOVE_HAZE",
       "MOVE_ICE_BALL",
       "MOVE_MIND_READER",
       "MOVE_MIST",
-      "MOVE_SPLASH",
-      "MOVE_WATER_SPORT"
+      "MOVE_SPLASH"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -9214,8 +9200,6 @@
       "MOVE_PROTECT",
       "MOVE_RAIN_DANCE",
       "MOVE_FRUSTRATION",
-      "MOVE_THUNDERBOLT",
-      "MOVE_THUNDER",
       "MOVE_RETURN",
       "MOVE_DOUBLE_TEAM",
       "MOVE_SHOCK_WAVE",
@@ -9305,8 +9289,6 @@
       "MOVE_PROTECT",
       "MOVE_RAIN_DANCE",
       "MOVE_FRUSTRATION",
-      "MOVE_THUNDERBOLT",
-      "MOVE_THUNDER",
       "MOVE_RETURN",
       "MOVE_DOUBLE_TEAM",
       "MOVE_SHOCK_WAVE",
@@ -14753,11 +14735,8 @@
       "MOVE_ANCIENT_POWER",
       "MOVE_CRUNCH",
       "MOVE_DRAGON_CLAW",
-      "MOVE_HYDRO_PUMP",
-      "MOVE_MUD_SPORT",
       "MOVE_ROCK_SLIDE",
-      "MOVE_THRASH",
-      "MOVE_WATER_SPORT"
+      "MOVE_THRASH"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -14848,11 +14827,8 @@
       "MOVE_ANCIENT_POWER",
       "MOVE_CRUNCH",
       "MOVE_DRAGON_CLAW",
-      "MOVE_HYDRO_PUMP",
-      "MOVE_MUD_SPORT",
       "MOVE_ROCK_SLIDE",
-      "MOVE_THRASH",
-      "MOVE_WATER_SPORT"
+      "MOVE_THRASH"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -14951,19 +14927,14 @@
       "MOVE_ATTRACT",
       "MOVE_CUT",
       "MOVE_STRENGTH",
-      "MOVE_ROCK_SMASH",
-      "MOVE_WATERFALL",
-      "MOVE_DIVE"
+      "MOVE_ROCK_SMASH"
     ],
     "EggMoves": [
       "MOVE_ANCIENT_POWER",
       "MOVE_CRUNCH",
       "MOVE_DRAGON_CLAW",
-      "MOVE_HYDRO_PUMP",
-      "MOVE_MUD_SPORT",
       "MOVE_ROCK_SLIDE",
-      "MOVE_THRASH",
-      "MOVE_WATER_SPORT"
+      "MOVE_THRASH"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -20224,10 +20195,6 @@
         "Move": "MOVE_AMNESIA"
       },
       {
-        "Level": 36,
-        "Move": "MOVE_FLAMETHROWER"
-      },
-      {
         "Level": 43,
         "Move": "MOVE_ROCK_SLIDE"
       },
@@ -20304,10 +20271,6 @@
       {
         "Level": 29,
         "Move": "MOVE_AMNESIA"
-      },
-      {
-        "Level": 36,
-        "Move": "MOVE_FLAMETHROWER"
       },
       {
         "Level": 48,
@@ -23301,24 +23264,17 @@
       {
         "Level": 41,
         "Move": "MOVE_DETECT"
-      },
-      {
-        "Level": 46,
-        "Move": "MOVE_GIGA_DRAIN"
       }
     ],
     "PreEvoMoves": [],
     "TMMoves": [
       "MOVE_FOCUS_PUNCH",
       "MOVE_TOXIC",
-      "MOVE_BULLET_SEED",
       "MOVE_HIDDEN_POWER",
       "MOVE_SUNNY_DAY",
       "MOVE_PROTECT",
-      "MOVE_GIGA_DRAIN",
       "MOVE_SAFEGUARD",
       "MOVE_FRUSTRATION",
-      "MOVE_SOLAR_BEAM",
       "MOVE_IRON_TAIL",
       "MOVE_RETURN",
       "MOVE_DIG",
@@ -23424,20 +23380,16 @@
       }
     ],
     "PreEvoMoves": [
-      "MOVE_GIGA_DRAIN",
       "MOVE_MEGA_DRAIN"
     ],
     "TMMoves": [
       "MOVE_FOCUS_PUNCH",
       "MOVE_TOXIC",
-      "MOVE_BULLET_SEED",
       "MOVE_HIDDEN_POWER",
       "MOVE_SUNNY_DAY",
       "MOVE_PROTECT",
-      "MOVE_GIGA_DRAIN",
       "MOVE_SAFEGUARD",
       "MOVE_FRUSTRATION",
-      "MOVE_SOLAR_BEAM",
       "MOVE_IRON_TAIL",
       "MOVE_RETURN",
       "MOVE_DIG",
@@ -23543,7 +23495,6 @@
       }
     ],
     "PreEvoMoves": [
-      "MOVE_GIGA_DRAIN",
       "MOVE_MEGA_DRAIN"
     ],
     "TMMoves": [
@@ -23551,15 +23502,12 @@
       "MOVE_DRAGON_CLAW",
       "MOVE_ROAR",
       "MOVE_TOXIC",
-      "MOVE_BULLET_SEED",
       "MOVE_HIDDEN_POWER",
       "MOVE_SUNNY_DAY",
       "MOVE_HYPER_BEAM",
       "MOVE_PROTECT",
-      "MOVE_GIGA_DRAIN",
       "MOVE_SAFEGUARD",
       "MOVE_FRUSTRATION",
-      "MOVE_SOLAR_BEAM",
       "MOVE_IRON_TAIL",
       "MOVE_EARTHQUAKE",
       "MOVE_RETURN",
@@ -23647,10 +23595,6 @@
       {
         "Level": 37,
         "Move": "MOVE_MIRROR_MOVE"
-      },
-      {
-        "Level": 43,
-        "Move": "MOVE_FLAMETHROWER"
       }
     ],
     "PreEvoMoves": [],
@@ -23760,8 +23704,7 @@
       }
     ],
     "PreEvoMoves": [
-      "MOVE_FIRE_SPIN",
-      "MOVE_FLAMETHROWER"
+      "MOVE_FIRE_SPIN"
     ],
     "TMMoves": [
       "MOVE_FOCUS_PUNCH",
@@ -23818,10 +23761,6 @@
   },
   "BLAZIKEN": {
     "LevelMoves": [
-      {
-        "Level": 1,
-        "Move": "MOVE_FIRE_PUNCH"
-      },
       {
         "Level": 1,
         "Move": "MOVE_SCRATCH"
@@ -23884,8 +23823,7 @@
       }
     ],
     "PreEvoMoves": [
-      "MOVE_FIRE_SPIN",
-      "MOVE_FLAMETHROWER"
+      "MOVE_FIRE_SPIN"
     ],
     "TMMoves": [
       "MOVE_FOCUS_PUNCH",
@@ -23926,7 +23864,6 @@
       "MOVE_DOUBLE_EDGE",
       "MOVE_DYNAMIC_PUNCH",
       "MOVE_ENDURE",
-      "MOVE_FIRE_PUNCH",
       "MOVE_FURY_CUTTER",
       "MOVE_MEGA_KICK",
       "MOVE_MEGA_PUNCH",
@@ -25907,8 +25844,7 @@
       "MOVE_DESTINY_BOND",
       "MOVE_DISABLE",
       "MOVE_MEAN_LOOK",
-      "MOVE_MEMENTO",
-      "MOVE_WILL_O_WISP"
+      "MOVE_MEMENTO"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -26018,8 +25954,7 @@
       "MOVE_DESTINY_BOND",
       "MOVE_DISABLE",
       "MOVE_MEAN_LOOK",
-      "MOVE_MEMENTO",
-      "MOVE_WILL_O_WISP"
+      "MOVE_MEMENTO"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -26130,8 +26065,7 @@
       "MOVE_DESTINY_BOND",
       "MOVE_DISABLE",
       "MOVE_MEAN_LOOK",
-      "MOVE_MEMENTO",
-      "MOVE_WILL_O_WISP"
+      "MOVE_MEMENTO"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -28087,7 +28021,7 @@
       "MOVE_SECRET_POWER",
       "MOVE_REST",
       "MOVE_ATTRACT",
-            "MOVE_CUT",
+      "MOVE_CUT",
       "MOVE_SLASH",
       "MOVE_IRON_TAIL",
       "MOVE_DOUBLE_TEAM",
@@ -29694,10 +29628,8 @@
       "MOVE_ROCK_SMASH"
     ],
     "EggMoves": [
-      "MOVE_ACID_ARMOR",
       "MOVE_DREAM_EATER",
-      "MOVE_PAIN_SPLIT",
-      "MOVE_SMOG"
+      "MOVE_PAIN_SPLIT"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -29808,10 +29740,8 @@
       "MOVE_ROCK_SMASH"
     ],
     "EggMoves": [
-      "MOVE_ACID_ARMOR",
       "MOVE_DREAM_EATER",
-      "MOVE_PAIN_SPLIT",
-      "MOVE_SMOG"
+      "MOVE_PAIN_SPLIT"
     ],
     "TutorMoves": [
       "MOVE_BODY_SLAM",
@@ -29895,7 +29825,6 @@
     ],
     "EggMoves": [
       "MOVE_DOUBLE_EDGE",
-      "MOVE_HYDRO_PUMP",
       "MOVE_THRASH"
     ],
     "TutorMoves": [
@@ -29998,7 +29927,6 @@
     ],
     "EggMoves": [
       "MOVE_DOUBLE_EDGE",
-      "MOVE_HYDRO_PUMP",
       "MOVE_THRASH"
     ],
     "TutorMoves": [
@@ -30265,10 +30193,6 @@
         "Move": "MOVE_EARTHQUAKE"
       },
       {
-        "Level": 41,
-        "Move": "MOVE_FLAMETHROWER"
-      },
-      {
         "Level": 49,
         "Move": "MOVE_DOUBLE_EDGE"
       }
@@ -30449,10 +30373,6 @@
         "Move": "MOVE_PROTECT"
       },
       {
-        "Level": 30,
-        "Move": "MOVE_FLAMETHROWER"
-      },
-      {
         "Level": 33,
         "Move": "MOVE_IRON_DEFENSE"
       },
@@ -30488,7 +30408,6 @@
     ],
     "EggMoves": [
       "MOVE_ENDURE",
-      "MOVE_ERUPTION",
       "MOVE_SLEEP_TALK",
       "MOVE_YAWN"
     ],
@@ -31172,13 +31091,10 @@
     "TMMoves": [
       "MOVE_FOCUS_PUNCH",
       "MOVE_TOXIC",
-      "MOVE_BULLET_SEED",
       "MOVE_HIDDEN_POWER",
       "MOVE_SUNNY_DAY",
       "MOVE_PROTECT",
-      "MOVE_GIGA_DRAIN",
       "MOVE_FRUSTRATION",
-      "MOVE_SOLAR_BEAM",
       "MOVE_RETURN",
       "MOVE_DOUBLE_TEAM",
       "MOVE_SANDSTORM",
@@ -31282,14 +31198,11 @@
     "TMMoves": [
       "MOVE_FOCUS_PUNCH",
       "MOVE_TOXIC",
-      "MOVE_BULLET_SEED",
       "MOVE_HIDDEN_POWER",
       "MOVE_SUNNY_DAY",
       "MOVE_HYPER_BEAM",
       "MOVE_PROTECT",
-      "MOVE_GIGA_DRAIN",
       "MOVE_FRUSTRATION",
-      "MOVE_SOLAR_BEAM",
       "MOVE_RETURN",
       "MOVE_DOUBLE_TEAM",
       "MOVE_SANDSTORM",

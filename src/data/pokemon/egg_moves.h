@@ -1513,17 +1513,12 @@ static const u16 sCyndaquilEggMoveLearnset[] = {
 static const u16 sTotodileEggMoveLearnset[] = {
     MOVE_CRUNCH,
     MOVE_THRASH,
-    MOVE_HYDRO_PUMP,
     MOVE_ANCIENT_POWER,
-    MOVE_MUD_SPORT,
-    MOVE_WATER_SPORT,
     MOVE_ICE_PUNCH,
     MOVE_METAL_CLAW,
     MOVE_DRAGON_DANCE,
-    MOVE_AQUA_JET,
     MOVE_FAKE_TEARS,
     MOVE_BLOCK,
-    MOVE_WATER_PULSE,
     MOVE_FLATTER,
     MOVE_UNAVAILABLE,
 };
@@ -2377,7 +2372,6 @@ static const u16 sTorchicEggMoveLearnset[] = {
     MOVE_FEINT,
     MOVE_FEATHER_DANCE,
     MOVE_CURSE,
-    MOVE_FLAME_BURST,
     MOVE_LOW_KICK,
     MOVE_UNAVAILABLE,
 };
@@ -2393,7 +2387,6 @@ static const u16 sMudkipEggMoveLearnset[] = {
     MOVE_MIRROR_COAT,
     MOVE_COUNTER,
     MOVE_ANCIENT_POWER,
-    MOVE_WHIRLPOOL,
     MOVE_BITE,
     MOVE_DOUBLE_EDGE,
     MOVE_MUD_BOMB,
@@ -2864,26 +2857,20 @@ static const u16 sRoseliaEggMoveLearnset[] = {
 
 #if P_FAMILY_GULPIN
 static const u16 sGulpinEggMoveLearnset[] = {
-    MOVE_ACID_ARMOR,
-    MOVE_SMOG,
     MOVE_PAIN_SPLIT,
     MOVE_CURSE,
     MOVE_DESTINY_BOND,
     MOVE_MUD_SLAP,
-    MOVE_GUNK_SHOT,
-    MOVE_VENOM_DRENCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_GULPIN
 
 #if P_FAMILY_CARVANHA
 static const u16 sCarvanhaEggMoveLearnset[] = {
-    MOVE_HYDRO_PUMP,
     MOVE_DOUBLE_EDGE,
     MOVE_THRASH,
     MOVE_ANCIENT_POWER,
     MOVE_SWIFT,
-    MOVE_BRINE,
     MOVE_DESTINY_BOND,
     MOVE_PSYCHIC_FANGS,
     MOVE_UNAVAILABLE,
@@ -2920,7 +2907,6 @@ static const u16 sNumelEggMoveLearnset[] = {
     MOVE_YAWN,
     MOVE_ANCIENT_POWER,
     MOVE_MUD_BOMB,
-    MOVE_HEAT_WAVE,
     MOVE_STOCKPILE,
     MOVE_SWALLOW,
     MOVE_SPIT_UP,
@@ -2934,13 +2920,11 @@ static const u16 sNumelEggMoveLearnset[] = {
 
 #if P_FAMILY_TORKOAL
 static const u16 sTorkoalEggMoveLearnset[] = {
-    MOVE_ERUPTION,
     MOVE_ENDURE,
     MOVE_SLEEP_TALK,
     MOVE_YAWN,
     MOVE_FISSURE,
     MOVE_SKULL_BASH,
-    MOVE_FLAME_BURST,
     MOVE_CLEAR_SMOG,
     MOVE_SUPERPOWER,
     MOVE_UNAVAILABLE,
