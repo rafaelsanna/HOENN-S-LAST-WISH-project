@@ -15,6 +15,7 @@ LittlerootTown_BrendansHouse_2F_OnFrame:
 
 LittlerootTown_BrendansHouse_2F_EventScript_WeirdDreamDialogue::
 	lockall
+	setflag FLAG_PLAYER_AWOKE_IN_LITTLEROOT
 	msgbox LittlerootTown_BrendansHouse_2F_Text_WeirdDream, MSGBOX_DEFAULT
 	setvar VAR_LITTLEROOT_INTRO_STATE, 7
 	releaseall
@@ -294,7 +295,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 	showmonpic SPECIES_AEGISLASH, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory1, MSGBOX_DEFAULT
 	hidemonpic
-	
+
 	// 2. ALOMOMOLA - The Conflict
 	showmonpic SPECIES_ALOMOMOLA, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory2, MSGBOX_DEFAULT
@@ -306,7 +307,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 	playse SE_M_THUNDERBOLT
 	msgbox PlayersHouse_2F_Text_NotebookStory3, MSGBOX_DEFAULT
 	hidemonpic
-	
+
 	// 4. AMAURA - Tsunami
 	showmonpic SPECIES_AMAURA, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory4, MSGBOX_DEFAULT
@@ -336,12 +337,12 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 	showmonpic SPECIES_AMOONGUSS, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory9, MSGBOX_DEFAULT
 	hidemonpic
-	
+
 	// 10. APPLIN - Legend Appears
 	showmonpic SPECIES_APPLIN, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory10, MSGBOX_DEFAULT
 	hidemonpic
-	
+
 	// 11. APPLETUN - Sky Guardian
 	showmonpic SPECIES_APPLETUN, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory11, MSGBOX_DEFAULT
@@ -351,7 +352,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 	showmonpic SPECIES_AXEW, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory12, MSGBOX_DEFAULT
 	hidemonpic
-	
+
 	// 13. ARBOLIVA - World Today
 	showmonpic SPECIES_ARBOLIVA, 10, 3
 	msgbox PlayersHouse_2F_Text_NotebookStory13, MSGBOX_DEFAULT

@@ -241,7 +241,8 @@ void ResetHlwSaveBlock4(void) { InitHlwPersistentData(); }
 
 void ClearSaveData(void)
 {
-    // Explicit title-menu erase only. Overwrite saves do not call this.
+    // Explicit save deletion only (including Hard Nuzlocke game over).
+    // Overwrite saves do not call this.
     for (u32 i = 0; i < SECTORS_COUNT; i++)
         EraseFlashSector(i);
 }

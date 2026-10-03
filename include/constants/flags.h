@@ -1694,17 +1694,19 @@
 #define FLAG_DEFEATED_ELITE_FOUR_HARD                (HLW_CUSTOM_FLAGS_START + 0x025)
 #define FLAG_DEFEATED_CHAMPION_NORMAL                (HLW_CUSTOM_FLAGS_START + 0x026)
 #define FLAG_DEFEATED_CHAMPION_HARD                  (HLW_CUSTOM_FLAGS_START + 0x027)
-#define FLAG_UNUSED_0x1028                           (HLW_CUSTOM_FLAGS_START + 0x028) // Unused Flag
-#define FLAG_UNUSED_0x1029                           (HLW_CUSTOM_FLAGS_START + 0x029) // Unused Flag
-#define FLAG_UNUSED_0x102A                           (HLW_CUSTOM_FLAGS_START + 0x02A) // Unused Flag
-#define FLAG_UNUSED_0x102B                           (HLW_CUSTOM_FLAGS_START + 0x02B) // Unused Flag
-#define FLAG_UNUSED_0x102C                           (HLW_CUSTOM_FLAGS_START + 0x02C) // Unused Flag
-#define FLAG_UNUSED_0x102D                           (HLW_CUSTOM_FLAGS_START + 0x02D) // Unused Flag
-#define FLAG_UNUSED_0x102E                           (HLW_CUSTOM_FLAGS_START + 0x02E) // Unused Flag
-#define FLAG_UNUSED_0x102F                           (HLW_CUSTOM_FLAGS_START + 0x02F) // Unused Flag
-#define FLAG_UNUSED_0x1030                           (HLW_CUSTOM_FLAGS_START + 0x030) // Unused Flag
-#define FLAG_UNUSED_0x1031                           (HLW_CUSTOM_FLAGS_START + 0x031) // Unused Flag
-#define FLAG_UNUSED_0x1032                           (HLW_CUSTOM_FLAGS_START + 0x032) // Unused Flag
+#define FLAG_INITIAL_GAME_CONFIG_DONE                (HLW_CUSTOM_FLAGS_START + 0x028)
+#define FLAG_STARTED_ON_HARD                         (HLW_CUSTOM_FLAGS_START + 0x029)
+#define FLAG_HARD_RUN_BROKEN                         (HLW_CUSTOM_FLAGS_START + 0x02A)
+#define FLAG_HARD_RUN_COMPLETED                      (HLW_CUSTOM_FLAGS_START + 0x02B)
+// Uninterrupted Nuzlocke history; separate from current gameplay settings.
+#define FLAG_NUZLOCKE_RUN_CONFIGURED                 (HLW_CUSTOM_FLAGS_START + 0x02C)
+#define FLAG_NUZLOCKE_RUN_STARTED                    (HLW_CUSTOM_FLAGS_START + 0x02D)
+#define FLAG_NUZLOCKE_RUN_HARD_ELIGIBLE               (HLW_CUSTOM_FLAGS_START + 0x02E)
+#define FLAG_NUZLOCKE_RUN_BROKEN                     (HLW_CUSTOM_FLAGS_START + 0x02F)
+#define FLAG_NUZLOCKE_RUN_COMPLETED_NORMAL            (HLW_CUSTOM_FLAGS_START + 0x030)
+#define FLAG_NUZLOCKE_RUN_COMPLETED_HARD              (HLW_CUSTOM_FLAGS_START + 0x031)
+// Story milestone, set on waking regardless of the selected Nuzlocke mode.
+#define FLAG_PLAYER_AWOKE_IN_LITTLEROOT               (HLW_CUSTOM_FLAGS_START + 0x032)
 #define FLAG_UNUSED_0x1033                           (HLW_CUSTOM_FLAGS_START + 0x033) // Unused Flag
 #define FLAG_UNUSED_0x1034                           (HLW_CUSTOM_FLAGS_START + 0x034) // Unused Flag
 #define FLAG_UNUSED_0x1035                           (HLW_CUSTOM_FLAGS_START + 0x035) // Unused Flag

@@ -144,7 +144,7 @@ static const struct WindowTemplate sHof_WindowTemplate = {
 static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sUnusedTextColors[4] = {TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_TRANSPARENT};
-static const u8 sText_DifficultyCasual[] = _("Difficulty: Casual - ");
+static const u8 sText_DifficultyNormal[] = _("Difficulty: Normal - ");
 static const u8 sText_DifficultyHard[] = _("Difficulty: Hard - ");
 static const u8 sText_NuzlockeOff[] = _("Nuzlocke: Off");
 static const u8 sText_NuzlockeNormal[] = _("Nuzlocke: Normal");
@@ -1145,7 +1145,7 @@ static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
     u8 line3[64];
     u8 *stringPtr;
 
-    stringPtr = StringCopy(line1, GetCurrentDifficultyLevel() == DIFFICULTY_HARD ? sText_DifficultyHard : sText_DifficultyCasual);
+    stringPtr = StringCopy(line1, HasCompletedHardRun() ? sText_DifficultyHard : sText_DifficultyNormal);
     StringCopy(stringPtr, GetHallOfFameNuzlockeText());
 
     stringPtr = StringCopy(line2, gSaveBlock2Ptr->optionsInfiniteCandy == OPTIONS_INFINITECANDY_ON ? sText_InfiniteCandyYes : sText_InfiniteCandyNo);
@@ -1174,7 +1174,7 @@ static void HallOfFame_PrintChampionText(void)
     stringPtr = StringCopy(stringPtr, sText_ChampionHeaderSeparator);
     StringCopy(stringPtr, sText_Congratulations);
 
-    stringPtr = StringCopy(difficultyAndNuzlocke, GetCurrentDifficultyLevel() == DIFFICULTY_HARD ? sText_DifficultyHard : sText_DifficultyCasual);
+    stringPtr = StringCopy(difficultyAndNuzlocke, HasCompletedHardRun() ? sText_DifficultyHard : sText_DifficultyNormal);
     StringCopy(stringPtr, GetHallOfFameNuzlockeText());
 
     stringPtr = StringCopy(levelCapAndTrophies, sText_LevelCap);

@@ -12,6 +12,7 @@ void CopyTrainerId(u8 *dst, u8 *src);
 
 // Main new game initialization functions
 void NewGameInitData(void);
+void PrepareNewGameForInitialConfig(void);
 void ResetMenuAndMonGlobals(void);
 void Sav2_ClearSetDefault(void);
 

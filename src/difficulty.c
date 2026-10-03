@@ -4,6 +4,7 @@
 #include "data.h"
 #include "difficulty.h"
 #include "event_data.h"
+#include "nuzlocke.h"
 #include "script.h"
 #include "constants/battle.h"
 #include "constants/flags.h"
@@ -137,6 +138,19 @@ void RecordTrainerDifficultyVictory(u16 trainerId)
 
     FlagSet(sDifficultyVictoryFlags[victory][difficulty]);
 
+    // Freeze the certificate at the first champion win, before the victory
+    // script marks the game clear. Postgame settings cannot revoke or earn it.
+    if (victory == VICTORY_CHAMPION && !FlagGet(FLAG_SYS_GAME_CLEAR))
+    {
+        Nuzlocke_RecordChampionVictory();
+        RecordDifficultyChoice(difficulty);
+        if (FlagGet(FLAG_INITIAL_GAME_CONFIG_DONE)
+         && FlagGet(FLAG_STARTED_ON_HARD)
+         && !FlagGet(FLAG_HARD_RUN_BROKEN)
+         && difficulty == DIFFICULTY_HARD)
+            FlagSet(FLAG_HARD_RUN_COMPLETED);
+    }
+
     if (victory >= VICTORY_ELITE_FOUR_1 && victory <= VICTORY_ELITE_FOUR_4)
     {
         for (u32 member = VICTORY_ELITE_FOUR_1; member <= VICTORY_ELITE_FOUR_4; member++)
@@ -146,6 +160,33 @@ void RecordTrainerDifficultyVictory(u16 trainerId)
         }
         FlagSet(sEliteFourVictoryFlags[difficulty]);
     }
+}
+
+void RecordInitialDifficultyChoice(enum DifficultyLevel difficulty)
+{
+    // Only the final selection saved in the intro counts. Later menu visits
+    // cannot replace the starting mode or erase a previously broken run.
+    if (FlagGet(FLAG_INITIAL_GAME_CONFIG_DONE))
+        return;
+
+    FlagSet(FLAG_INITIAL_GAME_CONFIG_DONE);
+    if (difficulty == DIFFICULTY_HARD)
+        FlagSet(FLAG_STARTED_ON_HARD);
+}
+
+void RecordDifficultyChoice(enum DifficultyLevel difficulty)
+{
+    if (difficulty != DIFFICULTY_HARD
+     && FlagGet(FLAG_INITIAL_GAME_CONFIG_DONE)
+     && FlagGet(FLAG_STARTED_ON_HARD)
+     && !FlagGet(FLAG_HARD_RUN_COMPLETED)
+     && !FlagGet(FLAG_SYS_GAME_CLEAR))
+        FlagSet(FLAG_HARD_RUN_BROKEN);
+}
+
+bool32 HasCompletedHardRun(void)
+{
+    return FlagGet(FLAG_HARD_RUN_COMPLETED);
 }
 
 enum DifficultyLevel GetCurrentDifficultyLevel(void)

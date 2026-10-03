@@ -15,6 +15,7 @@ LittlerootTown_MaysHouse_2F_OnFrame:
 
 LittlerootTown_MaysHouse_2F_EventScript_WeirdDreamDialogue::
 	lockall
+	setflag FLAG_PLAYER_AWOKE_IN_LITTLEROOT
 	msgbox LittlerootTown_MaysHouse_2F_Text_WeirdDream, MSGBOX_DEFAULT
 	setvar VAR_LITTLEROOT_INTRO_STATE, 7
 	releaseall

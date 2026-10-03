@@ -19,6 +19,7 @@
 #include "list_menu.h"
 #include "mystery_event_menu.h"
 #include "naming_screen.h"
+#include "new_game.h"
 #include "option_menu.h"
 #include "overworld.h"
 #include "palette.h"
@@ -241,6 +242,11 @@ static void Task_NewGameBirchSpeech_StartNamingScreen(u8);
 static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void);
 static void Task_NewGameBirchSpeech_CreateNameYesNo(u8);
 static void Task_NewGameBirchSpeech_ProcessNameYesNoMenu(u8);
+static void Task_NewGameBirchSpeech_WaitForConfigExplanation(u8);
+static void Task_NewGameBirchSpeech_WaitToOpenInitialConfig(u8);
+static void Task_NewGameBirchSpeech_OpenInitialConfig(u8);
+static void CB2_NewGameBirchSpeech_ReturnFromInitialConfig(void);
+static void Task_NewGameBirchSpeech_ResumeAfterInitialConfig(u8);
 void CreateYesNoMenuParameterized(u8, u8, u16, u16, u8, u8);
 static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8);
 static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8);
@@ -308,6 +314,16 @@ static const u8  sGenderCombinedTilemaps[] = INCBIN_U8("graphics/birch_speech/zi
 #define sGenderGirlTilemapSrc ((const u16 *)(sGenderCombinedTilemaps + BIRCH_GENDER_TILEMAP_STRIDE * sizeof(u16)))
 
 static const u8 gText_SaveFileCorrupted[] = _("The save file is corrupted. The\nprevious save file will be loaded.");
+static const u8 sText_InitialGameConfig[] = _(
+    "Please choose how you will\n"
+    "play your adventure.\p"
+    "You can change these settings\n"
+    "at any time, but your HALL OF FAME\l"
+    "certificate will only be marked\l"
+    "“hard difficulty” or “nuzlocke” if\l"
+    "you select them here and do not\l"
+    "turn them off until after beating\l"
+    "the champion.");
 static const u8 gJPText_No1MSubCircuit[] = _("1Mサブきばんが ささっていません！");
 static const u8 gText_BatteryRunDry[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
 
@@ -2234,14 +2250,58 @@ static void Task_NewGameBirchSpeech_ProcessNameYesNoMenu(u8 taskId)
     {
         case 0:
             PlaySE(SE_SELECT);
-            gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-            NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
-            gTasks[taskId].func = Task_NewGameBirchSpeech_SlidePlatformAway2;
+            NewGameBirchSpeech_ClearWindow(0);
+            StringCopy(gStringVar4, sText_InitialGameConfig);
+            NewGameBirchSpeech_PrintMessage();
+            gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForConfigExplanation;
             break;
         case MENU_B_PRESSED:
         case 1:
             PlaySE(SE_SELECT);
             gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
+    }
+}
+
+static void Task_NewGameBirchSpeech_WaitForConfigExplanation(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToOpenInitialConfig;
+}
+
+static void Task_NewGameBirchSpeech_WaitToOpenInitialConfig(u8 taskId)
+{
+    if (JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_OpenInitialConfig;
+    }
+}
+
+static void Task_NewGameBirchSpeech_OpenInitialConfig(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        SetVBlankCallback(NULL);
+        Birch_DestroyStars();
+        FreeAllWindowBuffers();
+        FreeAndDestroyMonPicSprite(gTasks[taskId].tLotadSpriteId);
+        ResetAllPicSprites();
+        DestroyTask(taskId);
+        PrepareNewGameForInitialConfig();
+        gMain.savedCallback = CB2_NewGameBirchSpeech_ReturnFromInitialConfig;
+        SetMainCallback2(CB2_InitOptionMenu_InitialConfig);
+    }
+}
+
+static void Task_NewGameBirchSpeech_ResumeAfterInitialConfig(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        NewGameBirchSpeech_ShowDialogueWindow(0, TRUE);
+        gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_SlidePlatformAway2;
     }
 }
 
@@ -2485,6 +2545,17 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
 
 static void SpriteCB_Null(struct Sprite *sprite)
 {
+}
+
+static void CB2_NewGameBirchSpeech_ReturnFromInitialConfig(void)
+{
+    u8 taskId;
+
+    // Rebuild the naming backdrop, but resume after confirmation instead of
+    // asking for the name again. The options menu has reset tasks and VRAM.
+    CB2_NewGameBirchSpeech_ReturnFromNamingScreen();
+    taskId = FindTaskIdByFunc(Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ResumeAfterInitialConfig;
 }
 
 static void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *sprite)

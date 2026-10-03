@@ -609,14 +609,13 @@ static void CB2_EndWildBattle(void)
             HealPlayerParty();
     }
 
-    Nuzlocke_ApplyPermadeathToPlayerParty();
-
-    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
-    if (Nuzlocke_ShouldHardGameOver())
+    // Normal's Continue option applies the loss penalties after this menu.
+    if (Nuzlocke_ShouldGameOver())
     {
-        Nuzlocke_StartHardGameOverScreen();
+        Nuzlocke_StartGameOverScreen();
         return;
     }
+    Nuzlocke_ApplyPermadeathToPlayerParty();
 
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
@@ -640,14 +639,12 @@ static void CB2_EndScriptedWildBattle(void)
     CpuFill16(0, (void *)(BG_PLTT), BG_PLTT_SIZE);
     ResetOamRange(0, 128);
 
-    Nuzlocke_ApplyPermadeathToPlayerParty();
-
-    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
-    if (Nuzlocke_ShouldHardGameOver())
+    if (Nuzlocke_ShouldGameOver())
     {
-        Nuzlocke_StartHardGameOverScreen();
+        Nuzlocke_StartGameOverScreen();
         return;
     }
+    Nuzlocke_ApplyPermadeathToPlayerParty();
 
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
@@ -968,6 +965,17 @@ static void CB2_StartFirstBattle(void)
 static void CB2_EndFirstBattle(void)
 {
     Overworld_ClearSavedMusic();
+    if (Nuzlocke_ShouldGameOver())
+    {
+        // Whiteout stops the rescue script. Prepare its persistent follow-up
+        // first so Normal can recover at home and visit Acacia in the lab,
+        // without getting stuck on Route 101 or being given another starter.
+        if (Nuzlocke_GetMode() == OPTIONS_NUZLOCKE_NORMAL)
+            RunScriptImmediately(Route101_EventScript_CompleteAcaciaRescue);
+        Nuzlocke_StartGameOverScreen();
+        return;
+    }
+    Nuzlocke_ApplyPermadeathToPlayerParty();
     DowngradeBadPoison();
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
@@ -1367,14 +1375,12 @@ static void CB2_EndTrainerBattle(void)
             HealPlayerParty();
     }
 
-    Nuzlocke_ApplyPermadeathToPlayerParty();
-
-    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
-    if (Nuzlocke_ShouldHardGameOver())
+    if (Nuzlocke_ShouldGameOver())
     {
-        Nuzlocke_StartHardGameOverScreen();
+        Nuzlocke_StartGameOverScreen();
         return;
     }
+    Nuzlocke_ApplyPermadeathToPlayerParty();
 
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
@@ -1413,14 +1419,12 @@ static void CB2_EndRematchBattle(void)
 {
     bool8 nuzlockePartyWiped;
 
-    Nuzlocke_ApplyPermadeathToPlayerParty();
-
-    // HARD game-over must be decided only AFTER permadeath removed fainted mons.
-    if (Nuzlocke_ShouldHardGameOver())
+    if (Nuzlocke_ShouldGameOver())
     {
-        Nuzlocke_StartHardGameOverScreen();
+        Nuzlocke_StartGameOverScreen();
         return;
     }
+    Nuzlocke_ApplyPermadeathToPlayerParty();
 
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 

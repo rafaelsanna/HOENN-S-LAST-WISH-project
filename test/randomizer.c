@@ -9,6 +9,7 @@
 #include "script_pokemon_util.h"
 #include "script.h"
 #include "starter_choose.h"
+#include "string_util.h"
 #include "text.h"
 #include "wild_encounter.h"
 #include "constants/items.h"
@@ -18,6 +19,7 @@
 
 static void SetUpRandomizer(bool8 tables, bool8 full)
 {
+    gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
     Randomizer_SetWildModes(tables, full);
     FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
     VarSet(RANDOMIZER_VAR_SPECIES_MODE, MON_RANDOM);
@@ -29,6 +31,129 @@ static void SetUpRandomizer(bool8 tables, bool8 full)
     gIsSurfingEncounter = FALSE;
     gChainFishingDexNavStreak = 0;
     SeedRng(0x12345678);
+}
+
+TEST("Hard randomizers: all menu selections and saved flags are forced off and locked")
+{
+    u8 bits;
+    PARAMETRIZE { bits = 0; }
+    PARAMETRIZE { bits = 1; }
+    PARAMETRIZE { bits = 2; }
+    PARAMETRIZE { bits = 3; }
+    PARAMETRIZE { bits = 4; }
+    PARAMETRIZE { bits = 5; }
+    PARAMETRIZE { bits = 6; }
+    PARAMETRIZE { bits = 7; }
+    for (u32 randomizer = 0; randomizer < 3; randomizer++)
+    {
+        bool8 selections[] = {!!(bits & 1), !!(bits & 2), !!(bits & 4)};
+        bool8 canToggle[3];
+        const u8 *description;
+
+        SetUpRandomizer(FALSE, FALSE);
+        if (selections[0]) FlagSet(RANDOMIZER_FLAG_WILD_MON);
+        if (selections[1]) FlagSet(RANDOMIZER_FLAG_FULL_WILD_MON);
+        if (selections[2]) FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+        description = OptionMenu_TestRandomizerRules(TRUE, randomizer, selections, canToggle);
+        for (u32 i = 0; i < 3; i++)
+        {
+            EXPECT_EQ(selections[i], FALSE);
+            EXPECT_EQ(canToggle[i], FALSE);
+        }
+        EXPECT_EQ(FlagGet(RANDOMIZER_FLAG_WILD_MON), FALSE);
+        EXPECT_EQ(FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON), FALSE);
+        EXPECT_EQ(FlagGet(RANDOMIZER_FLAG_TRAINER_MON), FALSE);
+        EXPECT_EQ(StringCompare(description, COMPOUND_STRING("Randomizers are locked OFF\nwhile HARD mode is selected.")), 0);
+        EXPECT(GetStringWidth(FONT_NORMAL, description, 0) <= 200);
+    }
+}
+
+TEST("Hard randomizers: switching back to Normal unlocks modes without restoring old selections")
+{
+    bool8 selections[] = {TRUE, TRUE, TRUE};
+    bool8 canToggle[3];
+
+    SetUpRandomizer(TRUE, FALSE);
+    FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+    OptionMenu_TestRandomizerRules(TRUE, 0, selections, canToggle);
+    OptionMenu_TestRandomizerRules(FALSE, 0, selections, canToggle);
+    for (u32 i = 0; i < 3; i++)
+    {
+        EXPECT_EQ(selections[i], FALSE);
+        EXPECT_EQ(canToggle[i], TRUE);
+    }
+    EXPECT_EQ(Randomizer_WildEnabled(), FALSE);
+    EXPECT_EQ(Randomizer_FullWildEnabled(), FALSE);
+    EXPECT_EQ(Randomizer_TrainerEnabled(), FALSE);
+}
+
+TEST("Hard randomizers: Normal preserves enabled modes and wild-mode mutual exclusion")
+{
+    bool8 full;
+    PARAMETRIZE { full = FALSE; }
+    PARAMETRIZE { full = TRUE; }
+    bool8 selections[] = {!full, full, TRUE};
+    bool8 canToggle[3];
+
+    SetUpRandomizer(!full, full);
+    FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+    OptionMenu_TestRandomizerRules(FALSE, 0, selections, canToggle);
+    EXPECT_EQ(selections[0], !full);
+    EXPECT_EQ(selections[1], full);
+    EXPECT_EQ(selections[2], TRUE);
+    EXPECT_EQ(canToggle[0], !full);
+    EXPECT_EQ(canToggle[1], full);
+    EXPECT_EQ(canToggle[2], TRUE);
+    EXPECT_EQ(Randomizer_WildEnabled(), !full);
+    EXPECT_EQ(Randomizer_FullWildEnabled(), full);
+    EXPECT_EQ(Randomizer_TrainerEnabled(), TRUE);
+}
+
+TEST("Hard randomizers: stale flags cannot randomize encounters trainers or starters in Hard")
+{
+    static const u16 starters[] = {SPECIES_BULBASAUR, SPECIES_TOTODILE, SPECIES_TORCHIC};
+    u32 expectedRng;
+
+    SetUpRandomizer(FALSE, FALSE);
+    FlagSet(RANDOMIZER_FLAG_WILD_MON);
+    FlagSet(RANDOMIZER_FLAG_FULL_WILD_MON);
+    FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+    gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_HARD;
+    expectedRng = Random32();
+    SeedRng(0x12345678);
+    EXPECT_EQ(Randomizer_WildEnabled(), FALSE);
+    EXPECT_EQ(Randomizer_FullWildEnabled(), FALSE);
+    EXPECT_EQ(Randomizer_TrainerEnabled(), FALSE);
+    EXPECT_EQ(Randomizer_OnWildEncounter(SPECIES_POOCHYENA, 0, 1, WILD_AREA_LAND, 3), SPECIES_POOCHYENA);
+    EXPECT_EQ(Randomizer_OnFullWildEncounter(SPECIES_POOCHYENA), SPECIES_POOCHYENA);
+    EXPECT_EQ(Randomizer_OnTrainerMon(SPECIES_POOCHYENA, 1, 0), SPECIES_POOCHYENA);
+    for (u32 slot = 0; slot < ARRAY_COUNT(starters); slot++)
+        EXPECT_EQ(Randomizer_GetFixedStarter(slot), starters[slot]);
+    EXPECT_EQ(Random32(), expectedRng);
+    // The starter screen still makes its ordinary independent shiny rolls.
+    for (u32 slot = 0; slot < ARRAY_COUNT(starters); slot++)
+        EXPECT_EQ(GetStarterPokemon(slot), starters[slot]);
+    gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+}
+
+TEST("Hard randomizers: script setters cannot enable modes in Hard but still work in Normal")
+{
+    SetUpRandomizer(TRUE, FALSE);
+    FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+    gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_HARD;
+    Randomizer_Init(TRUE, TRUE, MON_RANDOM);
+    EXPECT_EQ(FlagGet(RANDOMIZER_FLAG_WILD_MON), FALSE);
+    EXPECT_EQ(FlagGet(RANDOMIZER_FLAG_TRAINER_MON), FALSE);
+    Randomizer_SetWildModes(FALSE, TRUE);
+    EXPECT_EQ(FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON), FALSE);
+    Randomizer_SetWildModes(TRUE, FALSE);
+    EXPECT_EQ(FlagGet(RANDOMIZER_FLAG_WILD_MON), FALSE);
+    gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    Randomizer_Init(TRUE, TRUE, MON_RANDOM);
+    EXPECT_EQ(Randomizer_WildEnabled(), TRUE);
+    EXPECT_EQ(Randomizer_TrainerEnabled(), TRUE);
+    Randomizer_SetWildModes(FALSE, TRUE);
+    EXPECT_EQ(Randomizer_FullWildEnabled(), TRUE);
 }
 
 static void ExpectHoennSpecies(u16 species)

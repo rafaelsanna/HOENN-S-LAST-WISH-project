@@ -63,6 +63,7 @@ static void ClearPokedexFlags(void);
 // Global variables
 EWRAM_DATA bool8 gDifferentSaveFile = FALSE;
 EWRAM_DATA bool8 gEnableContestDebugging = FALSE;
+static EWRAM_DATA bool8 sNewGameDataPrepared = FALSE;
 
 // Contest winner dummy data
 static const struct ContestWinner sContestWinnerPicDummy =
@@ -147,12 +148,14 @@ static void ClearFrontierRecord(void)
 // Save system functions
 void Sav2_ClearSetDefault(void)
 {
+    sNewGameDataPrepared = FALSE;
     ClearSav2();
     SetDefaultOptions();
 }
 
 void ResetMenuAndMonGlobals(void)
 {
+    sNewGameDataPrepared = FALSE;
     gDifferentSaveFile = FALSE;
     ResetPokedexScrollPositions();
     ZeroPlayerPartyMons();
@@ -162,7 +165,7 @@ void ResetMenuAndMonGlobals(void)
 }
 
 // Main new game initialization - REFINED VERSION
-void NewGameInitData(void)
+static void InitializeNewGameData(void)
 {
     // RTC initialization for new/corrupt saves
     if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
@@ -263,7 +266,23 @@ void NewGameInitData(void)
     
     // Mini-games
     ResetMiniGamesRecords();
-    
+}
+
+void PrepareNewGameForInitialConfig(void)
+{
+    // Clear the old adventure before showing settings: options stored in
+    // flags, custom vars and SB1 must survive the later overworld entry.
+    // Naming/gender and the SB2 options are intentionally preserved.
+    InitializeNewGameData();
+    sNewGameDataPrepared = TRUE;
+}
+
+void NewGameInitData(void)
+{
+    if (!sNewGameDataPrepared)
+        InitializeNewGameData();
+    sNewGameDataPrepared = FALSE;
+
     // CRITICAL: Set initial warp destination to LITTLEROOT_TOWN_01
     // This ensures the NPC interaction works from the start
     SetWarpDestination(MAP_GROUP(MAP_DREAM_REALM), 

@@ -248,6 +248,14 @@ Route101_EventScript_AcaciasBag::
 	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
 	removefieldmugshot
 	special HealPlayerParty
+	call Route101_EventScript_CompleteAcaciaRescue
+	warp MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, 6, 5
+	waitstate
+	release
+	end
+
+@ Also called after a Normal Nuzlocke starter-battle wipe, before whiteout.
+Route101_EventScript_CompleteAcaciaRescue::
 	setflag FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	setflag FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG
@@ -257,10 +265,7 @@ Route101_EventScript_AcaciasBag::
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route101_EventScript_HideMayInBedroom
 	call_if_eq VAR_RESULT, FEMALE, Route101_EventScript_HideBrendanInBedroom
-	warp MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, 6, 5
-	waitstate
-	release
-	end
+	return
 
 Route101_EventScript_HideMayInBedroom::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM

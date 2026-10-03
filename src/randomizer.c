@@ -588,22 +588,33 @@ static u32 Rz_Next(u32 *state, u32 range)
 }
 
 // Funções públicas
+static bool8 RandomizersAllowed(void)
+{
+    return gSaveBlock2Ptr != NULL
+        && gSaveBlock2Ptr->optionsNpcTeams != OPTIONS_NPCTEAMS_HARD;
+}
+
 bool8 Randomizer_WildEnabled(void)
 {
-    return FlagGet(RANDOMIZER_FLAG_WILD_MON);
+    return RandomizersAllowed() && FlagGet(RANDOMIZER_FLAG_WILD_MON);
 }
 
 bool8 Randomizer_FullWildEnabled(void)
 {
     // Preserve the established table mode if a malformed save has both bits set.
-    return gSaveBlock2Ptr != NULL
-        && gSaveBlock2Ptr->optionsNpcTeams != OPTIONS_NPCTEAMS_HARD
+    return RandomizersAllowed()
         && !Randomizer_WildEnabled()
         && FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON);
 }
 
 void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom)
 {
+    if (!RandomizersAllowed())
+    {
+        randomizeTables = FALSE;
+        fullRandom = FALSE;
+    }
+
     if (randomizeTables)
         FlagSet(RANDOMIZER_FLAG_WILD_MON);
     else
@@ -617,7 +628,7 @@ void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom)
 
 bool8 Randomizer_TrainerEnabled(void)
 {
-    return FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
+    return RandomizersAllowed() && FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
 }
 
 u32 Randomizer_GetSeed(void)
@@ -644,7 +655,7 @@ void Randomizer_Init(bool8 randomizeWild, bool8 randomizeTrainers, enum Randomiz
 {
     Randomizer_SetWildModes(randomizeWild, FALSE);
 
-    if (randomizeTrainers)
+    if (randomizeTrainers && RandomizersAllowed())
         FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
     else
         FlagClear(RANDOMIZER_FLAG_TRAINER_MON);

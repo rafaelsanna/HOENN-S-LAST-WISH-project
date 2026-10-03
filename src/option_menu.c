@@ -2,6 +2,7 @@
 #include "hlw_media_save.h"
 #include "comfy_anim.h"
 #include "debug.h"
+#include "difficulty.h"
 #include "event_data.h"
 #include "option_menu.h"
 #include "randomizer.h"
@@ -10,6 +11,7 @@
 #include "international_string_util.h"
 #include "main.h"
 #include "menu.h"
+#include "nuzlocke.h"
 #include "palette.h"
 #include "scanline_effect.h"
 #include "sprite.h"
@@ -249,6 +251,7 @@ static void DrawChoices_RandomizerT(int selection, int y);
 static void DrawChoices_PhysicalSpecialSplit(int selection, int y);
 static void DrawBgWindowFrames(void);
 static EWRAM_DATA u8 sOptionMenuStartPage = PAGE_GENERAL;
+static EWRAM_DATA bool8 sInitialGameConfig = FALSE;
 bool8 Debug_IsWishMenuBlockedByEliteFour(void);
 
 // EWRAM vars
@@ -427,12 +430,14 @@ static void EnforceHardNpcTeamsRules(void)
     // HLW_SHOW_TYPES_OPTION_V1: Hard mode never reveals battle type indicators.
     sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES]   = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FALSE;
+    sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = FALSE;
     FlagClear(FLAG_OPS_ALL_MOVES);
     FlagClear(FLAG_PHYSICAL_SPECIAL_SPLIT);
-    FlagClear(RANDOMIZER_FLAG_FULL_WILD_MON);
+    Randomizer_SetWildModes(FALSE, FALSE);
+    FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
 }
 
 // Menu left side text conditions
@@ -468,7 +473,8 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_SHOW_TYPES:       return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_INVERSE_BATTLE:   return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_NUZLOCKE:         return TRUE;
-        case MENUITEM_DIF_RANDOMIZER_E:     return !sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM];
+        case MENUITEM_DIF_RANDOMIZER_E:     return !IsHardNpcTeamsSelected()
+                                                   && !sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM];
         case MENUITEM_DIF_FULL_RANDOM:      return !IsHardNpcTeamsSelected()
                                                    && !sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E];
         case MENUITEM_DIF_RANDOMIZER_T:     return !IsHardNpcTeamsSelected();
@@ -517,13 +523,14 @@ static const u8 sText_Desc_BattleItemsOn[]      = _("Permits the use of items in
 static const u8 sText_Desc_BattleItemsOff[]     = _("Disallows the use of items in battle.");
 static const u8 sText_Desc_NuzlockeOff[]        = _("Play without nuzlocke rules.");
 static const u8 sText_Desc_NuzlockeNormal[]     = _("One non-shiny capture per route,\nbut any shiny may still be caught.");
-static const u8 sText_Desc_NuzlockeHard[]       = _("Only the first wild POKeMON seen\nin each route may be captured.");
+static const u8 sText_Desc_NuzlockeHard[]       = _("Only first pkmn seen in each route\ncapturable. Saves wipe on loss.");
 static const u8 sText_Desc_RandomizerEOff[]     = _("OFF: Normal encounter tables.\nON: Randomized, fixed table slots.");
 static const u8 sText_Desc_RandomizerEOn[]      = _("Randomizes wild encounter tables.\nSlots stay fixed between encounters.");
 static const u8 sText_Desc_FullRandomOff[]      = _("ON: Reroll each wild encounter.\nAlso randomizes the 3 starters.");
 static const u8 sText_Desc_FullRandomOn[]       = _("Rerolls each wild from your Pokédex.\nAlso randomizes the 3 starters.");
 static const u8 sText_Desc_TableRandomLocked[]  = _("Disable FULL RANDOM first.\nThis mode randomizes table slots.");
 static const u8 sText_Desc_FullRandomLocked[]   = _("Disable RANDOM POKéMON first.\nThis mode rerolls every encounter.");
+static const u8 sText_Desc_RandomizerHardLocked[] = _("Randomizers are locked OFF\nwhile HARD mode is selected.");
 static const u8 sText_Desc_RandomizerTOff[]     = _("Trainer teams appear normally.");
 static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.");
 static const u8 sText_Desc_PhysicalSpecialSplitOff[] = _("Use the old type-based\nphysical/special split.");
@@ -616,7 +623,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_NUZLOCKE]     = sText_Empty,
     [MENUITEM_DIF_RANDOMIZER_E] = sText_Desc_TableRandomLocked,
     [MENUITEM_DIF_FULL_RANDOM]  = sText_Desc_FullRandomLocked,
-    [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_HardLocked,
+    [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_RandomizerHardLocked,
     [MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = sText_Desc_HardLocked,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
@@ -715,10 +722,14 @@ static const u8 *const OptionTextDescription(void)
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_NUZLOCKE];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_NUZLOCKE][sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]];
         case MENUITEM_DIF_RANDOMIZER_E:
+            if (IsHardNpcTeamsSelected())
+                return sText_Desc_RandomizerHardLocked;
             if (!CheckConditions(MENUITEM_DIF_RANDOMIZER_E))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER_E];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER_E][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]];
         case MENUITEM_DIF_FULL_RANDOM:
+            if (IsHardNpcTeamsSelected())
+                return sText_Desc_RandomizerHardLocked;
             if (!CheckConditions(MENUITEM_DIF_FULL_RANDOM))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_FULL_RANDOM];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_FULL_RANDOM][sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]];
@@ -758,6 +769,30 @@ const u8 *OptionMenu_TestWildRandomizerOption(bool8 fullOption, bool8 tablesSele
     options.menuCursor[PAGE_DIFFICULTY] = selection;
     sOptions = &options;
     *canToggle = CheckConditions(selection);
+    description = OptionTextDescription();
+    sOptions = previous;
+    return description;
+}
+
+const u8 *OptionMenu_TestRandomizerRules(bool8 hard, u8 randomizer, bool8 selections[3], bool8 canToggle[3])
+{
+    static const u8 items[] = {MENUITEM_DIF_RANDOMIZER_E, MENUITEM_DIF_FULL_RANDOM, MENUITEM_DIF_RANDOMIZER_T};
+    struct OptionMenu options = {0};
+    struct OptionMenu *previous = sOptions;
+    const u8 *description;
+
+    options.submenu = PAGE_DIFFICULTY;
+    options.sel_difficulty[MENUITEM_DIF_NPCTEAMS] = hard ? OPTIONS_NPCTEAMS_HARD : OPTIONS_NPCTEAMS_CASUAL;
+    for (u32 i = 0; i < ARRAY_COUNT(items); i++)
+        options.sel_difficulty[items[i]] = selections[i];
+    options.menuCursor[PAGE_DIFFICULTY] = items[randomizer];
+    sOptions = &options;
+    EnforceHardNpcTeamsRules();
+    for (u32 i = 0; i < ARRAY_COUNT(items); i++)
+    {
+        selections[i] = options.sel_difficulty[items[i]];
+        canToggle[i] = CheckConditions(items[i]);
+    }
     description = OptionTextDescription();
     sOptions = previous;
     return description;
@@ -1265,11 +1300,19 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 {
                     sOptions->sel_difficulty[cursor] = sItemFunctionsDifficulty[cursor].processInput(previousOption);
 
+                    // Like difficulty history, selecting a weaker mode even
+                    // briefly cannot be undone by changing it back before Save.
+                    if (cursor == MENUITEM_DIF_NUZLOCKE && !sInitialGameConfig
+                     && previousOption != sOptions->sel_difficulty[cursor])
+                        Nuzlocke_RecordModeChoice(sOptions->sel_difficulty[cursor]);
+
                     // Restore the intended Casual defaults when leaving Hard mode.
                     if (cursor == MENUITEM_DIF_NPCTEAMS
                      && previousOption == OPTIONS_NPCTEAMS_HARD
                      && !IsHardNpcTeamsSelected())
                     {
+                        if (!sInitialGameConfig)
+                            RecordDifficultyChoice(DIFFICULTY_NORMAL);
                         sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES] = TRUE;
                         sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FALSE;
                     }
@@ -1293,7 +1336,7 @@ static void Task_OptionMenuProcessInput(u8 taskId)
     }
     else if (JOY_NEW(R_BUTTON))
     {
-        if (sOptions->submenu == PAGE_GENERAL && Debug_IsWishMenuBlockedByEliteFour())
+        if (!sInitialGameConfig && sOptions->submenu == PAGE_GENERAL && Debug_IsWishMenuBlockedByEliteFour())
         {
             PlaySE(SE_FAILURE);
             return;
@@ -1360,11 +1403,19 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsWindowFrameType  = sOptions->sel[MENUITEM_GEN_FRAMETYPE];
 
     gSaveBlock2Ptr->optionsNpcTeams         = sOptions->sel_difficulty[MENUITEM_DIF_NPCTEAMS];
+    if (sInitialGameConfig)
+        RecordInitialDifficultyChoice(GetCurrentDifficultyLevel());
+    else
+        RecordDifficultyChoice(GetCurrentDifficultyLevel());
     gSaveBlock2Ptr->optionsBattleItems      = sOptions->sel_difficulty[MENUITEM_DIF_BATTLEITEMS];
     gSaveBlock2Ptr->optionsBattleStyle      = sOptions->sel_difficulty[MENUITEM_DIF_BATTLESTYLE];
     gSaveBlock2Ptr->optionsInfiniteCandy    = sOptions->sel_difficulty[MENUITEM_DIF_INFCANDY];
     gSaveBlock2Ptr->optionsLevelCaps        = sOptions->sel_difficulty[MENUITEM_DIF_LEVELCAPS];
     gSaveBlock2Ptr->optionsNuzlocke         = sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE];
+    if (sInitialGameConfig)
+        Nuzlocke_RecordInitialChoice(Nuzlocke_GetMode());
+    else
+        Nuzlocke_RecordModeChoice(Nuzlocke_GetMode());
 
     if (sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES])
         FlagClear(FLAG_HIDE_BATTLE_TYPES);
@@ -1421,6 +1472,7 @@ static void Task_OptionMenuFadeOut(u8 taskId)
         DestroyTask(taskId);
         FreeAllWindowBuffers();
         FREE_AND_SET_NULL(sOptions);
+        sInitialGameConfig = FALSE;
         SetMainCallback2(gMain.savedCallback);
     }
 }
@@ -2043,5 +2095,17 @@ static void DrawBgWindowFrames(void)
 void CB2_InitOptionMenu_DifficultyTab(void)
 {
     sOptionMenuStartPage = PAGE_DIFFICULTY;
+    CB2_InitOptionMenu();
+}
+
+void CB2_InitOptionMenu_InitialConfig(void)
+{
+    // The options menu contains only General and Configuration, so L/R
+    // cannot reach the Wish Menu, bag, party, or any other game menu.
+    if (gMain.state == 0)
+    {
+        sInitialGameConfig = TRUE;
+        sOptionMenuStartPage = PAGE_DIFFICULTY;
+    }
     CB2_InitOptionMenu();
 }
