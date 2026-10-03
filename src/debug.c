@@ -81,6 +81,9 @@
 #include "fake_rtc.h"
 #include "save.h"
 
+static const u8 sDebugText_On[] = _("ON");
+static const u8 sDebugText_Off[] = _("OFF");
+
 // DEV-only QoL core hook implemented in src/field_player_avatar.c.
 // 0 = normal player speed, 5 = x5, 10 = x10.
 u8 DebugGetPlayerSpeedMode(void);
@@ -281,6 +284,7 @@ static void DebugAction_OpenSubMenuCreateFollowerNPC(u8 taskId, const struct Deb
 static void DebugAction_ExecuteScript(u8 taskId, const u8 *script);
 static void DebugAction_ToggleFlag(u8 taskId);
 static void DebugAction_Dev_QuickSetup(u8 taskId);
+static void DebugAction_Cheat_OpsAllMoves(u8 taskId);
 
 static void DebugTask_HandleMenuInput_General(u8 taskId);
 
@@ -860,6 +864,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Time Functions…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
     { COMPOUND_STRING("Watch credits…"),     DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),        DebugAction_Util_CheatStart },
+    { COMPOUND_STRING("LEARN ALL MOVES: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
     { COMPOUND_STRING("Achievements…"),      DebugAction_Util_OpenAchievements },
     { COMPOUND_STRING("Test Ach Popup"),     DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
@@ -921,6 +926,12 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
     { NULL }
 };
 
+static const struct DebugMenuOption sDebugMenu_Actions_Player_Cheats[] =
+{
+    { COMPOUND_STRING("LEARN ALL MOVES: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
+    { NULL }
+};
+
 static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
 {
     { COMPOUND_STRING("Player name"),           DebugAction_Player_Name },
@@ -928,6 +939,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
     { COMPOUND_STRING("Player Speed Normal"),  DebugAction_Player_NormalSpeed },
     { COMPOUND_STRING("Player Speed x5"),       DebugAction_Player_Speed5x },
     { COMPOUND_STRING("Player Speed x10"),      DebugAction_Player_Speed10x },
+    { COMPOUND_STRING("Cheats…"),               DebugAction_OpenSubMenu, sDebugMenu_Actions_Player_Cheats },
 
     // Trainer ID editing is intentionally hidden in HLW.
     // { COMPOUND_STRING("New Trainer ID"), DebugAction_Player_Id },
@@ -1318,6 +1330,8 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
         for (u32 i = 0; items[i].text != NULL; i++)
         {
             sDebugMenuListData->listItems[i].id = i;
+            if (items[i].action == DebugAction_Cheat_OpsAllMoves)
+                StringCopy(gStringVar1, IsOpsAllMovesEnabled() ? sDebugText_On : sDebugText_Off);
             StringExpandPlaceholders(gStringVar4, items[i].text);
             if (IsSubMenuAction(items[i].action))
                 StringAppend(gStringVar4, sDebugText_Arrow);
@@ -2265,6 +2279,20 @@ static void DebugAction_Util_WatchCredits(u8 taskId)
 static void DebugAction_Player_Name(u8 taskId)
 {
     DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldContinueScript);
+}
+
+static void DebugAction_Cheat_OpsAllMoves(u8 taskId)
+{
+    // The cheat remains unavailable in Hard mode even when opened through the
+    // Wish/Debug Menu instead of the regular Configuration screen.
+    if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
+        FlagClear(FLAG_OPS_ALL_MOVES);
+    else
+        FlagToggle(FLAG_OPS_ALL_MOVES);
+
+    // Reopen the current submenu so its ON/OFF label reflects the new state.
+    Debug_DestroyMenu(taskId);
+    Debug_ShowMenu(DebugTask_HandleMenuInput_General, NULL);
 }
 
 static void DebugAction_Player_Gender(u8 taskId)

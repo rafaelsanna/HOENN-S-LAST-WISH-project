@@ -314,6 +314,7 @@ u32 TryImmunityAbilityHealStatus(u32 battler, u32 caseID);
 bool32 ShouldGetStatBadgeBoost(u16 flagId, u32 battler);
 uq4_12_t GetBadgeBoostModifier(void);
 enum DamageCategory GetBattleMoveCategory(u32 move);
+bool32 IsPhysicalSpecialSplitEnabled(void);
 void SetDynamicMoveCategory(u32 battlerAtk, u32 battlerDef, u32 move);
 bool32 CanFling(u32 battler);
 bool32 IsTelekinesisBannedSpecies(u16 species);

@@ -1663,8 +1663,8 @@
 #define FLAG_HIDDEN_ITEM_ROUTE_123_NUGGET             (HLW_CUSTOM_FLAGS_START + 0x007)
 #define FLAG_ITEM_ROUTE_117_NEST_BALL                 (HLW_CUSTOM_FLAGS_START + 0x008)
 #define FLAG_OPS_ALL_MOVES                           (HLW_CUSTOM_FLAGS_START + 0x009) // Configuration: expose every level-up move to the Move Reminder
-#define FLAG_UNUSED_0x100A                           (HLW_CUSTOM_FLAGS_START + 0x00A) // Unused Flag
-#define FLAG_UNUSED_0x100B                           (HLW_CUSTOM_FLAGS_START + 0x00B) // Unused Flag
+#define FLAG_PHYSICAL_SPECIAL_SPLIT                 (HLW_CUSTOM_FLAGS_START + 0x00A) // Configuration: use move-based physical/special categories
+#define FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED      (HLW_CUSTOM_FLAGS_START + 0x00B) // Save migration marker for the split option
 #define FLAG_UNUSED_0x100C                           (HLW_CUSTOM_FLAGS_START + 0x00C) // Unused Flag
 #define FLAG_UNUSED_0x100D                           (HLW_CUSTOM_FLAGS_START + 0x00D) // Unused Flag
 #define FLAG_UNUSED_0x100E                           (HLW_CUSTOM_FLAGS_START + 0x00E) // Unused Flag

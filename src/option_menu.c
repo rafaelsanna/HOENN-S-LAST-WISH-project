@@ -91,7 +91,7 @@ enum //Difficulty's Menu Items
     MENUITEM_DIF_FULL_RANDOM,
     MENUITEM_DIF_RANDOMIZER_T,
     MENUITEM_DIF_INVERSE_BATTLE,
-    MENUITEM_DIF_OPS_ALL_MOVES,
+    MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT,
     MENUITEM_DIF_DEBUGMENU,
     MENUITEM_DIF_CANCEL,
     MENUITEM_DIF_COUNT,
@@ -246,7 +246,7 @@ static void DrawChoices_AutoFishing(int selection, int y);
 static void DrawChoices_RandomizerE(int selection, int y);
 static void DrawChoices_FullRandom(int selection, int y);
 static void DrawChoices_RandomizerT(int selection, int y);
-static void DrawChoices_OpsAllMoves(int selection, int y);
+static void DrawChoices_PhysicalSpecialSplit(int selection, int y);
 static void DrawBgWindowFrames(void);
 static EWRAM_DATA u8 sOptionMenuStartPage = PAGE_GENERAL;
 bool8 Debug_IsWishMenuBlockedByEliteFour(void);
@@ -335,7 +335,7 @@ struct // PAGE_DIFFICULTY
     [MENUITEM_DIF_FULL_RANDOM]    = {DrawChoices_FullRandom, ProcessInput_Options_Two},
     [MENUITEM_DIF_RANDOMIZER_T]   = {DrawChoices_RandomizerT, ProcessInput_Options_Two},
     [MENUITEM_DIF_DEBUGMENU]      = {DrawChoices_OnOff,        ProcessInput_Options_Two},
-    [MENUITEM_DIF_OPS_ALL_MOVES]  = {DrawChoices_OpsAllMoves,  ProcessInput_Options_Two},
+    [MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = {DrawChoices_PhysicalSpecialSplit, ProcessInput_Options_Two},
     [MENUITEM_DIF_CANCEL]         = {NULL, NULL},
 };
 
@@ -350,7 +350,7 @@ static const u8 sText_Nuzlocke[]        = _("NUZLOCKE");
 static const u8 sText_RandomizerE[]     = _("RANDOM POKéMON");
 static const u8 sText_FullRandom[]      = _("FULL RANDOM");
 static const u8 sText_RandomizerT[]     = _("RANDOM TRAINERS");
-static const u8 sText_OpsAllMoves[]     = _("OPS ALL MOVES");
+static const u8 sText_PhysicalSpecialSplit[] = _("PHYS/SPEC SPLIT");
 static const u8 sText_AutoFishing[]     = _("AUTO FISH");
 static const u8 sText_FastSlide[]       = _("FAST SLIDE");
 static const u8 sText_AutoRun[]         = _("AUTO RUN");
@@ -390,7 +390,7 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIF_COUNT] =
     [MENUITEM_DIF_RANDOMIZER_E]   = sText_RandomizerE,
     [MENUITEM_DIF_FULL_RANDOM]    = sText_FullRandom,
     [MENUITEM_DIF_RANDOMIZER_T]   = sText_RandomizerT,
-    [MENUITEM_DIF_OPS_ALL_MOVES]  = sText_OpsAllMoves,
+    [MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = sText_PhysicalSpecialSplit,
     [MENUITEM_DIF_DEBUGMENU]      = COMPOUND_STRING("WISH MENU"),
     [MENUITEM_DIF_CANCEL]         = gText_OptionMenuSave,
 };
@@ -428,8 +428,9 @@ static void EnforceHardNpcTeamsRules(void)
     sOptions->sel_difficulty[MENUITEM_DIF_SHOW_TYPES]   = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T] = FALSE;
-    sOptions->sel_difficulty[MENUITEM_DIF_OPS_ALL_MOVES] = FALSE;
+    sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = FALSE;
     FlagClear(FLAG_OPS_ALL_MOVES);
+    FlagClear(FLAG_PHYSICAL_SPECIAL_SPLIT);
 }
 
 // Menu left side text conditions
@@ -468,7 +469,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIF_RANDOMIZER_E:     return !sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM];
         case MENUITEM_DIF_FULL_RANDOM:      return !sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E];
         case MENUITEM_DIF_RANDOMIZER_T:     return !IsHardNpcTeamsSelected();
-        case MENUITEM_DIF_OPS_ALL_MOVES:   return !IsHardNpcTeamsSelected();
+        case MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT: return !IsHardNpcTeamsSelected();
         case MENUITEM_DIF_DEBUGMENU:        return TRUE;
         case MENUITEM_DIF_CANCEL:           return TRUE;
         case MENUITEM_DIF_COUNT:            return TRUE;
@@ -522,8 +523,8 @@ static const u8 sText_Desc_TableRandomLocked[]  = _("Disable FULL RANDOM first.\
 static const u8 sText_Desc_FullRandomLocked[]   = _("Disable RANDOM POKéMON first.\nThis mode rerolls every encounter.");
 static const u8 sText_Desc_RandomizerTOff[]     = _("Trainer teams appear normally.");
 static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.");
-static const u8 sText_Desc_OpsAllMovesOff[]     = _("Pokémon learn level-up moves\nnormally during the game.");
-static const u8 sText_Desc_OpsAllMovesOn[]      = _("Stops automatic level-up learning.\nUse the Move Reminder for every move.");
+static const u8 sText_Desc_PhysicalSpecialSplitOff[] = _("Use the old type-based\nphysical/special split.");
+static const u8 sText_Desc_PhysicalSpecialSplitOn[]  = _("Use modern physical/special\nsplit by move.");
 static const u8 sText_Desc_AutoFishingOff[]     = _("Fishing uses the normal wait timer\nand A-button check.");
 static const u8 sText_Desc_AutoFishingOn[]      = _("Fishing advances automatically.");
 static const u8 sText_Desc_HardLocked[]         = _("Locked by HARD NPC\nTEAMS.");
@@ -572,7 +573,7 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_COUNT]
     [MENUITEM_DIF_RANDOMIZER_E] = {sText_Desc_RandomizerEOff,      sText_Desc_RandomizerEOn,  sText_Empty},
     [MENUITEM_DIF_FULL_RANDOM]  = {sText_Desc_FullRandomOff,       sText_Desc_FullRandomOn,   sText_Empty},
     [MENUITEM_DIF_RANDOMIZER_T] = {sText_Desc_RandomizerTOff,      sText_Desc_RandomizerTOn,  sText_Empty},
-    [MENUITEM_DIF_OPS_ALL_MOVES] = {sText_Desc_OpsAllMovesOff,     sText_Desc_OpsAllMovesOn,   sText_Empty},
+    [MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = {sText_Desc_PhysicalSpecialSplitOff, sText_Desc_PhysicalSpecialSplitOn, sText_Empty},
     [MENUITEM_DIF_DEBUGMENU]    = {
         COMPOUND_STRING("Disables the debug menu completely."),
         COMPOUND_STRING("Enables the wish menu (debug menu)."),
@@ -613,7 +614,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_RANDOMIZER_E] = sText_Desc_TableRandomLocked,
     [MENUITEM_DIF_FULL_RANDOM]  = sText_Desc_FullRandomLocked,
     [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_HardLocked,
-    [MENUITEM_DIF_OPS_ALL_MOVES] = sText_Desc_HardLocked,
+    [MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = sText_Desc_HardLocked,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
 };
@@ -722,10 +723,10 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_DIF_RANDOMIZER_T))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_RANDOMIZER_T];
             return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_RANDOMIZER_T][sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]];
-        case MENUITEM_DIF_OPS_ALL_MOVES:
-            if (!CheckConditions(MENUITEM_DIF_OPS_ALL_MOVES))
-                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_OPS_ALL_MOVES];
-            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_OPS_ALL_MOVES][sOptions->sel_difficulty[MENUITEM_DIF_OPS_ALL_MOVES]];
+        case MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT:
+            if (!CheckConditions(MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT))
+                return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT];
+            return sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT][sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT]];
         case MENUITEM_DIF_DEBUGMENU:
             if (!CheckConditions(MENUITEM_DIF_DEBUGMENU))
                 return sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIF_DEBUGMENU];
@@ -1101,7 +1102,7 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]    = Randomizer_FullWildEnabled();
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
-    sOptions->sel_difficulty[MENUITEM_DIF_OPS_ALL_MOVES]  = FlagGet(FLAG_OPS_ALL_MOVES);
+    sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = IsPhysicalSpecialSplitEnabled();
     sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
     EnforceHardNpcTeamsRules();
 
@@ -1380,10 +1381,15 @@ static void Task_OptionMenuSave(u8 taskId)
     else
         FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
 
-    if (sOptions->sel_difficulty[MENUITEM_DIF_OPS_ALL_MOVES] && !IsHardNpcTeamsSelected())
-        FlagSet(FLAG_OPS_ALL_MOVES);
+    if (sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] && !IsHardNpcTeamsSelected())
+    {
+        FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    }
     else
-        FlagClear(FLAG_OPS_ALL_MOVES);
+    {
+        FlagClear(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    }
+    FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED);
 
     gSaveBlock2Ptr->optionsDebugMenu        = sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU];
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
@@ -1975,9 +1981,9 @@ static void DrawChoices_RandomizerT(int selection, int y)
     DrawOptionMenuChoice(sText_OptionTrue, GetStringRightAlignXOffset(FONT_NORMAL, sText_OptionTrue, 198), y, styles[1], active);
 }
 
-static void DrawChoices_OpsAllMoves(int selection, int y)
+static void DrawChoices_PhysicalSpecialSplit(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_DIF_OPS_ALL_MOVES);
+    bool8 active = CheckConditions(MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT);
     u8 styles[2] = {0};
     styles[selection] = 1;
 

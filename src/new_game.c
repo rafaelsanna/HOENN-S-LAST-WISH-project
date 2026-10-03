@@ -199,6 +199,9 @@ void NewGameInitData(void)
     InitEventData();
     // OPS ALL MOVES is a fun Casual-only option and starts disabled.
     FlagClear(FLAG_OPS_ALL_MOVES);
+    // Physical/Special Split is the project's default battle behavior.
+    FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED);
     ClearTVShowData();
     ResetGabbyAndTy();
     

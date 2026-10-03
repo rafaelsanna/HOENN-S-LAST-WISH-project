@@ -45,6 +45,7 @@
 #include "constants/hold_effects.h"
 #include "constants/items.h"
 #include "constants/item_effects.h"
+#include "constants/flags.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/species.h"
@@ -10572,6 +10573,26 @@ static enum DamageCategory SwapMoveDamageCategory(u32 move)
     return DAMAGE_CATEGORY_PHYSICAL;
 }
 
+bool32 IsPhysicalSpecialSplitEnabled(void)
+{
+    if (gSaveBlock2Ptr == NULL)
+        return FALSE;
+
+    // Existing saves did not have this option. Migrate them to the project's
+    // current default instead of interpreting the new flag as OFF.
+    if (!FlagGet(FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED))
+    {
+        FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED);
+        FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    }
+
+    // Hard mode always uses the more restrictive legacy behavior.
+    if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
+        return FALSE;
+
+    return FlagGet(FLAG_PHYSICAL_SPECIAL_SPLIT);
+}
+
 /*
     The Global States gBattleStruct->categoryOverride and gBattleStruct->swapDamageCategory
     can be removed but a lot of function arguments (battlerAtk and battlerDef) have to be added for this, about 50+.
@@ -10589,7 +10610,7 @@ enum DamageCategory GetBattleMoveCategory(u32 move)
             return DAMAGE_CATEGORY_STATUS;
     }
 
-    if (B_PHYSICAL_SPECIAL_SPLIT <= GEN_4)
+    if (B_PHYSICAL_SPECIAL_SPLIT <= GEN_4 || !IsPhysicalSpecialSplitEnabled())
         return gTypesInfo[GetBattleMoveType(move)].damageCategory;
 
     return GetMoveCategory(move);
