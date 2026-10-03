@@ -725,7 +725,7 @@ DewfordTown_Gym_Text_TakaoPostBattle:
 # 363 "data/maps/DewfordTown_Gym/scripts.pory"
 DewfordTown_Gym_Text_FruscianteIntro:
 # 364 "data/maps/DewfordTown_Gym/scripts.pory"
-	.string "I'm FRUSCIANTE! Feel that riff?\n"
+	.string "Close your eyes. Feel that riff?\n"
 # 365 "data/maps/DewfordTown_Gym/scripts.pory"
 	.string "That's the groove talking!\p"
 # 366 "data/maps/DewfordTown_Gym/scripts.pory"

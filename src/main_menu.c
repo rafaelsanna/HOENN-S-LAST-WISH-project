@@ -246,6 +246,10 @@ static void Task_NewGameBirchSpeech_WaitForConfigExplanation(u8);
 static void Task_NewGameBirchSpeech_WaitToOpenInitialConfig(u8);
 static void Task_NewGameBirchSpeech_OpenInitialConfig(u8);
 static void CB2_NewGameBirchSpeech_ReturnFromInitialConfig(void);
+static void Task_NewGameBirchSpeech_ConfirmInitialConfig(u8);
+static void Task_NewGameBirchSpeech_CreateInitialConfigConfirmation(u8);
+static void Task_NewGameBirchSpeech_ProcessInitialConfigConfirmation(u8);
+static void Task_NewGameBirchSpeech_ReopenInitialConfig(u8);
 static void Task_NewGameBirchSpeech_ResumeAfterInitialConfig(u8);
 void CreateYesNoMenuParameterized(u8, u8, u16, u16, u8, u8);
 static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8);
@@ -324,6 +328,8 @@ static const u8 sText_InitialGameConfig[] = _(
     "you select them here and do not\l"
     "turn them off until after beating\l"
     "the champion.");
+static const u8 sText_ConfirmInitialGameConfig[] = _(
+    "Are you sure that's how you wish to play?");
 static const u8 gJPText_No1MSubCircuit[] = _("1Mサブきばんが ささっていません！");
 static const u8 gText_BatteryRunDry[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
 
@@ -2305,6 +2311,60 @@ static void Task_NewGameBirchSpeech_ResumeAfterInitialConfig(u8 taskId)
     }
 }
 
+static void Task_NewGameBirchSpeech_ConfirmInitialConfig(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        NewGameBirchSpeech_ShowDialogueWindow(0, TRUE);
+        NewGameBirchSpeech_ClearWindow(0);
+        StringCopy(gStringVar4, sText_ConfirmInitialGameConfig);
+        NewGameBirchSpeech_PrintMessage();
+        gTasks[taskId].func = Task_NewGameBirchSpeech_CreateInitialConfigConfirmation;
+    }
+}
+
+static void Task_NewGameBirchSpeech_CreateInitialConfigConfirmation(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        CreateYesNoMenuParameterized(2, 1, 0xF3, 0xDF, 2, 15);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ProcessInitialConfigConfirmation;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ProcessInitialConfigConfirmation(u8 taskId)
+{
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ResumeAfterInitialConfig;
+        break;
+    case MENU_B_PRESSED:
+    case 1:
+        PlaySE(SE_SELECT);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ReopenInitialConfig;
+        break;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ReopenInitialConfig(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        SetVBlankCallback(NULL);
+        Birch_DestroyStars();
+        FreeAllWindowBuffers();
+        FreeAndDestroyMonPicSprite(gTasks[taskId].tLotadSpriteId);
+        ResetAllPicSprites();
+        DestroyTask(taskId);
+        // Keep the settings saved by the options menu when reopening it.
+        gMain.savedCallback = CB2_NewGameBirchSpeech_ReturnFromInitialConfig;
+        SetMainCallback2(CB2_InitOptionMenu_InitialConfig);
+    }
+}
+
 static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8 taskId)
 {
     // *** ALTERAÇÃO: Remove o movimento de retorno do BG1 ***
@@ -2555,7 +2615,7 @@ static void CB2_NewGameBirchSpeech_ReturnFromInitialConfig(void)
     // asking for the name again. The options menu has reset tasks and VRAM.
     CB2_NewGameBirchSpeech_ReturnFromNamingScreen();
     taskId = FindTaskIdByFunc(Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox);
-    gTasks[taskId].func = Task_NewGameBirchSpeech_ResumeAfterInitialConfig;
+    gTasks[taskId].func = Task_NewGameBirchSpeech_ConfirmInitialConfig;
 }
 
 static void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *sprite)

@@ -199,11 +199,10 @@ LittlerootTown_01_Text_Question:
 	.string "Skip prologue?$"
 
 LittlerootTown_01_Text_JirachiTimeWarp:
-	.string "Jirachi: Your wish is my command!\n"
-	.string "TIME WARP - ACTIVATE!$"
+	.string "You can wake up now...$"
 
 LittlerootTown_01_Text_No:
-	.string "Then, start the journey.$"
+	.string "You can wake up now...$"
 
 LittlerootTown_01_Text_CelebiWarning:
 	.string "Celebi: Greetings, traveler of time...\p"
