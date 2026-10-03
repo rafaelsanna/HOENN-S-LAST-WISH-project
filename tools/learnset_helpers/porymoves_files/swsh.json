@@ -88,8 +88,6 @@
       "MOVE_SKULL_BASH"
     ],
     "TutorMoves": [
-      "MOVE_GRASS_PLEDGE",
-      "MOVE_GRASSY_GLIDE"
     ]
   },
   "IVYSAUR": {
@@ -181,8 +179,6 @@
       "MOVE_SKULL_BASH"
     ],
     "TutorMoves": [
-      "MOVE_GRASS_PLEDGE",
-      "MOVE_GRASSY_GLIDE"
     ]
   },
   "VENUSAUR": {
@@ -293,10 +289,7 @@
       "MOVE_SKULL_BASH"
     ],
     "TutorMoves": [
-      "MOVE_FRENZY_PLANT",
-      "MOVE_GRASS_PLEDGE",
-      "MOVE_TERRAIN_PULSE",
-      "MOVE_GRASSY_GLIDE"
+      "MOVE_TERRAIN_PULSE"
     ]
   },
   "CHARMANDER": {
@@ -3231,7 +3224,6 @@
       "MOVE_WISH"
     ],
     "TutorMoves": [
-      "MOVE_STEEL_ROLLER",
       "MOVE_MISTY_EXPLOSION"
     ]
   },
@@ -3396,8 +3388,6 @@
       "MOVE_WISH"
     ],
     "TutorMoves": [
-      "MOVE_EXPANDING_FORCE",
-      "MOVE_STEEL_ROLLER",
       "MOVE_MISTY_EXPLOSION"
     ]
   },
@@ -3937,8 +3927,7 @@
       "MOVE_TICKLE"
     ],
     "TutorMoves": [
-      "MOVE_GRASSY_GLIDE",
-      "MOVE_CORROSIVE_GAS"
+      "MOVE_GRASSY_GLIDE"
     ]
   },
   "DIGLETT": {
@@ -15702,7 +15691,6 @@
       "MOVE_TICKLE"
     ],
     "TutorMoves": [
-      "MOVE_GRASSY_GLIDE"
     ]
   },
   "MARILL": {
@@ -18847,8 +18835,7 @@
       "MOVE_WHIRLWIND"
     ],
     "TutorMoves": [
-      "MOVE_STEEL_BEAM",
-      "MOVE_DUAL_WINGBEAT"
+      "MOVE_STEEL_BEAM"
     ]
   },
   "KINGDRA": {
@@ -21157,8 +21144,6 @@
       "MOVE_SLASH"
     ],
     "TutorMoves": [
-      "MOVE_GRASS_PLEDGE",
-      "MOVE_GRASSY_GLIDE"
     ]
   },
   "GROVYLE": {
@@ -21288,8 +21273,6 @@
       "MOVE_SLASH"
     ],
     "TutorMoves": [
-      "MOVE_GRASS_PLEDGE",
-      "MOVE_GRASSY_GLIDE"
     ]
   },
   "SCEPTILE": {
@@ -21440,9 +21423,6 @@
       "MOVE_SLASH"
     ],
     "TutorMoves": [
-      "MOVE_FRENZY_PLANT",
-      "MOVE_GRASS_PLEDGE",
-      "MOVE_GRASSY_GLIDE",
       "MOVE_SCALE_SHOT"
     ]
   },
@@ -21540,7 +21520,6 @@
       "MOVE_PECK"
     ],
     "TutorMoves": [
-      "MOVE_FIRE_PLEDGE"
     ]
   },
   "COMBUSKEN": {
@@ -21663,7 +21642,6 @@
       "MOVE_PECK"
     ],
     "TutorMoves": [
-      "MOVE_FIRE_PLEDGE",
       "MOVE_COACHING"
     ]
   },
@@ -21799,10 +21777,7 @@
       "MOVE_PECK"
     ],
     "TutorMoves": [
-      "MOVE_BLAST_BURN",
-      "MOVE_FIRE_PLEDGE",
-      "MOVE_COACHING",
-      "MOVE_SCORCHING_SANDS"
+      "MOVE_COACHING"
     ]
   },
   "MUDKIP": {
@@ -21919,7 +21894,6 @@
       "MOVE_YAWN"
     ],
     "TutorMoves": [
-      "MOVE_WATER_PLEDGE"
     ]
   },
   "MARSHTOMP": {
@@ -22063,7 +22037,6 @@
       "MOVE_YAWN"
     ],
     "TutorMoves": [
-      "MOVE_WATER_PLEDGE"
     ]
   },
   "SWAMPERT": {
@@ -22931,7 +22904,6 @@
       "MOVE_WORRY_SEED"
     ],
     "TutorMoves": [
-      "MOVE_GRASSY_GLIDE"
     ]
   },
   "NUZLEAF": {
@@ -23070,8 +23042,6 @@
       "MOVE_WORRY_SEED"
     ],
     "TutorMoves": [
-      "MOVE_GRASSY_GLIDE",
-      "MOVE_LASH_OUT"
     ]
   },
   "SHIFTRY": {
@@ -23234,8 +23204,6 @@
       "MOVE_WORRY_SEED"
     ],
     "TutorMoves": [
-      "MOVE_GRASSY_GLIDE",
-      "MOVE_LASH_OUT"
     ]
   },
   "WINGULL": {
@@ -23528,7 +23496,6 @@
     "TMMoves": [
       "MOVE_MEGA_PUNCH",
       "MOVE_MEGA_KICK",
-      "MOVE_FIRE_PUNCH",
       "MOVE_ICE_PUNCH",
       "MOVE_THUNDER_PUNCH",
       "MOVE_MAGICAL_LEAF",
@@ -23589,7 +23556,6 @@
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": [
-      "MOVE_EXPANDING_FORCE"
     ]
   },
   "KIRLIA": {
@@ -23659,7 +23625,6 @@
     "TMMoves": [
       "MOVE_MEGA_PUNCH",
       "MOVE_MEGA_KICK",
-      "MOVE_FIRE_PUNCH",
       "MOVE_ICE_PUNCH",
       "MOVE_THUNDER_PUNCH",
       "MOVE_MAGICAL_LEAF",
@@ -23720,8 +23685,6 @@
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": [
-      "MOVE_TRIPLE_AXEL",
-      "MOVE_EXPANDING_FORCE"
     ]
   },
   "GARDEVOIR": {
@@ -23815,7 +23778,6 @@
     "TMMoves": [
       "MOVE_MEGA_PUNCH",
       "MOVE_MEGA_KICK",
-      "MOVE_FIRE_PUNCH",
       "MOVE_ICE_PUNCH",
       "MOVE_THUNDER_PUNCH",
       "MOVE_HYPER_BEAM",
@@ -23884,8 +23846,6 @@
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": [
-      "MOVE_TRIPLE_AXEL",
-      "MOVE_EXPANDING_FORCE",
       "MOVE_MISTY_EXPLOSION"
     ]
   },
@@ -25774,7 +25734,6 @@
       "MOVE_THRASH"
     ],
     "TutorMoves": [
-      "MOVE_SCALE_SHOT"
     ]
   },
   "SHARPEDO": {
@@ -25892,7 +25851,6 @@
       "MOVE_THRASH"
     ],
     "TutorMoves": [
-      "MOVE_SCALE_SHOT"
     ]
   },
   "WAILMER": {
@@ -26256,8 +26214,6 @@
       "MOVE_YAWN"
     ],
     "TutorMoves": [
-      "MOVE_BURNING_JEALOUSY",
-      "MOVE_SCORCHING_SANDS"
     ]
   },
   "TRAPINCH": {
@@ -26358,7 +26314,6 @@
       "MOVE_QUICK_ATTACK"
     ],
     "TutorMoves": [
-      "MOVE_SCORCHING_SANDS"
     ]
   },
   "VIBRAVA": {
@@ -26508,7 +26463,6 @@
     ],
     "TutorMoves": [
       "MOVE_DRACO_METEOR",
-      "MOVE_SCORCHING_SANDS",
       "MOVE_DUAL_WINGBEAT"
     ]
   },
@@ -26685,7 +26639,6 @@
     ],
     "TutorMoves": [
       "MOVE_DRACO_METEOR",
-      "MOVE_SCORCHING_SANDS",
       "MOVE_DUAL_WINGBEAT",
       "MOVE_SCALE_SHOT"
     ]
@@ -29642,8 +29595,7 @@
       "MOVE_SKULL_BASH"
     ],
     "TutorMoves": [
-      "MOVE_METEOR_BEAM",
-      "MOVE_SCALE_SHOT"
+      "MOVE_METEOR_BEAM"
     ]
   },
   "BAGON": {
@@ -37540,7 +37492,6 @@
     "TMMoves": [
       "MOVE_MEGA_PUNCH",
       "MOVE_MEGA_KICK",
-      "MOVE_FIRE_PUNCH",
       "MOVE_ICE_PUNCH",
       "MOVE_THUNDER_PUNCH",
       "MOVE_HYPER_BEAM",
@@ -37630,9 +37581,7 @@
       "MOVE_SHADOW_SNEAK"
     ],
     "TutorMoves": [
-      "MOVE_TRIPLE_AXEL",
-      "MOVE_COACHING",
-      "MOVE_EXPANDING_FORCE"
+      "MOVE_COACHING"
     ]
   },
   "DUSKNOIR": {
@@ -50344,8 +50293,7 @@
     "TutorMoves": [
       "MOVE_DRACO_METEOR",
       "MOVE_DUAL_WINGBEAT",
-      "MOVE_SCALE_SHOT",
-      "MOVE_LASH_OUT"
+      "MOVE_SCALE_SHOT"
     ]
   },
   "GOLETT": {
@@ -52599,7 +52547,6 @@
     ],
     "EggMoves": [],
     "TutorMoves": [
-      "MOVE_GRASSY_GLIDE",
       "MOVE_COACHING"
     ]
   },
@@ -73342,7 +73289,6 @@
       "MOVE_QUICK_GUARD"
     ],
     "TutorMoves": [
-      "MOVE_LASH_OUT"
     ]
   },
   "PERRSERKER": {
@@ -73601,8 +73547,6 @@
       "MOVE_WATER_PULSE"
     ],
     "TutorMoves": [
-      "MOVE_BURNING_JEALOUSY",
-      "MOVE_METEOR_BEAM",
       "MOVE_POLTERGEIST"
     ]
   },
