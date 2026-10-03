@@ -410,6 +410,10 @@ Full Random owns custom flag 0x1003 (`FLAG_RANDOMIZER_FULL_WILD`), previously un
 
 Lilycove City's new hidden Star Piece and Wave Incense item ball own custom flags 0x1004 (`FLAG_HIDDEN_ITEM_LILYCOVE_CITY_STAR_PIECE`) and 0x1005 (`FLAG_ITEM_LILYCOVE_CITY_WAVE_INCENSE`), respectively. Both bits were previously unused, so the pickups are available in existing saves without changing any saved layout or existing collection flag.
 
+Route 123's new Jolly Mint item ball and hidden Nugget own custom flags 0x1006 (`FLAG_ITEM_ROUTE_123_JOLLY_MINT`) and 0x1007 (`FLAG_HIDDEN_ITEM_ROUTE_123_NUGGET`), respectively. Both bits were previously unused, so existing saves can collect the items once without reusing a temporary flag or changing any saved layout or existing collection flag.
+
+Route 117's new Nest Ball item ball owns custom flag 0x1008 (`FLAG_ITEM_ROUTE_117_NEST_BALL`), previously unused. The pickup is available once in existing saves without changing any saved layout or existing collection flag.
+
 ## Hall of Fame archive byte map
 
 Each alternating archive is exactly 4,096 bytes. Its 64-byte header is followed by twenty-eight teams at offsets 64–4095. The other two teams occupy the 288-byte storage tail, so their publication is part of the normal bundle.

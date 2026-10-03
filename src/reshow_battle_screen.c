@@ -71,6 +71,8 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         break;
     case 3:
         ResetSpriteData();
+        for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+            gBattlerSpriteIds[battler] = SPRITE_NONE;
         break;
     case 4:
         FreeAllSpritePalettes();
@@ -212,6 +214,8 @@ static void CB2_ReshowBlankBattleScreenAfterMenu(void)
         break;
     case 3:
         ResetSpriteData();
+        for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+            gBattlerSpriteIds[battler] = SPRITE_NONE;
         break;
     case 4:
         FreeAllSpritePalettes();
@@ -291,7 +295,7 @@ static bool8 LoadBattlerSpriteGfx(u32 battler)
 
 void CreateBattlerSprite(u32 battler)
 {
-    if (battler < gBattlersCount)
+    if (battler < gBattlersCount && !(gAbsentBattlerFlags & (1u << battler)))
     {
         u8 posY;
 

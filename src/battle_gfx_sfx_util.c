@@ -907,12 +907,16 @@ void CopyAllBattleSpritesInvisibilities(void)
     s32 i;
 
     for (i = 0; i < gBattlersCount; i++)
-        gBattleSpritesDataPtr->battlerData[i].invisible = gSprites[gBattlerSpriteIds[i]].invisible;
+        CopyBattleSpriteInvisibility(i);
 }
 
 void CopyBattleSpriteInvisibility(u8 battler)
 {
-    gBattleSpritesDataPtr->battlerData[battler].invisible = gSprites[gBattlerSpriteIds[battler]].invisible;
+    u8 spriteId = gBattlerSpriteIds[battler];
+    gBattleSpritesDataPtr->battlerData[battler].invisible = spriteId >= MAX_SPRITES
+                                                     || !gSprites[spriteId].inUse
+                                                     || (gAbsentBattlerFlags & (1u << battler))
+                                                     || gSprites[spriteId].invisible;
 }
 
 void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool32 megaEvo, bool8 trackEnemyPersonality)
@@ -1246,14 +1250,15 @@ void SpriteCB_EnemyShadow(struct Sprite *shadowSprite)
 {
     bool8 invisible = FALSE;
     u8 battler = shadowSprite->tBattlerId;
-    struct Sprite *battlerSprite = &gSprites[gBattlerSpriteIds[battler]];
+    struct Sprite *battlerSprite;
     u16 transformSpecies = SanitizeSpeciesId(gBattleSpritesDataPtr->battlerData[battler].transformSpecies);
 
-    if (!battlerSprite->inUse || !IsBattlerSpritePresent(battler))
+    if (!IsBattlerSpritePresent(battler))
     {
         shadowSprite->callback = SpriteCB_SetInvisible;
         return;
     }
+    battlerSprite = &gSprites[gBattlerSpriteIds[battler]];
 
     s8 xOffset = 0, UNUSED yOffset = 0, size = SHADOW_SIZE_S;
     if (gAnimScriptActive || battlerSprite->invisible)

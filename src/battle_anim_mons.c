@@ -832,10 +832,20 @@ bool8 IsBattlerSpritePresent(u8 battler)
     }
     else
     {
-        if (GetBattlerPosition(battler) == 0xff)
+        if (battler >= gBattlersCount || GetBattlerPosition(battler) == 0xff
+         || (gAbsentBattlerFlags & (1u << battler)))
             return FALSE;
 
-        if (!gBattleStruct->spriteIgnore0Hp && GetMonData(GetBattlerMon(battler), MON_DATA_HP) == 0)
+        u8 spriteId = gBattlerSpriteIds[battler];
+        if (spriteId >= MAX_SPRITES || !gSprites[spriteId].inUse || gBattlerPartyIndexes[battler] >= PARTY_SIZE)
+            return FALSE;
+
+        struct Pokemon *mon = GetBattlerMon(battler);
+        if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE || GetMonData(mon, MON_DATA_IS_EGG))
+            return FALSE;
+
+        // Faint/form-change animations may ignore zero HP, but never an empty slot.
+        if (!gBattleStruct->spriteIgnore0Hp && GetMonData(mon, MON_DATA_HP) == 0)
             return FALSE;
         return TRUE;
     }

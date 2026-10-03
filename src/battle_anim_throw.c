@@ -1540,6 +1540,7 @@ static void SpriteCB_Ball_Capture_Step(struct Sprite *sprite)
     {
         FreeOamMatrix(gSprites[gBattlerSpriteIds[*battler]].oam.matrixNum);
         DestroySprite(&gSprites[gBattlerSpriteIds[*battler]]);
+        gBattlerSpriteIds[*battler] = SPRITE_NONE;
 
         sprite->sState = 0;
         sprite->callback = SpriteCB_Ball_FadeOut;

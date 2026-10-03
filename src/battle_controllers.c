@@ -75,6 +75,7 @@ void SetUpBattleVarsAndBirchZigzagoon(void)
     {
         gBattlerControllerFuncs[i] = BattleControllerDummy;
         gBattlerPositions[i] = 0xFF;
+        gBattlerSpriteIds[i] = SPRITE_NONE;
         gActionSelectionCursor[i] = 0;
         gMoveSelectionCursor[i] = 0;
     }
@@ -1934,8 +1935,14 @@ void StartSendOutAnim(u32 battler, bool32 dontClearTransform, bool32 dontClearSu
 
 static void FreeMonSprite(u32 battler)
 {
-    FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[battler]]);
-    DestroySprite(&gSprites[gBattlerSpriteIds[battler]]);
+    u8 spriteId = gBattlerSpriteIds[battler];
+
+    if (spriteId < MAX_SPRITES && gSprites[spriteId].inUse)
+    {
+        FreeSpriteOamMatrix(&gSprites[spriteId]);
+        DestroySprite(&gSprites[spriteId]);
+    }
+    gBattlerSpriteIds[battler] = SPRITE_NONE;
     if (!IsOnPlayerSide(battler))
         HideBattlerShadowSprite(battler);
     SetHealthboxSpriteInvisible(gHealthboxSpriteIds[battler]);
@@ -1979,6 +1986,7 @@ static void Controller_FaintPlayerMon(u32 battler)
         BattleGfxSfxDummy2(GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES));
         FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
         DestroySprite(&gSprites[spriteId]);
+        gBattlerSpriteIds[battler] = SPRITE_NONE;
         SetHealthboxSpriteInvisible(gHealthboxSpriteIds[battler]);
         BtlController_Complete(battler);
     }
@@ -1986,8 +1994,9 @@ static void Controller_FaintPlayerMon(u32 battler)
 
 static void Controller_FaintOpponentMon(u32 battler)
 {
-    if (!gSprites[gBattlerSpriteIds[battler]].inUse)
+    if (gBattlerSpriteIds[battler] >= MAX_SPRITES || !gSprites[gBattlerSpriteIds[battler]].inUse)
     {
+        gBattlerSpriteIds[battler] = SPRITE_NONE;
         SetHealthboxSpriteInvisible(gHealthboxSpriteIds[battler]);
         BtlController_Complete(battler);
     }

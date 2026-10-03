@@ -622,11 +622,11 @@ Music: Intense
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Makuhita
+Hariyama
 Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Machoke
+Machamp
 Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -1341,11 +1341,11 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Roselia
+Roserade
 Level: 47
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Gloom
+Vileplume
 Level: 47
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -1455,7 +1455,7 @@ Music: Hiker
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Baltoy
+Claydol
 Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Psybeam
@@ -1463,7 +1463,7 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Sandstorm
 - Ancient Power
 
-Sandshrew
+Donphan
 Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 - Dig
@@ -1982,7 +1982,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Wing Attack
 - Endeavor
 
-Trapinch
+Vibrava
 Level: 46
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Bite
@@ -2642,11 +2642,11 @@ Music: Suspicious
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Duskull
+Dusclops
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Shuppet
+Banette
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -2659,11 +2659,11 @@ Music: Suspicious
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Duskull
+Dusclops @ Eviolite
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Shuppet
+Banette
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -4123,11 +4123,11 @@ Music: Intense
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Electrike
+Manectric
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Loudred
+Exploud
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -4964,6 +4964,10 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Solrock
+Level: 49
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Lunatone
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -7623,7 +7627,7 @@ Music: Twins
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Pikachu @ Oran Berry
+Raichu @ Air Balloon
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -10052,11 +10056,11 @@ Music: Cool
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Wingull
+Pelipper
 Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Natu
+Xatu
 Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -10069,7 +10073,7 @@ Music: Cool
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Swablu
+Altaria
 Level: 45
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -11942,7 +11946,7 @@ Music: Suspicious
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Koffing
+Weezing
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Toxic
@@ -12286,20 +12290,20 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Slugma
-Level: 43
+Bellossom
+Level: 46
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Pelipper
-Level: 44
+Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Pinsir
-Level: 45
+Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Feraligatr
-Level: 46
+Level: 49
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_BRENDAN_ROUTE_103_TREECKO ===
@@ -12350,19 +12354,19 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Camerupt
-Level: 43
+Level: 46
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Swalot
-Level: 44
+Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Pinsir
-Level: 45
+Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Blaziken
-Level: 46
+Level: 49
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_BRENDAN_ROUTE_103_TORCHIC ===
@@ -12413,19 +12417,19 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Lombre
-Level: 43
+Level: 46
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Slugma
-Level: 44
+Bellossom
+Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Magcargo
-Level: 45
+Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Venusaur
-Level: 46
+Level: 49
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_MAY_ROUTE_103_MUDKIP ===
@@ -12475,20 +12479,20 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Slugma
-Level: 43
+Bellossom
+Level: 46
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Pelipper
-Level: 44
+Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Pinsir
-Level: 45
+Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Feraligatr
-Level: 46
+Level: 49
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_MAY_ROUTE_103_TREECKO ===
@@ -12539,19 +12543,19 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Camerupt
-Level: 43
+Level: 46
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Swalot
-Level: 44
+Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Pinsir
-Level: 45
+Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Blaziken
-Level: 46
+Level: 49
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_MAY_ROUTE_103_TORCHIC ===
@@ -12602,19 +12606,19 @@ Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
 Lombre
-Level: 43
+Level: 46
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Slugma
-Level: 44
+Bellossom
+Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Magcargo
-Level: 45
+Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Venusaur
-Level: 46
+Level: 49
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_ISAAC_1 ===
@@ -13174,11 +13178,11 @@ Items: Full Restore
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Lotad
+Lombre
 Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Lombre
+Ludicolo
 Level: 44
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -17304,28 +17308,16 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Makuhita
-Level: 46
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
-Wingull
-Level: 46
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
 Tropius
-Level: 46
+Level: 48
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-Zigzagoon
-Level: 46
+Obstagoon
+Level: 48
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-Electrike
-Level: 46
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
-Snubbull
-Level: 46
+Pelipper
+Level: 48
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 === TRAINER_PAT ===
@@ -17337,28 +17329,16 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Poochyena
-Level: 46
+Virizion
+Level: 48
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-Shroomish
-Level: 46
+Azumarill
+Level: 48
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-Electrike
-Level: 46
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
-Marill
-Level: 46
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
-Sandshrew
-Level: 46
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
-Gulpin
-Level: 46
+Manectric
+Level: 48
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 === TRAINER_CRISTIN_1 ===

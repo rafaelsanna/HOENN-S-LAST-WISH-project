@@ -7026,6 +7026,8 @@ static void AnimDoubleTeam(struct Sprite *sprite)
         {
             DestroySprite(&gSprites[gBattlerSpriteIds[gBattlerAttacker]]);
             DestroySprite(&gSprites[gBattlerSpriteIds[BATTLE_PARTNER(gBattlerAttacker)]]);
+            gBattlerSpriteIds[gBattlerAttacker] = SPRITE_NONE;
+            gBattlerSpriteIds[BATTLE_PARTNER(gBattlerAttacker)] = SPRITE_NONE;
         }
         DestroySpriteWithActiveSheet(sprite);
     }

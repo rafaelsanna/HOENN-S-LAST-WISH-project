@@ -541,11 +541,13 @@ static void SlideMonToOriginalPos(struct Sprite *sprite)
 
 static void SlideMonToOriginalPosPartner(struct Sprite *sprite)
 {
-    u32 monSpriteId;
-    if (!gBattleAnimArgs[0])
-        monSpriteId = gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimAttacker)];
-    else
-        monSpriteId = gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimTarget)];
+    u8 battler = BATTLE_PARTNER(gBattleAnimArgs[0] ? gBattleAnimTarget : gBattleAnimAttacker);
+    if (!IsBattlerSpritePresent(battler))
+    {
+        DestroyAnimSprite(sprite);
+        return;
+    }
+    u8 monSpriteId = gBattlerSpriteIds[battler];
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gSprites[monSpriteId].x + gSprites[monSpriteId].x2;
@@ -648,6 +650,11 @@ static void SlideMonToOffsetPartner(struct Sprite *sprite)
     else
         battler = BATTLE_PARTNER(gBattleAnimTarget);
 
+    if (!IsBattlerSpritePresent(battler))
+    {
+        DestroyAnimSprite(sprite);
+        return;
+    }
     monSpriteId = gBattlerSpriteIds[battler];
     if (!IsOnPlayerSide(battler))
     {

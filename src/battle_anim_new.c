@@ -8735,7 +8735,7 @@ void AnimTask_AllBattlersInvisible(u8 taskId)
     for (i = 0; i < gBattlersCount; i++)
     {
         spriteId = gBattlerSpriteIds[i];
-        if (spriteId != 0xFF)
+        if (IsBattlerSpritePresent(i))
             gSprites[spriteId].invisible = TRUE;
     }
     DestroyAnimVisualTask(taskId);
@@ -8747,7 +8747,7 @@ void AnimTask_AllBattlersVisible(u8 taskId)
     for (i = 0; i < gBattlersCount; ++i)
     {
         spriteId = gBattlerSpriteIds[i];
-        if (IsBattlerSpriteVisible(i) && spriteId != 0xFF)
+        if (IsBattlerSpriteVisible(i))
             gSprites[spriteId].invisible = FALSE;
     }
 
@@ -8760,9 +8760,9 @@ void AnimTask_AllBattlersInvisibleExceptAttackerAndTarget(u8 taskId)
     for (i = 0; i < gBattlersCount; ++i)
     {
         u8 spriteId = gBattlerSpriteIds[i];
-        if (spriteId == GetAnimBattlerSpriteId(ANIM_ATTACKER) || spriteId == GetAnimBattlerSpriteId(ANIM_TARGET))
+        if (i == gBattleAnimAttacker || i == gBattleAnimTarget)
             continue;
-        if (spriteId != 0xFF || !IsBattlerSpriteVisible(i)) //Pokemon that are already hidden
+        if (IsBattlerSpritePresent(i))
             gSprites[spriteId].invisible = TRUE;
     }
     DestroyAnimVisualTask(taskId);

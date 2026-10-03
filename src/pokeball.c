@@ -1171,6 +1171,7 @@ static void SpriteCB_BallThrow_CaptureMon(struct Sprite *sprite)
     {
         FreeOamMatrix(gSprites[gBattlerSpriteIds[battler]].oam.matrixNum);
         DestroySprite(&gSprites[gBattlerSpriteIds[battler]]);
+        gBattlerSpriteIds[battler] = SPRITE_NONE;
         DestroySpriteAndFreeResources(sprite);
         if (gMain.inBattle)
             gBattleSpritesDataPtr->healthBoxesData[battler].ballAnimActive = FALSE;

@@ -169,7 +169,7 @@ EWRAM_DATA u8 gBattlerByTurnOrder[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA u8 gCurrentTurnActionNumber = 0;
 EWRAM_DATA u8 gCurrentActionFuncId = 0;
 EWRAM_DATA struct BattlePokemon gBattleMons[MAX_BATTLERS_COUNT] = {0};
-EWRAM_DATA u8 gBattlerSpriteIds[MAX_BATTLERS_COUNT] = {0};
+EWRAM_DATA u8 gBattlerSpriteIds[MAX_BATTLERS_COUNT] = {0}; // Reset to SPRITE_NONE at battle setup.
 EWRAM_DATA u8 gCurrMovePos = 0;
 EWRAM_DATA u8 gChosenMovePos = 0;
 EWRAM_DATA u16 gCurrentMove = 0;
@@ -2946,6 +2946,7 @@ static void SpriteCB_AnimFaintOpponent(struct Sprite *sprite)
         sprite->y2 += 8; // Move the sprite down.
         if (--sprite->data[3] < 0)
         {
+            gBattlerSpriteIds[sprite->sBattler] = SPRITE_NONE;
             FreeSpriteOamMatrix(sprite);
             DestroySprite(sprite);
         }

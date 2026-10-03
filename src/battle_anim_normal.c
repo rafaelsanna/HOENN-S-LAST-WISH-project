@@ -960,7 +960,8 @@ static void AnimShakeMonOrBattlePlatforms_Step(struct Sprite *sprite)
         if (var0 < 2)
         {
             for (i = 0; i < gBattlersCount; i++)
-                gSprites[gBattlerSpriteIds[i]].coordOffsetEnabled = FALSE;
+                if (IsBattlerSpritePresent(i))
+                    gSprites[gBattlerSpriteIds[i]].coordOffsetEnabled = FALSE;
         }
 
         DestroyAnimSprite(sprite);

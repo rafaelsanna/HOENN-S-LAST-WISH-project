@@ -1659,9 +1659,9 @@
 #define FLAG_RANDOMIZER_FULL_WILD                  (HLW_CUSTOM_FLAGS_START + 0x003) // Full Random config option; formerly unowned.
 #define FLAG_HIDDEN_ITEM_LILYCOVE_CITY_STAR_PIECE     (HLW_CUSTOM_FLAGS_START + 0x004)
 #define FLAG_ITEM_LILYCOVE_CITY_WAVE_INCENSE          (HLW_CUSTOM_FLAGS_START + 0x005)
-#define FLAG_UNUSED_0x1006                           (HLW_CUSTOM_FLAGS_START + 0x006) // Unused Flag
-#define FLAG_UNUSED_0x1007                           (HLW_CUSTOM_FLAGS_START + 0x007) // Unused Flag
-#define FLAG_UNUSED_0x1008                           (HLW_CUSTOM_FLAGS_START + 0x008) // Unused Flag
+#define FLAG_ITEM_ROUTE_123_JOLLY_MINT                (HLW_CUSTOM_FLAGS_START + 0x006)
+#define FLAG_HIDDEN_ITEM_ROUTE_123_NUGGET             (HLW_CUSTOM_FLAGS_START + 0x007)
+#define FLAG_ITEM_ROUTE_117_NEST_BALL                 (HLW_CUSTOM_FLAGS_START + 0x008)
 #define FLAG_UNUSED_0x1009                           (HLW_CUSTOM_FLAGS_START + 0x009) // Unused Flag
 #define FLAG_UNUSED_0x100A                           (HLW_CUSTOM_FLAGS_START + 0x00A) // Unused Flag
 #define FLAG_UNUSED_0x100B                           (HLW_CUSTOM_FLAGS_START + 0x00B) // Unused Flag
