@@ -71,45 +71,18 @@ static bool8 Nuzlocke_IsWildHeaderFlagSet(const u8 *flags, u16 headerId, u8 bit)
     return flags[bitIndex >> 3] & (1 << (bitIndex & 7));
 }
 
-static u16 Nuzlocke_GetEvolutionFamilyRoot(u16 species)
-{
-    u16 preEvolution;
-    u16 safety = 0;
-
-    if (species == SPECIES_NONE || species >= NUM_SPECIES)
-        return SPECIES_NONE;
-
-    // Walk backwards until the first species in the active evolution line.
-    // The safety counter prevents a malformed/custom evolution loop from hanging.
-    while (safety++ < NUM_SPECIES)
-    {
-        preEvolution = GetSpeciesPreEvolution(species);
-        if (preEvolution == SPECIES_NONE || preEvolution == species)
-            break;
-
-        species = preEvolution;
-    }
-
-    return species;
-}
-
-static bool8 Nuzlocke_IsSpeciesInPlayerCollection(u16 familyRoot)
+static bool8 Nuzlocke_IsSpeciesInPlayerCollection(u16 species)
 {
     s32 i;
     s32 box;
     s32 slot;
-    u16 ownedSpecies;
 
-    if (familyRoot == SPECIES_NONE)
+    if (species == SPECIES_NONE)
         return FALSE;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        ownedSpecies = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
-        if (ownedSpecies == SPECIES_NONE)
-            continue;
-
-        if (Nuzlocke_GetEvolutionFamilyRoot(ownedSpecies) == familyRoot)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == species)
             return TRUE;
     }
 
@@ -120,11 +93,7 @@ static bool8 Nuzlocke_IsSpeciesInPlayerCollection(u16 familyRoot)
     {
         for (slot = 0; slot < IN_BOX_COUNT; slot++)
         {
-            ownedSpecies = GetBoxMonData(&gPokemonStoragePtr->boxes[box][slot], MON_DATA_SPECIES);
-            if (ownedSpecies == SPECIES_NONE)
-                continue;
-
-            if (Nuzlocke_GetEvolutionFamilyRoot(ownedSpecies) == familyRoot)
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[box][slot], MON_DATA_SPECIES) == species)
                 return TRUE;
         }
     }
@@ -134,46 +103,21 @@ static bool8 Nuzlocke_IsSpeciesInPlayerCollection(u16 familyRoot)
 
 static bool8 Nuzlocke_IsSpeciesAlreadyOwned(u16 species)
 {
-    u16 candidate;
     u16 dexNum;
-    u16 familyRoot;
 
-    if (species == SPECIES_NONE || species >= NUM_SPECIES || gSaveBlock2Ptr == NULL)
+    if (species == SPECIES_NONE || gSaveBlock2Ptr == NULL)
         return FALSE;
 
-    familyRoot = Nuzlocke_GetEvolutionFamilyRoot(species);
-    if (familyRoot == SPECIES_NONE)
-        return FALSE;
-
-    // Party / PC: any member of the same evolution family counts as a dupe.
-    if (Nuzlocke_IsSpeciesInPlayerCollection(familyRoot))
+    dexNum = SpeciesToNationalPokedexNum(species);
+    if (dexNum != 0 && dexNum <= NATIONAL_DEX_COUNT
+     && GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT))
         return TRUE;
 
-    // Persistent history: a caught or released member of the same evolution
-    // family also keeps the whole family under Species Clause.
-    for (candidate = 1; candidate < NUM_SPECIES; candidate++)
-    {
-        bool8 wasCaught;
-        bool8 wasReleased;
+    if (Nuzlocke_IsSpeciesInPlayerCollection(species))
+        return TRUE;
 
-        // Avoid asking evolution helpers about species disabled by this build.
-        if (!IsSpeciesEnabled(candidate))
-            continue;
-
-        dexNum = SpeciesToNationalPokedexNum(candidate);
-        wasCaught = dexNum != 0
-                 && dexNum <= NATIONAL_DEX_COUNT
-                 && GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT);
-
-        wasReleased = gSaveBlock3Ptr != NULL
-                   && Nuzlocke_IsSpeciesFlagSet(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags, candidate);
-
-        if (!wasCaught && !wasReleased)
-            continue;
-
-        if (Nuzlocke_GetEvolutionFamilyRoot(candidate) == familyRoot)
-            return TRUE;
-    }
+    if (gSaveBlock3Ptr != NULL && Nuzlocke_IsSpeciesFlagSet(gSaveBlock3Ptr->nuzlockeReleasedSpeciesFlags, species))
+        return TRUE;
 
     return FALSE;
 }

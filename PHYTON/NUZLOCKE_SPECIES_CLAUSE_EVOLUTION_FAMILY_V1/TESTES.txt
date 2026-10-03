@@ -1,0 +1,11 @@
+TESTES
+1 Rattata capturado -> Raticate dupe; fuja; outro mon da mesma rota ainda capturável.
+2 Raticate capturado -> Rattata dupe.
+3 Pichu -> Pikachu/Raichu dupes e ordem inversa.
+4 Eevee -> Vaporeon/Jolteon/etc dupes; branch -> outra branch também dupe.
+5 Evolua o capturado e confirme que a forma anterior continua dupe.
+6 Deposite no PC e confirme family dupe.
+7 HARD: deixe morrer; evolução/família continua dupe via released flags.
+8 Remova/troque o Pokémon mantendo CAUGHT; família continua dupe via Pokédex.
+9 Teste shiny para garantir comportamento existente.
+10 Edge case: wild double com um dupe + um novo; CanThrowBallThisBattle é battle-wide e merece teste separado.
