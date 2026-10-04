@@ -4580,7 +4580,7 @@ void Special_HasDrizzleOrRainDanceInParty(void)
             continue;
 
         // Exact CURRENT ability only.
-        if (GetMonAbility(mon) == ABILITY_DRIZZLE)
+        if (MonHasAbility(mon, ABILITY_DRIZZLE))
         {
             gSpecialVar_Result = TRUE;
             return;
@@ -4640,4 +4640,3 @@ void Special_HideLavaridgeMakeItRainQueueNow(void)
         );
     }
 }
-

@@ -135,7 +135,7 @@ bool32 IsTypeStellarBoosted(u32 battler, u32 type)
 uq4_12_t GetTeraMultiplier(u32 battler, u32 type)
 {
     u32 teraType = GetBattlerTeraType(battler);
-    bool32 hasAdaptability = (GetBattlerAbility(battler) == ABILITY_ADAPTABILITY);
+    bool32 hasAdaptability = BattlerHasAbility(battler, ABILITY_ADAPTABILITY);
 
     // Safety check.
     if (GetActiveGimmick(battler) != GIMMICK_TERA)

@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_util.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
 #include "malloc.h"
@@ -14,6 +15,8 @@
 
 void AllocateBattleResources(void)
 {
+    ResetAllAbilitiesContinuations();
+
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)
         InitTrainerHillBattleStruct();
 
@@ -143,7 +146,7 @@ u32 BattlePalace_TryEscapeStatus(u8 battler)
                 {
                     u32 toSub;
 
-                    if (GetBattlerAbility(battler) == ABILITY_EARLY_BIRD)
+                    if (BattlerHasAbility(battler, ABILITY_EARLY_BIRD))
                         toSub = 2;
                     else
                         toSub = 1;

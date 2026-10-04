@@ -3682,6 +3682,52 @@ u16 GetMonAbility(struct Pokemon *mon)
     return GetAbilityBySpecies(species, abilityNum);
 }
 
+bool32 IsAllAbilitiesEnabled(void)
+{
+    return FlagGet(FLAG_ALL_ABILITIES);
+}
+
+bool32 SpeciesHasAbility(u16 species, u16 ability)
+{
+    u8 slot;
+
+    if (ability == ABILITY_NONE)
+        return FALSE;
+
+    for (slot = 0; slot < NUM_ABILITY_SLOTS; slot++)
+    {
+        if (GetSpeciesAbility(species, slot) == ability)
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+u8 CountSpeciesAbilities(u16 species)
+{
+    u8 slot;
+    u8 count = 0;
+
+    for (slot = 0; slot < NUM_ABILITY_SLOTS; slot++)
+    {
+        if (GetSpeciesAbility(species, slot) != ABILITY_NONE)
+            count++;
+    }
+
+    return count;
+}
+
+bool32 MonHasAbility(struct Pokemon *mon, u16 ability)
+{
+    if (GetMonAbility(mon) == ability)
+        return TRUE;
+
+    if (!IsAllAbilitiesEnabled())
+        return FALSE;
+
+    return SpeciesHasAbility(GetMonData(mon, MON_DATA_SPECIES, NULL), ability);
+}
+
 void CreateSecretBaseEnemyParty(struct SecretBase *secretBaseRecord)
 {
     s32 i, j;

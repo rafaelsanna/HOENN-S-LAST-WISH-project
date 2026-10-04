@@ -48,6 +48,7 @@
 #include "tv.h"
 #include "window.h"
 #include "constants/battle_move_effects.h"
+#include "constants/abilities.h"
 #include "constants/hold_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
@@ -98,6 +99,9 @@
 #define SUMMARY_EXP_DRAW_PAL     12
 #define SUMMARY_EXP_ERASE_PAL    13
 #define SUMMARY_INFO_MEMO_PAL    14
+
+static const u8 sText_AllAbilitiesCountPrefix[] = _(" HAS ");
+static const u8 sText_AllAbilitiesCountSuffix[] = _(" ABILITIES");
 
 // Canonical Summary UI colors for the dark theme.
 // Main surfaces stay neutral (black/charcoal); blue/red are accents and
@@ -4698,14 +4702,54 @@ static void PrintMonOTID(void)
 
 static void PrintMonAbilityName(void)
 {
-    u16 ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
-    PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY), gAbilitiesInfo[ability].name, 0, 1, 0, 1);
+    u8 slot;
+    u8 abilityCount = 0;
+    u8 *text = gStringVar1;
+    u8 windowId = AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY);
+
+    if (!IsAllAbilitiesEnabled())
+    {
+        u16 ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
+        PrintTextOnWindow(windowId, gAbilitiesInfo[ability].name, 0, 1, 0, 1);
+        return;
+    }
+
+    // PrintMonOTID uses the same global buffer, so start the ability list empty.
+    *gStringVar1 = EOS;
+    for (slot = 0; slot < NUM_ABILITY_SLOTS; slot++)
+    {
+        u16 ability = GetSpeciesAbility(sMonSummaryScreen->summary.species, slot);
+
+        if (ability == ABILITY_NONE)
+            continue;
+        if (abilityCount != 0)
+            text = StringAppend(text, gText_Slash);
+        text = StringAppend(text, gAbilitiesInfo[ability].name);
+        abilityCount++;
+    }
+
+    PrintTextOnWindowWithFont(windowId, gStringVar1, 0, 1, 0, 1,
+                              GetFontIdToFit(gStringVar1, FONT_SMALL, 0, WindowWidthPx(windowId)));
 }
 
 static void PrintMonAbilityDescription(void)
 {
-    u16 ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
-    PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY), gAbilitiesInfo[ability].description, 0, 17, 0, 0);
+    u8 windowId = AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY);
+
+    if (!IsAllAbilitiesEnabled())
+    {
+        u16 ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
+        PrintTextOnWindow(windowId, gAbilitiesInfo[ability].description, 0, 17, 0, 0);
+        return;
+    }
+
+    StringCopy(gStringVar2, GetSpeciesName(sMonSummaryScreen->summary.species));
+    StringAppend(gStringVar2, sText_AllAbilitiesCountPrefix);
+    ConvertIntToDecimalStringN(gStringVar1, CountSpeciesAbilities(sMonSummaryScreen->summary.species), STR_CONV_MODE_LEFT_ALIGN, 1);
+    StringAppend(gStringVar2, gStringVar1);
+    StringAppend(gStringVar2, sText_AllAbilitiesCountSuffix);
+    PrintTextOnWindowWithFont(windowId, gStringVar2, 0, 17, 0, 0,
+                              GetFontIdToFit(gStringVar2, FONT_SMALL, 0, WindowWidthPx(windowId)));
 }
 
 static void BufferMonTrainerMemo(void)

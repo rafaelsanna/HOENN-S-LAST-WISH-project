@@ -2935,7 +2935,11 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst, u32 dstSize)
                 toCpy = gAbilitiesInfo[sBattlerAbilities[gBattlerTarget]].name;
                 break;
             case B_TXT_SCR_ACTIVE_ABILITY: // scripting active ability
-                toCpy = gAbilitiesInfo[sBattlerAbilities[gBattleScripting.battler]].name;
+                if (IsAllAbilitiesEnabled()
+                 && SpeciesHasAbility(gBattleMons[gBattleScripting.battler].species, gLastUsedAbility))
+                    toCpy = gAbilitiesInfo[gLastUsedAbility].name;
+                else
+                    toCpy = gAbilitiesInfo[sBattlerAbilities[gBattleScripting.battler]].name;
                 break;
             case B_TXT_EFF_ABILITY: // effect battler ability
                 toCpy = gAbilitiesInfo[sBattlerAbilities[gEffectBattler]].name;
@@ -3320,7 +3324,7 @@ static void IllusionNickHack(u32 battler, u32 partyId, u8 *dst)
     // we know it's gEnemyParty
     struct Pokemon *mon = &gEnemyParty[partyId], *partnerMon;
 
-    if (GetMonAbility(mon) == ABILITY_ILLUSION)
+    if (MonHasAbility(mon, ABILITY_ILLUSION))
     {
         if (IsBattlerAlive(BATTLE_PARTNER(battler)))
             partnerMon = GetBattlerMon(BATTLE_PARTNER(battler));
