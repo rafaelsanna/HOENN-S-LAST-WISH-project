@@ -19,6 +19,8 @@
 #include "new_game.h"
 #include "string_util.h"
 #include "data.h"
+#include "item.h"
+#include "move.h"
 #include "link.h"
 #include "field_message_box.h"
 #include "tv.h"
@@ -80,6 +82,693 @@ static u8 GetFrontierTrainerFixedIvs(u16 trainerId);
 static void SetEReaderTrainerChecksum(struct BattleTowerEReaderTrainer *ereaderTrainer);
 #endif //FREE_BATTLE_TOWER_E_READER
 static u8 SetTentPtrsGetLevel(void);
+
+// Battle Frontier sets predate the project's Wish Form type changes. Keep this
+// compatibility layer limited to gBattleFrontierMons so regular trainer,
+// wild, caught, and Battle Tent Pokemon retain their normal move data.
+struct FrontierWishMoveRework
+{
+    u16 species;
+    u16 oldMove;
+    u16 newMove;
+};
+
+static const struct FrontierWishMoveRework sFrontierWishMoveReworks[] =
+{
+    {SPECIES_WURMPLE,   MOVE_POISON_STING, MOVE_FURY_CUTTER},
+
+    {SPECIES_BULBASAUR, MOVE_RAZOR_LEAF,   MOVE_WATER_PULSE},
+    {SPECIES_IVYSAUR,   MOVE_PETAL_DANCE,  MOVE_WATER_PULSE},
+    {SPECIES_IVYSAUR,   MOVE_GIGA_DRAIN,   MOVE_WATER_PULSE},
+    {SPECIES_IVYSAUR,   MOVE_SLUDGE_BOMB,  MOVE_EARTH_POWER},
+    {SPECIES_VENUSAUR,  MOVE_GIGA_DRAIN,   MOVE_SURF},
+    {SPECIES_VENUSAUR,  MOVE_SLUDGE_BOMB,  MOVE_EARTH_POWER},
+    {SPECIES_VENUSAUR,  MOVE_SOLAR_BEAM,   MOVE_SURF},
+
+    {SPECIES_ODDISH,    MOVE_ACID,         MOVE_FAIRY_WIND},
+    {SPECIES_GLOOM,     MOVE_ACID,         MOVE_FAIRY_WIND},
+    {SPECIES_GLOOM,     MOVE_SLUDGE_BOMB,  MOVE_DAZZLING_GLEAM},
+    {SPECIES_VILEPLUME, MOVE_SLUDGE_BOMB,  MOVE_DAZZLING_GLEAM},
+
+    {SPECIES_HOPPIP,    MOVE_MEGA_DRAIN,   MOVE_FAIRY_WIND},
+    {SPECIES_SKIPLOOM,  MOVE_MEGA_DRAIN,   MOVE_FAIRY_WIND},
+    {SPECIES_JUMPLUFF,  MOVE_GIGA_DRAIN,   MOVE_DAZZLING_GLEAM},
+
+    {SPECIES_TREECKO,   MOVE_BULLET_SEED,  MOVE_ACID_SPRAY},
+    {SPECIES_GROVYLE,   MOVE_GIGA_DRAIN,   MOVE_SLUDGE_BOMB},
+    {SPECIES_SCEPTILE,  MOVE_LEAF_BLADE,   MOVE_SLUDGE_BOMB},
+
+    {SPECIES_SEEDOT,    MOVE_BULLET_SEED,  MOVE_EMBER},
+    {SPECIES_SHIFTRY,   MOVE_GIGA_DRAIN,   MOVE_FLAMETHROWER},
+    {SPECIES_SHIFTRY,   MOVE_SOLAR_BEAM,   MOVE_FLASH_CANNON},
+
+    {SPECIES_TORCHIC,   MOVE_FIRE_SPIN,    MOVE_MEGA_DRAIN},
+    {SPECIES_COMBUSKEN, MOVE_EMBER,        MOVE_MEGA_DRAIN},
+    {SPECIES_COMBUSKEN, MOVE_FLAMETHROWER, MOVE_GIGA_DRAIN},
+    {SPECIES_BLAZIKEN,  MOVE_FLAMETHROWER, MOVE_ENERGY_BALL},
+    {SPECIES_BLAZIKEN,  MOVE_BLAZE_KICK,   MOVE_LEAF_BLADE},
+    {SPECIES_BLAZIKEN,  MOVE_OVERHEAT,     MOVE_LEAF_STORM},
+
+    {SPECIES_TOTODILE,  MOVE_WATER_PULSE,  MOVE_FIRE_FANG},
+    {SPECIES_TOTODILE,  MOVE_ICY_WIND,     MOVE_DRAGON_BREATH},
+    {SPECIES_CROCONAW,  MOVE_WATER_PULSE,  MOVE_FIRE_FANG},
+    {SPECIES_FERALIGATR,MOVE_SURF,         MOVE_FLAMETHROWER},
+    {SPECIES_FERALIGATR,MOVE_RAIN_DANCE,   MOVE_DRAGON_DANCE},
+    {SPECIES_FERALIGATR,MOVE_HYDRO_PUMP,   MOVE_FIRE_BLAST},
+    {SPECIES_FERALIGATR,MOVE_ICE_BEAM,     MOVE_DRAGON_PULSE},
+
+    {SPECIES_GULPIN,    MOVE_SLUDGE,       MOVE_FLAME_CHARGE},
+    {SPECIES_SWALOT,    MOVE_SLUDGE,       MOVE_FLAME_CHARGE},
+    {SPECIES_SWALOT,    MOVE_SLUDGE_BOMB,  MOVE_FLAMETHROWER},
+
+    {SPECIES_NUMEL,     MOVE_EMBER,        MOVE_WATER_GUN},
+    {SPECIES_CAMERUPT,  MOVE_ERUPTION,     MOVE_HYDRO_PUMP},
+    {SPECIES_SHARPEDO,  MOVE_WATER_PULSE,  MOVE_FIRE_FANG},
+    {SPECIES_SHARPEDO,  MOVE_SURF,         MOVE_FLARE_BLITZ},
+
+    {SPECIES_CACNEA,    MOVE_NEEDLE_ARM,   MOVE_ICE_SHARD},
+    {SPECIES_CACTURNE,  MOVE_NEEDLE_ARM,   MOVE_ICE_SHARD},
+    {SPECIES_CACTURNE,  MOVE_ACID,         MOVE_PURSUIT},
+
+    {SPECIES_SLUGMA,    MOVE_EMBER,        MOVE_ACID},
+    {SPECIES_TORKOAL,   MOVE_EMBER,        MOVE_ICE_SHARD},
+    {SPECIES_TORKOAL,   MOVE_FIRE_SPIN,    MOVE_POWDER_SNOW},
+    {SPECIES_TORKOAL,   MOVE_OVERHEAT,     MOVE_BLIZZARD},
+
+    // The current split makes this the special Bug STAB that replaces the
+    // old physical Fire Punch sets. Ice Punch remains intentionally valid.
+    {SPECIES_GARDEVOIR, MOVE_FIRE_PUNCH,   MOVE_BUG_BUZZ},
+
+    // Skarmory may retain other Flying attacks, but Fly is not part of its
+    // current Frontier set anymore.
+    {SPECIES_SKARMORY,  MOVE_FLY,          MOVE_BRICK_BREAK},
+};
+
+static bool32 IsBattleFrontierMon(const struct TrainerMon *fmon)
+{
+    return fmon >= gBattleFrontierMons
+        && fmon < &gBattleFrontierMons[NUM_FRONTIER_MONS];
+}
+
+static u16 ReworkBattleFrontierWishMove(u16 species, u16 move)
+{
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sFrontierWishMoveReworks); i++)
+    {
+        if (sFrontierWishMoveReworks[i].species == species
+         && sFrontierWishMoveReworks[i].oldMove == move)
+            return sFrontierWishMoveReworks[i].newMove;
+    }
+
+    return move;
+}
+
+struct FrontierWishStabChoices
+{
+    u8 type;
+    u16 physical[3];
+    u16 special[3];
+};
+
+// Keep the replacement pool close to the power level of the original
+// Frontier sets. The category is selected from the set's existing moves and
+// the species' offensive stats below.
+static const struct FrontierWishStabChoices sFrontierWishStabChoices[] =
+{
+    {TYPE_NORMAL,   {MOVE_BODY_SLAM, MOVE_DOUBLE_EDGE, MOVE_TAKE_DOWN}, {MOVE_HYPER_VOICE, MOVE_TRI_ATTACK, MOVE_NONE}},
+    {TYPE_FIRE,     {MOVE_FIRE_PUNCH, MOVE_FLAME_CHARGE, MOVE_FLARE_BLITZ}, {MOVE_FLAMETHROWER, MOVE_HEAT_WAVE, MOVE_FIRE_BLAST}},
+    {TYPE_WATER,    {MOVE_WATERFALL, MOVE_AQUA_TAIL, MOVE_NONE}, {MOVE_WATER_PULSE, MOVE_SURF, MOVE_HYDRO_PUMP}},
+    {TYPE_GRASS,    {MOVE_LEAF_BLADE, MOVE_SEED_BOMB, MOVE_NONE}, {MOVE_MEGA_DRAIN, MOVE_ENERGY_BALL, MOVE_GIGA_DRAIN}},
+    {TYPE_ICE,      {MOVE_ICE_PUNCH, MOVE_ICE_SHARD, MOVE_ICICLE_CRASH}, {MOVE_ICY_WIND, MOVE_ICE_BEAM, MOVE_BLIZZARD}},
+    {TYPE_FIGHTING, {MOVE_BRICK_BREAK, MOVE_DRAIN_PUNCH, MOVE_CLOSE_COMBAT}, {MOVE_AURA_SPHERE, MOVE_VACUUM_WAVE, MOVE_FOCUS_BLAST}},
+    {TYPE_POISON,   {MOVE_POISON_JAB, MOVE_CROSS_POISON, MOVE_GUNK_SHOT}, {MOVE_ACID_SPRAY, MOVE_SLUDGE, MOVE_SLUDGE_BOMB}},
+    {TYPE_GROUND,   {MOVE_DIG, MOVE_EARTHQUAKE, MOVE_DRILL_RUN}, {MOVE_MUD_SHOT, MOVE_EARTH_POWER, MOVE_NONE}},
+    {TYPE_FLYING,   {MOVE_AERIAL_ACE, MOVE_FLY, MOVE_BRAVE_BIRD}, {MOVE_GUST, MOVE_AIR_SLASH, MOVE_HURRICANE}},
+    {TYPE_PSYCHIC,  {MOVE_ZEN_HEADBUTT, MOVE_PSYCHO_CUT, MOVE_NONE}, {MOVE_PSYBEAM, MOVE_PSYCHIC, MOVE_PSYSHOCK}},
+    {TYPE_BUG,      {MOVE_FURY_CUTTER, MOVE_U_TURN, MOVE_X_SCISSOR}, {MOVE_SIGNAL_BEAM, MOVE_BUG_BUZZ, MOVE_SILVER_WIND}},
+    {TYPE_ROCK,     {MOVE_ROCK_TOMB, MOVE_ROCK_SLIDE, MOVE_STONE_EDGE}, {MOVE_ANCIENT_POWER, MOVE_POWER_GEM, MOVE_METEOR_BEAM}},
+    {TYPE_GHOST,    {MOVE_SHADOW_CLAW, MOVE_SHADOW_PUNCH, MOVE_NONE}, {MOVE_SHADOW_BALL, MOVE_HEX, MOVE_NONE}},
+    {TYPE_DRAGON,   {MOVE_DRAGON_CLAW, MOVE_DRAGON_RUSH, MOVE_OUTRAGE}, {MOVE_DRAGON_BREATH, MOVE_DRAGON_PULSE, MOVE_DRACO_METEOR}},
+    {TYPE_DARK,     {MOVE_BITE, MOVE_CRUNCH, MOVE_KNOCK_OFF}, {MOVE_SNARL, MOVE_DARK_PULSE, MOVE_NONE}},
+    {TYPE_STEEL,    {MOVE_METAL_CLAW, MOVE_IRON_HEAD, MOVE_IRON_TAIL}, {MOVE_MIRROR_SHOT, MOVE_FLASH_CANNON, MOVE_STEEL_BEAM}},
+    {TYPE_FAIRY,    {MOVE_PLAY_ROUGH, MOVE_NONE, MOVE_NONE}, {MOVE_FAIRY_WIND, MOVE_DRAINING_KISS, MOVE_DAZZLING_GLEAM}},
+    {TYPE_ELECTRIC, {MOVE_THUNDER_PUNCH, MOVE_SPARK, MOVE_WILD_CHARGE}, {MOVE_THUNDER_SHOCK, MOVE_THUNDERBOLT, MOVE_DISCHARGE}},
+};
+
+static bool32 IsFrontierWishFormSpecies(u16 species)
+{
+    switch (species)
+    {
+#define WISH_FORM(id, speciesName) case SPECIES_##speciesName:
+#include "data/wish_form_registry.inc"
+#undef WISH_FORM
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static const struct FrontierWishStabChoices *GetFrontierWishStabChoices(u8 type)
+{
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sFrontierWishStabChoices); i++)
+    {
+        if (sFrontierWishStabChoices[i].type == type)
+            return &sFrontierWishStabChoices[i];
+    }
+
+    return NULL;
+}
+
+static bool32 IsFrontierWishStab(u16 species, u16 move)
+{
+    u32 type = GetMoveType(move);
+
+    return GetMovePower(move) != 0
+        && (type == GetSpeciesType(species, 0) || type == GetSpeciesType(species, 1));
+}
+
+static bool32 IsFrontierWishMoveLearnable(u16 species, u16 move)
+{
+    const struct LevelUpMove *levelUpLearnset = GetSpeciesLevelUpLearnset(species);
+    const u16 *teachableLearnset = GetSpeciesTeachableLearnset(species);
+    const u16 *eggMoveLearnset = GetSpeciesEggMoves(species);
+    u32 i;
+
+    for (i = 0; levelUpLearnset[i].move != LEVEL_UP_MOVE_END; i++)
+    {
+        if (levelUpLearnset[i].move == move)
+            return TRUE;
+    }
+
+    for (i = 0; teachableLearnset[i] != MOVE_UNAVAILABLE; i++)
+    {
+        if (teachableLearnset[i] == move)
+            return TRUE;
+    }
+
+    for (i = 0; eggMoveLearnset[i] != MOVE_UNAVAILABLE; i++)
+    {
+        if (eggMoveLearnset[i] == move)
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+static u32 CountFrontierWishStabs(u16 species, const u16 moves[MAX_MON_MOVES], u8 type)
+{
+    u32 i, count = 0;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMovePower(moves[i]) != 0 && GetMoveType(moves[i]) == type)
+            count++;
+    }
+
+    return count;
+}
+
+static u8 GetFrontierWishPreferredCategory(u16 species, const u16 moves[MAX_MON_MOVES])
+{
+    u32 i, physicalCount = 0, specialCount = 0;
+    u32 physicalPower = 0, specialPower = 0;
+
+    // A stale physical or special move must not override a clear species
+    // profile. Luvdisc, for example, has 30 Attack and 90 Sp. Atk.
+    if (gSpeciesInfo[species].baseSpAttack >= gSpeciesInfo[species].baseAttack + 15)
+        return DAMAGE_CATEGORY_SPECIAL;
+    if (gSpeciesInfo[species].baseAttack >= gSpeciesInfo[species].baseSpAttack + 15)
+        return DAMAGE_CATEGORY_PHYSICAL;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMovePower(moves[i]) == 0)
+            continue;
+
+        if (GetMoveCategory(moves[i]) == DAMAGE_CATEGORY_PHYSICAL)
+        {
+            physicalCount++;
+            physicalPower += GetMovePower(moves[i]);
+        }
+        else if (GetMoveCategory(moves[i]) == DAMAGE_CATEGORY_SPECIAL)
+        {
+            specialCount++;
+            specialPower += GetMovePower(moves[i]);
+        }
+    }
+
+    if (physicalCount > specialCount)
+        return DAMAGE_CATEGORY_PHYSICAL;
+    if (specialCount > physicalCount)
+        return DAMAGE_CATEGORY_SPECIAL;
+    if (physicalCount != 0 && physicalPower > specialPower)
+        return DAMAGE_CATEGORY_PHYSICAL;
+    if (specialCount != 0 && specialPower > physicalPower)
+        return DAMAGE_CATEGORY_SPECIAL;
+
+    return gSpeciesInfo[species].baseAttack >= gSpeciesInfo[species].baseSpAttack
+        ? DAMAGE_CATEGORY_PHYSICAL
+        : DAMAGE_CATEGORY_SPECIAL;
+}
+
+static u16 SelectFrontierWishStabMove(u16 species, const u16 moves[MAX_MON_MOVES], u8 type)
+{
+    const struct FrontierWishStabChoices *choices = GetFrontierWishStabChoices(type);
+    u32 i, totalPower = 0, damagingMoves = 0;
+    u32 bestScore = 0xFFFFFFFF;
+    u16 bestMove = MOVE_NONE;
+    u8 category;
+
+    if (choices == NULL)
+        return MOVE_NONE;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMovePower(moves[i]) != 0)
+        {
+            totalPower += GetMovePower(moves[i]);
+            damagingMoves++;
+        }
+    }
+
+    if (damagingMoves == 0)
+        totalPower = 80;
+    else
+        totalPower /= damagingMoves;
+
+    category = GetFrontierWishPreferredCategory(species, moves);
+    for (i = 0; i < 3; i++)
+    {
+        u16 candidate = category == DAMAGE_CATEGORY_PHYSICAL ? choices->physical[i] : choices->special[i];
+        u32 powerDifference;
+        u32 score;
+
+        if (candidate == MOVE_NONE || GetMovePower(candidate) == 0
+         || !IsFrontierWishMoveLearnable(species, candidate))
+            continue;
+
+        powerDifference = GetMovePower(candidate) > totalPower
+            ? GetMovePower(candidate) - totalPower
+            : totalPower - GetMovePower(candidate);
+        score = powerDifference * 4;
+
+        for (u32 j = 0; j < MAX_MON_MOVES; j++)
+        {
+            if (moves[j] == candidate)
+                score += 1000;
+        }
+
+        if (score < bestScore)
+        {
+            bestScore = score;
+            bestMove = candidate;
+        }
+    }
+
+    return bestMove;
+}
+
+static bool32 IsFrontierWishMoveInSet(const u16 moves[MAX_MON_MOVES], u16 move, s32 ignoredSlot)
+{
+    u32 i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if ((s32)i != ignoredSlot && moves[i] == move)
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+static u16 SelectFrontierWishCoverageMove(u16 species, const u16 moves[MAX_MON_MOVES], s32 ignoredSlot,
+                                          u8 category, u16 targetPower)
+{
+    const struct LevelUpMove *levelUpLearnset = GetSpeciesLevelUpLearnset(species);
+    const u16 *teachableLearnset = GetSpeciesTeachableLearnset(species);
+    const u16 *eggMoveLearnset = GetSpeciesEggMoves(species);
+    const u16 *learnsets[3] = {NULL, teachableLearnset, eggMoveLearnset};
+    u32 source, i;
+    u32 bestScore = 0xFFFFFFFF;
+    u16 bestMove = MOVE_NONE;
+
+    // Level-up moves have a struct wrapper, so score them separately.
+    for (i = 0; levelUpLearnset[i].move != LEVEL_UP_MOVE_END; i++)
+    {
+        u16 move = levelUpLearnset[i].move;
+        u32 power = GetMovePower(move);
+        u32 score;
+
+        if (power == 0 || GetMoveCategory(move) != category
+         || IsFrontierWishStab(species, move)
+         || IsFrontierWishMoveInSet(moves, move, ignoredSlot))
+            continue;
+
+        score = power > targetPower ? power - targetPower : targetPower - power;
+        if (score < bestScore)
+        {
+            bestScore = score;
+            bestMove = move;
+        }
+    }
+
+    for (source = 1; source < ARRAY_COUNT(learnsets); source++)
+    {
+        for (i = 0; learnsets[source][i] != MOVE_UNAVAILABLE; i++)
+        {
+            u16 move = learnsets[source][i];
+            u32 power = GetMovePower(move);
+            u32 score;
+
+            if (power == 0 || GetMoveCategory(move) != category
+             || IsFrontierWishStab(species, move)
+             || IsFrontierWishMoveInSet(moves, move, ignoredSlot))
+                continue;
+
+            score = power > targetPower ? power - targetPower : targetPower - power;
+            if (score < bestScore)
+            {
+                bestScore = score;
+                bestMove = move;
+            }
+        }
+    }
+
+    return bestMove;
+}
+
+static u16 SelectFrontierWishAnyLearnedMove(u16 species, const u16 moves[MAX_MON_MOVES], s32 ignoredSlot)
+{
+    const struct LevelUpMove *levelUpLearnset = GetSpeciesLevelUpLearnset(species);
+    const u16 *teachableLearnset = GetSpeciesTeachableLearnset(species);
+    const u16 *eggMoveLearnset = GetSpeciesEggMoves(species);
+    const u16 *learnsets[2] = {teachableLearnset, eggMoveLearnset};
+    u32 source, i;
+
+    for (i = 0; levelUpLearnset[i].move != LEVEL_UP_MOVE_END; i++)
+    {
+        u16 move = levelUpLearnset[i].move;
+
+        if (move != MOVE_NONE && !IsFrontierWishMoveInSet(moves, move, ignoredSlot))
+            return move;
+    }
+
+    for (source = 0; source < ARRAY_COUNT(learnsets); source++)
+    {
+        for (i = 0; learnsets[source][i] != MOVE_UNAVAILABLE; i++)
+        {
+            u16 move = learnsets[source][i];
+
+            if (move != MOVE_NONE && !IsFrontierWishMoveInSet(moves, move, ignoredSlot))
+                return move;
+        }
+    }
+
+    return MOVE_NONE;
+}
+
+static u16 SelectFrontierWishCategoryReplacement(u16 species, const u16 moves[MAX_MON_MOVES],
+                                                 s32 slot, u8 category)
+{
+    u16 move = moves[slot];
+
+    if (IsFrontierWishStab(species, move))
+        return SelectFrontierWishStabMove(species, moves, GetMoveType(move));
+
+    return SelectFrontierWishCoverageMove(species, moves, slot, category, GetMovePower(move));
+}
+
+static s32 FindRedundantFrontierWishStabSlot(const u16 moves[MAX_MON_MOVES], u8 type)
+{
+    s32 bestSlot = -1;
+    u32 bestPower = 0;
+    u32 i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMovePower(moves[i]) != 0 && GetMoveType(moves[i]) == type
+         && GetMovePower(moves[i]) >= bestPower)
+        {
+            bestPower = GetMovePower(moves[i]);
+            bestSlot = i;
+        }
+    }
+
+    return bestSlot;
+}
+
+static s32 FindFrontierWishReplacementSlot(u16 species, const u16 moves[MAX_MON_MOVES])
+{
+    s32 bestSlot = -1;
+    u32 bestPriority = 0xFFFFFFFF;
+    u32 bestPower = 0xFFFFFFFF;
+    u32 i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        u32 priority;
+        u32 power = GetMovePower(moves[i]);
+
+        if (moves[i] == MOVE_NONE)
+            priority = 0; // Fill an empty slot before replacing a real move.
+        else if (power == 0)
+            priority = 1; // Replace a status move only after weak coverage.
+        else if (!IsFrontierWishStab(species, moves[i]))
+            priority = 0; // Old off-type coverage is the first thing to fix.
+        else if (CountFrontierWishStabs(species, moves, GetMoveType(moves[i])) > 1)
+            priority = 2; // Keep at least one copy of every existing STAB.
+        else
+            priority = 3;
+
+        if (priority < bestPriority || (priority == bestPriority && power < bestPower))
+        {
+            bestPriority = priority;
+            bestPower = power;
+            bestSlot = i;
+        }
+    }
+
+    return bestSlot;
+}
+
+static void ReworkBattleFrontierWishSet(u16 species, u16 moves[MAX_MON_MOVES])
+{
+    u8 types[2];
+    u32 typeCount = 0, typeIndex, i;
+
+    if (!IsFrontierWishFormSpecies(species))
+        return;
+
+    // Tent/Frontier sets predate the Wish Form learnsets. Remove legacy moves
+    // that this species cannot actually learn before filling the set again.
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (moves[i] != MOVE_NONE && !IsFrontierWishMoveLearnable(species, moves[i]))
+            moves[i] = MOVE_NONE;
+    }
+
+    types[typeCount++] = GetSpeciesType(species, 0);
+    if (GetSpeciesType(species, 1) != types[0])
+        types[typeCount++] = GetSpeciesType(species, 1);
+
+    // Add at least one damaging STAB for every current Wish Form type.
+    for (typeIndex = 0; typeIndex < typeCount; typeIndex++)
+    {
+        u8 type = types[typeIndex];
+        s32 slot;
+        u16 replacement;
+
+        if (CountFrontierWishStabs(species, moves, type) != 0)
+            continue;
+
+        slot = FindFrontierWishReplacementSlot(species, moves);
+        replacement = SelectFrontierWishStabMove(species, moves, type);
+        if (slot >= 0 && replacement != MOVE_NONE)
+            moves[slot] = replacement;
+    }
+
+    // Rebuild offensive moves that conflict with the species' actual
+    // physical/special profile. Status moves are left alone, while Pokémon
+    // with close offensive stats can remain mixed.
+    {
+        u8 preferredCategory = GetFrontierWishPreferredCategory(species, moves);
+
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            u16 replacement;
+
+            if (GetMovePower(moves[i]) == 0 || GetMoveCategory(moves[i]) == preferredCategory)
+                continue;
+
+            replacement = SelectFrontierWishCategoryReplacement(species, moves, i, preferredCategory);
+            if (replacement != MOVE_NONE)
+                moves[i] = replacement;
+        }
+    }
+
+    // One STAB per type is enough. Replace redundant same-type attacks with
+    // legal, non-STAB coverage from the species' own learnset. This prevents
+    // a mono-type Wish Form such as Grovyle from ending up with three Poison
+    // attacks after the compatibility pass.
+    for (typeIndex = 0; typeIndex < typeCount; typeIndex++)
+    {
+        u8 type = types[typeIndex];
+
+        while (CountFrontierWishStabs(species, moves, type) > 1)
+        {
+            s32 slot;
+            u16 replacement;
+            u16 targetPower;
+            u32 totalPower = 0, damagingMoves = 0;
+
+            for (i = 0; i < MAX_MON_MOVES; i++)
+            {
+                if (GetMovePower(moves[i]) != 0)
+                {
+                    totalPower += GetMovePower(moves[i]);
+                    damagingMoves++;
+                }
+            }
+
+            if (damagingMoves == 0)
+                totalPower = 80;
+            else
+                totalPower /= damagingMoves;
+
+            slot = FindRedundantFrontierWishStabSlot(moves, type);
+            if (slot < 0)
+                break;
+
+            targetPower = GetMovePower(moves[slot]);
+            if (targetPower > totalPower + 20)
+                targetPower = totalPower + 20;
+            replacement = SelectFrontierWishCoverageMove(species, moves, slot,
+                                                          GetMoveCategory(moves[slot]), targetPower);
+            if (replacement == MOVE_NONE)
+                break;
+
+            moves[slot] = replacement;
+        }
+    }
+
+    // Cleanup can remove more than one legacy move. Always finish with a
+    // complete four-move set instead of leaving an empty battle slot behind.
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (moves[i] == MOVE_NONE)
+        {
+            u16 replacement = SelectFrontierWishCoverageMove(
+                species, moves, i, GetFrontierWishPreferredCategory(species, moves), 80);
+
+            if (replacement == MOVE_NONE)
+                replacement = SelectFrontierWishStabMove(species, moves, types[i % typeCount]);
+            if (replacement == MOVE_NONE)
+                replacement = SelectFrontierWishAnyLearnedMove(species, moves, i);
+            if (replacement != MOVE_NONE)
+                moves[i] = replacement;
+        }
+    }
+}
+
+static u16 GetFrontierWishTypeBoostItem(u8 type)
+{
+    switch (type)
+    {
+    case TYPE_NORMAL:   return ITEM_SILK_SCARF;
+    case TYPE_FIRE:     return ITEM_CHARCOAL;
+    case TYPE_WATER:    return ITEM_MYSTIC_WATER;
+    case TYPE_ELECTRIC: return ITEM_MAGNET;
+    case TYPE_GRASS:    return ITEM_MIRACLE_SEED;
+    case TYPE_ICE:      return ITEM_NEVER_MELT_ICE;
+    case TYPE_FIGHTING: return ITEM_BLACK_BELT;
+    case TYPE_POISON:   return ITEM_POISON_BARB;
+    case TYPE_GROUND:   return ITEM_SOFT_SAND;
+    case TYPE_FLYING:   return ITEM_SHARP_BEAK;
+    case TYPE_PSYCHIC:  return ITEM_TWISTED_SPOON;
+    case TYPE_BUG:      return ITEM_SILVER_POWDER;
+    case TYPE_ROCK:     return ITEM_HARD_STONE;
+    case TYPE_GHOST:    return ITEM_SPELL_TAG;
+    case TYPE_DRAGON:   return ITEM_DRAGON_FANG;
+    case TYPE_DARK:     return ITEM_BLACK_GLASSES;
+    case TYPE_STEEL:    return ITEM_METAL_COAT;
+    case TYPE_FAIRY:    return ITEM_FAIRY_FEATHER;
+    default:            return ITEM_NONE;
+    }
+}
+
+static bool32 GetFrontierWishHeldItemType(u16 item, u8 *type)
+{
+    if (item >= ITEMS_COUNT)
+        return FALSE;
+
+    if (GetItemHoldEffect(item) != HOLD_EFFECT_TYPE_POWER
+     && GetItemHoldEffect(item) != HOLD_EFFECT_PLATE)
+        return FALSE;
+
+    if (gItemsInfo[item].secondaryId >= NUMBER_OF_MON_TYPES)
+        return FALSE;
+
+    *type = gItemsInfo[item].secondaryId;
+    return TRUE;
+}
+
+static u8 GetFrontierWishPreferredHeldItemType(u16 species, const u16 moves[MAX_MON_MOVES])
+{
+    u8 speciesTypes[2] = {GetSpeciesType(species, 0), GetSpeciesType(species, 1)};
+    u32 typeScores[2] = {0, 0};
+    u32 i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        u16 move = moves[i];
+        u32 power = GetMovePower(move);
+
+        if (power == 0)
+            continue;
+
+        if (GetMoveType(move) == speciesTypes[0])
+            typeScores[0] += power;
+        if (GetMoveType(move) == speciesTypes[1])
+            typeScores[1] += power;
+    }
+
+    if (typeScores[1] > typeScores[0])
+        return speciesTypes[1];
+    return speciesTypes[0];
+}
+
+static u16 ReworkBattleFrontierWishHeldItem(u16 species, const u16 moves[MAX_MON_MOVES], u16 heldItem)
+{
+    u8 heldItemType;
+    u8 preferredType;
+    u16 replacementItem;
+
+    preferredType = GetFrontierWishPreferredHeldItemType(species, moves);
+
+    // Every automatically generated Frontier/Tent Pokémon should have an
+    // item. If the old data left the slot empty, use the strongest current
+    // STAB type as the item's type instead of leaving an unheld Pokémon.
+    if (heldItem == ITEM_NONE)
+    {
+        replacementItem = GetFrontierWishTypeBoostItem(preferredType);
+        return replacementItem != ITEM_NONE ? replacementItem : ITEM_SITRUS_BERRY;
+    }
+
+    if (!GetFrontierWishHeldItemType(heldItem, &heldItemType))
+        return heldItem;
+
+    // Keep a type booster only when it still boosts one of the current Wish
+    // Form's actual STAB types and a damaging move of that type exists.
+    if ((heldItemType == GetSpeciesType(species, 0) || heldItemType == GetSpeciesType(species, 1))
+     && CountFrontierWishStabs(species, moves, heldItemType) != 0)
+        return heldItem;
+
+    replacementItem = GetFrontierWishTypeBoostItem(preferredType);
+    return replacementItem != ITEM_NONE ? replacementItem : ITEM_SITRUS_BERRY;
+}
 
 #include "data/battle_frontier/battle_frontier_trainer_mons.h"
 #include "data/battle_frontier/battle_frontier_trainers.h"
@@ -697,6 +1386,21 @@ static const u8 *const *const sPartnerApprenticeTextTables[NUM_APPRENTICES] =
 };
 
 #include "data/battle_frontier/battle_tent.h"
+
+static bool32 IsBattleTentMon(const struct TrainerMon *fmon)
+{
+    return (fmon >= gSlateportBattleTentMons
+         && fmon < &gSlateportBattleTentMons[NUM_SLATEPORT_TENT_MONS])
+        || (fmon >= gVerdanturfBattleTentMons
+         && fmon < &gVerdanturfBattleTentMons[NUM_VERDANTURF_TENT_MONS])
+        || (fmon >= gFallarborBattleTentMons
+         && fmon < &gFallarborBattleTentMons[NUM_FALLARBOR_TENT_MONS]);
+}
+
+static bool32 IsAutomaticFacilityMon(const struct TrainerMon *fmon)
+{
+    return IsBattleFrontierMon(fmon) || IsBattleTentMon(fmon);
+}
 
 #include "data/partner_parties.h"
 const struct Trainer gBattlePartners[DIFFICULTY_COUNT][PARTNER_COUNT] =
@@ -1568,6 +2272,8 @@ static void FillTentTrainerParty(u8 monsCount)
 void CreateFacilityMon(const struct TrainerMon *fmon, u16 level, u8 fixedIV, u32 otID, u32 flags, struct Pokemon *dst)
 {
     u8 ball = (fmon->ball == 0xFF) ? Random() % POKEBALL_COUNT : fmon->ball;
+    u16 moves[MAX_MON_MOVES];
+    u16 heldItem = fmon->heldItem;
     u16 move;
     u32 personality = 0, ability, friendship, j;
 
@@ -1590,14 +2296,27 @@ void CreateFacilityMon(const struct TrainerMon *fmon, u16 level, u8 fixedIV, u32
         move = fmon->moves[j];
         if (flags & FLAG_FRONTIER_MON_FACTORY && move == MOVE_RETURN)
             move = MOVE_FRUSTRATION;
+        if (IsAutomaticFacilityMon(fmon))
+            move = ReworkBattleFrontierWishMove(fmon->species, move);
 
-        SetMonMoveSlot(dst, move, j);
-        if (GetMoveEffect(move) == EFFECT_FRUSTRATION)
+        moves[j] = move;
+    }
+
+    if (IsAutomaticFacilityMon(fmon))
+    {
+        ReworkBattleFrontierWishSet(fmon->species, moves);
+        heldItem = ReworkBattleFrontierWishHeldItem(fmon->species, moves, heldItem);
+    }
+
+    for (j = 0; j < MAX_MON_MOVES; j++)
+    {
+        SetMonMoveSlot(dst, moves[j], j);
+        if (GetMoveEffect(moves[j]) == EFFECT_FRUSTRATION)
             friendship = 0;  // Frustration is more powerful the lower the pokemon's friendship is.
     }
 
     SetMonData(dst, MON_DATA_FRIENDSHIP, &friendship);
-    SetMonData(dst, MON_DATA_HELD_ITEM, &fmon->heldItem);
+    SetMonData(dst, MON_DATA_HELD_ITEM, &heldItem);
 
     // try to set ability. Otherwise, random of non-hidden as per vanilla
     if (fmon->ability != ABILITY_NONE)

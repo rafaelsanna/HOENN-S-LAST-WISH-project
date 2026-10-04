@@ -850,6 +850,8 @@ static u32 ChooseMoveOrAction_Doubles(u32 battler)
                 {
                     if (!CanTargetBattler(battler, i, gBattleMons[battler].moves[j]))
                         continue;
+                    if (i == BATTLE_PARTNER(battler) && !AI_CanTargetPartner(battler, gBattleMons[battler].moves[j]))
+                        continue;
 
                     if (mostViableMovesScores[0] == gAiThinkingStruct->score[j])
                     {
@@ -909,8 +911,7 @@ static inline bool32 ShouldConsiderMoveForBattler(u32 battlerAi, u32 battlerDef,
 {
     if (battlerAi == BATTLE_PARTNER(battlerDef))
     {
-        u32 target = GetBattlerMoveTargetType(battlerAi, move);
-        if (target == MOVE_TARGET_BOTH || target == MOVE_TARGET_OPPONENTS_FIELD)
+        if (!AI_CanTargetPartner(battlerAi, move))
             return FALSE;
     }
     return TRUE;

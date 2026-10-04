@@ -2452,19 +2452,15 @@ static const u16 sLotadEggMoveLearnset[] = {
 #if P_FAMILY_SEEDOT
 static const u16 sSeedotEggMoveLearnset[] = {
 
-    MOVE_LEECH_SEED,
     MOVE_AMNESIA,
     MOVE_QUICK_ATTACK,
     MOVE_RAZOR_WIND,
     MOVE_TAKE_DOWN,
-    MOVE_WORRY_SEED,
     MOVE_NASTY_PLOT,
     MOVE_POWER_SWAP,
     MOVE_DEFOG,
     MOVE_FOUL_PLAY,
     MOVE_BEAT_UP,
-    MOVE_BULLET_SEED,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SEEDOT

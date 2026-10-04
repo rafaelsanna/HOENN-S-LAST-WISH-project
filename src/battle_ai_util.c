@@ -3889,6 +3889,51 @@ bool32 IsTargetingPartner(u32 battlerAtk, u32 battlerDef)
     return ((battlerAtk) == (battlerDef ^ BIT_FLANK));
 }
 
+bool32 AI_CanTargetPartner(u32 battlerAtk, u16 move)
+{
+    u32 moveTarget = GetBattlerMoveTargetType(battlerAtk, move);
+
+    if (gAiThinkingStruct->aiFlags[battlerAtk] & AI_FLAG_ATTACKS_PARTNER)
+        return TRUE;
+
+    // These target modes explicitly support an ally.
+    if (moveTarget & MOVE_TARGET_ALLY)
+        return TRUE;
+
+    // A few selected-target moves have legitimate partner-specific AI logic.
+    // Keep those available while rejecting ordinary foe-targeting moves.
+    if (moveTarget != MOVE_TARGET_SELECTED)
+        return FALSE;
+
+    switch (GetMoveEffect(move))
+    {
+    case EFFECT_DOODLE:
+    case EFFECT_ENTRAINMENT:
+    case EFFECT_GASTRO_ACID:
+    case EFFECT_ROLE_PLAY:
+    case EFFECT_SIMPLE_BEAM:
+    case EFFECT_SKILL_SWAP:
+    case EFFECT_WORRY_SEED:
+    case EFFECT_SPICY_EXTRACT:
+    case EFFECT_PURIFY:
+    case EFFECT_SWAGGER:
+    case EFFECT_FLATTER:
+    case EFFECT_BEAT_UP:
+    case EFFECT_SOAK:
+    case EFFECT_INSTRUCT:
+    case EFFECT_AFTER_YOU:
+    case EFFECT_HEAL_PULSE:
+    case EFFECT_HIT_ENEMY_HEAL_ALLY:
+    case EFFECT_DECORATE:
+    case EFFECT_SPEED_SWAP:
+    case EFFECT_GUARD_SPLIT:
+    case EFFECT_POWER_SPLIT:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
 u32 GetAllyChosenMove(u32 battlerId)
 {
     u32 partnerBattler = BATTLE_PARTNER(battlerId);

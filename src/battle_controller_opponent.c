@@ -441,6 +441,17 @@ static void OpponentHandleChooseMove(u32 battler)
                 if (gAbsentBattlerFlags & (1u << gBattlerTarget))
                     gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
             }
+            // A regular foe-targeting move must never use the AI partner as
+            // its selected target. Support moves with legitimate ally logic
+            // are allowed by AI_CanTargetPartner.
+            if (IsDoubleBattle()
+             && IsBattlerAlly(battler, gBattlerTarget)
+             && !AI_CanTargetPartner(battler, chosenMove))
+            {
+                gBattlerTarget = GetOpposingSideBattler(battler);
+                if (!IsBattlerAlive(gBattlerTarget))
+                    gBattlerTarget ^= BIT_FLANK;
+            }
             // If opponent can and should use a gimmick (considering trainer data), do it
             if (gBattleStruct->gimmick.usableGimmick[battler] != GIMMICK_NONE && IsAIUsingGimmick(battler))
             {
