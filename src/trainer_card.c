@@ -1,4 +1,5 @@
 #include "global.h"
+#include "achievements.h"
 #include "comfy_anim.h"
 #include "decompress.h"
 #include "scanline_effect.h"
@@ -25,6 +26,7 @@
 #include "gpu_regs.h"
 #include "international_string_util.h"
 #include "pokedex.h"
+#include "pokemon_storage_system.h"
 #include "pokemon_icon.h"
 #include "graphics.h"
 #include "pokemon_icon.h"
@@ -129,6 +131,7 @@ static u32 GetCappedGameStat(u8 statId, u32 maxValue);
 static bool8 HasAllFrontierSymbols(void);
 static u8 GetRubyTrainerStars(struct TrainerCard *);
 static u16 GetCaughtMonsCount(void);
+static u16 GetOwnedMonsCount(void);
 static void SetPlayerCardData(struct TrainerCard *, u8);
 static void TrainerCard_GenerateCardForPlayer(struct TrainerCard *);
 static u8 VersionToCardType(u8);
@@ -185,7 +188,9 @@ static void DestroyNewTrainerCardSprites(void);
 static void PrintNewTrainerCardNameAndId(void);
 static void PrintNewTrainerCardTimeAndDex(void);
 static void RefreshNewTrainerCardTimeAndDex(void);
-static void PrintNewTrainerCardMoneyAndWhiteouts(void);
+static void PrintNewTrainerCardMoney(void);
+static void PrintNewTrainerCardWins(void);
+static void PrintNewTrainerCardBadges(void);
 static void PrintNewTrainerCardOptions(void);
 static void CreateNewTrainerCardSprites(void);
 
@@ -289,8 +294,10 @@ static const u8 sNewTrainerCardTextColors[] =
 };
 
 static const u8 sText_NewTrainerCardNameAndId[] = _("name: {STR_VAR_1} id: {STR_VAR_2}");
-static const u8 sText_NewTrainerCardTimeAndDex[] = _("time: {STR_VAR_1}:{STR_VAR_2} dex: {STR_VAR_3}");
-static const u8 sText_NewTrainerCardMoneyAndWhiteouts[] = _("money: {STR_VAR_1} whiteout: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardTimeAndDex[] = _("time: {STR_VAR_1}:{STR_VAR_2} dex: {STR_VAR_3} own: ");
+static const u8 sText_NewTrainerCardMoneyAndAchievements[] = _("money: {STR_VAR_1} achievements: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardWinsAndWhiteouts[] = _("win: {STR_VAR_1} whiteout: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardBadges[] = _("badges: {STR_VAR_1}");
 static const u8 sText_NewTrainerCardOptions[] = _("difficulty: {STR_VAR_1} nuzlocke: {STR_VAR_2} wishmenu: {STR_VAR_3}");
 static const u8 sText_NewTrainerCardNormal[] = _("normal");
 static const u8 sText_NewTrainerCardHard[] = _("hard");
@@ -1076,9 +1083,15 @@ static bool8 PrintAllOnCardFront(void)
             PrintNewTrainerCardTimeAndDex();
             break;
         case 2:
-            PrintNewTrainerCardMoneyAndWhiteouts();
+            PrintNewTrainerCardMoney();
             break;
         case 3:
+            PrintNewTrainerCardWins();
+            break;
+        case 4:
+            PrintNewTrainerCardBadges();
+            break;
+        case 5:
             PrintNewTrainerCardOptions();
             break;
         default:
@@ -1123,19 +1136,22 @@ static void PrintNewTrainerCardNameAndId(void)
     ConvertInternationalString(gStringVar1, sData->language);
     ConvertIntToDecimalStringN(gStringVar2, sData->trainerCard.trainerId, STR_CONV_MODE_LEADING_ZEROS, 5);
     StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardNameAndId);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 2, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 2, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static void PrintNewTrainerCardTimeAndDex(void)
 {
+    u8 text[64];
     u16 hours = sData->isLink ? sData->trainerCard.playTimeHours : gSaveBlock2Ptr->playTimeHours;
     u16 minutes = sData->isLink ? sData->trainerCard.playTimeMinutes : gSaveBlock2Ptr->playTimeMinutes;
 
     ConvertIntToDecimalStringN(gStringVar1, hours, STR_CONV_MODE_LEFT_ALIGN, 3);
     ConvertIntToDecimalStringN(gStringVar2, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
     ConvertIntToDecimalStringN(gStringVar3, sData->trainerCard.caughtMonsCount, STR_CONV_MODE_LEFT_ALIGN, 3);
-    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardTimeAndDex);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 18, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    ConvertIntToDecimalStringN(gStringVar4, GetOwnedMonsCount(), STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringExpandPlaceholders(text, sText_NewTrainerCardTimeAndDex);
+    StringAppend(text, gStringVar4);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 14, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, text);
 }
 
 static void RefreshNewTrainerCardTimeAndDex(void)
@@ -1143,19 +1159,40 @@ static void RefreshNewTrainerCardTimeAndDex(void)
     // The legacy timer redraws at the old card position (TIME + a number),
     // which leaked into the new front card after the play clock advanced.
     // Refresh only the new top line instead.
-    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 18, 224, 15);
+    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 12, 224, 11);
     // Erase any old line that may have been written before the custom path
     // took over this window.
     FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 88, 224, 16);
     PrintNewTrainerCardTimeAndDex();
 }
 
-static void PrintNewTrainerCardMoneyAndWhiteouts(void)
+static void PrintNewTrainerCardMoney(void)
 {
     ConvertIntToDecimalStringN(gStringVar1, sData->trainerCard.money, STR_CONV_MODE_LEFT_ALIGN, MAX_MONEY_DIGITS);
+    ConvertIntToDecimalStringN(gStringVar2, Achievement_CountUnlocked(), STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardMoneyAndAchievements);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 26, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardWins(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, GetCappedGameStat(GAME_STAT_TRAINER_WINS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
     ConvertIntToDecimalStringN(gStringVar2, GetCappedGameStat(GAME_STAT_WHITEOUTS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
-    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardMoneyAndWhiteouts);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 34, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardWinsAndWhiteouts);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 38, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBadges(void)
+{
+    u8 i;
+    u8 badgeCount = 0;
+
+    for (i = 0; i < NUM_BADGES; i++)
+        badgeCount += sData->badgeCount[i];
+
+    ConvertIntToDecimalStringN(gStringVar1, badgeCount, STR_CONV_MODE_LEFT_ALIGN, 1);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBadges);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 62, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static void PrintNewTrainerCardOptions(void)
@@ -1177,7 +1214,7 @@ static void PrintNewTrainerCardOptions(void)
 
     StringCopy(gStringVar3, FlagGet(FLAG_USED_DEBUG_MENU) ? sText_NewTrainerCardYes : sText_NewTrainerCardOff);
     StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardOptions);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 120, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 120, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static bool8 PrintAllOnCardBack(void)
@@ -1295,6 +1332,16 @@ static u16 GetCaughtMonsCount(void)
         return GetNationalPokedexCount(FLAG_GET_CAUGHT);
     else
         return GetHoennPokedexCount(FLAG_GET_CAUGHT);
+}
+
+static u16 GetOwnedMonsCount(void)
+{
+    u32 count = CountPartyNonEggMons();
+
+    if (gPokemonStoragePtr != NULL)
+        count += CountStorageNonEggMons();
+
+    return min(count, 999);
 }
 
 static void PrintPokedexOnCard(void)
@@ -1661,7 +1708,7 @@ static void CreateNewTrainerCardSprites(void)
             species,
             SpriteCB_MonIcon,
             28 + (37 * i),
-            120,
+            112,
             0,
             GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
         if (sData->partyIconSpriteIds[i] != SPRITE_NONE)

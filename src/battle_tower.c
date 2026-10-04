@@ -41,6 +41,7 @@
 #include "constants/items.h"
 #include "constants/trainers.h"
 #include "constants/event_objects.h"
+#include "constants/game_stat.h"
 #include "constants/moves.h"
 
 // EWRAM vars.
@@ -2626,6 +2627,11 @@ static void GetOpponentIntroSpeech(void)
 static void HandleSpecialTrainerBattleEnd(void)
 {
     s32 i;
+
+    if (gBattleOutcome == B_OUTCOME_WON
+     && (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
+        IncrementGameStat(GAME_STAT_TRAINER_WINS);
 
     RecordedBattle_SaveBattleOutcome();
     switch (gBattleScripting.specialTrainerBattleType)

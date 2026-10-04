@@ -1384,6 +1384,9 @@ static void CB2_EndTrainerBattle(void)
 
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
 
+    if (gBattleOutcome == B_OUTCOME_WON)
+        IncrementGameStat(GAME_STAT_TRAINER_WINS);
+
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
         DowngradeBadPoison();
@@ -1427,6 +1430,9 @@ static void CB2_EndRematchBattle(void)
     Nuzlocke_ApplyPermadeathToPlayerParty();
 
     nuzlockePartyWiped = Nuzlocke_IsEnabled() && NoAliveMonsForPlayer();
+
+    if (gBattleOutcome == B_OUTCOME_WON)
+        IncrementGameStat(GAME_STAT_TRAINER_WINS);
 
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
