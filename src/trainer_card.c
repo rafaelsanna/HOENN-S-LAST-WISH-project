@@ -105,6 +105,7 @@ struct TrainerCardData
     bool8 isNewCard;
     u8 colorTheme;
     u8 mugshotSpriteId;
+    u8 championRibbonSpriteId;
     u8 partyIconSpriteIds[PARTY_SIZE];
     u32 bgScrollX;
     u32 bgScrollY;
@@ -350,6 +351,7 @@ static const struct TrainerCardThemeColors sTrainerCardThemeColors[TRAINER_CARD_
 };
 
 #define TRAINER_CARD_MUGSHOT_TAG       0x2F50
+#define TRAINER_CARD_CHAMPION_RIBBON_TAG 0x2F51
 
 static const u16 sTrainerCardBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brendan_mugshot.gbapal");
 static const u32 sTrainerCardBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.lz");
@@ -389,6 +391,22 @@ static const struct SpritePalette sTrainerCardMayMugshotPal =
     .tag = TRAINER_CARD_MUGSHOT_TAG,
 };
 
+static const u32 sTrainerCardChampionRibbon_Gfx[] = INCBIN_U32("graphics/trainer_card/champribbon.4bpp.lz");
+static const u16 sTrainerCardChampionRibbon_Pal[] = INCBIN_U16("graphics/trainer_card/champribbon.gbapal");
+
+static const struct CompressedSpriteSheet sTrainerCardChampionRibbonSheet =
+{
+    .data = sTrainerCardChampionRibbon_Gfx,
+    .size = 64 * 64 / 2,
+    .tag = TRAINER_CARD_CHAMPION_RIBBON_TAG,
+};
+
+static const struct SpritePalette sTrainerCardChampionRibbonPal =
+{
+    .data = sTrainerCardChampionRibbon_Pal,
+    .tag = TRAINER_CARD_CHAMPION_RIBBON_TAG,
+};
+
 static const union AnimCmd sTrainerCardMugshotAnim[] =
 {
     ANIMCMD_FRAME(0, 0),
@@ -411,6 +429,17 @@ static const struct SpriteTemplate sTrainerCardMugshotTemplate =
     .callback = SpriteCallbackDummy,
 };
 
+static const struct SpriteTemplate sTrainerCardChampionRibbonTemplate =
+{
+    .tileTag = TRAINER_CARD_CHAMPION_RIBBON_TAG,
+    .paletteTag = TRAINER_CARD_CHAMPION_RIBBON_TAG,
+    .oam = &sTrainerCardMugshotOam,
+    .anims = sTrainerCardMugshotAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
 static const u8 sNewTrainerCardTextColors[] =
 {
     TEXT_COLOR_TRANSPARENT,
@@ -422,6 +451,7 @@ static const u8 sNewTrainerCardTextColors[] =
 
 static const u8 sText_NewTrainerCardName[] = _("name: {STR_VAR_1}");
 static const u8 sText_NewTrainerCardId[] = _("id: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardChampion[] = _("champion");
 static const u8 sText_NewTrainerCardTimeAndDex[] = _("time: {STR_VAR_1} : {STR_VAR_2} dex: {STR_VAR_3} own: ");
 static const u8 sText_NewTrainerCardMoneyAndAchievements[] = _("money: {STR_VAR_1} achievements: {STR_VAR_2}");
 static const u8 sText_NewTrainerCardWinsAndWhiteouts[] = _("win: {STR_VAR_1} whiteout: {STR_VAR_2}");
@@ -1277,6 +1307,7 @@ static bool8 PrintAllOnCardFront(void)
 static void PrintNewTrainerCardNameAndId(void)
 {
     s32 idX;
+    s32 championX;
 
     StringCopy(gStringVar1, sData->trainerCard.playerName);
     ConvertInternationalString(gStringVar1, sData->language);
@@ -1291,6 +1322,13 @@ static void PrintNewTrainerCardNameAndId(void)
 
     StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardId);
     AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, idX, TRAINER_CARD_NAME_ID_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+
+    if (FlagGet(FLAG_IS_CHAMPION))
+    {
+        StringCopy(gStringVar4, sText_NewTrainerCardChampion);
+        championX = 176 - GetStringWidth(FONT_SMALL_NARROWER, gStringVar4, 0) / 2;
+        AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, championX, 77, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    }
 }
 
 static void PrintNewTrainerCardTimeAndDex(void)
@@ -1837,6 +1875,12 @@ static void LoadNewTrainerCardSpriteGfx(void)
         LoadSpritePalette(&sTrainerCardMayMugshotPal);
     }
 
+    if (FlagGet(FLAG_IS_CHAMPION))
+    {
+        LoadCompressedSpriteSheet(&sTrainerCardChampionRibbonSheet);
+        LoadSpritePalette(&sTrainerCardChampionRibbonPal);
+    }
+
     LoadMonIconPalettes();
 }
 
@@ -1849,6 +1893,13 @@ static void CreateNewTrainerCardSprites(void)
     {
         gSprites[sData->mugshotSpriteId].oam.priority = 0;
         StartSpriteAnim(&gSprites[sData->mugshotSpriteId], 0);
+    }
+
+    if (FlagGet(FLAG_IS_CHAMPION))
+    {
+        sData->championRibbonSpriteId = CreateSprite(&sTrainerCardChampionRibbonTemplate, 214, 83, 0);
+        if (sData->championRibbonSpriteId != SPRITE_NONE)
+            gSprites[sData->championRibbonSpriteId].oam.priority = 0;
     }
 
     for (i = 0; i < PARTY_SIZE; i++)
@@ -1880,6 +1931,12 @@ static void DestroyNewTrainerCardSprites(void)
 
     FreeSpriteTilesByTag(TRAINER_CARD_MUGSHOT_TAG);
     FreeSpritePaletteByTag(TRAINER_CARD_MUGSHOT_TAG);
+
+    if (sData->championRibbonSpriteId != SPRITE_NONE)
+        DestroySprite(&gSprites[sData->championRibbonSpriteId]);
+
+    FreeSpriteTilesByTag(TRAINER_CARD_CHAMPION_RIBBON_TAG);
+    FreeSpritePaletteByTag(TRAINER_CARD_CHAMPION_RIBBON_TAG);
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
@@ -2562,6 +2619,7 @@ static void InitTrainerCardData(void)
     sData->cardType = GetSetCardType();
     LoadTrainerCardColorThemeFromSave();
     sData->mugshotSpriteId = SPRITE_NONE;
+    sData->championRibbonSpriteId = SPRITE_NONE;
     sData->bgScrollX = TRAINER_CARD_SCROLL_X_PERIOD_PIXELS << 8;
     sData->bgScrollY = TRAINER_CARD_SCROLL_Y_PERIOD_PIXELS << 8;
     for (i = 0; i < PARTY_SIZE; i++)

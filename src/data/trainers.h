@@ -14620,7 +14620,7 @@ F_TRAINER_FEMALE |
 #line 5596
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 5597
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE | AI_FLAG_DOUBLE_ACE_POKEMON,
+        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_HP_AWARE,
 #line 5598
         .mugshotColor = MUGSHOT_COLOR_GREEN,
 #line 0
