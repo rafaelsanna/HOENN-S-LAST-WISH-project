@@ -39,18 +39,39 @@ const server = http.createServer((request, response) => {
         await page.goto(base + '/wishdex.html');
         const data = await page.evaluate(() => window.WISHDEX_DATA);
         const visible = data.filter(pokemon => !pokemon.hidden);
-        assert.equal(data.length, 100);
-        assert.equal(visible.length, 98);
-        assert.equal(await page.locator('.pokemon-card').count(), 100);
-        assert.equal(await page.locator('button.pokemon-card').count(), 98);
-        assert.equal(await page.locator('.pokemon-card-hidden').count(), 2);
+        const hiddenEntries = data.filter(pokemon => pokemon.hidden);
+        assert.equal(data.length, 102);
+        assert.equal(visible.length, 100);
+        assert.equal(await page.locator('.pokemon-card').count(), data.length);
+        assert.equal(await page.locator('button.pokemon-card').count(), visible.length);
+        assert.equal(await page.locator('.pokemon-card-hidden').count(), hiddenEntries.length);
+        assert.deepEqual(data.map(pokemon => pokemon.id), Array.from({ length: data.length }, (_, index) => index + 1),
+            'existing card IDs remain stable and new entries append');
+        assert.deepEqual(hiddenEntries.map(pokemon => pokemon.id), [90, 97], 'hidden card IDs remain stable');
+        const byName = new Map(visible.map(pokemon => [pokemon.name, pokemon]));
+        assert.equal(byName.size, visible.length, 'visible entries have distinct names');
+        for (const [name, types] of Object.entries({ Ralts: ['Bug'], Kirlia: ['Bug', 'Ground'],
+            Gardevoir: ['Bug', 'Fairy'], Stantler: ['Normal', 'Grass'], Wyrdeer: ['Psychic', 'Grass'] })) {
+            assert(byName.has(name), name + ' is available');
+            assert.deepEqual(byName.get(name).types, types, name + ' uses the active game types only');
+        }
+        assert.equal(byName.get('Stantler').id, 101);
+        assert.equal(byName.get('Wyrdeer').id, 102);
+        assert.deepEqual(byName.get('Stantler').evolutions,
+            [{ target: 'Wyrdeer', method: 'Level up after using Psyshield Bash 20 times' }]);
+        for (const pokemon of visible) {
+            assert(pokemon.types.length >= 1 && pokemon.types.length <= 2,
+                pokemon.name + ' has one or two types');
+            assert.equal(new Set(pokemon.types).size, pokemon.types.length,
+                pokemon.name + ' has no repeated type');
+        }
         async function assertGridLabels(color) {
             const labels = await page.locator('.pokemon-card-name').evaluateAll(elements =>
                 elements.map(element => {
                     const style = getComputedStyle(element);
                     return { color: style.color, weight: style.fontWeight };
                 }));
-            assert.equal(labels.length, 100);
+            assert.equal(labels.length, data.length);
             for (const label of labels) {
                 assert.equal(label.color, color, 'selection labels match the current theme');
                 assert.equal(label.weight, '700', 'selection labels are bold');
@@ -58,7 +79,7 @@ const server = http.createServer((request, response) => {
         }
         await assertGridLabels('rgb(255, 255, 255)');
         assert(!JSON.stringify(data).match(/Salamence|Quagsire/i));
-        for (const hidden of data.filter(pokemon => pokemon.hidden)) {
+        for (const hidden of hiddenEntries) {
             assert.deepEqual(Object.keys(hidden).sort(), ['hidden', 'id', 'sprite']);
         }
 
@@ -69,6 +90,8 @@ const server = http.createServer((request, response) => {
             await card.click();
             assert(await modal.isVisible(), pokemon.name + ' opens');
             assert.equal(await page.locator('#modal-pokemon-name').textContent(), pokemon.name);
+            assert.equal(await card.locator('.pokemon-card-name').textContent(), pokemon.name);
+            assert.equal(await card.getAttribute('aria-label'), 'View ' + pokemon.name);
             assert.equal(await page.locator('.stat-value').allTextContents().then(values => values.join(',')),
                 [pokemon.hp, pokemon.attack, pokemon.defense, pokemon.spAttack, pokemon.spDefense, pokemon.speed].join(','));
             assert.equal(await page.locator('.move-item').count(), pokemon.moveset.length);
@@ -89,7 +112,7 @@ const server = http.createServer((request, response) => {
             await page.keyboard.press('Escape');
             assert(!await modal.isVisible(), pokemon.name + ' closes');
             assert.equal(await page.evaluate(() => document.activeElement.dataset.pokemonId), String(pokemon.id));
-            if ([25, 50, 75, 98].includes(visible.indexOf(pokemon) + 1)) {
+            if ([25, 50, 75, visible.length].includes(visible.indexOf(pokemon) + 1)) {
                 console.log('Profiles checked: ' + (visible.indexOf(pokemon) + 1));
             }
         }
@@ -114,7 +137,7 @@ const server = http.createServer((request, response) => {
         await page.locator('.wishdex-title').click();
         assert.equal(await first.locator('img').getAttribute('src'), visible[0].sprite);
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < hiddenEntries.length; i++) {
             const hidden = page.locator('.pokemon-card-hidden').nth(i);
             assert.equal(await hidden.locator('img').getAttribute('alt'), 'Undiscovered Wish form');
             assert.equal(await hidden.getAttribute('data-pokemon-id'), null);
@@ -172,7 +195,7 @@ const server = http.createServer((request, response) => {
         assert.deepEqual(errors, [], 'no JavaScript errors');
         assert.deepEqual(missing.filter(url => !/\/Pokemon_HLW-[12]\.png$/.test(new URL(url).pathname)),
             [], 'no new missing local assets');
-        console.log(`PASS: 98 profiles, ${shinies} shiny toggles, 2 protected silhouettes, hover, keyboard/focus, close controls, mobile/light mode, navigation/slideshow, all assets.`);
+        console.log(`PASS: ${visible.length} profiles, ${shinies} shiny toggles, ${hiddenEntries.length} protected silhouettes, active game types, Stantler/Wyrdeer evolution, hover, keyboard/focus, close controls, mobile/light mode, navigation/slideshow, all assets.`);
     } finally {
         if (browser) await browser.close();
         await new Promise(resolve => server.close(resolve));

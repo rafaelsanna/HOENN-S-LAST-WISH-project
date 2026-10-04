@@ -5,12 +5,14 @@ Run from any directory with Python 3, Pillow, and a C preprocessor installed:
     python3 tools/wishdex/generate.py
     python3 tools/wishdex/generate.py --check
 
-The manifest follows wishmon.png, left to right, excluding its blank cells.
+The original manifest follows wishmon.png, left to right, excluding blank cells.
+Later additions are appended so existing card and sprite IDs remain stable.
 Hidden entries export only a flattened silhouette, never their game data.
 """
 
 import argparse
 import ast
+import hashlib
 import html
 import json
 import operator
@@ -35,12 +37,16 @@ ROWS = [
     "RALTS KIRLIA GARDEVOIR GALLADE GROVYLE SCEPTILE BAGON SHELGON SALAMENCE",
     "TRAPINCH VIBRAVA FLYGON IGGLYBUFF CHINGLING WOOPER QUAGSIRE",
     "TEDDIURSA URSARING URSALUNA",
+    "STANTLER WYRDEER",
 ]
 MANIFEST = [f"SPECIES_{slot}" for row in ROWS for slot in row.split()]
 HIDDEN = {"SPECIES_SALAMENCE": "hidden-1", "SPECIES_QUAGSIRE": "hidden-2"}
 START = "<!-- BEGIN GENERATED WISHDEX CARDS -->"
 END = "<!-- END GENERATED WISHDEX CARDS -->"
 STRING = r'"(?:\\.|[^"\\])*"'
+TYPE_TOKENS = frozenset(re.findall(
+    r"^#define\s+(TYPE_(?!NONE\b)[A-Z0-9_]+)\s+\d+\b",
+    (ROOT / "include/constants/pokemon.h").read_text(), re.M))
 
 
 def preprocess(source):
@@ -188,6 +194,30 @@ def readable(token, prefix):
     return token.removeprefix(prefix).replace("_", " ").title()
 
 
+def type_names(expression):
+    """Export configured type arguments, not inactive conditional branches."""
+    expression = expression.strip()
+    match = re.fullmatch(r"MON_TYPES\s*(\(.*\))", expression, re.S)
+    group = match[1] if match else expression
+    if (not match and not group.startswith("{")) or balanced(group, 0) != group:
+        raise ValueError(f"Unsupported Pokémon types: {expression}")
+    arguments = split_arguments(group[1:-1])
+    if not 1 <= len(arguments) <= 2 or not all(arguments):
+        raise ValueError(f"Expected one or two Pokémon types: {expression}")
+    names = []
+    for argument in arguments:
+        try:
+            token = evaluate(argument)
+        except SyntaxError as error:
+            raise ValueError(f"Unsupported Pokémon type: {argument}") from error
+        if token not in TYPE_TOKENS:
+            raise ValueError(f"Unknown Pokémon type: {token}")
+        name = readable(token, "TYPE_")
+        if name not in names:
+            names.append(name)
+    return names
+
+
 def evolution_details(expression, species, moves, items):
     if not expression:
         return []
@@ -292,7 +322,14 @@ def image_for(block, graphics, frame=0, shiny=False, silhouette=False):
     return image
 
 
+def versioned_url(path, contents):
+    """Invalidate browser caches only when the rendered asset changes."""
+    return f"{path}?v={hashlib.sha256(contents).hexdigest()[:12]}"
+
+
 def export(check=False):
+    assert len(MANIFEST) == len(set(MANIFEST)), "Duplicate WishDex species"
+    assert HIDDEN.keys() <= set(MANIFEST), "Hidden entries missing from WishDex"
     species, shared, graphics, learnsets, abilities, moves, items = game_tables()
     data = []
     images = {}
@@ -300,8 +337,9 @@ def export(check=False):
     for number, slot in enumerate(MANIFEST, 1):
         block = species[slot]
         if slot in HIDDEN:
-            sprite = f"images/wishdex/{HIDDEN[slot]}.png"
-            images[sprite] = image_for(block, graphics, silhouette=True)
+            sprite_path = f"images/wishdex/{HIDDEN[slot]}.png"
+            images[sprite_path] = image_for(block, graphics, silhouette=True)
+            sprite = versioned_url(sprite_path, images[sprite_path].tobytes())
             data.append({"id": number, "hidden": True, "sprite": sprite})
             cards.append(f'''                <div class="pokemon-card pokemon-card-hidden">
                     <img src="{sprite}" alt="Undiscovered Wish form" class="pokemon-sprite" width="64" height="64" loading="lazy">
@@ -310,12 +348,15 @@ def export(check=False):
             continue
         name = strings(field(block, "speciesName"))
         basename = f"images/wishdex/{number:02d}"
-        sprite, frame, shiny = f"{basename}.png", f"{basename}-frame.png", f"{basename}-shiny.png"
-        images[sprite] = image_for(block, graphics)
-        images[frame] = image_for(block, graphics, frame=1)
+        sprite_path, frame_path, shiny_path = f"{basename}.png", f"{basename}-frame.png", f"{basename}-shiny.png"
+        images[sprite_path] = image_for(block, graphics)
+        images[frame_path] = image_for(block, graphics, frame=1)
+        sprite = versioned_url(sprite_path, images[sprite_path].tobytes())
+        frame = versioned_url(frame_path, images[frame_path].tobytes())
         shiny_image = image_for(block, graphics, shiny=True)
         if shiny_image is not None:
-            images[shiny] = shiny_image
+            images[shiny_path] = shiny_image
+            shiny = versioned_url(shiny_path, shiny_image.tobytes())
         else:
             shiny = None
         description = field(block, "description")
@@ -340,7 +381,7 @@ def export(check=False):
             "id": number, "name": name,
             "species": strings(field(block, "categoryName")) + " Pokémon",
             "sprite": sprite, "frameSprite": frame, "shinySprite": shiny,
-            "types": [readable(token, "TYPE_") for token in re.findall(r"TYPE_\w+", field(block, "types"))],
+            "types": type_names(field(block, "types")),
             "height": f"{evaluate(field(block, 'height')) / 10:g} m",
             "weight": f"{evaluate(field(block, 'weight')) / 10:g} kg",
             "abilities": ability_names, "description": description,
@@ -358,7 +399,9 @@ def export(check=False):
                     <img src="{sprite}" alt="{escaped_name}" class="pokemon-sprite" data-normal="{sprite}" data-frame="{frame}" width="64" height="64" loading="lazy">
                     <span class="pokemon-card-name">{escaped_name}</span>
                 </button>''')
-    assert len(data) == 100 and sum(not entry.get("hidden") for entry in data) == 98
+    hidden_count = sum(bool(entry.get("hidden")) for entry in data)
+    detailed_count = len(data) - hidden_count
+    assert len(data) == len(MANIFEST) and hidden_count == len(HIDDEN)
     serialized = json.dumps(data, ensure_ascii=False, indent=2)
     for slot in HIDDEN:
         assert strings(field(species[slot], "speciesName")) not in serialized
@@ -367,6 +410,11 @@ def export(check=False):
     page = page_path.read_text()
     start, end = page.index(START) + len(START), page.index(END)
     page = page[:start] + "\n" + "\n".join(cards) + "\n                " + page[end:]
+    data_url = versioned_url("wishdex-data.js", generated.encode("utf-8"))
+    page, script_count = re.subn(
+        r'''(<script\b[^>]*\bsrc\s*=\s*)(["'])wishdex-data\.js(?:\?[^"']*)?\2''',
+        lambda match: f"{match[1]}{match[2]}{data_url}{match[2]}", page, flags=re.I)
+    assert script_count == 1, "Expected one WishDex data script reference"
     changes = []
     for relative, contents in {"wishdex-data.js": generated, "wishdex.html": page}.items():
         destination = ROOT / relative
@@ -384,7 +432,7 @@ def export(check=False):
                 image.save(destination)
     if check and changes:
         raise SystemExit("WishDex needs regeneration:\n" + "\n".join(changes))
-    print(f"WishDex: 98 detailed entries, 2 silhouettes; {len(changes)} {'outdated' if check else 'updated'} files.")
+    print(f"WishDex: {detailed_count} detailed entries, {hidden_count} silhouettes; {len(changes)} {'outdated' if check else 'updated'} files.")
 
 
 if __name__ == "__main__":

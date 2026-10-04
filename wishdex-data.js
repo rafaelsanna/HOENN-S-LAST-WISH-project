@@ -4,9 +4,9 @@ window.WISHDEX_DATA = [
     "id": 1,
     "name": "Bulbasaur",
     "species": "Toad Pokémon",
-    "sprite": "images/wishdex/01.png",
-    "frameSprite": "images/wishdex/01-frame.png",
-    "shinySprite": "images/wishdex/01-shiny.png",
+    "sprite": "images/wishdex/01.png?v=51b3edebf85b",
+    "frameSprite": "images/wishdex/01-frame.png?v=9688fed4acb8",
+    "shinySprite": "images/wishdex/01-shiny.png?v=38e5ca74ea90",
     "types": [
       "Water"
     ],
@@ -104,9 +104,9 @@ window.WISHDEX_DATA = [
     "id": 2,
     "name": "Ivysaur",
     "species": "Toad Pokémon",
-    "sprite": "images/wishdex/02.png",
-    "frameSprite": "images/wishdex/02-frame.png",
-    "shinySprite": "images/wishdex/02-shiny.png",
+    "sprite": "images/wishdex/02.png?v=fe02b1b52bf7",
+    "frameSprite": "images/wishdex/02-frame.png?v=529e86708406",
+    "shinySprite": "images/wishdex/02-shiny.png?v=03119a6cb9ab",
     "types": [
       "Water",
       "Ground"
@@ -221,9 +221,9 @@ window.WISHDEX_DATA = [
     "id": 3,
     "name": "Venusaur",
     "species": "Brute Pokémon",
-    "sprite": "images/wishdex/03.png",
-    "frameSprite": "images/wishdex/03-frame.png",
-    "shinySprite": "images/wishdex/03-shiny.png",
+    "sprite": "images/wishdex/03.png?v=bf03b9e7e7e1",
+    "frameSprite": "images/wishdex/03-frame.png?v=e32a01c0ff48",
+    "shinySprite": "images/wishdex/03-shiny.png?v=ab4478623304",
     "types": [
       "Water",
       "Ground"
@@ -349,9 +349,9 @@ window.WISHDEX_DATA = [
     "id": 4,
     "name": "Totodile",
     "species": "Big Jaw Pokémon",
-    "sprite": "images/wishdex/04.png",
-    "frameSprite": "images/wishdex/04-frame.png",
-    "shinySprite": "images/wishdex/04-shiny.png",
+    "sprite": "images/wishdex/04.png?v=a23ca06f33e0",
+    "frameSprite": "images/wishdex/04-frame.png?v=f27ecb350f59",
+    "shinySprite": "images/wishdex/04-shiny.png?v=046865415460",
     "types": [
       "Fire"
     ],
@@ -457,9 +457,9 @@ window.WISHDEX_DATA = [
     "id": 5,
     "name": "Croconaw",
     "species": "Big Jaw Pokémon",
-    "sprite": "images/wishdex/05.png",
-    "frameSprite": "images/wishdex/05-frame.png",
-    "shinySprite": "images/wishdex/05-shiny.png",
+    "sprite": "images/wishdex/05.png?v=6e03a06e2ef2",
+    "frameSprite": "images/wishdex/05-frame.png?v=49651c16b018",
+    "shinySprite": "images/wishdex/05-shiny.png?v=140bf0e5be32",
     "types": [
       "Fire"
     ],
@@ -569,9 +569,9 @@ window.WISHDEX_DATA = [
     "id": 6,
     "name": "Feraligatr",
     "species": "Dragon Jaw Pokémon",
-    "sprite": "images/wishdex/06.png",
-    "frameSprite": "images/wishdex/06-frame.png",
-    "shinySprite": "images/wishdex/06-shiny.png",
+    "sprite": "images/wishdex/06.png?v=1b8ae8ad8f3b",
+    "frameSprite": "images/wishdex/06-frame.png?v=fb5666e667b1",
+    "shinySprite": "images/wishdex/06-shiny.png?v=7f59ee77d132",
     "types": [
       "Fire",
       "Dragon"
@@ -598,10 +598,6 @@ window.WISHDEX_DATA = [
         "move": "Ember"
       },
       {
-        "level": 1,
-        "move": "Dragon Rage"
-      },
-      {
         "level": 7,
         "move": "Twister"
       },
@@ -616,6 +612,10 @@ window.WISHDEX_DATA = [
       {
         "level": 19,
         "move": "Fire Fang"
+      },
+      {
+        "level": 20,
+        "move": "Dragon Rage"
       },
       {
         "level": 25,
@@ -677,9 +677,9 @@ window.WISHDEX_DATA = [
     "id": 7,
     "name": "Torchic",
     "species": "Chick Pokémon",
-    "sprite": "images/wishdex/07.png",
-    "frameSprite": "images/wishdex/07-frame.png",
-    "shinySprite": "images/wishdex/07-shiny.png",
+    "sprite": "images/wishdex/07.png?v=5f380f506b47",
+    "frameSprite": "images/wishdex/07-frame.png?v=6a2e177de21f",
+    "shinySprite": "images/wishdex/07-shiny.png?v=bd3d44d68cef",
     "types": [
       "Grass"
     ],
@@ -777,9 +777,9 @@ window.WISHDEX_DATA = [
     "id": 8,
     "name": "Combusken",
     "species": "Young Fowl Pokémon",
-    "sprite": "images/wishdex/08.png",
-    "frameSprite": "images/wishdex/08-frame.png",
-    "shinySprite": "images/wishdex/08-shiny.png",
+    "sprite": "images/wishdex/08.png?v=5fcad492db3f",
+    "frameSprite": "images/wishdex/08-frame.png?v=1f0ebbeb8483",
+    "shinySprite": "images/wishdex/08-shiny.png?v=b1a3c467c49c",
     "types": [
       "Grass"
     ],
@@ -901,9 +901,9 @@ window.WISHDEX_DATA = [
     "id": 9,
     "name": "Blaziken",
     "species": "Brave Bird Pokémon",
-    "sprite": "images/wishdex/09.png",
-    "frameSprite": "images/wishdex/09-frame.png",
-    "shinySprite": "images/wishdex/09-shiny.png",
+    "sprite": "images/wishdex/09.png?v=cbc1b768debd",
+    "frameSprite": "images/wishdex/09-frame.png?v=84725f19b9b4",
+    "shinySprite": "images/wishdex/09-shiny.png?v=555f051f09f5",
     "types": [
       "Grass",
       "Flying"
@@ -1021,9 +1021,9 @@ window.WISHDEX_DATA = [
     "id": 10,
     "name": "Howlyena",
     "species": "Crunch Pokémon",
-    "sprite": "images/wishdex/10.png",
-    "frameSprite": "images/wishdex/10-frame.png",
-    "shinySprite": "images/wishdex/10-shiny.png",
+    "sprite": "images/wishdex/10.png?v=25dee15dc7ac",
+    "frameSprite": "images/wishdex/10-frame.png?v=6c55650924e8",
+    "shinySprite": "images/wishdex/10-shiny.png?v=10c59b670ad5",
     "types": [
       "Dark"
     ],
@@ -1149,9 +1149,9 @@ window.WISHDEX_DATA = [
     "id": 11,
     "name": "Nosepass",
     "species": "Compass Pokémon",
-    "sprite": "images/wishdex/11.png",
-    "frameSprite": "images/wishdex/11-frame.png",
-    "shinySprite": "images/wishdex/11-shiny.png",
+    "sprite": "images/wishdex/11.png?v=5f28dab8dd8b",
+    "frameSprite": "images/wishdex/11-frame.png?v=21d395bb5aa2",
+    "shinySprite": "images/wishdex/11-shiny.png?v=bc1c9b287cb7",
     "types": [
       "Rock",
       "Psychic"
@@ -1267,9 +1267,9 @@ window.WISHDEX_DATA = [
     "id": 12,
     "name": "Probopass",
     "species": "Compass Pokémon",
-    "sprite": "images/wishdex/12.png",
-    "frameSprite": "images/wishdex/12-frame.png",
-    "shinySprite": "images/wishdex/12-shiny.png",
+    "sprite": "images/wishdex/12.png?v=a3ed228154d4",
+    "frameSprite": "images/wishdex/12-frame.png?v=803b96a21f6c",
+    "shinySprite": "images/wishdex/12-shiny.png?v=c340284a60c5",
     "types": [
       "Steel",
       "Psychic"
@@ -1408,9 +1408,9 @@ window.WISHDEX_DATA = [
     "id": 13,
     "name": "Sentret",
     "species": "Scout Pokémon",
-    "sprite": "images/wishdex/13.png",
-    "frameSprite": "images/wishdex/13-frame.png",
-    "shinySprite": "images/wishdex/13-shiny.png",
+    "sprite": "images/wishdex/13.png?v=1b7024204c3f",
+    "frameSprite": "images/wishdex/13-frame.png?v=8af62f10e27e",
+    "shinySprite": "images/wishdex/13-shiny.png?v=aa0f143d8806",
     "types": [
       "Ground",
       "Normal"
@@ -1463,7 +1463,7 @@ window.WISHDEX_DATA = [
         "move": "Follow Me"
       },
       {
-        "level": 15,
+        "level": 16,
         "move": "Rock Smash"
       },
       {
@@ -1514,9 +1514,9 @@ window.WISHDEX_DATA = [
     "id": 14,
     "name": "Furret",
     "species": "Long Body Pokémon",
-    "sprite": "images/wishdex/14.png",
-    "frameSprite": "images/wishdex/14-frame.png",
-    "shinySprite": "images/wishdex/14-shiny.png",
+    "sprite": "images/wishdex/14.png?v=7fb1d1038095",
+    "frameSprite": "images/wishdex/14-frame.png?v=4c7139686745",
+    "shinySprite": "images/wishdex/14-shiny.png?v=004fc54d611f",
     "types": [
       "Ground",
       "Fighting"
@@ -1531,6 +1531,14 @@ window.WISHDEX_DATA = [
     "description": "Its body is lean and scarred from many battles. It wears each mark with pride. Its larger claws let it carve new dens and stand firm against strong foes.",
     "evolutions": [],
     "moveset": [
+      {
+        "level": 0,
+        "move": "Rock Smash"
+      },
+      {
+        "level": 1,
+        "move": "Rock Smash"
+      },
       {
         "level": 1,
         "move": "Tackle"
@@ -1562,10 +1570,6 @@ window.WISHDEX_DATA = [
       {
         "level": 11,
         "move": "Quick Attack"
-      },
-      {
-        "level": 15,
-        "move": "Rock Smash"
       },
       {
         "level": 17,
@@ -1627,9 +1631,9 @@ window.WISHDEX_DATA = [
     "id": 15,
     "name": "Oddish",
     "species": "Weed Pokémon",
-    "sprite": "images/wishdex/15.png",
-    "frameSprite": "images/wishdex/15-frame.png",
-    "shinySprite": "images/wishdex/15-shiny.png",
+    "sprite": "images/wishdex/15.png?v=f6727e082243",
+    "frameSprite": "images/wishdex/15-frame.png?v=2d480e0663b2",
+    "shinySprite": "images/wishdex/15-shiny.png?v=cf9a64cad3f1",
     "types": [
       "Grass",
       "Fairy"
@@ -1682,10 +1686,6 @@ window.WISHDEX_DATA = [
       },
       {
         "level": 24,
-        "move": "Giga Drain"
-      },
-      {
-        "level": 26,
         "move": "Draining Kiss"
       },
       {
@@ -1694,7 +1694,7 @@ window.WISHDEX_DATA = [
       },
       {
         "level": 32,
-        "move": "Moonblast"
+        "move": "Giga Drain"
       },
       {
         "level": 34,
@@ -1725,11 +1725,15 @@ window.WISHDEX_DATA = [
         "move": "Petal Dance"
       },
       {
+        "level": 46,
+        "move": "Moonblast"
+      },
+      {
         "level": 49,
         "move": "Solar Beam"
       },
       {
-        "level": 59,
+        "level": 60,
         "move": "Spore"
       }
     ],
@@ -1744,9 +1748,9 @@ window.WISHDEX_DATA = [
     "id": 16,
     "name": "Gloom",
     "species": "Weed Pokémon",
-    "sprite": "images/wishdex/16.png",
-    "frameSprite": "images/wishdex/16-frame.png",
-    "shinySprite": "images/wishdex/16-shiny.png",
+    "sprite": "images/wishdex/16.png?v=ef13e51dd1e0",
+    "frameSprite": "images/wishdex/16-frame.png?v=43d121178df5",
+    "shinySprite": "images/wishdex/16-shiny.png?v=ad776243ff9e",
     "types": [
       "Grass",
       "Fairy"
@@ -1802,10 +1806,6 @@ window.WISHDEX_DATA = [
         "move": "Sleep Powder"
       },
       {
-        "level": 26,
-        "move": "Giga Drain"
-      },
-      {
         "level": 28,
         "move": "Draining Kiss"
       },
@@ -1814,8 +1814,8 @@ window.WISHDEX_DATA = [
         "move": "Aromatherapy"
       },
       {
-        "level": 38,
-        "move": "Moonblast"
+        "level": 36,
+        "move": "Giga Drain"
       },
       {
         "level": 40,
@@ -1846,6 +1846,10 @@ window.WISHDEX_DATA = [
         "move": "Petal Dance"
       },
       {
+        "level": 59,
+        "move": "Moonblast"
+      },
+      {
         "level": 61,
         "move": "Solar Beam"
       },
@@ -1873,9 +1877,9 @@ window.WISHDEX_DATA = [
     "id": 17,
     "name": "Vileplume",
     "species": "Flower Pokémon",
-    "sprite": "images/wishdex/17.png",
-    "frameSprite": "images/wishdex/17-frame.png",
-    "shinySprite": "images/wishdex/17-shiny.png",
+    "sprite": "images/wishdex/17.png?v=095073374f4d",
+    "frameSprite": "images/wishdex/17-frame.png?v=916000baaba2",
+    "shinySprite": "images/wishdex/17-shiny.png?v=e730d2aa8375",
     "types": [
       "Grass",
       "Fairy"
@@ -1939,8 +1943,8 @@ window.WISHDEX_DATA = [
         "move": "Aromatherapy"
       },
       {
-        "level": 40,
-        "move": "Moonblast"
+        "level": 38,
+        "move": "Giga Drain"
       },
       {
         "level": 42,
@@ -1971,6 +1975,10 @@ window.WISHDEX_DATA = [
         "move": "Petal Dance"
       },
       {
+        "level": 61,
+        "move": "Moonblast"
+      },
+      {
         "level": 63,
         "move": "Solar Beam"
       },
@@ -1990,9 +1998,9 @@ window.WISHDEX_DATA = [
     "id": 18,
     "name": "Bellossom",
     "species": "Flower Pokémon",
-    "sprite": "images/wishdex/18.png",
-    "frameSprite": "images/wishdex/18-frame.png",
-    "shinySprite": "images/wishdex/18-shiny.png",
+    "sprite": "images/wishdex/18.png?v=daa27fd8a576",
+    "frameSprite": "images/wishdex/18-frame.png?v=a3097af514c4",
+    "shinySprite": "images/wishdex/18-shiny.png?v=eec8a579e848",
     "types": [
       "Poison",
       "Fairy"
@@ -2080,10 +2088,6 @@ window.WISHDEX_DATA = [
         "move": "Venoshock"
       },
       {
-        "level": 40,
-        "move": "Moonblast"
-      },
-      {
         "level": 42,
         "move": "Strength Sap"
       },
@@ -2112,6 +2116,10 @@ window.WISHDEX_DATA = [
         "move": "Petal Dance"
       },
       {
+        "level": 61,
+        "move": "Moonblast"
+      },
+      {
         "level": 63,
         "move": "Perish Song"
       },
@@ -2131,9 +2139,9 @@ window.WISHDEX_DATA = [
     "id": 19,
     "name": "Pidgey",
     "species": "Tiny Bird Pokémon",
-    "sprite": "images/wishdex/19.png",
-    "frameSprite": "images/wishdex/19-frame.png",
-    "shinySprite": "images/wishdex/19-shiny.png",
+    "sprite": "images/wishdex/19.png?v=e77ba93867ad",
+    "frameSprite": "images/wishdex/19-frame.png?v=b8c75926b68d",
+    "shinySprite": "images/wishdex/19-shiny.png?v=986a569eb033",
     "types": [
       "Flying",
       "Psychic"
@@ -2213,9 +2221,9 @@ window.WISHDEX_DATA = [
     "id": 20,
     "name": "Pidgeotto",
     "species": "Bird Pokémon",
-    "sprite": "images/wishdex/20.png",
-    "frameSprite": "images/wishdex/20-frame.png",
-    "shinySprite": "images/wishdex/20-shiny.png",
+    "sprite": "images/wishdex/20.png?v=4dc54d5c52a6",
+    "frameSprite": "images/wishdex/20-frame.png?v=11d60d179857",
+    "shinySprite": "images/wishdex/20-shiny.png?v=f74b7ba7ee34",
     "types": [
       "Flying",
       "Psychic"
@@ -2331,9 +2339,9 @@ window.WISHDEX_DATA = [
     "id": 21,
     "name": "Pidgeot",
     "species": "Bird Pokémon",
-    "sprite": "images/wishdex/21.png",
-    "frameSprite": "images/wishdex/21-frame.png",
-    "shinySprite": "images/wishdex/21-shiny.png",
+    "sprite": "images/wishdex/21.png?v=912989b49a00",
+    "frameSprite": "images/wishdex/21-frame.png?v=4c20ca88652a",
+    "shinySprite": "images/wishdex/21-shiny.png?v=1f72710d67fd",
     "types": [
       "Flying",
       "Psychic"
@@ -2448,9 +2456,9 @@ window.WISHDEX_DATA = [
     "id": 22,
     "name": "Poliwag",
     "species": "Tadpole Pokémon",
-    "sprite": "images/wishdex/22.png",
-    "frameSprite": "images/wishdex/22-frame.png",
-    "shinySprite": "images/wishdex/22-shiny.png",
+    "sprite": "images/wishdex/22.png?v=7cf5ac2eab08",
+    "frameSprite": "images/wishdex/22-frame.png?v=a4f5ee9575d0",
+    "shinySprite": "images/wishdex/22-shiny.png?v=286ec4a77aa5",
     "types": [
       "Water",
       "Electric"
@@ -2550,9 +2558,9 @@ window.WISHDEX_DATA = [
     "id": 23,
     "name": "Poliwhirl",
     "species": "Tadpole Pokémon",
-    "sprite": "images/wishdex/23.png",
-    "frameSprite": "images/wishdex/23-frame.png",
-    "shinySprite": "images/wishdex/23-shiny.png",
+    "sprite": "images/wishdex/23.png?v=569a660b2ca4",
+    "frameSprite": "images/wishdex/23-frame.png?v=5a8a83c838a5",
+    "shinySprite": "images/wishdex/23-shiny.png?v=f0f41a4281c0",
     "types": [
       "Water",
       "Electric"
@@ -2660,9 +2668,9 @@ window.WISHDEX_DATA = [
     "id": 24,
     "name": "Poliwrath",
     "species": "Tadpole Pokémon",
-    "sprite": "images/wishdex/24.png",
-    "frameSprite": "images/wishdex/24-frame.png",
-    "shinySprite": "images/wishdex/24-shiny.png",
+    "sprite": "images/wishdex/24.png?v=540b9196e27a",
+    "frameSprite": "images/wishdex/24-frame.png?v=7c66fb197848",
+    "shinySprite": "images/wishdex/24-shiny.png?v=81b586210924",
     "types": [
       "Electric",
       "Fighting"
@@ -2695,23 +2703,11 @@ window.WISHDEX_DATA = [
       },
       {
         "level": 1,
-        "move": "Hydro Pump"
-      },
-      {
-        "level": 1,
-        "move": "Belly Drum"
-      },
-      {
-        "level": 1,
         "move": "Rain Dance"
       },
       {
         "level": 1,
         "move": "Mud Shot"
-      },
-      {
-        "level": 1,
-        "move": "Earth Power"
       },
       {
         "level": 1,
@@ -2762,12 +2758,24 @@ window.WISHDEX_DATA = [
         "move": "Earth Power"
       },
       {
+        "level": 36,
+        "move": "Earth Power"
+      },
+      {
         "level": 40,
         "move": "Wild Charge"
       },
       {
         "level": 42,
         "move": "Hydro Pump"
+      },
+      {
+        "level": 42,
+        "move": "Hydro Pump"
+      },
+      {
+        "level": 48,
+        "move": "Belly Drum"
       },
       {
         "level": 48,
@@ -2784,6 +2792,10 @@ window.WISHDEX_DATA = [
       {
         "level": 60,
         "move": "Thunder"
+      },
+      {
+        "level": 65,
+        "move": "Close Combat"
       }
     ],
     "hp": 90,
@@ -2797,9 +2809,9 @@ window.WISHDEX_DATA = [
     "id": 25,
     "name": "Politoed",
     "species": "Frog Pokémon",
-    "sprite": "images/wishdex/25.png",
-    "frameSprite": "images/wishdex/25-frame.png",
-    "shinySprite": "images/wishdex/25-shiny.png",
+    "sprite": "images/wishdex/25.png?v=6d8ebc9b56a4",
+    "frameSprite": "images/wishdex/25-frame.png?v=f19ec7fc3db7",
+    "shinySprite": "images/wishdex/25-shiny.png?v=b854c19f420d",
     "types": [
       "Water",
       "Electric"
@@ -2808,8 +2820,8 @@ window.WISHDEX_DATA = [
     "weight": "33.9 kg",
     "abilities": [
       "Volt Absorb",
-      "Damp",
-      "Drizzle (Hidden)"
+      "Drizzle",
+      "Electric Surge (Hidden)"
     ],
     "description": "Its lightning-bolt crown draws storms and serves as a living lightning rod. Each absorbed strike amplifies its power to terrifying, cataclysmic levels.",
     "evolutions": [],
@@ -2840,15 +2852,7 @@ window.WISHDEX_DATA = [
       },
       {
         "level": 1,
-        "move": "Perish Song"
-      },
-      {
-        "level": 1,
         "move": "Swagger"
-      },
-      {
-        "level": 1,
-        "move": "Hyper Voice"
       },
       {
         "level": 1,
@@ -2856,19 +2860,7 @@ window.WISHDEX_DATA = [
       },
       {
         "level": 1,
-        "move": "Earth Power"
-      },
-      {
-        "level": 1,
         "move": "Pound"
-      },
-      {
-        "level": 1,
-        "move": "Hydro Pump"
-      },
-      {
-        "level": 1,
-        "move": "Belly Drum"
       },
       {
         "level": 1,
@@ -2903,6 +2895,14 @@ window.WISHDEX_DATA = [
         "move": "Discharge"
       },
       {
+        "level": 35,
+        "move": "Hyper Voice"
+      },
+      {
+        "level": 36,
+        "move": "Earth Power"
+      },
+      {
         "level": 36,
         "move": "Earth Power"
       },
@@ -2913,6 +2913,18 @@ window.WISHDEX_DATA = [
       {
         "level": 42,
         "move": "Hydro Pump"
+      },
+      {
+        "level": 42,
+        "move": "Hydro Pump"
+      },
+      {
+        "level": 45,
+        "move": "Perish Song"
+      },
+      {
+        "level": 48,
+        "move": "Belly Drum"
       },
       {
         "level": 48,
@@ -2929,6 +2941,10 @@ window.WISHDEX_DATA = [
       {
         "level": 60,
         "move": "Thunder"
+      },
+      {
+        "level": 65,
+        "move": "Zap Cannon"
       }
     ],
     "hp": 90,
@@ -2942,9 +2958,9 @@ window.WISHDEX_DATA = [
     "id": 26,
     "name": "Jigglypuff",
     "species": "Balloon Pokémon",
-    "sprite": "images/wishdex/26.png",
-    "frameSprite": "images/wishdex/26-frame.png",
-    "shinySprite": "images/wishdex/26-shiny.png",
+    "sprite": "images/wishdex/26.png?v=4043612561da",
+    "frameSprite": "images/wishdex/26-frame.png?v=62188f027274",
+    "shinySprite": "images/wishdex/26-shiny.png?v=bbb9b7fa8b8a",
     "types": [
       "Flying",
       "Fairy"
@@ -2964,10 +2980,6 @@ window.WISHDEX_DATA = [
       }
     ],
     "moveset": [
-      {
-        "level": 0,
-        "move": "Fairy Wind"
-      },
       {
         "level": 0,
         "move": "Sing"
@@ -3096,9 +3108,9 @@ window.WISHDEX_DATA = [
     "id": 27,
     "name": "Wigglytuff",
     "species": "Balloon Pokémon",
-    "sprite": "images/wishdex/27.png",
-    "frameSprite": "images/wishdex/27-frame.png",
-    "shinySprite": "images/wishdex/27-shiny.png",
+    "sprite": "images/wishdex/27.png?v=7c8a866bccb0",
+    "frameSprite": "images/wishdex/27-frame.png?v=bb947790a101",
+    "shinySprite": "images/wishdex/27-shiny.png?v=72e77734d91b",
     "types": [
       "Flying",
       "Fairy"
@@ -3116,10 +3128,6 @@ window.WISHDEX_DATA = [
       {
         "level": 0,
         "move": "Fairy Wind"
-      },
-      {
-        "level": 0,
-        "move": "Sing"
       },
       {
         "level": 1,
@@ -3245,9 +3253,9 @@ window.WISHDEX_DATA = [
     "id": 28,
     "name": "Slugma",
     "species": "Lava Pokémon",
-    "sprite": "images/wishdex/28.png",
-    "frameSprite": "images/wishdex/28-frame.png",
-    "shinySprite": "images/wishdex/28-shiny.png",
+    "sprite": "images/wishdex/28.png?v=844222fd52cb",
+    "frameSprite": "images/wishdex/28-frame.png?v=b6581b06e2bc",
+    "shinySprite": "images/wishdex/28-shiny.png?v=f996499440e9",
     "types": [
       "Poison"
     ],
@@ -3358,9 +3366,9 @@ window.WISHDEX_DATA = [
     "id": 29,
     "name": "Magcargo",
     "species": "Lava Pokémon",
-    "sprite": "images/wishdex/29.png",
-    "frameSprite": "images/wishdex/29-frame.png",
-    "shinySprite": "images/wishdex/29-shiny.png",
+    "sprite": "images/wishdex/29.png?v=67cf31a4915c",
+    "frameSprite": "images/wishdex/29-frame.png?v=69873233fa3f",
+    "shinySprite": "images/wishdex/29-shiny.png?v=cb9b0c564230",
     "types": [
       "Poison",
       "Rock"
@@ -3398,10 +3406,6 @@ window.WISHDEX_DATA = [
       {
         "level": 1,
         "move": "Venom Drench"
-      },
-      {
-        "level": 1,
-        "move": "Earth Power"
       },
       {
         "level": 13,
@@ -3452,6 +3456,10 @@ window.WISHDEX_DATA = [
         "move": "Recover"
       },
       {
+        "level": 50,
+        "move": "Earth Power"
+      },
+      {
         "level": 54,
         "move": "Sludge Wave"
       },
@@ -3475,9 +3483,9 @@ window.WISHDEX_DATA = [
     "id": 30,
     "name": "Gulpin",
     "species": "Stomach Pokémon",
-    "sprite": "images/wishdex/30.png",
-    "frameSprite": "images/wishdex/30-frame.png",
-    "shinySprite": "images/wishdex/30-shiny.png",
+    "sprite": "images/wishdex/30.png?v=dd9b0b3c263a",
+    "frameSprite": "images/wishdex/30-frame.png?v=3d322cab9954",
+    "shinySprite": "images/wishdex/30-shiny.png?v=4d2f11ebc016",
     "types": [
       "Fire"
     ],
@@ -3600,9 +3608,9 @@ window.WISHDEX_DATA = [
     "id": 31,
     "name": "Swalot",
     "species": "Fire Bag Pokémon",
-    "sprite": "images/wishdex/31.png",
-    "frameSprite": "images/wishdex/31-frame.png",
-    "shinySprite": "images/wishdex/31-shiny.png",
+    "sprite": "images/wishdex/31.png?v=d8b636cf52e6",
+    "frameSprite": "images/wishdex/31-frame.png?v=5dfafc380f93",
+    "shinySprite": "images/wishdex/31-shiny.png?v=a6a82214b810",
     "types": [
       "Fire"
     ],
@@ -3716,9 +3724,9 @@ window.WISHDEX_DATA = [
     "id": 32,
     "name": "Pinsir",
     "species": "Stag Beetle Pokémon",
-    "sprite": "images/wishdex/32.png",
-    "frameSprite": "images/wishdex/32-frame.png",
-    "shinySprite": "images/wishdex/32-shiny.png",
+    "sprite": "images/wishdex/32.png?v=97324af2bcc6",
+    "frameSprite": "images/wishdex/32-frame.png?v=4c81800ed9b3",
+    "shinySprite": "images/wishdex/32-shiny.png?v=091c693f2a2f",
     "types": [
       "Bug",
       "Dark"
@@ -3841,9 +3849,9 @@ window.WISHDEX_DATA = [
     "id": 33,
     "name": "Skitty",
     "species": "Kitten Pokémon",
-    "sprite": "images/wishdex/33.png",
-    "frameSprite": "images/wishdex/33-frame.png",
-    "shinySprite": "images/wishdex/33-shiny.png",
+    "sprite": "images/wishdex/33.png?v=17f8cca2297d",
+    "frameSprite": "images/wishdex/33-frame.png?v=3047c26caa62",
+    "shinySprite": "images/wishdex/33-shiny.png?v=6f47aa9caabc",
     "types": [
       "Normal",
       "Steel"
@@ -4003,9 +4011,9 @@ window.WISHDEX_DATA = [
     "id": 34,
     "name": "Delcatty",
     "species": "Ninja Cat Pokémon",
-    "sprite": "images/wishdex/34.png",
-    "frameSprite": "images/wishdex/34-frame.png",
-    "shinySprite": "images/wishdex/34-shiny.png",
+    "sprite": "images/wishdex/34.png?v=20f7a81e5053",
+    "frameSprite": "images/wishdex/34-frame.png?v=88d7782a1a38",
+    "shinySprite": "images/wishdex/34-shiny.png?v=8911904d70e6",
     "types": [
       "Normal",
       "Steel"
@@ -4176,9 +4184,9 @@ window.WISHDEX_DATA = [
     "id": 35,
     "name": "Skarmory",
     "species": "Armor Bird Pokémon",
-    "sprite": "images/wishdex/35.png",
-    "frameSprite": "images/wishdex/35-frame.png",
-    "shinySprite": "images/wishdex/35-shiny.png",
+    "sprite": "images/wishdex/35.png?v=e080eea268f8",
+    "frameSprite": "images/wishdex/35-frame.png?v=e20716b5c493",
+    "shinySprite": "images/wishdex/35-shiny.png?v=300bea5a4f01",
     "types": [
       "Steel",
       "Fighting"
@@ -4285,9 +4293,9 @@ window.WISHDEX_DATA = [
     "id": 36,
     "name": "Cursola",
     "species": "Coral Pokémon",
-    "sprite": "images/wishdex/36.png",
-    "frameSprite": "images/wishdex/36-frame.png",
-    "shinySprite": "images/wishdex/36-shiny.png",
+    "sprite": "images/wishdex/36.png?v=6f0bf55d8b88",
+    "frameSprite": "images/wishdex/36-frame.png?v=8c850e937b5d",
+    "shinySprite": "images/wishdex/36-shiny.png?v=55c41e13a3de",
     "types": [
       "Water",
       "Fairy"
@@ -4442,9 +4450,9 @@ window.WISHDEX_DATA = [
     "id": 37,
     "name": "Clamperl",
     "species": "Bivalve Pokémon",
-    "sprite": "images/wishdex/37.png",
-    "frameSprite": "images/wishdex/37-frame.png",
-    "shinySprite": "images/wishdex/37-shiny.png",
+    "sprite": "images/wishdex/37.png?v=d7571681f5b9",
+    "frameSprite": "images/wishdex/37-frame.png?v=8873d793a897",
+    "shinySprite": "images/wishdex/37-shiny.png?v=cb7f80a741e6",
     "types": [
       "Rock",
       "Ghost"
@@ -4503,9 +4511,9 @@ window.WISHDEX_DATA = [
     "id": 38,
     "name": "Gorebyss",
     "species": "South Sea Pokémon",
-    "sprite": "images/wishdex/38.png",
-    "frameSprite": "images/wishdex/38-frame.png",
-    "shinySprite": null,
+    "sprite": "images/wishdex/38.png?v=c77a1ed3a0c9",
+    "frameSprite": "images/wishdex/38-frame.png?v=e65dd6895906",
+    "shinySprite": "images/wishdex/38-shiny.png?v=98d20f213e44",
     "types": [
       "Fairy",
       "Ghost"
@@ -4603,9 +4611,9 @@ window.WISHDEX_DATA = [
     "id": 39,
     "name": "Huntail",
     "species": "Deep Sea Pokémon",
-    "sprite": "images/wishdex/39.png",
-    "frameSprite": "images/wishdex/39-frame.png",
-    "shinySprite": "images/wishdex/39-shiny.png",
+    "sprite": "images/wishdex/39.png?v=ab154e18ad19",
+    "frameSprite": "images/wishdex/39-frame.png?v=568ec8e62d3e",
+    "shinySprite": "images/wishdex/39-shiny.png?v=59fee824bcbe",
     "types": [
       "Dark",
       "Ghost"
@@ -4704,9 +4712,9 @@ window.WISHDEX_DATA = [
     "id": 40,
     "name": "Luvdisc",
     "species": "Rendezvous Pokémon",
-    "sprite": "images/wishdex/40.png",
-    "frameSprite": "images/wishdex/40-frame.png",
-    "shinySprite": "images/wishdex/40-shiny.png",
+    "sprite": "images/wishdex/40.png?v=ce4f2fb48fbe",
+    "frameSprite": "images/wishdex/40-frame.png?v=1186a6dfe3ff",
+    "shinySprite": "images/wishdex/40-shiny.png?v=2756457dfd96",
     "types": [
       "Water",
       "Dark"
@@ -4861,9 +4869,9 @@ window.WISHDEX_DATA = [
     "id": 41,
     "name": "Vesperain",
     "species": "Eyeball Pokémon",
-    "sprite": "images/wishdex/41.png",
-    "frameSprite": "images/wishdex/41-frame.png",
-    "shinySprite": "images/wishdex/41-shiny.png",
+    "sprite": "images/wishdex/41.png?v=57be56c0fd67",
+    "frameSprite": "images/wishdex/41-frame.png?v=49d14835086f",
+    "shinySprite": "images/wishdex/41-shiny.png?v=4086753c8dd5",
     "types": [
       "Bug",
       "Flying"
@@ -4994,9 +5002,9 @@ window.WISHDEX_DATA = [
     "id": 42,
     "name": "Hoppip",
     "species": "Cottonweed Pokémon",
-    "sprite": "images/wishdex/42.png",
-    "frameSprite": "images/wishdex/42-frame.png",
-    "shinySprite": "images/wishdex/42-shiny.png",
+    "sprite": "images/wishdex/42.png?v=fff4d981128c",
+    "frameSprite": "images/wishdex/42-frame.png?v=adeca1f1d107",
+    "shinySprite": "images/wishdex/42-shiny.png?v=d63da108a05d",
     "types": [
       "Fairy"
     ],
@@ -5062,9 +5070,9 @@ window.WISHDEX_DATA = [
     "id": 43,
     "name": "Skiploom",
     "species": "Cottonweed Pokémon",
-    "sprite": "images/wishdex/43.png",
-    "frameSprite": "images/wishdex/43-frame.png",
-    "shinySprite": "images/wishdex/43-shiny.png",
+    "sprite": "images/wishdex/43.png?v=8eff646acc9c",
+    "frameSprite": "images/wishdex/43-frame.png?v=1c649858f15a",
+    "shinySprite": "images/wishdex/43-shiny.png?v=0a41d0b35192",
     "types": [
       "Fairy",
       "Ice"
@@ -5167,9 +5175,9 @@ window.WISHDEX_DATA = [
     "id": 44,
     "name": "Jumpluff",
     "species": "Cottonweed Pokémon",
-    "sprite": "images/wishdex/44.png",
-    "frameSprite": "images/wishdex/44-frame.png",
-    "shinySprite": "images/wishdex/44-shiny.png",
+    "sprite": "images/wishdex/44.png?v=eba0123f0aa1",
+    "frameSprite": "images/wishdex/44-frame.png?v=83054694caba",
+    "shinySprite": "images/wishdex/44-shiny.png?v=215f9362418b",
     "types": [
       "Fairy",
       "Ice"
@@ -5216,43 +5224,43 @@ window.WISHDEX_DATA = [
         "move": "Covet"
       },
       {
-        "level": 22,
+        "level": 27,
         "move": "Acrobatics"
       },
       {
-        "level": 26,
+        "level": 31,
         "move": "Ice Punch"
-      },
-      {
-        "level": 30,
-        "move": "Play Rough"
       },
       {
         "level": 35,
-        "move": "Avalanche"
+        "move": "Play Rough"
       },
       {
         "level": 40,
-        "move": "U-turn"
+        "move": "Avalanche"
       },
       {
         "level": 45,
-        "move": "Ice Punch"
-      },
-      {
-        "level": 47,
-        "move": "Icicle Spear"
+        "move": "U-turn"
       },
       {
         "level": 50,
-        "move": "Bounce"
+        "move": "Ice Punch"
+      },
+      {
+        "level": 52,
+        "move": "Icicle Spear"
       },
       {
         "level": 55,
-        "move": "Memento"
+        "move": "Bounce"
       },
       {
         "level": 60,
+        "move": "Memento"
+      },
+      {
+        "level": 65,
         "move": "Ice Hammer"
       }
     ],
@@ -5267,9 +5275,9 @@ window.WISHDEX_DATA = [
     "id": 45,
     "name": "Torkoal",
     "species": "Coal Pokémon",
-    "sprite": "images/wishdex/45.png",
-    "frameSprite": "images/wishdex/45-frame.png",
-    "shinySprite": "images/wishdex/45-shiny.png",
+    "sprite": "images/wishdex/45.png?v=7d09e804c4f5",
+    "frameSprite": "images/wishdex/45-frame.png?v=b9c0a264f569",
+    "shinySprite": "images/wishdex/45-shiny.png?v=2631177aba29",
     "types": [
       "Ice"
     ],
@@ -5277,7 +5285,7 @@ window.WISHDEX_DATA = [
     "weight": "80.4 kg",
     "abilities": [
       "White Smoke",
-      "Drought",
+      "Snow Warning",
       "Shell Armor (Hidden)"
     ],
     "description": "It battles using energy it gets from burning coal. When loosing smoke from its nostrils, it lets off a sound that is similar to a locomotive's horn.",
@@ -5357,19 +5365,19 @@ window.WISHDEX_DATA = [
       }
     ],
     "hp": 70,
-    "attack": 85,
+    "attack": 65,
     "defense": 70,
     "speed": 20,
-    "spAttack": 85,
+    "spAttack": 105,
     "spDefense": 140
   },
   {
     "id": 46,
     "name": "Vulpix",
     "species": "Fox Pokémon",
-    "sprite": "images/wishdex/46.png",
-    "frameSprite": "images/wishdex/46-frame.png",
-    "shinySprite": "images/wishdex/46-shiny.png",
+    "sprite": "images/wishdex/46.png?v=767f264e27df",
+    "frameSprite": "images/wishdex/46-frame.png?v=4dd54a5b4e11",
+    "shinySprite": "images/wishdex/46-shiny.png?v=d8a0fcdc0d46",
     "types": [
       "Fire",
       "Fairy"
@@ -5505,9 +5513,9 @@ window.WISHDEX_DATA = [
     "id": 47,
     "name": "Ninetales",
     "species": "Fox Pokémon",
-    "sprite": "images/wishdex/47.png",
-    "frameSprite": "images/wishdex/47-frame.png",
-    "shinySprite": "images/wishdex/47-shiny.png",
+    "sprite": "images/wishdex/47.png?v=edf0d7a81a25",
+    "frameSprite": "images/wishdex/47-frame.png?v=001fabfa4252",
+    "shinySprite": "images/wishdex/47-shiny.png?v=913ead347eea",
     "types": [
       "Fire",
       "Fairy"
@@ -5529,10 +5537,6 @@ window.WISHDEX_DATA = [
       {
         "level": 1,
         "move": "Disable"
-      },
-      {
-        "level": 1,
-        "move": "Nasty Plot"
       },
       {
         "level": 1,
@@ -5581,6 +5585,10 @@ window.WISHDEX_DATA = [
       {
         "level": 23,
         "move": "Confuse Ray"
+      },
+      {
+        "level": 25,
+        "move": "Nasty Plot"
       },
       {
         "level": 27,
@@ -5654,9 +5662,9 @@ window.WISHDEX_DATA = [
     "id": 48,
     "name": "Dragonami",
     "species": "Dragon Pokémon",
-    "sprite": "images/wishdex/48.png",
-    "frameSprite": "images/wishdex/48-frame.png",
-    "shinySprite": "images/wishdex/48-shiny.png",
+    "sprite": "images/wishdex/48.png?v=d1243ea4e6ee",
+    "frameSprite": "images/wishdex/48-frame.png?v=ce794db9c517",
+    "shinySprite": "images/wishdex/48-shiny.png?v=2160ebbd059a",
     "types": [
       "Dragon",
       "Water"
@@ -5814,9 +5822,9 @@ window.WISHDEX_DATA = [
     "id": 49,
     "name": "Chimecho",
     "species": "Wind Chime Pokémon",
-    "sprite": "images/wishdex/49.png",
-    "frameSprite": "images/wishdex/49-frame.png",
-    "shinySprite": "images/wishdex/49-shiny.png",
+    "sprite": "images/wishdex/49.png?v=ce80831b335c",
+    "frameSprite": "images/wishdex/49-frame.png?v=9138b14d173e",
+    "shinySprite": "images/wishdex/49-shiny.png?v=c8b7cf5f0456",
     "types": [
       "Ghost",
       "Fire"
@@ -5899,9 +5907,9 @@ window.WISHDEX_DATA = [
     "id": 50,
     "name": "Relicanth",
     "species": "Longevity Pokémon",
-    "sprite": "images/wishdex/50.png",
-    "frameSprite": "images/wishdex/50-frame.png",
-    "shinySprite": "images/wishdex/50-shiny.png",
+    "sprite": "images/wishdex/50.png?v=f8d91e2b0fef",
+    "frameSprite": "images/wishdex/50-frame.png?v=f11b6801f304",
+    "shinySprite": "images/wishdex/50-shiny.png?v=11bf56c44b23",
     "types": [
       "Ghost",
       "Rock"
@@ -6008,9 +6016,9 @@ window.WISHDEX_DATA = [
     "id": 51,
     "name": "Mandraloom",
     "species": "Mushroom Pokémon",
-    "sprite": "images/wishdex/51.png",
-    "frameSprite": "images/wishdex/51-frame.png",
-    "shinySprite": "images/wishdex/51-shiny.png",
+    "sprite": "images/wishdex/51.png?v=4dacad7d6046",
+    "frameSprite": "images/wishdex/51-frame.png?v=ee3fab01e6dd",
+    "shinySprite": "images/wishdex/51-shiny.png?v=bd3ef3665467",
     "types": [
       "Poison",
       "Fairy"
@@ -6133,9 +6141,9 @@ window.WISHDEX_DATA = [
     "id": 52,
     "name": "Wurmple",
     "species": "Worm Pokémon",
-    "sprite": "images/wishdex/52.png",
-    "frameSprite": "images/wishdex/52-frame.png",
-    "shinySprite": "images/wishdex/52-shiny.png",
+    "sprite": "images/wishdex/52.png?v=853d4c5bdb7f",
+    "frameSprite": "images/wishdex/52-frame.png?v=fdf84d07b983",
+    "shinySprite": "images/wishdex/52-shiny.png?v=8d28b3206c45",
     "types": [
       "Bug",
       "Normal"
@@ -6199,9 +6207,9 @@ window.WISHDEX_DATA = [
     "id": 53,
     "name": "Silcoon",
     "species": "Cocoon Pokémon",
-    "sprite": "images/wishdex/53.png",
-    "frameSprite": "images/wishdex/53-frame.png",
-    "shinySprite": "images/wishdex/53-shiny.png",
+    "sprite": "images/wishdex/53.png?v=1faef9799600",
+    "frameSprite": "images/wishdex/53-frame.png?v=8040a7f51b96",
+    "shinySprite": "images/wishdex/53-shiny.png?v=28304549a7f4",
     "types": [
       "Bug",
       "Normal"
@@ -6239,9 +6247,9 @@ window.WISHDEX_DATA = [
     "id": 54,
     "name": "Cascoon",
     "species": "Cocoon Pokémon",
-    "sprite": "images/wishdex/54.png",
-    "frameSprite": "images/wishdex/54-frame.png",
-    "shinySprite": "images/wishdex/54-shiny.png",
+    "sprite": "images/wishdex/54.png?v=c179f3e2473f",
+    "frameSprite": "images/wishdex/54-frame.png?v=9a63b6dd6b61",
+    "shinySprite": "images/wishdex/54-shiny.png?v=a2696ea53421",
     "types": [
       "Bug",
       "Normal"
@@ -6279,9 +6287,9 @@ window.WISHDEX_DATA = [
     "id": 55,
     "name": "Dustox",
     "species": "Poison Moth Pokémon",
-    "sprite": "images/wishdex/55.png",
-    "frameSprite": "images/wishdex/55-frame.png",
-    "shinySprite": "images/wishdex/55-shiny.png",
+    "sprite": "images/wishdex/55.png?v=2dc41a77bb82",
+    "frameSprite": "images/wishdex/55-frame.png?v=10e6a341283c",
+    "shinySprite": "images/wishdex/55-shiny.png?v=0201ce18148e",
     "types": [
       "Bug",
       "Fairy"
@@ -6420,9 +6428,9 @@ window.WISHDEX_DATA = [
     "id": 56,
     "name": "Beautifly",
     "species": "Butterfly Pokémon",
-    "sprite": "images/wishdex/56.png",
-    "frameSprite": "images/wishdex/56-frame.png",
-    "shinySprite": "images/wishdex/56-shiny.png",
+    "sprite": "images/wishdex/56.png?v=9d114ed576d7",
+    "frameSprite": "images/wishdex/56-frame.png?v=88c300f9cca8",
+    "shinySprite": "images/wishdex/56-shiny.png?v=e6f071ddd245",
     "types": [
       "Bug",
       "Psychic"
@@ -6561,9 +6569,9 @@ window.WISHDEX_DATA = [
     "id": 57,
     "name": "Obstagoon",
     "species": "Rushing Pokémon",
-    "sprite": "images/wishdex/57.png",
-    "frameSprite": "images/wishdex/57-frame.png",
-    "shinySprite": "images/wishdex/57-shiny.png",
+    "sprite": "images/wishdex/57.png?v=1005fa3f6a52",
+    "frameSprite": "images/wishdex/57-frame.png?v=88555d8afa33",
+    "shinySprite": "images/wishdex/57-shiny.png?v=95baaacfe5ad",
     "types": [
       "Normal"
     ],
@@ -6584,10 +6592,6 @@ window.WISHDEX_DATA = [
       {
         "level": 1,
         "move": "Obstruct"
-      },
-      {
-        "level": 1,
-        "move": "Cross Chop"
       },
       {
         "level": 1,
@@ -6658,6 +6662,10 @@ window.WISHDEX_DATA = [
         "move": "Counter"
       },
       {
+        "level": 45,
+        "move": "Cross Chop"
+      },
+      {
         "level": 49,
         "move": "Taunt"
       },
@@ -6677,9 +6685,9 @@ window.WISHDEX_DATA = [
     "id": 58,
     "name": "Snubbull",
     "species": "Pup Pokémon",
-    "sprite": "images/wishdex/58.png",
-    "frameSprite": "images/wishdex/58-frame.png",
-    "shinySprite": "images/wishdex/58-shiny.png",
+    "sprite": "images/wishdex/58.png?v=208e1ee4fe8b",
+    "frameSprite": "images/wishdex/58-frame.png?v=1c0b78a601d8",
+    "shinySprite": "images/wishdex/58-shiny.png?v=847eecc7e131",
     "types": [
       "Fire"
     ],
@@ -6782,9 +6790,9 @@ window.WISHDEX_DATA = [
     "id": 59,
     "name": "Granbull",
     "species": "Inferno Pokémon",
-    "sprite": "images/wishdex/59.png",
-    "frameSprite": "images/wishdex/59-frame.png",
-    "shinySprite": "images/wishdex/59-shiny.png",
+    "sprite": "images/wishdex/59.png?v=e0c2c6d2b8e4",
+    "frameSprite": "images/wishdex/59-frame.png?v=c416f854c7ce",
+    "shinySprite": "images/wishdex/59-shiny.png?v=66729f82d6bb",
     "types": [
       "Fire",
       "Fighting"
@@ -6910,10 +6918,10 @@ window.WISHDEX_DATA = [
   {
     "id": 60,
     "name": "Seedot",
-    "species": "Acorn Pokémon",
-    "sprite": "images/wishdex/60.png",
-    "frameSprite": "images/wishdex/60-frame.png",
-    "shinySprite": "images/wishdex/60-shiny.png",
+    "species": "Grenade Pokémon",
+    "sprite": "images/wishdex/60.png?v=54cfe544f7e1",
+    "frameSprite": "images/wishdex/60-frame.png?v=163c047468b1",
+    "shinySprite": "images/wishdex/60-shiny.png?v=36177a7caa92",
     "types": [
       "Fire",
       "Steel"
@@ -7009,9 +7017,9 @@ window.WISHDEX_DATA = [
     "id": 61,
     "name": "Nuzleaf",
     "species": "Wily Pokémon",
-    "sprite": "images/wishdex/61.png",
-    "frameSprite": "images/wishdex/61-frame.png",
-    "shinySprite": "images/wishdex/61-shiny.png",
+    "sprite": "images/wishdex/61.png?v=f017480a4ea7",
+    "frameSprite": "images/wishdex/61-frame.png?v=f19d49f41d22",
+    "shinySprite": "images/wishdex/61-shiny.png?v=fe2d894aa6af",
     "types": [
       "Fire",
       "Steel"
@@ -7135,9 +7143,9 @@ window.WISHDEX_DATA = [
     "id": 62,
     "name": "Shiftry",
     "species": "Wicked Pokémon",
-    "sprite": "images/wishdex/62.png",
-    "frameSprite": "images/wishdex/62-frame.png",
-    "shinySprite": "images/wishdex/62-shiny.png",
+    "sprite": "images/wishdex/62.png?v=b5fa7d4c91e1",
+    "frameSprite": "images/wishdex/62-frame.png?v=376767409cdd",
+    "shinySprite": "images/wishdex/62-shiny.png?v=4ae7ae2c9d78",
     "types": [
       "Fire",
       "Steel"
@@ -7276,9 +7284,9 @@ window.WISHDEX_DATA = [
     "id": 63,
     "name": "Zubat",
     "species": "Bat Pokémon",
-    "sprite": "images/wishdex/63.png",
-    "frameSprite": "images/wishdex/63-frame.png",
-    "shinySprite": "images/wishdex/63-shiny.png",
+    "sprite": "images/wishdex/63.png?v=cca8e80156a2",
+    "frameSprite": "images/wishdex/63-frame.png?v=f410064ff078",
+    "shinySprite": "images/wishdex/63-shiny.png?v=80bb6b59d9e2",
     "types": [
       "Poison",
       "Steel"
@@ -7327,6 +7335,10 @@ window.WISHDEX_DATA = [
         "move": "Quick Guard"
       },
       {
+        "level": 22,
+        "move": "Wing Attack"
+      },
+      {
         "level": 25,
         "move": "Air Cutter"
       },
@@ -7361,6 +7373,10 @@ window.WISHDEX_DATA = [
       {
         "level": 55,
         "move": "Leech Life"
+      },
+      {
+        "level": 60,
+        "move": "Sludge Wave"
       }
     ],
     "hp": 40,
@@ -7374,9 +7390,9 @@ window.WISHDEX_DATA = [
     "id": 64,
     "name": "Golbat",
     "species": "Bat Pokémon",
-    "sprite": "images/wishdex/64.png",
-    "frameSprite": "images/wishdex/64-frame.png",
-    "shinySprite": "images/wishdex/64-shiny.png",
+    "sprite": "images/wishdex/64.png?v=b63acf637480",
+    "frameSprite": "images/wishdex/64-frame.png?v=ec91ec28a1b8",
+    "shinySprite": "images/wishdex/64-shiny.png?v=33c57e269e11",
     "types": [
       "Poison",
       "Steel"
@@ -7433,6 +7449,10 @@ window.WISHDEX_DATA = [
         "move": "Quick Guard"
       },
       {
+        "level": 22,
+        "move": "Wing Attack"
+      },
+      {
         "level": 27,
         "move": "Air Cutter"
       },
@@ -7465,8 +7485,12 @@ window.WISHDEX_DATA = [
         "move": "Air Slash"
       },
       {
-        "level": 69,
+        "level": 64,
         "move": "Leech Life"
+      },
+      {
+        "level": 66,
+        "move": "Sludge Wave"
       }
     ],
     "hp": 75,
@@ -7480,9 +7504,9 @@ window.WISHDEX_DATA = [
     "id": 65,
     "name": "Crobat",
     "species": "Bat Pokémon",
-    "sprite": "images/wishdex/65.png",
-    "frameSprite": "images/wishdex/65-frame.png",
-    "shinySprite": "images/wishdex/65-shiny.png",
+    "sprite": "images/wishdex/65.png?v=e6254f66cd1f",
+    "frameSprite": "images/wishdex/65-frame.png?v=8dcd9a799489",
+    "shinySprite": "images/wishdex/65-shiny.png?v=17f6ae81c05b",
     "types": [
       "Poison",
       "Steel"
@@ -7542,6 +7566,10 @@ window.WISHDEX_DATA = [
         "move": "Quick Guard"
       },
       {
+        "level": 22,
+        "move": "Wing Attack"
+      },
+      {
         "level": 27,
         "move": "Air Cutter"
       },
@@ -7566,8 +7594,12 @@ window.WISHDEX_DATA = [
         "move": "Air Slash"
       },
       {
-        "level": 69,
+        "level": 66,
         "move": "Leech Life"
+      },
+      {
+        "level": 69,
+        "move": "Sludge Wave"
       }
     ],
     "hp": 85,
@@ -7581,9 +7613,9 @@ window.WISHDEX_DATA = [
     "id": 66,
     "name": "Seviper",
     "species": "Fang Snake Pokémon",
-    "sprite": "images/wishdex/66.png",
-    "frameSprite": "images/wishdex/66-frame.png",
-    "shinySprite": "images/wishdex/66-shiny.png",
+    "sprite": "images/wishdex/66.png?v=26fe9c47fa5a",
+    "frameSprite": "images/wishdex/66-frame.png?v=956da5db03f3",
+    "shinySprite": "images/wishdex/66-shiny.png?v=8538cd99888f",
     "types": [
       "Ground",
       "Electric"
@@ -7730,9 +7762,9 @@ window.WISHDEX_DATA = [
     "id": 67,
     "name": "Meowth",
     "species": "Scratch Cat Pokémon",
-    "sprite": "images/wishdex/67.png",
-    "frameSprite": "images/wishdex/67-frame.png",
-    "shinySprite": "images/wishdex/67-shiny.png",
+    "sprite": "images/wishdex/67.png?v=f924b139dfff",
+    "frameSprite": "images/wishdex/67-frame.png?v=70ca65660d3b",
+    "shinySprite": "images/wishdex/67-shiny.png?v=27041f9af394",
     "types": [
       "Ghost"
     ],
@@ -7879,9 +7911,9 @@ window.WISHDEX_DATA = [
     "id": 68,
     "name": "Persian",
     "species": "Void Cat Pokémon",
-    "sprite": "images/wishdex/68.png",
-    "frameSprite": "images/wishdex/68-frame.png",
-    "shinySprite": "images/wishdex/68-shiny.png",
+    "sprite": "images/wishdex/68.png?v=61e4b278501a",
+    "frameSprite": "images/wishdex/68-frame.png?v=75849c447a6c",
+    "shinySprite": "images/wishdex/68-shiny.png?v=2e3429be811a",
     "types": [
       "Ghost"
     ],
@@ -8039,9 +8071,9 @@ window.WISHDEX_DATA = [
     "id": 69,
     "name": "Ratybara",
     "species": "Capybara Pokémon",
-    "sprite": "images/wishdex/69.png",
-    "frameSprite": "images/wishdex/69-frame.png",
-    "shinySprite": "images/wishdex/69-shiny.png",
+    "sprite": "images/wishdex/69.png?v=d2b95ff8e1db",
+    "frameSprite": "images/wishdex/69-frame.png?v=737dcb145e41",
+    "shinySprite": "images/wishdex/69-shiny.png?v=f84952b6678f",
     "types": [
       "Grass",
       "Water"
@@ -8140,9 +8172,9 @@ window.WISHDEX_DATA = [
     "id": 70,
     "name": "Voltorb",
     "species": "Dice Pokémon",
-    "sprite": "images/wishdex/70.png",
-    "frameSprite": "images/wishdex/70-frame.png",
-    "shinySprite": "images/wishdex/70-shiny.png",
+    "sprite": "images/wishdex/70.png?v=fe5dcd54e335",
+    "frameSprite": "images/wishdex/70-frame.png?v=4a1a5da80894",
+    "shinySprite": "images/wishdex/70-shiny.png?v=47598517e61f",
     "types": [
       "Rock",
       "Dark"
@@ -8254,9 +8286,9 @@ window.WISHDEX_DATA = [
     "id": 71,
     "name": "Electrode",
     "species": "Geometric Pokémon",
-    "sprite": "images/wishdex/71.png",
-    "frameSprite": "images/wishdex/71-frame.png",
-    "shinySprite": "images/wishdex/71-shiny.png",
+    "sprite": "images/wishdex/71.png?v=359784e927c1",
+    "frameSprite": "images/wishdex/71-frame.png?v=ff7cd2ca2e9b",
+    "shinySprite": "images/wishdex/71-shiny.png?v=a29ee695e9c2",
     "types": [
       "Rock",
       "Dark"
@@ -8371,9 +8403,9 @@ window.WISHDEX_DATA = [
     "id": 72,
     "name": "Carvanha",
     "species": "Savage Pokémon",
-    "sprite": "images/wishdex/72.png",
-    "frameSprite": "images/wishdex/72-frame.png",
-    "shinySprite": "images/wishdex/72-shiny.png",
+    "sprite": "images/wishdex/72.png?v=fb944e95b57b",
+    "frameSprite": "images/wishdex/72-frame.png?v=d20620ef9abe",
+    "shinySprite": "images/wishdex/72-shiny.png?v=0a308e2a57b1",
     "types": [
       "Fire"
     ],
@@ -8496,9 +8528,9 @@ window.WISHDEX_DATA = [
     "id": 73,
     "name": "Sharpedo",
     "species": "Lava Shark Pokémon",
-    "sprite": "images/wishdex/73.png",
-    "frameSprite": "images/wishdex/73-frame.png",
-    "shinySprite": "images/wishdex/73-shiny.png",
+    "sprite": "images/wishdex/73.png?v=22549e2d4fac",
+    "frameSprite": "images/wishdex/73-frame.png?v=efe9c6642ee6",
+    "shinySprite": "images/wishdex/73-shiny.png?v=f96b98f8f270",
     "types": [
       "Fire",
       "Ground"
@@ -8637,9 +8669,9 @@ window.WISHDEX_DATA = [
     "id": 74,
     "name": "Cacnea",
     "species": "Snowman Pokémon",
-    "sprite": "images/wishdex/74.png",
-    "frameSprite": "images/wishdex/74-frame.png",
-    "shinySprite": "images/wishdex/74-shiny.png",
+    "sprite": "images/wishdex/74.png?v=e67f2ed16c6d",
+    "frameSprite": "images/wishdex/74-frame.png?v=c6e5c782d30e",
+    "shinySprite": "images/wishdex/74-shiny.png?v=f19f0e54dcea",
     "types": [
       "Ice",
       "Normal"
@@ -8751,9 +8783,9 @@ window.WISHDEX_DATA = [
     "id": 75,
     "name": "Cacturne",
     "species": "Snow Figure Pokémon",
-    "sprite": "images/wishdex/75.png",
-    "frameSprite": "images/wishdex/75-frame.png",
-    "shinySprite": "images/wishdex/75-shiny.png",
+    "sprite": "images/wishdex/75.png?v=68231e4facaa",
+    "frameSprite": "images/wishdex/75-frame.png?v=f7402abde2a6",
+    "shinySprite": "images/wishdex/75-shiny.png?v=55cc2bd607ed",
     "types": [
       "Ice",
       "Dark"
@@ -8791,10 +8823,6 @@ window.WISHDEX_DATA = [
       {
         "level": 1,
         "move": "Icy Wind"
-      },
-      {
-        "level": 1,
-        "move": "Destiny Bond"
       },
       {
         "level": 10,
@@ -8853,6 +8881,10 @@ window.WISHDEX_DATA = [
         "move": "Destiny Bond"
       },
       {
+        "level": 58,
+        "move": "Destiny Bond"
+      },
+      {
         "level": 60,
         "move": "Ice Beam"
       },
@@ -8872,9 +8904,9 @@ window.WISHDEX_DATA = [
     "id": 76,
     "name": "Numel",
     "species": "Numb Pokémon",
-    "sprite": "images/wishdex/76.png",
-    "frameSprite": "images/wishdex/76-frame.png",
-    "shinySprite": "images/wishdex/76-shiny.png",
+    "sprite": "images/wishdex/76.png?v=b370bb07c804",
+    "frameSprite": "images/wishdex/76-frame.png?v=6f0316902bd5",
+    "shinySprite": "images/wishdex/76-shiny.png?v=b82d558f4186",
     "types": [
       "Water"
     ],
@@ -8989,9 +9021,9 @@ window.WISHDEX_DATA = [
     "id": 77,
     "name": "Camerupt",
     "species": "Leviathan Pokémon",
-    "sprite": "images/wishdex/77.png",
-    "frameSprite": "images/wishdex/77-frame.png",
-    "shinySprite": "images/wishdex/77-shiny.png",
+    "sprite": "images/wishdex/77.png?v=d8f4ab037bf1",
+    "frameSprite": "images/wishdex/77-frame.png?v=fc8f34681ee1",
+    "shinySprite": "images/wishdex/77-shiny.png?v=35d9859237c9",
     "types": [
       "Water",
       "Rock"
@@ -9021,10 +9053,6 @@ window.WISHDEX_DATA = [
       {
         "level": 1,
         "move": "Water Gun"
-      },
-      {
-        "level": 1,
-        "move": "Fissure"
       },
       {
         "level": 1,
@@ -9120,6 +9148,10 @@ window.WISHDEX_DATA = [
       },
       {
         "level": 60,
+        "move": "Fissure"
+      },
+      {
+        "level": 60,
         "move": "Rain Dance"
       }
     ],
@@ -9134,9 +9166,9 @@ window.WISHDEX_DATA = [
     "id": 78,
     "name": "Mudkip",
     "species": "Mud Fish Pokémon",
-    "sprite": "images/wishdex/78.png",
-    "frameSprite": "images/wishdex/78-frame.png",
-    "shinySprite": "images/wishdex/78-shiny.png",
+    "sprite": "images/wishdex/78.png?v=63c2d13565b3",
+    "frameSprite": "images/wishdex/78-frame.png?v=0403db1ec84d",
+    "shinySprite": "images/wishdex/78-shiny.png?v=a44cf9acb4e0",
     "types": [
       "Dark",
       "Ground"
@@ -9252,9 +9284,9 @@ window.WISHDEX_DATA = [
     "id": 79,
     "name": "Marshtomp",
     "species": "Mud Fish Pokémon",
-    "sprite": "images/wishdex/79.png",
-    "frameSprite": "images/wishdex/79-frame.png",
-    "shinySprite": "images/wishdex/79-shiny.png",
+    "sprite": "images/wishdex/79.png?v=e82f81c3dee1",
+    "frameSprite": "images/wishdex/79-frame.png?v=fbd34c0bd38f",
+    "shinySprite": "images/wishdex/79-shiny.png?v=987e5d5d55ae",
     "types": [
       "Dark",
       "Ground"
@@ -9378,9 +9410,9 @@ window.WISHDEX_DATA = [
     "id": 80,
     "name": "Swampert",
     "species": "Mud Fish Pokémon",
-    "sprite": "images/wishdex/80.png",
-    "frameSprite": "images/wishdex/80-frame.png",
-    "shinySprite": "images/wishdex/80-shiny.png",
+    "sprite": "images/wishdex/80.png?v=0624852a3557",
+    "frameSprite": "images/wishdex/80-frame.png?v=e8e6620f1907",
+    "shinySprite": "images/wishdex/80-shiny.png?v=6c72895b5122",
     "types": [
       "Water",
       "Ground"
@@ -9395,10 +9427,6 @@ window.WISHDEX_DATA = [
     "description": "If it senses the approach of a storm and a tidal wave, it protects its seaside nest by piling up boulders. It swims as fast as a jet ski.",
     "evolutions": [],
     "moveset": [
-      {
-        "level": 1,
-        "move": "Hammer Arm"
-      },
       {
         "level": 1,
         "move": "Mud Shot"
@@ -9468,6 +9496,10 @@ window.WISHDEX_DATA = [
         "move": "Crunch"
       },
       {
+        "level": 45,
+        "move": "Hammer Arm"
+      },
+      {
         "level": 46,
         "move": "Screech"
       },
@@ -9503,9 +9535,9 @@ window.WISHDEX_DATA = [
     "id": 81,
     "name": "Treecko",
     "species": "Wood Gecko Pokémon",
-    "sprite": "images/wishdex/81.png",
-    "frameSprite": "images/wishdex/81-frame.png",
-    "shinySprite": "images/wishdex/81-shiny.png",
+    "sprite": "images/wishdex/81.png?v=b351645e8973",
+    "frameSprite": "images/wishdex/81-frame.png?v=2548fc0f78d3",
+    "shinySprite": "images/wishdex/81-shiny.png?v=3401171697b2",
     "types": [
       "Poison"
     ],
@@ -9628,9 +9660,9 @@ window.WISHDEX_DATA = [
     "id": 82,
     "name": "Ralts",
     "species": "Feeling Pokémon",
-    "sprite": "images/wishdex/82.png",
-    "frameSprite": "images/wishdex/82-frame.png",
-    "shinySprite": "images/wishdex/82-shiny.png",
+    "sprite": "images/wishdex/82.png?v=f2407987d63f",
+    "frameSprite": "images/wishdex/82-frame.png?v=575989344d60",
+    "shinySprite": "images/wishdex/82-shiny.png?v=4e8c4a120dbd",
     "types": [
       "Bug"
     ],
@@ -9693,9 +9725,9 @@ window.WISHDEX_DATA = [
     "id": 83,
     "name": "Kirlia",
     "species": "Emotion Pokémon",
-    "sprite": "images/wishdex/83.png",
-    "frameSprite": "images/wishdex/83-frame.png",
-    "shinySprite": "images/wishdex/83-shiny.png",
+    "sprite": "images/wishdex/83.png?v=b69691530bb7",
+    "frameSprite": "images/wishdex/83-frame.png?v=765212154039",
+    "shinySprite": "images/wishdex/83-shiny.png?v=5a5f351b4abf",
     "types": [
       "Bug",
       "Ground"
@@ -9773,13 +9805,12 @@ window.WISHDEX_DATA = [
     "id": 84,
     "name": "Gardevoir",
     "species": "Embrace Pokémon",
-    "sprite": "images/wishdex/84.png",
-    "frameSprite": "images/wishdex/84-frame.png",
-    "shinySprite": "images/wishdex/84-shiny.png",
+    "sprite": "images/wishdex/84.png?v=b7b1e150ee36",
+    "frameSprite": "images/wishdex/84-frame.png?v=b7b1279f38e5",
+    "shinySprite": "images/wishdex/84-shiny.png?v=1cf9090962d6",
     "types": [
       "Bug",
-      "Fairy",
-      "Psychic"
+      "Fairy"
     ],
     "height": "1.6 m",
     "weight": "48.4 kg",
@@ -9895,9 +9926,9 @@ window.WISHDEX_DATA = [
     "id": 85,
     "name": "Gallade",
     "species": "Blade Pokémon",
-    "sprite": "images/wishdex/85.png",
-    "frameSprite": "images/wishdex/85-frame.png",
-    "shinySprite": "images/wishdex/85-shiny.png",
+    "sprite": "images/wishdex/85.png?v=8c528ff9716d",
+    "frameSprite": "images/wishdex/85-frame.png?v=997f2eb613be",
+    "shinySprite": "images/wishdex/85-shiny.png?v=0f7c7e42e682",
     "types": [
       "Bug",
       "Fighting"
@@ -10044,9 +10075,9 @@ window.WISHDEX_DATA = [
     "id": 86,
     "name": "Grovyle",
     "species": "Wood Gecko Pokémon",
-    "sprite": "images/wishdex/86.png",
-    "frameSprite": "images/wishdex/86-frame.png",
-    "shinySprite": "images/wishdex/86-shiny.png",
+    "sprite": "images/wishdex/86.png?v=9efd53516b44",
+    "frameSprite": "images/wishdex/86-frame.png?v=b9b3fba1ae41",
+    "shinySprite": "images/wishdex/86-shiny.png?v=5429c437af4e",
     "types": [
       "Poison"
     ],
@@ -10181,9 +10212,9 @@ window.WISHDEX_DATA = [
     "id": 87,
     "name": "Sceptile",
     "species": "Forest Pokémon",
-    "sprite": "images/wishdex/87.png",
-    "frameSprite": "images/wishdex/87-frame.png",
-    "shinySprite": "images/wishdex/87-shiny.png",
+    "sprite": "images/wishdex/87.png?v=b113a71a04fe",
+    "frameSprite": "images/wishdex/87-frame.png?v=8f3d749f5a46",
+    "shinySprite": "images/wishdex/87-shiny.png?v=b0c5346513ea",
     "types": [
       "Poison",
       "Dragon"
@@ -10334,9 +10365,9 @@ window.WISHDEX_DATA = [
     "id": 88,
     "name": "Bagon",
     "species": "Rock Head Pokémon",
-    "sprite": "images/wishdex/88.png",
-    "frameSprite": "images/wishdex/88-frame.png",
-    "shinySprite": "images/wishdex/88-shiny.png",
+    "sprite": "images/wishdex/88.png?v=9858749f52ab",
+    "frameSprite": "images/wishdex/88-frame.png?v=1b42d268f40c",
+    "shinySprite": "images/wishdex/88-shiny.png?v=a138b06799a6",
     "types": [
       "Dragon",
       "Steel"
@@ -10432,9 +10463,9 @@ window.WISHDEX_DATA = [
     "id": 89,
     "name": "Shelgon",
     "species": "Endurance Pokémon",
-    "sprite": "images/wishdex/89.png",
-    "frameSprite": "images/wishdex/89-frame.png",
-    "shinySprite": "images/wishdex/89-shiny.png",
+    "sprite": "images/wishdex/89.png?v=9d0eb10c9e78",
+    "frameSprite": "images/wishdex/89-frame.png?v=db90e5c31868",
+    "shinySprite": "images/wishdex/89-shiny.png?v=c9de1a71b4b9",
     "types": [
       "Dragon",
       "Steel"
@@ -10565,15 +10596,15 @@ window.WISHDEX_DATA = [
   {
     "id": 90,
     "hidden": true,
-    "sprite": "images/wishdex/hidden-1.png"
+    "sprite": "images/wishdex/hidden-1.png?v=2673d9699d4e"
   },
   {
     "id": 91,
     "name": "Trapinch",
     "species": "Ant Pit Pokémon",
-    "sprite": "images/wishdex/91.png",
-    "frameSprite": "images/wishdex/91-frame.png",
-    "shinySprite": "images/wishdex/91-shiny.png",
+    "sprite": "images/wishdex/91.png?v=44649354b6f0",
+    "frameSprite": "images/wishdex/91-frame.png?v=e9663ea9591e",
+    "shinySprite": "images/wishdex/91-shiny.png?v=dc7da6f21e44",
     "types": [
       "Ice"
     ],
@@ -10668,9 +10699,9 @@ window.WISHDEX_DATA = [
     "id": 92,
     "name": "Vibrava",
     "species": "Vibration Pokémon",
-    "sprite": "images/wishdex/92.png",
-    "frameSprite": "images/wishdex/92-frame.png",
-    "shinySprite": "images/wishdex/92-shiny.png",
+    "sprite": "images/wishdex/92.png?v=3dabd8f22d9d",
+    "frameSprite": "images/wishdex/92-frame.png?v=14096245317e",
+    "shinySprite": "images/wishdex/92-shiny.png?v=f772ba2c1c26",
     "types": [
       "Ice",
       "Dragon"
@@ -10708,10 +10739,6 @@ window.WISHDEX_DATA = [
       },
       {
         "level": 1,
-        "move": "Superpower"
-      },
-      {
-        "level": 1,
         "move": "Astonish"
       },
       {
@@ -10777,6 +10804,10 @@ window.WISHDEX_DATA = [
       {
         "level": 44,
         "move": "Ice Beam"
+      },
+      {
+        "level": 45,
+        "move": "Superpower"
       },
       {
         "level": 48,
@@ -10810,9 +10841,9 @@ window.WISHDEX_DATA = [
     "id": 93,
     "name": "Flygon",
     "species": "Mystic Pokémon",
-    "sprite": "images/wishdex/93.png",
-    "frameSprite": "images/wishdex/93-frame.png",
-    "shinySprite": "images/wishdex/93-shiny.png",
+    "sprite": "images/wishdex/93.png?v=b4f47324f7b6",
+    "frameSprite": "images/wishdex/93-frame.png?v=27b66422e53e",
+    "shinySprite": "images/wishdex/93-shiny.png?v=778f07545260",
     "types": [
       "Ice",
       "Dragon"
@@ -10842,10 +10873,6 @@ window.WISHDEX_DATA = [
       {
         "level": 1,
         "move": "Astonish"
-      },
-      {
-        "level": 1,
-        "move": "Superpower"
       },
       {
         "level": 1,
@@ -10916,6 +10943,10 @@ window.WISHDEX_DATA = [
         "move": "Ice Beam"
       },
       {
+        "level": 45,
+        "move": "Superpower"
+      },
+      {
         "level": 48,
         "move": "Freeze-Dry"
       },
@@ -10947,9 +10978,9 @@ window.WISHDEX_DATA = [
     "id": 94,
     "name": "Igglybuff",
     "species": "Balloon Pokémon",
-    "sprite": "images/wishdex/94.png",
-    "frameSprite": "images/wishdex/94-frame.png",
-    "shinySprite": "images/wishdex/94-shiny.png",
+    "sprite": "images/wishdex/94.png?v=2bd8e39f027b",
+    "frameSprite": "images/wishdex/94-frame.png?v=a1ae2f04757a",
+    "shinySprite": "images/wishdex/94-shiny.png?v=ea60a4d20ab0",
     "types": [
       "Flying",
       "Fairy"
@@ -11057,9 +11088,9 @@ window.WISHDEX_DATA = [
     "id": 95,
     "name": "Chingling",
     "species": "Bell Pokémon",
-    "sprite": "images/wishdex/95.png",
-    "frameSprite": "images/wishdex/95-frame.png",
-    "shinySprite": "images/wishdex/95-shiny.png",
+    "sprite": "images/wishdex/95.png?v=3ea64d845594",
+    "frameSprite": "images/wishdex/95-frame.png?v=0c9d9f126df0",
+    "shinySprite": "images/wishdex/95-shiny.png?v=f07d22d0bc72",
     "types": [
       "Ghost",
       "Fire"
@@ -11123,9 +11154,9 @@ window.WISHDEX_DATA = [
     "id": 96,
     "name": "Wooper",
     "species": "Water Fish Pokémon",
-    "sprite": "images/wishdex/96.png",
-    "frameSprite": "images/wishdex/96-frame.png",
-    "shinySprite": "images/wishdex/96-shiny.png",
+    "sprite": "images/wishdex/96.png?v=37d1904996b1",
+    "frameSprite": "images/wishdex/96-frame.png?v=b8a2f54354d9",
+    "shinySprite": "images/wishdex/96-shiny.png?v=aa64cbbbf128",
     "types": [
       "Water",
       "Ground"
@@ -11208,16 +11239,17 @@ window.WISHDEX_DATA = [
   {
     "id": 97,
     "hidden": true,
-    "sprite": "images/wishdex/hidden-2.png"
+    "sprite": "images/wishdex/hidden-2.png?v=ed32ee30930b"
   },
   {
     "id": 98,
     "name": "Teddiursa",
     "species": "Little Bear Pokémon",
-    "sprite": "images/wishdex/98.png",
-    "frameSprite": "images/wishdex/98-frame.png",
-    "shinySprite": "images/wishdex/98-shiny.png",
+    "sprite": "images/wishdex/98.png?v=9d01980c3e1a",
+    "frameSprite": "images/wishdex/98-frame.png?v=e44ee0ef927f",
+    "shinySprite": "images/wishdex/98-shiny.png?v=508b28a21246",
     "types": [
+      "Ghost",
       "Normal"
     ],
     "height": "0.6 m",
@@ -11307,10 +11339,11 @@ window.WISHDEX_DATA = [
     "id": 99,
     "name": "Ursaring",
     "species": "Hibernator Pokémon",
-    "sprite": "images/wishdex/99.png",
-    "frameSprite": "images/wishdex/99-frame.png",
-    "shinySprite": "images/wishdex/99-shiny.png",
+    "sprite": "images/wishdex/99.png?v=282569665767",
+    "frameSprite": "images/wishdex/99-frame.png?v=bd51d4929d01",
+    "shinySprite": "images/wishdex/99-shiny.png?v=2291c3e217ed",
     "types": [
+      "Ghost",
       "Normal"
     ],
     "height": "1.8 m",
@@ -11408,9 +11441,9 @@ window.WISHDEX_DATA = [
     "id": 100,
     "name": "Ursaluna",
     "species": "Peat Pokémon",
-    "sprite": "images/wishdex/100.png",
-    "frameSprite": "images/wishdex/100-frame.png",
-    "shinySprite": "images/wishdex/100-shiny.png",
+    "sprite": "images/wishdex/100.png?v=7a5137da4314",
+    "frameSprite": "images/wishdex/100-frame.png?v=30442867092f",
+    "shinySprite": "images/wishdex/100-shiny.png?v=981037564ba0",
     "types": [
       "Ghost",
       "Normal"
@@ -11504,5 +11537,192 @@ window.WISHDEX_DATA = [
     "speed": 50,
     "spAttack": 45,
     "spDefense": 80
+  },
+  {
+    "id": 101,
+    "name": "Stantler",
+    "species": "Big Horn Pokémon",
+    "sprite": "images/wishdex/101.png?v=4e677f6d7947",
+    "frameSprite": "images/wishdex/101-frame.png?v=f42ab9c894ed",
+    "shinySprite": "images/wishdex/101-shiny.png?v=884dbbe1e93c",
+    "types": [
+      "Normal",
+      "Grass"
+    ],
+    "height": "1.4 m",
+    "weight": "71.2 kg",
+    "abilities": [
+      "Intimidate",
+      "Frisk",
+      "Sap Sipper (Hidden)"
+    ],
+    "description": "Stantler's magnificent antlers were once traded at high prices as works of art. As a result, this Pokémon was hunted close to extinction.",
+    "evolutions": [
+      {
+        "target": "Wyrdeer",
+        "method": "Level up after using Psyshield Bash 20 times"
+      }
+    ],
+    "moveset": [
+      {
+        "level": 1,
+        "move": "Tackle"
+      },
+      {
+        "level": 3,
+        "move": "Leer"
+      },
+      {
+        "level": 7,
+        "move": "Astonish"
+      },
+      {
+        "level": 10,
+        "move": "Hypnosis"
+      },
+      {
+        "level": 13,
+        "move": "Stomp"
+      },
+      {
+        "level": 16,
+        "move": "Sand Attack"
+      },
+      {
+        "level": 21,
+        "move": "Take Down"
+      },
+      {
+        "level": 23,
+        "move": "Confuse Ray"
+      },
+      {
+        "level": 27,
+        "move": "Calm Mind"
+      },
+      {
+        "level": 32,
+        "move": "Role Play"
+      },
+      {
+        "level": 37,
+        "move": "Zen Headbutt"
+      },
+      {
+        "level": 40,
+        "move": "Psyshield Bash"
+      },
+      {
+        "level": 42,
+        "move": "Horn Leech"
+      },
+      {
+        "level": 49,
+        "move": "Imprison"
+      },
+      {
+        "level": 55,
+        "move": "Double-Edge"
+      }
+    ],
+    "hp": 73,
+    "attack": 95,
+    "defense": 62,
+    "speed": 85,
+    "spAttack": 85,
+    "spDefense": 65
+  },
+  {
+    "id": 102,
+    "name": "Wyrdeer",
+    "species": "Big Horn Pokémon",
+    "sprite": "images/wishdex/102.png?v=db9640cb674a",
+    "frameSprite": "images/wishdex/102-frame.png?v=c83bbbf4d8b1",
+    "shinySprite": "images/wishdex/102-shiny.png?v=ddee6c9171d9",
+    "types": [
+      "Psychic",
+      "Grass"
+    ],
+    "height": "1.8 m",
+    "weight": "95.1 kg",
+    "abilities": [
+      "Intimidate",
+      "Frisk",
+      "Sap Sipper (Hidden)"
+    ],
+    "description": "The black orbs shine with an uncanny light when it is erecting invisible barriers. The fur shed from its beard retains heat and is useful for winter clothing.",
+    "evolutions": [],
+    "moveset": [
+      {
+        "level": 0,
+        "move": "Psyshield Bash"
+      },
+      {
+        "level": 1,
+        "move": "Tackle"
+      },
+      {
+        "level": 3,
+        "move": "Leer"
+      },
+      {
+        "level": 7,
+        "move": "Astonish"
+      },
+      {
+        "level": 10,
+        "move": "Hypnosis"
+      },
+      {
+        "level": 13,
+        "move": "Stomp"
+      },
+      {
+        "level": 16,
+        "move": "Sand Attack"
+      },
+      {
+        "level": 21,
+        "move": "Take Down"
+      },
+      {
+        "level": 23,
+        "move": "Confuse Ray"
+      },
+      {
+        "level": 27,
+        "move": "Calm Mind"
+      },
+      {
+        "level": 32,
+        "move": "Role Play"
+      },
+      {
+        "level": 37,
+        "move": "Zen Headbutt"
+      },
+      {
+        "level": 47,
+        "move": "Horn Leech"
+      },
+      {
+        "level": 49,
+        "move": "Imprison"
+      },
+      {
+        "level": 55,
+        "move": "Double-Edge"
+      },
+      {
+        "level": 62,
+        "move": "Megahorn"
+      }
+    ],
+    "hp": 103,
+    "attack": 105,
+    "defense": 72,
+    "speed": 65,
+    "spAttack": 105,
+    "spDefense": 75
   }
 ];

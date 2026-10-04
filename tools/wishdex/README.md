@@ -9,11 +9,16 @@ After editing Pokémon data or sprites, run:
 ```sh
 python3 tools/wishdex/generate.py
 python3 tools/wishdex/generate.py --check
+python3 tools/wishdex/test_generate.py
 ```
 
 Requirements: Python 3, Pillow, and `cpp` (the C preprocessor included with GCC).
 Generated files are committed, so visitors and GitHub Pages do not need these
 tools. The Pages workflow copies both WishDex scripts and the image directory.
+Generated data and sprite URLs include content versions so refreshed entries
+and artwork are not replaced by an older copy in the visitor's browser cache.
+The Python tests check configured type expressions, stable card IDs, hidden
+entries, and the added species' data against the current game.
 
 Browser regression tests (requires Node and Playwright with Chromium installed):
 
@@ -26,8 +31,9 @@ hidden entries, hover, keyboard/focus behavior, desktop/mobile layouts, light
 mode, asset requests, and the home page's navigation/slideshow. External widgets
 are excluded from this local test.
 
-The manifest in `generate.py` follows the sprite sheet's row order and uses
-internal species identifiers. Displayed names, stats, types, abilities,
+The original manifest in `generate.py` follows the sprite sheet's row order;
+later entries are appended to keep existing card IDs stable. It uses internal
+species identifiers. Displayed names, stats, types, abilities,
 descriptions, height, weight, evolutions, and level-up learnsets come from the
 repo's active configuration. Indexed front sprites are exported as transparent
 PNGs using their normal and shiny palettes. Hover uses the second frame.
