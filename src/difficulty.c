@@ -189,6 +189,21 @@ bool32 HasCompletedHardRun(void)
     return FlagGet(FLAG_HARD_RUN_COMPLETED);
 }
 
+enum DifficultyLevel GetDifficultyRunQualification(void)
+{
+    // Earned credit survives postgame setting changes. Older saves without
+    // initial configuration history must never receive guessed Hard credit.
+    if (HasCompletedHardRun())
+        return DIFFICULTY_HARD;
+    if (FlagGet(FLAG_INITIAL_GAME_CONFIG_DONE)
+     && FlagGet(FLAG_STARTED_ON_HARD)
+     && !FlagGet(FLAG_HARD_RUN_BROKEN)
+     && !FlagGet(FLAG_SYS_GAME_CLEAR))
+        return DIFFICULTY_HARD;
+
+    return DIFFICULTY_NORMAL;
+}
+
 enum DifficultyLevel GetCurrentDifficultyLevel(void)
 {
     return gSaveBlock2Ptr->optionsNpcTeams;

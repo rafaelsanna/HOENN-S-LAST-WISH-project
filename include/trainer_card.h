@@ -70,5 +70,11 @@ void CopyTrainerCardData(struct TrainerCard *dst, struct TrainerCard *src, u8 ga
 void ShowPlayerTrainerCard(void (*callback)(void));
 void ShowTrainerCardInLink(u8 cardId, void (*callback)(void));
 void TrainerCard_GenerateCardForLinkPlayer(struct TrainerCard *trainerCard);
+// Replace individual Hoenn badges using the recorded first Hard gym wins.
+void TrainerCard_ApplyHardBadgeGraphics(u8 *tiles);
+// Redraw the complete custom time/Dex row, erasing its previous contents.
+void TrainerCard_DrawTimeAndDex(u8 windowId, u16 hours, u16 minutes, u16 caughtCount, u16 ownedCount);
+// Format permanent run history, not the currently selected game options.
+void TrainerCard_FormatRunStatus(u8 *dest);
 
 #endif // GUARD_TRAINER_CARD_H

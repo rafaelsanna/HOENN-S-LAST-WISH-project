@@ -5225,9 +5225,9 @@
       "id": "LAYOUT_DEVON_HIDEOUT",
       "name": "DevonHideout_Layout",
       "width": 20,
-      "height": 20,
+      "height": 10,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_Lab",
+      "secondary_tileset": "gTileset_Facility",
       "border_filepath": "data/layouts/DevonHideout/border.bin",
       "blockdata_filepath": "data/layouts/DevonHideout/map.bin"
     },

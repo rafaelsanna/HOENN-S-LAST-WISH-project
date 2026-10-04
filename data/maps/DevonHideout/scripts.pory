@@ -1,0 +1,118 @@
+raw `
+DevonHideout_MapScripts::
+	.byte 0
+
+@ Each clue has its own text below so it can be written independently.
+DevonHideout_EventScript_FilingCabinet1::
+	msgbox DevonHideout_Text_FilingCabinet1, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_Stone1::
+	msgbox DevonHideout_Text_Stone1, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_Stone2::
+	msgbox DevonHideout_Text_Stone2, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_PC1::
+	msgbox DevonHideout_Text_PC1, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_PC2::
+	msgbox DevonHideout_Text_PC2, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_Device::
+	msgbox DevonHideout_Text_Device, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_Trash1::
+	msgbox DevonHideout_Text_Trash1, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_Trash2::
+	msgbox DevonHideout_Text_Trash2, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_FilingCabinet2::
+	msgbox DevonHideout_Text_FilingCabinet2, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_FilingCabinet3::
+	msgbox DevonHideout_Text_FilingCabinet3, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_FilingCabinet4::
+	msgbox DevonHideout_Text_FilingCabinet4, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_FilingCabinet5::
+	msgbox DevonHideout_Text_FilingCabinet5, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_Book1::
+	msgbox DevonHideout_Text_Book1, MSGBOX_SIGN
+	end
+
+DevonHideout_EventScript_Book2::
+	msgbox DevonHideout_Text_Book2, MSGBOX_SIGN
+	end
+
+@ Replace these placeholders with the clue dialogue.
+DevonHideout_Text_FilingCabinet1::
+	.string "FILING CABINET 1\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_Stone1::
+	.string "STONE 1\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_Stone2::
+	.string "STONE 2\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_PC1::
+	.string "COMPUTER 1\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_PC2::
+	.string "COMPUTER 2\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_Device::
+	.string "DEVICE\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_Trash1::
+	.string "TRASH CAN 1\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_Trash2::
+	.string "TRASH CAN 2\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_FilingCabinet2::
+	.string "FILING CABINET 2\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_FilingCabinet3::
+	.string "FILING CABINET 3\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_FilingCabinet4::
+	.string "FILING CABINET 4\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_FilingCabinet5::
+	.string "FILING CABINET 5\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_Book1::
+	.string "BOOK 1\n"
+	.string "Placeholder clue text.$"
+
+DevonHideout_Text_Book2::
+	.string "BOOK 2\n"
+	.string "Placeholder clue text.$"
+`

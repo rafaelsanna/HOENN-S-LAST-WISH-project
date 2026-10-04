@@ -12,6 +12,8 @@ enum DifficultyLevel GetTrainerDifficultyLevel(u16);
 void RecordTrainerDifficultyVictory(u16 trainerId);
 void RecordInitialDifficultyChoice(enum DifficultyLevel difficulty);
 void RecordDifficultyChoice(enum DifficultyLevel difficulty);
+// Eligible difficulty during the adventure; frozen result after the champion.
+enum DifficultyLevel GetDifficultyRunQualification(void);
 bool32 HasCompletedHardRun(void);
 void Script_IncreaseDifficulty(void);
 void Script_DecreaseDifficulty(void);

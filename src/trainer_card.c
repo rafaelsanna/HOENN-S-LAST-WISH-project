@@ -192,7 +192,6 @@ static void LoadNewTrainerCardSpriteGfx(void);
 static void DestroyNewTrainerCardSprites(void);
 static void PrintNewTrainerCardNameAndId(void);
 static void PrintNewTrainerCardTimeAndDex(void);
-static void RefreshNewTrainerCardTimeAndDex(void);
 static void PrintNewTrainerCardMoney(void);
 static void PrintNewTrainerCardWins(void);
 static void PrintNewTrainerCardBadges(void);
@@ -226,7 +225,24 @@ static const u16 sTrainerCardSticker2_Pal[]      = INCBIN_U16("graphics/trainer_
 static const u16 sTrainerCardSticker3_Pal[]      = INCBIN_U16("graphics/trainer_card/frlg/stickers3.gbapal");
 static const u16 sTrainerCardSticker4_Pal[]      = INCBIN_U16("graphics/trainer_card/frlg/stickers4.gbapal");
 static const u32 sHoennTrainerCardBadges_Gfx[]   = INCBIN_U32("graphics/trainer_card/badges.4bpp.smol");
+// Read alternate tiles directly from ROM; reuse the existing badge buffer
+// and shared palette rather than allocating another sheet in RAM.
+static const u32 sHoennTrainerCardHardBadges_Gfx[] = INCBIN_U32("graphics/trainer_card/badgeshard.4bpp");
 static const u32 sKantoTrainerCardBadges_Gfx[]   = INCBIN_U32("graphics/trainer_card/frlg/badges.4bpp.smol");
+
+static const u16 sHardBadgeVictoryFlags[NUM_BADGES] =
+{
+    FLAG_DEFEATED_GYM_1_HARD,
+    FLAG_DEFEATED_GYM_2_HARD,
+    FLAG_DEFEATED_GYM_3_HARD,
+    FLAG_DEFEATED_GYM_4_HARD,
+    FLAG_DEFEATED_GYM_5_HARD,
+    FLAG_DEFEATED_GYM_6_HARD,
+    FLAG_DEFEATED_GYM_7_HARD,
+    FLAG_DEFEATED_GYM_8_HARD,
+};
+
+STATIC_ASSERT(sizeof(sHoennTrainerCardHardBadges_Gfx) == 0x80 * NUM_BADGES, TrainerCardHardBadgeSheetSize);
 
 // The custom card is a 30x20 tilemap. Its source PNG is the 128x64 4bpp
 // tileset, generated to newtrainercard.4bpp by the normal graphics rule.
@@ -271,6 +287,9 @@ struct TrainerCardThemeColors
 #define TRAINER_CARD_THEME_COUNT 16
 #define TRAINER_CARD_NAME_ID_Y 2
 #define TRAINER_CARD_TIME_DEX_Y 19
+// Small-narrow glyphs (including shadows) are 12 pixels tall, despite the
+// font metadata reporting an 8-pixel line height.
+#define TRAINER_CARD_TIME_DEX_HEIGHT 12
 #define TRAINER_CARD_MONEY_Y 30
 #define TRAINER_CARD_WINS_Y 42
 #define TRAINER_CARD_BADGES_TEXT_Y 59
@@ -452,15 +471,16 @@ static const u8 sNewTrainerCardTextColors[] =
 static const u8 sText_NewTrainerCardName[] = _("name: {STR_VAR_1}");
 static const u8 sText_NewTrainerCardId[] = _("id: {STR_VAR_2}");
 static const u8 sText_NewTrainerCardChampion[] = _("champion");
-static const u8 sText_NewTrainerCardTimeAndDex[] = _("time: {STR_VAR_1} : {STR_VAR_2} dex: {STR_VAR_3} own: ");
-static const u8 sText_NewTrainerCardMoneyAndAchievements[] = _("money: {STR_VAR_1} achievements: {STR_VAR_2}");
-static const u8 sText_NewTrainerCardWinsAndWhiteouts[] = _("win: {STR_VAR_1} whiteout: {STR_VAR_2}");
-static const u8 sText_NewTrainerCardBadges[] = _("badges: {STR_VAR_1}");
-static const u8 sText_NewTrainerCardOptions[] = _("difficulty: {STR_VAR_1} nuzlocke: {STR_VAR_2} wishmenu: {STR_VAR_3}");
-static const u8 sText_NewTrainerCardNormal[] = _("normal");
+static const u8 sText_NewTrainerCardTimeAndDex[] = _("time {STR_VAR_1} : {STR_VAR_2} {EMOJI_PIPE} dex {STR_VAR_3} {EMOJI_PIPE} own ");
+static const u8 sText_NewTrainerCardMoneyAndAchievements[] = _("money {STR_VAR_1} {EMOJI_PIPE} achievement {STR_VAR_2}");
+static const u8 sText_NewTrainerCardWinsAndWhiteouts[] = _("win {STR_VAR_1} {EMOJI_PIPE} whiteout {STR_VAR_2}");
+static const u8 sText_NewTrainerCardBadges[] = _("badges {STR_VAR_1}");
+static const u8 sText_NewTrainerCardOptions[] = _("difficulty {STR_VAR_1}{CLEAR 2}{EMOJI_PIPE}{CLEAR 2}nuzlocke {STR_VAR_2}{CLEAR 2}{EMOJI_PIPE}{CLEAR 2}wishmenu {STR_VAR_3}");
+static const u8 sText_NewTrainerCardNormal[] = _("nrm");
 static const u8 sText_NewTrainerCardHard[] = _("hard");
 static const u8 sText_NewTrainerCardOff[] = _("off");
-static const u8 sText_NewTrainerCardYes[] = _("yes");
+static const u8 sText_NewTrainerCardUsed[] = _("used");
+static const u8 sText_NewTrainerCardNone[] = _("none");
 
 static const struct BgTemplate sTrainerCardBgTemplates[4] =
 {
@@ -722,7 +742,7 @@ static void Task_TrainerCard(u8 taskId)
         if (!gReceivedRemoteLinkPlayers && sData->timeColonNeedDraw)
         {
             if (sData->isNewCard)
-                RefreshNewTrainerCardTimeAndDex();
+                PrintNewTrainerCardTimeAndDex();
             else
                 PrintTimeOnCard();
             DrawTrainerCardWindow(WIN_CARD_TEXT);
@@ -827,6 +847,26 @@ static void Task_TrainerCard(u8 taskId)
    }
 }
 
+void TrainerCard_ApplyHardBadgeGraphics(u8 *tiles)
+{
+    const u8 *hardTiles = (const u8 *)sHoennTrainerCardHardBadges_Gfx;
+    const u32 halfBadgeSize = 2 * TILE_SIZE_4BPP;
+    const u32 sheetRowSize = NUM_BADGES * halfBadgeSize;
+
+    for (u32 badge = 0; badge < NUM_BADGES; badge++)
+    {
+        if (FlagGet(sHardBadgeVictoryFlags[badge]))
+        {
+            u32 offset = badge * halfBadgeSize;
+
+            // A 128x16 sheet stores all top tile pairs, then all bottom pairs.
+            memcpy(tiles + offset, hardTiles + offset, halfBadgeSize);
+            offset += sheetRowSize;
+            memcpy(tiles + offset, hardTiles + offset, halfBadgeSize);
+        }
+    }
+}
+
 static bool8 LoadCardGfx(void)
 {
     if (sData->isNewCard)
@@ -838,7 +878,10 @@ static bool8 LoadCardGfx(void)
             break;
         case 1:
             if (sData->cardType != CARD_TYPE_FRLG)
+            {
                 DecompressDataWithHeaderWram(sHoennTrainerCardBadges_Gfx, sData->badgeTiles);
+                TrainerCard_ApplyHardBadgeGraphics(sData->badgeTiles);
+            }
             else
                 DecompressDataWithHeaderWram(sKantoTrainerCardBadges_Gfx, sData->badgeTiles);
             break;
@@ -1331,31 +1374,32 @@ static void PrintNewTrainerCardNameAndId(void)
     }
 }
 
-static void PrintNewTrainerCardTimeAndDex(void)
+void TrainerCard_DrawTimeAndDex(u8 windowId, u16 hours, u16 minutes, u16 caughtCount, u16 ownedCount)
 {
     u8 text[64];
-    u16 hours = sData->isLink ? sData->trainerCard.playTimeHours : gSaveBlock2Ptr->playTimeHours;
-    u16 minutes = sData->isLink ? sData->trainerCard.playTimeMinutes : gSaveBlock2Ptr->playTimeMinutes;
+
+    // Clear the entire row at its current position before every redraw.
+    // Include the font's full glyph/shadow footprint, not its shorter
+    // reported line height. The next line's visible text starts below it.
+    FillWindowPixelRect(windowId, PIXEL_FILL(0), 0, TRAINER_CARD_TIME_DEX_Y,
+        WindowWidthPx(windowId), TRAINER_CARD_TIME_DEX_HEIGHT);
 
     ConvertIntToDecimalStringN(gStringVar1, hours, STR_CONV_MODE_LEFT_ALIGN, 3);
     ConvertIntToDecimalStringN(gStringVar2, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
-    ConvertIntToDecimalStringN(gStringVar3, sData->trainerCard.caughtMonsCount, STR_CONV_MODE_LEFT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar4, GetOwnedMonsCount(), STR_CONV_MODE_LEFT_ALIGN, 3);
+    ConvertIntToDecimalStringN(gStringVar3, caughtCount, STR_CONV_MODE_LEFT_ALIGN, 3);
+    ConvertIntToDecimalStringN(gStringVar4, ownedCount, STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(text, sText_NewTrainerCardTimeAndDex);
     StringAppend(text, gStringVar4);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, TRAINER_CARD_TIME_DEX_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, text);
+    AddTextPrinterParameterized3(windowId, FONT_SMALL_NARROW, 6, TRAINER_CARD_TIME_DEX_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, text);
 }
 
-static void RefreshNewTrainerCardTimeAndDex(void)
+static void PrintNewTrainerCardTimeAndDex(void)
 {
-    // The legacy timer redraws at the old card position (TIME + a number),
-    // which leaked into the new front card after the play clock advanced.
-    // Refresh only the new top line instead.
-    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 14, 224, 11);
-    // Erase any old line that may have been written before the custom path
-    // took over this window.
-    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 88, 224, 16);
-    PrintNewTrainerCardTimeAndDex();
+    u16 hours = sData->isLink ? sData->trainerCard.playTimeHours : gSaveBlock2Ptr->playTimeHours;
+    u16 minutes = sData->isLink ? sData->trainerCard.playTimeMinutes : gSaveBlock2Ptr->playTimeMinutes;
+
+    TrainerCard_DrawTimeAndDex(WIN_CARD_TEXT, hours, minutes,
+        sData->trainerCard.caughtMonsCount, GetOwnedMonsCount());
 }
 
 static void PrintNewTrainerCardMoney(void)
@@ -1387,11 +1431,11 @@ static void PrintNewTrainerCardBadges(void)
     AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, TRAINER_CARD_BADGES_TEXT_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
-static void PrintNewTrainerCardOptions(void)
+void TrainerCard_FormatRunStatus(u8 *dest)
 {
-    StringCopy(gStringVar1, GetCurrentDifficultyLevel() == DIFFICULTY_HARD ? sText_NewTrainerCardHard : sText_NewTrainerCardNormal);
+    StringCopy(gStringVar1, GetDifficultyRunQualification() == DIFFICULTY_HARD ? sText_NewTrainerCardHard : sText_NewTrainerCardNormal);
 
-    switch (Nuzlocke_GetMode())
+    switch (Nuzlocke_GetRunQualification())
     {
     case OPTIONS_NUZLOCKE_NORMAL:
         StringCopy(gStringVar2, sText_NewTrainerCardNormal);
@@ -1404,8 +1448,14 @@ static void PrintNewTrainerCardOptions(void)
         break;
     }
 
-    StringCopy(gStringVar3, FlagGet(FLAG_USED_DEBUG_MENU) ? sText_NewTrainerCardYes : sText_NewTrainerCardOff);
-    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardOptions);
+    StringCopy(gStringVar3, FlagGet(FLAG_USED_DEBUG_MENU) ? sText_NewTrainerCardUsed : sText_NewTrainerCardNone);
+    StringExpandPlaceholders(dest, sText_NewTrainerCardOptions);
+}
+
+static void PrintNewTrainerCardOptions(void)
+{
+    TrainerCard_FormatRunStatus(gStringVar4);
+    // Two-pixel separator gaps let the widest labels fit without shrinking glyphs.
     AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 120, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
