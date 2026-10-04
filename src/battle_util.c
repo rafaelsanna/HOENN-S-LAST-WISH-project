@@ -5300,7 +5300,9 @@ static u32 AbilityBattleEffectsSingle(u32 caseID, u32 battler, u32 ability, u32 
         for (i = 0; i < gBattlersCount; i++)
         {
             if ((gBattleMons[i].ability == ABILITY_NEUTRALIZING_GAS
-              || (IsAllAbilitiesEnabled() && SpeciesHasAbility(gBattleMons[i].species, ABILITY_NEUTRALIZING_GAS)))
+              || (IsAllAbilitiesEnabled()
+               && gBattleMons[i].ability != ABILITY_NONE
+               && SpeciesHasAbility(gBattleMons[i].species, ABILITY_NEUTRALIZING_GAS)))
              && !gDisableStructs[i].neutralizingGas)
             {
                 gDisableStructs[i].neutralizingGas = TRUE;
@@ -5528,7 +5530,9 @@ bool32 IsNeutralizingGasOnField(void)
     {
         if (IsBattlerAlive(i)
          && (gBattleMons[i].ability == ABILITY_NEUTRALIZING_GAS
-          || (IsAllAbilitiesEnabled() && SpeciesHasAbility(gBattleMons[i].species, ABILITY_NEUTRALIZING_GAS)))
+          || (IsAllAbilitiesEnabled()
+           && gBattleMons[i].ability != ABILITY_NONE
+           && SpeciesHasAbility(gBattleMons[i].species, ABILITY_NEUTRALIZING_GAS)))
          && !gBattleMons[i].volatiles.gastroAcid)
             return TRUE;
     }
@@ -5589,6 +5593,7 @@ bool32 BattlerHasAbility(u32 battler, u16 ability)
     // ability resolver applies the field-wide suppression it creates.
     if (IsAllAbilitiesEnabled()
      && ability == ABILITY_NEUTRALIZING_GAS
+     && gBattleMons[battler].ability != ABILITY_NONE
      && !gBattleMons[battler].volatiles.gastroAcid
      && SpeciesHasAbility(gBattleMons[battler].species, ability))
         return TRUE;
