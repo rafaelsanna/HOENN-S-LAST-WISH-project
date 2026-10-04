@@ -175,6 +175,15 @@ void *AllocZeroedInternal(void *heapStart, u32 size, const char *location)
 bool32 CheckMemBlockInternal(void *heapStart, void *pointer)
 {
     struct MemBlock *head = (struct MemBlock *)heapStart;
+
+    // Callers such as window cleanup may hold a stale buffer pointer after a
+    // screen replaces its BG tilemap. Do not dereference arbitrary addresses
+    // while checking whether such a pointer belongs to this heap.
+    if (pointer == NULL
+     || (u8 *)pointer < (u8 *)heapStart + sizeof(struct MemBlock)
+     || (u8 *)pointer >= (u8 *)heapStart + sHeapSize)
+        return FALSE;
+
     struct MemBlock *block = (struct MemBlock *)((u8 *)pointer - sizeof(struct MemBlock));
 
     if (block->magic != MALLOC_SYSTEM_ID)

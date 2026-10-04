@@ -24,6 +24,7 @@
 #define GAME_STAT_MOVED_SECRET_BASE           20
 #define GAME_STAT_POKEMON_TRADES              21
 #define GAME_STAT_UNKNOWN_22                  22
+#define GAME_STAT_WHITEOUTS                   GAME_STAT_UNKNOWN_22
 #define GAME_STAT_LINK_BATTLE_WINS            23
 #define GAME_STAT_LINK_BATTLE_LOSSES          24
 #define GAME_STAT_LINK_BATTLE_DRAWS           25

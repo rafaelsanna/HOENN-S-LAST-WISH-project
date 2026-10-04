@@ -258,7 +258,8 @@ void FreeAllWindowBuffers(void)
     {
         if (gWindowBgTilemapBuffers[i] != NULL && gWindowBgTilemapBuffers[i] != DummyWindowBgTilemap)
         {
-            Free(gWindowBgTilemapBuffers[i]);
+            if (CheckMemBlock(gWindowBgTilemapBuffers[i]))
+                Free(gWindowBgTilemapBuffers[i]);
             gWindowBgTilemapBuffers[i] = NULL;
         }
     }

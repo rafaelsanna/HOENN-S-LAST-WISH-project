@@ -15,8 +15,10 @@
 #include "menu.h"
 #include "text.h"
 #include "event_data.h"
+#include "difficulty.h"
 #include "easy_chat.h"
 #include "money.h"
+#include "nuzlocke.h"
 #include "strings.h"
 #include "string_util.h"
 #include "trainer_card.h"
@@ -31,6 +33,7 @@
 #include "decompress.h"
 #include "constants/songs.h"
 #include "constants/game_stat.h"
+#include "constants/flags.h"
 #include "constants/battle_frontier.h"
 #include "constants/rgb.h"
 #include "constants/trainers.h"
@@ -90,8 +93,15 @@ struct TrainerCardData
     u8 cardTiles[0x2300];
     u16 cardTilemapBuffer[0x1000];
     u16 bgTilemapBuffer[0x1000];
+    // The custom front card uses BG3 only for its transparent badge row.
+    // Keep that map independent from the legacy trainer-card background map;
+    // sharing it can leave old front-card text/icons visible on the new card.
+    u16 badgeTilemapBuffer[0x400];
     u16 cardTop;
     u8 language;
+    bool8 isNewCard;
+    u8 mugshotSpriteId;
+    u8 partyIconSpriteIds[PARTY_SIZE];
 };
 
 // EWRAM
@@ -170,6 +180,14 @@ static bool8 Task_AnimateCardFlipUp(struct Task *task);
 static bool8 Task_EndCardFlip(struct Task *task);
 static void UpdateCardFlipRegs(u16);
 static void LoadMonIconGfx(void);
+static void LoadNewTrainerCardSpriteGfx(void);
+static void DestroyNewTrainerCardSprites(void);
+static void PrintNewTrainerCardNameAndId(void);
+static void PrintNewTrainerCardTimeAndDex(void);
+static void RefreshNewTrainerCardTimeAndDex(void);
+static void PrintNewTrainerCardMoneyAndWhiteouts(void);
+static void PrintNewTrainerCardOptions(void);
+static void CreateNewTrainerCardSprites(void);
 
 static const u32 sTrainerCardStickers_Gfx[]      = INCBIN_U32("graphics/trainer_card/frlg/stickers.4bpp.smol");
 static const u16 sUnused_Pal[]                   = INCBIN_U16("graphics/trainer_card/unused.gbapal");
@@ -192,6 +210,92 @@ static const u16 sTrainerCardSticker3_Pal[]      = INCBIN_U16("graphics/trainer_
 static const u16 sTrainerCardSticker4_Pal[]      = INCBIN_U16("graphics/trainer_card/frlg/stickers4.gbapal");
 static const u32 sHoennTrainerCardBadges_Gfx[]   = INCBIN_U32("graphics/trainer_card/badges.4bpp.smol");
 static const u32 sKantoTrainerCardBadges_Gfx[]   = INCBIN_U32("graphics/trainer_card/frlg/badges.4bpp.smol");
+
+// The custom card is a 30x20 tilemap. Its source PNG is the 128x64 4bpp
+// tileset, generated to newtrainercard.4bpp by the normal graphics rule.
+static const u8 sNewTrainerCard_Gfx[] = INCBIN_U8("graphics/trainer_card/newtrainercard.4bpp");
+static const u16 sNewTrainerCard_Pal[] = INCBIN_U16("graphics/trainer_card/newtrainercard.gbapal");
+static const u16 sNewTrainerCard_Tilemap[] = INCBIN_U16("graphics/trainer_card/newtrainercard.bin");
+
+#define TRAINER_CARD_MUGSHOT_TAG       0x2F50
+
+static const u16 sTrainerCardBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brendan_mugshot.gbapal");
+static const u32 sTrainerCardBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.lz");
+static const u16 sTrainerCardMayMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/may_mugshot.gbapal");
+static const u32 sTrainerCardMayMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/may_mugshot.4bpp.lz");
+
+static const struct OamData sTrainerCardMugshotOam =
+{
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+    .priority = 0,
+};
+
+static const struct CompressedSpriteSheet sTrainerCardBrendanMugshotSheet =
+{
+    .data = sTrainerCardBrendanMugshot_Gfx,
+    .size = 64 * 64 / 2,
+    .tag = TRAINER_CARD_MUGSHOT_TAG,
+};
+
+static const struct CompressedSpriteSheet sTrainerCardMayMugshotSheet =
+{
+    .data = sTrainerCardMayMugshot_Gfx,
+    .size = 64 * 64 / 2,
+    .tag = TRAINER_CARD_MUGSHOT_TAG,
+};
+
+static const struct SpritePalette sTrainerCardBrendanMugshotPal =
+{
+    .data = sTrainerCardBrendanMugshot_Pal,
+    .tag = TRAINER_CARD_MUGSHOT_TAG,
+};
+
+static const struct SpritePalette sTrainerCardMayMugshotPal =
+{
+    .data = sTrainerCardMayMugshot_Pal,
+    .tag = TRAINER_CARD_MUGSHOT_TAG,
+};
+
+static const union AnimCmd sTrainerCardMugshotAnim[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sTrainerCardMugshotAnimTable[] =
+{
+    sTrainerCardMugshotAnim,
+};
+
+static const struct SpriteTemplate sTrainerCardMugshotTemplate =
+{
+    .tileTag = TRAINER_CARD_MUGSHOT_TAG,
+    .paletteTag = TRAINER_CARD_MUGSHOT_TAG,
+    .oam = &sTrainerCardMugshotOam,
+    .anims = sTrainerCardMugshotAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const u8 sNewTrainerCardTextColors[] =
+{
+    TEXT_COLOR_TRANSPARENT,
+    // The project textbox palette stores white at palette index 2 and its
+    // gray shadow at palette index 3.
+    TEXT_COLOR_DARK_GRAY,
+    TEXT_COLOR_LIGHT_GRAY,
+};
+
+static const u8 sText_NewTrainerCardNameAndId[] = _("name: {STR_VAR_1} id: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardTimeAndDex[] = _("time: {STR_VAR_1}:{STR_VAR_2} dex: {STR_VAR_3}");
+static const u8 sText_NewTrainerCardMoneyAndWhiteouts[] = _("money: {STR_VAR_1} whiteout: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardOptions[] = _("difficulty: {STR_VAR_1} nuzlocke: {STR_VAR_2} wishmenu: {STR_VAR_3}");
+static const u8 sText_NewTrainerCardNormal[] = _("normal");
+static const u8 sText_NewTrainerCardHard[] = _("hard");
+static const u8 sText_NewTrainerCardOff[] = _("off");
+static const u8 sText_NewTrainerCardYes[] = _("yes");
 
 static const struct BgTemplate sTrainerCardBgTemplates[4] =
 {
@@ -362,6 +466,9 @@ static void CB2_TrainerCard(void)
 
 static void CloseTrainerCard(u8 taskId)
 {
+    if (sData->isNewCard)
+        DestroyNewTrainerCardSprites();
+
     SetMainCallback2(sData->callback2);
     FreeAllWindowBuffers();
     FREE_AND_SET_NULL(sData);
@@ -398,9 +505,12 @@ static void Task_TrainerCard(u8 taskId)
         sData->mainState++;
         break;
     case 3:
-        FillWindowPixelBuffer(WIN_TRAINER_PIC, PIXEL_FILL(0));
         CreateTrainerCardTrainerPic();
-        DrawTrainerCardWindow(WIN_TRAINER_PIC);
+        if (!sData->isNewCard)
+        {
+            FillWindowPixelBuffer(WIN_TRAINER_PIC, PIXEL_FILL(0));
+            DrawTrainerCardWindow(WIN_TRAINER_PIC);
+        }
         sData->mainState++;
         break;
     case 4:
@@ -442,15 +552,21 @@ static void Task_TrainerCard(u8 taskId)
         // Blink the : in play time
         if (!gReceivedRemoteLinkPlayers && sData->timeColonNeedDraw)
         {
-            PrintTimeOnCard();
+            if (sData->isNewCard)
+                RefreshNewTrainerCardTimeAndDex();
+            else
+                PrintTimeOnCard();
             DrawTrainerCardWindow(WIN_CARD_TEXT);
             sData->timeColonNeedDraw = FALSE;
         }
         if (JOY_NEW(A_BUTTON))
         {
-            FlipTrainerCard();
-            PlaySE(SE_RG_CARD_FLIP);
-            sData->mainState = STATE_WAIT_FLIP_TO_BACK;
+            if (!sData->isNewCard)
+            {
+                FlipTrainerCard();
+                PlaySE(SE_RG_CARD_FLIP);
+                sData->mainState = STATE_WAIT_FLIP_TO_BACK;
+            }
         }
         else if (JOY_NEW(B_BUTTON))
         {
@@ -534,6 +650,27 @@ static void Task_TrainerCard(u8 taskId)
 
 static bool8 LoadCardGfx(void)
 {
+    if (sData->isNewCard)
+    {
+        switch (sData->gfxLoadState)
+        {
+        case 0:
+            memcpy(sData->frontTilemap, sNewTrainerCard_Tilemap, sizeof(sNewTrainerCard_Tilemap));
+            break;
+        case 1:
+            if (sData->cardType != CARD_TYPE_FRLG)
+                DecompressDataWithHeaderWram(sHoennTrainerCardBadges_Gfx, sData->badgeTiles);
+            else
+                DecompressDataWithHeaderWram(sKantoTrainerCardBadges_Gfx, sData->badgeTiles);
+            break;
+        default:
+            sData->gfxLoadState = 0;
+            return TRUE;
+        }
+        sData->gfxLoadState++;
+        return FALSE;
+    }
+
     switch (sData->gfxLoadState)
     {
     case 0:
@@ -616,7 +753,10 @@ static void CB2_InitTrainerCard(void)
         gMain.state++;
         break;
     case 5:
-        LoadMonIconGfx();
+        if (sData->isNewCard)
+            LoadNewTrainerCardSpriteGfx();
+        else
+            LoadMonIconGfx();
         gMain.state++;
         break;
     case 6:
@@ -624,7 +764,8 @@ static void CB2_InitTrainerCard(void)
             gMain.state++;
         break;
     case 7:
-        LoadStickerGfx();
+        if (!sData->isNewCard)
+            LoadStickerGfx();
         gMain.state++;
         break;
     case 8:
@@ -924,6 +1065,30 @@ static void SetUpTrainerCardTask(void)
 
 static bool8 PrintAllOnCardFront(void)
 {
+    if (sData->isNewCard)
+    {
+        switch (sData->printState)
+        {
+        case 0:
+            PrintNewTrainerCardNameAndId();
+            break;
+        case 1:
+            PrintNewTrainerCardTimeAndDex();
+            break;
+        case 2:
+            PrintNewTrainerCardMoneyAndWhiteouts();
+            break;
+        case 3:
+            PrintNewTrainerCardOptions();
+            break;
+        default:
+            sData->printState = 0;
+            return TRUE;
+        }
+        sData->printState++;
+        return FALSE;
+    }
+
     switch (sData->printState)
     {
     case 0:
@@ -950,6 +1115,69 @@ static bool8 PrintAllOnCardFront(void)
     }
     sData->printState++;
     return FALSE;
+}
+
+static void PrintNewTrainerCardNameAndId(void)
+{
+    StringCopy(gStringVar1, sData->trainerCard.playerName);
+    ConvertInternationalString(gStringVar1, sData->language);
+    ConvertIntToDecimalStringN(gStringVar2, sData->trainerCard.trainerId, STR_CONV_MODE_LEADING_ZEROS, 5);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardNameAndId);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 2, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardTimeAndDex(void)
+{
+    u16 hours = sData->isLink ? sData->trainerCard.playTimeHours : gSaveBlock2Ptr->playTimeHours;
+    u16 minutes = sData->isLink ? sData->trainerCard.playTimeMinutes : gSaveBlock2Ptr->playTimeMinutes;
+
+    ConvertIntToDecimalStringN(gStringVar1, hours, STR_CONV_MODE_LEFT_ALIGN, 3);
+    ConvertIntToDecimalStringN(gStringVar2, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
+    ConvertIntToDecimalStringN(gStringVar3, sData->trainerCard.caughtMonsCount, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardTimeAndDex);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 18, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void RefreshNewTrainerCardTimeAndDex(void)
+{
+    // The legacy timer redraws at the old card position (TIME + a number),
+    // which leaked into the new front card after the play clock advanced.
+    // Refresh only the new top line instead.
+    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 18, 224, 15);
+    // Erase any old line that may have been written before the custom path
+    // took over this window.
+    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 88, 224, 16);
+    PrintNewTrainerCardTimeAndDex();
+}
+
+static void PrintNewTrainerCardMoneyAndWhiteouts(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, sData->trainerCard.money, STR_CONV_MODE_LEFT_ALIGN, MAX_MONEY_DIGITS);
+    ConvertIntToDecimalStringN(gStringVar2, GetCappedGameStat(GAME_STAT_WHITEOUTS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardMoneyAndWhiteouts);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 34, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardOptions(void)
+{
+    StringCopy(gStringVar1, GetCurrentDifficultyLevel() == DIFFICULTY_HARD ? sText_NewTrainerCardHard : sText_NewTrainerCardNormal);
+
+    switch (Nuzlocke_GetMode())
+    {
+    case OPTIONS_NUZLOCKE_NORMAL:
+        StringCopy(gStringVar2, sText_NewTrainerCardNormal);
+        break;
+    case OPTIONS_NUZLOCKE_HARD:
+        StringCopy(gStringVar2, sText_NewTrainerCardHard);
+        break;
+    default:
+        StringCopy(gStringVar2, sText_NewTrainerCardOff);
+        break;
+    }
+
+    StringCopy(gStringVar3, FlagGet(FLAG_USED_DEBUG_MENU) ? sText_NewTrainerCardYes : sText_NewTrainerCardOff);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardOptions);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 4, 120, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static bool8 PrintAllOnCardBack(void)
@@ -1099,6 +1327,11 @@ static void PrintTimeOnCard(void)
     u16 minutes;
     s32 width;
     u32 x, y, totalWidth;
+
+    // The custom front card has its own clock line and must never use the
+    // legacy TIME label/position.
+    if (sData->isNewCard)
+        return;
 
     if (!sData->isHoenn)
         AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 20, 88, sTrainerCardTextColors, TEXT_SKIP_DRAW, gText_TrainerCardTime);
@@ -1390,6 +1623,72 @@ static void LoadMonIconGfx(void)
     }
 }
 
+static void LoadNewTrainerCardSpriteGfx(void)
+{
+    if (sData->trainerCard.gender == MALE)
+    {
+        LoadCompressedSpriteSheet(&sTrainerCardBrendanMugshotSheet);
+        LoadSpritePalette(&sTrainerCardBrendanMugshotPal);
+    }
+    else
+    {
+        LoadCompressedSpriteSheet(&sTrainerCardMayMugshotSheet);
+        LoadSpritePalette(&sTrainerCardMayMugshotPal);
+    }
+
+    LoadMonIconPalettes();
+}
+
+static void CreateNewTrainerCardSprites(void)
+{
+    u8 i;
+
+    sData->mugshotSpriteId = CreateSprite(&sTrainerCardMugshotTemplate, 184, 51, 0);
+    if (sData->mugshotSpriteId != SPRITE_NONE)
+    {
+        gSprites[sData->mugshotSpriteId].oam.priority = 0;
+        StartSpriteAnim(&gSprites[sData->mugshotSpriteId], 0);
+    }
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+
+        if (species == SPECIES_NONE)
+            continue;
+
+        sData->partyIconSpriteIds[i] = CreateMonIcon(
+            species,
+            SpriteCB_MonIcon,
+            28 + (37 * i),
+            120,
+            0,
+            GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
+        if (sData->partyIconSpriteIds[i] != SPRITE_NONE)
+            gSprites[sData->partyIconSpriteIds[i]].oam.priority = 0;
+
+    }
+}
+
+static void DestroyNewTrainerCardSprites(void)
+{
+    u8 i;
+
+    if (sData->mugshotSpriteId != SPRITE_NONE)
+        DestroySprite(&gSprites[sData->mugshotSpriteId]);
+
+    FreeSpriteTilesByTag(TRAINER_CARD_MUGSHOT_TAG);
+    FreeSpritePaletteByTag(TRAINER_CARD_MUGSHOT_TAG);
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sData->partyIconSpriteIds[i] != SPRITE_NONE)
+            FreeAndDestroyMonIconSprite(&gSprites[sData->partyIconSpriteIds[i]]);
+    }
+
+    FreeMonIconPalettes();
+}
+
 static void PrintStickersOnCard(void)
 {
     u8 i;
@@ -1423,6 +1722,51 @@ static void DrawTrainerCardWindow(u8 windowId)
 
 static u8 SetCardBgsAndPals(void)
 {
+    if (sData->isNewCard)
+    {
+        switch (sData->bgPalLoadState)
+        {
+        case 0:
+            LoadBgTiles(0, sNewTrainerCard_Gfx, sizeof(sNewTrainerCard_Gfx), 0);
+            break;
+        case 1:
+            // Some map entries use palette bits. The source card has one
+            // palette, so mirror it into all referenced BG palette slots.
+            LoadPalette(sNewTrainerCard_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+            LoadPalette(sNewTrainerCard_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+            LoadPalette(sNewTrainerCard_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+            LoadPalette(sNewTrainerCard_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+            break;
+        case 2:
+            // Keep badges on a separate priority layer so their transparent
+            // pixels reveal the new card underneath instead of the backdrop.
+            LoadBgTiles(3, sData->badgeTiles, ARRAY_COUNT(sData->badgeTiles), 0);
+            break;
+        case 3:
+            if (sData->cardType != CARD_TYPE_FRLG)
+                LoadPalette(sHoennTrainerCardBadges_Pal, BG_PLTT_ID(4), PLTT_SIZE_4BPP);
+            else
+                LoadPalette(sKantoTrainerCardBadges_Pal, BG_PLTT_ID(4), PLTT_SIZE_4BPP);
+            break;
+        case 4:
+            SetBgTilemapBuffer(0, sData->cardTilemapBuffer);
+            SetBgTilemapBuffer(2, sData->bgTilemapBuffer);
+            // Use a dedicated cleared buffer for BG3; this prevents the
+            // legacy team/portrait tilemap from surviving into the new card.
+            SetBgTilemapBuffer(3, sData->badgeTilemapBuffer);
+            break;
+        case 5:
+            FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 32, 32);
+            // BG3 used to contain the old trainer-card portrait/badges.
+            FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 32, 32);
+            break;
+        default:
+            return 1;
+        }
+        sData->bgPalLoadState++;
+        return 0;
+    }
+
     switch (sData->bgPalLoadState)
     {
     case 0:
@@ -1515,6 +1859,26 @@ static void DrawStarsAndBadgesOnCard(void)
     s16 i, x;
     u16 tileNum = 192;
     u8 palNum = 3;
+
+    if (sData->isNewCard)
+    {
+        // The new card has one compact row for the eight real Hoenn badges.
+        // Badge graphics are 2x2 tiles, so keep them contiguous like the mockup.
+        palNum = 4;
+        x = 2;
+        for (i = 0; i < NUM_BADGES; i++, tileNum += 2, x += 2)
+        {
+            if (sData->badgeCount[i])
+            {
+                FillBgTilemapBufferRect(3, tileNum, x, 10, 1, 1, palNum);
+                FillBgTilemapBufferRect(3, tileNum + 1, x + 1, 10, 1, 1, palNum);
+                FillBgTilemapBufferRect(3, tileNum + 16, x, 11, 1, 1, palNum);
+                FillBgTilemapBufferRect(3, tileNum + 17, x + 1, 11, 1, 1, palNum);
+            }
+        }
+        CopyBgTilemapBufferToVram(3);
+        return;
+    }
 
     FillBgTilemapBufferRect(3, 143, 15, yOffsets[sData->isHoenn], sData->trainerCard.stars, 1, 4);
     if (!sData->isLink)
@@ -1821,6 +2185,7 @@ void ShowPlayerTrainerCard(void (*callback)(void))
     else
         sData->isLink = FALSE;
 
+    sData->isNewCard = !sData->isLink;
     sData->language = GAME_LANGUAGE;
     TrainerCard_GenerateCardForPlayer(&sData->trainerCard);
     SetMainCallback2(CB2_InitTrainerCard);
@@ -1846,6 +2211,9 @@ static void InitTrainerCardData(void)
     sData->onBack = FALSE;
     sData->flipBlendY = 0;
     sData->cardType = GetSetCardType();
+    sData->mugshotSpriteId = SPRITE_NONE;
+    for (i = 0; i < PARTY_SIZE; i++)
+        sData->partyIconSpriteIds[i] = SPRITE_NONE;
     for (i = 0; i < TRAINER_CARD_PROFILE_LENGTH; i++)
         CopyEasyChatWord(sData->easyChatProfile[i], sData->trainerCard.easyChatProfile[i]);
 }
@@ -1893,6 +2261,12 @@ static u8 VersionToCardType(u8 version)
 
 static void CreateTrainerCardTrainerPic(void)
 {
+    if (sData->isNewCard)
+    {
+        CreateNewTrainerCardSprites();
+        return;
+    }
+
     if (InUnionRoom() == TRUE && gReceivedRemoteLinkPlayers == 1)
     {
         CreateTrainerCardTrainerPicSprite(FacilityClassToPicIndex(sData->trainerCard.unionRoomClass),

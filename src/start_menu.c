@@ -1379,7 +1379,7 @@ static bool8 StartMenuPlayerNameCallback(void)
         else if (FlagGet(FLAG_SYS_FRONTIER_PASS))
             ShowFrontierPass(CB2_ReturnToFieldWithOpenMenu); // Display frontier pass
         else
-            ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
+            ShowPlayerTrainerCard(CB2_ReturnToField); // Display trainer card; return to a clean overworld
 
         return TRUE;
     }

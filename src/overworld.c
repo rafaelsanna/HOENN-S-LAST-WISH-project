@@ -1891,6 +1891,7 @@ u8 state;
         FieldClearVBlankHBlankCallbacks();
         StopMapMusic();
         ResetSafariZoneFlag_();
+        IncrementGameStat(GAME_STAT_WHITEOUTS);
         DoWhiteOut();
         ResetInitialPlayerAvatarState();
         ScriptContext_Init();
