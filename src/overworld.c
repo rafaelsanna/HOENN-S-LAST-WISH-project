@@ -569,7 +569,24 @@ void LoadSaveblockObjEventScripts(void)
         current = FindObjectEventTemplateByLocalId(savObjTemplates[i].localId,
                                                  events->objectEvents, events->objectEventCount);
         if (current != NULL)
+        {
             savObjTemplates[i].script = current->script;
+            // Continue may retain an old pickup flag in the saved template.
+            // Refresh only the corrected pickups, leaving saved positions,
+            // movement, unrelated template flags and all story bits intact.
+            switch (current->flagId)
+            {
+            case FLAG_PICKUP_RUSTBORO_CITY_LIGHT_CLAY:
+            case FLAG_PICKUP_ROUTE_104_QUIET_MINT:
+            case FLAG_PICKUP_PETALBURG_CAVE_QUIET_MINT:
+            case FLAG_PICKUP_LITTLEROOT_COAST_ETHER:
+            case FLAG_PICKUP_LONELY_CAVE_B2_TM51:
+            case FLAG_PICKUP_CARGO_SHIP_WATER_STONE:
+            case FLAG_PICKUP_ABANDONED_SHIP_ROOM_B1F_TM_ICE_BEAM:
+                savObjTemplates[i].flagId = current->flagId;
+                break;
+            }
+        }
     }
 }
 
@@ -1458,6 +1475,15 @@ enum MapType GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum)
 enum MapType GetMapTypeByWarpData(struct WarpData *warp)
 {
     return GetMapTypeByGroupAndId(warp->mapGroup, warp->mapNum);
+}
+
+bool8 Overworld_IsInEliteFourChallenge(void)
+{
+    // Battle rooms and connecting halls are contiguous. The League lobby and
+    // Hall of Fame follow this range and remain available for portable menus.
+    return gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM)
+        && gSaveBlock1Ptr->location.mapNum >= MAP_NUM(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM)
+        && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(MAP_EVER_GRANDE_CITY_HALL5);
 }
 
 enum MapType GetCurrentMapType(void)

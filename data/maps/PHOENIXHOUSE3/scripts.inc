@@ -17,8 +17,8 @@ PHOENIXHOUSE3_EventScript_ExpertM::
 # 9 "data/maps/PHOENIXHOUSE3/scripts.pory"
 PHOENIXHOUSE3_Text_WarmStones:
 # 10 "data/maps/PHOENIXHOUSE3/scripts.pory"
-	.string "Some stones from the first\n"
+	.string "It can get really cold in the desert\n"
 # 11 "data/maps/PHOENIXHOUSE3/scripts.pory"
-	.string "quake stay warm in winter.\p"
+	.string "at night. Make sure you're prepared\l"
 # 12 "data/maps/PHOENIXHOUSE3/scripts.pory"
-	.string "Nobody knows why.$"
+	.string "for all temperatures here.$"

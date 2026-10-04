@@ -62,9 +62,9 @@
       "movement_range_x": 1,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_QUIET_MINT",
+      "trainer_sight_or_berry_tree_id": "ITEM_CALM_MINT",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ROUTE_104_QUIET_MINT"
+      "flag": "FLAG_PICKUP_PETALBURG_CAVE_QUIET_MINT"
     }
   ],
   "warp_events": [

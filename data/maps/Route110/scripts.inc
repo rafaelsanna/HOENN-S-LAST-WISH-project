@@ -1937,7 +1937,7 @@ Route110_Text_ImagineSeeingYouHere:
 # 969 "data/maps/Route110/scripts.pory"
 	.string "Imagine seeing you here!\p"
 # 970 "data/maps/Route110/scripts.pory"
-	.string "And where might my {RIVAL} be?$"
+	.string "And where might {RIVAL} be?$"
 # 971 "data/maps/Route110/scripts.pory"
 
 # 972 "data/maps/Route110/scripts.pory"
@@ -1977,7 +1977,7 @@ Route110_Text_KeepAnEyeOutForRival:
 # 989 "data/maps/Route110/scripts.pory"
 	.string "PROF. ACACIA: {PLAYER}{KUN}…\p"
 # 990 "data/maps/Route110/scripts.pory"
-	.string "Please keep an eye out for my {RIVAL}.\n"
+	.string "Please keep an eye out for {RIVAL}.\n"
 # 991 "data/maps/Route110/scripts.pory"
 	.string "… … … … … …\p"
 # 992 "data/maps/Route110/scripts.pory"

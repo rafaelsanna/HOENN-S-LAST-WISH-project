@@ -35,7 +35,8 @@
 #define PARTY_MENU_TYPE_STORE_PYRAMID_HELD_ITEMS  12
 #define PARTY_MENU_TYPE_COUNT                     13
 
-#define PARTY_MENU_PC_ACCESS FlagGet(FLAG_PARTY_MENU_PC_ACCESS)
+// Derive access from the current map, not the legacy flag shared with a Time Gear.
+#define PARTY_MENU_PC_ACCESS (!Overworld_IsInEliteFourChallenge())
 
 #define PARTY_ACTION_CHOOSE_MON         0
 #define PARTY_ACTION_SEND_OUT           1

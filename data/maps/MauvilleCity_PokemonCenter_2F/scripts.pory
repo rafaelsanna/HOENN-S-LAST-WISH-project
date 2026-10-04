@@ -24,11 +24,10 @@ MauvilleCity_PokemonCenter_2F_EventScript_Youngster::
 	end
 
 MauvilleCity_PokemonCenter_2F_Text_Youngster:
-	.string "Did you know that you can link battle\n"
-	.string "at the COLOSSEUM here?\p"
-	.string "They put up your record on the wall\n"
-	.string "for everyone to see.\p"
-	.string "It's embarrassing if you lose more\n"
-	.string "often than you win…$"
+	.string "Did you know that you can battle\n"
+	.string "and trade with friends here?\p"
+	.string "Technology is amazing. Maybe soon,\n"
+	.string "we can even do it with people from\l"
+	.string "all over the world, too!$"
 
 `

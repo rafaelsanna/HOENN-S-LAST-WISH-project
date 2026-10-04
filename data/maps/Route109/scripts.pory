@@ -535,8 +535,8 @@ Route109_Text_LittleKidsDartAround:
 	.string "Little kids can dart around so quickly…\p"
 	.string "You don't dare take your eyes off them\n"
 	.string "for an instant. It's very taxing.\p"
-	.string "Mine are with my POKéMON, so they\n"
-	.string "should be okay, but…$"
+	.string "This probably wouldn't have been so\n"
+	.string "stressful if we stayed closer to shore…$"
 
 Route109_Text_SandCastleTakingLongTime:
 	.string "Our sand castle's taking a long time\n"
@@ -577,6 +577,6 @@ Route109_Text_TrainerTipsSign:
 	.string "TRAINER TIPS\p"
 	.string "POKéMON at the same level may not\n"
 	.string "always have identical stats.\p"
-	.string "POKéMON raised by TRAINERS are said\n"
-	.string "to grow stronger than wild POKéMON.$"
+	.string "A TRAINER can raise a POKéMON's stats\n"
+	.string "by giving it vitamins.$"
 `

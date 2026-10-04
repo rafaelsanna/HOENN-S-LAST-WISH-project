@@ -8,9 +8,10 @@ PHOENIXHOUSE1_EventScript_OldMan_Quest::
 	goto_if_set FLAG_HIDE_PHOENIXHOUSE1_OLD_MAN, PHOENIXHOUSE1_EventScript_OldMan_QuestFinished
 	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_STARTED, PHOENIXHOUSE1_EventScript_OldMan_QuestStart
 	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_FAMILY_MET, PHOENIXHOUSE1_EventScript_OldMan_QuestStart
+	@ Receiving the reply clears LETTER, so check REPLY before offering a letter.
+	goto_if_set FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY, PHOENIXHOUSE1_EventScript_OldMan_QuestComplete
 	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_LETTER, PHOENIXHOUSE1_EventScript_OldMan_QuestGiveLetter
-	goto_if_unset FLAG_PHOENIXHOUSE1_OLD_MAN_QUEST_REPLY, PHOENIXHOUSE1_EventScript_OldMan_QuestWaitingForReply
-	goto PHOENIXHOUSE1_EventScript_OldMan_QuestComplete
+	goto PHOENIXHOUSE1_EventScript_OldMan_QuestWaitingForReply
 
 PHOENIXHOUSE1_EventScript_OldMan_QuestStart::
 	msgbox PHOENIXHOUSE1_Text_OldMan_QuestStart, MSGBOX_DEFAULT
@@ -54,8 +55,8 @@ PHOENIXHOUSE1_Text_OldMan_QuestStart:
 	.string "She loved wandering about…\p"
 	.string "A little shopping, a long walk, and a\n"
 	.string "high place where the clouds felt close.\p"
-	.string "But after her parents divorced, I never\n"
-	.string "saw her again. Some days, I miss her\n"
+	.string "After her parents divorced, I never\n"
+	.string "saw her again. Some days, I miss her\l"
 	.string "so much the house feels awfully quiet.$"
 
 PHOENIXHOUSE1_Text_OldMan_QuestGiveLetter:
@@ -63,7 +64,7 @@ PHOENIXHOUSE1_Text_OldMan_QuestGiveLetter:
 	.string "I kept this close for so long. If you\n"
 	.string "see her, would you give it to her?\p"
 	.string "There is no grand message inside…\n"
-	.string "Only a few words from an old man who\n"
+	.string "Only a few words from an old man who\l"
 	.string "still looks up at the sky.$"
 
 PHOENIXHOUSE1_Text_OldMan_QuestWaitingForReply:
@@ -73,14 +74,14 @@ PHOENIXHOUSE1_Text_OldMan_QuestWaitingForReply:
 
 PHOENIXHOUSE1_Text_OldMan_QuestComplete:
 	.string "She wrote back…\p"
-	.string "After all this time, she still remembers\n"
+	.string "After all this time, she remembers\n"
 	.string "the sky we used to watch together.$"
 
 PHOENIXHOUSE1_Text_OldMan_QuestReward:
 	.string "You have given an old heart a little\n"
 	.string "sunshine. Thank you, my friend.\p"
-	.string "Please take this CATCHING CHARM. It has\n"
-	.string "brought me good fortune.$"
+	.string "Please take this CATCHING CHARM. It\n"
+	.string "has brought me good fortune.$"
 
 PHOENIXHOUSE1_Text_OldMan_QuestFinished:
 	.string "I will never forget the little bit of\n"

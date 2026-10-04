@@ -1169,8 +1169,8 @@ SlateportCity_Text_AquaHasPolicy:
 SlateportCity_Text_BossIsBrilliant:
 .string "Hey, kid!\n"
 .string "What are you looking at?\p"
-.string "With that goofy look on your face,\n"
-.string "wierd cloths, you'd better beat it.\p"
+.string "With that goofy look on your face and\n"
+.string "weird clothes, you'd better beat it.\p"
 .string "Mind your own business unless you\n"
 .string "want some trouble!$"
 
@@ -1178,7 +1178,7 @@ SlateportCity_Text_BossIsBrilliant:
 SlateportCity_Text_WhatsNewSchemeIWonder:
 .string "Huh? You lookin' to join TEAM AQUA\n"
 .string "or somethin'?\p"
-.string "Please… with that goofy face?\n"
+.string "Please… with that goofy outfit?\n"
 .string "You wouldn't last a minute.\p"
 .string "Do yourself a favor and scram\n"
 .string "before you get in trouble.$"
@@ -1190,7 +1190,7 @@ SlateportCity_Text_ShouldTakeItAll:
 .string "or you're gonna get swept under.\p"
 .string "If I were you, I'd start learnin'\n"
 .string "about the cause…\p"
-.string "Break the system, y'know?\n"
+.string "Exploit the system, y'know?\n"
 .string "It's the only way forward.$"
 
 
@@ -1246,9 +1246,9 @@ SlateportCity_Text_SinkOldBoats:
 .string "ships that get too creaky to sail?\p"
 .string "They sink them so they become new\n"
 .string "habitats for POKéMON.\p"
-.string "The sea's been wild lately… furious,\n"
-.string "almost like some great power is\l"
-.string "stirring beneath the waves.$"
+.string "The sea's been wild lately… furious.\p"
+.string "If we sink more ships, do you think\n"
+.string "it'll be happier?$"
 
 SlateportCity_Text_BuyTooMuch:
 	.string "Whenever I visit here, I get carried\n"
@@ -1436,13 +1436,10 @@ SlateportCity_Text_NameRatersHouseSign:
 SlateportCity_Text_ExplainBerries:
 	.string "If a wild POKéMON gets hurt, it heals\n"
 	.string "itself by chewing on BERRIES.\p"
-	.string "Did you know that?\p"
 	.string "Somebody saw that and got the idea\n"
 	.string "of making medicine from BERRIES.\p"
-	.string "Did you know that?\p"
 	.string "To turn BERRIES into medicine,\n"
 	.string "they must be crushed into powder.\p"
-	.string "Did you know that?\p"
 	.string "You seem to have an interest\n"
 	.string "in BERRIES!\p"
 	.string "I've got something good for someone\n"

@@ -81,7 +81,7 @@ SlateportCity_Mart_Text_SomeItemsOnlyAtMart:
 # 41 "data/maps/SlateportCity_Mart/scripts.pory"
 	.string "We've served sailors and trainers for\n"
 # 42 "data/maps/SlateportCity_Mart/scripts.pory"
-	.string "generations trust what works.$"
+	.string "generations! Trust what works.$"
 # 43 "data/maps/SlateportCity_Mart/scripts.pory"
 
 # 44 "data/maps/SlateportCity_Mart/scripts.pory"
@@ -91,7 +91,7 @@ SlateportCity_Mart_Text_GreatBallIsBetter:
 # 46 "data/maps/SlateportCity_Mart/scripts.pory"
 	.string "a humble fishing village.\p"
 # 47 "data/maps/SlateportCity_Mart/scripts.pory"
-	.string "Now? It's HOENN's gateway to the world.\n"
+	.string "Now it's HOENN's gateway to the world.\n"
 # 48 "data/maps/SlateportCity_Mart/scripts.pory"
 	.string "Ships from JOHTO, KANTO, even far off\l"
 # 49 "data/maps/SlateportCity_Mart/scripts.pory"

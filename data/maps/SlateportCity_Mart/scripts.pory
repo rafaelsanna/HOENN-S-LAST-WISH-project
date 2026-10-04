@@ -39,12 +39,12 @@ SlateportCity_Mart_Text_SomeItemsOnlyAtMart:
 	.string "The MARKET's great for trinkets, but for\n"
 	.string "reliable gear, you want the MART.\p"
 	.string "We've served sailors and trainers for\n"
-	.string "generations trust what works.$"
+	.string "generations! Trust what works.$"
 
 SlateportCity_Mart_Text_GreatBallIsBetter:
 	.string "Generations ago, SLATEPORT was just\n"
 	.string "a humble fishing village.\p"
-	.string "Now? It's HOENN's gateway to the world.\n"
+	.string "Now it's HOENN's gateway to the world.\n"
 	.string "Ships from JOHTO, KANTO, even far off\l"
 	.string "regions dock here every week.\p"
 	.string "The city's soul is salt and sea.$"

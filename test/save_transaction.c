@@ -1,6 +1,7 @@
 #include "global.h"
 #include "agb_flash.h"
 #include "gba/flash_internal.h"
+#include "event_data.h"
 #include "hall_of_fame.h"
 #include "item.h"
 #include "load_save.h"
@@ -236,6 +237,89 @@ FLASH_TEST("Physical save round-trips every byte of all five banks")
     for (u32 i = 0; i < ARRAY_COUNT(expected); i++)
         EXPECT_EQ(actual[i], expected[i]);
     ExpectBundleMarker(0x19);
+}
+
+FLASH_TEST("Physical save preserves independent pickups without rewriting legacy story bits")
+{
+    static const u16 pickups[] =
+    {
+        FLAG_PICKUP_RUSTBORO_CITY_LIGHT_CLAY,
+        FLAG_PICKUP_RUSTBORO_CITY_POTION,
+        FLAG_PICKUP_ROUTE_104_QUIET_MINT,
+        FLAG_PICKUP_PETALBURG_CAVE_QUIET_MINT,
+        FLAG_PICKUP_LITTLEROOT_COAST_ETHER,
+        FLAG_PICKUP_LONELY_CAVE_B2_TM51,
+        FLAG_PICKUP_LONELY_CAVE_B2_RARE_CANDY,
+        FLAG_PICKUP_RUSTURF_GROVE_SUPER_REPEL,
+        FLAG_PICKUP_GRANITE_CAVE_B1F_RARE_CANDY,
+        FLAG_PICKUP_FIERY_PATH_PROTEIN,
+        FLAG_PICKUP_FIERY_PATH_PP_UP,
+        FLAG_PICKUP_FIERY_PATH_ULTRA_BALL,
+        FLAG_PICKUP_FIERY_PATH_REVIVE,
+        FLAG_PICKUP_CARGO_SHIP_WATER_STONE,
+        FLAG_PICKUP_ABANDONED_SHIP_ROOM_B1F_TM_ICE_BEAM,
+    };
+    static const u16 legacyFlags[] =
+    {
+        FLAG_MOSSDEEP_COLLECTED_ITEM_1,
+        FLAG_MOSSDEEP_COLLECTED_ITEM_2,
+        FLAG_MOSSDEEP_COLLECTED_ITEM_3,
+        FLAG_MOSSDEEP_QUEST_COMPLETED,
+        FLAG_HIDE_MOSSDEEP_COMET,
+        FLAG_MOSSDEEP_CELEBI_RESCUED,
+        FLAG_HIDE_MOSSDEEP_CELEBI_FOLLOWER,
+        FLAG_HIDE_MOSSDEEP_CELEBI_STATIC,
+        FLAG_MOSSDEEP_PROLOGUE_COMPLETED,
+        FLAG_MOSSDEEP_GRANDMA_DIALOGUE,
+        FLAG_MOSSDEEP_GRANDPA_DIALOGUE,
+        FLAG_HIDE_MOSSDEEP_RIVAL_MALE,
+        FLAG_HIDE_MOSSDEEP_RIVAL_FEMALE,
+        FLAG_RECEIVED_EXP_SHARE_FROM_RIVAL,
+        FLAG_ITEM_ROUTE_104_QUIET_MINT,
+        FLAG_ITEM_CARGO_SHIP_WATER_STONE,
+    };
+
+    // None, all, each individual pickup, and all except each pickup. This
+    // covers both states of every bit without exponential flash writes.
+    for (u32 pattern = 0; pattern < 2 + 2 * ARRAY_COUNT(pickups); pattern++)
+    {
+        u32 all = (1 << ARRAY_COUNT(pickups)) - 1;
+        u32 mask;
+
+        if (pattern == 0)
+            mask = 0;
+        else if (pattern == 1)
+            mask = all;
+        else if (pattern < 2 + ARRAY_COUNT(pickups))
+            mask = 1 << (pattern - 2);
+        else
+            mask = all ^ (1 << (pattern - 2 - ARRAY_COUNT(pickups)));
+
+        for (u32 i = 0; i < ARRAY_COUNT(legacyFlags); i++)
+            FlagSet(legacyFlags[i]);
+        FlagSet(FLAG_PLAYER_AWOKE_IN_LITTLEROOT);
+        for (u32 i = 0; i < ARRAY_COUNT(pickups); i++)
+        {
+            if (mask & (1 << i))
+                FlagSet(pickups[i]);
+            else
+                FlagClear(pickups[i]);
+        }
+        EXPECT_EQ(CommitBundle(SAVE_NORMAL), SAVE_STATUS_OK);
+
+        for (u32 i = 0; i < ARRAY_COUNT(legacyFlags); i++)
+            FlagClear(legacyFlags[i]);
+        FlagClear(FLAG_PLAYER_AWOKE_IN_LITTLEROOT);
+        for (u32 i = 0; i < ARRAY_COUNT(pickups); i++)
+            FlagToggle(pickups[i]);
+        EXPECT(SelectedSaveIsUsable(LoadGameSave(SAVE_NORMAL)));
+
+        for (u32 i = 0; i < ARRAY_COUNT(legacyFlags); i++)
+            EXPECT_EQ(FlagGet(legacyFlags[i]), TRUE);
+        EXPECT_EQ(FlagGet(FLAG_PLAYER_AWOKE_IN_LITTLEROOT), TRUE);
+        for (u32 i = 0; i < ARRAY_COUNT(pickups); i++)
+            EXPECT_EQ(FlagGet(pickups[i]), !!(mask & (1 << i)));
+    }
 }
 
 FLASH_TEST("Physical save freezes mutable banks and PC before incremental yielding")

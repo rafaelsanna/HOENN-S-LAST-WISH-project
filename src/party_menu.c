@@ -1654,10 +1654,13 @@ static void DrawBasicPartyThemeChrome(void)
     AddTextPrinterParameterized3(sPartyThemeTopWindowId, FONT_SMALL, 2, 1,
                                  sPartyThemeBarTextColors, 0, sText_PartyMenuHeader);
 
-    centerWidth = GetStringWidth(FONT_SMALL, sText_PartyAccessPc, 0);
-    centerX = (DISPLAY_WIDTH - centerWidth) / 2;
-    AddTextPrinterParameterized3(sPartyThemeTopWindowId, FONT_SMALL, centerX, 1,
-                                 sPartyThemeBarTextColors, 0, sText_PartyAccessPc);
+    if (PARTY_MENU_PC_ACCESS)
+    {
+        centerWidth = GetStringWidth(FONT_SMALL, sText_PartyAccessPc, 0);
+        centerX = (DISPLAY_WIDTH - centerWidth) / 2;
+        AddTextPrinterParameterized3(sPartyThemeTopWindowId, FONT_SMALL, centerX, 1,
+                                     sPartyThemeBarTextColors, 0, sText_PartyAccessPc);
+    }
 
     rightWidth = GetStringWidth(FONT_SMALL, sText_PartyChoosePokemon, 0);
     AddTextPrinterParameterized3(sPartyThemeTopWindowId, FONT_SMALL,

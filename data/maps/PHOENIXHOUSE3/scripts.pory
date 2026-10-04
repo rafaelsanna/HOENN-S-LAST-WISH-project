@@ -7,7 +7,7 @@ PHOENIXHOUSE3_EventScript_ExpertM::
 	end
 
 PHOENIXHOUSE3_Text_WarmStones:
-	.string "Some stones from the first\n"
-	.string "quake stay warm in winter.\p"
-	.string "Nobody knows why.$"
+	.string "It can get really cold in the desert\n"
+	.string "at night. Make sure you're prepared\l"
+	.string "for all temperatures here.$"
 `

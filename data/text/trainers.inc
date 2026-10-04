@@ -303,9 +303,10 @@ Route104_Text_BillyDefeat:
 	.string "They're all gritty!$"
 
 Route104_Text_BillyPostBattle:
-	.string "I want to leave my footprints in\n"
-	.string "the sand everywhere, but they\l"
-	.string "disappear quickly…$"
+	.string "I wanted to go in that nearby cave,\n"
+	.string "but there are some trees blocking it.\p"
+	.string "I guess I'll just keep playing in\n"
+	.string "the sand…$"
 
 Route104_Text_HaleyIntro:
 	.string "Should I…\n"
@@ -354,7 +355,10 @@ Route104_Text_WinstonDefeat:
 
 Route104_Text_WinstonPostBattle:
 	.string "There are some things money can't buy.\n"
-	.string "That's POKéMON…$"
+	.string "That's POKéMON…\p"
+	.string "Oh, actually, you can do that at the\n"
+	.string "MAUVILLE GAME CORNER now too.\p"
+	.string "There's nothing money can't buy!$"
 
 Route104_Text_WinstonRegister1:
 	.string "Hm?\n"
@@ -389,8 +393,8 @@ Route104_Text_CindyDefeat:
 	.string "Oh, my!$"
 
 Route104_Text_CindyPostBattle:
-	.string "“Hello” is the beginning of “good-bye.”\n"
-	.string "I hope we meet again.$"
+	.string "Hm. My purse feels a bit lighter.\n"
+	.string "Did I drop something around here?$"
 
 Route104_Text_CindyRegister1:
 	.string "Hello, we meet again.\p"
@@ -439,7 +443,8 @@ Route105_Text_FosterDefeated:
 
 Route105_Text_FosterPostBattle:
 	.string "I can spend hours and hours staring\n"
-	.string "at a nice rock without growing bored.$"
+	.string "at a nice rock without growing bored.\p"
+	.string "What? Get help? Why should I do that?$"
 
 Route105_Text_LuisIntro:
 	.string "Whew! I was worried that a kid was\n"
@@ -564,18 +569,18 @@ Route106_Text_ElliotRematchPostBattle:
 	.string "You agree with me, right?$"
 
 Route106_Text_NedIntro:
-	.string "What do people do if they need to go\n"
-	.string "to a washroom?\p"
-	.string "What if my ROD hooks a big one while\n"
-	.string "I'm in the washroom? I just can't go…$"
+	.string "I would love to have a boat like\n"
+	.string "some of those other fishermen.\p"
+	.string "I'm just stuck here on the shore,\n"
+	.string "hooking small fish and battling kids…$"
 
 Route106_Text_NedDefeated:
-	.string "I lost because I'm trying to not go\n"
-	.string "to the washroom…$"
+	.string "I lost because I don't have any\n"
+	.string "deep sea POKéMON…$"
 
 Route106_Text_NedPostBattle:
-	.string "Oh, no! I've got this feeling I'll hook\n"
-	.string "a big one!$"
+	.string "There's a big tide pool to the east.\n"
+	.string "If I had a boat, I'd fish there!$"
 
 Route106_Text_DouglasIntro:
 	.string "Hahahah! I'm a lousy runner, but in\n"

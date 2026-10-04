@@ -180,10 +180,11 @@ Route104_PrettyPetalFlowerShop_Text_WailmerPailExplanation:
 	.string "water them with the WAILMER PAIL.\p"
 	.string "Oh, another thing.\p"
 	.string "If you don't pick BERRIES for a while,\n"
-	.string "they'll drop off onto the ground.\l"
-	.string "But they'll sprout again.\p"
-	.string "Isn't that awesome?\n"
-	.string "It's like they have the will to live.$"
+	.string "they'll drop off onto the ground.\p"
+	.string "Or, at least, they used to.\n"
+	.string "And then that strange comet passed.\p"
+	.string "Now they just hang onto the plant...\n"
+	.string "forever ripe. It's a little creepy.$"
 
 Route104_PrettyPetalFlowerShop_Text_ImGrowingFlowers:
 	.string "I'm trying to be like my big sisters.\n"

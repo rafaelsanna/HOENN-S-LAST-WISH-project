@@ -97,7 +97,7 @@
 #define FLAG_RESCUED_BIRCH                       0x52
 #define FLAG_LEGENDARIES_IN_SOOTOPOLIS           0x53
 
-#define FLAG_PARTY_MENU_PC_ACCESS                0x54  
+#define FLAG_PARTY_MENU_PC_ACCESS                0x54 // Legacy Time Gear alias; PC permissions are now location-based.
 #define FLAG_LUKA_WON_BATTLE                     0x55 
 
 #define FLAG_HIDE_CONTEST_POKE_BALL          0x56  // Always set after new game, object it hides is added directly
@@ -657,9 +657,9 @@
 #define FLAG_HIDDEN_ITEM_LITTLEROOT_COAST_ETHER              (FLAG_HIDDEN_ITEMS_START + 0x70)
 #define FLAG_HIDDEN_ITEM_LONELY_CAVE_B2_TM51                 (FLAG_HIDDEN_ITEMS_START + 0x71)
 #define FLAG_HIDDEN_ITEM_LONELY_CAVE_B2_RARE_CANDY           (FLAG_HIDDEN_ITEMS_START + 0x72)
-#define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_LIGHT_CLAY            (FLAG_HIDDEN_ITEMS_START + 0x73)
+#define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_LIGHT_CLAY            (FLAG_HIDDEN_ITEMS_START + 0x73) // Legacy alias of Celebi rescued; pickup uses FLAG_PICKUP_RUSTBORO_CITY_LIGHT_CLAY.
 #define FLAG_HIDDEN_ITEM_RUSTURF_GROVE_SUPER_REPEL           (FLAG_HIDDEN_ITEMS_START + 0x74)
-#define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POTION                (FLAG_HIDDEN_ITEMS_START + 0x75)
+#define FLAG_HIDDEN_ITEM_RUSTBORO_CITY_POTION                (FLAG_HIDDEN_ITEMS_START + 0x75) // Legacy alias of static Celebi visibility; pickup uses FLAG_PICKUP_RUSTBORO_CITY_POTION.
 #define FLAG_HIDDEN_ITEM_GRANITE_CAVE_B1F_RARE_CANDY         (FLAG_HIDDEN_ITEMS_START + 0x76)
 #define FLAG_HIDDEN_ITEM_CARGO_SHIP_DIVE_BALL                (FLAG_HIDDEN_ITEMS_START + 0x77)
 #define FLAG_HIDDEN_ITEM_FIERY_PATH_PROTEIN                  (FLAG_HIDDEN_ITEMS_START + 0x78)
@@ -1168,7 +1168,7 @@
 #define FLAG_ITEM_SHOAL_CAVE_ICE_ROOM_TM_HAIL                       0x458
 #define FLAG_ITEM_SHOAL_CAVE_ICE_ROOM_NEVER_MELT_ICE                0x459
 #define FLAG_ITEM_ROUTE_103_GUARD_SPEC                              0x45A
-#define FLAG_ITEM_ROUTE_104_QUIET_MINT                              0x45B
+#define FLAG_ITEM_ROUTE_104_QUIET_MINT                              0x45B // Legacy shared Route 104/Petalburg Cave pickup; both now use independent FLAG_PICKUP_* bits.
 #define FLAG_ITEM_MAUVILLE_CITY_X_SPEED                             0x45C
 #define FLAG_ITEM_PETALBURG_WOODS_PARALYZE_HEAL                     0x45D
 #define FLAG_ITEM_ROUTE_115_GREAT_BALL                              0x45E
@@ -1708,21 +1708,23 @@
 #define FLAG_NUZLOCKE_RUN_COMPLETED_HARD              (HLW_CUSTOM_FLAGS_START + 0x031)
 // Story milestone, set on waking regardless of the selected Nuzlocke mode.
 #define FLAG_PLAYER_AWOKE_IN_LITTLEROOT               (HLW_CUSTOM_FLAGS_START + 0x032)
-#define FLAG_UNUSED_0x1033                           (HLW_CUSTOM_FLAGS_START + 0x033) // Unused Flag
-#define FLAG_UNUSED_0x1034                           (HLW_CUSTOM_FLAGS_START + 0x034) // Unused Flag
-#define FLAG_UNUSED_0x1035                           (HLW_CUSTOM_FLAGS_START + 0x035) // Unused Flag
-#define FLAG_UNUSED_0x1036                           (HLW_CUSTOM_FLAGS_START + 0x036) // Unused Flag
-#define FLAG_UNUSED_0x1037                           (HLW_CUSTOM_FLAGS_START + 0x037) // Unused Flag
-#define FLAG_UNUSED_0x1038                           (HLW_CUSTOM_FLAGS_START + 0x038) // Unused Flag
-#define FLAG_UNUSED_0x1039                           (HLW_CUSTOM_FLAGS_START + 0x039) // Unused Flag
-#define FLAG_UNUSED_0x103A                           (HLW_CUSTOM_FLAGS_START + 0x03A) // Unused Flag
-#define FLAG_UNUSED_0x103B                           (HLW_CUSTOM_FLAGS_START + 0x03B) // Unused Flag
-#define FLAG_UNUSED_0x103C                           (HLW_CUSTOM_FLAGS_START + 0x03C) // Unused Flag
-#define FLAG_UNUSED_0x103D                           (HLW_CUSTOM_FLAGS_START + 0x03D) // Unused Flag
-#define FLAG_UNUSED_0x103E                           (HLW_CUSTOM_FLAGS_START + 0x03E) // Unused Flag
-#define FLAG_UNUSED_0x103F                           (HLW_CUSTOM_FLAGS_START + 0x03F) // Unused Flag
-#define FLAG_UNUSED_0x1040                           (HLW_CUSTOM_FLAGS_START + 0x040) // Unused Flag
-#define FLAG_UNUSED_0x1041                           (HLW_CUSTOM_FLAGS_START + 0x041) // Unused Flag
+// Independent pickups replacing ambiguous legacy shared flags. Do not copy
+// or clear those old bits: existing saves get one pickup under each new flag.
+#define FLAG_PICKUP_RUSTBORO_CITY_LIGHT_CLAY         (HLW_CUSTOM_FLAGS_START + 0x033)
+#define FLAG_PICKUP_RUSTBORO_CITY_POTION             (HLW_CUSTOM_FLAGS_START + 0x034)
+#define FLAG_PICKUP_ROUTE_104_QUIET_MINT             (HLW_CUSTOM_FLAGS_START + 0x035)
+#define FLAG_PICKUP_PETALBURG_CAVE_QUIET_MINT        (HLW_CUSTOM_FLAGS_START + 0x036)
+#define FLAG_PICKUP_LITTLEROOT_COAST_ETHER           (HLW_CUSTOM_FLAGS_START + 0x037)
+#define FLAG_PICKUP_LONELY_CAVE_B2_TM51              (HLW_CUSTOM_FLAGS_START + 0x038)
+#define FLAG_PICKUP_LONELY_CAVE_B2_RARE_CANDY         (HLW_CUSTOM_FLAGS_START + 0x039)
+#define FLAG_PICKUP_RUSTURF_GROVE_SUPER_REPEL        (HLW_CUSTOM_FLAGS_START + 0x03A)
+#define FLAG_PICKUP_GRANITE_CAVE_B1F_RARE_CANDY      (HLW_CUSTOM_FLAGS_START + 0x03B)
+#define FLAG_PICKUP_FIERY_PATH_PROTEIN              (HLW_CUSTOM_FLAGS_START + 0x03C)
+#define FLAG_PICKUP_FIERY_PATH_PP_UP                (HLW_CUSTOM_FLAGS_START + 0x03D)
+#define FLAG_PICKUP_FIERY_PATH_ULTRA_BALL           (HLW_CUSTOM_FLAGS_START + 0x03E)
+#define FLAG_PICKUP_FIERY_PATH_REVIVE               (HLW_CUSTOM_FLAGS_START + 0x03F)
+#define FLAG_PICKUP_CARGO_SHIP_WATER_STONE          (HLW_CUSTOM_FLAGS_START + 0x040)
+#define FLAG_PICKUP_ABANDONED_SHIP_ROOM_B1F_TM_ICE_BEAM (HLW_CUSTOM_FLAGS_START + 0x041)
 #define FLAG_UNUSED_0x1042                           (HLW_CUSTOM_FLAGS_START + 0x042) // Unused Flag
 #define FLAG_UNUSED_0x1043                           (HLW_CUSTOM_FLAGS_START + 0x043) // Unused Flag
 #define FLAG_UNUSED_0x1044                           (HLW_CUSTOM_FLAGS_START + 0x044) // Unused Flag

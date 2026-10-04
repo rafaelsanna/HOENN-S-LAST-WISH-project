@@ -134,6 +134,7 @@ void UpdateAmbientCry(s16 *state, u16 *delayCounter);
 enum MapType GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum);
 enum MapType GetMapTypeByWarpData(struct WarpData *warp);
 enum MapType GetCurrentMapType(void);
+bool8 Overworld_IsInEliteFourChallenge(void);
 enum MapType GetLastUsedWarpMapType(void);
 bool8 IsMapTypeOutdoors(enum MapType mapType);
 bool8 Overworld_MapTypeAllowsTeleportAndFly(enum MapType mapType);

@@ -120,7 +120,7 @@
       "y": 24,
       "elevation": 3,
       "item": "ITEM_RARE_CANDY",
-      "flag": "FLAG_HIDDEN_ITEM_GRANITE_CAVE_B1F_RARE_CANDY"
+      "flag": "FLAG_PICKUP_GRANITE_CAVE_B1F_RARE_CANDY"
     }
   ]
 }

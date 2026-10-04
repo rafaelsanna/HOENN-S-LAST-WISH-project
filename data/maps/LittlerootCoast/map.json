@@ -94,7 +94,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "ITEM_ETHER",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_HIDDEN_ITEM_LITTLEROOT_COAST_ETHER"
+      "flag": "FLAG_PICKUP_LITTLEROOT_COAST_ETHER"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ARTIST",

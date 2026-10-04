@@ -55,16 +55,16 @@ TEST("HLW custom flags route the complete 0x1000 through 0x17FF range")
 {
     memset(gHlwSaveBlock4.customFlags, 0, sizeof(gHlwSaveBlock4.customFlags));
 
-    FlagSet(FLAG_UNUSED_0x1000);
-    FlagSet(FLAG_UNUSED_0x17FF);
+    FlagSet(HLW_CUSTOM_FLAGS_START);
+    FlagSet(HLW_CUSTOM_FLAGS_END);
 
-    EXPECT_EQ(FlagGet(FLAG_UNUSED_0x1000), TRUE);
-    EXPECT_EQ(FlagGet(FLAG_UNUSED_0x17FF), TRUE);
+    EXPECT_EQ(FlagGet(HLW_CUSTOM_FLAGS_START), TRUE);
+    EXPECT_EQ(FlagGet(HLW_CUSTOM_FLAGS_END), TRUE);
     EXPECT_EQ(gHlwSaveBlock4.customFlags[0], 0x01);
     EXPECT_EQ(gHlwSaveBlock4.customFlags[HLW_CUSTOM_FLAG_BYTES - 1], 0x80);
 
-    FlagClear(FLAG_UNUSED_0x1000);
-    FlagClear(FLAG_UNUSED_0x17FF);
+    FlagClear(HLW_CUSTOM_FLAGS_START);
+    FlagClear(HLW_CUSTOM_FLAGS_END);
 }
 
 TEST("HLW flag banks reject invalid IDs without modifying adjacent storage")

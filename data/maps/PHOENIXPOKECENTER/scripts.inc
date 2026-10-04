@@ -67,6 +67,6 @@ PHOENIXPOKECENTER_Text_CalmPokemon:
 # 34 "data/maps/PHOENIXPOKECENTER/scripts.pory"
 	.string "POKéMON seem calmer here.\p"
 # 35 "data/maps/PHOENIXPOKECENTER/scripts.pory"
-	.string "Maybe they hear the earth\n"
+	.string "Maybe being so far away from big\n"
 # 36 "data/maps/PHOENIXPOKECENTER/scripts.pory"
-	.string "better than we do.$"
+	.string "cities and roads is good for them.$"

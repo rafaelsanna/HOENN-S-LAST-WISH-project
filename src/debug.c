@@ -586,8 +586,8 @@ static const struct DebugVisibleItemFlagName sDebugVisibleItemFlagNames[] =
     { FLAG_ITEM_ABANDONED_SHIP_ROOMS_1F_HARBOR_MAIL, COMPOUND_STRING("Harbor Mail") },
     { FLAG_ITEM_ABANDONED_SHIP_ROOMS_B1F_ESCAPE_ROPE, COMPOUND_STRING("Escape Rope") },
     { FLAG_ITEM_ABANDONED_SHIP_ROOMS_2_B1F_DIVE_BALL, COMPOUND_STRING("Dive Ball") },
-    { FLAG_ITEM_CARGO_SHIP_WATER_STONE, COMPOUND_STRING("Water Stone") },
-    { FLAG_ITEM_ABANDONED_SHIP_ROOMS_B1F_TM_ICE_BEAM, COMPOUND_STRING("TM Ice Beam") },
+    { FLAG_PICKUP_CARGO_SHIP_WATER_STONE, COMPOUND_STRING("Water Stone") },
+    { FLAG_PICKUP_ABANDONED_SHIP_ROOM_B1F_TM_ICE_BEAM, COMPOUND_STRING("TM Ice Beam") },
     { FLAG_ITEM_ABANDONED_SHIP_ROOMS_2_1F_REVIVE, COMPOUND_STRING("Revive") },
     { FLAG_ITEM_ABANDONED_SHIP_CAPTAINS_OFFICE_STORAGE_KEY, COMPOUND_STRING("Storage Key") },
     { FLAG_ITEM_ABANDONED_SHIP_HIDDEN_FLOOR_ROOM_3_WATER_STONE, COMPOUND_STRING("Water Stone") },
@@ -1226,11 +1226,7 @@ static void DebugTask_HandleWishWarningTextBlock(u8 taskId)
 
 bool8 Debug_IsWishMenuBlockedByEliteFour(void)
 {
-    // Elite Four maps are contiguous: Sidney through Hall 5. The Pokémon League
-    // lobby and Hall of Fame are immediately after this range and remain allowed.
-    return gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM)
-        && gSaveBlock1Ptr->location.mapNum >= MAP_NUM(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM)
-        && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(MAP_EVER_GRANDE_CITY_HALL5);
+    return Overworld_IsInEliteFourChallenge();
 }
 
 static bool8 Debug_CanOpen(void)

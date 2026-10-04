@@ -20,15 +20,14 @@ MauvilleCity_House1_EventScript_ReceivedRockSmash::
 	end
 
 MauvilleCity_House1_Text_ImRockSmashDudeTakeThis:
-	.string "Hold on. Wait a second.\p"
-	.string "You fought RENTON back in\n"
-	.string "the second Gym city?\p"
-	.string "And you beat him?\p"
+	.string "Hold on. Wait a second.\n"
+	.string "You fought RENTON back in DEWFORD?\p"
+	.string "And you beat him?\n"
 	.string "Hah. That's impressive, kid.\p"
 	.string "Renton and I go way back.\n"
 	.string "Drinks, fights, broken tables.\p"
-	.string "He respected strength.\n"
-	.string "So did I.\p"
+	.string "He respects strength.\n"
+	.string "So do I.\p"
 	.string "They used to call me the\n"
 	.string "ROCK SMASH DUDE.\p"
 	.string "If Renton acknowledged you,\n"

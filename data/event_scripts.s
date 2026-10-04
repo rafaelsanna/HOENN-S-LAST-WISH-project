@@ -672,7 +672,6 @@ EverGrandeCity_HallOfFame_EventScript_ResetEliteFour::
         clearflag FLAG_DEFEATED_ELITE_4_GLACIA
         clearflag FLAG_DEFEATED_ELITE_4_DRAKE
         setvar VAR_ELITE_4_STATE, 0
-        setflag FLAG_PARTY_MENU_PC_ACCESS
         return
 		
 Common_EventScript_UpdateBrineyLocation:: 

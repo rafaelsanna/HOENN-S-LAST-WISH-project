@@ -296,6 +296,7 @@ Route101_Text_YouSavedMe:
 	.string "PROF. ACACIA: Whew…\p"
 	.string "I was in the tall grass studying wild\n"
 	.string "POKéMON when I was jumped.\p"
+	.string "Seriously, what is with those SENTRET?\p"
 	.string "You saved me.\n"
 	.string "Thanks a lot!\p"
 	.string "Oh?\p"

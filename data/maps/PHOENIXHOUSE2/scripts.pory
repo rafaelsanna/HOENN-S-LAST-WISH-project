@@ -8,6 +8,7 @@ PHOENIXHOUSE2_EventScript_Woman::
 
 PHOENIXHOUSE2_Text_SlowLife:
 	.string "Life is slow here.\p"
-	.string "We learn to listen before\n"
-	.string "the ground moves.$"
+	.string "I guess that's to be expected\n"
+	.string "when you live in a dead end\l"
+	.string "middle-of-nowhere town.$"
 `

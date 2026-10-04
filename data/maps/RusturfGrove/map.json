@@ -176,7 +176,7 @@
       "y": 11,
       "elevation": 3,
       "item": "ITEM_SUPER_REPEL",
-      "flag": "FLAG_HIDDEN_ITEM_RUSTURF_GROVE_SUPER_REPEL"
+      "flag": "FLAG_PICKUP_RUSTURF_GROVE_SUPER_REPEL"
     }
   ]
 }

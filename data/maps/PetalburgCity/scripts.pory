@@ -1281,8 +1281,8 @@ PetalburgCity_Text_AreYouRookieTrainer:
     .string "You've got that 'what did I walk into'\n"
     .string "look on your face.\p"
     .string "Petalburg's been… odd lately.\n"
-    .string "People keep hearing footsteps in the\l"
-    .string "woods even when the wind is still.\p"
+    .string "The woods especially. Even experienced\l"
+    .string "trainers have ended up in rough shape.\p"
     .string "Calendula wants to speak with any new\n"
     .string "visitors before they go into the woods.\l"
 	.string "You should visit her if you haven't.$"
@@ -1328,8 +1328,7 @@ PetalburgCity_Text_QuakeAquaGruntBlock:
 PetalburgCity_Text_QuakeAdventureBoy:
 	.string "I wanted an adventure, but I didn't\n"
 	.string "mean earthquakes and endless rain!\p"
-	.string "This is a little too exciting for\n"
-	.string "me.$"
+	.string "This is a little too scary for me.$"
 
 PetalburgCity_Text_QuakeCalendulaPart15:
 	.string "CALENDULA: {PLAYER}, have you met\n"

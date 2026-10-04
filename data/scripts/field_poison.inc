@@ -12,7 +12,6 @@ EventScript_FieldWhiteOut::
 	waitmessage
 	waitbuttonpress
 	special Script_FadeOutMapMusic
-	setflag FLAG_PARTY_MENU_PC_ACCESS 
 	waitstate
 	fadescreen FADE_TO_BLACK
 	call_if_set FLAG_WHITEOUT_TO_LAVARIDGE, EventScript_SetRespawnLavaridgePkmnCenter

@@ -704,16 +704,18 @@ MauvilleCity_Text_ScottYouDidntHoldBack:
 
 MauvilleCity_Text_WattsonNeedFavorTakeKey:
 	.string "DEN: Oh, {PLAYER}{KUN}!\n"
-	.string "You look like you have a lot of zip!\l"
+	.string "You look like you have a lot of guts!\l"
 	.string "That's a good thing, wahahahaha!\p"
 	.string "Fine! I've decided!\n"
 	.string "I need a favor, {PLAYER}{KUN}!\p"
 	.string "MAUVILLE CITY has an underground\n"
 	.string "sector called NEW MAUVILLE.\p"
 	.string "{PLAYER}{KUN}, I'd like you to go there and\n"
-	.string "switch off the GENERATOR.\p"
+	.string "connect this cable to the GENERATOR.\p"
 	.string "The GENERATOR has been running a bit\n"
 	.string "haywire. It's getting unsafe.\p"
+	.string "Of course, that means I need to connect\n"
+	.string "it to my GYM's grid for experiments!\p"
 	.string "Here, this is the KEY to get into\n"
 	.string "NEW MAUVILLE.$"
 
@@ -736,20 +738,20 @@ MauvilleCity_Text_WattsonThanksTakeTM:
 MauvilleCity_Text_WattsonYoungTakeCharge:
 	.string "DEN: Wahahahaha!\p"
 	.string "It pleases me to no end to see\n"
-	.string "the young step up and take charge!$"
+	.string "the curious step up and take charge!$"
 
 MauvilleCity_Text_NurseHurtMonBackToHealth:
 	.string "You have heard about DEN, right?\n"
 	.string "The Gym Leader here.\p"
 	.string "They say he is a genius with\n"
 	.string "electricity and POKéMON.\p"
-	.string "But also a little unstable.\n"
+	.string "But he's also a little unstable.\n"
 	.string "His experiments go too far sometimes.\p"
 	.string "Strange machines, sparks everywhere,\n"
-	.string "lights flashing all night.\p"
-	.string "Some people find him scary.\n"
-	.string "Others call him brilliant.\p"
-	.string "Maybe both are true.$"
+	.string "and lights flashing all night.\p"
+	.string "That's just the beginning of it.\p"
+	.string "If he isn't careful, he's going to\n"
+	.string "get reported for disruptive behavior.$"
 
 MauvilleCity_Text_AllSortsOfPeopleComeThrough:
 	.string "Mauville sits at the crossroads.\n"
@@ -773,11 +775,11 @@ MauvilleCity_Text_PokemonCanJumpYouOnBike:
 	.string "They say the energy here is so strong\l"
 	.string "it can make POKéMON behave strangely.\p"
 	.string "Some trainers claim they felt their\n"
-	.string "own POKéMON twitch without warning.\p"
+	.string "own POKéBALLS twitch without warning.\p"
 	.string "Others swear strange lights flicker\n"
 	.string "near the power grid at night.\p"
-	.string "If you pay attention, you might\n"
-	.string "discover something no one else has.$"
+	.string "Maybe DEN's just doing experiments\n"
+	.string "again... or it could be ghosts...$"
 
 
 MauvilleCity_Text_CitySign:

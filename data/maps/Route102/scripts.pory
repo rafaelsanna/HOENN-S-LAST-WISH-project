@@ -91,8 +91,7 @@ Route102_EventScript_ZIGZAGOON102::
 	end
 
 Route102_Text_WatchMeCatchPokemon:
-.string "My heart's racing for a real battle!\n"
-.string "So let's see what you can do!$"
+.string "LUKA: Hm. This looks like a good spot.$"
 
 Route102_Text_WallyIDidIt:
 .string "LUKA: Congrats, {PLAYER}!\n"

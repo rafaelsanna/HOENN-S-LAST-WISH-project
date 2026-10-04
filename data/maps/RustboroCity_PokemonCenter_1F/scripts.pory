@@ -51,10 +51,9 @@ RustboroCity_PokemonCenter_1F_Text_HMCutNextDoor:
 	.string "A woman who moves like wind through trees.\p"
 	.string "They say she can slice through\n"
 	.string "the thickest branches with one strike.\p"
-	.string "She learned the art from her grandfather,\n"
-	.string "but she only teaches those who can\l"
-	.string "defeat her in battle.\p"
-	.string "I've searched everywhere but never found her.\n"
-	.string "Maybe she doesn't want to be found.$"
+	.string "She only teaches those who can defeat\n"
+	.string "her in battle.\p"
+	.string "I heard there's a grove she trains in\n"
+	.string "sometimes near RUSTBORO TUNNEL.$"
 
 `

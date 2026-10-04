@@ -28,12 +28,12 @@ SlateportCity_PokemonCenter_1F_EventScript_Woman::
 SlateportCity_PokemonCenter_1F_Text_RaiseDifferentTypesOfPokemon:
 	.string "Slateport breathes different every\n"
 	.string "morning. Depends which ship docked.\p"
-	.string "Last week, sailors from Kanto.\n"
-	.string "Told stories of a lighthouse that\l"
-	.string "shines where no land exists.\p"
-	.string "Yesterday, a woman from Johto.\n"
-	.string "Said the tides there whisper at night.\l"
-	.string "Words, almost. I believed her.$"
+	.string "Last week, sailors from Kanto\n"
+	.string "brought exotic spices and the market\l"
+	.string "was going wild.\p"
+	.string "Yesterday, a ship from Sinnoh docked\n"
+	.string "with a cargo full of special POKéBALLS.\p"
+	.string "It's great living in a harbor town.$"
 
 SlateportCity_PokemonCenter_1F_Text_TradedMonWithFriend:
 	.string "My brother was a fisherman.\n"
@@ -41,11 +41,10 @@ SlateportCity_PokemonCenter_1F_Text_TradedMonWithFriend:
 	.string "Took his boat out some weeks ago.\n"
 	.string "Same route he'd sailed a thousand times.\p"
 	.string "The coast guard found the vessel\n"
-	.string "yesterday. Drifting. Empty.\p"
-	.string "No damage. No struggle.\n"
-	.string "Just... gone.\p"
+	.string "yesterday, completely empty.\p"
+	.string "He was just gone.\p"
 	.string "The old sailors say the tides have\n"
-	.string "been wrong since the comet.\l"
-	.string "Taking things that don't belong to them.$"
+	.string "been wrong since the comet.\p"
+	.string "I know something must have got him.$"
 
 `

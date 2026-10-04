@@ -32,6 +32,6 @@ PHOENIXPOKECENTER_Text_DryAir:
 
 PHOENIXPOKECENTER_Text_CalmPokemon:
 	.string "POKéMON seem calmer here.\p"
-	.string "Maybe they hear the earth\n"
-	.string "better than we do.$"
+	.string "Maybe being so far away from big\n"
+	.string "cities and roads is good for them.$"
 `

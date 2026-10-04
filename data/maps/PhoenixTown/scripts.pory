@@ -826,16 +826,16 @@ PhoenixTown_EventScript_Gentleman::
 	end
 
 PhoenixTown_Text_Hiker:
-	.string "PHOENIX TOWN rose when the\n"
-	.string "canyon split in a great quake.\p"
-	.string "The first settlers followed\n"
-	.string "the new springs to safety.$"
+	.string "PHOENIX TOWN has been here longer\n"
+	.string "than anyone can remember.\p"
+	.string "I'm not sure if anyone knows how\n"
+	.string "the first settlers came to live here.$"
 
 PhoenixTown_Text_Woman:
-	.string "At night, the earth hums\n"
-	.string "beneath these streets.\p"
-	.string "We say the canyon is\n"
-	.string "dreaming.$"
+	.string "At night, the stars here are brighter\n"
+	.string "than most places in HOENN.\p"
+	.string "This is one of the best places for\n"
+	.string "star watching.$"
 
 PhoenixTown_Text_Youngster:
 	.string "It is quiet here, far from\n"
@@ -844,15 +844,15 @@ PhoenixTown_Text_Youngster:
 	.string "isolated desert town.$"
 
 PhoenixTown_Text_Man:
-	.string "A tremor can reveal a path\n"
-	.string "the desert hid for years.\p"
-	.string "Never cross the canyon\n"
-	.string "without water.$"
+	.string "The spring provides life to all\n"
+	.string "of us here in the desert.\p"
+	.string "We would be doomed without it,\n"
+	.string "but it never runs dry.\p"
+	.string "I wonder where it comes from.$"
 
 PhoenixTown_Text_LittleGirl:
 	.string "At sunset, the canyon walls\n"
-	.string "glow like a sleeping\n"
-	.string "PHOENIX.$"
+	.string "glow like a sleeping MOLTRES.$"
 
 PhoenixTown_Text_Gentleman:
 	.string "No city lights reach us here.\p"

@@ -155,7 +155,7 @@ PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
 # 78 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	.string "publishing papers and living quietly.\p"
 # 79 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "But she chose the Gym instead.\n"
+	.string "Naturally, she chose the Gym instead.\n"
 # 80 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	.string "Says she learned more from one real\l"
 # 81 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"

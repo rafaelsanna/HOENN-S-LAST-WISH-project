@@ -51,7 +51,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "ITEM_TM51",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_HIDDEN_ITEM_LONELY_CAVE_B2_TM51"
+      "flag": "FLAG_PICKUP_LONELY_CAVE_B2_TM51"
     }
   ],
   "warp_events": [
@@ -71,7 +71,7 @@
       "y": 24,
       "elevation": 3,
       "item": "ITEM_RARE_CANDY",
-      "flag": "FLAG_HIDDEN_ITEM_LONELY_CAVE_B2_RARE_CANDY"
+      "flag": "FLAG_PICKUP_LONELY_CAVE_B2_RARE_CANDY"
     }
   ]
 }
