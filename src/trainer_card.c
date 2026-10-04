@@ -40,6 +40,7 @@
 #include "constants/rgb.h"
 #include "constants/trainers.h"
 #include "constants/union_room.h"
+#include "hlw_media_save.h"
 
 enum {
     WIN_MSG,
@@ -102,8 +103,11 @@ struct TrainerCardData
     u16 cardTop;
     u8 language;
     bool8 isNewCard;
+    u8 colorTheme;
     u8 mugshotSpriteId;
     u8 partyIconSpriteIds[PARTY_SIZE];
+    u32 bgScrollX;
+    u32 bgScrollY;
 };
 
 // EWRAM
@@ -193,6 +197,13 @@ static void PrintNewTrainerCardWins(void);
 static void PrintNewTrainerCardBadges(void);
 static void PrintNewTrainerCardOptions(void);
 static void CreateNewTrainerCardSprites(void);
+static void LoadNewTrainerCardScrollingBackground(void);
+static void UpdateNewTrainerCardScrollingBackground(void);
+static void LoadTrainerCardColorThemeFromSave(void);
+static void SaveTrainerCardColorThemeToSave(void);
+static u8 GetTrainerCardThemeCyclePosition(void);
+static void ChangeTrainerCardColorTheme(s8 direction);
+static void ApplyTrainerCardThemePalettes(void);
 
 static const u32 sTrainerCardStickers_Gfx[]      = INCBIN_U32("graphics/trainer_card/frlg/stickers.4bpp.smol");
 static const u16 sUnused_Pal[]                   = INCBIN_U16("graphics/trainer_card/unused.gbapal");
@@ -221,6 +232,122 @@ static const u32 sKantoTrainerCardBadges_Gfx[]   = INCBIN_U32("graphics/trainer_
 static const u8 sNewTrainerCard_Gfx[] = INCBIN_U8("graphics/trainer_card/newtrainercard.4bpp");
 static const u16 sNewTrainerCard_Pal[] = INCBIN_U16("graphics/trainer_card/newtrainercard.gbapal");
 static const u16 sNewTrainerCard_Tilemap[] = INCBIN_U16("graphics/trainer_card/newtrainercard.bin");
+
+// The card artwork uses palette index 0 for the area outside the card. On a
+// BG this index is transparent, so keep the backdrop dark while BG2 supplies
+// the animated artwork underneath it.
+static const u16 sNewTrainerCardBackdrop_Pal[] = {RGB(4, 4, 5)};
+
+// Reuse the same 128x24 scrolling artwork and movement used by Options.
+#define TRAINER_CARD_SCROLL_BG_PALETTE       5
+#define TRAINER_CARD_SCROLL_BG_SCREENBASE    24
+#define TRAINER_CARD_SCROLL_SOURCE_WIDTH     32
+#define TRAINER_CARD_SCROLL_SOURCE_HEIGHT    24
+#define TRAINER_CARD_SCROLL_BG_HEIGHT        64
+#define TRAINER_CARD_SCROLL_X_PERIOD_PIXELS  (TRAINER_CARD_SCROLL_SOURCE_WIDTH * 8)
+#define TRAINER_CARD_SCROLL_Y_PERIOD_PIXELS  (TRAINER_CARD_SCROLL_SOURCE_HEIGHT * 8)
+#define TRAINER_CARD_SCROLL_SPEED_X          32
+#define TRAINER_CARD_SCROLL_SPEED_Y          48
+static const u32 sTrainerCardScrolling_Gfx[] = INCBIN_U32("graphics/trainer_card/bgscroll.4bpp");
+static const u16 sTrainerCardScrolling_Tilemap[] = INCBIN_U16("graphics/trainer_card/bgscroll.bin");
+static const u16 sTrainerCardScrolling_Pal[] = INCBIN_U16("graphics/trainer_card/bgscroll.gbapal");
+
+// These are the same sixteen neutral UI themes used by the Summary and Party
+// screens. The saved theme byte is shared with both screens below.
+struct TrainerCardThemeColors
+{
+    u16 nearBlack;
+    u16 black2;
+    u16 deep;
+    u16 dark1;
+    u16 charcoal;
+    u16 dark;
+    u16 mid;
+    u16 light;
+    u16 detail;
+};
+
+#define TRAINER_CARD_THEME_COUNT 16
+#define TRAINER_CARD_NAME_ID_Y 2
+#define TRAINER_CARD_TIME_DEX_Y 19
+#define TRAINER_CARD_MONEY_Y 30
+#define TRAINER_CARD_WINS_Y 42
+#define TRAINER_CARD_BADGES_TEXT_Y 59
+#define TRAINER_CARD_BADGES_BG_Y_OFFSET (-3 * 256)
+
+static const u8 sTrainerCardThemeCycleOrder[TRAINER_CARD_THEME_COUNT] =
+{
+    0, 1, 2, 3, 4, 5, 6, 7,
+    8, 9, 15, 10, 11, 12, 13, 14,
+};
+
+static const struct TrainerCardThemeColors sTrainerCardThemeColors[TRAINER_CARD_THEME_COUNT] =
+{
+    [0] = {
+        RGB(1, 1, 2), RGB(2, 2, 3), RGB(2, 3, 4), RGB(3, 3, 4),
+        RGB(4, 4, 5), RGB(6, 6, 8), RGB(9,10,12), RGB(13,14,17), RGB(9, 7,12),
+    },
+    [1] = {
+        RGB(2, 1, 3), RGB(3, 2, 5), RGB(4, 3, 7), RGB(5, 4, 8),
+        RGB(6, 5, 9), RGB(8, 7,12), RGB(11, 9,15), RGB(16,13,19), RGB(20,16,25),
+    },
+    [2] = {
+        RGB(3, 1, 2), RGB(5, 2, 3), RGB(7, 3, 4), RGB(8, 4, 5),
+        RGB(9, 5, 6), RGB(12,6, 8), RGB(15,8,10), RGB(18,10,12), RGB(23,12,15),
+    },
+    [3] = {
+        RGB(1, 2, 3), RGB(2, 3, 5), RGB(2, 4, 7), RGB(3, 5, 8),
+        RGB(4, 6,10), RGB(5, 8,13), RGB(8,11,17), RGB(11,16,21), RGB(12,22,29),
+    },
+    [4] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(2, 6, 4), RGB(3, 7, 5),
+        RGB(4, 8, 6), RGB(5,11, 8), RGB(8,14,10), RGB(11,17,13), RGB(15,23,17),
+    },
+    [5] = {
+        RGB(1, 3, 3), RGB(2, 4, 5), RGB(2, 6, 7), RGB(3, 7, 8),
+        RGB(4, 8,10), RGB(5,11,13), RGB(8,14,16), RGB(11,17,19), RGB(13,23,25),
+    },
+    [6] = {
+        RGB(3, 2, 1), RGB(5, 3, 2), RGB(7, 4, 2), RGB(8, 5, 3),
+        RGB(9, 6, 4), RGB(12,8, 5), RGB(15,10,7), RGB(18,13, 9), RGB(24,17,10),
+    },
+    [7] = {
+        RGB(3, 1, 3), RGB(5, 2, 4), RGB(7, 3, 6), RGB(8, 4, 7),
+        RGB(9, 5, 8), RGB(12,7,10), RGB(15, 9,13), RGB(18,11,15), RGB(24,16,20),
+    },
+    [8] = {
+        RGB(1, 1, 3), RGB(2, 2, 5), RGB(3, 3, 7), RGB(4, 4, 8),
+        RGB(5, 5,10), RGB(7, 7,13), RGB(10,10,17), RGB(13,13,20), RGB(18,18,27),
+    },
+    [9] = {
+        RGB(2, 2, 3), RGB(3, 4, 5), RGB(4, 5, 6), RGB(5, 6, 7),
+        RGB(6, 7, 8), RGB(8, 9,11), RGB(11,13,15), RGB(15,16,19), RGB(18,20,23),
+    },
+    [10] = {
+        RGB(3, 1, 2), RGB(5, 2, 4), RGB(8, 3, 6), RGB(10,4, 8),
+        RGB(12,5,10), RGB(15,7,12), RGB(19,10,15), RGB(24,14,19), RGB(31,18,24),
+    },
+    [11] = {
+        RGB(2, 2, 3), RGB(3, 3, 5), RGB(5, 5, 7), RGB(6, 6, 8),
+        RGB(8, 8,10), RGB(10,10,13), RGB(13,13,16), RGB(17,17,21), RGB(22,20,27),
+    },
+    [12] = {
+        RGB(1, 2, 3), RGB(2, 3, 4), RGB(3, 5, 6), RGB(4, 6, 7),
+        RGB(5, 7, 9), RGB(7,10,12), RGB(10,13,16), RGB(14,18,21), RGB(18,24,28),
+    },
+    [13] = {
+        RGB(1, 3, 2), RGB(2, 4, 3), RGB(3, 6, 5), RGB(4, 7, 6),
+        RGB(5, 8, 7), RGB(7,11, 9), RGB(10,14,12), RGB(14,18,16), RGB(18,25,21),
+    },
+    [14] = {
+        RGB(3, 2, 2), RGB(5, 3, 2), RGB(7, 5, 4), RGB(8, 6, 5),
+        RGB(10,7, 6), RGB(12,9, 8), RGB(15,12,10), RGB(19,15,13), RGB(25,20,17),
+    },
+    [15] = {
+        RGB(3, 2, 0), RGB(5, 3, 1), RGB(7, 5, 1), RGB(9, 6, 1),
+        RGB(11,8, 2), RGB(14,10,3), RGB(18,13,4), RGB(23,17,6), RGB(29,22,8),
+    },
+};
 
 #define TRAINER_CARD_MUGSHOT_TAG       0x2F50
 
@@ -293,8 +420,9 @@ static const u8 sNewTrainerCardTextColors[] =
     TEXT_COLOR_LIGHT_GRAY,
 };
 
-static const u8 sText_NewTrainerCardNameAndId[] = _("name: {STR_VAR_1} id: {STR_VAR_2}");
-static const u8 sText_NewTrainerCardTimeAndDex[] = _("time: {STR_VAR_1}:{STR_VAR_2} dex: {STR_VAR_3} own: ");
+static const u8 sText_NewTrainerCardName[] = _("name: {STR_VAR_1}");
+static const u8 sText_NewTrainerCardId[] = _("id: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardTimeAndDex[] = _("time: {STR_VAR_1} : {STR_VAR_2} dex: {STR_VAR_3} own: ");
 static const u8 sText_NewTrainerCardMoneyAndAchievements[] = _("money: {STR_VAR_1} achievements: {STR_VAR_2}");
 static const u8 sText_NewTrainerCardWinsAndWhiteouts[] = _("win: {STR_VAR_1} whiteout: {STR_VAR_2}");
 static const u8 sText_NewTrainerCardBadges[] = _("badges: {STR_VAR_1}");
@@ -325,13 +453,14 @@ static const struct BgTemplate sTrainerCardBgTemplates[4] =
         .baseTile = 0
     },
     {
-        .bg = 2,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 30,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 3,
-        .baseTile = 0
+       .bg = 2,
+       .charBaseIndex = 1,
+       // BG2 is 32x64, so keep its 4 KiB tilemap away from BG3's map at 31.
+       .mapBaseIndex = TRAINER_CARD_SCROLL_BG_SCREENBASE,
+       .screenSize = 2,
+       .paletteMode = 0,
+       .priority = 3,
+       .baseTile = 0
     },
     {
         .bg = 3,
@@ -465,6 +594,8 @@ static void HblankCb_TrainerCard(void)
 
 static void CB2_TrainerCard(void)
 {
+    if (sData->isNewCard)
+        UpdateNewTrainerCardScrollingBackground();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -521,7 +652,8 @@ static void Task_TrainerCard(u8 taskId)
         sData->mainState++;
         break;
     case 4:
-        DrawCardScreenBackground(sData->bgTilemap);
+        if (!sData->isNewCard)
+            DrawCardScreenBackground(sData->bgTilemap);
         sData->mainState++;
         break;
     case 5:
@@ -586,6 +718,16 @@ static void Task_TrainerCard(u8 taskId)
                 BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, sData->blendColor);
                 sData->mainState = STATE_CLOSE_CARD;
             }
+        }
+        else if (sData->isNewCard && JOY_NEW(L_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            ChangeTrainerCardColorTheme(-1);
+        }
+        else if (sData->isNewCard && JOY_NEW(R_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            ChangeTrainerCardColorTheme(1);
         }
         break;
     case STATE_WAIT_FLIP_TO_BACK:
@@ -1010,6 +1152,8 @@ static void InitGpuRegs(void)
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ);
     SetGpuReg(REG_OFFSET_WIN0V, DISPLAY_HEIGHT);
     SetGpuReg(REG_OFFSET_WIN0H, DISPLAY_WIDTH);
+    if (sData->isNewCard)
+        ChangeBgY(3, TRAINER_CARD_BADGES_BG_Y_OFFSET, BG_COORD_SET);
     if (gReceivedRemoteLinkPlayers)
         EnableInterrupts(INTR_FLAG_VBLANK | INTR_FLAG_HBLANK | INTR_FLAG_VCOUNT | INTR_FLAG_TIMER3 | INTR_FLAG_SERIAL);
     else
@@ -1132,11 +1276,21 @@ static bool8 PrintAllOnCardFront(void)
 
 static void PrintNewTrainerCardNameAndId(void)
 {
+    s32 idX;
+
     StringCopy(gStringVar1, sData->trainerCard.playerName);
     ConvertInternationalString(gStringVar1, sData->language);
     ConvertIntToDecimalStringN(gStringVar2, sData->trainerCard.trainerId, STR_CONV_MODE_LEADING_ZEROS, 5);
-    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardNameAndId);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 2, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+
+    // Keep the name and ID in separate runs. The mugshot begins at the right
+    // edge of this text area, so one long combined run could be hidden by it.
+    // The narrower font also leaves room for the full seven-character name.
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardName);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_NAME_ID_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    idX = 6 + GetStringWidth(FONT_SMALL_NARROWER, gStringVar4, 0) + 6;
+
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardId);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, idX, TRAINER_CARD_NAME_ID_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static void PrintNewTrainerCardTimeAndDex(void)
@@ -1151,7 +1305,7 @@ static void PrintNewTrainerCardTimeAndDex(void)
     ConvertIntToDecimalStringN(gStringVar4, GetOwnedMonsCount(), STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(text, sText_NewTrainerCardTimeAndDex);
     StringAppend(text, gStringVar4);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 14, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, text);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, TRAINER_CARD_TIME_DEX_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, text);
 }
 
 static void RefreshNewTrainerCardTimeAndDex(void)
@@ -1159,7 +1313,7 @@ static void RefreshNewTrainerCardTimeAndDex(void)
     // The legacy timer redraws at the old card position (TIME + a number),
     // which leaked into the new front card after the play clock advanced.
     // Refresh only the new top line instead.
-    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 12, 224, 11);
+    FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 14, 224, 11);
     // Erase any old line that may have been written before the custom path
     // took over this window.
     FillWindowPixelRect(WIN_CARD_TEXT, PIXEL_FILL(0), 0, 88, 224, 16);
@@ -1171,7 +1325,7 @@ static void PrintNewTrainerCardMoney(void)
     ConvertIntToDecimalStringN(gStringVar1, sData->trainerCard.money, STR_CONV_MODE_LEFT_ALIGN, MAX_MONEY_DIGITS);
     ConvertIntToDecimalStringN(gStringVar2, Achievement_CountUnlocked(), STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardMoneyAndAchievements);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 26, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, TRAINER_CARD_MONEY_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static void PrintNewTrainerCardWins(void)
@@ -1179,7 +1333,7 @@ static void PrintNewTrainerCardWins(void)
     ConvertIntToDecimalStringN(gStringVar1, GetCappedGameStat(GAME_STAT_TRAINER_WINS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
     ConvertIntToDecimalStringN(gStringVar2, GetCappedGameStat(GAME_STAT_WHITEOUTS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
     StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardWinsAndWhiteouts);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 38, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, TRAINER_CARD_WINS_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static void PrintNewTrainerCardBadges(void)
@@ -1192,7 +1346,7 @@ static void PrintNewTrainerCardBadges(void)
 
     ConvertIntToDecimalStringN(gStringVar1, badgeCount, STR_CONV_MODE_LEFT_ALIGN, 1);
     StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBadges);
-    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 62, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, TRAINER_CARD_BADGES_TEXT_Y, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
 static void PrintNewTrainerCardOptions(void)
@@ -1783,29 +1937,38 @@ static u8 SetCardBgsAndPals(void)
             LoadPalette(sNewTrainerCard_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
             LoadPalette(sNewTrainerCard_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
             LoadPalette(sNewTrainerCard_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+            LoadPalette(sNewTrainerCardBackdrop_Pal, BG_PLTT_ID(0), sizeof(sNewTrainerCardBackdrop_Pal));
             break;
         case 2:
+            LoadBgTiles(2, sTrainerCardScrolling_Gfx, sizeof(sTrainerCardScrolling_Gfx), 0);
+            break;
+        case 3:
+            LoadPalette(sTrainerCardScrolling_Pal, BG_PLTT_ID(TRAINER_CARD_SCROLL_BG_PALETTE), PLTT_SIZE_4BPP);
+            ApplyTrainerCardThemePalettes();
+            break;
+        case 4:
             // Keep badges on a separate priority layer so their transparent
             // pixels reveal the new card underneath instead of the backdrop.
             LoadBgTiles(3, sData->badgeTiles, ARRAY_COUNT(sData->badgeTiles), 0);
             break;
-        case 3:
+        case 5:
             if (sData->cardType != CARD_TYPE_FRLG)
                 LoadPalette(sHoennTrainerCardBadges_Pal, BG_PLTT_ID(4), PLTT_SIZE_4BPP);
             else
                 LoadPalette(sKantoTrainerCardBadges_Pal, BG_PLTT_ID(4), PLTT_SIZE_4BPP);
             break;
-        case 4:
+        case 6:
             SetBgTilemapBuffer(0, sData->cardTilemapBuffer);
             SetBgTilemapBuffer(2, sData->bgTilemapBuffer);
             // Use a dedicated cleared buffer for BG3; this prevents the
             // legacy team/portrait tilemap from surviving into the new card.
             SetBgTilemapBuffer(3, sData->badgeTilemapBuffer);
             break;
-        case 5:
+        case 7:
             FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 32, 32);
             // BG3 used to contain the old trainer-card portrait/badges.
             FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 32, 32);
+            LoadNewTrainerCardScrollingBackground();
             break;
         default:
             return 1;
@@ -1821,6 +1984,9 @@ static u8 SetCardBgsAndPals(void)
         break;
     case 1:
         LoadBgTiles(0, sData->cardTiles, 0x1800, 0);
+        // BG2 uses its own character block so the animated card backdrop does
+        // not overwrite the legacy trainer-card tiles on BG0.
+        LoadBgTiles(2, sData->cardTiles, 0x1800, 0);
         break;
     case 2:
         if (sData->cardType != CARD_TYPE_FRLG)
@@ -1870,6 +2036,142 @@ static void DrawCardScreenBackground(u16 *ptr)
         }
     }
     CopyBgTilemapBufferToVram(2);
+}
+
+static void LoadNewTrainerCardScrollingBackground(void)
+{
+    u32 x, y;
+    vu16 *dst = (vu16 *)BG_SCREEN_ADDR(TRAINER_CARD_SCROLL_BG_SCREENBASE);
+
+    // BG2 is 32x64 tiles. Repeat the authored 32x24 map far enough to keep
+    // the full card viewport covered while the camera moves vertically.
+    for (y = 0; y < TRAINER_CARD_SCROLL_BG_HEIGHT; y++)
+    {
+        const u32 srcY = y % TRAINER_CARD_SCROLL_SOURCE_HEIGHT;
+
+        for (x = 0; x < TRAINER_CARD_SCROLL_SOURCE_WIDTH; x++)
+        {
+            const u16 entry = sTrainerCardScrolling_Tilemap[srcY * TRAINER_CARD_SCROLL_SOURCE_WIDTH + x];
+            dst[y * TRAINER_CARD_SCROLL_SOURCE_WIDTH + x] =
+                (entry & 0x0FFF) | (TRAINER_CARD_SCROLL_BG_PALETTE << 12);
+        }
+    }
+}
+
+static void UpdateNewTrainerCardScrollingBackground(void)
+{
+    // Match Options: decreasing the camera offsets makes the artwork drift
+    // down and to the right, with the same smooth diagonal speed and loops.
+    if (sData->bgScrollX <= TRAINER_CARD_SCROLL_SPEED_X)
+        sData->bgScrollX = TRAINER_CARD_SCROLL_X_PERIOD_PIXELS << 8;
+    else
+        sData->bgScrollX -= TRAINER_CARD_SCROLL_SPEED_X;
+
+    if (sData->bgScrollY <= TRAINER_CARD_SCROLL_SPEED_Y)
+        sData->bgScrollY = TRAINER_CARD_SCROLL_Y_PERIOD_PIXELS << 8;
+    else
+        sData->bgScrollY -= TRAINER_CARD_SCROLL_SPEED_Y;
+
+    ChangeBgX(2, sData->bgScrollX, BG_COORD_SET);
+    ChangeBgY(2, sData->bgScrollY, BG_COORD_SET);
+}
+
+static void LoadTrainerCardColorThemeFromSave(void)
+{
+    sData->colorTheme = 0;
+
+    if (gSaveBlock1Ptr != NULL
+     && gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] < TRAINER_CARD_THEME_COUNT)
+    {
+        sData->colorTheme = gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET];
+    }
+}
+
+static void SaveTrainerCardColorThemeToSave(void)
+{
+    if (gSaveBlock1Ptr != NULL)
+    {
+        gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] =
+            sData->colorTheme < TRAINER_CARD_THEME_COUNT ? sData->colorTheme : 0;
+    }
+}
+
+static u8 GetTrainerCardThemeCyclePosition(void)
+{
+    u8 i;
+
+    for (i = 0; i < TRAINER_CARD_THEME_COUNT; i++)
+    {
+        if (sTrainerCardThemeCycleOrder[i] == sData->colorTheme)
+            return i;
+    }
+
+    return 0;
+}
+
+static void ChangeTrainerCardColorTheme(s8 direction)
+{
+    u8 position = GetTrainerCardThemeCyclePosition();
+
+    if (direction > 0)
+        position = (position + 1) % TRAINER_CARD_THEME_COUNT;
+    else
+        position = position > 0 ? position - 1 : TRAINER_CARD_THEME_COUNT - 1;
+
+    sData->colorTheme = sTrainerCardThemeCycleOrder[position];
+    SaveTrainerCardColorThemeToSave();
+    ApplyTrainerCardThemePalettes();
+}
+
+static void ApplyTrainerCardThemePalettes(void)
+{
+    u16 cardPalette[16];
+    u16 scrollPalette[16];
+    const struct TrainerCardThemeColors *theme;
+    u8 i;
+
+    CpuCopy16(sNewTrainerCard_Pal, cardPalette, sizeof(cardPalette));
+    CpuCopy16(sTrainerCardScrolling_Pal, scrollPalette, sizeof(scrollPalette));
+
+    // Palette index 0 is transparent in both BGs. Give the hardware backdrop
+    // a dark theme color so the old green key color can never leak through.
+    cardPalette[0] = sNewTrainerCardBackdrop_Pal[0];
+    scrollPalette[0] = sNewTrainerCardBackdrop_Pal[0];
+
+    if (sData->colorTheme != 0)
+    {
+        theme = &sTrainerCardThemeColors[sData->colorTheme];
+
+        cardPalette[0] = theme->charcoal;
+        scrollPalette[0] = theme->charcoal;
+
+        // Re-map the card's neutral ramp while keeping its colored accent.
+        cardPalette[1] = theme->light;
+        cardPalette[2] = theme->light;
+        cardPalette[3] = theme->detail;
+        cardPalette[4] = theme->light;
+        cardPalette[5] = theme->mid;
+        cardPalette[6] = theme->mid;
+        cardPalette[7] = theme->dark;
+        cardPalette[8] = theme->charcoal;
+        cardPalette[9] = theme->dark1;
+        cardPalette[10] = theme->deep;
+        cardPalette[11] = theme->black2;
+        cardPalette[12] = theme->nearBlack;
+
+        // Apply the same theme ramp to the moving background.
+        scrollPalette[1] = theme->mid;
+        scrollPalette[2] = theme->dark;
+        scrollPalette[3] = theme->deep;
+        scrollPalette[4] = theme->black2;
+        scrollPalette[5] = theme->nearBlack;
+        scrollPalette[6] = theme->nearBlack;
+        scrollPalette[7] = theme->nearBlack;
+    }
+
+    for (i = 0; i < 4; i++)
+        LoadPalette(cardPalette, BG_PLTT_ID(i), PLTT_SIZE_4BPP);
+    LoadPalette(scrollPalette, BG_PLTT_ID(TRAINER_CARD_SCROLL_BG_PALETTE), PLTT_SIZE_4BPP);
 }
 
 static void DrawCardFrontOrBack(u16 *ptr)
@@ -2258,7 +2560,10 @@ static void InitTrainerCardData(void)
     sData->onBack = FALSE;
     sData->flipBlendY = 0;
     sData->cardType = GetSetCardType();
+    LoadTrainerCardColorThemeFromSave();
     sData->mugshotSpriteId = SPRITE_NONE;
+    sData->bgScrollX = TRAINER_CARD_SCROLL_X_PERIOD_PIXELS << 8;
+    sData->bgScrollY = TRAINER_CARD_SCROLL_Y_PERIOD_PIXELS << 8;
     for (i = 0; i < PARTY_SIZE; i++)
         sData->partyIconSpriteIds[i] = SPRITE_NONE;
     for (i = 0; i < TRAINER_CARD_PROFILE_LENGTH; i++)
