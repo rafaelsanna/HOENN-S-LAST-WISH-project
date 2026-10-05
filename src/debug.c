@@ -70,6 +70,7 @@
 #include "constants/event_bg.h"
 #include "constants/expansion.h"
 #include "constants/flags.h"
+#include "constants/game_stat.h"
 #include "constants/items.h"
 #include "constants/map_groups.h"
 #include "constants/rgb.h"
@@ -1134,6 +1135,8 @@ void Debug_ShowMainMenu(void)
 {
     if (!Debug_CanOpen() || Debug_IsWishMenuBlockedByEliteFour())
         return;
+
+    IncrementGameStat(GAME_STAT_WISH_MENU_OPENINGS);
 
     // Permanently mark that this save has opened the Debug/Wish Menu at least once.
     // This is intentionally never cleared, even if the option is later turned off.

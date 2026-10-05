@@ -69,6 +69,7 @@
 #include "text_window.h"
 #include "window.h"
 #include "radio.h"
+#include "constants/game_stat.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
@@ -78,6 +79,9 @@
 static EWRAM_DATA MainCallback sRadioReturnCallback = NULL;
 static EWRAM_DATA u16          sRadioCurrentSong    = 0;
 static EWRAM_DATA bool8        sRadioIsPlaying       = FALSE;
+static EWRAM_DATA u32          sRadioUsageLastVBlank;
+static EWRAM_DATA u16          sRadioUsageVBlankRemainder;
+static EWRAM_DATA bool8        sRadioUsageClockInitialized;
 static EWRAM_DATA u8           sRadioStation         = 0; // 0 = STATION_ALL
 static EWRAM_DATA u16          sRadioStationIndex    = 0;
 
@@ -2722,7 +2726,7 @@ static void Radio_LoadPersistentState(void);
 static void Radio_SavePersistentState(void);
 static void Radio_ResetPlaybackMonitor(void);
 static void Radio_ApplyAudioSettings(void);
-static void Radio_StartSongWithSettings(u16 songId);
+static void Radio_StartSongWithSettings(u16 songId, bool8 countTrack);
 static void Radio_SetStereoOutput(bool8 stereo);
 static void Radio_RefreshAlbumCover(void);
 static void Radio_QueueNowPlayingPopup(u16 songId);
@@ -2761,10 +2765,42 @@ static void Radio_ApplyAudioSettings(void)
     Radio_ApplyMonoPanIfNeeded();
 }
 
-static void Radio_StartSongWithSettings(u16 songId)
+static void Radio_StartSongWithSettings(u16 songId, bool8 countTrack)
 {
     m4aSongNumStart(songId);
+    if (countTrack)
+        IncrementGameStat(GAME_STAT_RADIO_TRACKS);
     Radio_ApplyAudioSettings();
+}
+
+void Radio_UpdateUsageStats(void)
+{
+    u32 currentVBlank = gMain.vblankCounter1;
+    u32 elapsedVBlanks;
+    u32 elapsedSeconds;
+
+    if (!sRadioUsageClockInitialized)
+    {
+        sRadioUsageLastVBlank = currentVBlank;
+        sRadioUsageClockInitialized = TRUE;
+        return;
+    }
+
+    elapsedVBlanks = currentVBlank - sRadioUsageLastVBlank;
+    sRadioUsageLastVBlank = currentVBlank;
+
+    if (!sRadioIsPlaying
+     || (!sRadioPriorityEnabled && gMain.callback2 != CB2_Radio))
+        return;
+
+    elapsedSeconds = (sRadioUsageVBlankRemainder + elapsedVBlanks) / 60;
+    sRadioUsageVBlankRemainder = (sRadioUsageVBlankRemainder + elapsedVBlanks) % 60;
+
+    while (elapsedSeconds != 0 && GetGameStat(GAME_STAT_RADIO_TIME) < 0xFFFFFF)
+    {
+        IncrementGameStat(GAME_STAT_RADIO_TIME);
+        elapsedSeconds--;
+    }
 }
 
 static void Radio_SetStereoOutput(bool8 stereo)
@@ -2783,7 +2819,7 @@ static void Radio_SetStereoOutput(bool8 stereo)
     if (sRadioIsPlaying)
     {
         m4aSongNumStop(sRadioCurrentSong);
-        Radio_StartSongWithSettings(sRadioCurrentSong);
+        Radio_StartSongWithSettings(sRadioCurrentSong, FALSE);
         Radio_ResetPlaybackMonitor();
     }
 }
@@ -4268,7 +4304,7 @@ static bool8 Radio_AdvanceToNextStationTrack(void)
 
     // Stop only the old radio song, then start the next station entry.
     m4aSongNumStop(oldSong);
-    Radio_StartSongWithSettings(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong, TRUE);
 
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
@@ -4312,7 +4348,7 @@ bool8 RadioPriority_NextTrack(void)
     sRadioCurrentSong = Station_GetTrack(sRadioStation, sRadioStationIndex);
 
     m4aSongNumStop(oldSong);
-    Radio_StartSongWithSettings(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong, TRUE);
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
     Radio_SavePersistentState();
@@ -4348,7 +4384,7 @@ bool8 RadioPriority_PreviousTrack(void)
     sRadioCurrentSong = Station_GetTrack(sRadioStation, sRadioStationIndex);
 
     m4aSongNumStop(oldSong);
-    Radio_StartSongWithSettings(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong, TRUE);
     sRadioIsPlaying = TRUE;
     Radio_ResetPlaybackMonitor();
     Radio_SavePersistentState();
@@ -4394,7 +4430,7 @@ bool8 RadioPriority_Update(void)
 
             // A destructive fade/clear removed the live tracks. There is no
             // position left to resume, so restart is the unavoidable fallback.
-            Radio_StartSongWithSettings(sRadioCurrentSong);
+            Radio_StartSongWithSettings(sRadioCurrentSong, FALSE);
             Radio_ResetPlaybackMonitor();
             return FALSE;
         }
@@ -4406,7 +4442,7 @@ bool8 RadioPriority_Update(void)
         if (sRadioRepeatEnabled
          && !(gMPlayInfo_BGM.status & MUSICPLAYER_STATUS_TRACK))
         {
-            Radio_StartSongWithSettings(sRadioCurrentSong);
+            Radio_StartSongWithSettings(sRadioCurrentSong, FALSE);
             Radio_ResetPlaybackMonitor();
         }
 
@@ -4415,7 +4451,7 @@ bool8 RadioPriority_Update(void)
 
     // Something bypassed the guarded sound.c API and replaced the BGM.
     // Restore the radio as a safety net.
-    Radio_StartSongWithSettings(sRadioCurrentSong);
+    Radio_StartSongWithSettings(sRadioCurrentSong, FALSE);
     Radio_ResetPlaybackMonitor();
     return FALSE;
 }
@@ -5859,7 +5895,7 @@ static void Radio_PlayListSelection(u8 taskId, u8 station, u16 index)
     if (playing)
     {
         m4aSongNumStop(oldSong);
-        Radio_StartSongWithSettings(songId);
+        Radio_StartSongWithSettings(songId, TRUE);
         Radio_ResetPlaybackMonitor();
     }
 
@@ -7081,7 +7117,7 @@ static void Task_RadioHandleInput(u8 taskId)
             if (playing)
             {
                 m4aSongNumStop((u16)gTasks[taskId].tCurrSong);
-                Radio_StartSongWithSettings(songId);
+                Radio_StartSongWithSettings(songId, TRUE);
                 Radio_ResetPlaybackMonitor();
             }
 
@@ -7187,7 +7223,7 @@ static void Task_RadioHandleInput(u8 taskId)
             if (playing)
             {
                 m4aSongNumStop((u16)gTasks[taskId].tCurrSong);
-                Radio_StartSongWithSettings(songId);
+                Radio_StartSongWithSettings(songId, TRUE);
                 Radio_ResetPlaybackMonitor();
             }
 
@@ -7303,7 +7339,7 @@ static void Task_RadioHandleInput(u8 taskId)
         if (playing)
         {
             m4aSongNumStop((u16)gTasks[taskId].tCurrSong);
-            Radio_StartSongWithSettings(songId);
+            Radio_StartSongWithSettings(songId, TRUE);
             Radio_ResetPlaybackMonitor();
         }
 
@@ -7356,14 +7392,14 @@ static void Task_RadioHandleInput(u8 taskId)
                     if (songId != oldSong)
                     {
                         m4aSongNumStop(oldSong);
-                        Radio_StartSongWithSettings(songId);
+                        Radio_StartSongWithSettings(songId, TRUE);
                         Radio_ResetPlaybackMonitor();
                         startedSong = TRUE;
                     }
                 }
                 else
                 {
-                    Radio_StartSongWithSettings(songId);
+                    Radio_StartSongWithSettings(songId, TRUE);
                     playing = TRUE;
                     Radio_ResetPlaybackMonitor();
                     startedSong = TRUE;
@@ -7386,7 +7422,7 @@ static void Task_RadioHandleInput(u8 taskId)
             }
             else
             {
-                Radio_StartSongWithSettings(songId);
+                Radio_StartSongWithSettings(songId, TRUE);
                 playing = TRUE;
                 Radio_ResetPlaybackMonitor();
 
@@ -8231,7 +8267,7 @@ static void CB2_LoadRadio(void)
             // Radio UI was opened.
             if (gMPlayInfo_BGM.songHeader != gSongTable[sRadioCurrentSong].header)
             {
-                Radio_StartSongWithSettings(sRadioCurrentSong);
+                Radio_StartSongWithSettings(sRadioCurrentSong, FALSE);
                 Radio_ResetPlaybackMonitor();
             }
             else if (gMPlayInfo_BGM.status & MUSICPLAYER_STATUS_PAUSE)

@@ -74,6 +74,7 @@
 #include "constants/field_effects.h"
 #include "constants/field_move.h"
 #include "constants/form_change_types.h"
+#include "constants/game_stat.h"
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
@@ -7674,6 +7675,8 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
         sFinalLevel = GetMonData(mon, MON_DATA_LEVEL, NULL);
         if (gSpecialVar_ItemId == ITEM_INFINITE_CANDY && sFinalLevel > effectiveLevelCap)
             sFinalLevel = effectiveLevelCap;
+        if (gSpecialVar_ItemId == ITEM_INFINITE_CANDY)
+            IncrementGameStat(GAME_STAT_INFINITE_CANDY_USES);
         gPartyMenuUseExitCallback = TRUE;
         UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
         

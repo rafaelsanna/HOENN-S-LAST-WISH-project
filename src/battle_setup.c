@@ -1386,6 +1386,10 @@ static void CB2_EndTrainerBattle(void)
 
     if (gBattleOutcome == B_OUTCOME_WON)
         IncrementGameStat(GAME_STAT_TRAINER_WINS);
+    else if (IsPlayerDefeated(gBattleOutcome) == TRUE
+          || DidPlayerForfeitNormalTrainerBattle()
+          || nuzlockePartyWiped)
+        IncrementGameStat(GAME_STAT_TRAINER_LOSSES);
 
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
@@ -1433,13 +1437,19 @@ static void CB2_EndRematchBattle(void)
 
     if (gBattleOutcome == B_OUTCOME_WON)
         IncrementGameStat(GAME_STAT_TRAINER_WINS);
+    else if (IsPlayerDefeated(gBattleOutcome) == TRUE
+          || DidPlayerForfeitNormalTrainerBattle()
+          || nuzlockePartyWiped)
+        IncrementGameStat(GAME_STAT_TRAINER_LOSSES);
 
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
     {
         DowngradeBadPoison();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }
-    else if (IsPlayerDefeated(gBattleOutcome) == TRUE || nuzlockePartyWiped)
+    else if (IsPlayerDefeated(gBattleOutcome) == TRUE
+          || DidPlayerForfeitNormalTrainerBattle()
+          || nuzlockePartyWiped)
     {
         SetMainCallback2(CB2_WhiteOut);
     }

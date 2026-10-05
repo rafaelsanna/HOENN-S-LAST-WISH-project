@@ -44,6 +44,7 @@
 #include "pokeball.h"
 #include "pokedex.h"
 #include "nuzlocke.h"
+#include "overworld.h"
 #include "pokemon.h"
 #include "random.h"
 #include "recorded_battle.h"
@@ -68,6 +69,7 @@
 #include "constants/battle_ai.h"
 #include "constants/flags.h"
 #include "constants/battle_move_effects.h"
+#include "constants/game_stat.h"
 #include "constants/battle_string_ids.h"
 #include "constants/battle_partner.h"
 #include "constants/hold_effects.h"
@@ -3522,6 +3524,9 @@ const u8* FaintClearSetData(u32 battler)
 {
     s32 i;
     const u8 *result = NULL;
+
+    if (gSaveBlock1Ptr != NULL && IsOnPlayerSide(battler))
+        IncrementGameStat(GAME_STAT_FAINTED_POKEMON);
 
     for (i = 0; i < NUM_BATTLE_STATS; i++)
         gBattleMons[battler].statStages[i] = DEFAULT_STAT_STAGE;

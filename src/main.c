@@ -25,6 +25,7 @@
 #include "trainer_hill.h"
 #include "test_runner.h"
 #include "constants/rgb.h"
+#include "constants/game_stat.h"
 #include "comfy_anim.h"
 #include "emulator_check.h"
 
@@ -299,6 +300,11 @@ static void ReadKeys(void)
 
     gMain.heldKeysRaw = keyInput;
     gMain.heldKeys = gMain.heldKeysRaw;
+
+    // Keep a persistent count for the Trainer Card's profile statistics.
+    // Use raw input so L=A remapping does not inflate the A-button count.
+    if (gSaveBlock1Ptr != NULL && (gMain.newKeysRaw & A_BUTTON))
+        IncrementGameStat(GAME_STAT_A_BUTTON_PRESSES);
 
     // Remap L to A if the L=A option is enabled.
     if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_L_EQUALS_A)

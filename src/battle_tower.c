@@ -2628,10 +2628,14 @@ static void HandleSpecialTrainerBattleEnd(void)
 {
     s32 i;
 
-    if (gBattleOutcome == B_OUTCOME_WON
-     && (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
      && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
-        IncrementGameStat(GAME_STAT_TRAINER_WINS);
+    {
+        if (gBattleOutcome == B_OUTCOME_WON)
+            IncrementGameStat(GAME_STAT_TRAINER_WINS);
+        else if (gBattleOutcome == B_OUTCOME_LOST || gBattleOutcome == B_OUTCOME_DREW)
+            IncrementGameStat(GAME_STAT_TRAINER_LOSSES);
+    }
 
     RecordedBattle_SaveBattleOutcome();
     switch (gBattleScripting.specialTrainerBattleType)

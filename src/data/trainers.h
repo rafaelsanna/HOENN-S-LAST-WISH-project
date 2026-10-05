@@ -17232,7 +17232,7 @@ F_TRAINER_FEMALE |
 #line 6685
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 6686
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_DOUBLE_ACE_POKEMON,
+        .aiFlags = AI_FLAG_BASIC_TRAINER,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_NORMAN,
         .partySize = 6,
@@ -17834,7 +17834,7 @@ F_TRAINER_FEMALE |
 #line 6936
         .battleType = TRAINER_BATTLE_TYPE_DOUBLES,
 #line 6937
-        .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_DOUBLE_ACE_POKEMON,
+        .aiFlags = AI_FLAG_BASIC_TRAINER,
 #line 0
         .trainerBackPic = TRAINER_PIC_LEADER_TATE_AND_LIZA,
         .partySize = 6,

@@ -32,6 +32,7 @@
 #include "battle_ai_util.h"
 #include "event_data.h"
 #include "link.h"
+#include "overworld.h"
 #include "malloc.h"
 #include "berry.h"
 #include "pokedex.h"
@@ -46,6 +47,7 @@
 #include "constants/items.h"
 #include "constants/item_effects.h"
 #include "constants/flags.h"
+#include "constants/game_stat.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/species.h"
@@ -706,6 +708,7 @@ bool32 TryRunFromBattle(u32 battler)
     {
         gCurrentTurnActionNumber = gBattlersCount;
         gBattleOutcome = B_OUTCOME_RAN;
+        IncrementGameStat(GAME_STAT_BATTLES_RUN_FROM);
     }
 
     return effect;
@@ -860,6 +863,7 @@ void HandleAction_SafariZoneRun(void)
     PlaySE(SE_FLEE);
     gCurrentTurnActionNumber = gBattlersCount;
     gBattleOutcome = B_OUTCOME_RAN;
+    IncrementGameStat(GAME_STAT_BATTLES_RUN_FROM);
 }
 
 void HandleAction_WallyBallThrow(void)

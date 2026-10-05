@@ -12,6 +12,7 @@
 
 extern bool8 RadioPriority_ShouldBlockBgmChange(void);
 extern void RadioPriority_MaintainBgm(void);
+extern void Radio_UpdateUsageStats(void);
 
 struct Fanfare
 {
@@ -66,6 +67,8 @@ void InitMapMusic(void)
 
 void MapMusicMain(void)
 {
+    Radio_UpdateUsageStats();
+
     if (RadioPriority_ShouldBlockBgmChange())
     {
         // Keeps the same radio playback position across normal overworld

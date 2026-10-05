@@ -6,6 +6,7 @@
 // Call this from ItemUseOutOfBattle_Radio (item_use.c)
 // returnCallback is typically CB2_ReturnToField or CB2_ReturnToFieldContinueScript
 void Radio_Open(MainCallback returnCallback);
+void Radio_UpdateUsageStats(void);
 bool32 RadioPopup_IsActive(void);
 void Radio_CancelNowPlayingPopup(void);
 void Radio_TryShowQueuedPopup(void);

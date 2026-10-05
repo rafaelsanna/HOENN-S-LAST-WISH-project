@@ -33,6 +33,7 @@
 #include "trainer_pokemon_sprites.h"
 #include "contest_util.h"
 #include "decompress.h"
+#include "coins.h"
 #include "constants/songs.h"
 #include "constants/game_stat.h"
 #include "constants/flags.h"
@@ -178,6 +179,9 @@ static void BufferBattleFacilityStats(void);
 static void PrintStatOnBackOfCard(u8 top, const u8 *str1, u8 *str2, const u8 *color);
 static void LoadStickerGfx(void);
 static u8 SetCardBgsAndPals(void);
+static void LoadNewTrainerCardFrontGraphics(void);
+static void LoadNewTrainerCardBackGraphics(void);
+static void SetNewTrainerCardSpritesVisible(bool8 visible);
 static void DrawCardBackStats(void);
 static void Task_DoCardFlipTask(u8);
 static bool8 Task_BeginCardFlip(struct Task *task);
@@ -196,7 +200,16 @@ static void PrintNewTrainerCardMoney(void);
 static void PrintNewTrainerCardWins(void);
 static void PrintNewTrainerCardBadges(void);
 static void PrintNewTrainerCardOptions(void);
+static void PrintNewTrainerCardBackHeader(void);
+static void PrintNewTrainerCardBackProgress(void);
+static void PrintNewTrainerCardBackResources(void);
+static void PrintNewTrainerCardBackActivity(void);
+static void PrintNewTrainerCardBackWishMenuAndCandyCount(void);
+static void PrintNewTrainerCardBackRadio(void);
+static void PrintNewTrainerCardBackOnlineRecord(void);
+static void PrintNewTrainerCardBackChampionRecord(void);
 static void CreateNewTrainerCardSprites(void);
+static void ApplyHardChampionRibbonMark(void);
 static void LoadNewTrainerCardScrollingBackground(void);
 static void UpdateNewTrainerCardScrollingBackground(void);
 static void LoadTrainerCardColorThemeFromSave(void);
@@ -249,6 +262,8 @@ STATIC_ASSERT(sizeof(sHoennTrainerCardHardBadges_Gfx) == 0x80 * NUM_BADGES, Trai
 static const u8 sNewTrainerCard_Gfx[] = INCBIN_U8("graphics/trainer_card/newtrainercard.4bpp");
 static const u16 sNewTrainerCard_Pal[] = INCBIN_U16("graphics/trainer_card/newtrainercard.gbapal");
 static const u16 sNewTrainerCard_Tilemap[] = INCBIN_U16("graphics/trainer_card/newtrainercard.bin");
+static const u8 sNewTrainerCardBack_Gfx[] = INCBIN_U8("graphics/trainer_card/newtrainercardback.4bpp");
+static const u16 sNewTrainerCardBack_Tilemap[] = INCBIN_U16("graphics/trainer_card/newtrainercardback.bin");
 
 // The card artwork uses palette index 0 for the area outside the card. On a
 // BG this index is transparent, so keep the backdrop dark while BG2 supplies
@@ -293,6 +308,14 @@ struct TrainerCardThemeColors
 #define TRAINER_CARD_MONEY_Y 30
 #define TRAINER_CARD_WINS_Y 42
 #define TRAINER_CARD_BADGES_TEXT_Y 59
+#define TRAINER_CARD_BACK_HEADER_Y 2
+#define TRAINER_CARD_BACK_PROGRESS_Y 19
+#define TRAINER_CARD_BACK_RESOURCES_Y 31
+#define TRAINER_CARD_BACK_ACTIVITY_Y 43
+#define TRAINER_CARD_BACK_WISH_MENU_Y 55
+#define TRAINER_CARD_BACK_RADIO_Y 67
+#define TRAINER_CARD_BACK_ONLINE_Y 108
+#define TRAINER_CARD_BACK_CHAMPION_Y 122
 #define TRAINER_CARD_BADGES_BG_Y_OFFSET (-3 * 256)
 
 static const u8 sTrainerCardThemeCycleOrder[TRAINER_CARD_THEME_COUNT] =
@@ -459,6 +482,20 @@ static const struct SpriteTemplate sTrainerCardChampionRibbonTemplate =
     .callback = SpriteCallbackDummy,
 };
 
+// The Champion Ribbon uses the same gold H indicator as the hard-mode badges.
+// Palette index 0 remains transparent; indices 2 and 3 are the ribbon's
+// existing black outline and gold colors respectively.
+static const u8 sTrainerCardHardChampionMark[7][6] =
+{
+    {2, 2, 0, 2, 2, 0},
+    {2, 3, 2, 2, 3, 2},
+    {2, 3, 2, 2, 3, 2},
+    {2, 3, 3, 3, 3, 2},
+    {2, 3, 2, 2, 3, 2},
+    {2, 3, 2, 2, 3, 2},
+    {2, 2, 0, 2, 2, 0},
+};
+
 static const u8 sNewTrainerCardTextColors[] =
 {
     TEXT_COLOR_TRANSPARENT,
@@ -476,6 +513,21 @@ static const u8 sText_NewTrainerCardMoneyAndAchievements[] = _("money {STR_VAR_1
 static const u8 sText_NewTrainerCardWinsAndWhiteouts[] = _("win {STR_VAR_1} {EMOJI_PIPE} whiteout {STR_VAR_2}");
 static const u8 sText_NewTrainerCardBadges[] = _("badges {STR_VAR_1}");
 static const u8 sText_NewTrainerCardOptions[] = _("difficulty {STR_VAR_1}{CLEAR 2}{EMOJI_PIPE}{CLEAR 2}nuzlocke {STR_VAR_2}{CLEAR 2}{EMOJI_PIPE}{CLEAR 2}wishmenu {STR_VAR_3}");
+static const u8 sText_NewTrainerCardBackTitle[] = _("wish card");
+static const u8 sText_NewTrainerCardBackTheme[] = _("theme {STR_VAR_1}/16");
+static const u8 sText_NewTrainerCardBackHeader[] = _("name:{STR_VAR_1} id:{STR_VAR_2}");
+static const u8 sText_NewTrainerCardBackProgress[] = _("steps: {STR_VAR_1} {EMOJI_PIPE} pressed a: {STR_VAR_2} {EMOJI_PIPE} battles: {STR_VAR_3}");
+static const u8 sText_NewTrainerCardBackResources[] = _("battle points: {STR_VAR_1} {EMOJI_PIPE} gc coins: {STR_VAR_2} {EMOJI_PIPE} trades: {STR_VAR_3}");
+static const u8 sText_NewTrainerCardBackActivity[] = _("faints: {STR_VAR_1} {EMOJI_PIPE} fled: {STR_VAR_2} {EMOJI_PIPE} evolution: {STR_VAR_3}");
+static const u8 sText_NewTrainerCardBackActivityHatch[] = _(" {EMOJI_PIPE} hatch: ");
+static const u8 sText_NewTrainerCardBackWishMenuAndCandyCount[] = _("wish menu count: {STR_VAR_1} {EMOJI_PIPE} infinity candy count: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardBackRadio[] = _("radio time: {STR_VAR_1}:{STR_VAR_2} {EMOJI_PIPE} song count: {STR_VAR_3}");
+static const u8 sText_NewTrainerCardBackOnlineRecord[] = _("online record: {STR_VAR_1} win {STR_VAR_2} lost");
+static const u8 sText_NewTrainerCardBackWinRate[] = _(" {EMOJI_PIPE} W R: ");
+static const u8 sText_NewTrainerCardBackOnlineWinRate[] = _(" {EMOJI_PIPE} win rate: ");
+static const u8 sText_NewTrainerCardBackPercent[] = _("%");
+static const u8 sText_NewTrainerCardBackChampionRecord[] = _("champion: {STR_VAR_1}      hall of fame debut: {STR_VAR_2}");
+static const u8 sText_NewTrainerCardBackHofTime[] = _("{STR_VAR_1}:{STR_VAR_2}:{STR_VAR_3}");
 static const u8 sText_NewTrainerCardNormal[] = _("nrm");
 static const u8 sText_NewTrainerCardHard[] = _("hard");
 static const u8 sText_NewTrainerCardOff[] = _("off");
@@ -750,12 +802,9 @@ static void Task_TrainerCard(u8 taskId)
         }
         if (JOY_NEW(A_BUTTON))
         {
-            if (!sData->isNewCard)
-            {
-                FlipTrainerCard();
-                PlaySE(SE_RG_CARD_FLIP);
-                sData->mainState = STATE_WAIT_FLIP_TO_BACK;
-            }
+            FlipTrainerCard();
+            PlaySE(SE_RG_CARD_FLIP);
+            sData->mainState = STATE_WAIT_FLIP_TO_BACK;
         }
         else if (JOY_NEW(B_BUTTON))
         {
@@ -788,7 +837,21 @@ static void Task_TrainerCard(u8 taskId)
         }
         break;
     case STATE_HANDLE_INPUT_BACK:
-        if (JOY_NEW(B_BUTTON))
+        if (sData->isNewCard)
+        {
+            if (JOY_NEW(A_BUTTON))
+            {
+                FlipTrainerCard();
+                sData->mainState = STATE_WAIT_FLIP_TO_FRONT;
+                PlaySE(SE_RG_CARD_FLIP);
+            }
+            else if (JOY_NEW(B_BUTTON))
+            {
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, sData->blendColor);
+                sData->mainState = STATE_CLOSE_CARD;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
         {
             if (gReceivedRemoteLinkPlayers && sData->isLink && InUnionRoom() == TRUE)
             {
@@ -884,6 +947,9 @@ static bool8 LoadCardGfx(void)
             }
             else
                 DecompressDataWithHeaderWram(sKantoTrainerCardBadges_Gfx, sData->badgeTiles);
+            break;
+        case 2:
+            memcpy(sData->backTilemap, sNewTrainerCardBack_Tilemap, sizeof(sNewTrainerCardBack_Tilemap));
             break;
         default:
             sData->gfxLoadState = 0;
@@ -1459,8 +1525,165 @@ static void PrintNewTrainerCardOptions(void)
     AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROW, 6, 120, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
 }
 
+static void PrintNewTrainerCardBackHeader(void)
+{
+    s32 x;
+
+    ConvertIntToDecimalStringN(gStringVar1, GetTrainerCardThemeCyclePosition() + 1, STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackTheme);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 69, TRAINER_CARD_BACK_HEADER_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+
+    StringCopy(gStringVar1, sData->trainerCard.playerName);
+    ConvertInternationalString(gStringVar1, sData->language);
+    ConvertIntToDecimalStringN(gStringVar2, sData->trainerCard.trainerId, STR_CONV_MODE_LEADING_ZEROS, 5);
+
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackTitle);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_HEADER_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackHeader);
+    x = GetStringRightAlignXOffset(FONT_SMALL_NARROWER, gStringVar4, 218);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, x, TRAINER_CARD_BACK_HEADER_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBackProgress(void)
+{
+    u8 winRate[4];
+    u32 trainerWins = GetCappedGameStat(GAME_STAT_TRAINER_WINS, 9999);
+    u32 trainerBattles = GetCappedGameStat(GAME_STAT_TRAINER_BATTLES, 9999);
+
+    ConvertIntToDecimalStringN(gStringVar1, GetCappedGameStat(GAME_STAT_STEPS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar2, GetCappedGameStat(GAME_STAT_A_BUTTON_PRESSES, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar3, GetCappedGameStat(GAME_STAT_TOTAL_BATTLES, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackProgress);
+    StringAppend(gStringVar4, sText_NewTrainerCardBackWinRate);
+    ConvertIntToDecimalStringN(winRate, trainerBattles == 0 ? 0 : trainerWins * 100 / trainerBattles, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(gStringVar4, winRate);
+    StringAppend(gStringVar4, sText_NewTrainerCardBackPercent);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_PROGRESS_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBackResources(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, sData->trainerCard.frontierBP, STR_CONV_MODE_LEFT_ALIGN, 5);
+    ConvertIntToDecimalStringN(gStringVar2, GetCoins(), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar3, GetCappedGameStat(GAME_STAT_POKEMON_TRADES, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackResources);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_RESOURCES_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBackActivity(void)
+{
+    u8 hatchCount[5];
+
+    ConvertIntToDecimalStringN(gStringVar1, GetCappedGameStat(GAME_STAT_FAINTED_POKEMON, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar2, GetCappedGameStat(GAME_STAT_BATTLES_RUN_FROM, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar3, GetCappedGameStat(GAME_STAT_EVOLVED_POKEMON, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(hatchCount, GetCappedGameStat(GAME_STAT_HATCHED_EGGS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackActivity);
+    StringAppend(gStringVar4, sText_NewTrainerCardBackActivityHatch);
+    StringAppend(gStringVar4, hatchCount);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_ACTIVITY_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBackWishMenuAndCandyCount(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, GetCappedGameStat(GAME_STAT_WISH_MENU_OPENINGS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar2, GetCappedGameStat(GAME_STAT_INFINITE_CANDY_USES, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackWishMenuAndCandyCount);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_WISH_MENU_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBackRadio(void)
+{
+    u32 radioTime = GetCappedGameStat(GAME_STAT_RADIO_TIME, 0xFFFFFF);
+    u32 radioMinutes = radioTime / 60;
+    u32 radioSeconds = radioTime % 60;
+
+    ConvertIntToDecimalStringN(gStringVar1, radioMinutes, STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar2, radioSeconds, STR_CONV_MODE_LEADING_ZEROS, 2);
+    ConvertIntToDecimalStringN(gStringVar3, GetCappedGameStat(GAME_STAT_RADIO_TRACKS, 9999), STR_CONV_MODE_LEFT_ALIGN, 4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackRadio);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_RADIO_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBackOnlineRecord(void)
+{
+    u8 winRate[4];
+    u32 onlineBattles = sData->trainerCard.linkBattleWins + sData->trainerCard.linkBattleLosses;
+
+    ConvertIntToDecimalStringN(gStringVar1, sData->trainerCard.linkBattleWins, STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(gStringVar2, sData->trainerCard.linkBattleLosses, STR_CONV_MODE_LEFT_ALIGN, 4);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackOnlineRecord);
+    StringAppend(gStringVar4, sText_NewTrainerCardBackOnlineWinRate);
+    ConvertIntToDecimalStringN(winRate, onlineBattles == 0 ? 0 : sData->trainerCard.linkBattleWins * 100 / onlineBattles, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(gStringVar4, winRate);
+    StringAppend(gStringVar4, sText_NewTrainerCardBackPercent);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_ONLINE_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintNewTrainerCardBackChampionRecord(void)
+{
+    u8 hofTime[16];
+
+    ConvertIntToDecimalStringN(gStringVar1, sData->trainerCard.hofDebutHours, STR_CONV_MODE_LEFT_ALIGN, 3);
+    ConvertIntToDecimalStringN(gStringVar2, sData->trainerCard.hofDebutMinutes, STR_CONV_MODE_LEADING_ZEROS, 2);
+    ConvertIntToDecimalStringN(gStringVar3, sData->trainerCard.hofDebutSeconds, STR_CONV_MODE_LEADING_ZEROS, 2);
+    StringExpandPlaceholders(hofTime, sText_NewTrainerCardBackHofTime);
+
+    ConvertIntToDecimalStringN(gStringVar1, GetCappedGameStat(GAME_STAT_ENTERED_HOF, 999), STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringCopy(gStringVar2, hofTime);
+    StringExpandPlaceholders(gStringVar4, sText_NewTrainerCardBackChampionRecord);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, 6, TRAINER_CARD_BACK_CHAMPION_Y,
+        sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
 static bool8 PrintAllOnCardBack(void)
 {
+    if (sData->isNewCard)
+    {
+        switch (sData->printState)
+        {
+        case 0:
+            PrintNewTrainerCardBackHeader();
+            break;
+        case 1:
+            PrintNewTrainerCardBackProgress();
+            break;
+        case 2:
+            PrintNewTrainerCardBackResources();
+            break;
+        case 3:
+            PrintNewTrainerCardBackActivity();
+            break;
+        case 4:
+            PrintNewTrainerCardBackWishMenuAndCandyCount();
+            break;
+        case 5:
+            PrintNewTrainerCardBackRadio();
+            break;
+        case 6:
+            PrintNewTrainerCardBackOnlineRecord();
+            break;
+        case 7:
+            PrintNewTrainerCardBackChampionRecord();
+            break;
+        default:
+            sData->printState = 0;
+            return TRUE;
+        }
+        sData->printState++;
+        return FALSE;
+    }
+
     switch (sData->printState)
     {
     case 0:
@@ -1929,9 +2152,45 @@ static void LoadNewTrainerCardSpriteGfx(void)
     {
         LoadCompressedSpriteSheet(&sTrainerCardChampionRibbonSheet);
         LoadSpritePalette(&sTrainerCardChampionRibbonPal);
+        if (FlagGet(FLAG_DEFEATED_CHAMPION_HARD))
+            ApplyHardChampionRibbonMark();
     }
 
     LoadMonIconPalettes();
+}
+
+static void ApplyHardChampionRibbonMark(void)
+{
+    u16 tileStart = GetSpriteTileStartByTag(TRAINER_CARD_CHAMPION_RIBBON_TAG);
+    u8 *tileData;
+    u8 x, y;
+
+    if (tileStart == 0xFFFF)
+        return;
+
+    tileData = (u8 *)OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP;
+
+    for (y = 0; y < ARRAY_COUNT(sTrainerCardHardChampionMark); y++)
+    {
+        for (x = 0; x < ARRAY_COUNT(sTrainerCardHardChampionMark[0]); x++)
+        {
+            u8 color = sTrainerCardHardChampionMark[y][x];
+            u8 *pixel;
+            u8 shift;
+
+            if (color == 0)
+                continue;
+
+            // Put the mark on the lower-right of the 64x64 ribbon sprite,
+            // matching the placement of the H on each hard badge.
+            pixel = tileData
+                  + ((y + 44) / 8 * 8 + (x + 47) / 8) * TILE_SIZE_4BPP
+                  + ((y + 44) % 8) * 4
+                  + ((x + 47) % 8) / 2;
+            shift = ((x + 47) & 1) * 4;
+            *pixel = (*pixel & (0xF0 >> shift)) | (color << shift);
+        }
+    }
 }
 
 static void CreateNewTrainerCardSprites(void)
@@ -1995,6 +2254,22 @@ static void DestroyNewTrainerCardSprites(void)
     }
 
     FreeMonIconPalettes();
+}
+
+static void SetNewTrainerCardSpritesVisible(bool8 visible)
+{
+    u8 i;
+
+    if (sData->mugshotSpriteId != SPRITE_NONE)
+        gSprites[sData->mugshotSpriteId].invisible = !visible;
+    if (sData->championRibbonSpriteId != SPRITE_NONE)
+        gSprites[sData->championRibbonSpriteId].invisible = !visible;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sData->partyIconSpriteIds[i] != SPRITE_NONE)
+            gSprites[sData->partyIconSpriteIds[i]].invisible = !visible;
+    }
 }
 
 static void PrintStickersOnCard(void)
@@ -2281,6 +2556,30 @@ static void ApplyTrainerCardThemePalettes(void)
     LoadPalette(scrollPalette, BG_PLTT_ID(TRAINER_CARD_SCROLL_BG_PALETTE), PLTT_SIZE_4BPP);
 }
 
+static void LoadNewTrainerCardFrontGraphics(void)
+{
+    LoadBgTiles(0, sNewTrainerCard_Gfx, sizeof(sNewTrainerCard_Gfx), 0);
+    LoadBgTiles(2, sTrainerCardScrolling_Gfx, sizeof(sTrainerCardScrolling_Gfx), 0);
+    ApplyTrainerCardThemePalettes();
+    if (sData->cardType != CARD_TYPE_FRLG)
+        LoadPalette(sHoennTrainerCardBadges_Pal, BG_PLTT_ID(4), PLTT_SIZE_4BPP);
+    else
+        LoadPalette(sKantoTrainerCardBadges_Pal, BG_PLTT_ID(4), PLTT_SIZE_4BPP);
+    LoadNewTrainerCardScrollingBackground();
+    ChangeBgX(2, sData->bgScrollX, BG_COORD_SET);
+    ChangeBgY(2, sData->bgScrollY, BG_COORD_SET);
+}
+
+static void LoadNewTrainerCardBackGraphics(void)
+{
+    LoadBgTiles(0, sNewTrainerCardBack_Gfx, sizeof(sNewTrainerCardBack_Gfx), 0);
+    LoadBgTiles(2, sTrainerCardScrolling_Gfx, sizeof(sTrainerCardScrolling_Gfx), 0);
+    ApplyTrainerCardThemePalettes();
+    LoadNewTrainerCardScrollingBackground();
+    ChangeBgX(2, sData->bgScrollX, BG_COORD_SET);
+    ChangeBgY(2, sData->bgScrollY, BG_COORD_SET);
+}
+
 static void DrawCardFrontOrBack(u16 *ptr)
 {
     s16 i, j;
@@ -2441,6 +2740,8 @@ static bool8 Task_BeginCardFlip(struct Task *task)
 {
     u32 i;
 
+    if (sData->isNewCard && !sData->onBack)
+        SetNewTrainerCardSpritesVisible(FALSE);
     HideBg(1);
     HideBg(3);
     ScanlineEffect_Stop();
@@ -2510,8 +2811,17 @@ static bool8 Task_DrawFlippedCardSide(struct Task *task)
         switch (sData->flipDrawState)
         {
         case 0:
+            if (sData->isNewCard)
+            {
+                if (sData->onBack)
+                    LoadNewTrainerCardFrontGraphics();
+                else
+                    LoadNewTrainerCardBackGraphics();
+            }
             FillWindowPixelBuffer(WIN_CARD_TEXT, PIXEL_FILL(0));
             FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 0x20, 0x20);
+            if (sData->isNewCard)
+                CopyBgTilemapBufferToVram(3);
             break;
         case 1:
             if (!sData->onBack)
@@ -2527,12 +2837,14 @@ static bool8 Task_DrawFlippedCardSide(struct Task *task)
             break;
         case 2:
             if (!sData->onBack)
+            {
                 DrawCardFrontOrBack(sData->backTilemap);
+            }
             else
                 DrawTrainerCardWindow(WIN_CARD_TEXT);
             break;
         case 3:
-            if (!sData->onBack)
+            if (!sData->onBack && !sData->isNewCard)
                 DrawCardBackStats();
             else
                 FillWindowPixelBuffer(WIN_TRAINER_PIC, PIXEL_FILL(0));
@@ -2560,10 +2872,15 @@ static bool8 Task_SetCardFlipped(struct Task *task)
     // If on back of card, draw front of card because its being flipped
     if (sData->onBack)
     {
-        DrawTrainerCardWindow(WIN_TRAINER_PIC);
-        DrawCardScreenBackground(sData->bgTilemap);
+        if (!sData->isNewCard)
+        {
+            DrawTrainerCardWindow(WIN_TRAINER_PIC);
+            DrawCardScreenBackground(sData->bgTilemap);
+        }
         DrawCardFrontOrBack(sData->frontTilemap);
         DrawStarsAndBadgesOnCard();
+        if (sData->isNewCard)
+            SetNewTrainerCardSpritesVisible(TRUE);
     }
     DrawTrainerCardWindow(WIN_CARD_TEXT);
     sData->onBack ^= 1;
@@ -2723,7 +3040,8 @@ static void CreateTrainerCardTrainerPic(void)
 {
     if (sData->isNewCard)
     {
-        CreateNewTrainerCardSprites();
+        if (sData->mugshotSpriteId == SPRITE_NONE)
+            CreateNewTrainerCardSprites();
         return;
     }
 

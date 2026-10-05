@@ -34,6 +34,15 @@
 #define GAME_STAT_CONSECUTIVE_ROULETTE_WINS   29
 #define GAME_STAT_ENTERED_BATTLE_TOWER        30
 #define GAME_STAT_UNKNOWN_31                  31
+// This legacy slot is unused by the original game and stores Trainer Card A presses.
+#define GAME_STAT_A_BUTTON_PRESSES            GAME_STAT_UNKNOWN_31
+#define GAME_STAT_BATTLES_RUN_FROM            54
+#define GAME_STAT_FAINTED_POKEMON             55
+#define GAME_STAT_WISH_MENU_OPENINGS          56
+#define GAME_STAT_TRAINER_LOSSES              57
+#define GAME_STAT_INFINITE_CANDY_USES         58
+#define GAME_STAT_RADIO_TIME                  59
+#define GAME_STAT_RADIO_TRACKS                60
 #define GAME_STAT_BATTLE_TOWER_SINGLES_STREAK 32
 #define GAME_STAT_POKEBLOCKS                  33
 #define GAME_STAT_POKEBLOCKS_WITH_FRIENDS     34
@@ -57,7 +66,7 @@
 #define GAME_STAT_DEXNAV_SCANNED              52
 #define GAME_STAT_TRAINER_WINS                53
 
-#define NUM_USED_GAME_STATS                   54
+#define NUM_USED_GAME_STATS                   61
 #define NUM_GAME_STATS                        64
 
 #endif // GUARD_CONSTANTS_GAME_STAT_H
