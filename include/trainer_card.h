@@ -3,6 +3,22 @@
 
 #define TRAINER_CARD_PROFILE_LENGTH  4
 #define TRAINER_CARD_STICKER_TYPES   3
+#define TRAINER_CARD_THEME_COUNT     16
+
+// Shared by the Trainer Card, Summary and Party screens. Frontier Pass uses
+// the same saved theme so all of these interfaces keep a consistent palette.
+struct TrainerCardThemeColors
+{
+    u16 nearBlack;
+    u16 black2;
+    u16 deep;
+    u16 dark1;
+    u16 charcoal;
+    u16 dark;
+    u16 mid;
+    u16 light;
+    u16 detail;
+};
 
 enum
 {
@@ -76,5 +92,9 @@ void TrainerCard_ApplyHardBadgeGraphics(u8 *tiles);
 void TrainerCard_DrawTimeAndDex(u8 windowId, u16 hours, u16 minutes, u16 caughtCount, u16 ownedCount);
 // Format permanent run history, not the currently selected game options.
 void TrainerCard_FormatRunStatus(u8 *dest);
+u8 TrainerCard_GetColorTheme(void);
+const struct TrainerCardThemeColors *TrainerCard_GetColorThemeColors(void);
+const u8 *TrainerCard_GetColorThemeName(void);
+void TrainerCard_CycleColorTheme(s8 direction);
 
 #endif // GUARD_TRAINER_CARD_H

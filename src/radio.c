@@ -44,6 +44,9 @@
 
 #include "global.h"
 #include "hlw_media_save.h"
+
+#define FRONTIER_PASS_PROFILE_DEFAULT_OFFSET   HLW_MEDIA_RESERVED_OFFSET
+#define FRONTIER_PASS_PROFILE_DEFAULT_FRONTIER 0
 #include "bg.h"
 #include "comfy_anim.h"
 #include "decompress.h"
@@ -4843,6 +4846,7 @@ void HlwMedia_InitDefaults(void)
     gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_BATTLE_SPEED_OFFSET] = 0;
     gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_HP_BAR_OFFSET] = 0;
     gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_WISH_MENU_COUNT_OFFSET] = 0;
+    gSaveBlock1Ptr->hlwSave.future[FRONTIER_PASS_PROFILE_DEFAULT_OFFSET] = FRONTIER_PASS_PROFILE_DEFAULT_FRONTIER;
 }
 
 static bool8 Radio_SaveSongIdIsValid(u16 songId)

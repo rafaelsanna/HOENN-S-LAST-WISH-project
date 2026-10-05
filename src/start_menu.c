@@ -1377,7 +1377,7 @@ static bool8 StartMenuPlayerNameCallback(void)
         if (IsOverworldLinkActive() || InUnionRoom())
             ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
         else if (FlagGet(FLAG_SYS_FRONTIER_PASS))
-            ShowFrontierPass(CB2_ReturnToFieldWithOpenMenu); // Display frontier pass
+            ShowDefaultPlayerProfile(CB2_ReturnToFieldWithOpenMenu); // Display the selected profile
         else
             ShowPlayerTrainerCard(CB2_ReturnToField); // Display trainer card; return to a clean overworld
 

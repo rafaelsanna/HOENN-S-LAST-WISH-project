@@ -122,6 +122,7 @@ static void HblankCb_TrainerCard(void);
 static void BlinkTimeColon(void);
 static void CB2_TrainerCard(void);
 static void CloseTrainerCard(u8 task);
+static void CloseTrainerCardToFrontierPass(u8 task);
 static bool8 PrintAllOnCardFront(void);
 static void DrawTrainerCardWindow(u8);
 static void CreateTrainerCardTrainerPic(void);
@@ -213,7 +214,6 @@ static void ApplyHardChampionRibbonMark(void);
 static void LoadNewTrainerCardScrollingBackground(void);
 static void UpdateNewTrainerCardScrollingBackground(void);
 static void LoadTrainerCardColorThemeFromSave(void);
-static void SaveTrainerCardColorThemeToSave(void);
 static u8 GetTrainerCardThemeCyclePosition(void);
 static void ChangeTrainerCardColorTheme(s8 direction);
 static void ApplyTrainerCardThemePalettes(void);
@@ -286,20 +286,6 @@ static const u16 sTrainerCardScrolling_Pal[] = INCBIN_U16("graphics/trainer_card
 
 // These are the same sixteen neutral UI themes used by the Summary and Party
 // screens. The saved theme byte is shared with both screens below.
-struct TrainerCardThemeColors
-{
-    u16 nearBlack;
-    u16 black2;
-    u16 deep;
-    u16 dark1;
-    u16 charcoal;
-    u16 dark;
-    u16 mid;
-    u16 light;
-    u16 detail;
-};
-
-#define TRAINER_CARD_THEME_COUNT 16
 #define TRAINER_CARD_NAME_ID_Y 2
 #define TRAINER_CARD_TIME_DEX_Y 19
 // Small-narrow glyphs (including shadows) are 12 pixels tall, despite the
@@ -322,6 +308,43 @@ static const u8 sTrainerCardThemeCycleOrder[TRAINER_CARD_THEME_COUNT] =
 {
     0, 1, 2, 3, 4, 5, 6, 7,
     8, 9, 15, 10, 11, 12, 13, 14,
+};
+
+static const u8 sTrainerCardThemeName_Base[]  = _("BASE");
+static const u8 sTrainerCardThemeName_Ameth[] = _("AMETH");
+static const u8 sTrainerCardThemeName_Burg[]  = _("BURG");
+static const u8 sTrainerCardThemeName_Sky[]   = _("SKY");
+static const u8 sTrainerCardThemeName_Emrld[] = _("EMRLD");
+static const u8 sTrainerCardThemeName_Ocean[] = _("OCEAN");
+static const u8 sTrainerCardThemeName_Coppr[] = _("COPPR");
+static const u8 sTrainerCardThemeName_Rose[]  = _("ROSE");
+static const u8 sTrainerCardThemeName_Indgo[] = _("INDGO");
+static const u8 sTrainerCardThemeName_Silvr[] = _("SILVR");
+static const u8 sTrainerCardThemeName_Pink[]  = _("PINK");
+static const u8 sTrainerCardThemeName_Lavdr[] = _("LAVDR");
+static const u8 sTrainerCardThemeName_Baby[]  = _("BABY");
+static const u8 sTrainerCardThemeName_Mint[]  = _("MINT");
+static const u8 sTrainerCardThemeName_Peach[] = _("PEACH");
+static const u8 sTrainerCardThemeName_Gold[]  = _("GOLD");
+
+static const u8 *const sTrainerCardThemeNames[TRAINER_CARD_THEME_COUNT] =
+{
+    [0]  = sTrainerCardThemeName_Base,
+    [1]  = sTrainerCardThemeName_Ameth,
+    [2]  = sTrainerCardThemeName_Burg,
+    [3]  = sTrainerCardThemeName_Sky,
+    [4]  = sTrainerCardThemeName_Emrld,
+    [5]  = sTrainerCardThemeName_Ocean,
+    [6]  = sTrainerCardThemeName_Coppr,
+    [7]  = sTrainerCardThemeName_Rose,
+    [8]  = sTrainerCardThemeName_Indgo,
+    [9]  = sTrainerCardThemeName_Silvr,
+    [10] = sTrainerCardThemeName_Pink,
+    [11] = sTrainerCardThemeName_Lavdr,
+    [12] = sTrainerCardThemeName_Baby,
+    [13] = sTrainerCardThemeName_Mint,
+    [14] = sTrainerCardThemeName_Peach,
+    [15] = sTrainerCardThemeName_Gold,
 };
 
 static const struct TrainerCardThemeColors sTrainerCardThemeColors[TRAINER_CARD_THEME_COUNT] =
@@ -715,6 +738,24 @@ static void CloseTrainerCard(u8 taskId)
     DestroyTask(taskId);
 }
 
+static void CloseTrainerCardToFrontierPass(u8 taskId)
+{
+    MainCallback callback = sData->callback2;
+    bool8 wasOpenedFromFrontierPass = callback == CB2_ReshowFrontierPass;
+
+    if (sData->isNewCard)
+        DestroyNewTrainerCardSprites();
+
+    FreeAllWindowBuffers();
+    FREE_AND_SET_NULL(sData);
+    DestroyTask(taskId);
+
+    if (wasOpenedFromFrontierPass)
+        SetMainCallback2(CB2_ReshowFrontierPass);
+    else
+        ShowFrontierPass(callback);
+}
+
 // States for Task_TrainerCard. Skips the initial states, which are done once in order
 #define STATE_HANDLE_INPUT_FRONT  10
 #define STATE_HANDLE_INPUT_BACK   11
@@ -723,6 +764,7 @@ static void CloseTrainerCard(u8 taskId)
 #define STATE_CLOSE_CARD          14
 #define STATE_WAIT_LINK_PARTNER   15
 #define STATE_CLOSE_CARD_LINK     16
+#define STATE_CLOSE_CARD_TO_PASS  17
 
 static void Task_TrainerCard(u8 taskId)
 {
@@ -806,6 +848,13 @@ static void Task_TrainerCard(u8 taskId)
             PlaySE(SE_RG_CARD_FLIP);
             sData->mainState = STATE_WAIT_FLIP_TO_BACK;
         }
+        else if (!sData->isLink && FlagGet(FLAG_SYS_FRONTIER_PASS)
+              && JOY_NEW(START_BUTTON | SELECT_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            sData->mainState = STATE_CLOSE_CARD_TO_PASS;
+        }
         else if (JOY_NEW(B_BUTTON))
         {
             if (gReceivedRemoteLinkPlayers && sData->isLink && InUnionRoom() == TRUE)
@@ -839,7 +888,14 @@ static void Task_TrainerCard(u8 taskId)
     case STATE_HANDLE_INPUT_BACK:
         if (sData->isNewCard)
         {
-            if (JOY_NEW(A_BUTTON))
+            if (!sData->isLink && FlagGet(FLAG_SYS_FRONTIER_PASS)
+                  && JOY_NEW(START_BUTTON | SELECT_BUTTON))
+            {
+                PlaySE(SE_SELECT);
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+                sData->mainState = STATE_CLOSE_CARD_TO_PASS;
+            }
+            else if (JOY_NEW(A_BUTTON))
             {
                 FlipTrainerCard();
                 sData->mainState = STATE_WAIT_FLIP_TO_FRONT;
@@ -899,6 +955,10 @@ static void Task_TrainerCard(u8 taskId)
     case STATE_CLOSE_CARD:
         if (!UpdatePaletteFade())
             CloseTrainerCard(taskId);
+        break;
+    case STATE_CLOSE_CARD_TO_PASS:
+        if (!UpdatePaletteFade())
+            CloseTrainerCardToFrontierPass(taskId);
         break;
     case STATE_WAIT_FLIP_TO_FRONT:
         if (IsCardFlipTaskActive() && Overworld_IsRecvQueueAtMax() != TRUE)
@@ -2460,22 +2520,28 @@ static void UpdateNewTrainerCardScrollingBackground(void)
 
 static void LoadTrainerCardColorThemeFromSave(void)
 {
-    sData->colorTheme = 0;
+    sData->colorTheme = TrainerCard_GetColorTheme();
+}
 
+u8 TrainerCard_GetColorTheme(void)
+{
     if (gSaveBlock1Ptr != NULL
      && gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] < TRAINER_CARD_THEME_COUNT)
     {
-        sData->colorTheme = gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET];
+        return gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET];
     }
+
+    return 0;
 }
 
-static void SaveTrainerCardColorThemeToSave(void)
+const struct TrainerCardThemeColors *TrainerCard_GetColorThemeColors(void)
 {
-    if (gSaveBlock1Ptr != NULL)
-    {
-        gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] =
-            sData->colorTheme < TRAINER_CARD_THEME_COUNT ? sData->colorTheme : 0;
-    }
+    return &sTrainerCardThemeColors[TrainerCard_GetColorTheme()];
+}
+
+const u8 *TrainerCard_GetColorThemeName(void)
+{
+    return sTrainerCardThemeNames[TrainerCard_GetColorTheme()];
 }
 
 static u8 GetTrainerCardThemeCyclePosition(void)
@@ -2491,18 +2557,39 @@ static u8 GetTrainerCardThemeCyclePosition(void)
     return 0;
 }
 
+void TrainerCard_CycleColorTheme(s8 direction)
+{
+    u8 position = 0;
+    u8 current = TrainerCard_GetColorTheme();
+
+    for (position = 0; position < TRAINER_CARD_THEME_COUNT; position++)
+    {
+        if (sTrainerCardThemeCycleOrder[position] == current)
+            break;
+    }
+
+    if (position >= TRAINER_CARD_THEME_COUNT)
+        position = 0;
+    else if (direction > 0)
+        position = (position + 1) % TRAINER_CARD_THEME_COUNT;
+    else if (position > 0)
+        position--;
+    else
+        position = TRAINER_CARD_THEME_COUNT - 1;
+
+    if (gSaveBlock1Ptr != NULL)
+        gSaveBlock1Ptr->hlwSave.future[HLW_MEDIA_PARTY_THEME_OFFSET] = sTrainerCardThemeCycleOrder[position];
+
+    if (sData != NULL)
+    {
+        sData->colorTheme = sTrainerCardThemeCycleOrder[position];
+        ApplyTrainerCardThemePalettes();
+    }
+}
+
 static void ChangeTrainerCardColorTheme(s8 direction)
 {
-    u8 position = GetTrainerCardThemeCyclePosition();
-
-    if (direction > 0)
-        position = (position + 1) % TRAINER_CARD_THEME_COUNT;
-    else
-        position = position > 0 ? position - 1 : TRAINER_CARD_THEME_COUNT - 1;
-
-    sData->colorTheme = sTrainerCardThemeCycleOrder[position];
-    SaveTrainerCardColorThemeToSave();
-    ApplyTrainerCardThemePalettes();
+    TrainerCard_CycleColorTheme(direction);
 }
 
 static void ApplyTrainerCardThemePalettes(void)
@@ -2948,10 +3035,10 @@ void ShowPlayerTrainerCard(void (*callback)(void))
 {
     sData = AllocZeroed(sizeof(*sData));
     sData->callback2 = callback;
-    if (callback == CB2_ReshowFrontierPass)
-        sData->blendColor = RGB_WHITE;
-    else
-        sData->blendColor = RGB_BLACK;
+    // Profile transitions use the same black fade in both directions. The
+    // previous white fade was especially harsh when returning from the card
+    // to the Frontier Pass.
+    sData->blendColor = RGB_BLACK;
 
     if (InUnionRoom() == TRUE)
         sData->isLink = TRUE;

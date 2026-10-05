@@ -30,6 +30,8 @@
 #include "constants/rgb.h"
 #include "constants/region_map_sections.h"
 #include "constants/songs.h"
+#include "constants/flags.h"
+#include "hlw_media_save.h"
 
 // gFrontierPassBg_Pal has 8*16 colors, but they attempt to load 13*16 colors.
 // As a result it goes out of bounds and interprets 160 bytes of whatever comes
@@ -42,12 +44,45 @@
 #define NUM_BG_PAL_SLOTS 13
 #endif
 
+// Keep the 8bpp minimap in palette memory starting at index 0. The two new
+// 4bpp layers use later palette banks so the minimap cannot overwrite them.
+#define FRONTIER_PASS_BGNEW_PALETTE       2
+#define FRONTIER_PASS_MINICARD_PALETTE    3
+#define FRONTIER_PASS_SCROLL_PALETTE      5
+#define FRONTIER_PASS_MINICARD_TILE_BASE  0x100
+// The tilemap assembles the 128x48 source tiles into a nine-row card;
+// the final two rows contain the lower border and mini-card text.
+#define FRONTIER_PASS_MINICARD_TILE_HEIGHT 9
+#define FRONTIER_PASS_SCROLL_SOURCE_WIDTH  32
+#define FRONTIER_PASS_SCROLL_SOURCE_HEIGHT 24
+#define FRONTIER_PASS_SCROLL_MAP_WIDTH     32
+#define FRONTIER_PASS_SCROLL_MAP_HEIGHT    32
+#define FRONTIER_PASS_SCROLL_X_PERIOD      (FRONTIER_PASS_SCROLL_SOURCE_WIDTH * 8)
+#define FRONTIER_PASS_SCROLL_Y_PERIOD      (FRONTIER_PASS_SCROLL_SOURCE_HEIGHT * 8)
+#define FRONTIER_PASS_SCROLL_SPEED_X       32
+#define FRONTIER_PASS_SCROLL_SPEED_Y       48
+#define FRONTIER_PASS_MINIMAP_TILE_BASE    0
+#define FRONTIER_PASS_MINICARD_TILE_X      16
+#define FRONTIER_PASS_MINICARD_TILE_Y      9
+// Sprite coordinates are the center of the 32x32 OBJ. These centers match
+// the empty portrait slot assembled by minicard.bin.
+#define FRONTIER_PASS_MINICARD_PIC_X       (FRONTIER_PASS_MINICARD_TILE_X * 8 + 74)
+#define FRONTIER_PASS_MINICARD_PIC_Y       (FRONTIER_PASS_MINICARD_TILE_Y * 8 + 22)
+#define FRONTIER_PASS_MINIMAP_OFFSET_X     3
+#define FRONTIER_PASS_MINIMAP_OFFSET_Y     (-3)
+#define FRONTIER_PASS_PROFILE_TEXT_X       7
+#define FRONTIER_PASS_PROFILE_DEFAULT_OFFSET   HLW_MEDIA_RESERVED_OFFSET
+#define FRONTIER_PASS_PROFILE_DEFAULT_FRONTIER 0
+#define FRONTIER_PASS_PROFILE_DEFAULT_CARD     1
+
 // All windows displayed in the frontier pass.
 enum
 {
-    WINDOW_EARNED_SYMBOLS,
-    WINDOW_BATTLE_RECORD,
-    WINDOW_BATTLE_POINTS,
+    WINDOW_HEADER,
+    WINDOW_PROFILE,
+    WINDOW_SYMBOLS,
+    WINDOW_CARD_LABEL,
+    WINDOW_MAP_LABEL,
     WINDOW_DESCRIPTION,
     WINDOW_DUMMY,
     WINDOW_COUNT
@@ -96,6 +131,8 @@ enum {
     TAG_MEDAL_GOLD,
     TAG_HEAD_MALE,
     TAG_HEAD_FEMALE,
+    TAG_FIELD_MUGSHOT,
+    TAG_MINICARD_PLAYER_PIC,
 };
 
 // Error return codes. Never read
@@ -117,23 +154,20 @@ struct FrontierPassData
     bool8 hasBattleRecord:1;
     u8 areaToShow:3;
     u8 trainerStars:4;
+    u32 bgScrollX;
+    u32 bgScrollY;
     u8 facilitySymbols[NUM_FRONTIER_FACILITIES]; // 0: no symbol, 1: silver, 2: gold
 };
 
 struct FrontierPassGfx
 {
     struct Sprite *cursorSprite;
+    struct Sprite *mugshotSprite;
+    struct Sprite *miniCardPlayerPicSprite;
     struct Sprite *symbolSprites[NUM_FRONTIER_FACILITIES];
-    // These 3 tilemaps are used to overwrite the respective area when highlighted
-    u8 *mapAndCardZoomTilemap;
-    u8 *mapAndCardTilemap;
-    u8 *battleRecordTilemap;
-    bool8 zooming;
-    s16 scaleX;
-    s16 scaleY;
     u8 tilemapBuff1[BG_SCREEN_SIZE * 2];
     u8 tilemapBuff2[BG_SCREEN_SIZE * 2];
-    u8 tilemapBuff3[BG_SCREEN_SIZE / 2];
+    u8 tilemapBuff4[BG_SCREEN_SIZE * 2];
 };
 
 struct FrontierPassSaved
@@ -174,25 +208,52 @@ static void Task_HandleFrontierPassInput(u8);
 static void Task_PassAreaZoom(u8);
 static void UpdateAreaHighlight(u8, u8);
 static void PrintAreaDescription(u8);
-static void ShowHideZoomingArea(bool8, bool8);
+static void LoadFrontierPassMainGraphics(void);
+static void LoadFrontierPassMinimap(void);
+static void LoadFrontierPassScrollingBackground(void);
+static void UpdateFrontierPassScrollingBackground(void);
+static void LoadFrontierPassThemePalettes(void);
 static void SpriteCB_PlayerHead(struct Sprite *);
 
 static const u16 sMaleHead_Pal[]                 = INCBIN_U16("graphics/frontier_pass/map_heads.gbapal");
-static const u16 sFemaleHead_Pal[]               = INCBIN_U16("graphics/frontier_pass/map_heads_female.gbapal");
+// map_heads.png is the indexed two-frame sheet: male on top, female below.
+// Both frames must use that same palette; the old standalone female palette
+// no longer matches the indexed art.
+static const u16 sFemaleHead_Pal[]               = INCBIN_U16("graphics/frontier_pass/map_heads.gbapal");
 static const u32 sMapScreen_Gfx[]                = INCBIN_U32("graphics/frontier_pass/map_screen.4bpp.smol");
 static const u32 sCursor_Gfx[]                   = INCBIN_U32("graphics/frontier_pass/cursor.4bpp.smol");
 static const u32 sHeads_Gfx[]                    = INCBIN_U32("graphics/frontier_pass/map_heads.4bpp.smol");
 static const u32 sMapCursor_Gfx[]                = INCBIN_U32("graphics/frontier_pass/map_cursor.4bpp.smol");
 static const u32 sMapScreen_Tilemap[]            = INCBIN_U32("graphics/frontier_pass/map_screen.bin.smolTM");
-static const u32 sMapAndCard_ZoomedOut_Tilemap[] = INCBIN_U32("graphics/frontier_pass/small_map_and_card.bin.smolTM");
-static const u32 sCardBall_Filled_Tilemap[]      = INCBIN_U32("graphics/frontier_pass/card_ball_filled.bin"); // Unused
-static const u32 sBattleRecord_Tilemap[]         = INCBIN_U32("graphics/frontier_pass/record_frame.bin.smolTM");
-static const u32 sMapAndCard_Zooming_Tilemap[]   = INCBIN_U32("graphics/frontier_pass/small_map_and_card_affine.bin.smolTM");
+static const u32 sFrontierPassMugshotMale_Gfx[]   = INCBIN_U32("graphics/field_mugshots/zenno/normal.4bpp.lz");
+static const u32 sFrontierPassMugshotFemale_Gfx[] = INCBIN_U32("graphics/field_mugshots/zinnia/normal.4bpp.lz");
+static const u16 sFrontierPassMugshotMale_Pal[]   = INCBIN_U16("graphics/field_mugshots/zenno/normal.gbapal");
+static const u16 sFrontierPassMugshotFemale_Pal[] = INCBIN_U16("graphics/field_mugshots/zinnia/normal.gbapal");
 
-static const s16 sBgAffineCoords[][2] =
+static const u8 sBgNew_Gfx[]                     = INCBIN_U8("graphics/frontier_pass/bgnew.4bpp");
+static const u16 sBgNew_Pal[]                    = INCBIN_U16("graphics/frontier_pass/bgnew.gbapal");
+static const u16 sBgNew_Tilemap[]                = INCBIN_U16("graphics/frontier_pass/bgnew.bin");
+static const u8 sMiniCard_Gfx[]                   = INCBIN_U8("graphics/frontier_pass/minicard.4bpp");
+static const u16 sMiniCard_Pal[]                  = INCBIN_U16("graphics/frontier_pass/minicard.gbapal");
+static const u16 sMiniCard_Tilemap[]              = INCBIN_U16("graphics/frontier_pass/minicard.bin");
+static const u8 sMiniCardMalePic_Gfx[]            = INCBIN_U8("graphics/frontier_pass/zennopic.4bpp");
+static const u8 sMiniCardFemalePic_Gfx[]          = INCBIN_U8("graphics/frontier_pass/zinniapic.4bpp");
+static const u16 sMiniCardMalePic_Pal[]            = INCBIN_U16("graphics/frontier_pass/zennopic.gbapal");
+static const u16 sMiniCardFemalePic_Pal[]          = INCBIN_U16("graphics/frontier_pass/zinniapic.gbapal");
+static const u8 sMinimap_Gfx[]                    = INCBIN_U8("graphics/frontier_pass/minimap.8bpp");
+static const u16 sMinimap_Pal[]                   = INCBIN_U16("graphics/frontier_pass/minimap.gbapal");
+static const u32 sFrontierPassScrolling_Gfx[]     = INCBIN_U32("graphics/trainer_card/bgscroll.4bpp");
+static const u16 sFrontierPassScrolling_Pal[]     = INCBIN_U16("graphics/trainer_card/bgscroll.gbapal");
+static const u16 sFrontierPassScrolling_Tilemap[] = INCBIN_U16("graphics/trainer_card/bgscroll.bin");
+
+static const u16 sMinimap_Tilemap[] =
 {
-    [CURSOR_AREA_MAP - 1]  = {216,  32},
-    [CURSOR_AREA_CARD - 1] = {216, 128}
+    0, 1, 2, 3, 4, 5,
+    6, 7, 8, 9, 10, 11,
+    12, 13, 14, 15, 16, 17,
+    18, 19, 20, 21, 22, 23,
+    24, 25, 26, 27, 28, 29,
+    30, 31, 32, 33, 34, 35,
 };
 
 static const struct BgTemplate sPassBgTemplates[] =
@@ -219,9 +280,18 @@ static const struct BgTemplate sPassBgTemplates[] =
         .bg = 2,
         .charBaseIndex = 1,
         .mapBaseIndex = 29,
-        .screenSize = 1,
+        .screenSize = 0,
         .paletteMode = 1,
         .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
         .baseTile = 0
     },
 };
@@ -259,41 +329,59 @@ static const struct BgTemplate sMapBgTemplates[] =
 
 static const struct WindowTemplate sPassWindowTemplates[WINDOW_COUNT] =
 {
-    [WINDOW_EARNED_SYMBOLS] = {
+    [WINDOW_HEADER] = {
         .bg = 0,
-        .tilemapLeft = 2,
-        .tilemapTop = 3,
-        .width = 12,
-        .height = 3,
+        .tilemapLeft = 1,
+        .tilemapTop = 0,
+        .width = 28,
+        .height = 2,
         .paletteNum = 15,
         .baseBlock = 0x1,
     },
-    [WINDOW_BATTLE_RECORD] = {
+    [WINDOW_PROFILE] = {
+        .bg = 0,
+        .tilemapLeft = 6,
+        .tilemapTop = 4,
+        .width = 8,
+        .height = 5,
+        .paletteNum = 15,
+        .baseBlock = 0x39,
+    },
+    [WINDOW_SYMBOLS] = {
         .bg = 0,
         .tilemapLeft = 2,
-        .tilemapTop = 10,
-        .width = 12,
+        .tilemapTop = 9,
+        .width = 13,
         .height = 3,
         .paletteNum = 15,
-        .baseBlock = 0x26,
+        .baseBlock = 0x61,
     },
-    [WINDOW_BATTLE_POINTS] = {
+    [WINDOW_CARD_LABEL] = {
         .bg = 0,
-        .tilemapLeft = 2,
-        .tilemapTop = 13,
-        .width = 12,
-        .height = 4,
+        .tilemapLeft = FRONTIER_PASS_MINICARD_TILE_X,
+        .tilemapTop = 7,
+        .width = 7,
+        .height = 2,
         .paletteNum = 15,
-        .baseBlock = 0x4B,
+        .baseBlock = 0x88,
+    },
+    [WINDOW_MAP_LABEL] = {
+        .bg = 0,
+        .tilemapLeft = 22,
+        .tilemapTop = 7,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x96,
     },
     [WINDOW_DESCRIPTION] = {
         .bg = 0,
         .tilemapLeft = 0,
         .tilemapTop = 18,
         .width = 30,
-        .height = 3,
+        .height = 2,
         .paletteNum = 15,
-        .baseBlock = 0x7C,
+        .baseBlock = 0xA4,
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -333,7 +421,7 @@ static const struct WindowTemplate sMapWindowTemplates[] =
 static const u8 sTextColors[][3] =
 {
     {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY},
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_BLUE},
+    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY},
     {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED},
 };
 
@@ -346,19 +434,19 @@ struct
 }
 static const sPassAreasLayout[CURSOR_AREA_COUNT - 1] =
 {
-    [CURSOR_AREA_MAP - 1]            = { 28,  76, 132, 220},
-    [CURSOR_AREA_CARD - 1]           = { 84, 132, 132, 220},
-    [CURSOR_AREA_RECORD - 1]         = { 80, 102,  20, 108},
-    [CURSOR_AREA_CANCEL - 1]         = {  0,  16, 152, 240},
-    [CURSOR_AREA_POINTS - 1]         = {108, 134,  20, 108},
-    [CURSOR_AREA_EARNED_SYMBOLS - 1] = { 24,  48,  20, 108},
-    [CURSOR_AREA_SYMBOL_TOWER - 1]   = { 50,  66,  20,  36},
-    [CURSOR_AREA_SYMBOL_DOME - 1]    = { 66,  82,  32,  48},
-    [CURSOR_AREA_SYMBOL_PALACE - 1]  = { 50,  66,  44,  60},
-    [CURSOR_AREA_SYMBOL_ARENA - 1]   = { 66,  82,  56,  72},
-    [CURSOR_AREA_SYMBOL_FACTORY - 1] = { 50,  66,  68,  84},
-    [CURSOR_AREA_SYMBOL_PIKE - 1]    = { 66,  82,  80,  96},
-    [CURSOR_AREA_SYMBOL_PYRAMID - 1] = { 50,  66,  92, 108},
+    [CURSOR_AREA_MAP - 1]            = { 24,  72, 184, 232},
+    [CURSOR_AREA_CARD - 1]           = { 72, 128, 128, 240},
+    [CURSOR_AREA_RECORD - 1]         = {  0,   0,   0,   0},
+    [CURSOR_AREA_CANCEL - 1]         = {  0,   8, 232, 240},
+    [CURSOR_AREA_POINTS - 1]         = { 32,  72,  72, 112},
+    [CURSOR_AREA_EARNED_SYMBOLS - 1] = {104, 140,  16, 120},
+    [CURSOR_AREA_SYMBOL_TOWER - 1]   = {108, 128,  16,  30},
+    [CURSOR_AREA_SYMBOL_DOME - 1]    = {108, 128,  30,  44},
+    [CURSOR_AREA_SYMBOL_PALACE - 1]  = {108, 128,  44,  58},
+    [CURSOR_AREA_SYMBOL_ARENA - 1]   = {108, 128,  58,  72},
+    [CURSOR_AREA_SYMBOL_FACTORY - 1] = {108, 128,  72,  86},
+    [CURSOR_AREA_SYMBOL_PIKE - 1]    = {108, 128,  86, 100},
+    [CURSOR_AREA_SYMBOL_PYRAMID - 1] = {108, 128, 100, 114},
 };
 
 static const struct CompressedSpriteSheet sCursorSpriteSheets[] =
@@ -528,6 +616,28 @@ static const struct SpriteTemplate sSpriteTemplate_PlayerHead =
     .callback = SpriteCB_PlayerHead,
 };
 
+static const struct SpriteTemplate sSpriteTemplate_ProfileMugshot =
+{
+    .tileTag = TAG_FIELD_MUGSHOT,
+    .paletteTag = TAG_FIELD_MUGSHOT,
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_MiniCardPlayerPic =
+{
+    .tileTag = TAG_MINICARD_PLAYER_PIC,
+    .paletteTag = TAG_MINICARD_PLAYER_PIC,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
 static const u8 *const sPassAreaDescriptions[CURSOR_AREA_COUNT + 1] =
 {
     [CURSOR_AREA_NOTHING]        = gText_ThereIsNoBattleRecord, // NOTHING is re-used for CURSOR_AREA_RECORD when no Record is present
@@ -546,6 +656,18 @@ static const u8 *const sPassAreaDescriptions[CURSOR_AREA_COUNT + 1] =
     [CURSOR_AREA_SYMBOL_PYRAMID] = gText_BattlePyramidBraveSymbol,
     [CURSOR_AREA_COUNT]          = gText_EmptyString7,
 };
+
+static const u8 sText_FrontierPass[] = _("frontier pass");
+static const u8 sText_TrainerCard[] = _("trainer card");
+static const u8 sText_ThemePrefix[] = _("theme ");
+static const u8 sText_ThemeTotal[] = _("/16");
+static const u8 sText_SelectSwapDefault[] = _("select swap default: ");
+static const u8 sText_CardLabel[] = _("card");
+static const u8 sText_MapLabel[] = _("map");
+static const u8 sText_SymbolsEarned[] = _("symbols earned: ");
+static const u8 sText_BattlePointsShort[] = _("bp: ");
+static const u8 sText_CursorInfo[] = _("cursor info");
+static const u8 sText_SwapThemes[] = _("R/L swap themes");
 
 struct
 {
@@ -599,6 +721,34 @@ void ShowFrontierPass(void (*callback)(void))
     SetMainCallback2(CB2_InitFrontierPass);
 }
 
+bool8 FrontierPass_IsDefaultProfile(void)
+{
+    if (gSaveBlock1Ptr == NULL)
+        return TRUE;
+
+    return gSaveBlock1Ptr->hlwSave.future[FRONTIER_PASS_PROFILE_DEFAULT_OFFSET]
+        != FRONTIER_PASS_PROFILE_DEFAULT_CARD;
+}
+
+void FrontierPass_ToggleDefaultProfile(void)
+{
+    if (gSaveBlock1Ptr != NULL)
+    {
+        u8 *defaultProfile = &gSaveBlock1Ptr->hlwSave.future[FRONTIER_PASS_PROFILE_DEFAULT_OFFSET];
+        *defaultProfile = FrontierPass_IsDefaultProfile()
+            ? FRONTIER_PASS_PROFILE_DEFAULT_CARD
+            : FRONTIER_PASS_PROFILE_DEFAULT_FRONTIER;
+    }
+}
+
+void ShowDefaultPlayerProfile(void (*callback)(void))
+{
+    if (FlagGet(FLAG_SYS_FRONTIER_PASS) && FrontierPass_IsDefaultProfile())
+        ShowFrontierPass(callback);
+    else
+        ShowPlayerTrainerCard(callback);
+}
+
 static void LeaveFrontierPass(void)
 {
     SetMainCallback2(sPassData->callback);
@@ -629,7 +779,7 @@ static u32 AllocateFrontierPassData(void (*callback)(void))
     {
         // Player is in the frontier, set
         // cursor position to the frontier map
-        sPassData->cursorX = 176;
+        sPassData->cursorX = 208;
         sPassData->cursorY = 48;
     }
 
@@ -637,6 +787,8 @@ static u32 AllocateFrontierPassData(void (*callback)(void))
     sPassData->hasBattleRecord = CanCopyRecordedBattleSaveData();
     sPassData->areaToShow = CURSOR_AREA_NOTHING;
     sPassData->trainerStars = CountPlayerTrainerStars();
+    sPassData->bgScrollX = FRONTIER_PASS_SCROLL_X_PERIOD << 8;
+    sPassData->bgScrollY = FRONTIER_PASS_SCROLL_Y_PERIOD << 8;
     for (i = 0; i < NUM_FRONTIER_FACILITIES; i++)
     {
         if (FlagGet(FLAG_SYS_TOWER_SILVER + i * 2))
@@ -676,10 +828,6 @@ static u32 FreeFrontierPassGfx(void)
     if (sPassGfx == NULL)
         return ERR_ALREADY_DONE;
 
-    TRY_FREE_AND_SET_NULL(sPassGfx->battleRecordTilemap);
-    TRY_FREE_AND_SET_NULL(sPassGfx->mapAndCardTilemap);
-    TRY_FREE_AND_SET_NULL(sPassGfx->mapAndCardZoomTilemap);
-
     memset(sPassGfx, 0, sizeof(*sPassGfx)); // Why clear data, if it's going to be freed anyway?
     FREE_AND_SET_NULL(sPassGfx);
     return SUCCESS;
@@ -687,17 +835,6 @@ static u32 FreeFrontierPassGfx(void)
 
 static void VBlankCB_FrontierPass(void)
 {
-    if (sPassGfx->zooming)
-    {
-        SetBgAffine(2,
-                    sBgAffineCoords[sPassData->areaToShow - 1][0] << 8,
-                    sBgAffineCoords[sPassData->areaToShow - 1][1] << 8,
-                    sBgAffineCoords[sPassData->areaToShow - 1][0],
-                    sBgAffineCoords[sPassData->areaToShow - 1][1],
-                    sPassGfx->scaleX,
-                    sPassGfx->scaleY,
-                    0);
-    }
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
@@ -706,6 +843,8 @@ static void VBlankCB_FrontierPass(void)
 static void CB2_FrontierPass(void)
 {
     RunTasks();
+    if (sPassGfx != NULL)
+        UpdateFrontierPassScrollingBackground();
     AnimateSprites();
     BuildOamBuffer();
 }
@@ -727,8 +866,6 @@ static void CB2_HideFrontierPass(void)
 
 static bool32 InitFrontierPass(void)
 {
-    u32 sizeOut = 0;
-
     switch (sPassData->state)
     {
     case 0:
@@ -753,10 +890,10 @@ static bool32 InitFrontierPass(void)
         break;
     case 4:
         ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(1, sPassBgTemplates, ARRAY_COUNT(sPassBgTemplates));
+        InitBgsFromTemplates(0, sPassBgTemplates, ARRAY_COUNT(sPassBgTemplates));
         SetBgTilemapBuffer(1, sPassGfx->tilemapBuff1);
         SetBgTilemapBuffer(2, sPassGfx->tilemapBuff2);
-        SetBgTilemapBuffer(3, sPassGfx->tilemapBuff3);
+        SetBgTilemapBuffer(3, sPassGfx->tilemapBuff4);
         SetBgAttribute(2, BG_ATTR_WRAPAROUND, 1);
         break;
     case 5:
@@ -764,11 +901,9 @@ static bool32 InitFrontierPass(void)
         DeactivateAllTextPrinters();
         break;
     case 6:
-        sPassGfx->mapAndCardZoomTilemap = malloc_and_decompress(sMapAndCard_Zooming_Tilemap, &sizeOut);
-        sPassGfx->mapAndCardTilemap = malloc_and_decompress(sMapAndCard_ZoomedOut_Tilemap, &sizeOut);
-        sPassGfx->battleRecordTilemap = malloc_and_decompress(sBattleRecord_Tilemap, &sizeOut);
-        DecompressAndCopyTileDataToVram(1, gFrontierPassBg_Gfx, 0, 0, 0);
-        DecompressAndCopyTileDataToVram(2, gFrontierPassMapAndCard_Gfx, 0, 0, 0);
+        LoadBgTiles(1, sBgNew_Gfx, sizeof(sBgNew_Gfx), 0);
+        LoadBgTiles(0, sMiniCard_Gfx, sizeof(sMiniCard_Gfx), FRONTIER_PASS_MINICARD_TILE_BASE);
+        LoadBgTiles(3, sFrontierPassScrolling_Gfx, sizeof(sFrontierPassScrolling_Gfx), 0);
         break;
     case 7:
         if (FreeTempTileDataBuffersIfPossible())
@@ -776,16 +911,26 @@ static bool32 InitFrontierPass(void)
         FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
         FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
         FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+        FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+        LoadFrontierPassScrollingBackground();
         CopyBgTilemapBufferToVram(0);
         CopyBgTilemapBufferToVram(1);
         CopyBgTilemapBufferToVram(2);
+        CopyBgTilemapBufferToVram(3);
         break;
     case 8:
-        LoadPalette(gFrontierPassBg_Pal, 0, NUM_BG_PAL_SLOTS * PLTT_SIZE_4BPP);
-        LoadPalette(gFrontierPassBg_Pal[1 + sPassData->trainerStars], BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        LoadFrontierPassMainGraphics();
+        // The minimap is an 8bpp layer, so its palette occupies palette
+        // memory starting at index 0. Keep it loaded after the 4bpp theme
+        // banks are prepared; the old Frontier Pass palette here was the
+        // green background that leaked through the new layout.
+        LoadPalette(sMinimap_Pal, 0, sizeof(sMinimap_Pal));
+        // Palette index 0 is also the hardware backdrop. The minimap uses
+        // that index as its transparent key, so replace only the key color;
+        // replacing the whole first bank would destroy the 8bpp minimap.
+        LoadPalette(&TrainerCard_GetColorThemeColors()->charcoal, BG_PLTT_ID(0), sizeof(u16));
         LoadPalette(GetTextWindowPalette(0), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
         DrawFrontierPassBg();
-        UpdateAreaHighlight(sPassData->cursorArea, sPassData->previousCursorArea);
         if (sPassData->areaToShow == CURSOR_AREA_MAP || sPassData->areaToShow == CURSOR_AREA_CARD)
         {
             sPassData->state = 0;
@@ -797,6 +942,9 @@ static bool32 InitFrontierPass(void)
         ShowBg(0);
         ShowBg(1);
         ShowBg(2);
+        ShowBg(3);
+        ChangeBgX(3, sPassData->bgScrollX, BG_COORD_SET);
+        ChangeBgY(3, sPassData->bgScrollY, BG_COORD_SET);
         LoadCursorAndSymbolSprites();
         SetVBlankCallback(VBlankCB_FrontierPass);
         BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
@@ -840,6 +988,7 @@ static bool32 HideFrontierPass(void)
         HideBg(0);
         HideBg(1);
         HideBg(2);
+        HideBg(3);
         SetVBlankCallback(NULL);
         ScanlineEffect_Stop();
         SetVBlankHBlankCallbacksToNull();
@@ -858,6 +1007,7 @@ static bool32 HideFrontierPass(void)
         UnsetBgTilemapBuffer(0);
         UnsetBgTilemapBuffer(1);
         UnsetBgTilemapBuffer(2);
+        UnsetBgTilemapBuffer(3);
         FreeFrontierPassGfx();
         sPassData->state = 0;
         return TRUE;
@@ -989,6 +1139,42 @@ static void Task_HandleFrontierPassInput(u8 taskId)
 {
     u8 var = FALSE; // Reused, first informs whether the cursor moves, then used as the new cursor area.
 
+    // START swaps straight to the other profile. SELECT changes which profile
+    // the player opens by default from the overworld's profile entry.
+    if (JOY_NEW(START_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        sPassData->areaToShow = CURSOR_AREA_CARD;
+        sPassData->cursorX = sPassGfx->cursorSprite->x;
+        sPassData->cursorY = sPassGfx->cursorSprite->y;
+        gTasks[taskId].func = Task_PassAreaZoom;
+        gTasks[taskId].tZoomOut = FALSE;
+        return;
+    }
+    if (JOY_NEW(SELECT_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        FrontierPass_ToggleDefaultProfile();
+        DrawFrontierPassBg();
+        return;
+    }
+    if (JOY_NEW(L_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        TrainerCard_CycleColorTheme(-1);
+        LoadFrontierPassMainGraphics();
+        DrawFrontierPassBg();
+        return;
+    }
+    if (JOY_NEW(R_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        TrainerCard_CycleColorTheme(1);
+        LoadFrontierPassMainGraphics();
+        DrawFrontierPassBg();
+        return;
+    }
+
     if (JOY_HELD(DPAD_UP) && sPassGfx->cursorSprite->y >= 9)
     {
         sPassGfx->cursorSprite->y -= 2;
@@ -1061,12 +1247,9 @@ static void Task_HandleFrontierPassInput(u8 taskId)
     }
 }
 
-#define tScaleX      data[1]
-#define tScaleY      data[2]
-#define tScaleSpeedX data[3]
-#define tScaleSpeedY data[4]
-
 // Zoom in/out for the Frontier map or the trainer card
+#define tZoomOut data[0]
+
 static void Task_PassAreaZoom(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
@@ -1074,60 +1257,39 @@ static void Task_PassAreaZoom(u8 taskId)
     switch (sPassData->state)
     {
     case 0:
-        // Initialize the zoom, start fading in/out
+        // Fade between the pass and the selected feature. The old affine
+        // transition reused the legacy map/card sheet on BG2; with the new
+        // pass artwork that sheet could briefly overwrite the new minicard
+        // and was also the crash path when the feature was closed repeatedly.
+        // Keep the new pass graphics resident and make this transition safe
+        // until a dedicated new zoom sheet is available.
         if (!tZoomOut)
         {
-            // Zooming in to map/card screen
-            ShowHideZoomingArea(TRUE, FALSE);
-            tScaleX = Q_8_8(1);
-            tScaleY = Q_8_8(1);
-            tScaleSpeedX = 0x15;
-            tScaleSpeedY = 0x15;
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_WHITE);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         }
         else
         {
             // Zooming out of map/card screen back to frontier pass
-            tScaleX = Q_8_8(1.984375); // 1 and 63/64
-            tScaleY = Q_8_8(1.984375);
-            tScaleSpeedX = -0x15;
-            tScaleSpeedY = -0x15;
             SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
             ShowBg(0);
             ShowBg(1);
             ShowBg(2);
+            ShowBg(3);
+            ChangeBgX(3, sPassData->bgScrollX, BG_COORD_SET);
+            ChangeBgY(3, sPassData->bgScrollY, BG_COORD_SET);
             LoadCursorAndSymbolSprites();
             SetVBlankCallback(VBlankCB_FrontierPass);
-            BlendPalettes(PALETTES_ALL, 16, RGB_WHITE);
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_WHITE);
+            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         }
-        sPassGfx->zooming = TRUE;
-        sPassGfx->scaleX = MathUtil_Inv16(tScaleX);
-        sPassGfx->scaleY = MathUtil_Inv16(tScaleY);
         break;
     case 1:
-        // Update the fade and zoom
+        // Wait for the palette transition. There is intentionally no affine
+        // update here; the new minimap and minicard must remain the graphics
+        // the player sees during the whole pass transition.
         UpdatePaletteFade();
-        tScaleX += tScaleSpeedX;
-        tScaleY += tScaleSpeedY;
-        sPassGfx->scaleX = MathUtil_Inv16(tScaleX);
-        sPassGfx->scaleY = MathUtil_Inv16(tScaleY);
-
-        // Check if zoom hasn't reached target
-        if (!tZoomOut)
-        {
-            if (tScaleX <= Q_8_8(1.984375))
-                return;
-        }
-        else
-        {
-            if (tScaleX != Q_8_8(1))
-                return;
-        }
         break;
     case 2:
-        if (sPassGfx->zooming)
-            sPassGfx->zooming = FALSE;
         if (UpdatePaletteFade())
             return;
 
@@ -1140,7 +1302,8 @@ static void Task_PassAreaZoom(u8 taskId)
         else
         {
             // Zoomed out and faded in, return to frontier pass
-            ShowHideZoomingArea(FALSE, FALSE);
+            LoadFrontierPassMainGraphics();
+            LoadFrontierPassMinimap();
             sPassData->areaToShow = CURSOR_AREA_NOTHING;
             gTasks[taskId].func = Task_HandleFrontierPassInput;
         }
@@ -1156,6 +1319,8 @@ static void ShowAndPrintWindows(void)
 {
     s32 x;
     u8 i;
+    u8 symbolsEarned = 0;
+    u16 trainerId;
 
     for (i = 0; i < WINDOW_COUNT; i++)
     {
@@ -1163,16 +1328,52 @@ static void ShowAndPrintWindows(void)
         FillWindowPixelBuffer(i, PIXEL_FILL(0));
     }
 
-    x = GetStringCenterAlignXOffset(FONT_NORMAL, gText_SymbolsEarned, 96);
-    AddTextPrinterParameterized3(WINDOW_EARNED_SYMBOLS, FONT_NORMAL, x, 5, sTextColors[0], 0, gText_SymbolsEarned);
+    // Header: the theme is shown on the left and the current default profile
+    // is shown on the right, as a reminder of what the overworld entry opens.
+    StringCopy(gStringVar1, sText_ThemePrefix);
+    ConvertIntToDecimalStringN(gStringVar2, TrainerCard_GetColorTheme() + 1, STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringAppend(gStringVar1, gStringVar2);
+    StringAppend(gStringVar1, sText_ThemeTotal);
+    StringAppend(gStringVar1, COMPOUND_STRING(" "));
+    StringAppend(gStringVar1, TrainerCard_GetColorThemeName());
+    AddTextPrinterParameterized3(WINDOW_HEADER, FONT_SMALL_NARROWER, 2, 0, sTextColors[1], 0, gStringVar1);
 
-    x = GetStringCenterAlignXOffset(FONT_NORMAL, gText_BattleRecord, 96);
-    AddTextPrinterParameterized3(WINDOW_BATTLE_RECORD, FONT_NORMAL, x, 5, sTextColors[0], 0, gText_BattleRecord);
+    StringCopy(gStringVar2, sText_SelectSwapDefault);
+    StringAppend(gStringVar2, FrontierPass_IsDefaultProfile() ? sText_FrontierPass : sText_TrainerCard);
+    x = GetStringRightAlignXOffset(FONT_SMALL_NARROWER, gStringVar2, 222);
+    AddTextPrinterParameterized3(WINDOW_HEADER, FONT_SMALL_NARROWER, x, 0, sTextColors[1], 0, gStringVar2);
 
-    AddTextPrinterParameterized3(WINDOW_BATTLE_POINTS, FONT_SMALL_NARROW, 5, 4, sTextColors[0], 0, gText_BattlePoints);
+    // Profile text sits beside the mugshot. Keep this deliberately short so
+    // the player's name never collides with the card artwork.
+    AddTextPrinterParameterized3(WINDOW_PROFILE, FONT_SMALL_NARROWER, FRONTIER_PASS_PROFILE_TEXT_X, 0, sTextColors[1], 0, sText_FrontierPass);
+    trainerId = gSaveBlock2Ptr->playerTrainerId[0] | (gSaveBlock2Ptr->playerTrainerId[1] << 8);
+    StringCopy(gStringVar3, gSaveBlock2Ptr->playerName);
+    StringAppend(gStringVar3, COMPOUND_STRING(" "));
+    ConvertIntToDecimalStringN(gStringVar4, trainerId, STR_CONV_MODE_LEFT_ALIGN, 5);
+    StringAppend(gStringVar3, gStringVar4);
+    AddTextPrinterParameterized3(WINDOW_PROFILE, FONT_SMALL_NARROWER, FRONTIER_PASS_PROFILE_TEXT_X, 16, sTextColors[1], 0, gStringVar3);
+
+    AddTextPrinterParameterized3(WINDOW_PROFILE, FONT_SMALL_NARROWER, FRONTIER_PASS_PROFILE_TEXT_X, 24, sTextColors[1], 0, sText_BattlePointsShort);
     ConvertIntToDecimalStringN(gStringVar4, sPassData->battlePoints, STR_CONV_MODE_LEFT_ALIGN, 5);
-    x = GetStringRightAlignXOffset(FONT_SMALL_NARROW, gStringVar4, 91);
-    AddTextPrinterParameterized3(WINDOW_BATTLE_POINTS, FONT_SMALL_NARROW, x, 16, sTextColors[0], 0, gStringVar4);
+    AddTextPrinterParameterized3(WINDOW_PROFILE, FONT_SMALL_NARROWER,
+                                 FRONTIER_PASS_PROFILE_TEXT_X + GetStringWidth(FONT_SMALL_NARROWER, sText_BattlePointsShort, 0), 24,
+                                 sTextColors[1], 0, gStringVar4);
+
+    for (i = 0; i < NUM_FRONTIER_FACILITIES; i++)
+    {
+        if (sPassData->facilitySymbols[i] != 0)
+            symbolsEarned++;
+    }
+    AddTextPrinterParameterized3(WINDOW_SYMBOLS, FONT_SMALL_NARROWER, 0, 6, sTextColors[1], 0, sText_SymbolsEarned);
+    ConvertIntToDecimalStringN(gStringVar4, symbolsEarned, STR_CONV_MODE_LEFT_ALIGN, 1);
+    AddTextPrinterParameterized3(WINDOW_SYMBOLS, FONT_SMALL_NARROWER,
+                                 GetStringWidth(FONT_SMALL_NARROWER, sText_SymbolsEarned, 0), 6,
+                                 sTextColors[1], 0, gStringVar4);
+
+    x = GetStringCenterAlignXOffset(FONT_SMALL_NARROWER, sText_CardLabel, 56);
+    AddTextPrinterParameterized3(WINDOW_CARD_LABEL, FONT_SMALL_NARROWER, x, 4, sTextColors[1], 0, sText_CardLabel);
+    x = GetStringCenterAlignXOffset(FONT_SMALL_NARROWER, sText_MapLabel, 56);
+    AddTextPrinterParameterized3(WINDOW_MAP_LABEL, FONT_SMALL_NARROWER, x, 0, sTextColors[1], 0, sText_MapLabel);
 
     sPassData->cursorArea = GetCursorAreaFromCoords(sPassData->cursorX - 5, sPassData->cursorY + 5);
     sPassData->previousCursorArea = CURSOR_AREA_NOTHING;
@@ -1186,121 +1387,153 @@ static void ShowAndPrintWindows(void)
 
 static void PrintAreaDescription(u8 cursorArea)
 {
+    s32 x;
+
     FillWindowPixelBuffer(WINDOW_DESCRIPTION, PIXEL_FILL(0));
 
     if (cursorArea == CURSOR_AREA_RECORD && !sPassData->hasBattleRecord)
         AddTextPrinterParameterized3(WINDOW_DESCRIPTION, FONT_NORMAL, 2, 0, sTextColors[1], 0, sPassAreaDescriptions[CURSOR_AREA_NOTHING]);
     else if (cursorArea != CURSOR_AREA_NOTHING)
         AddTextPrinterParameterized3(WINDOW_DESCRIPTION, FONT_NORMAL, 2, 0, sTextColors[1], 0, sPassAreaDescriptions[cursorArea]);
+    else
+        AddTextPrinterParameterized3(WINDOW_DESCRIPTION, FONT_SMALL_NARROWER, 2, 0, sTextColors[1], 0, sText_CursorInfo);
+
+    x = GetStringRightAlignXOffset(FONT_SMALL_NARROWER, sText_SwapThemes, 236);
+    AddTextPrinterParameterized3(WINDOW_DESCRIPTION, FONT_SMALL_NARROWER, x, 0, sTextColors[1], 0, sText_SwapThemes);
 
     CopyWindowToVram(WINDOW_DESCRIPTION, COPYWIN_FULL);
     CopyBgTilemapBufferToVram(0);
 }
 
-static void ShowHideZoomingArea(bool8 show, bool8 zoomedIn)
+static void LoadFrontierPassThemePalettes(void)
 {
-    switch (sPassData->areaToShow)
+    u16 bgPalette[16];
+    u16 cardPalette[16];
+    u16 scrollPalette[16];
+    const struct TrainerCardThemeColors *theme;
+
+    theme = TrainerCard_GetColorThemeColors();
+    CpuCopy16(sBgNew_Pal, bgPalette, sizeof(bgPalette));
+    CpuCopy16(sMiniCard_Pal, cardPalette, sizeof(cardPalette));
+    CpuCopy16(sFrontierPassScrolling_Pal, scrollPalette, sizeof(scrollPalette));
+
+    // Color 0 is transparent for tiled BGs, but the hardware backdrop is
+    // still the color at palette index 0. The imported sheets use lime as
+    // their transparent key, so keep that key out of the visible backdrop.
+    bgPalette[0] = theme->charcoal;
+    cardPalette[0] = theme->charcoal;
+    scrollPalette[0] = theme->charcoal;
+
+    if (TrainerCard_GetColorTheme() != 0)
     {
-    case CURSOR_AREA_MAP:
-        if (show)
-            CopyToBgTilemapBufferRect_ChangePalette(2, sPassGfx->mapAndCardZoomTilemap, 16, 3, 12, 7, 16);
-        else
-            FillBgTilemapBufferRect(2, 0, 16, 3, 12, 7, 16);
-        break;
-    case CURSOR_AREA_CARD:
-        if (show)
-            CopyToBgTilemapBufferRect_ChangePalette(2, sPassGfx->mapAndCardZoomTilemap + 84, 16, 10, 12, 7, 16);
-        else
-            FillBgTilemapBufferRect(2, 0, 16, 10, 12, 7, 16);
-        break;
-    default:
-        return;
+        // The transparent key remains index 0. Recolor the neutral ramps of
+        // the new Frontier Pass art while preserving the colored accents.
+        bgPalette[1] = theme->light;
+        bgPalette[2] = theme->light;
+        bgPalette[3] = theme->mid;
+        bgPalette[4] = theme->dark;
+        bgPalette[5] = theme->deep;
+        bgPalette[6] = theme->black2;
+
+        cardPalette[9]  = theme->detail;
+        cardPalette[10] = theme->dark;
+        cardPalette[11] = theme->mid;
+        cardPalette[12] = theme->dark;
+        cardPalette[13] = theme->deep;
+        cardPalette[14] = theme->black2;
+        cardPalette[15] = theme->nearBlack;
+
+        scrollPalette[0] = theme->charcoal;
+        scrollPalette[1] = theme->mid;
+        scrollPalette[2] = theme->dark;
+        scrollPalette[3] = theme->deep;
+        scrollPalette[4] = theme->black2;
+        scrollPalette[5] = theme->nearBlack;
+        scrollPalette[6] = theme->nearBlack;
+        scrollPalette[7] = theme->nearBlack;
     }
 
+    LoadPalette(bgPalette, BG_PLTT_ID(FRONTIER_PASS_BGNEW_PALETTE), PLTT_SIZE_4BPP);
+    LoadPalette(cardPalette, BG_PLTT_ID(FRONTIER_PASS_MINICARD_PALETTE), PLTT_SIZE_4BPP);
+    LoadPalette(scrollPalette, BG_PLTT_ID(FRONTIER_PASS_SCROLL_PALETTE), PLTT_SIZE_4BPP);
+}
+
+static void LoadFrontierPassMinimap(void)
+{
+    LoadBgTiles(2, sMinimap_Gfx, sizeof(sMinimap_Gfx), FRONTIER_PASS_MINIMAP_TILE_BASE);
+    CopyToBgTilemapBufferRect(2, sMinimap_Tilemap, 23, 2, 6, 6);
+    ChangeBgX(2, FRONTIER_PASS_MINIMAP_OFFSET_X * 256, BG_COORD_SET);
+    ChangeBgY(2, FRONTIER_PASS_MINIMAP_OFFSET_Y * 256, BG_COORD_SET);
     CopyBgTilemapBufferToVram(2);
-    if (zoomedIn)
+}
+
+static void LoadFrontierPassMainGraphics(void)
+{
+    // The map/card callbacks reuse the same character blocks. Restore every
+    // pass layer when returning from one of them; reloading only the palettes
+    // leaves the scroll layer or the minimap replaced by the last screen.
+    LoadBgTiles(1, sBgNew_Gfx, sizeof(sBgNew_Gfx), 0);
+    LoadBgTiles(0, sMiniCard_Gfx, sizeof(sMiniCard_Gfx), FRONTIER_PASS_MINICARD_TILE_BASE);
+    LoadBgTiles(3, sFrontierPassScrolling_Gfx, sizeof(sFrontierPassScrolling_Gfx), 0);
+    LoadFrontierPassScrollingBackground();
+    CopyBgTilemapBufferToVram(3);
+    LoadFrontierPassThemePalettes();
+    LoadPalette(&TrainerCard_GetColorThemeColors()->charcoal, BG_PLTT_ID(0), sizeof(u16));
+}
+
+static void LoadFrontierPassScrollingBackground(void)
+{
+    u16 *tilemap = (u16 *)sPassGfx->tilemapBuff4;
+    u16 x, y;
+
+    for (y = 0; y < FRONTIER_PASS_SCROLL_MAP_HEIGHT; y++)
     {
-        SetBgAffine(2,
-                    sBgAffineCoords[sPassData->areaToShow - 1][0] << 8,
-                    sBgAffineCoords[sPassData->areaToShow - 1][1] << 8,
-                    sBgAffineCoords[sPassData->areaToShow - 1][0],
-                    sBgAffineCoords[sPassData->areaToShow - 1][1],
-                    MathUtil_Inv16(Q_8_8(1.984375)), // 1 and 63/64
-                    MathUtil_Inv16(Q_8_8(1.984375)),
-                    0);
+        const u16 sourceY = y % FRONTIER_PASS_SCROLL_SOURCE_HEIGHT;
+
+        for (x = 0; x < FRONTIER_PASS_SCROLL_MAP_WIDTH; x++)
+        {
+            const u16 entry = sFrontierPassScrolling_Tilemap[sourceY * FRONTIER_PASS_SCROLL_SOURCE_WIDTH + x];
+            tilemap[y * FRONTIER_PASS_SCROLL_MAP_WIDTH + x] =
+                (entry & 0x0FFF) | (FRONTIER_PASS_SCROLL_PALETTE << 12);
+        }
     }
+}
+
+static void UpdateFrontierPassScrollingBackground(void)
+{
+    if (sPassData->bgScrollX <= FRONTIER_PASS_SCROLL_SPEED_X)
+        sPassData->bgScrollX = FRONTIER_PASS_SCROLL_X_PERIOD << 8;
     else
-    {
-        SetBgAffine(2,
-                    sBgAffineCoords[sPassData->areaToShow - 1][0] << 8,
-                    sBgAffineCoords[sPassData->areaToShow - 1][1] << 8,
-                    sBgAffineCoords[sPassData->areaToShow - 1][0],
-                    sBgAffineCoords[sPassData->areaToShow - 1][1],
-                    MathUtil_Inv16(Q_8_8(1)),
-                    MathUtil_Inv16(Q_8_8(1)),
-                    0);
-    }
+        sPassData->bgScrollX -= FRONTIER_PASS_SCROLL_SPEED_X;
+
+    if (sPassData->bgScrollY <= FRONTIER_PASS_SCROLL_SPEED_Y)
+        sPassData->bgScrollY = FRONTIER_PASS_SCROLL_Y_PERIOD << 8;
+    else
+        sPassData->bgScrollY -= FRONTIER_PASS_SCROLL_SPEED_Y;
+
+    ChangeBgX(3, sPassData->bgScrollX, BG_COORD_SET);
+    ChangeBgY(3, sPassData->bgScrollY, BG_COORD_SET);
 }
 
 static void UpdateAreaHighlight(u8 cursorArea, u8 previousCursorArea)
 {
-    #define NON_HIGHLIGHT_AREA(area) ((area) == CURSOR_AREA_NOTHING || (area) > CURSOR_AREA_CANCEL)
-
-    // If moving off highlightable area, unhighlight it
-    switch (previousCursorArea)
-    {
-    case CURSOR_AREA_MAP:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->mapAndCardTilemap, 16, 3, 12, 7, 17);
-        break;
-    case CURSOR_AREA_CARD:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->mapAndCardTilemap + 336, 16, 10, 12, 7, 17);
-        break;
-    case CURSOR_AREA_RECORD:
-        if (sPassData->hasBattleRecord)
-            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->battleRecordTilemap, 2, 10, 12, 3, 17);
-        else if (NON_HIGHLIGHT_AREA(cursorArea))
-            return;
-        break;
-    case CURSOR_AREA_CANCEL:
-        CopyToBgTilemapBufferRect_ChangePalette(1, gFrontierPassCancelButton_Tilemap, 21, 0, 9, 2, 17);
-        break;
-    default:
-        if (NON_HIGHLIGHT_AREA(cursorArea))
-            return;
-        break;
-    }
-
-    // If moving on to highlightable area, highlight it
-    switch (cursorArea)
-    {
-    case CURSOR_AREA_MAP:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->mapAndCardTilemap + 168, 16, 3, 12, 7, 17);
-        break;
-    case CURSOR_AREA_CARD:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->mapAndCardTilemap + 504, 16, 10, 12, 7, 17);
-        break;
-    case CURSOR_AREA_RECORD:
-        if (sPassData->hasBattleRecord)
-            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->battleRecordTilemap + 72, 2, 10, 12, 3, 17);
-        else
-            return;
-        break;
-    case CURSOR_AREA_CANCEL:
-        CopyToBgTilemapBufferRect_ChangePalette(1, gFrontierPassCancelButtonHighlighted_Tilemap, 21, 0, 9, 2, 17);
-        break;
-    default:
-        if (NON_HIGHLIGHT_AREA(previousCursorArea))
-            return;
-    }
-
-    CopyBgTilemapBufferToVram(1);
+    // The new bgnew artwork already supplies the complete panel layout. The
+    // old highlight tilemaps belong to the previous background and would
+    // overwrite the new map/card artwork, so cursor hit-testing remains the
+    // same while the visual highlight is intentionally left to the cursor.
+    (void)cursorArea;
+    (void)previousCursorArea;
 }
 
 static void DrawFrontierPassBg(void)
 {
-    CopyToBgTilemapBuffer(1, gFrontierPassBg_Tilemap, 0, 0);
+    CopyRectToBgTilemapBufferRect(1, sBgNew_Tilemap, 0, 0, 30, 20, 0, 0, 30, 20,
+                                  FRONTIER_PASS_BGNEW_PALETTE, 0, 0);
+    CopyRectToBgTilemapBufferRect(0, sMiniCard_Tilemap, 0, 0, 30, 20,
+                                  FRONTIER_PASS_MINICARD_TILE_X, FRONTIER_PASS_MINICARD_TILE_Y, 16, FRONTIER_PASS_MINICARD_TILE_HEIGHT,
+                                  FRONTIER_PASS_MINICARD_PALETTE, FRONTIER_PASS_MINICARD_TILE_BASE, 0);
     UpdateAreaHighlight(sPassData->cursorArea, sPassData->previousCursorArea);
-    ShowHideZoomingArea(TRUE, sPassData->areaToShow); // If returning to frontier pass from map/card (areaToShow will be != 0)
+    LoadFrontierPassMinimap();
     ShowAndPrintWindows();
     CopyBgTilemapBufferToVram(1);
 }
@@ -1309,15 +1542,60 @@ static void LoadCursorAndSymbolSprites(void)
 {
     u8 spriteId;
     u8 i = 0;
+    struct CompressedSpriteSheet mugshotSheet;
+    struct SpritePalette mugshotPalette;
+    struct SpriteSheet miniCardPicSheet;
+    struct SpritePalette miniCardPicPalette;
 
     FreeAllSpritePalettes();
     ResetAffineAnimData();
     LoadSpritePalettes(sSpritePalettes);
+    mugshotSheet.data = gSaveBlock2Ptr->playerGender == MALE
+        ? sFrontierPassMugshotMale_Gfx
+        : sFrontierPassMugshotFemale_Gfx;
+    mugshotSheet.size = 64 * 64 / 2;
+    mugshotSheet.tag = TAG_FIELD_MUGSHOT;
+    mugshotPalette.data = gSaveBlock2Ptr->playerGender == MALE
+        ? sFrontierPassMugshotMale_Pal
+        : sFrontierPassMugshotFemale_Pal;
+    mugshotPalette.tag = TAG_FIELD_MUGSHOT;
+    LoadCompressedSpriteSheet(&mugshotSheet);
+    LoadSpritePalette(&mugshotPalette);
     LoadCompressedSpriteSheet(&sCursorSpriteSheets[0]);
     LoadCompressedSpriteSheet(&sCursorSpriteSheets[2]);
+    spriteId = CreateSprite(&sSpriteTemplate_ProfileMugshot, 31, 43, 1);
+    if (spriteId != SPRITE_NONE)
+    {
+        sPassGfx->mugshotSprite = &gSprites[spriteId];
+        sPassGfx->mugshotSprite->oam.priority = 0;
+    }
+
+    miniCardPicSheet.data = gSaveBlock2Ptr->playerGender == MALE
+        ? sMiniCardMalePic_Gfx
+        : sMiniCardFemalePic_Gfx;
+    miniCardPicSheet.size = 32 * 32 / 2;
+    miniCardPicSheet.tag = TAG_MINICARD_PLAYER_PIC;
+    miniCardPicPalette.data = gSaveBlock2Ptr->playerGender == MALE
+        ? sMiniCardMalePic_Pal
+        : sMiniCardFemalePic_Pal;
+    miniCardPicPalette.tag = TAG_MINICARD_PLAYER_PIC;
+    LoadSpriteSheet(&miniCardPicSheet);
+    LoadSpritePalette(&miniCardPicPalette);
+    spriteId = CreateSprite(&sSpriteTemplate_MiniCardPlayerPic,
+                            FRONTIER_PASS_MINICARD_PIC_X,
+                            FRONTIER_PASS_MINICARD_PIC_Y, 0);
+    if (spriteId != SPRITE_NONE)
+    {
+        sPassGfx->miniCardPlayerPicSprite = &gSprites[spriteId];
+        sPassGfx->miniCardPlayerPicSprite->oam.priority = 0;
+    }
+
     spriteId = CreateSprite(&sSpriteTemplates_Cursors[0], sPassData->cursorX, sPassData->cursorY, 0);
-    sPassGfx->cursorSprite = &gSprites[spriteId];
-    sPassGfx->cursorSprite->oam.priority = 0;
+    if (spriteId != SPRITE_NONE)
+    {
+        sPassGfx->cursorSprite = &gSprites[spriteId];
+        sPassGfx->cursorSprite->oam.priority = 0;
+    }
 
     for (i = 0; i < NUM_FRONTIER_FACILITIES; i++)
     {
@@ -1338,8 +1616,21 @@ static void FreeCursorAndSymbolSprites(void)
 {
     u8 i = 0;
 
-    DestroySprite(sPassGfx->cursorSprite);
-    sPassGfx->cursorSprite = NULL;
+    if (sPassGfx->mugshotSprite != NULL)
+    {
+        DestroySprite(sPassGfx->mugshotSprite);
+        sPassGfx->mugshotSprite = NULL;
+    }
+    if (sPassGfx->miniCardPlayerPicSprite != NULL)
+    {
+        DestroySprite(sPassGfx->miniCardPlayerPicSprite);
+        sPassGfx->miniCardPlayerPicSprite = NULL;
+    }
+    if (sPassGfx->cursorSprite != NULL)
+    {
+        DestroySprite(sPassGfx->cursorSprite);
+        sPassGfx->cursorSprite = NULL;
+    }
     for (i = 0; i < NUM_FRONTIER_FACILITIES; i++)
     {
         if (sPassGfx->symbolSprites[i] != NULL)
@@ -1351,6 +1642,8 @@ static void FreeCursorAndSymbolSprites(void)
     FreeAllSpritePalettes();
     FreeSpriteTilesByTag(TAG_MEDAL_SILVER);
     FreeSpriteTilesByTag(TAG_CURSOR);
+    FreeSpriteTilesByTag(TAG_FIELD_MUGSHOT);
+    FreeSpriteTilesByTag(TAG_MINICARD_PLAYER_PIC);
 }
 
 static void SpriteCB_PlayerHead(struct Sprite *sprite)
@@ -1440,8 +1733,8 @@ static bool32 InitFrontierMap(void)
         ShowBg(2);
         InitFrontierMapSprites();
         SetVBlankCallback(VBlankCB_FrontierPass);
-        BlendPalettes(PALETTES_ALL, 16, RGB_WHITE);
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_WHITE);
+        BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         break;
     case 7:
         if (UpdatePaletteFade())
@@ -1459,7 +1752,7 @@ static bool32 ExitFrontierMap(void)
     switch (sPassData->state)
     {
     case 0:
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_WHITE);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         break;
     case 1:
         if (UpdatePaletteFade())
