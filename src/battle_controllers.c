@@ -2446,9 +2446,11 @@ void BtlController_HandleFaintAnimation(u32 battler)
             }
             // The player's sprite callback just slides the mon, the opponent's removes the sprite.
             // The player's sprite is removed in Controller_FaintPlayerMon. Controller_FaintOpponentMon only removes the healthbox once the sprite is removed by SpriteCB_FaintOpponentMon.
+            // Celebrate once, when the faint animation actually starts. Starting
+            // on each setup/wait frame can put two animation tasks on one sprite.
+            AnimateMonAfterKnockout(battler);
         }
     }
-    AnimateMonAfterKnockout(battler);
 }
 
 #undef sSpeedX
@@ -2919,22 +2921,23 @@ static void AnimateMonAfterKnockout(u32 battler)
 
 static void LaunchKOAnimation(u32 battlerId, u16 animId, bool32 isFront)
 {
-    u32 species = GetBattlerVisualSpecies(battlerId);
-    u32 spriteId = gBattlerSpriteIds[battlerId];
+    u32 species, spriteId;
 
-    gBattleStruct->battlerKOAnimsRunning++;
+    if (battlerId >= MAX_BATTLERS_COUNT)
+        return;
 
-    if (isFront)
-    {
-        LaunchAnimationTaskForFrontSprite(&gSprites[spriteId], animId);
+    spriteId = gBattlerSpriteIds[battlerId];
+    if (spriteId >= MAX_SPRITES || !gSprites[spriteId].inUse)
+        return;
 
-        if (HasTwoFramesAnimation(species))
-            StartSpriteAnim(&gSprites[spriteId], 1);
-    }
-    else
-    {
-        LaunchAnimationTaskForBackSprite(&gSprites[spriteId], animId);
-    }
+    // The task owns the wait counter. Rejected/duplicate launches must not
+    // add a count that no animation will ever clear.
+    if (!LaunchMonKnockoutAnimation(&gSprites[spriteId], animId, isFront))
+        return;
+
+    species = GetBattlerVisualSpecies(battlerId);
+    if (isFront && HasTwoFramesAnimation(species))
+        StartSpriteAnim(&gSprites[spriteId], 1);
 
     PlayCry_Normal(species, CRY_PRIORITY_NORMAL);
 }

@@ -6591,7 +6591,10 @@ static void Task_AnimateAfterDelay(u8 taskId)
 {
     if (--gTasks[taskId].sAnimDelay == 0)
     {
-        LaunchAnimationTaskForFrontSprite(READ_PTR_FROM_TASK(taskId, 0), gTasks[taskId].sAnimId);
+        struct Sprite *sprite = READ_PTR_FROM_TASK(taskId, 0);
+        if (!LaunchAnimationTaskForFrontSprite(sprite, gTasks[taskId].sAnimId)
+         && !IsMonSpriteAnimationRunning(sprite))
+            sprite->callback = SpriteCallbackDummy;
         DestroyTask(taskId);
     }
 }
@@ -6651,13 +6654,16 @@ void DoMonFrontSpriteAnimation(struct Sprite *sprite, u16 species, bool8 noCry, 
             STORE_PTR_IN_TASK(sprite, taskId, 0);
             gTasks[taskId].sAnimId = gSpeciesInfo[species].frontAnimId;
             gTasks[taskId].sAnimDelay = gSpeciesInfo[species].frontAnimDelay;
+            sprite->callback = SpriteCallbackDummy_2;
         }
         else
         {
             // No delay, start animation
-            LaunchAnimationTaskForFrontSprite(sprite, gSpeciesInfo[species].frontAnimId);
+            if (LaunchAnimationTaskForFrontSprite(sprite, gSpeciesInfo[species].frontAnimId))
+                sprite->callback = SpriteCallbackDummy_2;
+            else if (!IsMonSpriteAnimationRunning(sprite))
+                sprite->callback = SpriteCallbackDummy;
         }
-        sprite->callback = SpriteCallbackDummy_2;
     }
 }
 
@@ -6697,8 +6703,10 @@ void BattleAnimateBackSprite(struct Sprite *sprite, u16 species)
     }
     else
     {
-        LaunchAnimationTaskForBackSprite(sprite, GetSpeciesBackAnimSet(species));
-        sprite->callback = SpriteCallbackDummy_2;
+        if (LaunchAnimationTaskForBackSprite(sprite, GetSpeciesBackAnimSet(species)))
+            sprite->callback = SpriteCallbackDummy_2;
+        else if (!IsMonSpriteAnimationRunning(sprite))
+            sprite->callback = SpriteCallbackDummy;
     }
 }
 

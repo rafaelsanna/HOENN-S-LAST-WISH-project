@@ -482,6 +482,7 @@ enum BackAnim GetSpeciesBackAnimSet(u16 species)
 #define tAnimId data[3]
 #define tBattlerId data[4]
 #define tSpeciesId data[5]
+#define tIsKnockoutAnim data[6]
 
 // BUG: In vanilla, tPtrLo is read as an s16, so if bit 15 of the
 // address were to be set it would cause the pointer to be read
@@ -494,15 +495,28 @@ enum BackAnim GetSpeciesBackAnimSet(u16 species)
 #define ANIM_SPRITE(taskId)   ((struct Sprite *)((gTasks[taskId].tPtrHi << 16) | (gTasks[taskId].tPtrLo)))
 #endif //MODERN || BUGFIX
 
+static void FinishMonAnimationTask(u8 taskId)
+{
+    if (gTasks[taskId].tIsKnockoutAnim
+     && gBattleStruct != NULL
+     && gBattleStruct->battlerKOAnimsRunning > 0)
+        gBattleStruct->battlerKOAnimsRunning--;
+    DestroyTask(taskId);
+}
+
 static void Task_HandleMonAnimation(u8 taskId)
 {
     u32 i;
     struct Sprite *sprite = ANIM_SPRITE(taskId);
 
+    if (!sprite->inUse)
+    {
+        FinishMonAnimationTask(taskId);
+        return;
+    }
+
     if (gTasks[taskId].tState == 0)
     {
-        gTasks[taskId].tBattlerId = sprite->data[0];
-        gTasks[taskId].tSpeciesId = sprite->data[2];
         sprite->sDontFlip = TRUE;
         sprite->data[0] = 0;
 
@@ -523,21 +537,86 @@ static void Task_HandleMonAnimation(u8 taskId)
         sprite->data[2] = gTasks[taskId].tSpeciesId;
         sprite->data[1] = 0;
 
-        // Task_HandleMonAnimation handles more than just KO animations,
-        // but if the counter is non-zero then only KO animations are running.
-        // This assumption is not checked.
-        if (gBattleStruct->battlerKOAnimsRunning > 0)
-            gBattleStruct->battlerKOAnimsRunning--;
-        DestroyTask(taskId);
+        FinishMonAnimationTask(taskId);
     }
 }
 
-void LaunchAnimationTaskForFrontSprite(struct Sprite *sprite, enum AnimFunctionIDs frontAnimId)
+bool32 IsMonSpriteAnimationRunning(const struct Sprite *sprite)
 {
-    u8 taskId = CreateTask(Task_HandleMonAnimation, 128);
+    u32 i;
+
+    for (i = 0; i < NUM_TASKS; i++)
+        if (gTasks[i].isActive && gTasks[i].func == Task_HandleMonAnimation && ANIM_SPRITE(i) == sprite)
+            return TRUE;
+
+    return FALSE;
+}
+
+static bool32 TryLaunchMonAnimation(struct Sprite *sprite, u32 animId, bool32 isFront, bool32 isKnockoutAnim)
+{
+    u32 i, battler, nature;
+    u8 taskId;
+
+    // Only live sprite slots may be owned by an animation task.
+    for (i = 0; i < MAX_SPRITES; i++)
+        if (sprite == &gSprites[i])
+            break;
+    if (i == MAX_SPRITES || !sprite->inUse)
+        return FALSE;
+
+    // Animation callbacks use sprite->data as scratch storage. Check ownership
+    // before reading the original battler ID, including before task state 0.
+    if (IsMonSpriteAnimationRunning(sprite))
+        return FALSE;
+
+    // CreateTask returns 0 when the pool is full, which could overwrite a live task.
+    for (i = 0; i < NUM_TASKS; i++)
+        if (!gTasks[i].isActive)
+            break;
+    if (i == NUM_TASKS)
+        return FALSE;
+
+    if (isKnockoutAnim
+     && (gBattleStruct == NULL || gBattleStruct->battlerKOAnimsRunning >= MAX_BATTLERS_COUNT))
+        return FALSE;
+
+    if (!isFront)
+    {
+        if (animId >= ARRAY_COUNT(sBackAnimationIds) / 3)
+            return FALSE;
+
+        battler = (u16)sprite->data[0];
+        if (battler >= MAX_BATTLERS_COUNT || gBattlerPartyIndexes[battler] >= PARTY_SIZE)
+            return FALSE;
+
+        nature = GetNature(GetBattlerMon(battler));
+        if (nature >= NUM_NATURES || gNaturesInfo[nature].backAnim >= 3)
+            return FALSE;
+
+        // Each back animation set has three variants selected by nature.
+        animId = sBackAnimationIds[3 * animId + gNaturesInfo[nature].backAnim];
+    }
+
+    if (animId >= ARRAY_COUNT(sMonAnimFunctions) || sMonAnimFunctions[animId] == NULL)
+        return FALSE;
+
+    taskId = CreateTask(Task_HandleMonAnimation, 128);
     gTasks[taskId].tPtrHi = (u32)(sprite) >> 16;
     gTasks[taskId].tPtrLo = (u32)(sprite);
-    gTasks[taskId].tAnimId = frontAnimId;
+    gTasks[taskId].tAnimId = animId;
+    gTasks[taskId].tBattlerId = sprite->data[0];
+    gTasks[taskId].tSpeciesId = sprite->data[2];
+    gTasks[taskId].tIsKnockoutAnim = isKnockoutAnim;
+
+    if (isKnockoutAnim)
+        gBattleStruct->battlerKOAnimsRunning++;
+
+    return TRUE;
+}
+
+bool32 LaunchAnimationTaskForFrontSprite(struct Sprite *sprite, enum AnimFunctionIDs frontAnimId)
+{
+    return TryLaunchMonAnimation(sprite, frontAnimId, TRUE, FALSE);
 }
 
 void StartMonSummaryAnimation(struct Sprite *sprite, enum AnimFunctionIDs frontAnimId)
@@ -547,21 +626,14 @@ void StartMonSummaryAnimation(struct Sprite *sprite, enum AnimFunctionIDs frontA
     sprite->callback = sMonAnimFunctions[frontAnimId];
 }
 
-void LaunchAnimationTaskForBackSprite(struct Sprite *sprite, enum BackAnim backAnimSet)
+bool32 LaunchAnimationTaskForBackSprite(struct Sprite *sprite, enum BackAnim backAnimSet)
 {
-    u8 nature, taskId, battler;
-    enum AnimFunctionIDs animId;
+    return TryLaunchMonAnimation(sprite, backAnimSet, FALSE, FALSE);
+}
 
-    taskId = CreateTask(Task_HandleMonAnimation, 128);
-    gTasks[taskId].tPtrHi = (u32)(sprite) >> 16;
-    gTasks[taskId].tPtrLo = (u32)(sprite);
-
-    battler = sprite->data[0];
-    nature = GetNature(GetBattlerMon(battler));
-
-    // * 3 below because each back anim has 3 variants depending on nature
-    animId = 3 * backAnimSet + gNaturesInfo[nature].backAnim;
-    gTasks[taskId].tAnimId = sBackAnimationIds[animId];
+bool32 LaunchMonKnockoutAnimation(struct Sprite *sprite, u16 animId, bool32 isFront)
+{
+    return TryLaunchMonAnimation(sprite, animId, isFront, TRUE);
 }
 
 #undef tState
@@ -570,6 +642,7 @@ void LaunchAnimationTaskForBackSprite(struct Sprite *sprite, enum BackAnim backA
 #undef tAnimId
 #undef tBattlerId
 #undef tSpeciesId
+#undef tIsKnockoutAnim
 
 void SetSpriteCB_MonAnimDummy(struct Sprite *sprite)
 {
