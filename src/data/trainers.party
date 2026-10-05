@@ -1488,8 +1488,8 @@ Music: Hiker
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Sandshrew
-Level: 25
+Sandslash
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Dig
 - Slash
@@ -1497,7 +1497,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Poison Sting
 
 Sandslash
-Level: 25
+Level: 40
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Dig
 - Slash
@@ -1708,8 +1708,8 @@ Music: Girl
 Double Battle: No
 AI: Basic Trainer
 
-Marill
-Level: 26
+Azumarill
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GWEN ===
@@ -1721,8 +1721,8 @@ Music: Girl
 Double Battle: No
 AI: Basic Trainer
 
-Marill
-Level: 26
+Azumarill
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LOLA_2 ===
@@ -3431,8 +3431,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Tentacool
-Level: 26
+Tentacruel
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DOMINIK ===
@@ -3444,8 +3444,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Tentacool
-Level: 26
+Tentacruel
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DOUGLAS ===
@@ -3457,12 +3457,12 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Tentacool
-Level: 24
+Tentacruel
+Level: 39
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-Tentacool
-Level: 24
+Tentacruel
+Level: 39
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 === TRAINER_DARRIN ===
@@ -3474,16 +3474,16 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Tentacool
-Level: 24
+Tentacruel
+Level: 39
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-Wingull
-Level: 24
+Pelipper
+Level: 39
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-Tentacool
-Level: 24
+Tentacruel
+Level: 39
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 === TRAINER_TONY_1 ===
@@ -3495,8 +3495,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Tentacool
-Level: 26
+Tentacruel @ Black Sludge
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JEROME ===
@@ -3509,7 +3509,7 @@ Double Battle: No
 AI: Basic Trainer / HP Aware
 
 Tentacruel
-Level: 26
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_MATTHEW ===
@@ -3521,8 +3521,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Tentacool
-Level: 26
+Tentacruel
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DAVID ===
@@ -3534,12 +3534,12 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer
 
-Tentacool
-Level: 25
+Tentacruel
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Tentacool
-Level: 25
+Tentacruel
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_SPENCER ===
@@ -9083,12 +9083,12 @@ Music: Hiker
 Double Battle: No
 AI: Basic Trainer
 
-Wailmer
-Level: 25
+Wailord
+Level: 40
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 Tentacruel
-Level: 25
+Level: 40
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
 === TRAINER_ELLIOT_2 ===
@@ -10786,12 +10786,12 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Wingull
-Level: 25
+Pelipper
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Wailmer
-Level: 25
+Wailord
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_IMANI ===
@@ -10803,8 +10803,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Marill
-Level: 26
+Azumarill
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_KYLA ===
@@ -10816,8 +10816,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Wailmer
-Level: 26
+Wailord @ Sitrus Berry
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DENISE ===
@@ -10829,12 +10829,12 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Wingull
-Level: 25
+Pelipper
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Goldeen
-Level: 25
+Seaking
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BETH ===
@@ -10846,8 +10846,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Goldeen
-Level: 26
+Seaking
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TARA ===
@@ -10859,12 +10859,12 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Horsea
-Level: 25
+Kingdra
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Marill
-Level: 25
+Azumarill
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_MISSY ===
@@ -10876,8 +10876,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Goldeen
-Level: 26
+Seaking
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_ALICE ===
@@ -10889,16 +10889,16 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer
 
-Goldeen
-Level: 24
+Seaking
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Wingull
-Level: 24
+Pelipper
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Goldeen
-Level: 24
+Seaking
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JENNY_1 ===
@@ -15759,7 +15759,7 @@ Double Battle: Yes
 AI: Basic Trainer
 
 Dustox
-Level: 27
+Level: 42
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Gust
 - Psybeam
@@ -15767,7 +15767,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Protect
 
 Beautifly
-Level: 27
+Level: 42
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Gust
 - Mega Drain
@@ -16010,12 +16010,12 @@ Music: Swimmer
 Double Battle: Yes
 AI: Basic Trainer / HP Aware
 
-Goldeen
-Level: 27
+Seaking
+Level: 42
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Tentacool
-Level: 25
+Tentacruel
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_CHRIS ===
@@ -16791,8 +16791,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Tentacool
-Level: 15
+Tentacruel
+Level: 42
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_ISABELLE ===
@@ -16804,8 +16804,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Marill
-Level: 15
+Azumarill
+Level: 42
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_ANDRES_1 ===
@@ -16817,12 +16817,12 @@ Music: Hiker
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Sandshrew
-Level: 25
+Sandslash
+Level: 40
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Sandshrew
-Level: 25
+Sandslash
+Level: 40
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_JOSUE ===
@@ -16834,12 +16834,12 @@ Music: Cool
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Taillow
-Level: 25
+Swellow
+Level: 40
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Wingull
-Level: 25
+Pelipper
+Level: 40
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_CAMRON ===
@@ -16851,8 +16851,8 @@ Music: Swimmer
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Staryu
-Level: 26
+Starmie
+Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_CORY_1 ===
@@ -16864,16 +16864,16 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Wingull
-Level: 24
+Pelipper @ Wacan Berry
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Machop
-Level: 24
+Machamp @ Black Belt
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Tentacool
-Level: 24
+Tentacruel @ Sitrus Berry
+Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_CAROLINA ===
@@ -16886,16 +16886,16 @@ Items: Hyper Potion
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Manectric
-Level: 24
+Manectric @ Air Balloon
+Level: 39
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Swellow
-Level: 24
+Swellow @ Charti Berry
+Level: 39
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Manectric
-Level: 24
+Manectric @ Shuca Berry
+Level: 39
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_ELIJAH ===
@@ -16908,11 +16908,11 @@ Double Battle: No
 AI: Basic Trainer
 
 Skarmory
-Level: 25
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Skarmory
-Level: 25
+Level: 40
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_CELIA ===

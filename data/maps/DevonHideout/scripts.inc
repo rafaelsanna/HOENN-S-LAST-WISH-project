@@ -133,7 +133,7 @@ DevonHideout_Text_FilingCabinet1::
 # 67 "data/maps/DevonHideout/scripts.pory"
 	.string "massively overvalued.\p"
 # 68 "data/maps/DevonHideout/scripts.pory"
-	.string "¥5000 for a POTION?$"
+	.string "¥50,000 for a POTION?$"
 # 69 "data/maps/DevonHideout/scripts.pory"
 
 # 70 "data/maps/DevonHideout/scripts.pory"

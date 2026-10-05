@@ -7027,6 +7027,13 @@ dirn_to_anim(GetWalkInPlaceFasterMovementAction, gWalkInPlaceFasterMovementActio
 
 bool8 ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
 {
+    // Darrin's placeholder Pokémon sprite should keep its facing when spoken to.
+    // Use the map-local object identity, not its graphics, so other Palkia can turn.
+    if (objectEvent->mapGroup == MAP_GROUP(MAP_ROUTE107)
+     && objectEvent->mapNum == MAP_NUM(MAP_ROUTE107)
+     && objectEvent->localId == LOCALID_ROUTE107_DARRIN)
+        return FALSE;
+
     return ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(GetOppositeDirection(direction)));
 }
 
