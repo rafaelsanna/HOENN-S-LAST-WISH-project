@@ -125,110 +125,150 @@ DevonHideout_EventScript_Book2::
 # 63 "data/maps/DevonHideout/scripts.pory"
 DevonHideout_Text_FilingCabinet1::
 # 64 "data/maps/DevonHideout/scripts.pory"
-	.string "FILING CABINET 1\n"
+	.string "There's a ledger of payments to\n"
 # 65 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+	.string "Seabreeze Shipping and Bedrock Mining.\p"
 # 66 "data/maps/DevonHideout/scripts.pory"
-
+	.string "The purchased goods seem to be\n"
 # 67 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_Stone1::
+	.string "massively overvalued.\p"
 # 68 "data/maps/DevonHideout/scripts.pory"
-	.string "STONE 1\n"
+	.string "¥5000 for a POTION?$"
 # 69 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+
 # 70 "data/maps/DevonHideout/scripts.pory"
-
+DevonHideout_Text_Stone1::
 # 71 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_Stone2::
+	.string "Fire and water stones line the\n"
 # 72 "data/maps/DevonHideout/scripts.pory"
-	.string "STONE 2\n"
+	.string "display cases.$"
 # 73 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+
 # 74 "data/maps/DevonHideout/scripts.pory"
-
+DevonHideout_Text_Stone2::
 # 75 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_PC1::
+	.string "A large sparkling orb that has a\n"
 # 76 "data/maps/DevonHideout/scripts.pory"
-	.string "COMPUTER 1\n"
+	.string "mystical quality. Probably a replica.$"
 # 77 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
-# 78 "data/maps/DevonHideout/scripts.pory"
 
+# 78 "data/maps/DevonHideout/scripts.pory"
+DevonHideout_Text_PC1::
 # 79 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_PC2::
+	.string "The E-mail is left open. There are\n"
 # 80 "data/maps/DevonHideout/scripts.pory"
-	.string "COMPUTER 2\n"
+	.string "messages back and forth between\l"
 # 81 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+	.string "MAGMA, AQUA, and an anonymous party.$"
 # 82 "data/maps/DevonHideout/scripts.pory"
 
 # 83 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_Device::
+DevonHideout_Text_PC2::
 # 84 "data/maps/DevonHideout/scripts.pory"
-	.string "DEVICE\n"
+	.string "A letter is drafted to STELLA, but\n"
 # 85 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+	.string "remains unsent.\p"
 # 86 "data/maps/DevonHideout/scripts.pory"
-
+	.string "It seems to have been revised many\n"
 # 87 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_Trash1::
+	.string "times judging by the number of drafts.$"
 # 88 "data/maps/DevonHideout/scripts.pory"
-	.string "TRASH CAN 1\n"
+
 # 89 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+DevonHideout_Text_Device::
 # 90 "data/maps/DevonHideout/scripts.pory"
-
+	.string "Lights flash red and blue on this\n"
 # 91 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_Trash2::
+	.string "strange device.$"
 # 92 "data/maps/DevonHideout/scripts.pory"
-	.string "TRASH CAN 2\n"
+
 # 93 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+DevonHideout_Text_Trash1::
 # 94 "data/maps/DevonHideout/scripts.pory"
-
+	.string "There's a crumpled up letter here.\p"
 # 95 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_FilingCabinet2::
+	.string "Unfolding it, it appears to be from\n"
 # 96 "data/maps/DevonHideout/scripts.pory"
-	.string "FILING CABINET 2\n"
+	.string "the Seabreeze Shipping CEO.\p"
 # 97 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+	.string "He is requesting increased compensation\n"
 # 98 "data/maps/DevonHideout/scripts.pory"
-
+	.string "in return for shouldering greater risk.$"
 # 99 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_FilingCabinet3::
+
 # 100 "data/maps/DevonHideout/scripts.pory"
-	.string "FILING CABINET 3\n"
+DevonHideout_Text_Trash2::
 # 101 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+	.string "A letter to STELLA is hastily ripped\n"
 # 102 "data/maps/DevonHideout/scripts.pory"
-
+	.string "and discarded.\p"
 # 103 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_FilingCabinet4::
+	.string "A shred remains where you can see\n"
 # 104 "data/maps/DevonHideout/scripts.pory"
-	.string "FILING CABINET 4\n"
+	.string "the beginnings of an apology.$"
 # 105 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+
 # 106 "data/maps/DevonHideout/scripts.pory"
-
+DevonHideout_Text_FilingCabinet2::
 # 107 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_FilingCabinet5::
+	.string "Expense reports for TEAM MAGMA and\n"
 # 108 "data/maps/DevonHideout/scripts.pory"
-	.string "FILING CABINET 5\n"
+	.string "TEAM AQUA fill the filing cabinet.\p"
 # 109 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+	.string "The letters appear to have been\n"
 # 110 "data/maps/DevonHideout/scripts.pory"
-
+	.string "forwarded here from Seabreeze Shipping\l"
 # 111 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_Book1::
+	.string "and Bedrock Mining.$"
 # 112 "data/maps/DevonHideout/scripts.pory"
-	.string "BOOK 1\n"
-# 113 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
-# 114 "data/maps/DevonHideout/scripts.pory"
 
+# 113 "data/maps/DevonHideout/scripts.pory"
+DevonHideout_Text_FilingCabinet3::
+# 114 "data/maps/DevonHideout/scripts.pory"
+	.string "It's plans for a new coastal city.\n"
 # 115 "data/maps/DevonHideout/scripts.pory"
-DevonHideout_Text_Book2::
+	.string "The location is currently completely\l"
 # 116 "data/maps/DevonHideout/scripts.pory"
-	.string "BOOK 2\n"
+	.string "landlocked with ocean nowhere near it.$"
 # 117 "data/maps/DevonHideout/scripts.pory"
-	.string "Placeholder clue text.$"
+
+# 118 "data/maps/DevonHideout/scripts.pory"
+DevonHideout_Text_FilingCabinet4::
+# 119 "data/maps/DevonHideout/scripts.pory"
+	.string "A report of potential income from\n"
+# 120 "data/maps/DevonHideout/scripts.pory"
+	.string "deep earth mining exports.\p"
+# 121 "data/maps/DevonHideout/scripts.pory"
+	.string "To your knowledge, there is no way\n"
+# 122 "data/maps/DevonHideout/scripts.pory"
+	.string "to mine these products yet.$"
+# 123 "data/maps/DevonHideout/scripts.pory"
+
+# 124 "data/maps/DevonHideout/scripts.pory"
+DevonHideout_Text_FilingCabinet5::
+# 125 "data/maps/DevonHideout/scripts.pory"
+	.string "A list of new policies and taxes to\n"
+# 126 "data/maps/DevonHideout/scripts.pory"
+	.string "be implemented. It's a plan for an\l"
+# 127 "data/maps/DevonHideout/scripts.pory"
+	.string "entire change in governance.$"
+# 128 "data/maps/DevonHideout/scripts.pory"
+
+# 129 "data/maps/DevonHideout/scripts.pory"
+DevonHideout_Text_Book1::
+# 130 "data/maps/DevonHideout/scripts.pory"
+	.string "This book describes the legend of\n"
+# 131 "data/maps/DevonHideout/scripts.pory"
+	.string "KYOGRE and where it is believed to be\l"
+# 132 "data/maps/DevonHideout/scripts.pory"
+	.string "hiding to this day.$"
+# 133 "data/maps/DevonHideout/scripts.pory"
+
+# 134 "data/maps/DevonHideout/scripts.pory"
+DevonHideout_Text_Book2::
+# 135 "data/maps/DevonHideout/scripts.pory"
+	.string "It's a book detailing the history\n"
+# 136 "data/maps/DevonHideout/scripts.pory"
+	.string "of GROUDON. It is believed to be\l"
+# 137 "data/maps/DevonHideout/scripts.pory"
+	.string "sleeping deep within the earth.$"

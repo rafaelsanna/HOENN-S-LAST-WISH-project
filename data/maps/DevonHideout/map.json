@@ -136,6 +136,62 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "DevonHideout_EventScript_Book2"
+    },
+    {
+      "type": "sign",
+      "x": 16,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DevonHideout_EventScript_Stone2"
+    },
+    {
+      "type": "sign",
+      "x": 13,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DevonHideout_EventScript_Stone1"
+    },
+    {
+      "type": "sign",
+      "x": 12,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DevonHideout_EventScript_Stone1"
+    },
+    {
+      "type": "sign",
+      "x": 19,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DevonHideout_EventScript_Stone1"
+    },
+    {
+      "type": "sign",
+      "x": 18,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DevonHideout_EventScript_Stone1"
+    },
+    {
+      "type": "sign",
+      "x": 17,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DevonHideout_EventScript_Stone1"
+    },
+    {
+      "type": "sign",
+      "x": 1,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DevonHideout_EventScript_Device"
     }
   ]
 }

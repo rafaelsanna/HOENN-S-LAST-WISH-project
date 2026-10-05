@@ -61,58 +61,78 @@ DevonHideout_EventScript_Book2::
 
 @ Replace these placeholders with the clue dialogue.
 DevonHideout_Text_FilingCabinet1::
-	.string "FILING CABINET 1\n"
-	.string "Placeholder clue text.$"
+	.string "There's a ledger of payments to\n"
+	.string "Seabreeze Shipping and Bedrock Mining.\p"
+	.string "The purchased goods seem to be\n"
+	.string "massively overvalued.\p"
+	.string "¥50,000 for a POTION?$"
 
 DevonHideout_Text_Stone1::
-	.string "STONE 1\n"
-	.string "Placeholder clue text.$"
+	.string "Fire and water stones line the\n"
+	.string "display cases.$"
 
 DevonHideout_Text_Stone2::
-	.string "STONE 2\n"
-	.string "Placeholder clue text.$"
+	.string "A large sparkling orb that has a\n"
+	.string "mystical quality. Probably a replica.$"
 
 DevonHideout_Text_PC1::
-	.string "COMPUTER 1\n"
-	.string "Placeholder clue text.$"
+	.string "The E-mail is left open. There are\n"
+	.string "messages back and forth between\l"
+	.string "MAGMA, AQUA, and an anonymous party.$"
 
 DevonHideout_Text_PC2::
-	.string "COMPUTER 2\n"
-	.string "Placeholder clue text.$"
+	.string "A letter is drafted to STELLA, but\n"
+	.string "remains unsent.\p"
+	.string "It seems to have been revised many\n"
+	.string "times judging by the number of drafts.$"
 
 DevonHideout_Text_Device::
-	.string "DEVICE\n"
-	.string "Placeholder clue text.$"
+	.string "Lights flash red and blue on this\n"
+	.string "strange device.$"
 
 DevonHideout_Text_Trash1::
-	.string "TRASH CAN 1\n"
-	.string "Placeholder clue text.$"
+	.string "There's a crumpled up letter here.\p"
+	.string "Unfolding it, it appears to be from\n"
+	.string "the Seabreeze Shipping CEO.\p"
+	.string "He is requesting increased compensation\n"
+	.string "in return for shouldering greater risk.$"
 
 DevonHideout_Text_Trash2::
-	.string "TRASH CAN 2\n"
-	.string "Placeholder clue text.$"
+	.string "A letter to STELLA is hastily ripped\n"
+	.string "and discarded.\p"
+	.string "A shred remains where you can see\n"
+	.string "the beginnings of an apology.$"
 
 DevonHideout_Text_FilingCabinet2::
-	.string "FILING CABINET 2\n"
-	.string "Placeholder clue text.$"
+	.string "Expense reports for TEAM MAGMA and\n"
+	.string "TEAM AQUA fill the filing cabinet.\p"
+	.string "The letters appear to have been\n"
+	.string "forwarded here from Seabreeze Shipping\l"
+	.string "and Bedrock Mining.$"
 
 DevonHideout_Text_FilingCabinet3::
-	.string "FILING CABINET 3\n"
-	.string "Placeholder clue text.$"
+	.string "It's plans for a new coastal city.\n"
+	.string "The location is currently completely\l"
+	.string "landlocked with ocean nowhere near it.$"
 
 DevonHideout_Text_FilingCabinet4::
-	.string "FILING CABINET 4\n"
-	.string "Placeholder clue text.$"
+	.string "A report of potential income from\n"
+	.string "deep earth mining exports.\p"
+	.string "To your knowledge, there is no way\n"
+	.string "to mine these products yet.$"
 
 DevonHideout_Text_FilingCabinet5::
-	.string "FILING CABINET 5\n"
-	.string "Placeholder clue text.$"
+	.string "A list of new policies and taxes to\n"
+	.string "be implemented. It's a plan for an\l"
+	.string "entire change in governance.$"
 
 DevonHideout_Text_Book1::
-	.string "BOOK 1\n"
-	.string "Placeholder clue text.$"
+	.string "This book describes the legend of\n"
+	.string "KYOGRE and where it is believed to be\l"
+	.string "hiding to this day.$"
 
 DevonHideout_Text_Book2::
-	.string "BOOK 2\n"
-	.string "Placeholder clue text.$"
+	.string "It's a book detailing the history\n"
+	.string "of GROUDON. It is believed to be\l"
+	.string "sleeping deep within the earth.$"
 `
