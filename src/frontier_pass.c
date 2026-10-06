@@ -33,6 +33,9 @@
 #include "constants/flags.h"
 #include "hlw_media_save.h"
 
+extern const struct OamData gOamData_AffineOff_ObjNormal_8x32;
+extern const struct OamData gOamData_AffineOff_ObjNormal_32x8;
+
 // gFrontierPassBg_Pal has 8*16 colors, but they attempt to load 13*16 colors.
 // As a result it goes out of bounds and interprets 160 bytes of whatever comes
 // after gFrontierPassBg_Pal (by default, gFrontierPassBg_Gfx) as a palette.
@@ -64,9 +67,14 @@
 #define FRONTIER_PASS_MINIMAP_TILE_BASE    0
 #define FRONTIER_PASS_MINICARD_TILE_X      16
 #define FRONTIER_PASS_MINICARD_TILE_Y      9
+#define FRONTIER_PASS_MINIMAP_X             184
+#define FRONTIER_PASS_MINIMAP_Y             24
+#define FRONTIER_PASS_CARD_X                (FRONTIER_PASS_MINICARD_TILE_X * 8)
+#define FRONTIER_PASS_CARD_Y                (FRONTIER_PASS_MINICARD_TILE_Y * 8)
+#define FRONTIER_PASS_CARD_HIGHLIGHT_COUNT  8
 // Sprite coordinates are the center of the 32x32 OBJ. These centers match
 // the empty portrait slot assembled by minicard.bin.
-#define FRONTIER_PASS_MINICARD_PIC_X       (FRONTIER_PASS_MINICARD_TILE_X * 8 + 74)
+#define FRONTIER_PASS_MINICARD_PIC_X       (FRONTIER_PASS_MINICARD_TILE_X * 8 + 75)
 #define FRONTIER_PASS_MINICARD_PIC_Y       (FRONTIER_PASS_MINICARD_TILE_Y * 8 + 22)
 #define FRONTIER_PASS_MINIMAP_OFFSET_X     3
 #define FRONTIER_PASS_MINIMAP_OFFSET_Y     (-3)
@@ -133,6 +141,16 @@ enum {
     TAG_HEAD_FEMALE,
     TAG_FIELD_MUGSHOT,
     TAG_MINICARD_PLAYER_PIC,
+    TAG_FRONTIER_PASS_HIGHLIGHT_PALETTE,
+    TAG_CARD_HIGHLIGHT_TOP_LEFT,
+    TAG_CARD_HIGHLIGHT_TOP_MIDDLE,
+    TAG_CARD_HIGHLIGHT_TOP_RIGHT_TOP,
+    TAG_CARD_HIGHLIGHT_TOP_RIGHT_BOTTOM,
+    TAG_CARD_HIGHLIGHT_BOTTOM_LEFT,
+    TAG_CARD_HIGHLIGHT_BOTTOM_MIDDLE,
+    TAG_CARD_HIGHLIGHT_BOTTOM_RIGHT,
+    TAG_CARD_HIGHLIGHT_BOTTOM_EDGE,
+    TAG_MAP_HIGHLIGHT,
 };
 
 // Error return codes. Never read
@@ -164,6 +182,8 @@ struct FrontierPassGfx
     struct Sprite *cursorSprite;
     struct Sprite *mugshotSprite;
     struct Sprite *miniCardPlayerPicSprite;
+    struct Sprite *cardHighlightSprites[FRONTIER_PASS_CARD_HIGHLIGHT_COUNT];
+    struct Sprite *mapHighlightSprite;
     struct Sprite *symbolSprites[NUM_FRONTIER_FACILITIES];
     u8 tilemapBuff1[BG_SCREEN_SIZE * 2];
     u8 tilemapBuff2[BG_SCREEN_SIZE * 2];
@@ -206,6 +226,7 @@ static bool32 InitFrontierPass(void);
 static bool32 HideFrontierPass(void);
 static void Task_HandleFrontierPassInput(u8);
 static void Task_PassAreaZoom(u8);
+static u8 GetCursorAreaFromCoords(s16, s16);
 static void UpdateAreaHighlight(u8, u8);
 static void PrintAreaDescription(u8);
 static void LoadFrontierPassMainGraphics(void);
@@ -434,8 +455,8 @@ struct
 }
 static const sPassAreasLayout[CURSOR_AREA_COUNT - 1] =
 {
-    [CURSOR_AREA_MAP - 1]            = { 24,  72, 184, 232},
-    [CURSOR_AREA_CARD - 1]           = { 72, 128, 128, 240},
+    [CURSOR_AREA_MAP - 1]            = { 24,  56, 184, 232},
+    [CURSOR_AREA_CARD - 1]           = { 72, 144, 128, 232},
     [CURSOR_AREA_RECORD - 1]         = {  0,   0,   0,   0},
     [CURSOR_AREA_CANCEL - 1]         = {  0,   8, 232, 240},
     [CURSOR_AREA_POINTS - 1]         = { 32,  72,  72, 112},
@@ -462,6 +483,31 @@ static const struct CompressedSpriteSheet sHeadsSpriteSheet[] =
     {}
 };
 
+static const u8 sCardHighlightTopLeft_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_top_left.4bpp");
+static const u8 sCardHighlightTopMiddle_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_top_middle.4bpp");
+static const u8 sCardHighlightTopRightTop_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_top_right_top.4bpp");
+static const u8 sCardHighlightTopRightBottom_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_top_right_bottom.4bpp");
+static const u8 sCardHighlightBottomLeft_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_bottom_left.4bpp");
+static const u8 sCardHighlightBottomMiddle_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_bottom_middle.4bpp");
+static const u8 sCardHighlightBottomRight_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_bottom_right.4bpp");
+static const u8 sCardHighlightBottomEdge_Gfx[] = INCBIN_U8("graphics/frontier_pass/card_highlight_bottom_edge.4bpp");
+static const u8 sMapHighlight_Gfx[] = INCBIN_U8("graphics/frontier_pass/map_highlight.4bpp");
+static const u16 sFrontierPassHighlight_Pal[] = INCBIN_U16("graphics/frontier_pass/highlight.gbapal");
+
+static const struct SpriteSheet sFrontierPassHighlightSheets[] =
+{
+    {sCardHighlightTopLeft_Gfx,       sizeof(sCardHighlightTopLeft_Gfx),       TAG_CARD_HIGHLIGHT_TOP_LEFT},
+    {sCardHighlightTopMiddle_Gfx,     sizeof(sCardHighlightTopMiddle_Gfx),     TAG_CARD_HIGHLIGHT_TOP_MIDDLE},
+    {sCardHighlightTopRightTop_Gfx,   sizeof(sCardHighlightTopRightTop_Gfx),   TAG_CARD_HIGHLIGHT_TOP_RIGHT_TOP},
+    {sCardHighlightTopRightBottom_Gfx, sizeof(sCardHighlightTopRightBottom_Gfx), TAG_CARD_HIGHLIGHT_TOP_RIGHT_BOTTOM},
+    {sCardHighlightBottomLeft_Gfx,    sizeof(sCardHighlightBottomLeft_Gfx),    TAG_CARD_HIGHLIGHT_BOTTOM_LEFT},
+    {sCardHighlightBottomMiddle_Gfx,  sizeof(sCardHighlightBottomMiddle_Gfx),  TAG_CARD_HIGHLIGHT_BOTTOM_MIDDLE},
+    {sCardHighlightBottomRight_Gfx,   sizeof(sCardHighlightBottomRight_Gfx),   TAG_CARD_HIGHLIGHT_BOTTOM_RIGHT},
+    {sCardHighlightBottomEdge_Gfx,    sizeof(sCardHighlightBottomEdge_Gfx),    TAG_CARD_HIGHLIGHT_BOTTOM_EDGE},
+    {sMapHighlight_Gfx,               sizeof(sMapHighlight_Gfx),               TAG_MAP_HIGHLIGHT},
+    {},
+};
+
 static const struct SpritePalette sSpritePalettes[] =
 {
     {gFrontierPassCursor_Pal,       TAG_CURSOR},
@@ -472,6 +518,38 @@ static const struct SpritePalette sSpritePalettes[] =
     {sFemaleHead_Pal,               TAG_HEAD_FEMALE},
     {}
 };
+
+static const struct SpritePalette sFrontierPassHighlight_Palette =
+{
+    sFrontierPassHighlight_Pal,
+    TAG_FRONTIER_PASS_HIGHLIGHT_PALETTE,
+};
+
+#define FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(_tag, _oam) \
+{ \
+    .tileTag = (_tag), \
+    .paletteTag = TAG_FRONTIER_PASS_HIGHLIGHT_PALETTE, \
+    .oam = (_oam), \
+    .anims = gDummySpriteAnimTable, \
+    .images = NULL, \
+    .affineAnims = gDummySpriteAffineAnimTable, \
+    .callback = SpriteCallbackDummy, \
+}
+
+static const struct SpriteTemplate sCardHighlightSpriteTemplates[FRONTIER_PASS_CARD_HIGHLIGHT_COUNT] =
+{
+    [0] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_TOP_LEFT,        &gOamData_AffineOff_ObjNormal_64x64),
+    [1] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_TOP_MIDDLE,      &gOamData_AffineOff_ObjNormal_32x64),
+    [2] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_TOP_RIGHT_TOP,    &gOamData_AffineOff_ObjNormal_8x32),
+    [3] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_TOP_RIGHT_BOTTOM, &gOamData_AffineOff_ObjNormal_8x32),
+    [4] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_BOTTOM_LEFT,      &gOamData_AffineOff_ObjNormal_32x8),
+    [5] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_BOTTOM_MIDDLE,    &gOamData_AffineOff_ObjNormal_32x8),
+    [6] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_BOTTOM_RIGHT,     &gOamData_AffineOff_ObjNormal_32x8),
+    [7] = FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_CARD_HIGHLIGHT_BOTTOM_EDGE,      &gOamData_AffineOff_ObjNormal_8x8),
+};
+
+static const struct SpriteTemplate sMapHighlightSpriteTemplate =
+    FRONTIER_PASS_HIGHLIGHT_SPRITE_TEMPLATE(TAG_MAP_HIGHLIGHT, &gOamData_AffineOff_ObjNormal_64x32);
 
 static const union AnimCmd sAnim_Frame1_Unused[] =
 {
@@ -846,6 +924,12 @@ static void CB2_FrontierPass(void)
     if (sPassGfx != NULL)
         UpdateFrontierPassScrollingBackground();
     AnimateSprites();
+    if (sPassGfx != NULL && sPassGfx->cursorSprite != NULL)
+    {
+        u8 cursorArea = GetCursorAreaFromCoords(sPassGfx->cursorSprite->x - 5,
+                                                sPassGfx->cursorSprite->y + 5);
+        UpdateAreaHighlight(cursorArea, sPassData->cursorArea);
+    }
     BuildOamBuffer();
 }
 
@@ -1517,12 +1601,22 @@ static void UpdateFrontierPassScrollingBackground(void)
 
 static void UpdateAreaHighlight(u8 cursorArea, u8 previousCursorArea)
 {
-    // The new bgnew artwork already supplies the complete panel layout. The
-    // old highlight tilemaps belong to the previous background and would
-    // overwrite the new map/card artwork, so cursor hit-testing remains the
-    // same while the visual highlight is intentionally left to the cursor.
-    (void)cursorArea;
+    u8 i;
+    bool8 showCard = cursorArea == CURSOR_AREA_CARD;
+    bool8 showMap = cursorArea == CURSOR_AREA_MAP;
+
     (void)previousCursorArea;
+
+    if (sPassGfx == NULL)
+        return;
+
+    for (i = 0; i < FRONTIER_PASS_CARD_HIGHLIGHT_COUNT; i++)
+    {
+        if (sPassGfx->cardHighlightSprites[i] != NULL)
+            sPassGfx->cardHighlightSprites[i]->invisible = !showCard;
+    }
+    if (sPassGfx->mapHighlightSprite != NULL)
+        sPassGfx->mapHighlightSprite->invisible = !showMap;
 }
 
 static void DrawFrontierPassBg(void)
@@ -1550,6 +1644,8 @@ static void LoadCursorAndSymbolSprites(void)
     FreeAllSpritePalettes();
     ResetAffineAnimData();
     LoadSpritePalettes(sSpritePalettes);
+    LoadSpriteSheets(sFrontierPassHighlightSheets);
+    LoadSpritePalette(&sFrontierPassHighlight_Palette);
     mugshotSheet.data = gSaveBlock2Ptr->playerGender == MALE
         ? sFrontierPassMugshotMale_Gfx
         : sFrontierPassMugshotFemale_Gfx;
@@ -1583,11 +1679,48 @@ static void LoadCursorAndSymbolSprites(void)
     LoadSpritePalette(&miniCardPicPalette);
     spriteId = CreateSprite(&sSpriteTemplate_MiniCardPlayerPic,
                             FRONTIER_PASS_MINICARD_PIC_X,
-                            FRONTIER_PASS_MINICARD_PIC_Y, 0);
+                            FRONTIER_PASS_MINICARD_PIC_Y, 1);
     if (spriteId != SPRITE_NONE)
     {
         sPassGfx->miniCardPlayerPicSprite = &gSprites[spriteId];
         sPassGfx->miniCardPlayerPicSprite->oam.priority = 0;
+    }
+
+    {
+        static const s16 sCardHighlightPositions[FRONTIER_PASS_CARD_HIGHLIGHT_COUNT][2] =
+        {
+            {FRONTIER_PASS_CARD_X + 32, FRONTIER_PASS_CARD_Y + 32},
+            {FRONTIER_PASS_CARD_X + 80, FRONTIER_PASS_CARD_Y + 32},
+            {FRONTIER_PASS_CARD_X + 100, FRONTIER_PASS_CARD_Y + 16},
+            {FRONTIER_PASS_CARD_X + 100, FRONTIER_PASS_CARD_Y + 48},
+            {FRONTIER_PASS_CARD_X + 16, FRONTIER_PASS_CARD_Y + 68},
+            {FRONTIER_PASS_CARD_X + 48, FRONTIER_PASS_CARD_Y + 68},
+            {FRONTIER_PASS_CARD_X + 80, FRONTIER_PASS_CARD_Y + 68},
+            {FRONTIER_PASS_CARD_X + 100, FRONTIER_PASS_CARD_Y + 68},
+        };
+
+        for (i = 0; i < FRONTIER_PASS_CARD_HIGHLIGHT_COUNT; i++)
+        {
+            spriteId = CreateSprite(&sCardHighlightSpriteTemplates[i],
+                                     sCardHighlightPositions[i][0],
+                                     sCardHighlightPositions[i][1], 1);
+            if (spriteId != SPRITE_NONE)
+            {
+                sPassGfx->cardHighlightSprites[i] = &gSprites[spriteId];
+                sPassGfx->cardHighlightSprites[i]->oam.priority = 0;
+                sPassGfx->cardHighlightSprites[i]->invisible = TRUE;
+            }
+        }
+
+        spriteId = CreateSprite(&sMapHighlightSpriteTemplate,
+                                FRONTIER_PASS_MINIMAP_X + 32,
+                                FRONTIER_PASS_MINIMAP_Y + 16, 1);
+        if (spriteId != SPRITE_NONE)
+        {
+            sPassGfx->mapHighlightSprite = &gSprites[spriteId];
+            sPassGfx->mapHighlightSprite->oam.priority = 0;
+            sPassGfx->mapHighlightSprite->invisible = TRUE;
+        }
     }
 
     spriteId = CreateSprite(&sSpriteTemplates_Cursors[0], sPassData->cursorX, sPassData->cursorY, 0);
@@ -1610,6 +1743,13 @@ static void LoadCursorAndSymbolSprites(void)
             StartSpriteAnim(sPassGfx->symbolSprites[i], i);
         }
     }
+
+    if (sPassGfx->cursorSprite != NULL)
+    {
+        UpdateAreaHighlight(GetCursorAreaFromCoords(sPassGfx->cursorSprite->x - 5,
+                                                    sPassGfx->cursorSprite->y + 5),
+                            CURSOR_AREA_NOTHING);
+    }
 }
 
 static void FreeCursorAndSymbolSprites(void)
@@ -1625,6 +1765,19 @@ static void FreeCursorAndSymbolSprites(void)
     {
         DestroySprite(sPassGfx->miniCardPlayerPicSprite);
         sPassGfx->miniCardPlayerPicSprite = NULL;
+    }
+    for (i = 0; i < FRONTIER_PASS_CARD_HIGHLIGHT_COUNT; i++)
+    {
+        if (sPassGfx->cardHighlightSprites[i] != NULL)
+        {
+            DestroySprite(sPassGfx->cardHighlightSprites[i]);
+            sPassGfx->cardHighlightSprites[i] = NULL;
+        }
+    }
+    if (sPassGfx->mapHighlightSprite != NULL)
+    {
+        DestroySprite(sPassGfx->mapHighlightSprite);
+        sPassGfx->mapHighlightSprite = NULL;
     }
     if (sPassGfx->cursorSprite != NULL)
     {
@@ -1644,6 +1797,9 @@ static void FreeCursorAndSymbolSprites(void)
     FreeSpriteTilesByTag(TAG_CURSOR);
     FreeSpriteTilesByTag(TAG_FIELD_MUGSHOT);
     FreeSpriteTilesByTag(TAG_MINICARD_PLAYER_PIC);
+    for (i = 0; i < FRONTIER_PASS_CARD_HIGHLIGHT_COUNT; i++)
+        FreeSpriteTilesByTag(TAG_CARD_HIGHLIGHT_TOP_LEFT + i);
+    FreeSpriteTilesByTag(TAG_MAP_HIGHLIGHT);
 }
 
 static void SpriteCB_PlayerHead(struct Sprite *sprite)

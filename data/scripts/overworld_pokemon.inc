@@ -811,6 +811,16 @@ EventScript_OverworldPokemonCry_UMBREON::
 EventScript_OverworldPokemonCry_VOLTORB::
 	lock
 	faceplayer
+	goto_if_eq VAR_LAST_TALKED, LOCALID_MAUVILLE_CITY_GAME_CORNER_VOLTORB_SPIN, EventScript_OverworldPokemonCry_VOLTORB_GameCorner
+	playmoncry SPECIES_VOLTORB, CRY_MODE_NORMAL
+	waitmoncry
+	release
+	end
+
+EventScript_OverworldPokemonCry_VOLTORB_GameCorner::
+	face_down
+	applymovement LOCALID_MAUVILLE_CITY_GAME_CORNER_VOLTORB_SPIN, MauvilleCity_GameCorner_Movement_VoltorbSpin
+	waitmovement 0
 	playmoncry SPECIES_VOLTORB, CRY_MODE_NORMAL
 	waitmoncry
 	release

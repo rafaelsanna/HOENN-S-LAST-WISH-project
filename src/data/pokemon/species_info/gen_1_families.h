@@ -13039,7 +13039,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             SIZE_32x32,
             SHADOW_SIZE_M,
             TRACKS_SPOT,
-            sAnimTable_Following,
+            sAnimTable_Spheal,
             gOverworldPalette_Voltorb,
             gShinyOverworldPalette_Voltorb
         )
@@ -13113,7 +13113,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             SIZE_32x32,
             SHADOW_SIZE_M,
             TRACKS_SPOT,
-            sAnimTable_Following,
+            sAnimTable_Spheal,
             gOverworldPalette_Electrode,
             gShinyOverworldPalette_Electrode
         )

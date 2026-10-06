@@ -2200,23 +2200,11 @@ MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpace::
 	end
 
 MauvilleCity_GameCorner_Movement_VoltorbSpin:
-	face_up
-	delay_1
-	face_right
-	delay_1
 	face_down
-	delay_1
-	face_left
-	delay_1
-	face_up
-	delay_1
-	face_right
-	delay_1
-	face_down
-	delay_1
-	face_left
-	delay_1
-	face_right
+	walk_in_place_fast_down
+	walk_in_place_fast_up
+	walk_in_place_fast_down
+	walk_in_place_fast_up
 	step_end
 
 MauvilleCity_GameCorner_Text_VoltorbSpinIntro:
