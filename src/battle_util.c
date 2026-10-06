@@ -10746,9 +10746,10 @@ bool32 IsPhysicalSpecialSplitEnabled(void)
         FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
     }
 
-    // Hard mode always uses the more restrictive legacy behavior.
+    // Hard mode always uses move-based categories, including existing saves
+    // whose stored option was forced OFF by an older version.
     if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
-        return FALSE;
+        return TRUE;
 
     return FlagGet(FLAG_PHYSICAL_SPECIAL_SPLIT);
 }

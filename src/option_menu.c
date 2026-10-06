@@ -220,6 +220,7 @@ static const u8 *const OptionTextDescription(void);
 static const u8 *const OptionTextRight(u8 menuItem);
 static bool8 IsHardNpcTeamsSelected(void);
 static void EnforceHardNpcTeamsRules(void);
+static void SavePhysicalSpecialSplitOption(void);
 static u8 MenuItemCount(void);
 static u8 MenuItemCancel(void);
 static void DrawDescriptionText(void);
@@ -438,13 +439,22 @@ static void EnforceHardNpcTeamsRules(void)
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM] = FALSE;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T] = FALSE;
-    sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = FALSE;
+    sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = TRUE;
     sOptions->sel_difficulty[MENUITEM_DIF_ALL_ABILITIES] = FALSE;
     FlagClear(FLAG_OPS_ALL_MOVES);
-    FlagClear(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
     FlagClear(FLAG_ALL_ABILITIES);
     Randomizer_SetWildModes(FALSE, FALSE);
     FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
+}
+
+static void SavePhysicalSpecialSplitOption(void)
+{
+    if (IsHardNpcTeamsSelected() || sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT])
+        FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    else
+        FlagClear(FLAG_PHYSICAL_SPECIAL_SPLIT);
+    FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED);
 }
 
 // Menu left side text conditions
@@ -543,6 +553,7 @@ static const u8 sText_Desc_RandomizerTOff[]     = _("Trainer teams appear normal
 static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.");
 static const u8 sText_Desc_PhysicalSpecialSplitOff[] = _("Use the old type-based\nphysical/special split.");
 static const u8 sText_Desc_PhysicalSpecialSplitOn[]  = _("Use modern physical/special\nsplit by move.");
+static const u8 sText_Desc_PhysicalSpecialSplitHardLocked[] = _("Physical/special split is\nlocked ON in HARD mode.");
 static const u8 sText_Desc_AllAbilitiesOff[] = _("Pokémon use their normal ability.");
 static const u8 sText_Desc_AllAbilitiesOn[]  = _("Pokémon use all of their species'\nabilities at the same time.");
 static const u8 sText_Desc_AutoFishingOff[]     = _("Fishing uses the normal wait timer\nand A-button check.");
@@ -635,7 +646,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIF_RANDOMIZER_E] = sText_Desc_TableRandomLocked,
     [MENUITEM_DIF_FULL_RANDOM]  = sText_Desc_FullRandomLocked,
     [MENUITEM_DIF_RANDOMIZER_T] = sText_Desc_RandomizerHardLocked,
-    [MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = sText_Desc_HardLocked,
+    [MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = sText_Desc_PhysicalSpecialSplitHardLocked,
     [MENUITEM_DIF_ALL_ABILITIES] = sText_Desc_HardLocked,
     [MENUITEM_DIF_DEBUGMENU]    = sText_Empty,
     [MENUITEM_DIF_CANCEL]       = sText_Empty,
@@ -810,6 +821,27 @@ const u8 *OptionMenu_TestRandomizerRules(bool8 hard, u8 randomizer, bool8 select
         canToggle[i] = CheckConditions(items[i]);
     }
     description = OptionTextDescription();
+    sOptions = previous;
+    return description;
+}
+
+const u8 *OptionMenu_TestPhysicalSpecialSplitRules(bool8 hard, bool8 save, bool8 *selection, bool8 *canToggle)
+{
+    struct OptionMenu options = {0};
+    struct OptionMenu *previous = sOptions;
+    const u8 *description;
+
+    options.submenu = PAGE_DIFFICULTY;
+    options.sel_difficulty[MENUITEM_DIF_NPCTEAMS] = hard ? OPTIONS_NPCTEAMS_HARD : OPTIONS_NPCTEAMS_CASUAL;
+    options.sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = *selection;
+    options.menuCursor[PAGE_DIFFICULTY] = MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT;
+    sOptions = &options;
+    EnforceHardNpcTeamsRules();
+    *selection = options.sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT];
+    *canToggle = CheckConditions(MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT);
+    description = OptionTextDescription();
+    if (save)
+        SavePhysicalSpecialSplitOption();
     sOptions = previous;
     return description;
 }
@@ -1452,15 +1484,7 @@ static void Task_OptionMenuSave(u8 taskId)
     else
         FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
 
-    if (sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] && !IsHardNpcTeamsSelected())
-    {
-        FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
-    }
-    else
-    {
-        FlagClear(FLAG_PHYSICAL_SPECIAL_SPLIT);
-    }
-    FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED);
+    SavePhysicalSpecialSplitOption();
 
     if (sOptions->sel_difficulty[MENUITEM_DIF_ALL_ABILITIES] && !IsHardNpcTeamsSelected())
         FlagSet(FLAG_ALL_ABILITIES);

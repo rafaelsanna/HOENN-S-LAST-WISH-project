@@ -652,17 +652,10 @@ RustboroCity_EventScript_EmployeeFacePlayerRight::
 RustboroCity_EventScript_Rival::
     lockall
     goto_if_set FLAG_DEFEATED_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalAfterBattle
-    goto_if_unset FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_RivalFirstMeeting
     call RustboroCity_EventScript_PlayRivalMusic
     applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
     waitmovement 0
-    goto RustboroCity_EventScript_RivalEncounter
-
-RustboroCity_EventScript_RivalFirstMeeting::
-    call RustboroCity_EventScript_PlayRivalMusic
-    applymovement LOCALID_RUSTBORO_RIVAL, Common_Movement_FacePlayer
-    waitmovement 0
-    setflag FLAG_MET_RIVAL_RUSTBORO
+    @ Let the shared encounter choose and record the first dialogue for both entry paths.
     goto RustboroCity_EventScript_RivalEncounter
 
 RustboroCity_EventScript_RivalAfterBattle::
@@ -1736,8 +1729,8 @@ RustboroCity_Text_BrendanPassedBrineyWantToBattle:
 	.string "I bet he was on his way home to his\n"
 	.string "cottage by the sea.\p"
 	.string "{PLAYER}, how's your POKéDEX?\n"
-	.string "I just stopped by the lab to show\n"
-	.string "mine to PROF. ACACIA, but I still\n"
+	.string "I just stopped by the lab to show\l"
+	.string "mine to PROF. ACACIA, but I still\l"
 	.string "have a long way to go.\p"
 	.string "Want to have a battle to test how\n"
 	.string "far you've progressed?$"
