@@ -93,6 +93,7 @@ void TrainerCard_DrawTimeAndDex(u8 windowId, u16 hours, u16 minutes, u16 caughtC
 // Format permanent run history, not the currently selected game options.
 void TrainerCard_FormatRunStatus(u8 *dest);
 u8 TrainerCard_GetColorTheme(void);
+u8 TrainerCard_GetColorThemeCyclePosition(void);
 const struct TrainerCardThemeColors *TrainerCard_GetColorThemeColors(void);
 const u8 *TrainerCard_GetColorThemeName(void);
 void TrainerCard_CycleColorTheme(s8 direction);

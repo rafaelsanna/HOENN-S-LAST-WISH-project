@@ -2557,6 +2557,20 @@ static u8 GetTrainerCardThemeCyclePosition(void)
     return 0;
 }
 
+u8 TrainerCard_GetColorThemeCyclePosition(void)
+{
+    u8 i;
+    u8 current = TrainerCard_GetColorTheme();
+
+    for (i = 0; i < TRAINER_CARD_THEME_COUNT; i++)
+    {
+        if (sTrainerCardThemeCycleOrder[i] == current)
+            return i;
+    }
+
+    return 0;
+}
+
 void TrainerCard_CycleColorTheme(s8 direction)
 {
     u8 position = 0;

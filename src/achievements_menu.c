@@ -19,6 +19,7 @@
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
+#include "trainer_card.h"
 #include "window.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -44,6 +45,7 @@
 #define ACHIEVEMENTS_ICON_Y(row) (27 + (row) * ACHIEVEMENTS_ROW_HEIGHT)
 #define ACHIEVEMENTS_FOOTER_TEXT_X 8
 #define ACHIEVEMENTS_FOOTER_TEXT_Y 26
+#define ACHIEVEMENTS_THEME_TEXT_Y 42
 #define ACHIEVEMENTS_SCROLL_ARROW_X 170
 #define ACHIEVEMENTS_SCROLL_ARROW_TOP_Y 18
 #define ACHIEVEMENTS_SCROLL_ARROW_BOTTOM_Y 118
@@ -72,6 +74,7 @@ static void DrawHeader(void);
 static void DrawList(void);
 static void DrawAchievementFooter(void);
 static void LoadMenuTilemap(void);
+static void LoadAchievementsThemePalettes(void);
 static void PrintListStatusText(const u8 *text, u8 y, const u8 *color);
 static const u8 *GetAchievementDescription(const struct Achievement *achievement);
 static void DrawListCursor(u8 row);
@@ -102,11 +105,6 @@ EWRAM_DATA static MainCallback sExitCallback = NULL;
 
 static const u32 sBlankBgTile[8] = {};
 static const u16 sAchievementsBgTilemap[BG_SCREEN_SIZE / 2] = {};
-static const u16 sAchievementsBgPal[16] =
-{
-    RGB(2, 2, 3),
-    RGB(4, 4, 5),
-};
 static const u32 sAchievementsMenuTiles[] = INCBIN_U32("graphics/achievements/menu.4bpp");
 static const u16 sAchievementsMenuTilemap[] = INCBIN_U16("graphics/achievements/menu.bin");
 static const u16 sAchievementsMenuPal[] = INCBIN_U16("graphics/achievements/menu.gbapal");
@@ -136,6 +134,7 @@ static const u16 sAchievementsMenuDarkPal[16] =
 static const u8 sColor_Blue[3] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_BLUE };
 static const u8 sColor_Green[3] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_GREEN, TEXT_COLOR_LIGHT_GREEN };
 static const u8 sColor_White[3] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY };
+static const u8 sText_Theme[] = _("theme ");
 
 struct AchievementBallIconGfx
 {
@@ -328,8 +327,7 @@ void CB2_InitAchievementsMenuWithCallback(MainCallback callback)
     LoadBgTiles(BG_DETAIL, sBlankBgTile, sizeof(sBlankBgTile), ACHIEVEMENTS_BLANK_TILE);
     LoadBgTiles(BG_MENU, sAchievementsMenuTiles, sizeof(sAchievementsMenuTiles), 0);
     LoadBgTiles(BG_BACKGROUND, sBlankBgTile, sizeof(sBlankBgTile), 0);
-    LoadPalette(sAchievementsBgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
-    LoadPalette(sAchievementsMenuDarkPal, BG_PLTT_ID(ACHIEVEMENTS_MENU_PAL_SLOT), PLTT_SIZE_4BPP);
+    LoadAchievementsThemePalettes();
     FillBgTilemapBufferRect_Palette0(BG_DETAIL, ACHIEVEMENTS_BLANK_TILE, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     FillBgTilemapBufferRect_Palette0(BG_TEXT, ACHIEVEMENTS_BLANK_TILE, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     LoadMenuTilemap();
@@ -400,6 +398,40 @@ static void LoadMenuTilemap(void)
     for (i = 0; i < BG_SCREEN_SIZE / 2; i++)
         sMenuTilemapBuffer[i] = (sAchievementsMenuTilemap[i] & 0x0FFF) | (ACHIEVEMENTS_MENU_PAL_SLOT << 12);
     CopyBgTilemapBufferToVram(BG_MENU);
+}
+
+static void LoadAchievementsThemePalettes(void)
+{
+    const struct TrainerCardThemeColors *theme = TrainerCard_GetColorThemeColors();
+    u16 backgroundPalette[16] = {};
+    u16 menuPalette[16];
+
+    CpuCopy16(sAchievementsMenuDarkPal, menuPalette, sizeof(menuPalette));
+
+    backgroundPalette[0] = theme->nearBlack;
+    backgroundPalette[1] = theme->charcoal;
+
+    // Keep the menu's bright text/highlight white, but remap all of its
+    // neutral and accent ramps to the active Trainer Card theme.
+    menuPalette[0] = theme->nearBlack;
+    menuPalette[1] = theme->charcoal;
+    menuPalette[2] = theme->nearBlack;
+    menuPalette[3] = theme->dark1;
+    menuPalette[4] = theme->dark;
+    menuPalette[5] = theme->deep;
+    menuPalette[6] = theme->mid;
+    menuPalette[7] = theme->dark1;
+    menuPalette[8] = theme->light;
+    menuPalette[9] = theme->detail;
+    menuPalette[10] = theme->light;
+    menuPalette[11] = theme->detail;
+    menuPalette[12] = RGB(31, 31, 31);
+    menuPalette[13] = theme->light;
+    menuPalette[14] = theme->dark;
+    menuPalette[15] = theme->charcoal;
+
+    LoadPalette(backgroundPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    LoadPalette(menuPalette, BG_PLTT_ID(ACHIEVEMENTS_MENU_PAL_SLOT), PLTT_SIZE_4BPP);
 }
 
 static void PrintListStatusText(const u8 *text, u8 y, const u8 *color)
@@ -652,6 +684,7 @@ static void DrawList(void)
 static void DrawAchievementFooter(void)
 {
     const struct Achievement *achievement;
+    s32 x;
 
     PutWindowTilemap(WIN_FOOTER);
     FillWindowPixelBuffer(WIN_FOOTER, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
@@ -667,6 +700,13 @@ static void DrawAchievementFooter(void)
             TEXT_SKIP_DRAW,
             GetAchievementDescription(achievement));
     }
+
+    ConvertIntToDecimalStringN(gStringVar1, TrainerCard_GetColorThemeCyclePosition() + 1, STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringCopy(gStringVar4, sText_Theme);
+    StringAppend(gStringVar4, gStringVar1);
+    x = GetStringRightAlignXOffset(FONT_SMALL_NARROWER, gStringVar4, 232);
+    AddTextPrinterParameterized3(WIN_FOOTER, FONT_SMALL_NARROWER, x, ACHIEVEMENTS_THEME_TEXT_Y,
+                                 sColor_White, TEXT_SKIP_DRAW, gStringVar4);
     CopyWindowToVram(WIN_FOOTER, COPYWIN_FULL);
 }
 
@@ -774,6 +814,20 @@ static void Task_AchievementsMenu(u8 taskId)
         MoveCursor(-ACHIEVEMENTS_VISIBLE_ROWS);
     else if (JOY_REPEAT(DPAD_RIGHT))
         MoveCursor(ACHIEVEMENTS_VISIBLE_ROWS);
+    else if (JOY_NEW(L_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        TrainerCard_CycleColorTheme(-1);
+        LoadAchievementsThemePalettes();
+        DrawAchievementsMenu();
+    }
+    else if (JOY_NEW(R_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        TrainerCard_CycleColorTheme(1);
+        LoadAchievementsThemePalettes();
+        DrawAchievementsMenu();
+    }
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
@@ -815,6 +869,7 @@ static void ExitAchievementsMenu(u8 taskId)
 #undef ACHIEVEMENTS_ICON_Y
 #undef ACHIEVEMENTS_FOOTER_TEXT_X
 #undef ACHIEVEMENTS_FOOTER_TEXT_Y
+#undef ACHIEVEMENTS_THEME_TEXT_Y
 #undef ACHIEVEMENTS_SCROLL_ARROW_X
 #undef ACHIEVEMENTS_SCROLL_ARROW_TOP_Y
 #undef ACHIEVEMENTS_SCROLL_ARROW_BOTTOM_Y
