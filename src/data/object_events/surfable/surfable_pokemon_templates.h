@@ -3,6 +3,8 @@ enum
     PAL_TAG_SURFABLE_NONE = 0x3000,
 #if P_FAMILY_BULBASAUR
     PAL_TAG_BULBASAUR_SURF = 0x3001,
+    PAL_TAG_IVYSAUR_SURF,
+    PAL_TAG_VENUSAUR_SURF,
 #endif // P_FAMILY_BULBASAUR
 #if P_FAMILY_SQUIRTLE
     PAL_TAG_SQUIRTLE_SURF,
@@ -247,6 +249,18 @@ enum
 #if P_FAMILY_RAYQUAZA
     PAL_TAG_RAYQUAZA_SURF,
 #endif // P_FAMILY_RAYQUAZA
+#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+    PAL_TAG_DRUDDIGON_SURF,
+#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+    PAL_TAG_TORKOAL_SURF,
+#endif // P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+#if P_FAMILY_NUMEL && OW_SURF_NUMEL
+    PAL_TAG_NUMEL_SURF,
+#endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
+#if P_FAMILY_NUMEL && OW_SURF_CAMERUPT
+    PAL_TAG_CAMERUPT_SURF,
+#endif // P_FAMILY_NUMEL && OW_SURF_CAMERUPT
 #if 0 // Gen IV+ surf sheets are not present; these species use the default blob.
 // Gen IV Pokemon
 #if P_FAMILY_PIPLUP
@@ -553,6 +567,8 @@ const struct SpritePalette sSurfablePokemonPalettes[] = {
     {NULL, PAL_TAG_SURFABLE_NONE},
 #if P_FAMILY_BULBASAUR
     {gSurfablePokemonPalette_Bulbasaur, PAL_TAG_BULBASAUR_SURF},
+    {gSurfablePokemonPalette_Ivysaur,   PAL_TAG_IVYSAUR_SURF},
+    {gSurfablePokemonPalette_Venusaur,  PAL_TAG_VENUSAUR_SURF},
 #endif // P_FAMILY_BULBASAUR
 #if P_FAMILY_SQUIRTLE
     {gSurfablePokemonPalette_Squirtle,   PAL_TAG_SQUIRTLE_SURF},
@@ -797,6 +813,18 @@ const struct SpritePalette sSurfablePokemonPalettes[] = {
 #if P_FAMILY_RAYQUAZA
     {gSurfablePokemonPalette_Rayquaza,  PAL_TAG_RAYQUAZA_SURF},
 #endif // P_FAMILY_RAYQUAZA
+#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+    {gSurfablePokemonPalette_Druddigon, PAL_TAG_DRUDDIGON_SURF},
+#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+    {gSurfablePokemonPalette_Torkoal,   PAL_TAG_TORKOAL_SURF},
+#endif // P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+#if P_FAMILY_NUMEL && OW_SURF_NUMEL
+    {gSurfablePokemonPalette_Numel,     PAL_TAG_NUMEL_SURF},
+#endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
+#if P_FAMILY_NUMEL && OW_SURF_CAMERUPT
+    {gSurfablePokemonPalette_Camerupt,  PAL_TAG_CAMERUPT_SURF},
+#endif // P_FAMILY_NUMEL && OW_SURF_CAMERUPT
 #if 0 // Gen IV+ surf sheets are not present.
 // Gen IV Pokemon
 #if P_FAMILY_PIPLUP
@@ -1250,6 +1278,8 @@ const struct SpritePalette sSurfablePokemonShinyPalettes[] = {
     {NULL, PAL_TAG_SURFABLE_NONE},
 #if P_FAMILY_BULBASAUR
     {gSurfablePokemonShinyPalette_Bulbasaur, PAL_TAG_BULBASAUR_SURF},
+    {gSurfablePokemonShinyPalette_Ivysaur,   PAL_TAG_IVYSAUR_SURF},
+    {gSurfablePokemonShinyPalette_Venusaur,  PAL_TAG_VENUSAUR_SURF},
 #endif // P_FAMILY_BULBASAUR
 #if P_FAMILY_SQUIRTLE
     {gSurfablePokemonShinyPalette_Squirtle,   PAL_TAG_SQUIRTLE_SURF},
@@ -1494,6 +1524,18 @@ const struct SpritePalette sSurfablePokemonShinyPalettes[] = {
 #if P_FAMILY_RAYQUAZA
     {gSurfablePokemonShinyPalette_Rayquaza,  PAL_TAG_RAYQUAZA_SURF},
 #endif // P_FAMILY_RAYQUAZA
+#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+    {gSurfablePokemonShinyPalette_Druddigon, PAL_TAG_DRUDDIGON_SURF},
+#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+    {gSurfablePokemonShinyPalette_Torkoal,   PAL_TAG_TORKOAL_SURF},
+#endif // P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+#if P_FAMILY_NUMEL && OW_SURF_NUMEL
+    {gSurfablePokemonShinyPalette_Numel,     PAL_TAG_NUMEL_SURF},
+#endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
+#if P_FAMILY_NUMEL && OW_SURF_CAMERUPT
+    {gSurfablePokemonShinyPalette_Camerupt,  PAL_TAG_CAMERUPT_SURF},
+#endif // P_FAMILY_NUMEL && OW_SURF_CAMERUPT
 #if 0 // Gen IV+ surf sheets are not present.
 // Gen IV Pokemon
 #if P_FAMILY_PIPLUP
@@ -1999,6 +2041,8 @@ const struct SpriteTemplate gSurfablePokemonOverworldSprites[] =
     {0},
 #if P_FAMILY_BULBASAUR
     {0xFFFF, PAL_TAG_BULBASAUR_SURF, &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Bulbasaur, gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
+    {0xFFFF, PAL_TAG_IVYSAUR_SURF,   &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Ivysaur,   gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
+    {0xFFFF, PAL_TAG_VENUSAUR_SURF,  &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Venusaur,  gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
 #endif // P_FAMILY_BULBASAUR
 #if P_FAMILY_SQUIRTLE
     {0xFFFF, PAL_TAG_SQUIRTLE_SURF,   &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Squirtle,   gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
@@ -2243,6 +2287,18 @@ const struct SpriteTemplate gSurfablePokemonOverworldSprites[] =
 #if P_FAMILY_RAYQUAZA
     {0xFFFF, PAL_TAG_RAYQUAZA_SURF,  &gObjectEventBaseOam_64x64, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Rayquaza,  gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
 #endif // P_FAMILY_RAYQUAZA
+#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+    {0xFFFF, PAL_TAG_DRUDDIGON_SURF, &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Druddigon, gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
+#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+    {0xFFFF, PAL_TAG_TORKOAL_SURF,   &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Torkoal,   gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
+#endif // P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+#if P_FAMILY_NUMEL && OW_SURF_NUMEL
+    {0xFFFF, PAL_TAG_NUMEL_SURF,     &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Numel,     gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
+#endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
+#if P_FAMILY_NUMEL && OW_SURF_CAMERUPT
+    {0xFFFF, PAL_TAG_CAMERUPT_SURF,  &gObjectEventBaseOam_64x64, gSurfablePokemonAnimTable, gSurfingOverworldPicTable_Camerupt,  gDummySpriteAffineAnimTable, UpdateSurfBlobFieldEffect},
+#endif // P_FAMILY_NUMEL && OW_SURF_CAMERUPT
 #if 0 // Gen IV+ surf sheets are not present.
 // Gen IV Pokemon
 #if P_FAMILY_PIPLUP
@@ -2698,6 +2754,8 @@ const struct SpriteTemplate gSurfablePokemonOverlaySprites[] =
     NO_OVERLAY,
 #if P_FAMILY_BULBASAUR
     {0xFFFF, PAL_TAG_BULBASAUR_SURF, &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverlayPicTable_Bulbasaur, gDummySpriteAffineAnimTable, UpdateSurfMonOverlay},
+    {0xFFFF, PAL_TAG_IVYSAUR_SURF,   &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverlayPicTable_Ivysaur,   gDummySpriteAffineAnimTable, UpdateSurfMonOverlay},
+    {0xFFFF, PAL_TAG_VENUSAUR_SURF,  &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverlayPicTable_Venusaur,  gDummySpriteAffineAnimTable, UpdateSurfMonOverlay},
 #endif // P_FAMILY_BULBASAUR
 #if P_FAMILY_SQUIRTLE
     {0xFFFF, PAL_TAG_SQUIRTLE_SURF,   &gObjectEventBaseOam_32x32, gSurfablePokemonAnimTable, gSurfingOverlayPicTable_Squirtle,   gDummySpriteAffineAnimTable, UpdateSurfMonOverlay},
@@ -2942,6 +3000,18 @@ const struct SpriteTemplate gSurfablePokemonOverlaySprites[] =
 #if P_FAMILY_RAYQUAZA
     {0xFFFF, PAL_TAG_RAYQUAZA_SURF,  &gObjectEventBaseOam_64x64, gSurfablePokemonAnimTable, gSurfingOverlayPicTable_Rayquaza,  gDummySpriteAffineAnimTable, UpdateSurfMonOverlay},
 #endif // P_FAMILY_RAYQUAZA
+#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+    NO_OVERLAY, // Druddigon
+#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+    NO_OVERLAY, // Torkoal
+#endif // P_FAMILY_TORKOAL && OW_SURF_TORKOAL
+#if P_FAMILY_NUMEL && OW_SURF_NUMEL
+    NO_OVERLAY, // Numel
+#endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
+#if P_FAMILY_NUMEL && OW_SURF_CAMERUPT
+    NO_OVERLAY, // Camerupt
+#endif // P_FAMILY_NUMEL && OW_SURF_CAMERUPT
 #if 0 // Gen IV+ surf sheets are not present.
 // Gen IV Pokemon
 #if P_FAMILY_PIPLUP

@@ -5027,11 +5027,15 @@ graphics/radio/amaterasu.gbapal: graphics/radio/amaterasu.png
 $(OBJEVENTGFXDIR)/pokemon/surfable/%.4bpp: $(OBJEVENTGFXDIR)/pokemon/surfable/%.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+$(OBJEVENTGFXDIR)/pokemon/surfable/camerupt.gbapal: %.gbapal: %.png
+	$(GFX) $< $@
+
 $(OBJEVENTGFXDIR)/pokemon/surfable/0130_gyarados.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0130_gyarados_shiny.4bpp \
 $(OBJEVENTGFXDIR)/pokemon/surfable/0148_dragonair.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0148_dragonair_shiny.4bpp \
 $(OBJEVENTGFXDIR)/pokemon/surfable/0160_feraligatr.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0160_feraligatr_shiny.4bpp \
 $(OBJEVENTGFXDIR)/pokemon/surfable/0249_lugia.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0249_lugia_shiny.4bpp \
 $(OBJEVENTGFXDIR)/pokemon/surfable/0321_wailord.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0321_wailord_shiny.4bpp \
+$(OBJEVENTGFXDIR)/pokemon/surfable/camerupt.4bpp \
 $(OBJEVENTGFXDIR)/pokemon/surfable/0382_kyogre.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0382_kyogre_shiny.4bpp \
 $(OBJEVENTGFXDIR)/pokemon/surfable/0382_kyogre_primal.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0382_kyogre_primal_shiny.4bpp \
 $(OBJEVENTGFXDIR)/pokemon/surfable/0384_rayquaza.4bpp $(OBJEVENTGFXDIR)/pokemon/surfable/0384_rayquaza_shiny.4bpp: %.4bpp: %.png

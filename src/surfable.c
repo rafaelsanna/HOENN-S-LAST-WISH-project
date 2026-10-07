@@ -31,11 +31,7 @@ struct RideablePokemon
 {
     u16 species;
     u8 trainerPose;
-    const u32 *shinyPic;
 };
-
-#define SURFABLE_POKEMON_DEFAULT_FRAME_COUNT 6
-#define SURFABLE_POKEMON_MAX_FRAME_COUNT     8
 
 // Keep the default table focused on Gen I-III and evolutions introduced later
 // for those families. Additional families can still be enabled explicitly by
@@ -85,9 +81,6 @@ STATIC_ASSERT(ARRAY_COUNT(gSurfablePokemon) == ARRAY_COUNT(gSurfablePokemonOverl
 
 static EWRAM_DATA u16 sCurrentSurfMon = {0};
 static EWRAM_DATA u8 sCurrentSurfMonPartySlot = {0};
-static EWRAM_DATA bool8 sUseShinySurfSheet = FALSE;
-static EWRAM_DATA struct SpriteFrameImage sShinySurfFrames[SURFABLE_POKEMON_MAX_FRAME_COUNT] = {0};
-static EWRAM_DATA struct SpriteFrameImage sShinySurfOverlayFrames[SURFABLE_POKEMON_MAX_FRAME_COUNT] = {0};
 
 static u16 GetSurfablePokemonIndex(u16 species)
 {
@@ -166,40 +159,6 @@ static void LoadSurfOverworldPalette(void)
         UpdateSpritePaletteWithWeather(paletteNum, FALSE);
 }
 
-static bool8 SetupShinySurfFrames(void)
-{
-    const u8 *shinyPic = (const u8 *)gSurfablePokemon[sCurrentSurfMon].shinyPic;
-    const struct SpriteFrameImage *normalFrames = gSurfablePokemonOverworldSprites[sCurrentSurfMon].images;
-    const struct SpriteTemplate *overlayTemplate = &gSurfablePokemonOverlaySprites[sCurrentSurfMon];
-    u32 frameSize = normalFrames[0].size;
-    u32 frameCount = SURFABLE_POKEMON_DEFAULT_FRAME_COUNT;
-
-    if (!IsMonShiny(&gPlayerParty[sCurrentSurfMonPartySlot]) || shinyPic == NULL)
-        return FALSE;
-
-    if (overlayTemplate->tileTag == TAG_NONE)
-    {
-        const u8 *normalPic = normalFrames[0].data;
-        const u8 *normalOverlayPic = overlayTemplate->images[0].data;
-
-        frameCount = (normalOverlayPic - normalPic) / frameSize;
-    }
-    if (frameCount > ARRAY_COUNT(sShinySurfFrames))
-        return FALSE;
-
-    for (u32 i = 0; i < frameCount; i++)
-    {
-        sShinySurfFrames[i].data = shinyPic + frameSize * i;
-        sShinySurfFrames[i].size = frameSize;
-        sShinySurfFrames[i].relativeFrames = FALSE;
-        sShinySurfOverlayFrames[i].data = shinyPic + frameSize * (i + frameCount);
-        sShinySurfOverlayFrames[i].size = frameSize;
-        sShinySurfOverlayFrames[i].relativeFrames = FALSE;
-    }
-
-    return TRUE;
-}
-
 u32 CreateSurfablePokemonSprite(void)
 {
     u8 spriteId;
@@ -208,17 +167,13 @@ u32 CreateSurfablePokemonSprite(void)
     SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
 
     sCurrentSurfMon = GetSurfablePokemonSprite();
-    sUseShinySurfSheet = FALSE;
     if (sCurrentSurfMon != 0xFFFF)
     {
-        sUseShinySurfSheet = SetupShinySurfFrames();
         LoadSurfOverworldPalette();
         if (gSurfablePokemonOverlaySprites[sCurrentSurfMon].tileTag == TAG_NONE)
             CreateOverlaySprite();
 
         spriteId = CreateSpriteAtEnd(&gSurfablePokemonOverworldSprites[sCurrentSurfMon], gFieldEffectArguments[0], gFieldEffectArguments[1], 0x96);
-        if (sUseShinySurfSheet && spriteId != MAX_SPRITES)
-            gSprites[spriteId].images = sShinySurfFrames;
     }
     else
     {
@@ -256,8 +211,6 @@ static void CreateOverlaySprite(void)
     if (overlaySprite != MAX_SPRITES)
     {
         sprite = &gSprites[overlaySprite];
-        if (sUseShinySurfSheet)
-            sprite->images = sShinySurfOverlayFrames;
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[2] = gFieldEffectArguments[2];
         sprite->data[3] = -1;
