@@ -5,28 +5,62 @@ GraniteCave_B2F_MapScripts::
 .equ LOCALID_MAGMA_M, 11
 .equ LOCALID_MAGMA_F, 10
 
+GraniteCave_B2F_EventScript_MagmaWorking::
+    lock
+    msgbox GraniteCave_Text_MagmaWorking, MSGBOX_DEFAULT
+    release
+    end
+
 GraniteCave_B2F_EventScript_MagmaTrigger::
     lockall
-    goto_if_set FLAG_NEW_MAGMA_GRUNTS, GraniteCave_B2F_EventScript_End 
+    goto_if_set FLAG_NEW_MAGMA_GRUNTS, GraniteCave_B2F_EventScript_End
 
     playbgm MUS_ENCOUNTER_MAGMA, FALSE
 
+    playse SE_PIN
+    applymovement LOCALID_MAGMA_M, Common_Movement_ExclamationMark
+    applymovement LOCALID_MAGMA_F, Common_Movement_ExclamationMark
+    waitmovement LOCALID_MAGMA_M
+    waitmovement LOCALID_MAGMA_F
+    waitfieldeffect FLDEFF_EXCLAMATION_MARK_ICON
+
+    getplayerxy VAR_TEMP_0, VAR_TEMP_1
+    goto_if_eq VAR_TEMP_0, 25, GraniteCave_B2F_EventScript_MagmaApproachRightTrigger
     applymovement LOCALID_MAGMA_M, GraniteCave_Movement_MagmaM_Approach
     applymovement LOCALID_MAGMA_F, GraniteCave_Movement_MagmaF_Approach
-    waitmovement 0
+    goto GraniteCave_B2F_EventScript_MagmaApproachFinished
 
+GraniteCave_B2F_EventScript_MagmaApproachRightTrigger::
+    applymovement LOCALID_MAGMA_M, GraniteCave_Movement_MagmaM_ApproachRightTrigger
+    applymovement LOCALID_MAGMA_F, GraniteCave_Movement_MagmaF_ApproachRightTrigger
+
+GraniteCave_B2F_EventScript_MagmaApproachFinished::
+    waitmovement LOCALID_MAGMA_M
+    waitmovement LOCALID_MAGMA_F
     applymovement LOCALID_MAGMA_M, Common_Movement_FacePlayer
     applymovement LOCALID_MAGMA_F, Common_Movement_FacePlayer
-    waitmovement 0
+    waitmovement LOCALID_MAGMA_M
+    waitmovement LOCALID_MAGMA_F
 
     msgbox GraniteCave_Text_MagmaIntro, MSGBOX_DEFAULT
     closemessage
 
     trainerbattle_no_intro TRAINER_GRUNT_GRANITE_CAVE, GraniteCave_Text_MagmaLose
 
+GraniteCave_B2F_EventScript_MagmaExit::
+    getplayerxy VAR_TEMP_0, VAR_TEMP_1
+    goto_if_eq VAR_TEMP_0, 25, GraniteCave_B2F_EventScript_MagmaExitRightTrigger
     applymovement LOCALID_MAGMA_M, GraniteCave_Movement_Magma_RunAway_M
     applymovement LOCALID_MAGMA_F, GraniteCave_Movement_Magma_RunAway_F
-    waitmovement 0
+    goto GraniteCave_B2F_EventScript_MagmaExitFinished
+
+GraniteCave_B2F_EventScript_MagmaExitRightTrigger::
+    applymovement LOCALID_MAGMA_M, GraniteCave_Movement_Magma_RunAway_M_RightTrigger
+    applymovement LOCALID_MAGMA_F, GraniteCave_Movement_Magma_RunAway_F_RightTrigger
+
+GraniteCave_B2F_EventScript_MagmaExitFinished::
+    waitmovement LOCALID_MAGMA_M
+    waitmovement LOCALID_MAGMA_F
 
     removeobject LOCALID_MAGMA_M
     removeobject LOCALID_MAGMA_F
@@ -46,28 +80,60 @@ GraniteCave_Movement_MagmaF_Approach:
     walk_left
     step_end
 
-GraniteCave_Movement_Magma_RunAway_M:
-    walk_fast_left
-    walk_fast_left
-    walk_fast_left
-    walk_fast_left
-    walk_fast_left
-    walk_fast_up
-    walk_fast_up
-    walk_fast_left
-    walk_fast_left
+GraniteCave_Movement_MagmaM_ApproachRightTrigger:
+    walk_right
+    walk_right
     step_end
 
-GraniteCave_Movement_Magma_RunAway_F:
-    walk_fast_left
+GraniteCave_Movement_MagmaF_ApproachRightTrigger:
+    walk_left
+    step_end
+
+GraniteCave_Movement_Magma_RunAway_M:
     walk_fast_left
     walk_fast_left
     walk_fast_down
     walk_fast_left
     walk_fast_left
-    walk_fast_up
-    walk_fast_up
+    walk_fast_left
+    jump_2_left
+    walk_fast_down
+    walk_fast_left
     step_end
+
+GraniteCave_Movement_Magma_RunAway_F:
+    walk_fast_right
+    jump_2_down
+    walk_fast_down
+    walk_fast_down
+    walk_fast_down
+    walk_fast_down
+    step_end
+
+GraniteCave_Movement_Magma_RunAway_M_RightTrigger:
+    walk_fast_left
+    walk_fast_left
+    walk_fast_down
+    walk_fast_left
+    walk_fast_left
+    walk_fast_left
+    walk_fast_left
+    jump_2_left
+    walk_fast_down
+    walk_fast_left
+    step_end
+
+GraniteCave_Movement_Magma_RunAway_F_RightTrigger:
+    jump_2_down
+    walk_fast_down
+    walk_fast_down
+    walk_fast_down
+    walk_fast_down
+    step_end
+
+GraniteCave_Text_MagmaWorking:
+    .string "The grunt is hammering away at the\n"
+    .string "rock and does not notice you.$"
 
 GraniteCave_Text_MagmaIntro:
     .string "Tch. Just our luck.\n"

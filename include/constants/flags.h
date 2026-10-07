@@ -1725,9 +1725,12 @@
 #define FLAG_PICKUP_FIERY_PATH_REVIVE               (HLW_CUSTOM_FLAGS_START + 0x03F)
 #define FLAG_PICKUP_CARGO_SHIP_WATER_STONE          (HLW_CUSTOM_FLAGS_START + 0x040)
 #define FLAG_PICKUP_ABANDONED_SHIP_ROOM_B1F_TM_ICE_BEAM (HLW_CUSTOM_FLAGS_START + 0x041)
-#define FLAG_UNUSED_0x1042                           (HLW_CUSTOM_FLAGS_START + 0x042) // Unused Flag
-#define FLAG_UNUSED_0x1043                           (HLW_CUSTOM_FLAGS_START + 0x043) // Unused Flag
-#define FLAG_UNUSED_0x1044                           (HLW_CUSTOM_FLAGS_START + 0x044) // Unused Flag
+#define FLAG_RECEIVED_PORYGON_LITTLEROOT             (HLW_CUSTOM_FLAGS_START + 0x042)
+#define FLAG_UNUSED_0x1042                           (HLW_CUSTOM_FLAGS_START + 0x042) // Reserved by FLAG_RECEIVED_PORYGON_LITTLEROOT
+#define FLAG_RECEIVED_UPGRADE_LITTLEROOT             (HLW_CUSTOM_FLAGS_START + 0x043)
+#define FLAG_UNUSED_0x1043                           (HLW_CUSTOM_FLAGS_START + 0x043) // Reserved by FLAG_RECEIVED_UPGRADE_LITTLEROOT
+#define FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT         (HLW_CUSTOM_FLAGS_START + 0x044)
+#define FLAG_UNUSED_0x1044                           (HLW_CUSTOM_FLAGS_START + 0x044) // Reserved by FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT
 #define FLAG_UNUSED_0x1045                           (HLW_CUSTOM_FLAGS_START + 0x045) // Unused Flag
 #define FLAG_UNUSED_0x1046                           (HLW_CUSTOM_FLAGS_START + 0x046) // Unused Flag
 #define FLAG_UNUSED_0x1047                           (HLW_CUSTOM_FLAGS_START + 0x047) // Unused Flag

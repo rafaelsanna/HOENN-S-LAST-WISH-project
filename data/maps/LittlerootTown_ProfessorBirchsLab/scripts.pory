@@ -294,28 +294,61 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter::
 	release
 	end
 
-///////NOVO EVENTO: Aide depois que o jogador recebe a Pokédex
 LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterPokedex::
+	call LittlerootTown_ProfessorBirchsLab_EventScript_CheckAllAideGifts
+	goto_if_eq VAR_RESULT, TRUE, LittlerootTown_ProfessorBirchsLab_EventScript_AideAllGiftsGiven
+	@ Visiting rewards accept any matching follower, including a traded one.
+	call LittlerootTown_ProfessorBirchsLab_EventScript_CountCaughtPokemon
+	specialvar VAR_TEMP_1, Script_GetFollowerSpecies
+	goto_if_eq VAR_TEMP_1, SPECIES_PORYGON, LittlerootTown_ProfessorBirchsLab_EventScript_CheckUpgradeReward
+	goto_if_eq VAR_TEMP_1, SPECIES_PORYGON2, LittlerootTown_ProfessorBirchsLab_EventScript_CheckDubiousDiscReward
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_CheckAideShop
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_CheckAllAideGifts::
+	setvar VAR_RESULT, FALSE
+	goto_if_unset FLAG_RECEIVED_TOGEPI_EGG, LittlerootTown_ProfessorBirchsLab_EventScript_AideGiftsNotComplete
+	goto_if_unset FLAG_RECEIVED_PORYGON_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_AideGiftsNotComplete
+	goto_if_unset FLAG_RECEIVED_UPGRADE_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_AideGiftsNotComplete
+	goto_if_unset FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_AideGiftsNotComplete
+	setvar VAR_RESULT, TRUE
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideGiftsNotComplete::
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideAllGiftsGiven::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_AllGiftsGiven, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_AideEvolutionItemShop
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_EndAideConversation
+	end
+
+@ Unclaimed Pokemon gifts precede their repeat dialogue, with Togepi first.
+LittlerootTown_ProfessorBirchsLab_EventScript_AideDexRewards::
 	goto_if_set FLAG_RECEIVED_TOGEPI_EGG, LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterTogepi
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_Register10PokemonForTogepiEgg, MSGBOX_DEFAULT
-	/// Usa o comando bufferpartymonnick que conta Pokémon vistos
 	call LittlerootTown_ProfessorBirchsLab_EventScript_CountSeenPokemon
 	goto_if_ge VAR_TEMP_0, 10, LittlerootTown_ProfessorBirchsLab_EventScript_GiveTogepiEgg
 	release
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_CountSeenPokemon::
-	copyvar VAR_TEMP_0, VAR_0x8004
+	setvar VAR_0x8004, 0 @ Custom Hoenn dex, regardless of prior scripts or National mode.
 	special ScriptGetPokedexInfo
 	copyvar VAR_TEMP_0, VAR_0x8005
 	return
 
+LittlerootTown_ProfessorBirchsLab_EventScript_CountCaughtPokemon::
+	setvar VAR_0x8004, 0
+	special ScriptGetPokedexInfo
+	copyvar VAR_TEMP_0, VAR_0x8006 @ Unique caught entries, not total captures or seen entries.
+	return
+
 LittlerootTown_ProfessorBirchsLab_EventScript_GiveTogepiEgg::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_YouHave10PokemonHeresTogepiEgg, MSGBOX_DEFAULT
-	@ Seta a flag ANTES de dar o ovo para evitar loop
-	setflag FLAG_RECEIVED_TOGEPI_EGG
 	giveegg SPECIES_TOGEPI
-	goto_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_NoRoomForTogepiEgg
+	goto_if_eq VAR_RESULT, MON_CANT_GIVE, LittlerootTown_ProfessorBirchsLab_EventScript_NoRoomForTogepiEgg
+	setflag FLAG_RECEIVED_TOGEPI_EGG
 	playfanfare MUS_OBTAIN_ITEM
 	message LittlerootTown_ProfessorBirchsLab_Text_ReceivedTogepiEgg
 	waitmessage
@@ -325,15 +358,171 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GiveTogepiEgg::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_NoRoomForTogepiEgg::
-	@ Não mostra mensagem de erro, apenas não dá o ovo
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg, MSGBOX_DEFAULT
 	release
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterTogepi::
+	goto_if_set FLAG_RECEIVED_PORYGON_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterPorygon
+	call LittlerootTown_ProfessorBirchsLab_EventScript_CountCaughtPokemon
+	goto_if_ge VAR_TEMP_0, 100, LittlerootTown_ProfessorBirchsLab_EventScript_GivePorygon
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_HowIsTogepiDoing, MSGBOX_DEFAULT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_Register100PokemonForPorygon, MSGBOX_DEFAULT
 	release
 	end
-////////////////////////////////
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GivePorygon::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_YouHave100PokemonHeresPorygon, MSGBOX_DEFAULT
+	bufferspeciesname STR_VAR_1, SPECIES_PORYGON
+	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_PORYGON
+	givemon SPECIES_PORYGON, 5
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, LittlerootTown_ProfessorBirchsLab_EventScript_SendPorygonToParty
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, LittlerootTown_ProfessorBirchsLab_EventScript_SendPorygonToPC
+	goto Common_EventScript_NoMoreRoomForPokemon
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_SendPorygonToParty::
+	setflag FLAG_RECEIVED_PORYGON_LITTLEROOT
+	call LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedPorygon
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_FinishPorygonReward
+	call Common_EventScript_GetGiftMonPartySlot
+	call Common_EventScript_NameReceivedPartyMon
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_FinishPorygonReward
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_SendPorygonToPC::
+	setflag FLAG_RECEIVED_PORYGON_LITTLEROOT
+	call LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedPorygon
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_PorygonTransferredToPC
+	call Common_EventScript_NameReceivedBoxMon
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_PorygonTransferredToPC
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_PorygonTransferredToPC::
+	call Common_EventScript_TransferredToPC
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_FinishPorygonReward
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedPorygon::
+	playfanfare MUS_OBTAIN_ITEM
+	message LittlerootTown_ProfessorBirchsLab_Text_ReceivedPorygon
+	waitmessage
+	waitfanfare
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_FinishPorygonReward::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_TakeGoodCareOfPorygon, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterPorygon::
+	goto_if_set FLAG_RECEIVED_UPGRADE_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterUpgradeReward
+	goto_if_set FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_AideEvolutionItemShop
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_HowIsPorygonDoing, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_CheckUpgradeReward::
+	goto_if_set FLAG_RECEIVED_UPGRADE_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_CheckAideShop
+	goto_if_ge VAR_TEMP_0, 200, LittlerootTown_ProfessorBirchsLab_EventScript_GiveUpgrade
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_CheckAideShop
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_CheckDubiousDiscReward::
+	goto_if_set FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_CheckAideShop
+	goto_if_ge VAR_TEMP_0, 300, LittlerootTown_ProfessorBirchsLab_EventScript_GiveDubiousDisc
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_CheckAideShop
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GiveUpgrade::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PorygonVisitUpgrade, MSGBOX_DEFAULT
+	giveitem ITEM_UPGRADE
+	goto_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_AideBagFull
+	setflag FLAG_RECEIVED_UPGRADE_LITTLEROOT
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterUpgradeReward
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideAfterUpgradeReward::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_AfterUpgradeReward, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_OfferUpgrade
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_EndAideConversation
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GiveDubiousDisc::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_Porygon2VisitDubiousDisc, MSGBOX_DEFAULT
+	giveitem ITEM_DUBIOUS_DISC
+	goto_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_AideBagFull
+	setflag FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_AfterDubiousDiscReward, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_CheckAideShop::
+	@ Unclaimed Pokemon gifts precede repeat dialogue; do not shop before it.
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_AideDexRewards
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideEvolutionItemShop::
+	goto_if_set FLAG_RECEIVED_UPGRADE_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_OfferUpgrade
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_OfferDubiousDisc
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_OfferUpgrade::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BuyUpgrade, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_BuyUpgrade
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_OfferDubiousDisc
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_OfferDubiousDisc::
+	goto_if_unset FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT, LittlerootTown_ProfessorBirchsLab_EventScript_AideShopExit
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BuyDubiousDisc, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_BuyDubiousDisc
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_AideShopExit
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideShopExit::
+	@ Do not replay a reward-stage dialogue after declining a price offer.
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_EndAideConversation
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_EndAideConversation::
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BuyUpgrade::
+	setvar VAR_TEMP_2, ITEM_UPGRADE
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_BuyEvolutionItem
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BuyDubiousDisc::
+	setvar VAR_TEMP_2, ITEM_DUBIOUS_DISC
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_BuyEvolutionItem
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BuyEvolutionItem::
+	checkmoney 10000
+	goto_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_AideNotEnoughMoney
+	checkitemspace VAR_TEMP_2, 1
+	goto_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_AideBagFull
+	giveitem VAR_TEMP_2, 1
+	goto_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_AideBagFull
+	@ Never charge for a canceled or failed delivery.
+	removemoney 10000
+	playse SE_SHOP
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_AideEvolutionItemShop
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideNotEnoughMoney::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_AideNotEnoughMoney, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideBagFull::
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
+	release
+	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_Cyndaquil::
 	release
@@ -567,7 +756,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex::
 	call LittlerootTown_ProfessorBirchsLab_EventScript_HeardYouBeatRivalTakePokedex
 	call LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_AfterGivePokedex
-	
+
 LittlerootTown_ProfessorBirchsLab_EventScript_HeardYouBeatRivalTakePokedex::
 	@ The rival is May for a male player, and Brendan for a female player.
 	checkplayergender
@@ -952,7 +1141,7 @@ LittlerootTown_ProfessorBirchsLab_Text_MayWhereShouldIGoNext:
 	.string "I heard it's really dark and dangerous,\n"
 	.string "but if you're brave enough, it's full of\l"
 	.string "amazing POKéMON!$"
-	
+
 LittlerootTown_ProfessorBirchsLab_Text_BrendanGotPokedexTooTakeThese:
 	.string "ZENNO: That sounds pretty intense.\p"
 	.string "{PLAYER}, you have a POKéDEX now, so\n"
@@ -1194,6 +1383,90 @@ LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg:
 LittlerootTown_ProfessorBirchsLab_Text_HowIsTogepiDoing:
 	.string "How is the TOGEPI doing?\n"
 	.string "I hope it's growing well!$"
+
+@ Porygon gift dialogue.
+LittlerootTown_ProfessorBirchsLab_Text_Register100PokemonForPorygon:
+	.string "A colleague from KANTO recently\n"
+	.string "brought us this strange POKéMON.\p"
+	.string "It's supposedly made completely\n"
+	.string "out of code! How fascinating!\p"
+	.string "If you record full data on 100\n"
+	.string "different POKéMON, I would be glad\l"
+	.string "to give PORYGON to you.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_YouHave100PokemonHeresPorygon:
+	.string "Wow! What a feat!\p"
+	.string "You recorded full data on 100\n"
+	.string "different POKéMON!\p"
+	.string "As promised, here is PORYGON.\n"
+	.string "I know you'll take great care of it.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_ReceivedPorygon:
+	.string "{PLAYER} received PORYGON!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_TakeGoodCareOfPorygon:
+	.string "I'm a little sad to see PORYGON go.\n"
+	.string "We made quite a few memories while\l"
+	.string "it was here, after all.\p"
+	.string "However, I know it will be much more\n"
+	.string "happy out in the world with a trainer.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_HowIsPorygonDoing:
+	.string "Hello, {PLAYER}!\n"
+	.string "Is PORYGON doing well?\p"
+	.string "Bring it to visit sometime, okay?\n"
+	.string "I miss that little buddy.\p"
+	.string "If you can also show me full data on\n"
+	.string "200 different POKéMON, I'll give you\l"
+	.string "something nice for PORYGON.$"
+
+@ Visiting-reward dialogue placeholders for the author to replace.
+LittlerootTown_ProfessorBirchsLab_Text_PorygonVisitUpgrade:
+	.string "Wow! A PORYGON came to visit!\p"
+	.string "I'm so happy to see a PORYGON!\n"
+	.string "Oh, right! I just developed this item,\l"
+	.string "and I think PORYGON might like it.\p"
+	.string "Please, I would like you to have it.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_AfterUpgradeReward:
+	.string "Try giving that UPGRADE to PORYGON.\p"
+	.string "If you come back to show me what\n"
+	.string "PORYGON evolved into after getting\l"
+	.string "full data on 300 POKéMON, I'll give\l"
+	.string "you something else too!\p"
+	.string "Oh, or did you want to buy another\n"
+	.string "UPGRADE?$"
+
+LittlerootTown_ProfessorBirchsLab_Text_Porygon2VisitDubiousDisc:
+	.string "Wow! You've brought a PORYGON2!\n"
+	.string "And you've got data on 300 POKéMON!\p"
+	.string "With all this data, I can now make\n"
+	.string "another gift for PORYGON2.\p"
+	.string "Please, take it.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_AfterDubiousDiscReward:
+	.string "I can't thank you enough for your\n"
+	.string "help with my research and for showing\l"
+	.string "me so many fantastic forms of PORYGON.$"
+
+@ General repeat dialogue after all four successful gifts.
+LittlerootTown_ProfessorBirchsLab_Text_AllGiftsGiven:
+	.string "Hello, {PLAYER}! How are you?\n"
+	.string "Are TOGEPI and PORYGON doing well?\p"
+	.string "Or, perhaps...\p"
+	.string "Would you like to buy an UPGRADE\n"
+	.string "or a DUBIOUS DISC?$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BuyUpgrade:
+	.string "Would you like to buy an UPGRADE\n"
+	.string "for ¥10,000?$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BuyDubiousDisc:
+	.string "Would you like to buy a DUBIOUS DISC\n"
+	.string "for ¥10,000?$"
+
+LittlerootTown_ProfessorBirchsLab_Text_AideNotEnoughMoney:
+	.string "Sorry, you need ¥10,000 to buy one.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_WouldYouLikeInfiniteCandy:
 	.string "PROF. ACACIA: Ah, before I forget!\p"

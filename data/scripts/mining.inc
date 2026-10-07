@@ -81,7 +81,7 @@ Text_Mining_PaidSessionOffer:
 
 Text_Mining_NotEnoughMoney:
 	.string "You need ¥2000 to mine again here\n"
-	.string "today. Either pay up, or come back\n"
+	.string "today. Either pay up, or come back\l"
 	.string "tomorrow for more free sessions.$"
 
 Text_DailyMiningLocked:
@@ -225,7 +225,7 @@ VictoryRoad_1F_EventScript_MinerNPC_Start:
 
 VictoryRoad_1F_Text_MinerNPC_Prompt:
 	.string "This location is rich in minerals\n"
-	.string "that help boost certain moves and\n"
+	.string "that help boost certain moves and\l"
 	.string "abilities.\p"
 	.string "You have {STR_VAR_1} free mining\n"
 	.string "session(s) left here today.\p"
@@ -233,7 +233,7 @@ VictoryRoad_1F_Text_MinerNPC_Prompt:
 
 VictoryRoad_1F_Text_MinerNPC_Description:
 	.string "This location is rich in minerals\n"
-	.string "that help boost certain moves and\n"
+	.string "that help boost certain moves and\l"
 	.string "abilities.$"
 
 Mossdeepcave_EventScript_MinerNPC::
@@ -270,7 +270,7 @@ Mossdeepcave_EventScript_MinerNPC_Start:
 
 Mossdeepcave_Text_MinerNPC_Prompt:
 	.string "Rare treasures fill this cave.\n"
-	.string "Some are valuable; others help\n"
+	.string "Some are valuable; others help\l"
 	.string "POKéMON in battle or evolution.\p"
 	.string "You have {STR_VAR_1} free mining\n"
 	.string "session(s) left here today.\p"
@@ -278,7 +278,7 @@ Mossdeepcave_Text_MinerNPC_Prompt:
 
 Mossdeepcave_Text_MinerNPC_Description:
 	.string "Rare treasures fill this cave.\n"
-	.string "Some are valuable; others help\n"
+	.string "Some are valuable; others help\l"
 	.string "POKéMON in battle or evolution.$"
 
 MagmaHideout_EventScript_MinerNPC::

@@ -2331,7 +2331,7 @@ Route114_Text_AngelinaPostBattle:
 LonelyCaveB1_Text_UzumakiIntro:
 	.string "Are you afraid of spirits?\n"
 	.string "I’m not. What about you?\p"
-	.string "How about a battle now?\n"
+	.string "How about a battle now?$"
 
 LonelyCaveB1_Text_UzumakiDefeat:
 	.string "Oh…\n"

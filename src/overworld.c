@@ -571,6 +571,27 @@ void LoadSaveblockObjEventScripts(void)
         if (current != NULL)
         {
             savObjTemplates[i].script = current->script;
+            // These grunts now react only to coordinate triggers. Continue
+            // restores old trainer-sight metadata in both templates and live
+            // objects; correct just these NPCs without moving or turning them.
+            if (current->script == GraniteCave_B2F_EventScript_MagmaWorking)
+            {
+                savObjTemplates[i].trainerType = current->trainerType;
+                savObjTemplates[i].trainerRange_berryTreeId = current->trainerRange_berryTreeId;
+                for (u32 objectId = 0; objectId < OBJECT_EVENTS_COUNT; objectId++)
+                {
+                    struct ObjectEvent *object = &gObjectEvents[objectId];
+
+                    if (object->active
+                     && object->localId == current->localId
+                     && object->mapGroup == gSaveBlock1Ptr->location.mapGroup
+                     && object->mapNum == gSaveBlock1Ptr->location.mapNum)
+                    {
+                        object->trainerType = current->trainerType;
+                        object->trainerRange_berryTreeId = current->trainerRange_berryTreeId;
+                    }
+                }
+            }
             // Continue may retain an old pickup flag in the saved template.
             // Refresh only the corrected pickups, leaving saved positions,
             // movement, unrelated template flags and all story bits intact.

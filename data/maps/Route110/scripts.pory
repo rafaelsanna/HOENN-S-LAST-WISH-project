@@ -986,9 +986,18 @@ Route110_Text_RegisteredBirchInPokenav:
 	.string "in the POKéNAV.$"
 
 Route110_Text_KeepAnEyeOutForRival:
-	.string "PROF. ACACIA: {PLAYER}{KUN}…\p"
-	.string "Please keep an eye out for {RIVAL}.\n"
-	.string "… … … … … …\p"
+	.string "PROF. ACACIA: Oh, I see!\n"
+	.string "You two are running separately.\l"
+	.string "Well, that's fine.\p"
+	.string "I've been studying the data that\n"
+	.string "comes in from both of your POKéDEX.\p"
+	.string "CALENDULA and I are getting closer\n"
+	.string "to working out a usable formula.\l"
+	.string "We're both so grateful for your help.\p"
+	.string "Still, things have been dangerous,\n"
+	.string "what with AQUA and MAGMA around...\p"
+	.string "{PLAYER}{KUN}… be safe.\n"
+	.string "Please keep an eye out for {RIVAL}.\p"
 	.string "Well, I had better get going.\n"
 	.string "See you again, {PLAYER}{KUN}!$"
 

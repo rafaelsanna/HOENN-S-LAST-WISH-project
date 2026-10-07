@@ -41,7 +41,7 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	call_if_eq VAR_FACING, DIR_NORTH, GraniteCave_StevensRoom_EventScript_StevenExitNorth
 	call_if_eq VAR_FACING, DIR_SOUTH, GraniteCave_StevensRoom_EventScript_StevenExitSouth
 	call_if_eq VAR_FACING, DIR_WEST, GraniteCave_StevensRoom_EventScript_StevenExitWestEast
-	call_if_eq VAR_FACING, DIR_EAST, GraniteCave_StevensRoom_EventScript_StevenExitWestEast
+	call_if_eq VAR_FACING, DIR_EAST, GraniteCave_StevensRoom_EventScript_StevenExitFromLeft
 	playse SE_EXIT
 	removeobject LOCALID_GRANITE_CAVE_STEVEN
 	release
@@ -55,6 +55,12 @@ GraniteCave_StevensRoom_EventScript_StevenExitNorth::
 GraniteCave_StevensRoom_EventScript_StevenExitWestEast::
 	applymovement LOCALID_PLAYER, GraniteCave_StevensRoom_Movement_PlayerTurnTowardExit
 	applymovement LOCALID_GRANITE_CAVE_STEVEN, GraniteCave_StevensRoom_Movement_StevenExit
+	waitmovement 0
+	return
+
+GraniteCave_StevensRoom_EventScript_StevenExitFromLeft::
+	applymovement LOCALID_PLAYER, GraniteCave_StevensRoom_Movement_PlayerTurnTowardExit
+	applymovement LOCALID_GRANITE_CAVE_STEVEN, GraniteCave_StevensRoom_Movement_StevenExitFromLeft
 	waitmovement 0
 	return
 
@@ -73,6 +79,18 @@ GraniteCave_StevensRoom_EventScript_BagFull::
 GraniteCave_StevensRoom_Movement_StevenExit:
 	walk_left
 	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	delay_8
+	step_end
+
+GraniteCave_StevensRoom_Movement_StevenExitFromLeft:
+	walk_up
+	walk_left
 	walk_up
 	walk_up
 	walk_up

@@ -17,6 +17,7 @@
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_weather.h"
+#include "follower_npc.h"
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item.h"
@@ -4527,6 +4528,22 @@ void SetHiddenNature(void)
     u32 hiddenNature = gSpecialVar_Result;
     SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HIDDEN_NATURE, &hiddenNature);
     CalculateMonStats(&gPlayerParty[gSpecialVar_0x8004]);
+}
+
+// The selected active Pokemon follower, not just a matching party member.
+u16 Script_GetFollowerSpecies(void)
+{
+    u32 species;
+    bool32 shiny, female;
+
+    // Temporary invisibility after a warp/menu does not recall the follower.
+    if (!OW_POKEMON_OBJECT_EVENTS || !OW_FOLLOWERS_ENABLED
+     || GetFollowerObject() == NULL || PlayerHasFollowerNPC()
+     || FlagGet(FLAG_TEMP_HIDE_FOLLOWER) || FlagGet(B_FLAG_FOLLOWERS_DISABLED)
+     || !GetFollowerInfo(&species, &shiny, &female))
+        return SPECIES_NONE;
+
+    return species;
 }
 
 void Special_CheckPartyHasWaterMon(void)

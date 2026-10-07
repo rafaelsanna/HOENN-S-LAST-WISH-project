@@ -39,6 +39,7 @@ extern const u8 EventScript_TryDoRematchBattle[];
 extern const u8 EventScript_ObjectApproachPlayer[];
 extern const u8 EventScript_TryDailyMining[];
 extern const u8 Route101_EventScript_CompleteAcaciaRescue[];
+extern const u8 GraniteCave_B2F_EventScript_MagmaWorking[];
 
 extern const u8 BerryTreeScript[];
 

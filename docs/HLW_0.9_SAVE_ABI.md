@@ -480,6 +480,8 @@ After release, append IDs without moving existing meanings. Keep deleted IDs as 
 
 Reviewed coordinate-only update (2026-10-01): Lilycove City warp 2 (Pokémon Center) moved from (24, 14) to (25, 14), warp 9 (House2) from (55, 15) to (16, 14), and warp 11 (House4) from (12, 14) to (10, 14). Only these three baseline records were updated. Their indices, destinations, destination warp IDs and elevations are unchanged, and interior exits still target the same indices. Lilycove's Fly landing position was also moved to (25, 15) to match the Pokémon Center. No saved layout or schema version changed; older saves made outdoors still retain their original player coordinates.
 
+Reviewed script-binding update (2026-10-06): Granite Cave B2F objects 10 and 11 remain the same female and male Magma grunts, with unchanged local IDs, positions, map facings and hide flag. Their formerly blank scripts now point to `GraniteCave_B2F_EventScript_MagmaWorking`; only those two content-identity records were updated. Automatic trainer sight is disabled in their ROM templates. Continue refreshes these two NPCs' saved template and matching live-object sight metadata, preserving coordinates, movement, facing, flags and unrelated objects. No saved layout, numeric identity or schema version changed.
+
 No known structural requirement remains that forces another planned save break. Exceeding the fixed capacities or reinterpreting a released ID could still require a deliberate migration. Reserve is finite, and static RAM is especially tight. Preserve exact extents when consuming reserve and account for the resulting runtime buffers separately.
 
 ## Verification commands

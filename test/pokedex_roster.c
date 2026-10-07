@@ -87,19 +87,19 @@ static const struct
     {HOENN_DEX_RAPIDASH, HOENN_DEX_TREECKO, HOENN_DEX_SCEPTILE, HOENN_DEX_MUDKIP},
     {HOENN_DEX_SCEPTILE, HOENN_DEX_MUDKIP, HOENN_DEX_SWAMPERT, HOENN_DEX_CHIKORITA},
     {HOENN_DEX_SWAMPERT, HOENN_DEX_CHIKORITA, HOENN_DEX_MEGANIUM, HOENN_DEX_CYNDAQUIL},
-    {HOENN_DEX_MEGANIUM, HOENN_DEX_CYNDAQUIL, HOENN_DEX_TYPHLOSION, HOENN_DEX_PICHU},
+    {HOENN_DEX_MEGANIUM, HOENN_DEX_CYNDAQUIL, HOENN_DEX_TYPHLOSION, HOENN_DEX_CHARMANDER},
     {HOENN_DEX_DUSTOX, HOENN_DEX_LEDYBA, HOENN_DEX_ARIADOS, HOENN_DEX_VENONAT},
-    {HOENN_DEX_PIDGEOT, HOENN_DEX_SPEAROW, HOENN_DEX_NOCTOWL, HOENN_DEX_RALTS},
-    {HOENN_DEX_SLAKING, HOENN_DEX_AIPOM, HOENN_DEX_AIPOM, HOENN_DEX_ABRA},
+    {HOENN_DEX_PIDGEOT, HOENN_DEX_SPEAROW, HOENN_DEX_NOCTOWL, HOENN_DEX_FARFETCHD},
+    {HOENN_DEX_SLAKING, HOENN_DEX_AIPOM, HOENN_DEX_AIPOM, HOENN_DEX_DROWZEE},
     {HOENN_DEX_JUMPLUFF, HOENN_DEX_SUNKERN, HOENN_DEX_SUNFLORA, HOENN_DEX_GEODUDE},
     {HOENN_DEX_NOSEPASS, HOENN_DEX_SUDOWOODO, HOENN_DEX_SUDOWOODO, HOENN_DEX_SKITTY},
     {HOENN_DEX_MANECTRIC, HOENN_DEX_MAREEP, HOENN_DEX_AMPHAROS, HOENN_DEX_PLUSLE},
     {HOENN_DEX_VICTREEBEL, HOENN_DEX_EXEGGCUTE, HOENN_DEX_EXEGGUTOR, HOENN_DEX_DODUO},
-    {HOENN_DEX_SANDSLASH, HOENN_DEX_DIGLETT, HOENN_DEX_DUGTRIO, HOENN_DEX_PINECO},
+    {HOENN_DEX_SANDSLASH, HOENN_DEX_DIGLETT, HOENN_DEX_DUGTRIO, HOENN_DEX_CUBONE},
     {HOENN_DEX_FORRETRESS, HOENN_DEX_SHUCKLE, HOENN_DEX_SHUCKLE, HOENN_DEX_SPINDA},
     {HOENN_DEX_CRAWDAUNT, HOENN_DEX_KRABBY, HOENN_DEX_KINGLER, HOENN_DEX_BALTOY},
     {HOENN_DEX_CLAYDOL, HOENN_DEX_OMANYTE, HOENN_DEX_AERODACTYL, HOENN_DEX_LILEEP},
-    {HOENN_DEX_BLISSEY, HOENN_DEX_MILTANK, HOENN_DEX_MILTANK, HOENN_DEX_TAUROS},
+    {HOENN_DEX_SNORLAX, HOENN_DEX_MILTANK, HOENN_DEX_MILTANK, HOENN_DEX_TAUROS},
     {HOENN_DEX_KECLEON, HOENN_DEX_DITTO, HOENN_DEX_DITTO, HOENN_DEX_SHUPPET},
     {HOENN_DEX_LANTURN, HOENN_DEX_REMORAID, HOENN_DEX_OCTILLERY, HOENN_DEX_MANTYKE},
     {HOENN_DEX_SALAMENCE, HOENN_DEX_LARVITAR, HOENN_DEX_TYRANITAR, HOENN_DEX_BELDUM},
@@ -108,12 +108,107 @@ static const struct
     {HOENN_DEX_JYNX, HOENN_DEX_DELIBIRD, HOENN_DEX_DELIBIRD, HOENN_DEX_SNORUNT},
     {HOENN_DEX_GOREBYSS, HOENN_DEX_SHELLDER, HOENN_DEX_CLOYSTER, HOENN_DEX_RELICANTH},
     {HOENN_DEX_SMEARGLE, HOENN_DEX_DUNSPARCE, HOENN_DEX_DUDUNSPARCE, HOENN_DEX_PINSIR},
-    {HOENN_DEX_MILTANK, HOENN_DEX_TAUROS, HOENN_DEX_KANGASKHAN, HOENN_DEX_FEEBAS},
+    {HOENN_DEX_MILTANK, HOENN_DEX_TAUROS, HOENN_DEX_KANGASKHAN, HOENN_DEX_LICKITUNG},
     {HOENN_DEX_BELLOSSOM, HOENN_DEX_BELLSPROUT, HOENN_DEX_VICTREEBEL, HOENN_DEX_EXEGGCUTE},
     {HOENN_DEX_ARCANINE, HOENN_DEX_PONYTA, HOENN_DEX_RAPIDASH, HOENN_DEX_TREECKO},
     {HOENN_DEX_URSALUNA, HOENN_DEX_EKANS, HOENN_DEX_ARBOK, HOENN_DEX_SEVIPER},
     {HOENN_DEX_VENOMOTH, HOENN_DEX_PARAS, HOENN_DEX_PARASECT, HOENN_DEX_NIDORAN_F},
     {HOENN_DEX_ARIADOS, HOENN_DEX_VENONAT, HOENN_DEX_VENOMOTH, HOENN_DEX_PARAS},
+};
+
+static const u16 sCompletedGen12Families[] =
+{
+    SPECIES_CATERPIE,
+    SPECIES_METAPOD,
+    SPECIES_BUTTERFREE,
+    SPECIES_WEEDLE,
+    SPECIES_KAKUNA,
+    SPECIES_BEEDRILL,
+    SPECIES_FARFETCHD,
+    SPECIES_DROWZEE,
+    SPECIES_HYPNO,
+    SPECIES_MIME_JR,
+    SPECIES_MR_MIME,
+    SPECIES_ONIX,
+    SPECIES_STEELIX,
+    SPECIES_QWILFISH,
+    SPECIES_TYROGUE,
+    SPECIES_HITMONLEE,
+    SPECIES_HITMONCHAN,
+    SPECIES_HITMONTOP,
+    SPECIES_PORYGON,
+    SPECIES_PORYGON2,
+    SPECIES_PORYGON_Z,
+    SPECIES_CUBONE,
+    SPECIES_MAROWAK,
+    SPECIES_MUNCHLAX,
+    SPECIES_SNORLAX,
+    SPECIES_LICKITUNG,
+    SPECIES_LICKILICKY,
+    SPECIES_CHARMANDER,
+    SPECIES_CHARMELEON,
+    SPECIES_CHARIZARD,
+    SPECIES_SQUIRTLE,
+    SPECIES_WARTORTLE,
+    SPECIES_BLASTOISE,
+    SPECIES_UNOWN,
+};
+
+static const struct
+{
+    u16 previous;
+    u16 first;
+    u16 last;
+    u16 next;
+} sCompletedFamilyPlacements[] =
+{
+    {HOENN_DEX_FURRET, HOENN_DEX_CATERPIE, HOENN_DEX_BUTTERFREE, HOENN_DEX_WEEDLE},
+    {HOENN_DEX_BUTTERFREE, HOENN_DEX_WEEDLE, HOENN_DEX_BEEDRILL, HOENN_DEX_WURMPLE},
+    {HOENN_DEX_NOCTOWL, HOENN_DEX_FARFETCHD, HOENN_DEX_FARFETCHD, HOENN_DEX_RALTS},
+    {HOENN_DEX_AIPOM, HOENN_DEX_DROWZEE, HOENN_DEX_HYPNO, HOENN_DEX_ABRA},
+    {HOENN_DEX_ALAKAZAM, HOENN_DEX_MIME_JR, HOENN_DEX_MR_MIME, HOENN_DEX_NINCADA},
+    {HOENN_DEX_GOLEM, HOENN_DEX_ONIX, HOENN_DEX_STEELIX, HOENN_DEX_NOSEPASS},
+    {HOENN_DEX_TENTACRUEL, HOENN_DEX_QWILFISH, HOENN_DEX_QWILFISH, HOENN_DEX_SABLEYE},
+    {HOENN_DEX_MACHAMP, HOENN_DEX_TYROGUE, HOENN_DEX_HITMONTOP, HOENN_DEX_MEDITITE},
+    {HOENN_DEX_MAGNETON, HOENN_DEX_PORYGON, HOENN_DEX_PORYGON_Z, HOENN_DEX_VOLTORB},
+    {HOENN_DEX_DUGTRIO, HOENN_DEX_CUBONE, HOENN_DEX_MAROWAK, HOENN_DEX_PINECO},
+    {HOENN_DEX_BLISSEY, HOENN_DEX_MUNCHLAX, HOENN_DEX_SNORLAX, HOENN_DEX_MILTANK},
+    {HOENN_DEX_KANGASKHAN, HOENN_DEX_LICKITUNG, HOENN_DEX_LICKILICKY, HOENN_DEX_FEEBAS},
+    {HOENN_DEX_TYPHLOSION, HOENN_DEX_CHARMANDER, HOENN_DEX_CHARIZARD, HOENN_DEX_SQUIRTLE},
+    {HOENN_DEX_CHARIZARD, HOENN_DEX_SQUIRTLE, HOENN_DEX_BLASTOISE, HOENN_DEX_PICHU},
+    {HOENN_DEX_XATU, HOENN_DEX_UNOWN, HOENN_DEX_UNOWN, HOENN_DEX_MURKROW},
+};
+
+static const u16 sExcludedGen12Legendaries[] =
+{
+    NATIONAL_DEX_ARTICUNO,
+    NATIONAL_DEX_ZAPDOS,
+    NATIONAL_DEX_MOLTRES,
+    NATIONAL_DEX_MEWTWO,
+    NATIONAL_DEX_MEW,
+    NATIONAL_DEX_RAIKOU,
+    NATIONAL_DEX_ENTEI,
+    NATIONAL_DEX_SUICUNE,
+    NATIONAL_DEX_LUGIA,
+    NATIONAL_DEX_HO_OH,
+};
+
+static const struct
+{
+    u16 form;
+    u16 base;
+} sExistingAddedFamilyForms[] =
+{
+#if P_GALARIAN_FORMS
+    {SPECIES_FARFETCHD_GALAR, SPECIES_FARFETCHD},
+    {SPECIES_MR_MIME_GALAR, SPECIES_MR_MIME},
+#endif
+#if P_HISUIAN_FORMS
+    {SPECIES_QWILFISH_HISUI, SPECIES_QWILFISH},
+#endif
+#if P_ALOLAN_FORMS
+    {SPECIES_MAROWAK_ALOLA, SPECIES_MAROWAK},
+#endif
 };
 
 static void SetUpCompletedRegionalDex(void)
@@ -142,9 +237,80 @@ TEST("Regional dex includes all newly added species")
         EXPECT(dexNum > HOENN_DEX_NONE && dexNum < HOENN_DEX_COUNT);
         EXPECT_EQ(NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum)), species);
     }
-    EXPECT_EQ(SpeciesToHoennPokedexNum(SPECIES_CATERPIE), HOENN_DEX_NONE);
-    EXPECT_EQ(SpeciesToHoennPokedexNum(SPECIES_METAPOD), HOENN_DEX_NONE);
-    EXPECT_EQ(SpeciesToHoennPokedexNum(SPECIES_BUTTERFREE), HOENN_DEX_NONE);
+}
+
+TEST("Regional dex includes the completed Gen 1 and 2 nonlegendary families and their later relatives")
+{
+    EXPECT_EQ(ARRAY_COUNT(sCompletedGen12Families), 34);
+    EXPECT_EQ(HOENN_DEX_COUNT - 1, 417);
+    for (u32 i = 0; i < ARRAY_COUNT(sCompletedGen12Families); i++)
+    {
+        u16 species = sCompletedGen12Families[i];
+        u16 dexNum = SpeciesToHoennPokedexNum(species);
+
+        EXPECT(dexNum > HOENN_DEX_NONE && dexNum < HOENN_DEX_COUNT);
+        EXPECT(gSpeciesInfo[species].baseHP > 0);
+        EXPECT_EQ(NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum)), species);
+    }
+    EXPECT_EQ(SpeciesToHoennPokedexNum(SPECIES_SIRFETCHD), HOENN_DEX_NONE);
+    EXPECT_EQ(SpeciesToHoennPokedexNum(SPECIES_MR_RIME), HOENN_DEX_NONE);
+    EXPECT_EQ(SpeciesToHoennPokedexNum(SPECIES_OVERQWIL), HOENN_DEX_NONE);
+}
+
+TEST("Regional dex contains every Gen 1 and 2 nonlegendary without adding the previously excluded legendaries")
+{
+    for (u16 nationalNum = NATIONAL_DEX_BULBASAUR; nationalNum <= NATIONAL_DEX_CELEBI; nationalNum++)
+    {
+        u16 dexNum = NationalToHoennOrder(nationalNum);
+        bool32 excluded = FALSE;
+
+        for (u32 i = 0; i < ARRAY_COUNT(sExcludedGen12Legendaries); i++)
+            if (sExcludedGen12Legendaries[i] == nationalNum)
+                excluded = TRUE;
+        if (excluded)
+            EXPECT_EQ(dexNum, HOENN_DEX_NONE);
+        else
+        {
+            EXPECT(dexNum > HOENN_DEX_NONE && dexNum < HOENN_DEX_COUNT);
+            EXPECT_EQ(HoennToNationalOrder(dexNum), nationalNum);
+        }
+    }
+}
+
+TEST("Regional dex completed Gen 1 and 2 families preserve their intended order and neighboring entries")
+{
+    u32 speciesIndex = 0;
+
+    for (u32 i = 0; i < ARRAY_COUNT(sCompletedFamilyPlacements); i++)
+    {
+        u16 previous = sCompletedFamilyPlacements[i].previous;
+
+#if P_NEW_EVOS_IN_REGIONAL_DEX && P_GEN_4_CROSS_EVOS
+        if (previous == HOENN_DEX_MAGNETON)
+            previous = HOENN_DEX_MAGNEZONE;
+#endif
+        EXPECT_EQ(sCompletedFamilyPlacements[i].first, previous + 1);
+        EXPECT_EQ(sCompletedFamilyPlacements[i].last + 1, sCompletedFamilyPlacements[i].next);
+        for (u16 dexNum = sCompletedFamilyPlacements[i].first; dexNum <= sCompletedFamilyPlacements[i].last; dexNum++)
+            EXPECT_EQ(NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum)), sCompletedGen12Families[speciesIndex++]);
+    }
+    EXPECT_EQ(speciesIndex, ARRAY_COUNT(sCompletedGen12Families));
+}
+
+TEST("Regional dex additions use base species entries rather than additional regional form entries")
+{
+    for (u32 i = 0; i < ARRAY_COUNT(sExistingAddedFamilyForms); i++)
+    {
+        u16 form = sExistingAddedFamilyForms[i].form;
+        u16 base = sExistingAddedFamilyForms[i].base;
+        u16 dexNum = SpeciesToHoennPokedexNum(base);
+
+        // Existing engine forms share the base species' National identity. They
+        // do not create separate regional entries or replace the base display.
+        EXPECT_EQ(SpeciesToHoennPokedexNum(form), dexNum);
+        EXPECT_EQ(SpeciesToNationalPokedexNum(form), SpeciesToNationalPokedexNum(base));
+        EXPECT_EQ(NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum)), base);
+    }
 }
 
 TEST("Regional dex includes every Gen 3 species")
