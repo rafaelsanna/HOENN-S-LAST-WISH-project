@@ -157,7 +157,7 @@ gFieldEffectScript_Ash::
 	field_eff_end
 
 gFieldEffectScript_SurfBlob::
-	field_eff_callnative FldEff_SurfBlob
+	field_eff_callnative CreateSurfablePokemonSprite
 	field_eff_end
 
 gFieldEffectScript_UseSurf::
@@ -433,4 +433,3 @@ gFieldEffectScript_UseRockClimb:: @ 82DBC3F
 gFieldEffectScript_RockClimbDust:: @ 82DBB28
 	field_eff_loadfadedpal_callnative gSpritePalette_BigDust, FldEff_RockClimbDust
 	field_eff_end
-

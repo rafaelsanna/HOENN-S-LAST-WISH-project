@@ -28,6 +28,9 @@ static void UpdateObjectReflectionSprite(struct Sprite *);
 static void LoadObjectReflectionPalette(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *, struct Sprite *sprite);
 static void LoadObjectRegularReflectionPalette(struct ObjectEvent *, struct Sprite *);
+static void UpdateSurfablePokemonReflection(struct Sprite *reflectionSprite);
+static void LoadSurfablePokemonReflectionPalette(const struct Sprite *mainSprite, struct Sprite *reflectionSprite);
+static bool8 IsSurfablePokemonReflectionWater(void);
 
 static void UpdateGrassFieldEffectSubpriority(struct Sprite *, u8, u8);
 static bool8 IsSeaGrassMetatile(s16 x, s16 y);
@@ -39,8 +42,8 @@ static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *);
 static void UpdateAshFieldEffect_Wait(struct Sprite *);
 static void UpdateAshFieldEffect_Show(struct Sprite *);
 static void UpdateAshFieldEffect_End(struct Sprite *);
-static void SynchroniseSurfAnim(struct ObjectEvent *, struct Sprite *);
-static void SynchroniseSurfPosition(struct ObjectEvent *, struct Sprite *);
+void SynchroniseSurfAnim(struct ObjectEvent *, struct Sprite *);
+void SynchroniseSurfPosition(struct ObjectEvent *, struct Sprite *);
 static void UpdateBobbingEffect(struct ObjectEvent *, struct Sprite *, struct Sprite *);
 static void SpriteCB_UnderwaterSurfBlob(struct Sprite *);
 static u32 ShowDisguiseFieldEffect(u8, u8, u8);
@@ -262,6 +265,133 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
         // If the sprite is facing east, then it's flipped, and its matrixNum is 1.
         reflectionSprite->oam.matrixNum = (mainSprite->oam.matrixNum & ST_OAM_HFLIP) ? 1 : 0;
     }
+}
+
+static s16 GetSurfablePokemonReflectionVerticalOffset(const struct Sprite *sprite)
+{
+    static const u8 spriteWidths[] = {8, 16, 32, 64};
+
+    if (sprite->oam.shape != ST_OAM_SQUARE)
+        return 30;
+
+    return spriteWidths[sprite->oam.size] - 2;
+}
+
+void CreateSurfablePokemonReflection(struct Sprite *sprite)
+{
+    u8 spriteId = sprite - gSprites;
+    u8 reflectionId = CreateCopySpriteAt(sprite, sprite->x, sprite->y, 152);
+
+    if (reflectionId == MAX_SPRITES)
+        return;
+
+    struct Sprite *reflectionSprite = &gSprites[reflectionId];
+    reflectionSprite->callback = UpdateSurfablePokemonReflection;
+    reflectionSprite->oam.priority = 3;
+    reflectionSprite->usingSheet = TRUE;
+    reflectionSprite->anims = gDummySpriteAnimTable;
+    StartSpriteAnim(reflectionSprite, 0);
+    reflectionSprite->affineAnims = gDummySpriteAffineAnimTable;
+    reflectionSprite->affineAnimBeginning = TRUE;
+    reflectionSprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    reflectionSprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+    reflectionSprite->subspriteTableNum = 0;
+    reflectionSprite->data[0] = spriteId;
+    if (IsSurfablePokemonReflectionWater())
+        LoadSurfablePokemonReflectionPalette(sprite, reflectionSprite);
+    else
+        reflectionSprite->invisible = TRUE;
+}
+
+static bool8 IsSurfablePokemonReflectionWater(void)
+{
+    struct ObjectEvent *playerObj = &gObjectEvents[gPlayerAvatar.objectEventId];
+    u8 currentBehavior = MapGridGetMetatileBehaviorAt(playerObj->currentCoords.x, playerObj->currentCoords.y);
+    u8 previousBehavior = MapGridGetMetatileBehaviorAt(playerObj->previousCoords.x, playerObj->previousCoords.y);
+
+    return MetatileBehavior_IsReflective(currentBehavior)
+        || MetatileBehavior_IsReflective(previousBehavior);
+}
+
+static void LoadSurfablePokemonReflectionPalette(const struct Sprite *mainSprite, struct Sprite *reflectionSprite)
+{
+    u16 baseTag = GetSpritePaletteTagByPaletteNum(mainSprite->oam.paletteNum);
+    u16 paletteTag = REFLECTION_PAL_TAG(baseTag, mainSprite->oam.paletteNum);
+    u8 paletteNum = IndexOfSpritePaletteTag(paletteTag);
+
+    if (paletteNum <= 16)
+    {
+        u16 filteredData[16];
+        struct SpritePalette filteredPal = {.tag = paletteTag, .data = filteredData};
+        ApplyPondFilter(mainSprite->oam.paletteNum, filteredData);
+        paletteNum = LoadSpritePalette(&filteredPal);
+        UpdateSpritePaletteWithWeather(paletteNum, TRUE);
+    }
+
+    reflectionSprite->oam.paletteNum = paletteNum;
+    reflectionSprite->oam.objMode = ST_OAM_OBJ_BLEND;
+}
+
+static void UpdateSurfablePokemonReflection(struct Sprite *reflectionSprite)
+{
+    u8 sourceId = reflectionSprite->data[0];
+    struct Sprite *mainSprite;
+
+    if (sourceId >= MAX_SPRITES || !gSprites[sourceId].inUse)
+    {
+        reflectionSprite->inUse = FALSE;
+        FieldEffectFreePaletteIfUnused(reflectionSprite->oam.paletteNum);
+        return;
+    }
+
+    mainSprite = &gSprites[sourceId];
+    if (!IsSurfablePokemonReflectionWater())
+    {
+        reflectionSprite->invisible = TRUE;
+        return;
+    }
+
+    if (IndexOfSpritePaletteTag(HIGH_BRIDGE_PAL_TAG) != reflectionSprite->oam.paletteNum)
+    {
+        u16 baseTag = GetSpritePaletteTagByPaletteNum(mainSprite->oam.paletteNum);
+        u16 paletteTag = REFLECTION_PAL_TAG(baseTag, mainSprite->oam.paletteNum);
+        u8 paletteNum = IndexOfSpritePaletteTag(paletteTag);
+
+        if (paletteNum >= 16)
+        {
+            reflectionSprite->inUse = FALSE;
+            FieldEffectFreePaletteIfUnused(reflectionSprite->oam.paletteNum);
+            reflectionSprite->inUse = TRUE;
+            LoadSurfablePokemonReflectionPalette(mainSprite, reflectionSprite);
+        }
+        else
+        {
+            reflectionSprite->oam.paletteNum = paletteNum;
+        }
+    }
+
+    reflectionSprite->oam.shape = mainSprite->oam.shape;
+    reflectionSprite->oam.size = mainSprite->oam.size;
+    reflectionSprite->oam.matrixNum = mainSprite->oam.matrixNum | ST_OAM_VFLIP;
+    reflectionSprite->oam.tileNum = mainSprite->oam.tileNum;
+    reflectionSprite->subspriteTables = mainSprite->subspriteTables;
+    reflectionSprite->invisible = mainSprite->invisible;
+    reflectionSprite->x = mainSprite->x;
+    reflectionSprite->y = mainSprite->y + GetSurfablePokemonReflectionVerticalOffset(mainSprite);
+    reflectionSprite->centerToCornerVecX = mainSprite->centerToCornerVecX;
+    reflectionSprite->centerToCornerVecY = mainSprite->centerToCornerVecY;
+    reflectionSprite->x2 = mainSprite->x2;
+    reflectionSprite->y2 = -mainSprite->y2;
+    reflectionSprite->coordOffsetEnabled = mainSprite->coordOffsetEnabled;
+
+    if (reflectionSprite->subspriteTables != NULL && reflectionSprite->subspriteTables[0].subsprites != NULL)
+    {
+        reflectionSprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+        return;
+    }
+
+    reflectionSprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    reflectionSprite->oam.matrixNum = (mainSprite->oam.matrixNum & ST_OAM_HFLIP) ? 1 : 0;
 }
 
 #undef sReflectionObjEventId
@@ -1625,7 +1755,7 @@ void UpdateSurfBlobFieldEffect(struct Sprite *sprite)
     sprite->oam.priority = playerSprite->oam.priority;
 }
 
-static void SynchroniseSurfAnim(struct ObjectEvent *playerObj, struct Sprite *sprite)
+void SynchroniseSurfAnim(struct ObjectEvent *playerObj, struct Sprite *sprite)
 {
     // Indexes into sAnimTable_SurfBlob
     u8 surfBlobDirectionAnims[] = {
