@@ -559,3 +559,41 @@ Failure injection stops manager operations before sector writes, the final byte 
 Hall of Fame integrity is mandatory for its associated normal bundle. If both normal generations reference one archive and that archive corrupts, neither is accepted. The single-interruption guarantees do not cover multiple independent corruptions that also destroy replacement evidence.
 
 All source files in the full unfiltered test build compiled, but the combined test image exceeded the 32 MiB GBA limit by 691,220 bytes and overlapped fixed DACS data. A focused test ELF was used for runtime verification. Production linker limits and assets were not enlarged or removed. Trainer slides have one existing Bulbasaur/Vine Whip primary-type assumption skip under the current Wish roster.
+
+## Prop graphics relocation (2026-10-08)
+
+Fifteen overworld props moved to unused existing species slots, covering 38
+object events across 22 maps. Araquanid's separate front-view Time Gear moved
+to Spidops, including its two-frame picture and normal/shiny palettes; Terra's
+Araquanid overworld and the Ducklett/Escavalier shadow Pokemon remain unchanged.
+The original prop donors' Pokemon artwork/palettes and altered prop metadata
+were restored from pre-replacement Git revisions. Arboliva's existing story
+picture was not changed. The exact mapping and asset checks are recorded in
+`tools/check_prop_graphics.py`.
+
+Species IDs, map IDs, object ordering/local IDs, script identities, hide flags,
+save structures and capacities are unchanged. Map object graphics IDs do
+change. Continue now calls `MigratePropGraphicsForSavedObjects`, matching each
+current ROM map/local object identity and its exact old-to-new prop graphics
+pair before refreshing cached templates and matching active objects. Positions,
+movement, visibility, flags and unrelated NPC/follower graphics are preserved;
+no new save field, version or migration flag is needed.
+
+Only the ten enlarged replacement overworld slots and the structurally changed
+Spidops front require new size/frame/animation metadata. The five same-size
+overworld replacement entries remain identical. Graphics conversion rules were
+updated only for those ten slots and the restored 32x32 Solgaleo/Melmetal slots.
+The comet, portal and stage-screen animation timing, ship footprint, walkable
+Wailord priority/collision, concert-screen lighting and Darrin facing exception
+follow the replacement graphics. Comet animation references beyond its four
+available frames were corrected.
+
+Production build and all frozen save-ABI/registry checks passed. The focused
+emulator suite passed 12 test definitions, including all 38 parameterized prop
+save cases, Continue integration, idempotence, animation bounds, collision and
+existing object-script/Darrin regressions; its one intentional runner-crash
+fixture remained expected. The asset checker confirms lossless transferred
+PNG/palette files, historical restorations, unchanged map event data apart from
+graphics and narrowly scoped metadata changes. Visual gameplay checks of the
+full story scenes and daycare re-entry remain useful; the transfer does not
+alter their existing event logic.

@@ -4234,7 +4234,7 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         OVERWORLD(
             sPicTable_Polteageist,
             SIZE_32x32,
-            SHADOW_SIZE_NONE,
+            SHADOW_SIZE_M,
             TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Polteageist,
@@ -5576,9 +5576,9 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         FOOTPRINT(Stonjourner)
         OVERWORLD(
             sPicTable_Stonjourner,
-            SIZE_32x32,
+            SIZE_64x64,
             SHADOW_SIZE_M,
-            TRACKS_FOOT,
+            TRACKS_NONE,
             sAnimTable_Following,
             gOverworldPalette_Stonjourner,
             gShinyOverworldPalette_Stonjourner
@@ -6031,7 +6031,7 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         FOOTPRINT(Cufant)
         OVERWORLD(
             sPicTable_Cufant,
-            SIZE_32x32,
+            SIZE_64x64,
             SHADOW_SIZE_M,
             TRACKS_FOOT,
             sAnimTable_Following,
@@ -6097,8 +6097,8 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         FOOTPRINT(Copperajah)
         OVERWORLD(
             sPicTable_Copperajah,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
+            SIZE_64x64,
+            SHADOW_SIZE_NONE,
             TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Copperajah,

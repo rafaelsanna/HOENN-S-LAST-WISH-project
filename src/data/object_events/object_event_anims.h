@@ -295,7 +295,14 @@ static const union AnimCmd sAnim_GoEast2F[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_GoWestKoraidon[] =
+#if P_FAMILY_PAWMI
+static const union AnimCmd sAnim_FaceEastMillenniumComet[] =
+{
+    ANIMCMD_FRAME(0, 16, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_GoWestMillenniumComet[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(1, 2),
@@ -304,7 +311,7 @@ static const union AnimCmd sAnim_GoWestKoraidon[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_GoEastKoraidon[] =
+static const union AnimCmd sAnim_GoEastMillenniumComet[] =
 {
     ANIMCMD_FRAME(0, 2, .hFlip = TRUE),
     ANIMCMD_FRAME(1, 2, .hFlip = TRUE),
@@ -312,6 +319,7 @@ static const union AnimCmd sAnim_GoEastKoraidon[] =
     ANIMCMD_FRAME(3, 2, .hFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
+#endif //P_FAMILY_PAWMI
 
 static const union AnimCmd sAnim_GoEast2F_Asym[] =
 {
@@ -1204,21 +1212,22 @@ const union AnimCmd *const sAnimTable_Following[] = {
 };
 
 
-// Custom 4-frame 64x64 overworld animation for Melmetal.
+#if P_FAMILY_VAROOM
+// Four-frame animation for Amaterasu's concert screen.
 // The sheet is 256x64: four 64x64 frames (0, 1, 2, 3).
-static const union AnimCmd sAnim_FaceWestMelmetal[] =
+static const union AnimCmd sAnim_FaceWestAmaterasuScreen[] =
 {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_FaceEastMelmetal[] =
+static const union AnimCmd sAnim_FaceEastAmaterasuScreen[] =
 {
     ANIMCMD_FRAME(0, 16, .hFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_GoWestMelmetal[] =
+static const union AnimCmd sAnim_GoWestAmaterasuScreen[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(1, 2),
@@ -1227,7 +1236,7 @@ static const union AnimCmd sAnim_GoWestMelmetal[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_GoEastMelmetal[] =
+static const union AnimCmd sAnim_GoEastAmaterasuScreen[] =
 {
     ANIMCMD_FRAME(0, 10, .hFlip = TRUE),
     ANIMCMD_FRAME(1, 10, .hFlip = TRUE),
@@ -1236,65 +1245,69 @@ static const union AnimCmd sAnim_GoEastMelmetal[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const sAnimTable_Melmetal[] =
+const union AnimCmd *const sAnimTable_AmaterasuScreen[] =
 {
-    [ANIM_STD_FACE_SOUTH] = sAnim_FaceWestMelmetal,
-    [ANIM_STD_FACE_NORTH] = sAnim_FaceWestMelmetal,
-    [ANIM_STD_FACE_WEST] = sAnim_FaceWestMelmetal,
-    [ANIM_STD_FACE_EAST] = sAnim_FaceEastMelmetal,
+    [ANIM_STD_FACE_SOUTH] = sAnim_FaceWestAmaterasuScreen,
+    [ANIM_STD_FACE_NORTH] = sAnim_FaceWestAmaterasuScreen,
+    [ANIM_STD_FACE_WEST] = sAnim_FaceWestAmaterasuScreen,
+    [ANIM_STD_FACE_EAST] = sAnim_FaceEastAmaterasuScreen,
 
-    [ANIM_STD_GO_SOUTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_NORTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_WEST] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_EAST] = sAnim_GoEastMelmetal,
+    [ANIM_STD_GO_SOUTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_NORTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_WEST] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_EAST] = sAnim_GoEastAmaterasuScreen,
 
-    [ANIM_STD_GO_FAST_SOUTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FAST_NORTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FAST_WEST] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FAST_EAST] = sAnim_GoEastMelmetal,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_GoEastAmaterasuScreen,
 
-    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FASTER_NORTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FASTER_WEST] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FASTER_EAST] = sAnim_GoEastMelmetal,
+    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FASTER_NORTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FASTER_WEST] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FASTER_EAST] = sAnim_GoEastAmaterasuScreen,
 
-    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FASTEST_WEST] = sAnim_GoWestMelmetal,
-    [ANIM_STD_GO_FASTEST_EAST] = sAnim_GoEastMelmetal,
+    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FASTEST_WEST] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_STD_GO_FASTEST_EAST] = sAnim_GoEastAmaterasuScreen,
 
-    [ANIM_EXIT_POKEBALL_FAST_SOUTH] = sAnim_GoWestMelmetal,
-    [ANIM_EXIT_POKEBALL_FAST_NORTH] = sAnim_GoWestMelmetal,
-    [ANIM_EXIT_POKEBALL_FAST_WEST] = sAnim_GoWestMelmetal,
-    [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_GoEastMelmetal,
+    [ANIM_EXIT_POKEBALL_FAST_SOUTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_EXIT_POKEBALL_FAST_NORTH] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_EXIT_POKEBALL_FAST_WEST] = sAnim_GoWestAmaterasuScreen,
+    [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_GoEastAmaterasuScreen,
 };
+#endif //P_FAMILY_VAROOM
 
-const union AnimCmd *const sAnimTable_Koraidon[] = {
+#if P_FAMILY_PAWMI
+const union AnimCmd *const sAnimTable_MillenniumComet[] = {
     [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
     [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth2F,
-    [ANIM_STD_FACE_WEST] = sAnim_FaceWest2F,
-    [ANIM_STD_FACE_EAST] = sAnim_FaceEast2F,
+    [ANIM_STD_FACE_WEST] = sAnim_FaceSouth,
+    [ANIM_STD_FACE_EAST] = sAnim_FaceEastMillenniumComet,
     [ANIM_STD_GO_SOUTH] = sAnim_GoSouth2F,
     [ANIM_STD_GO_NORTH] = sAnim_GoNorth2F,
-    [ANIM_STD_GO_WEST] = sAnim_GoWestKoraidon,
-    [ANIM_STD_GO_EAST] = sAnim_GoEastKoraidon,
+    [ANIM_STD_GO_WEST] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_EAST] = sAnim_GoEastMillenniumComet,
     [ANIM_STD_GO_FAST_SOUTH] = sAnim_GoFastSouth2F,
     [ANIM_STD_GO_FAST_NORTH] = sAnim_GoFastNorth2F,
-    [ANIM_STD_GO_FAST_WEST] = sAnim_GoWestKoraidon,
-    [ANIM_STD_GO_FAST_EAST] = sAnim_GoEastKoraidon,
-    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_EnterSouth,
-    [ANIM_STD_GO_FASTER_NORTH] = sAnim_EnterNorth,
-    [ANIM_STD_GO_FASTER_WEST] = sAnim_EnterWest,
-    [ANIM_STD_GO_FASTER_EAST] = sAnim_EnterEast,
-    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_ExitPokeballSouth,
-    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_ExitPokeballNorth,
-    [ANIM_STD_GO_FASTEST_WEST] = sAnim_ExitPokeballWest,
-    [ANIM_STD_GO_FASTEST_EAST] = sAnim_ExitPokeballEast,
-    [ANIM_EXIT_POKEBALL_FAST_SOUTH] = sAnim_ExitPokeballFastSouth,
-    [ANIM_EXIT_POKEBALL_FAST_NORTH] = sAnim_ExitPokeballFastNorth,
-    [ANIM_EXIT_POKEBALL_FAST_WEST] = sAnim_ExitPokeballFastWest,
-    [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_ExitPokeballFastEast,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_GoEastMillenniumComet,
+    // This prop has four frames; follower Poké Ball animations require a fifth.
+    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_FASTER_NORTH] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_FASTER_WEST] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_FASTER_EAST] = sAnim_GoEastMillenniumComet,
+    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_FASTEST_WEST] = sAnim_GoWestMillenniumComet,
+    [ANIM_STD_GO_FASTEST_EAST] = sAnim_GoEastMillenniumComet,
+    [ANIM_EXIT_POKEBALL_FAST_SOUTH] = sAnim_GoWestMillenniumComet,
+    [ANIM_EXIT_POKEBALL_FAST_NORTH] = sAnim_GoWestMillenniumComet,
+    [ANIM_EXIT_POKEBALL_FAST_WEST] = sAnim_GoWestMillenniumComet,
+    [ANIM_EXIT_POKEBALL_FAST_EAST] = sAnim_GoEastMillenniumComet,
 };
+#endif //P_FAMILY_PAWMI
 
 // Like the above, but has separate frames for facing right
 const union AnimCmd *const sAnimTable_Following_Asym[] = {

@@ -39,7 +39,7 @@
       "flag": "FLAG_AQUA_GRUNTS_PETALBURG_DONE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SOLGALEO)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BOMBIRDIER)",
       "x": 6,
       "y": 52,
       "elevation": 0,
@@ -52,7 +52,7 @@
       "flag": "FLAG_AQUA_GRUNTS_PETALBURG_DONE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SOLGALEO)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BOMBIRDIER)",
       "x": 10,
       "y": 52,
       "elevation": 0,
@@ -65,7 +65,7 @@
       "flag": "FLAG_AQUA_GRUNTS_PETALBURG_DONE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SOLGALEO)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BOMBIRDIER)",
       "x": 14,
       "y": 52,
       "elevation": 0,

@@ -552,6 +552,70 @@ void LoadObjEventTemplatesFromHeader(void)
               gMapHeader.events->objectEventCount * sizeof(struct ObjectEventTemplate));
 }
 
+static u16 GetLegacyPropGraphicsId(u16 currentGraphicsId)
+{
+    switch (currentGraphicsId)
+    {
+    case OBJ_EVENT_GFX_SPECIES(COALOSSAL):  return OBJ_EVENT_GFX_SPECIES(ACCELGOR);
+    case OBJ_EVENT_GFX_SPECIES(FIDOUGH):    return OBJ_EVENT_GFX_SPECIES(ARCHEOPS);
+    case OBJ_EVENT_GFX_SPECIES(VAROOM):     return OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT);
+    case OBJ_EVENT_GFX_SPECIES(DOLLIV):     return OBJ_EVENT_GFX_SPECIES(GIRATINA);
+    case OBJ_EVENT_GFX_SPECIES(SMOLIV):     return OBJ_EVENT_GFX_SPECIES(RESHIRAM);
+    case OBJ_EVENT_GFX_SPECIES(PAWMI):      return OBJ_EVENT_GFX_SPECIES(KORAIDON);
+    case OBJ_EVENT_GFX_SPECIES(PAWMO):      return OBJ_EVENT_GFX_SPECIES(KYUREM);
+    case OBJ_EVENT_GFX_SPECIES(REVAVROOM):  return OBJ_EVENT_GFX_SPECIES(MELMETAL);
+    case OBJ_EVENT_GFX_SPECIES(STONJOURNER): return OBJ_EVENT_GFX_SPECIES(MIRAIDON);
+    case OBJ_EVENT_GFX_SPECIES(WUGTRIO):    return OBJ_EVENT_GFX_SPECIES(PALKIA);
+    case OBJ_EVENT_GFX_SPECIES(TAROUNTULA): return OBJ_EVENT_GFX_SPECIES(POLTEAGEIST);
+    case OBJ_EVENT_GFX_SPECIES(BOMBIRDIER): return OBJ_EVENT_GFX_SPECIES(SOLGALEO);
+    case OBJ_EVENT_GFX_SPECIES(ROLYCOLY):   return OBJ_EVENT_GFX_SPECIES(TADBULB);
+    case OBJ_EVENT_GFX_SPECIES(CUFANT):     return OBJ_EVENT_GFX_SPECIES(XERNEAS);
+    case OBJ_EVENT_GFX_SPECIES(COPPERAJAH): return OBJ_EVENT_GFX_SPECIES(ZEKROM);
+    default: return 0;
+    }
+}
+
+void MigratePropGraphicsForSavedObjects(void)
+{
+    const struct MapHeader *map = Overworld_GetMapHeaderByGroupAndId(
+        gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
+
+    if (map->events == NULL || map->events->objectEvents == NULL)
+        return;
+
+    // Continue retains old graphics IDs in both templates and live objects.
+    // Match the current ROM map/local identity and the exact old->new prop
+    // pair; never redirect actual Pokemon followers or unrelated NPC graphics.
+    for (u32 i = 0; i < map->events->objectEventCount; i++)
+    {
+        const struct ObjectEventTemplate *current = &map->events->objectEvents[i];
+        u16 oldGraphicsId = GetLegacyPropGraphicsId(current->graphicsId);
+
+        if (oldGraphicsId == 0)
+            continue;
+
+        for (u32 j = 0; j < OBJECT_EVENT_TEMPLATES_COUNT; j++)
+        {
+            struct ObjectEventTemplate *saved = &gSaveBlock1Ptr->objectEventTemplates[j];
+
+            if (saved->localId == current->localId && saved->graphicsId == oldGraphicsId)
+                saved->graphicsId = current->graphicsId;
+        }
+
+        for (u32 j = 0; j < OBJECT_EVENTS_COUNT; j++)
+        {
+            struct ObjectEvent *object = &gObjectEvents[j];
+
+            if (object->active
+             && object->mapGroup == gSaveBlock1Ptr->location.mapGroup
+             && object->mapNum == gSaveBlock1Ptr->location.mapNum
+             && object->localId == current->localId
+             && object->graphicsId == oldGraphicsId)
+                object->graphicsId = current->graphicsId;
+        }
+    }
+}
+
 void LoadSaveblockObjEventScripts(void)
 {
     const struct MapEvents *events = gMapHeader.events;
@@ -610,6 +674,8 @@ void LoadSaveblockObjEventScripts(void)
             }
         }
     }
+
+    MigratePropGraphicsForSavedObjects();
 }
 
 void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)

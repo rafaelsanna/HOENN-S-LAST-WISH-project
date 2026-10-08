@@ -801,7 +801,7 @@ MOSSDEEP01_EventScript_Celebi::
 # 401 "data/maps/MOSSDEEP01/scripts.pory"
 MOSSDEEP01_EventScript_CelebiNeedGears::
 # 402 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARAQUANID, 10, 3
+	showmonpic SPECIES_SPIDOPS, 10, 3
 # 403 "data/maps/MOSSDEEP01/scripts.pory"
 	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 # 404 "data/maps/MOSSDEEP01/scripts.pory"
@@ -821,7 +821,7 @@ MOSSDEEP01_EventScript_CelebiNeedGears::
 # 411 "data/maps/MOSSDEEP01/scripts.pory"
 MOSSDEEP01_EventScript_CelebiIntroduction::
 # 412 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARAQUANID, 10, 3
+	showmonpic SPECIES_SPIDOPS, 10, 3
 # 413 "data/maps/MOSSDEEP01/scripts.pory"
 	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 # 414 "data/maps/MOSSDEEP01/scripts.pory"

@@ -39,7 +39,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SMOLIV)",
       "x": 32,
       "y": 29,
       "elevation": 0,
@@ -78,7 +78,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RESHIRAM)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SMOLIV)",
       "x": 43,
       "y": 12,
       "elevation": 0,

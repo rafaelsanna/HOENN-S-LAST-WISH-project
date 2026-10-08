@@ -82,6 +82,7 @@ void SetGameStat(u8 index, u32 value);
 void ApplyNewEncryptionKeyToGameStats(u32 newKey);
 void LoadObjEventTemplatesFromHeader(void);
 void LoadSaveblockObjEventScripts(void);
+void MigratePropGraphicsForSavedObjects(void);
 void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y);
 void SetObjEventTemplateMovementType(u8 localId, u8 movementType);
 const struct MapLayout *GetMapLayout(u16 mapLayoutId);
@@ -180,8 +181,12 @@ bool32 IsSendingKeysOverCable(void);
 void ClearLinkPlayerObjectEvents(void);
 bool16 SetTimeOfDay(u16 hours);
 extern const union AnimCmd *const sAnimTable_Spheal[];
-extern const union AnimCmd *const sAnimTable_Koraidon[];
-extern const union AnimCmd *const sAnimTable_Melmetal[];
+#if P_FAMILY_PAWMI
+extern const union AnimCmd *const sAnimTable_MillenniumComet[];
+#endif
+#if P_FAMILY_VAROOM
+extern const union AnimCmd *const sAnimTable_AmaterasuScreen[];
+#endif
 
 // Item Description Headers
 enum ItemObtainFlags

@@ -69,7 +69,7 @@ TEST("Route105-109 trainers: Darrin retains his object slot, graphics and traine
 
     EXPECT_EQ(LOCALID_ROUTE107_DARRIN, 1);
     EXPECT_EQ(object->localId, LOCALID_ROUTE107_DARRIN);
-    EXPECT_EQ(object->graphicsId, OBJ_EVENT_GFX_SPECIES(PALKIA));
+    EXPECT_EQ(object->graphicsId, OBJ_EVENT_GFX_SPECIES(WUGTRIO));
     EXPECT_EQ(object->trainerType, TRAINER_TYPE_NORMAL);
     EXPECT_EQ(object->movementType, MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN);
     EXPECT_EQ(object->script, Route107_EventScript_Darrin);

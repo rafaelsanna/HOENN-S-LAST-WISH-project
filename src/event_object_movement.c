@@ -1784,15 +1784,13 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
     UpdateObjectEventVisibility(objectEvent, sprite);
     
-    // === ADICIONE ESTE CÓDIGO ===
-    // Forçar Zekrom a ficar SEMPRE por baixo do jogador
-    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(ZEKROM))
+    // The Wailord bridge must always render underneath the player.
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(COPPERAJAH))
     {
         objectEvent->fixedPriority = TRUE;
         sprite->subpriority = 0xFF;  // Valor ALTO = renderiza POR BAIXO
     }
 
-    // ============================
     
     return objectEventId;
 }
@@ -3040,14 +3038,12 @@ static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
         ResetObjectEventFldEffData(objectEvent);
         SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
         
-        // === ADICIONE ESTE CÓDIGO ===
-        // Forçar Zekrom a ficar SEMPRE por baixo do jogador
-        if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(ZEKROM))
+        // Preserve the Wailord bridge's priority when recreating its sprite.
+        if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(COPPERAJAH))
         {
             objectEvent->fixedPriority = TRUE;
             sprite->subpriority = 0xFF;  // Valor ALTO = renderiza POR BAIXO
         }
-        // ============================
     }
 }
 
@@ -6107,7 +6103,7 @@ bool8 MovementType_MoveInPlace_Step1(struct ObjectEvent *objectEvent, struct Spr
     // similar to UpdateMonMoveInPlace
     else if (OW_FOLLOWERS_BOBBING == TRUE
           && IS_OW_MON_OBJ(objectEvent)
-          && objectEvent->graphicsId != OBJ_EVENT_GFX_SPECIES(MELMETAL)
+          && objectEvent->graphicsId != OBJ_EVENT_GFX_SPECIES(REVAVROOM)
           && (sprite->data[3] & 7) == 2)
     {
         sprite->y2 ^= 1;
@@ -6397,7 +6393,7 @@ u8 GetCollisionInDirection(struct ObjectEvent *objectEvent, u8 direction)
     s16 y = objectEvent->currentCoords.y;
     MoveCoords(direction, &x, &y);
 
-    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(SOLGALEO))
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(BOMBIRDIER))
     {
         s16 ei, ej;
         s16 edgeX0, edgeX1, edgeY0, edgeY1;
@@ -6412,7 +6408,7 @@ u8 GetCollisionInDirection(struct ObjectEvent *objectEvent, u8 direction)
 
         // Passo 2: verifica os 4 tiles da "borda líder" para paredes/bordas de mapa.
         // São os únicos tiles realmente novos ao mover em `direction`.
-        // Corpo do Solgaleo (4×4): largura [x-2 .. x+1], altura [y-3 .. y], pé em (x,y).
+        // Corpo do navio (4×4): largura [x-2 .. x+1], altura [y-3 .. y], pé em (x,y).
         //
         //   NORTE: nova linha topo  → j = y-3  (antiga era y-2)
         //   SUL:   nova linha base  → j = y    (antiga era y-1)
@@ -6680,7 +6676,7 @@ u32 GetObjectObjectCollidesWith(struct ObjectEvent *objectEvent, s16 x, s16 y, b
         curObject = &gObjectEvents[i];
         
         // Large set pieces and the buried miner are visual-only blockers.
-        if (curObject->graphicsId == OBJ_EVENT_GFX_SPECIES(ZEKROM)
+        if (curObject->graphicsId == OBJ_EVENT_GFX_SPECIES(COPPERAJAH)
          || curObject->graphicsId == OBJ_EVENT_GFX_TRAPPED_BLIPBUG)
             continue;
         
@@ -6689,7 +6685,7 @@ u32 GetObjectObjectCollidesWith(struct ObjectEvent *objectEvent, s16 x, s16 y, b
          )
         {
             // check for collision if curObject is active, not the object in question, and not exempt from collisions
-            if (curObject->graphicsId == OBJ_EVENT_GFX_SPECIES(SOLGALEO))
+            if (curObject->graphicsId == OBJ_EVENT_GFX_SPECIES(BOMBIRDIER))
             {
                 // Para bloquear jogador/NPCs: usa apenas a linha do pé (y == cy),
                 // largura total [cx-2..cx+1]. Cobre as extremidades laterais sem
@@ -6736,7 +6732,7 @@ static bool32 DoesBigObjectCollideAt(struct ObjectEvent *objectEvent, s16 baseX,
 
 static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(SOLGALEO))
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(BOMBIRDIER))
         return DoesBigObjectCollideAt(objectEvent, x, y);
     else
         return (GetObjectObjectCollidesWith(objectEvent, x, y, FALSE) < OBJECT_EVENTS_COUNT);

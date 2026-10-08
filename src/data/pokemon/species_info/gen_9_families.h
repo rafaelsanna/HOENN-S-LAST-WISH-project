@@ -895,9 +895,9 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Spidops,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 5,
-        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
-        //.frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .frontPicYOffset = 2,
+        .frontAnimFrames = sAnims_TimeGear,
+        .frontAnimId = ANIM_H_SHAKE,
         .backPic = gMonBackPic_Spidops,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 11,
@@ -1108,12 +1108,12 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
         SHADOW(1, 4, SHADOW_SIZE_M)
         FOOTPRINT(Pawmi)
-            OVERWORLD(
+        OVERWORLD(
             sPicTable_Pawmi,
-            SIZE_32x32,
-            SHADOW_SIZE_S,
-            TRACKS_FOOT,
-            sAnimTable_Following,
+            SIZE_64x64,
+            SHADOW_SIZE_M,
+            TRACKS_NONE,
+            sAnimTable_MillenniumComet,
             gOverworldPalette_Pawmi,
             gShinyOverworldPalette_Pawmi
         )
@@ -1176,10 +1176,10 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         FOOTPRINT(Pawmo)
         OVERWORLD(
             sPicTable_Pawmo,
-            SIZE_32x32,
-            SHADOW_SIZE_S,
+            SIZE_64x64,
+            SHADOW_SIZE_M,
             TRACKS_FOOT,
-            sAnimTable_Following,
+            sAnimTable_DarkPortal,
             gOverworldPalette_Pawmo,
             gShinyOverworldPalette_Pawmo
         )
@@ -1637,8 +1637,8 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         FOOTPRINT(Smoliv)
         OVERWORLD(
             sPicTable_Smoliv,
-            SIZE_32x32,
-            SHADOW_SIZE_S,
+            SIZE_64x64,
+            SHADOW_SIZE_M,
             TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Smoliv,
@@ -1703,8 +1703,8 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         FOOTPRINT(Dolliv)
         OVERWORLD(
             sPicTable_Dolliv,
-            SIZE_32x32,
-            SHADOW_SIZE_S,
+            SIZE_64x64,
+            SHADOW_SIZE_M,
             TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Dolliv,
@@ -4015,9 +4015,9 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         FOOTPRINT(Wugtrio)
         OVERWORLD(
             sPicTable_Wugtrio,
-            SIZE_32x32,
+            SIZE_64x64,
             SHADOW_SIZE_M,
-            TRACKS_SLITHER,
+            TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Wugtrio,
             gShinyOverworldPalette_Wugtrio
@@ -4081,9 +4081,9 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         FOOTPRINT(Bombirdier)
         OVERWORLD(
             sPicTable_Bombirdier,
-            SIZE_32x32,
+            SIZE_64x64,
             SHADOW_SIZE_M,
-            TRACKS_NONE,
+            TRACKS_FOOT,
             sAnimTable_Following,
             gOverworldPalette_Bombirdier,
             gShinyOverworldPalette_Bombirdier
@@ -4413,10 +4413,10 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         FOOTPRINT(Revavroom)
         OVERWORLD(
             sPicTable_Revavroom,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_NONE,
-            sAnimTable_Following,
+            SIZE_64x64,
+            SHADOW_SIZE_NONE,
+            TRACKS_FOOT,
+            sAnimTable_AmaterasuScreen,
             gOverworldPalette_Revavroom,
             gShinyOverworldPalette_Revavroom
         )
@@ -7030,7 +7030,7 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
             SIZE_64x64,
             SHADOW_SIZE_M,
             TRACKS_NONE,
-            sAnimTable_Koraidon,
+            sAnimTable_Following,
             gOverworldPalette_Koraidon,
             gShinyOverworldPalette_Koraidon
         )

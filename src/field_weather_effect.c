@@ -3864,7 +3864,7 @@ void ConcertBeam_ApplyObjectLighting(void)
 
     // Collect the strongest beam contribution for each overworld OBJ palette.
     // Ordinary object events remain restricted to the normal 0..11 slots.
-    // Melmetal may use one of the dynamic OBJ palette slots 12..15 because
+    // The stage screen may use dynamic OBJ palette slots 12..15 because
     // this species slot is being used as a custom 64x64 stage sprite.
     for (objectEventId = 0; objectEventId < OBJECT_EVENTS_COUNT; objectEventId++)
     {
@@ -3874,7 +3874,7 @@ void ConcertBeam_ApplyObjectLighting(void)
         s16 pointY;
         u8 strength = 0;
         u8 beamId;
-        bool8 isMelmetal;
+        bool8 isStageScreen;
 
         if (!objectEvent->active || objectEvent->invisible)
             continue;
@@ -3891,20 +3891,20 @@ void ConcertBeam_ApplyObjectLighting(void)
         if (paletteNum >= CONCERT_BEAM_OBJECT_PALETTE_COUNT)
             continue;
 
-        isMelmetal =
-            (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(MELMETAL));
+        isStageScreen =
+            (objectEvent->graphicsId == OBJ_EVENT_GFX_SPECIES(REVAVROOM));
 
         // The beams were moved away from the 64x64 stage screen on purpose.
-        // Keep Melmetal out of LOCAL beam lighting. It still receives the
+        // Keep the screen out of LOCAL beam lighting. It still receives the
         // normal/global Concert Lights weather grade.
-        if (isMelmetal)
+        if (isStageScreen)
             continue;
 
 
         // Keep custom/weather/UI OBJ palette slots protected for every normal
-        // object. Only our Melmetal stage sprite is allowed through here.
+        // object. Only our stage screen sprite is allowed through here.
         if (paletteNum >= CONCERT_BEAM_STANDARD_PALETTE_COUNT
-         && !isMelmetal)
+         && !isStageScreen)
         {
             continue;
         }
@@ -3918,7 +3918,7 @@ void ConcertBeam_ApplyObjectLighting(void)
         {
             u8 beamStrength = 0;
 
-            if (isMelmetal)
+            if (isStageScreen)
             {
                 // 64x64 custom stage sprite: detect beam overlap against the
                 // whole visible rectangle, not a single NPC torso point.

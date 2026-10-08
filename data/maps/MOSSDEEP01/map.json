@@ -30,7 +30,7 @@
     },
     {
       "local_id": "LOCALID_TIME_GEAR_1",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(VAROOM)",
       "x": 43,
       "y": 25,
       "elevation": 0,
@@ -44,7 +44,7 @@
     },
     {
       "local_id": "LOCALID_TIME_GEAR_2",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(VAROOM)",
       "x": 63,
       "y": 46,
       "elevation": 0,
@@ -58,7 +58,7 @@
     },
     {
       "local_id": "LOCALID_TIME_GEAR_3",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CORVIKNIGHT)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(VAROOM)",
       "x": 22,
       "y": 28,
       "elevation": 0,
@@ -72,7 +72,7 @@
     },
     {
       "local_id": "LOCALID_MILLENNIUM_COMET",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(KORAIDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PAWMI)",
       "x": 33,
       "y": 4,
       "elevation": 0,
@@ -99,7 +99,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(XERNEAS)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CUFANT)",
       "x": 53,
       "y": 24,
       "elevation": 0,
@@ -153,7 +153,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(STONJOURNER)",
       "x": 18,
       "y": 72,
       "elevation": 0,
@@ -166,7 +166,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(STONJOURNER)",
       "x": 14,
       "y": 66,
       "elevation": 0,
@@ -261,7 +261,7 @@
     },
     {
       "local_id": "LOCALID_WAILORD_BLOCKER",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZEKROM)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(COPPERAJAH)",
       "x": 33,
       "y": 22,
       "elevation": 0,
@@ -449,7 +449,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACCELGOR)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(COALOSSAL)",
       "x": 10,
       "y": 67,
       "elevation": 0,
@@ -527,7 +527,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(STONJOURNER)",
       "x": 22,
       "y": 67,
       "elevation": 0,
@@ -540,7 +540,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIRAIDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(STONJOURNER)",
       "x": 26,
       "y": 67,
       "elevation": 0,

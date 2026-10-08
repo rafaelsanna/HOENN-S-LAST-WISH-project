@@ -399,7 +399,7 @@ MOSSDEEP01_EventScript_Celebi::
 	end
 
 MOSSDEEP01_EventScript_CelebiNeedGears::
-	showmonpic SPECIES_ARAQUANID, 10, 3
+	showmonpic SPECIES_SPIDOPS, 10, 3
 	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
 	removefieldmugshot
@@ -409,7 +409,7 @@ MOSSDEEP01_EventScript_CelebiNeedGears::
 	end
 
 MOSSDEEP01_EventScript_CelebiIntroduction::
-	showmonpic SPECIES_ARAQUANID, 10, 3
+	showmonpic SPECIES_SPIDOPS, 10, 3
 	createfieldmugshot MUGSHOT_CELEBI, EMOTE_NORMAL
 	msgbox MOSSDEEP01_Text_CelebiHelp, MSGBOX_DEFAULT
 	removefieldmugshot
