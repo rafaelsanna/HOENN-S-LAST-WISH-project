@@ -2013,7 +2013,7 @@ MOSSDEEP01_EventScript_Grandma::
 # 1007 "data/maps/MOSSDEEP01/scripts.pory"
 MOSSDEEP01_EventScript_TellStory::
 # 1008 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AEGISLASH, 10, 3
+	showmonpic SPECIES_COALOSSAL, 10, 3
 # 1009 "data/maps/MOSSDEEP01/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 1010 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2023,7 +2023,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1012 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 1013 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	showmonpic SPECIES_FIDOUGH, 10, 3
 # 1014 "data/maps/MOSSDEEP01/scripts.pory"
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 # 1015 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2033,7 +2033,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1017 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1018 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AVALUGG, 10, 3
+	showmonpic SPECIES_MASCHIFF, 10, 3
 # 1019 "data/maps/MOSSDEEP01/scripts.pory"
 	playse SE_M_SURF
 # 1020 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2045,7 +2045,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1023 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 1024 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AMAURA, 10, 3
+	showmonpic SPECIES_DOLLIV, 10, 3
 # 1025 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
 # 1026 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2053,7 +2053,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1027 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1028 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AROMATISSE, 10, 3
+	showmonpic SPECIES_VAROOM, 10, 3
 # 1029 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
 # 1030 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2061,7 +2061,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1031 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1032 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARROKUDA, 10, 3
+	showmonpic SPECIES_COPPERAJAH, 10, 3
 # 1033 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
 # 1034 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2069,7 +2069,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1035 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1036 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AUDINO, 10, 3
+	showmonpic SPECIES_ROLYCOLY, 10, 3
 # 1037 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
 # 1038 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2077,7 +2077,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1039 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1040 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AURORUS, 10, 3
+	showmonpic SPECIES_CARKOL, 10, 3
 # 1041 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
 # 1042 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2085,7 +2085,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1043 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1044 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AMOONGUSS, 10, 3
+	showmonpic SPECIES_SMOLIV, 10, 3
 # 1045 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory9, MSGBOX_DEFAULT
 # 1046 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2093,7 +2093,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1047 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 1048 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_APPLIN, 10, 3
+	showmonpic SPECIES_PAWMI, 10, 3
 # 1049 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory10, MSGBOX_DEFAULT
 # 1050 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2101,7 +2101,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1051 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 1052 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_APPLETUN, 10, 3
+	showmonpic SPECIES_PAWMO, 10, 3
 # 1053 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory11, MSGBOX_DEFAULT
 # 1054 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2109,7 +2109,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1055 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1056 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_AXEW, 10, 3
+	showmonpic SPECIES_MABOSSTIFF, 10, 3
 # 1057 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory12, MSGBOX_DEFAULT
 # 1058 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2117,7 +2117,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1059 "data/maps/MOSSDEEP01/scripts.pory"
 	
 # 1060 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARBOLIVA, 10, 3
+	showmonpic SPECIES_REVAVROOM, 10, 3
 # 1061 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaStory13, MSGBOX_DEFAULT
 # 1062 "data/maps/MOSSDEEP01/scripts.pory"
@@ -2125,7 +2125,7 @@ MOSSDEEP01_EventScript_TellStory::
 # 1063 "data/maps/MOSSDEEP01/scripts.pory"
 
 # 1064 "data/maps/MOSSDEEP01/scripts.pory"
-	showmonpic SPECIES_ARCHEN, 10, 3
+	showmonpic SPECIES_STONJOURNER, 10, 3
 # 1065 "data/maps/MOSSDEEP01/scripts.pory"
 	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 # 1066 "data/maps/MOSSDEEP01/scripts.pory"

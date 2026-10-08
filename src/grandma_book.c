@@ -245,24 +245,26 @@ static const u8 sBookStoryText18[] =
 
 static const struct GrandmaBookPage sBookStoryPages[] =
 {
-    { SPECIES_ARCTIBAX,   sBookStoryText1  },
-    { SPECIES_ARCTOVISH,  sBookStoryText2  },
-    { SPECIES_ARCTOZOLT,  sBookStoryText3  },
-    { SPECIES_ARMAROUGE,  sBookStoryText4  },
-    { SPECIES_AEGISLASH,  sBookStoryText5  },
-    { SPECIES_ALOMOMOLA,  sBookStoryText6  },
-    { SPECIES_AVALUGG,    sBookStoryText7  },
-    { SPECIES_AMAURA,     sBookStoryText8  },
-    { SPECIES_AROMATISSE, sBookStoryText9  },
-    { SPECIES_ARROKUDA,   sBookStoryText10 },
-    { SPECIES_AUDINO,     sBookStoryText11 },
-    { SPECIES_AURORUS,    sBookStoryText12 },
-    { SPECIES_AMOONGUSS,  sBookStoryText13 },
-    { SPECIES_APPLIN,     sBookStoryText14 },
-    { SPECIES_APPLETUN,   sBookStoryText15 },
-    { SPECIES_AXEW,       sBookStoryText16 },
-    { SPECIES_ARBOLIVA,   sBookStoryText17 },
-    { SPECIES_ARCHEN,     sBookStoryText18 },
+    // The story artwork was transferred to filler slots. Keep this scene on
+    // the same species slots used by the prologue and notebook showmonpics.
+    { SPECIES_WUGTRIO,    sBookStoryText1  }, // Arctibax
+    { SPECIES_TAROUNTULA, sBookStoryText2  }, // Arctovish
+    { SPECIES_BOMBIRDIER, sBookStoryText3  }, // Arctozolt
+    { SPECIES_CUFANT,     sBookStoryText4  }, // Armarouge
+    { SPECIES_COALOSSAL,  sBookStoryText5  }, // Aegislash
+    { SPECIES_FIDOUGH,    sBookStoryText6  }, // Alomomola
+    { SPECIES_MASCHIFF,   sBookStoryText7  }, // Avalugg
+    { SPECIES_DOLLIV,     sBookStoryText8  }, // Amaura
+    { SPECIES_VAROOM,     sBookStoryText9  }, // Aromatisse
+    { SPECIES_COPPERAJAH, sBookStoryText10 }, // Arrokuda
+    { SPECIES_ROLYCOLY,   sBookStoryText11 }, // Audino
+    { SPECIES_CARKOL,     sBookStoryText12 }, // Aurorus
+    { SPECIES_SMOLIV,     sBookStoryText13 }, // Amoonguss
+    { SPECIES_PAWMI,      sBookStoryText14 }, // Applin
+    { SPECIES_PAWMO,      sBookStoryText15 }, // Appletun
+    { SPECIES_MABOSSTIFF, sBookStoryText16 }, // Axew
+    { SPECIES_REVAVROOM,  sBookStoryText17 }, // Arboliva
+    { SPECIES_STONJOURNER,sBookStoryText18 }, // Archen
 };
 
 static const u8 sBookPage01[] = _("Page 01");

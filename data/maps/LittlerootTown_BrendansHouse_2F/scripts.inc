@@ -587,7 +587,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 294 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 1. AEGISLASH - The Beginning
 # 295 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AEGISLASH, 10, 3
+	showmonpic SPECIES_COALOSSAL, 10, 3
 # 296 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory1, MSGBOX_DEFAULT
 # 297 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -597,7 +597,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 299 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 2. ALOMOMOLA - The Conflict
 # 300 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	showmonpic SPECIES_FIDOUGH, 10, 3
 # 301 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory2, MSGBOX_DEFAULT
 # 302 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -607,7 +607,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 304 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 3. AVALUGG - Great Battle
 # 305 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AVALUGG, 10, 3
+	showmonpic SPECIES_MASCHIFF, 10, 3
 # 306 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	playse SE_M_SURF
 # 307 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -621,7 +621,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 311 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 4. AMAURA - Tsunami
 # 312 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AMAURA, 10, 3
+	showmonpic SPECIES_DOLLIV, 10, 3
 # 313 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory4, MSGBOX_DEFAULT
 # 314 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -631,7 +631,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 316 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 5. AROMATISSE - Volcano
 # 317 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AROMATISSE, 10, 3
+	showmonpic SPECIES_VAROOM, 10, 3
 # 318 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory5, MSGBOX_DEFAULT
 # 319 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -641,7 +641,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 321 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 6. ARROKUDA - Wasteland
 # 322 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_ARROKUDA, 10, 3
+	showmonpic SPECIES_COPPERAJAH, 10, 3
 # 323 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory6, MSGBOX_DEFAULT
 # 324 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -651,7 +651,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 326 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 7. AUDINO - Ocean Storms
 # 327 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AUDINO, 10, 3
+	showmonpic SPECIES_ROLYCOLY, 10, 3
 # 328 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory7, MSGBOX_DEFAULT
 # 329 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -661,7 +661,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 331 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 8. AURORUS - Survivor Camps
 # 332 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AURORUS, 10, 3
+	showmonpic SPECIES_CARKOL, 10, 3
 # 333 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory8, MSGBOX_DEFAULT
 # 334 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -671,7 +671,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 336 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 9. AMOONGUSS - Hope Fades
 # 337 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AMOONGUSS, 10, 3
+	showmonpic SPECIES_SMOLIV, 10, 3
 # 338 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory9, MSGBOX_DEFAULT
 # 339 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -681,7 +681,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 341 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 10. APPLIN - Legend Appears
 # 342 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_APPLIN, 10, 3
+	showmonpic SPECIES_PAWMI, 10, 3
 # 343 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory10, MSGBOX_DEFAULT
 # 344 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -691,7 +691,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 346 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 11. APPLETUN - Sky Guardian
 # 347 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_APPLETUN, 10, 3
+	showmonpic SPECIES_PAWMO, 10, 3
 # 348 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory11, MSGBOX_DEFAULT
 # 349 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -701,7 +701,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 351 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 12. AXEW - Peace Restored
 # 352 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_AXEW, 10, 3
+	showmonpic SPECIES_MABOSSTIFF, 10, 3
 # 353 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory12, MSGBOX_DEFAULT
 # 354 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
@@ -711,7 +711,7 @@ PlayersHouse_2F_EventScript_ReadNotebook::
 # 356 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	// 13. ARBOLIVA - World Today
 # 357 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
-	showmonpic SPECIES_ARBOLIVA, 10, 3
+	showmonpic SPECIES_REVAVROOM, 10, 3
 # 358 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	msgbox PlayersHouse_2F_Text_NotebookStory13, MSGBOX_DEFAULT
 # 359 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"

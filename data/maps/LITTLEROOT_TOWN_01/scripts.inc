@@ -77,7 +77,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 39 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0. ARCTIBAX - forgotten age
 # 40 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCTIBAX, 10, 3
+	showmonpic SPECIES_WUGTRIO, 10, 3
 # 41 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 42 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -91,7 +91,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 46 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0.1. ARCTOVISH - Hoenn was a paradise
 # 47 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCTOVISH, 10, 3
+	showmonpic SPECIES_TAROUNTULA, 10, 3
 # 48 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 49 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -105,7 +105,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 53 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0.2. ARCTOZOLT - People and Pokémon lived as one
 # 54 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCTOZOLT, 10, 3
+	showmonpic SPECIES_BOMBIRDIER, 10, 3
 # 55 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 56 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -119,7 +119,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 60 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0.3. ARMAROUGE - the balance
 # 61 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARMAROUGE, 10, 3
+	showmonpic SPECIES_CUFANT, 10, 3
 # 62 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 63 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -133,7 +133,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 67 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 1. AEGISLASH - KYOGRE
 # 68 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AEGISLASH, 10, 3
+	showmonpic SPECIES_COALOSSAL, 10, 3
 # 69 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 70 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -147,7 +147,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 74 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 2. ALOMOMOLA - GROUNDON
 # 75 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	showmonpic SPECIES_FIDOUGH, 10, 3
 # 76 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 # 77 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -161,7 +161,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 81 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 3. AVALUGG - The great battle
 # 82 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AVALUGG, 10, 3
+	showmonpic SPECIES_MASCHIFF, 10, 3
 # 83 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_SURF
 # 84 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -177,7 +177,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 89 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 4. AMAURA - The FLOOD
 # 90 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AMAURA, 10, 3
+	showmonpic SPECIES_DOLLIV, 10, 3
 # 91 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory4, MSGBOX_DEFAULT
 # 92 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -189,7 +189,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 95 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 5. AROMATISSE - TSUNAMI
 # 96 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AROMATISSE, 10, 3
+	showmonpic SPECIES_VAROOM, 10, 3
 # 97 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory5, MSGBOX_DEFAULT
 # 98 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -201,7 +201,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 101 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 6. ARROKUDA - VOLCANO
 # 102 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARROKUDA, 10, 3
+	showmonpic SPECIES_COPPERAJAH, 10, 3
 # 103 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory6, MSGBOX_DEFAULT
 # 104 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -213,7 +213,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 107 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 7. AUDINO - DESTROYED CITIES
 # 108 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AUDINO, 10, 3
+	showmonpic SPECIES_ROLYCOLY, 10, 3
 # 109 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory7, MSGBOX_DEFAULT
 # 110 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -225,7 +225,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 113 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 8. AURORUS - FLOODED CITIES
 # 114 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AURORUS, 10, 3
+	showmonpic SPECIES_CARKOL, 10, 3
 # 115 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory8, MSGBOX_DEFAULT
 # 116 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -237,7 +237,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 119 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 9. AMOONGUSS - LAVA ON THE LANDS
 # 120 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AMOONGUSS, 10, 3
+	showmonpic SPECIES_SMOLIV, 10, 3
 # 121 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory9, MSGBOX_DEFAULT
 # 122 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -249,7 +249,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 125 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 10. APPLIN - A legend appears jirachi and celebi
 # 126 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_APPLIN, 10, 3
+	showmonpic SPECIES_PAWMI, 10, 3
 # 127 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory10, MSGBOX_DEFAULT
 # 128 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -261,7 +261,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 131 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 11. APPLETUN - The MAGIC SHRINE
 # 132 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_APPLETUN, 10, 3
+	showmonpic SPECIES_PAWMO, 10, 3
 # 133 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory11, MSGBOX_DEFAULT
 # 134 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -273,7 +273,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 137 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 12. AXEW - JIRACHI USING ITS POWERS TO GRANT A WISH
 # 138 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AXEW, 10, 3
+	showmonpic SPECIES_MABOSSTIFF, 10, 3
 # 139 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory12, MSGBOX_DEFAULT
 # 140 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -285,7 +285,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 143 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 13. ARBOLIVA - JIRACHI USING ITS POWERS TO GRANT A WISH
 # 144 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARBOLIVA, 10, 3
+	showmonpic SPECIES_REVAVROOM, 10, 3
 # 145 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaStory13, MSGBOX_DEFAULT
 # 146 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -297,7 +297,7 @@ LittlerootTown_EventScript_ShowGrandmaStory::
 # 149 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// Final - MILLENION COMMET
 # 150 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCHEN, 10, 3
+	showmonpic SPECIES_STONJOURNER, 10, 3
 # 151 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	msgbox LittlerootTown_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 # 152 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -367,7 +367,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 184 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0. ARCTIBAX - forgotten age
 # 185 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCTIBAX, 10, 3
+	showmonpic SPECIES_WUGTRIO, 10, 3
 # 186 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_LATIOS, CRY_MODE_ENCOUNTER
 # 187 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -381,7 +381,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 191 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0.1. ARCTOVISH - Hoenn was a paradise
 # 192 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCTOVISH, 10, 3
+	showmonpic SPECIES_TAROUNTULA, 10, 3
 # 193 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_SWAMPERT, CRY_MODE_ENCOUNTER
 # 194 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -395,7 +395,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 198 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0.2. ARCTOZOLT - People and Pokémon lived as one
 # 199 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCTOZOLT, 10, 3
+	showmonpic SPECIES_BOMBIRDIER, 10, 3
 # 200 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
 # 201 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -409,7 +409,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 205 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 0.3. ARMAROUGE - the balance
 # 206 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARMAROUGE, 10, 3
+	showmonpic SPECIES_CUFANT, 10, 3
 # 207 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_FLY
 # 208 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -423,7 +423,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 212 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 1. AEGISLASH - KYOGRE
 # 213 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AEGISLASH, 10, 3
+	showmonpic SPECIES_COALOSSAL, 10, 3
 # 214 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 # 215 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -437,7 +437,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 219 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 2. ALOMOMOLA - GROUNDON
 # 220 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	showmonpic SPECIES_FIDOUGH, 10, 3
 # 221 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 # 222 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -451,7 +451,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 226 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 3. AVALUGG - The great battle
 # 227 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AVALUGG, 10, 3
+	showmonpic SPECIES_MASCHIFF, 10, 3
 # 228 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_SURF
 # 229 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -467,7 +467,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 234 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 4. AMAURA - The FLOOD
 # 235 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AMAURA, 10, 3
+	showmonpic SPECIES_DOLLIV, 10, 3
 # 236 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_BUBBLE_BEAM
 # 237 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -481,7 +481,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 241 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 5. AROMATISSE - TSUNAMI
 # 242 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AROMATISSE, 10, 3
+	showmonpic SPECIES_VAROOM, 10, 3
 # 243 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_SURF
 # 244 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -495,7 +495,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 248 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 6. ARROKUDA - VOLCANO
 # 249 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARROKUDA, 10, 3
+	showmonpic SPECIES_COPPERAJAH, 10, 3
 # 250 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_HEAT_WAVE
 # 251 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -509,7 +509,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 255 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 7. AUDINO - DESTROYED CITIES
 # 256 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AUDINO, 10, 3
+	showmonpic SPECIES_ROLYCOLY, 10, 3
 # 257 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_EARTHQUAKE
 # 258 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -523,7 +523,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 262 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 8. AURORUS - FLOODED CITIES
 # 263 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AURORUS, 10, 3
+	showmonpic SPECIES_CARKOL, 10, 3
 # 264 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_SURF
 # 265 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -537,7 +537,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 269 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 9. AMOONGUSS - LAVA ON THE LANDS
 # 270 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AMOONGUSS, 10, 3
+	showmonpic SPECIES_SMOLIV, 10, 3
 # 271 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_HEAT_WAVE
 # 272 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -551,7 +551,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 276 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 10. APPLIN - A legend appears jirachi and celebi
 # 277 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_APPLIN, 10, 3
+	showmonpic SPECIES_PAWMI, 10, 3
 # 278 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_CELEBI, CRY_MODE_ENCOUNTER
 # 279 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -565,7 +565,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 283 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 11. APPLETUN - The MAGIC SHRINE
 # 284 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_APPLETUN, 10, 3
+	showmonpic SPECIES_PAWMO, 10, 3
 # 285 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_TELEPORT
 # 286 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -579,7 +579,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 290 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 12. AXEW - JIRACHI USING ITS POWERS TO GRANT A WISH
 # 291 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_AXEW, 10, 3
+	showmonpic SPECIES_MABOSSTIFF, 10, 3
 # 292 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_HOOTHOOT, CRY_MODE_ENCOUNTER
 # 293 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -593,7 +593,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 297 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// 13. ARBOLIVA - JIRACHI USING ITS POWERS TO GRANT A WISH
 # 298 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARBOLIVA, 10, 3
+	showmonpic SPECIES_REVAVROOM, 10, 3
 # 299 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playmoncry SPECIES_JIRACHI, CRY_MODE_ENCOUNTER
 # 300 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -607,7 +607,7 @@ LittlerootTown_01_EventScript_JirachiCelebi::
 # 304 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	// Final - MILLENION COMMET
 # 305 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	showmonpic SPECIES_ARCHEN, 10, 3
+	showmonpic SPECIES_STONJOURNER, 10, 3
 # 306 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	playse SE_M_COSMIC_POWER
 # 307 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"

@@ -1005,63 +1005,63 @@ MOSSDEEP01_EventScript_Grandma::
 	end
 
 MOSSDEEP01_EventScript_TellStory::
-	showmonpic SPECIES_AEGISLASH, 10, 3
+	showmonpic SPECIES_COALOSSAL, 10, 3
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	msgbox MOSSDEEP01_Text_GrandmaStory1, MSGBOX_DEFAULT
 	hidemonpic
 	
-	showmonpic SPECIES_ALOMOMOLA, 10, 3
+	showmonpic SPECIES_FIDOUGH, 10, 3
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 	msgbox MOSSDEEP01_Text_GrandmaStory2, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_AVALUGG, 10, 3
+	showmonpic SPECIES_MASCHIFF, 10, 3
 	playse SE_M_SURF
 	playse SE_M_THUNDERBOLT
 	msgbox MOSSDEEP01_Text_GrandmaStory3, MSGBOX_DEFAULT
 	hidemonpic
 	
-	showmonpic SPECIES_AMAURA, 10, 3
+	showmonpic SPECIES_DOLLIV, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory4, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_AROMATISSE, 10, 3
+	showmonpic SPECIES_VAROOM, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory5, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_ARROKUDA, 10, 3
+	showmonpic SPECIES_COPPERAJAH, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory6, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_AUDINO, 10, 3
+	showmonpic SPECIES_ROLYCOLY, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory7, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_AURORUS, 10, 3
+	showmonpic SPECIES_CARKOL, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory8, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_AMOONGUSS, 10, 3
+	showmonpic SPECIES_SMOLIV, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory9, MSGBOX_DEFAULT
 	hidemonpic
 	
-	showmonpic SPECIES_APPLIN, 10, 3
+	showmonpic SPECIES_PAWMI, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory10, MSGBOX_DEFAULT
 	hidemonpic
 	
-	showmonpic SPECIES_APPLETUN, 10, 3
+	showmonpic SPECIES_PAWMO, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory11, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_AXEW, 10, 3
+	showmonpic SPECIES_MABOSSTIFF, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory12, MSGBOX_DEFAULT
 	hidemonpic
 	
-	showmonpic SPECIES_ARBOLIVA, 10, 3
+	showmonpic SPECIES_REVAVROOM, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaStory13, MSGBOX_DEFAULT
 	hidemonpic
 
-	showmonpic SPECIES_ARCHEN, 10, 3
+	showmonpic SPECIES_STONJOURNER, 10, 3
 	msgbox MOSSDEEP01_Text_GrandmaEncouragement, MSGBOX_DEFAULT
 	hidemonpic
 
