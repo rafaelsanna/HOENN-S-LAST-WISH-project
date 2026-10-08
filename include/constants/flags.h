@@ -1733,7 +1733,7 @@
 #define FLAG_UNUSED_0x1044                           (HLW_CUSTOM_FLAGS_START + 0x044) // Reserved by FLAG_RECEIVED_DUBIOUS_DISC_LITTLEROOT
 #define FLAG_SURF_SPRITE                             (HLW_CUSTOM_FLAGS_START + 0x045) // Use Pokémon overworld sprites while surfing.
 #define FLAG_SURF_SPRITE_CONFIGURED                 (HLW_CUSTOM_FLAGS_START + 0x046) // Surf sprite option has been saved.
-#define FLAG_UNUSED_0x1047                           (HLW_CUSTOM_FLAGS_START + 0x047) // Unused Flag
+#define FLAG_NIGHT_MODE                              (HLW_CUSTOM_FLAGS_START + 0x047) // Reduce blue light with a red screen filter.
 #define FLAG_UNUSED_0x1048                           (HLW_CUSTOM_FLAGS_START + 0x048) // Unused Flag
 #define FLAG_UNUSED_0x1049                           (HLW_CUSTOM_FLAGS_START + 0x049) // Unused Flag
 #define FLAG_UNUSED_0x104A                           (HLW_CUSTOM_FLAGS_START + 0x04A) // Unused Flag

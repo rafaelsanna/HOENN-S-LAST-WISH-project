@@ -1,4 +1,5 @@
 #include "global.h"
+#include "night_mode.h"
 #include "palette.h"
 #include "util.h"
 #include "decompress.h"
@@ -87,7 +88,7 @@ void TransferPlttBuffer(void)
 {
     if (!gPaletteFade.bufferTransferDisabled)
     {
-        void *src = gPlttBufferFaded;
+        const void *src = NightMode_GetPaletteForTransfer();
         void *dest = (void *)PLTT;
         DmaCopy16(3, src, dest, PLTT_SIZE);
         sPlttBufferTransferPending = FALSE;
@@ -158,7 +159,7 @@ bool32 BeginNormalPaletteFade(u32 selectedPalettes, s8 delay, u8 startY, u8 targ
 
         temp = gPaletteFade.bufferTransferDisabled;
         gPaletteFade.bufferTransferDisabled = FALSE;
-        CpuCopy32(gPlttBufferFaded, (void *)PLTT, PLTT_SIZE);
+        NightMode_CopyPaletteToHardware();
         sPlttBufferTransferPending = FALSE;
         if (gPaletteFade.mode == HARDWARE_FADE && gPaletteFade.active)
             UpdateBlendRegisters();
@@ -205,7 +206,7 @@ bool32 BeginTimeOfDayPaletteFade(u32 selectedPalettes, s8 delay, u8 startY, u8 t
 
     temp = gPaletteFade.bufferTransferDisabled;
     gPaletteFade.bufferTransferDisabled = 0;
-    CpuCopy32(gPlttBufferFaded, (void *)PLTT, PLTT_SIZE);
+    NightMode_CopyPaletteToHardware();
     sPlttBufferTransferPending = 0;
     if (gPaletteFade.mode == HARDWARE_FADE && gPaletteFade.active)
         UpdateBlendRegisters();

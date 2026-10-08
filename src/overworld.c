@@ -43,6 +43,7 @@
 #include "metatile_behavior.h"
 #include "mirage_tower.h"
 #include "money.h"
+#include "night_mode.h"
 #include "new_game.h"
 #include "nuzlocke.h"
 #include "palette.h"
@@ -2358,7 +2359,7 @@ static bool32 ReturnToFieldLocal(u8 *state)
         if (gFieldCallback == FieldCB_ContinueScriptFromWhite)
         {
             BlendPalettes(PALETTES_ALL, 16, RGB_WHITE);
-            CpuCopy32(gPlttBufferFaded, (void *)PLTT, PLTT_SIZE);
+            NightMode_CopyPaletteToHardware();
         }
         FollowerNPC_BindToSurfBlobOnReloadScreen();
         (*state)++;

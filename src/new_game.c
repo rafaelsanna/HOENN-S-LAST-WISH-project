@@ -18,6 +18,7 @@
 #include "easy_chat.h"
 #include "event_data.h"
 #include "money.h"
+#include "night_mode.h"
 #include "trainer_hill.h"
 #include "tv.h"
 #include "coins.h"
@@ -200,6 +201,7 @@ static void InitializeNewGameData(void)
     
     // Event and story systems
     InitEventData();
+    NightMode_SetEnabled(FALSE);
     // OPS ALL MOVES is a fun Casual-only option and starts disabled.
     FlagClear(FLAG_OPS_ALL_MOVES);
     // All Abilities is a fun Casual-only option and starts disabled.
