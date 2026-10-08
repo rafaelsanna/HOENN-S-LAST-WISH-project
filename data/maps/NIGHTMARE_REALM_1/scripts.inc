@@ -179,7 +179,7 @@ NightmareRealm1_Arrival::
 # 90 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     setflag FLAG_LOST_NIGHTMARE_BATTLE
 # 91 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    setwildbattle SPECIES_DUCKLETT, 45, ITEM_NONE, SPECIES_ESCAVALIER, 45, ITEM_NONE
+    setwildbattle SPECIES_NICKIT, 45, ITEM_NONE, SPECIES_CLOBBOPUS, 45, ITEM_NONE
 # 92 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     dowildbattle
 # 93 "data/maps/NIGHTMARE_REALM_1/scripts.pory"

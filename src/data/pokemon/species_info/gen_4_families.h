@@ -1027,13 +1027,13 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
 
     [SPECIES_BIBAREL] =
     {
-        .baseHP        = 95,
-        .baseAttack    = 91,
-        .baseDefense   = 90,
-        .baseSpeed     = 60,
-        .baseSpAttack  = 50,
-        .baseSpDefense = 97,
-        .types = MON_TYPES(TYPE_GRASS, TYPE_WATER),
+        .baseHP        = 79,
+        .baseAttack    = 85,
+        .baseDefense   = 60,
+        .baseSpeed     = 71,
+        .baseSpAttack  = 55,
+        .baseSpDefense = 60,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_WATER),
         .catchRate = 127,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 144 : 116,
         .evYield_Attack = 2,
@@ -1042,52 +1042,48 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_FIELD),
-        .abilities = { ABILITY_THICK_FAT, ABILITY_UNAWARE, ABILITY_HYDRATION },
+        .abilities = { ABILITY_SIMPLE, ABILITY_UNAWARE, ABILITY_MOODY },
         .bodyColor = BODY_COLOR_BROWN,
-        .speciesName = _("Ratybara"),
+        .speciesName = _("Bibarel"),
         .cryId = CRY_BIBAREL,
         .natDexNum = NATIONAL_DEX_BIBAREL,
-        .categoryName = _("Capybara"),
+        .categoryName = _("Beaver"),
         .height = 10,
         .weight = 315,
         .description = COMPOUND_STRING(
-"It nests near hot springs and calm streams,\n"
-"relaxing in warm waters for hours on end.\n"
-"Where Ratybara rests, the springs stay\n"
-"clear and peaceful a gift to each traveler.$"),
+            "It makes its nest by damming streams\n"
+            "with bark and mud. A river dammed by\n"
+            "Bibarel will never overflow its banks,\n"
+            "which is appreciated by people nearby."),
         .pokemonScale = 305,
         .pokemonOffset = 8,
         .trainerScale = 257,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Bibarel,
         .frontPicSize = MON_COORDS_SIZE(56, 48),
-        .frontPicYOffset = 2,
+        .frontPicYOffset = 8,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 10),
             ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 10),
             ANIMCMD_FRAME(1, 10),
             ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_H_JUMPS_V_STRETCH,
+        .frontAnimId = ANIM_GROW_VIBRATE,
         .backPic = gMonBackPic_Bibarel,
         .backPicSize = MON_COORDS_SIZE(64, 56),
-        .backPicYOffset = 3,
+        .backPicYOffset = 6,
         .backAnimId = BACK_ANIM_DIP_RIGHT_SIDE,
         .palette = gMonPalette_Bibarel,
         .shinyPalette = gMonShinyPalette_Bibarel,
         .iconSprite = gMonIcon_Bibarel,
-        .iconPalIndex = 4,
-        .iconPalette = gMonIconPalette_Bibarel,
-        .shinyIconPalette = gMonShinyIconPalette_Bibarel,
+        .iconPalIndex = 2,
 #if P_GENDER_DIFFERENCES
         .frontPicFemale = gMonFrontPic_BibarelF,
         .frontPicSizeFemale = MON_COORDS_SIZE(56, 48),
 #endif //P_GENDER_DIFFERENCES
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(0, 12, SHADOW_SIZE_L)
+        SHADOW(-5, 5, SHADOW_SIZE_M)
         FOOTPRINT(Bibarel)
         OVERWORLD(
             sPicTable_Bibarel,
@@ -7282,61 +7278,65 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
 #if P_FAMILY_DARKRAI
     [SPECIES_DARKRAI] =
     {
-        .baseHP        = 100,
-        .baseAttack    = 110,
-        .baseDefense   = 80,
-        .baseSpeed     = 90,
-        .baseSpAttack  = 60,
-        .baseSpDefense = 80,
+        .baseHP        = 70,
+        .baseAttack    = 90,
+        .baseDefense   = 90,
+        .baseSpeed     = 125,
+        .baseSpAttack  = 135,
+        .baseSpDefense = 90,
         .types = MON_TYPES(TYPE_DARK),
-        .catchRate = 50,  // Aumentei de 3 para 50 (mais comum)
-        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 220 : 200,  // Aumentei EXP
-        .evYield_Attack = 2,
-        .genderRatio = PERCENT_FEMALE(50),
-        .eggCycles = 20,  // Adicionei ciclos de ovo
-        .friendship = STANDARD_FRIENDSHIP,
-        .growthRate = GROWTH_MEDIUM_FAST,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),  // Mudei para FIELD
-        .abilities = { ABILITY_INTIMIDATE, ABILITY_STRONG_JAW, ABILITY_MOXIE },
-        .bodyColor = BODY_COLOR_GRAY,  // Mudei para GRAY
-        .speciesName = _("Howlyena"),
-        .cryId = CRY_MIGHTYENA,  // Use o cry do Mightyena
+        .catchRate = 3,
+    #if P_UPDATED_EXP_YIELDS >= GEN_8
+        .expYield = 300,
+    #elif P_UPDATED_EXP_YIELDS >= GEN_5
+        .expYield = 270,
+    #else
+        .expYield = 210,
+    #endif
+        .evYield_Speed = 1,
+        .evYield_SpAttack = 2,
+        .genderRatio = MON_GENDERLESS,
+        .eggCycles = 120,
+        .friendship = 0,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_BAD_DREAMS, ABILITY_NONE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BLACK,
+        .speciesName = _("Darkrai"),
+        .cryId = CRY_DARKRAI,
         .natDexNum = NATIONAL_DEX_DARKRAI,
-        .categoryName = _("Crunch"),  // Mudei categoria
-        .height = 14,  // Reduzi altura
-        .weight = 900,  // Reduzi peso
+        .categoryName = _("Pitch-Black"),
+        .height = 15,
+        .weight = 505,
         .description = COMPOUND_STRING(
-"Its bite is strongest of any Pokémon.\n"
-"It leads its pack with fierce resolve.\n"
-"Rivalries with OBSTAGOON rage nightly,\n"
-"battles echoing through the wild dark.$"),
-        .pokemonScale = 320,
-        .pokemonOffset = 5,
-        .trainerScale = 256,
+            "It chases people and Pokémon from its\n"
+            "territory by causing them to experience\n"
+            "deep, nightmarish slumbers. However,\n"
+            "it means no harm."),
+        .pokemonScale = 268,
+        .pokemonOffset = 2,
+        .trainerScale = 271,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Darkrai,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 0,
+        .frontPicYOffset = 3,
         .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(0, 20),
-            ANIMCMD_FRAME(1, 8),
-            ANIMCMD_FRAME(0, 8),
-            ANIMCMD_FRAME(1, 8),
-            ANIMCMD_FRAME(0, 8),
+            ANIMCMD_FRAME(1, 50),
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 10),
         ),
-        .frontAnimId = ANIM_V_SHAKE,  // Mudei animação
+        .frontAnimId = ANIM_GLOW_BLACK,
+        .enemyMonElevation = 4,
         .backPic = gMonBackPic_Darkrai,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 0,
-        .backAnimId = BACK_ANIM_H_SHAKE,  // Mudei animação
+        .backAnimId = BACK_ANIM_SHRINK_GROW_VIBRATE,
         .palette = gMonPalette_Darkrai,
         .shinyPalette = gMonShinyPalette_Darkrai,
         .iconSprite = gMonIcon_Darkrai,
-        .iconPalIndex = 2,
-        .iconPalette = gMonIconPalette_Darkrai,
-        .shinyIconPalette = gMonShinyIconPalette_Darkrai,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(3, 15, SHADOW_SIZE_L)
+        SHADOW(4, 12, SHADOW_SIZE_M)
         FOOTPRINT(Darkrai)
         OVERWORLD(
             sPicTable_Darkrai,
@@ -7347,12 +7347,11 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
             gOverworldPalette_Darkrai,
             gShinyOverworldPalette_Darkrai
         )
-        // REMOVE estas linhas:
-        // .isMythical = TRUE,
-        // .isFrontierBanned = TRUE, 
-        // .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
-        .levelUpLearnset = sMightyenaLevelUpLearnset,  // Use learnset do Mightyena
-        .teachableLearnset = sMightyenaTeachableLearnset,  // Use TMs do Mightyena
+        .isMythical = TRUE,
+        .isFrontierBanned = TRUE,
+        .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
+        .levelUpLearnset = sDarkraiLevelUpLearnset,
+        .teachableLearnset = sDarkraiTeachableLearnset,
     },
 #endif //P_FAMILY_DARKRAI
 

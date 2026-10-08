@@ -1571,7 +1571,7 @@ MOSSDEEP01_EventScript_GuardDarkrai::
 # 786 "data/maps/MOSSDEEP01/scripts.pory"
 	lock
 # 787 "data/maps/MOSSDEEP01/scripts.pory"
-	playmoncry SPECIES_DARKRAI, CRY_MODE_NORMAL
+	playmoncry SPECIES_DACHSBUN, CRY_MODE_NORMAL
 # 788 "data/maps/MOSSDEEP01/scripts.pory"
 	waitmoncry
 # 789 "data/maps/MOSSDEEP01/scripts.pory"

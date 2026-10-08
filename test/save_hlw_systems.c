@@ -32,18 +32,18 @@ TEST("Wish banks keep core and custom boundaries independent of achievements")
 TEST("Wish membership uses the explicit manifest instead of a species tail")
 {
     EXPECT_EQ(WishForm_GetIdForSpecies(SPECIES_BULBASAUR), 0);
-    EXPECT_EQ(WishForm_GetIdForSpecies(SPECIES_DARKRAI), 9);
+    EXPECT_EQ(WishForm_GetIdForSpecies(SPECIES_DACHSBUN), 9);
     EXPECT_EQ(WishForm_GetIdForSpecies(SPECIES_URSALUNA), 99);
     EXPECT_EQ(WishForm_GetIdForSpecies(SPECIES_NONE), WISH_FORM_ID_NONE);
-    EXPECT_EQ(WishForm_GetIdForSpecies(SPECIES_DUCKLETT), WISH_FORM_ID_NONE);
+    EXPECT_EQ(WishForm_GetIdForSpecies(SPECIES_NICKIT), WISH_FORM_ID_NONE);
 }
 
 TEST("Shadow IDs preserve joint Nightmare progress and bound the 30-slot bank")
 {
     struct AchievementSave before = gSaveBlock3Ptr->achievements;
-    EXPECT_EQ(ShadowPokemon_GetIdForSpecies(SPECIES_ESCAVALIER), SHADOW_ID_EVIL_CELEBI);
-    EXPECT_EQ(ShadowPokemon_GetIdForSpecies(SPECIES_DUCKLETT), SHADOW_ID_JIRACHI);
-    EXPECT_EQ(ShadowPokemon_GetIdForSpecies(SPECIES_SWANNA), SHADOW_ID_SUICUNE);
+    EXPECT_EQ(ShadowPokemon_GetIdForSpecies(SPECIES_CLOBBOPUS), SHADOW_ID_EVIL_CELEBI);
+    EXPECT_EQ(ShadowPokemon_GetIdForSpecies(SPECIES_NICKIT), SHADOW_ID_JIRACHI);
+    EXPECT_EQ(ShadowPokemon_GetIdForSpecies(SPECIES_GRAPPLOCT), SHADOW_ID_SUICUNE);
     EXPECT_EQ(ShadowPokemon_GetIdForSpecies(SPECIES_JIRACHI), SHADOW_ID_NONE);
     memset(&gSaveBlock3Ptr->achievements, 0, sizeof(before));
     EXPECT_EQ(ShadowPokemon_SetDefeated(SHADOW_ID_EVIL_CELEBI, TRUE), TRUE);

@@ -169,7 +169,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
         HIDDEN_GROTTO_ITEM_POOL_ROUTE119,
         ITEM_BLACK_AUGURITE,
         {
-            {SPECIES_VIRIZION, 0},
+            {SPECIES_WIGLETT, 0},
             {SPECIES_TANGELA, 0},
             {SPECIES_LEAFEON, 0},
             {SPECIES_SCYTHER, 0},
@@ -186,7 +186,7 @@ static const struct HiddenGrotto sHiddenGrottoData[NUM_HIDDEN_GROTTOES] =
             {SPECIES_TREECKO, 0},
             {SPECIES_VILEPLUME, 0},
             {SPECIES_BELLOSSOM, 0},
-            {SPECIES_BIBAREL, 0},
+            {SPECIES_SCOVILLAIN, 0},
         },
     },
     [HIDDEN_GROTTO_ID_MT_PYRE] = {

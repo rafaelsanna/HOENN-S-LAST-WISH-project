@@ -5639,10 +5639,15 @@ static const u16 sBlipbugEggMoveLearnset[] = {
 
 #if P_FAMILY_NICKIT
 static const u16 sNickitEggMoveLearnset[] = {
-    MOVE_QUICK_GUARD,
-    MOVE_KNOCK_OFF,
-    MOVE_HOWL,
-    MOVE_TORMENT,
+    MOVE_STEEL_WING,
+    MOVE_BRINE,
+    MOVE_GUST,
+    MOVE_AIR_CUTTER,
+    MOVE_MIRROR_MOVE,
+    MOVE_ME_FIRST,
+    MOVE_LUCKY_CHANT,
+    MOVE_MUD_SPORT,
+    MOVE_AQUA_JET,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_NICKIT
@@ -6279,3 +6284,20 @@ static const u16 sFrigibaxEggMoveLearnset[] = {
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_FRIGIBAX
+
+#if P_FAMILY_PAWMI
+static const u16 sPawmotEggMoveLearnset[] = {
+    MOVE_FIRE_FANG,
+    MOVE_THUNDER_FANG,
+    MOVE_CRUSH_CLAW,
+    MOVE_FEINT_ATTACK,
+    MOVE_PURSUIT,
+    MOVE_IRON_TAIL,
+    MOVE_POISON_TAIL,
+    MOVE_SNATCH,
+    MOVE_METAL_CLAW,
+    MOVE_GLARE,
+    MOVE_SUCKER_PUNCH,
+    MOVE_UNAVAILABLE,
+};
+#endif

@@ -1092,7 +1092,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sMightyenaLevelUpLearnset,
         .teachableLearnset = sMightyenaTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_DARKRAI}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_DACHSBUN}),
     },
 #endif //P_FAMILY_POOCHYENA
 
@@ -3344,8 +3344,8 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sMasquerainLevelUpLearnset,
         .teachableLearnset = sMasquerainTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 45, SPECIES_VOLCARONA, CONDITIONS({IF_WEATHER, WEATHER_RAIN})},
-                                {EVO_LEVEL, 45, SPECIES_VOLCARONA, CONDITIONS({IF_WEATHER, WEATHER_FOG})}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 45, SPECIES_ARBOLIVA, CONDITIONS({IF_WEATHER, WEATHER_RAIN})},
+                                {EVO_LEVEL, 45, SPECIES_ARBOLIVA, CONDITIONS({IF_WEATHER, WEATHER_FOG})}),
     },
 #endif //P_FAMILY_SURSKIT
 
@@ -3431,7 +3431,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sShroomishLevelUpLearnset,
         .teachableLearnset = sShroomishTeachableLearnset,
-.evolutions = EVOLUTION({EVO_LEVEL, 0, SPECIES_VIRIZION, CONDITIONS({IF_KNOWS_MOVE, MOVE_TOXIC}, {IF_TIME, TIME_NIGHT})},
+.evolutions = EVOLUTION({EVO_LEVEL, 0, SPECIES_WIGLETT, CONDITIONS({IF_KNOWS_MOVE, MOVE_TOXIC}, {IF_TIME, TIME_NIGHT})},
     {EVO_LEVEL, 23, SPECIES_BRELOOM}
 ),
     },  

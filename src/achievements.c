@@ -1,5 +1,6 @@
 #include "global.h"
 #include "achievements.h"
+#include "species_relocation.h"
 #include "battle.h"
 #include "data.h"
 #include "event_data.h"
@@ -271,7 +272,7 @@ u16 WishForm_GetIdForSpecies(u16 species)
 {
     u32 i;
     for (i = 0; i < ARRAY_COUNT(sWishFormRegistry); i++)
-        if (sWishFormRegistry[i].species == species)
+        if (HlwSpecies_GetCurrentSpecies(sWishFormRegistry[i].species) == species)
             return sWishFormRegistry[i].id;
     return WISH_FORM_ID_NONE;
 }
@@ -300,9 +301,9 @@ u16 ShadowPokemon_GetIdForSpecies(u16 species)
     // Repurposed species slots are content; these small IDs are persistent.
     switch (species)
     {
-    case SPECIES_ESCAVALIER: return SHADOW_ID_EVIL_CELEBI;
-    case SPECIES_DUCKLETT:   return SHADOW_ID_JIRACHI;
-    case SPECIES_SWANNA:     return SHADOW_ID_SUICUNE;
+    case SPECIES_CLOBBOPUS: return SHADOW_ID_EVIL_CELEBI;
+    case SPECIES_NICKIT:    return SHADOW_ID_JIRACHI;
+    case SPECIES_GRAPPLOCT: return SHADOW_ID_SUICUNE;
     default:                return SHADOW_ID_NONE;
     }
 }
@@ -737,4 +738,3 @@ void Achievement_RecordAquaGruntDefeat(void)
 {
     Achievement_IncrementCounter(ACH_COUNTER_AQUA_GRUNTS, 1);
 }
-

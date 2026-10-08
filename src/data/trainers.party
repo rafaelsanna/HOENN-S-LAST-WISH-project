@@ -222,7 +222,7 @@ Lombre
 Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Bibarel
+Scovillain
 Level: 44
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -566,7 +566,7 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Darkrai
+Dachsbun
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -639,7 +639,7 @@ Music: Aqua
 Double Battle: Yes
 AI: Check Bad Move
 
-Bibarel @ Sitrus Berry  
+Scovillain @ Sitrus Berry
 Level: 60
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -2422,7 +2422,7 @@ Obstagoon
 Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
-Virizion
+Wiglett
 Level: 45
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
@@ -6074,7 +6074,7 @@ Timid Nature
 - U-turn  
 - Low Kick  
 
-Druddigon @ Assault Vest 
+Pawmot @ Assault Vest
 Level: 68
 Ability: Multiscale  
 Modest Nature
@@ -6125,7 +6125,7 @@ Adamant Nature
 - Iron Head  
 - Rock Slide  
 
-Druddigon @ Leftovers  
+Pawmot @ Leftovers
 Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Multiscale  
@@ -6196,7 +6196,7 @@ Adamant Nature
 - Iron Head  
 - Dragon Claw  
 
-Druddigon @ Heavy-Duty Boots  
+Pawmot @ Heavy-Duty Boots
 Level: 70
 Ability: Multiscale  
 Modest Nature  
@@ -6793,7 +6793,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Acrobatics  
 - Earth Power
 
-Volcarona @ Heavy-Duty Boots  
+Arboliva @ Heavy-Duty Boots
 Ability: Water Bubble  
 Modest Nature
 Level: 50  
@@ -6853,7 +6853,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Acrobatics 
 - Leech Seed
 
-Volcarona @ Heavy-Duty Boots  
+Arboliva @ Heavy-Duty Boots
 Ability: Water Bubble  
 Level: 50  
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe  
@@ -13030,7 +13030,7 @@ Items: Full Restore
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Virizion
+Wiglett
 Level: 40
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -13959,7 +13959,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Sludge Bomb
 - Substitute
 
-Darkrai @ Assault Vest 
+Dachsbun @ Assault Vest
 Ability: Intimidate
 Level: 40
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
@@ -16484,7 +16484,7 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Darkrai
+Dachsbun
 Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -16548,7 +16548,7 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
-Darkrai
+Dachsbun
 Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -17227,7 +17227,7 @@ Lombre
 Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Bibarel
+Scovillain
 Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -17329,7 +17329,7 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer / HP Aware / Try to 2HKO
 
-Virizion
+Wiglett
 Level: 48
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
@@ -20680,7 +20680,7 @@ Swampert
 Level: 45
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Virizion
+Wiglett
 Level: 45
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 

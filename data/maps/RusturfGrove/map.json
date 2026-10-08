@@ -35,7 +35,7 @@
     },
     {
       "local_id": "LOCALID_CUTTER",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(WORMADAM)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(GRAFAIAI)",
       "x": 20,
       "y": 7,
       "elevation": 3,

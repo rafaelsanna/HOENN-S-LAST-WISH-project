@@ -201,6 +201,10 @@ static void InitializeNewGameData(void)
     
     // Event and story systems
     InitEventData();
+    // New games already use the relocated custom species. Never translate a
+    // genuine restored Darkrai/etc obtained later in this save.
+    FlagSet(FLAG_HLW_SPECIES_RELOCATED);
+    FlagSet(FLAG_HLW_HOF_SPECIES_RELOCATED);
     NightMode_SetEnabled(FALSE);
     // OPS ALL MOVES is a fun Casual-only option and starts disabled.
     FlagClear(FLAG_OPS_ALL_MOVES);

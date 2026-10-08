@@ -16,7 +16,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_MOSSDEEP_JIRACHI",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BASCULIN)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(VELUZA)",
       "x": 24,
       "y": 12,
       "elevation": 0,
@@ -289,7 +289,7 @@
     },
     {
       "local_id": "LOCALID_DARKRAI_HOSTILE",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(DARKRAI)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(DACHSBUN)",
       "x": 48,
       "y": 49,
       "elevation": 0,
@@ -554,7 +554,7 @@
     },
     {
       "local_id": "LOCALID_DARKRAI_GUARD",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(DARKRAI)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(DACHSBUN)",
       "x": 49,
       "y": 43,
       "elevation": 0,

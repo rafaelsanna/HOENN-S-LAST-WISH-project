@@ -10,6 +10,9 @@
 #include "new_game.h"
 #include "pokemon_storage_system.h"
 #include "save.h"
+#include "species_relocation.h"
+#include "constants/event_objects.h"
+#include "constants/flags.h"
 #include "test/test.h"
 
 // These tests program only mGBA's private emulated flash. No host save file or
@@ -37,6 +40,10 @@ static void FlashFixtureResetRam(void)
     gPlayerPartyCount = 0;
     ResetPokemonStorageSystem();
     InitHlwPersistentData();
+    // These fixtures create current-format games, just like New Game. Tests
+    // that deliberately model legacy saves clear the marker explicitly.
+    FlagSet(FLAG_HLW_SPECIES_RELOCATED);
+    FlagSet(FLAG_HLW_HOF_SPECIES_RELOCATED);
     ClearBag();
     Save_ResetSaveCounters();
 }
@@ -118,6 +125,81 @@ static const struct TestRunner sFlashTestRunner =
         .sourceLine = __LINE__, .data = (void *)CAT(FlashTest, __LINE__), \
     }; \
     static void CAT(FlashTest, __LINE__)(void)
+
+FLASH_TEST("Species relocation: legacy saves translate party boxes daycare and progress once")
+{
+    // Emulate a pre-relocation save: custom content still carries the old ID.
+    u16 legacy = SPECIES_DARKRAI;
+    u16 current = SPECIES_DACHSBUN;
+    CreateMon(&gPlayerParty[0], current, 40, 17, TRUE, 0x12345678, OT_ID_PRESET, 0xABCDEF);
+    SetMonData(&gPlayerParty[0], MON_DATA_SPECIES, &legacy);
+    gPlayerPartyCount = 1;
+    gPokemonStoragePtr->boxes[0][0] = gPlayerParty[0].box;
+    gSaveBlock1Ptr->daycare.mons[0].mon = gPlayerParty[0].box;
+    FlagClear(FLAG_HLW_SPECIES_RELOCATED);
+    gHlwSaveBlock4.dexNavSearch[legacy] = 73;
+    u16 oldDex = SpeciesToNationalPokedexNum(legacy) - 1;
+    u16 newDex = SpeciesToNationalPokedexNum(current) - 1;
+    gSaveBlock3Ptr->dexSeen[oldDex / 8] |= 1 << (oldDex % 8);
+    gSaveBlock3Ptr->dexCaught[oldDex / 8] |= 1 << (oldDex % 8);
+    gObjectEvents[0].graphicsId = OBJ_EVENT_GFX_SPECIES_SHINY_FEMALE(DARKRAI);
+    EXPECT_EQ(HandleSavingData(SAVE_NORMAL), SAVE_STATUS_OK);
+    sProgress++;
+    EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
+    EXPECT_EQ(GetMonData(&gPlayerParty[0], MON_DATA_SPECIES), current);
+    EXPECT_EQ(GetBoxMonData(&gPokemonStoragePtr->boxes[0][0], MON_DATA_SPECIES), current);
+    EXPECT_EQ(GetBoxMonData(&gSaveBlock1Ptr->daycare.mons[0].mon, MON_DATA_SPECIES), current);
+    EXPECT_EQ(GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY), 0x12345678);
+    EXPECT_EQ(gHlwSaveBlock4.dexNavSearch[current], 73);
+    EXPECT_EQ(gHlwSaveBlock4.dexNavSearch[legacy], 0);
+    EXPECT_NE(gSaveBlock3Ptr->dexSeen[newDex / 8] & (1 << (newDex % 8)), 0);
+    EXPECT_EQ(gSaveBlock3Ptr->dexSeen[oldDex / 8] & (1 << (oldDex % 8)), 0);
+    EXPECT_EQ(gObjectEvents[0].graphicsId, OBJ_EVENT_GFX_SPECIES_SHINY_FEMALE(DACHSBUN));
+    EXPECT_EQ(FlagGet(FLAG_HLW_SPECIES_RELOCATED), TRUE);
+    // A genuine native Darkrai obtained AFTER migration must stay Darkrai.
+    CreateMon(&gPlayerParty[1], legacy, 50, 31, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    gPlayerPartyCount = 2;
+    HlwSpecies_MigrateSave();
+    EXPECT_EQ(GetMonData(&gPlayerParty[1], MON_DATA_SPECIES), legacy);
+    EXPECT_EQ(HandleSavingData(SAVE_NORMAL), SAVE_STATUS_OK);
+    sProgress++;
+    EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
+    EXPECT_EQ(GetMonData(&gPlayerParty[0], MON_DATA_SPECIES), current);
+    EXPECT_EQ(GetMonData(&gPlayerParty[1], MON_DATA_SPECIES), legacy);
+}
+
+FLASH_TEST("Species relocation: HOF marker commits atomically and protects future native Darkrai")
+{
+    FlagSet(FLAG_HLW_SPECIES_RELOCATED);
+    FlagClear(FLAG_HLW_HOF_SPECIES_RELOCATED);
+    gHoFSaveBuffer = AllocZeroed(SECTOR_SIZE * NUM_HOF_SECTORS);
+    EXPECT(gHoFSaveBuffer != NULL);
+    gHoFSaveBuffer[0].mon[0].species = SPECIES_DARKRAI;
+    EXPECT_EQ(HandleSavingData(SAVE_HALL_OF_FAME), SAVE_STATUS_OK);
+    sProgress++;
+    // Clear only the marker in the next normal bundle to model a legacy HOF
+    // archive without introducing an alternate flash/archive implementation.
+    FlagClear(FLAG_HLW_HOF_SPECIES_RELOCATED);
+    EXPECT_EQ(HandleSavingData(SAVE_NORMAL), SAVE_STATUS_OK);
+    sProgress++;
+    EXPECT_EQ(LoadGameSave(SAVE_HALL_OF_FAME), SAVE_STATUS_OK);
+    EXPECT_EQ((u16)gHoFSaveBuffer[0].mon[0].species, SPECIES_DACHSBUN);
+    EXPECT_EQ(FlagGet(FLAG_HLW_HOF_SPECIES_RELOCATED), FALSE);
+    // Just as the game does: append the new team AFTER translating the old
+    // archive. The new team can contain an actual restored native Darkrai.
+    gHoFSaveBuffer[1].mon[0].species = SPECIES_DARKRAI;
+    HlwSave_TestFailWriteAfter(1);
+    EXPECT_NE(HandleSavingData(SAVE_HALL_OF_FAME), SAVE_STATUS_OK);
+    EXPECT_EQ(FlagGet(FLAG_HLW_HOF_SPECIES_RELOCATED), FALSE);
+    HlwSave_TestFailWriteAfter(-1);
+    EXPECT_EQ(HandleSavingData(SAVE_HALL_OF_FAME), SAVE_STATUS_OK);
+    sProgress++;
+    EXPECT_EQ(FlagGet(FLAG_HLW_HOF_SPECIES_RELOCATED), TRUE);
+    EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
+    EXPECT_EQ(LoadGameSave(SAVE_HALL_OF_FAME), SAVE_STATUS_OK);
+    EXPECT_EQ((u16)gHoFSaveBuffer[0].mon[0].species, SPECIES_DACHSBUN);
+    EXPECT_EQ((u16)gHoFSaveBuffer[1].mon[0].species, SPECIES_DARKRAI);
+}
 
 static bool32 SelectedSaveIsUsable(u8 status)
 {

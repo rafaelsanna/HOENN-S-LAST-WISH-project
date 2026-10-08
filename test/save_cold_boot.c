@@ -103,7 +103,7 @@ static void ExpectMarkersAndPrintCrcs(void)
     EXPECT_EQ(gSaveBlock3Ptr->achievements.wishOriginalForms[15], 0xA5);
     EXPECT_EQ(gSaveBlock3Ptr->dexSeen[128], 1);
     EXPECT_EQ(gHlwSaveBlock4.customFlags[0], 1);
-    EXPECT_EQ(gHlwSaveBlock4.customFlags[255], 0x80);
+    EXPECT_EQ(gHlwSaveBlock4.customFlags[255], 0x8C); // final flag + the two relocation markers
     EXPECT_EQ(gHlwSaveBlock4.customVars[255], 0xBEEF);
     EXPECT_EQ(gHlwSaveBlock4.dexNavSearch[2047], 0x73);
     EXPECT_EQ(gHlwSaveBlock4.grottoStates[63], 0x2A15);
@@ -148,6 +148,8 @@ COLD_BOOT_TEST("HLW cold boot writer", ColdBootWriter)
     gDifferentSaveFile = FALSE;
     ResetPokemonStorageSystem();
     InitHlwPersistentData();
+    FlagSet(FLAG_HLW_SPECIES_RELOCATED);
+    FlagSet(FLAG_HLW_HOF_SPECIES_RELOCATED);
     ClearBag();
     Save_ResetSaveCounters();
 

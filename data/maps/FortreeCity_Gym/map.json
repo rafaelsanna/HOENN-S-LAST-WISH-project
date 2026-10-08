@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BRAVIARY)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CETODDLE)",
       "x": 10,
       "y": 2,
       "elevation": 3,
@@ -119,7 +119,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(VOLCARONA)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ARBOLIVA)",
       "x": 9,
       "y": 2,
       "elevation": 0,

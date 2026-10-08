@@ -2143,7 +2143,7 @@ const struct SpriteFrameImage gSurfingOverlayPicTable_Rayquaza[] = {
 #endif // P_FAMILY_RAYQUAZA
 
 // Wish forms using their native six-frame overworld sheets.
-#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#if P_FAMILY_PAWMI && OW_SURF_DRUDDIGON
 const struct SpriteFrameImage gSurfingOverworldPicTable_Druddigon[] = {
     overworld_frame(gSurfablePokemonPic_Druddigon, 4, 4, 0),
     overworld_frame(gSurfablePokemonPic_Druddigon, 4, 4, 1),
@@ -2161,7 +2161,7 @@ const struct SpriteFrameImage gSurfingOverlayPicTable_Druddigon[] = {
     overworld_frame(gSurfablePokemonPic_Druddigon, 4, 4, 10),
     overworld_frame(gSurfablePokemonPic_Druddigon, 4, 4, 11),
 };
-#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#endif // P_FAMILY_PAWMI && OW_SURF_DRUDDIGON
 
 #if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
 const struct SpriteFrameImage gSurfingOverworldPicTable_Torkoal[] = {
@@ -2206,7 +2206,7 @@ const struct SpriteFrameImage gSurfingOverworldPicTable_Camerupt[] = {
 };
 #endif // P_FAMILY_NUMEL && OW_SURF_CAMERUPT
 
-#if P_FAMILY_BIDOOF && OW_SURF_BIBAREL
+#if P_FAMILY_CAPSAKID && OW_SURF_BIBAREL
 const struct SpriteFrameImage gSurfingOverworldPicTable_Bibarel[] = {
     overworld_frame(gSurfablePokemonPic_Bibarel, 4, 4, 0),
     overworld_frame(gSurfablePokemonPic_Bibarel, 4, 4, 1),
@@ -2224,7 +2224,7 @@ const struct SpriteFrameImage gSurfingOverlayPicTable_Bibarel[] = {
     overworld_frame(gSurfablePokemonPic_Bibarel, 4, 4, 10),
     overworld_frame(gSurfablePokemonPic_Bibarel, 4, 4, 11),
 };
-#endif // P_FAMILY_BIDOOF && OW_SURF_BIBAREL
+#endif // P_FAMILY_CAPSAKID && OW_SURF_BIBAREL
 
 /* Gen IV+ surf sheets are not present; these species use the default blob.
 // Gen IV Pokemon

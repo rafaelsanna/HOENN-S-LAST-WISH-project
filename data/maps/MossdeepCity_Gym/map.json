@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(IMPIDIMP)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CAPSAKID)",
       "x": 23,
       "y": 7,
       "elevation": 0,
@@ -119,7 +119,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SCRAGGY)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(KLAWF)",
       "x": 24,
       "y": 7,
       "elevation": 0,

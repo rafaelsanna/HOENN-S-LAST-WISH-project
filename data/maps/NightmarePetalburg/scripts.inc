@@ -44,8 +44,8 @@ NightmarePetalburg_Suicune::
     applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
     waitmovement 0
     waitse
-    @ SPECIES_SWANNA is the project's Dark Suicune slot and uses CRY_SUICUNE.
-    playmoncry SPECIES_SWANNA, CRY_MODE_NORMAL
+    @ SPECIES_GRAPPLOCT is the project's Dark Suicune slot and uses CRY_SUICUNE.
+    playmoncry SPECIES_GRAPPLOCT, CRY_MODE_NORMAL
     waitmoncry
     special SpawnCameraObject
     applymovement LOCALID_CAMERA, NightmarePetalburg_Movement_CameraToDarkAura
@@ -153,11 +153,11 @@ NightmarePetalburg_EventScript_DarkAuraBattle::
 NightmarePetalburg_EventScript_DarkAuraBattle_AfterScene::
     fadescreenspeed FADE_TO_BLACK, 1
 	waitse
-	playmoncry SPECIES_SWANNA, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_GRAPPLOCT, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setvar VAR_LAST_TALKED, LOCALID_NIGHTMARE_PETALBURG_DARK_AURA
-	setwildbattle SPECIES_SWANNA, 50
+	setwildbattle SPECIES_GRAPPLOCT, 50
 	special SetScriptedWildMonPerfectIVs
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartDarkAuraBattle

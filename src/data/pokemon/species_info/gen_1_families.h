@@ -2295,7 +2295,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .levelUpLearnset = sRaticateLevelUpLearnset,
         .teachableLearnset = sRaticateTeachableLearnset,
         .formSpeciesIdTable = sRaticateFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_BIBAREL, CONDITIONS({IF_SPECIES_IN_PARTY, SPECIES_LOTAD})}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_SCOVILLAIN, CONDITIONS({IF_SPECIES_IN_PARTY, SPECIES_LOTAD})}),
     },
 
 #if P_ALOLAN_FORMS
@@ -20337,7 +20337,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         )
         .levelUpLearnset = sDragonairLevelUpLearnset,
         .teachableLearnset = sDragonairTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 55, SPECIES_DRAGONITE}, {EVO_ITEM, ITEM_WATER_STONE, SPECIES_DRUDDIGON}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 55, SPECIES_DRAGONITE}, {EVO_ITEM, ITEM_WATER_STONE, SPECIES_PAWMOT}),
 },
 
     [SPECIES_DRAGONITE] =

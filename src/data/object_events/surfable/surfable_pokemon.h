@@ -590,12 +590,12 @@ const struct RideablePokemon gSurfablePokemon[] =
 #endif // P_FAMILY_RAYQUAZA
 
 // Wish forms using their native six-frame overworld sheets.
-#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#if P_FAMILY_PAWMI && OW_SURF_DRUDDIGON
     {
-        .species = SPECIES_DRUDDIGON,
+        .species = SPECIES_PAWMOT,
         .trainerPose = 0,
     },
-#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#endif // P_FAMILY_PAWMI && OW_SURF_DRUDDIGON
 #if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
     {
         .species = SPECIES_TORKOAL,
@@ -612,12 +612,12 @@ const struct RideablePokemon gSurfablePokemon[] =
         .trainerPose = 0,
     },
 #endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
-#if P_FAMILY_BIDOOF && OW_SURF_BIBAREL
+#if P_FAMILY_CAPSAKID && OW_SURF_BIBAREL
     {
-        .species = SPECIES_BIBAREL,
+        .species = SPECIES_SCOVILLAIN,
         .trainerPose = 0,
     },
-#endif // P_FAMILY_BIDOOF && OW_SURF_BIBAREL
+#endif // P_FAMILY_CAPSAKID && OW_SURF_BIBAREL
 
 #if 0 // Gen IV+ surf sheets are not present; these species use the default blob.
 // Gen IV Pokemon
@@ -637,7 +637,7 @@ const struct RideablePokemon gSurfablePokemon[] =
 #endif // P_FAMILY_PIPLUP
 #if P_FAMILY_BIDOOF
     {
-        .species = SPECIES_BIBAREL,
+        .species = SPECIES_SCOVILLAIN,
         .trainerPose = 0,
     },
 #endif // P_FAMILY_BIDOOF
@@ -977,7 +977,7 @@ const struct RideablePokemon gSurfablePokemon[] =
 #if P_FAMILY_DRUDDIGON
 #if OW_SURF_DRUDDIGON
 {
-        .species = SPECIES_DRUDDIGON,
+        .species = SPECIES_PAWMOT,
         .trainerPose = 0,
     },
 #endif // OW_SURF_DRUDDIGON

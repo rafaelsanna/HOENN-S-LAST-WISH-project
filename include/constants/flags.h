@@ -1666,6 +1666,8 @@
 #define FLAG_PHYSICAL_SPECIAL_SPLIT                 (HLW_CUSTOM_FLAGS_START + 0x00A) // Configuration: use move-based physical/special categories
 #define FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED      (HLW_CUSTOM_FLAGS_START + 0x00B) // Save migration marker for the split option
 #define FLAG_ALL_ABILITIES                           (HLW_CUSTOM_FLAGS_START + 0x7FD) // Configuration: every species ability is active
+#define FLAG_HLW_SPECIES_RELOCATED                   FLAG_UNUSED_0x17FA
+#define FLAG_HLW_HOF_SPECIES_RELOCATED               FLAG_UNUSED_0x17FB
 // Permanent difficulty history. Gym flags record the first badge battle only.
 #define FLAG_DEFEATED_GYM_1_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x00C)
 #define FLAG_DEFEATED_GYM_1_HARD                     (HLW_CUSTOM_FLAGS_START + 0x00D)
@@ -3704,8 +3706,8 @@
 #define FLAG_UNUSED_0x17F7                           (HLW_CUSTOM_FLAGS_START + 0x7F7) // Unused Flag
 #define FLAG_UNUSED_0x17F8                           (HLW_CUSTOM_FLAGS_START + 0x7F8) // Unused Flag
 #define FLAG_UNUSED_0x17F9                           (HLW_CUSTOM_FLAGS_START + 0x7F9) // Unused Flag
-#define FLAG_UNUSED_0x17FA                           (HLW_CUSTOM_FLAGS_START + 0x7FA) // Unused Flag
-#define FLAG_UNUSED_0x17FB                           (HLW_CUSTOM_FLAGS_START + 0x7FB) // Unused Flag
+#define FLAG_UNUSED_0x17FA                           (HLW_CUSTOM_FLAGS_START + 0x7FA) // Reserved: species relocation marker
+#define FLAG_UNUSED_0x17FB                           (HLW_CUSTOM_FLAGS_START + 0x7FB) // Reserved: HOF relocation marker
 #define FLAG_UNUSED_0x17FC                           (HLW_CUSTOM_FLAGS_START + 0x7FC) // Unused Flag
 #define FLAG_UNUSED_0x17FD                           (HLW_CUSTOM_FLAGS_START + 0x7FD) // Reserved by FLAG_ALL_ABILITIES
 #define FLAG_UNUSED_0x17FE                           (HLW_CUSTOM_FLAGS_START + 0x7FE) // Unused Flag

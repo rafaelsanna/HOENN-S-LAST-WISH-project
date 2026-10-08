@@ -399,7 +399,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 225
-            .species = SPECIES_BIBAREL,
+            .species = SPECIES_SCOVILLAIN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 227
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -1308,7 +1308,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 569
-            .species = SPECIES_DARKRAI,
+            .species = SPECIES_DACHSBUN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 571
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -1506,7 +1506,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 642
-            .species = SPECIES_BIBAREL,
+            .species = SPECIES_SCOVILLAIN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 642
             .heldItem = ITEM_SITRUS_BERRY,
@@ -6196,7 +6196,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 2425
-            .species = SPECIES_VIRIZION,
+            .species = SPECIES_WIGLETT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 2427
             .iv = TRAINER_PARTY_IVS(20, 20, 20, 20, 20, 20),
@@ -15746,7 +15746,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 6077
-            .species = SPECIES_DRUDDIGON,
+            .species = SPECIES_PAWMOT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6077
             .heldItem = ITEM_ASSAULT_VEST,
@@ -15865,7 +15865,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 6128
-            .species = SPECIES_DRUDDIGON,
+            .species = SPECIES_PAWMOT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6128
             .heldItem = ITEM_LEFTOVERS,
@@ -16030,7 +16030,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 6199
-            .species = SPECIES_DRUDDIGON,
+            .species = SPECIES_PAWMOT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6199
             .heldItem = ITEM_HEAVY_DUTY_BOOTS,
@@ -17502,7 +17502,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 6796
-            .species = SPECIES_VOLCARONA,
+            .species = SPECIES_ARBOLIVA,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6796
             .heldItem = ITEM_HEAVY_DUTY_BOOTS,
@@ -17640,7 +17640,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 6856
-            .species = SPECIES_VOLCARONA,
+            .species = SPECIES_ARBOLIVA,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6856
             .heldItem = ITEM_HEAVY_DUTY_BOOTS,
@@ -33921,7 +33921,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 13033
-            .species = SPECIES_VIRIZION,
+            .species = SPECIES_WIGLETT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 13035
             .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
@@ -36394,7 +36394,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 13962
-            .species = SPECIES_DARKRAI,
+            .species = SPECIES_DACHSBUN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 13962
             .heldItem = ITEM_ASSAULT_VEST,
@@ -43024,7 +43024,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 16487
-            .species = SPECIES_DARKRAI,
+            .species = SPECIES_DACHSBUN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 16489
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -43193,7 +43193,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 16551
-            .species = SPECIES_DARKRAI,
+            .species = SPECIES_DACHSBUN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 16553
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
@@ -45026,7 +45026,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 17230
-            .species = SPECIES_BIBAREL,
+            .species = SPECIES_SCOVILLAIN,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 17232
             .iv = TRAINER_PARTY_IVS(18, 18, 18, 18, 18, 18),
@@ -45297,7 +45297,7 @@ F_TRAINER_FEMALE |
         {
             {
 #line 17332
-            .species = SPECIES_VIRIZION,
+            .species = SPECIES_WIGLETT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 17334
             .iv = TRAINER_PARTY_IVS(1, 1, 1, 1, 1, 1),
@@ -53799,7 +53799,7 @@ F_TRAINER_FEMALE |
             },
             {
 #line 20683
-            .species = SPECIES_VIRIZION,
+            .species = SPECIES_WIGLETT,
             .gender = TRAINER_MON_RANDOM_GENDER,
 #line 20685
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),

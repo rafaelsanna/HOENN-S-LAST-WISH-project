@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_tower.h"
+#include "achievements.h"
 #include "apprentice.h"
 #include "event_data.h"
 #include "battle_setup.h"
@@ -219,15 +220,7 @@ static const struct FrontierWishStabChoices sFrontierWishStabChoices[] =
 
 static bool32 IsFrontierWishFormSpecies(u16 species)
 {
-    switch (species)
-    {
-#define WISH_FORM(id, speciesName) case SPECIES_##speciesName:
-#include "data/wish_form_registry.inc"
-#undef WISH_FORM
-        return TRUE;
-    default:
-        return FALSE;
-    }
+    return WishForm_GetIdForSpecies(species) != WISH_FORM_ID_NONE;
 }
 
 static const struct FrontierWishStabChoices *GetFrontierWishStabChoices(u8 type)

@@ -17,6 +17,9 @@
 #include "hlw_media_save.h"
 #include "follower_npc.h"
 #include "new_game.h"
+#include "species_relocation.h"
+#include "event_data.h"
+#include "constants/flags.h"
 #include "constants/game_stat.h"
 #include "hlw_save_abi_asserts.h"
 
@@ -68,6 +71,7 @@ struct HlwSaveTransaction
     u8 nextSector;
     bool8 retireOtherSlot;
     u8 previousHofBank;
+    bool8 relocatesHof;
 };
 
 struct HlwSlotInfo
@@ -451,6 +455,8 @@ static u8 SelectSlot(struct HlwSlotInfo *selected)
 
 static void EndTransaction(u8 status)
 {
+    if (sTransaction != NULL && status == SAVE_STATUS_OK && sTransaction->relocatesHof)
+        FlagSet(FLAG_HLW_HOF_SPECIES_RELOCATED);
     if (sTransaction != NULL)
         FREE_AND_SET_NULL(sTransaction);
     sTransactionStatus = status;
@@ -542,6 +548,7 @@ static u8 BeginTransaction(u8 saveType)
     if (t == NULL)
         return SAVE_STATUS_ERROR;
     sTransaction = t;
+    t->relocatesHof = FALSE;
     sTransactionStatus = SAVE_STATUS_ERROR;
     gDamagedSaveSectors = 0;
     UpdateSaveAddresses();
@@ -591,6 +598,14 @@ static u8 BeginTransaction(u8 saveType)
     {
         EndTransaction(SAVE_STATUS_ERROR);
         return SAVE_STATUS_ERROR;
+    }
+    if (saveType == SAVE_HALL_OF_FAME || saveType == SAVE_HALL_OF_FAME_ERASE_BEFORE)
+    {
+        // HOF loads translate old archives before appending the current team.
+        // Publish that marker with this archive, not before a failed save.
+        u32 bit = FLAG_HLW_HOF_SPECIES_RELOCATED - HLW_CUSTOM_FLAGS_START;
+        t->extension.customFlags[bit / 8] |= 1 << (bit % 8);
+        t->relocatesHof = TRUE;
     }
     memcpy(t->storageLast + LAST_STORAGE_OFFSET(metadata), &t->metadata, sizeof(t->metadata));
     for (u32 id = 0; id < 14; id++)
@@ -791,6 +806,7 @@ u8 LoadGameSave(u8 saveType)
         memcpy(gHoFSaveBuffer, archive->teams, sizeof(archive->teams));
         memcpy((u8 *)gHoFSaveBuffer + sizeof(archive->teams), gPokemonStoragePtr->hallOfFameTail,
                sizeof(gPokemonStoragePtr->hallOfFameTail));
+        HlwSpecies_MigrateHallOfFame(gHoFSaveBuffer);
         return SAVE_STATUS_OK;
     }
     UpdateSaveAddresses();
@@ -808,6 +824,7 @@ u8 LoadGameSave(u8 saveType)
                   (u8 *)&gHlwSaveBlock4, sizeof(gHlwSaveBlock4));
         MigrateBagExpansion();
         CopyPartyAndObjectsFromSave();
+        HlwSpecies_MigrateSave();
     }
     gSaveFileStatus = status;
     gGameContinueCallback = NULL;

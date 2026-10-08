@@ -88,7 +88,7 @@ NightmareRealm1_Arrival::
     @ --- PHASE 5: BATTLE — double wild --------------------------------------
     @ Whiteout does not resume this script, so arm retry before the battle.
     setflag FLAG_LOST_NIGHTMARE_BATTLE
-    setwildbattle SPECIES_DUCKLETT, 45, ITEM_NONE, SPECIES_ESCAVALIER, 45, ITEM_NONE
+    setwildbattle SPECIES_NICKIT, 45, ITEM_NONE, SPECIES_CLOBBOPUS, 45, ITEM_NONE
     dowildbattle
 
     @ Only a non-whiteout outcome resumes the script.

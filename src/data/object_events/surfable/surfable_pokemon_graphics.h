@@ -608,14 +608,14 @@ const u16 gSurfablePokemonShinyPalette_Rayquaza[] = INCBIN_U16("graphics/object_
 #endif // P_FAMILY_RAYQUAZA
 
 // Wish forms using their native overworld sheets.
-#if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
-const u32 gSurfablePokemonPic_Druddigon[] = INCBIN_U32("graphics/pokemon/druddigon/druddigon.4bpp.lz");
-const u16 gSurfablePokemonPalette_Druddigon[] = INCBIN_U16("graphics/pokemon/druddigon/overworld_normal.gbapal");
-const u16 gSurfablePokemonShinyPalette_Druddigon[] = INCBIN_U16("graphics/pokemon/druddigon/overworld_shiny.gbapal");
+#if P_FAMILY_PAWMI && OW_SURF_DRUDDIGON
+const u32 gSurfablePokemonPic_Druddigon[] = INCBIN_U32("graphics/pokemon/pawmot/druddigon.4bpp.lz");
+const u16 gSurfablePokemonPalette_Druddigon[] = INCBIN_U16("graphics/pokemon/pawmot/overworld_normal.gbapal");
+const u16 gSurfablePokemonShinyPalette_Druddigon[] = INCBIN_U16("graphics/pokemon/pawmot/overworld_shiny.gbapal");
 #if !OW_SURF_GFX_COMPRESS
 SURFABLE_STATIC_ASSERT(sizeof(gSurfablePokemonPic_Druddigon) == 6144, DruddigonSurfSheetMustContainTwelve32x32Frames);
 #endif
-#endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
+#endif // P_FAMILY_PAWMI && OW_SURF_DRUDDIGON
 
 #if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
 const u32 gSurfablePokemonPic_Torkoal[] = INCBIN_U32("graphics/object_events/pics/pokemon/surfable/torkoal.4bpp.lz");
@@ -1596,14 +1596,14 @@ SURFABLE_STATIC_ASSERT(sizeof(gSurfablePokemonPic_Overqwil) == 6144, OverqwilSur
 #endif // P_FAMILY_QWILFISH && P_HISUIAN_FORMS
 */
 
-#if P_FAMILY_BIDOOF && OW_SURF_BIBAREL
-// Bibarel currently uses the ratybara sheet as its Surf placeholder.
+#if P_FAMILY_CAPSAKID && OW_SURF_BIBAREL
+// Ratybara now occupies Scovillain; retain the existing Surf art and overlay.
 const u32 gSurfablePokemonPic_Bibarel[] = INCBIN_U32("graphics/object_events/pics/pokemon/surfable/ratybara.4bpp.lz");
 const u16 gSurfablePokemonPalette_Bibarel[] = INCBIN_U16("graphics/object_events/pics/pokemon/surfable/ratybara.gbapal");
 const u16 gSurfablePokemonShinyPalette_Bibarel[] = INCBIN_U16("graphics/object_events/pics/pokemon/surfable/ratybara.gbapal");
 #if !OW_SURF_GFX_COMPRESS
 SURFABLE_STATIC_ASSERT(sizeof(gSurfablePokemonPic_Bibarel) == 6144, BibarelSurfSheetMustContainTwelve32x32Frames);
 #endif
-#endif // P_FAMILY_BIDOOF && OW_SURF_BIBAREL
+#endif // P_FAMILY_CAPSAKID && OW_SURF_BIBAREL
 
 #undef SURFABLE_STATIC_ASSERT

@@ -784,7 +784,7 @@ MOSSDEEP01_EventScript_GuardMightyena::
 
 MOSSDEEP01_EventScript_GuardDarkrai::
 	lock
-	playmoncry SPECIES_DARKRAI, CRY_MODE_NORMAL
+	playmoncry SPECIES_DACHSBUN, CRY_MODE_NORMAL
 	waitmoncry
 	release
 	end

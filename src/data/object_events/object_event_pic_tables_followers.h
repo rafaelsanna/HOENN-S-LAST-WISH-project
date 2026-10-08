@@ -6366,6 +6366,9 @@ static const struct SpriteFrameImage sPicTable_Capsakid[] = {
 static const struct SpriteFrameImage sPicTable_Scovillain[] = {
     overworld_ascending_frames(gObjectEventPic_Scovillain, 4, 4),
 };
+static const struct SpriteFrameImage sPicTable_ScovillainF[] = {
+    overworld_ascending_frames(gObjectEventPic_ScovillainF, 4, 4),
+};
 #endif //P_FAMILY_CAPSAKID
 
 #if P_FAMILY_RELLOR

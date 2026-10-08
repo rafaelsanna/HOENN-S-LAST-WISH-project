@@ -206,7 +206,7 @@
       "flag": "FLAG_HIDE_PETALBURG_WOODS_AQUA_GRUNT"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SKRELP)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TOEDSCOOL)",
       "x": 10,
       "y": 21,
       "elevation": 3,
@@ -219,7 +219,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BARRASKEWDA)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ORBEETLE)",
       "x": 4,
       "y": 26,
       "elevation": 3,
