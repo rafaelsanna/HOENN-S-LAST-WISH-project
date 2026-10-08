@@ -11,6 +11,7 @@
 #include "palette.h"
 #include "sound.h"
 #include "sprite.h"
+#include "surfable.h"
 #include "trig.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
@@ -340,6 +341,7 @@ static void UpdateSurfablePokemonReflection(struct Sprite *reflectionSprite)
     if (sourceId >= MAX_SPRITES || !gSprites[sourceId].inUse)
     {
         reflectionSprite->inUse = FALSE;
+        FreeSurfablePokemonSpriteTiles(reflectionSprite);
         FieldEffectFreePaletteIfUnused(reflectionSprite->oam.paletteNum);
         return;
     }

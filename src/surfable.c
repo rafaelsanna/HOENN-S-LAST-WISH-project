@@ -1,4 +1,5 @@
 #include "global.h"
+#include "decompress.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "field_effect.h"
@@ -27,6 +28,8 @@ extern void SynchroniseSurfPosition(struct ObjectEvent *playerObj, struct Sprite
 
 static void CreateOverlaySprite(void);
 static void UpdateSurfMonOverlay(struct Sprite *sprite);
+
+#define SURFABLE_TILE_TAG_BASE (COMP_OW_TILE_TAG_BASE + 0x100)
 
 struct RideablePokemon
 {
@@ -80,6 +83,121 @@ STATIC_ASSERT(ARRAY_COUNT(gSurfablePokemon) == ARRAY_COUNT(gSurfablePokemonOverl
 
 static EWRAM_DATA u16 sCurrentSurfMon = {0};
 static EWRAM_DATA u8 sCurrentSurfMonPartySlot = {0};
+static struct SpriteTemplate sSurfablePokemonSpriteTemplate;
+static struct SpriteTemplate sSurfablePokemonOverlayTemplate;
+
+static const union AnimCmd sSurfablePokemonOverlayAnim_FaceSouth[] =
+{
+    ANIMCMD_FRAME(8, 16),
+    ANIMCMD_FRAME(9, 16),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sSurfablePokemonOverlayAnim_FaceNorth[] =
+{
+    ANIMCMD_FRAME(6, 16),
+    ANIMCMD_FRAME(7, 16),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sSurfablePokemonOverlayAnim_FaceWest[] =
+{
+    ANIMCMD_FRAME(10, 16),
+    ANIMCMD_FRAME(11, 16),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sSurfablePokemonOverlayAnim_FaceEast[] =
+{
+    ANIMCMD_FRAME(10, 16, .hFlip = TRUE),
+    ANIMCMD_FRAME(11, 16, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sSurfablePokemonOverlayAnimTable[] =
+{
+    sSurfablePokemonOverlayAnim_FaceSouth,
+    sSurfablePokemonOverlayAnim_FaceNorth,
+    sSurfablePokemonOverlayAnim_FaceWest,
+    sSurfablePokemonOverlayAnim_FaceEast,
+};
+
+static const union AnimCmd sSurfablePokemonOverlayAnim_NoFlipFaceEast[] =
+{
+    ANIMCMD_FRAME(14, 16),
+    ANIMCMD_FRAME(15, 16),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sSurfablePokemonOverlayNoFlipAnimTable[] =
+{
+    sSurfablePokemonOverlayAnim_FaceSouth,
+    sSurfablePokemonOverlayAnim_FaceNorth,
+    sSurfablePokemonOverlayAnim_FaceWest,
+    sSurfablePokemonOverlayAnim_NoFlipFaceEast,
+};
+
+static u16 GetSurfablePokemonTileTag(void)
+{
+    return SURFABLE_TILE_TAG_BASE + sCurrentSurfMon;
+}
+
+static bool8 PrepareSurfablePokemonGraphics(void)
+{
+    u32 sheetSpan;
+    u16 tileTag;
+
+    sSurfablePokemonSpriteTemplate = gSurfablePokemonOverworldSprites[sCurrentSurfMon];
+    sSurfablePokemonOverlayTemplate = gSurfablePokemonOverlaySprites[sCurrentSurfMon];
+    tileTag = GetSurfablePokemonTileTag();
+    sSurfablePokemonSpriteTemplate.tileTag = tileTag;
+
+    if (sSurfablePokemonOverlayTemplate.images != NULL)
+    {
+        sSurfablePokemonOverlayTemplate.tileTag = tileTag;
+        sSurfablePokemonOverlayTemplate.anims = sSurfablePokemonSpriteTemplate.anims == gSurfablePokemonNoFlipAnimTable
+            ? sSurfablePokemonOverlayNoFlipAnimTable
+            : sSurfablePokemonOverlayAnimTable;
+    }
+
+    if (GetSpriteTileStartByTag(tileTag) != TAG_NONE)
+        return TRUE;
+
+    sheetSpan = GetSpanPerImage(sSurfablePokemonSpriteTemplate.oam->shape, sSurfablePokemonSpriteTemplate.oam->size);
+    LoadCompressedSpriteSheetByTemplate(&sSurfablePokemonSpriteTemplate, TILE_SIZE_4BPP << sheetSpan);
+    return GetSpriteTileStartByTag(tileTag) != TAG_NONE;
+}
+
+static void SetSurfablePokemonSheetSpan(struct Sprite *sprite)
+{
+    if (sprite->usingSheet)
+    {
+        sprite->sheetSpan = GetSpanPerImage(sprite->oam.shape, sprite->oam.size);
+        SetSpriteSheetFrameTileNum(sprite);
+    }
+}
+
+static bool8 IsSurfablePokemonSprite(const struct Sprite *sprite)
+{
+    return sprite->template == &sSurfablePokemonSpriteTemplate
+        || sprite->template == &sSurfablePokemonOverlayTemplate;
+}
+
+void FreeSurfablePokemonSpriteTiles(struct Sprite *sprite)
+{
+    if (IsSurfablePokemonSprite(sprite) && sprite->usingSheet)
+        FieldEffectFreeTilesIfUnused(sprite->sheetTileStart);
+}
+
+void DestroySurfablePokemonSprite(struct Sprite *sprite)
+{
+    bool8 isSurfablePokemon = IsSurfablePokemonSprite(sprite);
+    u16 tileStart = sprite->sheetTileStart;
+
+    DestroySprite(sprite);
+    if (isSurfablePokemon)
+        FieldEffectFreeTilesIfUnused(tileStart);
+}
 
 static u16 GetSurfablePokemonIndex(u16 species)
 {
@@ -173,10 +291,20 @@ u32 CreateSurfablePokemonSprite(void)
     if (sCurrentSurfMon != 0xFFFF)
     {
         LoadSurfOverworldPalette();
-        if (gSurfablePokemonOverlaySprites[sCurrentSurfMon].tileTag == TAG_NONE)
-            CreateOverlaySprite();
+        if (!PrepareSurfablePokemonGraphics())
+        {
+            sCurrentSurfMon = 0xFFFF;
+            spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SURF_BLOB], gFieldEffectArguments[0], gFieldEffectArguments[1], 0x96);
+        }
+        else
+        {
+            if (sSurfablePokemonOverlayTemplate.images == NULL)
+                CreateOverlaySprite();
 
-        spriteId = CreateSpriteAtEnd(&gSurfablePokemonOverworldSprites[sCurrentSurfMon], gFieldEffectArguments[0], gFieldEffectArguments[1], 0x96);
+            spriteId = CreateSpriteAtEnd(&sSurfablePokemonSpriteTemplate, gFieldEffectArguments[0], gFieldEffectArguments[1], 0x96);
+            if (spriteId != MAX_SPRITES)
+                SetSurfablePokemonSheetSpan(&gSprites[spriteId]);
+        }
     }
     else
     {
@@ -209,11 +337,12 @@ static void CreateOverlaySprite(void)
     struct Sprite *sprite;
 
     subpriority = gSprites[gPlayerAvatar.spriteId].subpriority - 1;
-    overlaySprite = CreateSpriteAtEnd(&gSurfablePokemonOverlaySprites[sCurrentSurfMon], gFieldEffectArguments[0], gFieldEffectArguments[1], subpriority);
+    overlaySprite = CreateSpriteAtEnd(&sSurfablePokemonOverlayTemplate, gFieldEffectArguments[0], gFieldEffectArguments[1], subpriority);
 
     if (overlaySprite != MAX_SPRITES)
     {
         sprite = &gSprites[overlaySprite];
+        SetSurfablePokemonSheetSpan(sprite);
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[2] = gFieldEffectArguments[2];
         sprite->data[3] = -1;
@@ -249,5 +378,5 @@ static void UpdateSurfMonOverlay(struct Sprite *sprite)
     sprite->oam.priority = surfSprite->oam.priority;
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING))
-        DestroySprite(sprite);
+        DestroySurfablePokemonSprite(sprite);
 }

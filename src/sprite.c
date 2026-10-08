@@ -878,7 +878,7 @@ void BeginAnim(struct Sprite *sprite)
         if (sprite->usingSheet)
         {
             //  Inject OW decompression here
-            if (OW_GFX_COMPRESS && sprite->sheetSpan)
+            if (sprite->sheetSpan)
             {
                 imageValue = (imageValue + 1) << sprite->sheetSpan;
             }
@@ -938,7 +938,7 @@ void AnimCmd_frame(struct Sprite *sprite)
 
     if (sprite->usingSheet)
     {
-        if (OW_GFX_COMPRESS && sprite->sheetSpan)
+        if (sprite->sheetSpan)
         {
             //  Inject OW frame switcher here
             imageValue = (imageValue + 1) << sprite->sheetSpan;
@@ -981,7 +981,7 @@ void AnimCmd_jump(struct Sprite *sprite)
 
     if (sprite->usingSheet)
     {
-        if (OW_GFX_COMPRESS && sprite->sheetSpan)
+        if (sprite->sheetSpan)
             imageValue = (imageValue + 1) << sprite->sheetSpan;
         sprite->oam.tileNum = sprite->sheetTileStart + imageValue;
     }
@@ -1371,7 +1371,7 @@ void SetSpriteSheetFrameTileNum(struct Sprite *sprite)
     if (sprite->usingSheet)
     {
         s16 tileOffset = sprite->anims[sprite->animNum][sprite->animCmdIndex].frame.imageValue;
-        if (OW_GFX_COMPRESS && sprite->sheetSpan)
+        if (sprite->sheetSpan)
             tileOffset = (tileOffset + 1) << sprite->sheetSpan;
         if (tileOffset < 0)
             tileOffset = 0;

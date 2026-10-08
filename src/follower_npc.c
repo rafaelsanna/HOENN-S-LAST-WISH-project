@@ -26,6 +26,7 @@
 #include "script_movement.h"
 #include "script_pokemon_util.h"
 #include "sound.h"
+#include "surfable.h"
 #include "task.h"
 #include "trig.h"
 #include "constants/event_object_movement.h"
@@ -1401,7 +1402,7 @@ void HideNPCFollower(void)
     if (GetFollowerNPCData(FNPC_DATA_SURF_BLOB) == FNPC_SURF_BLOB_RECREATE || GetFollowerNPCData(FNPC_DATA_SURF_BLOB) == FNPC_SURF_BLOB_DESTROY)
     {
         SetSurfBlob_BobState(gObjectEvents[GetFollowerNPCObjectId()].fieldEffectSpriteId, 2);
-        DestroySprite(&gSprites[gObjectEvents[GetFollowerNPCObjectId()].fieldEffectSpriteId]);
+        DestroySurfablePokemonSprite(&gSprites[gObjectEvents[GetFollowerNPCObjectId()].fieldEffectSpriteId]);
         gObjectEvents[GetFollowerNPCObjectId()].fieldEffectSpriteId = 0;
     }
 

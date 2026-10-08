@@ -27,6 +27,7 @@
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
+#include "surfable.h"
 #include "task.h"
 #include "trainer_pokemon_sprites.h"
 #include "trig.h"
@@ -3502,7 +3503,7 @@ static void FlyOutFieldEffect_JumpOnBird(struct Task *task)
         ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_JUMP_IN_PLACE_LEFT);
         if (task->tAvatarFlags & PLAYER_AVATAR_FLAG_SURFING)
         {
-            DestroySprite(&gSprites[objectEvent->fieldEffectSpriteId]);
+            DestroySurfablePokemonSprite(&gSprites[objectEvent->fieldEffectSpriteId]);
         }
         task->tState++;
         task->tTimer = 0;
@@ -4408,7 +4409,7 @@ static bool8 RockClimb_WaitStopRockClimb(struct Task *task, struct ObjectEvent *
         objectEvent->noShadow = FALSE; // restore shadow
         UnfreezeObjectEvents();
         UnlockPlayerFieldControls();
-        DestroySprite(&gSprites[objectEvent->fieldEffectSpriteId]);
+        DestroySurfablePokemonSprite(&gSprites[objectEvent->fieldEffectSpriteId]);
         FieldEffectActiveListRemove(FLDEFF_USE_ROCK_CLIMB);
         objectEvent->triggerGroundEffectsOnMove = TRUE; // e.g. if dismount on grass
         DestroyTask(FindTaskIdByFunc(Task_UseRockClimb));

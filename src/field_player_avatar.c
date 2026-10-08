@@ -22,6 +22,7 @@
 #include "sound.h"
 #include "sprite.h"
 #include "strings.h"
+#include "surfable.h"
 #include "task.h"
 #include "tv.h"
 #include "wild_encounter.h"
@@ -2026,7 +2027,7 @@ static void Task_WaitStopSurfing(u8 taskId)
         gPlayerAvatar.preventStep = FALSE;
         UnlockPlayerFieldControls();
         FollowerNPC_ReappearAfterSurf();
-        DestroySprite(&gSprites[playerObjEvent->fieldEffectSpriteId]);
+        DestroySurfablePokemonSprite(&gSprites[playerObjEvent->fieldEffectSpriteId]);
 #ifdef BUGFIX
         // If this is not defined but the player steps into grass from surfing, they will appear over the grass instead of in the grass.
         playerObjEvent->triggerGroundEffectsOnMove = TRUE;
