@@ -1205,9 +1205,9 @@ MauvilleCity_Text_WallyWillYouBattleMe:
 # 603 "data/maps/MauvilleCity/scripts.pory"
 MauvilleCity_Text_WallyMyUncleWontKnowImStrong:
 # 604 "data/maps/MauvilleCity/scripts.pory"
-	.string "LUKA: Huh? If you won't battle me,\p"
+	.string "LUKA: Huh? If you won't battle me,\n"
 # 605 "data/maps/MauvilleCity/scripts.pory"
-	.string "{PLAYER}, how will you ever prove\n"
+	.string "{PLAYER}, how will you ever prove\l"
 # 606 "data/maps/MauvilleCity/scripts.pory"
 	.string "you're ready for the GYM?\p"
 # 607 "data/maps/MauvilleCity/scripts.pory"

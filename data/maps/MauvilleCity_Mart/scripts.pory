@@ -43,9 +43,10 @@ MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats:
 	.string "building contraptions that sparked...\p"
 	.string "Rumors say he can command electricity\n"
 	.string "with his mind after all his experiments.\p"
-	.string "But I know the truth, he's just a man with\n"
-	.string "no sense of self preservation. The weird\l"
-	.string "glow in his GYM is probably just a live wire.$"
+	.string "But I know the truth, he's just got\n"
+	.string "no sense of self preservation.\p"
+	.string "The weird glow in his GYM is probably\n"
+	.string "just a live wire.$"
 
 MauvilleCity_Mart_Text_DecisionsDetermineBattle:
 	.string "Mauville City is the true heart of Hoenn.\n"

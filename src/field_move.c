@@ -3,49 +3,57 @@
 #include "field_move.h"
 #include "fldeff.h"
 #include "fldeff_misc.h"
+#include "item.h"
 #include "party_menu.h"
 #include "constants/field_move.h"
 #include "constants/moves.h"
+#include "constants/items.h"
 #include "constants/party_menu.h"
 
 static bool32 IsFieldMoveUnlocked_Cut(void)
 {
-    return FlagGet(FLAG_BADGE01_GET);
+    return FlagGet(FLAG_BADGE01_GET) && CheckBagHasItem(ITEM_HM01, 1);
 }
 
 static bool32 IsFieldMoveUnlocked_Flash(void)
 {
-    return FlagGet(FLAG_BADGE02_GET);
+    return FlagGet(FLAG_BADGE02_GET) && CheckBagHasItem(ITEM_HM05, 1);
 }
 
 static bool32 IsFieldMoveUnlocked_RockSmash(void)
 {
-    return FlagGet(FLAG_BADGE03_GET);
+    return FlagGet(FLAG_BADGE03_GET) && CheckBagHasItem(ITEM_HM06, 1);
 }
 
 static bool32 IsFieldMoveUnlocked_Strength(void)
 {
-    return FlagGet(FLAG_BADGE04_GET);
+    return FlagGet(FLAG_BADGE04_GET) && CheckBagHasItem(ITEM_HM04, 1);
 }
 
 static bool32 IsFieldMoveUnlocked_Surf(void)
 {
-    return FlagGet(FLAG_BADGE05_GET);
+    return FlagGet(FLAG_BADGE05_GET) && CheckBagHasItem(ITEM_HM03, 1);
 }
 
 static bool32 IsFieldMoveUnlocked_Fly(void)
 {
-    return FlagGet(FLAG_BADGE06_GET);
+    return FlagGet(FLAG_BADGE06_GET) && CheckBagHasItem(ITEM_HM02, 1);
 }
 
 static bool32 IsFieldMoveUnlocked_Dive(void)
 {
-    return FlagGet(FLAG_BADGE07_GET);
+    return FlagGet(FLAG_BADGE07_GET) && CheckBagHasItem(ITEM_HM08, 1);
 }
 
 static bool32 IsFieldMoveUnlocked_Waterfall(void)
 {
-    return FlagGet(FLAG_BADGE08_GET);
+    return FlagGet(FLAG_BADGE08_GET) && CheckBagHasItem(ITEM_HM07, 1);
+}
+
+static bool32 IsFieldMoveUnlocked_Headbutt(void)
+{
+    // Headbutt keeps its existing badge requirement, but is not an HM.
+    return FlagGet(FLAG_BADGE04_GET);
 }
 
 #if OW_ROCK_CLIMB_FIELD_MOVE == TRUE
@@ -208,7 +216,7 @@ const struct FieldMoveInfo gFieldMoveInfo[FIELD_MOVES_COUNT] =
     [FIELD_MOVE_HEADBUTT] =
     {
         .fieldMoveFunc = SetUpFieldMove_Strength, 
-        .isUnlockedFunc = IsFieldMoveUnlocked_Strength, 
+        .isUnlockedFunc = IsFieldMoveUnlocked_Headbutt,
         .moveID = MOVE_HEADBUTT,
         .partyMsgID = PARTY_MSG_CANT_USE_HERE,
     },

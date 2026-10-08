@@ -305,10 +305,11 @@ VerdanturfTowncafe_Text_AcaciaCometMeasurements:
 	.string "When the comet passed over, my\n"
 	.string "instruments recorded its energy\l"
 	.string "signature.\p"
-	.string "After converting it into a\n"
-	.string "formula, I have been able to\l"
-	.string "measure the level of comet energy\l"
-	.string "in an area.$"
+	.string "Your POKéDEXs have been collecting\n"
+	.string "more data as you've traveled HOENN.\p"
+	.string "After converting it all into a\n"
+	.string "formula, I have been able to quantify\l"
+	.string "the level of comet energy in an area.$"
 
 VerdanturfTowncafe_Text_CalendulaTeamEnergy:
 	.string "We have noticed highly increased\n"
@@ -324,10 +325,9 @@ VerdanturfTowncafe_Text_AcaciaErraticReadings:
 	.string "investigate more closely.$"
 
 VerdanturfTowncafe_Text_CalendulaUnpredictable:
-	.string "You three, you have all grown\n"
-	.string "immensely, but the situation\l"
-	.string "surrounding the comet is\l"
-	.string "becoming more and more\l"
+	.string "You three have all grown immensely,\n"
+	.string "but the situation surrounding the\l"
+	.string "comet is becoming more and more\l"
 	.string "unpredictable.$"
 
 VerdanturfTowncafe_Text_AcaciaSafety:
@@ -339,13 +339,13 @@ VerdanturfTowncafe_Text_AcaciaSafety:
 VerdanturfTowncafe_Text_CalendulaCaution:
 	.string "We could never have gathered all\n"
 	.string "this data without you, but please\l"
-	.string "exercise caution whenever you\l"
-	.string "run into dangerous criminals.$"
+	.string "exercise caution whenever you run\l"
+	.string "into dangerous criminals.$"
 
 VerdanturfTowncafe_Text_LukaConfidence:
-	.string "Come on, PROFESSORS! We have\n"
-	.string "stomped every single one of those\l"
-	.string "thugs we've come across.$"
+	.string "Come on, PROFESSORS!\n"
+	.string "We've stomped every single one of\l"
+	.string "those thugs we've come across.$"
 
 VerdanturfTowncafe_Text_RivalReassuranceMale:
 	.string "Yeah, you don't need to worry\n"
@@ -360,14 +360,14 @@ VerdanturfTowncafe_Text_RivalReassuranceFemale:
 	.string "several times already.$"
 
 VerdanturfTowncafe_Text_AcaciaWorry:
-	.string "Of course we know how strong you\n"
-	.string "are, but we still worry.$"
+	.string "Of course we know how strong you are,\n"
+	.string "but we still worry.$"
 
 VerdanturfTowncafe_Text_CalendulaMeteorFalls:
 	.string "Well then, I'll be off to\n"
 	.string "METEOR FALLS.\p"
-	.string "{RIVAL}, LUKA, and {PLAYER}, I\n"
-	.string "look forward to seeing your\l"
+	.string "{RIVAL}, LUKA, and {PLAYER},\n"
+	.string "I look forward to seeing your\l"
 	.string "progress when we next meet.$"
 
 VerdanturfTowncafe_Text_CalendulaTakeCare:

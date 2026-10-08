@@ -60,7 +60,7 @@ FallarborTown_Mart_Text_Skitty:
 
 FallarborTown_Mart_Text_SellNuggetIFound:
 	.string "We FALLARBOR folk are used to ash\n"
-	.string "and soot-it's in our blood now.\p"
+	.string "and soot. It's in our blood now.\p"
 	.string "The volcano gave us fertile land,\n"
 	.string "but took some things we can't get back.\p"
 	.string "Sometimes, after a storm, the earth\n"

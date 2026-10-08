@@ -31,9 +31,9 @@ LavaridgeTown_PokemonCenter_1F_EventScript_Gentleman::
 
 LavaridgeTown_PokemonCenter_1F_Text_TrainersPokemonSpendTimeTogether:
 	.string "Something changed after the comet.\n"
-	.string "My POKéMON look at me differently now.\p"
-	.string "Like they understand more than they\n"
-	.string "did before. Deeper. It's unsettling.\p"
+	.string "My POKéMON look at me differently now,\l"
+	.string "like they understand more than they\l"
+	.string "did before. It's unsettling.\p"
 	.string "Maybe we never really knew each other\n"
 	.string "until that night.$"
 

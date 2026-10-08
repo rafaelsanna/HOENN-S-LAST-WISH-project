@@ -114,6 +114,21 @@ LavaridgeTownincense_EventScript_Husband::
 	msgbox LavaridgeTownincense_Text_Husband, MSGBOX_NPC
 	end
 
+LavaridgeTownincense_EventScript_IncenseVase::
+	msgbox LavaridgeTownincense_Text_IncenseVase, MSGBOX_SIGN
+	end
+
+LavaridgeTownincense_EventScript_IncenseDrawer::
+	msgbox LavaridgeTownincense_Text_IncenseDrawer, MSGBOX_SIGN
+	end
+
+LavaridgeTownincense_Text_IncenseVase:
+	.string "It's filled to the brim with incense.$"
+
+LavaridgeTownincense_Text_IncenseDrawer:
+	.string "Every drawer is stuffed full\n"
+	.string "of incense.$"
+
 LavaridgeTownincense_Text_MerchantGreeting:
 	.string "Hello hello! I love incense.\p"
 	.string "In fact, I love it so much that I\n"

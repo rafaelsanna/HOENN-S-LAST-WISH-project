@@ -760,12 +760,12 @@ LavaridgeTown_Text_HerbShopSign:
 
 LavaridgeTown_Text_Boy:
     .string "Yo! My grandpa says\n"
-    .string "it wasn't this hot before here.\p"
-    .string "Something must've changed\n"
-    .string "deep in the mountain...\p"
-    .string "When I grow up, I'm going\n"
-    .string "to check out FIERY PATH\l"
-    .string "and find rare POKéMON!$"
+    .string "it wasn't this hot here before.\p"
+    .string "Something must've changed deep\n"
+    .string "in the mountain...\p"
+    .string "When I grow up, I'm going to\n"
+    .string "check out what's going on with\l"
+    .string "FIERY PATH and find rare POKéMON!$"
 
 // MAKE IT RAIN dialogue
 LavaridgeTown_Text_MakeItRainComplaint:

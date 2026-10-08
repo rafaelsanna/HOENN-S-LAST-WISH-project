@@ -103,10 +103,10 @@ FallarborTown_PokemonCenter_1F_Text_FossilManiacEdgeOfTown:
 	.string "I've been studying fossil records\n"
 	.string "from across HOENN.\p"
 	.string "POKéMON today are different from even\n"
-	.string "a hundred years ago. Subtle changes.\p"
-	.string "Larger teeth. Different eyes.\n"
-	.string "Almost like they're adapting to\l"
-	.string "something we can't see yet.$"
+	.string "a hundred years ago.\p"
+	.string "Evolution is a phenomenon that never\n"
+	.string "stops. If you go digging in the desert,\l"
+	.string "you might find something interesting.$"
 
 FallarborTown_PokemonCenter_1F_Text_PlantHardyTrees:
 	.string "Volcanic ash covers everything.\n"
@@ -115,7 +115,7 @@ FallarborTown_PokemonCenter_1F_Text_PlantHardyTrees:
 	.string "buries will feed.\p"
 	.string "Nothing grows richer than soil born\n"
 	.string "from fire and destruction.\p"
-	.string "The comet, the mountain... maybe\n"
-	.string "something beautiful comes after.$"
+	.string "That comet... maybe something\n"
+	.string "beautiful comes after.$"
 
 `

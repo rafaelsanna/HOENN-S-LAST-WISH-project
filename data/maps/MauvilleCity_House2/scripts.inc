@@ -197,6 +197,6 @@ MauvilleCity_House2_Text_KiraraThanks:
 # 99 "data/maps/MauvilleCity_House2/scripts.pory"
 	.string "Now he's finally free of that addiction.\n"
 # 100 "data/maps/MauvilleCity_House2/scripts.pory"
-	.string "We're together again, and he even\l"
+	.string "We're together again, and now he even\l"
 # 101 "data/maps/MauvilleCity_House2/scripts.pory"
-	.string "started caring for POKéMON instead of bets.$"
+	.string "cares for POKéMON instead of bets.$"

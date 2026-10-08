@@ -123,7 +123,7 @@ FallarborTown_Mart_Text_SellNuggetIFound:
 # 62 "data/maps/FallarborTown_Mart/scripts.pory"
 	.string "We FALLARBOR folk are used to ash\n"
 # 63 "data/maps/FallarborTown_Mart/scripts.pory"
-	.string "and soot-it's in our blood now.\p"
+	.string "and soot. It's in our blood now.\p"
 # 64 "data/maps/FallarborTown_Mart/scripts.pory"
 	.string "The volcano gave us fertile land,\n"
 # 65 "data/maps/FallarborTown_Mart/scripts.pory"

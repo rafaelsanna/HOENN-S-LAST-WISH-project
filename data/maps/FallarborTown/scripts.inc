@@ -127,80 +127,84 @@ FallarborTown_Text_RegionKnownForMeteors:
 # 64 "data/maps/FallarborTown/scripts.pory"
 	.string "They say METEOR FALLS was gouged out\n"
 # 65 "data/maps/FallarborTown/scripts.pory"
-	.string "by a falling meteorite long ago.$"
+	.string "by a falling meteorite long ago.\p"
 # 66 "data/maps/FallarborTown/scripts.pory"
-
+	.string "Hey, you actually look sort of like\n"
 # 67 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_Text_MyPreciousAzurill:
+	.string "one of the cave drawings in there.$"
 # 68 "data/maps/FallarborTown/scripts.pory"
-	.string "See! Take a look!\n"
+
 # 69 "data/maps/FallarborTown/scripts.pory"
-	.string "This is my precious AZURILL!\p"
+FallarborTown_Text_MyPreciousAzurill:
 # 70 "data/maps/FallarborTown/scripts.pory"
-	.string "It's slick and smooth and plushy, too!$"
+	.string "See! Take a look!\n"
 # 71 "data/maps/FallarborTown/scripts.pory"
-
+	.string "This is my precious AZURILL!\p"
 # 72 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_Text_Azurill:
+	.string "It's slick and smooth and plushy, too!$"
 # 73 "data/maps/FallarborTown/scripts.pory"
-	.string "AZURILL: Rooreelooo.$"
+
 # 74 "data/maps/FallarborTown/scripts.pory"
-
+FallarborTown_Text_Azurill:
 # 75 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_Text_HaveYouChallengedFlannery:
+	.string "AZURILL: Rooreelooo.$"
 # 76 "data/maps/FallarborTown/scripts.pory"
-	.string "Have you challenged AMATERASU,\n"
+
 # 77 "data/maps/FallarborTown/scripts.pory"
-	.string "the LEADER of LAVARIDGE GYM?\p"
+FallarborTown_Text_HaveYouChallengedFlannery:
 # 78 "data/maps/FallarborTown/scripts.pory"
-	.string "I hear AMATERASU is as fierce in\n"
+	.string "Have you challenged AMATERASU,\n"
 # 79 "data/maps/FallarborTown/scripts.pory"
-	.string "battle as she is on stage.\p"
+	.string "the LEADER of LAVARIDGE GYM?\p"
 # 80 "data/maps/FallarborTown/scripts.pory"
-	.string "No wonder she became the LEADER\n"
+	.string "I hear AMATERASU is as fierce in\n"
 # 81 "data/maps/FallarborTown/scripts.pory"
-	.string "of LAVARIDGE GYM.$"
+	.string "battle as she is on stage.\p"
 # 82 "data/maps/FallarborTown/scripts.pory"
-
+	.string "No wonder she became the LEADER\n"
 # 83 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_Text_BattleTentSign:
+	.string "of LAVARIDGE GYM.$"
 # 84 "data/maps/FallarborTown/scripts.pory"
-	.string "BATTLE TENT FALLARBOR SITE\n"
+
 # 85 "data/maps/FallarborTown/scripts.pory"
-	.string "“May the Greatest Teams Gather!”$"
+FallarborTown_Text_BattleTentSign:
 # 86 "data/maps/FallarborTown/scripts.pory"
-
+	.string "BATTLE TENT FALLARBOR SITE\n"
 # 87 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_Text_TownSign:
+	.string "“May the Greatest Teams Gather!”$"
 # 88 "data/maps/FallarborTown/scripts.pory"
-	.string "FALLARBOR TOWN\n"
+
 # 89 "data/maps/FallarborTown/scripts.pory"
-	.string "“A farm community with small gardens.”$"
+FallarborTown_Text_TownSign:
 # 90 "data/maps/FallarborTown/scripts.pory"
-
+	.string "FALLARBOR TOWN\n"
 # 91 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_Text_MoveTutorSign:
+	.string "“A farm community with small gardens.”$"
 # 92 "data/maps/FallarborTown/scripts.pory"
-	.string "MOVE TUTOR'S HOUSE\n"
+
 # 93 "data/maps/FallarborTown/scripts.pory"
-	.string "“New moves taught to POKéMON.”$"
+FallarborTown_Text_MoveTutorSign:
 # 94 "data/maps/FallarborTown/scripts.pory"
-
+	.string "MOVE TUTOR'S HOUSE\n"
 # 95 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_EventScript_Farminglady::
+	.string "“New moves taught to POKéMON.”$"
 # 96 "data/maps/FallarborTown/scripts.pory"
-	msgbox FallarborTown_Text_Farminglady_1, MSGBOX_NPC
-# 97 "data/maps/FallarborTown/scripts.pory"
-	end
-# 98 "data/maps/FallarborTown/scripts.pory"
 
+# 97 "data/maps/FallarborTown/scripts.pory"
+FallarborTown_EventScript_Farminglady::
+# 98 "data/maps/FallarborTown/scripts.pory"
+	msgbox FallarborTown_Text_Farminglady_1, MSGBOX_NPC
 # 99 "data/maps/FallarborTown/scripts.pory"
-FallarborTown_Text_Farminglady_1:
+	end
 # 100 "data/maps/FallarborTown/scripts.pory"
-	.string "The soil on this farm is more\n"
+
 # 101 "data/maps/FallarborTown/scripts.pory"
-	.string "fertile than anywhere else in Hoenn.\p"
+FallarborTown_Text_Farminglady_1:
 # 102 "data/maps/FallarborTown/scripts.pory"
-	.string "Plant as much as you like here.\n"
+	.string "The soil on this farm is more\n"
 # 103 "data/maps/FallarborTown/scripts.pory"
+	.string "fertile than anywhere else in Hoenn.\p"
+# 104 "data/maps/FallarborTown/scripts.pory"
+	.string "Plant as much as you like here.\n"
+# 105 "data/maps/FallarborTown/scripts.pory"
 	.string "We have more than enough space!$"

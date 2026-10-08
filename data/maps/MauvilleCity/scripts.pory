@@ -601,8 +601,8 @@ MauvilleCity_Text_WallyWillYouBattleMe:
 	.string "we battle each other?$"
 
 MauvilleCity_Text_WallyMyUncleWontKnowImStrong:
-	.string "LUKA: Huh? If you won't battle me,\p"
-	.string "{PLAYER}, how will you ever prove\n"
+	.string "LUKA: Huh? If you won't battle me,\n"
+	.string "{PLAYER}, how will you ever prove\l"
 	.string "you're ready for the GYM?\p"
 	.string "If you can't face me now,\n"
 	.string "how will you face the LEADER?$"

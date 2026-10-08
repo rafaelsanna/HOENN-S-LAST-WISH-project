@@ -533,13 +533,15 @@ PetalburgWoods_Text_CantBePopularIfILose:
 	.string "I can't be popular if I lose.$"
 
 PetalburgWoods_Text_PeopleRespectYou:
-	.string "This forest has grown more sinister\n"
-	.string "in recent years…\p"
-	.string "Lately, people tell frightening\n"
-	.string "legends about shadowy figures\l"
-	.string "moving between the trees at night.\p"
-	.string "Some say the woods themselves\n"
-	.string "have become alive and watchful…$"
+	.string "I originally came out here because\n"
+	.string "I heard a rumor in school…\p"
+	.string "It was that there is a hidden place\n"
+	.string "in these woods where rare POKÉMON\l"
+	.string "and items could be found.\p"
+	.string "I looked all over, but couldn't find\n"
+	.string "anything…\p"
+	.string "Maybe it's past those small trees?\n"
+	.string "But I don't have the HM CUT...$"
 
 PetalburgWoods_Text_IWantRematch1:
 	.string "I want a rematch when my BUG\n"

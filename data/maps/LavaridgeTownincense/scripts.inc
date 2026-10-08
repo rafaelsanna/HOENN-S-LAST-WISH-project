@@ -231,40 +231,70 @@ LavaridgeTownincense_EventScript_Husband::
 # 116 "data/maps/LavaridgeTownincense/scripts.pory"
 
 # 117 "data/maps/LavaridgeTownincense/scripts.pory"
-LavaridgeTownincense_Text_MerchantGreeting:
+LavaridgeTownincense_EventScript_IncenseVase::
 # 118 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "Hello hello! I love incense.\p"
+	msgbox LavaridgeTownincense_Text_IncenseVase, MSGBOX_SIGN
 # 119 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "In fact, I love it so much that I\n"
+	end
 # 120 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "want everyone to have some!\p"
+
 # 121 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "But it's so expensive, I'd go broke\n"
+LavaridgeTownincense_EventScript_IncenseDrawer::
 # 122 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "if I just gave it away!\p"
+	msgbox LavaridgeTownincense_Text_IncenseDrawer, MSGBOX_SIGN
 # 123 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "Here, I'll sell it to you!$"
+	end
 # 124 "data/maps/LavaridgeTownincense/scripts.pory"
 
 # 125 "data/maps/LavaridgeTownincense/scripts.pory"
-LavaridgeTownincense_Text_MerchantFarewell:
+LavaridgeTownincense_Text_IncenseVase:
 # 126 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "Come back again! I know you will.\p"
+	.string "It's filled to the brim with incense.$"
 # 127 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "Everyone loves incense!$"
-# 128 "data/maps/LavaridgeTownincense/scripts.pory"
 
+# 128 "data/maps/LavaridgeTownincense/scripts.pory"
+LavaridgeTownincense_Text_IncenseDrawer:
 # 129 "data/maps/LavaridgeTownincense/scripts.pory"
-LavaridgeTownincense_Text_Husband:
+	.string "Every drawer is stuffed full\n"
 # 130 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "My husband is completely obsessed\n"
+	.string "of incense.$"
 # 131 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "with incense.\p"
+
 # 132 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "Every drawer, pot, and cabinet in\n"
+LavaridgeTownincense_Text_MerchantGreeting:
 # 133 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "our house is stuffed with it.\p"
+	.string "Hello hello! I love incense.\p"
 # 134 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "Please, for the love of ARCEUS,\n"
+	.string "In fact, I love it so much that I\n"
 # 135 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "want everyone to have some!\p"
+# 136 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "But it's so expensive, I'd go broke\n"
+# 137 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "if I just gave it away!\p"
+# 138 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "Here, I'll sell it to you!$"
+# 139 "data/maps/LavaridgeTownincense/scripts.pory"
+
+# 140 "data/maps/LavaridgeTownincense/scripts.pory"
+LavaridgeTownincense_Text_MerchantFarewell:
+# 141 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "Come back again! I know you will.\p"
+# 142 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "Everyone loves incense!$"
+# 143 "data/maps/LavaridgeTownincense/scripts.pory"
+
+# 144 "data/maps/LavaridgeTownincense/scripts.pory"
+LavaridgeTownincense_Text_Husband:
+# 145 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "My husband is completely obsessed\n"
+# 146 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "with incense.\p"
+# 147 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "Every drawer, pot, and cabinet in\n"
+# 148 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "our house is stuffed with it.\p"
+# 149 "data/maps/LavaridgeTownincense/scripts.pory"
+	.string "Please, for the love of ARCEUS,\n"
+# 150 "data/maps/LavaridgeTownincense/scripts.pory"
 	.string "buy some and get it out of here...$"
