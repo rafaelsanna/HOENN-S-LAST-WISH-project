@@ -612,6 +612,12 @@ const struct RideablePokemon gSurfablePokemon[] =
         .trainerPose = 0,
     },
 #endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
+#if P_FAMILY_BIDOOF && OW_SURF_BIBAREL
+    {
+        .species = SPECIES_BIBAREL,
+        .trainerPose = 0,
+    },
+#endif // P_FAMILY_BIDOOF && OW_SURF_BIBAREL
 
 #if 0 // Gen IV+ surf sheets are not present; these species use the default blob.
 // Gen IV Pokemon

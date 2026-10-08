@@ -207,6 +207,9 @@ static void InitializeNewGameData(void)
     // Physical/Special Split is the project's default battle behavior.
     FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
     FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT_CONFIGURED);
+    // Pokémon overworld Surf sprites are the default presentation.
+    FlagSet(FLAG_SURF_SPRITE);
+    FlagClear(FLAG_SURF_SPRITE_CONFIGURED);
     ClearTVShowData();
     ResetGabbyAndTy();
     

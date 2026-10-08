@@ -73,6 +73,7 @@ enum //General's Menu Items
     MENUITEM_GEN_MOVECOLORS,
     MENUITEM_GEN_AUTORUN,
     MENUITEM_GEN_AUTOFISHING,
+    MENUITEM_GEN_SURF_SPRITE,
     MENUITEM_GEN_SOUND,
     MENUITEM_GEN_BUTTONMODE,
     MENUITEM_GEN_FRAMETYPE,
@@ -317,6 +318,7 @@ struct // PAGE_GENERAL
     [MENUITEM_GEN_MOVECOLORS]    = {DrawChoices_MoveColors,  ProcessInput_Options_Two},
     [MENUITEM_GEN_AUTORUN]       = {DrawChoices_AutoRun,     ProcessInput_Options_Two},
     [MENUITEM_GEN_AUTOFISHING]   = {DrawChoices_AutoFishing, ProcessInput_Options_Two},
+    [MENUITEM_GEN_SURF_SPRITE]   = {DrawChoices_OnOff,       ProcessInput_Options_Two},
     [MENUITEM_GEN_SOUND]         = {DrawChoices_Sound,       ProcessInput_Sound},
     [MENUITEM_GEN_BUTTONMODE]    = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
     [MENUITEM_GEN_FRAMETYPE]      = {DrawChoices_FrameType,       ProcessInput_FrameType},
@@ -360,6 +362,7 @@ static const u8 sText_RandomizerT[]     = _("RANDOM TRAINERS");
 static const u8 sText_PhysicalSpecialSplit[] = _("PHYS/SPEC SPLIT");
 static const u8 sText_AllAbilities[]    = _("ALL ABILITIES");
 static const u8 sText_AutoFishing[]     = _("AUTO FISH");
+static const u8 sText_SurfSprite[]      = _("SURF SPRITE");
 static const u8 sText_FastSlide[]       = _("FAST SLIDE");
 static const u8 sText_AutoRun[]         = _("AUTO RUN");
 static const u8 sText_BattleSpeed[]     = _("BATTLE SPEED");
@@ -379,6 +382,7 @@ static const u8 *const sOptionMenuItemsNamesGeneral[MENUITEM_GEN_COUNT] =
     [MENUITEM_GEN_MOVECOLORS]    = sText_MoveColors,
     [MENUITEM_GEN_AUTORUN]       = sText_AutoRun,
     [MENUITEM_GEN_AUTOFISHING]   = sText_AutoFishing,
+    [MENUITEM_GEN_SURF_SPRITE]   = sText_SurfSprite,
     [MENUITEM_GEN_SOUND]         = gText_Sound,
     [MENUITEM_GEN_BUTTONMODE]    = gText_ButtonMode,
     [MENUITEM_GEN_FRAMETYPE]      = gText_Frame,
@@ -473,6 +477,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_GEN_MOVECOLORS:       return TRUE;
         case MENUITEM_GEN_AUTORUN:          return TRUE;
         case MENUITEM_GEN_AUTOFISHING:      return TRUE;
+        case MENUITEM_GEN_SURF_SPRITE:      return TRUE;
         case MENUITEM_GEN_SOUND:            return TRUE;
         case MENUITEM_GEN_BUTTONMODE:       return TRUE;
         case MENUITEM_GEN_FRAMETYPE:        return TRUE;
@@ -558,6 +563,8 @@ static const u8 sText_Desc_AllAbilitiesOff[] = _("Pokémon use their normal abil
 static const u8 sText_Desc_AllAbilitiesOn[]  = _("Pokémon use all of their species'\nabilities at the same time.");
 static const u8 sText_Desc_AutoFishingOff[]     = _("Fishing uses the normal wait timer\nand A-button check.");
 static const u8 sText_Desc_AutoFishingOn[]      = _("Fishing advances automatically.");
+static const u8 sText_Desc_SurfSpriteOff[]      = _("Use the classic blob while surfing.");
+static const u8 sText_Desc_SurfSpriteOn[]       = _("Show the party Pokémon while surfing.");
 static const u8 sText_Desc_HardLocked[]         = _("Locked by HARD NPC\nTEAMS.");
 
 // Option strings
@@ -585,6 +592,7 @@ static const u8 *const sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_COUNT][3]
     [MENUITEM_GEN_MOVECOLORS]   = {sText_Desc_MoveColorsOff,        sText_Desc_MoveColorsOn,    sText_Empty},
     [MENUITEM_GEN_AUTORUN]      = {sText_Desc_AutoRunOff,           sText_Desc_AutoRunOn,       sText_Empty},
     [MENUITEM_GEN_AUTOFISHING]  = {sText_Desc_AutoFishingOff,       sText_Desc_AutoFishingOn,   sText_Empty},
+    [MENUITEM_GEN_SURF_SPRITE]  = {sText_Desc_SurfSpriteOff,         sText_Desc_SurfSpriteOn,    sText_Empty},
     [MENUITEM_GEN_SOUND]        = {sText_Desc_SoundMono,            sText_Desc_SoundStereo,     sText_Empty},
     [MENUITEM_GEN_BUTTONMODE]   = {sText_Desc_ButtonMode,           sText_Desc_ButtonMode_LR,   sText_Desc_ButtonMode_LA},
     [MENUITEM_GEN_FRAMETYPE]      = {sText_Desc_FrameType,             sText_Empty,                    sText_Empty},
@@ -626,6 +634,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_C
     [MENUITEM_GEN_MOVECOLORS]   = sText_Empty,
     [MENUITEM_GEN_AUTORUN]      = sText_Empty,
     [MENUITEM_GEN_AUTOFISHING]  = sText_Empty,
+    [MENUITEM_GEN_SURF_SPRITE]  = sText_Empty,
     [MENUITEM_GEN_SOUND]        = sText_Empty,
     [MENUITEM_GEN_BUTTONMODE]   = sText_Empty,
     [MENUITEM_GEN_FRAMETYPE]     = sText_Empty,
@@ -691,6 +700,10 @@ static const u8 *const OptionTextDescription(void)
             if (!CheckConditions(MENUITEM_GEN_AUTOFISHING))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_AUTOFISHING];
             return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_AUTOFISHING][sOptions->sel[MENUITEM_GEN_AUTOFISHING]];
+        case MENUITEM_GEN_SURF_SPRITE:
+            if (!CheckConditions(MENUITEM_GEN_SURF_SPRITE))
+                return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_SURF_SPRITE];
+            return sOptionMenuItemDescriptionsGeneral[MENUITEM_GEN_SURF_SPRITE][sOptions->sel[MENUITEM_GEN_SURF_SPRITE]];
         case MENUITEM_GEN_SOUND:
             if (!CheckConditions(MENUITEM_GEN_SOUND))
                 return sOptionMenuItemDescriptionsDisabledGeneral[MENUITEM_GEN_SOUND];
@@ -1171,6 +1184,10 @@ void CB2_InitOptionMenu(void)
     sOptions->sel[MENUITEM_GEN_MOVECOLORS]  = AreMoveTypeColorsEnabled();
     sOptions->sel[MENUITEM_GEN_AUTORUN]     = FlagGet(FLAG_SYS_AUTO_RUN);
     sOptions->sel[MENUITEM_GEN_AUTOFISHING] = FlagGet(FLAG_AUTO_FISHING);
+    if (FlagGet(FLAG_SURF_SPRITE_CONFIGURED))
+        sOptions->sel[MENUITEM_GEN_SURF_SPRITE] = FlagGet(FLAG_SURF_SPRITE);
+    else
+        sOptions->sel[MENUITEM_GEN_SURF_SPRITE] = TRUE;
     sOptions->sel[MENUITEM_GEN_SOUND]       = gSaveBlock2Ptr->optionsSound;
     sOptions->sel[MENUITEM_GEN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
     sOptions->sel[MENUITEM_GEN_FRAMETYPE]   = gSaveBlock2Ptr->optionsWindowFrameType;
@@ -1446,6 +1463,12 @@ static void Task_OptionMenuSave(u8 taskId)
         FlagSet(FLAG_AUTO_FISHING);
     else
         FlagClear(FLAG_AUTO_FISHING);
+
+    if (sOptions->sel[MENUITEM_GEN_SURF_SPRITE])
+        FlagSet(FLAG_SURF_SPRITE);
+    else
+        FlagClear(FLAG_SURF_SPRITE);
+    FlagSet(FLAG_SURF_SPRITE_CONFIGURED);
 
     gSaveBlock2Ptr->optionsSound            = sOptions->sel[MENUITEM_GEN_SOUND];
     gSaveBlock2Ptr->optionsButtonMode       = sOptions->sel[MENUITEM_GEN_BUTTONMODE];

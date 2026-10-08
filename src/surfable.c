@@ -13,6 +13,7 @@
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
+#include "constants/flags.h"
 #include "constants/moves.h"
 #include "constants/species.h"
 #include "config/surfable_species_enabled.h"
@@ -38,8 +39,6 @@ struct RideablePokemon
 // adding their OW_SURF_* setting in surfable_species_enabled.h.
 #undef P_FAMILY_PIPLUP
 #define P_FAMILY_PIPLUP FALSE
-#undef P_FAMILY_BIDOOF
-#define P_FAMILY_BIDOOF FALSE
 #undef P_FAMILY_CRANIDOS
 #define P_FAMILY_CRANIDOS FALSE
 #undef P_FAMILY_BUIZEL
@@ -139,6 +138,10 @@ u8 GetSurfablePokemonPartySlot(void)
 
 static u16 GetSurfablePokemonSprite(void)
 {
+    // Saves from before this option existed default to the Pokémon sprites.
+    if (FlagGet(FLAG_SURF_SPRITE_CONFIGURED) && !FlagGet(FLAG_SURF_SPRITE))
+        return 0xFFFF;
+
     sCurrentSurfMonPartySlot = GetSurfablePokemonPartySlot();
     if (sCurrentSurfMonPartySlot == PARTY_SIZE)
         return 0xFFFF;

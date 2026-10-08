@@ -601,12 +601,12 @@ const u16 gSurfablePokemonShinyPalette_Rayquaza[] = INCBIN_U16("graphics/object_
 
 #endif // P_FAMILY_RAYQUAZA
 
-// Wish forms using their native six-frame overworld sheets.
+// Wish forms using their native overworld sheets.
 #if P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
-const u32 gSurfablePokemonPic_Druddigon[] = INCBIN_U32("graphics/object_events/pics/pokemon/surfable/druddigon.4bpp");
+const u32 gSurfablePokemonPic_Druddigon[] = INCBIN_U32("graphics/pokemon/druddigon/druddigon.4bpp");
 const u16 gSurfablePokemonPalette_Druddigon[] = INCBIN_U16("graphics/pokemon/druddigon/overworld_normal.gbapal");
 const u16 gSurfablePokemonShinyPalette_Druddigon[] = INCBIN_U16("graphics/pokemon/druddigon/overworld_shiny.gbapal");
-STATIC_ASSERT(sizeof(gSurfablePokemonPic_Druddigon) == 3072, DruddigonSurfSheetMustContainSix32x32Frames);
+STATIC_ASSERT(sizeof(gSurfablePokemonPic_Druddigon) == 6144, DruddigonSurfSheetMustContainTwelve32x32Frames);
 #endif // P_FAMILY_DRUDDIGON && OW_SURF_DRUDDIGON
 
 #if P_FAMILY_TORKOAL && OW_SURF_TORKOAL
@@ -620,7 +620,8 @@ STATIC_ASSERT(sizeof(gSurfablePokemonPic_Torkoal) == 3072, TorkoalSurfSheetMustC
 const u32 gSurfablePokemonPic_Numel[] = INCBIN_U32("graphics/object_events/pics/pokemon/surfable/numel.4bpp");
 const u16 gSurfablePokemonPalette_Numel[] = INCBIN_U16("graphics/pokemon/numel/overworld_normal.gbapal");
 const u16 gSurfablePokemonShinyPalette_Numel[] = INCBIN_U16("graphics/pokemon/numel/overworld_shiny.gbapal");
-STATIC_ASSERT(sizeof(gSurfablePokemonPic_Numel) == 3072, NumelSurfSheetMustContainSix32x32Frames);
+// The first six 32x32 frames are used by Surf; the source sheet is 192x64.
+STATIC_ASSERT(sizeof(gSurfablePokemonPic_Numel) == 6144, NumelSurfSheetMustContainTwelve32x32Frames);
 #endif // P_FAMILY_NUMEL && OW_SURF_NUMEL
 
 #if P_FAMILY_NUMEL && OW_SURF_CAMERUPT
@@ -1586,3 +1587,11 @@ STATIC_ASSERT(sizeof(gSurfablePokemonPic_Overqwil) == 6144, OverqwilSurfSheetMus
 #endif // OW_SURF_OVERQWIL
 #endif // P_FAMILY_QWILFISH && P_HISUIAN_FORMS
 */
+
+#if P_FAMILY_BIDOOF && OW_SURF_BIBAREL
+// Bibarel currently uses the ratybara sheet as its Surf placeholder.
+const u32 gSurfablePokemonPic_Bibarel[] = INCBIN_U32("graphics/object_events/pics/pokemon/surfable/ratybara.4bpp");
+const u16 gSurfablePokemonPalette_Bibarel[] = INCBIN_U16("graphics/object_events/pics/pokemon/surfable/ratybara.gbapal");
+const u16 gSurfablePokemonShinyPalette_Bibarel[] = INCBIN_U16("graphics/object_events/pics/pokemon/surfable/ratybara.gbapal");
+STATIC_ASSERT(sizeof(gSurfablePokemonPic_Bibarel) == 6144, BibarelSurfSheetMustContainTwelve32x32Frames);
+#endif // P_FAMILY_BIDOOF && OW_SURF_BIBAREL

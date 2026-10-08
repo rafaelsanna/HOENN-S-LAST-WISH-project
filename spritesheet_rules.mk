@@ -3210,6 +3210,9 @@ $(POKEMONGFXDIR)/mienshao/overworld.4bpp: %.4bpp: %.png
 $(POKEMONGFXDIR)/druddigon/overworld.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+$(POKEMONGFXDIR)/druddigon/druddigon.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
 $(POKEMONGFXDIR)/golett/overworld.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 

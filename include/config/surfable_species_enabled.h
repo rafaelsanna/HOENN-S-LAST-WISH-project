@@ -1,10 +1,10 @@
 #ifndef GUARD_CONFIG_SURFABLE_SPECIES_ENABLED_H
 #define GUARD_CONFIG_SURFABLE_SPECIES_ENABLED_H
 
-// These entries use their native overworld sheets for now. Druddigon, Torkoal,
-// and Numel have six 32x32 frames; Camerupt follows Wailord with eight 64x64
-// frames. They have no player-overlay sheet yet, so their surf overlay is
-// intentionally disabled.
+// These entries use their native overworld sheets for now. Druddigon, Numel,
+// and Bibarel use 192x64 sheets with six Surf frames followed by six overlay
+// frames. Torkoal has six 32x32 frames. Camerupt follows Wailord with eight
+// 64x64 frames and has no player-overlay sheet.
 
 #define OW_SURF_ALOMOMOLA                            0
 #define OW_SURF_ARAQUANID                            0
@@ -18,6 +18,7 @@
 #define OW_SURF_BASCULEGION                          0
 #define OW_SURF_BEARTIC                              0
 #define OW_SURF_BERGMITE                             0
+#define OW_SURF_BIBAREL                              1
 #define OW_SURF_BINACLE                              0
 #define OW_SURF_BOUFFALANT                           0
 #define OW_SURF_BRIONNE                              0
