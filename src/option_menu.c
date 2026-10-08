@@ -454,6 +454,7 @@ static void EnforceHardNpcTeamsRules(void)
     FlagSet(FLAG_PHYSICAL_SPECIAL_SPLIT);
     FlagClear(FLAG_ALL_ABILITIES);
     Randomizer_SetWildModes(FALSE, FALSE);
+    Randomizer_SetChaosMode(FALSE);
     FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
 }
 
@@ -1218,7 +1219,7 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_INVERSE_BATTLE] = FlagGet(FLAG_INVERSE_BATTLE_OPTION);
     sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
-    sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]    = Randomizer_FullWildEnabled();
+    sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]    = Randomizer_FullWildEnabled() && !Randomizer_ChaosEnabled();
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = IsPhysicalSpecialSplitEnabled();
     sOptions->sel_difficulty[MENUITEM_DIF_ALL_ABILITIES]  = FlagGet(FLAG_ALL_ABILITIES);

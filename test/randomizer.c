@@ -20,6 +20,7 @@
 static void SetUpRandomizer(bool8 tables, bool8 full)
 {
     gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    Randomizer_SetChaosMode(FALSE);
     Randomizer_SetWildModes(tables, full);
     FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
     VarSet(RANDOMIZER_VAR_SPECIES_MODE, MON_RANDOM);

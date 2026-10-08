@@ -46,6 +46,8 @@
 #include "party_menu.h"
 #include "pokedex.h"
 #include "pokemon.h"
+#include "pokemon_content.h"
+#include "randomizer.h"
 #include "pokemon_sprite_visualizer.h"
 #include "pokemon_icon.h"
 #include "pokemon_storage_system.h"
@@ -216,7 +218,7 @@ enum DebugBattleEnvironment
 #define DEBUG_NUMBER_ICON_X 210
 #define DEBUG_NUMBER_ICON_Y 50
 
-#define DEBUG_MAX_MENU_ITEMS 20
+#define DEBUG_MAX_MENU_ITEMS 21
 #define DEBUG_MAX_SUB_MENU_LEVELS 4
 
 // *******************************
@@ -286,6 +288,7 @@ static void DebugAction_ExecuteScript(u8 taskId, const u8 *script);
 static void DebugAction_ToggleFlag(u8 taskId);
 static void DebugAction_Dev_QuickSetup(u8 taskId);
 static void DebugAction_Cheat_OpsAllMoves(u8 taskId);
+static void DebugAction_Util_FullChaosRandom(u8 taskId);
 
 static void DebugTask_HandleMenuInput_General(u8 taskId);
 
@@ -866,6 +869,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Watch credits…"),     DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),        DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Learn All Moves: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
+    { COMPOUND_STRING("Full Chaos Random: {STR_VAR_1}"), DebugAction_Util_FullChaosRandom },
     { COMPOUND_STRING("Achievements…"),      DebugAction_Util_OpenAchievements },
     { COMPOUND_STRING("Test Ach Popup"),     DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
@@ -874,6 +878,9 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Steven Multi"),       DebugAction_ExecuteScript, Debug_EventScript_Steven_Multi },
     { NULL }
 };
+STATIC_ASSERT(ARRAY_COUNT(sDebugMenu_Actions_Utilities) - 1 <= DEBUG_MAX_MENU_ITEMS, UtilitiesFitDebugMenu);
+
+static const u8 sDebugText_FullChaosHardLocked[] = _("Full Chaos Random cannot be\nenabled in HARD mode.");
 
 static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
 {
@@ -1315,7 +1322,10 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
     // create window
     HideMapNamePopUpWindow();
     LoadMessageBoxAndBorderGfx();
-    windowId = AddWindow(&sDebugMenuWindowTemplateMain);
+    struct WindowTemplate windowTemplate = sDebugMenuWindowTemplateMain;
+    if (items == sDebugMenu_Actions_Utilities)
+        windowTemplate.width = 19; // Full mode name plus visible ON/OFF.
+    windowId = AddWindow(&windowTemplate);
     DrawStdWindowFrame(windowId, FALSE);
 
     u32 totalItems = 0;
@@ -1331,6 +1341,8 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
             sDebugMenuListData->listItems[i].id = i;
             if (items[i].action == DebugAction_Cheat_OpsAllMoves)
                 StringCopy(gStringVar1, IsOpsAllMovesEnabled() ? sDebugText_On : sDebugText_Off);
+            if (items[i].action == DebugAction_Util_FullChaosRandom)
+                StringCopy(gStringVar1, Randomizer_ChaosEnabled() ? sDebugText_On : sDebugText_Off);
             StringExpandPlaceholders(gStringVar4, items[i].text);
             if (IsSubMenuAction(items[i].action))
                 StringAppend(gStringVar4, sDebugText_Arrow);
@@ -2308,6 +2320,57 @@ static void DebugAction_Cheat_OpsAllMoves(u8 taskId)
     }
     RedrawListMenu(gTasks[taskId].tMenuTaskId);
 }
+
+static void DebugAction_Util_FullChaosRandom(u8 taskId)
+{
+    if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
+    {
+        Randomizer_SetChaosMode(FALSE);
+        PlaySE(SE_FAILURE);
+        StringCopy(gStringVar4, sDebugText_FullChaosHardLocked);
+        Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
+        return;
+    }
+
+    Randomizer_SetChaosMode(!Randomizer_ChaosEnabled());
+    const struct DebugMenuOption *items = Debug_GetCurrentCallbackMenu();
+    for (u32 i = 0; items[i].text != NULL; i++)
+    {
+        if (items[i].action == DebugAction_Util_FullChaosRandom)
+        {
+            StringCopy(gStringVar1, Randomizer_ChaosEnabled() ? sDebugText_On : sDebugText_Off);
+            StringExpandPlaceholders(gStringVar4, items[i].text);
+            StringCopy(&sDebugMenuListData->itemNames[i][0], gStringVar4);
+            sDebugMenuListData->listItems[i].name = &sDebugMenuListData->itemNames[i][0];
+            break;
+        }
+    }
+    RedrawListMenu(gTasks[taskId].tMenuTaskId);
+}
+
+#if TESTING
+const u8 *Debug_TestChaosLabel(bool8 enabled)
+{
+    for (u32 i = 0; sDebugMenu_Actions_Utilities[i].text != NULL; i++)
+        if (sDebugMenu_Actions_Utilities[i].action == DebugAction_Util_FullChaosRandom)
+        {
+            StringCopy(gStringVar1, enabled ? sDebugText_On : sDebugText_Off);
+            StringExpandPlaceholders(gStringVar4, sDebugMenu_Actions_Utilities[i].text);
+            return gStringVar4;
+        }
+    return NULL;
+}
+
+const u8 *Debug_TestChaosHardMessage(void)
+{
+    return sDebugText_FullChaosHardLocked;
+}
+
+u32 Debug_TestUtilitiesCount(void)
+{
+    return ARRAY_COUNT(sDebugMenu_Actions_Utilities) - 1;
+}
+#endif
 
 static void DebugAction_Player_Gender(u8 taskId)
 {
@@ -4028,6 +4091,7 @@ static void DebugAction_Give_Pokemon_SelectId(u8 taskId)
     {
         PlaySE(SE_SELECT);
         Debug_HandleInput_Numeric(taskId, 1, NUM_SPECIES - 1, DEBUG_NUMBER_DIGITS_ITEMS);
+        gTasks[taskId].tInput = PokemonContent_NextGiveSpecies(gTasks[taskId].tInput, JOY_NEW(DPAD_DOWN));
         Debug_Display_SpeciesInfo(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
         FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
         FreeMonIconPalettes();
@@ -4037,6 +4101,11 @@ static void DebugAction_Give_Pokemon_SelectId(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
+        if (!PokemonContent_CanGive(gTasks[taskId].tInput))
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
         sDebugMonData->species = gTasks[taskId].tInput;
         gTasks[taskId].tInput = 1;
         gTasks[taskId].tDigit = 0;

@@ -5,6 +5,7 @@
 
 #include "global.h"
 #include "randomizer.h"
+#include "pokemon_content.h"
 #include "event_data.h"
 #include "pokemon.h"
 #include "random.h"
@@ -604,11 +605,32 @@ bool8 Randomizer_FullWildEnabled(void)
     // Preserve the established table mode if a malformed save has both bits set.
     return RandomizersAllowed()
         && !Randomizer_WildEnabled()
-        && FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON);
+        && (FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON) || FlagGet(FLAG_RANDOMIZER_FULL_CHAOS));
+}
+
+bool8 Randomizer_ChaosEnabled(void)
+{
+    return RandomizersAllowed()
+        && !FlagGet(RANDOMIZER_FLAG_WILD_MON)
+        && !FlagGet(RANDOMIZER_FLAG_FULL_WILD_MON)
+        && FlagGet(FLAG_RANDOMIZER_FULL_CHAOS);
+}
+
+void Randomizer_SetChaosMode(bool8 enabled)
+{
+    if (enabled && RandomizersAllowed())
+    {
+        Randomizer_SetWildModes(FALSE, FALSE);
+        FlagSet(FLAG_RANDOMIZER_FULL_CHAOS);
+    }
+    else
+        FlagClear(FLAG_RANDOMIZER_FULL_CHAOS);
 }
 
 void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom)
 {
+    if (!RandomizersAllowed() || randomizeTables || fullRandom)
+        FlagClear(FLAG_RANDOMIZER_FULL_CHAOS);
     if (!RandomizersAllowed())
     {
         randomizeTables = FALSE;
@@ -653,6 +675,7 @@ enum RandomizerSpeciesMode Randomizer_GetSpeciesMode(void)
 
 void Randomizer_Init(bool8 randomizeWild, bool8 randomizeTrainers, enum RandomizerSpeciesMode mode)
 {
+    Randomizer_SetChaosMode(FALSE);
     Randomizer_SetWildModes(randomizeWild, FALSE);
 
     if (randomizeTrainers && RandomizersAllowed())
@@ -690,7 +713,8 @@ static u8 Rz_GetEvolutionStage(u16 species)
         bool8 foundPrev = FALSE;
         for (s = 1; s < NUM_SPECIES; s++)
         {
-            for (u8 i = 0; i < EVOS_PER_MON; i++)
+            for (u8 i = 0; gSpeciesInfo[s].evolutions != NULL && i < EVOS_PER_MON
+                 && gSpeciesInfo[s].evolutions[i].method != EVOLUTIONS_END; i++)
             {
                 if (gSpeciesInfo[s].evolutions[i].targetSpecies == prev)
                 {
@@ -766,6 +790,12 @@ u16 Randomizer_OnFullWildEncounter(u16 species)
     if (!Randomizer_FullWildEnabled())
         return species;
 
+    if (Randomizer_ChaosEnabled())
+    {
+        u16 count = PokemonContent_ChaosCount();
+        return count != 0 ? PokemonContent_ChaosSpeciesAt(Random32() % count) : species;
+    }
+
     // Use the same roster as the regional Pokédex, not the table-mode pool.
     // A fresh draw includes every dex entry, regardless of evolution or rarity.
     for (u32 attempt = 0; attempt < HOENN_DEX_COUNT - 1; attempt++)
@@ -773,7 +803,7 @@ u16 Randomizer_OnFullWildEncounter(u16 species)
         u16 dexNum = 1 + Random32() % (HOENN_DEX_COUNT - 1);
         u16 candidate = NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum));
 
-        if (candidate != SPECIES_NONE && candidate < NUM_SPECIES && gSpeciesInfo[candidate].baseHP != 0)
+        if (PokemonContent_CanGive(candidate))
             return candidate;
     }
 
@@ -816,19 +846,25 @@ u16 Randomizer_GetFixedStarter(u8 slot)
     {
         u16 choices[ARRAY_COUNT(vanillaStarters)] = {SPECIES_NONE};
         u32 state = Rz_MixSeed(Rz_GetStarterSeed(), 0x53544152); // "STAR"
+        bool8 chaos = Randomizer_ChaosEnabled();
+        u16 poolSize = chaos ? PokemonContent_ChaosCount() : HOENN_DEX_COUNT - 1;
+
+        if (poolSize < ARRAY_COUNT(choices))
+            return vanillaStarters[slot % ARRAY_COUNT(choices)];
 
         slot %= ARRAY_COUNT(choices);
         // Rebuild the same distinct choices from the save's trainer ID. Do
         // not consume encounter RNG or reroll between previews and rewards.
         for (u8 choice = 0; choice <= slot; choice++)
         {
-            for (u32 attempt = 0; attempt < HOENN_DEX_COUNT - 1; attempt++)
+            for (u32 attempt = 0; attempt < poolSize; attempt++)
             {
-                u16 dexNum = 1 + Rz_Next(&state, HOENN_DEX_COUNT - 1);
-                u16 species = NationalPokedexNumToSpecies(HoennToNationalOrder(dexNum));
+                u16 pick = Rz_Next(&state, poolSize);
+                u16 species = chaos ? PokemonContent_ChaosSpeciesAt(pick)
+                    : NationalPokedexNumToSpecies(HoennToNationalOrder(1 + pick));
                 bool8 alreadyChosen = FALSE;
 
-                if (species == SPECIES_NONE || species >= NUM_SPECIES || gSpeciesInfo[species].baseHP == 0)
+                if (!PokemonContent_CanGive(species))
                     continue;
                 for (u8 previous = 0; previous < choice; previous++)
                     alreadyChosen |= choices[previous] == species;

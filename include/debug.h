@@ -7,6 +7,12 @@ extern const u8 Debug_FlagsAndVarNotSetBattleConfigMessage[];
 const u8 *GetWeatherName(u32 weatherId);
 const struct Trainer* GetDebugAiTrainer(void);
 
+#if TESTING
+const u8 *Debug_TestChaosLabel(bool8 enabled);
+const u8 *Debug_TestChaosHardMessage(void);
+u32 Debug_TestUtilitiesCount(void);
+#endif
+
 extern EWRAM_DATA bool8 gIsDebugBattle;
 extern EWRAM_DATA u64 gDebugAIFlags;
 
