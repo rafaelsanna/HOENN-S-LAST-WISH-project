@@ -1,6 +1,7 @@
 #include "global.h"
 #include "assertf.h"
 #include "malloc.h"
+#include "constants/hlw_version.h"
 #include "test/test.h"
 
 static void ExpectRenderedText(u32 x, u32 y, const char *text)
@@ -8,6 +9,19 @@ static void ExpectRenderedText(u32 x, u32 y, const char *text)
     while (*text != '\0')
     {
         EXPECT_EQ(Assertf_TestReadChar(x++, y), *text++);
+    }
+}
+
+TEST("assertf: fatal and recoverable headers show the central patch version")
+{
+    for (u32 fatal = 0; fatal < 2; fatal++)
+    {
+        Assertf_TestRenderHeader(fatal);
+        ExpectRenderedText(0, 0, fatal ? "HLW FATAL REPORT" : "HLW RECOVERABLE REPORT");
+        ExpectRenderedText(0, 2, "PATCH " HLW_PATCH_VERSION);
+        // Keep the address row and message start free for the report itself.
+        EXPECT_EQ(Assertf_TestReadChar(0, 1), ' ');
+        EXPECT_EQ(Assertf_TestReadChar(0, 3), ' ');
     }
 }
 
@@ -141,5 +155,7 @@ TEST("assertf: direct renderer remains usable when the heap has no free blocks")
 
     Assertf_TestRender("heap exhausted %u", 123u);
     ExpectRenderedText(0, 0, "HEAP EXHAUSTED 123");
+    Assertf_TestRenderHeader(TRUE);
+    ExpectRenderedText(0, 2, "PATCH " HLW_PATCH_VERSION);
     Free(remaining);
 }

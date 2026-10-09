@@ -12,6 +12,13 @@ The reporter does not write or delete the save. Resetting after a fatal report
 still loses progress since the last normal save. Do not add save operations to
 the error path: the failure may involve the heap, scene state or save buffers.
 
+All report screens, including the low-stack emergency screen, display
+`PATCH <version>` below the header/addresses. The single project-version definition
+is `HLW_PATCH_VERSION` in `include/constants/hlw_version.h`: update that value
+and rebuild for each release. The displayed version is embedded in that ROM;
+older ROMs keep their original label. This does not change the Gen 3
+`GAME_VERSION` identifier, save layout or RAM reservations.
+
 ## API and build configuration
 
 Include `assertf.h` at the call site.
@@ -246,6 +253,26 @@ port artifacts are `build/crash-reporting.gba`, `.elf` and `.map`; ROM SHA-256:
 Retain the matching ELF/MAP alongside any copy distributed to testers.
 
 ## Deliberately testing a report
+
+Development builds with `DEBUG_CRASH_SCREEN_TEST` enabled in
+`include/config/debug.h` expose **Wish Menu -> Utilities -> Crash Screen Tests**.
+Both choices show a warning and default to **NO**; choose **YES** and press A to
+trigger the report. B cancels. The trigger waits for pending menu uploads and
+disarms itself before calling the reporter, so returning cannot repeat it every
+frame.
+
+- **Blue report (START returns)** invokes `errorf` without corrupting memory.
+  Press and release START to return to the test menu if recovery is allowed.
+  Unsafe contexts or insufficient backup memory still produce a fatal report;
+  this test does not bypass the reporter's recovery guards.
+- **Fatal report (restart)** invokes `fatalf`. The fatal screen stays visible
+  and START cannot continue; reset the emulator or console afterward.
+
+Save normally before testing and use a disposable save copy. The test does not
+write or delete the save, but resetting loses unsaved progress. Opening the
+Wish Menu still performs its existing Wish-menu usage marking. Set
+`DEBUG_CRASH_SCREEN_TEST` to `FALSE` before a public release: this removes the
+test submenu and handlers, without disabling genuine crash reporting.
 
 Use a separate diagnostic ROM and a disposable save copy. In a temporary,
 one-shot foreground callback with a known safe mode-0, nonbattle scene, call:

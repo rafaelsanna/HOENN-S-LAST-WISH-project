@@ -7,10 +7,12 @@
 #include "main.h"
 #include "malloc.h"
 #include "constants/characters.h"
+#include "constants/hlw_version.h"
 #include "constants/rgb.h"
 
 enum { MODE_RECOVERABLE, MODE_FATAL };
 enum { REPORT_COLS = 30, REPORT_ROWS = 18, FONT_TILE = 40 };
+STATIC_ASSERT(sizeof("PATCH " HLW_PATCH_VERSION) - 1 <= REPORT_COLS, CrashPatchVersionFits);
 // 41 original glyphs, followed by punctuation absent from upstream's font.
 static const char sGlyphChars[] = " _.:/ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-%+=?,()[]!";
 static const u32 sGlyphs[] = INCBIN_U32("graphics/crash_screen/font.1bpp");
@@ -213,6 +215,12 @@ static void Label(u32 row, const char *text)
         ((vu16 *)VRAM)[row * 32 + x++] = Glyph(text[i]);
 }
 
+static void ReportHeader(u32 mode)
+{
+    Label(0, mode == MODE_FATAL ? "HLW FATAL REPORT" : "HLW RECOVERABLE REPORT");
+    Label(2, "PATCH " HLW_PATCH_VERSION);
+}
+
 static void WaitFrame(void)
 {
     // IRQs are suspended only while showing the fault screen. BIOS waits
@@ -227,9 +235,9 @@ static __attribute__((used)) _Noreturn void EmergencyScreen(void)
     DmaStop(0);
     REG_SOUNDCNT_L = REG_SOUNDCNT_H = 0;
     InitScreen(MODE_FATAL);
-    Label(0, "HLW FATAL REPORT");
-    Label(2, "REPORTER REENTRY OR LOW STACK");
-    Label(4, "RESTART THE GAME. DO NOT SAVE.");
+    ReportHeader(MODE_FATAL);
+    Label(4, "REPORTER REENTRY OR LOW STACK");
+    Label(6, "RESTART THE GAME. DO NOT SAVE.");
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_BG0_ON;
     while (TRUE) WaitFrame();
 }
@@ -309,7 +317,7 @@ static void CrashScreen(u32 mode, const void *caller, const void *here, const ch
     DmaStop(0);
     REG_SOUNDCNT_L = REG_SOUNDCNT_H = 0;
     InitScreen(mode);
-    Label(0, mode == MODE_FATAL ? "HLW FATAL REPORT" : "HLW RECOVERABLE REPORT");
+    ReportHeader(mode);
     u32 x = 0, y = 1;
     Puts(&x, &y, "HERE ", FALSE);
     PutUnsigned(&x, &y, (uintptr_t)here, 16, 8);
@@ -369,6 +377,15 @@ _Noreturn void FatalfCrashScreen(const void *caller, const char *fmt, ...)
 }
 
 #if TESTING
+void Assertf_TestRenderHeader(bool32 fatal)
+{
+    u16 dispcnt = REG_DISPCNT;
+    u32 mode = fatal ? MODE_FATAL : MODE_RECOVERABLE;
+    InitScreen(mode);
+    ReportHeader(mode);
+    REG_DISPCNT = dispcnt;
+}
+
 void Assertf_TestRender(const char *fmt, ...)
 {
     u16 dispcnt = REG_DISPCNT;

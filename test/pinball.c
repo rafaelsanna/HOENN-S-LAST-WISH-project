@@ -76,7 +76,7 @@ TEST("Pinball: all four tables show the fixed quit artwork and L/R control separ
         u8 id = Pinball_TestGetQuitSprite();
         EXPECT_LT(id, MAX_SPRITES);
         struct Sprite *quit = &gSprites[id];
-        EXPECT_EQ(quit->x, 188);
+        EXPECT_EQ(quit->x, 183);
         EXPECT_EQ(quit->y, 157);
         EXPECT_EQ((u32)quit->oam.shape, SPRITE_SHAPE(64x64));
         EXPECT_EQ((u32)quit->oam.size, SPRITE_SIZE(64x64));
@@ -109,7 +109,7 @@ TEST("Pinball: all four tables show the fixed quit artwork and L/R control separ
         EXPECT_EQ(Pinball_TestGetFlipperState(FALSE), 0);
         EXPECT_EQ(Pinball_TestGetFlipperState(TRUE), 0);
         TickPinball(DPAD_LEFT);
-        EXPECT_EQ(quit->x, 188);
+        EXPECT_EQ(quit->x, 183);
         EXPECT_EQ(quit->y, 157);
         VarSet(VAR_TEMP_4, 42);
         QuitPinballScene();

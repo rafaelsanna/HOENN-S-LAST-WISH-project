@@ -218,7 +218,7 @@ enum DebugBattleEnvironment
 #define DEBUG_NUMBER_ICON_X 210
 #define DEBUG_NUMBER_ICON_Y 50
 
-#define DEBUG_MAX_MENU_ITEMS 22
+#define DEBUG_MAX_MENU_ITEMS (22 + DEBUG_CRASH_SCREEN_TEST)
 #define DEBUG_MAX_SUB_MENU_LEVELS 4
 
 // *******************************
@@ -310,6 +310,12 @@ static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
 static void DebugAction_Util_OpenAchievements(u8 taskId);
 static void DebugAction_Util_UnlockNextAchievement(u8 taskId);
+#if DEBUG_CRASH_SCREEN_TEST
+static void DebugAction_Util_TestBlueReport(u8 taskId);
+static void DebugAction_Util_TestFatalReport(u8 taskId);
+static void DebugTask_HandleCrashConfirmation(u8 taskId);
+static void DebugTask_TriggerCrashReport(u8 taskId);
+#endif
 static void DebugAction_Util_EncounterInfo(u8 taskId);
 static void DebugAction_Util_BattleSpeed10x(u8 taskId);
 static void DebugAction_Util_InfoItems(u8 taskId);
@@ -873,6 +879,16 @@ static const struct DebugMenuOption sDebugMenu_Actions_ChaosTrainers[] =
     { NULL }
 };
 
+#if DEBUG_CRASH_SCREEN_TEST
+static const struct DebugMenuOption sDebugMenu_Actions_CrashTests[] =
+{
+    { COMPOUND_STRING("Blue report (START returns)"), DebugAction_Util_TestBlueReport },
+    { COMPOUND_STRING("Fatal report (restart)"),      DebugAction_Util_TestFatalReport },
+    { COMPOUND_STRING("Back"),                        DebugAction_ReturnToParent },
+    { NULL }
+};
+#endif
+
 static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
 {
     { COMPOUND_STRING("Fly to map…"),        DebugAction_Util_Fly },
@@ -897,6 +913,9 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("EWRAM Counters…"),    DebugAction_ExecuteScript, Debug_EventScript_EWRAMCounters },
     { COMPOUND_STRING("Follower NPC…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_FollowerNPCMenu },
     { COMPOUND_STRING("Steven Multi"),       DebugAction_ExecuteScript, Debug_EventScript_Steven_Multi },
+#if DEBUG_CRASH_SCREEN_TEST
+    { COMPOUND_STRING("Crash Screen Tests…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_CrashTests },
+#endif
     { NULL }
 };
 STATIC_ASSERT(ARRAY_COUNT(sDebugMenu_Actions_Utilities) - 1 <= DEBUG_MAX_MENU_ITEMS, UtilitiesFitDebugMenu);
@@ -1380,6 +1399,10 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
         windowTemplate.width = 19; // Full mode name plus visible ON/OFF.
     if (Debug_GetChaosDescription(items) != NULL)
         windowTemplate.width = 26; // Short description below the toggle and Back.
+#if DEBUG_CRASH_SCREEN_TEST
+    if (items == sDebugMenu_Actions_CrashTests)
+        windowTemplate.width = 26;
+#endif
     windowId = AddWindow(&windowTemplate);
     DrawStdWindowFrame(windowId, FALSE);
 
@@ -2734,6 +2757,129 @@ static void DebugAction_Util_UnlockNextAchievement(u8 taskId)
     Debug_UnlockNextAchievement();
     ScriptContext_Enable();
 }
+
+#if DEBUG_CRASH_SCREEN_TEST
+#define tCrashFatal  data[5]
+#define tCrashChoice data[6]
+#define tCrashDelay  data[7]
+
+static const u8 sDebugText_BlueReportConfirm[] = _(
+    "Test the blue report screen?\n"
+    "START returns only if safe.\n"
+    "Otherwise, restart is required.\n"
+    "Save before testing.");
+static const u8 sDebugText_FatalReportConfirm[] = _(
+    "Test the fatal report screen?\n"
+    "You MUST restart afterward.\n"
+    "Unsaved progress will be lost.\n"
+    "Save before testing.");
+
+static void Debug_DrawCrashConfirmation(u8 windowId, bool8 fatal, bool8 yes)
+{
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(windowId, FONT_NORMAL,
+        fatal ? sDebugText_FatalReportConfirm : sDebugText_BlueReportConfirm,
+        8, 8, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL,
+        yes ? sDebugText_DeleteAllYes : sDebugText_DeleteAllNo,
+        108, 88, TEXT_SKIP_DRAW, NULL);
+}
+
+static bool32 Debug_CrashTestConfirmed(bool8 yes, u16 keys)
+{
+    return yes && (keys & A_BUTTON) && !(keys & B_BUTTON);
+}
+
+static void Debug_ShowCrashConfirmation(u8 taskId, bool8 fatal)
+{
+    gTasks[taskId].tCrashFatal = fatal;
+    gTasks[taskId].tCrashChoice = 1; // NO by default for both tests.
+    Debug_DrawCrashConfirmation(gTasks[taskId].tWindowId, fatal, FALSE);
+    CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_GFX);
+    gTasks[taskId].func = DebugTask_HandleCrashConfirmation;
+}
+
+static void DebugAction_Util_TestBlueReport(u8 taskId)
+{
+    Debug_ShowCrashConfirmation(taskId, FALSE);
+}
+
+static void DebugAction_Util_TestFatalReport(u8 taskId)
+{
+    Debug_ShowCrashConfirmation(taskId, TRUE);
+}
+
+static void DebugTask_HandleCrashConfirmation(u8 taskId)
+{
+    if (JOY_NEW(B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+    }
+    else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT | DPAD_UP | DPAD_DOWN))
+    {
+        PlaySE(SE_SELECT);
+        gTasks[taskId].tCrashChoice ^= 1;
+        Debug_DrawCrashConfirmation(gTasks[taskId].tWindowId,
+            gTasks[taskId].tCrashFatal, gTasks[taskId].tCrashChoice == 0);
+        CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_GFX);
+        return;
+    }
+    else if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        if (Debug_CrashTestConfirmed(gTasks[taskId].tCrashChoice == 0, gMain.newKeys))
+        {
+            // Let pending window uploads complete before taking over VRAM.
+            gTasks[taskId].tCrashDelay = 2;
+            gTasks[taskId].func = DebugTask_TriggerCrashReport;
+            return;
+        }
+    }
+    else
+        return;
+
+    RedrawListMenu(gTasks[taskId].tMenuTaskId);
+    gTasks[taskId].func = DebugTask_HandleMenuInput_General;
+}
+
+static void Debug_RunCrashTest(bool8 fatal)
+{
+    // Invoke the real reporter, not undefined behavior or memory corruption.
+    // The trigger never writes a save or modifies game data.
+    if (fatal)
+        fatalf("Intentional Wish Menu test.\nFatal report: restart required.\nSave file was not written.");
+    else
+        errorf("Intentional Wish Menu test.\nBlue report: START to return.\nSave file was not written.");
+}
+
+static void DebugTask_TriggerCrashReport(u8 taskId)
+{
+    if (gTasks[taskId].tCrashDelay > 0)
+    {
+        gTasks[taskId].tCrashDelay--;
+        return;
+    }
+    // Disarm before calling so a resumable report cannot trigger every frame.
+    gTasks[taskId].func = DebugTask_HandleMenuInput_General;
+    Debug_RunCrashTest(gTasks[taskId].tCrashFatal);
+    RedrawListMenu(gTasks[taskId].tMenuTaskId);
+}
+
+#if TESTING
+bool32 Debug_TestCrashConfirmed(bool8 yes, u16 keys) { return Debug_CrashTestConfirmed(yes, keys); }
+void Debug_TestRunCrashReport(bool8 fatal) { Debug_RunCrashTest(fatal); }
+const u8 *Debug_TestCrashConfirmationText(bool8 fatal)
+{
+    return fatal ? sDebugText_FatalReportConfirm : sDebugText_BlueReportConfirm;
+}
+void Debug_TestShowCrashConfirmation(u8 taskId, bool8 fatal) { Debug_ShowCrashConfirmation(taskId, fatal); }
+bool32 Debug_TestCrashChoiceIsYes(u8 taskId) { return gTasks[taskId].tCrashChoice == 0; }
+#endif
+
+#undef tCrashFatal
+#undef tCrashChoice
+#undef tCrashDelay
+#endif
 
 #define tInfoItemsWindowId  data[1]
 #define tInfoItemsOffset    data[5]

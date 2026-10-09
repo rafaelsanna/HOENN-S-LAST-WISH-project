@@ -2372,8 +2372,8 @@ static void InitQuitHint(void)
                   6 * TILE_SIZE_4BPP);
     LoadSpriteSheet(&sheet);
     LoadSpritePalette(&palette);
-    // The opaque QUIT/B pixels land at x=164..197, y=145..157.
-    sPinballGame->quitSpriteId = CreateSprite(&sQuitSpriteTemplate, 188, 157, 0);
+    // Shared screen-fixed hint: move left five pixels, preserving its Y.
+    sPinballGame->quitSpriteId = CreateSprite(&sQuitSpriteTemplate, 183, 157, 0);
 }
 
 static void LoadBgGfx(u8 gameType)

@@ -31,6 +31,7 @@ void AssertfCrashScreen(const void *caller, const char *fmt, ...);
 _Noreturn void FatalfCrashScreen(const void *caller, const char *fmt, ...);
 
 #if TESTING
+void Assertf_TestRenderHeader(bool32 fatal);
 void Assertf_TestRender(const char *fmt, ...);
 char Assertf_TestReadChar(u32 x, u32 y);
 #endif

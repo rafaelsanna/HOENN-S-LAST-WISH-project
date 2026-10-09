@@ -36,7 +36,7 @@ static void SetUpChaos(void)
 
 TEST("Full Chaos: Utilities text fits its window and the additional entry remains reachable")
 {
-    EXPECT_EQ(Debug_TestUtilitiesCount(), 22);
+    EXPECT_EQ(Debug_TestUtilitiesCount(), 22 + DEBUG_CRASH_SCREEN_TEST);
     EXPECT_EQ(Debug_TestChaosSubmenus(), TRUE);
     EXPECT_EQ(StringCompare(Debug_TestChaosLabel(FALSE), COMPOUND_STRING("Full Chaos Random: OFF")), 0);
     EXPECT(GetStringWidth(FONT_NORMAL, Debug_TestChaosLabel(FALSE), 1) <= 19 * 8 - 8);

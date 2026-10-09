@@ -20,6 +20,13 @@ const u8 *Debug_TestChaosConfirmationText(void);
 bool32 Debug_TestChaosNeedsConfirmation(bool8 trainers);
 bool32 Debug_TestConfirmChaos(bool8 trainers, bool8 yes);
 void Debug_TestDrawChaosConfirmation(u8 windowId, bool8 yes);
+#if DEBUG_CRASH_SCREEN_TEST
+bool32 Debug_TestCrashConfirmed(bool8 yes, u16 keys);
+void Debug_TestRunCrashReport(bool8 fatal);
+const u8 *Debug_TestCrashConfirmationText(bool8 fatal);
+void Debug_TestShowCrashConfirmation(u8 taskId, bool8 fatal);
+bool32 Debug_TestCrashChoiceIsYes(u8 taskId);
+#endif
 #endif
 
 extern EWRAM_DATA bool8 gIsDebugBattle;
