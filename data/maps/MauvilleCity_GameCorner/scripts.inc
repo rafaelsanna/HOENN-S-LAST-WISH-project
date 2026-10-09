@@ -4023,538 +4023,546 @@ MauvilleCity_GameCorner_EventScript_ArcadeCoinResultEven::
 # 2012 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 MauvilleCity_GameCorner_Text_PlayPinballMeowth:
 # 2013 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play MEOWTH PINBALL for\n"
+	.string "L/R: flippers. B: quit.\p"
 # 2014 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "25 COINS?$"
+	.string "Play MEOWTH PINBALL for\n"
 # 2015 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "25 COINS?$"
 # 2016 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayGachaBasic:
+
 # 2017 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play BASIC GACHA for\n"
+MauvilleCity_GameCorner_Text_PlayGachaBasic:
 # 2018 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "100 COINS?$"
+	.string "Play BASIC GACHA for\n"
 # 2019 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
-# 2020 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayGachaGreat:
-# 2021 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play GREAT GACHA for\n"
-# 2022 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "500 COINS?$"
-# 2023 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
-# 2024 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayGachaUltra:
-# 2025 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play ULTRA GACHA for\n"
-# 2026 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "2000 COINS?$"
-# 2027 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
-# 2028 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_GachaRefundExtraCoins:
-# 2029 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You've already collected every\n"
-# 2030 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "possible POKéMON from this machine.\p"
-# 2031 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "We refunded the extra {STR_VAR_1}\n"
-# 2032 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "COINS from your wager.$"
-# 2033 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
-# 2034 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayPinballDiglett:
-# 2035 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play DIGLETT PINBALL for\n"
-# 2036 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "50 COINS?$"
-# 2037 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
-# 2038 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayPinballSeel:
-# 2039 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play SEEL PINBALL for\n"
-# 2040 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "25 COINS?$"
-# 2041 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
-# 2042 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayPinballGengar:
-# 2043 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play GENGAR PINBALL for\n"
-# 2044 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "100 COINS?$"
-# 2045 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+# 2020 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
-# 2046 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayFlappyBird:
-# 2047 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play FLUTTERFREE for\n"
-# 2048 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+# 2021 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_PlayGachaGreat:
+# 2022 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "Play GREAT GACHA for\n"
+# 2023 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "500 COINS?$"
+# 2024 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
+# 2025 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_PlayGachaUltra:
+# 2026 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "Play ULTRA GACHA for\n"
+# 2027 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "2000 COINS?$"
+# 2028 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
+# 2029 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_GachaRefundExtraCoins:
+# 2030 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "You've already collected every\n"
+# 2031 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "possible POKéMON from this machine.\p"
+# 2032 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "We refunded the extra {STR_VAR_1}\n"
+# 2033 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "COINS from your wager.$"
+# 2034 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
+# 2035 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_PlayPinballDiglett:
+# 2036 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "L/R: flippers. B: quit.\p"
+# 2037 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "Play DIGLETT PINBALL for\n"
+# 2038 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "50 COINS?$"
+# 2039 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
+# 2040 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_PlayPinballSeel:
+# 2041 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "L/R: flippers. B: quit.\p"
+# 2042 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "Play SEEL PINBALL for\n"
+# 2043 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "25 COINS?$"
+# 2044 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
+# 2045 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_PlayPinballGengar:
+# 2046 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "L/R: flippers. B: quit.\p"
+# 2047 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "Play GENGAR PINBALL for\n"
+# 2048 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "100 COINS?$"
 # 2049 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2050 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlaySnake:
+MauvilleCity_GameCorner_Text_PlayFlappyBird:
 # 2051 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play ONIX for\n"
+	.string "Play FLUTTERFREE for\n"
 # 2052 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "25 COINS?$"
 # 2053 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2054 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayBlockStacker:
+MauvilleCity_GameCorner_Text_PlaySnake:
 # 2055 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play BLOCK BUILDER for\n"
+	.string "Play ONIX for\n"
 # 2056 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "25 COINS?$"
 # 2057 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2058 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayPachinko:
+MauvilleCity_GameCorner_Text_PlayBlockStacker:
 # 2059 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play PACHINKO?\p"
+	.string "Play BLOCK BUILDER for\n"
 # 2060 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Each drop costs 3 COINS.$"
+	.string "25 COINS?$"
 # 2061 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2062 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_DebugVoltorbFlipKeepGoing:
+MauvilleCity_GameCorner_Text_PlayPachinko:
 # 2063 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Current winnings: {STR_VAR_1} COINS.\p"
+	.string "Play PACHINKO?\p"
 # 2064 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Keep going?$"
+	.string "Each drop costs 3 COINS.$"
 # 2065 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2066 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayVoltorbFlip:
+MauvilleCity_GameCorner_Text_DebugVoltorbFlipKeepGoing:
 # 2067 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play VOLTORB FLIP for\n"
+	.string "Current winnings: {STR_VAR_1} COINS.\p"
 # 2068 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "50 COINS?$"
+	.string "Keep going?$"
 # 2069 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2070 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayDerby:
+MauvilleCity_GameCorner_Text_PlayVoltorbFlip:
 # 2071 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Enter the MAUVILLE DERBY?\p"
+	.string "Play VOLTORB FLIP for\n"
 # 2072 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Bets start at 10 COINS.$"
+	.string "50 COINS?$"
 # 2073 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2074 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_PlayBlackjack:
+MauvilleCity_GameCorner_Text_PlayDerby:
 # 2075 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Play BLACKJACK?$"
+	.string "Enter the MAUVILLE DERBY?\p"
 # 2076 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "Bets start at 10 COINS.$"
 # 2077 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_WhichSnackWouldYouLike:
+
 # 2078 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "A vending machine full of snacks!\p"
+MauvilleCity_GameCorner_Text_PlayBlackjack:
 # 2079 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Which one would you like?$"
+	.string "Play BLACKJACK?$"
 # 2080 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2081 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_WhichDrinkWouldYouLike:
+MauvilleCity_GameCorner_Text_WhichSnackWouldYouLike:
 # 2082 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "It's a VENDING MACHINE.\n"
+	.string "A vending machine full of snacks!\p"
 # 2083 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Which drink would you like?$"
+	.string "Which one would you like?$"
 # 2084 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2085 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_SnackDroppedDown:
+MauvilleCity_GameCorner_Text_WhichDrinkWouldYouLike:
 # 2086 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Clunk!\p"
+	.string "It's a VENDING MACHINE.\n"
 # 2087 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "{STR_VAR_1} dropped down.$"
+	.string "Which drink would you like?$"
 # 2088 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2089 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_CanOfDrinkDroppedDown:
+MauvilleCity_GameCorner_Text_SnackDroppedDown:
 # 2090 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Clang!\p"
+	.string "Clunk!\p"
 # 2091 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "A can of {STR_VAR_1} dropped down.$"
+	.string "{STR_VAR_1} dropped down.$"
 # 2092 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2093 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_NotEnoughMoneyForSnack:
+MauvilleCity_GameCorner_Text_CanOfDrinkDroppedDown:
 # 2094 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You don't have enough money.$"
+	.string "Clang!\p"
 # 2095 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "A can of {STR_VAR_1} dropped down.$"
 # 2096 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_NotEnoughMoneyForDrink:
+
 # 2097 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You don't have enough money.$"
+MauvilleCity_GameCorner_Text_NotEnoughMoneyForSnack:
 # 2098 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "You don't have enough money.$"
 # 2099 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_DecidedAgainstSnack:
+
 # 2100 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Maybe another time.$"
+MauvilleCity_GameCorner_Text_NotEnoughMoneyForDrink:
 # 2101 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "You don't have enough money.$"
 # 2102 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_DecidedAgainstBuyingDrink:
+
 # 2103 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Maybe another time.$"
+MauvilleCity_GameCorner_Text_DecidedAgainstSnack:
 # 2104 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "Maybe another time.$"
 # 2105 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_ArcadeCoinsWon:
+
 # 2106 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You're up {STR_VAR_1} COINS!$"
+MauvilleCity_GameCorner_Text_DecidedAgainstBuyingDrink:
 # 2107 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "Maybe another time.$"
 # 2108 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_ArcadeCoinsLost:
+
 # 2109 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You're down {STR_VAR_1} COINS!$"
+MauvilleCity_GameCorner_Text_ArcadeCoinsWon:
 # 2110 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "You're up {STR_VAR_1} COINS!$"
 # 2111 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_ArcadeCoinsEven:
-# 2112 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You're even on COINS.$"
-# 2113 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
+# 2112 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_ArcadeCoinsLost:
+# 2113 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "You're down {STR_VAR_1} COINS!$"
 # 2114 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-@ ============================================================
+
 # 2115 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-@ GENTLEMAN + VOLTORB: LOADED DICE NUMBER GAME
+MauvilleCity_GameCorner_Text_ArcadeCoinsEven:
 # 2116 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-@ ============================================================
+	.string "You're even on COINS.$"
 # 2117 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2118 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpin::
+@ ============================================================
 # 2119 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	lockall
+@ GENTLEMAN + VOLTORB: LOADED DICE NUMBER GAME
 # 2120 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	faceplayer
+@ ============================================================
 # 2121 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	goto_if_set FLAG_LOADED_DICE_GAME_CORNER, MauvilleCity_GameCorner_EventScript_VoltorbSpinAlreadyWon
+
 # 2122 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinIntro, MSGBOX_YESNO
+MauvilleCity_GameCorner_EventScript_VoltorbSpin::
 # 2123 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	closemessage
+	lockall
 # 2124 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_VoltorbSpinDecline
+	faceplayer
 # 2125 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	goto_if_set FLAG_LOADED_DICE_GAME_CORNER, MauvilleCity_GameCorner_EventScript_VoltorbSpinAlreadyWon
 # 2126 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	checkitem ITEM_COIN_CASE
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinIntro, MSGBOX_YESNO
 # 2127 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoCoinCase
+	closemessage
 # 2128 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_VoltorbSpinDecline
 # 2129 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	checkcoins VAR_TEMP_3
+
 # 2130 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	goto_if_lt VAR_TEMP_3, 50, MauvilleCity_GameCorner_EventScript_VoltorbSpinNotEnoughCoins
+	checkitem ITEM_COIN_CASE
 # 2131 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoCoinCase
 # 2132 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	checkitemspace ITEM_LOADED_DICE, 1
+
 # 2133 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpace
+	checkcoins VAR_TEMP_3
 # 2134 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	goto_if_lt VAR_TEMP_3, 50, MauvilleCity_GameCorner_EventScript_VoltorbSpinNotEnoughCoins
 # 2135 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinPickNumber, MSGBOX_DEFAULT
-# 2136 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	dynmultichoice 24, 0, TRUE, 6, 0, DYN_MULTICHOICE_CB_NONE, MauvilleCity_GameCorner_Text_VoltorbSpinChoice1, MauvilleCity_GameCorner_Text_VoltorbSpinChoice2, MauvilleCity_GameCorner_Text_VoltorbSpinChoice3, MauvilleCity_GameCorner_Text_VoltorbSpinChoice4, MauvilleCity_GameCorner_Text_VoltorbSpinChoice5, MauvilleCity_GameCorner_Text_VoltorbSpinChoice6
-# 2137 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	copyvar VAR_TEMP_1, VAR_RESULT
-# 2138 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	addvar VAR_TEMP_1, 1
-# 2139 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	buffernumberstring STR_VAR_1, VAR_TEMP_1
-# 2140 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked, MSGBOX_DEFAULT
-# 2141 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
+# 2136 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	checkitemspace ITEM_LOADED_DICE, 1
+# 2137 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpace
+# 2138 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
+# 2139 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinPickNumber, MSGBOX_DEFAULT
+# 2140 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	dynmultichoice 24, 0, TRUE, 6, 0, DYN_MULTICHOICE_CB_NONE, MauvilleCity_GameCorner_Text_VoltorbSpinChoice1, MauvilleCity_GameCorner_Text_VoltorbSpinChoice2, MauvilleCity_GameCorner_Text_VoltorbSpinChoice3, MauvilleCity_GameCorner_Text_VoltorbSpinChoice4, MauvilleCity_GameCorner_Text_VoltorbSpinChoice5, MauvilleCity_GameCorner_Text_VoltorbSpinChoice6
+# 2141 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	copyvar VAR_TEMP_1, VAR_RESULT
 # 2142 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	random 6
+	addvar VAR_TEMP_1, 1
 # 2143 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	addvar VAR_RESULT, 1
+	buffernumberstring STR_VAR_1, VAR_TEMP_1
 # 2144 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	copyvar VAR_TEMP_2, VAR_RESULT
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked, MSGBOX_DEFAULT
 # 2145 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2146 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	playse SE_BALL
+	random 6
 # 2147 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	applymovement LOCALID_MAUVILLE_CITY_GAME_CORNER_VOLTORB_SPIN, MauvilleCity_GameCorner_Movement_VoltorbSpin
+	addvar VAR_RESULT, 1
 # 2148 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	waitmovement 0
+	copyvar VAR_TEMP_2, VAR_RESULT
 # 2149 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	playmoncry SPECIES_VOLTORB, CRY_MODE_NORMAL
+
 # 2150 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	waitmoncry
+	playse SE_BALL
 # 2151 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	applymovement LOCALID_MAUVILLE_CITY_GAME_CORNER_VOLTORB_SPIN, MauvilleCity_GameCorner_Movement_VoltorbSpin
 # 2152 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	buffernumberstring STR_VAR_1, VAR_TEMP_2
+	waitmovement 0
 # 2153 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinResult, MSGBOX_DEFAULT
+	playmoncry SPECIES_VOLTORB, CRY_MODE_NORMAL
 # 2154 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	waitmoncry
 # 2155 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	compare VAR_TEMP_1, VAR_TEMP_2
+
 # 2156 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	goto_if_eq MauvilleCity_GameCorner_EventScript_VoltorbSpinWin
+	buffernumberstring STR_VAR_1, VAR_TEMP_2
 # 2157 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinResult, MSGBOX_DEFAULT
 # 2158 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	removecoins 50
+
 # 2159 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	playse SE_SHOP
+	compare VAR_TEMP_1, VAR_TEMP_2
 # 2160 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinLose, MSGBOX_DEFAULT
+	goto_if_eq MauvilleCity_GameCorner_EventScript_VoltorbSpinWin
 # 2161 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	releaseall
+
 # 2162 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	end
+	removecoins 50
 # 2163 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	playse SE_SHOP
 # 2164 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpinWin::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinLose, MSGBOX_DEFAULT
 # 2165 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinWin, MSGBOX_DEFAULT
+	releaseall
 # 2166 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	giveitem ITEM_LOADED_DICE
+	end
 # 2167 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpaceAfterWin
+
 # 2168 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	setflag FLAG_LOADED_DICE_GAME_CORNER
+MauvilleCity_GameCorner_EventScript_VoltorbSpinWin::
 # 2169 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	releaseall
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinWin, MSGBOX_DEFAULT
 # 2170 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	end
+	giveitem ITEM_LOADED_DICE
 # 2171 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpaceAfterWin
 # 2172 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpaceAfterWin::
+	setflag FLAG_LOADED_DICE_GAME_CORNER
 # 2173 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	@ Extremely defensive fallback. The game checks item space before the roll.
+	releaseall
 # 2174 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	releaseall
+	end
 # 2175 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	end
+
 # 2176 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpaceAfterWin::
 # 2177 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpinAlreadyWon::
+	@ Extremely defensive fallback. The game checks item space before the roll.
 # 2178 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinAlreadyWon, MSGBOX_DEFAULT
+	releaseall
 # 2179 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	releaseall
+	end
 # 2180 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	end
+
 # 2181 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+MauvilleCity_GameCorner_EventScript_VoltorbSpinAlreadyWon::
 # 2182 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpinDecline::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinAlreadyWon, MSGBOX_DEFAULT
 # 2183 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinDecline, MSGBOX_DEFAULT
+	releaseall
 # 2184 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	releaseall
+	end
 # 2185 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	end
+
 # 2186 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+MauvilleCity_GameCorner_EventScript_VoltorbSpinDecline::
 # 2187 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpinNoCoinCase::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinDecline, MSGBOX_DEFAULT
 # 2188 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNoCoinCase, MSGBOX_DEFAULT
+	releaseall
 # 2189 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	releaseall
+	end
 # 2190 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	end
+
 # 2191 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNoCoinCase::
 # 2192 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpinNotEnoughCoins::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNoCoinCase, MSGBOX_DEFAULT
 # 2193 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNotEnoughCoins, MSGBOX_DEFAULT
+	releaseall
 # 2194 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	releaseall
+	end
 # 2195 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	end
+
 # 2196 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNotEnoughCoins::
 # 2197 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpace::
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNotEnoughCoins, MSGBOX_DEFAULT
 # 2198 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNoBagSpace, MSGBOX_DEFAULT
-# 2199 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	releaseall
-# 2200 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+# 2199 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	end
+# 2200 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
 # 2201 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+MauvilleCity_GameCorner_EventScript_VoltorbSpinNoBagSpace::
 # 2202 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Movement_VoltorbSpin:
+	msgbox MauvilleCity_GameCorner_Text_VoltorbSpinNoBagSpace, MSGBOX_DEFAULT
 # 2203 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	face_down
+	releaseall
 # 2204 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	walk_in_place_fast_down
+	end
 # 2205 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	walk_in_place_fast_up
+
 # 2206 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	walk_in_place_fast_down
+MauvilleCity_GameCorner_Movement_VoltorbSpin:
 # 2207 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	walk_in_place_fast_up
+	face_down
 # 2208 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	step_end
+	walk_in_place_fast_down
 # 2209 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	walk_in_place_fast_up
 # 2210 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinIntro:
+	walk_in_place_fast_down
 # 2211 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "HAHAHA! My VOLTORB and I love\n"
+	walk_in_place_fast_up
 # 2212 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "to gamble!\p"
+	step_end
 # 2213 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Want to play a little game?\n"
+
 # 2214 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Guess the number it will roll.\p"
+MauvilleCity_GameCorner_Text_VoltorbSpinIntro:
 # 2215 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Get it right and I'll give you\n"
+	.string "HAHAHA! My VOLTORB and I love\n"
 # 2216 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "a prize. Miss, and you pay\p"
+	.string "to gamble!\p"
 # 2217 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "me just 50 COINS. What do\n"
+	.string "Want to play a little game?\n"
 # 2218 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "you say?$"
+	.string "Guess the number it will roll.\p"
 # 2219 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "Get it right and I'll give you\n"
 # 2220 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinPickNumber:
+	.string "a prize. Miss, and you pay\p"
 # 2221 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Pick a number from 1 to 6.$"
+	.string "me just 50 COINS. What do\n"
 # 2222 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "you say?$"
 # 2223 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked:
+
 # 2224 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You picked {STR_VAR_1}!\n"
+MauvilleCity_GameCorner_Text_VoltorbSpinPickNumber:
 # 2225 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "All right, VOLTORB… ROLL!$"
+	.string "Pick a number from 1 to 6.$"
 # 2226 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2227 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinResult:
+MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked:
 # 2228 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "VOLTORB rolled a {STR_VAR_1}!$"
+	.string "You picked {STR_VAR_1}!\n"
 # 2229 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "All right, VOLTORB… ROLL!$"
 # 2230 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinWin:
+
 # 2231 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "HAHAHA! You got it exactly!\n"
+MauvilleCity_GameCorner_Text_VoltorbSpinResult:
 # 2232 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "A deal is a deal.\p"
+	.string "VOLTORB rolled a {STR_VAR_1}!$"
 # 2233 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Take this LOADED DICE.\n"
+
 # 2234 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You've earned it!$"
+MauvilleCity_GameCorner_Text_VoltorbSpinWin:
 # 2235 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "HAHAHA! You got it exactly!\n"
 # 2236 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinLose:
+	.string "A deal is a deal.\p"
 # 2237 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "HAHAHA! Wrong number!\n"
+	.string "Take this LOADED DICE.\n"
 # 2238 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "That's 50 COINS for me.\p"
+	.string "You've earned it!$"
 # 2239 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Come back if you want another\n"
-# 2240 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "shot at beating VOLTORB!$"
-# 2241 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
+# 2240 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_VoltorbSpinLose:
+# 2241 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "HAHAHA! Wrong number!\n"
 # 2242 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinDecline:
+	.string "That's 50 COINS for me.\p"
 # 2243 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "HAHAHA! Playing it safe?\n"
+	.string "Come back if you want another\n"
 # 2244 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "VOLTORB will be waiting!$"
+	.string "shot at beating VOLTORB!$"
 # 2245 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2246 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinNoCoinCase:
+MauvilleCity_GameCorner_Text_VoltorbSpinDecline:
 # 2247 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You'll need a COIN CASE\n"
+	.string "HAHAHA! Playing it safe?\n"
 # 2248 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "before we can make a wager.$"
+	.string "VOLTORB will be waiting!$"
 # 2249 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2250 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinNotEnoughCoins:
+MauvilleCity_GameCorner_Text_VoltorbSpinNoCoinCase:
 # 2251 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "HAHAHA! You're a little short.\n"
+	.string "You'll need a COIN CASE\n"
 # 2252 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Come back with 50 COINS.$"
+	.string "before we can make a wager.$"
 # 2253 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2254 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinNoBagSpace:
+MauvilleCity_GameCorner_Text_VoltorbSpinNotEnoughCoins:
 # 2255 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Hold on! Your BAG is full.\n"
+	.string "HAHAHA! You're a little short.\n"
 # 2256 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Make room for the prize first.$"
+	.string "Come back with 50 COINS.$"
 # 2257 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2258 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinAlreadyWon:
+MauvilleCity_GameCorner_Text_VoltorbSpinNoBagSpace:
 # 2259 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "HAHAHA! You already beat\n"
+	.string "Hold on! Your BAG is full.\n"
 # 2260 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "VOLTORB at its own game!\p"
+	.string "Make room for the prize first.$"
 # 2261 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Enjoy that LOADED DICE.\n"
+
 # 2262 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "You earned those lucky rolls!$"
+MauvilleCity_GameCorner_Text_VoltorbSpinAlreadyWon:
 # 2263 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "HAHAHA! You already beat\n"
 # 2264 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinChoice1:
+	.string "VOLTORB at its own game!\p"
 # 2265 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "1$"
+	.string "Enjoy that LOADED DICE.\n"
 # 2266 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "You earned those lucky rolls!$"
 # 2267 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinChoice2:
+
 # 2268 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "2$"
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice1:
 # 2269 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "1$"
 # 2270 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinChoice3:
+
 # 2271 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "3$"
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice2:
 # 2272 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "2$"
 # 2273 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinChoice4:
+
 # 2274 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "4$"
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice3:
 # 2275 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-
+	.string "3$"
 # 2276 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinChoice5:
-# 2277 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "5$"
-# 2278 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
+# 2277 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice4:
+# 2278 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "4$"
 # 2279 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-MauvilleCity_GameCorner_Text_VoltorbSpinChoice6:
+
 # 2280 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice5:
+# 2281 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+	.string "5$"
+# 2282 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+
+# 2283 "data/maps/MauvilleCity_GameCorner/scripts.pory"
+MauvilleCity_GameCorner_Text_VoltorbSpinChoice6:
+# 2284 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "6$"

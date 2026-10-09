@@ -61,6 +61,7 @@ static u8 *sPinballDecompressionBuffer = NULL;
 #define TAG_HAUNTER                    511
 #define TAG_GENGAR                     512
 #define TAG_TIMER_DIGIT                513
+#define TAG_QUIT                       514
 
 #define GFXTAG_PLAYER_DIGIT 8
 #define PALTAG_INTERFACEPLAYER 9
@@ -132,6 +133,8 @@ enum
 };
 
 #define MAX_MEOWTH_JEWELS 6
+#define MEOWTH_FINISH_FADE_STEPS 16
+#define MEOWTH_FINISH_FADE_STEP_FRAMES 3
 
 struct MeowthJewel
 {
@@ -367,6 +370,7 @@ struct PinballGame
     bool8 flippersDisabled;
     bool8 completed;
     u8 exitTimer;
+    u8 quitSpriteId;
     bool8 waitExitScene;
     u16 backupMapMusic;
     MainCallback returnMainCallback;
@@ -382,6 +386,7 @@ static void LoadSpriteGfx(u8 gameType);
 static void InitBallSprite(void);
 static void InitFlipperSprites(void);
 static void InitTimerSprites(void);
+static void InitQuitHint(void);
 static bool32 GameTypeUsesTimer(u8 gameType);
 static void GetTimerScreenCoords(u8 gameType, int *outX, int *outY);
 static void InitGameType(u8 gameType);
@@ -449,6 +454,8 @@ static int GetNumActiveJewels(struct Meowth *meowth);
 static struct MeowthJewel *TryCreateNewJewel(struct Meowth *meowth, int ballXPos);
 static void UpdateJewels(struct MeowthJewel *jewels);
 static void UpdateMeowthSprite(struct Sprite *sprite);
+static void RestoreMeowthBlend(struct Sprite *sprite);
+static void UpdateMeowthFinishFade(struct Sprite *sprite);
 static void UpdateMeowthJewelSprite(struct Sprite *sprite);
 static void UpdateMeowthJewelMultiplierSprite(struct Sprite *sprite);
 static void ResetMeowthJewels(struct Meowth *meowth);
@@ -526,6 +533,27 @@ static const struct WindowTemplate sPinballWinTemplates[] = {
 static const u32 sCoverBgGfx[] = INCBIN_U32("graphics/pinball/bg_cover_tiles.4bpp");
 static const u16 sCoverBgPalette[] = INCBIN_U16("graphics/pinball/bg_cover_tiles.gbapal");
 static const u16 sCovergTilemap[] = INCBIN_U16("graphics/pinball/bg_tilemap_cover.bin");
+
+static const u8 sQuitGfx[] = INCBIN_U8("graphics/pinball/quit.4bpp");
+static const u16 sQuitPalette[] = INCBIN_U16("graphics/pinball/quit.gbapal");
+STATIC_ASSERT(sizeof(sQuitGfx) == 6 * 6 * TILE_SIZE_4BPP, QuitHintIs48x48);
+
+static const struct OamData sQuitOam =
+{
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+    .priority = 0,
+};
+
+static const struct SpriteTemplate sQuitSpriteTemplate =
+{
+    .tileTag = TAG_QUIT,
+    .paletteTag = TAG_QUIT,
+    .oam = &sQuitOam,
+    .anims = gDummySpriteAnimTable,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
 
 static const u32 sBallPokeballGfx[] = INCBIN_U32("graphics/pinball/ball_pokeball.4bpp.lz");
 static const u16 sBallPokeballPalette[] = INCBIN_U16("graphics/pinball/ball_pokeball.gbapal");
@@ -933,7 +961,7 @@ static const union AnimCmd sMeowthAnimCmd_HitLeft[] = {
 static const union AnimCmd sMeowthAnimCmd_Finish[] = {
     ANIMCMD_FRAME(48, 30),
     ANIMCMD_FRAME(64, 30),
-    ANIMCMD_JUMP(0),
+    ANIMCMD_END,
 };
 
 static const union AnimCmd *const sMeowthAnimCmds[] = {
@@ -2314,6 +2342,7 @@ static void InitPinballScreen(void)
         InitFlipperSprites();
         InitTimerSprites();
         InitGameType(sPinballGame->gameType);
+        InitQuitHint();
         StartNewBall();
         gMain.state++;
     case 5:
@@ -2326,6 +2355,25 @@ static void InitPinballScreen(void)
         CreateTask(PinballMain, 0);
         return;
     }
+}
+
+static void InitQuitHint(void)
+{
+    const struct SpriteSheet sheet = { sPinballDecompressionBuffer, 64 * TILE_SIZE_4BPP, TAG_QUIT };
+    const struct SpritePalette palette = { sQuitPalette, TAG_QUIT };
+    u32 row;
+
+    // OBJ sizes cannot be 48x48. Pad the user's six-tile rows to eight tiles
+    // in the existing scratch buffer; LoadSpriteSheet copies it immediately.
+    CpuFill16(0, sPinballDecompressionBuffer, sheet.size);
+    for (row = 0; row < 6; row++)
+        CpuCopy16(sQuitGfx + row * 6 * TILE_SIZE_4BPP,
+                  sPinballDecompressionBuffer + row * 8 * TILE_SIZE_4BPP,
+                  6 * TILE_SIZE_4BPP);
+    LoadSpriteSheet(&sheet);
+    LoadSpritePalette(&palette);
+    // The opaque QUIT/B pixels land at x=164..197, y=145..157.
+    sPinballGame->quitSpriteId = CreateSprite(&sQuitSpriteTemplate, 188, 157, 0);
 }
 
 static void LoadBgGfx(u8 gameType)
@@ -2593,6 +2641,9 @@ static void PinballVBlankCallback(void)
 static void PinballMainCallback(void)
 {
     RunTasks();
+    // The exit task releases the state used by the sprite callbacks.
+    if (sPinballGame == NULL)
+        return;
     AnimateSprites();
     BuildOamBuffer();
     RunTextPrinters();
@@ -2602,6 +2653,19 @@ static void PinballMainCallback(void)
 static void PinballMain(u8 taskId)
 {
     bool32 completed;
+
+    // Quit from every stage, including loss fades and victory animations.
+    if (JOY_NEW(B_BUTTON)
+     && sPinballGame->state != PINBALL_STATE_START_EXIT
+     && sPinballGame->state != PINBALL_STATE_EXIT)
+    {
+        gSpecialVar_Result = sPinballGame->completed;
+        sPinballGame->waitExitScene = FALSE;
+        sPinballGame->flippersDisabled = TRUE;
+        sPinballGame->state = PINBALL_STATE_START_EXIT;
+        PlaySE(SE_SELECT);
+        return;
+    }
 
     switch (sPinballGame->state)
     {
@@ -3097,19 +3161,14 @@ static bool32 HandleFlippers(struct Ball *ball, u16 *outYForce, u8 *outCollision
 static void UpdateFlipperState(struct Flipper *flipper)
 {
     int stateDelta;
+    u16 button = flipper->type == FLIPPER_LEFT ? L_BUTTON : R_BUTTON;
 
     flipper->prevState = flipper->state;
-	
-	if (!sPinballGame->flippersDisabled && (gMain.newKeys & A_BUTTON)) // A button rising edge
-    {
-        PlaySE(SE_VEND); // Play sound effect
-    }
-	else if (!sPinballGame->flippersDisabled && (gMain.newKeys & B_BUTTON)) // A button rising edge
-    {
-        PlaySE(SE_VEND); // Play sound effect
-    }
-	
-    if (!sPinballGame->flippersDisabled && (gMain.heldKeys & (A_BUTTON | B_BUTTON)))
+
+    if (!sPinballGame->flippersDisabled && (gMain.newKeys & button))
+        PlaySE(SE_VEND);
+
+    if (!sPinballGame->flippersDisabled && (gMain.heldKeys & button))
     {
         if (flipper->state == 0x0FFF)
             stateDelta = 0;
@@ -3646,17 +3705,42 @@ static void DisableFlippers(void)
 
 static void StartExitPinballGame(void)
 {
+    // Do not replace an in-progress fade with an exit state prematurely.
+    if (gPaletteFade.active)
+        return;
+    if (gPaletteFade.blendColor == RGB_WHITE && gPaletteFade.y != 0)
+    {
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, gPaletteFade.y, 0, RGB_WHITE);
+        return;
+    }
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
     sPinballGame->state = PINBALL_STATE_EXIT;
-	//SetWeather(WEATHER_NONE);
 }
 
 static void ExitPinballGame(void)
 {
     if (!gPaletteFade.active)
     {
+        u8 taskId = FindTaskIdByFunc(PinballMain);
+        SetVBlankCallback(NULL);
+        if (sPinballGame->gameType == GAME_TYPE_MEOWTH)
+            RestoreMeowthBlend(&gSprites[sPinballGame->meowth.spriteId]);
         if (sPinballGame->gameType == GAME_TYPE_DIGLETT)
             FREE_AND_SET_NULL(sPinballGame->diglett.collisionMap);
+        if (sPinballGame->gameType == GAME_TYPE_GENGAR)
+            FREE_AND_SET_NULL(sPinballGame->gengar.collisionMap);
+
+        ClearScheduledBgCopiesToVram();
+        FreeAllWindowBuffers();
+        Free(GetBgTilemapBuffer(PINBALL_BG_COVER));
+        Free(GetBgTilemapBuffer(PINBALL_BG_BASE));
+        UnsetBgTilemapBuffer(PINBALL_BG_TEXT);
+        UnsetBgTilemapBuffer(PINBALL_BG_COVER);
+        UnsetBgTilemapBuffer(PINBALL_BG_BASE);
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        if (taskId != TASK_NONE)
+            DestroyTask(taskId);
 
         Free(sPinballDecompressionBuffer);
         sPinballDecompressionBuffer = NULL;
@@ -3845,7 +3929,7 @@ static bool32 CheckMeowthCollision(struct Ball *ball, struct Meowth *meowth, u32
     int ballXPos = (ball->xPos >> 8);
     int ballYPos = (ball->yPos >> 8);
 
-    if (ticks <= 0)
+    if (ticks <= 0 || meowth->state == MEOWTH_STATE_FINISH)
         return FALSE;
 
     if (ballXPos < meowth->xPos - 24 || ballXPos >= meowth->xPos + 24
@@ -3868,6 +3952,7 @@ static bool32 CheckMeowthCollision(struct Ball *ball, struct Meowth *meowth, u32
         meowth->hitDuration = 30;
         TryCreateNewJewel(meowth, ballXPos);
 		PlaySE(SE_EFFECTIVE);
+        PlayCry_Normal(SPECIES_MEOWTH, 0);
     }
 
     return TRUE;
@@ -4026,6 +4111,43 @@ static bool32 CheckJewelCollision(struct Ball *ball, struct MeowthJewel *jewel, 
     return TRUE;
 }
 
+// Fade only this semi-transparent OBJ. Normal sprites and backgrounds are not
+// first blend targets, so the ball, jewels and stage keep their own colors.
+static void RestoreMeowthBlend(struct Sprite *sprite)
+{
+    if (sprite->oam.objMode != ST_OAM_OBJ_BLEND)
+        return;
+
+    SetGpuReg(REG_OFFSET_BLDCNT, sprite->data[3]);
+    SetGpuReg(REG_OFFSET_BLDALPHA, sprite->data[4]);
+    sprite->oam.objMode = ST_OAM_OBJ_NORMAL;
+}
+
+static void UpdateMeowthFinishFade(struct Sprite *sprite)
+{
+    u16 opacity;
+
+    if (!sprite->animEnded || sprite->invisible)
+        return;
+
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[3] = GetGpuReg(REG_OFFSET_BLDCNT);
+        sprite->data[4] = GetGpuReg(REG_OFFSET_BLDALPHA);
+        sprite->oam.objMode = ST_OAM_OBJ_BLEND;
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG_ALL | BLDCNT_TGT2_BD);
+    }
+
+    // Hold the last frame, then fade out over 48 frames (about 0.8 seconds).
+    opacity = MEOWTH_FINISH_FADE_STEPS - (++sprite->data[2] / MEOWTH_FINISH_FADE_STEP_FRAMES);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(opacity, MEOWTH_FINISH_FADE_STEPS - opacity));
+    if (opacity == 0)
+    {
+        sprite->invisible = TRUE;
+        RestoreMeowthBlend(sprite);
+    }
+}
+
 static void UpdateMeowthSprite(struct Sprite *sprite)
 {
     int animNum;
@@ -4055,6 +4177,7 @@ static void UpdateMeowthSprite(struct Sprite *sprite)
             break;
         case MEOWTH_STATE_FINISH:
             StartSpriteAnim(sprite, 4);
+            sprite->data[2] = 0;
             break;
         }
     }
@@ -4064,7 +4187,99 @@ static void UpdateMeowthSprite(struct Sprite *sprite)
         if (--meowth->hitDuration == 0)
             meowth->state = MEOWTH_STATE_WALK;
     }
+    else if (curState == MEOWTH_STATE_FINISH)
+    {
+        UpdateMeowthFinishFade(sprite);
+    }
 }
+
+#if TESTING
+bool32 Pinball_TestStartScene(u8 gameType, MainCallback returnCallback)
+{
+    sPinballDecompressionBuffer = AllocZeroed(0x4000);
+    sPinballGame = AllocZeroed(sizeof(*sPinballGame));
+    if (sPinballDecompressionBuffer == NULL || sPinballGame == NULL)
+        return FALSE;
+    sPinballGame->gameType = gameType;
+    sPinballGame->backupMapMusic = GetCurrentMapMusic();
+    sPinballGame->returnMainCallback = returnCallback;
+    SetMainCallback2(InitPinballScreen);
+    return TRUE;
+}
+
+bool32 Pinball_TestSceneReady(void)
+{
+    return sPinballGame != NULL && gMain.callback2 == PinballMainCallback
+        && sPinballGame->state == PINBALL_STATE_RUNNING;
+}
+
+u8 Pinball_TestGetQuitSprite(void)
+{
+    return sPinballGame->quitSpriteId;
+}
+
+u16 Pinball_TestGetFlipperState(bool32 right)
+{
+    return right ? sPinballGame->rightFlipper.state : sPinballGame->leftFlipper.state;
+}
+
+void Pinball_TestSetQuitContext(u32 context)
+{
+    if (context == 1)
+    {
+        sPinballGame->state = PINBALL_LOST_BALL_FADE_OUT;
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_WHITE);
+    }
+    else if (context == 2)
+    {
+        sPinballGame->state = PINBALL_STATE_WAIT_ANIM;
+        sPinballGame->waitExitScene = TRUE;
+        sPinballGame->flippersDisabled = TRUE;
+        sPinballGame->completed = TRUE;
+    }
+}
+
+u8 Pinball_TestInitMeowth(void)
+{
+    sPinballGame = AllocZeroed(sizeof(*sPinballGame));
+    if (sPinballGame == NULL)
+        return MAX_SPRITES;
+    sPinballGame->gameType = GAME_TYPE_MEOWTH;
+    LoadSpriteGfx(GAME_TYPE_MEOWTH);
+    InitMeowth();
+    return sPinballGame->meowth.spriteId;
+}
+
+bool32 Pinball_TestHitMeowth(s16 x, s16 y, u32 ticks)
+{
+    struct Ball ball = {.xPos = x << 8, .yPos = y << 8};
+    u8 normal;
+    int amplification = 0;
+    return CheckMeowthCollision(&ball, &sPinballGame->meowth, ticks, &normal, &amplification);
+}
+
+void Pinball_TestFinishMeowth(void)
+{
+    HandleTimeRanOut();
+}
+
+void Pinball_TestFreeMeowth(void)
+{
+    struct Meowth *meowth = &sPinballGame->meowth;
+    RestoreMeowthBlend(&gSprites[meowth->spriteId]);
+    ResetMeowthJewels(meowth);
+    DestroySprite(&gSprites[meowth->spriteId]);
+    DestroySprite(&gSprites[meowth->sparkleSpriteId]);
+    FREE_AND_SET_NULL(sPinballGame);
+    FreeSpriteTilesByTag(TAG_MEOWTH);
+    FreeSpriteTilesByTag(TAG_MEOWTH_JEWEL);
+    FreeSpriteTilesByTag(TAG_MEOWTH_JEWEL_MUTLIPLIER);
+    FreeSpriteTilesByTag(TAG_TILES_MEOWTH_JEWEL_SPARKLE);
+    FreeSpritePaletteByTag(TAG_MEOWTH);
+    FreeSpritePaletteByTag(TAG_MEOWTH_JEWEL);
+    FreeSpritePaletteByTag(TAG_MEOWTH_JEWEL_MUTLIPLIER);
+}
+#endif
 
 static void UpdateMeowthJewelSprite(struct Sprite *sprite)
 {

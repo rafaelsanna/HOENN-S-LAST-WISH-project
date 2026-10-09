@@ -2010,6 +2010,7 @@ MauvilleCity_GameCorner_EventScript_ArcadeCoinResultEven::
 	return
 
 MauvilleCity_GameCorner_Text_PlayPinballMeowth:
+	.string "L/R: flippers. B: quit.\p"
 	.string "Play MEOWTH PINBALL for\n"
 	.string "25 COINS?$"
 
@@ -2032,14 +2033,17 @@ MauvilleCity_GameCorner_Text_GachaRefundExtraCoins:
 	.string "COINS from your wager.$"
 
 MauvilleCity_GameCorner_Text_PlayPinballDiglett:
+	.string "L/R: flippers. B: quit.\p"
 	.string "Play DIGLETT PINBALL for\n"
 	.string "50 COINS?$"
 
 MauvilleCity_GameCorner_Text_PlayPinballSeel:
+	.string "L/R: flippers. B: quit.\p"
 	.string "Play SEEL PINBALL for\n"
 	.string "25 COINS?$"
 
 MauvilleCity_GameCorner_Text_PlayPinballGengar:
+	.string "L/R: flippers. B: quit.\p"
 	.string "Play GENGAR PINBALL for\n"
 	.string "100 COINS?$"
 

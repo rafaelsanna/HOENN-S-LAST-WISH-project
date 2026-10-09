@@ -1,5 +1,5 @@
-#include "game_corner_block_stacker.h"
 #include "global.h"
+#include "game_corner_block_stacker.h"
 #include "malloc.h"
 #include "battle.h"
 #include "bg.h"
@@ -99,7 +99,7 @@ enum {
 struct BlockStacker {
     u8 state;
     u8 CreditSpriteIds[MAX_SPRITES_CREDIT];
-    u8 RhydonSpriteId;
+    u8 NosepassSpriteId;
     u8 CommandsSpriteId;
     u8 ToggleButtons;
     u8 CurrentRow; // 1-8
@@ -160,8 +160,6 @@ struct BlockStacker {
     u8 WinnerSpriteId;
     u8 Win;
     u8 LivesSpriteId;
-    u8 Rhydon2SpriteId;
-    u8 RhydonBlockSpriteId;
     u16 backupMapMusic;
 };    
 
@@ -170,6 +168,7 @@ static EWRAM_DATA struct BlockStacker *sBlockStacker = NULL;
 static void FadeToBlockStackerScreen(u8 taskId);
 static void InitBlockStackerScreen(void);
 static void BlockStackerVBlankCallback(void);
+static void BlockStackerMainCallback(void);
 
 // Backgound
 
@@ -177,13 +176,9 @@ static const u32 BlockStacker_BG_Img[] = INCBIN_U32("graphics/block_stacker/bloc
 static const u8 BlockStacker_Tilemap[] = INCBIN_U8("graphics/block_stacker/blockbgtiles.bin.smolTM");
 static const u16 BlockStacker_BG_Pal[] = INCBIN_U16("graphics/block_stacker/bgblock.gbapal");
 
-// Rhydon
-static const u32 RhydonGFX[] = INCBIN_U32("graphics/block_stacker/rhydon.4bpp.smol");
-static const u32 Rhydon2GFX[] = INCBIN_U32("graphics/block_stacker/rhydon2.4bpp.smol");
-static const u16 RhydonPAL[] = INCBIN_U16("graphics/block_stacker/rhydon.gbapal");
-
-static const u32 RhydonBlockGFX[] = INCBIN_U32("graphics/block_stacker/rhydonblock.4bpp.smol");
-static const u16 RhydonBlockPAL[] = INCBIN_U16("graphics/block_stacker/rhydonblock.gbapal");
+// Four-frame dancing Nosepass, with its own palette extracted from the PNG.
+static const u32 NosepassGFX[] = INCBIN_U32("graphics/block_stacker/nosepass.4bpp.smol");
+static const u16 NosepassPAL[] = INCBIN_U16("graphics/block_stacker/nosepass.gbapal");
 
 // Highlight
 static const u32 HighlightGFX[] = INCBIN_U32("graphics/block_stacker/highlight.4bpp.smol");
@@ -267,7 +262,7 @@ static const struct WindowTemplate sBlockStackerWinTemplates[] = {
     DUMMY_WIN_TEMPLATE,
 };
 
-#define RHYDON_GFXTAG 1
+#define NOSEPASS_GFXTAG 1
 #define HIGHLIGHT_GFXTAG 2
 #define TITLE_GFXTAG 3
 #define START_GFXTAG 4
@@ -281,10 +276,8 @@ static const struct WindowTemplate sBlockStackerWinTemplates[] = {
 #define NO_GFXTAG 12
 #define WINNER_GFXTAG 13
 #define LIVES_GFXTAG 14
-#define RHYDON2_GFXTAG 15
-#define RHYDONBLOCK_GFXTAG 16
 
-#define RHYDON_PALTAG 1
+#define NOSEPASS_PALTAG 1
 #define HIGHLIGHT_PALTAG 2
 #define TITLE_PALTAG 3
 #define COMMANDS_PALTAG 4
@@ -293,11 +286,10 @@ static const struct WindowTemplate sBlockStackerWinTemplates[] = {
 #define X_PALTAG 7
 #define YESNO_PALTAG 8
 #define LIVES_PALTAG 9
-#define RHYDONBLOCK_PALTAG 10
 
 static const struct SpritePalette sSpritePalettes[] =
 {
-    { .data = RhydonPAL,      .tag = RHYDON_PALTAG },
+    { .data = NosepassPAL,       .tag = NOSEPASS_PALTAG },
     { .data = HighlightPAL,      .tag = HIGHLIGHT_PALTAG },
     { .data = TitlePAL,          .tag = TITLE_PALTAG },
     { .data = CommandsPAL,      .tag = COMMANDS_PALTAG },
@@ -306,36 +298,7 @@ static const struct SpritePalette sSpritePalettes[] =
     { .data = XPAL,              .tag = X_PALTAG },
     { .data = YesNoPAL,          .tag = YESNO_PALTAG },
     { .data = LivesPAL,          .tag = LIVES_PALTAG },
-    { .data = RhydonBlockPAL, .tag = RHYDONBLOCK_PALTAG },
     {}
-};
-
-static const struct CompressedSpriteSheet sSpriteSheet_RhydonBlock =
-{
-    .data = RhydonBlockGFX,
-    .size = 0x200,
-    .tag = RHYDONBLOCK_GFXTAG,
-};
-
-static const struct OamData sOamData_RhydonBlock =
-{
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .shape = SPRITE_SHAPE(32x32),
-    .size = SPRITE_SIZE(32x32),
-    .tileNum = 0,
-    .priority = 0,
-};
-
-static const struct SpriteTemplate sSpriteTemplate_RhydonBlock =
-{
-    .tileTag = RHYDONBLOCK_GFXTAG,
-    .paletteTag = RHYDONBLOCK_PALTAG,
-    .oam = &sOamData_RhydonBlock,
-    .anims = gDummySpriteAnimTable,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_Lives =
@@ -748,21 +711,14 @@ static const struct SpriteTemplate sSpriteTemplate_Highlight =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_Rhydon2 =
+static const struct CompressedSpriteSheet sSpriteSheet_Nosepass =
 {
-    .data = Rhydon2GFX,
-    .size = 0x3800,
-    .tag = RHYDON2_GFXTAG,
+    .data = NosepassGFX,
+    .size = 4 * 64 * TILE_SIZE_4BPP,
+    .tag = NOSEPASS_GFXTAG,
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_Rhydon =
-{
-    .data = RhydonGFX,
-    .size = 0x4000,
-    .tag = RHYDON_GFXTAG,
-};
-
-static const struct OamData sOamData_Rhydon2 =
+static const struct OamData sOamData_Nosepass =
 {
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -772,70 +728,54 @@ static const struct OamData sOamData_Rhydon2 =
     .priority = 0,
 };
 
-static const struct OamData sOamData_Rhydon =
+// A quick four-pose dance; alternate horizontal facing after each cycle.
+static const union AnimCmd sNosepassDanceAnim[] =
 {
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .shape = SPRITE_SHAPE(64x64),
-    .size = SPRITE_SIZE(64x64),
-    .tileNum = 0,
-    .priority = 0,
+    ANIMCMD_FRAME(0, 6),
+    ANIMCMD_FRAME(64, 6),
+    ANIMCMD_FRAME(128, 6),
+    ANIMCMD_FRAME(192, 6),
+    ANIMCMD_END,
 };
 
-static const union AnimCmd sRhydon2AnimCmd_0[] = 
+static const union AnimCmd *const sNosepassAnimCmds[] = {
+    sNosepassDanceAnim,
+};
+
+static void SpriteCB_NosepassDance(struct Sprite *sprite)
 {
-    ANIMCMD_FRAME(0, 10),
-    ANIMCMD_FRAME(64, 10),
-    ANIMCMD_FRAME(128, 10),
-    ANIMCMD_FRAME(192, 10),
-    ANIMCMD_FRAME(256, 10),
-    ANIMCMD_FRAME(320, 10),
-    ANIMCMD_FRAME(384, 10),
-    ANIMCMD_JUMP(0)         // Loop back to the first frame (Frame 0)
-};
+    if (sprite->animEnded)
+    {
+        // The sprite-level flip applies to every frame of the next dance.
+        sprite->hFlip ^= 1;
+        StartSpriteAnim(sprite, 0);
+    }
+}
 
-static const union AnimCmd *const sRhydon2AnimCmds[] = {
-    sRhydon2AnimCmd_0,  // Looping animation
-};
-
-static const union AnimCmd sRhydonAnimCmd_0[] = 
+static const struct SpriteTemplate sSpriteTemplate_Nosepass =
 {
-    ANIMCMD_FRAME(0, 10),
-    ANIMCMD_FRAME(64, 10),
-    ANIMCMD_FRAME(128, 10),
-    ANIMCMD_FRAME(192, 10),
-    ANIMCMD_FRAME(256, 10),
-    ANIMCMD_FRAME(320, 10),
-    ANIMCMD_FRAME(384, 10),
-    ANIMCMD_FRAME(448, 10),
-    ANIMCMD_JUMP(0)         // Loop back to the first frame (Frame 0)
-};
-
-static const union AnimCmd *const sRhydonAnimCmds[] = {
-    sRhydonAnimCmd_0,  // Looping animation
-};
-
-static const struct SpriteTemplate sSpriteTemplate_Rhydon2 =
-{
-    .tileTag = RHYDON2_GFXTAG,
-    .paletteTag = RHYDON_PALTAG,
-    .oam = &sOamData_Rhydon2,
-    .anims = sRhydon2AnimCmds,
+    .tileTag = NOSEPASS_GFXTAG,
+    .paletteTag = NOSEPASS_PALTAG,
+    .oam = &sOamData_Nosepass,
+    .anims = sNosepassAnimCmds,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
+    .callback = SpriteCB_NosepassDance,
 };
 
-static const struct SpriteTemplate sSpriteTemplate_Rhydon =
+static void InitBlockStackerIntroState(void)
 {
-    .tileTag = RHYDON_GFXTAG,
-    .paletteTag = RHYDON_PALTAG,
-    .oam = &sOamData_Rhydon,
-    .anims = sRhydonAnimCmds,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
-};
+    // Sprite 0 is the live Nosepass, not an empty highlight slot.
+    memset(sBlockStacker->HighlightSpriteIds, SPRITE_NONE, sizeof(sBlockStacker->HighlightSpriteIds));
+    sBlockStacker->state = STACKER_HIGHLIGHT;
+    sBlockStacker->HighlightNum = 0;
+    sBlockStacker->HighlightRow = 0;
+    sBlockStacker->DestroyedHighlights = 0;
+    sBlockStacker->ToggleButtons = 0;
+    sBlockStacker->CurrentRow = 1;
+    sBlockStacker->BlocksLeft = 3;
+    sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
+}
 
 void StartBlockStacker(void)
 {
@@ -862,6 +802,14 @@ static void FadeToBlockStackerScreen(u8 taskId)
     }
 }
 
+// Loading an already-used tag still allocates a new tile range. The intro
+// reuses the highlight sheet dozens of times, so load shared sheets only once.
+static void LoadBlockStackerSpriteSheet(const struct CompressedSpriteSheet *sheet)
+{
+    if (GetSpriteTileStartByTag(sheet->tag) == 0xFFFF)
+        LoadCompressedSpriteSheet(sheet);
+}
+
 static void BlockStackerVBlankCallback(void)
 {
     LoadOam();
@@ -880,10 +828,17 @@ static void BlockStackerMainCallback(void)
 
 static void CreateHighlight(u8 num, u8 row)
 {
-    if ((sBlockStacker->HighlightSpriteIds[num] == 0) && (sBlockStacker->HighlightRow != 8))
+    u8 spriteId;
+
+    if (num >= MAX_SPRITES_HIGHLIGHT || row >= 8)
+        return;
+
+    spriteId = sBlockStacker->HighlightSpriteIds[num];
+    if (spriteId >= MAX_SPRITES || !gSprites[spriteId].inUse
+     || gSprites[spriteId].template != &sSpriteTemplate_Highlight)
     {    
             LoadSpritePalettes(sSpritePalettes);
-            LoadCompressedSpriteSheet(&sSpriteSheet_Highlight);
+            LoadBlockStackerSpriteSheet(&sSpriteSheet_Highlight);
         if (num < 7)
         {
             sBlockStacker->HighlightSpriteIds[num] = CreateSprite(&sSpriteTemplate_Highlight, 32 + (16 * num), 136 - (16 * row), 1);
@@ -892,11 +847,18 @@ static void CreateHighlight(u8 num, u8 row)
         {
             sBlockStacker->HighlightSpriteIds[num] = CreateSprite(&sSpriteTemplate_Highlight, ((32 + (16 * num)) - (16 * 7)), 136 - (16 * row), 1);
         }
-        gSprites[sBlockStacker->HighlightSpriteIds[num]].animNum = 0; // Light Up
+        spriteId = sBlockStacker->HighlightSpriteIds[num];
+        if (spriteId >= MAX_SPRITES)
+        {
+            sBlockStacker->HighlightSpriteIds[num] = SPRITE_NONE;
+            sBlockStacker->state = STACKER_START_EXIT;
+            return;
+        }
+        StartSpriteAnim(&gSprites[spriteId], 0); // Light Up
     }
-    else if ((gSprites[sBlockStacker->HighlightSpriteIds[num]].animNum == 0) && (gSprites[sBlockStacker->HighlightSpriteIds[num]].animCmdIndex == 0))
+    else if (gSprites[spriteId].animNum == 0 && gSprites[spriteId].animCmdIndex == 0)
     {
-        gSprites[sBlockStacker->HighlightSpriteIds[num]].animNum = 2; // Light Down
+        StartSpriteAnim(&gSprites[spriteId], 2); // Light Down
         
         if ((sBlockStacker->HighlightNum != 6) && (sBlockStacker->HighlightNum != 13) && (sBlockStacker->HighlightRow != 8))
         {
@@ -920,26 +882,43 @@ static void DestroyHighlights(void)
     int i;
     
     for (i = 0; i < MAX_SPRITES_HIGHLIGHT; i++) {
-        if ((gSprites[sBlockStacker->HighlightSpriteIds[i]].animNum == 2) && (gSprites[sBlockStacker->HighlightSpriteIds[i]].animCmdIndex > 3))
+        u8 spriteId = sBlockStacker->HighlightSpriteIds[i];
+
+        if (spriteId >= MAX_SPRITES || !gSprites[spriteId].inUse
+         || gSprites[spriteId].template != &sSpriteTemplate_Highlight)
         {
-            DestroySpriteAndFreeResources(&gSprites[sBlockStacker->HighlightSpriteIds[i]]);
-            sBlockStacker->HighlightSpriteIds[i] = 0;
+            sBlockStacker->HighlightSpriteIds[i] = SPRITE_NONE;
+            continue;
+        }
+        if (gSprites[spriteId].animNum == 2 && gSprites[spriteId].animCmdIndex > 3)
+        {
+            // Highlights share one sheet and palette. Keep those resources
+            // alive until the entire intro has finished, not just this sprite.
+            DestroySprite(&gSprites[spriteId]);
+            sBlockStacker->HighlightSpriteIds[i] = SPRITE_NONE;
             sBlockStacker->DestroyedHighlights++;
         }
     }
 }
 
-static void CreateRhydon(void)
+static u8 CreateNosepass(void)
 {
-        LoadCompressedSpriteSheet(&sSpriteSheet_Rhydon);
-    
-    sBlockStacker->RhydonSpriteId = CreateSprite(&sSpriteTemplate_Rhydon, 183, 112, 0);
+    LoadBlockStackerSpriteSheet(&sSpriteSheet_Nosepass);
+    return CreateSprite(&sSpriteTemplate_Nosepass, 183, 112, 0);
 }
+
+#if TESTING
+u8 BlockStacker_TestCreateNosepass(void)
+{
+    LoadSpritePalettes(sSpritePalettes);
+    return CreateNosepass();
+}
+#endif
 
 static void CreateArrow(void)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Arrow);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Arrow);
     
     sBlockStacker->ArrowSpriteId = CreateSprite(&sSpriteTemplate_Arrow, 14, 137, 0);
 }
@@ -947,7 +926,7 @@ static void CreateArrow(void)
 static void CreateCommands(void)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Commands);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Commands);
     
     sBlockStacker->CommandsSpriteId = CreateSprite(&sSpriteTemplate_Commands, 196, 50, 0);
 }
@@ -955,7 +934,7 @@ static void CreateCommands(void)
 static void CreateX1(s16 x, s16 y)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_X);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_X);
     
     sBlockStacker->x1SpriteId = CreateSprite(&sSpriteTemplate_X, x, y, 0);
 }
@@ -963,7 +942,7 @@ static void CreateX1(s16 x, s16 y)
 static void CreateX2(s16 x, s16 y)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_X);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_X);
     
     sBlockStacker->x2SpriteId = CreateSprite(&sSpriteTemplate_X, x, y, 0);
 }
@@ -971,7 +950,7 @@ static void CreateX2(s16 x, s16 y)
 static void CreateX3(s16 x, s16 y)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_X);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_X);
     
     sBlockStacker->x3SpriteId = CreateSprite(&sSpriteTemplate_X, x, y, 0);
 }
@@ -979,12 +958,12 @@ static void CreateX3(s16 x, s16 y)
 static void CreateYesNo(void)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Yes);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Yes);
     
     sBlockStacker->YesSpriteId = CreateSprite(&sSpriteTemplate_Yes, 50, 110, 0);
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_No);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_No);
     
     sBlockStacker->NoSpriteId = CreateSprite(&sSpriteTemplate_No, 104, 110, 0);
     gSprites[sBlockStacker->NoSpriteId].oam.tileNum += 32;
@@ -1011,7 +990,7 @@ static void UpdateLives(void)
 static void CreateLives(void)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Lives);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Lives);
     
     sBlockStacker->LivesSpriteId = CreateSprite(&sSpriteTemplate_Lives, 204, 24, 0);
     gSprites[sBlockStacker->LivesSpriteId].oam.tileNum += 4;
@@ -1020,7 +999,7 @@ static void CreateLives(void)
 static void CreateKeepGoing(void)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_KeepGoing);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_KeepGoing);
     
     sBlockStacker->KeepGoingSpriteId = CreateSprite(&sSpriteTemplate_KeepGoing, 80, 80, 0);
 }
@@ -1028,7 +1007,7 @@ static void CreateKeepGoing(void)
 static void CreateGameOver(void)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_GameOver);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_GameOver);
     
     sBlockStacker->GameOverSpriteId = CreateSprite(&sSpriteTemplate_GameOver, 80, 80, 0);
 }
@@ -1036,7 +1015,7 @@ static void CreateGameOver(void)
 static void CreateStart(void)
 {
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Start);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Start);
     
     sBlockStacker->StartSpriteId = CreateSprite(&sSpriteTemplate_Start, 80, 80, 0);
 }
@@ -1061,14 +1040,14 @@ static void DestroyLives(void)
 
 static void CreateWinner(void)
 {
-        LoadCompressedSpriteSheet(&sSpriteSheet_Winner);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Winner);
     
     sBlockStacker->WinnerSpriteId = CreateSprite(&sSpriteTemplate_Winner, 80, 80, 0);
 }
 
 static void CreateTitle(void)
 {
-        LoadCompressedSpriteSheet(&sSpriteSheet_Title);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Title);
     
     sBlockStacker->TitleSpriteId = CreateSprite(&sSpriteTemplate_Title, 80, 80, 0);
 }
@@ -1083,7 +1062,7 @@ static void CreateLevel_1(void)
     u8 LR;
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -1115,7 +1094,7 @@ static void CreateLevel_2(void)
     u8 LR;
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -1182,7 +1161,7 @@ static void CreateLevel_3(void)
     u8 LR;
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -1230,7 +1209,7 @@ static void CreateLevel_4(void)
     u8 LR;
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -1278,7 +1257,7 @@ static void CreateLevel_5(void)
     u8 LR;
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -1306,7 +1285,7 @@ static void CreateLevel_6(void)
     u8 LR;
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -1334,7 +1313,7 @@ static void CreateLevel_7(void)
     u8 LR;
     
     LoadSpritePalettes(sSpritePalettes);
-    LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+    LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -1362,7 +1341,7 @@ static void CreateLevel_8(void)
     u8 LR;
     
         LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Block);
+        LoadBlockStackerSpriteSheet(&sSpriteSheet_Block);
     
     LR = (Random() % 100);
     
@@ -2042,6 +2021,8 @@ static void ExitBlockStacker(void)
 {
     if (!gPaletteFade.active)
     {
+        if (sBlockStacker->NosepassSpriteId < MAX_SPRITES)
+            DestroySpriteAndFreeResources(&gSprites[sBlockStacker->NosepassSpriteId]);
         if (GetCurrentMapMusic() != sBlockStacker->backupMapMusic)
             PlayNewMapMusic(sBlockStacker->backupMapMusic);
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
@@ -2068,6 +2049,8 @@ static void BlockStackerMain(u8 taskId)
             }
             break;    
         case STACKER_HIGHLIGHT_END:
+            FreeSpriteTilesByTag(HIGHLIGHT_GFXTAG);
+            FreeSpritePaletteByTag(HIGHLIGHT_PALTAG);
             sBlockStacker->GoDelay = 50;
             sBlockStacker->state = STACKER_GO_DELAY;
             break;        
@@ -2296,6 +2279,44 @@ static void BlockStackerMain(u8 taskId)
     }
 }
 
+#if TESTING
+u8 BlockStacker_TestStartIntro(void)
+{
+    sBlockStacker = AllocZeroed(sizeof(*sBlockStacker));
+    if (sBlockStacker == NULL)
+        return MAX_SPRITES;
+    LoadSpritePalettes(sSpritePalettes);
+    sBlockStacker->NosepassSpriteId = CreateNosepass();
+    CreateTitle();
+    InitBlockStackerIntroState();
+    return sBlockStacker->NosepassSpriteId;
+}
+
+void BlockStacker_TestStepIntro(void)
+{
+    BlockStackerMain(0);
+}
+
+bool32 BlockStacker_TestIntroFinished(void)
+{
+    return sBlockStacker->state == STACKER_INPUT;
+}
+
+void BlockStacker_TestFreeIntro(void)
+{
+    FREE_AND_SET_NULL(sBlockStacker);
+}
+
+u8 BlockStacker_TestLoseGame(void)
+{
+    sBlockStacker->BlocksLeft = 0;
+    sBlockStacker->GoDelay = 1;
+    sBlockStacker->state = STACKER_ROW_DELAY;
+    BlockStackerMain(0);
+    return sBlockStacker->GameOverSpriteId;
+}
+#endif
+
 static void InitBlockStackerScreen(void)
 {    
     SetVBlankCallback(NULL);
@@ -2313,15 +2334,9 @@ static void InitBlockStackerScreen(void)
     FreeAllSpritePalettes();
     LoadSpritePalettes(sSpritePalettes);
     
-    CreateRhydon();
+    sBlockStacker->NosepassSpriteId = CreateNosepass();
     CreateTitle();
-    sBlockStacker->HighlightNum = 0; // 0-13
-    sBlockStacker->HighlightRow = 0; // 0-7
-    sBlockStacker->DestroyedHighlights = 0;
-    sBlockStacker->ToggleButtons = 0;
-    sBlockStacker->CurrentRow = 1;
-    sBlockStacker->BlocksLeft = 3;
-    sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
+    InitBlockStackerIntroState();
     
     CopyBgTilemapBufferToVram(BLOCKSTACKER_BG);
     //CopyBgTilemapBufferToVram(BLOCKSTACKER_TEXT_MENUS);
