@@ -96,7 +96,7 @@ static void MigrateTVShow(TVShow *show)
     case TVSHOW_POKEMON_TODAY_FAILED: MOVE(pokemonTodayFailed, species); MOVE(pokemonTodayFailed, species2); break;
     case TVSHOW_FISHING_ADVICE: MOVE(pokemonAngler, species); break;
     case TVSHOW_WORLD_OF_MASTERS: MOVE(worldOfMasters, species); break;
-    case TVSHOW_BREAKING_NEWS: MOVE(breakingNews, poke1Species); break;
+    case TVSHOW_BREAKING_NEWS: MOVE(breakingNews, lastOpponentSpecies); MOVE(breakingNews, poke1Species); break;
     case TVSHOW_SECRET_BASE_VISIT: MOVE(secretBaseVisit, species); break;
     case TVSHOW_BATTLE_SEMINAR: MOVE(battleSeminar, species); MOVE(battleSeminar, foeSpecies); break;
     case TVSHOW_FRONTIER: MOVE(frontier, species1); MOVE(frontier, species2); MOVE(frontier, species3); MOVE(frontier, species4); break;
@@ -167,6 +167,20 @@ void HlwSpecies_MigrateSave(void)
     MigrateTowerRecord(&gSaveBlock2Ptr->frontier.towerPlayer);
     for (u32 i = 0; i < BATTLE_TOWER_RECORD_COUNT; i++)
         MigrateTowerRecord(&gSaveBlock2Ptr->frontier.towerRecords[i]);
+#if FREE_BATTLE_TOWER_E_READER == FALSE
+    {
+        struct BattleTowerEReaderTrainer *record = &gSaveBlock2Ptr->frontier.ereaderTrainer;
+        bool32 changed = FALSE;
+        for (u32 i = 0; i < ARRAY_COUNT(record->party); i++)
+        {
+            u16 species = HlwSpecies_GetCurrentSpecies(record->party[i].species);
+            changed |= species != record->party[i].species;
+            record->party[i].species = species;
+        }
+        if (changed)
+            SetEReaderTrainerChecksum(record);
+    }
+#endif //FREE_BATTLE_TOWER_E_READER
     gSaveBlock2Ptr->frontier.towerInterview.playerSpecies = HlwSpecies_GetCurrentSpecies(gSaveBlock2Ptr->frontier.towerInterview.playerSpecies);
     gSaveBlock2Ptr->frontier.towerInterview.opponentSpecies = HlwSpecies_GetCurrentSpecies(gSaveBlock2Ptr->frontier.towerInterview.opponentSpecies);
     for (u32 i = 0; i < APPRENTICE_COUNT; i++)

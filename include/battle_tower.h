@@ -63,6 +63,9 @@ u8 GetEreaderTrainerFrontSpriteId(void);
 enum TrainerClassID GetEreaderTrainerClassId(void);
 void GetEreaderTrainerName(u8 *dst);
 void ValidateEReaderTrainer(void);
+#if FREE_BATTLE_TOWER_E_READER == FALSE
+void SetEReaderTrainerChecksum(struct BattleTowerEReaderTrainer *ereaderTrainer);
+#endif //FREE_BATTLE_TOWER_E_READER
 void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *ereaderTrainer);
 void CopyEReaderTrainerGreeting(void);
 void TryHideBattleTowerReporter(void);

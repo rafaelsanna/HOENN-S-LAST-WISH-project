@@ -278,6 +278,37 @@ TEST("Full Random leaves existing Random Pokemon table slots consistent")
     }
 }
 
+TEST("Regional randomizers: Mandraloom is reachable in wild tables and trainer teams")
+{
+    bool8 trainers = FALSE;
+    enum RandomizerSpeciesMode mode = MON_RANDOM;
+    for (u32 context = 0; context < 2; context++)
+        for (u32 variant = MON_RANDOM; variant <= MON_RANDOM_NO_LEGEND; variant++)
+            PARAMETRIZE { trainers = context; mode = variant; }
+    bool8 found = FALSE;
+
+    SetUpRandomizer(!trainers, FALSE);
+    Randomizer_SetTrainerMode(trainers);
+    VarSet(RANDOMIZER_VAR_SPECIES_MODE, mode);
+    // Scan fixed save seeds through the real hooks, not a separate test pool.
+    for (u32 seed = 1; seed <= 4096; seed++)
+    {
+        for (u32 byte = 0; byte < sizeof(gSaveBlock2Ptr->playerTrainerId); byte++)
+            gSaveBlock2Ptr->playerTrainerId[byte] = seed >> (byte * 8);
+        u16 species = trainers
+            ? Randomizer_OnTrainerMon(SPECIES_SHROOMISH, 1, 0)
+            : Randomizer_OnWildEncounter(SPECIES_SHROOMISH, 0, 1, WILD_AREA_LAND, 3);
+        if (species != SPECIES_WIGLETT)
+            continue;
+        found = TRUE;
+        EXPECT_EQ(trainers
+            ? Randomizer_OnTrainerMon(SPECIES_SHROOMISH, 1, 0)
+            : Randomizer_OnWildEncounter(SPECIES_SHROOMISH, 0, 1, WILD_AREA_LAND, 3), SPECIES_WIGLETT);
+        break;
+    }
+    EXPECT(found);
+}
+
 TEST("Full Random can select every actual custom Hoenn dex entry including legendaries")
 {
     bool8 foundLegend = FALSE;

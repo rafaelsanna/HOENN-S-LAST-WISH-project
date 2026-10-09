@@ -11,6 +11,13 @@ MEMORY
     ROM    (rx) : ORIGIN = 0x8000000, LENGTH = 32M
 }
 
+/* IntrMain runs interrupt handlers on the foreground system stack, so leave
+ * room for both SMOL's temporary code buffers and VBlank audio processing.
+ * crt0.s uses this same top address when initializing the system SP. */
+__system_stack_top = ORIGIN(IWRAM) + 0x8000 - 0x1C0;
+__system_stack_size = 0x1000;
+__system_stack_bottom = __system_stack_top - __system_stack_size;
+
 SECTIONS {
 
 
@@ -27,6 +34,8 @@ SECTIONS {
     ALIGN(4)
     {
         *.o(.sbss);
+        /* Keep runtime callbacks beyond the legacy multiboot staging area. */
+        *(.sbss.main);
     } > EWRAM
 
     .iwram ORIGIN(IWRAM) : AT (__iwram_lma)
@@ -46,7 +55,12 @@ SECTIONS {
         src/*.o(COMMON);
         *libc.a:*.o(COMMON);
         *libnosys.a:*.o(COMMON);
+        . = ALIGN(4);
+        __iwram_data_end = .;
     } > IWRAM
+
+    ASSERT(__iwram_data_end <= __system_stack_bottom,
+           "IWRAM data overlaps the reserved 4 KiB system stack")
 
     /* BEGIN ROM DATA */
 

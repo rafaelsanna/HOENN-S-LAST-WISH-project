@@ -1,5 +1,6 @@
 #include "global.h"
 #include "agb_flash.h"
+#include "battle_tower.h"
 #include "gba/flash_internal.h"
 #include "event_data.h"
 #include "hall_of_fame.h"
@@ -11,6 +12,7 @@
 #include "pokemon_storage_system.h"
 #include "save.h"
 #include "species_relocation.h"
+#include "string_util.h"
 #include "constants/event_objects.h"
 #include "constants/flags.h"
 #include "test/test.h"
@@ -167,6 +169,103 @@ FLASH_TEST("Species relocation: legacy saves translate party boxes daycare and p
     EXPECT_EQ(GetMonData(&gPlayerParty[0], MON_DATA_SPECIES), current);
     EXPECT_EQ(GetMonData(&gPlayerParty[1], MON_DATA_SPECIES), legacy);
 }
+
+FLASH_TEST("Species relocation: breaking news translates both species without changing other fields")
+{
+    static const u16 forms[][2] =
+    {
+        {SPECIES_DARKRAI, SPECIES_DACHSBUN},
+        {SPECIES_VOLCARONA, SPECIES_ARBOLIVA},
+        {SPECIES_DRUDDIGON, SPECIES_PAWMOT},
+        {SPECIES_VIRIZION, SPECIES_WIGLETT},
+        {SPECIES_BIBAREL, SPECIES_SCOVILLAIN},
+        {SPECIES_DUCKLETT, SPECIES_NICKIT},
+        {SPECIES_ESCAVALIER, SPECIES_CLOBBOPUS},
+        {SPECIES_SWANNA, SPECIES_GRAPPLOCT},
+    };
+    for (u32 i = 0; i < ARRAY_COUNT(forms); i++)
+    {
+        TVShow *show = &gSaveBlock1Ptr->tvShows[i];
+        show->breakingNews.kind = TVSHOW_BREAKING_NEWS;
+        show->breakingNews.active = TRUE;
+        show->breakingNews.lastOpponentSpecies = forms[i][0];
+        show->breakingNews.poke1Species = forms[i][0];
+        // An unrelated u16 with the same value is not a species reference.
+        show->breakingNews.lastUsedMove = forms[i][0];
+    }
+    FlagClear(FLAG_HLW_SPECIES_RELOCATED);
+    EXPECT_EQ(HandleSavingData(SAVE_NORMAL), SAVE_STATUS_OK);
+    sProgress++;
+    EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
+    for (u32 i = 0; i < ARRAY_COUNT(forms); i++)
+    {
+        const TVShow *show = &gSaveBlock1Ptr->tvShows[i];
+        EXPECT_EQ(show->breakingNews.kind, TVSHOW_BREAKING_NEWS);
+        EXPECT_EQ(show->breakingNews.active, TRUE);
+        EXPECT_EQ(show->breakingNews.lastOpponentSpecies, forms[i][1]);
+        EXPECT_EQ(show->breakingNews.poke1Species, forms[i][1]);
+        EXPECT_EQ(show->breakingNews.lastUsedMove, forms[i][0]);
+    }
+}
+
+#if FREE_BATTLE_TOWER_E_READER == FALSE
+FLASH_TEST("Species relocation: e-Reader parties retain checksums and future native species")
+{
+    static const u8 name[] = _("Keep me");
+    static const u16 forms[][2] =
+    {
+        {SPECIES_DARKRAI, SPECIES_DACHSBUN},
+        {SPECIES_VOLCARONA, SPECIES_ARBOLIVA},
+        {SPECIES_DRUDDIGON, SPECIES_PAWMOT},
+        {SPECIES_VIRIZION, SPECIES_WIGLETT},
+        {SPECIES_BIBAREL, SPECIES_SCOVILLAIN},
+        {SPECIES_DUCKLETT, SPECIES_NICKIT},
+        {SPECIES_ESCAVALIER, SPECIES_CLOBBOPUS},
+        {SPECIES_SWANNA, SPECIES_GRAPPLOCT},
+    };
+    struct BattleTowerEReaderTrainer expected;
+    struct BattleTowerEReaderTrainer *record = &gSaveBlock2Ptr->frontier.ereaderTrainer;
+    for (u32 i = 0; i < ARRAY_COUNT(forms); i++)
+    {
+        memset(record, 0, sizeof(*record));
+        record->winStreak = 123;
+        record->facilityClass = 17;
+        record->trainerId[0] = 0xAB;
+        StringCopy(record->name, name);
+        for (u32 j = 0; j < ARRAY_COUNT(record->party); j++)
+        {
+            record->party[j].species = forms[i][0];
+            record->party[j].moves[0] = MOVE_TACKLE;
+            record->party[j].heldItem = ITEM_ORAN_BERRY;
+            record->party[j].personality = 0x12345678 + j;
+            record->party[j].level = 40;
+        }
+        SetEReaderTrainerChecksum(record);
+        expected = *record;
+        for (u32 j = 0; j < ARRAY_COUNT(expected.party); j++)
+            expected.party[j].species = forms[i][1];
+        SetEReaderTrainerChecksum(&expected);
+        FlagClear(FLAG_HLW_SPECIES_RELOCATED);
+        EXPECT_EQ(HandleSavingData(SAVE_NORMAL), SAVE_STATUS_OK);
+        sProgress++;
+        EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
+        EXPECT_EQ(memcmp(record, &expected, sizeof(expected)), 0);
+        ValidateEReaderTrainer();
+        EXPECT_EQ(gSpecialVar_Result, FALSE);
+    }
+    // After migration, restored native species must remain native, including
+    // their checksum, across another real save/load cycle.
+    record->party[0].species = SPECIES_DARKRAI;
+    SetEReaderTrainerChecksum(record);
+    expected = *record;
+    EXPECT_EQ(HandleSavingData(SAVE_NORMAL), SAVE_STATUS_OK);
+    sProgress++;
+    EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
+    EXPECT_EQ(memcmp(record, &expected, sizeof(expected)), 0);
+    ValidateEReaderTrainer();
+    EXPECT_EQ(gSpecialVar_Result, FALSE);
+}
+#endif //FREE_BATTLE_TOWER_E_READER
 
 FLASH_TEST("Species relocation: HOF marker commits atomically and protects future native Darkrai")
 {

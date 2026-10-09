@@ -1,7 +1,8 @@
 #include "global.h"
 #include "task.h"
 
-COMMON_DATA struct Task gTasks[NUM_TASKS] = {0};
+// Reserve IWRAM for stack-heavy decompression interrupted by audio processing.
+EWRAM_DATA struct Task gTasks[NUM_TASKS] = {0};
 
 static void InsertTask(u8 newTaskId);
 static u8 FindFirstActiveTask(void);

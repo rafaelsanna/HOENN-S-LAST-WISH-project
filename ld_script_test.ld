@@ -12,6 +12,12 @@ MEMORY
     ROM               (rx) : ORIGIN = 0x8000000, LENGTH = 32M
 }
 
+/* Match production's shared foreground/interrupt stack budget. crt0.s reads
+ * this top address; the persistent test region remains above the system SP. */
+__system_stack_top = ORIGIN(IWRAM) + 0x8000 - 0x1C0;
+__system_stack_size = 0x1000;
+__system_stack_bottom = __system_stack_top - __system_stack_size;
+
 SECTIONS {
 
     .ewram ORIGIN(EWRAM) : AT (__ewram_lma)
@@ -28,6 +34,7 @@ SECTIONS {
     {
         src/*.o(.sbss);
         test/*.o(.sbss);
+        *(.sbss.main);
         . = ALIGN(4);
     } > EWRAM
 
@@ -57,7 +64,12 @@ SECTIONS {
         data/*.o(COMMON);
         test/*.o(COMMON);
         *libc.a:sbrkr.o(COMMON);
+        . = ALIGN(4);
+        __iwram_data_end = .;
     } > IWRAM
+
+    ASSERT(__iwram_data_end <= __system_stack_bottom,
+           "IWRAM data overlaps the reserved 4 KiB system stack")
 
     /* .persistent starts at 0x3007F00 */
     /* WARNING: This is the end of the IRQ stack, if there's too

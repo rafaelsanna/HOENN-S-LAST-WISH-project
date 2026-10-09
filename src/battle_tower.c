@@ -80,9 +80,6 @@ static void FillTentTrainerParty_(u16 trainerId, u8 firstMonId, u8 monCount);
 static void FillFactoryFrontierTrainerParty(u16 trainerId, u8 firstMonId);
 static void FillFactoryTentTrainerParty(u16 trainerId, u8 firstMonId);
 static u8 GetFrontierTrainerFixedIvs(u16 trainerId);
-#if FREE_BATTLE_TOWER_E_READER == FALSE
-static void SetEReaderTrainerChecksum(struct BattleTowerEReaderTrainer *ereaderTrainer);
-#endif //FREE_BATTLE_TOWER_E_READER
 static u8 SetTentPtrsGetLevel(void);
 
 // Battle Frontier sets predate the project's Wish Form type changes. Keep this
@@ -3628,7 +3625,7 @@ void ValidateEReaderTrainer(void)
 }
 
 #if FREE_BATTLE_TOWER_E_READER == FALSE
-static void SetEReaderTrainerChecksum(struct BattleTowerEReaderTrainer *ereaderTrainer)
+void SetEReaderTrainerChecksum(struct BattleTowerEReaderTrainer *ereaderTrainer)
 {
     s32 i;
 
