@@ -1360,4 +1360,6 @@ struct MapPosition
 extern bool32 gLoadFail;
 #endif // T_SHOULD_RUN_MOVE_ANIM
 
+#include "assertf.h"
+
 #endif // GUARD_GLOBAL_H

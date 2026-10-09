@@ -1023,6 +1023,7 @@ void BattleTransition_Start(u8 transitionId)
 bool8 IsBattleTransitionDone(void)
 {
     u8 taskId = FindTaskIdByFunc(Task_BattleTransition);
+    fatal_assertf(taskId != TASK_NONE, "Missing battle transition task");
     if (gTasks[taskId].tTransitionDone)
     {
         // Keep the final palette/OAM upload, but retire callbacks that use
@@ -1043,9 +1044,17 @@ bool8 IsBattleTransitionDone(void)
 
 static void LaunchBattleTransitionTask(u8 transitionId)
 {
+    fatal_assertf(transitionId < B_TRANSITION_COUNT, "Invalid battle transition %u", transitionId);
+    // CreateTask returns 0 (a valid ID) when full in this engine. Check before
+    // calling it so exhaustion cannot overwrite an unrelated task's data.
+    u32 freeSlot;
+    for (freeSlot = 0; freeSlot < NUM_TASKS; freeSlot++)
+        if (!gTasks[freeSlot].isActive)
+            break;
+    fatal_assertf(freeSlot < NUM_TASKS, "No task slot for battle transition %u", transitionId);
     u8 taskId = CreateTask(Task_BattleTransition, 2);
     gTasks[taskId].tTransitionId = transitionId;
-    sTransitionData = AllocZeroed(sizeof(*sTransitionData));
+    sTransitionData = AllocZeroedRequired(sizeof(*sTransitionData));
 }
 
 static void Task_BattleTransition(u8 taskId)

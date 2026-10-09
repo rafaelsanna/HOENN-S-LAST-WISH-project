@@ -288,8 +288,18 @@ void HandleLoadSpecialPokePic(bool32 isFrontPic, void *dest, s32 species, u32 pe
 //  Wrapper function for all decompression calls using formats with headers
 //  calls the correct decompression function depending on the header
 //  VRAM version
+static bool32 IsReadableCompressionHeader(const u32 *src)
+{
+    uintptr_t p = (uintptr_t)src;
+    return !(p & 3)
+        && ((p >= ROM_START && p <= ROM_END - 8)
+         || (p >= EWRAM_START && p <= EWRAM_END - 8)
+         || (p >= IWRAM_START && p <= IWRAM_END - 8));
+}
+
 void DecompressDataWithHeaderVram(const u32 *src, void *dest)
 {
+    fatal_assertf(IsReadableCompressionHeader(src), "Invalid VRAM compression header %p", src);
     union CompressionHeader header;
     CpuCopy32(src, &header, 8);
     switch (header.smol.mode)
@@ -318,6 +328,7 @@ void DecompressDataWithHeaderVram(const u32 *src, void *dest)
 //  WRAM version
 void DecompressDataWithHeaderWram(const u32 *src, void *dest)
 {
+    fatal_assertf(IsReadableCompressionHeader(src), "Invalid WRAM compression header %p", src);
     union CompressionHeader header;
     CpuCopy32(src, &header, 8);
     switch (header.smol.mode)

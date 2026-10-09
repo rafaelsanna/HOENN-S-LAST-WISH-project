@@ -8,6 +8,12 @@
 // Ruby's actual debug build does not use the AGBPrint features.
 //#define NDEBUG
 
+// Tester ROMs retain on-screen diagnostics independently of emulator logging.
+// Set FALSE to suppress ordinary assertf/errorf screens; fatalf is always on.
+#ifndef ASSERTF_SCREEN_ENABLED
+#define ASSERTF_SCREEN_ENABLED TRUE
+#endif
+
 // To enable printf debugging, comment out "#define NDEBUG". This allows
 // the various AGBPrint functions to be used. (See include/gba/isagbprint.h).
 // See below for enabling different pretty printing versions.

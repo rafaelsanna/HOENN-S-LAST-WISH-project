@@ -56,11 +56,23 @@ extern u8 gHeap[HEAP_SIZE];
 
 #endif
 
+// Required allocations retain the call site even in release builds. Ordinary
+// Alloc/AllocZeroed remain nullable for callers with an explicit recovery path.
+#define AllocRequired(size) AllocRequired_(size, __FILE__, __LINE__)
+#define AllocZeroedRequired(size) AllocZeroedRequired_(size, __FILE__, __LINE__)
+
 void *Alloc_(u32 size, const char *location);
 void *AllocZeroed_(u32 size, const char *location);
+void *AllocRequired_(u32 size, const char *file, u32 line);
+void *AllocZeroedRequired_(u32 size, const char *file, u32 line);
+// Non-reporting paths for crash-screen backups: failure/corruption returns NULL.
+// These perform a bounded integrity check and must never report recursively.
+void *AllocUnchecked(u32 size);
+void *AllocZeroedUnchecked(u32 size);
 void Free(void *pointer);
 void InitHeap(void *heapStart, u32 heapSize);
 bool32 CheckMemBlock(void *pointer);
+bool32 CheckHeap(void);
 
 const struct MemBlock *HeapHead(void);
 const char *MemBlockLocation(const struct MemBlock *block);
