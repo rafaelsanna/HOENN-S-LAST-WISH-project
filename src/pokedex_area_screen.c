@@ -105,10 +105,13 @@ typedef struct PokedexAreaScreen
     /*0x6E8*/ u8 *screenSwitchState;
     /*0x6EC*/ struct RegionMap regionMap;
     /*0xF70*/ u8 charBuffer[64];
+#if !OW_TIME_OF_DAY_ENCOUNTERS
+    // The time-of-day UI uses a text label instead of these legacy sprites.
     /*0xFB0*/ struct Sprite *areaUnknownSprites[3];
     /*0xFBC*/ u8 areaUnknownGraphicsBuffer[0x600];
-    /*0xFC0*/ u8 areaScreenLabelIds[NUM_LABEL_WINDOWS];
-    /*0xFC8*/ u8 areaState;
+#endif
+    u8 areaScreenLabelIds[NUM_LABEL_WINDOWS];
+    u8 areaState;
 } PokedexAreaScreen;
 
 // PASSO 2: buffer estático e ponteiro declarados separadamente
@@ -128,8 +131,10 @@ static void DoAreaGlow(void);
 static void Task_ShowPokedexAreaScreen(u8 taskId);
 static void Task_UpdatePokedexAreaScreen(u8 taskId);
 static void CreateAreaMarkerSprites(void);
+#if !OW_TIME_OF_DAY_ENCOUNTERS
 static void LoadAreaUnknownGraphics(void);
 static void CreateAreaUnknownSprites(void);
+#endif
 static void Task_HandlePokedexAreaScreenInput(u8);
 static void ResetPokedexAreaMapBg(void);
 static void DestroyAreaScreenSprites(void);
@@ -138,8 +143,6 @@ static void ShowEncounterInfoLabel(void);
 static void ShowAreaUnknownLabel(void);
 static void PrintAreaLabelText(const u8 *text, enum PokedexAreaLabels labelId, int textXPos);
 static void ClearAreaWindowLabel(enum PokedexAreaLabels labelId);
-
-bool32 ShouldShowAreaUnknownLabel(void);
 
 static const u32 sAreaGlow_Pal[] = INCBIN_U32("graphics/pokedex/area_glow.gbapal");
 static const u32 sAreaGlow_Gfx[] = INCBIN_U32("graphics/pokedex/area_glow.4bpp.smol");
@@ -216,6 +219,7 @@ static const struct SpriteTemplate sAreaMarkerSpriteTemplate =
 static const u16 sAreaMarkerPalette[] = INCBIN_U16("graphics/pokedex/area_marker.gbapal");
 static const u8 sAreaMarkerTiles[] = INCBIN_U8("graphics/pokedex/area_marker.4bpp");
 
+#if !OW_TIME_OF_DAY_ENCOUNTERS
 static const struct SpritePalette sAreaUnknownSpritePalette =
 {
     .data = gPokedexAreaScreenAreaUnknown_Pal, .tag = TAG_AREA_UNKNOWN
@@ -238,6 +242,7 @@ static const struct SpriteTemplate sAreaUnknownSpriteTemplate =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
+#endif
 
 static const u8 sFontColor_AreaInfo[3] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, 5};
 static const struct WindowTemplate sTimeOfDayWindowLabelTemplates[] =
@@ -790,12 +795,14 @@ static void Task_ShowPokedexAreaScreen(u8 taskId)
         CreateAreaMarkerSprites();
         break;
     case 7:
-        if(!OW_TIME_OF_DAY_ENCOUNTERS)
-            LoadAreaUnknownGraphics();
+#if !OW_TIME_OF_DAY_ENCOUNTERS
+        LoadAreaUnknownGraphics();
+#endif
         break;
     case 8:
-        if(!OW_TIME_OF_DAY_ENCOUNTERS)
-            CreateAreaUnknownSprites();
+#if !OW_TIME_OF_DAY_ENCOUNTERS
+        CreateAreaUnknownSprites();
+#endif
         break;
     case 9:
         BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 16, 0, RGB_BLACK);
@@ -1005,19 +1012,19 @@ static void DestroyAreaScreenSprites(void)
     for (i = 0; i < sPokedexAreaScreen->numAreaMarkerSprites; i++)
         DestroySprite(sPokedexAreaScreen->areaMarkerSprites[i]);
 
-    if (!OW_TIME_OF_DAY_ENCOUNTERS)
+#if !OW_TIME_OF_DAY_ENCOUNTERS
+    // Destroy "Area Unknown" sprites in the legacy, non-time-of-day UI.
+    FreeSpriteTilesByTag(TAG_AREA_UNKNOWN);
+    FreeSpritePaletteByTag(TAG_AREA_UNKNOWN);
+    for (i = 0; i < ARRAY_COUNT(sPokedexAreaScreen->areaUnknownSprites); i++)
     {
-        // Destroy "Area Unknown" sprites
-        FreeSpriteTilesByTag(TAG_AREA_UNKNOWN);
-        FreeSpritePaletteByTag(TAG_AREA_UNKNOWN);
-        for (i = 0; i < ARRAY_COUNT(sPokedexAreaScreen->areaUnknownSprites); i++)
-        {
-            if (sPokedexAreaScreen->areaUnknownSprites[i])
-                DestroySprite(sPokedexAreaScreen->areaUnknownSprites[i]);
-        }
+        if (sPokedexAreaScreen->areaUnknownSprites[i])
+            DestroySprite(sPokedexAreaScreen->areaUnknownSprites[i]);
     }
+#endif
 }
 
+#if !OW_TIME_OF_DAY_ENCOUNTERS
 static void LoadAreaUnknownGraphics(void)
 {
     struct SpriteSheet spriteSheet = {
@@ -1059,9 +1066,17 @@ static void CreateAreaUnknownSprites(void)
         }
     }
 }
+#endif
 
 static void LoadHGSSScreenSelectBarSubmenu(void)
 {
     CopyToBgTilemapBuffer(1, sPokedexPlusHGSS_ScreenSelectBarSubmenu_Tilemap, 0, 0);
     CopyBgTilemapBufferToVram(1);
 }
+
+#if TESTING
+u32 PokedexArea_TestStateSize(void)
+{
+    return sizeof(PokedexAreaScreen);
+}
+#endif

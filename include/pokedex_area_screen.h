@@ -13,5 +13,10 @@ enum PokedexAreaScreenState
 
 void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum TimeOfDay timeOfDay, enum PokedexAreaScreenState areaState);
 void ShowPokedexAreaScreen(u16 species, u8 *screenSwitchState);
+bool32 ShouldShowAreaUnknownLabel(void);
+
+#if TESTING
+u32 PokedexArea_TestStateSize(void);
+#endif
 
 #endif // GUARD_POKEDEX_AREA_SCREEN_H

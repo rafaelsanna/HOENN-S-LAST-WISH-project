@@ -100,11 +100,9 @@ EWRAM_DATA static u8 sScrollIndicatorArrowPairId = 0;
 EWRAM_DATA static u16 sDetailTilemapBuffer[BG_SCREEN_SIZE / 2] = {};
 EWRAM_DATA static u16 sTextTilemapBuffer[BG_SCREEN_SIZE / 2] = {};
 EWRAM_DATA static u16 sMenuTilemapBuffer[BG_SCREEN_SIZE / 2] = {};
-EWRAM_DATA static u16 sBackgroundTilemapBuffer[BG_SCREEN_SIZE / 2] = {};
 EWRAM_DATA static MainCallback sExitCallback = NULL;
 
 static const u32 sBlankBgTile[8] = {};
-static const u16 sAchievementsBgTilemap[BG_SCREEN_SIZE / 2] = {};
 static const u32 sAchievementsMenuTiles[] = INCBIN_U32("graphics/achievements/menu.4bpp");
 static const u16 sAchievementsMenuTilemap[] = INCBIN_U16("graphics/achievements/menu.bin");
 static const u16 sAchievementsMenuPal[] = INCBIN_U16("graphics/achievements/menu.gbapal");
@@ -305,11 +303,11 @@ void CB2_InitAchievementsMenuWithCallback(MainCallback callback)
     CpuFill16(0, sDetailTilemapBuffer, sizeof(sDetailTilemapBuffer));
     CpuFill16(0, sTextTilemapBuffer, sizeof(sTextTilemapBuffer));
     CpuFill16(0, sMenuTilemapBuffer, sizeof(sMenuTilemapBuffer));
-    CpuFill16(0, sBackgroundTilemapBuffer, sizeof(sBackgroundTilemapBuffer));
     SetBgTilemapBuffer(BG_DETAIL, sDetailTilemapBuffer);
     SetBgTilemapBuffer(BG_TEXT, sTextTilemapBuffer);
     SetBgTilemapBuffer(BG_MENU, sMenuTilemapBuffer);
-    SetBgTilemapBuffer(BG_BACKGROUND, sBackgroundTilemapBuffer);
+    // BG3 is a blank tile/map kept directly in VRAM, not a writable tilemap.
+    // InitBgsFromTemplates cleared its previous tilemap binding.
     ResetAllBgsCoordinates();
     ResetPaletteFade();
     ResetSpriteData();
@@ -323,6 +321,7 @@ void CB2_InitAchievementsMenuWithCallback(MainCallback callback)
     DmaClear16(3, BG_SCREEN_ADDR(31), BG_SCREEN_SIZE);
     DmaClear16(3, BG_SCREEN_ADDR(30), BG_SCREEN_SIZE);
     DmaClear16(3, BG_SCREEN_ADDR(29), BG_SCREEN_SIZE);
+    // Keep the blank background even when opening over another screen's VRAM.
     DmaClear16(3, BG_SCREEN_ADDR(28), BG_SCREEN_SIZE);
     LoadBgTiles(BG_DETAIL, sBlankBgTile, sizeof(sBlankBgTile), ACHIEVEMENTS_BLANK_TILE);
     LoadBgTiles(BG_MENU, sAchievementsMenuTiles, sizeof(sAchievementsMenuTiles), 0);
@@ -331,8 +330,6 @@ void CB2_InitAchievementsMenuWithCallback(MainCallback callback)
     FillBgTilemapBufferRect_Palette0(BG_DETAIL, ACHIEVEMENTS_BLANK_TILE, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     FillBgTilemapBufferRect_Palette0(BG_TEXT, ACHIEVEMENTS_BLANK_TILE, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     LoadMenuTilemap();
-    CopyToBgTilemapBufferRect(BG_BACKGROUND, sAchievementsBgTilemap, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
-    CopyBgTilemapBufferToVram(BG_BACKGROUND);
     CopyBgTilemapBufferToVram(BG_DETAIL);
     CopyBgTilemapBufferToVram(BG_TEXT);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_BG3_ON);

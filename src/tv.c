@@ -64,16 +64,6 @@ enum {
 };
 
 COMMON_DATA s8 sCurTVShowSlot = 0;
-COMMON_DATA u16 sTV_SecretBaseVisitMovesTemp[8] = {0};
-COMMON_DATA u8 sTV_DecorationsBuffer[DECOR_MAX_SECRET_BASE] = {0};
-COMMON_DATA struct {
-    u8 level;
-    u16 species;
-    u16 move;
-} sTV_SecretBaseVisitMonsTemp[10] = {0};
-
-static u8 sTVShowMixingNumPlayers;
-static u8 sTVShowNewsMixingNumPlayers;
 static s8 sTVShowMixingCurSlot;
 
 static EWRAM_DATA u16 sPokemonAnglerSpecies = 0;
@@ -82,6 +72,8 @@ static EWRAM_DATA u16 sFindThatGamerCoinsSpent = 0;
 static EWRAM_DATA u8 sFindThatGamerWhichGame = SLOT_MACHINE;
 static EWRAM_DATA ALIGNED(4) u8 sRecordMixingPartnersWithoutShowsToShare = 0;
 static EWRAM_DATA ALIGNED(4) u8 sTVShowState = 0;
+// These choices must survive separate calls while the show's dialogue advances.
+// Unlike calculation scratch buffers, they cannot be moved onto the stack.
 static EWRAM_DATA u8 sTVSecretBaseSecretsRandomValues[3] = {};
 
 static void ClearPokeNews(void);
@@ -1962,12 +1954,13 @@ void AlertTVThatPlayerPlayedRoulette(u16 nCoinsSpent)
 
 static void SecretBaseVisit_CalculateDecorationData(TVShow *show)
 {
+    u8 decorationsBuffer[DECOR_MAX_SECRET_BASE];
     u8 i, j;
     u8 n;
     u8 decoration;
 
     for (i = 0; i < DECOR_MAX_SECRET_BASE; i++)
-        sTV_DecorationsBuffer[i] = DECOR_NONE;
+        decorationsBuffer[i] = DECOR_NONE;
 
     // Count (and save) the unique decorations in the base
     for (i = 0, n = 0; i < DECOR_MAX_SECRET_BASE; i++)
@@ -1978,16 +1971,16 @@ static void SecretBaseVisit_CalculateDecorationData(TVShow *show)
             // Search for an empty spot to save decoration
             for (j = 0; j < DECOR_MAX_SECRET_BASE; j++)
             {
-                if (sTV_DecorationsBuffer[j] == DECOR_NONE)
+                if (decorationsBuffer[j] == DECOR_NONE)
                 {
                     // Save and count new unique decoration
-                    sTV_DecorationsBuffer[j] = decoration;
+                    decorationsBuffer[j] = decoration;
                     n++;
                     break;
                 }
 
                 // Decoration has already been saved, skip and move on to the next base decoration
-                if (sTV_DecorationsBuffer[j] == decoration)
+                if (decorationsBuffer[j] == decoration)
                     break;
             }
         }
@@ -2004,22 +1997,31 @@ static void SecretBaseVisit_CalculateDecorationData(TVShow *show)
     case 0:
         break;
     case 1:
-        show->secretBaseVisit.decorations[0] = sTV_DecorationsBuffer[0];
+        show->secretBaseVisit.decorations[0] = decorationsBuffer[0];
         break;
     default:
         // More than 1 decoration, randomize the full list
-        Shuffle(sTV_DecorationsBuffer, n, sizeof(sTV_DecorationsBuffer[0]));
+        Shuffle(decorationsBuffer, n, sizeof(decorationsBuffer[0]));
 
         // Pick the first decorations in the randomized list to talk about on the show
         for (i = 0; i < show->secretBaseVisit.numDecorations; i++)
-            show->secretBaseVisit.decorations[i] = sTV_DecorationsBuffer[i];
+            show->secretBaseVisit.decorations[i] = decorationsBuffer[i];
         break;
     }
 }
 
 static void SecretBaseVisit_CalculatePartyData(TVShow *show)
 {
+    // Synchronous scratch only: six party members and four moves, not ten/eight.
+    struct
+    {
+        u8 level;
+        u16 species;
+        u16 move;
+    } partyData[PARTY_SIZE];
+    u16 monMoves[MAX_MON_MOVES];
     u8 i;
+    u8 moveIndex;
     u16 move;
     u16 j;
     u8 numMoves;
@@ -2030,49 +2032,39 @@ static void SecretBaseVisit_CalculatePartyData(TVShow *show)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
         {
-            sTV_SecretBaseVisitMonsTemp[numPokemon].level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
-            sTV_SecretBaseVisitMonsTemp[numPokemon].species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
+            partyData[numPokemon].level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            partyData[numPokemon].species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
 
             // Check all the Pokémon's moves, then randomly select one to save
             numMoves = 0;
-            move = GetMonData(&gPlayerParty[i], MON_DATA_MOVE1);
-            if (move != MOVE_NONE)
+            for (moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
             {
-                sTV_SecretBaseVisitMovesTemp[numMoves] = move;
-                numMoves++;
+                move = GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + moveIndex);
+                if (move != MOVE_NONE)
+                    monMoves[numMoves++] = move;
             }
-            move = GetMonData(&gPlayerParty[i], MON_DATA_MOVE2);
-            if (move != MOVE_NONE)
-            {
-                sTV_SecretBaseVisitMovesTemp[numMoves] = move;
-                numMoves++;
-            }
-            move = GetMonData(&gPlayerParty[i], MON_DATA_MOVE3);
-            if (move != MOVE_NONE)
-            {
-                sTV_SecretBaseVisitMovesTemp[numMoves] = move;
-                numMoves++;
-            }
-            move = GetMonData(&gPlayerParty[i], MON_DATA_MOVE4);
-            if (move != MOVE_NONE)
-            {
-                sTV_SecretBaseVisitMovesTemp[numMoves] = move;
-                numMoves++;
-            }
-            sTV_SecretBaseVisitMonsTemp[numPokemon].move = sTV_SecretBaseVisitMovesTemp[Random() % numMoves];
+            partyData[numPokemon].move = numMoves == 0 ? MOVE_NONE : monMoves[Random() % numMoves];
             numPokemon++;
         }
     }
 
     for (i = 0, sum = 0; i < numPokemon; i++)
-        sum += sTV_SecretBaseVisitMonsTemp[i].level;
+        sum += partyData[i].level;
+
+    if (numPokemon == 0)
+    {
+        show->secretBaseVisit.avgLevel = 0;
+        show->secretBaseVisit.species = SPECIES_NONE;
+        show->secretBaseVisit.move = MOVE_NONE;
+        return;
+    }
 
     // Using the data calculated above, save the data to talk about on the show
     // (average level, and one randomly selected species / move)
     show->secretBaseVisit.avgLevel = sum / numPokemon;
     j = Random() % numPokemon;
-    show->secretBaseVisit.species = sTV_SecretBaseVisitMonsTemp[j].species;
-    show->secretBaseVisit.move = sTV_SecretBaseVisitMonsTemp[j].move;
+    show->secretBaseVisit.species = partyData[j].species;
+    show->secretBaseVisit.move = partyData[j].move;
 }
 
 void TryPutSecretBaseVisitOnAir(void)
@@ -3469,16 +3461,16 @@ static void SetMixedTVShows(TVShow player1[TV_SHOWS_COUNT], TVShow player2[TV_SH
 {
     u8 i;
     u8 j;
+    u8 numPlayers = GetLinkPlayerCount();
     TVShow **tvShows[MAX_LINK_PLAYERS];
 
     tvShows[0] = &player1;
     tvShows[1] = &player2;
     tvShows[2] = &player3;
     tvShows[3] = &player4;
-    sTVShowMixingNumPlayers = GetLinkPlayerCount();
     while (1)
     {
-        for (i = 0; i < sTVShowMixingNumPlayers; i++)
+        for (i = 0; i < numPlayers; i++)
         {
             if (i == 0)
                 sRecordMixingPartnersWithoutShowsToShare = 0;
@@ -3487,19 +3479,19 @@ static void SetMixedTVShows(TVShow player1[TV_SHOWS_COUNT], TVShow player2[TV_SH
             if (sTVShowMixingCurSlot == -1)
             {
                 sRecordMixingPartnersWithoutShowsToShare++;
-                if (sRecordMixingPartnersWithoutShowsToShare == sTVShowMixingNumPlayers)
+                if (sRecordMixingPartnersWithoutShowsToShare == numPlayers)
                     return;
             }
             else
             {
-                for (j = 0; j < sTVShowMixingNumPlayers - 1; j++)
+                for (j = 0; j < numPlayers - 1; j++)
                 {
-                    sCurTVShowSlot = FindFirstEmptyRecordMixTVShowSlot(tvShows[(i + j + 1) % sTVShowMixingNumPlayers][0]);
+                    sCurTVShowSlot = FindFirstEmptyRecordMixTVShowSlot(tvShows[(i + j + 1) % numPlayers][0]);
                     if (sCurTVShowSlot != -1
-                        && TryMixTVShow(&tvShows[(i + j + 1) % sTVShowMixingNumPlayers][0], &tvShows[i][0], (i + j + 1) % sTVShowMixingNumPlayers) == 1)
+                        && TryMixTVShow(&tvShows[(i + j + 1) % numPlayers][0], &tvShows[i][0], (i + j + 1) % numPlayers) == 1)
                         break;
                 }
-                if (j == sTVShowMixingNumPlayers - 1)
+                if (j == numPlayers - 1)
                     DeleteTVShowInArrayByIdx(tvShows[i][0], sTVShowMixingCurSlot);
             }
         }
@@ -3841,25 +3833,25 @@ void ReceivePokeNewsData(void *src, u32 size, u8 playersLinkId)
 static void SetMixedPokeNews(PokeNews player1[POKE_NEWS_COUNT], PokeNews player2[POKE_NEWS_COUNT], PokeNews player3[POKE_NEWS_COUNT], PokeNews player4[POKE_NEWS_COUNT])
 {
     u8 i, j, k;
+    u8 numPlayers = GetLinkPlayerCount();
     PokeNews **pokeNews[MAX_LINK_PLAYERS];
 
     pokeNews[0] = &player1;
     pokeNews[1] = &player2;
     pokeNews[2] = &player3;
     pokeNews[3] = &player4;
-    sTVShowNewsMixingNumPlayers = GetLinkPlayerCount();
     for (i = 0; i < POKE_NEWS_COUNT; i++)
     {
-        for (j = 0; j < sTVShowNewsMixingNumPlayers; j++)
+        for (j = 0; j < numPlayers; j++)
         {
             sTVShowMixingCurSlot = GetPokeNewsSlotIfActive(*pokeNews[j], i);
             if (sTVShowMixingCurSlot != -1)
             {
-                for (k = 0; k < sTVShowNewsMixingNumPlayers - 1; k++)
+                for (k = 0; k < numPlayers - 1; k++)
                 {
-                    sCurTVShowSlot = GetFirstEmptyPokeNewsSlot(*pokeNews[(j + k + 1) % sTVShowNewsMixingNumPlayers]);
+                    sCurTVShowSlot = GetFirstEmptyPokeNewsSlot(*pokeNews[(j + k + 1) % numPlayers]);
                     if (sCurTVShowSlot != -1)
-                        InitTryMixPokeNewsShow(pokeNews[(j + k + 1) % sTVShowNewsMixingNumPlayers], pokeNews[j]);
+                        InitTryMixPokeNewsShow(pokeNews[(j + k + 1) % numPlayers], pokeNews[j]);
                 }
             }
         }
@@ -6796,3 +6788,10 @@ void ResetTVShowState(void)
 {
     sTVShowState = 0;
 }
+
+#if TESTING
+u8 TV_TestGetShowState(void)
+{
+    return sTVShowState;
+}
+#endif

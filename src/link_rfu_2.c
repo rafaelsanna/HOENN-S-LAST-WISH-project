@@ -62,21 +62,17 @@ struct SioInfo
     u8 filler[92];
 };
 
-// Struct is mostly empty, presumably because usage of
-// its fields was largely removed before release
+// Runtime-only diagnostics; unused legacy padding is not transmitted or saved.
 struct RfuDebug
 {
-    u8 unused0[6];
     u16 recvCount;
-    u8 unused1[6];
-    vu8 unkFlag;
-    u8 childJoinCount;
-    u8 unused2[84];
     u16 blockSendFailures;
-    u8 unused3[29];
+    u8 childJoinCount;
     u8 blockSendTime;
-    u8 unused4[88];
+    u8 padding[2];
 };
+
+STATIC_ASSERT(sizeof(struct RfuDebug) == 8, RfuDebugContainsOnlyLiveCounters);
 
 COMMON_DATA u32 gRfuAPIBuffer[RFU_API_BUFF_SIZE_RAM / 4] = {0};
 COMMON_DATA struct RfuManager gRfu = {0};
@@ -879,7 +875,6 @@ static bool32 RfuMain2_Parent(void)
             CallRfuFunc();
             if (gRfu.nextChildBits && !gRfu.stopNewConnections)
             {
-                sRfuDebug.unkFlag = FALSE;
                 rfu_clearSlot(TYPE_UNI_SEND | TYPE_UNI_RECV, gRfu.parentSendSlot);
                 for (i = 0; i < RFU_CHILD_MAX; i++)
                 {

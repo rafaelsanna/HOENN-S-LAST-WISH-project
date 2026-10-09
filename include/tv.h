@@ -8,6 +8,7 @@ void TryPutBreakingNewsOnAir(void);
 void TryPutBattleSeminarOnAir(u16 foeSpecies, u16 species, u8 moveIndex, const u16 *movePtr, u16 betterMove);
 void TryPutFrontierTVShowOnAir(u16 winStreak, u8 facilityAndMode);
 void DoTVShow(void);
+void ResetTVShowState(void);
 void DoTVShowInSearchOfTrainers(void);
 void TryPutTreasureInvestigatorsOnAir(void);
 void TryPutLotteryWinnerReportOnAir(void);
@@ -61,5 +62,9 @@ void ResetGabbyAndTy(void);
 u8 CheckForPlayersHouseNews(void);
 bool8 IsGabbyAndTyShowOnTheAir(void);
 void TryPutTrainerFanClubOnAir(void);
+
+#if TESTING
+u8 TV_TestGetShowState(void);
+#endif
 
 #endif //GUARD_TV_H
