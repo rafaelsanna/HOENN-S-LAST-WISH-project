@@ -1153,7 +1153,7 @@ static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
 
     stringPtr = StringCopy(line3, Randomizer_FullWildEnabled() ? sText_RandomWildsFull
         : Randomizer_WildEnabled() ? sText_RandomWildsOn : sText_RandomWildsOff);
-    StringCopy(stringPtr, FlagGet(RANDOMIZER_FLAG_TRAINER_MON) ? sText_RandomTrainersOn : sText_RandomTrainersOff);
+    StringCopy(stringPtr, Randomizer_TrainerEnabled() ? sText_RandomTrainersOn : sText_RandomTrainersOff);
 
     FillWindowPixelBuffer(0, PIXEL_FILL(0));
     PutWindowTilemap(0);

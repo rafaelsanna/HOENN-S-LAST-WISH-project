@@ -2169,7 +2169,13 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 SetMonData(&party[i], MON_DATA_SPDEF_EV, &(partyData[monIndex].ev[4]));
                 SetMonData(&party[i], MON_DATA_SPEED_EV, &(partyData[monIndex].ev[5]));
             }
-            if (partyData[monIndex].ability != ABILITY_NONE)
+            if (Randomizer_TrainerEnabled() && randomizedSpecies != originalSpecies)
+            {
+                // CreateMon already selected a valid ability for the new
+                // species; do not inherit an absent ability slot from the old one.
+                abilityNum = GetMonData(&party[i], MON_DATA_ABILITY_NUM);
+            }
+            else if (partyData[monIndex].ability != ABILITY_NONE)
             {
                 const struct SpeciesInfo *speciesInfo = &gSpeciesInfo[partyData[monIndex].species];
                 u32 maxAbilityNum = ARRAY_COUNT(speciesInfo->abilities);

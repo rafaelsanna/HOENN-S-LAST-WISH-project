@@ -455,7 +455,8 @@ static void EnforceHardNpcTeamsRules(void)
     FlagClear(FLAG_ALL_ABILITIES);
     Randomizer_SetWildModes(FALSE, FALSE);
     Randomizer_SetChaosMode(FALSE);
-    FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
+    Randomizer_SetChaosTrainersMode(FALSE);
+    Randomizer_SetTrainerMode(FALSE);
 }
 
 static void SavePhysicalSpecialSplitOption(void)
@@ -562,7 +563,7 @@ static const u8 sText_Desc_TableRandomLocked[]  = _("Disable FULL RANDOM first.\
 static const u8 sText_Desc_FullRandomLocked[]   = _("Disable RANDOM POKéMON first.\nThis mode rerolls every encounter.");
 static const u8 sText_Desc_RandomizerHardLocked[] = _("Randomizers are locked OFF\nwhile HARD mode is selected.");
 static const u8 sText_Desc_RandomizerTOff[]     = _("Trainer teams appear normally.");
-static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.");
+static const u8 sText_Desc_RandomizerTOn[]      = _("Trainer POKéMON are randomized.\nE4: 500+ BST; Champion: 550+.");
 static const u8 sText_Desc_PhysicalSpecialSplitOff[] = _("Use the old type-based\nphysical/special split.");
 static const u8 sText_Desc_PhysicalSpecialSplitOn[]  = _("Use modern physical/special\nsplit by move.");
 static const u8 sText_Desc_PhysicalSpecialSplitHardLocked[] = _("Physical/special split is\nlocked ON in HARD mode.");
@@ -1220,7 +1221,7 @@ void CB2_InitOptionMenu(void)
     sOptions->sel_difficulty[MENUITEM_DIF_NUZLOCKE]       = gSaveBlock2Ptr->optionsNuzlocke;
     sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E]   = FlagGet(RANDOMIZER_FLAG_WILD_MON);
     sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]    = Randomizer_FullWildEnabled() && !Randomizer_ChaosEnabled();
-    sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
+    sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]   = Randomizer_TrainerEnabled() && !Randomizer_ChaosTrainersEnabled();
     sOptions->sel_difficulty[MENUITEM_DIF_PHYSICAL_SPECIAL_SPLIT] = IsPhysicalSpecialSplitEnabled();
     sOptions->sel_difficulty[MENUITEM_DIF_ALL_ABILITIES]  = FlagGet(FLAG_ALL_ABILITIES);
     sOptions->sel_difficulty[MENUITEM_DIF_DEBUGMENU]      = gSaveBlock2Ptr->optionsDebugMenu;
@@ -1520,10 +1521,7 @@ static void Task_OptionMenuSave(u8 taskId)
     Randomizer_SetWildModes(sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_E],
         sOptions->sel_difficulty[MENUITEM_DIF_FULL_RANDOM]);
 
-    if (sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T])
-        FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
-    else
-        FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
+    Randomizer_SetTrainerMode(sOptions->sel_difficulty[MENUITEM_DIF_RANDOMIZER_T]);
 
     SavePhysicalSpecialSplitOption();
 

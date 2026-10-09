@@ -1,6 +1,8 @@
 # Full Chaos Random
 
-Enable or disable **Full Chaos Random** in the Wish/Debug Menu's **Utilities**.
+Open **Full Chaos Random…** in the Wish/Debug Menu's **Utilities** to read a
+short description and toggle ON/OFF. **Chaos Trainers…**, immediately below it,
+has its own description and toggle. Use **Back** or B to return to Utilities.
 The existing regional **FULL RANDOM** in Configuration remains a separate
 mode. Enabling a different wild randomizer replaces Chaos; disabling Chaos
 returns to ordinary encounters. Saving unrelated Configuration options does
@@ -10,7 +12,34 @@ Chaos rerolls the same wild encounter paths as Full Random: ordinary land,
 Surf/fishing, outbreaks, scripted single/double battles, roamers, and resolved
 Frontier wild encounters. Encounter levels and scripted held items remain
 unchanged. The three starter choices are distinct and repeatable per save.
-It does not enable trainer randomization or randomize ordinary gifts.
+It does not automatically enable trainer randomization or randomize ordinary gifts.
+
+## Chaos Trainers
+
+**Chaos Trainers** expands the existing trainer randomizer to exactly the same
+full Chaos roster described below, including legends and completed Wish/shadow
+Pokemon. It does not apply the regional species-mode or common-legend filters.
+The existing per-save, trainer-ID and party-slot seed remains deterministic;
+wild encounter RNG does not reroll trainer teams.
+
+League battles, including their alternate singles/doubles IDs, have minimum
+base-stat totals: **500 for each Elite Four member**, **550 for the Champion**.
+Both cutoffs are inclusive and use the actual six stats in this project.
+The same rule applies to **Chaos Trainers and the regional RANDOM TRAINERS**
+option; each keeps its own roster and existing legendary/mode restrictions.
+Other trainers, earlier encounters with those characters, wild encounters
+and starters keep their usual unrestricted-BST pools. Hard Mode still disables
+both randomizers. Filtering scans the existing ROM-only rosters, without
+duplicating the pools or adding an EWRAM cache.
+
+The original team size, levels, items, IVs/EVs and battle setup are retained.
+Changed species receive their own level-up moves and a valid native ability.
+The existing trainer hooks cover regular and two-opponent trainer parties,
+not Frontier/e-Reader/Trainer Hill special facility parties.
+
+Wild Chaos and Chaos Trainers can be enabled together or separately in Normal.
+For each encounter category, enabling the regional Configuration randomizer
+replaces its Chaos counterpart. Saving unrelated options leaves Chaos enabled.
 
 The current roster contains **1,012** enabled entries: one normal/base species
 identity per national dex number across all generations, plus stable Alolan,
@@ -58,7 +87,7 @@ Arboliva is not excluded: its completed Pokemon is now Vesperain.
 
 ## Hard Mode and saves
 
-Hard Mode blocks activation with a message. Selecting Hard clears Chaos and
+Hard Mode blocks activation of either Chaos mode with a message. Selecting Hard clears both Chaos modes and
 the existing randomizer flags; returning to Normal does not re-enable them.
 Runtime checks also reject stale flags in a Hard save.
 
@@ -66,6 +95,8 @@ Chaos uses `FLAG_RANDOMIZER_FULL_CHAOS`, an alias for the previously unused
 `FLAG_UNUSED_0x17FC` bit in the existing custom flag bank. No save structure,
 species ID, registry ID or other released bit position was changed. Existing
 saves default to Chaos OFF.
+Chaos Trainers uses the previously unused `FLAG_UNUSED_0x17FE` bit via
+`FLAG_RANDOMIZER_CHAOS_TRAINERS`, also without changing the save layout.
 
 ## Checks
 
@@ -76,6 +107,7 @@ make -j8 TEST=1 'TEST_SRCS=test/test_test_runner.c test/test_runner.c test/test_
 
 Tests cover filler/alternate-form exclusions, native and custom Pokemon,
 conditional-form exclusions, the full sorted pool, wild/scripted encounters,
-starter repeatability, mode transitions and Hard enforcement. The existing
+starter repeatability, actual single/two-opponent trainer parties, move/ability
+validity, description sizes, independent mode transitions and Hard enforcement. The existing
 regional randomizer and prior species/prop regressions can also be run with
 the same source list and `TESTS=''`.

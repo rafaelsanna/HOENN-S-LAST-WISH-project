@@ -9,6 +9,11 @@ const struct Trainer* GetDebugAiTrainer(void);
 
 #if TESTING
 const u8 *Debug_TestChaosLabel(bool8 enabled);
+const u8 *Debug_TestChaosTrainersLabel(bool8 enabled);
+const u8 *Debug_TestChaosDescription(bool8 trainers);
+void Debug_TestDrawChaosDescription(u8 windowId, bool8 trainers);
+bool32 Debug_TestChaosSubmenus(void);
+const u8 *Debug_TestChaosTrainersHardMessage(void);
 const u8 *Debug_TestChaosHardMessage(void);
 u32 Debug_TestUtilitiesCount(void);
 #endif

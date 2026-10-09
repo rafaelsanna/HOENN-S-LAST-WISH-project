@@ -12,12 +12,16 @@
 #include "constants/flags.h"
 #include "constants/vars.h"
 #include "constants/species.h"
+#include "constants/opponents.h"
 
 #ifndef EVOS_PER_MON
 #define EVOS_PER_MON 5
 #endif
 
 #if RANDOMIZER_AVAILABLE == TRUE
+
+#define RANDOMIZER_ELITE_FOUR_MIN_BST 500
+#define RANDOMIZER_CHAMPION_MIN_BST 550
 
 static const u16 sHoennDexPool[] =
 {
@@ -650,7 +654,38 @@ void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom)
 
 bool8 Randomizer_TrainerEnabled(void)
 {
-    return RandomizersAllowed() && FlagGet(RANDOMIZER_FLAG_TRAINER_MON);
+    return RandomizersAllowed()
+        && (FlagGet(RANDOMIZER_FLAG_TRAINER_MON) || FlagGet(FLAG_RANDOMIZER_CHAOS_TRAINERS));
+}
+
+bool8 Randomizer_ChaosTrainersEnabled(void)
+{
+    return RandomizersAllowed()
+        && !FlagGet(RANDOMIZER_FLAG_TRAINER_MON)
+        && FlagGet(FLAG_RANDOMIZER_CHAOS_TRAINERS);
+}
+
+void Randomizer_SetChaosTrainersMode(bool8 enabled)
+{
+    if (enabled && RandomizersAllowed())
+    {
+        Randomizer_SetTrainerMode(FALSE);
+        FlagSet(FLAG_RANDOMIZER_CHAOS_TRAINERS);
+    }
+    else
+        FlagClear(FLAG_RANDOMIZER_CHAOS_TRAINERS);
+}
+
+void Randomizer_SetTrainerMode(bool8 enabled)
+{
+    // An unrelated Options save must preserve the independent Chaos mode.
+    // Explicitly enabling regional trainers replaces Chaos, as for wilds.
+    if (!RandomizersAllowed() || enabled)
+        FlagClear(FLAG_RANDOMIZER_CHAOS_TRAINERS);
+    if (enabled && RandomizersAllowed())
+        FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
+    else
+        FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
 }
 
 u32 Randomizer_GetSeed(void)
@@ -678,10 +713,8 @@ void Randomizer_Init(bool8 randomizeWild, bool8 randomizeTrainers, enum Randomiz
     Randomizer_SetChaosMode(FALSE);
     Randomizer_SetWildModes(randomizeWild, FALSE);
 
-    if (randomizeTrainers && RandomizersAllowed())
-        FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
-    else
-        FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
+    Randomizer_SetChaosTrainersMode(FALSE);
+    Randomizer_SetTrainerMode(randomizeTrainers);
 
     VarSet(RANDOMIZER_VAR_SPECIES_MODE, (u16)mode);
 }
@@ -733,12 +766,13 @@ static u8 Rz_GetEvolutionStage(u16 species)
 
 // Core de randomização
 static u16 Rz_CountValidFromPool(enum RandomizerSpeciesMode mode, u16 originalSpecies,
-                                  bool8 isOriginalLegendary, u16 originalBST, u8 originalStage)
+                                  bool8 isOriginalLegendary, u16 originalBST, u8 originalStage, u16 minimumBST)
 {
     u16 count = 0;
     for (u16 i = 0; i < HOENN_POOL_SIZE; i++)
     {
         u16 s = sHoennDexPool[i];
+        if (minimumBST != 0 && (!PokemonContent_CanGive(s) || Rz_GetBST(s) < minimumBST)) continue;
         if (mode == MON_RANDOM_NO_LEGEND && Rz_IsLegendary(s)) continue;
 #if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
         if (!isOriginalLegendary && Rz_IsLegendary(s)) continue;
@@ -749,12 +783,13 @@ static u16 Rz_CountValidFromPool(enum RandomizerSpeciesMode mode, u16 originalSp
 }
 
 static u16 Rz_GetNthFromPool(enum RandomizerSpeciesMode mode, u16 originalSpecies,
-                              bool8 isOriginalLegendary, u16 originalBST, u8 originalStage, u16 n)
+                              bool8 isOriginalLegendary, u16 originalBST, u8 originalStage, u16 minimumBST, u16 n)
 {
     u16 idx = 0;
     for (u16 i = 0; i < HOENN_POOL_SIZE; i++)
     {
         u16 s = sHoennDexPool[i];
+        if (minimumBST != 0 && (!PokemonContent_CanGive(s) || Rz_GetBST(s) < minimumBST)) continue;
         if (mode == MON_RANDOM_NO_LEGEND && Rz_IsLegendary(s)) continue;
 #if RANDOMIZER_EXCLUDE_LEGENDS_FROM_COMMON
         if (!isOriginalLegendary && Rz_IsLegendary(s)) continue;
@@ -765,23 +800,65 @@ static u16 Rz_GetNthFromPool(enum RandomizerSpeciesMode mode, u16 originalSpecie
     return originalSpecies;
 }
 
+static u16 Rz_GetTrainerMinimumBST(u16 trainerId)
+{
+    // Exact League battle IDs: do not restrict earlier encounters with the
+    // same characters (e.g. Tsubaki in Rusturf Grove), or other trainers.
+    switch (trainerId)
+    {
+    case TRAINER_SIDNEY:
+    case TRAINER_TSUBAKI_HARD_DOUBLES:
+    case TRAINER_TSUBAKI_HARD_SINGLES:
+    case TRAINER_PHOEBE:
+    case TRAINER_PHOEBE_HARD_DOUBLES:
+    case TRAINER_PHOEBE_HARD_SINGLES:
+    case TRAINER_GLACIA:
+    case TRAINER_SARK_HARD_DOUBLES:
+    case TRAINER_SARK_HARD_SINGLES:
+    case TRAINER_DRAKE:
+    case TRAINER_DAEMON_HARD_DOUBLES:
+    case TRAINER_DAEMON_HARD_SINGLES:
+        return RANDOMIZER_ELITE_FOUR_MIN_BST;
+    case TRAINER_WALLACE:
+    case TRAINER_STELLA_HARD_DOUBLES_TROOM:
+    case TRAINER_STELLA_HARD_HO_TAILWIND:
+    case TRAINER_STELLA_HARD_BALANCE_HAZZARDS:
+        return RANDOMIZER_CHAMPION_MIN_BST;
+    default:
+        return 0;
+    }
+}
+
 u16 Randomizer_GetSpecies(u16 originalSpecies, enum RandomizerContext context, u32 contextKey)
 {
     if (originalSpecies == SPECIES_NONE || originalSpecies >= NUM_SPECIES)
         return originalSpecies;
+
+    u16 minimumBST = context == RZ_CTX_TRAINER_MON ? Rz_GetTrainerMinimumBST(contextKey >> 8) : 0;
+    if (context == RZ_CTX_TRAINER_MON && Randomizer_ChaosTrainersEnabled())
+    {
+        // Reuse the existing per-trainer/per-slot deterministic seed, but
+        // draw from the same roster as wild Chaos. Only the League uses a
+        // minimum total of base stats, calculated from this project's data.
+        u16 count = PokemonContent_ChaosCountWithMinBST(minimumBST);
+        if (count == 0)
+            return originalSpecies;
+        u32 state = Rz_MixSeed(Randomizer_GetSeed(), (u32)context ^ contextKey ^ (u32)originalSpecies);
+        return PokemonContent_ChaosSpeciesAtWithMinBST(Rz_Next(&state, count), minimumBST);
+    }
 
     enum RandomizerSpeciesMode mode = Randomizer_GetSpeciesMode();
     bool8 isLegendary = Rz_IsLegendary(originalSpecies);
     u16 originalBST = (mode == MON_RANDOM_BST) ? Rz_GetBST(originalSpecies) : 0;
     u8 originalStage = (mode == MON_EVOLUTION_STAGE) ? Rz_GetEvolutionStage(originalSpecies) : 0;
 
-    u16 poolSize = Rz_CountValidFromPool(mode, originalSpecies, isLegendary, originalBST, originalStage);
+    u16 poolSize = Rz_CountValidFromPool(mode, originalSpecies, isLegendary, originalBST, originalStage, minimumBST);
     if (poolSize == 0) return originalSpecies;
 
     u32 seed = Randomizer_GetSeed();
     u32 state = Rz_MixSeed(seed, (u32)context ^ contextKey ^ (u32)originalSpecies);
     u32 pick = Rz_Next(&state, poolSize);
-    return Rz_GetNthFromPool(mode, originalSpecies, isLegendary, originalBST, originalStage, (u16)pick);
+    return Rz_GetNthFromPool(mode, originalSpecies, isLegendary, originalBST, originalStage, minimumBST, (u16)pick);
 }
 
 // Hooks

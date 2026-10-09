@@ -218,7 +218,7 @@ enum DebugBattleEnvironment
 #define DEBUG_NUMBER_ICON_X 210
 #define DEBUG_NUMBER_ICON_Y 50
 
-#define DEBUG_MAX_MENU_ITEMS 21
+#define DEBUG_MAX_MENU_ITEMS 22
 #define DEBUG_MAX_SUB_MENU_LEVELS 4
 
 // *******************************
@@ -289,6 +289,10 @@ static void DebugAction_ToggleFlag(u8 taskId);
 static void DebugAction_Dev_QuickSetup(u8 taskId);
 static void DebugAction_Cheat_OpsAllMoves(u8 taskId);
 static void DebugAction_Util_FullChaosRandom(u8 taskId);
+static void DebugAction_Util_ChaosTrainers(u8 taskId);
+static void DebugAction_ReturnToParent(u8 taskId);
+static void Debug_PrintChaosDescription(u8 windowId, u32 itemId, u8 y);
+static const u8 *Debug_GetChaosDescription(const struct DebugMenuOption *items);
 
 static void DebugTask_HandleMenuInput_General(u8 taskId);
 
@@ -853,6 +857,20 @@ static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu[] =
     { NULL }
 };
 
+static const struct DebugMenuOption sDebugMenu_Actions_FullChaosRandom[] =
+{
+    { COMPOUND_STRING("Full Chaos Random: {STR_VAR_1}"), DebugAction_Util_FullChaosRandom },
+    { COMPOUND_STRING("Back"), DebugAction_ReturnToParent },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_ChaosTrainers[] =
+{
+    { COMPOUND_STRING("Chaos Trainers: {STR_VAR_1}"), DebugAction_Util_ChaosTrainers },
+    { COMPOUND_STRING("Back"), DebugAction_ReturnToParent },
+    { NULL }
+};
+
 static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
 {
     { COMPOUND_STRING("Fly to map…"),        DebugAction_Util_Fly },
@@ -869,7 +887,8 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Watch credits…"),     DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),        DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Learn All Moves: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
-    { COMPOUND_STRING("Full Chaos Random: {STR_VAR_1}"), DebugAction_Util_FullChaosRandom },
+    { COMPOUND_STRING("Full Chaos Random…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_FullChaosRandom },
+    { COMPOUND_STRING("Chaos Trainers…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_ChaosTrainers },
     { COMPOUND_STRING("Achievements…"),      DebugAction_Util_OpenAchievements },
     { COMPOUND_STRING("Test Ach Popup"),     DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
@@ -881,6 +900,20 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
 STATIC_ASSERT(ARRAY_COUNT(sDebugMenu_Actions_Utilities) - 1 <= DEBUG_MAX_MENU_ITEMS, UtilitiesFitDebugMenu);
 
 static const u8 sDebugText_FullChaosHardLocked[] = _("Full Chaos Random cannot be\nenabled in HARD mode.");
+static const u8 sDebugText_ChaosTrainersHardLocked[] = _("Chaos Trainers cannot be\nenabled in HARD mode.");
+static const u8 sDebugText_FullChaosDescription[] = _(
+    "Wild POKéMON + starters from\n"
+    "all generations, even legends.\n"
+    "No fillers or special forms.\n"
+    "Encounter levels stay the same.\n"
+    "Unavailable in HARD mode.");
+static const u8 sDebugText_ChaosTrainersDescription[] = _(
+    "Randomizes trainer POKéMON\n"
+    "using the full Chaos pool.\n"
+    "Team size, levels and items stay.\n"
+    "New species use level-up moves.\n"
+    "League BST: E4 500+, Champ 550+.\n"
+    "Unavailable in HARD mode.");
 
 static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
 {
@@ -1307,6 +1340,22 @@ static bool32 IsSubMenuAction(const void *action)
         || action == DebugAction_OpenSubMenuCreateFollowerNPC;
 }
 
+static const u8 *Debug_GetChaosDescription(const struct DebugMenuOption *items)
+{
+    if (items == sDebugMenu_Actions_FullChaosRandom)
+        return sDebugText_FullChaosDescription;
+    if (items == sDebugMenu_Actions_ChaosTrainers)
+        return sDebugText_ChaosTrainersDescription;
+    return NULL;
+}
+
+static void Debug_PrintChaosDescription(u8 windowId, u32 itemId, u8 y)
+{
+    if (itemId == 0)
+        AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT,
+            Debug_GetChaosDescription(Debug_GetCurrentCallbackMenu()), 8, 48, TEXT_SKIP_DRAW, NULL);
+}
+
 static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *items)
 {
     struct ListMenuTemplate menuTemplate = {0};
@@ -1325,6 +1374,8 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
     struct WindowTemplate windowTemplate = sDebugMenuWindowTemplateMain;
     if (items == sDebugMenu_Actions_Utilities)
         windowTemplate.width = 19; // Full mode name plus visible ON/OFF.
+    if (Debug_GetChaosDescription(items) != NULL)
+        windowTemplate.width = 26; // Short description below the toggle and Back.
     windowId = AddWindow(&windowTemplate);
     DrawStdWindowFrame(windowId, FALSE);
 
@@ -1343,6 +1394,8 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
                 StringCopy(gStringVar1, IsOpsAllMovesEnabled() ? sDebugText_On : sDebugText_Off);
             if (items[i].action == DebugAction_Util_FullChaosRandom)
                 StringCopy(gStringVar1, Randomizer_ChaosEnabled() ? sDebugText_On : sDebugText_Off);
+            if (items[i].action == DebugAction_Util_ChaosTrainers)
+                StringCopy(gStringVar1, Randomizer_ChaosTrainersEnabled() ? sDebugText_On : sDebugText_Off);
             StringExpandPlaceholders(gStringVar4, items[i].text);
             if (IsSubMenuAction(items[i].action))
                 StringAppend(gStringVar4, sDebugText_Arrow);
@@ -1355,6 +1408,8 @@ static void Debug_ShowMenu(DebugFunc HandleInput, const struct DebugMenuOption *
     // create list menu
     menuTemplate.items = sDebugMenuListData->listItems;
     menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
+    if (Debug_GetChaosDescription(items) != NULL)
+        menuTemplate.itemPrintFunc = Debug_PrintChaosDescription;
     menuTemplate.totalItems = totalItems;
     menuTemplate.maxShowed = DEBUG_MENU_HEIGHT_MAIN;
     menuTemplate.windowId = windowId;
@@ -1778,6 +1833,8 @@ static bool8 Debug_TryWrapListMenu(u8 taskId)
     menuTemplate.fontId = DEBUG_MENU_FONT;
     menuTemplate.cursorKind = 0;
 
+    if (Debug_GetChaosDescription(Debug_GetCurrentCallbackMenu()) != NULL)
+        menuTemplate.itemPrintFunc = Debug_PrintChaosDescription;
     gTasks[taskId].tMenuTaskId = ListMenuInit(&menuTemplate, targetScroll, targetRow);
     CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
     if (playJumpSe)
@@ -1788,16 +1845,15 @@ static bool8 Debug_TryWrapListMenu(u8 taskId)
 static void DebugTask_HandleMenuInput_General(u8 taskId)
 {
     const struct DebugMenuOption *options = Debug_GetCurrentCallbackMenu();
-    u32 input;
+    s32 input;
 
     if (Debug_TryWrapListMenu(taskId))
         return;
 
     input = ListMenu_ProcessInput(gTasks[taskId].tMenuTaskId);
-    struct DebugMenuOption option = options[input];
-
-    if (JOY_NEW(A_BUTTON))
+    if (JOY_NEW(A_BUTTON) && input >= 0 && input < Debug_GetCurrentMenuItemCount())
     {
+        struct DebugMenuOption option = options[input];
         PlaySE(SE_SELECT);
         if (option.action != NULL)
         {
@@ -1823,18 +1879,22 @@ static void DebugTask_HandleMenuInput_General(u8 taskId)
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (Debug_GetCurrentCallbackMenu() != NULL && Debug_RemoveCallbackMenu() != 0)
-        {
-            Debug_DestroyMenu(taskId);
-            if (sDebugMenuListData->listId != 0)
-                sDebugMenuListData->listId = 0;
-            Debug_ShowMenu(DebugTask_HandleMenuInput_General, NULL);
-        }
-        else
-        {
-            Debug_DestroyMenu_Full(taskId);
-            ScriptContext_Enable();
-        }
+        DebugAction_ReturnToParent(taskId);
+    }
+}
+
+static void DebugAction_ReturnToParent(u8 taskId)
+{
+    if (Debug_GetCurrentCallbackMenu() != NULL && Debug_RemoveCallbackMenu() != 0)
+    {
+        Debug_DestroyMenu(taskId);
+        sDebugMenuListData->listId = 0;
+        Debug_ShowMenu(DebugTask_HandleMenuInput_General, NULL);
+    }
+    else
+    {
+        Debug_DestroyMenu_Full(taskId);
+        ScriptContext_Enable();
     }
 }
 
@@ -2348,17 +2408,74 @@ static void DebugAction_Util_FullChaosRandom(u8 taskId)
     RedrawListMenu(gTasks[taskId].tMenuTaskId);
 }
 
+static void DebugAction_Util_ChaosTrainers(u8 taskId)
+{
+    if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
+    {
+        Randomizer_SetChaosTrainersMode(FALSE);
+        PlaySE(SE_FAILURE);
+        StringCopy(gStringVar4, sDebugText_ChaosTrainersHardLocked);
+        Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
+        return;
+    }
+
+    Randomizer_SetChaosTrainersMode(!Randomizer_ChaosTrainersEnabled());
+    const struct DebugMenuOption *items = Debug_GetCurrentCallbackMenu();
+    for (u32 i = 0; items[i].text != NULL; i++)
+    {
+        if (items[i].action == DebugAction_Util_ChaosTrainers)
+        {
+            StringCopy(gStringVar1, Randomizer_ChaosTrainersEnabled() ? sDebugText_On : sDebugText_Off);
+            StringExpandPlaceholders(gStringVar4, items[i].text);
+            StringCopy(&sDebugMenuListData->itemNames[i][0], gStringVar4);
+            sDebugMenuListData->listItems[i].name = &sDebugMenuListData->itemNames[i][0];
+            break;
+        }
+    }
+    RedrawListMenu(gTasks[taskId].tMenuTaskId);
+}
+
 #if TESTING
 const u8 *Debug_TestChaosLabel(bool8 enabled)
 {
-    for (u32 i = 0; sDebugMenu_Actions_Utilities[i].text != NULL; i++)
-        if (sDebugMenu_Actions_Utilities[i].action == DebugAction_Util_FullChaosRandom)
-        {
-            StringCopy(gStringVar1, enabled ? sDebugText_On : sDebugText_Off);
-            StringExpandPlaceholders(gStringVar4, sDebugMenu_Actions_Utilities[i].text);
-            return gStringVar4;
-        }
-    return NULL;
+    StringCopy(gStringVar1, enabled ? sDebugText_On : sDebugText_Off);
+    StringExpandPlaceholders(gStringVar4, sDebugMenu_Actions_FullChaosRandom[0].text);
+    return gStringVar4;
+}
+
+const u8 *Debug_TestChaosTrainersLabel(bool8 enabled)
+{
+    StringCopy(gStringVar1, enabled ? sDebugText_On : sDebugText_Off);
+    StringExpandPlaceholders(gStringVar4, sDebugMenu_Actions_ChaosTrainers[0].text);
+    return gStringVar4;
+}
+
+const u8 *Debug_TestChaosDescription(bool8 trainers)
+{
+    return Debug_GetChaosDescription(trainers ? sDebugMenu_Actions_ChaosTrainers : sDebugMenu_Actions_FullChaosRandom);
+}
+
+void Debug_TestDrawChaosDescription(u8 windowId, bool8 trainers)
+{
+    struct DebugMenuListData data = {0};
+    struct DebugMenuListData *previous = sDebugMenuListData;
+    data.subMenuItems[0] = trainers ? sDebugMenu_Actions_ChaosTrainers : sDebugMenu_Actions_FullChaosRandom;
+    sDebugMenuListData = &data;
+    Debug_PrintChaosDescription(windowId, 0, 1);
+    sDebugMenuListData = previous;
+}
+
+bool32 Debug_TestChaosSubmenus(void)
+{
+    return sDebugMenu_Actions_Utilities[14].action == DebugAction_OpenSubMenu
+        && sDebugMenu_Actions_Utilities[14].actionParams == sDebugMenu_Actions_FullChaosRandom
+        && sDebugMenu_Actions_Utilities[15].action == DebugAction_OpenSubMenu
+        && sDebugMenu_Actions_Utilities[15].actionParams == sDebugMenu_Actions_ChaosTrainers;
+}
+
+const u8 *Debug_TestChaosTrainersHardMessage(void)
+{
+    return sDebugText_ChaosTrainersHardLocked;
 }
 
 const u8 *Debug_TestChaosHardMessage(void)

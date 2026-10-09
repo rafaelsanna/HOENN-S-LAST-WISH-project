@@ -85,18 +85,39 @@ bool32 PokemonContent_IsChaosSpecies(u16 species)
     return FALSE;
 }
 
-u16 PokemonContent_ChaosCount(void)
+static bool32 ChaosSpeciesMeetsMinimumBST(u16 species, u16 minimumBST)
+{
+    if (!PokemonContent_CanGive(species))
+        return FALSE;
+    if (minimumBST == 0)
+        return TRUE;
+    const struct SpeciesInfo *info = &gSpeciesInfo[species];
+    return info->baseHP + info->baseAttack + info->baseDefense
+        + info->baseSpAttack + info->baseSpDefense + info->baseSpeed >= minimumBST;
+}
+
+u16 PokemonContent_ChaosCountWithMinBST(u16 minimumBST)
 {
     u16 count = 0;
     for (u32 i = 0; i < ARRAY_COUNT(sChaosPool); i++)
-        count += PokemonContent_CanGive(sChaosPool[i]);
+        count += ChaosSpeciesMeetsMinimumBST(sChaosPool[i], minimumBST);
     return count;
+}
+
+u16 PokemonContent_ChaosSpeciesAtWithMinBST(u16 index, u16 minimumBST)
+{
+    for (u32 i = 0; i < ARRAY_COUNT(sChaosPool); i++)
+        if (ChaosSpeciesMeetsMinimumBST(sChaosPool[i], minimumBST) && index-- == 0)
+            return sChaosPool[i];
+    return SPECIES_NONE;
+}
+
+u16 PokemonContent_ChaosCount(void)
+{
+    return PokemonContent_ChaosCountWithMinBST(0);
 }
 
 u16 PokemonContent_ChaosSpeciesAt(u16 index)
 {
-    for (u32 i = 0; i < ARRAY_COUNT(sChaosPool); i++)
-        if (PokemonContent_CanGive(sChaosPool[i]) && index-- == 0)
-            return sChaosPool[i];
-    return SPECIES_NONE;
+    return PokemonContent_ChaosSpeciesAtWithMinBST(index, 0);
 }
