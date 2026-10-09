@@ -521,7 +521,7 @@ FieryPath_Text_FisherGotBurned:
 # 261 "data/maps/FieryPath/scripts.pory"
 	.string "But my rod melted in seconds.\n"
 # 262 "data/maps/FieryPath/scripts.pory"
-	.string "Poof. Gone. Just like that.\p"
+	.string "Poof. Gone, just like that.\p"
 # 263 "data/maps/FieryPath/scripts.pory"
 	.string "Now I'm burned, my rod's destroyed,\n"
 # 264 "data/maps/FieryPath/scripts.pory"

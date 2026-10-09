@@ -1581,12 +1581,12 @@ Music: Interviewer
 Double Battle: Yes
 AI: Check Bad Move
 
-Magnemite
-Level: 40
+Magneton
+Level: 35
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Whismur
-Level: 40
+Loudred
+Level: 35
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_GABBY_AND_TY_2 ===
@@ -4029,8 +4029,8 @@ Music: Intense
 Double Battle: No
 AI: Basic Trainer / HP Aware
 
-Machop
-Level: 19
+Machamp
+Level: 30
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_ATSUSHI ===
@@ -4740,12 +4740,12 @@ Music: Suspicious
 Double Battle: Yes
 AI: Basic Trainer
 
-Dustox
-Level: 22  
+Dustox @ Shed Shell
+Level: 25
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Beautifly
-Level: 22
+Beautifly @ Shed Shell
+Level: 25
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 === TRAINER_JEFFREY_2 ===
@@ -7360,13 +7360,13 @@ Music: Twins
 Double Battle: Yes
 AI: Basic Trainer
 
-Nidorina
-Level: 21
+Nidorina @ Sitrus Berry
+Level: 25
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 
-Nidorino
-Level: 21
+Nidorino @ Poison Barb
+Level: 25
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 
@@ -9423,11 +9423,11 @@ Double Battle: No
 AI: Basic Trainer
 
 Doduo
-Level: 20
+Level: 25
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
-Machop
-Level: 20
+Machoke
+Level: 25
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_DYLAN_2 ===
@@ -9492,11 +9492,11 @@ Double Battle: No
 AI: Basic Trainer
 
 Spearow
-Level: 23
+Level: 25
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
-Wingull
-Level: 23
+Pelipper
+Level: 25
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
 === TRAINER_MARIA_2 ===
@@ -12631,27 +12631,27 @@ Double Battle: No
 AI: Basic Trainer
 
 Whismur
-Level: 20
+Level: 23
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Jigglypuff
-Level: 20
+Level: 23
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Oddish
-Level: 20
+Level: 23
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Lotad
-Level: 20
+Level: 23
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Kadabra
-Level: 20   
+Level: 23
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 Slugma
-Level: 20
+Level: 23
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_DAVIS ===
@@ -12834,27 +12834,27 @@ Double Battle: No
 AI: Basic Trainer
 
 Jigglypuff
-Level: 20
+Level: 23
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
 Shroomish
-Level: 20
+Level: 23
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
 Marill
-Level: 20
+Level: 23
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
 Roselia
-Level: 20
+Level: 23
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
 Oddish
-Level: 20
+Level: 23
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
 Wurmple
-Level: 20
+Level: 23
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
 === TRAINER_HALLE ===
@@ -17128,8 +17128,8 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Doduo
-Level: 25
+Dodrio
+Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BRANDI ===
@@ -17141,8 +17141,8 @@ Music: Intense
 Double Battle: No
 AI: Basic Trainer
 
-Ralts
-Level: 25
+Kirlia
+Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_AISHA ===
@@ -17155,7 +17155,7 @@ Double Battle: No
 AI: Basic Trainer
 
 Meditite
-Level: 25
+Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_MAKAYLA ===

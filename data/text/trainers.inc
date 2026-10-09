@@ -733,13 +733,13 @@ FieryPath_Text_EvaPostBattle:
 
 FieryPath_Text_JaimeIntro:
 	.string "Hey! Don't move!\p"
-	.string "That pose, that light hitting the\n"
-	.string "lava… it's perfect!\p"
+	.string "That pose with that light hitting\n"
+	.string "the lava… it's perfect!\p"
 	.string "I'm professional photographer chasing\n"
 	.string "shots no one else dares to take!\p"
 	.string "Only solidified lava formations\n"
-	.string "like these can create scenery\n"
-	.string "this unreal!\p"
+	.string "like these can create scenery\l"
+	.string "this captivating!\p"
 	.string "But a great photo needs action!\n"
 	.string "Battle me, this will be legendary!$"
 

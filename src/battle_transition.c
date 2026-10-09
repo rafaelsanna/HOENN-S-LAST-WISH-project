@@ -1025,6 +1025,12 @@ bool8 IsBattleTransitionDone(void)
     u8 taskId = FindTaskIdByFunc(Task_BattleTransition);
     if (gTasks[taskId].tTransitionDone)
     {
+        // Keep the final palette/OAM upload, but retire callbacks that use
+        // transition data before freeing it. Replace VBlank before stopping
+        // DMA0 so an interrupt cannot restart the old scanline transfer.
+        SetVBlankCallback(VBlankCB_BattleTransition);
+        SetHBlankCallback(NULL);
+        DmaStop(0);
         DestroyTask(taskId);
         FREE_AND_SET_NULL(sTransitionData);
         return TRUE;

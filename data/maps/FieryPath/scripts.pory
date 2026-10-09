@@ -259,7 +259,7 @@ FieryPath_Text_FisherGotBurned:
 	.string "I just wanted to catch one…\n"
 	.string "Just ONE! IMAGINE IT!\p"
 	.string "But my rod melted in seconds.\n"
-	.string "Poof. Gone. Just like that.\p"
+	.string "Poof. Gone, just like that.\p"
 	.string "Now I'm burned, my rod's destroyed,\n"
 	.string "and I've got no story to tell…\p"
 	.string "Guess I'll just sit here and\n"
