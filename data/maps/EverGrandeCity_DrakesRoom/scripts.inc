@@ -167,7 +167,7 @@ EverGrandeCity_DrakesRoom_Text_IntroSpeech:
 # 84 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"
     .string "Someone my age making it this far… \n"
 # 85 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"
-    .string "Damn, that's amazing...\p"
+    .string "Damn, that's amazing…\p"
 # 86 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"
     .string "Surrounded by old folks here with their\n"
 # 87 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"
@@ -209,7 +209,7 @@ EverGrandeCity_DrakesRoom_Text_Defeat:
 # 105 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"
 	.string "I need to battle you again right now!\n"
 # 106 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"
-	.string "Oh, wait… I'm out of Pokémon! Dammit!$"
+	.string "Oh, wait… I'm out of POKéMON! Dammit!$"
 # 107 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"
 
 # 108 "data/maps/EverGrandeCity_DrakesRoom/scripts.pory"

@@ -253,20 +253,20 @@ FieryPath_Movement_MagmaMExitRight:
 
 FieryPath_Text_FisherGotBurned:
 	.string "My fishing buddies warned me:\n"
-	.string "Don't go fishing in the lava...\n"
+	.string "Don't go fishing in the lava…\n"
 	.string "But I heard SHARPEDO swim in these\n"
 	.string "magma rivers! LAVA SHARKS!\p"
-	.string "I just wanted to catch one...\n"
+	.string "I just wanted to catch one…\n"
 	.string "Just ONE! IMAGINE IT!\p"
 	.string "But my rod melted in seconds.\n"
 	.string "Poof. Gone. Just like that.\p"
 	.string "Now I'm burned, my rod's destroyed,\n"
-	.string "and I've got no story to tell...\p"
+	.string "and I've got no story to tell…\p"
 	.string "Guess I'll just sit here and\n"
-	.string "watch the lava flow...$"
+	.string "watch the lava flow…$"
 
 FieryPath_Text_SolanaIntro:
-	.string "Wait...do you hear that rhythm?\p"
+	.string "Wait…do you hear that rhythm?\p"
 	.string "I play every AMATERASU song at full\n"
 	.string "volume! I'm her biggest fan!\p"
 	.string "Eva says her music is fake. She's just\n"
@@ -276,7 +276,7 @@ FieryPath_Text_SolanaIntro:
 
 FieryPath_Text_SolanaDefeated:
 	.string "Encore!\n"
-	.string "...Right after I tune up.$"
+	.string "…Right after I tune up.$"
 
 FieryPath_Text_SolanaPostBattle:
 	.string "AMATERASU's voice could make even\n"
@@ -285,23 +285,23 @@ FieryPath_Text_SolanaPostBattle:
 	.string "be in the front row forever!$"
 
 FieryPath_Text_MagmaIntro_F:
-    .string "Ugh... ALL day in this heat,\n"
+    .string "Ugh… ALL day in this heat,\n"
     .string "and we found absolutely nothing.$"
 
 FieryPath_Text_MagmaIntro_M:
-    .string "Hold on... that outfit.\n"
+    .string "Hold on… that outfit.\n"
     .string "You're that kid who wants to\l"
     .string "play hero, aren't you?$"
 
 FieryPath_Text_MagmaChallenge:
     .string "You've got some nerve, kid.\p"
-    .string "Fine - both of us, right now!\n"
+    .string "Fine, both of us, right now!\n"
     .string "Let's see how tough you really are!$"
 
 FieryPath_Text_MagmaAfterLoss:
-    .string "...Damn. You're actually strong.\p"
+    .string "…Damn. You're actually strong.\p"
     .string "Whatever. We found nothing useful\n"
     .string "in this cave anyway.\p"
     .string "Next time we WON'T hold back.\n"
-    .string "So frustrating...$"
+    .string "So frustrating…$"
 `

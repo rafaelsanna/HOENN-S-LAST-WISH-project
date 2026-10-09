@@ -633,7 +633,7 @@ Route110_TrickHouseEnd_Text_DefeatedMePreferWhichTent:
 # 317 "data/maps/Route110_TrickHouseEnd/scripts.pory"
 	.string "this keepsake!\p"
 # 318 "data/maps/Route110_TrickHouseEnd/scripts.pory"
-	.string "Actually there are two--\n"
+	.string "Actually there are two,\n"
 # 319 "data/maps/Route110_TrickHouseEnd/scripts.pory"
 	.string "a RED TENT and a BLUE TENT.\l"
 # 320 "data/maps/Route110_TrickHouseEnd/scripts.pory"

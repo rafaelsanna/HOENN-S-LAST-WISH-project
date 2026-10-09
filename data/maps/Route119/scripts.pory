@@ -512,7 +512,7 @@ Route119_Text_GonChallenge:
 	.string "My POKéMON and I train hard.\n"
 	.string "We punch trees until they fall!\p"
 	.string "Have we knocked one down yet?\n"
-	.string "...Well, not quite.\p"
+	.string "…Well, not quite.\p"
 	.string "But our hands are definitely\n"
 	.string "getting nice and callused!\p"
 	.string "If you think you're so clever,\n"
@@ -520,8 +520,8 @@ Route119_Text_GonChallenge:
 	.string "Think you can beat me?$"
 
 Route119_Text_GonDefeat:
-	.string "Oof... So much for\n"
-	.string "all that fist training...$"
+	.string "Oof… So much for\n"
+	.string "all that fist training…$"
 
 Route119_Text_GonReward:
 	.string "All right, you got me!\n"

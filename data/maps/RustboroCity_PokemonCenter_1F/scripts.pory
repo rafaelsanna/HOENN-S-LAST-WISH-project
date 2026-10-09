@@ -34,13 +34,13 @@ RustboroCity_PokemonCenter_1F_Text_PokemonHavePersonalities:
 	.string "research division.\p"
 	.string "After the comet, we started detecting\n"
 	.string "energy signatures that don't match\l"
-	.string "any known Pokémon.\p"
+	.string "any known POKéMON.\p"
 	.string "Something is bleeding through from\n"
 	.string "somewhere. The question is where.$"
 
 RustboroCity_PokemonCenter_1F_Text_MaleAndFemalePokemon:
 	.string "My grandfather helped found\n"
-	.string "the Pokémon Trainer's School here.\p"
+	.string "the POKéMON Trainer's School here.\p"
 	.string "He used to say that Rustboro would\n"
 	.string "outlast any disaster, but there\l"
 	.string "have been so many earthquakes lately.\p"

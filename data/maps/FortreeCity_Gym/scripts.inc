@@ -559,7 +559,7 @@ FortreeCity_Gym_Text_HumbertoPostBattle:
 # 280 "data/maps/FortreeCity_Gym/scripts.pory"
 FortreeCity_Gym_Text_DariusIntro:
 # 281 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "Flying POKEMON aren't\n"
+	.string "Flying POKéMON aren't\n"
 # 282 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "all the same.\p"
 # 283 "data/maps/FortreeCity_Gym/scripts.pory"
@@ -601,7 +601,7 @@ FortreeCity_Gym_Text_WinonaIntro:
 # 301 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "Up there, I feel limitless.\p"
 # 302 "data/maps/FortreeCity_Gym/scripts.pory"
-	.string "With my FLYING POKEMON,\n"
+	.string "With my FLYING POKéMON,\n"
 # 303 "data/maps/FortreeCity_Gym/scripts.pory"
 	.string "I chase the wind itself.\p"
 # 304 "data/maps/FortreeCity_Gym/scripts.pory"

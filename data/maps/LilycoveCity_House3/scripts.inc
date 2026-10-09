@@ -261,7 +261,7 @@ LilycoveCity_House3_Text_ExplainPokeblocks:
 # 131 "data/maps/LilycoveCity_House3/scripts.pory"
 	.string "use different kinds of BERRIES.\p"
 # 132 "data/maps/LilycoveCity_House3/scripts.pory"
-	.string "Don't be stingy--the kinds of BERRIES\n"
+	.string "Don't be stingy, the kinds of BERRIES\n"
 # 133 "data/maps/LilycoveCity_House3/scripts.pory"
 	.string "affect the smoothness of {POKEBLOCK}S.\p"
 # 134 "data/maps/LilycoveCity_House3/scripts.pory"

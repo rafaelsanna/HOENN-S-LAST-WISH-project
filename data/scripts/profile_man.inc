@@ -94,7 +94,7 @@ ProfileMan_EventScript_Ret::
 ProfileMan_Text_CollectTrainerProfiles:
 	.string "Hello there, TRAINER!\n"
 	.string "You've got a wonderful smile, there.\p"
-	.string "I have a hobby--collecting the profiles\n"
+	.string "I have a hobby, collecting the profiles\n"
 	.string "of POKéMON TRAINERS.$"
 
 ProfileMan_Text_MayISeeYourProfile:
@@ -147,7 +147,7 @@ ProfileMan_Text_EvenBetterThanLastProfile:
 
 ProfileMan_Text_LikeProfileWayItIs:
 	.string "Oh, you like your profile the way it is.\p"
-	.string "I don't blame you--it's a wonderful\n"
+	.string "I don't blame you, it's a wonderful\n"
 	.string "profile the way it is now.$"
 
 ProfileMan_Text_FantasticProfile:

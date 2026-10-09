@@ -773,7 +773,7 @@ PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor:
 # 387 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"
 	.string "Might be a good way to get your mind\l"
 # 388 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"
-	.string "off things...$"
+	.string "off things…$"
 # 389 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"
 
 # 390 "data/maps/LittlerootTown_BrendansHouse_1F/scripts.pory"

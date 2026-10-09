@@ -54,10 +54,10 @@ FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg::
 	end
 
 FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor:
-.string "I was the MOVE TUTOR once...\p"
+.string "I was the MOVE TUTOR once…\p"
 .string "Back in the day, trainers would come\n"
 .string "to me when they wanted their POKéMON\l"
-.string "to remember old moves... Always...\p"
+.string "to remember old moves… Always…\p"
 .string "I'd charge a HEART SCALE for my\n"
 .string "services, and business was good.\p"
 .string "But nowadays… you can just teach\n"

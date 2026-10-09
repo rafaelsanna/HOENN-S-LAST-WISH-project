@@ -129,7 +129,7 @@ LilycoveCity_House3_Text_ExplainPokeblocks:
 	.string "And this is important.\p"
 	.string "If you want to make smooth {POKEBLOCK}S,\n"
 	.string "use different kinds of BERRIES.\p"
-	.string "Don't be stingy--the kinds of BERRIES\n"
+	.string "Don't be stingy, the kinds of BERRIES\n"
 	.string "affect the smoothness of {POKEBLOCK}S.\p"
 	.string "And another thing.\p"
 	.string "The more people blending BERRIES,\n"

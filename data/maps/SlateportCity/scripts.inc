@@ -2993,7 +2993,7 @@ SlateportCity_Text_YouDroveTeamAquaAway:
 # 1497 "data/maps/SlateportCity/scripts.pory"
 	.string "here like they were stung.\p"
 # 1498 "data/maps/SlateportCity/scripts.pory"
-	.string "Let me guess--you drove them away?$"
+	.string "Let me guess, you drove them away?$"
 # 1499 "data/maps/SlateportCity/scripts.pory"
 
 # 1500 "data/maps/SlateportCity/scripts.pory"
@@ -3049,7 +3049,7 @@ SlateportCity_Text_TakingBattleTentChallenge:
 # 1525 "data/maps/SlateportCity/scripts.pory"
     .string "If it isn't {PLAYER}{KUN}!\p"
 # 1526 "data/maps/SlateportCity/scripts.pory"
-    .string "{PLAYER}{KUN}, let me guess--you're going\n"
+    .string "{PLAYER}{KUN}, let me guess, you're going\n"
 # 1527 "data/maps/SlateportCity/scripts.pory"
     .string "to take the BATTLE TENT challenge?\p"
 # 1528 "data/maps/SlateportCity/scripts.pory"

@@ -450,7 +450,7 @@ BattleFrontier_BattleDomeLobby_Text_HopeToSeeYouAgain:
 
 BattleFrontier_BattleDomeLobby_Text_ExplainSinglesChallenge:
 	.string "The SINGLE BATTLE Tournament\n"
-	.string "is exactly as the name suggests--\l"
+	.string "is exactly as the name suggests,\l"
 	.string "a tournament of SINGLE BATTLES.\p"
 	.string "All participating TRAINERS must\n"
 	.string "enter three POKéMON each.\p"
@@ -558,7 +558,7 @@ BattleFrontier_BattleDomeLobby_Text_TakeDoublesChallenge:
 
 BattleFrontier_BattleDomeLobby_Text_ExplainDoublesChallenge:
 	.string "The DOUBLE BATTLE Tournament\n"
-	.string "is exactly as the name suggests--\l"
+	.string "is exactly as the name suggests,\l"
 	.string "a tournament of DOUBLE BATTLES.\p"
 	.string "All participating TRAINERS must\n"
 	.string "enter three POKéMON each.\p"
@@ -642,8 +642,8 @@ BattleFrontier_BattleDomeLobby_Text_CongratsDefeatedTucker:
 	.string "the Battle Tournament!$"
 
 BattleFrontier_BattleDomeLobby_Text_AwardTheseBattlePoints:
-	.string "In recognition of your strategy--\n"
-	.string "a thing of beauty it was, too--\l"
+	.string "In recognition of your strategy,\n"
+	.string "a thing of beauty it was, too,\l"
 	.string "we award you these Battle Point(s)!$"
 
 BattleFrontier_BattleDomeLobby_Text_RecordLastMatch:
@@ -678,7 +678,7 @@ BattleFrontier_BattleDomeLobby_Text_ExplainTourneyTree:
 
 BattleFrontier_BattleDomeLobby_Text_ExplainDoubleKORules:
 	.string "If battling POKéMON faint at the same\n"
-	.string "time--a double KO--in a tournament\l"
+	.string "time, a double KO, in a tournament\l"
 	.string "match, the REFEREES will review\l"
 	.string "the match and declare the winner.$"
 `

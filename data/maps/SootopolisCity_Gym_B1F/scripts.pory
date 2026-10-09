@@ -146,7 +146,7 @@ SootopolisCity_Gym_B1F_Text_TiffanyPostBattle:
 	.string "Discipline shaped them.$"
 
 SootopolisCity_Gym_B1F_Text_BethanyIntro:
-	.string "When I train with my POKEMON,\n"
+	.string "When I train with my POKéMON,\n"
 	.string "time disappears like a deep dive.$"
 
 SootopolisCity_Gym_B1F_Text_BethanyDefeat:
@@ -157,7 +157,7 @@ SootopolisCity_Gym_B1F_Text_BethanyPostBattle:
 	.string "a lesson beneath the surface.$"
 
 SootopolisCity_Gym_B1F_Text_AnnikaIntro:
-	.string "Would you like to see rare POKEMON?\p"
+	.string "Would you like to see rare POKéMON?\p"
 	.string "RIO says rarity isn't about looks\n"
 	.string "it's about heart!$"
 

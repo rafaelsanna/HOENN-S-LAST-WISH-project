@@ -933,7 +933,7 @@ SlateportCity_OceanicMuseum_2F_Text_SSAnneReplica:
 # 467 "data/maps/SlateportCity_OceanicMuseum_2F/scripts.pory"
 SlateportCity_OceanicMuseum_2F_Text_AlejandroLovesPop:
 # 468 "data/maps/SlateportCity_OceanicMuseum_2F/scripts.pory"
-	.string "ALEJANDRO: Wait... Is that POP\n"
+	.string "ALEJANDRO: Wait… Is that POP\n"
 # 469 "data/maps/SlateportCity_OceanicMuseum_2F/scripts.pory"
 	.string "you're listening to?\p"
 # 470 "data/maps/SlateportCity_OceanicMuseum_2F/scripts.pory"

@@ -51,4 +51,4 @@ OldaleTown_House2_Text_YoullGoFurtherWithStrongPokemon:
 # 26 "data/maps/OldaleTown_House2/scripts.pory"
     .string "Must be the age getting to her.\n"
 # 27 "data/maps/OldaleTown_House2/scripts.pory"
-    .string "Don't mind her too much...$"
+    .string "Don't mind her too much…$"

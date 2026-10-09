@@ -333,7 +333,7 @@ VictoryRoad_B1F_Text_MamoruChallenge:
 # 167 "data/maps/VictoryRoad_B1F/scripts.pory"
 VictoryRoad_B1F_Text_MamoruDefeat:
 # 168 "data/maps/VictoryRoad_B1F/scripts.pory"
-	.string "MAMORU: Even ice can crack...\n"
+	.string "MAMORU: Even ice can crack…\n"
 # 169 "data/maps/VictoryRoad_B1F/scripts.pory"
 	.string "Well fought.$"
 # 170 "data/maps/VictoryRoad_B1F/scripts.pory"
@@ -373,7 +373,7 @@ VictoryRoad_B1F_Text_RyoChallenge:
 # 187 "data/maps/VictoryRoad_B1F/scripts.pory"
 	.string "Our SENSEI made us choose a path.\n"
 # 188 "data/maps/VictoryRoad_B1F/scripts.pory"
-	.string "Mine was speed--pure lightning.\p"
+	.string "Mine was speed, pure lightning.\p"
 # 189 "data/maps/VictoryRoad_B1F/scripts.pory"
 	.string "A punch should land before your\n"
 # 190 "data/maps/VictoryRoad_B1F/scripts.pory"

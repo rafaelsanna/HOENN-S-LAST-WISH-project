@@ -94,7 +94,7 @@ FallarborTown_PokemonCenter_1F_Text_LanetteGreeting:
 	.string "You spoke to me because you wanted\n"
 	.string "to access something on this PC.\p"
 	.string "Oh, I'm sorry. I'm LANETTE.\p"
-	.string "Honestly, I'm glad to meet you--it's\n"
+	.string "Honestly, I'm glad to meet you, it's\n"
 	.string "great you're using the Storage System.\p"
 	.string "If you could, please visit me at home.\n"
 	.string "My house is on ROUTE 114.$"
@@ -115,7 +115,7 @@ FallarborTown_PokemonCenter_1F_Text_PlantHardyTrees:
 	.string "buries will feed.\p"
 	.string "Nothing grows richer than soil born\n"
 	.string "from fire and destruction.\p"
-	.string "That comet... maybe something\n"
+	.string "That comet… maybe something\n"
 	.string "beautiful comes after.$"
 
 `

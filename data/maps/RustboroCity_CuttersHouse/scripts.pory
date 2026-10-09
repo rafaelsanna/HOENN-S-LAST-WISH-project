@@ -31,7 +31,7 @@ CuttersGrandma::
 
 ElderDialogue::
 # 12 "data/maps/RustboroCity_CuttersHouse/scripts.pory"
-	.string "That determined expression...\p The limber way you move...\l And your well-trained POKéMON…\p You seem like a skilled TRAINER!\p My granddaughter is in Rusturf\n Grove practicing her cutting.\p You should go battle her!$"
+	.string "That determined expression…\p The limber way you move…\l And your well-trained POKéMON…\p You seem like a skilled TRAINER!\p My granddaughter is in Rusturf\n Grove practicing her cutting.\p You should go battle her!$"
 
 CuttersGrandmaDialogue::
 # 30 "data/maps/RustboroCity_CuttersHouse/scripts.pory"

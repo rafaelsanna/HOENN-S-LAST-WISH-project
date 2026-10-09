@@ -143,16 +143,16 @@ MOSSDEEP02_EventScript_MomAfterPrologue::
 
 MOSSDEEP02_Text_GrandmaWelcome:
 	.string "Grandma: Oh, you're awake!\p"
-	.string "Thank goodness...\n"
+	.string "Thank goodness…\n"
 	.string "You've been having nightmares.$"
 
 MOSSDEEP02_Text_EarthquakeWarning:
-	.string "Grandma: Wait... do you feel that?\p"
+	.string "Grandma: Wait… do you feel that?\p"
 	.string "Not again!$"
 
 MOSSDEEP02_Text_HoennDestroyed:
 	.string "Grandma: Ever since the Great Disaster,\n"
-	.string "these quakes won't stop...\p"
+	.string "these quakes won't stop…\p"
 	.string "The land is tearing itself apart.\n"
 	.string "Storms rage without end.\p"
 	.string "Hoenn is dying, child.\n"
@@ -162,14 +162,14 @@ MOSSDEEP02_Text_GrandpaLegend:
 	.string "Grandpa: My grandfather fled\n"
 	.string "from Johto long ago.\p"
 	.string "He built an altar on the northern cliffs\n"
-	.string "and spoke of Celebi...\p"
+	.string "and spoke of Celebi…\p"
 	.string "A guardian that can travel through time.\p"
 	.string "Perhaps the answers lie there.$"
 
 MOSSDEEP02_Text_PlayerDecision:
-	.string "{PLAYER} feels a strange pull...\p"
-	.string "Those recurring dreams...\n"
-	.string "The ruined altar...\p"
+	.string "{PLAYER} feels a strange pull…\p"
+	.string "Those recurring dreams…\n"
+	.string "The ruined altar…\p"
 	.string "There has to be a connection.$"
 
 MOSSDEEP02_Text_GoodLuck:
@@ -188,7 +188,7 @@ MOSSDEEP02_Text_GrandpaEncouragement:
 MOSSDEEP02_Text_MomWorried:
 	.string "Mom: You look pale, sweetheart.\p"
 	.string "Those nightmares again?\n"
-	.string "Maybe you should rest a bit more...$"
+	.string "Maybe you should rest a bit more…$"
 
 MOSSDEEP02_Text_MomEncouragement:
 	.string "Mom: I know you feel you must do this.\p"

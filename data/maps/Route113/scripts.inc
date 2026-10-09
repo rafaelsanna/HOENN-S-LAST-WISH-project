@@ -289,7 +289,7 @@ Route113_Text_FunWalkingThroughAsh:
 # 145 "data/maps/Route113/scripts.pory"
 	.string "ashes on the ground and grass.\p"
 # 146 "data/maps/Route113/scripts.pory"
-	.string "You can see where you walked--it's\n"
+	.string "You can see where you walked, it's\n"
 # 147 "data/maps/Route113/scripts.pory"
 	.string "really neat!$"
 # 148 "data/maps/Route113/scripts.pory"

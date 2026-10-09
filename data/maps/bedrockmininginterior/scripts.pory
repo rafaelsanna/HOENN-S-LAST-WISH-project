@@ -61,7 +61,7 @@ bedrockmininginterior_Text_NPC3:
 	.string "jumpsuits come in and insist on\l"
 	.string "looking through all our work.\p"
 	.string "The boss tells us to comply and\n"
-	.string "not ask questions...\p"
+	.string "not ask questions…\p"
 	.string "Is this really okay?$"
 
 bedrockmininginterior_Text_NPC4:
@@ -84,7 +84,7 @@ bedrockmininginterior_Text_Sign1:
 bedrockmininginterior_Text_Sign2:
 	.string "The boss's email is left open.\n"
 	.string "A little peek couldn't hurt.\p"
-	.string "...\p"
+	.string "…\p"
 	.string "An anonymous sender is offering\n"
 	.string "mining rights to all of HOENN in\l"
 	.string "exchange for his cooperation.\p"

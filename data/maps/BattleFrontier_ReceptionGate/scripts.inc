@@ -723,7 +723,7 @@ BattleFrontier_ReceptionGate_Text_BattleDomeInfo:
 # 362 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"
 	.string "The Battle Tourneys are offered in\n"
 # 363 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"
-	.string "two courses--for SINGLE and DOUBLE\l"
+	.string "two courses, for SINGLE and DOUBLE\l"
 # 364 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"
 	.string "BATTLES.$"
 # 365 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"
@@ -853,7 +853,7 @@ BattleFrontier_ReceptionGate_Text_LevelModeInfo:
 # 427 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"
 	.string "FRONTIER's facilities come in\l"
 # 428 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"
-	.string "two courses--Level 50 and Open Level.$"
+	.string "two courses, Level 50 and Open Level.$"
 # 429 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"
 
 # 430 "data/maps/BattleFrontier_ReceptionGate/scripts.pory"

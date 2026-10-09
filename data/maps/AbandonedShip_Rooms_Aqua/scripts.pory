@@ -47,7 +47,7 @@ AbandonedShip_Text_Grunt_Intro:
 	.string "This ship belongs to Team Aqua.$"
 
 AbandonedShip_Text_Grunt_Defeat:
-	.string "How...$"
+	.string "How…$"
 
 AbandonedShip_Text_Grunt_PostBattle:
 	.string "Admin Lazuli is going to hear\n"
@@ -305,7 +305,7 @@ AbandonedShip_Text_Alejandro_Intro:
 	.string "There won't be a second warning.$"
 
 AbandonedShip_Text_Alejandro_Defeat:
-	.string "Tch... You've got more bite\n"
+	.string "Tch… You've got more bite\n"
 	.string "than I expected.\p"
 	.string "But this ship is only a piece\n"
 	.string "of the bigger picture.\p"
@@ -314,13 +314,13 @@ AbandonedShip_Text_Alejandro_Defeat:
 AbandonedShip_Text_Stella_Arrives:
 	.string "STELLA: Are you alright?\p"
 	.string "I can't believe you made it here\n"
-	.string "before me...\p"
+	.string "before me…\p"
 	.string "I've been tracking this ship for three\n"
 	.string "days straight.\p"
 	.string "You shouldn't have come alone.$"
 
 AbandonedShip_Text_Alejandro_Retreats:
-	.string "INAE: ...\p"
+	.string "INAE: …\p"
 	.string "Stella.\p"
 	.string "Of all the people to show up.\p"
 	.string "Two against one, on my own\n"
@@ -340,7 +340,7 @@ AbandonedShip_Text_Stella_Warning:
 	.string "every major shipping lane\l"
 	.string "in Hoenn.\p"
 	.string "Cut the ports, cut the supply\n"
-	.string "lines -- the whole region\l"
+	.string "lines, the whole region\l"
 	.string "goes quiet.\p"
 	.string "That's the plan,\n"
 	.string "and it's already in motion.\p"

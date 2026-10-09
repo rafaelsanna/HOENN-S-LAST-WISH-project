@@ -723,7 +723,7 @@ MauvilleCity_Gym_Text_AngeloPostBattle:
 # 362 "data/maps/MauvilleCity_Gym/scripts.pory"
 	.string "some high-voltage machine!\p"
 # 363 "data/maps/MauvilleCity_Gym/scripts.pory"
-	.string "Hahaha! Seriously, though...\n"
+	.string "Hahaha! Seriously, though…\n"
 # 364 "data/maps/MauvilleCity_Gym/scripts.pory"
 	.string "One wrong step and ZAP!$"
 # 365 "data/maps/MauvilleCity_Gym/scripts.pory"

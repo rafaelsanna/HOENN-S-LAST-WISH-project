@@ -234,7 +234,7 @@ Route112_Text_OldManBlocker:
 	.string "These old legs aren't what they used\n"
 	.string "to be, but they can still get me\l"
 	.string "up these stairs! Maybe just after\l"
-	.string "a short break on this step...$"
+	.string "a short break on this step…$"
 
 Route112_Text_MtChimneyCableCarSign:
 	.string "MT. CHIMNEY CABLE CAR\n"

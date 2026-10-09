@@ -23,4 +23,4 @@ SlateportCity_House2_Text_Placeholder:
 # 12 "data/maps/SlateportCity_House2/scripts.pory"
 	.string "He has such a cool job!\n"
 # 13 "data/maps/SlateportCity_House2/scripts.pory"
-	.string "I do miss him sometimes though...$"
+	.string "I do miss him sometimes though…$"

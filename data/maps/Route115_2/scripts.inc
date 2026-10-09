@@ -29,4 +29,4 @@ Route115_Text_Sinister_Woman:
 # 15 "data/maps/Route115_2/scripts.pory"
 	.string "Lonely Cave, right?\n"
 # 16 "data/maps/Route115_2/scripts.pory"
-	.string "I can relate to this name...$"
+	.string "I can relate to this name…$"

@@ -83,7 +83,7 @@ MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats:
 # 42 "data/maps/MauvilleCity_Mart/scripts.pory"
 	.string "Never played outside, he was indoors\n"
 # 43 "data/maps/MauvilleCity_Mart/scripts.pory"
-	.string "building contraptions that sparked...\p"
+	.string "building contraptions that sparked…\p"
 # 44 "data/maps/MauvilleCity_Mart/scripts.pory"
 	.string "Rumors say he can command electricity\n"
 # 45 "data/maps/MauvilleCity_Mart/scripts.pory"

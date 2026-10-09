@@ -95,7 +95,7 @@ PacifidlogTown_PokemonCenter_1F_Text_OnColonyOfCorsola:
 # 48 "data/maps/PacifidlogTown_PokemonCenter_1F/scripts.pory"
 	.string "They flee, or they fight.\p"
 # 49 "data/maps/PacifidlogTown_PokemonCenter_1F/scripts.pory"
-	.string "These ones are just... waiting.$"
+	.string "These ones are just… waiting.$"
 # 50 "data/maps/PacifidlogTown_PokemonCenter_1F/scripts.pory"
 
 # 51 "data/maps/PacifidlogTown_PokemonCenter_1F/scripts.pory"

@@ -131,19 +131,19 @@ GraniteCave_StevensRoom_Text_ImStevenLetterForMe:
 	.string "My name is STELLA.\p"
 	.string "What are you doing in this cave with\n"
 	.string "such strange clothes?\p"
-	.string "Don't tell me you're with TEAM MAGMA...\p"
+	.string "Don't tell me you're with TEAM MAGMA…\p"
 	.string "Oh? You're just exploring? Good. You\n"
 	.string "startled me.\p"
 	.string "A LETTER for me? Really? Thank you.\p"
-	.string "...\n"
-	.string "...\p"
-	.string "Why does Grandfather want me to...?\p"
+	.string "…\n"
+	.string "…\p"
+	.string "Why does Grandfather want me to…?\p"
 	.string "Oh! I'm sorry, I got distracted by\n"
 	.string "this LETTER. How rude of me.$"
 
 GraniteCave_StevensRoom_Text_ThankYouTakeThis:
 	.string "STELLA: You beat two MAGMA grunts\n"
-	.string "alone and still made it here...\p"
+	.string "alone and still made it here…\p"
 	.string "Just to deliver this to me. Thank you,\n"
 	.string "weird friend!\p"
 	.string "Here, take this TM, STEEL WING. It's my\n"
@@ -151,12 +151,12 @@ GraniteCave_StevensRoom_Text_ThankYouTakeThis:
 
 GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:
 	.string "STELLA: I don't know what MAGMA is\n"
-	.string "after here... Rare ore? Energy?\p"
+	.string "after here… Rare ore? Energy?\p"
 	.string "Whatever it is, it's bad news, but you\n"
 	.string "beat them easily.$"
 
 GraniteCave_StevensRoom_Text_RegisteredSteven:
-	.string "...$"
+	.string "…$"
 
 GraniteCave_StevensRoom_Text_LookAnciantPainting:
 	.string "STELLA: Now, take a look at this\n"
@@ -165,7 +165,7 @@ GraniteCave_StevensRoom_Text_LookAnciantPainting:
 GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 	.string "STELLA: I came to study this old\n"
 	.string "painting. It must be thousands of\l"
-	.string "years old. Maybe even more...\p"
+	.string "years old. Maybe even more…\p"
 	.string "It shows two titans, one of land, one\n"
 	.string "of sea. Ancient guardians.\p"
 	.string "That strange meteor in the sky made\n"

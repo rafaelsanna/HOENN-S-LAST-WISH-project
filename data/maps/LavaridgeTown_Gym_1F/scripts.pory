@@ -591,13 +591,13 @@ LavaridgeTown_Gym_1F_Movement_RentonLeaveFromX11:
 
 
 LavaridgeTown_Gym_1F_Text_RentonIdle:
-	.string "Uh... I'm just passing through.\p"
+	.string "Uh… I'm just passing through.\p"
 	.string "Don't make this weird, kid.$"
 
 LavaridgeTown_Gym_1F_Text_RentonLikesPop:
 	.string "Yo! There you are! HAHAHA!\p"
 	.string "I gotta admit, I liked our fight!\n"
-	.string "...Wait a second.\n"
+	.string "…Wait a second.\n"
 	.string "YOU like POP?!\p"
 	.string "HAHAHA!\p"
 	.string "Me? A POP fan? Pffft! No way!\n"
@@ -613,12 +613,12 @@ LavaridgeTown_Gym_1F_Text_RentonLikesPop:
 	.string "fan after I punched the guy.\p"
 	.string "I just came back to get them!\n"
 	.string "Perfectly normal explanation!\p"
-	.string "...What? Why are you grinning?\n"
+	.string "…What? Why are you grinning?\n"
 	.string "Red? ME?! I'm not red!\p"
 	.string "This place is packed, that's all!\n"
 	.string "It's hot! There's no air in here!\p"
 	.string "I'm definitely NOT embarrassed!\n"
-	.string "HAHAHA... ha...\p"
+	.string "HAHAHA… ha…\p"
 	.string "Now scoot over before somebody\n"
 	.string "from my GYM sees me here!$"
 

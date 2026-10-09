@@ -2023,7 +2023,7 @@ LittlerootTown_Text_WantPKM:
 # 1012 "data/maps/LittlerootTown/scripts.pory"
 	.string "When that comet passed through\n"
 # 1013 "data/maps/LittlerootTown/scripts.pory"
-	.string "the sky that night...\l"
+	.string "the sky that night…\l"
 # 1014 "data/maps/LittlerootTown/scripts.pory"
 	.string "I made a wish!\p"
 # 1015 "data/maps/LittlerootTown/scripts.pory"

@@ -327,7 +327,7 @@ SlateportCity_PokemonFanClub_Text_HereIfYouGetUrgeToTellMe:
 	.string "about POKéMON, I'll be here!$"
 
 SlateportCity_PokemonFanClub_Text_EnjoyDoingInterviews:
-	.string "I enjoy this job--you get to learn\n"
+	.string "I enjoy this job, you get to learn\n"
 	.string "about POKéMON by doing interviews.$"
 
 SlateportCity_PokemonFanClub_Text_InterviewRequest:
@@ -778,10 +778,10 @@ gTVNameRaterText10::
 	.string "The nickname {STR_VAR_1} is very\n"
 	.string "shapely in a pleasing manner.\p"
 	.string "The presence of the letters “{STR_VAR_2}” and\n"
-	.string "“{STR_VAR_3}”--now that is remarkably good!$"
+	.string "“{STR_VAR_3}”, now that is remarkably good!$"
 
 gTVNameRaterText11::
-	.string "The nickname {STR_VAR_1}--it has a\n"
+	.string "The nickname {STR_VAR_1}, it has a\n"
 	.string "sublime, flowing feel to it.\p"
 	.string "The flow from the initial letter “{STR_VAR_2}” to\n"
 	.string "“{STR_VAR_3}” is especially wonderful.$"
@@ -1000,7 +1000,7 @@ gTVPokemonTodaySuccessfulText07::
 gTVPokemonTodaySuccessfulText08::
 	.string "{STR_VAR_2} the {STR_VAR_1}?\n"
 	.string "Doesn't that sound perfect?\p"
-	.string "The letters and everything--they\n"
+	.string "The letters and everything, they\n"
 	.string "sound just right for the POKéMON\l"
 	.string "{STR_VAR_1}!\p"
 	.string "BIG BRO: Yeah, true, that!$"
@@ -1350,7 +1350,7 @@ gTVFindThatGamerText01::
 	.string "Viewers, it's best to watch your COINS\n"
 	.string "like {STR_VAR_1} if you visit the GAME\l"
 	.string "CORNER and play the {STR_VAR_2} game.\p"
-	.string "This is live from the GAME CORNER--\n"
+	.string "This is live from the GAME CORNER,\n"
 	.string "where you can feel the excitement!\p"
 	.string "That's all for today!$"
 
@@ -1366,7 +1366,7 @@ gTVFindThatGamerText03::
 	.string "Viewers, it's best to watch your COINS\n"
 	.string "like {STR_VAR_1} if you visit the GAME\l"
 	.string "CORNER and play the {STR_VAR_2} game.\p"
-	.string "This is live from the GAME CORNER--\n"
+	.string "This is live from the GAME CORNER,\n"
 	.string "where you can feel the excitement!\p"
 	.string "That's all for today!$"
 
@@ -2791,7 +2791,7 @@ GabbyAndTy_Text_GabbyNotEnoughMons:
 
 GabbyAndTy_Text_GiveUsAnInterviewThisTime:
 	.string "GABBY: Wow, you are something!\p"
-	.string "You've gotten a lot stronger--a lot--\n"
+	.string "You've gotten a lot stronger, a lot,\n"
 	.string "since we last battled.\p"
 	.string "We were right about you when we\n"
 	.string "spotted you as a hot TRAINER.\p"
@@ -2867,8 +2867,8 @@ gTVInSearchOfTrainersText02::
 gTVInSearchOfTrainersText03::
 	.string "The combination of {STR_VAR_1} and\n"
 	.string "{STR_VAR_3} was divine!\p"
-	.string "The sight of them--{STR_VAR_1} and\n"
-	.string "{STR_VAR_3}--selflessly supporting\l"
+	.string "The sight of them, {STR_VAR_1} and\n"
+	.string "{STR_VAR_3}, selflessly supporting\l"
 	.string "each other in the thick of battle…\p"
 	.string "It was a marvelous sight to behold!\p"
 	.string "{STR_VAR_2} was the move the TRAINER\n"
@@ -2920,7 +2920,7 @@ gTVInSearchOfTrainersText08::
 	.string "And “{STR_VAR_1}”…\p"
 	.string "Mmm! That's deep! There's deep\n"
 	.string "significance behind that quote!\p"
-	.string "It's no surprise--a good TRAINER has\n"
+	.string "It's no surprise, a good TRAINER has\n"
 	.string "good things to say.\p"
 	.string "That's all for today!\n"
 	.string "See you again on our next broadcast!$"

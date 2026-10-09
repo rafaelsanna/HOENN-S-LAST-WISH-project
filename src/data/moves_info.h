@@ -4001,7 +4001,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Splash"),
         .description = COMPOUND_STRING(
-            "It's just a splash...\n"
+            "It's just a splash…\n"
             "Has no effect whatsoever."),
         .effect = EFFECT_DO_NOTHING,
         .power = 0,

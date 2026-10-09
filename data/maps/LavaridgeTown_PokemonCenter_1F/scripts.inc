@@ -97,7 +97,7 @@ LavaridgeTown_PokemonCenter_1F_Text_TrainersShouldRestToo:
 # 49 "data/maps/LavaridgeTown_PokemonCenter_1F/scripts.pory"
 	.string "Hohoho! You look exhausted, kid.\n"
 # 50 "data/maps/LavaridgeTown_PokemonCenter_1F/scripts.pory"
-	.string "Those bags under your eyes...\p"
+	.string "Those bags under your eyes…\p"
 # 51 "data/maps/LavaridgeTown_PokemonCenter_1F/scripts.pory"
 	.string "The springs are just through that door.\n"
 # 52 "data/maps/LavaridgeTown_PokemonCenter_1F/scripts.pory"

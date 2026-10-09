@@ -597,7 +597,7 @@ VerdanturfTowncafe_Text_AcaciaCometMeasurements:
 # 299 "data/maps/VerdanturfTowncafe/scripts.pory"
 	.string "Now, to get into the reason we're\n"
 # 300 "data/maps/VerdanturfTowncafe/scripts.pory"
-	.string "all here...\p"
+	.string "all here…\p"
 # 301 "data/maps/VerdanturfTowncafe/scripts.pory"
 	.string "CALENDULA and I have been\n"
 # 302 "data/maps/VerdanturfTowncafe/scripts.pory"
@@ -909,7 +909,7 @@ VerdanturfTowncafe_Text_Barista:
 # 455 "data/maps/VerdanturfTowncafe/scripts.pory"
 VerdanturfTowncafe_Text_Boy:
 # 456 "data/maps/VerdanturfTowncafe/scripts.pory"
-	.string "I asked her here for coffee...\p"
+	.string "I asked her here for coffee…\p"
 # 457 "data/maps/VerdanturfTowncafe/scripts.pory"
 	.string "Now I've forgotten everything\n"
 # 458 "data/maps/VerdanturfTowncafe/scripts.pory"

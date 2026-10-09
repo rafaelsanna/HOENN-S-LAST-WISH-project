@@ -402,9 +402,9 @@ MossdeepCity_Gym_Text_GymGuideAdvice:
 	.string "{PLAYER}?\p"
 	.string "This GYM is a split challenge!\n"
 	.string "Two LEADERS, two styles!\p"
-	.string "One commands FAIRY-type POKEMON,\n"
+	.string "One commands FAIRY-type POKéMON,\n"
 	.string "bright, tricky, and unpredictable.\p"
-	.string "The other wields DARK-type POKEMON,\n"
+	.string "The other wields DARK-type POKéMON,\n"
 	.string "ruthless, tactical, and merciless.\p"
 	.string "If you rush in blindly, you'll get\n"
 	.string "outplayed from both sides.\p"
@@ -441,7 +441,7 @@ MossdeepCity_Gym_Text_PrestonPostBattle:
 MossdeepCity_Gym_Text_VirgilIntro:
 	.string "Let me see your talent.\p"
 	.string "I'm training under LUNA,\n"
-	.string "master of DARK-type POKEMON.$"
+	.string "master of DARK-type POKéMON.$"
 
 MossdeepCity_Gym_Text_VirgilDefeat:
 	.string "Your light cut through my shadows…$"

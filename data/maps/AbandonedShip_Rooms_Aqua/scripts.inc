@@ -97,7 +97,7 @@ AbandonedShip_Text_Grunt_Intro:
 # 49 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 AbandonedShip_Text_Grunt_Defeat:
 # 50 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "How...$"
+	.string "How…$"
 # 51 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 
 # 52 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
@@ -613,7 +613,7 @@ AbandonedShip_Text_Alejandro_Intro:
 # 307 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 AbandonedShip_Text_Alejandro_Defeat:
 # 308 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "Tch... You've got more bite\n"
+	.string "Tch… You've got more bite\n"
 # 309 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "than I expected.\p"
 # 310 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
@@ -631,7 +631,7 @@ AbandonedShip_Text_Stella_Arrives:
 # 316 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "I can't believe you made it here\n"
 # 317 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "before me...\p"
+	.string "before me…\p"
 # 318 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "I've been tracking this ship for three\n"
 # 319 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
@@ -643,7 +643,7 @@ AbandonedShip_Text_Stella_Arrives:
 # 322 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 AbandonedShip_Text_Alejandro_Retreats:
 # 323 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "INAE: ...\p"
+	.string "INAE: …\p"
 # 324 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "Stella.\p"
 # 325 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
@@ -683,7 +683,7 @@ AbandonedShip_Text_Stella_Warning:
 # 342 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "Cut the ports, cut the supply\n"
 # 343 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
-	.string "lines -- the whole region\l"
+	.string "lines, the whole region\l"
 # 344 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"
 	.string "goes quiet.\p"
 # 345 "data/maps/AbandonedShip_Rooms_Aqua/scripts.pory"

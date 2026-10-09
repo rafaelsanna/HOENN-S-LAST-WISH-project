@@ -171,7 +171,7 @@ Route103_Text_AndrewPostBattle:
 
 Route103_Text_MiguelIntro:
 	.string "My POKéMON is delightfully adorable!\n"
-	.string "Don't be shy--I'll show you!$"
+	.string "Don't be shy, I'll show you!$"
 
 Route103_Text_MiguelDefeated:
 	.string "Oh, my gosh!\n"
@@ -676,7 +676,7 @@ FieryPath_Text_DaxonIntro:
 
 FieryPath_Text_DaxonDefeated:
 	.string "Guess I'm not as tough\n"
-	.string "as the magma below...$"
+	.string "as the magma below…$"
 
 FieryPath_Text_DaxonPostBattle:
 	.string "They tell storys about a path\n"
@@ -687,32 +687,32 @@ FieryPath_Text_DaxonPostBattle:
 	.string "doesn't forgive carelessness.$"
 
 FieryPath_Text_FlemingIntro:
-	.string "Heh... you felt that tremor too,\n"
+	.string "Heh… you felt that tremor too,\n"
 	.string "didn't you?\p"
 	.string "Most trainers turn back when the\n"
 	.string "ground starts breathing like this.\p"
 	.string "But not me. I'm waiting for\n"
 	.string "something to break through.\p"
-	.string "If you're sticking around...\n"
+	.string "If you're sticking around…\n"
 	.string "prove you can handle the heat!$"
 
 FieryPath_Text_FlemingDefeated:
-	.string "Tch...\n"
+	.string "Tch…\n"
 	.string "You are good!$"
 
 FieryPath_Text_FlemingPostBattle:
-	.string "Listen closely... between the\n"
+	.string "Listen closely… between the\n"
 	.string "rumbling, there's another sound.\p"
 	.string "Like something shifting far\n"
-	.string "below us... not just magma.\p"
+	.string "below us… not just magma.\p"
 	.string "People say it's just pressure.\n"
 	.string "I think it's something waking up.\p"
-	.string "If it reaches the surface...\n"
-	.string "this cave won't be just hot...$"
+	.string "If it reaches the surface…\n"
+	.string "this cave won't be just hot…$"
 
 FieryPath_Text_EvaIntro:
 	.string "Huh. Another trainer crawling through\n"
-	.string "this oven? Whatever...\p"
+	.string "this oven? Whatever…\p"
 	.string "You heard that AMATERASU girl?\n"
 	.string "Her pop songs make my ears bleed.\p"
 	.string "This cave? This HEAT? Now THAT's\n"
@@ -721,7 +721,7 @@ FieryPath_Text_EvaIntro:
 	.string "Show me you don't suck!$"
 
 FieryPath_Text_EvaDefeated:
-	.string "Tch... not bad.\n"
+	.string "Tch… not bad.\n"
 	.string "You've got some fire after all.$"
 
 FieryPath_Text_EvaPostBattle:
@@ -734,7 +734,7 @@ FieryPath_Text_EvaPostBattle:
 FieryPath_Text_JaimeIntro:
 	.string "Hey! Don't move!\p"
 	.string "That pose, that light hitting the\n"
-	.string "lava... it's perfect!\p"
+	.string "lava… it's perfect!\p"
 	.string "I'm professional photographer chasing\n"
 	.string "shots no one else dares to take!\p"
 	.string "Only solidified lava formations\n"
@@ -748,7 +748,7 @@ FieryPath_Text_JaimeDefeated:
 	.string "That was PERFECT!$"
 
 FieryPath_Text_JaimePostBattle:
-	.string "Your performance... spectacular!\p"
+	.string "Your performance… spectacular!\p"
 	.string "And that outfit, straight out of\n"
 	.string "a hero's journey!\p"
 	.string "These shots are incredible!\n"
@@ -757,51 +757,51 @@ FieryPath_Text_JaimePostBattle:
 	.string "with this set!$"
 
 FieryPath_Text_LochIntro:
-	.string "...?\p"
+	.string "…?\p"
 	.string "Not many people come this far\n"
 	.string "into the FIERY PATH.\p"
 	.string "I've been looking around for\n"
-	.string "anything... unusual.\p"
-	.string "Old markings, strange rocks...\n"
+	.string "anything… unusual.\p"
+	.string "Old markings, strange rocks…\n"
 	.string "stuff like that.\p"
-	.string "Heh... maybe I'm just seeing\n"
+	.string "Heh… maybe I'm just seeing\n"
 	.string "things in the heat.\p"
 	.string "Anyway, let's battle!$"
 
 FieryPath_Text_LochDefeated:
-	.string "Guess I got carried away...$"
+	.string "Guess I got carried away…$"
 
 FieryPath_Text_LochPostBattle:
-	.string "Still... some of these walls\n"
+	.string "Still… some of these walls\n"
 	.string "don't look right.\p"
 	.string "Like they weren't formed by\n"
 	.string "lava alone.\p"
 	.string "Eh, probably nothing.\n"
-	.string "Or maybe not...$"
+	.string "Or maybe not…$"
 
 FieryPath_Text_SatsukiIntro:
-	.string "The flames here... they never\n"
+	.string "The flames here… they never\n"
 	.string "truly go out.\p"
 	.string "Long ago, people brought\n"
 	.string "their offerings to this place.\p"
-	.string "Everything cast into the lava...\n"
+	.string "Everything cast into the lava…\n"
 	.string "burned, and was made pure.\p"
 	.string "An old ritual, forgotten by most.\p"
-	.string "...\p"
+	.string "…\p"
 	.string "You there, child.\n"
-	.string "Let me read your aura...$"
+	.string "Let me read your aura…$"
 
 FieryPath_Text_SatsukiDefeated:
-	.string "Ahh... the flames flicker\n"
-	.string "around you...$"
+	.string "Ahh… the flames flicker\n"
+	.string "around you…$"
 
 FieryPath_Text_SatsukiPostBattle:
-	.string "The fire spirits whisper...\n"
+	.string "The fire spirits whisper…\n"
 	.string "though their voices are unclear.\p"
 	.string "They speak of a path set apart\n"
-	.string "from all others...\p"
-	.string "Whether it leads to light...\n"
-	.string "or to ashes...\p"
+	.string "from all others…\p"
+	.string "Whether it leads to light…\n"
+	.string "or to ashes…\p"
 	.string "That, even they will not say.$"
 
 DewdropJungle_Text_DrewIntro:
@@ -847,18 +847,18 @@ DewdropJungle_Text_AriaPostBattle:
 DewdropJungle_Text_XanderIntro:
 	.string "Hey there! I came to this jungle\n"
 	.string "looking for adventure and strong,\l"
-	.string "rock solid POKéMON...\p"
+	.string "rock solid POKéMON…\p"
 	.string "But all I've found so far is\n"
 	.string "plants, rain, and mud.\p"
 	.string "At least you showed up. Let's\n"
 	.string "fight! Maybe that'll save my trip.$"
 
 DewdropJungle_Text_XanderDefeated:
-	.string "Great... now I'm wet AND defeated.$"
+	.string "Great… now I'm wet AND defeated.$"
 
 DewdropJungle_Text_XanderPostBattle:
 	.string "My boots are full of water, my\n"
-	.string "map turned into mush...\p"
+	.string "map turned into mush…\p"
 	.string "I'm done. Next time, I'm staying\n"
 	.string "somewhere dry. This jungle hates me.$"
 
@@ -868,7 +868,7 @@ DewdropJungle_Text_KaylaIntro:
 	.string "all day, but it doesn't hit back!$"
 
 DewdropJungle_Text_KaylaDefeated:
-	.string "Okay... you hit back.$"
+	.string "Okay… you hit back.$"
 
 DewdropJungle_Text_KaylaPostBattle:
 	.string "I came out here to get stronger,\n"
@@ -905,7 +905,7 @@ DewdropJungle_Text_LouisIntro:
 	.string "out my new recipe?$"
 
 DewdropJungle_Text_LouisDefeated:
-	.string "Ah... I burnt it.$"
+	.string "Ah… I burnt it.$"
 
 DewdropJungle_Text_LouisPostBattle:
 	.string "You ever notice how different\n"
@@ -925,7 +925,7 @@ Route107_Text_DarrinDefeated:
 
 Route107_Text_DarrinPostBattle:
 	.string "Floating and being rocked by\n"
-	.string "the waves--it's like sleeping in\l"
+	.string "the waves, it's like sleeping in\l"
 	.string "a plush, comfy bed.$"
 
 Route107_Text_TonyIntro:
@@ -1954,7 +1954,7 @@ Route113_Text_JaylenDefeat:
 Route113_Text_JaylenPostBattle:
 	.string "The volcanic ash blocks the sun,\n"
 	.string "so it doesn't get very warm.\p"
-	.string "That's good for me--I can't stand heat!$"
+	.string "That's good for me, I can't stand heat!$"
 
 Route113_Text_DillonIntro:
 	.string "The volcano's eruption is proof that\n"
@@ -2611,7 +2611,7 @@ Route116_Text_KarenIntro:
 	.string "the way home, too!$"
 
 Route116_Text_KarenDefeat:
-	.string "I'm in shock--I lost?$"
+	.string "I'm in shock, I lost?$"
 
 Route116_Text_KarenPostBattle:
 	.string "Awww, I'll never become an elegant\n"
@@ -2621,14 +2621,14 @@ Route116_Text_KarenRegister1:
 	.string "Oh, wow! Is that a DEXNAV?\n"
 	.string "If they weren't so expensive,\l"
 	.string "I'd buy one in a heartbeat.\p"
-	.string "Guess I'll just have to dream...\n"
+	.string "Guess I'll just have to dream…\n"
 	.string "Lucky you!$"
 
 Route116_Text_KarenRegister2:
 	.string "Oh, wow! Is that a DEXNAV?\n"
 	.string "If they weren't so expensive,\l"
 	.string "I'd buy one in a heartbeat.\p"
-	.string "Guess I'll just have to dream...\n"
+	.string "Guess I'll just have to dream…\n"
 	.string "Lucky you!$"
 
 Route116_Text_KarenRematchIntro:
@@ -2924,7 +2924,7 @@ Route117_Text_AishaIntro:
 
 Route117_Text_AishaDefeat:
 	.string "I don't waste any time being angry\n"
-	.string "over a loss--I would rather train.$"
+	.string "over a loss, I would rather train.$"
 
 Route117_Text_AishaPostBattle:
 	.string "I think that if you worry about losing,\n"
@@ -3048,7 +3048,7 @@ Route118_Text_DeandreDefeat:
 Route118_Text_DeandrePostBattle:
 	.string "Isn't it cool that I have a POKéMON\n"
 	.string "battle team?\p"
-	.string "You can copy me--I don't mind!$"
+	.string "You can copy me, I don't mind!$"
 
 Route119_Text_BrentIntro:
 	.string "We're the MIMIC CIRCLE!\n"
@@ -3685,7 +3685,7 @@ Route121_Text_PatDefeat:
 
 Route121_Text_PatPostBattle:
 	.string "I raise every POKéMON with the same\n"
-	.string "love and care--I don't pick favorites.$"
+	.string "love and care, I don't pick favorites.$"
 
 Route121_Text_MarcelIntro:
 	.string "My POKéMON have never tasted defeat!\n"
@@ -3997,7 +3997,7 @@ Route124_Text_JennyRegister:
 	.string "It's only on a whim, but maybe I'll\n"
 	.string "ask you to remember my name.\p"
 	.string "No big deal if you don't, though.\n"
-	.string "Just a thought...$"
+	.string "Just a thought…$"
 
 Route124_Text_JennyRematchIntro:
 	.string "If you just float in the sea like this,\n"
@@ -4371,7 +4371,7 @@ Route126_Text_LeonardoDefeat:
 Route126_Text_LeonardoPostBattle:
 	.string "If you practice at something,\n"
 	.string "you will get better at it.\p"
-	.string "You're young--don't be afraid to\n"
+	.string "You're young, don't be afraid to\n"
 	.string "try all sorts of things!$"
 
 Route126_Text_IsobelIntro:
@@ -5165,15 +5165,15 @@ CargoShip_Text_AquaMemberIntro::
 	.string "picked the wrong place!$"
 
 CargoShip_Text_AquaMemberDefeated::
-	.string "I'm getting fired for this...\n"
-	.string "I just know it...$"
+	.string "I'm getting fired for this…\n"
+	.string "I just know it…$"
 
 CargoShip_Text_AquaMemberPostBattle::
 	.string "Fine. Do whatever you want.\n"
 	.string "I'm getting fired anyway.$"
 
 RogueCanyon_Text_LilloIntro::
-.string "I'm a maniac for rare Pokémon!\n"
+.string "I'm a maniac for rare POKéMON!\n"
 .string "I'm combing every corner of this\l"
 .string "canyon to find them.\p"
 .string "They say Hoenn is a natural paradise,\n"
@@ -5188,7 +5188,7 @@ RogueCanyon_Text_LilloDefeat::
 RogueCanyon_Text_LilloPostBattle::
 .string "The canyon walls hide many secrets.\n"
 .string "Keep searching and you might find\l"
-.string "rare Pokémon nesting in the crevices.$"
+.string "rare POKéMON nesting in the crevices.$"
 
 RogueCanyon_Text_PedroIntro::
 .string "I've climbed mountains all over,\n"
@@ -5204,7 +5204,7 @@ RogueCanyon_Text_PedroDefeat::
 
 RogueCanyon_Text_PedroPostBattle::
 .string "The best adventures are shared\n"
-.string "with Pokémon.\p"
+.string "with POKéMON.\p"
 .string "May your journey be as thrilling\n"
 .string "as a mountain ascent.$"
 

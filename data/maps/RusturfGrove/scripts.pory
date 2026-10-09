@@ -73,7 +73,7 @@ ArtistFragonard_Text_0:
 # 16 "data/maps/RusturfGrove/scripts.pory"
 	.string "My favorite things to paint are\n"
 	.string "forests, but I get jumped by wild\l"
-	.string "pokémon sometimes!$"
+	.string "POKéMON sometimes!$"
 
 FragonardIntro::
 # 21 "data/maps/RusturfGrove/scripts.pory"
@@ -82,7 +82,7 @@ FragonardIntro::
 FragonardLose::
 # 25 "data/maps/RusturfGrove/scripts.pory"
 	.string "If only I were as strong as\n"
-	.string "this place was pretty...$"
+	.string "this place was pretty…$"
 
 CutterDialogueBefore::
 # 60 "data/maps/RusturfGrove/scripts.pory"
@@ -112,7 +112,7 @@ CutterIntro::
 	.string "a ninja-in-training? Bring it on!$"
 
 CutterLose::
-	.string "I wasn't expecting a defeat...$"
+	.string "I wasn't expecting a defeat…$"
 
 
 `

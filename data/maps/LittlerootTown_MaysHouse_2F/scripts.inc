@@ -723,7 +723,7 @@ RivalsHouse_2F_Text_BrendanWhoAreYou:
 # 362 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "PROFESSOR ACACIA said it might be\n"
 # 363 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
-	.string "connected to POKeMON somehow.\p"
+	.string "connected to POKéMON somehow.\p"
 # 364 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"
 	.string "Me? Of course I made a wish.\n"
 # 365 "data/maps/LittlerootTown_MaysHouse_2F/scripts.pory"

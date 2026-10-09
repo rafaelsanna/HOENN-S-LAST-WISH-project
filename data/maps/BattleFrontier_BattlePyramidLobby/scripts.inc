@@ -1793,7 +1793,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 # 897 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "while in the PYRAMID.\p"
 # 898 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "There are two separate BATTLE BAGS--\n"
+	.string "There are two separate BATTLE BAGS,\n"
 # 899 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "one each for the Level 50 and\l"
 # 900 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"

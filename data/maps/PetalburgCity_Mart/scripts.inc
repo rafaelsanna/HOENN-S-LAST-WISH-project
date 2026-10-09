@@ -169,7 +169,7 @@ PetalburgCity_Mart_Text_TakeSomeAntidotesWithYou:
 # 85 "data/maps/PetalburgCity_Mart/scripts.pory"
 	.string "It's dark in there, and the bugs\n"
 # 86 "data/maps/PetalburgCity_Mart/scripts.pory"
-	.string "love to use poison moves...\p"
+	.string "love to use poison moves…\p"
 # 87 "data/maps/PetalburgCity_Mart/scripts.pory"
 	.string "Wouldn't want your POKéMON to\n"
 # 88 "data/maps/PetalburgCity_Mart/scripts.pory"

@@ -53,7 +53,7 @@ FallarborTown_Mart_Text_DecidingSkittyEvolve:
 	.string "but it's so hard to decide…\p"
 	.string "If I make it evolve, it will become\n"
 	.string "much stronger.\p"
-	.string "But it will look so different, too...$"
+	.string "But it will look so different, too…$"
 
 FallarborTown_Mart_Text_Skitty:
 	.string "SKITTY: Miyao?$"

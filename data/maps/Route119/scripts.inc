@@ -1027,7 +1027,7 @@ Route119_Text_GonChallenge:
 # 514 "data/maps/Route119/scripts.pory"
 	.string "Have we knocked one down yet?\n"
 # 515 "data/maps/Route119/scripts.pory"
-	.string "...Well, not quite.\p"
+	.string "…Well, not quite.\p"
 # 516 "data/maps/Route119/scripts.pory"
 	.string "But our hands are definitely\n"
 # 517 "data/maps/Route119/scripts.pory"
@@ -1043,9 +1043,9 @@ Route119_Text_GonChallenge:
 # 522 "data/maps/Route119/scripts.pory"
 Route119_Text_GonDefeat:
 # 523 "data/maps/Route119/scripts.pory"
-	.string "Oof... So much for\n"
+	.string "Oof… So much for\n"
 # 524 "data/maps/Route119/scripts.pory"
-	.string "all that fist training...$"
+	.string "all that fist training…$"
 # 525 "data/maps/Route119/scripts.pory"
 
 # 526 "data/maps/Route119/scripts.pory"

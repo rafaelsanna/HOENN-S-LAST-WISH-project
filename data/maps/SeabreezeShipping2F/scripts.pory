@@ -155,7 +155,7 @@ SeabreezeShipping2F_Text_AlejandroBusiness:
 
 SeabreezeShipping2F_Text_PresidentWarning:
 	.string "PRESIDENT: If anyone learns\n"
-	.string "what this company is involved in...$"
+	.string "what this company is involved in…$"
 
 SeabreezeShipping2F_Text_AlejandroOverheard:
 	.string "ALEJANDRO: Well, well. I didn't expect\n"

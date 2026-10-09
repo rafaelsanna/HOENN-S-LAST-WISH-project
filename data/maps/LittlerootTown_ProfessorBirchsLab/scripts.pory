@@ -1102,7 +1102,7 @@ LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
 	.string "Calm, brilliant, and one of the strongest\n"
     .string "NORMAL-type trainers alive.\p"
     .string "If you truly want to become a real\n"
-    .string "POKEMON TRAINER, go meet her.$"
+    .string "POKéMON TRAINER, go meet her.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_HereTakeMap:
     .string "PROF. ACACIA: Oh, and before you go,\n"
@@ -1359,14 +1359,14 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 	.string "… … … … … Click!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_Register10PokemonForTogepiEgg:
-	.string "We're studying this different Pokémon\n"
+	.string "We're studying this different POKéMON\n"
 	.string "called TOGEPI.\p"
-	.string "If you register 10 Pokémon in your\n"
+	.string "If you register 10 POKéMON in your\n"
 	.string "Pokédex, we'll give you a TOGEPI EGG!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_YouHave10PokemonHeresTogepiEgg:
 	.string "Wow! You've already registered\n"
-	.string "10 Pokémon in your Pokédex!\p"
+	.string "10 POKéMON in your Pokédex!\p"
 	.string "As promised, here's the TOGEPI EGG!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_ReceivedTogepiEgg:
@@ -1374,7 +1374,7 @@ LittlerootTown_ProfessorBirchsLab_Text_ReceivedTogepiEgg:
 
 LittlerootTown_ProfessorBirchsLab_Text_TakeGoodCareOfTogepi:
 	.string "Take good care of that TOGEPI!\n"
-	.string "It's a very special Pokémon.$"
+	.string "It's a very special POKéMON.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg:
 	.string "Oh, you don't have room for this EGG\n"
@@ -1453,7 +1453,7 @@ LittlerootTown_ProfessorBirchsLab_Text_AfterDubiousDiscReward:
 LittlerootTown_ProfessorBirchsLab_Text_AllGiftsGiven:
 	.string "Hello, {PLAYER}! How are you?\n"
 	.string "Are TOGEPI and PORYGON doing well?\p"
-	.string "Or, perhaps...\p"
+	.string "Or, perhaps…\p"
 	.string "Would you like to buy an UPGRADE\n"
 	.string "or a DUBIOUS DISC?$"
 

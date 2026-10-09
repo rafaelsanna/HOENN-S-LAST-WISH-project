@@ -653,7 +653,7 @@ NightmareRealm1_Movement_EscavalierCloseIn:
 # 327 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
 NightmareRealm1_Text_JirachiPleas:
 # 328 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
-    .string "You can hear us...\p"
+    .string "You can hear us…\p"
 # 329 "data/maps/NIGHTMARE_REALM_1/scripts.pory"
     .string "We are JIRACHI and CELEBI.\p"
 # 330 "data/maps/NIGHTMARE_REALM_1/scripts.pory"

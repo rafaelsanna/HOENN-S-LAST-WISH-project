@@ -82,7 +82,7 @@ EverGrandeCity_DrakesRoom_EventScript_Defeated::
 
 EverGrandeCity_DrakesRoom_Text_IntroSpeech:
     .string "Someone my age making it this far… \n"
-    .string "Damn, that's amazing...\p"
+    .string "Damn, that's amazing…\p"
     .string "Surrounded by old folks here with their\n"
     .string "philosophical talk about focus and all that crap!\p"
     .string "My name is DAEMON! My dream was simply to reach the\n"
@@ -103,7 +103,7 @@ EverGrandeCity_DrakesRoom_Text_Defeat:
 	.string "and you actually beat me? Crazy!\n"
 	.string "This is a dream come true! I need more!\p"
 	.string "I need to battle you again right now!\n"
-	.string "Oh, wait… I'm out of Pokémon! Dammit!$"
+	.string "Oh, wait… I'm out of POKéMON! Dammit!$"
 
 EverGrandeCity_DrakesRoom_Text_PostBattleSpeech:
 	.string "You deserve every credit for coming\n"

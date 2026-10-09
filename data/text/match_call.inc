@@ -1193,7 +1193,7 @@ MatchCall_PersonalizedText49::
 	.string "{STR_VAR_1} here!\p"
 	.string "I'm a SAILOR, but I'm not on a boat\n"
 	.string "now.\p"
-	.string "It makes me wonder--what should\n"
+	.string "It makes me wonder, what should\n"
 	.string "a SAILOR on land be called?\p"
 	.string "That's what I've been thinking\n"
 	.string "while staring out across the waves.\p"
@@ -1516,7 +1516,7 @@ MatchCall_BattleFrontierRecordStreakText1::
 	.string "I heard the news!\p"
 	.string "They say you did excellent at\n"
 	.string "the {STR_VAR_2}.\p"
-	.string "It's awesome--{STR_VAR_3} straight wins?\n"
+	.string "It's awesome, {STR_VAR_3} straight wins?\n"
 	.string "See you!$"
 
 MatchCall_BattleFrontierRecordStreakText2::
@@ -2226,7 +2226,7 @@ MatchCall_Text_TateLiza4::
 MatchCall_Text_Juan1::
 	.string "JUAN: Hmm…\n"
 	.string "{PLAYER}{KUN}… Was it?\p"
-	.string "Our battle together--it brought\n"
+	.string "Our battle together, it brought\n"
 	.string "to me memories of when I first\l"
 	.string "encountered WALLACE.\p"
 	.string "Perhaps you are a genius who may\n"
@@ -2568,7 +2568,7 @@ MatchCall_Text_Brendan13::
 	.string "POKéDEX successfully?\p"
 	.string "I heard a rumor that there are\n"
 	.string "super-ancient POKéMON out there.\l"
-	.string "And not just one--three!\p"
+	.string "And not just one, three!\p"
 	.string "I'd love to catch even one…$"
 
 MatchCall_Text_Brendan14::

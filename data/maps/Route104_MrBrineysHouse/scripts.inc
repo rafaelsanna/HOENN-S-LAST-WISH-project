@@ -265,7 +265,7 @@ Route104_MrBrineysHouse_Text_NeedToMakeDeliveriesSailToDewford:
 # 133 "data/maps/Route104_MrBrineysHouse/scripts.pory"
 	.string "What you need me to do is no problem\n"
 # 134 "data/maps/Route104_MrBrineysHouse/scripts.pory"
-	.string "at all--I'm the man for the job!\p"
+	.string "at all, I'm the man for the job!\p"
 # 135 "data/maps/Route104_MrBrineysHouse/scripts.pory"
 	.string "First, we'll set sail for DEWFORD.$"
 # 136 "data/maps/Route104_MrBrineysHouse/scripts.pory"
@@ -283,7 +283,7 @@ Route104_MrBrineysHouse_Text_NeedToDeliverPackageSailToDewford:
 # 142 "data/maps/Route104_MrBrineysHouse/scripts.pory"
 	.string "What you need me to do is no problem\n"
 # 143 "data/maps/Route104_MrBrineysHouse/scripts.pory"
-	.string "at all--I'm the man for the job!\p"
+	.string "at all, I'm the man for the job!\p"
 # 144 "data/maps/Route104_MrBrineysHouse/scripts.pory"
 	.string "First, we'll set sail for DEWFORD.$"
 # 145 "data/maps/Route104_MrBrineysHouse/scripts.pory"
@@ -313,4 +313,4 @@ Route104_MrBrineysHouse_Text_TellMeWheneverYouWantToSail:
 # 157 "data/maps/Route104_MrBrineysHouse/scripts.pory"
 Route104_MrBrineysHouse_Text_Peeko:
 # 158 "data/maps/Route104_MrBrineysHouse/scripts.pory"
-	.string "NAMI: Mooouuuh...$"
+	.string "NAMI: Mooouuuh…$"

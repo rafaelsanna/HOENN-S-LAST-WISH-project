@@ -297,7 +297,7 @@ VerdanturfTowncafe_Text_CalendulaPraisesLuka:
 
 VerdanturfTowncafe_Text_AcaciaCometMeasurements:
 	.string "Now, to get into the reason we're\n"
-	.string "all here...\p"
+	.string "all here…\p"
 	.string "CALENDULA and I have been\n"
 	.string "noticing some strange phenomena\l"
 	.string "occurring at various locations in\l"
@@ -453,7 +453,7 @@ VerdanturfTowncafe_Text_Barista:
 	.string "when the beans are brewing.$"
 
 VerdanturfTowncafe_Text_Boy:
-	.string "I asked her here for coffee...\p"
+	.string "I asked her here for coffee…\p"
 	.string "Now I've forgotten everything\n"
 	.string "I was going to say.$"
 

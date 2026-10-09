@@ -325,7 +325,7 @@ NightmareRealm1_Movement_EscavalierCloseIn:
 @ =============================================================================
 
 NightmareRealm1_Text_JirachiPleas:
-    .string "You can hear us...\p"
+    .string "You can hear us…\p"
     .string "We are JIRACHI and CELEBI.\p"
     .string "The time warp that brought you\n"
     .string "here… it fractured something.\p"

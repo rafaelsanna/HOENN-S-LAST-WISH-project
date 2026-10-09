@@ -50,6 +50,6 @@ FortreeCity_PokemonCenter_1F_Text_RecordCornerIsNeat:
 FortreeCity_PokemonCenter_1F_Text_DoYouKnowAboutPokenav:
 	.string "A DEXNAV? From Devon?\n"
 	.string "Technology sees what we can't.\l"
-	.string "Question is... should it?$"
+	.string "Question is… should it?$"
 
 `

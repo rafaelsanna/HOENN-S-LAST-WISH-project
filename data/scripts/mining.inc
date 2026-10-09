@@ -89,7 +89,7 @@ Text_DailyMiningLocked:
 	.string "but you do not know how to mine it.$"
 
 Text_DailyMiningEmpty:
-	.string "You tap the wall...\p"
+	.string "You tap the wall…\p"
 	.string "There is no response.$"
 
 Text_DailyMiningAlreadyTried:
@@ -101,7 +101,7 @@ Text_DailyMiningNoEnergy:
 	.string "more walls today.$"
 
 Text_DailyMiningPrompt:
-	.string "You tap the wall...\p"
+	.string "You tap the wall…\p"
 	.string "Something is buried here!\n"
 	.string "Mine this spot?$"
 

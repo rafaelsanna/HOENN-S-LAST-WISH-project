@@ -138,7 +138,7 @@ VerdanturfTown_Text_GuyTryingToBustThroughCave:
 VerdanturfTown_Text_EasyToGetToRustboroNow:
 	.string "That cave next to the POKéMON MART\n"
 	.string "is now a tunnel to the other side.\p"
-	.string "It's great--it's easy to go shop for\n"
+	.string "It's great, it's easy to go shop for\n"
 	.string "new DEVON products in RUSTBORO now.$"
 
 VerdanturfTown_Text_TownSign:
@@ -169,24 +169,24 @@ VerdanturfTown_Text_OldJudgeIntro:
 	.string "I even served as a JUDGE for the\n"
 	.string "ELITE FOUR once.\p"
 	.string "But when I retired, I realized\n"
-	.string "something rather sad...\p"
+	.string "something rather sad…\p"
 	.string "The glory always goes to the\n"
 	.string "TRAINERS and their POKéMON.\p"
 	.string "Hardly anyone remembers the people\n"
 	.string "who make the difficult calls.\p"
-	.string "Tell me... Do you think a JUDGE's\n"
+	.string "Tell me… Do you think a JUDGE's\n"
 	.string "work is important?$"
 
 VerdanturfTown_Text_OldJudgeNo:
-	.string "OLD JUDGE: Yeah... I understand.\n"
+	.string "OLD JUDGE: Yeah… I understand.\n"
 	.string "The fame belongs to the battlers.\p"
 	.string "That's how it's always been.$"
 
 VerdanturfTown_Text_OldJudgeYes:
-	.string "OLD JUDGE: You... really think so?\n"
+	.string "OLD JUDGE: You… really think so?\n"
 	.string "You think serving the ELITE FOUR\p"
 	.string "as a JUDGE was impressive?\p"
-	.string "Heh... Thank you. I haven't heard\n"
+	.string "Heh… Thank you. I haven't heard\n"
 	.string "words like that in a long time.\p"
 	.string "Please, take this RED CARD.\n"
 	.string "Consider it an old JUDGE's thanks.$"

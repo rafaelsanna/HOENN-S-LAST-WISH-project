@@ -151,7 +151,7 @@ RustboroCity_Mart_Text_BuyingHealsInCaseOfShroomish:
 # 76 "data/maps/RustboroCity_Mart/scripts.pory"
 	.string "Sometimes I wonder what she's found\n"
 # 77 "data/maps/RustboroCity_Mart/scripts.pory"
-	.string "up there... Must be amazing!$"
+	.string "up there… Must be amazing!$"
 # 78 "data/maps/RustboroCity_Mart/scripts.pory"
 
 # 79 "data/maps/RustboroCity_Mart/scripts.pory"
@@ -191,4 +191,4 @@ RustboroCity_Mart_Text_GettingEscapeRopeJustInCase:
 # 96 "data/maps/RustboroCity_Mart/scripts.pory"
 	.string "Or maybe a POKéMON with DIG…\l"
 # 97 "data/maps/RustboroCity_Mart/scripts.pory"
-	.string "Just in case I need to escape...$"
+	.string "Just in case I need to escape…$"

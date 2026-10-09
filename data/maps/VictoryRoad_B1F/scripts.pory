@@ -165,7 +165,7 @@ VictoryRoad_B1F_Text_MamoruChallenge:
 	.string "Will you face my ICE PUNCH?$"
 
 VictoryRoad_B1F_Text_MamoruDefeat:
-	.string "MAMORU: Even ice can crack...\n"
+	.string "MAMORU: Even ice can crack…\n"
 	.string "Well fought.$"
 
 VictoryRoad_B1F_Text_MamoruReward:
@@ -185,7 +185,7 @@ VictoryRoad_B1F_Text_RyoChallenge:
 	.string "RYO: IPPO, MAMORU, and I\n"
 	.string "trained in the same dojo.\p"
 	.string "Our SENSEI made us choose a path.\n"
-	.string "Mine was speed--pure lightning.\p"
+	.string "Mine was speed, pure lightning.\p"
 	.string "A punch should land before your\n"
 	.string "opponent sees it coming.\p"
 	.string "Think you can handle my\n"

@@ -1227,7 +1227,7 @@ PhoenixTown_Text_ZennoWait:
 # 614 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_AuroraSilent:
 # 615 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: ...$"
+	.string "AURORA: …$"
 # 616 "data/maps/PhoenixTown/scripts.pory"
 
 # 617 "data/maps/PhoenixTown/scripts.pory"
@@ -1315,7 +1315,7 @@ PhoenixTown_Text_LukaNoAnswers:
 # 658 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_AuroraSoYouCame:
 # 659 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: ...\p"
+	.string "AURORA: …\p"
 # 660 "data/maps/PhoenixTown/scripts.pory"
 	.string "So you came.\n"
 # 661 "data/maps/PhoenixTown/scripts.pory"
@@ -1379,7 +1379,7 @@ PhoenixTown_Text_AuroraCometSavior:
 # 690 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_ZinniaWhatDoesThatMean:
 # 691 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZINNIA: What...?\p"
+	.string "ZINNIA: What…?\p"
 # 692 "data/maps/PhoenixTown/scripts.pory"
 	.string "What is that supposed to mean?$"
 # 693 "data/maps/PhoenixTown/scripts.pory"
@@ -1387,7 +1387,7 @@ PhoenixTown_Text_ZinniaWhatDoesThatMean:
 # 694 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_ZennoWhatDoesThatMean:
 # 695 "data/maps/PhoenixTown/scripts.pory"
-	.string "ZENNO: What...?\p"
+	.string "ZENNO: What…?\p"
 # 696 "data/maps/PhoenixTown/scripts.pory"
 	.string "What is that supposed to mean?$"
 # 697 "data/maps/PhoenixTown/scripts.pory"
@@ -1425,7 +1425,7 @@ PhoenixTown_Text_LukaWhatGift:
 # 713 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_AuroraNotYou:
 # 714 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: Hm...\p"
+	.string "AURORA: Hm…\p"
 # 715 "data/maps/PhoenixTown/scripts.pory"
 	.string "You are more attuned than most,\n"
 # 716 "data/maps/PhoenixTown/scripts.pory"
@@ -1435,7 +1435,7 @@ PhoenixTown_Text_AuroraNotYou:
 # 718 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_AuroraNorYou:
 # 719 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: ...\p"
+	.string "AURORA: …\p"
 # 720 "data/maps/PhoenixTown/scripts.pory"
 	.string "Another of unusual ability,\n"
 # 721 "data/maps/PhoenixTown/scripts.pory"
@@ -1445,7 +1445,7 @@ PhoenixTown_Text_AuroraNorYou:
 # 723 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_AuroraFinalBattle:
 # 724 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: Oh...\p"
+	.string "AURORA: Oh…\p"
 # 725 "data/maps/PhoenixTown/scripts.pory"
 	.string "I sense it in you. You have\n"
 # 726 "data/maps/PhoenixTown/scripts.pory"
@@ -1465,7 +1465,7 @@ PhoenixTown_Text_AuroraFinalBattle:
 # 733 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_AuroraFinalBattleDefeat:
 # 734 "data/maps/PhoenixTown/scripts.pory"
-	.string "AURORA: I see it now...$"
+	.string "AURORA: I see it now…$"
 # 735 "data/maps/PhoenixTown/scripts.pory"
 
 # 736 "data/maps/PhoenixTown/scripts.pory"
@@ -1483,7 +1483,7 @@ PhoenixTown_Text_AuroraPlayerHasGift:
 # 742 "data/maps/PhoenixTown/scripts.pory"
 PhoenixTown_Text_LukaWhatWasThat:
 # 743 "data/maps/PhoenixTown/scripts.pory"
-	.string "LUKA: What... was that?$"
+	.string "LUKA: What… was that?$"
 # 744 "data/maps/PhoenixTown/scripts.pory"
 
 # 745 "data/maps/PhoenixTown/scripts.pory"

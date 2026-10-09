@@ -1421,7 +1421,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_Apprentice15Intro::
 # 711 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_Apprentice15Mon1::
 # 712 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
-	.string "{STR_VAR_3} said this team'll be good--\n"
+	.string "{STR_VAR_3} said this team'll be good,\n"
 # 713 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 	.string "one {STR_VAR_2} with {STR_VAR_1} and$"
 # 714 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
@@ -1667,7 +1667,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_BeautyReject::
 # 834 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 	.string "How disappointing!\p"
 # 835 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
-	.string "We two together--we would've been\n"
+	.string "We two together, we would've been\n"
 # 836 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 	.string "the best!$"
 # 837 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
@@ -2157,7 +2157,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_RunningTriathleteMIntro::
 # 1079 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_RunningTriathleteMMon1::
 # 1080 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
-	.string "I go on runs with my durable team--\n"
+	.string "I go on runs with my durable team,\n"
 # 1081 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 	.string "one {STR_VAR_2} with {STR_VAR_1} and$"
 # 1082 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
@@ -2505,7 +2505,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_ExpertFMon1::
 # 1253 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_ExpertFMon2Ask::
 # 1254 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
-	.string "one {STR_VAR_2} with {STR_VAR_1}--\n"
+	.string "one {STR_VAR_2} with {STR_VAR_1},\n"
 # 1255 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 	.string "they're what I have.\p"
 # 1256 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
@@ -2711,7 +2711,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_BugManiacMon1::
 # 1356 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_BugManiacMon2Ask::
 # 1357 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
-	.string "one {STR_VAR_2} with {STR_VAR_1}--\n"
+	.string "one {STR_VAR_2} with {STR_VAR_1},\n"
 # 1358 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 	.string "they are what I found.\p"
 # 1359 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
@@ -3301,7 +3301,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_PsychicFMon1::
 # 1651 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_PsychicFMon2Ask::
 # 1652 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
-	.string "one {STR_VAR_2} with {STR_VAR_1}--\n"
+	.string "one {STR_VAR_2} with {STR_VAR_1},\n"
 # 1653 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"
 	.string "they're my disciples.\p"
 # 1654 "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.pory"

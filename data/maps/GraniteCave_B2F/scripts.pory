@@ -138,7 +138,7 @@ GraniteCave_Text_MagmaWorking:
 GraniteCave_Text_MagmaIntro:
     .string "Tch. Just our luck.\n"
     .string "We've been stuck in this hole all day,\l"
-    .string "digging for whatever the boss wants...\p"
+    .string "digging for whatever the boss wants…\p"
     .string "And then YOU stroll in here with that\n"
     .string "ridiculous outfit like you own the place.\p"
     .string "You got POKéMON on you?\p"
@@ -153,9 +153,9 @@ GraniteCave_Text_MagmaIntro:
     .string "Team Magma today, kid!$"
 
 GraniteCave_Text_MagmaLose:
-    .string "You've gotta be kidding...\n"
+    .string "You've gotta be kidding…\n"
     .string "We lose! And to a kid dressed like that?\p"
-    .string "Ugh... Whatever.\n"
+    .string "Ugh… Whatever.\n"
     .string "We're getting out of this stupid cave.\p"
     .string "But don't think this is over.\n"
     .string "Team Magma doesn't forget.$"

@@ -65,7 +65,7 @@ Route106_Text_TrainerTips:
 
 Route106_Text_BerryGirl_Give:
     .string "Yo! You're a trainer too?\n"
-    .string "Let me tell you something...\p"
+    .string "Let me tell you something…\p"
     .string "I was trying to beat the Gym Leader\n"
     .string "here, and I trained really hard!\p"
     .string "To prepare, I grew lots of\n"
@@ -76,7 +76,7 @@ Route106_Text_BerryGirl_Give:
     .string "with you! Here!$"
 
 Route106_Text_BerryGirl_After:
-    .string "It's so hot here...\p"
+    .string "It's so hot here…\p"
     .string "I hope you can beat the gym!$"
 
 

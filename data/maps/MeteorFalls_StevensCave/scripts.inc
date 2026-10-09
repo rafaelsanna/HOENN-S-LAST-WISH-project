@@ -93,7 +93,7 @@ MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst:
 # 47 "data/maps/MeteorFalls_StevensCave/scripts.pory"
 MeteorFalls_StevensCave_Text_StevenDefeat:
 # 48 "data/maps/MeteorFalls_StevensCave/scripts.pory"
-	.string "You've grown so strong...\p"
+	.string "You've grown so strong…\p"
 # 49 "data/maps/MeteorFalls_StevensCave/scripts.pory"
 	.string "I'm proud of you!$"
 # 50 "data/maps/MeteorFalls_StevensCave/scripts.pory"

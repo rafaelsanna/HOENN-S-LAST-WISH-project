@@ -1255,7 +1255,7 @@ MauvilleCity_GameCorner_Text_InfoLottery:
 	.string "have different wager tiers,\p"
 	.string "and each one can award COMMON,\n"
 	.string "UNCOMMON, RARE, or ULTRA-RARE\l"
-	.string "POKeMON.$"
+	.string "POKéMON.$"
 
 MauvilleCity_GameCorner_Text_ComeAgainForInfo:
 	.string "Please enjoy your time at the\n"
@@ -1623,15 +1623,15 @@ MauvilleCity_GameCorner_Text_Placeholder9:
 	.string "watch the races.$"
 
 MauvilleCity_GameCorner_Text_Placeholder10:
-	.string "Uh... I really have no idea which\n"
-	.string "Pokemon to bet on. Got any suggestions?$"
+	.string "Uh… I really have no idea which\n"
+	.string "POKéMON to bet on. Got any suggestions?$"
 
 MauvilleCity_GameCorner_Text_Placeholder11:
 	.string "My husband spends all day here betting\n"
 	.string "on races. We've just barely been\l"
 	.string "breaking even.\p"
 	.string "Hopefully he doesn't lose our entire\n"
-	.string "retirement fund...$"
+	.string "retirement fund…$"
 
 MauvilleCity_GameCorner_Text_Placeholder12:
 	.string "I brought my girlfriend here on a\n"
@@ -1644,11 +1644,11 @@ MauvilleCity_GameCorner_Text_Placeholder13:
 
 MauvilleCity_GameCorner_Text_Placeholder14:
 	.string "I've already spent so many credits\n"
-	.string "on the gacha machines here...\p"
+	.string "on the gacha machines here…\p"
 	.string "Well, surely a little more won't hurt!$"
 
 MauvilleCity_GameCorner_Text_Placeholder15:
-	.string "I lost everything...\p"
+	.string "I lost everything…\p"
 	.string "I can't even afford a drink to\n"
 	.string "drown my sorrows.$"
 
@@ -1663,7 +1663,7 @@ MauvilleCity_GameCorner_Text_Placeholder17:
 	.string "The key is to not gamble!$"
 
 MauvilleCity_GameCorner_Text_Placeholder18:
-	.string "It's a Pokemon race! Place your\n"
+	.string "It's a POKéMON race! Place your\n"
 	.string "bet at the terminals on either side.$"
 
 
@@ -2027,7 +2027,7 @@ MauvilleCity_GameCorner_Text_PlayGachaUltra:
 
 MauvilleCity_GameCorner_Text_GachaRefundExtraCoins:
 	.string "You've already collected every\n"
-	.string "possible POKeMON from this machine.\p"
+	.string "possible POKéMON from this machine.\p"
 	.string "We refunded the extra {STR_VAR_1}\n"
 	.string "COINS from your wager.$"
 
@@ -2222,7 +2222,7 @@ MauvilleCity_GameCorner_Text_VoltorbSpinPickNumber:
 
 MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked:
 	.string "You picked {STR_VAR_1}!\n"
-	.string "All right, VOLTORB... ROLL!$"
+	.string "All right, VOLTORB… ROLL!$"
 
 MauvilleCity_GameCorner_Text_VoltorbSpinResult:
 	.string "VOLTORB rolled a {STR_VAR_1}!$"

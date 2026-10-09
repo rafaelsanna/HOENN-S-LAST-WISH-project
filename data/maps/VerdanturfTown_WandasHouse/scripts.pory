@@ -126,7 +126,7 @@ VerdanturfTown_WandasHouse_Text_WallyGoneThatFar:
 	.string "UNCLE: Is that right?\n"
 	.string "LUKA's gone away that far all by\l"
 	.string "himself…\p"
-	.string "Well, I have to give him credit--he is\n"
+	.string "Well, I have to give him credit, he is\n"
 	.string "my little brother's son.$"
 
 VerdanturfTown_WandasHouse_Text_MeetWanda:

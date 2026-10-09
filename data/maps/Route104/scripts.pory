@@ -2594,7 +2594,7 @@ CaesarIntro::
 
 CaesarLose::
 # 13 "data/maps/Route104/scripts.pory"
-	.string "Maybe you can...$"
+	.string "Maybe you can…$"
 
 Route104_Text_BrineyRivalWaiting:
 	.string "This is MR. BRINEY's place.\n"

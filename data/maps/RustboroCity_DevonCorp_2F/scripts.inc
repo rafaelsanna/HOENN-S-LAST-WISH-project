@@ -1183,7 +1183,7 @@ RustboroCity_DevonCorp_2F_Text_FossilRegeneratorTakesTime:
 # 592 "data/maps/RustboroCity_DevonCorp_2F/scripts.pory"
 	.string "is incredible.\p"
 # 593 "data/maps/RustboroCity_DevonCorp_2F/scripts.pory"
-	.string "But it has one drawback--it takes\n"
+	.string "But it has one drawback, it takes\n"
 # 594 "data/maps/RustboroCity_DevonCorp_2F/scripts.pory"
 	.string "a long time to work.\p"
 # 595 "data/maps/RustboroCity_DevonCorp_2F/scripts.pory"

@@ -278,7 +278,7 @@ FortreeCity_Gym_Text_HumbertoPostBattle:
 	.string "Freedom demands courage!$"
 
 FortreeCity_Gym_Text_DariusIntro:
-	.string "Flying POKEMON aren't\n"
+	.string "Flying POKéMON aren't\n"
 	.string "all the same.\p"
 	.string "Some soar.\n"
 	.string "Some dive.\p"
@@ -299,7 +299,7 @@ FortreeCity_Gym_Text_WinonaIntro:
 	.string "the FORTREE GYM.\p"
 	.string "The sky is my true home.\n"
 	.string "Up there, I feel limitless.\p"
-	.string "With my FLYING POKEMON,\n"
+	.string "With my FLYING POKéMON,\n"
 	.string "I chase the wind itself.\p"
 	.string "Show me, can you battle\n"
 	.string "with the same freedom?$"

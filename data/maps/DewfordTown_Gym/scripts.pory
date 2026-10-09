@@ -354,7 +354,7 @@ DewfordTown_Gym_Text_TakaoIntro:
 	.string "Come on!$"
 
 DewfordTown_Gym_Text_TakaoDefeat:
-	.string "Not enough power...$"
+	.string "Not enough power…$"
 
 DewfordTown_Gym_Text_TakaoPostBattle:
 	.string "Your skill overcame my strength!\n"
@@ -367,7 +367,7 @@ DewfordTown_Gym_Text_FruscianteIntro:
 	.string "guitar tones! Let's jam!$"
 
 DewfordTown_Gym_Text_FruscianteDefeat:
-	.string "What a killer solo...\n"
+	.string "What a killer solo…\n"
 	.string "You broke my groove!$"
 
 DewfordTown_Gym_Text_FrusciantePostBattle:
@@ -382,12 +382,12 @@ DewfordTown_Gym_Text_LauraIntro:
 	.string "I blast ROCK music in here!\p"
 	.string "The dark? I don't care about that!\n"
 	.string "I grew up hanging with RENTON!\p"
-	.string "Street fights, loud nights, bad lighting...\n"
+	.string "Street fights, loud nights, bad lighting…\n"
 	.string "This Gym is exactly my vibe!$"
 
 DewfordTown_Gym_Text_LauraDefeat:
 	.string "Waaaah!\n"
-	.string "I lost! No way...$"
+	.string "I lost! No way…$"
 
 DewfordTown_Gym_Text_LauraPostBattle:
 	.string "Huh? Me and RENTON?\n"
@@ -396,19 +396,19 @@ DewfordTown_Gym_Text_LauraPostBattle:
 	.string "Stop imagining stuff!$"
 
 DewfordTown_Gym_Text_LilithIntro:
-	.string "Ufufu...\p"
+	.string "Ufufu…\p"
 	.string "You, with those weird clothes!\n"
 	.string "Stumbling around in the dark?$"
 
 DewfordTown_Gym_Text_LilithDefeat:
-	.string "Oh, you... weirdo...\n"
+	.string "Oh, you… weirdo…\n"
 	.string "I don't want to know you!$"
 
 DewfordTown_Gym_Text_LilithPostBattle:
 	.string "You deserve to get lost and end up\n"
 	.string "back at the entrance!\p"
 	.string "We get used to the dark here.\n"
-	.string "Just like street fights... the more,\l"
+	.string "Just like street fights… the more,\l"
 	.string "the better we become!$"
 
 DewfordTown_Gym_Text_BrendenIntro:
@@ -467,7 +467,7 @@ DewfordTown_Gym_Text_BrawlyDefeat:
 	.string "I thought you would!\p"
 	.string "You totally wrecked me!\n"
 	.string "Alright, take this GYM BADGE!\p"
-	.string "But you'd better run along now...\n"
+	.string "But you'd better run along now…\n"
 	.string "or you might pick a real fight with me!\p"
 	.string "HAHAHAHAHA!$"
 
@@ -501,7 +501,7 @@ DewfordTown_Gym_Text_RegisteredBrawly:
 
 DewfordTown_Gym_Text_BrawlyPostBattle:
 	.string "Heh, I can tell you've been in plenty\n"
-	.string "of fights, kid... HAHAHA!\l"
+	.string "of fights, kid… HAHAHA!\l"
 	.string "You know how to have fun!\p"
 	.string "Let's clash again someday, yeah?\n"
 	.string "Or hang out and trade street stories!\p"
@@ -540,7 +540,7 @@ DewfordTown_Gym_Text_BrawlyPostRematch:
 DewfordTown_Gym_Text_BrawlyRematchNeedTwoMons:
 	.string "RENTON: Heh, knew you'd come back,\n"
 	.string "kid! Real fighters always do.\p"
-	.string "But hold up... You've only got one\n"
+	.string "But hold up… You've only got one\n"
 	.string "POKéMON ready to throw down.\p"
 	.string "Bring at least two POKéMON and\n"
 	.string "then we'll have a real fight!$"

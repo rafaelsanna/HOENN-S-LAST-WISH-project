@@ -85,7 +85,7 @@ LavaridgeTown_Mart_Text_XSpeedFirstStrike:
 # 43 "data/maps/LavaridgeTown_Mart/scripts.pory"
 	.string "They say the steam carries whispers\n"
 # 44 "data/maps/LavaridgeTown_Mart/scripts.pory"
-	.string "of ancient POKéMON dreams...$"
+	.string "of ancient POKéMON dreams…$"
 # 45 "data/maps/LavaridgeTown_Mart/scripts.pory"
 
 # 46 "data/maps/LavaridgeTown_Mart/scripts.pory"
@@ -107,4 +107,4 @@ LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney:
 # 54 "data/maps/LavaridgeTown_Mart/scripts.pory"
 	.string "Their battle scarred the peak forever.\n"
 # 55 "data/maps/LavaridgeTown_Mart/scripts.pory"
-	.string "Even now, the volcano remembers...$"
+	.string "Even now, the volcano remembers…$"

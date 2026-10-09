@@ -568,16 +568,16 @@ LittlerootTown_01_Text_Question:
 	.string "Play prologue?$"
 
 LittlerootTown_01_Text_JirachiTimeWarp:
-	.string "You can wake up now...$"
+	.string "You can wake up now…$"
 
 LittlerootTown_01_Text_No:
-	.string "You can wake up now...$"
+	.string "You can wake up now…$"
 
 LittlerootTown_01_Text_CelebiWarning:
 	.string "CELEBI: {PLAYER}{KUN}…\p"
 	.string "Do not fear this place.\n"
 	.string "What you see is only a dream…\p"
-	.string "You will soon return to your world...\n"
+	.string "You will soon return to your world…\n"
 	.string "to a broken reality you must restore.\p"
 	.string "A fragment of a future that must\n"
 	.string "never be allowed to happen.\p"
@@ -613,7 +613,7 @@ LittlerootTown_01_Text_JirachiWish:
 	.string "JIRACHI: I am the Wish POKéMON!\nMake a wish and I might grant it!$"
 
 LittlerootTown_01_Text_JirachiSleep:
-	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
+	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years… what year is it?$"
 
 LittlerootTown_01_Text_JirachiGrant:
 	.string "JIRACHI: They say I can grant any wish!\nWhat would you wish for?$"

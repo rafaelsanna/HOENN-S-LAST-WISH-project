@@ -124,7 +124,7 @@ LittlerootTown_2_Text_YouHaveBothNidoran:
 
 LittlerootTown_2_Text_UseMoonStoneToEvolve:
 	.string "Moon Stones can evolve certain\n"
-	.string "Pokémon like Nidorina and Nidorino!$"
+	.string "POKéMON like Nidorina and Nidorino!$"
 
 LittlerootTown_2_Text_ThisIsMaleNidoran:
 	.string "This is a male Nidoran!$"
@@ -139,17 +139,17 @@ LittlerootTown_2_Text_NeedBothNidoran:
 
 LittlerootTown_2_Text_NoMaleNidoran:
 	.string "This is a male Nidoran!\p"
-	.string "Hmm... I don't see one in your party.\n"
+	.string "Hmm… I don't see one in your party.\n"
 	.string "You still need this one!$"
 
 LittlerootTown_2_Text_NoFemaleNidoran:
 	.string "This is a female Nidoran!\p"
-	.string "Hmm... I don't see one in your party.\n"
+	.string "Hmm… I don't see one in your party.\n"
 	.string "You still need this one!$"
 
 LittlerootTown_2_Text_DefaultDialogue:
 	.string "Moon Stones are fascinating!\n"
-	.string "They trigger evolution in some Pokémon.$"
+	.string "They trigger evolution in some POKéMON.$"
 
 
 

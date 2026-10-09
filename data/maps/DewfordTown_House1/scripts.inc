@@ -63,7 +63,7 @@ DewfordTown_House1_Text_LifeGoesSlowlyOnIsland:
 # 32 "data/maps/DewfordTown_House1/scripts.pory"
 	.string "island. But being surrounded by the\l"
 # 33 "data/maps/DewfordTown_House1/scripts.pory"
-	.string "beautiful sea--that's happiness, too.$"
+	.string "beautiful sea, that's happiness, too.$"
 # 34 "data/maps/DewfordTown_House1/scripts.pory"
 
 # 35 "data/maps/DewfordTown_House1/scripts.pory"

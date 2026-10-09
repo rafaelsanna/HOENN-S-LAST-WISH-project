@@ -451,7 +451,7 @@ JaggedPass_Text_GruntDefeat::
 JaggedPass_Text_GoWhereverYouWant::
 # 299 "data/maps/JaggedPass/scripts.pory"
 	.string "Okay, oh-kay!\n"
-	.string "I admit it--you're strong!\p"
+	.string "I admit it, you're strong!\p"
 	.string "Don't worry about me.\n"
 	.string "Go wherever you want!$"
 

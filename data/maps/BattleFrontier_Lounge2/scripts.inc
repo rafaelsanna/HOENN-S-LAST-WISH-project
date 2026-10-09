@@ -687,7 +687,7 @@ BattleFrontier_Lounge2_Text_MultiBattleAdvice::
 # 344 "data/maps/BattleFrontier_Lounge2/scripts.pory"
 	.string "the BATTLE SALON.\p"
 # 345 "data/maps/BattleFrontier_Lounge2/scripts.pory"
-	.string "Just think--you may run into your\n"
+	.string "Just think, you may run into your\n"
 # 346 "data/maps/BattleFrontier_Lounge2/scripts.pory"
 	.string "friends or followers!\l"
 # 347 "data/maps/BattleFrontier_Lounge2/scripts.pory"

@@ -835,7 +835,7 @@ Route110_Text_YouGotBikeFromRydel:
 	.string "RYDEL, RYDEL, RYDEL, RYDEL, RYDEL…\n"
 	.string "That name's everywhere.\p"
 	.string "You should ride it around all over\n"
-	.string "the place--it's good advertising!$"
+	.string "the place, it's good advertising!$"
 
 Route110_Text_TwoRoads:
 	.string "The two roads, one above, one below…\p"
@@ -995,7 +995,7 @@ Route110_Text_KeepAnEyeOutForRival:
 	.string "to working out a usable formula.\l"
 	.string "We're both so grateful for your help.\p"
 	.string "Still, things have been dangerous,\n"
-	.string "what with AQUA and MAGMA around...\p"
+	.string "what with AQUA and MAGMA around…\p"
 	.string "{PLAYER}{KUN}… be safe.\n"
 	.string "Please keep an eye out for {RIVAL}.\p"
 	.string "Well, I had better get going.\n"

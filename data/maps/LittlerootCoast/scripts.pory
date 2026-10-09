@@ -63,7 +63,7 @@ text PortinariDialogue {
 }
 
 text PortinariIntro {
-	format("The rhythm of the sea… the waves... "
+	format("The rhythm of the sea… the waves… "
 	       "All of it fuels my creativity!\p"
 	       "Let me capture your style in battle!")
 }

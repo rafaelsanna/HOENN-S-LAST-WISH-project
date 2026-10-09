@@ -18,5 +18,5 @@ LonelyCave1F_Hiker::
 LonelyCave1F_Hiker_Text_0:
 # 7 "data/maps/LonelyCave_1F/scripts.pory"
 	.string "I'm getting a strange feeling from this\n"
-	.string "place. Could it be GHOST-type pokémon?$"
+	.string "place. Could it be GHOST-type POKéMON?$"
 `

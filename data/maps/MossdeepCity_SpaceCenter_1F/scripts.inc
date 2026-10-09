@@ -813,7 +813,7 @@ MossdeepCity_SpaceCenter_1F_Text_Grunt4Intro:
 # 407 "data/maps/MossdeepCity_SpaceCenter_1F/scripts.pory"
 	.string "The rocket fuel the SPACE CENTER has\n"
 # 408 "data/maps/MossdeepCity_SpaceCenter_1F/scripts.pory"
-	.string "in storage--that's what we're after.\p"
+	.string "in storage, that's what we're after.\p"
 # 409 "data/maps/MossdeepCity_SpaceCenter_1F/scripts.pory"
 	.string "We mean to take every last bit of it!$"
 # 410 "data/maps/MossdeepCity_SpaceCenter_1F/scripts.pory"

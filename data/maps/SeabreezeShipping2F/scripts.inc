@@ -313,7 +313,7 @@ SeabreezeShipping2F_Text_PresidentWarning:
 # 157 "data/maps/SeabreezeShipping2F/scripts.pory"
 	.string "PRESIDENT: If anyone learns\n"
 # 158 "data/maps/SeabreezeShipping2F/scripts.pory"
-	.string "what this company is involved in...$"
+	.string "what this company is involved in…$"
 # 159 "data/maps/SeabreezeShipping2F/scripts.pory"
 
 # 160 "data/maps/SeabreezeShipping2F/scripts.pory"

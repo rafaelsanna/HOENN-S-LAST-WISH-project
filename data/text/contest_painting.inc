@@ -37,7 +37,7 @@ gContestToughness::
 	.string "TOUGHNESS$"
 
 gContestPaintingCool1::
-	.string "Nonstop supercool--\n"
+	.string "Nonstop supercool,\n"
 	.string "the inestimable {STR_VAR_1}$"
 
 gContestPaintingCool2::
@@ -49,7 +49,7 @@ gContestPaintingCool3::
 	.string "very great {STR_VAR_1}$"
 
 gContestPaintingBeauty1::
-	.string "This century's last Venus--\n"
+	.string "This century's last Venus,\n"
 	.string "the beautiful {STR_VAR_1}$"
 
 gContestPaintingBeauty2::
@@ -57,7 +57,7 @@ gContestPaintingBeauty2::
 	.string "glittering smile$"
 
 gContestPaintingBeauty3::
-	.string "POKéMON CENTER's super idol--\n"
+	.string "POKéMON CENTER's super idol,\n"
 	.string "the incomparable {STR_VAR_1}$"
 
 gContestPaintingCute1::
@@ -72,11 +72,11 @@ gContestPaintingCute3::
 	.string "The cutie POKéMON {STR_VAR_1}$"
 
 gContestPaintingSmart1::
-	.string "The smartness maestro--\n"
+	.string "The smartness maestro,\n"
 	.string "the wise POKéMON {STR_VAR_1}$"
 
 gContestPaintingSmart2::
-	.string "{STR_VAR_1}--the one chosen\n"
+	.string "{STR_VAR_1}, the one chosen\n"
 	.string "above all POKéMON$"
 
 gContestPaintingSmart3::

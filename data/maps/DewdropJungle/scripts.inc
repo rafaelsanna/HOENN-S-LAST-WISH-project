@@ -115,4 +115,4 @@ DewdropJungle_Text_Waterfallgirl:
 # 58 "data/maps/DewdropJungle/scripts.pory"
 	.string "I like to come out here to watch\n"
 # 59 "data/maps/DewdropJungle/scripts.pory"
-	.string "the waterfall. So peaceful...$"
+	.string "the waterfall. So peaceful…$"

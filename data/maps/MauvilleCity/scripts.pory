@@ -80,7 +80,7 @@ MauvilleCity_Text_Electirizer_Congrats:
 
 MauvilleCity_Text_Electirizer_Goodbye:
     .string "Use that Electirizer wisely.\n"
-    .string "It can evolve certain Pokémon.\p"
+    .string "It can evolve certain POKéMON.\p"
     .string "Keep up the good training, young one!$"
 
 MauvilleCity_Text_Electirizer_AlreadyGot:
@@ -635,7 +635,7 @@ MauvilleCity_Text_WallyDefeat:
 
 MauvilleCity_Text_WallyIllGoBackToVerdanturf:
 	.string "LUKA: That was a great battle\n"
-	.string "but... now what are we supposed\l"
+	.string "but… now what are we supposed\l"
 	.string "to do?$"
 
 MauvilleCity_Text_ThankYouNotEnoughToBattle:
@@ -731,7 +731,7 @@ MauvilleCity_Text_WattsonThanksTakeTM:
 	.string "DEN: Wahahahaha!\p"
 	.string "I knew it, {PLAYER}{KUN}! I knew I'd made\n"
 	.string "the right choice asking you!\p"
-	.string "This is my thanks--a TM containing\n"
+	.string "This is my thanks, a TM containing\n"
 	.string "THUNDERBOLT!\p"
 	.string "Go on, you've earned it!$"
 
@@ -779,7 +779,7 @@ MauvilleCity_Text_PokemonCanJumpYouOnBike:
 	.string "Others swear strange lights flicker\n"
 	.string "near the power grid at night.\p"
 	.string "Maybe DEN's just doing experiments\n"
-	.string "again... or it could be ghosts...$"
+	.string "again… or it could be ghosts…$"
 
 
 MauvilleCity_Text_CitySign:
@@ -787,7 +787,7 @@ MauvilleCity_Text_CitySign:
 	.string "“The bright and shiny city of fun!”$"
 
 MauvilleCity_Text_GymSign:
-	.string "MAUVILLE CITY POKeMON GYM\n"
+	.string "MAUVILLE CITY POKéMON GYM\n"
 	.string "LEADER: DEN\l"
 	.string "The brilliant, electrifying prodigy!$"
 

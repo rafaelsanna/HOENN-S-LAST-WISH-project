@@ -582,7 +582,7 @@ gText_ApprenticeLevelModeThanks13::
 	.string "Hm, all right. That's {STR_VAR_1}.\n"
 	.string "I'll go there right away.\p"
 	.string "I hope I can keep hitting you up for\n"
-	.string "help--after all, you're my mentor!$"
+	.string "help, after all, you're my mentor!$"
 
 gText_ApprenticePleaseTeach14::
 	.string "Er… Um…\n"
@@ -1091,7 +1091,7 @@ gText_ApprenticeWhatHeldItem12::
 	.string "{PLAYER}, are you getting sick of me?\n"
 	.string "Nah, no way, that can't be.\p"
 	.string "Will you hear me out?\n"
-	.string "I'm looking for advice--that's what\l"
+	.string "I'm looking for advice, that's what\l"
 	.string "I'm talking about.\p"
 	.string "It's about a hold item for\n"
 	.string "my {STR_VAR_1} that'd be good.\l"
@@ -1560,7 +1560,7 @@ gText_ApprenticeWhichMon1::
 	.string "Yay! It's {PLAYER}!\n"
 	.string "Yay, you came at the right time, too!\l"
 	.string "I need your advice again!\p"
-	.string "Um, I'm all mixed up--should I use\n"
+	.string "Um, I'm all mixed up, should I use\n"
 	.string "my {STR_VAR_1} or {STR_VAR_2}…\p"
 	.string "Which do you think I should raise,\n"
 	.string "{PLAYER}?$"
@@ -1767,7 +1767,7 @@ gText_ApprenticeWhichMon12::
 	.string "the ice. I'm also looking for advice!\l"
 	.string "Are you receiving me?\l"
 	.string "You are receiving me!\p"
-	.string "My POKéMON--which should I use?\n"
+	.string "My POKéMON, which should I use?\n"
 	.string "It's either {STR_VAR_1} or {STR_VAR_2}.\l"
 	.string "Which do you choose?$"
 
@@ -2031,7 +2031,7 @@ gText_ApprenticeWhichMove10::
 	.string "for my POKéMON.\p"
 	.string "So, how about deciding for me which\n"
 	.string "kind of move I should teach?\p"
-	.string "{STR_VAR_2} or {STR_VAR_3}--which\n"
+	.string "{STR_VAR_2} or {STR_VAR_3}, which\n"
 	.string "would go with my {STR_VAR_1} best?$"
 
 gText_ApprenticeMoveThanks10::
@@ -2067,7 +2067,7 @@ gText_ApprenticeWhichMove12::
 	.string "I want your advice, can't you see?\p"
 	.string "Are you receiving me?\n"
 	.string "You are receiving me!\p"
-	.string "My {STR_VAR_1}--what should it use?\n"
+	.string "My {STR_VAR_1}, what should it use?\n"
 	.string "It's {STR_VAR_2} or {STR_VAR_3},\l"
 	.string "what do you choose?$"
 

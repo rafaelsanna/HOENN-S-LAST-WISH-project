@@ -61,7 +61,7 @@ PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
 	.string "You know, I never saw someone\n"
 	.string "using a cape like yours!\p"
 	.string "Not exactly Petalburg fashion!\n"
-	.string "You from out of region? Or just...\l"
+	.string "You from out of region? Or just…\l"
 	.string "from somewhere else?$"
 
 PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:

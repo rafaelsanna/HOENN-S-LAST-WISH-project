@@ -83,7 +83,7 @@ PetalburgCity_Mart_Text_TakeSomeAntidotesWithYou:
 	.string "Thinking of heading into\n"
 	.string "PETALBURG WOODS? Good luck.\p"
 	.string "It's dark in there, and the bugs\n"
-	.string "love to use poison moves...\p"
+	.string "love to use poison moves…\p"
 	.string "Wouldn't want your POKéMON to\n"
 	.string "keel over before you reach the other\l"
 	.string "side. Better stock up on ANTIDOTES.$"

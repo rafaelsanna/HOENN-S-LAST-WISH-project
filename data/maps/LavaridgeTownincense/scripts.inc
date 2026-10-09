@@ -297,4 +297,4 @@ LavaridgeTownincense_Text_Husband:
 # 149 "data/maps/LavaridgeTownincense/scripts.pory"
 	.string "Please, for the love of ARCEUS,\n"
 # 150 "data/maps/LavaridgeTownincense/scripts.pory"
-	.string "buy some and get it out of here...$"
+	.string "buy some and get it out of here…$"

@@ -199,7 +199,7 @@ AURORAGROVE_Text_AuroraWelcome:
 AURORAGROVE_Text_AuroraBrokenWorld:
 	.string "AURORA: This world has been broken\n"
 	.string "before.\p"
-	.string "These two POKEMON combined their\n"
+	.string "These two POKéMON combined their\n"
 	.string "power to restore it, but they are\l"
 	.string "not all-powerful.\p"
 	.string "This fragile timeline is hanging\n"
@@ -212,7 +212,7 @@ AURORAGROVE_Text_AuroraBrokenWorld:
 AURORAGROVE_Text_AuroraImbueKnowledge:
 	.string "AURORA: I will imbue you with my\n"
 	.string "knowledge, so you may borrow these\l"
-	.string "two POKEMONs' power and use it to\l"
+	.string "two POKéMON's power and use it to\l"
 	.string "influence the world within the\l"
 	.string "nightmare leaking through.\p"
 	.string "There, you will find a way to\n"

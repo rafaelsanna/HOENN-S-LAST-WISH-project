@@ -109,7 +109,7 @@ FallarborTown_Mart_Text_DecidingSkittyEvolve:
 # 55 "data/maps/FallarborTown_Mart/scripts.pory"
 	.string "much stronger.\p"
 # 56 "data/maps/FallarborTown_Mart/scripts.pory"
-	.string "But it will look so different, too...$"
+	.string "But it will look so different, too…$"
 # 57 "data/maps/FallarborTown_Mart/scripts.pory"
 
 # 58 "data/maps/FallarborTown_Mart/scripts.pory"

@@ -143,7 +143,7 @@ Route113_Text_AshCanBeFashionedIntoGlass:
 Route113_Text_FunWalkingThroughAsh:
 	.string "It's fun walking through the volcano's\n"
 	.string "ashes on the ground and grass.\p"
-	.string "You can see where you walked--it's\n"
+	.string "You can see where you walked, it's\n"
 	.string "really neat!$"
 
 Route113_Text_RouteSign111:

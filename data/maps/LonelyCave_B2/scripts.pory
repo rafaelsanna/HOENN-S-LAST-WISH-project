@@ -46,7 +46,7 @@ SeleneLose::
 
 WillIntro::
 # 27 "data/maps/LonelyCave_B2/scripts.pory"
-	.string "I sense something in here...$"
+	.string "I sense something in here…$"
 
 WillLose::
 # 31 "data/maps/LonelyCave_B2/scripts.pory"

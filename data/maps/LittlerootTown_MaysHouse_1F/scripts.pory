@@ -440,7 +440,7 @@ RivalsHouse_1F_Text_BrendanWhoAreYou:
 	.string "The whole sky was glowing with this\n"
 	.string "weird purple light!\p"
 	.string "PROFESSOR ACACIA said it might be\n"
-	.string "connected to POKeMON somehow.\p"
+	.string "connected to POKéMON somehow.\p"
 	.string "Me? Of course I made a wish.\n"
 	.string "I'm not telling you though, or it won't\l"
 	.string "come true.$"

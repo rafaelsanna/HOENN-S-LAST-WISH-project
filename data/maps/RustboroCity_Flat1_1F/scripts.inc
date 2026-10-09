@@ -65,7 +65,7 @@ RustboroCity_Flat1_1F_Text_PokemonStrange:
 # 33 "data/maps/RustboroCity_Flat1_1F/scripts.pory"
 	.string "flame. Such a dear little helper!\p"
 # 34 "data/maps/RustboroCity_Flat1_1F/scripts.pory"
-	.string "I simply love coffee… And Pokémon are\n"
+	.string "I simply love coffee… And POKéMON are\n"
 # 35 "data/maps/RustboroCity_Flat1_1F/scripts.pory"
 	.string "truly amazing, aren't they?$"
 # 36 "data/maps/RustboroCity_Flat1_1F/scripts.pory"

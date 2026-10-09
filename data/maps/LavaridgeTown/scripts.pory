@@ -491,15 +491,15 @@ LavaridgeTown_Movement_RentonLeaveSouth:
 	step_end
 
 LavaridgeTown_Text_RentonClearedQueue:
-	.string "Whoa... I don't even like POP\n"
-	.string "music, you know... Usually.\p"
+	.string "Whoa… I don't even like POP\n"
+	.string "music, you know… Usually.\p"
 	.string "But since your taste is this good,\n"
 	.string "I guess I can tell you something.\p"
-	.string "That AMATERASU... Well...\n"
+	.string "That AMATERASU… Well…\n"
 	.string "I think she's kind of my type.\p"
-	.string "...HEY! WHY ARE YOU LAUGHING?!\n"
+	.string "…HEY! WHY ARE YOU LAUGHING?!\n"
 	.string "Knock it off!\p"
-	.string "And... some of her songs are\n"
+	.string "And… some of her songs are\n"
 	.string "actually pretty good, okay?\p"
 	.string "You only got away with this\n"
 	.string "because that RADIO station is\l"
@@ -756,33 +756,33 @@ LavaridgeTown_Text_GymSign:
 
 LavaridgeTown_Text_HerbShopSign:
 	.string "POKéMON HERB SHOP\n"
-	.string "“Bitter taste--better cure!”$"
+	.string "“Bitter taste, better cure!”$"
 
 LavaridgeTown_Text_Boy:
     .string "Yo! My grandpa says\n"
     .string "it wasn't this hot here before.\p"
     .string "Something must've changed deep\n"
-    .string "in the mountain...\p"
+    .string "in the mountain…\p"
     .string "When I grow up, I'm going to\n"
     .string "check out what's going on with\l"
     .string "FIERY PATH and find rare POKéMON!$"
 
 // MAKE IT RAIN dialogue
 LavaridgeTown_Text_MakeItRainComplaint:
-	.string "Honestly... all this noise is ruining\n"
+	.string "Honestly… all this noise is ruining\n"
 	.string "the peace and quiet of LAVARIDGE!\p"
 	.string "People shouting, laughing, lining up\n"
-	.string "all day... What a nuisance.\p"
+	.string "all day… What a nuisance.\p"
 	.string "A good downpour would send them all\n"
 	.string "running for cover.\p"
 	.string "If only I had a POKéMON that could\n"
-	.string "make it rain...$"
+	.string "make it rain…$"
 
 LavaridgeTown_Text_MakeItRainCanHelp:
-	.string "Hmm... Wait a moment.\p"
+	.string "Hmm… Wait a moment.\p"
 	.string "There's something unusual about one\n"
-	.string "of your POKéMON...\p"
-	.string "Don't tell me... You can actually\n"
+	.string "of your POKéMON…\p"
+	.string "Don't tell me… You can actually\n"
 	.string "bring the rain?$"
 
 LavaridgeTown_Text_MakeItRainSuccess:
@@ -830,7 +830,7 @@ LavaridgeTown_Text_ShowQueue1:
 LavaridgeTown_Text_ShowQueueAlejandro:
 	.string "ALEJANDRO: I'm off duty right now!\p"
 	.string "I can enjoy a show too, okay?\p"
-	.string "We'll settle things later...$"
+	.string "We'll settle things later…$"
 
 LavaridgeTown_Text_ShowQueue3:
 	.string "AMATERASU's songs are so good!\n"

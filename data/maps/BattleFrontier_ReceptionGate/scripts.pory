@@ -360,7 +360,7 @@ BattleFrontier_ReceptionGate_Text_BattleDomeInfo:
 	.string "Events named Battle Tourneys are held\n"
 	.string "in this facility.\p"
 	.string "The Battle Tourneys are offered in\n"
-	.string "two courses--for SINGLE and DOUBLE\l"
+	.string "two courses, for SINGLE and DOUBLE\l"
 	.string "BATTLES.$"
 
 BattleFrontier_ReceptionGate_Text_BattlePalaceInfo:
@@ -425,7 +425,7 @@ BattleFrontier_ReceptionGate_Text_LearnAboutWhat:
 BattleFrontier_ReceptionGate_Text_LevelModeInfo:
 	.string "All the challenges at the BATTLE\n"
 	.string "FRONTIER's facilities come in\l"
-	.string "two courses--Level 50 and Open Level.$"
+	.string "two courses, Level 50 and Open Level.$"
 
 BattleFrontier_ReceptionGate_Text_Level50Info:
 	.string "The Level 50 course is open to POKéMON\n"

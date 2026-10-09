@@ -45,7 +45,7 @@ MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst:
 	.string "Give me everything you've got!$"
 
 MeteorFalls_StevensCave_Text_StevenDefeat:
-	.string "You've grown so strong...\p"
+	.string "You've grown so strong…\p"
 	.string "I'm proud of you!$"
 
 MeteorFalls_StevensCave_Text_MyPredictionCameTrue:

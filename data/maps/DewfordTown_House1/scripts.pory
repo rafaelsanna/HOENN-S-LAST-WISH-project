@@ -30,7 +30,7 @@ DewfordTown_House1_Text_LifeGoesSlowlyOnIsland:
 	.string "CITY when I married my husband here.\p"
 	.string "Life goes by slowly on this little\n"
 	.string "island. But being surrounded by the\l"
-	.string "beautiful sea--that's happiness, too.$"
+	.string "beautiful sea, that's happiness, too.$"
 
 DewfordTown_House1_Text_Zigzagoon:
 	.string "ZIGZAGOON: Guguuh!$"

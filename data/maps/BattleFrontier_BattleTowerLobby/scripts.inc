@@ -2721,7 +2721,7 @@ BattleFrontier_BattleTowerLobby_Text_ExplainTowerRules:
 # 1361 "data/maps/BattleFrontier_BattleTowerLobby/scripts.pory"
 	.string "The BATTLE TOWER is a facility where\n"
 # 1362 "data/maps/BattleFrontier_BattleTowerLobby/scripts.pory"
-	.string "four types of battles are waged--\l"
+	.string "four types of battles are waged,\l"
 # 1363 "data/maps/BattleFrontier_BattleTowerLobby/scripts.pory"
 	.string "SINGLE BATTLE, DOUBLE BATTLE, MULTI\l"
 # 1364 "data/maps/BattleFrontier_BattleTowerLobby/scripts.pory"

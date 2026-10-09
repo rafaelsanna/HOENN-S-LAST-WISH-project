@@ -335,7 +335,7 @@ RustboroCity_PokemonSchool_Text_ScottMetAlreadyCut:
 
 RustboroCity_PokemonSchool_Text_NiloIntro:
 	.string "I've been studying hard about\n"
-	.string "Pokémon battles!\p"
+	.string "POKéMON battles!\p"
 	.string "Let me show you what I've learned!$"
 
 RustboroCity_PokemonSchool_Text_NiloDefeat:
@@ -346,7 +346,7 @@ RustboroCity_PokemonSchool_Text_NiloPostBattle:
 	.string "But battling is so much fun!$"
 
 RustboroCity_PokemonSchool_Text_NiloNotEnoughMons:
-	.string "You need two Pokémon to battle\n"
+	.string "You need two POKéMON to battle\n"
 	.string "with me!$"
 
 RustboroCity_PokemonSchool_Text_JoleneIntro:
@@ -363,14 +363,14 @@ RustboroCity_PokemonSchool_Text_JolenePostBattle:
 
 RustboroCity_PokemonSchool_Text_JoleneNotEnoughMons:
 	.string "Oh, you don't have enough\n"
-	.string "Pokémon for a double battle.$"
+	.string "POKéMON for a double battle.$"
 
 RustboroCity_PokemonSchool_Text_LianIntro:
 	.string "My family is quite wealthy,\n"
-	.string "but I prefer Pokémon battles over\l"
+	.string "but I prefer POKéMON battles over\l"
 	.string "material possessions!\p"
 	.string "Let's see how you fare against my\n"
-	.string "well-bred Pokémon!$"
+	.string "well-bred POKéMON!$"
 
 RustboroCity_PokemonSchool_Text_LianDefeat:
 	.string "Incredible! Your skill surpasses\n"
@@ -383,7 +383,7 @@ RustboroCity_PokemonSchool_Text_LianPostBattle:
 
 RustboroCity_PokemonSchool_Text_LianNotEnoughMons:
 	.string "A proper double battle requires\n"
-	.string "two Pokémon on each side.$"
+	.string "two POKéMON on each side.$"
 
 RustboroCity_PokemonSchool_Text_StudentsWhoDefeatAllGetWiseGlasses:
 	.string "Whoa! Congratulations on defeating\n"

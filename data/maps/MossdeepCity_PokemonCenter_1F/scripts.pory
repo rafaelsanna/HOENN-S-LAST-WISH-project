@@ -25,16 +25,16 @@ MossdeepCity_PokemonCenter_1F_EventScript_Girl::
 	end
 
 MossdeepCity_PokemonCenter_1F_Text_GymLeaderDuoFormidable:
-	.string "When the comet passed... it filled\n"
+	.string "When the comet passed… it filled\n"
 	.string "the entire sky. Overwhelming.\p"
 	.string "But here? In Mossdeep?\n"
-	.string "It felt... gentle. Almost welcoming.\p"
+	.string "It felt… gentle. Almost welcoming.\p"
 	.string "Like the city itself exhaled\n"
 	.string "and the comet exhaled back.\p"
 	.string "People came from everywhere after.\n"
 	.string "Refugees. Survivors. They said other\l"
 	.string "towns felt the weight of it.\p"
-	.string "Here, we just felt... seen.$"
+	.string "Here, we just felt… seen.$"
 
 MossdeepCity_PokemonCenter_1F_Text_AbilitiesMightChangeMoves:
 	.string "The space center detected something\n"

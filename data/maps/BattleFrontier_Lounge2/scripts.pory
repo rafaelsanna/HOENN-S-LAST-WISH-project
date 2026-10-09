@@ -342,7 +342,7 @@ BattleFrontier_Lounge2_Text_DoubleBattleAdvice3::
 BattleFrontier_Lounge2_Text_MultiBattleAdvice::
 	.string "All sorts of TRAINERS gather in\n"
 	.string "the BATTLE SALON.\p"
-	.string "Just think--you may run into your\n"
+	.string "Just think, you may run into your\n"
 	.string "friends or followers!\l"
 	.string "You should look carefully!$"
 

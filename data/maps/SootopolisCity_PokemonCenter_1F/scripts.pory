@@ -69,9 +69,9 @@ SootopolisCity_PokemonCenter_1F_Text_AlwaysBeFriendsWithPokemon:
 	.string "And it's decided I'm worth protecting.$"
 
 SootopolisCity_PokemonCenter_1F_Text_ArentPokemonOurFriends:
-	.string "When the comet passed, every Pokémon\n"
+	.string "When the comet passed, every POKéMON\n"
 	.string "in Sootopolis fell silent.\p"
-	.string "Thousands of them. Just... stopped.\n"
+	.string "Thousands of them. Just… stopped.\n"
 	.string "Stared at the sky together.\p"
 	.string "For three minutes, this city\n"
 	.string "didn't make a sound.\p"

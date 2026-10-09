@@ -715,7 +715,7 @@ TrainerHill_Entrance_Text_ExplainTrainerHill:
 # 358 "data/maps/TrainerHill_Entrance/scripts.pory"
 	.string "The fastest times are posted on\n"
 # 359 "data/maps/TrainerHill_Entrance/scripts.pory"
-	.string "the Time Board--try competing with\l"
+	.string "the Time Board, try competing with\l"
 # 360 "data/maps/TrainerHill_Entrance/scripts.pory"
 	.string "your friends.\p"
 # 361 "data/maps/TrainerHill_Entrance/scripts.pory"

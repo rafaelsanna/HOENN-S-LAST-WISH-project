@@ -471,7 +471,7 @@ Route112_Text_OldManBlocker:
 # 236 "data/maps/Route112/scripts.pory"
 	.string "up these stairs! Maybe just after\l"
 # 237 "data/maps/Route112/scripts.pory"
-	.string "a short break on this step...$"
+	.string "a short break on this step…$"
 # 238 "data/maps/Route112/scripts.pory"
 
 # 239 "data/maps/Route112/scripts.pory"

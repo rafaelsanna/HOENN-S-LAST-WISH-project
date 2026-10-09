@@ -133,7 +133,7 @@ Route106_Text_BerryGirl_Give:
 # 67 "data/maps/Route106/scripts.pory"
     .string "Yo! You're a trainer too?\n"
 # 68 "data/maps/Route106/scripts.pory"
-    .string "Let me tell you something...\p"
+    .string "Let me tell you something…\p"
 # 69 "data/maps/Route106/scripts.pory"
     .string "I was trying to beat the Gym Leader\n"
 # 70 "data/maps/Route106/scripts.pory"
@@ -155,6 +155,6 @@ Route106_Text_BerryGirl_Give:
 # 78 "data/maps/Route106/scripts.pory"
 Route106_Text_BerryGirl_After:
 # 79 "data/maps/Route106/scripts.pory"
-    .string "It's so hot here...\p"
+    .string "It's so hot here…\p"
 # 80 "data/maps/Route106/scripts.pory"
     .string "I hope you can beat the gym!$"

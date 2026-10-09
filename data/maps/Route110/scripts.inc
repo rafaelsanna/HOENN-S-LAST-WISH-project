@@ -1673,7 +1673,7 @@ Route110_Text_YouGotBikeFromRydel:
 # 837 "data/maps/Route110/scripts.pory"
 	.string "You should ride it around all over\n"
 # 838 "data/maps/Route110/scripts.pory"
-	.string "the place--it's good advertising!$"
+	.string "the place, it's good advertising!$"
 # 839 "data/maps/Route110/scripts.pory"
 
 # 840 "data/maps/Route110/scripts.pory"
@@ -1993,7 +1993,7 @@ Route110_Text_KeepAnEyeOutForRival:
 # 997 "data/maps/Route110/scripts.pory"
 	.string "Still, things have been dangerous,\n"
 # 998 "data/maps/Route110/scripts.pory"
-	.string "what with AQUA and MAGMA around...\p"
+	.string "what with AQUA and MAGMA around…\p"
 # 999 "data/maps/Route110/scripts.pory"
 	.string "{PLAYER}{KUN}… be safe.\n"
 # 1000 "data/maps/Route110/scripts.pory"

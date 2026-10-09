@@ -295,7 +295,7 @@ SootopolisCity_Gym_B1F_Text_TiffanyPostBattle:
 # 148 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"
 SootopolisCity_Gym_B1F_Text_BethanyIntro:
 # 149 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"
-	.string "When I train with my POKEMON,\n"
+	.string "When I train with my POKéMON,\n"
 # 150 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"
 	.string "time disappears like a deep dive.$"
 # 151 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"
@@ -317,7 +317,7 @@ SootopolisCity_Gym_B1F_Text_BethanyPostBattle:
 # 159 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"
 SootopolisCity_Gym_B1F_Text_AnnikaIntro:
 # 160 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"
-	.string "Would you like to see rare POKEMON?\p"
+	.string "Would you like to see rare POKéMON?\p"
 # 161 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"
 	.string "RIO says rarity isn't about looks\n"
 # 162 "data/maps/SootopolisCity_Gym_B1F/scripts.pory"

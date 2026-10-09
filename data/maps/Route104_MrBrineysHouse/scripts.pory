@@ -131,7 +131,7 @@ Route104_MrBrineysHouse_Text_NeedToMakeDeliveriesSailToDewford:
 	.string "You're to deliver a LETTER to DEWFORD\n"
 	.string "and a package to SLATEPORT.\p"
 	.string "What you need me to do is no problem\n"
-	.string "at all--I'm the man for the job!\p"
+	.string "at all, I'm the man for the job!\p"
 	.string "First, we'll set sail for DEWFORD.$"
 
 Route104_MrBrineysHouse_Text_NeedToDeliverPackageSailToDewford:
@@ -140,7 +140,7 @@ Route104_MrBrineysHouse_Text_NeedToDeliverPackageSailToDewford:
 	.string "You're to deliver a package to\n"
 	.string "CAPT. STERN in SLATEPORT.\p"
 	.string "What you need me to do is no problem\n"
-	.string "at all--I'm the man for the job!\p"
+	.string "at all, I'm the man for the job!\p"
 	.string "First, we'll set sail for DEWFORD.$"
 
 Route104_MrBrineysHouse_Text_WhereAreWeBound:
@@ -155,6 +155,6 @@ Route104_MrBrineysHouse_Text_TellMeWheneverYouWantToSail:
 	.string "you want to set sail!$"
 
 Route104_MrBrineysHouse_Text_Peeko:
-	.string "NAMI: Mooouuuh...$"  
+	.string "NAMI: Mooouuuh…$"
 
 `

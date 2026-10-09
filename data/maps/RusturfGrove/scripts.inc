@@ -149,7 +149,7 @@ ArtistFragonard_Text_0:
 # 75 "data/maps/RusturfGrove/scripts.pory"
 	.string "forests, but I get jumped by wild\l"
 # 76 "data/maps/RusturfGrove/scripts.pory"
-	.string "pokémon sometimes!$"
+	.string "POKéMON sometimes!$"
 # 77 "data/maps/RusturfGrove/scripts.pory"
 
 # 78 "data/maps/RusturfGrove/scripts.pory"
@@ -167,7 +167,7 @@ FragonardLose::
 # 84 "data/maps/RusturfGrove/scripts.pory"
 	.string "If only I were as strong as\n"
 # 85 "data/maps/RusturfGrove/scripts.pory"
-	.string "this place was pretty...$"
+	.string "this place was pretty…$"
 # 86 "data/maps/RusturfGrove/scripts.pory"
 
 # 87 "data/maps/RusturfGrove/scripts.pory"
@@ -227,4 +227,4 @@ CutterIntro::
 # 114 "data/maps/RusturfGrove/scripts.pory"
 CutterLose::
 # 115 "data/maps/RusturfGrove/scripts.pory"
-	.string "I wasn't expecting a defeat...$"
+	.string "I wasn't expecting a defeat…$"

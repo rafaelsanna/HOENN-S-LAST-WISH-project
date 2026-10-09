@@ -161,4 +161,4 @@ RustboroCity_House1_Text_AllSortsOfPlaces:
 # 81 "data/maps/RustboroCity_House1/scripts.pory"
 	.string "worried. Now, though, that big crack\l"
 # 82 "data/maps/RustboroCity_House1/scripts.pory"
-	.string "in the ground is getting closer...$"
+	.string "in the ground is getting closer…$"

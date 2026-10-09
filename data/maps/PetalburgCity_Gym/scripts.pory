@@ -1746,7 +1746,7 @@ PetalburgCity_Gym_Text_DadGoCollectBadges:
     .string "But be cautious.\n"
     .string "Strange events have been happening,\l"
     .string "and that mysterious comet passed\l"
-	.string "recently...\p"
+	.string "recently…\p"
     .string "I have a bad feeling about it.\n"
     .string "Stay alert, {PLAYER}, and come back\l"
     .string "stronger for our GYM battle.$"
@@ -1982,7 +1982,7 @@ PetalburgCity_Gym_Text_BerkeIntro:
 	.string "I'm not going to take it easy\n"
 	.string "just because you're her apprentice.\p"
 	.string "I'll show you how brutal it is\n"
-	.string "when a POKEMON takes a critical hit!$"
+	.string "when a POKéMON takes a critical hit!$"
 	
 PetalburgCity_Gym_Text_BerkeDefeat:
 	.string "Your power…\n"
@@ -1998,7 +1998,7 @@ PetalburgCity_Gym_Text_BerkePostBadge:
 	.string "Since CALENDULA became our\n"
 	.string "LEADER, we've grown a lot.\p"
 	.string "We've learned so much about\n"
-	.string "the POKEMON world\l"
+	.string "the POKéMON world\l"
 	.string "beyond just battling.\p"
 	.string "Knowledge and strategy matter\n"
 	.string "just as much as strength now.$"
@@ -2228,7 +2228,7 @@ PetalburgCity_Gym_Text_NormanRematchNeedTwoMons:
 	.string "with at least two POKéMON.$"
 
 PetalburgCity_Gym_Text_CalendulaGaveEevee:
-    .string "CALENDULA: Oh, before you go...\p"
+    .string "CALENDULA: Oh, before you go…\p"
     .string "Since Acacia likes you, I can give\n"
     .string "you something. She isn't the only one\l"
     .string "who likes helping promising students!\p"

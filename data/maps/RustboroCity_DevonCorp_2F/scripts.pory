@@ -590,7 +590,7 @@ RustboroCity_DevonCorp_2F_Text_HandedFossilToResearcher:
 RustboroCity_DevonCorp_2F_Text_FossilRegeneratorTakesTime:
 	.string "The FOSSIL REGENERATOR, which I made,\n"
 	.string "is incredible.\p"
-	.string "But it has one drawback--it takes\n"
+	.string "But it has one drawback, it takes\n"
 	.string "a long time to work.\p"
 	.string "So, uh… How about you go for a stroll\n"
 	.string "and look around for a while?$"

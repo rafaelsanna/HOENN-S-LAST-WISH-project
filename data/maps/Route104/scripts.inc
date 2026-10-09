@@ -5191,7 +5191,7 @@ CaesarLose::
 # 2596 "data/maps/Route104/scripts.pory"
 # 13 "data/maps/Route104/scripts.pory"
 # 2597 "data/maps/Route104/scripts.pory"
-	.string "Maybe you can...$"
+	.string "Maybe you can…$"
 # 2598 "data/maps/Route104/scripts.pory"
 
 # 2599 "data/maps/Route104/scripts.pory"

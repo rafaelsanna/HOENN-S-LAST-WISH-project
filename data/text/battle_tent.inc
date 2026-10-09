@@ -233,7 +233,7 @@ SlateportCity_BattleTentLobby_Text_ExplainSlateportTent:
 	.string "If you win, you are permitted to trade\n"
 	.string "one of your rental POKéMON.\p"
 	.string "Repeat this cycle of battling and\n"
-	.string "trading--if you win three times in\l"
+	.string "trading, if you win three times in\l"
 	.string "a row, you will earn a fine prize.\p"
 	.string "If you want to interrupt your\n"
 	.string "challenge, please save the game.\p"

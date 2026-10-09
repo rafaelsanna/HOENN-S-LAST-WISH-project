@@ -103,7 +103,7 @@ RustboroCity_Text_LukaSchoolScene:
 	.string "but they didn't have anything useful\l"
 	.string "about the comet.\p"
 	.string "There were lots of books that would\n"
-	.string "help someone starting a new POKEMON\l"
+	.string "help someone starting a new POKéMON\l"
 	.string "journey, though.\p"
 	.string "You should stop by if you haven't\n"
 	.string "already.\p"
@@ -1502,17 +1502,17 @@ RustboroCity_Text_MarIntro:
 	.string "aren't you?\p"
 	.string "I'm MAR, her dad!\n"
 	.string "I'm also RIO's dad, the GYM LEADER\l"
-	.string "over in Sootopolis... her sibling.\p"
+	.string "over in Sootopolis… her sibling.\p"
 	.string "Everybody in my family trains like\n"
-	.string "an athlete... and trains POKéMON,\l"
+	.string "an athlete… and trains POKéMON,\l"
 	.string "too.\p"
 	.string "I'm a TRAINER myself, but I've been\n"
 	.string "busy with more important stuff\l"
-	.string "lately...\p"
+	.string "lately…\p"
 	.string "HAHAHA, I've said too much already!\n"
 	.string "Anyway, TERRA's plenty tough.\p"
 	.string "The last challenger I saw take her\n"
-	.string "on walked out crying...$"
+	.string "on walked out crying…$"
 
 RustboroCity_Text_MarGiveCharti:
 	.string "Here, take this.\n"
@@ -1543,8 +1543,8 @@ RustboroCity_Text_HeyThatsRustborosGymBadge:
 .string "She's tough! And a formidable\n"
 .string "climber! Look at you, with those\l"
 .string "weird clothes, all scrawny, and those\l"
-.string "dark circles under your eyes...\p"
-.string "I'm not sure you stand a chance...\p"
+.string "dark circles under your eyes…\p"
+.string "I'm not sure you stand a chance…\p"
 .string "I got mine after like 20 attempts,\n"
 .string "and I think TERRA went easy on me\l"
 .string "'cause we're climbing buddies!\p"
@@ -1563,8 +1563,8 @@ RustboroCity_Text_GymLeaderIsntEasyWithFire:
     .string "climbed Mt. Chimney with no equipment.\p"
     .string "I went to meet her just to ask for an\n"
     .string "autograph, but she challenged me to a\l"
-    .string "battle instead...\p"
-    .string "I got beaten really badly...$"
+    .string "battle instead…\p"
+    .string "I got beaten really badly…$"
 
 RustboroCity_Text_MrBrineyWalksInTheTunnel:
 	.string "The old sailor MR. BRINEY lives in\n"
@@ -1610,7 +1610,7 @@ RustboroCity_Text_TradePokemonGrowFast:
     .string "Hmph… Those climbers around Rustboro\n"
     .string "think they're so tough, climbing all\l"
     .string "day and bragging about their ROCK\l"
-	.string "Pokémon.\p"
+	.string "POKéMON.\p"
     .string "I can't stand that rowdy bunch,\n"
 	.string "so I train WATER-types just to wash\l"
 	.string "them off their precious mountains.$"
@@ -1656,7 +1656,7 @@ RustboroCity_Text_YouGotItThankYou:
 
 RustboroCity_Text_YoureLoadedWithItems:
 	.string "You're loaded with items.\n"
-	.string "I can't give you this...$"
+	.string "I can't give you this…$"
 
 RustboroCity_Text_PleaseComeWithMe:
 	.string "Excuse me, please!\n"

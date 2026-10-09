@@ -103,4 +103,4 @@ FortreeCity_PokemonCenter_1F_Text_DoYouKnowAboutPokenav:
 # 52 "data/maps/FortreeCity_PokemonCenter_1F/scripts.pory"
 	.string "Technology sees what we can't.\l"
 # 53 "data/maps/FortreeCity_PokemonCenter_1F/scripts.pory"
-	.string "Question is... should it?$"
+	.string "Question is… should it?$"

@@ -213,14 +213,14 @@ NightmarePetalburg_Text_TimeGearTurn:
 	.string "still. Turn it and leave this place?$"
 
 NightmarePetalburg_Text_CelebiTimelineRestored:
-	.string "CELEBI: {PLAYER}...\n"
+	.string "CELEBI: {PLAYER}…\n"
 	.string "Thank you.\p"
     .string "We could not break the barrier to\n"
     .string "enter this place on our own.\p"
 	.string "I can now restore this portion of the\n"
 	.string "timeline. This town will be safe.\p"
 	.string "Your path is a lonely one.\n"
-	.string "What has been broken and restored...\l"
+	.string "What has been broken and restored…\l"
 	.string "Most cannot remember it.\p"
 	.string "Still, lean on those close to you,\n"
 	.string "and continue forward.$"
@@ -234,7 +234,7 @@ NightmarePetalburg_Text_DoorWontBudge:
 
 NightmarePetalburg_Text_WhosWally:
 	.string "WALLY's house.\p"
-	.string "...\p"
+	.string "…\p"
 	.string "Who is WALLY?$"
 
 NightmarePetalburg_Text_PetalburgCity:
@@ -242,5 +242,5 @@ NightmarePetalburg_Text_PetalburgCity:
 	.string "Where people mingle with nature.$"
 
 NightmarePetalburg_Text_Norman:
-	.string "PETALBURG GYM - LEADER: NORMAN\p"
+	.string "PETALBURG GYM, LEADER: NORMAN\p"
 	.string "NORMAN???$"

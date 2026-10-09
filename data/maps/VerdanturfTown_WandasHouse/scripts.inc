@@ -255,7 +255,7 @@ VerdanturfTown_WandasHouse_Text_WallyGoneThatFar:
 # 128 "data/maps/VerdanturfTown_WandasHouse/scripts.pory"
 	.string "himself…\p"
 # 129 "data/maps/VerdanturfTown_WandasHouse/scripts.pory"
-	.string "Well, I have to give him credit--he is\n"
+	.string "Well, I have to give him credit, he is\n"
 # 130 "data/maps/VerdanturfTown_WandasHouse/scripts.pory"
 	.string "my little brother's son.$"
 # 131 "data/maps/VerdanturfTown_WandasHouse/scripts.pory"

@@ -141,11 +141,11 @@ SootopolisCity_PokemonCenter_1F_Text_AlwaysBeFriendsWithPokemon:
 # 71 "data/maps/SootopolisCity_PokemonCenter_1F/scripts.pory"
 SootopolisCity_PokemonCenter_1F_Text_ArentPokemonOurFriends:
 # 72 "data/maps/SootopolisCity_PokemonCenter_1F/scripts.pory"
-	.string "When the comet passed, every Pokémon\n"
+	.string "When the comet passed, every POKéMON\n"
 # 73 "data/maps/SootopolisCity_PokemonCenter_1F/scripts.pory"
 	.string "in Sootopolis fell silent.\p"
 # 74 "data/maps/SootopolisCity_PokemonCenter_1F/scripts.pory"
-	.string "Thousands of them. Just... stopped.\n"
+	.string "Thousands of them. Just… stopped.\n"
 # 75 "data/maps/SootopolisCity_PokemonCenter_1F/scripts.pory"
 	.string "Stared at the sky together.\p"
 # 76 "data/maps/SootopolisCity_PokemonCenter_1F/scripts.pory"

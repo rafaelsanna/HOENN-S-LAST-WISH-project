@@ -325,7 +325,7 @@ MossdeepCity_StevensHouse_Text_YouveEarnedHMDive:
 # 163 "data/maps/MossdeepCity_StevensHouse/scripts.pory"
 	.string "the HIDDEN MACHINE DIVE.\p"
 # 164 "data/maps/MossdeepCity_StevensHouse/scripts.pory"
-	.string "No need to be shy--you've earned this\n"
+	.string "No need to be shy, you've earned this\n"
 # 165 "data/maps/MossdeepCity_StevensHouse/scripts.pory"
 	.string "HM.$"
 # 166 "data/maps/MossdeepCity_StevensHouse/scripts.pory"

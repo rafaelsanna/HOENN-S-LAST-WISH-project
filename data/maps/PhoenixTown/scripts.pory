@@ -612,7 +612,7 @@ PhoenixTown_Text_ZennoWait:
 	.string "ZENNO: CALENDULA is waiting for you.$"
 
 PhoenixTown_Text_AuroraSilent:
-	.string "AURORA: ...$"
+	.string "AURORA: …$"
 
 PhoenixTown_Text_CalendulaGladYoureHere:
 	.string "CALENDULA: {PLAYER}! I'm glad\n"
@@ -656,7 +656,7 @@ PhoenixTown_Text_LukaNoAnswers:
 	.string "anything!$"
 
 PhoenixTown_Text_AuroraSoYouCame:
-	.string "AURORA: ...\p"
+	.string "AURORA: …\p"
 	.string "So you came.\n"
 	.string "It happened again, then.\p"
 	.string "I can sense no malice or greed\n"
@@ -688,11 +688,11 @@ PhoenixTown_Text_AuroraCometSavior:
 	.string "us to the path of ruin.$"
 
 PhoenixTown_Text_ZinniaWhatDoesThatMean:
-	.string "ZINNIA: What...?\p"
+	.string "ZINNIA: What…?\p"
 	.string "What is that supposed to mean?$"
 
 PhoenixTown_Text_ZennoWhatDoesThatMean:
-	.string "ZENNO: What...?\p"
+	.string "ZENNO: What…?\p"
 	.string "What is that supposed to mean?$"
 
 PhoenixTown_Text_AuroraGiftOnly:
@@ -711,17 +711,17 @@ PhoenixTown_Text_LukaWhatGift:
 	.string "LUKA: What is this gift?$"
 
 PhoenixTown_Text_AuroraNotYou:
-	.string "AURORA: Hm...\p"
+	.string "AURORA: Hm…\p"
 	.string "You are more attuned than most,\n"
 	.string "but you do not have it.$"
 
 PhoenixTown_Text_AuroraNorYou:
-	.string "AURORA: ...\p"
+	.string "AURORA: …\p"
 	.string "Another of unusual ability,\n"
 	.string "but still not enough.$"
 
 PhoenixTown_Text_AuroraFinalBattle:
-	.string "AURORA: Oh...\p"
+	.string "AURORA: Oh…\p"
 	.string "I sense it in you. You have\n"
 	.string "the gift.\p"
 	.string "But that alone does not guarantee\n"
@@ -731,7 +731,7 @@ PhoenixTown_Text_AuroraFinalBattle:
 	.string "Prove it to me in battle.$"
 
 PhoenixTown_Text_AuroraFinalBattleDefeat:
-	.string "AURORA: I see it now...$"
+	.string "AURORA: I see it now…$"
 
 PhoenixTown_Text_AuroraPlayerHasGift:
 	.string "AURORA: You.\p"
@@ -740,7 +740,7 @@ PhoenixTown_Text_AuroraPlayerHasGift:
 	.string "Come through the cave to learn.$"
 
 PhoenixTown_Text_LukaWhatWasThat:
-	.string "LUKA: What... was that?$"
+	.string "LUKA: What… was that?$"
 
 PhoenixTown_Text_ZinniaCanWeTrust:
 	.string "ZINNIA: Can we really trust\n"

@@ -200,7 +200,7 @@ CargoShip_Text_LukaUseConfusion:
 	.string "LUKA: PIDGEOT, use CONFUSION!$"
 
 CargoShip_Text_SailorConfused:
-	.string "What...? Who...?$"
+	.string "What…? Who…?$"
 
 CargoShip_Text_LukaThatTakesCareOfHim:
 	.string "LUKA: That takes care of him. Let's get\n"

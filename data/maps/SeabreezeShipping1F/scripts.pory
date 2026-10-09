@@ -201,7 +201,7 @@ SeabreezeShipping1F_Text_Grunt3Intro:
 
 SeabreezeShipping1F_Text_Grunt3Defeat:
 	.string "The boss won't be happy about\n"
-	.string "this...$"
+	.string "this…$"
 
 SeabreezeShipping1F_Text_Grunt3PostBattle:
 	.string "Want to know a secret?\p"

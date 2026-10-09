@@ -562,7 +562,7 @@ MtChimney_Text_MeteoriteWillActivateVolcano:
 	.string "We will trigger a chain reaction.\p"
 	.string "MT. CHIMNEY's volcanic activity will\n"
 	.string "intensify tenfold. Nature's real power!\p"
-	.string "The METEORITE - A fragment of the\n"
+	.string "The METEORITE: A fragment of the\n"
 	.string "MILLENNIUM COMET, pulsing with ancient\l"
 	.string "power. This world has forgotten its nature.$"
 
@@ -588,7 +588,7 @@ MtChimney_Text_MaxieIntro:
 	.string "The eruptions will fracture the earth,\n"
 	.string "exposing veins of rare minerals\l"
 	.string "never before seen.\p"
-	.string "And when the ash settles...\n"
+	.string "And when the ash settles…\n"
 	.string "the soil will become the richest\l"
 	.string "in all of HOENN.\p"
 	.string "A new era of resources.\n"
@@ -627,12 +627,12 @@ MtChimney_Text_TabithaIntro:
 	.string "That weird rich boy is my rival,\n"
 	.string "and I can't stand him!\l"
 	.string "That spoiled boy! I hate Alejandro!\p"
-	.string "Anyway...\n"
+	.string "Anyway…\n"
 	.string "Why are you so interested in poking\l"
 	.string "your nose into our revolution?\p"
 	.string "You don't understand the importance\n"
 	.string "of the power we want to have!\p"
-	.string "But whatever...\n"
+	.string "But whatever…\n"
 	.string "I'm gonna crush you here,\l"
 	.string "and then you're going to get lost!$"
 
@@ -646,7 +646,7 @@ MtChimney_Text_TabithaDefeat:
 	.string "I already did what needed to be done.\n"
 	.string "The METEORITE is in place.\l"
 	.string "The machine is ready.\p"
-	.string "The plan moves forward...\n"
+	.string "The plan moves forward…\n"
 	.string "whether you like it or not.\p"
 	.string "Hehehe…\n"
 	.string "Enjoy your little victory, hero.\l"
@@ -657,7 +657,7 @@ MtChimney_Text_TabithaPostBattle:
 	.string "Hit it with the METEORITE's energy!\p"
 	.string "Hehehe…\n"
 	.string "Let those AQUA scum choke on our ash!\p"
-	.string "And you, kid...\n"
+	.string "And you, kid…\n"
 	.string "You'd better run while you still can.$"
 
 MtChimney_Text_Grunt2Intro:
@@ -723,12 +723,12 @@ MtChimney_Text_AquasNameSimilar:
 	.string "They're TEAM AQUA!\p"
 	.string "They're just greedy pigs!\n"
 	.string "Blinded by their own selfishness.\p"
-	.string "Our plan... it's a beautiful revolution.\n"
+	.string "Our plan… it's a beautiful revolution.\n"
 	.string "At the price of some sacrifices,\l"
 	.string "it will save so many.\p"
 	.string "The land will flourish.\n"
 	.string "Resources for all.\p"
-	.string "You wouldn't understand...\n"
+	.string "You wouldn't understand…\n"
 	.string "You're just like them.$"
 
 MtChimney_Text_DouseThemInFire:
@@ -754,8 +754,8 @@ MtChimney_Text_ArchieGoStopTeamMagma:
 	.string "METEORITE's power into the volcano!\p"
 	.string "Doing something like that will cause\n"
 	.string "the volcano's eruption!\p"
-	.string "And when the tectonic plates shift...\n"
-	.string "our coastlines... our territories...\l"
+	.string "And when the tectonic plates shift…\n"
+	.string "our coastlines… our territories…\l"
 	.string "Everything we've built. Gone.$"
 
 MtChimney_Text_ArchieIHaveMyHandsFull:
@@ -773,12 +773,12 @@ MtChimney_Text_ArchieIHaveMyHandsFull:
 	.string "places, doesn't it?\p"
 	.string "That madman MAGNUS will reshape all\n"
 	.string "of HOENN with his volcanic greed.\p"
-	.string "The tectonic shift alone...\n"
+	.string "The tectonic shift alone…\n"
 	.string "entire coastlines will collapse.\p"
-	.string "Irony of ironies...\p"
-	.string "For now... we need to ally.\n"
+	.string "Irony of ironies…\p"
+	.string "For now… we need to ally.\n"
 	.string "You'll help TEAM AQUA.\p"
-	.string "Just a pawn...\n"
+	.string "Just a pawn…\n"
 	.string "but a useful one, kid!$"
 
 MtChimney_Text_ArchieThankYou:
@@ -795,10 +795,10 @@ MtChimney_Text_ArchieThankYou:
 	.string "A revolution that will save the world,\n"
 	.string "whether you understand it or not.\p"
 	.string "You need to choose a side.\n"
-	.string "The fence you're sitting on...\l"
+	.string "The fence you're sitting on…\l"
 	.string "it will collapse beneath you.\p"
 	.string "{PLAYER}, we shall meet again!\n"
-	.string "And next time... choose wisely.$"
+	.string "And next time… choose wisely.$"
 
 MtChimney_Text_MagmaOutnumbersUs:
 	.string "Darn… TEAM MAGMA outnumbers us!\n"
@@ -809,7 +809,7 @@ MtChimney_Text_MagmaOutnumbersUs:
 MtChimney_Text_LessHabitatForWaterPokemon:
 	.string "If they expand the land, there'll be\n"
 	.string "less habitats for WATER POKéMON!\p"
-	.string "But worse... shipping routes.\n"
+	.string "But worse… shipping routes.\n"
 	.string "Trade harbors. Our entire economy.\l"
 	.string "All built on the coastlines.$"
 
@@ -862,7 +862,7 @@ MtChimney_Text_RemoveTheMeteorite:
 MtChimney_Text_PlayerRemovedMeteorite:
 	.string "{PLAYER} removed the METEORITE from\n"
 	.string "the mysterious machine.\p"
-	.string "For now... HOENN is safe.$"
+	.string "For now… HOENN is safe.$"
 
 MtChimney_Text_PlayerLeftMeteorite:
 	.string "{PLAYER} left the METEORITE where\n"
@@ -879,7 +879,7 @@ MtChimney_Text_MachineMakesNoResponse:
 MtChimney_Text_RouteSign:
 	.string "{DOWN_ARROW} JAGGED PATH\n"
 	.string "LAVARIDGE TOWN AHEAD\p"
-	.string "MT. CHIMNEY - Where the future\n"
+	.string "MT. CHIMNEY: Where the future\n"
 	.string "of HOENN will be decided.$"
 
 MtChimney_Text_ShelbyIntro:
@@ -974,7 +974,7 @@ MtChimney_Text_ShirleyPostBattle:
 	.string "I'll have to take another dip in the\n"
 	.string "hot springs. Want to join me?\p"
 	.string "Just joking!\p"
-	.string "But seriously... if they blow this\n"
+	.string "But seriously… if they blow this\n"
 	.string "mountain, the springs go with it.$"
 
 MtChimney_Text_SawyerIntro:

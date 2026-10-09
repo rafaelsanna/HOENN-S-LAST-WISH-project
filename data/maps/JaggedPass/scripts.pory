@@ -298,7 +298,7 @@ text JaggedPass_Text_GruntDefeat {
 
 text JaggedPass_Text_GoWhereverYouWant {
 	"Okay, oh-kay!\n"
-	"I admit it--you're strong!\p"
+	"I admit it, you're strong!\p"
 	"Don't worry about me.\n"
 	"Go wherever you want!"
 }

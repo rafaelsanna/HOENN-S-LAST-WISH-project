@@ -113,4 +113,4 @@ DewfordTown_House2_Text_BrawlySoCool:
 # 57 "data/maps/DewfordTown_House2/scripts.pory"
 	.string "of the gym by some new guy.\p"
 # 58 "data/maps/DewfordTown_House2/scripts.pory"
-	.string "He looked pretty roughed up...$"
+	.string "He looked pretty roughed up…$"

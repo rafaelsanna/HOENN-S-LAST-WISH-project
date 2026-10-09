@@ -56,5 +56,5 @@ DewdropJungle_EventScript_Krabby::
 
 DewdropJungle_Text_Waterfallgirl:
 	.string "I like to come out here to watch\n"
-	.string "the waterfall. So peaceful...$"
+	.string "the waterfall. So peaceful…$"
 `

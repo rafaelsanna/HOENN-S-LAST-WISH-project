@@ -41,7 +41,7 @@ LavaridgeTown_Mart_Text_XSpeedFirstStrike:
 	.string "Folks come from all over just to\n"
 	.string "soak away their troubles here.\p"
 	.string "They say the steam carries whispers\n"
-	.string "of ancient POKéMON dreams...$"
+	.string "of ancient POKéMON dreams…$"
 
 LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney:
 	.string "MT. CHIMNEY looms above us, its peak\n"
@@ -52,7 +52,7 @@ LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney:
 	.string "in the skies, one wielding sunlight,\l"
 	.string "the other, depths of the ocean.\p"
 	.string "Their battle scarred the peak forever.\n"
-	.string "Even now, the volcano remembers...$"
+	.string "Even now, the volcano remembers…$"
 
 
 	

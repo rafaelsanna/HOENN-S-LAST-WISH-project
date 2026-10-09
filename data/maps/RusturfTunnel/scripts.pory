@@ -430,7 +430,7 @@ RusturfTunnel_Text_ComeAndGetSome:
 	.string "Come and get some, then!$"
 
 RusturfTunnel_Text_Peeko:
-	.string "NAMI: Mooouuuh...$"
+	.string "NAMI: Mooouuuh…$"
 
 RusturfTunnel_Text_GruntIntro:
 	.string "Grah, keelhaul it all!\p"
@@ -472,7 +472,7 @@ RusturfTunnel_Text_ThankYouLetsGoHomePeeko:
 	.string "by the sea near PETALBURG WOODS.\p"
 	.string "Come, NAMI, we should make our way\n"
 	.string "home.\p"
-	.string "NAMI: Mooouuuh...$"
+	.string "NAMI: Mooouuuh…$"
 
 RusturfTunnel_Text_WhyCantTheyKeepDigging:
 	.string "… …\p"
@@ -534,19 +534,19 @@ RusturfTunnel_Text_MikePostBattle:
 	.string "There's a feel-good story!$"
 
 RusturfTunnel_Text_SacaredToHop:
-	.string "I-I’m gonna jump...\p"
+	.string "I-I’m gonna jump…\p"
 	.string "I just need a second to build\n"
-	.string "up the courage...\p"
+	.string "up the courage…\p"
 	.string "They say if you fall down there,\n"
 	.string "you never come back.\p"
-	.string "An endless, dark abyss...\n"
-	.string "no way out...\p"
-	.string "S-Sometimes...\n"
-	.string "you can hear echoes from below...\p"
-	.string "L-like people calling for help...\p"
-	.string "...\p"
-	.string "O-Okay... I can do this...\n"
-	.string "3... 2... 1...\p"
-	.string "...\p"
+	.string "An endless, dark abyss…\n"
+	.string "no way out…\p"
+	.string "S-Sometimes…\n"
+	.string "you can hear echoes from below…\p"
+	.string "L-like people calling for help…\p"
+	.string "…\p"
+	.string "O-Okay… I can do this…\n"
+	.string "3… 2… 1…\p"
+	.string "…\p"
 	.string "M-Maybe next time.$"
 `

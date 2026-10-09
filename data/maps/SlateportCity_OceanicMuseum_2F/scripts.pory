@@ -465,7 +465,7 @@ SlateportCity_OceanicMuseum_2F_Text_SSAnneReplica:
 ///////////// ALEJANDRO PART
 
 SlateportCity_OceanicMuseum_2F_Text_AlejandroLovesPop:
-	.string "ALEJANDRO: Wait... Is that POP\n"
+	.string "ALEJANDRO: Wait… Is that POP\n"
 	.string "you're listening to?\p"
 	.string "Heh, I love POP.\n"
 	.string "You've got really good taste.\p"

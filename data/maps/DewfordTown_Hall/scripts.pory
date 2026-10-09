@@ -321,7 +321,7 @@ DewfordTown_Hall_Text_ManChallenge:
 
 DewfordTown_Hall_Text_ManDefeat:
 	.string "Alas! Our artistic ways are\n"
-	.string "losing to brute force...$"
+	.string "losing to brute force…$"
 
 DewfordTown_Hall_Text_ManPostBattle:
 	.string "Before RENTON, this hall was filled\n"
@@ -334,15 +334,15 @@ DewfordTown_Hall_Text_LittleBoyChallenge:
 	.string "RENTON ruined everything!\n"
 	.string "He made fun of my paintings!\p"
 	.string "He said real artists don't paint\n"
-	.string "flowers and rainbows...\p"
-	.string "Well, my Pokémon and I will show him\n"
+	.string "flowers and rainbows…\p"
+	.string "Well, my POKéMON and I will show him\n"
 	.string "that art can be powerful too!$"
 
 DewfordTown_Hall_Text_LittleBoyDefeat:
-	.string "My art wasn't strong enough...$"
+	.string "My art wasn't strong enough…$"
 
 DewfordTown_Hall_Text_LittleBoyPostBattle:
-	.string "Maybe RENTON was right...\n"
+	.string "Maybe RENTON was right…\n"
 	.string "Maybe I need to make my art tougher.\p"
 	.string "But I'll never give up painting!\n"
 	.string "I'll just paint angrier flowers!$"
@@ -415,7 +415,7 @@ DewfordTown_Hall_Text_AllegedTrendNotAuthentic:
 	.string "Oh, no, no, no.\p"
 	.string "That alleged\n"
 	.string "{STR_VAR_1}\l"
-	.string "you claim to have seen--it's not.\p"
+	.string "you claim to have seen, it's not.\p"
 	.string "The authentic article is much…\n"
 	.string "How should I say it?\l"
 	.string "Sharper, yet more mellow!\p"
@@ -501,19 +501,19 @@ DewfordTown_Hall_Text_LoveSludgeBombButTrendInToo:
 
 DewfordTown_Hall_Text_TwinGiveSunStone:
     .string "You defeated all of them!\n"
-    .string "Your battles were incredible...\p"
+    .string "Your battles were incredible…\p"
     .string "You even inspired me to paint\n"
-    .string "a brand new picture! Hihihi...\p"
+    .string "a brand new picture! Hihihi…\p"
     .string "Here, you deserve this\n"
     .string "SUN STONE!$"
 
 DewfordTown_Hall_Text_TwinNotYet:
     .string "Here in Dewford, us artists\n"
-    .string "really treasure the SUN...\p"
+    .string "really treasure the SUN…\p"
     .string "The island where the sun\n"
     .string "shines the brightest!\p"
     .string "My grandpa gave me this stone!\n"
-    .string "You seem cool...\p"
+    .string "You seem cool…\p"
     .string "Let's make a deal! Defeat all\n"
     .string "the artists in this room\p"
     .string "and I'll give it to you!$"
@@ -521,9 +521,9 @@ DewfordTown_Hall_Text_TwinNotYet:
 DewfordTown_Hall_Text_TwinAlreadyGave:
     .string "When I grow up I'll be an\n"
     .string "amazing artist, for sure!\p"
-    .string "I just love painting the Sun...\p"
+    .string "I just love painting the Sun…\p"
     .string "Your battles inspired me to\n"
     .string "paint a brand new picture!\n"
-    .string "Hihihi...$"
+    .string "Hihihi…$"
 
 `

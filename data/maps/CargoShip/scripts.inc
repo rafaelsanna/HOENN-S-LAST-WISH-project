@@ -403,7 +403,7 @@ CargoShip_Text_LukaUseConfusion:
 # 202 "data/maps/CargoShip/scripts.pory"
 CargoShip_Text_SailorConfused:
 # 203 "data/maps/CargoShip/scripts.pory"
-	.string "What...? Who...?$"
+	.string "What…? Who…?$"
 # 204 "data/maps/CargoShip/scripts.pory"
 
 # 205 "data/maps/CargoShip/scripts.pory"

@@ -89,7 +89,7 @@ EverGrandeCity_SidneysRoom_Text_IntroSpeech:
 	.string "everything around me.\p"
 	.string "I hear the footsteps, the slow\n"
 	.string "approach. I already knew you were\p"
-	.string "coming...\p"
+	.string "coming…\p"
 	.string "Nothing escapes my notice.$"
     .string "I'm the blade that moves in shadow.\p"
     .string "The razor's edge does not lie kid.\n"
@@ -101,7 +101,7 @@ EverGrandeCity_SidneysRoom_Text_Defeat:
 	.string "I have to admit, you have potential.$"
 
 EverGrandeCity_SidneysRoom_Text_PostBattleSpeech:
-	.string "TSUBAKI: {PLAYER}... Your movements\n"
+	.string "TSUBAKI: {PLAYER}… Your movements\n"
 	.string "may not be as sharp as mine.\p"
 	.string "But there's something rare in you.\n"
 	.string "You were precise, in the best way.\p"

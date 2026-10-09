@@ -577,6 +577,6 @@ LilycoveCity_LilycoveMuseum_1F_Text_MuseumTouristDestination:
 # 289 "data/maps/LilycoveCity_LilycoveMuseum_1F/scripts.pory"
 	.string "No, great for the HOENN region!\p"
 # 290 "data/maps/LilycoveCity_LilycoveMuseum_1F/scripts.pory"
-	.string "This is what I've heard--a lone TRAINER\n"
+	.string "This is what I've heard, a lone TRAINER\n"
 # 291 "data/maps/LilycoveCity_LilycoveMuseum_1F/scripts.pory"
 	.string "procured all the paintings upstairs.$"

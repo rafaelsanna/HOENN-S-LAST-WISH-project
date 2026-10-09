@@ -1660,7 +1660,7 @@ MOSSDEEP01_Text_CelebiPower:
 	.string "the temporal flow!$"
 
 MOSSDEEP01_Text_CelebiCalmed:
-	.string "The wild POKÉMON have calmed down!$"
+	.string "The wild POKéMON have calmed down!$"
 
 MOSSDEEP01_Text_CelebiThanks:
 	.string "CELEBI: Thank you, {PLAYER}!\n"
@@ -1668,14 +1668,14 @@ MOSSDEEP01_Text_CelebiThanks:
 	.string "However, to truly repair reality,\n"
 	.string "we will need more.\p"
 	.string "There is something mystical coming.\n"
-	.string "We must find the wish POKÉMON.\p"
+	.string "We must find the wish POKéMON.\p"
 	.string "Quickly, this is our chance!$"
 
 MOSSDEEP01_Text_MightyenaAttack:
 	.string "The wild MIGHTYENA attacks!$"
 
 MOSSDEEP01_Text_MightyenaBlackedOut:
-	.string "The wild POKÉMON are too aggressive!\n"
+	.string "The wild POKéMON are too aggressive!\n"
 	.string "You blacked out!$"
 
 MOSSDEEP01_Text_MightyenaFriendly:
@@ -1684,12 +1684,12 @@ MOSSDEEP01_Text_MightyenaFriendly:
 	.string "You can even pet them!$"
 
 MOSSDEEP01_Text_SurvivorTrapped:
-	.string "SURVIVOR: Help! These wild POKÉMON\n"
+	.string "SURVIVOR: Help! These wild POKéMON\n"
 	.string "are too aggressive!\p"
 	.string "I can't escape!$"
 
 MOSSDEEP01_Text_SurvivorAmazed:
-	.string "SURVIVOR: Incredible! The POKÉMON\n"
+	.string "SURVIVOR: Incredible! The POKéMON\n"
 	.string "suddenly calmed down!\p"
 	.string "What happened?$"
 
@@ -1702,13 +1702,13 @@ MOSSDEEP01_Text_SurvivorHappy:
 	.string "Thank you for your help!$"
 
 MOSSDEEP01_Text_HealerWelcome:
-	.string "HEALER: Let me heal your POKÉMON.$"
+	.string "HEALER: Let me heal your POKéMON.$"
 
 MOSSDEEP01_Text_Healing:
-	.string "Healing POKÉMON…$"
+	.string "Healing POKéMON…$"
 
 MOSSDEEP01_Text_HealedComplete:
-	.string "HEALER: Your POKÉMON are fully\n"
+	.string "HEALER: Your POKéMON are fully\n"
 	.string "healed! Good luck!$"
 
 MOSSDEEP01_Text_GrandmaWelcome:
@@ -1726,7 +1726,7 @@ MOSSDEEP01_Text_GrandmaGivesCharm:
 
 MOSSDEEP01_Text_GrandmaCharmExplanation:
 	.string "GRANDMA: This charm increases your\n"
-	.string "chances of finding rare POKÉMON.\p"
+	.string "chances of finding rare POKéMON.\p"
 	.string "Use it well!$"
 
 MOSSDEEP01_Text_HoennDestroyed:
@@ -1757,12 +1757,12 @@ MOSSDEEP01_Text_GrandpaAfterTalk:
 
 MOSSDEEP01_Text_GrandmaAfterCelebi:
 	.string "GRANDMA: {PLAYER}, that little\n"
-	.string "POKÉMON following you seems so gentle.\p"
+	.string "POKéMON following you seems so gentle.\p"
 	.string "It makes me feel like perhaps this world\n"
 	.string "can still heal.$"
 
 MOSSDEEP01_Text_GrandpaAfterCelebi:
-	.string "GRANDPA: I've never seen a POKÉMON like\n"
+	.string "GRANDPA: I've never seen a POKéMON like\n"
 	.string "that before.\p"
 	.string "If it chose to travel with you,\n"
 	.string "it must see something special in you.$"
@@ -1831,13 +1831,13 @@ MOSSDEEP01_Text_RivalMale01:
 	.string "Let's work together!$"
 
 MOSSDEEP01_Text_RivalMale02:
-	.string "ZENNO: These wild POKÉMON are\n"
+	.string "ZENNO: These wild POKéMON are\n"
 	.string "really aggressive!\p"
 	.string "Be careful out there!$"
 
 MOSSDEEP01_Text_RivalMale03:
 	.string "ZENNO: I heard there's a special\n"
-	.string "POKÉMON that can help us.\p"
+	.string "POKéMON that can help us.\p"
 	.string "Let's find it!$"
 
 MOSSDEEP01_Text_RivalMale04:
@@ -1845,7 +1845,7 @@ MOSSDEEP01_Text_RivalMale04:
 	.string "Together we'll save everyone!$"
 
 MOSSDEEP01_Text_RivalMaleAfterCelebi:
-	.string "ZENNO: {PLAYER}, that POKÉMON\n"
+	.string "ZENNO: {PLAYER}, that POKéMON\n"
 	.string "following you is incredible!\p"
 	.string "I have a feeling we're witnessing\n"
 	.string "something truly special.$"
@@ -1855,13 +1855,13 @@ MOSSDEEP01_Text_RivalFemale01:
 	.string "Let's help the survivors together!$"
 
 MOSSDEEP01_Text_RivalFemale02:
-	.string "ZINNIA: The wild POKÉMON are\n"
+	.string "ZINNIA: The wild POKéMON are\n"
 	.string "acting so strange…\p"
 	.string "Something must be wrong!$"
 
 MOSSDEEP01_Text_RivalFemale03:
 	.string "ZINNIA: I heard about a legendary\n"
-	.string "POKÉMON that controls time.\p"
+	.string "POKéMON that controls time.\p"
 	.string "Maybe it can help us!$"
 
 MOSSDEEP01_Text_RivalFemale04:
@@ -1869,7 +1869,7 @@ MOSSDEEP01_Text_RivalFemale04:
 	.string "{PLAYER}! Let's keep going!$"
 
 MOSSDEEP01_Text_RivalFemaleAfterCelebi:
-	.string "ZINNIA: {PLAYER}, that POKÉMON\n"
+	.string "ZINNIA: {PLAYER}, that POKéMON\n"
 	.string "following you is incredible!\p"
 	.string "I have a feeling we're witnessing\n"
 	.string "something truly special.$"
@@ -1923,7 +1923,7 @@ MOSSDEEP01_Text_PathNowOpen:
 	.string "over its back.$"
 
 MOSSDEEP01_Text_JirachiWaking:
-	.string "A mysterious POKÉMON is sleeping\n"
+	.string "A mysterious POKéMON is sleeping\n"
 	.string "near the rocks…\p"
 	.string "It seems to be waking up!$"
 
@@ -1953,32 +1953,32 @@ MOSSDEEP01_Text_WallyIntro:
 	.string "LUKA: Hey, {PLAYER}!\p"
 	.string "Are you doing alright?\p"
 	.string "Oh, you need help getting past some wild\n"
-	.string "POKÉMON?\p"
+	.string "POKéMON?\p"
 	.string "Leave it to me and PIDGEOT!$"
 
 MOSSDEEP01_Text_GrandmaRecoveryZinnia:
 	.string "GRANDMA: {PLAYER}, you're awake!\p"
 	.string "Oh, thank goodness. We were so worried\n"
 	.string "after you were attacked by that wild\l"
-	.string "POKÉMON.\p"
+	.string "POKéMON.\p"
 	.string "ZINNIA just barely got you back here.$"
 
 MOSSDEEP01_Text_GrandmaRecoveryZenno:
 	.string "GRANDMA: {PLAYER}, you're awake!\p"
 	.string "Oh, thank goodness. We were so worried\n"
 	.string "after you were attacked by that wild\l"
-	.string "POKÉMON.\p"
+	.string "POKéMON.\p"
 	.string "ZENNO just barely got you back here.$"
 
 MOSSDEEP01_Text_GrandpaRecovery:
-	.string "GRANDPA: Wild POKÉMON are extremely\n"
+	.string "GRANDPA: Wild POKéMON are extremely\n"
 	.string "dangerous, {PLAYER}.\p"
 	.string "You must never approach one alone.\p"
 	.string "Very few people are able to have their\n"
-	.string "own POKÉMON.\p"
+	.string "own POKéMON.\p"
 	.string "There used to be a technology called\n"
 	.string "POKÉ BALLS that allowed us to catch\l"
-	.string "POKÉMON, but those don't exist anymore.$"
+	.string "POKéMON, but those don't exist anymore.$"
 
 MOSSDEEP01_Text_GrandpaSuggestLuka:
 	.string "GRANDPA: Come to think of it, that boy,\n"
@@ -1992,7 +1992,7 @@ MOSSDEEP01_Text_GrandpaMightyenaReminder:
 	.string "Perhaps they can help you.$"
 
 MOSSDEEP01_Text_WallyAfterCelebi:
-	.string "LUKA: Wow… What is that Pokemon\n"
+	.string "LUKA: Wow… What is that POKéMON\n"
 	.string "following you?\p"
 	.string "It feels so magical…\n"
 	.string "I have never seen anything like it.\p"
@@ -2007,13 +2007,13 @@ MOSSDEEP01_Text_WallyWarped:
 
 MOSSDEEP01_Text_WallyNotReady:
 	.string "LUKA: {PLAYER}, we'll hold these wild\n"
-	.string "POKÉMON off.\p"
+	.string "POKéMON off.\p"
 	.string "Use this chance to get through!$"
 
 MOSSDEEP01_Text_WallyBeforeMightyena:
 	.string "LUKA: Hello, {PLAYER}!\p"
 	.string "Be careful out there! The wild\n"
-	.string "POKÉMON are very aggressive.\p"
+	.string "POKéMON are very aggressive.\p"
 	.string "If you get into trouble, come\n"
 	.string "talk to me!$"
 

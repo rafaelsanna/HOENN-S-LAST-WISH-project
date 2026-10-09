@@ -125,7 +125,7 @@ PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
 # 63 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	.string "Not exactly Petalburg fashion!\n"
 # 64 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
-	.string "You from out of region? Or just...\l"
+	.string "You from out of region? Or just…\l"
 # 65 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"
 	.string "from somewhere else?$"
 # 66 "data/maps/PetalburgCity_PokemonCenter_1F/scripts.pory"

@@ -123,7 +123,7 @@ Route111_WinstrateFamilysHouse_Text_MySonIsStrongerThanYou:
 # 62 "data/maps/Route111_WinstrateFamilysHouse/scripts.pory"
 	.string "deploys POKéMON so masterfully.\p"
 # 63 "data/maps/Route111_WinstrateFamilysHouse/scripts.pory"
-	.string "But, I should tell you--my son is\n"
+	.string "But, I should tell you, my son is\n"
 # 64 "data/maps/Route111_WinstrateFamilysHouse/scripts.pory"
 	.string "stronger than you.\p"
 # 65 "data/maps/Route111_WinstrateFamilysHouse/scripts.pory"

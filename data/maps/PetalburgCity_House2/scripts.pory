@@ -140,28 +140,28 @@ PetalburgCity_House2_Movement_MotherFromLowerTrigger:
 
 PetalburgCity_House2_Text_MotherWorried:
 	.string "My son hasn't been himself since\n"
-	.string "we lost his father...\p"
+	.string "we lost his father…\p"
 	.string "He loved watching anime with him,\n"
 	.string "but even that won't cheer him up.$"
 
 PetalburgCity_House2_Text_SadSchoolKid:
 	.string "Dad and I always watched anime\n"
-	.string "together...\p"
+	.string "together…\p"
 	.string "Now it only reminds me that he's\n"
-	.string "gone...$"
+	.string "gone…$"
 
 PetalburgCity_House2_Text_MotherHearsAnime:
-	.string "Wait... Is that music from an\n"
+	.string "Wait… Is that music from an\n"
 	.string "anime?$"
 
 PetalburgCity_House2_Text_KidCalmsDown:
 	.string "I know this song! Dad used to sing\n"
 	.string "it with me!\p"
-	.string "I still miss him... but remembering\n"
+	.string "I still miss him… but remembering\n"
 	.string "him like this makes me feel warm.$"
 
 PetalburgCity_House2_Text_MotherThanks:
-	.string "Look at him smile... I haven't seen\n"
+	.string "Look at him smile… I haven't seen\n"
 	.string "that since his father passed away.\p"
 	.string "Thank you. Please accept this.$"
 

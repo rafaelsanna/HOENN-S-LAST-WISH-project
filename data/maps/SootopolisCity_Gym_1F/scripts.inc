@@ -555,7 +555,7 @@ SootopolisCity_Gym_1F_Text_JuanPostBattle:
 # 278 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
 	.string "Head east, to EVER GRANDE.\n"
 # 279 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
-	.string "The POKEMON LEAGUE awaits.\p"
+	.string "The POKéMON LEAGUE awaits.\p"
 # 280 "data/maps/SootopolisCity_Gym_1F/scripts.pory"
 	.string "That's where the strongest\n"
 # 281 "data/maps/SootopolisCity_Gym_1F/scripts.pory"

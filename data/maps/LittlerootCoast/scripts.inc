@@ -83,7 +83,7 @@ PortinariDialogue::
 
 PortinariIntro::
 # 65 "data/maps/LittlerootCoast/scripts.pory"
-	.string "The rhythm of the sea… the waves... All\n"
+	.string "The rhythm of the sea… the waves… All\n"
 	.string "of it fuels my creativity!\p"
 	.string "Let me capture your style in battle!$"
 

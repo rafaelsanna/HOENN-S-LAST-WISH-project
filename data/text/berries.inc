@@ -183,7 +183,7 @@ Route104_PrettyPetalFlowerShop_Text_WailmerPailExplanation:
 	.string "they'll drop off onto the ground.\p"
 	.string "Or, at least, they used to.\n"
 	.string "And then that strange comet passed.\p"
-	.string "Now they just hang onto the plant...\n"
+	.string "Now they just hang onto the plant…\n"
 	.string "forever ripe. It's a little creepy.$"
 
 Route104_PrettyPetalFlowerShop_Text_ImGrowingFlowers:

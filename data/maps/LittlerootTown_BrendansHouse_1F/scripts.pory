@@ -385,7 +385,7 @@ PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor:
 	.string "visit her one of these days.\p"
 	.string "Why don't you go see her?\n"
 	.string "Might be a good way to get your mind\l"
-	.string "off things...$"
+	.string "off things…$"
 
 PlayersHouse_1F_Text_SeeYouHoney:
 	.string "GRANDMA: See you, dear!$"

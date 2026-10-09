@@ -325,7 +325,7 @@ Route103_Text_MayRoute103Pokemon:
 
 Route103_Text_MayLetsBattle:
     .string "Oh, hi, {PLAYER}{KUN}!\p"
-    .string "So you got a POKeMON from PROFESSOR\n"
+    .string "So you got a POKéMON from PROFESSOR\n"
     .string "ACACIA too?\p"
 	.string "The PROFESSOR has been very excited\n"
 	.string "about the comet.\p"
@@ -360,7 +360,7 @@ Route103_Text_BrendanRoute103Pokemon:
 
 Route103_Text_BrendanLetsBattle:
     .string "Hey, {PLAYER}!\p"
-    .string "So you got a POKeMON from PROFESSOR\n"
+    .string "So you got a POKéMON from PROFESSOR\n"
     .string "ACACIA too?\p"
 	.string "The PROFESSOR has been very excited\n"
 	.string "about the comet.\p"

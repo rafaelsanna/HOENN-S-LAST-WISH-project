@@ -2513,7 +2513,7 @@ MauvilleCity_GameCorner_Text_InfoLottery:
 # 1257 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "UNCOMMON, RARE, or ULTRA-RARE\l"
 # 1258 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "POKeMON.$"
+	.string "POKéMON.$"
 # 1259 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 1260 "data/maps/MauvilleCity_GameCorner/scripts.pory"
@@ -3249,9 +3249,9 @@ MauvilleCity_GameCorner_Text_Placeholder9:
 # 1625 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 MauvilleCity_GameCorner_Text_Placeholder10:
 # 1626 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Uh... I really have no idea which\n"
+	.string "Uh… I really have no idea which\n"
 # 1627 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "Pokemon to bet on. Got any suggestions?$"
+	.string "POKéMON to bet on. Got any suggestions?$"
 # 1628 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 1629 "data/maps/MauvilleCity_GameCorner/scripts.pory"
@@ -3265,7 +3265,7 @@ MauvilleCity_GameCorner_Text_Placeholder11:
 # 1633 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "Hopefully he doesn't lose our entire\n"
 # 1634 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "retirement fund...$"
+	.string "retirement fund…$"
 # 1635 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 1636 "data/maps/MauvilleCity_GameCorner/scripts.pory"
@@ -3291,7 +3291,7 @@ MauvilleCity_GameCorner_Text_Placeholder14:
 # 1646 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "I've already spent so many credits\n"
 # 1647 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "on the gacha machines here...\p"
+	.string "on the gacha machines here…\p"
 # 1648 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "Well, surely a little more won't hurt!$"
 # 1649 "data/maps/MauvilleCity_GameCorner/scripts.pory"
@@ -3299,7 +3299,7 @@ MauvilleCity_GameCorner_Text_Placeholder14:
 # 1650 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 MauvilleCity_GameCorner_Text_Placeholder15:
 # 1651 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "I lost everything...\p"
+	.string "I lost everything…\p"
 # 1652 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "I can't even afford a drink to\n"
 # 1653 "data/maps/MauvilleCity_GameCorner/scripts.pory"
@@ -3329,7 +3329,7 @@ MauvilleCity_GameCorner_Text_Placeholder17:
 # 1665 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 MauvilleCity_GameCorner_Text_Placeholder18:
 # 1666 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "It's a Pokemon race! Place your\n"
+	.string "It's a POKéMON race! Place your\n"
 # 1667 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "bet at the terminals on either side.$"
 # 1668 "data/maps/MauvilleCity_GameCorner/scripts.pory"
@@ -4057,7 +4057,7 @@ MauvilleCity_GameCorner_Text_GachaRefundExtraCoins:
 # 2029 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "You've already collected every\n"
 # 2030 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "possible POKeMON from this machine.\p"
+	.string "possible POKéMON from this machine.\p"
 # 2031 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "We refunded the extra {STR_VAR_1}\n"
 # 2032 "data/maps/MauvilleCity_GameCorner/scripts.pory"
@@ -4447,7 +4447,7 @@ MauvilleCity_GameCorner_Text_VoltorbSpinYouPicked:
 # 2224 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 	.string "You picked {STR_VAR_1}!\n"
 # 2225 "data/maps/MauvilleCity_GameCorner/scripts.pory"
-	.string "All right, VOLTORB... ROLL!$"
+	.string "All right, VOLTORB… ROLL!$"
 # 2226 "data/maps/MauvilleCity_GameCorner/scripts.pory"
 
 # 2227 "data/maps/MauvilleCity_GameCorner/scripts.pory"

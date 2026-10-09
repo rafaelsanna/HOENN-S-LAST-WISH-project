@@ -473,7 +473,7 @@ Text_MonUsedRockClimb:
 
 Text_CantRockClimb:
     .string "The cliff is steep.\n"
-    .string "A Pokémon may be able to climb it.$"
+    .string "A POKéMON may be able to climb it.$"
 
 @ Interact with a headbuttable tree
 EventScript_Headbutt::

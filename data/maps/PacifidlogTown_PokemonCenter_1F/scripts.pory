@@ -46,7 +46,7 @@ PacifidlogTown_PokemonCenter_1F_Text_OnColonyOfCorsola:
 	.string "generations. This isn't normal.\p"
 	.string "Corals don't just stop growing.\n"
 	.string "They flee, or they fight.\p"
-	.string "These ones are just... waiting.$"
+	.string "These ones are just… waiting.$"
 
 PacifidlogTown_PokemonCenter_1F_Text_AncestorsLivedOnBoats:
 	.string "We descend from nomads who foresaw\n"

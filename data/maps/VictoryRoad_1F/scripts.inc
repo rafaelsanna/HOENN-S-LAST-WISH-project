@@ -425,7 +425,7 @@ VictoryRoad_1F_Text_QuincyDefeat:
 # 213 "data/maps/VictoryRoad_1F/scripts.pory"
 VictoryRoad_1F_Text_QuincyPostBattle:
 # 214 "data/maps/VictoryRoad_1F/scripts.pory"
-	.string "Getting through here safely--that's\n"
+	.string "Getting through here safely, that's\n"
 # 215 "data/maps/VictoryRoad_1F/scripts.pory"
 	.string "the final test for any TRAINER aiming\l"
 # 216 "data/maps/VictoryRoad_1F/scripts.pory"

@@ -315,7 +315,7 @@ Route110_TrickHouseEnd_Text_DefeatedMePreferWhichTent:
 	.string "between you, the driven, and the genius\l"
 	.string "that is myself, I demand that you take\l"
 	.string "this keepsake!\p"
-	.string "Actually there are two--\n"
+	.string "Actually there are two,\n"
 	.string "a RED TENT and a BLUE TENT.\l"
 	.string "Which do you prefer?$"
 

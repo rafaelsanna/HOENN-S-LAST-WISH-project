@@ -247,7 +247,7 @@ LilycoveCity_CoveLilyMotel_2F_Text_SnoozingPreferBattles:
 # 124 "data/maps/LilycoveCity_CoveLilyMotel_2F/scripts.pory"
 	.string "entertaining, but…\p"
 # 125 "data/maps/LilycoveCity_CoveLilyMotel_2F/scripts.pory"
-	.string "Consider me a purist--I prefer\n"
+	.string "Consider me a purist, I prefer\n"
 # 126 "data/maps/LilycoveCity_CoveLilyMotel_2F/scripts.pory"
 	.string "battles and tough TRAINERS.\p"
 # 127 "data/maps/LilycoveCity_CoveLilyMotel_2F/scripts.pory"

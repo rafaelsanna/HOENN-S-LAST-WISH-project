@@ -939,7 +939,7 @@ LilycoveCity_Text_MarOldLeader:
 LilycoveCity_Text_RioTougherThanDad:
 	.string "RIO: Don't let him fool you, though.\n"
 	.string "I'm way tougher than he ever was.\p"
-	.string "HAHAHA, just kidding... mostly.$"
+	.string "HAHAHA, just kidding… mostly.$"
 
 LilycoveCity_Text_MarBusyWithImportantThings:
 	.string "MAR: Truth is, neither of us has had\n"

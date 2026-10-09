@@ -360,7 +360,7 @@ MauvilleCity_Gym_Text_AngeloPostBattle:
 	.string "Don't get too close to DEN.\p"
 	.string "That guy is always carrying\n"
 	.string "some high-voltage machine!\p"
-	.string "Hahaha! Seriously, though...\n"
+	.string "Hahaha! Seriously, though…\n"
 	.string "One wrong step and ZAP!$"
 
  MauvilleCity_Gym_Text_WattsonIntro:

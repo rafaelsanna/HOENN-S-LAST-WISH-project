@@ -1139,13 +1139,13 @@ LittlerootTown_01_Text_Question:
 # 570 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiTimeWarp:
 # 571 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "You can wake up now...$"
+	.string "You can wake up now…$"
 # 572 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 573 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_No:
 # 574 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "You can wake up now...$"
+	.string "You can wake up now…$"
 # 575 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 576 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -1157,7 +1157,7 @@ LittlerootTown_01_Text_CelebiWarning:
 # 579 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "What you see is only a dream…\p"
 # 580 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "You will soon return to your world...\n"
+	.string "You will soon return to your world…\n"
 # 581 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 	.string "to a broken reality you must restore.\p"
 # 582 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
@@ -1229,7 +1229,7 @@ LittlerootTown_01_Text_JirachiWish:
 # 615 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 LittlerootTown_01_Text_JirachiSleep:
 # 616 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
-	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years... what year is it?$"
+	.string "JIRACHI: Hello! I've been sleeping\nfor 1000 years… what year is it?$"
 # 617 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"
 
 # 618 "data/maps/LITTLEROOT_TOWN_01/scripts.pory"

@@ -95,7 +95,7 @@ WillIntro::
 # 48 "data/maps/LonelyCave_B2/scripts.pory"
 # 27 "data/maps/LonelyCave_B2/scripts.pory"
 # 49 "data/maps/LonelyCave_B2/scripts.pory"
-	.string "I sense something in here...$"
+	.string "I sense something in here…$"
 # 50 "data/maps/LonelyCave_B2/scripts.pory"
 
 # 51 "data/maps/LonelyCave_B2/scripts.pory"

@@ -709,7 +709,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_Apprentice15Intro::
 	.string "I'm the no. {STR_VAR_2} apprentice of {STR_VAR_1}.$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_Apprentice15Mon1::
-	.string "{STR_VAR_3} said this team'll be good--\n"
+	.string "{STR_VAR_3} said this team'll be good,\n"
 	.string "one {STR_VAR_2} with {STR_VAR_1} and$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_Apprentice15Mon2Ask::
@@ -832,7 +832,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_BeautyAccept::
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_BeautyReject::
 	.string "How disappointing!\p"
-	.string "We two together--we would've been\n"
+	.string "We two together, we would've been\n"
 	.string "the best!$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_FishermanIntro::
@@ -1077,7 +1077,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_RunningTriathleteMIntro::
 	.string "I'm a TRIATHLETE!$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_RunningTriathleteMMon1::
-	.string "I go on runs with my durable team--\n"
+	.string "I go on runs with my durable team,\n"
 	.string "one {STR_VAR_2} with {STR_VAR_1} and$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_RunningTriathleteMMon2Ask::
@@ -1251,7 +1251,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_ExpertFMon1::
 	.string "One {STR_VAR_2} with {STR_VAR_1} and$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_ExpertFMon2Ask::
-	.string "one {STR_VAR_2} with {STR_VAR_1}--\n"
+	.string "one {STR_VAR_2} with {STR_VAR_1},\n"
 	.string "they're what I have.\p"
 	.string "Wouldn't you like to team up with me?$"
 
@@ -1354,7 +1354,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_BugManiacMon1::
 	.string "One {STR_VAR_2} with {STR_VAR_1} and$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_BugManiacMon2Ask::
-	.string "one {STR_VAR_2} with {STR_VAR_1}--\n"
+	.string "one {STR_VAR_2} with {STR_VAR_1},\n"
 	.string "they are what I found.\p"
 	.string "Could I interest you in forming\n"
 	.string "a tag team?$"
@@ -1649,7 +1649,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_Text_PsychicFMon1::
 	.string "One {STR_VAR_2} with {STR_VAR_1} and$"
 
 BattleFrontier_BattleTowerMultiPartnerRoom_Text_PsychicFMon2Ask::
-	.string "one {STR_VAR_2} with {STR_VAR_1}--\n"
+	.string "one {STR_VAR_2} with {STR_VAR_1},\n"
 	.string "they're my disciples.\p"
 	.string "Doesn't the idea of forming a tag-team\n"
 	.string "partnership intrigue you?$"

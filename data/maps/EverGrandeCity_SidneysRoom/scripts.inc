@@ -181,7 +181,7 @@ EverGrandeCity_SidneysRoom_Text_IntroSpeech:
 # 91 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	.string "approach. I already knew you were\p"
 # 92 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "coming...\p"
+	.string "coming…\p"
 # 93 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	.string "Nothing escapes my notice.$"
 # 94 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
@@ -205,7 +205,7 @@ EverGrandeCity_SidneysRoom_Text_Defeat:
 # 103 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 EverGrandeCity_SidneysRoom_Text_PostBattleSpeech:
 # 104 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
-	.string "TSUBAKI: {PLAYER}... Your movements\n"
+	.string "TSUBAKI: {PLAYER}… Your movements\n"
 # 105 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"
 	.string "may not be as sharp as mine.\p"
 # 106 "data/maps/EverGrandeCity_SidneysRoom/scripts.pory"

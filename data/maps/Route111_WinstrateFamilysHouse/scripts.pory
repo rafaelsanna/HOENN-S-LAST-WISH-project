@@ -60,7 +60,7 @@ Route111_WinstrateFamilysHouse_EventScript_FaceOriginalDirection::
 Route111_WinstrateFamilysHouse_Text_MySonIsStrongerThanYou:
 	.string "You're the first TRAINER I've seen who\n"
 	.string "deploys POKéMON so masterfully.\p"
-	.string "But, I should tell you--my son is\n"
+	.string "But, I should tell you, my son is\n"
 	.string "stronger than you.\p"
 	.string "He even took the POKéMON LEAGUE\n"
 	.string "challenge, I'll have you know.$"

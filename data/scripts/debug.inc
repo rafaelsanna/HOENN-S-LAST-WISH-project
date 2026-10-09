@@ -232,10 +232,10 @@ DebugScript_HatchAnEgg_CantForceHatch::
 	end
 
 DebugScript_Text_EmptyParty::
-	.string "You have no Pokémon nor Eggs.$"
+	.string "You have no POKéMON nor Eggs.$"
 
 DebugScript_HatchAnEgg_Text_NotAnEgg::
-	.string "That's not a Pokémon Egg.$"
+	.string "That's not a POKéMON Egg.$"
 
 DebugScript_ZeroDaycareMons::
 	msgbox DebugText_DaycareNoPokemon, MSGBOX_DEFAULT
@@ -253,13 +253,13 @@ DebugScript_DaycareMonsNotCompatible::
 	end
 
 DebugText_DaycareNoPokemon:
-	.string "You have no Pokémon at Daycare.$"
+	.string "You have no POKéMON at Daycare.$"
 
 DebugText_DaycareOnePokemon:
-	.string "You have only one Pokémon at Daycare.$"
+	.string "You have only one POKéMON at Daycare.$"
 
 DebugText_DaycarePokemonNotCompatible:
-	.string "Your Pokémon at Daycare can't\nhave babies together!$"
+	.string "Your POKéMON at Daycare can't\nhave babies together!$"
 
 Debug_ShowExpansionVersion::
 	callnative BufferExpansionVersion
@@ -318,7 +318,7 @@ Debug_Follower_NPC_Player_Line_4:
 	end
 
 Debug_Follower_NPC_Player_Text_0:
-	.string "I guess we are dating now...$"
+	.string "I guess we are dating now…$"
 
 Debug_Follower_NPC_Player_Text_1:
 	.string "Don't you feel shame of using cheats?$"

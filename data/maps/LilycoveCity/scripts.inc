@@ -1881,7 +1881,7 @@ LilycoveCity_Text_RioTougherThanDad:
 # 941 "data/maps/LilycoveCity/scripts.pory"
 	.string "I'm way tougher than he ever was.\p"
 # 942 "data/maps/LilycoveCity/scripts.pory"
-	.string "HAHAHA, just kidding... mostly.$"
+	.string "HAHAHA, just kidding… mostly.$"
 # 943 "data/maps/LilycoveCity/scripts.pory"
 
 # 944 "data/maps/LilycoveCity/scripts.pory"

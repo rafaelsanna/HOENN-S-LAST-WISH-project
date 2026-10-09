@@ -405,7 +405,7 @@ MossdeepCity_SpaceCenter_1F_Text_Grunt1PostBattle:
 
 MossdeepCity_SpaceCenter_1F_Text_Grunt4Intro:
 	.string "The rocket fuel the SPACE CENTER has\n"
-	.string "in storage--that's what we're after.\p"
+	.string "in storage, that's what we're after.\p"
 	.string "We mean to take every last bit of it!$"
 
 MossdeepCity_SpaceCenter_1F_Text_Grunt4Defeat:

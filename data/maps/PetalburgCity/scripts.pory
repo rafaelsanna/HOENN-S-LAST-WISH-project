@@ -1273,7 +1273,7 @@ PetalburgCity_Text_WallyTutorial_LukaGoBack:
 PetalburgCity_Text_WhereIsWally:
 	.string "Where has our LUKA gone?\p"
 	.string "Surely he hasn't left for VERDANTURF\n"
-	.string "already without saying goodbye...$"
+	.string "already without saying goodbye…$"
 
 PetalburgCity_Text_AreYouRookieTrainer:
     .string "Hey, you're not from around here,\n"
@@ -1303,7 +1303,7 @@ PetalburgCity_Text_QuakeBoy:
 	.string "wants to run for cover.$"
 
 PetalburgCity_Text_QuakeWallysMom:
-	.string "This rain came on so suddenly...\p"
+	.string "This rain came on so suddenly…\p"
 	.string "I hope everyone outside is keeping\n"
 	.string "safe.$"
 
@@ -1364,12 +1364,12 @@ PetalburgCity_Text_QuakeLukaPart15:
 PetalburgCity_Text_QuakeZinniaPart15:
 	.string "ZINNIA: This rain just won't stop,\n"
 	.string "and the earthquakes are getting\l"
-	.string "worse...$"
+	.string "worse…$"
 
 PetalburgCity_Text_QuakeZennoPart15:
 	.string "ZENNO: This rain just won't stop,\n"
 	.string "and the earthquakes are getting\l"
-	.string "worse...$"
+	.string "worse…$"
 
 PetalburgCity_Text_NightmareReturn_LukaAwake:
 	.string "LUKA: {PLAYER}! You're awake!$"
@@ -1391,18 +1391,18 @@ PetalburgCity_Text_NightmareReturn_RivalGhost:
 
 PetalburgCity_Text_NightmareReturn_LukaUnsettled:
 	.string "LUKA: It's been peaceful here, but\n"
-	.string "I don't know...\p"
+	.string "I don't know…\p"
 	.string "I've just got an unsettling feeling.$"
 
 PetalburgCity_Text_NightmareReturn_RivalLeaves:
-	.string "RIVAL: I know what you mean. But...\n"
+	.string "RIVAL: I know what you mean. But…\n"
 	.string "there's no point lingering on it too\l"
 	.string "much.\p"
 	.string "I'm off to continue my journey.\n"
 	.string "Take care of yourselves, both of you.$"
 
 PetalburgCity_Text_NightmareReturn_LukaLeaves:
-	.string "LUKA: ...\p"
+	.string "LUKA: …\p"
 	.string "It's just too strange. Whatever that\n"
 	.string "feeling was is gone now.\p"
 	.string "Hey, {PLAYER}, I'm going to ask around\n"
@@ -1455,7 +1455,7 @@ PetalburgCity_Text_WallyHouseSign:
 PetalburgCity_Text_WallyIntro:
     .string "LUKA: {PLAYER}! The Professor said\n"
     .string "you're special, but so am I!\p"
-    .string "I've been training for so long...\n"
+    .string "I've been training for so long…\n"
     .string "Let me show you what I've learned!$"
 
 PetalburgCity_Text_WallyDefeat:
@@ -1505,9 +1505,9 @@ PetalburgCity_Text_AquaGruntBlock:
 PetalburgCity_Text_AdventureBoy:
     .string "This city's pretty calm.\n"
     .string "Or at least, it seems that way.\p"
-    .string "But the forest to the north...\n"
+    .string "But the forest to the north…\n"
     .string "It feels different somehow.\p"
-    .string "Even when it's quiet...\n"
+    .string "Even when it's quiet…\n"
     .string "I get this strange feeling.\p"
     .string "Like something's watching.\p"
     .string "You should be careful, okay?$"

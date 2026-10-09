@@ -1495,7 +1495,7 @@ SlateportCity_Text_YouDroveTeamAquaAway:
 	.string "If not, my name's SCOTT.\p"
 	.string "I just saw TEAM AQUA run away from\n"
 	.string "here like they were stung.\p"
-	.string "Let me guess--you drove them away?$"
+	.string "Let me guess, you drove them away?$"
 
 SlateportCity_Text_MaybeThisTrainer:
 	.string "SCOTT: Hmm…\n"
@@ -1523,7 +1523,7 @@ SlateportCity_Text_KeepEyeOnTrainersBeSeeingYou:
 SlateportCity_Text_TakingBattleTentChallenge:
     .string "SCOTT: Oh, hey!\n"
     .string "If it isn't {PLAYER}{KUN}!\p"
-    .string "{PLAYER}{KUN}, let me guess--you're going\n"
+    .string "{PLAYER}{KUN}, let me guess, you're going\n"
     .string "to take the BATTLE TENT challenge?\p"
     .string "Yeah! That's a good idea!\n"
     .string "That's a really great idea!\p"

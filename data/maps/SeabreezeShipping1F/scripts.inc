@@ -405,7 +405,7 @@ SeabreezeShipping1F_Text_Grunt3Defeat:
 # 203 "data/maps/SeabreezeShipping1F/scripts.pory"
 	.string "The boss won't be happy about\n"
 # 204 "data/maps/SeabreezeShipping1F/scripts.pory"
-	.string "this...$"
+	.string "this…$"
 # 205 "data/maps/SeabreezeShipping1F/scripts.pory"
 
 # 206 "data/maps/SeabreezeShipping1F/scripts.pory"
