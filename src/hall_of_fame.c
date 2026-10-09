@@ -155,8 +155,10 @@ static const u8 sText_WishMenuUsed[] = _("Wish Menu: Used");
 static const u8 sText_WishMenuNo[] = _("Wish Menu: No");
 static const u8 sText_RandomWildsOn[] = _("Random Wilds: On - ");
 static const u8 sText_RandomWildsFull[] = _("Random Wilds: Full - ");
+static const u8 sText_RandomWildsChaos[] = _("Random Wilds: Chaos - ");
 static const u8 sText_RandomWildsOff[] = _("Random Wilds: Off - ");
 static const u8 sText_RandomTrainersOn[] = _("Random Trainers: On");
+static const u8 sText_RandomTrainersChaos[] = _("Random Trainers: Chaos");
 static const u8 sText_RandomTrainersOff[] = _("Random Trainers: Off");
 static const u8 sText_HoennChampion[] = _("HOENN CHAMPION!");
 static const u8 sText_Congratulations[] = _("CONGRATULATIONS!");
@@ -1138,6 +1140,15 @@ static void Task_HofPC_ExitOnButtonPress(u8 taskId)
 #undef tMonNo
 #undef tMonSpriteId
 
+void HallOfFame_FormatRandomizerStatus(u8 *dest)
+{
+    u8 *ptr = StringCopy(dest, (Randomizer_HasUsedChaosWild() || Randomizer_ChaosEnabled()) ? sText_RandomWildsChaos
+        : Randomizer_FullWildEnabled() ? sText_RandomWildsFull
+        : Randomizer_WildEnabled() ? sText_RandomWildsOn : sText_RandomWildsOff);
+    StringCopy(ptr, (Randomizer_HasUsedChaosTrainers() || Randomizer_ChaosTrainersEnabled()) ? sText_RandomTrainersChaos
+        : Randomizer_TrainerEnabled() ? sText_RandomTrainersOn : sText_RandomTrainersOff);
+}
+
 static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
 {
     u8 line1[64];
@@ -1151,9 +1162,7 @@ static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
     stringPtr = StringCopy(line2, gSaveBlock2Ptr->optionsInfiniteCandy == OPTIONS_INFINITECANDY_ON ? sText_InfiniteCandyYes : sText_InfiniteCandyNo);
     StringCopy(stringPtr, FlagGet(FLAG_USED_DEBUG_MENU) ? sText_WishMenuUsed : sText_WishMenuNo);
 
-    stringPtr = StringCopy(line3, Randomizer_FullWildEnabled() ? sText_RandomWildsFull
-        : Randomizer_WildEnabled() ? sText_RandomWildsOn : sText_RandomWildsOff);
-    StringCopy(stringPtr, Randomizer_TrainerEnabled() ? sText_RandomTrainersOn : sText_RandomTrainersOff);
+    HallOfFame_FormatRandomizerStatus(line3);
 
     FillWindowPixelBuffer(0, PIXEL_FILL(0));
     PutWindowTilemap(0);

@@ -16,6 +16,10 @@ bool32 Debug_TestChaosSubmenus(void);
 const u8 *Debug_TestChaosTrainersHardMessage(void);
 const u8 *Debug_TestChaosHardMessage(void);
 u32 Debug_TestUtilitiesCount(void);
+const u8 *Debug_TestChaosConfirmationText(void);
+bool32 Debug_TestChaosNeedsConfirmation(bool8 trainers);
+bool32 Debug_TestConfirmChaos(bool8 trainers, bool8 yes);
+void Debug_TestDrawChaosConfirmation(u8 windowId, bool8 yes);
 #endif
 
 extern EWRAM_DATA bool8 gIsDebugBattle;

@@ -1,8 +1,11 @@
 # Full Chaos Random
 
 Open **Full Chaos Random…** in the Wish/Debug Menu's **Utilities** to read a
-short description and toggle ON/OFF. **Chaos Trainers…**, immediately below it,
+short description and toggle ON/OFF. **Chaos Random Trainers…**, immediately below it,
 has its own description and toggle. Use **Back** or B to return to Utilities.
+The first activation of **each** Chaos mode asks: "This will mark your Trainer
+ID forever. Want to enable?" No is selected by default. Yes enables that mode
+and records its permanent history; No/B cancels without changing either mode.
 The existing regional **FULL RANDOM** in Configuration remains a separate
 mode. Enabling a different wild randomizer replaces Chaos; disabling Chaos
 returns to ordinary encounters. Saving unrelated Configuration options does
@@ -14,9 +17,9 @@ Frontier wild encounters. Encounter levels and scripted held items remain
 unchanged. The three starter choices are distinct and repeatable per save.
 It does not automatically enable trainer randomization or randomize ordinary gifts.
 
-## Chaos Trainers
+## Chaos Random Trainers
 
-**Chaos Trainers** expands the existing trainer randomizer to exactly the same
+**Chaos Random Trainers** expands the existing trainer randomizer to exactly the same
 full Chaos roster described below, including legends and completed Wish/shadow
 Pokemon. It does not apply the regional species-mode or common-legend filters.
 The existing per-save, trainer-ID and party-slot seed remains deterministic;
@@ -25,7 +28,7 @@ wild encounter RNG does not reroll trainer teams.
 League battles, including their alternate singles/doubles IDs, have minimum
 base-stat totals: **500 for each Elite Four member**, **550 for the Champion**.
 Both cutoffs are inclusive and use the actual six stats in this project.
-The same rule applies to **Chaos Trainers and the regional RANDOM TRAINERS**
+The same rule applies to **Chaos Random Trainers and the regional RANDOM TRAINERS**
 option; each keeps its own roster and existing legendary/mode restrictions.
 Other trainers, earlier encounters with those characters, wild encounters
 and starters keep their usual unrestricted-BST pools. Hard Mode still disables
@@ -37,7 +40,7 @@ Changed species receive their own level-up moves and a valid native ability.
 The existing trainer hooks cover regular and two-opponent trainer parties,
 not Frontier/e-Reader/Trainer Hill special facility parties.
 
-Wild Chaos and Chaos Trainers can be enabled together or separately in Normal.
+Wild Chaos and Chaos Random Trainers can be enabled together or separately in Normal.
 For each encounter category, enabling the regional Configuration randomizer
 replaces its Chaos counterpart. Saving unrelated options leaves Chaos enabled.
 
@@ -95,8 +98,23 @@ Chaos uses `FLAG_RANDOMIZER_FULL_CHAOS`, an alias for the previously unused
 `FLAG_UNUSED_0x17FC` bit in the existing custom flag bank. No save structure,
 species ID, registry ID or other released bit position was changed. Existing
 saves default to Chaos OFF.
-Chaos Trainers uses the previously unused `FLAG_UNUSED_0x17FE` bit via
+Chaos Random Trainers uses the previously unused `FLAG_UNUSED_0x17FE` bit via
 `FLAG_RANDOMIZER_CHAOS_TRAINERS`, also without changing the save layout.
+
+Permanent wild/trainer history uses the previously unused `0x17F8`/`0x17F9`
+custom bits. Turning a mode off, selecting a regional mode, or entering Hard
+never clears this history. The player's numeric Trainer ID is not modified.
+Valid already-active Chaos modes in older saves are recorded on Continue;
+an old inactive mode cannot be inferred, and stale Hard flags are not marked.
+Markers persist through the game's normal save system, like Wish Menu history.
+
+Once either Chaos mode has been used, the local Trainer Card permanently draws
+the original indexed `graphics/trainer_card/chaosrandom.png` beside/below the
+portrait. The 48x48 source and its palette are unchanged: a transparent 64x64
+OBJ frame preserves all source tiles and index zero stays transparent. The
+mark hides during card flips and frees its tiles/palette on exit. It never
+appears on someone else's link card. The Hall of Fame's existing white status
+row reports **Chaos** for each recorded mode independently, even after OFF.
 
 ## Checks
 

@@ -825,6 +825,7 @@ u8 LoadGameSave(u8 saveType)
         MigrateBagExpansion();
         CopyPartyAndObjectsFromSave();
         HlwSpecies_MigrateSave();
+        Randomizer_RecordActiveChaosUsage();
     }
     gSaveFileStatus = status;
     gGameContinueCallback = NULL;

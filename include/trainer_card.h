@@ -92,6 +92,13 @@ void TrainerCard_ApplyHardBadgeGraphics(u8 *tiles);
 void TrainerCard_DrawTimeAndDex(u8 windowId, u16 hours, u16 minutes, u16 caughtCount, u16 ownedCount);
 // Format permanent run history, not the currently selected game options.
 void TrainerCard_FormatRunStatus(u8 *dest);
+// Preserve the original indexed 48x48 mark in a transparent 64x64 OBJ frame.
+void TrainerCard_BuildChaosMarkTiles(u8 *tiles);
+#if TESTING
+const u8 *TrainerCard_TestChaosMarkGfx(void);
+const u16 *TrainerCard_TestChaosMarkPalette(void);
+bool32 TrainerCard_TestHasChaosMark(void);
+#endif
 u8 TrainerCard_GetColorTheme(void);
 u8 TrainerCard_GetColorThemeCyclePosition(void);
 const struct TrainerCardThemeColors *TrainerCard_GetColorThemeColors(void);

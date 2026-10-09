@@ -253,7 +253,7 @@ struct DebugMenuListData
 {
     const struct DebugMenuOption *subMenuItems[DEBUG_MAX_SUB_MENU_LEVELS];
     struct ListMenuItem listItems[DEBUG_MAX_MENU_ITEMS + 1];
-    u8 itemNames[DEBUG_MAX_MENU_ITEMS + 1][26];
+    u8 itemNames[DEBUG_MAX_MENU_ITEMS + 1][32]; // Full Chaos trainer label plus ON/OFF and terminator.
     u8 listId;
 };
 
@@ -293,6 +293,8 @@ static void DebugAction_Util_ChaosTrainers(u8 taskId);
 static void DebugAction_ReturnToParent(u8 taskId);
 static void Debug_PrintChaosDescription(u8 windowId, u32 itemId, u8 y);
 static const u8 *Debug_GetChaosDescription(const struct DebugMenuOption *items);
+static void DebugAction_ToggleChaos(u8 taskId, bool8 trainers);
+static void DebugTask_HandleChaosConfirmation(u8 taskId);
 
 static void DebugTask_HandleMenuInput_General(u8 taskId);
 
@@ -866,7 +868,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_FullChaosRandom[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_ChaosTrainers[] =
 {
-    { COMPOUND_STRING("Chaos Trainers: {STR_VAR_1}"), DebugAction_Util_ChaosTrainers },
+    { COMPOUND_STRING("Chaos Random Trainers: {STR_VAR_1}"), DebugAction_Util_ChaosTrainers },
     { COMPOUND_STRING("Back"), DebugAction_ReturnToParent },
     { NULL }
 };
@@ -888,7 +890,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Cheat start"),        DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Learn All Moves: {STR_VAR_1}"), DebugAction_Cheat_OpsAllMoves },
     { COMPOUND_STRING("Full Chaos Random…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_FullChaosRandom },
-    { COMPOUND_STRING("Chaos Trainers…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_ChaosTrainers },
+    { COMPOUND_STRING("Chaos Random Trainers…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_ChaosTrainers },
     { COMPOUND_STRING("Achievements…"),      DebugAction_Util_OpenAchievements },
     { COMPOUND_STRING("Test Ach Popup"),     DebugAction_Util_UnlockNextAchievement },
     { COMPOUND_STRING("Berry Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
@@ -900,7 +902,8 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
 STATIC_ASSERT(ARRAY_COUNT(sDebugMenu_Actions_Utilities) - 1 <= DEBUG_MAX_MENU_ITEMS, UtilitiesFitDebugMenu);
 
 static const u8 sDebugText_FullChaosHardLocked[] = _("Full Chaos Random cannot be\nenabled in HARD mode.");
-static const u8 sDebugText_ChaosTrainersHardLocked[] = _("Chaos Trainers cannot be\nenabled in HARD mode.");
+static const u8 sDebugText_ChaosTrainersHardLocked[] = _("Chaos Random Trainers cannot be\nenabled in HARD mode.");
+static const u8 sDebugText_ChaosPermanentConfirmation[] = _("This will mark your Trainer ID\nforever. Want to enable?");
 static const u8 sDebugText_FullChaosDescription[] = _(
     "Wild POKéMON + starters from\n"
     "all generations, even legends.\n"
@@ -1176,6 +1179,7 @@ void Debug_ShowMainMenu(void)
     if (!Debug_CanOpen() || Debug_IsWishMenuBlockedByEliteFour())
         return;
 
+    Randomizer_RecordActiveChaosUsage();
     IncrementGameStat(GAME_STAT_WISH_MENU_OPENINGS);
 
     // Permanently mark that this save has opened the Debug/Wish Menu at least once.
@@ -2381,61 +2385,129 @@ static void DebugAction_Cheat_OpsAllMoves(u8 taskId)
     RedrawListMenu(gTasks[taskId].tMenuTaskId);
 }
 
-static void DebugAction_Util_FullChaosRandom(u8 taskId)
+static bool32 Debug_ChaosNeedsConfirmation(bool8 trainers)
 {
-    if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
-    {
-        Randomizer_SetChaosMode(FALSE);
-        PlaySE(SE_FAILURE);
-        StringCopy(gStringVar4, sDebugText_FullChaosHardLocked);
-        Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
-        return;
-    }
+    if (gSaveBlock2Ptr == NULL || gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
+        return FALSE;
+    return trainers ? !Randomizer_ChaosTrainersEnabled() && !Randomizer_HasUsedChaosTrainers()
+        : !Randomizer_ChaosEnabled() && !Randomizer_HasUsedChaosWild();
+}
 
-    Randomizer_SetChaosMode(!Randomizer_ChaosEnabled());
+static bool32 Debug_ConfirmEnableChaos(bool8 trainers, bool8 yes)
+{
+    if (!yes)
+        return FALSE;
+    if (trainers)
+        Randomizer_SetChaosTrainersMode(TRUE);
+    else
+        Randomizer_SetChaosMode(TRUE);
+    return trainers ? Randomizer_ChaosTrainersEnabled() : Randomizer_ChaosEnabled();
+}
+
+static void Debug_RefreshChaosToggle(u8 taskId, bool8 trainers)
+{
     const struct DebugMenuOption *items = Debug_GetCurrentCallbackMenu();
+    const void *action = trainers ? DebugAction_Util_ChaosTrainers : DebugAction_Util_FullChaosRandom;
+    bool8 enabled = trainers ? Randomizer_ChaosTrainersEnabled() : Randomizer_ChaosEnabled();
     for (u32 i = 0; items[i].text != NULL; i++)
     {
-        if (items[i].action == DebugAction_Util_FullChaosRandom)
+        if (items[i].action == action)
         {
-            StringCopy(gStringVar1, Randomizer_ChaosEnabled() ? sDebugText_On : sDebugText_Off);
+            StringCopy(gStringVar1, enabled ? sDebugText_On : sDebugText_Off);
             StringExpandPlaceholders(gStringVar4, items[i].text);
-            StringCopy(&sDebugMenuListData->itemNames[i][0], gStringVar4);
-            sDebugMenuListData->listItems[i].name = &sDebugMenuListData->itemNames[i][0];
+            StringCopy(sDebugMenuListData->itemNames[i], gStringVar4);
             break;
         }
     }
     RedrawListMenu(gTasks[taskId].tMenuTaskId);
+}
+
+static void Debug_DrawChaosConfirmation(u8 windowId, bool8 yes)
+{
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, sDebugText_ChaosPermanentConfirmation,
+        8, 8, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, yes ? sDebugText_DeleteAllYes : sDebugText_DeleteAllNo,
+        108, 60, TEXT_SKIP_DRAW, NULL);
+}
+
+#define tChaosTarget data[5]
+#define tChaosChoice data[6]
+
+static void DebugAction_ToggleChaos(u8 taskId, bool8 trainers)
+{
+    Randomizer_RecordActiveChaosUsage();
+    if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
+    {
+        if (trainers)
+            Randomizer_SetChaosTrainersMode(FALSE);
+        else
+            Randomizer_SetChaosMode(FALSE);
+        PlaySE(SE_FAILURE);
+        StringCopy(gStringVar4, trainers ? sDebugText_ChaosTrainersHardLocked : sDebugText_FullChaosHardLocked);
+        Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
+        return;
+    }
+
+    if (Debug_ChaosNeedsConfirmation(trainers))
+    {
+        // Reuse the info window: an overlay would overlap its BG tile range.
+        gTasks[taskId].tChaosTarget = trainers;
+        gTasks[taskId].tChaosChoice = 1; // No by default for a permanent mark.
+        Debug_DrawChaosConfirmation(gTasks[taskId].tWindowId, FALSE);
+        CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_GFX);
+        gTasks[taskId].func = DebugTask_HandleChaosConfirmation;
+        return;
+    }
+
+    if (trainers)
+        Randomizer_SetChaosTrainersMode(!Randomizer_ChaosTrainersEnabled());
+    else
+        Randomizer_SetChaosMode(!Randomizer_ChaosEnabled());
+    Debug_RefreshChaosToggle(taskId, trainers);
+}
+
+static void DebugTask_HandleChaosConfirmation(u8 taskId)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT | DPAD_UP | DPAD_DOWN))
+    {
+        PlaySE(SE_SELECT);
+        gTasks[taskId].tChaosChoice ^= 1;
+        Debug_DrawChaosConfirmation(gTasks[taskId].tWindowId, gTasks[taskId].tChaosChoice == 0);
+        CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_GFX);
+        return;
+    }
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        Debug_ConfirmEnableChaos(gTasks[taskId].tChaosTarget, gTasks[taskId].tChaosChoice == 0);
+    }
+    else if (JOY_NEW(B_BUTTON))
+        PlaySE(SE_SELECT);
+    else
+        return;
+    Debug_RefreshChaosToggle(taskId, gTasks[taskId].tChaosTarget);
+    gTasks[taskId].func = DebugTask_HandleMenuInput_General;
+}
+
+static void DebugAction_Util_FullChaosRandom(u8 taskId)
+{
+    DebugAction_ToggleChaos(taskId, FALSE);
 }
 
 static void DebugAction_Util_ChaosTrainers(u8 taskId)
 {
-    if (gSaveBlock2Ptr->optionsNpcTeams == OPTIONS_NPCTEAMS_HARD)
-    {
-        Randomizer_SetChaosTrainersMode(FALSE);
-        PlaySE(SE_FAILURE);
-        StringCopy(gStringVar4, sDebugText_ChaosTrainersHardLocked);
-        Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
-        return;
-    }
-
-    Randomizer_SetChaosTrainersMode(!Randomizer_ChaosTrainersEnabled());
-    const struct DebugMenuOption *items = Debug_GetCurrentCallbackMenu();
-    for (u32 i = 0; items[i].text != NULL; i++)
-    {
-        if (items[i].action == DebugAction_Util_ChaosTrainers)
-        {
-            StringCopy(gStringVar1, Randomizer_ChaosTrainersEnabled() ? sDebugText_On : sDebugText_Off);
-            StringExpandPlaceholders(gStringVar4, items[i].text);
-            StringCopy(&sDebugMenuListData->itemNames[i][0], gStringVar4);
-            sDebugMenuListData->listItems[i].name = &sDebugMenuListData->itemNames[i][0];
-            break;
-        }
-    }
-    RedrawListMenu(gTasks[taskId].tMenuTaskId);
+    DebugAction_ToggleChaos(taskId, TRUE);
 }
 
+#undef tChaosTarget
+#undef tChaosChoice
+
 #if TESTING
+const u8 *Debug_TestChaosConfirmationText(void) { return sDebugText_ChaosPermanentConfirmation; }
+bool32 Debug_TestChaosNeedsConfirmation(bool8 trainers) { return Debug_ChaosNeedsConfirmation(trainers); }
+bool32 Debug_TestConfirmChaos(bool8 trainers, bool8 yes) { return Debug_ConfirmEnableChaos(trainers, yes); }
+void Debug_TestDrawChaosConfirmation(u8 windowId, bool8 yes) { Debug_DrawChaosConfirmation(windowId, yes); }
 const u8 *Debug_TestChaosLabel(bool8 enabled)
 {
     StringCopy(gStringVar1, enabled ? sDebugText_On : sDebugText_Off);

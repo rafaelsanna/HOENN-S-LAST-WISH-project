@@ -42,9 +42,14 @@ TEST("Full Chaos: Utilities text fits its window and the additional entry remain
     EXPECT(GetStringWidth(FONT_NORMAL, Debug_TestChaosLabel(FALSE), 1) <= 19 * 8 - 8);
     EXPECT(GetStringWidth(FONT_NORMAL, Debug_TestChaosLabel(TRUE), 1) <= 19 * 8 - 8);
     EXPECT(GetStringWidth(FONT_NORMAL, Debug_TestChaosHardMessage(), 0) <= 208);
-    EXPECT_EQ(StringCompare(Debug_TestChaosTrainersLabel(FALSE), COMPOUND_STRING("Chaos Trainers: OFF")), 0);
-    EXPECT_EQ(StringCompare(Debug_TestChaosTrainersLabel(TRUE), COMPOUND_STRING("Chaos Trainers: ON")), 0);
+    EXPECT_EQ(StringCompare(Debug_TestChaosTrainersLabel(FALSE), COMPOUND_STRING("Chaos Random Trainers: OFF")), 0);
+    EXPECT_EQ(StringCompare(Debug_TestChaosTrainersLabel(TRUE), COMPOUND_STRING("Chaos Random Trainers: ON")), 0);
+    EXPECT(StringLength(Debug_TestChaosTrainersLabel(FALSE)) < 32);
+    const u8 *utilitiesLabel = COMPOUND_STRING("Chaos Random Trainers…{CLEAR_TO 110}{RIGHT_ARROW}");
+    EXPECT(StringLength(utilitiesLabel) < 32);
+    EXPECT(GetStringWidth(FONT_NORMAL, utilitiesLabel, 1) <= 19 * 8 - 8);
     EXPECT(GetStringWidth(FONT_NORMAL, Debug_TestChaosTrainersLabel(FALSE), 1) <= 26 * 8 - 8);
+    EXPECT(GetStringWidth(FONT_NORMAL, Debug_TestChaosTrainersLabel(TRUE), 1) <= 26 * 8 - 8);
     EXPECT(GetStringWidth(FONT_NORMAL, Debug_TestChaosTrainersHardMessage(), 0) <= 208);
     for (u32 trainers = 0; trainers <= 1; trainers++)
     {

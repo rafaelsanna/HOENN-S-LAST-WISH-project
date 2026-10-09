@@ -107,6 +107,7 @@ struct TrainerCardData
     u8 colorTheme;
     u8 mugshotSpriteId;
     u8 championRibbonSpriteId;
+    u8 chaosMarkSpriteId;
     u8 partyIconSpriteIds[PARTY_SIZE];
     u32 bgScrollX;
     u32 bgScrollY;
@@ -417,6 +418,14 @@ static const struct TrainerCardThemeColors sTrainerCardThemeColors[TRAINER_CARD_
 
 #define TRAINER_CARD_MUGSHOT_TAG       0x2F50
 #define TRAINER_CARD_CHAMPION_RIBBON_TAG 0x2F51
+#define TRAINER_CARD_CHAOS_MARK_TAG      0x2F52
+#define TRAINER_CARD_CHAOS_SOURCE_TILES 6
+#define TRAINER_CARD_CHAOS_FRAME_TILES  8
+
+static const u8 sTrainerCardChaosMark_Gfx[] = INCBIN_U8("graphics/trainer_card/chaosrandom.4bpp");
+static const u16 sTrainerCardChaosMark_Pal[] = INCBIN_U16("graphics/trainer_card/chaosrandom.gbapal");
+STATIC_ASSERT(sizeof(sTrainerCardChaosMark_Gfx) == 48 * 48 / 2, ChaosMarkHasOriginal48x48Sheet);
+STATIC_ASSERT(sizeof(sTrainerCardChaosMark_Pal) <= PLTT_SIZE_4BPP, ChaosMarkPaletteFits16Colors);
 
 static const u16 sTrainerCardBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brendan_mugshot.gbapal");
 static const u32 sTrainerCardBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.lz");
@@ -504,6 +513,38 @@ static const struct SpriteTemplate sTrainerCardChampionRibbonTemplate =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
+
+static const struct SpriteTemplate sTrainerCardChaosMarkTemplate =
+{
+    .tileTag = TRAINER_CARD_CHAOS_MARK_TAG,
+    .paletteTag = TRAINER_CARD_CHAOS_MARK_TAG,
+    .oam = &sTrainerCardMugshotOam,
+    .anims = sTrainerCardMugshotAnimTable,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static bool32 HasPermanentChaosMark(void)
+{
+    return Randomizer_HasUsedChaosWild() || Randomizer_HasUsedChaosTrainers();
+}
+
+void TrainerCard_BuildChaosMarkTiles(u8 *tiles)
+{
+    // The GBA has no 48x48 OBJ size. Keep every source pixel unchanged,
+    // with transparent padding in a 64x64 frame and the proper tile stride.
+    memset(tiles, 0, 64 * 64 / 2);
+    for (u32 row = 0; row < TRAINER_CARD_CHAOS_SOURCE_TILES; row++)
+        memcpy(tiles + row * TRAINER_CARD_CHAOS_FRAME_TILES * TILE_SIZE_4BPP,
+            sTrainerCardChaosMark_Gfx + row * TRAINER_CARD_CHAOS_SOURCE_TILES * TILE_SIZE_4BPP,
+            TRAINER_CARD_CHAOS_SOURCE_TILES * TILE_SIZE_4BPP);
+}
+
+#if TESTING
+const u8 *TrainerCard_TestChaosMarkGfx(void) { return sTrainerCardChaosMark_Gfx; }
+const u16 *TrainerCard_TestChaosMarkPalette(void) { return sTrainerCardChaosMark_Pal; }
+bool32 TrainerCard_TestHasChaosMark(void) { return HasPermanentChaosMark(); }
+#endif
 
 // The Champion Ribbon uses the same gold H indicator as the hard-mode badges.
 // Palette index 0 remains transparent; indices 2 and 3 are the ribbon's
@@ -1495,7 +1536,7 @@ static void PrintNewTrainerCardNameAndId(void)
     if (FlagGet(FLAG_IS_CHAMPION))
     {
         StringCopy(gStringVar4, sText_NewTrainerCardChampion);
-        championX = 176 - GetStringWidth(FONT_SMALL_NARROWER, gStringVar4, 0) / 2;
+        championX = (HasPermanentChaosMark() ? 184 : 176) - GetStringWidth(FONT_SMALL_NARROWER, gStringVar4, 0) / 2;
         AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_SMALL_NARROWER, championX, 77, sNewTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
     }
 }
@@ -2216,6 +2257,24 @@ static void LoadNewTrainerCardSpriteGfx(void)
             ApplyHardChampionRibbonMark();
     }
 
+    if (HasPermanentChaosMark())
+    {
+        u8 *tiles = AllocZeroed(64 * 64 / 2);
+        if (tiles != NULL)
+        {
+            struct SpriteSheet sheet = {tiles, 64 * 64 / 2, TRAINER_CARD_CHAOS_MARK_TAG};
+            u16 palette[16] = {0};
+            struct SpritePalette spritePalette = {palette, TRAINER_CARD_CHAOS_MARK_TAG};
+            TrainerCard_BuildChaosMarkTiles(tiles);
+            LoadSpriteSheet(&sheet);
+            // PNG has five indexed colors; pad the unused entries safely.
+            // Index zero is still the original transparent green color key.
+            memcpy(palette, sTrainerCardChaosMark_Pal, sizeof(sTrainerCardChaosMark_Pal));
+            LoadSpritePalette(&spritePalette);
+            Free(tiles);
+        }
+    }
+
     LoadMonIconPalettes();
 }
 
@@ -2271,6 +2330,19 @@ static void CreateNewTrainerCardSprites(void)
             gSprites[sData->championRibbonSpriteId].oam.priority = 0;
     }
 
+    if (HasPermanentChaosMark() && GetSpriteTileStartByTag(TRAINER_CARD_CHAOS_MARK_TAG) != TAG_NONE)
+    {
+        // Top-left is (144,56): move the mark 16px right and 8px down
+        // to match the requested green-overlay position.
+        sData->chaosMarkSpriteId = CreateSprite(&sTrainerCardChaosMarkTemplate, 176, 88, 0);
+        if (sData->chaosMarkSpriteId != SPRITE_NONE)
+        {
+            gSprites[sData->chaosMarkSpriteId].oam.priority = 0;
+            if (sData->mugshotSpriteId != SPRITE_NONE)
+                gSprites[sData->mugshotSpriteId].subpriority = 1;
+        }
+    }
+
     for (i = 0; i < PARTY_SIZE; i++)
     {
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
@@ -2307,6 +2379,11 @@ static void DestroyNewTrainerCardSprites(void)
     FreeSpriteTilesByTag(TRAINER_CARD_CHAMPION_RIBBON_TAG);
     FreeSpritePaletteByTag(TRAINER_CARD_CHAMPION_RIBBON_TAG);
 
+    if (sData->chaosMarkSpriteId != SPRITE_NONE)
+        DestroySprite(&gSprites[sData->chaosMarkSpriteId]);
+    FreeSpriteTilesByTag(TRAINER_CARD_CHAOS_MARK_TAG);
+    FreeSpritePaletteByTag(TRAINER_CARD_CHAOS_MARK_TAG);
+
     for (i = 0; i < PARTY_SIZE; i++)
     {
         if (sData->partyIconSpriteIds[i] != SPRITE_NONE)
@@ -2324,6 +2401,8 @@ static void SetNewTrainerCardSpritesVisible(bool8 visible)
         gSprites[sData->mugshotSpriteId].invisible = !visible;
     if (sData->championRibbonSpriteId != SPRITE_NONE)
         gSprites[sData->championRibbonSpriteId].invisible = !visible;
+    if (sData->chaosMarkSpriteId != SPRITE_NONE)
+        gSprites[sData->chaosMarkSpriteId].invisible = !visible;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
@@ -3047,6 +3126,7 @@ static bool8 Task_EndCardFlip(struct Task *task)
 
 void ShowPlayerTrainerCard(void (*callback)(void))
 {
+    Randomizer_RecordActiveChaosUsage();
     sData = AllocZeroed(sizeof(*sData));
     sData->callback2 = callback;
     // Profile transitions use the same black fade in both directions. The
@@ -3088,6 +3168,7 @@ static void InitTrainerCardData(void)
     LoadTrainerCardColorThemeFromSave();
     sData->mugshotSpriteId = SPRITE_NONE;
     sData->championRibbonSpriteId = SPRITE_NONE;
+    sData->chaosMarkSpriteId = SPRITE_NONE;
     sData->bgScrollX = TRAINER_CARD_SCROLL_X_PERIOD_PIXELS << 8;
     sData->bgScrollY = TRAINER_CARD_SCROLL_Y_PERIOD_PIXELS << 8;
     for (i = 0; i < PARTY_SIZE; i++)

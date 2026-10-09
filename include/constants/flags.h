@@ -1670,6 +1670,8 @@
 #define FLAG_HLW_HOF_SPECIES_RELOCATED               FLAG_UNUSED_0x17FB
 #define FLAG_RANDOMIZER_FULL_CHAOS                   FLAG_UNUSED_0x17FC
 #define FLAG_RANDOMIZER_CHAOS_TRAINERS               FLAG_UNUSED_0x17FE
+#define FLAG_USED_CHAOS_RANDOM                      FLAG_UNUSED_0x17F8
+#define FLAG_USED_CHAOS_TRAINERS                    FLAG_UNUSED_0x17F9
 // Permanent difficulty history. Gym flags record the first badge battle only.
 #define FLAG_DEFEATED_GYM_1_NORMAL                   (HLW_CUSTOM_FLAGS_START + 0x00C)
 #define FLAG_DEFEATED_GYM_1_HARD                     (HLW_CUSTOM_FLAGS_START + 0x00D)
@@ -3706,8 +3708,8 @@
 #define FLAG_UNUSED_0x17F5                           (HLW_CUSTOM_FLAGS_START + 0x7F5) // Unused Flag
 #define FLAG_UNUSED_0x17F6                           (HLW_CUSTOM_FLAGS_START + 0x7F6) // Unused Flag
 #define FLAG_UNUSED_0x17F7                           (HLW_CUSTOM_FLAGS_START + 0x7F7) // Unused Flag
-#define FLAG_UNUSED_0x17F8                           (HLW_CUSTOM_FLAGS_START + 0x7F8) // Unused Flag
-#define FLAG_UNUSED_0x17F9                           (HLW_CUSTOM_FLAGS_START + 0x7F9) // Unused Flag
+#define FLAG_UNUSED_0x17F8                           (HLW_CUSTOM_FLAGS_START + 0x7F8) // Reserved: permanent wild Chaos history
+#define FLAG_UNUSED_0x17F9                           (HLW_CUSTOM_FLAGS_START + 0x7F9) // Reserved: permanent trainer Chaos history
 #define FLAG_UNUSED_0x17FA                           (HLW_CUSTOM_FLAGS_START + 0x7FA) // Reserved: species relocation marker
 #define FLAG_UNUSED_0x17FB                           (HLW_CUSTOM_FLAGS_START + 0x7FB) // Reserved: HOF relocation marker
 #define FLAG_UNUSED_0x17FC                           (HLW_CUSTOM_FLAGS_START + 0x7FC) // Reserved: Full Chaos Random

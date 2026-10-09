@@ -622,10 +622,12 @@ bool8 Randomizer_ChaosEnabled(void)
 
 void Randomizer_SetChaosMode(bool8 enabled)
 {
+    Randomizer_RecordActiveChaosUsage();
     if (enabled && RandomizersAllowed())
     {
         Randomizer_SetWildModes(FALSE, FALSE);
         FlagSet(FLAG_RANDOMIZER_FULL_CHAOS);
+        FlagSet(FLAG_USED_CHAOS_RANDOM);
     }
     else
         FlagClear(FLAG_RANDOMIZER_FULL_CHAOS);
@@ -633,6 +635,7 @@ void Randomizer_SetChaosMode(bool8 enabled)
 
 void Randomizer_SetWildModes(bool8 randomizeTables, bool8 fullRandom)
 {
+    Randomizer_RecordActiveChaosUsage();
     if (!RandomizersAllowed() || randomizeTables || fullRandom)
         FlagClear(FLAG_RANDOMIZER_FULL_CHAOS);
     if (!RandomizersAllowed())
@@ -667,10 +670,12 @@ bool8 Randomizer_ChaosTrainersEnabled(void)
 
 void Randomizer_SetChaosTrainersMode(bool8 enabled)
 {
+    Randomizer_RecordActiveChaosUsage();
     if (enabled && RandomizersAllowed())
     {
         Randomizer_SetTrainerMode(FALSE);
         FlagSet(FLAG_RANDOMIZER_CHAOS_TRAINERS);
+        FlagSet(FLAG_USED_CHAOS_TRAINERS);
     }
     else
         FlagClear(FLAG_RANDOMIZER_CHAOS_TRAINERS);
@@ -678,6 +683,7 @@ void Randomizer_SetChaosTrainersMode(bool8 enabled)
 
 void Randomizer_SetTrainerMode(bool8 enabled)
 {
+    Randomizer_RecordActiveChaosUsage();
     // An unrelated Options save must preserve the independent Chaos mode.
     // Explicitly enabling regional trainers replaces Chaos, as for wilds.
     if (!RandomizersAllowed() || enabled)
@@ -686,6 +692,26 @@ void Randomizer_SetTrainerMode(bool8 enabled)
         FlagSet(RANDOMIZER_FLAG_TRAINER_MON);
     else
         FlagClear(RANDOMIZER_FLAG_TRAINER_MON);
+}
+
+bool8 Randomizer_HasUsedChaosWild(void)
+{
+    return FlagGet(FLAG_USED_CHAOS_RANDOM);
+}
+
+bool8 Randomizer_HasUsedChaosTrainers(void)
+{
+    return FlagGet(FLAG_USED_CHAOS_TRAINERS);
+}
+
+void Randomizer_RecordActiveChaosUsage(void)
+{
+    // Existing saves can already have a valid active mode from before the
+    // permanent markers existed. Never infer usage from invalid Hard flags.
+    if (Randomizer_ChaosEnabled())
+        FlagSet(FLAG_USED_CHAOS_RANDOM);
+    if (Randomizer_ChaosTrainersEnabled())
+        FlagSet(FLAG_USED_CHAOS_TRAINERS);
 }
 
 u32 Randomizer_GetSeed(void)

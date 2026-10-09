@@ -30,6 +30,9 @@ bool8 Randomizer_TrainerEnabled(void);
 bool8 Randomizer_ChaosTrainersEnabled(void);
 void Randomizer_SetChaosTrainersMode(bool8 enabled);
 void Randomizer_SetTrainerMode(bool8 enabled);
+bool8 Randomizer_HasUsedChaosWild(void);
+bool8 Randomizer_HasUsedChaosTrainers(void);
+void Randomizer_RecordActiveChaosUsage(void);
 enum RandomizerSpeciesMode Randomizer_GetSpeciesMode(void);
 u32 Randomizer_GetSeed(void);
 u16 Randomizer_GetSpecies(u16 originalSpecies, enum RandomizerContext context, u32 contextKey);
@@ -62,6 +65,9 @@ u16 Randomizer_GetRandomStarter(u16 originalSpecies, u8 slot);
 #define Randomizer_ChaosTrainersEnabled() FALSE
 #define Randomizer_SetChaosTrainersMode(enabled) ((void)0)
 #define Randomizer_SetTrainerMode(enabled) ((void)0)
+#define Randomizer_HasUsedChaosWild() FALSE
+#define Randomizer_HasUsedChaosTrainers() FALSE
+#define Randomizer_RecordActiveChaosUsage() ((void)0)
 #define Randomizer_OnWildEncounter(species, mapGroup, mapNum, area, slot) (species)
 #define Randomizer_OnFullWildEncounter(species) (species)
 #define Randomizer_OnTrainerMon(species, trainerId, slotIndex) (species)
