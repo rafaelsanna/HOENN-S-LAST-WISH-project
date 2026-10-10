@@ -223,6 +223,8 @@ enum RandomTag
     RNG_HIDDEN_GROTTO_VISIBLE_ITEM,
     RNG_HIDDEN_GROTTO_HIDDEN_ITEM,
     RNG_HIDDEN_GROTTO_IV,
+    RNG_AI_AMATERASU_SETUP,
+    RNG_AI_AMATERASU_PASS,
 };
 
 #define RandomWeighted(tag, ...) \

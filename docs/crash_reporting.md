@@ -19,6 +19,35 @@ and rebuild for each release. The displayed version is embedded in that ROM;
 older ROMs keep their original label. This does not change the Gen 3
 `GAME_VERSION` identifier, save layout or RAM reservations.
 
+The header also includes the current screen, map group/number and the exact
+Porymap directory name. Long labels end in `...`; group/number still uniquely
+identify the map. `CB2` is the active screen callback's address and can be
+resolved using the matching ELF when a callback has no recognized friendly name.
+Map names are generated automatically from `data/maps/map_groups.json` and
+stored in ROM, not RAM. Missing/invalid save pointers or an unloaded map show
+`MAP N/A` rather than attempting an unsafe lookup. Unknown IDs show `UNKNOWN MAP`.
+
+Normal C `SetMainCallback2` calls retain their callback name automatically;
+the original callable symbol remains available for assembly/function pointers.
+The two tracking pointers use 8 bytes; linker alignment makes the total EWRAM
+increase 12 bytes in the current build. This does not change IWRAM, `gMain`,
+the save ABI or heap capacity. Callback matching, bounded ROM reads and
+read-only PC/Wish task probes cover battles, PC/storage, menus, naming screens
+and minigames without inspecting their heap-owned UI data. These labels are
+best-effort: a corrupt state or a warp in progress can leave missing or
+transitional information, and direct/indirect callback assignments may need
+their `CB2` address decoded. Fatal reporting still performs no allocation.
+
+The context addition passes the frozen save/registry checks and all 38 focused
+test expectations (31 normal passes and seven deliberately expected failures).
+Coverage includes battle submenus, the actual storage callback, field PC/Wish
+tasks, stale callback names, invalid save pointers, map IDs and long-label
+truncation, plus existing naming-screen, Pinball and Block Stacker regressions.
+The 512-byte renderer headroom check, 4 KiB stack reservation and heap capacity
+remain unchanged; new context helpers use small fixed stack frames, not large
+automatic buffers or a failure-time heap allocation. This is not a guarantee
+of coverage for every scene or every possible corruption.
+
 ## API and build configuration
 
 Include `assertf.h` at the call site.

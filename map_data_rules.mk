@@ -13,6 +13,10 @@ AUTO_GEN_TARGETS += $(INCLUDECONSTS_OUTDIR)/map_groups.h
 AUTO_GEN_TARGETS += $(INCLUDECONSTS_OUTDIR)/layouts.h
 AUTO_GEN_TARGETS += $(INCLUDECONSTS_OUTDIR)/map_event_ids.h
 AUTO_GEN_TARGETS += $(DATA_SRC_SUBDIR)/map_group_count.h
+AUTO_GEN_TARGETS += $(DATA_SRC_SUBDIR)/crash_map_names.h
+
+$(DATA_SRC_SUBDIR)/crash_map_names.h: $(MAPS_DIR)/map_groups.json tools/generate_crash_map_names.py
+	python3 tools/generate_crash_map_names.py $< $@
 
 MAP_DIRS := $(dir $(wildcard $(MAPS_DIR)/*/map.json))
 MAP_CONNECTIONS := $(patsubst $(MAPS_DIR)/%/,$(MAPS_DIR)/%/connections.inc,$(MAP_DIRS))

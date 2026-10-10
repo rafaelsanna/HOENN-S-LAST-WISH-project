@@ -16812,7 +16812,7 @@ F_TRAINER_FEMALE |
 #line 6514
             .iv = TRAINER_PARTY_IVS(24, 24, 24, 24, 24, 24),
 #line 6510
-            .ability = ABILITY_MOODY,
+            .ability = ABILITY_OWN_TEMPO,
 #line 6513
             .lvl = 42,
 #line 6511
@@ -16864,7 +16864,7 @@ F_TRAINER_FEMALE |
 #line 6533
             .lvl = 42,
 #line 6532
-            .nature = NATURE_ADAMANT,
+            .nature = NATURE_JOLLY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 6535
@@ -16887,7 +16887,7 @@ F_TRAINER_FEMALE |
 #line 6543
             .lvl = 42,
 #line 6542
-            .nature = NATURE_ADAMANT,
+            .nature = NATURE_JOLLY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 6545
@@ -16910,7 +16910,7 @@ F_TRAINER_FEMALE |
 #line 6553
             .lvl = 42,
 #line 6552
-            .nature = NATURE_ADAMANT,
+            .nature = NATURE_JOLLY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 6555
@@ -16940,7 +16940,7 @@ F_TRAINER_FEMALE |
                 MOVE_SOLAR_BEAM,
                 MOVE_DARK_PULSE,
                 MOVE_FIERY_DANCE,
-                MOVE_TAUNT,
+                MOVE_SLUDGE_BOMB,
             },
             },
         },

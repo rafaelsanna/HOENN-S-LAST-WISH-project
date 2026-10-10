@@ -22,6 +22,7 @@
 #include "text.h"
 #include "intro.h"
 #include "main.h"
+#include "crash_context.h"
 #include "trainer_hill.h"
 #include "test_runner.h"
 #include "constants/rgb.h"
@@ -207,10 +208,16 @@ static void CallCallbacks(void)
         gMain.callback2();
 }
 
-void SetMainCallback2(MainCallback callback)
+void (SetMainCallback2)(MainCallback callback)
+{
+    SetMainCallback2Named(callback, NULL);
+}
+
+void SetMainCallback2Named(MainCallback callback, const char *name)
 {
     gMain.callback2 = callback;
     gMain.state = 0;
+    CrashContext_SetCallback(callback, name);
 }
 
 void StartTimer1(void)

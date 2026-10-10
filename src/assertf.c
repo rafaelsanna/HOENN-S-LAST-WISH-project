@@ -3,6 +3,7 @@
 // scene backup or alloca. Nothing in this file accesses the player's save.
 #include <stdarg.h>
 #include "global.h"
+#include "crash_context.h"
 #include "gpu_regs.h"
 #include "main.h"
 #include "malloc.h"
@@ -208,17 +209,43 @@ static void InitScreen(u32 mode)
     ((vu16 *)BG_PLTT)[1] = sPalettes[mode][1];
 }
 
+static void LabelAt(u32 row, u32 x, const char *text)
+{
+    u32 i = 0;
+    while (x < REPORT_COLS && Readable(text + i) && text[i] != '\0')
+        ((vu16 *)VRAM)[row * 32 + x++] = Glyph(text[i++]);
+    if (x == REPORT_COLS && Readable(text + i) && text[i] != '\0')
+        for (u32 col = REPORT_COLS - 3; col < REPORT_COLS; col++)
+            ((vu16 *)VRAM)[row * 32 + col] = Glyph('.');
+}
+
 static void Label(u32 row, const char *text)
 {
-    u32 x = 0;
-    for (u32 i = 0; text[i] != '\0' && x < REPORT_COLS; i++)
-        ((vu16 *)VRAM)[row * 32 + x++] = Glyph(text[i]);
+    LabelAt(row, 0, text);
 }
 
 static void ReportHeader(u32 mode)
 {
     Label(0, mode == MODE_FATAL ? "HLW FATAL REPORT" : "HLW RECOVERABLE REPORT");
     Label(2, "PATCH " HLW_PATCH_VERSION);
+    Label(3, "SCREEN ");
+    LabelAt(3, 7, CrashContext_GetScreenName());
+    u8 group = 0, num = 0;
+    const char *mapName = NULL;
+    bool32 hasMap = CrashContext_GetMap(&group, &num, &mapName);
+    u32 x = 0, y = 4;
+    if (hasMap)
+    {
+        Puts(&x, &y, "MAP ", FALSE);
+        PutUnsigned(&x, &y, group, 10, 0);
+        Putc(&x, &y, '/');
+        PutUnsigned(&x, &y, num, 10, 0);
+    }
+    else
+        Puts(&x, &y, "MAP N/A", FALSE);
+    Puts(&x, &y, " CB2 ", FALSE);
+    PutUnsigned(&x, &y, (uintptr_t)gMain.callback2, 16, 8);
+    Label(5, hasMap ? (mapName != NULL ? mapName : "UNKNOWN MAP") : "NO MAP LOADED");
 }
 
 static void WaitFrame(void)
@@ -236,8 +263,8 @@ static __attribute__((used)) _Noreturn void EmergencyScreen(void)
     REG_SOUNDCNT_L = REG_SOUNDCNT_H = 0;
     InitScreen(MODE_FATAL);
     ReportHeader(MODE_FATAL);
-    Label(4, "REPORTER REENTRY OR LOW STACK");
-    Label(6, "RESTART THE GAME. DO NOT SAVE.");
+    Label(6, "REPORTER REENTRY OR LOW STACK");
+    Label(8, "RESTART THE GAME. DO NOT SAVE.");
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_BG0_ON;
     while (TRUE) WaitFrame();
 }
@@ -323,7 +350,7 @@ static void CrashScreen(u32 mode, const void *caller, const void *here, const ch
     PutUnsigned(&x, &y, (uintptr_t)here, 16, 8);
     Puts(&x, &y, " FROM ", FALSE);
     PutUnsigned(&x, &y, (uintptr_t)caller, 16, 8);
-    Vprint(0, 3, fmt, va);
+    Vprint(0, 6, fmt, va);
     Label(19, mode == MODE_FATAL ? "RESTART GAME - NO CONTINUE" : "PRESS START TO RETURN");
     WaitFrame();
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_BG0_ON;

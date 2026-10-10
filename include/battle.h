@@ -796,7 +796,8 @@ struct AiBattleData
     u16 aiUsingGimmick:6;
     u8 actionFlee:1;
     u8 choiceWatch:1;
-    u8 padding:6;
+    u8 amaterasuDance:2; // Successful setup, kept through Fiery Dance and Moody.
+    u8 padding:4;
 };
 
 // The palaceFlags member of struct BattleStruct contains 1 flag per move to indicate which moves the AI should consider,

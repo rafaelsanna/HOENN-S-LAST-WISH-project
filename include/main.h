@@ -58,6 +58,10 @@ extern s8 gPcmDmaCounter;
 void AgbMain(void);
 void AgbMainLoop(void);
 void SetMainCallback2(MainCallback callback);
+void SetMainCallback2Named(MainCallback callback, const char *name);
+// Keep the original callable symbol for assembly/function pointers. Ordinary
+// C calls also retain their screen callback's name for diagnostic reports.
+#define SetMainCallback2(callback) SetMainCallback2Named((callback), #callback)
 void InitKeys(void);
 void SetVBlankCallback(IntrCallback callback);
 void SetHBlankCallback(IntrCallback callback);

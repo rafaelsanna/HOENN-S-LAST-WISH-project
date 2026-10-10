@@ -1,4 +1,5 @@
 #include "global.h"
+#include "crash_context.h"
 #include "constants/songs.h"
 #include "bg.h"
 #include "decoration.h"
@@ -169,6 +170,37 @@ static void ItemStorage_DrawSwapArrow(u8, u8, u8);
 static void ItemStorage_RemoveWindow(u8);
 static void ItemStorage_UpdateSwapLinePos(u8);
 static void ItemStorage_ProcessItemSwapInput(u8);
+bool32 CrashContext_PlayerPCActive(void)
+{
+    static const TaskFunc tasks[] =
+    {
+        PlayerPCProcessMenuInput,
+        ItemStorageMenuProcessInput,
+        ItemStorage_HandleReturnToProcessInput,
+        ItemStorage_CreateListMenu,
+        ItemStorage_ProcessInput,
+        Task_ItemStorage_Deposit,
+        ItemStorage_HandleQuantityRolling,
+        ItemStorage_HandleRemoveItem,
+        ItemStorage_HandleErrorMessageInput,
+        ItemStorage_ProcessItemSwapInput,
+        Mailbox_ProcessInput,
+        Mailbox_MailOptionsProcessInput,
+        Mailbox_HandleReturnToProcessInput,
+        Mailbox_HandleConfirmMoveToBag,
+        Mailbox_FadeAndReadMail,
+        Mailbox_DoGiveMailPokeMenu,
+    };
+    for (u32 i = 0; i < ARRAY_COUNT(tasks); i++)
+        if (FuncIsActiveTask(tasks[i]))
+            return TRUE;
+    return FALSE;
+}
+
+#if TESTING
+TaskFunc CrashContext_TestPlayerPCMenuTask(void) { return PlayerPCProcessMenuInput; }
+#endif
+
 static void ItemStorage_EraseItemIcon(void);
 static void ItemStorage_DrawItemIcon(u16);
 static void ItemStorage_PrintDescription(s32);

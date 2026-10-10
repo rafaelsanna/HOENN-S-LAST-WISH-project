@@ -7,6 +7,7 @@
 #include "battle_anim.h"
 #include "battle_ai_util.h"
 #include "battle_ai_main.h"
+#include "battle_ai_amaterasu.h"
 #include "battle_controllers.h"
 #include "battle_factory.h"
 #include "battle_setup.h"
@@ -452,6 +453,8 @@ void Ai_InitPartyStruct(void)
     bool32 isOmniscient = (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_LEFT] & AI_FLAG_OMNISCIENT) || (gAiThinkingStruct->aiFlags[B_POSITION_OPPONENT_RIGHT] & AI_FLAG_OMNISCIENT);
     struct Pokemon *mon;
 
+    BattleAI_ResetAmaterasuDance();
+
     gAiPartyData->count[B_SIDE_PLAYER] = CalculatePlayerPartyCount();
     gAiPartyData->count[B_SIDE_OPPONENT] = CalculateEnemyPartyCount();
 
@@ -491,6 +494,9 @@ void Ai_UpdateSwitchInData(u32 battler)
     u32 i;
     u32 side = GetBattlerSide(battler);
     struct AiPartyMon *aiMon = &gAiPartyData->mons[side][gBattlerPartyIndexes[battler]];
+
+    if (!IsOnPlayerSide(battler))
+        BattleAI_ResetAmaterasuDance();
 
     // See if the switched-in mon has been already in battle
     if (aiMon->wasSentInBattle)
@@ -741,6 +747,22 @@ static u32 ChooseMoveOrAction_Singles(u32 battler)
     s32 i;
     u64 flags = gAiThinkingStruct->aiFlags[battler];
     u32 opposingBattler = GetOppositeBattler(battler);
+    u32 amaterasuMoves = BattleAI_GetAmaterasuMoveMask(battler);
+
+    if (amaterasuMoves != 0)
+    {
+        numOfBestMoves = 0;
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            SET_SCORE(battler, i, (amaterasuMoves & (1u << i)) ? AI_SCORE_DEFAULT + 100 : 0);
+            gAiBattleData->finalScore[battler][opposingBattler][i] = gAiThinkingStruct->score[i];
+            if (amaterasuMoves & (1u << i))
+                consideredMoveArray[numOfBestMoves++] = i;
+        }
+        gBattlerTarget = opposingBattler;
+        gAiBattleData->chosenTarget[battler] = opposingBattler;
+        return consideredMoveArray[numOfBestMoves == 1 ? 0 : RandomUniform(RNG_AI_AMATERASU_SETUP, 0, numOfBestMoves - 1)];
+    }
 
     gAiThinkingStruct->aiLogicId = 0;
     gAiThinkingStruct->movesetIndex = 0;
@@ -762,9 +784,42 @@ static u32 ChooseMoveOrAction_Singles(u32 battler)
     if (gAiThinkingStruct->aiFlags[battler] & AI_FLAG_CHECK_VIABILITY)
         AI_CompareDamagingMoves(battler, opposingBattler);
 
+    u32 amaterasuAttacks = BattleAI_GetAmaterasuAttackMask(battler);
+    if (amaterasuAttacks != 0)
+    {
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (!(amaterasuAttacks & (1u << i)))
+                SET_SCORE(battler, i, 0);
+        }
+    }
+
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         gAiBattleData->finalScore[battler][opposingBattler][i] = gAiThinkingStruct->score[i];
+    }
+
+    if (amaterasuAttacks != 0)
+    {
+        s32 bestScore = -1;
+        u32 bestDamage = 0;
+        numOfBestMoves = 0;
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (!(amaterasuAttacks & (1u << i)))
+                continue;
+            u32 damage = AI_GetDamage(battler, opposingBattler, i, AI_ATTACKING, gAiLogicData);
+            if (gAiThinkingStruct->score[i] > bestScore
+                || (gAiThinkingStruct->score[i] == bestScore && damage > bestDamage))
+            {
+                bestScore = gAiThinkingStruct->score[i];
+                bestDamage = damage;
+                numOfBestMoves = 0;
+            }
+            if (gAiThinkingStruct->score[i] == bestScore && damage == bestDamage)
+                consideredMoveArray[numOfBestMoves++] = i;
+        }
+        return consideredMoveArray[Random() % numOfBestMoves];
     }
 
     numOfBestMoves = 1;

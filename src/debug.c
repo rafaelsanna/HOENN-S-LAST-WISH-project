@@ -8,6 +8,7 @@
 //Jaizu:                https://jaizu.moe/
 //AND OTHER RHH POKEEMERALD-EXPANSION CONTRIBUTORS
 #include "global.h"
+#include "crash_context.h"
 #include "achievements.h"
 #include "battle.h"
 #include "battle_setup.h"
@@ -2744,6 +2745,23 @@ static void DebugAction_Util_CheatStart(u8 taskId)
     InitTimeBasedEvents();
     Debug_DestroyMenu_Full_Script(taskId, Debug_CheatStart);
 }
+
+bool32 CrashContext_WishMenuActive(void)
+{
+    if (FuncIsActiveTask(DebugTask_HandleMenuInput_General)
+     || FuncIsActiveTask(DebugTask_HandleChaosConfirmation))
+        return TRUE;
+#if DEBUG_CRASH_SCREEN_TEST
+    if (FuncIsActiveTask(DebugTask_HandleCrashConfirmation)
+     || FuncIsActiveTask(DebugTask_TriggerCrashReport))
+        return TRUE;
+#endif
+    return FALSE;
+}
+
+#if TESTING
+TaskFunc CrashContext_TestWishMenuTask(void) { return DebugTask_HandleMenuInput_General; }
+#endif
 
 static void DebugAction_Util_OpenAchievements(u8 taskId)
 {

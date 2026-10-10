@@ -29,6 +29,7 @@
 #include "window.h"
 #include "battle_message.h"
 #include "battle_ai_main.h"
+#include "battle_ai_amaterasu.h"
 #include "battle_ai_util.h"
 #include "event_data.h"
 #include "link.h"
@@ -3607,10 +3608,18 @@ static u32 AbilityBattleEffectsSingle(u32 caseID, u32 battler, u32 ability, u32 
 //        }
         break;
     case ABILITYEFFECT_SWITCH_IN_WEATHER:
+    {
+        bool32 amaterasuSun = BattleAI_AmaterasuStartsInSun();
+        bool32 allowStartingWeather = !(gBattleTypeFlags & BATTLE_TYPE_RECORDED);
+        u32 startingWeather = amaterasuSun ? WEATHER_DROUGHT : GetCurrentWeather();
+#if TESTING
+        if (gTestRunnerEnabled && amaterasuSun)
+            allowStartingWeather = TRUE;
+#endif
         gBattleScripting.battler = battler;
-        if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED))
+        if (allowStartingWeather)
         {
-            switch (GetCurrentWeather())
+            switch (startingWeather)
             {
             case WEATHER_RAIN:
             case WEATHER_RAIN_THUNDERSTORM:
@@ -3670,10 +3679,11 @@ static u32 AbilityBattleEffectsSingle(u32 caseID, u32 battler, u32 ability, u32 
         }
         if (effect != 0)
         {
-            gBattleCommunication[MULTISTRING_CHOOSER] = GetCurrentWeather();
+            gBattleCommunication[MULTISTRING_CHOOSER] = startingWeather;
             BattleScriptPushCursorAndCallback(BattleScript_OverworldWeatherStarts);
         }
         break;
+    }
     case ABILITYEFFECT_ON_SWITCHIN:
         gBattleScripting.battler = battler;
         switch (gLastUsedAbility)

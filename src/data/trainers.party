@@ -6507,7 +6507,7 @@ Double Battle: No
 AI: Smart Trainer / Prediction / Try to 2HKO / Prefer Highest Damage Move
 
 Smeargle @ Focus Sash  
-Ability: Moody  
+Ability: Own Tempo  
 Timid Nature  
 Shiny: Yes  
 Level: 42  
@@ -6529,7 +6529,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Granbull @ Sitrus Berry  
 Ability: Intimidate   
-Adamant Nature  
+Jolly Nature  
 Level: 42   
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Flare Blitz  
@@ -6539,7 +6539,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Arcanine @ Assault Vest  
 Ability: Intimidate  
-Adamant Nature
+Jolly Nature
 Level: 42  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Extreme Speed  
@@ -6549,7 +6549,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Flareon @ Toxic Orb  
 Ability: Guts  
-Adamant Nature
+Jolly Nature
 Level: 42    
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Facade  
@@ -6565,7 +6565,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Solar Beam  
 - Dark Pulse  
 - Fiery Dance    
-- Taunt  
+- Sludge Bomb  
 
 === TRAINER_FLANNERY_CASUAL ===
 Name: AMATERASU

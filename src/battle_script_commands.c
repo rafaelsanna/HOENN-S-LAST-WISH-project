@@ -4,6 +4,7 @@
 #include "battle_message.h"
 #include "battle_anim.h"
 #include "battle_ai_main.h"
+#include "battle_ai_amaterasu.h"
 #include "battle_ai_util.h"
 #include "battle_scripts.h"
 #include "battle_environment.h"
@@ -3408,6 +3409,7 @@ void SetMoveEffect(u32 battler, u32 effectBattler, bool32 primary, bool32 certai
         {
             for (i = 0; i < NUM_BATTLE_STATS; i++)
                 gBattleMons[gEffectBattler].statStages[i] = DEFAULT_STAT_STAGE;
+            BattleAI_AmaterasuStatsCleared(gEffectBattler);
             BattleScriptPush(gBattlescriptCurrInstr + 1);
             gBattlescriptCurrInstr = BattleScript_MoveEffectClearSmog;
         }
@@ -6386,6 +6388,8 @@ static void Cmd_moveend(void)
                 u32 temp;
                 SWAP(gBattlerAttacker, gBattlerTarget, temp);
             }
+
+            BattleAI_RecordAmaterasuDance(gBattlerAttacker, gCurrentMove);
 
             if (!gSpecialStatuses[gBattlerAttacker].dancerUsedMove)
             {
@@ -10622,6 +10626,7 @@ bool32 TryResetBattlerStatChanges(u8 battler)
         gBattleMons[battler].statStages[j] = DEFAULT_STAT_STAGE;
     }
 
+    BattleAI_AmaterasuStatsCleared(battler);
     return ret;
 }
 

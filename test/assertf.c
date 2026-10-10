@@ -21,7 +21,7 @@ TEST("assertf: fatal and recoverable headers show the central patch version")
         ExpectRenderedText(0, 2, "PATCH " HLW_PATCH_VERSION);
         // Keep the address row and message start free for the report itself.
         EXPECT_EQ(Assertf_TestReadChar(0, 1), ' ');
-        EXPECT_EQ(Assertf_TestReadChar(0, 3), ' ');
+        EXPECT_EQ(Assertf_TestReadChar(0, 6), ' ');
     }
 }
 

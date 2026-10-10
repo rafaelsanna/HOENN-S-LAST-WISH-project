@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "constants/battle_ai.h"
 #include "battle_ai_main.h"
+#include "battle_ai_amaterasu.h"
 #include "battle_ai_util.h"
 #include "battle_util.h"
 #include "battle_anim.h"
@@ -1105,6 +1106,9 @@ bool32 ShouldSwitch(u32 battler)
     s32 i;
     s32 availableToSwitch;
 
+    if (BattleAI_GetAmaterasuMoveMask(battler) || BattleAI_GetAmaterasuAttackMask(battler))
+        return FALSE; // Preserve the combo/emergency or a usable boosted attack.
+
     if (gBattleMons[battler].volatiles.wrapped)
         return FALSE;
     if (gBattleMons[battler].volatiles.escapePrevention)
@@ -1255,6 +1259,9 @@ void ModifySwitchAfterMoveScoring(u32 battler)
     struct Pokemon *party;
     s32 i;
     s32 availableToSwitch;
+
+    if (BattleAI_GetAmaterasuMoveMask(battler) || BattleAI_GetAmaterasuAttackMask(battler))
+        return;
 
     if (gBattleMons[battler].volatiles.wrapped)
         return;
@@ -2346,6 +2353,10 @@ u32 GetMostSuitableMonToSwitchInto(u32 battler, enum SwitchType switchType)
         return gBattleStruct->monToSwitchIntoId[battler];
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
         return gBattlerPartyIndexes[battler] + 1;
+
+    bestMonId = BattleAI_GetAmaterasuSwitchIn(battler);
+    if (bestMonId != PARTY_SIZE)
+        return bestMonId;
 
     if (IsDoubleBattle())
     {

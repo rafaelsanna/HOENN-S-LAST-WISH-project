@@ -1,4 +1,5 @@
 #include "global.h"
+#include "crash_context.h"
 #include "comfy_anim.h"
 #include "malloc.h"
 #include "bg.h"
@@ -2277,6 +2278,23 @@ static s8 SwapInPalNextVBlank(void *palette, void *dst) {
   sStorage->swapInPalDst = dst;
   return 0;
 }
+
+static void CB2_PokeStorage(void);
+
+bool32 CrashContext_PokemonPCActive(void)
+{
+    // Only compare callbacks/tasks. Never inspect sStorage or box buffers.
+    if (gMain.callback2 == CB2_PokeStorage || gMain.callback2 == CB2_ExitPokeStorage)
+        return TRUE;
+    if (gMain.callback2 != CB2_Overworld && gMain.callback2 != CB2_OverworldBasic)
+        return FALSE;
+    return FuncIsActiveTask(Task_PCMainMenu) || FuncIsActiveTask(Task_InitBox);
+}
+
+#if TESTING
+MainCallback CrashContext_TestStorageCallback(void) { return CB2_PokeStorage; }
+TaskFunc CrashContext_TestPokemonPCMenuTask(void) { return Task_PCMainMenu; }
+#endif
 
 static void CB2_PokeStorage(void)
 {
