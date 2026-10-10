@@ -8,5 +8,7 @@ bool32 BattleAI_AmaterasuStartsInSun(void);
 u32 BattleAI_GetAmaterasuMoveMask(u32 battler);
 u32 BattleAI_GetAmaterasuAttackMask(u32 battler);
 u32 BattleAI_GetAmaterasuSwitchIn(u32 battler);
+bool32 BattleAI_AmaterasuReserveSmeargle(u32 battler, u32 partyIndex);
+u32 BattleAI_GetAmaterasuEscapeSwitch(u32 battler);
 
 #endif // GUARD_BATTLE_AI_AMATERASU_H

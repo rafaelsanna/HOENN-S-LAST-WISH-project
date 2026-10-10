@@ -7247,7 +7247,7 @@ static void Cmd_switchindataupdate(void)
             // Find the first possible replacement for the not valid pokemon.
             for (i = 0; i < PARTY_SIZE; i++)
             {
-                if (IsValidForBattle(&party[i]))
+                if (IsValidForBattle(&party[i]) && !BattleAI_AmaterasuReserveSmeargle(battler, i))
                     break;
             }
             // There is valid replacement.

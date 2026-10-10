@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_ai_main.h"
+#include "battle_ai_amaterasu.h"
 #include "battle_ai_util.h"
 #include "constants/battle_ai.h"
 #include "battle_anim.h"
@@ -538,6 +539,15 @@ static void OpponentHandleChoosePokemon(u32 battler)
     s32 pokemonInBattle = 1;
     enum SwitchType switchType = SWITCH_AFTER_KO;
 
+    // A planned sacrifice is legal only while switching a living teammate.
+    // Pursuit can turn a pending switch into a KO replacement instead.
+    if (!IsBattlerAlive(battler)
+        && BattleAI_AmaterasuReserveSmeargle(battler, gBattleStruct->AI_monToSwitchIntoId[battler]))
+    {
+        gBattleStruct->AI_monToSwitchIntoId[battler] = PARTY_SIZE;
+        gBattleStruct->monToSwitchIntoId[battler] = PARTY_SIZE;
+    }
+
     // Choosing Revival Blessing target
     if (gBattleResources->bufferA[battler][1] == PARTY_ACTION_CHOOSE_FAINTED_MON)
     {
@@ -574,6 +584,7 @@ static void OpponentHandleChoosePokemon(u32 battler)
             for (chosenMonId = (lastId-1); chosenMonId >= firstId; chosenMonId--)
             {
                 if (!IsValidForBattle(&gEnemyParty[chosenMonId])
+                 || BattleAI_AmaterasuReserveSmeargle(battler, chosenMonId)
                  || chosenMonId == gBattlerPartyIndexes[battler1]
                  || chosenMonId == gBattlerPartyIndexes[battler2])
                     continue;

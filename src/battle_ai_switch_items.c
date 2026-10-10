@@ -158,6 +158,8 @@ void GetAIPartyIndexes(u32 battler, s32 *firstId, s32 *lastId)
 
 static inline bool32 SetSwitchinAndSwitch(u32 battler, u32 switchinId)
 {
+    if (BattleAI_AmaterasuReserveSmeargle(battler, switchinId))
+        return FALSE;
     gBattleStruct->AI_monToSwitchIntoId[battler] = switchinId;
     return TRUE;
 }
@@ -1106,9 +1108,6 @@ bool32 ShouldSwitch(u32 battler)
     s32 i;
     s32 availableToSwitch;
 
-    if (BattleAI_GetAmaterasuMoveMask(battler) || BattleAI_GetAmaterasuAttackMask(battler))
-        return FALSE; // Preserve the combo/emergency or a usable boosted attack.
-
     if (gBattleMons[battler].volatiles.wrapped)
         return FALSE;
     if (gBattleMons[battler].volatiles.escapePrevention)
@@ -1123,6 +1122,15 @@ bool32 ShouldSwitch(u32 battler)
     // Sequence Switching AI never switches mid-battle
     if (gAiThinkingStruct->aiFlags[battler] & AI_FLAG_SEQUENCE_SWITCHING)
         return FALSE;
+
+    u32 escapeSwitch = BattleAI_GetAmaterasuEscapeSwitch(battler);
+    if (escapeSwitch != PARTY_SIZE)
+    {
+        gBattleStruct->AI_monToSwitchIntoId[battler] = escapeSwitch;
+        return TRUE;
+    }
+    if (BattleAI_GetAmaterasuMoveMask(battler) || BattleAI_GetAmaterasuAttackMask(battler))
+        return FALSE; // Preserve boosts unless an actual escape is beneficial.
 
     availableToSwitch = 0;
 
@@ -1147,6 +1155,8 @@ bool32 ShouldSwitch(u32 battler)
     for (i = firstId; i < lastId; i++)
     {
         if (!IsValidForBattle(&party[i]))
+            continue;
+        if (BattleAI_AmaterasuReserveSmeargle(battler, i))
             continue;
         if (i == gBattlerPartyIndexes[battlerIn1])
             continue;
@@ -1260,6 +1270,9 @@ void ModifySwitchAfterMoveScoring(u32 battler)
     s32 i;
     s32 availableToSwitch;
 
+    if ((gAiLogicData->shouldSwitch & (1u << battler))
+        && BattleAI_AmaterasuReserveSmeargle(battler, gBattleStruct->AI_monToSwitchIntoId[battler]))
+        return; // Preserve the explicit sacrifice, not an ordinary replacement.
     if (BattleAI_GetAmaterasuMoveMask(battler) || BattleAI_GetAmaterasuAttackMask(battler))
         return;
 
@@ -1301,6 +1314,8 @@ void ModifySwitchAfterMoveScoring(u32 battler)
     for (i = firstId; i < lastId; i++)
     {
         if (!IsValidForBattle(&party[i]))
+            continue;
+        if (BattleAI_AmaterasuReserveSmeargle(battler, i))
             continue;
         if (i == gBattlerPartyIndexes[battlerIn1])
             continue;
@@ -1384,6 +1399,8 @@ void AI_TrySwitchOrUseItem(u32 battler)
                     for (monToSwitchId = (lastId-1); monToSwitchId >= firstId; monToSwitchId--)
                     {
                         if (!IsValidForBattle(&party[monToSwitchId]))
+                            continue;
+                        if (BattleAI_AmaterasuReserveSmeargle(battler, monToSwitchId))
                             continue;
                         if (monToSwitchId == gBattlerPartyIndexes[battlerIn1])
                             continue;
@@ -2140,6 +2157,7 @@ static u32 GetBestMonIntegrated(struct Pokemon *party, int firstId, int lastId, 
     {
         // Check mon validity
         if (!IsValidForBattle(&party[i])
+            || BattleAI_AmaterasuReserveSmeargle(battler, i)
             || gBattlerPartyIndexes[battlerIn1] == i
             || gBattlerPartyIndexes[battlerIn2] == i
             || i == gBattleStruct->monToSwitchIntoId[battlerIn1]
@@ -2281,6 +2299,8 @@ static u32 GetBestMonIntegrated(struct Pokemon *party, int firstId, int lastId, 
     }
 
     batonPassId = GetRandomSwitchinWithBatonPass(aliveCount, bits, firstId, lastId, i);
+    if (BattleAI_AmaterasuReserveSmeargle(battler, batonPassId))
+        batonPassId = PARTY_SIZE;
 
     // Different switching priorities depending on switching mid battle vs switching after a KO or slow switch
     if (isFreeSwitch)
@@ -2328,6 +2348,7 @@ static u32 GetNextMonInParty(struct Pokemon *party, int firstId, int lastId, u32
     {
         // Check mon validity
         if (!IsValidForBattle(&party[i])
+            || BattleAI_AmaterasuReserveSmeargle(battlerIn1, i)
             || gBattlerPartyIndexes[battlerIn1] == i
             || gBattlerPartyIndexes[battlerIn2] == i
             || i == gBattleStruct->monToSwitchIntoId[battlerIn1]
@@ -2349,7 +2370,8 @@ u32 GetMostSuitableMonToSwitchInto(u32 battler, enum SwitchType switchType)
     s32 lastId = 0; // + 1
     struct Pokemon *party;
 
-    if (gBattleStruct->monToSwitchIntoId[battler] != PARTY_SIZE)
+    if (gBattleStruct->monToSwitchIntoId[battler] != PARTY_SIZE
+        && !BattleAI_AmaterasuReserveSmeargle(battler, gBattleStruct->monToSwitchIntoId[battler]))
         return gBattleStruct->monToSwitchIntoId[battler];
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
         return gBattlerPartyIndexes[battler] + 1;
@@ -2402,6 +2424,7 @@ u32 GetMostSuitableMonToSwitchInto(u32 battler, enum SwitchType switchType)
         for (i = firstId; i < lastId; i++)
         {
             if (!IsValidForBattle(&party[i])
+                || BattleAI_AmaterasuReserveSmeargle(battler, i)
                 || gBattlerPartyIndexes[battlerIn1] == i
                 || gBattlerPartyIndexes[battlerIn2] == i
                 || i == gBattleStruct->monToSwitchIntoId[battlerIn1]
