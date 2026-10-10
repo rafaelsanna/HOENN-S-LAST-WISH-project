@@ -21034,7 +21034,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
             "A desperation attack. Power\n"
             "doubles if last move failed."),
         .effect = EFFECT_STOMPING_TANTRUM,
-        .power = 75,
+        .power = 80,
         .type = TYPE_FIRE,
         .accuracy = 100,
         .pp = 20,

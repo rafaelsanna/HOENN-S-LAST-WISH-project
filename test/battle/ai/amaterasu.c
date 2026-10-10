@@ -270,7 +270,7 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: boosted sweeper excludes a zero PP attack with
     }
 }
 
-AI_SINGLE_BATTLE_TEST("Amaterasu: boosted physical Flareon attacks despite Protect and Will O Wisp")
+AI_SINGLE_BATTLE_TEST("Amaterasu: Flareon does not count as a physical Baton Pass recipient")
 {
     PARAMETRIZE { }
     GIVEN {
@@ -278,16 +278,14 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: boosted physical Flareon attacks despite Prote
         AI_FLAGS(AMATERASU_AI | AI_FLAG_POWERFUL_STATUS);
         PLAYER(SPECIES_NINETALES) { Speed(50); MaxHP(1000); HP(1000); Ability(ABILITY_FLASH_FIRE); Moves(MOVE_SCRATCH, MOVE_SPLASH); }
         OPPONENT(SPECIES_SMEARGLE) { Speed(100); Ability(ABILITY_OWN_TEMPO); Moves(MOVE_QUIVER_DANCE, MOVE_VICTORY_DANCE, MOVE_FIERY_DANCE, MOVE_BATON_PASS); }
-        OPPONENT(SPECIES_NINETALES) { Speed(100); HP(0); }
+        OPPONENT(SPECIES_NINETALES) { Speed(100); HP(100); }
         OPPONENT(SPECIES_FLAREON) { Speed(100); Ability(ABILITY_GUTS); Item(ITEM_TOXIC_ORB); Moves(MOVE_FACADE, MOVE_FLARE_BLITZ, MOVE_WILL_O_WISP, MOVE_PROTECT); }
     } WHEN {
-        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_VICTORY_DANCE); }
-        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 2); }
-        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_FACADE); }
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 1); }
     } THEN {
-        EXPECT_EQ(gBattleMons[B_POSITION_OPPONENT_LEFT].species, SPECIES_FLAREON);
-        EXPECT_EQ(gAiBattleData->finalScore[B_POSITION_OPPONENT_LEFT][B_POSITION_PLAYER_LEFT][2], 0);
-        EXPECT_EQ(gAiBattleData->finalScore[B_POSITION_OPPONENT_LEFT][B_POSITION_PLAYER_LEFT][3], 0);
+        EXPECT_EQ(gBattleMons[B_POSITION_OPPONENT_LEFT].species, SPECIES_NINETALES);
+        EXPECT_EQ(GetMonData(&gEnemyParty[2], MON_DATA_HELD_ITEM), ITEM_TOXIC_ORB);
     } FINALLY {
         gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
     }
@@ -322,15 +320,14 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: pass follows the successful dance without a Sa
     }
 }
 
-AI_SINGLE_BATTLE_TEST("Amaterasu: every healthy physical or special sweeper can receive the corresponding pass")
+AI_SINGLE_BATTLE_TEST("Amaterasu: each eligible physical or special pair receives Baton Pass with equal probability")
 {
     u32 dance, recipient;
     PARAMETRIZE { dance = MOVE_QUIVER_DANCE; recipient = 1; }
     PARAMETRIZE { dance = MOVE_QUIVER_DANCE; recipient = 5; }
     PARAMETRIZE { dance = MOVE_VICTORY_DANCE; recipient = 2; }
     PARAMETRIZE { dance = MOVE_VICTORY_DANCE; recipient = 3; }
-    PARAMETRIZE { dance = MOVE_VICTORY_DANCE; recipient = 4; }
-    PASSES_RANDOMLY(1, dance == MOVE_QUIVER_DANCE ? 2 : 3, RNG_AI_AMATERASU_PASS);
+    PASSES_RANDOMLY(1, 2, RNG_AI_AMATERASU_PASS);
     GIVEN {
         SetAmaterasu();
         AI_FLAGS(AMATERASU_AI);
@@ -344,6 +341,49 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: every healthy physical or special sweeper can 
     } WHEN {
         TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, dance); }
         TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, recipient); }
+    } FINALLY {
+        gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    }
+}
+
+AI_SINGLE_BATTLE_TEST("Amaterasu: the surviving member of either pair receives the pass, never Flareon")
+{
+    u32 dance, recipient;
+    PARAMETRIZE { dance = MOVE_QUIVER_DANCE; recipient = 1; }
+    PARAMETRIZE { dance = MOVE_QUIVER_DANCE; recipient = 5; }
+    PARAMETRIZE { dance = MOVE_VICTORY_DANCE; recipient = 2; }
+    PARAMETRIZE { dance = MOVE_VICTORY_DANCE; recipient = 3; }
+    GIVEN {
+        SetAmaterasu();
+        AI_FLAGS(AMATERASU_AI);
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_SMEARGLE) { Moves(dance, MOVE_FIERY_DANCE, MOVE_BATON_PASS); }
+        OPPONENT(SPECIES_NINETALES) { HP(recipient == 1 ? 100 : 0); }
+        OPPONENT(SPECIES_GRANBULL) { HP(recipient == 2 ? 100 : 0); }
+        OPPONENT(SPECIES_ARCANINE) { HP(recipient == 3 ? 100 : 0); }
+        OPPONENT(SPECIES_FLAREON) { Ability(ABILITY_GUTS); Item(ITEM_TOXIC_ORB); }
+        OPPONENT(SPECIES_HOUNDOOM) { HP(recipient == 5 ? 100 : 0); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, dance); }
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, recipient); }
+    } FINALLY {
+        gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    }
+}
+
+AI_SINGLE_BATTLE_TEST("Amaterasu: only Flareon remaining does not initiate a useless setup or pass")
+{
+    PARAMETRIZE { }
+    GIVEN {
+        SetAmaterasu();
+        AI_FLAGS(AMATERASU_AI);
+        PLAYER(SPECIES_WOBBUFFET) { HP(1000); MaxHP(1000); }
+        OPPONENT(SPECIES_SMEARGLE) { Ability(ABILITY_OWN_TEMPO); Moves(MOVE_QUIVER_DANCE, MOVE_VICTORY_DANCE, MOVE_FIERY_DANCE, MOVE_BATON_PASS); }
+        OPPONENT(SPECIES_FLAREON) { Ability(ABILITY_GUTS); Item(ITEM_TOXIC_ORB); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_FIERY_DANCE); }
+    } THEN {
+        EXPECT_EQ(gBattlerPartyIndexes[B_POSITION_OPPONENT_LEFT], 0);
     } FINALLY {
         gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
     }

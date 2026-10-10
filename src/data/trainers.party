@@ -6532,7 +6532,7 @@ Ability: Intimidate
 Jolly Nature  
 Level: 42   
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
-- Flare Blitz  
+- Fire Punch  
 - Earthquake  
 - Close Combat 
 - Wild Charge  
@@ -6543,7 +6543,7 @@ Jolly Nature
 Level: 42  
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Extreme Speed  
-- Flare Blitz  
+- Temper Flare
 - Close Combat  
 - Wild Charge  
 
@@ -6553,7 +6553,7 @@ Jolly Nature
 Level: 42    
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe 
 - Facade  
-- Flare Blitz  
+- Temper Flare  
 - Will-O-Wisp  
 - Protect  
 

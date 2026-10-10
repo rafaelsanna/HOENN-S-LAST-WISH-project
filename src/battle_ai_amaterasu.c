@@ -87,7 +87,6 @@ static u32 GetRecipientMask(u32 battler, enum AmaterasuDance dance)
         {
         case SPECIES_GRANBULL:
         case SPECIES_ARCANINE:
-        case SPECIES_FLAREON:
             if (dance == AMATERASU_DANCE_VICTORY)
                 mask |= 1u << i;
             break;
@@ -262,6 +261,13 @@ u32 BattleAI_GetAmaterasuMoveMask(u32 battler)
     }
     if (!hasReserve)
         return 0;
+
+    // Flareon keeps its own Guts/Facade/Protect plan. If it is the only
+    // teammate left, attack rather than initiate a pass with no recipient.
+    if (!GetRecipientMask(battler, AMATERASU_DANCE_QUIVER)
+        && !GetRecipientMask(battler, AMATERASU_DANCE_VICTORY)
+        && fieryDance != MAX_MON_MOVES)
+        return 1u << fieryDance;
 
     if (gAiBattleData->amaterasuDance != AMATERASU_DANCE_NONE)
     {

@@ -16868,7 +16868,7 @@ F_TRAINER_FEMALE |
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 6535
-                MOVE_FLARE_BLITZ,
+                MOVE_FIRE_PUNCH,
                 MOVE_EARTHQUAKE,
                 MOVE_CLOSE_COMBAT,
                 MOVE_WILD_CHARGE,
@@ -16892,7 +16892,7 @@ F_TRAINER_FEMALE |
             .moves = {
 #line 6545
                 MOVE_EXTREME_SPEED,
-                MOVE_FLARE_BLITZ,
+                MOVE_TEMPER_FLARE,
                 MOVE_CLOSE_COMBAT,
                 MOVE_WILD_CHARGE,
             },
@@ -16915,7 +16915,7 @@ F_TRAINER_FEMALE |
             .moves = {
 #line 6555
                 MOVE_FACADE,
-                MOVE_FLARE_BLITZ,
+                MOVE_TEMPER_FLARE,
                 MOVE_WILL_O_WISP,
                 MOVE_PROTECT,
             },
