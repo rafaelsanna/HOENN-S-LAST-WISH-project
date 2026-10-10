@@ -4555,7 +4555,9 @@ static void Task_Scene0_Main(u8 taskId)
         task->tTimer++;
         if (!gPaletteFade.active && task->tTimer > 1)
         {
-            // Desliga display e blend ANTES de mexer na VRAM
+            // SetGpuReg can defer DISPCNT until VBlank. Disable the layers
+            // immediately too, keeping the already-black backdrop visible.
+            REG_DISPCNT = 0;
             SetGpuReg(REG_OFFSET_DISPCNT, 0);
             SetGpuReg(REG_OFFSET_BLDCNT, 0);
             SetGpuReg(REG_OFFSET_BLDY, 0);
@@ -4598,11 +4600,6 @@ static void Task_Scene0_Main(u8 taskId)
             // Após carregar elementos fixos, permitir alocação normal de paletas
             gReservedSpritePaletteCount = 0;
 
-            // As paletas foram atualizadas enquanto o display estava desligado; força uma
-            // transferência imediata para a PAL durante o VBlank
-            gPaletteFade.bufferTransferDisabled = FALSE;
-            TransferPlttBuffer();
-
             // Cria a lua
             task->tMoonId = CreateSprite(&sSpriteTemplate_Scene0Moon,
                                          DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, 1);
@@ -4610,7 +4607,14 @@ static void Task_Scene0_Main(u8 taskId)
             gSprites[task->tMoonId].data[1] = 768;
             gSprites[task->tMoonId].data[2] = 0;
 
-            // RELIGA O DISPLAY (agora sem flash)
+            // LoadPalette fills both software buffers with unfaded colors;
+            // BG color zero is magenta. Never upload those colors here, even
+            // with the layers off: color zero is the visible backdrop.
+            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+            BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
+            gPaletteFade.bufferTransferDisabled = FALSE;
+
+            // Re-enable the scene only after its fade starts from black.
             SetGpuReg(REG_OFFSET_DISPCNT,
                 DISPCNT_MODE_0
                 | DISPCNT_OBJ_1D_MAP
@@ -4621,7 +4625,6 @@ static void Task_Scene0_Main(u8 taskId)
             task->tTimer = 0;
             task->tCloudScroll = 0;
             task->tSparkleTimer = 0;
-            BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
             PlaySE(SE_M_MOONLIGHT);
             task->tState = S0_HOLD_SET03;
         }

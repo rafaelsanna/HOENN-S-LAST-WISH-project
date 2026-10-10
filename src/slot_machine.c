@@ -129,6 +129,22 @@ enum {
     PALTAG_EXPLOSION,
     PALTAG_DIG_DISPLAY,
     PALTAG_PIKA_AURA,
+    PALTAG_REEL_SYMBOL_3,
+    PALTAG_REEL_SYMBOL_4,
+    PALTAG_REEL_SYMBOL_5,
+};
+
+// Symbols 3-5 have independent PNG palettes. Keep the shared palette for the
+// other symbols and the white reel background, including during Reel Time.
+static const u16 sReelSymbolPaletteTags[] =
+{
+    [SYMBOL_7_RED]   = PALTAG_REEL,
+    [SYMBOL_7_BLUE]  = PALTAG_REEL,
+    [SYMBOL_AZURILL] = PALTAG_REEL_SYMBOL_3,
+    [SYMBOL_LOTAD]   = PALTAG_REEL_SYMBOL_4,
+    [SYMBOL_CHERRY]  = PALTAG_REEL_SYMBOL_5,
+    [SYMBOL_POWER]   = PALTAG_REEL,
+    [SYMBOL_REPLAY]  = PALTAG_REEL,
 };
 
 enum {
@@ -4151,14 +4167,45 @@ static void CreateReelSymbolSprites(void)
     }
 }
 
+static void SetReelSymbolGraphics(struct Sprite *sprite, u32 symbol)
+{
+    sprite->sheetTileStart = GetSpriteTileStartByTag(GFXTAG_SYMBOLS_START + symbol);
+    sprite->oam.paletteNum = IndexOfSpritePaletteTag(sReelSymbolPaletteTags[symbol]);
+    SetSpriteSheetFrameTileNum(sprite);
+}
+
 static void SpriteCB_ReelSymbol(struct Sprite *sprite)
 {
     sprite->data[2] = sSlotMachine->reelPixelOffsets[sprite->data[0]] + sprite->data[1];
     sprite->data[2] %= 120;
     sprite->y = sSlotMachine->reelShockOffsets[sprite->data[0]] + 28 + sprite->data[2];
-    sprite->sheetTileStart = GetSpriteTileStartByTag(GetSymbolAtRest(sprite->data[0], sprite->data[2] / 24));
-    SetSpriteSheetFrameTileNum(sprite);
+    SetReelSymbolGraphics(sprite, GetSymbolAtRest(sprite->data[0], sprite->data[2] / 24));
 }
+
+#if TESTING
+void SlotMachine_TestLoadReelAssets(void)
+{
+    for (u32 symbol = SYMBOL_7_RED; symbol <= SYMBOL_REPLAY; symbol++)
+        LoadSpriteSheet(&sSlotMachineSpriteSheets[symbol]);
+    LoadSpritePalettes(sSlotMachineSpritePalettes);
+}
+
+u8 SlotMachine_TestCreateReelSymbol(u32 symbol)
+{
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelSymbol, 48, 72, 14);
+    if (spriteId != MAX_SPRITES)
+    {
+        gSprites[spriteId].callback = SpriteCallbackDummy;
+        SetReelSymbolGraphics(&gSprites[spriteId], symbol);
+    }
+    return spriteId;
+}
+
+void SlotMachine_TestSetReelSymbol(u8 spriteId, u32 symbol)
+{
+    SetReelSymbolGraphics(&gSprites[spriteId], symbol);
+}
+#endif
 
 static void CreateCreditPayoutNumberSprites(void)
 {
@@ -8007,6 +8054,9 @@ static const struct SpritePalette sSlotMachineSpritePalettes[] =
     { .data = gSlotMachineReelTimeExplosion_Pal, .tag = PALTAG_EXPLOSION},
     { .data = gSlotMachineDigitalDisplay_Pal,    .tag = PALTAG_DIG_DISPLAY},
     { .data = gSlotMachineMisc_Pal,              .tag = PALTAG_PIKA_AURA},
+    { .data = gSlotMachineReelSymbol3_Pal,       .tag = PALTAG_REEL_SYMBOL_3},
+    { .data = gSlotMachineReelSymbol4_Pal,       .tag = PALTAG_REEL_SYMBOL_4},
+    { .data = gSlotMachineReelSymbol5_Pal,       .tag = PALTAG_REEL_SYMBOL_5},
     {}
 };
 

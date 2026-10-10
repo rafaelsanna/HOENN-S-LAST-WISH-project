@@ -5,6 +5,11 @@ const u16 gSlotMachineMenu_Tilemap[] = INCBIN_U16("graphics/slot_machine/menu.bi
 const u16 gSlotMachineInfoBox_Tilemap[] = INCBIN_U16("graphics/slot_machine/info_box.bin");
 
 const u16 gSlotMachineReelSymbols_Pal[] = INCBIN_U16("graphics/slot_machine/reel_symbols/1.gbapal");
+// PNGs with fewer than 16 colors still need a full OBJ palette. The remaining
+// entries are zero-initialized without changing the PNG's color-index order.
+const u16 gSlotMachineReelSymbol3_Pal[16] = INCBIN_U16("graphics/slot_machine/reel_symbols/3.gbapal");
+const u16 gSlotMachineReelSymbol4_Pal[16] = INCBIN_U16("graphics/slot_machine/reel_symbols/4.gbapal");
+const u16 gSlotMachineReelSymbol5_Pal[16] = INCBIN_U16("graphics/slot_machine/reel_symbols/5.gbapal");
 const u16 gSlotMachineReelTimePikachu_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_pikachu.gbapal");
 const u16 gSlotMachineReelTimeMisc_Pal[] = INCBIN_U16("graphics/slot_machine/shadow.gbapal");
 const u16 gSlotMachineReelTimeMachine_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_machine.gbapal");
