@@ -167,9 +167,9 @@ Route112_Movement_AcaciaChimneyExit:
 # 84 "data/maps/Route112/scripts.pory"
 Route112_Text_AcaciaChimneyScene:
 # 85 "data/maps/Route112/scripts.pory"
-	.string "PROF. ACACIA: Oh! Hello, {PLAYER}.\p"
+	.string "PROF. ACACIA: Oh! Hello, {PLAYER}.\n"
 # 86 "data/maps/Route112/scripts.pory"
-	.string "I just got back from MT. CHIMNEY.\n"
+	.string "I just got back from MT. CHIMNEY.\p"
 # 87 "data/maps/Route112/scripts.pory"
 	.string "As I'm sure you remember,\n"
 # 88 "data/maps/Route112/scripts.pory"

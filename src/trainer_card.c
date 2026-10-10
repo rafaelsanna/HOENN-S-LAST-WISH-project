@@ -2350,12 +2350,13 @@ static void CreateNewTrainerCardSprites(void)
         if (species == SPECIES_NONE)
             continue;
 
-        sData->partyIconSpriteIds[i] = CreateMonIcon(
+        sData->partyIconSpriteIds[i] = CreateMonIcon2(
             species,
             SpriteCB_MonIcon,
             28 + (37 * i),
             112,
             0,
+            GetMonData(&gPlayerParty[i], MON_DATA_IS_SHINY),
             GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
         if (sData->partyIconSpriteIds[i] != SPRITE_NONE)
             gSprites[sData->partyIconSpriteIds[i]].oam.priority = 0;
