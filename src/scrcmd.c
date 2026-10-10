@@ -2314,7 +2314,13 @@ bool8 ScrCmd_checkfieldmove(struct ScriptContext *ctx)
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
         if (!species)
             break;
-        if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) && CanLearnTeachableMove(species, move))
+        // HMs use species compatibility without occupying a move slot.
+        // Headbutt is not an HM: its level-up move is absent from the
+        // teachable lists, so it must check the Pokemon's actual moves.
+        if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
+         && (fieldMove == FIELD_MOVE_HEADBUTT
+             ? MonKnowsMove(&gPlayerParty[i], move)
+             : CanLearnTeachableMove(species, move)))
         {
             gSpecialVar_Result = i;
             gSpecialVar_0x8004 = species;

@@ -64,7 +64,7 @@
     },
     {
       "local_id": "LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(THIEVUL)",
+      "graphics_id": "OBJ_EVENT_GFX_AURORA",
       "x": 17,
       "y": 10,
       "elevation": 3,

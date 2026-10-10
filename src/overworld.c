@@ -587,6 +587,7 @@ static u16 GetLegacyPropGraphicsId(u16 currentGraphicsId)
     case OBJ_EVENT_GFX_SPECIES(GRAFAIAI): return OBJ_EVENT_GFX_SPECIES(WORMADAM);
     case OBJ_EVENT_GFX_SPECIES(SHROODLE): return OBJ_EVENT_GFX_SPECIES(ZEBSTRIKA);
     case OBJ_EVENT_GFX_NORMAN: return OBJ_EVENT_GFX_SPECIES(POPPLIO);
+    case OBJ_EVENT_GFX_AURORA: return OBJ_EVENT_GFX_SPECIES(THIEVUL);
     default: return 0;
     }
 }

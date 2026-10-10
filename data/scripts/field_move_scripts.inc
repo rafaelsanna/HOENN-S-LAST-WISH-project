@@ -480,6 +480,13 @@ EventScript_Headbutt::
     lockall
     checkfieldmove FIELD_MOVE_HEADBUTT, TRUE
     goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantHeadbuttTree
+    goto EventScript_DoHeadbutt
+
+@ Party-menu use has already checked the badge and selected a Pokemon
+@ that knows Headbutt. Keep that selection instead of scanning the party.
+EventScript_HeadbuttFromParty::
+    lockall
+EventScript_DoHeadbutt:
     setfieldeffectargument 0, VAR_RESULT
     bufferpartymonnick STR_VAR_1, VAR_RESULT
     buffermovename STR_VAR_2, MOVE_HEADBUTT

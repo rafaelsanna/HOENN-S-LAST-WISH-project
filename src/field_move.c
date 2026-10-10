@@ -215,7 +215,7 @@ const struct FieldMoveInfo gFieldMoveInfo[FIELD_MOVES_COUNT] =
     },
     [FIELD_MOVE_HEADBUTT] =
     {
-        .fieldMoveFunc = SetUpFieldMove_Strength, 
+        .fieldMoveFunc = SetUpFieldMove_Headbutt,
         .isUnlockedFunc = IsFieldMoveUnlocked_Headbutt,
         .moveID = MOVE_HEADBUTT,
         .partyMsgID = PARTY_MSG_CANT_USE_HERE,

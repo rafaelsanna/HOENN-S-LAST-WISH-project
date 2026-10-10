@@ -33,6 +33,12 @@ contest_types := cool beauty cute smart tough
 $(OBJEVENTGFXDIR)/pics/people/battle_girl_repacked.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
+### Aurora NPC ###
+
+# Nine standard 16x32 NPC frames laid out horizontally, not Pokemon frames.
+$(OBJEVENTGFXDIR)/pics/people/aurora.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 2 -mheight 4
+
 ### Tilesets ###
 
 $(TILESETGFXDIR)/secondary/petalburg/tiles.4bpp: %.4bpp: %.png

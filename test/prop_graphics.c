@@ -86,6 +86,12 @@ static const struct PropGraphicsFixture sProps[] =
     PROP(SLATEPORT_CITY_NAME_RATERS_HOUSE, 1, ZEBSTRIKA, SHROODLE),
     { MAP_PETALBURG_CITY_GYM, LOCALID_PETALBURG_GYM_NORMAN,
       OBJ_EVENT_GFX_SPECIES(POPPLIO), OBJ_EVENT_GFX_NORMAN },
+    { MAP_GRANITE_CAVE_1F, 1,
+      OBJ_EVENT_GFX_SPECIES(THIEVUL), OBJ_EVENT_GFX_AURORA },
+    { MAP_AURORAGROVE, LOCALID_AURORA_GROVE_AURORA,
+      OBJ_EVENT_GFX_SPECIES(THIEVUL), OBJ_EVENT_GFX_AURORA },
+    { MAP_PHOENIX_TOWN, LOCALID_PHOENIX_TOWN_AURORA_PETALBURG_EVENT,
+      OBJ_EVENT_GFX_SPECIES(THIEVUL), OBJ_EVENT_GFX_AURORA },
 };
 
 struct PropGraphicsSavedState
@@ -215,7 +221,12 @@ TEST("Prop graphics: old saves migrate every placed prop and preserve object sta
 
 TEST("Prop graphics: the normal Continue script refresh also migrates saved graphics")
 {
-    EXPECT_EQ(ExercisePropMigration(&sProps[0], TRUE), 0);
+    u32 index = 0;
+
+    for (u32 i = 0; i < ARRAY_COUNT(sProps); i++)
+        PARAMETRIZE { index = i; }
+
+    EXPECT_EQ(ExercisePropMigration(&sProps[index], TRUE), 0);
 }
 
 TEST("Prop graphics: comet, portal and screen animations stay inside their four-frame sheets")

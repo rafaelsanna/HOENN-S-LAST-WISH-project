@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(THIEVUL)",
+      "graphics_id": "OBJ_EVENT_GFX_AURORA",
       "x": 36,
       "y": 9,
       "elevation": 3,
