@@ -27,12 +27,12 @@ VerdanturfTown_PokemonCenter_1F_EventScript_ExpertM::
 
 VerdanturfTown_PokemonCenter_1F_Text_FaithInYourPokemon:
 	.string "My grandfather always said:\n"
-	.string "'Trust your POKéMON more than yourself.'\p"
+	.string "'Trust your POKéMON over yourself.'\p"
 	.string "I thought I understood…\n"
 	.string "until last week.\p"
 	.string "My MANECTRIC woke me up at 3am,\n"
-	.string "dragged me outside, and just stood there\l"
-	.string "staring at the sky, trembling.\p"
+	.string "dragged me outside and just stood\l"
+	.string "there staring at the sky, trembling.\p"
 	.string "Nothing there, but he knew something.$"
 
 VerdanturfTown_PokemonCenter_1F_Text_VisitForBattleTent:

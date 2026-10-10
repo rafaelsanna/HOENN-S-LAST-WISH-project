@@ -82,8 +82,8 @@ Route112_Movement_AcaciaChimneyExit:
 	step_end
 
 Route112_Text_AcaciaChimneyScene:
-	.string "PROF. ACACIA: Oh! Hello, {PLAYER}.\p"
-	.string "I just got back from MT. CHIMNEY.\n"
+	.string "PROF. ACACIA: Oh! Hello, {PLAYER}.\n"
+	.string "I just got back from MT. CHIMNEY.\p"
 	.string "As I'm sure you remember,\n"
 	.string "all of my instruments recently started\l"
 	.string "going haywire in the direction of\l"

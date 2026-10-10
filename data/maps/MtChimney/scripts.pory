@@ -187,21 +187,20 @@ MtChimney_Movement_ArchieExitEast:
 
 MtChimney_Movement_ArchieApproachPlayerNorth:
 	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
 	walk_right
-	walk_up
-	walk_up
-	walk_up
-	walk_up
 	face_right
 	step_end
 
 MtChimney_Movement_ArchieExitNorth:
-	walk_down
-	walk_down
-	walk_down
-	walk_down
 	walk_left
-	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
 	walk_down
 	walk_down
 	walk_down
@@ -571,10 +570,10 @@ MtChimney_Text_MaxieIntro:
 	.string "Who are you?\p"
 	.string "… … … … … …\n"
 	.string "… … … … … …\p"
-	.string "I'd heard NEREA bemoaning a child\n"
+	.string "I'd heard INAE bemoaning a child\n"
 	.string "who's been meddling in TEAM AQUA's\l"
 	.string "affairs.\p"
-	.string "It must be you he meant.\p"
+	.string "It must be you she meant.\p"
 	.string "Humph! So you're thinking of\n"
 	.string "interfering with us, TEAM MAGMA?\p"
 	.string "Now you listen.\n"
@@ -591,8 +590,8 @@ MtChimney_Text_MaxieIntro:
 	.string "And when the ash settles…\n"
 	.string "the soil will become the richest\l"
 	.string "in all of HOENN.\p"
-	.string "A new era of resources.\n"
-	.string "A new world order.\p"
+	.string "A new era of resources, and with it,\n"
+	.string "a new world order.\p"
 	.string "Oh! There was no need for you to\n"
 	.string "learn that much.\p"
 	.string "But, no matter!\n"
@@ -746,7 +745,7 @@ MtChimney_Text_Bufoh:
 	.string "Bufoh!$"
 
 MtChimney_Text_ArchieGoStopTeamMagma:
-	.string "NEREA: Grr, {PLAYER}!\n"
+	.string "INAE: Grr, {PLAYER}!\n"
 	.string "I should've guessed you'd show up!\p"
 	.string "See for yourself what the fanatics\n"
 	.string "of TEAM MAGMA are up to!\p"
@@ -759,7 +758,7 @@ MtChimney_Text_ArchieGoStopTeamMagma:
 	.string "Everything we've built. Gone.$"
 
 MtChimney_Text_ArchieIHaveMyHandsFull:
-	.string "NEREA: Grrr…\p"
+	.string "INAE: Grrr…\p"
 	.string "I want to stop that MAGNUS,\n"
 	.string "but I can't!\p"
 	.string "Not when I have my hands full battling\n"
@@ -782,7 +781,7 @@ MtChimney_Text_ArchieIHaveMyHandsFull:
 	.string "but a useful one, kid!$"
 
 MtChimney_Text_ArchieThankYou:
-	.string "NEREA: {PLAYER}!\n"
+	.string "INAE: {PLAYER}!\n"
 	.string "Thank you!\p"
 	.string "With your help, we thwarted TEAM\n"
 	.string "MAGMA's destructive plan!\p"
@@ -792,7 +791,7 @@ MtChimney_Text_ArchieThankYou:
 	.string "more than just a pawn in this.\p"
 	.string "You have no idea the importance of\n"
 	.string "the revolution that is coming.\p"
-	.string "A revolution that will save the world,\n"
+	.string "This revolution will save the world,\n"
 	.string "whether you understand it or not.\p"
 	.string "You need to choose a side.\n"
 	.string "The fence you're sitting on…\l"
