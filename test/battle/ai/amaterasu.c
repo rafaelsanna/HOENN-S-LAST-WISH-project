@@ -681,9 +681,12 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: an offensive drop cancelling setup changes dan
     }
 }
 
-AI_SINGLE_BATTLE_TEST("Amaterasu: full HP intact Sash permits repeated useful setup but chip triggers Baton Pass")
+AI_SINGLE_BATTLE_TEST("Amaterasu: protected full HP after the first boost chooses setup or Baton Pass 50/50")
 {
-    PARAMETRIZE { }
+    bool32 pass;
+    PARAMETRIZE { pass = FALSE; }
+    PARAMETRIZE { pass = TRUE; }
+    PASSES_RANDOMLY(1, 2, RNG_AI_AMATERASU_CONTINUE);
     GIVEN {
         SetAmaterasu();
         AI_FLAGS(AMATERASU_AI);
@@ -692,11 +695,14 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: full HP intact Sash permits repeated useful se
         OPPONENT(SPECIES_NINETALES) { Speed(100); }
     } WHEN {
         TURN { MOVE(player, MOVE_CALM_MIND); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
-        TURN { MOVE(player, MOVE_CALM_MIND); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
-        TURN { MOVE(player, MOVE_THUNDER_SHOCK, secondaryEffect: FALSE); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
-        TURN { MOVE(player, MOVE_CALM_MIND); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 1); }
+        TURN {
+            MOVE(player, MOVE_CALM_MIND);
+            EXPECT_MOVE(opponent, pass ? MOVE_BATON_PASS : MOVE_QUIVER_DANCE);
+            if (pass)
+                EXPECT_SEND_OUT(opponent, 1);
+        }
     } THEN {
-        EXPECT_EQ(gBattleMons[B_POSITION_OPPONENT_LEFT].statStages[STAT_SPATK], DEFAULT_STAT_STAGE + 3);
+        EXPECT_EQ(gBattleMons[B_POSITION_OPPONENT_LEFT].statStages[STAT_SPATK], DEFAULT_STAT_STAGE + (pass ? 1 : 2));
     } FINALLY {
         gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
     }
@@ -712,21 +718,18 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: intact Sash does not cause infinite setup at t
         OPPONENT(SPECIES_SMEARGLE) { Ability(ABILITY_OWN_TEMPO); Item(ITEM_FOCUS_SASH); Moves(MOVE_QUIVER_DANCE, MOVE_FIERY_DANCE, MOVE_BATON_PASS); }
         OPPONENT(SPECIES_NINETALES);
     } WHEN {
-        for (u32 i = 0; i < 6; i++)
-            TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
-        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 1); }
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
     } THEN {
-        EXPECT_EQ(gBattleMons[B_POSITION_OPPONENT_LEFT].statStages[STAT_SPATK], MAX_STAT_STAGE);
+        gBattleMons[B_POSITION_OPPONENT_LEFT].statStages[STAT_SPATK] = MAX_STAT_STAGE;
+        EXPECT_EQ(BattleAI_GetAmaterasuMoveMask(B_POSITION_OPPONENT_LEFT), 1u << 2);
     } FINALLY {
         gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
     }
 }
 
-AI_SINGLE_BATTLE_TEST("Amaterasu: Sash survivor stays reserved after a recipient faints and is allowed only as the last survivor")
+AI_SINGLE_BATTLE_TEST("Amaterasu: damaged Sash survivor is not an ordinary post-KO replacement")
 {
-    bool32 lastSurvivor;
-    PARAMETRIZE { lastSurvivor = FALSE; }
-    PARAMETRIZE { lastSurvivor = TRUE; }
+    PARAMETRIZE { }
     GIVEN {
         SetAmaterasu();
         AI_FLAGS(AMATERASU_AI);
@@ -737,12 +740,10 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: Sash survivor stays reserved after a recipient
     } WHEN {
         TURN { MOVE(player, MOVE_EARTHQUAKE); EXPECT_MOVE(opponent, MOVE_VICTORY_DANCE); }
         TURN { MOVE(player, MOVE_EARTHQUAKE); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 1); EXPECT_SEND_OUT(opponent, 2); }
-        if (lastSurvivor)
-            TURN { MOVE(player, MOVE_FISSURE, hit: TRUE); EXPECT_MOVE(opponent, MOVE_SPLASH); EXPECT_SEND_OUT(opponent, 0); }
     } THEN {
         EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_HP), 1);
-        EXPECT_EQ(gBattlerPartyIndexes[B_POSITION_OPPONENT_LEFT], lastSurvivor ? 0 : 2);
-        EXPECT_EQ(BattleAI_AmaterasuReserveSmeargle(B_POSITION_OPPONENT_LEFT, 0), !lastSurvivor);
+        EXPECT_EQ(gBattlerPartyIndexes[B_POSITION_OPPONENT_LEFT], 2);
+        EXPECT(BattleAI_AmaterasuReserveSmeargle(B_POSITION_OPPONENT_LEFT, 0));
     } FINALLY {
         gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
     }
@@ -750,12 +751,14 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: Sash survivor stays reserved after a recipient
 
 AI_SINGLE_BATTLE_TEST("Amaterasu: Smeargle absorbs a lethal attack to save a boosted sweeper and give a free entry")
 {
-    PARAMETRIZE { }
+    u32 smeargleHP;
+    PARAMETRIZE { smeargleHP = 1; }
+    PARAMETRIZE { smeargleHP = 39; }
     GIVEN {
         SetAmaterasu();
         AI_FLAGS(AMATERASU_AI);
         PLAYER(SPECIES_MACHAMP) { Speed(100); Attack(500); Defense(1000); SpDefense(1); HP(100); MaxHP(100); Moves(MOVE_EARTHQUAKE, MOVE_SPLASH); }
-        OPPONENT(SPECIES_SMEARGLE) { Speed(1000); HP(1); MaxHP(40); Ability(ABILITY_OWN_TEMPO); Moves(MOVE_VICTORY_DANCE, MOVE_BATON_PASS); }
+        OPPONENT(SPECIES_SMEARGLE) { Speed(1000); HP(smeargleHP); MaxHP(40); Defense(10); Ability(ABILITY_OWN_TEMPO); Moves(MOVE_VICTORY_DANCE, MOVE_BATON_PASS); }
         OPPONENT(SPECIES_ARCANINE) { Speed(100); Attack(1); Defense(10); HP(200); MaxHP(200); Ability(ABILITY_FLASH_FIRE); Moves(MOVE_SCRATCH); }
         OPPONENT(SPECIES_NINETALES) { Level(100); Speed(500); SpAttack(500); Defense(10); HP(40); MaxHP(40); Ability(ABILITY_DROUGHT); Moves(MOVE_FLAMETHROWER); }
     } WHEN {
@@ -817,6 +820,85 @@ AI_SINGLE_BATTLE_TEST("Amaterasu: entry hazards do not waste the sacrifice witho
     } THEN {
         EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_HP), 1);
         EXPECT_EQ(GetMonData(&gEnemyParty[1], MON_DATA_HP), 0);
+    } FINALLY {
+        gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    }
+}
+
+AI_SINGLE_BATTLE_TEST("Amaterasu: protected full HP returns after a recipient KO but any chip or damaging entry hazard prevents recycling")
+{
+    u32 hp, fieldMove;
+    bool32 recycle;
+    PARAMETRIZE { hp = 40; fieldMove = MOVE_NONE; recycle = TRUE; }
+    PARAMETRIZE { hp = 39; fieldMove = MOVE_NONE; recycle = FALSE; }
+    PARAMETRIZE { hp = 40; fieldMove = MOVE_STEALTH_ROCK; recycle = FALSE; }
+    PARAMETRIZE { hp = 40; fieldMove = MOVE_SPIKES; recycle = FALSE; }
+    PARAMETRIZE { hp = 40; fieldMove = MOVE_SNOWSCAPE; recycle = TRUE; }
+    GIVEN {
+        SetAmaterasu();
+        AI_FLAGS(AMATERASU_AI);
+        PLAYER(SPECIES_MACHAMP) { Speed(100); Attack(500); HP(1000); MaxHP(1000); Moves(MOVE_DOUBLE_HIT, MOVE_SPLASH, fieldMove); }
+        OPPONENT(SPECIES_SMEARGLE) { Speed(1000); Defense(10); HP(hp); MaxHP(40); Ability(ABILITY_OWN_TEMPO); Item(ITEM_FOCUS_SASH); Moves(MOVE_QUIVER_DANCE, MOVE_VICTORY_DANCE, MOVE_FIERY_DANCE, MOVE_BATON_PASS); }
+        OPPONENT(SPECIES_ARCANINE) { Speed(100); Defense(10); HP(40); MaxHP(40); Ability(ABILITY_FLASH_FIRE); }
+        OPPONENT(SPECIES_NINETALES) { Speed(50); Defense(500); HP(1000); MaxHP(1000); Moves(MOVE_SPLASH); }
+    } WHEN {
+        TURN { MOVE(player, fieldMove == MOVE_NONE ? MOVE_SPLASH : fieldMove); EXPECT_MOVE(opponent, MOVE_VICTORY_DANCE); }
+        // Known multi-hit KO bypasses Sash: no greedy setup coin on this turn.
+        TURN { MOVE(player, MOVE_DOUBLE_HIT, hit: TRUE); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 1); EXPECT_SEND_OUT(opponent, recycle ? 0 : 2); }
+        if (recycle)
+            TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
+    } THEN {
+        EXPECT_EQ(gBattlerPartyIndexes[B_POSITION_OPPONENT_LEFT], recycle ? 0 : 2);
+        EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_HP), hp);
+        EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM), ITEM_FOCUS_SASH);
+    } FINALLY {
+        gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    }
+}
+
+AI_SINGLE_BATTLE_TEST("Amaterasu: any damaged HP forces a useful pass rather than another protected-setup coin")
+{
+    u32 hp;
+    PARAMETRIZE { hp = 1; }
+    PARAMETRIZE { hp = 99; }
+    GIVEN {
+        SetAmaterasu();
+        AI_FLAGS(AMATERASU_AI);
+        PLAYER(SPECIES_WOBBUFFET) { HP(1000); MaxHP(1000); Moves(MOVE_SPLASH); }
+        OPPONENT(SPECIES_SMEARGLE) { HP(hp); MaxHP(100); Ability(ABILITY_OWN_TEMPO); Item(ITEM_FOCUS_SASH); Moves(MOVE_QUIVER_DANCE, MOVE_FIERY_DANCE, MOVE_BATON_PASS); }
+        OPPONENT(SPECIES_NINETALES);
+    } WHEN {
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_QUIVER_DANCE); }
+        TURN { MOVE(player, MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 1); }
+    } FINALLY {
+        gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
+    }
+}
+
+AI_SINGLE_BATTLE_TEST("Amaterasu: spends damaged or entry-unsafe Smeargle before the final sweeper can die even without an immediate KO threat")
+{
+    u32 hp, fieldMove;
+    PARAMETRIZE { hp = 1; fieldMove = MOVE_NONE; }
+    PARAMETRIZE { hp = 99; fieldMove = MOVE_NONE; }
+    PARAMETRIZE { hp = 100; fieldMove = MOVE_STEALTH_ROCK; }
+    PARAMETRIZE { hp = 100; fieldMove = MOVE_SPIKES; }
+    PARAMETRIZE { hp = 100; fieldMove = MOVE_SANDSTORM; }
+    PARAMETRIZE { hp = 1; fieldMove = MOVE_STEALTH_ROCK; }
+    PARAMETRIZE { hp = 1; fieldMove = MOVE_SPIKES; }
+    GIVEN {
+        SetAmaterasu();
+        AI_FLAGS(AMATERASU_AI);
+        PLAYER(SPECIES_MACHAMP) { Speed(100); Attack(500); Defense(1000); HP(1000); MaxHP(1000); Moves(MOVE_EARTHQUAKE, MOVE_SPLASH, fieldMove); }
+        OPPONENT(SPECIES_SMEARGLE) { Speed(1000); Defense(10); HP(hp); MaxHP(100); Ability(ABILITY_OWN_TEMPO); Item(ITEM_FOCUS_SASH); Moves(MOVE_VICTORY_DANCE, MOVE_FIERY_DANCE, MOVE_BATON_PASS); }
+        OPPONENT(SPECIES_ARCANINE) { Speed(100); Attack(1); Defense(1000); HP(1000); MaxHP(1000); Ability(ABILITY_FLASH_FIRE); Moves(MOVE_SCRATCH); }
+    } WHEN {
+        TURN { MOVE(player, fieldMove != MOVE_NONE && fieldMove != MOVE_SANDSTORM ? fieldMove : MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_VICTORY_DANCE); }
+        TURN { MOVE(player, fieldMove == MOVE_SANDSTORM ? fieldMove : MOVE_SPLASH); EXPECT_MOVE(opponent, MOVE_BATON_PASS); EXPECT_SEND_OUT(opponent, 1); }
+        TURN { MOVE(player, MOVE_EARTHQUAKE); EXPECT_SWITCH(opponent, 0); EXPECT_SEND_OUT(opponent, 1); }
+    } THEN {
+        EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_HP), 0);
+        EXPECT(gBattleMons[B_POSITION_OPPONENT_LEFT].hp > 0);
+        EXPECT_EQ(gBattleMons[B_POSITION_OPPONENT_LEFT].species, SPECIES_ARCANINE);
     } FINALLY {
         gSaveBlock2Ptr->optionsNpcTeams = OPTIONS_NPCTEAMS_CASUAL;
     }

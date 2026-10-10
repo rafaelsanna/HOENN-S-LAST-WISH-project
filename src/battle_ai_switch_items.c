@@ -2370,15 +2370,15 @@ u32 GetMostSuitableMonToSwitchInto(u32 battler, enum SwitchType switchType)
     s32 lastId = 0; // + 1
     struct Pokemon *party;
 
+    bestMonId = BattleAI_GetAmaterasuSwitchIn(battler);
+    if (bestMonId != PARTY_SIZE)
+        return bestMonId;
+
     if (gBattleStruct->monToSwitchIntoId[battler] != PARTY_SIZE
         && !BattleAI_AmaterasuReserveSmeargle(battler, gBattleStruct->monToSwitchIntoId[battler]))
         return gBattleStruct->monToSwitchIntoId[battler];
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
         return gBattlerPartyIndexes[battler] + 1;
-
-    bestMonId = BattleAI_GetAmaterasuSwitchIn(battler);
-    if (bestMonId != PARTY_SIZE)
-        return bestMonId;
 
     if (IsDoubleBattle())
     {

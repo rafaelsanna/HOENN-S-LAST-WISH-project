@@ -539,6 +539,14 @@ static void OpponentHandleChoosePokemon(u32 battler)
     s32 pokemonInBattle = 1;
     enum SwitchType switchType = SWITCH_AFTER_KO;
 
+    if (!IsBattlerAlive(battler) && BattleAI_GetAmaterasuSwitchIn(battler) == 0)
+    {
+        // A protected Smeargle restarts after a KO even if a different
+        // replacement was cached before the teammate actually fainted.
+        gBattleStruct->AI_monToSwitchIntoId[battler] = PARTY_SIZE;
+        gBattleStruct->monToSwitchIntoId[battler] = PARTY_SIZE;
+    }
+
     // A planned sacrifice is legal only while switching a living teammate.
     // Pursuit can turn a pending switch into a KO replacement instead.
     if (!IsBattlerAlive(battler)

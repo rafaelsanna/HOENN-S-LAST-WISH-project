@@ -225,6 +225,7 @@ enum RandomTag
     RNG_HIDDEN_GROTTO_IV,
     RNG_AI_AMATERASU_SETUP,
     RNG_AI_AMATERASU_PASS,
+    RNG_AI_AMATERASU_CONTINUE,
 };
 
 #define RandomWeighted(tag, ...) \

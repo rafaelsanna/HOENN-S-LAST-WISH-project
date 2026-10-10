@@ -22,6 +22,10 @@ enum AmaterasuDance
     AMATERASU_DANCE_VICTORY,
 };
 
+static u32 GetAmaterasuEntryDamage(u32 battler, struct BattlePokemon *mon);
+static bool32 IsReusableSmeargle(u32 battler);
+static bool32 CanRestartSmeargle(u32 battler);
+
 static bool32 IsAmaterasu(u32 battler)
 {
     return !IsOnPlayerSide(battler)
@@ -211,6 +215,7 @@ u32 BattleAI_GetAmaterasuMoveMask(u32 battler)
     u32 i, fieryDance = MAX_MON_MOVES, batonPass = MAX_MON_MOVES, setupMask = 0;
     u32 limitations;
     bool32 hasReserve = FALSE;
+    bool32 mayPass = FALSE;
 
     if (!IsAmaterasuSmeargle(battler) || !IsBattlerAlive(battler))
         return 0;
@@ -248,6 +253,16 @@ u32 BattleAI_GetAmaterasuMoveMask(u32 battler)
             || CanIndexMoveFaintTarget(battler, GetOppositeBattler(battler), fieryDance, AI_ATTACKING)))
         return 1u << fieryDance;
 
+    // A damaged return from the bench is fodder, not another setup lead.
+    // The saved outgoing party index distinguishes it from the opening
+    // Smeargle that just survived its first setup turn with a broken sash.
+    if (gBattleStruct->battlerPartyIndexes[battler] > 0
+        && gBattleStruct->battlerPartyIndexes[battler] < PARTY_SIZE
+        && gAiBattleData->amaterasuDance == AMATERASU_DANCE_NONE
+        && !IsReusableSmeargle(battler)
+        && fieryDance != MAX_MON_MOVES)
+        return 1u << fieryDance;
+
     if (batonPass == MAX_MON_MOVES)
         return 0; // No legal combo: leave PP/Encore/etc. handling to normal AI.
 
@@ -274,10 +289,7 @@ u32 BattleAI_GetAmaterasuMoveMask(u32 battler)
         u32 attackingStage = gBattleMons[battler].statStages[GetDanceAttackStat(gAiBattleData->amaterasuDance)];
         bool32 usefulPass = attackingStage > DEFAULT_STAT_STAGE
             && GetRecipientMask(battler, gAiBattleData->amaterasuDance);
-        bool32 protectedSetup = gBattleMons[battler].hp == gBattleMons[battler].maxHP
-            && gAiLogicData->holdEffects[battler] == HOLD_EFFECT_FOCUS_SASH
-            && GetBattlerSecondaryDamage(battler) == 0
-            && !(gBattleMons[battler].status1 & STATUS1_BURN)
+        bool32 protectedSetup = IsReusableSmeargle(battler)
             && !CanTargetFaintAi(GetOppositeBattler(battler), battler);
 
         // Do not wait for exactly 1 HP: chip, multi-hit moves, PP and lost
@@ -286,6 +298,7 @@ u32 BattleAI_GetAmaterasuMoveMask(u32 battler)
             return 1u << batonPass;
         if (setupMask == 0)
             return 0; // No useful legal setup/pass: let Smart AI recover.
+        mayPass = usefulPass;
     }
 
     enum AmaterasuDance defensiveDance = GetPreferredDance(battler);
@@ -294,9 +307,9 @@ u32 BattleAI_GetAmaterasuMoveMask(u32 battler)
         if ((setupMask & (1u << i))
             && ((defensiveDance == AMATERASU_DANCE_VICTORY && gBattleMons[battler].moves[i] == MOVE_VICTORY_DANCE)
                 || (defensiveDance == AMATERASU_DANCE_QUIVER && gBattleMons[battler].moves[i] == MOVE_QUIVER_DANCE)))
-            return 1u << i;
+            return (1u << i) | (mayPass ? 1u << batonPass : 0);
     }
-    return setupMask;
+    return setupMask | (mayPass ? 1u << batonPass : 0);
 }
 
 bool32 BattleAI_AmaterasuReserveSmeargle(u32 battler, u32 partyIndex)
@@ -308,9 +321,12 @@ bool32 BattleAI_AmaterasuReserveSmeargle(u32 battler, u32 partyIndex)
         || !IsValidForBattle(&gEnemyParty[0]))
         return FALSE;
 
-    // Never choose the benched lead as an ordinary replacement while a
-    // teammate lives. Include the active sweeper when considering a switch.
-    // The last usable Pokemon must remain eligible, even at 1 HP.
+    if (!IsBattlerAlive(battler) && CanRestartSmeargle(battler))
+        return FALSE; // A protected full-HP lead restarts after a teammate's KO.
+
+    // Damaged means ANY lost HP, not just 1 HP. Preserve fodder for a useful
+    // sacrifice, and keep a healthy lead out of ordinary mid-turn switches.
+    // Last-survivor fallback stays legal when trapping/forced KOs prevent a sac.
     for (i = 1; i < PARTY_SIZE; i++)
     {
         if (IsValidForBattle(&gEnemyParty[i]))
@@ -338,6 +354,83 @@ static u32 GetAmaterasuEntryDamage(u32 battler, struct BattlePokemon *mon)
     return damage;
 }
 
+static bool32 IsReusableSmeargle(u32 battler)
+{
+    struct BattlePokemon mon;
+    u32 holdEffect, side = GetBattlerSide(battler);
+
+    if (!IsValidForBattle(&gEnemyParty[0])
+        || GetMonData(&gEnemyParty[0], MON_DATA_SPECIES) != SPECIES_SMEARGLE)
+        return FALSE;
+    if (gBattlerPartyIndexes[battler] == 0)
+    {
+        return gBattleMons[battler].hp == gBattleMons[battler].maxHP
+            && gBattleMons[battler].hp > 1
+            && GetBattlerHoldEffect(battler, FALSE) == HOLD_EFFECT_FOCUS_SASH
+            && GetBattlerSecondaryDamage(battler) == 0
+            && !(gBattleMons[battler].status1 & (STATUS1_BURN | STATUS1_FROSTBITE));
+    }
+
+    PokemonToBattleMon(&gEnemyParty[0], &mon);
+    holdEffect = gItemsInfo[mon.item].holdEffect;
+    if (mon.hp != mon.maxHP || mon.hp <= 1 || holdEffect != HOLD_EFFECT_FOCUS_SASH
+        || mon.ability == ABILITY_KLUTZ || (gFieldStatuses & STATUS_FIELD_MAGIC_ROOM)
+        || (gWishFutureKnock.knockedOffMons[side] & 1)
+        || GetAmaterasuEntryDamage(battler, &mon) != 0)
+        return FALSE;
+
+    // Full in the party is not protected if poison or weather will remove
+    // the sash on entry/end of turn. Snow itself does not deal hail damage.
+    if (mon.ability != ABILITY_MAGIC_GUARD)
+    {
+        if ((mon.status1 & (STATUS1_BURN | STATUS1_FROSTBITE))
+            || ((mon.status1 & (STATUS1_POISON | STATUS1_TOXIC_POISON)) && mon.ability != ABILITY_POISON_HEAL))
+            return FALSE;
+        if (IsHazardOnSide(side, HAZARDS_TOXIC_SPIKES)
+            && mon.status1 == STATUS1_NONE
+            && mon.types[0] != TYPE_POISON && mon.types[1] != TYPE_POISON
+            && mon.types[0] != TYPE_STEEL && mon.types[1] != TYPE_STEEL
+            && mon.ability != ABILITY_IMMUNITY && mon.ability != ABILITY_POISON_HEAL
+            && IsMonGrounded(holdEffect, mon.ability, mon.types[0], mon.types[1]))
+            return FALSE;
+        if (HasWeatherEffect() && mon.ability != ABILITY_OVERCOAT)
+        {
+            if ((gBattleWeather & B_WEATHER_SANDSTORM)
+                && mon.types[0] != TYPE_ROCK && mon.types[1] != TYPE_ROCK
+                && mon.types[0] != TYPE_GROUND && mon.types[1] != TYPE_GROUND
+                && mon.types[0] != TYPE_STEEL && mon.types[1] != TYPE_STEEL
+                && mon.ability != ABILITY_SAND_VEIL && mon.ability != ABILITY_SAND_RUSH && mon.ability != ABILITY_SAND_FORCE)
+                return FALSE;
+            if ((gBattleWeather & B_WEATHER_HAIL)
+                && mon.types[0] != TYPE_ICE && mon.types[1] != TYPE_ICE
+                && mon.ability != ABILITY_ICE_BODY && mon.ability != ABILITY_SNOW_CLOAK)
+                return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static bool32 CanRestartSmeargle(u32 battler)
+{
+    u32 i;
+    bool32 batonPass = FALSE, setup = FALSE;
+
+    if (gBattlerPartyIndexes[battler] == 0 || !IsReusableSmeargle(battler))
+        return FALSE;
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMonData(&gEnemyParty[0], MON_DATA_PP1 + i) == 0)
+            continue;
+        u32 move = GetMonData(&gEnemyParty[0], MON_DATA_MOVE1 + i);
+        if (move == MOVE_BATON_PASS)
+            batonPass = TRUE;
+        if ((move == MOVE_QUIVER_DANCE && GetRecipientMask(battler, AMATERASU_DANCE_QUIVER))
+            || (move == MOVE_VICTORY_DANCE && GetRecipientMask(battler, AMATERASU_DANCE_VICTORY)))
+            setup = TRUE;
+    }
+    return batonPass && setup;
+}
+
 u32 BattleAI_GetAmaterasuEscapeSwitch(u32 battler)
 {
     struct BattlePokemon candidate;
@@ -352,26 +445,40 @@ u32 BattleAI_GetAmaterasuEscapeSwitch(u32 battler)
         || GetAmaterasuEntryDamage(battler, &gBattleMons[battler]) >= gBattleMons[battler].hp
         || !CanBattlerEscape(battler) || IsAbilityPreventingEscape(battler)
         || !BattleAI_AmaterasuReserveSmeargle(battler, 0)
-        || GetMonData(&gEnemyParty[0], MON_DATA_HP) != 1)
+        || IsReusableSmeargle(battler))
         return PARTY_SIZE;
+
+    u32 teammates = 0;
+    for (i = 1; i < PARTY_SIZE; i++)
+        teammates += IsValidForBattle(&gEnemyParty[i]);
+    bool32 lastSweeper = teammates == 1;
+    // This is an endgame deadline, not ordinary speculative switching.
+    // A setup prediction must not keep unusable Smeargle benched forever;
+    // use the opponent's known legal threats without reading its input.
+    if (lastSweeper)
+        incoming = MOVE_NONE;
+    PokemonToBattleMon(&gEnemyParty[0], &candidate);
+    bool32 hazardSac = lastSweeper && GetAmaterasuEntryDamage(battler, &candidate) >= candidate.hp;
 
     // A predicted setup/status turn is not an opportunity to spend the sac.
     // Otherwise use a known legal KO threat, never the player's selected input.
-    if (incoming != MOVE_NONE && IsBattleMoveStatus(incoming))
+    if (incoming != MOVE_NONE && IsBattleMoveStatus(incoming) && !hazardSac)
         return PARTY_SIZE;
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         if (!IsMoveUnusable(i, moves[i], gAiLogicData->moveLimitations[opponent])
             && (incoming == MOVE_NONE || incoming == moves[i])
-            && CanIndexMoveFaintTarget(opponent, battler, i, AI_DEFENDING))
+            && (lastSweeper ? AI_GetDamage(opponent, battler, i, AI_DEFENDING, gAiLogicData) > 0
+                            : CanIndexMoveFaintTarget(opponent, battler, i, AI_DEFENDING)))
         {
             threat = i;
             break;
         }
     }
-    if (threat == MAX_MON_MOVES)
+    if (threat == MAX_MON_MOVES && !hazardSac)
         return PARTY_SIZE;
-    incoming = moves[threat];
+    if (threat != MAX_MON_MOVES)
+        incoming = moves[threat];
 
     // Keep a winning attack rather than throw away a boost and a teammate.
     for (i = 0; i < MAX_MON_MOVES; i++)
@@ -379,14 +486,32 @@ u32 BattleAI_GetAmaterasuEscapeSwitch(u32 battler)
         u32 move = gBattleMons[battler].moves[i];
         if (!IsMoveUnusable(i, move, gAiLogicData->moveLimitations[battler])
             && CanIndexMoveFaintTarget(battler, opponent, i, AI_ATTACKING)
-            && AI_IsFaster(battler, opponent, move, incoming, CONSIDER_PRIORITY))
+            && (IsBattleMoveStatus(incoming) || AI_IsFaster(battler, opponent, move, incoming, CONSIDER_PRIORITY)))
             return PARTY_SIZE;
     }
 
+    if (hazardSac)
+    {
+        // With only two left, leaving entry-doomed fodder in the party would
+        // make it the final Pokemon. Spend it now only if the returning
+        // sweeper survives entry plus the attack (the hazards absorb no hit).
+        PokemonToBattleMon(&gEnemyParty[gBattlerPartyIndexes[battler]], &candidate);
+        candidate.hp = gBattleMons[battler].hp;
+        u32 entryDamage = GetAmaterasuEntryDamage(battler, &candidate);
+        s32 damage = incoming == MOVE_NONE || IsBattleMoveStatus(incoming) ? 0
+            : AI_CalcPartyMonDamage(incoming, opponent, battler, candidate, AI_DEFENDING);
+        return entryDamage + max(0, damage) + GetBattlerSecondaryDamage(battler) < candidate.hp ? 0 : PARTY_SIZE;
+    }
+
     PokemonToBattleMon(&gEnemyParty[0], &candidate);
-    if (GetAmaterasuEntryDamage(battler, &candidate) >= candidate.hp
-        || AI_CalcPartyMonDamage(incoming, opponent, battler, candidate, AI_DEFENDING) <= 0)
+    u32 entryDamage = GetAmaterasuEntryDamage(battler, &candidate);
+    s32 sacDamage = AI_CalcPartyMonDamage(incoming, opponent, battler, candidate, AI_DEFENDING);
+    if (entryDamage >= candidate.hp || sacDamage <= 0)
         return PARTY_SIZE; // Hazard KO / immunity would not absorb the attack.
+    if (lastSweeper)
+        return 0; // Spend ANY damaged fodder before the final sweeper can faint.
+    if (sacDamage < candidate.hp - entryDamage)
+        return PARTY_SIZE; // Earlier in the fight, demand an actual free entry.
 
     for (i = 1; i < PARTY_SIZE; i++)
     {
@@ -426,6 +551,11 @@ u32 BattleAI_GetAmaterasuSwitchIn(u32 battler)
 {
     u32 i, mask, count = 0, choice;
 
+    if (!IsAmaterasu(battler))
+        return PARTY_SIZE;
+
+    if (!IsBattlerAlive(battler) && CanRestartSmeargle(battler))
+        return 0;
     if (!IsAmaterasuSmeargle(battler))
         return PARTY_SIZE;
 

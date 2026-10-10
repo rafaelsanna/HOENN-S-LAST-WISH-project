@@ -751,17 +751,29 @@ static u32 ChooseMoveOrAction_Singles(u32 battler)
 
     if (amaterasuMoves != 0)
     {
+        enum RandomTag choiceTag = RNG_AI_AMATERASU_SETUP;
         numOfBestMoves = 0;
         for (i = 0; i < MAX_MON_MOVES; i++)
         {
             SET_SCORE(battler, i, (amaterasuMoves & (1u << i)) ? AI_SCORE_DEFAULT + 100 : 0);
             gAiBattleData->finalScore[battler][opposingBattler][i] = gAiThinkingStruct->score[i];
             if (amaterasuMoves & (1u << i))
+            {
                 consideredMoveArray[numOfBestMoves++] = i;
+                if (gBattleMons[battler].moves[i] == MOVE_BATON_PASS)
+                    choiceTag = RNG_AI_AMATERASU_CONTINUE;
+            }
         }
         gBattlerTarget = opposingBattler;
         gAiBattleData->chosenTarget[battler] = opposingBattler;
-        return consideredMoveArray[numOfBestMoves == 1 ? 0 : RandomUniform(RNG_AI_AMATERASU_SETUP, 0, numOfBestMoves - 1)];
+        // Draw only here, once per decision. ShouldSwitch and post-scoring
+        // checks query the same mask without rerolling the setup/pass coin.
+        u32 chosenMove = consideredMoveArray[numOfBestMoves == 1 ? 0 : RandomUniform(choiceTag, 0, numOfBestMoves - 1)];
+        // The lottery has now resolved; keep the final ranking consistent
+        // with its selected action instead of reporting an unresolved tie.
+        SET_SCORE(battler, chosenMove, gAiThinkingStruct->score[chosenMove] + 1);
+        gAiBattleData->finalScore[battler][opposingBattler][chosenMove] = gAiThinkingStruct->score[chosenMove];
+        return chosenMove;
     }
 
     gAiThinkingStruct->aiLogicId = 0;
