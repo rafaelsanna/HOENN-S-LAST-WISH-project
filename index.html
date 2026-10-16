@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon: Hoenn's Last Wish</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
+    
+    <!-- Discord / Social Media Preview -->
+    <meta property="og:title" content="Pokémon: Hoenn's Last Wish">
+    <meta property="og:description" content="A Pokémon ROM Hack where Rayquaza failed to stop Groudon and Kyogre. Travel through time with Jirachi and Celebi to save Hoenn!">
+    <meta property="og:image" content="https://rafaelsanna.github.io/HOENN-S-LAST-WISH-project/images/banner-preview.png">
+    <meta property="og:url" content="https://rafaelsanna.github.io/HOENN-S-LAST-WISH-project/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pokémon: Hoenn's Last Wish">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Fonts & CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@300;400;500&family=Tiny5&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link type="text/css" rel="stylesheet" href="./rom-patcher-js/style.css" media="all" />
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link" aria-label="Pokémon: Hoenn's Last Wish - Home">
+                <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="logo-img">
+            </a>
+
+            <button class="hamburger" id="hamburger"
+                    aria-label="Open navigation menu"
+                    aria-controls="nav-links"
+                    aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-menu" id="nav-links">
+                <ul class="nav-links nav-links-left">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#story">Story</a></li>
+                    <li><a href="#screenshots">Screenshots</a></li>
+                </ul>
+
+                <a href="#home" class="header-animated" aria-label="Back to Home">
+                    <img src="images/jirachi-celebi00.png"
+                         alt="Jirachi & Celebi"
+                         class="animated-header-img"
+                         data-normal="images/jirachi-celebi00.png"
+                         data-hover="images/jirachi-celebi01.png">
+                </a>
+
+                <ul class="nav-links nav-links-right">
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="wishdex.html">WishDex</a></li>
+                    <li>
+                        <a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588"
+                           target="_blank" rel="noopener noreferrer">Documentation</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i> Light Mode
+    </button>
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-with-banner">
+            <div class="banner-container">
+                <img src="images/banner.png" alt="Pokémon: Hoenn's Last Wish" class="hero-banner">
+                <img src="images/cloud-left.png" alt="" class="cloud cloud-left">
+                <img src="images/cloud-right.png" alt="" class="cloud cloud-right">
+                
+                <a href="#home" class="banner-logo-link">
+                    <img src="images/logo.png" alt="Pokémon: Hoenn's Last Wish" class="banner-logo">
+                </a>
+            </div>
+            
+            <div class="hero-content-overlay">
+                <div class="button-row">
+                    <a href="#download" class="cta-button">Download Patch</a>
+                    <a href="https://discord.gg/nfzXFsPbgS" class="discord-button" target="_blank">
+                        <i class="fab fa-discord"></i> Join Discord
+                    </a>
+                    <a href="https://www.youtube.com/@hoennslastwish" class="youtube-button" target="_blank">
+                        <i class="fab fa-youtube"></i> YouTube Channel
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1m-Odz6r7YLsyuA7sznMbcbzC6AvCG2SNT5GG7vP1MRg/edit?gid=1605379588#gid=1605379588"
+                       class="sheets-button" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-table"></i> Documentation
+                    </a>
+                    <a href="https://ko-fi.com/K1U827MYHT"
+                       class="support-button" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-heart"></i> Commission Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <!-- Video Section -->
+    <section class="video-main">
+        <div class="container">
+            <video class="main-video" controls autoplay muted loop>
+                <source src="images/video00.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="hackdex-button" target="_blank">
+                    <img src="./images/download_banner.png" alt="Download now at hackdex.app">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="story">
+        <div class="container">
+            <h2>The Story</h2>
+            <div class="story-content">
+                <p>A parallel universe where Rayquaza failed to stop Groudon and Kyogre, which caused a natural collapse in Hoenn.</p>
+
+                <p>After long years of natural destruction, the entire Hoenn region was practically devastated, the era of trainers / pokeballs ended, the pokémons became wild animals, and the nomadic people trying to survive.</p>
+
+                <p>After years the plot is the millennium comet (Jirachi) and Celebi (time traveler), giving the player an opportunity to go back in time and prevent this disaster from happening.</p>
+
+                <p>With the return in time, some things from Hoenn destroyed for many years affect the "normal" Hoenn of the past, generating new forms of pokémon, new characters, new villains, gym leaders, and more.</p>
+
+                <p>Play as Zinnia or Zenno, uncovering the past events that led to Hoenn's destruction, and then travel back in time to experience a parallel reality where you can avert the tragedy.</p>
+
+                <p>Expect captivating, individually crafted characters with depth and personality, including a secondary rival: Luka, who plays an active role in the story, and villains driven by genuine, greed-fueled commercial ambitions. With other supporting characters also boasting greater depth, do not expect the same Hoenn story you already know; things have changed completely.</p>
+
+                <p>Modern, fully customizable quality-of-life features to enhance the experience; clean, unique menus and UIs; increased difficulty with options for both casual and competitive players; built-in Nuzlocke and randomizer modes; plus various other features seen in top-tier projects, alongside unique ones we created specifically for this game.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="screenshots">
+        <div class="container">
+            <h2>Screenshots</h2>
+            <div class="slideshow-container">
+                <div class="simple-slideshow">
+                    <img id="slideshow-image" src="images/screenshots/Pokemon_HLW-0.png" alt="In-Game Screenshot 1 of 19">
+                </div>
+                <div class="slideshow-nav">
+                    <button id="prev-slide" type="button" aria-label="Previous screenshot"><i class="fas fa-chevron-left"></i></button>
+                    <button id="next-slide" type="button" aria-label="Next screenshot"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apply Patch Section -->
+    <section id="applypatch" class="download patch-section">
+        <div class="container">
+            <h2>Apply Patch</h2>
+            <div class="download-info">
+                <p class="patch-section-intro">
+                    Patch your clean Pokémon Emerald ROM directly in the browser. Your ROM stays on your device.
+                </p>
+
+                <div class="patch-panel">
+                    <div class="patch-panel-title">Patch Application</div>
+                    <div class="patch-panel-body">
+                        <div id="rom-patcher-container">
+                            <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-rom">
+                                <div class="text-right"><label for="rom-patcher-input-file-rom">ROM file:</label></div>
+                                <div class="rom-patcher-container-input">
+                                    <input type="file" id="rom-patcher-input-file-rom" class="empty" disabled />
+                                </div>
+                            </div>
+
+                            <div class="margin-bottom text-selectable text-mono text-muted" id="rom-patcher-rom-info">
+                                <div class="rom-patcher-row">
+                                    <div class="text-right">CRC32:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-crc32"></span></div>
+                                </div>
+                                <div class="rom-patcher-row">
+                                    <div class="text-right">MD5:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-md5"></span></div>
+                                </div>
+                                <div class="rom-patcher-row">
+                                    <div class="text-right">SHA-1:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-sha1"></span></div>
+                                </div>
+                                <div class="rom-patcher-row" id="rom-patcher-row-info-rom">
+                                    <div class="text-right">ROM:</div>
+                                    <div class="text-truncate"><span id="rom-patcher-span-rom-info"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-file-patch">
+                                <div class="text-right"><label for="rom-patcher-select-patch">Patch file:</label></div>
+                                <div class="rom-patcher-container-input">
+                                    <select id="rom-patcher-select-patch"></select>
+                                </div>
+                            </div>
+
+                            <div class="rom-patcher-row margin-bottom" id="rom-patcher-row-patch-description">
+                                <div class="text-right text-mono text-muted">Description:</div>
+                                <div class="text-truncate" id="rom-patcher-patch-description"></div>
+                            </div>
+
+                            <div class="rom-patcher-row margin-bottom text-selectable text-mono text-muted" id="rom-patcher-row-patch-requirements">
+                                <div class="text-right text-mono" id="rom-patcher-patch-requirements-type">ROM requirements:</div>
+                                <div class="text-truncate" id="rom-patcher-patch-requirements-value"></div>
+                            </div>
+
+                            <div class="text-center" id="rom-patcher-row-apply">
+                                <div id="rom-patcher-row-error-message" class="margin-bottom"><span id="rom-patcher-error-message"></span></div>
+                                <button id="rom-patcher-button-apply" disabled>Apply patch</button>
+                            </div>
+                        </div>
+
+                        <div id="rom-patcher-powered" class="text-center">
+                            <a href="https://github.com/marcrobledo/RomPatcher.js" target="_blank">Powered by Rom Patcher JS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Download</h2>
+            <div class="download-info">
+                <h3>Choose how you want to patch</h3>
+                <p>
+                    Apply the latest patch directly on this site, download the BPS from Google Drive,
+                    or use HackDex.
+                </p>
+
+                <div class="download-links">
+                    <a href="#applypatch" class="download-btn info">
+                        Apply Patch
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1Kczj59U4ZCFtgkXeLXAMmM9c05i0XHek?usp=sharing" class="download-btn" target="_blank">
+                        Download BPS Patch
+                    </a>
+
+                    <a href="#installation-guide" class="download-btn secondary" id="how-to-apply-btn">
+                        How to Apply Patch
+                    </a>
+
+                    <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="download-btn hackdex-download" target="_blank">
+                        <img src="./images/download_banner.png" alt="Download now at hackdex.app">
+                    </a>
+                </div>
+
+                <details class="installation-accordion" id="installation-guide">
+                    <summary>Installation Guide</summary>
+                    <div class="installation-guide-content">
+                        <div class="installation-option">
+                            <h4>Option 1 — Patch directly on this site</h4>
+                            <ol>
+                                <li>Go to the <a href="#applypatch">Apply Patch</a> section above.</li>
+                                <li>Select a clean Pokémon Emerald (USA/Europe) ROM.</li>
+                                <li>The latest Hoenn's Last Wish BPS patch is selected automatically.</li>
+                                <li>Click <strong>Apply patch</strong> and save the generated .gba file.</li>
+                            </ol>
+                        </div>
+
+                        <div class="installation-option">
+                            <h4>Option 2 — HackDex</h4>
+                            <p>Open the Hoenn's Last Wish page on HackDex and use the download/patch options available there.</p>
+                            <a href="https://www.hackdex.app/hack/hoenns-last-wish" class="guide-link" target="_blank">
+                                Open Hoenn's Last Wish on HackDex
+                            </a>
+                        </div>
+
+                        <div class="installation-option">
+                            <h4>Option 3 — Google Drive / manual BPS patch</h4>
+                            <ol>
+                                <li>Download the latest .bps patch from Google Drive.</li>
+                                <li>Use a clean Pokémon Emerald (USA/Europe) ROM.</li>
+                                <li>Apply the .bps with FLIPS or another compatible BPS patcher.</li>
+                                <li>Save the patched ROM and enjoy your adventure.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2>OUR TEAM</h2>
+            
+            <div class="team-row team-lead-row">
+                <a href="https://ko-fi.com/rafaelsanna" target="_blank" rel="noopener noreferrer" class="team-card-link">
+                    <div class="team-member large">
+                        <h3>Rafael Sanna</h3>
+                        <p>Creator / Main Dev / Art Director / Spriter / Code</p>
+                    </div>
+                </a>
+
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member large">
+                        <h3>Ember</h3>
+                        <p>Secondary Dev / Mapper</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="team-row grid-3">
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>coffeelover42</h3>
+                        <p>Mapper / Scriptor</p>
+                    </div>
+                </a>
+
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>_pablo</h3>
+                        <p>Dev / Scripter</p>
+                    </div>
+                </a>
+
+                <a href="#" data-no-link="true" class="team-card-link" onclick="return false;">
+                    <div class="team-member">
+                        <h3>Kirb</h3>
+                        <p>OST / Musics / Ideas / Play Test</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="team-row grid-4">
+                <a href="#" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Eric Serbinenko</h3>
+                        <p>Spriter / Dev</p>
+                    </div>
+                </a>
+                
+                <a href="https://ko-fi.com/gerbo" target="_blank" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Gerbo</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.instagram.com/_kaziio_ko_/" target="_blank" class="team-card-link">
+                    <div class="team-member">
+                        <h3>Kazioko</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="team-card-link">
+                    <div class="team-member">
+                        <h3>DoodleLordElias</h3>
+                        <p>Sprites / Concept Artist</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <a href="https://www.behance.net/rafaelsanna" target="_blank" class="footer-logo-link">
+                <img src="images/rs-logo.png" alt="RS - Rafael Sanna Graphics" class="footer-logo">
+            </a>
+            
+            <div class="footer-credits">
+                <p>Made by: Rafael Sanna</p>
+                <a href="https://docs.google.com/document/d/1K_1i6doDUI3dhyyjtoNYlCZQZiFuHJBfjhZC-yJ3x-s/edit?usp=sharing" class="credits-btn" target="_blank">
+                    View Credits
+                </a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>This is a non-profit fan project. Pokémon is © Nintendo/Creatures Inc./GAME FREAK Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js?v=20260925-nav-slides"></script>
+    <script type="text/javascript" src="rom-patcher-js/RomPatcher.webapp.js"></script>
+    <script type="text/javascript">
+        window.addEventListener('load', async function () {
+            try {
+                /*
+                 * Automatic patch detection:
+                 * Reads the public GitHub repository folder and finds .bps files.
+                 * If there is more than one versioned patch, the highest version wins.
+                 *
+                 * Example:
+                 *   HLW v0.4.6.bps
+                 *   HLW v0.4.7.bps  <- selected automatically
+                 */
+                const apiUrl =
+                    'https://api.github.com/repos/rafaelsanna/HOENN-S-LAST-WISH-project/contents/rom-patcher-js?ref=main';
+
+                const response = await fetch(apiUrl, {
+                    cache: 'no-store',
+                    headers: {
+                        'Accept': 'application/vnd.github+json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        'Could not read rom-patcher-js folder from GitHub. HTTP ' +
+                        response.status
+                    );
+                }
+
+                const files = await response.json();
+
+                if (!Array.isArray(files)) {
+                    throw new Error('Unexpected response while reading patch folder.');
+                }
+
+                const patchFiles = files.filter(function (file) {
+                    return file &&
+                        file.type === 'file' &&
+                        typeof file.name === 'string' &&
+                        file.name.toLowerCase().endsWith('.bps');
+                });
+
+                if (patchFiles.length === 0) {
+                    throw new Error('No .bps patch found inside rom-patcher-js.');
+                }
+
+                // Extracts numeric versions such as 0.4.7 from "HLW v0.4.7.bps".
+                function getVersionParts(filename) {
+                    const match = filename.match(/(?:^|[^0-9])v?(\d+(?:\.\d+)+)/i);
+
+                    if (!match) {
+                        return null;
+                    }
+
+                    return match[1].split('.').map(function (part) {
+                        return parseInt(part, 10) || 0;
+                    });
+                }
+
+                function compareVersions(a, b) {
+                    const versionA = getVersionParts(a.name);
+                    const versionB = getVersionParts(b.name);
+
+                    // Versioned files are preferred over files without a version.
+                    if (versionA && !versionB) return -1;
+                    if (!versionA && versionB) return 1;
+
+                    // If neither has a detectable version, sort by filename.
+                    if (!versionA && !versionB) {
+                        return b.name.localeCompare(a.name, undefined, {
+                            numeric: true,
+                            sensitivity: 'base'
+                        });
+                    }
+
+                    const length = Math.max(versionA.length, versionB.length);
+
+                    for (let i = 0; i < length; i++) {
+                        const valueA = versionA[i] || 0;
+                        const valueB = versionB[i] || 0;
+
+                        if (valueA !== valueB) {
+                            return valueB - valueA;
+                        }
+                    }
+
+                    return b.name.localeCompare(a.name, undefined, {
+                        numeric: true,
+                        sensitivity: 'base'
+                    });
+                }
+
+                patchFiles.sort(compareVersions);
+
+                const patch = patchFiles[0];
+                const patchName = patch.name.replace(/\.bps$/i, '');
+                const patchUrl =
+                    './rom-patcher-js/' + encodeURIComponent(patch.name);
+
+                console.log('Automatic patch detected:', patch.name);
+
+                if (patchFiles.length > 1) {
+                    console.log(
+                        'Multiple .bps files found. Newest detected version selected:',
+                        patch.name
+                    );
+                }
+
+                RomPatcherWeb.initialize({
+                    language: 'en',
+                    requireValidation: true,
+                    allowDropFiles: true
+                }, {
+                    file: patchUrl,
+                    name: patchName,
+                    inputCrc32: 0x1f1c08fb,
+                    inputMd5: '605b89b67018abcea91e693a4dd25be3',
+                    description: 'Last Updated Patch for Pokemon Hoenn Last Wish.',
+                    outputName: patchName + ' (Patched).gba'
+                });
+
+            } catch (err) {
+                console.error('Rom Patcher JS failed to initialize:', err);
+
+                const container = document.getElementById('rom-patcher-container');
+
+                if (container) {
+                    container.innerHTML =
+                        'Something went wrong loading the patcher. ' +
+                        '<a href="https://www.hackdex.app/hack/hoenns-last-wish" ' +
+                        'target="_blank" style="color:#7ec8e3;">' +
+                        'Open Hoenn\'s Last Wish on HackDex instead</a>.';
+                }
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const howToApplyButton = document.getElementById('how-to-apply-btn');
+            const installationGuide = document.getElementById('installation-guide');
+
+            if (howToApplyButton && installationGuide) {
+                howToApplyButton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    installationGuide.open = true;
+
+                    requestAnimationFrame(function () {
+                        installationGuide.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    });
+                });
+            }
+        });
+    </script>
+
+    <!-- Ko-fi Floating Button -->
+    <div id="kofi-floating-btn"></div>
+    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+    <script type='text/javascript'>
+        kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'K1U827MYHT');
+        document.getElementById('kofi-floating-btn').innerHTML = kofiwidget2.getHTML();
+    </script>
+</body>
+</html>
